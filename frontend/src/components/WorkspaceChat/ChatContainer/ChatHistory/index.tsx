@@ -135,7 +135,7 @@ function buildRows({ history, workspace, websocket, t }: any) {
     } else {
       rows.push({
         kind: "historical",
-        id: `historical-${props.uuid ?? props.chatId ?? index}`,
+        id: `historical-${props.uuid ?? `${props.chatId ?? "x"}-${props.role}-${index}`}`,
         uuid: props.uuid,
         message: props.content,
         role: props.role,
