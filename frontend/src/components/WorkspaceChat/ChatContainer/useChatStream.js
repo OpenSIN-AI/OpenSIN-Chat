@@ -82,7 +82,7 @@ export default function useChatStream({
        // finished persisting the new messages yet.  In that case knownHistory
        // would be stale (missing the user message + AI response) and replacing
        // the current state would wipe the just-streamed content from the UI.
-       const currentLen = _chatHistory?.current?.length ?? 0;
+       const currentLen = chatHistory?.length ?? 0;
        const knownLen = knownHistory?.length ?? 0;
        if (knownLen >= currentLen) {
          setChatHistory(knownHistory);
