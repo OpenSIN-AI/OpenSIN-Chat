@@ -12,5 +12,5 @@ spec:
       image: curlimages/curl:8.1.2
       command: ["sh", "-c"]
       args:
-        - "curl -fsS -o /dev/null http://{{ include "opensin.fullname" . }}:{{ .Values.service.port }}|| exit 1"
+        - "curl -fsS -o /dev/null http://{{ include "opensin.fullname" . }}:{{ .Values.service.port }}/ping || exit 1"
   restartPolicy: Never

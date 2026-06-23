@@ -58,7 +58,7 @@ production.
 - ✅ Run + verify the first politician sync job
 - ✅ PostgreSQL + pgvector production database
 - ✅ Activate `PoliticianVectorStore` (semantic speech search)
-- 🚧 Bundestag 21. WP migration + Abgeordnetenwatch API v2 fields
+- ✅ Bundestag 21. WP migration + Abgeordnetenwatch API v2 fields (#84)
 - ✅ Full-text search over speeches / protocols (SQLite FTS fallback)
 
 ### E3 — Resilience & External-API Hardening ✅
@@ -73,7 +73,10 @@ degradable. Relates to issue #52.
 - ✅ Short-TTL cache layer for external responses (stale-while-revalidate)
 - ✅ Circuit-breaker + cached-fallback when an upstream is down
 - ✅ Politician sync API callers (Bundestag, Abgeordnetenwatch, PlenarScraper) migrated
-- 🚧 Remaining external callers (web search, RSS, AfD feeds) — future work
+- ✅ Web search providers (SerpAPI, DuckDuckGo, SearxNG) migrated to `ResilientHttpClient`
+- ✅ RSS feed proxy migrated to `ResilientHttpClient`
+- ✅ PDF cross-check research agent (Serper, SearchApi) migrated to `ResilientHttpClient`
+- ✅ All unbounded raw `fetch()` calls in external API paths eliminated
 
 ### E4 — Requested Endpoints ✅
 > Plan: inline below + issues #53, #54.
@@ -92,12 +95,12 @@ Turn the existing `cloud-deployments/` scaffolding into real, tested artifacts.
 - Redis session cache (horizontal scaling)
 - CDN for static assets
 
-### E6 — Code Quality & Dependency Hygiene
+### E6 — Code Quality & Dependency Hygiene ✅
 > Plan: [`PLAN-DEPENDENCY-SECURITY.md`](./PLAN-DEPENDENCY-SECURITY.md) (exists)
 Address the INFO-level findings before they become MEDIUM.
 
-- Refactor oversized files (`endpoints/system.js` 1615 LOC, `helpers/updateENV.js` 1521 LOC)
-- Pin critical top-level deps (`langchain`, `openai`) to avoid silent minor drift
+- ✅ Refactor oversized files — `system.js` 2094→8 LOC (10 sub-modules), `updateENV.js` 1195→4 LOC (6 sub-modules)
+- ✅ Pin critical top-level deps — `langchain`, `openai`, `@langchain/*` (6 pkgs), `@anthropic-ai/sdk` all pinned to exact versions
 
 ### E7 — Governance & Repo Hygiene ✅
 Make the repo self-serve for contributors.

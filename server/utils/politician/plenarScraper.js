@@ -9,7 +9,7 @@
  *
  * Sources:
  *   XML: https://www.bundestag.de/resource/blob/XXXXXX/dip.pdf.xml
- *   PDF: https://dserver.bundestag.de/btp/20/20NNNNN.pdf
+ *   PDF: https://dserver.bundestag.de/btp/21/21NNNNN.pdf
  *
  * Strategy:
  *   1. Fetch plenary protocol index for a session
@@ -87,7 +87,7 @@ class PlenarScraper {
 
   /**
    * Build the XML protocol URL for a given session/sitting.
-   * @param {number} session - Wahlperiode (e.g. 20)
+   * @param {number} session - Wahlperiode (e.g. 21)
    * @param {number} sitting - Sitzungsnummer (e.g. 123)
    * @returns {string}
    */
@@ -99,7 +99,7 @@ class PlenarScraper {
   /**
    * Fetch and parse a single plenary protocol by session/sitting number.
    * Prefers XML format (structured) over PDF.
-   * @param {number} session - Wahlperiode (e.g. 20)
+   * @param {number} session - Wahlperiode (e.g. 21)
    * @param {number} sitting - Sitzungsnummer
    * @returns {Promise<PlenarSpeech[]>}
    */
@@ -156,7 +156,7 @@ class PlenarScraper {
    * This avoids dependence on the dserver blob XML which is occasionally
    * unavailable.
    *
-   * @param {number} session - Wahlperiode (e.g. 20)
+   * @param {number} session - Wahlperiode (e.g. 21)
    * @param {number} sitting - Sitzungsnummer
    * @returns {Promise<PlenarSpeech[]>}
    */
@@ -380,7 +380,7 @@ class PlenarScraper {
 
   /**
    * Fetch protocol index for an entire electoral term.
-   * @param {number} session - Wahlperiode (e.g. 20)
+   * @param {number} session - Wahlperiode (e.g. 21)
    * @returns {Promise<Array<{sitting: number, date: string}>>}
    */
   async fetchSessionIndex(session) {

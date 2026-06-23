@@ -17,6 +17,9 @@ const { Agent: UndiciAgent, fetch: undiciFetch } = require("undici");
 const { PdfReader } = require("../pdfReader");
 const { validatePdfPath } = require("../security");
 const { analyzeImageUrl, analyzeVideoUrl } = require("./mediaAdapters");
+const {
+  fetchWithTimeout,
+} = require("../../helpers/fetchWithTimeout");
 
 const MAX_FETCH_BYTES = Number(
   process.env.PDF_ANALYSIS_XCHECK_MAX_FETCH_BYTES || 5 * 1024 * 1024,
@@ -213,10 +216,14 @@ async function loadSource(source) {
     case "url": {
       // Content-Type-Triage: Bild/Video-URLs automatisch an Medien-Adapter routen
       await assertSafeUrl(source.url);
-      const head = await fetch(source.url, {
-        method: "HEAD",
-        headers: { "User-Agent": "OpenSIN-CrossCheck/1.0" },
-      }).catch(() => null);
+      const head = await fetchWithTimeout(
+        source.url,
+        {
+          method: "HEAD",
+          headers: { "User-Agent": "OpenSIN-CrossCheck/1.0" },
+        },
+        FETCH_TIMEOUT_MS,
+      ).catch(() => null);
       const contentType = head?.headers?.get("content-type") || "";
       if (contentType.startsWith("image/"))
         return analyzeImageUrl(source.url, fetchBuffer);

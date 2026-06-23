@@ -12,29 +12,22 @@ const {
   ROLES,
 } = require("../utils/middleware/multiUserProtected");
 const { reqBody } = require("../utils/http");
+const {
+  fetchWithTimeout,
+} = require("../utils/helpers/fetchWithTimeout");
+const {
+  ResilientHttpClient,
+} = require("../utils/helpers/resilientHttpClient");
 
-/**
- * fetch() wrapper that aborts after `timeoutMs` so a hung upstream API
- * (Bundestag DIP, Abgeordnetenwatch, AfD RSS) can never block the request
- * indefinitely and leave the browser sidebar spinning forever.
- * @param {string} url
- * @param {RequestInit} options
- * @param {number} timeoutMs
- * @returns {Promise<Response>}
- */
-async function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    return await fetch(url, { ...options, signal: controller.signal });
-  } catch (e) {
-    if (e.name === "AbortError")
-      throw new Error(`Zeitüberschreitung nach ${timeoutMs}ms`, { cause: e });
-    throw e;
-  } finally {
-    clearTimeout(timer);
-  }
-}
+const rssClient = new ResilientHttpClient({
+  timeoutMs: 10_000,
+  maxRetries: 2,
+  retryDelayMs: 500,
+  rateLimitDelayMs: 200,
+  circuitBreakerThreshold: 5,
+  circuitBreakerCooldownMs: 60_000,
+  cacheTtlMs: 5 * 60 * 1000,
+});
 
 function utilEndpoints(app) {
   if (!app) return;
@@ -89,6 +82,7 @@ function utilEndpoints(app) {
         const res = await fetchWithTimeout(
           `https://search.dip.bundestag.de/api/v1/drucksache?${params}`,
           { headers: { Accept: "application/json" } },
+          8_000,
         );
         if (!res.ok) {
           const msg =
@@ -129,6 +123,7 @@ function utilEndpoints(app) {
           const res = await fetchWithTimeout(
             `https://www.abgeordnetenwatch.de/api/v2/politicians`,
             { headers: { Accept: "application/json" } },
+            8_000,
           );
           if (!res.ok) throw new Error(`AW ${res.status}`);
           const json = await res.json();
@@ -197,7 +192,7 @@ function utilEndpoints(app) {
           .status(403)
           .json({ error: "Blocked: internal address" });
       }
-      const res = await fetchWithTimeout(feed, {
+      const res = await rssClient.fetch(feed, {
         headers: { "User-Agent": "OpenSIN-Chat/1.0" },
       });
       if (!res.ok) throw new Error(`RSS ${res.status}`);

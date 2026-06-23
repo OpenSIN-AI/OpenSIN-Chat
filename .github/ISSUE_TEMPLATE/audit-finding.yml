@@ -1,0 +1,82 @@
+name: Audit Finding
+description: Report a finding from a CEO audit, security scan, or code-quality review.
+title: "[AUDIT] "
+labels: ["audit-finding", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template for findings from CEO audits, security scans (gosec, npm audit, bandit),
+        code-quality tools, or manual reviews. One finding per issue, please.
+  - type: input
+    id: source
+    attributes:
+      label: Audit source
+      description: Which audit or tool produced this finding?
+      placeholder: "CEO Audit 2026-06-07 / npm audit / gosec / manual review"
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - CRITICAL
+        - HIGH
+        - MEDIUM
+        - LOW
+        - INFO
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Security
+        - Performance
+        - Code Quality
+        - Testing
+        - Dependencies
+        - Documentation
+        - CI/CD
+        - Compliance
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: File / module location
+      description: Path to the affected file or module.
+      placeholder: "server/endpoints/system.js:123"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Finding description
+      description: What is the issue? What is the current state vs. the desired state?
+    validations:
+      required: true
+  - type: textarea
+    id: recommendation
+    attributes:
+      label: Recommended fix
+      description: What action should be taken to resolve this finding?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence / logs / references
+      description: Paste scanner output, audit excerpts, or links to relevant docs.
+      render: shell
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-checks
+      options:
+        - label: I searched existing issues and this is not a duplicate.
+          required: true
+        - label: I redacted secrets, API keys, and passwords from any pasted output.
+          required: true

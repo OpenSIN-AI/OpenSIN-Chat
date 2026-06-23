@@ -1,0 +1,139 @@
+# SPDX-License-Identifier: MIT
+# Purpose: Production Docker Compose for OpenSIN Chat with Postgres + Redis.
+#          This is the golden-path multi-node deployment file (E5-D1).
+#          Use: docker compose -f docker/docker-compose.prod.yml up -d
+#
+# Unlike docker/docker-compose.yml (single-node, SQLite, in-memory rate limit),
+# this compose brings up the full scale-out stack:
+#   - PostgreSQL 16 with pgvector for vector search + document storage
+#   - Redis 7 for shared rate-limiting across app nodes
+#   - OpenSIN Chat app (can be scaled: docker compose up --scale opensin-chat=2)
+#
+# Required env vars (provide via docker/.env or shell):
+#   AUTH_TOKEN, JWT_SECRET, SIG_KEY, SIG_SALT
+#   GENERIC_OPEN_AI_BASE_PATH, GENERIC_OPEN_AI_API_KEY, GENERIC_OPEN_AI_MODEL_PREF
+#
+# Docs: docker/docker-compose.prod.yml.doc.md
+
+name: opensin-prod
+
+networks:
+  opensin-prod:
+    driver: bridge
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: opensin-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-opensin}
+      POSTGRES_USER: ${POSTGRES_USER:-opensin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-opensin} -d ${POSTGRES_DB:-opensin}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - opensin-prod
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+          cpus: '1'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+
+  redis:
+    image: redis:7-alpine
+    container_name: opensin-redis
+    restart: always
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru --appendonly yes
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - opensin-prod
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+          cpus: '0.5'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "3"
+
+  opensin-chat:
+    image: ghcr.io/opensin-ai/opensin-chat:latest
+    container_name: opensin-chat-app
+    restart: always
+    build:
+      context: ../.
+      dockerfile: ./docker/Dockerfile
+      args:
+        ARG_UID: ${UID:-1000}
+        ARG_GID: ${GID:-1000}
+        SKIP_CHROMIUM: ${SKIP_CHROMIUM:-1}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - "./.env:/app/server/.env:ro"
+      - "../server/storage:/app/server/storage"
+      - "../collector/hotdir/:/app/collector/hotdir"
+      - "../collector/outputs/:/app/collector/outputs"
+    user: "${UID:-1000}:${GID:-1000}"
+    ports:
+      - "${COMPOSE_PORT:-3001}:3001"
+    env_file:
+      - .env
+    environment:
+      - STORAGE_DIR=/app/server/storage
+      - AUTH_TOKEN=${AUTH_TOKEN:?AUTH_TOKEN env var is required in production}
+      - JWT_SECRET=${JWT_SECRET:?JWT_SECRET env var is required in production}
+      - SIG_KEY=${SIG_KEY}
+      - SIG_SALT=${SIG_SALT}
+      - LLM_PROVIDER=${LLM_PROVIDER:-generic-openai}
+      - GENERIC_OPEN_AI_BASE_PATH=${GENERIC_OPEN_AI_BASE_PATH}
+      - GENERIC_OPEN_AI_API_KEY=${GENERIC_OPEN_AI_API_KEY}
+      - GENERIC_OPEN_AI_MODEL_PREF=${GENERIC_OPEN_AI_MODEL_PREF}
+      - GENERIC_OPEN_AI_MODEL_TOKEN_LIMIT=${GENERIC_OPEN_AI_MODEL_TOKEN_LIMIT:-202752}
+      # PostgreSQL connection for vector search + document storage
+      - PGVECTOR_CONNECTION_STRING=postgresql://${POSTGRES_USER:-opensin}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-opensin}
+      # Redis for shared rate-limiting across nodes (E5-D3)
+      - RATE_LIMIT_BACKEND=redis
+      - REDIS_URL=redis://redis:6379
+    networks:
+      - opensin-prod
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+          cpus: '2'
+
+volumes:
+  postgres-data:
+  redis-data:

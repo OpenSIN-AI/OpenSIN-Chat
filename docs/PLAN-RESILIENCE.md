@@ -38,14 +38,28 @@ client used by all external API callers in the politician sync pipeline.
 - `server/utils/politician/bundestagApi.js` — uses `ResilientHttpClient`
 - `server/utils/politician/abgeordnetenwatchApi.js` — uses `ResilientHttpClient`
 - `server/utils/politician/plenarScraper.js` — uses `ResilientHttpClient`
+- `server/utils/research/webSearchEngine.js` — migrated from per-provider circuit
+  breakers + `fetchWithTimeout` to per-provider `ResilientHttpClient` instances
+  (SerpAPI, DuckDuckGo, SearxNG). Retains `withCache` for parsed-results caching.
+- `server/endpoints/utils.js` — replaced inline `fetchWithTimeout` with shared
+  `fetchWithTimeout` for DIP/Abgeordnetenwatch proxies; RSS feed proxy migrated
+  to `ResilientHttpClient` (timeout, retry, circuit breaker, 5-min cache).
+- `server/utils/pdfAnalysis/crossCheck/researchAgent.js` — `webSearch()` migrated
+  from raw `fetch()` + `AbortSignal.timeout` to `ResilientHttpClient` (Serper +
+  SearchApi clients with retry, rate limit, circuit breaker).
+- `server/utils/pdfAnalysis/crossCheck/sourceAdapters.js` — raw `fetch()` HEAD
+  request replaced with shared `fetchWithTimeout` (no more unbounded hang).
 
 ## Acceptance Criteria
 
 - [x] Shared resilient client exists and is tested
 - [x] All politician sync API callers use the shared client
+- [x] Web search providers use the shared client (SerpAPI, DuckDuckGo, SearxNG)
+- [x] RSS feed proxy uses the shared client
+- [x] PDF cross-check research agent uses the shared client (Serper, SearchApi)
+- [x] No unbounded raw `fetch()` calls remain in external API paths
 - [x] Existing API tests (66) still pass
-- [x] Full server test suite (1 876 tests) still passes
-- [ ] Extend resilience wrapper to remaining external callers (web search, RSS, etc.) — future work
+- [x] Full server test suite still passes
 
 ## Related Issues
 

@@ -40,6 +40,7 @@ export default function useChatStream({
   const pendingResetRef = useRef(false);
   const activeThreadSlug = threadSlug;
   const prevLoadingResponse = useRef(loadingResponse);
+  const lastResponseWasError = useRef(false);
 
   const isEmpty =
     chatHistory.length === 0 && !sessionStorage.getItem(PENDING_HOME_MESSAGE);
@@ -60,9 +61,21 @@ export default function useChatStream({
    * assistant's response (or error) to vanish from the UI.  By syncing only
    * when `knownHistory` itself changes (i.e. after the SWR refetch completes),
    * the streamed content stays visible until the fresh server data arrives.
+   *
+   * ERROR GUARD: When the last response was an error (e.g. API 413 from an
+   * oversized image), the chat is NOT saved to the database.  The SWR
+   * refetch therefore returns the old history without the user's new
+   * message.  Without this guard, `setChatHistory(knownHistory)` would wipe
+   * the optimistic user message + error bubble, making it look as if the
+   * user never typed anything.  We skip the replacement and reset the flag
+   * so the next successful response syncs normally.
    */
   useEffect(() => {
     if (!loadingResponse) {
+      if (lastResponseWasError.current) {
+        lastResponseWasError.current = false;
+        return;
+      }
       setChatHistory(knownHistory);
     }
   }, [knownHistory]);
@@ -336,7 +349,15 @@ export default function useChatStream({
           threadSlug: activeThreadSlug,
           prompt: promptMessage.userMessage,
           chatHandler: (chatResult) => {
-            if (chatResult?.type === "abort") errorAlreadyHandled = true;
+            if (chatResult?.type === "abort") {
+              errorAlreadyHandled = true;
+              if (chatResult?.error) lastResponseWasError.current = true;
+            } else if (
+              chatResult?.type === "textResponse" ||
+              chatResult?.type === "finalizeResponseStream"
+            ) {
+              lastResponseWasError.current = false;
+            }
             handleChat(
               chatResult,
               setLoadingResponse,
@@ -357,6 +378,7 @@ export default function useChatStream({
         // show a fallback error so the user is not left with a perpetual
         // loading spinner.
         if (!errorAlreadyHandled) {
+          lastResponseWasError.current = true;
           handleChat(
             {
               id: v4(),

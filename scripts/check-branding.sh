@@ -181,6 +181,7 @@ ALLOWED_FILES=(
   # ── Project identity & policy docs ──────────────────
   #    Reference the upstream AnythingLLM / Mintplex Labs origin for context.
   "AGENTS.md"
+  "CONTRIBUTING.md"
   "SECURITY.md"
   "CHANGELOG.md"
   "AUDIT-NEXT-AGENT.md"

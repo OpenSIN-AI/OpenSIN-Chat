@@ -542,11 +542,46 @@ export default function DnDFileUploaderWrapper({ children }: any) {
 }
 
 /**
- * Convert image types into Base64 strings for requests.
+ * Maximum dimension (width or height) for compressed images.
+ * Images larger than this are scaled down proportionally.
+ */
+const IMAGE_MAX_DIMENSION = 1024;
+/**
+ * JPEG quality for compressed images (0–1).
+ * 0.8 keeps good visual quality while significantly reducing base64 size.
+ */
+const IMAGE_QUALITY = 0.8;
+/**
+ * Target maximum size for the base64 data URL (~600 KB).
+ * The Fireworks API proxy enforces a 1 MB request body limit; the
+ * system prompt + chat history + user text can consume 200–400 KB,
+ * so the image data URL must stay well under 700 KB to avoid HTTP 413.
+ */
+const IMAGE_MAX_DATA_URL_BYTES = 600_000;
+
+/**
+ * Compress and resize an image File using a canvas, then return a
+ * data URL.  Falls back to the original file if canvas is unavailable
+ * (SSR / non-image types) or if the original is already small enough.
  * @param {File} file
  * @returns {Promise<string>}
  */
 async function toBase64(file: any) {
+  if (!file.type.startsWith("image/")) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (typeof reader.result !== "string") {
+          reject(new Error("Unexpected result type"));
+          return;
+        }
+        resolve(reader.result);
+      };
+      reader.onerror = (error) => reject(error);
+      reader.readAsDataURL(file);
+    });
+  }
+
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => {
@@ -554,8 +589,41 @@ async function toBase64(file: any) {
         reject(new Error("Unexpected result type"));
         return;
       }
-      const base64String = reader.result.split(",")[1];
-      resolve(`data:${file.type};base64,${base64String}`);
+
+      if (reader.result.length <= IMAGE_MAX_DATA_URL_BYTES) {
+        resolve(reader.result);
+        return;
+      }
+
+      const img = new Image();
+      img.onload = () => {
+        let { width, height } = img;
+        if (width > IMAGE_MAX_DIMENSION || height > IMAGE_MAX_DIMENSION) {
+          const scale = IMAGE_MAX_DIMENSION / Math.max(width, height);
+          width = Math.round(width * scale);
+          height = Math.round(height * scale);
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+          resolve(reader.result);
+          return;
+        }
+        ctx.drawImage(img, 0, 0, width, height);
+
+        let quality = IMAGE_QUALITY;
+        let dataUrl = canvas.toDataURL("image/jpeg", quality);
+        while (dataUrl.length > IMAGE_MAX_DATA_URL_BYTES && quality > 0.3) {
+          quality -= 0.1;
+          dataUrl = canvas.toDataURL("image/jpeg", quality);
+        }
+        resolve(dataUrl);
+      };
+      img.onerror = () => resolve(reader.result);
+      img.src = reader.result;
     };
     reader.onerror = (error) => reject(error);
     reader.readAsDataURL(file);

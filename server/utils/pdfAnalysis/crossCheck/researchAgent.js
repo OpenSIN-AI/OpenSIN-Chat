@@ -10,6 +10,9 @@
  *     holt Top-Treffer (Such-Provider per ENV: Serper oder SearchApi —
  *     dieselben Provider, die der Fork für Agent-Websuche nutzt),
  *     lädt vielversprechende Seiten und prüft die Behauptungen dagegen.
+ *
+ * Resilience: ResilientHttpClient (timeout, retry, rate limit, circuit
+ *             breaker, stale response fallback) for search provider calls.
  */
 const { chat, parseJson } = require("../llm");
 const {
@@ -17,9 +20,34 @@ const {
   fetchWithLimits,
   htmlToText,
 } = require("./sourceAdapters");
+const {
+  ResilientHttpClient,
+} = require("../../helpers/resilientHttpClient");
 
 const RESULTS_PER_QUERY = Number(process.env.PDF_ANALYSIS_XCHECK_RESULTS || 4);
 const QUERIES_PER_CLAIM = Number(process.env.PDF_ANALYSIS_XCHECK_QUERIES || 2);
+
+const serperClient = new ResilientHttpClient({
+  timeoutMs: 15_000,
+  maxRetries: 2,
+  rateLimitDelayMs: 500,
+  circuitBreakerThreshold: 5,
+  circuitBreakerCooldownMs: 60_000,
+  cacheTtlMs: 5 * 60 * 1000,
+});
+const searchApiClient = new ResilientHttpClient({
+  timeoutMs: 15_000,
+  maxRetries: 2,
+  rateLimitDelayMs: 500,
+  circuitBreakerThreshold: 5,
+  circuitBreakerCooldownMs: 60_000,
+  cacheTtlMs: 5 * 60 * 1000,
+});
+
+function resetSearchClients() {
+  serperClient.reset();
+  searchApiClient.reset();
+}
 
 const VERDICT_SYSTEM = `Du bist ein forensischer Verifikations-Agent. Du erhältst Behauptungen und den Text einer Vergleichsquelle.
 Pruefe JEDE Behauptung NUR gegen den gegebenen Quelltext. Erfinde nichts.
@@ -81,14 +109,13 @@ async function compareAgainstSource(claims, source) {
 /** Websuche über konfigurierten Provider (Serper bevorzugt, sonst SearchApi). */
 async function webSearch(query) {
   if (process.env.SERPER_DEV_API_KEY) {
-    const res = await fetch("https://google.serper.dev/search", {
+    const res = await serperClient.fetch("https://google.serper.dev/search", {
       method: "POST",
       headers: {
         "X-API-KEY": process.env.SERPER_DEV_API_KEY,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ q: query, num: RESULTS_PER_QUERY }),
-      signal: AbortSignal.timeout(15000),
     });
     if (!res.ok) throw new Error(`Serper HTTP ${res.status}`);
     const json = await res.json();
@@ -104,9 +131,8 @@ async function webSearch(query) {
       q: query,
       api_key: process.env.SEARCHAPI_API_KEY,
     });
-    const res = await fetch(
+    const res = await searchApiClient.fetch(
       `https://www.searchapi.io/api/v1/search?${params}`,
-      { signal: AbortSignal.timeout(15000) },
     );
     if (!res.ok) throw new Error(`SearchApi HTTP ${res.status}`);
     const json = await res.json();
@@ -201,4 +227,4 @@ async function deepWebResearch(claim) {
   };
 }
 
-module.exports = { compareAgainstSource, deepWebResearch };
+module.exports = { compareAgainstSource, deepWebResearch, resetSearchClients };

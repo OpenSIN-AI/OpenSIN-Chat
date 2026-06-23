@@ -62,12 +62,31 @@ yarn dev:all
 ```
 This will start the server, frontend, and collector in development mode. Changes to the code will be hot reloaded.
 
+### Useful commands
+
+| Task | Command |
+|---|---|
+| Install (all) | `yarn setup` |
+| Dev server + frontend | `yarn dev:all` |
+| Dev server only | `yarn dev:server` |
+| Dev frontend only | `yarn dev:frontend` |
+| Build | `yarn build` |
+| Lint check | `yarn lint:check` |
+| Frontend tests | `yarn test` (run from `frontend/`) |
+| Server tests | `yarn test:server` |
+| Bundle size check | `yarn check:bundle` |
+| Branding check | `./scripts/check-branding.sh` |
+
 ## Best practices for pull requests
 
 For the best chance of having your pull request accepted, please follow these guidelines:
 
 1. Unit test all bug fixes and new features. Your code will not be merged if it
    doesn't have tests.
+1. Run `yarn lint:check` and `yarn build` before requesting review. Your code
+   will not be merged if lint or build fails.
+1. Run `./scripts/check-branding.sh` — it must pass (no `AnythingLLM` or
+   `Mintplex Labs` strings in new code).
 1. If you change the public API, update the documentation in `docs/` of this repository.
 1. Aim to minimize the number of changes in each pull request. Keep to solving
    one problem at a time, when possible.
@@ -86,15 +105,24 @@ For the best chance of having your pull request accepted, please follow these gu
 
 The core library is written in Node.js. There are additional sub-repositories for the embed widget and browser extension. These are not part of the core OpenSIN Chat project, but are maintained by the OpenSIN Chat team.
 
-* `server`: Node.js server source code
-* `frontend`: React frontend source code
-* `collector`: Python collector source code
+* `server`: Node.js server source code (Express + Prisma + SQLite/Postgres)
+* `frontend`: React frontend source code (Vite + React 18 + TypeScript + Tailwind)
+* `collector`: Node.js document ingestion and OCR service
+* `docker/`: Docker and Docker Compose setup
+* `cloud-deployments/`: Cloud deployment templates (AWS, GCP, Azure, DO, Helm)
+* `docs/`: Architecture docs, ADRs, plans, runbooks
+
+## Brand guard
+
+OpenSIN Chat is a fork of AnythingLLM (MIT). Never re-introduce `AnythingLLM` or `Mintplex Labs` strings in user-facing code, UI, or docs. The branding check (`./scripts/check-branding.sh`) must pass before merge. See [`AGENTS.md`](AGENTS.md) for the full project rules.
 
 ## Release process
 
-Changes to the core OpenSIN Chat project are released through the `main` branch. When a PR is merged into `main`, a new version of the package is published to Docker and GitHub Container Registry under the `latest` tag.
+Changes to the core OpenSIN Chat project are released through the `main` branch. When a PR is merged into `main`, a new version of the package is published to GitHub Container Registry (GHCR) under the `latest` tag.
 
-When a new version is released, the following steps are taken a new image is built and pushed to Docker Hub and GitHub Container Registry under the associated version tag. Version tags are of the format `v<major>.<minor>.<patch>` and are pinned code, while `latest` is the latest version of the code at any point in time.
+When a new version is released, a new image is built and pushed to GHCR (`ghcr.io/opensin-ai/opensin-chat`) under the associated version tag. Version tags are of the format `v<major>.<minor>.<patch>` and are pinned code, while `latest` is the latest version of the code at any point in time.
+
+Production is deployed at `https://sinchat.delqhi.com` via Cloudflare Tunnel. See [`docs/OPENSIN-CHAT-DEPLOYMENT.md`](docs/OPENSIN-CHAT-DEPLOYMENT.md) for the full deployment guide.
 
 ### Desktop propagation
 

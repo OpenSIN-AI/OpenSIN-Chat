@@ -270,7 +270,7 @@ Dieser Endpoint liefert eine Liste verfügbarer Plenarprotokolle mit IDs.
 | Rede-Text | `text` | Text | Volltext der Rede |
 | Tagesordnungspunkt | `top` | String | TOP-Bezeichnung |
 | Sitzungsdatum | `date` | Date | Datum der Sitzung |
-| Wahlperiode | `session` | Number | z.B. 20 |
+| Wahlperiode | `session` | Number | z.B. 21 |
 | Sitzungsnummer | `sitting` | Number | z.B. 1, 2, 3... |
 | Seitennummer | `pageNumbers` | String | z.B. "12-15" |
 | Dokument-URL | `documentUrl` | URL | Link zum Original |
@@ -404,7 +404,7 @@ if (source) filters.source = source;
 
 | Begriff | Bedeutung |
 |---------|-----------|
-| **WP** | Wahlperiode (z.B. 20 = 20. Bundestag) |
+| **WP** | Wahlperiode (z.B. 21 = 21. Bundestag) |
 | **MdB** | Mitglied des Bundestags |
 | **TOP** | Tagesordnungspunkt |
 | **DIP** | Deutsches Interaktives Parlamentsdokumentationssystem |

@@ -1,149 +1,159 @@
 # opensin-chat
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.85.0](https://img.shields.io/badge/AppVersion-1.85.0-informational?style=flat-square)
-
-![OpenSIN Chat](https://raw.githubusercontent.com/OpenSIN-AI/OpenSIN-Chat/master/images/wordmark.png)
+![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.14.0](https://img.shields.io/badge/AppVersion-1.14.0-informational?style=flat-square)
 
 [OpenSIN Chat](https://github.com/OpenSIN-AI/OpenSIN-Chat)
 
-The all-in-one Desktop & Docker AI application with built-in RAG, AI agents, No-code agent builder, MCP compatibility, and more.
+Self-hostable AI workspace with RAG, AI agents, MCP compatibility, and political research tools.
 
-**Configuration & Usage**
+## Quick Start
 
-- **Config vs Secrets:** This chart exposes application configuration via two mechanisms:
-  - `config` (in `values.yaml`) — rendered into a `ConfigMap` and injected using `envFrom` in the pod. Do NOT place sensitive values (API keys, secrets) in `config` because `ConfigMap`s are not encrypted.
-  - `env` / `envFrom` — the preferred way to inject secrets. Use Kubernetes `Secret` objects and reference them from `env` (with `valueFrom.secretKeyRef`) or `envFrom.secretRef`.
+```bash
+# Single-node (SQLite, no Redis)
+helm install opensin-chat ./cloud-deployments/helm/charts/opensin-chat
 
-- **Storage & STORAGE_DIR mapping:** The chart creates (or mounts) a `PersistentVolumeClaim` using the `persistentVolume.*` settings. The container mount path is set from `persistentVolume.mountPath`. Ensure the container `STORAGE_DIR` config key matches that path (defaults are set in `values.yaml`).
-
-**Providing API keys & secrets (recommended)**
-
-Use Kubernetes Secrets. Below are example workflows and `values.yaml` snippets.
-
-1) Create a Kubernetes Secret with API keys:
-
-```
-kubectl create secret generic openai-secret --from-literal=OPENAI_KEY="sk-..."
-# or from a file
-# kubectl create secret generic openai-secret --from-file=OPENAI_KEY=/path/to/keyfile
+# Multi-node (Postgres + Redis, auto-scaling)
+helm install opensin-chat ./cloud-deployments/helm/charts/opensin-chat \
+  -f values-prod.yaml
 ```
 
-2) Reference the Secret from `values.yaml` using `envFrom` (recommended when your secret contains multiple env keys):
+### values-prod.yaml example
 
 ```yaml
-envFrom:
-  - secretRef:
-      name: openai-secret
-```
+replicaCount: 2
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 0
+    maxSurge: 1
 
-This will inject all key/value pairs from the `openai-secret` Secret as environment variables in the container.
+redis:
+  enabled: true
 
-3) Or reference a single secret key via `env` (explicit mapping):
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
 
-```yaml
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+
+ingress:
+  enabled: true
+  className: nginx
+  hosts:
+    - host: chat.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: chat-tls
+      hosts:
+        - chat.example.com
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 1Gi
+  limits:
+    cpu: "2"
+    memory: 4Gi
+
+# External Redis (if not using bundled subchart)
+# redis:
+#   enabled: true
+#   url: "redis://my-redis:6379"
+
+# External Postgres (set via env)
 env:
-  - name: OPENAI_KEY
+  - name: PGVECTOR_CONNECTION_STRING
     valueFrom:
       secretKeyRef:
-        name: openai-secret
-        key: OPENAI_KEY
+        name: postgres-secret
+        key: connection-string
 ```
 
-Notes:
-- Avoid placing secret values into `config:` (the chart's `ConfigMap`) — `ConfigMap`s are visible to anyone who can read the namespace. Use `Secret` objects for any credentials/tokens.
-- If you use a GitOps workflow, consider integrating an external secret operator (ExternalSecrets, SealedSecrets, etc.) so you don't store raw secrets in Git.
+## Configuration
 
-**Example `values-secret.yaml` to pass during `helm install`**
+### Config vs Secrets
+
+- `config` (in `values.yaml`) — rendered into a `ConfigMap` and injected using `envFrom`. Do NOT place sensitive values here.
+- `env` / `envFrom` — the preferred way to inject secrets. Use Kubernetes `Secret` objects.
+
+```bash
+kubectl create secret generic opensin-secrets \
+  --from-literal=AUTH_TOKEN="..." \
+  --from-literal=JWT_SECRET="..." \
+  --from-literal=PGVECTOR_CONNECTION_STRING="postgresql://..."
+```
 
 ```yaml
-image:
-  repository: opensin/opensin-chat
-  tag: "1.13.0"
-
-service:
-  type: ClusterIP
-  port: 3001
-
-# Reference secret containing API keys
 envFrom:
   - secretRef:
-      name: openai-secret
-
-# Optionally override other values
-persistentVolume:
-  size: 16Gi
-  mountPath: /storage
+      name: opensin-secrets
 ```
 
-Install with:
+### Redis (E5-D3)
 
-```
-helm install my-opensin-chat ./opensin-chat -f values-secret.yaml
-```
+The app uses **JWT for authentication** (stateless), so sessions work across
+nodes without a shared session store. Redis is used for **rate limiting** only.
 
-**Best practices & tips**
+When `redis.enabled: true`:
+- `RATE_LIMIT_BACKEND=redis` and `REDIS_URL` are injected automatically
+- If `redis.url` is set, that URL is used (external Redis)
+- If `redis.url` is empty, the bundled Redis subchart service name is used
 
-- Use `envFrom` for convenience when many environment variables are stored in a single `Secret` and use `env`/`valueFrom` for explicit single-key mappings.
-- Use `kubectl create secret generic` or your secrets management solution. If you need to reference multiple different provider keys (OpenAI, Anthropic, etc.), create a single `Secret` with multiple keys or multiple Secrets and add multiple `envFrom` entries.
-- Keep probe paths and `service.port` aligned. If your probes fail after deployment, check that the probe `port` matches the container port (or named port `http`) and that the `path` is valid.
-- For storage, if you have a pre-existing PVC set `persistentVolume.existingClaim` to the PVC name; the chart will mount that claim (and will not attempt to create a new PVC).
-- For production, provide resource `requests` and `limits` in `values.yaml` to prevent scheduler starvation and to control cost.
+### Probes
+
+Probes use the `/ping` endpoint on port 3001 (the actual health endpoint).
+A startup probe prevents premature liveness failures during Prisma migrations.
+
+### Scaling
+
+- **Single-node:** `replicaCount: 1`, `strategy: Recreate`, PVC with `ReadWriteOnce`
+- **Multi-node:** `replicaCount: 2+`, `strategy: RollingUpdate`, PVC requires `ReadWriteMany` or external storage (S3, NFS)
+- **HPA:** Enable `autoscaling.enabled: true` for CPU/memory-based auto-scaling
+- **PDB:** Enable `podDisruptionBudget.enabled: true` to prevent voluntary evictions from taking down all replicas
+- **WebSocket sticky sessions:** For agent streaming across multiple nodes, configure sticky sessions at the load balancer (nginx `ip_hash`, Cloudflare `session_affinity`)
+
+### Storage
+
+The chart creates a PVC using `persistentVolume.*` settings. For multi-node
+deployments, either:
+1. Use a `ReadWriteMany` storage class (NFS, CephFS, EFS)
+2. Set `persistentVolume.existingClaim` to a pre-provisioned shared volume
+3. Use external object storage (S3) and remove the PVC mount
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{}` |  |
-| config.DISABLE_TELEMETRY | string | `"true"` |  |
-| config.GID | string | `"1000"` |  |
-| config.NODE_ENV | string | `"production"` |  |
-| config.STORAGE_DIR | string | `"/storage"` |  |
-| config.UID | string | `"1000"` |  |
-| env | object | `{}` |  |
-| envFrom | object | `{}` |  |
-| fullnameOverride | string | `""` |  |
-| image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"opensin/opensin-chat"` |  |
-| image.tag | string | `"1.13.0"` |  |
-| imagePullSecrets | list | `[]` |  |
-| ingress.annotations | object | `{}` |  |
-| ingress.className | string | `""` |  |
-| ingress.enabled | bool | `false` |  |
-| ingress.hosts[0].host | string | `"chart-example.local"` |  |
-| ingress.hosts[0].paths[0].path | string | `"/"` |  |
-| ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
-| ingress.tls | list | `[]` |  |
-| initContainers | list | `[]` |  |
-| livenessProbe.failureThreshold | int | `3` |  |
-| livenessProbe.httpGet.path | string | `"/v1/api/health"` |  |
-| livenessProbe.httpGet.port | int | `8888` |  |
-| livenessProbe.initialDelaySeconds | int | `15` |  |
-| livenessProbe.periodSeconds | int | `5` |  |
-| nameOverride | string | `""` |  |
-| nodeSelector | object | `{}` |  |
-| persistentVolume.accessModes[0] | string | `"ReadWriteOnce"` |  |
-| persistentVolume.annotations | object | `{}` |  |
-| persistentVolume.existingClaim | string | `""` |  |
-| persistentVolume.labels | object | `{}` |  |
-| persistentVolume.mountPath | string | `"/storage"` |  |
-| persistentVolume.size | string | `"8Gi"` |  |
-| podAnnotations | object | `{}` |  |
-| podLabels | object | `{}` |  |
-| podSecurityContext.fsGroup | int | `1000` |  |
-| readinessProbe.httpGet.path | string | `"/v1/api/health"` |  |
-| readinessProbe.httpGet.port | int | `8888` |  |
-| readinessProbe.initialDelaySeconds | int | `15` |  |
-| readinessProbe.periodSeconds | int | `5` |  |
-| readinessProbe.successThreshold | int | `2` |  |
-| replicaCount | int | `1` |  |
-| resources | object | `{}` |  |
-| securityContext | object | `{}` |  |
-| service.port | int | `3001` |  |
-| service.type | string | `"ClusterIP"` |  |
-| serviceAccount.annotations | object | `{}` |  |
-| serviceAccount.automount | bool | `true` |  |
-| serviceAccount.create | bool | `true` |  |
-| serviceAccount.name | string | `""` |  |
-| tolerations | list | `[]` |  |
-| volumeMounts | list | `[]` |  |
-| volumes | list | `[]` |  |
+| replicaCount | int | `1` | Number of pod replicas |
+| image.repository | string | `"ghcr.io/opensin-ai/opensin-chat"` | Container image repository |
+| image.tag | string | `""` | Image tag (defaults to appVersion) |
+| image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| strategy.type | string | `"RollingUpdate"` | Deployment strategy |
+| config | object | see values | ConfigMap env vars |
+| env | list | `[]` | Extra env vars (for secret refs) |
+| envFrom | list | `[]` | envFrom refs |
+| service.type | string | `"ClusterIP"` | Service type |
+| service.port | int | `3001` | Service port |
+| redis.enabled | bool | `false` | Enable Redis for rate limiting |
+| redis.url | string | `""` | External Redis URL (empty = bundled) |
+| podDisruptionBudget.enabled | bool | `false` | Enable PDB |
+| podDisruptionBudget.minAvailable | int | `1` | Minimum available pods |
+| autoscaling.enabled | bool | `false` | Enable HPA |
+| autoscaling.minReplicas | int | `2` | Minimum replicas for HPA |
+| autoscaling.maxReplicas | int | `5` | Maximum replicas for HPA |
+| autoscaling.targetCPUUtilizationPercentage | int | `80` | CPU target for HPA |
+| serviceMonitor.enabled | bool | `false` | Enable Prometheus ServiceMonitor |
+| ingress.enabled | bool | `false` | Enable Ingress |
+| persistentVolume.size | string | `"8Gi"` | PVC size |
+| persistentVolume.mountPath | string | `"/app/server/storage"` | Mount path |
+| resources.requests | object | `{cpu: 250m, memory: 512Mi}` | Resource requests |
+| resources.limits | object | `{cpu: 1, memory: 2Gi}` | Resource limits |
+| startupProbe | object | see values | Startup probe config |
+| readinessProbe | object | see values | Readiness probe config |
+| livenessProbe | object | see values | Liveness probe config |
