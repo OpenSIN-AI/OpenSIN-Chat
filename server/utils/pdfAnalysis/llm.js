@@ -98,4 +98,4 @@ function parseJson(text) {
   return JSON.parse(cleaned.slice(start, end + 1));
 }
 
-module.exports = { chat, parseJson };
+module.exports = { chat, parseJson, stripReasoning, isRetryable };
