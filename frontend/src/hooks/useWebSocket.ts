@@ -167,12 +167,12 @@ export default function useWebSocket({
           setAgentSessionActive(false);
           window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));
           ws.close();
-        } finally {
-          // Ensure loading is always reset, even if handleSocketResponse threw.
-          // Previously this was outside the try/catch, so a throw would leave
-          // loadingResponse stuck at true with a perpetual loading spinner.
-          setLoadingResponse(false);
         }
+        // NOTE: setLoadingResponse(false) is NOT called here.
+        // It is only called when the WebSocket closes (see 'close' handler
+        // below) or when handleSocketResponse dispatches AGENT_SESSION_END.
+        // Calling it on every message caused a premature SWR refetch that
+        // overwrote local state with server data missing the current turn.
       });
 
       ws.addEventListener("close", (_event) => {

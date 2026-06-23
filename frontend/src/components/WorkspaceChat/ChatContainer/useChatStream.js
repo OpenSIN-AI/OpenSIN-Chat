@@ -152,6 +152,7 @@ export default function useChatStream({
         attachments: parseAttachments(),
       },
       {
+        uuid: crypto.randomUUID?.() || `pending-${Date.now()}`,
         content: "",
         role: "assistant",
         pending: true,
