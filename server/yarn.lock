@@ -2,17 +2,9 @@
 # yarn lockfile v1
 
 
-"@anthropic-ai/sdk@^0.103.0":
-  version "0.103.0"
-  resolved "https://registry.yarnpkg.com/@anthropic-ai/sdk/-/sdk-0.103.0.tgz#9c61bca13c329fbd45bd171d06649f6d3bf3ea2e"
-  integrity sha512-1uG7RNgoHTUxzOXqSCODKt0UTVlxWiHk/2Tt2/uQJiPW7XzBeKVuJyd3Aw6T3LPyvZV/jDTnPLX7SaM70WLLjA==
-  dependencies:
-    json-schema-to-ts "^3.1.1"
-    standardwebhooks "^1.0.0"
-
-"@anthropic-ai/sdk@^0.39.0":
+"@anthropic-ai/sdk@0.39.0":
   version "0.39.0"
-  resolved "https://registry.npmjs.org/@anthropic-ai/sdk/-/sdk-0.39.0.tgz"
+  resolved "https://registry.yarnpkg.com/@anthropic-ai/sdk/-/sdk-0.39.0.tgz#624d5b33413a9cc322febb64e9d48bdcf5a98cdc"
   integrity sha512-eMyDIPRZbt1CCLErRCi3exlAvNkBtRe+kW5vvJyef93PmNr/clstYgHhtvmkxN82nlKgzyGPCyGxrm0JQ1ZIdg==
   dependencies:
     "@types/node" "^18.11.18"
@@ -22,6 +14,14 @@
     form-data-encoder "1.7.2"
     formdata-node "^4.3.2"
     node-fetch "^2.6.7"
+
+"@anthropic-ai/sdk@^0.103.0":
+  version "0.103.0"
+  resolved "https://registry.yarnpkg.com/@anthropic-ai/sdk/-/sdk-0.103.0.tgz#9c61bca13c329fbd45bd171d06649f6d3bf3ea2e"
+  integrity sha512-1uG7RNgoHTUxzOXqSCODKt0UTVlxWiHk/2Tt2/uQJiPW7XzBeKVuJyd3Aw6T3LPyvZV/jDTnPLX7SaM70WLLjA==
+  dependencies:
+    json-schema-to-ts "^3.1.1"
+    standardwebhooks "^1.0.0"
 
 "@asamuzakjp/css-color@^3.2.0":
   version "3.2.0"
@@ -1576,7 +1576,7 @@
     "@lancedb/lancedb-win32-arm64-msvc" "0.15.0"
     "@lancedb/lancedb-win32-x64-msvc" "0.15.0"
 
-"@langchain/anthropic@^1.4.1":
+"@langchain/anthropic@1.4.1":
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/@langchain/anthropic/-/anthropic-1.4.1.tgz#a51af7657b211a18d6a74fe2747a87a3639081b4"
   integrity sha512-h3b6hxThcfh0WdmpuWr+qBi74MN+0BpNI/4H681vwXxbD3hLr2qMYN6ghqcPQhCxGJjg8ufs85qu2/ldSWonYQ==
@@ -1600,9 +1600,9 @@
   optionalDependencies:
     langsmith ">=0.4.0 <1.0.0"
 
-"@langchain/community@^1.1.29":
+"@langchain/community@1.1.29":
   version "1.1.29"
-  resolved "https://registry.npmjs.org/@langchain/community/-/community-1.1.29.tgz"
+  resolved "https://registry.yarnpkg.com/@langchain/community/-/community-1.1.29.tgz#b4570301b7080e51594eaaa48d3465ed465d0220"
   integrity sha512-eJbE0IARueEg+Lljk7SIGGeiSnu5u0mcT0MPIF7UG6jYPNXOpSebwiXsS3aIKOyJZSj0DlmBPv7q0hkLrxDtHA==
   dependencies:
     "@langchain/classic" "^1.0.27"
@@ -1615,7 +1615,7 @@
     uuid "^14.0.0"
     zod "^3.25.76 || ^4"
 
-"@langchain/core@^1.1.49":
+"@langchain/core@1.1.49":
   version "1.1.49"
   resolved "https://registry.yarnpkg.com/@langchain/core/-/core-1.1.49.tgz#2e334c843961e9bfc52f3fcff19247602e0be866"
   integrity sha512-7wkN3Qv/qZqsY0p3h48CNu6E6y5GMYatYxj+JrX4uVNBiqIVQm1Z528QrmayJWVW9SQTQicqRNoyTCzl+K9F8Q==
@@ -1660,12 +1660,22 @@
     "@langchain/protocol" "^0.0.16"
     "@standard-schema/spec" "1.1.0"
 
-"@langchain/ollama@^1.2.7":
+"@langchain/ollama@1.2.7":
   version "1.2.7"
-  resolved "https://registry.npmjs.org/@langchain/ollama/-/ollama-1.2.7.tgz"
+  resolved "https://registry.yarnpkg.com/@langchain/ollama/-/ollama-1.2.7.tgz#a1d6ed8105ebcefdb7d30ebf7daa0f35c7a32e31"
   integrity sha512-7Gu17q1dn4nKGB3ZYJyaaL8H/2k7LHvcL6V25S8cVDniTTSvd0fWzI5MzPJvbf9WPxBhvmf+rDDLAhOWljHEtQ==
   dependencies:
     ollama "^0.6.3"
+
+"@langchain/openai@0.3.17":
+  version "0.3.17"
+  resolved "https://registry.yarnpkg.com/@langchain/openai/-/openai-0.3.17.tgz#5b8613ac8d849da90f3ecd8368ae7389fca4ee13"
+  integrity sha512-uw4po32OKptVjq+CYHrumgbfh4NuD7LqyE+ZgqY9I/LrLc6bHLMc+sisHmI17vgek0K/yqtarI0alPJbzrwyag==
+  dependencies:
+    js-tiktoken "^1.0.12"
+    openai "^4.77.0"
+    zod "^3.22.4"
+    zod-to-json-schema "^3.22.3"
 
 "@langchain/openai@1.4.7", "@langchain/openai@^1.4.1":
   version "1.4.7"
@@ -1676,32 +1686,22 @@
     openai "^6.37.0"
     zod "^3.25.76 || ^4"
 
-"@langchain/openai@^0.3.0":
-  version "0.3.17"
-  resolved "https://registry.npmjs.org/@langchain/openai/-/openai-0.3.17.tgz"
-  integrity sha512-uw4po32OKptVjq+CYHrumgbfh4NuD7LqyE+ZgqY9I/LrLc6bHLMc+sisHmI17vgek0K/yqtarI0alPJbzrwyag==
-  dependencies:
-    js-tiktoken "^1.0.12"
-    openai "^4.77.0"
-    zod "^3.22.4"
-    zod-to-json-schema "^3.22.3"
-
 "@langchain/protocol@^0.0.16":
   version "0.0.16"
   resolved "https://registry.npmjs.org/@langchain/protocol/-/protocol-0.0.16.tgz"
   integrity sha512-ws+J7MaHyhO5dG7f0vdyHQiUn9hoCnki0f3crJPa4MCTGzcRC39jYSCghyrGtBPYQnZbUQiGyRVpW3z3M8IpJg==
 
+"@langchain/textsplitters@0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@langchain/textsplitters/-/textsplitters-0.1.0.tgz#f37620992192df09ecda3dfbd545b36a6bcbae46"
+  integrity sha512-djI4uw9rlkAb5iMhtLED+xJebDdAG935AdP4eRTB02R7OB/act55Bj9wsskhZsvuyQRpO4O1wQOp85s6T6GWmw==
+  dependencies:
+    js-tiktoken "^1.0.12"
+
 "@langchain/textsplitters@1.0.1":
   version "1.0.1"
   resolved "https://registry.npmjs.org/@langchain/textsplitters/-/textsplitters-1.0.1.tgz"
   integrity sha512-rheJlB01iVtrOUzttscutRgLybPH9qR79EyzBEbf1u97ljWyuxQfCwIWK+SjoQTM9O8M7GGLLRBSYE26Jmcoww==
-  dependencies:
-    js-tiktoken "^1.0.12"
-
-"@langchain/textsplitters@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.npmjs.org/@langchain/textsplitters/-/textsplitters-0.1.0.tgz"
-  integrity sha512-djI4uw9rlkAb5iMhtLED+xJebDdAG935AdP4eRTB02R7OB/act55Bj9wsskhZsvuyQRpO4O1wQOp85s6T6GWmw==
   dependencies:
     js-tiktoken "^1.0.12"
 
