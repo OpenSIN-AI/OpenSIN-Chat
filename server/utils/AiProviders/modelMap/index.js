@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { logger } = require("../../logger/structured");
 const path = require("path");
 const { getStoragePath } = require("../../paths");
 const fs = require("fs");
@@ -38,8 +39,10 @@ class ContextWindowFinder {
   }
 
   log(text, ...args) {
-    // eslint-disable-next-line no-console
-    console.log(`\x1b[33m[ContextWindowFinder]\x1b[0m ${text}`, ...args);
+    const suffix = args.length ? ` ${args
+      .map((a) => (typeof a === "object" ? JSON.stringify(a) : a))
+      .join(" ")}` : "";
+    logger.info("ContextWindowFinder", `${text}${suffix}`);
   }
 
   get isCacheStale() {

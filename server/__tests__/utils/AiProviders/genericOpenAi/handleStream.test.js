@@ -17,6 +17,9 @@ const ORIGINAL_ENV = { ...process.env };
 beforeAll(() => {
   process.env.GENERIC_OPEN_AI_BASE_PATH = "http://localhost:9999/v1";
   process.env.GENERIC_OPEN_AI_MODEL_PREF = "test-model";
+  // The openai SDK (v6+) throws at construction when apiKey is null, so we
+  // provide a dummy key. No real network calls are made — the stream is mocked.
+  process.env.GENERIC_OPEN_AI_API_KEY = "test-key";
 });
 
 afterAll(() => {

@@ -88,5 +88,10 @@
   },
   "resolutions": {
     "js-yaml": ">=4.2.0"
+  },
+  "dependencies": {
+    "openai": "^6.44.0",
+    "swr": "^2.4.2",
+    "uuid": "^14.0.1"
   }
 }

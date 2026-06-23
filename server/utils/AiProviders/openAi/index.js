@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { logger } = require("../../logger/structured");
 const { v4: uuidv4 } = require("uuid");
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
 const {
@@ -36,8 +37,10 @@ class OpenAiLLM {
   }
 
   log(text, ...args) {
-    // eslint-disable-next-line no-console
-    console.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
+    const suffix = args.length ? ` ${args
+      .map((a) => (typeof a === "object" ? JSON.stringify(a) : a))
+      .join(" ")}` : "";
+    logger.info(this.className, `${text}${suffix}`);
   }
 
   #appendContext(contextTexts = []) {

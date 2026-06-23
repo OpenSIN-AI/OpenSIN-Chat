@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { logger } = require("../../logger/structured");
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
 const {
   LLMPerformanceMonitor,
@@ -8,6 +9,10 @@ const {
   writeResponseChunk,
   clientAbortedHandler,
 } = require("../../helpers/chat/responses");
+const {
+  createReasoningState,
+  filterReasoningToken,
+} = require("../../helpers/chat/streamReasoningFilter");
 const { v4: uuidv4 } = require("uuid");
 const { toValidNumber } = require("../../http");
 const { getOpenSINChatUserAgent } = require("../../../endpoints/utils");
@@ -50,8 +55,10 @@ class GenericOpenAiLLM {
   }
 
   log(text, ...args) {
-    // eslint-disable-next-line no-console
-    console.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
+    const suffix = args.length ? ` ${args
+      .map((a) => (typeof a === "object" ? JSON.stringify(a) : a))
+      .join(" ")}` : "";
+    logger.info(this.className, `${text}${suffix}`);
   }
 
   /**
@@ -332,6 +339,8 @@ class GenericOpenAiLLM {
       let allReasoningText = ""; // preserved for saved history even after streaming
       let reasoningMode = true; // Assume reasoning model by default
       let reasoningBlockOpen = false;
+      // Tracks the inline `<think>...</think>` filter state across token splits.
+      const inlineReasoningState = createReasoningState();
 
       // Establish listener to early-abort a streaming response
       // in case things go sideways or the user does not like the response.
@@ -422,45 +431,13 @@ class GenericOpenAiLLM {
             // dedicated `reasoning_content` field. We must strip those segments
             // while preserving any answer text that shares the same token.
             //
-            // The previous implementation only flipped `reasoningBlockOpen` to
-            // false inside the `<think>`-detection branch. When the closing
-            // `</think>` arrived in its own token (the common streaming case),
-            // that branch was skipped, `reasoningBlockOpen` was never reset, and
-            // every subsequent answer token was dropped — leaving the assistant
-            // message blank. This walks the token character-accurately so the
-            // block always closes and the real answer survives.
+            // This is now handled by the shared `filterReasoningToken` utility
+            // (see server/utils/helpers/chat/streamReasoningFilter.js) which
+            // walks the token character-accurately so the block always closes
+            // across token splits and the real answer always survives.
             let filteredToken = token;
             if (reasoningMode) {
-              let working = token;
-              let emitted = "";
-              while (working.length > 0) {
-                if (reasoningBlockOpen) {
-                  const closeIdx = working.indexOf("</think>");
-                  if (closeIdx === -1) {
-                    // Whole remaining chunk is still reasoning — drop it.
-                    working = "";
-                    break;
-                  }
-                  // Reasoning ends here; continue scanning the trailing answer.
-                  working = working.slice(closeIdx + "</think>".length);
-                  reasoningBlockOpen = false;
-                  continue;
-                }
-
-                const openIdx = working.indexOf("<think>");
-                if (openIdx === -1) {
-                  // No (more) reasoning in this token — keep it as answer text.
-                  emitted += working;
-                  working = "";
-                  break;
-                }
-                // Text before `<think>` is answer content; everything after the
-                // tag is reasoning until we find the matching close.
-                emitted += working.slice(0, openIdx);
-                working = working.slice(openIdx + "<think>".length);
-                reasoningBlockOpen = true;
-              }
-              filteredToken = emitted;
+              filteredToken = filterReasoningToken(token, inlineReasoningState);
               if (!filteredToken) continue;
             }
 

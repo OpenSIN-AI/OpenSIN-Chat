@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { logger } = require("../../logger/structured");
 const fs = require("fs");
 const path = require("path");
 const { getStoragePath } = require("../../paths");
@@ -44,8 +45,10 @@ class FireworksAiLLM {
   }
 
   log(text, ...args) {
-    // eslint-disable-next-line no-console
-    console.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
+    const suffix = args.length ? ` ${args
+      .map((a) => (typeof a === "object" ? JSON.stringify(a) : a))
+      .join(" ")}` : "";
+    logger.info(this.className, `${text}${suffix}`);
   }
 
   // This checks if the .cached_at file has a timestamp that is more than 1Week (in millis)
