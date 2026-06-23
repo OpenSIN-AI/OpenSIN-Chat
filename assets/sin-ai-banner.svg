@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="200" viewBox="0 0 1200 200" fill="none">
+  <defs>
+    <linearGradient id="fbgGrad" x1="0" y1="0" x2="1200" y2="200" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0B1120"/>
+      <stop offset="0.5" stop-color="#0F1729"/>
+      <stop offset="1" stop-color="#0B1120"/>
+    </linearGradient>
+    <linearGradient id="ftextGrad" x1="0" y1="0" x2="500" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00D9FF"/>
+      <stop offset="0.5" stop-color="#38BDF8"/>
+      <stop offset="1" stop-color="#7B3FE4"/>
+    </linearGradient>
+    <filter id="fsoftGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="200" fill="url(#fbgGrad)"/>
+
+  <!-- Hex grid -->
+  <g opacity="0.06" stroke="#00D9FF" stroke-width="1" fill="none">
+    <path d="M 40 30 L 65 30 L 78 52 L 65 74 L 40 74 L 27 52 Z"/>
+    <path d="M 92 30 L 117 30 L 130 52 L 117 74 L 92 74 L 79 52 Z"/>
+    <path d="M 40 84 L 65 84 L 78 106 L 65 128 L 40 128 L 27 106 Z"/>
+    <path d="M 92 84 L 117 84 L 130 106 L 117 128 L 92 128 L 79 106 Z"/>
+    <path d="M 1080 30 L 1105 30 L 1118 52 L 1105 74 L 1080 74 L 1067 52 Z"/>
+    <path d="M 1132 30 L 1157 30 L 1170 52 L 1157 74 L 1132 74 L 1119 52 Z"/>
+  </g>
+
+  <!-- Scanning line -->
+  <rect x="0" y="100" width="1200" height="1" fill="#00D9FF" opacity="0.1">
+    <animate attributeName="y" from="100" to="105" dur="3s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- Logo: OpenSIN AI shield (centered) -->
+  <g transform="translate(530, 30)">
+    <path d="M 35 0 L 70 13 L 70 48 Q 70 78 35 95 Q 0 78 0 48 L 0 13 Z" fill="none" stroke="#00D9FF" stroke-width="2" filter="url(#fsoftGlow)" opacity="0.7"/>
+    <path d="M 35 4 L 66 16 L 66 48 Q 66 74 35 88 Q 4 74 4 48 L 4 16 Z" fill="#0F1729" stroke="#00D9FF" stroke-width="1.5" opacity="0.4"/>
+    <text x="35" y="55" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#00D9FF" opacity="0.9">AI</text>
+  </g>
+
+  <!-- Pulse ring -->
+  <circle cx="565" cy="78" r="50" fill="none" stroke="#00D9FF" stroke-width="1" opacity="0.3">
+    <animate attributeName="r" from="50" to="58" dur="2.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" from="0.3" to="0" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Brand text -->
+  <text x="600" y="130" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, sans-serif" font-size="28" font-weight="500" fill="url(#ftextGrad)" letter-spacing="2">
+    OpenSIN AI
+  </text>
+
+  <!-- Repo name tagline -->
+  <text x="600" y="155" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, sans-serif" font-size="13" font-weight="400" fill="#475569" letter-spacing="1.5">
+    OpenSIN-Chat
+  </text>
+
+  <!-- Benefits (pipe-separated) -->
+  <text x="600" y="178" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, sans-serif" font-size="12" font-weight="400" fill="#64748B" letter-spacing="0.5">
+    Self-hosted · Zero telemetry · Fireworks AI vision · Bundestag API
+  </text>
+</svg>

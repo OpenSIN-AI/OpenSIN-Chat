@@ -1,282 +1,111 @@
-<div align="center">
-  <br />
+<a name="readme-top"></a>
+
+# OpenSIN Chat
+
+<p align="center">
+  <em>Self-hosted AI workspace for political research — chat with documents, search the Bundestag, generate reports.</em>
+</p>
+
+<!-- BADGES -->
+<p align="center">
   <a href="https://sinchat.delqhi.com">
-    <img src="./images/wordmark.png" alt="OpenSIN Chat — Souveräner KI-Arbeitsraum" width="380" />
+    <img src="https://img.shields.io/badge/Live-sinchat.delqhi.com-009ee0?logo=cloudflare" alt="Live" />
   </a>
-  <br />
-  <br />
+  <a href="./LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" />
+  </a>
+  <a href="https://github.com/OpenSIN-AI/OpenSIN-Chat">
+    <img src="https://img.shields.io/badge/Telemetry-ZERO-red" alt="Telemetry" />
+  </a>
+</p>
 
-**Souveräner, selbst gehosteter KI-Arbeitsraum**
+<!-- QUICK LINKS -->
+<p align="center">
+  <a href="#quick-start">Quick Start</a> |
+  <a href="#features">Features</a> |
+  <a href="#architecture">Architecture</a> |
+  <a href="#deployment">Deployment</a> |
+  <a href="#credits">Credits</a>
+</p>
 
-Chatte mit deinen Dokumenten. Automatisiere Recherche. Multi-User, selbst gehostet, ohne Telemetrie — auf deiner eigenen Infrastruktur.
-
-  <br />
-
-[![Cloudflare-Deployment](https://img.shields.io/badge/Cloudflare-deployed-orange?logo=cloudflare)](https://sinchat.delqhi.com)
-[![License: MIT](https://img.shields.io/badge/Lizenz-MIT-gr%C3%BCn)](./LICENSE)
-[![Repo: GitHub](https://img.shields.io/badge/Repo-GitHub-black?logo=github)](https://github.com/OpenSIN-AI/OpenSIN-Chat)
-[![DSGVO-konform](https://img.shields.io/badge/DSGVO-konform-blau)]()
-[![Keine Telemetrie](https://img.shields.io/badge/Telemetrie-KOMPLETT%20AUS-rot)]()
-
-  <br />
-</div>
-
----
-
-## 🎯 Was ist OpenSIN Chat?
-
-OpenSIN Chat ist eine **selbstgehostete KI-Plattform** für politische Arbeit, Recherche und Wissensmanagement. Sie wurde auf Basis von [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) (MIT) als souveräne, eigenständige Variante unter dem [OpenSIN-AI](https://github.com/OpenSIN-AI)-Brand für den deutschsprachigen politischen Raum weiterentwickelt.
-
-**Im Kern:** Du lädst deine Dokumente hoch (Bundestags-Drucksachen, Pressemitteilungen, Gesetzesentwürfe, interne Papiere) — und die KI beantwortet Fragen **nur aus diesen Quellen**, mit nachvollziehbaren Zitaten. Keine Halluzinationen aus dem Nichts, keine Cloud-Pflicht, keine Telemetrie.
-
-## ✨ Features
-
-### AnythingLLM-Basis (geerbt)
-
-- 📚 **Dokumente chatten** — PDF, DOCX, TXT, Markdown, Webseiten, YouTube-Transkripte
-- 🧠 **Vektor-Datenbanken** — LanceDB, Chroma, Pinecone, Qdrant, Milvus, PGVector …
-- 🤖 **LLM-Auswahl** — OpenAI, Anthropic, Mistral, DeepSeek, Ollama (lokal), LM Studio, Lemonade …
-- 🛠 **AI-Agenten** — automatisierte Recherche, Web-Browsing, PDF-Erstellung, Code-Ausführung
-- 🔌 **MCP-Kompatibilität** — binde beliebige externe Tools ein
-- 👥 **Multi-User** — Berechtigungen, Workspaces, Audit-Logs (Docker-Version)
-- 🌐 **Mehrsprachig** — Deutsch, Englisch, weitere Sprachen
-- 🎨 **OpenSIN-AI-Branding** — Brand-Blau `#009ee0`, eigene Logo-Platzhalter, deutschsprachiger System-Prompt
-- 🚫 **Keine Telemetrie** — Null Datenverkehr zu Dritten (kein PostHog, kein CDN-Tracking)
-
-### OpenSIN-AI-spezifisch (neu in OpenSIN Chat)
-
-- 🏛 **Politiker-Datenbank** — Bundestag-API + Abgeordnetenwatch als strukturierte Quellen (Stammdaten, Mandate, Votes, Reden) — direkt abfragbar, kein Crawling nötig
-- 📜 **Plenarprotokoll-Suche** — semantische Volltextsuche über Bundestags-Reden mit Vektor-Index (LanceDB); Antworten mit Rede-Kontext und Quellenverweis
-- 🔍 **Deep-Research-Pipeline** — automatisierte Web-Recherche (Search → Extract → Summarize) mit Quellen-Tracking; asynchron via Job-IDs, polling-fähig
-- 📄 **OpenSIN-PDF-Reports** — gebrandete Berichte (Cover, Header, Footer in Brand-Blau `#009ee0`) mit Inhaltsverzeichnis, Quellenliste und Politiker-Bezügen — direkt aus Research-Jobs generierbar
-- 🤖 **Agent-Plugins** — `@politician-search`, `@deep-research`, `@generate-report`, `@orchestrator`, `@pdf-analyze`, `@browser-vision`, `@image-generation`, `@create-files` — direkt im Chat-Workflow aufrufbar (Slash-Commands / Agent-Skill-Whitelist)
-- 🧪 **Umfassende Testabdeckung** — 1.335+ Frontend-Tests, 1.756+ Server-Tests, 500+ Integrationstests; Vitest-Coverage-Thresholds bei 20 % und steigend
-- ⚡ **CI-Optimierung** — Vitest-Tests in 6 parallele Shards aufgeteilt, Jest mit `--experimental-vm-modules`, zentraler `getStoragePath()`-Helper
-- 🔄 **SWR-Datenlayer** — Migration manueller `useEffect`-Fetches zu SWR-Hooks für bessere Caching- und Ladeverhalten
-
-## 🇩🇪 OpenSIN-AI-spezifische Features im Detail
-
-OpenSIN Chat erweitert AnythingLLM um politisch zugeschnittene Module. Sie sind als eigenständige Server-Utilities unter `server/utils/` implementiert und über geschützte REST-Endpunkte (`validApiKey`-Middleware) ansprechbar.
-
-### 🏛 Modul 1 — Politiker-Datenbank
-
-**Code:** [`server/utils/politician/`](./server/utils/politician/)
-
-Strukturierte Anbindung an zwei offizielle deutsche Parlamentsdaten-Quellen:
-
-| Datei | Aufgabe |
-|---|---|
-| `bundestagApi.js` | Anbindung an die offizielle Bundestag-Open-Data-API (Stammdaten, Mandate, Abstimmungen, Reden) |
-| `abgeordnetenwatchApi.js` | Anbindung an Abgeordnetenwatch (Wahlkreise, Beruf, Ausschüsse, Nebentätigkeiten) |
-| `plenarScraper.js` | Web-Scraper für ältere Plenarprotokolle, die nicht in der API enthalten sind |
-| `vectorStore.js` | LanceDB-basierter Vektor-Index für semantische Suche über Reden |
-| `embedder.js` | Embedding-Worker (chunkt und vektorisiert Plenarprotokolle) |
-| `index.js` | Public API: `PoliticianDB` Klasse mit `getPolitician`, `search`, `getVotes`, `getSpeeches`, `getMandates`, `speechSearch` |
-
-**REST-Endpoints:** `/api/politician/*`
-
-```
-GET /api/politician/search?q=…&party=…&state=…&source=…
-GET /api/politician/speech-search?q=…&source=…   ← semantische Suche über Reden
-GET /api/politician/sources          ← verfügbare Datenquellen + Anzahl
-GET /api/politician/sync/status      ← letzter Sync-Lauf + Status pro Quelle
-GET /api/politician/parties
-GET /api/politician/states
-GET /api/politician/stats
-GET /api/politician/:id
-GET /api/politician/:id/votes
-GET /api/politician/:id/speeches?source=…
-GET /api/politician/:id/mandates
-```
-
-> **Datenquellen:** Spezifikationen, Rate-Limits und Schema-Mapping der externen
-> APIs sind in [`docs/DATA-SOURCES.md`](./docs/DATA-SOURCES.md) dokumentiert.
-> Vollständige API-Referenz: [`docs/API.md`](./docs/API.md).
-
-**Use-Cases:**
-
-- **Abgeordneten-Dossier** — alle Mandate, Ausschüsse, Reden und Abstimmungen eines MdB auf Knopfdruck
-- **Wahlkreis-Vergleich** — filtern nach Bundesland, Fraktion, Wahlperiode
-- **Reden-Analyse** — semantische Suche: „Wer hat im Bundestag 2024 über die Energiepolitik der Bundesregierung gesprochen?"
-- **Abstimmungs-Tracking** — wie hat ein MdB zu einem konkreten Gesetz abgestimmt?
+<!-- HERO BANNER (custom SVG, dual-mode) -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/hero-banner.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="./assets/hero-banner-light.svg" />
+  <img src="./assets/hero-banner.svg" alt="OpenSIN Chat" />
+</picture>
 
 ---
 
-### 🔍 Modul 2 — Deep-Research-Pipeline
+OpenSIN Chat is a **self-hosted AI platform** for political work, research, and knowledge management. Upload your documents (Bundestag papers, press releases, legislation drafts) and the AI answers questions **only from your sources**, with traceable citations. No hallucinations from thin air, no cloud dependency, zero telemetry.
 
-**Code:** [`server/utils/research/`](./server/utils/research/)
+Built on [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) (MIT) as a sovereign variant under the [OpenSIN-AI](https://github.com/OpenSIN-AI) brand — optimized for the German political sphere.
 
-Asynchrone Recherche-Pipeline mit drei klaren Stufen:
-
-| Datei | Aufgabe |
-|---|---|
-| `webSearchEngine.js` | SerpAPI / SearXNG / Bing-Such-Provider (modular) |
-| `contentExtractor.js` | Article-Extractor (Mozilla Readability) — holt Volltext aus Suchergebnissen |
-| `summarizer.js` | LLM-gestützte Zusammenfassung mit Quellen-Attribution |
-| `index.js` | Orchestrator: `ResearchPipeline` mit `start`, `getStatus`, `getResults`; Job-Verwaltung in-memory |
-
-**REST-Endpoints:** `/api/research/*`
-
-```
-POST /api/research/start      ← { query, sources, maxResults } → { jobId }
-GET  /api/research/list
-GET  /api/research/:id         ← Status (pending | running | completed | failed)
-GET  /api/research/:id/result  ← Vollständige Ergebnisse (Summary + Quellen + Extrahiertes)
-```
-
-**Use-Cases:**
-
-- **Faktencheck** — Pipeline verifiziert eine Behauptung gegen mehrere Web-Quellen
-- **Hintergrund-Recherche** — „Recherchiere alles zu Drucksache 20/12345"
-- **Politiker-Profil-Vorbereitung** — sammle aktuelle Aussagen und Positionen aus Medien
-- **Pressemitteilungs-Vorbereitung** — Belege und Quellen für ein neues Pressestatement
-
----
-
-### 📄 Modul 3 — OpenSIN-PDF-Reports
-
-**Code:** [`server/utils/reports/`](./server/utils/reports/)
-
-Generiert aus Research-Ergebnissen oder manuellen Daten ein druckfertiges PDF im OpenSIN-Corporate-Design.
-
-| Datei | Aufgabe |
-|---|---|
-| `index.js` | `ReportGenerator` Klasse (PDFKit-basiert) mit Cover-Page, Inhaltsverzeichnis, mehreren Inhalts-Sektionen, Quellenliste, Header/Footer in OpenSIN-Blau |
-
-**REST-Endpoints:** `/api/reports/*`
-
-```
-POST /api/reports/generate   ← { title, query, summary, researchJobId? } → { fileName, url }
-GET  /api/reports/list
-GET  /api/reports/:fileName  ← Download
-```
-
-**Design-Tokens:**
-
-- Primärfarbe: `#009ee0` (OpenSIN-Blau) — Header, Footer, Akzente
-- Schrift: DejaVu Sans (vollständiger UTF-8- und Umlaut-Support)
-- Layout: A4, 25 mm Margins, automatisches Inhaltsverzeichnis
-- Output: `server/storage/generated-reports/*.pdf`
-
-**Use-Cases:**
-
-- **Pressemitteilungen** — druckfertige 1–2-Seiten-PDFs aus Research-Ergebnissen
-- **Abgeordneten-Dossier** — Bürgeranfragen mit kompaktem Profil + Quellen
-- **Faktencheck-Berichte** — neutrale Aufbereitung für Social-Media oder Veranstaltungen
-- **Interne Papiere** — Vorlagen für Fraktionssitzungen, AGs, Kreisverbände
-
----
-
-### 🤖 Modul 4 — Agent-Plugins
-
-**Code:** [`server/utils/agents/`](./server/utils/agents/) und [`server/utils/agentFlows/`](./server/utils/agentFlows/) (Flow-Ausführung), [`server/utils/orchestrator/`](./server/utils/orchestrator/) (Workflow-Engine)
-
-Die Agent-Plugins sind die **Schnittstelle zwischen Chat und den Modulen oben**. Sie werden im Agent-Framework registriert und sind in jedem Workspace-Chat als Slash-Command verfügbar.
-
-| Plugin | Zweck | Ruft auf |
-|---|---|---|
-| `@politician-search` | Findet Abgeordnete und Reden zu einer Frage | Modul 1 (Politiker-DB) |
-| `@deep-research` | Startet eine asynchrone Research-Pipeline | Modul 2 (Research) |
-| `@generate-report` | Erzeugt PDF aus Research-Job | Modul 3 (Reports) |
-| `@orchestrator` | Verkettet mehrere Agents zu einem Workflow (z. B. Search → Research → Report) | Module 1–3 + Agent-Flows |
-| `@pdf-analyze` | Analysiert PDF-Dokumente mit KI | PDF-Analyse-Pipeline |
-| `@browser-vision` | Lässt Agenten Webseiten visuell analysieren | Browser-Tool |
-| `@image-generation` | Erzeugt Bilder via konfigurierten Provider | Image-Generation-API |
-| `@create-files` | Erstellt Dateien (DOCX, PDF) aus Chat heraus | Datei-Generator |
-
-**REST-Endpoints:** `/api/orchestrator/*`
-
-```
-POST /api/orchestrator/start      ← { goal, steps: [...] } → { workflowId }
-GET  /api/orchestrator/list
-GET  /api/orchestrator/:id
-GET  /api/orchestrator/:id/result
-```
-
-**Use-Cases:**
-
-- **One-Shot-Dossier:** `@politician-search Max Mustermann` → `@generate-report` → fertiges PDF
-- **Recherche-zu-PDF:** `@deep-research Energiepolitik 2024` → warten → `@generate-report`
-- **Multi-Step-Workflow:** `@orchestrator` mit Steps `[politician-search, deep-research, generate-report]` als Ein-Klick-Pipeline
-
----
-
-### Architektur-Übersicht
-
-```
-┌──────────────┐    ┌───────────────┐    ┌────────────────┐
-│  Chat-UI     │───▶│  Agent-Plugin │───▶│  Orchestrator  │
-│  (React)     │    │  (× 4)        │    │  (Workflow)    │
-└──────────────┘    └───────────────┘    └────────────────┘
-                            │                     │
-                            ▼                     ▼
-        ┌─────────────┬─────────────┬─────────────────┐
-        │  Politiker  │  Research   │  PDF-Report     │
-        │  -DB        │  -Pipeline  │  -Generator     │
-        │ (Modul 1)   │ (Modul 2)   │ (Modul 3)       │
-        └─────────────┴─────────────┴─────────────────┘
-              │              │              │
-              ▼              ▼              ▼
-        Bundestag-API   SerpAPI/        PDFKit
-        Abgeordneten-   Readability/    OpenSIN-Blau
-        watch-API       LLM             #009ee0
-```
-
-## 🚀 Schnellstart
-
-### Live-Demo
-
-👉 **https://sinchat.delqhi.com** (Cloudflare-Deployment)
-
-### Selbst hosten (Docker)
+## Quick Start
 
 ```bash
 git clone https://github.com/OpenSIN-AI/OpenSIN-Chat.git
 cd OpenSIN-Chat/docker
 cp .env.example .env
-# Optional: .env anpassen (SERVER_PORT, JWT_SECRET, SIG_KEY/SIG_SALT, LLM-Keys)
 docker compose up -d
 ```
 
-Der Container mapped den Host-Port `38471` auf den internen Server-Port `3001`. Öffne danach `http://localhost:38471`.
+The container maps host port `38471` to internal port `3001`. Open `http://localhost:38471` after startup.
 
-### Bare-Metal / Development
+> [!NOTE]
+> For full setup instructions, environment variables, and bare-metal deployment, see [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md).
 
-Siehe [`BARE_METAL.md`](./BARE_METAL.md) und [`DEPLOYMENT_GUIDE.md`](./DEPLOYMENT_GUIDE.md).
+## Features
 
-## 🏗 Architektur
+### Core (inherited from AnythingLLM)
 
-### Production-Flow (Live unter [sinchat.delqhi.com](https://sinchat.delqhi.com))
+- **Document Chat** — PDF, DOCX, TXT, Markdown, web pages, YouTube transcripts
+- **Vector Databases** — LanceDB, Chroma, Pinecone, Qdrant, Milvus, PGVector
+- **12+ LLM Providers** — OpenAI, Anthropic, Mistral, DeepSeek, Ollama (local), LM Studio, Fireworks AI
+- **AI Agents** — automated research, web browsing, PDF creation, code execution
+- **MCP Compatible** — integrate any external tool via Model Context Protocol
+- **Multi-User** — permissions, workspaces, audit logs (Docker edition)
+- **Multilingual** — German, English, and more
+- **Zero Telemetry** — no PostHog, no CDN tracking, no outbound calls to third parties
+
+### OpenSIN-AI Modules (new in OpenSIN Chat)
+
+- **Politician Database** — Bundestag API + Abgeordnetenwatch as structured sources (biographical data, mandates, votes, speeches). Semantic full-text search over plenary protocols via LanceDB vector index
+- **Deep Research Pipeline** — automated web research (Search → Extract → Summarize) with source tracking. Async via job IDs, polling-capable
+- **OpenSIN PDF Reports** — branded reports (cover, header, footer in OpenSIN blue `#009ee0`) with table of contents, source lists, and politician references — generated directly from research jobs
+- **Agent Plugins** — `@politician-search`, `@deep-research`, `@generate-report`, `@orchestrator`, `@pdf-analyze`, `@browser-vision`, `@image-generation`, `@create-files` — callable directly in chat
+- **Fireworks AI Vision** — multimodal image analysis via Fireworks AI models (minimax-m3, kimi-k2p5/6/7, qwen-3p7-plus). Upload images and the AI describes what it sees
+- **3,000+ Tests** — comprehensive frontend (Vitest) and server (Jest) test coverage
+
+## Architecture
 
 ```mermaid
 flowchart TB
-    User(["👤 Browser<br/>https://sinchat.delqhi.com"])
+    User(["Browser<br/>https://sinchat.delqhi.com"])
 
-    subgraph Cloudflare["☁️ Cloudflare Edge (DNS + Tunnel-Broker)"]
-        DNS["DNS-Records<br/>A / CNAME"]
-        Tunnel["Tunnel-Broker<br/>cf-ray, cf-cache-status"]
+    subgraph Cloudflare["Cloudflare Edge (DNS + Tunnel)"]
+        DNS["DNS Records"]
+        Tunnel["Tunnel Broker"]
     end
 
-    subgraph Mac["🍎 Mac (Produktions-Host)"]
-        Cloudflared["cloudflared<br/>(Tunnel-Client)<br/>PID 53989"]
-        Express["Express-Server<br/>server/index.js :3001 (extern :38471)<br/>x-powered-by: Express"]
-        Collector["Collector<br/>:8888<br/>(Document-Parsing, OCR)"]
-        Frontend["frontend/dist/<br/>(statische Files<br/>nach server/public/ kopiert)"]
+    subgraph Host["Production Host"]
+        Cloudflared["cloudflared<br/>(Tunnel Client)"]
+        Express["Express Server<br/>:3001 (extern :38471)"]
+        Collector["Collector<br/>:8888<br/>(Document Parsing, OCR)"]
+        Frontend["frontend/dist/<br/>(Static Files)"]
     end
 
-    subgraph Data["💾 Persistenz (lokal auf Mac)"]
+    subgraph Data["Persistence (local)"]
         SQLite[("server/storage/<br/>opensin.db<br/>(Prisma + SQLite)")]
         Files[("server/storage/<br/>uploads/, vectors/")]
     end
 
     User -->|HTTPS| DNS
     DNS --> Tunnel
-    Tunnel <-->|Outbound-Tunnel<br/>kein offener Port!| Cloudflared
+    Tunnel <-->|Outbound Tunnel| Cloudflared
     Cloudflared -->|localhost:38471| Express
     Express -->|"/api/*"| Express
-    Express -->|"/"| IndexPage["IndexPage.generate()<br/>(HTML serverseitig)"]
-    Express -->|"express.static()"| Frontend
-    Express -->|HTTP| Collector
+    Express -->|"/"| Frontend
     Express <--> SQLite
     Express <--> Files
 
@@ -284,171 +113,104 @@ flowchart TB
     classDef mac fill:#e3f2fd,stroke:#1976d2,color:#000
     classDef data fill:#f3e5f5,stroke:#7b1fa2,color:#000
     class DNS,Tunnel cloud
-    class Cloudflared,Express,Collector,Frontend,IndexPage mac
+    class Cloudflared,Express,Collector,Frontend mac
     class SQLite,Files data
 ```
 
-**Was passiert konkret:**
-
-| Schicht | Wo | Was |
-|---|---|---|
-| 1. Browser | Welt | HTTPS-Request auf `https://sinchat.delqhi.com` |
-| 2. Cloudflare DNS | Cloudflare-Edge | Löst Domain zu Tunnel-Broker auf (`cf-ray`, `cf-cache-status` Header) |
-| 3. `cloudflared` | **Dein Mac** (PID 53989) | Outbound-Tunnel zurück zum Cloudflare-Broker — **kein offener Port nötig!** |
-| 4. Express | **Dein Mac** (`:3001` / extern `:38471`) | Single-Process: rendert HTML, liefert API, serviert Static |
-| 5. Frontend-Bundle | `server/public/` | Output von `cd frontend && yarn build`, vor Server-Start kopiert |
-| 6. Collector | **Dein Mac** (`:8888`) | Separater Prozess für PDF-Parsing, OCR, Document-Ingestion |
-| 7. Persistenz | `server/storage/` | SQLite + Vektor-Indizes + User-Uploads (alles lokal) |
-
-> **Kritisch:** Der Mac ist der **Produktions-Host**. Geht er aus oder schläft, ist die App offline. Cloudflare ist nur der Tunnel-Entry — keine Compute, kein Storage.
-
-### Repo-Struktur
+### Repo Structure
 
 ```
 OpenSIN-Chat/
-├── frontend/      # Vite + React (UI) — yarn build → dist/ wird nach server/public/ kopiert
-├── server/        # Node.js Express (API, Vektor-DB, Auth, HTML-Rendering)
+├── frontend/          Vite + React 18 + TypeScript + Tailwind + i18next
+├── server/            Node.js + Express + Prisma + SQLite/Postgres
 │   └── utils/
-│       ├── politician/   # 🆕 Modul 1 — Politiker-DB (Bundestag + Abgeordnetenwatch)
-│       ├── research/     # 🆕 Modul 2 — Deep-Research-Pipeline
-│       ├── reports/      # 🆕 Modul 3 — OpenSIN-PDF-Reports
-│       ├── orchestrator/ # 🆕 Modul 4a — Workflow-Engine für Agent-Plugins
-│       ├── agents/       # 🆕 Modul 4b — Agent-Definitionen (@politician-search, …)
-│       └── agentFlows/   # 🆕 Modul 4c — Agent-Flow-Ausführung
-├── collector/     # Node.js Express (Document-Parsing, OCR)
-├── docker/        # Dockerfiles, docker-compose (für Self-Hosting)
-├── cloud-deployments/   # AWS, GCP, DigitalOcean, K8s, Helm (für Cloud-Self-Hosting)
-├── tests/         # Vitest-Integrationstests für Server-Endpunkte
-├── docs/          # Doku
-└── .cloudflared/  # (lokal, nicht im Repo) cloudflared-Config für sinchat.delqhi.com-Tunnel
+│       ├── politician/    Politician DB (Bundestag + Abgeordnetenwatch)
+│       ├── research/      Deep Research Pipeline
+│       ├── reports/       PDF Report Generator
+│       ├── orchestrator/  Workflow Engine for Agent Plugins
+│       └── agents/        Agent Definitions
+├── collector/         Python service for document ingestion and OCR
+├── docker/            Docker / Compose setup
+├── cloud-deployments/ AWS, GCP, Azure, DO, Helm, OpenShift stubs
+├── tests/             E2E and integration tests
+└── docs/              Architecture, ADRs, plans, runbooks
 ```
-
-## 🔒 Sicherheit & Datenschutz
-
-- **Null Telemetrie** — `DISABLE_TELEMETRY=true` ist der Default; keine Outbound-Calls zu PostHog, OpenSIN Team-CDN oder Drittanbietern
-- **DSGVO-affin** — alle Daten bleiben auf deiner Infrastruktur
-- **Keine externen LLM-Pflichten** — du kannst komplett offline mit Ollama oder LM Studio arbeiten
-- **Selbstsignierte JWT-Secrets** — keine Backdoors
-- **Audit-Logs** — alle User-Aktionen nachvollziehbar
-
-Mehr in [`SECURITY.md`](./SECURITY.md).
-
-## 🤝 Mitwirken
-
-Beiträge sind willkommen — siehe [`CONTRIBUTING.md`](./CONTRIBUTING.md). Code-Conventions, Branching-Strategie, Commit-Format sind dort beschrieben.
-
-## 📚 Dokumentation
-
-- **In-App-Entwicklerdoku:** Im laufenden Frontend unter `/docs` erreichbar (Benutzer-Handbuch, API-Referenz, Architektur, Deployment-Runbooks). Der Content wird automatisch aus dem [`docs/`](./docs/)-Ordner bei `npm run dev`/`npm run build` synchronisiert.
-- **Quell-Dokumentation:** Alle Markdown-Dateien im [`docs/`](./docs/)-Ordner sind die Single-Source-of-Truth für die In-App-Doku.
-- **Architektur-Entscheidungen:** ADRs liegen unter [`docs/adr/`](./docs/adr/).
-
-## 📜 Lizenz
-
-**MIT** — siehe [`LICENSE`](./LICENSE). Du kannst das Projekt frei nutzen, verändern und weitergeben, solange der Lizenztext erhalten bleibt.
-
-## 🙏 Danksagung — Upstream-Credit
-
-OpenSIN Chat ist ein Community-Fork von **[AnythingLLM](https://github.com/Mintplex-Labs/anything-llm)**, entwickelt von **[Mintplex Labs Inc.](https://github.com/Mintplex-Labs)** unter MIT-Lizenz.
-
-Ohne die hervorragende Arbeit von **Timothy Carambat** und dem gesamten Mintplex-Team, der AnythingLLM-Community und allen Mitwirkenden wäre dieses Projekt nicht möglich gewesen. Wir stehen auf den Schultern von Riesen — und das soll hier ausdrücklich gewürdigt werden.
-
-> *AnythingLLM is a full-stack application that enables you to turn any document, resource, or piece of content into context that any LLM can use as a reference during chatting. Built and maintained by [Mintplex Labs Inc.](https://github.com/Mintplex-Labs) — used here as the foundation for OpenSIN Chat.*
-
-**Was wir von AnythingLLM übernommen haben:**
-
-- Komplette Architektur (Frontend, Server, Collector, Vector-DB-Layer)
-- LLM-, Embedding- und Vektor-Datenbank-Provider-Landschaft
-- Agent-Framework, MCP-Integration, Web-Scraping
-- Sicherheits-, Auth- und Multi-User-Konzept
-- `@mintplex-labs/*` NPM-Pakete (WebSocket, Bree Scheduler, Piper-TTS)
-
-**Was OpenSIN Chat draufsetzt:**
-
-- Komplettes Rebranding (OpenSIN-Blau, deutsche Sprache, eigenes Logo)
-- Telemetrie **komplett** entfernt (statt nur abschaltbar)
-- DSGVO-affine Defaults (kein Phone-Home, kein CDN-Tracking)
-- Branding-Strategie auf einen deutschsprachigen politischen Use-Case
-- 🆕 **Politiker-Datenbank** mit Anbindung an Bundestag-API und Abgeordnetenwatch inkl. semantischer Plenarprotokoll-Suche (Modul 1)
-- 🆕 **Deep-Research-Pipeline** für automatisierte Web-Recherche mit Quellen-Tracking (Modul 2)
-- 🆕 **OpenSIN-PDF-Reports** — gebrandete, druckfertige Berichte aus Research-Jobs (Modul 3)
-- 🆕 **Agent-Plugins** (`@politician-search`, `@deep-research`, `@generate-report`, `@orchestrator`, `@pdf-analyze`, `@browser-vision`, `@image-generation`, `@create-files`) — direkter Zugriff auf die Module aus dem Chat-Workflow (Modul 4)
-- 🆕 **REST-API** unter `/api/politician/*`, `/api/research/*`, `/api/reports/*`, `/api/orchestrator/*` — alle Module sind auch programmatisch nutzbar
-- 🆕 **Test- & CI-Infrastruktur** — Frontend-Sharding, Server-Jest mit VM-Modules, zentraler `getStoragePath()`-Helper
-
-**Upstream synchronisieren:** Wir empfehlen, das Original-Repo als Git-Remote hinzuzufügen, um Sicherheits-Patches mitzuziehen:
-
-```bash
-git remote add upstream https://github.com/Mintplex-Labs/anything-llm.git
-git fetch upstream
-```
-
-Eine vollständige Liste aller Drittanbieter-Komponenten findest du in [`THIRD-PARTY.md`](./THIRD-PARTY.md).
 
 ## Deployment
 
-Die Live-Site läuft als Docker-Container auf einem lokalen Mac, erreichbar über
-Cloudflare Tunnel (`sinchat.delqhi.com` → Cloudflare → cloudflared → localhost:38471).
+### Live Demo
+
+**https://sinchat.delqhi.com** — deployed via Cloudflare Tunnel on a local Mac.
+
+### Docker Self-Hosting
+
+```bash
+cd docker
+cp .env.example .env
+# Configure: SERVER_PORT, JWT_SECRET, SIG_KEY/SIG_SALT, LLM keys
+docker compose up -d
+```
+
+### Bare Metal / Development
+
+See [BARE_METAL.md](./BARE_METAL.md) and [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md).
 
 ### Auto-Deploy
 
-Ein Auto-Deploy-Skript pollt `origin/main` und baut bei Änderung automatisch neu. Einrichtung in [`docs/AUTO-DEPLOY.md`](./docs/AUTO-DEPLOY.md).
+An auto-deploy script polls `origin/main` and rebuilds automatically. Setup in [docs/AUTO-DEPLOY.md](./docs/AUTO-DEPLOY.md).
 
-### Schnelles Frontend-Update (ohne Image-Rebuild)
+### Security Notes
 
-```bash
-cd frontend && npx vite build
-docker cp frontend/dist/. opensin-chat:/app/server/public/
-```
+- **No credentials in the bundle or repo.** Demo/onboarding passwords must never land in the frontend bundle, README, or commits
+- **Secret rotation.** All keys in `.env` (LLM providers, `JWT_SECRET`, `SIG_KEY`/`SIG_SALT`) are deployment-specific (`openssl rand -base64 32`)
+- **Research SSRF protection.** The Deep Research Pipeline blocks private/internal targets by default
+- **Job limits.** `RESEARCH_MAX_ACTIVE_JOBS` (default 3) and `ORCHESTRATOR_MAX_ACTIVE_WORKFLOWS` (default 2) limit concurrent pipelines
 
-Nur nötig bei Dockerfile- oder Dependency-Änderungen:
-```bash
-cd docker && docker compose build --no-cache && docker compose down && docker compose up -d
-```
+See [SECURITY.md](./SECURITY.md) for details.
 
-### Wichtige Regeln
+## Documentation
 
-- **Immer `--no-cache`** beim Docker-Build, sonst bleibt altes Frontend-Bundle im Image.
-- **Vor jedem Deploy:** `lsof -i :38471 -P -n` prüfen — kein rogue `node`-Prozess darf den externen Port blockieren.
-- **Nach Merge-Konflikten:** `rg '<<<<<' frontend/src/` laufen lassen, sonst bricht der Build.
+- **In-app docs:** Available at `/docs` in the running frontend (user manual, API reference, architecture, deployment runbooks)
+- **Source docs:** All Markdown files in [`docs/`](./docs/) are the single source of truth
+- **Architecture decisions:** ADRs in [`docs/adr/`](./docs/adr/)
+- **Data sources:** [`docs/DATA-SOURCES.md`](./docs/DATA-SOURCES.md) — external API specs, rate limits, schema mapping
+- **API reference:** [`docs/API.md`](./docs/API.md)
 
-### Security-Hinweise für Betreiber
+## Contributing
 
-- **Keine Zugangsdaten im Bundle oder Repo.** Demo-/Onboarding-Passwörter dürfen
-  niemals im Frontend-Bundle, im README oder in Commits landen. Falls ein
-  Passwort jemals veröffentlicht wurde, gilt es als kompromittiert und muss
-  sofort geändert werden.
-- **Secrets-Rotation.** Alle Keys in `.env` (LLM-Provider, `JWT_SECRET`,
-  `SIG_KEY`/`SIG_SALT`) sind deployment-spezifisch zu generieren
-  (`openssl rand -base64 32`) und regelmäßig zu rotieren. `.env` ist in
-  `.gitignore`; CI (`ceo-audit.yml`, `secrets-scan.yml`) blockt versehentliche
-  Commits.
-- **Research-SSRF-Schutz.** Die Deep-Research-Pipeline blockt private/interne
-  Ziele standardmäßig (`RESEARCH_ALLOW_PRIVATE_NETWORKS=true` für bewusste
-  VPC-Setups, `RESEARCH_STRICT_SSRF=true` für zusätzliche DNS-Prüfung).
-- **Job-Limits.** `RESEARCH_MAX_ACTIVE_JOBS` (Default 3) und
-  `ORCHESTRATOR_MAX_ACTIVE_WORKFLOWS` (Default 2) begrenzen parallele
-  Pipelines; bei Überschreitung antwortet die API mit HTTP 429.
+1. Fork the repository
+2. Create your branch (`git checkout -b feature/amazing-feature`)
+3. Test your changes (`yarn test` + `yarn test:server`)
+4. Commit and push
+5. Open a Pull Request
 
----
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for details. Code conventions, branching strategy, and commit format are documented there.
 
-<div align="center">
+## License
 
-### 💙 Thank you, Mintplex Labs!
+Distributed under the **MIT License**. See [LICENSE](./LICENSE) for details.
 
-[![Upstream](https://img.shields.io/badge/Upstream-AnythingLLM-009ee0?logo=github)](https://github.com/Mintplex-Labs/anything-llm)
-[![Original Repo](https://img.shields.io/badge/Mintplex--Labs-anything--llm-black?logo=github)](https://github.com/Mintplex-Labs/anything-llm)
-[![MIT License](https://img.shields.io/badge/License-MIT-green)](https://github.com/Mintplex-Labs/anything-llm/blob/master/LICENSE)
-[![Discord (Original)](https://img.shields.io/badge/Discord-Original%20Community-blueviolet?logo=discord)](https://discord.gg/6UyHPeGZAC)
+## Credits
 
-*OpenSIN Chat is a community fork. All credit for the original codebase goes to the Mintplex Labs team and the AnythingLLM contributors.*
+OpenSIN Chat is a community fork of **[AnythingLLM](https://github.com/Mintplex-Labs/anything-llm)**, developed by **[Mintplex Labs Inc.](https://github.com/Mintplex-Labs)** under MIT license.
 
-</div>
+Without the excellent work of **Timothy Carambat** and the entire Mintplex team, the AnythingLLM community, and all contributors, this project would not be possible.
+
+> *AnythingLLM is a full-stack application that enables you to turn any document, resource, or piece of content into context that any LLM can use as reference during chatting. Built and maintained by Mintplex Labs Inc. — used here as the foundation for OpenSIN Chat.*
+
+**What we inherited from AnythingLLM:** complete architecture (frontend, server, collector, vector DB layer), LLM/embedding/vector DB providers, agent framework, MCP integration, web scraping, security/auth/multi-user concept, `@mintplex-labs/*` NPM packages.
+
+**What OpenSIN Chat adds on top:** complete rebranding (OpenSIN blue, German language, custom logo), telemetry fully removed (not just disableable), GDPR-affine defaults, political-use-case branding, Politician Database, Deep Research Pipeline, PDF Reports, Agent Plugins, REST APIs, test & CI infrastructure.
+
+A full list of third-party components is in [THIRD-PARTY.md](./THIRD-PARTY.md).
 
 ---
 
----
-
-<div align="center">
-  <sub>OpenSIN Chat · Sovereigner KI-Arbeitsraum · Selbst gehostet · Keine Telemetrie</sub>
-</div>
+<!-- OpenSIN AI BRANDING FOOTER -->
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/sin-ai-banner.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="./assets/sin-ai-banner-light.svg" />
+    <img src="./assets/sin-ai-banner.svg" alt="OpenSIN AI" />
+  </picture>
+</p>
