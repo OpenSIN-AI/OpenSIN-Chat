@@ -59,9 +59,11 @@ class AnthropicLLM {
   }
 
   log(text, ...args) {
-    const suffix = args.length ? ` ${args
-      .map((a) => (typeof a === "object" ? JSON.stringify(a) : a))
-      .join(" ")}` : "";
+    const suffix = args.length
+      ? ` ${args
+          .map((a) => (typeof a === "object" ? JSON.stringify(a) : a))
+          .join(" ")}`
+      : "";
     logger.info(this.className, `${text}${suffix}`);
   }
 

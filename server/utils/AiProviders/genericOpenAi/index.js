@@ -55,9 +55,11 @@ class GenericOpenAiLLM {
   }
 
   log(text, ...args) {
-    const suffix = args.length ? ` ${args
-      .map((a) => (typeof a === "object" ? JSON.stringify(a) : a))
-      .join(" ")}` : "";
+    const suffix = args.length
+      ? ` ${args
+          .map((a) => (typeof a === "object" ? JSON.stringify(a) : a))
+          .join(" ")}`
+      : "";
     logger.info(this.className, `${text}${suffix}`);
   }
 
@@ -529,25 +531,47 @@ class GenericOpenAiLLM {
       const model = (this.model || "").toLowerCase();
       const VISION_MODEL_PATTERNS = [
         // Fireworks AI models (current pool)
-        "minimax-m3", "minimax-m2p5", "minimax-m2p7",
-        "kimi-k2p5", "kimi-k2p6", "kimi-k2p7",
-        "qwen3p6", "qwen3p7", "qwen-3p6", "qwen-3p7",
+        "minimax-m3",
+        "minimax-m2p5",
+        "minimax-m2p7",
+        "kimi-k2p5",
+        "kimi-k2p6",
+        "kimi-k2p7",
+        "qwen3p6",
+        "qwen3p7",
+        "qwen-3p6",
+        "qwen-3p7",
         "deepseek-v4",
         "glm-5p",
         // OpenAI
-        "gpt-4o", "gpt-4-vision", "gpt-4-turbo",
+        "gpt-4o",
+        "gpt-4-vision",
+        "gpt-4-turbo",
         // Anthropic
-        "claude-3", "claude-sonnet", "claude-opus", "claude-haiku",
+        "claude-3",
+        "claude-sonnet",
+        "claude-opus",
+        "claude-haiku",
         // Google
         "gemini",
         // Meta
-        "llama-3.2", "llama-4",
+        "llama-3.2",
+        "llama-4",
         // Other open-source VLMs
-        "pixtral", "minicpm", "internvl", "llava",
-        "qwen-vl", "qwen2-vl", "qwen2.5-vl",
-        "deepseek-vl", "yi-vl", "cogvlm",
-        "phi-3.5-vision", "phi-3-vision",
-        "molmo", "smolvlm",
+        "pixtral",
+        "minicpm",
+        "internvl",
+        "llava",
+        "qwen-vl",
+        "qwen2-vl",
+        "qwen2.5-vl",
+        "deepseek-vl",
+        "yi-vl",
+        "cogvlm",
+        "phi-3.5-vision",
+        "phi-3-vision",
+        "molmo",
+        "smolvlm",
       ];
       return VISION_MODEL_PATTERNS.some((p) => model.includes(p));
     }

@@ -59,7 +59,6 @@ function filterReasoningToken(token, state) {
       const closeIdx = working.indexOf(CLOSE_TAG);
       if (closeIdx === -1) {
         // Whole remaining chunk is still reasoning — drop it.
-        working = "";
         break;
       }
       // Reasoning ends here; continue scanning the trailing answer text.
@@ -72,7 +71,6 @@ function filterReasoningToken(token, state) {
     if (openIdx === -1) {
       // No (more) reasoning in this token — keep it as answer text.
       emitted += working;
-      working = "";
       break;
     }
     // Text before `<think>` is answer content; everything after the tag is
