@@ -95,7 +95,14 @@ const router = createBrowserRouter([
             await import("@/pages/WorkspaceChat");
           return { element: <PrivateRoute Component={WorkspaceChat} /> };
         },
-        children: [{ path: "t/:threadSlug" }],
+      },
+      {
+        path: "/workspace/:slug/t/:threadSlug",
+        lazy: async () => {
+          const { default: WorkspaceChat } =
+            await import("@/pages/WorkspaceChat");
+          return { element: <PrivateRoute Component={WorkspaceChat} /> };
+        },
       },
       {
         path: "/accept-invite/:code",

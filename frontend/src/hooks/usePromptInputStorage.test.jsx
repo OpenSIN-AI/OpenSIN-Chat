@@ -14,13 +14,10 @@ describe("usePromptInputStorage", () => {
 
   function wrapper({ children }) {
     return (
-      <MemoryRouter initialEntries={["/workspace/ws/thread/t1"]}>
+      <MemoryRouter initialEntries={["/workspace/ws/t/t1"]}>
         <Routes>
           <Route path="/workspace/:slug" element={children} />
-          <Route
-            path="/workspace/:slug/thread/:threadSlug"
-            element={children}
-          />
+          <Route path="/workspace/:slug/t/:threadSlug" element={children} />
         </Routes>
       </MemoryRouter>
     );
