@@ -519,22 +519,26 @@ class GenericOpenAiLLM {
     if (capability === "vision") {
       const model = (this.model || "").toLowerCase();
       const VISION_MODEL_PATTERNS = [
+        // Fireworks AI models (current pool)
+        "minimax-m3", "minimax-m2p5", "minimax-m2p7",
+        "kimi-k2p5", "kimi-k2p6", "kimi-k2p7",
+        "qwen3p6", "qwen3p7", "qwen-3p6", "qwen-3p7",
+        "deepseek-v4",
+        "glm-5p",
+        // OpenAI
         "gpt-4o", "gpt-4-vision", "gpt-4-turbo",
+        // Anthropic
         "claude-3", "claude-sonnet", "claude-opus", "claude-haiku",
-        "gemini", "gemini-pro", "gemini-flash",
+        // Google
+        "gemini",
+        // Meta
         "llama-3.2", "llama-4",
-        "pixtral",
-        "minicpm",
-        "qwen2-vl", "qwen-2-vl", "qwen2.5-vl", "qwen-vl",
-        "internvl",
-        "kimi-k2p7",  // Kimi K2.7 supports vision
-        "deepseek-vl",
-        "yi-vl",
-        "cogvlm",
-        "llava",
+        // Other open-source VLMs
+        "pixtral", "minicpm", "internvl", "llava",
+        "qwen-vl", "qwen2-vl", "qwen2.5-vl",
+        "deepseek-vl", "yi-vl", "cogvlm",
         "phi-3.5-vision", "phi-3-vision",
-        "molmo",
-        "smolvlm",
+        "molmo", "smolvlm",
       ];
       return VISION_MODEL_PATTERNS.some((p) => model.includes(p));
     }

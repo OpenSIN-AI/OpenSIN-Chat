@@ -68,18 +68,23 @@ const websocket = {
             socket.handleClarificationResponse = null;
           });
         }
-        aibitat.onError(async (error) => {
-          let errorMessage =
-            error?.message || "An error occurred while running the agent.";
-          // eslint-disable-next-line no-console
-          console.error(chalk.red(`   error: ${errorMessage}`), error);
-          aibitat.introspect(
-            `Error encountered while running: ${errorMessage}`,
-          );
-          socket.send(
-            JSON.stringify({ type: "wssFailure", content: errorMessage }),
-          );
-          aibitat.terminate();
+        aibitat.onError((error) => {
+          try {
+            let errorMessage =
+              error?.message || "An error occurred while running the agent.";
+            // eslint-disable-next-line no-console
+            console.error(chalk.red(`   error: ${errorMessage}`), error);
+            aibitat.introspect(
+              `Error encountered while running: ${errorMessage}`,
+            );
+            socket.send(
+              JSON.stringify({ type: "wssFailure", content: errorMessage }),
+            );
+            aibitat.terminate();
+          } catch (err) {
+            // eslint-disable-next-line no-console
+            console.error(chalk.red("   error: onError handler failed"), err);
+          }
         });
 
         aibitat.introspect = (messageText) => {

@@ -18,7 +18,7 @@ const EncryptionMgr = new EncryptionManager();
 // ── Connection safety limits ───────────────────────────────────────────────
 const MAX_WS_CONNECTIONS = Number(process.env.AGENT_WS_MAX_CONNECTIONS) || 50;
 const MAX_MESSAGE_BYTES =
-  Number(process.env.AGENT_WS_MAX_MESSAGE_BYTES) || 1_048_576; // 1 MiB
+  Number(process.env.AGENT_WS_MAX_MESSAGE_BYTES) || 10_485_760; // 10 MiB (base64 images)
 const HEARTBEAT_INTERVAL_MS =
   Number(process.env.AGENT_WS_HEARTBEAT_MS) || 30_000;
 const HEARTBEAT_TIMEOUT_MS = HEARTBEAT_INTERVAL_MS * 2;
