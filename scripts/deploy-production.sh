@@ -2,56 +2,45 @@
 set -euo pipefail
 
 # Deploy OpenSIN-Chat to the OCI production VM (sin-supabase).
-# This script is intended to run ON the VM via SSH, not from the agent environment.
-# Example: ssh sin-supabase 'bash -s' < scripts/deploy-production.sh
+# Builds the frontend locally with apple/container (Node 22), then
+# rsyncs dist/ to the server and restarts the Docker container there.
+# No Docker build on the server — only the pre-built static assets
+# are copied into the running container.
+#
+# Usage: ./scripts/deploy-production.sh
 
-REPO_DIR="${HOME}/OpenSIN-Chat"
-COMPOSE_DIR="${REPO_DIR}/docker-opensin"
+REPO_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+SERVER="sin-supabase"
+REMOTE_REPO_DIR="\${HOME}/OpenSIN-Chat"
 HEALTH_URL="http://localhost:38471/api/ping"
 BRANCH="main"
 
-cd "${REPO_DIR}"
+echo "[deploy] Building frontend locally (Node 22 via apple/container)..."
+cd "${REPO_DIR}/frontend"
 
-echo "[deploy] Fetching latest ${BRANCH}..."
-git fetch origin "${BRANCH}"
+# Build inside a Node 22 container using apple/container
+container run --rm \
+  -v "$(pwd):/build" \
+  -w /build \
+  node:22-slim \
+  sh -c "yarn install --frozen-lockfile && yarn build"
 
-# We use checkout with pathspec exclusion instead of reset --hard because
-# server/storage and server/storage-opensin are live runtime volumes mounted into
-# the container. Their files are owned by the container UID, so git cannot
-# overwrite them. Code updates must not touch those directories.
-echo "[deploy] Checking out code updates (excluding runtime storage volumes)..."
-git checkout -f "origin/${BRANCH}" -- . ':!server/storage' ':!server/storage-opensin'
+echo "[deploy] Frontend build complete. dist/ ready."
 
-cd "${COMPOSE_DIR}"
+echo "[deploy] Syncing source + dist to ${SERVER}..."
+ssh "${SERVER}" "cd ${REMOTE_REPO_DIR} && git fetch origin ${BRANCH} && git checkout -f origin/${BRANCH} -- . ':!server/storage' ':!server/storage-opensin'"
 
-# Ensure production port and container name are set in .env so the base
-# docker-compose.yml uses the correct values and no duplicate ports appear.
-if ! grep -qE '^COMPOSE_PORT=' .env; then
-  echo 'COMPOSE_PORT=38471' >> .env
-  echo '[deploy] Added COMPOSE_PORT=38471 to .env'
-fi
-if ! grep -qE '^COMPOSE_CONTAINER_NAME=' .env; then
-  echo 'COMPOSE_CONTAINER_NAME=opensin-app' >> .env
-  echo '[deploy] Added COMPOSE_CONTAINER_NAME=opensin-app to .env'
-fi
+# rsync the freshly built dist into the server's repo
+rsync -az --delete "${REPO_DIR}/frontend/dist/" "${SERVER}:${REMOTE_REPO_DIR}/frontend/dist/"
 
-echo "[deploy] Building production image (no cache)..."
-docker compose -f docker-compose.yml -f docker-compose.production.yml build --no-cache
-
-echo "[deploy] Cleaning up any old production container..."
-docker compose -f docker-compose.yml -f docker-compose.production.yml down 2>/dev/null || true
-docker rm -f opensin-app 2>/dev/null || true
-
-echo "[deploy] Starting/restarting production container..."
-docker compose -f docker-compose.yml -f docker-compose.production.yml up -d
-
-echo "[deploy] Container status:"
-docker compose -f docker-compose.yml -f docker-compose.production.yml ps
+echo "[deploy] Copying dist into running container and restarting..."
+ssh "${SERVER}" "docker cp ${REMOTE_REPO_DIR}/frontend/dist/. opensin-app:/app/server/public/ && docker restart opensin-app"
 
 echo "[deploy] Waiting for health endpoint..."
 for i in {1..30}; do
-  if curl -sS "${HEALTH_URL}" | grep -q '"online":true'; then
-    echo "[deploy] Health check OK: ${HEALTH_URL}"
+  if ssh "${SERVER}" "curl -sS ${HEALTH_URL}" | grep -q '"online":true'; then
+    echo "[deploy] Health check OK"
+    echo "[deploy] Live check: $(curl -sS https://sinchat.delqhi.com/api/ping)"
     exit 0
   fi
   echo "[deploy] Health check pending (${i}/30)..."
