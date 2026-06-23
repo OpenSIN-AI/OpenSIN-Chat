@@ -45,12 +45,12 @@ Built on [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) (MIT) as a
 
 ```bash
 git clone https://github.com/OpenSIN-AI/OpenSIN-Chat.git
-cd OpenSIN-Chat/docker
+cd OpenSIN-Chat/docker-opensin
 cp .env.example .env
 docker compose up -d
 ```
 
-The container maps host port `38471` to internal port `3001`. Open `http://localhost:38471` after startup.
+The container maps host port `43939` to internal port `3001`. Open `http://localhost:43939` after startup.
 
 > [!NOTE]
 > For full setup instructions, environment variables, and bare-metal deployment, see [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md).
@@ -88,7 +88,7 @@ flowchart TB
         Tunnel["Tunnel Broker"]
     end
 
-    subgraph Host["Production Host"]
+    subgraph Host["OCI VM (sin-supabase, 92.5.60.87)"]
         Cloudflared["cloudflared<br/>(Tunnel Client)"]
         Express["Express Server<br/>:3001 (extern :38471)"]
         Collector["Collector<br/>:8888<br/>(Document Parsing, OCR)"]
@@ -130,9 +130,11 @@ OpenSIN-Chat/
 │       ├── orchestrator/  Workflow Engine for Agent Plugins
 │       └── agents/        Agent Definitions
 ├── collector/         Python service for document ingestion and OCR
-├── docker/            Docker / Compose setup
+├── docker/            Original Docker setup (openafd)
+├── docker-opensin/    OpenSIN-Chat Docker / Compose setup
 ├── cloud-deployments/ AWS, GCP, Azure, DO, Helm, OpenShift stubs
 ├── tests/             E2E and integration tests
+├── scripts/           Deploy scripts (deploy-production.sh)
 └── docs/              Architecture, ADRs, plans, runbooks
 ```
 
@@ -140,12 +142,12 @@ OpenSIN-Chat/
 
 ### Live Demo
 
-**https://sinchat.delqhi.com** — deployed via Cloudflare Tunnel on a local Mac.
+**https://sinchat.delqhi.com** — deployed on an OCI VM (`sin-supabase`) via Cloudflare Tunnel.
 
 ### Docker Self-Hosting
 
 ```bash
-cd docker
+cd docker-opensin
 cp .env.example .env
 # Configure: SERVER_PORT, JWT_SECRET, SIG_KEY/SIG_SALT, LLM keys
 docker compose up -d
