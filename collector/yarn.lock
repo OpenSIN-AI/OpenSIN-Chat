@@ -4065,10 +4065,10 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-youtube-transcript-plus@^1.1.2:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/youtube-transcript-plus/-/youtube-transcript-plus-1.2.0.tgz#f5a05a837e4d18e6c3be73be2f70f6c652997a56"
-  integrity sha512-SRjVft8V+vUulMKgakgfzC+pnFLSy4tolX7xGnSvp9juUNocikMFmUx5GlhzLDILzxYrijcYtmNqz0qyklnPmA==
+youtube-transcript-plus@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/youtube-transcript-plus/-/youtube-transcript-plus-2.0.0.tgz#d4f31ce282b6c79492c6111dc1e0d6805735ec65"
+  integrity sha512-n4nnGVV3ZABnvk/sSF+W51c/+P6I23kLwwhOiYeKLeHOGfpjwCUthhoKgQk9dldJEgHCkbyJpuD3vkbBxWqDHA==
 
 youtubei.js@^9.1.0:
   version "9.4.0"
