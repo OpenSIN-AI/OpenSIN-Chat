@@ -106,7 +106,7 @@ const HistoricalMessage = ({
         className={`${isDeleted ? "animate-remove" : ""} flex justify-end w-full group`}
       >
         <div className="py-1 px-4 flex flex-col items-end">
-          <div className="bg-blue-600 light:bg-blue-500 text-white light:text-white rounded-2xl rounded-br-md px-3.5 py-1.5 max-w-[600px] [&_p]:m-0 shadow-sm">
+          <div className="bg-zinc-100 light:bg-slate-100 text-zinc-900 light:text-slate-900 rounded-2xl rounded-br-md px-3.5 py-1.5 max-w-[600px] [&_p]:m-0 shadow-sm border border-zinc-300 light:border-slate-200">
             <TruncatableContent>
               <RenderChatContent
                 role={role}
@@ -323,7 +323,7 @@ function TruncatableContent({ children }: any) {
       <div className="relative">
         <div
           ref={contentRef}
-          className={`text-white light:text-slate-900 ${showTruncation ? "max-h-[250px] overflow-hidden" : ""}`}
+          className={`text-zinc-900 light:text-slate-900 ${showTruncation ? "max-h-[250px] overflow-hidden" : ""}`}
         >
           {children}
         </div>
@@ -354,7 +354,7 @@ const RenderChatContent = memo(
     if (role !== "assistant")
       return (
         <span
-          className="flex flex-col gap-y-0.5 text-white light:text-slate-900"
+          className="flex flex-col gap-y-0.5 text-zinc-900 light:text-slate-900"
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(renderMarkdown(message)),
           }}

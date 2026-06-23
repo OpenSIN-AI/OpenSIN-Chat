@@ -436,10 +436,14 @@ export default forwardRef(function (
             data={compiledRows}
             computeItemKey={computeItemKey}
             itemContent={(index, row) => renderRow(row, index)}
-            followOutput={(atBottom: boolean) => (atBottom ? "auto" : false)}
-            initialTopMostItemIndex={
-              compiledRows.length > 1 ? compiledRows.length - 1 : 0
-            }
+            followOutput={(atBottom: boolean) => {
+              // Only auto-scroll if the user is actually at the bottom.
+              // react-virtuoso passes isAtBottom || scrollingInProgress,
+              // which is true during active scrolling — causing the chat
+              // to jump when the user tries to scroll up. We only follow
+              // when genuinely at bottom AND not actively scrolling.
+              return atBottom && !isStreaming ? "auto" : false;
+            }}
             atBottomStateChange={handleScrollState}
             className="h-full w-full overflow-y-scroll"
             defaultItemHeight={120}
@@ -452,7 +456,7 @@ export default forwardRef(function (
             />
           )}
           {!isAtBottom && (
-            <div className="absolute bottom-4 right-10 z-50 cursor-pointer animate-pulse">
+            <div className="absolute bottom-[130px] right-6 z-30 cursor-pointer">
               <div className="flex flex-col items-center">
                 <div
                   className="p-1 rounded-full border border-white/10 bg-white/10 hover:bg-white/20 hover:text-white light:border-theme-border-primary light:bg-theme-bg-primary light:hover:bg-theme-bg-secondary"

@@ -507,8 +507,39 @@ class GenericOpenAiLLM {
 
     const envKey = CapabilityEnvMap[capability];
     if (!envKey) return false;
-    if (!(envKey in process.env)) return false;
-    return process.env[envKey]?.includes("generic-openai") || false;
+
+    // If the env var is explicitly set, honour it.
+    if (envKey in process.env) {
+      return process.env[envKey]?.includes("generic-openai") || false;
+    }
+
+    // Fallback: auto-detect vision-capable models by model name when the
+    // env var is not set.  This prevents images from being silently
+    // stripped for models that genuinely support vision.
+    if (capability === "vision") {
+      const model = (this.model || "").toLowerCase();
+      const VISION_MODEL_PATTERNS = [
+        "gpt-4o", "gpt-4-vision", "gpt-4-turbo",
+        "claude-3", "claude-sonnet", "claude-opus", "claude-haiku",
+        "gemini", "gemini-pro", "gemini-flash",
+        "llama-3.2", "llama-4",
+        "pixtral",
+        "minicpm",
+        "qwen2-vl", "qwen-2-vl", "qwen2.5-vl", "qwen-vl",
+        "internvl",
+        "kimi-k2p7",  // Kimi K2.7 supports vision
+        "deepseek-vl",
+        "yi-vl",
+        "cogvlm",
+        "llava",
+        "phi-3.5-vision", "phi-3-vision",
+        "molmo",
+        "smolvlm",
+      ];
+      return VISION_MODEL_PATTERNS.some((p) => model.includes(p));
+    }
+
+    return false;
   }
 
   /**
