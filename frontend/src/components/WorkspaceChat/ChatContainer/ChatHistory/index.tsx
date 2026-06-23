@@ -437,12 +437,7 @@ export default forwardRef(function (
             computeItemKey={computeItemKey}
             itemContent={(index, row) => renderRow(row, index)}
             followOutput={(atBottom: boolean) => {
-              // Only auto-scroll if the user is actually at the bottom.
-              // react-virtuoso passes isAtBottom || scrollingInProgress,
-              // which is true during active scrolling — causing the chat
-              // to jump when the user tries to scroll up. We only follow
-              // when genuinely at bottom AND not actively scrolling.
-              return atBottom && !isStreaming ? "auto" : false;
+              return atBottom ? "auto" : false;
             }}
             atBottomStateChange={handleScrollState}
             className="h-full w-full overflow-y-scroll"
