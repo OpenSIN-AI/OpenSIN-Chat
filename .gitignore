@@ -13,6 +13,9 @@ server/.env
 # Common ignores
 node_modules
 .next/
+*.bak
+*.old
+*.tmp
 
 # This is a Yarn project — npm lockfiles must never be committed. They are
 # only generated transiently for `npm audit` (see frontend audit scripts).

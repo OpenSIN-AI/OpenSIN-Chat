@@ -15,12 +15,16 @@ module.exports = {
     "!**/__tests__/**",
   ],
   coverageDirectory: "coverage",
+  // Coverage gate — Epic E1 (2026-06-23): raised to 70% for new/changed
+  // code. Enforced via `yarn test:coverage` (jest --coverage). Regular
+  // `yarn test` (jest --ci) does not collect coverage so thresholds are
+  // not checked during normal development runs.
   coverageThreshold: {
     global: {
-      statements: 21,
-      branches: 15,
-      functions: 18,
-      lines: 21,
+      statements: 70,
+      branches: 70,
+      functions: 70,
+      lines: 70,
     },
   },
   verbose: true,

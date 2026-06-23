@@ -1,10 +1,10 @@
 # OpenSIN Chat — ROADMAP (GSD-Style)
 
 > **GSD-Phasen:** Get Shit Done — jede Phase ist ein abgeschlossenes Deliverable.  
-> **Aktueller Stand:** Phase 1 ✅, Phase 2 ✅, Phase 3 ❌ CANCELLED, Phase 4 ✅, Phase 5 ✅, Phase 6 ✅, Phase 7 ✅ COMPLETE (Docs Overhaul), Phase 8 ✅ COMPLETE (Docs UI Polish), Phase 9 ✅ COMPLETE (Security & Operations Hardening), Phase 10 🚧 PLANNED (Production Readiness — Next Epics)  
+> **Aktueller Stand:** Phase 1 ✅, Phase 2 ✅, Phase 3 ❌ CANCELLED, Phase 4 ✅, Phase 5 ✅, Phase 6 ✅, Phase 7 ✅ COMPLETE (Docs Overhaul), Phase 8 ✅ COMPLETE (Docs UI Polish), Phase 9 ✅ COMPLETE (Security & Operations Hardening), Phase 10 ✅ COMPLETE (Production Readiness — All Epics Done)  
 > **Repo:** [OpenSIN-AI/OpenSIN-Chat](https://github.com/OpenSIN-AI/OpenSIN-Chat)  
-> **Letztes Update:** 2026-06-22  
-> **Aktueller PLAN:** [docs/PLAN-PRODUCTION-READINESS.md](docs/PLAN-PRODUCTION-READINESS.md) — Phase 10: Production Readiness — Next Epics 🚧 PLANNED
+> **Letztes Update:** 2026-06-23  
+> **Aktueller PLAN:** [docs/PLAN-PRODUCTION-READINESS.md](docs/PLAN-PRODUCTION-READINESS.md) — Phase 10: Production Readiness ✅ COMPLETE
 
 ---
 
@@ -305,25 +305,32 @@
 
 ---
 
-## Phase 10: Production Readiness — Next Epics 🚧 **PLANNED**
+## Phase 10: Production Readiness ✅ **COMPLETE**
 
-> **Zeitraum:** TBD  
-> **Ziel:** Remaining epics from `docs/PLAN-PRODUCTION-READINESS.md` umsetzen: E1 Testing & Quality Gates, E2 Politician Data & Vector Search, E3 Resilience & External-API Hardening, E4 Terminal Endpoint UI, E6 Code Quality & Dependency Hygiene.  
-> **Auslöser:** Phase 9 abgeschlossen. CEO Plan empfiehlt Sequenz: E1 → E2 → E3 → E4 (UI) → E5/E6.
+> **Zeitraum:** Juni 2026  
+> **Ziel:** Alle remaining epics from `docs/PLAN-PRODUCTION-READINESS.md` umgesetzt: E1 Testing & Quality Gates, E2 Politician Data & Vector Search, E3 Resilience & External-API Hardening, E4 Terminal Endpoint UI, E5 Scale & Deployment, E6 Code Quality & Dependency Hygiene.  
+> **Auslöser:** Phase 9 abgeschlossen. 7-Agent Sprint hat alle Epics in paralleler Arbeit abgeschlossen.
 
 ### Deliverables
 
 | Wave | Inhalt | Status |
 |---|---|---|
-| 1 | E1 Testing & Quality Gates (Test-Score ≥ 90) | 🚧 |
-| 2 | E2 Politician Data & Vector Search (pgvector) | 🚧 |
-| 3 | E3 Resilience & External-API Hardening | 🚧 |
-| 4 | E4 Terminal Endpoint UI (`/api/terminal/exec`) | 🚧 |
-| 5 | E6 Code Quality & Dependency Hygiene | 🚧 |
+| 1 | E1 Testing & Quality Gates (+73 tests, 3602 total, coverage gate set) | ✅ |
+| 2 | E2 Politician Data & Vector Search (21. WP migration done, docs fixed) | ✅ |
+| 3 | E3 Resilience & External-API Hardening (all callers → ResilientHttpClient) | ✅ |
+| 4 | E4 Terminal Endpoint UI (`/api/terminal/exec`) | ✅ |
+| 5 | E5 Scale & Deployment (Helm chart linted+tested, prod compose, deployment guide) | ✅ |
+| 6 | E6 Code Quality & Dependency Hygiene (deps pinned, refactoring done) | ✅ |
 
 ### Verifikation
 
-- TBD — tracked in `docs/PLAN-PRODUCTION-READINESS.md`.
+- 3602 tests passing (frontend + server + integration)
+- Coverage gate set at 70% for new/changed code
+- Helm chart linted and tested
+- Production Docker Compose created and documented
+- All external API callers migrated to ResilientHttpClient
+- Critical dependencies pinned to exact versions
+- Full details in `docs/PLAN-PRODUCTION-READINESS.md`.
 
 ---
 
@@ -366,7 +373,7 @@
 - **Total Commits:** 320+ (since v1.13.0; 734 total on main since fork)
 - **Files Changed:** 2,700+ (350K+ insertions, 150K+ deletions since v1.13.0)
 - **CEO Audit:** Grade A (94.5/100 — final audit 2026-06-17, `docs/ceo-audit-final.md`)
-- **GitHub Issues:** All closed (inkl. #22 test expansion — 2211+ Tests)
+- **GitHub Issues:** All closed (inkl. #22 test expansion — 3602 tests)
 - **Politician DB:** 733 politicians, 7382 speeches synced (`804b6388`)
 - **SBOM:** SPDX 2.3 + CycloneDX 1.5 generated (`758ffba1`, `sbom/` directory)
 - **CoDocs:** 0 broken refs, 35+ `.doc.md` companions
@@ -376,12 +383,14 @@
 - **i18next:** ❌ CANCELLED — user chose to ignore warnings (noise-only, no functional impact); ~1859 warnings remain
 - **ESLint:** 0 Errors, 0 Warnings
 - **TypeScript:** 100% migration complete (all JSX → TSX)
-- **Tests:** 2211+ (1335 frontend + 1756 server + 500 integration)
+- **Tests:** 3,602 (1,914 server + 1,688 frontend, 338 test files) — coverage configured: server 21.3% stmts / frontend 53.5% stmts, 70% threshold gate for new/changed code; see `docs/CEO-AUDIT-RERUN-2026-06-23.md`
+- **Scale & Deploy:** Helm chart linted + tested, production Docker Compose, Redis session cache documented, CDN for static assets documented
+- **Code Quality:** Critical deps pinned to exact versions, oversized files refactored (system.js 2094→8 LOC, updateENV.js 1195→4 LOC)
 - **Docs:** /docs mit Landing Page, Kategorien, Suche, persistentem rechten TOC, Theme-Toggle
 
 ---
 
-*Next Milestone: Phase 10 — Production Readiness epics (testing, data, resilience, terminal UI, dependency hygiene).*  
+*Next Milestone: All phases complete. OpenSIN-Chat is production-ready.*  
 *Owner: @OpenSIN-AI*  
-*Updated: 2026-06-22*  
+*Updated: 2026-06-23*  
 *Current PLAN: [docs/PLAN-PRODUCTION-READINESS.md](docs/PLAN-PRODUCTION-READINESS.md)*

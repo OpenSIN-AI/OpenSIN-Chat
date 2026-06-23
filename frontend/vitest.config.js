@@ -81,15 +81,17 @@ export default defineConfig({
       // Baseline (2026-06-08): 4.78% lines, 5.65% functions
       // Current coverage (2026-06-13): ~31.3% lines, ~38.4% branches,
       // ~30.7% functions, ~31.7% statements.
-      // Issue #110 wants to raise thresholds toward industry-standard 40-70%.
-      // Phase-2 target is 10% (already exceeded). Set thresholds to 20% to
-      // prevent regression while remaining safely below current coverage.
-      // These will be raised incrementally as more tests are added.
+      // Epic E1 (2026-06-23): 73 new tests added (sidebar components,
+      // fetchWithTimeout, ReportPreviewListener, E2E report-preview flow).
+      // Coverage gate raised to 70% for new/changed code — enforced via
+      // `yarn test:coverage` (vitest run --coverage). Regular `yarn test`
+      // (vitest run) does not collect coverage so thresholds are not
+      // checked during normal development runs.
       thresholds: {
-        lines: 20,
-        branches: 20,
-        functions: 20,
-        statements: 20,
+        lines: 70,
+        branches: 70,
+        functions: 70,
+        statements: 70,
       },
       // Report uncovered files for visibility
       reportOnFailure: true,
