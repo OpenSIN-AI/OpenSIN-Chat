@@ -18,12 +18,25 @@ vi.mock("./ChatHistory/HistoricalMessage/Actions/RenderMetrics", () => ({
 }));
 
 describe("MessageList", () => {
-  it("renders ChatHistory and PromptInput", () => {
-    const { getByTestId } = render(
-      <MessageList chatHistory={[]} workspace={{}} />,
+  it("renders ChatHistory and PromptInput when history exists", () => {
+    const { getByTestId, queryByText } = render(
+      <MessageList
+        chatHistory={[{ uuid: "msg-1", content: "hi" }]}
+        workspace={{}}
+      />,
     );
     expect(getByTestId("metrics")).toBeInTheDocument();
     expect(getByTestId("chat-history")).toBeInTheDocument();
     expect(getByTestId("prompt-input")).toBeInTheDocument();
+    expect(queryByText("chat.history.empty")).not.toBeInTheDocument();
+  });
+
+  it("renders an empty-state message when history is empty", () => {
+    const { getByTestId, getByText, queryByTestId } = render(
+      <MessageList chatHistory={[]} workspace={{}} />,
+    );
+    expect(getByText("chat.history.empty")).toBeInTheDocument();
+    expect(getByTestId("prompt-input")).toBeInTheDocument();
+    expect(queryByTestId("metrics")).not.toBeInTheDocument();
   });
 });

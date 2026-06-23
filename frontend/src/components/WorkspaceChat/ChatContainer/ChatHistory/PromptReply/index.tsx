@@ -146,6 +146,7 @@ function RenderAssistantChatContent({ message, messageId }: any) {
           ref={thoughtChainRef}
           content=""
           messageId={messageId}
+          defaultExpanded={true}
         />
         <div className="flex items-center gap-x-1.5">
           <ThoughtBrainButton

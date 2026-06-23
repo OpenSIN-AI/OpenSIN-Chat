@@ -161,16 +161,29 @@ export function ThoughtBrainButton({
  * Only visible when the expansion state is true (toggled via ThoughtBrainButton).
  */
 export const ThoughtChainComponent = forwardRef(
-  ({ content: initialContent, messageId }: any, ref) => {
+  (
+    { content: initialContent, messageId, defaultExpanded = false }: any,
+    ref,
+  ) => {
     const [content, setContent] = useState(initialContent);
     const [hasReadableContent, setHasReadableContent] = useState(() =>
       contentIsNotEmpty(initialContent),
     );
     const { expanded: persistedExpanded, setExpanded: setPersistedExpanded } =
       useThoughtExpansion(messageId);
-    const [localExpanded, setLocalExpanded] = useState(false as any);
+    const [localExpanded, _setLocalExpanded] = useState(defaultExpanded as any);
+    const [persistInitDone, setPersistInitDone] = useState(false);
 
     const isExpanded = messageId ? persistedExpanded : localExpanded;
+
+    // On first mount, seed the persisted expansion state for this messageId
+    // so streaming thinking content is visible without a manual click.
+    useEffect(() => {
+      if (messageId && defaultExpanded && !persistInitDone) {
+        setPersistedExpanded(true);
+        setPersistInitDone(true);
+      }
+    }, [messageId, defaultExpanded, persistInitDone, setPersistedExpanded]);
 
     useEffect(() => {
       if (initialContent !== content) {

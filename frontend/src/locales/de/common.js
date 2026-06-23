@@ -928,6 +928,7 @@ const TRANSLATIONS = {
       recommend: "Empfohlen 20. ",
       "desc-end":
         "Alles über 45 führt wahrscheinlich zu kontinuierlichen Chat-Ausfällen, abhängig von der Nachrichtengröße.",
+      empty: "Noch keine Nachrichten. Beginnen Sie das Gespräch.",
     },
     prompt: {
       title: "Prompt",

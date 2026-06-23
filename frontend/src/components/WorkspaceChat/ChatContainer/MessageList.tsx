@@ -2,6 +2,7 @@
 import ChatHistory from "./ChatHistory";
 import PromptInput from "./PromptInput";
 import { MetricsProvider } from "./ChatHistory/HistoricalMessage/Actions/RenderMetrics";
+import { useTranslation } from "react-i18next";
 
 /**
  * Chat history with MetricsProvider and PromptInput.
@@ -33,20 +34,31 @@ export default function MessageList({
   handleSubmit,
   files,
 }: MessageListProps) {
+  const { t } = useTranslation();
+  const hasHistory = chatHistory.length > 0;
+
   return (
     <div className="flex flex-col h-full w-full">
       <div className="contents">
-        <MetricsProvider>
-          <ChatHistory
-            ref={chatHistoryRef}
-            history={chatHistory}
-            workspace={workspace}
-            sendCommand={sendCommand}
-            updateHistory={setChatHistory}
-            regenerateAssistantMessage={regenerateAssistantMessage}
-            websocket={websocket}
-          />
-        </MetricsProvider>
+        {hasHistory ? (
+          <MetricsProvider>
+            <ChatHistory
+              ref={chatHistoryRef}
+              history={chatHistory}
+              workspace={workspace}
+              sendCommand={sendCommand}
+              updateHistory={setChatHistory}
+              regenerateAssistantMessage={regenerateAssistantMessage}
+              websocket={websocket}
+            />
+          </MetricsProvider>
+        ) : (
+          <div className="flex-1 flex items-center justify-center px-4">
+            <p className="text-sm text-center text-white/60 light:text-slate-500">
+              {t("chat.history.empty")}
+            </p>
+          </div>
+        )}
         <PromptInput
           workspace={workspace}
           submit={handleSubmit}

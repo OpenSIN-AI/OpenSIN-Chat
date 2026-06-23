@@ -23,9 +23,14 @@ import { copyText } from "@/utils/clipboard";
 const THREAD_CALLOUT_DETAIL_WIDTH: any = 26;
 const DEFAULT_THREAD_NAMES = ["Thread", "New Thread"];
 
-export function threadDisplayName(thread: any): string {
+export function threadDisplayName(
+  thread: any,
+  duplicateNames?: Set<string>,
+): string {
   if (!thread?.name) return "";
-  if (!DEFAULT_THREAD_NAMES.includes(thread.name)) return thread.name;
+  const isDefault = DEFAULT_THREAD_NAMES.includes(thread.name);
+  const needsDisambiguation = isDefault || duplicateNames?.has(thread.name);
+  if (!needsDisambiguation) return thread.name;
   const dateRaw = thread.lastUpdatedAt || thread.createdAt;
   if (!dateRaw) return thread.name;
   const d = new Date(dateRaw);
@@ -52,13 +57,14 @@ function ThreadItem({
   ctrlPressed = false,
   draggable = false,
   folderId = null,
+  duplicateNames = null,
 }: any) {
   const { slug: urlSlug, threadSlug = null } = useParams();
   const { t } = useTranslation();
   const workspaceSlug = workspace?.slug ?? urlSlug;
   const optionsContainer = useRef(null);
   const [showOptions, setShowOptions] = useState(false);
-  const displayName = threadDisplayName(thread);
+  const displayName = threadDisplayName(thread, duplicateNames);
   const linkTo = thread.virtual
     ? paths.workspace.chat(workspaceSlug)
     : !thread.slug
@@ -153,7 +159,7 @@ function ThreadItem({
             aria-current={isActive ? "page" : undefined}
           >
             <p
-              className={`text-left text-sm truncate max-w-[150px] ${
+              className={`text-left text-sm truncate w-full ${
                 isActive
                   ? "font-semibold text-theme-text-primary light:text-blue-900"
                   : "text-theme-text-primary font-medium light:text-slate-800"

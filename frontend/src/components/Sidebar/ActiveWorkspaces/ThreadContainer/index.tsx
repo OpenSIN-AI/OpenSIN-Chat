@@ -6,7 +6,7 @@ import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { FolderSimplePlus } from "@phosphor-icons/react/dist/csr/FolderSimplePlus";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ThreadItem from "./ThreadItem";
 import ThreadFolderItem from "./ThreadFolderItem";
@@ -38,6 +38,20 @@ export default function ThreadContainer({
     isLoading: loading,
     mutate,
   } = useThreads(workspace.slug);
+
+  // Names that appear more than once across all threads need a date/time suffix
+  // so duplicate thread titles remain distinguishable in the sidebar.
+  const duplicateNames = useMemo(() => {
+    const seen = new Set<string>();
+    const duplicates = new Set<string>();
+    for (const thread of threads) {
+      if (!thread?.name) continue;
+      if (seen.has(thread.name)) duplicates.add(thread.name);
+      else seen.add(thread.name);
+    }
+    return duplicates;
+  }, [threads]);
+
   const [ctrlPressed, setCtrlPressed] = useState(false);
   const [activeId, setActiveId] = useState(null);
 
@@ -332,6 +346,7 @@ export default function ThreadContainer({
               onRemoveThread={removeThread}
               onFolderDeleted={handleFolderDeleted}
               onFolderRenamed={handleFolderRenamed}
+              duplicateNames={duplicateNames}
             />
           );
         })}
@@ -349,6 +364,7 @@ export default function ThreadContainer({
               thread={thread}
               hasNext={i !== unfolderedThreads.length - 1 || showVirtualThread}
               draggable
+              duplicateNames={duplicateNames}
             />
           ))}
         </UnfolderedDropZone>

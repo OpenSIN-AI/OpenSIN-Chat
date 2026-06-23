@@ -1360,6 +1360,7 @@ const TRANSLATIONS = {
       recommend: "Recommend 20. ",
       "desc-end":
         "Anything more than 45 is likely to lead to continuous chat failures depending on message size.",
+      empty: "No messages yet. Start the conversation.",
     },
     prompt: {
       title: "System Prompt",

@@ -147,6 +147,7 @@ export default function ThreadFolderItem({
   onRemoveThread,
   onFolderDeleted,
   onFolderRenamed,
+  duplicateNames = null,
 }: any) {
   const { threadSlug = null } = useParams();
   const { t } = useTranslation();
@@ -345,6 +346,7 @@ export default function ThreadFolderItem({
                 thread={thread}
                 hasNext={i !== threads.length - 1}
                 draggable
+                duplicateNames={duplicateNames}
               />
             ))
           )}
