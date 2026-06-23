@@ -48,7 +48,7 @@ function WorkspaceChatLayout() {
 }
 
 function ShowWorkspaceChat() {
-  const { slug } = useParams();
+  const { slug, threadSlug } = useParams();
   const {
     workspace: rawWorkspace,
     suggestedMessages,
@@ -93,6 +93,7 @@ function ShowWorkspaceChat() {
     <WorkspaceChatContainer
       loading={loadedSlug !== slug}
       workspace={workspace}
+      threadSlug={threadSlug}
     />
   );
 }

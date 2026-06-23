@@ -23,10 +23,15 @@ import { copyText } from "@/utils/clipboard";
 import useChatHistory from "@/hooks/useChatHistory";
 import ErrorBoundaryFallback from "@/components/ErrorBoundaryFallback";
 
-export default function WorkspaceChat({ loading, workspace }: any) {
+export default function WorkspaceChat({
+  loading,
+  workspace,
+  threadSlug: threadSlugProp = null,
+}: any) {
   useWatchForAutoPlayAssistantTTSResponse();
   const { t } = useTranslation();
-  const { threadSlug = null } = useParams();
+  const { threadSlug: threadSlugParam = null } = useParams();
+  const threadSlug = threadSlugProp ?? threadSlugParam;
   const { history, isLoading: historyLoading } = useChatHistory(
     workspace?.slug,
     threadSlug,
