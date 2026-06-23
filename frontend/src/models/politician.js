@@ -105,10 +105,10 @@ const Politician = {
    */
   searchSpeeches: async function (query, opts = {}) {
     try {
-      const params = new URLSearchParams({ query });
+      const params = new URLSearchParams({ q: query });
       if (opts.party) params.set("party", opts.party);
       if (opts.source) params.set("source", opts.source);
-      if (opts.limit) params.set("limit", String(opts.limit));
+      if (opts.limit) params.set("topN", String(opts.limit));
       const res = await fetch(
         `${API_BASE}/politician/speech-search?${params}`,
         { headers: baseHeaders() },
