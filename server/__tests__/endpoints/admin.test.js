@@ -159,9 +159,11 @@ describe("adminEndpoints", () => {
       User.get.mockResolvedValue({ id: 2, username: "user1" });
       User.delete.mockResolvedValue();
       BrowserExtensionApiKey.deleteAllForUser.mockResolvedValue();
+      ApiKey.deleteAllForUser.mockResolvedValue();
       const res = await app.call("delete", "/admin/user/2");
       expect(res.statusCode).toBe(200);
       expect(res.body.success).toBe(true);
+      expect(ApiKey.deleteAllForUser).toHaveBeenCalledWith(2);
     });
 
     it("returns 500 on error", async () => {

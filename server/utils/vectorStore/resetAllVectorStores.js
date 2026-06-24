@@ -28,8 +28,10 @@ async function resetAllVectorStores({ vectorDbKey }) {
       reason: "System vector configuration changed",
     });
 
-    // eslint-disable-next-line no-console
-    consoleLogger.log("Resetting openafd managed vector namespaces for", vectorDbKey);
+    consoleLogger.log(
+      "Resetting openafd managed vector namespaces for",
+      vectorDbKey,
+    );
     const VectorDb = getVectorDbClass(vectorDbKey);
 
     if (vectorDbKey === "pgvector") {
@@ -45,7 +47,6 @@ async function resetAllVectorStores({ vectorDbKey }) {
         try {
           await VectorDb["delete-namespace"]({ namespace: workspace.slug });
         } catch (e) {
-          // eslint-disable-next-line no-console
           consoleLogger.error(e.message);
         }
       }
@@ -53,7 +54,6 @@ async function resetAllVectorStores({ vectorDbKey }) {
 
     return true;
   } catch (error) {
-    // eslint-disable-next-line no-console
     consoleLogger.error("Failed to reset vector stores:", error);
     return false;
   }

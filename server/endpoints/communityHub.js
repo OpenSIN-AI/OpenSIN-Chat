@@ -34,7 +34,6 @@ function communityHubEndpoints(app) {
         const { connectionKey } = await SystemSettings.hubSettings();
         response.status(200).json({ success: true, connectionKey });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(error);
         response
           .status(500)
@@ -53,7 +52,6 @@ function communityHubEndpoints(app) {
         if (result.error) throw new Error(result.error);
         response.status(200).json({ success: true, error: null });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(error);
         response
           .status(500)
@@ -70,7 +68,6 @@ function communityHubEndpoints(app) {
         const exploreItems = await CommunityHub.fetchExploreItems();
         response.status(200).json({ success: true, result: exploreItems });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(error);
         response.status(500).json({
           success: false,
@@ -92,7 +89,6 @@ function communityHubEndpoints(app) {
           error: null,
         });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(error);
         response.status(500).json({
           success: false,
@@ -139,7 +135,6 @@ function communityHubEndpoints(app) {
 
         response.status(200).json({ success: true, error: null });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(error);
         response
           .status(500)
@@ -185,7 +180,6 @@ function communityHubEndpoints(app) {
 
         response.status(200).json({ success: true, error: null });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(error);
         response.status(500).json({
           success: false,
@@ -204,7 +198,6 @@ function communityHubEndpoints(app) {
         const items = await CommunityHub.fetchUserItems(connectionKey);
         response.status(200).json({ success: true, ...items });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(error);
         response
           .status(500)
@@ -244,7 +237,6 @@ function communityHubEndpoints(app) {
           .status(200)
           .json({ success: true, error: null, item: { id: itemId } });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(error);
         response
           .status(500)

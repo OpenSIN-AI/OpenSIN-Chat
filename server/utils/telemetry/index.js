@@ -7,7 +7,6 @@
 const consoleLogger = require("../logger/console.js");
 
 async function setupTelemetry() {
-  // eslint-disable-next-line no-console
   consoleLogger.log(
     `\x1b[32m[OpenSIN Chat]\x1b[0m Telemetrie dauerhaft deaktiviert — keine Outbound-Calls, keine Drittanbieter.`,
   );

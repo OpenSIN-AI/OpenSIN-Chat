@@ -15,7 +15,6 @@ const WorkspaceUser = {
         ),
       );
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
     }
     return;
@@ -41,7 +40,6 @@ const WorkspaceUser = {
         ),
       );
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
     }
     return;
@@ -54,7 +52,6 @@ const WorkspaceUser = {
       });
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(
         "FAILED TO CREATE WORKSPACE_USER RELATIONSHIP.",
         error.message,
@@ -68,7 +65,6 @@ const WorkspaceUser = {
       const result = await prisma.workspace_users.findFirst({ where: clause });
       return result || null;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return null;
     }
@@ -82,7 +78,6 @@ const WorkspaceUser = {
       });
       return results;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return [];
     }
@@ -93,7 +88,6 @@ const WorkspaceUser = {
       const count = await prisma.workspace_users.count({ where: clause });
       return count;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return 0;
     }
@@ -103,7 +97,6 @@ const WorkspaceUser = {
     try {
       await prisma.workspace_users.deleteMany({ where: clause });
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
     }
     return;

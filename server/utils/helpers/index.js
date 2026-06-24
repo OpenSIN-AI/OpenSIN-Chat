@@ -121,7 +121,6 @@ function getVectorDbClass(getExactly = null) {
       const { PGVector } = require("../vectorDbProviders/pgvector");
       return new PGVector();
     default:
-      // eslint-disable-next-line no-console
       consoleLogger.error(
         `\x1b[31m[ENV ERROR]\x1b[0m No VECTOR_DB value found in environment! Falling back to LanceDB`,
       );
@@ -393,7 +392,6 @@ async function getProviderModelPreference(provider = null) {
     }
     return env ?? null;
   } catch (e) {
-    // eslint-disable-next-line no-console
     consoleLogger.error(
       `getProviderModelPreference error for ${provider}:`,
       e.message,
@@ -462,8 +460,10 @@ function reportEmbeddingProgress(chunksProcessed, totalChunks) {
     try {
       process.send(event);
     } catch (e) {
-      // eslint-disable-next-line no-console
-      consoleLogger.error("reportEmbeddingProgress: process.send failed", e.message);
+      consoleLogger.error(
+        "reportEmbeddingProgress: process.send failed",
+        e.message,
+      );
     }
     return;
   }

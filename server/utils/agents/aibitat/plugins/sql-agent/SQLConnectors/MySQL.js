@@ -72,7 +72,6 @@ class MySQLConnector {
         clearTimeout(timerId);
       }
     } catch (err) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(this.className, err);
       result.error = err.message;
     } finally {

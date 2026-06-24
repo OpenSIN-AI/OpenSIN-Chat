@@ -94,7 +94,6 @@ const ModelRouterRule = {
       });
       return { rule: this._hydrate(rule), error: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return (
         handleUniqueConstraintError(error) || {
@@ -112,7 +111,6 @@ const ModelRouterRule = {
       });
       return this._hydrate(rule);
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return null;
     }
@@ -127,7 +125,6 @@ const ModelRouterRule = {
       });
       return results.map((r) => this._hydrate(r));
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return [];
     }
@@ -203,7 +200,6 @@ const ModelRouterRule = {
       });
       return { rule: this._hydrate(rule), error: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return (
         handleUniqueConstraintError(error) || {
@@ -222,7 +218,6 @@ const ModelRouterRule = {
       });
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return false;
     }
@@ -244,7 +239,6 @@ const ModelRouterRule = {
       );
       return { success: true, error: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return { success: false, error: error.message };
     }

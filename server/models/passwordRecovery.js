@@ -16,7 +16,6 @@ const RecoveryCode = {
       });
       return { recoveryCode, error: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("FAILED TO CREATE RECOVERY CODE.", error.message);
       return { recoveryCode: null, error: error.message };
     }
@@ -30,7 +29,6 @@ const RecoveryCode = {
       );
       return { recoveryCodes, error: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("FAILED TO CREATE RECOVERY CODES.", error.message);
       return { recoveryCodes: null, error: error.message };
     }
@@ -42,7 +40,6 @@ const RecoveryCode = {
       });
       return recoveryCode;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("FAILED TO FIND RECOVERY CODE.", error.message);
       return null;
     }
@@ -54,9 +51,8 @@ const RecoveryCode = {
       });
       return recoveryCodes;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("FAILED TO FIND RECOVERY CODES.", error.message);
-      return null;
+      return [];
     }
   },
   deleteMany: async function (clause = {}) {
@@ -64,7 +60,6 @@ const RecoveryCode = {
       await prisma.recovery_codes.deleteMany({ where: clause });
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("FAILED TO DELETE RECOVERY CODES.", error.message);
       return false;
     }
@@ -91,8 +86,10 @@ const PasswordResetToken = {
       });
       return { passwordResetToken, error: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
-      consoleLogger.error("FAILED TO CREATE PASSWORD RESET TOKEN.", error.message);
+      consoleLogger.error(
+        "FAILED TO CREATE PASSWORD RESET TOKEN.",
+        error.message,
+      );
       return { passwordResetToken: null, error: error.message };
     }
   },
@@ -103,8 +100,10 @@ const PasswordResetToken = {
       });
       return passwordResetToken;
     } catch (error) {
-      // eslint-disable-next-line no-console
-      consoleLogger.error("FAILED TO FIND PASSWORD RESET TOKEN.", error.message);
+      consoleLogger.error(
+        "FAILED TO FIND PASSWORD RESET TOKEN.",
+        error.message,
+      );
       return null;
     }
   },
@@ -113,8 +112,10 @@ const PasswordResetToken = {
       await prisma.password_reset_tokens.deleteMany({ where: clause });
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
-      consoleLogger.error("FAILED TO DELETE PASSWORD RESET TOKEN.", error.message);
+      consoleLogger.error(
+        "FAILED TO DELETE PASSWORD RESET TOKEN.",
+        error.message,
+      );
       return false;
     }
   },
@@ -143,8 +144,10 @@ const PasswordResetToken = {
       });
       return { count: result.count, userId: record.user_id };
     } catch (error) {
-      // eslint-disable-next-line no-console
-      consoleLogger.error("FAILED TO CLAIM PASSWORD RESET TOKEN.", error.message);
+      consoleLogger.error(
+        "FAILED TO CLAIM PASSWORD RESET TOKEN.",
+        error.message,
+      );
       return { count: 0, userId: null };
     }
   },

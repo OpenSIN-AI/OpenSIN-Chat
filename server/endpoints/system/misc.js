@@ -42,7 +42,6 @@ function miscEndpoints(app) {
         );
         return response.status(200).json({ success: true, text });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("STT transcription error:", error);
         return response.status(500).json({
           success: false,
@@ -79,7 +78,6 @@ function miscEndpoints(app) {
 
         response.status(200).json(result);
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("SQL validation error:", error);
         response.status(500).json({
           success: false,

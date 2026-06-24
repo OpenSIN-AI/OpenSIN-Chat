@@ -97,7 +97,6 @@ module.exports.SqlAgentListTables = {
 
               return JSON.stringify(result);
             } catch (e) {
-              // eslint-disable-next-line no-console
               consoleLogger.error(e);
               return e.message;
             }

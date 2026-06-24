@@ -8,7 +8,10 @@ const { User } = require("../../../models/user");
 const { Workspace } = require("../../../models/workspace");
 const { WorkspaceChats } = require("../../../models/workspaceChats");
 const { WorkspaceUser } = require("../../../models/workspaceUsers");
-const { BrowserExtensionApiKey } = require("../../../models/browserExtensionApiKey");
+const {
+  BrowserExtensionApiKey,
+} = require("../../../models/browserExtensionApiKey");
+const { ApiKey } = require("../../../models/apiKeys");
 const {
   canModifyAdmin,
   validCanModify,
@@ -85,7 +88,6 @@ function apiAdminEndpoints(app) {
       const users = await User.where();
       response.status(200).json({ users });
     } catch (e) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(e);
       response.sendStatus(500);
     }
@@ -167,7 +169,6 @@ function apiAdminEndpoints(app) {
         }
         response.status(newUser ? 200 : 400).json({ user: newUser, error });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -238,9 +239,7 @@ function apiAdminEndpoints(app) {
 
         const canModify = validCanModify(currUser, user);
         if (!canModify.valid) {
-          response
-            .status(200)
-            .json({ success: false, error: canModify.error });
+          response.status(200).json({ success: false, error: canModify.error });
           return;
         }
 
@@ -263,7 +262,6 @@ function apiAdminEndpoints(app) {
         const { success, error } = await User.update(id, updates);
         response.status(200).json({ success, error });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -325,9 +323,7 @@ function apiAdminEndpoints(app) {
           : null;
         const canModify = validCanModify(currUser, user);
         if (!canModify.valid) {
-          response
-            .status(200)
-            .json({ success: false, error: canModify.error });
+          response.status(200).json({ success: false, error: canModify.error });
           return;
         }
 
@@ -340,6 +336,7 @@ function apiAdminEndpoints(app) {
         }
 
         await BrowserExtensionApiKey.deleteAllForUser(Number(id));
+        await ApiKey.deleteAllForUser(Number(id));
         await User.delete({ id: user.id });
         await EventLogs.logEvent(
           "user_deleted",
@@ -351,7 +348,6 @@ function apiAdminEndpoints(app) {
         );
         response.status(200).json({ success: true, error: null });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -402,7 +398,6 @@ function apiAdminEndpoints(app) {
         const invites = await Invite.whereWithUsers();
         response.status(200).json({ invites });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -477,7 +472,6 @@ function apiAdminEndpoints(app) {
         }
         response.status(200).json({ invite, error });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -534,7 +528,6 @@ function apiAdminEndpoints(app) {
         );
         response.status(200).json({ success, error });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -590,7 +583,6 @@ function apiAdminEndpoints(app) {
 
         response.status(200).json({ users });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -658,7 +650,6 @@ function apiAdminEndpoints(app) {
         );
         response.status(200).json({ success, error });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -784,7 +775,6 @@ function apiAdminEndpoints(app) {
           users: await Workspace.workspaceUsers(workspace.id),
         });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -841,7 +831,6 @@ function apiAdminEndpoints(app) {
         const hasPages = (await WorkspaceChats.count()) > (offset + 1) * pgSize;
         response.status(200).json({ chats: chats, hasPages });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -898,7 +887,6 @@ function apiAdminEndpoints(app) {
         const { success, error } = await SystemSettings.updateSettings(updates);
         response.status(200).json({ success, error });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }

@@ -90,7 +90,6 @@ function apiOpenAICompatibleEndpoints(app) {
           data,
         });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         openAIError(response, 500, "Internal server error", "server_error");
       }
@@ -129,6 +128,7 @@ function apiOpenAICompatibleEndpoints(app) {
         }
       }
       */
+      let stopHeartbeat = null;
       try {
         const {
           model,
@@ -161,7 +161,7 @@ function apiOpenAICompatibleEndpoints(app) {
 
         const systemPrompt =
           messages.find((chat) => chat.role === "system")?.content ?? null;
-        const history = messages.filter((chat) => chat.role !== "system") ?? [];
+        const history = messages.filter((chat) => chat.role !== "system");
 
         if (!stream) {
           const chatResult = await OpenAICompatibleChat.chatSync({
@@ -179,6 +179,7 @@ function apiOpenAICompatibleEndpoints(app) {
             Embedder: process.env.EMBEDDING_ENGINE || "inherit",
             VectorDbSelection: process.env.VECTOR_DB || "lancedb",
             TTSSelection: process.env.TTS_PROVIDER || "native",
+            LLMModel: getModelTag(),
           });
           await EventLogs.logEvent("api_sent_chat", {
             workspaceName: workspace?.name,
@@ -192,7 +193,7 @@ function apiOpenAICompatibleEndpoints(app) {
         response.setHeader("Connection", "keep-alive");
         response.flushHeaders();
 
-        const stopHeartbeat = startSSEHeartbeat(response);
+        stopHeartbeat = startSSEHeartbeat(response);
 
         await OpenAICompatibleChat.streamChat({
           workspace,
@@ -204,8 +205,10 @@ function apiOpenAICompatibleEndpoints(app) {
           response,
         });
         stopHeartbeat();
+        stopHeartbeat = null;
         await Telemetry.sendTelemetry("sent_chat", {
-          LLMSelection: process.env.LLM_PROVIDER || "openai",
+          LLMSelection:
+            workspace.chatProvider ?? process.env.LLM_PROVIDER ?? "openai",
           Embedder: process.env.EMBEDDING_ENGINE || "inherit",
           VectorDbSelection: process.env.VECTOR_DB || "lancedb",
           TTSSelection: process.env.TTS_PROVIDER || "native",
@@ -217,7 +220,8 @@ function apiOpenAICompatibleEndpoints(app) {
         });
         response.end();
       } catch (e) {
-        // eslint-disable-next-line no-console
+        if (stopHeartbeat) stopHeartbeat();
+
         consoleLogger.error(e.message, e);
         openAIError(response, 500, "Internal server error", "server_error");
       }
@@ -262,10 +266,24 @@ function apiOpenAICompatibleEndpoints(app) {
 
         if (Array.isArray(input)) {
           if (input.length === 0)
-            throw new Error("Input array cannot be empty.");
+            return openAIError(
+              response,
+              400,
+              "Input array cannot be empty.",
+              "invalid_request_error",
+              "empty_input",
+              "input",
+            );
           const validArray = input.every((text) => typeof text === "string");
           if (!validArray)
-            throw new Error("All inputs to be embedded must be strings.");
+            return openAIError(
+              response,
+              400,
+              "All inputs to be embedded must be strings.",
+              "invalid_request_error",
+              "invalid_input_type",
+              "input",
+            );
         }
 
         const Embedder = getEmbeddingEngineSelection();
@@ -285,7 +303,6 @@ function apiOpenAICompatibleEndpoints(app) {
           model: Embedder.model,
         });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         openAIError(
           response,
@@ -367,7 +384,6 @@ function apiOpenAICompatibleEndpoints(app) {
           has_more: false,
         });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         openAIError(response, 500, "Internal server error", "server_error");
       }

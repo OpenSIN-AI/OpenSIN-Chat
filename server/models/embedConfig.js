@@ -71,7 +71,6 @@ const EmbedConfig = {
       });
       return { embed, message: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return { embed: null, message: error.message };
     }
@@ -97,7 +96,6 @@ const EmbedConfig = {
       });
       return { success: true, error: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return { success: false, error: error.message };
     }
@@ -111,7 +109,6 @@ const EmbedConfig = {
 
       return embedConfig || null;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return null;
     }
@@ -128,7 +125,6 @@ const EmbedConfig = {
 
       return embedConfig || null;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return null;
     }
@@ -141,7 +137,6 @@ const EmbedConfig = {
       });
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return false;
     }
@@ -156,7 +151,6 @@ const EmbedConfig = {
       });
       return results;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return [];
     }
@@ -181,7 +175,6 @@ const EmbedConfig = {
       });
       return results;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return [];
     }
@@ -196,8 +189,9 @@ const EmbedConfig = {
     try {
       return JSON.parse(embed.allowlist_domains);
     } catch {
-      // eslint-disable-next-line no-console
-      consoleLogger.error(`Failed to parse allowlist_domains for Embed ${embed.id}!`);
+      consoleLogger.error(
+        `Failed to parse allowlist_domains for Embed ${embed.id}!`,
+      );
       return [];
     }
   },

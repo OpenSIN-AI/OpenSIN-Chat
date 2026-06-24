@@ -36,7 +36,6 @@ async function validateMemoryOwner(request, response, next) {
 
     next();
   } catch (e) {
-    // eslint-disable-next-line no-console
     consoleLogger.error(e);
     return response.sendStatus(500);
   }
@@ -66,7 +65,6 @@ function memoryEndpoints(app) {
           memories: { global: globalMemories, workspace: workspaceMemories },
         });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         return response.sendStatus(500);
       }
@@ -99,7 +97,6 @@ function memoryEndpoints(app) {
         if (!memory) return response.status(400).json({ error: message });
         response.status(200).json({ memory });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         return response.sendStatus(500);
       }
@@ -131,7 +128,6 @@ function memoryEndpoints(app) {
         if (!memory) return response.status(400).json({ error: message });
         response.status(200).json({ memory });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         return response.sendStatus(500);
       }
@@ -158,7 +154,6 @@ function memoryEndpoints(app) {
           return response.status(404).json({ error: "Memory not found." });
         response.status(200).json({ success: true });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         return response.sendStatus(500);
       }
@@ -181,7 +176,6 @@ function memoryEndpoints(app) {
 
         response.status(200).json({ memory });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         return response.sendStatus(500);
       }
@@ -210,7 +204,6 @@ function memoryEndpoints(app) {
         if (!memory) return response.status(400).json({ error: message });
         response.status(200).json({ memory });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         return response.sendStatus(500);
       }

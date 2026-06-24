@@ -80,7 +80,6 @@ class FilesystemManager {
       try {
         await fs.mkdir(dir, { recursive: true });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(
           `Warning: Could not create directory ${dir}: ${error.message}`,
         );
@@ -429,7 +428,6 @@ class FilesystemManager {
       this.#allowedDirectories,
     );
     if (!isAllowed) {
-      // eslint-disable-next-line no-console
       consoleLogger.log(
         `[validatePath] Access denied - path outside allowed directories: ${absolute} not in ${this.#allowedDirectories.join(", ")}`,
       );
@@ -445,7 +443,6 @@ class FilesystemManager {
           this.#allowedDirectories,
         )
       ) {
-        // eslint-disable-next-line no-console
         consoleLogger.log(
           `[validatePath] Access denied - symlink target outside allowed directories: ${realPath} not in ${this.#allowedDirectories.join(", ")}`,
         );
@@ -466,7 +463,6 @@ class FilesystemManager {
               this.#allowedDirectories,
             )
           ) {
-            // eslint-disable-next-line no-console
             consoleLogger.log(
               `[validatePath] Access denied - parent directory outside allowed directories: ${realParentPath} not in ${this.#allowedDirectories.join(", ")}`,
             );
@@ -788,8 +784,10 @@ class FilesystemManager {
         contentString: `data:${mime};base64,${base64}`,
       };
     } catch (error) {
-      // eslint-disable-next-line no-console
-      consoleLogger.error(`Error reading image file ${filePath}:`, error.message);
+      consoleLogger.error(
+        `Error reading image file ${filePath}:`,
+        error.message,
+      );
       return null;
     }
   }

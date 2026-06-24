@@ -27,7 +27,7 @@ function mcpServersEndpoints(app) {
         });
       } catch (error) {
         const id = crypto.randomUUID();
-        // eslint-disable-next-line no-console
+
         consoleLogger.error(`[mcpServers force-reload error id=${id}]`, error);
         return response.status(500).json({
           success: false,
@@ -51,7 +51,7 @@ function mcpServersEndpoints(app) {
         });
       } catch (error) {
         const id = crypto.randomUUID();
-        // eslint-disable-next-line no-console
+
         consoleLogger.error(`[mcpServers list error id=${id}]`, error);
         return response.status(500).json({
           success: false,
@@ -82,7 +82,7 @@ function mcpServersEndpoints(app) {
         });
       } catch (error) {
         const id = crypto.randomUUID();
-        // eslint-disable-next-line no-console
+
         consoleLogger.error(`[mcpServers toggle error id=${id}]`, error);
         return response.status(500).json({
           success: false,
@@ -111,7 +111,7 @@ function mcpServersEndpoints(app) {
         });
       } catch (error) {
         const id = crypto.randomUUID();
-        // eslint-disable-next-line no-console
+
         consoleLogger.error(`[mcpServers delete error id=${id}]`, error);
         return response.status(500).json({
           success: false,
@@ -150,7 +150,7 @@ function mcpServersEndpoints(app) {
         });
       } catch (error) {
         const id = crypto.randomUUID();
-        // eslint-disable-next-line no-console
+
         consoleLogger.error(`[mcpServers toggle-tool error id=${id}]`, error);
         return response.status(500).json({
           success: false,

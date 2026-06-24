@@ -37,7 +37,6 @@ const WorkspaceChats = {
       }
       return { chat, message: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return { chat: null, message: error.message };
     }
@@ -71,7 +70,6 @@ const WorkspaceChats = {
       });
       return chats;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return [];
     }
@@ -104,7 +102,6 @@ const WorkspaceChats = {
       });
       return chats;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return [];
     }
@@ -136,7 +133,6 @@ const WorkspaceChats = {
       });
       return chats;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return [];
     }
@@ -160,7 +156,6 @@ const WorkspaceChats = {
       });
       return;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
     }
   },
@@ -187,7 +182,6 @@ const WorkspaceChats = {
       });
       return;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
     }
   },
@@ -215,7 +209,6 @@ const WorkspaceChats = {
       });
       return;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
     }
   },
@@ -241,7 +234,6 @@ const WorkspaceChats = {
       });
       return chat || null;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return null;
     }
@@ -254,7 +246,6 @@ const WorkspaceChats = {
       });
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return false;
     }
@@ -287,7 +278,6 @@ const WorkspaceChats = {
       });
       return chats;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return [];
     }
@@ -300,7 +290,6 @@ const WorkspaceChats = {
       });
       return count;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return 0;
     }
@@ -351,7 +340,6 @@ const WorkspaceChats = {
 
       return results;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return [];
     }
@@ -370,7 +358,6 @@ const WorkspaceChats = {
       });
       return;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
     }
   },
@@ -388,7 +375,6 @@ const WorkspaceChats = {
       });
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return false;
     }
@@ -403,7 +389,6 @@ const WorkspaceChats = {
         data: { memoryProcessed: true },
       });
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
     }
   },
@@ -416,7 +401,6 @@ const WorkspaceChats = {
       });
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return false;
     }
@@ -426,8 +410,10 @@ const WorkspaceChats = {
     if (!Array.isArray(chatsData) || chatsData.length === 0)
       return { chats: [], message: null };
     try {
-      await prisma.workspace_chats.createMany({ data: chatsData });
-      return { chats: { count: chatsData.length }, message: null };
+      const result = await prisma.workspace_chats.createMany({
+        data: chatsData,
+      });
+      return { chats: { count: result.count }, message: null };
     } catch {
       try {
         const createdChats = [];
@@ -441,7 +427,6 @@ const WorkspaceChats = {
         }
         return { chats: createdChats, message: null };
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(error.message);
         return { chats: null, message: error.message };
       }
@@ -481,7 +466,6 @@ const WorkspaceChats = {
       });
       return { chat, message: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return { chat: null, message: error.message };
     }

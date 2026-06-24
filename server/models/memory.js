@@ -80,7 +80,6 @@ const Memory = {
       });
       return memories;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return [];
     }
@@ -104,7 +103,6 @@ const Memory = {
       });
       return memories;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return [];
     }
@@ -165,7 +163,6 @@ const Memory = {
       });
       return result;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return { memory: null, message: error.message };
     }
@@ -205,7 +202,6 @@ const Memory = {
       });
       return { memory, message: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return { memory: null, message: error.message };
     }
@@ -234,7 +230,6 @@ const Memory = {
       });
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return false;
     }
@@ -279,7 +274,6 @@ const Memory = {
       });
       return result;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return { memory: null, message: error.message };
     }
@@ -328,7 +322,6 @@ const Memory = {
         return { memory, message: null };
       });
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       if (String(error.message).startsWith("WORKSPACE_LIMIT reached")) {
         return {
@@ -353,7 +346,6 @@ const Memory = {
         data: { lastUsedAt: new Date() },
       });
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
     }
   },
@@ -375,7 +367,6 @@ const Memory = {
         where.workspaceId = this.validations.workspaceId(workspaceId);
       return await client.memories.count({ where });
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return 0;
     }
@@ -419,7 +410,6 @@ const Memory = {
       });
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return false;
     }
@@ -514,7 +504,6 @@ const Memory = {
       result.globalCount = newGlobal.length;
       result.updatedCount = actuallyUpdated;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
     }
     return result;
@@ -533,7 +522,6 @@ const Memory = {
       });
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return false;
     }
@@ -552,7 +540,6 @@ const Memory = {
       });
       return memory || null;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return null;
     }

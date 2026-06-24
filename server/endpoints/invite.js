@@ -51,7 +51,6 @@ function inviteEndpoints(app) {
           .status(200)
           .json({ invite: { code, status: invite.status }, error: null });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -105,7 +104,6 @@ function inviteEndpoints(app) {
           role: "default",
         });
         if (!user) {
-          // eslint-disable-next-line no-console
           consoleLogger.error("Accepting invite:", error);
           response.status(200).json({ success: false, error });
           return;
@@ -122,7 +120,6 @@ function inviteEndpoints(app) {
 
         response.status(200).json({ success: true, error: null });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }

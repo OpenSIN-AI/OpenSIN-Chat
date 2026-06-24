@@ -44,9 +44,10 @@ function settingsEndpoints(app) {
         );
         response.status(200).json({ newValues, error });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
-        response.status(500).json({ newValues: null, error: "Internal server error" });
+        response
+          .status(500)
+          .json({ newValues: null, error: "Internal server error" });
       }
     },
   );
@@ -80,9 +81,10 @@ function settingsEndpoints(app) {
         invalidateAuthTokenHash();
         response.status(200).json({ success: !error, error });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
-        response.status(500).json({ success: false, error: "Internal server error" });
+        response
+          .status(500)
+          .json({ success: false, error: "Internal server error" });
       }
     },
   );
@@ -168,7 +170,6 @@ function settingsEndpoints(app) {
           multi_user_mode: false,
         });
 
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -183,7 +184,6 @@ function settingsEndpoints(app) {
         const multiUserMode = await SystemSettings.isMultiUserMode();
         response.status(200).json({ multiUserMode });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -207,7 +207,6 @@ function settingsEndpoints(app) {
           saneDefaultSystemPrompt: SystemSettings.saneDefaultSystemPrompt,
         });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error fetching default system prompt:", error);
         response
           .status(500)
@@ -237,8 +236,11 @@ function settingsEndpoints(app) {
         });
       } catch (error) {
         const id = crypto.randomUUID();
-        // eslint-disable-next-line no-console
-        consoleLogger.error(`[system default-system-prompt error id=${id}]`, error);
+
+        consoleLogger.error(
+          `[system default-system-prompt error id=${id}]`,
+          error,
+        );
         response.status(500).json({
           success: false,
           message: "Internal server error",

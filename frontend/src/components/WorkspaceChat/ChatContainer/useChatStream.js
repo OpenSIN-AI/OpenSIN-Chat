@@ -198,14 +198,18 @@ export default function useChatStream({
       (msg) => msg.role === "user",
     );
     Workspace.deleteChats(workspace.slug, [chatId])
-      .then(() =>
-        sendCommand({
+      .then((success) => {
+        if (!success) {
+          console.error("Failed to delete chat for regeneration.");
+          return;
+        }
+        return sendCommand({
           text: lastUserMessage.content,
           autoSubmit: true,
           history: filteredHistory,
           attachments: lastUserMessage?.attachments,
-        }),
-      )
+        });
+      })
       .catch((e) => console.error(e));
   };
 

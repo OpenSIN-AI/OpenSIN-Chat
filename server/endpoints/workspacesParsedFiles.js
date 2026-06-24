@@ -49,7 +49,7 @@ async function copyToUploads(request) {
     await fs.promises.copyFile(filePath, destPath);
   } catch (e) {
     // Non-fatal: visibility in the sidebar is optional; the parse itself succeeded.
-    // eslint-disable-next-line no-console
+
     consoleLogger.error("[copyToUploads] best-effort copy failed:", e.message);
   }
 }
@@ -108,7 +108,6 @@ function workspaceParsedFilesEndpoints(app) {
         });
         return response.status(success ? 200 : 403).end();
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         return response.sendStatus(500);
       }
@@ -166,7 +165,6 @@ function workspaceParsedFilesEndpoints(app) {
           document,
         });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         return response.sendStatus(500);
       }

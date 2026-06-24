@@ -44,7 +44,6 @@ function pfpEndpoints(app) {
         response.end(Buffer.from(buffer, "base64"));
         return;
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error processing the logo request:", error);
         response.status(500).json({ message: "Internal server error" });
       }
@@ -115,8 +114,10 @@ function pfpEndpoints(app) {
           message: "Profile picture uploaded successfully.",
         });
       } catch (error) {
-        // eslint-disable-next-line no-console
-        consoleLogger.error("Error processing the profile picture upload:", error);
+        consoleLogger.error(
+          "Error processing the profile picture upload:",
+          error,
+        );
         response.status(500).json({ message: "Internal server error" });
       }
     },
@@ -154,8 +155,10 @@ function pfpEndpoints(app) {
             : error || "Failed to remove profile picture.",
         });
       } catch (error) {
-        // eslint-disable-next-line no-console
-        consoleLogger.error("Error processing the profile picture removal:", error);
+        consoleLogger.error(
+          "Error processing the profile picture removal:",
+          error,
+        );
         response.status(500).json({ message: "Internal server error" });
       }
     },

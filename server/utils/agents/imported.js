@@ -59,7 +59,6 @@ class ImportedPlugin {
     );
     this.allowlisted = isAllowlisted(this.config.hubId);
     if (!this.allowlisted) {
-      // eslint-disable-next-line no-console
       consoleLogger.log(
         `ImportedPlugin — hubId '${this.config.hubId}' not on config/plugins-allowlist.toml; skipping handler load`,
       );
@@ -214,7 +213,6 @@ class ImportedPlugin {
     }
     for (const [param, definition] of Object.entries(this.config.setup_args)) {
       if (definition.required && !definition?.value) {
-        // eslint-disable-next-line no-console
         consoleLogger.log(
           `'${param}' required value for '${this.name}' plugin is missing. Plugin may not function or crash agent.`,
         );
@@ -235,7 +233,8 @@ class ImportedPlugin {
           aibitat.function({
             super: aibitat,
             name: this.name,
-            description: this.config?.description || "Imported plugin (not allowlisted)",
+            description:
+              this.config?.description || "Imported plugin (not allowlisted)",
             parameters: {
               $schema: "http://json-schema.org/draft-07/schema#",
               type: "object",
@@ -306,7 +305,6 @@ class ImportedPlugin {
 
     const pluginFolder = path.resolve(pluginsPath, normalizePath(hubId));
     if (fs.existsSync(pluginFolder))
-      // eslint-disable-next-line no-console
       consoleLogger.log(
         "ImportedPlugin.importCommunityItemFromUrl - plugin folder already exists - will overwrite",
       );
@@ -318,7 +316,6 @@ class ImportedPlugin {
 
       const downloadZipFile = new Promise(async (resolve) => {
         try {
-          // eslint-disable-next-line no-console
           consoleLogger.log(
             "ImportedPlugin.importCommunityItemFromUrl - downloading asset from ",
             new URL(url).origin,
@@ -326,7 +323,6 @@ class ImportedPlugin {
           const zipFile = fs.createWriteStream(zipFilePath);
           const request = httpLib.get(url, function (response) {
             if (response.statusCode !== 200) {
-              // eslint-disable-next-line no-console
               consoleLogger.error(
                 "ImportedPlugin.importCommunityItemFromUrl - HTTP",
                 response.statusCode,
@@ -338,14 +334,12 @@ class ImportedPlugin {
             }
             response.pipe(zipFile);
             zipFile.on("finish", () => {
-              // eslint-disable-next-line no-console
               consoleLogger.log(
                 "ImportedPlugin.importCommunityItemFromUrl - downloaded zip file",
               );
               resolve(true);
             });
             zipFile.on("error", (error) => {
-              // eslint-disable-next-line no-console
               consoleLogger.error(
                 "ImportedPlugin.importCommunityItemFromUrl - zipFile stream error: ",
                 error,
@@ -356,7 +350,7 @@ class ImportedPlugin {
           request.setTimeout(30000, () => {
             request.destroy();
             zipFile.destroy();
-            // eslint-disable-next-line no-console
+
             consoleLogger.error(
               "ImportedPlugin.importCommunityItemFromUrl - download timed out after 30s",
             );
@@ -364,7 +358,6 @@ class ImportedPlugin {
           });
 
           request.on("error", (error) => {
-            // eslint-disable-next-line no-console
             consoleLogger.error(
               "ImportedPlugin.importCommunityItemFromUrl - error downloading zip file: ",
               error,
@@ -373,7 +366,6 @@ class ImportedPlugin {
             resolve(false);
           });
         } catch (error) {
-          // eslint-disable-next-line no-console
           consoleLogger.error(
             "ImportedPlugin.importCommunityItemFromUrl - error downloading zip file: ",
             error,
@@ -411,13 +403,11 @@ class ImportedPlugin {
       pluginJson.hubId = hubId;
       fs.writeFileSync(pluginJsonPath, JSON.stringify(pluginJson, null, 2));
 
-      // eslint-disable-next-line no-console
       consoleLogger.log(
         `ImportedPlugin.importCommunityItemFromUrl - successfully imported plugin to agent-skills/${hubId}`,
       );
       return { success: true, error: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(
         "ImportedPlugin.importCommunityItemFromUrl - error: ",
         error,

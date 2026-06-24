@@ -44,7 +44,6 @@ function documentEndpoints(app) {
         fs.mkdirSync(storagePath, { recursive: true });
         response.status(200).json({ success: true, message: null });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.status(500).json({
           success: false,
@@ -93,7 +92,6 @@ function documentEndpoints(app) {
 
             fs.rename(sourcePath, destinationPath, (err) => {
               if (err) {
-                // eslint-disable-next-line no-console
                 consoleLogger.error(`Error moving file ${from} to ${to}:`, err);
                 reject(err);
               } else {
@@ -118,14 +116,12 @@ function documentEndpoints(app) {
             });
           }
         } catch (err) {
-          // eslint-disable-next-line no-console
           consoleLogger.error("Error moving files:", err);
           response
             .status(500)
             .json({ success: false, message: "Failed to move some files." });
         }
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response
           .status(500)

@@ -43,7 +43,6 @@ function browserExtensionEndpoints(app) {
           apiKeyId,
         });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(error);
         response
           .status(500)
@@ -63,7 +62,6 @@ function browserExtensionEndpoints(app) {
         if (!success) throw new Error(error);
         response.status(200).json({ success: true });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(error);
         response
           .status(500)
@@ -84,7 +82,6 @@ function browserExtensionEndpoints(app) {
 
         response.status(200).json({ workspaces });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(error);
         response.status(500).json({ error: "Failed to fetch workspaces" });
       }
@@ -139,7 +136,6 @@ function browserExtensionEndpoints(app) {
         await Telemetry.sendTelemetry("browser_extension_embed_content");
         response.status(200).json({ success: true });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(error);
         response.status(500).json({ error: "Failed to embed content" });
       }
@@ -166,7 +162,6 @@ function browserExtensionEndpoints(app) {
         await Telemetry.sendTelemetry("browser_extension_upload_content");
         response.status(200).json({ success: true });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(error);
         response.status(500).json({ error: "Failed to embed content" });
       }
@@ -186,7 +181,6 @@ function browserExtensionEndpoints(app) {
 
         response.status(200).json({ success: true, apiKeys });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(error);
         response
           .status(500)
@@ -217,7 +211,6 @@ function browserExtensionEndpoints(app) {
           apiKey: apiKey.key,
         });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(error);
         response.status(500).json({ error: "Failed to create API key" });
       }
@@ -246,7 +239,6 @@ function browserExtensionEndpoints(app) {
         if (!success) throw new Error(error);
         response.status(200).json({ success: true });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(error);
         response.status(500).json({ error: "Failed to revoke API key" });
       }

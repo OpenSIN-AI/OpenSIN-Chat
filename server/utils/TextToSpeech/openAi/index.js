@@ -22,7 +22,6 @@ class OpenAiTTS {
       });
       return Buffer.from(await result.arrayBuffer());
     } catch (e) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`OpenAiTTS:ttsBuffer failed: ${e?.message || e}`);
     }
     return null;

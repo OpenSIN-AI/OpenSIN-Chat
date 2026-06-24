@@ -195,7 +195,6 @@ const User = {
       });
       return { user: this.filterFields(user), error: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("FAILED TO CREATE USER.", error.message);
       return { user: null, error: this._identifyErrorAndFormatMessage(error) };
     }
@@ -279,7 +278,6 @@ const User = {
       });
       return { success: true, error: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("FAILED TO UPDATE USER.", error.message);
       return {
         success: false,
@@ -306,7 +304,6 @@ const User = {
       });
       return { user, message: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return { user: null, message: error.message };
     }
@@ -327,7 +324,6 @@ const User = {
       });
       return users;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return [];
     }
@@ -343,7 +339,6 @@ const User = {
       const user = await prisma.users.findFirst({ where: clause });
       return user ? this.filterFields({ ...user }) : null;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return null;
     }
@@ -354,7 +349,6 @@ const User = {
       const user = await prisma.users.findFirst({ where: clause });
       return user ? { ...user } : null;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return null;
     }
@@ -365,7 +359,6 @@ const User = {
       const count = await prisma.users.count({ where: clause });
       return count;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return 0;
     }
@@ -376,7 +369,6 @@ const User = {
       await prisma.users.deleteMany({ where: clause });
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return false;
     }
@@ -390,7 +382,6 @@ const User = {
       });
       return users.map((usr) => this.filterFields(usr));
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return [];
     }

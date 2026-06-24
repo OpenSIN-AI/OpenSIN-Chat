@@ -157,7 +157,6 @@ function terminalExecEndpoint(app) {
           return response.status(200).json({ output, exitCode });
         }
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("[terminal/exec]", e.message);
         return response
           .status(500)

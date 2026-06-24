@@ -79,7 +79,9 @@ async function executeWebScraping(config, context) {
   }
 
   if (!aibitat) {
-    logger(`No agent context (aibitat) available — returning raw content without summarization`);
+    logger(
+      `No agent context (aibitat) available — returning raw content without summarization`,
+    );
     return content;
   }
 

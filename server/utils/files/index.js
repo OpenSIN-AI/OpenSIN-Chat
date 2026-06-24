@@ -31,7 +31,6 @@ async function fileData(filePath = null) {
     return null;
   }
   if (stat.size > MAX_DOC_BYTES) {
-    // eslint-disable-next-line no-console
     consoleLogger.warn(
       `[fileData] Refusing ${filePath}: ${stat.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`,
     );
@@ -41,7 +40,6 @@ async function fileData(filePath = null) {
     const data = await fs.promises.readFile(fullFilePath, "utf8");
     return JSON.parse(data);
   } catch {
-    // eslint-disable-next-line no-console
     consoleLogger.error(`[fileData] Failed to parse JSON from ${filePath}`);
     return null;
   }
@@ -157,7 +155,6 @@ async function getDocumentsByFolder(folderName = "") {
     try {
       const st = fs.statSync(filePath);
       if (st.size > MAX_DOC_BYTES) {
-        // eslint-disable-next-line no-console
         consoleLogger.warn(
           `[getDocumentsByFolder] Skipping ${file}: ${st.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`,
         );
@@ -172,7 +169,9 @@ async function getDocumentsByFolder(folderName = "") {
       const rawData = await fs.promises.readFile(filePath, "utf8");
       parsed = JSON.parse(rawData);
     } catch {
-      consoleLogger.error(`[getDocumentsByFolder] Skipping corrupt JSON: ${file}`);
+      consoleLogger.error(
+        `[getDocumentsByFolder] Skipping corrupt JSON: ${file}`,
+      );
       continue;
     }
     const { pageContent: _pageContent, ...metadata } = parsed;
@@ -218,7 +217,6 @@ async function cachedVectorInformation(filename = null, checkOnly = false) {
   if (checkOnly) return exists;
   if (!exists) return { exists, chunks: [] };
 
-  // eslint-disable-next-line no-console
   consoleLogger.log(
     `Cached vectorized results of ${filename} found! Using cached data to save on embed costs.`,
   );
@@ -226,8 +224,9 @@ async function cachedVectorInformation(filename = null, checkOnly = false) {
   try {
     return { exists: true, chunks: JSON.parse(rawData) };
   } catch {
-    // eslint-disable-next-line no-console
-    consoleLogger.error(`Corrupt vector-cache file detected, ignoring: ${file}`);
+    consoleLogger.error(
+      `Corrupt vector-cache file detected, ignoring: ${file}`,
+    );
     return { exists: false, chunks: [] };
   }
 }
@@ -236,7 +235,7 @@ async function cachedVectorInformation(filename = null, checkOnly = false) {
 // filename is the fullpath to the doc so we can compare by filename to find cached matches.
 async function storeVectorResult(vectorData = [], filename = null) {
   if (!filename) return;
-  // eslint-disable-next-line no-console
+
   consoleLogger.log(
     `Caching vectorized results of ${filename} to prevent duplicated embedding.`,
   );
@@ -260,7 +259,6 @@ async function purgeSourceDocument(filename = null) {
   )
     return;
 
-  // eslint-disable-next-line no-console
   consoleLogger.log(`Purging source document of ${filename}.`);
   fs.rmSync(filePath);
   return;
@@ -273,7 +271,7 @@ async function purgeVectorCache(filename = null) {
   const filePath = path.resolve(vectorCachePath, `${digest}.json`);
 
   if (!fs.existsSync(filePath) || !fs.lstatSync(filePath).isFile()) return;
-  // eslint-disable-next-line no-console
+
   consoleLogger.log(`Purging vector-cache of ${filename}.`);
   fs.rmSync(filePath);
   return;
@@ -286,9 +284,7 @@ async function findDocumentInDocuments(documentName = null) {
   for (const folder of fs.readdirSync(documentsPath)) {
     let isFolder;
     try {
-      isFolder = fs
-        .lstatSync(path.join(documentsPath, folder))
-        .isDirectory();
+      isFolder = fs.lstatSync(path.join(documentsPath, folder)).isDirectory();
     } catch {
       continue;
     }
@@ -306,7 +302,6 @@ async function findDocumentInDocuments(documentName = null) {
     try {
       const st = fs.statSync(targetFileLocation);
       if (st.size > MAX_DOC_BYTES) {
-        // eslint-disable-next-line no-console
         consoleLogger.warn(
           `[findDocumentInDocuments] Skipping ${targetFilename}: ${st.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`,
         );
@@ -546,7 +541,6 @@ async function fileToPickerData({
 
   if (fileStats.size < FILE_READ_SIZE_THRESHOLD) {
     if (fileStats.size > MAX_DOC_BYTES) {
-      // eslint-disable-next-line no-console
       consoleLogger.warn(
         `[fileToPickerData] Skipping ${pathToFile}: ${fileStats.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`,
       );
@@ -556,7 +550,6 @@ async function fileToPickerData({
     try {
       rawData = await fs.promises.readFile(pathToFile, "utf8");
     } catch (err) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("Error reading file", err);
       return null;
     }
@@ -565,7 +558,6 @@ async function fileToPickerData({
       // Remove the pageContent field from the metadata - it is large and not needed for the picker
       delete metadata.pageContent;
     } catch (err) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("Error parsing file", err);
       return null;
     }
@@ -583,7 +575,6 @@ async function fileToPickerData({
     };
   }
 
-  // eslint-disable-next-line no-console
   consoleLogger.log(
     `Stream-parsing ${path.basename(pathToFile)} because it exceeds the ${FILE_READ_SIZE_THRESHOLD} byte limit.`,
   );
@@ -602,22 +593,18 @@ async function fileToPickerData({
             delete metadata.pageContent;
             resolve(metadata);
           } catch (parseErr) {
-            // eslint-disable-next-line no-console
             consoleLogger.error("Error parsing JSON from stream", parseErr);
             reject(new Error("Failed to parse streamed file content as JSON"));
           }
         })
         .on("error", (err) => {
-          // eslint-disable-next-line no-console
           consoleLogger.error("Error parsing file", err);
           reject(null);
         });
     }).catch((err) => {
-      // eslint-disable-next-line no-console
       consoleLogger.error("Error parsing file", err);
     });
   } catch (err) {
-    // eslint-disable-next-line no-console
     consoleLogger.error("Error parsing file", err);
     metadata = null;
   } finally {
@@ -626,7 +613,6 @@ async function fileToPickerData({
 
   // If the metadata is empty or something went wrong, return null
   if (!metadata || !Object.keys(metadata)?.length) {
-    // eslint-disable-next-line no-console
     consoleLogger.log(`Stream-parsing failed for ${path.basename(pathToFile)}`);
     return null;
   }

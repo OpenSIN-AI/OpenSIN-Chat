@@ -133,7 +133,6 @@ function agentFileServerEndpoints(app) {
         });
         return;
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("[agentFileServer] Download error:", error.message);
         return response.status(500).json({ error: "Failed to download file" });
       }
@@ -165,7 +164,6 @@ async function findFileSource(storageFilename, { user, isMultiUser }) {
 
     return await findInScheduledJobRuns(storageFilename);
   } catch (error) {
-    // eslint-disable-next-line no-console
     consoleLogger.error("[findFileSource] Error:", error.message);
     return null;
   }

@@ -140,7 +140,9 @@ async function main() {
   for (const themeName of themes) {
     await generateThemePreview(themeName, outputDir);
   }
-  consoleLogger.log(`\nDone! ${themes.length} previews saved to:\n  ${outputDir}`);
+  consoleLogger.log(
+    `\nDone! ${themes.length} previews saved to:\n  ${outputDir}`,
+  );
 }
 
 main().catch(console.error);

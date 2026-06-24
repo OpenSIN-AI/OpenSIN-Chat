@@ -281,14 +281,19 @@ export default memo(
  * Other attachment types may be supported here in the future.
  */
 function ChatAttachments({ attachments = [] }: any) {
-  if (!attachments.length) return null;
+  const imageAttachments = (attachments as any).filter(
+    (item: any) =>
+      item?.contentString &&
+      (!item?.mime || item.mime.toLowerCase().startsWith("image/")),
+  );
+  if (!imageAttachments.length) return null;
   return (
     <div className="flex flex-wrap gap-4 mt-4">
-      {(attachments as any).map((item, index) => (
+      {imageAttachments.map((item, index) => (
         <button
           type="button"
           key={`${item.name}-${index}`}
-          onClick={() => openImageLightbox(attachments, index)}
+          onClick={() => openImageLightbox(imageAttachments, index)}
           className="p-0 border-none bg-transparent cursor-pointer hover:opacity-80 transition-opacity"
         >
           <img

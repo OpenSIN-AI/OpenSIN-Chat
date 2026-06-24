@@ -20,7 +20,6 @@ async function requireAuthWhenOnboardingComplete(request, response, next) {
     if (!isComplete) return next();
     return validatedRequest(request, response, next);
   } catch (e) {
-    // eslint-disable-next-line no-console
     consoleLogger.error(e.message, e);
     response.sendStatus(500);
   }

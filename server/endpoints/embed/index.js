@@ -44,7 +44,13 @@ function embeddedEndpoints(app) {
 
   app.post(
     "/embed/:embedId/stream-chat",
-    [validEmbedConfig, embedCors, setConnectionMeta, canRespond, embedStreamRateLimit],
+    [
+      validEmbedConfig,
+      embedCors,
+      setConnectionMeta,
+      canRespond,
+      embedStreamRateLimit,
+    ],
     async (request, response) => {
       let stopHeartbeat = null;
       try {
@@ -115,7 +121,6 @@ function embeddedEndpoints(app) {
 
         response.status(200).json({ history: convertToChatHistory(history) });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -133,7 +138,6 @@ function embeddedEndpoints(app) {
         await EmbedChats.markHistoryInvalid(embed.id, sessionId);
         response.status(200).end();
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }

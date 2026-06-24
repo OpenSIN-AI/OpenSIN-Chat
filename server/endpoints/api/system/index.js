@@ -29,7 +29,6 @@ function apiSystemEndpoints(app) {
       dumpENV();
       response.sendStatus(200);
     } catch (e) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }
@@ -67,7 +66,6 @@ function apiSystemEndpoints(app) {
       const settings = await SystemSettings.currentSettings();
       response.status(200).json({ settings });
     } catch (e) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }
@@ -100,7 +98,6 @@ function apiSystemEndpoints(app) {
       const vectorCount = await VectorDb.totalVectors();
       response.status(200).json({ vectorCount });
     } catch (e) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }
@@ -149,7 +146,6 @@ function apiSystemEndpoints(app) {
         const { newValues, error } = await updateENV(body);
         response.status(200).json({ newValues, error });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -215,7 +211,6 @@ function apiSystemEndpoints(app) {
         );
         response.status(200).send(data);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -277,13 +272,16 @@ function apiSystemEndpoints(app) {
       try {
         const { names } = reqBody(request);
         if (!Array.isArray(names) || names.length === 0) {
-          response
-            .status(400)
-            .json({ success: false, message: "names must be a non-empty array of strings." });
+          response.status(400).json({
+            success: false,
+            message: "names must be a non-empty array of strings.",
+          });
           return;
         }
         const safeNames = names
-          .filter((n) => typeof n === "string" && n.length > 0 && n.length <= 500)
+          .filter(
+            (n) => typeof n === "string" && n.length > 0 && n.length <= 500,
+          )
           .slice(0, 100);
         await Promise.all(safeNames.map((name) => purgeDocument(name)));
         response
@@ -291,7 +289,6 @@ function apiSystemEndpoints(app) {
           .json({ success: true, message: "Documents removed successfully" })
           .end();
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }

@@ -97,7 +97,6 @@ function apiEmbedEndpoints(app) {
       }));
       response.status(200).json({ embeds: filteredEmbeds });
     } catch (e) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }
@@ -165,7 +164,6 @@ function apiEmbedEndpoints(app) {
         });
         response.status(200).json({ chats });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -233,7 +231,6 @@ function apiEmbedEndpoints(app) {
         });
         response.status(200).json({ chats });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -321,7 +318,6 @@ function apiEmbedEndpoints(app) {
 
       response.status(200).json({ embed, error });
     } catch (e) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }
@@ -395,7 +391,6 @@ function apiEmbedEndpoints(app) {
       const { success, error } = await EmbedConfig.update(embed.id, data);
       response.status(200).json({ success, error });
     } catch (e) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }
@@ -448,7 +443,6 @@ function apiEmbedEndpoints(app) {
           .status(200)
           .json({ success, error: success ? null : "Failed to delete embed" });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }

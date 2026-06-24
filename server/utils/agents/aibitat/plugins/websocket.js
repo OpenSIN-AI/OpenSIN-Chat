@@ -74,7 +74,7 @@ const websocket = {
           try {
             let errorMessage =
               error?.message || "An error occurred while running the agent.";
-            // eslint-disable-next-line no-console
+
             consoleLogger.error(chalk.red(`   error: ${errorMessage}`), error);
             aibitat.introspect(
               `Error encountered while running: ${errorMessage}`,
@@ -84,8 +84,10 @@ const websocket = {
             );
             aibitat.terminate();
           } catch (err) {
-            // eslint-disable-next-line no-console
-            consoleLogger.error(chalk.red("   error: onError handler failed"), err);
+            consoleLogger.error(
+              chalk.red("   error: onError handler failed"),
+              err,
+            );
           }
         });
 
@@ -125,7 +127,6 @@ const websocket = {
           description = null,
         }) {
           if (skillIsAutoApproved({ skillName })) {
-            // eslint-disable-next-line no-console
             consoleLogger.log(
               chalk.green(
                 `Skill ${skillName} is auto-approved by AGENT_AUTO_APPROVED_SKILLS`,
@@ -145,7 +146,6 @@ const websocket = {
             userId,
           );
           if (isWhitelisted) {
-            // eslint-disable-next-line no-console
             consoleLogger.log(
               chalk.green(
                 (userId ? `User ${userId} - ` : "") +
@@ -204,8 +204,10 @@ const websocket = {
                   message: "Tool call was rejected by the user.",
                 });
               } catch (e) {
-                // eslint-disable-next-line no-console
-                consoleLogger.error("Error handling tool approval response:", e);
+                consoleLogger.error(
+                  "Error handling tool approval response:",
+                  e,
+                );
               }
             };
 
@@ -221,7 +223,6 @@ const websocket = {
             );
 
             timeoutId = setTimeout(() => {
-              // eslint-disable-next-line no-console
               consoleLogger.log(
                 chalk.yellow(
                   `Tool approval request timed out after ${TOOL_APPROVAL_TIMEOUT_MS}ms`,
@@ -296,8 +297,10 @@ const websocket = {
                   answers: normalized,
                 });
               } catch (e) {
-                // eslint-disable-next-line no-console
-                consoleLogger.error("Error handling clarification response:", e);
+                consoleLogger.error(
+                  "Error handling clarification response:",
+                  e,
+                );
               }
             };
 
@@ -313,7 +316,7 @@ const websocket = {
 
             timeoutId = setTimeout(() => {
               delete socket.handleClarificationResponse;
-              // eslint-disable-next-line no-console
+
               consoleLogger.log(
                 chalk.yellow(
                   `Clarification request timed out after ${timeoutMs}ms`,
@@ -385,13 +388,11 @@ const websocket = {
                   });
                   return;
                 } catch (e) {
-                  // eslint-disable-next-line no-console
                   consoleLogger.error("Error handling feedback response:", e);
                 }
               };
 
               socketTimeout = setTimeout(() => {
-                // eslint-disable-next-line no-console
                 consoleLogger.log(
                   chalk.red(
                     `Client took too long to respond, chat thread is dead after ${SOCKET_TIMEOUT_MS}ms`,

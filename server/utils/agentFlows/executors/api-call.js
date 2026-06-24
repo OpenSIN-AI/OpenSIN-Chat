@@ -26,7 +26,9 @@ async function executeApiCall(config, context) {
   if (["POST", "PUT", "PATCH"].includes(method)) {
     if (bodyType === "form") {
       const formDataObj = new URLSearchParams();
-      (formData || []).forEach(({ key, value }) => formDataObj.append(key, value));
+      (formData || []).forEach(({ key, value }) =>
+        formDataObj.append(key, value),
+      );
       requestConfig.body = formDataObj.toString();
       requestConfig.headers["Content-Type"] =
         "application/x-www-form-urlencoded";
@@ -62,7 +64,6 @@ async function executeApiCall(config, context) {
         safeJsonParse(text, "Failed to parse output from API call block"),
       );
   } catch (error) {
-    // eslint-disable-next-line no-console
     consoleLogger.error(error);
     throw new Error(`API Call failed: ${error.message}`, { cause: error });
   }

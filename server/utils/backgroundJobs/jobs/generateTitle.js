@@ -279,7 +279,9 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
   if (!cleanTitle) cleanTitle = WorkspaceThread.defaultName;
 
   await WorkspaceThread.update(thread, { name: cleanTitle });
-  consoleLogger.log(`[GenerateTitle] Thread ${threadId} renamed to: "${cleanTitle}"`);
+  consoleLogger.log(
+    `[GenerateTitle] Thread ${threadId} renamed to: "${cleanTitle}"`,
+  );
 }
 
 module.exports = generateTitleJob;

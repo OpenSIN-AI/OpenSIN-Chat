@@ -132,7 +132,7 @@ function chatEndpoints(app) {
       } catch (e) {
         if (stopHeartbeat) stopHeartbeat();
         const id = crypto.randomUUID();
-        // eslint-disable-next-line no-console
+
         consoleLogger.error(`[chat SSE error id=${id}]`, e);
         writeResponseChunk(response, {
           id,
@@ -266,7 +266,7 @@ function chatEndpoints(app) {
       } catch (e) {
         if (stopHeartbeat) stopHeartbeat();
         const id = crypto.randomUUID();
-        // eslint-disable-next-line no-console
+
         consoleLogger.error(`[chat SSE error id=${id}]`, e);
         writeResponseChunk(response, {
           id,

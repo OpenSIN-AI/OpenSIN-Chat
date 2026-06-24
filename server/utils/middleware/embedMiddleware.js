@@ -267,9 +267,7 @@ function embedCors(request, response, next) {
   const origin = request.headers.origin;
 
   if (origin) {
-    const allowedHosts = embed
-      ? EmbedConfig.parseAllowedHosts(embed)
-      : null;
+    const allowedHosts = embed ? EmbedConfig.parseAllowedHosts(embed) : null;
     // No allowlist configured → allow any origin.
     // Allowlist configured → only allow listed origins.
     if (allowedHosts === null || allowedHosts.includes(origin)) {

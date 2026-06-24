@@ -20,7 +20,6 @@ const markOnboarded = require("./markOnboarded");
 // build and copy frontend to server/public with correct API_BASE and start server in prod model and all should be ok
 function bootSSL(app, port = 3001, onReady) {
   try {
-    // eslint-disable-next-line no-console
     consoleLogger.log(
       `\x1b[33m[SSL BOOT ENABLED]\x1b[0m Loading the certificate and key for HTTPS mode...`,
     );
@@ -40,8 +39,10 @@ function bootSSL(app, port = 3001, onReady) {
         new BackgroundService().boot();
         await eagerLoadContextWindows();
         if (onReady) await onReady();
-        // eslint-disable-next-line no-console
-        consoleLogger.log(`Primary server in HTTPS mode listening on port ${port}`);
+
+        consoleLogger.log(
+          `Primary server in HTTPS mode listening on port ${port}`,
+        );
       })
       .on("error", handleServerError);
 
@@ -49,7 +50,6 @@ function bootSSL(app, port = 3001, onReady) {
     registerSignalHandlers();
     return { app, server };
   } catch (e) {
-    // eslint-disable-next-line no-console
     consoleLogger.error(
       `\x1b[31m[SSL BOOT FAILED]\x1b[0m ${e.message} - falling back to HTTP boot.`,
       {
@@ -75,8 +75,10 @@ function bootHTTP(app, port = 3001, onReady) {
       new BackgroundService().boot();
       await eagerLoadContextWindows();
       if (onReady) await onReady();
-      // eslint-disable-next-line no-console
-      consoleLogger.log(`Primary server in HTTP mode listening on port ${port}`);
+
+      consoleLogger.log(
+        `Primary server in HTTP mode listening on port ${port}`,
+      );
     })
     .on("error", handleServerError);
 
@@ -92,7 +94,6 @@ function registerSignalHandlers() {
 }
 
 function handleServerError(error) {
-  // eslint-disable-next-line no-console
   consoleLogger.error(
     `\x1b[31m[SERVER ERROR]\x1b[0m ${error?.message || "Unknown error"}`,
     error,

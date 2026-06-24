@@ -72,7 +72,6 @@ class GeminiLLM {
   }
 
   #log(text, ...args) {
-    // eslint-disable-next-line no-console
     consoleLogger.log(`\x1b[32m[${this.className}]\x1b[0m ${text}`, ...args);
   }
 
@@ -119,7 +118,6 @@ class GeminiLLM {
         );
       return model.contextWindow;
     } catch (e) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`GeminiLLM:promptWindowLimit`, e.message);
       return MODEL_MAP.get("gemini", modelName) ?? 30_720;
     }
@@ -137,7 +135,6 @@ class GeminiLLM {
         );
       return model.contextWindow;
     } catch (e) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`GeminiLLM:promptWindowLimit`, e.message);
       return MODEL_MAP.get("gemini", this.model) ?? 30_720;
     }
@@ -228,12 +225,10 @@ class GeminiLLM {
             });
         })
         .catch((e) => {
-          // eslint-disable-next-line no-console
           consoleLogger.error(`Gemini:getGeminiModelsV1`, e.message);
           return;
         });
     } catch (e) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`Gemini:getGeminiModelsV1`, e.message);
     }
 
@@ -278,17 +273,14 @@ class GeminiLLM {
             });
         })
         .catch((e) => {
-          // eslint-disable-next-line no-console
           consoleLogger.error(`Gemini:getGeminiModelsV1beta`, e.message);
           return;
         });
     } catch (e) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`Gemini:getGeminiModelsV1beta`, e.message);
     }
 
     if (allModels.length === 0) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`Gemini:getGeminiModels - No models found`);
       return defaultGeminiModels();
     }
@@ -396,7 +388,6 @@ class GeminiLLM {
           temperature: temperature,
         })
         .catch((e) => {
-          // eslint-disable-next-line no-console
           consoleLogger.error(e);
           throw new Error(e.message);
         }),

@@ -11,7 +11,6 @@ const WorkspaceSuggestedMessages = {
       });
       return message || null;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return null;
     }
@@ -25,7 +24,6 @@ const WorkspaceSuggestedMessages = {
       });
       return messages;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return [];
     }
@@ -69,7 +67,6 @@ const WorkspaceSuggestedMessages = {
         ),
       ]);
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("Failed to save all messages", error.message);
       return [];
     }
@@ -93,7 +90,6 @@ const WorkspaceSuggestedMessages = {
         message: msg.message,
       }));
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("Failed to get all messages", error.message);
       return [];
     }

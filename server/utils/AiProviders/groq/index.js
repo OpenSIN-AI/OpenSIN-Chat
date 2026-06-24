@@ -45,7 +45,6 @@ class GroqLLM {
   }
 
   #log(text, ...args) {
-    // eslint-disable-next-line no-console
     consoleLogger.log(`\x1b[32m[GroqAi]\x1b[0m ${text}`, ...args);
   }
 

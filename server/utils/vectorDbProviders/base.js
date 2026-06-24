@@ -198,8 +198,10 @@ class VectorDatabase {
   }
 
   logger(message = null, ...args) {
-    // eslint-disable-next-line no-console
-    consoleLogger.log(`\x1b[36m[VectorDB::${this.name}]\x1b[0m ${message}`, ...args);
+    consoleLogger.log(
+      `\x1b[36m[VectorDB::${this.name}]\x1b[0m ${message}`,
+      ...args,
+    );
   }
 }
 

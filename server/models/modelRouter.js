@@ -63,7 +63,6 @@ const ModelRouter = {
       });
       return { router, error: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       // P2002 is the unique constraint violation error code
       if (
@@ -85,7 +84,6 @@ const ModelRouter = {
       });
       return router || null;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return null;
     }
@@ -104,7 +102,6 @@ const ModelRouter = {
       if (!router) return null;
       return { ...router, rules: router.rules.map(ModelRouterRule._hydrate) };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return null;
     }
@@ -128,7 +125,6 @@ const ModelRouter = {
         workspaceCount,
       };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return null;
     }
@@ -143,7 +139,6 @@ const ModelRouter = {
       });
       return results;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return [];
     }
@@ -183,7 +178,6 @@ const ModelRouter = {
         workspaceCount: countMap.get(router.id) || 0,
       }));
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return [];
     }
@@ -233,7 +227,6 @@ const ModelRouter = {
       });
       return { router, error: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       // P2002 is the unique constraint violation error code
       if (
@@ -257,7 +250,6 @@ const ModelRouter = {
       });
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return false;
     }
@@ -270,7 +262,6 @@ const ModelRouter = {
       });
       return count;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return 0;
     }

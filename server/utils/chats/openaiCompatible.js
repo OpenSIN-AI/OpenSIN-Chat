@@ -519,7 +519,7 @@ function formatJSON(
 ) {
   const data = {
     id: chat.uuid ?? chat.id,
-    object: "chat.completion",
+    object: chunked ? "chat.completion.chunk" : "chat.completion",
     created: Math.floor(Number(new Date()) / 1000),
     model: model,
     choices: [

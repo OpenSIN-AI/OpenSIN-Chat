@@ -106,7 +106,6 @@ function apiWorkspaceThreadEndpoints(app) {
         });
         response.status(200).json({ thread, message });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -188,7 +187,6 @@ function apiWorkspaceThreadEndpoints(app) {
         );
         response.status(200).json({ thread: updatedThread, message });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -238,7 +236,6 @@ function apiWorkspaceThreadEndpoints(app) {
         });
         response.sendStatus(200);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -319,7 +316,6 @@ function apiWorkspaceThreadEndpoints(app) {
 
         response.status(200).json({ history: convertToChatHistory(history) });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -448,7 +444,8 @@ function apiWorkspaceThreadEndpoints(app) {
           reset,
         });
         await Telemetry.sendTelemetry("sent_chat", {
-          LLMSelection: process.env.LLM_PROVIDER || "openai",
+          LLMSelection:
+            workspace.chatProvider ?? process.env.LLM_PROVIDER ?? "openai",
           Embedder: process.env.EMBEDDING_ENGINE || "inherit",
           VectorDbSelection: process.env.VECTOR_DB || "lancedb",
           TTSSelection: process.env.TTS_PROVIDER || "native",
@@ -462,7 +459,6 @@ function apiWorkspaceThreadEndpoints(app) {
         });
         response.status(200).json({ ...result });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e?.message || "Unknown error", e);
         response.status(500).json({
           id: uuidv4(),
@@ -636,7 +632,8 @@ function apiWorkspaceThreadEndpoints(app) {
         stopHeartbeat();
         stopHeartbeat = null;
         await Telemetry.sendTelemetry("sent_chat", {
-          LLMSelection: process.env.LLM_PROVIDER || "openai",
+          LLMSelection:
+            workspace.chatProvider ?? process.env.LLM_PROVIDER ?? "openai",
           Embedder: process.env.EMBEDDING_ENGINE || "inherit",
           VectorDbSelection: process.env.VECTOR_DB || "lancedb",
           TTSSelection: process.env.TTS_PROVIDER || "native",
@@ -651,7 +648,7 @@ function apiWorkspaceThreadEndpoints(app) {
         response.end();
       } catch (e) {
         if (stopHeartbeat) stopHeartbeat();
-        // eslint-disable-next-line no-console
+
         consoleLogger.error(e?.message || "Unknown error", e);
         writeResponseChunk(response, {
           id: uuidv4(),

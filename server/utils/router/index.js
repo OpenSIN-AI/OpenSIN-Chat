@@ -83,12 +83,10 @@ class ModelRouterService {
   }
 
   log(text, ...args) {
-    // eslint-disable-next-line no-console
     consoleLogger.log(`${this.LOG_PREFIX} ${text}`, ...args);
   }
 
   logIndent(text, ...args) {
-    // eslint-disable-next-line no-console
     consoleLogger.log(`${this.LOG_PREFIX}   ${text}`, ...args);
   }
 

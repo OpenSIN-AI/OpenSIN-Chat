@@ -119,8 +119,9 @@ class PoliticianDB {
       });
       return results;
     } catch (err) {
-      // eslint-disable-next-line no-console
-      consoleLogger.error(`[PoliticianDB] searchPoliticians error: ${err.message}`);
+      consoleLogger.error(
+        `[PoliticianDB] searchPoliticians error: ${err.message}`,
+      );
       return [];
     }
   }
@@ -247,7 +248,6 @@ class PoliticianDB {
 
       return { ...politician, _stats: { speechCount, voteCount } };
     } catch (err) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`[PoliticianDB] getPolitician error: ${err.message}`);
       return null;
     }
@@ -270,8 +270,9 @@ class PoliticianDB {
         skip: options.offset || 0,
       });
     } catch (err) {
-      // eslint-disable-next-line no-console
-      consoleLogger.error(`[PoliticianDB] getVotingRecord error: ${err.message}`);
+      consoleLogger.error(
+        `[PoliticianDB] getVotingRecord error: ${err.message}`,
+      );
       return [];
     }
   }
@@ -312,7 +313,6 @@ class PoliticianDB {
         },
       });
     } catch (err) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`[PoliticianDB] getSpeeches error: ${err.message}`);
       return [];
     }
@@ -331,7 +331,6 @@ class PoliticianDB {
         take: 1000,
       });
     } catch (err) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`[PoliticianDB] getMandates error: ${err.message}`);
       return [];
     }
@@ -360,8 +359,9 @@ class PoliticianDB {
       if (isNaN(awId)) return [];
       return await this.abgeordnetenwatch.getVotingRecord(awId);
     } catch (err) {
-      // eslint-disable-next-line no-console
-      consoleLogger.error(`[PoliticianDB] fetchLiveVotes error: ${err.message}`);
+      consoleLogger.error(
+        `[PoliticianDB] fetchLiveVotes error: ${err.message}`,
+      );
       return [];
     }
   }
@@ -418,7 +418,6 @@ class PoliticianDB {
         .filter((g) => g.source)
         .map((g) => ({ source: g.source, count: g._count._all }));
     } catch (err) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`[PoliticianDB] getSources error: ${err.message}`);
       return [];
     }
@@ -480,7 +479,6 @@ class PoliticianDB {
 
       return { lastSync, isHealthy, sources: sourcesWithHealth, retryQueue };
     } catch (err) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`[PoliticianDB] getSyncStatus error: ${err.message}`);
       return { lastSync: null, isHealthy: false, sources: [], retryQueue: [] };
     }
@@ -505,7 +503,6 @@ class PoliticianDB {
         lastError: e.lastError,
       }));
     } catch (err) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`[PoliticianDB] getRetryQueue error: ${err.message}`);
       return [];
     }

@@ -30,7 +30,6 @@ const BrowserExtensionApiKey = {
       });
       return { apiKey, error: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("Failed to create browser extension API key", error);
       return { apiKey: null, error: error.message };
     }
@@ -55,7 +54,6 @@ const BrowserExtensionApiKey = {
       // In multi-user mode, check if the key is associated with a user
       return apiKey.user_id ? apiKey : false;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(
         "FAILED TO VALIDATE BROWSER EXTENSION API KEY.",
         error.message,
@@ -76,8 +74,10 @@ const BrowserExtensionApiKey = {
       });
       return apiKey;
     } catch (error) {
-      // eslint-disable-next-line no-console
-      consoleLogger.error("FAILED TO GET BROWSER EXTENSION API KEY.", error.message);
+      consoleLogger.error(
+        "FAILED TO GET BROWSER EXTENSION API KEY.",
+        error.message,
+      );
       return null;
     }
   },
@@ -94,7 +94,6 @@ const BrowserExtensionApiKey = {
       });
       return { success: true, error: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("Failed to delete browser extension API key", error);
       return { success: false, error: error.message };
     }
@@ -114,7 +113,6 @@ const BrowserExtensionApiKey = {
       });
       return { success: true, error: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(
         "Failed to delete browser extension API keys for user",
         error,
@@ -142,8 +140,10 @@ const BrowserExtensionApiKey = {
       });
       return apiKeys;
     } catch (error) {
-      // eslint-disable-next-line no-console
-      consoleLogger.error("FAILED TO GET BROWSER EXTENSION API KEYS.", error.message);
+      consoleLogger.error(
+        "FAILED TO GET BROWSER EXTENSION API KEYS.",
+        error.message,
+      );
       return [];
     }
   },
@@ -180,7 +180,6 @@ const BrowserExtensionApiKey = {
       });
       return apiKeys;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return [];
     }
@@ -202,8 +201,10 @@ const BrowserExtensionApiKey = {
         },
       });
     } catch (error) {
-      // eslint-disable-next-line no-console
-      consoleLogger.error("Error migrating API keys to multi-user mode:", error);
+      consoleLogger.error(
+        "Error migrating API keys to multi-user mode:",
+        error,
+      );
     }
   },
 };

@@ -87,7 +87,6 @@ function dockerModelRunnerUtilsEndpoints(app) {
           }
         }
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         if (!response.writableEnded)
           response.write(

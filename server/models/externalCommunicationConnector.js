@@ -24,7 +24,6 @@ const ExternalCommunicationConnector = {
         config: safeJsonParse(connector.config, {}),
       };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("ExternalCommunicationConnector.get", error.message);
       return null;
     }
@@ -73,8 +72,10 @@ const ExternalCommunicationConnector = {
         error: null,
       };
     } catch (error) {
-      // eslint-disable-next-line no-console
-      consoleLogger.error("ExternalCommunicationConnector.upsert", error.message);
+      consoleLogger.error(
+        "ExternalCommunicationConnector.upsert",
+        error.message,
+      );
       return { connector: null, error: error.message };
     }
   },
@@ -124,7 +125,6 @@ const ExternalCommunicationConnector = {
         error: null,
       };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(
         "ExternalCommunicationConnector.updateConfig",
         error.message,
@@ -145,8 +145,10 @@ const ExternalCommunicationConnector = {
       });
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
-      consoleLogger.error("ExternalCommunicationConnector.delete", error.message);
+      consoleLogger.error(
+        "ExternalCommunicationConnector.delete",
+        error.message,
+      );
       return false;
     }
   },

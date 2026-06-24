@@ -92,7 +92,6 @@ async function openAiModels(apiKey = null) {
     .list()
     .then((results) => results.data)
     .catch((e) => {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`OpenAI:listModels`, e.message);
       return [
         {
@@ -215,7 +214,6 @@ async function openAiSttModels(apiKey = null) {
     .list()
     .then((results) => results.data)
     .catch((e) => {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`OpenAI:listModels (stt)`, e.message);
       return null;
     });
@@ -258,7 +256,6 @@ async function anthropicModels(_apiKey = null) {
         });
     })
     .catch((e) => {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`Anthropic:listModels`, e.message);
       return [];
     });
@@ -278,7 +275,6 @@ async function localAIModels(basePath = null, apiKey = null) {
     .list()
     .then((results) => results.data)
     .catch((e) => {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`LocalAI:listModels`, e.message);
       return [];
     });
@@ -304,7 +300,6 @@ async function getGroqAiModels(_apiKey = null) {
       .list()
       .then((results) => results.data)
       .catch((e) => {
-        // eslint-disable-next-line no-console
         consoleLogger.error(`GroqAi:listModels`, e.message);
         return [];
       })
@@ -327,7 +322,6 @@ async function liteLLMModels(basePath = null, apiKey = null) {
     .list()
     .then((results) => results.data)
     .catch((e) => {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`LiteLLM:listModels`, e.message);
       return [];
     });
@@ -355,14 +349,12 @@ async function getLMStudioModels(basePath = null, _apiKey = null) {
       .list()
       .then((results) => results.data)
       .catch((e) => {
-        // eslint-disable-next-line no-console
         consoleLogger.error(`LMStudio:listModels`, e.message);
         return [];
       });
 
     return { models, error: null };
   } catch (e) {
-    // eslint-disable-next-line no-console
     consoleLogger.error(`LMStudio:getLMStudioModels`, e.message);
     return { models: [], error: "Could not fetch LMStudio Models" };
   }
@@ -395,7 +387,6 @@ async function ollamaAIModels(basePath = null, _authToken = null) {
       }),
     )
     .catch((e) => {
-      // eslint-disable-next-line no-console
       consoleLogger.error(e);
       return [];
     });
@@ -434,7 +425,6 @@ async function getMistralModels(apiKey = null) {
       results.data.filter((model) => !model.id.includes("embed")),
     )
     .catch((e) => {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`Mistral:listModels`, e.message);
       return [];
     });
@@ -459,7 +449,6 @@ async function getXAIModels(_apiKey = null) {
     .list()
     .then((results) => results.data)
     .catch((e) => {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`XAI:listModels`, e.message);
       return [
         {
@@ -502,7 +491,6 @@ async function getNvidiaNimModels(basePath = null) {
 
     return { models, error: null };
   } catch (e) {
-    // eslint-disable-next-line no-console
     consoleLogger.error(`NVIDIA NIM:getNvidiaNimModels`, e.message);
     return { models: [], error: "Could not fetch NVIDIA NIM Models" };
   }
@@ -536,8 +524,10 @@ async function getDockerModelRunnerModels(basePath = null) {
     const models = await getDockerModels(basePath);
     return { models, error: null };
   } catch (e) {
-    // eslint-disable-next-line no-console
-    consoleLogger.error(`DockerModelRunner:getDockerModelRunnerModels`, e.message);
+    consoleLogger.error(
+      `DockerModelRunner:getDockerModelRunnerModels`,
+      e.message,
+    );
     return {
       models: [],
       error: "Could not fetch Docker Model Runner Models",
@@ -584,7 +574,6 @@ async function getDeepgramSTTModels(_apiKey = null) {
     if (models.length > 0 && _apiKey) process.env.STT_DEEPGRAM_API_KEY = apiKey;
     return { models, error: null };
   } catch (e) {
-    // eslint-disable-next-line no-console
     consoleLogger.error(`Deepgram:getDeepgramSTTModels`, e.message);
     return { models: [], error: "Could not fetch Deepgram STT models" };
   }
@@ -650,7 +639,6 @@ async function getOpencodeZenModels() {
         })),
       )
       .catch((e) => {
-        // eslint-disable-next-line no-console
         consoleLogger.error(`OpencodeZen:listModels`, e.message);
         return [];
       });
@@ -658,7 +646,6 @@ async function getOpencodeZenModels() {
     if (models.length > 0) return { models, error: null };
     return { models: fallback, error: null };
   } catch (e) {
-    // eslint-disable-next-line no-console
     consoleLogger.error(`OpencodeZen:getOpencodeZenModels`, e.message);
     return { models: fallback, error: null };
   }
@@ -764,7 +751,6 @@ async function getGenericOpenAiModels(basePath = null, apiKey = null) {
         })),
       )
       .catch((e) => {
-        // eslint-disable-next-line no-console
         consoleLogger.error(`GenericOpenAI:listModels`, e.message);
         return null;
       });
@@ -775,7 +761,6 @@ async function getGenericOpenAiModels(basePath = null, apiKey = null) {
     if (!!apiKey) process.env.GENERIC_OPEN_AI_API_KEY = apiKey;
     return { models, error: null };
   } catch (e) {
-    // eslint-disable-next-line no-console
     consoleLogger.error(`GenericOpenAI:getGenericOpenAiModels`, e.message);
     return { models: FIREWORKS_GENERIC_OPENAI_FALLBACK_MODELS, error: null };
   }
@@ -807,7 +792,6 @@ async function kokoroTtsVoices(basePath = null, apiKey = null) {
     })
     .then((data) => (Array.isArray(data?.voices) ? data.voices : []))
     .catch((e) => {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`Kokoro:listVoices`, e.message);
       return null;
     });

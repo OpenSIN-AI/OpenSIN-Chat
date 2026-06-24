@@ -25,7 +25,6 @@ class AgentOrchestrator {
   }
 
   log(text, ...args) {
-    // eslint-disable-next-line no-console
     consoleLogger.log(`\x1b[38;5;141m[Orchestrator]\x1b[0m ${text}`, ...args);
   }
 

@@ -28,7 +28,6 @@ function skillIsAutoApproved({ skillName }) {
   )
     return false;
 
-  // eslint-disable-next-line no-console
   consoleLogger.log(
     chalk.green(
       `Skill ${skillName} is auto-approved by the ENV variable AGENT_AUTO_APPROVED_SKILLS.`,

@@ -200,11 +200,11 @@ class CrossCheckPipeline {
       } else if (r.kind === "web") {
         if (perClaim[r.claimIdx]) {
           perClaim[r.claimIdx].webResearch = {
-          overall: r.overall,
-          sourcesChecked: r.sourcesChecked,
-          supports: r.supports,
-          contradicts: r.contradicts,
-          evidence: r.evidence,
+            overall: r.overall,
+            sourcesChecked: r.sourcesChecked,
+            supports: r.supports,
+            contradicts: r.contradicts,
+            evidence: r.evidence,
           };
         }
       }

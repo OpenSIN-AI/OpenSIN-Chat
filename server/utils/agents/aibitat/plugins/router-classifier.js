@@ -117,8 +117,10 @@ async function classifyWithLLM(rules, prompt, router) {
       validRules.find((rule) => rule.title.toLowerCase() === selected) || null
     );
   } catch (error) {
-    // eslint-disable-next-line no-console
-    consoleLogger.error("[RouterClassifier] Classification failed:", error.message);
+    consoleLogger.error(
+      "[RouterClassifier] Classification failed:",
+      error.message,
+    );
     return null;
   }
 }

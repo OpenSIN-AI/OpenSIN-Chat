@@ -103,7 +103,6 @@ function outlookAgentEndpoints(app) {
 
         return response.status(200).json({ success: true, url: result.url });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Outlook auth URL error:", e);
         response
           .status(500)
@@ -128,7 +127,6 @@ function outlookAgentEndpoints(app) {
         const { code, error, error_description } = request.query;
 
         if (error) {
-          // eslint-disable-next-line no-console
           consoleLogger.error("Outlook OAuth error:", error, error_description);
           return response.redirect(
             `/?outlook_auth=error&message=${encodeURIComponent(error_description || error)}`,
@@ -163,7 +161,6 @@ function outlookAgentEndpoints(app) {
           `${frontendUrl}/settings/agents?outlook_auth=success`,
         );
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Outlook OAuth callback error:", e);
         response.redirect(
           `/?outlook_auth=error&message=${encodeURIComponent(e.message)}`,
@@ -204,7 +201,6 @@ function outlookAgentEndpoints(app) {
           config: safeConfig,
         });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Outlook status error:", e);
         response
           .status(500)
@@ -224,7 +220,6 @@ function outlookAgentEndpoints(app) {
         outlookLib.reset();
         return response.status(200).json({ success: true });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Outlook revoke error:", e);
         response
           .status(500)

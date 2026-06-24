@@ -194,10 +194,11 @@ export default forwardRef(function (
       if (!editedMessage) return;
 
       if (role === "user" && saveOnly) {
-        const updatedHistory = [...history];
         const targetIdx = history.findIndex((msg) => msg.chatId === chatId);
         if (targetIdx < 0) return;
-        updatedHistory[targetIdx].content = editedMessage;
+        const updatedHistory = history.map((msg, idx) =>
+          idx === targetIdx ? { ...msg, content: editedMessage } : msg,
+        );
         updateHistory(updatedHistory);
         await Workspace.updateChat(
           workspace.slug,
@@ -214,7 +215,10 @@ export default forwardRef(function (
         const targetIdx = history.findIndex((msg) => msg.chatId === chatId);
         if (targetIdx < 0) return;
         const updatedHistory = history.slice(0, targetIdx + 1);
-        updatedHistory[updatedHistory.length - 1].content = editedMessage;
+        updatedHistory[updatedHistory.length - 1] = {
+          ...updatedHistory[updatedHistory.length - 1],
+          content: editedMessage,
+        };
         await Workspace.deleteEditedChats(workspace.slug, threadSlug, chatId);
         sendCommand({
           text: editedMessage,
@@ -226,12 +230,13 @@ export default forwardRef(function (
       }
 
       if (role === "assistant") {
-        const updatedHistory = [...history];
         const targetIdx = history.findIndex(
           (msg) => msg.chatId === chatId && msg.role === role,
         );
         if (targetIdx < 0) return;
-        updatedHistory[targetIdx].content = editedMessage;
+        const updatedHistory = history.map((msg, idx) =>
+          idx === targetIdx ? { ...msg, content: editedMessage } : msg,
+        );
         updateHistory(updatedHistory);
         await Workspace.updateChat(
           workspace.slug,
@@ -253,6 +258,7 @@ export default forwardRef(function (
         threadSlug,
         chatId,
       );
+      if (!newThreadSlug) return;
       invalidateChatHistory(workspace.slug, threadSlug);
       window.location.href = paths.workspace.thread(
         workspace.slug,

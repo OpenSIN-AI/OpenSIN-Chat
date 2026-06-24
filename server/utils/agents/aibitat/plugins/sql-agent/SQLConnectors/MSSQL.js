@@ -93,7 +93,6 @@ class MSSQLConnector {
       result.rows = query.recordset;
       result.count = query.rowsAffected.reduce((sum, a) => sum + a, 0);
     } catch (err) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(this.className, err);
       result.error = err.message;
     } finally {

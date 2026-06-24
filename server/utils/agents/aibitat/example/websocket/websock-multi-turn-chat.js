@@ -56,7 +56,9 @@ app.all("*", function (_, response) {
 });
 
 app.listen(port, () => {
-  consoleLogger.log(`Testing HTTP/WSS server listening at http://localhost:${port}`);
+  consoleLogger.log(
+    `Testing HTTP/WSS server listening at http://localhost:${port}`,
+  );
 });
 
 const Agent = {

@@ -45,7 +45,7 @@ function healthEndpoints(app) {
     async (request, response) => {
       if (process.env.NODE_ENV !== "production")
         return response.sendStatus(200);
-      // eslint-disable-next-line no-console
+
       consoleLogger.warn(
         `\x1b[33m[ENV-DUMP]\x1b[0m triggered by ip=${request.ip || "unknown"}`,
       );
@@ -59,7 +59,6 @@ function healthEndpoints(app) {
       const results = await SystemSettings.isOnboardingComplete();
       response.status(200).json({ onboardingComplete: results });
     } catch (e) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }
@@ -73,7 +72,6 @@ function healthEndpoints(app) {
         await SystemSettings.markOnboardingComplete();
         response.sendStatus(200);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -85,7 +83,6 @@ function healthEndpoints(app) {
       const results = await SystemSettings.currentSettings();
       response.status(200).json({ results });
     } catch (e) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }

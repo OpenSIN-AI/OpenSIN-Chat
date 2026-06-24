@@ -305,7 +305,6 @@ async function streamChatWithWorkspace(
   // Early exit if the client already disconnected during the prep work
   // (vector search, doc fetching, prompt assembly).
   if (response.writableEnded || response.destroyed) {
-    // eslint-disable-next-line no-console
     consoleLogger.log(
       `\x1b[43m\x1b[34m[STREAM ABORTED]\x1b[0m Client disconnected before LLM call. Skipping generation.`,
     );
@@ -315,7 +314,6 @@ async function streamChatWithWorkspace(
   // If streaming is not explicitly enabled for connector
   // we do regular waiting of a response and send a single chunk.
   if (LLMConnector.streamingEnabled() !== true) {
-    // eslint-disable-next-line no-console
     consoleLogger.log(
       `\x1b[31m[STREAMING DISABLED]\x1b[0m Streaming is not available for ${LLMConnector.constructor.name}. Will use regular chat method.`,
     );
@@ -339,7 +337,6 @@ async function streamChatWithWorkspace(
     response.removeListener("close", onClientClose);
 
     if (clientDisconnected) {
-      // eslint-disable-next-line no-console
       consoleLogger.log(
         `\x1b[43m\x1b[34m[STREAM ABORTED]\x1b[0m Client disconnected during non-streaming completion. Skipping write.`,
       );
@@ -374,7 +371,7 @@ async function streamChatWithWorkspace(
         LLMConnector.className ||
         LLMConnector.constructor?.name ||
         "LLM provider";
-      // eslint-disable-next-line no-console
+
       consoleLogger.error(
         `\x1b[31m[STREAM FAILED]\x1b[0m ${providerName} returned a null stream. The provider is likely misconfigured or the API key is invalid.`,
       );

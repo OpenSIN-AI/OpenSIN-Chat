@@ -40,7 +40,6 @@ function dataExportEndpoints(app) {
 
         response.status(200).json({ logs: logs, hasPages, totalLogs });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -60,7 +59,6 @@ function dataExportEndpoints(app) {
         );
         response.json({ success: true });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -90,7 +88,6 @@ function dataExportEndpoints(app) {
 
         response.status(200).json({ chats: chats, hasPages, totalChats });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -108,7 +105,6 @@ function dataExportEndpoints(app) {
           : await WorkspaceChats.delete({ id: Number(id) });
         response.json({ success: true, error: null });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -150,7 +146,6 @@ function dataExportEndpoints(app) {
         );
         response.status(200).send(data);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -204,7 +199,6 @@ function dataExportEndpoints(app) {
         response.setHeader("Content-Length", Buffer.byteLength(data));
         response.status(200).send(data);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }

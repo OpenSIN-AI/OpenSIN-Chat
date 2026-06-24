@@ -27,10 +27,9 @@ const TELEGRAM_BOT_TYPE = "telegram";
  */
 async function validateBotToken(botToken) {
   try {
-    const res = await fetch(
-      `${TELEGRAM_API_BASE}/bot${botToken}/getMe`,
-      { signal: AbortSignal.timeout(10_000) },
-    );
+    const res = await fetch(`${TELEGRAM_API_BASE}/bot${botToken}/getMe`, {
+      signal: AbortSignal.timeout(10_000),
+    });
     const data = await res.json();
     if (!data.ok) {
       return {
@@ -77,9 +76,8 @@ function telegramEndpoints(app) {
     [validatedRequest, flexUserRoleValid([ROLES.admin])],
     async (_request, response) => {
       try {
-        const connector = await ExternalCommunicationConnector.get(
-          TELEGRAM_BOT_TYPE,
-        );
+        const connector =
+          await ExternalCommunicationConnector.get(TELEGRAM_BOT_TYPE);
         const config = buildConfigResponse(connector);
         return response.status(200).json({ config, error: null });
       } catch (e) {
@@ -132,9 +130,7 @@ function telegramEndpoints(app) {
         );
 
         if (error) {
-          return response
-            .status(400)
-            .json({ success: false, error });
+          return response.status(400).json({ success: false, error });
         }
 
         return response.status(200).json({
@@ -171,9 +167,8 @@ function telegramEndpoints(app) {
     [validatedRequest, flexUserRoleValid([ROLES.admin])],
     async (_request, response) => {
       try {
-        const connector = await ExternalCommunicationConnector.get(
-          TELEGRAM_BOT_TYPE,
-        );
+        const connector =
+          await ExternalCommunicationConnector.get(TELEGRAM_BOT_TYPE);
         if (!connector) {
           return response
             .status(200)
@@ -185,9 +180,7 @@ function telegramEndpoints(app) {
         });
       } catch (e) {
         consoleLogger.error("Telegram status error:", e);
-        return response
-          .status(500)
-          .json({ active: false, bot_username: null });
+        return response.status(500).json({ active: false, bot_username: null });
       }
     },
   );
@@ -197,9 +190,8 @@ function telegramEndpoints(app) {
     [validatedRequest, flexUserRoleValid([ROLES.admin])],
     async (_request, response) => {
       try {
-        const connector = await ExternalCommunicationConnector.get(
-          TELEGRAM_BOT_TYPE,
-        );
+        const connector =
+          await ExternalCommunicationConnector.get(TELEGRAM_BOT_TYPE);
         const users = connector?.config?.pending_users || [];
         return response.status(200).json({ users });
       } catch (e) {
@@ -214,9 +206,8 @@ function telegramEndpoints(app) {
     [validatedRequest, flexUserRoleValid([ROLES.admin])],
     async (_request, response) => {
       try {
-        const connector = await ExternalCommunicationConnector.get(
-          TELEGRAM_BOT_TYPE,
-        );
+        const connector =
+          await ExternalCommunicationConnector.get(TELEGRAM_BOT_TYPE);
         const users = connector?.config?.approved_users || [];
         return response.status(200).json({ users });
       } catch (e) {
@@ -238,9 +229,8 @@ function telegramEndpoints(app) {
             .json({ success: false, error: "chatId is required" });
         }
 
-        const connector = await ExternalCommunicationConnector.get(
-          TELEGRAM_BOT_TYPE,
-        );
+        const connector =
+          await ExternalCommunicationConnector.get(TELEGRAM_BOT_TYPE);
         if (!connector) {
           return response
             .status(400)
@@ -248,7 +238,9 @@ function telegramEndpoints(app) {
         }
 
         const cfg = connector.config || {};
-        const pending = Array.isArray(cfg.pending_users) ? cfg.pending_users : [];
+        const pending = Array.isArray(cfg.pending_users)
+          ? cfg.pending_users
+          : [];
         const approved = Array.isArray(cfg.approved_users)
           ? cfg.approved_users
           : [];
@@ -296,9 +288,8 @@ function telegramEndpoints(app) {
             .json({ success: false, error: "chatId is required" });
         }
 
-        const connector = await ExternalCommunicationConnector.get(
-          TELEGRAM_BOT_TYPE,
-        );
+        const connector =
+          await ExternalCommunicationConnector.get(TELEGRAM_BOT_TYPE);
         if (!connector) {
           return response
             .status(400)
@@ -306,7 +297,9 @@ function telegramEndpoints(app) {
         }
 
         const cfg = connector.config || {};
-        const pending = Array.isArray(cfg.pending_users) ? cfg.pending_users : [];
+        const pending = Array.isArray(cfg.pending_users)
+          ? cfg.pending_users
+          : [];
 
         const userIndex = pending.findIndex(
           (u) => String(u.chatId) === String(chatId),
@@ -350,9 +343,8 @@ function telegramEndpoints(app) {
             .json({ success: false, error: "chatId is required" });
         }
 
-        const connector = await ExternalCommunicationConnector.get(
-          TELEGRAM_BOT_TYPE,
-        );
+        const connector =
+          await ExternalCommunicationConnector.get(TELEGRAM_BOT_TYPE);
         if (!connector) {
           return response
             .status(400)

@@ -80,7 +80,6 @@ const Document = {
       ]);
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return false;
     }
@@ -93,7 +92,6 @@ const Document = {
       });
       return document || null;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return null;
     }
@@ -132,7 +130,6 @@ const Document = {
       });
       return results;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return [];
     }
@@ -157,118 +154,114 @@ const Document = {
 
     try {
       for (const [index, path] of additions.entries()) {
-      const docProgress = {
-        workspaceSlug: workspace.slug,
-        userId,
-        filename: path,
-        docIndex: index,
-        totalDocs: additions.length,
-      };
+        const docProgress = {
+          workspaceSlug: workspace.slug,
+          userId,
+          filename: path,
+          docIndex: index,
+          totalDocs: additions.length,
+        };
 
-      let data;
-      try {
-        data = await fileData(path);
-      } catch (err) {
-        consoleLogger.error("Error loading file data:", err.message);
-        data = null;
-      }
-      if (!data) {
-        emitProgress(workspace.slug, {
-          type: "doc_failed",
-          ...docProgress,
-          error: "Failed to load file data",
-        });
-        failedToEmbed.push(path);
-        continue;
-      }
-
-      const docId = uuidv4();
-      const { pageContent: _pageContent, ...metadata } = data;
-      const newDoc = {
-        docId,
-        filename: path.split("/").pop() || path,
-        docpath: path,
-        workspaceId: workspace.id,
-        metadata: JSON.stringify(metadata),
-      };
-
-      emitProgress(workspace.slug, { type: "doc_starting", ...docProgress });
-
-      if (!global.__embeddingProgressMap)
-        global.__embeddingProgressMap = new Map();
-      global.__embeddingProgressMap.set(workspace.slug, {
-        workspaceSlug: workspace.slug,
-        filename: path,
-        userId,
-      });
-      global.__embeddingProgress = {
-        workspaceSlug: workspace.slug,
-        filename: path,
-        userId,
-      };
-
-      let vectorized = false;
-      let error;
-      try {
-        ({ vectorized, error } = await VectorDb.addDocumentToNamespace(
-          workspace.slug,
-          { ...data, docId },
-          path,
-        ));
-      } catch (vecErr) {
-        // eslint-disable-next-line no-console
-        consoleLogger.error("Vectorization threw:", vecErr.message);
-        error = vecErr.message || "Vectorization error";
-      }
-
-      if (!vectorized) {
-        // eslint-disable-next-line no-console
-        consoleLogger.error(
-          "Failed to vectorize",
-          metadata?.title || newDoc.filename,
-        );
-        failedToEmbed.push(metadata?.title || newDoc.filename);
-        errors.add(error);
-        emitProgress(workspace.slug, {
-          type: "doc_failed",
-          ...docProgress,
-          error: error || "Unknown error",
-        });
-        continue;
-      }
-
-      try {
-        await prisma.workspace_documents.create({ data: newDoc });
-        embedded.push(path);
-        emitProgress(workspace.slug, {
-          type: "doc_complete",
-          ...docProgress,
-        });
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        consoleLogger.error(error.message);
-        // Clean up orphaned vectors — the document was already added to the
-        // vector DB above, but the workspace_documents record failed to persist.
-        // Without this cleanup, vectors would exist with no DB record pointing
-        // to them, making them unqueryable and impossible to delete later.
+        let data;
         try {
-          await VectorDb.deleteDocumentFromNamespace(workspace.slug, docId);
-        } catch (cleanupErr) {
-          // eslint-disable-next-line no-console
-          consoleLogger.error(
-            "Failed to clean up orphaned vectors:",
-            cleanupErr.message,
-          );
+          data = await fileData(path);
+        } catch (err) {
+          consoleLogger.error("Error loading file data:", err.message);
+          data = null;
         }
-        failedToEmbed.push(metadata?.title || newDoc.filename);
-        errors.add(error.message || "Failed to save document record");
-        emitProgress(workspace.slug, {
-          type: "doc_failed",
-          ...docProgress,
-          error: "Failed to save document record",
+        if (!data) {
+          emitProgress(workspace.slug, {
+            type: "doc_failed",
+            ...docProgress,
+            error: "Failed to load file data",
+          });
+          failedToEmbed.push(path);
+          continue;
+        }
+
+        const docId = uuidv4();
+        const { pageContent: _pageContent, ...metadata } = data;
+        const newDoc = {
+          docId,
+          filename: path.split("/").pop() || path,
+          docpath: path,
+          workspaceId: workspace.id,
+          metadata: JSON.stringify(metadata),
+        };
+
+        emitProgress(workspace.slug, { type: "doc_starting", ...docProgress });
+
+        if (!global.__embeddingProgressMap)
+          global.__embeddingProgressMap = new Map();
+        global.__embeddingProgressMap.set(workspace.slug, {
+          workspaceSlug: workspace.slug,
+          filename: path,
+          userId,
         });
+        global.__embeddingProgress = {
+          workspaceSlug: workspace.slug,
+          filename: path,
+          userId,
+        };
+
+        let vectorized = false;
+        let error;
+        try {
+          ({ vectorized, error } = await VectorDb.addDocumentToNamespace(
+            workspace.slug,
+            { ...data, docId },
+            path,
+          ));
+        } catch (vecErr) {
+          consoleLogger.error("Vectorization threw:", vecErr.message);
+          error = vecErr.message || "Vectorization error";
+        }
+
+        if (!vectorized) {
+          consoleLogger.error(
+            "Failed to vectorize",
+            metadata?.title || newDoc.filename,
+          );
+          failedToEmbed.push(metadata?.title || newDoc.filename);
+          errors.add(error);
+          emitProgress(workspace.slug, {
+            type: "doc_failed",
+            ...docProgress,
+            error: error || "Unknown error",
+          });
+          continue;
+        }
+
+        try {
+          await prisma.workspace_documents.create({ data: newDoc });
+          embedded.push(path);
+          emitProgress(workspace.slug, {
+            type: "doc_complete",
+            ...docProgress,
+          });
+        } catch (error) {
+          consoleLogger.error(error.message);
+          // Clean up orphaned vectors — the document was already added to the
+          // vector DB above, but the workspace_documents record failed to persist.
+          // Without this cleanup, vectors would exist with no DB record pointing
+          // to them, making them unqueryable and impossible to delete later.
+          try {
+            await VectorDb.deleteDocumentFromNamespace(workspace.slug, docId);
+          } catch (cleanupErr) {
+            consoleLogger.error(
+              "Failed to clean up orphaned vectors:",
+              cleanupErr.message,
+            );
+          }
+          failedToEmbed.push(metadata?.title || newDoc.filename);
+          errors.add(error.message || "Failed to save document record");
+          emitProgress(workspace.slug, {
+            type: "doc_failed",
+            ...docProgress,
+            error: "Failed to save document record",
+          });
+        }
       }
-    }
     } finally {
       if (global.__embeddingProgressMap)
         global.__embeddingProgressMap.delete(workspace.slug);
@@ -364,7 +357,6 @@ const Document = {
       });
       return count;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("FAILED TO COUNT DOCUMENTS.", error.message);
       return 0;
     }
@@ -378,14 +370,16 @@ const Document = {
     if (validKeys.length === 0)
       return { document: { id }, message: "No valid fields to update!" };
 
+    const filteredData = {};
+    for (const key of validKeys) filteredData[key] = data[key];
+
     try {
       const document = await prisma.workspace_documents.update({
         where: { id },
-        data,
+        data: filteredData,
       });
       return { document, message: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return { document: null, message: error.message };
     }
@@ -398,7 +392,6 @@ const Document = {
       });
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return false;
     }
@@ -443,7 +436,6 @@ const Document = {
      */
     uploadToWorkspace: async function (wsSlugs = "", docLocation = null) {
       if (!docLocation)
-        // eslint-disable-next-line no-console
         return consoleLogger.error(
           "No document location provided for embedding",
           docLocation,
@@ -453,14 +445,15 @@ const Document = {
         .split(",")
         .map((slug) => String(slug)?.trim()?.toLowerCase());
       if (slugs.length === 0)
-        // eslint-disable-next-line no-console
         return consoleLogger.error(`No workspaces provided got: ${wsSlugs}`);
 
       const { Workspace } = require("./workspace");
       const workspaces = await Workspace.where({ slug: { in: slugs } });
       if (workspaces.length === 0)
-        // eslint-disable-next-line no-console
-        return consoleLogger.error("No valid workspaces found for slugs: ", slugs);
+        return consoleLogger.error(
+          "No valid workspaces found for slugs: ",
+          slugs,
+        );
 
       // Upsert the document into each workspace - do this sequentially
       // because the document may be large and we don't want to overwhelm the embedder, plus on the first
@@ -472,7 +465,6 @@ const Document = {
           [docLocation],
         );
         if (failedToEmbed.length > 0)
-          // eslint-disable-next-line no-console
           return consoleLogger.error(
             `Failed to embed document into workspace ${workspace.slug}`,
             errors,

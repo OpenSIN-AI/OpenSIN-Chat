@@ -9,6 +9,7 @@ const { EventLogs } = require("../../models/eventLogs");
 const {
   BrowserExtensionApiKey,
 } = require("../../models/browserExtensionApiKey");
+const { ApiKey } = require("../../models/apiKeys");
 const { SlashCommandPresets } = require("../../models/slashCommandsPresets");
 const { SystemPromptVariables } = require("../../models/systemPromptVariables");
 const { VALID_COMMANDS } = require("../../utils/chats");
@@ -89,6 +90,7 @@ function userManagementEndpoints(app) {
         }
 
         await BrowserExtensionApiKey.deleteAllForUser(id);
+        await ApiKey.deleteAllForUser(id);
         await User.delete({ id });
         await EventLogs.logEvent(
           "user_self_deleted",

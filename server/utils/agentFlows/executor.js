@@ -13,7 +13,7 @@ class FlowExecutor {
 
   constructor() {
     this.variables = {};
-    // eslint-disable-next-line no-console
+
     this.introspect = (...args) => consoleLogger.log("[introspect] ", ...args);
     // eslint-disable-next-line no-console
     this.logger = console.info;
@@ -22,8 +22,8 @@ class FlowExecutor {
 
   attachLogging(introspectFn = null, loggerFn = null) {
     this.introspect =
-      // eslint-disable-next-line no-console
-      introspectFn || ((...args) => consoleLogger.log("[introspect] ", ...args));
+      introspectFn ||
+      ((...args) => consoleLogger.log("[introspect] ", ...args));
     // eslint-disable-next-line no-console
     this.logger = loggerFn || console.info;
   }

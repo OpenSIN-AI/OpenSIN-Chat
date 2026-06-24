@@ -9,9 +9,7 @@ const {
 const {
   LLMPerformanceMonitor,
 } = require("../../helpers/chat/LLMPerformanceMonitor");
-const {
-  parseReasoningFromResponse,
-} = require("../../helpers/reasoningFilter");
+const { parseReasoningFromResponse } = require("../../helpers/reasoningFilter");
 const { OpenAI: OpenAIApi } = require("openai");
 
 //  hybrid of openAi LLM chat completion for LMStudio
@@ -50,12 +48,10 @@ class LMStudioLLM {
   }
 
   #log(text, ...args) {
-    // eslint-disable-next-line no-console
     consoleLogger.log(`\x1b[32m[LMStudio]\x1b[0m ${text}`, ...args);
   }
 
   static #slog(text, ...args) {
-    // eslint-disable-next-line no-console
     consoleLogger.log(`\x1b[32m[LMStudio]\x1b[0m ${text}`, ...args);
   }
 
@@ -329,7 +325,6 @@ class LMStudioLLM {
         vision: capabilities.vision,
       };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("Error getting model capabilities:", error);
       return {
         tools: "unknown",

@@ -32,7 +32,6 @@ function documentEndpoints(app) {
           : await VectorDb.totalVectors();
         response.status(200).json({ vectorCount });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -48,7 +47,6 @@ function documentEndpoints(app) {
         await purgeDocument(name);
         response.sendStatus(200);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -69,7 +67,6 @@ function documentEndpoints(app) {
         await Promise.all(names.map((name) => purgeDocument(name)));
         response.sendStatus(200);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -85,7 +82,6 @@ function documentEndpoints(app) {
         await purgeFolder(name);
         response.sendStatus(200);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -100,7 +96,6 @@ function documentEndpoints(app) {
         const localFiles = await viewLocalFiles();
         response.status(200).json({ localFiles });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -115,7 +110,6 @@ function documentEndpoints(app) {
         const online = await new CollectorApi().online();
         response.sendStatus(online ? 200 : 503);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -135,7 +129,6 @@ function documentEndpoints(app) {
 
         response.status(200).json({ types });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }

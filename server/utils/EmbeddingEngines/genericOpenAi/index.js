@@ -33,7 +33,6 @@ class GenericOpenAiEmbedder {
   }
 
   log(text, ...args) {
-    // eslint-disable-next-line no-console
     consoleLogger.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
   }
 

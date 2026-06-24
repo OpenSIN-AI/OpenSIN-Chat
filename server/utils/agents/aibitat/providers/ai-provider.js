@@ -101,7 +101,6 @@ class Provider {
   }
 
   providerLog(text, ...args) {
-    // eslint-disable-next-line no-console
     consoleLogger.log(
       `\x1b[36m[AgentLLM${this?.model ? ` - ${this.model}` : ""}]\x1b[0m ${text}`,
       ...args,
@@ -292,7 +291,6 @@ class Provider {
    */
   static contextLimit(provider = "openai", modelName) {
     if (typeof provider !== "string") {
-      // eslint-disable-next-line no-console
       consoleLogger.log(
         `\x1b[43m\x1b[30m[.contextLimit warning] A non-string provider for .contextLimit was given — Returning fallback context limit of 8000.\x1b[0m\n\x1b[43m\x1b[30mThis is a bug and should be reported so that context windows are properly managed by OpenSIN Chat.\x1b[0m`,
       );
@@ -302,7 +300,6 @@ class Provider {
 
     const llm = getLLMProviderClass({ provider });
     if (!llm || !llm.hasOwnProperty("promptWindowLimit")) {
-      // eslint-disable-next-line no-console
       consoleLogger.warn(
         `\x1b[33m[.contextLimit warning]\x1b[0m Could not determine .promptWindowLimit for provider ${provider}. This could lead to incorrect context window management by OpenSIN Chat since we cannot determine the context window limit for this provider/model combination.`,
       );

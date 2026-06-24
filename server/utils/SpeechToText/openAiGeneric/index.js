@@ -32,7 +32,6 @@ class GenericOpenAiSTT {
   }
 
   #log(text, ...args) {
-    // eslint-disable-next-line no-console
     consoleLogger.log(`\x1b[32m[OpenAiGenericSTT]\x1b[0m ${text}`, ...args);
   }
 
@@ -59,8 +58,9 @@ class GenericOpenAiSTT {
       });
       return result?.text ?? "";
     } catch (e) {
-      // eslint-disable-next-line no-console
-      consoleLogger.error(`GenericOpenAiSTT:transcribe failed: ${e?.message || e}`);
+      consoleLogger.error(
+        `GenericOpenAiSTT:transcribe failed: ${e?.message || e}`,
+      );
       throw new Error(
         `STT transcription failed: ${e?.message || "Unknown error"}`,
         { cause: e },

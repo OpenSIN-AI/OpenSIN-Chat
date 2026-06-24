@@ -58,7 +58,6 @@ class VoyageAiEmbedder {
       const embeddings = await this.voyage.embedDocuments(textChunks);
       return embeddings;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("Voyage AI Failed to embed:", error);
       if (
         error.message.includes(

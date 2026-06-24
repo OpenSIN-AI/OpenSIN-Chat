@@ -720,7 +720,6 @@ class AIbitat {
     // TODO: move this to when the group is created
     // warn if the group is underpopulated
     if (nodes.length < 3) {
-      // eslint-disable-next-line no-console
       consoleLogger.warn(
         `- Group (${channel}) is underpopulated with ${nodes.length} agents. Direct communication would be more efficient.`,
       );
@@ -993,7 +992,6 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
     try {
       return await providerCall();
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`[AIbitat] Provider error: ${error.message}`, {
         hide_meta: true,
       });

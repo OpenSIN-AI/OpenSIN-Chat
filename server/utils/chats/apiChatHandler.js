@@ -69,7 +69,6 @@ async function processDocumentAttachments(attachments = []) {
   const Collector = new CollectorApi();
   const processingOnline = await Collector.online();
   if (!processingOnline) {
-    // eslint-disable-next-line no-console
     consoleLogger.warn(
       "Collector API is not online, skipping document attachment processing",
     );
@@ -96,10 +95,9 @@ async function processDocumentAttachments(attachments = []) {
       const { success, reason, documents } =
         await Collector.parseDocument(filename);
       if (success && documents?.length > 0) parsedDocuments.push(...documents);
-      // eslint-disable-next-line no-console
-      else consoleLogger.warn(`Failed to parse attachment ${filename}:`, reason);
+      else
+        consoleLogger.warn(`Failed to parse attachment ${filename}:`, reason);
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(
         `Error processing attachment ${attachment.name}:`,
         error.message,
@@ -843,7 +841,6 @@ async function streamChat({
   // If streaming is not explicitly enabled for connector
   // we do regular waiting of a response and send a single chunk.
   if (LLMConnector.streamingEnabled() !== true) {
-    // eslint-disable-next-line no-console
     consoleLogger.log(
       `\x1b[31m[STREAMING DISABLED]\x1b[0m Streaming is not available for ${LLMConnector.constructor.name}. Will use regular chat method.`,
     );

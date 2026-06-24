@@ -13,7 +13,6 @@ const {
 const { normalizePath, isWithin } = require("../utils/files");
 const { Workspace } = require("../models/workspace");
 const { Document } = require("../models/documents");
-const { DocumentVectors } = require("../models/vectors");
 const { WorkspaceChats } = require("../models/workspaceChats");
 const { getVectorDbClass } = require("../utils/helpers");
 const {
@@ -41,6 +40,7 @@ const {
 const { getStoragePath, getCollectorPath } = require("../utils/paths");
 const { getTTSProvider } = require("../utils/TextToSpeech");
 const { WorkspaceThread } = require("../models/workspaceThread");
+const prisma = require("../utils/prisma");
 
 const truncate = require("truncate");
 const { purgeDocument } = require("../utils/files/purgeDocument");
@@ -106,7 +106,6 @@ function workspaceEndpoints(app) {
         );
         response.status(200).json({ workspace, message });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -145,7 +144,6 @@ function workspaceEndpoints(app) {
         );
         response.status(200).json({ workspace, message });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -234,7 +232,7 @@ function workspaceEndpoints(app) {
         response.status(200).json({ success: true, error: null, document });
       } catch (e) {
         cleanupHotdirFile(request);
-        // eslint-disable-next-line no-console
+
         consoleLogger.error(e.message, e);
         response
           .status(500)
@@ -487,7 +485,6 @@ function workspaceEndpoints(app) {
 
         response.status(200).json({ success: true, error: null, document });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -562,7 +559,6 @@ function workspaceEndpoints(app) {
               : null,
         });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -590,10 +586,20 @@ function workspaceEndpoints(app) {
           return;
         }
 
-        await WorkspaceChats.delete({ workspaceId: Number(workspace.id) });
-        await DocumentVectors.deleteForWorkspace(workspace.id);
-        await Document.delete({ workspaceId: Number(workspace.id) });
-        await Workspace.delete({ id: Number(workspace.id) });
+        const workspaceId = Number(workspace.id);
+        await prisma.$transaction(async (tx) => {
+          const docs = await tx.workspace_documents.findMany({
+            where: { workspaceId },
+            select: { docId: true },
+          });
+          const docIds = docs.map((d) => d.docId);
+          if (docIds.length > 0) {
+            await tx.document_vectors.deleteMany({
+              where: { docId: { in: docIds } },
+            });
+          }
+          await tx.workspaces.delete({ where: { id: workspaceId } });
+        });
 
         await EventLogs.logEvent(
           "workspace_deleted",
@@ -606,12 +612,10 @@ function workspaceEndpoints(app) {
         try {
           await VectorDb["delete-namespace"]({ namespace: slug });
         } catch (e) {
-          // eslint-disable-next-line no-console
           consoleLogger.error(e.message);
         }
         response.sendStatus(200);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -635,8 +639,21 @@ function workspaceEndpoints(app) {
           return;
         }
 
-        await DocumentVectors.deleteForWorkspace(workspace.id);
-        await Document.delete({ workspaceId: Number(workspace.id) });
+        await prisma.$transaction(async (tx) => {
+          const docs = await tx.workspace_documents.findMany({
+            where: { workspaceId: Number(workspace.id) },
+            select: { docId: true },
+          });
+          const docIds = docs.map((d) => d.docId);
+          if (docIds.length > 0) {
+            await tx.document_vectors.deleteMany({
+              where: { docId: { in: docIds } },
+            });
+          }
+          await tx.workspace_documents.deleteMany({
+            where: { workspaceId: Number(workspace.id) },
+          });
+        });
 
         await EventLogs.logEvent(
           "workspace_vectors_reset",
@@ -649,12 +666,10 @@ function workspaceEndpoints(app) {
         try {
           await VectorDb["delete-namespace"]({ namespace: slug });
         } catch (e) {
-          // eslint-disable-next-line no-console
           consoleLogger.error(e.message);
         }
         response.sendStatus(200);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -673,7 +688,6 @@ function workspaceEndpoints(app) {
 
         response.status(200).json({ workspaces });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -693,7 +707,6 @@ function workspaceEndpoints(app) {
 
         response.status(200).json({ workspace });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -721,7 +734,6 @@ function workspaceEndpoints(app) {
           : await WorkspaceChats.forWorkspace(workspace.id);
         response.status(200).json({ history: convertToChatHistory(history) });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -753,7 +765,6 @@ function workspaceEndpoints(app) {
 
         response.sendStatus(200);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -783,7 +794,6 @@ function workspaceEndpoints(app) {
 
         response.sendStatus(200);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -826,7 +836,6 @@ function workspaceEndpoints(app) {
 
         response.sendStatus(200);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -851,7 +860,6 @@ function workspaceEndpoints(app) {
         await WorkspaceChats.updateFeedbackScore(chatId, feedback);
         return response.status(200).json({ success: true });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error updating chat feedback:", error);
         response.status(500).end();
       }
@@ -868,7 +876,6 @@ function workspaceEndpoints(app) {
           await WorkspaceSuggestedMessages.getMessages(slug);
         response.status(200).json({ success: true, suggestedMessages });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error fetching suggested messages:", error);
         response
           .status(500)
@@ -897,7 +904,6 @@ function workspaceEndpoints(app) {
           message: "Suggested messages saved successfully.",
         });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error processing the suggested messages:", error);
         response.status(500).json({
           success: false,
@@ -928,7 +934,6 @@ function workspaceEndpoints(app) {
         await Document.update(document.id, { pinned: pinStatus });
         return response.status(200).end();
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error processing the pin status update:", error);
         return response.status(500).end();
       }
@@ -1003,7 +1008,6 @@ function workspaceEndpoints(app) {
         response.end(buffer);
         return;
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error processing the TTS request:", error);
         response.status(500).json({ message: "TTS could not be completed" });
       }
@@ -1047,7 +1051,6 @@ function workspaceEndpoints(app) {
         response.end(buffer);
         return;
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error processing the logo request:", error);
         response.status(500).json({ message: "Internal server error" });
       }
@@ -1102,8 +1105,10 @@ function workspaceEndpoints(app) {
             : message,
         });
       } catch (error) {
-        // eslint-disable-next-line no-console
-        consoleLogger.error("Error processing the profile picture upload:", error);
+        consoleLogger.error(
+          "Error processing the profile picture upload:",
+          error,
+        );
         response.status(500).json({ message: "Internal server error" });
       }
     },
@@ -1150,8 +1155,10 @@ function workspaceEndpoints(app) {
             : message,
         });
       } catch (error) {
-        // eslint-disable-next-line no-console
-        consoleLogger.error("Error processing the profile picture removal:", error);
+        consoleLogger.error(
+          "Error processing the profile picture removal:",
+          error,
+        );
         response.status(500).json({ message: "Internal server error" });
       }
     },
@@ -1226,7 +1233,6 @@ function workspaceEndpoints(app) {
         );
         response.status(200).json({ newThreadSlug: newThread.slug });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.status(500).json({ message: "Internal server error" });
       }
@@ -1252,7 +1258,6 @@ function workspaceEndpoints(app) {
         await WorkspaceChats._update(validChat.id, { include: false });
         response.json({ success: true, error: null });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.status(500).json({ success: false, error: "Server error" });
       }
@@ -1350,7 +1355,7 @@ function workspaceEndpoints(app) {
         });
       } catch (e) {
         cleanupHotdirFile(request);
-        // eslint-disable-next-line no-console
+
         consoleLogger.error(e.message, e);
         response
           .status(500)
@@ -1383,7 +1388,6 @@ function workspaceEndpoints(app) {
         await purgeDocument(body.documentLocation);
         response.status(200).end();
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -1401,7 +1405,6 @@ function workspaceEndpoints(app) {
           }),
         });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error fetching prompt history:", error);
         response.sendStatus(500);
       }
@@ -1423,7 +1426,6 @@ function workspaceEndpoints(app) {
           }),
         });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error clearing prompt history:", error);
         response.sendStatus(500);
       }
@@ -1441,7 +1443,6 @@ function workspaceEndpoints(app) {
           success: await PromptHistory.delete({ id: Number(id) }),
         });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error deleting prompt history:", error);
         response.sendStatus(500);
       }
@@ -1464,7 +1465,6 @@ function workspaceEndpoints(app) {
         );
         response.status(200).json(searchResults);
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error searching for workspaces:", error);
         response.sendStatus(500);
       }
@@ -1496,7 +1496,6 @@ function workspaceEndpoints(app) {
           removeSSEConnection(workspace.slug, response);
         });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.status(500).end();
       }
@@ -1545,8 +1544,10 @@ function workspaceEndpoints(app) {
           ),
         });
       } catch (error) {
-        // eslint-disable-next-line no-console
-        consoleLogger.error("Error checking if agent command is available:", error);
+        consoleLogger.error(
+          "Error checking if agent command is available:",
+          error,
+        );
         response.status(500).json({ showAgentCommand: true });
       }
     },

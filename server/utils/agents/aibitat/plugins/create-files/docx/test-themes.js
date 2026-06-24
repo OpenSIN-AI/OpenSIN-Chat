@@ -265,7 +265,9 @@ async function main() {
         `✓ ${config.name.padEnd(30)} [${config.theme.padEnd(7)}] [${config.margins.padEnd(6)}] ${titlePage} (${sizeKB}KB)`,
       );
     } catch (error) {
-      consoleLogger.error(`✗ ${config.name.padEnd(30)} → Error: ${error.message}`);
+      consoleLogger.error(
+        `✗ ${config.name.padEnd(30)} → Error: ${error.message}`,
+      );
       consoleLogger.error(error.stack);
     }
   }

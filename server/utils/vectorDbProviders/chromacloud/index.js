@@ -69,12 +69,10 @@ class ChromaCloud extends Chroma {
     };
 
     if (testSubmission.embedding.length > this.limits.maxEmbeddingDim)
-      // eslint-disable-next-line no-console
       consoleLogger.warn(
         `ChromaCloud::Embedding dimension too large (default max is ${this.limits.maxEmbeddingDim}). Got ${testSubmission.embedding.length}. Upsert may fail!`,
       );
     if (testSubmission.document.length > this.limits.maxDocumentBytes)
-      // eslint-disable-next-line no-console
       consoleLogger.warn(
         `ChromaCloud::Document length too large (default max is ${this.limits.maxDocumentBytes}). Got ${testSubmission.document.length}. Upsert may fail!`,
       );
@@ -82,7 +80,6 @@ class ChromaCloud extends Chroma {
       JSON.stringify(testSubmission.metadata).length >
       this.limits.maxMetadataBytes
     )
-      // eslint-disable-next-line no-console
       consoleLogger.warn(
         `ChromaCloud::Metadata length too large (default max is ${this.limits.maxMetadataBytes}). Got ${JSON.stringify(testSubmission.metadata).length}. Upsert may fail!`,
       );

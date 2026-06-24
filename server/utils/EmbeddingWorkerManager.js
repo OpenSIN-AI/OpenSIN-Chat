@@ -232,7 +232,6 @@ async function embedFiles(slug, files, workspaceId, userId) {
   });
 
   worker.on("error", (err) => {
-    // eslint-disable-next-line no-console
     consoleLogger.error(
       `[EmbeddingWorkerManager] Worker error for ${slug}:`,
       err.message,

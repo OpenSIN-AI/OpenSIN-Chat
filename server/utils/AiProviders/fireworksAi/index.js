@@ -14,9 +14,7 @@ const {
   handleDefaultStreamResponseV2,
   formatChatHistory,
 } = require("../../helpers/chat/responses");
-const {
-  parseReasoningFromResponse,
-} = require("../../helpers/reasoningFilter");
+const { parseReasoningFromResponse } = require("../../helpers/reasoningFilter");
 
 const cacheFolder = getStoragePath("models", "fireworks");
 
@@ -317,7 +315,6 @@ async function fireworksAiModels(providedApiKey = null) {
       });
 
       if (Object.keys(validModels).length === 0) {
-        // eslint-disable-next-line no-console
         consoleLogger.warn("fireworksAi: No models found");
         return {};
       }
@@ -343,7 +340,6 @@ async function fireworksAiModels(providedApiKey = null) {
       return validModels;
     })
     .catch((e) => {
-      // eslint-disable-next-line no-console
       consoleLogger.error(e);
       return {};
     });

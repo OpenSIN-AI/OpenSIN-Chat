@@ -33,7 +33,6 @@ function extensionEndpoints(app) {
           });
         response.status(200).json(responseFromProcessor);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -61,7 +60,6 @@ function extensionEndpoints(app) {
         });
         response.status(200).json(responseFromProcessor);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -84,7 +82,6 @@ function extensionEndpoints(app) {
         });
         response.status(200).json(responseFromProcessor);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -107,7 +104,6 @@ function extensionEndpoints(app) {
         });
         response.status(200).json(responseFromProcessor);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -129,7 +125,6 @@ function extensionEndpoints(app) {
         });
         response.status(200).json(responseFromProcessor);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -151,7 +146,6 @@ function extensionEndpoints(app) {
         });
         response.status(200).json(responseFromProcessor);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -174,7 +168,6 @@ function extensionEndpoints(app) {
         });
         response.status(200).json(responseFromProcessor);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -197,7 +190,6 @@ function extensionEndpoints(app) {
         });
         response.status(200).json(responseFromProcessor);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }

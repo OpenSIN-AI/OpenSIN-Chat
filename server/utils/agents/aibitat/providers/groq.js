@@ -115,7 +115,6 @@ class GroqProvider extends InheritMultiple([Provider, UnTooled]) {
         { provider: this },
       );
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message, error);
       if (error instanceof OpenAI.AuthenticationError) throw error;
       if (

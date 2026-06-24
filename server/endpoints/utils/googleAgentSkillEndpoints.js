@@ -35,7 +35,6 @@ function googleAgentSkillEndpoints(app) {
           config: safeConfig,
         });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Gmail status error:", e);
         response
           .status(500)
@@ -66,7 +65,6 @@ function googleAgentSkillEndpoints(app) {
           config: safeConfig,
         });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Google Calendar status error:", e);
         response
           .status(500)

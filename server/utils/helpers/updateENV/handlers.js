@@ -10,7 +10,6 @@ const {
 async function handleVectorStoreReset(key, prevValue, nextValue) {
   if (prevValue === nextValue) return;
   if (key === "VectorDB") {
-    // eslint-disable-next-line no-console
     consoleLogger.log(
       `Vector configuration changed from ${prevValue} to ${nextValue} - resetting ${prevValue} namespaces`,
     );
@@ -18,7 +17,6 @@ async function handleVectorStoreReset(key, prevValue, nextValue) {
   }
 
   if (key === "EmbeddingEngine" || key === "EmbeddingModelPref") {
-    // eslint-disable-next-line no-console
     consoleLogger.log(
       `${key} changed from ${prevValue} to ${nextValue} - resetting ${process.env.VECTOR_DB} namespaces`,
     );

@@ -362,7 +362,6 @@ function cannonball({
     truncText +
     tokenManager.bytesFromTokens(rightChunks);
 
-  // eslint-disable-next-line no-console
   consoleLogger.log(
     `Cannonball results ${initialInputSize} -> ${tokenManager.countFromString(
       truncatedText,
@@ -421,7 +420,6 @@ function fillSourceWindow({
   }
 
   const log = (text, ...args) => {
-    // eslint-disable-next-line no-console
     consoleLogger.log(`\x1b[36m[fillSourceWindow]\x1b[0m ${text}`, ...args);
   };
 

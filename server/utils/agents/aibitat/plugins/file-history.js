@@ -28,7 +28,6 @@ const fileHistory = {
           const content = JSON.stringify(aibitat.chats, null, 2);
           fs.writeFile(filename, content, (err) => {
             if (err) {
-              // eslint-disable-next-line no-console
               consoleLogger.error(err);
             }
           });

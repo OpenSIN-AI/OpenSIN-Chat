@@ -90,7 +90,6 @@ function relayToSocket(message) {
       return this?.handleClarificationResponse?.(message);
     this.checkBailCommand(message);
   } catch (e) {
-    // eslint-disable-next-line no-console
     consoleLogger.error("[agentWebsocket] relayToSocket error:", e.message);
   }
 }
@@ -138,7 +137,6 @@ function agentWebsocket(app, routePrefix = "") {
   // prefix the route with `/api` so it still matches the client URL
   // `${websocketURI()}/api/agent-invocation/:uuid`.
   if (typeof app.ws !== "function") {
-    // eslint-disable-next-line no-console
     consoleLogger.error(
       "[agentWebsocket] `.ws` is not available on the provided app/router — " +
         "agent WebSocket route NOT registered. Agents will fail to connect. " +
@@ -153,7 +151,6 @@ function agentWebsocket(app, routePrefix = "") {
       // ── Connection-level guards ──────────────────────────────────────────
       // CSWSH protection: validate Origin header.
       if (!isOriginAllowed(request)) {
-        // eslint-disable-next-line no-console
         consoleLogger.warn(
           `[agentWebsocket] Rejecting connection from disallowed origin: ${request.headers.origin || "<missing>"}`,
         );
@@ -175,7 +172,6 @@ function agentWebsocket(app, routePrefix = "") {
           // the connection is stale and we terminate it.
           clearTimeout(heartbeatTimeout);
           heartbeatTimeout = setTimeout(() => {
-            // eslint-disable-next-line no-console
             consoleLogger.warn(
               "[agentWebsocket] Heartbeat timeout — terminating stale connection.",
             );
@@ -228,7 +224,6 @@ function agentWebsocket(app, routePrefix = "") {
         let wsRejected = false;
         await withWsLock(() => {
           if (activeConnectionCount >= MAX_WS_CONNECTIONS) {
-            // eslint-disable-next-line no-console
             consoleLogger.warn(
               `[agentWebsocket] Rejecting connection: ${activeConnectionCount}/${MAX_WS_CONNECTIONS} slots in use.`,
             );
@@ -252,7 +247,6 @@ function agentWebsocket(app, routePrefix = "") {
           const size =
             typeof data === "string" ? Buffer.byteLength(data) : data.length;
           if (size > MAX_MESSAGE_BYTES) {
-            // eslint-disable-next-line no-console
             consoleLogger.warn(
               `[agentWebsocket] Message rejected: ${size} bytes exceeds ${MAX_MESSAGE_BYTES} byte limit.`,
             );
@@ -282,7 +276,6 @@ function agentWebsocket(app, routePrefix = "") {
               agentHandler.aibitat.abort();
             }
           } catch (e) {
-            // eslint-disable-next-line no-console
             consoleLogger.error(
               "[agentWebsocket] Error aborting agent on close:",
               e.message,
@@ -293,7 +286,6 @@ function agentWebsocket(app, routePrefix = "") {
         });
 
         socket.on("error", (error) => {
-          // eslint-disable-next-line no-console
           consoleLogger.error(
             "[agentWebsocket] Socket error:",
             error?.message || error,
@@ -327,7 +319,7 @@ function agentWebsocket(app, routePrefix = "") {
         await agentHandler.startAgentCluster();
       } catch (e) {
         const id = crypto.randomUUID();
-        // eslint-disable-next-line no-console
+
         consoleLogger.error(`[wss error id=${id}]`, e);
         cleanup();
 

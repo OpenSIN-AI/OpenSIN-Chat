@@ -69,7 +69,6 @@ function brandingEndpoints(app) {
       response.end(Buffer.from(buffer, "base64"));
       return;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("Error processing the logo request:", error);
       response.status(500).json({ message: "Internal server error" });
     }
@@ -82,7 +81,6 @@ function brandingEndpoints(app) {
         JSON.stringify([]);
       response.status(200).json({ footerData: footerData });
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("Error fetching footer data:", error);
       response.status(500).json({ message: "Internal server error" });
     }
@@ -98,7 +96,6 @@ function brandingEndpoints(app) {
         )?.value ?? null;
       response.status(200).json({ supportEmail: supportEmail });
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("Error fetching support email:", error);
       response.status(500).json({ message: "Internal server error" });
     }
@@ -115,7 +112,6 @@ function brandingEndpoints(app) {
         )?.value ?? null;
       response.status(200).json({ customAppName: customAppName });
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("Error fetching custom app name:", error);
       response.status(500).json({ message: "Internal server error" });
     }
@@ -206,7 +202,6 @@ function brandingEndpoints(app) {
           message: "Logo uploaded successfully.",
         });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error processing the logo upload:", error);
         response.status(500).json({ message: "Error uploading the logo." });
       }
@@ -223,7 +218,6 @@ function brandingEndpoints(app) {
           !currentLogoFilename || isDefaultFilename(currentLogoFilename);
         response.status(200).json({ isDefaultLogo });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error processing the logo request:", error);
         response.status(500).json({ message: "Internal server error" });
       }
@@ -247,7 +241,6 @@ function brandingEndpoints(app) {
             : error || "Failed to update with new logo.",
         });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error processing the logo removal:", error);
         response.status(500).json({ message: "Error removing the logo." });
       }

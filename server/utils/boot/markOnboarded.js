@@ -16,7 +16,6 @@ async function markOnboarded() {
     // If it is, then we can mark the onboarding as complete in the DB to persist this
     const alreadyOnboarded = await isLegacyOnboarded();
     if (alreadyOnboarded === true) {
-      // eslint-disable-next-line no-console
       consoleLogger.log(
         "\x1b[33m[ONBOARDING PATCH]\x1b[0m Legacy instance is already onboarded, marking onboarding as complete. You will not see this message again.",
       );
@@ -25,7 +24,6 @@ async function markOnboarded() {
     }
     return false;
   } catch (e) {
-    // eslint-disable-next-line no-console
     consoleLogger.error(
       "\x1b[31m[ONBOARDING PATCH]\x1b[0m Error marking onboarding as complete",
       e.message,

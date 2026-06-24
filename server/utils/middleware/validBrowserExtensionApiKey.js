@@ -61,7 +61,6 @@ async function validBrowserExtensionApiKey(request, response, next) {
  */
 function logFailedAuth(request, reason) {
   try {
-    // eslint-disable-next-line no-console
     consoleLogger.warn(
       `\x1b[33m[BROWSER-EXT-AUTH-FAIL]\x1b[0m reason=${reason} ip=${request.ip || "unknown"} ${request.method} ${request.originalUrl || request.path}`,
     );

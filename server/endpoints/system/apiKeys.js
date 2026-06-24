@@ -31,7 +31,6 @@ function apiKeyEndpoints(app) {
         error: null,
       });
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error);
       response.status(500).json({
         apiKey: null,
@@ -67,7 +66,6 @@ function apiKeyEndpoints(app) {
           error,
         });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(error);
         response.status(500).json({
           apiKey: null,
@@ -98,7 +96,6 @@ function apiKeyEndpoints(app) {
         );
         return response.status(200).end();
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(error);
         response.status(500).end();
       }
@@ -121,7 +118,6 @@ function apiKeyEndpoints(app) {
           error,
         });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(error);
         response.status(500).end();
       }

@@ -179,9 +179,7 @@ async function youtubeTranscript(url) {
   try {
     tracks = JSON.parse(m[1]);
   } catch {
-    throw new Error(
-      "YouTube captionTracks JSON konnte nicht geparst werden.",
-    );
+    throw new Error("YouTube captionTracks JSON konnte nicht geparst werden.");
   }
   if (!Array.isArray(tracks) || tracks.length === 0)
     throw new Error("Keine Untertitel-Spuren verfügbar.");

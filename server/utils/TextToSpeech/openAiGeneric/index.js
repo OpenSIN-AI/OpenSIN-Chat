@@ -34,7 +34,6 @@ class GenericOpenAiTTS {
   }
 
   #log(text, ...args) {
-    // eslint-disable-next-line no-console
     consoleLogger.log(`\x1b[32m[OpenAiGenericTTS]\x1b[0m ${text}`, ...args);
   }
 
@@ -52,8 +51,9 @@ class GenericOpenAiTTS {
       });
       return Buffer.from(await result.arrayBuffer());
     } catch (e) {
-      // eslint-disable-next-line no-console
-      consoleLogger.error(`GenericOpenAiTTS:ttsBuffer failed: ${e?.message || e}`);
+      consoleLogger.error(
+        `GenericOpenAiTTS:ttsBuffer failed: ${e?.message || e}`,
+      );
     }
     return null;
   }

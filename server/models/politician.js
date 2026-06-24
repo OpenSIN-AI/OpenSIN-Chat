@@ -123,8 +123,9 @@ const Politician = {
           }
         }
       } catch (err) {
-        // eslint-disable-next-line no-console
-        consoleLogger.error(`[Politician] massUpsert chunk error: ${err.message}`);
+        consoleLogger.error(
+          `[Politician] massUpsert chunk error: ${err.message}`,
+        );
         errors += chunk.length;
       }
     }
@@ -136,7 +137,6 @@ const Politician = {
     try {
       return await prisma.politicians.findFirst({ where: clause });
     } catch (err) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`[Politician] get error: ${err.message}`);
       return null;
     }
@@ -153,7 +153,6 @@ const Politician = {
         },
       });
     } catch (err) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(`[Politician] where error: ${err.message}`);
       return [];
     }
@@ -198,7 +197,6 @@ const PoliticianVote = {
         const partial = await prisma.$transaction(chunk);
         results.push(...partial);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.warn(
           `[PoliticianVote.bulkInsert] chunk ${i}-${i + CHUNK_SIZE} failed:`,
           e.message,
@@ -228,13 +226,29 @@ const PoliticianVote = {
 
     for (const v of votes) {
       try {
+        const id = v.id || require("uuid").v4();
+        const data = {
+          id,
+          politicianId: v.politicianId,
+          session: v.session || null,
+          sitting: v.sitting || null,
+          voteId: v.voteId || null,
+          voteTitle: v.voteTitle || null,
+          voteDescription: v.voteDescription || null,
+          voteResult: v.voteResult || null,
+          voteDate: v.voteDate ? new Date(v.voteDate) : null,
+          documentUrl: v.documentUrl || null,
+          plenaryProtocolUrl: v.plenaryProtocolUrl || null,
+          rawData: v.rawData || null,
+        };
+
         const existing = await prisma.politician_votes.findUnique({
-          where: { id: v.id },
+          where: { id },
         });
         await prisma.politician_votes.upsert({
-          where: { id: v.id },
-          update: v,
-          create: v,
+          where: { id },
+          update: data,
+          create: data,
         });
         if (existing) {
           updated++;
@@ -257,7 +271,10 @@ const PoliticianSpeech = {
       prisma.politician_speeches.create({
         data: {
           id: s.id || require("uuid").v4(),
+          dedupeKey: s.dedupeKey || null,
           politicianId: s.politicianId,
+          speakerName: s.speakerName || null,
+          speakerParty: s.speakerParty || null,
           session: s.session || null,
           sitting: s.sitting || null,
           speechTitle: s.speechTitle || null,
@@ -266,6 +283,7 @@ const PoliticianSpeech = {
           documentUrl: s.documentUrl || null,
           pageNumbers: s.pageNumbers || null,
           rawData: s.rawData || null,
+          matchConfidence: s.matchConfidence ?? null,
           vectorized: false,
         },
       }),
@@ -278,7 +296,6 @@ const PoliticianSpeech = {
         const partial = await prisma.$transaction(chunk);
         results.push(...partial);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.warn(
           `[PoliticianSpeech.bulkInsert] chunk ${i}-${i + CHUNK_SIZE} failed:`,
           e.message,
@@ -288,15 +305,16 @@ const PoliticianSpeech = {
     return { count: results.length };
   },
 
-  markVectorized: async function (speechId) {
+  markVectorized: async function (dedupeKey) {
     try {
       await prisma.politician_speeches.update({
-        where: { dedupeKey: speechId },
+        where: { dedupeKey },
         data: { vectorized: true },
       });
     } catch (err) {
-      // eslint-disable-next-line no-console
-      consoleLogger.error(`[PoliticianSpeech] markVectorized error: ${err.message}`);
+      consoleLogger.error(
+        `[PoliticianSpeech] markVectorized error: ${err.message}`,
+      );
     }
   },
 
@@ -395,13 +413,22 @@ const PoliticianCommittee = {
 
     for (const c of committees) {
       try {
+        const id = c.id || require("uuid").v4();
+        const data = {
+          id,
+          name: c.name,
+          fullName: c.fullName || null,
+          type: c.type || null,
+          description: c.description || null,
+        };
+
         const existing = await prisma.politician_committees.findUnique({
-          where: { id: c.id },
+          where: { id },
         });
         await prisma.politician_committees.upsert({
-          where: { id: c.id },
-          update: c,
-          create: c,
+          where: { id },
+          update: data,
+          create: data,
         });
         if (existing) {
           updated++;
@@ -426,14 +453,24 @@ const PoliticianCommitteeMembership = {
 
     for (const m of memberships) {
       try {
+        const id = m.id || require("uuid").v4();
+        const data = {
+          id,
+          politicianId: m.politicianId,
+          committeeId: m.committeeId,
+          role: m.role || null,
+          startDate: m.startDate ? new Date(m.startDate) : null,
+          endDate: m.endDate ? new Date(m.endDate) : null,
+        };
+
         const existing =
           await prisma.politician_committee_memberships.findUnique({
-            where: { id: m.id },
+            where: { id },
           });
         await prisma.politician_committee_memberships.upsert({
-          where: { id: m.id },
-          update: m,
-          create: m,
+          where: { id },
+          update: data,
+          create: data,
         });
         if (existing) {
           updated++;

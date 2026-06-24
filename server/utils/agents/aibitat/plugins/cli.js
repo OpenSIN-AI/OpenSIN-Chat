@@ -23,14 +23,13 @@ const cli = {
         aibitat.onError(async (error) => {
           let errorMessage =
             error?.message || "An error occurred while running the agent.";
-          // eslint-disable-next-line no-console
+
           consoleLogger.error(chalk.red(`   error: ${errorMessage}`), error);
         });
 
         aibitat.onStart(() => {
-          // eslint-disable-next-line no-console
           consoleLogger.log();
-          // eslint-disable-next-line no-console
+
           consoleLogger.log("🚀 starting chat ...\n");
           printing = [Promise.resolve()];
         });
@@ -46,7 +45,7 @@ const cli = {
 
         aibitat.onTerminate(async () => {
           await Promise.all(printing);
-          // eslint-disable-next-line no-console
+
           consoleLogger.log("🚀 chat finished");
         });
 
@@ -54,11 +53,10 @@ const cli = {
           await Promise.all(printing);
           const feedback = await this.askForFeedback(node);
           // Add an extra line after the message
-          // eslint-disable-next-line no-console
+
           consoleLogger.log();
 
           if (feedback === "exit") {
-            // eslint-disable-next-line no-console
             consoleLogger.log("🚀 chat finished");
             return process.exit(0);
           }
@@ -83,12 +81,11 @@ const cli = {
         )} ${replying}:`;
 
         if (!simulateStream) {
-          // eslint-disable-next-line no-console
           consoleLogger.log(reference);
-          // eslint-disable-next-line no-console
+
           consoleLogger.log(message.content);
           // Add an extra line after the message
-          // eslint-disable-next-line no-console
+
           consoleLogger.log();
           return;
         }
@@ -120,9 +117,9 @@ const cli = {
         }
 
         // Add an extra line after the message
-        // eslint-disable-next-line no-console
+
         consoleLogger.log();
-        // eslint-disable-next-line no-console
+
         consoleLogger.log();
       },
 

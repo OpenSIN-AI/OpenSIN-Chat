@@ -119,7 +119,6 @@ const DocumentSyncQueue = {
       );
       return queue || null;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return null;
     }
@@ -146,7 +145,6 @@ const DocumentSyncQueue = {
       );
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return false;
     }
@@ -162,7 +160,6 @@ const DocumentSyncQueue = {
       });
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return false;
     }
@@ -175,7 +172,6 @@ const DocumentSyncQueue = {
       });
       return queue || null;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return null;
     }
@@ -196,7 +192,6 @@ const DocumentSyncQueue = {
       });
       return results;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return [];
     }
@@ -210,7 +205,6 @@ const DocumentSyncQueue = {
       });
       return count;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("FAILED TO COUNT DOCUMENTS.", error.message);
       return 0;
     }
@@ -221,7 +215,6 @@ const DocumentSyncQueue = {
       await prisma.document_sync_queues.deleteMany({ where: clause });
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(error.message);
       return false;
     }

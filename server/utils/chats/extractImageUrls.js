@@ -128,7 +128,6 @@ async function extractUrlsFromImage(content) {
       trimCache();
       return urls;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("[extractImageUrls] OCR failed:", error.message);
       return [];
     }

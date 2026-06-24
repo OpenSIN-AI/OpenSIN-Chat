@@ -277,8 +277,9 @@ class OpenAiLLM {
           }
         }
       } catch (e) {
-        // eslint-disable-next-line no-console
-        consoleLogger.error(`\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${e.message}`);
+        consoleLogger.error(
+          `\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${e.message}`,
+        );
         writeResponseChunk(response, {
           uuid,
           type: "abort",

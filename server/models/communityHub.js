@@ -47,7 +47,6 @@ const CommunityHub = {
     })
       .then((response) => response.json())
       .catch((error) => {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error fetching explore items:", error);
         return {
           agentSkills: {
@@ -98,7 +97,6 @@ const CommunityHub = {
     )
       .then((response) => response.json())
       .catch((error) => {
-        // eslint-disable-next-line no-console
         consoleLogger.error(
           `Error fetching bundle item for import ID ${importId}:`,
           error,
@@ -179,7 +177,6 @@ const CommunityHub = {
     })
       .then((response) => response.json())
       .catch((error) => {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error fetching user items:", error);
         return { createdByMe: {}, teamItems: [] };
       });
@@ -216,7 +213,6 @@ const CommunityHub = {
         return { success: true, error: null, itemId: result.item.id };
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
         consoleLogger.error(`Error creating ${itemType}:`, error);
         return { success: false, error: error.message };
       });

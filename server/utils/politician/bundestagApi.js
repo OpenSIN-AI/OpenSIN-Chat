@@ -94,7 +94,6 @@ class BundestagApi {
   }
 
   log(text, ...args) {
-    // eslint-disable-next-line no-console
     consoleLogger.log(`\x1b[33m[BundestagApi]\x1b[0m ${text}`, ...args);
   }
 

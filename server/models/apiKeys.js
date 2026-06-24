@@ -32,7 +32,6 @@ const ApiKey = {
 
       return { apiKey, error: null };
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("FAILED TO CREATE API KEY.", error.message);
       return { apiKey: null, error: error.message };
     }
@@ -43,7 +42,6 @@ const ApiKey = {
       const apiKey = await prisma.api_keys.findFirst({ where: clause });
       return apiKey ? this._stripSecret(apiKey) : null;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("FAILED TO GET API KEY.", error.message);
       return null;
     }
@@ -54,7 +52,6 @@ const ApiKey = {
       const count = await prisma.api_keys.count({ where: clause });
       return count;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("FAILED TO COUNT API KEYS.", error.message);
       return 0;
     }
@@ -65,9 +62,27 @@ const ApiKey = {
       await prisma.api_keys.deleteMany({ where: clause });
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("FAILED TO DELETE API KEY.", error.message);
       return false;
+    }
+  },
+
+  /**
+   * Deletes all developer API keys for a user.
+   * Should be called when a user is deleted to revoke all their keys.
+   * @param {number} userId - The user ID whose keys should be deleted
+   * @returns {Promise<{success: boolean, error: string|null}>}
+   */
+  deleteAllForUser: async function (userId) {
+    try {
+      if (!userId) return { success: false, error: "User ID is required" };
+      await prisma.api_keys.deleteMany({
+        where: { createdBy: parseInt(userId) },
+      });
+      return { success: true, error: null };
+    } catch (error) {
+      consoleLogger.error("Failed to delete API keys for user", error);
+      return { success: false, error: error.message };
     }
   },
 
@@ -79,7 +94,6 @@ const ApiKey = {
       });
       return apiKeys.map((k) => this._stripSecret(k));
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("FAILED TO GET API KEYS.", error.message);
       return [];
     }
@@ -104,7 +118,6 @@ const ApiKey = {
 
       return apiKeys;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("FAILED TO GET API KEYS WITH USER.", error.message);
       return [];
     }

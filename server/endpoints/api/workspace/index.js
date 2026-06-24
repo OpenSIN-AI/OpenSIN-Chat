@@ -5,7 +5,6 @@ const crypto = require("crypto");
 const { v4: uuidv4 } = require("uuid");
 const { Document } = require("../../../models/documents");
 const { Telemetry } = require("../../../models/telemetry");
-const { DocumentVectors } = require("../../../models/vectors");
 const { Workspace } = require("../../../models/workspace");
 const { WorkspaceChats } = require("../../../models/workspaceChats");
 const {
@@ -26,6 +25,7 @@ const { getModelTag } = require("../../utils");
 const {
   workspaceDeletionProtection,
 } = require("../../../utils/middleware/workspaceDeletionProtection");
+const prisma = require("../../../utils/prisma");
 
 function apiWorkspaceEndpoints(app) {
   if (!app) return;
@@ -106,7 +106,6 @@ function apiWorkspaceEndpoints(app) {
       });
       response.status(200).json({ workspace, message });
     } catch (e) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }
@@ -161,7 +160,6 @@ function apiWorkspaceEndpoints(app) {
       });
       response.status(200).json({ workspaces });
     } catch (e) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }
@@ -227,7 +225,6 @@ function apiWorkspaceEndpoints(app) {
 
       response.status(200).json({ workspace });
     } catch (e) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }
@@ -263,10 +260,19 @@ function apiWorkspaceEndpoints(app) {
         }
 
         const workspaceId = Number(workspace.id);
-        await WorkspaceChats.delete({ workspaceId: workspaceId });
-        await DocumentVectors.deleteForWorkspace(workspaceId);
-        await Document.delete({ workspaceId: workspaceId });
-        await Workspace.delete({ id: workspaceId });
+        await prisma.$transaction(async (tx) => {
+          const docs = await tx.workspace_documents.findMany({
+            where: { workspaceId },
+            select: { docId: true },
+          });
+          const docIds = docs.map((d) => d.docId);
+          if (docIds.length > 0) {
+            await tx.document_vectors.deleteMany({
+              where: { docId: { in: docIds } },
+            });
+          }
+          await tx.workspaces.delete({ where: { id: workspaceId } });
+        });
 
         await EventLogs.logEvent("api_workspace_deleted", {
           workspaceName: workspace?.name || "Unknown Workspace",
@@ -274,12 +280,10 @@ function apiWorkspaceEndpoints(app) {
         try {
           await VectorDb["delete-namespace"]({ namespace: slug });
         } catch (e) {
-          // eslint-disable-next-line no-console
           consoleLogger.error(e.message);
         }
         response.sendStatus(200);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -358,7 +362,6 @@ function apiWorkspaceEndpoints(app) {
         );
         response.status(200).json({ workspace, message });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -465,7 +468,6 @@ function apiWorkspaceEndpoints(app) {
             });
         response.status(200).json({ history: convertToChatHistory(history) });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -543,7 +545,6 @@ function apiWorkspaceEndpoints(app) {
         });
         response.status(200).json({ workspace: updatedWorkspace });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -613,7 +614,6 @@ function apiWorkspaceEndpoints(app) {
           .json({ message: "Pin status updated successfully" })
           .end();
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error processing the pin status update:", error);
         return response.status(500).end();
       }
@@ -734,6 +734,7 @@ function apiWorkspaceEndpoints(app) {
           Embedder: process.env.EMBEDDING_ENGINE || "inherit",
           VectorDbSelection: process.env.VECTOR_DB || "lancedb",
           TTSSelection: process.env.TTS_PROVIDER || "native",
+          LLMModel: getModelTag(),
         });
         await EventLogs.logEvent("api_sent_chat", {
           workspaceName: workspace?.name,
@@ -901,6 +902,7 @@ function apiWorkspaceEndpoints(app) {
           Embedder: process.env.EMBEDDING_ENGINE || "inherit",
           VectorDbSelection: process.env.VECTOR_DB || "lancedb",
           TTSSelection: process.env.TTS_PROVIDER || "native",
+          LLMModel: getModelTag(),
         });
         await EventLogs.logEvent("api_sent_chat", {
           workspaceName: workspace?.name,
@@ -1054,7 +1056,6 @@ function apiWorkspaceEndpoints(app) {
           })),
         });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }

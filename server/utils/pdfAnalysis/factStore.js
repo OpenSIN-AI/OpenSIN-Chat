@@ -145,10 +145,24 @@ class FactStore {
       id: row.id,
       detail: row.detail,
       quote: row.quote,
-      tags: (() => { try { return JSON.parse(row.tags || "[]"); } catch { return []; } })(),
+      tags: (() => {
+        try {
+          return JSON.parse(row.tags || "[]");
+        } catch {
+          return [];
+        }
+      })(),
       confidence: row.confidence,
       verified: row.verified === null ? null : !!row.verified,
-      crossCheck: row.cross_check ? (() => { try { return JSON.parse(row.cross_check); } catch { return undefined; } })() : undefined,
+      crossCheck: row.cross_check
+        ? (() => {
+            try {
+              return JSON.parse(row.cross_check);
+            } catch {
+              return undefined;
+            }
+          })()
+        : undefined,
       source: {
         documentName: row.document_name,
         documentPath: row.document_path,

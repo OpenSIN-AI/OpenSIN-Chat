@@ -62,6 +62,30 @@ jest.mock("../../utils/middleware/workspaceDeletionProtection", () => ({
 jest.mock("../../endpoints/workspacesParsedFiles", () => ({
   workspaceParsedFilesEndpoints: () => {},
 }));
+jest.mock("../../utils/prisma", () => {
+  const mockWorkspaceDocuments = {
+    findMany: jest.fn().mockResolvedValue([]),
+    deleteMany: jest.fn().mockResolvedValue({ count: 0 }),
+  };
+  const mockDocumentVectors = {
+    deleteMany: jest.fn().mockResolvedValue({ count: 0 }),
+  };
+  const mockWorkspaces = {
+    delete: jest.fn().mockResolvedValue({ id: 1 }),
+  };
+  return {
+    workspace_documents: mockWorkspaceDocuments,
+    document_vectors: mockDocumentVectors,
+    workspaces: mockWorkspaces,
+    $transaction: jest.fn(async (fn) =>
+      fn({
+        workspace_documents: mockWorkspaceDocuments,
+        document_vectors: mockDocumentVectors,
+        workspaces: mockWorkspaces,
+      }),
+    ),
+  };
+});
 
 const { Workspace } = require("../../models/workspace");
 const { Document } = require("../../models/documents");

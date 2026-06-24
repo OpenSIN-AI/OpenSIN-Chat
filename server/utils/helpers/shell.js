@@ -17,12 +17,10 @@ async function patchShellEnvironmentPath() {
     fixPath();
     if (process.env.PATH) process.env.PATH = stripAnsi(process.env.PATH);
     if (process.env.PATH !== before) {
-      // eslint-disable-next-line no-console
       consoleLogger.log("Shell environment path patched successfully.");
     }
     return process.env;
   } catch (error) {
-    // eslint-disable-next-line no-console
     consoleLogger.error("Failed to patch shell environment path:", error);
     return process.env;
   }

@@ -135,7 +135,8 @@ export default function ChatPromptSettings({
                 <span className="bg-theme-settings-input-bg px-1 py-0.5 rounded">
                   {`{${v.key}}`}
                 </span>
-                {i < availableVariables.length - 1 && VARIABLE_SEPARATOR}
+                {i < Math.min(availableVariables.length, 3) - 1 &&
+                  VARIABLE_SEPARATOR}
               </Fragment>
             ))}
             {availableVariables.length > 3 && (

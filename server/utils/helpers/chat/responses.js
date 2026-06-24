@@ -11,7 +11,6 @@ const {
 } = require("./streamReasoningFilter");
 
 function clientAbortedHandler(resolve, fullText) {
-  // eslint-disable-next-line no-console
   consoleLogger.log(
     "\x1b[43m\x1b[34m[STREAM ABORTED]\x1b[0m Client requested to abort stream. Exiting LLM stream handler early.",
   );
@@ -151,7 +150,10 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
           // The shared filterReasoningToken utility walks the token
           // character-accurately so the block always closes across token
           // splits and the real answer always survives.
-          const filteredToken = filterReasoningToken(token, inlineReasoningState);
+          const filteredToken = filterReasoningToken(
+            token,
+            inlineReasoningState,
+          );
           if (!filteredToken) continue;
 
           fullText += filteredToken;
@@ -197,8 +199,9 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
       stream?.endMeasurement(usage);
       resolve(buildResolvedText());
     } catch (e) {
-      // eslint-disable-next-line no-console
-      consoleLogger.log(`\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${e.message}`);
+      consoleLogger.log(
+        `\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${e.message}`,
+      );
       writeResponseChunk(response, {
         uuid,
         type: "abort",
@@ -231,13 +234,11 @@ function convertToChatHistory(history = []) {
     // In the event that a bad response was stored - we should skip its entire record
     // because it was likely an error and cannot be used in chats and will fail to render on UI.
     if (typeof prompt !== "string") {
-      // eslint-disable-next-line no-console
       consoleLogger.log(
         `[convertToChatHistory] ChatHistory #${record.id} prompt property is not a string - skipping record.`,
       );
       continue;
     } else if (typeof data.text !== "string") {
-      // eslint-disable-next-line no-console
       consoleLogger.log(
         `[convertToChatHistory] ChatHistory #${record.id} response.text property is not a string - skipping record.`,
       );
@@ -253,7 +254,7 @@ function convertToChatHistory(history = []) {
         chatId: id,
       },
       {
-        type: data?.type || "chart",
+        type: data?.type || "chat",
         role: "assistant",
         content: data.text,
         sources: data.sources || [],
@@ -327,13 +328,11 @@ function convertToPromptHistory(history = []) {
     // In the event that a bad response was stored - we should skip its entire record
     // because it was likely an error and cannot be used in chats and will fail to render on UI.
     if (typeof prompt !== "string") {
-      // eslint-disable-next-line no-console
       consoleLogger.log(
         `[convertToPromptHistory] ChatHistory #${record.id} prompt property is not a string - skipping record.`,
       );
       continue;
     } else if (typeof data.text !== "string") {
-      // eslint-disable-next-line no-console
       consoleLogger.log(
         `[convertToPromptHistory] ChatHistory #${record.id} response.text property is not a string - skipping record.`,
       );

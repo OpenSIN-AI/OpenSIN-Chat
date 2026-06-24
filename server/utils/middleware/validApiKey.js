@@ -46,6 +46,35 @@ async function validApiKey(request, response, next) {
     return;
   }
 
+  // In multi-user mode, verify the key's creator is still a valid,
+  // non-suspended user. This mirrors the browser-extension API key
+  // middleware and prevents deleted/suspended users from accessing
+  // the developer API with orphaned keys.
+  if (multiUserMode) {
+    if (!apiKey.createdBy) {
+      logFailedAuth(request, "orphaned_key");
+      response.status(403).json({
+        error: "No valid api key found.",
+      });
+      return;
+    }
+    const { User } = require("../../models/user");
+    const user = await User.get({ id: apiKey.createdBy });
+    if (!user) {
+      logFailedAuth(request, "deleted_user");
+      response.status(403).json({
+        error: "No valid api key found.",
+      });
+      return;
+    }
+    if (user.suspended) {
+      response.status(401).json({
+        error: "User is suspended from system",
+      });
+      return;
+    }
+  }
+
   // Expose the validated API key (secret already stripped by ApiKey.get)
   // so downstream route handlers can scope responses to the key creator.
   response.locals.apiKey = apiKey;
@@ -118,7 +147,6 @@ async function validAdminApiKey(request, response, next) {
  */
 function logFailedAuth(request, reason) {
   try {
-    // eslint-disable-next-line no-console
     consoleLogger.warn(
       `\x1b[33m[AUTH-FAIL]\x1b[0m reason=${reason} ip=${request.ip || "unknown"} ${request.method} ${request.originalUrl || request.path}`,
     );
