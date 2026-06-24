@@ -5,7 +5,6 @@ const prisma = require("../utils/prisma");
 const { Telemetry } = require("./telemetry");
 const { EventLogs } = require("./eventLogs");
 const { safeJsonParse } = require("../utils/http");
-const { getModelTag } = require("../endpoints/utils");
 
 const Document = {
   writable: ["pinned", "watched", "lastUpdatedAt"],
@@ -250,6 +249,10 @@ const Document = {
       failed: failedToEmbed.length,
     });
 
+    // Required lazily to avoid a circular dependency: endpoints/utils.js pulls
+    // in middleware that eventually requires this model, so a top-level
+    // destructure here can capture an undefined getModelTag.
+    const { getModelTag } = require("../endpoints/utils");
     await Telemetry.sendTelemetry("documents_embedded_in_workspace", {
       LLMSelection: process.env.LLM_PROVIDER || "openai",
       Embedder: process.env.EMBEDDING_ENGINE || "inherit",

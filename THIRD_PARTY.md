@@ -1,13 +1,14 @@
 # Third-Party Components
 
-OpenSIN Chat is a fork of [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) by [Mintplex Labs Inc.](https://github.com/Mintplex-Labs), licensed under MIT.
+OpenSIN Chat is a sovereign, independent AI platform (MIT-licensed). It builds on
+architectural foundations from earlier open-source work, which we gratefully acknowledge below.
 
-## Core upstream
+## Foundational acknowledgments
 
 | Project | License | Usage |
 |---------|---------|-------|
-| [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) | MIT | Original full-stack architecture (frontend, server, collector, vector-DB layer) |
-| [Mintplex Labs](https://github.com/Mintplex-Labs) | MIT | Original authors and maintainers |
+| [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) | MIT | Architectural foundation that inspired the full-stack structure (frontend, server, collector, vector-DB layer) |
+| [Mintplex Labs](https://github.com/Mintplex-Labs) | MIT | Authors of the foundational open-source work |
 
 ## Key dependencies
 
