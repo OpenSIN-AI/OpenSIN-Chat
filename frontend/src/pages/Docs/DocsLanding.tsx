@@ -15,7 +15,7 @@ import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
 import type { Icon } from "@phosphor-icons/react/dist/lib/types";
 import paths from "@/utils/paths";
 import {
-  CATEGORY_LABELS,
+  getCategoryLabel,
   getGroupedDocs,
   type DocCategory,
 } from "./docsManifest";
@@ -55,7 +55,7 @@ export default function DocsLanding() {
                   aria-hidden="true"
                 />
                 <h2 className="text-sm font-semibold uppercase tracking-wide text-theme-text-secondary">
-                  {CATEGORY_LABELS[group.category]}
+                  {getCategoryLabel(group.category, t)}
                 </h2>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

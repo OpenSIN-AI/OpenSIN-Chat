@@ -5,6 +5,7 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import Appearance from "@/models/appearance";
 import { useTranslation } from "react-i18next";
+import showToast from "@/utils/toast";
 import MicButton from "../MicButton";
 
 let timeout;
@@ -32,7 +33,7 @@ export default function BrowserNativeSTT({ sendCommand }: any) {
 
   function startSTTSession() {
     if (!isMicrophoneAvailable) {
-      alert(t("chat_window.stt_mic_access_denied"));
+      showToast(t("chat_window.stt_mic_access_denied"), "error");
       return;
     }
 

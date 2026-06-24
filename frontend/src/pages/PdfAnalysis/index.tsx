@@ -38,6 +38,8 @@ import CrossCheckPanel from "./CrossCheckPanel";
 import PreLoader from "@/components/Preloader";
 import { copyText } from "@/utils/clipboard";
 import CorpusPanel from "./CorpusPanel";
+import showToast from "@/utils/toast";
+import { safeErrorMessage } from "@/utils/request";
 
 function formatEta(seconds: number | null): string | null {
   if (seconds == null) return null;
@@ -307,7 +309,7 @@ function StartForm({ onStarted, isSidebar = false }: StartFormProps) {
       }
       onStarted?.();
     } catch (err: any) {
-      setError(err.message);
+      setError(safeErrorMessage(err));
     } finally {
       setBusy(false);
     }
@@ -580,12 +582,12 @@ function extractHeadings(markdown = ""): Heading[] {
 /**
  * Download the report as plain Markdown (.md).
  */
-function downloadMarkdown(filename: string, content: string) {
+function downloadMarkdown(filename: string, content: string, suffix: string) {
   const blob = new Blob([content], { type: "text/markdown;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = filename.replace(/\.pdf$/i, "") + "-bericht.md";
+  a.download = filename.replace(/\.pdf$/i, "") + suffix + ".md";
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -594,7 +596,7 @@ function downloadMarkdown(filename: string, content: string) {
  * Download the report as a DOCX file using the `docx` library.
  * Converts basic Markdown headings and paragraphs — bold/italic are preserved.
  */
-async function downloadDocx(filename: string, content: string) {
+async function downloadDocx(filename: string, content: string, suffix: string) {
   const { Document, Packer, Paragraph, TextRun, HeadingLevel } =
     await docxReady();
   const lines = content.split("\n");
@@ -638,7 +640,7 @@ async function downloadDocx(filename: string, content: string) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = filename.replace(/\.pdf$/i, "") + "-bericht.docx";
+  a.download = filename.replace(/\.pdf$/i, "") + suffix + ".docx";
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -647,7 +649,7 @@ async function downloadDocx(filename: string, content: string) {
  * Download the report as a PDF using jsPDF.
  * Renders the text content line by line with basic heading detection.
  */
-async function downloadPdf(filename: string, content: string) {
+async function downloadPdf(filename: string, content: string, suffix: string) {
   const JsPDF = await jsPDFReady();
   const doc = new JsPDF({ unit: "mm", format: "a4" });
   const pageW = doc.internal.pageSize.getWidth();
@@ -693,7 +695,7 @@ async function downloadPdf(filename: string, content: string) {
     }
   }
 
-  doc.save(filename.replace(/\.pdf$/i, "") + "-bericht.pdf");
+  doc.save(filename.replace(/\.pdf$/i, "") + suffix + ".pdf");
 }
 
 interface ReportResult {
@@ -712,7 +714,7 @@ interface ReportModalProps {
 }
 
 function ReportModal({ job, onClose }: ReportModalProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [result, setResult] = useState<ReportResult | null>(null);
   const [tocOpen, setTocOpen] = useState(true);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -743,12 +745,9 @@ function ReportModal({ job, onClose }: ReportModalProps) {
   }
 
   function handleAddAsSource() {
-    // Trigger a workspace-document-upload with the rendered report as text.
-    // For now we copy the text to clipboard and show a browser notification
-    // until the ManageWorkspace integration is wired up with a real workspace slug.
     if (result?.report) {
       copyText(result.report).then((ok) => {
-        if (ok) alert(t("pdfAnalysis.panel.addedAsSourceToast"));
+        if (ok) showToast(t("pdfAnalysis.panel.addedAsSourceToast"), "success");
       });
     }
   }
@@ -798,7 +797,13 @@ function ReportModal({ job, onClose }: ReportModalProps) {
           {/* Download MD */}
           <button
             type="button"
-            onClick={() => downloadMarkdown(job.documentName, reportMd)}
+            onClick={() =>
+              downloadMarkdown(
+                job.documentName,
+                reportMd,
+                t("pdfAnalysis.panel.reportSuffix"),
+              )
+            }
             disabled={!result?.report}
             className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 disabled:opacity-40 whitespace-nowrap"
             title={t("pdfAnalysis.panel.downloadMd")}
@@ -811,7 +816,11 @@ function ReportModal({ job, onClose }: ReportModalProps) {
           <button
             type="button"
             onClick={() =>
-              downloadDocx(job.documentName, reportMd).catch(() => {})
+              downloadDocx(
+                job.documentName,
+                reportMd,
+                t("pdfAnalysis.panel.reportSuffix"),
+              ).catch(() => {})
             }
             disabled={!result?.report}
             className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 disabled:opacity-40 whitespace-nowrap"
@@ -824,7 +833,13 @@ function ReportModal({ job, onClose }: ReportModalProps) {
           {/* Download PDF */}
           <button
             type="button"
-            onClick={() => downloadPdf(job.documentName, reportMd)}
+            onClick={() =>
+              downloadPdf(
+                job.documentName,
+                reportMd,
+                t("pdfAnalysis.panel.reportSuffix"),
+              )
+            }
             disabled={!result?.report}
             className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 disabled:opacity-40 whitespace-nowrap"
             title={t("pdfAnalysis.panel.downloadPdf")}
@@ -1201,7 +1216,7 @@ export function FactsPanel({ onCrossCheck }: FactsPanelProps) {
                     title={t("pdfAnalysis.panel.checkedAt", {
                       date: fact.crossCheck.checkedAt
                         ? new Date(fact.crossCheck.checkedAt).toLocaleString(
-                            "de-DE",
+                            i18n.language,
                           )
                         : "—",
                     })}

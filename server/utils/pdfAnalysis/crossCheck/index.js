@@ -198,13 +198,15 @@ class CrossCheckPipeline {
             reasoning: v.reasoning,
           });
       } else if (r.kind === "web") {
-        perClaim[r.claimIdx].webResearch = {
+        if (perClaim[r.claimIdx]) {
+          perClaim[r.claimIdx].webResearch = {
           overall: r.overall,
           sourcesChecked: r.sourcesChecked,
           supports: r.supports,
           contradicts: r.contradicts,
           evidence: r.evidence,
-        };
+          };
+        }
       }
     }
 

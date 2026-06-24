@@ -39,7 +39,7 @@ const LEVEL_COLORS: Record<LogLevel, string> = {
 };
 
 function LogsTab() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { consoleLogs, clearConsoleLogs } = useConsoleSidebar();
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
@@ -73,7 +73,7 @@ function LogsTab() {
             <div key={log.timestamp} className="flex gap-2 mb-0.5">
               <span className="text-zinc-600 light:text-slate-400 shrink-0">
                 {/* eslint-disable i18next/no-literal-string */}
-                {new Date(log.timestamp).toLocaleTimeString("de-DE", {
+                {new Date(log.timestamp).toLocaleTimeString(i18n.language, {
                   hour12: false,
                   hour: "2-digit",
                   minute: "2-digit",

@@ -97,7 +97,8 @@ function VersionDropdown({ versions, activeVersion, onSelect }: any) {
         className="flex items-center gap-1 px-2 h-6 rounded border border-zinc-700 light:border-slate-300 bg-zinc-800 light:bg-slate-100 text-xs text-zinc-300 light:text-slate-600 hover:border-zinc-500 light:hover:border-slate-400 transition-colors cursor-pointer"
       >
         <span className="truncate max-w-[120px]">
-          {versions[activeVersion]?.label || `Version ${activeVersion + 1}`}
+          {versions[activeVersion]?.label ||
+            t("preview.version", { number: activeVersion + 1 })}
         </span>
         <CaretDown size={10} />
       </button>
@@ -117,7 +118,7 @@ function VersionDropdown({ versions, activeVersion, onSelect }: any) {
                   : "bg-transparent text-zinc-300 light:text-slate-600 hover:bg-zinc-700/60 light:hover:bg-slate-50"
               }`}
             >
-              {v.label || `Version ${idx + 1}`}
+              {v.label || t("preview.version", { number: idx + 1 })}
             </button>
           ))}
         </div>
@@ -354,12 +355,7 @@ function PreviewContent({ previewData, activeVersion }: any) {
     return (
       <div className="flex flex-col items-center justify-center h-full gap-3 text-zinc-500 light:text-slate-400">
         <Eye size={32} />
-        <p className="text-sm text-center px-4">
-          {t(
-            "preview.empty",
-            "Kein Inhalt zur Vorschau. Generiere einen Bericht oder ein Dokument, um es hier anzuzeigen.",
-          )}
-        </p>
+        <p className="text-sm text-center px-4">{t("preview.empty")}</p>
       </div>
     );
   }
@@ -471,7 +467,7 @@ export default function PreviewSidebar() {
             className="text-zinc-400 light:text-slate-500 shrink-0"
           />
           <p className="flex-1 font-medium text-sm text-white light:text-slate-900 truncate">
-            {previewData?.title || t("preview.title", "Vorschau")}
+            {previewData?.title || t("preview.title")}
           </p>
           <VersionDropdown
             versions={previewData?.versions}

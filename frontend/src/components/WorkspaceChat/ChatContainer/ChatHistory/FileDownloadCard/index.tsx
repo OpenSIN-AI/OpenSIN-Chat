@@ -41,85 +41,85 @@ const FILE_TYPE_MAP = {
     badge: "PPT",
     badgeBg: "bg-orange-100",
     badgeText: "text-orange-700",
-    fileType: "PowerPoint",
+    fileTypeKey: "powerpoint",
   },
   pptx: {
     badge: "PPT",
     badgeBg: "bg-orange-100",
     badgeText: "text-orange-700",
-    fileType: "PowerPoint",
+    fileTypeKey: "powerpoint",
   },
   pdf: {
     badge: "PDF",
     badgeBg: "bg-red-100",
     badgeText: "text-red-700",
-    fileType: "PDF Document",
+    fileTypeKey: "pdf",
   },
   doc: {
     badge: "DOC",
     badgeBg: "bg-blue-100",
     badgeText: "text-blue-700",
-    fileType: "Word Document",
+    fileTypeKey: "word",
   },
   docx: {
     badge: "DOC",
     badgeBg: "bg-blue-100",
     badgeText: "text-blue-700",
-    fileType: "Word Document",
+    fileTypeKey: "word",
   },
   xls: {
     badge: "XLS",
     badgeBg: "bg-green-100",
     badgeText: "text-green-700",
-    fileType: "Spreadsheet",
+    fileTypeKey: "spreadsheet",
   },
   xlsx: {
     badge: "XLS",
     badgeBg: "bg-green-100",
     badgeText: "text-green-700",
-    fileType: "Spreadsheet",
+    fileTypeKey: "spreadsheet",
   },
   csv: {
     badge: "CSV",
     badgeBg: "bg-green-100",
     badgeText: "text-green-700",
-    fileType: "Spreadsheet",
+    fileTypeKey: "spreadsheet",
   },
   png: {
     badge: "IMG",
     badgeBg: "bg-purple-100",
     badgeText: "text-purple-700",
-    fileType: "Image",
+    fileTypeKey: "image",
   },
   jpg: {
     badge: "IMG",
     badgeBg: "bg-purple-100",
     badgeText: "text-purple-700",
-    fileType: "Image",
+    fileTypeKey: "image",
   },
   jpeg: {
     badge: "IMG",
     badgeBg: "bg-purple-100",
     badgeText: "text-purple-700",
-    fileType: "Image",
+    fileTypeKey: "image",
   },
   gif: {
     badge: "IMG",
     badgeBg: "bg-purple-100",
     badgeText: "text-purple-700",
-    fileType: "Image",
+    fileTypeKey: "image",
   },
   webp: {
     badge: "IMG",
     badgeBg: "bg-purple-100",
     badgeText: "text-purple-700",
-    fileType: "Image",
+    fileTypeKey: "image",
   },
   svg: {
     badge: "SVG",
     badgeBg: "bg-purple-100",
     badgeText: "text-purple-700",
-    fileType: "Vector Image",
+    fileTypeKey: "vectorImage",
   },
 };
 
@@ -131,7 +131,7 @@ export function getFileDisplayInfo(filename) {
     badge: extension.toUpperCase().slice(0, 4),
     badgeBg: "bg-slate-200",
     badgeText: "text-slate-700",
-    fileType: "File",
+    fileTypeKey: "file",
   };
   return { ...base, extension, isImage, previewType };
 }
@@ -141,7 +141,7 @@ function FileDownloadCard({ props, autoPreview = false }) {
   const { slug: workspaceSlug } = useParams();
   const { filename, storageFilename, fileSize, downloadUrl } =
     props.content || {};
-  const { badge, badgeBg, badgeText, fileType, isImage, previewType } =
+  const { badge, badgeBg, badgeText, fileTypeKey, isImage, previewType } =
     getFileDisplayInfo(filename);
   const [downloading, setDownloading] = useState(false);
   const [addingSource, setAddingSource] = useState(false);
@@ -304,8 +304,8 @@ function FileDownloadCard({ props, autoPreview = false }) {
               </p>
               <p className="text-zinc-400 light:text-slate-500 text-xs leading-snug">
                 {humanFileSize(fileSize, true, 1)}
-                {fileSize && fileType ? " · " : ""}
-                {fileType}
+                {fileSize && fileTypeKey ? " · " : ""}
+                {t(`preview.fileType.${fileTypeKey}`)}
               </p>
             </div>
           </div>

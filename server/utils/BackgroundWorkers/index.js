@@ -424,20 +424,19 @@ class BackgroundService {
       );
       await Promise.race([
         new Promise((resolve, reject) => {
-          worker.once("exit", (code) => {
-            if (code === 0) return resolve();
-            reject(new Error(`exit ${code}`));
-          });
-        }),
-        new Promise((_, reject) =>
-          setTimeout(() => {
+          const timeoutId = setTimeout(() => {
             worker.kill("SIGKILL");
             this.bree.remove(workerId).catch(() => {});
             reject(
               new Error(`scheduled job timeout after ${MAX_RUN_TIMEOUT_MS}ms`),
             );
-          }, MAX_RUN_TIMEOUT_MS),
-        ),
+          }, MAX_RUN_TIMEOUT_MS);
+          worker.once("exit", (code) => {
+            clearTimeout(timeoutId);
+            if (code === 0) return resolve();
+            reject(new Error(`exit ${code}`));
+          });
+        }),
       ]);
     } finally {
       const workers = this.#scheduledJobWorkers.get(jobId);

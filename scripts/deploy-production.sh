@@ -28,10 +28,11 @@ container run --rm \
 echo "[deploy] Frontend build complete. dist/ ready."
 
 echo "[deploy] Syncing source + dist to ${SERVER}..."
-ssh "${SERVER}" "cd ${REMOTE_REPO_DIR} && git fetch origin ${BRANCH} && git checkout -f origin/${BRANCH} -- . ':!server/storage' ':!server/storage-opensin'"
+ssh "${SERVER}" "cd ${REMOTE_REPO_DIR} && git fetch origin ${BRANCH} && git checkout -f origin/${BRANCH} -- . ':!server/storage' ':!server/storage-opensin' ':!collector/hotdir' ':!collector/outputs' ':!frontend/node_modules' ':!server/node_modules' ':!collector/node_modules'"
 
 # rsync the freshly built dist into the server's repo
-rsync -az --delete "${REPO_DIR}/frontend/dist/" "${SERVER}:${REMOTE_REPO_DIR}/frontend/dist/"
+ssh "${SERVER}" "rm -rf ${REMOTE_REPO_DIR}/frontend/dist/*"
+rsync -az --no-perms --exclude='.vite' --exclude='node_modules' "${REPO_DIR}/frontend/dist/" "${SERVER}:${REMOTE_REPO_DIR}/frontend/dist/"
 
 echo "[deploy] Copying dist into running container and restarting..."
 ssh "${SERVER}" "docker cp ${REMOTE_REPO_DIR}/frontend/dist/. opensin-app:/app/server/public/ && docker restart opensin-app"

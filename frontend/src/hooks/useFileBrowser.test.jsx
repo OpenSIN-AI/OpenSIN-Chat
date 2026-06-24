@@ -8,6 +8,7 @@ vi.mock("@/utils/constants", () => ({
 
 vi.mock("@/utils/request", () => ({
   baseHeaders: vi.fn(() => ({ Authorization: "Bearer test-token" })),
+  safeErrorMessage: (e) => (e instanceof Error ? e.message : String(e)),
 }));
 
 import { useFileBrowser } from "./useFileBrowser";

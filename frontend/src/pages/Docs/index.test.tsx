@@ -90,6 +90,7 @@ vi.mock("@/pages/Docs/DocsLanding", () => ({
 
 vi.mock("@/pages/Docs/docsManifest", () => ({
   CATEGORY_LABELS: { test: "Test Category" },
+  getCategoryLabel: vi.fn(() => "Test Category"),
   CATEGORY_ORDER: ["test"],
   DOC_ENTRIES: [
     {

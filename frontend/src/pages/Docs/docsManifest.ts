@@ -44,6 +44,24 @@ export const CATEGORY_LABELS: Record<DocCategory, string> = {
   operations: "Sicherheit & Betrieb",
 };
 
+const CATEGORY_I18N_KEYS: Record<DocCategory, string> = {
+  "getting-started": "common.docsCategories.gettingStarted",
+  api: "common.docsCategories.api",
+  architecture: "common.docsCategories.architecture",
+  deployment: "common.docsCategories.deployment",
+  "data-sources": "common.docsCategories.dataSources",
+  operations: "common.docsCategories.operations",
+};
+
+export function getCategoryLabel(
+  category: DocCategory,
+  t: (key: string) => string,
+): string {
+  const i18nKey = CATEGORY_I18N_KEYS[category];
+  const translated = t(i18nKey);
+  return translated === i18nKey ? CATEGORY_LABELS[category] : translated;
+}
+
 // Order in which categories appear in the navigation.
 export const CATEGORY_ORDER: DocCategory[] = [
   "getting-started",

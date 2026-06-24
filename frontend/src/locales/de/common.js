@@ -743,6 +743,14 @@ const TRANSLATIONS = {
     docsEditOnGithub: "Auf GitHub bearbeiten",
     docsPagesCount_one: "{{count}} Seite",
     docsPagesCount_other: "{{count}} Seiten",
+    docsCategories: {
+      gettingStarted: "Erste Schritte",
+      api: "API-Referenz",
+      architecture: "Architektur",
+      dataSources: "Datenquellen & Sync",
+      deployment: "Deployment & Betrieb",
+      operations: "Sicherheit & Betrieb",
+    },
     methods: {
       put: "PUT",
       post: "POST",
@@ -1674,6 +1682,16 @@ const TRANSLATIONS = {
     open_new_tab: "Öffnen",
     source_added: "Zu Arbeitsbereich-Quellen hinzugefügt",
     source_add_failed: "Hinzufügen zu Quellen fehlgeschlagen",
+    version: "Version {{number}}",
+    fileType: {
+      powerpoint: "PowerPoint",
+      pdf: "PDF-Dokument",
+      word: "Word-Dokument",
+      spreadsheet: "Tabellenkalkulation",
+      image: "Bild",
+      vectorImage: "Vektorbild",
+      file: "Datei",
+    },
   },
   customization: {
     interface: {
@@ -2810,6 +2828,7 @@ const TRANSLATIONS = {
       downloadMd: "Markdown",
       downloadDocx: "Word-Dokument",
       downloadPdf: "PDF-Dokument",
+      reportSuffix: "-bericht",
     },
     corpus: {
       section: "Korpus-Analysen",

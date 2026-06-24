@@ -49,7 +49,7 @@ class MetaGenerator {
     return [
       {
         tag: "link",
-        props: { type: "image/svg+xml", href: "/favicon.png" },
+        props: { rel: "icon", type: "image/png", href: "/favicon.png" },
         content: null,
       },
       {

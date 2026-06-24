@@ -24,3 +24,13 @@ export function safeJsonParse(jsonString, fallback = null) {
   } catch {}
   return fallback;
 }
+
+export function safeErrorMessage(
+  e: unknown,
+  fallback = "An unexpected error occurred",
+) {
+  if (e instanceof Error) return e.message;
+  if (typeof e === "string") return e;
+  if (e && typeof e === "object" && "message" in e) return String(e.message);
+  return fallback;
+}

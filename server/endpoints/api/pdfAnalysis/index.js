@@ -86,7 +86,7 @@ function apiPdfAnalysisEndpoints(app) {
       response.status(200).json({ jobId });
     } catch (e) {
       response
-        .status(e.statusCode || 400)
+        .status(e.statusCode || 500)
         .json({ error: "Internal server error." });
     }
   });
@@ -147,7 +147,7 @@ function apiPdfAnalysisEndpoints(app) {
       response.status(200).json({ jobId });
     } catch (e) {
       response
-        .status(e.statusCode || 400)
+        .status(e.statusCode || 500)
         .json({ error: "Internal server error." });
     }
   });
@@ -235,7 +235,7 @@ function apiPdfAnalysisEndpoints(app) {
       response.status(200).json({ jobId });
     } catch (e) {
       response
-        .status(e.statusCode || 400)
+        .status(e.statusCode || 500)
         .json({ error: "Internal server error." });
     }
   });

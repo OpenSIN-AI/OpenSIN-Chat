@@ -19,7 +19,7 @@ import DocsMarkdown, { type DocHeading } from "./DocsMarkdown";
 import DocsToc from "./DocsToc";
 import DocsLanding from "./DocsLanding";
 import {
-  CATEGORY_LABELS,
+  getCategoryLabel,
   getDocBySlug,
   getDocContent,
   getGroupedDocs,
@@ -87,7 +87,7 @@ function DocsSidebar({
           grouped.map((group) => (
             <div key={group.category} className="flex flex-col gap-1">
               <h2 className="text-xs font-semibold uppercase tracking-wide text-theme-text-secondary px-2 mb-1">
-                {CATEGORY_LABELS[group.category]}
+                {getCategoryLabel(group.category, t)}
               </h2>
               {group.entries.map((entry) => {
                 const isActive = entry.slug === activeSlug;
@@ -352,7 +352,7 @@ export default function Docs() {
             <article className="mx-auto max-w-3xl lg:mx-0">
               <div className="flex items-center justify-between gap-4 mb-2">
                 <p className="text-xs font-semibold uppercase tracking-wide text-theme-text-secondary">
-                  {CATEGORY_LABELS[entry.category]}
+                  {getCategoryLabel(entry.category, t)}
                 </p>
                 <a
                   href={getEditUrl(entry)}
