@@ -27,11 +27,11 @@ async function grepCommand(message, user = null) {
   // Allows multiple commands in one message
   let updatedMessage = message;
   for (const preset of userPresets) {
-    const regex = new RegExp(
-      `(?:\\b\\s|^)(${preset.command})(?:\\b\\s|$)`,
-      "g",
+    const regex = new RegExp(`(^|\\s)(${preset.command})(\\s|$)`, "g");
+    updatedMessage = updatedMessage.replace(
+      regex,
+      (_match, pre, _cmd, post) => `${pre}${preset.prompt}${post}`,
     );
-    updatedMessage = updatedMessage.replace(regex, preset.prompt);
   }
 
   return updatedMessage;
@@ -49,11 +49,11 @@ async function grepAllSlashCommands(message) {
   // Allows multiple commands in one message
   let updatedMessage = message;
   for (const preset of allPresets) {
-    const regex = new RegExp(
-      `(?:\\b\\s|^)(${preset.command})(?:\\b\\s|$)`,
-      "g",
+    const regex = new RegExp(`(^|\\s)(${preset.command})(\\s|$)`, "g");
+    updatedMessage = updatedMessage.replace(
+      regex,
+      (_match, pre, _cmd, post) => `${pre}${preset.prompt}${post}`,
     );
-    updatedMessage = updatedMessage.replace(regex, preset.prompt);
   }
 
   return updatedMessage;

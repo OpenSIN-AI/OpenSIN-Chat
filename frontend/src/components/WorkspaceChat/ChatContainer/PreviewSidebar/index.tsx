@@ -75,6 +75,7 @@ const TYPE_ICONS = {
 };
 
 function VersionDropdown({ versions, activeVersion, onSelect }: any) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false as any);
   const ref: any = useRef(null);
 
@@ -407,6 +408,10 @@ export default function PreviewSidebar() {
   const { slug: workspaceSlug } = useParams();
   const [activeVersion, setActiveVersion] = useState(0 as any);
   const [addingSource, setAddingSource] = useState(false);
+
+  useEffect(() => {
+    setActiveVersion(0);
+  }, [previewData]);
 
   const TypeIcon = TYPE_ICONS[previewData?.type] ?? TYPE_ICONS.default;
 

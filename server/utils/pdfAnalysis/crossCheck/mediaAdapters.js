@@ -98,6 +98,14 @@ async function downloadVideo(url) {
       });
     });
     streamEnded = true;
+  } catch (err) {
+    // Clean up the temp directory on any download failure to prevent leaks
+    try {
+      fs.rmSync(tmpDir, { recursive: true, force: true });
+    } catch {
+      /* best-effort cleanup */
+    }
+    throw err;
   } finally {
     clearTimeout(timer);
     reader.cancel().catch(() => {});

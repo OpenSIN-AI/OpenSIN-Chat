@@ -52,9 +52,10 @@ let lastFailureAt = 0;
 let _cbLock = Promise.resolve();
 async function withCbLock(fn) {
   const release = _cbLock;
-  _cbLock = _cbLock.then(fn, fn);
+  const next = release.then(fn, fn);
+  _cbLock = next;
   await release;
-  return _cbLock;
+  return next;
 }
 
 /**

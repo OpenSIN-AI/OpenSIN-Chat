@@ -348,7 +348,7 @@ class EphemeralAgentHandler extends AgentHandler {
         // and push the new ones onto the end of the array so that they are loaded properly.
         this.aibitat.agents.get("@agent").functions = this.aibitat.agents
           .get("@agent")
-          .functions.filter((f) => f.name !== name);
+          .functions.filter((f) => f !== name);
         for (const plugin of plugins)
           this.aibitat.agents.get("@agent").functions.push(plugin.name);
 

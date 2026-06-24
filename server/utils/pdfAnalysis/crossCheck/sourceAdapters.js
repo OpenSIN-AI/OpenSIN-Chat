@@ -70,9 +70,9 @@ async function assertSafeUrl(rawUrl) {
   }
   if (!["http:", "https:"].includes(parsed.protocol))
     throw new Error("Nur http/https-URLs sind erlaubt.");
-  const { address } = await dns.lookup(parsed.hostname);
-  if (isPrivateIp(address))
-    throw new Error("Zugriff auf private/lokale Adressen ist nicht erlaubt.");
+  // Use resolveAndPin so the SSRF check and the pin happen atomically
+  // (no TOCTOU window between a separate dns.lookup and the dispatcher pin).
+  await resolveAndPin(parsed.hostname);
   return parsed;
 }
 
@@ -85,7 +85,11 @@ async function buildSafeDispatcher(parsedUrl) {
   });
 }
 
-async function fetchWithLimits(url) {
+const MAX_REDIRECTS = 5;
+
+async function fetchWithLimits(url, redirects = 0) {
+  if (redirects > MAX_REDIRECTS)
+    throw new Error(`Zu viele Redirects (> ${MAX_REDIRECTS}) für ${url}`);
   await assertSafeUrl(url);
   const parsed = new URL(url);
   const dispatcher = await buildSafeDispatcher(parsed);
@@ -102,7 +106,7 @@ async function fetchWithLimits(url) {
     if ([301, 302, 307, 308].includes(res.status)) {
       const loc = res.headers.get("location");
       if (!loc) throw new Error("Redirect ohne Ziel.");
-      return fetchWithLimits(new URL(loc, url).toString());
+      return fetchWithLimits(new URL(loc, url).toString(), redirects + 1);
     }
     if (!res.ok) throw new Error(`HTTP ${res.status} für ${url}`);
     const reader = res.body.getReader();
@@ -161,7 +165,16 @@ async function youtubeTranscript(url) {
     throw new Error(
       "Kein Transkript für dieses Video verfügbar (keine Untertitel).",
     );
-  const tracks = JSON.parse(m[1]);
+  let tracks;
+  try {
+    tracks = JSON.parse(m[1]);
+  } catch {
+    throw new Error(
+      "YouTube captionTracks JSON konnte nicht geparst werden.",
+    );
+  }
+  if (!Array.isArray(tracks) || tracks.length === 0)
+    throw new Error("Keine Untertitel-Spuren verfügbar.");
   const track =
     tracks.find((t) => /^(de|en)/.test(t.languageCode)) || tracks[0];
   const xml = await fetchWithLimits(track.baseUrl);
@@ -234,7 +247,9 @@ async function loadSource(source) {
   }
 }
 
-async function fetchBuffer(url) {
+async function fetchBuffer(url, redirects = 0) {
+  if (redirects > MAX_REDIRECTS)
+    throw new Error(`Zu viele Redirects (> ${MAX_REDIRECTS}) für ${url}`);
   await assertSafeUrl(url);
   const parsed = new URL(url);
   const dispatcher = await buildSafeDispatcher(parsed);
@@ -250,7 +265,7 @@ async function fetchBuffer(url) {
     if ([301, 302, 307, 308].includes(res.status)) {
       const loc = res.headers.get("location");
       if (!loc) throw new Error("Redirect ohne Ziel.");
-      return fetchBuffer(new URL(loc, url).toString());
+      return fetchBuffer(new URL(loc, url).toString(), redirects + 1);
     }
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const buf = Buffer.from(await res.arrayBuffer());

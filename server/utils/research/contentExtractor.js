@@ -50,7 +50,7 @@ function ipv4ToInt(ip) {
 }
 
 function isPrivateIPv4(ip) {
-  if (!isIP(ip) === 4) return false;
+  if (isIP(ip) !== 4) return false;
   const addr = ipv4ToInt(ip);
   for (const range of PRIVATE_RANGES) {
     const net = ipv4ToInt(range.net);

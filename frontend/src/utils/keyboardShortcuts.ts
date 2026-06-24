@@ -5,7 +5,10 @@ import { userFromStorage } from "./request";
 import { TOGGLE_LLM_SELECTOR_EVENT } from "@/components/WorkspaceChat/ChatContainer/PromptInput/LLMSelector/action";
 
 export const KEYBOARD_SHORTCUTS_HELP_EVENT = "keyboard-shortcuts-help";
-export const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
+export const isMac =
+  (navigator.userAgentData?.platform ?? navigator.platform)
+    .toUpperCase()
+    .indexOf("MAC") >= 0;
 export const SHORTCUTS = {
   "⌘ + ,": {
     translationKey: "settings",

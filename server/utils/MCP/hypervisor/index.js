@@ -454,7 +454,7 @@ class MCPHypervisor {
       return "http";
     if (Object.prototype.hasOwnProperty.call(server, "command")) return "stdio";
     if (Object.prototype.hasOwnProperty.call(server, "url")) return "http";
-    return "sse";
+    return null;
   }
 
   /**
@@ -494,8 +494,8 @@ class MCPHypervisor {
     }
 
     if (type === "http") {
-      if (!["sse", "streamable"].includes(server?.type))
-        throw new Error("MCP server type must have sse or streamable value.");
+      if (server.type && !["sse", "streamable", "http"].includes(server?.type))
+        throw new Error("MCP server type must have sse, streamable, or http value.");
     }
     if (type === "sse") return;
     return;

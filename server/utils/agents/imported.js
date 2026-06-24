@@ -226,6 +226,28 @@ class ImportedPlugin {
   }
 
   plugin(runtimeArgs = {}) {
+    if (!this.handler) {
+      return {
+        runtimeArgs,
+        name: this.name,
+        config: this.config,
+        setup(aibitat) {
+          aibitat.function({
+            super: aibitat,
+            name: this.name,
+            description: this.config?.description || "Imported plugin (not allowlisted)",
+            parameters: {
+              $schema: "http://json-schema.org/draft-07/schema#",
+              type: "object",
+              properties: {},
+              additionalProperties: false,
+            },
+            handler: async () =>
+              `Plugin ${this.name} is not on the allowlist and cannot be executed.`,
+          });
+        },
+      };
+    }
     const customFunctions = this.handler.runtime;
     return {
       runtimeArgs,

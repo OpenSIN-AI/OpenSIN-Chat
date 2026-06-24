@@ -237,6 +237,8 @@ class AgentHandler {
         return process.env.GEMINI_LLM_MODEL_PREF ?? "gemini-2.0-flash-lite";
       case "docker-model-runner":
         return process.env.DOCKER_MODEL_RUNNER_LLM_MODEL_PREF ?? null;
+      case "opencode-zen":
+        return process.env.OPENCODE_ZEN_LLM_MODEL_PREF ?? null;
       default:
         return null;
     }
@@ -495,7 +497,7 @@ class AgentHandler {
         // and push the new ones onto the end of the array so that they are loaded properly.
         this.aibitat.agents.get("@agent").functions = this.aibitat.agents
           .get("@agent")
-          .functions.filter((f) => f.name !== name);
+          .functions.filter((f) => f !== name);
         for (const plugin of plugins)
           this.aibitat.agents.get("@agent").functions.push(plugin.name);
 

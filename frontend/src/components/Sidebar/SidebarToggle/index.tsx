@@ -64,6 +64,7 @@ export function SidebarToggleProvider({
         e.shiftKey &&
         e.key.toLowerCase() === "s"
       ) {
+        e.preventDefault();
         setShowSidebar((prev) => {
           const newState = !prev;
           safeSetItem(SIDEBAR_TOGGLE_STORAGE_KEY, newState ? "open" : "closed");

@@ -17,6 +17,9 @@ export default {
         "270": "270deg",
         "360": "360deg"
       },
+      zIndex: {
+        99: "99",
+      },
       colors: {
         "black-900": "#141414",
         accent: "#3D4147",

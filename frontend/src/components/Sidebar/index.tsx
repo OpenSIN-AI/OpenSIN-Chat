@@ -220,6 +220,15 @@ export function SidebarMobileHeader() {
     }
   }, [showSidebar]);
 
+  useEffect(() => {
+    if (!showSidebar) return;
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === "Escape") setShowSidebar(false);
+    }
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [showSidebar]);
+
   return (
     <>
       <header
@@ -261,14 +270,14 @@ export function SidebarMobileHeader() {
         />
         <div
           ref={sidebarRef}
-          className="relative h-[100vh] fixed top-0 left-0  rounded-r-[26px] bg-theme-bg-sidebar w-[80%] p-[18px]"
+          className="h-[100vh] fixed top-0 left-0 rounded-r-[26px] bg-theme-bg-sidebar w-[80%] p-[18px]"
           role="navigation"
           aria-label={t("sidebar.mobileNavigation")}
         >
-          <div className="w-full h-full flex flex-col overflow-x-hidden items-between">
+          <div className="w-full h-full flex flex-col overflow-x-hidden justify-between">
             {/* Header Information */}
             <div className="flex w-full items-center justify-between gap-x-4">
-              <div className="flex shrink-1 w-fit items-center justify-start gap-x-2">
+              <div className="flex shrink-0 w-fit items-center justify-start gap-x-2">
                 <img
                   src={logo}
                   alt={t("sidebar.logo")}
@@ -277,14 +286,14 @@ export function SidebarMobileHeader() {
                 <span className="text-white font-bold text-base">OpenSIN</span>
               </div>
               {(!user || user?.role !== "default") && (
-                <div className="flex gap-x-2 items-center text-slate-500 shink-0">
+                <div className="flex gap-x-2 items-center text-slate-500 shrink-0">
                   <SettingsButton />
                 </div>
               )}
             </div>
 
             {/* Primary Body */}
-            <div className="h-full flex flex-col w-full justify-between pt-4 ">
+            <div className="flex-1 flex flex-col w-full justify-between pt-4 min-h-0">
               <div className="h-auto md:sidebar-items">
                 <div className=" flex flex-col gap-y-4 overflow-y-scroll no-scroll pb-[60px]">
                   <NewWorkspaceButton

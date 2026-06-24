@@ -83,9 +83,9 @@ export default function SettingsSidebar() {
             ref={sidebarRef}
             className="h-[100vh] fixed top-0 left-0 rounded-r-[26px] bg-theme-bg-sidebar w-[80%] p-[18px]"
           >
-            <div className="w-full h-full flex flex-col overflow-x-hidden items-between">
+            <div className="w-full h-full flex flex-col overflow-x-hidden justify-between">
               <div className="flex w-full items-center justify-between gap-x-4">
-                <div className="flex shrink-1 w-fit items-center justify-start gap-x-2">
+                <div className="flex shrink-0 w-fit items-center justify-start gap-x-2">
                   <img
                     src={logo}
                     alt={t("common.logo")}

@@ -43,11 +43,17 @@ async function verifyFact(fact, getPageText, totalPages) {
   if (quote.length < MIN_QUOTE_LENGTH)
     return { verified: false, correctedPage: null };
 
+  // Facts from index.js store the page at fact.source.page; facts from
+  // the analysis agent store it at fact.page. Support both shapes.
+  const pageNumber = fact.source?.page ?? fact.page;
+  if (!Number.isFinite(Number(pageNumber)))
+    return { verified: false, correctedPage: null };
+
   // Kandidaten-Seiten: angegebene Seite zuerst, dann Nachbarn
-  const candidates = [fact.page];
+  const candidates = [pageNumber];
   for (let d = 1; d <= VERIFY_PAGE_WINDOW; d++) {
-    if (fact.page - d >= 1) candidates.push(fact.page - d);
-    if (fact.page + d <= totalPages) candidates.push(fact.page + d);
+    if (pageNumber - d >= 1) candidates.push(pageNumber - d);
+    if (pageNumber + d <= totalPages) candidates.push(pageNumber + d);
   }
 
   for (const page of candidates) {
@@ -56,7 +62,7 @@ async function verifyFact(fact, getPageText, totalPages) {
     if (normalize(pageText).includes(quote)) {
       return {
         verified: true,
-        correctedPage: page === fact.page ? null : page,
+        correctedPage: page === pageNumber ? null : page,
       };
     }
   }
@@ -96,7 +102,7 @@ async function verifyFacts(facts, reader) {
       verified,
       source: {
         ...fact.source,
-        page: correctedPage ?? fact.source.page,
+        page: correctedPage ?? fact.source?.page ?? fact.page,
         pageCorrected: correctedPage !== null,
       },
     });

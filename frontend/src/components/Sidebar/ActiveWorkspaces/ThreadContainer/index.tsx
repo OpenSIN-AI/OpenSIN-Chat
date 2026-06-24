@@ -122,7 +122,7 @@ export default function ThreadContainer({
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [mutate, ctrlPressed, threads]);
+  }, [mutate]);
 
   const toggleForDeletion = (id) => {
     mutate(

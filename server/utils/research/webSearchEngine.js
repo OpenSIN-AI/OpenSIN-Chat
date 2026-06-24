@@ -160,7 +160,19 @@ class WebSearchEngine {
           });
         }
         (data.RelatedTopics || []).forEach((t) => {
-          if (t.FirstURL && t.Text) {
+          if (t.Topics && Array.isArray(t.Topics)) {
+            // Nested topic group — DuckDuckGo wraps related topics in a
+            // { Topics: [...] } container that must be flattened.
+            for (const nested of t.Topics) {
+              if (nested.FirstURL && nested.Text) {
+                results.push({
+                  title: nested.Text.substring(0, 100),
+                  link: nested.FirstURL,
+                  snippet: nested.Text,
+                });
+              }
+            }
+          } else if (t.FirstURL && t.Text) {
             results.push({
               title: t.Text.substring(0, 100),
               link: t.FirstURL,

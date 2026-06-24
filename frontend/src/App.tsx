@@ -63,7 +63,7 @@ export default function App() {
                         </ErrorBoundary>
                       </main>
                       <div aria-live="polite" aria-atomic="false">
-                        <ToastContainer />
+                        <ToastContainer limit={3} />
                       </div>
                       <KeyboardShortcutsHelp />
                       <ImageLightbox />
