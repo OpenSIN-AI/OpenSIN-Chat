@@ -3,6 +3,12 @@ const consoleLogger = require("../../logger/console.js");
 
 const { v4: uuidv4 } = require("uuid");
 const moment = require("moment");
+const {
+  createReasoningState,
+  filterReasoningToken,
+  OPEN_TAG,
+  CLOSE_TAG,
+} = require("./streamReasoningFilter");
 
 function clientAbortedHandler(resolve, fullText) {
   // eslint-disable-next-line no-console
@@ -39,6 +45,14 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
   return new Promise(async (resolve) => {
     let fullText = "";
     let reasoningText = "";
+    let allReasoningText = "";
+    let reasoningBlockOpen = false;
+    const inlineReasoningState = createReasoningState();
+
+    const buildResolvedText = () =>
+      allReasoningText
+        ? `${OPEN_TAG}${allReasoningText}${CLOSE_TAG}${fullText}`
+        : fullText;
 
     // Establish listener to early-abort a streaming response
     // in case things go sideways or the user does not like the response.
@@ -46,14 +60,12 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
     // to preserve previously generated content.
     const handleAbort = () => {
       stream?.endMeasurement(usage);
-      clientAbortedHandler(resolve, fullText);
+      clientAbortedHandler(resolve, buildResolvedText());
     };
     response.on("close", handleAbort);
 
     // Now handle the chunks from the streamed response and append to fullText.
     try {
-      let reasoningMode = true;
-      let reasoningBlockOpen = false;
       for await (const chunk of stream) {
         const message = chunk?.choices?.[0];
         const token = message?.delta?.content;
@@ -88,44 +100,59 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
         }
 
         // Reasoning models will always return the reasoning text before the token text.
-        // We keep it internally but don't send it to the frontend to avoid cluttering the UI.
+        // Stream reasoning to frontend wrapped in OPEN_TAG/CLOSE_TAG so the
+        // ThoughtContainer can display it live. Also accumulate in
+        // allReasoningText so saved chat history preserves the reasoning block.
         if (reasoningToken) {
           reasoningText += reasoningToken;
+          allReasoningText += reasoningToken;
+          if (!reasoningBlockOpen) {
+            reasoningBlockOpen = true;
+            writeResponseChunk(response, {
+              uuid,
+              sources: [],
+              type: "textResponseChunk",
+              textResponse: OPEN_TAG,
+              close: false,
+              error: false,
+            });
+          }
+          writeResponseChunk(response, {
+            uuid,
+            sources: [],
+            type: "textResponseChunk",
+            textResponse: reasoningToken,
+            close: false,
+            error: false,
+          });
+          if (!hasUsageMetrics) usage.completion_tokens++;
           continue;
         }
 
-        // Reasoning text is kept internally but never sent to frontend.
-        // When reasoning ends and token text begins, just reset reasoningText.
+        // When reasoning ends and token text begins, close the reasoning tag
+        // and reset reasoningText (it's already been streamed).
         if (!!reasoningText && !reasoningToken && token) {
+          reasoningBlockOpen = false;
+          writeResponseChunk(response, {
+            uuid,
+            sources: [],
+            type: "textResponseChunk",
+            textResponse: CLOSE_TAG,
+            close: false,
+            error: false,
+          });
           reasoningText = "";
         }
 
         if (token) {
-          let filteredToken = token;
-          if (reasoningMode) {
-            if (reasoningBlockOpen) {
-              const endIdx = filteredToken.indexOf("</think>");
-              if (endIdx !== -1) {
-                reasoningBlockOpen = false;
-                filteredToken = filteredToken.slice(endIdx + 8);
-              } else {
-                continue;
-              }
-            }
-            const startIdx = filteredToken.indexOf("<think>");
-            if (startIdx !== -1) {
-              const afterStart = filteredToken.slice(startIdx + 7);
-              const endIdx = afterStart.indexOf("</think>");
-              if (endIdx !== -1) {
-                filteredToken = afterStart.slice(endIdx + 8);
-              } else {
-                reasoningBlockOpen = true;
-                continue;
-              }
-            }
-            if (!filteredToken) continue;
-            reasoningMode = false;
-          }
+          // Filter out inline OPEN_TAG...CLOSE_TAG blocks from content tokens.
+          // Some OpenAI-compatible reasoning models stream chain-of-thought
+          // inline instead of using the dedicated reasoning_content field.
+          // The shared filterReasoningToken utility walks the token
+          // character-accurately so the block always closes across token
+          // splits and the real answer always survives.
+          const filteredToken = filterReasoningToken(token, inlineReasoningState);
+          if (!filteredToken) continue;
 
           fullText += filteredToken;
           // If we never saw a usage metric, we can estimate them by number of completion chunks
@@ -159,7 +186,7 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
           });
           response.removeListener("close", handleAbort);
           stream?.endMeasurement(usage);
-          resolve(fullText);
+          resolve(buildResolvedText());
           break; // Break streaming when a valid finish_reason is first encountered
         }
       }
@@ -168,7 +195,7 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
       // leaks and the Promise never resolves (hang).
       response.removeListener("close", handleAbort);
       stream?.endMeasurement(usage);
-      resolve(fullText);
+      resolve(buildResolvedText());
     } catch (e) {
       // eslint-disable-next-line no-console
       consoleLogger.log(`\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${e.message}`);
@@ -182,7 +209,7 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
       });
       response.removeListener("close", handleAbort);
       stream?.endMeasurement(usage);
-      resolve(fullText); // Return what we currently have - if anything.
+      resolve(buildResolvedText()); // Return what we currently have - if anything.
     }
   });
 }

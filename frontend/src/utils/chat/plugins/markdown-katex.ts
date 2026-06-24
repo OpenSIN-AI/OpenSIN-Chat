@@ -2,6 +2,15 @@
 import katex from "katex";
 import "katex/dist/katex.min.css";
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 // Test if potential opening or closing delimieter
 // Assumes that there is a "$" at state.src[pos]
 function isValidDelim(state, pos) {
@@ -226,8 +235,13 @@ function math_block(state, start, end, silent) {
 }
 
 export default function math_plugin(md, options) {
-  // Default options
+  // Default options — throwOnError:false lets KaTeX render an inline error
+  // message (red text) instead of throwing, so the user sees a visible
+  // error instead of silently falling back to raw LaTeX.
   options = options || {};
+  if (options.throwOnError === undefined) {
+    options.throwOnError = false;
+  }
 
   const katexInline: any = function (latex) {
     options.displayMode = false;
@@ -238,10 +252,8 @@ export default function math_plugin(md, options) {
         .replace(/^\\\[(.*)\\\]$/, "$1");
       return katex.renderToString(latex, options);
     } catch (error) {
-      if (options.throwOnError) {
-        console.error(error);
-      }
-      return latex;
+      console.error("KaTeX inline render error:", error);
+      return `<span class="katex-error" style="color:red;font-style:italic">${escapeHtml(latex)}</span>`;
     }
   };
 
@@ -256,10 +268,8 @@ export default function math_plugin(md, options) {
       latex = latex.replace(/^\[(.*)\]$/, "$1").replace(/^\\\[(.*)\\\]$/, "$1");
       return "<p>" + katex.renderToString(latex, options) + "</p>";
     } catch (error) {
-      if (options.throwOnError) {
-        console.error(error);
-      }
-      return latex;
+      console.error("KaTeX block render error:", error);
+      return `<p><span class="katex-error" style="color:red;font-style:italic">${escapeHtml(latex)}</span></p>`;
     }
   };
 

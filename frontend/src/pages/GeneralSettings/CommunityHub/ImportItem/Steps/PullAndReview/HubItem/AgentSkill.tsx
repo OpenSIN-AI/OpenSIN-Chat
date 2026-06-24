@@ -179,7 +179,7 @@ function FileReview({ item }: FileReviewProps): JSX.Element | null {
 
   useEffect(() => {
     if (files.length > 0) setFile(files?.[index] || files[0]);
-  }, [index]);
+  }, [index, files]);
 
   if (!file) return null;
   return (

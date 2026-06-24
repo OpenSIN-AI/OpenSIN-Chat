@@ -314,13 +314,14 @@ const MyTeam = ({
       return;
     }
 
-    navigate(paths.onboarding.dataHandling());
-    // Auto-request token with credentials that was just set so they
-    // are not redirected to login after completion.
+    // Auto-request token with credentials that were just set so they
+    // are not redirected to login after completion. Must set the token
+    // BEFORE navigating so the next page has auth context.
     const { user, token } = await System.requestToken(data);
     safeSetItem(AUTH_USER, JSON.stringify(user));
     safeSetItem(AUTH_TOKEN, token);
     safeRemoveItem(AUTH_TIMESTAMP);
+    navigate(paths.onboarding.dataHandling());
   };
 
   const setNewUsername = (e: React.ChangeEvent<HTMLInputElement>) =>

@@ -45,6 +45,12 @@ const MARKDOWN_SANITIZE_OPTS = {
     "th",
     "td",
     "img",
+    "hr",
+    "button",
+    "svg",
+    "path",
+    "rect",
+    "polyline",
   ],
 };
 const safeMarkdown = (html) => DOMPurify.sanitize(html, MARKDOWN_SANITIZE_OPTS);

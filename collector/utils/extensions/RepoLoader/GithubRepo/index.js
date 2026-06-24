@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-const { getStoragePath } = require("../../paths");
+const { getStoragePath } = require("../../../paths");
 const RepoLoader = require("./RepoLoader");
 const fs = require("fs");
 const { default: slugify } = require("slugify");

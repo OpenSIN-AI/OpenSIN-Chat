@@ -249,10 +249,57 @@ async function canAccessEmbed(request, response, next) {
   }
 }
 
+/**
+ * CORS middleware for public embed endpoints.
+ *
+ * The embed widget script is loaded on third-party sites and makes fetch()
+ * requests back to this server. Without CORS headers the browser blocks
+ * those cross-origin responses, making embed widgets non-functional on any
+ * site other than the server's own origin.
+ *
+ * This middleware sets Access-Control-Allow-Origin based on the embed's
+ * allowlist (or * if no allowlist is configured) and handles preflight
+ * OPTIONS requests. It must run AFTER `validEmbedConfig` so that
+ * `response.locals.embedConfig` is populated.
+ */
+function embedCors(request, response, next) {
+  const embed = response.locals.embedConfig;
+  const origin = request.headers.origin;
+
+  if (origin) {
+    const allowedHosts = embed
+      ? EmbedConfig.parseAllowedHosts(embed)
+      : null;
+    // No allowlist configured → allow any origin.
+    // Allowlist configured → only allow listed origins.
+    if (allowedHosts === null || allowedHosts.includes(origin)) {
+      response.setHeader("Access-Control-Allow-Origin", origin);
+      response.setHeader("Vary", "Origin");
+      response.setHeader(
+        "Access-Control-Allow-Methods",
+        "GET, POST, DELETE, OPTIONS",
+      );
+      response.setHeader(
+        "Access-Control-Allow-Headers",
+        "Content-Type, Accept",
+      );
+      response.setHeader("Access-Control-Max-Age", "86400");
+    }
+  }
+
+  // Handle preflight OPTIONS requests directly.
+  if (request.method === "OPTIONS") {
+    return response.status(204).end();
+  }
+
+  next();
+}
+
 module.exports = {
   setConnectionMeta,
   validEmbedConfig,
   validEmbedConfigId,
   canRespond,
   canAccessEmbed,
+  embedCors,
 };

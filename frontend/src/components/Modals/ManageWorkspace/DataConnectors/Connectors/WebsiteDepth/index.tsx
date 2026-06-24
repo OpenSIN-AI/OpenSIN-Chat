@@ -15,7 +15,7 @@ export default function WebsiteDepthOptions() {
 
     try {
       setLoading(true);
-      showToast("Scraping website - this may take a while.", "info", {
+      showToast(t("connectors.website-depth.scraping"), "info", {
         clear: true,
         autoClose: false,
       });
@@ -33,10 +33,10 @@ export default function WebsiteDepthOptions() {
       }
 
       showToast(
-        `Successfully scraped ${data.length} ${pluralize(
-          "page",
-          data.length,
-        )}!`,
+        t("connectors.website-depth.pages_scraped", {
+          count: data.length,
+          pagePlural: pluralize("page", data.length),
+        }),
         "success",
         { clear: true },
       );

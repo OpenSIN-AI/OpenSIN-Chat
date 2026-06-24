@@ -82,6 +82,12 @@ markdown.renderer.rules.image = function (tokens, idx: any) {
   return `<div class="w-full max-w-[800px]" data-markdown-image><img src="${HTMLEncode(safeSrc)}" alt="${HTMLEncode(alt)}" loading="lazy" class="w-full h-auto" /></div>`;
 };
 
+// Wrap tables in a scrollable container so wide tables don't overflow
+// and get clipped by the border-radius overflow:hidden on .markdown table.
+markdown.renderer.rules.table_open = () =>
+  '<div class="markdown-table-wrapper"><table>';
+markdown.renderer.rules.table_close = () => "</table></div>";
+
 markdown.use(markdownItKatexPlugin);
 
 const RENDER_CACHE = new Map<string, string>();

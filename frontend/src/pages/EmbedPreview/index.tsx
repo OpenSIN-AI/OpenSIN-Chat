@@ -16,8 +16,19 @@ export default function EmbedPreview() {
 
   useEffect(() => {
     if (!uuid || !containerRef.current) return;
+
+    // Remove any existing widget script and its injected DOM elements.
+    // The widget creates a plain <div> appended to document.body and renders
+    // a React app into it using "allm-" prefixed CSS classes. Without this
+    // cleanup, re-renders (e.g. UUID change) leave orphaned widget instances.
     const existing = document.getElementById("embed-widget-script");
     if (existing) existing.remove();
+    document
+      .querySelectorAll('body > div:not(#root):not([class*="min-h-screen"])')
+      .forEach((el) => {
+        if (el.querySelector("[class*='allm-']")) el.remove();
+      });
+
     const script = document.createElement("script");
     script.id = "embed-widget-script";
     script.setAttribute("data-embed-id", uuid);
@@ -27,6 +38,12 @@ export default function EmbedPreview() {
     return () => {
       const s = document.getElementById("embed-widget-script");
       if (s) s.remove();
+      // Also remove the widget's injected DOM elements on unmount.
+      document
+        .querySelectorAll('body > div:not(#root):not([class*="min-h-screen"])')
+        .forEach((el) => {
+          if (el.querySelector("[class*='allm-']")) el.remove();
+        });
     };
   }, [uuid, scriptHost, serverHost]);
 

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-const { getStoragePath } = require("../../paths");
+const { getStoragePath } = require("../../../paths");
 const RepoLoader = require("./RepoLoader");
 const fs = require("fs");
 const { default: slugify } = require("slugify");
@@ -223,7 +223,7 @@ function issueToMarkdown(issue) {
       if (!value || value?.length < 1) {
         return null;
       }
-      let result = `- ${name.replace("_", " ")}:`;
+      let result = `- ${name.replace(/_/g, " ")}:`;
 
       if (!Array.isArray(value)) {
         result += ` ${value}`;
@@ -244,7 +244,7 @@ ${issue.description}
 
 ${metadataString}`;
 
-  if (issue.discussions.length > 0) {
+  if (issue.discussions?.length > 0) {
     markdown += `
 
 ## Activity

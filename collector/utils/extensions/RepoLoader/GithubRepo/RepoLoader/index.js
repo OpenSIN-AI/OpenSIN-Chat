@@ -267,6 +267,9 @@ class GitHubRepoLoader {
           clearTimeout(branchTimeout);
         }
       }
+      if (!success) {
+        polling = false;
+      }
     }
 
     this.branches = [...new Set(branches.flat())];

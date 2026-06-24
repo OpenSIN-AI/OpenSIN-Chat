@@ -12,6 +12,7 @@ const {
   canRespond,
   canAccessEmbed,
   setConnectionMeta,
+  embedCors,
 } = require("../../utils/middleware/embedMiddleware");
 const { simpleRateLimit } = require("../../utils/middleware/simpleRateLimit");
 const {
@@ -43,7 +44,7 @@ function embeddedEndpoints(app) {
 
   app.post(
     "/embed/:embedId/stream-chat",
-    [validEmbedConfig, setConnectionMeta, canRespond, embedStreamRateLimit],
+    [validEmbedConfig, embedCors, setConnectionMeta, canRespond, embedStreamRateLimit],
     async (request, response) => {
       let stopHeartbeat = null;
       try {
@@ -99,7 +100,7 @@ function embeddedEndpoints(app) {
 
   app.get(
     "/embed/:embedId/:sessionId",
-    [validEmbedConfig, canAccessEmbed, embedHistoryRateLimit],
+    [validEmbedConfig, embedCors, canAccessEmbed, embedHistoryRateLimit],
     async (request, response) => {
       try {
         const { sessionId } = request.params;
@@ -123,7 +124,7 @@ function embeddedEndpoints(app) {
 
   app.delete(
     "/embed/:embedId/:sessionId",
-    [validEmbedConfig, canAccessEmbed, embedHistoryRateLimit],
+    [validEmbedConfig, embedCors, canAccessEmbed, embedHistoryRateLimit],
     async (request, response) => {
       try {
         const { sessionId } = request.params;

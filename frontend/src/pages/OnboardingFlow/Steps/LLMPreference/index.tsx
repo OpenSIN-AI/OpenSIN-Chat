@@ -215,14 +215,12 @@ export default function LLMPreference({
   }, [settings]);
 
   async function handleForward() {
-    try {
-      await System.markOnboardingComplete();
-    } catch (error) {
-      console.error("Onboarding complete failed", error);
-    } finally {
-      if (hiddenSubmitButtonRef.current) {
-        hiddenSubmitButtonRef.current.click();
-      }
+    // Do NOT call markOnboardingComplete here — onboarding is only complete
+    // after the user finishes all steps (UserSetup, DataHandling). Marking
+    // it complete prematurely would trigger useRedirectToHomeOnOnboardingComplete
+    // to skip the remaining steps.
+    if (hiddenSubmitButtonRef.current) {
+      hiddenSubmitButtonRef.current.click();
     }
   }
 

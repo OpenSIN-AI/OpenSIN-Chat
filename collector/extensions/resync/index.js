@@ -76,6 +76,7 @@ async function resyncConfluence({ chunkSource }, response) {
       spaceKey: source.searchParams.get("spaceKey"),
       accessToken: source.searchParams.get("token"),
       username: source.searchParams.get("username"),
+      personalAccessToken: source.searchParams.get("pat"),
       cloud: source.searchParams.get("cloud") === "true",
       bypassSSL: source.searchParams.get("bypassSSL") === "true",
     });
@@ -119,6 +120,43 @@ async function resyncGithub({ chunkSource }, response) {
 
     if (!success)
       throw new Error(`Failed to sync GitHub file content. ${reason}`);
+    response.status(200).json({ success, content });
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e);
+    response.status(502).json({
+      success: false,
+      content: null,
+      error: "Resync failed",
+      id: crypto.randomUUID(),
+    });
+  }
+}
+
+/**
+ * Fetches the content of a specific GitLab file via its chunkSource.
+ * Returns the content as a text string of the file in question and only that file.
+ * @param {object} data - metadata from document (eg: chunkSource)
+ * @param {import("../../middleware/setDataSigner").ResponseWithSigner} response
+ */
+async function resyncGitlab({ chunkSource }, response) {
+  if (!chunkSource) throw new Error("Invalid source property provided");
+  try {
+    // GitLab file data is `payload` encrypted (might contain PAT). So we need to expand its
+    // encrypted payload back into query params so we can reFetch the file with same access token/params.
+    const source = response.locals.encryptionWorker.expandPayload(chunkSource);
+    const {
+      fetchGitlabFile,
+    } = require("../../utils/extensions/RepoLoader/GitlabRepo");
+    const { success, reason, content } = await fetchGitlabFile({
+      repoUrl: `https:${source.pathname}`, // need to add back the real protocol
+      branch: source.searchParams.get("branch"),
+      accessToken: source.searchParams.get("pat"),
+      sourceFilePath: source.searchParams.get("path"),
+    });
+
+    if (!success)
+      throw new Error(`Failed to sync GitLab file content. ${reason}`);
     response.status(200).json({ success, content });
   } catch (e) {
     // eslint-disable-next-line no-console
@@ -214,6 +252,7 @@ module.exports = {
   youtube: resyncYouTube,
   confluence: resyncConfluence,
   github: resyncGithub,
+  gitlab: resyncGitlab,
   drupalwiki: resyncDrupalWiki,
   "paperless-ngx": resyncPaperlessNgx,
 };

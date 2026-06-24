@@ -95,7 +95,15 @@ class GitLabRepoLoader {
     console.log(
       "[Gitlab Loader]: Branch not set! Auto-assigning to a default branch."
     );
-    this.branch = this.branches.includes("main") ? "main" : "master";
+    if (this.branches.length === 0) {
+      this.branch = "main";
+    } else {
+      this.branch = this.branches.includes("main")
+        ? "main"
+        : this.branches.includes("master")
+          ? "master"
+          : this.branches[0];
+    }
     // eslint-disable-next-line no-console
     console.log(`[Gitlab Loader]: Branch auto-assigned to ${this.branch}.`);
     return;

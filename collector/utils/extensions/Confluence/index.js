@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-const { getStoragePath } = require("../paths");
+const { getStoragePath } = require("../../paths");
 const fs = require("fs");
 const { default: slugify } = require("slugify");
 const { v4 } = require("uuid");
@@ -98,17 +98,18 @@ async function loadConfluence(
       description: doc.metadata.title,
       docSource: `${normalizedBaseUrl} Confluence`,
       chunkSource: generateChunkSource(
-        {
-          doc,
-          baseUrl: normalizedBaseUrl,
-          spaceKey,
-          accessToken,
-          username,
-          cloud,
-          bypassSSL,
-        },
-        response.locals.encryptionWorker
-      ),
+          {
+            doc,
+            baseUrl: normalizedBaseUrl,
+            spaceKey,
+            accessToken,
+            username,
+            cloud,
+            bypassSSL,
+            personalAccessToken,
+          },
+          response.locals.encryptionWorker
+        ),
       published: new Date().toLocaleString(),
       wordCount: doc.pageContent.split(/\s+/).filter(Boolean).length,
       pageContent: doc.pageContent,
@@ -150,10 +151,11 @@ async function fetchConfluencePage({
   spaceKey,
   username,
   accessToken,
+  personalAccessToken = null,
   cloud = true,
   bypassSSL = false,
 }) {
-  if (!pageUrl || !baseUrl || !spaceKey || !username || !accessToken) {
+  if (!personalAccessToken && (!username || !accessToken)) {
     return {
       success: false,
       content: null,
@@ -162,7 +164,7 @@ async function fetchConfluencePage({
     };
   }
 
-  if (!validBaseUrl(baseUrl)) {
+  if (!pageUrl || !baseUrl || !validBaseUrl(baseUrl)) {
     return {
       success: false,
       content: null,
@@ -187,6 +189,7 @@ async function fetchConfluencePage({
     username,
     accessToken,
     cloud,
+    personalAccessToken,
     bypassSSL,
   });
 
@@ -266,7 +269,7 @@ function resolveConfluenceBaseUrl(baseUrl, cloud = true) {
  * @returns {string}
  */
 function generateChunkSource(
-  { doc, baseUrl, spaceKey, accessToken, username, cloud, bypassSSL },
+  { doc, baseUrl, spaceKey, accessToken, username, cloud, bypassSSL, personalAccessToken },
   encryptionWorker
 ) {
   const payload = {
@@ -276,6 +279,7 @@ function generateChunkSource(
     username,
     cloud,
     bypassSSL,
+    pat: personalAccessToken || null,
   };
   return `confluence://${doc.metadata.url}?payload=${encryptionWorker.encrypt(
     JSON.stringify(payload)

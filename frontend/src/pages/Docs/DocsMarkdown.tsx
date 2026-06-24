@@ -17,6 +17,7 @@ import hljs from "@/utils/chat/hljs";
 import "highlight.js/styles/github-dark.css";
 import DOMPurify from "@/utils/chat/purify";
 import { resolveDocLink } from "./docsManifest";
+import { copyText } from "@/utils/clipboard";
 
 export type DocHeading = { id: string; text: string; level: 2 | 3 };
 
@@ -181,18 +182,16 @@ export default function DocsMarkdown({
       const code = block?.querySelector("code");
       const text = code?.textContent ?? "";
       if (!text) return;
-      navigator.clipboard
-        ?.writeText(text)
-        .then(() => {
-          block?.classList.add("is-copied");
-          const labelEl = copyBtn.querySelector(".docs-code-copy-label");
-          if (labelEl) labelEl.textContent = t("common.docsCodeCopied");
-          window.setTimeout(() => {
-            block?.classList.remove("is-copied");
-            if (labelEl) labelEl.textContent = t("common.docsCopyCode");
-          }, 2000);
-        })
-        .catch(() => {});
+      copyText(text).then((ok) => {
+        if (!ok) return;
+        block?.classList.add("is-copied");
+        const labelEl = copyBtn.querySelector(".docs-code-copy-label");
+        if (labelEl) labelEl.textContent = t("common.docsCodeCopied");
+        window.setTimeout(() => {
+          block?.classList.remove("is-copied");
+          if (labelEl) labelEl.textContent = t("common.docsCopyCode");
+        }, 2000);
+      });
       return;
     }
 

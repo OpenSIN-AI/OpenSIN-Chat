@@ -73,15 +73,16 @@ function extractLinks(html, baseUrl) {
   const links = root.querySelectorAll("a");
   const extractedLinks = new Set();
 
+  const normalizedPath = baseUrl.pathname.endsWith("/")
+    ? baseUrl.pathname
+    : baseUrl.pathname + "/";
+  const linkPrefix = baseUrl.origin + normalizedPath.split("/").slice(0, -1).join("/");
+
   for (const link of links) {
     const href = link.getAttribute("href");
     if (href) {
       const absoluteUrl = new URL(href, baseUrl.href).href;
-      if (
-        absoluteUrl.startsWith(
-          baseUrl.origin + baseUrl.pathname.split("/").slice(0, -1).join("/")
-        )
-      ) {
+      if (absoluteUrl.startsWith(linkPrefix)) {
         extractedLinks.add(absoluteUrl);
       }
     }

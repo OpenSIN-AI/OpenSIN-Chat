@@ -316,6 +316,26 @@ describe("chat/markdown — renderMarkdown (real markdown-it)", () => {
       expect(out).toContain("This is a quote");
     });
 
+    it("wraps tables in a scrollable container for responsive overflow", () => {
+      const md =
+        "| Col A | Col B |\n|-------|-------|\n| cell1 | cell2 |\n";
+      const out = renderMarkdown(md);
+      expect(out).toContain("markdown-table-wrapper");
+      expect(out).toContain("<table>");
+      expect(out).toContain("<thead>");
+      expect(out).toContain("Col A");
+      expect(out).toContain("Col B");
+      expect(out).toContain("cell1");
+      expect(out).toContain("cell2");
+    });
+
+    it("renders horizontal rules (hr) correctly", () => {
+      const out = renderMarkdown("para one\n\n---\n\npara two");
+      expect(out).toContain("<hr");
+      expect(out).toContain("para one");
+      expect(out).toContain("para two");
+    });
+
     it("HTML-encodes ampersands in link hrefs", () => {
       const out = renderMarkdown("[click](https://example.com/?a=1&b=2)");
       expect(out).toContain("https://example.com/?a=1&#x26;b=2");

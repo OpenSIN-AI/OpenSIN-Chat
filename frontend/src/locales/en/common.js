@@ -2661,6 +2661,9 @@ const TRANSLATIONS = {
         "This may take a while depending on the size of your vault.",
       vault_warning:
         "To avoid any conflicts, make sure your Obsidian vault is not currently open.",
+      importing_vault: "Importing Obsidian vault - this may take a while.",
+      import_success: "Successfully imported {{count}} files from your vault!",
+      import_partial: "Imported {{successCount}} files, {{failCount}} failed",
     },
     github: {
       name: "GitHub Repo",
@@ -2752,6 +2755,9 @@ const TRANSLATIONS = {
       urlPlaceholder: "https://youtube.com/watch?v=abc123",
       collectingButton: "Collecting transcript...",
       collectButton: "Collect transcript",
+      fetching_transcript: "Fetching transcript for YouTube video.",
+      transcription_completed:
+        "{{title}} by {{author}} transcription completed. Output folder is {{destination}}.",
     },
     "website-depth": {
       name: "Bulk Link Scraper",
@@ -2767,6 +2773,8 @@ const TRANSLATIONS = {
         "Once complete, all scraped content will be available for embedding into workspaces in the document picker.",
       urlPlaceholder: "https://example.com",
       scrapingButton: "Scraping website...",
+      scraping: "Scraping website - this may take a while.",
+      pages_scraped: "Successfully scraped {{count}} {{pagePlural}}!",
     },
     confluence: {
       name: "Confluence",

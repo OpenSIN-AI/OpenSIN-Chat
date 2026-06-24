@@ -24,6 +24,16 @@ const md = new MarkdownIt({
   },
 });
 
+// Ensure links open in a new tab with safe rel attributes
+md.renderer.rules.link_open = (tokens, idx) => {
+  const token = tokens[idx];
+  const href = token.attrs?.find((attr) => attr[0] === "href")?.[1] ?? "#";
+  const safeHref = /^(https?:|mailto:|tel:|ftp:|\/|#|\.)/i.test(href)
+    ? href
+    : "#";
+  return `<a href="${md.utils.escapeHtml(safeHref)}" target="_blank" rel="noopener noreferrer">`;
+};
+
 interface ThoughtBubbleProps {
   thought: string;
 }

@@ -29,19 +29,23 @@ function useGetCommunityHubItem({
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let cancelled = false;
     async function fetchItem() {
       if (!importId) return;
       setLoading(true);
-      await new Promise((resolve) => setTimeout(resolve, 2000));
       const { error: fetchError, item: fetchedItem } =
         await CommunityHub.getItemFromImportId(importId);
+      if (cancelled) return;
       if (fetchError) setError(fetchError);
       setItem(fetchedItem);
       updateSettings((prev) => ({ ...prev, item: fetchedItem }));
       setLoading(false);
     }
     fetchItem();
-  }, [importId]);
+    return () => {
+      cancelled = true;
+    };
+  }, [importId, updateSettings]);
 
   return { item, loading, error };
 }

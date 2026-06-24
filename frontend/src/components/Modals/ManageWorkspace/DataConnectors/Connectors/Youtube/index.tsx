@@ -14,7 +14,7 @@ export default function YoutubeOptions() {
 
     try {
       setLoading(true);
-      showToast("Fetching transcript for YouTube video.", "info", {
+      showToast(t("connectors.youtube.fetching_transcript"), "info", {
         clear: true,
         autoClose: false,
       });
@@ -30,7 +30,11 @@ export default function YoutubeOptions() {
       }
 
       showToast(
-        `${data.title} by ${data.author} transcription completed. Output folder is ${data.destination}.`,
+        t("connectors.youtube.transcription_completed", {
+          title: data.title,
+          author: data.author,
+          destination: data.destination,
+        }),
         "success",
         { clear: true },
       );

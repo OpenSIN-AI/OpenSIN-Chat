@@ -1985,6 +1985,12 @@ const TRANSLATIONS = {
       processing_time: "Dies kann je nach Größe Ihres Vaults etwas dauern",
       vault_warning:
         "Bitte schließen Sie Ihr Obsidian-Vault, um mögliche Konflikte zu vermeiden.",
+      importing_vault:
+        "Obsidian-Vault wird importiert — dies kann einige Zeit dauern.",
+      import_success:
+        "Erfolgreich {{count}} Dateien aus Ihrem Vault importiert!",
+      import_partial:
+        "{{successCount}} Dateien importiert, {{failCount}} fehlgeschlagen",
     },
     github: {
       name: "GitHub Repository",
@@ -2078,6 +2084,9 @@ const TRANSLATIONS = {
       urlPlaceholder: "https://youtube.com/watch?v=abc123",
       collectingButton: "Transkript wird gesammelt...",
       collectButton: "Transkript sammeln",
+      fetching_transcript: "Transkript für YouTube-Video wird abgerufen.",
+      transcription_completed:
+        "Transkription von {{title}} durch {{author}} abgeschlossen. Ausgabeordner ist {{destination}}.",
     },
     "website-depth": {
       name: "Massen-Link-Scraper",
@@ -2095,6 +2104,8 @@ const TRANSLATIONS = {
         "Sobald der Vorgang abgeschlossen ist, sind alle gesammelten Inhalte im Dokumenten-Picker zur Einbettung in Workspaces verfügbar.",
       urlPlaceholder: "https://beispiel.de",
       scrapingButton: "Website wird durchsucht...",
+      scraping: "Website wird durchsucht — dies kann einige Zeit dauern.",
+      pages_scraped: "Erfolgreich {{count}} {{pagePlural}} durchsucht!",
     },
     confluence: {
       name: "Confluence",

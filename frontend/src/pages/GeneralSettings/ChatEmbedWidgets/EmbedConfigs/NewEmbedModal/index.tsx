@@ -393,7 +393,7 @@ export const NumberInput = ({
         className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-[15rem] p-2.5"
         min={0}
         defaultValue={defaultValue}
-        onScroll={(e) => (e.target as HTMLInputElement).blur()}
+        onWheel={(e) => (e.target as HTMLInputElement).blur()}
       />
     </div>
   );

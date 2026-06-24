@@ -199,13 +199,11 @@ class PaperlessNgxLoader {
             break;
           }
 
-          const data = await response.then((res) => {
-            if (!res.ok)
-              throw new Error(
-                `Failed to fetch documents from Paperless-ngx: ${res.status}`
-              );
-            return res.json();
-          });
+          if (!response.ok)
+            throw new Error(
+              `Failed to fetch documents from Paperless-ngx: ${response.status}`
+            );
+          const data = await response.json();
 
           const validResults = Array.isArray(data.results)
             ? data.results.filter((doc) => doc?.id)
