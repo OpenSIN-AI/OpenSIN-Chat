@@ -46,7 +46,7 @@ function settingsEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
-        response.status(500).json({ newValues: null, error: e.message });
+        response.status(500).json({ newValues: null, error: "Internal server error" });
       }
     },
   );
@@ -82,7 +82,7 @@ function settingsEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
-        response.status(500).json({ success: false, error: e.message });
+        response.status(500).json({ success: false, error: "Internal server error" });
       }
     },
   );
@@ -98,6 +98,7 @@ function settingsEndpoints(app) {
       }),
     ],
     async (request, response) => {
+      let createdUser = null;
       try {
         if (response.locals.multiUserMode) {
           response.status(200).json({
@@ -123,6 +124,7 @@ function settingsEndpoints(app) {
           password,
           role: ROLES.admin,
         });
+        createdUser = user;
 
         if (error || !user) {
           response.status(400).json({
@@ -155,7 +157,13 @@ function settingsEndpoints(app) {
         await EventLogs.logEvent("multi_user_mode_enabled", {}, user?.id);
         response.status(200).json({ success: !!user, error });
       } catch (e) {
-        await User.delete({});
+        // Only roll back the user that was just created — NOT all users.
+        // The previous code called User.delete({}) which wiped every user
+        // from the database when any error occurred during multi-user
+        // setup, destroying existing accounts and locking everyone out.
+        if (createdUser?.id) {
+          await User.delete({ id: createdUser.id }).catch(() => {});
+        }
         await SystemSettings._updateSettings({
           multi_user_mode: false,
         });

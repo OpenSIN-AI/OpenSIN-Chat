@@ -27,7 +27,7 @@ const Telegram: any = {
   connect: async function (botToken: any, workspaceSlug: any) {
     return await fetch(`${API_BASE}/telegram/connect`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({
         bot_token: botToken,
         default_workspace: workspaceSlug,
@@ -109,7 +109,7 @@ const Telegram: any = {
   approveUser: async function (chatId: any) {
     return await fetch(`${API_BASE}/telegram/approve-user`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ chatId }),
     })
       .then((res) => res.json())
@@ -127,7 +127,7 @@ const Telegram: any = {
   denyUser: async function (chatId: any) {
     return await fetch(`${API_BASE}/telegram/deny-user`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ chatId }),
     })
       .then((res) => res.json())
@@ -145,7 +145,7 @@ const Telegram: any = {
   updateConfig: async function (updates: any) {
     return await fetch(`${API_BASE}/telegram/update-config`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(updates),
     })
       .then((res) => res.json())
@@ -163,7 +163,7 @@ const Telegram: any = {
   revokeUser: async function (chatId: any) {
     return await fetch(`${API_BASE}/telegram/revoke-user`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ chatId }),
     })
       .then((res) => res.json())

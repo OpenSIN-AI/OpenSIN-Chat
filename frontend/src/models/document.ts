@@ -6,7 +6,7 @@ const Document: any = {
   createFolder: async (name) => {
     return await fetch(`${API_BASE}/document/create-folder`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ name }),
     })
       .then((res) => res.json())
@@ -25,7 +25,7 @@ const Document: any = {
 
     return await fetch(`${API_BASE}/document/move-files`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then((res) => res.json())

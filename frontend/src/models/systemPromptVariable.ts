@@ -42,7 +42,7 @@ const SystemPromptVariable: any = {
     try {
       return await fetch(`${API_BASE}/system/prompt-variables`, {
         method: "POST",
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify(variable),
       })
         .then((res) => res.json())
@@ -66,7 +66,7 @@ const SystemPromptVariable: any = {
     try {
       return await fetch(`${API_BASE}/system/prompt-variables/${id}`, {
         method: "PUT",
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify(variable),
       })
         .then((res) => res.json())

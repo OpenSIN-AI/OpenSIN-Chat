@@ -11,7 +11,7 @@ const AgentSkillWhitelist: any = {
   addToWhitelist: async function (skillName: any) {
     return fetch(`${API_BASE}/agent-skills/whitelist/add`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ skillName }),
     })
       .then((res) => res.json())

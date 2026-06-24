@@ -7,6 +7,7 @@
 import type { ApiResponse } from "@/types/api";
 import { ApiError } from "@/types/api";
 import { baseHeaders } from "@/utils/request";
+import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
 
 const STATUS_MESSAGES: Record<number, string> = {
   400: "Bad request — the server could not process your request.",
@@ -39,7 +40,7 @@ function friendlyError(status: number, errorText: string): ApiError {
  * Generic GET request with type safety
  */
 export async function apiGet<T>(url: string): Promise<T> {
-  const res = await fetch(url, {
+  const res = await fetchWithTimeout(url, {
     headers: baseHeaders(),
     method: "GET",
     credentials: "include",
@@ -57,7 +58,7 @@ export async function apiGet<T>(url: string): Promise<T> {
  * Generic POST request with type safety
  */
 export async function apiPost<T>(url: string, data?: any): Promise<T> {
-  const res = await fetch(url, {
+  const res = await fetchWithTimeout(url, {
     headers: { ...baseHeaders(), "Content-Type": "application/json" },
     method: "POST",
     body: data ? JSON.stringify(data) : undefined,
@@ -76,7 +77,7 @@ export async function apiPost<T>(url: string, data?: any): Promise<T> {
  * Generic PUT request with type safety
  */
 export async function apiPut<T>(url: string, data?: any): Promise<T> {
-  const res = await fetch(url, {
+  const res = await fetchWithTimeout(url, {
     headers: { ...baseHeaders(), "Content-Type": "application/json" },
     method: "PUT",
     body: data ? JSON.stringify(data) : undefined,
@@ -95,7 +96,7 @@ export async function apiPut<T>(url: string, data?: any): Promise<T> {
  * Generic DELETE request with type safety
  */
 export async function apiDelete<T = void>(url: string): Promise<T> {
-  const res = await fetch(url, {
+  const res = await fetchWithTimeout(url, {
     headers: baseHeaders(),
     method: "DELETE",
     credentials: "include",

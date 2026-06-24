@@ -21,6 +21,13 @@ import { useChatSidebar } from "../ChatSidebar";
 
 export const PDF_UPLOADED_EVENT = "PDF_UPLOADED";
 
+function isPdfFile(file: File): boolean {
+  return (
+    file.type === "application/pdf" ||
+    file.name.toLowerCase().endsWith(".pdf")
+  );
+}
+
 export const DndUploaderContext = createContext<any>(undefined);
 export const REMOVE_ATTACHMENT_EVENT = "ATTACHMENT_REMOVE";
 export const CLEAR_ATTACHMENTS_EVENT = "ATTACHMENT_CLEAR";

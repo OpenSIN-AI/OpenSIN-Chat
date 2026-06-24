@@ -42,7 +42,7 @@ const WorkspaceThread: any = {
       {
         method: "POST",
         body: JSON.stringify(data),
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
       },
     )
       .then((res) => res.json())
@@ -69,7 +69,7 @@ const WorkspaceThread: any = {
       {
         method: "DELETE",
         body: JSON.stringify({ slugs: threadSlugs }),
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
       },
     )
       .then((res) => res.ok)
@@ -212,16 +212,23 @@ const WorkspaceThread: any = {
           },
           onerror(err) {
             if (stallTimer) clearTimeout(stallTimer);
+            const isNetworkError =
+              err?.message?.includes("Failed to fetch") ||
+              err?.message?.includes("NetworkError") ||
+              err?.message?.includes("network") ||
+              !navigator.onLine;
             handleChat({
               id: v4(),
               type: "abort",
               textResponse: null,
               sources: [],
               close: true,
-              error: `An error occurred while streaming response. ${err.message}`,
+              error: isNetworkError
+                ? "Connection lost. You appear to be offline. Please check your network and try again."
+                : `An error occurred while streaming response. ${err?.message || "Unknown error"}`,
             });
             ctrl?.abort();
-            throw new Error();
+            throw new Error(isNetworkError ? "Network error" : "Stream error");
           },
         },
       );
@@ -239,7 +246,7 @@ const WorkspaceThread: any = {
       `${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}/delete-edited-chats`,
       {
         method: "DELETE",
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify({ startingId }),
       },
     )
@@ -263,7 +270,7 @@ const WorkspaceThread: any = {
       `${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}/update-chat`,
       {
         method: "POST",
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify({ chatId, newText, role }),
       },
     )
@@ -283,7 +290,7 @@ const WorkspaceThread: any = {
         `${API_BASE}/workspace/${workspaceSlug}/thread-folder/new`,
         {
           method: "POST",
-          headers: baseHeaders(),
+          headers: { ...baseHeaders(), "Content-Type": "application/json" },
           body: JSON.stringify({ name }),
         },
       )
@@ -296,7 +303,7 @@ const WorkspaceThread: any = {
         `${API_BASE}/workspace/${workspaceSlug}/thread-folder/${folderId}/update`,
         {
           method: "POST",
-          headers: baseHeaders(),
+          headers: { ...baseHeaders(), "Content-Type": "application/json" },
           body: JSON.stringify(data),
         },
       )
@@ -325,7 +332,7 @@ const WorkspaceThread: any = {
         `${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}/assign-folder`,
         {
           method: "POST",
-          headers: baseHeaders(),
+          headers: { ...baseHeaders(), "Content-Type": "application/json" },
           body: JSON.stringify({ folderId }),
         },
       )

@@ -33,7 +33,7 @@ const DMRUtils: any = {
       try {
         const response = await fetch(`${API_BASE}/utils/dmr/download-model`, {
           method: "POST",
-          headers: baseHeaders(),
+          headers: { ...baseHeaders(), "Content-Type": "application/json" },
           body: JSON.stringify({ modelId, basePath }),
         });
 

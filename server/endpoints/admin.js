@@ -131,7 +131,7 @@ function adminEndpoints(app) {
           return;
         }
 
-        const { success, error } = await User.update(id, updates);
+        const { success, error } = await User.update(Number(id), updates);
         response.status(200).json({ success, error });
       } catch (e) {
         // eslint-disable-next-line no-console

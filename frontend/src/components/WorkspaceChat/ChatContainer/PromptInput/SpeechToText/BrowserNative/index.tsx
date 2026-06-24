@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 import showToast from "@/utils/toast";
 import MicButton from "../MicButton";
 
-let timeout;
 const SILENCE_INTERVAL = 3_200; // wait in seconds of silence before closing.
 
 /**
@@ -20,6 +19,7 @@ const SILENCE_INTERVAL = 3_200; // wait in seconds of silence before closing.
 export default function BrowserNativeSTT({ sendCommand }: any) {
   const { t } = useTranslation();
   const previousTranscriptRef = useRef("");
+  const silenceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const {
     transcript,
     listening,
@@ -60,7 +60,10 @@ export default function BrowserNativeSTT({ sendCommand }: any) {
 
     resetTranscript();
     previousTranscriptRef.current = "";
-    clearTimeout(timeout);
+    if (silenceTimeoutRef.current) {
+      clearTimeout(silenceTimeoutRef.current);
+      silenceTimeoutRef.current = null;
+    }
   }
 
   useEffect(() => {
@@ -74,8 +77,8 @@ export default function BrowserNativeSTT({ sendCommand }: any) {
         sendCommand({ text: newContent, writeMode: "append" });
 
       previousTranscriptRef.current = transcript;
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
+      if (silenceTimeoutRef.current) clearTimeout(silenceTimeoutRef.current);
+      silenceTimeoutRef.current = setTimeout(() => {
         endSTTSession();
       }, SILENCE_INTERVAL);
     }
@@ -87,7 +90,10 @@ export default function BrowserNativeSTT({ sendCommand }: any) {
   // while leaving the microphone active.
   useEffect(() => {
     return () => {
-      clearTimeout(timeout);
+      if (silenceTimeoutRef.current) {
+        clearTimeout(silenceTimeoutRef.current);
+        silenceTimeoutRef.current = null;
+      }
       // Guard against environments (headless browsers, unsupported platforms)
       // where the Web Speech API polyfill does not expose stopListening,
       // which would throw a TypeError and crash the ErrorBoundary on unmount.

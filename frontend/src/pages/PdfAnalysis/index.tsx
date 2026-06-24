@@ -733,6 +733,14 @@ function ReportModal({ job, onClose }: ReportModalProps) {
     };
   }, [job.id]);
 
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
   // Build table of contents from headings in the report
   const headings = useMemo(
     () => (result?.report ? extractHeadings(result.report) : []),
@@ -760,8 +768,12 @@ function ReportModal({ job, onClose }: ReportModalProps) {
       role="dialog"
       aria-modal="true"
       aria-label={t("pdfAnalysis.panel.reportFor", { name: job.documentName })}
+      onClick={onClose}
     >
-      <div className="w-full max-w-5xl max-h-[90vh] flex flex-col rounded-lg bg-theme-bg-secondary border border-theme-sidebar-border shadow-xl">
+      <div
+        className="w-full max-w-5xl max-h-[90vh] flex flex-col rounded-lg bg-theme-bg-secondary border border-theme-sidebar-border shadow-xl"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* ── Header ── */}
         <div className="flex items-center gap-3 p-4 border-b border-theme-sidebar-border shrink-0">
           <h3 className="text-sm font-semibold text-theme-text-primary truncate flex-1 min-w-0">

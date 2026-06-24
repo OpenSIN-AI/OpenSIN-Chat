@@ -61,7 +61,7 @@ const MobileConnection: any = {
     return await fetch(`${API_BASE}/mobile/update/${id}`, {
       method: "POST",
       body: JSON.stringify(updates),
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
     })
       .then((res) => res.json())
       .catch(() => false);

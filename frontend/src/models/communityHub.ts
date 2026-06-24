@@ -11,7 +11,7 @@ const CommunityHub: any = {
   getItemFromImportId: async (importId: any) => {
     return await fetch(`${API_BASE}/community-hub/item`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ importId }),
     })
       .then((res) => res.json())
@@ -33,7 +33,7 @@ const CommunityHub: any = {
   applyItem: async (importId: any, options = {}) => {
     return await fetch(`${API_BASE}/community-hub/apply`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ importId, options }),
     })
       .then((res) => res.json())
@@ -54,7 +54,7 @@ const CommunityHub: any = {
   importBundleItem: async (importId: any) => {
     return await fetch(`${API_BASE}/community-hub/import`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ importId }),
     })
       .then(async (res) => {
@@ -78,7 +78,7 @@ const CommunityHub: any = {
   updateSettings: async (data: any) => {
     return await fetch(`${API_BASE}/community-hub/settings`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then(async (res) => {
@@ -168,7 +168,7 @@ const CommunityHub: any = {
   createSystemPrompt: async (data: any) => {
     return await fetch(`${API_BASE}/community-hub/system-prompt/create`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then(async (res) => {
@@ -191,7 +191,7 @@ const CommunityHub: any = {
   createAgentFlow: async (data: any) => {
     return await fetch(`${API_BASE}/community-hub/agent-flow/create`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then(async (res) => {
@@ -220,7 +220,7 @@ const CommunityHub: any = {
   createSlashCommand: async (data: any) => {
     return await fetch(`${API_BASE}/community-hub/slash-command/create`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then(async (res) => {

@@ -15,7 +15,7 @@ const Workspace = {
     const { workspace, message } = await fetch(`${API_BASE}/workspace/new`, {
       method: "POST",
       body: JSON.stringify(data),
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
     })
       .then((res) => res.json())
       .catch((e) => {
@@ -30,7 +30,7 @@ const Workspace = {
       {
         method: "POST",
         body: JSON.stringify(data),
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
       },
     )
       .then((res) => res.json())
@@ -46,7 +46,7 @@ const Workspace = {
       {
         method: "POST",
         body: JSON.stringify(changes), // contains 'adds' and 'removes' keys that are arrays of filepaths
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
       },
     )
       .then((res) => res.json())
@@ -60,7 +60,7 @@ const Workspace = {
     return fetch(`${API_BASE}/workspace/${slug}/embed-queue`, {
       method: "DELETE",
       body: JSON.stringify({ filename }),
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
     })
       .then((res) => res.json())
       .catch(() => ({ success: false }));
@@ -80,7 +80,7 @@ const Workspace = {
       `${API_BASE}/workspace/${slug}/chat-feedback/${chatId}`,
       {
         method: "POST",
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify({ feedback }),
       },
     )
@@ -92,7 +92,7 @@ const Workspace = {
   deleteChats: async function (slug = "", chatIds = []) {
     return await fetch(`${API_BASE}/workspace/${slug}/delete-chats`, {
       method: "DELETE",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ chatIds }),
     })
       .then((res) => {
@@ -390,7 +390,7 @@ const Workspace = {
   setSuggestedMessages: async function (slug, messages) {
     return fetch(`${API_BASE}/workspace/${slug}/suggested-messages`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ messages }),
     })
       .then(async (res) => {
@@ -410,7 +410,7 @@ const Workspace = {
   setPinForDocument: async function (slug, docPath, pinStatus) {
     return fetch(`${API_BASE}/workspace/${slug}/update-pin`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ docPath, pinStatus }),
     })
       .then((res) => {
@@ -490,7 +490,7 @@ const Workspace = {
   _updateChat: async function (slug = "", chatId, newText, role = "assistant") {
     return await fetch(`${API_BASE}/workspace/${slug}/update-chat`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ chatId, newText, role }),
     })
       .then((res) => {
@@ -505,7 +505,7 @@ const Workspace = {
   _deleteEditedChats: async function (slug = "", startingId) {
     return await fetch(`${API_BASE}/workspace/${slug}/delete-edited-chats`, {
       method: "DELETE",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ startingId }),
     })
       .then((res) => {
@@ -531,7 +531,7 @@ const Workspace = {
   forkThread: async function (slug = "", threadSlug = null, chatId = null) {
     return await fetch(`${API_BASE}/workspace/${slug}/thread/fork`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ threadSlug, chatId }),
     })
       .then((res) => {
@@ -577,7 +577,7 @@ const Workspace = {
       `${API_BASE}/workspace/${slug}/delete-parsed-files`,
       {
         method: "DELETE",
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify({ fileIds }),
       },
     );
@@ -614,7 +614,7 @@ const Workspace = {
       {
         method: "DELETE",
         body: JSON.stringify({ documentLocation }),
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
       },
     );
     return response.ok;
@@ -664,7 +664,7 @@ const Workspace = {
   searchWorkspaceOrThread: async function (searchTerm) {
     const response = await fetch(`${API_BASE}/workspace/search`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ searchTerm }),
     })
       .then((res) => res.json())

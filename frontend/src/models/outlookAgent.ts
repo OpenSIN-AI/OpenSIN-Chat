@@ -20,7 +20,7 @@ const OutlookAgent: any = {
   }: any) => {
     return await fetch(`${API_BASE}/admin/agent-skills/outlook/auth-url`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ clientId, tenantId, clientSecret, authType }),
     })
       .then((res) => res.json())

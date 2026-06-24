@@ -30,7 +30,7 @@ const Admin = {
   newUser: async (data) => {
     return await fetch(`${API_BASE}/admin/users/new`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then((res) => safeJson(res, { user: null, error: "Request failed" }))
@@ -39,7 +39,7 @@ const Admin = {
   updateUser: async (userId, data) => {
     return await fetch(`${API_BASE}/admin/user/${userId}`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then((res) => safeJson(res, { success: false, error: "Request failed" }))
@@ -67,7 +67,7 @@ const Admin = {
   newInvite: async ({ role = null, workspaceIds = null }) => {
     return await fetch(`${API_BASE}/admin/invite/new`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({
         role,
         workspaceIds,
@@ -107,7 +107,7 @@ const Admin = {
   newWorkspace: async (name) => {
     return await fetch(`${API_BASE}/admin/workspaces/new`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ name }),
     })
       .then((res) =>
@@ -120,7 +120,7 @@ const Admin = {
       `${API_BASE}/admin/workspaces/${workspaceId}/update-users`,
       {
         method: "POST",
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify({ userIds }),
       },
     )
@@ -156,7 +156,7 @@ const Admin = {
   updateSystemPreferences: async (updates = {}) => {
     return await fetch(`${API_BASE}/admin/system-preferences`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(updates),
     })
       .then((res) => safeJson(res, { success: false, error: "Request failed" }))
@@ -175,7 +175,7 @@ const Admin = {
   generateApiKey: async function (data = {}) {
     return fetch(`${API_BASE}/admin/generate-api-key`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then((res) => safeJson(res, { apiKey: null, error: "Request failed" }))

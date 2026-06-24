@@ -38,7 +38,7 @@ const {
   determineWorkspacePfpFilepath,
   fetchPfp,
 } = require("../utils/files/pfp");
-const { getStoragePath } = require("../utils/paths");
+const { getStoragePath, getCollectorPath } = require("../utils/paths");
 const { getTTSProvider } = require("../utils/TextToSpeech");
 const { WorkspaceThread } = require("../models/workspaceThread");
 
@@ -238,7 +238,7 @@ function workspaceEndpoints(app) {
         consoleLogger.error(e.message, e);
         response
           .status(500)
-          .json({ success: false, error: e.message || "Upload failed" })
+          .json({ success: false, error: "Upload failed" })
           .end();
       }
     },
@@ -312,6 +312,17 @@ function workspaceEndpoints(app) {
           return;
         }
 
+        // Allowed source roots for connect-files: only the storage
+        // documents, uploads, and collector hotdir directories. Without
+        // this check an attacker could copy arbitrary server files (e.g.
+        // /etc/passwd, .env) into the documents folder and read them via
+        // the document API — a local file disclosure vulnerability.
+        const allowedRoots = [
+          path.resolve(getStoragePath("documents")),
+          path.resolve(getStoragePath("uploads")),
+          getCollectorPath("hotdir"),
+        ];
+
         const results = [];
         for (const filePath of resolvedFilePaths) {
           try {
@@ -325,7 +336,32 @@ function workspaceEndpoints(app) {
               continue;
             }
 
+            // Block path traversal — the source file must reside inside
+            // one of the allowed storage roots.
+            const resolvedSource = path.resolve(filePath);
+            const isAllowed = allowedRoots.some(
+              (root) =>
+                resolvedSource === root ||
+                resolvedSource.startsWith(root + path.sep),
+            );
+            if (!isAllowed) {
+              results.push({
+                file: basename,
+                success: false,
+                error: "File is outside the permitted storage directories.",
+              });
+              continue;
+            }
+
             const destPath = path.join(storageDir, basename);
+            if (!isWithin(storageDir, destPath)) {
+              results.push({
+                file: basename,
+                success: false,
+                error: "Invalid destination path.",
+              });
+              continue;
+            }
             fs.copyFileSync(filePath, destPath);
 
             const { success, reason, documents } =
@@ -356,7 +392,7 @@ function workspaceEndpoints(app) {
             results.push({
               file: path.basename(filePath),
               success: false,
-              error: e.message,
+              error: "Failed to process file",
             });
           }
         }
@@ -1318,7 +1354,7 @@ function workspaceEndpoints(app) {
         consoleLogger.error(e.message, e);
         response
           .status(500)
-          .json({ success: false, error: e.message || "Upload failed" })
+          .json({ success: false, error: "Upload failed" })
           .end();
       }
     },

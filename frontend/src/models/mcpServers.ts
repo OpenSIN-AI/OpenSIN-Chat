@@ -45,7 +45,7 @@ const MCPServers: any = {
   toggleServer: async (name: any) => {
     return await fetch(`${API_BASE}/mcp-servers/toggle`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ name }),
     })
       .then((res) => res.json())
@@ -63,7 +63,7 @@ const MCPServers: any = {
   deleteServer: async (name: any) => {
     return await fetch(`${API_BASE}/mcp-servers/delete`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ name }),
     })
       .then((res) => res.json())
@@ -83,7 +83,7 @@ const MCPServers: any = {
   toggleTool: async (serverName: any, toolName: any, enabled: any) => {
     return await fetch(`${API_BASE}/mcp-servers/toggle-tool`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ serverName, toolName, enabled }),
     })
       .then((res) => res.json())

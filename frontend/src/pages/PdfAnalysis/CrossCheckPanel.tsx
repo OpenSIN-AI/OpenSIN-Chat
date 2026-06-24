@@ -443,14 +443,26 @@ function CrossCheckReportModal({ job, onClose }: CrossCheckReportModalProps) {
     };
   }, [job.id]);
 
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
       role="dialog"
       aria-modal="true"
       aria-label={t("pdfAnalysis.crossCheck.modalAriaLabel")}
+      onClick={onClose}
     >
-      <div className="w-full max-w-3xl max-h-[85vh] flex flex-col rounded-lg bg-theme-bg-secondary border border-theme-sidebar-border">
+      <div
+        className="w-full max-w-3xl max-h-[85vh] flex flex-col rounded-lg bg-theme-bg-secondary border border-theme-sidebar-border"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="flex items-center justify-between p-4 border-b border-theme-sidebar-border gap-3">
           <h3 className="text-sm font-semibold text-theme-text-primary flex-1">
             {t("pdfAnalysis.crossCheck.modalTitle")}

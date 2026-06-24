@@ -293,7 +293,7 @@ const System = {
   deleteDocument: async (name) => {
     return await fetch(`${API_BASE}/system/remove-document`, {
       method: "DELETE",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ name }),
     })
       .then((res) => res.ok)
@@ -305,7 +305,7 @@ const System = {
   deleteDocuments: async (names = []) => {
     return await fetch(`${API_BASE}/system/remove-documents`, {
       method: "DELETE",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ names }),
     })
       .then((res) => res.ok)
@@ -317,7 +317,7 @@ const System = {
   deleteFolder: async (name) => {
     return await fetch(`${API_BASE}/system/remove-folder`, {
       method: "DELETE",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ name }),
     })
       .then((res) => res.ok)
@@ -408,7 +408,7 @@ const System = {
       .then((res) => res.json())
       .catch((e) => {
         console.error(e);
-        return { email: "", error: e.message };
+        return { supportEmail: "", error: e.message };
       });
 
     if (!supportEmail || !!error) return { email: "", error: null };
@@ -476,7 +476,7 @@ const System = {
     try {
       const res = await fetch(`${API_BASE}/system/default-system-prompt`, {
         method: "POST",
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify({ defaultSystemPrompt }),
       });
       const data = await res.json();
@@ -595,7 +595,7 @@ const System = {
   generateApiKey: async function (data = {}) {
     return fetch(`${API_BASE}/system/generate-api-key`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then((res) => {
@@ -636,7 +636,7 @@ const System = {
 
     return fetch(`${API_BASE}/system/custom-models`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       signal: controller.signal,
       body: JSON.stringify({
         provider,
@@ -661,7 +661,7 @@ const System = {
   chats: async (offset = 0) => {
     return await fetch(`${API_BASE}/system/workspace-chats`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ offset }),
     })
       .then((res) => res.json())
@@ -673,7 +673,7 @@ const System = {
   eventLogs: async (offset = 0) => {
     return await fetch(`${API_BASE}/system/event-logs`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ offset }),
     })
       .then((res) => res.json())
@@ -696,7 +696,7 @@ const System = {
   execTerminalCommand: async function ({ command, cwd = "/app" }) {
     return await fetch(`${API_BASE}/terminal/exec`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ command, cwd }),
     })
       .then(async (res) => {
@@ -753,7 +753,7 @@ const System = {
   updateUser: async (data) => {
     return await fetch(`${API_BASE}/system/user`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
@@ -783,7 +783,7 @@ const System = {
   createSlashCommandPreset: async function (presetData) {
     return await fetch(`${API_BASE}/system/slash-command-presets`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(presetData),
     })
       .then(async (res) => {
@@ -804,7 +804,7 @@ const System = {
   updateSlashCommandPreset: async function (presetId, presetData) {
     return await fetch(`${API_BASE}/system/slash-command-presets/${presetId}`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(presetData),
     })
       .then(async (res) => {
@@ -930,7 +930,7 @@ const System = {
   validateSQLConnection: async function (engine, connectionString) {
     return fetch(`${API_BASE}/system/validate-sql-connection`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ engine, connectionString }),
     })
       .then((res) => res.json())
