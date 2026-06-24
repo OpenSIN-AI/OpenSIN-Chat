@@ -322,7 +322,7 @@ describe("adminEndpoints", () => {
 
   describe("POST /admin/system-preferences", () => {
     it("updates settings", async () => {
-      SystemSettings.updateSettings.mockResolvedValue();
+      SystemSettings.updateSettings.mockResolvedValue({ success: true, error: null });
       const res = await app.call("post", "/admin/system-preferences", { body: { custom_app_name: "New" } });
       expect(res.statusCode).toBe(200);
       expect(res.body.success).toBe(true);

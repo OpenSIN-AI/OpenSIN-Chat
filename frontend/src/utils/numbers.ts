@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-const Formatter = Intl.NumberFormat("en", { notation: "compact" });
+const Formatter = Intl.NumberFormat(undefined, { notation: "compact" });
 
 export function numberWithCommas(input) {
   if (input === null || input === undefined) return "";
@@ -11,7 +11,7 @@ export function nFormatter(input) {
 }
 
 export function dollarFormat(input) {
-  return new Intl.NumberFormat("en-us", {
+  return new Intl.NumberFormat(undefined, {
     style: "currency",
     currency: "USD",
   }).format(input);

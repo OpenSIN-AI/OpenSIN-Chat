@@ -47,7 +47,7 @@ export default function EditUserModal({
     const data: any = {};
     const form = new FormData(e.currentTarget);
     for (const [key, value] of form.entries()) {
-      if (!value || value === null) continue;
+      if (key === "password" && !value) continue;
       data[key] = value;
     }
     if (messageLimit.enabled) {

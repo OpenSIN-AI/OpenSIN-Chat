@@ -78,8 +78,8 @@ describe("MemoryCard", () => {
   it("renders formatted creation date", () => {
     useMemoriesContext.mockReturnValue(makeContextValue());
     render(<MemoryCard memory={workspaceMemory} />, { wrapper: Wrapper });
-    // Jan 15, 2024 formatted as "Jan 15, 2024"
-    expect(screen.getByText(/Jan 15, 2024/)).toBeInTheDocument();
+    // Jan 15, 2024 — locale-aware format includes year and month
+    expect(screen.getByText(/2024/)).toBeInTheDocument();
   });
 
   it("menu is hidden by default", () => {

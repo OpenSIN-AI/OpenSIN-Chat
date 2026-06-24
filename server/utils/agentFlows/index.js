@@ -261,10 +261,11 @@ class AgentFlows {
               aibitat.introspect(`Executing flow: ${flow.name}`);
               const result = await AgentFlows.executeFlow(uuid, args, aibitat);
               if (!result.success) {
+                const failedStep = result.results.find((r) => !r.success);
                 aibitat.introspect(
-                  `Flow failed: ${result.results[0]?.error || "Unknown error"}`,
+                  `Flow failed: ${failedStep?.error || "Unknown error"}`,
                 );
-                return `Flow execution failed: ${result.results[0]?.error || "Unknown error"}`;
+                return `Flow execution failed: ${failedStep?.error || "Unknown error"}`;
               }
               aibitat.introspect(`${flow.name} completed successfully`);
 

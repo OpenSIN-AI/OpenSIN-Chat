@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { ErrorBoundary } from "react-error-boundary";
 import DnDFileUploaderWrapper from "./DnDWrapper";
 import { ChatSidebarProvider } from "./ChatSidebar";
@@ -18,6 +18,7 @@ export default function ChatContainer({
   threadSlug = null,
   knownHistory = [],
 }) {
+  const isMobile = useIsMobileLayout();
   const { chatHistoryRef } = useChatContainerQuickScroll();
   const {
     t,

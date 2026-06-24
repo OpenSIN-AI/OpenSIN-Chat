@@ -26,7 +26,7 @@ async function executeApiCall(config, context) {
   if (["POST", "PUT", "PATCH"].includes(method)) {
     if (bodyType === "form") {
       const formDataObj = new URLSearchParams();
-      formData.forEach(({ key, value }) => formDataObj.append(key, value));
+      (formData || []).forEach(({ key, value }) => formDataObj.append(key, value));
       requestConfig.body = formDataObj.toString();
       requestConfig.headers["Content-Type"] =
         "application/x-www-form-urlencoded";

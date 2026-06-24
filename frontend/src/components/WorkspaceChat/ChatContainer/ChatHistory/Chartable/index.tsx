@@ -58,7 +58,7 @@ const CHART_SANITIZE_OPTS = {
 const safeChart = (html) => DOMPurify.sanitize(html, CHART_SANITIZE_OPTS);
 
 const dataFormatter: any = (number) => {
-  return Intl.NumberFormat("us").format(number).toString();
+  return Intl.NumberFormat(undefined).format(number).toString();
 };
 
 export function Chartable({ props }: any) {

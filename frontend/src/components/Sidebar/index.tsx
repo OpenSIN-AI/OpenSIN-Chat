@@ -198,7 +198,6 @@ export function SidebarMobileHeader() {
   const { logo } = useLogo();
   const sidebarRef = useRef(null);
   const [showSidebar, setShowSidebar] = useState(false);
-  const [showBgOverlay, setShowBgOverlay] = useState(false);
   const {
     showing: showingNewWsModal,
     showModal: showNewWsModal,
@@ -208,25 +207,21 @@ export function SidebarMobileHeader() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    // Darkens the rest of the screen
-    // when sidebar is open.
-    if (showSidebar) {
-      const timer = setTimeout(() => {
-        setShowBgOverlay(true);
-      }, 300);
-      return () => clearTimeout(timer);
-    } else {
-      setShowBgOverlay(false);
-    }
-  }, [showSidebar]);
-
-  useEffect(() => {
     if (!showSidebar) return;
     function handleEscape(e: KeyboardEvent) {
       if (e.key === "Escape") setShowSidebar(false);
     }
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);
+  }, [showSidebar]);
+
+  useEffect(() => {
+    if (!showSidebar) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
   }, [showSidebar]);
 
   return (
@@ -260,11 +255,11 @@ export function SidebarMobileHeader() {
         }`}
       >
         <div
-          className={`${
-            showBgOverlay
-              ? "transition-all opacity-1 pointer-events-auto"
-              : "transition-none opacity-0 pointer-events-none"
-          }  duration-500 fixed top-0 left-0 bg-theme-bg-secondary bg-opacity-75 w-screen h-screen`}
+          className={`transition-all duration-500 fixed top-0 left-0 bg-theme-bg-secondary bg-opacity-75 w-screen h-screen ${
+            showSidebar
+              ? "opacity-100 pointer-events-auto"
+              : "opacity-0 pointer-events-none"
+          }`}
           onClick={() => setShowSidebar(false)}
           role="presentation"
         />

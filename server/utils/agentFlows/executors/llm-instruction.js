@@ -13,6 +13,12 @@ async function executeLLMInstruction(config, context) {
   );
   introspect(`Processing data with LLM instruction...`);
 
+  if (!aibitat) {
+    throw new Error(
+      "LLM Instruction step requires an active agent context (aibitat) but none was provided.",
+    );
+  }
+
   try {
     logger(
       `Sending request to LLM (${aibitat.defaultProvider.provider}::${aibitat.defaultProvider.model})`,

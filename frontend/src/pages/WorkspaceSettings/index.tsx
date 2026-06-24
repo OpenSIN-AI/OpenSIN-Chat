@@ -91,8 +91,10 @@ function ShowWorkspaceChat(): JSX.Element | null {
 
   // Guard: an invalid or missing tab would make TABS[tab] undefined and
   // crash React with "Element type is invalid". Redirect to the default tab.
+  // Also guard against a null workspace (e.g. slug not found) — passing null
+  // to tab components like Members would crash on workspace.id access.
   const TabContent = TABS[tab ?? ""];
-  if (!TabContent || !slug) {
+  if (!TabContent || !slug || !workspace) {
     return (
       <Navigate
         to={paths.workspace.settings.generalAppearance(slug ?? "")}

@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 export default function LoadingChat() {
+  const isMobile = useIsMobileLayout();
   const highlightColor = "var(--theme-bg-primary)";
   const baseColor = "var(--theme-bg-secondary)";
   return (

@@ -741,19 +741,7 @@ const SystemSettings = {
       delete updates[key];
     });
 
-    const result = await this._updateSettings(updates);
-    if (
-      result.success &&
-      Object.prototype.hasOwnProperty.call(updates, "multi_user_mode")
-    ) {
-      try {
-        const {
-          invalidateMultiUserModeCache,
-        } = require("../utils/middleware/validatedRequest");
-        invalidateMultiUserModeCache();
-      } catch {}
-    }
-    return result;
+    return await this._updateSettings(updates);
   },
 
   delete: async function (clause = {}) {

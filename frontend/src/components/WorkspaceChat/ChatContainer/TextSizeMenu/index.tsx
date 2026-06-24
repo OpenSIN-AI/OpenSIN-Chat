@@ -3,7 +3,7 @@ import { useState, useRef, useEffect, useMemo } from "react";
 import { SlidersHorizontal } from "@phosphor-icons/react/dist/csr/SlidersHorizontal";
 import useLoginMode from "@/hooks/useLoginMode";
 import { useTranslation } from "react-i18next";
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 
 const VALID_TEXT_SIZES = ["small", "normal", "large"];
@@ -18,6 +18,7 @@ function getTextSizes(t: any) {
 
 export default function TextSizeMenu() {
   const { t } = useTranslation();
+  const isMobile = useIsMobileLayout();
   const TEXT_SIZES = useMemo(() => getTextSizes(t), [t]);
   const mode = useLoginMode();
   const [showMenu, setShowMenu] = useState(false as any);

@@ -175,8 +175,15 @@ export default function useWebSocket({
         // overwrote local state with server data missing the current turn.
       });
 
-      ws.addEventListener("close", (_event) => {
+      ws.addEventListener("close", (event) => {
         clearTimers();
+
+        // If the server closed with 1008 (Policy Violation), the session
+        // is permanently ended (e.g. invocation already closed). Don't
+        // attempt reconnection — it can never succeed.
+        if (event?.code === 1008) {
+          intentionalCloseRef.current = true;
+        }
 
         // Attempt reconnection if the close was unintentional and we
         // haven't exhausted our retry budget.

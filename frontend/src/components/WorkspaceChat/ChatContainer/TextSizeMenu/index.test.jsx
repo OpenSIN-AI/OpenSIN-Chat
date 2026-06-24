@@ -12,10 +12,8 @@ vi.mock("@/hooks/useLoginMode", () => ({
 }));
 
 const __isMobile = { value: false };
-vi.mock("react-device-detect", () => ({
-  get isMobile() {
-    return __isMobile.value;
-  },
+vi.mock("@/hooks/useIsMobileLayout", () => ({
+  useIsMobileLayout: () => __isMobile.value,
 }));
 
 vi.mock("@phosphor-icons/react/dist/csr/SlidersHorizontal", () => ({

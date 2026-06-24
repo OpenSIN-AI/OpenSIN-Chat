@@ -330,6 +330,30 @@ function agentWebsocket(app, routePrefix = "") {
         // eslint-disable-next-line no-console
         consoleLogger.error(`[wss error id=${id}]`, e);
         cleanup();
+
+        // If the invocation is already closed (e.g. reconnection to a
+        // disconnected session), close with 1008 so the frontend knows
+        // this is permanent and does not attempt reconnection.
+        if (e?.message?.includes("already closed")) {
+          try {
+            socket.send(
+              JSON.stringify({
+                type: "wssFailure",
+                content: "Agent session has ended.",
+                id,
+              }),
+            );
+          } catch {
+            /* socket already gone */
+          }
+          try {
+            socket.close(1008, "Session ended");
+          } catch {
+            /* socket already gone */
+          }
+          return;
+        }
+
         // Surface a clear, non-secret setup message so the frontend does not
         // show the generic "Internal error" on every agent chat attempt when the
         // provider/API key is missing or misconfigured. The full error is still

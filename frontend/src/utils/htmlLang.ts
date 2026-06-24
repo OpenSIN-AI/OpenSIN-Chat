@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 import i18next from "../i18n";
+import dayjs from "dayjs";
+import "dayjs/locale/de";
 
 const RTL_LANGUAGES = ["ar", "he", "fa", "ur", "dv", "yi"];
 
@@ -10,6 +12,7 @@ export function syncHtmlLang(lng) {
     "dir",
     RTL_LANGUAGES.includes(normalized) ? "rtl" : "ltr",
   );
+  dayjs.locale(normalized);
 }
 
 export function syncDocumentTitle() {

@@ -81,6 +81,9 @@ const User = {
   castColumnValue: function (key, value) {
     switch (key) {
       case "suspended":
+        if (typeof value === "string") {
+          return Number(value === "true" || value === "1");
+        }
         return Number(Boolean(value));
       case "dailyMessageLimit":
         return value === null ? null : Number(value);

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
 import { X } from "@phosphor-icons/react/dist/csr/X";
@@ -165,6 +165,7 @@ function WorkspaceChatsTab({ workspace, onClose }: any) {
 export default function SourcesSidebar({ workspace }: any) {
   const { sources, sidebarOpen, closeSidebar } = useSourcesSidebar();
   const { t } = useTranslation();
+  const isMobile = useIsMobileLayout();
   const [selectedSource, setSelectedSource] = useState(null);
   const { sourceFilter, isDocumentSource, isMediaSource } = useChatSidebar();
 

@@ -536,8 +536,8 @@ function adminEndpoints(app) {
           updates = filteredUpdates;
         }
 
-        await SystemSettings.updateSettings(updates);
-        response.status(200).json({ success: true, error: null });
+        const { success, error } = await SystemSettings.updateSettings(updates);
+        response.status(200).json({ success, error });
       } catch (e) {
         // eslint-disable-next-line no-console
         consoleLogger.error(e);

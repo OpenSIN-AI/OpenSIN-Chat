@@ -8,7 +8,12 @@ const { User } = require("../../../models/user");
 const { Workspace } = require("../../../models/workspace");
 const { WorkspaceChats } = require("../../../models/workspaceChats");
 const { WorkspaceUser } = require("../../../models/workspaceUsers");
-const { canModifyAdmin } = require("../../../utils/helpers/admin");
+const { BrowserExtensionApiKey } = require("../../../models/browserExtensionApiKey");
+const {
+  canModifyAdmin,
+  validCanModify,
+  validRoleSelection,
+} = require("../../../utils/helpers/admin");
 const { multiUserMode, reqBody } = require("../../../utils/http");
 const { validAdminApiKey } = require("../../../utils/middleware/validApiKey");
 
@@ -139,7 +144,27 @@ function apiAdminEndpoints(app) {
         }
 
         const newUserParams = reqBody(request);
+        const currUser = response.locals?.apiKey?.createdBy
+          ? await User.get({ id: response.locals.apiKey.createdBy })
+          : null;
+        const roleValidation = validRoleSelection(currUser, newUserParams);
+        if (!roleValidation.valid) {
+          response
+            .status(200)
+            .json({ user: null, error: roleValidation.error });
+          return;
+        }
         const { user: newUser, error } = await User.create(newUserParams);
+        if (newUser) {
+          await EventLogs.logEvent(
+            "user_created",
+            {
+              userName: newUser.username,
+              createdBy: currUser?.username || "api",
+            },
+            currUser?.id,
+          );
+        }
         response.status(newUser ? 200 : 400).json({ user: newUser, error });
       } catch (e) {
         // eslint-disable-next-line no-console
@@ -207,8 +232,27 @@ function apiAdminEndpoints(app) {
         const { id } = request.params;
         const updates = reqBody(request);
         const user = await User.get({ id: Number(id) });
-        const validAdminRoleModification = await canModifyAdmin(user, updates);
+        const currUser = response.locals?.apiKey?.createdBy
+          ? await User.get({ id: response.locals.apiKey.createdBy })
+          : null;
 
+        const canModify = validCanModify(currUser, user);
+        if (!canModify.valid) {
+          response
+            .status(200)
+            .json({ success: false, error: canModify.error });
+          return;
+        }
+
+        const roleValidation = validRoleSelection(currUser, updates);
+        if (!roleValidation.valid) {
+          response
+            .status(200)
+            .json({ success: false, error: roleValidation.error });
+          return;
+        }
+
+        const validAdminRoleModification = await canModifyAdmin(user, updates);
         if (!validAdminRoleModification.valid) {
           response
             .status(200)
@@ -275,10 +319,36 @@ function apiAdminEndpoints(app) {
             .json({ success: false, error: "User not found." });
           return;
         }
+
+        const currUser = response.locals?.apiKey?.createdBy
+          ? await User.get({ id: response.locals.apiKey.createdBy })
+          : null;
+        const canModify = validCanModify(currUser, user);
+        if (!canModify.valid) {
+          response
+            .status(200)
+            .json({ success: false, error: canModify.error });
+          return;
+        }
+
+        const adminCheck = await canModifyAdmin(user, { role: "__deleted__" });
+        if (!adminCheck.valid) {
+          response
+            .status(200)
+            .json({ success: false, error: adminCheck.error });
+          return;
+        }
+
+        await BrowserExtensionApiKey.deleteAllForUser(Number(id));
         await User.delete({ id: user.id });
-        await EventLogs.logEvent("api_user_deleted", {
-          userName: user.username,
-        });
+        await EventLogs.logEvent(
+          "user_deleted",
+          {
+            userName: user.username,
+            deletedBy: currUser?.username || "api",
+          },
+          currUser?.id,
+        );
         response.status(200).json({ success: true, error: null });
       } catch (e) {
         // eslint-disable-next-line no-console
@@ -390,9 +460,21 @@ function apiAdminEndpoints(app) {
         }
 
         const body = reqBody(request);
+        const createdByUserId = response.locals?.apiKey?.createdBy || 0;
         const { invite, error } = await Invite.create({
+          createdByUserId,
           workspaceIds: body?.workspaceIds ?? [],
         });
+        if (invite) {
+          await EventLogs.logEvent(
+            "invite_created",
+            {
+              inviteCode: invite.code,
+              createdBy: response.locals?.apiKey?.createdBy || null,
+            },
+            createdByUserId || undefined,
+          );
+        }
         response.status(200).json({ invite, error });
       } catch (e) {
         // eslint-disable-next-line no-console
@@ -445,6 +527,11 @@ function apiAdminEndpoints(app) {
 
         const { id } = request.params;
         const { success, error } = await Invite.deactivate(id);
+        await EventLogs.logEvent(
+          "invite_deleted",
+          { deletedBy: response.locals?.apiKey?.createdBy || null },
+          response.locals?.apiKey?.createdBy || undefined,
+        );
         response.status(200).json({ success, error });
       } catch (e) {
         // eslint-disable-next-line no-console
@@ -637,23 +724,33 @@ function apiAdminEndpoints(app) {
 
         const { workspaceSlug } = request.params;
         const { userIds: _uids, reset = false } = reqBody(request);
-        const userIds = (
-          await User.where({ id: { in: _uids.map(Number) } })
-        ).map((user) => user.id);
-        const workspace = await Workspace.get({ slug: String(workspaceSlug) });
-        const workspaceUsers = await Workspace.workspaceUsers(workspace.id);
 
+        const workspace = await Workspace.get({ slug: String(workspaceSlug) });
         if (!workspace) {
           response.status(404).json({
             success: false,
             error: `Workspace ${workspaceSlug} not found`,
-            users: workspaceUsers,
+            users: [],
           });
           return;
         }
 
+        if (!Array.isArray(_uids) || _uids.length === 0) {
+          response.status(400).json({
+            success: false,
+            error: `No valid user IDs provided.`,
+            users: await Workspace.workspaceUsers(workspace.id),
+          });
+          return;
+        }
+
+        const userIds = (
+          await User.where({ id: { in: _uids.map(Number) } })
+        ).map((user) => user.id);
+        const workspaceUsers = await Workspace.workspaceUsers(workspace.id);
+
         if (userIds.length === 0) {
-          response.status(404).json({
+          response.status(400).json({
             success: false,
             error: `No valid user IDs provided.`,
             users: workspaceUsers,
@@ -798,8 +895,8 @@ function apiAdminEndpoints(app) {
         }
 
         const updates = reqBody(request);
-        await SystemSettings.updateSettings(updates);
-        response.status(200).json({ success: true, error: null });
+        const { success, error } = await SystemSettings.updateSettings(updates);
+        response.status(200).json({ success, error });
       } catch (e) {
         // eslint-disable-next-line no-console
         consoleLogger.error(e);

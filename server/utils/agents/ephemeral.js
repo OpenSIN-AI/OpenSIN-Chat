@@ -700,6 +700,20 @@ class EphemeralEventListener extends EventEmitter {
         continue;
       }
 
+      // Skip non-response message types that should not overwrite textResponse.
+      // wssFailure, toolApprovalRequest, clarificationRequest, WAITING_ON_INPUT,
+      // agentInitWebsocketConnection, etc. are control messages, not responses.
+      if (
+        msg.type === "wssFailure" ||
+        msg.type === "toolApprovalRequest" ||
+        msg.type === "clarificationRequest" ||
+        msg.type === "WAITING_ON_INPUT" ||
+        msg.type === "agentInitWebsocketConnection" ||
+        msg.type === "__heartbeat"
+      ) {
+        continue;
+      }
+
       textResponse = msg.content;
     }
     return { thoughts, textResponse, outputs, metrics };
@@ -795,6 +809,17 @@ class EphemeralEventListener extends EventEmitter {
           });
         }
 
+        return;
+      }
+
+      // Skip non-response control messages that should not be sent as textResponse.
+      if (
+        data.type === "toolApprovalRequest" ||
+        data.type === "clarificationRequest" ||
+        data.type === "WAITING_ON_INPUT" ||
+        data.type === "agentInitWebsocketConnection" ||
+        data.type === "__heartbeat"
+      ) {
         return;
       }
 

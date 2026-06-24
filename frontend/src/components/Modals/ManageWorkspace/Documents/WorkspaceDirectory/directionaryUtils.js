@@ -44,7 +44,9 @@ export const getEmbeddedDocCount = (files) => {
 
 export const isAllItemsSelected = (selectedItems, files) => {
   const allItems = files.items.flatMap((folder) => folder.items);
-  return (
-    Object.keys(selectedItems).length === allItems.length && allItems.length > 0
-  );
+  if (allItems.length === 0) return false;
+  // Check that every item is actually selected, not just that the counts match.
+  // A count-only check would incorrectly report "all selected" when selectedItems
+  // contains stale IDs from previously deleted items.
+  return allItems.every((item) => selectedItems[item.id]);
 };

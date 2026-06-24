@@ -13,7 +13,7 @@ export const stripUuidAndJsonFromString = (input = "") => {
   return input
     ?.replace(uuidPattern, "") // remove v4 uuid
     ?.replace(jsonPattern, "") // remove trailing .json
-    ?.replace("-", " "); // turn slugged names into spaces
+    ?.replace(/-/g, " "); // turn slugged names into spaces (ALL hyphens, not just the first)
 };
 
 export function filterFileSearchResults(files = [], searchTerm = "") {

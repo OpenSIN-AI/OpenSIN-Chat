@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import React, { useEffect, useState } from "react";
 import paths from "@/utils/paths";
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import useUser from "@/hooks/useUser";
 import Appearance from "@/models/appearance";
 import useLogo from "@/hooks/useLogo";
@@ -110,6 +110,7 @@ export default function DefaultChatContainer() {
 
 const Layout = ({ children }) => {
   const { showScrollbar } = Appearance.getSettings();
+  const isMobile = useIsMobileLayout();
   return (
     <div
       // Dynamic: height depends on runtime device detection (isMobile ternary)

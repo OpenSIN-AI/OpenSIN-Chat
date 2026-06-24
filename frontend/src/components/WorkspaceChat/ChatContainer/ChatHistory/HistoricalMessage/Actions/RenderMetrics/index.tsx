@@ -2,7 +2,7 @@
 import { formatDateTimeAsMoment } from "@/utils/directories";
 import { formatDuration, numberWithCommas } from "@/utils/numbers";
 import React, { useEffect, useState, useContext } from "react";
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { useTranslation } from "react-i18next";
 const MetricsContext = React.createContext<any>(undefined);
 const SHOW_METRICS_KEY = "openafd_show_chat_metrics";
@@ -113,6 +113,7 @@ export default function RenderMetrics({ metrics = {} }: any) {
   const { showMetricsAutomatically, setShowMetricsAutomatically } =
     useContext(MetricsContext);
   const { t } = useTranslation();
+  const isMobile = useIsMobileLayout();
   if (!metrics?.duration || !metrics?.outputTps || isMobile) return null;
 
   return (

@@ -9,7 +9,7 @@ export function formatDate(dateString) {
   const parsed = new Date(dateString);
   if (isNaN(parsed.getTime())) return "—";
   const options = { year: "numeric", month: "short", day: "numeric" } as const;
-  return parsed.toLocaleDateString("en-US", options);
+  return parsed.toLocaleDateString(undefined, options);
 }
 
 export function formatDateTimeAsMoment(dateString, format = "LLL") {

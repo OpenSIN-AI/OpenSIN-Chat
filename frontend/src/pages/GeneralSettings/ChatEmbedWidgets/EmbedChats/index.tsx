@@ -25,7 +25,7 @@ const exportOptions: Record<string, ExportOption> = {
     mimeType: "text/csv",
     fileExtension: "csv",
     filenameFunc: () => {
-      return `openafd-embed-chats-${new Date().toLocaleDateString()}`;
+      return `opensin-embed-chats-${new Date().toISOString().slice(0, 10)}`;
     },
   },
   json: {
@@ -33,7 +33,7 @@ const exportOptions: Record<string, ExportOption> = {
     mimeType: "application/json",
     fileExtension: "json",
     filenameFunc: () => {
-      return `openafd-embed-chats-${new Date().toLocaleDateString()}`;
+      return `opensin-embed-chats-${new Date().toISOString().slice(0, 10)}`;
     },
   },
   jsonl: {
@@ -41,7 +41,7 @@ const exportOptions: Record<string, ExportOption> = {
     mimeType: "application/jsonl",
     fileExtension: "jsonl",
     filenameFunc: () => {
-      return `openafd-embed-chats-${new Date().toLocaleDateString()}-lines`;
+      return `opensin-embed-chats-${new Date().toISOString().slice(0, 10)}-lines`;
     },
   },
   jsonAlpaca: {
@@ -49,7 +49,7 @@ const exportOptions: Record<string, ExportOption> = {
     mimeType: "application/json",
     fileExtension: "json",
     filenameFunc: () => {
-      return `openafd-embed-chats-${new Date().toLocaleDateString()}-alpaca`;
+      return `opensin-embed-chats-${new Date().toISOString().slice(0, 10)}-alpaca`;
     },
   },
 };

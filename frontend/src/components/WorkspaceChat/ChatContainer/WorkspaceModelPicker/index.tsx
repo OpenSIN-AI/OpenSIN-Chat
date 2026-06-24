@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import useUser from "@/hooks/useUser";
 import useWorkspace from "@/hooks/useWorkspaceBySlug";
 import useSystemSettings from "@/hooks/useSystemSettings";
@@ -63,6 +63,7 @@ function prettifyModelName(rawModel: string): string {
 
 export default function WorkspaceModelPicker({ workspaceSlug = null }) {
   const { t } = useTranslation();
+  const isMobile = useIsMobileLayout();
   const { slug: urlSlug } = useParams();
   const slug = urlSlug ?? workspaceSlug;
   const { user } = useUser();

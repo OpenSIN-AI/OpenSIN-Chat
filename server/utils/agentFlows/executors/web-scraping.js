@@ -78,6 +78,11 @@ async function executeWebScraping(config, context) {
     return content;
   }
 
+  if (!aibitat) {
+    logger(`No agent context (aibitat) available — returning raw content without summarization`);
+    return content;
+  }
+
   const tokenCount = new TokenManager(
     aibitat.defaultProvider.model,
   ).countFromString(content);

@@ -45,8 +45,12 @@ export function FileTree({
     (sum: number, folder: any) => sum + folder.items.length,
     0,
   );
+  const allItems = files.items.flatMap((folder: any) => folder.items);
+  // Check that every item is actually selected, not just that the counts match.
+  // A count-only check would incorrectly report "all selected" when selectedItems
+  // contains stale IDs from previously deleted items.
   const allSelected =
-    Object.keys(selectedItems).length === allCount && allCount > 0;
+    allCount > 0 && allItems.every((item: any) => selectedItems[item.id]);
 
   return (
     <div className="px-8">
@@ -138,7 +142,7 @@ export function FileTree({
                     onClick={toggleSelectAll}
                     className="border-none text-sm font-semibold bg-white light:bg-[#E0F2FE] h-[30px] px-2.5 rounded-lg hover:bg-neutral-800/80 hover:text-white light:text-[#026AA2] light:hover:bg-[#026AA2] light:hover:text-white"
                   >
-                    {Object.keys(selectedItems).length === allCount
+                    {allSelected
                       ? t("connectors.directory.deselect_all")
                       : t("connectors.directory.select_all")}
                   </button>
