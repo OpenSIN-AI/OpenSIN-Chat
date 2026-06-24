@@ -6,11 +6,12 @@ const {
   ensureStorageDir,
 } = require("../utils/paths");
 const { SystemSettings } = require("../models/systemSettings");
-const { validatedRequest } = require("../utils/middleware/validatedRequest");
-const {
-  flexUserRoleValid,
-  ROLES,
-} = require("../utils/middleware/multiUserProtected");
+// NOTE: validatedRequest / flexUserRoleValid / ROLES are required lazily inside
+// utilEndpoints() instead of being destructured here. These middleware modules
+// participate in a circular dependency chain; a top-level destructure captures
+// `undefined` when this file is evaluated while the middleware module is still
+// mid-load, which crashed the server at boot ("argument handler must be a
+// function"). Requiring at call time guarantees the fully-resolved functions.
 const { reqBody } = require("../utils/http");
 const { fetchWithTimeout } = require("../utils/helpers/fetchWithTimeout");
 const { ResilientHttpClient } = require("../utils/helpers/resilientHttpClient");
@@ -27,6 +28,16 @@ const rssClient = new ResilientHttpClient({
 
 function utilEndpoints(app) {
   if (!app) return;
+
+  // Resolve middleware at call time to avoid the circular-dependency capture
+  // described in the import notes above.
+  const {
+    validatedRequest,
+  } = require("../utils/middleware/validatedRequest");
+  const {
+    flexUserRoleValid,
+    ROLES,
+  } = require("../utils/middleware/multiUserProtected");
 
   app.get("/utils/metrics", [validatedRequest], async (_, response) => {
     try {
