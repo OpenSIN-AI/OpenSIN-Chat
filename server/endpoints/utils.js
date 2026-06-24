@@ -12,12 +12,8 @@ const {
   ROLES,
 } = require("../utils/middleware/multiUserProtected");
 const { reqBody } = require("../utils/http");
-const {
-  fetchWithTimeout,
-} = require("../utils/helpers/fetchWithTimeout");
-const {
-  ResilientHttpClient,
-} = require("../utils/helpers/resilientHttpClient");
+const { fetchWithTimeout } = require("../utils/helpers/fetchWithTimeout");
+const { ResilientHttpClient } = require("../utils/helpers/resilientHttpClient");
 
 const rssClient = new ResilientHttpClient({
   timeoutMs: 10_000,

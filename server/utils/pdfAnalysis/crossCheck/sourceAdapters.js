@@ -17,9 +17,7 @@ const { Agent: UndiciAgent, fetch: undiciFetch } = require("undici");
 const { PdfReader } = require("../pdfReader");
 const { validatePdfPath } = require("../security");
 const { analyzeImageUrl, analyzeVideoUrl } = require("./mediaAdapters");
-const {
-  fetchWithTimeout,
-} = require("../../helpers/fetchWithTimeout");
+const { fetchWithTimeout } = require("../../helpers/fetchWithTimeout");
 
 const MAX_FETCH_BYTES = Number(
   process.env.PDF_ANALYSIS_XCHECK_MAX_FETCH_BYTES || 5 * 1024 * 1024,

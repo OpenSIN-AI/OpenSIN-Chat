@@ -20,9 +20,7 @@ const {
   fetchWithLimits,
   htmlToText,
 } = require("./sourceAdapters");
-const {
-  ResilientHttpClient,
-} = require("../../helpers/resilientHttpClient");
+const { ResilientHttpClient } = require("../../helpers/resilientHttpClient");
 
 const RESULTS_PER_QUERY = Number(process.env.PDF_ANALYSIS_XCHECK_RESULTS || 4);
 const QUERIES_PER_CLAIM = Number(process.env.PDF_ANALYSIS_XCHECK_QUERIES || 2);

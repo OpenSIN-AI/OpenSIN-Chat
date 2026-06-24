@@ -93,7 +93,10 @@ function doRender(text: string): string {
   // Strip empty KaTeX paragraphs that the katex plugin produces when
   // the text contains lone $ signs (e.g. "$100") — these render as
   // empty <p> tags with empty katex spans, creating large whitespace gaps.
-  html = html.replace(/<p>\s*<span class="katex-display"><span class="katex">[\s\S]*?<\/span><\/span><\/span><\/p>/g, "");
+  html = html.replace(
+    /<p>\s*<span class="katex-display"><span class="katex">[\s\S]*?<\/span><\/span><\/span><\/p>/g,
+    "",
+  );
   // Strip truly empty <p> tags (no text content at all)
   html = html.replace(/<p>\s*<\/p>/g, "");
   return html;

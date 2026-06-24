@@ -114,8 +114,12 @@ const Politician = {
         { headers: baseHeaders() },
       );
       const data = await res.json().catch(() => ({}));
-      if (!res.ok) return { results: [], error: data.error || `HTTP ${res.status}` };
-      return { results: data.results || data.speeches || [], error: data.error };
+      if (!res.ok)
+        return { results: [], error: data.error || `HTTP ${res.status}` };
+      return {
+        results: data.results || data.speeches || [],
+        error: data.error,
+      };
     } catch (e) {
       return { results: [], error: e.message };
     }
