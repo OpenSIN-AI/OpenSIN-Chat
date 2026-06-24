@@ -732,7 +732,11 @@ async function syncMandates() {
         continue;
       }
 
-      const fractionLabel = m.fraction_membership?.[0]?.fraction?.label || null;
+      const memberships = Array.isArray(m.fraction_membership)
+        ? m.fraction_membership
+        : [];
+      const lastMembership = memberships[memberships.length - 1] || {};
+      const fractionLabel = lastMembership?.fraction?.label || null;
       const party = cleanFractionLabel(fractionLabel);
 
       mandates.push({
@@ -787,7 +791,7 @@ async function syncVotes() {
             voteTitle: v.poll?.label || null,
             voteDescription: v.label || null,
             voteResult: v.vote || null,
-            voteDate: null,
+            voteDate: v.poll?.field_poll_date?.[0] || null,
             documentUrl: v.poll?.abgeordnetenwatch_url || null,
             plenaryProtocolUrl: null,
             rawData: JSON.stringify(v),
@@ -848,8 +852,8 @@ async function syncCommittees() {
             politicianId,
             committeeId: `aw-committee-${c.id}`,
             role: m.committee_role || null,
-            startDate: null,
-            endDate: null,
+            startDate: m.valid_from || null,
+            endDate: m.valid_until || null,
           });
         }
       } catch (err) {

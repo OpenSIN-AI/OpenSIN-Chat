@@ -15,8 +15,7 @@ const EventLogs = {
           occurredAt: new Date(),
         },
       });
-      // eslint-disable-next-line no-console
-      console.info(`\x1b[32m[Event Logged]\x1b[0m - ${event}`);
+      consoleLogger.info(`\x1b[32m[Event Logged]\x1b[0m - ${event}`);
       return { eventLog, message: null };
     } catch (error) {
       consoleLogger.error(
@@ -157,7 +156,8 @@ const EventLogs = {
   },
 
   delete: async function (clause = {}) {
-    if (!process.env.EVENT_LOGS_ALLOW_PURGE) {
+    const allow = process.env.EVENT_LOGS_ALLOW_PURGE;
+    if (allow !== "1" && allow !== "true") {
       throw new Error(
         "[event_logs] delete refused: append-only mode. Set EVENT_LOGS_ALLOW_PURGE=1 to override.",
       );

@@ -99,7 +99,7 @@ async function processQueue() {
     const { pageContent: _pageContent, ...metadata } = data;
     const newDoc = {
       docId,
-      filename: filePath.split("/")[1],
+      filename: filePath.split("/").pop(),
       docpath: filePath,
       workspaceId,
       metadata: JSON.stringify(metadata),

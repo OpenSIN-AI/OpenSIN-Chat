@@ -53,6 +53,10 @@ class Logger {
     };
     // eslint-disable-next-line no-console
     console.info = function (...args) {
+      logger.info(formatArgs(args));
+    };
+    // eslint-disable-next-line no-console
+    console.warn = function (...args) {
       logger.warn(formatArgs(args));
     };
     return logger;

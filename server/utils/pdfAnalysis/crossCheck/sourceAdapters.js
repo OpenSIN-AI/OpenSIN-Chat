@@ -59,7 +59,8 @@ function _resetResolvedLookups() {
 }
 
 function isPrivateIp(ip) {
-  if (net.isIPv6(ip)) return /^(::1|fc|fd|fe80)/i.test(ip) || ip === "::";
+  if (net.isIPv6(ip))
+    return /^(::1|fc|fd|fe80|::ffff:)/i.test(ip) || ip === "::";
   const parts = ip.split(".").map(Number);
   return (
     parts[0] === 10 ||

@@ -141,7 +141,12 @@ function runCleanup() {
   if (REPORT_TTL_DAYS > 0) {
     const reportFiles = [
       ...listFiles(REPORT_DIR).filter((f) => f.endsWith(".md")),
-      ...listFiles(path.join(REPORT_DIR, "crosscheck")),
+      ...listFiles(path.join(REPORT_DIR, "crosscheck")).filter((f) =>
+        f.endsWith(".md"),
+      ),
+      ...listFiles(path.join(REPORT_DIR, "corpus")).filter((f) =>
+        f.endsWith(".md"),
+      ),
     ];
     for (const file of reportFiles) {
       if (olderThanDays(file, REPORT_TTL_DAYS) && safeUnlink(file))

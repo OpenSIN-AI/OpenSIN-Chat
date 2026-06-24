@@ -16,7 +16,7 @@ FACTS_DB="${PDF_DIR}/facts.sqlite"
 SERVER_PORT="${SERVER_PORT:-3001}"
 
 # ── 1) Liveness: HTTP /ping muss 200 liefern ──────────────────────
-response=$(curl --write-out '%{http_code}' --silent --output /dev/null --max-time 5 "http://localhost:${SERVER_PORT}/ping")
+response=$(curl --write-out '%{http_code}' --silent --output /dev/null --max-time 5 "http://localhost:${SERVER_PORT}/api/ping")
 if [ "$response" -ne 200 ]; then
   echo "Server is down (ping HTTP $response)"
   exit 1

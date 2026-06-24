@@ -212,7 +212,7 @@ RUN chown -R opensin:0 /app && \
 ENV NODE_ENV=production
 ENV OPENSIN_CHAT_RUNTIME=docker
 ENV ANYTHING_LLM_RUNTIME=docker
-ENV DEPLOYMENT_VERSION=1.13.0
+ENV DEPLOYMENT_VERSION=1.14.0
 ENV HOME=/app
 
 # Setup the healthcheck

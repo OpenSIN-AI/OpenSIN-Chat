@@ -16,14 +16,14 @@
 # - Click "Add Files"
 # - Upload this file or create a file named `Dockerfile` and copy-paste this content into it. "Commit to main" and save.
 # - Your container will build and boot. You now have OpenSIN Chat on HuggingFace. Your data is stored in the persistent storage attached.
-# Have Fun 🤗 
+# Have Fun 🤗
 # Have issues? Check the logs on HuggingFace for clues.
-FROM ubuntu:noble-20251013
+FROM ghcr.io/opensin-ai/opensin-chat:latest
 
 USER root
 RUN mkdir -p /data/storage
 RUN ln -s /data/storage /storage
-USER openafd
+USER opensin
 
 ENV STORAGE_DIR="/data/storage"
 ENV SERVER_PORT=7860

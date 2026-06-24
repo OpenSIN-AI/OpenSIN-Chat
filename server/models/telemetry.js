@@ -39,6 +39,7 @@ const Telemetry = {
 
   connect: async function () {
     const client = this.client();
+    if (!client) return { client: null, distinctId: null };
     const distinctId = await this.findOrCreateId();
     return { client, distinctId };
   },
@@ -124,11 +125,9 @@ const Telemetry = {
         distinctId,
         properties,
       });
+      this.markOnCooldown(event);
     } catch {
       return;
-    } finally {
-      // Mark the event as on cooldown if needed
-      this.markOnCooldown(event);
     }
   },
 

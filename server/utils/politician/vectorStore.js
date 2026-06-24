@@ -151,12 +151,19 @@ class PoliticianVectorStore {
       connection = await this.vectorDb.connect();
       const queryVector = await this.embedder.embedText(query);
 
+      // When post-search metadata filters are active, over-fetch from the DB
+      // so that after filtering we still have up to topN results. Without this,
+      // a politician-specific search could return 0-2 results when topN=10
+      // because 8 of the 10 DB hits belonged to other politicians.
+      const hasFilter = !!politicianId || !!party;
+      const fetchN = hasFilter ? Math.max(topN * 5, 50) : topN;
+
       const result = await this.vectorDb.similarityResponse({
         client: connection,
         namespace: this.namespace,
         queryVector,
         similarityThreshold,
-        topN,
+        topN: fetchN,
       });
 
       // Apply optional filters post-search (PGVector namespace-level search only)
@@ -174,6 +181,9 @@ class PoliticianVectorStore {
       if (party) {
         results = results.filter((r) => r.metadata.party === party);
       }
+
+      // Trim back to the originally requested topN after filtering
+      results = results.slice(0, topN);
 
       return { results, error: null };
     } catch (err) {

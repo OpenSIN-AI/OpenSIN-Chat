@@ -107,7 +107,7 @@ class AbgeordnetenwatchApi {
     const res = await this.#fetch(url);
     if (!res.ok) {
       this.log(`HTTP ${res.status} for ${url}`);
-      res.text?.().catch(() => {});
+      await res.text?.().catch(() => {});
       return null;
     }
     return res.json();
@@ -345,10 +345,10 @@ class AbgeordnetenwatchApi {
    * @returns {Promise<AwPolitician[]>}
    */
   async searchPoliticians(query) {
-    const data = await this.#fetchCached(
-      `${this.baseUrl}/politicians/?search=${encodeURIComponent(query)}`,
+    this.log(`Searching politicians for "${query}"...`);
+    return this.#fetchAllRanged(
+      `${this.baseUrl}/politicians?search=${encodeURIComponent(query)}`,
     );
-    return Array.isArray(data?.data) ? data.data : [];
   }
 
   /**

@@ -121,7 +121,7 @@ class BundestagApi {
     const res = await this.#fetch(url, headers);
     if (!res.ok) {
       this.log(`HTTP ${res.status} for ${url}`);
-      res.text?.().catch(() => {});
+      await res.text?.().catch(() => {});
       return null;
     }
     return res.json();
@@ -234,7 +234,11 @@ class BundestagApi {
       birthPlace: raw.geburtsort || null,
       profession: raw.beruf || null,
       education: raw.vitaKurz || null,
-      photoUrl: raw.bild ? `${BUNDESTAG_BASE_URL}${raw.bild}` : null,
+      photoUrl: raw.bild
+        ? raw.bild.startsWith("http")
+          ? raw.bild
+          : `${BUNDESTAG_BASE_URL}${raw.bild}`
+        : null,
       profileUrl:
         raw.profilUrl ||
         (raw.id

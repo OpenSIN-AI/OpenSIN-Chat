@@ -64,6 +64,11 @@ async function downloadVideo(url) {
   });
   if (!res.ok) {
     clearTimeout(timer);
+    try {
+      fs.rmSync(tmpDir, { recursive: true, force: true });
+    } catch {
+      /* best-effort cleanup */
+    }
     throw new Error(`HTTP ${res.status} für ${url}`);
   }
   const reader = res.body.getReader();

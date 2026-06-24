@@ -67,8 +67,7 @@ const Politician = {
         const results = await prisma.$transaction(
           chunk.map((p) => {
             const id = p.id || uuid.v4();
-            const data = {
-              id,
+            const commonData = {
               externalId: p.externalId || null,
               source: p.source || "bundestag",
               title: p.title || null,
@@ -101,13 +100,16 @@ const Politician = {
             };
 
             if (p.externalId) {
+              // `id` must NOT be in `update` — overwriting the PK on an
+              // existing record would break every FK reference (mandates,
+              // votes, speeches, committee memberships).
               return prisma.politicians.upsert({
                 where: { externalId: p.externalId },
-                update: data,
-                create: data,
+                update: commonData,
+                create: { id, ...commonData },
               });
             }
-            return prisma.politicians.create({ data });
+            return prisma.politicians.create({ data: { id, ...commonData } });
           }),
         );
 

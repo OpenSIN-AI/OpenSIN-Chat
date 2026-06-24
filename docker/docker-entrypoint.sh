@@ -70,5 +70,10 @@ trap shutdown SIGTERM SIGINT
 SERVER_PID=$!
 { node /app/collector/index.js; } &
 COLLECTOR_PID=$!
-wait -n
-exit $?
+# Wait specifically for the SERVER process — a collector crash must NOT
+# take down the server.  Only exit when the server exits; clean up the
+# collector if it is still running.
+wait "$SERVER_PID"
+EXIT_CODE=$?
+[ -n "$COLLECTOR_PID" ] && kill -TERM "$COLLECTOR_PID" 2>/dev/null
+exit $EXIT_CODE

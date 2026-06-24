@@ -196,7 +196,7 @@ class PlenarScraper {
           speakerParty: block.speakerParty,
           text: block.text,
           top: `Sitzung ${sitting}`,
-          date: date || new Date().toISOString().slice(0, 10),
+          date: date || null,
           session,
           sitting,
           pageNumbers: null,
@@ -367,7 +367,7 @@ class PlenarScraper {
         speakerParty: getParty(),
         text: getText(),
         top: getTop() || `Sitzung ${sitting}`,
-        date: getDate() || docDate || new Date().toISOString().slice(0, 10),
+        date: getDate() || docDate || null,
         session,
         sitting,
         pageNumbers: null,
@@ -439,9 +439,21 @@ class PlenarScraper {
     if (!speech?.speakerName || !speech.speakerName.trim())
       return { politicianId: null, confidence: 0 };
 
-    const names = speech.speakerName.trim().split(" ");
+    // Strip common German academic/noble title prefixes that appear in
+    // Plenarprotokoll speaker labels (e.g. "Dr. Alice Weidel"). Without this,
+    // the first space-separated token would be "dr." instead of the actual
+    // given name, causing every titled speaker to miss the name map.
+    const cleanName = speech.speakerName
+      .trim()
+      .replace(/^(dr\.|prof\.|prof\.\s*dr\.|dr\.\s*h\.c\.|prof\.\s*dr\.\s*h\.c\.|habil\.)\s+/i, "")
+      .replace(/\s+(jr\.|sr\.|von|de|van|zu|zur|der|den|dem)\b/gi, " ")
+      .trim();
+
+    const names = cleanName.split(" ");
     const lastName = names[names.length - 1]?.toLowerCase();
     const firstName = names[0]?.toLowerCase();
+
+    if (!lastName) return { politicianId: null, confidence: 0 };
 
     // Try exact match first
     const key = `${lastName}, ${firstName}`;

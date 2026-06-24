@@ -26,11 +26,14 @@ function intEnv(name, fallback, { min = 1, max = 1024 } = {}) {
 }
 
 module.exports = {
-  // Verzeichnisse
-  STORAGE_DIR: path.join(STORAGE_ROOT, "pdf-analysis"),
-  CHECKPOINT_DIR: path.join(STORAGE_ROOT, "pdf-analysis", "checkpoints"),
-  REPORT_DIR: path.join(STORAGE_ROOT, "pdf-analysis", "reports"),
-  FACTS_FILE: path.join(STORAGE_ROOT, "pdf-analysis", "facts.json"),
+  // Verzeichnisse — STORAGE_ROOT already includes "pdf-analysis" from
+  // getStoragePath("pdf-analysis"); do NOT join another "pdf-analysis"
+  // segment or jobStore/agentPool write to a different directory than
+  // retention.js (which uses getStoragePath directly) reads from.
+  STORAGE_DIR: STORAGE_ROOT,
+  CHECKPOINT_DIR: path.join(STORAGE_ROOT, "checkpoints"),
+  REPORT_DIR: path.join(STORAGE_ROOT, "reports"),
+  FACTS_FILE: path.join(STORAGE_ROOT, "facts.json"),
 
   // Parallelisierung — use intEnv for NaN-safe parsing
   AGENT_CONCURRENCY: intEnv("PDF_ANALYSIS_CONCURRENCY", 6, { min: 1, max: 64 }),
