@@ -195,10 +195,10 @@ export default function GeneralEmbeddingPreference() {
 
     const { error } = await System.updateSystem(settingsData);
     if (error) {
-      showToast(`Failed to save embedding settings: ${error}`, "error");
+      showToast(t("embedding.saveFailed", { error }), "error");
       setHasChanges(true);
     } else {
-      showToast("Embedding preferences saved successfully.", "success");
+      showToast(t("embedding.saveSuccess"), "success");
       setHasChanges(false);
     }
     setSaving(false);

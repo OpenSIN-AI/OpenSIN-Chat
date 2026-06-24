@@ -192,6 +192,12 @@ function apiPoliticianEndpoints(app) {
         });
         child.unref();
 
+        child.on("error", (spawnErr) => {
+          logger.error(
+            `[politician] sync process failed to start: ${spawnErr.message}`,
+          );
+        });
+
         logger.info("[politician] Manual sync triggered via API");
         response
           .status(202)

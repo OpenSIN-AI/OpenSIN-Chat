@@ -806,11 +806,16 @@ const TRANSLATIONS = {
       placeholder: "OpenSIN Chat",
       clear: "Löschen",
       save: "Speichern",
+      updateSuccess: "App-Name erfolgreich aktualisiert.",
+      updateFailed: "App-Name konnte nicht aktualisiert werden: {{error}}",
     },
     supportEmail: {
       placeholder: "support@meinefirma.com",
       clear: "Löschen",
       save: "Speichern",
+      updateSuccess: "Support-E-Mail erfolgreich aktualisiert.",
+      updateFailed:
+        "Support-E-Mail konnte nicht aktualisiert werden: {{error}}",
     },
   },
   login: {
@@ -1886,6 +1891,9 @@ const TRANSLATIONS = {
     provider: {
       title: "Einbettungsanbieter",
     },
+    saveSuccess: "Einbettungspräferenzen erfolgreich gespeichert.",
+    saveFailed:
+      "Einbettungseinstellungen konnten nicht gespeichert werden: {{error}}",
   },
   text: {
     title: "Textsplitting & Chunking-Präferenzen",
@@ -1913,6 +1921,9 @@ const TRANSLATIONS = {
       title: "Vektordatenbankanbieter",
       description: "Für LanceDB ist keine Konfiguration erforderlich.",
     },
+    saveSuccess: "Vektordatenbank-Präferenzen erfolgreich gespeichert.",
+    saveFailed:
+      "Vektordatenbank-Einstellungen konnten nicht gespeichert werden: {{error}}",
   },
   embeddable: {
     title: "Einbettbare Chat-Widgets",

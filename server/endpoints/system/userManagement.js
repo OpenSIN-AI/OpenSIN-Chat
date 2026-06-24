@@ -18,6 +18,7 @@ const {
   flexUserRoleValid,
   ROLES,
 } = require("../../utils/middleware/multiUserProtected");
+const { simpleRateLimit } = require("../../utils/middleware/simpleRateLimit");
 
 function userManagementEndpoints(app) {
   if (!app) return;
@@ -26,7 +27,15 @@ function userManagementEndpoints(app) {
   // Allows a user to delete their own account with password confirmation.
   app.delete(
     "/system/user",
-    [validatedRequest, flexUserRoleValid([ROLES.all])],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.all]),
+      simpleRateLimit({
+        bucket: "user-self-delete",
+        max: 5,
+        windowMs: 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         const sessionUser = await userFromSession(request, response);
@@ -57,6 +66,7 @@ function userManagementEndpoints(app) {
             !fullUser ||
             !bcrypt.compareSync(String(currentPassword), fullUser.password)
           ) {
+            await User.recordFailedLogin(id);
             response.status(403).json({
               success: false,
               error: "Current password is incorrect.",
@@ -87,7 +97,6 @@ function userManagementEndpoints(app) {
         );
         response.status(200).json({ success: true, error: null });
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e);
         response.sendStatus(500);
       }
@@ -96,69 +105,83 @@ function userManagementEndpoints(app) {
 
   // Used for when a user in multi-user updates their own profile
   // from the UI.
-  app.post("/system/user", [validatedRequest], async (request, response) => {
-    try {
-      const sessionUser = await userFromSession(request, response);
-      const { username, password, currentPassword, bio } = reqBody(request);
-      const id = Number(sessionUser.id);
+  app.post(
+    "/system/user",
+    [
+      validatedRequest,
+      simpleRateLimit({
+        bucket: "user-self-update",
+        max: 10,
+        windowMs: 60 * 1000,
+      }),
+    ],
+    async (request, response) => {
+      try {
+        const sessionUser = await userFromSession(request, response);
+        const { username, password, currentPassword, bio } = reqBody(request);
+        const id = Number(sessionUser.id);
 
-      if (!id) {
-        response.status(400).json({ success: false, error: "Invalid user ID" });
-        return;
-      }
-
-      const updates = {};
-      // If the username is being changed, validate it.
-      // Otherwise, do not attempt to validate it to allow existing users to keep their username if not changing it.
-      if (username !== sessionUser.username)
-        updates.username = User.validations.username(String(username));
-
-      // When changing password, verify the current password to prevent
-      // account takeover via a stolen session token (e.g. XSS).
-      if (password) {
-        if (!currentPassword) {
-          response.status(400).json({
-            success: false,
-            error: "Current password is required to change password.",
-          });
+        if (!id) {
+          response
+            .status(400)
+            .json({ success: false, error: "Invalid user ID" });
           return;
         }
-        const fullUser = await User._get({ id });
-        const bcrypt = require("bcryptjs");
-        if (
-          !fullUser ||
-          !bcrypt.compareSync(String(currentPassword), fullUser.password)
-        ) {
-          response.status(403).json({
-            success: false,
-            error: "Current password is incorrect.",
-          });
+
+        const updates = {};
+        // If the username is being changed, validate it.
+        // Otherwise, do not attempt to validate it to allow existing users to keep their username if not changing it.
+        if (username !== sessionUser.username)
+          updates.username = User.validations.username(String(username));
+
+        // When changing password, verify the current password to prevent
+        // account takeover via a stolen session token (e.g. XSS).
+        if (password) {
+          if (!currentPassword) {
+            response.status(400).json({
+              success: false,
+              error: "Current password is required to change password.",
+            });
+            return;
+          }
+          const fullUser = await User._get({ id });
+          const bcrypt = require("bcryptjs");
+          if (
+            !fullUser ||
+            !bcrypt.compareSync(String(currentPassword), fullUser.password)
+          ) {
+            await User.recordFailedLogin(id);
+            response.status(403).json({
+              success: false,
+              error: "Current password is incorrect.",
+            });
+            return;
+          }
+          updates.password = String(password);
+        }
+
+        if (bio) updates.bio = String(bio).slice(0, 1000);
+
+        if (Object.keys(updates).length === 0) {
+          response
+            .status(400)
+            .json({ success: false, error: "No updates provided" });
           return;
         }
-        updates.password = String(password);
+
+        const { success, error } = await User.update(id, updates);
+        response.status(200).json({ success, error });
+      } catch (e) {
+        const errorId = crypto.randomUUID();
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
+        response.status(500).json({
+          success: false,
+          error: "Internal server error",
+          errorId,
+        });
       }
-
-      if (bio) updates.bio = String(bio).slice(0, 1000);
-
-      if (Object.keys(updates).length === 0) {
-        response
-          .status(400)
-          .json({ success: false, error: "No updates provided" });
-        return;
-      }
-
-      const { success, error } = await User.update(id, updates);
-      response.status(200).json({ success, error });
-    } catch (e) {
-      const errorId = crypto.randomUUID();
-      consoleLogger.error(`[endpoint error ${errorId}]`, e);
-      response.status(500).json({
-        success: false,
-        error: "Internal server error",
-        errorId,
-      });
-    }
-  });
+    },
+  );
 
   app.get(
     "/system/slash-command-presets",
@@ -169,7 +192,6 @@ function userManagementEndpoints(app) {
         const userPresets = await SlashCommandPresets.getUserPresets(user?.id);
         response.status(200).json({ presets: userPresets });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error fetching slash command presets:", error);
         response.status(500).json({ message: "Internal server error" });
       }
@@ -208,7 +230,6 @@ function userManagementEndpoints(app) {
         }
         response.status(201).json({ preset });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error creating slash command preset:", error);
         response.status(500).json({ message: "Internal server error" });
       }
@@ -255,7 +276,6 @@ function userManagementEndpoints(app) {
         if (!preset) return response.sendStatus(422);
         response.status(200).json({ preset: { ...ownsPreset, ...updates } });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error updating slash command preset:", error);
         response.status(500).json({ message: "Internal server error" });
       }
@@ -283,7 +303,6 @@ function userManagementEndpoints(app) {
         await SlashCommandPresets.delete(Number(slashCommandId));
         response.sendStatus(204);
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error deleting slash command preset:", error);
         response.status(500).json({ message: "Internal server error" });
       }
@@ -300,8 +319,11 @@ function userManagementEndpoints(app) {
         response.status(200).json({ variables });
       } catch (error) {
         const id = crypto.randomUUID();
-        // eslint-disable-next-line no-console
-        consoleLogger.error(`[system prompt-variables fetch error id=${id}]`, error);
+
+        consoleLogger.error(
+          `[system prompt-variables fetch error id=${id}]`,
+          error,
+        );
         response.status(500).json({
           success: false,
           error: "Internal error",
@@ -339,8 +361,11 @@ function userManagementEndpoints(app) {
         });
       } catch (error) {
         const id = crypto.randomUUID();
-        // eslint-disable-next-line no-console
-        consoleLogger.error(`[system prompt-variables create error id=${id}]`, error);
+
+        consoleLogger.error(
+          `[system prompt-variables create error id=${id}]`,
+          error,
+        );
         response.status(500).json({
           success: false,
           error: "Internal error",
@@ -383,7 +408,6 @@ function userManagementEndpoints(app) {
           variable,
         });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error updating system prompt variable:", error);
         response.status(500).json({
           success: false,
@@ -412,7 +436,6 @@ function userManagementEndpoints(app) {
           success: true,
         });
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error deleting system prompt variable:", error);
         response.status(500).json({
           success: false,

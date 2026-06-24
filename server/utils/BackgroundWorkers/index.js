@@ -393,7 +393,13 @@ class BackgroundService {
     this.#scheduledJobQueue.add(() =>
       this.#runScheduledJobWorker(jobId, run.id).catch(async (err) => {
         this.#log(`Scheduled job ${jobId} failed: ${err.message}`);
-        await ScheduledJobRun.failIfNotTerminal(run.id, err.message);
+        await ScheduledJobRun.failIfNotTerminal(run.id, err.message).catch(
+          (dbErr) => {
+            this.#log(
+              `Scheduled job ${jobId} failed to mark run ${run.id} as failed: ${dbErr.message}`,
+            );
+          },
+        );
       }),
     );
     return run;

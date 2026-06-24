@@ -4,7 +4,7 @@ import useUser from "@/hooks/useUser";
 import Admin from "@/models/admin";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import useSupportEmail from "@/hooks/useSupportEmail";
 
@@ -16,13 +16,16 @@ export default function SupportEmail(): JSX.Element {
   const [originalEmail, setOriginalEmail] = useState("");
   const { t } = useTranslation();
 
-  // Sync SWR data into local state
+  // Sync SWR data into local state once loaded.
+  // Using useEffect avoids the setState-during-render anti-pattern that
+  // forces React to discard the in-progress render and immediately re-render.
   const [synced, setSynced] = useState(false);
-  if (!isLoading && !synced) {
+  useEffect(() => {
+    if (isLoading || synced) return;
     setSupportEmail(fetchedEmail);
     setOriginalEmail(fetchedEmail);
     setSynced(true);
-  }
+  }, [isLoading, synced, fetchedEmail]);
 
   const updateSupportEmail = async (
     e: React.FormEvent<HTMLFormElement>,
@@ -40,10 +43,10 @@ export default function SupportEmail(): JSX.Element {
     });
 
     if (!success) {
-      showToast(`Failed to update support email: ${error}`, "error");
+      showToast(t("settings.supportEmail.updateFailed", { error }), "error");
       return;
     } else {
-      showToast("Successfully updated support email.", "success");
+      showToast(t("settings.supportEmail.updateSuccess"), "success");
       window.localStorage.removeItem(System.cacheKeys.supportEmail);
       setSupportEmail(support_email as string);
       setOriginalEmail(support_email as string);

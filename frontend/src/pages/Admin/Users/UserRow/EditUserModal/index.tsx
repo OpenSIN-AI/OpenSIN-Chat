@@ -60,9 +60,9 @@ export default function EditUserModal({
     if (success) {
       // Update local storage if we're editing our own user
       if (currentUser && currentUser.id === user.id) {
-        currentUser.username = data.username;
-        currentUser.bio = data.bio;
-        currentUser.role = data.role;
+        currentUser.username = data.username ?? currentUser.username;
+        currentUser.bio = data.bio ?? "";
+        currentUser.role = data.role ?? currentUser.role;
         safeSetItem(AUTH_USER, JSON.stringify(currentUser));
       }
 

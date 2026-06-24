@@ -39,6 +39,9 @@ class PDFLoader {
       }
     } catch (e) {
       if (e?.message?.startsWith("[PDFLoader]")) throw e;
+      console.warn(
+        `[PDFLoader] Archive pre-flight check threw an unexpected error, continuing without validation: ${e.message}`
+      );
     }
 
     const buffer = await fs.readFile(this.filePath);

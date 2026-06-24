@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "@/components/SettingsSidebar";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -19,11 +19,16 @@ export default function MobileDevices(): JSX.Element {
   const { devices, isLoading, mutate } = useMobileConnections();
   const [showedEmpty, setShowedEmpty] = useState(false);
 
-  // Show the QR modal on first load if no devices
-  if (!isLoading && devices.length === 0 && !showedEmpty) {
-    setShowedEmpty(true);
-    openModal();
-  }
+  // Show the QR modal on first load if no devices.
+  // Using useEffect avoids calling openModal (which calls setState)
+  // during render — a React anti-pattern that can cause warnings and
+  // discarded renders.
+  useEffect(() => {
+    if (!isLoading && devices.length === 0 && !showedEmpty) {
+      setShowedEmpty(true);
+      openModal();
+    }
+  }, [isLoading, devices, showedEmpty, openModal]);
 
   const removeDevice = (id: string) => {
     mutate(

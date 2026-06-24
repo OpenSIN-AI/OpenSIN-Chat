@@ -59,7 +59,12 @@ async function viewLocalFiles() {
   for (const file of fs.readdirSync(documentsPath)) {
     if (path.extname(file) === ".md") continue;
     const folderPath = path.resolve(documentsPath, file);
-    const isFolder = fs.lstatSync(folderPath).isDirectory();
+    let isFolder;
+    try {
+      isFolder = fs.lstatSync(folderPath).isDirectory();
+    } catch {
+      continue;
+    }
     if (isFolder) {
       const subdocs = {
         name: file,
@@ -279,9 +284,14 @@ async function purgeVectorCache(filename = null) {
 async function findDocumentInDocuments(documentName = null) {
   if (!documentName) return null;
   for (const folder of fs.readdirSync(documentsPath)) {
-    const isFolder = fs
-      .lstatSync(path.join(documentsPath, folder))
-      .isDirectory();
+    let isFolder;
+    try {
+      isFolder = fs
+        .lstatSync(path.join(documentsPath, folder))
+        .isDirectory();
+    } catch {
+      continue;
+    }
     if (!isFolder) continue;
 
     const targetFilename = normalizePath(documentName);

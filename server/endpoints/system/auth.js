@@ -4,8 +4,16 @@
 const consoleLogger = require("../../utils/logger/console.js");
 
 const crypto = require("crypto");
+const bcrypt = require("bcryptjs");
 const { SystemSettings } = require("../../models/systemSettings");
 const { User } = require("../../models/user");
+
+let _dummyBcryptHash = null;
+function getDummyBcryptHash() {
+  if (!_dummyBcryptHash)
+    _dummyBcryptHash = bcrypt.hashSync("timing-normalization-dummy", 10);
+  return _dummyBcryptHash;
+}
 const { Telemetry } = require("../../models/telemetry");
 const { EventLogs } = require("../../models/eventLogs");
 const {
@@ -53,7 +61,6 @@ function authEndpoints(app) {
 
         response.sendStatus(200);
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -141,7 +148,6 @@ function authEndpoints(app) {
     ],
     async (request, response) => {
       try {
-        const bcrypt = require("bcryptjs");
         const LOCKOUT_WINDOW_MS = 60 * 60 * 1000;
 
         if (await SystemSettings.isMultiUserMode()) {
@@ -183,6 +189,7 @@ function authEndpoints(app) {
           const existingUser = await User._get({ username: attempted });
 
           if (!existingUser) {
+            bcrypt.compareSync(String(password), getDummyBcryptHash());
             await EventLogs.logEvent(
               "failed_login_invalid_username",
               {
@@ -233,7 +240,7 @@ function authEndpoints(app) {
               user: null,
               valid: false,
               token: null,
-              message: "[002] Invalid login credentials.",
+              message: "[001] Invalid login credentials.",
             });
             return;
           }
@@ -355,7 +362,6 @@ function authEndpoints(app) {
           });
         }
       } catch (e) {
-        // eslint-disable-next-line no-console
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -465,7 +471,6 @@ function authEndpoints(app) {
           response.status(400).json({ success, message: error });
         }
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error recovering account:", error);
         response
           .status(500)
@@ -499,7 +504,6 @@ function authEndpoints(app) {
           response.status(400).json({ success, error });
         }
       } catch (error) {
-        // eslint-disable-next-line no-console
         consoleLogger.error("Error resetting password:", error);
         response
           .status(500)

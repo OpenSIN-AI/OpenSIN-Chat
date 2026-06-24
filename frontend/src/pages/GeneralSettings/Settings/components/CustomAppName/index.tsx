@@ -3,7 +3,7 @@
 import Admin from "@/models/admin";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import useCustomAppName from "@/hooks/useCustomAppName";
 import useSystemSettings from "@/hooks/useSystemSettings";
@@ -21,9 +21,12 @@ export default function CustomAppName(): JSX.Element {
   const [originalAppName, setOriginalAppName] = useState("");
   const [canCustomize, setCanCustomize] = useState(false);
 
-  // Sync SWR data into local state
+  // Sync SWR data into local state once loaded.
+  // Using useEffect avoids the setState-during-render anti-pattern that
+  // forces React to discard the in-progress render and immediately re-render.
   const [synced, setSynced] = useState(false);
-  if (!settingsLoading && !appNameLoading && !synced) {
+  useEffect(() => {
+    if (settingsLoading || appNameLoading || synced) return;
     if (!settings?.MultiUserMode && !settings?.RequiresAuth) {
       setCanCustomize(false);
       setSynced(true);
@@ -33,7 +36,7 @@ export default function CustomAppName(): JSX.Element {
       setCanCustomize(true);
       setSynced(true);
     }
-  }
+  }, [settingsLoading, appNameLoading, synced, settings, fetchedAppName]);
 
   const updateCustomAppName = async (
     e: React.FormEvent<HTMLFormElement>,
@@ -49,10 +52,10 @@ export default function CustomAppName(): JSX.Element {
       custom_app_name,
     });
     if (!success) {
-      showToast(`Failed to update custom app name: ${error}`, "error");
+      showToast(t("settings.customAppName.updateFailed", { error }), "error");
       return;
     } else {
-      showToast("Successfully updated custom app name.", "success");
+      showToast(t("settings.customAppName.updateSuccess"), "success");
       window.localStorage.removeItem(System.cacheKeys.customAppName);
       setCustomAppName(custom_app_name as string);
       setOriginalAppName(custom_app_name as string);

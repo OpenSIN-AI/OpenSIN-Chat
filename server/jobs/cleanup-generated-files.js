@@ -134,7 +134,7 @@ async function workspaceChatGeneratedFilenames(batchSize = 50) {
       for (const chat of chats) {
         try {
           const response = safeJsonParse(chat.response, { outputs: [] });
-          for (const output of response.outputs) {
+          for (const output of response.outputs || []) {
             if (!output || !output.payload || !output.payload.storageFilename)
               continue;
             storageFilenames.add(output.payload.storageFilename);
@@ -178,7 +178,7 @@ async function scheduledJobRunGeneratedFilenames(batchSize = 50) {
       for (const run of runs) {
         try {
           const response = safeJsonParse(run.result, { outputs: [] });
-          for (const output of response.outputs) {
+          for (const output of response.outputs || []) {
             if (!output?.payload?.storageFilename) continue;
             storageFilenames.add(output.payload.storageFilename);
           }

@@ -13,6 +13,9 @@ const sseConnections = new Map();
 /** @type {Map<string, object[]>} Buffered events per workspace for SSE replay */
 const eventHistory = new Map();
 
+/** @type {Map<string, NodeJS.Timeout>} Pending cleanup timers per slug */
+const pendingHistoryCleanups = new Map();
+
 const MAX_EVENT_HISTORY_PER_SLUG = 1000;
 const MAX_WORKERS = 256;
 
@@ -34,6 +37,11 @@ function _enforceMaxWorkers() {
     }
     runningWorkers.delete(oldestSlug);
     sseConnections.delete(oldestSlug);
+    const pendingCleanup = pendingHistoryCleanups.get(oldestSlug);
+    if (pendingCleanup) {
+      clearTimeout(pendingCleanup);
+      pendingHistoryCleanups.delete(oldestSlug);
+    }
     eventHistory.delete(oldestSlug);
   }
 }
@@ -49,8 +57,15 @@ function emitProgress(slug, event) {
     history.push(event);
     if (history.length > MAX_EVENT_HISTORY_PER_SLUG) history.shift();
 
-    if (event.type === "all_complete")
-      setTimeout(() => eventHistory.delete(slug), 10_000);
+    if (event.type === "all_complete") {
+      const prevTimer = pendingHistoryCleanups.get(slug);
+      if (prevTimer) clearTimeout(prevTimer);
+      const timer = setTimeout(() => {
+        eventHistory.delete(slug);
+        pendingHistoryCleanups.delete(slug);
+      }, 10_000);
+      pendingHistoryCleanups.set(slug, timer);
+    }
   }
 
   const connections = sseConnections.get(slug);
@@ -157,12 +172,22 @@ async function embedFiles(slug, files, workspaceId, userId) {
     } catch {
       runningWorkers.delete(slug);
       sseConnections.delete(slug);
+      const pendingCleanup = pendingHistoryCleanups.get(slug);
+      if (pendingCleanup) {
+        clearTimeout(pendingCleanup);
+        pendingHistoryCleanups.delete(slug);
+      }
       eventHistory.delete(slug);
     }
   }
 
   // Clear stale event history from any previous run so new SSE
   // connections don't replay old events (including all_complete).
+  const prevCleanup = pendingHistoryCleanups.get(slug);
+  if (prevCleanup) {
+    clearTimeout(prevCleanup);
+    pendingHistoryCleanups.delete(slug);
+  }
   eventHistory.delete(slug);
 
   const { BackgroundService } = require("./BackgroundWorkers");
@@ -186,6 +211,11 @@ async function embedFiles(slug, files, workspaceId, userId) {
     if (runningWorkers.get(slug)?.worker === worker) {
       runningWorkers.delete(slug);
       sseConnections.delete(slug);
+      const pendingCleanup = pendingHistoryCleanups.get(slug);
+      if (pendingCleanup) {
+        clearTimeout(pendingCleanup);
+        pendingHistoryCleanups.delete(slug);
+      }
       eventHistory.delete(slug);
     }
     bg.removeJob(jobId).catch(() => {});
@@ -210,6 +240,11 @@ async function embedFiles(slug, files, workspaceId, userId) {
     if (runningWorkers.get(slug)?.worker === worker) {
       runningWorkers.delete(slug);
       sseConnections.delete(slug);
+      const pendingCleanup = pendingHistoryCleanups.get(slug);
+      if (pendingCleanup) {
+        clearTimeout(pendingCleanup);
+        pendingHistoryCleanups.delete(slug);
+      }
       eventHistory.delete(slug);
     }
     bg.removeJob(jobId).catch(() => {});

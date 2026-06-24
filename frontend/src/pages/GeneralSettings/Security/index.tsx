@@ -78,6 +78,7 @@ function MultiUserMode() {
       setSaving(false);
       return;
     }
+    setSaving(false);
   };
 
   if (isLoading) {

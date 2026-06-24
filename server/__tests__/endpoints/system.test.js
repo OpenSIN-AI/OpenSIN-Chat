@@ -365,7 +365,7 @@ describe("systemEndpoints", () => {
         bcrypt.compareSync.mockReturnValue(false);
         const res = await app.call("post", "/request-token", { body: { username: "admin", password: "wrong" } });
         expect(res.body.valid).toBe(false);
-        expect(res.body.message).toMatch(/\[002\]/);
+        expect(res.body.message).toMatch(/\[001\]/);
       });
       it("rejects suspended user", async () => {
         User._get.mockResolvedValue({ id: 1, username: "admin", password: "hashed", suspended: true });

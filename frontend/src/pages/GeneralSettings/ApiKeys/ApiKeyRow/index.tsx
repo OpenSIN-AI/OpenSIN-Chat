@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
 import Admin from "@/models/admin";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { userFromStorage } from "@/utils/request";
 import System from "@/models/system";
 import { useTranslation } from "react-i18next";
-import { copyText } from "@/utils/clipboard";
 
 export default function ApiKeyRow({
   apiKey,
@@ -14,14 +12,13 @@ export default function ApiKeyRow({
   apiKey: {
     id: number;
     name?: string;
-    secret: string;
+    secret?: string;
     createdBy?: { username?: string };
     createdAt: string;
   };
   removeApiKey: (id: number) => void;
 }) {
   const { t } = useTranslation();
-  const [copied, setCopied] = useState(false);
   const handleDelete = async () => {
     if (!window.confirm(t("api.row.deleteConfirm"))) return false;
 
@@ -31,21 +28,6 @@ export default function ApiKeyRow({
     removeApiKey(apiKey.id);
   };
 
-  const copyApiKey = () => {
-    if (!apiKey) return false;
-    copyText(apiKey.secret).then((ok) => {
-      if (ok) setCopied(true);
-    });
-  };
-
-  useEffect(() => {
-    if (!copied) return;
-    const timer = setTimeout(() => {
-      setCopied(false);
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, [copied]);
-
   return (
     <>
       <tr className="bg-transparent text-white text-opacity-80 text-xs font-medium border-b border-white/10">
@@ -54,7 +36,9 @@ export default function ApiKeyRow({
         </td>
         <td scope="row" className="px-6 py-3 align-middle">
           <code className="font-mono text-[11px] break-all text-theme-text-primary">
-            {apiKey.secret}
+            {/* The secret is stripped server-side for security; only shown
+                once at creation time in NewApiKeyModal. */}
+            ••••••••••••••••
           </code>
         </td>
         <td className="px-6 py-3 text-left align-middle">
@@ -68,14 +52,6 @@ export default function ApiKeyRow({
         </td>
         <td className="px-6 py-3 align-middle">
           <div className="flex items-center gap-x-6">
-            <button
-              type="button"
-              onClick={copyApiKey}
-              disabled={copied}
-              className="text-xs font-medium text-blue-300 rounded-lg hover:text-white hover:light:text-blue-500 hover:text-opacity-60 hover:underline"
-            >
-              {copied ? t("api.row.copied") : t("api.row.copy")}
-            </button>
             <button
               type="button"
               onClick={handleDelete}

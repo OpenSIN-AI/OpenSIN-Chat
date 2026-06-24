@@ -1239,11 +1239,15 @@ const TRANSLATIONS = {
       placeholder: "OpenSIN Chat",
       clear: "Clear",
       save: "Save",
+      updateSuccess: "Successfully updated custom app name.",
+      updateFailed: "Failed to update custom app name: {{error}}",
     },
     supportEmail: {
       placeholder: "support@mycompany.com",
       clear: "Clear",
       save: "Save",
+      updateSuccess: "Successfully updated support email.",
+      updateFailed: "Failed to update support email: {{error}}",
     },
   },
   login: {
@@ -2461,6 +2465,8 @@ const TRANSLATIONS = {
     provider: {
       title: "Embedding Provider",
     },
+    saveSuccess: "Embedding preferences saved successfully.",
+    saveFailed: "Failed to save embedding settings: {{error}}",
   },
   text: {
     title: "Text splitting & Chunking Preferences",
@@ -2488,6 +2494,8 @@ const TRANSLATIONS = {
       title: "Vector Database Provider",
       description: "There is no configuration needed for LanceDB.",
     },
+    saveSuccess: "Vector database preferences saved successfully.",
+    saveFailed: "Failed to save vector database settings: {{error}}",
   },
   embeddable: {
     title: "Embeddable Chat Widgets",

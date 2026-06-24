@@ -7,6 +7,13 @@ const {
   PasswordResetToken,
 } = require("../../models/passwordRecovery");
 
+let _dummyBcryptHash = null;
+function getDummyBcryptHash() {
+  if (!_dummyBcryptHash)
+    _dummyBcryptHash = bcrypt.hashSync("timing-normalization-dummy", 10);
+  return _dummyBcryptHash;
+}
+
 async function generateRecoveryCodes(userId) {
   const newRecoveryCodes = [];
   const plainTextCodes = [];
@@ -33,7 +40,10 @@ async function generateRecoveryCodes(userId) {
 
 async function recoverAccount(username = "", recoveryCodes = []) {
   const user = await User.get({ username: String(username) });
-  if (!user) return { success: false, error: "Invalid recovery codes." };
+  if (!user) {
+    bcrypt.compareSync("timing-normalization-dummy", getDummyBcryptHash());
+    return { success: false, error: "Invalid recovery codes." };
+  }
 
   // If hashes do not exist for a user
   // because this is a user who has not logged out and back in since upgrade.

@@ -202,12 +202,13 @@ function CalculatedRuleBody({ rule }: { rule: Rule }): JSX.Element {
   }
 
   const quantifier = rule.condition_logic === "OR" ? "any" : "all";
+  const logicSeparator = rule.condition_logic === "OR" ? " OR " : " AND ";
   const conditionsSummary = conditions
     .map(
       (c: any) =>
         `${c.property} ${getComparatorLabel(t, c.comparator)} "${c.value}"`,
     )
-    .join(" AND ");
+    .join(logicSeparator);
 
   return (
     <p className="text-sm font-medium leading-5 text-zinc-400 light:text-slate-500 truncate">
