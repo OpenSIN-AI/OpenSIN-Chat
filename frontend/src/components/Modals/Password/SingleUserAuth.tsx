@@ -63,27 +63,32 @@ export default function SingleUserAuth({
 
   const handleLogin = async (e) => {
     setError(null);
-    setLoading(true);
     e.preventDefault();
+    setLoading(true);
     const data = {};
     const form = new FormData(e.target);
     for (const [key, value] of form.entries()) data[key] = value;
-    const { valid, token, message, recoveryCodes } =
-      await System.requestToken(data);
-    if (valid && !!token) {
-      setToken(token);
-      if (recoveryCodes) {
-        setRecoveryCodes(recoveryCodes);
-        openRecoveryCodeModal();
+    try {
+      const { valid, token, message, recoveryCodes } =
+        await System.requestToken(data);
+      if (valid && !!token) {
+        setToken(token);
+        if (recoveryCodes) {
+          setRecoveryCodes(recoveryCodes);
+          openRecoveryCodeModal();
+        } else {
+          safeSetItem(AUTH_TOKEN, token);
+          window.location.href = paths.home();
+        }
       } else {
-        safeSetItem(AUTH_TOKEN, token);
-        window.location.href = paths.home();
+        setError(message);
       }
-    } else {
-      setError(message);
+    } catch (err) {
+      console.error(err);
+      setError(err?.message || "Login failed. Please try again.");
+    } finally {
       setLoading(false);
     }
-    setLoading(false);
   };
 
   const handleDownloadComplete = () => {

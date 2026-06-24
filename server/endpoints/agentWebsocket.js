@@ -119,10 +119,14 @@ async function isAuthorizedRequest(request) {
   }
 
   const { p } = decoded;
-  if (p === null || !/\w{32}:\w{32}/.test(p)) return false;
+  if (p === null || typeof p !== "string" || p.length < 16) return false;
+  if (!/^[A-Za-z0-9+/=_-]+$/.test(p)) return false;
+
+  const decrypted = EncryptionMgr.decrypt(p);
+  if (!decrypted) return false;
 
   const bcrypt = require("bcryptjs");
-  return bcrypt.compareSync(EncryptionMgr.decrypt(p), getAuthTokenHash());
+  return bcrypt.compareSync(decrypted, getAuthTokenHash());
 }
 
 function agentWebsocket(app, routePrefix = "") {

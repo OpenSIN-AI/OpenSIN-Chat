@@ -60,6 +60,7 @@ export default function EditPresetModal({
           <button
             onClick={onClose}
             type="button"
+            aria-label={t("common.close") || "Close"}
             className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
           >
             <X size={24} weight="bold" className="text-white" />

@@ -276,7 +276,16 @@ function apiSystemEndpoints(app) {
       */
       try {
         const { names } = reqBody(request);
-        await Promise.all(names.map((name) => purgeDocument(name)));
+        if (!Array.isArray(names) || names.length === 0) {
+          response
+            .status(400)
+            .json({ success: false, message: "names must be a non-empty array of strings." });
+          return;
+        }
+        const safeNames = names
+          .filter((n) => typeof n === "string" && n.length > 0 && n.length <= 500)
+          .slice(0, 100);
+        await Promise.all(safeNames.map((name) => purgeDocument(name)));
         response
           .status(200)
           .json({ success: true, message: "Documents removed successfully" })

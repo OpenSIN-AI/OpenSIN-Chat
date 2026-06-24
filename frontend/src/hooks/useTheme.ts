@@ -3,6 +3,7 @@ import { REFETCH_LOGO_EVENT } from "@/LogoContext";
 import { useState, useEffect, useRef } from "react";
 import { THEME_KEY } from "@/utils/constants";
 import { getStoredTheme, safeSetItem } from "@/utils/safeStorage";
+import { useCallback } from "react";
 
 const availableThemes = {
   system: "System",
@@ -105,10 +106,10 @@ export function useTheme({ broadcastLogoChange = false } = {}) {
    * other necessary side effects
    * @param {ThemeOption} newTheme The new theme to set
    */
-  function setTheme(newTheme) {
+  const setTheme = useCallback((newTheme: any) => {
     _setTheme(newTheme);
     window.dispatchEvent(new Event(REFETCH_LOGO_EVENT));
-  }
+  }, []);
 
   return {
     theme,

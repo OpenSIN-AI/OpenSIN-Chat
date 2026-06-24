@@ -705,9 +705,8 @@ class PGVector extends VectorDatabase {
         );
 
       const { DocumentVectors } = require("../../../models/vectors");
-      const vectorIds = (await DocumentVectors.where({ docId })).map(
-        (record) => record.vectorId,
-      );
+      const knownDocuments = await DocumentVectors.where({ docId });
+      const vectorIds = knownDocuments.map((record) => record.vectorId);
       if (vectorIds.length === 0) return;
 
       try {
@@ -722,6 +721,9 @@ class PGVector extends VectorDatabase {
         await connection.query(`ROLLBACK`);
         throw err;
       }
+
+      const indexes = knownDocuments.map((doc) => doc.id);
+      await DocumentVectors.deleteIds(indexes);
 
       this.logger(
         `Deleted ${vectorIds.length} vectors from namespace ${namespace}`,

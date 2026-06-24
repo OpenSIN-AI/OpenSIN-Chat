@@ -3,6 +3,7 @@
 // due to unsaved form changes. Works with useBlocker from react-router-dom.
 import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import { useTranslation } from "react-i18next";
+import { useCallback } from "react";
 import ModalWrapper from "@/components/ModalWrapper";
 
 /**
@@ -12,10 +13,13 @@ import ModalWrapper from "@/components/ModalWrapper";
 export default function UnsavedChangesDialog({ blocker }: any) {
   const { t } = useTranslation();
 
+  const handleReset = useCallback(() => blocker.reset(), [blocker]);
+  const handleProceed = useCallback(() => blocker.proceed(), [blocker]);
+
   if (blocker.state !== "blocking") return null;
 
   return (
-    <ModalWrapper isOpen={true} closeModal={() => blocker.reset()}>
+    <ModalWrapper isOpen={true} closeModal={handleReset}>
       <div className="w-full max-w-lg bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border overflow-hidden z-9999">
         <div className="relative px-6 py-5 border-b rounded-t border-theme-modal-border">
           <div className="w-full flex gap-x-2 items-center">
@@ -33,14 +37,14 @@ export default function UnsavedChangesDialog({ blocker }: any) {
         </div>
         <div className="flex w-full justify-end items-center p-6 space-x-2 border-t border-theme-modal-border rounded-b">
           <button
-            onClick={() => blocker.reset()}
+            onClick={handleReset}
             type="button"
             className="transition-all duration-300 bg-transparent text-white hover:opacity-60 px-4 py-2 rounded-lg text-sm border-none"
           >
             {t("common.stayOnPage") || "Stay on Page"}
           </button>
           <button
-            onClick={() => blocker.proceed()}
+            onClick={handleProceed}
             type="button"
             className="transition-all duration-300 bg-red-500 text-white hover:opacity-60 px-4 py-2 rounded-lg text-sm border-none"
           >

@@ -32,17 +32,21 @@ export default function AddMemberModal({
 
   const handleUpdate = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { success, error } = await Admin.updateUsersInWorkspace(
-      workspace.id,
-      selectedUsers,
-    );
-    if (success) {
-      showToast(t("addMemberModal.usersUpdatedSuccess"), "success");
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    } else {
-      showToast(error, "error");
+    try {
+      const { success, error } = await Admin.updateUsersInWorkspace(
+        workspace.id,
+        selectedUsers,
+      );
+      if (success) {
+        showToast(t("addMemberModal.usersUpdatedSuccess"), "success");
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      } else {
+        showToast(error, "error");
+      }
+    } catch (err) {
+      showToast(err?.message || "Failed to update users.", "error");
     }
   };
 
@@ -107,6 +111,7 @@ export default function AddMemberModal({
           <button
             onClick={closeModal}
             type="button"
+            aria-label={t("common.close") || "Close"}
             className="border-none bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center bg-sidebar-button hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
           >
             <X className="text-white text-lg" />
@@ -121,11 +126,18 @@ export default function AddMemberModal({
                     key={user.id}
                     className="flex items-center gap-x-2 cursor-pointer"
                     onClick={() => handleUserSelect(user.id)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        handleUserSelect(user.id);
+                      }
+                    }}
                   >
                     <div
                       className="shrink-0 w-3 h-3 rounded border-[1px] border-solid border-white light:border-black flex justify-center items-center"
                       role="checkbox"
                       aria-checked={isUserSelected(user.id)}
+                      aria-label={user.username}
                       tabIndex={0}
                     >
                       {isUserSelected(user.id) && (
@@ -149,12 +161,19 @@ export default function AddMemberModal({
               <button
                 type="button"
                 onClick={handleSelectAll}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleSelectAll();
+                  }
+                }}
                 className="flex items-center gap-x-2 ml-2"
               >
                 <div
                   className="shrink-0 w-3 h-3 rounded border-[1px] border-white flex justify-center items-center cursor-pointer"
                   role="checkbox"
                   aria-checked={selectedUsers.length === filteredUsers.length}
+                  aria-label={t("addMemberModal.selectAll")}
                   tabIndex={0}
                 >
                   {selectedUsers.length === filteredUsers.length && (

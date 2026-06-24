@@ -41,6 +41,8 @@ export default function NewUserModal(): JSX.Element {
         return;
       }
       setError(error);
+    } catch (err: any) {
+      setError(err?.message || "Failed to create account. Please try again.");
     } finally {
       setLoading(false);
     }

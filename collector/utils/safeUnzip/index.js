@@ -22,9 +22,18 @@ const DANGEROUS_ENTRY_PATTERNS = [
   /(^|[/\\])activeX([/\\]|$)/i,
 ];
 
+const PATH_TRAVERSAL_PATTERNS = [
+  /(^|[/\\])\.\.([/\\]|$)/,
+  /^([a-zA-Z]:[/\\])/,
+  /^[/\\]/,
+];
+
 function isDangerousEntryName(fileName = "") {
   if (!fileName) return false;
   for (const pat of DANGEROUS_ENTRY_PATTERNS) {
+    if (pat.test(fileName)) return true;
+  }
+  for (const pat of PATH_TRAVERSAL_PATTERNS) {
     if (pat.test(fileName)) return true;
   }
   return false;

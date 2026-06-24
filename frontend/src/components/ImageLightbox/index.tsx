@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { CaretLeft } from "@phosphor-icons/react/dist/csr/CaretLeft";
@@ -23,6 +23,8 @@ export default function ImageLightbox() {
   const { t } = useTranslation();
   const [images, setImages] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0 as any);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previousActiveElement = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     function handleOpen(e: any) {
@@ -47,17 +49,29 @@ export default function ImageLightbox() {
 
   useEffect(() => {
     if (!images) return;
+    previousActiveElement.current =
+      (document.activeElement as HTMLElement) ?? null;
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    const focusTimer = window.setTimeout(() => {
+      closeButtonRef.current?.focus();
+    }, 0);
     function handleKeyDown(e: any) {
-      if (e.key === "Escape") close();
-      else if (e.key === "ArrowLeft") handlePrevious();
+      if (e.key === "Escape") {
+        e.preventDefault();
+        close();
+      } else if (e.key === "ArrowLeft") handlePrevious();
       else if (e.key === "ArrowRight") handleNext();
     }
     window.addEventListener("keydown", handleKeyDown);
     return () => {
+      window.clearTimeout(focusTimer);
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = prevOverflow;
+      const previously = previousActiveElement.current;
+      if (previously && document.contains(previously)) {
+        previously.focus();
+      }
     };
   }, [images]);
 
@@ -73,8 +87,10 @@ export default function ImageLightbox() {
       role="dialog"
       aria-modal="true"
       aria-label={t("imageLightbox.close")}
+      tabIndex={-1}
     >
       <button
+        ref={closeButtonRef}
         type="button"
         onClick={close}
         className="absolute top-4 right-4 p-2 text-white light:text-white hover:text-white/70 transition-colors rounded-full bg-white/10 hover:bg-white/20 border-none cursor-pointer"

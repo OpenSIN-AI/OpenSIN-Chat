@@ -32,8 +32,14 @@ function isPrivateIPv4(ip) {
 
 function isPrivateIPv6(hostname) {
   if (isIP(hostname) !== 6) return false;
+  const normalized = hostname.toLowerCase();
   return (
-    hostname === "::1" || hostname.startsWith("fc") || hostname.startsWith("fd")
+    normalized === "::1" ||
+    normalized === "::" ||
+    normalized.startsWith("fc") ||
+    normalized.startsWith("fd") ||
+    normalized.startsWith("fe80") ||
+    normalized.startsWith("::ffff:")
   );
 }
 

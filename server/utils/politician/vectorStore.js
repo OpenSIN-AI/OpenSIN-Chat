@@ -55,6 +55,12 @@ class PoliticianVectorStore {
 
     let connection = null;
     try {
+      // Delete any existing vectors for this speech before re-indexing.
+      // Without this, re-indexing a speech whose text was updated leaves
+      // stale/duplicate vectors in the store, causing duplicate search
+      // results and wasted storage.
+      await this.deleteSpeech(speechId);
+
       const metadata = {
         speechId,
         politicianId,

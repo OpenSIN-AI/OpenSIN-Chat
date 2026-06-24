@@ -187,7 +187,7 @@ const ResetPasswordForm = ({ onSubmit }) => {
               id="reset-confirmPassword"
               type="password"
               name="confirmPassword"
-              aria-label={t("auth.newPassword")}
+              aria-label={t("multiUserAuth.resetPassword.confirmPassword")}
               className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-full max-w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -259,6 +259,7 @@ export default function MultiUserAuth() {
       }
     } catch (err) {
       console.error(err);
+      setError(err?.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }

@@ -30,8 +30,9 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
         hideModal();
         mutate(WORKSPACES_KEY);
         navigate(paths.workspace.chat(workspace.slug));
+      } else {
+        setError(message);
       }
-      setError(message);
     } catch (err) {
       setError(t("newWorkspaceModal.creationFailed", { error: err?.message }));
     } finally {

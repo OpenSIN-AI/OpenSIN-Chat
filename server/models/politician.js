@@ -291,7 +291,7 @@ const PoliticianSpeech = {
   markVectorized: async function (speechId) {
     try {
       await prisma.politician_speeches.update({
-        where: { id: speechId },
+        where: { dedupeKey: speechId },
         data: { vectorized: true },
       });
     } catch (err) {

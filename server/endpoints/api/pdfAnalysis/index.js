@@ -76,8 +76,20 @@ function apiPdfAnalysisEndpoints(app) {
     try {
       const { pdfPath, task, reportType, factCriteria, deepScan } =
         request.body || {};
+      if (!pdfPath || typeof pdfPath !== "string") {
+        return response.status(400).json({ error: "pdfPath is required." });
+      }
+      const resolvedPdfPath = path.resolve(pdfPath);
+      if (
+        resolvedPdfPath !== UPLOAD_DIR &&
+        !resolvedPdfPath.startsWith(UPLOAD_DIR + path.sep)
+      ) {
+        return response
+          .status(403)
+          .json({ error: "pdfPath must be within the upload directory." });
+      }
       const { jobId } = PdfAnalysisPipeline.start({
-        pdfPath,
+        pdfPath: resolvedPdfPath,
         task,
         reportType,
         factCriteria,
@@ -225,8 +237,12 @@ function apiPdfAnalysisEndpoints(app) {
     try {
       const { pdfPaths, task, reportType, factCriteria, deepScan } =
         request.body || {};
+      const safePdfPaths = (Array.isArray(pdfPaths) ? pdfPaths : [])
+        .filter((p) => typeof p === "string" && p.length > 0)
+        .map((p) => path.resolve(p))
+        .filter((p) => p === UPLOAD_DIR || p.startsWith(UPLOAD_DIR + path.sep));
       const { jobId } = CorpusPipeline.start({
-        pdfPaths: Array.isArray(pdfPaths) ? pdfPaths : [],
+        pdfPaths: safePdfPaths,
         task,
         reportType,
         factCriteria,

@@ -30,27 +30,41 @@ export default function AccountModal({ user, hideModal }: any) {
     const file = event.target.files[0];
     if (!file) return false;
 
-    const formData = new FormData();
-    formData.append("file", file);
-    const { success, error } = await System.uploadPfp(formData);
-    if (!success) {
-      showToast(t("profile_settings.failed_upload", { error }), "error");
-      return;
-    }
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const { success, error } = await System.uploadPfp(formData);
+      if (!success) {
+        showToast(t("profile_settings.failed_upload", { error }), "error");
+        return;
+      }
 
-    const pfpUrl = await System.fetchPfp(user.id);
-    setPfp(pfpUrl);
-    showToast(t("profile_settings.upload_success"), "success");
+      const pfpUrl = await System.fetchPfp(user.id);
+      setPfp(pfpUrl);
+      showToast(t("profile_settings.upload_success"), "success");
+    } catch (err) {
+      showToast(
+        t("profile_settings.failed_upload", { error: err?.message }),
+        "error",
+      );
+    }
   };
 
   const handleRemovePfp = async () => {
-    const { success, error } = await System.removePfp();
-    if (!success) {
-      showToast(t("profile_settings.failed_remove", { error }), "error");
-      return;
-    }
+    try {
+      const { success, error } = await System.removePfp();
+      if (!success) {
+        showToast(t("profile_settings.failed_remove", { error }), "error");
+        return;
+      }
 
-    setPfp(null);
+      setPfp(null);
+    } catch (err) {
+      showToast(
+        t("profile_settings.failed_remove", { error: err?.message }),
+        "error",
+      );
+    }
   };
 
   const handleUpdate = async (e) => {
@@ -63,20 +77,27 @@ export default function AccountModal({ user, hideModal }: any) {
       data[key] = value;
     }
 
-    const { success, error } = await System.updateUser(data);
-    if (success) {
-      const storedUser = safeJsonParse(safeGetItem(AUTH_USER), null);
-      if (storedUser) {
-        (storedUser as any).username = data.username;
-        (storedUser as any).bio = data.bio;
-        safeSetItem(AUTH_USER, JSON.stringify(storedUser));
+    try {
+      const { success, error } = await System.updateUser(data);
+      if (success) {
+        const storedUser = safeJsonParse(safeGetItem(AUTH_USER), null);
+        if (storedUser) {
+          (storedUser as any).username = data.username;
+          (storedUser as any).bio = data.bio;
+          safeSetItem(AUTH_USER, JSON.stringify(storedUser));
+        }
+        showToast(t("profile_settings.profile_updated"), "success", {
+          clear: true,
+        });
+        hideModal();
+      } else {
+        showToast(t("profile_settings.failed_update_user", { error }), "error");
       }
-      showToast(t("profile_settings.profile_updated"), "success", {
-        clear: true,
-      });
-      hideModal();
-    } else {
-      showToast(t("profile_settings.failed_update_user", { error }), "error");
+    } catch (err) {
+      showToast(
+        t("profile_settings.failed_update_user", { error: err?.message }),
+        "error",
+      );
     }
   };
   return (
@@ -91,6 +112,7 @@ export default function AccountModal({ user, hideModal }: any) {
           <button
             onClick={hideModal}
             type="button"
+            aria-label={t("profile_settings.close") || "Close"}
             className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
           >
             <X size={24} weight="bold" className="text-white" />

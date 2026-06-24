@@ -28,6 +28,7 @@ const extractorBreaker = createCircuitBreaker("content-extractor");
 function resetAll() {
   extractorBreaker.reset();
   clearCache();
+  DNS_CACHE.clear();
 }
 
 // RFC 1918 + loopback + link-local + CGNAT + carrier-grade NAT ranges
@@ -68,6 +69,50 @@ function isPrivateHostname(hostname) {
   );
 }
 
+function isPrivateIPv6(hostname) {
+  if (isIP(hostname) !== 6) return false;
+  const normalized = hostname.toLowerCase();
+  return (
+    normalized === "::1" ||
+    normalized === "::" ||
+    normalized.startsWith("fc") ||
+    normalized.startsWith("fd") ||
+    normalized.startsWith("fe80") ||
+    normalized.startsWith("::ffff:")
+  );
+}
+
+function isPrivateIp(hostname) {
+  return isPrivateIPv4(hostname) || isPrivateIPv6(hostname);
+}
+
+const DNS_CACHE = new Map();
+const DNS_CACHE_TTL_MS = 60_000;
+const DNS_CACHE_MAX = 500;
+
+function evictDnsCache() {
+  while (DNS_CACHE.size > DNS_CACHE_MAX) {
+    const oldest = DNS_CACHE.keys().next().value;
+    if (oldest === undefined) break;
+    DNS_CACHE.delete(oldest);
+  }
+}
+
+async function resolveAndPin(hostname) {
+  if (isIP(hostname)) return hostname;
+  const cached = DNS_CACHE.get(hostname);
+  const now = Date.now();
+  if (cached && now - cached.at < DNS_CACHE_TTL_MS) return cached.ip;
+  const addresses = await dns.lookup(hostname, { all: true });
+  for (const addr of addresses) {
+    if (isPrivateIp(addr.address)) return null;
+  }
+  const ip = addresses[0]?.address || hostname;
+  DNS_CACHE.set(hostname, { ip, at: now });
+  evictDnsCache();
+  return ip;
+}
+
 function parseUrl(raw) {
   let parsed;
   try {
@@ -106,21 +151,22 @@ class ContentExtractor {
     // Skip private hostnames early
     if (isPrivateHostname(parsed.hostname) && !ALLOW_PRIVATE) return null;
 
-    // Validate IP if hostname is literal
+    // Validate IP if hostname is literal (both IPv4 and IPv6)
     if (isIP(parsed.hostname)) {
-      if (isPrivateIPv4(parsed.hostname) && !ALLOW_PRIVATE) return null;
+      if (isPrivateIp(parsed.hostname) && !ALLOW_PRIVATE) return null;
     }
 
-    // Strict mode: resolve DNS and check resolved IPs against private ranges
-    if (STRICT_SSRF && !isIP(parsed.hostname)) {
+    // Always resolve DNS and check resolved IPs against private ranges.
+    // This prevents SSRF via domain names that resolve to internal IPs.
+    // When STRICT_SSRF is enabled, DNS failure is fatal (fail closed).
+    // Without STRICT_SSRF, DNS failure is non-fatal — the fetch will
+    // likely fail on its own if the hostname can't resolve.
+    if (!isIP(parsed.hostname) && !ALLOW_PRIVATE) {
       try {
-        const addresses = await dns.resolve4(parsed.hostname);
-        for (const addr of addresses) {
-          if (isPrivateIPv4(addr) && !ALLOW_PRIVATE) return null;
-        }
+        const resolved = await resolveAndPin(parsed.hostname);
+        if (resolved === null) return null;
       } catch {
-        // DNS failure → treat as unreachable
-        return null;
+        if (STRICT_SSRF) return null;
       }
     }
 

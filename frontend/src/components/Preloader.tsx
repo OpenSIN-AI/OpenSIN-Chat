@@ -1,8 +1,13 @@
 // SPDX-License-Identifier: MIT
 export default function PreLoader({ size = "16" }: any) {
+  const dimension =
+    size.startsWith("[") && size.endsWith("]")
+      ? size.slice(1, -1)
+      : `${size * 4}px`;
   return (
     <div
-      className={`h-${size} w-${size} animate-spin rounded-full border-4 border-solid border-primary border-t-transparent`}
+      style={{ width: dimension, height: dimension }}
+      className="animate-spin rounded-full border-4 border-solid border-primary border-t-transparent"
     ></div>
   );
 }

@@ -76,6 +76,15 @@ async function requireApiKeyOrSession(request, response, next) {
     });
   }
 
+  // In multi-user mode, a valid user id is required. A single-user JWT
+  // (with `p` set but no `id`) must not be accepted — it has no user
+  // identity and would grant access without a valid user context.
+  if (multiUserMode && !valid.id) {
+    return response.status(401).json({
+      error: "No valid API key or session token found.",
+    });
+  }
+
   if (valid.id) {
     const user = await User.get({ id: valid.id });
     if (!user || user.suspended) {

@@ -33,9 +33,7 @@ function utilEndpoints(app) {
 
   // Resolve middleware at call time to avoid the circular-dependency capture
   // described in the import notes above.
-  const {
-    validatedRequest,
-  } = require("../utils/middleware/validatedRequest");
+  const { validatedRequest } = require("../utils/middleware/validatedRequest");
   const {
     flexUserRoleValid,
     ROLES,
@@ -55,7 +53,6 @@ function utilEndpoints(app) {
       };
       response.status(200).json(metrics);
     } catch (e) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(e);
       response.sendStatus(500);
     }
@@ -450,7 +447,10 @@ function utilEndpoints(app) {
         const filePath = path.join(reportsDir, fileName);
 
         // Verify resolved path is still under generated-reports/ (security check)
-        if (!filePath.startsWith(reportsDir)) {
+        if (
+          filePath !== reportsDir &&
+          !filePath.startsWith(reportsDir + path.sep)
+        ) {
           return response.sendStatus(403);
         }
 
@@ -498,7 +498,6 @@ function getGitVersion() {
       .trim();
     return _cachedGitVersion;
   } catch (e) {
-    // eslint-disable-next-line no-console
     consoleLogger.error("getGitVersion", e.message);
     _cachedGitVersion = "--";
     return _cachedGitVersion;

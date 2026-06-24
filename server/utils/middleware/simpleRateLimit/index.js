@@ -54,11 +54,15 @@ function purge(now) {
 }
 
 function getRealIp(request) {
-  return (
-    (request.headers && request.headers["cf-connecting-ip"]) ||
-    request.ip ||
-    "unknown"
-  );
+  // Express's request.ip already respects the `trust proxy` setting and
+  // validates X-Forwarded-For from trusted proxies only. The cf-connecting-ip
+  // header is a Cloudflare-specific header that any client can spoof — trusting
+  // it unconditionally allows an attacker to send a unique value per request
+  // and bypass rate limiting entirely. Only trust it when the request comes
+  // from a trusted proxy (which Express already validates via request.ip).
+  // In practice, request.ip already includes the correct client IP when behind
+  // Cloudflare (trust proxy is configured), so we use it directly.
+  return request.ip || "unknown";
 }
 
 function bucketKeys({ request, bucket, identity }) {

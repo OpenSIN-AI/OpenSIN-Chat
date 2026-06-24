@@ -21,6 +21,7 @@ export default function ChangeWarningModal({
         <button
           onClick={onClose}
           type="button"
+          aria-label={t("common.close") || "Close"}
           className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
         >
           <X size={24} weight="bold" className="text-white" />
@@ -30,7 +31,7 @@ export default function ChangeWarningModal({
         <div className="py-7 px-9 space-y-2 flex-col">
           <p className="text-white">
             {/* eslint-disable i18next/no-literal-string */}
-            {warningText.split("\\n").map((line, index) => (
+            {warningText.split("\n").map((line, index) => (
               <span key={index}>
                 {line}
                 <br />
