@@ -37,9 +37,11 @@ class LanceDb extends VectorDatabase {
     return { client };
   }
 
+  // Cosine distance ranges [0, 2]: 0 = identical, 1 = orthogonal, 2 = opposite.
+  // Similarity = 1 - distance ranges [-1, 1].
   distanceToSimilarity(distance = null) {
     if (distance === null || typeof distance !== "number") return 0.0;
-    if (distance >= 1.0) return 1;
+    if (distance >= 1.0) return 0;
     if (distance < 0) return 1 - Math.abs(distance);
     return 1 - distance;
   }

@@ -441,25 +441,36 @@ const User = {
     const lastReset = user.dailyMessageResetAt
       ? new Date(user.dailyMessageResetAt)
       : new Date(now.getTime() - 86400000);
-    const usedToday = Number(user.dailyMessageUsedAt ?? 0);
     const DAY_MS = 86400000;
+    const userId = Number(user.id);
 
+    // If the daily window has elapsed, reset the counter. This is a separate
+    // write — two concurrent callers may both reset, but the second reset is
+    // idempotent (sets usedAt=0, resetAt=now). The critical race is the
+    // check-then-increment below, which we make atomic via a conditional
+    // updateMany: the increment only fires if the current count is below the
+    // limit, and SQLite serialises writes so exactly one concurrent caller
+    // can win.
     if (now - lastReset > DAY_MS) {
       await prisma.users.update({
-        where: { id: user.id },
+        where: { id: userId },
         data: { dailyMessageUsedAt: 0, dailyMessageResetAt: now },
       });
       user.dailyMessageUsedAt = 0;
       user.dailyMessageResetAt = now;
     }
 
-    if ((user.dailyMessageUsedAt ?? usedToday) >= limit) return false;
-
-    await prisma.users.update({
-      where: { id: user.id },
+    // Atomic check-and-increment: only increments if the current DB value
+    // is strictly below the limit. Prevents the TOCTOU race where two
+    // concurrent requests both see count < limit and both increment.
+    const result = await prisma.users.updateMany({
+      where: {
+        id: userId,
+        dailyMessageUsedAt: { lt: limit },
+      },
       data: { dailyMessageUsedAt: { increment: 1 } },
     });
-    return true;
+    return result.count > 0;
   },
 };
 

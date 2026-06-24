@@ -80,10 +80,14 @@ class PoliticianDB {
     const where = {};
 
     if (query && query.trim()) {
+      // SQLite's LIKE (which Prisma's `contains` maps to) is already
+      // case-insensitive for ASCII by default. `mode: "insensitive"` is a
+      // PostgreSQL-only Prisma feature and throws a PrismaClientValidationError
+      // on SQLite, causing every search to fail silently (caught → []).
       where.OR = [
-        { lastName: { contains: query, mode: "insensitive" } },
-        { firstName: { contains: query, mode: "insensitive" } },
-        { fullName: { contains: query, mode: "insensitive" } },
+        { lastName: { contains: query } },
+        { firstName: { contains: query } },
+        { fullName: { contains: query } },
       ];
     }
 
@@ -168,10 +172,12 @@ class PoliticianDB {
   async _textSearchSpeeches(query, filters = {}) {
     try {
       const where = {
-        speechText: { contains: query, mode: "insensitive" },
+        // SQLite LIKE is case-insensitive for ASCII by default — no
+        // `mode: "insensitive"` needed (and it would crash on SQLite).
+        speechText: { contains: query },
       };
       if (filters.party) {
-        where.speakerParty = { contains: filters.party, mode: "insensitive" };
+        where.speakerParty = { contains: filters.party };
       }
       const src = filters.source;
       if (src && src !== "all" && src !== "plenarprotokolle") {

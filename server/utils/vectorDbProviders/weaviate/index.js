@@ -293,11 +293,6 @@ class Weaviate extends VectorDatabase {
       const documentVectors = [];
       const vectors = [];
       const vectorValues = await EmbedderEngine.embedChunks(textChunks);
-      const submission = {
-        ids: [],
-        vectors: [],
-        properties: [],
-      };
 
       if (!!vectorValues && vectorValues.length > 0) {
         for (const [i, vector] of vectorValues.entries()) {
@@ -311,10 +306,6 @@ class Weaviate extends VectorDatabase {
             // https://github.com/hwchase17/langchainjs/blob/5485c4af50c063e257ad54f4393fa79e0aff6462/langchain/src/vectorstores/weaviate.ts#L133
             properties: { ...flattenedMetadata, text: textChunks[i] },
           };
-
-          submission.ids.push(vectorRecord.id);
-          submission.vectors.push(vectorRecord.values);
-          submission.properties.push(metadata);
 
           vectors.push(vectorRecord);
           documentVectors.push({ docId, vectorId: vectorRecord.id });

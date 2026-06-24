@@ -1,29 +1,36 @@
 // SPDX-License-Identifier: MIT
-jest.mock("../../utils/prisma", () => ({
-  invites: {
+jest.mock("../../utils/prisma", () => {
+  const mockInvites = {
     create: jest.fn(),
     findFirst: jest.fn(),
     findMany: jest.fn(),
     count: jest.fn(),
     update: jest.fn(),
     deleteMany: jest.fn(),
-  },
-}));
+  };
+  const mockWorkspaces = {
+    findMany: jest.fn(),
+  };
+  const mockWorkspaceUsers = {
+    create: jest.fn(),
+  };
+  return {
+    invites: mockInvites,
+    workspaces: mockWorkspaces,
+    workspace_users: mockWorkspaceUsers,
+    $transaction: jest.fn(async (fn) => {
+      const tx = {
+        invites: mockInvites,
+        workspaces: mockWorkspaces,
+        workspace_users: mockWorkspaceUsers,
+      };
+      return fn(tx);
+    }),
+  };
+});
 
 const { Invite } = require("../../models/invite");
 const prisma = require("../../utils/prisma");
-
-jest.mock("../../models/workspace", () => ({
-  Workspace: {
-    where: jest.fn(),
-  },
-}));
-
-jest.mock("../../models/workspaceUsers", () => ({
-  WorkspaceUser: {
-    createMany: jest.fn(),
-  },
-}));
 
 jest.mock("../../models/user", () => ({
   User: {
@@ -31,8 +38,6 @@ jest.mock("../../models/user", () => ({
   },
 }));
 
-const { Workspace } = require("../../models/workspace");
-const { WorkspaceUser } = require("../../models/workspaceUsers");
 const { User } = require("../../models/user");
 
 describe("Invite model", () => {
@@ -122,13 +127,19 @@ describe("Invite model", () => {
         claimedBy: 10,
         workspaceIds: "[1,2]",
       });
-      Workspace.where.mockResolvedValue([{ id: 1 }, { id: 2 }, { id: 3 }]);
-      WorkspaceUser.createMany.mockResolvedValue(true);
+      prisma.workspaces.findMany.mockResolvedValue([{ id: 1 }, { id: 2 }, { id: 3 }]);
+      prisma.workspace_users.create.mockResolvedValue({});
 
       const { success, error } = await Invite.markClaimed(1, { id: 10 });
       expect(success).toBe(true);
       expect(error).toBeNull();
-      expect(WorkspaceUser.createMany).toHaveBeenCalledWith(10, [1, 2]);
+      expect(prisma.workspace_users.create).toHaveBeenCalledTimes(2);
+      expect(prisma.workspace_users.create).toHaveBeenCalledWith({
+        data: { user_id: 10, workspace_id: 1 },
+      });
+      expect(prisma.workspace_users.create).toHaveBeenCalledWith({
+        data: { user_id: 10, workspace_id: 2 },
+      });
     });
 
     it("skips workspace assignment when workspaceIds is empty", async () => {
@@ -141,7 +152,7 @@ describe("Invite model", () => {
 
       const { success } = await Invite.markClaimed(2, { id: 10 });
       expect(success).toBe(true);
-      expect(WorkspaceUser.createMany).not.toHaveBeenCalled();
+      expect(prisma.workspace_users.create).not.toHaveBeenCalled();
     });
 
     it("skips workspace assignment when workspaceIds is null/falsy", async () => {
@@ -154,22 +165,22 @@ describe("Invite model", () => {
 
       const { success } = await Invite.markClaimed(3, { id: 10 });
       expect(success).toBe(true);
-      expect(WorkspaceUser.createMany).not.toHaveBeenCalled();
+      expect(prisma.workspace_users.create).not.toHaveBeenCalled();
     });
 
-    it("still succeeds when workspace assignment fails", async () => {
+    it("returns failure when workspace assignment fails (transaction rolls back)", async () => {
       prisma.invites.update.mockResolvedValue({
         id: 4,
         status: "claimed",
         claimedBy: 10,
         workspaceIds: "[99]",
       });
-      Workspace.where.mockResolvedValue([{ id: 1 }]);
-      WorkspaceUser.createMany.mockRejectedValue(new Error("fail"));
+      prisma.workspaces.findMany.mockResolvedValue([{ id: 99 }]);
+      prisma.workspace_users.create.mockRejectedValue(new Error("fail"));
 
       const { success, error } = await Invite.markClaimed(4, { id: 10 });
-      expect(success).toBe(true);
-      expect(error).toBeNull();
+      expect(success).toBe(false);
+      expect(error).toBe("fail");
     });
 
     it("returns error when prisma update fails", async () => {

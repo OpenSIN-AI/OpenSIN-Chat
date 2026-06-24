@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 const consoleLogger = require("../../logger/console.js");
 
+const { toChunks, reportEmbeddingProgress } = require("../../helpers");
+
 class MistralEmbedder {
   constructor() {
     if (!process.env.MISTRAL_API_KEY)
@@ -27,18 +29,25 @@ class MistralEmbedder {
   async embedChunks(textChunks = []) {
     if (textChunks.length === 0) return [];
 
+    const allEmbeddings = [];
     try {
-      const response = await this.openai.embeddings.create({
-        model: this.model,
-        input: textChunks,
-      });
-      const embeddings = response?.data?.map((emb) => emb.embedding) || [];
-      if (embeddings.length === 0)
-        throw new Error("Mistral returned empty embeddings for batch");
-      return embeddings;
+      for (const batch of toChunks(textChunks, this.maxConcurrentChunks)) {
+        const response = await this.openai.embeddings.create({
+          model: this.model,
+          input: batch,
+        });
+        const embeddings = response?.data?.map((emb) => emb.embedding) || [];
+        if (embeddings.length === 0)
+          throw new Error("Mistral returned empty embeddings for batch");
+        allEmbeddings.push(...embeddings);
+        reportEmbeddingProgress(allEmbeddings.length, textChunks.length);
+      }
+      return allEmbeddings;
     } catch (error) {
-      // eslint-disable-next-line no-console
-      consoleLogger.error("Failed to get embeddings from Mistral.", error.message);
+      consoleLogger.error(
+        "Failed to get embeddings from Mistral.",
+        error.message,
+      );
       throw new Error(`Mistral Failed to embed: ${error.message}`, {
         cause: error,
       });

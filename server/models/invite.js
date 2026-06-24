@@ -62,32 +62,41 @@ const Invite = {
 
   markClaimed: async function (inviteId = null, user) {
     try {
-      const invite = await prisma.invites.update({
-        where: { id: Number(inviteId) },
-        data: { status: "claimed", claimedBy: user.id },
-      });
+      // Atomically claim the invite + assign workspaces in a single
+      // transaction so a failure mid-way does not leave the invite marked
+      // "claimed" while the user has no workspace access. Previously the
+      // invite update and workspace-user creation were separate operations
+      // and the function returned { success: true } even when the workspace
+      // assignment failed.
+      return await prisma.$transaction(async (tx) => {
+        const invite = await tx.invites.update({
+          where: { id: Number(inviteId) },
+          data: { status: "claimed", claimedBy: user.id },
+        });
 
-      try {
         if (!!invite?.workspaceIds) {
-          const { Workspace } = require("./workspace");
-          const { WorkspaceUser } = require("./workspaceUsers");
-          const workspaceIds = (await Workspace.where({})).map(
-            (workspace) => workspace.id,
-          );
+          const workspaces = await tx.workspaces.findMany({
+            select: { id: true },
+          });
+          const validIds = new Set(workspaces.map((w) => w.id));
           const ids = safeJsonParse(invite.workspaceIds, [])
             .map((id) => Number(id))
-            .filter((id) => workspaceIds.includes(id));
-          if (ids.length !== 0) await WorkspaceUser.createMany(user.id, ids);
-        }
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        consoleLogger.error(
-          "Could not add user to workspaces automatically",
-          e.message,
-        );
-      }
+            .filter((id) => validIds.has(id));
 
-      return { success: true, error: null };
+          if (ids.length !== 0) {
+            for (const workspaceId of ids) {
+              await tx.workspace_users.create({
+                data: {
+                  user_id: Number(user.id),
+                  workspace_id: workspaceId,
+                },
+              });
+            }
+          }
+        }
+
+        return { success: true, error: null };
+      });
     } catch (error) {
       // eslint-disable-next-line no-console
       consoleLogger.error(error.message);

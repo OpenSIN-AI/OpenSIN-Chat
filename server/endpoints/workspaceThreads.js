@@ -342,11 +342,13 @@ function workspaceThreadEndpoints(app) {
       try {
         const { folderId } = request.params;
         const workspace = response.locals.workspace;
+        const user = await userFromSession(request, response);
         const data = reqBody(request);
         const { folder, message } = await WorkspaceThreadFolder.update(
           folderId,
           data,
           workspace.id,
+          user?.id ?? null,
         );
         response.status(200).json({ folder, message });
       } catch (e) {
@@ -363,9 +365,11 @@ function workspaceThreadEndpoints(app) {
       try {
         const { folderId } = request.params;
         const workspace = response.locals.workspace;
+        const user = await userFromSession(request, response);
         const success = await WorkspaceThreadFolder.delete(
           folderId,
           workspace.id,
+          user?.id ?? null,
         );
         if (!success) return response.sendStatus(500);
         response.sendStatus(200);

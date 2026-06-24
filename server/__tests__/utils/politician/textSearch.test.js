@@ -4,7 +4,8 @@
  * fallback path in semanticSearchSpeeches.
  *
  * The text search is the fallback when the vector store is unavailable
- * or returns an error. It uses Prisma's case-insensitive `contains` filter.
+ * or returns an error. It uses Prisma's `contains` filter (case-insensitive
+ * on SQLite via default LIKE behaviour).
  *
  * Docs: server/utils/politician/index.js
  * Purpose: Verify fallback query construction, result mapping, and error handling.
@@ -94,9 +95,9 @@ describe("PoliticianDB._textSearchSpeeches", () => {
     await db._textSearchSpeeches("climate");
 
     const callArg = prisma.politician_speeches.findMany.mock.calls[0][0];
+    // SQLite LIKE is already case-insensitive for ASCII — no `mode` property.
     expect(callArg.where.speechText).toEqual({
       contains: "climate",
-      mode: "insensitive",
     });
   });
 
@@ -108,7 +109,6 @@ describe("PoliticianDB._textSearchSpeeches", () => {
     const callArg = prisma.politician_speeches.findMany.mock.calls[0][0];
     expect(callArg.where.speakerParty).toEqual({
       contains: "Green",
-      mode: "insensitive",
     });
   });
 

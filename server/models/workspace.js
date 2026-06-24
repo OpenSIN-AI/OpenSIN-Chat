@@ -260,6 +260,7 @@ const Workspace = {
     if (validatedUpdates?.chatProvider === "default") {
       validatedUpdates.chatProvider = null;
       validatedUpdates.chatModel = null;
+      validatedUpdates.router_id = null;
     }
 
     // When switching to openafd-router, chatModel is not used.

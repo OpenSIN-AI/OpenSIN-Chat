@@ -59,7 +59,25 @@ const Document = {
 
   delete: async function (clause = {}) {
     try {
-      await prisma.workspace_documents.deleteMany({ where: clause });
+      // document_vectors has NO foreign-key relation to workspace_documents
+      // (by design — see schema comment on workspace_agent_invocations for
+      // the same pattern). Prisma cascade-delete therefore cannot reach
+      // document_vectors, so we must clean them up manually to prevent
+      // orphaned rows whose docId no longer points to any document.
+      const docs = await prisma.workspace_documents.findMany({
+        where: clause,
+        select: { docId: true },
+      });
+      const docIds = docs.map((d) => d.docId);
+
+      if (docIds.length === 0) return true;
+
+      await prisma.$transaction([
+        prisma.document_vectors.deleteMany({
+          where: { docId: { in: docIds } },
+        }),
+        prisma.workspace_documents.deleteMany({ where: clause }),
+      ]);
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -228,6 +246,19 @@ const Document = {
       } catch (error) {
         // eslint-disable-next-line no-console
         consoleLogger.error(error.message);
+        // Clean up orphaned vectors — the document was already added to the
+        // vector DB above, but the workspace_documents record failed to persist.
+        // Without this cleanup, vectors would exist with no DB record pointing
+        // to them, making them unqueryable and impossible to delete later.
+        try {
+          await VectorDb.deleteDocumentFromNamespace(workspace.slug, docId);
+        } catch (cleanupErr) {
+          // eslint-disable-next-line no-console
+          consoleLogger.error(
+            "Failed to clean up orphaned vectors:",
+            cleanupErr.message,
+          );
+        }
         failedToEmbed.push(metadata?.title || newDoc.filename);
         errors.add(error.message || "Failed to save document record");
         emitProgress(workspace.slug, {
@@ -287,9 +318,19 @@ const Document = {
       resolvedDocs.push(document);
     }
 
-    resolvedDocs.forEach((document) => {
-      VectorDb.deleteDocumentFromNamespace(workspace.slug, document.docId);
-    });
+    for (const document of resolvedDocs) {
+      try {
+        await VectorDb.deleteDocumentFromNamespace(
+          workspace.slug,
+          document.docId,
+        );
+      } catch (err) {
+        consoleLogger.error(
+          `Failed to delete vectors for document ${document.docId}:`,
+          err.message,
+        );
+      }
+    }
 
     await prisma.$transaction(async (tx) => {
       for (const document of resolvedDocs) {

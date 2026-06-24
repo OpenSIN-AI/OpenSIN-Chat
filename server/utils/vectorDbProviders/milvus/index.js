@@ -393,6 +393,7 @@ class Milvus extends VectorDatabase {
       collection_name: this.normalize(namespace),
       vectors: queryVector,
       limit: topN,
+      output_fields: ["metadata"],
     });
     response.results.forEach((match) => {
       if (match.score < similarityThreshold) return;

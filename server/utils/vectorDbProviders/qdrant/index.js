@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: MIT
-const consoleLogger = require("../../logger/console.js");
-
 const { QdrantClient } = require("@qdrant/js-client-rest");
 const { TextSplitter } = require("../../TextSplitter");
 const { SystemSettings } = require("../../../models/systemSettings");
@@ -206,18 +204,11 @@ class QDrant extends VectorDatabase {
             // The id property must be defined or else it will be unable to be managed by ALLM.
             chunk.forEach((chunk) => {
               const id = uuidv4();
-              if (chunk?.payload?.hasOwnProperty("id")) {
-                const { id: _id, ...payload } = chunk.payload;
-                documentVectors.push({ docId, vectorId: id });
-                submission.ids.push(id);
-                submission.vectors.push(chunk.vector);
-                submission.payloads.push(payload);
-              } else {
-                // eslint-disable-next-line no-console
-                consoleLogger.error(
-                  "The 'id' property is not defined in chunk.payload - it will be omitted from being inserted in QDrant collection.",
-                );
-              }
+              const { id: _id, ...payload } = chunk.payload || {};
+              documentVectors.push({ docId, vectorId: id });
+              submission.ids.push(id);
+              submission.vectors.push(chunk.vector);
+              submission.payloads.push(payload);
             });
 
             const additionResult = await client.upsert(namespace, {

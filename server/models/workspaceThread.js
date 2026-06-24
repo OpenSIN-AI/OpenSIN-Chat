@@ -39,7 +39,7 @@ const WorkspaceThread = {
   new: async function (workspace, userId = null, data = {}) {
     try {
       let slug = data.slug
-        ? this.slugify(data.slug, { lowercase: true })
+        ? this.slugify(data.slug, { lower: true })
         : uuidv4();
 
       // When a slug is explicitly provided, check for collision and retry
@@ -49,7 +49,7 @@ const WorkspaceThread = {
         const existing = await this.get({ slug });
         if (existing) {
           const slugSeed = randomBytes(4).toString("hex").slice(0, 8);
-          slug = this.slugify(`${data.slug}-${slugSeed}`, { lowercase: true });
+          slug = this.slugify(`${data.slug}-${slugSeed}`, { lower: true });
         }
       }
 

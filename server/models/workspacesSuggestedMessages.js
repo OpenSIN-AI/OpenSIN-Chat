@@ -41,11 +41,24 @@ const WorkspaceSuggestedMessages = {
 
       const safeMessages = Array.isArray(messages) ? messages : [];
 
+      const validMessages = safeMessages
+        .filter(
+          (msg) =>
+            msg &&
+            typeof msg === "object" &&
+            typeof msg.heading === "string" &&
+            typeof msg.message === "string",
+        )
+        .map((msg) => ({
+          heading: msg.heading.slice(0, 255),
+          message: msg.message.slice(0, 1000),
+        }));
+
       return await prisma.$transaction([
         prisma.workspace_suggested_messages.deleteMany({
           where: { workspaceId: workspace.id },
         }),
-        ...safeMessages.map((message) =>
+        ...validMessages.map((message) =>
           prisma.workspace_suggested_messages.create({
             data: {
               workspaceId: workspace.id,
