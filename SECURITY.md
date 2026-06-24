@@ -26,9 +26,9 @@ mitigation for confirmed CRITICAL/HIGH findings within **14 days**.
 
 ## Scope Notes
 
-OpenSIN Chat is a self-hosted fork of [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm).
-Vulnerabilities in unmodified upstream code should additionally be reported
-upstream so the whole ecosystem benefits.
+OpenSIN Chat is a sovereign, independent product for political research and knowledge management.
+If you discover vulnerabilities in dependencies shared with upstream projects, please also report them to those projects
+so the wider open-source community benefits.
 
 ## Secrets & Deployment Hygiene
 

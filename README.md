@@ -39,7 +39,7 @@
 
 OpenSIN Chat is a **self-hosted AI platform** for political work, research, and knowledge management. Upload your documents (Bundestag papers, press releases, legislation drafts) and the AI answers questions **only from your sources**, with traceable citations. No hallucinations from thin air, no cloud dependency, zero telemetry.
 
-Built on [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) (MIT) as a sovereign variant under the [OpenSIN-AI](https://github.com/OpenSIN-AI) brand — optimized for the German political sphere.
+A sovereign, independent product built by [OpenSIN-AI](https://github.com/OpenSIN-AI) and optimized for the German political sphere. Originally inspired by AnythingLLM, OpenSIN Chat has evolved into a purpose-built system for political research with specialized agents, politician databases, and compliance features.
 
 ## Quick Start
 
@@ -57,7 +57,7 @@ The container maps host port `43939` to internal port `3001`. Open `http://local
 
 ## Features
 
-### Core (inherited from AnythingLLM)
+### Core Features
 
 - **Document Chat** — PDF, DOCX, TXT, Markdown, web pages, YouTube transcripts
 - **Vector Databases** — LanceDB, Chroma, Pinecone, Qdrant, Milvus, PGVector
@@ -68,7 +68,7 @@ The container maps host port `43939` to internal port `3001`. Open `http://local
 - **Multilingual** — German, English, and more
 - **Zero Telemetry** — no PostHog, no CDN tracking, no outbound calls to third parties
 
-### OpenSIN-AI Modules (new in OpenSIN Chat)
+### Political Research & OpenSIN-AI Specializations
 
 - **Politician Database** — Bundestag API + Abgeordnetenwatch as structured sources (biographical data, mandates, votes, speeches). Semantic full-text search over plenary protocols via LanceDB vector index
 - **Deep Research Pipeline** — automated web research (Search → Extract → Summarize) with source tracking. Async via job IDs, polling-capable

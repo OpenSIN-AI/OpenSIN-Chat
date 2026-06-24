@@ -114,7 +114,7 @@ Coverage tools configured in both server (`jest.config.js`) and frontend (`vites
 
 1. **Server coverage at 21.3%** — well below 70% threshold
    - Major gaps: vectorDbProviders, database providers, middleware
-   - These are mostly upstream AnythingLLM code
+   - These are shared library/helper code
 
 2. **Frontend coverage at 53.5%** — closer but still below 70%
    - Good coverage on utils (67%), hooks, and chat components

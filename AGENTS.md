@@ -8,7 +8,7 @@
 ## Project Identity
 
 - **Name:** OpenSIN-Chat
-- **Origin:** MIT-licensed fork of [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) by Mintplex Labs
+- **Status:** Sovereign, independent AI platform (MIT-licensed)
 - **Domain:** Self-hosted AI workspace for political research, knowledge management, and assisted chat
 - **Brand:** OpenSIN-AI (primary wordmark, color `#009ee0`)
 - **Telemetry:** Completely disabled — no PostHog, no Mintplex CDN, no analytics

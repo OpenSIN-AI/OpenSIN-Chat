@@ -1,7 +1,7 @@
 {
   "name": "opensin-chat",
   "version": "1.14.0",
-  "description": "OpenSIN Chat — souveräner, selbst gehosteter KI-Arbeitsraum ohne Telemetrie. Fork von AnythingLLM (MIT).",
+  "description": "OpenSIN Chat — sovereign, self-hosted AI workspace for political research, knowledge management, and document analysis. Zero telemetry, German-optimized.",
   "main": "index.js",
   "type": "module",
   "author": "OpenSIN-AI",
@@ -19,8 +19,8 @@
     }
   ],
   "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/anythingllm"
+    "type": "github",
+    "url": "https://github.com/sponsors/OpenSIN-AI"
   },
   "license": "MIT",
   "private": true,

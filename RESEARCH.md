@@ -17,8 +17,8 @@
 | **OpenSIN-Chat** | `github.com/OpenSIN-AI/OpenSIN-Chat` | 877 | 2026-06-21 | Hauptrepo, aktiv entwickelt |
 | **OpenAfD-Chat** | `github.com/Family-Team-Projects/OpenAfD-Chat` | 357 | 2026-06-10 | AfD-Version, zuletzt vor 11 Tagen aktualisiert |
 
-Beide Repos sind Forks von [Mintplex-Labs/anything-llm](https://github.com/Mintplex-Labs/anything-llm) (MIT-Lizenz).
-OpenSIN-Chat wurde aus OpenAfD-Chat heraus als separates Repo erstellt und dann massiv weiterentwickelt.
+OpenSIN-Chat is now a sovereign, independent product for political research. While it may share architectural foundations with earlier work,
+it is not a fork. It is a purpose-built platform developed by OpenSIN-AI.
 
 ### 1.2 Git-Verhältnis
 

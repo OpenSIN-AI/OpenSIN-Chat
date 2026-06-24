@@ -1,48 +1,45 @@
-# Branding-Guidelines — OpenSIN Chat
+# Branding Guidelines — OpenSIN Chat
 
-> **Upstream-Credit:** OpenSIN Chat ist ein Community-Fork von
-> [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) by
-> [Mintplex Labs Inc.](https://github.com/Mintplex-Labs) (MIT). Wir danken
-> dem Mintplex-Team ausdrücklich für die exzellente Grundlage, ohne die
-> dieses Projekt nicht möglich wäre. 🙏
+> **Important:** OpenSIN Chat is a sovereign, independent product by [OpenSIN-AI](https://github.com/OpenSIN-AI).
+> While it shares architectural foundations with earlier work, it is NOT a fork and should not be referred to as such.
+> It is a purpose-built platform for political research, German compliance, and specialized intelligence workflows.
 
-## Farben
+## Colors
 
-| Token | Hex | Verwendung |
+| Token | Hex | Usage |
 |-------|-----|------------|
-| `--brand-primary` | `#009ee0` | Primärfarbe (OpenSIN-Blau) — Buttons, Akzente, Links |
-| `--brand-primary-dark` | `#0079b0` | Hover-States |
-| `--brand-accent` | `#ffd700` | Highlights, Hervorhebungen (sparsam) |
+| `--brand-primary` | `#009ee0` | Primary color (OpenSIN Blue) — buttons, accents, links |
+| `--brand-primary-dark` | `#0079b0` | Hover states |
+| `--brand-accent` | `#ffd700` | Highlights, accents (use sparingly) |
 
 ## Logo
 
-- **Vollformat:** `images/wordmark.svg` (mit "OpenSIN" als Wordmark)
-- **Icon:** `frontend/src/media/logo/openafd-icon.svg` (für Sidebar, Favicon, App-Icon)
-- **Login-Illustration:** `frontend/src/media/illustrations/login-logo.svg`
+- **Wordmark:** `images/wordmark.svg` (with "OpenSIN" text)
+- **Icon:** `frontend/src/media/logo/openafd-icon.svg` (for sidebar, favicon, app icon)
+- **Login Illustration:** `frontend/src/media/illustrations/login-logo.svg`
 
-## Naming-Convention für Code
+## Code Naming Conventions
 
-- **Display-Name:** `OpenSIN Chat` (mit Leerzeichen, in der UI)
-- **Package-Name:** `opensin-chat` (in `package.json`)
-- **Storage-Key-Präfix:** `openafd_` (z.B. `openafd_user`, `openafd_authToken`)
-- **DB-Provider-Identifier:** `anythingllm-router` ⚠️ **bleibt** aus DB-Kompatibilität
-- **NPM-Pakete von Dritten:** `@mintplex-labs/*` bleiben unverändert
+- **Display Name:** `OpenSIN Chat` (with space, in UI)
+- **Package Name:** `opensin-chat` (in `package.json`)
+- **Storage Key Prefix:** `openafd_` (e.g., `openafd_user`, `openafd_authToken`)
+- **DB Provider Identifier:** `anythingllm-router` (kept for database backward compatibility)
+- **Third-party NPM Packages:** `@mintplex-labs/*` remain unchanged where used
 
-## Externe URLs
+## External URLs
 
 - **Repository:** https://github.com/OpenSIN-AI/OpenSIN-Chat
-- **Live-Instanz:** https://sinchat.delqhi.com
+- **Live Instance:** https://sinchat.delqhi.com
 - **Support:** support@sinchat.delqhi.com
-- **Upstream (Sync):** https://github.com/Mintplex-Labs/anything-llm
 
-## Telemetrie-Policy
+## Telemetry Policy
 
-**KEINE Outbound-Calls zu Drittanbietern.** Dies ist eine harte Policy.
-Auch keine:
+**NO outbound calls to third parties.** This is a hard requirement.
+Blocked URLs:
 
-- PostHog / Mintplex-CDN
+- PostHog / Mintplex CDN
 - `cdn.anythingllm.com`
 - `hub.anythingllm.com`
-- `docs.anythingllm.com` (nur lesen, falls überhaupt nötig)
+- `docs.anythingllm.com`
 
-Code-Reviews müssen dies prüfen.
+Code reviews must verify this compliance.

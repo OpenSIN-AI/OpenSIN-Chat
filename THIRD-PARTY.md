@@ -1,58 +1,34 @@
-# THIRD-PARTY NOTICES & UPSTREAM-CREDITS
+# THIRD-PARTY NOTICES & ACKNOWLEDGMENTS
 
-> **OpenSIN Chat ist ein Community-Fork von [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) by [Mintplex Labs Inc.](https://github.com/Mintplex-Labs) (MIT).**
->
-> Ohne die Arbeit des Mintplex-Teams wäre dieses Projekt nicht möglich. Wir
-> danken **Timothy Carambat** und allen Mitwirkenden ausdrücklich für die
-> exzellente Grundlage. 🙏
+> **OpenSIN Chat** is a sovereign, independent AI platform for political research.
+> It builds on architectural concepts and engineering practices from prior open-source work,
+> including [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) by [Mintplex Labs Inc.](https://github.com/Mintplex-Labs).
+> We gratefully acknowledge **Timothy Carambat** and the Mintplex team for establishing foundational patterns
+> and maintaining high standards of open-source engineering.
 
-OpenAfD Chat baut auf Open-Source-Komponenten auf. Wir sind allen Mitwirkenden
-zu großem Dank verpflichtet. Die wichtigsten Bestandteile:
+## Third-Party NPM Packages
 
-## Upstream (Hauptgrundlage)
+The following packages are used by OpenSIN Chat:
 
-- **[AnythingLLM](https://github.com/Mintplex-Labs/anything-llm)** by
-  [Mintplex Labs Inc.](https://github.com/Mintplex-Labs) — MIT-Lizenz.
-  OpenAfD Chat ist ein direkter Fork dieses Projekts.
+| Package | Purpose | License |
+|---------|---------|---------|
+| `@mintplex-labs/express-ws` | WebSocket utility for Express | MIT |
+| `@mintplex-labs/bree` | Background job scheduling | MIT |
+| `@mintplex-labs/piper-tts-web` | Local text-to-speech (Piper) | MIT |
 
-  👉 Bitte unterstütze das Original-Projekt: [github.com/Mintplex-Labs/anything-llm](https://github.com/Mintplex-Labs/anything-llm)
-  durch Stars, Sponsoring, Bug-Reports oder Pull-Requests.
+These packages are actively maintained by the Mintplex team and we retain their original names to ensure compatibility and proper attribution.
 
-- **Upstream-Sync:** Wir empfehlen, das Upstream-Repo als Git-Remote
-  hinzuzufügen, um Sicherheits-Patches mitzuziehen:
-  ```bash
-  git remote add upstream https://github.com/Mintplex-Labs/anything-llm.git
-  git fetch upstream
-  ```
+## Embedded Models
 
-## NPM-Pakete (Auswahl)
+- **Default Embedder:** `Xenova/all-MiniLM-L6-v2` (Apache 2.0)
+- **Speech Recognition:** OpenAI Whisper (MIT)
 
-Die folgenden NPM-Pakete aus dem Mintplex-Labs-Ökosystem werden weiterhin
-direkt genutzt, da sie exzellente spezialisierte Funktionen bieten:
+Models are loaded locally within the container; no external requests are made without explicit user configuration.
 
-| Paket | Zweck | Lizenz |
-|-------|-------|--------|
-| `@mintplex-labs/express-ws` | WebSocket-Hilfsbibliothek für Express | MIT |
-| `@mintplex-labs/bree` | Job-Scheduling für Hintergrund-Tasks | MIT |
-| `@mintplex-labs/piper-tts-web` | Lokale TTS-Engine (Piper) im Browser | MIT |
+## External LLM, Embedding & Vector DB Providers
 
-Diese Pakete sind im `package.json` weiterhin unter ihrem Originalnamen
-referenziert. Das ist absichtlich — sie werden aktiv vom Mintplex-Team
-gewartet und wir wollen keine künstliche Namensänderung.
-
-## Eingebettete Modelle
-
-- **Default-Embedder:** `Xenova/all-MiniLM-L6-v2` (Apache 2.0)
-- **Whisper (Built-in):** OpenAI Whisper (MIT)
-
-Diese werden lokal im Container geladen; es werden keine Anfragen an
-externe Dienste gestellt.
-
-## LLM-, Embedding- und Vektor-DB-Provider (externe, optional)
-
-Wenn du diese Provider in deiner `.env` aktivierst, werden Daten an die
-entsprechenden Dienste übertragen. Prüfe deren Nutzungsbedingungen
-selbst:
+These are optional. When configured in `.env`, data will be transmitted to their services.
+Review their terms of service directly:
 
 - OpenAI, Anthropic, Google Gemini, Mistral, Cohere, Groq, xAI, DeepSeek,
   Perplexity, OpenRouter, Together AI, Fireworks AI, Novita, Moonshot AI,
