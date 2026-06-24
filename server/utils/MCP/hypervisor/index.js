@@ -415,10 +415,12 @@ class MCPHypervisor {
       "docker"
     ) {
       baseEnv = {
-        // Fixed: NODE_PATH should point to modules directory, not node binary
+        ...safeBase,
+        // Fixed: NODE_PATH should point to modules directory, not node binary.
+        // Docker-specific paths must come AFTER ...safeBase so they override
+        // inherited values, not the other way around.
         NODE_PATH: "/usr/local/lib/node_modules",
         PATH: "/usr/local/bin:/usr/bin:/bin",
-        ...safeBase,
       };
     } else {
       baseEnv = { ...safeBase, ...baseEnv };
@@ -497,6 +499,16 @@ class MCPHypervisor {
         throw new Error(
           "MCP server type must have sse, streamable, or http value.",
         );
+      if (!server.url) {
+        throw new Error(
+          `MCP server "${name}": missing required "url" for http transport`,
+        );
+      }
+      try {
+        new URL(server.url);
+      } catch {
+        throw new Error(`MCP server "${name}": invalid URL "${server.url}"`);
+      }
     }
     if (type === "sse") return;
     return;

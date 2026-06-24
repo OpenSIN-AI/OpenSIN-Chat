@@ -119,6 +119,7 @@ export function useAgentForm() {
         : [...prev, flowId];
       return updated;
     });
+    setHasChanges(true);
   };
 
   const toggleMCP: any = (serverName) => {

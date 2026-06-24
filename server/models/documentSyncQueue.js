@@ -266,7 +266,8 @@ const DocumentSyncQueue = {
       return;
     }
 
-    await this.watch(documentRecord);
+    const result = await this.watch(documentRecord);
+    if (result === null) return; // watch failed (already watched or error) — skip telemetry
     await Telemetry.sendTelemetry("document_watched");
     return;
   },

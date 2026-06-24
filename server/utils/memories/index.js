@@ -112,7 +112,10 @@ function formatMemories(globalMemories, workspaceMemories) {
     String(raw || "")
       .slice(0, 500)
       .replace(/###\s*(system|assistant|user)/gi, "")
-      .replace(/<\|im_start\|>/g, "");
+      .replace(/<\|im_start\|>/g, "")
+      .replace(/<\|im_end\|>/g, "")
+      .replace(/<\|start_header_id\|>/g, "")
+      .replace(/<\|end_header_id\|>/g, "");
   for (const m of globalMemories)
     fenced.push(`<user_memory>\n${sanitize(m.content)}\n</user_memory>`);
   for (const m of workspaceMemories)

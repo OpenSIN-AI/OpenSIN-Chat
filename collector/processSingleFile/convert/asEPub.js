@@ -32,7 +32,7 @@ async function asEPub({
   try {
     const loader = new EPubLoader(fullFilePath, { splitChapters: false });
     const docs = await loader.load();
-    docs.forEach((doc) => (content += doc.pageContent));
+    content = docs.map((doc) => doc.pageContent).join("\n\n");
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error("Could not read epub file!", err);

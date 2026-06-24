@@ -213,11 +213,11 @@ function MemoryModalWrapper() {
       mode={modalState.mode}
       initialContent={editingMemory?.content || ""}
       onClose={closeModal}
-      onSubmit={(content) => {
+      onSubmit={async (content) => {
         if (modalState.mode === "edit" && editingMemory) {
-          handleUpdate(editingMemory.id, content);
+          return await handleUpdate(editingMemory.id, content);
         } else {
-          handleCreate(content);
+          return await handleCreate(content);
         }
       }}
     />

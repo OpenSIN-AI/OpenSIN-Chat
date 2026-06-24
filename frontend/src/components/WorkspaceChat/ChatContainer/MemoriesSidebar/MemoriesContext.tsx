@@ -59,14 +59,16 @@ export function MemoriesProvider({ workspace, children }) {
         scope: activeTab,
       });
       if (memory) refreshMemories();
+      return !!memory;
     },
     [workspace?.slug, activeTab, refreshMemories],
   );
 
   const handleDelete = useCallback(
     async (memoryId) => {
-      await Memory.delete(memoryId);
-      refreshMemories();
+      const { success } = await Memory.delete(memoryId);
+      if (success) refreshMemories();
+      return !!success;
     },
     [refreshMemories],
   );
@@ -75,6 +77,7 @@ export function MemoriesProvider({ workspace, children }) {
     async (memoryId, content) => {
       const { memory } = await Memory.update(memoryId, { content });
       if (memory) refreshMemories();
+      return !!memory;
     },
     [refreshMemories],
   );
@@ -83,18 +86,20 @@ export function MemoriesProvider({ workspace, children }) {
     async (memoryId) => {
       const { memory } = await Memory.promoteToGlobal(memoryId);
       if (memory) refreshMemories();
+      return !!memory;
     },
     [refreshMemories],
   );
 
   const handleDemote = useCallback(
     async (memoryId) => {
-      if (!workspace?.slug) return;
+      if (!workspace?.slug) return false;
       const { memory } = await Memory.demoteToWorkspace(
         memoryId,
         workspace.slug,
       );
       if (memory) refreshMemories();
+      return !!memory;
     },
     [workspace?.slug, refreshMemories],
   );

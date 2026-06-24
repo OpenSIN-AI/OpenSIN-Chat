@@ -76,6 +76,8 @@ const SHELL_OPERATOR_PATTERNS = [
   /`[^`]*`/,
   /\$\([^)]*\)/,
   />\s*\(/,
+  /\n/,
+  /\r/,
 ];
 
 function isDangerous(command) {
@@ -131,7 +133,7 @@ function apiTerminalExecEndpoints(app) {
         if (hasShellOperators(command))
           return response.status(403).json({
             error:
-              "Command blocked: shell operators (&&, ||, |, ;, backticks, $()) are not permitted.",
+              "Command blocked: shell operators (&&, ||, |, ;, newlines, backticks, $()) are not permitted.",
           });
 
         const execCwd =

@@ -231,7 +231,7 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
           metaDepth < MAX_META_REFRESH_DEPTH &&
           renderedBytes <= MAX_RESPONSE_BYTES
         ) {
-          const meta = extractMetaRefresh(originalContent);
+          const meta = extractMetaRefresh(originalContent, entryLink);
           if (!meta) break;
           if (redirectUrls.has(meta)) {
             // Loop detected — stop here.
@@ -430,12 +430,12 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
 const META_REFRESH_REGEX =
   /<meta[^>]*http-equiv\s*=\s*["']?refresh["']?[^>]*content\s*=\s*["']?\s*\d+\s*;\s*url\s*=\s*([^"'>\s]+)/i;
 
-function extractMetaRefresh(html = "") {
+function extractMetaRefresh(html = "", baseUrl = "") {
   if (!html) return null;
   const match = html.match(META_REFRESH_REGEX);
   if (!match) return null;
   try {
-    return new URL(match[1], "").toString();
+    return new URL(match[1], baseUrl).toString();
   } catch {
     return null;
   }

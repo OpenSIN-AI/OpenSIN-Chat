@@ -383,7 +383,20 @@ class OCRLoader {
       const processQueue = async () => {
         for (const idx of valid) {
           try {
-            const { data } = await worker.recognize(filePaths[idx], {}, "text");
+            let recognizeInput = filePaths[idx];
+            try {
+              const sharp = (await import("sharp")).default;
+              const oriented = await sharp(filePaths[idx])
+                .rotate()
+                .png()
+                .toBuffer();
+              recognizeInput = oriented;
+            } catch {
+              this.log(
+                `EXIF pre-processing skipped for ${filePaths[idx]} (unsupported format or sharp unavailable)`
+              );
+            }
+            const { data } = await worker.recognize(recognizeInput, {}, "text");
             results[idx] = data.text;
           } catch (e) {
             this.log(`Batch OCR error on ${filePaths[idx]}: ${e.message}`);
@@ -460,7 +473,13 @@ class PDFSharp {
             );
             continue;
           }
-          const channels = size / width / height;
+          const channels = Math.round(size / width / height);
+          if (![1, 2, 3, 4].includes(channels)) {
+            this.log(
+              `Iteration error: image ${name} has invalid channel count (${channels}, size=${size}, width=${width}, height=${height})`
+            );
+            continue;
+          }
           const targetDPI = 70;
           const targetWidth = Math.floor(width * (targetDPI / 72));
           const targetHeight = Math.floor(height * (targetDPI / 72));

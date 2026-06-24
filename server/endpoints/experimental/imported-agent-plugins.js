@@ -37,10 +37,16 @@ function importedAgentPluginEndpoints(app) {
       try {
         const { hubId } = request.params;
         const { updates } = reqBody(request);
+        if (!updates || typeof updates !== "object")
+          return response
+            .status(400)
+            .json({ error: "updates must be a non-empty object" });
         const updatedConfig = ImportedPlugin.updateImportedPlugin(
           hubId,
           updates,
         );
+        if (!updatedConfig)
+          return response.status(404).json({ error: "Plugin not found" });
         response.status(200).json(updatedConfig);
       } catch (e) {
         consoleLogger.error(e);
@@ -56,7 +62,9 @@ function importedAgentPluginEndpoints(app) {
       try {
         const { hubId } = request.params;
         const result = ImportedPlugin.deletePlugin(hubId);
-        response.status(200).json(result);
+        if (!result)
+          return response.status(404).json({ error: "Plugin not found" });
+        response.status(200).json({ success: true });
       } catch (e) {
         consoleLogger.error(e);
         response.status(500).end();

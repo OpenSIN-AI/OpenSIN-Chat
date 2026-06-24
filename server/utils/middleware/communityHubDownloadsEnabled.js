@@ -54,7 +54,7 @@ function communityHubDownloadsEnabled(request, response, next) {
 async function communityHubItem(request, response, next) {
   const { importId } = reqBody(request);
   if (!importId)
-    return response.status(500).json({
+    return response.status(400).json({
       success: false,
       error: "Import ID is required",
     });

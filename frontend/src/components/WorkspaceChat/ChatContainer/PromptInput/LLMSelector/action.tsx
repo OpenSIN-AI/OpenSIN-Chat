@@ -75,23 +75,26 @@ export default function LLMSelectorAction({ workspaceSlug = null }: any) {
   }, [saved]);
 
   useEffect(() => {
+    let timer;
     function handleProviderSetupEvent(e: any) {
       const { provider, settings } = e.detail;
       setConfig({
         settings,
         provider,
       });
-      setTimeout(() => {
+      timer = setTimeout(() => {
         openSetupProviderModal();
       }, 300);
     }
 
     window.addEventListener(PROVIDER_SETUP_EVENT, handleProviderSetupEvent);
-    return () =>
+    return () => {
       window.removeEventListener(
         PROVIDER_SETUP_EVENT,
         handleProviderSetupEvent,
       );
+      if (timer) clearTimeout(timer);
+    };
   }, []);
 
   // This feature is disabled for multi-user instances where the user is not an admin

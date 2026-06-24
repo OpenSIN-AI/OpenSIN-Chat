@@ -210,6 +210,8 @@ const CommunityHub = {
       .then((response) => response.json())
       .then((result) => {
         if (!!result.error) throw new Error(result.error || "Unknown error");
+        if (!result.item || !result.item.id)
+          throw new Error("Hub API returned no item id");
         return { success: true, error: null, itemId: result.item.id };
       })
       .catch((error) => {

@@ -115,7 +115,7 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
     window.addEventListener(SAVE_LLM_SELECTOR_EVENT, handleSave);
     return () =>
       window.removeEventListener(SAVE_LLM_SELECTOR_EVENT, handleSave);
-  }, [slug, workspace, systemSettings]);
+  }, []);
 
   useEffect(() => {
     function handleToggle() {

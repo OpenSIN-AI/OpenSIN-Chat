@@ -13,6 +13,14 @@ export default function NativeTTSMessage({ chatId, message }: any) {
     setSupported("speechSynthesis" in window);
   }, []);
 
+  useEffect(() => {
+    return () => {
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis?.cancel();
+      }
+    };
+  }, []);
+
   function endSpeechUtterance() {
     window.speechSynthesis?.cancel();
     setSpeaking(false);

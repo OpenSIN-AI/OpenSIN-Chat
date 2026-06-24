@@ -73,18 +73,25 @@ function extractLinks(html, baseUrl) {
   const links = root.querySelectorAll("a");
   const extractedLinks = new Set();
 
-  const normalizedPath = baseUrl.pathname.endsWith("/")
-    ? baseUrl.pathname
-    : baseUrl.pathname + "/";
-  const linkPrefix = baseUrl.origin + normalizedPath.split("/").slice(0, -1).join("/");
+  const basePath = baseUrl.pathname.endsWith("/")
+    ? baseUrl.pathname.slice(0, -1)
+    : baseUrl.pathname;
 
   for (const link of links) {
     const href = link.getAttribute("href");
-    if (href) {
-      const absoluteUrl = new URL(href, baseUrl.href).href;
-      if (absoluteUrl.startsWith(linkPrefix)) {
-        extractedLinks.add(absoluteUrl);
-      }
+    if (!href) continue;
+    try {
+      const resolved = new URL(href, baseUrl.href);
+      if (resolved.hostname !== baseUrl.hostname) continue;
+      if (
+        basePath &&
+        !resolved.pathname.startsWith(basePath + "/") &&
+        resolved.pathname !== basePath
+      )
+        continue;
+      extractedLinks.add(resolved.href);
+    } catch {
+      continue;
     }
   }
 
@@ -116,7 +123,12 @@ async function bulkScrapePages(links, outFolderPath) {
       }
 
       const url = new URL(link);
-      const decodedPathname = decodeURIComponent(url.pathname);
+      let decodedPathname;
+      try {
+        decodedPathname = decodeURIComponent(url.pathname);
+      } catch {
+        decodedPathname = url.pathname;
+      }
       const filename = `${url.hostname}${decodedPathname.replace(/\//g, "_")}`;
 
       const data = {

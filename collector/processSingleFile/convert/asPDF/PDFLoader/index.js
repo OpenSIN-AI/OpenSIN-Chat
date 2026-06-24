@@ -82,7 +82,7 @@ class PDFLoader {
         const textItems = [];
         for (const item of content.items) {
           if ("str" in item) {
-            if (lastY === item.transform[5] || !lastY) {
+            if (lastY === undefined || lastY === item.transform[5]) {
               textItems.push(item.str);
             } else {
               textItems.push(`\n${item.str}`);

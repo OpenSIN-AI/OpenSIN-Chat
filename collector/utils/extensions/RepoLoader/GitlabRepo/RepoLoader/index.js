@@ -53,6 +53,7 @@ class GitLabRepoLoader {
   }
 
   #validGitlabUrl() {
+    if (!this.repo || typeof this.repo !== "string") return false;
     const validPatterns = [
       //eslint-disable-next-line
       /https:\/\/gitlab\.com\/(?<author>[^\/]+)\/(?<project>.*)/,

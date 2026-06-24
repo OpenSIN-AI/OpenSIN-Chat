@@ -51,8 +51,8 @@ export default function MemoryModal({
     if (!content.trim() || isSubmitting) return;
     setIsSubmitting(true);
     try {
-      await onSubmit(content.trim());
-      onClose();
+      const success = await onSubmit(content.trim());
+      if (success) onClose();
     } finally {
       setIsSubmitting(false);
     }

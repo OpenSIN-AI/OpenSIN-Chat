@@ -144,7 +144,7 @@ const Memory = {
         if (count >= limit)
           return {
             memory: null,
-            message: `Maximum ${scope} memory limit (${limit}) reached.`,
+            message: `Maximum ${validatedScope} memory limit (${limit}) reached.`,
           };
 
         const memory = await tx.memories.create({
@@ -402,7 +402,7 @@ const Memory = {
               userId: this.validations.userId(userId),
               workspaceId: this.validations.id(workspaceId),
               scope: "workspace",
-              content,
+              content: this.validations.content(content),
             },
             ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
           });
@@ -467,7 +467,7 @@ const Memory = {
               userId: this.validations.userId(userId),
               workspaceId: this.validations.id(workspaceId),
               scope: "workspace",
-              content,
+              content: this.validations.content(content),
             },
             ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
           });
@@ -479,7 +479,7 @@ const Memory = {
               userId: this.validations.userId(userId),
               workspaceId: null,
               scope: "global",
-              content,
+              content: this.validations.content(content),
             },
             ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
           });

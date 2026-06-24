@@ -202,7 +202,7 @@ const WorkspaceParsedFiles = {
 
       return {
         files: results,
-        contextWindow: workspace.contextWindow,
+        contextWindow: workspace.contextWindow ?? Infinity,
         currentContextTokenCount: totalTokens,
       };
     } catch (error) {

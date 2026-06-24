@@ -133,7 +133,7 @@ export default function ToolsMenu({
     window.addEventListener(TOOLS_MENU_KEYBOARD_EVENT, handleKeyboard);
     return () =>
       window.removeEventListener(TOOLS_MENU_KEYBOARD_EVENT, handleKeyboard);
-  }, [showing, activeTab]);
+  }, [showing, activeTab, TABS]);
 
   if (!showing) return null;
 
