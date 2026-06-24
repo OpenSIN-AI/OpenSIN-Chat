@@ -79,7 +79,7 @@ markdown.renderer.rules.image = function (tokens, idx: any) {
     src && /^(https?:|data:image\/(?!svg)|\/|\.)/i.test(src) ? src : "";
   if (!safeSrc) return `<div class="w-full max-w-[800px]"></div>`;
 
-  return `<div class="w-full max-w-[800px]"><img src="${HTMLEncode(safeSrc)}" alt="${HTMLEncode(alt)}" loading="lazy" class="w-full h-auto" onerror="this.parentElement.style.display='none'" /></div>`;
+  return `<div class="w-full max-w-[800px]" data-markdown-image><img src="${HTMLEncode(safeSrc)}" alt="${HTMLEncode(alt)}" loading="lazy" class="w-full h-auto" /></div>`;
 };
 
 markdown.use(markdownItKatexPlugin);

@@ -440,31 +440,14 @@ class MetaGenerator {
   #buildCssTags(css, routePath) {
     if (!css.length) return "";
 
-    const isDocs = this.#isDocsRoute(routePath);
-    const isCritical = (p) => {
-      if (p === "/index.css") return true;
-      if (p === "/vendor.css") return true;
-      // Docs pages need all markdown/rendering styles synchronously; async
-      // preload tags with inline onload handlers violate our nonce-based CSP.
-      if (
-        isDocs &&
-        (p === "/Docs.css" ||
-          p === "/vendor-highlight.css" ||
-          p === "/vendor-katex.css" ||
-          p === "/markdown.css")
-      )
-        return true;
-      return false;
-    };
-
     return css
       .map((p) => {
-        if (isCritical(p)) {
-          return `<link rel="stylesheet" href="${p}">`;
-        }
-        // Async load non-critical CSS. The onload switch keeps the file in the
-        // stylesheet list while removing the print media attribute.
-        return `<link rel="preload" href="${p}" as="style" onload="this.onload=null;this.rel='stylesheet'">`;
+        // All CSS is loaded synchronously. The former preload+onload
+        // pattern used an inline event handler that violated our
+        // nonce-based CSP (script-src without 'unsafe-inline').
+        // crossorigin must match Vite's runtime <link rel="stylesheet" crossorigin>
+        // injection for code-split CSS.
+        return `<link rel="stylesheet" crossorigin href="${p}">`;
       })
       .join("\n            ");
   }
@@ -496,7 +479,7 @@ class MetaGenerator {
             ${this.#assembleMeta()}
             ${preloadTags}
             <script type="module" crossorigin src="/index.js"></script>
-            <link rel="stylesheet" href="/index.css">
+            <link rel="stylesheet" crossorigin href="/index.css">
             ${cssTags}
           </head>
           <body>

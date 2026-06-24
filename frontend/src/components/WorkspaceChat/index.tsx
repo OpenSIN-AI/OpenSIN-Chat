@@ -58,7 +58,12 @@ export default function WorkspaceChat({
   }, [workspace, loading, threadSlug, history, historyLoading]);
 
   useEffect(() => {
-    return setEventDelegatorForCodeSnippets();
+    const cleanupSnippets = setEventDelegatorForCodeSnippets();
+    const cleanupImages = setEventDelegatorForMarkdownImages();
+    return () => {
+      cleanupSnippets?.();
+      cleanupImages?.();
+    };
   }, []);
 
   let hasPendingMessage = false;
@@ -167,4 +172,18 @@ export function setEventDelegatorForCodeSnippets() {
   };
   document?.addEventListener("click", handler);
   return () => document?.removeEventListener("click", handler);
+}
+
+// Hides markdown image containers when the img fails to load.
+// Replaces the former inline onerror handler that violated CSP.
+export function setEventDelegatorForMarkdownImages() {
+  const handler = function (e: Event) {
+    const img = e.target as HTMLElement;
+    if (img?.tagName !== "IMG") return;
+    const container = img.closest("[data-markdown-image]");
+    if (container) (container as HTMLElement).style.display = "none";
+  };
+  // 'error' events do not bubble — use capture phase to catch them.
+  document?.addEventListener("error", handler, true);
+  return () => document?.removeEventListener("error", handler, true);
 }

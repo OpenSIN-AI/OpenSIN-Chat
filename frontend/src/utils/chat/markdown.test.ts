@@ -291,6 +291,9 @@ describe("chat/markdown — renderMarkdown (real markdown-it)", () => {
       expect(out).toContain('src="https://example.com/img.png"');
       expect(out).toContain('alt="alt text"');
       expect(out).toContain('class="w-full h-auto"');
+      expect(out).toContain("data-markdown-image");
+      // Must NOT contain inline event handlers (CSP violation)
+      expect(out).not.toMatch(/onerror/);
     });
 
     it("renders unordered lists", () => {

@@ -12,7 +12,10 @@ import { useEffect, useState } from "react";
 import renderMarkdown from "@/utils/chat/markdown";
 import DOMPurify from "@/utils/chat/purify";
 import CommunityHub from "@/models/communityHub";
-import { setEventDelegatorForCodeSnippets } from "@/components/WorkspaceChat";
+import {
+  setEventDelegatorForCodeSnippets,
+  setEventDelegatorForMarkdownImages,
+} from "@/components/WorkspaceChat";
 import { useTranslation } from "react-i18next";
 
 const AGENT_MENTION = "@agent";
@@ -61,7 +64,12 @@ export default function AgentSkill({
   }
 
   useEffect(() => {
-    return setEventDelegatorForCodeSnippets();
+    const cleanupSnippets = setEventDelegatorForCodeSnippets();
+    const cleanupImages = setEventDelegatorForMarkdownImages();
+    return () => {
+      cleanupSnippets?.();
+      cleanupImages?.();
+    };
   }, []);
 
   return (
