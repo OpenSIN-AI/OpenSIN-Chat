@@ -75,7 +75,6 @@ class BackgroundService {
   }
 
   #log(text, ...args) {
-    // eslint-disable-next-line no-console
     consoleLogger.log(`\x1b[36m[${this.name}]\x1b[0m ${text}`, ...args);
   }
 
@@ -124,6 +123,12 @@ class BackgroundService {
       );
     }
 
+    // Clean up old run records to prevent unbounded table growth
+    const deletedRuns = await ScheduledJobRun.cleanupOldRuns();
+    if (deletedRuns > 0) {
+      this.#log(`Cleaned up ${deletedRuns} old scheduled job run(s)`);
+    }
+
     const jobsToRun = this.jobs();
 
     this.#log("Starting...");
@@ -148,7 +153,7 @@ class BackgroundService {
   }
 
   /**
-   * Cleanup scheduled jobs (in-process cron timers + p-queue)
+   * Cleanup scheduled jobs (in-process cron timers + p-queue + in-flight workers)
    */
   #cleanupScheduledJobs() {
     for (const [id, timer] of this.#scheduledJobTimers) {
@@ -156,6 +161,19 @@ class BackgroundService {
       this.#scheduledJobTimers.delete(id);
     }
     this.#scheduledJobQueue.clear();
+
+    // Kill any in-flight worker processes so they don't outlive the service
+    // and try to write results back to a DB that may be shutting down.
+    for (const [jobId, workers] of this.#scheduledJobWorkers) {
+      for (const worker of workers) {
+        try {
+          worker.kill("SIGTERM");
+        } catch {
+          this.#log(`worker ${worker.pid} already exited during cleanup`);
+        }
+      }
+      this.#scheduledJobWorkers.delete(jobId);
+    }
   }
 
   async stop() {
@@ -300,11 +318,17 @@ class BackgroundService {
    */
   addScheduledJob(job) {
     this.removeScheduledJob(job.id);
-    const sched = later.parse.cron(job.schedule);
-    const timer = later.setInterval(() => {
-      this.enqueueScheduledJob(job.id);
-    }, sched);
-    this.#scheduledJobTimers.set(job.id, timer);
+    try {
+      const sched = later.parse.cron(job.schedule);
+      const timer = later.setInterval(() => {
+        this.enqueueScheduledJob(job.id);
+      }, sched);
+      this.#scheduledJobTimers.set(job.id, timer);
+    } catch (error) {
+      this.#log(
+        `Failed to register cron timer for job ${job.id} ("${job.name}"): ${error.message}`,
+      );
+    }
   }
 
   /**
@@ -425,9 +449,16 @@ class BackgroundService {
 
     try {
       worker.send({ jobId, runId });
-      const MAX_RUN_TIMEOUT_MS = Number(
-        process.env.SCHEDULED_JOB_TIMEOUT_MS ?? 60 * 60 * 1000 + 60_000,
-      );
+      // The parent timeout must be strictly longer than the worker's own
+      // SCHEDULED_JOB_TIMEOUT_MS so the worker can handle its timeout
+      // gracefully (mark the run as timed_out, send push notification, etc).
+      // If the parent fires first it SIGKILLs the worker, the worker's
+      // finally block never runs, and the run is marked as "failed" instead
+      // of "timed_out".  Use the same `|| ` pattern as the worker helper so
+      // falsy values (0, "") fall back to the default consistently.
+      const workerTimeoutMs =
+        Number(process.env.SCHEDULED_JOB_TIMEOUT_MS) || 5 * 60 * 1000;
+      const MAX_RUN_TIMEOUT_MS = workerTimeoutMs + 30_000; // 30s grace period
       await Promise.race([
         new Promise((resolve, reject) => {
           const timeoutId = setTimeout(() => {

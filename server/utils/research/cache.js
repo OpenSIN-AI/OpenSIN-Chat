@@ -11,8 +11,17 @@
  */
 
 const DEFAULT_TTL_MS = 60_000;
+const MAX_ENTRIES = Number(process.env.RESEARCH_CACHE_MAX_ENTRIES) || 500;
 
 const _store = new Map();
+
+function _evict() {
+  while (_store.size > MAX_ENTRIES) {
+    const oldest = _store.keys().next().value;
+    if (oldest === undefined) break;
+    _store.delete(oldest);
+  }
+}
 
 function getCached(key, ttl = DEFAULT_TTL_MS) {
   const entry = _store.get(key);
@@ -29,6 +38,7 @@ function getStale(key) {
 
 function setCached(key, value) {
   _store.set(key, { value, cachedAt: Date.now() });
+  _evict();
 }
 
 async function withCache(key, fn, ttl = DEFAULT_TTL_MS) {
@@ -69,4 +79,5 @@ module.exports = {
   deleteCached,
   cacheSize,
   DEFAULT_TTL_MS,
+  MAX_ENTRIES,
 };

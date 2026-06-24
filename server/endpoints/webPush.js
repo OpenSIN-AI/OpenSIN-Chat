@@ -108,7 +108,7 @@ function webPushEndpoints(app) {
         payload: {
           title,
           body: bodyText || "",
-          data: { url: url || "/" },
+          data: { onClickUrl: url || "/" },
         },
       });
       return response.status(200).json(result);

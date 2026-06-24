@@ -52,8 +52,10 @@ const ScheduledJobRun = {
         });
       });
     } catch (error) {
-      // eslint-disable-next-line no-console
-      consoleLogger.error("Failed to enqueue scheduled job run:", error.message);
+      consoleLogger.error(
+        "Failed to enqueue scheduled job run:",
+        error.message,
+      );
       return null;
     }
   },
@@ -79,7 +81,6 @@ const ScheduledJobRun = {
       });
       return result.count > 0;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(
         "Failed to transition scheduled job run to running:",
         error.message,
@@ -112,7 +113,6 @@ const ScheduledJobRun = {
       });
       return result.count > 0;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(
         "Failed to conditionally fail scheduled job run:",
         error.message,
@@ -123,18 +123,24 @@ const ScheduledJobRun = {
 
   complete: async function (id, { result } = {}) {
     try {
-      const run = await prisma.scheduled_job_runs.update({
-        where: { id: Number(id) },
+      const updateResult = await prisma.scheduled_job_runs.updateMany({
+        where: {
+          id: Number(id),
+          status: { in: this.nonTerminalStatuses },
+        },
         data: {
           status: this.statuses.completed,
           result: typeof result === "string" ? result : JSON.stringify(result),
           completedAt: new Date(),
         },
       });
-      return run;
+      if (updateResult.count === 0) return null;
+      return await this.get({ id: Number(id) });
     } catch (error) {
-      // eslint-disable-next-line no-console
-      consoleLogger.error("Failed to complete scheduled job run:", error.message);
+      consoleLogger.error(
+        "Failed to complete scheduled job run:",
+        error.message,
+      );
       return null;
     }
   },
@@ -157,7 +163,6 @@ const ScheduledJobRun = {
       if (result.count === 0) return null;
       return await this.get({ id: Number(id) });
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(
         "Failed to mark scheduled job run as failed:",
         error.message,
@@ -184,7 +189,6 @@ const ScheduledJobRun = {
       if (result.count === 0) return null;
       return await this.get({ id: Number(id) });
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error(
         "Failed to mark scheduled job run as timed out:",
         error.message,
@@ -218,7 +222,6 @@ const ScheduledJobRun = {
       if (result.count === 0) return null;
       return await this.get({ id: Number(id) });
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("Failed to kill scheduled job run:", error.message);
       return null;
     }
@@ -232,7 +235,6 @@ const ScheduledJobRun = {
       });
       return run || null;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("Failed to get scheduled job run:", error.message);
       return null;
     }
@@ -257,7 +259,6 @@ const ScheduledJobRun = {
       });
       return results;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("Failed to query scheduled job runs:", error.message);
       return [];
     }
@@ -271,7 +272,6 @@ const ScheduledJobRun = {
       });
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("Failed to mark run as read:", error.message);
       return false;
     }
@@ -282,8 +282,10 @@ const ScheduledJobRun = {
       await prisma.scheduled_job_runs.deleteMany({ where: clause });
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
-      consoleLogger.error("Failed to delete scheduled job runs:", error.message);
+      consoleLogger.error(
+        "Failed to delete scheduled job runs:",
+        error.message,
+      );
       return false;
     }
   },
@@ -304,8 +306,62 @@ const ScheduledJobRun = {
       });
       return result.count;
     } catch (error) {
-      // eslint-disable-next-line no-console
       consoleLogger.error("Failed to fail orphaned runs:", error.message);
+      return 0;
+    }
+  },
+
+  /**
+   * Delete old completed/failed/timed_out runs to prevent unbounded table
+   * growth. Keeps at most `keepPerJob` runs per job (default 200) and
+   * deletes runs older than `olderThanDays` days (default 90).
+   * Called on boot to perform periodic housekeeping.
+   * @param {object} [opts]
+   * @param {number} [opts.keepPerJob=200] - Max runs to retain per job.
+   * @param {number} [opts.olderThanDays=90] - Delete runs older than this many days.
+   * @returns {Promise<number>} Number of runs deleted.
+   */
+  cleanupOldRuns: async function ({
+    keepPerJob = 200,
+    olderThanDays = 90,
+  } = {}) {
+    try {
+      const cutoffDate = new Date(
+        Date.now() - olderThanDays * 24 * 60 * 60 * 1000,
+      );
+      let totalDeleted = 0;
+
+      const { ScheduledJob } = require("./scheduledJob");
+      const jobs = await ScheduledJob.where({}, null, { id: "asc" });
+
+      for (const job of jobs) {
+        const runCount = await prisma.scheduled_job_runs.count({
+          where: { jobId: job.id },
+        });
+        if (runCount <= keepPerJob) continue;
+
+        const runsToDelete = await prisma.scheduled_job_runs.findMany({
+          where: {
+            jobId: job.id,
+            completedAt: { lt: cutoffDate },
+            status: { notIn: this.nonTerminalStatuses },
+          },
+          orderBy: { startedAt: "asc" },
+          take: runCount - keepPerJob,
+          select: { id: true },
+        });
+
+        if (runsToDelete.length === 0) continue;
+
+        const result = await prisma.scheduled_job_runs.deleteMany({
+          where: { id: { in: runsToDelete.map((r) => r.id) } },
+        });
+        totalDeleted += result.count;
+      }
+
+      return totalDeleted;
+    } catch (error) {
+      consoleLogger.error("Failed to cleanup old runs:", error.message);
       return 0;
     }
   },

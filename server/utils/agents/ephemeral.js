@@ -644,7 +644,16 @@ class EphemeralEventListener extends EventEmitter {
   }
 
   send(jsonData) {
-    const data = JSON.parse(jsonData);
+    let data;
+    try {
+      data = JSON.parse(jsonData);
+    } catch (e) {
+      this.emit(
+        "error",
+        new Error(`EphemeralEventListener.send: invalid JSON — ${e.message}`),
+      );
+      return;
+    }
     this.messages.push(data);
     this.emit("chunk", data);
   }

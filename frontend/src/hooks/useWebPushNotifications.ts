@@ -144,7 +144,7 @@ export async function subscribeToPushNotifications(
     await fetch(PUSH_USER_SUBSCRIBE_URL, {
       method: "POST",
       body: JSON.stringify(subscription),
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
     });
   } catch (error) {
     log("Error subscribing to push notifications", error);

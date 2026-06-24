@@ -163,6 +163,12 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
           break; // Break streaming when a valid finish_reason is first encountered
         }
       }
+      // Stream ended without a finish_reason — some providers close the
+      // stream without sending one. Without this cleanup the close listener
+      // leaks and the Promise never resolves (hang).
+      response.removeListener("close", handleAbort);
+      stream?.endMeasurement(usage);
+      resolve(fullText);
     } catch (e) {
       // eslint-disable-next-line no-console
       consoleLogger.log(`\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${e.message}`);

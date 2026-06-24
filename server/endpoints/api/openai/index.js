@@ -20,6 +20,7 @@ const {
 const {
   simpleRateLimit,
 } = require("../../../utils/middleware/simpleRateLimit");
+const { startSSEHeartbeat } = require("../../../utils/helpers/sse");
 
 function apiKeyQuota(request, _response, next) {
   const auth = request.header("Authorization");
@@ -191,6 +192,8 @@ function apiOpenAICompatibleEndpoints(app) {
         response.setHeader("Connection", "keep-alive");
         response.flushHeaders();
 
+        const stopHeartbeat = startSSEHeartbeat(response);
+
         await OpenAICompatibleChat.streamChat({
           workspace,
           systemPrompt,
@@ -200,6 +203,7 @@ function apiOpenAICompatibleEndpoints(app) {
           temperature: Number(temperature),
           response,
         });
+        stopHeartbeat();
         await Telemetry.sendTelemetry("sent_chat", {
           LLMSelection: process.env.LLM_PROVIDER || "openai",
           Embedder: process.env.EMBEDDING_ENGINE || "inherit",

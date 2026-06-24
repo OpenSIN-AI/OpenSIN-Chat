@@ -63,6 +63,7 @@ jest.mock("../../../models/systemSettings", () => ({
 jest.mock("../../../models/scheduledJobRun", () => ({
   ScheduledJobRun: {
     failOrphanedRuns: jest.fn().mockResolvedValue(0),
+    cleanupOldRuns: jest.fn().mockResolvedValue(0),
     start: jest.fn().mockResolvedValue({ id: 1 }),
     failIfNotTerminal: jest.fn().mockResolvedValue(undefined),
   },

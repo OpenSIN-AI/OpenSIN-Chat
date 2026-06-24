@@ -17,6 +17,7 @@ const {
   validWorkspaceSlug,
 } = require("../utils/middleware/validWorkspace");
 const { writeResponseChunk } = require("../utils/helpers/chat/responses");
+const { startSSEHeartbeat } = require("../utils/helpers/sse");
 const { WorkspaceThread } = require("../models/workspaceThread");
 const { User } = require("../models/user");
 const { getModelTag } = require("./utils");
@@ -29,27 +30,6 @@ const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
 // TextArea.tsx, but the server must police this independently because the
 // limit can be bypassed with raw curl or any other non-browser client.
 const CHAT_MESSAGE_MAX_LENGTH = 32_000;
-
-/**
- * Start an SSE heartbeat that sends a comment-line keepalive every 15s.
- * Returns a stop function that clears the interval.
- * Prevents proxy/load-balancer timeouts during long prep phases
- * (vector search, doc fetching) before the first token is streamed.
- */
-function startSSEHeartbeat(response) {
-  const interval = setInterval(() => {
-    if (response.writableEnded || response.destroyed) {
-      clearInterval(interval);
-      return;
-    }
-    try {
-      response.write(": heartbeat\n\n");
-    } catch {
-      clearInterval(interval);
-    }
-  }, 15_000);
-  return () => clearInterval(interval);
-}
 
 function chatEndpoints(app) {
   if (!app) return;

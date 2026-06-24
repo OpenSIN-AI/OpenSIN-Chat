@@ -18,6 +18,7 @@ const {
   convertToChatHistory,
   writeResponseChunk,
 } = require("../../utils/helpers/chat/responses");
+const { startSSEHeartbeat } = require("../../utils/helpers/sse");
 
 function embedStreamRateLimit(request, response, next) {
   const { embedId } = request.params;
@@ -44,6 +45,7 @@ function embeddedEndpoints(app) {
     "/embed/:embedId/stream-chat",
     [validEmbedConfig, setConnectionMeta, canRespond, embedStreamRateLimit],
     async (request, response) => {
+      let stopHeartbeat = null;
       try {
         const embed = response.locals.embedConfig;
         const {
@@ -60,6 +62,7 @@ function embeddedEndpoints(app) {
         response.setHeader("Content-Type", "text/event-stream");
         response.setHeader("Connection", "keep-alive");
         response.flushHeaders();
+        stopHeartbeat = startSSEHeartbeat(response);
 
         await streamChatWithForEmbed(response, embed, message, sessionId, {
           promptOverride: prompt,
@@ -67,6 +70,8 @@ function embeddedEndpoints(app) {
           temperatureOverride: temperature,
           username,
         });
+        stopHeartbeat();
+        stopHeartbeat = null;
         await Telemetry.sendTelemetry("embed_sent_chat", {
           multiUserMode: multiUserMode(response),
           LLMSelection: process.env.LLM_PROVIDER || "openai",
@@ -75,6 +80,7 @@ function embeddedEndpoints(app) {
         });
         response.end();
       } catch (e) {
+        if (stopHeartbeat) stopHeartbeat();
         const errorId = crypto.randomUUID();
         consoleLogger.error(`[endpoint error ${errorId}]`, e);
         writeResponseChunk(response, {

@@ -48,9 +48,13 @@ function dockerModelRunnerUtilsEndpoints(app) {
           );
         const reader = dmrResponse.body.getReader();
         let done = false;
+        request.on("close", () => {
+          done = true;
+        });
         while (!done) {
           const { value, done: readerDone } = await reader.read();
           if (readerDone) done = true;
+          if (done) break;
 
           const chunk = new TextDecoder("utf-8").decode(value);
           const lines = chunk.split("\n");
@@ -65,27 +69,30 @@ function dockerModelRunnerUtilsEndpoints(app) {
                 data.message || "An error occurred while downloading the model",
               );
             } else if (data.type === "success") {
-              response.write(
-                `data: ${JSON.stringify({ type: "success", percentage: 100, message: "Model downloaded successfully" })}\n\n`,
-              );
+              if (!response.writableEnded)
+                response.write(
+                  `data: ${JSON.stringify({ type: "success", percentage: 100, message: "Model downloaded successfully" })}\n\n`,
+                );
               done = true;
             } else if (data.type === "progress") {
               const percentage =
                 data.total > 0
                   ? Math.round((data.pulled / data.total) * 100)
                   : 0;
-              response.write(
-                `data: ${JSON.stringify({ type: "progress", percentage, message: data.message })}\n\n`,
-              );
+              if (!response.writableEnded)
+                response.write(
+                  `data: ${JSON.stringify({ type: "progress", percentage, message: data.message })}\n\n`,
+                );
             }
           }
         }
       } catch (e) {
         // eslint-disable-next-line no-console
         consoleLogger.error(e);
-        response.write(
-          `data: ${JSON.stringify({ type: "error", message: "Internal server error." })}\n\n`,
-        );
+        if (!response.writableEnded)
+          response.write(
+            `data: ${JSON.stringify({ type: "error", message: "Internal server error." })}\n\n`,
+          );
       } finally {
         response.end();
       }

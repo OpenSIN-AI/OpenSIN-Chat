@@ -13,6 +13,7 @@ const {
   writeResponseChunk,
   convertToChatHistory,
 } = require("../../../utils/helpers/chat/responses");
+const { startSSEHeartbeat } = require("../../../utils/helpers/sse");
 const { WorkspaceChats } = require("../../../models/workspaceChats");
 const { User } = require("../../../models/user");
 const { ApiChatHandler } = require("../../../utils/chats/apiChatHandler");
@@ -564,6 +565,7 @@ function apiWorkspaceThreadEndpoints(app) {
         }
       }
       */
+      let stopHeartbeat = null;
       try {
         const { slug, threadSlug } = request.params;
         const {
@@ -619,6 +621,8 @@ function apiWorkspaceThreadEndpoints(app) {
         response.setHeader("Connection", "keep-alive");
         response.flushHeaders();
 
+        stopHeartbeat = startSSEHeartbeat(response);
+
         await ApiChatHandler.streamChat({
           response,
           workspace,
@@ -629,6 +633,8 @@ function apiWorkspaceThreadEndpoints(app) {
           attachments,
           reset,
         });
+        stopHeartbeat();
+        stopHeartbeat = null;
         await Telemetry.sendTelemetry("sent_chat", {
           LLMSelection: process.env.LLM_PROVIDER || "openai",
           Embedder: process.env.EMBEDDING_ENGINE || "inherit",
@@ -644,6 +650,7 @@ function apiWorkspaceThreadEndpoints(app) {
         });
         response.end();
       } catch (e) {
+        if (stopHeartbeat) stopHeartbeat();
         // eslint-disable-next-line no-console
         consoleLogger.error(e?.message || "Unknown error", e);
         writeResponseChunk(response, {

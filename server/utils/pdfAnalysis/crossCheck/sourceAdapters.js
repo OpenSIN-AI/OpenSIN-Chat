@@ -30,8 +30,17 @@ const MAX_SOURCE_CHARS = Number(
 );
 
 const LOOKUP_TTL_MS = Number(process.env.DNS_LOOKUP_TTL_MS) || 60000;
+const MAX_RESOLVED_LOOKUPS = Number(process.env.DNS_LOOKUP_CACHE_MAX) || 1000;
 
 const RESOLVED_LOOKUPS = new Map();
+
+function _evictResolvedLookups() {
+  while (RESOLVED_LOOKUPS.size > MAX_RESOLVED_LOOKUPS) {
+    const oldest = RESOLVED_LOOKUPS.keys().next().value;
+    if (oldest === undefined) break;
+    RESOLVED_LOOKUPS.delete(oldest);
+  }
+}
 
 async function resolveAndPin(hostname) {
   const cached = RESOLVED_LOOKUPS.get(hostname);
@@ -41,6 +50,7 @@ async function resolveAndPin(hostname) {
   if (isPrivateIp(address))
     throw new Error("Zugriff auf private/lokale Adressen ist nicht erlaubt.");
   RESOLVED_LOOKUPS.set(hostname, { ip: address, at: now });
+  _evictResolvedLookups();
   return address;
 }
 

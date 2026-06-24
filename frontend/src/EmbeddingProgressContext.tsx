@@ -206,6 +206,7 @@ export function EmbeddingProgressProvider({ children }: any) {
         },
         onerror: (err) => {
           delete abortControllersRef.current[slug];
+          ctrl?.abort();
           throw err;
         },
       }).catch((err) => {

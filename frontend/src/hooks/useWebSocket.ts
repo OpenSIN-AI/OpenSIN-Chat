@@ -213,11 +213,13 @@ export default function useWebSocket({
           reconnectTimer = setTimeout(() => {
             if (!isMounted) return;
             // Attempt reconnection by creating a new WebSocket to the same UUID.
-            const newWs = new WebSocket(agentWebsocketUrl(socketId)!);
-            newWs.supportsAgentStreaming = false;
-            setWebsocket(newWs);
-            attachListeners(newWs);
-            startHeartbeat(newWs);
+            // Assign to `socket` so the effect closure (handleAbortStream,
+            // cleanup) references the live connection, not the dead one.
+            socket = new WebSocket(agentWebsocketUrl(socketId)!);
+            socket.supportsAgentStreaming = false;
+            setWebsocket(socket);
+            attachListeners(socket);
+            startHeartbeat(socket);
           }, backoff);
           return;
         }

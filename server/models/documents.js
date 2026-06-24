@@ -155,7 +155,8 @@ const Document = {
       totalDocs: additions.length,
     });
 
-    for (const [index, path] of additions.entries()) {
+    try {
+      for (const [index, path] of additions.entries()) {
       const docProgress = {
         workspaceSlug: workspace.slug,
         userId,
@@ -268,10 +269,11 @@ const Document = {
         });
       }
     }
-
-    if (global.__embeddingProgressMap)
-      global.__embeddingProgressMap.delete(workspace.slug);
-    global.__embeddingProgress = null;
+    } finally {
+      if (global.__embeddingProgressMap)
+        global.__embeddingProgressMap.delete(workspace.slug);
+      global.__embeddingProgress = null;
+    }
 
     emitProgress(workspace.slug, {
       type: "all_complete",

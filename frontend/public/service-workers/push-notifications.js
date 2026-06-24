@@ -21,7 +21,8 @@ function parseEventData(event) {
   
   self.addEventListener('notificationclick', function (event) {
     event.notification.close();
-    const { onClickUrl = null } = event.notification.data || {};
-    if (!onClickUrl) return;
-    event.waitUntil(clients.openWindow(onClickUrl));
+    const data = event.notification.data || {};
+    const clickUrl = data.onClickUrl || data.url || null;
+    if (!clickUrl) return;
+    event.waitUntil(clients.openWindow(clickUrl));
   });

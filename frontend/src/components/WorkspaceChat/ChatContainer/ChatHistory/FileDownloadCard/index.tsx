@@ -17,6 +17,7 @@ import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 import useAuthenticatedBlobUrl from "@/hooks/useAuthenticatedBlobUrl";
 
+const AUTO_PREVIEW_MAX = 200;
 const autoPreviewedFiles = new Set();
 
 /**
@@ -174,6 +175,10 @@ function FileDownloadCard({ props, autoPreview = false }) {
     const key = storageFilename || downloadUrl || filename;
     if (!key || autoPreviewedFiles.has(key)) return;
     autoPreviewedFiles.add(key);
+    if (autoPreviewedFiles.size > AUTO_PREVIEW_MAX) {
+      const first = autoPreviewedFiles.values().next().value;
+      if (first !== undefined) autoPreviewedFiles.delete(first);
+    }
     didAutoOpen.current = true;
     openPreview(buildPreviewData());
   }, [

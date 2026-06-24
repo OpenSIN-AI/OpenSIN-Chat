@@ -134,7 +134,11 @@ process.on("message", async (payload) => {
     log(`Scheduled job "${job.name}" completed in ${duration}ms)`);
     await sendWebPushNotification(job, runId, state.textResponse, log);
   } catch (error) {
-    if (error.message === "SCHEDULED_JOB_TIMEOUT") {
+    if (status === "killed") {
+      // SIGTERM handler already set status to "killed" and called
+      // ScheduledJobRun.kill(). Don't overwrite it — the finally block
+      // will skip the switch default case and let the kill stand.
+    } else if (error.message === "SCHEDULED_JOB_TIMEOUT") {
       status = "timed_out";
       log("Scheduled job timed out");
     } else {

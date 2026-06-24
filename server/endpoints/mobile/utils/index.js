@@ -6,6 +6,7 @@ const { WorkspaceChats } = require("../../../models/workspaceChats");
 const { WorkspaceThread } = require("../../../models/workspaceThread");
 const { ApiChatHandler } = require("../../../utils/chats/apiChatHandler");
 const { reqBody } = require("../../../utils/http");
+const { startSSEHeartbeat } = require("../../../utils/helpers/sse");
 const prisma = require("../../../utils/prisma");
 const { getModelTag } = require("../../utils");
 const { MobileDevice } = require("../../../models/mobileDevice");
@@ -171,6 +172,7 @@ async function handleMobileCommand(request, response) {
       response.setHeader("Content-Type", "text/event-stream");
       response.setHeader("Connection", "keep-alive");
       response.flushHeaders();
+      const stopHeartbeat = startSSEHeartbeat(response);
       await ApiChatHandler.streamChat({
         response,
         workspace,
@@ -182,6 +184,7 @@ async function handleMobileCommand(request, response) {
         attachments: [],
         reset: false,
       });
+      stopHeartbeat();
       return response.end();
     }
 
