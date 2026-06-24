@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../../../logger/console.js");
+
 const pgSql = require("pg");
 
 class PostgresSQLConnector {
@@ -67,7 +69,7 @@ class PostgresSQLConnector {
       result.count = query.rowCount;
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.error(this.className, err);
+      consoleLogger.error(this.className, err);
       result.error = err.message;
     } finally {
       if (this.#connected && this._client) {

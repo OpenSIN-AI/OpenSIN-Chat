@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const { getEncodingNameForModel, getEncoding } = require("js-tiktoken");
 
 /**
@@ -32,7 +34,7 @@ class TokenManager {
 
   log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[35m[TokenManager]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[35m[TokenManager]\x1b[0m ${text}`, ...args);
   }
 
   #getEncodingFromModel(model) {
@@ -54,7 +56,7 @@ class TokenManager {
       return tokens;
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e);
+      consoleLogger.error(e);
       return [];
     }
   }

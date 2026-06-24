@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../logger/console.js");
+
 const { TokenManager } = require("../../../helpers/tiktoken");
 const {
   NativeEmbeddingReranker,
@@ -25,7 +27,7 @@ class ToolReranker {
 
   log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[33m[IntelligentSkillSelector]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[33m[IntelligentSkillSelector]\x1b[0m ${text}`, ...args);
   }
 
   /**

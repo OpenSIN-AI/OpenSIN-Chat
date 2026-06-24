@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../utils/logger/console.js");
+
 const { MobileDevice } = require("../../../models/mobileDevice");
 const { SystemSettings } = require("../../../models/systemSettings");
 const { User } = require("../../../models/user");
@@ -38,7 +40,7 @@ async function validDeviceToken(request, response, next) {
     next();
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error("validDeviceToken", error);
+    consoleLogger.error("validDeviceToken", error);
     response.status(500).json({ error: "Invalid middleware response" });
   }
 }
@@ -87,7 +89,7 @@ async function validRegistrationToken(request, response, next) {
     next();
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error("validRegistrationToken:error", error);
+    consoleLogger.error("validRegistrationToken:error", error);
     response.status(500).json({
       error: "Invalid middleware response from validRegistrationToken",
     });

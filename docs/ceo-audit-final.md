@@ -133,7 +133,7 @@ introduced. All 164 GitHub issues are now closed.
 | File headers | ✅ PASS | All new modules have `Purpose:` + `Docs:` headers |
 | SPDX headers | ✅ PASS | 21+ modules with license headers |
 | ADRs | ✅ PASS | Architecture Decision Records present in `docs/` |
-| Roadmap | ✅ PASS | ROADMAP.md + PLAN.md maintained |
+| Roadmap | ✅ PASS | ROADMAP.md maintained |
 
 ### 6. CI/CD — 95/100 ✅
 

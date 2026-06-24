@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../../logger/console.js");
+
 const path = require("path");
 const { getStoragePath } = require("../../../../paths");
 const fs = require("fs/promises");
@@ -34,7 +36,7 @@ class CreateFilesManager {
       await fs.mkdir(this.#outputDirectory, { recursive: true });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(
+      consoleLogger.error(
         `Warning: Could not create output directory ${this.#outputDirectory}: ${error.message}`,
       );
     }
@@ -85,7 +87,7 @@ class CreateFilesManager {
     const fileSizeMB = (fileSizeBytes / (1024 * 1024)).toFixed(2);
 
     // eslint-disable-next-line no-console
-    console.log(
+    consoleLogger.log(
       `[CreateFilesManager] writeBinaryFile starting - path: ${filePath}, size: ${fileSizeKB}KB (${fileSizeMB}MB)`,
     );
 
@@ -93,7 +95,7 @@ class CreateFilesManager {
     await fs.writeFile(filePath, buffer);
 
     // eslint-disable-next-line no-console
-    console.log(
+    consoleLogger.log(
       `[CreateFilesManager] writeBinaryFile completed - file saved to: ${filePath}`,
     );
   }
@@ -164,7 +166,7 @@ class CreateFilesManager {
   registerOutput(aibitat, type, payload) {
     if (!aibitat) {
       // eslint-disable-next-line no-console
-      console.warn(
+      consoleLogger.warn(
         "[CreateFilesManager] Cannot register output - aibitat instance not provided",
       );
       return;
@@ -176,7 +178,7 @@ class CreateFilesManager {
 
     aibitat._pendingOutputs.push({ type, payload });
     // eslint-disable-next-line no-console
-    console.log(
+    consoleLogger.log(
       `[CreateFilesManager] Registered output: type=${type}, total pending=${aibitat._pendingOutputs.length}`,
     );
   }
@@ -227,7 +229,7 @@ class CreateFilesManager {
     await this.writeBinaryFile(storagePath, buffer);
 
     // eslint-disable-next-line no-console
-    console.log(
+    consoleLogger.log(
       `[CreateFilesManager] saveGeneratedFile - saved ${filename} (${(buffer.length / 1024).toFixed(2)}KB)`,
     );
 
@@ -250,7 +252,7 @@ class CreateFilesManager {
     // Defense-in-depth: validate filename format to prevent path traversal
     if (!this.parseFilename(filename)) {
       // eslint-disable-next-line no-console
-      console.warn(
+      consoleLogger.warn(
         `[CreateFilesManager] getGeneratedFile - rejected invalid filename format: ${filename}`,
       );
       return null;

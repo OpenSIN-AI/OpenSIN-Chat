@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../../logger/console.js");
+
 const fs = require("fs/promises");
 const path = require("path");
 const { getStoragePath } = require("../../../../paths");
@@ -79,7 +81,7 @@ class FilesystemManager {
         await fs.mkdir(dir, { recursive: true });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(
+        consoleLogger.error(
           `Warning: Could not create directory ${dir}: ${error.message}`,
         );
       }
@@ -428,7 +430,7 @@ class FilesystemManager {
     );
     if (!isAllowed) {
       // eslint-disable-next-line no-console
-      console.log(
+      consoleLogger.log(
         `[validatePath] Access denied - path outside allowed directories: ${absolute} not in ${this.#allowedDirectories.join(", ")}`,
       );
       throw new Error(`Access denied - path outside allowed directories.`);
@@ -444,7 +446,7 @@ class FilesystemManager {
         )
       ) {
         // eslint-disable-next-line no-console
-        console.log(
+        consoleLogger.log(
           `[validatePath] Access denied - symlink target outside allowed directories: ${realPath} not in ${this.#allowedDirectories.join(", ")}`,
         );
         throw new Error(
@@ -465,7 +467,7 @@ class FilesystemManager {
             )
           ) {
             // eslint-disable-next-line no-console
-            console.log(
+            consoleLogger.log(
               `[validatePath] Access denied - parent directory outside allowed directories: ${realParentPath} not in ${this.#allowedDirectories.join(", ")}`,
             );
             throw new Error(
@@ -787,7 +789,7 @@ class FilesystemManager {
       };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(`Error reading image file ${filePath}:`, error.message);
+      consoleLogger.error(`Error reading image file ${filePath}:`, error.message);
       return null;
     }
   }

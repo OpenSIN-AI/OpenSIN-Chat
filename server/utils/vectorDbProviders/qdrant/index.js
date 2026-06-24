@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 const { QdrantClient } = require("@qdrant/js-client-rest");
 const { TextSplitter } = require("../../TextSplitter");
 const { SystemSettings } = require("../../../models/systemSettings");
@@ -212,7 +214,7 @@ class QDrant extends VectorDatabase {
                 submission.payloads.push(payload);
               } else {
                 // eslint-disable-next-line no-console
-                console.error(
+                consoleLogger.error(
                   "The 'id' property is not defined in chunk.payload - it will be omitted from being inserted in QDrant collection.",
                 );
               }

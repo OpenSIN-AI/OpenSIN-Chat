@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const prisma = require("../utils/prisma");
 const { v4: uuidv4 } = require("uuid");
 
@@ -35,7 +37,7 @@ const WorkspaceAgentInvocation = {
       return { invocation, message: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return { invocation: null, message: error.message };
     }
   },
@@ -49,7 +51,7 @@ const WorkspaceAgentInvocation = {
       return invocation || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -66,7 +68,7 @@ const WorkspaceAgentInvocation = {
       return invocation || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -79,7 +81,7 @@ const WorkspaceAgentInvocation = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -94,7 +96,7 @@ const WorkspaceAgentInvocation = {
       return results;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },

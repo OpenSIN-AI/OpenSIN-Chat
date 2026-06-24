@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const crypto = require("node:crypto");
 const { v4: uuidv4 } = require("uuid");
 const { reqBody, userFromSession, multiUserMode } = require("../utils/http");
@@ -151,7 +153,7 @@ function chatEndpoints(app) {
         if (stopHeartbeat) stopHeartbeat();
         const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error(`[chat SSE error id=${id}]`, e);
+        consoleLogger.error(`[chat SSE error id=${id}]`, e);
         writeResponseChunk(response, {
           id,
           type: "abort",
@@ -285,7 +287,7 @@ function chatEndpoints(app) {
         if (stopHeartbeat) stopHeartbeat();
         const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error(`[chat SSE error id=${id}]`, e);
+        consoleLogger.error(`[chat SSE error id=${id}]`, e);
         writeResponseChunk(response, {
           id,
           type: "abort",

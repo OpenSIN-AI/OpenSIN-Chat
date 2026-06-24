@@ -14,6 +14,8 @@
 // Track Run/isDuplicate prevents _exact_ data re-runs based on the SHA of their inputs
 // StartCooldown/isOnCooldown does prevention of _near-duplicate_ runs based on only the function name that is running.
 // isMarkedUnique/markUnique/removeUniqueConstraint prevents one-time functions from re-running. EG: charting.
+const consoleLogger = require("../../../logger/console.js");
+
 const crypto = require("crypto");
 const DEFAULT_COOLDOWN_MS = 30 * 1000;
 
@@ -25,7 +27,7 @@ class Deduplicator {
 
   log(message, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[36m[Deduplicator]\x1b[0m ${message}`, ...args);
+    consoleLogger.log(`\x1b[36m[Deduplicator]\x1b[0m ${message}`, ...args);
   }
 
   trackRun(

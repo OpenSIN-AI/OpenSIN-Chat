@@ -2,6 +2,8 @@
 // Purpose: Validation functions for ENV variable checks in updateENV.
 // Docs: server/utils/helpers/updateENV.doc.md
 
+const consoleLogger = require("../../logger/console.js");
+
 function isNotEmpty(input = "") {
   return !input || input.length === 0 ? "Value cannot be empty" : null;
 }
@@ -222,7 +224,7 @@ async function validDockerizedUrl(input = "") {
       return "Port is not running a reachable service on loopback address from inside the OpenSIN Chat container. Please use host.docker.internal (for linux use 172.17.0.1), a real machine ip, or domain to connect to your service.";
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error(error.message);
+    consoleLogger.error(error.message);
     return "An error occurred while validating the URL";
   }
 

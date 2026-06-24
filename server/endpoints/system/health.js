@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Health, migration, onboarding, and setup-status endpoints.
 // Docs: server/endpoints/system.doc.md
+const consoleLogger = require("../../utils/logger/console.js");
+
 const { SystemSettings } = require("../../models/systemSettings");
 const { validatedRequest } = require("../../utils/middleware/validatedRequest");
 const {
@@ -44,7 +46,7 @@ function healthEndpoints(app) {
       if (process.env.NODE_ENV !== "production")
         return response.sendStatus(200);
       // eslint-disable-next-line no-console
-      console.warn(
+      consoleLogger.warn(
         `\x1b[33m[ENV-DUMP]\x1b[0m triggered by ip=${request.ip || "unknown"}`,
       );
       dumpENV();
@@ -58,7 +60,7 @@ function healthEndpoints(app) {
       response.status(200).json({ onboardingComplete: results });
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e.message, e);
+      consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }
   });
@@ -72,7 +74,7 @@ function healthEndpoints(app) {
         response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -84,7 +86,7 @@ function healthEndpoints(app) {
       response.status(200).json({ results });
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e.message, e);
+      consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }
   });

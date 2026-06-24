@@ -340,7 +340,7 @@ curl "http://localhost:3001/api/politician/stats"
 
 ### Automatic sync
 - Bree scheduler runs sync every 6 hours (configured in `BackgroundWorkers/index.js`)
-- See `docs/PLAN-DATA-SYNC.md` for the architecture
+- See `docs/DATA-SOURCES.md` for the architecture
 
 ### Env vars
 - `BUNDESTAG_WAHLPERIODE=21` (default)

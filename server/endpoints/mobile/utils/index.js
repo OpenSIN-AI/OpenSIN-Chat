@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../utils/logger/console.js");
+
 const { Workspace } = require("../../../models/workspace");
 const { WorkspaceChats } = require("../../../models/workspaceChats");
 const { WorkspaceThread } = require("../../../models/workspaceThread");
@@ -192,7 +194,7 @@ async function handleMobileCommand(request, response) {
 
     return response.status(400).json({ error: "Invalid command" });
   } catch (e) {
-    console.error(e.message, e);
+    consoleLogger.error(e.message, e);
     response.status(500).json({ error: "Internal server error" });
   }
 }

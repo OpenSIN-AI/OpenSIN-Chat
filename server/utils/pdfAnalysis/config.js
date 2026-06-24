@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 /**
  * Zentrale Konfiguration für das PDF-Analyse-Modul.
  * Alle Werte sind per ENV übersteuerbar.
@@ -15,7 +17,7 @@ function intEnv(name, fallback, { min = 1, max = 1024 } = {}) {
   if (raw === undefined || raw === "") return fallback;
   const n = Number(raw);
   if (!Number.isFinite(n) || n < min || n > max) {
-    console.warn(
+    consoleLogger.warn(
       `[pdfAnalysis/config] Ungültiger ENV-Wert ${name}=${JSON.stringify(raw)} — Fallback ${fallback} wird verwendet (erlaubt: ${min}..${max}).`,
     );
     return fallback;

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 const { logger } = require("../../logger/structured");
 const fs = require("fs");
 const path = require("path");
@@ -12,6 +14,9 @@ const {
   handleDefaultStreamResponseV2,
   formatChatHistory,
 } = require("../../helpers/chat/responses");
+const {
+  parseReasoningFromResponse,
+} = require("../../helpers/reasoningFilter");
 
 const cacheFolder = getStoragePath("models", "fireworks");
 
@@ -313,7 +318,7 @@ async function fireworksAiModels(providedApiKey = null) {
 
       if (Object.keys(validModels).length === 0) {
         // eslint-disable-next-line no-console
-        console.warn("fireworksAi: No models found");
+        consoleLogger.warn("fireworksAi: No models found");
         return {};
       }
 
@@ -339,7 +344,7 @@ async function fireworksAiModels(providedApiKey = null) {
     })
     .catch((e) => {
       // eslint-disable-next-line no-console
-      console.error(e);
+      consoleLogger.error(e);
       return {};
     });
 }

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 class DeepgramSTT {
   constructor() {
     if (!process.env.STT_DEEPGRAM_API_KEY)
@@ -12,7 +14,7 @@ class DeepgramSTT {
 
   #log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[32m[DeepgramSTT]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[32m[DeepgramSTT]\x1b[0m ${text}`, ...args);
   }
 
   // Map common audio file extensions to a Content-Type that Deepgram accepts.

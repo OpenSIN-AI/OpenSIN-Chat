@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 /**
  * Browser-Endpoints: /pdf-analysis/*
  * Session-geschützt über validatedRequest — für die Frontend-UI.
@@ -85,7 +87,7 @@ function pdfAnalysisEndpoints(app) {
       response.status(200).json({ jobId });
     } catch (e) {
       const errorId = crypto.randomUUID();
-      console.error(`[endpoint error ${errorId}]`, e);
+      consoleLogger.error(`[endpoint error ${errorId}]`, e);
       response.status(e.statusCode || 500).json({
         error: "Internal server error",
         errorId,
@@ -116,7 +118,7 @@ function pdfAnalysisEndpoints(app) {
         response.status(200).json({ jobId });
       } catch (e) {
         const errorId = crypto.randomUUID();
-        console.error(`[endpoint error ${errorId}]`, e);
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
         response.status(e.statusCode || 500).json({
           error: "Internal server error",
           errorId,
@@ -244,7 +246,7 @@ function pdfAnalysisEndpoints(app) {
       response.status(200).json({ jobId });
     } catch (e) {
       const errorId = crypto.randomUUID();
-      console.error(`[endpoint error ${errorId}]`, e);
+      consoleLogger.error(`[endpoint error ${errorId}]`, e);
       response.status(e.statusCode || 500).json({
         error: "Internal server error",
         errorId,

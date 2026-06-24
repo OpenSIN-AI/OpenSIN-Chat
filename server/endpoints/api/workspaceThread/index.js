@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../utils/logger/console.js");
+
 const { v4: uuidv4 } = require("uuid");
 const { WorkspaceThread } = require("../../../models/workspaceThread");
 const { Workspace } = require("../../../models/workspace");
@@ -104,7 +106,7 @@ function apiWorkspaceThreadEndpoints(app) {
         response.status(200).json({ thread, message });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -186,7 +188,7 @@ function apiWorkspaceThreadEndpoints(app) {
         response.status(200).json({ thread: updatedThread, message });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -236,7 +238,7 @@ function apiWorkspaceThreadEndpoints(app) {
         response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -317,7 +319,7 @@ function apiWorkspaceThreadEndpoints(app) {
         response.status(200).json({ history: convertToChatHistory(history) });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -460,7 +462,7 @@ function apiWorkspaceThreadEndpoints(app) {
         response.status(200).json({ ...result });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e?.message || "Unknown error", e);
+        consoleLogger.error(e?.message || "Unknown error", e);
         response.status(500).json({
           id: uuidv4(),
           type: "abort",
@@ -643,7 +645,7 @@ function apiWorkspaceThreadEndpoints(app) {
         response.end();
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e?.message || "Unknown error", e);
+        consoleLogger.error(e?.message || "Unknown error", e);
         writeResponseChunk(response, {
           id: uuidv4(),
           type: "abort",

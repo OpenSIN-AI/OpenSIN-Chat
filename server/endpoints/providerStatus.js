@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
 const {
   flexUserRoleValid,
@@ -34,7 +36,7 @@ function providerStatusEndpoints(app) {
           checkedAt: new Date().toISOString(),
         });
       } catch (e) {
-        console.error("provider-key-status failed:", e.message);
+        consoleLogger.error("provider-key-status failed:", e.message);
         response
           .status(500)
           .json({ providers: [], paths: null, error: "Internal server error" });
@@ -63,7 +65,7 @@ function providerStatusEndpoints(app) {
           .status(200)
           .json({ results, checkedAt: new Date().toISOString() });
       } catch (e) {
-        console.error("provider-connectivity failed:", e.message);
+        consoleLogger.error("provider-connectivity failed:", e.message);
         response
           .status(500)
           .json({ results: [], error: "Internal server error" });

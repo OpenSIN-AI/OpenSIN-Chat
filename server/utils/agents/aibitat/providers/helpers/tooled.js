@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../../logger/console.js");
+
 const { v4 } = require("uuid");
 const { safeJsonParse } = require("../../../../http");
 
@@ -184,7 +186,7 @@ async function tooledStream(
     try {
       provider.resetUsage();
     } catch (e) {
-      console.error("[Tooled] Failed to reset usage:", e.message);
+      consoleLogger.error("[Tooled] Failed to reset usage:", e.message);
     }
   }
 
@@ -267,7 +269,7 @@ async function tooledStream(
     try {
       provider.recordUsage(usage, time_info);
     } catch (e) {
-      console.error("[Tooled] Failed to record usage:", e.message);
+      consoleLogger.error("[Tooled] Failed to record usage:", e.message);
     }
   }
 
@@ -317,7 +319,7 @@ async function tooledComplete(
     try {
       provider.resetUsage();
     } catch (e) {
-      console.error("[Tooled] Failed to reset usage:", e.message);
+      consoleLogger.error("[Tooled] Failed to reset usage:", e.message);
     }
   }
 
@@ -343,7 +345,7 @@ async function tooledComplete(
     try {
       provider.recordUsage(usage);
     } catch (e) {
-      console.error("[Tooled] Failed to record usage:", e.message);
+      consoleLogger.error("[Tooled] Failed to record usage:", e.message);
     }
   }
 

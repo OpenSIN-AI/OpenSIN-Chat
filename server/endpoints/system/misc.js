@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Audio transcription and SQL connection validation endpoints.
 // Docs: server/endpoints/system.doc.md
+const consoleLogger = require("../../utils/logger/console.js");
+
 const { reqBody } = require("../../utils/http");
 const { validatedRequest } = require("../../utils/middleware/validatedRequest");
 const {
@@ -41,7 +43,7 @@ function miscEndpoints(app) {
         return response.status(200).json({ success: true, text });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("STT transcription error:", error);
+        consoleLogger.error("STT transcription error:", error);
         return response.status(500).json({
           success: false,
           error: "Transcription failed.",
@@ -78,7 +80,7 @@ function miscEndpoints(app) {
         response.status(200).json(result);
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("SQL validation error:", error);
+        consoleLogger.error("SQL validation error:", error);
         response.status(500).json({
           success: false,
           error: `Unable to connect to ${engine}. Please verify your connection details.`,

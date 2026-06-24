@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const crypto = require("crypto");
 const {
   getStoragePath,
@@ -54,7 +56,7 @@ function utilEndpoints(app) {
       response.status(200).json(metrics);
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e);
+      consoleLogger.error(e);
       response.sendStatus(500);
     }
   });
@@ -102,7 +104,7 @@ function utilEndpoints(app) {
         response.status(200).json(json);
       } catch (e) {
         const errorId = crypto.randomUUID();
-        console.error(`[endpoint error ${errorId}]`, e);
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
         response.status(200).json({
           documents: [],
           error: e.message || "Upstream unavailable",
@@ -171,7 +173,7 @@ function utilEndpoints(app) {
         response.status(200).json({ data });
       } catch (e) {
         const errorId = crypto.randomUUID();
-        console.error(`[endpoint error ${errorId}]`, e);
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
         response
           .status(200)
           .json({ data: [], error: "Upstream unavailable", errorId });
@@ -227,7 +229,7 @@ function utilEndpoints(app) {
       response.status(200).json({ items });
     } catch (e) {
       const errorId = crypto.randomUUID();
-      console.error(`[endpoint error ${errorId}]`, e);
+      consoleLogger.error(`[endpoint error ${errorId}]`, e);
       response
         .status(200)
         .json({ items: [], error: "Upstream unavailable", errorId });
@@ -252,7 +254,7 @@ function utilEndpoints(app) {
         storage: disk,
       });
     } catch (e) {
-      console.error("filesystem endpoint error", e.message);
+      consoleLogger.error("filesystem endpoint error", e.message);
       response.sendStatus(500);
     }
   });
@@ -314,7 +316,7 @@ function utilEndpoints(app) {
         });
       } catch (e) {
         const errorId = crypto.randomUUID();
-        console.error(`[endpoint error ${errorId}]`, e);
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
         response.status(500).json({ error: "Internal server error", errorId });
       }
     },
@@ -352,7 +354,7 @@ function utilEndpoints(app) {
         response.status(200).json({ success: true, path: resolved });
       } catch (e) {
         const errorId = crypto.randomUUID();
-        console.error(`[endpoint error ${errorId}]`, e);
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
         response.status(500).json({ error: "Internal server error", errorId });
       }
     },
@@ -388,7 +390,7 @@ function utilEndpoints(app) {
         response.status(200).json({ success: true, path: resolved });
       } catch (e) {
         const errorId = crypto.randomUUID();
-        console.error(`[endpoint error ${errorId}]`, e);
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
         response.status(500).json({ error: "Internal server error", errorId });
       }
     },
@@ -426,7 +428,7 @@ function utilEndpoints(app) {
         response.status(200).json({ success: true });
       } catch (e) {
         const errorId = crypto.randomUUID();
-        console.error(`[endpoint error ${errorId}]`, e);
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
         response.status(500).json({ error: "Internal server error", errorId });
       }
     },
@@ -471,7 +473,7 @@ function utilEndpoints(app) {
         });
         stream.pipe(response);
       } catch (e) {
-        console.error("reports download error", e.message);
+        consoleLogger.error("reports download error", e.message);
         response.sendStatus(500);
       }
     },
@@ -497,7 +499,7 @@ function getGitVersion() {
     return _cachedGitVersion;
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.error("getGitVersion", e.message);
+    consoleLogger.error("getGitVersion", e.message);
     _cachedGitVersion = "--";
     return _cachedGitVersion;
   }

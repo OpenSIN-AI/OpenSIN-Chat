@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 /**
  * VisionAgent — beschreibt Bildinhalte über das konfigurierte Vision-Backend.
  *
@@ -78,7 +80,7 @@ async function describeViaCloud(imageBuffer, context, mime) {
       );
     }
   }
-  console.error(
+  consoleLogger.error(
     `[pdfAnalysis] Cloud-Vision fehlgeschlagen: ${lastError?.message}`,
   );
   return null;
@@ -106,7 +108,7 @@ async function describeImage(imageBuffer, context, mime = "image/png") {
     if (local) return local;
     if (VISION_BACKEND === "ollama") {
       // explizit lokal gewünscht — NICHT in die Cloud ausweichen (Privacy)
-      console.error(
+      consoleLogger.error(
         "[pdfAnalysis] LocalVision nicht verfügbar und Backend=ollama erzwungen — Bild übersprungen.",
       );
       return null;

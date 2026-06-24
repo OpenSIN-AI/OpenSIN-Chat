@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const path = require("path");
 const Graceful = require("@ladjs/graceful");
 const Bree = require("@mintplex-labs/bree");
@@ -74,7 +76,7 @@ class BackgroundService {
 
   #log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[36m[${this.name}]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[36m[${this.name}]\x1b[0m ${text}`, ...args);
   }
 
   /**

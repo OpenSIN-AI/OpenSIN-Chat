@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const { v4: uuidv4 } = require("uuid");
 const { DocumentManager } = require("../DocumentManager");
 const { WorkspaceChats } = require("../../models/workspaceChats");
@@ -436,7 +438,7 @@ async function streamChat({
 
 `);
     } catch (e) {
-      console.error(e);
+      consoleLogger.error(e);
     }
   });
 

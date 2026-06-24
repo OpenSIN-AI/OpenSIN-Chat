@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 // You must execute this example from within the example folder.
+const consoleLogger = require("../../../logger/console.js");
+
 const AIbitat = require("../index.js");
 const { cli } = require("../plugins/cli.js");
 const { NodeHtmlMarkdown } = require("node-html-markdown");
@@ -29,7 +31,7 @@ const aibitat = new AIbitat({
         .then((res) => res.text())
         .then((html) => NodeHtmlMarkdown.translate(html))
         .catch((e) => {
-          console.error(e.message);
+          consoleLogger.error(e.message);
           return "FAILED TO FETCH";
         });
     },

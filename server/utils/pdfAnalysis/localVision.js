@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 /**
  * LocalVision — lokales multimodales Backend über Ollama (MiniCPM-V 4.6).
  *
@@ -104,7 +106,7 @@ async function isAvailable() {
         // Ollama läuft, aber Modell fehlt → das ist ein Konfig-Fehler, kein
         // Backend-Ausfall. NICHT als Circuit-Failure zählen, sonst würde
         // der Breaker bei einem fehlenden `ollama pull` dauerhaft blockieren.
-        console.error(
+        consoleLogger.error(
           `[pdfAnalysis] Ollama läuft, aber Modell "${OLLAMA_MODEL}" fehlt. ` +
             `Installieren mit: ollama pull ${OLLAMA_MODEL}`,
         );
@@ -117,7 +119,7 @@ async function isAvailable() {
       lastFailureAt = Date.now();
       availabilityCache = { checkedAt: Date.now(), available: false };
       if (failureCount === FAILURE_THRESHOLD) {
-        console.error(
+        consoleLogger.error(
           `[pdfAnalysis] Circuit-Breaker geöffnet: ${failureCount} ` +
             `aufeinanderfolgende Ollama-Fehler. Health-Checks für ` +
             `${CIRCUIT_OPEN_MS / 1000}s pausiert.`,
@@ -189,7 +191,7 @@ async function generate(imageBuffers, systemPrompt, userPrompt) {
     // würden sonst fälschlich den Circuit öffnen.
     return result;
   } catch (e) {
-    console.error(`[pdfAnalysis] LocalVision-Fehler: ${e.message}`);
+    consoleLogger.error(`[pdfAnalysis] LocalVision-Fehler: ${e.message}`);
     // Generate-Fehler = Backend-Problem → Breaker hochzählen UND
     // positiven Cache invalidieren, damit der nächste isAvailable()
     // nicht aus einem 60s-„alles ok“-Cache die falsche Antwort liefert.
@@ -198,7 +200,7 @@ async function generate(imageBuffers, systemPrompt, userPrompt) {
       lastFailureAt = Date.now();
       availabilityCache = { checkedAt: 0, available: false };
       if (failureCount === FAILURE_THRESHOLD) {
-        console.error(
+        consoleLogger.error(
           `[pdfAnalysis] Circuit-Breaker geöffnet: ${failureCount} ` +
             `aufeinanderfolgende Ollama-Fehler. Health-Checks für ` +
             `${CIRCUIT_OPEN_MS / 1000}s pausiert.`,

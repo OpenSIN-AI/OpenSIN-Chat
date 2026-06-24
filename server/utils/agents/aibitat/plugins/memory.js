@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../logger/console.js");
+
 const { v4 } = require("uuid");
 const {
   getVectorDbClass,
@@ -93,7 +95,7 @@ const memory = {
               return response;
             } catch (error) {
               // eslint-disable-next-line no-console
-              console.error(error);
+              consoleLogger.error(error);
               return `There was an error while calling the function. ${error.message}`;
             }
           },

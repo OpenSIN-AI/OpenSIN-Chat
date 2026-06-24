@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useState, useRef, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { ArrowSquareOut } from "@phosphor-icons/react/dist/csr/ArrowSquareOut";
 import { DownloadSimple } from "@phosphor-icons/react/dist/csr/DownloadSimple";
@@ -12,12 +13,15 @@ import { ChartLineUp } from "@phosphor-icons/react/dist/csr/ChartLineUp";
 import { Image } from "@phosphor-icons/react/dist/csr/Image";
 import { DotsThree } from "@phosphor-icons/react/dist/csr/DotsThree";
 import { Eye } from "@phosphor-icons/react/dist/csr/Eye";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import { useTranslation } from "react-i18next";
 import DOMPurify from "@/utils/chat/purify";
 import ChatSidebar from "../ChatSidebar";
-import { usePreviewSidebar, useChatSidebar } from "../ChatSidebar";
+import { usePreviewSidebar } from "../ChatSidebar";
 import { baseHeaders } from "@/utils/request";
 import useAuthenticatedBlobUrl from "@/hooks/useAuthenticatedBlobUrl";
+import Workspace from "@/models/workspace";
+import showToast from "@/utils/toast";
 
 const HTML_PREVIEW_SANITIZE_OPTS = {
   ALLOWED_TAGS: [
@@ -122,7 +126,7 @@ function VersionDropdown({ versions, activeVersion, onSelect }: any) {
   );
 }
 
-function ThreeDotsMenu({ previewData, onAddToSources }: any) {
+function ThreeDotsMenu({ previewData, onAddToSources, addingSource }: any) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false as any);
   const ref: any = useRef(null);
@@ -214,10 +218,17 @@ function ThreeDotsMenu({ previewData, onAddToSources }: any) {
           <button
             type="button"
             onClick={handleAddToSources}
-            className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-zinc-300 light:text-slate-600 hover:bg-zinc-700/60 light:hover:bg-slate-50 border-none bg-transparent cursor-pointer transition-colors"
+            disabled={addingSource}
+            className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-zinc-300 light:text-slate-600 hover:bg-zinc-700/60 light:hover:bg-slate-50 border-none bg-transparent cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <Bookmark size={13} />
-            {t("preview.menu.add_to_sources")}
+            {addingSource ? (
+              <CircleNotch size={13} weight="bold" className="animate-spin" />
+            ) : (
+              <Bookmark size={13} />
+            )}
+            {addingSource
+              ? t("preview.adding")
+              : t("preview.menu.add_to_sources")}
           </button>
         </div>
       )}
@@ -396,16 +407,58 @@ function PreviewContent({ previewData, activeVersion }: any) {
 
 export default function PreviewSidebar() {
   const { sidebarOpen, previewData, closeSidebar } = usePreviewSidebar();
-  const { openSidebar } = useChatSidebar();
   const { t } = useTranslation();
+  const { slug: workspaceSlug } = useParams();
   const [activeVersion, setActiveVersion] = useState(0 as any);
+  const [addingSource, setAddingSource] = useState(false);
 
   const TypeIcon = TYPE_ICONS[previewData?.type] ?? TYPE_ICONS.default;
 
-  function handleAddToSources() {
-    if (!previewData) return;
-    // Navigate to sources sidebar and pass current preview as a source
-    openSidebar("sources", []);
+  async function handleAddToSources() {
+    if (!previewData || !workspaceSlug) return;
+    const targetUrl =
+      previewData.downloadUrl ||
+      previewData.url ||
+      previewData.versions?.[activeVersion]?.downloadUrl;
+    if (!targetUrl) return;
+
+    setAddingSource(true);
+    try {
+      const res = await fetch(targetUrl, { headers: baseHeaders() });
+      if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+      const blob = await res.blob();
+
+      const title = previewData.title || `report-${Date.now()}`;
+      const formData = new FormData();
+      formData.append(
+        "file",
+        new File([blob], title, {
+          type: blob.type || "application/octet-stream",
+        }),
+      );
+
+      const { response, data } = await Workspace.parseFile(
+        workspaceSlug,
+        formData,
+      );
+      if (!response.ok) throw new Error(data?.error || "Parse failed");
+      const parsedFile = data.files?.[0];
+      if (!parsedFile) throw new Error("No parsed file returned");
+
+      const embedResult = await Workspace.embedParsedFile(
+        workspaceSlug,
+        parsedFile.id,
+      );
+      if (!embedResult.response.ok) {
+        throw new Error(embedResult.data?.error || "Embed failed");
+      }
+      showToast(t("preview.source_added"), "success");
+    } catch (err) {
+      console.error("Failed to add to sources:", err);
+      showToast(t("preview.source_add_failed"), "error");
+    } finally {
+      setAddingSource(false);
+    }
   }
 
   return (
@@ -428,6 +481,7 @@ export default function PreviewSidebar() {
           <ThreeDotsMenu
             previewData={previewData}
             onAddToSources={handleAddToSources}
+            addingSource={addingSource}
           />
           <button
             onClick={closeSidebar}

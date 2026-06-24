@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const chalk = require("chalk");
 
 /**
@@ -27,7 +29,7 @@ function skillIsAutoApproved({ skillName }) {
     return false;
 
   // eslint-disable-next-line no-console
-  console.log(
+  consoleLogger.log(
     chalk.green(
       `Skill ${skillName} is auto-approved by the ENV variable AGENT_AUTO_APPROVED_SKILLS.`,
     ),

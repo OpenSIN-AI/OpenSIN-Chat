@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const { v4 } = require("uuid");
 const prisma = require("../utils/prisma");
 const bcrypt = require("bcryptjs");
@@ -15,7 +17,7 @@ const RecoveryCode = {
       return { recoveryCode, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO CREATE RECOVERY CODE.", error.message);
+      consoleLogger.error("FAILED TO CREATE RECOVERY CODE.", error.message);
       return { recoveryCode: null, error: error.message };
     }
   },
@@ -29,7 +31,7 @@ const RecoveryCode = {
       return { recoveryCodes, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO CREATE RECOVERY CODES.", error.message);
+      consoleLogger.error("FAILED TO CREATE RECOVERY CODES.", error.message);
       return { recoveryCodes: null, error: error.message };
     }
   },
@@ -41,7 +43,7 @@ const RecoveryCode = {
       return recoveryCode;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO FIND RECOVERY CODE.", error.message);
+      consoleLogger.error("FAILED TO FIND RECOVERY CODE.", error.message);
       return null;
     }
   },
@@ -53,7 +55,7 @@ const RecoveryCode = {
       return recoveryCodes;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO FIND RECOVERY CODES.", error.message);
+      consoleLogger.error("FAILED TO FIND RECOVERY CODES.", error.message);
       return null;
     }
   },
@@ -63,7 +65,7 @@ const RecoveryCode = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO DELETE RECOVERY CODES.", error.message);
+      consoleLogger.error("FAILED TO DELETE RECOVERY CODES.", error.message);
       return false;
     }
   },
@@ -90,7 +92,7 @@ const PasswordResetToken = {
       return { passwordResetToken, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO CREATE PASSWORD RESET TOKEN.", error.message);
+      consoleLogger.error("FAILED TO CREATE PASSWORD RESET TOKEN.", error.message);
       return { passwordResetToken: null, error: error.message };
     }
   },
@@ -102,7 +104,7 @@ const PasswordResetToken = {
       return passwordResetToken;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO FIND PASSWORD RESET TOKEN.", error.message);
+      consoleLogger.error("FAILED TO FIND PASSWORD RESET TOKEN.", error.message);
       return null;
     }
   },
@@ -112,7 +114,7 @@ const PasswordResetToken = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO DELETE PASSWORD RESET TOKEN.", error.message);
+      consoleLogger.error("FAILED TO DELETE PASSWORD RESET TOKEN.", error.message);
       return false;
     }
   },
@@ -142,7 +144,7 @@ const PasswordResetToken = {
       return { count: result.count, userId: record.user_id };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO CLAIM PASSWORD RESET TOKEN.", error.message);
+      consoleLogger.error("FAILED TO CLAIM PASSWORD RESET TOKEN.", error.message);
       return { count: 0, userId: null };
     }
   },

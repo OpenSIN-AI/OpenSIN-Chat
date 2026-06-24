@@ -1,12 +1,17 @@
 // SPDX-License-Identifier: MIT
 import { memo, useState, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
 import { saveAs } from "file-saver";
 import { useTranslation } from "react-i18next";
 import { DownloadSimple } from "@phosphor-icons/react/dist/csr/DownloadSimple";
 import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import { Eye } from "@phosphor-icons/react/dist/csr/Eye";
+import { Bookmark } from "@phosphor-icons/react/dist/csr/Bookmark";
+import { ArrowSquareOut } from "@phosphor-icons/react/dist/csr/ArrowSquareOut";
 import { humanFileSize } from "@/utils/numbers";
 import StorageFiles from "@/models/files";
+import Workspace from "@/models/workspace";
+import showToast from "@/utils/toast";
 import { useChatSidebar } from "../../ChatSidebar";
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
@@ -133,11 +138,13 @@ export function getFileDisplayInfo(filename) {
 
 function FileDownloadCard({ props, autoPreview = false }) {
   const { t } = useTranslation();
+  const { slug: workspaceSlug } = useParams();
   const { filename, storageFilename, fileSize, downloadUrl } =
     props.content || {};
   const { badge, badgeBg, badgeText, fileType, isImage, previewType } =
     getFileDisplayInfo(filename);
   const [downloading, setDownloading] = useState(false);
+  const [addingSource, setAddingSource] = useState(false);
   const { openPreview } = useChatSidebar();
 
   const previewUrl = resolveApiUrl(
@@ -203,6 +210,77 @@ function FileDownloadCard({ props, autoPreview = false }) {
     }
   };
 
+  const handleAddToSource = async () => {
+    if (addingSource || !workspaceSlug) return;
+    setAddingSource(true);
+    try {
+      let blob: Blob | null = null;
+      if (storageFilename) {
+        blob = await StorageFiles.download(storageFilename);
+      } else if (downloadUrl) {
+        const res = await fetch(resolveApiUrl(downloadUrl), {
+          headers: baseHeaders(),
+        });
+        if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+        blob = await res.blob();
+      }
+      if (!blob) throw new Error("Failed to fetch file");
+
+      const formData = new FormData();
+      formData.append(
+        "file",
+        new File([blob], filename || storageFilename || "report", {
+          type: blob.type || "application/octet-stream",
+        }),
+      );
+
+      const { response, data } = await Workspace.parseFile(
+        workspaceSlug,
+        formData,
+      );
+      if (!response.ok) {
+        throw new Error(data?.error || "Parse failed");
+      }
+      const parsedFile = data.files?.[0];
+      if (!parsedFile) throw new Error("No parsed file returned");
+
+      const embedResult = await Workspace.embedParsedFile(
+        workspaceSlug,
+        parsedFile.id,
+      );
+      if (!embedResult.response.ok) {
+        throw new Error(embedResult.data?.error || "Embed failed");
+      }
+      showToast(t("preview.source_added"), "success");
+    } catch (err) {
+      console.error("Failed to add to source:", err);
+      showToast(t("preview.source_add_failed"), "error");
+    } finally {
+      setAddingSource(false);
+    }
+  };
+
+  const handleOpenNewTab = async () => {
+    try {
+      let blob: Blob | null = null;
+      if (storageFilename) {
+        blob = await StorageFiles.download(storageFilename);
+      } else if (downloadUrl) {
+        const res = await fetch(resolveApiUrl(downloadUrl), {
+          headers: baseHeaders(),
+        });
+        if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+        blob = await res.blob();
+      }
+      if (!blob) throw new Error("Failed to fetch file");
+      const objectUrl = URL.createObjectURL(blob);
+      window.open(objectUrl, "_blank");
+      setTimeout(() => URL.revokeObjectURL(objectUrl), 60000);
+    } catch {
+      if (previewUrl) window.open(previewUrl, "_blank");
+    }
+  };
+
   return (
     <div className="flex justify-center w-full my-2">
       <div className="w-full max-w-[750px] mr-4">
@@ -240,6 +318,40 @@ function FileDownloadCard({ props, autoPreview = false }) {
               >
                 <Eye size={15} weight="regular" />
                 <span>{t("preview.open")}</span>
+              </button>
+            )}
+            {(downloadUrl || storageFilename) && (
+              <button
+                onClick={handleOpenNewTab}
+                type="button"
+                aria-label={t("preview.open_new_tab")}
+                className="flex items-center justify-center w-9 h-9 rounded-lg border border-zinc-700 light:border-theme-sidebar-border hover:bg-zinc-700 light:hover:bg-theme-bg-secondary transition-colors text-zinc-300 light:text-theme-text-secondary"
+              >
+                <ArrowSquareOut size={15} weight="regular" />
+              </button>
+            )}
+            {(downloadUrl || storageFilename) && workspaceSlug && (
+              <button
+                type="button"
+                onClick={handleAddToSource}
+                disabled={addingSource}
+                aria-busy={addingSource}
+                className="flex items-center gap-x-1.5 px-3 py-2 rounded-lg border border-zinc-700 light:border-theme-sidebar-border hover:bg-zinc-700 light:hover:bg-theme-bg-secondary transition-colors text-zinc-300 light:text-theme-text-secondary text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {addingSource ? (
+                  <CircleNotch
+                    size={15}
+                    weight="bold"
+                    className="animate-spin"
+                  />
+                ) : (
+                  <Bookmark size={15} weight="regular" />
+                )}
+                <span>
+                  {addingSource
+                    ? t("preview.adding")
+                    : t("preview.add_to_source")}
+                </span>
               </button>
             )}
             <button

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const crypto = require("node:crypto");
 const { reqBody } = require("../utils/http");
 const MCPCompatibilityLayer = require("../utils/MCP");
@@ -26,7 +28,7 @@ function mcpServersEndpoints(app) {
       } catch (error) {
         const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error(`[mcpServers force-reload error id=${id}]`, error);
+        consoleLogger.error(`[mcpServers force-reload error id=${id}]`, error);
         return response.status(500).json({
           success: false,
           error: "Internal error",
@@ -50,7 +52,7 @@ function mcpServersEndpoints(app) {
       } catch (error) {
         const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error(`[mcpServers list error id=${id}]`, error);
+        consoleLogger.error(`[mcpServers list error id=${id}]`, error);
         return response.status(500).json({
           success: false,
           error: "Internal error",
@@ -81,7 +83,7 @@ function mcpServersEndpoints(app) {
       } catch (error) {
         const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error(`[mcpServers toggle error id=${id}]`, error);
+        consoleLogger.error(`[mcpServers toggle error id=${id}]`, error);
         return response.status(500).json({
           success: false,
           error: "Internal error",
@@ -110,7 +112,7 @@ function mcpServersEndpoints(app) {
       } catch (error) {
         const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error(`[mcpServers delete error id=${id}]`, error);
+        consoleLogger.error(`[mcpServers delete error id=${id}]`, error);
         return response.status(500).json({
           success: false,
           error: "Internal error",
@@ -149,7 +151,7 @@ function mcpServersEndpoints(app) {
       } catch (error) {
         const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error(`[mcpServers toggle-tool error id=${id}]`, error);
+        consoleLogger.error(`[mcpServers toggle-tool error id=${id}]`, error);
         return response.status(500).json({
           success: false,
           error: "Internal error",

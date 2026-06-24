@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 const { getStoragePath } = require("../../paths");
 const path = require("path");
 const fs = require("fs");
@@ -50,7 +52,7 @@ class NativeEmbedder {
 
   log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
   }
 
   /**
@@ -122,7 +124,7 @@ class NativeEmbedder {
       await fs.promises.appendFile(filePath, data, { encoding: "utf8" });
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(`Error writing to tempfile: ${e}`);
+      consoleLogger.error(`Error writing to tempfile: ${e}`);
     }
   }
 
@@ -150,7 +152,7 @@ class NativeEmbedder {
                 progress_callback: (data) => {
                   if (!data.hasOwnProperty("progress")) return;
                   // eslint-disable-next-line no-console
-                  console.log(
+                  consoleLogger.log(
                     `\x1b[36m[NativeEmbedder - Downloading model]\x1b[0m ${
                       data.file
                     } ${~~data?.progress}%`,

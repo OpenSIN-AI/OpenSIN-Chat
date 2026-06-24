@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const { v4: uuidv4 } = require("uuid");
 const { DocumentManager } = require("../DocumentManager");
 const { WorkspaceChats } = require("../../models/workspaceChats");
@@ -68,7 +70,7 @@ async function processDocumentAttachments(attachments = []) {
   const processingOnline = await Collector.online();
   if (!processingOnline) {
     // eslint-disable-next-line no-console
-    console.warn(
+    consoleLogger.warn(
       "Collector API is not online, skipping document attachment processing",
     );
     return { parsedDocuments: [], imageAttachments };
@@ -95,10 +97,10 @@ async function processDocumentAttachments(attachments = []) {
         await Collector.parseDocument(filename);
       if (success && documents?.length > 0) parsedDocuments.push(...documents);
       // eslint-disable-next-line no-console
-      else console.warn(`Failed to parse attachment ${filename}:`, reason);
+      else consoleLogger.warn(`Failed to parse attachment ${filename}:`, reason);
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(
+      consoleLogger.error(
         `Error processing attachment ${attachment.name}:`,
         error.message,
       );
@@ -841,7 +843,7 @@ async function streamChat({
   // we do regular waiting of a response and send a single chunk.
   if (LLMConnector.streamingEnabled() !== true) {
     // eslint-disable-next-line no-console
-    console.log(
+    consoleLogger.log(
       `\x1b[31m[STREAMING DISABLED]\x1b[0m Streaming is not available for ${LLMConnector.constructor.name}. Will use regular chat method.`,
     );
     const { textResponse, metrics: performanceMetrics } =

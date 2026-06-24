@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const { ModelRouter } = require("../../models/modelRouter");
 const {
   classifyWithLLM,
@@ -82,12 +84,12 @@ class ModelRouterService {
 
   log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`${this.LOG_PREFIX} ${text}`, ...args);
+    consoleLogger.log(`${this.LOG_PREFIX} ${text}`, ...args);
   }
 
   logIndent(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`${this.LOG_PREFIX}   ${text}`, ...args);
+    consoleLogger.log(`${this.LOG_PREFIX}   ${text}`, ...args);
   }
 
   // ─────────────────────────────────────────────────────────────────────────────

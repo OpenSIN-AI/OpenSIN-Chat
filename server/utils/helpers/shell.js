@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 /**
  * Patch the shell environment path to ensure the PATH is properly set for the current platform.
  * On Docker, we are on Node v18 and cannot support fix-path v5.
@@ -16,12 +18,12 @@ async function patchShellEnvironmentPath() {
     if (process.env.PATH) process.env.PATH = stripAnsi(process.env.PATH);
     if (process.env.PATH !== before) {
       // eslint-disable-next-line no-console
-      console.log("Shell environment path patched successfully.");
+      consoleLogger.log("Shell environment path patched successfully.");
     }
     return process.env;
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error("Failed to patch shell environment path:", error);
+    consoleLogger.error("Failed to patch shell environment path:", error);
     return process.env;
   }
 }

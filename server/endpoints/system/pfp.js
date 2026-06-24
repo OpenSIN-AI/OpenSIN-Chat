@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Profile picture (PFP) endpoints — fetch, upload, remove.
 // Docs: server/endpoints/system.doc.md
+const consoleLogger = require("../../utils/logger/console.js");
+
 const fs = require("fs");
 const path = require("path");
 const { User } = require("../../models/user");
@@ -43,7 +45,7 @@ function pfpEndpoints(app) {
         return;
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error processing the logo request:", error);
+        consoleLogger.error("Error processing the logo request:", error);
         response.status(500).json({ message: "Internal server error" });
       }
     },
@@ -114,7 +116,7 @@ function pfpEndpoints(app) {
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error processing the profile picture upload:", error);
+        consoleLogger.error("Error processing the profile picture upload:", error);
         response.status(500).json({ message: "Internal server error" });
       }
     },
@@ -153,7 +155,7 @@ function pfpEndpoints(app) {
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error processing the profile picture removal:", error);
+        consoleLogger.error("Error processing the profile picture removal:", error);
         response.status(500).json({ message: "Internal server error" });
       }
     },

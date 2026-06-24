@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 /**
  * Politician Database model — thin data-access wrapper around Prisma queries
  * for politician-related tables.
@@ -122,7 +124,7 @@ const Politician = {
         }
       } catch (err) {
         // eslint-disable-next-line no-console
-        console.error(`[Politician] massUpsert chunk error: ${err.message}`);
+        consoleLogger.error(`[Politician] massUpsert chunk error: ${err.message}`);
         errors += chunk.length;
       }
     }
@@ -135,7 +137,7 @@ const Politician = {
       return await prisma.politicians.findFirst({ where: clause });
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.error(`[Politician] get error: ${err.message}`);
+      consoleLogger.error(`[Politician] get error: ${err.message}`);
       return null;
     }
   },
@@ -152,7 +154,7 @@ const Politician = {
       });
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.error(`[Politician] where error: ${err.message}`);
+      consoleLogger.error(`[Politician] where error: ${err.message}`);
       return [];
     }
   },
@@ -197,7 +199,7 @@ const PoliticianVote = {
         results.push(...partial);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.warn(
+        consoleLogger.warn(
           `[PoliticianVote.bulkInsert] chunk ${i}-${i + CHUNK_SIZE} failed:`,
           e.message,
         );
@@ -277,7 +279,7 @@ const PoliticianSpeech = {
         results.push(...partial);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.warn(
+        consoleLogger.warn(
           `[PoliticianSpeech.bulkInsert] chunk ${i}-${i + CHUNK_SIZE} failed:`,
           e.message,
         );
@@ -294,7 +296,7 @@ const PoliticianSpeech = {
       });
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.error(`[PoliticianSpeech] markVectorized error: ${err.message}`);
+      consoleLogger.error(`[PoliticianSpeech] markVectorized error: ${err.message}`);
     }
   },
 

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const { SystemSettings } = require("../../models/systemSettings");
 const { userFromSession } = require("../http");
 const ROLES = {
@@ -21,7 +23,7 @@ async function isSingleUserMode(_request, response, next) {
     next();
     return;
   } catch (e) {
-    console.error(e.message, e);
+    consoleLogger.error(e.message, e);
     response.status(500).json({ error: "Internal server error" });
   }
 }
@@ -65,7 +67,7 @@ function strictMultiUserRoleValid(allowedRoles = DEFAULT_ROLES) {
       }
       return response.sendStatus(401);
     } catch (e) {
-      console.error(e.message, e);
+      consoleLogger.error(e.message, e);
       response.status(500).json({ error: "Internal server error" });
     }
   };
@@ -104,7 +106,7 @@ function flexUserRoleValid(allowedRoles = DEFAULT_ROLES) {
       }
       return response.sendStatus(401);
     } catch (e) {
-      console.error(e.message, e);
+      consoleLogger.error(e.message, e);
       response.status(500).json({ error: "Internal server error" });
     }
   };
@@ -125,7 +127,7 @@ async function isMultiUserSetup(_request, response, next) {
     next();
     return;
   } catch (e) {
-    console.error(e.message, e);
+    consoleLogger.error(e.message, e);
     response.status(500).json({ error: "Internal server error" });
   }
 }

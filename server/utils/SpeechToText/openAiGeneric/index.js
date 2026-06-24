@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 const { convertAudioBufferToWav } = require("../helpers");
 const path = require("path");
 
@@ -31,7 +33,7 @@ class GenericOpenAiSTT {
 
   #log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[32m[OpenAiGenericSTT]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[32m[OpenAiGenericSTT]\x1b[0m ${text}`, ...args);
   }
 
   /**
@@ -58,7 +60,7 @@ class GenericOpenAiSTT {
       return result?.text ?? "";
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(`GenericOpenAiSTT:transcribe failed: ${e?.message || e}`);
+      consoleLogger.error(`GenericOpenAiSTT:transcribe failed: ${e?.message || e}`);
       throw new Error(
         `STT transcription failed: ${e?.message || "Unknown error"}`,
         { cause: e },

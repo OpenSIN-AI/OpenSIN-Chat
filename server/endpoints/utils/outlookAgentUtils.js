@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../utils/logger/console.js");
+
 const { reqBody } = require("../../utils/http");
 const {
   isSingleUserMode,
@@ -102,7 +104,7 @@ function outlookAgentEndpoints(app) {
         return response.status(200).json({ success: true, url: result.url });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error("Outlook auth URL error:", e);
+        consoleLogger.error("Outlook auth URL error:", e);
         response
           .status(500)
           .json({ success: false, error: "Internal server error." });
@@ -127,7 +129,7 @@ function outlookAgentEndpoints(app) {
 
         if (error) {
           // eslint-disable-next-line no-console
-          console.error("Outlook OAuth error:", error, error_description);
+          consoleLogger.error("Outlook OAuth error:", error, error_description);
           return response.redirect(
             `/?outlook_auth=error&message=${encodeURIComponent(error_description || error)}`,
           );
@@ -162,7 +164,7 @@ function outlookAgentEndpoints(app) {
         );
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error("Outlook OAuth callback error:", e);
+        consoleLogger.error("Outlook OAuth callback error:", e);
         response.redirect(
           `/?outlook_auth=error&message=${encodeURIComponent(e.message)}`,
         );
@@ -203,7 +205,7 @@ function outlookAgentEndpoints(app) {
         });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error("Outlook status error:", e);
+        consoleLogger.error("Outlook status error:", e);
         response
           .status(500)
           .json({ success: false, error: "Internal server error." });
@@ -223,7 +225,7 @@ function outlookAgentEndpoints(app) {
         return response.status(200).json({ success: true });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error("Outlook revoke error:", e);
+        consoleLogger.error("Outlook revoke error:", e);
         response
           .status(500)
           .json({ success: false, error: "Internal server error." });

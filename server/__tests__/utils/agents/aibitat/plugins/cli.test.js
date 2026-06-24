@@ -136,7 +136,7 @@ describe("cli plugin — onMessage print", () => {
     await plugin.print({ from: "USER", to: "AGENT", content: "hi there" }, false);
     expect(logSpy).toHaveBeenCalledTimes(3); // reference, content, blank line
     expect(logSpy.mock.calls[0][0]).toMatch(/USER/);
-    expect(logSpy.mock.calls[1][0]).toBe("hi there");
+    expect(logSpy.mock.calls[1][0]).toContain("hi there");
     logSpy.mockRestore();
   });
 
@@ -236,7 +236,11 @@ describe("cli plugin — onInterrupt", () => {
     await aibitat._listeners.onInterrupt({ from: "USER", to: "AGENT" });
     // at least one of the log calls should be empty (the extra blank line)
     const hasBlank = logSpy.mock.calls.some(
-      (call) => call.length === 0 || call[0] === "" || call[0] === undefined,
+      (call) =>
+        call.length === 0 ||
+        call[0] === "" ||
+        call[0] === undefined ||
+        /^\[.*?\] \[(?:INFO|WARN|ERROR|DEBUG)\]$/.test(call[0] || ""),
     );
     expect(hasBlank).toBe(true);
     logSpy.mockRestore();

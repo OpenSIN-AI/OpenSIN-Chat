@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Background health check for politician sync status
 // Docs: syncHealthCheck.doc.md
+const consoleLogger = require("../logger/console.js");
+
 const prisma = require("../../utils/prisma");
 const logger = require("../../utils/logger")();
 
@@ -16,7 +18,7 @@ async function fetchWithRetry(url, opts, maxRetries = 3) {
     } catch (e) {
       clearTimeout(t);
       if (i === maxRetries) {
-        console.error(
+        consoleLogger.error(
           `[syncHealthCheck] Webhook ${url} failed after ${maxRetries} retries: ${e.message}`,
         );
         return null;
@@ -117,12 +119,12 @@ if (require.main === module) {
   checkSyncHealth()
     .then(async (result) => {
       await prisma.$disconnect();
-      console.log(JSON.stringify(result, null, 2));
+      consoleLogger.log(JSON.stringify(result, null, 2));
       process.exit(result.healthy ? 0 : 1);
     })
     .catch(async (err) => {
       await prisma.$disconnect();
-      console.error(err);
+      consoleLogger.error(err);
       process.exit(1);
     });
 }

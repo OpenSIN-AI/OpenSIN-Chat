@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../logger/console.js");
+
 const chalk = require("chalk");
 const { Telemetry } = require("../../../../models/telemetry");
 const { v4: uuidv4 } = require("uuid");
@@ -80,7 +82,7 @@ const httpSocket = {
           let errorMessage =
             error?.message || "An error occurred while running the agent.";
           // eslint-disable-next-line no-console
-          console.error(chalk.red(`   error: ${errorMessage}`), error);
+          consoleLogger.error(chalk.red(`   error: ${errorMessage}`), error);
           aibitat.introspect(
             `Error encountered while running: ${errorMessage}`,
           );
@@ -137,7 +139,7 @@ const httpSocket = {
           );
           if (isWhitelisted) {
             // eslint-disable-next-line no-console
-            console.log(
+            consoleLogger.log(
               chalk.green(`Skill ${skillName} is whitelisted - auto-approved.`),
             );
             return {
@@ -150,7 +152,7 @@ const httpSocket = {
           const ipc = getWorkerIPC();
           if (!telegramChatId || !ipc) {
             // eslint-disable-next-line no-console
-            console.log(
+            consoleLogger.log(
               chalk.yellow(
                 `Tool approval requested for ${skillName} but no Telegram context available. Auto-denying for safety.`,
               ),
@@ -164,7 +166,7 @@ const httpSocket = {
 
           const requestId = uuidv4();
           // eslint-disable-next-line no-console
-          console.log(
+          consoleLogger.log(
             chalk.blue(
               `Requesting tool approval for ${skillName} (${requestId})`,
             ),
@@ -187,7 +189,7 @@ const httpSocket = {
 
               if (msg.approved) {
                 // eslint-disable-next-line no-console
-                console.log(
+                consoleLogger.log(
                   chalk.green(
                     `Tool ${skillName} approved by user via Telegram`,
                   ),
@@ -199,7 +201,7 @@ const httpSocket = {
               }
 
               // eslint-disable-next-line no-console
-              console.log(
+              consoleLogger.log(
                 chalk.yellow(`Tool ${skillName} denied by user via Telegram`),
               );
               return resolve({
@@ -224,7 +226,7 @@ const httpSocket = {
             timeoutId = setTimeout(() => {
               ipc.removeListener("message", messageHandler);
               // eslint-disable-next-line no-console
-              console.log(
+              consoleLogger.log(
                 chalk.yellow(
                   `Tool approval request timed out after ${TOOL_APPROVAL_TIMEOUT_MS}ms`,
                 ),
@@ -243,7 +245,7 @@ const httpSocket = {
         aibitat.onMessage((message) => {
           if (message.from !== "USER")
             Telemetry.sendTelemetry("agent_chat_sent").catch((err) => {
-              console.error("Telemetry error:", err.message);
+              consoleLogger.error("Telemetry error:", err.message);
             });
           if (message.from === "USER" && muteUserReply) return;
           handler.send(JSON.stringify(message));

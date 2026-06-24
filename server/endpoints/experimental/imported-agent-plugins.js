@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../utils/logger/console.js");
+
 const ImportedPlugin = require("../../utils/agents/imported");
 const { reqBody } = require("../../utils/http");
 const {
@@ -23,7 +25,7 @@ function importedAgentPluginEndpoints(app) {
         response.status(200).json(updatedConfig);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.status(500).end();
       }
     },
@@ -43,7 +45,7 @@ function importedAgentPluginEndpoints(app) {
         response.status(200).json(updatedConfig);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.status(500).end();
       }
     },
@@ -59,7 +61,7 @@ function importedAgentPluginEndpoints(app) {
         response.status(200).json(result);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.status(500).end();
       }
     },

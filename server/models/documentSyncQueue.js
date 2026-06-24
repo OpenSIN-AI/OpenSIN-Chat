@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const { BackgroundService } = require("../utils/BackgroundWorkers");
 const prisma = require("../utils/prisma");
 const { SystemSettings } = require("./systemSettings");
@@ -118,7 +120,7 @@ const DocumentSyncQueue = {
       return queue || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -145,7 +147,7 @@ const DocumentSyncQueue = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -161,7 +163,7 @@ const DocumentSyncQueue = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -174,7 +176,7 @@ const DocumentSyncQueue = {
       return queue || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -195,7 +197,7 @@ const DocumentSyncQueue = {
       return results;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -209,7 +211,7 @@ const DocumentSyncQueue = {
       return count;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO COUNT DOCUMENTS.", error.message);
+      consoleLogger.error("FAILED TO COUNT DOCUMENTS.", error.message);
       return 0;
     }
   },
@@ -220,7 +222,7 @@ const DocumentSyncQueue = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },

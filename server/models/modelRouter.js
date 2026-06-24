@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const { Prisma } = require("@prisma/client");
 const prisma = require("../utils/prisma");
 const { ModelRouterRule } = require("./modelRouterRule");
@@ -62,7 +64,7 @@ const ModelRouter = {
       return { router, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       // P2002 is the unique constraint violation error code
       if (
         error instanceof Prisma.PrismaClientKnownRequestError &&
@@ -84,7 +86,7 @@ const ModelRouter = {
       return router || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -103,7 +105,7 @@ const ModelRouter = {
       return { ...router, rules: router.rules.map(ModelRouterRule._hydrate) };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -127,7 +129,7 @@ const ModelRouter = {
       };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -142,7 +144,7 @@ const ModelRouter = {
       return results;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -182,7 +184,7 @@ const ModelRouter = {
       }));
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -232,7 +234,7 @@ const ModelRouter = {
       return { router, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       // P2002 is the unique constraint violation error code
       if (
         error instanceof Prisma.PrismaClientKnownRequestError &&
@@ -256,7 +258,7 @@ const ModelRouter = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -269,7 +271,7 @@ const ModelRouter = {
       return count;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return 0;
     }
   },

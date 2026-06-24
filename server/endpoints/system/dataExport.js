@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Event log, workspace chat, and data export endpoints.
 // Docs: server/endpoints/system.doc.md
+const consoleLogger = require("../../utils/logger/console.js");
+
 const { EventLogs } = require("../../models/eventLogs");
 const { WorkspaceChats } = require("../../models/workspaceChats");
 const { exportChatsAsType } = require("../../utils/helpers/chat/convertTo");
@@ -39,7 +41,7 @@ function dataExportEndpoints(app) {
         response.status(200).json({ logs: logs, hasPages, totalLogs });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -59,7 +61,7 @@ function dataExportEndpoints(app) {
         response.json({ success: true });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -89,7 +91,7 @@ function dataExportEndpoints(app) {
         response.status(200).json({ chats: chats, hasPages, totalChats });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -107,7 +109,7 @@ function dataExportEndpoints(app) {
         response.json({ success: true, error: null });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -149,7 +151,7 @@ function dataExportEndpoints(app) {
         response.status(200).send(data);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -203,7 +205,7 @@ function dataExportEndpoints(app) {
         response.status(200).send(data);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },

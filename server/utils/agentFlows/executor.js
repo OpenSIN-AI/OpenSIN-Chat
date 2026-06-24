@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const { FLOW_TYPES } = require("./flowTypes");
 const executeApiCall = require("./executors/api-call");
 const executeLLMInstruction = require("./executors/llm-instruction");
@@ -12,7 +14,7 @@ class FlowExecutor {
   constructor() {
     this.variables = {};
     // eslint-disable-next-line no-console
-    this.introspect = (...args) => console.log("[introspect] ", ...args);
+    this.introspect = (...args) => consoleLogger.log("[introspect] ", ...args);
     // eslint-disable-next-line no-console
     this.logger = console.info;
     this.aibitat = null;
@@ -21,7 +23,7 @@ class FlowExecutor {
   attachLogging(introspectFn = null, loggerFn = null) {
     this.introspect =
       // eslint-disable-next-line no-console
-      introspectFn || ((...args) => console.log("[introspect] ", ...args));
+      introspectFn || ((...args) => consoleLogger.log("[introspect] ", ...args));
     // eslint-disable-next-line no-console
     this.logger = loggerFn || console.info;
   }

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 const { safeJsonParse } = require("../../http");
 const { validateUrl } = require("../../ssrf");
 
@@ -61,7 +63,7 @@ async function executeApiCall(config, context) {
       );
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error(error);
+    consoleLogger.error(error);
     throw new Error(`API Call failed: ${error.message}`, { cause: error });
   }
 }

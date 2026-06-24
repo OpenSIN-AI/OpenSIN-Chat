@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const crypto = require("crypto");
 const path = require("path");
 const fs = require("fs");
@@ -105,7 +107,7 @@ function workspaceEndpoints(app) {
         response.status(200).json({ workspace, message });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -144,7 +146,7 @@ function workspaceEndpoints(app) {
         response.status(200).json({ workspace, message });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -233,7 +235,7 @@ function workspaceEndpoints(app) {
       } catch (e) {
         cleanupHotdirFile(request);
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response
           .status(500)
           .json({ success: false, error: e.message || "Upload failed" })
@@ -375,7 +377,7 @@ function workspaceEndpoints(app) {
         });
       } catch (e) {
         const errorId = crypto.randomUUID();
-        console.error(`[endpoint error ${errorId}]`, e);
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
         response
           .status(500)
           .json({ error: "Internal server error", errorId })
@@ -450,7 +452,7 @@ function workspaceEndpoints(app) {
         response.status(200).json({ success: true, error: null, document });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -525,7 +527,7 @@ function workspaceEndpoints(app) {
         });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -569,12 +571,12 @@ function workspaceEndpoints(app) {
           await VectorDb["delete-namespace"]({ namespace: slug });
         } catch (e) {
           // eslint-disable-next-line no-console
-          console.error(e.message);
+          consoleLogger.error(e.message);
         }
         response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -612,12 +614,12 @@ function workspaceEndpoints(app) {
           await VectorDb["delete-namespace"]({ namespace: slug });
         } catch (e) {
           // eslint-disable-next-line no-console
-          console.error(e.message);
+          consoleLogger.error(e.message);
         }
         response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -636,7 +638,7 @@ function workspaceEndpoints(app) {
         response.status(200).json({ workspaces });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -656,7 +658,7 @@ function workspaceEndpoints(app) {
         response.status(200).json({ workspace });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -684,7 +686,7 @@ function workspaceEndpoints(app) {
         response.status(200).json({ history: convertToChatHistory(history) });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -716,7 +718,7 @@ function workspaceEndpoints(app) {
         response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -746,7 +748,7 @@ function workspaceEndpoints(app) {
         response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -789,7 +791,7 @@ function workspaceEndpoints(app) {
         response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -814,7 +816,7 @@ function workspaceEndpoints(app) {
         return response.status(200).json({ success: true });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error updating chat feedback:", error);
+        consoleLogger.error("Error updating chat feedback:", error);
         response.status(500).end();
       }
     },
@@ -831,7 +833,7 @@ function workspaceEndpoints(app) {
         response.status(200).json({ success: true, suggestedMessages });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error fetching suggested messages:", error);
+        consoleLogger.error("Error fetching suggested messages:", error);
         response
           .status(500)
           .json({ success: false, message: "Internal server error" });
@@ -860,7 +862,7 @@ function workspaceEndpoints(app) {
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error processing the suggested messages:", error);
+        consoleLogger.error("Error processing the suggested messages:", error);
         response.status(500).json({
           success: false,
           message: "Error saving the suggested messages.",
@@ -891,7 +893,7 @@ function workspaceEndpoints(app) {
         return response.status(200).end();
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error processing the pin status update:", error);
+        consoleLogger.error("Error processing the pin status update:", error);
         return response.status(500).end();
       }
     },
@@ -966,7 +968,7 @@ function workspaceEndpoints(app) {
         return;
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error processing the TTS request:", error);
+        consoleLogger.error("Error processing the TTS request:", error);
         response.status(500).json({ message: "TTS could not be completed" });
       }
     },
@@ -1010,7 +1012,7 @@ function workspaceEndpoints(app) {
         return;
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error processing the logo request:", error);
+        consoleLogger.error("Error processing the logo request:", error);
         response.status(500).json({ message: "Internal server error" });
       }
     },
@@ -1065,7 +1067,7 @@ function workspaceEndpoints(app) {
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error processing the profile picture upload:", error);
+        consoleLogger.error("Error processing the profile picture upload:", error);
         response.status(500).json({ message: "Internal server error" });
       }
     },
@@ -1113,7 +1115,7 @@ function workspaceEndpoints(app) {
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error processing the profile picture removal:", error);
+        consoleLogger.error("Error processing the profile picture removal:", error);
         response.status(500).json({ message: "Internal server error" });
       }
     },
@@ -1189,7 +1191,7 @@ function workspaceEndpoints(app) {
         response.status(200).json({ newThreadSlug: newThread.slug });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.status(500).json({ message: "Internal server error" });
       }
     },
@@ -1215,7 +1217,7 @@ function workspaceEndpoints(app) {
         response.json({ success: true, error: null });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.status(500).json({ success: false, error: "Server error" });
       }
     },
@@ -1313,7 +1315,7 @@ function workspaceEndpoints(app) {
       } catch (e) {
         cleanupHotdirFile(request);
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response
           .status(500)
           .json({ success: false, error: e.message || "Upload failed" })
@@ -1346,7 +1348,7 @@ function workspaceEndpoints(app) {
         response.status(200).end();
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -1364,7 +1366,7 @@ function workspaceEndpoints(app) {
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error fetching prompt history:", error);
+        consoleLogger.error("Error fetching prompt history:", error);
         response.sendStatus(500);
       }
     },
@@ -1386,7 +1388,7 @@ function workspaceEndpoints(app) {
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error clearing prompt history:", error);
+        consoleLogger.error("Error clearing prompt history:", error);
         response.sendStatus(500);
       }
     },
@@ -1404,7 +1406,7 @@ function workspaceEndpoints(app) {
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error deleting prompt history:", error);
+        consoleLogger.error("Error deleting prompt history:", error);
         response.sendStatus(500);
       }
     },
@@ -1427,7 +1429,7 @@ function workspaceEndpoints(app) {
         response.status(200).json(searchResults);
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error searching for workspaces:", error);
+        consoleLogger.error("Error searching for workspaces:", error);
         response.sendStatus(500);
       }
     },
@@ -1459,7 +1461,7 @@ function workspaceEndpoints(app) {
         });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.status(500).end();
       }
     },
@@ -1488,7 +1490,7 @@ function workspaceEndpoints(app) {
         response.status(200).json({ success: sent });
       } catch (e) {
         const errorId = crypto.randomUUID();
-        console.error(`[endpoint error ${errorId}]`, e);
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
         response
           .status(500)
           .json({ success: false, error: "Internal server error", errorId });
@@ -1508,7 +1510,7 @@ function workspaceEndpoints(app) {
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error checking if agent command is available:", error);
+        consoleLogger.error("Error checking if agent command is available:", error);
         response.status(500).json({ showAgentCommand: true });
       }
     },

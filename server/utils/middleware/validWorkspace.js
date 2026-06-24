@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const { Workspace } = require("../../models/workspace");
 const { WorkspaceThread } = require("../../models/workspaceThread");
 const { userFromSession, multiUserMode } = require("../http");
@@ -20,7 +22,7 @@ async function validWorkspaceSlug(request, response, next) {
     response.locals.workspace = workspace;
     next();
   } catch (e) {
-    console.error(e.message, e);
+    consoleLogger.error(e.message, e);
     response.status(500).json({ error: "Internal server error" });
   }
 }
@@ -53,7 +55,7 @@ async function validWorkspaceAndThreadSlug(request, response, next) {
     response.locals.thread = thread;
     next();
   } catch (e) {
-    console.error(e.message, e);
+    consoleLogger.error(e.message, e);
     response.status(500).json({ error: "Internal server error" });
   }
 }

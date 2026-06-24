@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const ImportedPlugin = require("../utils/agents/imported");
 
 const HUB_TIMEOUT_MS = 15_000;
@@ -46,7 +48,7 @@ const CommunityHub = {
       .then((response) => response.json())
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.error("Error fetching explore items:", error);
+        consoleLogger.error("Error fetching explore items:", error);
         return {
           agentSkills: {
             items: [],
@@ -97,7 +99,7 @@ const CommunityHub = {
       .then((response) => response.json())
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.error(
+        consoleLogger.error(
           `Error fetching bundle item for import ID ${importId}:`,
           error,
         );
@@ -178,7 +180,7 @@ const CommunityHub = {
       .then((response) => response.json())
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.error("Error fetching user items:", error);
+        consoleLogger.error("Error fetching user items:", error);
         return { createdByMe: {}, teamItems: [] };
       });
   },
@@ -215,7 +217,7 @@ const CommunityHub = {
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.error(`Error creating ${itemType}:`, error);
+        consoleLogger.error(`Error creating ${itemType}:`, error);
         return { success: false, error: error.message };
       });
   },

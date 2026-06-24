@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const { ApiKey } = require("../../models/apiKeys");
 const { SystemSettings } = require("../../models/systemSettings");
 
@@ -117,7 +119,7 @@ async function validAdminApiKey(request, response, next) {
 function logFailedAuth(request, reason) {
   try {
     // eslint-disable-next-line no-console
-    console.warn(
+    consoleLogger.warn(
       `\x1b[33m[AUTH-FAIL]\x1b[0m reason=${reason} ip=${request.ip || "unknown"} ${request.method} ${request.originalUrl || request.path}`,
     );
   } catch {

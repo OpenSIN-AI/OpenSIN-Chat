@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../utils/logger/console.js");
+
 const { validatedRequest } = require("../../utils/middleware/validatedRequest");
 const { MobileDevice } = require("../../models/mobileDevice");
 const { handleMobileCommand } = require("./utils");
@@ -41,7 +43,7 @@ function mobileEndpoints(app) {
         return response.status(200).json({ devices });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -67,7 +69,7 @@ function mobileEndpoints(app) {
         return response.status(200).json({ updates });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -92,7 +94,7 @@ function mobileEndpoints(app) {
         return response.status(200).json({ message: "Device deleted" });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -108,7 +110,7 @@ function mobileEndpoints(app) {
         });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -128,7 +130,7 @@ function mobileEndpoints(app) {
           .json({ success: true, message: "Device authenticated" });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -161,7 +163,7 @@ function mobileEndpoints(app) {
         });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -175,7 +177,7 @@ function mobileEndpoints(app) {
         return handleMobileCommand(request, response);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },

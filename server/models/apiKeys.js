@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const prisma = require("../utils/prisma");
 
 const ApiKey = {
@@ -31,7 +33,7 @@ const ApiKey = {
       return { apiKey, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO CREATE API KEY.", error.message);
+      consoleLogger.error("FAILED TO CREATE API KEY.", error.message);
       return { apiKey: null, error: error.message };
     }
   },
@@ -42,7 +44,7 @@ const ApiKey = {
       return apiKey ? this._stripSecret(apiKey) : null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO GET API KEY.", error.message);
+      consoleLogger.error("FAILED TO GET API KEY.", error.message);
       return null;
     }
   },
@@ -53,7 +55,7 @@ const ApiKey = {
       return count;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO COUNT API KEYS.", error.message);
+      consoleLogger.error("FAILED TO COUNT API KEYS.", error.message);
       return 0;
     }
   },
@@ -64,7 +66,7 @@ const ApiKey = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO DELETE API KEY.", error.message);
+      consoleLogger.error("FAILED TO DELETE API KEY.", error.message);
       return false;
     }
   },
@@ -78,7 +80,7 @@ const ApiKey = {
       return apiKeys.map((k) => this._stripSecret(k));
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO GET API KEYS.", error.message);
+      consoleLogger.error("FAILED TO GET API KEYS.", error.message);
       return [];
     }
   },
@@ -103,7 +105,7 @@ const ApiKey = {
       return apiKeys;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO GET API KEYS WITH USER.", error.message);
+      consoleLogger.error("FAILED TO GET API KEYS WITH USER.", error.message);
       return [];
     }
   },

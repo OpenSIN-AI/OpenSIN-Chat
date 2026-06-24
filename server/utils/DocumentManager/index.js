@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const { getStoragePath } = require("../paths");
 const fs = require("fs");
 const path = require("path");
@@ -14,7 +16,7 @@ class DocumentManager {
 
   log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[36m[DocumentManager]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[36m[DocumentManager]\x1b[0m ${text}`, ...args);
   }
 
   async pinnedDocuments() {

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../logger/console.js");
+
 const AIbitat = require("../index.js");
 
 /**
@@ -116,7 +118,7 @@ async function classifyWithLLM(rules, prompt, router) {
     );
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error("[RouterClassifier] Classification failed:", error.message);
+    consoleLogger.error("[RouterClassifier] Classification failed:", error.message);
     return null;
   }
 }

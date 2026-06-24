@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const { ModelRouter } = require("../models/modelRouter");
 const { ModelRouterRule } = require("../models/modelRouterRule");
 const { Telemetry } = require("../models/telemetry");
@@ -23,7 +25,7 @@ function modelRouterEndpoints(app) {
         response.status(200).json({ routers });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -47,7 +49,7 @@ function modelRouterEndpoints(app) {
         response.status(200).json({ router });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -78,7 +80,7 @@ function modelRouterEndpoints(app) {
         return response.status(200).json({ router });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -105,7 +107,7 @@ function modelRouterEndpoints(app) {
         return response.status(200).json({ router });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -126,7 +128,7 @@ function modelRouterEndpoints(app) {
         return response.status(200).json({ success: true });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -161,7 +163,7 @@ function modelRouterEndpoints(app) {
         return response.status(200).json({ rule });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -186,7 +188,7 @@ function modelRouterEndpoints(app) {
         return response.status(200).json({ success });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -208,7 +210,7 @@ function modelRouterEndpoints(app) {
         return response.status(200).json({ rule });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -229,7 +231,7 @@ function modelRouterEndpoints(app) {
         return response.status(200).json({ success: true });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },

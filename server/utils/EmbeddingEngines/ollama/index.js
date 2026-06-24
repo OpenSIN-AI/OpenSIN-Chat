@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 const {
   maximumChunkLength,
   reportEmbeddingProgress,
@@ -37,7 +39,7 @@ class OllamaEmbedder {
 
   log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
   }
 
   /**

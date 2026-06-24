@@ -17,6 +17,9 @@ import useDocumentProcessorOnline from "@/hooks/useDocumentProcessorOnline";
 import showToast from "@/utils/toast";
 import FileUploadWarningModal from "./FileUploadWarningModal";
 import { useTranslation } from "react-i18next";
+import { useChatSidebar } from "../ChatSidebar";
+
+export const PDF_UPLOADED_EVENT = "PDF_UPLOADED";
 
 export const DndUploaderContext = createContext<any>(undefined);
 export const REMOVE_ATTACHMENT_EVENT = "ATTACHMENT_REMOVE";
@@ -347,6 +350,9 @@ export function DnDFileUploaderProvider({
     }
 
     setFiles((prev) => [...prev, ...newAccepted]);
+    if (newAccepted.some((f) => isPdfFile(f.file))) {
+      window.dispatchEvent(new CustomEvent(PDF_UPLOADED_EVENT));
+    }
     embedEligibleAttachmentsRef.current(newAccepted);
   }, []);
 
@@ -494,6 +500,16 @@ export default function DnDFileUploaderWrapper({ children }: any) {
   const { t } = useTranslation();
   const { onDrop, ready, dragging, setDragging } =
     useContext(DndUploaderContext);
+  const { openSidebar } = useChatSidebar();
+
+  useEffect(() => {
+    function onPdfUploaded() {
+      openSidebar("pdf-analysis");
+    }
+    window.addEventListener(PDF_UPLOADED_EVENT, onPdfUploaded);
+    return () => window.removeEventListener(PDF_UPLOADED_EVENT, onPdfUploaded);
+  }, [openSidebar]);
+
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     disabled: !ready,

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const { Workspace } = require("../../models/workspace");
 const { Document } = require("../../models/documents");
 const { DocumentVectors } = require("../../models/vectors");
@@ -27,7 +29,7 @@ async function resetAllVectorStores({ vectorDbKey }) {
     });
 
     // eslint-disable-next-line no-console
-    console.log("Resetting openafd managed vector namespaces for", vectorDbKey);
+    consoleLogger.log("Resetting openafd managed vector namespaces for", vectorDbKey);
     const VectorDb = getVectorDbClass(vectorDbKey);
 
     if (vectorDbKey === "pgvector") {
@@ -44,7 +46,7 @@ async function resetAllVectorStores({ vectorDbKey }) {
           await VectorDb["delete-namespace"]({ namespace: workspace.slug });
         } catch (e) {
           // eslint-disable-next-line no-console
-          console.error(e.message);
+          consoleLogger.error(e.message);
         }
       }
     }
@@ -52,7 +54,7 @@ async function resetAllVectorStores({ vectorDbKey }) {
     return true;
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error("Failed to reset vector stores:", error);
+    consoleLogger.error("Failed to reset vector stores:", error);
     return false;
   }
 }

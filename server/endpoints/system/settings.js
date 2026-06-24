@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Purpose: System settings endpoints — ENV updates, password, multi-user mode, system prompts.
 // Docs: server/endpoints/system.doc.md
+const consoleLogger = require("../../utils/logger/console.js");
+
 const crypto = require("crypto");
 const { SystemSettings } = require("../../models/systemSettings");
 const { User } = require("../../models/user");
@@ -43,7 +45,7 @@ function settingsEndpoints(app) {
         response.status(200).json({ newValues, error });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.status(500).json({ newValues: null, error: e.message });
       }
     },
@@ -79,7 +81,7 @@ function settingsEndpoints(app) {
         response.status(200).json({ success: !error, error });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.status(500).json({ success: false, error: e.message });
       }
     },
@@ -159,7 +161,7 @@ function settingsEndpoints(app) {
         });
 
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -174,7 +176,7 @@ function settingsEndpoints(app) {
         response.status(200).json({ multiUserMode });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -198,7 +200,7 @@ function settingsEndpoints(app) {
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error fetching default system prompt:", error);
+        consoleLogger.error("Error fetching default system prompt:", error);
         response
           .status(500)
           .json({ success: false, message: "Internal server error" });
@@ -228,7 +230,7 @@ function settingsEndpoints(app) {
       } catch (error) {
         const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error(`[system default-system-prompt error id=${id}]`, error);
+        consoleLogger.error(`[system default-system-prompt error id=${id}]`, error);
         response.status(500).json({
           success: false,
           message: "Internal server error",

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../utils/logger/console.js");
+
 const { Telemetry } = require("../../models/telemetry");
 const { CollectorApi } = require("../../utils/collectorApi");
 const {
@@ -32,7 +34,7 @@ function extensionEndpoints(app) {
         response.status(200).json(responseFromProcessor);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -60,7 +62,7 @@ function extensionEndpoints(app) {
         response.status(200).json(responseFromProcessor);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -83,7 +85,7 @@ function extensionEndpoints(app) {
         response.status(200).json(responseFromProcessor);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -106,7 +108,7 @@ function extensionEndpoints(app) {
         response.status(200).json(responseFromProcessor);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -128,7 +130,7 @@ function extensionEndpoints(app) {
         response.status(200).json(responseFromProcessor);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -150,7 +152,7 @@ function extensionEndpoints(app) {
         response.status(200).json(responseFromProcessor);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -173,7 +175,7 @@ function extensionEndpoints(app) {
         response.status(200).json(responseFromProcessor);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -196,7 +198,7 @@ function extensionEndpoints(app) {
         response.status(200).json(responseFromProcessor);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },

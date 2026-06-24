@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const { getStoragePath } = require("../paths");
 const crypto = require("crypto");
 const fs = require("fs");
@@ -27,7 +29,7 @@ class CommunicationKey {
 
   log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[36m[CommunicationKey]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[36m[CommunicationKey]\x1b[0m ${text}`, ...args);
   }
 
   #readPrivateKey() {

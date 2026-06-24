@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const prisma = require("../utils/prisma");
 const moment = require("moment");
 
@@ -59,7 +61,7 @@ const SystemPromptVariables = {
           return user?.username || "[User name is empty or unknown]";
         } catch (error) {
           // eslint-disable-next-line no-console
-          console.error("Error fetching user name:", error);
+          consoleLogger.error("Error fetching user name:", error);
           return "[User name is empty or unknown]";
         }
       },
@@ -79,7 +81,7 @@ const SystemPromptVariables = {
           return user?.bio || "[User bio is empty]";
         } catch (error) {
           // eslint-disable-next-line no-console
-          console.error("Error fetching user bio:", error);
+          consoleLogger.error("Error fetching user bio:", error);
           return "[User bio is empty]";
         }
       },
@@ -127,7 +129,7 @@ const SystemPromptVariables = {
       return variable;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Error getting system prompt variable:", error.message);
+      consoleLogger.error("Error getting system prompt variable:", error.message);
       return null;
     }
   },
@@ -188,7 +190,7 @@ const SystemPromptVariables = {
       });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Error creating system prompt variable:", error.message);
+      consoleLogger.error("Error creating system prompt variable:", error.message);
       throw error;
     }
   },
@@ -218,7 +220,7 @@ const SystemPromptVariables = {
       });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Error updating system prompt variable:", error.message);
+      consoleLogger.error("Error updating system prompt variable:", error.message);
       throw error;
     }
   },
@@ -236,7 +238,7 @@ const SystemPromptVariables = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Error deleting variable:", error);
+      consoleLogger.error("Error deleting variable:", error);
       return false;
     }
   },
@@ -295,7 +297,7 @@ const SystemPromptVariables = {
                 else throw new Error(`Invalid class-based variable: ${key}`);
               } catch (error) {
                 // eslint-disable-next-line no-console
-                console.error(
+                consoleLogger.error(
                   `Error processing ${variableTypeDisplay} variable ${key}:`,
                   error,
                 );
@@ -313,7 +315,7 @@ const SystemPromptVariables = {
                 else throw new Error(`Invalid class-based variable: ${key}`);
               } catch (error) {
                 // eslint-disable-next-line no-console
-                console.error(
+                consoleLogger.error(
                   `Error processing ${variableTypeDisplay} variable ${key}:`,
                   error,
                 );
@@ -349,7 +351,7 @@ const SystemPromptVariables = {
             }
           } catch (error) {
             // eslint-disable-next-line no-console
-            console.error(`Error processing dynamic variable ${key}:`, error);
+            consoleLogger.error(`Error processing dynamic variable ${key}:`, error);
             result = result.split(match).join(match);
           }
         } else {
@@ -359,7 +361,7 @@ const SystemPromptVariables = {
       return result;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Error in expandSystemPromptVariables:", error);
+      consoleLogger.error("Error in expandSystemPromptVariables:", error);
       return str;
     }
   },

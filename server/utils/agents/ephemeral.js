@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const AIbitat = require("./aibitat");
 const AgentPlugins = require("./aibitat/plugins");
 const ImportedPlugin = require("./imported");
@@ -94,7 +96,7 @@ class EphemeralAgentHandler extends AgentHandler {
 
   log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[36m[EphemeralAgentHandler]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[36m[EphemeralAgentHandler]\x1b[0m ${text}`, ...args);
   }
 
   closeAlert() {

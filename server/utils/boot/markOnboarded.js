@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const { SystemSettings } = require("../../models/systemSettings");
 
 /**
@@ -15,7 +17,7 @@ async function markOnboarded() {
     const alreadyOnboarded = await isLegacyOnboarded();
     if (alreadyOnboarded === true) {
       // eslint-disable-next-line no-console
-      console.log(
+      consoleLogger.log(
         "\x1b[33m[ONBOARDING PATCH]\x1b[0m Legacy instance is already onboarded, marking onboarding as complete. You will not see this message again.",
       );
       await SystemSettings.markOnboardingComplete();
@@ -24,7 +26,7 @@ async function markOnboarded() {
     return false;
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.error(
+    consoleLogger.error(
       "\x1b[31m[ONBOARDING PATCH]\x1b[0m Error marking onboarding as complete",
       e.message,
       e,

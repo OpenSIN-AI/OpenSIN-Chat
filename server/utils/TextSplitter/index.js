@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 /**
  * @typedef {object} DocumentMetadata
  * @property {string} id - eg; "123e4567-e89b-12d3-a456-426614174000"
@@ -37,7 +39,7 @@ class TextSplitter {
 
   log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[35m[TextSplitter]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[35m[TextSplitter]\x1b[0m ${text}`, ...args);
   }
 
   /**
@@ -53,7 +55,7 @@ class TextSplitter {
     const limit = Number(embedderLimit);
     if (prefValue > limit)
       // eslint-disable-next-line no-console
-      console.log(
+      consoleLogger.log(
         `\x1b[43m[WARN]\x1b[0m Text splitter chunk length of ${prefValue} exceeds embedder model max of ${embedderLimit}. Will use ${embedderLimit}.`,
       );
     return prefValue > limit ? limit : prefValue;
@@ -192,7 +194,7 @@ class RecursiveSplitter {
 
   log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[35m[RecursiveSplitter]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[35m[RecursiveSplitter]\x1b[0m ${text}`, ...args);
   }
 
   async _splitText(documentText) {

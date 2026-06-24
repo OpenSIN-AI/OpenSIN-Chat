@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../../../logger/console.js");
+
 const mssql = require("mssql");
 const { ConnectionStringParser } = require("./utils");
 
@@ -92,7 +94,7 @@ class MSSQLConnector {
       result.count = query.rowsAffected.reduce((sum, a) => sum + a, 0);
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.error(this.className, err);
+      consoleLogger.error(this.className, err);
       result.error = err.message;
     } finally {
       if (this.#connected && this._client) {

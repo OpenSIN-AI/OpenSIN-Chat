@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const prisma = require("../utils/prisma");
 
 const WorkspaceSuggestedMessages = {
@@ -10,7 +12,7 @@ const WorkspaceSuggestedMessages = {
       return message || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -24,7 +26,7 @@ const WorkspaceSuggestedMessages = {
       return messages;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -55,7 +57,7 @@ const WorkspaceSuggestedMessages = {
       ]);
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to save all messages", error.message);
+      consoleLogger.error("Failed to save all messages", error.message);
       return [];
     }
   },
@@ -79,7 +81,7 @@ const WorkspaceSuggestedMessages = {
       }));
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to get all messages", error.message);
+      consoleLogger.error("Failed to get all messages", error.message);
       return [];
     }
   },

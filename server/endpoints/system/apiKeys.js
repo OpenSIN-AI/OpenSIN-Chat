@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Purpose: API key management and custom model discovery endpoints.
 // Docs: server/endpoints/system.doc.md
+const consoleLogger = require("../../utils/logger/console.js");
+
 const { ApiKey } = require("../../models/apiKeys");
 const { EventLogs } = require("../../models/eventLogs");
 const { getCustomModels } = require("../../utils/helpers/customModels");
@@ -30,7 +32,7 @@ function apiKeyEndpoints(app) {
       });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error);
+      consoleLogger.error(error);
       response.status(500).json({
         apiKey: null,
         error: "Could not find an API Key.",
@@ -66,7 +68,7 @@ function apiKeyEndpoints(app) {
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        consoleLogger.error(error);
         response.status(500).json({
           apiKey: null,
           error: "Error generating api key.",
@@ -97,7 +99,7 @@ function apiKeyEndpoints(app) {
         return response.status(200).end();
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        consoleLogger.error(error);
         response.status(500).end();
       }
     },
@@ -120,7 +122,7 @@ function apiKeyEndpoints(app) {
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        consoleLogger.error(error);
         response.status(500).end();
       }
     },

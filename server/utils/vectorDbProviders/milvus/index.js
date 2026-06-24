@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 const {
   DataType,
   MetricType,
@@ -99,7 +101,7 @@ class Milvus extends VectorDatabase {
       .hasCollection({ collection_name: this.normalize(namespace) })
       .catch((e) => {
         // eslint-disable-next-line no-console
-        console.error(`${this.name}::namespaceExists`, e.message);
+        consoleLogger.error(`${this.name}::namespaceExists`, e.message);
         return { value: false };
       });
     return value;
@@ -208,7 +210,7 @@ class Milvus extends VectorDatabase {
             return { vectorized: true, error: null };
           } catch (insertError) {
             // eslint-disable-next-line no-console
-            console.error(
+            consoleLogger.error(
               "Error inserting cached chunks:",
               insertError.message,
             );

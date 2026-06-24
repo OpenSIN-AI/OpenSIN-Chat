@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Document and vector store management endpoints.
 // Docs: server/endpoints/system.doc.md
+const consoleLogger = require("../../utils/logger/console.js");
+
 const { viewLocalFiles } = require("../../utils/files");
 const {
   purgeDocument,
@@ -31,7 +33,7 @@ function documentEndpoints(app) {
         response.status(200).json({ vectorCount });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -47,7 +49,7 @@ function documentEndpoints(app) {
         response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -68,7 +70,7 @@ function documentEndpoints(app) {
         response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -84,7 +86,7 @@ function documentEndpoints(app) {
         response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -99,7 +101,7 @@ function documentEndpoints(app) {
         response.status(200).json({ localFiles });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -114,7 +116,7 @@ function documentEndpoints(app) {
         response.sendStatus(online ? 200 : 503);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -134,7 +136,7 @@ function documentEndpoints(app) {
         response.status(200).json({ types });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },

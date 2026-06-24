@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 class MistralEmbedder {
   constructor() {
     if (!process.env.MISTRAL_API_KEY)
@@ -36,7 +38,7 @@ class MistralEmbedder {
       return embeddings;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to get embeddings from Mistral.", error.message);
+      consoleLogger.error("Failed to get embeddings from Mistral.", error.message);
       throw new Error(`Mistral Failed to embed: ${error.message}`, {
         cause: error,
       });

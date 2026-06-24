@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Web push subscription service for server-side push delivery.
 // Docs: server/utils/PushNotifications/index.js
+const consoleLogger = require("../logger/console.js");
+
 const fs = require("node:fs");
 const path = require("node:path");
 const webpush = require("web-push");
@@ -27,7 +29,7 @@ function writeJsonSafe(filePath, value) {
     fs.writeFileSync(tmp, JSON.stringify(value, null, 2));
     fs.renameSync(tmp, filePath);
   } catch (e) {
-    console.error(
+    consoleLogger.error(
       `[pushNotificationService] Failed to write ${filePath}:`,
       e.message,
     );

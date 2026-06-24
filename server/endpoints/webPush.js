@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const crypto = require("node:crypto");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
 const {
@@ -14,7 +16,7 @@ function webPushEndpoints(app) {
       response.status(200).json({ publicKey });
     } catch (e) {
       const id = crypto.randomUUID();
-      console.error(`[webPush pubkey FATAL id=${id}]`, e);
+      consoleLogger.error(`[webPush pubkey FATAL id=${id}]`, e);
       response.status(500).json({ error: "Failed to provide VAPID key", id });
     }
   });
@@ -47,7 +49,7 @@ function webPushEndpoints(app) {
         return response.status(201).json({ success: true, id: result.id });
       } catch (e) {
         const id = crypto.randomUUID();
-        console.error(`[webPush subscribe FATAL id=${id}]`, e);
+        consoleLogger.error(`[webPush subscribe FATAL id=${id}]`, e);
         return response.status(500).json({ error: "Subscription failed", id });
       }
     },
@@ -70,7 +72,7 @@ function webPushEndpoints(app) {
         return response.status(200).json({ success: true, removed });
       } catch (e) {
         const id = crypto.randomUUID();
-        console.error(`[webPush unsubscribe FATAL id=${id}]`, e);
+        consoleLogger.error(`[webPush unsubscribe FATAL id=${id}]`, e);
         return response.status(500).json({ error: "Unsubscribe failed", id });
       }
     },
@@ -85,7 +87,7 @@ function webPushEndpoints(app) {
         return response.status(200).json({ subscriptions });
       } catch (e) {
         const id = crypto.randomUUID();
-        console.error(`[webPush list FATAL id=${id}]`, e);
+        consoleLogger.error(`[webPush list FATAL id=${id}]`, e);
         return response
           .status(500)
           .json({ error: "Failed to list subscriptions", id });
@@ -112,7 +114,7 @@ function webPushEndpoints(app) {
       return response.status(200).json(result);
     } catch (e) {
       const id = crypto.randomUUID();
-      console.error(`[webPush send FATAL id=${id}]`, e);
+      consoleLogger.error(`[webPush send FATAL id=${id}]`, e);
       return response.status(500).json({ error: "Send failed", id });
     }
   });

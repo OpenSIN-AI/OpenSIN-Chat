@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const {
   userFromSession,
   multiUserMode,
@@ -127,12 +129,12 @@ function agentFileServerEndpoints(app) {
         Telemetry.sendTelemetry("agent_generated_file_downloaded", {
           type: mimeType,
         }).catch((err) => {
-          console.error("Telemetry error:", err.message);
+          consoleLogger.error("Telemetry error:", err.message);
         });
         return;
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("[agentFileServer] Download error:", error.message);
+        consoleLogger.error("[agentFileServer] Download error:", error.message);
         return response.status(500).json({ error: "Failed to download file" });
       }
     },
@@ -164,7 +166,7 @@ async function findFileSource(storageFilename, { user, isMultiUser }) {
     return await findInScheduledJobRuns(storageFilename);
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error("[findFileSource] Error:", error.message);
+    consoleLogger.error("[findFileSource] Error:", error.message);
     return null;
   }
 }

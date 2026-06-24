@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 /**
  * Eagerly load the context windows for the current provider.
  * This is done to ensure that the context windows are pre-cached when the server boots.
@@ -12,7 +14,7 @@ async function eagerLoadContextWindows() {
 
   const log = (provider) => {
     // eslint-disable-next-line no-console
-    console.log(`⚡\x1b[32mPre-cached context windows for ${provider}\x1b[0m`);
+    consoleLogger.log(`⚡\x1b[32mPre-cached context windows for ${provider}\x1b[0m`);
   };
 
   switch (currentProvider) {

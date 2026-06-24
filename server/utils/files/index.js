@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const { getStoragePath, getCollectorPath } = require("../paths");
 const fs = require("fs");
 const path = require("path");
@@ -30,7 +32,7 @@ async function fileData(filePath = null) {
   }
   if (stat.size > MAX_DOC_BYTES) {
     // eslint-disable-next-line no-console
-    console.warn(
+    consoleLogger.warn(
       `[fileData] Refusing ${filePath}: ${stat.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`,
     );
     return null;
@@ -40,7 +42,7 @@ async function fileData(filePath = null) {
     return JSON.parse(data);
   } catch {
     // eslint-disable-next-line no-console
-    console.error(`[fileData] Failed to parse JSON from ${filePath}`);
+    consoleLogger.error(`[fileData] Failed to parse JSON from ${filePath}`);
     return null;
   }
 }
@@ -151,7 +153,7 @@ async function getDocumentsByFolder(folderName = "") {
       const st = fs.statSync(filePath);
       if (st.size > MAX_DOC_BYTES) {
         // eslint-disable-next-line no-console
-        console.warn(
+        consoleLogger.warn(
           `[getDocumentsByFolder] Skipping ${file}: ${st.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`,
         );
         continue;
@@ -165,7 +167,7 @@ async function getDocumentsByFolder(folderName = "") {
       const rawData = await fs.promises.readFile(filePath, "utf8");
       parsed = JSON.parse(rawData);
     } catch {
-      console.error(`[getDocumentsByFolder] Skipping corrupt JSON: ${file}`);
+      consoleLogger.error(`[getDocumentsByFolder] Skipping corrupt JSON: ${file}`);
       continue;
     }
     const { pageContent: _pageContent, ...metadata } = parsed;
@@ -212,7 +214,7 @@ async function cachedVectorInformation(filename = null, checkOnly = false) {
   if (!exists) return { exists, chunks: [] };
 
   // eslint-disable-next-line no-console
-  console.log(
+  consoleLogger.log(
     `Cached vectorized results of ${filename} found! Using cached data to save on embed costs.`,
   );
   const rawData = fs.readFileSync(file, "utf8");
@@ -220,7 +222,7 @@ async function cachedVectorInformation(filename = null, checkOnly = false) {
     return { exists: true, chunks: JSON.parse(rawData) };
   } catch {
     // eslint-disable-next-line no-console
-    console.error(`Corrupt vector-cache file detected, ignoring: ${file}`);
+    consoleLogger.error(`Corrupt vector-cache file detected, ignoring: ${file}`);
     return { exists: false, chunks: [] };
   }
 }
@@ -230,7 +232,7 @@ async function cachedVectorInformation(filename = null, checkOnly = false) {
 async function storeVectorResult(vectorData = [], filename = null) {
   if (!filename) return;
   // eslint-disable-next-line no-console
-  console.log(
+  consoleLogger.log(
     `Caching vectorized results of ${filename} to prevent duplicated embedding.`,
   );
   if (!fs.existsSync(vectorCachePath)) fs.mkdirSync(vectorCachePath);
@@ -254,7 +256,7 @@ async function purgeSourceDocument(filename = null) {
     return;
 
   // eslint-disable-next-line no-console
-  console.log(`Purging source document of ${filename}.`);
+  consoleLogger.log(`Purging source document of ${filename}.`);
   fs.rmSync(filePath);
   return;
 }
@@ -267,7 +269,7 @@ async function purgeVectorCache(filename = null) {
 
   if (!fs.existsSync(filePath) || !fs.lstatSync(filePath).isFile()) return;
   // eslint-disable-next-line no-console
-  console.log(`Purging vector-cache of ${filename}.`);
+  consoleLogger.log(`Purging vector-cache of ${filename}.`);
   fs.rmSync(filePath);
   return;
 }
@@ -295,7 +297,7 @@ async function findDocumentInDocuments(documentName = null) {
       const st = fs.statSync(targetFileLocation);
       if (st.size > MAX_DOC_BYTES) {
         // eslint-disable-next-line no-console
-        console.warn(
+        consoleLogger.warn(
           `[findDocumentInDocuments] Skipping ${targetFilename}: ${st.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`,
         );
         continue;
@@ -434,7 +436,7 @@ function hasVectorCachedFiles() {
     );
   } catch (e) {
     if (e.code !== "ENOENT") {
-      console.error("Error reading vector cache directory:", e.message);
+      consoleLogger.error("Error reading vector cache directory:", e.message);
     }
   }
   return false;
@@ -535,7 +537,7 @@ async function fileToPickerData({
   if (fileStats.size < FILE_READ_SIZE_THRESHOLD) {
     if (fileStats.size > MAX_DOC_BYTES) {
       // eslint-disable-next-line no-console
-      console.warn(
+      consoleLogger.warn(
         `[fileToPickerData] Skipping ${pathToFile}: ${fileStats.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`,
       );
       return null;
@@ -545,7 +547,7 @@ async function fileToPickerData({
       rawData = await fs.promises.readFile(pathToFile, "utf8");
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.error("Error reading file", err);
+      consoleLogger.error("Error reading file", err);
       return null;
     }
     try {
@@ -554,7 +556,7 @@ async function fileToPickerData({
       delete metadata.pageContent;
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.error("Error parsing file", err);
+      consoleLogger.error("Error parsing file", err);
       return null;
     }
 
@@ -572,7 +574,7 @@ async function fileToPickerData({
   }
 
   // eslint-disable-next-line no-console
-  console.log(
+  consoleLogger.log(
     `Stream-parsing ${path.basename(pathToFile)} because it exceeds the ${FILE_READ_SIZE_THRESHOLD} byte limit.`,
   );
   const stream = fs.createReadStream(pathToFile, { encoding: "utf8" });
@@ -591,22 +593,22 @@ async function fileToPickerData({
             resolve(metadata);
           } catch (parseErr) {
             // eslint-disable-next-line no-console
-            console.error("Error parsing JSON from stream", parseErr);
+            consoleLogger.error("Error parsing JSON from stream", parseErr);
             reject(new Error("Failed to parse streamed file content as JSON"));
           }
         })
         .on("error", (err) => {
           // eslint-disable-next-line no-console
-          console.error("Error parsing file", err);
+          consoleLogger.error("Error parsing file", err);
           reject(null);
         });
     }).catch((err) => {
       // eslint-disable-next-line no-console
-      console.error("Error parsing file", err);
+      consoleLogger.error("Error parsing file", err);
     });
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.error("Error parsing file", err);
+    consoleLogger.error("Error parsing file", err);
     metadata = null;
   } finally {
     stream.destroy();
@@ -615,7 +617,7 @@ async function fileToPickerData({
   // If the metadata is empty or something went wrong, return null
   if (!metadata || !Object.keys(metadata)?.length) {
     // eslint-disable-next-line no-console
-    console.log(`Stream-parsing failed for ${path.basename(pathToFile)}`);
+    consoleLogger.log(`Stream-parsing failed for ${path.basename(pathToFile)}`);
     return null;
   }
 

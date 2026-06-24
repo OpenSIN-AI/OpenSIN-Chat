@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 const { v4: uuidv4 } = require("uuid");
 const moment = require("moment");
 
 function clientAbortedHandler(resolve, fullText) {
   // eslint-disable-next-line no-console
-  console.log(
+  consoleLogger.log(
     "\x1b[43m\x1b[34m[STREAM ABORTED]\x1b[0m Client requested to abort stream. Exiting LLM stream handler early.",
   );
   resolve(fullText);
@@ -163,7 +165,7 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
       }
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.log(`\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${e.message}`);
+      consoleLogger.log(`\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${e.message}`);
       writeResponseChunk(response, {
         uuid,
         type: "abort",
@@ -187,7 +189,7 @@ function convertToChatHistory(history = []) {
     try {
       data = JSON.parse(response);
     } catch {
-      console.log(
+      consoleLogger.log(
         `[convertToChatHistory] ChatHistory #${record.id} response is not valid JSON - skipping record.`,
       );
       continue;
@@ -197,13 +199,13 @@ function convertToChatHistory(history = []) {
     // because it was likely an error and cannot be used in chats and will fail to render on UI.
     if (typeof prompt !== "string") {
       // eslint-disable-next-line no-console
-      console.log(
+      consoleLogger.log(
         `[convertToChatHistory] ChatHistory #${record.id} prompt property is not a string - skipping record.`,
       );
       continue;
     } else if (typeof data.text !== "string") {
       // eslint-disable-next-line no-console
-      console.log(
+      consoleLogger.log(
         `[convertToChatHistory] ChatHistory #${record.id} response.text property is not a string - skipping record.`,
       );
       continue;
@@ -283,7 +285,7 @@ function convertToPromptHistory(history = []) {
     try {
       data = JSON.parse(response);
     } catch {
-      console.log(
+      consoleLogger.log(
         `[convertToPromptHistory] ChatHistory #${record.id} response is not valid JSON - skipping record.`,
       );
       continue;
@@ -293,13 +295,13 @@ function convertToPromptHistory(history = []) {
     // because it was likely an error and cannot be used in chats and will fail to render on UI.
     if (typeof prompt !== "string") {
       // eslint-disable-next-line no-console
-      console.log(
+      consoleLogger.log(
         `[convertToPromptHistory] ChatHistory #${record.id} prompt property is not a string - skipping record.`,
       );
       continue;
     } else if (typeof data.text !== "string") {
       // eslint-disable-next-line no-console
-      console.log(
+      consoleLogger.log(
         `[convertToPromptHistory] ChatHistory #${record.id} response.text property is not a string - skipping record.`,
       );
       continue;

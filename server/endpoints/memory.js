@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const { Memory } = require("../models/memory");
 const { SystemSettings } = require("../models/systemSettings");
 const { userFromSession, reqBody } = require("../utils/http");
@@ -35,7 +37,7 @@ async function validateMemoryOwner(request, response, next) {
     next();
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.error(e);
+    consoleLogger.error(e);
     return response.sendStatus(500);
   }
 }
@@ -65,7 +67,7 @@ function memoryEndpoints(app) {
         });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         return response.sendStatus(500);
       }
     },
@@ -98,7 +100,7 @@ function memoryEndpoints(app) {
         response.status(200).json({ memory });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         return response.sendStatus(500);
       }
     },
@@ -130,7 +132,7 @@ function memoryEndpoints(app) {
         response.status(200).json({ memory });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         return response.sendStatus(500);
       }
     },
@@ -157,7 +159,7 @@ function memoryEndpoints(app) {
         response.status(200).json({ success: true });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         return response.sendStatus(500);
       }
     },
@@ -180,7 +182,7 @@ function memoryEndpoints(app) {
         response.status(200).json({ memory });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         return response.sendStatus(500);
       }
     },
@@ -209,7 +211,7 @@ function memoryEndpoints(app) {
         response.status(200).json({ memory });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         return response.sendStatus(500);
       }
     },

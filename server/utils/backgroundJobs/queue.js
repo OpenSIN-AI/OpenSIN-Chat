@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 /**
  * Persistente SQLite-basierte Background Job Queue für OpenSIN-Chat.
  *
@@ -42,7 +44,7 @@ class PersistentBackgroundQueue {
       });
       this._ensurePolling();
     } catch (error) {
-      console.error(
+      consoleLogger.error(
         `[Queue] Failed to enqueue job "${jobName}":`,
         error.message,
       );
@@ -72,7 +74,7 @@ class PersistentBackgroundQueue {
       await this._recoverStaleJobs();
       await this._processNextJob();
     } catch (error) {
-      console.error("[Queue] Poll error:", error.message);
+      consoleLogger.error("[Queue] Poll error:", error.message);
     }
 
     this.pollTimer = setTimeout(() => this._poll(), POLL_INTERVAL_MS);
@@ -94,12 +96,12 @@ class PersistentBackgroundQueue {
         },
       });
       if (result.count > 0) {
-        console.log(
+        consoleLogger.log(
           `[Queue] Pruned ${result.count} old job(s) (>${RETENTION_DAYS} days).`,
         );
       }
     } catch (error) {
-      console.error("[Queue] Pruning error:", error.message);
+      consoleLogger.error("[Queue] Pruning error:", error.message);
     }
   }
 
@@ -122,12 +124,12 @@ class PersistentBackgroundQueue {
         },
       });
       if (result.count > 0) {
-        console.log(
+        consoleLogger.log(
           `[Queue] Recovered ${result.count} stale job(s) (crash/sleep recovery).`,
         );
       }
     } catch (error) {
-      console.error("[Queue] Recovery error:", error.message);
+      consoleLogger.error("[Queue] Recovery error:", error.message);
     }
   }
 
@@ -155,7 +157,7 @@ class PersistentBackgroundQueue {
       });
       if (updated.count === 0) return; // Wurde parallel geschnappt
 
-      console.log(`[Queue] Processing job #${job.id}: ${job.job_name}`);
+      consoleLogger.log(`[Queue] Processing job #${job.id}: ${job.job_name}`);
       const payload = JSON.parse(job.payload);
       await this._executeJob(job, payload);
 
@@ -163,9 +165,9 @@ class PersistentBackgroundQueue {
         where: { id: job.id },
         data: { status: "completed", locked_at: null },
       });
-      console.log(`[Queue] Job #${job.id} (${job.job_name}) completed.`);
+      consoleLogger.log(`[Queue] Job #${job.id} (${job.job_name}) completed.`);
     } catch (error) {
-      console.error(
+      consoleLogger.error(
         `[Queue] Job #${job.id} (${job.job_name}) failed:`,
         error.message,
       );
@@ -205,7 +207,7 @@ class PersistentBackgroundQueue {
    * Beim Start: einmalig Pruning (falls Server lange offline war) + Polling.
    */
   start() {
-    console.log("[Queue] Starting persistent background queue...");
+    consoleLogger.log("[Queue] Starting persistent background queue...");
     // Fire-and-forget — Fehler hier dürfen den Server-Boot nicht blockieren
     this._pruneOldJobs().catch(() => {});
     this._ensurePolling();
@@ -220,7 +222,7 @@ class PersistentBackgroundQueue {
       this.pollTimer = null;
     }
     this.isPolling = false;
-    console.log("[Queue] Background queue stopped.");
+    consoleLogger.log("[Queue] Background queue stopped.");
   }
 
   // ── Monitoring Helpers (für Debug/Diagnose) ──────────────────────
@@ -239,7 +241,7 @@ class PersistentBackgroundQueue {
         return acc;
       }, {});
     } catch (error) {
-      console.error("[Queue] stats() error:", error.message);
+      consoleLogger.error("[Queue] stats() error:", error.message);
       return null;
     }
   }

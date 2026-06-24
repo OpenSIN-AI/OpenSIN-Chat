@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const prisma = require("../utils/prisma");
 const { EventLogs } = require("./eventLogs");
 const { Document } = require("./documents");
@@ -40,7 +42,7 @@ const WorkspaceParsedFiles = {
       return { file, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO CREATE PARSED FILE RECORD.", error.message);
+      consoleLogger.error("FAILED TO CREATE PARSED FILE RECORD.", error.message);
       return { file: null, error: error.message };
     }
   },
@@ -58,7 +60,7 @@ const WorkspaceParsedFiles = {
       return file;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -79,7 +81,7 @@ const WorkspaceParsedFiles = {
       return files;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -92,7 +94,7 @@ const WorkspaceParsedFiles = {
       return result.count > 0;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -106,7 +108,7 @@ const WorkspaceParsedFiles = {
       return _sum.tokenCountEstimate || 0;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO AGGREGATE TOKEN COUNT.", error.message);
+      consoleLogger.error("FAILED TO AGGREGATE TOKEN COUNT.", error.message);
       return 0;
     }
   },
@@ -166,7 +168,7 @@ const WorkspaceParsedFiles = {
       return { success: true, error: null, document };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to move and embed file:", error);
+      consoleLogger.error("Failed to move and embed file:", error);
       return { success: false, error: error.message, document: null };
     } finally {
       // Always delete the file after processing
@@ -208,7 +210,7 @@ const WorkspaceParsedFiles = {
       };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to get context metadata:", error);
+      consoleLogger.error("Failed to get context metadata:", error);
       return {
         files: [],
         contextWindow: Infinity,
@@ -251,7 +253,7 @@ const WorkspaceParsedFiles = {
       return results;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to get context files:", error);
+      consoleLogger.error("Failed to get context files:", error);
       return [];
     }
   },

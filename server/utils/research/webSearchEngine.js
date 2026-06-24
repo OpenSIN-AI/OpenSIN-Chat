@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 /**
  * Web search engine wrapper — delegates to the configured search provider
  * from SystemSettings (Vane, SearxNG, SerpAPI, DuckDuckGo).
@@ -87,7 +89,7 @@ class WebSearchEngine {
       const { VaneClient } = require("./vaneClient");
       return await VaneClient.search(query);
     } catch (err) {
-      console.error(`[WebSearchEngine] Vane error: ${err.message}`);
+      consoleLogger.error(`[WebSearchEngine] Vane error: ${err.message}`);
       return [];
     }
   }
@@ -115,7 +117,7 @@ class WebSearchEngine {
           .slice(0, 10);
       });
     } catch (err) {
-      console.error(`[WebSearchEngine] SearxNG error: ${err.message}`);
+      consoleLogger.error(`[WebSearchEngine] SearxNG error: ${err.message}`);
       return [];
     }
   }
@@ -137,7 +139,7 @@ class WebSearchEngine {
         }));
       });
     } catch (err) {
-      console.error(`[WebSearchEngine] SerpAPI error: ${err.message}`);
+      consoleLogger.error(`[WebSearchEngine] SerpAPI error: ${err.message}`);
       return [];
     }
   }
@@ -169,7 +171,7 @@ class WebSearchEngine {
         return results.slice(0, 10);
       });
     } catch (err) {
-      console.error(`[WebSearchEngine] DuckDuckGo error: ${err.message}`);
+      consoleLogger.error(`[WebSearchEngine] DuckDuckGo error: ${err.message}`);
       return [];
     }
   }

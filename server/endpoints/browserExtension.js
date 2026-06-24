@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const { Workspace } = require("../models/workspace");
 const { BrowserExtensionApiKey } = require("../models/browserExtensionApiKey");
 const { Document } = require("../models/documents");
@@ -42,7 +44,7 @@ function browserExtensionEndpoints(app) {
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        consoleLogger.error(error);
         response
           .status(500)
           .json({ connected: false, error: "Failed to fetch workspaces" });
@@ -62,7 +64,7 @@ function browserExtensionEndpoints(app) {
         response.status(200).json({ success: true });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        consoleLogger.error(error);
         response
           .status(500)
           .json({ error: "Failed to disconnect and revoke API key" });
@@ -83,7 +85,7 @@ function browserExtensionEndpoints(app) {
         response.status(200).json({ workspaces });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        consoleLogger.error(error);
         response.status(500).json({ error: "Failed to fetch workspaces" });
       }
     },
@@ -138,7 +140,7 @@ function browserExtensionEndpoints(app) {
         response.status(200).json({ success: true });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        consoleLogger.error(error);
         response.status(500).json({ error: "Failed to embed content" });
       }
     },
@@ -165,7 +167,7 @@ function browserExtensionEndpoints(app) {
         response.status(200).json({ success: true });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        consoleLogger.error(error);
         response.status(500).json({ error: "Failed to embed content" });
       }
     },
@@ -185,7 +187,7 @@ function browserExtensionEndpoints(app) {
         response.status(200).json({ success: true, apiKeys });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        consoleLogger.error(error);
         response
           .status(500)
           .json({ success: false, error: "Failed to fetch API keys" });
@@ -216,7 +218,7 @@ function browserExtensionEndpoints(app) {
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        consoleLogger.error(error);
         response.status(500).json({ error: "Failed to create API key" });
       }
     },
@@ -245,7 +247,7 @@ function browserExtensionEndpoints(app) {
         response.status(200).json({ success: true });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        consoleLogger.error(error);
         response.status(500).json({ error: "Failed to revoke API key" });
       }
     },

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../logger/console.js");
+
 const chalk = require("chalk");
 const { Telemetry } = require("../../../../models/telemetry");
 const { v4: uuidv4 } = require("uuid");
@@ -73,7 +75,7 @@ const websocket = {
             let errorMessage =
               error?.message || "An error occurred while running the agent.";
             // eslint-disable-next-line no-console
-            console.error(chalk.red(`   error: ${errorMessage}`), error);
+            consoleLogger.error(chalk.red(`   error: ${errorMessage}`), error);
             aibitat.introspect(
               `Error encountered while running: ${errorMessage}`,
             );
@@ -83,7 +85,7 @@ const websocket = {
             aibitat.terminate();
           } catch (err) {
             // eslint-disable-next-line no-console
-            console.error(chalk.red("   error: onError handler failed"), err);
+            consoleLogger.error(chalk.red("   error: onError handler failed"), err);
           }
         });
 
@@ -124,7 +126,7 @@ const websocket = {
         }) {
           if (skillIsAutoApproved({ skillName })) {
             // eslint-disable-next-line no-console
-            console.log(
+            consoleLogger.log(
               chalk.green(
                 `Skill ${skillName} is auto-approved by AGENT_AUTO_APPROVED_SKILLS`,
               ),
@@ -144,7 +146,7 @@ const websocket = {
           );
           if (isWhitelisted) {
             // eslint-disable-next-line no-console
-            console.log(
+            consoleLogger.log(
               chalk.green(
                 (userId ? `User ${userId} - ` : "") +
                   `Skill ${skillName} is whitelisted - auto-approved.`,
@@ -203,7 +205,7 @@ const websocket = {
                 });
               } catch (e) {
                 // eslint-disable-next-line no-console
-                console.error("Error handling tool approval response:", e);
+                consoleLogger.error("Error handling tool approval response:", e);
               }
             };
 
@@ -220,7 +222,7 @@ const websocket = {
 
             timeoutId = setTimeout(() => {
               // eslint-disable-next-line no-console
-              console.log(
+              consoleLogger.log(
                 chalk.yellow(
                   `Tool approval request timed out after ${TOOL_APPROVAL_TIMEOUT_MS}ms`,
                 ),
@@ -295,7 +297,7 @@ const websocket = {
                 });
               } catch (e) {
                 // eslint-disable-next-line no-console
-                console.error("Error handling clarification response:", e);
+                consoleLogger.error("Error handling clarification response:", e);
               }
             };
 
@@ -312,7 +314,7 @@ const websocket = {
             timeoutId = setTimeout(() => {
               delete socket.handleClarificationResponse;
               // eslint-disable-next-line no-console
-              console.log(
+              consoleLogger.log(
                 chalk.yellow(
                   `Clarification request timed out after ${timeoutMs}ms`,
                 ),
@@ -328,20 +330,20 @@ const websocket = {
 
         // aibitat.onStart(() => {
 
-        //   console.log("🚀 starting chat ...");
+        //   consoleLogger.log("🚀 starting chat ...");
         // });
 
         aibitat.onMessage((message) => {
           if (message.from !== "USER")
             Telemetry.sendTelemetry("agent_chat_sent").catch((err) => {
-              console.error("Telemetry error:", err.message);
+              consoleLogger.error("Telemetry error:", err.message);
             });
           if (message.from === "USER" && muteUserReply) return;
           socket.send(JSON.stringify(message));
         });
 
         aibitat.onTerminate(() => {
-          // console.log("🚀 chat finished");
+          // consoleLogger.log("🚀 chat finished");
           socket.close();
         });
 
@@ -384,13 +386,13 @@ const websocket = {
                   return;
                 } catch (e) {
                   // eslint-disable-next-line no-console
-                  console.error("Error handling feedback response:", e);
+                  consoleLogger.error("Error handling feedback response:", e);
                 }
               };
 
               socketTimeout = setTimeout(() => {
                 // eslint-disable-next-line no-console
-                console.log(
+                consoleLogger.log(
                   chalk.red(
                     `Client took too long to respond, chat thread is dead after ${SOCKET_TIMEOUT_MS}ms`,
                   ),
@@ -407,7 +409,7 @@ const websocket = {
            Press enter to skip and use auto-reply, or type 'exit' to end the conversation: \n`);
         };
 
-        // console.log("🚀 WS plugin is complete.");
+        // consoleLogger.log("🚀 WS plugin is complete.");
       },
     };
   },

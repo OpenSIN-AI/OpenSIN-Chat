@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const { ScheduledJob } = require("../models/scheduledJob");
 const { ScheduledJobRun } = require("../models/scheduledJobRun");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
@@ -25,7 +27,7 @@ function scheduledJobEndpoints(app) {
         return response.status(200).json({ tools });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.status(500).json({ tools: [] });
       }
     },
@@ -56,7 +58,7 @@ function scheduledJobEndpoints(app) {
         });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -109,7 +111,7 @@ function scheduledJobEndpoints(app) {
         }
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e?.message || "Unknown error", e);
+        consoleLogger.error(e?.message || "Unknown error", e);
         response.sendStatus(500);
       }
     },
@@ -136,7 +138,7 @@ function scheduledJobEndpoints(app) {
         return response.status(200).json({ jobs: jobsWithStatus });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -191,12 +193,12 @@ function scheduledJobEndpoints(app) {
 
         backgroundService.addScheduledJob(job);
         Telemetry.sendTelemetry("scheduled_job_created").catch((err) => {
-          console.error("Telemetry error:", err.message);
+          consoleLogger.error("Telemetry error:", err.message);
         });
         return response.status(201).json({ job, error: null });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -219,7 +221,7 @@ function scheduledJobEndpoints(app) {
         return response.status(200).json({ job });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -292,7 +294,7 @@ function scheduledJobEndpoints(app) {
         return response.status(200).json({ job, error: null });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -310,7 +312,7 @@ function scheduledJobEndpoints(app) {
         return response.status(200).json({ success });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -352,7 +354,7 @@ function scheduledJobEndpoints(app) {
         return response.status(200).json({ job: updated });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -377,7 +379,7 @@ function scheduledJobEndpoints(app) {
           .json({ success: true, skipped: !run, error: null });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -397,7 +399,7 @@ function scheduledJobEndpoints(app) {
         return response.status(200).json({ runs });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },

@@ -1,10 +1,9 @@
 # OpenSIN Chat — ROADMAP (GSD-Style)
 
 > **GSD-Phasen:** Get Shit Done — jede Phase ist ein abgeschlossenes Deliverable.  
-> **Aktueller Stand:** Phase 1 ✅, Phase 2 ✅, Phase 3 ❌ CANCELLED, Phase 4 ✅, Phase 5 ✅, Phase 6 ✅, Phase 7 ✅ COMPLETE (Docs Overhaul), Phase 8 ✅ COMPLETE (Docs UI Polish), Phase 9 ✅ COMPLETE (Security & Operations Hardening), Phase 10 ✅ COMPLETE (Production Readiness — All Epics Done)  
+> **Status:** All 10 phases ✅ COMPLETE — OpenSIN-Chat is production-ready. This document is now a historical archive.  
 > **Repo:** [OpenSIN-AI/OpenSIN-Chat](https://github.com/OpenSIN-AI/OpenSIN-Chat)  
-> **Letztes Update:** 2026-06-23  
-> **Aktueller PLAN:** [docs/PLAN-PRODUCTION-READINESS.md](docs/PLAN-PRODUCTION-READINESS.md) — Phase 10: Production Readiness ✅ COMPLETE
+> **Letztes Update:** 2026-06-24
 
 ---
 
@@ -178,28 +177,24 @@
 
 ## Phase 3: i18next Elimination & Code Quality ❌ **CANCELLED (by user)**
 
-> **Siehe [PLAN.md](PLAN.md) Priorität 1**  
 > **Status:** User hat entschieden, i18next-Warnings zu ignorieren (Issue #121 cancelled). Warnings sind noise-only und blockieren keine Funktionalität.
 
 ---
 
 ## Phase 4: PDF Analysis Hardening ✅ **COMPLETE**
 
-> **Siehe [PLAN.md](PLAN.md) Priorität 2**  
 > **Status:** Production hardening implementiert — Commit `8c4194a2` (Concurrency-Tuning, Memory-Limits, Job-Timeout, CoDocs, OCR-Fallback, Dark Mode).
 
 ---
 
 ## Phase 5: Build Cleanup & Infrastruktur ✅ **COMPLETE**
 
-> **Siehe [PLAN.md](PLAN.md) Prioritäten 3+4**  
 > **Status:** Build cleanup durchgeführt (Commit-Reihe 2026-06-17), Tunnel Health-Check via systemd aktiv (Commit `9e62abc4`, 30s Interval).
 
 ---
 
 ## Phase 6: Legacy Issues abarbeiten ✅ **COMPLETE**
 
-> **Siehe [PLAN.md](PLAN.md) Priorität 5**  
 > **Status:** Alle P0–P3 Issues abgearbeitet (#105–#119). Issue #121 (i18next) vom User cancelled. Issue #22 (Unit Tests) partial — 650+ Tests existieren, weiterer Ausbau durch separaten Subagent.
 
 ---
@@ -330,7 +325,6 @@
 - Production Docker Compose created and documented
 - All external API callers migrated to ResilientHttpClient
 - Critical dependencies pinned to exact versions
-- Full details in `docs/PLAN-PRODUCTION-READINESS.md`.
 
 ---
 
@@ -390,7 +384,6 @@
 
 ---
 
-*Next Milestone: All phases complete. OpenSIN-Chat is production-ready.*  
+*All phases complete. OpenSIN-Chat is production-ready.*  
 *Owner: @OpenSIN-AI*  
-*Updated: 2026-06-23*  
-*Current PLAN: [docs/PLAN-PRODUCTION-READINESS.md](docs/PLAN-PRODUCTION-READINESS.md)*
+*Updated: 2026-06-24*

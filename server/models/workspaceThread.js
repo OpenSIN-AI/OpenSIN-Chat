@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const { randomBytes } = require("crypto");
 const prisma = require("../utils/prisma");
 const slugifyModule = require("slugify");
@@ -63,7 +65,7 @@ const WorkspaceThread = {
       return { thread, message: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return { thread: null, message: error.message };
     }
   },
@@ -94,7 +96,7 @@ const WorkspaceThread = {
       return { thread, message: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return { thread: null, message: error.message };
     }
   },
@@ -108,7 +110,7 @@ const WorkspaceThread = {
       return thread || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -145,7 +147,7 @@ const WorkspaceThread = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -169,7 +171,7 @@ const WorkspaceThread = {
       return results;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },

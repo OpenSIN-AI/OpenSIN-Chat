@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 /**
  * Politician Database Module — unified entry point for politician search,
  * profiles, voting records, speeches, mandates, and sync status.
@@ -114,7 +116,7 @@ class PoliticianDB {
       return results;
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.error(`[PoliticianDB] searchPoliticians error: ${err.message}`);
+      consoleLogger.error(`[PoliticianDB] searchPoliticians error: ${err.message}`);
       return [];
     }
   }
@@ -156,7 +158,7 @@ class PoliticianDB {
       const allowedSet = new Set(allowed.map((p) => p.id));
       return results.filter((r) => allowedSet.has(r.metadata?.politicianId));
     } catch (err) {
-      console.error(
+      consoleLogger.error(
         `[PoliticianDB] semanticSearchSpeeches source filter error: ${err.message}`,
       );
       return results;
@@ -205,7 +207,7 @@ class PoliticianDB {
         score: 0,
       }));
     } catch (err) {
-      console.error(
+      consoleLogger.error(
         `[PoliticianDB] _textSearchSpeeches fallback error: ${err.message}`,
       );
       return [];
@@ -240,7 +242,7 @@ class PoliticianDB {
       return { ...politician, _stats: { speechCount, voteCount } };
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.error(`[PoliticianDB] getPolitician error: ${err.message}`);
+      consoleLogger.error(`[PoliticianDB] getPolitician error: ${err.message}`);
       return null;
     }
   }
@@ -263,7 +265,7 @@ class PoliticianDB {
       });
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.error(`[PoliticianDB] getVotingRecord error: ${err.message}`);
+      consoleLogger.error(`[PoliticianDB] getVotingRecord error: ${err.message}`);
       return [];
     }
   }
@@ -305,7 +307,7 @@ class PoliticianDB {
       });
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.error(`[PoliticianDB] getSpeeches error: ${err.message}`);
+      consoleLogger.error(`[PoliticianDB] getSpeeches error: ${err.message}`);
       return [];
     }
   }
@@ -324,7 +326,7 @@ class PoliticianDB {
       });
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.error(`[PoliticianDB] getMandates error: ${err.message}`);
+      consoleLogger.error(`[PoliticianDB] getMandates error: ${err.message}`);
       return [];
     }
   }
@@ -353,7 +355,7 @@ class PoliticianDB {
       return await this.abgeordnetenwatch.getVotingRecord(awId);
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.error(`[PoliticianDB] fetchLiveVotes error: ${err.message}`);
+      consoleLogger.error(`[PoliticianDB] fetchLiveVotes error: ${err.message}`);
       return [];
     }
   }
@@ -411,7 +413,7 @@ class PoliticianDB {
         .map((g) => ({ source: g.source, count: g._count._all }));
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.error(`[PoliticianDB] getSources error: ${err.message}`);
+      consoleLogger.error(`[PoliticianDB] getSources error: ${err.message}`);
       return [];
     }
   }
@@ -473,7 +475,7 @@ class PoliticianDB {
       return { lastSync, isHealthy, sources: sourcesWithHealth, retryQueue };
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.error(`[PoliticianDB] getSyncStatus error: ${err.message}`);
+      consoleLogger.error(`[PoliticianDB] getSyncStatus error: ${err.message}`);
       return { lastSync: null, isHealthy: false, sources: [], retryQueue: [] };
     }
   }
@@ -498,7 +500,7 @@ class PoliticianDB {
       }));
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.error(`[PoliticianDB] getRetryQueue error: ${err.message}`);
+      consoleLogger.error(`[PoliticianDB] getRetryQueue error: ${err.message}`);
       return [];
     }
   }

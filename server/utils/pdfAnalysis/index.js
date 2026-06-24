@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 /**
  * PdfAnalysisPipeline — autonomer Orchestrator.
  *
@@ -56,7 +58,7 @@ class PdfAnalysisPipeline {
           persistJob(job);
           continue;
         }
-        console.log(
+        consoleLogger.log(
           `[pdfAnalysis] Setze unterbrochenen Job fort: ${job.id} (${job.documentName})`,
         );
         this._run(job).catch((e) => {

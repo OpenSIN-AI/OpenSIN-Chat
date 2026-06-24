@@ -198,6 +198,15 @@ export const DOC_ENTRIES: DocEntry[] = [
     file: "operations.md",
     source: "docs/OPERATIONS.md",
   },
+  {
+    slug: "incident-response",
+    title: "Incident-Response-Playbook",
+    description:
+      "Kanonisches Playbook für Ausfälle: Cloudflare-Fehlercodes, SSH-Recovery, Tunnel-Neustart und Preventiv-Monitoring.",
+    category: "operations",
+    file: "incident-response.md",
+    source: "docs/INCIDENT-RESPONSE.md",
+  },
 ];
 
 /** Resolve the raw markdown content for a given content filename. */
@@ -235,6 +244,7 @@ const FILE_TO_SLUG: Record<string, string> = {
   "PDF-ANALYSIS.md": "pdf-analysis",
   "SECURITY.md": "security",
   "OPERATIONS.md": "operations",
+  "INCIDENT-RESPONSE.md": "incident-response",
 };
 
 /**

@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Branding endpoints — logo management, footer data, support email, custom app name.
 // Docs: server/endpoints/system.doc.md
+const consoleLogger = require("../../utils/logger/console.js");
+
 const fs = require("fs");
 const path = require("path");
 const { v4 } = require("uuid");
@@ -68,7 +70,7 @@ function brandingEndpoints(app) {
       return;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Error processing the logo request:", error);
+      consoleLogger.error("Error processing the logo request:", error);
       response.status(500).json({ message: "Internal server error" });
     }
   });
@@ -81,7 +83,7 @@ function brandingEndpoints(app) {
       response.status(200).json({ footerData: footerData });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Error fetching footer data:", error);
+      consoleLogger.error("Error fetching footer data:", error);
       response.status(500).json({ message: "Internal server error" });
     }
   });
@@ -97,7 +99,7 @@ function brandingEndpoints(app) {
       response.status(200).json({ supportEmail: supportEmail });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Error fetching support email:", error);
+      consoleLogger.error("Error fetching support email:", error);
       response.status(500).json({ message: "Internal server error" });
     }
   });
@@ -114,7 +116,7 @@ function brandingEndpoints(app) {
       response.status(200).json({ customAppName: customAppName });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Error fetching custom app name:", error);
+      consoleLogger.error("Error fetching custom app name:", error);
       response.status(500).json({ message: "Internal server error" });
     }
   });
@@ -205,7 +207,7 @@ function brandingEndpoints(app) {
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error processing the logo upload:", error);
+        consoleLogger.error("Error processing the logo upload:", error);
         response.status(500).json({ message: "Error uploading the logo." });
       }
     },
@@ -222,7 +224,7 @@ function brandingEndpoints(app) {
         response.status(200).json({ isDefaultLogo });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error processing the logo request:", error);
+        consoleLogger.error("Error processing the logo request:", error);
         response.status(500).json({ message: "Internal server error" });
       }
     },
@@ -246,7 +248,7 @@ function brandingEndpoints(app) {
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error processing the logo removal:", error);
+        consoleLogger.error("Error processing the logo removal:", error);
         response.status(500).json({ message: "Error removing the logo." });
       }
     },

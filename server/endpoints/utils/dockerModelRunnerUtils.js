@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../utils/logger/console.js");
+
 const { validatedRequest } = require("../../utils/middleware/validatedRequest");
 const {
   flexUserRoleValid,
@@ -80,7 +82,7 @@ function dockerModelRunnerUtilsEndpoints(app) {
         }
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.write(
           `data: ${JSON.stringify({ type: "error", message: "Internal server error." })}\n\n`,
         );

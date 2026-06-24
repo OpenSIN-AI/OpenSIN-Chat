@@ -49,13 +49,12 @@ OpenSIN-Chat/
 
 ## Active Planning Documents
 
-- [`PLAN.md`](./PLAN.md) — short-term priorities
-- [`docs/PLAN-PRODUCTION-READINESS.md`](./docs/PLAN-PRODUCTION-READINESS.md) — mid-to-long-term roadmap
-- [`ROADMAP.md`](./ROADMAP.md) — GSD-style phase overview
+- [`ROADMAP.md`](./ROADMAP.md) — GSD-style phase overview (all 10 phases complete; historical archive)
+- [`docs/MAJOR-UPGRADE-PLAN.md`](./docs/MAJOR-UPGRADE-PLAN.md) — future major version upgrade research (React 19, Prisma 7, Tailwind 4)
+- [`docs/PLAN-SCALE-DEPLOY-GUIDE.md`](./docs/PLAN-SCALE-DEPLOY-GUIDE.md) — production deployment guide (Docker Compose, Helm, Redis, CDN)
 
 ## Backlog & Issues
 
-- [`BACKLOG.md`](./BACKLOG.md) — archived; active work is in the plans above
 - GitHub Issues: all currently closed
 
 ## Deployment

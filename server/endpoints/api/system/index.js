@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../utils/logger/console.js");
+
 const { EventLogs } = require("../../../models/eventLogs");
 const { SystemSettings } = require("../../../models/systemSettings");
 const { purgeDocument } = require("../../../utils/files/purgeDocument");
@@ -28,7 +30,7 @@ function apiSystemEndpoints(app) {
       response.sendStatus(200);
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e.message, e);
+      consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }
   });
@@ -66,7 +68,7 @@ function apiSystemEndpoints(app) {
       response.status(200).json({ settings });
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e.message, e);
+      consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }
   });
@@ -99,7 +101,7 @@ function apiSystemEndpoints(app) {
       response.status(200).json({ vectorCount });
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e.message, e);
+      consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }
   });
@@ -148,7 +150,7 @@ function apiSystemEndpoints(app) {
         response.status(200).json({ newValues, error });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -214,7 +216,7 @@ function apiSystemEndpoints(app) {
         response.status(200).send(data);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -281,7 +283,7 @@ function apiSystemEndpoints(app) {
           .end();
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },

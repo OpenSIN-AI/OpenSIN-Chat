@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const { getStoragePath } = require("../paths");
 const fs = require("fs");
 const path = require("path");
@@ -32,7 +34,7 @@ class AgentFlows {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to create flows directory:", error);
+      consoleLogger.error("Failed to create flows directory:", error);
       return false;
     }
   }
@@ -56,7 +58,7 @@ class AgentFlows {
         flows[id] = config;
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(`Error reading flow file ${file}:`, error);
+        consoleLogger.error(`Error reading flow file ${file}:`, error);
       }
     }
 
@@ -89,7 +91,7 @@ class AgentFlows {
       };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to load flow:", error);
+      consoleLogger.error("Failed to load flow:", error);
       return null;
     }
   }
@@ -128,7 +130,7 @@ class AgentFlows {
       return { success: true, uuid };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to save flow:", error);
+      consoleLogger.error("Failed to save flow:", error);
       return { success: false, error: error.message };
     }
   }
@@ -148,7 +150,7 @@ class AgentFlows {
       }));
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to list flows:", error);
+      consoleLogger.error("Failed to list flows:", error);
       return [];
     }
   }
@@ -169,7 +171,7 @@ class AgentFlows {
       return { success: true };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to delete flow:", error);
+      consoleLogger.error("Failed to delete flow:", error);
       return { success: false, error: error.message };
     }
   }

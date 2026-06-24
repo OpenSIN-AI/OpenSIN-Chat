@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 const { sourceIdentifier } = require("../../chats");
 const { safeJsonParse } = require("../../http");
 const { TokenManager } = require("../tiktoken");
@@ -361,7 +363,7 @@ function cannonball({
     tokenManager.bytesFromTokens(rightChunks);
 
   // eslint-disable-next-line no-console
-  console.log(
+  consoleLogger.log(
     `Cannonball results ${initialInputSize} -> ${tokenManager.countFromString(
       truncatedText,
     )} tokens.`,
@@ -420,7 +422,7 @@ function fillSourceWindow({
 
   const log = (text, ...args) => {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[36m[fillSourceWindow]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[36m[fillSourceWindow]\x1b[0m ${text}`, ...args);
   };
 
   log(

@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../../../logger/console.js");
+
 /**
  * Test utility to generate sample Word documents for all themes and configurations.
  * Run from the server directory: node utils/agents/aibitat/plugins/create-files/docx/test-themes.js
@@ -181,16 +183,16 @@ async function generateThemePreview(themeName, themeConfig, options = {}) {
 }
 
 async function main() {
-  console.log("DOCX Theme Preview Generator");
-  console.log("============================\n");
+  consoleLogger.log("DOCX Theme Preview Generator");
+  consoleLogger.log("============================\n");
 
   await fs.mkdir(OUTPUT_DIR, { recursive: true });
 
   const themes = Object.keys(DOCUMENT_STYLES.themes);
   const marginPresets = Object.keys(DOCUMENT_STYLES.margins);
 
-  console.log(`Themes: ${themes.join(", ")}`);
-  console.log(`Margins: ${marginPresets.join(", ")}\n`);
+  consoleLogger.log(`Themes: ${themes.join(", ")}`);
+  consoleLogger.log(`Margins: ${marginPresets.join(", ")}\n`);
 
   const configs = [];
 
@@ -240,7 +242,7 @@ async function main() {
     content: MINIMAL_CONTENT,
   });
 
-  console.log(`Generating ${configs.length} preview documents...\n`);
+  consoleLogger.log(`Generating ${configs.length} preview documents...\n`);
 
   for (const config of configs) {
     const themeConfig = getTheme(config.theme);
@@ -259,36 +261,36 @@ async function main() {
 
       const sizeKB = (buffer.length / 1024).toFixed(1);
       const titlePage = config.includeTitlePage ? "✓ title" : "  -    ";
-      console.log(
+      consoleLogger.log(
         `✓ ${config.name.padEnd(30)} [${config.theme.padEnd(7)}] [${config.margins.padEnd(6)}] ${titlePage} (${sizeKB}KB)`,
       );
     } catch (error) {
-      console.error(`✗ ${config.name.padEnd(30)} → Error: ${error.message}`);
-      console.error(error.stack);
+      consoleLogger.error(`✗ ${config.name.padEnd(30)} → Error: ${error.message}`);
+      consoleLogger.error(error.stack);
     }
   }
 
-  console.log(`\n✅ Done! Files saved to: ${OUTPUT_DIR}`);
-  console.log(
+  consoleLogger.log(`\n✅ Done! Files saved to: ${OUTPUT_DIR}`);
+  consoleLogger.log(
     "\nOpen the .docx files in Microsoft Word or LibreOffice to preview each configuration.",
   );
 
-  console.log("\n--- Theme Color Reference ---");
+  consoleLogger.log("\n--- Theme Color Reference ---");
   for (const [name, colors] of Object.entries(DOCUMENT_STYLES.themes)) {
-    console.log(`\n${name.toUpperCase()}:`);
-    console.log(`  Heading:      #${colors.heading}`);
-    console.log(`  Accent:       #${colors.accent}`);
-    console.log(`  Table Header: #${colors.tableHeader}`);
-    console.log(`  Border:       #${colors.border}`);
-    console.log(`  Cover BG:     #${colors.coverBg}`);
-    console.log(`  Footer Text:  #${colors.footerText}`);
+    consoleLogger.log(`\n${name.toUpperCase()}:`);
+    consoleLogger.log(`  Heading:      #${colors.heading}`);
+    consoleLogger.log(`  Accent:       #${colors.accent}`);
+    consoleLogger.log(`  Table Header: #${colors.tableHeader}`);
+    consoleLogger.log(`  Border:       #${colors.border}`);
+    consoleLogger.log(`  Cover BG:     #${colors.coverBg}`);
+    consoleLogger.log(`  Footer Text:  #${colors.footerText}`);
   }
 
-  console.log("\n--- Margin Presets (twips) ---");
+  consoleLogger.log("\n--- Margin Presets (twips) ---");
   for (const [name, margins] of Object.entries(DOCUMENT_STYLES.margins)) {
     const inchTop = (margins.top / 1440).toFixed(2);
     const inchLeft = (margins.left / 1440).toFixed(2);
-    console.log(
+    consoleLogger.log(
       `${name.padEnd(8)}: top/bottom=${inchTop}" left/right=${inchLeft}"`,
     );
   }

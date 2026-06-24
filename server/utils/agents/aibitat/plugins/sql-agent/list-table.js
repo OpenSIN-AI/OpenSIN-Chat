@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../../logger/console.js");
+
 module.exports.SqlAgentListTables = {
   name: "sql-list-tables",
   plugin: function () {
@@ -96,7 +98,7 @@ module.exports.SqlAgentListTables = {
               return JSON.stringify(result);
             } catch (e) {
               // eslint-disable-next-line no-console
-              console.error(e);
+              consoleLogger.error(e);
               return e.message;
             }
           },

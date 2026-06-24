@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Purpose: User self-service, slash command presets, and prompt variable endpoints.
 // Docs: server/endpoints/system.doc.md
+const consoleLogger = require("../../utils/logger/console.js");
+
 const crypto = require("crypto");
 const { User } = require("../../models/user");
 const { EventLogs } = require("../../models/eventLogs");
@@ -86,7 +88,7 @@ function userManagementEndpoints(app) {
         response.status(200).json({ success: true, error: null });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -149,7 +151,7 @@ function userManagementEndpoints(app) {
       response.status(200).json({ success, error });
     } catch (e) {
       const errorId = crypto.randomUUID();
-      console.error(`[endpoint error ${errorId}]`, e);
+      consoleLogger.error(`[endpoint error ${errorId}]`, e);
       response.status(500).json({
         success: false,
         error: "Internal server error",
@@ -168,7 +170,7 @@ function userManagementEndpoints(app) {
         response.status(200).json({ presets: userPresets });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error fetching slash command presets:", error);
+        consoleLogger.error("Error fetching slash command presets:", error);
         response.status(500).json({ message: "Internal server error" });
       }
     },
@@ -207,7 +209,7 @@ function userManagementEndpoints(app) {
         response.status(201).json({ preset });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error creating slash command preset:", error);
+        consoleLogger.error("Error creating slash command preset:", error);
         response.status(500).json({ message: "Internal server error" });
       }
     },
@@ -254,7 +256,7 @@ function userManagementEndpoints(app) {
         response.status(200).json({ preset: { ...ownsPreset, ...updates } });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error updating slash command preset:", error);
+        consoleLogger.error("Error updating slash command preset:", error);
         response.status(500).json({ message: "Internal server error" });
       }
     },
@@ -282,7 +284,7 @@ function userManagementEndpoints(app) {
         response.sendStatus(204);
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error deleting slash command preset:", error);
+        consoleLogger.error("Error deleting slash command preset:", error);
         response.status(500).json({ message: "Internal server error" });
       }
     },
@@ -299,7 +301,7 @@ function userManagementEndpoints(app) {
       } catch (error) {
         const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error(`[system prompt-variables fetch error id=${id}]`, error);
+        consoleLogger.error(`[system prompt-variables fetch error id=${id}]`, error);
         response.status(500).json({
           success: false,
           error: "Internal error",
@@ -338,7 +340,7 @@ function userManagementEndpoints(app) {
       } catch (error) {
         const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error(`[system prompt-variables create error id=${id}]`, error);
+        consoleLogger.error(`[system prompt-variables create error id=${id}]`, error);
         response.status(500).json({
           success: false,
           error: "Internal error",
@@ -382,7 +384,7 @@ function userManagementEndpoints(app) {
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error updating system prompt variable:", error);
+        consoleLogger.error("Error updating system prompt variable:", error);
         response.status(500).json({
           success: false,
           error: "Failed to update system prompt variable.",
@@ -411,7 +413,7 @@ function userManagementEndpoints(app) {
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error deleting system prompt variable:", error);
+        consoleLogger.error("Error deleting system prompt variable:", error);
         response.status(500).json({
           success: false,
           error: "Failed to delete system prompt variable.",

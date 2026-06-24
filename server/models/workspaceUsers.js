@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const prisma = require("../utils/prisma");
 
 const WorkspaceUser = {
@@ -14,7 +16,7 @@ const WorkspaceUser = {
       );
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
     }
     return;
   },
@@ -40,7 +42,7 @@ const WorkspaceUser = {
       );
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
     }
     return;
   },
@@ -53,7 +55,7 @@ const WorkspaceUser = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(
+      consoleLogger.error(
         "FAILED TO CREATE WORKSPACE_USER RELATIONSHIP.",
         error.message,
       );
@@ -67,7 +69,7 @@ const WorkspaceUser = {
       return result || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -81,7 +83,7 @@ const WorkspaceUser = {
       return results;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -92,7 +94,7 @@ const WorkspaceUser = {
       return count;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return 0;
     }
   },
@@ -102,7 +104,7 @@ const WorkspaceUser = {
       await prisma.workspace_users.deleteMany({ where: clause });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
     }
     return;
   },

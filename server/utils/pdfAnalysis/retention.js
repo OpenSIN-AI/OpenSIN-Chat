@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 /**
  * Retention — automatische Speicher-Hygiene für das PDF-Analyse-Modul.
  *
@@ -80,14 +82,14 @@ function runCleanup() {
   //    verwaiste Jobs (PDF-Datei verschwunden) reporten.
   const stuck = markStuckJobsAsFailed(JOB_TIMEOUT_MINUTES / 60);
   if (stuck.length)
-    console.log(
+    consoleLogger.log(
       `[pdfAnalysis] ${stuck.length} stuck job(s) markiert als failed ` +
         `(Timeout: ${JOB_TIMEOUT_MINUTES} min).`,
     );
 
   const orphans = getOrphanedJobs();
   if (orphans.length)
-    console.warn(
+    consoleLogger.warn(
       `[pdfAnalysis] ${orphans.length} verwaiste Job(s) gefunden ` +
         `(PDF-Quelldatei fehlt). IDs: ${orphans.map((o) => o.id).join(", ")}`,
     );
@@ -103,7 +105,7 @@ function runCleanup() {
     CorpusPipeline.pruneCompletedJobs(24),
   ].reduce((a, b) => a + b, 0);
   if (pruned > 0)
-    console.log(`[pdfAnalysis] ${pruned} in-memory job(s) gepruned.`);
+    consoleLogger.log(`[pdfAnalysis] ${pruned} in-memory job(s) gepruned.`);
 
   const jobs = loadAllJobs();
   const activePdfPaths = new Set(
@@ -158,7 +160,7 @@ function runCleanup() {
   const total =
     removed.uploads + removed.checkpoints + removed.reports + removed.jobs;
   if (total > 0)
-    console.log(
+    consoleLogger.log(
       `[pdfAnalysis] Cleanup: ${removed.uploads} Uploads, ` +
         `${removed.checkpoints} Checkpoints, ${removed.reports} Reports, ` +
         `${removed.jobs} Job-Snapshots entfernt.`,

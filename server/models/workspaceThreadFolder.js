@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const prisma = require("../utils/prisma");
 
 const WorkspaceThreadFolder = {
@@ -30,7 +32,7 @@ const WorkspaceThreadFolder = {
       });
       return { folder, message: null };
     } catch (e) {
-      console.error("WorkspaceThreadFolder.new:", e.message);
+      consoleLogger.error("WorkspaceThreadFolder.new:", e.message);
       return { folder: null, message: e.message };
     }
   },
@@ -61,7 +63,7 @@ const WorkspaceThreadFolder = {
       });
       return { folder, message: null };
     } catch (e) {
-      console.error("WorkspaceThreadFolder.update:", e.message);
+      consoleLogger.error("WorkspaceThreadFolder.update:", e.message);
       return { folder: null, message: e.message };
     }
   },
@@ -76,7 +78,7 @@ const WorkspaceThreadFolder = {
           select: { id: true },
         });
         if (!existing) {
-          console.error(
+          consoleLogger.error(
             "WorkspaceThreadFolder.delete: folder does not belong to workspace",
           );
           return false;
@@ -94,7 +96,7 @@ const WorkspaceThreadFolder = {
       ]);
       return true;
     } catch (e) {
-      console.error("WorkspaceThreadFolder.delete:", e.message);
+      consoleLogger.error("WorkspaceThreadFolder.delete:", e.message);
       return false;
     }
   },
@@ -118,7 +120,7 @@ const WorkspaceThreadFolder = {
         if (!folder) return false;
 
         if (thread.workspace_id !== folder.workspace_id) {
-          console.error(
+          consoleLogger.error(
             "WorkspaceThreadFolder.assignThread: thread and folder belong to different workspaces",
           );
           return false;
@@ -131,7 +133,7 @@ const WorkspaceThreadFolder = {
       });
       return true;
     } catch (e) {
-      console.error("WorkspaceThreadFolder.assignThread:", e.message);
+      consoleLogger.error("WorkspaceThreadFolder.assignThread:", e.message);
       return false;
     }
   },

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const LOG_PREFIX = "\x1b[36m[SDK Timeout Patch]\x1b[0m";
 const DEFAULT_TIMEOUT_MS = 600_000; // 10 minutes default
 const DEFAULT_MAX_RETRIES = 0;
@@ -24,7 +26,7 @@ function patchSdkTimeouts() {
     const parsed = parseInt(envDefinedTimeout, 10);
     if (!Number.isFinite(parsed) || parsed <= 0) {
       // eslint-disable-next-line no-console
-      console.warn(
+      consoleLogger.warn(
         `${LOG_PREFIX} ANYTHINGLLM_FETCH_TIMEOUT="${envDefinedTimeout}" is not a valid positive integer — using default ${DEFAULT_TIMEOUT_MS}ms.`,
       );
     } else {
@@ -36,7 +38,7 @@ function patchSdkTimeouts() {
     const parsed = parseInt(envDefinedMaxRetries, 10);
     if (!Number.isFinite(parsed) || parsed < 0) {
       // eslint-disable-next-line no-console
-      console.warn(
+      consoleLogger.warn(
         `${LOG_PREFIX} ANYTHINGLLM_MAX_RETRIES="${envDefinedMaxRetries}" is not a valid non-negative integer — using default ${DEFAULT_MAX_RETRIES}.`,
       );
     } else {
@@ -51,12 +53,12 @@ function patchSdkTimeouts() {
       new Agent({ headersTimeout: timeoutMs, bodyTimeout: timeoutMs }),
     );
     // eslint-disable-next-line no-console
-    console.log(
+    consoleLogger.log(
       `${LOG_PREFIX} undici global dispatcher — headersTimeout & bodyTimeout ${humanSecs}`,
     );
   } catch {
     // eslint-disable-next-line no-console
-    console.warn(
+    consoleLogger.warn(
       `${LOG_PREFIX} undici not available — transport-level timeout not patched.`,
     );
   }
@@ -92,7 +94,7 @@ function patchSdkTimeouts() {
       }
 
       // eslint-disable-next-line no-console
-      console.log(
+      consoleLogger.log(
         `${LOG_PREFIX} ${label} SDK — timeout ${humanSecs}, maxRetries ${maxRetries}`,
       );
     } catch {

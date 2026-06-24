@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../logger/console.js");
+
 const { WorkspaceChats } = require("../../../../models/workspaceChats");
 const { WorkspaceThread } = require("../../../../models/workspaceThread");
 
@@ -93,7 +95,7 @@ const chatHistory = {
               attachments,
             });
           } catch (error) {
-            console.error("chat-history: Error saving message:", error);
+            consoleLogger.error("chat-history: Error saving message:", error);
           }
         });
       },

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 /**
  * @typedef MetaTagDefinition
  * @property {('link'|'meta')} tag - the type of meta tag element
@@ -40,7 +42,7 @@ class MetaGenerator {
 
   #log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[36m[${this.name}]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[36m[${this.name}]\x1b[0m ${text}`, ...args);
   }
 
   #defaultMeta() {

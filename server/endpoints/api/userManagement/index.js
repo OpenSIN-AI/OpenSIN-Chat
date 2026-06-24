@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../utils/logger/console.js");
+
 const { User } = require("../../../models/user");
 const { TemporaryAuthToken } = require("../../../models/temporaryAuthToken");
 const { multiUserMode } = require("../../../utils/http");
@@ -64,7 +66,7 @@ function apiUserManagementEndpoints(app) {
       response.status(200).json({ users: filteredUsers });
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e.message, e);
+      consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }
   });
@@ -120,7 +122,7 @@ function apiUserManagementEndpoints(app) {
         });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },

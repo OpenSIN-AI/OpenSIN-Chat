@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../logger/console.js");
+
 const fs = require("fs");
 const path = require("path");
 
@@ -27,7 +29,7 @@ const fileHistory = {
           fs.writeFile(filename, content, (err) => {
             if (err) {
               // eslint-disable-next-line no-console
-              console.error(err);
+              consoleLogger.error(err);
             }
           });
         });

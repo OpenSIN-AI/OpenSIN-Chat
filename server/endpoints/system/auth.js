@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Authentication endpoints — token request, SSO, account recovery, password reset.
 // Docs: server/endpoints/system.doc.md
+const consoleLogger = require("../../utils/logger/console.js");
+
 const crypto = require("crypto");
 const { SystemSettings } = require("../../models/systemSettings");
 const { User } = require("../../models/user");
@@ -52,7 +54,7 @@ function authEndpoints(app) {
         response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -96,7 +98,7 @@ function authEndpoints(app) {
         });
       } catch (e) {
         const errorId = crypto.randomUUID();
-        console.error(`[endpoint error ${errorId}]`, e);
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
         return response.status(500).json({
           success: false,
           user: null,
@@ -354,7 +356,7 @@ function authEndpoints(app) {
         }
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -428,7 +430,7 @@ function authEndpoints(app) {
         });
       } catch (e) {
         const errorId = crypto.randomUUID();
-        console.error(`[sso-simple FATAL id=${errorId}]`, e);
+        consoleLogger.error(`[sso-simple FATAL id=${errorId}]`, e);
         return response.status(500).json({
           valid: false,
           token: null,
@@ -464,7 +466,7 @@ function authEndpoints(app) {
         }
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error recovering account:", error);
+        consoleLogger.error("Error recovering account:", error);
         response
           .status(500)
           .json({ success: false, message: "Internal server error" });
@@ -498,7 +500,7 @@ function authEndpoints(app) {
         }
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error resetting password:", error);
+        consoleLogger.error("Error resetting password:", error);
         response
           .status(500)
           .json({ success: false, message: "Internal server error" });

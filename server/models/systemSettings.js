@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Central data-access layer for application-wide system settings.
 // Docs: server/models/systemSettings.doc.md
+const consoleLogger = require("../utils/logger/console.js");
+
 process.env.NODE_ENV === "development"
   ? require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` })
   : require("dotenv").config();
@@ -154,7 +156,7 @@ const SystemSettings = {
         return JSON.stringify(array);
       } catch {
         // eslint-disable-next-line no-console
-        console.error(`Failed to run validation function on footer_data`);
+        consoleLogger.error(`Failed to run validation function on footer_data`);
         return JSON.stringify([]);
       }
     },
@@ -167,7 +169,7 @@ const SystemSettings = {
         return Number(update);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(
+        consoleLogger.error(
           `Failed to run validation function on text_splitter_chunk_size`,
           e.message,
         );
@@ -183,7 +185,7 @@ const SystemSettings = {
         return Number(update);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(
+        consoleLogger.error(
           `Failed to run validation function on text_splitter_chunk_overlap`,
           e.message,
         );
@@ -214,7 +216,7 @@ const SystemSettings = {
         return String(update);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(
+        consoleLogger.error(
           `Failed to run validation function on agent_search_provider`,
           e.message,
         );
@@ -227,7 +229,7 @@ const SystemSettings = {
         return JSON.stringify(skills);
       } catch {
         // eslint-disable-next-line no-console
-        console.error(`Could not validate agent skills.`);
+        consoleLogger.error(`Could not validate agent skills.`);
         return JSON.stringify([]);
       }
     },
@@ -246,7 +248,7 @@ const SystemSettings = {
         return String(enabled);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(
+        consoleLogger.error(
           `Failed to run validation function on memory_enabled`,
           e.message,
         );
@@ -265,7 +267,7 @@ const SystemSettings = {
         return String(enabled);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(
+        consoleLogger.error(
           `Failed to run validation function on memory_auto_extraction`,
           e.message,
         );
@@ -278,7 +280,7 @@ const SystemSettings = {
         return JSON.stringify(skills);
       } catch {
         // eslint-disable-next-line no-console
-        console.error(`Could not validate disabled agent skills.`);
+        consoleLogger.error(`Could not validate disabled agent skills.`);
         return JSON.stringify([]);
       }
     },
@@ -288,7 +290,7 @@ const SystemSettings = {
         return JSON.stringify(skills);
       } catch {
         // eslint-disable-next-line no-console
-        console.error(`Could not validate disabled filesystem skills.`);
+        consoleLogger.error(`Could not validate disabled filesystem skills.`);
         return JSON.stringify([]);
       }
     },
@@ -298,7 +300,7 @@ const SystemSettings = {
         return JSON.stringify(skills);
       } catch {
         // eslint-disable-next-line no-console
-        console.error(`Could not validate disabled create files skills.`);
+        consoleLogger.error(`Could not validate disabled create files skills.`);
         return JSON.stringify([]);
       }
     },
@@ -308,7 +310,7 @@ const SystemSettings = {
         return JSON.stringify(skills);
       } catch {
         // eslint-disable-next-line no-console
-        console.error(`Could not validate disabled gmail skills.`);
+        consoleLogger.error(`Could not validate disabled gmail skills.`);
         return JSON.stringify([]);
       }
     },
@@ -337,7 +339,7 @@ const SystemSettings = {
         return JSON.stringify(mergedConfig);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(`Could not validate gmail agent config:`, e.message);
+        consoleLogger.error(`Could not validate gmail agent config:`, e.message);
         return JSON.stringify({});
       } finally {
         GmailBridge.reset();
@@ -349,7 +351,7 @@ const SystemSettings = {
         return JSON.stringify(skills);
       } catch {
         // eslint-disable-next-line no-console
-        console.error(`Could not validate disabled google calendar skills.`);
+        consoleLogger.error(`Could not validate disabled google calendar skills.`);
         return JSON.stringify([]);
       }
     },
@@ -379,7 +381,7 @@ const SystemSettings = {
         return JSON.stringify(mergedConfig);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(
+        consoleLogger.error(
           `Could not validate google calendar agent config:`,
           e.message,
         );
@@ -394,7 +396,7 @@ const SystemSettings = {
         return JSON.stringify(skills);
       } catch {
         // eslint-disable-next-line no-console
-        console.error(`Could not validate disabled outlook skills.`);
+        consoleLogger.error(`Could not validate disabled outlook skills.`);
         return JSON.stringify([]);
       }
     },
@@ -434,7 +436,7 @@ const SystemSettings = {
         return JSON.stringify(mergedConfig);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(`Could not validate outlook agent config:`, e.message);
+        consoleLogger.error(`Could not validate outlook agent config:`, e.message);
         return JSON.stringify({});
       } finally {
         OutlookBridge.reset();
@@ -453,7 +455,7 @@ const SystemSettings = {
         return JSON.stringify(updatedConnections);
       } catch {
         // eslint-disable-next-line no-console
-        console.error(`Failed to merge connections`);
+        consoleLogger.error(`Failed to merge connections`);
         return JSON.stringify(existingConnections ?? []);
       }
     },
@@ -697,7 +699,7 @@ const SystemSettings = {
       return setting || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -707,7 +709,7 @@ const SystemSettings = {
       return (await this.get(clause))?.value ?? fallback;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return fallback;
     }
   },
@@ -721,7 +723,7 @@ const SystemSettings = {
       return settings;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -762,7 +764,7 @@ const SystemSettings = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -811,7 +813,7 @@ const SystemSettings = {
       return { success: true, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO UPDATE SYSTEM SETTINGS", error.message);
+      consoleLogger.error("FAILED TO UPDATE SYSTEM SETTINGS", error.message);
       return { success: false, error: error.message };
     }
   },
@@ -822,7 +824,7 @@ const SystemSettings = {
       return setting?.value === "true";
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -833,7 +835,7 @@ const SystemSettings = {
       return setting?.value === "true";
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -845,7 +847,7 @@ const SystemSettings = {
       return !setting || setting.value === "true";
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -856,7 +858,7 @@ const SystemSettings = {
       return !setting || setting.value === "true";
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return true;
     }
   },
@@ -876,7 +878,7 @@ const SystemSettings = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -887,7 +889,7 @@ const SystemSettings = {
       return setting?.value || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -899,7 +901,7 @@ const SystemSettings = {
       return count > 0;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -1078,7 +1080,7 @@ const SystemSettings = {
           };
         } catch (e) {
           // eslint-disable-next-line no-console
-          console.error(
+          consoleLogger.error(
             `Failed to parse SQL connection "${conn.database_id ?? conn.engine}":`,
             e.message,
           );
@@ -1109,7 +1111,7 @@ const SystemSettings = {
       return { connectionKey: hubKey?.value || null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return { connectionKey: null };
     }
   },
@@ -1173,7 +1175,7 @@ function mergeConnections(existingConnections = [], updates = []) {
         // Verify original connection exists
         if (!connectionsMap.has(originalDatabaseId)) {
           // eslint-disable-next-line no-console
-          console.warn(
+          consoleLogger.warn(
             `[mergeConnections] Update skipped: Original connection "${originalDatabaseId}" not found`,
           );
           break;
@@ -1182,7 +1184,7 @@ function mergeConnections(existingConnections = [], updates = []) {
         // Check for name conflict (excluding the one being updated)
         if (newId !== originalDatabaseId && connectionsMap.has(newId)) {
           // eslint-disable-next-line no-console
-          console.warn(
+          consoleLogger.warn(
             `[mergeConnections] Update skipped: New name "${newId}" conflicts with existing connection`,
           );
           break;
@@ -1206,7 +1208,7 @@ function mergeConnections(existingConnections = [], updates = []) {
         // Skip if already exists
         if (connectionsMap.has(slugifiedId)) {
           // eslint-disable-next-line no-console
-          console.warn(
+          consoleLogger.warn(
             `[mergeConnections] Add skipped: Connection "${slugifiedId}" already exists`,
           );
           break;

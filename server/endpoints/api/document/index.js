@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../utils/logger/console.js");
+
 const { getStoragePath } = require("../../../utils/paths");
 const { Telemetry } = require("../../../models/telemetry");
 const { validApiKey } = require("../../../utils/middleware/validApiKey");
@@ -178,7 +180,7 @@ function apiDocumentEndpoints(app) {
         response.status(200).json({ success: true, error: null, documents });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -364,7 +366,7 @@ function apiDocumentEndpoints(app) {
         response.status(200).json({ success: true, error: null, documents });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -489,7 +491,7 @@ function apiDocumentEndpoints(app) {
         response.status(200).json({ success: true, error: null, documents });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -634,7 +636,7 @@ function apiDocumentEndpoints(app) {
         response.status(200).json({ success: true, error: null, documents });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -680,7 +682,7 @@ function apiDocumentEndpoints(app) {
       response.status(200).json({ localFiles });
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e.message, e);
+      consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }
   });
@@ -744,7 +746,7 @@ function apiDocumentEndpoints(app) {
         });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -802,7 +804,7 @@ function apiDocumentEndpoints(app) {
         response.status(200).json({ types });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -853,7 +855,7 @@ function apiDocumentEndpoints(app) {
         });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -912,7 +914,7 @@ function apiDocumentEndpoints(app) {
       response.status(200).json({ document });
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e.message, e);
+      consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }
   });
@@ -975,7 +977,7 @@ function apiDocumentEndpoints(app) {
         response.status(200).json({ success: true, message: null });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.status(500).json({
           success: false,
           message: `Failed to create folder: ${e.message}`,
@@ -1035,7 +1037,7 @@ function apiDocumentEndpoints(app) {
           .json({ success: true, message: "Folder removed successfully" });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.status(500).json({
           success: false,
           message: `Failed to remove folder: ${e.message}`,
@@ -1115,7 +1117,7 @@ function apiDocumentEndpoints(app) {
             fs.rename(sourcePath, destinationPath, (err) => {
               if (err) {
                 // eslint-disable-next-line no-console
-                console.error(`Error moving file ${from} to ${to}:`, err);
+                consoleLogger.error(`Error moving file ${from} to ${to}:`, err);
                 reject(err);
               } else {
                 resolve();
@@ -1139,14 +1141,14 @@ function apiDocumentEndpoints(app) {
           }
         } catch (err) {
           // eslint-disable-next-line no-console
-          console.error("Error moving files:", err);
+          consoleLogger.error("Error moving files:", err);
           response
             .status(500)
             .json({ success: false, message: "Failed to move some files." });
         }
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response
           .status(500)
           .json({ success: false, message: "Failed to move files." });
@@ -1238,11 +1240,11 @@ function apiDocumentEndpoints(app) {
         Telemetry.sendTelemetry("agent_generated_file_downloaded", {
           type: mimeType,
         }).catch((err) => {
-          console.error("Telemetry error:", err.message);
+          consoleLogger.error("Telemetry error:", err.message);
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(
+        consoleLogger.error(
           "[document/generated-files] Download error:",
           error.message,
         );

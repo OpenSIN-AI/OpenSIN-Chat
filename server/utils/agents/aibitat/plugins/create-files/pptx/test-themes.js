@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../../../logger/console.js");
+
 /**
  * Generate a preview presentation for every theme using the same rendering
  * pipeline as the production tool.  Run from repo root:
@@ -123,7 +125,7 @@ async function generateThemePreview(themeName, outputDir) {
   const filename = `theme-preview-${themeName}.pptx`;
   const filepath = path.join(outputDir, filename);
   await pptx.writeFile({ fileName: filepath });
-  console.log(`  ✓ ${theme.name} → ${filename}`);
+  consoleLogger.log(`  ✓ ${theme.name} → ${filename}`);
 }
 
 async function main() {
@@ -133,12 +135,12 @@ async function main() {
     fs.mkdirSync(outputDir, { recursive: true });
   }
 
-  console.log("Generating theme previews…\n");
+  consoleLogger.log("Generating theme previews…\n");
   const themes = getAvailableThemes();
   for (const themeName of themes) {
     await generateThemePreview(themeName, outputDir);
   }
-  console.log(`\nDone! ${themes.length} previews saved to:\n  ${outputDir}`);
+  consoleLogger.log(`\nDone! ${themes.length} previews saved to:\n  ${outputDir}`);
 }
 
 main().catch(console.error);

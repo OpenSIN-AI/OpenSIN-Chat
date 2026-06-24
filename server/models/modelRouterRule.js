@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const { Prisma } = require("@prisma/client");
 const prisma = require("../utils/prisma");
 const { safeJsonParse } = require("../utils/http");
@@ -93,7 +95,7 @@ const ModelRouterRule = {
       return { rule: this._hydrate(rule), error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return (
         handleUniqueConstraintError(error) || {
           rule: null,
@@ -111,7 +113,7 @@ const ModelRouterRule = {
       return this._hydrate(rule);
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -126,7 +128,7 @@ const ModelRouterRule = {
       return results.map((r) => this._hydrate(r));
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -202,7 +204,7 @@ const ModelRouterRule = {
       return { rule: this._hydrate(rule), error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return (
         handleUniqueConstraintError(error) || {
           rule: null,
@@ -221,7 +223,7 @@ const ModelRouterRule = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -243,7 +245,7 @@ const ModelRouterRule = {
       return { success: true, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return { success: false, error: error.message };
     }
   },

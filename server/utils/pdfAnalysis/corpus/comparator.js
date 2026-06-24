@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 /**
  * CorpusComparator — vergleicht die Analyse-Ergebnisse mehrerer Dokumente.
  *
@@ -109,7 +111,7 @@ function buildConflictPrompt(docsSubset, task) {
 
   const prompt = `Analyse-Auftrag: ${task}\n\n${findingsBlock}`;
   if (prompt.length > MAX_CONFLICT_PROMPT_CHARS) {
-    console.warn(
+    consoleLogger.warn(
       `[corpus/comparator] Konflikt-Prompt zu lang (${prompt.length} > ${MAX_CONFLICT_PROMPT_CHARS}) — Batch wird übersprungen.`,
     );
     return null;
@@ -140,7 +142,7 @@ async function runConflictBatch(docsSubset, task) {
       unique: Array.isArray(parsed.unique) ? parsed.unique : [],
     };
   } catch (e) {
-    console.warn(
+    consoleLogger.warn(
       `[corpus/comparator] Konflikt-Batch fehlgeschlagen (${docsSubset.length} Dokumente): ${e.message}`,
     );
     return { agreements: [], conflicts: [], unique: [] };

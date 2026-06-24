@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../../logger/console.js");
+
 const { SystemSettings } = require("../../../../../models/systemSettings");
 const { safeJsonParse } = require("../../../../http");
 
@@ -13,7 +15,7 @@ class GoogleCalendarBridge {
 
   #log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[35m[GoogleCalendarBridge]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[35m[GoogleCalendarBridge]\x1b[0m ${text}`, ...args);
   }
 
   /**

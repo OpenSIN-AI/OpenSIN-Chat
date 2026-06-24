@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Pre-update and post-update handler functions for ENV variable changes.
 // Docs: server/utils/helpers/updateENV.doc.md
+const consoleLogger = require("../../logger/console.js");
+
 const {
   resetAllVectorStores,
 } = require("../../vectorStore/resetAllVectorStores");
@@ -9,7 +11,7 @@ async function handleVectorStoreReset(key, prevValue, nextValue) {
   if (prevValue === nextValue) return;
   if (key === "VectorDB") {
     // eslint-disable-next-line no-console
-    console.log(
+    consoleLogger.log(
       `Vector configuration changed from ${prevValue} to ${nextValue} - resetting ${prevValue} namespaces`,
     );
     return await resetAllVectorStores({ vectorDbKey: prevValue });
@@ -17,7 +19,7 @@ async function handleVectorStoreReset(key, prevValue, nextValue) {
 
   if (key === "EmbeddingEngine" || key === "EmbeddingModelPref") {
     // eslint-disable-next-line no-console
-    console.log(
+    consoleLogger.log(
       `${key} changed from ${prevValue} to ${nextValue} - resetting ${process.env.VECTOR_DB} namespaces`,
     );
     return await resetAllVectorStores({ vectorDbKey: process.env.VECTOR_DB });

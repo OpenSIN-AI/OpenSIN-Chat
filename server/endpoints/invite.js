@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const { EventLogs } = require("../models/eventLogs");
 const { Invite } = require("../models/invite");
 const { User } = require("../models/user");
@@ -50,7 +52,7 @@ function inviteEndpoints(app) {
           .json({ invite: { code, status: invite.status }, error: null });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -104,7 +106,7 @@ function inviteEndpoints(app) {
         });
         if (!user) {
           // eslint-disable-next-line no-console
-          console.error("Accepting invite:", error);
+          consoleLogger.error("Accepting invite:", error);
           response.status(200).json({ success: false, error });
           return;
         }
@@ -121,7 +123,7 @@ function inviteEndpoints(app) {
         response.status(200).json({ success: true, error: null });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },

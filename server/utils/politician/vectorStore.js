@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 /**
  * Vector store operations for politician speeches — uses existing PGVector
  * provider for semantic search over speech contents.
@@ -23,7 +25,7 @@ class PoliticianVectorStore {
 
   log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[34m[PoliticianVectorStore]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[34m[PoliticianVectorStore]\x1b[0m ${text}`, ...args);
   }
 
   /**

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 /**
  * OCR-Fallback — Best Practice für gescannte PDFs ohne Text-Layer.
  *
@@ -33,7 +35,7 @@ async function getWorker() {
           const worker = await createWorker(lang);
           return worker;
         } catch (e) {
-          console.warn(
+          consoleLogger.warn(
             `[pdfAnalysis] Tesseract worker für "${lang}" fehlgeschlagen: ${e.message}`,
           );
         }

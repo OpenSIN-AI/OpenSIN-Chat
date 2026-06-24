@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const { v4 } = require("uuid");
 const prisma = require("../utils/prisma");
 const CMD_REGEX = new RegExp(/[^a-zA-Z0-9_-]/g);
@@ -20,7 +22,7 @@ const SlashCommandPresets = {
       return preset || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -34,7 +36,7 @@ const SlashCommandPresets = {
       return presets;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -65,7 +67,7 @@ const SlashCommandPresets = {
       return preset;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to create preset", error.message);
+      consoleLogger.error("Failed to create preset", error.message);
       return null;
     }
   },
@@ -85,7 +87,7 @@ const SlashCommandPresets = {
       }));
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to get user presets", error.message);
+      consoleLogger.error("Failed to get user presets", error.message);
       return [];
     }
   },
@@ -99,7 +101,7 @@ const SlashCommandPresets = {
       return preset;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to update preset", error.message);
+      consoleLogger.error("Failed to update preset", error.message);
       return null;
     }
   },
@@ -112,7 +114,7 @@ const SlashCommandPresets = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to delete preset", error.message);
+      consoleLogger.error("Failed to delete preset", error.message);
       return false;
     }
   },
@@ -134,7 +136,7 @@ const SlashCommandPresets = {
       });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(
+      consoleLogger.error(
         "Error migrating slash command presets to multi-user mode:",
         error,
       );

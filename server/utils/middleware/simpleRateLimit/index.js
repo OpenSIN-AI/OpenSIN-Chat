@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 const MAX_TRACKED_KEYS = 10000;
 const buckets = new Map();
 
@@ -18,7 +20,7 @@ if (RATE_LIMIT_BACKEND === "redis") {
       { lazyConnect: true, maxRetriesPerRequest: 1 },
     );
     redisClient.connect().catch((err) => {
-      console.warn(
+      consoleLogger.warn(
         `[simpleRateLimit] Redis connection failed: ${err.message}. Falling back to in-memory.`,
       );
     });
@@ -31,7 +33,7 @@ if (RATE_LIMIT_BACKEND === "redis") {
       return await redisClient.pttl(key);
     };
   } catch (err) {
-    console.warn(
+    consoleLogger.warn(
       `[simpleRateLimit] RATE_LIMIT_BACKEND=redis requested but ioredis not installed: ${err.message}. Falling back to in-memory.`,
     );
     redisClient = null;
@@ -106,7 +108,7 @@ function simpleRateLimit({
     String(process.env.DISABLE_RATE_LIMITS).toLowerCase() === "true" &&
     process.env.NODE_ENV === "production"
   ) {
-    console.error(
+    consoleLogger.error(
       "[FATAL] DISABLE_RATE_LIMITS=true in production — refusing to start.",
     );
     process.exit(1);

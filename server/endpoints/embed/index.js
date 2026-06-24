@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../utils/logger/console.js");
+
 const crypto = require("crypto");
 const { v4: uuidv4 } = require("uuid");
 const { reqBody, multiUserMode } = require("../../utils/http");
@@ -74,7 +76,7 @@ function embeddedEndpoints(app) {
         response.end();
       } catch (e) {
         const errorId = crypto.randomUUID();
-        console.error(`[endpoint error ${errorId}]`, e);
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
         writeResponseChunk(response, {
           id: uuidv4(),
           type: "abort",
@@ -107,7 +109,7 @@ function embeddedEndpoints(app) {
         response.status(200).json({ history: convertToChatHistory(history) });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -125,7 +127,7 @@ function embeddedEndpoints(app) {
         response.status(200).end();
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },

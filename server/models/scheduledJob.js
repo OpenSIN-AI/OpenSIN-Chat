@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const prisma = require("../utils/prisma");
 const later = require("@breejs/later");
 const cronValidate = require("cron-validate").default;
@@ -35,7 +37,7 @@ const ScheduledJob = {
       return next || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(
+      consoleLogger.error(
         "Failed to compute next run time from cron:",
         error.message,
       );
@@ -85,7 +87,7 @@ const ScheduledJob = {
       });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to create scheduled job:", error.message);
+      consoleLogger.error("Failed to create scheduled job:", error.message);
       return { job: null, error: error.message };
     }
   },
@@ -132,7 +134,7 @@ const ScheduledJob = {
       });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to update scheduled job:", error.message);
+      consoleLogger.error("Failed to update scheduled job:", error.message);
       return { job: null, error: error.message };
     }
   },
@@ -143,7 +145,7 @@ const ScheduledJob = {
       return job || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to get scheduled job:", error.message);
+      consoleLogger.error("Failed to get scheduled job:", error.message);
       return null;
     }
   },
@@ -166,7 +168,7 @@ const ScheduledJob = {
       return results;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to query scheduled jobs:", error.message);
+      consoleLogger.error("Failed to query scheduled jobs:", error.message);
       return [];
     }
   },
@@ -177,7 +179,7 @@ const ScheduledJob = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to delete scheduled job:", error.message);
+      consoleLogger.error("Failed to delete scheduled job:", error.message);
       return false;
     }
   },
@@ -189,7 +191,7 @@ const ScheduledJob = {
       });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to get enabled scheduled jobs:", error.message);
+      consoleLogger.error("Failed to get enabled scheduled jobs:", error.message);
       return [];
     }
   },
@@ -211,7 +213,7 @@ const ScheduledJob = {
       });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to count active scheduled jobs:", error.message);
+      consoleLogger.error("Failed to count active scheduled jobs:", error.message);
       return 0;
     }
   },
@@ -250,7 +252,7 @@ const ScheduledJob = {
       });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to recompute nextRunAt:", error.message);
+      consoleLogger.error("Failed to recompute nextRunAt:", error.message);
     }
   },
 
@@ -274,7 +276,7 @@ const ScheduledJob = {
       });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to update run timestamps:", error.message);
+      consoleLogger.error("Failed to update run timestamps:", error.message);
     }
   },
 
@@ -529,7 +531,7 @@ const ScheduledJob = {
       }
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to load MCP servers for available tools:", error);
+      consoleLogger.error("Failed to load MCP servers for available tools:", error);
     }
 
     return categories;

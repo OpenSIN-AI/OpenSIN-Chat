@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 /**
  * FactStore — SQLite basierte Speicherung ausgewählter Einzelinformationen
  * mit vollem Quellenbezug (Dokument, Seite, wörtliches Zitat, Job-ID).
@@ -33,7 +35,7 @@ try {
   new Database(":memory:").close();
 } catch (e) {
   Database = null;
-  console.warn(
+  consoleLogger.warn(
     `[pdfAnalysis] better-sqlite3 nicht verfügbar (${e.message.split("\n")[0]}). ` +
       `FactStore nutzt den JSON-Fallback (keine FTS5-Volltextsuche, langsamer bei sehr großen Korpora).`,
   );
@@ -117,13 +119,13 @@ class FactStore {
             createdAt: f.createdAt,
           })),
         );
-        console.log(
+        consoleLogger.log(
           `[pdfAnalysis] ${facts.length} Fakten aus facts.json nach SQLite migriert.`,
         );
       }
       fs.renameSync(LEGACY_JSON, `${LEGACY_JSON}.migrated`);
     } catch (e) {
-      console.error(
+      consoleLogger.error(
         `[pdfAnalysis] Migration von facts.json fehlgeschlagen: ${e.message}`,
       );
     }
@@ -321,7 +323,7 @@ class JsonFactStore {
       const { facts = [] } = JSON.parse(fs.readFileSync(this.jsonFile, "utf8"));
       for (const f of facts) if (f && f.id) this.facts.set(f.id, f);
     } catch (e) {
-      console.error(
+      consoleLogger.error(
         `[pdfAnalysis] facts.json konnte nicht gelesen werden: ${e.message}`,
       );
     }
@@ -335,7 +337,7 @@ class JsonFactStore {
         "utf8",
       );
     } catch (e) {
-      console.error(
+      consoleLogger.error(
         `[pdfAnalysis] facts.json konnte nicht geschrieben werden: ${e.message}`,
       );
     }

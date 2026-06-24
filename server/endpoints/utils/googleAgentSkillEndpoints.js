@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../utils/logger/console.js");
+
 const {
   isSingleUserMode,
 } = require("../../utils/middleware/multiUserProtected");
@@ -34,7 +36,7 @@ function googleAgentSkillEndpoints(app) {
         });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error("Gmail status error:", e);
+        consoleLogger.error("Gmail status error:", e);
         response
           .status(500)
           .json({ success: false, error: "Internal server error." });
@@ -65,7 +67,7 @@ function googleAgentSkillEndpoints(app) {
         });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error("Google Calendar status error:", e);
+        consoleLogger.error("Google Calendar status error:", e);
         response
           .status(500)
           .json({ success: false, error: "Internal server error." });

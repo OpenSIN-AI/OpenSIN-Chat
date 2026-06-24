@@ -1669,6 +1669,11 @@ const TRANSLATIONS = {
     open: "Vorschau",
     download: "Herunterladen",
     downloading: "Herunterladen…",
+    add_to_source: "Zur Quelle hinzufügen",
+    adding: "Hinzufügen…",
+    open_new_tab: "Öffnen",
+    source_added: "Zu Arbeitsbereich-Quellen hinzugefügt",
+    source_add_failed: "Hinzufügen zu Quellen fehlgeschlagen",
   },
   customization: {
     interface: {

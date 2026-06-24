@@ -1,5 +1,7 @@
 const { getStoragePath } = require("../../paths");
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 const fs = require("fs");
 const path = require("path");
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
@@ -71,7 +73,7 @@ class GeminiLLM {
 
   #log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[32m[${this.className}]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[32m[${this.className}]\x1b[0m ${text}`, ...args);
   }
 
   // This checks if the .cached_at file has a timestamp that is more than 1Week (in millis)
@@ -118,7 +120,7 @@ class GeminiLLM {
       return model.contextWindow;
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(`GeminiLLM:promptWindowLimit`, e.message);
+      consoleLogger.error(`GeminiLLM:promptWindowLimit`, e.message);
       return MODEL_MAP.get("gemini", modelName) ?? 30_720;
     }
   }
@@ -136,7 +138,7 @@ class GeminiLLM {
       return model.contextWindow;
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(`GeminiLLM:promptWindowLimit`, e.message);
+      consoleLogger.error(`GeminiLLM:promptWindowLimit`, e.message);
       return MODEL_MAP.get("gemini", this.model) ?? 30_720;
     }
   }
@@ -227,12 +229,12 @@ class GeminiLLM {
         })
         .catch((e) => {
           // eslint-disable-next-line no-console
-          console.error(`Gemini:getGeminiModelsV1`, e.message);
+          consoleLogger.error(`Gemini:getGeminiModelsV1`, e.message);
           return;
         });
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(`Gemini:getGeminiModelsV1`, e.message);
+      consoleLogger.error(`Gemini:getGeminiModelsV1`, e.message);
     }
 
     // Fetch from v1beta
@@ -277,17 +279,17 @@ class GeminiLLM {
         })
         .catch((e) => {
           // eslint-disable-next-line no-console
-          console.error(`Gemini:getGeminiModelsV1beta`, e.message);
+          consoleLogger.error(`Gemini:getGeminiModelsV1beta`, e.message);
           return;
         });
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(`Gemini:getGeminiModelsV1beta`, e.message);
+      consoleLogger.error(`Gemini:getGeminiModelsV1beta`, e.message);
     }
 
     if (allModels.length === 0) {
       // eslint-disable-next-line no-console
-      console.error(`Gemini:getGeminiModels - No models found`);
+      consoleLogger.error(`Gemini:getGeminiModels - No models found`);
       return defaultGeminiModels();
     }
 
@@ -395,7 +397,7 @@ class GeminiLLM {
         })
         .catch((e) => {
           // eslint-disable-next-line no-console
-          console.error(e);
+          consoleLogger.error(e);
           throw new Error(e.message);
         }),
     );

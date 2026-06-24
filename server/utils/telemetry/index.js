@@ -4,9 +4,11 @@
 // Es werden keinerlei Daten an externe Dienste gesendet.
 // Diese Funktion bleibt als No-Op-Stub erhalten, damit Aufrufer in
 // Boot-Skripten nicht refaktoriert werden müssen.
+const consoleLogger = require("../logger/console.js");
+
 async function setupTelemetry() {
   // eslint-disable-next-line no-console
-  console.log(
+  consoleLogger.log(
     `\x1b[32m[OpenSIN Chat]\x1b[0m Telemetrie dauerhaft deaktiviert — keine Outbound-Calls, keine Drittanbieter.`,
   );
   return true;

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../../../logger/console.js");
+
 const { SystemSettings } = require("../../../../../../models/systemSettings");
 const { safeJsonParse } = require("../../../../../http");
 
@@ -67,7 +69,7 @@ async function validateConnection(identifier = "", connectionConfig = {}) {
     return await client.validateConnection();
   } catch {
     // eslint-disable-next-line no-console
-    console.error(`Failed to connect to ${identifier} database.`);
+    consoleLogger.error(`Failed to connect to ${identifier} database.`);
     return {
       success: false,
       error: `Unable to connect to ${identifier}. Please verify your connection details.`,

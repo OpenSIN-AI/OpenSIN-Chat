@@ -2,6 +2,8 @@
 // Purpose: Endpoints for parsed workspace files (chat uploads) and their
 //          mirror into the server uploads directory for the FilesystemSidebar.
 // Docs: server/endpoints/workspacesParsedFiles.js.doc.md
+const consoleLogger = require("../utils/logger/console.js");
+
 const crypto = require("crypto");
 const { reqBody, multiUserMode, userFromSession } = require("../utils/http");
 const { handleFileUpload } = require("../utils/files/multer");
@@ -48,7 +50,7 @@ async function copyToUploads(request) {
   } catch (e) {
     // Non-fatal: visibility in the sidebar is optional; the parse itself succeeded.
     // eslint-disable-next-line no-console
-    console.error("[copyToUploads] best-effort copy failed:", e.message);
+    consoleLogger.error("[copyToUploads] best-effort copy failed:", e.message);
   }
 }
 
@@ -78,7 +80,7 @@ function workspaceParsedFilesEndpoints(app) {
           .json({ files, contextWindow, currentContextTokenCount });
       } catch (e) {
         const errorId = crypto.randomUUID();
-        console.error(`[endpoint error ${errorId}]`, e);
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
         return response.status(500).json({
           success: false,
           error: "Internal server error",
@@ -107,7 +109,7 @@ function workspaceParsedFilesEndpoints(app) {
         return response.status(success ? 200 : 403).end();
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         return response.sendStatus(500);
       }
     },
@@ -165,7 +167,7 @@ function workspaceParsedFilesEndpoints(app) {
         });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         return response.sendStatus(500);
       }
     },
@@ -274,7 +276,7 @@ function workspaceParsedFilesEndpoints(app) {
       } catch (e) {
         cleanupHotdirFile(request);
         const errorId = crypto.randomUUID();
-        console.error(`[endpoint error ${errorId}]`, e);
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
         return response.status(500).json({
           success: false,
           error: "Internal server error",

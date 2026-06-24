@@ -30,17 +30,48 @@ vi.mock("@phosphor-icons/react/dist/csr/Eye", () => ({
   default: (props) => <svg data-testid="eye-icon" {...props} />,
   Eye: (props) => <svg data-testid="eye-icon" {...props} />,
 }));
+vi.mock("@phosphor-icons/react/dist/csr/Bookmark", () => ({
+  default: (props) => <svg data-testid="bookmark-icon" {...props} />,
+  Bookmark: (props) => <svg data-testid="bookmark-icon" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/ArrowSquareOut", () => ({
+  default: (props) => <svg data-testid="arrow-square-out-icon" {...props} />,
+  ArrowSquareOut: (props) => (
+    <svg data-testid="arrow-square-out-icon" {...props} />
+  ),
+}));
+vi.mock("@/models/workspace", () => ({
+  default: {
+    parseFile: vi.fn(() => Promise.resolve({ location: "test-location" })),
+    embedParsedFile: vi.fn(() => Promise.resolve(true)),
+  },
+}));
+vi.mock("@/utils/toast", () => ({
+  default: vi.fn(),
+}));
+vi.mock("@/hooks/useAuthenticatedBlobUrl", () => {
+  let mockResult = { blobUrl: null, loading: false, error: null };
+  return {
+    default: vi.fn(() => mockResult),
+    __setMockResult: (r) => { mockResult = r; },
+  };
+});
 
 // Capture the openPreview mock so individual tests can assert against it.
 const openPreviewMock = vi.fn();
 vi.mock("../../ChatSidebar", () => ({
   useChatSidebar: () => ({ openPreview: openPreviewMock }),
 }));
-vi.mock("@/utils/request", () => ({
-  baseHeaders: () => ({ Authorization: "Bearer test-token" }),
-}));
+vi.mock("@/utils/request", async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    baseHeaders: () => ({ Authorization: "Bearer test-token" }),
+  };
+});
 vi.mock("@/utils/constants", () => ({
   API_BASE: "http://localhost:3001/api",
+  APPEARANCE_SETTINGS: "appearance-settings",
 }));
 
 // Mock fetch globally for ImagePreviewBanner
@@ -51,6 +82,12 @@ global.URL.revokeObjectURL = vi.fn();
 
 import { saveAs } from "file-saver";
 import StorageFiles from "@/models/files";
+import useAuthenticatedBlobUrl from "@/hooks/useAuthenticatedBlobUrl";
+
+// Helper to set the mock return value for the blob URL hook
+function setBlobUrlMock(result) {
+  useAuthenticatedBlobUrl.mockReturnValue(result);
+}
 
 describe("FileDownloadCard", () => {
   beforeEach(() => {
@@ -184,11 +221,7 @@ describe("FileDownloadCard", () => {
   });
 
   it("shows inline image when fetch succeeds for png", async () => {
-    const blob = new Blob(["imgdata"], { type: "image/png" });
-    mockFetch.mockResolvedValue({
-      ok: true,
-      blob: () => Promise.resolve(blob),
-    });
+    setBlobUrlMock({ blobUrl: "blob:mock-url", loading: false, error: null });
     render(
       <FileDownloadCard
         props={{
@@ -207,7 +240,7 @@ describe("FileDownloadCard", () => {
   });
 
   it("hides inline preview when fetch fails for image", async () => {
-    mockFetch.mockResolvedValue({ ok: false, status: 404 });
+    setBlobUrlMock({ blobUrl: null, loading: false, error: "404" });
     render(
       <FileDownloadCard
         props={{
@@ -284,8 +317,7 @@ describe("FileDownloadCard", () => {
   });
 
   it("renders skeleton spinner while image is loading (CLS prevention)", () => {
-    // Mock fetch to NEVER resolve — keeps the banner in loading state
-    mockFetch.mockReturnValue(new Promise(() => {}));
+    setBlobUrlMock({ blobUrl: null, loading: true, error: null });
     const { container } = render(
       <FileDownloadCard
         props={{
@@ -303,7 +335,7 @@ describe("FileDownloadCard", () => {
   });
 
   it("renders nothing for ImagePreviewBanner when fetch fails (no fallback UI)", async () => {
-    mockFetch.mockResolvedValue({ ok: false, status: 500 });
+    setBlobUrlMock({ blobUrl: null, loading: false, error: "500" });
     const { container } = render(
       <FileDownloadCard
         props={{
@@ -319,11 +351,7 @@ describe("FileDownloadCard", () => {
   });
 
   it("ImagePreviewBanner uses filename as alt text when filename is provided", async () => {
-    const blob = new Blob(["data"], { type: "image/png" });
-    mockFetch.mockResolvedValue({
-      ok: true,
-      blob: () => Promise.resolve(blob),
-    });
+    setBlobUrlMock({ blobUrl: "blob:mock-url", loading: false, error: null });
     render(
       <FileDownloadCard
         props={{

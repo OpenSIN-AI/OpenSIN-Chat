@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const crypto = require("node:crypto");
 const { Telemetry } = require("../models/telemetry");
 const {
@@ -89,7 +91,7 @@ function relayToSocket(message) {
     this.checkBailCommand(message);
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.error("[agentWebsocket] relayToSocket error:", e.message);
+    consoleLogger.error("[agentWebsocket] relayToSocket error:", e.message);
   }
 }
 
@@ -133,7 +135,7 @@ function agentWebsocket(app, routePrefix = "") {
   // `${websocketURI()}/api/agent-invocation/:uuid`.
   if (typeof app.ws !== "function") {
     // eslint-disable-next-line no-console
-    console.error(
+    consoleLogger.error(
       "[agentWebsocket] `.ws` is not available on the provided app/router — " +
         "agent WebSocket route NOT registered. Agents will fail to connect. " +
         "Ensure agentWebsocket(app) is called with the main express app after expressWs(app).",
@@ -148,7 +150,7 @@ function agentWebsocket(app, routePrefix = "") {
       // CSWSH protection: validate Origin header.
       if (!isOriginAllowed(request)) {
         // eslint-disable-next-line no-console
-        console.warn(
+        consoleLogger.warn(
           `[agentWebsocket] Rejecting connection from disallowed origin: ${request.headers.origin || "<missing>"}`,
         );
         socket.close(1008, "Origin not allowed");
@@ -170,7 +172,7 @@ function agentWebsocket(app, routePrefix = "") {
           clearTimeout(heartbeatTimeout);
           heartbeatTimeout = setTimeout(() => {
             // eslint-disable-next-line no-console
-            console.warn(
+            consoleLogger.warn(
               "[agentWebsocket] Heartbeat timeout — terminating stale connection.",
             );
             try {
@@ -223,7 +225,7 @@ function agentWebsocket(app, routePrefix = "") {
         await withWsLock(() => {
           if (activeConnectionCount >= MAX_WS_CONNECTIONS) {
             // eslint-disable-next-line no-console
-            console.warn(
+            consoleLogger.warn(
               `[agentWebsocket] Rejecting connection: ${activeConnectionCount}/${MAX_WS_CONNECTIONS} slots in use.`,
             );
             try {
@@ -247,7 +249,7 @@ function agentWebsocket(app, routePrefix = "") {
             typeof data === "string" ? Buffer.byteLength(data) : data.length;
           if (size > MAX_MESSAGE_BYTES) {
             // eslint-disable-next-line no-console
-            console.warn(
+            consoleLogger.warn(
               `[agentWebsocket] Message rejected: ${size} bytes exceeds ${MAX_MESSAGE_BYTES} byte limit.`,
             );
             try {
@@ -277,7 +279,7 @@ function agentWebsocket(app, routePrefix = "") {
             }
           } catch (e) {
             // eslint-disable-next-line no-console
-            console.error(
+            consoleLogger.error(
               "[agentWebsocket] Error aborting agent on close:",
               e.message,
             );
@@ -288,7 +290,7 @@ function agentWebsocket(app, routePrefix = "") {
 
         socket.on("error", (error) => {
           // eslint-disable-next-line no-console
-          console.error(
+          consoleLogger.error(
             "[agentWebsocket] Socket error:",
             error?.message || error,
           );
@@ -322,7 +324,7 @@ function agentWebsocket(app, routePrefix = "") {
       } catch (e) {
         const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error(`[wss error id=${id}]`, e);
+        consoleLogger.error(`[wss error id=${id}]`, e);
         cleanup();
         // Surface a clear, non-secret setup message so the frontend does not
         // show the generic "Internal error" on every agent chat attempt when the

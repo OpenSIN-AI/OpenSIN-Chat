@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const { SystemSettings } = require("../models/systemSettings");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
 const { reqBody } = require("../utils/http");
@@ -33,7 +35,7 @@ function communityHubEndpoints(app) {
         response.status(200).json({ success: true, connectionKey });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        consoleLogger.error(error);
         response
           .status(500)
           .json({ success: false, error: "Internal server error." });
@@ -52,7 +54,7 @@ function communityHubEndpoints(app) {
         response.status(200).json({ success: true, error: null });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        consoleLogger.error(error);
         response
           .status(500)
           .json({ success: false, error: "Internal server error." });
@@ -69,7 +71,7 @@ function communityHubEndpoints(app) {
         response.status(200).json({ success: true, result: exploreItems });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        consoleLogger.error(error);
         response.status(500).json({
           success: false,
           result: null,
@@ -91,7 +93,7 @@ function communityHubEndpoints(app) {
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        consoleLogger.error(error);
         response.status(500).json({
           success: false,
           item: null,
@@ -138,7 +140,7 @@ function communityHubEndpoints(app) {
         response.status(200).json({ success: true, error: null });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        consoleLogger.error(error);
         response
           .status(500)
           .json({ success: false, error: "Internal server error." });
@@ -184,7 +186,7 @@ function communityHubEndpoints(app) {
         response.status(200).json({ success: true, error: null });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        consoleLogger.error(error);
         response.status(500).json({
           success: false,
           error: "Internal server error.",
@@ -203,7 +205,7 @@ function communityHubEndpoints(app) {
         response.status(200).json({ success: true, ...items });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        consoleLogger.error(error);
         response
           .status(500)
           .json({ success: false, error: "Internal server error." });
@@ -243,7 +245,7 @@ function communityHubEndpoints(app) {
           .json({ success: true, error: null, item: { id: itemId } });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        consoleLogger.error(error);
         response
           .status(500)
           .json({ success: false, error: "Internal server error." });

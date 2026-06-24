@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../utils/logger/console.js");
+
 const { EventLogs } = require("../../../models/eventLogs");
 const { Invite } = require("../../../models/invite");
 const { SystemSettings } = require("../../../models/systemSettings");
@@ -79,7 +81,7 @@ function apiAdminEndpoints(app) {
       response.status(200).json({ users });
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e);
+      consoleLogger.error(e);
       response.sendStatus(500);
     }
   });
@@ -141,7 +143,7 @@ function apiAdminEndpoints(app) {
         response.status(newUser ? 200 : 400).json({ user: newUser, error });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -218,7 +220,7 @@ function apiAdminEndpoints(app) {
         response.status(200).json({ success, error });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -274,7 +276,7 @@ function apiAdminEndpoints(app) {
         response.status(200).json({ success: true, error: null });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -325,7 +327,7 @@ function apiAdminEndpoints(app) {
         response.status(200).json({ invites });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -388,7 +390,7 @@ function apiAdminEndpoints(app) {
         response.status(200).json({ invite, error });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -440,7 +442,7 @@ function apiAdminEndpoints(app) {
         response.status(200).json({ success, error });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -496,7 +498,7 @@ function apiAdminEndpoints(app) {
         response.status(200).json({ users });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -564,7 +566,7 @@ function apiAdminEndpoints(app) {
         response.status(200).json({ success, error });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -680,7 +682,7 @@ function apiAdminEndpoints(app) {
         });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -737,7 +739,7 @@ function apiAdminEndpoints(app) {
         response.status(200).json({ chats: chats, hasPages });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -794,7 +796,7 @@ function apiAdminEndpoints(app) {
         response.status(200).json({ success: true, error: null });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const prisma = require("../utils/prisma");
 const { Document } = require("./documents");
 
@@ -22,7 +24,7 @@ const DocumentVectors = {
       return { documentsInserted: inserts.length };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Bulk insert failed", error);
+      consoleLogger.error("Bulk insert failed", error);
       return { documentsInserted: 0 };
     }
   },
@@ -36,7 +38,7 @@ const DocumentVectors = {
       return results;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Where query failed", error);
+      consoleLogger.error("Where query failed", error);
       return [];
     }
   },
@@ -52,7 +54,7 @@ const DocumentVectors = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Delete for workspace failed", error);
+      consoleLogger.error("Delete for workspace failed", error);
       return false;
     }
   },
@@ -65,7 +67,7 @@ const DocumentVectors = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Delete IDs failed", error);
+      consoleLogger.error("Delete IDs failed", error);
       return false;
     }
   },
@@ -76,7 +78,7 @@ const DocumentVectors = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Delete failed", error);
+      consoleLogger.error("Delete failed", error);
       return false;
     }
   },

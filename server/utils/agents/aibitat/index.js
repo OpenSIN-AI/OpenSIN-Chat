@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 /* eslint-disable unused-imports/no-unused-vars */
 const { EventEmitter } = require("events");
 const { APIError } = require("./error.js");
@@ -719,7 +721,7 @@ class AIbitat {
     // warn if the group is underpopulated
     if (nodes.length < 3) {
       // eslint-disable-next-line no-console
-      console.warn(
+      consoleLogger.warn(
         `- Group (${channel}) is underpopulated with ${nodes.length} agents. Direct communication would be more efficient.`,
       );
     }
@@ -992,7 +994,7 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
       return await providerCall();
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(`[AIbitat] Provider error: ${error.message}`, {
+      consoleLogger.error(`[AIbitat] Provider error: ${error.message}`, {
         hide_meta: true,
       });
       throw new APIError(`The agent model failed to respond: ${error.message}`);
@@ -1185,7 +1187,7 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
         null,
         true,
       ).catch((err) => {
-        console.error("Telemetry error:", err.message);
+        consoleLogger.error("Telemetry error:", err.message);
       });
       this.emitter.emit("toolCallResult", {
         toolName: name,
@@ -1439,7 +1441,7 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
         null,
         true,
       ).catch((err) => {
-        console.error("Telemetry error:", err.message);
+        consoleLogger.error("Telemetry error:", err.message);
       });
       this.emitter.emit("toolCallResult", {
         toolName: name,

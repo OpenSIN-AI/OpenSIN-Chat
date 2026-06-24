@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Centralized path helpers for the server with STORAGE_DIR fallback.
 // Docs: server/utils/paths.js.doc.md
+const consoleLogger = require("./logger/console.js");
+
 const fs = require("fs");
 const path = require("path");
 
@@ -30,7 +32,7 @@ function getStoragePath(...subdirs) {
   const candidate = process.env.STORAGE_DIR;
   if (!path.isAbsolute(candidate)) {
     if (!pathsWarnedAboutFallback) {
-      console.warn(
+      consoleLogger.warn(
         `[paths] STORAGE_DIR="${candidate}" is not absolute — falling back to local <repo>/server/storage. Set STORAGE_DIR to an absolute path in .env.development to silence this warning.`,
       );
       pathsWarnedAboutFallback = true;
@@ -45,7 +47,7 @@ function getStoragePath(...subdirs) {
     return subdirs.length > 0 ? path.resolve(candidate, ...subdirs) : candidate;
   } catch (err) {
     if (!pathsWarnedAboutFallback) {
-      console.warn(
+      consoleLogger.warn(
         `[paths] STORAGE_DIR="${candidate}" is not writable (${err.code || err.message}) — falling back to local <repo>/server/storage. Set STORAGE_DIR in .env.development to an absolute writable path to silence this warning.`,
       );
       pathsWarnedAboutFallback = true;

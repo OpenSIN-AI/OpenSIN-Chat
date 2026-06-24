@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 process.env.NODE_ENV === "development"
   ? require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` })
   : require("dotenv").config();
@@ -108,7 +110,7 @@ async function userFromSession(request, response = null) {
 
 function decodeJWT(jwtToken) {
   if (!process.env.JWT_SECRET) {
-    console.warn("JWT decode skipped: JWT_SECRET is unset.");
+    consoleLogger.warn("JWT decode skipped: JWT_SECRET is unset.");
     return { p: null, id: null, username: null };
   }
   try {
@@ -118,7 +120,7 @@ function decodeJWT(jwtToken) {
       audience: "opensin-chat",
     });
   } catch (e) {
-    console.warn("JWT decode failed:", e.message);
+    consoleLogger.warn("JWT decode failed:", e.message);
   }
   return { p: null, id: null, username: null };
 }

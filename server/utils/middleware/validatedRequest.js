@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const { SystemSettings } = require("../../models/systemSettings");
 const { User } = require("../../models/user");
 const { EncryptionManager } = require("../EncryptionManager");
@@ -68,7 +70,7 @@ async function validatedRequest(request, response, next) {
       typeof crypto !== "undefined" && crypto.randomUUID
         ? crypto.randomUUID()
         : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-    console.error(
+    consoleLogger.error(
       `[validatedRequest FATAL id=${id}] auth misconfigured in production. AUTH_TOKEN=${!!process.env.AUTH_TOKEN} JWT_SECRET=${!!process.env.JWT_SECRET}`,
     );
     return response.status(503).json({
@@ -202,7 +204,7 @@ async function validateMultiUserRequest(request, response, next) {
     response.locals.user = user;
     next();
   } catch (e) {
-    console.error(e.message, e);
+    consoleLogger.error(e.message, e);
     response.status(500).json({ error: "Internal server error" });
   }
 }

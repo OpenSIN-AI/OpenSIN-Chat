@@ -3,7 +3,7 @@
 **Purpose:** Production Docker Compose for OpenSIN Chat with PostgreSQL + Redis,
 enabling horizontal scaling beyond a single node.
 
-**Docs:** E5-D1 in `docs/PLAN-SCALE-DEPLOY.md`
+**Docs:** See `docs/PLAN-SCALE-DEPLOY-GUIDE.md`
 
 ## Architecture
 

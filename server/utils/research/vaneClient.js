@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 /**
  * Vane API Client — bridge to a self-hosted Vane (AI answering engine) sidecar.
  *
@@ -19,7 +21,7 @@ class VaneClient {
   static #providerCache = { data: null, fetchedAt: 0 };
 
   static log(text, ...args) {
-    console.log(`\x1b[36m[VaneClient]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[36m[VaneClient]\x1b[0m ${text}`, ...args);
   }
 
   /** Check if the Vane sidecar is reachable. */

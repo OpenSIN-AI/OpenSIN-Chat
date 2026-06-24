@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Plugin CAN ONLY BE USE IN DEVELOPMENT.
+const consoleLogger = require("../../../logger/console.js");
+
 const { input } = require("@inquirer/prompts");
 const chalk = require("chalk");
 
@@ -22,14 +24,14 @@ const cli = {
           let errorMessage =
             error?.message || "An error occurred while running the agent.";
           // eslint-disable-next-line no-console
-          console.error(chalk.red(`   error: ${errorMessage}`), error);
+          consoleLogger.error(chalk.red(`   error: ${errorMessage}`), error);
         });
 
         aibitat.onStart(() => {
           // eslint-disable-next-line no-console
-          console.log();
+          consoleLogger.log();
           // eslint-disable-next-line no-console
-          console.log("🚀 starting chat ...\n");
+          consoleLogger.log("🚀 starting chat ...\n");
           printing = [Promise.resolve()];
         });
 
@@ -45,7 +47,7 @@ const cli = {
         aibitat.onTerminate(async () => {
           await Promise.all(printing);
           // eslint-disable-next-line no-console
-          console.log("🚀 chat finished");
+          consoleLogger.log("🚀 chat finished");
         });
 
         aibitat.onInterrupt(async (node) => {
@@ -53,11 +55,11 @@ const cli = {
           const feedback = await this.askForFeedback(node);
           // Add an extra line after the message
           // eslint-disable-next-line no-console
-          console.log();
+          consoleLogger.log();
 
           if (feedback === "exit") {
             // eslint-disable-next-line no-console
-            console.log("🚀 chat finished");
+            consoleLogger.log("🚀 chat finished");
             return process.exit(0);
           }
 
@@ -82,12 +84,12 @@ const cli = {
 
         if (!simulateStream) {
           // eslint-disable-next-line no-console
-          console.log(reference);
+          consoleLogger.log(reference);
           // eslint-disable-next-line no-console
-          console.log(message.content);
+          consoleLogger.log(message.content);
           // Add an extra line after the message
           // eslint-disable-next-line no-console
-          console.log();
+          consoleLogger.log();
           return;
         }
 
@@ -119,9 +121,9 @@ const cli = {
 
         // Add an extra line after the message
         // eslint-disable-next-line no-console
-        console.log();
+        consoleLogger.log();
         // eslint-disable-next-line no-console
-        console.log();
+        consoleLogger.log();
       },
 
       /**

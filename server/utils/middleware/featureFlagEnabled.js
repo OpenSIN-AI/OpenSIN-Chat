@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const { SystemSettings } = require("../../models/systemSettings");
 
 // Explicitly check that a specific feature flag is enabled.
@@ -20,7 +22,7 @@ function featureFlagEnabled(featureFlagKey = null) {
 
       return response.sendStatus(401);
     } catch (e) {
-      console.error(e.message, e);
+      consoleLogger.error(e.message, e);
       response.status(500).json({ error: "Internal server error" });
     }
   };

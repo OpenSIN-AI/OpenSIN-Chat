@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const {
   multiUserMode,
   userFromSession,
@@ -59,7 +61,7 @@ function workspaceThreadEndpoints(app) {
         response.status(200).json({ thread, message });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -100,7 +102,7 @@ function workspaceThreadEndpoints(app) {
         response.status(200).json({ threads, folders, defaultThreadChatCount });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -125,7 +127,7 @@ function workspaceThreadEndpoints(app) {
         response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -162,7 +164,7 @@ function workspaceThreadEndpoints(app) {
         response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -195,7 +197,7 @@ function workspaceThreadEndpoints(app) {
         response.status(200).json({ history: convertToChatHistory(history) });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -219,7 +221,7 @@ function workspaceThreadEndpoints(app) {
         response.status(200).json({ thread, message });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -254,7 +256,7 @@ function workspaceThreadEndpoints(app) {
         response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -304,7 +306,7 @@ function workspaceThreadEndpoints(app) {
         response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -327,7 +329,7 @@ function workspaceThreadEndpoints(app) {
         );
         response.status(200).json({ folder, message });
       } catch (e) {
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -348,7 +350,7 @@ function workspaceThreadEndpoints(app) {
         );
         response.status(200).json({ folder, message });
       } catch (e) {
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -368,7 +370,7 @@ function workspaceThreadEndpoints(app) {
         if (!success) return response.sendStatus(500);
         response.sendStatus(200);
       } catch (e) {
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -392,7 +394,7 @@ function workspaceThreadEndpoints(app) {
         if (!success) return response.sendStatus(500);
         response.sendStatus(200);
       } catch (e) {
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../utils/logger/console.js");
+
 const { reqBody } = require("../../utils/http");
 const { validatedRequest } = require("../../utils/middleware/validatedRequest");
 const { simpleRateLimit } = require("../../utils/middleware/simpleRateLimit");
@@ -156,7 +158,7 @@ function terminalExecEndpoint(app) {
         }
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error("[terminal/exec]", e.message);
+        consoleLogger.error("[terminal/exec]", e.message);
         return response
           .status(500)
           .json({ error: "Internal server error.", exitCode: 1 });

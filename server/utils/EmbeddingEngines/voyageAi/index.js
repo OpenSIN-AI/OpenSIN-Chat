@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 class VoyageAiEmbedder {
   constructor() {
     if (!process.env.VOYAGEAI_API_KEY)
@@ -57,7 +59,7 @@ class VoyageAiEmbedder {
       return embeddings;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Voyage AI Failed to embed:", error);
+      consoleLogger.error("Voyage AI Failed to embed:", error);
       if (
         error.message.includes(
           "Cannot read properties of undefined (reading '0')",

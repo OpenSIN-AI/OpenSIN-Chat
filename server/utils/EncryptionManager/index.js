@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const crypto = require("crypto");
 
 // Class that is used to arbitrarily encrypt/decrypt string data via a persistent passphrase/salt that
@@ -23,7 +25,7 @@ class EncryptionManager {
 
   log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[36m[EncryptionManager]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[36m[EncryptionManager]\x1b[0m ${text}`, ...args);
   }
 
   #loadOrCreateKeySalt(_key = null, _salt = null) {

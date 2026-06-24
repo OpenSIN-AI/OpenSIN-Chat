@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const { v4: uuidv4 } = require("uuid");
 const { getVectorDbClass } = require("../utils/helpers");
 const prisma = require("../utils/prisma");
@@ -61,7 +63,7 @@ const Document = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -74,7 +76,7 @@ const Document = {
       return document || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -113,7 +115,7 @@ const Document = {
       return results;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -148,7 +150,7 @@ const Document = {
       try {
         data = await fileData(path);
       } catch (err) {
-        console.error("Error loading file data:", err.message);
+        consoleLogger.error("Error loading file data:", err.message);
         data = null;
       }
       if (!data) {
@@ -196,13 +198,13 @@ const Document = {
         ));
       } catch (vecErr) {
         // eslint-disable-next-line no-console
-        console.error("Vectorization threw:", vecErr.message);
+        consoleLogger.error("Vectorization threw:", vecErr.message);
         error = vecErr.message || "Vectorization error";
       }
 
       if (!vectorized) {
         // eslint-disable-next-line no-console
-        console.error(
+        consoleLogger.error(
           "Failed to vectorize",
           metadata?.title || newDoc.filename,
         );
@@ -225,7 +227,7 @@ const Document = {
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error.message);
+        consoleLogger.error(error.message);
         failedToEmbed.push(metadata?.title || newDoc.filename);
         errors.add(error.message || "Failed to save document record");
         emitProgress(workspace.slug, {
@@ -320,7 +322,7 @@ const Document = {
       return count;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO COUNT DOCUMENTS.", error.message);
+      consoleLogger.error("FAILED TO COUNT DOCUMENTS.", error.message);
       return 0;
     }
   },
@@ -341,7 +343,7 @@ const Document = {
       return { document, message: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return { document: null, message: error.message };
     }
   },
@@ -354,7 +356,7 @@ const Document = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -399,7 +401,7 @@ const Document = {
     uploadToWorkspace: async function (wsSlugs = "", docLocation = null) {
       if (!docLocation)
         // eslint-disable-next-line no-console
-        return console.error(
+        return consoleLogger.error(
           "No document location provided for embedding",
           docLocation,
         );
@@ -409,13 +411,13 @@ const Document = {
         .map((slug) => String(slug)?.trim()?.toLowerCase());
       if (slugs.length === 0)
         // eslint-disable-next-line no-console
-        return console.error(`No workspaces provided got: ${wsSlugs}`);
+        return consoleLogger.error(`No workspaces provided got: ${wsSlugs}`);
 
       const { Workspace } = require("./workspace");
       const workspaces = await Workspace.where({ slug: { in: slugs } });
       if (workspaces.length === 0)
         // eslint-disable-next-line no-console
-        return console.error("No valid workspaces found for slugs: ", slugs);
+        return consoleLogger.error("No valid workspaces found for slugs: ", slugs);
 
       // Upsert the document into each workspace - do this sequentially
       // because the document may be large and we don't want to overwhelm the embedder, plus on the first
@@ -428,7 +430,7 @@ const Document = {
         );
         if (failedToEmbed.length > 0)
           // eslint-disable-next-line no-console
-          return console.error(
+          return consoleLogger.error(
             `Failed to embed document into workspace ${workspace.slug}`,
             errors,
           );

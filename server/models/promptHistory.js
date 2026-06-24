@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const prisma = require("../utils/prisma");
 
 const PromptHistory = {
@@ -16,7 +18,7 @@ const PromptHistory = {
       return { history, message: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return { history: null, message: error.message };
     }
   },
@@ -52,7 +54,7 @@ const PromptHistory = {
       return history;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -76,7 +78,7 @@ const PromptHistory = {
       return history || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -87,7 +89,7 @@ const PromptHistory = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -107,7 +109,7 @@ const PromptHistory = {
       });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to create prompt history:", error.message);
+      consoleLogger.error("Failed to create prompt history:", error.message);
     }
   },
 };

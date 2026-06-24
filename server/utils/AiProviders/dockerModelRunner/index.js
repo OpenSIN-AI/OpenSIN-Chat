@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 const { getStoragePath } = require("../../paths");
 const fs = require("fs");
 const path = require("path");
@@ -50,12 +52,12 @@ class DockerModelRunnerLLM {
 
   #log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[32m[Docker Model Runner]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[32m[Docker Model Runner]\x1b[0m ${text}`, ...args);
   }
 
   static slog(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[32m[Docker Model Runner]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[32m[Docker Model Runner]\x1b[0m ${text}`, ...args);
   }
 
   async assertModelContextLimits() {
@@ -244,7 +246,7 @@ class DockerModelRunnerLLM {
       };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Error getting model capabilities:", error);
+      consoleLogger.error("Error getting model capabilities:", error);
       return {
         tools: "unknown",
         reasoning: "unknown",

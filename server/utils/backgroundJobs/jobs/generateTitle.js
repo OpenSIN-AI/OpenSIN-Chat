@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 /**
  * Job-Handler: generiert einen kurzen, prägnanten Titel (max 5 Wörter)
  * für einen frisch erstellten Thread.
@@ -41,7 +43,7 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
     thread.name === (prompt || "").substring(0, 22);
 
   if (!looksLikeAutoRename) {
-    console.log(
+    consoleLogger.log(
       `[GenerateTitle] Thread ${threadId} has user-customized name "${thread.name}", skipping.`,
     );
     return;
@@ -277,7 +279,7 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
   if (!cleanTitle) cleanTitle = WorkspaceThread.defaultName;
 
   await WorkspaceThread.update(thread, { name: cleanTitle });
-  console.log(`[GenerateTitle] Thread ${threadId} renamed to: "${cleanTitle}"`);
+  consoleLogger.log(`[GenerateTitle] Thread ${threadId} renamed to: "${cleanTitle}"`);
 }
 
 module.exports = generateTitleJob;

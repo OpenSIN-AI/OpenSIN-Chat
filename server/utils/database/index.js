@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const { getGitVersion } = require("../../endpoints/utils");
 const { Telemetry } = require("../../models/telemetry");
 
@@ -44,7 +46,7 @@ async function checkForMigrations(model, db) {
   if (toMigrate.length === 0) return;
 
   // eslint-disable-next-line no-console
-  console.log(`Running ${toMigrate.length} migrations`, toMigrate);
+  consoleLogger.log(`Running ${toMigrate.length} migrations`, toMigrate);
   await db.exec(toMigrate.join(";\n"));
   return;
 }
@@ -58,7 +60,7 @@ async function validateTablePragmas(force = false) {
   try {
     if (process.env.NODE_ENV !== "development" && force === false) {
       // eslint-disable-next-line no-console
-      console.log(
+      consoleLogger.log(
         `\x1b[34m[MIGRATIONS STUBBED]\x1b[0m Please ping /migrate once server starts to run migrations`,
       );
       return;
@@ -84,7 +86,7 @@ async function validateTablePragmas(force = false) {
     await ApiKey.migrateTable();
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.error(`validateTablePragmas: Migrations failed`, e);
+    consoleLogger.error(`validateTablePragmas: Migrations failed`, e);
   }
   return;
 }
@@ -96,7 +98,7 @@ async function validateTablePragmas(force = false) {
 async function setupTelemetry() {
   if (process.env.DISABLE_TELEMETRY === "true") {
     // eslint-disable-next-line no-console
-    console.log(
+    consoleLogger.log(
       `\x1b[31m[TELEMETRY DISABLED]\x1b[0m Telemetry is marked as disabled - no events will send. Telemetry helps OpenSIN-AI improve OpenSIN Chat.`,
     );
     return true;
@@ -104,14 +106,14 @@ async function setupTelemetry() {
 
   if (Telemetry.isDev()) {
     // eslint-disable-next-line no-console
-    console.log(
+    consoleLogger.log(
       `\x1b[33m[TELEMETRY STUBBED]\x1b[0m Anonymous Telemetry stubbed in development.`,
     );
     return;
   }
 
   // eslint-disable-next-line no-console
-  console.log(
+  consoleLogger.log(
     `\x1b[32m[TELEMETRY ENABLED]\x1b[0m Anonymous Telemetry enabled. Telemetry helps OpenSIN-AI improve OpenSIN Chat.`,
   );
   await Telemetry.findOrCreateId();

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const prisma = require("../utils/prisma");
 const { safeJSONStringify } = require("../utils/helpers/chat/responses");
 
@@ -36,7 +38,7 @@ const WorkspaceChats = {
       return { chat, message: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return { chat: null, message: error.message };
     }
   },
@@ -70,7 +72,7 @@ const WorkspaceChats = {
       return chats;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -103,7 +105,7 @@ const WorkspaceChats = {
       return chats;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -135,7 +137,7 @@ const WorkspaceChats = {
       return chats;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -159,7 +161,7 @@ const WorkspaceChats = {
       return;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
     }
   },
 
@@ -186,7 +188,7 @@ const WorkspaceChats = {
       return;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
     }
   },
 
@@ -214,7 +216,7 @@ const WorkspaceChats = {
       return;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
     }
   },
 
@@ -240,7 +242,7 @@ const WorkspaceChats = {
       return chat || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -253,7 +255,7 @@ const WorkspaceChats = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -286,7 +288,7 @@ const WorkspaceChats = {
       return chats;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -299,7 +301,7 @@ const WorkspaceChats = {
       return count;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return 0;
     }
   },
@@ -350,7 +352,7 @@ const WorkspaceChats = {
       return results;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -369,7 +371,7 @@ const WorkspaceChats = {
       return;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
     }
   },
 
@@ -387,7 +389,7 @@ const WorkspaceChats = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -402,7 +404,7 @@ const WorkspaceChats = {
       });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
     }
   },
 
@@ -415,7 +417,7 @@ const WorkspaceChats = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -440,7 +442,7 @@ const WorkspaceChats = {
         return { chats: createdChats, message: null };
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error.message);
+        consoleLogger.error(error.message);
         return { chats: null, message: error.message };
       }
     }
@@ -480,7 +482,7 @@ const WorkspaceChats = {
       return { chat, message: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return { chat: null, message: error.message };
     }
   },

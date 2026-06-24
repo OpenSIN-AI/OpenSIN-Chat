@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const { Prisma } = require("@prisma/client");
 const prisma = require("../utils/prisma");
 const { EventLogs } = require("./eventLogs");
@@ -116,7 +118,7 @@ const User = {
         user.failed_login_count = 0;
         user.failed_login_last_at = null;
       } catch (err) {
-        console.error("FAILED TO RESET EXPIRED LOCKOUT.", err.message);
+        consoleLogger.error("FAILED TO RESET EXPIRED LOCKOUT.", err.message);
       }
       return false;
     }
@@ -134,7 +136,7 @@ const User = {
         },
       });
     } catch (err) {
-      console.error("FAILED TO RECORD FAILED LOGIN.", err.message);
+      consoleLogger.error("FAILED TO RECORD FAILED LOGIN.", err.message);
     }
   },
 
@@ -146,7 +148,7 @@ const User = {
         data: { failed_login_count: 0, failed_login_last_at: null },
       });
     } catch (err) {
-      console.error("FAILED TO RESET FAILED LOGINS.", err.message);
+      consoleLogger.error("FAILED TO RESET FAILED LOGINS.", err.message);
     }
   },
   _identifyErrorAndFormatMessage: function (error) {
@@ -191,7 +193,7 @@ const User = {
       return { user: this.filterFields(user), error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO CREATE USER.", error.message);
+      consoleLogger.error("FAILED TO CREATE USER.", error.message);
       return { user: null, error: this._identifyErrorAndFormatMessage(error) };
     }
   },
@@ -275,7 +277,7 @@ const User = {
       return { success: true, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO UPDATE USER.", error.message);
+      consoleLogger.error("FAILED TO UPDATE USER.", error.message);
       return {
         success: false,
         error: this._identifyErrorAndFormatMessage(error),
@@ -302,7 +304,7 @@ const User = {
       return { user, message: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return { user: null, message: error.message };
     }
   },
@@ -323,7 +325,7 @@ const User = {
       return users;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -339,7 +341,7 @@ const User = {
       return user ? this.filterFields({ ...user }) : null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -350,7 +352,7 @@ const User = {
       return user ? { ...user } : null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -361,7 +363,7 @@ const User = {
       return count;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return 0;
     }
   },
@@ -372,7 +374,7 @@ const User = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -386,7 +388,7 @@ const User = {
       return users.map((usr) => this.filterFields(usr));
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },

@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Purpose: dumpENV — writes the current process.env to the .env file with sanitization.
 // Docs: server/utils/helpers/updateENV.doc.md
+const consoleLogger = require("../../logger/console.js");
+
 const { KEY_MAPPING } = require("./keyMapping");
 
 function dumpENV() {
@@ -107,10 +109,10 @@ function dumpENV() {
     try {
       fs.chmodSync(envPath, 0o600);
     } catch (e) {
-      console.error(`Failed to chmod ${envPath} to 0o600: ${e.message}`);
+      consoleLogger.error(`Failed to chmod ${envPath} to 0o600: ${e.message}`);
     }
   } catch (e) {
-    console.error(`Failed to write .env file: ${e.message}`);
+    consoleLogger.error(`Failed to write .env file: ${e.message}`);
     return false;
   }
   return true;

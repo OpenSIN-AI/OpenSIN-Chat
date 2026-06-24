@@ -1,7 +1,7 @@
 # Tunnel Health-Check via systemd Timer (30 s Interval)
 
-> PLAN.md Priority 4 — replaces cron-based health checks with a
-> unified systemd timer that runs every 30 seconds.
+> Replaces cron-based health checks with a unified systemd timer
+> that runs every 30 seconds.
 
 ---
 

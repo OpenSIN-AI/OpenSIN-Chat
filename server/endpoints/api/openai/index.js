@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../utils/logger/console.js");
+
 const { Document } = require("../../../models/documents");
 const { Telemetry } = require("../../../models/telemetry");
 const { Workspace } = require("../../../models/workspace");
@@ -88,7 +90,7 @@ function apiOpenAICompatibleEndpoints(app) {
         });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         openAIError(response, 500, "Internal server error", "server_error");
       }
     },
@@ -212,7 +214,7 @@ function apiOpenAICompatibleEndpoints(app) {
         response.end();
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         openAIError(response, 500, "Internal server error", "server_error");
       }
     },
@@ -280,7 +282,7 @@ function apiOpenAICompatibleEndpoints(app) {
         });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         openAIError(
           response,
           500,
@@ -362,7 +364,7 @@ function apiOpenAICompatibleEndpoints(app) {
         });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         openAIError(response, 500, "Internal server error", "server_error");
       }
     },

@@ -4,6 +4,8 @@
 //          In prod, exits hard if any secret is missing or weak.
 // Docs: ensureJwtSecret.doc.md
 
+const consoleLogger = require("../logger/console.js");
+
 const fs = require("node:fs");
 const path = require("node:path");
 const crypto = require("node:crypto");
@@ -52,7 +54,7 @@ function ensureJwtSecret() {
   if (isStrong) return;
 
   if (isProd()) {
-    console.error(
+    consoleLogger.error(
       `${LOG_PREFIX} FATAL: JWT_SECRET is missing or weak in production. ` +
         `Set a stable secret (openssl rand -hex 24) before starting.`,
     );
@@ -78,20 +80,20 @@ function ensureJwtSecret() {
       try {
         fs.chmodSync(envFile, 0o600);
       } catch (e) {
-        console.warn(
+        consoleLogger.warn(
           `${LOG_PREFIX} Could not chmod ${envFile} to 0o600: ${e.message}`,
         );
       }
-      console.log(
+      consoleLogger.log(
         `${LOG_PREFIX} Generated new JWT_SECRET and wrote it to ${path.basename(envFile)}`,
       );
     } catch (e) {
-      console.warn(
+      consoleLogger.warn(
         `${LOG_PREFIX} Could not persist JWT_SECRET to ${envFile}: ${e.message}. Using in-memory value for this session.`,
       );
     }
   } else {
-    console.log(
+    consoleLogger.log(
       `${LOG_PREFIX} Generated in-memory JWT_SECRET (no .env file found to persist to)`,
     );
   }
@@ -116,13 +118,13 @@ function ensureEncryptionSecrets() {
 
   const names = problems.map(([n]) => n).join(", ");
   if (isProd()) {
-    console.error(
+    consoleLogger.error(
       `${LOG_PREFIX} FATAL: ${names} missing or weak in production. ` +
         `Set with: openssl rand -hex 32`,
     );
     process.exit(1);
   }
-  console.warn(
+  consoleLogger.warn(
     `${LOG_PREFIX} WARNING: ${names} weak/missing. Fine for local dev, ` +
       `but stored API keys are NOT securely encrypted. Set strong values before deploying.`,
   );

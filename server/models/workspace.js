@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const { randomBytes } = require("crypto");
 const prisma = require("../utils/prisma");
 const slugifyModule = require("slugify");
@@ -234,7 +236,7 @@ const Workspace = {
       return { workspace, message: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return { workspace: null, message: error.message };
     }
   },
@@ -291,7 +293,7 @@ const Workspace = {
       return { workspace, message: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return { workspace: null, message: error.message };
     }
   },
@@ -330,7 +332,7 @@ const Workspace = {
       };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -390,7 +392,7 @@ const Workspace = {
       };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -403,7 +405,7 @@ const Workspace = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -418,7 +420,7 @@ const Workspace = {
       return results;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -450,7 +452,7 @@ const Workspace = {
       return workspaces;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -467,7 +469,7 @@ const Workspace = {
       return workspaces;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -500,7 +502,7 @@ const Workspace = {
       return userInfo;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -532,7 +534,7 @@ const Workspace = {
       return { success: true, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return { success: false, error: error.message };
     }
   },
@@ -543,7 +545,7 @@ const Workspace = {
       return;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Error tracking workspace change:", error.message);
+      consoleLogger.error("Error tracking workspace change:", error.message);
       return;
     }
   },
@@ -601,7 +603,7 @@ const Workspace = {
       return results;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -617,7 +619,7 @@ const Workspace = {
       return results;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -641,7 +643,7 @@ const Workspace = {
       return { workspace, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return { workspace: null, error: error.message };
     }
   },
@@ -658,7 +660,7 @@ const Workspace = {
       return results;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -674,7 +676,7 @@ const Workspace = {
       return await PromptHistory.delete({ workspaceId });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -691,7 +693,7 @@ const Workspace = {
       return await PromptHistory.delete({ id, workspaceId });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },

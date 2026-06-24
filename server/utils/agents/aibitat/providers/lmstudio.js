@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../logger/console.js");
+
 const OpenAI = require("openai");
 const Provider = require("./ai-provider.js");
 const InheritMultiple = require("./helpers/classes.js");
@@ -123,7 +125,7 @@ class LMStudioProvider extends InheritMultiple([Provider, UnTooled]) {
       );
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message, error);
+      consoleLogger.error(error.message, error);
       if (error instanceof OpenAI.AuthenticationError) throw error;
       if (
         error instanceof OpenAI.RateLimitError ||

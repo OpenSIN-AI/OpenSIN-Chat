@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 const { logger } = require("../../logger/structured");
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
 const {
@@ -12,7 +14,8 @@ const {
 const {
   createReasoningState,
   filterReasoningToken,
-} = require("../../helpers/chat/streamReasoningFilter");
+  parseReasoningFromResponse,
+} = require("../../helpers/reasoningFilter");
 const { v4: uuidv4 } = require("uuid");
 const { toValidNumber } = require("../../http");
 const { getOpenSINChatUserAgent } = require("../../../endpoints/utils");
@@ -237,21 +240,6 @@ class GenericOpenAiLLM {
   }
 
   /**
-   * Parses and prepends reasoning from the response and returns the full text response.
-   * @param {Object} response
-   * @returns {string}
-   */
-  #parseReasoningFromResponse({ message }) {
-    let textResponse = message?.content;
-    if (
-      !!message?.reasoning_content &&
-      message.reasoning_content.trim().length > 0
-    )
-      textResponse = `<think>${message.reasoning_content}</think>${textResponse}`;
-    return textResponse;
-  }
-
-  /**
    * Includes the usage in the response if the ENV flag is set
    * using the stream_options: { include_usage: true } option. This is available via ENV
    * because some providers will crash with invalid options.
@@ -296,7 +284,7 @@ class GenericOpenAiLLM {
     this.#extractLlamaCppTimings(result.output, usage);
 
     return {
-      textResponse: this.#parseReasoningFromResponse(result.output.choices[0]),
+      textResponse: parseReasoningFromResponse(result.output.choices[0]),
       metrics: {
         ...usage,
         outputTps: usage.completion_tokens / usage.duration,
@@ -486,7 +474,7 @@ class GenericOpenAiLLM {
         }
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(`\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${e.message}`);
+        consoleLogger.error(`\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${e.message}`);
         writeResponseChunk(response, {
           uuid,
           type: "abort",
@@ -593,7 +581,7 @@ class GenericOpenAiLLM {
       };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Error getting model capabilities:", error);
+      consoleLogger.error("Error getting model capabilities:", error);
       return {
         tools: "unknown",
         reasoning: "unknown",

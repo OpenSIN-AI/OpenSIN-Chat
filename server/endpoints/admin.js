@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const { ApiKey } = require("../models/apiKeys");
 const { BrowserExtensionApiKey } = require("../models/browserExtensionApiKey");
 const { Document } = require("../models/documents");
@@ -46,7 +48,7 @@ function adminEndpoints(app) {
         response.status(200).json({ users });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -91,7 +93,7 @@ function adminEndpoints(app) {
         response.status(200).json({ user: newUser, error });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -133,7 +135,7 @@ function adminEndpoints(app) {
         response.status(200).json({ success, error });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -182,7 +184,7 @@ function adminEndpoints(app) {
         response.status(200).json({ success: true, error: null });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -197,7 +199,7 @@ function adminEndpoints(app) {
         response.status(200).json({ invites });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -237,7 +239,7 @@ function adminEndpoints(app) {
         response.status(200).json({ invite, error });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -259,7 +261,7 @@ function adminEndpoints(app) {
         response.status(200).json({ success, error });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -274,7 +276,7 @@ function adminEndpoints(app) {
         response.status(200).json({ workspaces });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -290,7 +292,7 @@ function adminEndpoints(app) {
         response.status(200).json({ users });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -310,7 +312,7 @@ function adminEndpoints(app) {
         response.status(200).json({ workspace, error });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -330,7 +332,7 @@ function adminEndpoints(app) {
         response.status(200).json({ success, error });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -361,13 +363,13 @@ function adminEndpoints(app) {
           await VectorDb["delete-namespace"]({ namespace: workspace.slug });
         } catch (e) {
           // eslint-disable-next-line no-console
-          console.error(e.message);
+          consoleLogger.error(e.message);
         }
 
         response.status(200).json({ success: true, error: null });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -500,7 +502,7 @@ function adminEndpoints(app) {
         response.status(200).json({ settings: requestedSettings });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -538,7 +540,7 @@ function adminEndpoints(app) {
         response.status(200).json({ success: true, error: null });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -556,7 +558,7 @@ function adminEndpoints(app) {
         });
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error);
+        consoleLogger.error(error);
         response.status(500).json({
           apiKey: null,
           error: "Could not find an API Keys.",
@@ -592,7 +594,7 @@ function adminEndpoints(app) {
         });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },
@@ -623,7 +625,7 @@ function adminEndpoints(app) {
         return response.status(200).end();
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.sendStatus(500);
       }
     },

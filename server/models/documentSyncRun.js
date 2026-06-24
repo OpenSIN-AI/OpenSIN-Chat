@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const prisma = require("../utils/prisma");
 const DocumentSyncRun = {
   statuses: {
@@ -25,7 +27,7 @@ const DocumentSyncRun = {
       return run || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -38,7 +40,7 @@ const DocumentSyncRun = {
       return queue || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -59,7 +61,7 @@ const DocumentSyncRun = {
       return results;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -74,7 +76,7 @@ const DocumentSyncRun = {
       return count;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO COUNT DOCUMENTS.", error.message);
+      consoleLogger.error("FAILED TO COUNT DOCUMENTS.", error.message);
       return 0;
     }
   },
@@ -85,7 +87,7 @@ const DocumentSyncRun = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },

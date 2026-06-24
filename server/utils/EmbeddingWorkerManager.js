@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("./logger/console.js");
+
 const path = require("path");
 const { EventLogs } = require("../models/eventLogs");
 
@@ -75,7 +77,7 @@ function logEmbeddingEvent(msg) {
     },
     msg.userId ?? null,
   ).catch((err) => {
-    console.error("Telemetry error:", err.message);
+    consoleLogger.error("Telemetry error:", err.message);
   });
 }
 
@@ -201,7 +203,7 @@ async function embedFiles(slug, files, workspaceId, userId) {
 
   worker.on("error", (err) => {
     // eslint-disable-next-line no-console
-    console.error(
+    consoleLogger.error(
       `[EmbeddingWorkerManager] Worker error for ${slug}:`,
       err.message,
     );

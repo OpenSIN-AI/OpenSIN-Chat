@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const prisma = require("../utils/prisma");
 const { safeJsonParse } = require("../utils/http");
 
@@ -29,7 +31,7 @@ const AgentSkillWhitelist = {
       return safeJsonParse(setting?.value, []);
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("AgentSkillWhitelist.get error:", error.message);
+      consoleLogger.error("AgentSkillWhitelist.get error:", error.message);
       return [];
     }
   },
@@ -72,7 +74,7 @@ const AgentSkillWhitelist = {
       });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("AgentSkillWhitelist.add error:", error.message);
+      consoleLogger.error("AgentSkillWhitelist.add error:", error.message);
       return { success: false, error: error.message };
     }
   },
@@ -100,7 +102,7 @@ const AgentSkillWhitelist = {
       return { success: true, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(
+      consoleLogger.error(
         "AgentSkillWhitelist.clearSingleUserWhitelist error:",
         error.message,
       );

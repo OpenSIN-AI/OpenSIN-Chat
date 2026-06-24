@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const { Document } = require("../models/documents");
 const { normalizePath, documentsPath, isWithin } = require("../utils/files");
 const { reqBody } = require("../utils/http");
@@ -43,7 +45,7 @@ function documentEndpoints(app) {
         response.status(200).json({ success: true, message: null });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response.status(500).json({
           success: false,
           message: `Failed to create folder: ${e?.message || String(e)} `,
@@ -92,7 +94,7 @@ function documentEndpoints(app) {
             fs.rename(sourcePath, destinationPath, (err) => {
               if (err) {
                 // eslint-disable-next-line no-console
-                console.error(`Error moving file ${from} to ${to}:`, err);
+                consoleLogger.error(`Error moving file ${from} to ${to}:`, err);
                 reject(err);
               } else {
                 resolve();
@@ -117,14 +119,14 @@ function documentEndpoints(app) {
           }
         } catch (err) {
           // eslint-disable-next-line no-console
-          console.error("Error moving files:", err);
+          consoleLogger.error("Error moving files:", err);
           response
             .status(500)
             .json({ success: false, message: "Failed to move some files." });
         }
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        consoleLogger.error(e);
         response
           .status(500)
           .json({ success: false, message: "Failed to move files." });

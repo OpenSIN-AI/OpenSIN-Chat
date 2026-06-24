@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 class OpenAiTTS {
   constructor() {
     if (!process.env.TTS_OPEN_AI_KEY)
@@ -21,7 +23,7 @@ class OpenAiTTS {
       return Buffer.from(await result.arrayBuffer());
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(`OpenAiTTS:ttsBuffer failed: ${e?.message || e}`);
+      consoleLogger.error(`OpenAiTTS:ttsBuffer failed: ${e?.message || e}`);
     }
     return null;
   }

@@ -2070,6 +2070,11 @@ const TRANSLATIONS = {
     open: "Preview",
     download: "Download",
     downloading: "Downloading...",
+    add_to_source: "Add to Source",
+    adding: "Adding...",
+    open_new_tab: "Open",
+    source_added: "Added to workspace sources",
+    source_add_failed: "Failed to add to sources",
   },
   customization: {
     interface: {

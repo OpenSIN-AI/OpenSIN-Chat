@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const { safeJsonParse } = require("../utils/http");
 const prisma = require("../utils/prisma");
 
@@ -39,7 +41,7 @@ const Invite = {
       return { invite, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO CREATE INVITE.", error.message);
+      consoleLogger.error("FAILED TO CREATE INVITE.", error.message);
       return { invite: null, error: error.message };
     }
   },
@@ -53,7 +55,7 @@ const Invite = {
       return { success: true, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return { success: false, error: error.message };
     }
   },
@@ -79,7 +81,7 @@ const Invite = {
         }
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(
+        consoleLogger.error(
           "Could not add user to workspaces automatically",
           e.message,
         );
@@ -88,7 +90,7 @@ const Invite = {
       return { success: true, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return { success: false, error: error.message };
     }
   },
@@ -99,7 +101,7 @@ const Invite = {
       return invite || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -110,7 +112,7 @@ const Invite = {
       return count;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return 0;
     }
   },
@@ -121,7 +123,7 @@ const Invite = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -135,7 +137,7 @@ const Invite = {
       return invites;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -164,7 +166,7 @@ const Invite = {
       return invites;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },

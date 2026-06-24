@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const { makeJWT } = require("../utils/http");
 const prisma = require("../utils/prisma");
 
@@ -41,7 +43,7 @@ const TemporaryAuthToken = {
       return { token, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO CREATE TEMPORARY AUTH TOKEN.", error.message);
+      consoleLogger.error("FAILED TO CREATE TEMPORARY AUTH TOKEN.", error.message);
       return { token: null, error: error.message };
     }
   },
@@ -107,7 +109,7 @@ const TemporaryAuthToken = {
       return { sessionToken, token, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO VALIDATE TEMPORARY AUTH TOKEN.", error.message);
+      consoleLogger.error("FAILED TO VALIDATE TEMPORARY AUTH TOKEN.", error.message);
       return { sessionToken: null, token: null, error: error.message };
     } finally {
       // Best-effort cleanup: if the token was found but not claimed (e.g.,

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const prisma = require("../utils/prisma");
 
 const ScheduledJobRun = {
@@ -51,7 +53,7 @@ const ScheduledJobRun = {
       });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to enqueue scheduled job run:", error.message);
+      consoleLogger.error("Failed to enqueue scheduled job run:", error.message);
       return null;
     }
   },
@@ -78,7 +80,7 @@ const ScheduledJobRun = {
       return result.count > 0;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(
+      consoleLogger.error(
         "Failed to transition scheduled job run to running:",
         error.message,
       );
@@ -111,7 +113,7 @@ const ScheduledJobRun = {
       return result.count > 0;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(
+      consoleLogger.error(
         "Failed to conditionally fail scheduled job run:",
         error.message,
       );
@@ -132,7 +134,7 @@ const ScheduledJobRun = {
       return run;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to complete scheduled job run:", error.message);
+      consoleLogger.error("Failed to complete scheduled job run:", error.message);
       return null;
     }
   },
@@ -156,7 +158,7 @@ const ScheduledJobRun = {
       return await this.get({ id: Number(id) });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(
+      consoleLogger.error(
         "Failed to mark scheduled job run as failed:",
         error.message,
       );
@@ -183,7 +185,7 @@ const ScheduledJobRun = {
       return await this.get({ id: Number(id) });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(
+      consoleLogger.error(
         "Failed to mark scheduled job run as timed out:",
         error.message,
       );
@@ -217,7 +219,7 @@ const ScheduledJobRun = {
       return await this.get({ id: Number(id) });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to kill scheduled job run:", error.message);
+      consoleLogger.error("Failed to kill scheduled job run:", error.message);
       return null;
     }
   },
@@ -231,7 +233,7 @@ const ScheduledJobRun = {
       return run || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to get scheduled job run:", error.message);
+      consoleLogger.error("Failed to get scheduled job run:", error.message);
       return null;
     }
   },
@@ -256,7 +258,7 @@ const ScheduledJobRun = {
       return results;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to query scheduled job runs:", error.message);
+      consoleLogger.error("Failed to query scheduled job runs:", error.message);
       return [];
     }
   },
@@ -270,7 +272,7 @@ const ScheduledJobRun = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to mark run as read:", error.message);
+      consoleLogger.error("Failed to mark run as read:", error.message);
       return false;
     }
   },
@@ -281,7 +283,7 @@ const ScheduledJobRun = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to delete scheduled job runs:", error.message);
+      consoleLogger.error("Failed to delete scheduled job runs:", error.message);
       return false;
     }
   },
@@ -303,7 +305,7 @@ const ScheduledJobRun = {
       return result.count;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Failed to fail orphaned runs:", error.message);
+      consoleLogger.error("Failed to fail orphaned runs:", error.message);
       return 0;
     }
   },

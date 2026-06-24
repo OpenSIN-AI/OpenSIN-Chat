@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../utils/logger/console.js");
+
 const crypto = require("crypto");
 const { v4: uuidv4 } = require("uuid");
 const { Document } = require("../../../models/documents");
@@ -104,7 +106,7 @@ function apiWorkspaceEndpoints(app) {
       response.status(200).json({ workspace, message });
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e.message, e);
+      consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }
   });
@@ -159,7 +161,7 @@ function apiWorkspaceEndpoints(app) {
       response.status(200).json({ workspaces });
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e.message, e);
+      consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }
   });
@@ -225,7 +227,7 @@ function apiWorkspaceEndpoints(app) {
       response.status(200).json({ workspace });
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e.message, e);
+      consoleLogger.error(e.message, e);
       response.sendStatus(500);
     }
   });
@@ -272,12 +274,12 @@ function apiWorkspaceEndpoints(app) {
           await VectorDb["delete-namespace"]({ namespace: slug });
         } catch (e) {
           // eslint-disable-next-line no-console
-          console.error(e.message);
+          consoleLogger.error(e.message);
         }
         response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -356,7 +358,7 @@ function apiWorkspaceEndpoints(app) {
         response.status(200).json({ workspace, message });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -463,7 +465,7 @@ function apiWorkspaceEndpoints(app) {
         response.status(200).json({ history: convertToChatHistory(history) });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -541,7 +543,7 @@ function apiWorkspaceEndpoints(app) {
         response.status(200).json({ workspace: updatedWorkspace });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },
@@ -611,7 +613,7 @@ function apiWorkspaceEndpoints(app) {
           .end();
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error("Error processing the pin status update:", error);
+        consoleLogger.error("Error processing the pin status update:", error);
         return response.status(500).end();
       }
     },
@@ -739,7 +741,7 @@ function apiWorkspaceEndpoints(app) {
         return response.status(200).json({ ...result });
       } catch (e) {
         const errorId = crypto.randomUUID();
-        console.error(`[endpoint error ${errorId}]`, e);
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
         response.status(500).json({
           id: uuidv4(),
           type: "abort",
@@ -901,7 +903,7 @@ function apiWorkspaceEndpoints(app) {
         response.end();
       } catch (e) {
         const errorId = crypto.randomUUID();
-        console.error(`[endpoint error ${errorId}]`, e);
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
         writeResponseChunk(response, {
           id: uuidv4(),
           type: "abort",
@@ -1046,7 +1048,7 @@ function apiWorkspaceEndpoints(app) {
         });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
     },

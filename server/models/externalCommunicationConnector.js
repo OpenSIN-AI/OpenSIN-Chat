@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const prisma = require("../utils/prisma");
 const { safeJsonParse } = require("../utils/http");
 
@@ -23,7 +25,7 @@ const ExternalCommunicationConnector = {
       };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("ExternalCommunicationConnector.get", error.message);
+      consoleLogger.error("ExternalCommunicationConnector.get", error.message);
       return null;
     }
   },
@@ -72,7 +74,7 @@ const ExternalCommunicationConnector = {
       };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("ExternalCommunicationConnector.upsert", error.message);
+      consoleLogger.error("ExternalCommunicationConnector.upsert", error.message);
       return { connector: null, error: error.message };
     }
   },
@@ -123,7 +125,7 @@ const ExternalCommunicationConnector = {
       };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(
+      consoleLogger.error(
         "ExternalCommunicationConnector.updateConfig",
         error.message,
       );
@@ -144,7 +146,7 @@ const ExternalCommunicationConnector = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("ExternalCommunicationConnector.delete", error.message);
+      consoleLogger.error("ExternalCommunicationConnector.delete", error.message);
       return false;
     }
   },

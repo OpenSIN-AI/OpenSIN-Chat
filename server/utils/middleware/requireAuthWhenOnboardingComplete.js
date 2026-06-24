@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Express middleware that allows onboarding completion without auth while setup is still pending.
 // Docs: server/utils/middleware/requireAuthWhenOnboardingComplete.doc.md
+const consoleLogger = require("../logger/console.js");
+
 const { SystemSettings } = require("../../models/systemSettings");
 const { validatedRequest } = require("./validatedRequest");
 
@@ -19,7 +21,7 @@ async function requireAuthWhenOnboardingComplete(request, response, next) {
     return validatedRequest(request, response, next);
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.error(e.message, e);
+    consoleLogger.error(e.message, e);
     response.sendStatus(500);
   }
 }

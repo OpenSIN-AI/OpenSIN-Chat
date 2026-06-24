@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Extract URLs from base64 image attachments using Tesseract OCR.
 // Docs: server/utils/chats/extractImageUrls.doc.md
+const consoleLogger = require("../logger/console.js");
+
 const crypto = require("crypto");
 
 const OCR_ENABLED = !/^false$/i.test(
@@ -127,7 +129,7 @@ async function extractUrlsFromImage(content) {
       return urls;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("[extractImageUrls] OCR failed:", error.message);
+      consoleLogger.error("[extractImageUrls] OCR failed:", error.message);
       return [];
     }
   });

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 const { parseLMStudioBasePath } = require("../../AiProviders/lmStudio");
 const {
   maximumChunkLength,
@@ -28,7 +30,7 @@ class LMStudioEmbedder {
 
   log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
   }
 
   async #isAlive() {
@@ -103,7 +105,7 @@ class LMStudioEmbedder {
     if (errors.length > 0) {
       let uniqueErrors = new Set();
       // eslint-disable-next-line no-console
-      console.error(errors);
+      consoleLogger.error(errors);
       errors.map((error) =>
         uniqueErrors.add(`[${error.type}]: ${error.message}`),
       );

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 /**
  * Sync fallback & retry-queue helpers (Issue #52).
  *
@@ -92,7 +94,7 @@ function nextRetryAt(attempt, now = new Date()) {
 async function withFallback(primary, fallback, opts = {}) {
   const {
     label = "source",
-    log = (msg) => console.warn(msg),
+    log = (msg) => consoleLogger.warn(msg),
     isEmpty = defaultIsEmpty,
   } = opts;
 

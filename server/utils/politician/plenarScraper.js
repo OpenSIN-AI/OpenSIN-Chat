@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 /**
  * Plenarprotokolle parser — extracts speech texts from Bundestag plenary protocols
  * (XML/PDF/HTML formats).
@@ -65,7 +67,7 @@ class PlenarScraper {
 
   log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[32m[PlenarScraper]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[32m[PlenarScraper]\x1b[0m ${text}`, ...args);
   }
 
   clearCache() {

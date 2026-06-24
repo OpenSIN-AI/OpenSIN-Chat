@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
 const {
   LLMPerformanceMonitor,
@@ -44,7 +46,7 @@ class GroqLLM {
 
   #log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[32m[GroqAi]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[32m[GroqAi]\x1b[0m ${text}`, ...args);
   }
 
   streamingEnabled() {

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
 const {
   handleDefaultStreamResponseV2,
@@ -7,6 +9,9 @@ const {
 const {
   LLMPerformanceMonitor,
 } = require("../../helpers/chat/LLMPerformanceMonitor");
+const {
+  parseReasoningFromResponse,
+} = require("../../helpers/reasoningFilter");
 const { OpenAI: OpenAIApi } = require("openai");
 
 //  hybrid of openAi LLM chat completion for LMStudio
@@ -46,12 +51,12 @@ class LMStudioLLM {
 
   #log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[32m[LMStudio]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[32m[LMStudio]\x1b[0m ${text}`, ...args);
   }
 
   static #slog(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[32m[LMStudio]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[32m[LMStudio]\x1b[0m ${text}`, ...args);
   }
 
   async assertModelContextLimits() {
@@ -215,22 +220,6 @@ class LMStudioLLM {
     ];
   }
 
-  /**
-   * Parses and prepends reasoning from the response and returns the full text response.
-   * Used for getChatCompletions to render thinking text if present in full response.
-   * @param {Object} message - The message object from the LMStudio response.
-   * @returns {string}
-   */
-  #parseReasoningFromResponse({ message }) {
-    let textResponse = message?.content ?? "";
-    if (
-      !!message?.reasoning_content &&
-      message.reasoning_content.trim().length > 0
-    )
-      textResponse = `<think>${message.reasoning_content}</think>${textResponse}`;
-    return textResponse;
-  }
-
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!this.model)
       throw new Error(
@@ -256,7 +245,7 @@ class LMStudioLLM {
       return null;
 
     return {
-      textResponse: this.#parseReasoningFromResponse(result.output.choices[0]),
+      textResponse: parseReasoningFromResponse(result.output.choices[0]),
       metrics: {
         prompt_tokens: result.output.usage?.prompt_tokens || 0,
         completion_tokens: result.output.usage?.completion_tokens || 0,
@@ -341,7 +330,7 @@ class LMStudioLLM {
       };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("Error getting model capabilities:", error);
+      consoleLogger.error("Error getting model capabilities:", error);
       return {
         tools: "unknown",
         reasoning: "unknown",

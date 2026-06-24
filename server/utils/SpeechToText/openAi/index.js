@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 class OpenAiSTT {
   constructor() {
     if (!process.env.OPEN_AI_KEY) throw new Error("No OpenAI API key was set.");
@@ -27,7 +29,7 @@ class OpenAiSTT {
       return result?.text ?? "";
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(`OpenAiSTT:transcribe failed: ${e?.message || e}`);
+      consoleLogger.error(`OpenAiSTT:transcribe failed: ${e?.message || e}`);
       throw new Error(
         `OpenAI transcription failed: ${e?.message || "Unknown error"}`,
         { cause: e },

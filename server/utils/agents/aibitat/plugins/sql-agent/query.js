@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../../logger/console.js");
+
 module.exports.SqlAgentQuery = {
   name: "sql-query",
   plugin: function () {
@@ -92,7 +94,7 @@ module.exports.SqlAgentQuery = {
               return JSON.stringify(result);
             } catch (e) {
               // eslint-disable-next-line no-console
-              console.error(e);
+              consoleLogger.error(e);
               return e.message;
             }
           },

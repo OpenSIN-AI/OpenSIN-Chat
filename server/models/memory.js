@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const prisma = require("../utils/prisma");
 
 const SUPPORTS_VECTORS = process.env.DATABASE_TYPE === "postgres";
@@ -79,7 +81,7 @@ const Memory = {
       return memories;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -103,7 +105,7 @@ const Memory = {
       return memories;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -164,7 +166,7 @@ const Memory = {
       return result;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return { memory: null, message: error.message };
     }
   },
@@ -204,7 +206,7 @@ const Memory = {
       return { memory, message: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return { memory: null, message: error.message };
     }
   },
@@ -233,7 +235,7 @@ const Memory = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -278,7 +280,7 @@ const Memory = {
       return result;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return { memory: null, message: error.message };
     }
   },
@@ -327,7 +329,7 @@ const Memory = {
       });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       if (String(error.message).startsWith("WORKSPACE_LIMIT reached")) {
         return {
           memory: null,
@@ -352,7 +354,7 @@ const Memory = {
       });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
     }
   },
 
@@ -374,7 +376,7 @@ const Memory = {
       return await client.memories.count({ where });
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return 0;
     }
   },
@@ -418,7 +420,7 @@ const Memory = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -513,7 +515,7 @@ const Memory = {
       result.updatedCount = actuallyUpdated;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
     }
     return result;
   },
@@ -532,7 +534,7 @@ const Memory = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -551,7 +553,7 @@ const Memory = {
       return memory || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },

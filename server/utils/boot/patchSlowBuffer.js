@@ -5,6 +5,8 @@
 //          `SlowBuffer.prototype.equal` at module-load time.
 // Docs: patchSlowBuffer.doc.md
 
+const consoleLogger = require("../logger/console.js");
+
 const LOG_PREFIX = "\x1b[36m[SlowBuffer Shim]\x1b[0m";
 
 /**
@@ -40,7 +42,7 @@ function patchSlowBuffer() {
   bufferModule.SlowBuffer = SlowBuffer;
 
   // eslint-disable-next-line no-console
-  console.log(
+  consoleLogger.log(
     `${LOG_PREFIX} Buffer.SlowBuffer shim installed (Node ${process.versions.node})`,
   );
 }

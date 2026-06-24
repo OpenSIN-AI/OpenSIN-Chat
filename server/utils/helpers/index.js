@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 /**
  * File Attachment for automatic upload on the chat container page.
  * @typedef Attachment
@@ -120,7 +122,7 @@ function getVectorDbClass(getExactly = null) {
       return new PGVector();
     default:
       // eslint-disable-next-line no-console
-      console.error(
+      consoleLogger.error(
         `\x1b[31m[ENV ERROR]\x1b[0m No VECTOR_DB value found in environment! Falling back to LanceDB`,
       );
       const { LanceDb: DefaultLanceDb } = require("../vectorDbProviders/lance");
@@ -392,7 +394,7 @@ async function getProviderModelPreference(provider = null) {
     return env ?? null;
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.error(
+    consoleLogger.error(
       `getProviderModelPreference error for ${provider}:`,
       e.message,
     );
@@ -461,7 +463,7 @@ function reportEmbeddingProgress(chunksProcessed, totalChunks) {
       process.send(event);
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error("reportEmbeddingProgress: process.send failed", e.message);
+      consoleLogger.error("reportEmbeddingProgress: process.send failed", e.message);
     }
     return;
   }

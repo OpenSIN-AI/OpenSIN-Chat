@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 class NvidiaNimTTS {
   // NVIDIA NIM TTS uses the OpenAI-compatible /audio/speech endpoint.
   // Docs: https://docs.nvidia.com/nim/nemo/tts/latest/getting-started.html
@@ -29,7 +31,7 @@ class NvidiaNimTTS {
 
   #log(text, ...args) {
     // eslint-disable-next-line no-console
-    console.log(`\x1b[32m[NvidiaNimTTS]\x1b[0m ${text}`, ...args);
+    consoleLogger.log(`\x1b[32m[NvidiaNimTTS]\x1b[0m ${text}`, ...args);
   }
 
   /**
@@ -47,7 +49,7 @@ class NvidiaNimTTS {
       return Buffer.from(await result.arrayBuffer());
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(`NvidiaNimTTS:ttsBuffer failed: ${e?.message || e}`);
+      consoleLogger.error(`NvidiaNimTTS:ttsBuffer failed: ${e?.message || e}`);
     }
     return null;
   }

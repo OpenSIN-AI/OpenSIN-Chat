@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const crypto = require("node:crypto");
 const express = require("express");
 const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
@@ -42,7 +44,7 @@ function cspViolationEndpoint(app) {
       }
 
       const truncated = JSON.stringify(body).slice(0, 500);
-      console.warn(`[csp-violation id=${id}]`, truncated);
+      consoleLogger.warn(`[csp-violation id=${id}]`, truncated);
       response.status(204).end();
     },
   );

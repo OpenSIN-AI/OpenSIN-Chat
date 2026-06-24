@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../logger/console.js");
+
 const { logger } = require("../../logger/structured");
 const { v4 } = require("uuid");
 const {
@@ -108,7 +110,7 @@ class AnthropicLLM {
       return Number(model.max_tokens ?? 4096);
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(`Error fetching model max tokens for ${modelName}:`, error);
+      consoleLogger.error(`Error fetching model max tokens for ${modelName}:`, error);
       return 4096;
     }
   }
@@ -235,7 +237,7 @@ class AnthropicLLM {
       };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error);
+      consoleLogger.error(error);
       return { textResponse: error.message, metrics: {} };
     }
   }

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../../utils/logger/console.js");
+
 const { reqBody } = require("../../utils/http");
 const { validatedRequest } = require("../../utils/middleware/validatedRequest");
 const { getLLMProvider } = require("../../utils/helpers");
@@ -66,7 +68,7 @@ function enhancePromptEndpoint(app) {
         return response.status(200).json({ enhanced: textResponse.trim() });
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error("[enhance-prompt]", e.message);
+        consoleLogger.error("[enhance-prompt]", e.message);
         // Return 200 with error so the frontend can fall back silently
         return response
           .status(200)

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const { safeJsonParse } = require("../utils/http");
 const prisma = require("../utils/prisma");
 
@@ -34,7 +36,7 @@ const EmbedChats = {
       return { chat, message: null };
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return { chat: null, message: error.message };
     }
   },
@@ -89,7 +91,7 @@ const EmbedChats = {
       return filterSources ? this.filterSources(chats) : chats;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -110,7 +112,7 @@ const EmbedChats = {
       return;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
     }
   },
 
@@ -124,7 +126,7 @@ const EmbedChats = {
       return chat || null;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return null;
     }
   },
@@ -137,7 +139,7 @@ const EmbedChats = {
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return false;
     }
   },
@@ -158,7 +160,7 @@ const EmbedChats = {
       return chats;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -190,7 +192,7 @@ const EmbedChats = {
       return chats;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return [];
     }
   },
@@ -203,7 +205,7 @@ const EmbedChats = {
       return count;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error(error.message);
+      consoleLogger.error(error.message);
       return 0;
     }
   },

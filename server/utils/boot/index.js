@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
 const { Telemetry } = require("../../models/telemetry");
 const { BackgroundService } = require("../BackgroundWorkers");
 const { EncryptionManager } = require("../EncryptionManager");
@@ -19,7 +21,7 @@ const markOnboarded = require("./markOnboarded");
 function bootSSL(app, port = 3001, onReady) {
   try {
     // eslint-disable-next-line no-console
-    console.log(
+    consoleLogger.log(
       `\x1b[33m[SSL BOOT ENABLED]\x1b[0m Loading the certificate and key for HTTPS mode...`,
     );
     const fs = require("fs");
@@ -39,7 +41,7 @@ function bootSSL(app, port = 3001, onReady) {
         await eagerLoadContextWindows();
         if (onReady) await onReady();
         // eslint-disable-next-line no-console
-        console.log(`Primary server in HTTPS mode listening on port ${port}`);
+        consoleLogger.log(`Primary server in HTTPS mode listening on port ${port}`);
       })
       .on("error", handleServerError);
 
@@ -48,7 +50,7 @@ function bootSSL(app, port = 3001, onReady) {
     return { app, server };
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.error(
+    consoleLogger.error(
       `\x1b[31m[SSL BOOT FAILED]\x1b[0m ${e.message} - falling back to HTTP boot.`,
       {
         ENABLE_HTTPS: process.env.ENABLE_HTTPS,
@@ -74,7 +76,7 @@ function bootHTTP(app, port = 3001, onReady) {
       await eagerLoadContextWindows();
       if (onReady) await onReady();
       // eslint-disable-next-line no-console
-      console.log(`Primary server in HTTP mode listening on port ${port}`);
+      consoleLogger.log(`Primary server in HTTP mode listening on port ${port}`);
     })
     .on("error", handleServerError);
 
@@ -91,7 +93,7 @@ function registerSignalHandlers() {
 
 function handleServerError(error) {
   // eslint-disable-next-line no-console
-  console.error(
+  consoleLogger.error(
     `\x1b[31m[SERVER ERROR]\x1b[0m ${error?.message || "Unknown error"}`,
     error,
   );

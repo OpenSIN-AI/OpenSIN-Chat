@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
 const crypto = require("crypto");
 const { AgentSkillWhitelist } = require("../models/agentSkillWhitelist");
 const { reqBody, userFromSession } = require("../utils/http");
@@ -22,7 +24,7 @@ function agentSkillWhitelistEndpoints(app) {
           .json({ available: filesystemTool.isToolAvailable() });
       } catch (e) {
         const errorId = crypto.randomUUID();
-        console.error(`[endpoint error ${errorId}]`, e);
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
         return response
           .status(500)
           .json({ available: false, error: "Internal server error", errorId });
@@ -41,7 +43,7 @@ function agentSkillWhitelistEndpoints(app) {
           .json({ available: createFilesTool.isToolAvailable() });
       } catch (e) {
         const errorId = crypto.randomUUID();
-        console.error(`[endpoint error ${errorId}]`, e);
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
         return response
           .status(500)
           .json({ available: false, error: "Internal server error", errorId });
@@ -77,7 +79,7 @@ function agentSkillWhitelistEndpoints(app) {
         return response.status(success ? 200 : 400).json({ success, error });
       } catch (e) {
         const errorId = crypto.randomUUID();
-        console.error(`[endpoint error ${errorId}]`, e);
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
         return response
           .status(500)
           .json({ success: false, error: "Internal server error", errorId });
