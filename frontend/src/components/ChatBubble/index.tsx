@@ -42,6 +42,13 @@ const MARKDOWN_SANITIZE_OPTS = {
     "path",
     "rect",
     "polyline",
+    "think",
+    "thinking",
+    "thought",
+    "thought_chain",
+    "think_chain",
+    "response",
+    "answer",
   ],
 };
 const safeMarkdown = (html) => DOMPurify.sanitize(html, MARKDOWN_SANITIZE_OPTS);

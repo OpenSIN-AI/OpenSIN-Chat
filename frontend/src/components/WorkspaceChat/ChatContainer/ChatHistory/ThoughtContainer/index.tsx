@@ -58,9 +58,10 @@ export function useThoughtExpansion(messageId: any) {
 }
 
 const THOUGHT_KEYWORDS = [
+  "think",
   "thought",
   "thinking",
-  "think",
+  "think_chain",
   "thought_chain",
   "arg_value",
 ];
