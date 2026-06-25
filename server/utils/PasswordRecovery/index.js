@@ -15,6 +15,11 @@ function getDummyBcryptHash() {
 }
 
 async function generateRecoveryCodes(userId) {
+  // Delete any existing recovery codes before generating new ones.
+  // Without this, old codes remain valid alongside the new ones, allowing
+  // an attacker with an old code to recover the account.
+  await RecoveryCode.deleteMany({ user_id: userId });
+
   const newRecoveryCodes = [];
   const plainTextCodes = [];
   for (let i = 0; i < 4; i++) {
@@ -51,9 +56,13 @@ async function recoverAccount(username = "", recoveryCodes = []) {
   if (allUserHashes.length < 4)
     return { success: false, error: "Invalid recovery codes." };
 
-  // If they tried to send more than two unique codes, we only take the first two
-  const uniqueRecoveryCodes = [...new Set(recoveryCodes)]
-    .map((code) => code.trim())
+  // Trim BEFORE deduplicating so that codes differing only by whitespace
+  // (e.g. " abc " and "abc") are treated as the same code.  Previously the
+  // Set deduplication ran before trim, allowing a single real code to be
+  // submitted twice with different whitespace to bypass the 2-code check.
+  const uniqueRecoveryCodes = [
+    ...new Set(recoveryCodes.map((code) => String(code).trim())),
+  ]
     .filter((code) => validate(code)) // we know that any provided code must be a uuid v4.
     .slice(0, 2);
   if (uniqueRecoveryCodes.length !== 2)
@@ -73,10 +82,10 @@ async function recoverAccount(username = "", recoveryCodes = []) {
   );
   if (!!error) return { success: false, error };
 
-  // Consume recovery codes immediately — they must be single-use.
-  // Without this, the same codes could generate multiple reset tokens
-  // before the password is actually changed.
-  await RecoveryCode.deleteMany({ user_id: user.id });
+  // Recovery codes are NOT deleted here — they are consumed in resetPassword
+  // only after the password is successfully changed.  Previously they were
+  // deleted here, which meant a failed resetPassword (e.g. complexity check)
+  // would leave the user locked out with no codes and no usable reset token.
 
   return { success: true, resetToken: passwordResetToken.token };
 }
@@ -100,13 +109,16 @@ async function resetPassword(token, _newPassword = "", confirmPassword = "") {
     password: newPassword,
   });
 
-  // seen_recovery_codes is not publicly writable
-  // so we have to do direct update here
+  if (error) return { success: false, message: error };
+
+  // Password was successfully changed — now consume the recovery codes
+  // and mark them as unseen so new codes are generated on next login.
+  // seen_recovery_codes is not publicly writable so we do a direct update.
+  await RecoveryCode.deleteMany({ user_id: userId });
   await User._update(userId, {
     seen_recovery_codes: false,
   });
 
-  if (error) return { success: false, message: error };
   // Token was already atomically claimed above; clean up any remaining tokens.
   await PasswordResetToken.deleteMany({ user_id: userId });
 

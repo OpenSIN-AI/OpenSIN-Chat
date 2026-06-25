@@ -36,14 +36,16 @@ class FlowExecutor {
    * @param {string} path - The path to the value
    * @returns {string} The resolved value
    */
-  getValueFromPath(obj = {}, path = "") {
-    if (typeof obj === "string") obj = safeJsonParse(obj, {});
+  getValueFromPath(obj, path = "") {
+    if (obj === undefined || obj === null) return "";
+    const wasString = typeof obj === "string";
+    if (wasString) obj = safeJsonParse(obj, {});
 
     if (
       !obj ||
       !path ||
       typeof obj !== "object" ||
-      Object.keys(obj).length === 0 ||
+      (wasString && Object.keys(obj).length === 0) ||
       typeof path !== "string"
     )
       return "";
@@ -157,7 +159,7 @@ class FlowExecutor {
         // For start blocks, we just initialize variables if they're not already set
         if (config.variables) {
           config.variables.forEach((v) => {
-            if (v.name && !this.variables[v.name]) {
+            if (v.name && this.variables[v.name] === undefined) {
               this.variables[v.name] = v.value || "";
             }
           });

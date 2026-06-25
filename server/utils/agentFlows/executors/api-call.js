@@ -13,17 +13,17 @@ const API_CALL_TIMEOUT_MS = 30_000; // 30s timeout for outbound API calls
  * @returns {Promise<string>} Response data
  */
 async function executeApiCall(config, context) {
-  const { url, method, headers = [], body, bodyType, formData } = config;
+  const { url, method = "GET", headers, body, bodyType, formData } = config;
   const { introspect, logger } = context;
   logger(`\x1b[43m[AgentFlowToolExecutor]\x1b[0m - executing API Call block`);
   introspect(`Making ${method} request to external API...`);
 
   const requestConfig = {
-    method,
-    headers: headers.reduce((acc, h) => ({ ...acc, [h.key]: h.value }), {}),
+    method: method.toUpperCase(),
+    headers: (headers || []).reduce((acc, h) => ({ ...acc, [h.key]: h.value }), {}),
   };
 
-  if (["POST", "PUT", "PATCH"].includes(method)) {
+  if (["POST", "PUT", "PATCH"].includes(method.toUpperCase())) {
     if (bodyType === "form") {
       const formDataObj = new URLSearchParams();
       (formData || []).forEach(({ key, value }) =>

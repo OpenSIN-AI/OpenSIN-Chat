@@ -501,7 +501,11 @@ function authEndpoints(app) {
         if (success) {
           response.status(200).json({ success, message });
         } else {
-          response.status(400).json({ success, error });
+          // resetPassword returns { success, message } — not { success, error }.
+          // Send `message` so the frontend can surface the actual error
+          // (e.g. "Invalid reset token" or password complexity failure)
+          // instead of a generic fallback.
+          response.status(400).json({ success, message });
         }
       } catch (error) {
         consoleLogger.error("Error resetting password:", error);

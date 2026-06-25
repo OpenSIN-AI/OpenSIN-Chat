@@ -49,9 +49,9 @@ describe("FlowExecutor: getValueFromPath", () => {
     expect(executor.getValueFromPath(obj, "a.b.subarr[2].id")).toBe(3);
   });
 
-  it("should return empty string if the path is invalid", () => {
+  it("should return undefined if the path does not exist in an empty object", () => {
     const result = executor.getValueFromPath({}, "a.b.c");
-    expect(result).toBe("");
+    expect(result).toBeUndefined();
   });
 
   it("should return empty string if the object is invalid", () => {

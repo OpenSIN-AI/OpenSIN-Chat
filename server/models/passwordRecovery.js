@@ -133,8 +133,17 @@ const PasswordResetToken = {
         where: { token: String(token) },
       });
       if (!record) return { count: 0, userId: null };
-      if (record.expiresAt < new Date())
+      if (record.expiresAt < new Date()) {
+        // Clean up the expired token so it doesn't accumulate in the DB.
+        try {
+          await prisma.password_reset_tokens.delete({
+            where: { id: record.id },
+          });
+        } catch {
+          // already deleted by a concurrent request — ignore
+        }
         return { count: 0, userId: record.user_id };
+      }
 
       const result = await prisma.password_reset_tokens.deleteMany({
         where: {

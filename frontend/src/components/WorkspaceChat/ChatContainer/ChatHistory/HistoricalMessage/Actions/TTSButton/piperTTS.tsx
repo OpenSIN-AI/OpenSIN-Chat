@@ -53,12 +53,19 @@ export default function PiperTTS({ chatId, voiceId = null, message }: any) {
       setSpeaking(false);
     }
 
+    function handleEnded() {
+      player.currentTime = 0;
+      setSpeaking(false);
+    }
+
     player.addEventListener("play", handlePlay);
     player.addEventListener("pause", handlePause);
+    player.addEventListener("ended", handleEnded);
 
     return () => {
       player.removeEventListener("play", handlePlay);
       player.removeEventListener("pause", handlePause);
+      player.removeEventListener("ended", handleEnded);
     };
   }, []);
 

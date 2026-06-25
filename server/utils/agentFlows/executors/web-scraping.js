@@ -55,7 +55,7 @@ async function executeWebScraping(config, context) {
   const result =
     captureAs === "querySelector"
       ? parseHTMLwithSelector(
-          collectorResult.content,
+          collectorResult?.content,
           config.querySelector,
           context,
         )
@@ -122,6 +122,11 @@ async function executeWebScraping(config, context) {
  * @returns {Object} The parsed content
  */
 function parseHTMLwithSelector(html, selector = null, context) {
+  if (!html) {
+    context.introspect("No HTML content to parse.");
+    return { success: false, content: null };
+  }
+
   if (!selector || selector.length === 0) {
     context.introspect("No selector provided. Returning the entire HTML.");
     return { success: true, content: html };

@@ -61,14 +61,27 @@ export default function AsyncTTSMessage({ slug, chatId }: any) {
       setSpeaking(false);
     }
 
+    function handleEnded() {
+      player.currentTime = 0;
+      setSpeaking(false);
+    }
+
     player.addEventListener("play", handlePlay);
     player.addEventListener("pause", handlePause);
+    player.addEventListener("ended", handleEnded);
 
     return () => {
       player.removeEventListener("play", handlePlay);
       player.removeEventListener("pause", handlePause);
+      player.removeEventListener("ended", handleEnded);
     };
   }, []);
+
+  useEffect(() => {
+    return () => {
+      if (audioSrc) URL.revokeObjectURL(audioSrc);
+    };
+  }, [audioSrc]);
 
   if (!chatId) return null;
   return (

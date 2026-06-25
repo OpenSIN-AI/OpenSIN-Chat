@@ -162,7 +162,8 @@ function userManagementEndpoints(app) {
           updates.password = String(password);
         }
 
-        if (bio) updates.bio = String(bio).slice(0, 1000);
+        // Allow clearing bio by accepting empty string (!== undefined check).
+        if (bio !== undefined) updates.bio = String(bio).slice(0, 1000);
 
         if (Object.keys(updates).length === 0) {
           response

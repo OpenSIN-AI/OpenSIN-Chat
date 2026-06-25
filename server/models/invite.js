@@ -88,12 +88,23 @@ const Invite = {
 
           if (validWorkspaceIds.length !== 0) {
             for (const workspaceId of validWorkspaceIds) {
-              await tx.workspace_users.create({
-                data: {
+              // Check for existing membership to avoid duplicate
+              // workspace_users entries (the table has no unique
+              // constraint on user_id + workspace_id).
+              const existing = await tx.workspace_users.findFirst({
+                where: {
                   user_id: Number(user.id),
                   workspace_id: workspaceId,
                 },
               });
+              if (!existing) {
+                await tx.workspace_users.create({
+                  data: {
+                    user_id: Number(user.id),
+                    workspace_id: workspaceId,
+                  },
+                });
+              }
             }
           }
         }

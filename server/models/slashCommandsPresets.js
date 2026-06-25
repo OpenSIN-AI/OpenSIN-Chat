@@ -9,9 +9,8 @@ const SlashCommandPresets = {
   formatCommand: function (command = "") {
     if (!command || command.length < 2) return `/${v4().split("-")[0]}`;
 
-    let adjustedCmd = command.toLowerCase(); // force lowercase
-    if (!adjustedCmd.startsWith("/")) adjustedCmd = `/${adjustedCmd}`; // Fix if no preceding / is found.
-    return `/${adjustedCmd.slice(1).toLowerCase().replace(CMD_REGEX, "-")}`; // replace any invalid chars with '-'
+    let adjustedCmd = command.toLowerCase().replace(/^\/+/, ""); // Strip ALL leading slashes
+    return `/${adjustedCmd.replace(CMD_REGEX, "-")}`; // replace any invalid chars with '-'
   },
 
   get: async function (clause = {}) {

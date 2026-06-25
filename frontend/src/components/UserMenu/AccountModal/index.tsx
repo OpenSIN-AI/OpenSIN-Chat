@@ -73,8 +73,15 @@ export default function AccountModal({ user, hideModal }: any) {
     const data: any = {};
     const form = new FormData(e.target);
     for (const [key, value] of form.entries()) {
-      if (!value || value === null) continue;
-      data[key] = value;
+      // Always include bio even if empty so the user can clear it.
+      // Skip other empty values (e.g. empty password fields).
+      if (key === "bio") {
+        data[key] = value;
+      } else if (!value || value === null) {
+        continue;
+      } else {
+        data[key] = value;
+      }
     }
 
     try {

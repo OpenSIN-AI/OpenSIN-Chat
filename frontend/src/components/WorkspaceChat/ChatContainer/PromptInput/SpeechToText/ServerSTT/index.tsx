@@ -122,7 +122,11 @@ async function uploadAndDispatch(
   t: any,
 ) {
   setProcessing(true);
-  const extension = mimeType.includes("ogg") ? "ogg" : "webm";
+  const extension = mimeType.includes("ogg")
+    ? "ogg"
+    : mimeType.includes("mp4") || mimeType.includes("m4a")
+      ? "m4a"
+      : "webm";
   const { text, error } = await System.transcribeAudio(
     blob,
     `audio.${extension}`,

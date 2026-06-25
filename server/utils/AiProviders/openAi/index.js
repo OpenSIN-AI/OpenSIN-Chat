@@ -172,12 +172,11 @@ class OpenAiLLM {
         }),
     );
 
-    if (!result.output || !result.output.hasOwnProperty("output_text"))
-      return null;
+    if (!result || !("output_text" in result)) return null;
 
-    const usage = result.output.usage || {};
+    const usage = result.usage || {};
     return {
-      textResponse: result.output.output_text,
+      textResponse: result.output_text,
       metrics: {
         prompt_tokens: usage.input_tokens || 0,
         completion_tokens: usage.output_tokens || 0,

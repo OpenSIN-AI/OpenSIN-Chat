@@ -6,7 +6,7 @@
  * @returns {Promise<string>} Processed result
  */
 async function executeLLMInstruction(config, context) {
-  const { instruction, resultVariable } = config;
+  const { instruction } = config;
   const { introspect, logger, aibitat } = context;
   logger(
     `\x1b[43m[AgentFlowToolExecutor]\x1b[0m - executing LLM Instruction block`,
@@ -43,7 +43,6 @@ async function executeLLMInstruction(config, context) {
     }
 
     introspect(`Successfully received LLM response`);
-    if (resultVariable) config.resultVariable = resultVariable;
     return completion.textResponse;
   } catch (error) {
     logger(`LLM processing failed: ${error.message}`, error);

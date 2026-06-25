@@ -13,6 +13,7 @@ jest.mock("../../utils/prisma", () => {
   };
   const mockWorkspaceUsers = {
     create: jest.fn(),
+    findFirst: jest.fn(),
   };
   return {
     invites: mockInvites,
@@ -128,6 +129,7 @@ describe("Invite model", () => {
         workspaceIds: "[1,2]",
       });
       prisma.workspaces.findMany.mockResolvedValue([{ id: 1 }, { id: 2 }, { id: 3 }]);
+      prisma.workspace_users.findFirst.mockResolvedValue(null);
       prisma.workspace_users.create.mockResolvedValue({});
 
       const { success, error } = await Invite.markClaimed(1, { id: 10 });
@@ -176,6 +178,7 @@ describe("Invite model", () => {
         workspaceIds: "[99]",
       });
       prisma.workspaces.findMany.mockResolvedValue([{ id: 99 }]);
+      prisma.workspace_users.findFirst.mockResolvedValue(null);
       prisma.workspace_users.create.mockRejectedValue(new Error("fail"));
 
       const { success, error } = await Invite.markClaimed(4, { id: 10 });
@@ -188,6 +191,30 @@ describe("Invite model", () => {
       const { success, error } = await Invite.markClaimed(999, { id: 10 });
       expect(success).toBe(false);
       expect(error).toBe("db fail");
+    });
+
+    it("skips workspace_users creation when membership already exists", async () => {
+      prisma.invites.update.mockResolvedValue({
+        id: 5,
+        status: "claimed",
+        claimedBy: 10,
+        workspaceIds: "[1,2]",
+      });
+      prisma.workspaces.findMany.mockResolvedValue([{ id: 1 }, { id: 2 }]);
+      // User is already a member of workspace 1 but not workspace 2
+      prisma.workspace_users.findFirst.mockImplementation((args) => {
+        if (args.where.workspace_id === 1) return { id: 100, user_id: 10, workspace_id: 1 };
+        return null;
+      });
+      prisma.workspace_users.create.mockResolvedValue({});
+
+      const { success } = await Invite.markClaimed(5, { id: 10 });
+      expect(success).toBe(true);
+      // Only workspace 2 should trigger create (workspace 1 already exists)
+      expect(prisma.workspace_users.create).toHaveBeenCalledTimes(1);
+      expect(prisma.workspace_users.create).toHaveBeenCalledWith({
+        data: { user_id: 10, workspace_id: 2 },
+      });
     });
   });
 

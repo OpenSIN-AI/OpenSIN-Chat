@@ -48,7 +48,7 @@ function agentFlowEndpoints(app) {
           return response.status(200).json({
             success: false,
             flow: null,
-            error: flow.error || "Failed to save flow",
+            error: flow?.error || "Failed to save flow",
           });
 
         if (!uuid) {
@@ -183,9 +183,9 @@ function agentFlowEndpoints(app) {
         }
 
         flow.config.active = active;
-        const { success } = AgentFlows.saveFlow(flow.name, flow.config, uuid);
+        const result = AgentFlows.saveFlow(flow.name, flow.config, uuid);
 
-        if (!success) {
+        if (!result || !result.success) {
           return response
             .status(500)
             .json({ success: false, error: "Failed to update flow" });
