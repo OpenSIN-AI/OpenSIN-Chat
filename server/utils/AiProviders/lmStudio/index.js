@@ -9,7 +9,20 @@ const {
 const {
   LLMPerformanceMonitor,
 } = require("../../helpers/chat/LLMPerformanceMonitor");
-const { parseReasoningFromResponse } = require("../../helpers/reasoningFilter");
+// Graceful fallback: if the centralized reasoningFilter helper is missing
+// (e.g. stale container image), the provider still returns the raw content
+// instead of crashing the process with "Cannot find module".
+let parseReasoningFromResponse;
+try {
+  ({ parseReasoningFromResponse } = require("../../helpers/reasoningFilter"));
+} catch (err) {
+  consoleLogger.error(
+    "[LMStudio] reasoningFilter helper not found, falling back to direct content extraction.",
+    err.message,
+  );
+  parseReasoningFromResponse = ({ message } = {}) => message?.content ?? "";
+}
+
 const { OpenAI: OpenAIApi } = require("openai");
 
 //  hybrid of openAi LLM chat completion for LMStudio
