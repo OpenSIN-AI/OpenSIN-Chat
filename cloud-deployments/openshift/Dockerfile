@@ -171,8 +171,9 @@ WORKDIR /app
 FROM --platform=$BUILDPLATFORM node:22-slim AS frontend-build
 WORKDIR /app/frontend
 COPY ./frontend/package.json ./frontend/yarn.lock ./
-RUN yarn install --network-timeout 100000 && yarn cache clean
+RUN yarn install --frozen-lockfile --network-timeout 100000 && yarn cache clean
 COPY ./frontend/ ./
+COPY ./docs/ /app/docs/
 RUN yarn build
 WORKDIR /app
 
@@ -181,14 +182,19 @@ WORKDIR /app
 FROM build AS backend-build
 COPY --chown=opensin:0 ./server /app/server/
 WORKDIR /app/server
-RUN yarn install --production --network-timeout 100000 && yarn cache clean
+RUN yarn install --production --frozen-lockfile --network-timeout 100000 && yarn cache clean
 WORKDIR /app
 
 # Install collector dependencies
 COPY --chown=opensin:0 ./collector/ ./collector/
 WORKDIR /app/collector
 ENV PUPPETEER_DOWNLOAD_BASE_URL=https://storage.googleapis.com/chrome-for-testing-public
-RUN yarn install --production --network-timeout 100000 && yarn cache clean
+# WORKAROUND: force git to resolve github ssh://git@github.com/... over https.
+# Base image has no openssh-client; the epub2-static dep in
+# collector/package.json is pinned to ssh, which crashes yarn install with
+# "ssh: not found". This redirect is non-destructive and only affects this stage.
+RUN git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
+RUN yarn install --production --frozen-lockfile --network-timeout 100000 && yarn cache clean
 
 WORKDIR /app
 USER opensin
@@ -211,7 +217,6 @@ RUN chown -R opensin:0 /app && \
 # Setup the environment
 ENV NODE_ENV=production
 ENV OPENSIN_CHAT_RUNTIME=docker
-ENV ANYTHING_LLM_RUNTIME=docker
 ENV DEPLOYMENT_VERSION=1.14.0
 ENV HOME=/app
 

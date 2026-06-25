@@ -317,7 +317,7 @@ class GitHubRepoLoader {
       const json = await res.json();
       if (json.hasOwnProperty("status") || !json.hasOwnProperty("content"))
         throw new Error(json?.message || "missing content");
-      return atob(json.content);
+      return Buffer.from(json.content, "base64").toString("utf8");
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(`RepoLoader.fetchSingleFile`, e);

@@ -732,9 +732,14 @@ const Workspace = {
       workspace?.chatModel ??
       getBaseLLMProviderModel({ provider });
     const agentConfig = { provider, model };
-    const agentProvider = new AIbitat(agentConfig).getProviderForConfig(
-      agentConfig,
-    );
+    let agentProvider;
+    try {
+      agentProvider = new AIbitat(agentConfig).getProviderForConfig(
+        agentConfig,
+      );
+    } catch {
+      return false;
+    }
     const nativeToolCalling = await agentProvider.supportsNativeToolCalling?.();
     return nativeToolCalling;
   },

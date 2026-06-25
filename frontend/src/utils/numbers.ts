@@ -7,10 +7,12 @@ export function numberWithCommas(input) {
 }
 
 export function nFormatter(input) {
+  if (input === null || input === undefined || isNaN(input)) return "";
   return Formatter.format(input);
 }
 
 export function dollarFormat(input) {
+  if (input === null || input === undefined || isNaN(input)) return "";
   return new Intl.NumberFormat(undefined, {
     style: "currency",
     currency: "USD",
@@ -63,12 +65,12 @@ export function milliToHms(milli = 0) {
 }
 
 /**
- * Format a duration in milliseconds to a human readable string
+ * Format a duration in seconds to a human readable string
  * - Less than 1 second - show milliseconds (50ms)
  * - Less than 60 seconds - show seconds (5s)
  * - Less than 1 hour - show min:sec (1m 30s)
  * - 1 hour or more - show h:min:sec (1h 30m 5s)
- * @param {number} duration - duration in milliseconds
+ * @param {number} duration - duration in seconds
  * @returns {string}
  */
 export function formatDuration(duration) {

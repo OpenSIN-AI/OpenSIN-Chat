@@ -28,10 +28,17 @@ export default function AdminTerminal(): JSX.Element {
     }
     setLoading(true);
     setResult(null);
-    const response = await System.execTerminalCommand({
-      command: command.trim(),
-      cwd: cwd.trim() || "/app",
-    });
+    let response: any;
+    try {
+      response = await System.execTerminalCommand({
+        command: command.trim(),
+        cwd: cwd.trim() || "/app",
+      });
+    } catch (e: any) {
+      showToast(String(e?.message || e), "error");
+      setLoading(false);
+      return;
+    }
     setLoading(false);
     if (response.error) {
       if (response.error.includes("disabled") || response.status === 403) {

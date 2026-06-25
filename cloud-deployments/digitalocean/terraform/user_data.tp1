@@ -13,10 +13,10 @@ cat <<EOF >/home/opensin-chat/.env
 ${env_content}
 EOF
 
-sudo docker pull ghcr.io/opensin-ai/opensin-chat:1.13.0
-sudo docker run -d -p 3001:3001 --cap-add SYS_ADMIN -v /home/opensin-chat:/app/server/storage -v /home/opensin-chat/.env:/app/server/.env -e STORAGE_DIR="/app/server/storage" ghcr.io/opensin-ai/opensin-chat:1.13.0
+sudo docker pull ghcr.io/opensin-ai/opensin-chat:1.14.0
+sudo docker run -d -p 3001:3001 --cap-add SYS_ADMIN -v /home/opensin-chat:/app/server/storage -v /home/opensin-chat/.env:/app/server/.env -e STORAGE_DIR="/app/server/storage" ghcr.io/opensin-ai/opensin-chat:1.14.0
 echo "Container ID: $(sudo docker ps --latest --quiet)"  
   
-export ONLINE=$(curl -Is http://localhost:3001/ping | head -n 1|cut -d$' ' -f2)  
+export ONLINE=$(curl -Is http://localhost:3001/api/ping | head -n 1|cut -d$' ' -f2)  
 echo "Health check: $ONLINE"  
 echo "Setup complete! OpenSIN Chat instance is now online!"  

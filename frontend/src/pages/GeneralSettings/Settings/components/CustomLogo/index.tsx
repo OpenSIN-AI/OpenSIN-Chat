@@ -32,43 +32,69 @@ export default function CustomLogo(): JSX.Element {
     const objectURL = URL.createObjectURL(file);
     setLogo(objectURL);
 
-    const formData = new FormData();
-    formData.append("logo", file);
-    const { success, error } = await System.uploadLogo(formData);
-    URL.revokeObjectURL(objectURL);
-    if (!success) {
-      showToast(t("customization.items.logo.uploadFailed", { error }), "error");
+    try {
+      const formData = new FormData();
+      formData.append("logo", file);
+      const { success, error } = await System.uploadLogo(formData);
+      URL.revokeObjectURL(objectURL);
+      if (!success) {
+        showToast(
+          t("customization.items.logo.uploadFailed", { error }),
+          "error",
+        );
+        setLogo(_initLogo);
+        return;
+      }
+
+      const { logoURL } = await System.fetchLogo();
+      _setLogo(logoURL);
+      refreshIsDefaultLogo();
+
+      showToast(t("customization.items.logo.uploadSuccess"), "success");
+      setIsDefaultLogo(false);
+    } catch (err: any) {
+      URL.revokeObjectURL(objectURL);
+      showToast(
+        t("customization.items.logo.uploadFailed", { error: err?.message ?? String(err) }),
+        "error",
+      );
       setLogo(_initLogo);
-      return;
     }
-
-    const { logoURL } = await System.fetchLogo();
-    _setLogo(logoURL);
-    refreshIsDefaultLogo();
-
-    showToast(t("customization.items.logo.uploadSuccess"), "success");
-    setIsDefaultLogo(false);
   };
 
   const handleRemoveLogo = async () => {
     setLogo("");
     setIsDefaultLogo(true);
 
-    const { success, error } = await System.removeCustomLogo();
-    if (!success) {
-      console.error("Failed to remove logo:", error);
-      showToast(t("customization.items.logo.removeFailed", { error }), "error");
+    try {
+      const { success, error } = await System.removeCustomLogo();
+      if (!success) {
+        console.error("Failed to remove logo:", error);
+        showToast(
+          t("customization.items.logo.removeFailed", { error }),
+          "error",
+        );
+        const { logoURL } = await System.fetchLogo();
+        setLogo(logoURL);
+        setIsDefaultLogo(false);
+        return;
+      }
+
+      const { logoURL } = await System.fetchLogo();
+      _setLogo(logoURL);
+      refreshIsDefaultLogo();
+
+      showToast(t("customization.items.logo.removeSuccess"), "success");
+    } catch (err: any) {
+      console.error("Failed to remove logo:", err);
+      showToast(
+        t("customization.items.logo.removeFailed", { error: err?.message ?? String(err) }),
+        "error",
+      );
       const { logoURL } = await System.fetchLogo();
       setLogo(logoURL);
       setIsDefaultLogo(false);
-      return;
     }
-
-    const { logoURL } = await System.fetchLogo();
-    _setLogo(logoURL);
-    refreshIsDefaultLogo();
-
-    showToast(t("customization.items.logo.removeSuccess"), "success");
   };
 
   const triggerFileInputClick = () => {

@@ -246,6 +246,8 @@ class YoutubeTranscript {
    * @returns {string} YouTube video ID
    */
   static retrieveVideoId(videoId) {
+    if (typeof videoId !== "string" || !videoId)
+      throw new YoutubeTranscriptError("Invalid video ID provided.");
     if (videoId.length === 11) return videoId; // already a valid ID most likely
     const matchedId = validYoutubeVideoUrl(videoId, true);
     if (matchedId) return matchedId;

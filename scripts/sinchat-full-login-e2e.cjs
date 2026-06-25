@@ -5,7 +5,7 @@ const { chromium } = require("playwright");
 const fs = require("fs");
 
 const PASSWORD = (fs.readFileSync("/tmp/auth-prod.txt", "utf8") || "").trim();
-const BASE_URL = "https://sinchat.delqhi.com";
+const BASE_URL = process.env.BASE_URL || "https://sinchat.delqhi.com";
 
 (async () => {
   console.log(`[login-e2e-v2] Launching Chromium against ${BASE_URL} ...`);

@@ -13,7 +13,7 @@ export default function useBrowserExtensionApiKey() {
   return {
     apiKeys: data?.apiKeys ?? [],
     isMultiUser: data?.apiKeys?.some((key) => key.user !== null) ?? false,
-    error: data?.success === false ? data?.error : null,
+    error: data?.success === false ? data?.error : error?.message || null,
     isLoading,
     refresh: mutate,
     mutate,

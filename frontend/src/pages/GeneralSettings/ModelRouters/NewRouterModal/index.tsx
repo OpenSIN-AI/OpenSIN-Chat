@@ -64,10 +64,18 @@ export default function NewRouterModal({
       return;
     }
 
-    const { router: saved, error: apiError } = isEdit
-      ? await ModelRouter.update(router?.id, data)
-      : await ModelRouter.create(data);
+    let result: any;
+    try {
+      result = isEdit
+        ? await ModelRouter.update(router?.id, data)
+        : await ModelRouter.create(data);
+    } catch (e: any) {
+      setError(String(e?.message || e));
+      setLoading(false);
+      return;
+    }
     setLoading(false);
+    const { router: saved, error: apiError } = result;
 
     if (saved) {
       onSuccess();

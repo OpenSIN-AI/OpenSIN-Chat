@@ -225,7 +225,11 @@ export function JobsPanel({ isSidebar = false }: { isSidebar?: boolean }) {
   const [selectedJob, setSelectedJob] = useState<PdfJob | null>(null);
 
   const refresh = useCallback(async () => {
-    setJobs((await PdfAnalysis.list()) as PdfJob[]);
+    try {
+      setJobs((await PdfAnalysis.list()) as PdfJob[]);
+    } catch (e) {
+      console.error("Failed to fetch PDF jobs:", e);
+    }
   }, []);
 
   useEffect(() => {
@@ -1090,7 +1094,7 @@ interface FactsPanelProps {
 }
 
 export function FactsPanel({ onCrossCheck }: FactsPanelProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [q, setQ] = useState("");
   const [documentFilter, setDocumentFilter] = useState("");
   const [facts, setFacts] = useState<Fact[]>([]);
@@ -1098,13 +1102,18 @@ export function FactsPanel({ onCrossCheck }: FactsPanelProps) {
 
   const search = useCallback(async () => {
     setLoading(true);
-    setFacts(
-      (await PdfAnalysis.searchFacts({
-        q,
-        document: documentFilter,
-      })) as Fact[],
-    );
-    setLoading(false);
+    try {
+      setFacts(
+        (await PdfAnalysis.searchFacts({
+          q,
+          document: documentFilter,
+        })) as Fact[],
+      );
+    } catch (e) {
+      console.error("Failed to search facts:", e);
+    } finally {
+      setLoading(false);
+    }
   }, [q, documentFilter]);
 
   useEffect(() => {

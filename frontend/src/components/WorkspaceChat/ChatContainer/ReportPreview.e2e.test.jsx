@@ -109,7 +109,7 @@ describe("E2E: agent → report → preview flow", () => {
     expect(mockOpenPreview).not.toHaveBeenCalled();
   });
 
-  it("uses default title 'Bericht' and type 'pdf' when detail is incomplete", () => {
+  it("uses default title and type 'pdf' when detail is incomplete", () => {
     render(<ReportPreviewListener />);
 
     act(() => {
@@ -120,7 +120,7 @@ describe("E2E: agent → report → preview flow", () => {
 
     expect(mockOpenPreview).toHaveBeenCalledTimes(1);
     const arg = mockOpenPreview.mock.calls[0][0];
-    expect(arg.title).toBe("Bericht");
+    expect(arg.title).toBe("Report");
     expect(arg.type).toBe("pdf");
   });
 

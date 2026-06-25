@@ -1,4 +1,8 @@
 // SPDX-License-Identifier: MIT
+/**
+ * Purpose: Render hover action icons (copy, edit, regenerate, feedback, more) for a chat message.
+ * Docs: Actions/index.tsx (this file)
+ */
 import React, { memo, useState } from "react";
 import useCopyText from "@/hooks/useCopyText";
 import { Check } from "@phosphor-icons/react/dist/csr/Check";
@@ -39,13 +43,11 @@ const Actions: any = ({
 
   return (
     <div
-      className={`flex w-full flex-wrap items-center gap-y-1 ${role === "user" ? "justify-end" : "justify-between"} md:h-0 md:overflow-hidden md:group-hover:h-auto md:focus-within:h-auto transition-all duration-200`}
+      className={`flex ${role === "user" ? "w-fit" : "w-full"} flex-wrap items-center gap-y-1 ${role === "user" ? "justify-end" : "justify-between"} md:h-0 md:overflow-hidden md:group-hover:h-auto md:focus-within:h-auto transition-all duration-200`}
     >
       <div className="flex justify-start items-center gap-x-[8px]">
         <div className="md:group-hover:opacity-100 md:focus-within:opacity-100 transition-all duration-300 md:opacity-0 flex justify-start items-center gap-x-[8px]">
-          <div
-            className={`flex justify-start items-center gap-x-[8px] ${role === "user" ? "flex-row-reverse" : ""}`}
-          >
+          <div className="flex justify-start items-center gap-x-[8px]">
             {ttsButton}
             <CopyMessage message={message} />
             <EditMessageAction
@@ -54,7 +56,7 @@ const Actions: any = ({
               isEditing={isEditing}
             />
           </div>
-          {isLastMessage && !isEditing && (
+          {isLastMessage && !isEditing && role !== "user" && (
             <RegenerateMessage
               regenerateMessage={regenerateMessage}
               slug={slug}
@@ -114,7 +116,7 @@ function CopyMessage({ message }: any) {
       <button
         type="button"
         onClick={() => copyText(message)}
-        data-tooltip-id="copy-assistant-text"
+        data-tooltip-id="copy-message-text"
         data-tooltip-content={t("chat_window.copy")}
         className="text-zinc-300 light:text-slate-500"
         aria-label={t("chat_window.copy")}

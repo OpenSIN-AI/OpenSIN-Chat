@@ -3,6 +3,11 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render } from "@testing-library/react";
 import { REPORT_PREVIEW_EVENT } from "@/utils/chat/agent";
 
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
+
 const mockOpenPreview = vi.fn();
 
 vi.mock("./ChatSidebar", () => ({
@@ -53,7 +58,7 @@ describe("ReportPreviewListener", () => {
     dispatchReportPreview({ downloadUrl: "/api/reports/456.pdf" });
     expect(mockOpenPreview).toHaveBeenCalledTimes(1);
     const arg = mockOpenPreview.mock.calls[0][0];
-    expect(arg.title).toBe("Bericht");
+    expect(arg.title).toBe("Report");
     expect(arg.type).toBe("pdf");
   });
 

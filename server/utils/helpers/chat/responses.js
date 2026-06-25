@@ -27,7 +27,7 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
     completion_tokens: 0,
   };
 
-  return new Promise(async (resolve) => {
+  return new Promise((resolve) => {
     let fullText = "";
     let reasoningText = "";
 
@@ -37,123 +37,125 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
     };
     response.on("close", handleAbort);
 
-    try {
-      let reasoningMode = true;
-      let reasoningBlockOpen = false;
-      for await (const chunk of stream) {
-        const message = chunk?.choices?.[0];
-        const token = message?.delta?.content;
+    (async () => {
+      try {
+        let reasoningMode = true;
+        let reasoningBlockOpen = false;
+        for await (const chunk of stream) {
+          const message = chunk?.choices?.[0];
+          const token = message?.delta?.content;
 
-        const reasoningToken =
-          message?.delta?.reasoning_content || message?.delta?.reasoning;
+          const reasoningToken =
+            message?.delta?.reasoning_content || message?.delta?.reasoning;
 
-        if (
-          chunk.hasOwnProperty("usage") &&
-          !!chunk.usage &&
-          Object.values(chunk.usage).length > 0
-        ) {
-          if (chunk.usage.hasOwnProperty("prompt_tokens")) {
-            usage.prompt_tokens = Number(chunk.usage.prompt_tokens);
-          }
-
-          if (chunk.usage.hasOwnProperty("completion_tokens")) {
-            hasUsageMetrics = true;
-            usage.completion_tokens = Number(chunk.usage.completion_tokens);
-          }
-
-          if (chunk.usage.hasOwnProperty("time_info")) {
-            usage.duration = chunk.usage.time_info.completion_time;
-          }
-        }
-
-        if (reasoningToken) {
-          reasoningText += reasoningToken;
-          if (!hasUsageMetrics) usage.completion_tokens++;
-          continue;
-        }
-
-        if (!!reasoningText && !reasoningToken && token) {
-          reasoningText = "";
-        }
-
-        if (token) {
-          let filteredToken = token;
-          if (reasoningMode) {
-            if (reasoningBlockOpen) {
-              const endIdx = filteredToken.indexOf(" antwortet");
-              if (endIdx !== -1) {
-                reasoningBlockOpen = false;
-                filteredToken = filteredToken.slice(endIdx + 8);
-              } else {
-                continue;
-              }
+          if (
+            chunk.hasOwnProperty("usage") &&
+            !!chunk.usage &&
+            Object.values(chunk.usage).length > 0
+          ) {
+            if (chunk.usage.hasOwnProperty("prompt_tokens")) {
+              usage.prompt_tokens = Number(chunk.usage.prompt_tokens);
             }
-            const startIdx = filteredToken.indexOf("imdaking");
-            if (startIdx !== -1) {
-              const afterStart = filteredToken.slice(startIdx + 7);
-              const endIdx = afterStart.indexOf(" antwortet");
-              if (endIdx !== -1) {
-                filteredToken = afterStart.slice(endIdx + 8);
-              } else {
-                reasoningBlockOpen = true;
-                continue;
-              }
+
+            if (chunk.usage.hasOwnProperty("completion_tokens")) {
+              hasUsageMetrics = true;
+              usage.completion_tokens = Number(chunk.usage.completion_tokens);
             }
-            if (!filteredToken) continue;
-            reasoningMode = false;
+
+            if (chunk.usage.hasOwnProperty("time_info")) {
+              usage.duration = chunk.usage.time_info.completion_time;
+            }
           }
 
-          fullText += filteredToken;
-          if (!hasUsageMetrics) usage.completion_tokens++;
-          if (response.writableEnded || response.destroyed) continue;
-          writeResponseChunk(response, {
-            uuid,
-            sources: [],
-            type: "textResponseChunk",
-            textResponse: filteredToken,
-            close: false,
-            error: false,
-          });
-        }
+          if (reasoningToken) {
+            reasoningText += reasoningToken;
+            if (!hasUsageMetrics) usage.completion_tokens++;
+            continue;
+          }
 
-        if (
-          message?.hasOwnProperty("finish_reason") &&
-          message.finish_reason !== "" &&
-          message.finish_reason !== null
-        ) {
-          writeResponseChunk(response, {
-            uuid,
-            sources,
-            type: "textResponseChunk",
-            textResponse: "",
-            close: true,
-            error: false,
-          });
-          response.removeListener("close", handleAbort);
-          stream?.endMeasurement(usage);
-          resolve(fullText);
-          break;
+          if (!!reasoningText && !reasoningToken && token) {
+            reasoningText = "";
+          }
+
+          if (token) {
+            let filteredToken = token;
+            if (reasoningMode) {
+              if (reasoningBlockOpen) {
+                const endIdx = filteredToken.indexOf(" antwortet");
+                if (endIdx !== -1) {
+                  reasoningBlockOpen = false;
+                  filteredToken = filteredToken.slice(endIdx + 8);
+                } else {
+                  continue;
+                }
+              }
+              const startIdx = filteredToken.indexOf("imdaking");
+              if (startIdx !== -1) {
+                const afterStart = filteredToken.slice(startIdx + 7);
+                const endIdx = afterStart.indexOf(" antwortet");
+                if (endIdx !== -1) {
+                  filteredToken = afterStart.slice(endIdx + 8);
+                } else {
+                  reasoningBlockOpen = true;
+                  continue;
+                }
+              }
+              if (!filteredToken) continue;
+              reasoningMode = false;
+            }
+
+            fullText += filteredToken;
+            if (!hasUsageMetrics) usage.completion_tokens++;
+            if (response.writableEnded || response.destroyed) continue;
+            writeResponseChunk(response, {
+              uuid,
+              sources: [],
+              type: "textResponseChunk",
+              textResponse: filteredToken,
+              close: false,
+              error: false,
+            });
+          }
+
+          if (
+            message?.hasOwnProperty("finish_reason") &&
+            message.finish_reason !== "" &&
+            message.finish_reason !== null
+          ) {
+            writeResponseChunk(response, {
+              uuid,
+              sources,
+              type: "textResponseChunk",
+              textResponse: "",
+              close: true,
+              error: false,
+            });
+            response.removeListener("close", handleAbort);
+            stream?.endMeasurement(usage);
+            resolve(fullText);
+            break;
+          }
         }
+        response.removeListener("close", handleAbort);
+        stream?.endMeasurement(usage);
+        resolve(fullText);
+      } catch (e) {
+        consoleLogger.log(
+          `\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${e.message}`,
+        );
+        writeResponseChunk(response, {
+          uuid,
+          type: "abort",
+          textResponse: null,
+          sources: [],
+          close: true,
+          error: e.message,
+        });
+        response.removeListener("close", handleAbort);
+        stream?.endMeasurement(usage);
+        resolve(fullText);
       }
-      response.removeListener("close", handleAbort);
-      stream?.endMeasurement(usage);
-      resolve(fullText);
-    } catch (e) {
-      consoleLogger.log(
-        `\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${e.message}`,
-      );
-      writeResponseChunk(response, {
-        uuid,
-        type: "abort",
-        textResponse: null,
-        sources: [],
-        close: true,
-        error: e.message,
-      });
-      response.removeListener("close", handleAbort);
-      stream?.endMeasurement(usage);
-      resolve(fullText);
-    }
+    })();
   });
 }
 

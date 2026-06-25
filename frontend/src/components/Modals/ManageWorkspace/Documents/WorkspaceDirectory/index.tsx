@@ -70,7 +70,7 @@ function WorkspaceDirectory({
 
   const handleRemoveSelectedItems = async () => {
     setLoading(true);
-    setLoadingMessage("Removing selected files from workspace");
+    setLoadingMessage(t("connectors.directory.removingSelectedFiles"));
 
     try {
       const itemsToRemove = buildItemsToRemove(selectedItems, files);

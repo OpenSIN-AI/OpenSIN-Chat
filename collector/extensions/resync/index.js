@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const crypto = require("crypto");
 const { getLinkText } = require("../../processLink");
 
 /**
@@ -230,7 +231,7 @@ async function resyncPaperlessNgx({ chunkSource }, response) {
       baseUrl: source.searchParams.get("baseUrl"),
       apiToken: source.searchParams.get("token"),
     });
-    const documentId = source.pathname.split("//")[1];
+    const documentId = source.hostname;
     const content = await loader.fetchDocumentContent(documentId);
 
     if (!content) throw new Error("Failed to fetch document content");

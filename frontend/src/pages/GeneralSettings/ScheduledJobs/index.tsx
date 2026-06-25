@@ -23,34 +23,48 @@ export default function ScheduledJobsPage() {
 
   const handleDelete = async (id: string | number) => {
     if (!window.confirm(t("scheduledJobs.confirmDelete"))) return;
-    await ScheduledJobs.delete(id);
-    showToast(t("scheduledJobs.toast.deleted"), "success", { clear: true });
+    try {
+      await ScheduledJobs.delete(id);
+      showToast(t("scheduledJobs.toast.deleted"), "success", { clear: true });
+    } catch (e) {
+      showToast(String(e), "error", { clear: true });
+    }
     refresh();
   };
 
   const handleToggle = async (id: string | number) => {
-    const result = await ScheduledJobs.toggle(id);
-    if (result?.error) showToast(result.error, "error", { clear: true });
+    try {
+      const result = await ScheduledJobs.toggle(id);
+      if (result?.error) showToast(result.error, "error", { clear: true });
+    } catch (e) {
+      showToast(String(e), "error", { clear: true });
+    }
     refresh();
   };
 
   const handleTrigger = async (id: string | number) => {
-    const { success, skipped, error } = await ScheduledJobs.trigger(id);
-    if (!success) {
-      showToast(error || t("scheduledJobs.toast.triggerFailed"), "error", {
-        clear: true,
-      });
-    } else if (skipped) {
-      showToast(
-        t(
-          "scheduledJobs.toast.triggerSkipped",
-          "A run is already in progress for this job",
-        ),
-        "info",
-        { clear: true },
-      );
-    } else {
-      showToast(t("scheduledJobs.toast.triggered"), "success", { clear: true });
+    try {
+      const { success, skipped, error } = await ScheduledJobs.trigger(id);
+      if (!success) {
+        showToast(error || t("scheduledJobs.toast.triggerFailed"), "error", {
+          clear: true,
+        });
+      } else if (skipped) {
+        showToast(
+          t(
+            "scheduledJobs.toast.triggerSkipped",
+            "A run is already in progress for this job",
+          ),
+          "info",
+          { clear: true },
+        );
+      } else {
+        showToast(t("scheduledJobs.toast.triggered"), "success", {
+          clear: true,
+        });
+      }
+    } catch (e) {
+      showToast(String(e), "error", { clear: true });
     }
     refresh();
   };
@@ -206,7 +220,11 @@ function NotificationBellButton() {
   }
 
   const handleClick = async () => {
-    await subscribeToPushNotifications();
+    try {
+      await subscribeToPushNotifications();
+    } catch (e) {
+      console.error("Failed to subscribe to push notifications:", e);
+    }
     setPermissionState(Notification.permission);
   };
 

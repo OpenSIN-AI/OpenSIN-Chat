@@ -78,8 +78,8 @@ function formatSize(bytes) {
   return `${size.toFixed(i === 0 ? 0 : 1)} ${units[i]}`;
 }
 
-function getBreadcrumbs(path) {
-  const crumbs = [{ name: "Uploads", path: "" }];
+function getBreadcrumbs(path, t) {
+  const crumbs = [{ name: t("sidebar.filesystem.uploadsRoot"), path: "" }];
   if (!path) return crumbs;
   const parts = path.split("/").filter(Boolean);
   let current = "";
@@ -128,7 +128,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
     }
   }, [sidebarOpen, currentPath, browse]);
 
-  const breadcrumbs = getBreadcrumbs(currentPath);
+  const breadcrumbs = getBreadcrumbs(currentPath, t);
 
   const handleSelectDirectory = useCallback(() => {
     if (currentPath !== null) {
@@ -159,19 +159,33 @@ export default function FilesystemSidebar({ workspace = null }: any) {
           success: true,
           message:
             selectedDirectory !== null
-              ? `Verzeichnis "${selectedDirectory || t("sidebar.filesystem.uploadsRoot")}" verbunden — KI hat Zugriff auf alle Dateien`
-              : `${data.connected || 0} von ${data.total} Datei(en) verbunden`,
+              ? t(
+                  "sidebar.filesystem.connectDirSuccess",
+                  'Verzeichnis "{path}" verbunden — KI hat Zugriff auf alle Dateien',
+                  { path: selectedDirectory || t("sidebar.filesystem.uploadsRoot") },
+                )
+              : t(
+                  "sidebar.filesystem.connectFilesSuccess",
+                  "{connected} von {total} Datei(en) verbunden",
+                  { connected: data.connected || 0, total: data.total },
+                ),
         });
         clearSelection();
         setSelectedDirectory(null);
       } else {
         setConnectResult({
           success: false,
-          message: data.error || "Fehler beim Verbinden",
+          message: data.error || t("sidebar.filesystem.connectFailed", "Fehler beim Verbinden"),
         });
       }
     } catch (e) {
-      setConnectResult({ success: false, message: e.message });
+      setConnectResult({
+        success: false,
+        message:
+          e instanceof Error
+            ? e.message
+            : t("sidebar.filesystem.connectFailed", "Fehler beim Verbinden"),
+      });
     } finally {
       setConnecting(false);
     }
@@ -198,7 +212,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
       } catch (err) {
         setItemActionMsg({
           success: false,
-          message: `${t("sidebar.filesystem.deleteFailed")}: ${err.message}`,
+          message: `${t("sidebar.filesystem.deleteFailed")}: ${err?.message ?? err}`,
         });
       } finally {
         setDeletingPath(null);
@@ -211,13 +225,13 @@ export default function FilesystemSidebar({ workspace = null }: any) {
     ? [
         {
           icon: Cpu,
-          label: "Plattform",
+          label: t("sidebar.filesystem.sysInfoPlatform", "Plattform"),
           value: `${sysInfo.platform} (${sysInfo.arch})`,
         },
         { icon: Cpu, label: "Node.js", value: sysInfo.nodeVersion },
         {
           icon: HardDrive,
-          label: "Speicher frei",
+          label: t("sidebar.filesystem.sysInfoStorageFree", "Speicher frei"),
           value:
             sysInfo.storage?.current != null
               ? `${sysInfo.storage.current} GB / ${sysInfo.storage.capacity} GB`
@@ -225,11 +239,19 @@ export default function FilesystemSidebar({ workspace = null }: any) {
         },
         {
           icon: Cpu,
-          label: "RAM frei",
+          label: t("sidebar.filesystem.sysInfoRamFree", "RAM frei"),
           value: `${sysInfo.freeMemMB} MB / ${sysInfo.totalMemMB} MB`,
         },
-        { icon: FolderOpen, label: "Storage", value: sysInfo.uploadPath },
-        { icon: Folder, label: "Arbeitsverz.", value: sysInfo.workDir },
+        {
+          icon: FolderOpen,
+          label: t("sidebar.filesystem.sysInfoStorage", "Storage"),
+          value: sysInfo.uploadPath,
+        },
+        {
+          icon: Folder,
+          label: t("sidebar.filesystem.sysInfoWorkDir", "Arbeitsverz."),
+          value: sysInfo.workDir,
+        },
       ]
     : [];
 
@@ -390,7 +412,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
                           .catch((err) => {
                             setItemActionMsg({
                               success: false,
-                              message: `${t("sidebar.filesystem.createFailed")}: ${err.message}`,
+                              message: `${t("sidebar.filesystem.createFailed")}: ${err?.message ?? err}`,
                             });
                           });
                       } else if (e.key === "Escape") {
@@ -426,7 +448,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
                         .catch((err) => {
                           setItemActionMsg({
                             success: false,
-                            message: `${t("sidebar.filesystem.createFailed")}: ${err.message}`,
+                            message: `${t("sidebar.filesystem.createFailed")}: ${err?.message ?? err}`,
                           });
                         });
                     }}

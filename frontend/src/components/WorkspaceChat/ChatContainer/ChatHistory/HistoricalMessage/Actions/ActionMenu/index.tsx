@@ -1,4 +1,8 @@
 // SPDX-License-Identifier: MIT
+/**
+ * Purpose: Three-dots overflow menu (fork / delete) for assistant chat messages.
+ * Docs: ActionMenu/index.tsx (this file)
+ */
 import React, { useState, useEffect, useRef } from "react";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { DotsThreeVertical } from "@phosphor-icons/react/dist/csr/DotsThreeVertical";
@@ -41,7 +45,10 @@ function ActionMenu({ chatId, forkThread, isEditing, role }: any) {
   if (!chatId || isEditing || role === "user") return null;
 
   return (
-    <div className="mt-2 -ml-0.5 relative" ref={menuRef}>
+    <div
+      className="relative flex items-center justify-center h-7 w-7"
+      ref={menuRef}
+    >
       <button
         type="button"
         onClick={toggleMenu}

@@ -160,37 +160,42 @@ export function useAgents(): UseAgentsReturn {
 
   useEffect(() => {
     async function fetchSettings() {
-      const [
-        _settings,
-        _preferences,
-        flowsRes,
-        fsAgentAvailable,
-        createFilesAvailable,
-      ] = await Promise.all([
-        System.keys(),
-        Admin.systemPreferencesByFields([
-          "disabled_agent_skills",
-          "default_agent_skills",
-          "imported_agent_skills",
-          "active_agent_flows",
-        ]),
-        AgentFlows.listFlows(),
-        System.isFileSystemAgentAvailable(),
-        System.isCreateFilesAgentAvailable(),
-      ]);
+      try {
+        const [
+          _settings,
+          _preferences,
+          flowsRes,
+          fsAgentAvailable,
+          createFilesAvailable,
+        ] = await Promise.all([
+          System.keys(),
+          Admin.systemPreferencesByFields([
+            "disabled_agent_skills",
+            "default_agent_skills",
+            "imported_agent_skills",
+            "active_agent_flows",
+          ]),
+          AgentFlows.listFlows(),
+          System.isFileSystemAgentAvailable(),
+          System.isCreateFilesAgentAvailable(),
+        ]);
 
-      const { flows = [] } = flowsRes as { flows?: AgentFlow[] };
-      setSettings({ ..._settings, preferences: _preferences.settings });
-      setAgentSkills(_preferences.settings?.default_agent_skills ?? []);
-      setDisabledAgentSkills(
-        _preferences.settings?.disabled_agent_skills ?? [],
-      );
-      setImportedSkills(_preferences.settings?.imported_agent_skills ?? []);
-      setActiveFlowIds(flows.filter((f) => f.active).map((f) => f.uuid));
-      setAgentFlows(flows);
-      setFileSystemAgentAvailable(fsAgentAvailable);
-      setCreateFilesAgentAvailable(createFilesAvailable);
-      setLoading(false);
+        const { flows = [] } = flowsRes as { flows?: AgentFlow[] };
+        setSettings({ ..._settings, preferences: _preferences.settings });
+        setAgentSkills(_preferences.settings?.default_agent_skills ?? []);
+        setDisabledAgentSkills(
+          _preferences.settings?.disabled_agent_skills ?? [],
+        );
+        setImportedSkills(_preferences.settings?.imported_agent_skills ?? []);
+        setActiveFlowIds(flows.filter((f) => f.active).map((f) => f.uuid));
+        setAgentFlows(flows);
+        setFileSystemAgentAvailable(fsAgentAvailable);
+        setCreateFilesAgentAvailable(createFilesAvailable);
+      } catch (e) {
+        console.error("Failed to fetch agent settings:", e);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchSettings();
   }, []);

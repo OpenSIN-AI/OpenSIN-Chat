@@ -3,8 +3,8 @@
 // Docs: syncHealthCheck.doc.md
 const consoleLogger = require("../logger/console.js");
 
-const prisma = require("../../utils/prisma");
-const logger = require("../../utils/logger")();
+const prisma = require("../prisma");
+const logger = require("../logger")();
 
 async function fetchWithRetry(url, opts, maxRetries = 3) {
   for (let i = 0; i <= maxRetries; i++) {

@@ -54,9 +54,13 @@ export default function CollapsibleSection({
 function CopyButton({ content }: { content: string }) {
   const [copied, setCopied] = useState(false);
   const copyToClipboard = async () => {
-    await copyMarkdownAsRichText(content);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await copyMarkdownAsRichText(content);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (e) {
+      console.error("Failed to copy content:", e);
+    }
   };
 
   return (

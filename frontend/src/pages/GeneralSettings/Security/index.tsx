@@ -61,6 +61,7 @@ function MultiUserMode() {
         password: form.get("password") as string,
       };
 
+    try {
       const { success, error } = await System.setupMultiUser(data);
       if (success) {
         showToast(t("security.multiuser.enable.success"), "success");
@@ -77,6 +78,16 @@ function MultiUserMode() {
       showToast(t("security.multiuser.enable.failed", { error }), "error");
       setSaving(false);
       return;
+    } catch (e: any) {
+      showToast(
+        t("security.multiuser.enable.failed", {
+          error: String(e?.message || e),
+        }),
+        "error",
+      );
+      setSaving(false);
+      return;
+    }
     }
     setSaving(false);
   };
@@ -229,19 +240,29 @@ function PasswordProtection() {
       newPassword: form.get("password"),
     };
 
-    const { success, error } = await System.updateSystemPassword(data);
-    if (success) {
-      showToast(t("security.password.refreshing"), "success");
-      setSaving(false);
-      setTimeout(() => {
-        safeRemoveItem(AUTH_USER);
-        safeRemoveItem(AUTH_TOKEN);
-        safeRemoveItem(AUTH_TIMESTAMP);
-        window.location.reload();
-      }, 3_000);
-      return;
-    } else {
-      showToast(t("security.password.updateFailed", { error }), "error");
+    try {
+      const { success, error } = await System.updateSystemPassword(data);
+      if (success) {
+        showToast(t("security.password.refreshing"), "success");
+        setSaving(false);
+        setTimeout(() => {
+          safeRemoveItem(AUTH_USER);
+          safeRemoveItem(AUTH_TOKEN);
+          safeRemoveItem(AUTH_TIMESTAMP);
+          window.location.reload();
+        }, 3_000);
+        return;
+      } else {
+        showToast(t("security.password.updateFailed", { error }), "error");
+        setSaving(false);
+      }
+    } catch (e: any) {
+      showToast(
+        t("security.password.updateFailed", {
+          error: String(e?.message || e),
+        }),
+        "error",
+      );
       setSaving(false);
     }
   };

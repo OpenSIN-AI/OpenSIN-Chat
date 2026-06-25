@@ -3,6 +3,11 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import MenuOption from "./index";
 
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
+
 vi.mock("react-router-dom", () => ({
   Link: ({ children, to, onClick, ...props }) => (
     <a href={to} onClick={onClick} {...props}>

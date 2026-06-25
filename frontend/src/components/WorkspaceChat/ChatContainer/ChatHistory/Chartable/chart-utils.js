@@ -70,6 +70,8 @@ export function getTremorColor(color) {
       return Colors.slate;
     case "zinc":
       return Colors.zinc;
+    default:
+      return Colors.blue;
   }
 }
 

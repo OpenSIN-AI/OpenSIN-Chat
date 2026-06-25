@@ -47,15 +47,25 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
     e.preventDefault();
     e.stopPropagation();
     setOpen(false);
-    const { thread, error } = await Workspace.threads.new(workspace.slug);
-    if (error) {
-      showToast(t("activeWorkspaces.chatCreateFailed", { error }), "error", {
-        clear: true,
-      });
-      return;
+    try {
+      const { thread, error } = await Workspace.threads.new(workspace.slug);
+      if (error) {
+        showToast(t("activeWorkspaces.chatCreateFailed", { error }), "error", {
+          clear: true,
+        });
+        return;
+      }
+      invalidateThreads(workspace.slug);
+      navigate(paths.workspace.thread(workspace.slug, thread.slug));
+    } catch (e: any) {
+      showToast(
+        t("activeWorkspaces.chatCreateFailed", {
+          error: String(e?.message || e),
+        }),
+        "error",
+        { clear: true },
+      );
     }
-    invalidateThreads(workspace.slug);
-    navigate(paths.workspace.thread(workspace.slug, thread.slug));
   };
 
   const handleNewFolder = async (e: React.MouseEvent) => {
@@ -64,19 +74,29 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
     setOpen(false);
     const name = window.prompt(t("activeWorkspaces.folderNamePrompt"))?.trim();
     if (!name) return;
-    const { folder, message } = await Workspace.threads.folders.new(
-      workspace.slug,
-      name,
-    );
-    if (message || !folder) {
+    try {
+      const { folder, message } = await Workspace.threads.folders.new(
+        workspace.slug,
+        name,
+      );
+      if (message || !folder) {
+        showToast(
+          t("activeWorkspaces.folderCreateFailed", { message }),
+          "error",
+          { clear: true },
+        );
+        return;
+      }
+      invalidateThreads(workspace.slug);
+    } catch (e: any) {
       showToast(
-        t("activeWorkspaces.folderCreateFailed", { message }),
+        t("activeWorkspaces.folderCreateFailed", {
+          message: String(e?.message || e),
+        }),
         "error",
         { clear: true },
       );
-      return;
     }
-    invalidateThreads(workspace.slug);
   };
 
   return (

@@ -80,7 +80,11 @@ export default function CrossCheckPanel({
   const [selectedJob, setSelectedJob] = useState<CrossCheckJob | null>(null);
 
   const refresh = useCallback(async () => {
-    setJobs((await PdfAnalysis.listCrossChecks()) as CrossCheckJob[]);
+    try {
+      setJobs((await PdfAnalysis.listCrossChecks()) as CrossCheckJob[]);
+    } catch (e) {
+      console.error("Failed to fetch cross-check jobs:", e);
+    }
   }, []);
 
   useEffect(() => {

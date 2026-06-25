@@ -34,17 +34,21 @@ export default function UserRow({ currUser, user }: UserRowProps): JSX.Element {
     )
       return false;
 
-    const { success, error } = await Admin.updateUser(user.id, {
-      suspended: suspended ? 0 : 1,
-    });
-    if (!success) showToast(error, "error", { clear: true });
-    if (success) {
-      showToast(
-        !suspended ? t("userRow.suspended") : t("userRow.unsuspended"),
-        "success",
-        { clear: true },
-      );
-      setSuspended(!suspended);
+    try {
+      const { success, error } = await Admin.updateUser(user.id, {
+        suspended: suspended ? 0 : 1,
+      });
+      if (!success) showToast(error, "error", { clear: true });
+      if (success) {
+        showToast(
+          !suspended ? t("userRow.suspended") : t("userRow.unsuspended"),
+          "success",
+          { clear: true },
+        );
+        setSuspended(!suspended);
+      }
+    } catch (e) {
+      showToast(String(e), "error", { clear: true });
     }
   };
   const handleDelete = async () => {
@@ -52,11 +56,15 @@ export default function UserRow({ currUser, user }: UserRowProps): JSX.Element {
       !window.confirm(t("userRow.confirmDelete", { username: user.username }))
     )
       return false;
-    const { success, error } = await Admin.deleteUser(user.id);
-    if (!success) showToast(error, "error", { clear: true });
-    if (success) {
-      showToast(t("userRow.deleteSuccess"), "success", { clear: true });
-      mutate(USERS_KEY);
+    try {
+      const { success, error } = await Admin.deleteUser(user.id);
+      if (!success) showToast(error, "error", { clear: true });
+      if (success) {
+        showToast(t("userRow.deleteSuccess"), "success", { clear: true });
+        mutate(USERS_KEY);
+      }
+    } catch (e) {
+      showToast(String(e), "error", { clear: true });
     }
   };
 

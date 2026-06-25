@@ -33,7 +33,15 @@ export default function RunHistoryPage(): JSX.Element {
 
   const handleRunNow = async () => {
     setTriggering(true);
-    const { success, skipped, error } = await ScheduledJobs.trigger(id);
+    let result: any;
+    try {
+      result = await ScheduledJobs.trigger(id);
+    } catch (e: any) {
+      showToast(String(e?.message || e), "error");
+      setTriggering(false);
+      return;
+    }
+    const { success, skipped, error } = result;
     setTriggering(false);
     if (!success) {
       showToast(error || t("scheduledJobs.toast.triggerFailed"), "error");

@@ -66,15 +66,24 @@ export default function GeneralLLMPreference() {
 
     for (const [key, value] of formData.entries()) data[key] = value;
     setSaving(true);
-    const { error } = await System.updateSystem(data);
+    try {
+      const { error } = await System.updateSystem(data);
 
-    if (error) {
-      showToast(t("llmPreference.saveFailed", { error }), "error");
-    } else {
-      showToast(t("llmPreference.saveSuccess"), "success");
+      if (error) {
+        showToast(t("llmPreference.saveFailed", { error }), "error");
+      } else {
+        showToast(t("llmPreference.saveSuccess"), "success");
+      }
+      setHasChanges(!!error);
+    } catch (e: any) {
+      showToast(
+        t("llmPreference.saveFailed", { error: String(e?.message || e) }),
+        "error",
+      );
+      setHasChanges(true);
+    } finally {
+      setSaving(false);
     }
-    setSaving(false);
-    setHasChanges(!!error);
   };
 
   const updateLLMChoice = (selection: string) => {

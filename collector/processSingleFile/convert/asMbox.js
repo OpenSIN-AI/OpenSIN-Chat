@@ -42,14 +42,17 @@ async function asMbox({
 
   let mails = [];
   try {
-    mails = await mboxParser(fs.createReadStream(fullFilePath))
-      .then((mails) => mails)
-      .catch((error) => {
+    mails = await mboxParser(fs.createReadStream(fullFilePath)).catch(
+      (error) => {
         // eslint-disable-next-line no-console
         console.error(`Could not parse mail items`, error);
         return [];
-      });
-  } finally {
+      }
+    );
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(`Could not parse mail items`, error);
+    mails = [];
   }
 
   if (!mails.length) {

@@ -212,9 +212,18 @@ function RouterRow({
     )
       return;
 
-    const { success, error } = await ModelRouter.delete(router.id);
-    if (success) removeRouter(router.id);
-    else showToast(t("model-router.toast-delete-failed", { error }), "error");
+    try {
+      const { success, error } = await ModelRouter.delete(router.id);
+      if (success) removeRouter(router.id);
+      else showToast(t("model-router.toast-delete-failed", { error }), "error");
+    } catch (e: any) {
+      showToast(
+        t("model-router.toast-delete-failed", {
+          error: String(e?.message || e),
+        }),
+        "error",
+      );
+    }
   };
 
   const goToRules = () => navigate(paths.settings.modelRouterRules(router.id));

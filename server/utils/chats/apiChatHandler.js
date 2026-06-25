@@ -866,6 +866,7 @@ async function streamChat({
         temperature: workspace?.openAiTemp ?? LLMConnector.defaultTemp,
         user: user,
       });
+      if (!stream) throw new Error("LLM provider returned a null stream.");
       completeText = await LLMConnector.handleStream(response, stream, {
         uuid,
       });
@@ -898,6 +899,10 @@ async function streamChat({
             user: user,
           },
         );
+        if (!retryStream)
+          throw new Error("LLM provider returned a null stream on retry.", {
+            cause: error,
+          });
         completeText = await LLMConnector.handleStream(response, retryStream, {
           uuid,
         });

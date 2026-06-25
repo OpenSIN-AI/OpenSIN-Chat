@@ -36,14 +36,18 @@ export default function NewApiKeyModal({
     const user = userFromStorage();
     const Model = !!user ? Admin : System;
 
-    const { apiKey: newApiKey, error } = await Model.generateApiKey({
-      name,
-    });
-    if (!!newApiKey) {
-      setApiKey(newApiKey);
-      onSuccess();
+    try {
+      const { apiKey: newApiKey, error } = await Model.generateApiKey({
+        name,
+      });
+      if (!!newApiKey) {
+        setApiKey(newApiKey);
+        onSuccess();
+      }
+      setError(error);
+    } catch (err: any) {
+      setError(err?.message ?? t("api.messages.error", { error: "" }));
     }
-    setError(error);
   };
 
   const copyApiKey = () => {

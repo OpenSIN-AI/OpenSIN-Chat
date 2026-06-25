@@ -648,6 +648,8 @@ const TRANSLATIONS = {
     name: "Name",
     bearer: "Bearer",
     default: "Standard",
+    defaultSkillTooltip:
+      "Diese Fähigkeit ist standardmäßig aktiviert und kann nicht deaktiviert werden.",
     branch: "Branch",
     agentSkills: "Agenten-Fähigkeiten",
     viewingText: "Text anzeigen",
@@ -751,6 +753,10 @@ const TRANSLATIONS = {
       deployment: "Deployment & Betrieb",
       operations: "Sicherheit & Betrieb",
     },
+    apiKey: "API-Schlüssel",
+    cancel: "Abbrechen",
+    communityHub: "Community Hub",
+    engine: "Engine",
     methods: {
       put: "PUT",
       post: "POST",
@@ -1006,6 +1012,10 @@ const TRANSLATIONS = {
         "Sie sind dabei, die Vektordatenbank dieses Workspace zurückzusetzen. Dies entfernt alle derzeit eingebetteten Vektoreinbettungen.\n\nDie ursprünglichen Quelldateien bleiben unberührt. Diese Aktion ist irreversibel.",
       error: "Die Workspace-Vektordatenbank konnte nicht zurückgesetzt werden!",
       success: "Die Workspace-Vektordatenbank wurde zurückgesetzt!",
+    },
+    common: {
+      error: "Ein Fehler ist aufgetreten.",
+      success: "Vorgang erfolgreich abgeschlossen.",
     },
   },
   agent: {
@@ -1609,6 +1619,7 @@ const TRANSLATIONS = {
       codePlaceholder: "Code eingeben...",
       storeResultIn: "Ergebnis speichern in",
       selectOrCreateVariable: "Variable auswählen oder erstellen",
+      language: "Sprache",
     },
     flowInfoNode: {
       flowName: "Flow-Name",
@@ -1678,6 +1689,7 @@ const TRANSLATIONS = {
     empty:
       "Kein Inhalt zur Vorschau. Generiere einen Bericht oder ein Dokument, um es hier anzuzeigen.",
     title: "Vorschau",
+    defaultReportTitle: "Bericht",
     unknown_file: "Unbekannte Datei",
     open: "Vorschau",
     download: "Herunterladen",
@@ -2178,6 +2190,7 @@ const TRANSLATIONS = {
       no_docs: "Keine Dokumente vorhanden.",
       remove_selected: "Ausgewähltes entfernen",
       save_embed: "Speichern und Einbetten",
+      removingSelectedFiles: "Ausgewählte Dateien werden aus dem Workspace entfernt",
       "total-documents_one": "{{count}} Dokument",
       "total-documents_other": "{{count}} Dokumente",
     },
@@ -2195,6 +2208,9 @@ const TRANSLATIONS = {
       "fetch-website": "Website abrufen",
       "privacy-notice":
         "Diese Dateien werden zum Dokumentenprozessor hochgeladen, der auf dieser OpenSIN Chat-Instanz läuft. Diese Dateien werden nicht an Dritte gesendet oder geteilt.",
+      scrapingLink: "Link wird abgerufen...",
+      linkUploadError: "Fehler beim Hochladen des Links: {{error}}",
+      linkUploadSuccess: "Link erfolgreich hochgeladen",
     },
     pinning: {
       what_pinning: "Was bedeutet es Dokumente anzuheften?",
@@ -2392,6 +2408,7 @@ const TRANSLATIONS = {
     account: "Account",
     support: "Support",
     signout: "Abmelden",
+    close: "Schließen",
   },
   "keyboard-shortcuts": {
     title: "Tastaturkürzel",
@@ -2590,6 +2607,7 @@ const TRANSLATIONS = {
     perplexityApiKey: "Perplexity API-Schlüssel",
     vaneNoConfig:
       "Vane läuft als lokaler Sidecar-Container und benötigt keinen API-Schlüssel. Der Endpunkt wird über die Umgebungsvariable VANE_API_URL konfiguriert (Standard: http://vane:3000). Schließe zuerst die einmalige Modell-Einrichtung in der Vane-Web-UI ab.",
+    azurePortalUrl: "Azure-Portal-URL",
   },
   ollama: {
     advancedSettings: "erweiterte Einstellungen",
@@ -3910,6 +3928,8 @@ const TRANSLATIONS = {
       users: "Benutzer",
       createdOn: "Erstellt am",
       deleteSuccess: "Workspace erfolgreich gelöscht.",
+      deleteConfirm:
+        "Sind Sie sicher, dass Sie {{name}} löschen möchten?\nDanach wird er in dieser OpenSIN Chat-Instanz nicht mehr verfügbar sein.\n\nDiese Aktion ist irreversibel.",
     },
     newWorkspaceModal: {
       title: "Neuen Workspace erstellen",
@@ -4105,6 +4125,8 @@ const TRANSLATIONS = {
     connectingToExtension:
       "Verbindung zur Browser-Erweiterung wird hergestellt...",
     notAvailable: "k.A.",
+    copyConnectionString: "Verbindungsstring kopieren",
+    autoConnectToExtension: "Automatisch mit Erweiterung verbinden",
     newKey: {
       title: "Neuer Browser-Erweiterungs-API-Schlüssel",
       error: "Fehler: {{error}}",
@@ -4834,6 +4856,18 @@ const TRANSLATIONS = {
   workspaceFileRow: {
     pinned: "Angeheftet",
     unpin: "Loslösen",
+    removingFile: "Datei wird aus dem Workspace entfernt",
+    pinToWorkspace: "An Workspace anheften",
+    unpinFromWorkspace: "Von Workspace loslösen",
+    failedToPin: "Dokument konnte nicht angeheftet werden.",
+    documentPinned: "Dokument an Workspace angeheftet",
+    documentUnpinned: "Dokument von Workspace gelöst",
+    stopWatching: "Änderungsüberwachung stoppen",
+    watchForChanges: "Dokument auf Änderungen überwachen",
+    failedToWatch: "Überwachung konnte nicht aktiviert werden.",
+    documentWatched: "Dokument wird auf Änderungen überwacht.",
+    documentUnwatched: "Dokument wird nicht mehr überwacht.",
+    removeDocument: "Dokument aus Workspace entfernen",
   },
   chartable: {
     unsupported: "Nicht unterstützter Diagrammtyp.",

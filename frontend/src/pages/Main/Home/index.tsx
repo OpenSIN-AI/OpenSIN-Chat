@@ -77,17 +77,21 @@ export default function Home() {
 
   useEffect(() => {
     async function init() {
-      const ws = await getTargetWorkspace();
-      if (ws) {
-        const [suggestedMessages, { showAgentCommand }] = await Promise.all([
-          Workspace.getSuggestedMessages(ws.slug),
-          Workspace.agentCommandAvailable(ws.slug),
-        ]);
-        setWorkspace({
-          ...ws,
-          suggestedMessages,
-          showAgentCommand,
-        });
+      try {
+        const ws = await getTargetWorkspace();
+        if (ws) {
+          const [suggestedMessages, { showAgentCommand }] = await Promise.all([
+            Workspace.getSuggestedMessages(ws.slug),
+            Workspace.agentCommandAvailable(ws.slug),
+          ]);
+          setWorkspace({
+            ...ws,
+            suggestedMessages,
+            showAgentCommand,
+          });
+        }
+      } catch (e) {
+        console.error("Failed to initialize home workspace:", e);
       }
       setWorkspaceLoading(false);
     }
@@ -114,16 +118,20 @@ export default function Home() {
       if (!files?.length) return;
 
       pendingFilesRef.current = files;
-      let ws = workspace;
-      if (!ws) {
-        ws = await createDefaultWorkspace(t("new-workspace.placeholder"));
-        if (!ws) return;
-        setWorkspace(ws);
-      }
-      const { thread } = await Workspace.threads.new(ws.slug);
-      if (thread) {
-        setThreadSlug(thread.slug);
-        invalidateThreads(ws.slug);
+      try {
+        let ws = workspace;
+        if (!ws) {
+          ws = await createDefaultWorkspace(t("new-workspace.placeholder"));
+          if (!ws) return;
+          setWorkspace(ws);
+        }
+        const { thread } = await Workspace.threads.new(ws.slug);
+        if (thread) {
+          setThreadSlug(thread.slug);
+          invalidateThreads(ws.slug);
+        }
+      } catch (e) {
+        console.error("Failed to handle paste:", e);
       }
     }
 
@@ -135,23 +143,31 @@ export default function Home() {
   async function handleDropWithoutWorkspace(acceptedFiles: File[]) {
     setDragging(false);
     pendingFilesRef.current = acceptedFiles;
-    const ws = await createDefaultWorkspace(t("new-workspace.placeholder"));
-    if (!ws) return;
-    setWorkspace(ws);
-    const { thread } = await Workspace.threads.new(ws.slug);
-    if (thread) {
-      setThreadSlug(thread.slug);
-      invalidateThreads(ws.slug);
+    try {
+      const ws = await createDefaultWorkspace(t("new-workspace.placeholder"));
+      if (!ws) return;
+      setWorkspace(ws);
+      const { thread } = await Workspace.threads.new(ws.slug);
+      if (thread) {
+        setThreadSlug(thread.slug);
+        invalidateThreads(ws.slug);
+      }
+    } catch (e) {
+      console.error("Failed to handle drop:", e);
     }
   }
 
   async function handleDropWithWorkspace(acceptedFiles: File[]) {
     setDragging(false);
     pendingFilesRef.current = acceptedFiles;
-    const { thread } = await Workspace.threads.new(workspace!.slug);
-    if (thread) {
-      setThreadSlug(thread.slug);
-      invalidateThreads(workspace!.slug);
+    try {
+      const { thread } = await Workspace.threads.new(workspace!.slug);
+      if (thread) {
+        setThreadSlug(thread.slug);
+        invalidateThreads(workspace!.slug);
+      }
+    } catch (e) {
+      console.error("Failed to handle drop:", e);
     }
   }
 

@@ -72,9 +72,13 @@ export default function JobFormModal({
   };
 
   useEffect(() => {
-    ScheduledJobs.availableTools().then(({ tools }: any) => {
-      setAvailableTools(tools || []);
-    });
+    ScheduledJobs.availableTools()
+      .then(({ tools }: any) => {
+        setAvailableTools(tools || []);
+      })
+      .catch((e) => {
+        console.error("Failed to fetch available tools:", e);
+      });
   }, []);
 
   const handleChange = (
@@ -118,10 +122,16 @@ export default function JobFormModal({
       tools: form.selectedTools,
     };
 
-    const result = isEditing
-      ? await ScheduledJobs.update(job?.id, data)
-      : await ScheduledJobs.create(data);
-
+    let result: any;
+    try {
+      result = isEditing
+        ? await ScheduledJobs.update(job?.id, data)
+        : await ScheduledJobs.create(data);
+    } catch (e: any) {
+      showToast(String(e?.message || e), "error");
+      setSaving(false);
+      return;
+    }
     setSaving(false);
 
     if (result.error) {

@@ -69,6 +69,7 @@ export async function subscribeToPushNotifications(
 
     const onUpdateFound = () => {
       const newWorker = swReg.installing;
+      if (!newWorker) return;
       log("Service worker update found");
 
       newWorker.addEventListener("statechange", () => {
@@ -116,24 +117,26 @@ export async function subscribeToPushNotifications(
     }
 
     if (swReg.installing) {
+      const sw = swReg.installing;
       await new Promise<void>((resolve) => {
-        swReg.installing.addEventListener(
-          "statechange",
-          () => {
-            if (swReg.installing?.state === "activated") resolve();
-          },
-          { once: true },
-        );
+        const handler = () => {
+          if (sw.state === "activated" || sw.state === "redundant") {
+            sw.removeEventListener("statechange", handler);
+            resolve();
+          }
+        };
+        sw.addEventListener("statechange", handler);
       });
     } else if (swReg.waiting) {
+      const sw = swReg.waiting;
       await new Promise<void>((resolve) => {
-        swReg.waiting.addEventListener(
-          "statechange",
-          () => {
-            if (swReg.waiting?.state === "activated") resolve();
-          },
-          { once: true },
-        );
+        const handler = () => {
+          if (sw.state === "activated" || sw.state === "redundant") {
+            sw.removeEventListener("statechange", handler);
+            resolve();
+          }
+        };
+        sw.addEventListener("statechange", handler);
       });
     }
 

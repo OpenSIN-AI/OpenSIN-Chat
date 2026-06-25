@@ -31,18 +31,27 @@ function bootSSL(app, port = 3001, onReady) {
     const server = https.createServer(credentials, app);
 
     server
-      .listen(port, async () => {
-        await markOnboarded();
-        await setupTelemetry();
-        new CommunicationKey(true);
-        new EncryptionManager();
-        new BackgroundService().boot();
-        await eagerLoadContextWindows();
-        if (onReady) await onReady();
+      .listen(port, () => {
+        (async () => {
+          try {
+            await markOnboarded();
+            await setupTelemetry();
+            new CommunicationKey(true);
+            new EncryptionManager();
+            new BackgroundService().boot();
+            await eagerLoadContextWindows();
+            if (onReady) await onReady();
+          } catch (e) {
+            consoleLogger.error(
+              `\x1b[31m[BOOT INIT ERROR]\x1b[0m ${e.message}`,
+              { stacktrace: e.stack },
+            );
+          }
 
-        consoleLogger.log(
-          `Primary server in HTTPS mode listening on port ${port}`,
-        );
+          consoleLogger.log(
+            `Primary server in HTTPS mode listening on port ${port}`,
+          );
+        })();
       })
       .on("error", handleServerError);
 
@@ -67,18 +76,26 @@ function bootHTTP(app, port = 3001, onReady) {
   if (!app) throw new Error('No "app" defined - crashing!');
 
   const server = app
-    .listen(port, async () => {
-      await markOnboarded();
-      await setupTelemetry();
-      new CommunicationKey(true);
-      new EncryptionManager();
-      new BackgroundService().boot();
-      await eagerLoadContextWindows();
-      if (onReady) await onReady();
+    .listen(port, () => {
+      (async () => {
+        try {
+          await markOnboarded();
+          await setupTelemetry();
+          new CommunicationKey(true);
+          new EncryptionManager();
+          new BackgroundService().boot();
+          await eagerLoadContextWindows();
+          if (onReady) await onReady();
+        } catch (e) {
+          consoleLogger.error(`\x1b[31m[BOOT INIT ERROR]\x1b[0m ${e.message}`, {
+            stacktrace: e.stack,
+          });
+        }
 
-      consoleLogger.log(
-        `Primary server in HTTP mode listening on port ${port}`,
-      );
+        consoleLogger.log(
+          `Primary server in HTTP mode listening on port ${port}`,
+        );
+      })();
     })
     .on("error", handleServerError);
 

@@ -78,6 +78,9 @@ export default function DefaultSystemPrompt() {
           return setSystemPromptForm((prev) => ({
             ...prev,
             value: saneDefaultSystemPrompt,
+            default: saneDefaultSystemPrompt,
+            isDirty: false,
+            isSubmitting: false,
           }));
         }
 

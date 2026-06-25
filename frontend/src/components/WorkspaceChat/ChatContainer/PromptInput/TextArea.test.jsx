@@ -1,7 +1,13 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
+import { useTranslation } from "react-i18next";
 import TextArea from "./TextArea";
+
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
 vi.mock("@/models/appearance", () => ({
   default: {
@@ -20,24 +26,27 @@ describe("TextArea", () => {
   const saveCurrentState = vi.fn();
   const setFocused = vi.fn();
   const adjustTextArea = vi.fn();
-  const t = (key) => key;
 
   const renderTextArea = (props = {}) => {
-    return render(
-      <TextArea
-        textareaRef={{ current: null }}
-        promptInput=""
-        handleChange={handleChange}
-        captureEnterOrUndo={captureEnterOrUndo}
-        handlePasteEvent={handlePasteEvent}
-        saveCurrentState={saveCurrentState}
-        textSizeClass="text-base"
-        t={t}
-        setFocused={setFocused}
-        adjustTextArea={adjustTextArea}
-        {...props}
-      />,
-    );
+    function Wrapper() {
+      const { t } = useTranslation();
+      return (
+        <TextArea
+          textareaRef={{ current: null }}
+          promptInput=""
+          handleChange={handleChange}
+          captureEnterOrUndo={captureEnterOrUndo}
+          handlePasteEvent={handlePasteEvent}
+          saveCurrentState={saveCurrentState}
+          textSizeClass="text-base"
+          t={t}
+          setFocused={setFocused}
+          adjustTextArea={adjustTextArea}
+          {...props}
+        />
+      );
+    }
+    return render(<Wrapper />);
   };
 
   beforeEach(() => {
@@ -97,7 +106,7 @@ describe("TextArea", () => {
   it("displays the placeholder", () => {
     renderTextArea();
     const textarea = screen.getByRole("textbox");
-    expect(textarea).toHaveAttribute("placeholder", "chat_window.send_message");
+    expect(textarea).toHaveAttribute("placeholder", "Send a message");
   });
 
   it("reflects the current prompt value", () => {

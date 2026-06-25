@@ -142,7 +142,11 @@ export default function ThreadContainer({
 
   const handleDeleteAll = async () => {
     const slugs = threads.filter((t) => t.deleted === true).map((t) => t.slug);
-    await Workspace.threads.deleteBulk(workspace.slug, slugs);
+    try {
+      await Workspace.threads.deleteBulk(workspace.slug, slugs);
+    } catch (e) {
+      console.error("Failed to delete threads:", e);
+    }
     mutate();
 
     // Only redirect if current thread is being deleted
@@ -440,17 +444,26 @@ function NewThreadButton({ workspace, mutate }) {
   const [loading, setLoading] = useState(false);
   const onClick = async () => {
     setLoading(true);
-    const { thread, error } = await Workspace.threads.new(workspace.slug);
-    if (!!error) {
-      showToast(t("threadContainer.createError", { error }), "error", {
-        clear: true,
-      });
+    try {
+      const { thread, error } = await Workspace.threads.new(workspace.slug);
+      if (!!error) {
+        showToast(t("threadContainer.createError", { error }), "error", {
+          clear: true,
+        });
+        setLoading(false);
+        return;
+      }
+      mutate();
+      navigate(paths.workspace.thread(workspace.slug, thread.slug));
+    } catch (e: any) {
+      showToast(
+        t("threadContainer.createError", { error: String(e?.message || e) }),
+        "error",
+        { clear: true },
+      );
+    } finally {
       setLoading(false);
-      return;
     }
-    mutate();
-    navigate(paths.workspace.thread(workspace.slug, thread.slug));
-    setLoading(false);
   };
 
   return (
@@ -496,18 +509,31 @@ function NewFolderButton({ workspace, onCreated }) {
     const name = window.prompt(t("threadContainer.folderNamePrompt"))?.trim();
     if (!name) return;
     setLoading(true);
-    const { folder, message } = await Workspace.threads.folders.new(
-      workspace.slug,
-      name,
-    );
-    setLoading(false);
-    if (message || !folder) {
-      showToast(t("threadContainer.folderCreateError", { message }), "error", {
-        clear: true,
-      });
-      return;
+    try {
+      const { folder, message } = await Workspace.threads.folders.new(
+        workspace.slug,
+        name,
+      );
+      if (message || !folder) {
+        showToast(
+          t("threadContainer.folderCreateError", { message }),
+          "error",
+          { clear: true },
+        );
+        return;
+      }
+      onCreated(folder);
+    } catch (e: any) {
+      showToast(
+        t("threadContainer.folderCreateError", {
+          message: String(e?.message || e),
+        }),
+        "error",
+        { clear: true },
+      );
+    } finally {
+      setLoading(false);
     }
-    onCreated(folder);
   };
 
   return (

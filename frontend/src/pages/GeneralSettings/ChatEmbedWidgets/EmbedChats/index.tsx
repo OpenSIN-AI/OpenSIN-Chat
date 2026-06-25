@@ -66,14 +66,18 @@ export default function EmbedChatsView() {
   const [canNext, setCanNext] = useState(false);
 
   const handleDumpChats = async (exportType: string) => {
-    const chats = await System.exportChats(exportType, "embed");
-    if (!!chats) {
-      const { name, mimeType, fileExtension, filenameFunc } =
-        exportOptions[exportType];
-      const blob = new Blob([chats], { type: mimeType });
-      saveAs(blob, `${filenameFunc()}.${fileExtension}`);
-      showToast(`Embed chats exported successfully as ${name}.`, "success");
-    } else {
+    try {
+      const chats = await System.exportChats(exportType, "embed");
+      if (!!chats) {
+        const { name, mimeType, fileExtension, filenameFunc } =
+          exportOptions[exportType];
+        const blob = new Blob([chats], { type: mimeType });
+        saveAs(blob, `${filenameFunc()}.${fileExtension}`);
+        showToast(`Embed chats exported successfully as ${name}.`, "success");
+      } else {
+        showToast("Failed to export embed chats.", "error");
+      }
+    } catch (e) {
       showToast("Failed to export embed chats.", "error");
     }
   };

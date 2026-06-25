@@ -1556,7 +1556,7 @@ function workspaceEndpoints(app) {
           "Error checking if agent command is available:",
           error,
         );
-        response.status(500).json({ showAgentCommand: true });
+        response.status(200).json({ showAgentCommand: true });
       }
     },
   );

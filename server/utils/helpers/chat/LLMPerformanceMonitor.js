@@ -79,6 +79,7 @@ class LLMPerformanceMonitor {
     provider = "",
   }) {
     const stream = await func;
+    if (!stream) return stream;
     stream.start = Date.now();
     stream.duration = 0;
     stream.metrics = {

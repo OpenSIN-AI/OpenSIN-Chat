@@ -81,10 +81,10 @@ class PaperlessNgxLoader {
       );
 
     const tempPath = path.join(os.tmpdir(), `paperless-${documentId}`);
-    const writeStream = fs.createWriteStream(tempPath);
     const reader = response.body?.getReader?.();
 
     if (reader) {
+      const writeStream = fs.createWriteStream(tempPath);
       let bytesWritten = 0;
       try {
         while (true) {

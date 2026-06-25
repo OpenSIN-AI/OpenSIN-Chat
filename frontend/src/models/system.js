@@ -6,7 +6,7 @@ import {
   fullApiUrl,
 } from "@/utils/constants";
 import { baseHeaders, safeJsonParse } from "@/utils/request";
-import { safeGetItem } from "@/utils/safeStorage";
+import { safeGetItem, safeSetItem, safeRemoveItem } from "@/utils/safeStorage";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
 import DataConnector from "./dataConnector";
 import LiveDocumentSync from "./experimental/liveSync";
@@ -107,7 +107,7 @@ const System = {
       .catch(() => null);
   },
   needsAuthCheck: function () {
-    const lastAuthCheck = window.localStorage.getItem(AUTH_TIMESTAMP);
+    const lastAuthCheck = safeGetItem(AUTH_TIMESTAMP);
     if (!lastAuthCheck) return true;
     const expiresAtMs = Number(lastAuthCheck) + 60 * 5 * 1000; // expires in 5 minutes in ms
     return Number(new Date()) > expiresAtMs;
@@ -121,7 +121,7 @@ const System = {
       .catch(() => false);
 
     if (valid) {
-      window.localStorage.setItem(AUTH_TIMESTAMP, Number(new Date()));
+      safeSetItem(AUTH_TIMESTAMP, String(Number(new Date())));
     }
     return valid;
   },
@@ -357,7 +357,7 @@ const System = {
       });
   },
   fetchCustomFooterIcons: async function () {
-    const cache = window.localStorage.getItem(this.cacheKeys.footerIcons);
+    const cache = safeGetItem(this.cacheKeys.footerIcons);
     const { data, lastFetched } = cache
       ? safeJsonParse(cache, { data: [], lastFetched: 0 })
       : { data: [], lastFetched: 0 };
@@ -382,14 +382,14 @@ const System = {
     if (!footerData || !!error) return { footerData: [], error: null };
 
     const newData = footerData ?? [];
-    window.localStorage.setItem(
+    safeSetItem(
       this.cacheKeys.footerIcons,
       JSON.stringify({ data: newData, lastFetched: Date.now() }),
     );
     return { footerData: newData, error: null };
   },
   fetchSupportEmail: async function () {
-    const cache = window.localStorage.getItem(this.cacheKeys.supportEmail);
+    const cache = safeGetItem(this.cacheKeys.supportEmail);
     const { email, lastFetched } = cache
       ? safeJsonParse(cache, { email: "", lastFetched: 0 })
       : { email: "", lastFetched: 0 };
@@ -412,7 +412,7 @@ const System = {
       });
 
     if (!supportEmail || !!error) return { email: "", error: null };
-    window.localStorage.setItem(
+    safeSetItem(
       this.cacheKeys.supportEmail,
       JSON.stringify({ email: supportEmail, lastFetched: Date.now() }),
     );
@@ -420,7 +420,7 @@ const System = {
   },
 
   fetchCustomAppName: async function () {
-    const cache = window.localStorage.getItem(this.cacheKeys.customAppName);
+    const cache = safeGetItem(this.cacheKeys.customAppName);
     const { appName, lastFetched } = cache
       ? safeJsonParse(cache, { appName: "", lastFetched: 0 })
       : { appName: "", lastFetched: 0 };
@@ -443,11 +443,11 @@ const System = {
       });
 
     if (!customAppName || !!error) {
-      window.localStorage.removeItem(this.cacheKeys.customAppName);
+      safeRemoveItem(this.cacheKeys.customAppName);
       return { appName: "", error: null };
     }
 
-    window.localStorage.setItem(
+    safeSetItem(
       this.cacheKeys.customAppName,
       JSON.stringify({ appName: customAppName, lastFetched: Date.now() }),
     );
@@ -844,9 +844,7 @@ const System = {
    * @returns {Promise<{viewable: boolean, error: string | null}>}
    */
   fetchCanViewChatHistory: async function () {
-    const cache = window.localStorage.getItem(
-      this.cacheKeys.canViewChatHistory,
-    );
+    const cache = safeGetItem(this.cacheKeys.canViewChatHistory);
     const { viewable, lastFetched } = cache
       ? safeJsonParse(cache, { viewable: false, lastFetched: 0 })
       : { viewable: false, lastFetched: 0 };
@@ -860,7 +858,7 @@ const System = {
     const res = await System.keys();
     const isViewable = res?.DisableViewChatHistory === false;
 
-    window.localStorage.setItem(
+    safeSetItem(
       this.cacheKeys.canViewChatHistory,
       JSON.stringify({ viewable: isViewable, lastFetched: Date.now() }),
     );
@@ -895,7 +893,7 @@ const System = {
    * @returns {Promise<string | null>} The app version.
    */
   fetchAppVersion: async function () {
-    const cache = window.localStorage.getItem(this.cacheKeys.deploymentVersion);
+    const cache = safeGetItem(this.cacheKeys.deploymentVersion);
     const { version, lastFetched } = cache
       ? safeJsonParse(cache, { version: null, lastFetched: 0 })
       : { version: null, lastFetched: 0 };
@@ -914,7 +912,7 @@ const System = {
       .catch(() => null);
 
     if (!newVersion) return null;
-    window.localStorage.setItem(
+    safeSetItem(
       this.cacheKeys.deploymentVersion,
       JSON.stringify({ version: newVersion, lastFetched: Date.now() }),
     );

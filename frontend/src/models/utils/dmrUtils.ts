@@ -39,7 +39,8 @@ const DMRUtils: any = {
 
         if (!response.ok)
           throw new Error("Error downloading model: " + response.statusText);
-        const reader = response.body!.getReader();
+        if (!response.body) throw new Error("Response has no readable body.");
+        const reader = response.body.getReader();
         let done = false;
 
         while (!done) {

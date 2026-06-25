@@ -266,17 +266,25 @@ function OptionsMenu({
 
   const handleNewChat = async () => {
     close();
-    const { thread: newThread, message } = await Workspace.threads.new(
-      workspace.slug,
-    );
-    if (message || !newThread) {
-      showToast(t("threadItem.chatCreateFailed", { message }), "error", {
-        clear: true,
-      });
-      return;
+    try {
+      const { thread: newThread, message } = await Workspace.threads.new(
+        workspace.slug,
+      );
+      if (message || !newThread) {
+        showToast(t("threadItem.chatCreateFailed", { message }), "error", {
+          clear: true,
+        });
+        return;
+      }
+      invalidateThreads(workspace.slug);
+      navigate(paths.workspace.thread(workspace.slug, newThread.slug));
+    } catch (e: any) {
+      showToast(
+        t("threadItem.chatCreateFailed", { message: String(e?.message || e) }),
+        "error",
+        { clear: true },
+      );
     }
-    invalidateThreads(workspace.slug);
-    navigate(paths.workspace.thread(workspace.slug, newThread.slug));
   };
 
   const handleCopyLink = () => {
@@ -302,39 +310,51 @@ function OptionsMenu({
       return;
     }
 
-    const { message } = await Workspace.threads.update(
-      workspace.slug,
-      thread.slug,
-      { name },
-    );
-    if (!!message) {
-      showToast(t("threadItem.updateFailed", { message }), "error", {
-        clear: true,
-      });
-      close();
-      return;
-    }
+    try {
+      const { message } = await Workspace.threads.update(
+        workspace.slug,
+        thread.slug,
+        { name },
+      );
+      if (!!message) {
+        showToast(t("threadItem.updateFailed", { message }), "error", {
+          clear: true,
+        });
+        close();
+        return;
+      }
 
-    invalidateThreads(workspace.slug);
-    close();
+      invalidateThreads(workspace.slug);
+      close();
+    } catch (e: any) {
+      showToast(
+        t("threadItem.updateFailed", { message: String(e?.message || e) }),
+        "error",
+        { clear: true },
+      );
+      close();
+    }
   };
 
   const handleDelete = async () => {
     if (!window.confirm(t("threadItem.deleteConfirm"))) return;
-    const success = await Workspace.threads.delete(workspace.slug, thread.slug);
-    if (!success) {
-      showToast(t("threadItem.deleteFailed"), "error", { clear: true });
-      return;
-    }
-    if (success) {
+    try {
+      const success = await Workspace.threads.delete(
+        workspace.slug,
+        thread.slug,
+      );
+      if (!success) {
+        showToast(t("threadItem.deleteFailed"), "error", { clear: true });
+        return;
+      }
       showToast(t("threadItem.deleteSuccess"), "success", { clear: true });
       invalidateThreads(workspace.slug);
       onRemove(thread.id);
-      // Redirect if deleting the active thread
       if (currentThreadSlug === thread.slug) {
         navigate(paths.workspace.chat(workspace.slug));
       }
-      return;
+    } catch (e: any) {
+      showToast(String(e?.message || e), "error", { clear: true });
     }
   };
 

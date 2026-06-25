@@ -29,19 +29,23 @@ export default function WorkspaceRow({
   const handleDelete = async () => {
     if (
       !window.confirm(
-        `Are you sure you want to delete ${workspace.name}?\nAfter you do this it will be unavailable in this instance of OpenSIN Chat.\n\nThis action is irreversible.`,
+        t("admin.workspacesPage.deleteConfirm", { name: workspace.name }),
       )
     )
       return false;
-    const { success, error } = await Admin.deleteWorkspace(workspace.id);
-    if (!success) {
-      showToast(error, "error", { clear: true });
-      return;
+    try {
+      const { success, error } = await Admin.deleteWorkspace(workspace.id);
+      if (!success) {
+        showToast(error, "error", { clear: true });
+        return;
+      }
+      showToast(t("admin.workspacesPage.deleteSuccess"), "success", {
+        clear: true,
+      });
+      mutate(ADMIN_WORKSPACES_KEY);
+    } catch (e) {
+      showToast(String(e), "error", { clear: true });
     }
-    showToast(t("admin.workspacesPage.deleteSuccess"), "success", {
-      clear: true,
-    });
-    mutate(ADMIN_WORKSPACES_KEY);
   };
 
   return (

@@ -26,7 +26,8 @@ export function saveEditState(
     undoStack.current.shift();
   undoStack.current.push({
     value: promptInput,
-    cursorPositionStart: textareaRef.current.selectionStart + adjustment,
-    cursorPositionEnd: textareaRef.current.selectionEnd + adjustment,
+    cursorPositionStart:
+      (textareaRef.current?.selectionStart ?? 0) + adjustment,
+    cursorPositionEnd: (textareaRef.current?.selectionEnd ?? 0) + adjustment,
   });
 }

@@ -38,13 +38,19 @@ export default function BrowserExtensionApiKeyRow({
     if (!window.confirm(t("browserExtensionApiKey.revokeConfirm")))
       return false;
 
-    const result = await BrowserExtensionApiKey.revoke(apiKey.id);
-    if (result.success) {
-      removeApiKey(apiKey.id);
-      showToast(t("browserExtensionApiKey.revoked"), "info", {
-        clear: true,
-      });
-    } else {
+    try {
+      const result = await BrowserExtensionApiKey.revoke(apiKey.id);
+      if (result.success) {
+        removeApiKey(apiKey.id);
+        showToast(t("browserExtensionApiKey.revoked"), "info", {
+          clear: true,
+        });
+      } else {
+        showToast(t("browserExtensionApiKey.revokeFailed"), "error", {
+          clear: true,
+        });
+      }
+    } catch (e) {
       showToast(t("browserExtensionApiKey.revokeFailed"), "error", {
         clear: true,
       });
@@ -87,7 +93,9 @@ export default function BrowserExtensionApiKeyRow({
               type="button"
               onClick={handleCopy}
               data-tooltip-id="copy-connection-text"
-              data-tooltip-content="Copy connection string"
+              data-tooltip-content={t(
+                "browserExtensionApiKey.copyConnectionString",
+              )}
               className="border-none text-theme-text-primary hover:text-theme-text-secondary transition-colors duration-200 p-1 rounded"
             >
               {copied ? (
@@ -101,7 +109,9 @@ export default function BrowserExtensionApiKeyRow({
               type="button"
               onClick={handleConnect}
               data-tooltip-id="auto-connection"
-              data-tooltip-content="Automatically connect to extension"
+              data-tooltip-content={t(
+                "browserExtensionApiKey.autoConnectToExtension",
+              )}
               className="border-none text-theme-text-primary hover:text-theme-text-secondary transition-colors duration-200 p-1 rounded"
             >
               <Plug className="h-4 w-4" />

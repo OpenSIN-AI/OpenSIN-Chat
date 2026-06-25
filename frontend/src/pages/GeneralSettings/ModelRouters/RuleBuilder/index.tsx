@@ -179,18 +179,26 @@ export default function RuleBuilder({
       )
     )
       return;
-    const { success } = await ModelRouterAPI.deleteRule(routerId, rule.id);
-    if (success) onRulesChanged();
-    else showToast(t("model-router.rules.toast-delete-failed"), "error");
+    try {
+      const { success } = await ModelRouterAPI.deleteRule(routerId, rule.id);
+      if (success) onRulesChanged();
+      else showToast(t("model-router.rules.toast-delete-failed"), "error");
+    } catch (e: any) {
+      showToast(String(e?.message || e), "error");
+    }
   };
 
   const handleToggle = async (rule: Rule) => {
-    const { rule: updated } = await ModelRouterAPI.updateRule(
-      routerId,
-      rule.id,
-      { enabled: !rule.enabled },
-    );
-    if (updated) onRulesChanged();
+    try {
+      const { rule: updated } = await ModelRouterAPI.updateRule(
+        routerId,
+        rule.id,
+        { enabled: !rule.enabled },
+      );
+      if (updated) onRulesChanged();
+    } catch (e: any) {
+      showToast(String(e?.message || e), "error");
+    }
   };
 
   const onDragEnd = async (result: DropResult) => {
@@ -213,12 +221,16 @@ export default function RuleBuilder({
       })),
     ];
 
-    const { success } = await ModelRouterAPI.reorderRules(
-      routerId,
-      ruleUpdates,
-    );
-    if (success) onRulesChanged();
-    else showToast(t("model-router.rules.toast-reorder-failed"), "error");
+    try {
+      const { success } = await ModelRouterAPI.reorderRules(
+        routerId,
+        ruleUpdates,
+      );
+      if (success) onRulesChanged();
+      else showToast(t("model-router.rules.toast-reorder-failed"), "error");
+    } catch (e: any) {
+      showToast(t("model-router.rules.toast-reorder-failed"), "error");
+    }
   };
 
   const hasRules = rules && rules.length > 0;

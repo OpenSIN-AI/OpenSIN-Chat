@@ -19,7 +19,7 @@ function filterByWorkspace(localFiles, workspace) {
 
   const availableDocs = {
     ...localFiles,
-    items: localFiles.items.map((folder) => {
+    items: (localFiles.items || []).map((folder) => {
       if (folder.items && folder.type === "folder") {
         return {
           ...folder,
@@ -36,7 +36,7 @@ function filterByWorkspace(localFiles, workspace) {
 
   const workspaceDocs = {
     ...localFiles,
-    items: localFiles.items.map((folder) => {
+    items: (localFiles.items || []).map((folder) => {
       if (folder.items && folder.type === "folder") {
         return {
           ...folder,

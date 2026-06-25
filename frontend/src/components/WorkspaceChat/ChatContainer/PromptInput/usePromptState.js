@@ -84,15 +84,17 @@ export default function usePromptState({
    * Save the current state before changes
    * @param {number} adjustment
    */
-  const saveCurrentStateRef = useRef((adjustment = 0) => {
+  const saveCurrentStateRef = useRef(null);
+  saveCurrentStateRef.current = (adjustment = 0) => {
     if (undoStack.current.length >= MAX_EDIT_STACK_SIZE)
       undoStack.current.shift();
     undoStack.current.push({
       value: promptInput,
-      cursorPositionStart: textareaRef.current.selectionStart + adjustment,
-      cursorPositionEnd: textareaRef.current.selectionEnd + adjustment,
+      cursorPositionStart:
+        (textareaRef.current?.selectionStart ?? 0) + adjustment,
+      cursorPositionEnd: (textareaRef.current?.selectionEnd ?? 0) + adjustment,
     });
-  });
+  };
   const saveCurrentState = useCallback(
     (adjustment = 0) => saveCurrentStateRef.current(adjustment),
     [],
@@ -189,12 +191,12 @@ export default function usePromptState({
 
       undoStack.current.push({
         value: promptInput,
-        cursorPositionStart: textareaRef.current.selectionStart,
-        cursorPositionEnd: textareaRef.current.selectionEnd,
+        cursorPositionStart: textareaRef.current?.selectionStart ?? 0,
+        cursorPositionEnd: textareaRef.current?.selectionEnd ?? 0,
       });
       setPromptInput(nextState.value);
       setTimeout(() => {
-        textareaRef.current.setSelectionRange(
+        textareaRef.current?.setSelectionRange(
           nextState.cursorPositionStart,
           nextState.cursorPositionEnd,
         );
@@ -213,12 +215,12 @@ export default function usePromptState({
 
       redoStack.current.push({
         value: promptInput,
-        cursorPositionStart: textareaRef.current.selectionStart,
-        cursorPositionEnd: textareaRef.current.selectionEnd,
+        cursorPositionStart: textareaRef.current?.selectionStart ?? 0,
+        cursorPositionEnd: textareaRef.current?.selectionEnd ?? 0,
       });
       setPromptInput(lastState.value);
       setTimeout(() => {
-        textareaRef.current.setSelectionRange(
+        textareaRef.current?.setSelectionRange(
           lastState.cursorPositionStart,
           lastState.cursorPositionEnd,
         );
@@ -263,6 +265,7 @@ export default function usePromptState({
     const pasteText = e.clipboardData.getData("text/plain");
     if (pasteText) {
       const textarea = textareaRef.current;
+      if (!textarea) return;
       const start = textarea.selectionStart;
       const end = textarea.selectionEnd;
       const newPromptInput =

@@ -44,7 +44,11 @@ export default function useThreads(workspaceSlug) {
     () => Workspace.threads.all(workspaceSlug),
   );
 
-  const threads = data?.threads || data || [];
+  const threads = Array.isArray(data?.threads)
+    ? data.threads
+    : Array.isArray(data)
+      ? data
+      : [];
   const folders = data?.folders || [];
   const defaultThreadChatCount = data?.defaultThreadChatCount || 0;
   const defaultThreadHasChats = defaultThreadChatCount > 0;

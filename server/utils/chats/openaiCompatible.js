@@ -446,6 +446,23 @@ async function streamChat({
     temperature:
       temperature ?? workspace?.openAiTemp ?? LLMConnector.defaultTemp,
   });
+  if (!stream) {
+    writeResponseChunk(
+      response,
+      formatJSON(
+        {
+          id: uuid,
+          type: "abort",
+          textResponse: null,
+          sources: [],
+          close: true,
+          error: "LLM provider returned a null stream.",
+        },
+        { chunked: true, model: workspace.slug, finish_reason: "abort" },
+      ),
+    );
+    return;
+  }
   const completeText = await LLMConnector.handleStream(
     responseInterceptor,
     stream,

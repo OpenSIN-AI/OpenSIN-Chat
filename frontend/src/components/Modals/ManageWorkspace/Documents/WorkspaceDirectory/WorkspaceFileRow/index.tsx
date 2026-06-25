@@ -33,7 +33,7 @@ export default function WorkspaceFileRow({
     setLoading(true);
 
     try {
-      setLoadingMessage(`Removing file from workspace`);
+      setLoadingMessage(t("workspaceFileRow.removingFile"));
       await Workspace.modifyEmbeddings(workspace.slug, {
         adds: [],
         deletes: [`${folderName}/${item.name}`],
@@ -157,22 +157,28 @@ const PinItemToWorkspace = memo(function PinItemToWorkspace({
       );
 
       if (!success) {
-        showToast(`Failed to ${!pinned ? "pin" : "unpin"} document.`, "error", {
+        showToast(t("workspaceFileRow.failedToPin"), "error", {
           clear: true,
         });
         return;
       }
 
       showToast(
-        `Document ${!pinned ? "pinned to" : "unpinned from"} workspace`,
+        !pinned
+          ? t("workspaceFileRow.documentPinned")
+          : t("workspaceFileRow.documentUnpinned"),
         "success",
         { clear: true },
       );
       setPinned(!pinned);
     } catch (error) {
-      showToast(`Failed to pin document. ${error.message}`, "error", {
-        clear: true,
-      });
+      showToast(
+        `${t("workspaceFileRow.failedToPin")} ${error.message}`,
+        "error",
+        {
+          clear: true,
+        },
+      );
       return;
     }
   };
@@ -185,7 +191,9 @@ const PinItemToWorkspace = memo(function PinItemToWorkspace({
       className="group flex items-center ml-2 cursor-pointer"
       data-tooltip-id="pin-document"
       data-tooltip-content={
-        pinned ? "Un-pin from workspace" : "Pin to workspace"
+        pinned
+          ? t("workspaceFileRow.unpinFromWorkspace")
+          : t("workspaceFileRow.pinToWorkspace")
       }
     >
       {pinned ? (
@@ -241,30 +249,28 @@ const WatchForChanges = memo(function WatchForChanges({
         );
 
       if (!success) {
-        showToast(
-          `Failed to ${!watched ? "watch" : "unwatch"} document.`,
-          "error",
-          {
-            clear: true,
-          },
-        );
+        showToast(t("workspaceFileRow.failedToWatch"), "error", {
+          clear: true,
+        });
         return;
       }
 
       showToast(
-        `Document ${
-          !watched
-            ? "will be watched for changes"
-            : "will no longer be watched for changes"
-        }.`,
+        !watched
+          ? t("workspaceFileRow.documentWatched")
+          : t("workspaceFileRow.documentUnwatched"),
         "success",
         { clear: true },
       );
       setWatched(!watched);
     } catch (error) {
-      showToast(`Failed to watch document. ${error.message}`, "error", {
-        clear: true,
-      });
+      showToast(
+        `${t("workspaceFileRow.failedToWatch")} ${error.message}`,
+        "error",
+        {
+          clear: true,
+        },
+      );
       return;
     }
   };
@@ -278,7 +284,9 @@ const WatchForChanges = memo(function WatchForChanges({
       data-tooltip-id="watch-changes"
       data-active={watched}
       data-tooltip-content={
-        watched ? "Stop watching for changes" : "Watch document for changes"
+        watched
+          ? t("workspaceFileRow.stopWatching")
+          : t("workspaceFileRow.watchForChanges")
       }
     >
       <Eye
@@ -298,12 +306,13 @@ const WatchForChanges = memo(function WatchForChanges({
 });
 
 const RemoveItemFromWorkspace = ({ item: _item, onClick }) => {
+  const { t } = useTranslation();
   return (
     <div>
       <ArrowUUpLeft
         aria-hidden="true"
         data-tooltip-id="remove-document"
-        data-tooltip-content="Remove document from workspace"
+        data-tooltip-content={t("workspaceFileRow.removeDocument")}
         onClick={onClick}
         className="text-base font-bold w-4 h-4 ml-2 flex-shrink-0 cursor-pointer"
       />

@@ -5,6 +5,7 @@ import { fetchEventSource } from "@microsoft/fetch-event-source";
 import WorkspaceThread from "@/models/workspaceThread";
 import { v4 } from "uuid";
 import { ABORT_STREAM_EVENT } from "@/utils/chat";
+import { safeGetItem } from "@/utils/safeStorage";
 
 const Workspace = {
   workspaceOrderStorageKey: "openafd-workspace-order",
@@ -652,7 +653,7 @@ const Workspace = {
    */
   orderWorkspaces: function (workspaces = []) {
     const workspaceOrderPreference =
-      safeJsonParse(localStorage.getItem(this.workspaceOrderStorageKey)) || [];
+      safeJsonParse(safeGetItem(this.workspaceOrderStorageKey)) || [];
     if (workspaceOrderPreference.length === 0) return workspaces;
     const orderedWorkspaces = Array.from(workspaces);
     orderedWorkspaces.sort(

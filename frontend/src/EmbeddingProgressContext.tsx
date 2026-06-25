@@ -94,7 +94,8 @@ export function EmbeddingProgressProvider({ children }: any) {
 
   const handleMessage = useCallback(
     (slug, msg, ctrl) => {
-      const data = safeJsonParse(msg.data);
+      const data = safeJsonParse(msg.data, null);
+      if (!data) return;
 
       switch (data.type) {
         case "batch_starting": {

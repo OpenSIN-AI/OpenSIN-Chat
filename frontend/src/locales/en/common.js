@@ -742,6 +742,12 @@ const TRANSLATIONS = {
       deployment: "Deployment & Operations",
       operations: "Security & Operations",
     },
+    apiKey: "API Key",
+    cancel: "Cancel",
+    communityHub: "Community Hub",
+    defaultSkillTooltip:
+      "This skill is enabled by default and cannot be turned off.",
+    engine: "Engine",
     methods: {
       put: "PUT",
       post: "POST",
@@ -792,6 +798,7 @@ const TRANSLATIONS = {
     perplexityApiKey: "Perplexity API Key",
     vaneNoConfig:
       "Vane runs as a local sidecar container and requires no API key. The endpoint is configured via the VANE_API_URL environment variable (default: http://vane:3000). Complete the one-time model setup at the Vane web UI first.",
+    azurePortalUrl: "Azure Portal URL",
   },
   ollama: {
     advancedSettings: "advanced settings",
@@ -1439,6 +1446,10 @@ const TRANSLATIONS = {
       error: "Workspace vector database could not be reset!",
       success: "Workspace vector database was reset!",
     },
+    common: {
+      error: "An error occurred.",
+      success: "Operation completed successfully.",
+    },
   },
   agent: {
     "performance-warning":
@@ -2010,6 +2021,7 @@ const TRANSLATIONS = {
       codePlaceholder: "Enter code...",
       storeResultIn: "Store Result In",
       selectOrCreateVariable: "Select or create variable",
+      language: "Language",
     },
     flowInfoNode: {
       flowName: "Flow Name",
@@ -2079,6 +2091,7 @@ const TRANSLATIONS = {
     empty:
       "No content to preview. Generate a report or document to view it here.",
     title: "Preview",
+    defaultReportTitle: "Report",
     unknown_file: "Unknown file",
     open: "Preview",
     download: "Download",
@@ -2248,7 +2261,9 @@ const TRANSLATIONS = {
         model_type: "Model Type",
         model_type_tooltip:
           'If your deployment uses a reasoning model (o1, o1-mini, o3-mini, etc.), set this to "Reasoning". Otherwise, your chat requests may fail.',
-        default: "Default",
+    default: "Default",
+    defaultSkillTooltip:
+      "This skill is enabled by default and cannot be turned off.",
         reasoning: "Reasoning",
         token_limit: {
           4096: "4,096 (gpt-3.5-turbo)",
@@ -2848,6 +2863,7 @@ const TRANSLATIONS = {
       deselect_all: "Deselect All",
       remove_selected: "Remove Selected",
       save_embed: "Save and Embed",
+      removingSelectedFiles: "Removing selected files from workspace",
     },
     upload: {
       "processor-offline": "Document Processor Unavailable",
@@ -2862,6 +2878,9 @@ const TRANSLATIONS = {
       "fetch-website": "Fetch website",
       "privacy-notice":
         "These files will be uploaded to the document processor running on this OpenSIN Chat instance. These files are not sent or shared with a third party.",
+      scrapingLink: "Scraping link...",
+      linkUploadError: "Error uploading link: {{error}}",
+      linkUploadSuccess: "Link uploaded successfully",
     },
     pinning: {
       what_pinning: "What is document pinning?",
@@ -3057,6 +3076,7 @@ const TRANSLATIONS = {
     account: "Account",
     support: "Support",
     signout: "Sign out",
+    close: "Close",
   },
   "keyboard-shortcuts": {
     title: "Keyboard Shortcuts",
@@ -3811,6 +3831,8 @@ const TRANSLATIONS = {
       users: "Users",
       createdOn: "Created On",
       deleteSuccess: "Workspace deleted successfully.",
+      deleteConfirm:
+        "Are you sure you want to delete {{name}}?\nAfter you do this it will be unavailable in this instance of OpenSIN Chat.\n\nThis action is irreversible.",
     },
     newWorkspaceModal: {
       title: "Create new workspace",
@@ -4005,6 +4027,8 @@ const TRANSLATIONS = {
     copiedToClipboard: "Connection string copied to clipboard",
     connectingToExtension: "Attempting to connect to browser extension...",
     notAvailable: "N/A",
+    copyConnectionString: "Copy connection string",
+    autoConnectToExtension: "Automatically connect to extension",
     newKey: {
       title: "New Browser Extension API Key",
       error: "Error: {{error}}",
@@ -4722,6 +4746,18 @@ const TRANSLATIONS = {
   workspaceFileRow: {
     pinned: "Pinned",
     unpin: "Un-pin",
+    removingFile: "Removing file from workspace",
+    pinToWorkspace: "Pin to workspace",
+    unpinFromWorkspace: "Un-pin from workspace",
+    failedToPin: "Failed to pin document.",
+    documentPinned: "Document pinned to workspace",
+    documentUnpinned: "Document unpinned from workspace",
+    stopWatching: "Stop watching for changes",
+    watchForChanges: "Watch document for changes",
+    failedToWatch: "Failed to watch document.",
+    documentWatched: "Document will be watched for changes.",
+    documentUnwatched: "Document will no longer be watched for changes.",
+    removeDocument: "Remove document from workspace",
   },
   chartable: {
     unsupported: "Unsupported chart type.",

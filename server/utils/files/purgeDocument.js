@@ -42,7 +42,11 @@ async function purgeFolder(folderName = null) {
       // are the protected custom-documents folder.
       if (folder === "custom-documents") return null;
       const subfolderPath = path.resolve(documentsPath, folder);
-      if (!fs.lstatSync(subfolderPath).isDirectory()) return null;
+      try {
+        if (!fs.lstatSync(subfolderPath).isDirectory()) return null;
+      } catch {
+        return null;
+      }
       return folder;
     })
     .filter((subFolder) => !!subFolder);

@@ -41,7 +41,6 @@ class MimeDetector {
           "ino",
           "hpp",
           "linq",
-          "cs",
         ],
       },
       true

@@ -1,0 +1,15 @@
+{
+  "site": "OpenAfD-Chat",
+  "url": "https://openafd.delqhi.com",
+  "consoleErrors": [],
+  "networkFailures": [],
+  "non2xxNetworkResponses": [],
+  "testLog": [
+    {
+      "step": "login",
+      "ok": true,
+      "tokenLength": 196
+    }
+  ],
+  "timestamp": "2026-06-25T10:35:10.156Z"
+}

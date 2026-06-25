@@ -74,14 +74,23 @@ export default function RunDetailPage() {
   useEffect(() => {
     if (run && runId && !run.readAt && markedRead.current !== runId) {
       markedRead.current = runId;
-      ScheduledJobs.markRunRead(runId).then(() => refresh());
+      ScheduledJobs.markRunRead(runId)
+        .then(() => refresh())
+        .catch((e) => console.error("Failed to mark run as read:", e));
     }
   }, [run, runId, refresh]);
 
   const handleContinueInThread = async () => {
     setContinuing(true);
-    const { workspaceSlug, threadSlug, error } =
-      await ScheduledJobs.continueInThread(runId);
+    let result: any;
+    try {
+      result = await ScheduledJobs.continueInThread(runId);
+    } catch (e: any) {
+      showToast(String(e?.message || e), "error");
+      setContinuing(false);
+      return;
+    }
+    const { workspaceSlug, threadSlug, error } = result;
 
     if (error || !workspaceSlug || !threadSlug) {
       showToast(error || t("scheduledJobs.runDetail.threadFailed"), "error");
@@ -94,7 +103,15 @@ export default function RunDetailPage() {
 
   const handleKillRun = async () => {
     setKilling(true);
-    const { success, error } = await ScheduledJobs.killRun(runId);
+    let result: any;
+    try {
+      result = await ScheduledJobs.killRun(runId);
+    } catch (e: any) {
+      showToast(String(e?.message || e), "error");
+      setKilling(false);
+      return;
+    }
+    const { success, error } = result;
     setKilling(false);
 
     if (!success) {

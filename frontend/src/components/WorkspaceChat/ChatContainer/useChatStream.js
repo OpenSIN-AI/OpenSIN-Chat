@@ -203,6 +203,10 @@ export default function useChatStream({
           console.error("Failed to delete chat for regeneration.");
           return;
         }
+        if (!lastUserMessage) {
+          console.error("No user message found for regeneration.");
+          return;
+        }
         return sendCommand({
           text: lastUserMessage.content,
           autoSubmit: true,

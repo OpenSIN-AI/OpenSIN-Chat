@@ -30,12 +30,16 @@ function ManageFlowMenu({ flow, onDelete }: ManageFlowMenuProps): JSX.Element {
   async function deleteFlow() {
     setOpen(false);
     if (!window.confirm(t("agentFlows.confirmDelete"))) return;
-    const { success, error } = await AgentFlows.deleteFlow(flow.uuid);
-    if (success) {
-      showToast(t("agentFlows.flowDeleted"), "success");
-      onDelete(flow.uuid);
-    } else {
-      showToast(error || t("agentFlows.deleteFailed"), "error");
+    try {
+      const { success, error } = await AgentFlows.deleteFlow(flow.uuid);
+      if (success) {
+        showToast(t("agentFlows.flowDeleted"), "success");
+        onDelete(flow.uuid);
+      } else {
+        showToast(error || t("agentFlows.deleteFailed"), "error");
+      }
+    } catch (e) {
+      showToast(t("agentFlows.deleteFailed"), "error");
     }
   }
 

@@ -71,7 +71,7 @@ spec:
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/path: /metrics
-        prometheus.io/port: "9090"
+        prometheus.io/port: "3001"
     spec:
       serviceAccountName: opensin-chat-sa
       terminationGracePeriodSeconds: 10
@@ -106,46 +106,22 @@ spec:
             memory: "512Mi"
             cpu: "250m"
         imagePullPolicy: IfNotPresent
-        image: "ghcr.io/opensin-ai/opensin-chat:1.13.0"
+        image: "ghcr.io/opensin-ai/opensin-chat:1.14.0"
         securityContext:
           allowPrivilegeEscalation: false
           runAsNonRoot: true
           runAsGroup: 1000
           runAsUser: 1000
-        command: 
-          # Specify a command to override the Dockerfile's ENTRYPOINT.
-          - /bin/bash
-          - -c
-          - |
-            set -x -e
-            sleep 3
-            echo "AWS_REGION: $AWS_REGION"
-            echo "SERVER_PORT: $SERVER_PORT"
-            echo "NODE_ENV: $NODE_ENV"
-            echo "STORAGE_DIR: $STORAGE_DIR"
-            {
-              cd /app/server/ &&
-                npx prisma generate --schema=./prisma/schema.prisma &&
-                npx prisma migrate deploy --schema=./prisma/schema.prisma &&
-                node /app/server/index.js
-              echo "Server process exited with status $?"
-            } &
-            { 
-              node /app/collector/index.js
-              echo "Collector process exited with status $?"
-            } &
-            wait -n
-            exit $?
         readinessProbe:
           httpGet:
-            path: /ping
+            path: /api/ping
             port: 3001
           initialDelaySeconds: 15
           periodSeconds: 5
           successThreshold: 2
         livenessProbe:
           httpGet:
-            path: /ping
+            path: /api/ping
             port: 3001
           initialDelaySeconds: 15
           periodSeconds: 5
@@ -209,7 +185,7 @@ spec:
           service:
             name: opensin-chat-svc
             port: 
-              number: 3001
+              number: 3301
   tls: # < placing a host in the TLS config will indicate a cert should be created
     - hosts:
         - "{{ namespace }}-chat.{{ base_domain }}"
@@ -228,9 +204,6 @@ spec:
   - port: 3301
     targetPort: 3001
     name: traffic
-  - port: 9090
-    targetPort: 9090
-    name: metrics
   selector:
     k8s-app: opensin-chat
 ---
@@ -266,8 +239,6 @@ spec:
       ports:
         - protocol: TCP
           port: 3001
-        - protocol: TCP
-          port: 9090
   egress:
     - to:
         - namespaceSelector:
@@ -281,3 +252,8 @@ spec:
           port: 53
         - protocol: TCP
           port: 53
+    - ports:
+        - protocol: TCP
+          port: 80
+        - protocol: TCP
+          port: 443

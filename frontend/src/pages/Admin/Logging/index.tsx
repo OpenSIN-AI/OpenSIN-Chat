@@ -40,12 +40,19 @@ export default function AdminLogs(): JSX.Element {
 
   const handleResetLogs = async () => {
     if (!window.confirm(t("event.clearConfirm"))) return;
-    const { success, error } = await System.clearEventLogs();
-    if (success) {
-      showToast(t("event.clearSuccess"), "success");
-      setOffset(0);
-    } else {
-      showToast(t("event.clearFailed", { error }), "error");
+    try {
+      const { success, error } = await System.clearEventLogs();
+      if (success) {
+        showToast(t("event.clearSuccess"), "success");
+        setOffset(0);
+      } else {
+        showToast(t("event.clearFailed", { error }), "error");
+      }
+    } catch (e: any) {
+      showToast(
+        t("event.clearFailed", { error: String(e?.message || e) }),
+        "error",
+      );
     }
   };
 

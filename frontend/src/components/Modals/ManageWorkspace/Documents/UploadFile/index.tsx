@@ -24,20 +24,30 @@ export default function UploadFile({
   const handleSendLink = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setLoadingMessage("Scraping link...");
+    setLoadingMessage(t("connectors.upload.scrapingLink"));
     setFetchingUrl(true);
     const formEl = e.target;
     const form = new FormData(formEl);
-    const { response, data } = await Workspace.uploadLink(
-      workspace.slug,
-      form.get("link"),
-    );
-    if (!response.ok) {
-      showToast(`Error uploading link: ${data.error}`, "error");
-    } else {
-      await fetchKeys(true, { autoSelectNew: true });
-      showToast("Link uploaded successfully", "success");
-      formEl.reset();
+    try {
+      const { response, data } = await Workspace.uploadLink(
+        workspace.slug,
+        form.get("link"),
+      );
+      if (!response.ok) {
+        showToast(
+          t("connectors.upload.linkUploadError", { error: data.error }),
+          "error",
+        );
+      } else {
+        await fetchKeys(true, { autoSelectNew: true });
+        showToast(t("connectors.upload.linkUploadSuccess"), "success");
+        formEl.reset();
+      }
+    } catch (err) {
+      showToast(
+        t("connectors.upload.linkUploadError", { error: String(err) }),
+        "error",
+      );
     }
     setLoading(false);
     setFetchingUrl(false);

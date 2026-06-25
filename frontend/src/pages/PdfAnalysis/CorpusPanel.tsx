@@ -50,7 +50,11 @@ export default function CorpusPanel() {
   const [selectedJob, setSelectedJob] = useState<CorpusJob | null>(null);
 
   const refresh = useCallback(async () => {
-    setJobs((await PdfAnalysis.listCorpus()) as CorpusJob[]);
+    try {
+      setJobs((await PdfAnalysis.listCorpus()) as CorpusJob[]);
+    } catch (e) {
+      console.error("Failed to fetch corpus jobs:", e);
+    }
   }, []);
 
   useEffect(() => {

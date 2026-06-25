@@ -96,7 +96,11 @@ async function main(event) {
       }
     })
     .catch((error) => {
-      self.postMessage({ type: "error", message: error.message, error }); // Will be an error.
+      self.postMessage({
+        type: "error",
+        message: error?.message || String(error),
+        error,
+      }); // Will be an error.
     });
 }
 

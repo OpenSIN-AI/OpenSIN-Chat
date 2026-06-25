@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { REPORT_PREVIEW_EVENT } from "@/utils/chat/agent";
 import { API_BASE } from "@/utils/constants";
 import { useChatSidebar } from "./ChatSidebar";
@@ -11,6 +12,7 @@ import { useChatSidebar } from "./ChatSidebar";
  */
 export default function ReportPreviewListener() {
   const { openPreview } = useChatSidebar();
+  const { t } = useTranslation();
   useEffect(() => {
     // The server sends absolute "/api/..." paths. When the frontend is served
     // from a different origin than the API (VITE_API_BASE is a full URL),
@@ -26,7 +28,7 @@ export default function ReportPreviewListener() {
     function onReportPreview(e: CustomEvent) {
       if (!e.detail) return;
       openPreview({
-        title: e.detail.title || "Bericht",
+        title: e.detail.title || t("preview.defaultReportTitle"),
         type: e.detail.type || "pdf",
         downloadUrl: resolveUrl(e.detail.downloadUrl) || null,
         versions: (e.detail.versions || []).map((v: any) => ({
@@ -45,6 +47,6 @@ export default function ReportPreviewListener() {
         REPORT_PREVIEW_EVENT,
         onReportPreview as EventListener,
       );
-  }, [openPreview]);
+  }, [openPreview, t]);
   return null;
 }

@@ -3,6 +3,11 @@ import { describe, it, expect, vi } from "vitest";
 import { render } from "@testing-library/react";
 import MessageList from "./MessageList";
 
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
+
 vi.mock("./ChatHistory", () => ({
   default: vi.fn(() => <div data-testid="chat-history" />),
 }));
@@ -28,14 +33,18 @@ describe("MessageList", () => {
     expect(getByTestId("metrics")).toBeInTheDocument();
     expect(getByTestId("chat-history")).toBeInTheDocument();
     expect(getByTestId("prompt-input")).toBeInTheDocument();
-    expect(queryByText("chat.history.empty")).not.toBeInTheDocument();
+    expect(
+      queryByText("No messages yet. Start the conversation."),
+    ).not.toBeInTheDocument();
   });
 
   it("renders an empty-state message when history is empty", () => {
     const { getByTestId, getByText, queryByTestId } = render(
       <MessageList chatHistory={[]} workspace={{}} />,
     );
-    expect(getByText("chat.history.empty")).toBeInTheDocument();
+    expect(
+      getByText("No messages yet. Start the conversation."),
+    ).toBeInTheDocument();
     expect(getByTestId("prompt-input")).toBeInTheDocument();
     expect(queryByTestId("metrics")).not.toBeInTheDocument();
   });

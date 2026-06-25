@@ -210,7 +210,8 @@ function ModelRow({
         await downloadModel(model.id, fileSize, (percentage) => {
           setDownloadPercentage(percentage);
         });
-      } catch {
+      } catch (e) {
+        console.error("Failed to download model:", e);
       } finally {
         setProcessing(false);
       }
@@ -222,7 +223,8 @@ function ModelRow({
     try {
       setProcessing(true);
       await uninstallModel(model.id);
-    } catch {
+    } catch (e) {
+      console.error("Failed to uninstall model:", e);
     } finally {
       setProcessing(false);
     }
@@ -231,9 +233,9 @@ function ModelRow({
   useEffect(() => {
     if (selectedModelId === model.id) {
       setIsActiveModel(true);
-      modelRowRef.current.classList.add("!bg-gray-200/10");
+      modelRowRef.current?.classList.add("!bg-gray-200/10");
       const timer = setTimeout(
-        () => modelRowRef.current.classList.remove("!bg-gray-200/10"),
+        () => modelRowRef.current?.classList.remove("!bg-gray-200/10"),
         800,
       );
       return () => clearTimeout(timer);

@@ -76,7 +76,14 @@ function ConnectivityPanel(): JSX.Element {
 
   const runProbe = async () => {
     setChecking(true);
-    const res = await ProviderStatus.connectivity();
+    let res: any;
+    try {
+      res = await ProviderStatus.connectivity();
+    } catch (e: any) {
+      showToast(t("systemHealth.probeFailed", { error: String(e?.message || e) }), "error");
+      setChecking(false);
+      return;
+    }
     setChecking(false);
     if (res.error) {
       showToast(t("systemHealth.probeFailed", { error: res.error }), "error");

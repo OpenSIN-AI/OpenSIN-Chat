@@ -6,27 +6,10 @@ vi.mock("react-router-dom", () => ({
   useLocation: vi.fn(),
 }));
 
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({
-    t: (key) => {
-      const map = {
-        "page.titles.home": "Home",
-        "page.titles.login": "Login",
-        "page.titles.sso": "SSO Login",
-        "page.titles.onboarding": "Onboarding",
-        "page.titles.docs": "Documentation",
-        "page.titles.pdfAnalysis": "PDF Analysis",
-        "page.titles.workspace": "Workspace",
-        "page.titles.workspaceSettings": "Workspace Settings",
-        "page.titles.settings": "Settings",
-        "page.titles.notFound": "Not Found",
-        "page.title": "OpenSIN Chat",
-      };
-      return map[key] || key;
-    },
-    i18n: { language: "en" },
-  }),
-}));
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
 import { useLocation } from "react-router-dom";
 import useRouteTitle from "./useRouteTitle";
@@ -58,7 +41,7 @@ describe("useRouteTitle", () => {
   it("sets title for onboarding route", () => {
     useLocation.mockReturnValue({ pathname: "/onboarding" });
     renderHook(() => useRouteTitle());
-    expect(document.title).toBe("Onboarding — OpenSIN Chat");
+    expect(document.title).toBe("Setup — OpenSIN Chat");
   });
 
   it("does not set title for docs sub-route (managed by Docs page)", () => {
@@ -96,7 +79,7 @@ describe("useRouteTitle", () => {
   it("sets title for unknown route (not found)", () => {
     useLocation.mockReturnValue({ pathname: "/random-page" });
     renderHook(() => useRouteTitle());
-    expect(document.title).toBe("Not Found — OpenSIN Chat");
+    expect(document.title).toBe("Page Not Found — OpenSIN Chat");
   });
 
   it("updates title when pathname changes", () => {

@@ -159,10 +159,15 @@ function Directory({
     }
     setLoading(true);
     setLoadingMessage(`Moving ${toMove.length} documents. Please wait.`);
-    const { success, message } = await Document.moveToFolder(
-      toMove,
-      folder.name,
-    );
+    let result: any;
+    try {
+      result = await Document.moveToFolder(toMove, folder.name);
+    } catch (e: any) {
+      showToast(`Error moving files: ${String(e?.message || e)}`, "error");
+      setLoading(false);
+      return;
+    }
+    const { success, message } = result;
     if (!success) {
       showToast(`Error moving files: ${message}`, "error");
       setLoading(false);
@@ -178,9 +183,14 @@ function Directory({
         "success",
       );
     }
-    await Promise.all([mutateDocuments(), mutateWorkspace()]);
-    setSelectedItems({});
-    setLoading(false);
+    try {
+      await Promise.all([mutateDocuments(), mutateWorkspace()]);
+      setSelectedItems({});
+    } catch (e) {
+      console.error("Failed to refresh after move:", e);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSearch = useMemo(

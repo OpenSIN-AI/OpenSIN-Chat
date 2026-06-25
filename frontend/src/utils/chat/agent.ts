@@ -145,7 +145,8 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
         if (data.content.type === "textResponseChunk") {
           // If this first chunk is just a non-text char (like \n, \t, etc.) then we need to ignore it.
           // Some providers like LMStudio will do this and it depends on the chat template as well.
-          if (data.content.content.trim() === "") return prev;
+          if (!data.content.content || data.content.content.trim() === "")
+            return prev;
           return [
             ...(prev as any).filter((msg) => !!msg.content),
             {
@@ -225,7 +226,7 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
                 ? {
                     ...msg,
                     type: "textResponse",
-                    content: msg.content + content,
+                    content: (msg.content || "") + (content || ""),
                   }
                 : msg?.content
                   ? msg
@@ -237,7 +238,10 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
         // Generic text response - will be put in the agent thought bubble
         return (prev as any).map((msg) =>
           msg.uuid === data.content.uuid
-            ? { ...msg, content: msg.content + data.content.content }
+            ? {
+                ...msg,
+                content: (msg.content || "") + (data.content.content || ""),
+              }
             : msg,
         );
       }

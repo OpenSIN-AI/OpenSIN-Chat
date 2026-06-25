@@ -151,7 +151,8 @@ class ConfluencePagesLoader {
       });
     };
 
-    const contentWithCodeBlocks = extractCodeBlocks(page.body.storage.value);
+    const rawBody = page?.body?.storage?.value || "";
+    const contentWithCodeBlocks = extractCodeBlocks(rawBody);
     const plainTextContent = htmlToText(contentWithCodeBlocks, {
       wordwrap: false,
       preserveNewlines: true,

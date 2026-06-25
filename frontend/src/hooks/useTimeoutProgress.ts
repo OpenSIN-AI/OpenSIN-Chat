@@ -28,6 +28,7 @@ export default function useTimeoutProgress(
 ) {
   const [progressPercent, setProgressPercent] = useState<number>(100);
   const startTimeRef = useRef<number | null>(null);
+  const pausedRemainingRef = useRef<number | null>(null);
   const onTimeoutRef = useRef(onTimeout);
 
   useEffect(() => {
@@ -36,7 +37,15 @@ export default function useTimeoutProgress(
 
   useEffect(() => {
     if (!timeoutMs || !active) return;
-    if (startTimeRef.current === null) startTimeRef.current = Date.now();
+    if (startTimeRef.current === null) {
+      if (pausedRemainingRef.current !== null) {
+        startTimeRef.current =
+          Date.now() - (timeoutMs - pausedRemainingRef.current);
+        pausedRemainingRef.current = null;
+      } else {
+        startTimeRef.current = Date.now();
+      }
+    }
 
     const intervalId = setInterval(() => {
       const elapsed = Date.now() - startTimeRef.current;
@@ -45,11 +54,19 @@ export default function useTimeoutProgress(
       if (remaining <= 0) {
         clearInterval(intervalId);
         startTimeRef.current = null;
+        pausedRemainingRef.current = null;
         setProgressPercent(0);
         onTimeoutRef.current?.();
       }
     }, intervalMs);
-    return () => clearInterval(intervalId);
+    return () => {
+      clearInterval(intervalId);
+      if (startTimeRef.current !== null && timeoutMs) {
+        const elapsed = Date.now() - startTimeRef.current;
+        pausedRemainingRef.current = Math.max(0, timeoutMs - elapsed);
+        startTimeRef.current = null;
+      }
+    };
   }, [timeoutMs, active, intervalMs]);
 
   return progressPercent;

@@ -18,14 +18,18 @@ export default function InviteRow({ invite }: { invite: any }) {
   const [copied, setCopied] = useState(false);
   const handleDelete = async () => {
     if (!window.confirm(t("inviteRow.deactivateConfirm"))) return false;
-    const { success, error } = await Admin.disableInvite(invite.id);
-    if (!success) {
-      showToast(error, "error", { clear: true });
-      return;
+    try {
+      const { success, error } = await Admin.disableInvite(invite.id);
+      if (!success) {
+        showToast(error, "error", { clear: true });
+        return;
+      }
+      setStatus("disabled");
+      showToast(t("inviteRow.disabled"), "success", { clear: true });
+      mutate(INVITES_KEY);
+    } catch (e) {
+      showToast(String(e), "error", { clear: true });
     }
-    setStatus("disabled");
-    showToast(t("inviteRow.disabled"), "success", { clear: true });
-    mutate(INVITES_KEY);
   };
   const copyInviteLink = () => {
     if (!invite) return false;

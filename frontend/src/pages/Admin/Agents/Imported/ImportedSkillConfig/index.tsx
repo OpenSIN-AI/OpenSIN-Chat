@@ -224,14 +224,21 @@ function ManageSkillMenu({ config, setImportedSkills }: ManageSkillMenuProps) {
 
   async function deleteSkill() {
     if (!window.confirm(t("importedSkillConfig.confirmDeleteSkill"))) return;
-    const success = await System.experimentalFeatures.agentPlugins.deletePlugin(
-      config.hubId,
-    );
-    if (success) {
-      setImportedSkills((prev) => prev.filter((s) => s.hubId !== config.hubId));
-      showToast(t("importedSkillConfig.skillDeleted"), "success");
-      setOpen(false);
-    } else {
+    try {
+      const success =
+        await System.experimentalFeatures.agentPlugins.deletePlugin(
+          config.hubId,
+        );
+      if (success) {
+        setImportedSkills((prev) =>
+          prev.filter((s) => s.hubId !== config.hubId),
+        );
+        showToast(t("importedSkillConfig.skillDeleted"), "success");
+        setOpen(false);
+      } else {
+        showToast(t("importedSkillConfig.skillDeleteFailed"), "error");
+      }
+    } catch (e) {
       showToast(t("importedSkillConfig.skillDeleteFailed"), "error");
     }
   }

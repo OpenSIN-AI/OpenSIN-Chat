@@ -51,7 +51,12 @@ async function getMemoriesForPrompt(userId, workspaceId, prompt, rawHistory) {
       ...globalMemories.map((m) => m.id),
       ...selectedWorkspace.map((m) => m.id),
     ];
-    Memory.updateLastUsed(injectedIds);
+    Memory.updateLastUsed(injectedIds).catch((err) => {
+      consoleLogger.error(
+        "[Memory Injection] updateLastUsed failed:",
+        err.message,
+      );
+    });
 
     return formatMemories(globalMemories, selectedWorkspace);
   } catch (error) {

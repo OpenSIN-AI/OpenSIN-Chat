@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
+import { useTranslation } from "react-i18next";
 import EmptyState from "./EmptyState";
 
 vi.mock("react-i18next", async () => {
@@ -42,7 +43,6 @@ vi.mock("@/components/lib/SuggestedMessages", () => ({
 }));
 
 describe("EmptyState", () => {
-  const t = (key) => key;
   const workspace = {
     slug: "test-workspace",
     documents: [{ id: 1 }, { id: 2 }],
@@ -51,32 +51,34 @@ describe("EmptyState", () => {
   const handleSubmit = vi.fn();
   const sendCommand = vi.fn();
 
+  function renderEmptyState(props = {}) {
+    function Wrapper() {
+      const { t } = useTranslation();
+      return (
+        <EmptyState
+          workspace={workspace}
+          handleSubmit={handleSubmit}
+          sendCommand={sendCommand}
+          loadingResponse={false}
+          files={[]}
+          t={t}
+          {...props}
+        />
+      );
+    }
+    return render(<Wrapper />);
+  }
+
   it("renders the greeting and prompt input", () => {
-    render(
-      <EmptyState
-        workspace={workspace}
-        handleSubmit={handleSubmit}
-        sendCommand={sendCommand}
-        loadingResponse={false}
-        files={[]}
-        t={t}
-      />,
-    );
-    expect(screen.getByText("main-page.greeting")).toBeInTheDocument();
+    renderEmptyState();
+    expect(
+      screen.getByText("How can I help you today?"),
+    ).toBeInTheDocument();
     expect(screen.getByTestId("prompt-input")).toBeInTheDocument();
   });
 
   it("passes the workspace to prompt input", () => {
-    render(
-      <EmptyState
-        workspace={workspace}
-        handleSubmit={handleSubmit}
-        sendCommand={sendCommand}
-        loadingResponse={false}
-        files={[]}
-        t={t}
-      />,
-    );
+    renderEmptyState();
     expect(screen.getByTestId("prompt-input")).toHaveAttribute(
       "data-workspace",
       "test-workspace",
@@ -88,16 +90,7 @@ describe("EmptyState", () => {
   });
 
   it("passes streaming state to prompt input", () => {
-    render(
-      <EmptyState
-        workspace={workspace}
-        handleSubmit={handleSubmit}
-        sendCommand={sendCommand}
-        loadingResponse={true}
-        files={[]}
-        t={t}
-      />,
-    );
+    renderEmptyState({ loadingResponse: true });
     expect(screen.getByTestId("prompt-input")).toHaveAttribute(
       "data-streaming",
       "true",
@@ -105,16 +98,7 @@ describe("EmptyState", () => {
   });
 
   it("renders workspace sources and suggested messages", () => {
-    render(
-      <EmptyState
-        workspace={workspace}
-        handleSubmit={handleSubmit}
-        sendCommand={sendCommand}
-        loadingResponse={false}
-        files={[]}
-        t={t}
-      />,
-    );
+    renderEmptyState();
     expect(screen.getByTestId("workspace-sources")).toHaveAttribute(
       "data-documents",
       "2",
@@ -126,17 +110,7 @@ describe("EmptyState", () => {
   });
 
   it("handles a workspace with no documents or suggested messages", () => {
-    const emptyWorkspace = { slug: "empty" };
-    render(
-      <EmptyState
-        workspace={emptyWorkspace}
-        handleSubmit={handleSubmit}
-        sendCommand={sendCommand}
-        loadingResponse={false}
-        files={[]}
-        t={t}
-      />,
-    );
+    renderEmptyState({ workspace: { slug: "empty" } });
     expect(screen.getByTestId("workspace-sources")).toHaveAttribute(
       "data-documents",
       "0",

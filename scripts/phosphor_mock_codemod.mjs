@@ -2,7 +2,7 @@
 import { readFileSync, writeFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, dirname } from "node:path";
 
-const ROOT = "/Users/jeremy/dev/OpenSIN-Chat/frontend/src";
+const ROOT = process.argv[2] || "frontend/src";
 
 function* walk(dir) {
   for (const entry of readdirSync(dir)) {

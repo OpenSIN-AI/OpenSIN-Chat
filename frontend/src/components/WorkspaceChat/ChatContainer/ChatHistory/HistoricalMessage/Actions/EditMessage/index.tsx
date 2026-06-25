@@ -1,4 +1,8 @@
 // SPDX-License-Identifier: MIT
+/**
+ * Purpose: Edit-action button and inline edit form for chat messages.
+ * Docs: EditMessage/index.tsx (this file)
+ */
 import { Info } from "@phosphor-icons/react/dist/csr/Info";
 import { Pencil } from "@phosphor-icons/react/dist/csr/Pencil";
 import { useRef, useEffect } from "react";
@@ -26,7 +30,7 @@ export function EditMessageAction({ chatId = null, role, isEditing }: any) {
   if (!chatId || isEditing) return null;
   return (
     <div
-      className={`mt-3 relative ${
+      className={`relative flex items-center justify-center h-7 w-7 ${
         role === "user" && !isEditing ? "" : "!opacity-100"
       }`}
     >
@@ -34,15 +38,19 @@ export function EditMessageAction({ chatId = null, role, isEditing }: any) {
         type="button"
         onClick={handleEditClick}
         data-tooltip-id="edit-input-text"
-        data-tooltip-content={`${
+        data-tooltip-content={
           role === "user"
             ? t("chat_window.edit_prompt")
             : t("chat_window.edit_response")
-        } `}
+        }
         className="border-none text-zinc-300 light:text-slate-500 px-0"
-        aria-label={`Edit ${role === "user" ? t("chat_window.edit_prompt") : t("chat_window.edit_response")}`}
+        aria-label={
+          role === "user"
+            ? t("chat_window.edit_prompt")
+            : t("chat_window.edit_response")
+        }
       >
-        <Pencil size={21} className="mb-1" />
+        <Pencil size={21} />
       </button>
     </div>
   );

@@ -101,7 +101,10 @@ async function viewLocalFiles() {
       for (const item of subdocs.items) {
         item.pinnedWorkspaces = pinnedWorkspacesByDocument[item.name] || [];
         item.watched =
-          watchedDocumentsFilenames.hasOwnProperty(item.name) || false;
+          Object.prototype.hasOwnProperty.call(
+            watchedDocumentsFilenames,
+            item.name,
+          ) || false;
       }
 
       directory.items.push(subdocs);

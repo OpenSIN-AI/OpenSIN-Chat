@@ -25,9 +25,7 @@ describe("ChatTooltips", () => {
     expect(
       screen.getByTestId("tooltip-regenerate-assistant-text"),
     ).toBeInTheDocument();
-    expect(
-      screen.getByTestId("tooltip-copy-assistant-text"),
-    ).toBeInTheDocument();
+    expect(screen.getByTestId("tooltip-copy-message-text")).toBeInTheDocument();
     expect(screen.getByTestId("tooltip-feedback-button")).toBeInTheDocument();
     expect(screen.getByTestId("tooltip-action-menu")).toBeInTheDocument();
     expect(screen.getByTestId("tooltip-edit-input-text")).toBeInTheDocument();

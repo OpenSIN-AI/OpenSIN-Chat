@@ -172,7 +172,8 @@ async function openAiModels(apiKey = null) {
   const customModels = allModels
     .filter(
       (model) =>
-        !model.owned_by.includes("openai") && model.owned_by !== "system",
+        !(model.owned_by || "").includes("openai") &&
+        model.owned_by !== "system",
     )
     .map((model) => {
       return {

@@ -62,10 +62,31 @@ function TelemetryLogs({ settings }: TelemetryLogsProps): JSX.Element {
   );
   const { t } = useTranslation();
   async function toggleTelemetry() {
-    const result = await System.updateSystem({
-      DisableTelemetry: !telemetry ? "false" : "true",
-    });
-    if (result?.error) {
+    try {
+      const result = await System.updateSystem({
+        DisableTelemetry: !telemetry ? "false" : "true",
+      });
+      if (result?.error) {
+        showToast(
+          t("privacyAndData.telemetryToggleFailed", {
+            defaultValue: "Failed to update telemetry setting",
+          }),
+          "error",
+          { clear: true },
+        );
+        return;
+      }
+      setTelemetry(!telemetry);
+      showToast(
+        t("privacyAndData.telemetryToggled", {
+          status: !telemetry
+            ? t("privacyAndData.enabled")
+            : t("privacyAndData.disabled"),
+        }),
+        "info",
+        { clear: true },
+      );
+    } catch (e) {
       showToast(
         t("privacyAndData.telemetryToggleFailed", {
           defaultValue: "Failed to update telemetry setting",
@@ -73,18 +94,7 @@ function TelemetryLogs({ settings }: TelemetryLogsProps): JSX.Element {
         "error",
         { clear: true },
       );
-      return;
     }
-    setTelemetry(!telemetry);
-    showToast(
-      t("privacyAndData.telemetryToggled", {
-        status: !telemetry
-          ? t("privacyAndData.enabled")
-          : t("privacyAndData.disabled"),
-      }),
-      "info",
-      { clear: true },
-    );
   }
 
   return (

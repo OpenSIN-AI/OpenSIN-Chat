@@ -206,6 +206,24 @@ async function streamChatWithForEmbed(
     const stream = await LLMConnector.streamGetChatCompletion(messages, {
       temperature: embed.workspace?.openAiTemp ?? LLMConnector.defaultTemp,
     });
+    if (!stream) {
+      const providerName =
+        LLMConnector.className ||
+        LLMConnector.constructor?.name ||
+        "LLM provider";
+      consoleLogger.error(
+        `\x1b[31m[STREAM FAILED]\x1b[0m ${providerName} returned a null stream for embed chat.`,
+      );
+      writeResponseChunk(response, {
+        uuid,
+        sources: [],
+        type: "abort",
+        textResponse: null,
+        close: true,
+        error: `${providerName} failed to start the chat stream.`,
+      });
+      return;
+    }
     completeText = await LLMConnector.handleStream(response, stream, {
       uuid,
       sources: [],

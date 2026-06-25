@@ -69,23 +69,31 @@ export default function WorkspaceChats() {
   const { t } = useTranslation();
 
   const handleDumpChats = async (exportType: keyof typeof exportOptions) => {
-    const chats = await System.exportChats(exportType, "workspace");
-    if (!!chats) {
-      const { name, mimeType, fileExtension, filenameFunc } =
-        exportOptions[exportType];
-      const blob = new Blob([chats], { type: mimeType });
-      saveAs(blob, `${filenameFunc()}.${fileExtension}`);
-      showToast(t("recorded.exportSuccess", { name }), "success");
-    } else {
+    try {
+      const chats = await System.exportChats(exportType, "workspace");
+      if (!!chats) {
+        const { name, mimeType, fileExtension, filenameFunc } =
+          exportOptions[exportType];
+        const blob = new Blob([chats], { type: mimeType });
+        saveAs(blob, `${filenameFunc()}.${fileExtension}`);
+        showToast(t("recorded.exportSuccess", { name }), "success");
+      } else {
+        showToast(t("recorded.exportFailed"), "error");
+      }
+    } catch (e) {
       showToast(t("recorded.exportFailed"), "error");
     }
   };
 
   const handleClearAllChats = async () => {
     if (!window.confirm(t("recorded.clearConfirm"))) return false;
-    await System.deleteChat(-1);
-    setChats([]);
-    showToast(t("recorded.clearedAll"), "success");
+    try {
+      await System.deleteChat(-1);
+      setChats([]);
+      showToast(t("recorded.clearedAll"), "success");
+    } catch (e) {
+      showToast(String(e), "error");
+    }
   };
 
   const toggleMenu = () => {
@@ -247,8 +255,12 @@ function ChatsContainer({
   };
 
   const handleDeleteChat = async (chatId: number) => {
-    await System.deleteChat(chatId);
-    setChats((prevChats) => prevChats.filter((chat) => chat.id !== chatId));
+    try {
+      await System.deleteChat(chatId);
+      setChats((prevChats) => prevChats.filter((chat) => chat.id !== chatId));
+    } catch (e) {
+      showToast(String(e), "error");
+    }
   };
 
   if (loading) {

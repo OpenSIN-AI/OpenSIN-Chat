@@ -42,7 +42,7 @@ export default function NewInviteModal({
       }
       setError(error);
     } catch (err: any) {
-      setError(err?.message ?? "Failed to create invite");
+      setError(err?.message ?? t("admin.newInvite.error", { error: "" }));
     }
   };
 

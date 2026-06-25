@@ -56,20 +56,24 @@ export default function EditUserModal({
       data.dailyMessageLimit = null;
     }
 
-    const { success, error } = await Admin.updateUser(user.id, data);
-    if (success) {
-      // Update local storage if we're editing our own user
-      if (currentUser && currentUser.id === user.id) {
-        currentUser.username = data.username ?? currentUser.username;
-        currentUser.bio = data.bio ?? "";
-        currentUser.role = data.role ?? currentUser.role;
-        safeSetItem(AUTH_USER, JSON.stringify(currentUser));
-      }
+    try {
+      const { success, error } = await Admin.updateUser(user.id, data);
+      if (success) {
+        // Update local storage if we're editing our own user
+        if (currentUser && currentUser.id === user.id) {
+          currentUser.username = data.username ?? currentUser.username;
+          currentUser.bio = data.bio ?? "";
+          currentUser.role = data.role ?? currentUser.role;
+          safeSetItem(AUTH_USER, JSON.stringify(currentUser));
+        }
 
-      mutate(USERS_KEY);
-      closeModal();
+        mutate(USERS_KEY);
+        closeModal();
+      }
+      setError(error);
+    } catch (err: any) {
+      setError(err?.message ?? String(err));
     }
-    setError(error);
   };
 
   return (
