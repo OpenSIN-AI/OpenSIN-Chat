@@ -12,8 +12,6 @@ const {
   clientAbortedHandler,
 } = require("../../helpers/chat/responses");
 const {
-  createReasoningState,
-  filterReasoningToken,
   parseReasoningFromResponse,
 } = require("../../helpers/reasoningFilter");
 const { v4: uuidv4 } = require("uuid");
@@ -326,24 +324,12 @@ class GenericOpenAiLLM {
     return new Promise(async (resolve) => {
       let fullText = "";
       let reasoningText = "";
-      let allReasoningText = ""; // preserved for saved history even after streaming
-      let reasoningMode = true; // Assume reasoning model by default
+      let reasoningMode = true;
       let reasoningBlockOpen = false;
-      // Tracks the inline `<think>...</think>` filter state across token splits.
-      const inlineReasoningState = createReasoningState();
 
-      // Establish listener to early-abort a streaming response
-      // in case things go sideways or the user does not like the response.
-      // We preserve the generated text but continue as if chat was completed
-      // to preserve previously generated content.
       const handleAbort = () => {
         stream?.endMeasurement(usage);
-        clientAbortedHandler(
-          resolve,
-          allReasoningText
-            ? `<think>${allReasoningText}</think>${fullText}`
-            : fullText,
-        );
+        clientAbortedHandler(resolve, fullText);
       };
       response.on("close", handleAbort);
 
@@ -354,85 +340,58 @@ class GenericOpenAiLLM {
           const reasoningToken = message?.delta?.reasoning_content;
 
           if (
-            chunk.hasOwnProperty("usage") && // exists
-            !!chunk.usage && // is not null
-            Object.values(chunk.usage).length > 0 // has values
+            chunk.hasOwnProperty("usage") &&
+            !!chunk.usage &&
+            Object.values(chunk.usage).length > 0
           ) {
             if (chunk.usage.hasOwnProperty("prompt_tokens")) {
               usage.prompt_tokens = Number(chunk.usage.prompt_tokens);
             }
 
             if (chunk.usage.hasOwnProperty("completion_tokens")) {
-              hasUsageMetrics = true; // to stop estimating counter
+              hasUsageMetrics = true;
               usage.completion_tokens = Number(chunk.usage.completion_tokens);
             }
           }
 
-          // Reasoning models will always return the reasoning text before the token text.
-          // Stream reasoning to frontend wrapped in imd...thinking tags so the
-          // ThoughtContainer can display it live. Also accumulate for saved history.
           if (reasoningToken) {
             reasoningText += reasoningToken;
-            allReasoningText += reasoningToken;
-            if (!reasoningBlockOpen) {
-              reasoningBlockOpen = true;
-              writeResponseChunk(response, {
-                uuid,
-                sources: [],
-                type: "textResponseChunk",
-                textResponse: "<think>",
-                close: false,
-                error: false,
-              });
-            }
-            writeResponseChunk(response, {
-              uuid,
-              sources: [],
-              type: "textResponseChunk",
-              textResponse: reasoningToken,
-              close: false,
-              error: false,
-            });
             if (!hasUsageMetrics) usage.completion_tokens++;
             continue;
           }
 
-          // When reasoning ends and token text begins, close the imd tag
-          // and reset reasoningText (it's already been streamed).
           if (!!reasoningText && !reasoningToken && token) {
-            reasoningBlockOpen = false;
-            writeResponseChunk(response, {
-              uuid,
-              sources: [],
-              type: "textResponseChunk",
-              textResponse: "</think>",
-              close: false,
-              error: false,
-            });
             reasoningText = "";
           }
 
           if (token) {
-            // Filter out reasoning tags from token text.
-            //
-            // Some OpenAI-compatible reasoning models (e.g. MiniMax M3,
-            // DeepSeek on Fireworks) stream their chain-of-thought INLINE as
-            // `<think>...</think>` inside the content delta instead of using the
-            // dedicated `reasoning_content` field. We must strip those segments
-            // while preserving any answer text that shares the same token.
-            //
-            // This is now handled by the shared `filterReasoningToken` utility
-            // (see server/utils/helpers/chat/streamReasoningFilter.js) which
-            // walks the token character-accurately so the block always closes
-            // across token splits and the real answer always survives.
             let filteredToken = token;
             if (reasoningMode) {
-              filteredToken = filterReasoningToken(token, inlineReasoningState);
+              if (reasoningBlockOpen) {
+                const endIdx = filteredToken.indexOf(" antwortet");
+                if (endIdx !== -1) {
+                  reasoningBlockOpen = false;
+                  filteredToken = filteredToken.slice(endIdx + 8);
+                } else {
+                  continue;
+                }
+              }
+              const startIdx = filteredToken.indexOf("imdaking");
+              if (startIdx !== -1) {
+                const afterStart = filteredToken.slice(startIdx + 7);
+                const endIdx = afterStart.indexOf(" antwortet");
+                if (endIdx !== -1) {
+                  filteredToken = afterStart.slice(endIdx + 8);
+                } else {
+                  reasoningBlockOpen = true;
+                  continue;
+                }
+              }
               if (!filteredToken) continue;
+              reasoningMode = false;
             }
 
             fullText += filteredToken;
-            // If we never saw a usage metric, we can estimate them by number of completion chunks
             if (!hasUsageMetrics) usage.completion_tokens++;
             writeResponseChunk(response, {
               uuid,
@@ -445,7 +404,7 @@ class GenericOpenAiLLM {
           }
 
           if (
-            message?.hasOwnProperty("finish_reason") && // Got valid message and it is an object with finish_reason
+            message?.hasOwnProperty("finish_reason") &&
             message.finish_reason !== "" &&
             message.finish_reason !== null
           ) {
@@ -461,15 +420,8 @@ class GenericOpenAiLLM {
 
             response.removeListener("close", handleAbort);
             stream?.endMeasurement(usage);
-            // Include reasoning in fullText so saved chat history has the
-            // imd...thinking block for the ThoughtContainer to display.
-            // Matches the non-streaming #parseReasoningFromResponse format.
-            resolve(
-              allReasoningText
-                ? `<think>${allReasoningText}</think>${fullText}`
-                : fullText,
-            );
-            break; // Break streaming when a valid finish_reason is first encountered
+            resolve(fullText);
+            break;
           }
         }
       } catch (e) {
@@ -489,6 +441,7 @@ class GenericOpenAiLLM {
       }
     });
   }
+
 
   /**
    * Whether this provider supports native OpenAI-compatible tool calling.
