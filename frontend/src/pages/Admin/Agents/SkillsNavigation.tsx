@@ -66,7 +66,7 @@ export function SkillsNavigation(props: SkillsNavigationProps): JSX.Element {
         <AgentSkillSettings />
       </div>
 
-      <div className="flex-1 overflow-y-auto pr-2 pb-4">
+      <div className="flex-1 min-h-0 overflow-y-auto pr-2 pb-4">
         <div className="space-y-4">
           <SkillList
             skills={defaultSkills}

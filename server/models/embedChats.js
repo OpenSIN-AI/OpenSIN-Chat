@@ -171,9 +171,11 @@ const EmbedChats = {
         include: {
           embed_config: {
             select: {
+              workspace_id: true,
               workspace: {
                 select: {
                   name: true,
+                  openAiPrompt: true,
                 },
               },
             },

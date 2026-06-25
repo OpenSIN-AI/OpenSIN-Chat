@@ -53,7 +53,7 @@ export default function ChatEmbedWidgets(): JSX.Element {
                     </div>
                   </button>
                 </div>
-                <div className="flex-1 overflow-y-auto p-4">
+                <div className="flex-1 min-h-0 overflow-y-auto p-4">
                   <div className="bg-theme-bg-secondary text-white rounded-xl p-4 overflow-y-scroll no-scroll">
                     {selectedView === "configs" ? (
                       <EmbedConfigsView />
@@ -82,7 +82,7 @@ export default function ChatEmbedWidgets(): JSX.Element {
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto pr-2 pb-4">
+          <div className="flex-1 min-h-0 overflow-y-auto pr-2 pb-4">
             <div className="space-y-4">
               <WidgetList
                 selectedView={selectedView}
@@ -92,7 +92,7 @@ export default function ChatEmbedWidgets(): JSX.Element {
           </div>
         </div>
         <div className="flex-[2] flex flex-col gap-y-[18px] mt-10">
-          <div className="bg-theme-bg-secondary text-white rounded-xl flex-1 p-4 overflow-y-scroll no-scroll">
+          <div className="bg-theme-bg-secondary text-white rounded-xl flex-1 min-h-0 p-4 overflow-y-scroll no-scroll">
             {selectedView === "configs" ? (
               <EmbedConfigsView />
             ) : (

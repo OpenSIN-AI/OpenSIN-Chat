@@ -245,6 +245,13 @@ const Workspace = {
         },
         onerror(err) {
           if (stallTimer) clearTimeout(stallTimer);
+          if (
+            err?.name === "AbortError" ||
+            (err?.message || "").toLowerCase().includes("abort")
+          ) {
+            ctrl.abort();
+            throw new Error("Aborted");
+          }
           const isNetworkError =
             err?.message?.includes("Failed to fetch") ||
             err?.message?.includes("NetworkError") ||

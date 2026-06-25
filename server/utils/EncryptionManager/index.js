@@ -39,8 +39,10 @@ class EncryptionManager {
 
     if (!process.env[this.#keyENV] || !process.env[this.#saltENV]) {
       this.log("Self-assigning key & salt for encrypting arbitrary data.");
-      process.env[this.#keyENV] = crypto.randomBytes(32).toString("hex");
-      process.env[this.#saltENV] = crypto.randomBytes(32).toString("hex");
+      if (!process.env[this.#keyENV])
+        process.env[this.#keyENV] = crypto.randomBytes(32).toString("hex");
+      if (!process.env[this.#saltENV])
+        process.env[this.#saltENV] = crypto.randomBytes(32).toString("hex");
       const { dumpENV } = require("../helpers/updateENV");
       dumpENV();
     } else

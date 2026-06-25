@@ -43,7 +43,11 @@ async function convertToJSONL(workspaceChatsMap) {
     .join("\n");
 }
 
-async function prepareChatsForExport(format = "jsonl", chatType = "workspace") {
+async function prepareChatsForExport(
+  format = "jsonl",
+  chatType = "workspace",
+  preloadedChats = null,
+) {
   if (!exportMap.hasOwnProperty(format))
     throw new Error(`Invalid export type: ${format}`);
 
@@ -53,7 +57,9 @@ async function prepareChatsForExport(format = "jsonl", chatType = "workspace") {
   );
 
   let chats;
-  if (chatType === "workspace") {
+  if (preloadedChats !== null) {
+    chats = preloadedChats;
+  } else if (chatType === "workspace") {
     chats = await WorkspaceChats.whereWithData({}, EXPORT_MAX_CHATS, null, {
       id: "asc",
     });
@@ -130,7 +136,9 @@ async function prepareChatsForExport(format = "jsonl", chatType = "workspace") {
       return {
         instruction: buildSystemPrompt(
           chat,
-          chat.workspace ? chat.workspace.openAiPrompt : null,
+          chat.workspace?.openAiPrompt ??
+            chat.embed_config?.workspace?.openAiPrompt ??
+            null,
         ),
         input: chat.prompt,
         output: responseJson.text,
@@ -145,18 +153,21 @@ async function prepareChatsForExport(format = "jsonl", chatType = "workspace") {
     const { prompt, response, workspaceId } = chat;
     const responseJson = safeJsonParse(response, { attachments: [] });
     const attachments = responseJson.attachments;
+    const groupKey = workspaceId ?? chat.embed_id;
+    const systemPrompt =
+      chat.workspace?.openAiPrompt ??
+      chat.embed_config?.workspace?.openAiPrompt ??
+      SystemSettings.saneDefaultSystemPrompt;
 
-    if (!acc[workspaceId]) {
-      acc[workspaceId] = {
+    if (!acc[groupKey]) {
+      acc[groupKey] = {
         messages: [
           {
             role: "system",
             content: [
               {
                 type: "text",
-                text:
-                  chat.workspace?.openAiPrompt ??
-                  SystemSettings.saneDefaultSystemPrompt,
+                text: systemPrompt,
               },
             ],
           },
@@ -164,7 +175,7 @@ async function prepareChatsForExport(format = "jsonl", chatType = "workspace") {
       };
     }
 
-    acc[workspaceId].messages.push(
+    acc[groupKey].messages.push(
       {
         role: "user",
         content: [
@@ -220,7 +231,7 @@ const exportMap = {
 
 function escapeCsv(str) {
   if (str === null || str === undefined) return '""';
-  return `"${str.replace(/"/g, '""').replace(/\n/g, " ")}"`;
+  return `"${str.replace(/"/g, '""').replace(/[\r\n]+/g, " ")}"`;
 }
 
 async function exportChatsAsType(
@@ -231,8 +242,7 @@ async function exportChatsAsType(
   const { contentType, func } = exportMap.hasOwnProperty(format)
     ? exportMap[format]
     : exportMap.jsonl;
-  const chats =
-    preloadedChats ?? (await prepareChatsForExport(format, chatType));
+  const chats = await prepareChatsForExport(format, chatType, preloadedChats);
   return {
     contentType,
     data: await func(chats),

@@ -1176,15 +1176,22 @@ function workspaceEndpoints(app) {
           return response.status(400).json({ message: "chatId is required" });
 
         // Get threadId we are branching from if that request body is sent
-        // and is a valid thread slug.
-        const threadId = !!threadSlug
-          ? ((
-              await WorkspaceThread.get({
-                slug: String(threadSlug),
-                workspace_id: workspace.id,
-              })
-            )?.id ?? null)
-          : null;
+        // and is a valid thread slug. Filter by user_id so users can only
+        // fork their own threads in multi-user mode.
+        let threadId = null;
+        if (threadSlug) {
+          const sourceThread = await WorkspaceThread.get({
+            slug: String(threadSlug),
+            workspace_id: workspace.id,
+            user_id: user?.id ?? null,
+          });
+          if (!sourceThread) {
+            return response
+              .status(400)
+              .json({ message: "Thread not found for this workspace." });
+          }
+          threadId = sourceThread.id;
+        }
         const chatsToFork = await WorkspaceChats.where(
           {
             workspaceId: workspace.id,
@@ -1214,6 +1221,7 @@ function workspaceEndpoints(app) {
             response: JSON.stringify(chatResponse),
             user_id: user?.id,
             thread_id: newThread.id,
+            include: true,
           };
         });
         await WorkspaceChats.bulkCreate(chatsData);

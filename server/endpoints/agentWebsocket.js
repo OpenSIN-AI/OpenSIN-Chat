@@ -117,6 +117,12 @@ async function isAuthorizedRequest(request) {
     return true;
   }
 
+  // Single-user no-AUTH_TOKEN mode: the JWT has { p: null }.
+  // Accept it the same way validatedRequest does (passthrough when
+  // AUTH_TOKEN is unset). Without this, WebSocket connections fail
+  // in single-user no-password deployments.
+  if (!process.env.AUTH_TOKEN) return true;
+
   const { p } = decoded;
   if (p === null || typeof p !== "string" || p.length < 16) return false;
   if (!/^[A-Za-z0-9+/=_-]+$/.test(p)) return false;

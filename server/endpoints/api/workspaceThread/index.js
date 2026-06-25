@@ -171,12 +171,18 @@ function apiWorkspaceThreadEndpoints(app) {
         const { slug, threadSlug } = request.params;
         const { name } = reqBody(request);
         const workspace = await Workspace.get({ slug });
+
+        if (!workspace) {
+          response.sendStatus(400);
+          return;
+        }
+
         const thread = await WorkspaceThread.get({
           slug: threadSlug,
           workspace_id: workspace.id,
         });
 
-        if (!workspace || !thread) {
+        if (!thread) {
           response.sendStatus(400);
           return;
         }
@@ -293,12 +299,18 @@ function apiWorkspaceThreadEndpoints(app) {
       try {
         const { slug, threadSlug } = request.params;
         const workspace = await Workspace.get({ slug });
+
+        if (!workspace) {
+          response.sendStatus(400);
+          return;
+        }
+
         const thread = await WorkspaceThread.get({
           slug: threadSlug,
           workspace_id: workspace.id,
         });
 
-        if (!workspace || !thread) {
+        if (!thread) {
           response.sendStatus(400);
           return;
         }
@@ -395,19 +407,32 @@ function apiWorkspaceThreadEndpoints(app) {
           reset = false,
         } = reqBody(request);
         const workspace = await Workspace.get({ slug });
-        const thread = await WorkspaceThread.get({
-          slug: threadSlug,
-          workspace_id: workspace.id,
-        });
 
-        if (!workspace || !thread) {
+        if (!workspace) {
           response.status(400).json({
             id: uuidv4(),
             type: "abort",
             textResponse: null,
             sources: [],
             close: true,
-            error: `Workspace ${slug} or thread ${threadSlug} is not valid.`,
+            error: `Workspace ${slug} is not valid.`,
+          });
+          return;
+        }
+
+        const thread = await WorkspaceThread.get({
+          slug: threadSlug,
+          workspace_id: workspace.id,
+        });
+
+        if (!thread) {
+          response.status(400).json({
+            id: uuidv4(),
+            type: "abort",
+            textResponse: null,
+            sources: [],
+            close: true,
+            error: `Thread ${threadSlug} is not valid.`,
           });
           return;
         }
@@ -572,19 +597,32 @@ function apiWorkspaceThreadEndpoints(app) {
           reset = false,
         } = reqBody(request);
         const workspace = await Workspace.get({ slug });
-        const thread = await WorkspaceThread.get({
-          slug: threadSlug,
-          workspace_id: workspace.id,
-        });
 
-        if (!workspace || !thread) {
+        if (!workspace) {
           response.status(400).json({
             id: uuidv4(),
             type: "abort",
             textResponse: null,
             sources: [],
             close: true,
-            error: `Workspace ${slug} or thread ${threadSlug} is not valid.`,
+            error: `Workspace ${slug} is not valid.`,
+          });
+          return;
+        }
+
+        const thread = await WorkspaceThread.get({
+          slug: threadSlug,
+          workspace_id: workspace.id,
+        });
+
+        if (!thread) {
+          response.status(400).json({
+            id: uuidv4(),
+            type: "abort",
+            textResponse: null,
+            sources: [],
+            close: true,
+            error: `Thread ${threadSlug} is not valid.`,
           });
           return;
         }

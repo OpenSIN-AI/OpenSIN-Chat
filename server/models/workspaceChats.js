@@ -315,7 +315,7 @@ const WorkspaceChats = {
           createdAt: true,
           feedbackScore: true,
           include: true,
-          workspace: { select: { name: true, slug: true } },
+          workspace: { select: { name: true, slug: true, openAiPrompt: true } },
           users: { select: { username: true } },
         },
         ...(limit !== null ? { take: limit } : {}),
@@ -326,8 +326,12 @@ const WorkspaceChats = {
       const results = chats.map((res) => ({
         ...res,
         workspace: res.workspace
-          ? { name: res.workspace.name, slug: res.workspace.slug }
-          : { name: "deleted workspace", slug: null },
+          ? {
+              name: res.workspace.name,
+              slug: res.workspace.slug,
+              openAiPrompt: res.workspace.openAiPrompt,
+            }
+          : { name: "deleted workspace", slug: null, openAiPrompt: null },
         user: res.users
           ? { username: res.users.username }
           : { username: res.api_session_id !== null ? "API" : "unknown user" },

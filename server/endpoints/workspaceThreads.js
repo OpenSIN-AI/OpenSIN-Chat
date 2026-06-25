@@ -116,11 +116,6 @@ function workspaceThreadEndpoints(app) {
     async (_, response) => {
       try {
         const thread = response.locals.thread;
-        const workspace = response.locals.workspace;
-        await WorkspaceChats.delete({
-          thread_id: Number(thread.id),
-          workspaceId: Number(workspace.id),
-        });
         await WorkspaceThread.delete({ id: thread.id });
         response.sendStatus(200);
       } catch (e) {
@@ -142,17 +137,6 @@ function workspaceThreadEndpoints(app) {
         const user = await userFromSession(request, response);
         const workspace = response.locals.workspace;
 
-        const threads = await WorkspaceThread.where({
-          slug: { in: slugs },
-          user_id: user?.id ?? null,
-          workspace_id: workspace.id,
-        });
-        if (threads.length > 0) {
-          await WorkspaceChats.delete({
-            thread_id: { in: threads.map((t) => Number(t.id)) },
-            workspaceId: Number(workspace.id),
-          });
-        }
         await WorkspaceThread.delete({
           slug: { in: slugs },
           user_id: user?.id ?? null,

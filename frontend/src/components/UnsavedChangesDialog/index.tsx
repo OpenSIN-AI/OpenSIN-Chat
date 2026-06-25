@@ -20,7 +20,7 @@ export default function UnsavedChangesDialog({ blocker }: any) {
 
   return (
     <ModalWrapper isOpen={true} closeModal={handleReset}>
-      <div className="w-full max-w-lg bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border overflow-hidden z-9999">
+      <div className="w-full max-w-lg bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border overflow-hidden z-[9999]">
         <div className="relative px-6 py-5 border-b rounded-t border-theme-modal-border">
           <div className="w-full flex gap-x-2 items-center">
             <Warning className="text-yellow-400 w-6 h-6" weight="fill" />

@@ -227,17 +227,56 @@
   color: var(--theme-text-primary);
 }
 
+[data-theme="light"] .text-white\/80,
+[data-theme="light"] .text-white\/70 {
+  color: var(--theme-text-primary);
+}
+
 [data-theme="light"] .text-description,
-[data-theme="light"] .text-white\/60 {
+[data-theme="light"] .text-white\/60,
+[data-theme="light"] .text-white\/55,
+[data-theme="light"] .text-white\/50,
+[data-theme="light"] .text-white\/45 {
   color: var(--theme-text-secondary);
+}
+
+[data-theme="light"] .text-white\/40,
+[data-theme="light"] .text-white\/30,
+[data-theme="light"] .text-white\/20 {
+  color: var(--theme-placeholder);
 }
 
 [data-theme="light"] .bg-theme-bg-secondary {
   border: 1px solid var(--theme-sidebar-border);
 }
 
-[data-theme="light"] .border-white\/10 {
+[data-theme="light"] .border-white\/5,
+[data-theme="light"] .border-white\/10,
+[data-theme="light"] .border-white\/20,
+[data-theme="light"] .border-white\/40,
+[data-theme="light"] .border-white\/60 {
   border-color: var(--theme-sidebar-border);
+}
+
+[data-theme="light"] .bg-white\/5,
+[data-theme="light"] .bg-white\/10,
+[data-theme="light"] .bg-white\/20 {
+  background-color: var(--theme-bg-hover);
+}
+
+[data-theme="light"] .bg-white\/40 {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .hover\:bg-white\/5:hover,
+[data-theme="light"] .hover\:bg-white\/10:hover,
+[data-theme="light"] .hover\:bg-white\/20:hover {
+  background-color: var(--theme-bg-hover);
+}
+
+[data-theme="light"] .hover\:text-white\/70:hover,
+[data-theme="light"] .hover\:text-white\/80:hover {
+  color: var(--theme-text-primary);
 }
 
 /*
@@ -301,7 +340,7 @@ a {
 }
 
 .greyC {
-  filter: gray;
+  filter: grayscale(100%);
   -webkit-filter: grayscale(100%);
   transition: 0.4s;
 }
@@ -404,7 +443,8 @@ a {
   }
 }
 
-/* Legacy dot-falling — kept for backward compat / tests */
+/* Legacy dot-falling — kept for backward compat / tests.
+   Renders two bouncing dots via ::before and ::after on an empty element. */
 .dot-falling {
   display: inline-flex;
   align-items: center;
@@ -415,11 +455,6 @@ a {
   height: auto;
   background-color: transparent;
   box-shadow: none;
-  animation: none;
-}
-.dot-falling::before,
-.dot-falling::after {
-  display: none;
 }
 .dot-falling::before,
 .dot-falling::after {
@@ -438,15 +473,6 @@ a {
 }
 .dot-falling::after {
   animation-delay: 0s;
-}
-.dot-falling {
-  animation: typing-bounce 1.4s infinite ease-in-out both;
-  animation-delay: -0.16s;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: currentColor;
-  opacity: 0.4;
 }
 
 .show-scrollbar {
@@ -610,7 +636,7 @@ dialog::backdrop {
   position: absolute;
 
   border-bottom: 8px solid transparent;
-  border-top: 8px solid rgba(255, 255, 255, 0.5);
+  border-top: 8px solid var(--theme-sidebar-border);
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
   border-radius: 0px 0px 0px 5px;
@@ -626,7 +652,7 @@ dialog::backdrop {
 .reply > *:last-child::after {
   content: "|";
   animation: blink 1.5s steps(1) infinite;
-  color: white;
+  color: var(--theme-text-primary);
   font-size: 14px;
 }
 

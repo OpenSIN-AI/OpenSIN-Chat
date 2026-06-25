@@ -191,5 +191,83 @@ describe("convertTo helpers — additional coverage", () => {
       const result = await exportChatsAsType("json", "workspace");
       expect(result.contentType).toBe("application/json");
     });
+
+    it("prepares preloadedChats through prepareChatsForExport instead of passing raw to func", async () => {
+      const rawChat = makeChat();
+      const result = await exportChatsAsType("csv", "workspace", [rawChat]);
+      const lines = result.data.split("\n");
+      const header = lines[0];
+      const row = lines[1];
+      expect(header).toContain("sent_at");
+      expect(header).toContain("workspace");
+      expect(header).toContain("rating");
+      expect(row).toContain("Test Workspace");
+      expect(row).not.toContain("[object Object]");
+    });
+
+    it("preloadedChats jsonl produces valid workspaceChatsMap, not raw array", async () => {
+      const rawChat = makeChat();
+      const result = await exportChatsAsType("jsonl", "workspace", [rawChat]);
+      const lines = result.data.split("\n");
+      expect(lines.length).toBe(1);
+      const parsed = JSON.parse(lines[0]);
+      expect(parsed).toHaveProperty("messages");
+      expect(parsed.messages[0].role).toBe("system");
+      expect(parsed.messages[1].role).toBe("user");
+      expect(parsed.messages[2].role).toBe("assistant");
+    });
+
+    it("preloadedChats jsonAlpaca produces instruction/input/output", async () => {
+      const rawChat = makeChat();
+      const result = await exportChatsAsType("jsonAlpaca", "workspace", [rawChat]);
+      const parsed = JSON.parse(result.data);
+      expect(parsed[0]).toHaveProperty("instruction");
+      expect(parsed[0]).toHaveProperty("input");
+      expect(parsed[0]).toHaveProperty("output");
+    });
+  });
+
+  describe("CSV export — carriage return handling", () => {
+    it("strips \\r from field values in CSV output", async () => {
+      const chatWithCR = makeChat({
+        prompt: "hello\r\nworld",
+        response: JSON.stringify({ text: "response\rmulti\r\nline", sources: [], attachments: [] }),
+      });
+      WorkspaceChats.whereWithData.mockResolvedValue([chatWithCR]);
+      const result = await exportChatsAsType("csv", "workspace");
+      expect(result.data).not.toContain("\r");
+      expect(result.data).toContain("hello");
+      expect(result.data).toContain("world");
+      expect(result.data).toContain("response");
+      expect(result.data).toContain("multi");
+      expect(result.data).toContain("line");
+    });
+  });
+
+  describe("prepareChatsForExport — embed chat JSONL", () => {
+    it("groups embed chats by embed_id, not undefined", async () => {
+      EmbedChats.whereWithEmbedAndWorkspace.mockResolvedValue([
+        {
+          id: 1,
+          prompt: "hi",
+          response: JSON.stringify({ text: "hello", sources: [], attachments: [] }),
+          embed_id: 5,
+          createdAt: "2025-01-01",
+          embed_config: { workspace_id: 10, workspace: { name: "Embed WS", openAiPrompt: "Custom embed prompt" } },
+        },
+        {
+          id: 2,
+          prompt: "bye",
+          response: JSON.stringify({ text: "goodbye", sources: [], attachments: [] }),
+          embed_id: 5,
+          createdAt: "2025-01-02",
+          embed_config: { workspace_id: 10, workspace: { name: "Embed WS", openAiPrompt: "Custom embed prompt" } },
+        },
+      ]);
+      const result = await prepareChatsForExport("jsonl", "embed");
+      expect(Object.keys(result)).toEqual(["5"]);
+      expect(result[5].messages[0].content[0].text).toBe("Custom embed prompt");
+      expect(result[5].messages.length).toBe(5);
+    });
   });
 });

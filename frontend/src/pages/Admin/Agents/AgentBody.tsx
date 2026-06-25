@@ -152,7 +152,7 @@ export default function AgentBody({
                   </div>
                 </button>
               </div>
-              <div className="flex-1 overflow-y-auto p-4">
+              <div className="flex-1 min-h-0 overflow-y-auto p-4">
                 <div className="bg-theme-bg-secondary text-white rounded-xl p-4 overflow-y-scroll overflow-x-visible no-scroll">
                   <AgentSkillPanel {...skillPanelProps} />
                 </div>
@@ -200,7 +200,7 @@ export default function AgentBody({
           <AgentSkillSettings />
         </div>
 
-        <div className="flex-1 overflow-y-auto pr-2 pb-4">
+        <div className="flex-1 min-h-0 overflow-y-auto pr-2 pb-4">
           <div className="space-y-4">
             <AgentSidebarLists
               {...sidebarProps}
@@ -212,7 +212,7 @@ export default function AgentBody({
       </div>
 
       <div className="flex-[2] flex flex-col gap-y-[18px] mt-10">
-        <div className="bg-theme-bg-secondary text-white rounded-xl flex-1 p-4 overflow-y-scroll overflow-x-visible no-scroll">
+        <div className="bg-theme-bg-secondary text-white rounded-xl flex-1 min-h-0 p-4 overflow-y-scroll overflow-x-visible no-scroll">
           <AgentSkillPanel {...skillPanelProps} />
         </div>
       </div>
