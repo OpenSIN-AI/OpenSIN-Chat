@@ -306,6 +306,7 @@ export default forwardRef(function (
   }, []);
 
   const wasEmptyRef = useRef(true);
+  const prevRowCountRef = useRef(0);
   useEffect(() => {
     if (wasEmptyRef.current && compiledRows.length > 0) {
       wasEmptyRef.current = false;
@@ -320,6 +321,15 @@ export default forwardRef(function (
       });
     }
   }, [compiledRows]);
+
+  useEffect(() => {
+    if (compiledRows.length > prevRowCountRef.current) {
+      requestAnimationFrame(() => {
+        scrollVirtuosoToBottom(false);
+      });
+    }
+    prevRowCountRef.current = compiledRows.length;
+  }, [compiledRows.length, scrollVirtuosoToBottom]);
 
   const renderRow = useCallback(
     (row: any, index: number) => {
@@ -442,8 +452,8 @@ export default forwardRef(function (
             data={compiledRows}
             computeItemKey={computeItemKey}
             itemContent={(index, row) => renderRow(row, index)}
-            followOutput={(atBottom: boolean) => {
-              return atBottom ? "auto" : false;
+            followOutput={() => {
+              return "smooth";
             }}
             atBottomStateChange={handleScrollState}
             className="h-full w-full overflow-y-scroll"
