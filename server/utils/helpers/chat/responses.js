@@ -3,12 +3,6 @@ const consoleLogger = require("../../logger/console.js");
 
 const { v4: uuidv4 } = require("uuid");
 const moment = require("moment");
-const {
-  createReasoningState,
-  filterReasoningToken,
-  OPEN_TAG,
-  CLOSE_TAG,
-} = require("./streamReasoningFilter");
 
 function clientAbortedHandler(resolve, fullText) {
   consoleLogger.log(
@@ -28,138 +22,89 @@ function clientAbortedHandler(resolve, fullText) {
 function handleDefaultStreamResponseV2(response, stream, responseProps) {
   const { uuid = uuidv4(), sources = [] } = responseProps;
 
-  // Why are we doing this?
-  // OpenAI do enable the usage metrics in the stream response but:
-  // 1. This parameter is not available in our current API version (TODO: update)
-  // 2. The usage metrics are not available in _every_ provider that uses this function
-  // 3. We need to track the usage metrics for every provider that uses this function - not just OpenAI
-  // Other keys are added by the LLMPerformanceMonitor.measureStream method
   let hasUsageMetrics = false;
   let usage = {
-    // prompt_tokens can be in this object if the provider supports it - otherwise we manually count it
-    // When the stream is created in the LLMProviders `streamGetChatCompletion` `LLMPerformanceMonitor.measureStream` call.
     completion_tokens: 0,
   };
 
   return new Promise(async (resolve) => {
     let fullText = "";
     let reasoningText = "";
-    let allReasoningText = "";
-    let reasoningBlockOpen = false;
-    const inlineReasoningState = createReasoningState();
 
-    const buildResolvedText = () =>
-      allReasoningText
-        ? `${OPEN_TAG}${allReasoningText}${CLOSE_TAG}${fullText}`
-        : fullText;
-
-    // Establish listener to early-abort a streaming response
-    // in case things go sideways or the user does not like the response.
-    // We preserve the generated text but continue as if chat was completed
-    // to preserve previously generated content.
     const handleAbort = () => {
       stream?.endMeasurement(usage);
-      clientAbortedHandler(resolve, buildResolvedText());
+      clientAbortedHandler(resolve, fullText);
     };
     response.on("close", handleAbort);
 
-    // Now handle the chunks from the streamed response and append to fullText.
     try {
+      let reasoningMode = true;
+      let reasoningBlockOpen = false;
       for await (const chunk of stream) {
         const message = chunk?.choices?.[0];
         const token = message?.delta?.content;
 
-        // Reasoning token can be in different properties depending on the provider.
-        // eg: Cerebras uses `reasoning` instead of `reasoning_content` like OpenAI.
         const reasoningToken =
           message?.delta?.reasoning_content || message?.delta?.reasoning;
 
-        // If we see usage metrics in the chunk, we can use them directly
-        // instead of estimating them, but we only want to assign values if
-        // the response object is the exact same key:value pair we expect.
         if (
-          chunk.hasOwnProperty("usage") && // exists
-          !!chunk.usage && // is not null
-          Object.values(chunk.usage).length > 0 // has values
+          chunk.hasOwnProperty("usage") &&
+          !!chunk.usage &&
+          Object.values(chunk.usage).length > 0
         ) {
           if (chunk.usage.hasOwnProperty("prompt_tokens")) {
             usage.prompt_tokens = Number(chunk.usage.prompt_tokens);
           }
 
           if (chunk.usage.hasOwnProperty("completion_tokens")) {
-            hasUsageMetrics = true; // to stop estimating counter
+            hasUsageMetrics = true;
             usage.completion_tokens = Number(chunk.usage.completion_tokens);
           }
 
-          // Some providers, like Cerebras, return the completion time in the usage metrics.
-          // This is used to report the real-time duration of the completion.
           if (chunk.usage.hasOwnProperty("time_info")) {
             usage.duration = chunk.usage.time_info.completion_time;
           }
         }
 
-        // Reasoning models will always return the reasoning text before the token text.
-        // Stream reasoning to frontend wrapped in OPEN_TAG/CLOSE_TAG so the
-        // ThoughtContainer can display it live. Also accumulate in
-        // allReasoningText so saved chat history preserves the reasoning block.
         if (reasoningToken) {
           reasoningText += reasoningToken;
-          allReasoningText += reasoningToken;
-          if (!reasoningBlockOpen) {
-            reasoningBlockOpen = true;
-            writeResponseChunk(response, {
-              uuid,
-              sources: [],
-              type: "textResponseChunk",
-              textResponse: OPEN_TAG,
-              close: false,
-              error: false,
-            });
-          }
-          writeResponseChunk(response, {
-            uuid,
-            sources: [],
-            type: "textResponseChunk",
-            textResponse: reasoningToken,
-            close: false,
-            error: false,
-          });
           if (!hasUsageMetrics) usage.completion_tokens++;
           continue;
         }
 
-        // When reasoning ends and token text begins, close the reasoning tag
-        // and reset reasoningText (it's already been streamed).
         if (!!reasoningText && !reasoningToken && token) {
-          reasoningBlockOpen = false;
-          writeResponseChunk(response, {
-            uuid,
-            sources: [],
-            type: "textResponseChunk",
-            textResponse: CLOSE_TAG,
-            close: false,
-            error: false,
-          });
           reasoningText = "";
         }
 
         if (token) {
-          // Filter out inline OPEN_TAG...CLOSE_TAG blocks from content tokens.
-          // Some OpenAI-compatible reasoning models stream chain-of-thought
-          // inline instead of using the dedicated reasoning_content field.
-          // The shared filterReasoningToken utility walks the token
-          // character-accurately so the block always closes across token
-          // splits and the real answer always survives.
-          const filteredToken = filterReasoningToken(
-            token,
-            inlineReasoningState,
-          );
-          if (!filteredToken) continue;
+          let filteredToken = token;
+          if (reasoningMode) {
+            if (reasoningBlockOpen) {
+              const endIdx = filteredToken.indexOf(" antwortet");
+              if (endIdx !== -1) {
+                reasoningBlockOpen = false;
+                filteredToken = filteredToken.slice(endIdx + 8);
+              } else {
+                continue;
+              }
+            }
+            const startIdx = filteredToken.indexOf("imdaking");
+            if (startIdx !== -1) {
+              const afterStart = filteredToken.slice(startIdx + 7);
+              const endIdx = afterStart.indexOf(" antwortet");
+              if (endIdx !== -1) {
+                filteredToken = afterStart.slice(endIdx + 8);
+              } else {
+                reasoningBlockOpen = true;
+                continue;
+              }
+            }
+            if (!filteredToken) continue;
+            reasoningMode = false;
+          }
 
           fullText += filteredToken;
-          // If we never saw a usage metric, we can estimate them by number of completion chunks
           if (!hasUsageMetrics) usage.completion_tokens++;
-          // Skip writing if the client already disconnected.
           if (response.writableEnded || response.destroyed) continue;
           writeResponseChunk(response, {
             uuid,
@@ -171,10 +116,8 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
           });
         }
 
-        // LocalAi returns '' and others return null on chunks - the last chunk is not "" or null.
-        // Either way, the key `finish_reason` must be present to determine ending chunk.
         if (
-          message?.hasOwnProperty("finish_reason") && // Got valid message and it is an object with finish_reason
+          message?.hasOwnProperty("finish_reason") &&
           message.finish_reason !== "" &&
           message.finish_reason !== null
         ) {
@@ -188,16 +131,13 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
           });
           response.removeListener("close", handleAbort);
           stream?.endMeasurement(usage);
-          resolve(buildResolvedText());
-          break; // Break streaming when a valid finish_reason is first encountered
+          resolve(fullText);
+          break;
         }
       }
-      // Stream ended without a finish_reason — some providers close the
-      // stream without sending one. Without this cleanup the close listener
-      // leaks and the Promise never resolves (hang).
       response.removeListener("close", handleAbort);
       stream?.endMeasurement(usage);
-      resolve(buildResolvedText());
+      resolve(fullText);
     } catch (e) {
       consoleLogger.log(
         `\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${e.message}`,
@@ -212,7 +152,7 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
       });
       response.removeListener("close", handleAbort);
       stream?.endMeasurement(usage);
-      resolve(buildResolvedText()); // Return what we currently have - if anything.
+      resolve(fullText);
     }
   });
 }

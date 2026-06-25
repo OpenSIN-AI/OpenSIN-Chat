@@ -13,10 +13,6 @@ const {
   writeResponseChunk,
   safeJSONStringify,
 } = require("../../../../utils/helpers/chat/responses");
-const {
-  OPEN_TAG,
-  CLOSE_TAG,
-} = require("../../../../utils/helpers/chat/streamReasoningFilter");
 
 /**
  * Creates a mock Express-like response object that captures write() calls
@@ -64,7 +60,7 @@ function parseChunkData(rawWrite) {
 }
 
 describe("handleDefaultStreamResponseV2 — reasoning tag filter", () => {
-  test("streams reasoning_content tokens wrapped in tags and forwards content tokens", async () => {
+  test("filters out reasoning_content tokens and forwards content tokens", async () => {
     const chunks = [
       { choices: [{ delta: { reasoning_content: "thinking..." } }] },
       { choices: [{ delta: { reasoning_content: "more thinking" } }] },
@@ -80,18 +76,15 @@ describe("handleDefaultStreamResponseV2 — reasoning tag filter", () => {
       { uuid: "test-uuid", sources: [] },
     );
 
-    // Resolved text preserves reasoning wrapped in tags + content
-    expect(fullText).toBe(`${OPEN_TAG}thinking...more thinking${CLOSE_TAG}Hello!`);
+    expect(fullText).toBe("Hello!");
     const textChunks = response._chunks
       .map(parseChunkData)
       .filter((c) => c.type === "textResponseChunk" && c.textResponse);
-    // OPEN_TAG + reasoning + CLOSE_TAG + content
-    expect(textChunks.length).toBeGreaterThanOrEqual(4);
-    const lastChunk = textChunks[textChunks.length - 1];
-    expect(lastChunk.textResponse).toBe("Hello!");
+    expect(textChunks).toHaveLength(1);
+    expect(textChunks[0].textResponse).toBe("Hello!");
   });
 
-  test("streams reasoning tokens via the reasoning property (Cerebras-style) wrapped in tags", async () => {
+  test("filters out reasoning tokens via the reasoning property (Cerebras-style)", async () => {
     const chunks = [
       { choices: [{ delta: { reasoning: "Cerebras reasoning" } }] },
       { choices: [{ delta: { content: "Answer" } }] },
@@ -106,7 +99,7 @@ describe("handleDefaultStreamResponseV2 — reasoning tag filter", () => {
       {},
     );
 
-    expect(fullText).toBe(`${OPEN_TAG}Cerebras reasoning${CLOSE_TAG}Answer`);
+    expect(fullText).toBe("Answer");
   });
 
   test("captures usage metrics when provided in chunks", async () => {
