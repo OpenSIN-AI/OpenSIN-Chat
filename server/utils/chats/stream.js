@@ -390,7 +390,7 @@ async function streamChatWithWorkspace(
       uuid,
       sources,
     });
-    metrics = stream.metrics;
+    metrics = stream?.metrics || {};
   }
 
   if (completeText?.length > 0) {
