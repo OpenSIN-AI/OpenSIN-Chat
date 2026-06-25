@@ -870,8 +870,11 @@ dialog::backdrop {
   display: none;
 }
 
-/* Hide paragraphs that only contain empty KaTeX math blocks */
-.markdown p:not(:has(:not(.katex):not(.katex-display):not(.katex-html):not(.katex-mathml):not(.strut):not(.base)):not(:empty)) {
+/* Hide paragraphs that only contain KaTeX rendering artifacts (no text, only math elements).
+   The previous selector used :not(:has(...)) which also matched <p> tags containing ONLY
+   plain text (no child elements), hiding all simple user/AI messages. Adding :has(.katex)
+   ensures this only applies to paragraphs that actually contain KaTeX math. */
+.markdown p:has(.katex):not(:has(:not(.katex):not(.katex-display):not(.katex-html):not(.katex-mathml):not(.strut):not(.base))) {
   display: none;
 }
 
