@@ -75,14 +75,19 @@ export default function LLMProviderModelPicker({
     }
     if (!isConfigured(selectedProvider)) return;
 
+    let cancelled = false;
     async function fetchModels() {
       setLoadingModels(true);
       const { models: fetchedModels = [] } =
         await System.customModels(selectedProvider);
+      if (cancelled) return;
       setModels(fetchedModels);
       setLoadingModels(false);
     }
     fetchModels();
+    return () => {
+      cancelled = true;
+    };
   }, [selectedProvider, settings]);
 
   function handleProviderChange(e: React.ChangeEvent<HTMLSelectElement>) {

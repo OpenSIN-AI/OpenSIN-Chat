@@ -159,6 +159,7 @@ export function useAgents(): UseAgentsReturn {
   }, [hasChanges]);
 
   useEffect(() => {
+    let cancelled = false;
     async function fetchSettings() {
       try {
         const [
@@ -180,6 +181,7 @@ export function useAgents(): UseAgentsReturn {
           System.isCreateFilesAgentAvailable(),
         ]);
 
+        if (cancelled) return;
         const { flows = [] } = flowsRes as { flows?: AgentFlow[] };
         setSettings({ ..._settings, preferences: _preferences.settings });
         setAgentSkills(_preferences.settings?.default_agent_skills ?? []);
@@ -192,12 +194,16 @@ export function useAgents(): UseAgentsReturn {
         setFileSystemAgentAvailable(fsAgentAvailable);
         setCreateFilesAgentAvailable(createFilesAvailable);
       } catch (e) {
+        if (cancelled) return;
         console.error("Failed to fetch agent settings:", e);
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     }
     fetchSettings();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const toggleDefaultSkill = (skillName: string) => {

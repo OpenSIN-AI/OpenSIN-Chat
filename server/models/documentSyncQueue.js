@@ -106,17 +106,23 @@ const DocumentSyncQueue = {
           `Cannot watch this document again - it already has a queue set.`,
         );
 
-      const queue = await prisma.document_sync_queues.create({
-        data: {
-          workspaceDocId: document.id,
-          staleAfterMs: this.defaultStaleAfter,
-          nextSyncAt: new Date(Date.now() + this.defaultStaleAfter),
-        },
+      // Wrap queue creation + document flag update in a transaction so
+      // a failure mid-way does not leave a queue record with an unwatched
+      // document (or vice versa).
+      const queue = await prisma.$transaction(async (tx) => {
+        const q = await tx.document_sync_queues.create({
+          data: {
+            workspaceDocId: document.id,
+            staleAfterMs: this.defaultStaleAfter,
+            nextSyncAt: new Date(Date.now() + this.defaultStaleAfter),
+          },
+        });
+        await tx.workspace_documents.updateMany({
+          where: { filename: document.filename },
+          data: { watched: true },
+        });
+        return q;
       });
-      await Document._updateAll(
-        { filename: document.filename },
-        { watched: true },
-      );
       return queue || null;
     } catch (error) {
       consoleLogger.error(error.message);
@@ -138,11 +144,19 @@ const DocumentSyncQueue = {
       const workspaceDocIds = (
         await Document.where({ filename: document.filename, watched: true })
       ).map((rec) => rec.id);
-      await this.delete({ workspaceDocId: { in: workspaceDocIds } });
-      await Document._updateAll(
-        { filename: document.filename },
-        { watched: false },
-      );
+
+      // Wrap queue deletion + document flag update in a transaction so
+      // a failure mid-way does not leave queues deleted while the document
+      // is still marked as watched (or vice versa).
+      await prisma.$transaction(async (tx) => {
+        await tx.document_sync_queues.deleteMany({
+          where: { workspaceDocId: { in: workspaceDocIds } },
+        });
+        await tx.workspace_documents.updateMany({
+          where: { filename: document.filename },
+          data: { watched: false },
+        });
+      });
       return true;
     } catch (error) {
       consoleLogger.error(error.message);

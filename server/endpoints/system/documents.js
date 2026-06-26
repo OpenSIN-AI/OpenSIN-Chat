@@ -64,7 +64,12 @@ function documentEndpoints(app) {
             .status(400)
             .json({ error: "names must be a non-empty array of strings." });
         }
-        await Promise.all(names.map((name) => purgeDocument(name)));
+        const safeNames = names
+          .filter(
+            (n) => typeof n === "string" && n.length > 0 && n.length <= 500,
+          )
+          .slice(0, 100);
+        await Promise.all(safeNames.map((name) => purgeDocument(name)));
         response.sendStatus(200);
       } catch (e) {
         consoleLogger.error(e.message, e);

@@ -85,7 +85,9 @@ class ResilientHttpClient {
     if (this.circuitBreaker.isOpen()) {
       if (cached) {
         // stale-while-revalidate fallback
-        return cached.response.clone();
+        return typeof cached.response.clone === "function"
+          ? cached.response.clone()
+          : cached.response;
       }
       throw new Error(`Circuit breaker open for ${url}`);
     }

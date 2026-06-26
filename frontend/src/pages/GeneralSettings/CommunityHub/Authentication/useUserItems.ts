@@ -34,23 +34,29 @@ export function useUserItems({
   const [userItems, setUserItems] = useState<UserItems>(DEFAULT_USER_ITEMS);
 
   useEffect(() => {
+    let cancelled = false;
     const fetchData = async () => {
       if (!connectionKey) return;
       setLoading(true);
       try {
         const { success, createdByMe, teamItems } =
           await CommunityHub.fetchUserItems();
+        if (cancelled) return;
         if (success) {
           setUserItems({ createdByMe, teamItems });
         }
       } catch (error) {
+        if (cancelled) return;
         console.error("Error fetching user items:", error);
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     };
 
     fetchData();
+    return () => {
+      cancelled = true;
+    };
   }, [connectionKey]);
 
   return { loading, userItems };

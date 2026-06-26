@@ -89,9 +89,21 @@ const SlashCommandPresets = {
 
   update: async function (presetId = null, presetData = {}) {
     try {
+      // Only allow updating user-facing fields. Without this filter,
+      // raw presetData is passed directly to Prisma and could overwrite
+      // protected fields like id, userId, uid, or createdAt.
+      const allowedFields = ["command", "prompt", "description"];
+      const filteredData = {};
+      for (const key of allowedFields) {
+        if (presetData.hasOwnProperty(key)) {
+          filteredData[key] = presetData[key];
+        }
+      }
+      if (Object.keys(filteredData).length === 0) return null;
+
       const preset = await prisma.slash_command_presets.update({
         where: { id: Number(presetId) },
-        data: presetData,
+        data: filteredData,
       });
       return preset;
     } catch (error) {

@@ -49,13 +49,18 @@ export default function WorkspaceLLM({
   }, [settings]);
 
   useEffect(() => {
+    let cancelled = false;
     async function getSettings() {
       if (isOpen) {
         const _settings = await System.keys();
+        if (cancelled) return;
         setCurrentSettings(_settings ?? {});
       }
     }
     getSettings();
+    return () => {
+      cancelled = true;
+    };
   }, [isOpen]);
 
   function handleProviderSelection() {

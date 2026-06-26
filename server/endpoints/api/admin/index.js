@@ -821,14 +821,16 @@ function apiAdminEndpoints(app) {
       try {
         const pgSize = 20;
         const { offset = 0 } = reqBody(request);
+        const clampedOffset = Math.max(parseInt(offset) || 0, 0);
         const chats = await WorkspaceChats.whereWithData(
           {},
           pgSize,
-          offset * pgSize,
+          clampedOffset * pgSize,
           { id: "desc" },
         );
 
-        const hasPages = (await WorkspaceChats.count()) > (offset + 1) * pgSize;
+        const hasPages =
+          (await WorkspaceChats.count()) > (clampedOffset + 1) * pgSize;
         response.status(200).json({ chats: chats, hasPages });
       } catch (e) {
         consoleLogger.error(e);

@@ -78,13 +78,75 @@ export default function AgentBuilder(): JSX.Element {
   const [showPublishModal, setShowPublishModal] = useState(false);
 
   useEffect(() => {
-    loadAvailableFlows();
+    let cancelled = false;
+    (async () => {
+      try {
+        const { success, error, flows } = await AgentFlows.listFlows();
+        if (cancelled) return;
+        if (!success) throw new Error(error);
+        setAvailableFlows(flows);
+      } catch (error) {
+        if (cancelled) return;
+        console.error(error);
+        showToast(t("agentBuilder.loadFlowsFailed"), "error", { clear: true });
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
-    if (flowId) {
-      loadFlow(flowId);
-    }
+    if (!flowId) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const { success, error, flow } = await AgentFlows.getFlow(flowId);
+        if (cancelled) return;
+        if (!success) throw new Error(error);
+
+        const flowBlocks: Block[] = [
+          {
+            id: "flow_info",
+            type: BLOCK_TYPES.FLOW_INFO,
+            config: {
+              name: flow.config.name,
+              description: flow.config.description,
+            },
+            isExpanded: true,
+          },
+          ...flow.config.steps.map((step: FlowStep, index: number) => ({
+            id: index === 0 ? "start" : `block_${index}`,
+            type: step.type,
+            config: step.config,
+            isExpanded: true,
+          })),
+        ];
+
+        if (flowBlocks[flowBlocks.length - 1]?.type !== BLOCK_TYPES.FINISH) {
+          flowBlocks.push({
+            id: "finish",
+            type: BLOCK_TYPES.FINISH,
+            config: {},
+            isExpanded: false,
+          });
+        }
+
+        if (cancelled) return;
+        setAgentName(flow.config.name);
+        setAgentDescription(flow.config.description);
+        setActive(flow.config.active ?? true);
+        setCurrentFlowUuid(flow.uuid);
+        setBlocks(flowBlocks);
+      } catch (error) {
+        if (cancelled) return;
+        console.error(error);
+        showToast(t("agentBuilder.loadFlowFailed"), "error", { clear: true });
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, [flowId]);
 
   useEffect(() => {

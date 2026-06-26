@@ -268,7 +268,7 @@ module.exports.CreateDocxFile = {
                 displayFilename,
               });
 
-              this.super.socket.send("fileDownloadCard", {
+              this.super.socket?.send?.("fileDownloadCard", {
                 filename: savedFile.displayFilename,
                 storageFilename: savedFile.filename,
                 fileSize: savedFile.fileSize,

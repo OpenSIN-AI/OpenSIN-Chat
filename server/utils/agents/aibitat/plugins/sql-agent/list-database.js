@@ -32,16 +32,24 @@ module.exports.SqlAgentListDatabase = {
             additionalProperties: false,
           },
           handler: async function () {
-            this.super.handlerProps.log(`Using the sql-list-databases tool.`);
-            this.super.introspect(
-              `${this.caller}: Checking what are the available databases.`,
-            );
+            try {
+              this.super.handlerProps.log(`Using the sql-list-databases tool.`);
+              this.super.introspect(
+                `${this.caller}: Checking what are the available databases.`,
+              );
 
-            const connections = (await listSQLConnections()).map((conn) => {
-              const { connectionString: _connectionString, ...rest } = conn;
-              return rest;
-            });
-            return JSON.stringify(connections);
+              const connections = (await listSQLConnections()).map((conn) => {
+                const { connectionString: _connectionString, ...rest } = conn;
+                return rest;
+              });
+              return JSON.stringify(connections);
+            } catch (e) {
+              this.super.handlerProps.log(
+                `sql-list-databases error: ${e.message}`,
+              );
+              this.super.introspect(`Error: ${e.message}`);
+              return `Error listing databases: ${e.message}`;
+            }
           },
         });
       },

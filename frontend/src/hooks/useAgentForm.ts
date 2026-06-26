@@ -34,6 +34,7 @@ export function useAgentForm() {
 
   // Load initial settings
   useEffect(() => {
+    let cancelled = false;
     async function fetchSettings() {
       try {
         const [
@@ -55,6 +56,7 @@ export function useAgentForm() {
           System.isCreateFilesAgentAvailable(),
         ]);
 
+        if (cancelled) return;
         const { flows = [] } = flowsRes;
         setSettings({ ..._settings, preferences: _preferences?.settings ?? {} });
         setAgentSkills(_preferences?.settings?.default_agent_skills ?? []);
@@ -69,12 +71,16 @@ export function useAgentForm() {
         setFileSystemAgentAvailable(fsAgentAvailable);
         setCreateFilesAgentAvailable(createFilesAvailable);
       } catch (e) {
+        if (cancelled) return;
         console.error("Failed to load agent form settings:", e);
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     }
     fetchSettings();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   // Prevent page unload with unsaved changes

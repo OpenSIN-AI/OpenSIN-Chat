@@ -104,19 +104,27 @@ export default function EmbedChatsView() {
   }, []);
 
   useEffect(() => {
+    let cancelled = false;
     async function fetchChats() {
       setLoading(true);
       await Embed.chats(offset)
         .then(({ chats: _chats, hasPages = false }: any) => {
+          if (cancelled) return;
           setChats(_chats);
           setCanNext(hasPages);
         })
-        .catch((e) => console.error(e))
+        .catch((e) => {
+          if (cancelled) return;
+          console.error(e);
+        })
         .finally(() => {
-          setLoading(false);
+          if (!cancelled) setLoading(false);
         });
     }
     fetchChats();
+    return () => {
+      cancelled = true;
+    };
   }, [offset]);
 
   const handlePrevious = () => {

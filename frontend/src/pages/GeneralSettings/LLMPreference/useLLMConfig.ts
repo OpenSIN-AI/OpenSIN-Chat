@@ -110,7 +110,7 @@ export default function useLLMConfig(
       llm.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
     setFilteredLLMs(filtered);
-  }, [searchQuery, selectedLLM]);
+  }, [searchQuery, availableProviders]);
 
   const selectedLLMObject = availableProviders.find(
     (llm) => llm.value === selectedLLM,

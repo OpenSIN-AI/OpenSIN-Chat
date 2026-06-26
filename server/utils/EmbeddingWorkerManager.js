@@ -26,6 +26,18 @@ function _touch(map, slug) {
   map.set(slug, value);
 }
 
+function _cleanupSSEConnections(slug) {
+  const connections = sseConnections.get(slug);
+  if (!connections) return;
+  for (const res of connections) {
+    if (res._sseHeartbeat) {
+      clearInterval(res._sseHeartbeat);
+      res._sseHeartbeat = null;
+    }
+  }
+  sseConnections.delete(slug);
+}
+
 function _enforceMaxWorkers() {
   while (runningWorkers.size >= MAX_WORKERS) {
     const oldestSlug = runningWorkers.keys().next().value;
@@ -36,7 +48,7 @@ function _enforceMaxWorkers() {
       /* worker may be gone */
     }
     runningWorkers.delete(oldestSlug);
-    sseConnections.delete(oldestSlug);
+    _cleanupSSEConnections(oldestSlug);
     const pendingCleanup = pendingHistoryCleanups.get(oldestSlug);
     if (pendingCleanup) {
       clearTimeout(pendingCleanup);
@@ -171,7 +183,7 @@ async function embedFiles(slug, files, workspaceId, userId) {
       return;
     } catch {
       runningWorkers.delete(slug);
-      sseConnections.delete(slug);
+      _cleanupSSEConnections(slug);
       const pendingCleanup = pendingHistoryCleanups.get(slug);
       if (pendingCleanup) {
         clearTimeout(pendingCleanup);
@@ -210,7 +222,7 @@ async function embedFiles(slug, files, workspaceId, userId) {
   worker.on("exit", (code) => {
     if (runningWorkers.get(slug)?.worker === worker) {
       runningWorkers.delete(slug);
-      sseConnections.delete(slug);
+      _cleanupSSEConnections(slug);
       const pendingCleanup = pendingHistoryCleanups.get(slug);
       if (pendingCleanup) {
         clearTimeout(pendingCleanup);
@@ -238,7 +250,7 @@ async function embedFiles(slug, files, workspaceId, userId) {
     );
     if (runningWorkers.get(slug)?.worker === worker) {
       runningWorkers.delete(slug);
-      sseConnections.delete(slug);
+      _cleanupSSEConnections(slug);
       const pendingCleanup = pendingHistoryCleanups.get(slug);
       if (pendingCleanup) {
         clearTimeout(pendingCleanup);

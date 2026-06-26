@@ -119,8 +119,10 @@ export default function Survey({
   }, []);
 
   useEffect(() => {
+    let cancelled = false;
     async function createDefaultWorkspace() {
       const workspaces = await Workspace.all();
+      if (cancelled) return;
       if (workspaces.length === 0) {
         await Workspace.new({
           name: t("new-workspace.placeholder"),
@@ -129,6 +131,9 @@ export default function Survey({
       }
     }
     createDefaultWorkspace();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

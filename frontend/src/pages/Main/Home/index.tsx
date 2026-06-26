@@ -76,14 +76,17 @@ export default function Home() {
   const pendingFilesRef = useRef<File[]>([]);
 
   useEffect(() => {
+    let cancelled = false;
     async function init() {
       try {
         const ws = await getTargetWorkspace();
+        if (cancelled) return;
         if (ws) {
           const [suggestedMessages, { showAgentCommand }] = await Promise.all([
             Workspace.getSuggestedMessages(ws.slug),
             Workspace.agentCommandAvailable(ws.slug),
           ]);
+          if (cancelled) return;
           setWorkspace({
             ...ws,
             suggestedMessages,
@@ -93,9 +96,12 @@ export default function Home() {
       } catch (e) {
         console.error("Failed to initialize home workspace:", e);
       }
-      setWorkspaceLoading(false);
+      if (!cancelled) setWorkspaceLoading(false);
     }
     init();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   // When workspace/thread becomes available and we have pending files, trigger upload
