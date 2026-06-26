@@ -101,9 +101,9 @@ class OllamaAILLM {
       );
       const infos = await Promise.all(infoPromises);
       infos.forEach((showInfo) => {
-        if (showInfo.capabilities.includes("embedding")) return;
-        const contextWindowKey = Object.keys(showInfo.model_info).find((key) =>
-          key.endsWith(".context_length"),
+        if (showInfo.capabilities?.includes("embedding")) return;
+        const contextWindowKey = Object.keys(showInfo.model_info || {}).find(
+          (key) => key.endsWith(".context_length"),
         );
         if (!contextWindowKey)
           return (OllamaAILLM.modelContextWindows[showInfo.name] = 4096);
@@ -381,9 +381,11 @@ class OllamaAILLM {
             );
 
           if (chunk.done) {
-            usage.prompt_tokens = chunk.prompt_eval_count;
-            usage.completion_tokens = chunk.eval_count;
-            usage.duration = chunk.eval_duration / 1e9;
+            usage.prompt_tokens = chunk.prompt_eval_count ?? 0;
+            usage.completion_tokens = chunk.eval_count ?? 0;
+            usage.duration = chunk.eval_duration
+              ? chunk.eval_duration / 1e9
+              : 0;
             writeResponseChunk(response, {
               uuid,
               sources,

@@ -50,12 +50,14 @@ export default function MicButton({
 
   const active = listening || processing;
   return (
-    <div
+    <button
+      type="button"
       data-tooltip-id="tooltip-microphone-btn"
       data-tooltip-content={`${t("chat_window.microphone")} (CTRL + M)`}
       aria-label={t("chat_window.microphone")}
       onClick={toggle}
-      className={`group border-none relative flex justify-center items-center cursor-pointer w-8 h-8 rounded-full hover:bg-zinc-700 light:hover:bg-slate-200 ${
+      disabled={processing}
+      className={`group border-none relative flex justify-center items-center cursor-pointer w-8 h-8 rounded-full hover:bg-zinc-700 light:hover:bg-slate-200 bg-transparent ${
         active ? "bg-zinc-700 light:bg-slate-200" : ""
       }`}
     >
@@ -82,6 +84,6 @@ export default function MicButton({
         delayShow={300}
         className="tooltip !text-xs z-99"
       />
-    </div>
+    </button>
   );
 }

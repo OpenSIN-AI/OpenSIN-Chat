@@ -458,7 +458,8 @@ const customTooltip: any = (props) => {
     <div className="w-56 bg-theme-bg-primary rounded-lg border p-2 text-white">
       <div className="flex flex-1 space-x-2.5">
         <div
-          className={`flex w-1.5 flex-col bg-${categoryPayload?.color}-500 rounded`}
+          className="flex w-1.5 flex-col rounded"
+          style={{ backgroundColor: Colors[categoryPayload?.color] ?? Colors.blue }}
         />
         <div className="w-full">
           <div className="flex items-center justify-between space-x-8">
@@ -480,28 +481,32 @@ function DownloadGraph({ onClick }: any) {
   const [loading, setLoading] = useState(false as any);
   const handleClick = async () => {
     setLoading(true);
-    await onClick?.();
-    setLoading(false);
+    try {
+      await onClick?.();
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="absolute top-3 right-3 z-50 cursor-pointer">
+    <div className="absolute top-3 right-3 z-50">
       <div className="flex flex-col items-center" aria-busy={loading}>
-        <div className="p-1 rounded-full border-none">
+        <button
+          type="button"
+          onClick={handleClick}
+          disabled={loading}
+          aria-label={loading ? t("chartable.downloading") : t("chartable.downloadGraph")}
+          className="p-1 rounded-full border-none bg-transparent cursor-pointer disabled:cursor-default"
+        >
           {loading ? (
-            <CircleNotch
-              className="text-theme-text-primary w-5 h-5 animate-spin"
-              aria-label={t("chartable.downloading")}
-            />
+            <CircleNotch className="text-theme-text-primary w-5 h-5 animate-spin" />
           ) : (
             <DownloadSimple
               weight="bold"
-              className="text-theme-text-primary w-5 h-5 hover:text-theme-text-primary"
-              onClick={handleClick}
-              aria-label={t("chartable.downloadGraph")}
+              className="text-theme-text-primary w-5 h-5 hover:text-theme-text-primary pointer-events-none"
             />
           )}
-        </div>
+        </button>
       </div>
     </div>
   );

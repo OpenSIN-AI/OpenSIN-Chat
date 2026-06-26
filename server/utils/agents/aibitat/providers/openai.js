@@ -282,7 +282,7 @@ class OpenAIProvider extends Provider {
       if (response.usage) this.recordUsage(response.usage);
       for (const outputBlock of response.output) {
         if (outputBlock.type === "message") {
-          if (outputBlock.content[0]?.type === "output_text") {
+          if (outputBlock.content?.[0]?.type === "output_text") {
             completion.content = outputBlock.content[0].text;
           }
         }

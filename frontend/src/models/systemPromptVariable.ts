@@ -48,11 +48,14 @@ const SystemPromptVariable: any = {
         .then((res) => res.json())
         .catch((error) => {
           console.error("Error creating system prompt variable:", error);
-          return { success: false, error };
+          return { success: false, error: error?.message ?? String(error) };
         });
     } catch (error) {
       console.error("Error creating system prompt variable:", error);
-      return { success: false, error };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : String(error),
+      };
     }
   },
 
@@ -72,11 +75,14 @@ const SystemPromptVariable: any = {
         .then((res) => res.json())
         .catch((error) => {
           console.error("Error updating system prompt variable:", error);
-          return { success: false, error };
+          return { success: false, error: error?.message ?? String(error) };
         });
     } catch (error) {
       console.error("Error updating system prompt variable:", error);
-      return { success: false, error };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : String(error),
+      };
     }
   },
 
@@ -95,11 +101,14 @@ const SystemPromptVariable: any = {
         .then((res) => res.json())
         .catch((error) => {
           console.error("Error deleting system prompt variable:", error);
-          return { success: false, error };
+          return { success: false, error: error?.message ?? String(error) };
         });
     } catch (error) {
       console.error("Error deleting system prompt variable:", error);
-      return { success: false, error };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : String(error),
+      };
     }
   },
 };

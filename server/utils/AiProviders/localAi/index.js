@@ -133,6 +133,7 @@ class LocalAiLLM {
     );
 
     if (
+      !result.output ||
       !result.output.hasOwnProperty("choices") ||
       result.output.choices.length === 0
     )

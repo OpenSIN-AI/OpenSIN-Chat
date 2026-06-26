@@ -165,12 +165,13 @@ export function useAgentForm() {
           "default_agent_skills",
           "imported_agent_skills",
         ]);
-        setSettings({ ..._settings, preferences: _preferences?.settings ?? {} });
-        setAgentSkills(_preferences?.settings?.default_agent_skills ?? []);
+        setSettings({ ..._settings, preferences: _preferences.settings });
+        setAgentSkills(_preferences.settings?.default_agent_skills ?? []);
         setDisabledAgentSkills(
-          _preferences?.settings?.disabled_agent_skills ?? [],
+          _preferences.settings?.disabled_agent_skills ?? [],
         );
-        setImportedSkills(_preferences?.settings?.imported_agent_skills ?? []);
+        setImportedSkills(_preferences.settings?.imported_agent_skills ?? []);
+        setHasChanges(false);
         showToast(`Agent preferences saved successfully.`, "success", {
           clear: true,
         });
@@ -183,8 +184,6 @@ export function useAgentForm() {
       console.error("Failed to save agent preferences:", e);
       showToast(`Agent preferences failed to save.`, "error", { clear: true });
     }
-
-    setHasChanges(false);
   };
 
   return {

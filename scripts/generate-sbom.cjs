@@ -148,7 +148,7 @@ function buildSpdx(docName, pkgMeta, deps) {
     documentNamespace: `${NS}/${docName}-${crypto.randomUUID()}`,
     creationInfo: {
       created: now,
-      creators: ["Tool: openafd-generate-sbom", "Organization: Family-Team-Projects"],
+      creators: ["Tool: opensin-generate-sbom", "Organization: OpenSIN-AI"],
       licenseListVersion: "3.22",
     },
     packages: [
@@ -182,7 +182,7 @@ function buildCycloneDx(docName, pkgMeta, deps) {
     version: 1,
     metadata: {
       timestamp: new Date().toISOString(),
-      tools: [{ vendor: "Family-Team-Projects", name: "openafd-generate-sbom", version: "1.0.0" }],
+      tools: [{ vendor: "OpenSIN-AI", name: "opensin-generate-sbom", version: "1.0.0" }],
       component: {
         type: "application",
         name: pkgMeta.name || docName,

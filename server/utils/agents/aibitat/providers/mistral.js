@@ -52,9 +52,9 @@ class MistralProvider extends InheritMultiple([Provider, UnTooled]) {
       })
       .then((result) => {
         if (!result.hasOwnProperty("choices"))
-          throw new Error("LMStudio chat: No results!");
+          throw new Error("Mistral chat: No results!");
         if (result.choices.length === 0)
-          throw new Error("LMStudio chat: No results length!");
+          throw new Error("Mistral chat: No results length!");
         return result.choices[0].message.content;
       })
       .catch((_) => {

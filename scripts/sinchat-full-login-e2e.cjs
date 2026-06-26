@@ -7,6 +7,11 @@ const fs = require("fs");
 const PASSWORD = (fs.readFileSync("/tmp/auth-prod.txt", "utf8") || "").trim();
 const BASE_URL = process.env.BASE_URL || "https://sinchat.delqhi.com";
 
+if (!PASSWORD) {
+  console.error("PASSWORD missing from /tmp/auth-prod.txt");
+  process.exit(1);
+}
+
 (async () => {
   console.log(`[login-e2e-v2] Launching Chromium against ${BASE_URL} ...`);
   const browser = await chromium.launch({

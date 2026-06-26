@@ -247,6 +247,7 @@ model workspace_chats {
   @@index([thread_id])
   @@index([workspaceId, thread_id])
   @@index([memoryProcessed])
+  @@index([api_session_id])
 }
 
 model workspace_agent_invocations {
@@ -264,6 +265,7 @@ model workspace_agent_invocations {
 
   @@index([workspace_id])
   @@index([user_id])
+  @@index([thread_id])
 }
 
 model workspace_users {
@@ -373,6 +375,8 @@ model document_sync_queues {
   workspaceDocId Int                        @unique
   workspaceDoc   workspace_documents?       @relation(fields: [workspaceDocId], references: [id], onDelete: Cascade)
   runs           document_sync_executions[]
+
+  @@index([nextSyncAt])
 }
 
 model document_sync_executions {
@@ -489,6 +493,8 @@ model scheduled_jobs {
   createdAt DateTime             @default(now())
   updatedAt DateTime             @updatedAt
   runs      scheduled_job_runs[]
+
+  @@index([enabled, nextRunAt])
 }
 
 model scheduled_job_runs {
@@ -682,6 +688,8 @@ model politician_sync_retry {
   nextRetryAt DateTime @default(now())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@index([status, nextRetryAt])
 }
 
 model memories {

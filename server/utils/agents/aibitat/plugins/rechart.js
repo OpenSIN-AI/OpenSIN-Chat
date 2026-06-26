@@ -77,7 +77,7 @@ Make sure the format use double quotes and property names are string literals. P
               }
 
               this.super.introspect(`${this.caller}: Rendering ${type} chart.`);
-              this.super.socket.send("rechartVisualize", {
+              this.super.socket?.send?.("rechartVisualize", {
                 type,
                 dataset,
                 title,

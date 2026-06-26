@@ -24,19 +24,20 @@ export default function TextSizeButton() {
 
   return (
     <>
-      <div
+      <button
+        type="button"
         id="text-size-btn"
         data-tooltip-id="tooltip-text-size-btn"
         aria-label={t("chat_window.text_size")}
         onClick={toggleTooltip}
-        className="border-none flex justify-center items-center opacity-60 hover:opacity-100 light:opacity-100 light:hover:opacity-60 cursor-pointer"
+        className="border-none flex justify-center items-center opacity-60 hover:opacity-100 light:opacity-100 light:hover:opacity-60 cursor-pointer bg-transparent"
       >
         <TextT
           color="var(--theme-sidebar-footer-icon-fill)"
           weight="fill"
           className="w-[20px] h-[20px] pointer-events-none text-white"
         />
-      </div>
+      </button>
       <Tooltip
         ref={tooltipRef}
         id="tooltip-text-size-btn"

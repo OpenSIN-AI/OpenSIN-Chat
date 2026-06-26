@@ -192,7 +192,6 @@ class ImportedPlugin {
   }
 
   /**
-  /**
    * Validates if the handler.js file exists for the given plugin.
    * @param {string} hubId - The hub ID of the plugin.
    * @returns {boolean} - True if the handler.js file exists, false otherwise.

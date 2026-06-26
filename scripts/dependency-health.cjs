@@ -44,7 +44,7 @@ function directDeps() {
 
 function fetchJson(url) {
   return new Promise((resolve, reject) => {
-    const req = https.get(url, { timeout: 15000, headers: { "user-agent": "openafd-dep-health" } }, (res) => {
+    const req = https.get(url, { timeout: 15000, headers: { "user-agent": "opensin-dep-health" } }, (res) => {
       if (res.statusCode === 404) return resolve(null);
       if (res.statusCode !== 200) return reject(new Error(`HTTP ${res.statusCode}`));
       let data = "";

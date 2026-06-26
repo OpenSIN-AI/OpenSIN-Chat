@@ -251,7 +251,7 @@ class OpenAiLLM {
             }
           } else if (chunk.type === "response.completed") {
             const { response: res } = chunk;
-            if (res.hasOwnProperty("usage") && !!res.usage) {
+            if (res?.hasOwnProperty("usage") && !!res.usage) {
               hasUsageMetrics = true;
               usage = {
                 ...usage,

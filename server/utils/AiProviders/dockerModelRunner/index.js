@@ -166,6 +166,7 @@ class DockerModelRunnerLLM {
     );
 
     if (
+      !result.output ||
       !result.output.hasOwnProperty("choices") ||
       result.output.choices.length === 0
     )
@@ -366,6 +367,7 @@ async function fetchRemoteModels(task = "chat") {
           )
           .map((result) => result.namespace + "/" + result.name);
         availableNamespaces.push(...namespaces);
+        return data;
       })
       .catch((e) => {
         DockerModelRunnerLLM.slog(
@@ -374,7 +376,6 @@ async function fetchRemoteModels(task = "chat") {
         );
         return [];
       });
-    if (!response) break;
     if (!response || !response.next) break;
     nextPage = response.next;
   }
@@ -502,8 +503,8 @@ async function getDockerModels(basePath = null, task = "chat") {
 
     // For any models that are still in the installed models list, we need to append them to the available models list as downloaded
     for (const model of Object.values(installedModels)) {
-      const organization = model.id.split("/").pop();
-      const name = model.id.split("/").pop();
+      const organization = model.id.split("/").pop()?.split(":")[0] ?? model.id;
+      const name = model.name;
       if (!availableModels[organization])
         availableModels[organization] = { tags: [] };
       availableModels[organization].tags.push({

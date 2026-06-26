@@ -323,9 +323,9 @@ class AnthropicLLM {
         const data = message;
 
         if (data.type === "message_start")
-          usage.prompt_tokens = data?.message?.usage?.input_tokens;
+          usage.prompt_tokens = data?.message?.usage?.input_tokens ?? 0;
         if (data.type === "message_delta")
-          usage.completion_tokens = data?.usage?.output_tokens;
+          usage.completion_tokens = data?.usage?.output_tokens ?? 0;
 
         if (
           data.type === "content_block_delta" &&
