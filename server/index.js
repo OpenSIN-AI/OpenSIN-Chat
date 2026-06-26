@@ -55,7 +55,14 @@ const {
   startRetentionSchedule,
   stopRetentionSchedule,
 } = require("./utils/pdfAnalysis/retention");
-startRetentionSchedule();
+try {
+  startRetentionSchedule();
+} catch (e) {
+  console.error(
+    "[Server] Retention schedule failed to start:",
+    e?.message || e,
+  );
+}
 
 const { shutdownOcr } = require("./utils/pdfAnalysis/ocr");
 

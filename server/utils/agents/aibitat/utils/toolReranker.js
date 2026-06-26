@@ -18,11 +18,12 @@ class ToolReranker {
 
   static instance = null;
 
+  #rerankerPromise = null;
+
   constructor() {
     if (ToolReranker.instance) return ToolReranker.instance;
     ToolReranker.instance = this;
     this.tokenManager = new TokenManager();
-    this.reranker = null;
   }
 
   log(text, ...args) {
@@ -55,7 +56,8 @@ class ToolReranker {
    * Truncate text to max length, trying to break at word boundary
    */
   #truncateText(text, maxLength = MAX_TEXT_LENGTH) {
-    if (!text || text.length <= maxLength) return text;
+    if (!text) return "";
+    if (text.length <= maxLength) return text;
     const truncated = text.slice(0, maxLength);
     const lastSpace = truncated.lastIndexOf(" ");
     return lastSpace > maxLength * 0.8
@@ -64,14 +66,22 @@ class ToolReranker {
   }
 
   /**
-   * Get or initialize the reranker instance
+   * Get or initialize the reranker instance.
+   * Uses a promise cache to prevent concurrent initialization races.
    */
   async #getReranker() {
-    if (!this.reranker) {
-      this.reranker = new NativeEmbeddingReranker();
-      await this.reranker.initClient();
+    if (this.#rerankerPromise) return this.#rerankerPromise;
+    this.#rerankerPromise = (async () => {
+      const reranker = new NativeEmbeddingReranker();
+      await reranker.initClient();
+      return reranker;
+    })();
+    try {
+      return await this.#rerankerPromise;
+    } catch (e) {
+      this.#rerankerPromise = null;
+      throw e;
     }
-    return this.reranker;
   }
 
   /**
@@ -180,7 +190,14 @@ class ToolReranker {
 
     try {
       this.log(`Starting tool reranking for ${tools.length} tools...`);
-      const documents = tools.map((tool) => this.#toolToDocument(tool));
+      const allDocuments = tools.map((tool) => this.#toolToDocument(tool));
+      const documents = allDocuments.filter((doc) => doc.tool && doc.text);
+      if (documents.length <= topN) {
+        this.log(
+          `${documents.length} valid tools <= ${topN}, skipping reranking`,
+        );
+        return documents.map((doc) => doc.tool);
+      }
       const originalTokenCount = documents.reduce(
         (acc, doc) => acc + doc.tokens,
         0,

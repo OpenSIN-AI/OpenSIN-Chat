@@ -102,7 +102,7 @@ async function messageArrayCompressor(llm, messages = [], rawHistory = []) {
     ];
   }
 
-  const compressedSystem = new Promise(async (resolve) => {
+  const compressedSystem = new Promise((resolve) => {
     const count = tokenManager.countFromString(system.content);
     if (count < llm.limits.system) {
       resolve(system);
@@ -146,13 +146,13 @@ async function messageArrayCompressor(llm, messages = [], rawHistory = []) {
 
   // Prompt is allowed to take up to 70% of window - we know its under
   // if we are here, so passthrough.
-  const compressedPrompt = new Promise(async (resolve) => resolve(user));
+  const compressedPrompt = new Promise((resolve) => resolve(user));
 
   // We always aggressively compress history because it is the least
   // important data to retain in full-fidelity.
   const compressedHistory = new Promise((resolve) => {
     const eligibleHistoryItems = [];
-    var historyTokenCount = 0;
+    let historyTokenCount = 0;
 
     for (const [i, history] of rawHistory.slice().reverse().entries()) {
       const [user, assistant] = convertToPromptHistory([history]);
@@ -243,7 +243,7 @@ async function messageStringCompressor(llm, promptArgs = {}, rawHistory = []) {
     });
   }
 
-  const compressedSystem = new Promise(async (resolve) => {
+  const compressedSystem = new Promise((resolve) => {
     const count = tokenManager.countFromString(system);
     if (count < llm.limits.system) {
       resolve(system);
@@ -260,13 +260,13 @@ async function messageStringCompressor(llm, promptArgs = {}, rawHistory = []) {
 
   // Prompt is allowed to take up to 70% of window - we know its under
   // if we are here, so passthrough.
-  const compressedPrompt = new Promise(async (resolve) => resolve(user));
+  const compressedPrompt = new Promise((resolve) => resolve(user));
 
   // We always aggressively compress history because it is the least
   // important data to retain in full-fidelity.
   const compressedHistory = new Promise((resolve) => {
     const eligibleHistoryItems = [];
-    var historyTokenCount = 0;
+    let historyTokenCount = 0;
 
     for (const [i, history] of rawHistory.slice().reverse().entries()) {
       const [user, assistant] = convertToPromptHistory([history]);

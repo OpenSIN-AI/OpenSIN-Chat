@@ -25,6 +25,11 @@ function bootSSL(app, port = 3001, onReady) {
     );
     const fs = require("fs");
     const https = require("https");
+    if (!process.env.HTTPS_KEY_PATH || !process.env.HTTPS_CERT_PATH) {
+      throw new Error(
+        "ENABLE_HTTPS=true but HTTPS_KEY_PATH and/or HTTPS_CERT_PATH is not set.",
+      );
+    }
     const privateKey = fs.readFileSync(process.env.HTTPS_KEY_PATH);
     const certificate = fs.readFileSync(process.env.HTTPS_CERT_PATH);
     const credentials = { key: privateKey, cert: certificate };
@@ -105,7 +110,11 @@ function bootHTTP(app, port = 3001, onReady) {
 
 function registerSignalHandlers() {
   process.once("SIGUSR2", async function () {
-    await Telemetry.flush();
+    try {
+      await Telemetry.flush();
+    } catch {
+      /* telemetry flush failure is non-fatal during restart */
+    }
     process.kill(process.pid, "SIGUSR2");
   });
 }

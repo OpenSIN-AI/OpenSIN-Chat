@@ -55,21 +55,31 @@ function FolderQuickAdd({ workspace, folder, isOpen, setIsOpen }: any) {
   const handleNewChat = async (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsOpen(false);
-    const { thread, error } = await Workspace.threads.new(workspace.slug);
-    if (error) {
-      showToast(t("threadFolderItem.chatCreateFailed", { error }), "error", {
-        clear: true,
-      });
-      return;
+    try {
+      const { thread, error } = await Workspace.threads.new(workspace.slug);
+      if (error) {
+        showToast(t("threadFolderItem.chatCreateFailed", { error }), "error", {
+          clear: true,
+        });
+        return;
+      }
+      // Assign the newly created thread to this folder
+      await Workspace.threads.folders.assignThread(
+        workspace.slug,
+        thread.slug,
+        folder.id,
+      );
+      invalidateThreads(workspace.slug);
+      navigate(paths.workspace.thread(workspace.slug, thread.slug));
+    } catch (err: any) {
+      showToast(
+        t("threadFolderItem.chatCreateFailed", {
+          error: String(err?.message || err),
+        }),
+        "error",
+        { clear: true },
+      );
     }
-    // Assign the newly created thread to this folder
-    await Workspace.threads.folders.assignThread(
-      workspace.slug,
-      thread.slug,
-      folder.id,
-    );
-    invalidateThreads(workspace.slug);
-    navigate(paths.workspace.thread(workspace.slug, thread.slug));
   };
 
   const handleNewFolder = async (e: React.MouseEvent) => {
@@ -77,21 +87,29 @@ function FolderQuickAdd({ workspace, folder, isOpen, setIsOpen }: any) {
     setIsOpen(false);
     const name = window.prompt(t("threadFolderItem.folderNamePrompt"))?.trim();
     if (!name) return;
-    const { folder: newFolder, message } = await Workspace.threads.folders.new(
-      workspace.slug,
-      name,
-    );
-    if (message || !newFolder) {
+    try {
+      const { folder: newFolder, message } =
+        await Workspace.threads.folders.new(workspace.slug, name);
+      if (message || !newFolder) {
+        showToast(
+          t("threadFolderItem.folderCreateFailed", { message }),
+          "error",
+          {
+            clear: true,
+          },
+        );
+        return;
+      }
+      invalidateThreads(workspace.slug);
+    } catch (err: any) {
       showToast(
-        t("threadFolderItem.folderCreateFailed", { message }),
+        t("threadFolderItem.folderCreateFailed", {
+          message: String(err?.message || err),
+        }),
         "error",
-        {
-          clear: true,
-        },
+        { clear: true },
       );
-      return;
     }
-    invalidateThreads(workspace.slug);
   };
 
   return (
@@ -177,19 +195,31 @@ export default function ThreadFolderItem({
       setEditing(false);
       return;
     }
-    const { folder: updated, message } = await Workspace.threads.folders.update(
-      workspace.slug,
-      folder.id,
-      { name: trimmed },
-    );
-    if (message || !updated) {
-      showToast(t("threadFolderItem.renameFailed", { message }), "error", {
-        clear: true,
-      });
+    try {
+      const { folder: updated, message } =
+        await Workspace.threads.folders.update(
+          workspace.slug,
+          folder.id,
+          { name: trimmed },
+        );
+      if (message || !updated) {
+        showToast(t("threadFolderItem.renameFailed", { message }), "error", {
+          clear: true,
+        });
+        setName(folder.name);
+      } else {
+        onFolderRenamed(folder.id, updated.name);
+        invalidateThreads(workspace.slug);
+      }
+    } catch (err: any) {
+      showToast(
+        t("threadFolderItem.renameFailed", {
+          message: String(err?.message || err),
+        }),
+        "error",
+        { clear: true },
+      );
       setName(folder.name);
-    } else {
-      onFolderRenamed(folder.id, updated.name);
-      invalidateThreads(workspace.slug);
     }
     setEditing(false);
   }
@@ -201,18 +231,27 @@ export default function ThreadFolderItem({
       )
     )
       return;
-    const ok = await Workspace.threads.folders.delete(
-      workspace.slug,
-      folder.id,
-    );
-    if (!ok) {
-      showToast(t("threadFolderItem.deleteFailed"), "error", {
-        clear: true,
-      });
-      return;
+    try {
+      const ok = await Workspace.threads.folders.delete(
+        workspace.slug,
+        folder.id,
+      );
+      if (!ok) {
+        showToast(t("threadFolderItem.deleteFailed"), "error", {
+          clear: true,
+        });
+        return;
+      }
+      onFolderDeleted(folder.id);
+      invalidateThreads(workspace.slug);
+    } catch (err: any) {
+      showToast(
+        t("threadFolderItem.deleteFailed") +
+          `: ${String(err?.message || err)}`,
+        "error",
+        { clear: true },
+      );
     }
-    onFolderDeleted(folder.id);
-    invalidateThreads(workspace.slug);
   }
 
   return (

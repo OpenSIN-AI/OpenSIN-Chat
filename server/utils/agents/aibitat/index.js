@@ -58,7 +58,7 @@ function sanitizeToolResultForLLM(result) {
  * Guiding the chat through a graph of agents.
  */
 class AIbitat {
-  emitter = new EventEmitter();
+  emitter = new EventEmitter().setMaxListeners(50);
 
   /**
    * Temporary flag to skip the handleExecution function
@@ -890,18 +890,24 @@ ${this.getHistory({ to: route.to })
 
     // Fetch fresh parsed file context and inject into the last user message
     if (this.fetchParsedFileContext) {
-      const parsedContext = await this.fetchParsedFileContext();
-      if (parsedContext) {
-        // Find the last user message and append context to it
-        for (let i = chatHistory.length - 1; i >= 0; i--) {
-          if (chatHistory[i].role === "user") {
-            chatHistory[i] = {
-              ...chatHistory[i],
-              content: chatHistory[i].content + parsedContext,
-            };
-            break;
+      try {
+        const parsedContext = await this.fetchParsedFileContext();
+        if (parsedContext) {
+          // Find the last user message and append context to it
+          for (let i = chatHistory.length - 1; i >= 0; i--) {
+            if (chatHistory[i].role === "user") {
+              chatHistory[i] = {
+                ...chatHistory[i],
+                content: chatHistory[i].content + parsedContext,
+              };
+              break;
+            }
           }
         }
+      } catch (e) {
+        this.handlerProps?.log?.(
+          `[warning]: Failed to fetch parsed file context: ${e.message}`,
+        );
       }
     }
 
@@ -941,15 +947,21 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
     // Re-evaluate model router before each turn if a resolver is attached.
     // This ensures routing rules are applied per-message, not just at initialization.
     if (this.resolveRoute) {
-      const userPrompt =
-        this.#extractUserPrompt(messages) || route.content || "";
-      const resolved = await this.resolveRoute(userPrompt);
-      if (resolved) {
-        this.defaultProvider = {
-          ...this.defaultProvider,
-          provider: resolved.provider,
-          model: resolved.model,
-        };
+      try {
+        const userPrompt =
+          this.#extractUserPrompt(messages) || route.content || "";
+        const resolved = await this.resolveRoute(userPrompt);
+        if (resolved) {
+          this.defaultProvider = {
+            ...this.defaultProvider,
+            provider: resolved.provider,
+            model: resolved.model,
+          };
+        }
+      } catch (e) {
+        this.handlerProps?.log?.(
+          `[warning]: Failed to resolve route: ${e.message}`,
+        );
       }
     }
 

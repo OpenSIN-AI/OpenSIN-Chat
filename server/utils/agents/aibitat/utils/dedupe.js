@@ -38,10 +38,16 @@ class Deduplicator {
       markUnique: false,
     },
   ) {
-    const hash = crypto
-      .createHash("sha256")
-      .update(JSON.stringify({ key, params }))
-      .digest("hex");
+    let hash;
+    try {
+      hash = crypto
+        .createHash("sha256")
+        .update(JSON.stringify({ key, params }))
+        .digest("hex");
+    } catch (e) {
+      this.log(`Failed to hash params for ${key}: ${e.message}`);
+      return;
+    }
     this.#hashes[hash] = Number(new Date());
     if (options.cooldown)
       this.startCooldown(key, { cooldownInMs: options.cooldownInMs });
@@ -58,10 +64,16 @@ class Deduplicator {
    * @returns {{isDuplicate: boolean, reason: string}} - The result of the check.
    */
   isDuplicate(key, params = {}) {
-    const newSig = crypto
-      .createHash("sha256")
-      .update(JSON.stringify({ key, params }))
-      .digest("hex");
+    let newSig;
+    try {
+      newSig = crypto
+        .createHash("sha256")
+        .update(JSON.stringify({ key, params }))
+        .digest("hex");
+    } catch (e) {
+      this.log(`Failed to hash params for ${key}: ${e.message}`);
+      return { isDuplicate: false, reason: "" };
+    }
     if (this.#hashes.hasOwnProperty(newSig))
       return {
         isDuplicate: true,

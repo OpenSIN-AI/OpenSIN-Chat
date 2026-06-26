@@ -7,26 +7,37 @@ import { useTranslation } from "react-i18next";
 export default function NewFolderModal({ closeModal, files, setFiles }: any) {
   const [error, setError] = useState(null);
   const [folderName, setFolderName] = useState("");
+  const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
 
   const handleCreate = async (e) => {
     e.preventDefault();
+    if (loading) return;
     setError(null);
     if (folderName.trim() !== "") {
-      const newFolder = {
-        name: folderName,
-        type: "folder",
-        items: [],
-      };
-      const { success } = await Document.createFolder(folderName);
-      if (success) {
-        setFiles({
-          ...files,
-          items: [...files.items, newFolder],
-        });
-        closeModal();
-      } else {
-        setError(t("newFolderModal.failedToCreate"));
+      setLoading(true);
+      try {
+        const newFolder = {
+          name: folderName,
+          type: "folder",
+          items: [],
+        };
+        const { success } = await Document.createFolder(folderName);
+        if (success) {
+          setFiles({
+            ...files,
+            items: [...files.items, newFolder],
+          });
+          closeModal();
+        } else {
+          setError(t("newFolderModal.failedToCreate"));
+        }
+      } catch (err: any) {
+        setError(
+          t("newFolderModal.error", { error: String(err?.message || err) }),
+        );
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -91,9 +102,10 @@ export default function NewFolderModal({ closeModal, files, setFiles }: any) {
             </button>
             <button
               type="submit"
-              className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm"
+              disabled={loading}
+              className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {t("newFolderModal.createFolder")}
+              {loading ? "..." : t("newFolderModal.createFolder")}
             </button>
           </div>
         </form>

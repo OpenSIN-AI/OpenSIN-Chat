@@ -63,6 +63,7 @@ async function searchWorkspaceAndThreads(searchTerm, user = null) {
         });
 
     for (const thread of threads) {
+      if (!thread.workspace) continue;
       const threadName = thread.name.toLowerCase();
       if (
         threadName.startsWith(searchTerm) ||

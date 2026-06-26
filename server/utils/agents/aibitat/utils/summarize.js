@@ -139,7 +139,7 @@ async function summarizeContent({
           true,
         )} of content left to summarize. Continue?`,
       });
-      if (!approval.approved) {
+      if (!approval?.approved) {
         introspect(`User stopped continuing with summarization.`);
         break;
       }
