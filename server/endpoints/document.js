@@ -29,6 +29,12 @@ function documentEndpoints(app) {
     async (request, response) => {
       try {
         const { name } = reqBody(request);
+        if (!name || typeof name !== "string" || !name.trim()) {
+          response
+            .status(400)
+            .json({ success: false, message: "Folder name is required." });
+          return;
+        }
         const storagePath = path.join(documentsPath, normalizePath(name));
         if (!isWithin(path.resolve(documentsPath), path.resolve(storagePath)))
           throw new Error("Invalid folder name.");

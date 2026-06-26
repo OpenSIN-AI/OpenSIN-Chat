@@ -227,8 +227,11 @@ const { DocumentSyncRun } = require("../models/documentSyncRun.js");
               reason: queueErr.message,
             },
           );
-        } catch {
-          /* saveRun failure is non-fatal — the queue will be retried next interval */
+        } catch (saveRunErr) {
+          console.error(
+            `[sync-watched-documents] saveRun also failed for queue ${queue.id}:`,
+            saveRunErr.message,
+          );
         }
       }
     }

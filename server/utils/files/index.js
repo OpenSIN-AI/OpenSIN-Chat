@@ -650,7 +650,7 @@ const REQUIRED_FILE_OBJECT_FIELDS = [
  */
 function hasRequiredMetadata(metadata = {}) {
   return REQUIRED_FILE_OBJECT_FIELDS.every((field) =>
-    metadata.hasOwnProperty(field),
+    Object.prototype.hasOwnProperty.call(metadata, field),
   );
 }
 

@@ -23,7 +23,11 @@ export default function SearchBox({ user, showNewWsModal }: any) {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
   const [searchResults, setSearchResults] = useState(DEFAULT_SEARCH_RESULTS);
-  const handleSearch = useCallback(debounce(handleSearchDebounced, 500), []);
+  const handleSearchDebouncedRef = useRef(null as any);
+  const handleSearch = useCallback(
+    debounce((e: any) => handleSearchDebouncedRef.current?.(e), 500),
+    [],
+  );
 
   useEffect(() => {
     return () => handleSearch.cancel();
@@ -45,6 +49,7 @@ export default function SearchBox({ user, showNewWsModal }: any) {
       setLoading(false);
     }
   }
+  handleSearchDebouncedRef.current = handleSearchDebounced;
 
   function handleReset() {
     searchRef.current.value = "";

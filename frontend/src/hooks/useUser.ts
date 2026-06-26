@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import { useSWRConfig } from "swr";
 import { AuthContext, userKey } from "@/AuthContext";
 
@@ -32,7 +32,7 @@ export default function useUser() {
   const auth = useContext(AuthContext);
   const { mutate } = useSWRConfig();
   const store = auth?.store ?? { user: null, authToken: null };
-  const refresh = () => mutate(userKey);
+  const refresh = useCallback(() => mutate(userKey), [mutate]);
 
   return {
     user: store.user ?? null,

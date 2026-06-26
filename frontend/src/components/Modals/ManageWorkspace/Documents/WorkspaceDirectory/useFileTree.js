@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import Workspace from "@/models/workspace";
 
 export function useFileTree({
@@ -10,6 +11,7 @@ export function useFileTree({
   fetchKeys,
   saveChanges,
 }) {
+  const { t } = useTranslation();
   const [selectedItems, setSelectedItems] = useState({});
   const embeddedDocCount = (files?.items ?? []).reduce(
     (sum, folder) => sum + (folder.items?.length ?? 0),
@@ -44,7 +46,7 @@ export function useFileTree({
 
   const removeSelectedItems = async () => {
     setLoading(true);
-    setLoadingMessage("Removing selected files from workspace");
+    setLoadingMessage(t("connectors.directory.removingSelectedFiles"));
 
     const itemsToRemove = Object.keys(selectedItems)
       .map((itemId) => {

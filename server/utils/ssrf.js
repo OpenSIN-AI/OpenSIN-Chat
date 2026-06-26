@@ -33,14 +33,24 @@ function isPrivateIPv4(ip) {
 function isPrivateIPv6(hostname) {
   if (isIP(hostname) !== 6) return false;
   const normalized = hostname.toLowerCase();
-  return (
+  if (
     normalized === "::1" ||
     normalized === "::" ||
     normalized.startsWith("fc") ||
     normalized.startsWith("fd") ||
     normalized.startsWith("fe80") ||
     normalized.startsWith("::ffff:")
+  )
+    return true;
+
+  // IPv4-compatible IPv6 (e.g. ::192.168.1.1) and IPv4-mapped variants
+  // without the ::ffff: prefix still embed a private IPv4 address.
+  const ipv4Embed = normalized.match(
+    /^::(?:ffff:)?(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})$/,
   );
+  if (ipv4Embed && isPrivateIPv4(ipv4Embed[1])) return true;
+
+  return false;
 }
 
 function validateUrl(rawUrl) {

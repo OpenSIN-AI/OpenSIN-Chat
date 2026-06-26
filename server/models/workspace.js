@@ -456,14 +456,18 @@ const Workspace = {
 
   whereWithUsers: async function (clause = {}, limit = null, orderBy = null) {
     try {
-      const workspaces = await this.where(clause, limit, orderBy);
-      for (const workspace of workspaces) {
-        const userIds = (
-          await WorkspaceUser.where({ workspace_id: Number(workspace.id) })
-        ).map((rel) => rel.user_id);
-        workspace.userIds = userIds;
-      }
-      return workspaces;
+      const workspaces = await prisma.workspaces.findMany({
+        where: clause,
+        include: {
+          workspace_users: { select: { user_id: true } },
+        },
+        ...(limit !== null ? { take: limit } : {}),
+        ...(orderBy !== null ? { orderBy } : {}),
+      });
+      return workspaces.map(({ workspace_users, ...ws }) => ({
+        ...ws,
+        userIds: workspace_users.map((rel) => rel.user_id),
+      }));
     } catch (error) {
       consoleLogger.error(error.message);
       return [];

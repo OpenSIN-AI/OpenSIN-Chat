@@ -27,17 +27,21 @@ const TemporaryAuthToken = {
   issue: async function (userId = null) {
     if (!userId)
       throw new Error("User ID is required to issue a temporary auth token.");
-    await this.invalidateUserTokens(userId);
 
     try {
       const token = this.makeTempToken();
       const expiresAt = new Date(Date.now() + this.expiry);
-      await prisma.temporary_auth_tokens.create({
-        data: {
-          token,
-          expiresAt,
-          userId: Number(userId),
-        },
+      await prisma.$transaction(async (tx) => {
+        await tx.temporary_auth_tokens.deleteMany({
+          where: { userId: Number(userId) },
+        });
+        await tx.temporary_auth_tokens.create({
+          data: {
+            token,
+            expiresAt,
+            userId: Number(userId),
+          },
+        });
       });
 
       return { token, error: null };

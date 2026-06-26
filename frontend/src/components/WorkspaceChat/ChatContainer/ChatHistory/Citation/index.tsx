@@ -253,7 +253,7 @@ export function CitationDetailModal({ source, onClose }: any) {
         <div className="h-full w-full overflow-y-auto max-h-[calc(100vh-200px)]">
           <div className="py-7 px-9 space-y-2 flex-col">
             {(chunks as any).map(({ text, score }, idx) => (
-              <Fragment key={idx}>
+              <Fragment key={`${idx}-${text?.slice(0, 32) ?? ""}`}>
                 <div className="pt-6 text-white light:text-slate-900">
                   <div className="flex flex-col w-full justify-start pb-6 gap-y-1">
                     <p className="text-white light:text-slate-900 whitespace-pre-line">

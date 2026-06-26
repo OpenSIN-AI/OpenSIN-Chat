@@ -100,6 +100,15 @@ function browserExtensionEndpoints(app) {
             .status(400)
             .json({ error: "workspaceId is required." });
         }
+        if (
+          !textContent ||
+          typeof textContent !== "string" ||
+          !textContent.trim()
+        ) {
+          return response.status(400).json({
+            error: "textContent is required and must be a non-empty string.",
+          });
+        }
         const workspace = multiUserMode(response)
           ? await Workspace.getWithUser(user, { id: parseInt(workspaceId) })
           : await Workspace.get({ id: parseInt(workspaceId) });
@@ -148,6 +157,15 @@ function browserExtensionEndpoints(app) {
     async (request, response) => {
       try {
         const { textContent, metadata } = reqBody(request);
+        if (
+          !textContent ||
+          typeof textContent !== "string" ||
+          !textContent.trim()
+        ) {
+          return response.status(400).json({
+            error: "textContent is required and must be a non-empty string.",
+          });
+        }
         const Collector = new CollectorApi();
         const { success, reason } = await Collector.processRawText(
           textContent,

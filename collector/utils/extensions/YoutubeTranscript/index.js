@@ -32,6 +32,7 @@ async function fetchVideoTranscriptContent({ url }) {
   console.log(`-- Working YouTube ${url} --`);
   const loader = YoutubeLoader.createFromUrl(url, { addVideoInfo: true });
   const LOAD_TIMEOUT_MS = 60_000;
+  let timeoutHandle;
   const { docs, error } = await Promise.race([
     loader
       .load()
@@ -40,17 +41,18 @@ async function fetchVideoTranscriptContent({ url }) {
         docs: [],
         error: e.message?.split("Error:")?.[1] || e.message,
       })),
-    new Promise((resolve) =>
-      setTimeout(
+    new Promise((resolve) => {
+      timeoutHandle = setTimeout(
         () =>
           resolve({
             docs: [],
             error: "YouTube transcript fetch timed out after 60s.",
           }),
         LOAD_TIMEOUT_MS
-      )
-    ),
+      );
+    }),
   ]);
+  clearTimeout(timeoutHandle);
 
   if (!docs.length || !!error) {
     return {

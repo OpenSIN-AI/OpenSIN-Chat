@@ -445,6 +445,15 @@ function apiDocumentEndpoints(app) {
           scraperHeaders = {},
           metadata: _metadata = {},
         } = reqBody(request);
+        if (!link || typeof link !== "string" || !link.trim()) {
+          return response
+            .status(400)
+            .json({
+              success: false,
+              error: "link is required and must be a non-empty string.",
+            })
+            .end();
+        }
         const metadata =
           typeof _metadata === "string"
             ? safeJsonParse(_metadata, {})
@@ -598,7 +607,11 @@ function apiDocumentEndpoints(app) {
             .end();
         }
 
-        if (!textContent || textContent?.length === 0) {
+        if (
+          !textContent ||
+          typeof textContent !== "string" ||
+          textContent?.length === 0
+        ) {
           return response
             .status(422)
             .json({
@@ -952,6 +965,12 @@ function apiDocumentEndpoints(app) {
       */
       try {
         const { name } = reqBody(request);
+        if (!name || typeof name !== "string" || !name.trim()) {
+          response
+            .status(400)
+            .json({ success: false, message: "Folder name is required." });
+          return;
+        }
         const storagePath = path.join(documentsPath, normalizePath(name));
         if (!isWithin(path.resolve(documentsPath), path.resolve(storagePath)))
           throw new Error("Invalid path name");
@@ -1021,6 +1040,12 @@ function apiDocumentEndpoints(app) {
       */
       try {
         const { name } = reqBody(request);
+        if (!name || typeof name !== "string" || !name.trim()) {
+          response
+            .status(400)
+            .json({ success: false, message: "Folder name is required." });
+          return;
+        }
         await purgeFolder(name);
         response
           .status(200)

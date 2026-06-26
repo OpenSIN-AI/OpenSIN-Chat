@@ -44,6 +44,12 @@ function documentEndpoints(app) {
     async (request, response) => {
       try {
         const { name } = reqBody(request);
+        if (!name || typeof name !== "string" || !name.trim()) {
+          response.status(400).json({
+            error: "name is required and must be a non-empty string.",
+          });
+          return;
+        }
         await purgeDocument(name);
         response.sendStatus(200);
       } catch (e) {
@@ -84,6 +90,12 @@ function documentEndpoints(app) {
     async (request, response) => {
       try {
         const { name } = reqBody(request);
+        if (!name || typeof name !== "string" || !name.trim()) {
+          response.status(400).json({
+            error: "name is required and must be a non-empty string.",
+          });
+          return;
+        }
         await purgeFolder(name);
         response.sendStatus(200);
       } catch (e) {

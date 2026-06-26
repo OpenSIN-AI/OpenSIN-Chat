@@ -280,9 +280,9 @@ const WorkspaceChats = {
           feedbackScore: true,
           include: true,
         },
-        ...(limit !== null ? { take: limit } : {}),
+        ...(limit !== null ? { take: limit } : { take: 1000 }),
         ...(offset !== null ? { skip: offset } : {}),
-        ...(orderBy !== null ? { orderBy } : {}),
+        ...(orderBy !== null ? { orderBy } : { orderBy: { id: "asc" } }),
       });
       return chats;
     } catch (error) {
@@ -326,9 +326,9 @@ const WorkspaceChats = {
           workspace: { select: { name: true, slug: true, openAiPrompt: true } },
           users: { select: { username: true } },
         },
-        ...(limit !== null ? { take: limit } : {}),
+        ...(limit !== null ? { take: limit } : { take: 1000 }),
         ...(offset !== null ? { skip: offset } : {}),
-        ...(orderBy !== null ? { orderBy } : {}),
+        ...(orderBy !== null ? { orderBy } : { orderBy: { id: "asc" } }),
       });
 
       const results = chats.map((res) => ({

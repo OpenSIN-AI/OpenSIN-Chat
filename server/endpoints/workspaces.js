@@ -754,11 +754,17 @@ function workspaceEndpoints(app) {
           return;
         }
 
-        // This works for both workspace and threads.
-        // we simplify this by just looking at workspace<>user overlap
-        // since they are all on the same table.
+        const validChatIds = chatIds
+          .map((id) => Number(id))
+          .filter((id) => !isNaN(id));
+
+        if (validChatIds.length === 0) {
+          response.sendStatus(400);
+          return;
+        }
+
         await WorkspaceChats.delete({
-          id: { in: chatIds.map((id) => Number(id)) },
+          id: { in: validChatIds },
           user_id: user?.id ?? null,
           workspaceId: workspace.id,
         });
@@ -1467,6 +1473,11 @@ function workspaceEndpoints(app) {
     async (request, response) => {
       try {
         const { searchTerm } = reqBody(request);
+        if (typeof searchTerm !== "string" || !searchTerm.trim()) {
+          return response.status(400).json({
+            error: "searchTerm is required and must be a non-empty string.",
+          });
+        }
         const searchResults = await searchWorkspaceAndThreads(
           searchTerm,
           response.locals?.user,

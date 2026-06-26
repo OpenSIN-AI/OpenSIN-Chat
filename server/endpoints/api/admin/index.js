@@ -644,6 +644,12 @@ function apiAdminEndpoints(app) {
 
         const { workspaceId } = request.params;
         const { userIds } = reqBody(request);
+        if (!Array.isArray(userIds)) {
+          response
+            .status(400)
+            .json({ success: false, error: "userIds must be an array." });
+          return;
+        }
         const { success, error } = await Workspace.updateUsers(
           workspaceId,
           userIds,

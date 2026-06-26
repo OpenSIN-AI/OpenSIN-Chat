@@ -95,7 +95,7 @@ function trashFile(filepath) {
     return;
   }
 
-  fs.rmSync(filepath);
+  fs.rmSync(filepath, { force: true });
   return;
 }
 

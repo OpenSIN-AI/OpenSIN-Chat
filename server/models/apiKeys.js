@@ -104,9 +104,16 @@ const ApiKey = {
       const { User } = require("./user");
       const apiKeys = await this.where(clause, limit);
 
+      const userIds = [
+        ...new Set(apiKeys.filter((k) => k.createdBy).map((k) => k.createdBy)),
+      ];
+      const users =
+        userIds.length > 0 ? await User.where({ id: { in: userIds } }) : [];
+      const userMap = new Map(users.map((u) => [u.id, u]));
+
       for (const apiKey of apiKeys) {
         if (!apiKey.createdBy) continue;
-        const user = await User.get({ id: apiKey.createdBy });
+        const user = userMap.get(apiKey.createdBy);
         if (!user) continue;
 
         apiKey.createdBy = {

@@ -92,7 +92,7 @@ class FlowExecutor {
 
         if (!isNaN(cleanKey)) {
           if (!Array.isArray(current)) return undefined;
-          current = current[parseInt(cleanKey)];
+          current = current[parseInt(cleanKey, 10)];
         } else {
           if (!(cleanKey in current)) return undefined;
           current = current[cleanKey];

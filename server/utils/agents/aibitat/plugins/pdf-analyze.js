@@ -86,17 +86,21 @@ const pdfAnalyze = {
             required: ["jobId"],
           },
           handler: async function ({ jobId }) {
-            const status = PdfAnalysisPipeline.getStatus(jobId);
-            if (!status) return "Job nicht gefunden.";
-            if (status.status !== "completed")
-              return JSON.stringify(status, null, 2);
-            const result = PdfAnalysisPipeline.getResult(jobId);
-            if (!result) return "Job nicht gefunden.";
-            return [
-              `Analyse abgeschlossen (${result.totalPages} Seiten, ${result.chunks} Chunks, ${result.factsStored} Fakten gespeichert).`,
-              ``,
-              result.report,
-            ].join("\n");
+            try {
+              const status = PdfAnalysisPipeline.getStatus(jobId);
+              if (!status) return "Job nicht gefunden.";
+              if (status.status !== "completed")
+                return JSON.stringify(status, null, 2);
+              const result = PdfAnalysisPipeline.getResult(jobId);
+              if (!result) return "Job nicht gefunden.";
+              return [
+                `Analyse abgeschlossen (${result.totalPages} Seiten, ${result.chunks} Chunks, ${result.factsStored} Fakten gespeichert).`,
+                ``,
+                result.report,
+              ].join("\n");
+            } catch (e) {
+              return `Fehler beim Abrufen des Status: ${e.message}`;
+            }
           },
         });
 
@@ -118,20 +122,24 @@ const pdfAnalyze = {
             required: [],
           },
           handler: async function ({ q, document, tag }) {
-            const facts = PdfAnalysisPipeline.factStore.search({
-              q,
-              document,
-              tag,
-              limit: 20,
-            });
-            if (!facts.length) return "Keine gespeicherten Fakten gefunden.";
-            return facts
-              .map(
-                (f) =>
-                  `- ${f.detail}\n  Quelle: ${f.source.documentName}, S. ${f.source.page}` +
-                  (f.quote ? ` — "${f.quote}"` : ""),
-              )
-              .join("\n");
+            try {
+              const facts = PdfAnalysisPipeline.factStore.search({
+                q,
+                document,
+                tag,
+                limit: 20,
+              });
+              if (!facts.length) return "Keine gespeicherten Fakten gefunden.";
+              return facts
+                .map(
+                  (f) =>
+                    `- ${f.detail}\n  Quelle: ${f.source.documentName}, S. ${f.source.page}` +
+                    (f.quote ? ` — "${f.quote}"` : ""),
+                )
+                .join("\n");
+            } catch (e) {
+              return `Fehler bei der Fakten-Suche: ${e.message}`;
+            }
           },
         });
 
@@ -201,13 +209,17 @@ const pdfAnalyze = {
             required: ["jobId"],
           },
           handler: async function ({ jobId }) {
-            const status = CrossCheckPipeline.getStatus(jobId);
-            if (!status) return "Job nicht gefunden.";
-            if (status.status !== "completed")
-              return JSON.stringify(status, null, 2);
-            const result = CrossCheckPipeline.getResult(jobId);
-            if (!result) return "Job nicht gefunden.";
-            return result.report || "Kein Bericht verfügbar.";
+            try {
+              const status = CrossCheckPipeline.getStatus(jobId);
+              if (!status) return "Job nicht gefunden.";
+              if (status.status !== "completed")
+                return JSON.stringify(status, null, 2);
+              const result = CrossCheckPipeline.getResult(jobId);
+              if (!result) return "Job nicht gefunden.";
+              return result.report || "Kein Bericht verfügbar.";
+            } catch (e) {
+              return `Fehler beim Abrufen des Status: ${e.message}`;
+            }
           },
         });
 
@@ -270,13 +282,17 @@ const pdfAnalyze = {
             required: ["jobId"],
           },
           handler: async function ({ jobId }) {
-            const status = CorpusPipeline.getStatus(jobId);
-            if (!status) return "Job nicht gefunden.";
-            if (status.status !== "completed")
-              return JSON.stringify(status, null, 2);
-            const result = CorpusPipeline.getResult(jobId);
-            if (!result) return "Job nicht gefunden.";
-            return result.report || "Kein Report verfügbar.";
+            try {
+              const status = CorpusPipeline.getStatus(jobId);
+              if (!status) return "Job nicht gefunden.";
+              if (status.status !== "completed")
+                return JSON.stringify(status, null, 2);
+              const result = CorpusPipeline.getResult(jobId);
+              if (!result) return "Job nicht gefunden.";
+              return result.report || "Kein Report verfügbar.";
+            } catch (e) {
+              return `Fehler beim Abrufen des Status: ${e.message}`;
+            }
           },
         });
       },

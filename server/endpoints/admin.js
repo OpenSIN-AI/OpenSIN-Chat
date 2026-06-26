@@ -316,6 +316,11 @@ function adminEndpoints(app) {
       try {
         const { workspaceId } = request.params;
         const { userIds } = reqBody(request);
+        if (!Array.isArray(userIds)) {
+          return response
+            .status(400)
+            .json({ success: false, error: "userIds must be an array." });
+        }
         const { success, error } = await Workspace.updateUsers(
           workspaceId,
           userIds,

@@ -192,7 +192,7 @@ function TerminalTab() {
         </p>
         {history.map((entry, idx) => (
           <div
-            key={idx}
+            key={`${idx}-${entry.type}-${entry.text?.slice(0, 20) ?? ""}`}
             className={
               entry.type === "input"
                 ? "text-zinc-200 light:text-slate-800 mb-0.5"

@@ -48,6 +48,7 @@ const RecoveryCode = {
     try {
       const recoveryCodes = await prisma.recovery_codes.findMany({
         where: clause,
+        take: 100,
       });
       return recoveryCodes;
     } catch (error) {

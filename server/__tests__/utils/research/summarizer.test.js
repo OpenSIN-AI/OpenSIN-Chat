@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: MIT
 
 // Mocked by resolved absolute path — summarizer.js requires these same files.
-jest.mock("../../../utils/agents/defaults", () => ({
+jest.mock("../../../utils/helpers", () => ({
   getLLMProvider: jest.fn(),
 }));
 jest.mock("../../../utils/agents/aibitat/providers/openai", () => ({
   OpenAiLlm: class {},
 }));
 
-const { getLLMProvider } = require("../../../utils/agents/defaults");
+const { getLLMProvider } = require("../../../utils/helpers");
 const { LLMSummarizer } = require("../../../utils/research/summarizer");
 
 const sampleInput = {

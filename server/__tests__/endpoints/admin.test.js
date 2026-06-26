@@ -273,8 +273,13 @@ describe("adminEndpoints", () => {
 
     it("returns 500 on error", async () => {
       Workspace.updateUsers.mockRejectedValue(new Error("fail"));
-      const res = await app.call("post", "/admin/workspaces/ws1/update-users", { body: {} });
+      const res = await app.call("post", "/admin/workspaces/ws1/update-users", { body: { userIds: [1, 2] } });
       expect(res.statusCode).toBe(500);
+    });
+
+    it("returns 400 when userIds is not an array", async () => {
+      const res = await app.call("post", "/admin/workspaces/ws1/update-users", { body: {} });
+      expect(res.statusCode).toBe(400);
     });
   });
 

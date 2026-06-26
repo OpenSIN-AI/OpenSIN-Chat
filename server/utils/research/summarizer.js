@@ -31,7 +31,7 @@ class LLMSummarizer {
     );
 
     try {
-      const { getLLMProvider } = require("../../utils/agents/defaults");
+      const { getLLMProvider } = require("../helpers");
 
       const LLMProvider = await getLLMProvider();
       if (!LLMProvider)

@@ -25,7 +25,15 @@ const fileHistory = {
         }
 
         aibitat.onMessage(() => {
-          const content = JSON.stringify(aibitat.chats, null, 2);
+          let content;
+          try {
+            content = JSON.stringify(aibitat.chats, null, 2);
+          } catch (e) {
+            consoleLogger.error(
+              `file-history: Failed to serialize chats: ${e.message}`,
+            );
+            return;
+          }
           fs.writeFile(filename, content, (err) => {
             if (err) {
               consoleLogger.error(err);

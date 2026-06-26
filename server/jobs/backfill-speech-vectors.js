@@ -5,7 +5,7 @@
  *
  * Usage:
  *   node server/jobs/backfill-speech-vectors.js
- *   node server/jobs/backfill-speech-vectors.js --limit 100  # only 100 speeches
+ *   node server/jobs/backfill-speech-vectors.js --limit=100  # only 100 speeches
  *   node server/jobs/backfill-speech-vectors.js --dry-run     # count only, no indexing
  *
  * Docs: backfill-speech-vectors.doc.md

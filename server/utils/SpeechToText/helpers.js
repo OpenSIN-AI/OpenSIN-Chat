@@ -27,6 +27,8 @@ async function convertAudioBufferToWav(audioBuffer, extension) {
       throw new Error(result?.reason || "Audio conversion failed.");
 
     wavPath = path.resolve(hotdirPath, result.wavFilename);
+    if (!isWithin(hotdirPath, wavPath))
+      throw new Error("Converted wav path is outside the hotdir.");
     return await fs.readFile(wavPath);
   } finally {
     await fs.rm(sourcePath, { force: true }).catch(() => {});

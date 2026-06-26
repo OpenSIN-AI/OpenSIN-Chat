@@ -389,8 +389,12 @@ async function syncBundestagMembers() {
           }),
         );
         processed++;
-      } catch {
+      } catch (memberErr) {
         failed++;
+        if (failed <= 5)
+          console.error(
+            `[sync-politician-data] Member upsert failed: ${memberErr.message}`,
+          );
       }
     }
 
@@ -504,8 +508,12 @@ async function syncAbgeordnetenwatch() {
           );
         }
         processed++;
-      } catch {
+      } catch (polErr) {
         failed++;
+        if (failed <= 5)
+          console.error(
+            `[sync-politician-data] AW politician create failed: ${polErr.message}`,
+          );
       }
     }
 
@@ -653,8 +661,12 @@ async function syncBundestagSpeeches() {
             }
 
             processed++;
-          } catch {
+          } catch (speechErr) {
             failed++;
+            if (failed <= 5)
+              console.error(
+                `[sync-politician-data] Speech upsert failed: ${speechErr.message}`,
+              );
           }
         }
       } catch (err) {

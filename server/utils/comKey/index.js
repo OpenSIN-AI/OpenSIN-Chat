@@ -53,10 +53,12 @@ class CommunicationKey {
     fs.writeFileSync(
       `${path.resolve(this.#storageLoc, this.#privKeyName)}`,
       keyPair.privateKey,
+      { mode: 0o600 },
     );
     fs.writeFileSync(
       `${path.resolve(this.#storageLoc, this.#pubKeyName)}`,
       keyPair.publicKey,
+      { mode: 0o600 },
     );
     this.log(
       "RSA key pair generated for signed payloads within OpenSIN Chat services.",

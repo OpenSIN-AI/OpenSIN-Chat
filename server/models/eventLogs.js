@@ -88,7 +88,7 @@ const EventLogs = {
           userId: true,
           occurredAt: true,
         },
-        ...(limit !== null ? { take: limit } : {}),
+        ...(limit !== null ? { take: limit } : { take: 1000 }),
         ...(offset !== null ? { skip: offset } : {}),
         ...(orderBy !== null
           ? { orderBy }
@@ -118,7 +118,7 @@ const EventLogs = {
           occurredAt: true,
           user: { select: { username: true } },
         },
-        ...(limit !== null ? { take: limit } : {}),
+        ...(limit !== null ? { take: limit } : { take: 1000 }),
         ...(offset !== null ? { skip: offset } : {}),
         ...(orderBy !== null
           ? { orderBy }

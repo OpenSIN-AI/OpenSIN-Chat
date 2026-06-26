@@ -4,6 +4,8 @@ const consoleLogger = require("../../../../logger/console.js");
 const { SystemSettings } = require("../../../../../models/systemSettings");
 const { safeJsonParse } = require("../../../../http");
 
+const GCALENDAR_API_TIMEOUT_MS = 30_000;
+
 /**
  * Google Calendar Bridge Library
  * Handles communication with the OpenSIN Chat Google Calendar Google Apps Script deployment.
@@ -153,6 +155,7 @@ class GoogleCalendarBridge {
           action,
           ...params,
         }),
+        signal: AbortSignal.timeout(GCALENDAR_API_TIMEOUT_MS),
       });
 
       if (!response.ok) {

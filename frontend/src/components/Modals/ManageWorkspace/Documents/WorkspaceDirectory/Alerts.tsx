@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { PushPin } from "@phosphor-icons/react/dist/csr/PushPin";
 import { Eye } from "@phosphor-icons/react/dist/csr/Eye";
@@ -24,16 +24,16 @@ export const PinAlert = memo(() => {
     window.removeEventListener("pinned_document", handlePinEvent);
   }
 
-  function handlePinEvent() {
+  const handlePinEvent = useCallback(function handlePinEvent() {
     if (!!safeGetItem(SEEN_DOC_PIN_ALERT)) return;
     setShowAlert(true);
-  }
+  }, []);
 
   useEffect(() => {
     if (!window || !!safeGetItem(SEEN_DOC_PIN_ALERT)) return;
     window?.addEventListener("pinned_document", handlePinEvent);
     return () => window.removeEventListener("pinned_document", handlePinEvent);
-  }, []);
+  }, [handlePinEvent]);
 
   return (
     <ModalWrapper isOpen={showAlert} noPortal={true}>
@@ -95,17 +95,17 @@ export const DocumentWatchAlert = memo(() => {
     window.removeEventListener("watch_document_for_changes", handlePinEvent);
   }
 
-  function handlePinEvent() {
+  const handlePinEvent = useCallback(function handlePinEvent() {
     if (!!safeGetItem(SEEN_WATCH_ALERT)) return;
     setShowAlert(true);
-  }
+  }, []);
 
   useEffect(() => {
     if (!window || !!safeGetItem(SEEN_WATCH_ALERT)) return;
     window?.addEventListener("watch_document_for_changes", handlePinEvent);
     return () =>
       window.removeEventListener("watch_document_for_changes", handlePinEvent);
-  }, []);
+  }, [handlePinEvent]);
 
   return (
     <ModalWrapper isOpen={showAlert} noPortal={true}>

@@ -226,39 +226,53 @@ const PoliticianVote = {
     let updated = 0;
     let errors = 0;
 
-    for (const v of votes) {
+    const CHUNK_SIZE = 50;
+    for (let i = 0; i < votes.length; i += CHUNK_SIZE) {
+      const chunk = votes.slice(i, i + CHUNK_SIZE);
       try {
-        const id = v.id || require("uuid").v4();
-        const data = {
-          id,
-          politicianId: v.politicianId,
-          session: v.session || null,
-          sitting: v.sitting || null,
-          voteId: v.voteId || null,
-          voteTitle: v.voteTitle || null,
-          voteDescription: v.voteDescription || null,
-          voteResult: v.voteResult || null,
-          voteDate: v.voteDate ? new Date(v.voteDate) : null,
-          documentUrl: v.documentUrl || null,
-          plenaryProtocolUrl: v.plenaryProtocolUrl || null,
-          rawData: v.rawData || null,
-        };
+        await prisma.$transaction(async (tx) => {
+          for (const v of chunk) {
+            try {
+              const id = v.id || require("uuid").v4();
+              const data = {
+                id,
+                politicianId: v.politicianId,
+                session: v.session || null,
+                sitting: v.sitting || null,
+                voteId: v.voteId || null,
+                voteTitle: v.voteTitle || null,
+                voteDescription: v.voteDescription || null,
+                voteResult: v.voteResult || null,
+                voteDate: v.voteDate ? new Date(v.voteDate) : null,
+                documentUrl: v.documentUrl || null,
+                plenaryProtocolUrl: v.plenaryProtocolUrl || null,
+                rawData: v.rawData || null,
+              };
 
-        const existing = await prisma.politician_votes.findUnique({
-          where: { id },
+              const existing = await tx.politician_votes.findUnique({
+                where: { id },
+              });
+              await tx.politician_votes.upsert({
+                where: { id },
+                update: data,
+                create: data,
+              });
+              if (existing) {
+                updated++;
+              } else {
+                inserted++;
+              }
+            } catch {
+              errors++;
+            }
+          }
         });
-        await prisma.politician_votes.upsert({
-          where: { id },
-          update: data,
-          create: data,
-        });
-        if (existing) {
-          updated++;
-        } else {
-          inserted++;
-        }
-      } catch {
-        errors++;
+      } catch (err) {
+        consoleLogger.warn(
+          `[PoliticianVote.bulkUpsert] chunk ${i}-${i + CHUNK_SIZE} failed:`,
+          err.message,
+        );
+        errors += chunk.length;
       }
     }
     return { inserted, updated, errors };
@@ -353,40 +367,53 @@ const PoliticianMandate = {
     let updated = 0;
     let errors = 0;
 
-    for (const m of mandates) {
+    const CHUNK_SIZE = 50;
+    for (let i = 0; i < mandates.length; i += CHUNK_SIZE) {
+      const chunk = mandates.slice(i, i + CHUNK_SIZE);
       try {
-        const id = m.id || require("uuid").v4();
-        const data = {
-          id,
-          politicianId: m.politicianId,
-          type: m.type || "bundestag",
-          position: m.position || null,
-          party: m.party || null,
-          faction: m.faction || null,
-          electoralDistrict: m.electoralDistrict || null,
-          state: m.state || null,
-          startDate: m.startDate ? new Date(m.startDate) : null,
-          endDate: m.endDate ? new Date(m.endDate) : null,
-          info: m.info || null,
-          rawData: m.rawData || null,
-        };
+        await prisma.$transaction(async (tx) => {
+          for (const m of chunk) {
+            try {
+              const id = m.id || require("uuid").v4();
+              const data = {
+                id,
+                politicianId: m.politicianId,
+                type: m.type || "bundestag",
+                position: m.position || null,
+                party: m.party || null,
+                faction: m.faction || null,
+                electoralDistrict: m.electoralDistrict || null,
+                state: m.state || null,
+                startDate: m.startDate ? new Date(m.startDate) : null,
+                endDate: m.endDate ? new Date(m.endDate) : null,
+                info: m.info || null,
+                rawData: m.rawData || null,
+              };
 
-        // Detect insert vs update by checking if the record already exists.
-        const existing = await prisma.politician_mandates.findUnique({
-          where: { id },
+              const existing = await tx.politician_mandates.findUnique({
+                where: { id },
+              });
+              await tx.politician_mandates.upsert({
+                where: { id },
+                update: data,
+                create: data,
+              });
+              if (existing) {
+                updated++;
+              } else {
+                inserted++;
+              }
+            } catch {
+              errors++;
+            }
+          }
         });
-        await prisma.politician_mandates.upsert({
-          where: { id },
-          update: data,
-          create: data,
-        });
-        if (existing) {
-          updated++;
-        } else {
-          inserted++;
-        }
-      } catch {
-        errors++;
+      } catch (err) {
+        consoleLogger.warn(
+          `[PoliticianMandate.bulkUpsert] chunk failed:`,
+          err.message,
+        );
+        errors += chunk.length;
       }
     }
     return { inserted, updated, errors };
@@ -413,32 +440,46 @@ const PoliticianCommittee = {
     let updated = 0;
     let errors = 0;
 
-    for (const c of committees) {
+    const CHUNK_SIZE = 50;
+    for (let i = 0; i < committees.length; i += CHUNK_SIZE) {
+      const chunk = committees.slice(i, i + CHUNK_SIZE);
       try {
-        const id = c.id || require("uuid").v4();
-        const data = {
-          id,
-          name: c.name,
-          fullName: c.fullName || null,
-          type: c.type || null,
-          description: c.description || null,
-        };
+        await prisma.$transaction(async (tx) => {
+          for (const c of chunk) {
+            try {
+              const id = c.id || require("uuid").v4();
+              const data = {
+                id,
+                name: c.name,
+                fullName: c.fullName || null,
+                type: c.type || null,
+                description: c.description || null,
+              };
 
-        const existing = await prisma.politician_committees.findUnique({
-          where: { id },
+              const existing = await tx.politician_committees.findUnique({
+                where: { id },
+              });
+              await tx.politician_committees.upsert({
+                where: { id },
+                update: data,
+                create: data,
+              });
+              if (existing) {
+                updated++;
+              } else {
+                inserted++;
+              }
+            } catch {
+              errors++;
+            }
+          }
         });
-        await prisma.politician_committees.upsert({
-          where: { id },
-          update: data,
-          create: data,
-        });
-        if (existing) {
-          updated++;
-        } else {
-          inserted++;
-        }
-      } catch {
-        errors++;
+      } catch (err) {
+        consoleLogger.warn(
+          `[PoliticianCommittee.bulkUpsert] chunk failed:`,
+          err.message,
+        );
+        errors += chunk.length;
       }
     }
     return { inserted, updated, errors };
@@ -453,34 +494,48 @@ const PoliticianCommitteeMembership = {
     let updated = 0;
     let errors = 0;
 
-    for (const m of memberships) {
+    const CHUNK_SIZE = 50;
+    for (let i = 0; i < memberships.length; i += CHUNK_SIZE) {
+      const chunk = memberships.slice(i, i + CHUNK_SIZE);
       try {
-        const id = m.id || require("uuid").v4();
-        const data = {
-          id,
-          politicianId: m.politicianId,
-          committeeId: m.committeeId,
-          role: m.role || null,
-          startDate: m.startDate ? new Date(m.startDate) : null,
-          endDate: m.endDate ? new Date(m.endDate) : null,
-        };
+        await prisma.$transaction(async (tx) => {
+          for (const m of chunk) {
+            try {
+              const id = m.id || require("uuid").v4();
+              const data = {
+                id,
+                politicianId: m.politicianId,
+                committeeId: m.committeeId,
+                role: m.role || null,
+                startDate: m.startDate ? new Date(m.startDate) : null,
+                endDate: m.endDate ? new Date(m.endDate) : null,
+              };
 
-        const existing =
-          await prisma.politician_committee_memberships.findUnique({
-            where: { id },
-          });
-        await prisma.politician_committee_memberships.upsert({
-          where: { id },
-          update: data,
-          create: data,
+              const existing =
+                await tx.politician_committee_memberships.findUnique({
+                  where: { id },
+                });
+              await tx.politician_committee_memberships.upsert({
+                where: { id },
+                update: data,
+                create: data,
+              });
+              if (existing) {
+                updated++;
+              } else {
+                inserted++;
+              }
+            } catch {
+              errors++;
+            }
+          }
         });
-        if (existing) {
-          updated++;
-        } else {
-          inserted++;
-        }
-      } catch {
-        errors++;
+      } catch (err) {
+        consoleLogger.warn(
+          `[PoliticianCommitteeMembership.bulkUpsert] chunk failed:`,
+          err.message,
+        );
+        errors += chunk.length;
       }
     }
     return { inserted, updated, errors };

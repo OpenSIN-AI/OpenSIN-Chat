@@ -97,18 +97,21 @@ async function processGroup(groupChats) {
     const workspace = await Workspace.get({ id: workspaceId });
     if (!workspace) {
       log(`Workspace ${workspaceId} not found. Marking processed.`);
+      await WorkspaceChats.markMemoryProcessed(unprocessedIds);
       return;
     }
 
     const chats = await loadLatestChats(userId, workspaceId);
     if (chats.length === 0) {
       log(`No summarizable chats for ${tag}. Marking processed.`);
+      await WorkspaceChats.markMemoryProcessed(unprocessedIds);
       return;
     }
 
     const llm = resolveLLM(workspace);
     if (!llm) {
       log(`No LLM configured for workspace ${workspaceId}. Marking processed.`);
+      await WorkspaceChats.markMemoryProcessed(unprocessedIds);
       return;
     }
 
@@ -144,6 +147,8 @@ async function processGroup(groupChats) {
         log(
           `(Tool handler was never called — model may not have produced a tool call.)`,
         );
+      if (candidates !== null)
+        await WorkspaceChats.markMemoryProcessed(unprocessedIds);
       return;
     }
     log(`Observer produced ${candidates.length} candidate(s) for ${tag}:`);
@@ -171,6 +176,8 @@ async function processGroup(groupChats) {
         log(
           `(Tool handler was never called — model may not have produced a tool call.)`,
         );
+      if (finalMemories !== null)
+        await WorkspaceChats.markMemoryProcessed(unprocessedIds);
       return;
     }
 

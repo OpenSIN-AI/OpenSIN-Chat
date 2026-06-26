@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 export function useModal() {
   const [isOpen, setIsOpen] = useState(false as any);
@@ -7,5 +7,8 @@ export function useModal() {
   const openModal = useCallback(() => setIsOpen(true), []);
   const closeModal = useCallback(() => setIsOpen(false), []);
 
-  return { isOpen, openModal, closeModal };
+  return useMemo(
+    () => ({ isOpen, openModal, closeModal }),
+    [isOpen, openModal, closeModal],
+  );
 }

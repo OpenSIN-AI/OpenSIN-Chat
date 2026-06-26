@@ -36,6 +36,7 @@ const prisma = require("../../utils/prisma");
 jest.mock("../../models/user", () => ({
   User: {
     get: jest.fn(),
+    where: jest.fn(),
   },
 }));
 
@@ -286,11 +287,10 @@ describe("Invite model", () => {
       prisma.invites.findMany.mockResolvedValue([
         { id: 1, claimedBy: 10, createdBy: 20 },
       ]);
-      User.get.mockImplementation((clause) => {
-        if (clause.id === 10) return { id: 10, username: "claimer" };
-        if (clause.id === 20) return { id: 20, username: "creator" };
-        return null;
-      });
+      User.where.mockResolvedValue([
+        { id: 10, username: "claimer" },
+        { id: 20, username: "creator" },
+      ]);
 
       const result = await Invite.whereWithUsers({});
       expect(result[0].claimedBy).toEqual({ id: 10, username: "claimer" });

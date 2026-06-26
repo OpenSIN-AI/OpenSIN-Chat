@@ -107,6 +107,7 @@ class PaperlessNgxLoader {
           writeStream.end((err) => (err ? reject(err) : resolve()));
         });
       } catch (e) {
+        writeStream.destroy();
         try {
           fs.rmSync(tempPath, { force: true });
         } catch {}

@@ -164,20 +164,28 @@ const Invite = {
     const { User } = require("./user");
     try {
       const invites = await this.where(clause, limit);
+      const userIds = new Set();
+      for (const invite of invites) {
+        if (invite.claimedBy) userIds.add(invite.claimedBy);
+        if (invite.createdBy) userIds.add(invite.createdBy);
+      }
+      const users =
+        userIds.size > 0 ? await User.where({ id: { in: [...userIds] } }) : [];
+      const userMap = new Map(users.map((u) => [u.id, u]));
       for (const invite of invites) {
         if (invite.claimedBy) {
-          const acceptedUser = await User.get({ id: invite.claimedBy });
+          const u = userMap.get(invite.claimedBy);
           invite.claimedBy = {
-            id: acceptedUser?.id,
-            username: acceptedUser?.username,
+            id: u?.id,
+            username: u?.username,
           };
         }
 
         if (invite.createdBy) {
-          const createdUser = await User.get({ id: invite.createdBy });
+          const u = userMap.get(invite.createdBy);
           invite.createdBy = {
-            id: createdUser?.id,
-            username: createdUser?.username,
+            id: u?.id,
+            username: u?.username,
           };
         }
       }

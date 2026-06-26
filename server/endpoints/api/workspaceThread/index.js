@@ -170,6 +170,13 @@ function apiWorkspaceThreadEndpoints(app) {
       try {
         const { slug, threadSlug } = request.params;
         const { name } = reqBody(request);
+        if (!name || typeof name !== "string" || !name.trim()) {
+          response.status(400).json({
+            thread: null,
+            message: "name is required and must be a non-empty string.",
+          });
+          return;
+        }
         const workspace = await Workspace.get({ slug });
 
         if (!workspace) {
