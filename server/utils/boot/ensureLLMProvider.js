@@ -26,7 +26,7 @@ async function ensureLLMProvider() {
         `\x1b[33m[LLM BOOT]\x1b[0m No LLM provider in DB — seeding default: ${DEFAULT_LLM_PROVIDER}`,
       );
 
-      await SystemSettings.updateSettings({
+      await SystemSettings._updateSettings({
         llm_provider: DEFAULT_LLM_PROVIDER,
         llm_model_pref: DEFAULT_LLM_MODEL,
         llm_api_key: DEFAULT_LLM_API_KEY,
