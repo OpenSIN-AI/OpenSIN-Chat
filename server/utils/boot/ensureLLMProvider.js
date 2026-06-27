@@ -13,8 +13,7 @@ const BROKEN_PROVIDERS = ["generic-openai", "nvidia-nim", "openai", "azure"];
 async function ensureLLMProvider() {
   try {
     const { SystemSettings } = require("../../models/systemSettings");
-    const { PrismaClient } = require("@prisma/client");
-    const prisma = new PrismaClient();
+    const { Workspace } = require("../../models/workspace");
 
     const existing = await SystemSettings.get({ label: "llm_provider" });
 
@@ -39,25 +38,22 @@ async function ensureLLMProvider() {
       );
     }
 
-    const workspaces = await prisma.workspace.findMany({
-      where: { chatProvider: { in: BROKEN_PROVIDERS } },
-      select: { id: true, name: true, chatProvider: true },
-    });
-
-    if (workspaces.length > 0) {
-      consoleLogger.log(
-        `\x1b[33m[LLM BOOT]\x1b[0m Fixing ${workspaces.length} workspace(s) with broken provider: ${workspaces.map((w) => `${w.name} (${w.chatProvider})`).join(", ")}`,
-      );
-      await prisma.workspace.updateMany({
-        where: { chatProvider: { in: BROKEN_PROVIDERS } },
-        data: { chatProvider: DEFAULT_LLM_PROVIDER },
+    if (typeof Workspace?.where === "function") {
+      const broken = await Workspace.where({
+        chatProvider: { in: BROKEN_PROVIDERS },
       });
-      consoleLogger.log(
-        `\x1b[32m[LLM BOOT]\x1b[0m Fixed workspace providers → ${DEFAULT_LLM_PROVIDER}`,
-      );
+      if (broken.length > 0) {
+        consoleLogger.log(
+          `\x1b[33m[LLM BOOT]\x1b[0m Fixing ${broken.length} workspace(s) with broken provider`,
+        );
+        for (const ws of broken) {
+          await ws.update({ chatProvider: DEFAULT_LLM_PROVIDER });
+        }
+        consoleLogger.log(
+          `\x1b[32m[LLM BOOT]\x1b[0m Fixed workspace providers → ${DEFAULT_LLM_PROVIDER}`,
+        );
+      }
     }
-
-    await prisma.$disconnect();
   } catch (e) {
     consoleLogger.error(`\x1b[31m[LLM BOOT ERROR]\x1b[0m ${e.message}`);
   }
