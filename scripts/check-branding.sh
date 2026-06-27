@@ -188,6 +188,8 @@ ALLOWED_FILES=(
   "scripts/skill-oci-oracle-cloud-SKILL.md"
   "RESEARCH.md"                        # research comparison doc referencing the upstream AnythingLLM/Mintplex origin for context
   "PRODUCTION-READINESS-REPORT.md"     # audit report documenting findings about upstream AnythingLLM/Mintplex strings
+  "CEO-AUDIT-REPORT-2026-06-27.md"    # CEO audit report referencing upstream fork lineage
+  "FUTURE-PLAN.md"                     # future plan referencing upstream structural debt
 
   # ── In-app documentation pages (upstream context) ───
   #    frontend/src/pages/Docs/content/ mirrors docs/ for the in-app docs viewer.
