@@ -3,9 +3,9 @@ const consoleLogger = require("../logger/console.js");
 
 const DEFAULT_LLM_PROVIDER = "fireworksAi";
 const DEFAULT_LLM_MODEL = "accounts/fireworks/models/minimax-m3";
-const DEFAULT_LLM_API_KEY = process.env.FIREWORKS_API_KEY || "";
+const DEFAULT_LLM_API_KEY = process.env.FIREWORKS_AI_LLM_API_KEY || "";
 const DEFAULT_LLM_BASE_PATH =
-  process.env.FIREWORKS_LLM_BASE_PATH ||
+  process.env.FIREWORKS_AI_LLM_BASE_PATH ||
   "https://sinatorpool-router.delqhi.com/inference/v1";
 
 async function ensureLLMProvider() {
