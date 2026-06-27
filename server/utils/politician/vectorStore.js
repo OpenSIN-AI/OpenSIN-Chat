@@ -21,6 +21,12 @@ class PoliticianVectorStore {
     this.vectorDb = new PGVector();
     this.embedder = new PoliticianEmbedder();
     this.namespace = POLITICIAN_NAMESPACE;
+    this.enabled = !!PGVector.connectionString();
+    if (!this.enabled) {
+      consoleLogger.log(
+        `\x1b[34m[PoliticianVectorStore]\x1b[0m pgvector not configured, vector indexing disabled`,
+      );
+    }
   }
 
   log(text, ...args) {
@@ -51,6 +57,13 @@ class PoliticianVectorStore {
     date,
     title,
   }) {
+    if (!this.enabled) {
+      return {
+        success: false,
+        chunksIndexed: 0,
+        error: "pgvector not configured",
+      };
+    }
     if (!text || text.trim().length === 0) {
       return { success: false, chunksIndexed: 0, error: "Empty text" };
     }
@@ -146,6 +159,9 @@ class PoliticianVectorStore {
     politicianId = null,
     party = null,
   }) {
+    if (!this.enabled) {
+      return { results: [], error: "pgvector not configured" };
+    }
     let connection = null;
     try {
       connection = await this.vectorDb.connect();
@@ -200,6 +216,7 @@ class PoliticianVectorStore {
    * @returns {Promise<boolean>}
    */
   async deleteSpeech(speechId) {
+    if (!this.enabled) return false;
     let connection = null;
     try {
       connection = await this.vectorDb.connect();
@@ -224,6 +241,7 @@ class PoliticianVectorStore {
    * @returns {Promise<{exists: boolean, count: number}>}
    */
   async stats() {
+    if (!this.enabled) return { exists: false, count: 0 };
     try {
       const exists = await this.vectorDb.hasNamespace(this.namespace);
       const count = await this.vectorDb.namespaceCount(this.namespace);

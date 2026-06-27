@@ -139,7 +139,7 @@ class MCPHypervisor {
     } else {
       try {
         const stat = fs.statSync(this.mcpServerJSONPath);
-        if (stat.mode & 0o077) {
+        if ((stat.mode & 0o777) !== 0o600) {
           this.log(
             `Fixing permissions on ${this.mcpServerJSONPath} from ${(stat.mode & 0o777).toString(8)} to 0600`,
           );

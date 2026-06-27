@@ -302,53 +302,68 @@ async function fireworksAiModels(providedApiKey = null) {
     },
   });
 
-  return await client.models
-    .list()
-    .then((res) => res.data)
-    .then((models = []) => {
-      const validModels = {};
-      models.forEach((model) => {
-        // There are many models - the ones without a context length are not chat models
-        if (!model.hasOwnProperty("context_length")) return;
+  let models;
+  try {
+    const res = await client.models.list();
+    models = res.data;
+  } catch (e) {
+    consoleLogger.error("fireworksAi: /models endpoint failed: " + e.message);
+    models = [];
+  }
 
-        validModels[model.id] = {
-          id: model.id,
-          name: model.id.split("/").pop(),
-          organization: model.owned_by,
-          subtype: model.type,
-          maxLength: model.context_length ?? 4096,
-        };
-      });
+  const validModels = {};
+  models.forEach((model) => {
+    if (!model.hasOwnProperty("context_length")) return;
+    validModels[model.id] = {
+      id: model.id,
+      name: model.id.split("/").pop(),
+      organization: model.owned_by,
+      subtype: model.type,
+      maxLength: model.context_length ?? 4096,
+    };
+  });
 
-      if (Object.keys(validModels).length === 0) {
-        consoleLogger.warn("fireworksAi: No models found");
-        return {};
-      }
-
-      // Cache all response information
-      if (!fs.existsSync(cacheFolder))
-        fs.mkdirSync(cacheFolder, { recursive: true });
-      fs.writeFileSync(
-        path.resolve(cacheFolder, "models.json"),
-        JSON.stringify(validModels),
-        {
-          encoding: "utf-8",
-        },
+  if (Object.keys(validModels).length === 0) {
+    const fallbackModel = process.env.FIREWORKS_AI_LLM_MODEL_PREF;
+    if (fallbackModel) {
+      validModels[fallbackModel] = {
+        id: fallbackModel,
+        name: fallbackModel.split("/").pop(),
+        organization: "fireworks-ai",
+        subtype: "chat",
+        maxLength:
+          parseInt(process.env.FIREWORKS_AI_LLM_MODEL_TOKEN_LIMIT, 10) ||
+          256000,
+      };
+      consoleLogger.log(
+        "fireworksAi: Using fallback model from ENV: " + fallbackModel,
       );
-      fs.writeFileSync(
-        path.resolve(cacheFolder, ".cached_at"),
-        String(Number(new Date())),
-        {
-          encoding: "utf-8",
-        },
+    } else {
+      consoleLogger.warn(
+        "fireworksAi: No models found and no fallback configured",
       );
-
-      return validModels;
-    })
-    .catch((e) => {
-      consoleLogger.error(e);
       return {};
-    });
+    }
+  }
+
+  if (!fs.existsSync(cacheFolder))
+    fs.mkdirSync(cacheFolder, { recursive: true });
+  fs.writeFileSync(
+    path.resolve(cacheFolder, "models.json"),
+    JSON.stringify(validModels),
+    {
+      encoding: "utf-8",
+    },
+  );
+  fs.writeFileSync(
+    path.resolve(cacheFolder, ".cached_at"),
+    String(Number(new Date())),
+    {
+      encoding: "utf-8",
+    },
+  );
+
+  return validModels;
 }
 
 module.exports = {

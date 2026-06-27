@@ -46,13 +46,18 @@ async function copyToUploads(request) {
     const filePath = request.file?.path;
     const filename = request.file?.filename;
     if (!filePath || !filename) return;
+    if (!fs.existsSync(filePath)) {
+      consoleLogger.info(
+        "[copyToUploads] source file no longer exists (already processed by collector):",
+        filePath,
+      );
+      return;
+    }
     const uploadsDir = ensureStorageDir("uploads");
     const destPath = path.join(uploadsDir, filename);
     await fs.promises.copyFile(filePath, destPath);
   } catch (e) {
-    // Non-fatal: visibility in the sidebar is optional; the parse itself succeeded.
-
-    consoleLogger.error("[copyToUploads] best-effort copy failed:", e.message);
+    consoleLogger.info("[copyToUploads] best-effort copy failed:", e.message);
   }
 }
 
