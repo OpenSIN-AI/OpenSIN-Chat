@@ -27,23 +27,11 @@ async function ensureLLMProvider() {
         `\x1b[33m[LLM BOOT]\x1b[0m No LLM provider in DB — seeding default: ${DEFAULT_LLM_PROVIDER}`,
       );
 
-      await SystemSettings.save({
-        label: "llm_provider",
-        value: DEFAULT_LLM_PROVIDER,
-      });
-      await SystemSettings.save({
-        label: "llm_model_pref",
-        value: DEFAULT_LLM_MODEL,
-      });
-      if (DEFAULT_LLM_API_KEY) {
-        await SystemSettings.save({
-          label: "llm_api_key",
-          value: DEFAULT_LLM_API_KEY,
-        });
-      }
-      await SystemSettings.save({
-        label: "llm_base_path",
-        value: DEFAULT_LLM_BASE_PATH,
+      await SystemSettings.updateSettings({
+        llm_provider: DEFAULT_LLM_PROVIDER,
+        llm_model_pref: DEFAULT_LLM_MODEL,
+        llm_api_key: DEFAULT_LLM_API_KEY,
+        llm_base_path: DEFAULT_LLM_BASE_PATH,
       });
 
       consoleLogger.log(
