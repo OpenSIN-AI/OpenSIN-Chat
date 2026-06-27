@@ -436,7 +436,7 @@ class MetaGenerator {
    * @param {string} routePath
    * @returns {string}
    */
-  #buildCssTags(css, routePath) {
+  #buildCssTags(css, _routePath) {
     if (!css.length) return "";
 
     return css

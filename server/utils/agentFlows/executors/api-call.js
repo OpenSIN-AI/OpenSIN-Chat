@@ -20,7 +20,10 @@ async function executeApiCall(config, context) {
 
   const requestConfig = {
     method: method.toUpperCase(),
-    headers: (headers || []).reduce((acc, h) => ({ ...acc, [h.key]: h.value }), {}),
+    headers: (headers || []).reduce(
+      (acc, h) => ({ ...acc, [h.key]: h.value }),
+      {},
+    ),
   };
 
   if (["POST", "PUT", "PATCH"].includes(method.toUpperCase())) {

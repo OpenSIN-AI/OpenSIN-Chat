@@ -157,7 +157,6 @@ class TextSplitter {
    * @param {number} [config.chunkOverlap = 20] - The overlap between chunks.
    */
   #setSplitter(config = {}) {
-    // if (!config?.splitByFilename) {// TODO do something when specific extension is present? }
     return new RecursiveSplitter({
       chunkSize: isNaN(config?.chunkSize) ? 1_000 : Number(config?.chunkSize),
       chunkOverlap: isNaN(config?.chunkOverlap)

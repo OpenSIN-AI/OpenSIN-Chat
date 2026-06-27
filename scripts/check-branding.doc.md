@@ -30,7 +30,7 @@ verfällt die Linter-Semantik.
 | `cdn.anythingllm.com` | Telemetry-CDN | **darf nicht mehr im Code sein** |
 | `hub.anythingllm.com` | Community-Hub | externe API, **darf nicht im Frontend** sein |
 | `docs.anythingllm.com` | Doku-CDN | optional, besser durch `sinchat.delqhi.com/docs` ersetzen |
-| `team@mintplex` | Mail-Adresse | **nur in `THIRD-PARTY.md`** |
+| `team@mintplex` | Mail-Adresse | **nur in `THIRD_PARTY.md`** |
 
 ## Usage
 
@@ -59,7 +59,7 @@ verfällt die Linter-Semantik.
   für DB-Backward-Compat. Whitelist-Eintrag nötig.
 - **`server/models/workspace.js`:** nutzt `provider: "anythingllm-router"` aus
   DB-Backward-Compat. Whitelist-Eintrag nötig.
-- **Neue Datei mit Brand-String:** erst in `THIRD-PARTY.md` referenzieren, dann
+- **Neue Datei mit Brand-String:** erst in `THIRD_PARTY.md` referenzieren, dann
   zur `ALLOWED_FILES` hinzufügen **mit Kommentar**, sonst vergisst man die
   Intention in 6 Monaten.
 

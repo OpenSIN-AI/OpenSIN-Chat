@@ -50,6 +50,25 @@ describe("docsManifest", () => {
     });
   });
 
+  it("resolves lowercase markdown links (case-insensitive aliases)", () => {
+    expect(resolveDocLink("security.md")).toEqual({
+      url: "/docs/security",
+      external: false,
+    });
+    expect(resolveDocLink("operations.md")).toEqual({
+      url: "/docs/operations",
+      external: false,
+    });
+    expect(resolveDocLink("api.md")).toEqual({
+      url: "/docs/api",
+      external: false,
+    });
+    expect(resolveDocLink("user-guide.md")).toEqual({
+      url: "/docs/user-guide",
+      external: false,
+    });
+  });
+
   it("has a rendered icon for every doc category", () => {
     for (const category of CATEGORY_ORDER) {
       expect(CATEGORY_ICONS[category]).toBeDefined();

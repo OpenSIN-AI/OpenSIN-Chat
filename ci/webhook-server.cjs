@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// SPDX-License-Identifier: MIT
 /**
  * OpenSIN-Chat self-hosted CI webhook receiver.
  *

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// SPDX-License-Identifier: MIT
 
 import fs from "fs";
 import path from "path";
@@ -20,8 +21,8 @@ const CONTENT_DEST = path.join(__dirname, "../src/pages/Docs/content");
  * Excludes internal planning/audit docs (PLAN-*, AGENT-*, CEO-AUDIT, etc.)
  */
 const CURATED_FILES = [
-  { src: "USER-GUIDE.md", dst: "user-guide.md" },
-  { src: "API.md", dst: "api.md" },
+  { src: "user-guide.md", dst: "user-guide.md" },
+  { src: "api.md", dst: "api.md" },
   { src: "architecture.md", dst: "architecture.md" },
   { src: "DATA-SOURCES.md", dst: "data-sources.md" },
   { src: "SYNC-RUNBOOK.md", dst: "sync-runbook.md" },
@@ -33,8 +34,8 @@ const CURATED_FILES = [
   { src: "ssh-remote-tunnel.md", dst: "ssh-remote-tunnel.md" },
   { src: "supabase-self-hosted.md", dst: "supabase-self-hosted.md" },
   { src: "PDF-ANALYSIS.md", dst: "pdf-analysis.md" },
-  { src: "SECURITY.md", dst: "security.md" },
-  { src: "OPERATIONS.md", dst: "operations.md" },
+  { src: "security.md", dst: "security.md" },
+  { src: "operations.md", dst: "operations.md" },
 ];
 
 const ADR_FILES = [

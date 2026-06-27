@@ -15,8 +15,7 @@ cd "$REPO_ROOT"
 # Add a comment next to each entry explaining WHY the exception exists.
 ALLOWED_FILES=(
   # ── Intentional upstream credit ───────────────────────────
-  "THIRD-PARTY.md"                     # canonical credit doc (hyphen variant)
-  "THIRD_PARTY.md"                     # canonical credit doc (underscore variant)
+  "THIRD_PARTY.md"                     # canonical credit doc (merged: acknowledgments + NPM packages)
   "BRANDING.md"                        # branding policy references upstream
   "README.md"                          # "Stand auf Schultern von Riesen" section
   "TERMS_SELF_HOSTED.md"               # §2 references AnythingLLM telemetry
@@ -72,15 +71,10 @@ ALLOWED_FILES=(
   "server/storage/README.md"           # docker exec commands reference upstream image
 
   # ── Vendored third-party embed widget ───────────────────
-  #    frontend/public/embed/ holds the public chat-embed script that
-  #    other sites copy <script src=".../embed/anythingllm-chat-widget.min.js">.
-  #    The filename + minified body legitimately contain "AnythingLLM" —
-  #    renaming the asset would break every existing embed on the web.
-  "frontend/public/embed/anythingllm-chat-widget.min.js"
-  #    Newer OpenSIN-branded embed is also a transitional vendored copy of the
+  #    Newer OpenSIN-branded embed is a transitional vendored copy of the
   #    upstream widget; its minified body still contains legacy AnythingLLM/
   #    Mintplex strings. Cleaning it is tracked separately; for now it is
-  #    treated the same as the legacy asset above.
+  #    treated the same as the legacy asset.
   "frontend/public/embed/opensin-chat-widget.min.js"
 
   # ── Upstream-sync tooling ───────────────────────────────
@@ -184,7 +178,6 @@ ALLOWED_FILES=(
   "CONTRIBUTING.md"
   "SECURITY.md"
   "CHANGELOG.md"
-  "AUDIT-NEXT-AGENT.md"
 
   # ── Audit & feature docs (upstream context) ─────────
   "docs/ceo-audit-final.md"
@@ -194,6 +187,7 @@ ALLOWED_FILES=(
   "server/app.doc.md"
   "scripts/skill-oci-oracle-cloud-SKILL.md"
   "RESEARCH.md"                        # research comparison doc referencing the upstream AnythingLLM/Mintplex origin for context
+  "PRODUCTION-READINESS-REPORT.md"     # audit report documenting findings about upstream AnythingLLM/Mintplex strings
 
   # ── In-app documentation pages (upstream context) ───
   #    frontend/src/pages/Docs/content/ mirrors docs/ for the in-app docs viewer.
@@ -298,7 +292,7 @@ if [ "$violations" -gt 0 ]; then
   for f in "${ALLOWED_FILES[@]}"; do
     echo "    • $f"
   done
-  echo "  - Any new mention must be added to THIRD-PARTY.md (not the code)."
+  echo "  - Any new mention must be added to THIRD_PARTY.md (not the code)."
   echo ""
   echo "If a mention is GENUINELY required in code, add the file to ALLOWED_FILES"
   echo "in scripts/check-branding.sh AND add a comment explaining why."

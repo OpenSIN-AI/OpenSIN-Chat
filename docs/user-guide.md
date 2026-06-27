@@ -69,7 +69,7 @@ Das **Kern-Feature**: Du lädst Dokumente hoch und die KI beantwortet Fragen **n
 
 ## 3. Politiker-Datenbank nutzen
 
-> **Hinweis:** Die Datenbank muss erst synchronisiert werden. Siehe `docs/USER-GUIDE.md` § 3.7.
+> **Hinweis:** Die Datenbank muss erst synchronisiert werden. Siehe `docs/user-guide.md` § 3.7.
 
 ### 3.1 Suche nach Abgeordneten
 
@@ -598,7 +598,7 @@ cd frontend && yarn build
 
 ### 9.7 Wo finde ich weitere Hilfe?
 
-- **API-Dokumentation:** `docs/API.md`
+- **API-Dokumentation:** `docs/api.md`
 - **Architektur:** `docs/architecture.md`
 - **Roadmap:** `ROADMAP.md`
 - **Issues:** https://github.com/Family-Team-Projects/OpenSIN-Chat/issues

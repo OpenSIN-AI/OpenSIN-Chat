@@ -80,7 +80,10 @@ function ConnectivityPanel(): JSX.Element {
     try {
       res = await ProviderStatus.connectivity();
     } catch (e: any) {
-      showToast(t("systemHealth.probeFailed", { error: String(e?.message || e) }), "error");
+      showToast(
+        t("systemHealth.probeFailed", { error: String(e?.message || e) }),
+        "error",
+      );
       setChecking(false);
       return;
     }

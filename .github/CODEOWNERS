@@ -1,0 +1,30 @@
+# Default owner — all files not explicitly assigned
+* @OpenSIN-AI
+
+# Frontend
+/frontend/ @OpenSIN-AI
+
+# Server
+/server/ @OpenSIN-AI
+
+# Collector
+/collector/ @OpenSIN-AI
+
+# Docker
+/docker/ @OpenSIN-AI
+
+# CI/CD
+/.github/ @OpenSIN-AI
+/ci/ @OpenSIN-AI
+
+# Documentation
+/docs/ @OpenSIN-AI
+/README.md @OpenSIN-AI
+/CHANGELOG.md @OpenSIN-AI
+/SECURITY.md @OpenSIN-AI
+/CONTRIBUTING.md @OpenSIN-AI
+/AGENTS.md @OpenSIN-AI
+
+# Branding
+/scripts/check-branding.sh @OpenSIN-AI
+/BRANDING.md @OpenSIN-AI

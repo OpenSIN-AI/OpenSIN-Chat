@@ -260,7 +260,7 @@ OpenAfD hat **40 LLM-Provider**, OpenSIN hat nur **17**.
 ### 4.3 Branding-Linter Whitelist-Unterschiede
 
 OpenSIN-Chat hat zusätzliche Whitelist-Einträge:
-- `THIRD_PARTY.md` (zusätzlich zu `THIRD-PARTY.md`)
+- `THIRD_PARTY.md` (zusätzlich zu `THIRD_PARTY.md`)
 - `docs/changelog-recent.md`
 - `docs/abandoned-packages-audit.md`
 - `docker/.env.example`

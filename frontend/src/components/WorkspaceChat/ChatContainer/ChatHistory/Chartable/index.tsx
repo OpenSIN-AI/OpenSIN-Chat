@@ -89,7 +89,8 @@ export function Chartable({ props }: any) {
     typeof content.dataset === "string"
       ? safeJsonParse(content.dataset, [])
       : content.dataset;
-  const value = data?.length > 0 ? (Object.keys(data[0])[1] ?? "value") : "value";
+  const value =
+    data?.length > 0 ? (Object.keys(data[0])[1] ?? "value") : "value";
   const title = content?.title;
 
   const renderChart = () => {
@@ -459,7 +460,9 @@ const customTooltip: any = (props) => {
       <div className="flex flex-1 space-x-2.5">
         <div
           className="flex w-1.5 flex-col rounded"
-          style={{ backgroundColor: Colors[categoryPayload?.color] ?? Colors.blue }}
+          style={{
+            backgroundColor: Colors[categoryPayload?.color] ?? Colors.blue,
+          }}
         />
         <div className="w-full">
           <div className="flex items-center justify-between space-x-8">
@@ -495,7 +498,9 @@ function DownloadGraph({ onClick }: any) {
           type="button"
           onClick={handleClick}
           disabled={loading}
-          aria-label={loading ? t("chartable.downloading") : t("chartable.downloadGraph")}
+          aria-label={
+            loading ? t("chartable.downloading") : t("chartable.downloadGraph")
+          }
           className="p-1 rounded-full border-none bg-transparent cursor-pointer disabled:cursor-default"
         >
           {loading ? (

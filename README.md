@@ -176,7 +176,7 @@ See [SECURITY.md](./SECURITY.md) for details.
 - **Source docs:** All Markdown files in [`docs/`](./docs/) are the single source of truth
 - **Architecture decisions:** ADRs in [`docs/adr/`](./docs/adr/)
 - **Data sources:** [`docs/DATA-SOURCES.md`](./docs/DATA-SOURCES.md) — external API specs, rate limits, schema mapping
-- **API reference:** [`docs/API.md`](./docs/API.md)
+- **API reference:** [`docs/api.md`](./docs/api.md)
 
 ## Contributing
 
@@ -204,7 +204,7 @@ Without the excellent work of **Timothy Carambat** and the entire Mintplex team,
 
 **What OpenSIN Chat adds on top:** complete rebranding (OpenSIN blue, German language, custom logo), telemetry fully removed (not just disableable), GDPR-affine defaults, political-use-case branding, Politician Database, Deep Research Pipeline, PDF Reports, Agent Plugins, REST APIs, test & CI infrastructure.
 
-A full list of third-party components is in [THIRD-PARTY.md](./THIRD-PARTY.md).
+A full list of third-party components is in [THIRD_PARTY.md](./THIRD_PARTY.md).
 
 ---
 

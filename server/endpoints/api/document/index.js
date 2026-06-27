@@ -47,10 +47,12 @@ function validateWorkspaceSlugQuery(request, response, next) {
 function apiDocumentEndpoints(app) {
   if (!app) return;
 
-  function cleanupHotdirFile(request) {
+  async function cleanupHotdirFile(request) {
     try {
       const filePath = request.file?.path;
-      if (filePath && fs.existsSync(filePath)) fs.rmSync(filePath);
+      if (!filePath) return;
+      await fs.promises.access(filePath);
+      await fs.promises.rm(filePath, { recursive: true, force: true });
     } catch {
       // Best-effort cleanup
     }
@@ -140,7 +142,7 @@ function apiDocumentEndpoints(app) {
         const processingOnline = await Collector.online();
 
         if (!processingOnline) {
-          cleanupHotdirFile(request);
+          await cleanupHotdirFile(request);
           response
             .status(500)
             .json({
@@ -157,7 +159,7 @@ function apiDocumentEndpoints(app) {
         );
 
         if (!success || !documents?.length) {
-          cleanupHotdirFile(request);
+          await cleanupHotdirFile(request);
           return response
             .status(500)
             .json({ success: false, error: reason, documents })
@@ -292,13 +294,16 @@ function apiDocumentEndpoints(app) {
           !isWithin(path.resolve(documentsPath), path.resolve(targetFolderPath))
         )
           throw new Error("Invalid folder name");
-        if (!fs.existsSync(targetFolderPath))
-          fs.mkdirSync(targetFolderPath, { recursive: true });
+        try {
+          await fs.promises.access(targetFolderPath);
+        } catch {
+          await fs.promises.mkdir(targetFolderPath, { recursive: true });
+        }
 
         const Collector = new CollectorApi();
         const processingOnline = await Collector.online();
         if (!processingOnline) {
-          cleanupHotdirFile(request);
+          await cleanupHotdirFile(request);
           return response
             .status(500)
             .json({
@@ -314,7 +319,7 @@ function apiDocumentEndpoints(app) {
           metadata,
         );
         if (!success || !documents?.length) {
-          cleanupHotdirFile(request);
+          await cleanupHotdirFile(request);
           return response
             .status(500)
             .json({ success: false, error: reason, documents })
@@ -341,7 +346,7 @@ function apiDocumentEndpoints(app) {
             )
               throw new Error("Invalid file location");
 
-            fs.renameSync(sourcePath, destinationPath);
+            await fs.promises.rename(sourcePath, destinationPath);
             doc.location = path.join(folder, path.basename(doc.location));
             doc.name = path.basename(doc.location);
           }
@@ -975,15 +980,18 @@ function apiDocumentEndpoints(app) {
         if (!isWithin(path.resolve(documentsPath), path.resolve(storagePath)))
           throw new Error("Invalid path name");
 
-        if (fs.existsSync(storagePath)) {
+        try {
+          await fs.promises.access(storagePath);
           response.status(500).json({
             success: false,
             message: "Folder by that name already exists",
           });
           return;
+        } catch {
+          // folder doesn't exist — proceed
         }
 
-        fs.mkdirSync(storagePath, { recursive: true });
+        await fs.promises.mkdir(storagePath, { recursive: true });
         response.status(200).json({ success: true, message: null });
       } catch (e) {
         consoleLogger.error(e);

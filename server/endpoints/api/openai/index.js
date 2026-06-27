@@ -259,7 +259,6 @@ function apiOpenAICompatibleEndpoints(app) {
       try {
         const body = reqBody(request);
         // Support input or "inputs" (for backwards compatibility) as an array of strings or a single string
-        // TODO: "inputs" key support will eventually be fully removed.
         let input = body?.input || body?.inputs || [];
         // if input is not an array, make it an array and force to string content
         if (!Array.isArray(input)) input = [String(input)];

@@ -30,14 +30,14 @@ export default function ChangeWarningModal({
       <div className="h-full w-full overflow-y-auto max-h-[calc(100vh-200px)]">
         <div className="py-7 px-9 space-y-2 flex-col">
           <p className="text-white">
-            {/* eslint-disable i18next/no-literal-string */}
+            {}
             {warningText.split("\n").map((line, index) => (
               <span key={index}>
                 {line}
                 <br />
               </span>
             ))}
-            {/* eslint-enable i18next/no-literal-string */}
+            {}
             <br />
             <br />
             {t("changeWarning.proceed")}

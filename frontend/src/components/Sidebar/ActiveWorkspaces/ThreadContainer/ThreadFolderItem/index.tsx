@@ -197,11 +197,9 @@ export default function ThreadFolderItem({
     }
     try {
       const { folder: updated, message } =
-        await Workspace.threads.folders.update(
-          workspace.slug,
-          folder.id,
-          { name: trimmed },
-        );
+        await Workspace.threads.folders.update(workspace.slug, folder.id, {
+          name: trimmed,
+        });
       if (message || !updated) {
         showToast(t("threadFolderItem.renameFailed", { message }), "error", {
           clear: true,
@@ -246,8 +244,7 @@ export default function ThreadFolderItem({
       invalidateThreads(workspace.slug);
     } catch (err: any) {
       showToast(
-        t("threadFolderItem.deleteFailed") +
-          `: ${String(err?.message || err)}`,
+        t("threadFolderItem.deleteFailed") + `: ${String(err?.message || err)}`,
         "error",
         { clear: true },
       );

@@ -445,7 +445,10 @@ class PlenarScraper {
     // given name, causing every titled speaker to miss the name map.
     const cleanName = speech.speakerName
       .trim()
-      .replace(/^(dr\.|prof\.|prof\.\s*dr\.|dr\.\s*h\.c\.|prof\.\s*dr\.\s*h\.c\.|habil\.)\s+/i, "")
+      .replace(
+        /^(dr\.|prof\.|prof\.\s*dr\.|dr\.\s*h\.c\.|prof\.\s*dr\.\s*h\.c\.|habil\.)\s+/i,
+        "",
+      )
       .replace(/\s+(jr\.|sr\.|von|de|van|zu|zur|der|den|dem)\b/gi, " ")
       .trim();
 

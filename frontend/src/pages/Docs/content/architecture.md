@@ -384,7 +384,7 @@ Auf einen externen Storage syncen (z.B. per `rclone` zu Backblaze B2 oder Hetzne
 - [`BARE_METAL.md`](../BARE_METAL.md) — Doku für Self-Hoster (nicht Mac-Cloudflare-Setup)
 - [`DEPLOYMENT_GUIDE.md`](../DEPLOYMENT_GUIDE.md) — Historische Setup-Anleitung
 - [`SECURITY.md`](../SECURITY.md) — Telemetrie-Audit, Auth-Modell
-- [`THIRD-PARTY.md`](../THIRD-PARTY.md) — Upstream-Komponenten, Lizenzen
+- [`THIRD_PARTY.md`](../THIRD_PARTY.md) — Upstream-Komponenten, Lizenzen
 - [`UPSTREAM-SYNC.md`](./UPSTREAM-SYNC.md) — Wie wir AnythingLLM-Patches mergen
 
 ---

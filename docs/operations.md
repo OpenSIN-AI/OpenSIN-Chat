@@ -187,7 +187,7 @@ Im Single-User-Modus ist der Python-Collector-Service absichtlich nicht gestarte
 
 - [`docs/INCIDENT-RESPONSE.md`](./INCIDENT-RESPONSE.md) — Vollständiges Incident-Response-Playbook
 - [`docs/OPENSIN-CHAT-DEPLOYMENT.md`](./OPENSIN-CHAT-DEPLOYMENT.md) — Deployments-Anleitung
-- [`docs/SECURITY.md`](./SECURITY.md) — Sicherheits-Handbuch
+- [`docs/security.md`](./security.md) — Sicherheits-Handbuch
 - [`scripts/deploy-production.sh`](https://github.com/OpenSIN-AI/OpenSIN-Chat/blob/main/scripts/deploy-production.sh) — Deploy-Skript
 
 ---

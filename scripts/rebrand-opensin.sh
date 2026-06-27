@@ -6,7 +6,7 @@ set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
 
 # Dateien, die NICHT angefasst werden duerfen (Lockfiles, Lizenz, Credit-Dateien).
-EXCLUDE='(^|/)(LICENSE|LICENSE\.md|THIRD-PARTY\.md|BRANDING\.md|pnpm-lock\.yaml|package-lock\.json|yarn\.lock)$'
+EXCLUDE='(^|/)(LICENSE|LICENSE\.md|THIRD_PARTY\.md|BRANDING\.md|pnpm-lock\.yaml|package-lock\.json|yarn\.lock)$'
 
 # 1) Anzeige-/Marken-Strings ersetzen (NICHT die kleingeschriebenen Storage-Keys).
 git ls-files -z \

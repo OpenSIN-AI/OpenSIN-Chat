@@ -23,10 +23,12 @@ const fs = require("fs");
 const path = require("path");
 const { ensureStorageDir } = require("../utils/paths");
 
-function cleanupHotdirFile(request) {
+async function cleanupHotdirFile(request) {
   try {
     const filePath = request.file?.path;
-    if (filePath && fs.existsSync(filePath)) fs.rmSync(filePath);
+    if (!filePath) return;
+    await fs.promises.access(filePath);
+    await fs.promises.rm(filePath, { recursive: true, force: true });
   } catch {
     // Best-effort cleanup
   }
@@ -200,7 +202,7 @@ function workspaceParsedFilesEndpoints(app) {
         const processingOnline = await Collector.online();
 
         if (!processingOnline) {
-          cleanupHotdirFile(request);
+          await cleanupHotdirFile(request);
           return response.status(500).json({
             success: false,
             error: `Document processing API is not online. Document ${originalname} will not be parsed.`,
@@ -210,7 +212,7 @@ function workspaceParsedFilesEndpoints(app) {
         const { success, reason, documents } =
           await Collector.parseDocument(collectorFilename);
         if (!success || !documents?.[0]) {
-          cleanupHotdirFile(request);
+          await cleanupHotdirFile(request);
           return response.status(500).json({
             success: false,
             error: reason || "No document returned from collector",
@@ -272,7 +274,7 @@ function workspaceParsedFilesEndpoints(app) {
           files,
         });
       } catch (e) {
-        cleanupHotdirFile(request);
+        await cleanupHotdirFile(request);
         const errorId = crypto.randomUUID();
         consoleLogger.error(`[endpoint error ${errorId}]`, e);
         return response.status(500).json({

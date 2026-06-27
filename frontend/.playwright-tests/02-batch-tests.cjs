@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { chromium } = require('playwright');
 
 async function loginAndSetup() {

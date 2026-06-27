@@ -14,7 +14,6 @@ const {
   handleDefaultStreamResponseV2,
   formatChatHistory,
 } = require("../../helpers/chat/responses");
-const { parseReasoningFromResponse } = require("../../helpers/reasoningFilter");
 
 const cacheFolder = getStoragePath("models", "fireworks");
 

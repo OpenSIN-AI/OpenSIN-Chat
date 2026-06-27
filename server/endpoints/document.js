@@ -39,15 +39,18 @@ function documentEndpoints(app) {
         if (!isWithin(path.resolve(documentsPath), path.resolve(storagePath)))
           throw new Error("Invalid folder name.");
 
-        if (fs.existsSync(storagePath)) {
+        try {
+          await fs.promises.access(storagePath);
           response.status(500).json({
             success: false,
             message: "Folder by that name already exists",
           });
           return;
+        } catch {
+          // folder doesn't exist — proceed
         }
 
-        fs.mkdirSync(storagePath, { recursive: true });
+        await fs.promises.mkdir(storagePath, { recursive: true });
         response.status(200).json({ success: true, message: null });
       } catch (e) {
         consoleLogger.error(e);

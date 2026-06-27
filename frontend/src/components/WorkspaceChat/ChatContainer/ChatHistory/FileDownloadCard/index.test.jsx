@@ -53,7 +53,9 @@ vi.mock("@/hooks/useAuthenticatedBlobUrl", () => {
   let mockResult = { blobUrl: null, loading: false, error: null };
   return {
     default: vi.fn(() => mockResult),
-    __setMockResult: (r) => { mockResult = r; },
+    __setMockResult: (r) => {
+      mockResult = r;
+    },
   };
 });
 

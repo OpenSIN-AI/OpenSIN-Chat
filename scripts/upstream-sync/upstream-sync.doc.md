@@ -93,4 +93,4 @@ Der Generator nutzt keine `declare -A` (gibt's erst ab Bash 4). Stattdessen pars
 - `docs/UPSTREAM-SYNC.md`         — Strategie-Doc
 - `BRANDING.md`                    — Welche Dateien `"AnythingLLM"` enthalten dürfen
 - `scripts/check-branding.sh`      — Linter, der Drift erkennt
-- `THIRD-PARTY.md`                 — Upstream-Credit + Lizenz
+- `THIRD_PARTY.md`                 — Upstream-Credit + Lizenz

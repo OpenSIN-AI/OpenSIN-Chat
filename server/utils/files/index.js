@@ -521,8 +521,6 @@ function purgeEntireVectorCache() {
  * If the file is larger than this, we will stream it and parse it in chunks
  * This is to prevent us from using too much memory when parsing large files
  * or loading the files in the file picker.
- * @TODO - When lazy loading for folders is implemented, we should increase this threshold (512MB)
- * since it will always be faster to readSync than to stream the file and parse it in chunks.
  */
 const FILE_READ_SIZE_THRESHOLD = 150 * (1024 * 1024);
 

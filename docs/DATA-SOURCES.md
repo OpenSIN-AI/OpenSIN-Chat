@@ -3,7 +3,7 @@
 > **Zweck:** Technische Dokumentation der 3 externen Datenquellen für die Politiker-Datenbank, inklusive API-Spezifikationen, Rate-Limits, Filter-Möglichkeiten und bekannten Einschränkungen.
 >
 > **Docs:** `docs/DATA-SOURCES.md` (diese Datei)
-> **Related:** `docs/USER-GUIDE.md` §3, `docs/API.md` §2, `server/jobs/sync-politician-data.js`
+> **Related:** `docs/user-guide.md` §3, `docs/api.md` §2, `server/jobs/sync-politician-data.js`
 
 ---
 

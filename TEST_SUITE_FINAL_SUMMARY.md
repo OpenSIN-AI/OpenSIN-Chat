@@ -174,7 +174,6 @@ const request = async (method, path, body = null, headers = {}) => {
 ### Documentation Files
 - `tests/README.md` - Comprehensive documentation of the test suite
 - `tests/TEST_COVERAGE_SUMMARY.md` - Detailed test coverage analysis
-- `TEST_SUITE_SUMMARY.md` - Overall summary of the test suite
 
 ### Existing Files
 - `tests/e2e/webAccessPrompt.test.cjs` - Existing E2E test (preserved)

@@ -1,11 +1,11 @@
 <!-- SPDX-License-Identifier: MIT -->
 
-**Purpose:** CoDocs companion for `docs/OPERATIONS.md` — day-to-day operations runbook for OpenSIN-Chat.
+**Purpose:** CoDocs companion for `docs/operations.md` — day-to-day operations runbook for OpenSIN-Chat.
 
 **Docs:**
-- Source: `docs/OPERATIONS.md`
+- Source: `docs/operations.md`
 - In-App slug: `/docs/operations`
-- Related: `docs/SECURITY.md`, `docs/INCIDENT-RESPONSE.md`, `docs/OPENSIN-CHAT-DEPLOYMENT.md`
+- Related: `docs/security.md`, `docs/INCIDENT-RESPONSE.md`, `docs/OPENSIN-CHAT-DEPLOYMENT.md`
 
 **Summary:**
 Covers health checks, production deployment, backup strategy, container restart, common troubleshooting, monitoring, and incident escalation.

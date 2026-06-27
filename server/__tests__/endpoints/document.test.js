@@ -54,15 +54,15 @@ describe("documentEndpoints", () => {
 
   describe("POST /document/create-folder", () => {
     it("creates a folder successfully", async () => {
-      jest.spyOn(fs, "existsSync").mockReturnValue(false);
-      jest.spyOn(fs, "mkdirSync").mockReturnValue();
+      jest.spyOn(fs.promises, "access").mockRejectedValue(new Error("ENOENT"));
+      jest.spyOn(fs.promises, "mkdir").mockResolvedValue();
       const res = await app.call("post", "/document/create-folder", { body: { name: "my-folder" } });
       expect(res.statusCode).toBe(200);
       expect(res.body.success).toBe(true);
     });
 
     it("rejects when folder exists", async () => {
-      jest.spyOn(fs, "existsSync").mockReturnValue(true);
+      jest.spyOn(fs.promises, "access").mockResolvedValue();
       const res = await app.call("post", "/document/create-folder", { body: { name: "existing" } });
       expect(res.statusCode).toBe(500);
       expect(res.body.message).toContain("already exists");
@@ -70,7 +70,6 @@ describe("documentEndpoints", () => {
 
     it("rejects invalid folder name", async () => {
       isWithin.mockReturnValue(false);
-      jest.spyOn(fs, "existsSync").mockReturnValue(false);
       const res = await app.call("post", "/document/create-folder", { body: { name: "../escape" } });
       expect(res.statusCode).toBe(500);
       expect(res.body.message).toContain("Invalid folder name");

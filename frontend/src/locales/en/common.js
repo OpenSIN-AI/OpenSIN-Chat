@@ -745,8 +745,6 @@ const TRANSLATIONS = {
     apiKey: "API Key",
     cancel: "Cancel",
     communityHub: "Community Hub",
-    defaultSkillTooltip:
-      "This skill is enabled by default and cannot be turned off.",
     engine: "Engine",
     methods: {
       put: "PUT",
@@ -2261,9 +2259,9 @@ const TRANSLATIONS = {
         model_type: "Model Type",
         model_type_tooltip:
           'If your deployment uses a reasoning model (o1, o1-mini, o3-mini, etc.), set this to "Reasoning". Otherwise, your chat requests may fail.',
-    default: "Default",
-    defaultSkillTooltip:
-      "This skill is enabled by default and cannot be turned off.",
+        default: "Default",
+        defaultSkillTooltip:
+          "This skill is enabled by default and cannot be turned off.",
         reasoning: "Reasoning",
         token_limit: {
           4096: "4,096 (gpt-3.5-turbo)",

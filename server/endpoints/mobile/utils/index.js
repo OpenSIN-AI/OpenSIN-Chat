@@ -116,13 +116,15 @@ async function handleMobileCommand(request, response) {
       if (!workspace)
         return response.status(400).json({ error: "Workspace not found" });
       const threadId = threadSlug
-        ? (await prisma.workspace_threads.findFirst({
-            where: {
-              workspace_id: workspace.id,
-              slug: String(threadSlug),
-              ...(user ? { user_id: user.id } : {}),
-            },
-          }))?.id ?? null
+        ? ((
+            await prisma.workspace_threads.findFirst({
+              where: {
+                workspace_id: workspace.id,
+                slug: String(threadSlug),
+                ...(user ? { user_id: user.id } : {}),
+              },
+            })
+          )?.id ?? null)
         : null;
 
       await WorkspaceChats.markThreadHistoryInvalidV2({

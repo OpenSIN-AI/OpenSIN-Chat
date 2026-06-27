@@ -23,8 +23,7 @@ export const PDF_UPLOADED_EVENT = "PDF_UPLOADED";
 
 function isPdfFile(file: File): boolean {
   return (
-    file.type === "application/pdf" ||
-    file.name.toLowerCase().endsWith(".pdf")
+    file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf")
   );
 }
 

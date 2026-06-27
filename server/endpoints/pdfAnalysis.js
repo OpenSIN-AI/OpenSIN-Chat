@@ -20,8 +20,8 @@ const UPLOAD_DIR = getStoragePath("pdf-analysis", "uploads");
 
 const upload = multer({
   storage: multer.diskStorage({
-    destination: (_req, _file, cb) => {
-      fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+    destination: async (_req, _file, cb) => {
+      await fs.promises.mkdir(UPLOAD_DIR, { recursive: true });
       cb(null, UPLOAD_DIR);
     },
     filename: (_req, file, cb) => {

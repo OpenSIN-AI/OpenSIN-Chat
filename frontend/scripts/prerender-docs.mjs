@@ -117,6 +117,10 @@ const FILE_TO_SLUG = {
   "PDF-ANALYSIS.md": "pdf-analysis",
   "SECURITY.md": "security",
   "OPERATIONS.md": "operations",
+  "api.md": "api",
+  "user-guide.md": "user-guide",
+  "security.md": "security",
+  "operations.md": "operations",
 };
 
 const DOC_ENTRIES = [
@@ -126,7 +130,7 @@ const DOC_ENTRIES = [
     description: "Einstieg, Workspaces, Chatten mit Dokumenten und Grundfunktionen.",
     category: "getting-started",
     file: "user-guide.md",
-    source: "docs/USER-GUIDE.md",
+    source: "docs/user-guide.md",
   },
   {
     slug: "api",
@@ -134,7 +138,7 @@ const DOC_ENTRIES = [
     description: "Vollständige REST-API-Referenz für Entwickler und Integrationen.",
     category: "api",
     file: "api.md",
-    source: "docs/API.md",
+    source: "docs/api.md",
   },
   {
     slug: "architecture",
@@ -246,7 +250,7 @@ const DOC_ENTRIES = [
     description: "Auth-Modi, Secrets-Management, Netzwerk-Sicherheit, DSGVO-Defaults und API-Sicherheit.",
     category: "operations",
     file: "security.md",
-    source: "docs/SECURITY.md",
+    source: "docs/security.md",
   },
   {
     slug: "operations",
@@ -254,7 +258,7 @@ const DOC_ENTRIES = [
     description: "Täglicher Betrieb, Deployments, Backups, Monitoring, Troubleshooting und Incident-Eskalation.",
     category: "operations",
     file: "operations.md",
-    source: "docs/OPERATIONS.md",
+    source: "docs/operations.md",
   },
 ];
 

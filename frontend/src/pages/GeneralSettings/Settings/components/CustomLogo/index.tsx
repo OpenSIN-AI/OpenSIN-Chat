@@ -55,7 +55,9 @@ export default function CustomLogo(): JSX.Element {
     } catch (err: any) {
       URL.revokeObjectURL(objectURL);
       showToast(
-        t("customization.items.logo.uploadFailed", { error: err?.message ?? String(err) }),
+        t("customization.items.logo.uploadFailed", {
+          error: err?.message ?? String(err),
+        }),
         "error",
       );
       setLogo(_initLogo);
@@ -88,7 +90,9 @@ export default function CustomLogo(): JSX.Element {
     } catch (err: any) {
       console.error("Failed to remove logo:", err);
       showToast(
-        t("customization.items.logo.removeFailed", { error: err?.message ?? String(err) }),
+        t("customization.items.logo.removeFailed", {
+          error: err?.message ?? String(err),
+        }),
         "error",
       );
       const { logoURL } = await System.fetchLogo();

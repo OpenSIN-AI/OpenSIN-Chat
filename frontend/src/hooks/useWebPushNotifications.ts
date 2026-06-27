@@ -14,7 +14,7 @@ const PUSH_USER_SUBSCRIBE_URL = `${API_BASE}/web-push/subscribe`;
 const SW_VERSION = "1.0.0";
 
 function log(message, ...args) {
-  if (import.meta.env.MODE === "production") return;
+  if (!import.meta.env.DEV) return;
   if (typeof message === "object") message = JSON.stringify(message, null, 2);
   // eslint-disable-next-line no-console
   console.log(`[useWebPushNotifications] ${message}`, ...args);

@@ -317,8 +317,7 @@ describe("chat/markdown — renderMarkdown (real markdown-it)", () => {
     });
 
     it("wraps tables in a scrollable container for responsive overflow", () => {
-      const md =
-        "| Col A | Col B |\n|-------|-------|\n| cell1 | cell2 |\n";
+      const md = "| Col A | Col B |\n|-------|-------|\n| cell1 | cell2 |\n";
       const out = renderMarkdown(md);
       expect(out).toContain("markdown-table-wrapper");
       expect(out).toContain("<table>");

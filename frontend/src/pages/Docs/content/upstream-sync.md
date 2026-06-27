@@ -79,5 +79,5 @@ Die letzten 23 Upstream-Commits (4 Merge-Commits ausgeschlossen) sind wie folgt 
 ## Siehe auch
 
 - `BRANDING.md`         — Marken-Richtlinien + Whitelist
-- `THIRD-PARTY.md`      — Upstream-Credit + Lizenz-Hinweise
+- `THIRD_PARTY.md`      — Upstream-Credit + Lizenz-Hinweise
 - `CONTRIBUTING.md`     — PR-Konventionen (Conventional Commits)

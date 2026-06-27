@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // E2E browser smoke runner for OpenSIN-Chat at https://sinchat.delqhi.com
 // Tests the FULL user journey in one run with deep inspection.
 // Usage: node tests/e2e-browser/01-smoke.mjs

@@ -64,6 +64,13 @@ class ModelRouterService {
     if (this._sweepTimer.unref) this._sweepTimer.unref();
   }
 
+  cleanup() {
+    if (this._sweepTimer) {
+      clearInterval(this._sweepTimer);
+      this._sweepTimer = null;
+    }
+  }
+
   _sweepExpired() {
     const now = Date.now();
     const stickyTtl = ModelRouterService.DEFAULT_STICKY_MS;
@@ -706,5 +713,10 @@ class ModelRouterService {
     }
   }
 }
+
+const _routerService = ModelRouterService.getInstance();
+
+process.on("SIGTERM", () => _routerService.cleanup());
+process.on("SIGINT", () => _routerService.cleanup());
 
 module.exports = { ModelRouterService };

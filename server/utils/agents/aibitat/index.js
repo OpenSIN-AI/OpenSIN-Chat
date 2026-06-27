@@ -626,9 +626,6 @@ class AIbitat {
       }
 
       if (!nextNode) {
-        // TODO: should it throw an error or keep the chat alive when there is no node to chat with in the group?
-        // maybe it should wrap up the chat and reply to the original node
-        // For now, it will terminate the chat
         this.terminate(route.from);
         return;
       }
@@ -717,8 +714,6 @@ class AIbitat {
     const nodes = this.getGroupMembers(channel);
     const channelConfig = this.getChannelConfig(channel);
 
-    // TODO: move this to when the group is created
-    // warn if the group is underpopulated
     if (nodes.length < 3) {
       consoleLogger.warn(
         `- Group (${channel}) is underpopulated with ${nodes.length} agents. Direct communication would be more efficient.`,
@@ -739,7 +734,6 @@ class AIbitat {
       }
     }
 
-    // TODO: what should it do when there is no node to chat with?
     if (!availableNodes.length) return;
 
     // get the provider that will be used for the channel

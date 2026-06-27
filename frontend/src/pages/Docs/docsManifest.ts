@@ -80,7 +80,7 @@ export const DOC_ENTRIES: DocEntry[] = [
       "Einstieg, Workspaces, Chatten mit Dokumenten und Grundfunktionen.",
     category: "getting-started",
     file: "user-guide.md",
-    source: "docs/USER-GUIDE.md",
+    source: "docs/user-guide.md",
   },
   {
     slug: "api",
@@ -89,7 +89,7 @@ export const DOC_ENTRIES: DocEntry[] = [
       "Vollständige REST-API-Referenz für Entwickler und Integrationen.",
     category: "api",
     file: "api.md",
-    source: "docs/API.md",
+    source: "docs/api.md",
   },
   {
     slug: "architecture",
@@ -205,7 +205,7 @@ export const DOC_ENTRIES: DocEntry[] = [
       "Auth-Modi, Secrets-Management, Netzwerk-Sicherheit, DSGVO-Defaults und API-Sicherheit.",
     category: "operations",
     file: "security.md",
-    source: "docs/SECURITY.md",
+    source: "docs/security.md",
   },
   {
     slug: "operations",
@@ -214,7 +214,7 @@ export const DOC_ENTRIES: DocEntry[] = [
       "Täglicher Betrieb, Deployments, Backups, Monitoring, Troubleshooting und Incident-Eskalation.",
     category: "operations",
     file: "operations.md",
-    source: "docs/OPERATIONS.md",
+    source: "docs/operations.md",
   },
   {
     slug: "incident-response",
@@ -263,6 +263,10 @@ const FILE_TO_SLUG: Record<string, string> = {
   "SECURITY.md": "security",
   "OPERATIONS.md": "operations",
   "INCIDENT-RESPONSE.md": "incident-response",
+  "api.md": "api",
+  "user-guide.md": "user-guide",
+  "security.md": "security",
+  "operations.md": "operations",
 };
 
 /**

@@ -71,9 +71,7 @@ describe("EmptyState", () => {
 
   it("renders the greeting and prompt input", () => {
     renderEmptyState();
-    expect(
-      screen.getByText("How can I help you today?"),
-    ).toBeInTheDocument();
+    expect(screen.getByText("How can I help you today?")).toBeInTheDocument();
     expect(screen.getByTestId("prompt-input")).toBeInTheDocument();
   });
 

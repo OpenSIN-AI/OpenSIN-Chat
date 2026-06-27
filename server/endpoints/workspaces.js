@@ -325,7 +325,9 @@ function workspaceEndpoints(app) {
         for (const filePath of resolvedFilePaths) {
           try {
             const basename = path.basename(filePath);
-            if (!fs.existsSync(filePath)) {
+            try {
+              await fs.promises.access(filePath);
+            } catch {
               results.push({
                 file: basename,
                 success: false,
@@ -360,7 +362,7 @@ function workspaceEndpoints(app) {
               });
               continue;
             }
-            fs.copyFileSync(filePath, destPath);
+            await fs.promises.copyFile(filePath, destPath);
 
             const { success, reason, documents } =
               await Collector.processDocument(basename);
@@ -386,7 +388,7 @@ function workspaceEndpoints(app) {
             } else {
               results.push({ file: basename, success: true, document });
             }
-          } catch (e) {
+          } catch {
             results.push({
               file: path.basename(filePath),
               success: false,

@@ -286,7 +286,7 @@
 
 | Wave | Inhalt | Status |
 |---|---|---|
-| 1 | `docs/SECURITY.md` + `docs/OPERATIONS.md` + In-App-Integration | ✅ |
+| 1 | `docs/security.md` + `docs/operations.md` + In-App-Integration | ✅ |
 | 2 | GitHub Issue Templates + `CODEOWNERS` | ✅ |
 | 3 | Tests + Build/Lint/Branding + Deploy | ✅ |
 

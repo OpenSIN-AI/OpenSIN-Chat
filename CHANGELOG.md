@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed — Deep Bug-Scan (Waves 2-6)
+
+Multi-wave systematic bug sweep across all layers of the codebase.
+252 bugs fixed across 200+ files using parallel subagents.
+
+- **Wave 2** (`f03a2346`) — 109 files, ~60+ bugs fixed across all layers
+  (server, frontend, collector, docker, infra).
+- **Wave 3** (`c81d139e`) — 39 bugs across server agents, AiProviders,
+  frontend, and infrastructure.
+- **Wave 4** (`c255e0ab`) — 26 bugs across agent plugins, models,
+  frontend, and infrastructure.
+- **Wave 5** (`a735444d`) — 24 bugs across aibitat core, helpers,
+  frontend, and boot sequence.
+- **Wave 6** (`3f283e63`) — 54 bugs across 51 files, executed by
+  8 parallel subagents.
+
 ### Fixed — Bug sweep #3 (issue #254)
 
 - **HIGH — Prisma `model_routers` / `model_router_rules` ambiguous

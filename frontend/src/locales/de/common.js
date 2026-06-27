@@ -648,8 +648,6 @@ const TRANSLATIONS = {
     name: "Name",
     bearer: "Bearer",
     default: "Standard",
-    defaultSkillTooltip:
-      "Diese Fähigkeit ist standardmäßig aktiviert und kann nicht deaktiviert werden.",
     branch: "Branch",
     agentSkills: "Agenten-Fähigkeiten",
     viewingText: "Text anzeigen",
@@ -1860,6 +1858,8 @@ const TRANSLATIONS = {
         chat_model_token_limit: "Chat-Modell Token-Begrenzung",
         model_type: "Art des Modells",
         default: "Standard",
+        defaultSkillTooltip:
+          "Diese Fähigkeit ist standardmäßig aktiviert und kann nicht deaktiviert werden.",
         reasoning: "Reasoning",
         model_type_tooltip:
           'Wenn Ihre Bereitstellung ein Reasoning-Modell verwendet (z. B. o1, o1-mini, o3-mini usw.), setzen Sie dies auf "Reasoning". Andernfalls können Ihre Chat-Anfragen fehlschlagen.',
@@ -2190,7 +2190,8 @@ const TRANSLATIONS = {
       no_docs: "Keine Dokumente vorhanden.",
       remove_selected: "Ausgewähltes entfernen",
       save_embed: "Speichern und Einbetten",
-      removingSelectedFiles: "Ausgewählte Dateien werden aus dem Workspace entfernt",
+      removingSelectedFiles:
+        "Ausgewählte Dateien werden aus dem Workspace entfernt",
       "total-documents_one": "{{count}} Dokument",
       "total-documents_other": "{{count}} Dokumente",
     },

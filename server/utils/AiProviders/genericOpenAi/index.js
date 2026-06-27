@@ -11,9 +11,7 @@ const {
   writeResponseChunk,
   clientAbortedHandler,
 } = require("../../helpers/chat/responses");
-const {
-  parseReasoningFromResponse,
-} = require("../../helpers/reasoningFilter");
+const { parseReasoningFromResponse } = require("../../helpers/reasoningFilter");
 const { v4: uuidv4 } = require("uuid");
 const { toValidNumber } = require("../../http");
 const { getOpenSINChatUserAgent } = require("../../../endpoints/utils");
@@ -312,9 +310,6 @@ class GenericOpenAiLLM {
     return measuredStreamRequest;
   }
 
-  // TODO: This is a copy of the generic handleStream function in responses.js
-  // to specifically handle the DeepSeek reasoning model `reasoning_content` field.
-  // When or if ever possible, we should refactor this to be in the generic function.
   handleStream(response, stream, responseProps) {
     const { uuid = uuidv4(), sources = [] } = responseProps;
     let hasUsageMetrics = false;
@@ -442,7 +437,6 @@ class GenericOpenAiLLM {
       }
     });
   }
-
 
   /**
    * Whether this provider supports native OpenAI-compatible tool calling.

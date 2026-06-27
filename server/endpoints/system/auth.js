@@ -492,7 +492,7 @@ function authEndpoints(app) {
     async (request, response) => {
       try {
         const { token, newPassword, confirmPassword } = reqBody(request);
-        const { success, message, error } = await resetPassword(
+        const { success, message } = await resetPassword(
           token,
           newPassword,
           confirmPassword,

@@ -162,7 +162,10 @@ export default function FilesystemSidebar({ workspace = null }: any) {
               ? t(
                   "sidebar.filesystem.connectDirSuccess",
                   'Verzeichnis "{path}" verbunden — KI hat Zugriff auf alle Dateien',
-                  { path: selectedDirectory || t("sidebar.filesystem.uploadsRoot") },
+                  {
+                    path:
+                      selectedDirectory || t("sidebar.filesystem.uploadsRoot"),
+                  },
                 )
               : t(
                   "sidebar.filesystem.connectFilesSuccess",
@@ -175,7 +178,9 @@ export default function FilesystemSidebar({ workspace = null }: any) {
       } else {
         setConnectResult({
           success: false,
-          message: data.error || t("sidebar.filesystem.connectFailed", "Fehler beim Verbinden"),
+          message:
+            data.error ||
+            t("sidebar.filesystem.connectFailed", "Fehler beim Verbinden"),
         });
       }
     } catch (e) {

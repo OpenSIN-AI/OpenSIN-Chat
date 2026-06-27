@@ -61,33 +61,33 @@ function MultiUserMode() {
         password: form.get("password") as string,
       };
 
-    try {
-      const { success, error } = await System.setupMultiUser(data);
-      if (success) {
-        showToast(t("security.multiuser.enable.success"), "success");
+      try {
+        const { success, error } = await System.setupMultiUser(data);
+        if (success) {
+          showToast(t("security.multiuser.enable.success"), "success");
+          setSaving(false);
+          setTimeout(() => {
+            safeRemoveItem(AUTH_USER);
+            safeRemoveItem(AUTH_TOKEN);
+            safeRemoveItem(AUTH_TIMESTAMP);
+            window.location.href = paths.settings.users();
+          }, 2_000);
+          return;
+        }
+
+        showToast(t("security.multiuser.enable.failed", { error }), "error");
         setSaving(false);
-        setTimeout(() => {
-          safeRemoveItem(AUTH_USER);
-          safeRemoveItem(AUTH_TOKEN);
-          safeRemoveItem(AUTH_TIMESTAMP);
-          window.location.href = paths.settings.users();
-        }, 2_000);
+        return;
+      } catch (e: any) {
+        showToast(
+          t("security.multiuser.enable.failed", {
+            error: String(e?.message || e),
+          }),
+          "error",
+        );
+        setSaving(false);
         return;
       }
-
-      showToast(t("security.multiuser.enable.failed", { error }), "error");
-      setSaving(false);
-      return;
-    } catch (e: any) {
-      showToast(
-        t("security.multiuser.enable.failed", {
-          error: String(e?.message || e),
-        }),
-        "error",
-      );
-      setSaving(false);
-      return;
-    }
     }
     setSaving(false);
   };

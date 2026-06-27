@@ -56,7 +56,8 @@ export default function useAgentPreferences() {
       return {
         settings: { ..._settings, preferences: _preferences?.settings ?? {} },
         agentSkills: _preferences?.settings?.default_agent_skills ?? [],
-        disabledAgentSkills: _preferences?.settings?.disabled_agent_skills ?? [],
+        disabledAgentSkills:
+          _preferences?.settings?.disabled_agent_skills ?? [],
         importedSkills: _preferences?.settings?.imported_agent_skills ?? [],
         agentFlows: flows,
         activeFlowIds: flows.filter((f) => f.active).map((f) => f.uuid),
