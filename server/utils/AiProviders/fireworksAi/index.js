@@ -29,6 +29,9 @@ class FireworksAiLLM {
         process.env.FIREWORKS_AI_LLM_BASE_PATH ||
         "https://api.fireworks.ai/inference/v1",
       apiKey: process.env.FIREWORKS_AI_LLM_API_KEY ?? null,
+      defaultHeaders: {
+        "User-Agent": "OpenSIN-Chat/1.0",
+      },
     });
     this.model = modelPreference || process.env.FIREWORKS_AI_LLM_MODEL_PREF;
     this.limits = {
@@ -294,6 +297,9 @@ async function fireworksAiModels(providedApiKey = null) {
       process.env.FIREWORKS_AI_LLM_BASE_PATH ||
       "https://api.fireworks.ai/inference/v1",
     apiKey: apiKey,
+    defaultHeaders: {
+      "User-Agent": "OpenSIN-Chat/1.0",
+    },
   });
 
   return await client.models
