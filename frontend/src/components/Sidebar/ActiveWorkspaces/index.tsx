@@ -248,15 +248,14 @@ export default function ActiveWorkspaces() {
                       }`}
                       {...({ role: "listitem" } as any)}
                     >
-                      <div className="flex gap-x-2 items-center justify-between">
+                      <div className="flex gap-x-1 items-center justify-between">
                         <Link
                           to={paths.workspace.chat(workspace.slug)}
                           aria-current={isActive ? "page" : undefined}
                           className={`
                             transition-all duration-[200ms]
-                            flex flex-grow w-[75%] gap-x-2 py-[6px] pl-[4px] pr-[6px] rounded-[4px] text-white justify-start items-center
-                            bg-theme-sidebar-item-default
-                            ${isActive ? "light:bg-blue-200 font-bold" : "hover:bg-theme-sidebar-subitem-hover light:hover:bg-slate-300"}
+                            flex flex-grow w-[75%] gap-x-2 py-[7px] pl-[6px] pr-[6px] rounded-[8px] text-white justify-start items-center
+                            ${isActive ? "bg-theme-sidebar-item-selected light:bg-blue-200 font-medium" : "bg-theme-sidebar-item-default hover:bg-theme-sidebar-item-hover light:hover:bg-slate-300"}
                           `}
                         >
                           <div className="flex flex-row justify-between w-full items-center">

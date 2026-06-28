@@ -103,7 +103,7 @@ export default function Sidebar() {
         className="relative transition-all duration-500 flex-shrink-0 z-40 bg-zinc-950 light:bg-slate-50 hidden md:flex"
       >
         <div className="overflow-hidden h-full">
-          <div className="flex shrink-0 w-full items-center justify-between gap-x-2 my-[18px] px-[16px]">
+          <div className="flex shrink-0 w-full items-center justify-between gap-x-2 my-[14px] px-[14px]">
             <Link
               to={paths.home()}
               aria-label={t("sidebar.home")}
@@ -151,15 +151,15 @@ export default function Sidebar() {
           </div>
           <div
             ref={sidebarRef}
-            style={{ "--sidebar-inner-width": `${sidebarWidth - 32}px` }}
-            className="w-[var(--sidebar-inner-width)] relative m-[16px] rounded-[16px] bg-theme-bg-sidebar light:bg-slate-200 border-[2px] border-theme-sidebar-border light:border-none p-[10px] h-[calc(100%-76px)]"
+            style={{ "--sidebar-inner-width": `${sidebarWidth - 16}px` }}
+            className="w-[var(--sidebar-inner-width)] relative m-[8px] rounded-[12px] bg-theme-bg-sidebar light:bg-slate-100/50 p-[8px] h-[calc(100%-40px)]"
           >
             <div className="flex flex-col h-full overflow-hidden">
               <div className="flex-grow flex flex-col min-h-0">
                 <div
-                  className="min-w-[var(--sidebar-scroll-min-width)] relative h-[calc(100%-60px)] flex flex-col w-full justify-between pt-[10px] overflow-y-scroll no-scroll"
+                  className="min-w-[var(--sidebar-scroll-min-width)] relative h-[calc(100%-60px)] flex flex-col w-full justify-between pt-[8px] overflow-y-scroll no-scroll"
                   style={{
-                    "--sidebar-scroll-min-width": `${sidebarWidth - 64}px`,
+                    "--sidebar-scroll-min-width": `${sidebarWidth - 48}px`,
                   }}
                 >
                   <div className="flex flex-col gap-y-[14px]">
@@ -167,7 +167,7 @@ export default function Sidebar() {
                     <ActiveWorkspaces />
                   </div>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 pb-3 rounded-b-[16px] bg-theme-bg-sidebar light:bg-slate-200 bg-opacity-80 backdrop-filter backdrop-blur-md z-10">
+                <div className="absolute bottom-0 left-0 right-0 pb-2 rounded-b-[12px] bg-transparent z-10">
                   <Footer />
                 </div>
               </div>

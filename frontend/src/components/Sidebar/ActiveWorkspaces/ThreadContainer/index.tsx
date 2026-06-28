@@ -470,24 +470,22 @@ function NewThreadButton({ workspace, mutate }) {
     <button
       type="button"
       onClick={onClick}
-      className="w-full relative flex h-[40px] items-center border-none hover:bg-[var(--theme-sidebar-thread-selected)] light:hover:bg-slate-300 hover:light:bg-theme-sidebar-subitem-hover rounded-lg"
+      className="w-full relative flex h-[36px] items-center border-none hover:bg-theme-sidebar-subitem-hover light:hover:bg-slate-300 rounded-[8px] transition-colors"
     >
-      <div className="flex w-full gap-x-2 items-center pl-4">
-        <div className="bg-zinc-800 light:bg-slate-50 p-2 rounded-lg h-[24px] w-[24px] flex items-center justify-center">
-          {loading ? (
-            <CircleNotch
-              weight="bold"
-              size={14}
-              className="shrink-0 animate-spin text-white light:text-theme-text-primary"
-            />
-          ) : (
-            <Plus
-              weight="bold"
-              size={14}
-              className="shrink-0 text-white light:text-theme-text-primary"
-            />
-          )}
-        </div>
+      <div className="flex w-full gap-x-2 items-center pl-3">
+        {loading ? (
+          <CircleNotch
+            weight="bold"
+            size={14}
+            className="shrink-0 animate-spin text-white light:text-theme-text-primary"
+          />
+        ) : (
+          <Plus
+            weight="bold"
+            size={14}
+            className="shrink-0 text-white light:text-theme-text-primary"
+          />
+        )}
         {loading ? (
           <p className="text-left text-white light:text-theme-text-primary text-sm">
             {t("threadContainer.startingChat")}
@@ -540,24 +538,22 @@ function NewFolderButton({ workspace, onCreated }) {
     <button
       type="button"
       onClick={onClick}
-      className="w-full relative flex h-[40px] items-center border-none hover:bg-[var(--theme-sidebar-thread-selected)] light:hover:bg-slate-300 rounded-lg"
+      className="w-full relative flex h-[36px] items-center border-none hover:bg-theme-sidebar-subitem-hover light:hover:bg-slate-300 rounded-[8px] transition-colors"
     >
-      <div className="flex w-full gap-x-2 items-center pl-4">
-        <div className="bg-zinc-800 light:bg-slate-50 p-2 rounded-lg h-[24px] w-[24px] flex items-center justify-center">
-          {loading ? (
-            <CircleNotch
-              weight="bold"
-              size={14}
-              className="shrink-0 animate-spin text-white light:text-theme-text-primary"
-            />
-          ) : (
-            <FolderSimplePlus
-              weight="bold"
-              size={14}
-              className="shrink-0 text-white light:text-theme-text-primary"
-            />
-          )}
-        </div>
+      <div className="flex w-full gap-x-2 items-center pl-3">
+        {loading ? (
+          <CircleNotch
+            weight="bold"
+            size={14}
+            className="shrink-0 animate-spin text-white light:text-theme-text-primary"
+          />
+        ) : (
+          <FolderSimplePlus
+            weight="bold"
+            size={14}
+            className="shrink-0 text-white light:text-theme-text-primary"
+          />
+        )}
         <p className="text-left text-white light:text-theme-text-primary text-sm font-semibold">
           {t("threadContainer.newFolder")}
         </p>

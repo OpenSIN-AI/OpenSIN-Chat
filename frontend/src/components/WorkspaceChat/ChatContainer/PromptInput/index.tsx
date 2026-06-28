@@ -72,7 +72,7 @@ export default function PromptInput({
       className={
         centered
           ? "w-full relative flex justify-center items-center"
-          : "w-full absolute bottom-0 left-0 z-10 flex justify-center items-center pwa:pb-5"
+          : "w-full absolute bottom-0 left-0 z-10 flex justify-center items-center pwa:pb-5 px-2 md:px-0"
       }
     >
       <form
@@ -86,7 +86,7 @@ export default function PromptInput({
         <div
           className={`flex items-center rounded-lg md:w-full ${centered ? "mb-0" : "mb-4"}`}
         >
-          <div className="relative w-[95vw] md:w-[750px]">
+          <div className="relative w-full md:w-[750px]">
             <ToolsMenu
               workspace={workspace}
               showing={showTools}

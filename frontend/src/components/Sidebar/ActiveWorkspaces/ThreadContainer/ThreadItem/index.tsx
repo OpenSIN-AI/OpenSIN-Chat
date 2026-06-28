@@ -124,7 +124,7 @@ function ThreadItem({
       {/* Curved line inline placeholder for spacing - not visible */}
       <div className="w-[34px] h-full" />
       <div
-        className={`flex w-full items-center justify-between pr-2 group/thread relative ${isActive ? "bg-[var(--theme-sidebar-thread-selected)] light:bg-blue-200" : "hover:bg-theme-sidebar-subitem-hover light:hover:bg-slate-300"} rounded-[4px]`}
+        className={`flex w-full items-center justify-between pr-2 group/thread relative ${isActive ? "bg-theme-sidebar-thread-selected light:bg-blue-200" : "hover:bg-theme-sidebar-subitem-hover light:hover:bg-slate-300"} rounded-[6px]`}
       >
         {thread.deleted ? (
           <div className="w-full flex justify-between">
