@@ -28,7 +28,9 @@ function formatTps(outputTps: any) {
  * @returns {boolean}
  */
 function getAutoShowMetrics() {
-  return window?.localStorage?.getItem(SHOW_METRICS_KEY) === "true";
+  const stored = window?.localStorage?.getItem(SHOW_METRICS_KEY);
+  if (stored === null) return true;
+  return stored === "true";
 }
 
 /**
