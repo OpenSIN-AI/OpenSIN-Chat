@@ -80,13 +80,13 @@ export default function PromptInput({
         className={
           centered
             ? "flex flex-col gap-y-1 rounded-t-lg w-full items-center"
-            : "flex flex-col gap-y-1 rounded-t-lg md:w-full w-full mx-auto max-w-[760px] items-center"
+            : "flex flex-col gap-y-1 rounded-t-lg w-full mx-auto max-w-[800px] items-center px-2 md:px-6"
         }
       >
         <div
-          className={`flex items-center rounded-lg md:w-full ${centered ? "mb-0" : "mb-4"}`}
+          className={`flex items-center rounded-lg w-full ${centered ? "mb-0" : "mb-4"}`}
         >
-          <div className="relative w-full md:w-[750px]">
+          <div className="relative w-full">
             <ToolsMenu
               workspace={workspace}
               showing={showTools}

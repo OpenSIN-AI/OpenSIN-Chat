@@ -452,7 +452,7 @@ export default forwardRef(function (
             data={compiledRows}
             computeItemKey={computeItemKey}
             itemContent={(index, row) => (
-              <div className="w-full max-w-[800px] mx-auto px-4 md:px-6">
+              <div className="w-full max-w-[800px] mx-auto px-2 md:px-6">
                 {renderRow(row, index)}
               </div>
             )}
