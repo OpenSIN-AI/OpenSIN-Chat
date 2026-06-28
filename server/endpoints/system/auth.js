@@ -133,14 +133,14 @@ function authEndpoints(app) {
     [
       simpleRateLimit({
         bucket: "login-ip",
-        max: 100,
+        max: 10,
         windowMs: 60 * 1000,
         identity: "user",
         skipIf: skipForSingleUserNoPassword,
       }),
       simpleRateLimit({
         bucket: "login-account",
-        max: 100,
+        max: 20,
         windowMs: 60 * 60 * 1000,
         identity: "user",
         skipIf: skipForSingleUserNoPassword,
@@ -335,7 +335,7 @@ function authEndpoints(app) {
             });
             return;
           }
-          if (!bcrypt.compareSync(password, getAuthTokenHash())) {
+          if (!password || !bcrypt.compareSync(String(password), getAuthTokenHash())) {
             await EventLogs.logEvent(
               "failed_login_invalid_password",
               singleRequestMeta,
