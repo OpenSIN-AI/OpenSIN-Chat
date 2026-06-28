@@ -87,15 +87,17 @@ const HistoricalMessage = ({
   if (role === "user") {
     if (isEditing) {
       return (
-        <div key={uuid} className="flex justify-end w-full py-1.5 px-4">
-          <EditMessageForm
-            role={role}
-            chatId={chatId}
-            message={message}
-            attachments={attachments}
-            adjustTextArea={adjustTextArea}
-            saveChanges={saveEditedMessage}
-          />
+        <div key={uuid} className="flex justify-end w-full py-2">
+          <div className="max-w-[75%] mr-4 md:mr-8">
+            <EditMessageForm
+              role={role}
+              chatId={chatId}
+              message={message}
+              attachments={attachments}
+              adjustTextArea={adjustTextArea}
+              saveChanges={saveEditedMessage}
+            />
+          </div>
         </div>
       );
     }
@@ -104,10 +106,10 @@ const HistoricalMessage = ({
       <div
         key={uuid}
         onAnimationEnd={onEndAnimation}
-        className={`${isDeleted ? "animate-remove" : ""} flex justify-end w-full group`}
+        className={`${isDeleted ? "animate-remove" : ""} flex justify-end w-full group py-2`}
       >
-        <div className="py-1 px-4 flex flex-col items-end">
-          <div className="bg-zinc-100 light:bg-slate-100 text-zinc-900 light:text-slate-900 rounded-2xl rounded-br-md px-3.5 py-1.5 max-w-[600px] [&_p]:m-0 shadow-sm border border-zinc-300 light:border-slate-200">
+        <div className="flex flex-col items-end max-w-[75%] mr-4 md:mr-8">
+          <div className="bg-zinc-800/80 light:bg-slate-100 text-zinc-100 light:text-slate-800 rounded-2xl rounded-br-sm px-4 py-2.5 [&_p]:m-0 shadow-sm">
             <TruncatableContent>
               <RenderChatContent
                 role={role}
@@ -138,9 +140,9 @@ const HistoricalMessage = ({
     <div
       key={uuid}
       onAnimationEnd={onEndAnimation}
-      className={`${isDeleted ? "animate-remove" : ""} flex justify-start w-full group`}
+      className={`${isDeleted ? "animate-remove" : ""} flex justify-start w-full group py-2`}
     >
-      <div className="py-1 px-4 flex flex-col md:max-w-[80%] w-full">
+      <div className="flex flex-col md:max-w-[80%] w-full ml-4 md:ml-8">
         {isEditing ? (
           <EditMessageForm
             role={role}

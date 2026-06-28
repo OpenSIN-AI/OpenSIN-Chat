@@ -22,12 +22,13 @@ export function useEditMessage({ chatId, role }: any) {
 export function EditMessageAction({ chatId = null, role, isEditing }: any) {
   const { t } = useTranslation();
   function handleEditClick() {
+    if (!chatId) return;
     window.dispatchEvent(
       new CustomEvent(EDIT_EVENT, { detail: { chatId, role } }),
     );
   }
 
-  if (!chatId || isEditing) return null;
+  if (isEditing) return null;
   return (
     <div
       className={`relative flex items-center justify-center h-7 w-7 ${
@@ -37,13 +38,14 @@ export function EditMessageAction({ chatId = null, role, isEditing }: any) {
       <button
         type="button"
         onClick={handleEditClick}
+        disabled={!chatId}
         data-tooltip-id="edit-input-text"
         data-tooltip-content={
           role === "user"
             ? t("chat_window.edit_prompt")
             : t("chat_window.edit_response")
         }
-        className="border-none text-zinc-300 light:text-slate-500 px-0"
+        className={`border-none px-0 ${!chatId ? "opacity-30 cursor-not-allowed" : "text-zinc-300 light:text-slate-500"}`}
         aria-label={
           role === "user"
             ? t("chat_window.edit_prompt")
