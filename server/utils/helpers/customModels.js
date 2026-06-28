@@ -85,72 +85,65 @@ async function openAiModels(apiKey = null) {
   const { OpenAI: OpenAIApi } = require("openai");
   const key = apiKey || process.env.OPEN_AI_KEY;
   if (!key) return { models: [], error: "No API key provided" };
-
-  const fallbackModels = [
-    {
-      name: "gpt-3.5-turbo",
-      id: "gpt-3.5-turbo",
-      object: "model",
-      created: 1677610602,
-      owned_by: "openai",
-      organization: "OpenAi",
-    },
-    {
-      name: "gpt-4o",
-      id: "gpt-4o",
-      object: "model",
-      created: 1677610602,
-      owned_by: "openai",
-      organization: "OpenAi",
-    },
-    {
-      name: "gpt-4",
-      id: "gpt-4",
-      object: "model",
-      created: 1687882411,
-      owned_by: "openai",
-      organization: "OpenAi",
-    },
-    {
-      name: "gpt-4-turbo",
-      id: "gpt-4-turbo",
-      object: "model",
-      created: 1712361441,
-      owned_by: "system",
-      organization: "OpenAi",
-    },
-    {
-      name: "gpt-4-32k",
-      id: "gpt-4-32k",
-      object: "model",
-      created: 1687979321,
-      owned_by: "openai",
-      organization: "OpenAi",
-    },
-    {
-      name: "gpt-3.5-turbo-16k",
-      id: "gpt-3.5-turbo-16k",
-      object: "model",
-      created: 1683758102,
-      owned_by: "openai-internal",
-      organization: "OpenAi",
-    },
-  ];
-
-  let allModels;
-  try {
-    const openai = new OpenAIApi({ apiKey: key });
-    allModels = await openai.models
-      .list()
-      .then((results) => results.data)
-      .catch((e) => {
-        consoleLogger.error(`OpenAI:listModels`, e.message);
-        return fallbackModels;
-      });
-  } catch (e) {
-    consoleLogger.error(`OpenAI:listModels`, e.message);
-    return { models: [], error: null };
-  }
+  const openai = new OpenAIApi({
+    apiKey: key,
+  });
+  const allModels = await openai.models
+    .list()
+    .then((results) => results.data)
+    .catch((e) => {
+      consoleLogger.error(`OpenAI:listModels`, e.message);
+      return [
+        {
+          name: "gpt-3.5-turbo",
+          id: "gpt-3.5-turbo",
+          object: "model",
+          created: 1677610602,
+          owned_by: "openai",
+          organization: "OpenAi",
+        },
+        {
+          name: "gpt-4o",
+          id: "gpt-4o",
+          object: "model",
+          created: 1677610602,
+          owned_by: "openai",
+          organization: "OpenAi",
+        },
+        {
+          name: "gpt-4",
+          id: "gpt-4",
+          object: "model",
+          created: 1687882411,
+          owned_by: "openai",
+          organization: "OpenAi",
+        },
+        {
+          name: "gpt-4-turbo",
+          id: "gpt-4-turbo",
+          object: "model",
+          created: 1712361441,
+          owned_by: "system",
+          organization: "OpenAi",
+        },
+        {
+          name: "gpt-4-32k",
+          id: "gpt-4-32k",
+          object: "model",
+          created: 1687979321,
+          owned_by: "openai",
+          organization: "OpenAi",
+        },
+        {
+          name: "gpt-3.5-turbo-16k",
+          id: "gpt-3.5-turbo-16k",
+          object: "model",
+          created: 1683758102,
+          owned_by: "openai-internal",
+          organization: "OpenAi",
+        },
+      ];
+    });
 
   const gpts = allModels
     .filter(
@@ -179,8 +172,7 @@ async function openAiModels(apiKey = null) {
   const customModels = allModels
     .filter(
       (model) =>
-        !(model.owned_by || "").includes("openai") &&
-        model.owned_by !== "system",
+        !model.owned_by.includes("openai") && model.owned_by !== "system",
     )
     .map((model) => {
       return {
@@ -214,23 +206,17 @@ async function openAiSttModels(apiKey = null) {
   const { OpenAI: OpenAIApi } = require("openai");
   const sttKey = apiKey || process.env.OPEN_AI_KEY;
   if (!sttKey) return { models: fallback, error: null };
+  const openai = new OpenAIApi({
+    apiKey: sttKey,
+  });
 
-  let allModels;
-  try {
-    const openai = new OpenAIApi({
-      apiKey: sttKey,
+  const allModels = await openai.models
+    .list()
+    .then((results) => results.data)
+    .catch((e) => {
+      consoleLogger.error(`OpenAI:listModels (stt)`, e.message);
+      return null;
     });
-    allModels = await openai.models
-      .list()
-      .then((results) => results.data)
-      .catch((e) => {
-        consoleLogger.error(`OpenAI:listModels (stt)`, e.message);
-        return null;
-      });
-  } catch (e) {
-    consoleLogger.error(`OpenAI:listModels (stt)`, e.message);
-    return { models: fallback, error: null };
-  }
 
   if (!allModels) return { models: fallback, error: null };
 
@@ -254,31 +240,25 @@ async function anthropicModels(_apiKey = null) {
       ? process.env.ANTHROPIC_API_KEY
       : _apiKey || process.env.ANTHROPIC_API_KEY || null;
   if (!apiKey) return { models: [], error: "No API key provided" };
-  let models;
-  try {
-    const AnthropicAI = require("@anthropic-ai/sdk");
-    const anthropic = new AnthropicAI({ apiKey });
-    models = await anthropic.models
-      .list()
-      .then((results) => results.data)
-      .then((models) => {
-        return models
-          .filter((model) => model.type === "model")
-          .map((model) => {
-            return {
-              id: model.id,
-              name: model.display_name,
-            };
-          });
-      })
-      .catch((e) => {
-        consoleLogger.error(`Anthropic:listModels`, e.message);
-        return [];
-      });
-  } catch (e) {
-    consoleLogger.error(`Anthropic:listModels`, e.message);
-    return { models: [], error: null };
-  }
+  const AnthropicAI = require("@anthropic-ai/sdk");
+  const anthropic = new AnthropicAI({ apiKey });
+  const models = await anthropic.models
+    .list()
+    .then((results) => results.data)
+    .then((models) => {
+      return models
+        .filter((model) => model.type === "model")
+        .map((model) => {
+          return {
+            id: model.id,
+            name: model.display_name,
+          };
+        });
+    })
+    .catch((e) => {
+      consoleLogger.error(`Anthropic:listModels`, e.message);
+      return [];
+    });
 
   // Api Key was successful so lets save it for future uses
   if (models.length > 0 && !!apiKey) process.env.ANTHROPIC_API_KEY = apiKey;
@@ -287,23 +267,17 @@ async function anthropicModels(_apiKey = null) {
 
 async function localAIModels(basePath = null, apiKey = null) {
   const { OpenAI: OpenAIApi } = require("openai");
-  let models;
-  try {
-    const openai = new OpenAIApi({
-      baseURL: basePath || process.env.LOCAL_AI_BASE_PATH,
-      apiKey: apiKey || process.env.LOCAL_AI_API_KEY || "no-key-required",
+  const openai = new OpenAIApi({
+    baseURL: basePath || process.env.LOCAL_AI_BASE_PATH,
+    apiKey: apiKey || process.env.LOCAL_AI_API_KEY || "no-key-required",
+  });
+  const models = await openai.models
+    .list()
+    .then((results) => results.data)
+    .catch((e) => {
+      consoleLogger.error(`LocalAI:listModels`, e.message);
+      return [];
     });
-    models = await openai.models
-      .list()
-      .then((results) => results.data)
-      .catch((e) => {
-        consoleLogger.error(`LocalAI:listModels`, e.message);
-        return [];
-      });
-  } catch (e) {
-    consoleLogger.error(`LocalAI:listModels`, e.message);
-    return { models: [], error: null };
-  }
 
   // Api Key was successful so lets save it for future uses
   if (models.length > 0 && !!apiKey) process.env.LOCAL_AI_API_KEY = apiKey;
@@ -317,28 +291,21 @@ async function getGroqAiModels(_apiKey = null) {
       ? process.env.GROQ_API_KEY
       : _apiKey || process.env.GROQ_API_KEY || null;
   if (!apiKey) return { models: [], error: "No API key provided" };
-  let models;
-  try {
-    const openai = new OpenAIApi({
-      baseURL: "https://api.groq.com/openai/v1",
-      apiKey,
-    });
-    models = (
-      await openai.models
-        .list()
-        .then((results) => results.data)
-        .catch((e) => {
-          consoleLogger.error(`GroqAi:listModels`, e.message);
-          return [];
-        })
-    ).filter(
-      (model) =>
-        !model.id.includes("whisper") && !model.id.includes("tool-use"),
-    );
-  } catch (e) {
-    consoleLogger.error(`GroqAi:listModels`, e.message);
-    return { models: [], error: null };
-  }
+  const openai = new OpenAIApi({
+    baseURL: "https://api.groq.com/openai/v1",
+    apiKey,
+  });
+  const models = (
+    await openai.models
+      .list()
+      .then((results) => results.data)
+      .catch((e) => {
+        consoleLogger.error(`GroqAi:listModels`, e.message);
+        return [];
+      })
+  ).filter(
+    (model) => !model.id.includes("whisper") && !model.id.includes("tool-use"),
+  );
 
   // Api Key was successful so lets save it for future uses
   if (models.length > 0 && !!apiKey) process.env.GROQ_API_KEY = apiKey;
@@ -347,23 +314,17 @@ async function getGroqAiModels(_apiKey = null) {
 
 async function liteLLMModels(basePath = null, apiKey = null) {
   const { OpenAI: OpenAIApi } = require("openai");
-  let models;
-  try {
-    const openai = new OpenAIApi({
-      baseURL: basePath || process.env.LITE_LLM_BASE_PATH,
-      apiKey: apiKey || process.env.LITE_LLM_API_KEY || "no-key-required",
+  const openai = new OpenAIApi({
+    baseURL: basePath || process.env.LITE_LLM_BASE_PATH,
+    apiKey: apiKey || process.env.LITE_LLM_API_KEY || "no-key-required",
+  });
+  const models = await openai.models
+    .list()
+    .then((results) => results.data)
+    .catch((e) => {
+      consoleLogger.error(`LiteLLM:listModels`, e.message);
+      return [];
     });
-    models = await openai.models
-      .list()
-      .then((results) => results.data)
-      .catch((e) => {
-        consoleLogger.error(`LiteLLM:listModels`, e.message);
-        return [];
-      });
-  } catch (e) {
-    consoleLogger.error(`LiteLLM:listModels`, e.message);
-    return { models: [], error: null };
-  }
 
   // Api Key was successful so lets save it for future uses
   if (models.length > 0 && !!apiKey) process.env.LITE_LLM_API_KEY = apiKey;

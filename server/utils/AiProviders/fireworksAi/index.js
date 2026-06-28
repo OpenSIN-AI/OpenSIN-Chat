@@ -14,6 +14,7 @@ const {
   handleDefaultStreamResponseV2,
   formatChatHistory,
 } = require("../../helpers/chat/responses");
+const { parseReasoningFromResponse } = require("../../helpers/reasoningFilter");
 
 const cacheFolder = getStoragePath("models", "fireworks");
 
@@ -226,7 +227,6 @@ class FireworksAiLLM {
     );
 
     if (
-      !result.output ||
       !result.output.hasOwnProperty("choices") ||
       result.output.choices.length === 0
     )
@@ -313,7 +313,9 @@ async function fireworksAiModels(providedApiKey = null) {
 
   const validModels = {};
   models.forEach((model) => {
+    // There are many models - the ones without a context length are not chat models
     if (!model.hasOwnProperty("context_length")) return;
+
     validModels[model.id] = {
       id: model.id,
       name: model.id.split("/").pop(),
@@ -339,13 +341,12 @@ async function fireworksAiModels(providedApiKey = null) {
         "fireworksAi: Using fallback model from ENV: " + fallbackModel,
       );
     } else {
-      consoleLogger.warn(
-        "fireworksAi: No models found and no fallback configured",
-      );
+      consoleLogger.warn("fireworksAi: No models found and no fallback configured");
       return {};
     }
   }
 
+  // Cache all response information
   if (!fs.existsSync(cacheFolder))
     fs.mkdirSync(cacheFolder, { recursive: true });
   fs.writeFileSync(
