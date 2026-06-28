@@ -69,7 +69,11 @@ export default function NotepadSidebar({ workspace }: any) {
       const updated = await Note.update(slug, id, { content: text });
       if (updated) {
         setNotes((prev) =>
-          prev.map((n) => (n.id === id ? { ...n, content: text, updatedAt: updated.updatedAt } : n)),
+          prev.map((n) =>
+            n.id === id
+              ? { ...n, content: text, updatedAt: updated.updatedAt }
+              : n,
+          ),
         );
       }
       setIsSaving(false);
@@ -104,8 +108,12 @@ export default function NotepadSidebar({ workspace }: any) {
     const updated = await Note.update(slug, noteId, { pinned: !currentPinned });
     if (updated) {
       setNotes((prev) => {
-        const updatedNotes = prev.map((n) => (n.id === noteId ? { ...n, pinned: !currentPinned } : n));
-        return updatedNotes.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
+        const updatedNotes = prev.map((n) =>
+          n.id === noteId ? { ...n, pinned: !currentPinned } : n,
+        );
+        return updatedNotes.sort(
+          (a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0),
+        );
       });
     }
   };
@@ -113,7 +121,11 @@ export default function NotepadSidebar({ workspace }: any) {
   const formatDate = (dateStr: any) => {
     if (!dateStr) return "";
     const d = new Date(dateStr);
-    return d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" });
+    return d.toLocaleDateString("de-DE", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
   };
 
   const wordCount = content.trim() ? content.trim().split(/\s+/).length : 0;
@@ -175,17 +187,25 @@ export default function NotepadSidebar({ workspace }: any) {
                 >
                   <div className="flex items-center gap-1.5">
                     {note.pinned && (
-                      <PushPin size={10} weight="fill" className="text-theme-text-secondary flex-shrink-0" />
+                      <PushPin
+                        size={10}
+                        weight="fill"
+                        className="text-theme-text-secondary flex-shrink-0"
+                      />
                     )}
                     <p className="flex-1 text-xs text-white light:text-slate-900 truncate">
-                      {(note.content || "").slice(0, 40) || t("chat_window.empty_note", "Leere Notiz")}
+                      {(note.content || "").slice(0, 40) ||
+                        t("chat_window.empty_note", "Leere Notiz")}
                     </p>
                   </div>
                   <p className="text-[10px] text-zinc-400 light:text-slate-500 mt-0.5">
                     {formatDate(note.updatedAt)}
                   </p>
                   <button
-                    onClick={(e) => { e.stopPropagation(); handleDeleteNote(note.id); }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteNote(note.id);
+                    }}
                     className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 text-zinc-400 hover:text-red-400 transition-all bg-transparent border-none cursor-pointer p-1"
                   >
                     <Trash size={12} />
@@ -200,14 +220,19 @@ export default function NotepadSidebar({ workspace }: any) {
                   <div className="flex items-center justify-between px-3 py-1.5 border-b border-theme-border">
                     <div className="flex items-center gap-2">
                       <button
-                        onClick={() => handleTogglePin(activeNote.id, activeNote.pinned)}
+                        onClick={() =>
+                          handleTogglePin(activeNote.id, activeNote.pinned)
+                        }
                         className={`bg-transparent border-none cursor-pointer p-1 transition-colors ${
                           activeNote.pinned
                             ? "text-theme-text-secondary"
                             : "text-zinc-500 hover:text-theme-text-secondary"
                         }`}
                       >
-                        <PushPin size={12} weight={activeNote.pinned ? "fill" : "regular"} />
+                        <PushPin
+                          size={12}
+                          weight={activeNote.pinned ? "fill" : "regular"}
+                        />
                       </button>
                       <span className="text-[10px] text-zinc-400 light:text-slate-500">
                         {isSaving
@@ -226,14 +251,20 @@ export default function NotepadSidebar({ workspace }: any) {
                       }
                       if (activeNote) saveNote(activeNote.id, content);
                     }}
-                    placeholder={t("chat_window.note_placeholder", "Hier Notiz schreiben...")}
+                    placeholder={t(
+                      "chat_window.note_placeholder",
+                      "Hier Notiz schreiben...",
+                    )}
                     className="flex-1 w-full bg-transparent text-sm text-white light:text-slate-900 p-3 outline-none resize-none placeholder:text-zinc-500"
                   />
                 </>
               ) : (
                 <div className="flex-1 flex items-center justify-center">
                   <p className="text-sm text-zinc-400 light:text-slate-500">
-                    {t("chat_window.select_or_create_note", "Notiz auswählen oder erstellen")}
+                    {t(
+                      "chat_window.select_or_create_note",
+                      "Notiz auswählen oder erstellen",
+                    )}
                   </p>
                 </div>
               )}

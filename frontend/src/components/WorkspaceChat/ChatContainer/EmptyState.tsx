@@ -30,8 +30,12 @@ function CapabilityCard({ icon: Icon, title, description, onClick }: any) {
         <Icon size={14} className="text-theme-accent" />
       </div>
       <div className="flex flex-col gap-0.5">
-        <span className="text-xs font-medium text-white light:text-slate-900">{title}</span>
-        <span className="text-[11px] text-zinc-400 light:text-slate-500 leading-tight">{description}</span>
+        <span className="text-xs font-medium text-white light:text-slate-900">
+          {title}
+        </span>
+        <span className="text-[11px] text-zinc-400 light:text-slate-500 leading-tight">
+          {description}
+        </span>
       </div>
     </button>
   );
@@ -62,25 +66,37 @@ export default function EmptyState({
     {
       icon: Books,
       title: t2("chat.capability_sources", "Quellen durchsuchen"),
-      description: t2("chat.capability_sources_desc", "Durchsuche deine hochgeladenen Dokumente"),
+      description: t2(
+        "chat.capability_sources_desc",
+        "Durchsuche deine hochgeladenen Dokumente",
+      ),
       onClick: () => toggleSidebar("sources"),
     },
     {
       icon: Notepad,
       title: t2("chat.capability_notes", "Notizen machen"),
-      description: t2("chat.capability_notes_desc", "Schreibe Notizen direkt im Workspace"),
+      description: t2(
+        "chat.capability_notes_desc",
+        "Schreibe Notizen direkt im Workspace",
+      ),
       onClick: () => toggleSidebar("notepad"),
     },
     {
       icon: Database,
       title: t2("chat.capability_database", "Politiker-Datenbank"),
-      description: t2("chat.capability_database_desc", "Durchsuche Bundestags-Daten"),
+      description: t2(
+        "chat.capability_database_desc",
+        "Durchsuche Bundestags-Daten",
+      ),
       onClick: () => toggleSidebar("database"),
     },
     {
       icon: Sparkle,
       title: t2("chat.capability_rag", "KI mit Quellen"),
-      description: t2("chat.capability_rag_desc", "Antworten basierend auf deinen Dokumenten"),
+      description: t2(
+        "chat.capability_rag_desc",
+        "Antworten basierend auf deinen Dokumenten",
+      ),
       onClick: () => {},
     },
   ];
