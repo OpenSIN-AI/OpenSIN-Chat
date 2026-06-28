@@ -471,22 +471,20 @@ export default forwardRef(function (
             />
           )}
           {!isAtBottom && (
-            <div className="absolute bottom-[130px] right-6 z-30">
-              <div className="flex flex-col items-center">
-                <button
-                  type="button"
-                  onClick={() => {
-                    scrollVirtuosoToBottom(!isStreaming);
-                  }}
-                  aria-label={t("chat.aria.scrollToBottom")}
-                  className="p-1 rounded-full border border-white/10 bg-white/10 hover:bg-white/20 hover:text-white light:border-theme-border-primary light:bg-theme-bg-primary light:hover:bg-theme-bg-secondary cursor-pointer"
-                >
-                  <ArrowDown
-                    weight="bold"
-                    className="text-white/60 light:text-theme-text-secondary w-5 h-5"
-                  />
-                </button>
-              </div>
+            <div className="absolute bottom-[140px] left-1/2 -translate-x-1/2 z-30">
+              <button
+                type="button"
+                onClick={() => {
+                  scrollVirtuosoToBottom(!isStreaming);
+                }}
+                aria-label={t("chat.aria.scrollToBottom")}
+                className="flex items-center justify-center w-9 h-9 rounded-full bg-zinc-700 light:bg-slate-200 hover:bg-zinc-600 light:hover:bg-slate-300 shadow-lg transition-all"
+              >
+                <ArrowDown
+                  weight="bold"
+                  className="text-zinc-300 light:text-slate-600 w-4 h-4"
+                />
+              </button>
             </div>
           )}
         </div>
