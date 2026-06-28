@@ -43,7 +43,7 @@ const Actions: any = ({
 
   return (
     <div
-      className={`flex ${role === "user" ? "w-fit" : "w-full"} flex-wrap items-center gap-y-1 ${role === "user" ? "justify-end" : "justify-between"} md:h-0 md:overflow-hidden md:group-hover:h-auto md:focus-within:h-auto transition-all duration-200`}
+      className={`flex ${role === "user" ? "w-fit" : "w-full"} flex-wrap items-center gap-y-1 ${role === "user" ? "justify-end" : "justify-between"} md:h-auto transition-all duration-200`}
     >
       <div className="flex justify-start items-center gap-x-[8px]">
         <div className="md:group-hover:opacity-100 md:focus-within:opacity-100 transition-all duration-300 md:opacity-50 flex justify-start items-center gap-x-[8px]">
