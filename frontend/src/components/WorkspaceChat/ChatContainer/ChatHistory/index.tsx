@@ -451,7 +451,11 @@ export default forwardRef(function (
             ref={virtuosoRef}
             data={compiledRows}
             computeItemKey={computeItemKey}
-            itemContent={(index, row) => renderRow(row, index)}
+            itemContent={(index, row) => (
+              <div className="w-full max-w-[800px] mx-auto px-4 md:px-6">
+                {renderRow(row, index)}
+              </div>
+            )}
             followOutput={() => {
               return "smooth";
             }}

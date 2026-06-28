@@ -75,8 +75,8 @@ const PromptReply: any = ({
 
   if (pending) {
     return (
-      <div className="flex justify-start w-full py-2">
-        <div className="flex items-center w-full ml-4 md:ml-8">
+      <div className="flex justify-start w-full py-2.5">
+        <div className="flex items-center w-full">
           <div className="flex items-center gap-1">
             <span className="w-2 h-2 rounded-full bg-zinc-400 light:bg-slate-400 animate-pulse" style={{ animationDelay: "0ms" }} />
             <span className="w-2 h-2 rounded-full bg-zinc-400 light:bg-slate-400 animate-pulse" style={{ animationDelay: "150ms" }} />
@@ -89,8 +89,8 @@ const PromptReply: any = ({
 
   if (error) {
     return (
-      <div className="flex justify-start w-full py-2">
-        <div className="flex flex-col md:max-w-[80%] ml-4 md:ml-8">
+      <div className="flex justify-start w-full py-2.5">
+        <div className="flex flex-col md:max-w-[85%] w-full">
           <span className="inline-block p-2 rounded-lg bg-red-50 text-red-500">
             <Warning className="h-4 w-4 mb-1 inline-block" />{" "}
             {t("promptReply.couldNotRespond")}
@@ -106,8 +106,8 @@ const PromptReply: any = ({
   }
 
   return (
-    <div key={uuid} className="flex justify-start w-full py-2">
-      <div className="flex flex-col w-full ml-4 md:ml-8 md:max-w-[80%]">
+    <div key={uuid} className="flex justify-start w-full py-2.5">
+      <div className="flex flex-col w-full md:max-w-[85%]">
         <RenderAssistantChatContent
           key={`${uuid}-prompt-reply-content`}
           message={reply}

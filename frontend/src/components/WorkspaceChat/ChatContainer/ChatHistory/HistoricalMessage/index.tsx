@@ -87,8 +87,8 @@ const HistoricalMessage = ({
   if (role === "user") {
     if (isEditing) {
       return (
-        <div key={uuid} className="flex justify-end w-full py-2">
-          <div className="max-w-[75%] mr-4 md:mr-8">
+        <div key={uuid} className="flex justify-end w-full py-2.5">
+          <div className="max-w-[80%]">
             <EditMessageForm
               role={role}
               chatId={chatId}
@@ -106,9 +106,9 @@ const HistoricalMessage = ({
       <div
         key={uuid}
         onAnimationEnd={onEndAnimation}
-        className={`${isDeleted ? "animate-remove" : ""} flex justify-end w-full group py-2`}
+        className={`${isDeleted ? "animate-remove" : ""} flex justify-end w-full group py-2.5`}
       >
-        <div className="flex flex-col items-end max-w-[75%] mr-4 md:mr-8">
+        <div className="flex flex-col items-end max-w-[80%]">
           <div className="bg-zinc-800/80 light:bg-slate-100 text-zinc-100 light:text-slate-800 rounded-2xl rounded-br-sm px-4 py-2.5 [&_p]:m-0 shadow-sm">
             <TruncatableContent>
               <RenderChatContent
@@ -140,9 +140,9 @@ const HistoricalMessage = ({
     <div
       key={uuid}
       onAnimationEnd={onEndAnimation}
-      className={`${isDeleted ? "animate-remove" : ""} flex justify-start w-full group py-2`}
+      className={`${isDeleted ? "animate-remove" : ""} flex justify-start w-full group py-2.5`}
     >
-      <div className="flex flex-col md:max-w-[80%] w-full ml-4 md:ml-8">
+      <div className="flex flex-col md:max-w-[85%] w-full">
         {isEditing ? (
           <EditMessageForm
             role={role}
