@@ -470,28 +470,28 @@ function NewThreadButton({ workspace, mutate }) {
     <button
       type="button"
       onClick={onClick}
-      className="w-full relative flex h-[36px] items-center border-none hover:bg-theme-sidebar-subitem-hover light:hover:bg-slate-300 rounded-[8px] transition-colors"
+      className="w-full relative flex h-[34px] items-center border border-white/10 light:border-slate-300 hover:bg-white/10 light:hover:bg-slate-200 rounded-[8px] transition-colors mb-1"
     >
       <div className="flex w-full gap-x-2 items-center pl-3">
         {loading ? (
           <CircleNotch
             weight="bold"
             size={14}
-            className="shrink-0 animate-spin text-white light:text-theme-text-primary"
+            className="shrink-0 animate-spin text-white light:text-slate-700"
           />
         ) : (
           <Plus
             weight="bold"
             size={14}
-            className="shrink-0 text-white light:text-theme-text-primary"
+            className="shrink-0 text-white light:text-slate-700"
           />
         )}
         {loading ? (
-          <p className="text-left text-white light:text-theme-text-primary text-sm">
+          <p className="text-left text-white/80 light:text-slate-600 text-[13px]">
             {t("threadContainer.startingChat")}
           </p>
         ) : (
-          <p className="text-left text-white light:text-theme-text-primary text-sm font-semibold">
+          <p className="text-left text-white/90 light:text-slate-700 text-[13px] font-medium">
             {t("threadContainer.newChat")}
           </p>
         )}
@@ -538,23 +538,23 @@ function NewFolderButton({ workspace, onCreated }) {
     <button
       type="button"
       onClick={onClick}
-      className="w-full relative flex h-[36px] items-center border-none hover:bg-theme-sidebar-subitem-hover light:hover:bg-slate-300 rounded-[8px] transition-colors"
+      className="w-full relative flex h-[34px] items-center border-none hover:bg-white/5 light:hover:bg-slate-200/70 rounded-[8px] transition-colors"
     >
       <div className="flex w-full gap-x-2 items-center pl-3">
         {loading ? (
           <CircleNotch
             weight="bold"
             size={14}
-            className="shrink-0 animate-spin text-white light:text-theme-text-primary"
+            className="shrink-0 animate-spin text-white/60 light:text-slate-500"
           />
         ) : (
           <FolderSimplePlus
             weight="bold"
             size={14}
-            className="shrink-0 text-white light:text-theme-text-primary"
+            className="shrink-0 text-white/60 light:text-slate-500"
           />
         )}
-        <p className="text-left text-white light:text-theme-text-primary text-sm font-semibold">
+        <p className="text-left text-white/60 light:text-slate-500 text-[13px] font-medium">
           {t("threadContainer.newFolder")}
         </p>
       </div>

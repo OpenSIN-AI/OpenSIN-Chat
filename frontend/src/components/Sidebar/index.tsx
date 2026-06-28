@@ -100,9 +100,9 @@ export default function Sidebar() {
       <nav
         aria-label={t("sidebar.mainNavigation")}
         style={{ width: showSidebar ? `${sidebarWidth}px` : "0px" }}
-        className="relative transition-all duration-500 flex-shrink-0 z-40 bg-zinc-950 light:bg-slate-50 hidden md:flex"
+        className="relative transition-all duration-500 flex-shrink-0 z-40 bg-zinc-950 light:bg-slate-100 hidden md:flex border-r border-white/5 light:border-slate-200"
       >
-        <div className="overflow-hidden h-full">
+        <div className="overflow-hidden h-full flex flex-col">
           <div className="flex shrink-0 w-full items-center justify-between gap-x-2 my-[14px] px-[14px]">
             <Link
               to={paths.home()}
@@ -151,23 +151,19 @@ export default function Sidebar() {
           </div>
           <div
             ref={sidebarRef}
-            style={{ "--sidebar-inner-width": `${sidebarWidth - 16}px` }}
-            className="w-[var(--sidebar-inner-width)] relative m-[8px] rounded-[12px] bg-theme-bg-sidebar light:bg-slate-100/50 p-[8px] h-[calc(100%-40px)]"
+            className="w-full relative flex-1 flex flex-col px-[10px] pb-[10px] min-h-0"
           >
             <div className="flex flex-col h-full overflow-hidden">
               <div className="flex-grow flex flex-col min-h-0">
                 <div
-                  className="min-w-[var(--sidebar-scroll-min-width)] relative h-[calc(100%-60px)] flex flex-col w-full justify-between pt-[8px] overflow-y-scroll no-scroll"
-                  style={{
-                    "--sidebar-scroll-min-width": `${sidebarWidth - 48}px`,
-                  }}
+                  className="relative flex-1 flex flex-col w-full justify-between pt-[4px] overflow-y-scroll no-scroll"
                 >
-                  <div className="flex flex-col gap-y-[14px]">
+                  <div className="flex flex-col gap-y-[12px]">
                     <SearchBox user={user} showNewWsModal={showNewWsModal} />
                     <ActiveWorkspaces />
                   </div>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 pb-2 rounded-b-[12px] bg-transparent z-10">
+                <div className="shrink-0 pt-2 pb-1 z-10">
                   <Footer />
                 </div>
               </div>

@@ -99,32 +99,11 @@ function ThreadItem({
       {...(draggable && thread.slug && !thread.virtual
         ? { ...attributes, ...listeners }
         : {})}
-      className="w-full relative flex h-[38px] items-center border-none rounded-lg"
+      className="w-full relative flex h-[34px] items-center border-none"
       role="listitem"
     >
-      {/* Curved line Element and leader if required */}
       <div
-        className={`w-[13px] ${
-          isActive
-            ? "border-l-2 border-b-2 border-white light:border-blue-800 z-[2]"
-            : "border-l border-b border-zinc-500 light:border-slate-400 z-[1]"
-        } h-[50%] absolute top-0 left-3 rounded-bl-lg`}
-      ></div>
-      {/* Downstroke border for next item */}
-      {hasNext && (
-        <div
-          className={`w-[13px] ${
-            idx <= activeIdx && !isActive
-              ? "border-l-2 border-white light:border-blue-800 z-[2]"
-              : "border-l border-zinc-500 light:border-slate-400 z-[1]"
-          } h-[100%] absolute top-0 left-3`}
-        ></div>
-      )}
-
-      {/* Curved line inline placeholder for spacing - not visible */}
-      <div className="w-[34px] h-full" />
-      <div
-        className={`flex w-full items-center justify-between pr-2 group/thread relative ${isActive ? "bg-theme-sidebar-thread-selected light:bg-blue-200" : "hover:bg-theme-sidebar-subitem-hover light:hover:bg-slate-300"} rounded-[6px]`}
+        className={`flex w-full items-center justify-between pr-1 group/thread relative ${isActive ? "bg-white/10 light:bg-blue-200/70" : "hover:bg-white/5 light:hover:bg-slate-200/70"} rounded-[6px] transition-colors`}
       >
         {thread.deleted ? (
           <div className="w-full flex justify-between">
@@ -155,14 +134,14 @@ function ThreadItem({
             to={linkTo}
             data-tooltip-id="workspace-thread-name"
             data-tooltip-content={displayName}
-            className="w-full pl-2 py-1 overflow-hidden"
+            className="w-full pl-3 py-1 overflow-hidden"
             aria-current={isActive ? "page" : undefined}
           >
             <p
-              className={`text-left text-sm truncate w-full ${
+              className={`text-left text-[13px] truncate w-full ${
                 isActive
-                  ? "font-semibold text-theme-text-primary light:text-blue-900"
-                  : "text-theme-text-primary font-medium light:text-slate-800"
+                  ? "font-medium text-white light:text-blue-900"
+                  : "text-white/60 light:text-slate-600 font-normal"
               }`}
             >
               {displayName}
