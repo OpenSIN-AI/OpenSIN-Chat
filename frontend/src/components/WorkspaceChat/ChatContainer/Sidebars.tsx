@@ -9,6 +9,7 @@ import FilesystemSidebar from "./FilesystemSidebar";
 import DatabaseSidebar from "./DatabaseSidebar";
 import PoliticalSidebar from "./PoliticalSidebar";
 import PdfAnalysisSidebar from "./PdfAnalysisSidebar";
+import NotepadSidebar from "./NotepadSidebar";
 import RightSidebarIconBar from "./RightSidebarIconBar";
 import { useChatSidebar } from "./ChatSidebar";
 import { useTranslation } from "react-i18next";
@@ -63,6 +64,11 @@ export default function Sidebars({ workspace }: SidebarsProps) {
           {activeSidebar === "pdf-analysis" && (
             <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
               <PdfAnalysisSidebar />
+            </ErrorBoundary>
+          )}
+          {activeSidebar === "notepad" && (
+            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+              <NotepadSidebar workspace={workspace} />
             </ErrorBoundary>
           )}
         </div>

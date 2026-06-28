@@ -11,6 +11,7 @@ import { Newspaper } from "@phosphor-icons/react/dist/csr/Newspaper";
 import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
 import { Brain } from "@phosphor-icons/react/dist/csr/Brain";
 import { FilePdf } from "@phosphor-icons/react/dist/csr/FilePdf";
+import { Notepad } from "@phosphor-icons/react/dist/csr/Notepad";
 import { useChatSidebar } from "../ChatSidebar";
 import { useTranslation } from "react-i18next";
 
@@ -53,7 +54,6 @@ export default function RightSidebarIconBar() {
       icon: BookOpen,
       label: t("right_sidebar.icon_sources", "Quellen"),
       action: () => toggleSidebar("sources"),
-      disabled: true,
     },
     {
       id: "memories",
@@ -65,10 +65,13 @@ export default function RightSidebarIconBar() {
       id: "pdf-analysis",
       icon: FilePdf,
       label: t("right_sidebar.icon_pdf_analysis", "PDF-Analyse"),
-      // Opens the PDF analysis panel in the right sidebar instead of navigating
-      // to the standalone /pdf-analysis page (issue #257). The page route is
-      // kept for deep linking.
       action: () => toggleSidebar("pdf-analysis"),
+    },
+    {
+      id: "notepad",
+      icon: Notepad,
+      label: t("right_sidebar.icon_notepad", "Notizblock"),
+      action: () => toggleSidebar("notepad"),
     },
   ];
 

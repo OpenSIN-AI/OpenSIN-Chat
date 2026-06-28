@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
@@ -18,7 +18,8 @@ import SourceItem from "./SourceItem";
 import ChatSidebar, { useSourcesSidebar, useChatSidebar } from "../ChatSidebar";
 import SidebarTabs from "../ChatSidebar/SidebarTabs";
 import { MemoriesProvider } from "../MemoriesSidebar/MemoriesContext";
-import { safeJsonParse } from "@/utils/request";
+import { safeJsonParse, baseHeaders } from "@/utils/request";
+import { API_BASE } from "@/utils/constants";
 
 // Re-export for backward compat with existing imports
 export { useSourcesSidebar } from "../ChatSidebar";
@@ -53,7 +54,7 @@ function getWorkspaceSourceType(doc: any) {
   return { type: "document", icon: FileText, label: null };
 }
 
-function WorkspaceSourceItem({ doc, onClick }: any) {
+function WorkspaceSourceItem({ doc, onClick, snippet }: any) {
   const { t } = useTranslation();
   const { type: sourceType, icon: Icon } = getWorkspaceSourceType(doc);
   const metadata = safeJsonParse(doc.metadata, {});
@@ -63,25 +64,42 @@ function WorkspaceSourceItem({ doc, onClick }: any) {
       : sourceType === "db"
         ? t("chat_window.source_type_database")
         : t("chat_window.source_type_document");
+  const title = metadata?.title || doc.filename || doc.docId;
+  const wordCount = metadata?.wordCount;
+  const createdDate = doc.createdAt
+    ? new Date(doc.createdAt).toLocaleDateString("de-DE", { day: "2-digit", month: "short", year: "numeric" })
+    : null;
+  const summaryText = snippet || metadata?.description || null;
 
   return (
     <button
       type="button"
       onClick={onClick}
-      className="flex flex-col gap-[2px] items-start w-full text-left hover:opacity-75 transition-opacity"
+      className="flex flex-col gap-1.5 w-full text-left p-2.5 rounded-lg border border-theme-border bg-zinc-800/50 light:bg-slate-50 hover:bg-zinc-800 light:hover:bg-slate-100 transition-colors"
     >
       <div className="flex gap-[6px] items-start w-full">
-        <div className="w-4 h-4 rounded-full bg-zinc-700 light:bg-slate-200 flex items-center justify-center flex-shrink-0">
-          <Icon size={10} className="text-white light:text-slate-800" />
+        <div className="w-5 h-5 rounded-full bg-zinc-700 light:bg-slate-200 flex items-center justify-center flex-shrink-0">
+          <Icon size={11} className="text-white light:text-slate-800" />
         </div>
-        <p className="flex-1 font-medium text-sm text-white light:text-slate-900 leading-[15px] truncate">
-          {metadata?.title || doc.filename || doc.docId}
+        <p className="flex-1 font-medium text-sm text-white light:text-slate-900 leading-[15px] line-clamp-2">
+          {title}
         </p>
       </div>
-      <div className="flex flex-col gap-[2px] pl-[22px] text-[10px] text-zinc-400 light:text-slate-500 leading-[14px]">
-        <p>{label}</p>
-        {metadata?.wordCount && (
-          <p>{t("common.words", { count: metadata.wordCount })}</p>
+      {summaryText && (
+        <p className="text-[11px] text-zinc-400 light:text-slate-500 leading-[14px] pl-[26px] line-clamp-3">
+          {summaryText}
+        </p>
+      )}
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 pl-[26px] text-[10px] text-zinc-500 light:text-slate-400">
+        <span className="inline-flex items-center gap-x-0.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-theme-accent opacity-60" />
+          {label}
+        </span>
+        {wordCount && (
+          <span>{t("common.words", { count: wordCount })}</span>
+        )}
+        {createdDate && (
+          <span>{createdDate}</span>
         )}
       </div>
     </button>
@@ -167,9 +185,28 @@ export default function SourcesSidebar({ workspace }: any) {
   const { t } = useTranslation();
   const isMobile = useIsMobileLayout();
   const [selectedSource, setSelectedSource] = useState(null);
+  const [snippets, setSnippets] = useState<Record<string, string>>({});
   const { sourceFilter, isDocumentSource, isMediaSource } = useChatSidebar();
 
   const combined = combineLikeSources(sources);
+
+  const fetchSnippets = useCallback(async (slug: any) => {
+    if (!slug) return;
+    try {
+      const res = await fetch(`${API_BASE}/workspaces/${slug}/document-snippets`, {
+        method: "GET",
+        headers: baseHeaders(),
+      });
+      const data = await res.json();
+      if (data?.snippets) setSnippets(data.snippets);
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    if (sidebarOpen && workspace?.slug) {
+      fetchSnippets(workspace.slug);
+    }
+  }, [sidebarOpen, workspace?.slug, fetchSnippets]);
 
   // Filter chat sources based on active filter
   const filteredChatSources = (combined as any).filter((source) => {
@@ -250,6 +287,7 @@ export default function SourcesSidebar({ workspace }: any) {
                   <WorkspaceSourceItem
                     key={source.docId || idx}
                     doc={source}
+                    snippet={snippets[source.docId]}
                     onClick={() => {}}
                   />
                 ) : (

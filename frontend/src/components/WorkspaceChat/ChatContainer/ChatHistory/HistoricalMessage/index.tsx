@@ -5,6 +5,7 @@ import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import Actions from "./Actions";
 import renderMarkdown from "@/utils/chat/markdown";
 import Citations from "../Citation";
+import GroundingBadge from "../GroundingBadge";
 import { v4 } from "uuid";
 import DOMPurify from "@/utils/chat/purify";
 import { EditMessageForm, useEditMessage } from "./Actions/EditMessage";
@@ -264,6 +265,7 @@ const HistoricalMessage = ({
             }
           />
         </div>
+        {role === "assistant" && <GroundingBadge sources={sources} />}
         {role === "assistant" && <Citations sources={sources} />}
       </div>
     </div>

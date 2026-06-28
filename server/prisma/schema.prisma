@@ -176,6 +176,7 @@ model workspaces {
   prompt_history               prompt_history[]
   workspace_parsed_files       workspace_parsed_files[]
   memories                     memories[]
+  notes                        workspace_notes[]
 
   @@index([router_id])
 }
@@ -778,4 +779,16 @@ model job_queue {
 
   @@index([status, created_at])
   @@index([status, locked_at])
+}
+
+model workspace_notes {
+  id          Int       @id @default(autoincrement())
+  workspaceId Int
+  content     String    @default("")
+  pinned      Boolean?  @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
+  workspace   workspaces @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId])
 }

@@ -56,6 +56,7 @@ const {
   googleAgentSkillEndpoints,
 } = require("./endpoints/utils/googleAgentSkillEndpoints");
 const { memoryEndpoints } = require("./endpoints/memory");
+const { noteEndpoints } = require("./endpoints/notes");
 const { providerStatusEndpoints } = require("./endpoints/providerStatus");
 const { pdfAnalysisEndpoints } = require("./endpoints/pdfAnalysis");
 const { webPushEndpoints } = require("./endpoints/webPush");
@@ -210,6 +211,7 @@ function buildApp() {
   googleAgentSkillEndpoints(apiRouter);
   pdfAnalysisEndpoints(app);
   memoryEndpoints(apiRouter);
+  noteEndpoints(apiRouter);
   providerStatusEndpoints(apiRouter);
   webPushEndpoints(apiRouter);
   telegramEndpoints(apiRouter);
