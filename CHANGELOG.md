@@ -5,6 +5,76 @@ All notable changes to **OpenSIN-Chat** are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [Unreleased] — 2026-06-29 — UI overhaul & chat polish
+
+### Added
+
+- **Empty State with 4 capability cards** — Quellen durchsuchen, Notizen
+  machen, Politiker-Datenbank, KI mit Quellen. Vertically centered,
+  `max-w-800px` container.
+- **Grounding Badge component** — Sparkle icon, subtle styling
+  (`text-[11px]`, `white/[0.04]` bg, `zinc-400` text).
+- **Notizblock (Notepad)** — full CRUD: `workspace_notes` table via raw
+  SQL migration, REST API endpoints, `NotepadSidebar` UI with auto-save,
+  pin, and delete actions.
+- **Auto-Summary Cards** — `document-snippets` endpoint, card redesign
+  with snippet preview.
+- **Code block copy button** — "Kopieren" label with language header.
+- **3-pulse loading dots animation** — `w-2.5 h-2.5 bg-zinc-500` with
+  200 ms delay spread between pulses.
+- **Blockquote styling** — `border-left: 3px solid` + opacity.
+- **Inline code styling** — background, padding, border-radius in both
+  light and dark modes.
+
+### Changed
+
+- **Code blocks** — `bg-zinc-900 light:bg-slate-50`,
+  `border border-white/5 light:border-slate-200`, `overflow-hidden`,
+  8 px border-radius.
+- **User messages** — `max-w-80%` right-aligned, `bg-zinc-700
+  light:bg-slate-100`, `text-zinc-50 light:text-slate-800`,
+  `rounded-br-sm`, `py-2.5`.
+- **AI messages** — `max-w-85%` left-aligned, `py-2.5`, no bubble.
+- **PromptInput** — `rounded-2xl` (was `rounded-t-lg`),
+  `border-white/10` (was `theme-sidebar-border`), `shadow-sm` (was
+  `shadow-lg`).
+- **TextArea** — `pt-3.5` padding (was `pt-1.5`).
+- **ChatHistory** — `pt-2 md:pt-3` (was `pt-4 md:pt-6`).
+- **Scroll-to-bottom button** — `w-8 h-8` (was `w-9 h-9`),
+  `shadow-md` (was `shadow-lg`), `bottom-[120px]` (was
+  `bottom-[140px]`).
+- **Left sidebar** — rebuilt ChatGPT-style: flat structure with
+  `border-r`, no nested container, no tree lines.
+- **Centered chat layout** — `max-w-[800px] mx-auto px-2 md:px-6` via
+  Virtuoso `itemContent` wrapper.
+- **Send button** — `slate-800` bg when text entered, `slate-400` when
+  empty.
+- **Agent `fireworksai.js` provider** — now uses
+  `FIREWORKS_AI_LLM_BASE_PATH` env var + `FIREWORKS_AI_LLM_MODEL_PREF`
+  + custom `User-Agent: OpenSIN-Chat/1.0`.
+
+### Fixed
+
+- **EmptyState now shows in all new chats** — `isEmpty` without
+  `!threadSlug` guard (was only visible on workspace home).
+- **Metrics default hidden** — `getAutoShowMetrics` returns `false`
+  when `localStorage` unset (was always visible).
+- **User message text invisible in dark mode** — `text-zinc-900` →
+  `text-zinc-50` on user message spans.
+- **Strong text invisible in light mode** — `text-white` →
+  `text-white light:text-slate-900` in `markdown.ts` `strong_open`
+  renderer.
+- **TruncatableContent gradient mismatch** — gradient from
+  `zinc-900` → `zinc-700` to match user bubble `bg-zinc-700`.
+- **"Neuer Chat" button off-screen** — was at `y=1081px`, fixed with
+  `sticky bottom-0 bg-zinc-950 light:bg-slate-100` wrapper.
+- **Action buttons hover-only** — `md:opacity-0` →
+  `md:group-hover:opacity-100` (was `md:h-0` making them unclickable).
+- **Edit button on all user messages** — always renders, disabled when
+  no `chatId`.
+- **`pre code` background transparent** — `.markdown pre code {
+  background: transparent; padding: 0; }`.
+
 ## [Unreleased]
 
 ### Fixed — Deep Bug-Scan (Waves 2-6)

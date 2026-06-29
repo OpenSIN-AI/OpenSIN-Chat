@@ -21,11 +21,12 @@
 
 <!-- QUICK LINKS -->
 <p align="center">
-  <a href="#quick-start">Quick Start</a> |
-  <a href="#features">Features</a> |
-  <a href="#architecture">Architecture</a> |
-  <a href="#deployment">Deployment</a> |
-  <a href="#credits">Credits</a>
+    <a href="#quick-start">Quick Start</a> |
+    <a href="#features">Features</a> |
+    <a href="#screenshots">Screenshots</a> |
+    <a href="#architecture">Architecture</a> |
+    <a href="#deployment">Deployment</a> |
+    <a href="#credits">Credits</a>
 </p>
 
 <!-- HERO BANNER (custom SVG, dual-mode) -->
@@ -52,6 +53,9 @@ docker compose up -d
 
 The container maps host port `43939` to internal port `3001`. Open `http://localhost:43939` after startup.
 
+> [!IMPORTANT]
+> Set `FIREWORKS_AI_LLM_BASE_PATH` and `FIREWORKS_AI_LLM_API_KEY` in `.env` to use Fireworks AI as the LLM provider. The SINator Pool Router URL goes in `FIREWORKS_AI_LLM_BASE_PATH`.
+
 > [!NOTE]
 > For full setup instructions, environment variables, and bare-metal deployment, see [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md).
 
@@ -61,7 +65,7 @@ The container maps host port `43939` to internal port `3001`. Open `http://local
 
 - **Document Chat** — PDF, DOCX, TXT, Markdown, web pages, YouTube transcripts
 - **Vector Databases** — LanceDB, Chroma, Pinecone, Qdrant, Milvus, PGVector
-- **12+ LLM Providers** — OpenAI, Anthropic, Mistral, DeepSeek, Ollama (local), LM Studio, Fireworks AI
+- **LLM Providers** — Fireworks AI (primary, via SINator Pool Router); alternatives: OpenAI, Anthropic, Mistral, DeepSeek, Ollama (local), LM Studio
 - **AI Agents** — automated research, web browsing, PDF creation, code execution
 - **MCP Compatible** — integrate any external tool via Model Context Protocol
 - **Multi-User** — permissions, workspaces, audit logs (Docker edition)
@@ -77,6 +81,27 @@ The container maps host port `43939` to internal port `3001`. Open `http://local
 - **Fireworks AI Vision** — multimodal image analysis via Fireworks AI models (minimax-m3, kimi-k2p5/6/7, qwen-3p7-plus). Upload images and the AI describes what it sees
 - **3,000+ Tests** — comprehensive frontend (Vitest) and server (Jest) test coverage
 
+### UI Features
+
+- **ChatGPT-style UI** — centered chat layout (max-w-800px), user message bubbles right-aligned, AI messages left-aligned
+- **Dark/Light Mode** — toggle button in sidebar, full theme support with `light:` CSS prefix system
+- **Code Blocks** — syntax highlighting with copy button, language label, bg/border styling in both modes
+- **Notepad** — inline workspace notes with auto-save, pin, and delete (workspace_notes table)
+- **Grounding Badge** — Sparkle icon badge showing when AI uses document sources (RAG)
+- **Auto-Summary Cards** — document snippets preview in sidebar
+- **Mobile Responsive** — 375px viewport, overlay panels, no horizontal overflow
+- **Loading Animation** — 3-pulse dots during AI response
+- **Action Buttons** — hover-only (TTS, Copy, Edit, Good Response, More) like ChatGPT/Claude
+
+## Screenshots
+
+| Light Mode | Dark Mode | Mobile |
+|------------|-----------|--------|
+| ![Empty State](docs/screenshots/empty-state-light.png) | ![Dark Chat](docs/screenshots/chat-codeblock-dark.png) | ![Mobile](docs/screenshots/mobile-empty-state.png) |
+
+![Chat with Code Blocks](docs/screenshots/chat-codeblock-light.png)
+![Sidebar](docs/screenshots/sidebar-light.png)
+
 ## Architecture
 
 ```mermaid
@@ -90,7 +115,7 @@ flowchart TB
 
     subgraph Host["OCI VM (sin-supabase, 92.5.60.87)"]
         Cloudflared["cloudflared<br/>(Tunnel Client)"]
-        Express["Express Server<br/>:3001 (extern :38471)"]
+        Express["Express Server<br/>:3001 (bound to 127.0.0.1:38471)"]
         Collector["Collector<br/>:8888<br/>(Document Parsing, OCR)"]
         Frontend["frontend/dist/<br/>(Static Files)"]
     end
@@ -100,21 +125,28 @@ flowchart TB
         Files[("server/storage/<br/>uploads/, vectors/")]
     end
 
+    subgraph LLM["LLM Backend"]
+        Fireworks["Fireworks AI<br/>(SINator Pool Router)"]
+    end
+
     User -->|HTTPS| DNS
     DNS --> Tunnel
     Tunnel <-->|Outbound Tunnel| Cloudflared
     Cloudflared -->|localhost:38471| Express
-    Express -->|"/api/*"| Express
     Express -->|"/"| Frontend
+    Express -->|"/api/*"| Express
+    Express -->|LLM calls| Fireworks
     Express <--> SQLite
     Express <--> Files
 
     classDef cloud fill:#fff4e1,stroke:#f48120,color:#000
     classDef mac fill:#e3f2fd,stroke:#1976d2,color:#000
     classDef data fill:#f3e5f5,stroke:#7b1fa2,color:#000
+    classDef llm fill:#e8f5e9,stroke:#388e3c,color:#000
     class DNS,Tunnel cloud
     class Cloudflared,Express,Collector,Frontend mac
     class SQLite,Files data
+    class Fireworks llm
 ```
 
 ### Repo Structure
@@ -142,7 +174,7 @@ OpenSIN-Chat/
 
 ### Live Demo
 
-**https://sinchat.delqhi.com** — deployed on an OCI VM (`sin-supabase`) via Cloudflare Tunnel.
+**https://sinchat.delqhi.com** — deployed on an OCI VM (`sin-supabase`) via Cloudflare Tunnel, Fireworks AI (SINator Pool Router) as LLM provider.
 
 ### Docker Self-Hosting
 
