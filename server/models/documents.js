@@ -67,6 +67,7 @@ const Document = {
       const docs = await prisma.workspace_documents.findMany({
         where: clause,
         select: { docId: true },
+        take: 100,
       });
       const docIds = docs.map((d) => d.docId);
 

@@ -123,6 +123,7 @@ const WorkspaceThread = {
       const threads = await prisma.workspace_threads.findMany({
         where: clause,
         select: { id: true },
+        take: 100,
       });
       const threadIds = threads.map((t) => t.id);
 

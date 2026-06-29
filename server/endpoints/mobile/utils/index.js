@@ -73,6 +73,7 @@ async function handleMobileCommand(request, response) {
             workspace_id: workspace.id,
             ...(user ? { user_id: user.id } : {}),
           },
+          take: 100,
         })),
       ];
       const chats = (
@@ -82,6 +83,7 @@ async function handleMobileCommand(request, response) {
             include: true,
             ...(user ? { user_id: user.id } : {}),
           },
+          take: 100,
         })
       ).map((chat) => ({
         ...chat,

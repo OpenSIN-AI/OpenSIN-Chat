@@ -159,6 +159,7 @@ class PoliticianDB {
       const allowed = await prisma.politicians.findMany({
         where: { id: { in: ids }, source: src },
         select: { id: true },
+        take: 100,
       });
       const allowedSet = new Set(allowed.map((p) => p.id));
       return results.filter((r) => allowedSet.has(r.metadata?.politicianId));
@@ -377,6 +378,7 @@ class PoliticianDB {
         distinct: ["party"],
         where: { party: { not: null } },
         orderBy: { party: "asc" },
+        take: 100,
       });
       return result.map((r) => r.party).filter(Boolean);
     } catch {
@@ -395,6 +397,7 @@ class PoliticianDB {
         distinct: ["state"],
         where: { state: { not: null } },
         orderBy: { state: "asc" },
+        take: 100,
       });
       return result.map((r) => r.state).filter(Boolean);
     } catch {
@@ -494,6 +497,7 @@ class PoliticianDB {
     try {
       const entries = await prisma.politician_sync_retry.findMany({
         orderBy: { nextRetryAt: "asc" },
+        take: 100,
       });
       return entries.map((e) => ({
         phase: e.phase,

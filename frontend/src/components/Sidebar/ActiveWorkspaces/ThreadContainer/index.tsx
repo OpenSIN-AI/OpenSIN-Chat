@@ -6,12 +6,18 @@ import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { FolderSimplePlus } from "@phosphor-icons/react/dist/csr/FolderSimplePlus";
-import { useEffect, useMemo, useState } from "react";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
+import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { ChatText } from "@phosphor-icons/react/dist/csr/ChatText";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ThreadItem from "./ThreadItem";
 import ThreadFolderItem from "./ThreadFolderItem";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import useThreads from "@/hooks/useThreads";
+import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 import {
   DndContext,
   PointerSensor,
@@ -22,6 +28,58 @@ import {
   useDroppable,
 } from "@dnd-kit/core";
 export const THREAD_RENAME_EVENT = "renameThread";
+
+const DATE_GROUPS = [
+  { id: "today", labelKey: "threadContainer.groupToday" },
+  { id: "yesterday", labelKey: "threadContainer.groupYesterday" },
+  { id: "this_week", labelKey: "threadContainer.groupThisWeek" },
+  { id: "last_week", labelKey: "threadContainer.groupLastWeek" },
+  { id: "older", labelKey: "threadContainer.groupOlder" },
+];
+
+function getThreadDateGroup(thread, now = new Date()) {
+  const dateStr = thread.lastUpdatedAt || thread.createdAt;
+  if (!dateStr) return "older";
+  const date = new Date(dateStr);
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const threadDay = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+  );
+  const diffDays = Math.floor(
+    (today.getTime() - threadDay.getTime()) / 86_400_000,
+  );
+  if (diffDays <= 0) return "today";
+  if (diffDays === 1) return "yesterday";
+  const dayOfWeek = today.getDay() || 7;
+  const currentMonday = new Date(today);
+  currentMonday.setDate(today.getDate() - dayOfWeek + 1);
+  if (threadDay >= currentMonday) return "this_week";
+  const lastMonday = new Date(currentMonday);
+  lastMonday.setDate(currentMonday.getDate() - 7);
+  if (threadDay >= lastMonday) return "last_week";
+  return "older";
+}
+
+function loadDateGroupCollapseState(workspaceSlug) {
+  try {
+    const stored = safeGetItem(`thread-folder-collapse-${workspaceSlug}`);
+    if (stored) return JSON.parse(stored);
+  } catch {}
+  return {};
+}
+
+function saveDateGroupCollapseState(workspaceSlug, groupId, isCollapsed) {
+  try {
+    const state = loadDateGroupCollapseState(workspaceSlug);
+    state[groupId] = isCollapsed;
+    safeSetItem(
+      `thread-folder-collapse-${workspaceSlug}`,
+      JSON.stringify(state),
+    );
+  } catch {}
+}
 
 export default function ThreadContainer({
   workspace,
@@ -38,6 +96,36 @@ export default function ThreadContainer({
     isLoading: loading,
     mutate,
   } = useThreads(workspace.slug);
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+
+  const isSearchActive = searchQuery.trim().length > 0;
+
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setSearchResults([]);
+      setIsSearching(false);
+      return;
+    }
+    setIsSearching(true);
+    const timer = setTimeout(async () => {
+      const results = await Workspace.threads.search(
+        workspace.slug,
+        searchQuery,
+      );
+      setSearchResults(results);
+      setIsSearching(false);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchQuery, workspace.slug]);
+
+  const clearSearch = useCallback(() => {
+    setSearchQuery("");
+    setSearchResults([]);
+    setIsSearching(false);
+  }, []);
 
   // Names that appear more than once across all threads need a date/time suffix
   // so duplicate thread titles remain distinguishable in the sidebar.
@@ -319,74 +407,87 @@ export default function ThreadContainer({
         role="list"
         aria-label={t("common.threads")}
       >
-        {defaultThreadHasChats && (
-          <ThreadItem
-            idx={0}
-            activeIdx={activeThreadIdx}
-            isActive={activeThreadIdx === 0}
-            workspace={workspace}
-            thread={{ slug: null, name: "default" }}
-            hasNext={
-              unfolderedThreads.length > 0 ||
-              showVirtualThread ||
-              folders.length > 0
-            }
-          />
-        )}
-        {folders.map((folder) => {
-          const folderThreads = threads.filter(
-            (t) => t.folder_id === folder.id,
-          );
-          return (
-            <ThreadFolderItem
-              key={folder.id}
-              folder={folder}
-              workspace={workspace}
-              threads={folderThreads}
-              activeThreadIdx={activeThreadIdx}
-              defaultThreadHasChats={defaultThreadHasChats}
-              ctrlPressed={ctrlPressed}
-              toggleMarkForDeletion={toggleForDeletion}
-              onRemoveThread={removeThread}
-              onFolderDeleted={handleFolderDeleted}
-              onFolderRenamed={handleFolderRenamed}
-              duplicateNames={duplicateNames}
-            />
-          );
-        })}
-        <UnfolderedDropZone isDragging={!!activeId}>
-          {unfolderedThreads.map((thread, i) => (
-            <ThreadItem
-              key={thread.slug}
-              idx={i + (defaultThreadHasChats ? 1 : 0)}
-              ctrlPressed={ctrlPressed}
-              toggleMarkForDeletion={toggleForDeletion}
-              activeIdx={activeThreadIdx}
-              isActive={activeThreadIdx === i + (defaultThreadHasChats ? 1 : 0)}
-              workspace={workspace}
-              onRemove={removeThread}
-              thread={thread}
-              hasNext={i !== unfolderedThreads.length - 1 || showVirtualThread}
-              draggable
-              duplicateNames={duplicateNames}
-            />
-          ))}
-        </UnfolderedDropZone>
-        {showVirtualThread && (
-          <ThreadItem
-            idx={activeThreadIdx}
-            activeIdx={activeThreadIdx}
-            isActive={true}
-            workspace={workspace}
-            thread={{ slug: null, name: "*New Thread", virtual: true }}
-            hasNext={false}
-          />
-        )}
-        <DeleteAllThreadButton
-          ctrlPressed={ctrlPressed}
-          threads={threads}
-          onDelete={handleDeleteAll}
+        <ThreadSearchBar
+          value={searchQuery}
+          onChange={setSearchQuery}
+          onClear={clearSearch}
         />
+        {isSearchActive ? (
+          <SearchResultsList
+            results={searchResults}
+            isSearching={isSearching}
+            query={searchQuery}
+            workspace={workspace}
+            onClear={clearSearch}
+          />
+        ) : (
+          <>
+            {defaultThreadHasChats && (
+              <ThreadItem
+                idx={0}
+                activeIdx={activeThreadIdx}
+                isActive={activeThreadIdx === 0}
+                workspace={workspace}
+                thread={{ slug: null, name: "default" }}
+                hasNext={
+                  unfolderedThreads.length > 0 ||
+                  showVirtualThread ||
+                  folders.length > 0
+                }
+              />
+            )}
+            {folders.map((folder) => {
+              const folderThreads = threads.filter(
+                (t) => t.folder_id === folder.id,
+              );
+              return (
+                <ThreadFolderItem
+                  key={folder.id}
+                  folder={folder}
+                  workspace={workspace}
+                  threads={folderThreads}
+                  activeThreadIdx={activeThreadIdx}
+                  defaultThreadHasChats={defaultThreadHasChats}
+                  ctrlPressed={ctrlPressed}
+                  toggleMarkForDeletion={toggleForDeletion}
+                  onRemoveThread={removeThread}
+                  onFolderDeleted={handleFolderDeleted}
+                  onFolderRenamed={handleFolderRenamed}
+                  duplicateNames={duplicateNames}
+                />
+              );
+            })}
+            <UnfolderedDropZone isDragging={!!activeId}>
+              <UnfolderedDateGroups
+                threads={unfolderedThreads}
+                defaultThreadHasChats={defaultThreadHasChats}
+                activeThreadIdx={activeThreadIdx}
+                ctrlPressed={ctrlPressed}
+                toggleMarkForDeletion={toggleForDeletion}
+                onRemoveThread={removeThread}
+                workspace={workspace}
+                workspaceSlug={workspace.slug}
+                showVirtualThread={showVirtualThread}
+                duplicateNames={duplicateNames}
+              />
+            </UnfolderedDropZone>
+            {showVirtualThread && (
+              <ThreadItem
+                idx={activeThreadIdx}
+                activeIdx={activeThreadIdx}
+                isActive={true}
+                workspace={workspace}
+                thread={{ slug: null, name: "*New Thread", virtual: true }}
+                hasNext={false}
+              />
+            )}
+            <DeleteAllThreadButton
+              ctrlPressed={ctrlPressed}
+              threads={threads}
+              onDelete={handleDeleteAll}
+            />
+          </>
+        )}
         <div className="sticky bottom-0 bg-zinc-950 light:bg-slate-100 pt-1 pb-1 z-10 -mx-[10px] px-[10px]">
           <NewFolderButton
             workspace={workspace}
@@ -413,6 +514,124 @@ export default function ThreadContainer({
         ) : null}
       </DragOverlay>
     </DndContext>
+  );
+}
+
+function DateGroupHeader({ label, count, collapsed, onToggle }) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      className="w-full flex items-center text-xs font-medium text-white/40 light:text-theme-text-secondary uppercase tracking-wider py-2 px-3 cursor-pointer hover:text-white/60 light:hover:text-theme-text-primary transition-colors"
+      aria-expanded={!collapsed}
+    >
+      {collapsed ? (
+        <CaretRight
+          size={12}
+          className="shrink-0 w-3 h-3 inline-block transition-transform mr-1"
+        />
+      ) : (
+        <CaretDown
+          size={12}
+          className="shrink-0 w-3 h-3 inline-block transition-transform mr-1"
+        />
+      )}
+      <span>{label}</span>
+      <span className="ml-1 text-white/20 light:text-theme-text-secondary text-[10px]">
+        {count}
+      </span>
+    </button>
+  );
+}
+
+function UnfolderedDateGroups({
+  threads,
+  defaultThreadHasChats,
+  activeThreadIdx,
+  ctrlPressed,
+  toggleMarkForDeletion,
+  onRemoveThread,
+  workspace,
+  workspaceSlug,
+  showVirtualThread,
+  duplicateNames,
+}) {
+  const { t } = useTranslation();
+  const { threadSlug = null } = useParams();
+
+  const [collapsed, setCollapsed] = useState(() =>
+    loadDateGroupCollapseState(workspaceSlug),
+  );
+
+  const grouped = useMemo(() => {
+    const buckets = {};
+    for (const thread of threads) {
+      const groupId = getThreadDateGroup(thread);
+      if (!buckets[groupId]) buckets[groupId] = [];
+      buckets[groupId].push(thread);
+    }
+    return DATE_GROUPS.filter((g) => buckets[g.id]?.length > 0).map((g) => ({
+      ...g,
+      threads: buckets[g.id],
+    }));
+  }, [threads]);
+
+  let runningIdx = 0;
+  const totalUnfoldered = threads.length;
+
+  return (
+    <>
+      {grouped.map((group) => {
+        const isCollapsed = collapsed[group.id] === true;
+        const containsActiveThread = group.threads.some(
+          (th) => th.slug === threadSlug,
+        );
+        const effectiveCollapsed = isCollapsed && !containsActiveThread;
+        const startIdx = runningIdx + (defaultThreadHasChats ? 1 : 0);
+        runningIdx += group.threads.length;
+
+        return (
+          <div key={group.id}>
+            <DateGroupHeader
+              label={t(group.labelKey)}
+              count={group.threads.length}
+              collapsed={effectiveCollapsed}
+              onToggle={() => {
+                const next = !isCollapsed;
+                setCollapsed((prev) => ({ ...prev, [group.id]: next }));
+                saveDateGroupCollapseState(workspaceSlug, group.id, next);
+              }}
+            />
+            <div
+              className={`transition-all duration-200 overflow-hidden ${
+                effectiveCollapsed ? "max-h-0" : "max-h-[9999px]"
+              }`}
+            >
+              {group.threads.map((thread, i) => {
+                const globalIdx = startIdx + i;
+                const isLastGlobally = globalIdx === totalUnfoldered - 1;
+                return (
+                  <ThreadItem
+                    key={thread.slug}
+                    idx={globalIdx}
+                    ctrlPressed={ctrlPressed}
+                    toggleMarkForDeletion={toggleMarkForDeletion}
+                    activeIdx={activeThreadIdx}
+                    isActive={activeThreadIdx === globalIdx}
+                    workspace={workspace}
+                    onRemove={onRemoveThread}
+                    thread={thread}
+                    hasNext={!isLastGlobally || showVirtualThread}
+                    draggable
+                    duplicateNames={duplicateNames}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
+    </>
   );
 }
 
@@ -587,5 +806,134 @@ function DeleteAllThreadButton({ ctrlPressed, threads, onDelete }) {
         </p>
       </div>
     </button>
+  );
+}
+
+function ThreadSearchBar({ value, onChange, onClear }) {
+  const { t } = useTranslation();
+  return (
+    <div className="relative flex items-center mb-2 mt-1">
+      <MagnifyingGlass
+        size={14}
+        className="absolute left-3 shrink-0 text-white/40 light:text-slate-400 pointer-events-none"
+      />
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={t("threadContainer.searchThreads")}
+        className="w-full h-[30px] pl-8 pr-7 text-[13px] bg-white/5 light:bg-slate-200/70 border border-white/10 light:border-slate-300 rounded-[8px] text-white light:text-slate-700 placeholder:text-white/30 light:placeholder:text-slate-400 focus:outline-none focus:border-white/20 light:focus:border-slate-400 transition-colors"
+      />
+      {value && (
+        <button
+          type="button"
+          onClick={onClear}
+          aria-label={t("threadContainer.clearSearch")}
+          className="absolute right-2 shrink-0 text-white/40 light:text-slate-400 hover:text-white light:hover:text-slate-600 transition-colors"
+        >
+          <X size={14} weight="bold" />
+        </button>
+      )}
+    </div>
+  );
+}
+
+function HighlightMatch({ text, query }) {
+  if (!query || !text) return <>{text}</>;
+  const lowerText = String(text).toLowerCase();
+  const lowerQuery = String(query).toLowerCase();
+  if (!lowerQuery || !lowerText.includes(lowerQuery)) return <>{text}</>;
+  const parts: any[] = [];
+  let lastIndex = 0;
+  let idx = lowerText.indexOf(lowerQuery);
+  let key = 0;
+  while (idx !== -1) {
+    if (idx > lastIndex) parts.push(text.slice(lastIndex, idx));
+    parts.push(
+      <mark
+        key={`hl-${key++}`}
+        className="bg-white/20 light:bg-blue-200/70 text-inherit rounded px-0.5"
+      >
+        {text.slice(idx, idx + query.length)}
+      </mark>,
+    );
+    lastIndex = idx + query.length;
+    idx = lowerText.indexOf(lowerQuery, lastIndex);
+  }
+  if (lastIndex < text.length) parts.push(text.slice(lastIndex));
+  return <>{parts}</>;
+}
+
+function SearchResultsList({
+  results,
+  isSearching,
+  query,
+  workspace,
+  onClear,
+}) {
+  const { t } = useTranslation();
+  if (isSearching) {
+    return (
+      <div className="flex items-center justify-center py-4">
+        <CircleNotch
+          size={16}
+          className="animate-spin text-white/40 light:text-slate-400"
+        />
+      </div>
+    );
+  }
+  if (results.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-4 px-3">
+        <p className="text-[13px] text-white/40 light:text-slate-400 text-center">
+          {t("threadContainer.noResults")}
+        </p>
+      </div>
+    );
+  }
+  return (
+    <div className="flex flex-col gap-0.5">
+      <p className="text-[11px] text-white/30 light:text-slate-400 px-3 pb-1 uppercase tracking-wider">
+        {t("threadContainer.searchResults", { count: results.length })}
+      </p>
+      {results.map((thread) => (
+        <SearchResultItem
+          key={thread.slug}
+          thread={thread}
+          query={query}
+          workspace={workspace}
+        />
+      ))}
+    </div>
+  );
+}
+
+function SearchResultItem({ thread, query, workspace }) {
+  const { t } = useTranslation();
+  const linkTo = thread.slug
+    ? paths.workspace.thread(workspace.slug, thread.slug)
+    : paths.workspace.chat(workspace.slug);
+  return (
+    <Link
+      to={linkTo}
+      className="w-full flex flex-col px-3 py-1.5 rounded-[6px] hover:bg-white/5 light:hover:bg-slate-200/70 transition-colors group/sr"
+    >
+      <div className="flex items-center gap-1.5">
+        {!thread.nameMatch && (
+          <ChatText
+            size={12}
+            className="shrink-0 text-white/30 light:text-slate-400"
+          />
+        )}
+        <p className="text-left text-[13px] truncate text-white/70 light:text-slate-600 group-hover/sr:text-white light:group-hover/sr:text-theme-text-primary">
+          <HighlightMatch text={thread.name} query={query} />
+        </p>
+      </div>
+      {thread.contentSnippet && (
+        <p className="text-[11px] text-white/30 light:text-slate-400 truncate pl-[18px] mt-0.5">
+          <HighlightMatch text={thread.contentSnippet} query={query} />
+        </p>
+      )}
+    </Link>
   );
 }

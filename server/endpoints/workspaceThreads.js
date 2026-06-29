@@ -23,6 +23,8 @@ const {
 const { WorkspaceChats } = require("../models/workspaceChats");
 const { convertToChatHistory } = require("../utils/helpers/chat/responses");
 const { getModelTag } = require("./utils");
+const prisma = require("../utils/prisma");
+const { Prisma } = require("@prisma/client");
 
 function workspaceThreadEndpoints(app) {
   if (!app) return;
@@ -99,6 +101,86 @@ function workspaceThreadEndpoints(app) {
         });
 
         response.status(200).json({ threads, folders, defaultThreadChatCount });
+      } catch (e) {
+        consoleLogger.error(e.message, e);
+        response.sendStatus(500);
+      }
+    },
+  );
+
+  app.get(
+    "/workspace/:slug/threads/search",
+    [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
+    async (request, response) => {
+      try {
+        const query = (request.query.q || "").toString().trim();
+        if (!query) {
+          return response.status(200).json({ results: [] });
+        }
+
+        const workspace = response.locals.workspace;
+        const user = await userFromSession(request, response);
+        const userId = user?.id ?? null;
+        const lowerPattern = `%${query.toLowerCase()}%`;
+
+        const threadUserFilter =
+          userId !== null
+            ? Prisma.sql`AND t.user_id = ${userId}`
+            : Prisma.sql`AND t.user_id IS NULL`;
+        const chatUserFilterC =
+          userId !== null
+            ? Prisma.sql`AND c.user_id = ${userId}`
+            : Prisma.sql`AND c.user_id IS NULL`;
+        const chatUserFilterC2 =
+          userId !== null
+            ? Prisma.sql`AND c2.user_id = ${userId}`
+            : Prisma.sql`AND c2.user_id IS NULL`;
+
+        const rows = await prisma.$queryRaw`
+          SELECT t.id, t.name, t.slug, t.workspace_id, t.user_id, t.folder_id, t.createdAt, t.lastUpdatedAt,
+            CASE WHEN LOWER(t.name) LIKE ${lowerPattern} THEN 1 ELSE 0 END as nameMatch,
+            (
+              SELECT SUBSTR(c2.prompt, 1, 120)
+              FROM workspace_chats c2
+              WHERE c2.thread_id = t.id
+                ${chatUserFilterC2}
+                AND c2.include = 1
+                AND (LOWER(c2.prompt) LIKE ${lowerPattern} OR LOWER(c2.response) LIKE ${lowerPattern})
+              LIMIT 1
+            ) as contentSnippet
+          FROM workspace_threads t
+          WHERE t.workspace_id = ${workspace.id}
+            ${threadUserFilter}
+            AND (
+              LOWER(t.name) LIKE ${lowerPattern}
+              OR EXISTS (
+                SELECT 1 FROM workspace_chats c
+                WHERE c.thread_id = t.id
+                  ${chatUserFilterC}
+                  AND c.include = 1
+                  AND (LOWER(c.prompt) LIKE ${lowerPattern} OR LOWER(c.response) LIKE ${lowerPattern})
+              )
+            )
+          ORDER BY nameMatch DESC, t.lastUpdatedAt DESC
+          LIMIT 50
+        `;
+
+        const results = Array.isArray(rows)
+          ? rows.map((r) => ({
+              id: Number(r.id),
+              name: r.name,
+              slug: r.slug,
+              workspace_id: Number(r.workspace_id),
+              user_id: r.user_id !== null ? Number(r.user_id) : null,
+              folder_id: r.folder_id !== null ? Number(r.folder_id) : null,
+              createdAt: r.createdAt,
+              lastUpdatedAt: r.lastUpdatedAt,
+              nameMatch: Boolean(r.nameMatch),
+              contentSnippet: r.contentSnippet || null,
+            }))
+          : [];
+
+        response.status(200).json({ results });
       } catch (e) {
         consoleLogger.error(e.message, e);
         response.sendStatus(500);

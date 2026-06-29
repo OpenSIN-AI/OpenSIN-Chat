@@ -21,6 +21,18 @@ const WorkspaceThread: any = {
 
     return { threads, folders: folders ?? [], defaultThreadChatCount };
   },
+  search: async function (workspaceSlug: string, query: string) {
+    const { results } = await fetch(
+      `${API_BASE}/workspace/${workspaceSlug}/threads/search?q=${encodeURIComponent(query)}`,
+      {
+        method: "GET",
+        headers: baseHeaders(),
+      },
+    )
+      .then((res) => res.json())
+      .catch(() => ({ results: [] }));
+    return results || [];
+  },
   new: async function (workspaceSlug: any) {
     const { thread, error } = await fetch(
       `${API_BASE}/workspace/${workspaceSlug}/thread/new`,

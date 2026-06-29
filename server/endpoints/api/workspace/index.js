@@ -157,6 +157,7 @@ function apiWorkspaceEndpoints(app) {
             },
           },
         },
+        take: 100,
       });
       response.status(200).json({ workspaces });
     } catch (e) {
@@ -221,6 +222,7 @@ function apiWorkspaceEndpoints(app) {
             },
           },
         },
+        take: 100,
       });
 
       response.status(200).json({ workspace });
@@ -264,6 +266,7 @@ function apiWorkspaceEndpoints(app) {
           const docs = await tx.workspace_documents.findMany({
             where: { workspaceId },
             select: { docId: true },
+            take: 100,
           });
           const docIds = docs.map((d) => d.docId);
           if (docIds.length > 0) {

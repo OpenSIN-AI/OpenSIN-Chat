@@ -185,6 +185,7 @@ async function loadDueRetryPhases() {
     const due = await prisma.politician_sync_retry.findMany({
       where: { status: "pending", nextRetryAt: { lte: new Date() } },
       select: { phase: true },
+      take: 100,
     });
     return new Set(due.map((r) => r.phase));
   } catch (err) {
@@ -570,6 +571,7 @@ async function buildSpeakerNameMap() {
   const politicians = await prisma.politicians
     .findMany({
       select: { id: true, firstName: true, lastName: true, party: true },
+      take: 1000,
     })
     .catch(() => []);
 

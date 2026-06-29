@@ -593,6 +593,7 @@ function workspaceEndpoints(app) {
           const docs = await tx.workspace_documents.findMany({
             where: { workspaceId },
             select: { docId: true },
+            take: 100,
           });
           const docIds = docs.map((d) => d.docId);
           if (docIds.length > 0) {
@@ -645,6 +646,7 @@ function workspaceEndpoints(app) {
           const docs = await tx.workspace_documents.findMany({
             where: { workspaceId: Number(workspace.id) },
             select: { docId: true },
+            take: 100,
           });
           const docIds = docs.map((d) => d.docId);
           if (docIds.length > 0) {

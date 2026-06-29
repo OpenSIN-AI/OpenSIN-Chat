@@ -82,6 +82,7 @@ const Invite = {
           const workspaces = await tx.workspaces.findMany({
             where: { id: { in: ids } },
             select: { id: true },
+            take: 100,
           });
           const validIds = new Set(workspaces.map((w) => w.id));
           const validWorkspaceIds = ids.filter((id) => validIds.has(id));

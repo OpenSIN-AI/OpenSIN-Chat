@@ -188,6 +188,7 @@ const ScheduledJob = {
     try {
       return await prisma.scheduled_jobs.findMany({
         where: { enabled: true },
+        take: 100,
       });
     } catch (error) {
       consoleLogger.error(

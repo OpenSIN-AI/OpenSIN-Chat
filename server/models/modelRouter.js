@@ -159,6 +159,7 @@ const ModelRouter = {
             },
           },
         },
+        take: 100,
       });
 
       // Batch workspace counts in a single groupBy query instead of

@@ -1,0 +1,8 @@
+[Unit]
+Description=OpenSIN-Chat backup verification
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/ubuntu/OpenSIN-Chat/scripts/verify-backup.sh
+User=ubuntu

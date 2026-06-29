@@ -83,6 +83,7 @@ const WorkspaceSuggestedMessages = {
       const messages = await prisma.workspace_suggested_messages.findMany({
         where: { workspaceId: workspace.id },
         orderBy: { createdAt: "asc" },
+        take: 100,
       });
 
       return messages.map((msg) => ({

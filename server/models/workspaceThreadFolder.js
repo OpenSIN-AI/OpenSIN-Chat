@@ -16,7 +16,7 @@ const WorkspaceThreadFolder = {
     // Vorher: orderBy: { createdAt: "asc" }
     // Nachher: orderBy: { createdAt: "desc" } -> Neue Ordner docken oben an
     return await prisma.workspace_thread_folders
-      .findMany({ where: filters, orderBy: { createdAt: "desc" } })
+      .findMany({ where: filters, orderBy: { createdAt: "desc" }, take: 100 })
       .catch(() => []);
   },
 
