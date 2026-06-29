@@ -89,7 +89,7 @@
   },
   "dependencies": {
     "check-disk-space": "^3.4.0",
-    "openai": "^6.44.0",
+    "openai": "^6.45.0",
     "swr": "^2.4.2",
     "uuid": "^14.0.1"
   }
