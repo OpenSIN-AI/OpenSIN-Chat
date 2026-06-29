@@ -445,7 +445,7 @@ export default forwardRef(function (
           role="log"
           aria-live="polite"
           aria-label={t("chat.aria.chatHistory")}
-          className={`markdown text-white/80 light:text-theme-text-primary font-light ${textSizeClass} h-full relative pb-[60px] pt-4 md:pt-6 md:mx-0 flex flex-col items-center justify-start`}
+          className={`markdown text-white/80 light:text-theme-text-primary font-light ${textSizeClass} h-full relative pb-[60px] pt-2 md:pt-3 md:mx-0 flex flex-col items-center justify-start`}
         >
           <Virtuoso
             ref={virtuosoRef}
@@ -471,18 +471,18 @@ export default forwardRef(function (
             />
           )}
           {!isAtBottom && (
-            <div className="absolute bottom-[140px] left-1/2 -translate-x-1/2 z-30">
+            <div className="absolute bottom-[120px] left-1/2 -translate-x-1/2 z-30">
               <button
                 type="button"
                 onClick={() => {
                   scrollVirtuosoToBottom(!isStreaming);
                 }}
                 aria-label={t("chat.aria.scrollToBottom")}
-                className="flex items-center justify-center w-9 h-9 rounded-full bg-zinc-700 light:bg-slate-200 hover:bg-zinc-600 light:hover:bg-slate-300 shadow-lg transition-all"
+                className="flex items-center justify-center w-8 h-8 rounded-full bg-zinc-800 light:bg-white border border-white/10 light:border-slate-200 hover:bg-zinc-700 light:hover:bg-slate-100 shadow-md transition-all"
               >
                 <ArrowDown
                   weight="bold"
-                  className="text-zinc-300 light:text-slate-600 w-4 h-4"
+                  className="text-zinc-400 light:text-slate-500 w-3.5 h-3.5"
                 />
               </button>
             </div>

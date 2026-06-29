@@ -19,7 +19,7 @@ const markdown = markdownIt({
     if (lang && hljs.getLanguage(lang)) {
       try {
         return (
-          `<div class="whitespace-pre-line w-full hljs ${theme} rounded-lg relative font-mono font-normal text-sm text-slate-200 my-2">
+          `<div class="whitespace-pre-line w-full hljs ${theme} rounded-lg relative font-mono font-normal text-sm text-slate-200 light:text-slate-800 my-2 bg-zinc-900 light:bg-slate-50 border border-white/5 light:border-slate-200 overflow-hidden">
             <div class="w-full flex items-center text-slate-400 bg-zinc-800/60 light:bg-slate-200/60 px-3 py-1.5 text-xs font-sans justify-between rounded-t-lg">
               <div class="flex gap-2">
                 <code class="text-xs opacity-60">${lang || ""}</code>
@@ -29,7 +29,7 @@ const markdown = markdownIt({
                 <p class="text-xs" style="margin:0;padding:0;">Kopieren</p>
               </button>
             </div>
-            <pre class="whitespace-pre-wrap px-4 py-3 overflow-x-auto">` +
+            <pre class="whitespace-pre-wrap px-4 py-3 overflow-x-auto bg-transparent">` +
           hljs.highlight(code, { language: lang, ignoreIllegals: true }).value +
           "</pre></div>"
         );
@@ -37,7 +37,7 @@ const markdown = markdownIt({
     }
 
     return (
-      `<div class="whitespace-pre-line w-full hljs ${theme} rounded-lg relative font-mono font-normal text-sm text-slate-200 my-2">
+      `<div class="whitespace-pre-line w-full hljs ${theme} rounded-lg relative font-mono font-normal text-sm text-slate-200 light:text-slate-800 my-2 bg-zinc-900 light:bg-slate-50 border border-white/5 light:border-slate-200 overflow-hidden">
         <div class="w-full flex items-center text-slate-400 bg-zinc-800/60 light:bg-slate-200/60 px-3 py-1.5 text-xs font-sans justify-between rounded-t-lg">
           <div class="flex gap-2"><code class="text-xs opacity-60"></code></div>
           <button data-code-snippet data-code="code-${uuid}" class="flex items-center gap-x-1 hover:text-white light:hover:text-slate-900 transition-colors" title="Code kopieren">
@@ -45,7 +45,7 @@ const markdown = markdownIt({
             <p class="text-xs" style="margin:0;padding:0;">Kopieren</p>
           </button>
         </div>
-        <pre class="whitespace-pre-wrap px-4 py-3 overflow-x-auto">` +
+        <pre class="whitespace-pre-wrap px-4 py-3 overflow-x-auto bg-transparent">` +
       HTMLEncode(code) +
       "</pre></div>"
     );
@@ -53,7 +53,7 @@ const markdown = markdownIt({
 });
 
 // Add custom renderer for strong tags to handle theme colors
-markdown.renderer.rules.strong_open = () => '<strong class="text-white">';
+markdown.renderer.rules.strong_open = () => '<strong class="text-white light:text-slate-900">';
 markdown.renderer.rules.strong_close = () => "</strong>";
 markdown.renderer.rules.link_open = (tokens, idx) => {
   const token = tokens[idx];

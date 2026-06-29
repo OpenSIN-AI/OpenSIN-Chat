@@ -387,20 +387,22 @@ export default function ThreadContainer({
           threads={threads}
           onDelete={handleDeleteAll}
         />
-        <NewFolderButton
-          workspace={workspace}
-          onCreated={(f) => {
-            mutate(
-              (current) => {
-                const currentFolders = current?.folders || [];
-                return { ...current, folders: [...currentFolders, f] };
-              },
-              { revalidate: false },
-            );
-            mutate();
-          }}
-        />
-        <NewThreadButton workspace={workspace} mutate={mutate} />
+        <div className="sticky bottom-0 bg-zinc-950 light:bg-slate-100 pt-1 pb-1 z-10 -mx-[10px] px-[10px]">
+          <NewFolderButton
+            workspace={workspace}
+            onCreated={(f) => {
+              mutate(
+                (current) => {
+                  const currentFolders = current?.folders || [];
+                  return { ...current, folders: [...currentFolders, f] };
+                },
+                { revalidate: false },
+              );
+              mutate();
+            }}
+          />
+          <NewThreadButton workspace={workspace} mutate={mutate} />
+        </div>
       </div>
 
       <DragOverlay>

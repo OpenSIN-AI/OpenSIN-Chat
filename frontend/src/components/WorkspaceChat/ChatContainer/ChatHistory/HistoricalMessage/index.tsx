@@ -332,13 +332,13 @@ function TruncatableContent({ children }: any) {
       <div className="relative">
         <div
           ref={contentRef}
-          className={`text-zinc-900 light:text-slate-900 ${showTruncation ? "max-h-[250px] overflow-hidden" : ""}`}
+          className={`text-zinc-50 light:text-slate-900 ${showTruncation ? "max-h-[250px] overflow-hidden" : ""}`}
         >
           {children}
         </div>
         {showTruncation && (
           <>
-            <div className="absolute bottom-0 left-0 right-0 h-[36px] light:hidden pointer-events-none bg-[linear-gradient(180deg,_rgba(39,_39,_42,_0.00)_0%,_rgba(39,_39,_42,_0.65)_50%,_#27272A_100%)]" />
+            <div className="absolute bottom-0 left-0 right-0 h-[36px] light:hidden pointer-events-none bg-[linear-gradient(180deg,_rgba(63,_63,_70,_0.00)_0%,_rgba(63,_63,_70,_0.65)_50%,_#3F3F46_100%)]" />
             <div className="absolute bottom-0 left-0 right-0 h-[36px] hidden light:block pointer-events-none bg-[linear-gradient(180deg,_rgba(241,_245,_249,_0.00)_0%,_rgba(241,_245,_249,_0.65)_50%,_#F1F5F9_100%)]" />
           </>
         )}
@@ -363,7 +363,7 @@ const RenderChatContent = memo(
     if (role !== "assistant")
       return (
         <span
-          className="flex flex-col gap-y-0.5 text-zinc-900 light:text-slate-900"
+          className="flex flex-col gap-y-0.5 text-zinc-50 light:text-slate-900"
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(renderMarkdown(message)),
           }}

@@ -2,8 +2,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import PromptInput from "./PromptInput";
-import WorkspaceSources from "@/components/lib/WorkspaceSources";
-import SuggestedMessages from "@/components/lib/SuggestedMessages";
 import { Books } from "@phosphor-icons/react/dist/csr/Books";
 import { Notepad } from "@phosphor-icons/react/dist/csr/Notepad";
 import { Database } from "@phosphor-icons/react/dist/csr/Database";
@@ -24,16 +22,16 @@ function CapabilityCard({ icon: Icon, title, description, onClick }: any) {
     <button
       type="button"
       onClick={onClick}
-      className="group flex flex-col gap-2 p-3.5 rounded-xl border border-theme-border bg-zinc-800/50 light:bg-slate-50 hover:bg-zinc-800 light:hover:bg-slate-100 transition-all text-left w-full"
+      className="group flex flex-col gap-2 p-4 rounded-xl border border-white/10 light:border-slate-200 bg-white/[0.03] light:bg-slate-50 hover:bg-white/[0.08] light:hover:bg-slate-100 hover:border-white/20 light:hover:border-slate-300 transition-all text-left w-full"
     >
-      <div className="w-7 h-7 rounded-lg bg-theme-accent/20 flex items-center justify-center flex-shrink-0">
-        <Icon size={14} className="text-theme-accent" />
+      <div className="w-8 h-8 rounded-lg bg-theme-accent/15 flex items-center justify-center flex-shrink-0">
+        <Icon size={16} className="text-theme-accent" />
       </div>
       <div className="flex flex-col gap-0.5">
-        <span className="text-xs font-medium text-white light:text-slate-900">
+        <span className="text-sm font-medium text-white light:text-slate-900">
           {title}
         </span>
-        <span className="text-[11px] text-zinc-400 light:text-slate-500 leading-tight">
+        <span className="text-xs text-zinc-500 light:text-slate-500 leading-tight">
           {description}
         </span>
       </div>
@@ -102,20 +100,20 @@ export default function EmptyState({
   ];
 
   return (
-    <div className="flex flex-col h-full w-full items-center justify-start overflow-y-auto pt-[8%] px-2 md:px-6">
-      <div className="flex flex-col items-center w-full max-w-[800px]">
-        <h1 className="text-white light:text-theme-text-primary text-xl md:text-2xl mb-2 text-center">
+    <div className="flex flex-col h-full w-full items-center justify-center overflow-y-auto px-2 md:px-6">
+      <div className="flex flex-col items-center w-full max-w-[800px] py-8">
+        <h1 className="text-white light:text-theme-text-primary text-2xl md:text-3xl font-semibold mb-3 text-center tracking-tight">
           {t("main-page.greeting")}
         </h1>
         {modelName && (
-          <div className="flex items-center gap-x-1.5 mb-6">
-            <span className="inline-flex items-center gap-x-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-theme-accent/10 text-theme-accent border border-theme-accent/20">
+          <div className="flex items-center gap-x-1.5 mb-8">
+            <span className="inline-flex items-center gap-x-1 px-2.5 py-1 rounded-full text-xs font-medium bg-theme-accent/10 text-theme-accent border border-theme-accent/20">
               <Sparkle size={11} weight="fill" />
               {modelName}
             </span>
           </div>
         )}
-        {!modelName && <div className="mb-6" />}
+        {!modelName && <div className="mb-8" />}
 
         <PromptInput
           workspace={workspace}
@@ -126,7 +124,7 @@ export default function EmptyState({
           centered={true}
         />
 
-        <div className="grid grid-cols-2 gap-2.5 w-full mt-4 mb-4">
+        <div className="grid grid-cols-2 gap-3 w-full mt-6">
           {capabilities.map((cap, idx) => (
             <CapabilityCard
               key={idx}
@@ -137,18 +135,7 @@ export default function EmptyState({
             />
           ))}
         </div>
-
-        <WorkspaceSources
-          documents={workspace?.documents || []}
-          onAddSources={() =>
-            document.getElementById("dnd-chat-file-uploader")?.click()
-          }
-        />
       </div>
-      <SuggestedMessages
-        suggestedMessages={workspace?.suggestedMessages}
-        sendCommand={sendCommand}
-      />
     </div>
   );
 }

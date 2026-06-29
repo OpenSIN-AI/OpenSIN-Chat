@@ -17,9 +17,9 @@ function GroundingIndicator({ sources = [] }: { sources?: any[] }) {
   if (count === 0) return null;
 
   return (
-    <div className="flex items-center gap-x-1.5 mt-1 mb-1">
+    <div className="flex items-center gap-x-1.5 mt-2">
       <span
-        className="inline-flex items-center gap-x-1 px-2 py-0.5 rounded-full text-xs font-medium bg-theme-bg-secondary text-theme-text-secondary border border-theme-border"
+        className="inline-flex items-center gap-x-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-white/[0.04] light:bg-slate-100 text-zinc-400 light:text-slate-500 border border-white/5 light:border-slate-200"
         title={t(
           "chat.grounding.tooltip",
           "Antwort basiert auf hochgeladenen Quellen",

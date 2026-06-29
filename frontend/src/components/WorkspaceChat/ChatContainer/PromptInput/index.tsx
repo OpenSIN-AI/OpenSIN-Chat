@@ -79,8 +79,8 @@ export default function PromptInput({
         onSubmit={handleSubmit}
         className={
           centered
-            ? "flex flex-col gap-y-1 rounded-t-lg w-full items-center"
-            : "flex flex-col gap-y-1 rounded-t-lg w-full mx-auto max-w-[800px] items-center px-2 md:px-6"
+            ? "flex flex-col gap-y-1 rounded-2xl w-full items-center"
+            : "flex flex-col gap-y-1 rounded-2xl w-full mx-auto max-w-[800px] items-center px-2 md:px-6"
         }
       >
         <div
@@ -96,7 +96,7 @@ export default function PromptInput({
               centered={centered}
               highlightedIndexRef={toolsHighlightRef}
             />
-            <div className="bg-zinc-800 light:bg-white border border-theme-sidebar-border light:border-slate-300 shadow-lg rounded-2xl flex flex-col px-4 overflow-hidden">
+            <div className="bg-zinc-800/80 light:bg-white border border-white/10 light:border-slate-200 shadow-sm rounded-2xl flex flex-col px-4 overflow-hidden">
               <AttachmentManager attachments={attachments} />
               <div className="flex items-center">
                 <TextArea

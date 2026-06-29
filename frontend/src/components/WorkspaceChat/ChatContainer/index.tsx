@@ -48,7 +48,7 @@ export default function ChatContainer({
             <DnDFileUploaderWrapper>
               {/* Threads should always show the chat interface, even when empty,
                   so that the workspace home greeting does not appear inside a thread. */}
-              {isEmpty && !threadSlug ? (
+              {isEmpty ? (
                 <EmptyState
                   workspace={workspace}
                   handleSubmit={handleSubmit}
