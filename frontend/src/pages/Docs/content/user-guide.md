@@ -2,7 +2,8 @@
 
 > **Zielgruppe:** Endnutzer — Pressestelle, Fraktionsmitarbeiter, Researcher, politische Mitarbeiter
 > **Voraussetzung:** OpenSIN Chat läuft auf `http://localhost:3001` oder `https://sinchat.delqhi.com`
-> **Stand:** 2026-06-07
+> **Repository:** [OpenSIN-AI/OpenSIN-Chat](https://github.com/OpenSIN-AI/OpenSIN-Chat)
+> **Stand:** 2026-06-29 · **Version:** v1.0.0
 
 ---
 
@@ -10,18 +11,32 @@
 
 ### 1.1 Login
 
-OpenSIN Chat unterstützt zwei Modi:
+OpenSIN Chat wird durch ein einzelnes Passwort geschützt, das in der `.env`-Datei als `AUTH_TOKEN` konfiguriert wird.
 
-- **Single-User-Mode** (Standard) — Du bekommst beim ersten Aufruf automatisch einen Session-Token, kein Passwort nötig
-- **Multi-User-Mode** (Docker) — Login mit Username + Passwort, verschiedene Rollen (Admin, Default)
+- **Produktion:** Setze `AUTH_TOKEN` in der `.env` auf ein starkes Passwort. Beim Aufruf der Seite wirst du zur Login-Maske weitergeleitet. Gib das Passwort ein — danach bist du eingeloggt.
+- **Lokale Entwicklung:** Wenn kein `AUTH_TOKEN` gesetzt ist, kannst du die App ohne Passwort öffnen (nur für `localhost`).
+
+![Login](../screenshots/login-light.png)
 
 ### 1.2 Dashboard-Übersicht
 
-Nach dem Login siehst du:
+Nach dem Login siehst du ein dreispaltiges Layout:
 
-- **Linke Sidebar:** Workspaces, Chats, Agenten
-- **Mitte:** Aktiver Chat / Workspace
-- **Rechts:** Quellen, Einstellungen, Erinnerungen
+![Dashboard Übersicht](../screenshots/empty-state-light.png)
+
+- **Linke Sidebar:**
+  - Oben: Workspace-Liste (Wechsel zwischen Workspaces per Klick)
+  - Mitte: Thread-Liste des aktiven Workspaces (alle Chat-Verläufe)
+  - Unten (sticky): **"Neuer Chat"** und **"Neuer Ordner"** Buttons
+  - Ganz oben rechts: **Design-Button** für Dark/Light Mode Toggle
+
+- **Mitte (Chat-Bereich):**
+  - **Empty State:** Wenn kein Chat aktiv ist, siehst du 4 Capability-Karten (Dokumente hochladen, Chat starten, Notizen machen, Politiker-Datenbank)
+  - **Chat-Verlauf:** Wenn ein Thread aktiv ist, werden die Nachrichten angezeigt (zentriert, max. 800px breit)
+
+- **Rechte Sidebar:**
+  - Icons für **Quellen** (Dokumente), **Notizen** (Notepad), **Einstellungen** (Gear-Icon)
+  - Auf Mobile wird die rechte Sidebar als Overlay-Panel eingeblendet
 
 ### 1.3 Workspace anlegen
 
@@ -30,11 +45,15 @@ Nach dem Login siehst du:
 3. Wähle eine LLM-Provider-Konfiguration
 4. Optional: Wähle eine Vektor-DB (Standard: LanceDB lokal)
 
+![Sidebar](../screenshots/sidebar-light.png)
+
 ---
 
 ## 2. Dokumente hochladen (RAG)
 
 Das **Kern-Feature**: Du lädst Dokumente hoch und die KI beantwortet Fragen **nur aus diesen Quellen**.
+
+![Dokumente](../screenshots/documents-light.png)
 
 ### 2.1 Unterstützte Formate
 
@@ -65,13 +84,133 @@ Das **Kern-Feature**: Du lädst Dokumente hoch und die KI beantwortet Fragen **n
 
 **Wichtig:** Antworten kommen **mit Zitaten** — du siehst immer, aus welcher Datei die Information stammt.
 
+### 2.3 Grounding Badge
+
+Wenn die KI Antworten aus deinen Dokumenten generiert, erscheint ein **Sparkle-Symbol (✨)** mit dem Modellnamen unter der Antwort. Dieses "Grounding Badge" zeigt dir, dass die Antwort auf deinen hochgeladenen Quellen basiert und nicht frei erfunden wurde.
+
+![Grounding](../screenshots/grounding-dark.png)
+
 ---
 
-## 3. Politiker-Datenbank nutzen
+## 3. Chat-UI
 
-> **Hinweis:** Die Datenbank muss erst synchronisiert werden. Siehe `docs/user-guide.md` § 3.7.
+Der Chat-Bereich ist das Herzstück von OpenSIN Chat. Das Layout ist zentriert (max. 800px breit), ähnlich wie bei ChatGPT, Claude oder Gemini.
 
-### 3.1 Suche nach Abgeordneten
+### 3.1 Nachrichten-Design
+
+- **Deine Nachrichten (User):** Rechts ausgerichtet, abgerundete Bubble (`bg-zinc-700` im Dark Mode / `bg-slate-100` im Light Mode), max. 80% Breite
+- **KI-Antworten (AI):** Links ausgerichtet, keine Bubble (fließender Text), max. 85% Breite, vollständiges Markdown-Rendering (Überschriften, Listen, Tabellen, Links)
+
+### 3.2 Code-Blöcke
+
+![Chat mit Code-Block](../screenshots/chat-codeblock-light.png)
+
+- **Syntax-Highlighting** für alle gängigen Sprachen (Python, JavaScript, Bash, SQL, etc.)
+- **Kopieren-Button** oben rechts im Code-Block-Header
+- **Language-Label** wird im Header des Code-Blocks angezeigt
+
+### 3.3 Inline-Code
+
+Inline-Code (z.B. `AUTH_TOKEN`) wird mit Hintergrundfarbe, Padding und abgerundeten Ecken dargestellt — klar vom Fließtext abgehoben.
+
+### 3.4 Action-Buttons
+
+Unter jeder KI-Antwort erscheinen bei **Hover** folgende Buttons:
+
+| Button | Funktion |
+|--------|----------|
+| Vorlesen | Nachricht wird vorgelesen (Text-to-Speech) |
+| Kopieren | Antwort in die Zwischenablage kopieren |
+| Bearbeiten | Antwort bearbeiten (z.B. für Korrekturen vor dem Export) |
+| Gute Antwort | Feedback geben (Daumen hoch) |
+| Weitere Aktionen | Weitere Optionen (z.B. als Notiz speichern) |
+
+### 3.5 Loading-Animation
+
+Während die KI antwortet, siehst du **3 Pulse-Dots** als Loading-Indikator.
+
+### 3.6 Scroll-to-Bottom
+
+Wenn du im Chat-Verlauf nach oben scrollst, erscheint ein kleiner **Scroll-to-Bottom-Button**. Ein Klick bringt dich zurück zur neuesten Nachricht.
+
+![Dark Mode](../screenshots/chat-codeblock-dark.png)
+
+---
+
+## 4. Notizblock (Notepad)
+
+OpenSIN Chat hat einen integrierten Notizblock, mit dem du Notizen direkt im Workspace verwalten kannst.
+
+### 4.1 Notepad öffnen
+
+Zwei Wege, um das Notepad zu öffnen:
+
+1. **Capability-Karte:** Klicke im Empty State auf die Karte **"Notizen machen"**
+2. **Sidebar-Icon:** Klicke auf das **Notepad-Icon** in der rechten Sidebar
+
+![Notepad](../screenshots/notepad-light.png)
+
+### 4.2 Notizen verwalten
+
+- **Erstellen:** Klicke auf "Neue Notiz" und schreibe deinen Text
+- **Bearbeiten:** Klicke auf eine Notiz und bearbeite sie — Änderungen werden **automatisch gespeichert** (Auto-Save)
+- **Pinnen:** Wichtige Notizen oben anpinnen, damit sie immer sichtbar bleiben
+- **Löschen:** Nicht mehr benötigte Notizen entfernen
+
+**Wichtig:** Notizen sind **pro-Workspace** — jeder Workspace hat seine eigenen Notizen.
+
+---
+
+## 5. Dark/Light Mode
+
+OpenSIN Chat unterstützt beide Themes vollständig.
+
+### 5.1 Umschalten
+
+Klicke auf den **Design-Button** oben rechts in der Sidebar, um zwischen Dark und Light Mode zu wechseln.
+
+### 5.2 Light Mode
+
+- Heller Hintergrund (`slate-50` / `slate-100`)
+- Dunkler Text
+- Helles Sidebar- und Panel-Design
+
+### 5.3 Dark Mode
+
+- Dunkler Hintergrund (`zinc-950`)
+- Heller Text
+- Dunkles Sidebar- und Panel-Design
+
+### 5.4 Vollständige Unterstützung
+
+Alle UI-Elemente unterstützen beide Modi:
+- Code-Blöcke (angepasstes Syntax-Highlighting)
+- Tabellen (angepasste Rahmen und Hintergründe)
+- Inline-Code (angepasste Hintergrundfarbe)
+- Chat-Bubbles (angepasste Farben)
+- Notepad und Settings-Panels
+
+---
+
+## 6. Mobile Nutzung
+
+OpenSIN Chat ist vollständig responsive und ab **375px Breite** nutzbar.
+
+![Mobile](../screenshots/mobile-empty-state.png)
+
+- **Responsive Layout:** Alle Elemente passen sich an die Bildschirmgröße an
+- **Rechte Sidebar:** Wird auf Mobile als **Overlay-Panel** eingeblendet (öffnen per Icon-Tap)
+- **Prompt Input:** Volle Breite am unteren Rand
+- **Sidebar:** Bleibt zugänglich (als ausklappbares Menü)
+- **Empty State:** Capability-Karten werden untereinander gestapelt
+
+---
+
+## 7. Politiker-Datenbank nutzen
+
+> **Hinweis:** Die Datenbank muss erst synchronisiert werden. Siehe § 7.7.
+
+### 7.1 Suche nach Abgeordneten
 
 **Im Chat** (über das `@politician-search` Agent-Plugin):
 
@@ -86,7 +225,7 @@ curl "http://localhost:3001/api/politician/search?q=Weidel&party=AfD" \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
-### 3.2 Profil eines Politikers anzeigen
+### 7.2 Profil eines Politikers anzeigen
 
 ```
 @politician-search Zeig mir das Profil von Alice Weidel
@@ -95,12 +234,12 @@ curl "http://localhost:3001/api/politician/search?q=Weidel&party=AfD" \
 Antwort enthält:
 - Name, Geburtsdatum, Beruf
 - Aktuelle Mandate (Bundestag, Wahlkreis)
-- Fraktionszugehörigkeit
+- Fraktionszugehörigkeiten
 - Ausschuss-Mitgliedschaften
 - Nebentätigkeiten (von Abgeordnetenwatch)
 - Profilfoto (falls verfügbar)
 
-### 3.3 Abstimmungsverhalten analysieren
+### 7.3 Abstimmungsverhalten analysieren
 
 ```
 @politician-search Wie hat Frauke Petry in der Migrationspolitik abgestimmt?
@@ -114,7 +253,7 @@ Antwort enthält:
 
 **Anwendungsfall:** Für Oppositions-Analyse oder Koalitions-Argumente.
 
-### 3.4 Plenarprotokoll-Reden durchsuchen
+### 7.4 Plenarprotokoll-Reden durchsuchen
 
 ```
 @politician-search Zeig mir alle Reden von Tino Chrupalla zur Energiepolitik
@@ -126,7 +265,7 @@ Antwort enthält:
 - Kontext (vorherige/nächste Rede)
 - Direktlink zum Original-Protokoll
 
-### 3.5 Semantische Suche über alle Reden
+### 7.5 Semantische Suche über alle Reden
 
 **Beispiel-Anfrage:**
 
@@ -138,7 +277,7 @@ Die KI nutzt **Vektor-Ähnlichkeit** (nicht nur Stichworte) und findet auch Rede
 
 **Hinweis:** Diese Funktion benötigt **PGVector** (nicht SQLite). Setup-Anleitung in `docs/supabase-self-hosted.md`.
 
-### 3.6 Konkrete Workflows
+### 7.6 Konkrete Workflows
 
 **Workflow 1: Oppositions-Dossier erstellen**
 
@@ -159,7 +298,7 @@ Die KI nutzt **Vektor-Ähnlichkeit** (nicht nur Stichworte) und findet auch Rede
 2. Themen clustern
 3. AfD-Position gegenüberstellen
 
-### 3.7 Datenbank initial befüllen
+### 7.7 Datenbank initial befüllen
 
 Die Politiker-DB ist beim ersten Start leer. Zum Befüllen:
 
@@ -179,11 +318,11 @@ Der Job:
 
 ---
 
-## 4. Deep Research Pipeline
+## 8. Deep Research Pipeline
 
 Automatisierte Web-Recherche mit Quellenangaben.
 
-### 4.1 Eine Recherche starten
+### 8.1 Eine Recherche starten
 
 **Im Chat** (über das `@deep-research` Plugin):
 
@@ -210,7 +349,7 @@ Antwort:
 }
 ```
 
-### 4.2 Status prüfen
+### 8.2 Status prüfen
 
 ```bash
 curl "http://localhost:3001/api/research/research-abc123" \
@@ -219,7 +358,7 @@ curl "http://localhost:3001/api/research/research-abc123" \
 
 Status: `running` → `completed` | `failed`
 
-### 4.3 Ergebnis abrufen
+### 8.3 Ergebnis abrufen
 
 ```bash
 curl "http://localhost:3001/api/research/research-abc123/result" \
@@ -233,7 +372,7 @@ curl "http://localhost:3001/api/research/research-abc123/result" \
 - **Confidence-Score** (0-100%, wie konsistent die Quellen sind)
 - **Markdown-Export** (für Copy-Paste in PM)
 
-### 4.4 Recherche-Optionen
+### 8.4 Recherche-Optionen
 
 | Parameter | Optionen | Beschreibung |
 |-----------|----------|--------------|
@@ -253,7 +392,7 @@ curl "http://localhost:3001/api/research/research-abc123/result" \
 }
 ```
 
-### 4.5 Multi-Step-Research mit dem Orchestrator
+### 8.5 Multi-Step-Research mit dem Orchestrator
 
 Für komplexe Recherchen (z.B. "Recherchiere Migration + erstelle Dossier"):
 
@@ -270,9 +409,9 @@ Der Orchestrator zerlegt die Aufgabe in:
 
 ---
 
-## 5. PDF Reports erstellen
+## 9. PDF Reports erstellen
 
-### 5.1 Aus Chat-Verlauf einen Report generieren
+### 9.1 Aus Chat-Verlauf einen Report generieren
 
 **Im Chat:**
 
@@ -287,7 +426,7 @@ Der Orchestrator zerlegt die Aufgabe in:
 - **Cover-Page** (Standard: aktiv)
 - **Quellenliste** (Standard: am Ende)
 
-### 5.2 AfD-Branding
+### 9.2 AfD-Branding
 
 Jeder Report enthält:
 - **Cover-Page** mit Titel, Datum, "OpenSIN Chat — Fraktionsresearch"
@@ -295,7 +434,7 @@ Jeder Report enthält:
 - **Footer** mit Seitenzahl + Logo-Platzhalter
 - **Farbschema:** AfD-Blau `#009ee0` für Akzente
 
-### 5.3 Report herunterladen
+### 9.3 Report herunterladen
 
 Nach der Generierung:
 
@@ -305,7 +444,7 @@ Nach der Generierung:
 
 **Speicherort:** `server/storage/reports/report-{timestamp}.pdf`
 
-### 5.4 Aus Research-Job generieren
+### 9.4 Aus Research-Job generieren
 
 ```bash
 curl -X POST "http://localhost:3001/api/reports/generate" \
@@ -332,7 +471,7 @@ curl -X POST "http://localhost:3001/api/reports/generate" \
 
 ---
 
-## 6. Agent-Plugins im Überblick
+## 10. Agent-Plugins im Überblick
 
 | Plugin | Slash-Command | Funktion |
 |--------|---------------|----------|
@@ -341,7 +480,7 @@ curl -X POST "http://localhost:3001/api/reports/generate" \
 | `@generate-report` | `/report` | PDF erstellen |
 | `@orchestrator` | `/orchestrate` | Multi-Step-Workflow |
 
-### 6.1 Plugins im Chat aktivieren
+### 10.1 Plugins im Chat aktivieren
 
 **Slash-Commands funktionieren automatisch**, aber du kannst sie auch explizit aufrufen:
 
@@ -351,7 +490,7 @@ curl -X POST "http://localhost:3001/api/reports/generate" \
 /report Erstelle PDF aus diesem Chat
 ```
 
-### 6.2 Plugins kombinieren
+### 10.2 Plugins kombinieren
 
 **Beispiel-Workflow:**
 
@@ -364,7 +503,7 @@ curl -X POST "http://localhost:3001/api/reports/generate" \
 
 ---
 
-## 7. Konkrete Use-Cases für die AfD
+## 11. Konkrete Use-Cases für die AfD
 
 ### Use-Case 1: Pressemitteilung entwerfen
 
@@ -472,9 +611,25 @@ Ton: sachlich, kämpferisch aber seriös.
 
 ---
 
-## 8. Tipps & Best Practices
+## 12. Einstellungen
 
-### 8.1 Welche Dokumente laden?
+Öffne die Einstellungen über das **Gear-Icon** (Zahnrad) in der rechten Sidebar.
+
+![Settings](../screenshots/settings-light.png)
+
+Verfügbare Einstellungen:
+
+- **LLM-Provider:** Auswahl des Modells (Fireworks AI, etc.)
+- **System-Prompt:** Anpassung des Workspace-System-Prompts
+- **Vektor-DB:** Konfiguration der Embedding-Datenbank
+- **Temperatur:** Kreativität vs. Präzision der Antworten
+- **Token-Limit:** Maximale Antwortlänge
+
+---
+
+## 13. Tipps & Best Practices
+
+### 13.1 Welche Dokumente laden?
 
 **Gute Quellen:**
 
@@ -490,7 +645,7 @@ Ton: sachlich, kämpferisch aber seriös.
 - Social-Media-Posts (Qualität schwankend)
 - Veraltete Dokumente (mehr als 5 Jahre alt)
 
-### 8.2 Wie fragt man die KI am besten?
+### 13.2 Wie fragt man die KI am besten?
 
 **Schlecht:**
 
@@ -513,7 +668,7 @@ mit Quellenangabe.
 - Format wünschen (Liste, Fließtext, Tabelle)
 - Länge angeben (300 Wörter, 5 Punkte)
 
-### 8.3 Module kombinieren
+### 13.3 Module kombinieren
 
 **Kombination 1: Recherche + Profil + Report**
 
@@ -536,37 +691,38 @@ mit Quellenangabe.
 
 ---
 
-## 9. Häufige Fragen (FAQ)
+## 14. Häufige Fragen (FAQ)
 
-### 9.1 Wie groß dürfen Dokumente sein?
+### 14.1 Wie groß dürfen Dokumente sein?
 
 - **Einzeldatei:** Bis 100 MB
 - **Workspace gesamt:** Unbegrenzt (lokaler Speicher)
 - **NVIDIA Nemotron:** 1M Context (= ca. 1500 Seiten Text)
 
-### 9.2 Funktioniert das auch offline?
+### 14.2 Funktioniert das auch offline?
 
 - **Vollständig offline:** Mit Ollama oder LM Studio als LLM-Provider
 - **Bundestag-API:** Online (Bundesquelle)
 - **Deep Research:** Online (Web-Suche)
 - **PDF-Reports:** Offline (kein Cloud-Call)
 
-### 9.3 Wie sicher sind meine Daten?
+### 14.3 Wie sicher sind meine Daten?
 
 - **Self-Hosted:** Alle Daten auf deinem Server
 - **Keine Telemetrie:** Null Outbound-Calls zu Dritten
 - **DSGVO:** Volle Kontrolle, lokal in DE/EU hostbar
 - **API-Keys:** Nur für die LLM-Provider, die du konfigurierst
 
-### 9.4 Was kostet der Betrieb?
+### 14.4 Was kostet der Betrieb?
 
 - **Server:** Eigener Mac/Linux/Windows (kein Cloud-Zwang)
 - **LLM-Provider:**
-  - **Lokal (Ollama):** 0 €/Monat (Stromkosten)
-  - **Cloud:** 10-100 €/Monat je nach Nutzung
+  - **Fireworks AI** (primärer Provider): Kosten variieren nach Modell — von günstigen Modellen (wenige Cent pro Anfrage) bis zu Premium-Modellen
+  - **SINator Pool Router:** Automatisches Key-Rotation und Load-Balancing über einen Pool von Fireworks API-Keys
+  - **Lokal (Ollama / LM Studio):** 0 €/Monat (nur Stromkosten)
 - **Keine Lizenzkosten:** MIT-Lizenz
 
-### 9.5 Was tun wenn die Politiker-DB leer ist?
+### 14.5 Was tun wenn die Politiker-DB leer ist?
 
 ```bash
 # 1. Sync-Job manuell starten
@@ -579,7 +735,7 @@ curl http://localhost:3001/api/politician/stats
 tail -f server/storage/logs/politician-sync.log
 ```
 
-### 9.6 Wie aktualisiere ich die App?
+### 14.6 Wie aktualisiere ich die App?
 
 ```bash
 # 1. Code aktualisieren
@@ -596,17 +752,17 @@ cd frontend && yarn build
 # (je nach Setup: docker compose restart, oder manuell)
 ```
 
-### 9.7 Wo finde ich weitere Hilfe?
+### 14.7 Wo finde ich weitere Hilfe?
 
 - **API-Dokumentation:** `docs/api.md`
 - **Architektur:** `docs/architecture.md`
 - **Roadmap:** `ROADMAP.md`
-- **Issues:** https://github.com/Family-Team-Projects/OpenSIN-Chat/issues
+- **Issues:** https://github.com/OpenSIN-AI/OpenSIN-Chat/issues
 - **Live-Demo:** https://sinchat.delqhi.com
 
 ---
 
-## 10. Anhang: Tastatur-Shortcuts
+## 15. Anhang: Tastatur-Shortcuts
 
 | Shortcut | Aktion |
 |----------|--------|
@@ -616,6 +772,8 @@ cd frontend && yarn build
 | `Cmd + /` | Agent-Plugin-Menü |
 | `Esc` | Modal schließen |
 
+> **Hinweis:** Shortcuts funktionieren nur im Desktop-Modus.
+
 ---
 
-*Letztes Update: 2026-06-07 · Version: v0.1.0 · Maintainer: @Family-Team-Projects*
+*Letztes Update: 2026-06-29 · Version: v1.0.0 · Maintainer: @OpenSIN-AI*

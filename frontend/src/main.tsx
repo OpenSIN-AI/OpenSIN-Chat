@@ -14,6 +14,7 @@ import {
   createBrowserRouter,
   Navigate,
   RouterProvider,
+  useParams,
 } from "react-router-dom";
 import App from "@/App";
 import PrivateRoute, {
@@ -43,6 +44,13 @@ if (
 ) {
   const { startMockWorker } = await import("@/mocks/browser");
   await startMockWorker();
+}
+
+function WorkspaceSettingsRedirect() {
+  const { slug } = useParams();
+  return (
+    <Navigate to={`/workspace/${slug}/settings/general-appearance`} replace />
+  );
 }
 
 const router = createBrowserRouter([
@@ -79,6 +87,10 @@ const router = createBrowserRouter([
           const { default: Docs } = await import("@/pages/Docs");
           return { element: <Docs /> };
         },
+      },
+      {
+        path: "/workspace/:slug/settings",
+        element: <WorkspaceSettingsRedirect />,
       },
       {
         path: "/workspace/:slug/settings/:tab",

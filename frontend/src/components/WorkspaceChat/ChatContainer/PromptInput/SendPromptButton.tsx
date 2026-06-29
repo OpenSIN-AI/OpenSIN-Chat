@@ -22,10 +22,10 @@ export default function SendPromptButton({
         ref={formRef}
         type="submit"
         disabled={isDisabled || !promptInput.trim().length}
-        className={`border-none flex justify-center items-center rounded-full w-8 h-8 transition-all ${
+        className={`border-none flex justify-center items-center rounded-full w-8 h-8 transition-opacity ${
           promptInput.trim().length && !isDisabled
-            ? "cursor-pointer bg-white hover:bg-zinc-200 light:bg-slate-800 light:hover:bg-slate-600"
-            : "cursor-not-allowed bg-zinc-600 light:bg-slate-400"
+            ? "cursor-pointer bg-slate-800 hover:opacity-80"
+            : "cursor-not-allowed bg-transparent"
         }`}
         data-tooltip-id="send-prompt"
         data-tooltip-content={
@@ -36,7 +36,11 @@ export default function SendPromptButton({
         aria-label={t("chat_window.send")}
       >
         <ArrowUp
-          className="w-[18px] h-[18px] pointer-events-none text-zinc-800 light:text-white"
+          className={`w-[18px] h-[18px] pointer-events-none ${
+            promptInput.trim().length && !isDisabled
+              ? "text-white"
+              : "text-slate-400 light:text-slate-300"
+          }`}
           weight="bold"
         />
         <span className="sr-only">{t("chat_window.send")}</span>

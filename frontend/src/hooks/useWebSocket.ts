@@ -7,6 +7,7 @@ import {
   AGENT_SESSION_END,
   AGENT_SESSION_START,
 } from "@/utils/chat/agent";
+import SSESocket from "@/utils/chat/SSESocket";
 import { CLEAR_ATTACHMENTS_EVENT } from "@/components/WorkspaceChat/ChatContainer/DnDWrapper";
 import { AUTH_TOKEN } from "@/utils/constants";
 import { safeGetItem } from "@/utils/safeStorage";
@@ -35,6 +36,8 @@ const MAX_BACKOFF_MS = 10_000;
 // ── Heartbeat parameters ────────────────────────────────────────────────────
 const HEARTBEAT_INTERVAL_MS = 30_000;
 const HEARTBEAT_TIMEOUT_MS = HEARTBEAT_INTERVAL_MS * 2;
+
+const WS_FALLBACK_TIMEOUT_MS = 3_000;
 
 /**
  * Custom hook to manage WebSocket connection for agent invocation.
@@ -69,6 +72,7 @@ export default function useWebSocket({
   const intentionalCloseRef = useRef(false);
   // Track reconnection attempt count for exponential backoff.
   const reconnectAttemptsRef = useRef(0);
+  const useSSEFallbackRef = useRef(false);
 
   useEffect(() => {
     let socket = null;
@@ -219,14 +223,19 @@ export default function useWebSocket({
 
           reconnectTimer = setTimeout(() => {
             if (!isMounted) return;
-            // Attempt reconnection by creating a new WebSocket to the same UUID.
-            // Assign to `socket` so the effect closure (handleAbortStream,
-            // cleanup) references the live connection, not the dead one.
-            socket = new WebSocket(agentWebsocketUrl(socketId)!);
-            socket.supportsAgentStreaming = false;
-            setWebsocket(socket);
-            attachListeners(socket);
-            startHeartbeat(socket);
+            if (useSSEFallbackRef.current) {
+              const sseSocket = new SSESocket(socketId!);
+              (sseSocket as any).supportsAgentStreaming = false;
+              socket = sseSocket as any;
+              setWebsocket(sseSocket as any);
+              attachListeners(sseSocket as any);
+            } else {
+              socket = new WebSocket(agentWebsocketUrl(socketId)!);
+              (socket as any).supportsAgentStreaming = false;
+              setWebsocket(socket);
+              attachListeners(socket);
+              startHeartbeat(socket);
+            }
           }, backoff);
           return;
         }
@@ -289,22 +298,99 @@ export default function useWebSocket({
       try {
         if (!socketId || !!websocket) return;
 
-        // Reset state for a new session.
         intentionalCloseRef.current = false;
         reconnectAttemptsRef.current = 0;
 
-        socket = new WebSocket(agentWebsocketUrl(socketId)!);
-        socket.supportsAgentStreaming = false;
-
         window.addEventListener(ABORT_STREAM_EVENT, handleAbortStream);
-
-        attachListeners(socket);
-        startHeartbeat(socket);
-
-        setWebsocket(socket);
         setAgentSessionActive(true);
         window.dispatchEvent(new CustomEvent(AGENT_SESSION_START));
         window.dispatchEvent(new CustomEvent(CLEAR_ATTACHMENTS_EVENT));
+
+        if (useSSEFallbackRef.current) {
+          const sseSocket = new SSESocket(socketId);
+          (sseSocket as any).supportsAgentStreaming = false;
+          socket = sseSocket as any;
+          setWebsocket(sseSocket as any);
+          attachListeners(sseSocket as any);
+          return;
+        }
+
+        let wsOpened = false;
+        let switchedToSSE = false;
+        let fallbackTimer: ReturnType<typeof setTimeout> | null = null;
+
+        function switchToSSE() {
+          if (switchedToSSE) return;
+          switchedToSSE = true;
+          useSSEFallbackRef.current = true;
+          if (fallbackTimer) {
+            clearTimeout(fallbackTimer);
+            fallbackTimer = null;
+          }
+          try {
+            const sseSocket = new SSESocket(socketId!);
+            (sseSocket as any).supportsAgentStreaming = false;
+            socket = sseSocket as any;
+            setWebsocket(sseSocket as any);
+            attachListeners(sseSocket as any);
+          } catch (sseErr: any) {
+            setChatHistory((prev) => [
+              ...(prev as any).filter((msg) => !!msg.content),
+              {
+                uuid: v4(),
+                type: "abort",
+                content: sseErr.message,
+                role: "assistant",
+                sources: [],
+                closed: true,
+                error: sseErr.message,
+                animate: false,
+                pending: false,
+              },
+            ]);
+            setLoadingResponse(false);
+            setWebsocket(null);
+            setSocketId(null);
+          }
+        }
+
+        socket = new WebSocket(agentWebsocketUrl(socketId)!);
+        (socket as any).supportsAgentStreaming = false;
+        setWebsocket(socket);
+
+        socket.addEventListener("open", () => {
+          wsOpened = true;
+          if (fallbackTimer) {
+            clearTimeout(fallbackTimer);
+            fallbackTimer = null;
+          }
+          reconnectAttemptsRef.current = 0;
+          attachListeners(socket);
+          startHeartbeat(socket);
+        });
+
+        const earlyFail = () => {
+          if (!wsOpened && !switchedToSSE) {
+            console.warn(
+              "[useWebSocket] WebSocket failed before open — falling back to SSE.",
+            );
+            switchToSSE();
+          }
+        };
+        socket.addEventListener("error", earlyFail);
+        socket.addEventListener("close", earlyFail);
+
+        fallbackTimer = setTimeout(() => {
+          if (!wsOpened && !switchedToSSE) {
+            console.warn(
+              "[useWebSocket] WebSocket did not connect within 3s — falling back to SSE.",
+            );
+            try {
+              socket?.close();
+            } catch {}
+            switchToSSE();
+          }
+        }, WS_FALLBACK_TIMEOUT_MS);
       } catch (e) {
         setChatHistory((prev) => [
           ...(prev as any).filter((msg) => !!msg.content),

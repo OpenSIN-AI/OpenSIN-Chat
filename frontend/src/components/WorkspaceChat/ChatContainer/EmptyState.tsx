@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import PromptInput from "./PromptInput";
+import AgentSessionButton from "./PromptInput/AgentSessionButton";
 import { Books } from "@phosphor-icons/react/dist/csr/Books";
 import { Notepad } from "@phosphor-icons/react/dist/csr/Notepad";
 import { Database } from "@phosphor-icons/react/dist/csr/Database";
@@ -50,6 +51,7 @@ export default function EmptyState({
   const { t: t2 } = useTranslation();
   const { toggleSidebar } = useChatSidebar();
   const [modelName, setModelName] = useState("");
+  const agentTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     const rawModel = workspace?.chatModel || "";
@@ -114,6 +116,18 @@ export default function EmptyState({
           </div>
         )}
         {!modelName && <div className="mb-8" />}
+
+        <div className="flex items-center gap-x-2 mb-3">
+          <AgentSessionButton
+            sendCommand={sendCommand}
+            promptInput=""
+            textareaRef={agentTextareaRef}
+            visible={true}
+          />
+          <span className="text-xs text-zinc-400 light:text-slate-500">
+            {t2("chat_window.start_agent_session")}
+          </span>
+        </div>
 
         <PromptInput
           workspace={workspace}
