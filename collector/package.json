@@ -21,7 +21,7 @@
     "ajv": "^8.20.0",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
+    "dotenv": "^17.4.2",
     "epub2": "git+https://github.com/Mintplex-Labs/epub2-static.git#eb0a45cd41ac1a5b4c97766e9935d97583104d35",
     "express": "^5.2.1",
     "fix-path": "^4.0.0",
