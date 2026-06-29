@@ -5,6 +5,7 @@ const path = require("path");
 
 const { WorkspaceNote } = require("../models/workspaceNote");
 const { Document } = require("../models/documents");
+const { Workspace } = require("../models/workspace");
 const { userFromSession, reqBody } = require("../utils/http");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
 const {
@@ -71,6 +72,90 @@ function noteEndpoints(app) {
       try {
         const { id } = request.params;
         await WorkspaceNote.delete(Number(id));
+        response.status(200).json({ success: true });
+      } catch (e) {
+        consoleLogger.error(e);
+        return response.sendStatus(500);
+      }
+    },
+  );
+
+  app.get(
+    "/workspaces/:slug/notes/shareable-workspaces",
+    [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
+    async (request, response) => {
+      try {
+        const workspace = response.locals.workspace;
+        const workspaces = await WorkspaceNote.getShareableWorkspaces(
+          workspace.id,
+        );
+        response.status(200).json({ workspaces });
+      } catch (e) {
+        consoleLogger.error(e);
+        return response.sendStatus(500);
+      }
+    },
+  );
+
+  app.get(
+    "/workspaces/:slug/notes/shared",
+    [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
+    async (request, response) => {
+      try {
+        const workspace = response.locals.workspace;
+        const notes = await WorkspaceNote.sharedToWorkspace(workspace.id);
+        response.status(200).json({ notes });
+      } catch (e) {
+        consoleLogger.error(e);
+        return response.sendStatus(500);
+      }
+    },
+  );
+
+  app.post(
+    "/workspaces/:slug/notes/:id/share",
+    [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
+    async (request, response) => {
+      try {
+        const workspace = response.locals.workspace;
+        const { id } = request.params;
+        const { targetWorkspaceSlug } = reqBody(request);
+        if (!targetWorkspaceSlug) {
+          return response.status(400).json({ error: "targetWorkspaceSlug is required" });
+        }
+        const target = await Workspace.get({ slug: targetWorkspaceSlug });
+        if (!target) {
+          return response.status(404).json({ error: "Target workspace not found" });
+        }
+        const user = await userFromSession(request, response);
+        const shared = await WorkspaceNote.shareToWorkspace(
+          id,
+          target.id,
+          user?.id || null,
+        );
+        response.status(200).json({ shared });
+      } catch (e) {
+        consoleLogger.error(e);
+        return response.sendStatus(500);
+      }
+    },
+  );
+
+  app.delete(
+    "/workspaces/:slug/notes/:id/share",
+    [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
+    async (request, response) => {
+      try {
+        const { id } = request.params;
+        const { targetWorkspaceSlug } = request.query;
+        if (!targetWorkspaceSlug) {
+          return response.status(400).json({ error: "targetWorkspaceSlug is required" });
+        }
+        const target = await Workspace.get({ slug: targetWorkspaceSlug });
+        if (!target) {
+          return response.status(404).json({ error: "Target workspace not found" });
+        }
+        await WorkspaceNote.unshareFromWorkspace(id, target.id);
         response.status(200).json({ success: true });
       } catch (e) {
         consoleLogger.error(e);

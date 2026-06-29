@@ -320,6 +320,7 @@ function agentWebsocket(app, routePrefix = "") {
           }
         };
 
+        try { socket.send(JSON.stringify({type: "statusResponse", content: "Verbindung hergestellt...", role: "assistant"})); } catch {}
         await Telemetry.sendTelemetry("agent_chat_started");
         await agentHandler.createAIbitat({ socket });
         await agentHandler.startAgentCluster();
