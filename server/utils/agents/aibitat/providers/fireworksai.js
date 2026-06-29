@@ -12,12 +12,20 @@ class FireworksAIProvider extends InheritMultiple([Provider, UnTooled]) {
   model;
 
   constructor(config = {}) {
-    const { model = "accounts/fireworks/models/llama-v3p1-8b-instruct" } =
-      config;
+    const {
+      model = process.env.FIREWORKS_AI_LLM_MODEL_PREF ||
+        "accounts/fireworks/models/llama-v3p1-8b-instruct",
+    } = config;
     super();
+    const baseURL =
+      process.env.FIREWORKS_AI_LLM_BASE_PATH ||
+      "https://api.fireworks.ai/inference/v1";
     const client = new OpenAI({
-      baseURL: "https://api.fireworks.ai/inference/v1",
+      baseURL,
       apiKey: process.env.FIREWORKS_AI_LLM_API_KEY,
+      defaultHeaders: {
+        "User-Agent": "OpenSIN-Chat/1.0",
+      },
     });
 
     this._client = client;
