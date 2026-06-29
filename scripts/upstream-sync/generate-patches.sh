@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: MIT
+
 # OpenSIN-Chat — Upstream Sync Patch Generator (Option A: Squash-Patch-Serie)
 # ----------------------------------------------------------------------------
 # Generates 6 atomic patch groups from upstream Mintplex-Labs/anything-llm

@@ -1,4 +1,6 @@
 #!/bin/bash
+# SPDX-License-Identifier: MIT
+
 set -euo pipefail
 
 # Deploy OpenSIN-Chat to the OCI production VM (sin-supabase).

@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: MIT
+
 # Purpose: Recovery one-shot for Aura-Call VM (92.5.30.252), parallel to sinchat emergency-recover.sh.
 # Docs: ../skill-oci-oracle-cloud SKILL.md §10.x
 # AUDIENCE: Operator on their Mac (NOT agent sandbox — Priority 20).

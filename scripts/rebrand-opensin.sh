@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: MIT
+
 # Migriert OpenAfD -> OpenSIN über den gesamten Tree.
 # WICHTIG: laesst Upstream-Credits (AnythingLLM/Mintplex) und funktionale
 # Kompat-Bezeichner (Storage-Keys, env-Var-Whitelist, DB-Dateiname) unberuehrt.

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const consoleLogger = require("../../utils/logger/console.js");
 const {
   reqBody,

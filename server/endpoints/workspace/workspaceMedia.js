@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const path = require("path");
 const fs = require("fs");
 const consoleLogger = require("../../utils/logger/console.js");

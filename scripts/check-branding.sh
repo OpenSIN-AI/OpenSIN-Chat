@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: MIT
+
 # OpenSIN Chat — Branding Linter
 # Fails CI when AnythingLLM / Mintplex Labs brand strings appear outside the
 # whitelist of files that LEGITIMATELY credit the upstream project.

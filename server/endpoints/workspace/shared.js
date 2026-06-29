@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { cleanupUploadedFile } = require("../../utils/files/multer");
 
 const RESPONSE_CACHE_MAX = 50;

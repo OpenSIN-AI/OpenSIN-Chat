@@ -1,4 +1,5 @@
 #!/bin/bash
+# SPDX-License-Identifier: MIT
 
 # Check if STORAGE_DIR is set
 if [ -z "$STORAGE_DIR" ]; then

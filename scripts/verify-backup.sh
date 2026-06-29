@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: MIT
+
 set -euo pipefail
 
 BACKUP_DIR="${1:-/home/ubuntu/backups}"

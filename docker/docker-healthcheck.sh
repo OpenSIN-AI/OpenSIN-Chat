@@ -1,4 +1,5 @@
 #!/bin/bash
+# SPDX-License-Identifier: MIT
 
 # Purpose: Docker HEALTHCHECK — prüft ob der OpenSIN-Chat-Server (Port 3001)
 #          antwortet UND ob die PDF-Analyse-Subsysteme (Storage, Job-Store)
