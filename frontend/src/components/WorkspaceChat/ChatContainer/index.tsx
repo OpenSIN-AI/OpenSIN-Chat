@@ -40,7 +40,7 @@ export default function ChatContainer({
         style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
         className="h-[var(--content-height)] relative flex md:ml-[16px] md:mr-[16px] md:my-[16px] flex-1 min-w-0 z-[2]"
       >
-        <ChatHeader workspaceSlug={workspace.slug} isEmpty={isEmpty} />
+        <ChatHeader workspaceSlug={workspace?.slug} isEmpty={isEmpty} />
         <div
           className={`flex-1 min-w-0 transition-all duration-500 relative md:rounded-[16px] bg-zinc-900 light:bg-white w-full h-full overflow-hidden border-none light:border-solid light:border light:border-theme-modal-border${isEmpty ? "" : " text-white light:text-slate-900"}`}
         >

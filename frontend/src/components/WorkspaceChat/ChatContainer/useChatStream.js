@@ -42,8 +42,10 @@ export default function useChatStream({
   const prevLoadingResponse = useRef(loadingResponse);
   const lastResponseWasError = useRef(false);
 
-  const isEmpty =
-    chatHistory.length === 0 && !sessionStorage.getItem(PENDING_HOME_MESSAGE);
+  const isEmpty = !threadSlug
+    ? true
+    : chatHistory.length === 0 &&
+      !sessionStorage.getItem(PENDING_HOME_MESSAGE);
 
   const { listening, resetTranscript } = useSpeechRecognition({
     clearTranscriptOnListen: true,

@@ -664,6 +664,7 @@ function NewThreadButton({ workspace, mutate }) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const onClick = async () => {
+    if (!workspace?.slug) return;
     setLoading(true);
     try {
       const { thread, error } = await Workspace.threads.new(workspace.slug);
@@ -675,7 +676,7 @@ function NewThreadButton({ workspace, mutate }) {
         return;
       }
       mutate();
-      navigate(paths.workspace.thread(workspace.slug, thread.slug));
+      navigate(paths.workspace.thread(workspace.slug, thread?.slug));
     } catch (e: any) {
       showToast(
         t("threadContainer.createError", { error: String(e?.message || e) }),

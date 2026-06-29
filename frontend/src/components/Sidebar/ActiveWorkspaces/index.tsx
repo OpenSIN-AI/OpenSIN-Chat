@@ -47,6 +47,7 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
     e.preventDefault();
     e.stopPropagation();
     setOpen(false);
+    if (!workspace?.slug) return;
     try {
       const { thread, error } = await Workspace.threads.new(workspace.slug);
       if (error) {
@@ -56,7 +57,7 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
         return;
       }
       invalidateThreads(workspace.slug);
-      navigate(paths.workspace.thread(workspace.slug, thread.slug));
+      navigate(paths.workspace.thread(workspace.slug, thread?.slug));
     } catch (e: any) {
       showToast(
         t("activeWorkspaces.chatCreateFailed", {
