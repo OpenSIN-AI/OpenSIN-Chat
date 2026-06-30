@@ -5,11 +5,17 @@ import { Database } from "@phosphor-icons/react/dist/csr/Database";
 import { Users } from "@phosphor-icons/react/dist/csr/Users";
 import { ArrowClockwise } from "@phosphor-icons/react/dist/csr/ArrowClockwise";
 import { ArrowSquareOut } from "@phosphor-icons/react/dist/csr/ArrowSquareOut";
+import { ArrowLeft } from "@phosphor-icons/react/dist/csr/ArrowLeft";
 import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
 import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { CheckSquare } from "@phosphor-icons/react/dist/csr/CheckSquare";
 import { Square } from "@phosphor-icons/react/dist/csr/Square";
 import { Microphone } from "@phosphor-icons/react/dist/csr/Microphone";
+import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
+import { Calendar } from "@phosphor-icons/react/dist/csr/Calendar";
+import { Briefcase } from "@phosphor-icons/react/dist/csr/Briefcase";
+import { MapPin } from "@phosphor-icons/react/dist/csr/MapPin";
+import { EnvelopeSimple } from "@phosphor-icons/react/dist/csr/EnvelopeSimple";
 import { useTranslation } from "react-i18next";
 import useSWR from "swr";
 import { usePoliticians } from "@/hooks/usePoliticians";
@@ -59,7 +65,17 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
   const [speechResults, setSpeechResults] = useState<any[]>([]);
   const [speechLoading, setSpeechLoading] = useState(false);
   const [speechError, setSpeechError] = useState<string | null>(null);
-  const [showSpeechSearch, setShowSpeechSearch] = useState(false);
+  const [activeTab, setActiveTab] = useState<
+    "politicians" | "speeches" | "drucksachen"
+  >("politicians");
+
+  const [dipQuery, setDipQuery] = useState("");
+  const [dipResults, setDipResults] = useState<any[]>([]);
+  const [dipLoading, setDipLoading] = useState(false);
+  const [dipError, setDipError] = useState<string | null>(null);
+
+  const [profileData, setProfileData] = useState<any>(null);
+  const [profileLoading, setProfileLoading] = useState(false);
 
   const workspaceSlug = workspace?.slug;
 
@@ -155,6 +171,37 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
     }
   }, [speechQuery]);
 
+  const searchDrucksachen = useCallback(async () => {
+    if (!dipQuery.trim()) return;
+    setDipLoading(true);
+    setDipError(null);
+    try {
+      const { results, error } = await Politician.searchDrucksachen(dipQuery, {
+        faction: "AfD",
+        limit: 10,
+      });
+      if (error) setDipError(error);
+      else setDipResults(results);
+    } catch (e) {
+      setDipError(e instanceof Error ? e.message : "Search failed");
+    } finally {
+      setDipLoading(false);
+    }
+  }, [dipQuery]);
+
+  const openProfile = useCallback(async (id: string) => {
+    setProfileLoading(true);
+    setProfileData(null);
+    try {
+      const data = await Politician.getById(id);
+      if (data?.politician) setProfileData(data.politician);
+    } catch (e) {
+      console.error("Profile load error:", e);
+    } finally {
+      setProfileLoading(false);
+    }
+  }, []);
+
   return (
     <ChatSidebar isOpen={sidebarOpen} minWidth={420}>
       <div className="w-full h-full bg-zinc-900 light:bg-white light:border-l light:border-slate-300 flex flex-col overflow-hidden">
@@ -189,13 +236,16 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
 
         {/* Filters */}
         <div className="px-4 py-3 flex flex-col gap-2 border-b border-zinc-800 light:border-slate-200">
-          {/* Tab toggle: Politician search vs Speech search */}
+          {/* Tab toggle: Politicians | Speeches | Drucksachen */}
           <div className="flex gap-1 mb-1">
             <button
               type="button"
-              onClick={() => setShowSpeechSearch(false)}
+              onClick={() => {
+                setActiveTab("politicians");
+                setProfileData(null);
+              }}
               className={`flex-1 flex items-center justify-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium border-none cursor-pointer transition-colors ${
-                !showSpeechSearch
+                activeTab === "politicians"
                   ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
                   : "bg-transparent text-zinc-500 light:text-slate-400 hover:text-zinc-300"
               }`}
@@ -205,19 +255,37 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
             </button>
             <button
               type="button"
-              onClick={() => setShowSpeechSearch(true)}
+              onClick={() => {
+                setActiveTab("speeches");
+                setProfileData(null);
+              }}
               className={`flex-1 flex items-center justify-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium border-none cursor-pointer transition-colors ${
-                showSpeechSearch
+                activeTab === "speeches"
                   ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
                   : "bg-transparent text-zinc-500 light:text-slate-400 hover:text-zinc-300"
               }`}
             >
               <Microphone size={12} />
-              {t("sidebar.database.tabSpeeches", "Reden-Suche")}
+              {t("sidebar.database.tabSpeeches", "Reden")}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setActiveTab("drucksachen");
+                setProfileData(null);
+              }}
+              className={`flex-1 flex items-center justify-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium border-none cursor-pointer transition-colors ${
+                activeTab === "drucksachen"
+                  ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
+                  : "bg-transparent text-zinc-500 light:text-slate-400 hover:text-zinc-300"
+              }`}
+            >
+              <FileText size={12} />
+              {t("sidebar.database.tabDrucksachen", "Drucksachen")}
             </button>
           </div>
 
-          {showSpeechSearch ? (
+          {activeTab === "speeches" ? (
             /* Speech search input */
             <div className="flex gap-2">
               <div className="relative flex-1">
@@ -248,6 +316,38 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
                 className="px-3 py-1.5 rounded-md bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white text-xs font-medium border-none cursor-pointer transition-colors"
               >
                 {speechLoading ? "..." : t("common.search", "Suchen")}
+              </button>
+            </div>
+          ) : activeTab === "drucksachen" ? (
+            <div className="flex gap-2">
+              <div className="relative flex-1">
+                <MagnifyingGlass
+                  size={14}
+                  className="absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-500 light:text-slate-400"
+                />
+                <input
+                  type="search"
+                  value={dipQuery}
+                  onChange={(e) => setDipQuery(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && searchDrucksachen()}
+                  placeholder={t(
+                    "sidebar.database.dipSearch",
+                    "Bundestags-Drucksachen durchsuchen...",
+                  )}
+                  aria-label={t(
+                    "sidebar.database.dipSearch",
+                    "Bundestags-Drucksachen durchsuchen...",
+                  )}
+                  className="w-full border border-zinc-700 light:border-slate-300 rounded-md pl-8 pr-2 py-1.5 text-sm text-white light:text-slate-900 bg-zinc-950 light:bg-white outline-none focus:border-blue-500 placeholder:text-zinc-500 light:placeholder:text-slate-400"
+                />
+              </div>
+              <button
+                type="button"
+                onClick={searchDrucksachen}
+                disabled={dipLoading || !dipQuery.trim()}
+                className="px-3 py-1.5 rounded-md bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white text-xs font-medium border-none cursor-pointer transition-colors"
+              >
+                {dipLoading ? "..." : t("common.search", "Suchen")}
               </button>
             </div>
           ) : (
@@ -357,7 +457,152 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto p-4 no-scroll flex flex-col gap-2">
-          {showSpeechSearch ? (
+          {profileData ? (
+            /* Profile Card View */
+            <div className="flex flex-col gap-3">
+              <button
+                type="button"
+                onClick={() => setProfileData(null)}
+                className="flex items-center gap-1.5 text-xs text-zinc-400 light:text-slate-500 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer self-start"
+              >
+                <ArrowLeft size={12} weight="bold" />
+                {t("common.back", "Zurück")}
+              </button>
+              <div className="flex items-center gap-3 p-3 rounded-xl bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-200">
+                <div className="w-12 h-12 rounded-full bg-zinc-700 light:bg-slate-200 flex items-center justify-center flex-shrink-0">
+                  <Users
+                    size={20}
+                    className="text-zinc-400 light:text-slate-500"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-white light:text-slate-900 truncate">
+                    {profileData.fullName ||
+                      `${profileData.firstName || ""} ${profileData.lastName || ""}`.trim() ||
+                      profileData.id}
+                  </p>
+                  <p className="text-xs text-zinc-500 light:text-slate-400 truncate">
+                    {profileData.party || "—"}
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-col gap-1.5 text-xs text-zinc-300 light:text-slate-600">
+                {profileData.party && (
+                  <div className="flex items-center gap-2">
+                    <Briefcase
+                      size={12}
+                      className="text-zinc-500 flex-shrink-0"
+                    />{" "}
+                    {profileData.party}
+                  </div>
+                )}
+                {profileData.state && (
+                  <div className="flex items-center gap-2">
+                    <MapPin size={12} className="text-zinc-500 flex-shrink-0" />{" "}
+                    {profileData.state}
+                  </div>
+                )}
+                {profileData.electoralDistrict && (
+                  <div className="flex items-center gap-2">
+                    <MapPin size={12} className="text-zinc-500 flex-shrink-0" />{" "}
+                    {profileData.electoralDistrict}
+                  </div>
+                )}
+                {profileData.email && (
+                  <div className="flex items-center gap-2">
+                    <EnvelopeSimple
+                      size={12}
+                      className="text-zinc-500 flex-shrink-0"
+                    />{" "}
+                    {profileData.email}
+                  </div>
+                )}
+                {profileData.birthDate && (
+                  <div className="flex items-center gap-2">
+                    <Calendar
+                      size={12}
+                      className="text-zinc-500 flex-shrink-0"
+                    />{" "}
+                    {
+                      new Date(profileData.birthDate)
+                        .toISOString()
+                        .split("T")[0]
+                    }
+                  </div>
+                )}
+                {profileData.profession && (
+                  <div className="flex items-center gap-2">
+                    <Briefcase
+                      size={12}
+                      className="text-zinc-500 flex-shrink-0"
+                    />{" "}
+                    {profileData.profession}
+                  </div>
+                )}
+              </div>
+              {profileData.bio && (
+                <div className="p-3 rounded-xl bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-200">
+                  <p className="text-[10px] uppercase tracking-widest text-zinc-500 light:text-slate-400 mb-1">
+                    {t("sidebar.database.biography", "Biografie")}
+                  </p>
+                  <p className="text-xs text-zinc-300 light:text-slate-600 leading-relaxed">
+                    {profileData.bio}
+                  </p>
+                </div>
+              )}
+              {profileData.stats && (
+                <div className="grid grid-cols-3 gap-2">
+                  <div className="p-2 rounded-lg bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-200 text-center">
+                    <p className="text-lg font-bold text-white light:text-slate-900">
+                      {profileData.stats.speeches ?? 0}
+                    </p>
+                    <p className="text-[10px] text-zinc-500 light:text-slate-400">
+                      {t("sidebar.database.statSpeeches", "Reden")}
+                    </p>
+                  </div>
+                  <div className="p-2 rounded-lg bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-200 text-center">
+                    <p className="text-lg font-bold text-white light:text-slate-900">
+                      {profileData.stats.votes ?? 0}
+                    </p>
+                    <p className="text-[10px] text-zinc-500 light:text-slate-400">
+                      {t("sidebar.database.statVotes", "Abstimmungen")}
+                    </p>
+                  </div>
+                  <div className="p-2 rounded-lg bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-200 text-center">
+                    <p className="text-lg font-bold text-white light:text-slate-900">
+                      {profileData.stats.mandates ?? 0}
+                    </p>
+                    <p className="text-[10px] text-zinc-500 light:text-slate-400">
+                      {t("sidebar.database.statMandates", "Mandate")}
+                    </p>
+                  </div>
+                </div>
+              )}
+              {profileData.profileUrl && (
+                <a
+                  href={profileData.profileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-xs text-blue-400 hover:text-blue-300 transition-colors"
+                >
+                  <ArrowSquareOut size={12} />
+                  {t("sidebar.database.openProfile", "Profil öffnen")}
+                </a>
+              )}
+              <button
+                type="button"
+                onClick={() => addPoliticianToWorkspace(profileData.id)}
+                disabled={adding.has(profileData.id) || !workspaceSlug}
+                className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white text-xs font-medium border-none cursor-pointer transition-colors"
+              >
+                <Plus size={14} weight="bold" />
+                {t(
+                  "sidebar.database.addToWorkspace",
+                  "Zum Workspace hinzufügen",
+                )}
+              </button>
+            </div>
+          ) : activeTab === "speeches" ? (
             /* Speech search results */
             <>
               <p className="text-[10px] uppercase tracking-widest text-zinc-500 light:text-slate-400 mb-1">
@@ -436,8 +681,99 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
                 </div>
               ))}
             </>
+          ) : activeTab === "drucksachen" ? (
+            /* DIP Drucksachen results */
+            <>
+              <p className="text-[10px] uppercase tracking-widest text-zinc-500 light:text-slate-400 mb-1">
+                {t("sidebar.database.dipResults", "Bundestags-Drucksachen")}
+              </p>
+
+              {dipLoading && (
+                <div className="flex flex-col gap-2">
+                  {Array.from({ length: 3 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="p-3 rounded-xl bg-zinc-800 light:bg-slate-100 animate-pulse space-y-2"
+                    >
+                      <div className="h-3 w-32 rounded bg-zinc-700 light:bg-slate-200" />
+                      <div className="h-2 w-full rounded bg-zinc-700 light:bg-slate-200" />
+                      <div className="h-2 w-3/4 rounded bg-zinc-700 light:bg-slate-200" />
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {dipError && (
+                <div className="p-3 rounded-lg bg-red-950/40 border border-red-800/50 text-xs text-red-400">
+                  {dipError}
+                </div>
+              )}
+
+              {!dipLoading &&
+                !dipError &&
+                dipResults.length === 0 &&
+                !dipQuery && (
+                  <p className="text-xs text-zinc-500 italic">
+                    {t(
+                      "sidebar.database.dipHint",
+                      "Suche nach Bundestags-Drucksachen (Anfragen, Anträge, Berichte).",
+                    )}
+                  </p>
+                )}
+
+              {!dipLoading &&
+                !dipError &&
+                dipResults.length === 0 &&
+                dipQuery && (
+                  <p className="text-xs text-zinc-500 italic">
+                    {t(
+                      "sidebar.database.noDipResults",
+                      "Keine Drucksachen gefunden.",
+                    )}
+                  </p>
+                )}
+
+              {dipResults.map((doc, i) => (
+                <div
+                  key={doc.id || i}
+                  className="p-3 rounded-xl bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-200"
+                >
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <FileText
+                      size={12}
+                      className="text-zinc-400 flex-shrink-0"
+                    />
+                    <p className="text-xs font-medium text-white light:text-slate-900 truncate flex-1">
+                      {doc.titel || doc.title || "—"}
+                    </p>
+                  </div>
+                  <p className="text-xs text-zinc-300 light:text-slate-600 leading-snug line-clamp-3">
+                    {doc.kurz_beschreibung ||
+                      doc.abstract ||
+                      doc.description ||
+                      "—"}
+                  </p>
+                  <div className="flex items-center gap-2 mt-1.5">
+                    {doc.typ && (
+                      <span className="text-[10px] text-zinc-500 light:text-slate-400 bg-zinc-700/50 light:bg-slate-100 rounded px-1.5 py-0.5">
+                        {doc.typ}
+                      </span>
+                    )}
+                    {doc.datum && (
+                      <span className="text-[10px] text-zinc-500 light:text-slate-400">
+                        {new Date(doc.datum).toLocaleDateString()}
+                      </span>
+                    )}
+                    {doc.drucksachennummer && (
+                      <span className="text-[10px] text-zinc-500 light:text-slate-400">
+                        {doc.drucksachennummer}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </>
           ) : (
-            /* Politician list */
             <>
               <p className="text-[10px] uppercase tracking-widest text-zinc-500 light:text-slate-400 mb-1">
                 {t("sidebar.database.source", "Quelle: Abgeordnetenwatch API")}
@@ -498,7 +834,8 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
                 return (
                   <div
                     key={p.id}
-                    className={`flex items-center gap-2 p-2.5 rounded-xl border transition-colors ${
+                    onClick={() => openProfile(p.id)}
+                    className={`flex items-center gap-2 p-2.5 rounded-xl border transition-colors cursor-pointer ${
                       isSelected
                         ? "bg-blue-600/20 border-blue-500/40"
                         : "bg-zinc-800 light:bg-slate-50 border-zinc-700 light:border-slate-200 hover:bg-zinc-700/50 light:hover:bg-slate-100"
@@ -506,7 +843,10 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
                   >
                     <button
                       type="button"
-                      onClick={() => toggleSelected(p.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleSelected(p.id);
+                      }}
                       className="text-zinc-400 light:text-slate-500 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer flex-shrink-0"
                       aria-label={t("sidebar.database.select", "Auswählen")}
                     >
@@ -538,7 +878,10 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
                     </div>
                     <button
                       type="button"
-                      onClick={() => addPoliticianToWorkspace(p.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        addPoliticianToWorkspace(p.id);
+                      }}
                       disabled={isAdding || !workspaceSlug}
                       className="text-zinc-500 hover:text-blue-400 disabled:opacity-40 transition-colors border-none bg-transparent cursor-pointer flex-shrink-0"
                       aria-label={t(

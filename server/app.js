@@ -314,6 +314,20 @@ function buildApp() {
     // Return 404 JSON for unmatched /api/* paths instead of serving HTML
     apiRouter.use((req, res) => res.status(404).json({ error: "Not found" }));
 
+    app.use("/assets", function (request, response, next) {
+      const fs = require("fs");
+      const path = require("path");
+      const assetsDir = path.resolve(__dirname, "public", "assets");
+      const filePath = path.resolve(assetsDir, request.path);
+      if (filePath !== assetsDir && !filePath.startsWith(assetsDir + path.sep)) {
+        return response.status(403).end();
+      }
+      if (!fs.existsSync(filePath)) {
+        return response.status(404).end();
+      }
+      next();
+    });
+
     app.use("/", function (request, response) {
       const prerendered = getDocsPrerender(request.path);
       IndexPage.generate(request, response, 200, prerendered);

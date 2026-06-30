@@ -80,11 +80,13 @@ function utilEndpoints(app) {
           process.env.BUNDESTAG_API_KEY ||
           "";
         const params = new URLSearchParams({
-          f_fraktion: "AfD",
           format: "json",
           rows: req.query.rows || "10",
           ...(apiKey ? { apikey: apiKey } : {}),
         });
+        if (req.query.q) params.set("q", req.query.q);
+        if (req.query.f_fraktion) params.set("f_fraktion", req.query.f_fraktion);
+        if (!params.has("f_fraktion")) params.set("f_fraktion", "AfD");
         const res = await fetchWithTimeout(
           `https://search.dip.bundestag.de/api/v1/drucksache?${params}`,
           { headers: { Accept: "application/json" } },
@@ -98,7 +100,11 @@ function utilEndpoints(app) {
           throw new Error(msg);
         }
         const json = await res.json();
-        response.status(200).json(json);
+        response.status(200).json({
+          documents: json.documents || [],
+          cursor: json.cursor || null,
+          numFound: json.numFound || 0,
+        });
       } catch (e) {
         const errorId = crypto.randomUUID();
         consoleLogger.error(`[endpoint error ${errorId}]`, e);
@@ -282,12 +288,14 @@ function utilEndpoints(app) {
                 const itemRelPath = path.relative(uploadsRoot, fullPath);
                 let size = 0;
                 let ext = "";
+                let modifiedAt = null;
                 try {
+                  const stat = await fs.promises.stat(fullPath);
                   if (entry.isFile()) {
-                    const stat = await fs.promises.stat(fullPath);
                     size = stat.size;
                     ext = path.extname(entry.name).toLowerCase();
                   }
+                  modifiedAt = stat.mtime.toISOString();
                 } catch {}
                 return {
                   name: entry.name,
@@ -295,6 +303,7 @@ function utilEndpoints(app) {
                   path: itemRelPath,
                   size,
                   ext,
+                  modifiedAt,
                 };
               }),
           )
@@ -423,6 +432,78 @@ function utilEndpoints(app) {
 
         await fs.promises.rm(resolved, { recursive: true });
         response.status(200).json({ success: true });
+      } catch (e) {
+        const errorId = crypto.randomUUID();
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
+        response.status(500).json({ error: "Internal server error", errorId });
+      }
+    },
+  );
+
+  // Upload file to uploads/ directory — used by FilesystemSidebar
+  app.post(
+    "/utils/upload-file",
+    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    async (req, response) => {
+      try {
+        const path = require("path");
+        const fs = require("fs");
+        const multer = require("multer");
+
+        const upload = multer({
+          storage: multer.diskStorage({
+            destination: (req, file, cb) => {
+              const dir = safeStorageJoin("uploads", req.query.path || "");
+              ensureStorageDir(path.join("uploads", req.query.path || ""));
+              cb(null, dir);
+            },
+            filename: (req, file, cb) => {
+              cb(null, file.originalname);
+            },
+          }),
+          limits: { fileSize: 500 * 1024 * 1024 },
+        });
+
+        upload.single("file")(req, response, (err) => {
+          if (err) {
+            return response.status(400).json({ error: err.message });
+          }
+          if (!req.file) {
+            return response.status(400).json({ error: "No file provided" });
+          }
+          response.status(200).json({
+            name: req.file.originalname,
+            size: req.file.size,
+            path: path.relative(getStoragePath("uploads"), req.file.path),
+          });
+        });
+      } catch (e) {
+        const errorId = crypto.randomUUID();
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
+        response.status(500).json({ error: "Internal server error", errorId });
+      }
+    },
+  );
+
+  app.get(
+    "/utils/download-file",
+    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    async (req, response) => {
+      try {
+        const path = require("path");
+        const fs = require("fs");
+        const relativePath = req.query.path || "";
+        const filePath = safeStorageJoin("uploads", relativePath);
+        if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
+          return response.status(404).json({ error: "File not found" });
+        }
+        const fileName = path.basename(filePath);
+        response.setHeader(
+          "Content-Disposition",
+          `attachment; filename="${encodeURIComponent(fileName)}"`,
+        );
+        response.setHeader("Content-Type", "application/octet-stream");
+        fs.createReadStream(filePath).pipe(response);
       } catch (e) {
         const errorId = crypto.randomUUID();
         consoleLogger.error(`[endpoint error ${errorId}]`, e);

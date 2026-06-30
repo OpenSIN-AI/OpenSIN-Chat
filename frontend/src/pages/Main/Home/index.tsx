@@ -4,7 +4,7 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { isMobile } from "react-device-detect";
-import PromptInput, {
+import {
   PROMPT_INPUT_EVENT,
   PROMPT_INPUT_ID,
 } from "@/components/WorkspaceChat/ChatContainer/PromptInput";
@@ -13,6 +13,7 @@ import DnDFileUploaderWrapper, {
   DnDFileUploaderProvider,
   PASTE_ATTACHMENT_EVENT,
 } from "@/components/WorkspaceChat/ChatContainer/DnDWrapper";
+import EmptyState from "@/components/WorkspaceChat/ChatContainer/EmptyState";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
 import {
@@ -25,8 +26,6 @@ import showToast from "@/utils/toast";
 import { safeJsonParse } from "@/utils/request";
 import { safeGetItem } from "@/utils/safeStorage";
 import { invalidateThreads } from "@/hooks/useThreads";
-import WorkspaceSources from "@/components/lib/WorkspaceSources";
-import SuggestedMessages from "@/components/lib/SuggestedMessages";
 import useUser from "@/hooks/useUser";
 import ChatSettingsMenu from "@/components/WorkspaceChat/ChatContainer/ChatSettingsMenu";
 import WorkspaceModelPicker from "@/components/WorkspaceChat/ChatContainer/WorkspaceModelPicker";
@@ -350,33 +349,16 @@ function HomeContent({
         <div className="flex-1 min-w-0 transition-all duration-500 relative md:rounded-[16px] bg-zinc-900 light:bg-white w-full h-full overflow-hidden border-none light:border-solid light:border light:border-theme-modal-border">
           <WorkspaceModelPicker workspaceSlug={workspace?.slug} />
           <DnDFileUploaderWrapper>
-            <div className="flex flex-col h-full w-full items-center justify-center">
-              <div className="flex flex-col items-center w-full max-w-[750px]">
-                <h1 className="text-white text-xl md:text-2xl mb-11 text-center">
-                  {t("main-page.greeting")}
-                </h1>
-                <PromptInput
-                  workspace={workspace}
-                  submit={handleSubmit}
-                  isStreaming={loading}
-                  sendCommand={sendCommand}
-                  attachments={files}
-                  centered={true}
-                  workspaceSlug={workspace?.slug}
-                  threadSlug={threadSlug}
-                />
-                <WorkspaceSources
-                  documents={workspace?.documents || []}
-                  onAddSources={() =>
-                    document.getElementById("dnd-chat-file-uploader")?.click()
-                  }
-                />
-              </div>
-              <SuggestedMessages
-                suggestedMessages={workspace?.suggestedMessages}
-                sendCommand={sendCommand}
-              />
-            </div>
+            <EmptyState
+              workspace={workspace}
+              handleSubmit={handleSubmit}
+              sendCommand={sendCommand}
+              loadingResponse={loading}
+              files={files}
+              t={t}
+              workspaceSlug={workspace?.slug}
+              threadSlug={threadSlug}
+            />
           </DnDFileUploaderWrapper>
           <ChatTooltips />
         </div>

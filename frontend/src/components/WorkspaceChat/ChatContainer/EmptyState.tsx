@@ -16,6 +16,8 @@ interface EmptyStateProps {
   loadingResponse: boolean;
   files: any[];
   t: (key: string) => string;
+  workspaceSlug?: string;
+  threadSlug?: string;
 }
 
 function CapabilityCard({ icon: Icon, title, description, onClick }: any) {
@@ -47,6 +49,8 @@ export default function EmptyState({
   loadingResponse,
   files,
   t,
+  workspaceSlug,
+  threadSlug,
 }: EmptyStateProps) {
   const { t: t2 } = useTranslation();
   const { toggleSidebar } = useChatSidebar();
@@ -97,7 +101,7 @@ export default function EmptyState({
         "chat.capability_rag_desc",
         "Antworten basierend auf deinen Dokumenten",
       ),
-      onClick: () => {},
+      onClick: () => toggleSidebar("sources"),
     },
   ];
 
@@ -136,6 +140,8 @@ export default function EmptyState({
           sendCommand={sendCommand}
           attachments={files}
           centered={true}
+          workspaceSlug={workspaceSlug}
+          threadSlug={threadSlug}
         />
 
         <div className="grid grid-cols-2 gap-3 w-full mt-6">

@@ -124,6 +124,40 @@ const Politician = {
       return { results: [], error: e.message };
     }
   },
+
+  searchDrucksachen: async function (query, opts = {}) {
+    try {
+      const params = new URLSearchParams();
+      if (query) params.set("q", query);
+      if (opts.faction) params.set("f_fraktion", opts.faction);
+      params.set("rows", String(opts.limit || 10));
+      params.set("format", "json");
+      const res = await fetch(
+        `${API_BASE}/utils/bundestag/drucksachen?${params}`,
+        { headers: baseHeaders() },
+      );
+      const data = await res.json().catch(() => ({}));
+      if (data.error) return { results: [], error: data.error };
+      return {
+        results: data.documents || [],
+        error: null,
+      };
+    } catch (e) {
+      return { results: [], error: e.message };
+    }
+  },
+
+  getProfile: async function (politicianId) {
+    try {
+      const res = await fetch(`${API_BASE}/politician/${politicianId}`, {
+        headers: baseHeaders(),
+      });
+      if (!res.ok) return null;
+      return await res.json();
+    } catch {
+      return null;
+    }
+  },
 };
 
 export default Politician;

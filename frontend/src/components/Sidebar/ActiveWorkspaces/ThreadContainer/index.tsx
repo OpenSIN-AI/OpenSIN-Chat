@@ -294,8 +294,15 @@ export default function ThreadContainer({
       newFolderId = null;
     } else if (String(over.id).startsWith("folder-")) {
       newFolderId = Number(String(over.id).replace("folder-", ""));
-    } else {
+    } else if (over.id === draggedSlug) {
       return;
+    } else {
+      const overThread = threads.find((t) => t.slug === over.id);
+      if (overThread) {
+        newFolderId = overThread.folder_id;
+      } else {
+        return;
+      }
     }
     if (thread.folder_id === newFolderId) return;
 
@@ -403,7 +410,7 @@ export default function ThreadContainer({
       onDragEnd={handleDragEnd}
     >
       <div
-        className="flex flex-col"
+        className="flex flex-col w-full overflow-x-hidden"
         role="list"
         aria-label={t("common.threads")}
       >
@@ -522,7 +529,7 @@ function DateGroupHeader({ label, count, collapsed, onToggle }) {
     <button
       type="button"
       onClick={onToggle}
-      className="w-full flex items-center text-xs font-medium text-white/40 light:text-theme-text-secondary uppercase tracking-wider py-2 px-3 cursor-pointer hover:text-white/60 light:hover:text-theme-text-primary transition-colors"
+      className="w-full flex items-center overflow-hidden text-xs font-medium text-white/40 light:text-theme-text-secondary uppercase tracking-wider py-2 px-3 cursor-pointer hover:text-white/60 light:hover:text-theme-text-primary transition-colors"
       aria-expanded={!collapsed}
     >
       {collapsed ? (
@@ -813,7 +820,7 @@ function DeleteAllThreadButton({ ctrlPressed, threads, onDelete }) {
 function ThreadSearchBar({ value, onChange, onClear }) {
   const { t } = useTranslation();
   return (
-    <div className="relative flex items-center mb-2 mt-1">
+    <div className="relative flex items-center w-full mb-2 mt-1">
       <MagnifyingGlass
         size={14}
         className="absolute left-3 shrink-0 text-white/40 light:text-slate-400 pointer-events-none"

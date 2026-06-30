@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import { createPortal } from "react-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Workspace from "@/models/workspace";
@@ -11,7 +12,7 @@ import { Link, useParams, useNavigate, useMatch } from "react-router-dom";
 import { GearSix } from "@phosphor-icons/react/dist/csr/GearSix";
 import { UploadSimple } from "@phosphor-icons/react/dist/csr/UploadSimple";
 import { DotsSixVertical } from "@phosphor-icons/react/dist/csr/DotsSixVertical";
-import { FolderOpen } from "@phosphor-icons/react/dist/csr/FolderOpen";
+import { SquaresFour } from "@phosphor-icons/react/dist/csr/SquaresFour";
 import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { ChatCircleText } from "@phosphor-icons/react/dist/csr/ChatCircleText";
 import { FolderSimplePlus } from "@phosphor-icons/react/dist/csr/FolderSimplePlus";
@@ -32,6 +33,8 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const [menuPos, setMenuPos] = useState({ top: 0, left: 0 });
 
   useEffect(() => {
     if (!open) return;
@@ -42,6 +45,14 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, [open]);
+
+  const openMenu = useCallback(() => {
+    if (btnRef.current) {
+      const rect = btnRef.current.getBoundingClientRect();
+      setMenuPos({ top: rect.bottom + 4, left: rect.right - 176 });
+    }
+    setOpen((p) => !p);
+  }, []);
 
   const handleNewChat = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -103,11 +114,12 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
   return (
     <div ref={ref} className="relative flex items-center">
       <button
+        ref={btnRef}
         type="button"
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          setOpen((p) => !p);
+          openMenu();
         }}
         data-tooltip-id="workspace-quick-add"
         data-tooltip-content={t("activeWorkspaces.createTooltip")}
@@ -127,8 +139,11 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
         />
       </button>
 
-      {open && (
-        <div className="absolute right-0 top-full mt-1 z-50 w-44 rounded-lg border border-white/10 light:border-slate-200 bg-zinc-800 light:bg-white shadow-xl overflow-hidden">
+      {open && createPortal(
+        <div
+          style={{ position: "fixed", top: menuPos.top, left: menuPos.left, zIndex: 9999 }}
+          className="w-44 rounded-lg border border-white/10 light:border-slate-200 bg-zinc-800 light:bg-white shadow-xl overflow-hidden"
+        >
           <button
             type="button"
             onClick={handleNewChat}
@@ -146,7 +161,8 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
             <FolderSimplePlus size={15} />
             {t("activeWorkspaces.newFolder")}
           </button>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
@@ -270,7 +286,7 @@ export default function ActiveWorkspaces() {
                                 weight="bold"
                               />
                             </div>
-                            <FolderOpen
+                            <SquaresFour
                               size={16}
                               weight="fill"
                               className={`shrink-0 mr-[2px] ${isActive ? "text-white light:text-blue-800" : "text-white/60 light:text-slate-500"}`}

@@ -62,7 +62,11 @@ function isAllowedLauncher(command) {
     real = normalized;
   }
   const base = path.basename(real);
-  return ALLOWED_MCP_LAUNCHERS.includes(base);
+  const origBase = path.basename(normalized);
+  return (
+    ALLOWED_MCP_LAUNCHERS.includes(base) ||
+    ALLOWED_MCP_LAUNCHERS.includes(origBase)
+  );
 }
 
 /**

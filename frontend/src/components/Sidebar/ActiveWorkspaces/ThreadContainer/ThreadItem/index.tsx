@@ -99,7 +99,7 @@ function ThreadItem({
       {...(draggable && thread.slug && !thread.virtual
         ? { ...attributes, ...listeners }
         : {})}
-      className="w-full relative flex h-[34px] items-center border-none"
+      className="w-full relative flex h-[34px] items-center border-none overflow-x-hidden"
       role="listitem"
     >
       <div

@@ -254,7 +254,7 @@ export default function ThreadFolderItem({
   return (
     <div
       ref={setNodeRef}
-      className={`w-full rounded-lg transition-colors ${isOver ? "bg-sky-500/10 ring-1 ring-sky-500/40" : ""}`}
+      className={`w-full rounded-lg transition-colors overflow-x-hidden ${isOver ? "bg-sky-500/10 ring-1 ring-sky-500/40" : ""}`}
     >
       {/* Folder header */}
       <div className="flex items-center w-full h-[38px] group px-2 gap-x-1 rounded-lg hover:bg-[var(--theme-sidebar-thread-selected)] light:hover:bg-slate-200">

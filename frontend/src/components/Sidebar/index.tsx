@@ -151,12 +151,12 @@ export default function Sidebar() {
           </div>
           <div
             ref={sidebarRef}
-            className="w-full relative flex-1 flex flex-col px-[10px] pb-[10px] min-h-0"
+            className="w-full relative flex-1 flex flex-col px-[10px] pb-[10px] min-h-0 overflow-hidden"
           >
             <div className="flex flex-col h-full overflow-hidden">
               <div className="flex-grow flex flex-col min-h-0">
                 <div
-                  className="relative flex-1 flex flex-col w-full justify-between pt-[4px] overflow-y-scroll no-scroll"
+                  className="relative flex-1 flex flex-col w-full justify-between pt-[4px] overflow-y-scroll overflow-x-hidden no-scroll"
                 >
                   <div className="flex flex-col gap-y-[12px]">
                     <SearchBox user={user} showNewWsModal={showNewWsModal} />
