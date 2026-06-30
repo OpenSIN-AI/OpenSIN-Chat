@@ -335,7 +335,10 @@ function authEndpoints(app) {
             });
             return;
           }
-          if (!password || !bcrypt.compareSync(String(password), getAuthTokenHash())) {
+          if (
+            !password ||
+            !bcrypt.compareSync(String(password), getAuthTokenHash())
+          ) {
             await EventLogs.logEvent(
               "failed_login_invalid_password",
               singleRequestMeta,

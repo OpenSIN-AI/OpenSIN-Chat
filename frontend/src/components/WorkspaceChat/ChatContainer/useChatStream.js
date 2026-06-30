@@ -44,8 +44,7 @@ export default function useChatStream({
 
   const isEmpty = !threadSlug
     ? true
-    : chatHistory.length === 0 &&
-      !sessionStorage.getItem(PENDING_HOME_MESSAGE);
+    : chatHistory.length === 0 && !sessionStorage.getItem(PENDING_HOME_MESSAGE);
 
   const { listening, resetTranscript } = useSpeechRecognition({
     clearTranscriptOnListen: true,

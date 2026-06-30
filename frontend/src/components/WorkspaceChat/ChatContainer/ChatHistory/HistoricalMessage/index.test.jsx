@@ -149,11 +149,11 @@ describe("HistoricalMessage", () => {
     const { container } = render(<HistoricalMessage {...baseUserProps} />, {
       wrapper: Wrapper,
     });
-    const bubble = container.querySelector(".bg-zinc-100");
+    const bubble = container.querySelector(".bg-zinc-700");
     expect(bubble).toBeInTheDocument();
-    expect(bubble?.className).toContain("text-zinc-900");
+    expect(bubble?.className).toContain("text-zinc-50");
     expect(bubble?.className).toContain("light:bg-slate-100");
-    expect(bubble?.className).toContain("light:text-slate-900");
+    expect(bubble?.className).toContain("light:text-slate-800");
   });
 
   it("renders the actions bar for both user and assistant messages", () => {

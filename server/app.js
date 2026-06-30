@@ -321,7 +321,10 @@ function buildApp() {
       const path = require("path");
       const assetsDir = path.resolve(__dirname, "public", "assets");
       const filePath = path.resolve(assetsDir, request.path);
-      if (filePath !== assetsDir && !filePath.startsWith(assetsDir + path.sep)) {
+      if (
+        filePath !== assetsDir &&
+        !filePath.startsWith(assetsDir + path.sep)
+      ) {
         return response.status(403).end();
       }
       if (!fs.existsSync(filePath)) {

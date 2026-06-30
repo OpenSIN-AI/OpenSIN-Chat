@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 const { workspaceParsedFilesEndpoints } = require("./workspacesParsedFiles");
 const { workspaceCrudEndpoints } = require("./workspace/workspaceCrud");
-const { workspaceDocumentEndpoints } = require("./workspace/workspaceDocuments");
+const {
+  workspaceDocumentEndpoints,
+} = require("./workspace/workspaceDocuments");
 const { workspaceChatEndpoints } = require("./workspace/workspaceChats");
 const { workspacePinEndpoints } = require("./workspace/workspacePins");
 const { workspaceMediaEndpoints } = require("./workspace/workspaceMedia");

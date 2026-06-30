@@ -34,10 +34,10 @@ describe("RightSidebarIconBar", () => {
     vi.clearAllMocks();
   });
 
-  it("renders all icon buttons (6 panels + PDF-analysis panel)", () => {
+  it("renders all icon buttons (7 panels + notepad panel)", () => {
     const { container } = renderBar();
     const buttons = container.querySelectorAll("button");
-    expect(buttons.length).toBe(7);
+    expect(buttons.length).toBe(8);
   });
 
   it("calls toggleSidebar with 'pdf-analysis' when PDF-analysis icon clicked", () => {

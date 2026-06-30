@@ -8,7 +8,7 @@ import ToolsMenu from "./ToolsMenu";
 import usePromptState from "./usePromptState";
 import useIsDisabled from "./useIsDisabled";
 import TextArea from "./TextArea";
-import AgentSessionButton from "./AgentSessionButton";
+import AgentModeButton, { useAgentMode } from "./AgentModeButton";
 import ToolsButton from "./ToolsButton";
 import SendPromptButton from "./SendPromptButton";
 import EnhancePromptButton from "./EnhancePromptButton";
@@ -66,6 +66,8 @@ export default function PromptInput({
     isDisabled,
   });
 
+  const agentMode = useAgentMode();
+
   return (
     <div
       id="prompt-input-wrapper"
@@ -119,11 +121,12 @@ export default function PromptInput({
                       workspaceSlug={workspaceSlug}
                       workspaceThreadSlug={threadSlug}
                     />
-                    <AgentSessionButton
+                    <AgentModeButton
                       sendCommand={sendCommand}
                       promptInput={promptInput}
                       textareaRef={textareaRef}
                       visible={!agentSessionActive && showAgentCommand}
+                      {...agentMode}
                     />
                   </div>
                   <ToolsButton

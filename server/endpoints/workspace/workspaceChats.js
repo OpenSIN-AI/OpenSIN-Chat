@@ -13,9 +13,7 @@ const {
   flexUserRoleValid,
   ROLES,
 } = require("../../utils/middleware/multiUserProtected");
-const {
-  validWorkspaceSlug,
-} = require("../../utils/middleware/validWorkspace");
+const { validWorkspaceSlug } = require("../../utils/middleware/validWorkspace");
 const { convertToChatHistory } = require("../../utils/helpers/chat/responses");
 
 function workspaceChatEndpoints(app) {

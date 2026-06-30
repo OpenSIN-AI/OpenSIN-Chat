@@ -56,7 +56,10 @@ function noteEndpoints(app) {
       try {
         const { id } = request.params;
         const { content, pinned } = reqBody(request);
-        const note = await WorkspaceNote.update(Number(id), { content, pinned });
+        const note = await WorkspaceNote.update(Number(id), {
+          content,
+          pinned,
+        });
         response.status(200).json({ note });
       } catch (e) {
         consoleLogger.error(e);
@@ -117,15 +120,19 @@ function noteEndpoints(app) {
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async (request, response) => {
       try {
-        const workspace = response.locals.workspace;
+        const _workspace = response.locals.workspace;
         const { id } = request.params;
         const { targetWorkspaceSlug } = reqBody(request);
         if (!targetWorkspaceSlug) {
-          return response.status(400).json({ error: "targetWorkspaceSlug is required" });
+          return response
+            .status(400)
+            .json({ error: "targetWorkspaceSlug is required" });
         }
         const target = await Workspace.get({ slug: targetWorkspaceSlug });
         if (!target) {
-          return response.status(404).json({ error: "Target workspace not found" });
+          return response
+            .status(404)
+            .json({ error: "Target workspace not found" });
         }
         const user = await userFromSession(request, response);
         const shared = await WorkspaceNote.shareToWorkspace(
@@ -149,11 +156,15 @@ function noteEndpoints(app) {
         const { id } = request.params;
         const { targetWorkspaceSlug } = request.query;
         if (!targetWorkspaceSlug) {
-          return response.status(400).json({ error: "targetWorkspaceSlug is required" });
+          return response
+            .status(400)
+            .json({ error: "targetWorkspaceSlug is required" });
         }
         const target = await Workspace.get({ slug: targetWorkspaceSlug });
         if (!target) {
-          return response.status(404).json({ error: "Target workspace not found" });
+          return response
+            .status(404)
+            .json({ error: "Target workspace not found" });
         }
         await WorkspaceNote.unshareFromWorkspace(id, target.id);
         response.status(200).json({ success: true });
@@ -186,7 +197,7 @@ function noteEndpoints(app) {
             if (clean.length > 0) {
               snippets[doc.docId] = clean.slice(0, 200);
             }
-          } catch (e) {}
+          } catch {}
         }
 
         response.status(200).json({ snippets });

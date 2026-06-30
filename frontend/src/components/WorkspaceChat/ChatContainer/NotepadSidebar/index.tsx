@@ -55,7 +55,10 @@ export default function NotepadSidebar({ workspace }: any) {
 
   useEffect(() => {
     const handler = (e: any) => {
-      if (shareDropdownRef.current && !shareDropdownRef.current.contains(e.target)) {
+      if (
+        shareDropdownRef.current &&
+        !shareDropdownRef.current.contains(e.target)
+      ) {
         setSharingNoteId(null);
       }
     };
@@ -295,13 +298,18 @@ export default function NotepadSidebar({ workspace }: any) {
                       </p>
                       {shareableWorkspaces.length === 0 ? (
                         <p className="px-3 py-2 text-xs text-zinc-400 light:text-slate-500">
-                          {t("chat_window.no_other_workspaces", "Keine weiteren Workspaces")}
+                          {t(
+                            "chat_window.no_other_workspaces",
+                            "Keine weiteren Workspaces",
+                          )}
                         </p>
                       ) : (
                         shareableWorkspaces.map((ws) => (
                           <button
                             key={ws.id}
-                            onClick={() => handleShareToWorkspace(note.id, ws.slug)}
+                            onClick={() =>
+                              handleShareToWorkspace(note.id, ws.slug)
+                            }
                             className="w-full text-left px-3 py-1.5 text-xs text-white light:text-slate-900 hover:bg-zinc-700 light:hover:bg-slate-100 transition-colors bg-transparent border-none cursor-pointer truncate"
                           >
                             {ws.name}
@@ -342,11 +350,16 @@ export default function NotepadSidebar({ workspace }: any) {
                         </p>
                       </div>
                       <p className="text-[10px] text-zinc-400 light:text-slate-500 mt-0.5">
-                        {t("chat_window.from", "von")} {note.source_workspace_name}
+                        {t("chat_window.from", "von")}{" "}
+                        {note.source_workspace_name}
                       </p>
                       <button
                         onClick={(e) =>
-                          handleUnshareNote(e, note.id, note.source_workspace_slug)
+                          handleUnshareNote(
+                            e,
+                            note.id,
+                            note.source_workspace_slug,
+                          )
                         }
                         className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 text-zinc-400 hover:text-red-400 transition-all bg-transparent border-none cursor-pointer p-1"
                         title={t("chat_window.unshare", "Teilen aufheben")}
@@ -407,12 +420,10 @@ export default function NotepadSidebar({ workspace }: any) {
                 <>
                   <div className="flex items-center justify-between px-3 py-1.5 border-b border-theme-border">
                     <div className="flex items-center gap-1.5">
-                      <ShareNetwork
-                        size={12}
-                        className="text-primary-button"
-                      />
+                      <ShareNetwork size={12} className="text-primary-button" />
                       <span className="text-[10px] text-zinc-400 light:text-slate-500">
-                        {t("chat_window.from", "von")} {activeSharedNote.source_workspace_name}
+                        {t("chat_window.from", "von")}{" "}
+                        {activeSharedNote.source_workspace_name}
                         {" · "}
                         {t("chat_window.read_only", "Schreibgeschützt")}
                       </span>

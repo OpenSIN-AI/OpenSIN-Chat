@@ -53,7 +53,8 @@ const markdown = markdownIt({
 });
 
 // Add custom renderer for strong tags to handle theme colors
-markdown.renderer.rules.strong_open = () => '<strong class="text-white light:text-slate-900">';
+markdown.renderer.rules.strong_open = () =>
+  '<strong class="text-white light:text-slate-900">';
 markdown.renderer.rules.strong_close = () => "</strong>";
 markdown.renderer.rules.link_open = (tokens, idx) => {
   const token = tokens[idx];

@@ -50,7 +50,7 @@ describe("PromptReply", () => {
 
   it("renders loading dots when pending", () => {
     const { container } = render(<PromptReply uuid="1" pending={true} />);
-    expect(container.querySelector(".dot-falling")).toBeInTheDocument();
+    expect(container.querySelector(".animate-pulse")).toBeInTheDocument();
   });
 
   it("renders an error message when error is provided", () => {

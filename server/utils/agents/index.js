@@ -554,13 +554,19 @@ class AgentHandler {
     const user = this.invocation.user_id
       ? await User.get({ id: Number(this.invocation.user_id) })
       : null;
+
+    const modeExtraRole = this.#modeSystemPrompt || "";
+    const combinedExtraRole = [this.#urlPrompt, modeExtraRole]
+      .filter(Boolean)
+      .join("\n\n");
+
     const userAgentDef = await USER_AGENT.getDefinition();
     const workspaceAgentDef = await WORKSPACE_AGENT.getDefinition(
       this.provider,
       this.invocation.workspace,
       user,
       this.invocation.prompt,
-      this.#urlPrompt,
+      combinedExtraRole,
     );
 
     this.aibitat.agent(USER_AGENT.name, userAgentDef);
@@ -579,6 +585,10 @@ class AgentHandler {
     this.attachments = getAndClearInvocationAttachments(this.#invocationUUID);
     // Retrieve any screenshot URL prompt instruction cached by the HTTP handler.
     this.#urlPrompt = getAndClearInvocationUrlPrompt(this.#invocationUUID);
+
+    // Parse agent mode from the prompt early so the system prompt hint
+    // can be injected into WORKSPACE_AGENT.getDefinition() during createAIbitat.
+    this.#stripAgentCommand(this.invocation.prompt);
 
     return this;
   }
@@ -725,18 +735,42 @@ class AgentHandler {
    * @returns {string} The message with the @agent command stripped.
    */
   #stripAgentCommand(message = "") {
-    const stripped = String(message)
+    let stripped = String(message)
       .replace(/^@agent\s*/, "")
       .trim();
+
+    const modeMatch = stripped.match(/^\[([a-z-]+)\]\s*(.*)/i);
+    if (modeMatch) {
+      const modeId = modeMatch[1].toLowerCase();
+      const modeHints = {
+        "deep-research":
+          "You are operating in DEEP RESEARCH mode. Use web-search and url-fetch tools extensively. Perform multi-step reasoning: search broadly first, then drill down into specific sources. Always cite your sources with URLs. Structure your response with clear sections: Summary, Key Findings, Sources. Be thorough and analytical.",
+        report:
+          "You are operating in REPORT mode. Create a structured, professional report. Use this format: 1) Executive Summary (2-3 sentences), 2) Background/Context, 3) Main Analysis (with subheadings), 4) Key Findings (bulleted), 5) Conclusions, 6) Recommendations. Use markdown formatting with proper headings (##, ###), bullet points, and bold text for emphasis. If web-search tools are available, use them to gather current information. Always cite sources.",
+      };
+      if (modeHints[modeId]) {
+        this.#modeSystemPrompt = modeHints[modeId];
+      }
+      stripped = modeMatch[2].trim();
+    }
+
     if (!stripped) return "Hello!";
     return stripped;
   }
 
+  #modeSystemPrompt = null;
+
   startAgentCluster() {
+    const cleanContent = this.#stripAgentCommand(this.invocation.prompt);
+    if (this.#modeSystemPrompt) {
+      this.log(
+        `Agent mode active: ${this.#modeSystemPrompt.substring(0, 80)}...`,
+      );
+    }
     return this.aibitat.start({
       from: USER_AGENT.name,
       to: this.channel ?? WORKSPACE_AGENT.name,
-      content: this.#stripAgentCommand(this.invocation.prompt),
+      content: cleanContent,
       attachments: this.attachments,
     });
   }

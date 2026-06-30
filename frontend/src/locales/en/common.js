@@ -3978,7 +3978,7 @@ const TRANSLATIONS = {
       weeksAgo: "{{count}} weeks ago",
       sectionUploads: "Uploads",
       sectionReports: "Analysis Reports",
-      empty: "Empty",
+      folderEmpty: "Empty",
     },
     retry: "Try again",
     political: {

@@ -85,7 +85,8 @@ function utilEndpoints(app) {
           ...(apiKey ? { apikey: apiKey } : {}),
         });
         if (req.query.q) params.set("q", req.query.q);
-        if (req.query.f_fraktion) params.set("f_fraktion", req.query.f_fraktion);
+        if (req.query.f_fraktion)
+          params.set("f_fraktion", req.query.f_fraktion);
         if (!params.has("f_fraktion")) params.set("f_fraktion", "AfD");
         const res = await fetchWithTimeout(
           `https://search.dip.bundestag.de/api/v1/drucksache?${params}`,
@@ -447,7 +448,6 @@ function utilEndpoints(app) {
     async (req, response) => {
       try {
         const path = require("path");
-        const fs = require("fs");
         const multer = require("multer");
 
         const upload = multer({

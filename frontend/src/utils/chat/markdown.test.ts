@@ -252,12 +252,16 @@ describe("chat/markdown — renderMarkdown (real markdown-it)", () => {
   describe("basic markdown rendering", () => {
     it("renders bold text with the custom strong class", () => {
       const out = renderMarkdown("**bold text**");
-      expect(out).toContain('<strong class="text-white">bold text</strong>');
+      expect(out).toContain(
+        '<strong class="text-white light:text-slate-900">bold text</strong>',
+      );
     });
 
     it("renders bold with underscore syntax", () => {
       const out = renderMarkdown("__bold text__");
-      expect(out).toContain('<strong class="text-white">bold text</strong>');
+      expect(out).toContain(
+        '<strong class="text-white light:text-slate-900">bold text</strong>',
+      );
     });
 
     it("renders links with target=_blank and rel=noopener noreferrer", () => {

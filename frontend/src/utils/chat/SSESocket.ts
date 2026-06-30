@@ -81,7 +81,10 @@ export default class SSESocket {
     };
 
     this.eventSource.onerror = () => {
-      if (this.isIntentionalClose || this.eventSource?.readyState === EventSource.CLOSED) {
+      if (
+        this.isIntentionalClose ||
+        this.eventSource?.readyState === EventSource.CLOSED
+      ) {
         this.readyState = CLOSED;
         this._dispatch("close", new CloseEvent("close"));
         return;
@@ -115,7 +118,10 @@ export default class SSESocket {
       this.eventSource = null;
     }
     this.readyState = CLOSED;
-    this._dispatch("close", new CloseEvent("close", { code: code || 1000, reason: reason || "" }));
+    this._dispatch(
+      "close",
+      new CloseEvent("close", { code: code || 1000, reason: reason || "" }),
+    );
   }
 
   addEventListener(type: string, listener: EventListener) {
@@ -137,13 +143,29 @@ export default class SSESocket {
     return true;
   }
 
-  static get CONNECTING() { return CONNECTING; }
-  static get OPEN() { return OPEN; }
-  static get CLOSING() { return CLOSING; }
-  static get CLOSED() { return CLOSED; }
+  static get CONNECTING() {
+    return CONNECTING;
+  }
+  static get OPEN() {
+    return OPEN;
+  }
+  static get CLOSING() {
+    return CLOSING;
+  }
+  static get CLOSED() {
+    return CLOSED;
+  }
 
-  get CONNECTING() { return CONNECTING; }
-  get OPEN() { return OPEN; }
-  get CLOSING() { return CLOSING; }
-  get CLOSED() { return CLOSED; }
+  get CONNECTING() {
+    return CONNECTING;
+  }
+  get OPEN() {
+    return OPEN;
+  }
+  get CLOSING() {
+    return CLOSING;
+  }
+  get CLOSED() {
+    return CLOSED;
+  }
 }

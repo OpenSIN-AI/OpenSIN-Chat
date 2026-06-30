@@ -964,7 +964,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
                         )}
                         {!folderLoading && folderItems.length === 0 && (
                           <p className="px-2.5 py-1.5 text-xs text-zinc-600 light:text-slate-400">
-                            {t("sidebar.filesystem.empty", "Empty")}
+                            {t("sidebar.filesystem.folderEmpty", "Empty")}
                           </p>
                         )}
                         {!folderLoading &&

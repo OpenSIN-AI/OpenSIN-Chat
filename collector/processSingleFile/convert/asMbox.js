@@ -43,13 +43,11 @@ async function asMbox({
   let mails = [];
   const mboxStream = fs.createReadStream(fullFilePath);
   try {
-    mails = await mboxParser(mboxStream).catch(
-      (error) => {
-        // eslint-disable-next-line no-console
-        console.error(`Could not parse mail items`, error);
-        return [];
-      }
-    );
+    mails = await mboxParser(mboxStream).catch((error) => {
+      // eslint-disable-next-line no-console
+      console.error(`Could not parse mail items`, error);
+      return [];
+    });
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(`Could not parse mail items`, error);

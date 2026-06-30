@@ -1,10 +1,6 @@
 // SPDX-License-Identifier: MIT
 const consoleLogger = require("../../utils/logger/console.js");
-const {
-  reqBody,
-  multiUserMode,
-  userFromSession,
-} = require("../../utils/http");
+const { reqBody, multiUserMode, userFromSession } = require("../../utils/http");
 const { Workspace } = require("../../models/workspace");
 const { Telemetry } = require("../../models/telemetry");
 const { EventLogs } = require("../../models/eventLogs");

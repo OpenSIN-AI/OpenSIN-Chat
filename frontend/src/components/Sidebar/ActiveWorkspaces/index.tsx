@@ -139,31 +139,37 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
         />
       </button>
 
-      {open && createPortal(
-        <div
-          style={{ position: "fixed", top: menuPos.top, left: menuPos.left, zIndex: 9999 }}
-          className="w-44 rounded-lg border border-white/10 light:border-slate-200 bg-zinc-800 light:bg-white shadow-xl overflow-hidden"
-        >
-          <button
-            type="button"
-            onClick={handleNewChat}
-            className="w-full flex items-center gap-x-2 px-3 py-2 text-sm text-slate-200 light:text-slate-700 hover:bg-zinc-700 light:hover:bg-slate-100 transition-colors"
+      {open &&
+        createPortal(
+          <div
+            style={{
+              position: "fixed",
+              top: menuPos.top,
+              left: menuPos.left,
+              zIndex: 9999,
+            }}
+            className="w-44 rounded-lg border border-white/10 light:border-slate-200 bg-zinc-800 light:bg-white shadow-xl overflow-hidden"
           >
-            <ChatCircleText size={15} />
-            {t("activeWorkspaces.newChat")}
-          </button>
-          <div className="h-px bg-white/10 light:bg-slate-200" />
-          <button
-            type="button"
-            onClick={handleNewFolder}
-            className="w-full flex items-center gap-x-2 px-3 py-2 text-sm text-slate-200 light:text-slate-700 hover:bg-zinc-700 light:hover:bg-slate-100 transition-colors"
-          >
-            <FolderSimplePlus size={15} />
-            {t("activeWorkspaces.newFolder")}
-          </button>
-        </div>,
-        document.body
-      )}
+            <button
+              type="button"
+              onClick={handleNewChat}
+              className="w-full flex items-center gap-x-2 px-3 py-2 text-sm text-slate-200 light:text-slate-700 hover:bg-zinc-700 light:hover:bg-slate-100 transition-colors"
+            >
+              <ChatCircleText size={15} />
+              {t("activeWorkspaces.newChat")}
+            </button>
+            <div className="h-px bg-white/10 light:bg-slate-200" />
+            <button
+              type="button"
+              onClick={handleNewFolder}
+              className="w-full flex items-center gap-x-2 px-3 py-2 text-sm text-slate-200 light:text-slate-700 hover:bg-zinc-700 light:hover:bg-slate-100 transition-colors"
+            >
+              <FolderSimplePlus size={15} />
+              {t("activeWorkspaces.newFolder")}
+            </button>
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }

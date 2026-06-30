@@ -3,12 +3,8 @@ const crypto = require("crypto");
 const path = require("path");
 const fs = require("fs");
 const consoleLogger = require("../../utils/logger/console.js");
-const {
-  reqBody,
-  multiUserMode,
-  userFromSession,
-} = require("../../utils/http");
-const { normalizePath, isWithin } = require("../../utils/files");
+const { reqBody, multiUserMode, userFromSession } = require("../../utils/http");
+const { isWithin } = require("../../utils/files");
 const { Workspace } = require("../../models/workspace");
 const { Document } = require("../../models/documents");
 const { Telemetry } = require("../../models/telemetry");

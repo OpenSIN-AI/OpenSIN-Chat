@@ -17,8 +17,7 @@ const { EncryptionManager } = require("../utils/EncryptionManager");
 const { getAuthTokenHash } = require("../utils/middleware/validatedRequest");
 const EncryptionMgr = new EncryptionManager();
 
-const MAX_SSE_CONNECTIONS =
-  Number(process.env.AGENT_WS_MAX_CONNECTIONS) || 50;
+const MAX_SSE_CONNECTIONS = Number(process.env.AGENT_WS_MAX_CONNECTIONS) || 50;
 const MAX_MESSAGE_BYTES =
   Number(process.env.AGENT_WS_MAX_MESSAGE_BYTES) || 10_485_760;
 

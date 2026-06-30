@@ -2,11 +2,7 @@
 const path = require("path");
 const fs = require("fs");
 const consoleLogger = require("../../utils/logger/console.js");
-const {
-  multiUserMode,
-  userFromSession,
-  safeJsonParse,
-} = require("../../utils/http");
+const { userFromSession, safeJsonParse } = require("../../utils/http");
 const { Workspace } = require("../../models/workspace");
 const { WorkspaceChats } = require("../../models/workspaceChats");
 const { validatedRequest } = require("../../utils/middleware/validatedRequest");
@@ -14,9 +10,7 @@ const {
   flexUserRoleValid,
   ROLES,
 } = require("../../utils/middleware/multiUserProtected");
-const {
-  validWorkspaceSlug,
-} = require("../../utils/middleware/validWorkspace");
+const { validWorkspaceSlug } = require("../../utils/middleware/validWorkspace");
 const { handlePfpUpload } = require("../../utils/files/multer");
 const {
   determineWorkspacePfpFilepath,

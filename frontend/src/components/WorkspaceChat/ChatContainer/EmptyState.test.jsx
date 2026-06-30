@@ -23,6 +23,23 @@ vi.mock("./PromptInput", () => ({
   ),
 }));
 
+vi.mock("./PromptInput/AgentSessionButton", () => ({
+  default: () => <button data-testid="agent-session-btn">Agent</button>,
+}));
+
+vi.mock("./PromptInput/AgentModeButton", () => ({
+  default: () => <button data-testid="agent-mode-btn">Agent Mode</button>,
+  useAgentMode: () => ({
+    activeMode: null,
+    showDropdown: false,
+    setShowDropdown: vi.fn(),
+    buttonRef: { current: null },
+    dropdownRef: { current: null },
+    selectMode: vi.fn(),
+    clearMode: vi.fn(),
+  }),
+}));
+
 vi.mock("@/components/lib/WorkspaceSources", () => ({
   default: ({ documents }) => (
     <div data-testid="workspace-sources" data-documents={documents.length}>
@@ -40,6 +57,10 @@ vi.mock("@/components/lib/SuggestedMessages", () => ({
       SuggestedMessages
     </div>
   ),
+}));
+
+vi.mock("./ChatSidebar", () => ({
+  useChatSidebar: () => ({ toggleSidebar: vi.fn() }),
 }));
 
 describe("EmptyState", () => {
@@ -95,27 +116,22 @@ describe("EmptyState", () => {
     );
   });
 
-  it("renders workspace sources and suggested messages", () => {
+  it("renders capability cards for workspace with documents", () => {
     renderEmptyState();
-    expect(screen.getByTestId("workspace-sources")).toHaveAttribute(
-      "data-documents",
-      "2",
+    const buttons = screen.getAllByRole("button");
+    const capabilityButtons = buttons.filter(
+      (b) => !b.hasAttribute("data-testid"),
     );
-    expect(screen.getByTestId("suggested-messages")).toHaveAttribute(
-      "data-count",
-      "2",
-    );
+    expect(capabilityButtons.length).toBeGreaterThanOrEqual(4);
   });
 
   it("handles a workspace with no documents or suggested messages", () => {
     renderEmptyState({ workspace: { slug: "empty" } });
-    expect(screen.getByTestId("workspace-sources")).toHaveAttribute(
-      "data-documents",
-      "0",
+    expect(screen.getByTestId("prompt-input")).toBeInTheDocument();
+    const buttons = screen.getAllByRole("button");
+    const capabilityButtons = buttons.filter(
+      (b) => !b.hasAttribute("data-testid"),
     );
-    expect(screen.getByTestId("suggested-messages")).toHaveAttribute(
-      "data-count",
-      "0",
-    );
+    expect(capabilityButtons.length).toBeGreaterThanOrEqual(4);
   });
 });

@@ -98,18 +98,18 @@ async function loadConfluence(
       description: doc.metadata.title,
       docSource: `${normalizedBaseUrl} Confluence`,
       chunkSource: generateChunkSource(
-          {
-            doc,
-            baseUrl: normalizedBaseUrl,
-            spaceKey,
-            accessToken,
-            username,
-            cloud,
-            bypassSSL,
-            personalAccessToken,
-          },
-          response.locals.encryptionWorker
-        ),
+        {
+          doc,
+          baseUrl: normalizedBaseUrl,
+          spaceKey,
+          accessToken,
+          username,
+          cloud,
+          bypassSSL,
+          personalAccessToken,
+        },
+        response.locals.encryptionWorker
+      ),
       published: new Date().toLocaleString(),
       wordCount: doc.pageContent.split(/\s+/).filter(Boolean).length,
       pageContent: doc.pageContent,
@@ -269,7 +269,16 @@ function resolveConfluenceBaseUrl(baseUrl, cloud = true) {
  * @returns {string}
  */
 function generateChunkSource(
-  { doc, baseUrl, spaceKey, accessToken, username, cloud, bypassSSL, personalAccessToken },
+  {
+    doc,
+    baseUrl,
+    spaceKey,
+    accessToken,
+    username,
+    cloud,
+    bypassSSL,
+    personalAccessToken,
+  },
   encryptionWorker
 ) {
   const payload = {

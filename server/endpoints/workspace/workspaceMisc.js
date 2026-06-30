@@ -1,12 +1,7 @@
 // SPDX-License-Identifier: MIT
 const crypto = require("crypto");
 const consoleLogger = require("../../utils/logger/console.js");
-const {
-  reqBody,
-  multiUserMode,
-  userFromSession,
-  safeJsonParse,
-} = require("../../utils/http");
+const { reqBody, userFromSession, safeJsonParse } = require("../../utils/http");
 const { Workspace } = require("../../models/workspace");
 const { WorkspaceChats } = require("../../models/workspaceChats");
 const { WorkspaceThread } = require("../../models/workspaceThread");
@@ -16,9 +11,7 @@ const {
   flexUserRoleValid,
   ROLES,
 } = require("../../utils/middleware/multiUserProtected");
-const {
-  validWorkspaceSlug,
-} = require("../../utils/middleware/validWorkspace");
+const { validWorkspaceSlug } = require("../../utils/middleware/validWorkspace");
 const truncate = require("truncate");
 const { searchWorkspaceAndThreads } = require("../../utils/helpers/search");
 
@@ -231,7 +224,9 @@ function workspaceMiscEndpoints(app) {
           return;
         }
 
-        const { removeQueuedFile } = require("../../utils/EmbeddingWorkerManager");
+        const {
+          removeQueuedFile,
+        } = require("../../utils/EmbeddingWorkerManager");
         const sent = removeQueuedFile(workspace.slug, filename);
         response.status(200).json({ success: sent });
       } catch (e) {

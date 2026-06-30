@@ -14,7 +14,6 @@ const {
   handleDefaultStreamResponseV2,
   formatChatHistory,
 } = require("../../helpers/chat/responses");
-const { parseReasoningFromResponse } = require("../../helpers/reasoningFilter");
 
 const cacheFolder = getStoragePath("models", "fireworks");
 
@@ -341,7 +340,9 @@ async function fireworksAiModels(providedApiKey = null) {
         "fireworksAi: Using fallback model from ENV: " + fallbackModel,
       );
     } else {
-      consoleLogger.warn("fireworksAi: No models found and no fallback configured");
+      consoleLogger.warn(
+        "fireworksAi: No models found and no fallback configured",
+      );
       return {};
     }
   }

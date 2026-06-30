@@ -102,8 +102,8 @@ class GitLabRepoLoader {
       this.branch = this.branches.includes("main")
         ? "main"
         : this.branches.includes("master")
-          ? "master"
-          : this.branches[0];
+        ? "master"
+        : this.branches[0];
     }
     // eslint-disable-next-line no-console
     console.log(`[Gitlab Loader]: Branch auto-assigned to ${this.branch}.`);

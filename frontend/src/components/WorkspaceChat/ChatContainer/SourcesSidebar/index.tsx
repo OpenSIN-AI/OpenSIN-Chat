@@ -67,7 +67,11 @@ function WorkspaceSourceItem({ doc, onClick, snippet }: any) {
   const title = metadata?.title || doc.filename || doc.docId;
   const wordCount = metadata?.wordCount;
   const createdDate = doc.createdAt
-    ? new Date(doc.createdAt).toLocaleDateString("de-DE", { day: "2-digit", month: "short", year: "numeric" })
+    ? new Date(doc.createdAt).toLocaleDateString("de-DE", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      })
     : null;
   const summaryText = snippet || metadata?.description || null;
 
@@ -95,12 +99,8 @@ function WorkspaceSourceItem({ doc, onClick, snippet }: any) {
           <span className="w-1.5 h-1.5 rounded-full bg-theme-accent opacity-60" />
           {label}
         </span>
-        {wordCount && (
-          <span>{t("common.words", { count: wordCount })}</span>
-        )}
-        {createdDate && (
-          <span>{createdDate}</span>
-        )}
+        {wordCount && <span>{t("common.words", { count: wordCount })}</span>}
+        {createdDate && <span>{createdDate}</span>}
       </div>
     </button>
   );
@@ -193,10 +193,13 @@ export default function SourcesSidebar({ workspace }: any) {
   const fetchSnippets = useCallback(async (slug: any) => {
     if (!slug) return;
     try {
-      const res = await fetch(`${API_BASE}/workspaces/${slug}/document-snippets`, {
-        method: "GET",
-        headers: baseHeaders(),
-      });
+      const res = await fetch(
+        `${API_BASE}/workspaces/${slug}/document-snippets`,
+        {
+          method: "GET",
+          headers: baseHeaders(),
+        },
+      );
       const data = await res.json();
       if (data?.snippets) setSnippets(data.snippets);
     } catch {}
