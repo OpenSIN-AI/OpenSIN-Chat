@@ -12,6 +12,8 @@ const DEFAULT_SKILLS = [
   AgentPlugins.memory.name,
   AgentPlugins.docSummarizer.name,
   AgentPlugins.webScraping.name,
+  AgentPlugins.generateReport.name,
+  AgentPlugins.deepResearch.name,
 ];
 
 /**

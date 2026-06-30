@@ -744,12 +744,13 @@ class AgentHandler {
       const modeId = modeMatch[1].toLowerCase();
       const modeHints = {
         "deep-research":
-          "You are operating in DEEP RESEARCH mode. Use web-search and url-fetch tools extensively. Perform multi-step reasoning: search broadly first, then drill down into specific sources. Always cite your sources with URLs. Structure your response with clear sections: Summary, Key Findings, Sources. Be thorough and analytical.",
+          "You are operating in DEEP RESEARCH mode. Use web-search and url-fetch tools extensively. Perform multi-step reasoning: search broadly first, then drill down into specific sources. Always cite your sources with URLs. Structure your response with clear sections: Summary, Key Findings, Sources. Be thorough and analytical. You MUST call the generate_report tool at the end to produce a downloadable PDF report of your findings.",
         report:
-          "You are operating in REPORT mode. Create a structured, professional report. Use this format: 1) Executive Summary (2-3 sentences), 2) Background/Context, 3) Main Analysis (with subheadings), 4) Key Findings (bulleted), 5) Conclusions, 6) Recommendations. Use markdown formatting with proper headings (##, ###), bullet points, and bold text for emphasis. If web-search tools are available, use them to gather current information. Always cite sources.",
+          "You are operating in REPORT mode. You MUST use the generate_report tool to create a professional PDF report. Call generate_report with a title and a summary containing your structured report in markdown format. Use this structure in the summary: 1) Executive Summary (2-3 sentences), 2) Background/Context, 3) Main Analysis (with subheadings), 4) Key Findings (bulleted), 5) Conclusions, 6) Recommendations. If web-search tools are available, use them to gather current information before generating the report. Always cite sources in the summary text.",
       };
       if (modeHints[modeId]) {
         this.#modeSystemPrompt = modeHints[modeId];
+        this.#activeMode = modeId;
       }
       stripped = modeMatch[2].trim();
     }
@@ -759,6 +760,7 @@ class AgentHandler {
   }
 
   #modeSystemPrompt = null;
+  #activeMode = null;
 
   startAgentCluster() {
     const cleanContent = this.#stripAgentCommand(this.invocation.prompt);
@@ -767,12 +769,88 @@ class AgentHandler {
         `Agent mode active: ${this.#modeSystemPrompt.substring(0, 80)}...`,
       );
     }
-    return this.aibitat.start({
-      from: USER_AGENT.name,
-      to: this.channel ?? WORKSPACE_AGENT.name,
-      content: cleanContent,
-      attachments: this.attachments,
-    });
+    return this.aibitat
+      .start({
+        from: USER_AGENT.name,
+        to: this.channel ?? WORKSPACE_AGENT.name,
+        content: cleanContent,
+        attachments: this.attachments,
+      })
+      .then((result) => this.#postAgentLoop(result))
+      .catch((err) => {
+        this.#postAgentLoop(null);
+        throw err;
+      });
+  }
+
+  async #postAgentLoop(_result) {
+    if (this.#activeMode !== "report") return;
+    const pendingOutputs = this.aibitat?._pendingOutputs || [];
+    const alreadyGenerated = pendingOutputs.some(
+      (o) => o.type === "ReportFileDownload",
+    );
+    if (alreadyGenerated) return;
+
+    const chats = this.aibitat?.chats || [];
+    const lastAssistant = [...chats]
+      .reverse()
+      .find(
+        (m) =>
+          (m.from === "@agent" ||
+            m.from === "workspace-agent" ||
+            m.role === "assistant") &&
+          m.content,
+      );
+    if (!lastAssistant?.content) return;
+
+    this.log("Auto-generating PDF report from agent text response...");
+    try {
+      const { ReportGenerator } = require("../reports");
+      const reportData = {
+        title: "Agent Bericht",
+        query: "",
+        summary: lastAssistant.content,
+        searchResults: [],
+        politicianResults: [],
+        extractedContent: [],
+        template: "standard",
+      };
+      const result = await ReportGenerator.generate(reportData);
+      const fileSizeBytes = Math.round(parseFloat(result.fileSizeKB) * 1024);
+      const downloadUrl = `/api/utils/reports/${result.fileName}`;
+      const versions = [
+        { label: "Standardbericht", fileName: result.fileName, downloadUrl },
+      ];
+
+      this.aibitat?.socket?.send?.("reportPreview", {
+        title: reportData.title,
+        fileName: result.fileName,
+        fileSizeKB: result.fileSizeKB,
+        type: "pdf",
+        downloadUrl,
+        versions,
+      });
+      this.aibitat?.socket?.send?.("fileDownloadCard", {
+        filename: result.fileName,
+        fileSize: fileSizeBytes,
+        downloadUrl,
+        versions,
+      });
+
+      if (!this.aibitat._pendingOutputs) this.aibitat._pendingOutputs = [];
+      this.aibitat._pendingOutputs.push({
+        type: "ReportFileDownload",
+        payload: {
+          filename: result.fileName,
+          fileSize: fileSizeBytes,
+          downloadUrl,
+          versions,
+        },
+      });
+      this.log(`Auto-generated PDF: ${result.fileName} (${result.fileSizeKB} KB)`);
+    } catch (error) {
+      this.log("Auto-report generation failed:", error.message);
+    }
   }
 }
 
