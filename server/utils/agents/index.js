@@ -653,7 +653,7 @@ class AgentHandler {
   ) {
     this.aibitat = new AIbitat({
       provider: this.provider ?? "openai",
-      model: this.model ?? "gpt-4o",
+      model: this.model || process.env.FIREWORKS_AI_LLM_MODEL_PREF || "gpt-4o",
       chats: await this.#chatHistory(20),
       handlerProps: {
         invocation: this.invocation,

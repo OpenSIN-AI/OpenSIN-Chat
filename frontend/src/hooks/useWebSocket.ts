@@ -306,91 +306,15 @@ export default function useWebSocket({
         window.dispatchEvent(new CustomEvent(AGENT_SESSION_START));
         window.dispatchEvent(new CustomEvent(CLEAR_ATTACHMENTS_EVENT));
 
-        if (useSSEFallbackRef.current) {
-          const sseSocket = new SSESocket(socketId);
-          (sseSocket as any).supportsAgentStreaming = false;
-          socket = sseSocket as any;
-          setWebsocket(sseSocket as any);
-          attachListeners(sseSocket as any);
-          return;
-        }
+        // Cloudflare Tunnel deployments cannot proxy WebSocket upgrades.
+        // Always use SSE fallback for agent connections.
+        useSSEFallbackRef.current = true;
 
-        let wsOpened = false;
-        let switchedToSSE = false;
-        let fallbackTimer: ReturnType<typeof setTimeout> | null = null;
-
-        function switchToSSE() {
-          if (switchedToSSE) return;
-          switchedToSSE = true;
-          useSSEFallbackRef.current = true;
-          if (fallbackTimer) {
-            clearTimeout(fallbackTimer);
-            fallbackTimer = null;
-          }
-          try {
-            const sseSocket = new SSESocket(socketId!);
-            (sseSocket as any).supportsAgentStreaming = false;
-            socket = sseSocket as any;
-            setWebsocket(sseSocket as any);
-            attachListeners(sseSocket as any);
-          } catch (sseErr: any) {
-            setChatHistory((prev) => [
-              ...(prev as any).filter((msg) => !!msg.content),
-              {
-                uuid: v4(),
-                type: "abort",
-                content: sseErr.message,
-                role: "assistant",
-                sources: [],
-                closed: true,
-                error: sseErr.message,
-                animate: false,
-                pending: false,
-              },
-            ]);
-            setLoadingResponse(false);
-            setWebsocket(null);
-            setSocketId(null);
-          }
-        }
-
-        socket = new WebSocket(agentWebsocketUrl(socketId)!);
-        (socket as any).supportsAgentStreaming = false;
-        setWebsocket(socket);
-
-        socket.addEventListener("open", () => {
-          wsOpened = true;
-          if (fallbackTimer) {
-            clearTimeout(fallbackTimer);
-            fallbackTimer = null;
-          }
-          reconnectAttemptsRef.current = 0;
-          attachListeners(socket);
-          startHeartbeat(socket);
-        });
-
-        const earlyFail = () => {
-          if (!wsOpened && !switchedToSSE) {
-            console.warn(
-              "[useWebSocket] WebSocket failed before open — falling back to SSE.",
-            );
-            switchToSSE();
-          }
-        };
-        socket.addEventListener("error", earlyFail);
-        socket.addEventListener("close", earlyFail);
-
-        fallbackTimer = setTimeout(() => {
-          if (!wsOpened && !switchedToSSE) {
-            console.warn(
-              "[useWebSocket] WebSocket did not connect within 3s — falling back to SSE.",
-            );
-            try {
-              socket?.close();
-            } catch {}
-            switchToSSE();
-          }
-        }, WS_FALLBACK_TIMEOUT_MS);
+        const sseSocket = new SSESocket(socketId);
+        (sseSocket as any).supportsAgentStreaming = false;
+        socket = sseSocket as any;
+        setWebsocket(sseSocket as any);
+        attachListeners(sseSocket as any);
       } catch (e) {
         setChatHistory((prev) => [
           ...(prev as any).filter((msg) => !!msg.content),

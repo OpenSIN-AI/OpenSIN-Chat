@@ -107,6 +107,8 @@ function bootHTTP(app, port = 3001, onReady) {
     })
     .on("error", handleServerError);
 
+  require("@mintplex-labs/express-ws").default(app, server);
+
   registerSignalHandlers();
   return { app, server };
 }

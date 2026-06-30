@@ -38,6 +38,7 @@ const { bootHTTP, bootSSL } = require("./utils/boot");
 const { workspaceThreadEndpoints } = require("./endpoints/workspaceThreads");
 const { documentEndpoints } = require("./endpoints/document");
 const { agentWebsocket } = require("./endpoints/agentWebsocket");
+const { agentSSE } = require("./endpoints/agentSSE");
 const {
   agentSkillWhitelistEndpoints,
 } = require("./endpoints/agentSkillWhitelist");
@@ -179,6 +180,7 @@ function buildApp() {
   }
 
   systemEndpoints(apiRouter);
+  agentSSE(apiRouter, "");
   extensionEndpoints(apiRouter);
   workspaceEndpoints(apiRouter);
   workspaceThreadEndpoints(apiRouter);

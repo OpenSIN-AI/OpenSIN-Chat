@@ -35,7 +35,7 @@ function isOriginAllowed(request) {
 
   const origin = request.headers.origin;
   if (!origin) {
-    return process.env.NODE_ENV !== "production";
+    return true;
   }
 
   const corsOrigin = process.env.CORS_ORIGIN;
