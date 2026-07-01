@@ -296,14 +296,14 @@ function FileDownloadCard({ props, autoPreview = false }) {
           />
         )}
 
-        <div className="flex items-center justify-between bg-zinc-800 light:bg-slate-100 light:border light:border-slate-200/50 rounded-xl px-2 py-1">
+        <div className="flex flex-col gap-2 bg-zinc-800 light:bg-slate-100 light:border light:border-slate-200/50 rounded-xl p-3">
           <div className="flex items-center gap-x-3 min-w-0">
             <div
               className={`${badgeBg} ${badgeText} rounded-lg flex items-center justify-center flex-shrink-0 h-[48px] w-[48px] text-xs font-bold`}
             >
               {badge}
             </div>
-            <div className="flex flex-col min-w-0">
+            <div className="flex flex-col min-w-0 flex-1">
               <p className="text-white light:text-slate-900 text-sm font-medium truncate leading-snug">
                 {filename || t("preview.unknown_file")}
               </p>
@@ -314,17 +314,37 @@ function FileDownloadCard({ props, autoPreview = false }) {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-x-2 flex-shrink-0 ml-4">
+          <div className="flex items-center gap-2 flex-wrap">
             {(downloadUrl || storageFilename) && !isImage && (
               <button
                 onClick={handlePreview}
                 type="button"
-                className="flex items-center gap-x-1.5 px-3 py-2 rounded-lg border border-zinc-700 light:border-theme-sidebar-border hover:bg-zinc-700 light:hover:bg-theme-bg-secondary transition-colors text-zinc-300 light:text-theme-text-secondary text-sm font-medium"
+                className="flex items-center gap-x-1.5 px-3 py-2 rounded-lg bg-primary-button text-slate-900 hover:opacity-90 transition-colors text-sm font-medium border-none"
               >
-                <Eye size={15} weight="regular" />
+                <Eye size={15} weight="bold" />
                 <span>{t("preview.open")}</span>
               </button>
             )}
+            <button
+              type="button"
+              onClick={handleDownload}
+              disabled={downloading}
+              aria-busy={downloading}
+              className="flex items-center gap-x-2 px-4 py-2 rounded-lg border border-zinc-600 light:border-theme-sidebar-border hover:bg-zinc-700 light:hover:bg-theme-bg-secondary transition-colors text-white light:text-theme-text-primary text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {downloading ? (
+                <CircleNotch
+                  size={16}
+                  weight="bold"
+                  className="animate-spin"
+                />
+              ) : (
+                <DownloadSimple size={16} weight="bold" />
+              )}
+              <span>
+                {downloading ? t("preview.downloading") : t("preview.download")}
+              </span>
+            </button>
             {(downloadUrl || storageFilename) && (
               <button
                 onClick={handleOpenNewTab}
@@ -359,22 +379,6 @@ function FileDownloadCard({ props, autoPreview = false }) {
                 </span>
               </button>
             )}
-            <button
-              type="button"
-              onClick={handleDownload}
-              disabled={downloading}
-              aria-busy={downloading}
-              className="flex items-center gap-x-2 px-4 py-2 rounded-lg border border-zinc-600 light:border-theme-sidebar-border hover:bg-zinc-700 light:hover:bg-theme-bg-secondary transition-colors text-white light:text-theme-text-primary text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {downloading ? (
-                <CircleNotch size={16} weight="bold" className="animate-spin" />
-              ) : (
-                <DownloadSimple size={16} weight="bold" />
-              )}
-              <span>
-                {downloading ? t("preview.downloading") : t("preview.download")}
-              </span>
-            </button>
           </div>
         </div>
       </div>
