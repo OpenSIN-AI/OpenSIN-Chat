@@ -850,15 +850,13 @@ class AgentHandler {
 
       const { WorkspaceChats } = require("../../models/workspaceChats");
       const lastChats = await WorkspaceChats.where(
-        {
-          workspaceId: Number(this.invocation.workspace_id),
-          thread_id: this.invocation?.thread_id || null,
-          include: true,
-        },
-        1,
+        { workspaceId: Number(this.invocation.workspace_id) },
+        5,
         { id: "desc" },
       );
-      const lastChat = Array.isArray(lastChats) ? lastChats[0] : null;
+      const lastChat = (Array.isArray(lastChats) ? lastChats : []).find(
+        (c) => c.include === true || c.include === 1,
+      );
       if (lastChat?.response) {
         const resp = typeof lastChat.response === "string"
           ? JSON.parse(lastChat.response)
