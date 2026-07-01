@@ -243,16 +243,11 @@ const PdfPreview = lazy(() => import("./PdfPreview"));
 function IframePreview({ url, title }: any) {
   const { t } = useTranslation();
   const { blobUrl, error: fetchError } = useAuthenticatedBlobUrl(url);
-  const [loaded, setLoaded] = useState(false);
   const [isPdf, setIsPdf] = useState(false);
 
   useEffect(() => {
     setIsPdf(!!url && url.includes("/api/utils/reports/"));
   }, [url]);
-
-  useEffect(() => {
-    setLoaded(false);
-  }, [blobUrl, url]);
 
   if (fetchError && !url?.includes("/api/utils/reports/")) {
     return (
@@ -333,7 +328,6 @@ function IframePreview({ url, title }: any) {
       {blobUrl && (
         <iframe
           src={blobUrl}
-          onLoad={() => setLoaded(true)}
           className="w-full h-full rounded border-none bg-white"
           title={title || t("preview.iframe_title")}
         />

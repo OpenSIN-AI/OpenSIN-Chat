@@ -11,7 +11,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 export default function PdfPreview({
   blobUrl,
-  title,
 }: {
   blobUrl: string;
   title?: string;
