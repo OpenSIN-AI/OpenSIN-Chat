@@ -9,7 +9,13 @@ import * as pdfjsLib from "pdfjs-dist";
 import pdfWorker from "pdfjs-dist/build/pdf.worker.min.mjs?url";
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
-export default function PdfPreview({ blobUrl, title }: { blobUrl: string; title?: string }) {
+export default function PdfPreview({
+  blobUrl,
+  title,
+}: {
+  blobUrl: string;
+  title?: string;
+}) {
   const [numPages, setNumPages] = useState(0);
   const [error, setError] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -55,8 +61,13 @@ export default function PdfPreview({ blobUrl, title }: { blobUrl: string; title?
         onLoadError={() => setError(true)}
         loading={
           <div className="flex flex-col items-center justify-center py-20 gap-2">
-            <FilePdf size={28} className="text-zinc-500 light:text-slate-400 animate-pulse" />
-            <p className="text-xs text-zinc-500 light:text-slate-400">PDF wird geladen...</p>
+            <FilePdf
+              size={28}
+              className="text-zinc-500 light:text-slate-400 animate-pulse"
+            />
+            <p className="text-xs text-zinc-500 light:text-slate-400">
+              PDF wird geladen...
+            </p>
           </div>
         }
       >
@@ -64,7 +75,11 @@ export default function PdfPreview({ blobUrl, title }: { blobUrl: string; title?
           <Page
             key={i}
             pageNumber={i + 1}
-            width={containerWidth > 0 ? Math.min(containerWidth - 20, 800) : undefined}
+            width={
+              containerWidth > 0
+                ? Math.min(containerWidth - 20, 800)
+                : undefined
+            }
             className="mb-2 shadow-lg"
             renderTextLayer={false}
             renderAnnotationLayer={false}

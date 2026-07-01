@@ -578,7 +578,6 @@ function buildOption(
       option = buildFunnelOption(dataset, title, isDark);
       break;
     case "radialbar":
-    case "radialbar":
       option = buildRadialBarOption(dataset, title, isDark);
       break;
     case "composed":

@@ -19,8 +19,6 @@ import DOMPurify from "@/utils/chat/purify";
 import ChatSidebar from "../ChatSidebar";
 import { usePreviewSidebar } from "../ChatSidebar";
 import { baseHeaders } from "@/utils/request";
-import { AUTH_TOKEN } from "@/utils/constants";
-import { safeGetItem } from "@/utils/safeStorage";
 import useAuthenticatedBlobUrl from "@/hooks/useAuthenticatedBlobUrl";
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
@@ -281,8 +279,13 @@ function IframePreview({ url, title }: any) {
       <Suspense
         fallback={
           <div className="flex flex-col items-center justify-center h-full gap-3 bg-zinc-900 light:bg-white">
-            <FilePdf size={28} className="text-zinc-500 light:text-slate-400 animate-pulse" />
-            <p className="text-xs text-zinc-500 light:text-slate-400">{t("preview.loading")}</p>
+            <FilePdf
+              size={28}
+              className="text-zinc-500 light:text-slate-400 animate-pulse"
+            />
+            <p className="text-xs text-zinc-500 light:text-slate-400">
+              {t("preview.loading")}
+            </p>
           </div>
         }
       >
@@ -294,8 +297,13 @@ function IframePreview({ url, title }: any) {
   if (isPdf && !blobUrl && !fetchError) {
     return (
       <div className="flex flex-col items-center justify-center h-full gap-3 bg-zinc-900 light:bg-white">
-        <FilePdf size={28} className="text-zinc-500 light:text-slate-400 animate-pulse" />
-        <p className="text-xs text-zinc-500 light:text-slate-400">{t("preview.loading")}</p>
+        <FilePdf
+          size={28}
+          className="text-zinc-500 light:text-slate-400 animate-pulse"
+        />
+        <p className="text-xs text-zinc-500 light:text-slate-400">
+          {t("preview.loading")}
+        </p>
       </div>
     );
   }
@@ -332,8 +340,13 @@ function IframePreview({ url, title }: any) {
       )}
       {!blobUrl && (
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-zinc-900 light:bg-white">
-          <FilePdf size={28} className="text-zinc-500 light:text-slate-400 animate-pulse" />
-          <p className="text-xs text-zinc-500 light:text-slate-400">{t("preview.loading")}</p>
+          <FilePdf
+            size={28}
+            className="text-zinc-500 light:text-slate-400 animate-pulse"
+          />
+          <p className="text-xs text-zinc-500 light:text-slate-400">
+            {t("preview.loading")}
+          </p>
         </div>
       )}
     </div>

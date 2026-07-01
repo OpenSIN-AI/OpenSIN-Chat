@@ -7,6 +7,8 @@ const mockPlugins = {
   memory: { name: "rag-memory" },
   docSummarizer: { name: "document-summarizer" },
   webScraping: { name: "web-scraping" },
+  generateReport: { name: "generate-report" },
+  deepResearch: { name: "deep-research" },
   filesystemAgent: {
     name: "filesystem-agent",
     plugin: [{ name: "read-file" }, { name: "write-file" }],

@@ -25,6 +25,8 @@ jest.mock("../../../utils/agents/aibitat/plugins", () => {
     memory: { name: "rag-memory" },
     docSummarizer: { name: "document-summarizer" },
     webScraping: { name: "web-scraping" },
+    generateReport: { name: "generate-report" },
+    deepResearch: { name: "deep-research" },
     requestUserInput: { name: "request-user-input", plugin: [{ name: "ask-user" }] },
   };
   for (const key of Object.keys(plugins)) {

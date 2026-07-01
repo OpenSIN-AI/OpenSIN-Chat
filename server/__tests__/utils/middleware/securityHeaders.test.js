@@ -56,7 +56,7 @@ describe("securityHeaders", () => {
     expect(csp).toBeDefined();
     expect(csp).toContain("default-src 'self'");
     expect(csp).toContain("font-src 'self' data:");
-    expect(csp).toContain("frame-ancestors 'none'");
+    expect(csp).toContain("frame-ancestors 'self'");
   });
 
   it("CSP connect-src excludes wildcard googleusercontent and unused openai root", () => {
@@ -95,7 +95,7 @@ describe("securityHeaders", () => {
 
     const reportOnly = res.headers["Content-Security-Policy-Report-Only"];
     expect(reportOnly).toContain("default-src 'self'");
-    expect(reportOnly).toContain("frame-ancestors 'none'");
+    expect(reportOnly).toContain("frame-ancestors 'self'");
     expect(reportOnly).toContain("worker-src 'self' blob:");
     expect(res.headers["Content-Security-Policy"]).toContain(
       "default-src 'self'",

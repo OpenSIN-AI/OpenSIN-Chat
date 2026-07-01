@@ -12,8 +12,13 @@ vi.mock("uuid", () => ({ v4: () => "test-uuid-1234" }));
 
 vi.mock("echarts-for-react", () => ({
   default: ({ option }) => (
-    <div data-testid="echart-renderer" data-chart-type={option?.series?.[0]?.type ?? "unknown"}>
-      {option?.title?.text && <span data-testid="echart-title">{option.title.text}</span>}
+    <div
+      data-testid="echart-renderer"
+      data-chart-type={option?.series?.[0]?.type ?? "unknown"}
+    >
+      {option?.title?.text && (
+        <span data-testid="echart-title">{option.title.text}</span>
+      )}
     </div>
   ),
 }));
@@ -166,7 +171,9 @@ describe("Chartable (ECharts)", () => {
       />,
     );
     expect(screen.getByTestId("echart-renderer")).toBeInTheDocument();
-    expect(screen.getByTestId("echart-title")).toHaveTextContent("Parsed Chart");
+    expect(screen.getByTestId("echart-title")).toHaveTextContent(
+      "Parsed Chart",
+    );
   });
 
   it("renders the caption inside the chat container when chatId is present", () => {
@@ -188,7 +195,9 @@ describe("Chartable (ECharts)", () => {
 
   it("returns null for empty dataset", () => {
     const { container } = render(
-      <Chartable props={{ content: { type: "bar", dataset: [], title: "Empty" } }} />,
+      <Chartable
+        props={{ content: { type: "bar", dataset: [], title: "Empty" } }}
+      />,
     );
     expect(container.innerHTML).toBe("");
   });

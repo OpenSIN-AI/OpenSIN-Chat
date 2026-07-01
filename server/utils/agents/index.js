@@ -858,9 +858,10 @@ class AgentHandler {
         (c) => c.include === true || c.include === 1,
       );
       if (lastChat?.response) {
-        const resp = typeof lastChat.response === "string"
-          ? JSON.parse(lastChat.response)
-          : lastChat.response;
+        const resp =
+          typeof lastChat.response === "string"
+            ? JSON.parse(lastChat.response)
+            : lastChat.response;
         if (!resp.outputs) resp.outputs = [];
         resp.outputs.push({
           type: "ReportFileDownload",
@@ -882,7 +883,9 @@ class AgentHandler {
         this.log("Persisted auto-report output to chat history.");
       }
 
-      this.log(`Auto-generated PDF: ${result.fileName} (${result.fileSizeKB} KB)`);
+      this.log(
+        `Auto-generated PDF: ${result.fileName} (${result.fileSizeKB} KB)`,
+      );
     } catch (error) {
       this.log("Auto-report generation failed:", error.message);
     }
