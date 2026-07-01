@@ -19,6 +19,8 @@ import DOMPurify from "@/utils/chat/purify";
 import ChatSidebar from "../ChatSidebar";
 import { usePreviewSidebar } from "../ChatSidebar";
 import { baseHeaders } from "@/utils/request";
+import { AUTH_TOKEN } from "@/utils/constants";
+import { safeGetItem } from "@/utils/safeStorage";
 import useAuthenticatedBlobUrl from "@/hooks/useAuthenticatedBlobUrl";
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
@@ -242,6 +244,7 @@ function IframePreview({ url, title }: any) {
   const { t } = useTranslation();
   const { blobUrl, error: fetchError } = useAuthenticatedBlobUrl(url);
   const [loaded, setLoaded] = useState(false);
+  const [directUrl, setDirectUrl] = useState<string | null>(null);
 
   const [graceElapsed, setGraceElapsed] = useState(false);
   useEffect(() => {
@@ -249,9 +252,27 @@ function IframePreview({ url, title }: any) {
     setGraceElapsed(false);
     const timer = setTimeout(() => setGraceElapsed(true), 6000);
     return () => clearTimeout(timer);
-  }, [blobUrl]);
+  }, [blobUrl, directUrl]);
 
-  if (fetchError) {
+  useEffect(() => {
+    if (!url) {
+      setDirectUrl(null);
+      return;
+    }
+    if (url.includes("/api/utils/reports/")) {
+      const token = safeGetItem(AUTH_TOKEN);
+      const sep = url.includes("?") ? "&" : "?";
+      setDirectUrl(token ? `${url}${sep}token=${encodeURIComponent(token)}` : url);
+      setBlobFallback(false);
+      return;
+    }
+    setDirectUrl(null);
+  }, [url]);
+
+  const [blobFallback, setBlobFallback] = useState(false);
+  const renderUrl = blobFallback ? blobUrl : directUrl;
+
+  if (fetchError && !directUrl) {
     return (
       <div className="flex flex-col items-center justify-center h-full gap-3 bg-zinc-900 light:bg-white">
         <FilePdf size={28} className="text-zinc-500 light:text-slate-400" />
@@ -273,16 +294,16 @@ function IframePreview({ url, title }: any) {
 
   return (
     <div className="relative w-full h-full">
-      {blobUrl && (
+      {renderUrl && (
         <iframe
-          src={blobUrl}
+          src={renderUrl}
           onLoad={() => setLoaded(true)}
           className="w-full h-full rounded border-none bg-white"
           title={title || t("preview.iframe_title")}
           sandbox="allow-same-origin allow-scripts allow-popups"
         />
       )}
-      {(!blobUrl || !loaded) && (
+      {(!renderUrl || !loaded) && (
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-zinc-900 light:bg-white pointer-events-none">
           <FilePdf
             size={28}
@@ -291,9 +312,9 @@ function IframePreview({ url, title }: any) {
           <p className="text-xs text-zinc-500 light:text-slate-400">
             {t("preview.loading")}
           </p>
-          {graceElapsed && blobUrl && (
+          {graceElapsed && renderUrl && (
             <a
-              href={blobUrl}
+              href={renderUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="pointer-events-auto flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-800 light:bg-slate-100 text-xs text-zinc-300 light:text-slate-600 hover:text-white light:hover:text-slate-900 transition-colors no-underline"

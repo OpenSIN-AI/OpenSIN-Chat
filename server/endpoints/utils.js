@@ -516,9 +516,15 @@ function utilEndpoints(app) {
   // Reports are stored in STORAGE_DIR/generated-reports/ by the ReportGenerator
   // (server/utils/reports). This mirrors that exact resolution so the
   // PreviewSidebar iframe can load the PDF without an API key.
+  // Accepts token via query param (?token=...) so iframe src can authenticate.
   app.get(
     "/utils/reports/:fileName",
-    [validatedRequest],
+    async (req, response, next) => {
+      if (req.query.token && !req.header("Authorization")) {
+        req.headers.authorization = `Bearer ${req.query.token}`;
+      }
+      validatedRequest(req, response, next);
+    },
     async (req, response) => {
       try {
         const path = require("path");

@@ -847,6 +847,43 @@ class AgentHandler {
           versions,
         },
       });
+
+      const { WorkspaceChats } = require("../../models/workspaceChats");
+      const lastChats = await WorkspaceChats.where(
+        {
+          workspaceId: Number(this.invocation.workspace_id),
+          thread_id: this.invocation?.thread_id || null,
+          include: true,
+        },
+        1,
+        { id: "desc" },
+      );
+      const lastChat = Array.isArray(lastChats) ? lastChats[0] : null;
+      if (lastChat?.response) {
+        const resp = typeof lastChat.response === "string"
+          ? JSON.parse(lastChat.response)
+          : lastChat.response;
+        if (!resp.outputs) resp.outputs = [];
+        resp.outputs.push({
+          type: "ReportFileDownload",
+          payload: {
+            filename: result.fileName,
+            fileSize: fileSizeBytes,
+            downloadUrl,
+            versions,
+          },
+        });
+        await WorkspaceChats.upsert(lastChat.id, {
+          workspaceId: Number(this.invocation.workspace_id),
+          prompt: lastChat.prompt,
+          response: resp,
+          user: { id: this.invocation?.user_id || null },
+          threadId: this.invocation?.thread_id || null,
+          include: true,
+        });
+        this.log("Persisted auto-report output to chat history.");
+      }
+
       this.log(`Auto-generated PDF: ${result.fileName} (${result.fileSizeKB} KB)`);
     } catch (error) {
       this.log("Auto-report generation failed:", error.message);
