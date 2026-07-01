@@ -319,7 +319,7 @@ function FileDownloadCard({ props, autoPreview = false }) {
               <button
                 onClick={handlePreview}
                 type="button"
-                className="flex items-center gap-x-1.5 px-3 py-2 rounded-lg bg-primary-button text-slate-900 hover:opacity-90 transition-colors text-sm font-medium border-none"
+                className="flex items-center gap-x-1.5 px-3 py-2 rounded-lg bg-primary-button text-black light:text-white hover:opacity-90 transition-colors text-sm font-medium border-none"
               >
                 <Eye size={15} weight="bold" />
                 <span>{t("preview.open")}</span>
