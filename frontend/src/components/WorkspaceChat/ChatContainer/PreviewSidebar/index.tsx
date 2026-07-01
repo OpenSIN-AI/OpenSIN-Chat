@@ -295,19 +295,12 @@ function IframePreview({ url, title }: any) {
   return (
     <div className="relative w-full h-full">
       {renderUrl && (
-        <object
-          data={renderUrl}
-          type="application/pdf"
+        <iframe
+          src={renderUrl}
+          onLoad={() => setLoaded(true)}
           className="w-full h-full rounded border-none bg-white"
-          aria-label={title || t("preview.iframe_title")}
-        >
-          <iframe
-            src={renderUrl}
-            onLoad={() => setLoaded(true)}
-            className="w-full h-full rounded border-none bg-white"
-            title={title || t("preview.iframe_title")}
-          />
-        </object>
+          title={title || t("preview.iframe_title")}
+        />
       )}
       {(!renderUrl || !loaded) && (
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-zinc-900 light:bg-white pointer-events-none">

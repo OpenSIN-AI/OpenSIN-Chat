@@ -71,9 +71,10 @@ function buildEnforcedCsp(nonce) {
     "media-src 'self' blob:",
     "worker-src 'self' blob:",
     `connect-src ${ENFORCED_CSP_CONNECT_SRC.join(" ")}`,
-    "object-src 'none'",
+    "object-src 'self'",
+    "frame-src 'self' blob: data:",
     "base-uri 'self'",
-    "frame-ancestors 'none'",
+    "frame-ancestors 'self'",
     "report-uri /api/csp-violation",
   ].join("; ");
 }
@@ -87,9 +88,10 @@ const REPORT_ONLY_CSP = [
   "media-src 'self' blob:",
   "worker-src 'self' blob:",
   "connect-src *",
-  "object-src 'none'",
+  "object-src 'self'",
+  "frame-src 'self' blob: data:",
   "base-uri 'self'",
-  "frame-ancestors 'none'",
+  "frame-ancestors 'self'",
 ].join("; ");
 
 /**
