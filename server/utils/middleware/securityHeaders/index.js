@@ -34,6 +34,8 @@ const PERMISSIONS_POLICY = [
 
 const ENFORCED_CSP_CONNECT_SRC = [
   "'self'",
+  "blob:",
+  "data:",
   "https://api.anthropic.com",
   "https://api.fireworks.ai",
   "https://api.cohere.ai",

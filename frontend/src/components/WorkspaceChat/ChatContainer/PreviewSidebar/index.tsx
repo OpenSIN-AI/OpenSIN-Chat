@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Suspense, lazy } from "react";
 import { useParams } from "react-router-dom";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { ArrowSquareOut } from "@phosphor-icons/react/dist/csr/ArrowSquareOut";
@@ -240,39 +240,67 @@ function ThreeDotsMenu({ previewData, onAddToSources, addingSource }: any) {
   );
 }
 
+const PdfPreview = lazy(() => import("./PdfPreview"));
+
 function IframePreview({ url, title }: any) {
   const { t } = useTranslation();
   const { blobUrl, error: fetchError } = useAuthenticatedBlobUrl(url);
   const [loaded, setLoaded] = useState(false);
-  const [directUrl, setDirectUrl] = useState<string | null>(null);
-
-  const [graceElapsed, setGraceElapsed] = useState(false);
-  useEffect(() => {
-    setLoaded(false);
-    setGraceElapsed(false);
-    const timer = setTimeout(() => setGraceElapsed(true), 6000);
-    return () => clearTimeout(timer);
-  }, [blobUrl, directUrl]);
+  const [isPdf, setIsPdf] = useState(false);
 
   useEffect(() => {
-    if (!url) {
-      setDirectUrl(null);
-      return;
-    }
-    if (url.includes("/api/utils/reports/")) {
-      const token = safeGetItem(AUTH_TOKEN);
-      const sep = url.includes("?") ? "&" : "?";
-      setDirectUrl(token ? `${url}${sep}token=${encodeURIComponent(token)}` : url);
-      setBlobFallback(false);
-      return;
-    }
-    setDirectUrl(null);
+    setIsPdf(!!url && url.includes("/api/utils/reports/"));
   }, [url]);
 
-  const [blobFallback, setBlobFallback] = useState(false);
-  const renderUrl = blobFallback ? blobUrl : directUrl;
+  useEffect(() => {
+    setLoaded(false);
+  }, [blobUrl, url]);
 
-  if (fetchError && !directUrl) {
+  if (fetchError && !url?.includes("/api/utils/reports/")) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full gap-3 bg-zinc-900 light:bg-white">
+        <FilePdf size={28} className="text-zinc-500 light:text-slate-400" />
+        <p className="text-xs text-zinc-500 light:text-slate-400 text-center px-4">
+          {t("preview.load_error")}
+        </p>
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-800 light:bg-slate-100 text-xs text-zinc-300 light:text-slate-600 hover:text-white light:hover:text-slate-900 transition-colors no-underline"
+        >
+          <ArrowSquareOut size={12} />
+          {t("preview.open_externally")}
+        </a>
+      </div>
+    );
+  }
+
+  if (isPdf && blobUrl) {
+    return (
+      <Suspense
+        fallback={
+          <div className="flex flex-col items-center justify-center h-full gap-3 bg-zinc-900 light:bg-white">
+            <FilePdf size={28} className="text-zinc-500 light:text-slate-400 animate-pulse" />
+            <p className="text-xs text-zinc-500 light:text-slate-400">{t("preview.loading")}</p>
+          </div>
+        }
+      >
+        <PdfPreview blobUrl={blobUrl} title={title} />
+      </Suspense>
+    );
+  }
+
+  if (isPdf && !blobUrl && !fetchError) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full gap-3 bg-zinc-900 light:bg-white">
+        <FilePdf size={28} className="text-zinc-500 light:text-slate-400 animate-pulse" />
+        <p className="text-xs text-zinc-500 light:text-slate-400">{t("preview.loading")}</p>
+      </div>
+    );
+  }
+
+  if (isPdf && fetchError) {
     return (
       <div className="flex flex-col items-center justify-center h-full gap-3 bg-zinc-900 light:bg-white">
         <FilePdf size={28} className="text-zinc-500 light:text-slate-400" />
@@ -294,34 +322,18 @@ function IframePreview({ url, title }: any) {
 
   return (
     <div className="relative w-full h-full">
-      {renderUrl && (
+      {blobUrl && (
         <iframe
-          src={renderUrl}
+          src={blobUrl}
           onLoad={() => setLoaded(true)}
           className="w-full h-full rounded border-none bg-white"
           title={title || t("preview.iframe_title")}
         />
       )}
-      {(!renderUrl || !loaded) && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-zinc-900 light:bg-white pointer-events-none">
-          <FilePdf
-            size={28}
-            className="text-zinc-500 light:text-slate-400 animate-pulse"
-          />
-          <p className="text-xs text-zinc-500 light:text-slate-400">
-            {t("preview.loading")}
-          </p>
-          {graceElapsed && renderUrl && (
-            <a
-              href={renderUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="pointer-events-auto flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-800 light:bg-slate-100 text-xs text-zinc-300 light:text-slate-600 hover:text-white light:hover:text-slate-900 transition-colors no-underline"
-            >
-              <ArrowSquareOut size={12} />
-              {t("preview.open_externally")}
-            </a>
-          )}
+      {!blobUrl && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-zinc-900 light:bg-white">
+          <FilePdf size={28} className="text-zinc-500 light:text-slate-400 animate-pulse" />
+          <p className="text-xs text-zinc-500 light:text-slate-400">{t("preview.loading")}</p>
         </div>
       )}
     </div>
