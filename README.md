@@ -92,6 +92,7 @@ The container maps host port `43939` to internal port `3001`. Open `http://local
 - **Mobile Responsive** — 375px viewport, overlay panels, no horizontal overflow
 - **Loading Animation** — 3-pulse dots during AI response
 - **Action Buttons** — hover-only (TTS, Copy, Edit, Good Response, More) like ChatGPT/Claude
+- **SOTA Charts (ECharts)** — the AI generates interactive charts directly in chat: bar, line, area, pie, radar, scatter, treemap, funnel, radialBar. Apache ECharts 6 rendering with gradient fills, glow shadows, rounded bars, staggered elastic animations, dark/light theme support, hover tooltips, save-as-image (2x PNG), and data-view toolbox. Multi-series support for grouped/comparison charts. The `create-chart` agent plugin sends `{type, dataset, title, caption}` via WebSocket — no external services, no API keys, fully local rendering
 
 ## Screenshots
 
@@ -101,6 +102,18 @@ The container maps host port `43939` to internal port `3001`. Open `http://local
 
 ![Chat with Code Blocks](docs/screenshots/chat-codeblock-light.png)
 ![Sidebar](docs/screenshots/sidebar-light.png)
+
+### ECharts — SOTA Diagramme direkt im Chat
+
+Die KI generiert interaktive Apache ECharts-Diagramme ohne externe Dienste:
+
+| Fraktionsverteilung | AfD nach Bundesland | Redeaktivitat |
+|---|---|---|
+| ![Pie](screenshots/demo-charts/01-fraktionsverteilung.png) | ![Bar](screenshots/demo-charts/02-bundeslaender.png) | ![Area](screenshots/demo-charts/03-redeaktivitaet.png) |
+
+| Top Redner | Abstimmungsverhalten | Ausschuss-Prasenz |
+|---|---|---|
+| ![Bar](screenshots/demo-charts/04-top-redner.png) | ![Pie](screenshots/demo-charts/05-abstimmungsverhalten.png) | ![Grouped Bar](screenshots/demo-charts/06-ausschuesse.png) |
 
 ## Architecture
 

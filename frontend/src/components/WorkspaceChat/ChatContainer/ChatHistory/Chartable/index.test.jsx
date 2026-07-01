@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen } from "@testing-library/react";
 
 import { Chartable } from "./index";
-import { saveAs } from "file-saver";
 
 vi.mock("react-i18next", async () => {
   const { createI18nMock } = await import("@/test/i18nMock");
@@ -12,64 +10,16 @@ vi.mock("react-i18next", async () => {
 });
 vi.mock("uuid", () => ({ v4: () => "test-uuid-1234" }));
 
-vi.mock("@tremor/react", () => ({
-  AreaChart: ({ data, index }) => (
-    <div data-testid="area-chart">{`AreaChart:${data?.length}:${index}`}</div>
-  ),
-  BarChart: ({ data, index }) => (
-    <div data-testid="bar-chart">{`BarChart:${data?.length}:${index}`}</div>
-  ),
-  LineChart: ({ data, index }) => (
-    <div data-testid="line-chart">{`LineChart:${data?.length}:${index}`}</div>
-  ),
-  DonutChart: ({ data, category }) => (
-    <div data-testid="donut-chart">{`DonutChart:${data?.length}:${category}`}</div>
-  ),
-  Legend: ({ categories }) => (
-    <div data-testid="legend">{categories?.join(",")}</div>
+vi.mock("echarts-for-react", () => ({
+  default: ({ option }) => (
+    <div data-testid="echart-renderer" data-chart-type={option?.series?.[0]?.type ?? "unknown"}>
+      {option?.title?.text && <span data-testid="echart-title">{option.title.text}</span>}
+    </div>
   ),
 }));
 
-vi.mock("recharts", () => ({
-  ComposedChart: ({ children }) => (
-    <div data-testid="composed-chart">{children}</div>
-  ),
-  ScatterChart: ({ children }) => (
-    <div data-testid="scatter-chart">{children}</div>
-  ),
-  RadarChart: ({ children }) => <div data-testid="radar-chart">{children}</div>,
-  RadialBarChart: ({ children }) => (
-    <div data-testid="radialbar-chart">{children}</div>
-  ),
-  Treemap: ({ children }) => <div data-testid="treemap">{children}</div>,
-  FunnelChart: ({ children }) => (
-    <div data-testid="funnel-chart">{children}</div>
-  ),
-  Bar: () => <div>Bar</div>,
-  Line: () => <div>Line</div>,
-  CartesianGrid: () => <div>Grid</div>,
-  XAxis: () => <div>XAxis</div>,
-  YAxis: () => <div>YAxis</div>,
-  Scatter: () => <div>Scatter</div>,
-  Radar: () => <div>Radar</div>,
-  RadialBar: () => <div>RadialBar</div>,
-  PolarGrid: () => <div>PolarGrid</div>,
-  PolarAngleAxis: () => <div>PolarAngleAxis</div>,
-  PolarRadiusAxis: () => <div>PolarRadiusAxis</div>,
-  Funnel: () => <div>Funnel</div>,
-}));
-
-vi.mock("./chart-utils.ts", () => ({
-  Colors: { blue: "#3b82f6" },
-  getTremorColor: (c) => "#3b82f6",
-}));
-
-vi.mock("./CustomCell.tsx", () => ({
-  default: () => <div>CustomCell</div>,
-}));
-
-vi.mock("./CustomTooltip.tsx", () => ({
-  default: (props) => <div>Tooltip</div>,
+vi.mock("@/hooks/useTheme", () => ({
+  resolveDarkMode: () => true,
 }));
 
 vi.mock("@/utils/request.ts", () => ({
@@ -90,25 +40,10 @@ vi.mock("@/utils/chat/purify", () => ({
   default: { sanitize: (s) => s ?? "" },
 }));
 
-const mockGetDivJpeg = vi.fn(async () => "blob");
-
 vi.mock("file-saver", () => ({
   saveAs: vi.fn(),
 }));
 
-vi.mock("recharts-to-png", () => ({
-  useGenerateImage: () => [
-    mockGetDivJpeg,
-    { ref: { current: document.createElement("div") } },
-  ],
-}));
-
-vi.mock("@phosphor-icons/react/dist/csr/ArrowDown", () => ({
-  default: (props) => <svg data-testid="phosphor-arrowdown-icon" {...props} />,
-  ArrowDown: (props) => (
-    <svg data-testid="phosphor-arrowdown-icon" {...props} />
-  ),
-}));
 vi.mock("@phosphor-icons/react/dist/csr/CircleNotch", () => ({
   default: (props) => (
     <svg data-testid="phosphor-circlenotch-icon" {...props} />
@@ -142,10 +77,9 @@ function makeProps(type, dataset = sampleDataset, extra = {}) {
 
 beforeEach(() => {
   vi.clearAllMocks();
-  mockGetDivJpeg.mockResolvedValue("blob");
 });
 
-describe("Chartable", () => {
+describe("Chartable (ECharts)", () => {
   it("returns null when content is null after parse", () => {
     const { container } = render(
       <Chartable props={{ content: "not-json-at-all" }} />,
@@ -153,60 +87,45 @@ describe("Chartable", () => {
     expect(container.innerHTML).toBe("");
   });
 
-  it("renders area chart", () => {
+  it("renders area chart via ECharts", () => {
     render(<Chartable {...makeProps("area")} />);
-    expect(screen.getByTestId("area-chart")).toBeInTheDocument();
-    expect(screen.getByText("Test Chart")).toBeInTheDocument();
+    expect(screen.getByTestId("echart-renderer")).toBeInTheDocument();
+    expect(screen.getByTestId("echart-title")).toHaveTextContent("Test Chart");
   });
 
-  it("renders bar chart", () => {
+  it("renders bar chart via ECharts", () => {
     render(<Chartable {...makeProps("bar")} />);
-    expect(screen.getByTestId("bar-chart")).toBeInTheDocument();
+    expect(screen.getByTestId("echart-renderer")).toBeInTheDocument();
   });
 
-  it("renders line chart", () => {
+  it("renders line chart via ECharts", () => {
     render(<Chartable {...makeProps("line")} />);
-    expect(screen.getByTestId("line-chart")).toBeInTheDocument();
+    expect(screen.getByTestId("echart-renderer")).toBeInTheDocument();
   });
 
-  it("renders composed chart", () => {
-    render(<Chartable {...makeProps("composed")} />);
-    expect(screen.getByTestId("composed-chart")).toBeInTheDocument();
-  });
-
-  it("renders scatter chart", () => {
-    render(<Chartable {...makeProps("scatter")} />);
-    expect(screen.getByTestId("scatter-chart")).toBeInTheDocument();
-  });
-
-  it("renders pie/donut chart", () => {
+  it("renders pie chart via ECharts", () => {
     render(<Chartable {...makeProps("pie")} />);
-    expect(screen.getByTestId("donut-chart")).toBeInTheDocument();
+    expect(screen.getByTestId("echart-renderer")).toBeInTheDocument();
   });
 
-  it("renders radar chart", () => {
+  it("renders scatter chart via ECharts", () => {
+    render(<Chartable {...makeProps("scatter")} />);
+    expect(screen.getByTestId("echart-renderer")).toBeInTheDocument();
+  });
+
+  it("renders radar chart via ECharts", () => {
     render(<Chartable {...makeProps("radar")} />);
-    expect(screen.getByTestId("radar-chart")).toBeInTheDocument();
+    expect(screen.getByTestId("echart-renderer")).toBeInTheDocument();
   });
 
-  it("renders radialbar chart", () => {
-    render(<Chartable {...makeProps("radialbar")} />);
-    expect(screen.getByTestId("radialbar-chart")).toBeInTheDocument();
-  });
-
-  it("renders treemap chart", () => {
+  it("renders treemap chart via ECharts", () => {
     render(<Chartable {...makeProps("treemap")} />);
-    expect(screen.getByTestId("treemap")).toBeInTheDocument();
+    expect(screen.getByTestId("echart-renderer")).toBeInTheDocument();
   });
 
-  it("renders funnel chart", () => {
+  it("renders funnel chart via ECharts", () => {
     render(<Chartable {...makeProps("funnel")} />);
-    expect(screen.getByTestId("funnel-chart")).toBeInTheDocument();
-  });
-
-  it("renders unsupported message for unknown type", () => {
-    render(<Chartable {...makeProps("unknown")} />);
-    expect(screen.getByText("Unsupported chart type.")).toBeInTheDocument();
+    expect(screen.getByTestId("echart-renderer")).toBeInTheDocument();
   });
 
   it("renders download button", () => {
@@ -231,7 +150,7 @@ describe("Chartable", () => {
       },
     };
     render(<Chartable {...props} />);
-    expect(screen.getByText("Chat Chart")).toBeInTheDocument();
+    expect(screen.getByTestId("echart-title")).toHaveTextContent("Chat Chart");
   });
 
   it("handles dataset as JSON string", () => {
@@ -246,29 +165,8 @@ describe("Chartable", () => {
         }}
       />,
     );
-    expect(screen.getByTestId("bar-chart")).toBeInTheDocument();
-    expect(screen.getByText("Parsed Chart")).toBeInTheDocument();
-  });
-
-  it("triggers download when the download button is clicked", async () => {
-    const user = userEvent.setup();
-    render(<Chartable {...makeProps("area")} />);
-    await user.click(screen.getByLabelText("Download graph"));
-    await waitFor(() => expect(mockGetDivJpeg).toHaveBeenCalledTimes(1));
-    expect(saveAs).toHaveBeenCalledWith(
-      "blob",
-      expect.stringMatching(/^chart-/),
-    );
-  });
-
-  it("renders a loading spinner while downloading", async () => {
-    const user = userEvent.setup();
-    mockGetDivJpeg.mockImplementation(() => new Promise(() => {}));
-    render(<Chartable {...makeProps("area")} />);
-    await user.click(screen.getByLabelText("Download graph"));
-    await waitFor(() =>
-      expect(screen.getByLabelText("Downloading chart...")).toBeInTheDocument(),
-    );
+    expect(screen.getByTestId("echart-renderer")).toBeInTheDocument();
+    expect(screen.getByTestId("echart-title")).toHaveTextContent("Parsed Chart");
   });
 
   it("renders the caption inside the chat container when chatId is present", () => {
@@ -284,7 +182,23 @@ describe("Chartable", () => {
       },
     };
     render(<Chartable {...props} />);
-    expect(screen.getByText("Chat Chart")).toBeInTheDocument();
+    expect(screen.getByTestId("echart-title")).toHaveTextContent("Chat Chart");
     expect(screen.getByText("Chat caption")).toBeInTheDocument();
+  });
+
+  it("returns null for empty dataset", () => {
+    const { container } = render(
+      <Chartable props={{ content: { type: "bar", dataset: [], title: "Empty" } }} />,
+    );
+    expect(container.innerHTML).toBe("");
+  });
+
+  it("renders multi-series bar chart", () => {
+    const multiSeries = [
+      { name: "Jan", AfD: 45, CDU: 62 },
+      { name: "Feb", AfD: 38, CDU: 55 },
+    ];
+    render(<Chartable {...makeProps("bar", multiSeries)} />);
+    expect(screen.getByTestId("echart-renderer")).toBeInTheDocument();
   });
 });

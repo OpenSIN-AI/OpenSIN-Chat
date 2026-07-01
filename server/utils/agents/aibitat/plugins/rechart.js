@@ -17,7 +17,7 @@ const rechart = {
           name: this.name,
           tracker: new Deduplicator(),
           description:
-            "Create a chart, graph, or data visualization. Generate bar charts, line graphs, pie charts, area charts, or scatter plots to visualize data, statistics, trends, or results. Use to display numbers and data visually.",
+            "Create a chart, graph, or data visualization. Generate bar charts, line graphs, pie charts, area charts, or scatter plots to visualize data, statistics, trends, or results. Charts are rendered with Apache ECharts — SOTA gradients, glow shadows, rounded bars, staggered animations, interactive tooltips, and save-as-image. Use to display numbers and data visually.",
           examples: [
             { prompt: "Create a chart from that data" },
             { prompt: "Make a bar graph of the results" },
@@ -50,16 +50,22 @@ const rechart = {
               },
               dataset: {
                 type: "string",
-                description: `Valid JSON in which each element is an object for Recharts API for the 'type' of chart defined WITHOUT new line characters. Strictly using this FORMAT and naming:
+                description: `Valid JSON in which each element is an object WITHOUT new line characters. Strictly using this FORMAT and naming:
 { "name": "a", "value": 12 }].
 Make sure field "name" always stays named "name". Instead of naming value field value in JSON, name it based on user metric and make it the same across every item.
+For multi-series charts (grouped bars, multiple lines), include multiple value keys: { "name": "Jan", "AfD": 45, "CDU": 62 }.
 Make sure the format use double quotes and property names are string literals. Provide JSON data only.`,
+              },
+              caption: {
+                type: "string",
+                description:
+                  "Optional markdown caption displayed below the chart. Use to explain the data or provide context.",
               },
             },
             additionalProperties: false,
           },
           required: ["type", "title", "dataset"],
-          handler: async function ({ type, dataset, title }) {
+          handler: async function ({ type, dataset, title, caption }) {
             try {
               if (this.tracker.isMarkedUnique(this.name)) {
                 this.super.handlerProps.log(
@@ -81,6 +87,7 @@ Make sure the format use double quotes and property names are string literals. P
                 type,
                 dataset,
                 title,
+                caption: caption || "",
               });
 
               this.super._replySpecialAttributes = {
@@ -90,7 +97,7 @@ Make sure the format use double quotes and property names are string literals. P
                     type,
                     dataset,
                     title,
-                    caption: additionalText,
+                    caption: caption || additionalText || "",
                   }),
                 postSave: () => this.tracker.removeUniqueConstraint(this.name),
               };

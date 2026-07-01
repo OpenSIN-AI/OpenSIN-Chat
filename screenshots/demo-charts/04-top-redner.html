@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Top 10 aktivste Redner im Bundestag</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0B1120;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:Inter,-apple-system,sans-serif}
+#chart{width:1200px;height:720px}
+</style>
+</head>
+<body>
+<div id="chart"></div>
+<script>
+var chart=echarts.init(document.getElementById('chart'),null,{renderer:'canvas'});
+var option={
+  "animation": true,
+  "animationDuration": 1200,
+  "animationEasing": "cubicOut",
+  "backgroundColor": "#0B1120",
+  "grid": {
+    "bottom": "12%",
+    "containLabel": true,
+    "left": "8%",
+    "right": "5%",
+    "top": "22%"
+  },
+  "legend": {
+    "icon": "circle",
+    "itemGap": 20,
+    "itemHeight": 10,
+    "itemWidth": 10,
+    "right": "5%",
+    "show": true,
+    "textStyle": {
+      "color": "#CBD5E1",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": 13
+    },
+    "top": "13%"
+  },
+  "series": [
+    {
+      "animationDelay": function(idx){return idx*80+0;},
+      "animationDuration": 800,
+      "animationEasing": "elasticOut",
+      "barGap": "15%",
+      "barWidth": "45%",
+      "data": [
+        {
+          "itemStyle": {
+            "borderRadius": [
+              8,
+              8,
+              0,
+              0
+            ],
+            "color": {
+              "type": "linear",
+              "x": 0,
+              "y": 0,
+              "x2": 0,
+              "y2": 1,
+              "colorStops": [
+                {
+                  "offset": 0,
+                  "color": "#818CF8"
+                },
+                {
+                  "offset": 1,
+                  "color": "#6366F1"
+                }
+              ]
+            },
+            "shadowBlur": 12,
+            "shadowColor": "rgba(99,102,241,0.25)",
+            "shadowOffsetY": 4
+          },
+          "value": 89
+        },
+        {
+          "itemStyle": {
+            "borderRadius": [
+              8,
+              8,
+              0,
+              0
+            ],
+            "color": {
+              "type": "linear",
+              "x": 0,
+              "y": 0,
+              "x2": 0,
+              "y2": 1,
+              "colorStops": [
+                {
+                  "offset": 0,
+                  "color": "#818CF8"
+                },
+                {
+                  "offset": 1,
+                  "color": "#6366F1"
+                }
+              ]
+            },
+            "shadowBlur": 12,
+            "shadowColor": "rgba(99,102,241,0.25)",
+            "shadowOffsetY": 4
+          },
+          "value": 76
+        },
+        {
+          "itemStyle": {
+            "borderRadius": [
+              8,
+              8,
+              0,
+              0
+            ],
+            "color": {
+              "type": "linear",
+              "x": 0,
+              "y": 0,
+              "x2": 0,
+              "y2": 1,
+              "colorStops": [
+                {
+                  "offset": 0,
+                  "color": "#818CF8"
+                },
+                {
+                  "offset": 1,
+                  "color": "#6366F1"
+                }
+              ]
+            },
+            "shadowBlur": 12,
+            "shadowColor": "rgba(99,102,241,0.25)",
+            "shadowOffsetY": 4
+          },
+          "value": 71
+        },
+        {
+          "itemStyle": {
+            "borderRadius": [
+              8,
+              8,
+              0,
+              0
+            ],
+            "color": {
+              "type": "linear",
+              "x": 0,
+              "y": 0,
+              "x2": 0,
+              "y2": 1,
+              "colorStops": [
+                {
+                  "offset": 0,
+                  "color": "#818CF8"
+                },
+                {
+                  "offset": 1,
+                  "color": "#6366F1"
+                }
+              ]
+            },
+            "shadowBlur": 12,
+            "shadowColor": "rgba(99,102,241,0.25)",
+            "shadowOffsetY": 4
+          },
+          "value": 64
+        },
+        {
+          "itemStyle": {
+            "borderRadius": [
+              8,
+              8,
+              0,
+              0
+            ],
+            "color": {
+              "type": "linear",
+              "x": 0,
+              "y": 0,
+              "x2": 0,
+              "y2": 1,
+              "colorStops": [
+                {
+                  "offset": 0,
+                  "color": "#818CF8"
+                },
+                {
+                  "offset": 1,
+                  "color": "#6366F1"
+                }
+              ]
+            },
+            "shadowBlur": 12,
+            "shadowColor": "rgba(99,102,241,0.25)",
+            "shadowOffsetY": 4
+          },
+          "value": 58
+        },
+        {
+          "itemStyle": {
+            "borderRadius": [
+              8,
+              8,
+              0,
+              0
+            ],
+            "color": {
+              "type": "linear",
+              "x": 0,
+              "y": 0,
+              "x2": 0,
+              "y2": 1,
+              "colorStops": [
+                {
+                  "offset": 0,
+                  "color": "#818CF8"
+                },
+                {
+                  "offset": 1,
+                  "color": "#6366F1"
+                }
+              ]
+            },
+            "shadowBlur": 12,
+            "shadowColor": "rgba(99,102,241,0.25)",
+            "shadowOffsetY": 4
+          },
+          "value": 55
+        },
+        {
+          "itemStyle": {
+            "borderRadius": [
+              8,
+              8,
+              0,
+              0
+            ],
+            "color": {
+              "type": "linear",
+              "x": 0,
+              "y": 0,
+              "x2": 0,
+              "y2": 1,
+              "colorStops": [
+                {
+                  "offset": 0,
+                  "color": "#818CF8"
+                },
+                {
+                  "offset": 1,
+                  "color": "#6366F1"
+                }
+              ]
+            },
+            "shadowBlur": 12,
+            "shadowColor": "rgba(99,102,241,0.25)",
+            "shadowOffsetY": 4
+          },
+          "value": 52
+        },
+        {
+          "itemStyle": {
+            "borderRadius": [
+              8,
+              8,
+              0,
+              0
+            ],
+            "color": {
+              "type": "linear",
+              "x": 0,
+              "y": 0,
+              "x2": 0,
+              "y2": 1,
+              "colorStops": [
+                {
+                  "offset": 0,
+                  "color": "#818CF8"
+                },
+                {
+                  "offset": 1,
+                  "color": "#6366F1"
+                }
+              ]
+            },
+            "shadowBlur": 12,
+            "shadowColor": "rgba(99,102,241,0.25)",
+            "shadowOffsetY": 4
+          },
+          "value": 49
+        },
+        {
+          "itemStyle": {
+            "borderRadius": [
+              8,
+              8,
+              0,
+              0
+            ],
+            "color": {
+              "type": "linear",
+              "x": 0,
+              "y": 0,
+              "x2": 0,
+              "y2": 1,
+              "colorStops": [
+                {
+                  "offset": 0,
+                  "color": "#818CF8"
+                },
+                {
+                  "offset": 1,
+                  "color": "#6366F1"
+                }
+              ]
+            },
+            "shadowBlur": 12,
+            "shadowColor": "rgba(99,102,241,0.25)",
+            "shadowOffsetY": 4
+          },
+          "value": 47
+        },
+        {
+          "itemStyle": {
+            "borderRadius": [
+              8,
+              8,
+              0,
+              0
+            ],
+            "color": {
+              "type": "linear",
+              "x": 0,
+              "y": 0,
+              "x2": 0,
+              "y2": 1,
+              "colorStops": [
+                {
+                  "offset": 0,
+                  "color": "#818CF8"
+                },
+                {
+                  "offset": 1,
+                  "color": "#6366F1"
+                }
+              ]
+            },
+            "shadowBlur": 12,
+            "shadowColor": "rgba(99,102,241,0.25)",
+            "shadowOffsetY": 4
+          },
+          "value": 44
+        }
+      ],
+      "emphasis": {
+        "focus": "series",
+        "itemStyle": {
+          "shadowBlur": 24,
+          "shadowColor": "rgba(99,102,241,0.5)"
+        }
+      },
+      "label": {
+        "color": "#94A3B8",
+        "fontFamily": "Inter, sans-serif",
+        "fontSize": 11,
+        "position": "top",
+        "show": true
+      },
+      "name": "Reden",
+      "type": "bar"
+    }
+  ],
+  "title": {
+    "left": "center",
+    "subtext": "Anzahl Plenarreden — 20. Wahlperiode",
+    "subtextStyle": {
+      "color": "#94A3B8",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": 14
+    },
+    "text": "Top 10 aktivste Redner im Bundestag",
+    "textStyle": {
+      "color": "#F8FAFC",
+      "fontFamily": "Inter, -apple-system, sans-serif",
+      "fontSize": 26,
+      "fontWeight": "bold"
+    },
+    "top": "4%"
+  },
+  "toolbox": {
+    "feature": {
+      "dataView": {
+        "readOnly": true
+      },
+      "restore": {},
+      "saveAsImage": {
+        "backgroundColor": "#0B1120",
+        "name": "Top 10 aktivste Redner im Bundestag",
+        "pixelRatio": 2
+      }
+    },
+    "iconStyle": {
+      "borderColor": "#64748B"
+    },
+    "right": "3%",
+    "show": true,
+    "top": "5%"
+  },
+  "tooltip": {
+    "axisPointer": {
+      "shadowStyle": {
+        "color": "rgba(30,41,59,0.5)"
+      },
+      "type": "shadow"
+    },
+    "backgroundColor": "#1E293B",
+    "borderColor": "#334155",
+    "borderWidth": 1,
+    "padding": 12,
+    "textStyle": {
+      "color": "#F8FAFC",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": 13
+    },
+    "trigger": "axis"
+  },
+  "xAxis": {
+    "axisLabel": {
+      "color": "#CBD5E1",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": 12,
+      "margin": 14
+    },
+    "axisLine": {
+      "lineStyle": {
+        "color": "#334155"
+      }
+    },
+    "axisTick": {
+      "show": false
+    },
+    "data": [
+      "M. Chrupalla",
+      "A. Gawelek",
+      "T. Weidel",
+      "B. Bystron",
+      "L. Lippmann",
+      "P. Boehringer",
+      "K. Giefers",
+      "R. Mutzenich",
+      "A. Scheuer",
+      "S. Korte"
+    ],
+    "name": "",
+    "nameTextStyle": {
+      "color": "#94A3B8",
+      "fontSize": 12
+    },
+    "splitLine": {
+      "show": false
+    },
+    "type": "category"
+  },
+  "yAxis": {
+    "axisLabel": {
+      "color": "#CBD5E1",
+      "fontFamily": "Inter, sans-serif",
+      "fontSize": 12
+    },
+    "axisLine": {
+      "show": false
+    },
+    "axisTick": {
+      "show": false
+    },
+    "name": "Anzahl Reden",
+    "nameTextStyle": {
+      "color": "#94A3B8",
+      "fontSize": 12
+    },
+    "splitLine": {
+      "lineStyle": {
+        "color": "#1E293B",
+        "dashOffset": 5,
+        "type": "dashed"
+      },
+      "show": true
+    },
+    "type": "value"
+  }
+};
+option.animation=false;
+chart.setOption(option);
+window.addEventListener('resize',function(){chart.resize()});
+window.addEventListener('load',function(){setTimeout(function(){document.title='CHART_READY'},500)});
+</script>
+</body>
+</html>
