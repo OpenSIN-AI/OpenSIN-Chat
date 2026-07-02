@@ -3,6 +3,7 @@ const consoleLogger = require("../utils/logger/console.js");
 
 const { Prisma } = require("@prisma/client");
 const prisma = require("../utils/prisma");
+const { clampLimit, MAX_LIST_LIMIT } = require("../utils/database/queryLimits");
 const { EventLogs } = require("./eventLogs");
 
 /**
@@ -320,7 +321,7 @@ const User = {
     try {
       const users = await prisma.users.findMany({
         where: clause,
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
       });
       return users;
     } catch (error) {
@@ -378,7 +379,7 @@ const User = {
     try {
       const users = await prisma.users.findMany({
         where: clause,
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
       });
       return users.map((usr) => this.filterFields(usr));
     } catch (error) {

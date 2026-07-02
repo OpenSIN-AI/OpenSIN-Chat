@@ -3,6 +3,7 @@ const consoleLogger = require("../utils/logger/console.js");
 
 const { safeJsonParse } = require("../utils/http");
 const prisma = require("../utils/prisma");
+const { clampLimit, MAX_LIST_LIMIT } = require("../utils/database/queryLimits");
 
 /**
  * @typedef {Object} EmbedChat
@@ -84,7 +85,7 @@ const EmbedChats = {
           session_id: String(sessionId),
           include: true,
         },
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(orderBy !== null ? { orderBy } : { orderBy: { id: "asc" } }),
       });
       return filterSources ? this.filterSources(chats) : chats;
@@ -117,7 +118,7 @@ const EmbedChats = {
     try {
       const chat = await prisma.embed_chats.findFirst({
         where: clause,
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(orderBy !== null ? { orderBy } : {}),
       });
       return chat || null;
@@ -148,7 +149,7 @@ const EmbedChats = {
     try {
       const chats = await prisma.embed_chats.findMany({
         where: clause,
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(offset !== null ? { skip: offset } : {}),
         ...(orderBy !== null ? { orderBy } : {}),
       });
@@ -181,7 +182,7 @@ const EmbedChats = {
             },
           },
         },
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(offset !== null ? { skip: offset } : {}),
         ...(orderBy !== null ? { orderBy } : {}),
       });

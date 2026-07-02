@@ -2,6 +2,7 @@
 const consoleLogger = require("../utils/logger/console.js");
 
 const prisma = require("../utils/prisma");
+const { clampLimit, MAX_LIST_LIMIT } = require("../utils/database/queryLimits");
 const DocumentSyncRun = {
   statuses: {
     unknown: "unknown",
@@ -52,7 +53,7 @@ const DocumentSyncRun = {
     try {
       const results = await prisma.document_sync_executions.findMany({
         where: clause,
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(orderBy !== null ? { orderBy } : {}),
         ...(include !== null ? { include } : {}),
       });
@@ -67,7 +68,7 @@ const DocumentSyncRun = {
     try {
       const count = await prisma.document_sync_executions.count({
         where: clause,
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
       });
       return count;
     } catch (error) {

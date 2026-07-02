@@ -2,6 +2,7 @@
 const consoleLogger = require("../utils/logger/console.js");
 
 const prisma = require("../utils/prisma");
+const { clampLimit, MAX_LIST_LIMIT } = require("../utils/database/queryLimits");
 const { SystemSettings } = require("./systemSettings");
 const { ROLES } = require("../utils/middleware/multiUserProtected");
 
@@ -132,7 +133,7 @@ const BrowserExtensionApiKey = {
     try {
       const apiKeys = await prisma.browser_extension_api_keys.findMany({
         where: clause,
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(orderBy !== null ? { orderBy } : {}),
         include: {
           user: { select: { id: true, username: true, role: true } },
@@ -175,7 +176,7 @@ const BrowserExtensionApiKey = {
         include: {
           user: { select: { id: true, username: true, role: true } },
         },
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(orderBy !== null ? { orderBy } : {}),
       });
       return apiKeys;

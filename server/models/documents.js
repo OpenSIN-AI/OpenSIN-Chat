@@ -4,6 +4,7 @@ const consoleLogger = require("../utils/logger/console.js");
 const { v4: uuidv4 } = require("uuid");
 const { getVectorDbClass } = require("../utils/helpers");
 const prisma = require("../utils/prisma");
+const { clampLimit, MAX_LIST_LIMIT } = require("../utils/database/queryLimits");
 const { Telemetry } = require("./telemetry");
 const { EventLogs } = require("./eventLogs");
 const { safeJsonParse } = require("../utils/http");
@@ -108,7 +109,7 @@ const Document = {
     try {
       const results = await prisma.workspace_documents.findMany({
         where: clause,
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(orderBy !== null ? { orderBy } : {}),
         ...(include !== null
           ? { include }
@@ -354,7 +355,7 @@ const Document = {
     try {
       const count = await prisma.workspace_documents.count({
         where: clause,
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
       });
       return count;
     } catch (error) {

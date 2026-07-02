@@ -2,6 +2,7 @@
 const consoleLogger = require("../utils/logger/console.js");
 
 const prisma = require("../utils/prisma");
+const { clampLimit, MAX_LIST_LIMIT } = require("../utils/database/queryLimits");
 const { EventLogs } = require("./eventLogs");
 const { Document } = require("./documents");
 const { documentsPath, directUploadsPath } = require("../utils/files");
@@ -75,7 +76,7 @@ const WorkspaceParsedFiles = {
     try {
       const files = await prisma.workspace_parsed_files.findMany({
         where: clause,
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(orderBy !== null ? { orderBy } : {}),
         ...(select !== null ? { select } : {}),
       });
