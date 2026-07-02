@@ -231,12 +231,21 @@ export default function AgentModeButton({
             }}
             style={{
               position: "fixed",
-              top: buttonRef?.current
-                ? buttonRef.current.getBoundingClientRect().bottom + 6
-                : 0,
-              left: buttonRef?.current
-                ? buttonRef.current.getBoundingClientRect().left
-                : 0,
+              ...((): { top?: number; bottom?: number; left?: number } => {
+                if (!buttonRef?.current) return { top: 0, left: 0 };
+                const btnRect = buttonRef.current.getBoundingClientRect();
+                const dropdownHeight = 316;
+                const spaceBelow = window.innerHeight - btnRect.bottom - 6;
+                const spaceAbove = btnRect.top - 6;
+                const left = btnRect.left;
+                if (spaceBelow >= dropdownHeight) {
+                  return { top: btnRect.bottom + 6, left };
+                }
+                if (spaceAbove >= dropdownHeight) {
+                  return { bottom: window.innerHeight - btnRect.top + 6, left };
+                }
+                return { top: btnRect.bottom + 6, left };
+              })(),
             }}
             className="z-50 w-[300px] bg-zinc-800 light:bg-white border border-zinc-700 light:border-slate-300 rounded-xl shadow-2xl overflow-hidden"
           >
