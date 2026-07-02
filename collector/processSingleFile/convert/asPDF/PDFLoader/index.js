@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 const fs = require("fs").promises;
-const { validateArchive } = require("../../../utils/safeUnzip");
+const { validateArchive } = require("../../../../utils/safeUnzip");
 
 const HARD_MAX_BYTES = 5 * 1024 * 1024 * 1024;
 
