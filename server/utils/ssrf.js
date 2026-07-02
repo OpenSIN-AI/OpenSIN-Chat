@@ -31,24 +31,48 @@ function isPrivateIPv4(ip) {
 }
 
 function isPrivateIPv6(hostname) {
-  if (isIP(hostname) !== 6) return false;
-  const normalized = hostname.toLowerCase();
+  // The WHATWG URL parser keeps IPv6 literals wrapped in brackets
+  // (e.g. "[::1]"); strip them so net.isIP can recognise the address.
+  const stripped = hostname.replace(/^\[/, "").replace(/\]$/, "");
+  if (isIP(stripped) !== 6) return false;
+  const normalized = stripped.toLowerCase();
   if (
     normalized === "::1" ||
     normalized === "::" ||
     normalized.startsWith("fc") ||
     normalized.startsWith("fd") ||
     normalized.startsWith("fe80") ||
+    normalized.startsWith("fe9") ||
+    normalized.startsWith("fea") ||
+    normalized.startsWith("feb") ||
     normalized.startsWith("::ffff:")
   )
     return true;
 
   // IPv4-compatible IPv6 (e.g. ::192.168.1.1) and IPv4-mapped variants
-  // without the ::ffff: prefix still embed a private IPv4 address.
+  // written in dotted-quad form still embed a private IPv4 address.
   const ipv4Embed = normalized.match(
     /^::(?:ffff:)?(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})$/,
   );
   if (ipv4Embed && isPrivateIPv4(ipv4Embed[1])) return true;
+
+  // IPv4-mapped/compatible addresses written in hex form, e.g.
+  // ::ffff:7f00:1 (== 127.0.0.1) or ::7f00:1. Extract the trailing two
+  // 16-bit hextets, rebuild the embedded IPv4 address and re-check it.
+  const hexEmbed = normalized.match(
+    /^::(?:ffff:)?([0-9a-f]{1,4}):([0-9a-f]{1,4})$/,
+  );
+  if (hexEmbed) {
+    const high = parseInt(hexEmbed[1], 16);
+    const low = parseInt(hexEmbed[2], 16);
+    const embedded = [
+      (high >> 8) & 0xff,
+      high & 0xff,
+      (low >> 8) & 0xff,
+      low & 0xff,
+    ].join(".");
+    if (isPrivateIPv4(embedded)) return true;
+  }
 
   return false;
 }

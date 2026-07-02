@@ -2,26 +2,28 @@
 /**
  * Terminal Execution REST API endpoint.
  *
- * Purpose: Executes shell commands in a sandboxed environment with strict
- *          security gates. Intended for development workflows and admin
- *          tooling — NEVER enabled by default in production.
+ * Purpose: Executes a small set of whitelisted, read-only shell commands.
+ *          Intended for development workflows and admin tooling — NEVER
+ *          enabled by default in production.
  *
  * Endpoint:
- *   POST /terminal/exec  — execute a shell command
+ *   POST /terminal/exec  — execute a whitelisted command
  *
- * Security measures:
+ * Security model (allowlist, not blocklist):
  *   - Only available in development mode OR when ENABLE_TERMINAL_EXEC=true
  *   - Requires authenticated admin role
  *   - Rate-limited to 5 requests per minute
- *   - Dangerous command patterns blocked (rm -rf, sudo, chmod 777, etc.)
- *   - 30-second hard timeout per command
- *   - No shell operators (&&, ||, ;, |) to prevent command chaining
+ *   - Commands are validated against an explicit whitelist of read-only
+ *     binaries with per-command argument rules
+ *   - Executed via child_process.execFile with shell:false — no shell is
+ *     ever spawned, so shell operators / substitution are impossible
+ *   - 30-second hard timeout and 1 MiB output cap per command
  *
  * Input:  { command: string, cwd?: string }
  * Output: { stdout: string, stderr: string, exitCode: number }
  */
 
-const { exec } = require("child_process");
+const { execFile } = require("child_process");
 const path = require("path");
 const { validatedRequest } = require("../../utils/middleware/validatedRequest");
 const {
@@ -35,6 +37,7 @@ const logger = require("../../utils/logger")();
 const TIMEOUT_MS = 30 * 1000;
 const MAX_COMMAND_LENGTH = 2000;
 const MAX_CWD_LENGTH = 500;
+const MAX_OUTPUT_BYTES = 1024 * 1024;
 
 const execRateLimit = simpleRateLimit({
   bucket: "terminal-exec",
@@ -42,50 +45,74 @@ const execRateLimit = simpleRateLimit({
   windowMs: 60 * 1000,
 });
 
-const DANGEROUS_PATTERNS = [
-  /\brm\s+-rf\b/i,
-  /\brm\s+-fr\b/i,
-  /\brm\s+--recursive\b/i,
-  /\bsudo\b/i,
-  /\bchmod\s+777\b/i,
-  /\bchown\s+-R\b/i,
-  /\bmkfs\b/i,
-  /\bdd\s+if=/i,
-  /\bshutdown\b/i,
-  /\breboot\b/i,
-  /\bhalt\b/i,
-  /\bkill\s+-9\b/i,
-  /\bkillall\b/i,
-  /\b:(){.*};/i,
-  /\bmv\s+.*\s+\/\s*$/i,
-  />\s*\/dev\/sd/i,
-  /\bcurl\s+.*\|\s*(bash|sh)\b/i,
-  /\bwget\s+.*\|\s*(bash|sh)\b/i,
-  /\bnc\s+-l/i,
-  /\bpython\s+-c\s+.*import\s+os/i,
-  /\beval\s*\(/i,
-  /\bexport\s+LD_PRELOAD/i,
-];
+/**
+ * Whitelist of commands that may be executed via the terminal endpoint.
+ * Only read-only, non-destructive commands are permitted.
+ * Each entry maps a command name to its allowed argument count and an
+ * optional per-argument character pattern.
+ */
+const COMMAND_WHITELIST = {
+  ls: { maxArgs: 3, argPattern: /^[a-zA-Z0-9_./-]*$/ },
+  pwd: { maxArgs: 0, argPattern: null },
+  echo: { maxArgs: 8, argPattern: /^[a-zA-Z0-9_.,:'"=@+\s/-]*$/ },
+  date: { maxArgs: 1, argPattern: /^[+%a-zA-Z0-9_\s:/-]*$/ },
+  whoami: { maxArgs: 0, argPattern: null },
+  uname: { maxArgs: 1, argPattern: /^-[a-z]+$/ },
+  uptime: { maxArgs: 0, argPattern: null },
+  df: { maxArgs: 2, argPattern: /^[a-zA-Z0-9_./-]*$/ },
+  du: { maxArgs: 3, argPattern: /^[a-zA-Z0-9_./-]*$/ },
+  free: { maxArgs: 1, argPattern: /^-[a-z]+$/ },
+  cat: { maxArgs: 1, argPattern: /^[a-zA-Z0-9_./-]*$/ },
+  head: { maxArgs: 3, argPattern: /^[a-zA-Z0-9_./-]*$/ },
+  tail: { maxArgs: 3, argPattern: /^[a-zA-Z0-9_./-]*$/ },
+  wc: { maxArgs: 2, argPattern: /^[a-zA-Z0-9_./-]*$/ },
+  ps: { maxArgs: 1, argPattern: /^[a-z-]+$/ },
+  hostname: { maxArgs: 0, argPattern: null },
+  id: { maxArgs: 0, argPattern: null },
+  which: { maxArgs: 1, argPattern: /^[a-zA-Z0-9_.-]*$/ },
+  node: { maxArgs: 1, argPattern: /^(--version|-v)$/ },
+  npm: { maxArgs: 1, argPattern: /^(--version|-v)$/ },
+  yarn: { maxArgs: 1, argPattern: /^(--version|-v)$/ },
+  git: { maxArgs: 2, argPattern: /^(status|log|branch|--oneline|-s|-b)$/ },
+};
 
-const SHELL_OPERATOR_PATTERNS = [
-  /&&/,
-  /\|\|/,
-  /;\s/,
-  /;\s*$/,
-  /\|/,
-  /`[^`]*`/,
-  /\$\([^)]*\)/,
-  />\s*\(/,
-  /\n/,
-  /\r/,
-];
+/** Shell metacharacters that must never appear in any argument. */
+const SHELL_META_RE = /[;&|`$<>(){}\\*?!#~^\n\r]/;
 
-function isDangerous(command) {
-  return DANGEROUS_PATTERNS.some((p) => p.test(command));
-}
+/**
+ * Validates a parsed command + args against the whitelist.
+ * Returns { ok: true } or { ok: false, reason: string }
+ */
+function validateCommand(cmd, args) {
+  if (!Object.prototype.hasOwnProperty.call(COMMAND_WHITELIST, cmd)) {
+    return {
+      ok: false,
+      reason: `Command '${cmd}' is not allowed. Only whitelisted read-only commands may be executed.`,
+    };
+  }
 
-function hasShellOperators(command) {
-  return SHELL_OPERATOR_PATTERNS.some((p) => p.test(command));
+  const rule = COMMAND_WHITELIST[cmd];
+
+  if (args.length > rule.maxArgs) {
+    return {
+      ok: false,
+      reason: `Too many arguments for '${cmd}' (max ${rule.maxArgs}).`,
+    };
+  }
+
+  for (const arg of args) {
+    if (SHELL_META_RE.test(arg)) {
+      return { ok: false, reason: "Shell metacharacters are not allowed." };
+    }
+    if (rule.argPattern && !rule.argPattern.test(arg)) {
+      return {
+        ok: false,
+        reason: `Argument '${arg}' contains disallowed characters.`,
+      };
+    }
+  }
+
+  return { ok: true };
 }
 
 function isTerminalExecEnabled() {
@@ -125,16 +152,13 @@ function apiTerminalExecEndpoints(app) {
             });
         }
 
-        if (isDangerous(command))
-          return response.status(403).json({
-            error: "Command blocked: contains a dangerous pattern.",
-          });
+        // Tokenize on whitespace — no shell parsing, no expansion.
+        const tokens = command.trim().split(/\s+/);
+        const [cmd, ...args] = tokens;
 
-        if (hasShellOperators(command))
-          return response.status(403).json({
-            error:
-              "Command blocked: shell operators (&&, ||, |, ;, newlines, backticks, $()) are not permitted.",
-          });
+        const validation = validateCommand(cmd, args);
+        if (!validation.ok)
+          return response.status(403).json({ error: validation.reason });
 
         const execCwd =
           cwd && typeof cwd === "string" && cwd.trim()
@@ -142,9 +166,15 @@ function apiTerminalExecEndpoints(app) {
             : process.cwd();
 
         await new Promise((resolve) => {
-          exec(
-            command,
-            { timeout: TIMEOUT_MS, cwd: execCwd, maxBuffer: 1024 * 1024 },
+          execFile(
+            cmd,
+            args,
+            {
+              timeout: TIMEOUT_MS,
+              cwd: execCwd,
+              maxBuffer: MAX_OUTPUT_BYTES,
+              shell: false, // critical — never spawn a shell
+            },
             (err, stdout, stderr) => {
               if (err && err.killed) {
                 response.status(200).json({
@@ -163,20 +193,20 @@ function apiTerminalExecEndpoints(app) {
                 exitCode: typeof exitCode === "number" ? exitCode : 1,
               });
               resolve();
-            },
+            }
           );
         });
       } catch (err) {
         logger.error(`[terminal/exec] ${err.message}`, err);
         response.status(500).json({ error: "Internal Server Error" });
       }
-    },
+    }
   );
 }
 
 module.exports = {
   apiTerminalExecEndpoints,
-  isDangerous,
-  hasShellOperators,
+  validateCommand,
   isTerminalExecEnabled,
+  COMMAND_WHITELIST,
 };

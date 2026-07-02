@@ -96,6 +96,23 @@ describe("ssrf", () => {
     test("returns false for IPv4 address", () => {
       expect(isPrivateIPv6("8.8.8.8")).toBe(false);
     });
+
+    test("returns true for bracketed loopback [::1]", () => {
+      expect(isPrivateIPv6("[::1]")).toBe(true);
+    });
+
+    test("returns true for hex-form IPv4-mapped loopback (::ffff:7f00:1)", () => {
+      expect(isPrivateIPv6("::ffff:7f00:1")).toBe(true);
+      expect(isPrivateIPv6("[::ffff:7f00:1]")).toBe(true);
+    });
+
+    test("returns true for dotted IPv4-mapped private (::ffff:192.168.0.1)", () => {
+      expect(isPrivateIPv6("::ffff:192.168.0.1")).toBe(true);
+    });
+
+    test("returns true for link-local fe80::", () => {
+      expect(isPrivateIPv6("fe80::1")).toBe(true);
+    });
   });
 
   describe("validateUrl", () => {
@@ -176,6 +193,35 @@ describe("ssrf", () => {
       expect(() => validateUrl("http://0.0.0.0")).toThrow(
         "Internal URLs not allowed",
       );
+    });
+
+    test("throws on IPv6 loopback [::1]", () => {
+      expect(() => validateUrl("http://[::1]/admin")).toThrow(
+        "Internal URLs not allowed",
+      );
+    });
+
+    test("throws on hex-form IPv4-mapped loopback", () => {
+      expect(() => validateUrl("http://[::ffff:7f00:1]/")).toThrow(
+        "Internal URLs not allowed",
+      );
+    });
+
+    test("throws on dotted IPv4-mapped loopback", () => {
+      expect(() => validateUrl("http://[::ffff:127.0.0.1]/")).toThrow(
+        "Internal URLs not allowed",
+      );
+    });
+
+    test("throws on IPv6 link-local", () => {
+      expect(() => validateUrl("http://[fe80::1]/")).toThrow(
+        "Internal URLs not allowed",
+      );
+    });
+
+    test("accepts public IPv6 literal", () => {
+      const parsed = validateUrl("http://[2606:4700:4700::1111]/");
+      expect(parsed.protocol).toBe("http:");
     });
 
     test("accepts public domain URL with port", () => {
