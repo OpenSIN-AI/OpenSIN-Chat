@@ -2,6 +2,7 @@
 const consoleLogger = require("../utils/logger/console.js");
 
 const prisma = require("../utils/prisma");
+const { clampLimit, MAX_LIST_LIMIT } = require("../utils/database/queryLimits");
 const { v4: uuidv4 } = require("uuid");
 
 const WorkspaceAgentInvocation = {
@@ -86,7 +87,7 @@ const WorkspaceAgentInvocation = {
     try {
       const results = await prisma.workspace_agent_invocations.findMany({
         where: clause,
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(orderBy !== null ? { orderBy } : {}),
       });
       return results;

@@ -3,6 +3,11 @@ const consoleLogger = require("../utils/logger/console.js");
 
 const prisma = require("../utils/prisma");
 const { safeJSONStringify } = require("../utils/helpers/chat/responses");
+const {
+  clampLimit,
+  paginate,
+  MAX_LIST_LIMIT,
+} = require("../utils/database/queryLimits");
 
 const WorkspaceChats = {
   new: async function ({
@@ -65,7 +70,7 @@ const WorkspaceChats = {
           createdAt: true,
           feedbackScore: true,
         },
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit),
         ...(orderBy !== null ? { orderBy } : { orderBy: { id: "asc" } }),
       });
       return chats;
@@ -97,7 +102,7 @@ const WorkspaceChats = {
           createdAt: true,
           feedbackScore: true,
         },
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit),
         ...(orderBy !== null ? { orderBy } : { orderBy: { id: "asc" } }),
       });
       return chats;
@@ -128,7 +133,7 @@ const WorkspaceChats = {
           createdAt: true,
           feedbackScore: true,
         },
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit),
         ...(orderBy !== null ? { orderBy } : { orderBy: { id: "asc" } }),
       });
       return chats;
@@ -237,7 +242,7 @@ const WorkspaceChats = {
           feedbackScore: true,
           include: true,
         },
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(orderBy !== null ? { orderBy } : {}),
       });
       return chat || null;
@@ -280,8 +285,7 @@ const WorkspaceChats = {
           feedbackScore: true,
           include: true,
         },
-        ...(limit !== null ? { take: limit } : { take: 1000 }),
-        ...(offset !== null ? { skip: offset } : {}),
+        ...paginate(limit, offset, { fallback: 1000 }),
         ...(orderBy !== null ? { orderBy } : { orderBy: { id: "asc" } }),
       });
       return chats;
@@ -326,8 +330,7 @@ const WorkspaceChats = {
           workspace: { select: { name: true, slug: true, openAiPrompt: true } },
           users: { select: { username: true } },
         },
-        ...(limit !== null ? { take: limit } : { take: 1000 }),
-        ...(offset !== null ? { skip: offset } : {}),
+        ...paginate(limit, offset, { fallback: 1000 }),
         ...(orderBy !== null ? { orderBy } : { orderBy: { id: "asc" } }),
       });
 

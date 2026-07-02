@@ -2,6 +2,7 @@
 const consoleLogger = require("../utils/logger/console.js");
 
 const prisma = require("../utils/prisma");
+const { clampLimit, MAX_LIST_LIMIT } = require("../utils/database/queryLimits");
 
 const PromptHistory = {
   DEFAULT_LIMIT: 100,
@@ -61,7 +62,7 @@ const PromptHistory = {
     try {
       const history = await prisma.prompt_history.findFirst({
         where: clause,
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(orderBy !== null ? { orderBy } : {}),
         include: {
           user: {

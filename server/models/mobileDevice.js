@@ -2,6 +2,7 @@
 const consoleLogger = require("../utils/logger/console.js");
 
 const prisma = require("../utils/prisma");
+const { clampLimit, MAX_LIST_LIMIT } = require("../utils/database/queryLimits");
 const { v4: uuidv4 } = require("uuid");
 const os = require("os");
 
@@ -236,7 +237,7 @@ const MobileDevice = {
     try {
       const devices = await prisma.desktop_mobile_devices.findMany({
         where: clause,
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(orderBy !== null ? { orderBy } : {}),
         ...(include !== null ? { include } : {}),
       });
