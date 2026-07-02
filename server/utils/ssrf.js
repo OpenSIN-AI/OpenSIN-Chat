@@ -80,4 +80,47 @@ function validateUrl(rawUrl) {
   return parsed;
 }
 
-module.exports = { validateUrl, isPrivateIPv4, isPrivateIPv6 };
+const DEFAULT_MAX_REDIRECTS = 5;
+
+/**
+ * SSRF-safe fetch wrapper.
+ *
+ * The stock `fetch(url, { redirect: "follow" })` only validates the *initial*
+ * URL — a server that returns a 3xx to `http://169.254.169.254/` (cloud
+ * metadata) or `http://127.0.0.1/` completely bypasses an up-front
+ * validateUrl() check. This wrapper follows redirects manually and re-validates
+ * every hop against the same private-network blocklist.
+ *
+ * @param {string} url The initial URL (validated before the first request).
+ * @param {RequestInit} [options] Passed through to fetch; `redirect` is forced to "manual".
+ * @param {object} [config]
+ * @param {number} [config.maxRedirects=DEFAULT_MAX_REDIRECTS]
+ * @returns {Promise<Response>} The final (non-redirect) response.
+ */
+async function safeFetch(url, options = {}, config = {}) {
+  const { maxRedirects = DEFAULT_MAX_REDIRECTS } = config;
+  let currentUrl = validateUrl(url).toString();
+
+  for (let hop = 0; hop <= maxRedirects; hop++) {
+    const res = await fetch(currentUrl, { ...options, redirect: "manual" });
+
+    // Not a redirect — return the response to the caller.
+    if (res.status < 300 || res.status >= 400) return res;
+
+    const location = res.headers.get("location");
+    if (!location) return res; // Redirect with no target; let caller handle.
+
+    // Resolve relative redirects against the current URL, then re-validate.
+    const nextUrl = new URL(location, currentUrl).toString();
+    currentUrl = validateUrl(nextUrl).toString();
+  }
+
+  throw new Error("Too many redirects");
+}
+
+module.exports = {
+  validateUrl,
+  isPrivateIPv4,
+  isPrivateIPv6,
+  safeFetch,
+};

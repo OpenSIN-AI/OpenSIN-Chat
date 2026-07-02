@@ -5,6 +5,7 @@ const { resetMemory } = require("./commands/reset");
 const { convertToPromptHistory } = require("../helpers/chat/responses");
 const { SlashCommandPresets } = require("../../models/slashCommandsPresets");
 const { SystemPromptVariables } = require("../../models/systemPromptVariables");
+const { escapeRegExp } = require("../helpers/regex");
 
 const VALID_COMMANDS = {
   "/reset": resetMemory,
@@ -17,7 +18,7 @@ async function grepCommand(message, user = null) {
   // Check if the message starts with any built-in command
   for (let i = 0; i < availableCommands.length; i++) {
     const cmd = availableCommands[i];
-    const re = new RegExp(`^(${cmd})`, "i");
+    const re = new RegExp(`^(${escapeRegExp(cmd)})`, "i");
     if (re.test(message)) {
       return cmd;
     }
@@ -27,7 +28,10 @@ async function grepCommand(message, user = null) {
   // Allows multiple commands in one message
   let updatedMessage = message;
   for (const preset of userPresets) {
-    const regex = new RegExp(`(^|\\s)(${preset.command})(\\s|$)`, "g");
+    const regex = new RegExp(
+      `(^|\\s)(${escapeRegExp(preset.command)})(\\s|$)`,
+      "g",
+    );
     updatedMessage = updatedMessage.replace(
       regex,
       (_match, pre, _cmd, post) => `${pre}${preset.prompt}${post}`,
@@ -49,7 +53,10 @@ async function grepAllSlashCommands(message) {
   // Allows multiple commands in one message
   let updatedMessage = message;
   for (const preset of allPresets) {
-    const regex = new RegExp(`(^|\\s)(${preset.command})(\\s|$)`, "g");
+    const regex = new RegExp(
+      `(^|\\s)(${escapeRegExp(preset.command)})(\\s|$)`,
+      "g",
+    );
     updatedMessage = updatedMessage.replace(
       regex,
       (_match, pre, _cmd, post) => `${pre}${preset.prompt}${post}`,

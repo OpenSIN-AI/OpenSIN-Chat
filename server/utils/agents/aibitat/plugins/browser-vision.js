@@ -27,7 +27,7 @@
  */
 
 const { TokenManager } = require("../../../helpers/tiktoken");
-const { validateUrl } = require("../../../ssrf");
+const { validateUrl, safeFetch } = require("../../../ssrf");
 const tiktoken = new TokenManager();
 
 // ── HTML parsing helpers ──────────────────────────────────────────────────────
@@ -142,7 +142,10 @@ async function fetchWithRetry(url) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
     try {
-      const res = await fetch(url, {
+      // safeFetch follows redirects manually and re-validates every hop, so a
+      // 3xx to a private/internal address (e.g. cloud metadata) cannot bypass
+      // the SSRF guard the way `redirect: "follow"` would.
+      const res = await safeFetch(url, {
         signal: controller.signal,
         headers: {
           "User-Agent":
@@ -150,7 +153,6 @@ async function fetchWithRetry(url) {
           Accept: "text/html,application/xhtml+xml,*/*;q=0.8",
           "Accept-Language": "de,en;q=0.7",
         },
-        redirect: "follow",
       });
       clearTimeout(timer);
 

@@ -21,6 +21,24 @@ const { normalizePath, isWithin } = require("../../utils/files");
 const { getTTSProvider } = require("../../utils/TextToSpeech");
 const { responseCache, cacheSet } = require("./shared");
 
+// Precompiled once at module load instead of on every TTS request. The keyword
+// list is a fixed constant (never user input), so these patterns are stable.
+const THOUGHT_KEYWORDS = ["thought_chain", "thought", "thinking", "think"];
+// Matches a fully-closed <keyword>...</keyword> block.
+const THOUGHT_BLOCK_REGEXES = THOUGHT_KEYWORDS.map(
+  (keyword) =>
+    new RegExp(
+      `<${keyword}\\s*(?:[^>]*?)?>[\\s\\S]*?<\\/${keyword}\\s*(?:[^>]*?)?>`,
+      "gi",
+    ),
+);
+// Matches an unclosed <keyword>... that runs to end of string.
+const THOUGHT_OPEN_REGEXES = THOUGHT_KEYWORDS.map(
+  (keyword) => new RegExp(`<${keyword}\\s*(?:[^>]*?)?>([\\s\\S]*)$`, "gi"),
+);
+const RESPONSE_TAG_REGEX = /<\/?(response|answer)\s*(?:[^>]*?)?>/gi;
+const WHITESPACE_REGEX = /\s+/g;
+
 function workspaceMediaEndpoints(app) {
   if (!app) return;
 
@@ -52,30 +70,15 @@ function workspaceMediaEndpoints(app) {
         const rawText = safeJsonParse(wsChat.response, null)?.text;
         if (!rawText) return response.sendStatus(204);
 
-        const THOUGHT_KEYWORDS = [
-          "thought_chain",
-          "thought",
-          "thinking",
-          "think",
-        ];
         let text = rawText;
-        for (const keyword of THOUGHT_KEYWORDS) {
-          text = text.replace(
-            new RegExp(
-              `<${keyword}\\s*(?:[^>]*?)?>[\\s\\S]*?<\\/${keyword}\\s*(?:[^>]*?)?>`,
-              "gi",
-            ),
-            " ",
-          );
+        for (const regex of THOUGHT_BLOCK_REGEXES) {
+          text = text.replace(regex, " ");
         }
-        for (const keyword of THOUGHT_KEYWORDS) {
-          text = text.replace(
-            new RegExp(`<${keyword}\\s*(?:[^>]*?)?>([\\s\\S]*)$`, "gi"),
-            " ",
-          );
+        for (const regex of THOUGHT_OPEN_REGEXES) {
+          text = text.replace(regex, " ");
         }
-        text = text.replace(/<\/?(response|answer)\s*(?:[^>]*?)?>/gi, " ");
-        text = text.replace(/\s+/g, " ").trim();
+        text = text.replace(RESPONSE_TAG_REGEX, " ");
+        text = text.replace(WHITESPACE_REGEX, " ").trim();
         if (!text) return response.sendStatus(204);
 
         const TTSProvider = getTTSProvider();
