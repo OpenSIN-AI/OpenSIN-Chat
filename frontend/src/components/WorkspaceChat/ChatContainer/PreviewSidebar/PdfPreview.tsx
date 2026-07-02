@@ -1,13 +1,11 @@
 import { useState, useEffect, useRef } from "react";
-import { Document, Page } from "react-pdf";
+import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import { ArrowSquareOut } from "@phosphor-icons/react/dist/csr/ArrowSquareOut";
 import { FilePdf } from "@phosphor-icons/react/dist/csr/FilePdf";
 
-import * as pdfjsLib from "pdfjs-dist";
-import pdfWorker from "pdfjs-dist/build/pdf.worker.min.mjs?url";
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
+pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
 export default function PdfPreview({
   blobUrl,
