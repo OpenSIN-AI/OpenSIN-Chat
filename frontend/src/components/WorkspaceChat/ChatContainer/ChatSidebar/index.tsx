@@ -345,7 +345,7 @@ export default function ChatSidebar({
 
   return (
     <div
-      className="relative h-full overflow-hidden flex flex-col flex-shrink-0"
+      className="relative h-full overflow-hidden flex flex-col flex-shrink-0 z-20"
       style={{ width: `${width}px` }}
     >
       {/* Resize handle on the LEFT edge so user can drag to widen the panel */}
