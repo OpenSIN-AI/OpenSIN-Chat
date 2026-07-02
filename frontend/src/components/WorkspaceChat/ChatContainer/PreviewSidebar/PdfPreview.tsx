@@ -7,12 +7,7 @@ import { FilePdf } from "@phosphor-icons/react/dist/csr/FilePdf";
 
 pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
-export default function PdfPreview({
-  blobUrl,
-}: {
-  blobUrl: string;
-  title?: string;
-}) {
+export default function PdfPreview({ blobUrl }: { blobUrl: string }) {
   const [numPages, setNumPages] = useState(0);
   const [error, setError] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);

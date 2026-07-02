@@ -284,7 +284,7 @@ function IframePreview({ url, title }: any) {
           </div>
         }
       >
-        <PdfPreview blobUrl={blobUrl} title={title} />
+        <PdfPreview blobUrl={blobUrl} />
       </Suspense>
     );
   }
