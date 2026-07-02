@@ -148,7 +148,7 @@ function handleFileUpload(request, response, next) {
 
   const upload = multer({
     storage,
-    limits: { fileSize: 100 * 1024 * 1024, files: 1 },
+    limits: { fileSize: 5 * 1024 * 1024 * 1024, files: 1 },
     fileFilter: executableFileFilter,
   }).single("file");
   upload(request, response, function (err) {
@@ -220,7 +220,7 @@ function handleAPIFileUpload(request, response, next) {
 
   const upload = multer({
     storage,
-    limits: { fileSize: 100 * 1024 * 1024, files: 1 },
+    limits: { fileSize: 5 * 1024 * 1024 * 1024, files: 1 },
     fileFilter: executableFileFilter,
   }).single("file");
   upload(request, response, function (err) {
@@ -288,7 +288,7 @@ function handleAssetUpload(request, response, next) {
 
   const upload = multer({
     storage,
-    limits: { fileSize: 100 * 1024 * 1024, files: 1 },
+    limits: { fileSize: 5 * 1024 * 1024 * 1024, files: 1 },
     fileFilter: imageFileFilter,
   }).single("logo");
   upload(request, response, function (err) {

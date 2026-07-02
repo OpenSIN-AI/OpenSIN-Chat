@@ -12,7 +12,7 @@ const {
   isWithin,
 } = require("../utils/files");
 const RESERVED_FILES = ["__HOTDIR__.md"];
-const MAX_FILE_SIZE_BYTES = 500 * 1024 * 1024; // 500 MB — matches FILE_LIMIT in collector/index.js
+const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024 * 1024; // 5 GB — matches FILE_LIMIT in collector/index.js
 
 const ALLOWED_MIMES = new Set([
   "text/plain",

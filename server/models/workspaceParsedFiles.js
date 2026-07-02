@@ -233,17 +233,19 @@ const WorkspaceParsedFiles = {
           directUploadsPath,
           path.basename(location),
         );
-        if (!fs.existsSync(sourceFile)) continue;
+        try {
+          const content = await fs.promises.readFile(sourceFile, "utf-8");
+          const data = safeJsonParse(content, null);
+          if (!data?.pageContent) continue;
 
-        const content = fs.readFileSync(sourceFile, "utf-8");
-        const data = safeJsonParse(content, null);
-        if (!data?.pageContent) continue;
-
-        results.push({
-          pageContent: data.pageContent,
-          token_count_estimate: file.tokenCountEstimate,
-          ...metadata,
-        });
+          results.push({
+            pageContent: data.pageContent,
+            token_count_estimate: file.tokenCountEstimate,
+            ...metadata,
+          });
+        } catch {
+          continue;
+        }
       }
 
       return results;

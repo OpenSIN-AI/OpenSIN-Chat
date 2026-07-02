@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 const fs = require("fs").promises;
-const { validateArchive } = require("../../../safeUnzip");
+const { validateArchive } = require("../../../utils/safeUnzip");
 
-const HARD_MAX_BYTES = 500 * 1024 * 1024;
+const HARD_MAX_BYTES = 5 * 1024 * 1024 * 1024;
 
 class PDFLoader {
   constructor(filePath, { splitPages = true } = {}) {
@@ -22,7 +22,7 @@ class PDFLoader {
       console.warn(
         `[PDFLoader] Large file detected (${(stat.size / 1024 / 1024).toFixed(
           1
-        )}MB). Attempting to load with pdf.js streaming...`
+        )}MB). Using streaming mode...`
       );
     }
 
@@ -44,21 +44,40 @@ class PDFLoader {
       );
     }
 
-    const buffer = await fs.readFile(this.filePath);
     const { getDocument, version } = await this.getPdfJS();
 
     let pdf;
     try {
-      pdf = await getDocument({
-        data: new Uint8Array(
-          buffer.buffer,
-          buffer.byteOffset,
-          buffer.byteLength
-        ),
-        useWorkerFetch: false,
-        isEvalSupported: false,
-        useSystemFonts: true,
-      }).promise;
+      if (stat.size > 100 * 1024 * 1024) {
+        const fd = await fs.open(this.filePath, "r");
+        pdf = await getDocument({
+          data: {
+            read: async (offset, length) => {
+              const buf = Buffer.alloc(length);
+              const { bytesRead } = await fd.read(buf, 0, length, offset);
+              return new Uint8Array(buf.buffer, 0, bytesRead);
+            },
+            length: stat.size,
+            chunkSize: 1024 * 1024 * 2,
+          },
+          useWorkerFetch: false,
+          isEvalSupported: false,
+          useSystemFonts: true,
+        }).promise;
+        await fd.close();
+      } else {
+        const buffer = await fs.readFile(this.filePath);
+        pdf = await getDocument({
+          data: new Uint8Array(
+            buffer.buffer,
+            buffer.byteOffset,
+            buffer.byteLength
+          ),
+          useWorkerFetch: false,
+          isEvalSupported: false,
+          useSystemFonts: true,
+        }).promise;
+      }
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(`[PDFLoader] Failed to load PDF: ${e.message}`);

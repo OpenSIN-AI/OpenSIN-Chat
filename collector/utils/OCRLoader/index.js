@@ -5,7 +5,7 @@ const os = require("os");
 const path = require("path");
 const { VALID_LANGUAGE_CODES } = require("./validLangs");
 
-const OCR_MAX_BYTES = 500 * 1024 * 1024;
+const OCR_MAX_BYTES = 5 * 1024 * 1024 * 1024;
 
 class OCRLoader {
   /**

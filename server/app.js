@@ -76,7 +76,7 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 
-const FILE_LIMIT = process.env.BODY_LIMIT || "50MB";
+const FILE_LIMIT = process.env.BODY_LIMIT || "5GB";
 
 let activeApp = null;
 // Kept as a reference to prevent the HTTP server from being garbage-collected.

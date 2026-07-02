@@ -5,7 +5,7 @@ const { EncryptionManager } = require("../EncryptionManager");
 const { Agent: UndiciAgent } = require("undici");
 
 const COLLECTOR_HEALTH_TIMEOUT_MS = 5_000;
-const COLLECTOR_PROCESS_TIMEOUT_MS = 120_000;
+const COLLECTOR_PROCESS_TIMEOUT_MS = 1_800_000; // 30 min — large PDFs need time
 
 let _extensionAgent;
 function extensionRequestAgent() {
