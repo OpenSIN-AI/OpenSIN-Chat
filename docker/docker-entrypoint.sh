@@ -5,11 +5,20 @@
 # This ensures secrets survive container recreation even without --env-file.
 # Only sets variables that are not already in the environment (docker run -e wins).
 if [ -f /app/.env ]; then
-  while IFS='=' read -r key value; do
+  while IFS='=' read -r key raw_value; do
     # Skip comments and empty lines
     [[ "$key" =~ ^[[:space:]]*# ]] && continue
     [[ -z "$key" ]] && continue
+    # Trim key whitespace
     key=$(echo "$key" | xargs)
+    # Trim value: strip CRLF, then leading/trailing whitespace
+    value=$(printf '%s' "$raw_value" | sed 's/\r$//')
+    value="${value#"${value%%[![:space:]]*}"}"
+    value="${value%"${value##*[![:space:]]}"}"
+    # Strip matching surrounding quotes (single or double)
+    if [[ "$value" =~ ^\"(.*)\"$ ]] || [[ "$value" =~ ^\'(.*)\'$ ]]; then
+      value="${BASH_REMATCH[1]}"
+    fi
     # Only set if not already in environment
     if [ -z "${!key}" ]; then
       export "$key=$value"
