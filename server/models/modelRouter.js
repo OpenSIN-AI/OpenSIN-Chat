@@ -3,6 +3,7 @@ const consoleLogger = require("../utils/logger/console.js");
 
 const { Prisma } = require("@prisma/client");
 const prisma = require("../utils/prisma");
+const { clampLimit, MAX_LIST_LIMIT } = require("../utils/database/queryLimits");
 const { ModelRouterRule } = require("./modelRouterRule");
 
 const ModelRouter = {
@@ -134,7 +135,7 @@ const ModelRouter = {
     try {
       const results = await prisma.model_routers.findMany({
         where: clause,
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(orderBy !== null ? { orderBy } : { orderBy: { createdAt: "asc" } }),
       });
       return results;

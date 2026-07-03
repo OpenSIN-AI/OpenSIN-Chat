@@ -3,6 +3,7 @@ const consoleLogger = require("../utils/logger/console.js");
 
 const { randomBytes } = require("crypto");
 const prisma = require("../utils/prisma");
+const { clampLimit, MAX_LIST_LIMIT } = require("../utils/database/queryLimits");
 const slugifyModule = require("slugify");
 const { Document } = require("./documents");
 const { WorkspaceUser } = require("./workspaceUsers");
@@ -413,7 +414,7 @@ const Workspace = {
     try {
       const results = await prisma.workspaces.findMany({
         where: clause,
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(orderBy !== null ? { orderBy } : {}),
       });
       return results;
@@ -444,7 +445,7 @@ const Workspace = {
             },
           },
         },
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(orderBy !== null ? { orderBy } : {}),
       });
       return workspaces;
@@ -461,7 +462,7 @@ const Workspace = {
         include: {
           workspace_users: { select: { user_id: true } },
         },
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(orderBy !== null ? { orderBy } : {}),
       });
       return workspaces.map(({ workspace_users, ...ws }) => ({
@@ -596,7 +597,14 @@ const Workspace = {
    */
   _findMany: async function (prismaQuery = {}) {
     try {
-      const results = await prisma.workspaces.findMany(prismaQuery);
+      // Defense-in-depth: never allow a fully unbounded scan. If a caller does
+      // not specify a `take`, apply the max safety-net limit so a single query
+      // cannot load an entire large table into memory (OOM protection).
+      const safeQuery =
+        prismaQuery && prismaQuery.take !== undefined
+          ? prismaQuery
+          : { ...prismaQuery, take: MAX_LIST_LIMIT };
+      const results = await prisma.workspaces.findMany(safeQuery);
       return results;
     } catch (error) {
       consoleLogger.error(error.message);

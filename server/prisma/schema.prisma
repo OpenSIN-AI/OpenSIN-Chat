@@ -6,16 +6,11 @@ generator client {
 // `server/prisma/migrations/migration_lock.toml` and the runtime
 // `server/storage/openafd.db`). The PostgreSQL block is preserved
 // upstream-style for optional future migration.
+// In Prisma 7 the connection URL lives in prisma.config.ts (or the
+// PrismaClient constructor adapter), not in the schema datasource block.
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
 }
-
-// PostgreSQL datasource — set DATABASE_URL in your .env file.
-// datasource db {
-//   provider = "postgresql"
-//   url      = env("DATABASE_URL")
-// }
 
 model api_keys {
   id            Int      @id @default(autoincrement())

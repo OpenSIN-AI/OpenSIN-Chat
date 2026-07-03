@@ -2,6 +2,7 @@
 const consoleLogger = require("../utils/logger/console.js");
 
 const prisma = require("../utils/prisma");
+const { clampLimit, MAX_LIST_LIMIT } = require("../utils/database/queryLimits");
 
 const WorkspaceUser = {
   createMany: async function (userId, workspaceIds = []) {
@@ -74,7 +75,7 @@ const WorkspaceUser = {
     try {
       const results = await prisma.workspace_users.findMany({
         where: clause,
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
       });
       return results;
     } catch (error) {

@@ -2,6 +2,7 @@
 const consoleLogger = require("../utils/logger/console.js");
 
 const prisma = require("../utils/prisma");
+const { clampLimit, MAX_LIST_LIMIT } = require("../utils/database/queryLimits");
 const later = require("@breejs/later");
 const cronValidate = require("cron-validate").default;
 
@@ -161,7 +162,7 @@ const ScheduledJob = {
     try {
       const results = await prisma.scheduled_jobs.findMany({
         where: clause,
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(orderBy !== null
           ? { orderBy }
           : { orderBy: { createdAt: "desc" } }),

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 const { PrismaClient } = require("@prisma/client");
+const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
 
 // npx prisma introspect
 // npx prisma generate
@@ -8,9 +9,10 @@ const { PrismaClient } = require("@prisma/client");
 
 const logLevels = ["error", "info", "warn"]; // add "query" to debug query logs
 
-const prismaClientConfig = {
-  log: logLevels,
-};
+// Prisma 7: the datasource URL is no longer in schema.prisma. We resolve it
+// the same way prisma.config.ts does (env or default SQLite path) and pass
+// it to the driver adapter which the PrismaClient constructor requires.
+const isPostgres = process.env.DATABASE_URL?.startsWith("postgresql://");
 
 function buildPostgresUrl(base) {
   if (!base) return null;
@@ -22,26 +24,19 @@ function buildPostgresUrl(base) {
 }
 
 // SQLite: enable WAL mode and set busy_timeout to prevent connection timeouts.
-// Prisma's SQLite driver (modernc.org/sqlite) uses a connection pool (default 5).
-// WAL mode is database-level (persistent), so setting it once is sufficient.
-// busy_timeout is per-connection. The _pragma DSN parameter doesn't work for
-// busy_timeout in modernc.org/sqlite, so we limit the pool to 1 connection
-// and set busy_timeout on it. SQLite is single-writer anyway (WAL allows
-// concurrent readers but Prisma serializes queries), so connection_limit=1
-// has minimal performance impact while eliminating pool-related timeouts.
-const isPostgres = process.env.DATABASE_URL?.startsWith("postgresql://");
+// connection_limit=1 ensures our PRAGMA busy_timeout applies to the only connection.
+const sqliteUrl = process.env.DATABASE_URL || "file:../storage/openafd.db";
+const sqliteBase = sqliteUrl.split("?")[0];
+process.env.DATABASE_URL = `${sqliteBase}?connection_limit=1`;
 
-if (isPostgres) {
-  prismaClientConfig.datasources = {
-    db: { url: buildPostgresUrl(process.env.DATABASE_URL) },
-  };
-} else {
-  const sqliteUrl = process.env.DATABASE_URL || "file:../storage/openafd.db";
-  const base = sqliteUrl.split("?")[0];
-  // connection_limit=1 ensures our PRAGMA busy_timeout applies to the only connection.
-  process.env.DATABASE_URL = `${base}?connection_limit=1`;
-  prismaClientConfig.datasources = { db: { url: process.env.DATABASE_URL } };
-}
+const adapter = new PrismaBetterSqlite3({
+  url: process.env.DATABASE_URL,
+});
+
+const prismaClientConfig = {
+  log: logLevels,
+  adapter,
+};
 
 const prisma = new PrismaClient(prismaClientConfig);
 

@@ -16,6 +16,7 @@
  */
 
 const { PrismaClient } = require("@prisma/client");
+const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
 const {
   AbgeordnetenwatchApi,
 } = require("../utils/politician/abgeordnetenwatchApi");
@@ -26,7 +27,11 @@ const {
   extractPartyFromBundestagRawData,
 } = require("../utils/politician/extractors");
 
-const prisma = new PrismaClient();
+const adapter = new PrismaBetterSqlite3({
+  url:
+    process.env.DATABASE_URL || "file:../storage/openafd.db?connection_limit=1",
+});
+const prisma = new PrismaClient({ adapter });
 
 function normalizeName(name) {
   return (name || "").toLowerCase().replace(/\s+/g, " ").trim();

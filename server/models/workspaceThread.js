@@ -3,6 +3,7 @@ const consoleLogger = require("../utils/logger/console.js");
 
 const { randomBytes } = require("crypto");
 const prisma = require("../utils/prisma");
+const { clampLimit, MAX_LIST_LIMIT } = require("../utils/database/queryLimits");
 const slugifyModule = require("slugify");
 const { v4: uuidv4 } = require("uuid");
 const truncate = require("truncate");
@@ -161,7 +162,7 @@ const WorkspaceThread = {
     try {
       const results = await prisma.workspace_threads.findMany({
         where: clause,
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(orderBy !== null ? { orderBy } : {}),
         ...(include !== null ? { include } : {}),
       });

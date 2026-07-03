@@ -3,6 +3,7 @@ const consoleLogger = require("../utils/logger/console.js");
 
 const { v4 } = require("uuid");
 const prisma = require("../utils/prisma");
+const { clampLimit, MAX_LIST_LIMIT } = require("../utils/database/queryLimits");
 /**
  * Valid chat modes for embeds.
  * - chat: Chat mode will use the workspace's chat mode.
@@ -146,7 +147,7 @@ const EmbedConfig = {
     try {
       const results = await prisma.embed_configs.findMany({
         where: clause,
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(orderBy !== null ? { orderBy } : {}),
       });
       return results;
@@ -170,7 +171,7 @@ const EmbedConfig = {
             select: { embed_chats: true },
           },
         },
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(orderBy !== null ? { orderBy } : {}),
       });
       return results;

@@ -3,6 +3,7 @@ const {
   validateUrl,
   isPrivateIPv4,
   isPrivateIPv6,
+  safeFetch,
 } = require("../../utils/ssrf");
 
 describe("ssrf", () => {
@@ -96,6 +97,23 @@ describe("ssrf", () => {
     test("returns false for IPv4 address", () => {
       expect(isPrivateIPv6("8.8.8.8")).toBe(false);
     });
+
+    test("returns true for bracketed loopback [::1]", () => {
+      expect(isPrivateIPv6("[::1]")).toBe(true);
+    });
+
+    test("returns true for hex-form IPv4-mapped loopback (::ffff:7f00:1)", () => {
+      expect(isPrivateIPv6("::ffff:7f00:1")).toBe(true);
+      expect(isPrivateIPv6("[::ffff:7f00:1]")).toBe(true);
+    });
+
+    test("returns true for dotted IPv4-mapped private (::ffff:192.168.0.1)", () => {
+      expect(isPrivateIPv6("::ffff:192.168.0.1")).toBe(true);
+    });
+
+    test("returns true for link-local fe80::", () => {
+      expect(isPrivateIPv6("fe80::1")).toBe(true);
+    });
   });
 
   describe("validateUrl", () => {
@@ -178,6 +196,35 @@ describe("ssrf", () => {
       );
     });
 
+    test("throws on IPv6 loopback [::1]", () => {
+      expect(() => validateUrl("http://[::1]/admin")).toThrow(
+        "Internal URLs not allowed",
+      );
+    });
+
+    test("throws on hex-form IPv4-mapped loopback", () => {
+      expect(() => validateUrl("http://[::ffff:7f00:1]/")).toThrow(
+        "Internal URLs not allowed",
+      );
+    });
+
+    test("throws on dotted IPv4-mapped loopback", () => {
+      expect(() => validateUrl("http://[::ffff:127.0.0.1]/")).toThrow(
+        "Internal URLs not allowed",
+      );
+    });
+
+    test("throws on IPv6 link-local", () => {
+      expect(() => validateUrl("http://[fe80::1]/")).toThrow(
+        "Internal URLs not allowed",
+      );
+    });
+
+    test("accepts public IPv6 literal", () => {
+      const parsed = validateUrl("http://[2606:4700:4700::1111]/");
+      expect(parsed.protocol).toBe("http:");
+    });
+
     test("accepts public domain URL with port", () => {
       const parsed = validateUrl("https://example.com:8080/api");
       expect(parsed.hostname).toBe("example.com");
@@ -187,6 +234,79 @@ describe("ssrf", () => {
     test("accepts URL with query parameters", () => {
       const parsed = validateUrl("https://example.com/search?q=test&page=1");
       expect(parsed.hostname).toBe("example.com");
+    });
+  });
+
+  describe("safeFetch", () => {
+    const originalFetch = global.fetch;
+    afterEach(() => {
+      global.fetch = originalFetch;
+    });
+
+    function mockResponse({ status = 200, location = null } = {}) {
+      return {
+        status,
+        headers: { get: (name) => (name === "location" ? location : null) },
+      };
+    }
+
+    test("rejects an initial internal URL before any fetch", async () => {
+      global.fetch = jest.fn();
+      await expect(safeFetch("http://169.254.169.254/latest")).rejects.toThrow(
+        "Internal URLs not allowed",
+      );
+      expect(global.fetch).not.toHaveBeenCalled();
+    });
+
+    test("forces manual redirect handling", async () => {
+      global.fetch = jest.fn().mockResolvedValue(mockResponse({ status: 200 }));
+      await safeFetch("https://example.com");
+      expect(global.fetch).toHaveBeenCalledWith(
+        "https://example.com/",
+        expect.objectContaining({ redirect: "manual" }),
+      );
+    });
+
+    test("returns the final response after a safe redirect", async () => {
+      global.fetch = jest
+        .fn()
+        .mockResolvedValueOnce(
+          mockResponse({ status: 302, location: "https://elsewhere.com/final" }),
+        )
+        .mockResolvedValueOnce(mockResponse({ status: 200 }));
+      const res = await safeFetch("https://example.com");
+      expect(res.status).toBe(200);
+      expect(global.fetch).toHaveBeenCalledTimes(2);
+    });
+
+    test("blocks a redirect that points to an internal address", async () => {
+      global.fetch = jest.fn().mockResolvedValueOnce(
+        mockResponse({
+          status: 302,
+          location: "http://169.254.169.254/latest/meta-data",
+        }),
+      );
+      await expect(safeFetch("https://example.com")).rejects.toThrow(
+        "Internal URLs not allowed",
+      );
+    });
+
+    test("blocks a redirect to localhost", async () => {
+      global.fetch = jest.fn().mockResolvedValueOnce(
+        mockResponse({ status: 301, location: "http://127.0.0.1/admin" }),
+      );
+      await expect(safeFetch("https://example.com")).rejects.toThrow(
+        "Internal URLs not allowed",
+      );
+    });
+
+    test("throws after exceeding the max redirect count", async () => {
+      global.fetch = jest.fn().mockResolvedValue(
+        mockResponse({ status: 302, location: "https://example.com/loop" }),
+      );
+      await expect(
+        safeFetch("https://example.com", {}, { maxRedirects: 2 }),
+      ).rejects.toThrow("Too many redirects");
     });
   });
 });

@@ -3,6 +3,7 @@ const consoleLogger = require("../utils/logger/console.js");
 
 const { BackgroundService } = require("../utils/BackgroundWorkers");
 const prisma = require("../utils/prisma");
+const { clampLimit, MAX_LIST_LIMIT } = require("../utils/database/queryLimits");
 const { SystemSettings } = require("./systemSettings");
 const { Telemetry } = require("./telemetry");
 
@@ -200,7 +201,7 @@ const DocumentSyncQueue = {
     try {
       const results = await prisma.document_sync_queues.findMany({
         where: clause,
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
         ...(orderBy !== null ? { orderBy } : {}),
         ...(include !== null ? { include } : {}),
       });
@@ -215,7 +216,7 @@ const DocumentSyncQueue = {
     try {
       const count = await prisma.document_sync_queues.count({
         where: clause,
-        ...(limit !== null ? { take: limit } : {}),
+        take: clampLimit(limit, { fallback: MAX_LIST_LIMIT }),
       });
       return count;
     } catch (error) {
