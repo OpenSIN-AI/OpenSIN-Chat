@@ -193,14 +193,14 @@ function apiTerminalExecEndpoints(app) {
                 exitCode: typeof exitCode === "number" ? exitCode : 1,
               });
               resolve();
-            }
+            },
           );
         });
       } catch (err) {
         logger.error(`[terminal/exec] ${err.message}`, err);
         response.status(500).json({ error: "Internal Server Error" });
       }
-    }
+    },
   );
 }
 

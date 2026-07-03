@@ -1,8 +1,15 @@
 // SPDX-License-Identifier: MIT
 const consoleLogger = require("../logger/console.js");
 
-const { SystemSettings } = require("../../models/systemSettings");
-const { userFromSession } = require("../http");
+// Lazy accessors to break the circular dependency:
+// utils/http → models/user → utils/middleware/multiUserProtected → models/systemSettings → … → utils/http
+function getSystemSettings() {
+  return require("../../models/systemSettings").SystemSettings;
+}
+function getUserFromSession() {
+  return require("../http").userFromSession;
+}
+
 const ROLES = {
   all: "<all>",
   admin: "admin",
@@ -18,7 +25,7 @@ const DEFAULT_ROLES = [ROLES.admin, ROLES.manager];
  */
 async function isSingleUserMode(_request, response, next) {
   try {
-    const multiUserMode = await SystemSettings.isMultiUserMode();
+    const multiUserMode = await getSystemSettings().isMultiUserMode();
     if (multiUserMode) return response.sendStatus(401);
     next();
     return;
@@ -49,7 +56,7 @@ function strictMultiUserRoleValid(allowedRoles = DEFAULT_ROLES) {
 
       const multiUserMode =
         response.locals?.multiUserMode ??
-        (await SystemSettings.isMultiUserMode());
+        (await getSystemSettings().isMultiUserMode());
       // Single-user operators are implicitly admin of their own server.
       // There is no other user to protect from, so bypass role gating
       // entirely. Multi-user deployments still receive the strict
@@ -60,7 +67,8 @@ function strictMultiUserRoleValid(allowedRoles = DEFAULT_ROLES) {
       }
 
       const user =
-        response.locals?.user ?? (await userFromSession(request, response));
+        response.locals?.user ??
+        (await getUserFromSession()(request, response));
       if (allowedRoles.includes(user?.role)) {
         next();
         return;
@@ -92,14 +100,15 @@ function flexUserRoleValid(allowedRoles = DEFAULT_ROLES) {
       // Bypass if not in multi-user mode
       const multiUserMode =
         response.locals?.multiUserMode ??
-        (await SystemSettings.isMultiUserMode());
+        (await getSystemSettings().isMultiUserMode());
       if (!multiUserMode) {
         next();
         return;
       }
 
       const user =
-        response.locals?.user ?? (await userFromSession(request, response));
+        response.locals?.user ??
+        (await getUserFromSession()(request, response));
       if (allowedRoles.includes(user?.role)) {
         next();
         return;
@@ -116,7 +125,7 @@ function flexUserRoleValid(allowedRoles = DEFAULT_ROLES) {
 // multi-user set up.
 async function isMultiUserSetup(_request, response, next) {
   try {
-    const multiUserMode = await SystemSettings.isMultiUserMode();
+    const multiUserMode = await getSystemSettings().isMultiUserMode();
     if (!multiUserMode) {
       response.status(403).json({
         error: "Invalid request",

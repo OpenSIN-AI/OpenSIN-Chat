@@ -158,7 +158,11 @@ describe("sync-politician-data: buildDedupeKey", () => {
 describe("sync-politician-data: Prisma model mapping", () => {
   test("politician_speeches model has the fields required by the sync job", () => {
     const { PrismaClient } = require("@prisma/client");
-    const prisma = new PrismaClient();
+    const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
+    const adapter = new PrismaBetterSqlite3({
+      url: "file:../storage/openafd.db?connection_limit=1",
+    });
+    const prisma = new PrismaClient({ adapter });
     // Regression for Issue #172: code used prisma.politician_speech (singular)
     // which does not exist; the generated model is politician_speeches (plural).
     expect(prisma.politician_speeches).toBeDefined();
@@ -188,7 +192,11 @@ describe("sync-politician-data: Prisma model mapping", () => {
 
   test("politician_speech (singular) is NOT a valid model", () => {
     const { PrismaClient } = require("@prisma/client");
-    const prisma = new PrismaClient();
+    const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
+    const adapter = new PrismaBetterSqlite3({
+      url: "file:../storage/openafd.db?connection_limit=1",
+    });
+    const prisma = new PrismaClient({ adapter });
     expect(prisma.politician_speech).toBeUndefined();
     prisma.$disconnect();
   });
