@@ -1,6 +1,22 @@
 #!/bin/bash
 # SPDX-License-Identifier: MIT
 
+# Source /app/.env if it exists (persistent secrets mounted as read-only volume).
+# This ensures secrets survive container recreation even without --env-file.
+# Only sets variables that are not already in the environment (docker run -e wins).
+if [ -f /app/.env ]; then
+  while IFS='=' read -r key value; do
+    # Skip comments and empty lines
+    [[ "$key" =~ ^[[:space:]]*# ]] && continue
+    [[ -z "$key" ]] && continue
+    key=$(echo "$key" | xargs)
+    # Only set if not already in environment
+    if [ -z "${!key}" ]; then
+      export "$key=$value"
+    fi
+  done < /app/.env
+fi
+
 # Check if STORAGE_DIR is set
 if [ -z "$STORAGE_DIR" ]; then
     echo "================================================================"
