@@ -29,8 +29,10 @@ const sqliteUrl = process.env.DATABASE_URL || "file:../storage/openafd.db";
 const sqliteBase = sqliteUrl.split("?")[0];
 process.env.DATABASE_URL = `${sqliteBase}?connection_limit=1`;
 
+// PrismaBetterSqlite3 treats everything after `?` as part of the FILENAME,
+// so we pass the bare path (no query params) to the adapter.
 const adapter = new PrismaBetterSqlite3({
-  url: process.env.DATABASE_URL,
+  url: sqliteBase,
 });
 
 const prismaClientConfig = {

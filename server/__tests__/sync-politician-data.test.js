@@ -160,7 +160,7 @@ describe("sync-politician-data: Prisma model mapping", () => {
     const { PrismaClient } = require("@prisma/client");
     const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
     const adapter = new PrismaBetterSqlite3({
-      url: "file:../storage/openafd.db?connection_limit=1",
+      url: "file:../storage/openafd.db",
     });
     const prisma = new PrismaClient({ adapter });
     // Regression for Issue #172: code used prisma.politician_speech (singular)
@@ -194,7 +194,7 @@ describe("sync-politician-data: Prisma model mapping", () => {
     const { PrismaClient } = require("@prisma/client");
     const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
     const adapter = new PrismaBetterSqlite3({
-      url: "file:../storage/openafd.db?connection_limit=1",
+      url: "file:../storage/openafd.db",
     });
     const prisma = new PrismaClient({ adapter });
     expect(prisma.politician_speech).toBeUndefined();

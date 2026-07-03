@@ -49,9 +49,10 @@ const {
   PoliticianCommitteeMembership,
 } = require("../models/politician");
 
+// PrismaBetterSqlite3 treats `?` params as part of the filename — strip them.
+const sqliteUrl = process.env.DATABASE_URL || "file:../storage/openafd.db";
 const adapter = new PrismaBetterSqlite3({
-  url:
-    process.env.DATABASE_URL || "file:../storage/openafd.db?connection_limit=1",
+  url: sqliteUrl.split("?")[0],
 });
 const prisma = new PrismaClient({ adapter });
 const bundestag = new BundestagApi();
