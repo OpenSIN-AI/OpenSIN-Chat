@@ -10,7 +10,7 @@ const RecoveryCode = {
   writable: [],
   create: async function (userId, code) {
     try {
-      const codeHash = await bcrypt.hash(code, 10);
+      const codeHash = await bcrypt.hash(code, 12);
       const recoveryCode = await prisma.recovery_codes.create({
         data: { user_id: userId, code_hash: codeHash },
       });
