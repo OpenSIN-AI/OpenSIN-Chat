@@ -61,7 +61,7 @@
     "jspdf": "^4.2.1",
     "katex": "^0.16.11",
     "lodash.debounce": "^4.0.8",
-    "markdown-it": "^14.2.0",
+    "markdown-it": "^14.3.0",
     "onnxruntime-web": "^1.18.0",
     "pluralize": "^8.0.0",
     "qrcode.react": "^4.2.0",
