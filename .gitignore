@@ -46,6 +46,7 @@ docker/.env.*
 docker-opensin/.env
 
 # Runtime storage (DB, Uploads, Vektoren) — niemals committen
+storage/
 server/storage/
 server/storage-opensin/
 collector/hotdir/

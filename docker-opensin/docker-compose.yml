@@ -18,7 +18,6 @@ services:
     cap_add:
       - SYS_ADMIN
     volumes:
-      - "./.env:/app/server/.env"
       - "../server/storage-opensin:/app/server/storage"
       - "../collector/hotdir/:/app/collector/hotdir"
       - "../collector/outputs/:/app/collector/outputs"
