@@ -11,7 +11,7 @@ const { User } = require("../../models/user");
 let _dummyBcryptHash = null;
 function getDummyBcryptHash() {
   if (!_dummyBcryptHash)
-    _dummyBcryptHash = bcrypt.hashSync("timing-normalization-dummy", 10);
+    _dummyBcryptHash = bcrypt.hashSync("timing-normalization-dummy", 12);
   return _dummyBcryptHash;
 }
 const { Telemetry } = require("../../models/telemetry");
@@ -322,7 +322,7 @@ function authEndpoints(app) {
           };
           // Single-user mode WITHOUT an AUTH_TOKEN env var: auth is disabled.
           // Auto-grant a session token instead of crashing on
-          // `bcrypt.hashSync(undefined, 10)`.
+          // `bcrypt.hashSync(undefined, 12)`.
           if (!process.env.AUTH_TOKEN) {
             await Telemetry.sendTelemetry("login_event", {
               multiUserMode: false,
