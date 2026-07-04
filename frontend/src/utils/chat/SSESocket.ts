@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { API_BASE, AUTH_TOKEN } from "@/utils/constants";
 import { safeGetItem } from "@/utils/safeStorage";
+import { fetchEventSource } from "@microsoft/fetch-event-source";
 
 const CONNECTING = 0;
 const OPEN = 1;
@@ -21,22 +22,18 @@ function sseBaseHost() {
 
 function sseStreamUrl(socketId: string) {
   const host = sseBaseHost() || window.location.origin;
-  const base = `${host}/api/sse/agent/${socketId}`;
-  const token = safeGetItem(AUTH_TOKEN);
-  if (!token) return base;
-  const url = new URL(base);
-  url.searchParams.set("token", token);
-  return url.toString();
+  return `${host}/api/sse/agent/${socketId}`;
 }
 
 function ssePostUrl(socketId: string) {
   const host = sseBaseHost() || window.location.origin;
-  const base = `${host}/api/sse/agent/${socketId}/message`;
+  return `${host}/api/sse/agent/${socketId}/message`;
+}
+
+function authHeaders(): Record<string, string> {
   const token = safeGetItem(AUTH_TOKEN);
-  if (!token) return base;
-  const url = new URL(base);
-  url.searchParams.set("token", token);
-  return url.toString();
+  if (!token) return {};
+  return { Authorization: `Bearer ${token}` };
 }
 
 export default class SSESocket {
@@ -48,10 +45,10 @@ export default class SSESocket {
   protocol: string = "";
   url: string;
 
-  private eventSource: EventSource | null = null;
   private postUrl: string;
   private listeners: Map<string, Set<EventListener>> = new Map();
   private isIntentionalClose: boolean = false;
+  private abortController: AbortController | null = null;
 
   constructor(socketId: string) {
     this.url = sseStreamUrl(socketId);
@@ -60,37 +57,54 @@ export default class SSESocket {
   }
 
   private _connect() {
-    try {
-      this.eventSource = new EventSource(this.url);
-    } catch (e) {
-      this.readyState = CLOSED;
-      this._dispatch("error", new Event("error"));
-      return;
-    }
+    this.abortController = new AbortController();
 
-    this.eventSource.onopen = () => {
-      this.readyState = OPEN;
-      this._dispatch("open", new Event("open"));
-    };
+    fetchEventSource(this.url, {
+      method: "GET",
+      headers: {
+        Accept: "text/event-stream",
+        ...authHeaders(),
+      },
+      signal: this.abortController.signal,
+      openWhenHidden: true,
 
-    this.eventSource.onmessage = (event: MessageEvent) => {
-      const fakeEvent = {
-        data: event.data,
-      } as MessageEvent;
-      this._dispatch("message", fakeEvent);
-    };
+      onopen: async (response) => {
+        if (response.ok) {
+          this.readyState = OPEN;
+          this._dispatch("open", new Event("open"));
+        } else {
+          this.readyState = CLOSED;
+          this._dispatch("error", new Event("error"));
+          throw new Error(`SSE connection failed: ${response.status}`);
+        }
+      },
 
-    this.eventSource.onerror = () => {
-      if (
-        this.isIntentionalClose ||
-        this.eventSource?.readyState === EventSource.CLOSED
-      ) {
+      onmessage: (event) => {
+        const fakeEvent = { data: event.data } as MessageEvent;
+        this._dispatch("message", fakeEvent);
+      },
+
+      onerror: (err) => {
+        if (this.isIntentionalClose) {
+          this.readyState = CLOSED;
+          this._dispatch("close", new CloseEvent("close"));
+          throw err; // Stop retrying
+        }
+        this._dispatch("error", new Event("error"));
+        // fetch-event-source auto-retries; don't throw to allow retry
+      },
+
+      onclose: () => {
         this.readyState = CLOSED;
         this._dispatch("close", new CloseEvent("close"));
-        return;
+      },
+    }).catch(() => {
+      // Connection ended or errored out
+      if (this.readyState !== CLOSED) {
+        this.readyState = CLOSED;
+        this._dispatch("close", new CloseEvent("close"));
       }
-      this._dispatch("error", new Event("error"));
-    };
+    });
   }
 
   private _dispatch(type: string, event: Event) {
@@ -104,7 +118,10 @@ export default class SSESocket {
     if (this.readyState !== OPEN) return;
     fetch(this.postUrl, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        ...authHeaders(),
+      },
       body: data,
       keepalive: true,
     }).catch(() => {});
@@ -113,9 +130,9 @@ export default class SSESocket {
   close(code?: number, reason?: string) {
     this.isIntentionalClose = true;
     this.readyState = CLOSING;
-    if (this.eventSource) {
-      this.eventSource.close();
-      this.eventSource = null;
+    if (this.abortController) {
+      this.abortController.abort();
+      this.abortController = null;
     }
     this.readyState = CLOSED;
     this._dispatch(
