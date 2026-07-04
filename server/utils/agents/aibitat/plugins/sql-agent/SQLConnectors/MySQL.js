@@ -2,7 +2,7 @@
 const consoleLogger = require("../../../../../logger/console.js");
 
 const mysql = require("mysql2/promise");
-const { ConnectionStringParser } = require("./utils");
+const { ConnectionStringParser, assertReadOnlyQuery } = require("./utils");
 
 class MySQLConnector {
   #connected = false;
@@ -25,7 +25,14 @@ class MySQLConnector {
   }
 
   async connect() {
-    this._client = await mysql.createConnection({ uri: this.connectionString });
+    this._client = await mysql.createConnection({
+      uri: this.connectionString,
+      // Explicitly disabled (this is already mysql2's default) so that a
+      // stacked query such as `SELECT 1; DROP TABLE users;` can never be
+      // executed as multiple statements even if the driver default changes
+      // in a future version. Do not rely on library defaults for this.
+      multipleStatements: false,
+    });
     this.#connected = true;
     return this._client;
   }
@@ -37,14 +44,12 @@ class MySQLConnector {
    * @returns {Promise<import(".").QueryResult>}
    */
   async runQuery(queryString = "", params = []) {
-    const SELECT_ONLY_REGEX = /^\s*(SELECT|WITH|SHOW|EXPLAIN|DESCRIBE)\b/i;
-    const cleanQuery =
-      typeof queryString === "string" ? queryString.trim() : "";
-    if (!SELECT_ONLY_REGEX.test(cleanQuery)) {
+    const safetyCheck = assertReadOnlyQuery(queryString);
+    if (!safetyCheck.ok) {
       return {
         rows: [],
         count: 0,
-        error: "Only SELECT/WITH/SHOW/EXPLAIN/DESCRIBE queries are allowed",
+        error: safetyCheck.error,
       };
     }
 

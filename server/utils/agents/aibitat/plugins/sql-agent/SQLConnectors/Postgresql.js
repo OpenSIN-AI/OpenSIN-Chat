@@ -2,6 +2,7 @@
 const consoleLogger = require("../../../../../logger/console.js");
 
 const pgSql = require("pg");
+const { assertReadOnlyQuery } = require("./utils");
 
 class PostgresSQLConnector {
   #connected = false;
@@ -33,14 +34,12 @@ class PostgresSQLConnector {
    * @returns {Promise<import(".").QueryResult>}
    */
   async runQuery(queryString = "", params = []) {
-    const SELECT_ONLY_REGEX = /^\s*(SELECT|WITH|SHOW|EXPLAIN|DESCRIBE)\b/i;
-    const cleanQuery =
-      typeof queryString === "string" ? queryString.trim() : "";
-    if (!SELECT_ONLY_REGEX.test(cleanQuery)) {
+    const safetyCheck = assertReadOnlyQuery(queryString);
+    if (!safetyCheck.ok) {
       return {
         rows: [],
         count: 0,
-        error: "Only SELECT/WITH/SHOW/EXPLAIN/DESCRIBE queries are allowed",
+        error: safetyCheck.error,
       };
     }
 

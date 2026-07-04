@@ -2,7 +2,7 @@
 const consoleLogger = require("../../../../../logger/console.js");
 
 const mssql = require("mssql");
-const { ConnectionStringParser } = require("./utils");
+const { ConnectionStringParser, assertReadOnlyQuery } = require("./utils");
 
 class MSSQLConnector {
   #connected = false;
@@ -69,14 +69,12 @@ class MSSQLConnector {
    * @returns {Promise<import(".").QueryResult>}
    */
   async runQuery(queryString = "", params = []) {
-    const SELECT_ONLY_REGEX = /^\s*(SELECT|WITH|SHOW|EXPLAIN|DESCRIBE)\b/i;
-    const cleanQuery =
-      typeof queryString === "string" ? queryString.trim() : "";
-    if (!SELECT_ONLY_REGEX.test(cleanQuery)) {
+    const safetyCheck = assertReadOnlyQuery(queryString);
+    if (!safetyCheck.ok) {
       return {
         rows: [],
         count: 0,
-        error: "Only SELECT/WITH/SHOW/EXPLAIN/DESCRIBE queries are allowed",
+        error: safetyCheck.error,
       };
     }
 
