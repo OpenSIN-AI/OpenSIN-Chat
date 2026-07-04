@@ -22,7 +22,9 @@ function isOnboardingBypassEnabled() {
   try {
     if (import.meta.env.VITE_DISABLE_ONBOARDING === "true") return true;
     return (
-      typeof window !== "undefined" &&
+      (typeof window !== "undefined" &&
+        window.localStorage?.getItem("opensin_disable_onboarding") ===
+          "true") ||
       window.localStorage?.getItem("anythingllm_disable_onboarding") === "true"
     );
   } catch {
@@ -64,7 +66,7 @@ const System = {
    * Dev/audit bypass: when running a dev build you can skip the backend
    * onboarding gate (useful for visually auditing the app without a running
    * server). Enable it either by:
-   *   - localStorage.setItem("anythingllm_disable_onboarding", "true")  // no rebuild
+   *   - localStorage.setItem("opensin_disable_onboarding", "true")  // no rebuild
    *   - building with VITE_DISABLE_ONBOARDING=true
    * The bypass is ignored entirely in production builds.
    * @returns {Promise<boolean>}

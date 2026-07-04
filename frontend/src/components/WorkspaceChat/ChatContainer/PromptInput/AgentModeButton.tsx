@@ -232,7 +232,7 @@ export default function AgentModeButton({
             type="button"
             onClick={() => clearMode(sendCommand, textareaRef, promptInput)}
             className="ml-0.5 flex items-center justify-center w-4 h-4 rounded-full hover:bg-zinc-600 light:hover:bg-slate-300 transition-colors"
-            aria-label="Mode entfernen"
+            aria-label={t("agentMode.removeMode")}
           >
             <X size={10} className="text-zinc-400 light:text-slate-500" />
           </button>
@@ -288,7 +288,7 @@ export default function AgentModeButton({
                   className="text-theme-accent"
                 />
                 <span className="text-xs font-semibold text-white light:text-slate-900">
-                  Agent Modus wahlen
+                  {t("agentMode.title")}
                 </span>
               </div>
             </div>
@@ -341,7 +341,7 @@ export default function AgentModeButton({
                         )}
                         {activeMode?.id === mode.id && (
                           <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-full bg-theme-accent/20 text-theme-accent">
-                            aktiv
+                            {t("agentMode.active")}
                           </span>
                         )}
                       </div>

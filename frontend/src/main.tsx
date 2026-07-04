@@ -39,7 +39,9 @@ const REACTWRAP = isDev ? React.Fragment : React.StrictMode;
 // can be fully tested without a running backend.
 if (
   isDev &&
-  (safeGetItem("anythingllm_pdf_mock") === "true" ||
+  (safeGetItem("opensin_pdf_mock") === "true" ||
+    safeGetItem("anythingllm_pdf_mock") === "true" ||
+    safeGetItem("opensin_ws_mock") === "true" ||
     safeGetItem("anythingllm_ws_mock") === "true")
 ) {
   const { startMockWorker } = await import("@/mocks/browser");

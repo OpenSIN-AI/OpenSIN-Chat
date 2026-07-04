@@ -4494,6 +4494,11 @@ const TRANSLATIONS = {
     approveAccess: "Approve Access",
     deny: "Deny",
   },
+  agentMode: {
+    title: "Choose Agent Mode",
+    active: "active",
+    removeMode: "Remove mode",
+  },
   agentModelSelection: {
     multiModelNotSupported:
       "Multi-model support is not supported for this provider yet.",
