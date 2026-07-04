@@ -10,7 +10,7 @@ const {
 let _dummyBcryptHash = null;
 function getDummyBcryptHash() {
   if (!_dummyBcryptHash)
-    _dummyBcryptHash = bcrypt.hashSync("timing-normalization-dummy", 10);
+    _dummyBcryptHash = bcrypt.hashSync("timing-normalization-dummy", 12);
   return _dummyBcryptHash;
 }
 
@@ -24,7 +24,7 @@ async function generateRecoveryCodes(userId) {
   const plainTextCodes = [];
   for (let i = 0; i < 4; i++) {
     const code = v4();
-    const hashedCode = bcrypt.hashSync(code, 10);
+    const hashedCode = bcrypt.hashSync(code, 12);
     newRecoveryCodes.push({
       user_id: userId,
       code_hash: hashedCode,
