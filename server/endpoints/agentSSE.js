@@ -180,7 +180,7 @@ function agentSSE(app, routePrefix = "") {
 
     res.writeHead(200, {
       "Content-Type": "text/event-stream",
-      "Cache-Control": "no-cache",
+      "Cache-Control": "no-store, no-cache, must-revalidate",
       Connection: "keep-alive",
       "X-Accel-Buffering": "no",
     });

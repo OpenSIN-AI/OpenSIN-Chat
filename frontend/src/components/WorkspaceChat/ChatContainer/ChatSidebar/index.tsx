@@ -24,6 +24,7 @@ type LogEntry = {
 export const LOG_EVENT = "openafd:log";
 
 const ChatSidebarContext = createContext<any>(undefined);
+const ChatSidebarLogsContext = createContext<any>(undefined);
 
 const SOURCE_FILTERS = {
   all: "all",
@@ -126,11 +127,13 @@ export function ChatSidebarProvider({ children }: any) {
         previewData,
         setPreviewData,
         openPreview,
-        consoleLogs,
-        clearConsoleLogs,
       }}
     >
-      {children}
+      <ChatSidebarLogsContext.Provider
+        value={{ consoleLogs, clearConsoleLogs }}
+      >
+        {children}
+      </ChatSidebarLogsContext.Provider>
     </ChatSidebarContext.Provider>
   );
 }
@@ -195,17 +198,13 @@ export function usePreviewSidebar() {
 
 export function useConsoleSidebar() {
   const ctx = useContext(ChatSidebarContext);
+  const logsCtx = useContext(ChatSidebarLogsContext);
   if (!ctx)
     throw new Error(
       "useConsoleSidebar must be used within ChatSidebarProvider",
     );
-  const {
-    activeSidebar,
-    toggleSidebar,
-    closeSidebar,
-    consoleLogs,
-    clearConsoleLogs,
-  } = ctx;
+  const { activeSidebar, toggleSidebar, closeSidebar } = ctx;
+  const { consoleLogs, clearConsoleLogs } = logsCtx;
   return {
     sidebarOpen: activeSidebar === "console",
     toggleConsole: () => toggleSidebar("console"),
@@ -213,6 +212,15 @@ export function useConsoleSidebar() {
     consoleLogs,
     clearConsoleLogs,
   };
+}
+
+export function useChatSidebarLogs() {
+  const ctx = useContext(ChatSidebarLogsContext);
+  if (!ctx)
+    throw new Error(
+      "useChatSidebarLogs must be used within ChatSidebarProvider",
+    );
+  return ctx;
 }
 
 export function useFilesystemSidebar() {

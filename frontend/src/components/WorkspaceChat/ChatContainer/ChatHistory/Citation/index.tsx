@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { Fragment, useState, useEffect } from "react";
 import { decode as HTMLDecode } from "he";
+import DOMPurify from "dompurify";
 import { truncate } from "@/utils/strings";
 import ModalWrapper from "@/components/ModalWrapper";
 import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
@@ -256,9 +257,15 @@ export function CitationDetailModal({ source, onClose }: any) {
               <Fragment key={`${idx}-${text?.slice(0, 32) ?? ""}`}>
                 <div className="pt-6 text-white light:text-slate-900">
                   <div className="flex flex-col w-full justify-start pb-6 gap-y-1">
-                    <p className="text-white light:text-slate-900 whitespace-pre-line">
-                      {HTMLDecode(omitChunkHeader(text))}
-                    </p>
+                    <p
+                      className="text-white light:text-slate-900 whitespace-pre-line"
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(
+                          HTMLDecode(omitChunkHeader(text)),
+                          { ALLOWED_TAGS: [] },
+                        ),
+                      }}
+                    />
 
                     {!!score && (
                       <div className="w-full flex items-center text-xs text-white/60 light:text-slate-500 gap-x-2 cursor-default">

@@ -246,7 +246,10 @@ class AnthropicLLM {
       };
     } catch (error) {
       consoleLogger.error(error);
-      return { textResponse: error.message, metrics: {} };
+      return {
+        textResponse: `[Anthropic Error] ${error.message?.replace(/api[_-]?key[^:]*:\s*\S+/gi, "api_key: [REDACTED]") ?? "Unknown error occurred"}`,
+        metrics: {},
+      };
     }
   }
 

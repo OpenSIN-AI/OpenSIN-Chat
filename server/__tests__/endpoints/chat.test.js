@@ -143,7 +143,7 @@ describe("chatEndpoints", () => {
         locals: WS_LOCALS,
       });
       expect(res.headers["Content-Type"]).toBe("text/event-stream");
-      expect(res.headers["Cache-Control"]).toBe("no-cache");
+      expect(res.headers["Cache-Control"]).toBe("no-store, no-cache, must-revalidate");
     });
 
     it("sends quota abort when user exceeds limit", async () => {

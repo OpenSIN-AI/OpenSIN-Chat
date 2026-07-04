@@ -191,7 +191,10 @@ function workspaceMiscEndpoints(app) {
           removeSSEConnection,
         } = require("../../utils/EmbeddingWorkerManager");
 
-        response.setHeader("Cache-Control", "no-cache");
+        response.setHeader(
+          "Cache-Control",
+          "no-store, no-cache, must-revalidate",
+        );
         response.setHeader("Content-Type", "text/event-stream");
         response.setHeader("Connection", "keep-alive");
         response.flushHeaders();

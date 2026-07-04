@@ -47,7 +47,6 @@ const MARKDOWN_SANITIZE_OPTS = {
     "td",
     "img",
     "hr",
-    "button",
     "svg",
     "path",
     "rect",

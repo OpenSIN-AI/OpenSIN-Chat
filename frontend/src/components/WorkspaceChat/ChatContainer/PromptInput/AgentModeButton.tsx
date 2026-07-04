@@ -76,8 +76,27 @@ export function parseAgentMode(message) {
 
 export const AGENT_MODE_EVENT = "agent-mode-change";
 
+const AGENT_MODE_STORAGE_KEY = "opensin_agent_mode";
+
+function loadPersistedMode() {
+  try {
+    const stored = localStorage.getItem(AGENT_MODE_STORAGE_KEY);
+    if (!stored) return null;
+    return getAgentModeById(stored) || null;
+  } catch {
+    return null;
+  }
+}
+
+function persistMode(modeId) {
+  try {
+    if (modeId) localStorage.setItem(AGENT_MODE_STORAGE_KEY, modeId);
+    else localStorage.removeItem(AGENT_MODE_STORAGE_KEY);
+  } catch {}
+}
+
 export function useAgentMode() {
-  const [activeMode, setActiveMode] = useState(null);
+  const [activeMode, setActiveMode] = useState(loadPersistedMode);
   const [showDropdown, setShowDropdown] = useState(false);
   const buttonRef = useRef(null);
   const dropdownRef = useRef(null);
@@ -108,6 +127,7 @@ export function useAgentMode() {
   const selectMode = useCallback((mode, sendCommand, textareaRef) => {
     if (!mode.enabled) return;
     setActiveMode(mode);
+    persistMode(mode.id);
     setShowDropdown(false);
     window.dispatchEvent(
       new CustomEvent(AGENT_MODE_EVENT, { detail: { mode: mode.id } }),
@@ -122,6 +142,7 @@ export function useAgentMode() {
 
   const clearMode = useCallback((sendCommand, textareaRef, promptInput) => {
     setActiveMode(null);
+    persistMode(null);
     setShowDropdown(false);
     window.dispatchEvent(
       new CustomEvent(AGENT_MODE_EVENT, { detail: { mode: null } }),

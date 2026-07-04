@@ -1,6 +1,79 @@
 // SPDX-License-Identifier: MIT
 const consoleLogger = require("../../../../logger/console.js");
 
+/**
+ * Validate that a SQL query is read-only (no mutations).
+ * Allows SELECT, EXPLAIN, SHOW, DESCRIBE as first statement.
+ * Strips comments and whitespace before checking.
+ * @param {string} sql - Raw SQL query from the agent
+ * @returns {{ok: boolean, reason?: string}} Validation result
+ */
+function validateReadOnlyQuery(sql) {
+  if (!sql || typeof sql !== "string")
+    return { ok: false, reason: "Empty query" };
+
+  // Strip block comments (/* ... */) and line comments (-- ... or # ...)
+  let cleaned = sql
+    .replace(/\/\*[\s\S]*?\*\//g, "") // /* ... */
+    .replace(/--[^\n]*/g, "") // -- line comment
+    .replace(/#[^\n]*/g, "") // # line comment
+    .trim();
+
+  if (!cleaned)
+    return { ok: false, reason: "Query is empty after stripping comments" };
+
+  // Only allow statements that start with a safe read-only keyword
+  const firstWord = cleaned.split(/\s+/)[0].toUpperCase();
+  const allowedFirstWords = ["SELECT", "EXPLAIN", "SHOW", "DESCRIBE", "WITH"];
+  if (!allowedFirstWords.includes(firstWord)) {
+    return {
+      ok: false,
+      reason: `Only read-only queries are allowed. Query must start with ${allowedFirstWords.join(", ")}. Found: ${firstWord}`,
+    };
+  }
+
+  // Check for dangerous SQL keywords (as standalone words, not inside strings)
+  // Simple heuristic: check for keywords outside of single/double quoted strings
+  const withoutStrings = cleaned
+    .replace(/'[^']*'/g, "")
+    .replace(/"[^"]*"/g, "");
+  const dangerousKeywords = [
+    "INSERT",
+    "UPDATE",
+    "DELETE",
+    "DROP",
+    "ALTER",
+    "CREATE",
+    "TRUNCATE",
+    "GRANT",
+    "REVOKE",
+    "EXEC",
+    "EXECUTE",
+    "MERGE",
+    "UPSERT",
+    "CALL",
+    "COMMIT",
+    "ROLLBACK",
+    "SET",
+    "LOCK",
+    "UNLOCK",
+    "RENAME",
+    "REPLACE",
+  ];
+  const upper = withoutStrings.toUpperCase();
+  for (const kw of dangerousKeywords) {
+    // Match as whole word boundary
+    if (new RegExp(`\\b${kw}\\b`).test(upper)) {
+      return {
+        ok: false,
+        reason: `Query contains prohibited keyword: ${kw}`,
+      };
+    }
+  }
+
+  return { ok: true };
+}
+
 module.exports.SqlAgentQuery = {
   name: "sql-query",
   plugin: function () {
@@ -79,6 +152,15 @@ module.exports.SqlAgentQuery = {
                 `${this.caller}: Im going to run a query on the ${database_id} to get an answer.`,
               );
               const db = getDBClient(databaseConfig.engine, databaseConfig);
+
+              const validation = validateReadOnlyQuery(sql_query);
+              if (!validation.ok) {
+                this.super.handlerProps.log(
+                  `sql-query rejected: ${validation.reason}`,
+                );
+                this.super.introspect(`Query rejected: ${validation.reason}`);
+                return `Query rejected: ${validation.reason}`;
+              }
 
               this.super.introspect(`Running SQL: ${sql_query}`);
               const result = await db.runQuery(sql_query);
