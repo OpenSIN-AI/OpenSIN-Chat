@@ -12,7 +12,7 @@ let _cachedAuthTokenHash = null;
 function getAuthTokenHash() {
   if (!_cachedAuthTokenHash) {
     const bcrypt = require("bcryptjs");
-    _cachedAuthTokenHash = bcrypt.hashSync(process.env.AUTH_TOKEN, 10);
+    _cachedAuthTokenHash = bcrypt.hashSync(process.env.AUTH_TOKEN, 12);
   }
   return _cachedAuthTokenHash;
 }
