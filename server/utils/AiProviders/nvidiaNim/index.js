@@ -16,6 +16,8 @@ const HARDCODED_MODEL_PREF = "nvidia/nemotron-nano-12b-v2-vl";
 const HARDCODED_TOKEN_LIMIT = 8192;
 
 class NvidiaNimLLM {
+  static #discoveredTokenLimit = null;
+
   constructor(embedder = null, modelPreference = null) {
     this.className = "NvidiaNimLLM";
     const { OpenAI: OpenAIApi } = require("openai");
@@ -103,7 +105,7 @@ class NvidiaNimLLM {
     if (!model.length) return;
     const modelInfo = model.find((model) => model.id === modelId);
     if (!modelInfo) return;
-    process.env.NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT = Number(
+    NvidiaNimLLM.#discoveredTokenLimit = Number(
       modelInfo.max_model_len || HARDCODED_TOKEN_LIMIT,
     );
   }
@@ -114,7 +116,9 @@ class NvidiaNimLLM {
 
   static promptWindowLimit(_modelName) {
     const limit =
-      process.env.NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT || HARDCODED_TOKEN_LIMIT;
+      NvidiaNimLLM.#discoveredTokenLimit ||
+      process.env.NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT ||
+      HARDCODED_TOKEN_LIMIT;
     return Number(limit);
   }
 
@@ -122,7 +126,9 @@ class NvidiaNimLLM {
   // and if undefined - assume 4096 window.
   promptWindowLimit() {
     const limit =
-      process.env.NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT || HARDCODED_TOKEN_LIMIT;
+      NvidiaNimLLM.#discoveredTokenLimit ||
+      process.env.NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT ||
+      HARDCODED_TOKEN_LIMIT;
     if (!limit || isNaN(Number(limit))) {
       this.#log(
         "Warning: NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT not set or invalid, using default 8192",

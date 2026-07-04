@@ -195,9 +195,17 @@ export default function AgentModeButton({
           ref={buttonRef}
           type="button"
           onClick={() => setShowDropdown(!showDropdown)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              setShowDropdown(!showDropdown);
+            }
+          }}
           aria-label={
             activeMode ? activeMode.label : t("chat_window.start_agent_session")
           }
+          aria-haspopup="true"
+          aria-expanded={showDropdown}
           className={`group border-none relative flex justify-center items-center cursor-pointer rounded-lg transition-all ${
             activeMode
               ? "bg-theme-accent/15 px-2 h-7 gap-1.5"
@@ -247,6 +255,8 @@ export default function AgentModeButton({
         createPortal(
           <div
             ref={dropdownRef}
+            role="dialog"
+            aria-label={t("chat_window.start_agent_session")}
             onMouseDown={(e) => {
               if (e.currentTarget.contains(e.target)) e.preventDefault();
             }}
@@ -290,6 +300,8 @@ export default function AgentModeButton({
                     key={mode.id}
                     type="button"
                     disabled={!mode.enabled}
+                    aria-pressed={activeMode?.id === mode.id}
+                    aria-label={mode.label}
                     onClick={() =>
                       mode.enabled && selectMode(mode, sendCommand, textareaRef)
                     }

@@ -65,8 +65,7 @@ function assertReadOnlyQuery(queryString = "") {
     if (pattern.test(cleanQuery)) {
       return {
         ok: false,
-        error:
-          "Query references a disallowed file/command-execution primitive",
+        error: "Query references a disallowed file/command-execution primitive",
       };
     }
   }

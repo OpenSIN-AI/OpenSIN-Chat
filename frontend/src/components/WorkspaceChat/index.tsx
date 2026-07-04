@@ -149,14 +149,15 @@ function copyCodeSnippet(uuid: any) {
 
   copyText(markdown).then((ok) => {
     if (!ok) return;
+    const savedChildren = Array.from(target.childNodes);
     target.classList.add("text-green-500");
-    const originalText = target.innerHTML;
     target.textContent = i18n.t("workspaceChat.copied");
     target.setAttribute("disabled", "true");
 
     setTimeout(() => {
       target.classList.remove("text-green-500");
-      target.innerHTML = originalText;
+      target.innerHTML = "";
+      savedChildren.forEach((node) => target.appendChild(node.cloneNode(true)));
       target.removeAttribute("disabled");
     }, 2500);
   });

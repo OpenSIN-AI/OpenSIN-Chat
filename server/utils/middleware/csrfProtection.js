@@ -80,7 +80,10 @@ function csrfProtection(request, response, next) {
   if (response.locals?.apiKey) return next();
 
   // Skip in test mode
-  if (process.env.NODE_ENV === "test" && process.env.INTEGRATION_TEST === "true") {
+  if (
+    process.env.NODE_ENV === "test" &&
+    process.env.INTEGRATION_TEST === "true"
+  ) {
     return next();
   }
 
