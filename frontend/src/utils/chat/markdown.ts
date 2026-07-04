@@ -110,6 +110,9 @@ function doRender(text: string): string {
 }
 
 export default function renderMarkdown(text = "") {
+  // Skip caching for very large inputs to avoid memory bloat.
+  // 256 entries × a 100KB message = 25MB — the cap keeps the cache bounded.
+  if (text.length > 100_000) return doRender(text);
   const cached = RENDER_CACHE.get(text);
   if (cached !== undefined) return cached;
   const html = doRender(text);
