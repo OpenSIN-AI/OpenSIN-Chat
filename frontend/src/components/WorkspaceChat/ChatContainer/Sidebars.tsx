@@ -48,8 +48,16 @@ export default function Sidebars({ workspace }: SidebarsProps) {
               <MemoriesSidebar workspace={workspace} />
             </ErrorBoundary>
           )}
-          {activeSidebar === "preview" && <PreviewSidebar />}
-          {activeSidebar === "console" && <ConsoleSidebar />}
+          {activeSidebar === "preview" && (
+            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+              <PreviewSidebar />
+            </ErrorBoundary>
+          )}
+          {activeSidebar === "console" && (
+            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+              <ConsoleSidebar />
+            </ErrorBoundary>
+          )}
           {activeSidebar === "filesystem" && (
             <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
               <FilesystemSidebar workspace={workspace} />
@@ -60,7 +68,11 @@ export default function Sidebars({ workspace }: SidebarsProps) {
               <DatabaseSidebar workspace={workspace} />
             </ErrorBoundary>
           )}
-          {activeSidebar === "political" && <PoliticalSidebar />}
+          {activeSidebar === "political" && (
+            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+              <PoliticalSidebar />
+            </ErrorBoundary>
+          )}
           {activeSidebar === "pdf-analysis" && (
             <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
               <PdfAnalysisSidebar />

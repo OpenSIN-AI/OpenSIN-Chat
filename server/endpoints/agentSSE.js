@@ -15,6 +15,7 @@ const { SystemSettings } = require("../models/systemSettings");
 const { User } = require("../models/user");
 const { EncryptionManager } = require("../utils/EncryptionManager");
 const { getAuthTokenHash } = require("../utils/middleware/validatedRequest");
+const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
 const EncryptionMgr = new EncryptionManager();
 
 const MAX_SSE_CONNECTIONS = Number(process.env.AGENT_WS_MAX_CONNECTIONS) || 50;
@@ -34,7 +35,10 @@ function isOriginAllowed(request) {
 
   const origin = request.headers.origin;
   if (!origin) {
-    return true;
+    // Non-browser clients (Node, curl) don't send Origin — allow in
+    // development, reject in production for defence-in-depth.
+    // This matches the pattern in agentWebsocket.js isOriginAllowed().
+    return process.env.NODE_ENV !== "production";
   }
 
   const corsOrigin = process.env.CORS_ORIGIN;
@@ -169,7 +173,16 @@ function agentSSE(app, routePrefix = "") {
   if (!app) return;
   const router = express.Router();
 
-  router.get("/agent/:uuid", async (req, res) => {
+  router.get(
+    "/agent/:uuid",
+    [
+      simpleRateLimit({
+        bucket: "agent-sse-connect",
+        max: 30,
+        windowMs: 60 * 1000,
+      }),
+    ],
+    async (req, res) => {
     if (!isOriginAllowed(req)) {
       consoleLogger.warn(
         `[agentSSE] Rejecting connection from disallowed origin: ${req.headers.origin || "<missing>"}`,
@@ -328,7 +341,16 @@ function agentSSE(app, routePrefix = "") {
     }
   });
 
-  router.post("/agent/:uuid/message", async (req, res) => {
+  router.post(
+    "/agent/:uuid/message",
+    [
+      simpleRateLimit({
+        bucket: "agent-sse-message",
+        max: 60,
+        windowMs: 60 * 1000,
+      }),
+    ],
+    async (req, res) => {
     if (!(await isAuthorizedRequest(req))) {
       return res.status(401).json({ error: "Unauthorized" });
     }

@@ -3,12 +3,14 @@ updates:
   - package-ecosystem: npm
     directory: /server
     schedule:
-      interval: weekly
-      day: monday
+      interval: daily
+      time: "06:00"
     open-pull-requests-limit: 5
     labels:
       - dependencies
       - medium-priority
+    commit-message:
+      prefix: "deps(server)"
 
   - package-ecosystem: npm
     directory: /
@@ -19,16 +21,20 @@ updates:
     labels:
       - dependencies
       - medium-priority
+    commit-message:
+      prefix: "deps(root)"
 
   - package-ecosystem: npm
     directory: /frontend
     schedule:
-      interval: weekly
-      day: monday
+      interval: daily
+      time: "06:00"
     open-pull-requests-limit: 5
     labels:
       - dependencies
       - medium-priority
+    commit-message:
+      prefix: "deps(frontend)"
 
   - package-ecosystem: npm
     directory: /collector
@@ -39,6 +45,8 @@ updates:
     labels:
       - dependencies
       - low-priority
+    commit-message:
+      prefix: "deps(collector)"
 
   - package-ecosystem: github-actions
     directory: /
@@ -47,3 +55,5 @@ updates:
     labels:
       - dependencies
       - medium-priority
+    commit-message:
+      prefix: "deps(ci)"
