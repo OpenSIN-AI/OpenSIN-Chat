@@ -11,6 +11,13 @@ const { validateUrl } = require("../ssrf");
 const pluginsPath = getStoragePath("plugins", "agent-skills");
 const sharedWebScraper = new CollectorApi();
 
+// Hard limits for community plugin zip imports (see
+// importCommunityItemFromUrl below) to prevent a malicious or corrupted
+// asset from causing a disk-fill / decompression-bomb denial of service.
+const MAX_ZIP_DOWNLOAD_BYTES = 50 * 1024 * 1024; // 50MB compressed download cap
+const MAX_ZIP_UNCOMPRESSED_BYTES = 250 * 1024 * 1024; // 250MB extracted-size cap
+const MAX_ZIP_ENTRY_COUNT = 5000; // max number of files/dirs in the archive
+
 const ALLOWLIST_PATH = path.resolve(
   __dirname,
   "../../config/plugins-allowlist.toml",
@@ -331,6 +338,25 @@ class ImportedPlugin {
               resolve(false);
               return;
             }
+
+            // Guard against a malicious/compromised community-hub asset
+            // serving an oversized payload (disk-fill DoS) — abort the
+            // download as soon as we've received more than
+            // MAX_ZIP_DOWNLOAD_BYTES, regardless of what Content-Length
+            // claims (Content-Length can be absent or lied about).
+            let bytesReceived = 0;
+            response.on("data", (chunk) => {
+              bytesReceived += chunk.length;
+              if (bytesReceived > MAX_ZIP_DOWNLOAD_BYTES) {
+                consoleLogger.error(
+                  `ImportedPlugin.importCommunityItemFromUrl - download exceeded ${MAX_ZIP_DOWNLOAD_BYTES} byte limit, aborting.`,
+                );
+                request.destroy();
+                zipFile.destroy();
+                resolve(false);
+              }
+            });
+
             response.pipe(zipFile);
             zipFile.on("finish", () => {
               consoleLogger.log(
@@ -381,6 +407,28 @@ class ImportedPlugin {
       // Note: https://github.com/cthackers/adm-zip?tab=readme-ov-file#electron-original-fs
       const AdmZip = require("adm-zip");
       const zip = new AdmZip(zipFilePath);
+
+      // Guard against decompression ("zip bomb") DoS: a tiny compressed
+      // file can expand to an enormous amount of data or an enormous
+      // number of files, exhausting disk space or inodes during
+      // extraction. Check the *uncompressed* size and entry count
+      // declared in the zip's central directory before extracting
+      // anything.
+      const zipEntries = zip.getEntries();
+      if (zipEntries.length > MAX_ZIP_ENTRY_COUNT) {
+        throw new Error(
+          `Zip file contains ${zipEntries.length} entries, which exceeds the limit of ${MAX_ZIP_ENTRY_COUNT}.`,
+        );
+      }
+      const totalUncompressedSize = zipEntries.reduce(
+        (sum, entry) => sum + (entry.header?.size || 0),
+        0,
+      );
+      if (totalUncompressedSize > MAX_ZIP_UNCOMPRESSED_BYTES) {
+        throw new Error(
+          `Zip file would extract to ${totalUncompressedSize} bytes, which exceeds the limit of ${MAX_ZIP_UNCOMPRESSED_BYTES}.`,
+        );
+      }
 
       // Validate all zip entries to prevent Zip Slip path traversal attacks (CWE-22)
       for (const entry of zip.getEntries()) {
