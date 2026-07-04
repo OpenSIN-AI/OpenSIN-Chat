@@ -139,6 +139,32 @@ export default defineConfig({
           // them in the main chunk as well to avoid the race.
           if (/[\\/]node_modules[\\/](react-tooltip|@tanstack|@floating-ui)[\\/]/.test(id))
             return undefined;
+          // Split heavy i18n, state, and UI libraries out of the catch-all vendor chunk.
+          if (/[\\/]node_modules[\\/](i18next|react-i18next|i18next-)[\\/]/.test(id))
+            return "vendor-i18n";
+          if (/[\\/]node_modules[\\/](swr|zustand|recoil|@tanstack)[\\/]/.test(id))
+            return "vendor-state";
+          if (/[\\/]node_modules[\\/](react-toastify|react-error-boundary|react-loading-skeleton|react-tooltip)[\\/]/.test(id))
+            return "vendor-ui";
+          if (/[\\/]node_modules[\\/](he|html-entities|validator|joi|@hapi)[\\/]/.test(id))
+            return "vendor-utils2";
+          if (/[\\/]node_modules[\\/](react-router|react-router-dom|@remix-run|history)[\\/]/.test(id))
+            return "vendor-router";
+          // ECharts chart rendering (used only in Chartable message component).
+          if (/[\\/]node_modules[\\/](echarts|zrender)[\\/]/.test(id))
+            return "vendor-charts";
+          // @lobehub provider brand icons.
+          if (/[\\/]node_modules[\\/](@lobehub)[\\/]/.test(id))
+            return "vendor-icons";
+          // Lucide icon set (tree-shaken but still sizable).
+          if (/[\\/]node_modules[\\/](lucide-react)[\\/]/.test(id))
+            return "vendor-lucide";
+          // React Aria / Adobe accessibility primitives.
+          if (/[\\/]node_modules[\\/](react-aria|react-stately|@internationalized)[\\/]/.test(id))
+            return "vendor-aria";
+          // Polyfills and babel runtime (heavy, loaded once).
+          if (/[\\/]node_modules[\\/](core-js|@babel[\\/]runtime|regenerator-runtime)[\\/]/.test(id))
+            return "vendor-polyfill";
           return "vendor";
         },
       },
