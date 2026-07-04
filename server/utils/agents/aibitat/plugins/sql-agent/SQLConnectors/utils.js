@@ -2,6 +2,79 @@
 // Credit: https://github.com/sindilevich/connection-string-parser
 
 /**
+ * Patterns that indicate an attempt to use a normally-read-only statement
+ * (SELECT/WITH/SHOW/EXPLAIN/DESCRIBE) to reach filesystem or command
+ * execution primitives exposed by some SQL engines when the connecting
+ * user has elevated privileges (e.g. FILE, pg_read_server_files,
+ * xp_cmdshell). A plain "starts with SELECT" check does not catch these
+ * because all of the statements below are syntactically valid SELECT/
+ * WITH statements.
+ */
+const DANGEROUS_QUERY_PATTERNS = [
+  /\bINTO\s+(OUTFILE|DUMPFILE)\b/i, // MySQL: SELECT ... INTO OUTFILE '/path/shell.php'
+  /\bLOAD_FILE\s*\(/i, // MySQL: SELECT LOAD_FILE('/etc/passwd')
+  /\bpg_read_(binary_)?file\s*\(/i, // Postgres: SELECT pg_read_file(...)
+  /\bpg_ls_dir\s*\(/i, // Postgres: directory listing via SELECT
+  /\bCOPY\b[\s\S]*\bPROGRAM\b/i, // Postgres: COPY ... TO/FROM PROGRAM '<shell cmd>'
+  /\bxp_cmdshell\b/i, // MSSQL: shell execution
+  /\bOPENROWSET\s*\(/i, // MSSQL: ad-hoc remote/file access
+  /\bOPENQUERY\s*\(/i, // MSSQL: linked server passthrough queries
+  /\bOPENDATASOURCE\s*\(/i, // MSSQL: ad-hoc remote data source access
+  /\bsp_configure\b/i, // MSSQL: server configuration changes
+];
+
+/**
+ * Validates that a query string is a safe, single, read-only statement.
+ * Combines three checks the individual per-engine "SELECT_ONLY_REGEX" check
+ * used to do alone, which was bypassable because it only inspected the
+ * first keyword of the string:
+ *   1. The statement must start with an allowed read-only keyword.
+ *   2. The statement must not contain a second statement (stacked query,
+ *      e.g. `SELECT 1; DROP TABLE users;`), detected via an unquoted `;`
+ *      that isn't just trailing whitespace/semicolons at the very end.
+ *   3. The statement must not reference a known file/command-execution
+ *      primitive (see DANGEROUS_QUERY_PATTERNS above).
+ * @param {string} queryString
+ * @returns {{ok: true}|{ok: false, error: string}}
+ */
+function assertReadOnlyQuery(queryString = "") {
+  const SELECT_ONLY_REGEX = /^\s*(SELECT|WITH|SHOW|EXPLAIN|DESCRIBE)\b/i;
+  const cleanQuery = typeof queryString === "string" ? queryString.trim() : "";
+
+  if (!SELECT_ONLY_REGEX.test(cleanQuery)) {
+    return {
+      ok: false,
+      error: "Only SELECT/WITH/SHOW/EXPLAIN/DESCRIBE queries are allowed",
+    };
+  }
+
+  // Reject stacked statements: any semicolon that is not just trailing
+  // punctuation at the end of the query indicates a second statement.
+  // This is a conservative heuristic (it does not parse string literals),
+  // so it may reject some valid queries containing a literal `;` inside a
+  // quoted string, but it never allows a stacked statement through.
+  const withoutTrailingSemicolons = cleanQuery.replace(/;+\s*$/, "");
+  if (withoutTrailingSemicolons.includes(";")) {
+    return {
+      ok: false,
+      error: "Multiple statements in a single query are not allowed",
+    };
+  }
+
+  for (const pattern of DANGEROUS_QUERY_PATTERNS) {
+    if (pattern.test(cleanQuery)) {
+      return {
+        ok: false,
+        error:
+          "Query references a disallowed file/command-execution primitive",
+      };
+    }
+  }
+
+  return { ok: true };
+}
+
+/**
  * @typedef {Object} ConnectionStringParserOptions
  * @property {'mssql' | 'mysql' | 'postgresql' | 'db'} [scheme] - The scheme of the connection string
  */
@@ -180,4 +253,4 @@ class ConnectionStringParser {
   }
 }
 
-module.exports = { ConnectionStringParser };
+module.exports = { ConnectionStringParser, assertReadOnlyQuery };

@@ -80,6 +80,34 @@ const COMMAND_WHITELIST = {
 const SHELL_META_RE = /[;&|`$<>(){}\\*?!#~^\n\r]/;
 
 /**
+ * Commands whose arguments may reference filesystem paths. For these, we
+ * additionally reject any `..` path segment so the whitelist's intent
+ * ("read-only, low-risk introspection") can't be used to walk outside of
+ * the intended working directory and read arbitrary files (e.g. `.env`,
+ * private keys) that happen to be readable by the server process.
+ */
+const PATH_ARG_COMMANDS = new Set([
+  "ls",
+  "cat",
+  "head",
+  "tail",
+  "du",
+  "df",
+  "which",
+]);
+
+/**
+ * Returns true if any `/`-delimited segment of the argument is `..`,
+ * which would let the argument escape the directory it's rooted in
+ * (e.g. `cat ../../../.env`, `cat foo/../../secrets`).
+ * @param {string} arg
+ * @returns {boolean}
+ */
+function hasPathTraversalSegment(arg) {
+  return arg.split("/").some((segment) => segment === "..");
+}
+
+/**
  * Validates a parsed command + args against the whitelist.
  * Returns { ok: true } or { ok: false, reason: string }
  */
@@ -108,6 +136,12 @@ function validateCommand(cmd, args) {
       return {
         ok: false,
         reason: `Argument '${arg}' contains disallowed characters.`,
+      };
+    }
+    if (PATH_ARG_COMMANDS.has(cmd) && hasPathTraversalSegment(arg)) {
+      return {
+        ok: false,
+        reason: "'..' path segments are not allowed in command arguments.",
       };
     }
   }
@@ -149,6 +183,10 @@ function apiTerminalExecEndpoints(app) {
           if (typeof cwd !== "string" || cwd.length > MAX_CWD_LENGTH)
             return response.status(400).json({
               error: "cwd must be a string of 500 characters or fewer",
+            });
+          if (hasPathTraversalSegment(cwd))
+            return response.status(400).json({
+              error: "'..' path segments are not allowed in cwd.",
             });
         }
 
@@ -208,5 +246,6 @@ module.exports = {
   apiTerminalExecEndpoints,
   validateCommand,
   isTerminalExecEnabled,
+  hasPathTraversalSegment,
   COMMAND_WHITELIST,
 };

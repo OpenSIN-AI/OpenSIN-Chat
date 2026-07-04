@@ -237,6 +237,54 @@ describe("Terminal Exec endpoint", () => {
     });
   });
 
+  describe("path traversal blocking (regression)", () => {
+    beforeEach(() => {
+      process.env.NODE_ENV = "development";
+    });
+
+    it("blocks '..' segments in cat arguments", async () => {
+      const { call } = buildApp();
+      const res = await call("post", "/terminal/exec", {
+        body: { command: "cat ../../../.env" },
+      });
+      expect(res.statusCode).toBe(403);
+      expect(res.body.error).toMatch(/\.\./);
+    });
+
+    it("blocks '..' segments buried mid-path", async () => {
+      const { call } = buildApp();
+      const res = await call("post", "/terminal/exec", {
+        body: { command: "cat foo/../../etc/passwd" },
+      });
+      expect(res.statusCode).toBe(403);
+    });
+
+    it("blocks '..' as the cwd parameter", async () => {
+      const { call } = buildApp();
+      const res = await call("post", "/terminal/exec", {
+        body: { command: "pwd", cwd: "../../.." },
+      });
+      expect(res.statusCode).toBe(400);
+      expect(res.body.error).toMatch(/\.\./);
+    });
+
+    it("still allows a plain relative filename for cat", async () => {
+      const { call } = buildApp();
+      const res = await call("post", "/terminal/exec", {
+        body: { command: "cat package.json" },
+      });
+      expect(res.statusCode).toBe(200);
+    });
+
+    it("still allows '.' as ls argument (not a traversal segment)", async () => {
+      const { call } = buildApp();
+      const res = await call("post", "/terminal/exec", {
+        body: { command: "ls ." },
+      });
+      expect(res.statusCode).toBe(200);
+    });
+  });
+
   describe("validateCommand unit tests", () => {
     it("rejects commands not in the whitelist", () => {
       expect(validateCommand("rm", ["-rf", "/"]).ok).toBe(false);
