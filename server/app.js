@@ -76,7 +76,12 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 
-const FILE_LIMIT = process.env.BODY_LIMIT || "5GB";
+// Body-parser limit for JSON/text/urlencoded payloads.
+// File uploads are handled by multer with its own size limits, so
+// bodyParser does not need to accept multi-GB payloads. 50MB is
+// generous for any legitimate JSON body (chat messages, attachments
+// as base64, etc.) while preventing memory-exhaustion DoS.
+const FILE_LIMIT = process.env.BODY_LIMIT || "50mb";
 
 let activeApp = null;
 // Kept as a reference to prevent the HTTP server from being garbage-collected.
