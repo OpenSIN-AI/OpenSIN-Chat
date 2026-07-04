@@ -183,7 +183,7 @@ const User = {
       const validatedUsername = this.validations.username(username);
 
       const bcrypt = require("bcryptjs");
-      const hashedPassword = bcrypt.hashSync(password, 10);
+      const hashedPassword = bcrypt.hashSync(password, 12);
       const user = await prisma.users.create({
         data: {
           username: validatedUsername,
@@ -257,7 +257,7 @@ const User = {
           return { success: false, error: passwordCheck.error };
         }
         const bcrypt = require("bcryptjs");
-        updates.password = bcrypt.hashSync(updates.password, 10);
+        updates.password = bcrypt.hashSync(updates.password, 12);
       }
 
       const changes = this.loggedChanges(updates, currentUser);
