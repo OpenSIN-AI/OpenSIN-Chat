@@ -1603,10 +1603,10 @@
     "@lancedb/lancedb-win32-arm64-msvc" "0.15.0"
     "@lancedb/lancedb-win32-x64-msvc" "0.15.0"
 
-"@langchain/anthropic@1.4.1":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@langchain/anthropic/-/anthropic-1.4.1.tgz#a51af7657b211a18d6a74fe2747a87a3639081b4"
-  integrity sha512-h3b6hxThcfh0WdmpuWr+qBi74MN+0BpNI/4H681vwXxbD3hLr2qMYN6ghqcPQhCxGJjg8ufs85qu2/ldSWonYQ==
+"@langchain/anthropic@1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@langchain/anthropic/-/anthropic-1.5.1.tgz#b288fc2274b9144a2899bde0ca4510fee879b10b"
+  integrity sha512-j92zCCd5BFH3rHMRzc2wBmSKDoVpinof1oh8aFiAz9TWbSOc4tGU4n6bqwy/wP0GH1uO96zZHLGCHBMPgrxTNw==
   dependencies:
     "@anthropic-ai/sdk" "^0.103.0"
     zod "^3.25.76 || ^4"
