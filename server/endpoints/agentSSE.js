@@ -35,7 +35,10 @@ function isOriginAllowed(request) {
 
   const origin = request.headers.origin;
   if (!origin) {
-    return true;
+    // Non-browser clients (Node, curl) don't send Origin — allow in
+    // development, reject in production for defence-in-depth.
+    // This matches the pattern in agentWebsocket.js isOriginAllowed().
+    return process.env.NODE_ENV !== "production";
   }
 
   const corsOrigin = process.env.CORS_ORIGIN;
