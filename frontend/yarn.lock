@@ -2723,12 +2723,11 @@ eslint-plugin-ft-flow@^3.0.0:
     lodash "^4.17.21"
     string-natural-compare "^3.0.1"
 
-eslint-plugin-i18next@^6.1.4:
-  version "6.1.4"
-  resolved "https://registry.npmjs.org/eslint-plugin-i18next/-/eslint-plugin-i18next-6.1.4.tgz"
-  integrity sha512-BekXQu1VaVFkREepQGsntBYoKuPsf89V16n/s2xpKMtsw0/lDseds1wBhj3RtO1dKnHsfTPaG+xul1vF0R7LEQ==
+eslint-plugin-i18next@^6.1.5:
+  version "6.1.5"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-i18next/-/eslint-plugin-i18next-6.1.5.tgz#743d06eec1e5918d8872d346f6a3487d223f2124"
+  integrity sha512-xCTfstbK9ZpQ6UFT5S1s6zbZMhKn2o2jRSQYiU2UkV7wt8y1m3WjkUYGkGlipgRdFInYI9+LAqE+JQU/L73HmA==
   dependencies:
-    lodash "^4.17.21"
     requireindex "~1.1.0"
 
 eslint-plugin-jsx-a11y@^6.10.2:
