@@ -238,9 +238,24 @@ export default function math_plugin(md, options) {
   // Default options — throwOnError:false lets KaTeX render an inline error
   // message (red text) instead of throwing, so the user sees a visible
   // error instead of silently falling back to raw LaTeX.
+  //
+  // trust:false + strict:"ignore" (added upstream in KaTeX 0.11+, unavailable
+  // in the 0.6.0 this project was previously pinned to) disable KaTeX's own
+  // "trusted" commands (\includegraphics, \href, \url, \htmlData, ...) that
+  // can otherwise embed arbitrary URLs/attributes into the rendered output.
+  // LLM output is untrusted input, so we don't want KaTeX itself opening an
+  // extra injection surface — this is defense-in-depth on top of (not a
+  // replacement for) the DOMPurify sanitization already applied to rendered
+  // chat HTML elsewhere in the app.
   options = options || {};
   if (options.throwOnError === undefined) {
     options.throwOnError = false;
+  }
+  if (options.trust === undefined) {
+    options.trust = false;
+  }
+  if (options.strict === undefined) {
+    options.strict = "ignore";
   }
 
   const katexInline: any = function (latex) {
