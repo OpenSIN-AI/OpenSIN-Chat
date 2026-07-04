@@ -88,7 +88,7 @@
     "remark-gfm": "^4.0.1",
     "swr": "^2.4.1",
     "text-case": "^1.0.9",
-    "uuid": "^11.1.1"
+    "uuid": "^14.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
