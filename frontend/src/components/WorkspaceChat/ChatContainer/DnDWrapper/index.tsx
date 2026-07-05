@@ -231,15 +231,41 @@ export function DnDFileUploaderProvider({
   async function pollParseJob(jobId: string) {
     const POLL_INTERVAL_MS = 1500;
     const MAX_POLL_MS = 30 * 60 * 1000; // OCR on large scans can take a while
+    const MAX_TRANSIENT_RETRIES = 20; // consecutive 429/5xx/network failures
+    const MAX_BACKOFF_MS = 30 * 1000;
     const startedAt = Date.now();
+    let transientFailures = 0;
 
     while (Date.now() - startedAt < MAX_POLL_MS) {
       const result = await Workspace.parseFileStatus(workspace.slug, jobId);
-      if (!result?.success)
+
+      if (result?.success) {
+        transientFailures = 0;
+        if (result.status === "completed" || result.status === "failed")
+          return result;
+        await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
+        continue;
+      }
+
+      // Terminal: the job no longer exists (expired, swept, or invalid id).
+      // Parsing itself may have succeeded — the caller refreshes the parsed
+      // file list either way, so only the poll result is lost.
+      if (result?.statusCode === 404)
         return { status: "failed", error: result?.error ?? null };
-      if (result.status === "completed" || result.status === "failed")
-        return result;
-      await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
+
+      // Transient: 429 (rate limited), 5xx (restart), or network blip.
+      // The job keeps running server-side — back off and retry instead of
+      // declaring the upload dead on the first hiccup.
+      transientFailures += 1;
+      if (transientFailures > MAX_TRANSIENT_RETRIES)
+        return { status: "failed", error: result?.error ?? null };
+      const backoffMs =
+        result?.retryAfterMs ??
+        Math.min(
+          POLL_INTERVAL_MS * 2 ** Math.min(transientFailures, 4),
+          MAX_BACKOFF_MS,
+        );
+      await new Promise((resolve) => setTimeout(resolve, backoffMs));
     }
     return { status: "failed", error: "Processing timed out." };
   }
