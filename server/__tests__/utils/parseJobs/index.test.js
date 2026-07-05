@@ -182,14 +182,14 @@ describe("ParseJobs store — TTL sweep", () => {
     expect(rawRow(id).status).toBe(JOB_STATUS.COMPLETED);
   });
 
-  it("deletes finished jobs older than the 15-minute TTL", async () => {
+  it("deletes finished jobs older than the TTL", async () => {
     const stale = await ParseJobs.create({ workspaceId: WS, originalname: "stale.pdf" });
     await ParseJobs.markCompleted(stale.id, []);
-    backdateFinishedAt(stale.id, 20); // 20 min ago > 15 min TTL
+    backdateFinishedAt(stale.id, 40); // 40 min ago > 35 min TTL
 
     const staleFailed = await ParseJobs.create({ workspaceId: WS, originalname: "old-fail.pdf" });
     await ParseJobs.markFailed(staleFailed.id, "boom");
-    backdateFinishedAt(staleFailed.id, 16);
+    backdateFinishedAt(staleFailed.id, 36);
 
     // A brand-new create() kicks off the sweep. Await create so the row is in,
     // then run sweep via a second create to be deterministic.
@@ -204,6 +204,19 @@ describe("ParseJobs store — TTL sweep", () => {
     expect(rawRow(stale.id)).toBeFalsy(); // swept
     expect(rawRow(staleFailed.id)).toBeFalsy(); // swept
     expect(rawRow(fresh.id)).toBeTruthy(); // retained
+  });
+
+  it("retains finished jobs for the full frontend polling window (30 min)", async () => {
+    // A throttled background tab may take up to MAX_POLL_MS (30 min) to fetch
+    // the result. TTL must exceed that or successful parses turn into 404s.
+    const job = await ParseJobs.create({ workspaceId: WS, originalname: "slow-tab.pdf" });
+    await ParseJobs.markCompleted(job.id, [{ id: 1 }]);
+    backdateFinishedAt(job.id, 31); // finished 31 min ago — still inside TTL
+
+    await ParseJobs.create({ workspaceId: WS, originalname: "trigger.pdf" });
+    await new Promise((r) => setTimeout(r, 20));
+
+    expect(rawRow(job.id)).toBeTruthy();
   });
 
   it("never sweeps unfinished (pending/processing) jobs regardless of age", async () => {
@@ -245,10 +258,57 @@ describe("ParseJobs store — stalled-job recovery on boot", () => {
     expect(rawRow(done.id).status).toBe(JOB_STATUS.COMPLETED);
   });
 
+  it("marks orphaned 'pending' jobs past the grace period as failed", async () => {
+    // Server crashed between ParseJobs.create() and markProcessing() — the
+    // row is stuck in "pending" forever without this recovery.
+    const orphan = await ParseJobs.create({ workspaceId: WS, originalname: "orphan.pdf" });
+    prisma.__db
+      .prepare(`UPDATE parse_jobs SET createdAt = datetime('now','-5 minutes') WHERE id = ?`)
+      .run(orphan.id);
+
+    // A pending job created moments ago (e.g. during a rolling restart) is
+    // still inside the grace period and must NOT be touched.
+    const fresh = await ParseJobs.create({ workspaceId: WS, originalname: "fresh.pdf" });
+
+    await recoverStalledJobs();
+
+    const recovered = rawRow(orphan.id);
+    expect(recovered.status).toBe(JOB_STATUS.FAILED);
+    expect(recovered.error).toMatch(/re-upload/i);
+    expect(rawRow(fresh.id).status).toBe(JOB_STATUS.PENDING);
+  });
+
+  it("runs the TTL sweep at boot so quiet instances get cleaned up too", async () => {
+    const old = await ParseJobs.create({ workspaceId: WS, originalname: "old.pdf" });
+    await ParseJobs.markCompleted(old.id, []);
+    backdateFinishedAt(old.id, 60); // way past TTL
+
+    await recoverStalledJobs(); // no new create() needed
+
+    expect(rawRow(old.id)).toBeFalsy();
+  });
+
   it("is a no-op when there are no stalled jobs", async () => {
     const done = await ParseJobs.create({ workspaceId: WS, originalname: "done.pdf" });
     await ParseJobs.markCompleted(done.id, []);
     await expect(recoverStalledJobs()).resolves.not.toThrow();
     expect(rawRow(done.id).status).toBe(JOB_STATUS.COMPLETED);
+  });
+});
+
+describe("ParseJobs store — corrupted data resilience", () => {
+  it("degrades a job with corrupted files JSON to 'failed' instead of throwing", async () => {
+    const { id } = await ParseJobs.create({ workspaceId: WS, originalname: "corrupt.pdf" });
+    await ParseJobs.markCompleted(id, [{ id: 1 }]);
+    // Simulate on-disk corruption / partial write of the files column.
+    prisma.__db
+      .prepare(`UPDATE parse_jobs SET files = '{"broken' WHERE id = ?`)
+      .run(id);
+
+    const job = await ParseJobs.get(id, { workspaceId: WS });
+    expect(job).not.toBeNull();
+    expect(job.status).toBe(JOB_STATUS.FAILED);
+    expect(job.files).toBeNull();
+    expect(job.error).toMatch(/corrupted/i);
   });
 });

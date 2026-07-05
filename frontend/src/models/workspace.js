@@ -409,17 +409,46 @@ const Workspace = {
 
   /**
    * Polls the status of an async parse job started via uploadAndParseFile.
+   * Exposes the HTTP status code and Retry-After header so callers can
+   * distinguish transient failures (429 rate limit, 5xx, network blips —
+   * retry with backoff) from terminal ones (404 job gone).
    * @param {string} slug - workspace slug
    * @param {string} jobId
-   * @returns {Promise<{success: boolean, status?: "pending"|"processing"|"completed"|"failed", files?: object[]|null, error?: string|null}>}
+   * @returns {Promise<{success: boolean, status?: "pending"|"processing"|"completed"|"failed", files?: object[]|null, error?: string|null, statusCode: number|null, retryAfterMs: number|null}>}
    */
   parseFileStatus: async function (slug, jobId) {
-    return await fetch(`${API_BASE}/workspace/${slug}/parse-status/${jobId}`, {
-      method: "GET",
-      headers: baseHeaders(),
-    })
-      .then((res) => res.json())
-      .catch((e) => ({ success: false, error: e.message }));
+    try {
+      const res = await fetch(
+        `${API_BASE}/workspace/${slug}/parse-status/${jobId}`,
+        {
+          method: "GET",
+          headers: baseHeaders(),
+        }
+      );
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        data = { success: false, error: `HTTP ${res.status}` };
+      }
+      const retryAfter = Number(res.headers.get("Retry-After"));
+      return {
+        ...data,
+        statusCode: res.status,
+        retryAfterMs:
+          Number.isFinite(retryAfter) && retryAfter > 0
+            ? retryAfter * 1000
+            : null,
+      };
+    } catch (e) {
+      // Network error — statusCode null marks this as transient.
+      return {
+        success: false,
+        error: e.message,
+        statusCode: null,
+        retryAfterMs: null,
+      };
+    }
   },
 
   getParsedFiles: async function (slug, threadSlug = null) {

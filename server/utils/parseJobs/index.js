@@ -7,8 +7,20 @@
 const { v4 } = require("uuid");
 const prisma = require("../prisma");
 
-/** How long completed/failed jobs are retained before TTL cleanup (15 min). */
-const JOB_TTL_MS = 15 * 60 * 1000;
+/**
+ * How long completed/failed jobs are retained before TTL cleanup.
+ * MUST be >= the frontend's MAX_POLL_MS (30 min) so a throttled/backgrounded
+ * tab can still fetch the result of a finished job before it is swept —
+ * otherwise a successful parse turns into a 404/"failed" for that client.
+ */
+const JOB_TTL_MS = 35 * 60 * 1000;
+
+/**
+ * Grace period before a still-"pending" row found at boot is considered
+ * orphaned. A pending job normally flips to "processing" within milliseconds,
+ * so anything pending for longer than this at startup lost its worker.
+ */
+const PENDING_STALE_MS = 60 * 1000;
 
 const JOB_STATUS = {
   PENDING: "pending",
@@ -77,6 +89,28 @@ async function recoverStalledJobs() {
       "Server restarted while this job was processing. Please re-upload the file.",
       JOB_STATUS.PROCESSING
     );
+    // Rows stuck in "pending" past the grace period lost their worker too —
+    // e.g. the server crashed between ParseJobs.create() and markProcessing().
+    // Without this, the frontend polls a forever-pending job until timeout.
+    const pendingStaleMinutes = Math.max(
+      1,
+      Math.round(PENDING_STALE_MS / 60000)
+    );
+    await prisma.$executeRawUnsafe(
+      `UPDATE parse_jobs
+          SET status     = ?,
+              error      = ?,
+              finishedAt = datetime('now')
+        WHERE status = ?
+          AND createdAt < datetime('now', ?)`,
+      JOB_STATUS.FAILED,
+      "Server restarted before this job could start. Please re-upload the file.",
+      JOB_STATUS.PENDING,
+      `-${pendingStaleMinutes} minutes`
+    );
+    // Boot-time sweep: without this, finished jobs only get cleaned up when
+    // someone uploads a new file — on quiet instances they linger forever.
+    await sweep();
   } catch (e) {
     // Non-fatal: log and continue — the rest of the server should still start.
     console.error("[ParseJobs] recoverStalledJobs failed:", e.message);
@@ -223,6 +257,23 @@ async function _queryOne(sql, ...params) {
  */
 function _toJob(row) {
   if (!row) return null;
+  // Defensive parse: a corrupted `files` column must not turn every
+  // /parse-status poll into a 500. Degrade the job to "failed" instead.
+  let files = null;
+  let status = row.status;
+  let error = row.error ?? null;
+  if (row.files) {
+    try {
+      files = JSON.parse(row.files);
+    } catch {
+      console.error(
+        `[ParseJobs] corrupted files JSON for job ${row.id} — degrading to failed`
+      );
+      files = null;
+      status = JOB_STATUS.FAILED;
+      error = "Stored parse result was corrupted. Please re-upload the file.";
+    }
+  }
   return {
     id: row.id,
     workspaceId:
@@ -236,9 +287,9 @@ function _toJob(row) {
           : Number(row.userId)
         : null,
     originalname: row.originalname,
-    status: row.status,
-    files: row.files ? JSON.parse(row.files) : null,
-    error: row.error ?? null,
+    status,
+    files,
+    error,
     // Normalise datetime strings / Date objects to Unix ms for backwards compat.
     createdAt: _toMs(row.createdAt),
     finishedAt: row.finishedAt ? _toMs(row.finishedAt) : null,
