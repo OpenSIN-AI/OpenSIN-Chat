@@ -40,6 +40,26 @@ function noteEndpoints(app) {
       try {
         const workspace = response.locals.workspace;
         const { content = "", pinned = false } = reqBody(request);
+
+        // Validate content — mirror the same rules enforced by PUT.
+        if (typeof content !== "string") {
+          return response
+            .status(400)
+            .json({ error: "content must be a string" });
+        }
+        if (content.length > 100_000) {
+          return response
+            .status(400)
+            .json({ error: "content must be a string of max 100,000 characters" });
+        }
+
+        // Validate pinned — must be boolean (or coercible default false).
+        if (typeof pinned !== "boolean") {
+          return response
+            .status(400)
+            .json({ error: "pinned must be a boolean" });
+        }
+
         const note = await WorkspaceNote.create(workspace.id, content, pinned);
         response.status(200).json({ note });
       } catch (e) {
