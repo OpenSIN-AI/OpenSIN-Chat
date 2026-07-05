@@ -4,6 +4,7 @@ import { renderHook, act, waitFor } from "@testing-library/react";
 import {
   ChatSidebarProvider,
   useChatSidebar,
+  useChatSidebarLogs,
   useDatabaseSidebar,
   usePreviewSidebar,
   usePoliticalSidebar,
@@ -61,7 +62,9 @@ describe("ChatSidebarProvider", () => {
   });
 
   it("accumulates console logs from dispatchLog", async () => {
-    const { result } = renderHook(() => useChatSidebar(), { wrapper });
+    // consoleLogs live in a dedicated logs context (ChatSidebarLogsContext)
+    // so log spam does not re-render every consumer of useChatSidebar.
+    const { result } = renderHook(() => useChatSidebarLogs(), { wrapper });
     expect(result.current.consoleLogs).toEqual([]);
     act(() => {
       dispatchLog("info", "test message");
