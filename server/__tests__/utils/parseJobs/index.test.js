@@ -296,6 +296,58 @@ describe("ParseJobs store — stalled-job recovery on boot", () => {
   });
 });
 
+describe("ParseJobs store — edge cases (Issue #369 audit)", () => {
+  it("handles umlauts and multi-byte filenames losslessly", async () => {
+    const originalname = "Bericht_Größenordnung_München — 東京.pdf";
+    const { id } = await ParseJobs.create({ workspaceId: WS, originalname });
+    const job = await ParseJobs.get(id, { workspaceId: WS });
+    expect(job.originalname).toBe(originalname);
+  });
+
+  it("stores hostile filenames inertly via placeholders (no SQL injection)", async () => {
+    const originalname = `x'); DROP TABLE parse_jobs; --.pdf`;
+    const { id } = await ParseJobs.create({ workspaceId: WS, originalname });
+    const job = await ParseJobs.get(id, { workspaceId: WS });
+    expect(job.originalname).toBe(originalname);
+    // Table survived — the next query would throw if it had been dropped.
+    expect(await ParseJobs.get(id, { workspaceId: WS })).not.toBeNull();
+  });
+
+  it("supports many concurrent uploads without id collisions or cross-talk", async () => {
+    const jobs = await Promise.all(
+      Array.from({ length: 25 }, (_, i) =>
+        ParseJobs.create({
+          workspaceId: (i % 3) + 1,
+          userId: (i % 5) + 1,
+          originalname: `parallel-${i}.pdf`,
+        })
+      )
+    );
+
+    // All ids unique.
+    expect(new Set(jobs.map((j) => j.id)).size).toBe(jobs.length);
+
+    // Interleaved terminal transitions land on the right rows.
+    await Promise.all(
+      jobs.map((j, i) =>
+        i % 2 === 0
+          ? ParseJobs.markCompleted(j.id, [{ id: i }])
+          : ParseJobs.markFailed(j.id, `err-${i}`)
+      )
+    );
+    for (let i = 0; i < jobs.length; i++) {
+      const row = rawRow(jobs[i].id);
+      if (i % 2 === 0) {
+        expect(row.status).toBe(JOB_STATUS.COMPLETED);
+        expect(JSON.parse(row.files)).toEqual([{ id: i }]);
+      } else {
+        expect(row.status).toBe(JOB_STATUS.FAILED);
+        expect(row.error).toBe(`err-${i}`);
+      }
+    }
+  });
+});
+
 describe("ParseJobs store — corrupted data resilience", () => {
   it("degrades a job with corrupted files JSON to 'failed' instead of throwing", async () => {
     const { id } = await ParseJobs.create({ workspaceId: WS, originalname: "corrupt.pdf" });

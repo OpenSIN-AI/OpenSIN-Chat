@@ -33,6 +33,24 @@ export default defineConfig([
       "no-unused-private-class-members": "warn",
       "no-console": "warn",
       "no-unused-vars": "off",
+      // Guard against SQL injection: raw SQL helpers may only receive static
+      // SQL strings with `?` placeholders — never interpolated templates or
+      // concatenated strings. (Issue #369 raw-SQL audit)
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector:
+            "CallExpression[callee.property.name=/^\\$(executeRawUnsafe|queryRawUnsafe)$/] > TemplateLiteral.arguments:first-child[expressions.length>0]",
+          message:
+            "Do not interpolate values into raw SQL. Use `?` placeholders and pass values as parameters (see utils/parseJobs).",
+        },
+        {
+          selector:
+            "CallExpression[callee.property.name=/^\\$(executeRawUnsafe|queryRawUnsafe)$/] > BinaryExpression.arguments:first-child[operator='+']",
+          message:
+            "Do not build raw SQL via string concatenation. Use `?` placeholders and pass values as parameters.",
+        },
+      ],
       "unused-imports/no-unused-imports": "error",
       "unused-imports/no-unused-vars": [
         "error",

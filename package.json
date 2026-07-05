@@ -94,6 +94,7 @@
     "better-sqlite3": "^12.11.1",
     "check-disk-space": "^3.4.0",
     "docx": "^9.7.1",
+    "eslint": "^10.6.0",
     "jspdf": "^4.2.1",
     "multer": "^2.2.0",
     "openai": "^6.44.0",

@@ -82,7 +82,10 @@ const WorkspaceNote = {
 
   create: async function (workspaceId, content = "", pinned = false) {
     await prisma.$executeRawUnsafe(
-      'INSERT INTO workspace_notes (workspaceId, content, pinned, createdAt, updatedAt) VALUES (?, ?, ?, datetime("now"), datetime("now"))',
+      // NOTE: datetime('now') MUST use single quotes. Double-quoted "now" is
+      // an identifier in SQLite; better-sqlite3 (the Prisma 7 adapter)
+      // rejects it with `no such column: "now"`, breaking note creation.
+      "INSERT INTO workspace_notes (workspaceId, content, pinned, createdAt, updatedAt) VALUES (?, ?, ?, datetime('now'), datetime('now'))",
       workspaceId,
       content,
       pinned ? 1 : 0,
@@ -97,14 +100,14 @@ const WorkspaceNote = {
   update: async function (id, data) {
     if (data.content !== undefined) {
       await prisma.$executeRawUnsafe(
-        'UPDATE workspace_notes SET content = ?, updatedAt = datetime("now") WHERE id = ?',
+        "UPDATE workspace_notes SET content = ?, updatedAt = datetime('now') WHERE id = ?",
         data.content,
         id,
       );
     }
     if (data.pinned !== undefined) {
       await prisma.$executeRawUnsafe(
-        'UPDATE workspace_notes SET pinned = ?, updatedAt = datetime("now") WHERE id = ?',
+        "UPDATE workspace_notes SET pinned = ?, updatedAt = datetime('now') WHERE id = ?",
         data.pinned ? 1 : 0,
         id,
       );

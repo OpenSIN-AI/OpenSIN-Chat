@@ -87,14 +87,14 @@ async function recoverStalledJobs() {
         WHERE status = ?`,
       JOB_STATUS.FAILED,
       "Server restarted while this job was processing. Please re-upload the file.",
-      JOB_STATUS.PROCESSING
+      JOB_STATUS.PROCESSING,
     );
     // Rows stuck in "pending" past the grace period lost their worker too —
     // e.g. the server crashed between ParseJobs.create() and markProcessing().
     // Without this, the frontend polls a forever-pending job until timeout.
     const pendingStaleMinutes = Math.max(
       1,
-      Math.round(PENDING_STALE_MS / 60000)
+      Math.round(PENDING_STALE_MS / 60000),
     );
     await prisma.$executeRawUnsafe(
       `UPDATE parse_jobs
@@ -106,7 +106,7 @@ async function recoverStalledJobs() {
       JOB_STATUS.FAILED,
       "Server restarted before this job could start. Please re-upload the file.",
       JOB_STATUS.PENDING,
-      `-${pendingStaleMinutes} minutes`
+      `-${pendingStaleMinutes} minutes`,
     );
     // Boot-time sweep: without this, finished jobs only get cleaned up when
     // someone uploads a new file — on quiet instances they linger forever.
@@ -136,7 +136,7 @@ async function sweep() {
         AND finishedAt < datetime('now', ?)`,
     JOB_STATUS.COMPLETED,
     JOB_STATUS.FAILED,
-    `-${ttlMinutes} minutes`
+    `-${ttlMinutes} minutes`,
   );
 }
 
@@ -155,7 +155,7 @@ async function create({ workspaceId, userId = null, originalname }) {
   await ensureTable();
   // Async sweep — don't await so the caller isn't blocked by housekeeping.
   sweep().catch((e) =>
-    console.warn("[ParseJobs] sweep error (non-fatal):", e.message)
+    console.warn("[ParseJobs] sweep error (non-fatal):", e.message),
   );
 
   const id = v4();
@@ -166,14 +166,9 @@ async function create({ workspaceId, userId = null, originalname }) {
     workspaceId,
     userId ?? null,
     originalname,
-    JOB_STATUS.PENDING
+    JOB_STATUS.PENDING,
   );
-  return _toJob(
-    await _queryOne(
-      "SELECT * FROM parse_jobs WHERE id = ?",
-      id
-    )
-  );
+  return _toJob(await _queryOne("SELECT * FROM parse_jobs WHERE id = ?", id));
 }
 
 /**
@@ -186,10 +181,7 @@ async function create({ workspaceId, userId = null, originalname }) {
  */
 async function get(jobId, { workspaceId, userId = null }) {
   await ensureTable();
-  const row = await _queryOne(
-    "SELECT * FROM parse_jobs WHERE id = ?",
-    jobId
-  );
+  const row = await _queryOne("SELECT * FROM parse_jobs WHERE id = ?", jobId);
   if (!row) return null;
   if (row.workspaceId !== workspaceId) return null;
   if (userId !== null && row.userId !== null && row.userId !== userId)
@@ -202,7 +194,7 @@ async function markProcessing(jobId) {
   await prisma.$executeRawUnsafe(
     `UPDATE parse_jobs SET status = ? WHERE id = ?`,
     JOB_STATUS.PROCESSING,
-    jobId
+    jobId,
   );
 }
 
@@ -220,7 +212,7 @@ async function markCompleted(jobId, files) {
       WHERE id = ?`,
     JOB_STATUS.COMPLETED,
     JSON.stringify(files ?? []),
-    jobId
+    jobId,
   );
 }
 
@@ -238,7 +230,7 @@ async function markFailed(jobId, error) {
       WHERE id = ?`,
     JOB_STATUS.FAILED,
     error || "Unknown error",
-    jobId
+    jobId,
   );
 }
 
@@ -248,7 +240,7 @@ async function markFailed(jobId, error) {
 
 async function _queryOne(sql, ...params) {
   const rows = await prisma.$queryRawUnsafe(sql, ...params);
-  return Array.isArray(rows) ? rows[0] ?? null : rows ?? null;
+  return Array.isArray(rows) ? (rows[0] ?? null) : (rows ?? null);
 }
 
 /**
@@ -267,7 +259,7 @@ function _toJob(row) {
       files = JSON.parse(row.files);
     } catch {
       console.error(
-        `[ParseJobs] corrupted files JSON for job ${row.id} — degrading to failed`
+        `[ParseJobs] corrupted files JSON for job ${row.id} — degrading to failed`,
       );
       files = null;
       status = JOB_STATUS.FAILED;
@@ -303,7 +295,10 @@ function _toMs(val) {
   // SQLite `datetime('now')` stores UTC as "YYYY-MM-DD HH:MM:SS" without a
   // timezone marker — normalise to ISO-8601 UTC so JS doesn't parse it as
   // local time.
-  if (typeof val === "string" && /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(val))
+  if (
+    typeof val === "string" &&
+    /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(val)
+  )
     return new Date(`${val.replace(" ", "T")}Z`).getTime();
   return new Date(val).getTime();
 }
