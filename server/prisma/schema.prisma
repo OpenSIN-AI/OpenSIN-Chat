@@ -787,3 +787,25 @@ model workspace_notes {
 
   @@index([workspaceId])
 }
+
+// Persistent store for async PDF/file parse jobs.
+// Replaces the previous in-memory Map so jobs survive server restarts.
+// Managed by `server/utils/parseJobs/index.js`.
+model parse_jobs {
+  // UUID generated in application code (not autoincrement) so the id can be
+  // handed to the client *before* the row is committed.
+  id          String    @id
+  workspaceId Int
+  userId      Int?
+  originalname String
+  // pending | processing | completed | failed
+  status      String    @default("pending")
+  // JSON array of WorkspaceParsedFiles rows; null until completed.
+  files       String?
+  error       String?
+  createdAt   DateTime  @default(now())
+  finishedAt  DateTime?
+
+  @@index([workspaceId, status])
+  @@index([createdAt])
+}

@@ -30,22 +30,25 @@ if (!process.env.GIT_SHA) {
 }
 
 // Resume interrupted PDF analysis, cross-check, and corpus jobs after a restart.
+// Also recover stalled parse_jobs rows so the frontend never polls forever.
 // Fire-and-forget with error catch — failures here must not prevent server boot.
 (async () => {
   try {
     const { PdfAnalysisPipeline } = require("./utils/pdfAnalysis");
     const { CrossCheckPipeline } = require("./utils/pdfAnalysis/crossCheck");
     const { CorpusPipeline } = require("./utils/pdfAnalysis/corpus");
+    const { recoverStalledJobs } = require("./utils/parseJobs");
 
     await Promise.all([
       Promise.resolve(PdfAnalysisPipeline.resumeInterrupted()),
       Promise.resolve(CorpusPipeline.restorePersisted()),
+      recoverStalledJobs(),
     ]);
     await Promise.resolve(
       CrossCheckPipeline.restorePersisted(PdfAnalysisPipeline.factStore),
     );
   } catch (err) {
-    console.error("[Server] PDF job resumption failed:", err?.message || err);
+    console.error("[Server] Job resumption failed:", err?.message || err);
   }
 })();
 
