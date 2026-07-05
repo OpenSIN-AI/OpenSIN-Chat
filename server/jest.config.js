@@ -36,5 +36,9 @@ module.exports = {
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/$1",
+    // uuid >= 11 ships ESM-only. Node itself can require() ESM at runtime,
+    // but Jest's CJS module registry cannot (without experimental VM
+    // modules) — map to a tiny crypto.randomUUID-backed shim in tests.
+    "^uuid$": "<rootDir>/__tests__/helpers/uuidShim.js",
   },
 };

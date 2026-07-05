@@ -26,6 +26,7 @@ jest.mock("../../utils/http", () => ({
 
 jest.mock("../../utils/files/multer", () => ({
   handleFileUpload: (_req, _res, next) => next(),
+  mirrorToSupabase: jest.fn().mockResolvedValue(false),
 }));
 
 const mockTelemetrySend = jest.fn().mockResolvedValue(undefined);
@@ -293,9 +294,10 @@ describe("Workspace Parsed Files endpoints", () => {
     });
   });
 
-  describe("POST /workspace/:slug/parse", () => {
+  describe("POST /workspace/:slug/parse (sync mode, ?sync=true)", () => {
     const workspace = { id: 1, slug: "ws" };
     const user = { id: 10 };
+    const syncQuery = { sync: "true" };
 
     it("rejects when collector is offline", async () => {
       mockUserFromSession.mockResolvedValue(user);
@@ -305,7 +307,7 @@ describe("Workspace Parsed Files endpoints", () => {
         harness,
         "post",
         "/workspace/:slug/parse",
-        { file: { originalname: "doc.pdf" } },
+        { file: { originalname: "doc.pdf" }, query: syncQuery },
         { workspace },
       );
       expect(res.statusCode).toBe(500);
@@ -328,7 +330,7 @@ describe("Workspace Parsed Files endpoints", () => {
         harness,
         "post",
         "/workspace/:slug/parse",
-        { file: { originalname: "doc.pdf" }, body: {} },
+        { file: { originalname: "doc.pdf" }, body: {}, query: syncQuery },
         { workspace },
       );
       expect(res.statusCode).toBe(200);
@@ -350,7 +352,7 @@ describe("Workspace Parsed Files endpoints", () => {
         harness,
         "post",
         "/workspace/:slug/parse",
-        { file: { originalname: "doc.pdf" }, body: {} },
+        { file: { originalname: "doc.pdf" }, body: {}, query: syncQuery },
         { workspace },
       );
       expect(res.statusCode).toBe(500);
@@ -373,7 +375,7 @@ describe("Workspace Parsed Files endpoints", () => {
         harness,
         "post",
         "/workspace/:slug/parse",
-        { file: { originalname: "doc.pdf" }, body: {} },
+        { file: { originalname: "doc.pdf" }, body: {}, query: syncQuery },
         { workspace },
       );
       expect(res.statusCode).toBe(500);
@@ -386,10 +388,150 @@ describe("Workspace Parsed Files endpoints", () => {
         harness,
         "post",
         "/workspace/:slug/parse",
-        { file: { originalname: "doc.pdf" }, body: {} },
+        { file: { originalname: "doc.pdf" }, body: {}, query: syncQuery },
         { workspace },
       );
       expect(res.statusCode).toBe(500);
+    });
+  });
+
+  describe("POST /workspace/:slug/parse (async default) + parse-status", () => {
+    const workspace = { id: 1, slug: "ws" };
+    const user = { id: 10 };
+
+    /** Lets pending background microtasks (runParseJob) settle. */
+    const flush = () => new Promise((resolve) => setTimeout(resolve, 0));
+
+    it("rejects missing file with 400", async () => {
+      mockUserFromSession.mockResolvedValue(user);
+      const harness = buildApp();
+      const res = await callWithLocals(
+        harness,
+        "post",
+        "/workspace/:slug/parse",
+        { body: {} },
+        { workspace },
+      );
+      expect(res.statusCode).toBe(400);
+    });
+
+    it("responds 202 with a jobId immediately and completes in background", async () => {
+      mockUserFromSession.mockResolvedValue(user);
+      mockMultiUserMode.mockReturnValue(false);
+      mockCollectorOnline.mockResolvedValue(true);
+      mockCollectorParse.mockResolvedValue({
+        success: true,
+        documents: [{ id: "d1", token_count_estimate: 50 }],
+      });
+      mockParsedCreate.mockResolvedValue({
+        file: { id: 1, filename: "doc.pdf-d1.json", tokenCountEstimate: 50 },
+        error: null,
+      });
+      const harness = buildApp();
+      const res = await callWithLocals(
+        harness,
+        "post",
+        "/workspace/:slug/parse",
+        { file: { originalname: "doc.pdf" }, body: {} },
+        { workspace },
+      );
+      expect(res.statusCode).toBe(202);
+      expect(res.body.success).toBe(true);
+      expect(res.body.jobId).toBeDefined();
+
+      await flush();
+
+      const statusRes = await callWithLocals(
+        harness,
+        "get",
+        "/workspace/:slug/parse-status/:jobId",
+        { params: { slug: "ws", jobId: res.body.jobId } },
+        { workspace },
+      );
+      expect(statusRes.statusCode).toBe(200);
+      expect(statusRes.body.status).toBe("completed");
+      expect(statusRes.body.files).toHaveLength(1);
+      expect(mockEventLog).toHaveBeenCalled();
+    });
+
+    it("marks job failed when the collector parse fails", async () => {
+      mockUserFromSession.mockResolvedValue(user);
+      mockMultiUserMode.mockReturnValue(false);
+      mockCollectorOnline.mockResolvedValue(true);
+      mockCollectorParse.mockResolvedValue({
+        success: false,
+        reason: "parse error",
+        documents: [],
+      });
+      const harness = buildApp();
+      const res = await callWithLocals(
+        harness,
+        "post",
+        "/workspace/:slug/parse",
+        { file: { originalname: "doc.pdf" }, body: {} },
+        { workspace },
+      );
+      expect(res.statusCode).toBe(202);
+
+      await flush();
+
+      const statusRes = await callWithLocals(
+        harness,
+        "get",
+        "/workspace/:slug/parse-status/:jobId",
+        { params: { slug: "ws", jobId: res.body.jobId } },
+        { workspace },
+      );
+      expect(statusRes.statusCode).toBe(200);
+      expect(statusRes.body.status).toBe("failed");
+      expect(statusRes.body.error).toMatch(/parse error/i);
+    });
+
+    it("returns 404 for unknown job ids", async () => {
+      mockUserFromSession.mockResolvedValue(user);
+      mockMultiUserMode.mockReturnValue(false);
+      const harness = buildApp();
+      const statusRes = await callWithLocals(
+        harness,
+        "get",
+        "/workspace/:slug/parse-status/:jobId",
+        { params: { slug: "ws", jobId: "does-not-exist" } },
+        { workspace },
+      );
+      expect(statusRes.statusCode).toBe(404);
+    });
+
+    it("scopes job visibility to the owning workspace", async () => {
+      mockUserFromSession.mockResolvedValue(user);
+      mockMultiUserMode.mockReturnValue(false);
+      mockCollectorOnline.mockResolvedValue(true);
+      mockCollectorParse.mockResolvedValue({
+        success: true,
+        documents: [{ id: "d1", token_count_estimate: 1 }],
+      });
+      mockParsedCreate.mockResolvedValue({
+        file: { id: 1, filename: "doc.pdf-d1.json" },
+        error: null,
+      });
+      const harness = buildApp();
+      const res = await callWithLocals(
+        harness,
+        "post",
+        "/workspace/:slug/parse",
+        { file: { originalname: "doc.pdf" }, body: {} },
+        { workspace },
+      );
+      await flush();
+
+      const otherWorkspace = { id: 999, slug: "other" };
+      const statusRes = await callWithLocals(
+        harness,
+        "get",
+        "/workspace/:slug/parse-status/:jobId",
+        { params: { slug: "other", jobId: res.body.jobId } },
+        { workspace: otherWorkspace },
+      );
+      expect(statusRes.statusCode).toBe(404);
     });
   });
 });
