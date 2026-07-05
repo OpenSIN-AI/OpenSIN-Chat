@@ -89,16 +89,20 @@ async function recoverStalledJobs() {
 
 /** Delete finished jobs older than JOB_TTL_MS to keep the table small. */
 async function sweep() {
-  const cutoffMs = Date.now() - JOB_TTL_MS;
-  const cutoff = new Date(cutoffMs).toISOString();
+  // IMPORTANT: the cutoff is computed entirely inside SQLite so it uses the
+  // exact same datetime string format as the stored `finishedAt` values
+  // (`datetime('now')` → "YYYY-MM-DD HH:MM:SS"). Mixing in a JS ISO string
+  // ("...T...Z") would corrupt the lexicographic comparison because
+  // ' ' < 'T' and same-day rows would always sort below the cutoff.
+  const ttlMinutes = Math.round(JOB_TTL_MS / 60000);
   await prisma.$executeRawUnsafe(
     `DELETE FROM parse_jobs
       WHERE status IN (?, ?)
         AND finishedAt IS NOT NULL
-        AND finishedAt < ?`,
+        AND finishedAt < datetime('now', ?)`,
     JOB_STATUS.COMPLETED,
     JOB_STATUS.FAILED,
-    cutoff
+    `-${ttlMinutes} minutes`
   );
 }
 
@@ -245,6 +249,11 @@ function _toMs(val) {
   if (!val) return null;
   if (typeof val === "number") return val;
   if (val instanceof Date) return val.getTime();
+  // SQLite `datetime('now')` stores UTC as "YYYY-MM-DD HH:MM:SS" without a
+  // timezone marker — normalise to ISO-8601 UTC so JS doesn't parse it as
+  // local time.
+  if (typeof val === "string" && /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(val))
+    return new Date(`${val.replace(" ", "T")}Z`).getTime();
   return new Date(val).getTime();
 }
 
