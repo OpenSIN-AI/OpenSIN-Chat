@@ -26,6 +26,7 @@ jest.mock("../../../utils/files/index.js", () => ({
 jest.mock("../../../utils/storage/supabase.js", () => ({
   isEnabled: jest.fn(() => false),
   uploadBuffer: jest.fn(),
+  uploadStream: jest.fn(),
 }));
 
 const supabaseStorage = require("../../../utils/storage/supabase.js");
@@ -188,9 +189,9 @@ describe("handleFileUpload (GUI document uploads)", () => {
 // ---- mirrorToSupabase ----------------------------------------------------------
 
 describe("mirrorToSupabase (decoupled durability mirror)", () => {
-  test("uploads the on-disk file to the documents bucket and annotates request.file", async () => {
+  test("streams the on-disk file to the documents bucket and annotates request.file", async () => {
     supabaseStorage.isEnabled.mockReturnValue(true);
-    supabaseStorage.uploadBuffer.mockResolvedValue({
+    supabaseStorage.uploadStream.mockResolvedValue({
       path: "documents/cloud.txt",
       url: "https://supabase.example/cloud.txt",
     });
@@ -203,9 +204,15 @@ describe("mirrorToSupabase (decoupled durability mirror)", () => {
 
     const mirrored = await multerHandlers.mirrorToSupabase(outReq);
     expect(mirrored).toBe(true);
-    expect(supabaseStorage.uploadBuffer).toHaveBeenCalledWith(
-      expect.objectContaining({ bucket: "documents", objectPath: "cloud.txt" }),
+    // Streaming upload (constant RAM) — never a full-buffer upload.
+    expect(supabaseStorage.uploadStream).toHaveBeenCalledWith(
+      expect.objectContaining({
+        bucket: "documents",
+        objectPath: "cloud.txt",
+        localPath: outReq.file.path,
+      }),
     );
+    expect(supabaseStorage.uploadBuffer).not.toHaveBeenCalled();
     expect(outReq.file.supabasePath).toBe("documents/cloud.txt");
     expect(outReq.file.supabaseUrl).toBe("https://supabase.example/cloud.txt");
   });
@@ -220,12 +227,13 @@ describe("mirrorToSupabase (decoupled durability mirror)", () => {
 
     const mirrored = await multerHandlers.mirrorToSupabase(outReq);
     expect(mirrored).toBe(false);
+    expect(supabaseStorage.uploadStream).not.toHaveBeenCalled();
     expect(supabaseStorage.uploadBuffer).not.toHaveBeenCalled();
   });
 
   test("never throws when the Supabase upload fails (best-effort)", async () => {
     supabaseStorage.isEnabled.mockReturnValue(true);
-    supabaseStorage.uploadBuffer.mockRejectedValue(new Error("bucket missing"));
+    supabaseStorage.uploadStream.mockRejectedValue(new Error("bucket missing"));
 
     const req = makeUploadRequest({ filename: "fail.txt" });
     const { req: outReq } = await runHandler(

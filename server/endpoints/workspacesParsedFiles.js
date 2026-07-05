@@ -66,28 +66,54 @@ async function copyToUploads(request) {
 }
 
 /**
+ * Extracts the minimal set of upload fields the background parse pipeline
+ * needs from a multer-populated request. The background job must NOT retain
+ * the Express request object itself — it holds references to the socket,
+ * headers, parsed body, session, etc., which would otherwise stay pinned in
+ * memory for the lifetime of the job (potentially minutes for OCR-heavy
+ * PDFs).
+ *
+ * The returned object is `{ file: {...} }`-shaped so the existing helpers
+ * (`cleanupHotdirFile`, `copyToUploads`, `mirrorToSupabase`) work unchanged.
+ *
+ * @param {import("express").Request} request — multer-populated request.
+ * @returns {{file: {path: string, filename: string, originalname: string, mimetype: string, size: number}}}
+ */
+function extractUpload(request) {
+  return {
+    file: {
+      path: request.file?.path,
+      filename: request.file?.filename,
+      originalname: request.file?.originalname,
+      mimetype: request.file?.mimetype,
+      size: request.file?.size,
+    },
+  };
+}
+
+/**
  * Runs the full parse pipeline (collector parse → DB rows → uploads mirror →
  * Supabase mirror) for an already-received upload and records the outcome on
  * the parse job. Called WITHOUT await from the /parse endpoint so the HTTP
  * response returns as soon as the file is on disk.
  *
  * @param {string} jobId
- * @param {import("express").Request} request — multer-populated request.
- *   Safe to retain after response: we only touch `request.file` and
- *   pre-resolved values passed in `ctx`.
+ * @param {{file: object}} upload — minimal upload descriptor from
+ *   extractUpload(). Never pass the Express request here: the job outlives
+ *   the response and must not pin the request (socket/headers/body) in RAM.
  * @param {{workspace: object, user: object|null, thread: object|null}} ctx
  */
-async function runParseJob(jobId, request, ctx) {
+async function runParseJob(jobId, upload, ctx) {
   const { workspace, user, thread } = ctx;
-  const originalname = request.file?.originalname || "unknown";
-  const collectorFilename = request.file?.filename || originalname;
+  const originalname = upload.file?.originalname || "unknown";
+  const collectorFilename = upload.file?.filename || originalname;
   await ParseJobs.markProcessing(jobId);
 
   try {
     const Collector = new CollectorApi();
     const processingOnline = await Collector.online();
     if (!processingOnline) {
-      await cleanupHotdirFile(request);
+      await cleanupHotdirFile(upload);
       await ParseJobs.markFailed(
         jobId,
         `Document processing API is not online. Document ${originalname} will not be parsed.`,
@@ -97,13 +123,13 @@ async function runParseJob(jobId, request, ctx) {
 
     // Durability mirror runs in parallel with parsing — neither blocks
     // the other and neither ever blocked the client's upload request.
-    const mirrorPromise = mirrorToSupabase(request).catch(() => {});
+    const mirrorPromise = mirrorToSupabase(upload).catch(() => {});
 
     const { success, reason, documents } =
       await Collector.parseDocument(collectorFilename);
     if (!success || !documents?.[0]) {
       await mirrorPromise;
-      await cleanupHotdirFile(request);
+      await cleanupHotdirFile(upload);
       await ParseJobs.markFailed(
         jobId,
         reason || "No document returned from collector",
@@ -137,7 +163,7 @@ async function runParseJob(jobId, request, ctx) {
 
     // Mirror the local upload into the FilesystemSidebar uploads root and
     // wait for the Supabase mirror to settle — both best-effort.
-    await Promise.all([copyToUploads(request), mirrorPromise]);
+    await Promise.all([copyToUploads(upload), mirrorPromise]);
 
     Collector.log(`Document ${originalname} parsed successfully.`);
     await EventLogs.logEvent(
@@ -151,7 +177,7 @@ async function runParseJob(jobId, request, ctx) {
     );
     await ParseJobs.markCompleted(jobId, files);
   } catch (e) {
-    await cleanupHotdirFile(request);
+    await cleanupHotdirFile(upload);
     const errorId = crypto.randomUUID();
     consoleLogger.error(`[parse job error ${errorId}]`, e);
     await ParseJobs.markFailed(jobId, `Internal server error (${errorId})`).catch(
@@ -323,8 +349,12 @@ function workspaceParsedFilesEndpoints(app) {
           originalname,
         });
 
+        // Detach the upload descriptor from the request so the background
+        // job never pins the Express request (socket/headers/body) in RAM.
+        const upload = extractUpload(request);
+
         if (sync) {
-          await runParseJob(job.id, request, { workspace, user, thread });
+          await runParseJob(job.id, upload, { workspace, user, thread });
           const finished = await ParseJobs.get(job.id, {
             workspaceId: workspace.id,
             userId: user?.id || null,
@@ -343,7 +373,7 @@ function workspaceParsedFilesEndpoints(app) {
         // Async (default): the file is safely on local disk — respond NOW.
         // Parsing, OCR, DB rows and the Supabase mirror run in the
         // background; the client polls /parse-status/:jobId.
-        runParseJob(job.id, request, { workspace, user, thread }).catch(
+        runParseJob(job.id, upload, { workspace, user, thread }).catch(
           (e) => {
             consoleLogger.error("[parse job] unhandled error", e);
             ParseJobs.markFailed(job.id, "Internal server error").catch(
@@ -372,7 +402,19 @@ function workspaceParsedFilesEndpoints(app) {
 
   app.get(
     "/workspace/:slug/parse-status/:jobId",
-    [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.all]),
+      validWorkspaceSlug,
+      // Generous cap for a polling endpoint: the frontend polls one job
+      // every ~1.5s, so even ~5 concurrent uploads stay well under the
+      // limit while scripted abuse is cut off.
+      simpleRateLimit({
+        bucket: "workspace-parse-status",
+        max: 240,
+        windowMs: 60 * 1000,
+      }),
+    ],
     async function (request, response) {
       try {
         const { jobId } = request.params;

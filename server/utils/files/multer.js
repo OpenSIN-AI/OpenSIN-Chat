@@ -129,33 +129,36 @@ const imageFileFilter = (_req, file, cb) => {
  * Parsing always reads from the local hotdir, so the mirror is never needed
  * synchronously.
  *
- * Sets `request.file.supabasePath` / `supabaseUrl` / `supabaseBucket` on
+ * Sets `upload.file.supabasePath` / `supabaseUrl` / `supabaseBucket` on
  * success so `cleanupUploadedFile` can remove the mirror if needed.
  *
- * @param {import("express").Request} request — request with `request.file`
- *   populated by multer.diskStorage.
+ * The file is STREAMED from disk to Supabase (uploadStream) — never fully
+ * buffered in RAM — so even 200 MB uploads keep a constant heap footprint.
+ *
+ * @param {{file: object}} upload — any `{ file }`-shaped object with the
+ *   file populated by multer.diskStorage (an Express request or a detached
+ *   upload descriptor from extractUpload()).
  * @returns {Promise<boolean>} true when mirrored, false when skipped/failed.
  */
-async function mirrorToSupabase(request) {
+async function mirrorToSupabase(upload) {
   if (!supabaseStorage.isEnabled()) return false;
-  const filePath = request.file?.path;
+  const filePath = upload.file?.path;
   if (!filePath) return false;
   try {
-    const buffer = await fs.promises.readFile(filePath);
-    const { path: storagePath, url } = await supabaseStorage.uploadBuffer({
+    const { path: storagePath, url } = await supabaseStorage.uploadStream({
       bucket: "documents",
-      objectPath: request.file.originalname,
-      buffer,
-      contentType: request.file.mimetype,
+      objectPath: upload.file.originalname,
+      localPath: filePath,
+      contentType: upload.file.mimetype,
     });
-    request.file.supabasePath = storagePath;
-    request.file.supabaseUrl = url;
-    request.file.supabaseBucket = "documents";
+    upload.file.supabasePath = storagePath;
+    upload.file.supabaseUrl = url;
+    upload.file.supabaseBucket = "documents";
     return true;
   } catch (e) {
     // Durability mirror only — never fail the upload because of it.
     console.error(
-      `[mirrorToSupabase] best-effort mirror failed for ${request.file?.originalname}: ${e.message}`,
+      `[mirrorToSupabase] best-effort mirror failed for ${upload.file?.originalname}: ${e.message}`,
     );
     return false;
   }
@@ -268,15 +271,17 @@ function handleAPIFileUpload(request, response, next) {
 
 /**
  * Handle logo asset uploads.
- * Routes to Supabase Storage (assets bucket) when enabled.
+ *
+ * Always streams to the local assets directory via multer.diskStorage —
+ * constant RAM footprint even for concurrent uploads (no memoryStorage).
+ * The local file is the authoritative copy for serving; when Supabase
+ * Storage is enabled the file is additionally mirrored to the assets
+ * bucket as a best-effort durability copy (a mirror failure never fails
+ * the upload).
  */
 function handleAssetUpload(request, response, next) {
-  const storage = supabaseStorage.isEnabled()
-    ? multer.memoryStorage()
-    : assetUploadStorage;
-
   const upload = multer({
-    storage,
+    storage: assetUploadStorage,
     limits: { fileSize: 10 * 1024 * 1024, files: 1 }, // 10 MB — logos don't need more
     fileFilter: imageFileFilter,
   }).single("logo");
@@ -303,45 +308,30 @@ function handleAssetUpload(request, response, next) {
       return;
     }
 
-    if (supabaseStorage.isEnabled() && request.file?.buffer) {
-      const originalName = sanitizeFileName(
-        normalizePath(
-          Buffer.from(request.file.originalname, "latin1").toString("utf8"),
-        ),
-      );
-      // Also persist locally so logo-serving endpoints that read from
-      // getStoragePath("assets") still find the file (Issue #362).
-      try {
-        const assetsDir = getStoragePath("assets");
-        fs.mkdirSync(assetsDir, { recursive: true });
-        fs.writeFileSync(path.join(assetsDir, originalName), request.file.buffer);
-        request.file.originalname = originalName;
-      } catch (localErr) {
-        response
-          .status(500)
-          .json({ success: false, error: localErr.message })
-          .end();
-        return;
-      }
-      supabaseStorage
-        .uploadBuffer({
-          bucket: "assets",
-          objectPath: originalName,
-          buffer: request.file.buffer,
-          contentType: request.file.mimetype,
-        })
+    if (supabaseStorage.isEnabled() && request.file?.path) {
+      fs.promises
+        .readFile(request.file.path)
+        .then((buffer) =>
+          supabaseStorage.uploadBuffer({
+            bucket: "assets",
+            objectPath: request.file.originalname,
+            buffer,
+            contentType: request.file.mimetype,
+          }),
+        )
         .then(({ path: storagePath, url }) => {
           request.file.supabasePath = storagePath;
           request.file.supabaseUrl = url;
           request.file.supabaseBucket = "assets";
-          next();
         })
-        .catch((uploadErr) => {
-          response
-            .status(500)
-            .json({ success: false, error: uploadErr.message })
-            .end();
-        });
+        .catch((mirrorErr) => {
+          // Best-effort durability mirror only — the local file is
+          // authoritative for serving, so never fail the request.
+          console.error(
+            `[handleAssetUpload] Supabase mirror failed for ${request.file?.originalname}: ${mirrorErr.message}`,
+          );
+        })
+        .finally(() => next());
     } else {
       next();
     }
@@ -350,15 +340,15 @@ function handleAssetUpload(request, response, next) {
 
 /**
  * Handle PFP file upload as logos.
- * Routes to Supabase Storage (avatars bucket) when enabled.
+ *
+ * Always streams to STORAGE_DIR/assets/pfp via multer.diskStorage (which
+ * also generates `request.randomFileName`) — constant RAM footprint, no
+ * memoryStorage. When Supabase Storage is enabled the file is additionally
+ * mirrored to the avatars bucket as a best-effort durability copy.
  */
 function handlePfpUpload(request, response, next) {
-  const storage = supabaseStorage.isEnabled()
-    ? multer.memoryStorage()
-    : pfpUploadStorage;
-
   const upload = multer({
-    storage,
+    storage: pfpUploadStorage,
     limits: { fileSize: 5 * 1024 * 1024, files: 1 },
     fileFilter: imageFileFilter,
   }).single("file");
@@ -385,43 +375,30 @@ function handlePfpUpload(request, response, next) {
       return;
     }
 
-    if (supabaseStorage.isEnabled() && request.file?.buffer) {
-      const randomFileName = `${v4()}${path.extname(
-        normalizePath(request.file.originalname),
-      )}`;
-      request.randomFileName = randomFileName;
-      // Also persist locally so pfp-serving endpoints that read from
-      // getStoragePath("assets", "pfp") still find the file (Issue #362).
-      try {
-        const pfpDir = getStoragePath("assets", "pfp");
-        fs.mkdirSync(pfpDir, { recursive: true });
-        fs.writeFileSync(path.join(pfpDir, randomFileName), request.file.buffer);
-      } catch (localErr) {
-        response
-          .status(500)
-          .json({ success: false, error: localErr.message })
-          .end();
-        return;
-      }
-      supabaseStorage
-        .uploadBuffer({
-          bucket: "avatars",
-          objectPath: `pfp/${randomFileName}`,
-          buffer: request.file.buffer,
-          contentType: request.file.mimetype,
-        })
+    if (supabaseStorage.isEnabled() && request.file?.path) {
+      fs.promises
+        .readFile(request.file.path)
+        .then((buffer) =>
+          supabaseStorage.uploadBuffer({
+            bucket: "avatars",
+            objectPath: `pfp/${request.randomFileName}`,
+            buffer,
+            contentType: request.file.mimetype,
+          }),
+        )
         .then(({ path: storagePath, url }) => {
           request.file.supabasePath = storagePath;
           request.file.supabaseUrl = url;
           request.file.supabaseBucket = "avatars";
-          next();
         })
-        .catch((uploadErr) => {
-          response
-            .status(500)
-            .json({ success: false, error: uploadErr.message })
-            .end();
-        });
+        .catch((mirrorErr) => {
+          // Best-effort durability mirror only — the local file is
+          // authoritative for serving, so never fail the request.
+          console.error(
+            `[handlePfpUpload] Supabase mirror failed for ${request.randomFileName}: ${mirrorErr.message}`,
+          );
+        })
+        .finally(() => next());
     } else {
       next();
     }
