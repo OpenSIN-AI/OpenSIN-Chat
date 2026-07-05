@@ -393,6 +393,29 @@ function StartForm({ onStarted, isSidebar = false }: StartFormProps) {
         </p>
       )}
 
+      {uploadProgress !== null && (
+        <div className="flex flex-col gap-1">
+          <div
+            role="progressbar"
+            aria-valuenow={uploadProgress}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label={t("pdfAnalysis.panel.uploading")}
+            className="h-1.5 w-full rounded-full bg-theme-bg-container overflow-hidden"
+          >
+            <div
+              className="h-full rounded-full bg-theme-text-primary transition-[width] duration-200 ease-out"
+              style={{ width: `${uploadProgress}%` }}
+            />
+          </div>
+          <p className="text-xs text-theme-text-secondary">
+            {t("pdfAnalysis.panel.uploadingPercent", {
+              percent: uploadProgress,
+            })}
+          </p>
+        </div>
+      )}
+
       <div>
         <button
           type="submit"

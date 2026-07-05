@@ -4,11 +4,11 @@
  * Tests for server/utils/files/multer.js
  * Covers:
  *  - Hotdir routing in production mode (via getCollectorPath / STORAGE_DIR)
- *  - Supabase Storage switch (memoryStorage + uploadBuffer vs. disk write)
+ *  - Document uploads always stream to disk; Supabase mirror is decoupled
+ *    (mirrorToSupabase, best-effort, never fails the request)
  *  - Filename handling (latin1 -> utf8 re-decode, sanitize pipeline)
  *  - PFP random filename generation (uuid + original extension)
  *  - Audio upload: in-memory only, audio/* mimetype filter
- *  - Error paths: multer errors and Supabase upload failures -> HTTP 500
  */
 const fs = require("fs");
 const os = require("os");
@@ -166,12 +166,8 @@ describe("handleFileUpload (GUI document uploads)", () => {
     expect(filesIndex.sanitizeFileName).toHaveBeenCalled();
   });
 
-  test("uses memoryStorage + Supabase uploadBuffer when Supabase is enabled", async () => {
+  test("streams to disk even when Supabase is enabled (no request-path mirror)", async () => {
     supabaseStorage.isEnabled.mockReturnValue(true);
-    supabaseStorage.uploadBuffer.mockResolvedValue({
-      path: "documents/cloud.txt",
-      url: "https://supabase.example/cloud.txt",
-    });
 
     const req = makeUploadRequest({ filename: "cloud.txt", content: "cloud" });
     const { req: outReq, nextCalled } = await runHandler(
@@ -180,28 +176,67 @@ describe("handleFileUpload (GUI document uploads)", () => {
     );
 
     expect(nextCalled).toBe(true);
+    // The upload middleware never talks to Supabase anymore — the durability
+    // mirror is decoupled via mirrorToSupabase() after the response.
+    expect(supabaseStorage.uploadBuffer).not.toHaveBeenCalled();
+    const files = fs.readdirSync(hotdir);
+    expect(files.some((f) => f.endsWith("_cloud.txt"))).toBe(true);
+    expect(outReq.file.path).toBeDefined();
+  });
+});
+
+// ---- mirrorToSupabase ----------------------------------------------------------
+
+describe("mirrorToSupabase (decoupled durability mirror)", () => {
+  test("uploads the on-disk file to the documents bucket and annotates request.file", async () => {
+    supabaseStorage.isEnabled.mockReturnValue(true);
+    supabaseStorage.uploadBuffer.mockResolvedValue({
+      path: "documents/cloud.txt",
+      url: "https://supabase.example/cloud.txt",
+    });
+
+    const req = makeUploadRequest({ filename: "cloud.txt", content: "cloud" });
+    const { req: outReq } = await runHandler(
+      multerHandlers.handleFileUpload,
+      req,
+    );
+
+    const mirrored = await multerHandlers.mirrorToSupabase(outReq);
+    expect(mirrored).toBe(true);
     expect(supabaseStorage.uploadBuffer).toHaveBeenCalledWith(
       expect.objectContaining({ bucket: "documents", objectPath: "cloud.txt" }),
     );
     expect(outReq.file.supabasePath).toBe("documents/cloud.txt");
     expect(outReq.file.supabaseUrl).toBe("https://supabase.example/cloud.txt");
-    // nothing written to disk
-    expect(fs.existsSync(path.join(hotdir, "cloud.txt"))).toBe(false);
   });
 
-  test("responds 500 when the Supabase upload fails", async () => {
-    supabaseStorage.isEnabled.mockReturnValue(true);
-    supabaseStorage.uploadBuffer.mockRejectedValue(new Error("bucket missing"));
-
-    const req = makeUploadRequest({ filename: "fail.txt" });
-    const { res, nextCalled } = await runHandler(
+  test("is a no-op when Supabase is disabled", async () => {
+    supabaseStorage.isEnabled.mockReturnValue(false);
+    const req = makeUploadRequest({ filename: "local.txt" });
+    const { req: outReq } = await runHandler(
       multerHandlers.handleFileUpload,
       req,
     );
 
-    expect(nextCalled).toBe(false);
-    expect(res.statusCode).toBe(500);
-    expect(res.body).toEqual({ success: false, error: "bucket missing" });
+    const mirrored = await multerHandlers.mirrorToSupabase(outReq);
+    expect(mirrored).toBe(false);
+    expect(supabaseStorage.uploadBuffer).not.toHaveBeenCalled();
+  });
+
+  test("never throws when the Supabase upload fails (best-effort)", async () => {
+    supabaseStorage.isEnabled.mockReturnValue(true);
+    supabaseStorage.uploadBuffer.mockRejectedValue(new Error("bucket missing"));
+
+    const req = makeUploadRequest({ filename: "fail.txt" });
+    const { req: outReq } = await runHandler(
+      multerHandlers.handleFileUpload,
+      req,
+    );
+
+    await expect(
+      multerHandlers.mirrorToSupabase(outReq),
+    ).resolves.toBe(false);
+    expect(outReq.file.supabasePath).toBeUndefined();
   });
 });
 
@@ -220,9 +255,8 @@ describe("handleAPIFileUpload (API document uploads)", () => {
     expect(files.some((f) => f.endsWith("_api-doc.txt"))).toBe(true);
   });
 
-  test("routes to Supabase documents bucket when enabled", async () => {
+  test("streams to disk even when Supabase is enabled (mirror is decoupled)", async () => {
     supabaseStorage.isEnabled.mockReturnValue(true);
-    supabaseStorage.uploadBuffer.mockResolvedValue({ path: "p", url: "u" });
 
     const req = makeUploadRequest({ filename: "api-cloud.txt" });
     const { nextCalled } = await runHandler(
@@ -231,9 +265,9 @@ describe("handleAPIFileUpload (API document uploads)", () => {
     );
 
     expect(nextCalled).toBe(true);
-    expect(supabaseStorage.uploadBuffer).toHaveBeenCalledWith(
-      expect.objectContaining({ bucket: "documents" }),
-    );
+    expect(supabaseStorage.uploadBuffer).not.toHaveBeenCalled();
+    const files = fs.readdirSync(hotdir);
+    expect(files.some((f) => f.endsWith("_api-cloud.txt"))).toBe(true);
   });
 });
 

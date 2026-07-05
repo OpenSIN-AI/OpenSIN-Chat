@@ -1039,6 +1039,8 @@ const TRANSLATIONS = {
       factCriteriaPlaceholder: "e.g. only verifiable numbers and dates",
       deepScan: "Deep scan (OCR & vision for scanned pages, slower)",
       fileRequired: "Please select a PDF file and provide a task.",
+      uploading: "Uploading",
+      uploadingPercent: "Uploading... {{percent}}%",
       submitBusy: "Starting…",
       submitIdle: "Start analysis",
       jobsSection: "Analyses",

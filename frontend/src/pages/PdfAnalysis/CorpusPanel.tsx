@@ -123,8 +123,11 @@ function CorpusForm({ onStarted }: CorpusFormProps) {
     try {
       const pdfPaths: string[] = [];
       for (let i = 0; i < files.length; i++) {
-        setUploadProgress(`Upload ${i + 1}/${files.length}: ${files[i].name}`);
-        const uploaded = await PdfAnalysis.upload(files[i]);
+        const label = `Upload ${i + 1}/${files.length}: ${files[i].name}`;
+        setUploadProgress(label);
+        const uploaded = await PdfAnalysis.upload(files[i], (percent) =>
+          setUploadProgress(`${label} — ${percent}%`),
+        );
         if (uploaded.error)
           throw new Error(`${files[i].name}: ${uploaded.error}`);
         pdfPaths.push(uploaded.pdfPath as string);

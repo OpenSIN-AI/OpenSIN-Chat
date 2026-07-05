@@ -2816,6 +2816,8 @@ const TRANSLATIONS = {
       deepScan: "Tiefen-Scan (OCR & Vision für gescannte Seiten, langsamer)",
       fileRequired:
         "Bitte wählen Sie eine PDF-Datei und geben Sie eine Aufgabe an.",
+      uploading: "Hochladen",
+      uploadingPercent: "Hochladen... {{percent}}%",
       submitBusy: "Wird gestartet…",
       submitIdle: "Analyse starten",
       jobsSection: "Analysen",

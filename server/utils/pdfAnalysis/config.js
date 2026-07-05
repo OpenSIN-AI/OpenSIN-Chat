@@ -37,7 +37,10 @@ module.exports = {
 
   // Parallelisierung — use intEnv for NaN-safe parsing
   AGENT_CONCURRENCY: intEnv("PDF_ANALYSIS_CONCURRENCY", 6, { min: 1, max: 64 }),
-  PAGES_PER_CHUNK: intEnv("PDF_ANALYSIS_PAGES_PER_CHUNK", 8, {
+  // 12 Seiten/Chunk (vorher 8): ~33 % weniger Chunks => ~33 % weniger
+  // LLM-Calls pro Analyse bei gleichem MAX_CHARS_PER_CHUNK-Schutz gegen
+  // Kontextüberlauf. Per ENV übersteuerbar für sehr dichte Dokumente.
+  PAGES_PER_CHUNK: intEnv("PDF_ANALYSIS_PAGES_PER_CHUNK", 12, {
     min: 1,
     max: 100,
   }),

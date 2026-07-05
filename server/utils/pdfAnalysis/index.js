@@ -147,6 +147,20 @@ class PdfAnalysisPipeline {
       job.progress.phase = "analyzing";
       let lastPersist = Date.now();
 
+      // Critic-Review (zweiter LLM-Pass pro Chunk) ist teuer: er kann die
+      // LLM-Calls pro Analyse nahezu verdoppeln. Standard-Analysen laufen
+      // deshalb ohne Critic; nur Deep-Scan (Qualität > Geschwindigkeit)
+      // aktiviert ihn. Override: PDF_ANALYSIS_CRITIC=always | never.
+      const criticMode = String(
+        process.env.PDF_ANALYSIS_CRITIC || "",
+      ).toLowerCase();
+      const criticEnabled =
+        criticMode === "always" || criticMode === "true"
+          ? true
+          : criticMode === "never" || criticMode === "false"
+            ? false
+            : !!job.deepScan;
+
       // Telemetrie für ETA/Durchsatz
       const telemetry = {
         startedAt: Date.now(),
@@ -170,7 +184,7 @@ class PdfAnalysisPipeline {
           };
           const result = await analyzeChunk(ctx);
           // Critic-Review + ggf. Repair direkt im Worker => läuft mit-parallelisiert
-          return await reviewAndRepair(result, ctx);
+          return criticEnabled ? await reviewAndRepair(result, ctx) : result;
         },
         {
           jobId: job.id,

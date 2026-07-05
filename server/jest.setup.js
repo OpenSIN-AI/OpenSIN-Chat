@@ -2,16 +2,22 @@
 // SPDX-License-Identifier: MIT
 // Mock buffer-equal-constant-time for Node.js 18+ compatibility
 // This package is deprecated and doesn't work with newer Node.js versions
-jest.mock("buffer-equal-constant-time", () => {
-  return (a, b) => {
-    if (a.length !== b.length) return false;
-    let result = 0;
-    for (let i = 0; i < a.length; i++) {
-      result |= a[i] ^ b[i];
-    }
-    return result === 0;
-  };
-});
+jest.mock(
+  "buffer-equal-constant-time",
+  () => {
+    return (a, b) => {
+      if (a.length !== b.length) return false;
+      let result = 0;
+      for (let i = 0; i < a.length; i++) {
+        result |= a[i] ^ b[i];
+      }
+      return result === 0;
+    };
+  },
+  // virtual: the deprecated package may not even be installed (it's an
+  // optional transitive dep) — the mock must not require it to resolve.
+  { virtual: true },
+);
 
 // Disable rate limiting in test runs — the fixed-window limiter
 // would throttle sequential test calls to the same endpoint bucket.
