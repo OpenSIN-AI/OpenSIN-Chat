@@ -85,50 +85,63 @@ class PDFLoader {
     }
 
     const meta = await pdf.getMetadata().catch(() => null);
-    const documents = [];
 
-    for (let i = 1; i <= pdf.numPages; i += 1) {
-      const page = await pdf.getPage(i);
-      let content;
-      try {
-        content = await page.getTextContent();
+    // Extract text from a single page number. pdf.js `PDFDocumentProxy.getPage`
+    // and `PDFPageProxy.getTextContent` are safe to call concurrently on the
+    // same document instance, so we batch them with a bounded concurrency limit
+    // instead of running them sequentially.
+    const BATCH_SIZE = 8;
+    const pageNumbers = Array.from({ length: pdf.numPages }, (_, k) => k + 1);
+    const results = []; // sparse: index = pageNumber - 1, value = text | null
 
-        if (content.items.length === 0) {
-          continue;
-        }
+    for (let b = 0; b < pageNumbers.length; b += BATCH_SIZE) {
+      const batch = pageNumbers.slice(b, b + BATCH_SIZE);
+      const batchResults = await Promise.all(
+        batch.map(async (pageNum) => {
+          const page = await pdf.getPage(pageNum);
+          try {
+            const content = await page.getTextContent();
+            if (content.items.length === 0) return { pageNum, text: null };
 
-        let lastY;
-        const textItems = [];
-        for (const item of content.items) {
-          if ("str" in item) {
-            if (lastY === undefined || lastY === item.transform[5]) {
-              textItems.push(item.str);
-            } else {
-              textItems.push(`\n${item.str}`);
+            let lastY;
+            const textItems = [];
+            for (const item of content.items) {
+              if ("str" in item) {
+                if (lastY === undefined || lastY === item.transform[5]) {
+                  textItems.push(item.str);
+                } else {
+                  textItems.push(`\n${item.str}`);
+                }
+                lastY = item.transform[5];
+              }
             }
-            lastY = item.transform[5];
+            return { pageNum, text: textItems.join("").trim() };
+          } finally {
+            try {
+              if (typeof page.cleanup === "function") await page.cleanup();
+            } catch {}
           }
-        }
+        })
+      );
+      results.push(...batchResults);
+    }
 
-        const text = textItems.join("");
-        documents.push({
-          pageContent: text.trim(),
-          metadata: {
-            source: this.filePath,
-            pdf: {
-              version,
-              info: meta?.info,
-              metadata: meta?.metadata,
-              totalPages: pdf.numPages,
-            },
-            loc: { pageNumber: i },
+    const documents = [];
+    for (const { pageNum, text } of results) {
+      if (text === null) continue;
+      documents.push({
+        pageContent: text,
+        metadata: {
+          source: this.filePath,
+          pdf: {
+            version,
+            info: meta?.info,
+            metadata: meta?.metadata,
+            totalPages: pdf.numPages,
           },
-        });
-      } finally {
-        try {
-          if (typeof page.cleanup === "function") await page.cleanup();
-        } catch {}
-      }
+          loc: { pageNumber: pageNum },
+        },
+      });
     }
 
     if (this.splitPages) {

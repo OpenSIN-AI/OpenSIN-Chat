@@ -110,6 +110,46 @@ async function uploadBuffer({ bucket, objectPath, buffer, contentType }) {
 }
 
 /**
+ * Upload a file from a local filesystem path to Supabase Storage by
+ * STREAMING it — the file is never fully buffered in RAM. Preferred over
+ * uploadFile()/uploadBuffer() for large documents (uploads can be up to
+ * UPLOAD_FILE_LIMIT_MB, 200 MB by default).
+ *
+ * storage-js accepts a NodeJS.ReadableStream body; undici sends it with
+ * `duplex: "half"` chunked transfer, so the heap footprint stays constant
+ * regardless of file size.
+ *
+ * @param {Object} options
+ * @param {"documents"|"reports"|"avatars"|"assets"} options.bucket
+ * @param {string} options.objectPath   Destination path inside the bucket.
+ * @param {string} options.localPath    Absolute path to the source file.
+ * @param {string} options.contentType  MIME type.
+ * @returns {Promise<{url: string, path: string}>}
+ */
+async function uploadStream({ bucket, objectPath, localPath, contentType }) {
+  const bucketName = BUCKETS[bucket]();
+  await ensureBucket(bucketName);
+
+  const client = getClient();
+  const stream = fs.createReadStream(localPath);
+  try {
+    const { error } = await client.from(bucketName).upload(objectPath, stream, {
+      contentType,
+      upsert: true,
+      // storage-js needs the size for stream bodies to set Content-Length;
+      // undici otherwise uses chunked transfer which Supabase also accepts.
+      duplex: "half",
+    });
+    if (error) throw new Error(`Supabase upload failed: ${error.message}`);
+  } finally {
+    stream.destroy();
+  }
+
+  const { data } = client.from(bucketName).getPublicUrl(objectPath);
+  return { url: data?.publicUrl ?? null, path: objectPath };
+}
+
+/**
  * Upload a file from a local filesystem path to Supabase Storage, then
  * optionally delete the local copy.
  *
@@ -255,6 +295,7 @@ module.exports = {
   BUCKETS,
   ensureBucket,
   uploadBuffer,
+  uploadStream,
   uploadFile,
   downloadBuffer,
   deleteFile,
