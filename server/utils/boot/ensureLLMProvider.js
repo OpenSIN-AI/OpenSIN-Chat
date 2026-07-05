@@ -1,14 +1,12 @@
 // SPDX-License-Identifier: MIT
 const consoleLogger = require("../logger/console.js");
 
-const DEFAULT_LLM_PROVIDER = "fireworksai";
-const DEFAULT_LLM_MODEL = "accounts/fireworks/models/minimax-m3";
-const DEFAULT_LLM_API_KEY = process.env.FIREWORKS_AI_LLM_API_KEY || "";
-const DEFAULT_LLM_BASE_PATH =
-  process.env.FIREWORKS_AI_LLM_BASE_PATH ||
-  "https://sinatorpool-router.delqhi.com/inference/v1";
+const DEFAULT_PROVIDER = "nvidia-nim";
+const DEFAULT_MODEL = "nvidia/nemotron-nano-12b-v2-vl";
+const DEFAULT_API_KEY = process.env.NVIDIA_NIM_LLM_API_KEY || "";
+const DEFAULT_BASE_PATH = process.env.NVIDIA_NIM_LLM_BASE_PATH || "https://integrate.api.nvidia.com/v1";
 
-const BROKEN_PROVIDERS = ["generic-openai", "nvidia-nim", "openai", "azure"];
+const BROKEN_PROVIDERS = ["generic-openai", "openai", "azure"];
 
 async function ensureLLMProvider() {
   try {
@@ -23,18 +21,18 @@ async function ensureLLMProvider() {
       );
     } else {
       consoleLogger.log(
-        `\x1b[33m[LLM BOOT]\x1b[0m No LLM provider in DB — seeding default: ${DEFAULT_LLM_PROVIDER}`,
+        `\x1b[33m[LLM BOOT]\x1b[0m No LLM provider in DB — seeding default: ${DEFAULT_PROVIDER}`,
       );
 
       await SystemSettings._updateSettings({
-        llm_provider: DEFAULT_LLM_PROVIDER,
-        llm_model_pref: DEFAULT_LLM_MODEL,
-        llm_api_key: DEFAULT_LLM_API_KEY,
-        llm_base_path: DEFAULT_LLM_BASE_PATH,
+        llm_provider: DEFAULT_PROVIDER,
+        llm_model_pref: DEFAULT_MODEL,
+        llm_api_key: DEFAULT_API_KEY,
+        llm_base_path: DEFAULT_BASE_PATH,
       });
 
       consoleLogger.log(
-        `\x1b[32m[LLM BOOT]\x1b[0m Seeded ${DEFAULT_LLM_PROVIDER} / ${DEFAULT_LLM_MODEL}`,
+        `\x1b[32m[LLM BOOT]\x1b[0m Seeded ${DEFAULT_PROVIDER} / ${DEFAULT_MODEL}`,
       );
     }
 
@@ -47,10 +45,10 @@ async function ensureLLMProvider() {
           `\x1b[33m[LLM BOOT]\x1b[0m Fixing ${broken.length} workspace(s) with broken provider`,
         );
         for (const ws of broken) {
-          await ws.update({ chatProvider: DEFAULT_LLM_PROVIDER });
+          await Workspace.update({ where: { id: ws.id }, data: { chatProvider: DEFAULT_PROVIDER, chatModel: DEFAULT_MODEL } });
         }
         consoleLogger.log(
-          `\x1b[32m[LLM BOOT]\x1b[0m Fixed workspace providers → ${DEFAULT_LLM_PROVIDER}`,
+          `\x1b[32m[LLM BOOT]\x1b[0m Fixed workspace providers → ${DEFAULT_PROVIDER}`,
         );
       }
     }
