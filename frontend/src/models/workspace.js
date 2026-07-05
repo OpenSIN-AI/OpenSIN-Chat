@@ -326,7 +326,15 @@ const Workspace = {
     try {
       data = await response.json();
     } catch {
-      data = { success: false, error: response.statusText || "Upload failed" };
+      // Non-JSON response — usually a proxy/tunnel error page (e.g.
+      // Cloudflare 413 body-too-large or 524 timeout). Surface the HTTP
+      // status so the real cause is visible instead of a generic message.
+      data = {
+        success: false,
+        error: `Upload failed (HTTP ${response.status}${
+          response.statusText ? ` ${response.statusText}` : ""
+        })`,
+      };
     }
     return { response, data };
   },
@@ -341,7 +349,15 @@ const Workspace = {
     try {
       data = await response.json();
     } catch {
-      data = { success: false, error: response.statusText || "Parse failed" };
+      // Non-JSON response — usually a proxy/tunnel error page (e.g.
+      // Cloudflare 413 body-too-large or 524 timeout). Surface the HTTP
+      // status so the real cause is visible instead of a generic message.
+      data = {
+        success: false,
+        error: `Parse failed (HTTP ${response.status}${
+          response.statusText ? ` ${response.statusText}` : ""
+        })`,
+      };
     }
     return { response, data };
   },

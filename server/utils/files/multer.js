@@ -120,6 +120,34 @@ const imageFileFilter = (_req, file, cb) => {
 };
 
 /**
+ * Persist an in-memory (Supabase mode) upload buffer to the collector hotdir
+ * so the collector service can actually find and parse the file. Without
+ * this, memoryStorage uploads never reach the hotdir and every parse/process
+ * call fails with "File does not exist in upload directory".
+ *
+ * Sets `request.file.filename` and `request.file.path` to mirror what
+ * multer.diskStorage would have produced so downstream consumers
+ * (Collector.parseDocument, cleanup, copyToUploads) work unchanged.
+ * @param {import("express").Request} request
+ */
+function writeBufferToHotdir(request) {
+  if (!request.file?.buffer) return;
+  const uploadOutput = getCollectorPath("hotdir");
+  fs.mkdirSync(uploadOutput, { recursive: true });
+  const originalName = sanitizeFileName(
+    normalizePath(
+      Buffer.from(request.file.originalname, "latin1").toString("utf8"),
+    ),
+  );
+  const filename = `${v4()}_${originalName}`;
+  const filePath = path.join(uploadOutput, filename);
+  fs.writeFileSync(filePath, request.file.buffer);
+  request.file.originalname = originalName;
+  request.file.filename = filename;
+  request.file.path = filePath;
+}
+
+/**
  * Maps a multer/upload error to the appropriate HTTP status code.
  * - LIMIT_FILE_SIZE → 413 (Payload Too Large)
  * - File type rejected by filter → 415 (Unsupported Media Type)
@@ -175,15 +203,22 @@ function handleFileUpload(request, response, next) {
     }
 
     if (supabaseStorage.isEnabled() && request.file?.buffer) {
-      const originalName = sanitizeFileName(
-        normalizePath(
-          Buffer.from(request.file.originalname, "latin1").toString("utf8"),
-        ),
-      );
+      // Also persist to the local hotdir so the collector service can
+      // find and parse the file — Supabase Storage is only a mirror for
+      // durability; parsing always happens from the local hotdir.
+      try {
+        writeBufferToHotdir(request);
+      } catch (hotdirErr) {
+        response
+          .status(500)
+          .json({ success: false, error: hotdirErr.message })
+          .end();
+        return;
+      }
       supabaseStorage
         .uploadBuffer({
           bucket: "documents",
-          objectPath: originalName,
+          objectPath: request.file.originalname,
           buffer: request.file.buffer,
           contentType: request.file.mimetype,
         })
@@ -194,6 +229,10 @@ function handleFileUpload(request, response, next) {
           next();
         })
         .catch((uploadErr) => {
+          try {
+            if (request.file.path)
+              fs.rmSync(request.file.path, { force: true });
+          } catch {}
           response
             .status(500)
             .json({ success: false, error: uploadErr.message })
@@ -247,15 +286,21 @@ function handleAPIFileUpload(request, response, next) {
     }
 
     if (supabaseStorage.isEnabled() && request.file?.buffer) {
-      const originalName = sanitizeFileName(
-        normalizePath(
-          Buffer.from(request.file.originalname, "latin1").toString("utf8"),
-        ),
-      );
+      // Also persist to the local hotdir so the collector service can
+      // find and parse the file (see handleFileUpload above).
+      try {
+        writeBufferToHotdir(request);
+      } catch (hotdirErr) {
+        response
+          .status(500)
+          .json({ success: false, error: hotdirErr.message })
+          .end();
+        return;
+      }
       supabaseStorage
         .uploadBuffer({
           bucket: "documents",
-          objectPath: originalName,
+          objectPath: request.file.originalname,
           buffer: request.file.buffer,
           contentType: request.file.mimetype,
         })
@@ -266,6 +311,10 @@ function handleAPIFileUpload(request, response, next) {
           next();
         })
         .catch((uploadErr) => {
+          try {
+            if (request.file.path)
+              fs.rmSync(request.file.path, { force: true });
+          } catch {}
           response
             .status(500)
             .json({ success: false, error: uploadErr.message })
