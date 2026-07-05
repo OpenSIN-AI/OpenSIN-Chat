@@ -33,6 +33,7 @@ const PROVIDER_DEFAULT_MODELS: Record<string, string[]> = {
     "nvidia/llama-3.3-nemotron-super-49b-v1.5",
     "nvidia/llama-3.3-nemotron-super-49b-v1",
     "nvidia/nemotron-nano-12b-v2-vl",
+    "zai-org/glm-5.2",
     "nvidia/llama-3.2-90b-vision-instruct",
     "meta/llama-3.1-70b-instruct",
     "meta/llama-3.1-8b-instruct",
