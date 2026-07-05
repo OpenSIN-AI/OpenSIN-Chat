@@ -81,14 +81,14 @@ async function runParseJob(jobId, request, ctx) {
   const { workspace, user, thread } = ctx;
   const originalname = request.file?.originalname || "unknown";
   const collectorFilename = request.file?.filename || originalname;
-  ParseJobs.markProcessing(jobId);
+  await ParseJobs.markProcessing(jobId);
 
   try {
     const Collector = new CollectorApi();
     const processingOnline = await Collector.online();
     if (!processingOnline) {
       await cleanupHotdirFile(request);
-      ParseJobs.markFailed(
+      await ParseJobs.markFailed(
         jobId,
         `Document processing API is not online. Document ${originalname} will not be parsed.`,
       );
@@ -104,7 +104,7 @@ async function runParseJob(jobId, request, ctx) {
     if (!success || !documents?.[0]) {
       await mirrorPromise;
       await cleanupHotdirFile(request);
-      ParseJobs.markFailed(
+      await ParseJobs.markFailed(
         jobId,
         reason || "No document returned from collector",
       );
@@ -149,12 +149,14 @@ async function runParseJob(jobId, request, ctx) {
       },
       user?.id,
     );
-    ParseJobs.markCompleted(jobId, files);
+    await ParseJobs.markCompleted(jobId, files);
   } catch (e) {
     await cleanupHotdirFile(request);
     const errorId = crypto.randomUUID();
     consoleLogger.error(`[parse job error ${errorId}]`, e);
-    ParseJobs.markFailed(jobId, `Internal server error (${errorId})`);
+    await ParseJobs.markFailed(jobId, `Internal server error (${errorId})`).catch(
+      () => {},
+    );
   }
 }
 
@@ -315,7 +317,7 @@ function workspaceParsedFilesEndpoints(app) {
         // existing API consumers that expect files in the response.
         const sync = String(request.query?.sync) === "true";
 
-        const job = ParseJobs.create({
+        const job = await ParseJobs.create({
           workspaceId: workspace.id,
           userId: user?.id || null,
           originalname,
@@ -323,7 +325,7 @@ function workspaceParsedFilesEndpoints(app) {
 
         if (sync) {
           await runParseJob(job.id, request, { workspace, user, thread });
-          const finished = ParseJobs.get(job.id, {
+          const finished = await ParseJobs.get(job.id, {
             workspaceId: workspace.id,
             userId: user?.id || null,
           });
@@ -344,7 +346,9 @@ function workspaceParsedFilesEndpoints(app) {
         runParseJob(job.id, request, { workspace, user, thread }).catch(
           (e) => {
             consoleLogger.error("[parse job] unhandled error", e);
-            ParseJobs.markFailed(job.id, "Internal server error");
+            ParseJobs.markFailed(job.id, "Internal server error").catch(
+              () => {},
+            );
           },
         );
 
@@ -374,7 +378,7 @@ function workspaceParsedFilesEndpoints(app) {
         const { jobId } = request.params;
         const user = await userFromSession(request, response);
         const workspace = response.locals.workspace;
-        const job = ParseJobs.get(String(jobId), {
+        const job = await ParseJobs.get(String(jobId), {
           workspaceId: workspace.id,
           userId: multiUserMode(response) ? user?.id || null : null,
         });
