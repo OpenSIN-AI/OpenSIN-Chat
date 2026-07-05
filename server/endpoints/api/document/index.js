@@ -4,7 +4,10 @@ const consoleLogger = require("../../../utils/logger/console.js");
 const { getStoragePath } = require("../../../utils/paths");
 const { Telemetry } = require("../../../models/telemetry");
 const { validApiKey } = require("../../../utils/middleware/validApiKey");
-const { handleAPIFileUpload } = require("../../../utils/files/multer");
+const {
+  handleAPIFileUpload,
+  mirrorToSupabase,
+} = require("../../../utils/files/multer");
 const {
   viewLocalFiles,
   findDocumentInDocuments,
@@ -153,12 +156,17 @@ function apiDocumentEndpoints(app) {
           return;
         }
 
+        // Out-of-band Supabase durability mirror — the API client never
+        // waits for the OCI → Supabase roundtrip.
+        const mirrorPromise = mirrorToSupabase(request).catch(() => {});
+
         const { success, reason, documents } = await Collector.processDocument(
           collectorFilename,
           metadata,
         );
 
         if (!success || !documents?.length) {
+          await mirrorPromise;
           await cleanupHotdirFile(request);
           return response
             .status(500)
@@ -313,12 +321,16 @@ function apiDocumentEndpoints(app) {
             .end();
         }
 
+        // Out-of-band Supabase durability mirror (see /v1/document/upload).
+        const mirrorPromise = mirrorToSupabase(request).catch(() => {});
+
         // Process the uploaded document with metadata
         const { success, reason, documents } = await Collector.processDocument(
           collectorFilename,
           metadata,
         );
         if (!success || !documents?.length) {
+          await mirrorPromise;
           await cleanupHotdirFile(request);
           return response
             .status(500)

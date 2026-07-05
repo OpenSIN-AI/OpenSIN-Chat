@@ -4436,6 +4436,8 @@ const TRANSLATIONS = {
   },
   attachments: {
     uploading: "Uploading...",
+    uploadingPercent: "Uploading... {{percent}}%",
+    processing: "Processing...",
     fileNotEmbedded: "File not embedded!",
     imageAttached: "Image attached!",
     fileEmbedded: "File embedded!",

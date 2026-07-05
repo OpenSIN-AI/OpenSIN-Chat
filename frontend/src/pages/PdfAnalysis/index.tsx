@@ -282,6 +282,7 @@ function StartForm({ onStarted, isSidebar = false }: StartFormProps) {
   const [factCriteria, setFactCriteria] = useState("");
   const [deepScan, setDeepScan] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -293,8 +294,10 @@ function StartForm({ onStarted, isSidebar = false }: StartFormProps) {
       return;
     }
     setBusy(true);
+    setUploadProgress(0);
     try {
-      const uploaded = await PdfAnalysis.upload(file);
+      const uploaded = await PdfAnalysis.upload(file, setUploadProgress);
+      setUploadProgress(null);
       if (uploaded.error) throw new Error(uploaded.error);
       const started = await PdfAnalysis.start({
         pdfPath: uploaded.pdfPath as string,
@@ -316,6 +319,7 @@ function StartForm({ onStarted, isSidebar = false }: StartFormProps) {
       setError(safeErrorMessage(err));
     } finally {
       setBusy(false);
+      setUploadProgress(null);
     }
   }
 

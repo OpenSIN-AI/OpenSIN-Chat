@@ -46,6 +46,8 @@ export const PARSED_FILE_ATTACHMENT_REMOVED_EVENT =
  * @property {string|null} error - Error message
  * @property {{id:string, location:string}|null} document - uploaded document details
  * @property {('attachment'|'upload')} type - The type of upload. Attachments are chat-specific, uploads go to the workspace.
+ * @property {('uploading'|'processing')|null} [phase] - current in_progress sub-phase (upload vs server-side parsing).
+ * @property {number|null} [progress] - upload progress percent (0-100) while phase === "uploading".
  */
 
 /**
@@ -209,7 +211,43 @@ export function DnDFileUploaderProvider({
   }
 
   /**
+   * Updates a single attachment in the queue by uid.
+   * @param {string} uid
+   * @param {object} updates
+   */
+  function updateAttachment(uid: string, updates: any) {
+    setFiles((prev) =>
+      (prev as any).map((prevFile) =>
+        prevFile.uid !== uid ? prevFile : { ...prevFile, ...updates },
+      ),
+    );
+  }
+
+  /**
+   * Polls the async parse job until it completes or fails.
+   * @param {string} jobId
+   * @returns {Promise<{status: string, files?: object[]|null, error?: string|null}>}
+   */
+  async function pollParseJob(jobId: string) {
+    const POLL_INTERVAL_MS = 1500;
+    const MAX_POLL_MS = 30 * 60 * 1000; // OCR on large scans can take a while
+    const startedAt = Date.now();
+
+    while (Date.now() - startedAt < MAX_POLL_MS) {
+      const result = await Workspace.parseFileStatus(workspace.slug, jobId);
+      if (!result?.success)
+        return { status: "failed", error: result?.error ?? null };
+      if (result.status === "completed" || result.status === "failed")
+        return result;
+      await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
+    }
+    return { status: "failed", error: "Processing timed out." };
+  }
+
+  /**
    * Embeds attachments that are eligible for embedding - basically files that are not images.
+   * Uploads with real progress reporting, then polls the async parse job
+   * until the document is ready as chat context.
    * @param {Attachment[]} newAttachments
    */
   async function embedEligibleAttachments(newAttachments: any = []) {
@@ -233,74 +271,84 @@ export function DnDFileUploaderProvider({
       const formData = new FormData();
       formData.append("file", attachment.file, attachment.file.name);
       if (threadSlug) formData.append("threadSlug", threadSlug);
+      updateAttachment(attachment.uid, { phase: "uploading", progress: 0 });
+
       promises.push(
-        Workspace.parseFile(workspace.slug, formData).then(
-          async ({ response, data }: any) => {
-            if (!response.ok) {
-              const errorMsg = data?.error ?? t("attachments.fileNotEmbedded");
-              showToast(errorMsg, "error");
-              const updates = {
-                status: "failed",
-                error: data?.error ?? null,
-              };
-              setFiles((prev) =>
-                (prev as any).map(
-                  (
-                    /** @type {Attachment} */
-                    prevFile,
-                  ) =>
-                    prevFile.uid !== attachment.uid
-                      ? prevFile
-                      : { ...prevFile, ...updates },
-                ),
-              );
-              return;
-            }
-            // Will always be one file in the array
-            /** @type {ParsedFile} */
-            const file = data.files[0];
+        (async () => {
+          const uploadResult = await Workspace.uploadAndParseFile(
+            workspace.slug,
+            formData,
+            {
+              onUploadProgress: (percent: number) =>
+                updateAttachment(attachment.uid, {
+                  phase: "uploading",
+                  progress: percent,
+                }),
+            },
+          );
 
-            // Add token count for this file
-            // and add it to the batch pending files
-            totalTokenCount += file.tokenCountEstimate;
-            batchPendingFiles.push({
-              attachment,
-              parsedFileId: file.id,
-              tokenCount: file.tokenCountEstimate,
+          if (!uploadResult?.success || !uploadResult?.jobId) {
+            const errorMsg =
+              uploadResult?.error ?? t("attachments.fileNotEmbedded");
+            showToast(errorMsg, "error");
+            updateAttachment(attachment.uid, {
+              status: "failed",
+              error: uploadResult?.error ?? null,
+              phase: null,
+              progress: null,
             });
+            return;
+          }
 
-            if (totalTokenCount > workspaceContextWindow) {
-              setTokenCount(totalTokenCount);
-              setPendingFiles(batchPendingFiles);
-              setShowWarningModal(true);
-              return;
-            }
+          // Upload finished — server is now parsing in the background.
+          updateAttachment(attachment.uid, {
+            phase: "processing",
+            progress: null,
+          });
 
-            // File is within limits, keep in parsed files
-            const result = {
-              success: true,
-              document: file,
-              error: null as string | null,
-            };
-            const updates = {
-              status: result.success ? "added_context" : "failed",
-              error: result.error ?? null,
-              document: result.document,
-            };
+          const jobResult = await pollParseJob(uploadResult.jobId);
+          if (jobResult.status !== "completed" || !jobResult.files?.[0]) {
+            const errorMsg =
+              jobResult.error ?? t("attachments.fileNotEmbedded");
+            showToast(errorMsg, "error");
+            updateAttachment(attachment.uid, {
+              status: "failed",
+              error: jobResult.error ?? null,
+              phase: null,
+              progress: null,
+            });
+            return;
+          }
 
-            setFiles((prev) =>
-              (prev as any).map(
-                (
-                  /** @type {Attachment} */
-                  prevFile,
-                ) =>
-                  prevFile.uid !== attachment.uid
-                    ? prevFile
-                    : { ...prevFile, ...updates },
-              ),
-            );
-          },
-        ),
+          // Will always be one file in the array
+          /** @type {ParsedFile} */
+          const file = jobResult.files[0];
+
+          // Add token count for this file
+          // and add it to the batch pending files
+          totalTokenCount += file.tokenCountEstimate;
+          batchPendingFiles.push({
+            attachment,
+            parsedFileId: file.id,
+            tokenCount: file.tokenCountEstimate,
+          });
+
+          if (totalTokenCount > workspaceContextWindow) {
+            setTokenCount(totalTokenCount);
+            setPendingFiles(batchPendingFiles);
+            setShowWarningModal(true);
+            return;
+          }
+
+          // File is within limits, keep in parsed files
+          updateAttachment(attachment.uid, {
+            status: "added_context",
+            error: null,
+            document: file,
+            phase: null,
+            progress: null,
+          });
+        })(),
       );
     }
 

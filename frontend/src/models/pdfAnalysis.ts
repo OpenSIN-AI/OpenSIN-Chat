@@ -50,17 +50,48 @@ function safeJson(res: Response): any {
 }
 
 const PdfAnalysis = {
-  upload: async function (file: File): Promise<PdfAnalysisResult> {
+  /**
+   * Uploads a PDF for analysis with real upload-progress reporting via XHR.
+   * @param file - the PDF file to upload
+   * @param onProgress - optional callback receiving upload percent (0-100)
+   */
+  upload: async function (
+    file: File,
+    onProgress?: (percent: number) => void,
+  ): Promise<PdfAnalysisResult> {
     const formData = new FormData();
     formData.append("file", file);
-    return await fetch(`${PDF_ANALYSIS_BASE}/upload`, {
-      method: "POST",
-      headers: baseHeaders(),
-      body: formData,
-      credentials: "include",
-    })
-      .then(safeJson)
-      .catch((e) => ({ error: e.message }));
+
+    return new Promise((resolve) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", `${PDF_ANALYSIS_BASE}/upload`);
+      xhr.withCredentials = true;
+      const headers = baseHeaders() as Record<string, string>;
+      for (const [key, value] of Object.entries(headers)) {
+        if (value) xhr.setRequestHeader(key, value);
+      }
+
+      xhr.upload.onprogress = (event) => {
+        if (!event.lengthComputable || !onProgress) return;
+        onProgress(Math.round((event.loaded / event.total) * 100));
+      };
+
+      xhr.onload = () => {
+        try {
+          resolve(JSON.parse(xhr.responseText));
+        } catch {
+          resolve({
+            error:
+              xhr.status >= 200 && xhr.status < 300
+                ? xhr.responseText.substring(0, 200)
+                : `HTTP ${xhr.status}`,
+          });
+        }
+      };
+      xhr.onerror = () => resolve({ error: "Upload failed (network error)" });
+      xhr.onabort = () => resolve({ error: "Upload was cancelled" });
+      xhr.send(formData);
+    });
   },
 
   start: async function ({

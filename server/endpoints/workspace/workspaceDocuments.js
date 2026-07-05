@@ -14,7 +14,10 @@ const {
   flexUserRoleValid,
   ROLES,
 } = require("../../utils/middleware/multiUserProtected");
-const { handleFileUpload } = require("../../utils/files/multer");
+const {
+  handleFileUpload,
+  mirrorToSupabase,
+} = require("../../utils/files/multer");
 const { CollectorApi } = require("../../utils/collectorApi");
 const { getStoragePath, getCollectorPath } = require("../../utils/paths");
 const { simpleRateLimit } = require("../../utils/middleware/simpleRateLimit");
@@ -66,11 +69,16 @@ function workspaceDocumentEndpoints(app) {
           return;
         }
 
+        // Kick off the Supabase durability mirror out-of-band — the client
+        // never waits for the OCI → Supabase roundtrip.
+        const mirrorPromise = mirrorToSupabase(request).catch(() => {});
+
         const { success, reason, documents } = await Collector.processDocument(
           collectorFilename,
           { title: originalname },
         );
         if (!success || documents?.length === 0) {
+          await mirrorPromise;
           cleanupHotdirFile(request);
           response.status(500).json({ success: false, error: reason }).end();
           return;
@@ -474,11 +482,15 @@ function workspaceDocumentEndpoints(app) {
           return;
         }
 
+        // Out-of-band Supabase durability mirror (see /upload above).
+        const mirrorPromise = mirrorToSupabase(request).catch(() => {});
+
         const { success, reason, documents } = await Collector.processDocument(
           collectorFilename,
           { title: originalname },
         );
         if (!success || documents?.length === 0) {
+          await mirrorPromise;
           cleanupHotdirFile(request);
           response.status(500).json({ success: false, error: reason }).end();
           return;

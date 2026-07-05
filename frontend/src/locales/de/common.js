@@ -4543,6 +4543,8 @@ const TRANSLATIONS = {
   },
   attachments: {
     uploading: "Hochladen...",
+    uploadingPercent: "Hochladen... {{percent}}%",
+    processing: "Wird verarbeitet...",
     fileNotEmbedded: "Datei nicht eingebettet!",
     imageAttached: "Bild angehängt!",
     fileEmbedded: "Datei eingebettet!",

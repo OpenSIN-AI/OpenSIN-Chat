@@ -42,12 +42,12 @@ async function asPdf({
       `[asPDF] No text content found for ${filename}. Will attempt OCR parse.`
     );
 
-    // OCR can take many minutes for large scans. Reverse proxies (Cloudflare,
-    // nginx) typically cut connections after 60–100 s, which causes the client
-    // to receive an HTML error page instead of JSON → "Parse failed".
-    // We cap OCR at OCR_TIMEOUT_MS (default 75 s) so the response is always
-    // JSON with a clear human-readable reason instead of a proxy timeout page.
-    const OCR_TIMEOUT_MS = Number(process.env.OCR_TIMEOUT_MS) || 75_000;
+    // OCR can take many minutes for large scans. Uploads are now processed
+    // asynchronously (the HTTP request returns before parsing starts), so no
+    // reverse proxy can kill the connection mid-OCR anymore. OCR_TIMEOUT_MS
+    // (default 10 minutes) is only a generous safety stop against runaway
+    // OCR processes.
+    const OCR_TIMEOUT_MS = Number(process.env.OCR_TIMEOUT_MS) || 600_000;
 
     try {
       const ocrPromise = new OCRLoader({
@@ -60,8 +60,8 @@ async function asPdf({
             reject(
               new Error(
                 `OCR timed out after ${Math.round(OCR_TIMEOUT_MS / 1000)} s. ` +
-                  `The document may be a large scanned PDF. ` +
-                  `Please upload it via the Document Manager instead of the chat.`
+                  `The document appears to be a very large scanned PDF. ` +
+                  `Try splitting it into smaller parts or raise OCR_TIMEOUT_MS.`
               )
             ),
           OCR_TIMEOUT_MS

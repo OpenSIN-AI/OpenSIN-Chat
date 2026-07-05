@@ -59,8 +59,17 @@ function AttachmentItem({ attachment, onImageClick }: any) {
   }
 
   if (status === "in_progress") {
+    const isUploading =
+      attachment.phase === "uploading" &&
+      typeof attachment.progress === "number";
+    const statusText = isUploading
+      ? t("attachments.uploadingPercent", { percent: attachment.progress })
+      : attachment.phase === "processing"
+        ? t("attachments.processing")
+        : t("attachments.uploading");
+
     return (
-      <div className="relative flex items-center gap-x-1 rounded-lg bg-theme-attachment-bg border-none w-[180px] group">
+      <div className="relative flex items-center gap-x-1 rounded-lg bg-theme-attachment-bg border-none w-[180px] group overflow-hidden">
         <div
           className={`bg-theme-attachment-icon-spinner-bg rounded-md flex items-center justify-center flex-shrink-0 h-[32px] w-[32px] m-1`}
         >
@@ -75,9 +84,24 @@ function AttachmentItem({ attachment, onImageClick }: any) {
             {file.name}
           </p>
           <p className="text-theme-attachment-text-secondary text-[10px] leading-[14px] font-medium">
-            {t("attachments.uploading")}
+            {statusText}
           </p>
         </div>
+        {isUploading && (
+          <div
+            role="progressbar"
+            aria-valuenow={attachment.progress}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label={t("attachments.uploading")}
+            className="absolute bottom-0 left-0 h-[3px] w-full bg-theme-attachment-icon-spinner-bg"
+          >
+            <div
+              className="h-full bg-theme-attachment-icon-spinner transition-[width] duration-200 ease-out"
+              style={{ width: `${attachment.progress}%` }}
+            />
+          </div>
+        )}
       </div>
     );
   }

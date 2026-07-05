@@ -6,7 +6,11 @@ const consoleLogger = require("../utils/logger/console.js");
 
 const crypto = require("crypto");
 const { reqBody, multiUserMode, userFromSession } = require("../utils/http");
-const { handleFileUpload } = require("../utils/files/multer");
+const {
+  handleFileUpload,
+  mirrorToSupabase,
+} = require("../utils/files/multer");
+const { ParseJobs, JOB_STATUS } = require("../utils/parseJobs");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
 const { Telemetry } = require("../models/telemetry");
 const {
@@ -58,6 +62,99 @@ async function copyToUploads(request) {
     await fs.promises.copyFile(filePath, destPath);
   } catch (e) {
     consoleLogger.info("[copyToUploads] best-effort copy failed:", e.message);
+  }
+}
+
+/**
+ * Runs the full parse pipeline (collector parse → DB rows → uploads mirror →
+ * Supabase mirror) for an already-received upload and records the outcome on
+ * the parse job. Called WITHOUT await from the /parse endpoint so the HTTP
+ * response returns as soon as the file is on disk.
+ *
+ * @param {string} jobId
+ * @param {import("express").Request} request — multer-populated request.
+ *   Safe to retain after response: we only touch `request.file` and
+ *   pre-resolved values passed in `ctx`.
+ * @param {{workspace: object, user: object|null, thread: object|null}} ctx
+ */
+async function runParseJob(jobId, request, ctx) {
+  const { workspace, user, thread } = ctx;
+  const originalname = request.file?.originalname || "unknown";
+  const collectorFilename = request.file?.filename || originalname;
+  ParseJobs.markProcessing(jobId);
+
+  try {
+    const Collector = new CollectorApi();
+    const processingOnline = await Collector.online();
+    if (!processingOnline) {
+      await cleanupHotdirFile(request);
+      ParseJobs.markFailed(
+        jobId,
+        `Document processing API is not online. Document ${originalname} will not be parsed.`,
+      );
+      return;
+    }
+
+    // Durability mirror runs in parallel with parsing — neither blocks
+    // the other and neither ever blocked the client's upload request.
+    const mirrorPromise = mirrorToSupabase(request).catch(() => {});
+
+    const { success, reason, documents } =
+      await Collector.parseDocument(collectorFilename);
+    if (!success || !documents?.[0]) {
+      await mirrorPromise;
+      await cleanupHotdirFile(request);
+      ParseJobs.markFailed(
+        jobId,
+        reason || "No document returned from collector",
+      );
+      return;
+    }
+
+    const files = [];
+    const BATCH_SIZE = 5;
+    for (let i = 0; i < documents.length; i += BATCH_SIZE) {
+      const batch = documents.slice(i, i + BATCH_SIZE);
+      const batchResults = await Promise.all(
+        batch.map(async (doc) => {
+          const metadata = { ...doc };
+          delete metadata.pageContent;
+          const filename = `${originalname}-${doc.id}.json`;
+          const { file, error: dbError } = await WorkspaceParsedFiles.create({
+            filename,
+            workspaceId: workspace.id,
+            userId: user?.id || null,
+            threadId: thread?.id || null,
+            metadata: JSON.stringify(metadata),
+            tokenCountEstimate: doc.token_count_estimate || 0,
+          });
+          if (dbError) throw new Error(dbError);
+          return file;
+        }),
+      );
+      files.push(...batchResults);
+    }
+
+    // Mirror the local upload into the FilesystemSidebar uploads root and
+    // wait for the Supabase mirror to settle — both best-effort.
+    await Promise.all([copyToUploads(request), mirrorPromise]);
+
+    Collector.log(`Document ${originalname} parsed successfully.`);
+    await EventLogs.logEvent(
+      "document_uploaded_to_chat",
+      {
+        documentName: originalname,
+        workspace: workspace.slug,
+        thread: thread?.name || null,
+      },
+      user?.id,
+    );
+    ParseJobs.markCompleted(jobId, files);
+  } catch (e) {
+    await cleanupHotdirFile(request);
+    const errorId = crypto.randomUUID();
+    consoleLogger.error(`[parse job error ${errorId}]`, e);
+    ParseJobs.markFailed(jobId, `Internal server error (${errorId})`);
   }
 }
 
@@ -201,30 +298,10 @@ function workspaceParsedFilesEndpoints(app) {
 
         const user = await userFromSession(request, response);
         const workspace = response.locals.workspace;
-        const Collector = new CollectorApi();
         const originalname = request.file?.originalname || "unknown";
-        const collectorFilename = request.file?.filename || originalname;
-        const processingOnline = await Collector.online();
 
-        if (!processingOnline) {
-          await cleanupHotdirFile(request);
-          return response.status(500).json({
-            success: false,
-            error: `Document processing API is not online. Document ${originalname} will not be parsed.`,
-          });
-        }
-
-        const { success, reason, documents } =
-          await Collector.parseDocument(collectorFilename);
-        if (!success || !documents?.[0]) {
-          await cleanupHotdirFile(request);
-          return response.status(500).json({
-            success: false,
-            error: reason || "No document returned from collector",
-          });
-        }
-
-        // Get thread ID if we have a slug
+        // Resolve the thread before responding — it's a fast DB lookup and
+        // the background job needs it for row scoping.
         const { threadSlug = null } = reqBody(request);
         const thread = threadSlug
           ? await WorkspaceThread.get({
@@ -233,53 +310,87 @@ function workspaceParsedFilesEndpoints(app) {
               user_id: user?.id || null,
             })
           : null;
-        const files = [];
-        const BATCH_SIZE = 5;
-        for (let i = 0; i < documents.length; i += BATCH_SIZE) {
-          const batch = documents.slice(i, i + BATCH_SIZE);
-          const batchResults = await Promise.all(
-            batch.map(async (doc) => {
-              const metadata = { ...doc };
-              delete metadata.pageContent;
-              const filename = `${originalname}-${doc.id}.json`;
-              const { file, error: dbError } =
-                await WorkspaceParsedFiles.create({
-                  filename,
-                  workspaceId: workspace.id,
-                  userId: user?.id || null,
-                  threadId: thread?.id || null,
-                  metadata: JSON.stringify(metadata),
-                  tokenCountEstimate: doc.token_count_estimate || 0,
-                });
 
-              if (dbError) throw new Error(dbError);
-              return file;
-            }),
-          );
-          files.push(...batchResults);
+        // Back-compat: ?sync=true retains the old blocking behavior for
+        // existing API consumers that expect files in the response.
+        const sync = String(request.query?.sync) === "true";
+
+        const job = ParseJobs.create({
+          workspaceId: workspace.id,
+          userId: user?.id || null,
+          originalname,
+        });
+
+        if (sync) {
+          await runParseJob(job.id, request, { workspace, user, thread });
+          const finished = ParseJobs.get(job.id, {
+            workspaceId: workspace.id,
+            userId: user?.id || null,
+          });
+          if (finished?.status === JOB_STATUS.COMPLETED) {
+            return response
+              .status(200)
+              .json({ success: true, error: null, files: finished.files });
+          }
+          return response.status(500).json({
+            success: false,
+            error: finished?.error || "Parsing failed",
+          });
         }
 
-        // Mirror the local upload into the FilesystemSidebar uploads root.
-        await copyToUploads(request);
-
-        Collector.log(`Document ${originalname} parsed successfully.`);
-        await EventLogs.logEvent(
-          "document_uploaded_to_chat",
-          {
-            documentName: originalname,
-            workspace: workspace.slug,
-            thread: thread?.name || null,
+        // Async (default): the file is safely on local disk — respond NOW.
+        // Parsing, OCR, DB rows and the Supabase mirror run in the
+        // background; the client polls /parse-status/:jobId.
+        runParseJob(job.id, request, { workspace, user, thread }).catch(
+          (e) => {
+            consoleLogger.error("[parse job] unhandled error", e);
+            ParseJobs.markFailed(job.id, "Internal server error");
           },
-          user?.id,
         );
 
-        return response.status(200).json({
+        return response.status(202).json({
           success: true,
           error: null,
-          files,
+          jobId: job.id,
         });
       } catch (e) {
         await cleanupHotdirFile(request);
+        const errorId = crypto.randomUUID();
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
+        return response.status(500).json({
+          success: false,
+          error: "Internal server error",
+          errorId,
+        });
+      }
+    },
+  );
+
+  app.get(
+    "/workspace/:slug/parse-status/:jobId",
+    [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
+    async function (request, response) {
+      try {
+        const { jobId } = request.params;
+        const user = await userFromSession(request, response);
+        const workspace = response.locals.workspace;
+        const job = ParseJobs.get(String(jobId), {
+          workspaceId: workspace.id,
+          userId: multiUserMode(response) ? user?.id || null : null,
+        });
+
+        if (!job)
+          return response
+            .status(404)
+            .json({ success: false, error: "Job not found" });
+
+        return response.status(200).json({
+          success: true,
+          status: job.status,
+          files: job.status === JOB_STATUS.COMPLETED ? job.files : null,
+          error: job.status === JOB_STATUS.FAILED ? job.error : null,
+        });
+      } catch (e) {
         const errorId = crypto.randomUUID();
         consoleLogger.error(`[endpoint error ${errorId}]`, e);
         return response.status(500).json({

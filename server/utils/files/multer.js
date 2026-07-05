@@ -120,31 +120,45 @@ const imageFileFilter = (_req, file, cb) => {
 };
 
 /**
- * Persist an in-memory (Supabase mode) upload buffer to the collector hotdir
- * so the collector service can actually find and parse the file. Without
- * this, memoryStorage uploads never reach the hotdir and every parse/process
- * call fails with "File does not exist in upload directory".
+ * Best-effort mirror of a document upload (already streamed to the local
+ * hotdir by multer.diskStorage) into Supabase Storage for durability.
  *
- * Sets `request.file.filename` and `request.file.path` to mirror what
- * multer.diskStorage would have produced so downstream consumers
- * (Collector.parseDocument, cleanup, copyToUploads) work unchanged.
- * @param {import("express").Request} request
+ * This is intentionally DECOUPLED from the request path: callers invoke it
+ * fire-and-forget (or from a background job) AFTER responding to the client,
+ * so the user never waits for a second network roundtrip (OCI → Supabase).
+ * Parsing always reads from the local hotdir, so the mirror is never needed
+ * synchronously.
+ *
+ * Sets `request.file.supabasePath` / `supabaseUrl` / `supabaseBucket` on
+ * success so `cleanupUploadedFile` can remove the mirror if needed.
+ *
+ * @param {import("express").Request} request — request with `request.file`
+ *   populated by multer.diskStorage.
+ * @returns {Promise<boolean>} true when mirrored, false when skipped/failed.
  */
-function writeBufferToHotdir(request) {
-  if (!request.file?.buffer) return;
-  const uploadOutput = getCollectorPath("hotdir");
-  fs.mkdirSync(uploadOutput, { recursive: true });
-  const originalName = sanitizeFileName(
-    normalizePath(
-      Buffer.from(request.file.originalname, "latin1").toString("utf8"),
-    ),
-  );
-  const filename = `${v4()}_${originalName}`;
-  const filePath = path.join(uploadOutput, filename);
-  fs.writeFileSync(filePath, request.file.buffer);
-  request.file.originalname = originalName;
-  request.file.filename = filename;
-  request.file.path = filePath;
+async function mirrorToSupabase(request) {
+  if (!supabaseStorage.isEnabled()) return false;
+  const filePath = request.file?.path;
+  if (!filePath) return false;
+  try {
+    const buffer = await fs.promises.readFile(filePath);
+    const { path: storagePath, url } = await supabaseStorage.uploadBuffer({
+      bucket: "documents",
+      objectPath: request.file.originalname,
+      buffer,
+      contentType: request.file.mimetype,
+    });
+    request.file.supabasePath = storagePath;
+    request.file.supabaseUrl = url;
+    request.file.supabaseBucket = "documents";
+    return true;
+  } catch (e) {
+    // Durability mirror only — never fail the upload because of it.
+    console.error(
+      `[mirrorToSupabase] best-effort mirror failed for ${request.file?.originalname}: ${e.message}`,
+    );
+    return false;
+  }
 }
 
 /**
@@ -171,18 +185,15 @@ function uploadErrorStatus(err) {
  */
 // Maximum allowed document upload size in bytes.
 // Configurable via UPLOAD_FILE_LIMIT_MB env var (default 200 MB).
-// Keeping the RAM footprint predictable on the OCI VM avoids OOM-kills when
-// Supabase mode buffers the whole file in memory before writing to disk.
 const DOCUMENT_FILE_LIMIT_BYTES =
   (Number(process.env.UPLOAD_FILE_LIMIT_MB) || 200) * 1024 * 1024;
 
 function handleFileUpload(request, response, next) {
-  const storage = supabaseStorage.isEnabled()
-    ? multer.memoryStorage()
-    : fileUploadStorage;
-
+  // Always stream directly to the local hotdir — constant RAM footprint
+  // and no event-loop blocking, regardless of Supabase mode. The Supabase
+  // durability mirror is handled out-of-band via mirrorToSupabase().
   const upload = multer({
-    storage,
+    storage: fileUploadStorage,
     limits: { fileSize: DOCUMENT_FILE_LIMIT_BYTES, files: 1 },
     fileFilter: executableFileFilter,
   }).single("file");
@@ -209,45 +220,7 @@ function handleFileUpload(request, response, next) {
       return;
     }
 
-    if (supabaseStorage.isEnabled() && request.file?.buffer) {
-      // Also persist to the local hotdir so the collector service can
-      // find and parse the file — Supabase Storage is only a mirror for
-      // durability; parsing always happens from the local hotdir.
-      try {
-        writeBufferToHotdir(request);
-      } catch (hotdirErr) {
-        response
-          .status(500)
-          .json({ success: false, error: hotdirErr.message })
-          .end();
-        return;
-      }
-      supabaseStorage
-        .uploadBuffer({
-          bucket: "documents",
-          objectPath: request.file.originalname,
-          buffer: request.file.buffer,
-          contentType: request.file.mimetype,
-        })
-        .then(({ path: storagePath, url }) => {
-          request.file.supabasePath = storagePath;
-          request.file.supabaseUrl = url;
-          request.file.supabaseBucket = "documents";
-          next();
-        })
-        .catch((uploadErr) => {
-          try {
-            if (request.file.path)
-              fs.rmSync(request.file.path, { force: true });
-          } catch {}
-          response
-            .status(500)
-            .json({ success: false, error: uploadErr.message })
-            .end();
-        });
-    } else {
-      next();
-    }
+    next();
   });
 }
 
@@ -260,12 +233,9 @@ function handleFileUpload(request, response, next) {
  * @param {NextFunction} next
  */
 function handleAPIFileUpload(request, response, next) {
-  const storage = supabaseStorage.isEnabled()
-    ? multer.memoryStorage()
-    : fileAPIUploadStorage;
-
+  // Always stream directly to the local hotdir (see handleFileUpload).
   const upload = multer({
-    storage,
+    storage: fileAPIUploadStorage,
     limits: { fileSize: DOCUMENT_FILE_LIMIT_BYTES, files: 1 },
     fileFilter: executableFileFilter,
   }).single("file");
@@ -292,44 +262,7 @@ function handleAPIFileUpload(request, response, next) {
       return;
     }
 
-    if (supabaseStorage.isEnabled() && request.file?.buffer) {
-      // Also persist to the local hotdir so the collector service can
-      // find and parse the file (see handleFileUpload above).
-      try {
-        writeBufferToHotdir(request);
-      } catch (hotdirErr) {
-        response
-          .status(500)
-          .json({ success: false, error: hotdirErr.message })
-          .end();
-        return;
-      }
-      supabaseStorage
-        .uploadBuffer({
-          bucket: "documents",
-          objectPath: request.file.originalname,
-          buffer: request.file.buffer,
-          contentType: request.file.mimetype,
-        })
-        .then(({ path: storagePath, url }) => {
-          request.file.supabasePath = storagePath;
-          request.file.supabaseUrl = url;
-          request.file.supabaseBucket = "documents";
-          next();
-        })
-        .catch((uploadErr) => {
-          try {
-            if (request.file.path)
-              fs.rmSync(request.file.path, { force: true });
-          } catch {}
-          response
-            .status(500)
-            .json({ success: false, error: uploadErr.message })
-            .end();
-        });
-    } else {
-      next();
-    }
+    next();
   });
 }
 
@@ -551,6 +484,7 @@ function cleanupUploadedFile(request) {
 module.exports = {
   handleFileUpload,
   handleAPIFileUpload,
+  mirrorToSupabase,
   handleAssetUpload,
   handlePfpUpload,
   handleAudioUpload,

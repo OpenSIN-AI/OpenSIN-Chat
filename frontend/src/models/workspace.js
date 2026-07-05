@@ -362,6 +362,66 @@ const Workspace = {
     return { response, data };
   },
 
+  /**
+   * Uploads a file for async parsing with real upload progress reporting.
+   * The server responds 202 + { jobId } as soon as the file is received;
+   * parsing happens in the background (poll with parseFileStatus).
+   * @param {string} slug - workspace slug
+   * @param {FormData} formData - form data containing the file (+ threadSlug)
+   * @param {{onUploadProgress?: (percent: number) => void}} [options]
+   * @returns {Promise<{success: boolean, jobId?: string, error?: string}>}
+   */
+  uploadAndParseFile: async function (slug, formData, { onUploadProgress } = {}) {
+    return new Promise((resolve) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", `${API_BASE}/workspace/${slug}/parse`);
+      const headers = baseHeaders();
+      for (const [key, value] of Object.entries(headers)) {
+        if (value) xhr.setRequestHeader(key, value);
+      }
+
+      xhr.upload.onprogress = (event) => {
+        if (!event.lengthComputable || !onUploadProgress) return;
+        onUploadProgress(Math.round((event.loaded / event.total) * 100));
+      };
+
+      xhr.onload = () => {
+        let data;
+        try {
+          data = JSON.parse(xhr.responseText);
+        } catch {
+          data = {
+            success: false,
+            error: `Upload failed (HTTP ${xhr.status}${
+              xhr.statusText ? ` ${xhr.statusText}` : ""
+            })`,
+          };
+        }
+        resolve(data);
+      };
+      xhr.onerror = () =>
+        resolve({ success: false, error: "Upload failed (network error)" });
+      xhr.onabort = () =>
+        resolve({ success: false, error: "Upload was cancelled" });
+      xhr.send(formData);
+    });
+  },
+
+  /**
+   * Polls the status of an async parse job started via uploadAndParseFile.
+   * @param {string} slug - workspace slug
+   * @param {string} jobId
+   * @returns {Promise<{success: boolean, status?: "pending"|"processing"|"completed"|"failed", files?: object[]|null, error?: string|null}>}
+   */
+  parseFileStatus: async function (slug, jobId) {
+    return await fetch(`${API_BASE}/workspace/${slug}/parse-status/${jobId}`, {
+      method: "GET",
+      headers: baseHeaders(),
+    })
+      .then((res) => res.json())
+      .catch((e) => ({ success: false, error: e.message }));
+  },
+
   getParsedFiles: async function (slug, threadSlug = null) {
     const basePath = new URL(`${fullApiUrl()}/workspace/${slug}/parsed-files`);
     if (threadSlug) basePath.searchParams.set("threadSlug", threadSlug);
