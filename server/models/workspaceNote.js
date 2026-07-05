@@ -15,6 +15,14 @@ const WorkspaceNote = {
     await prisma.$executeRawUnsafe(SHARED_TABLE_SQL);
   },
 
+  get: async function (id) {
+    const rows = await prisma.$queryRawUnsafe(
+      "SELECT * FROM workspace_notes WHERE id = ? LIMIT 1",
+      Number(id),
+    );
+    return Array.isArray(rows) ? rows[0] : rows;
+  },
+
   forWorkspace: async function (workspaceId) {
     return await prisma.$queryRawUnsafe(
       "SELECT * FROM workspace_notes WHERE workspaceId = ? ORDER BY pinned DESC, updatedAt DESC",

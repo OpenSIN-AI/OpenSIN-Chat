@@ -41,10 +41,34 @@ async function asPdf({
     console.log(
       `[asPDF] No text content found for ${filename}. Will attempt OCR parse.`
     );
+
+    // OCR can take many minutes for large scans. Reverse proxies (Cloudflare,
+    // nginx) typically cut connections after 60–100 s, which causes the client
+    // to receive an HTML error page instead of JSON → "Parse failed".
+    // We cap OCR at OCR_TIMEOUT_MS (default 75 s) so the response is always
+    // JSON with a clear human-readable reason instead of a proxy timeout page.
+    const OCR_TIMEOUT_MS = Number(process.env.OCR_TIMEOUT_MS) || 75_000;
+
     try {
-      docs = await new OCRLoader({
+      const ocrPromise = new OCRLoader({
         targetLanguages: options?.ocr?.langList,
       }).ocrPDF(fullFilePath);
+
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(
+          () =>
+            reject(
+              new Error(
+                `OCR timed out after ${Math.round(OCR_TIMEOUT_MS / 1000)} s. ` +
+                  `The document may be a large scanned PDF. ` +
+                  `Please upload it via the Document Manager instead of the chat.`
+              )
+            ),
+          OCR_TIMEOUT_MS
+        )
+      );
+
+      docs = await Promise.race([ocrPromise, timeoutPromise]);
     } catch (e) {
       console.error(`[asPDF] OCR also failed for ${filename}: ${e.message}`);
       if (!options.absolutePath) trashFile(fullFilePath);

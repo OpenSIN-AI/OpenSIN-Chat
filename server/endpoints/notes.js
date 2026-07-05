@@ -54,12 +54,28 @@ function noteEndpoints(app) {
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async (request, response) => {
       try {
-        const { id } = request.params;
+        const workspace = response.locals.workspace;
+        const noteId = Number(request.params.id);
+        if (!Number.isInteger(noteId) || noteId <= 0) {
+          return response.status(400).json({ error: "Invalid note id" });
+        }
         const { content, pinned } = reqBody(request);
-        const note = await WorkspaceNote.update(Number(id), {
-          content,
-          pinned,
-        });
+        if (content !== undefined) {
+          if (typeof content !== "string" || content.length > 100_000) {
+            return response
+              .status(400)
+              .json({ error: "content must be a string of max 100,000 characters" });
+          }
+        }
+        // IDOR guard: ensure the note belongs to this workspace
+        const existing = await WorkspaceNote.get(noteId);
+        if (!existing || existing.workspaceId !== workspace.id) {
+          return response.status(404).json({ error: "Note not found" });
+        }
+        const updates = {};
+        if (content !== undefined) updates.content = content;
+        if (pinned !== undefined) updates.pinned = pinned;
+        const note = await WorkspaceNote.update(noteId, updates);
         response.status(200).json({ note });
       } catch (e) {
         consoleLogger.error(e);
@@ -73,8 +89,17 @@ function noteEndpoints(app) {
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async (request, response) => {
       try {
-        const { id } = request.params;
-        await WorkspaceNote.delete(Number(id));
+        const workspace = response.locals.workspace;
+        const noteId = Number(request.params.id);
+        if (!Number.isInteger(noteId) || noteId <= 0) {
+          return response.status(400).json({ error: "Invalid note id" });
+        }
+        // IDOR guard: ensure the note belongs to this workspace
+        const existing = await WorkspaceNote.get(noteId);
+        if (!existing || existing.workspaceId !== workspace.id) {
+          return response.status(404).json({ error: "Note not found" });
+        }
+        await WorkspaceNote.delete(noteId);
         response.status(200).json({ success: true });
       } catch (e) {
         consoleLogger.error(e);
@@ -120,13 +145,21 @@ function noteEndpoints(app) {
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async (request, response) => {
       try {
-        const _workspace = response.locals.workspace;
-        const { id } = request.params;
+        const workspace = response.locals.workspace;
+        const noteId = Number(request.params.id);
+        if (!Number.isInteger(noteId) || noteId <= 0) {
+          return response.status(400).json({ error: "Invalid note id" });
+        }
         const { targetWorkspaceSlug } = reqBody(request);
         if (!targetWorkspaceSlug) {
           return response
             .status(400)
             .json({ error: "targetWorkspaceSlug is required" });
+        }
+        // IDOR guard: ensure the note belongs to this workspace
+        const existing = await WorkspaceNote.get(noteId);
+        if (!existing || existing.workspaceId !== workspace.id) {
+          return response.status(404).json({ error: "Note not found" });
         }
         const target = await Workspace.get({ slug: targetWorkspaceSlug });
         if (!target) {
@@ -136,7 +169,7 @@ function noteEndpoints(app) {
         }
         const user = await userFromSession(request, response);
         const shared = await WorkspaceNote.shareToWorkspace(
-          id,
+          noteId,
           target.id,
           user?.id || null,
         );
@@ -153,12 +186,21 @@ function noteEndpoints(app) {
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async (request, response) => {
       try {
-        const { id } = request.params;
+        const workspace = response.locals.workspace;
+        const noteId = Number(request.params.id);
+        if (!Number.isInteger(noteId) || noteId <= 0) {
+          return response.status(400).json({ error: "Invalid note id" });
+        }
         const { targetWorkspaceSlug } = request.query;
         if (!targetWorkspaceSlug) {
           return response
             .status(400)
             .json({ error: "targetWorkspaceSlug is required" });
+        }
+        // IDOR guard: ensure the note belongs to this workspace
+        const existing = await WorkspaceNote.get(noteId);
+        if (!existing || existing.workspaceId !== workspace.id) {
+          return response.status(404).json({ error: "Note not found" });
         }
         const target = await Workspace.get({ slug: targetWorkspaceSlug });
         if (!target) {
@@ -166,7 +208,7 @@ function noteEndpoints(app) {
             .status(404)
             .json({ error: "Target workspace not found" });
         }
-        await WorkspaceNote.unshareFromWorkspace(id, target.id);
+        await WorkspaceNote.unshareFromWorkspace(noteId, target.id);
         response.status(200).json({ success: true });
       } catch (e) {
         consoleLogger.error(e);
@@ -185,12 +227,29 @@ function noteEndpoints(app) {
         const documentsPath = getStoragePath("documents");
         const snippets = {};
 
+        // Read only the first 8 KB of each document file instead of loading
+        // the entire file into memory. This prevents blocking the event loop
+        // when a workspace contains many or large documents (Issue #364).
+        const READ_BYTES = 8 * 1024;
         for (const doc of docs) {
           try {
             const fullPath = path.join(documentsPath, doc.docpath);
-            if (!fs.existsSync(fullPath)) continue;
-            const content = fs.readFileSync(fullPath, "utf-8");
-            const clean = content
+            let buf;
+            try {
+              const fd = await fs.promises.open(fullPath, "r");
+              const result = await fd.read(
+                Buffer.alloc(READ_BYTES),
+                0,
+                READ_BYTES,
+                0,
+              );
+              await fd.close();
+              buf = result.buffer.subarray(0, result.bytesRead);
+            } catch {
+              continue; // file missing or unreadable — skip silently
+            }
+            const clean = buf
+              .toString("utf-8")
               .replace(/<[^>]+>/g, " ")
               .replace(/\s+/g, " ")
               .trim();

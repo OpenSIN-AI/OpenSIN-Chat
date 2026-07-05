@@ -169,6 +169,13 @@ function uploadErrorStatus(err) {
  * @param {Response} response
  * @param {NextFunction} next
  */
+// Maximum allowed document upload size in bytes.
+// Configurable via UPLOAD_FILE_LIMIT_MB env var (default 200 MB).
+// Keeping the RAM footprint predictable on the OCI VM avoids OOM-kills when
+// Supabase mode buffers the whole file in memory before writing to disk.
+const DOCUMENT_FILE_LIMIT_BYTES =
+  (Number(process.env.UPLOAD_FILE_LIMIT_MB) || 200) * 1024 * 1024;
+
 function handleFileUpload(request, response, next) {
   const storage = supabaseStorage.isEnabled()
     ? multer.memoryStorage()
@@ -176,7 +183,7 @@ function handleFileUpload(request, response, next) {
 
   const upload = multer({
     storage,
-    limits: { fileSize: 5 * 1024 * 1024 * 1024, files: 1 },
+    limits: { fileSize: DOCUMENT_FILE_LIMIT_BYTES, files: 1 },
     fileFilter: executableFileFilter,
   }).single("file");
   upload(request, response, function (err) {
@@ -259,7 +266,7 @@ function handleAPIFileUpload(request, response, next) {
 
   const upload = multer({
     storage,
-    limits: { fileSize: 5 * 1024 * 1024 * 1024, files: 1 },
+    limits: { fileSize: DOCUMENT_FILE_LIMIT_BYTES, files: 1 },
     fileFilter: executableFileFilter,
   }).single("file");
   upload(request, response, function (err) {
@@ -337,7 +344,7 @@ function handleAssetUpload(request, response, next) {
 
   const upload = multer({
     storage,
-    limits: { fileSize: 5 * 1024 * 1024 * 1024, files: 1 },
+    limits: { fileSize: 10 * 1024 * 1024, files: 1 }, // 10 MB — logos don't need more
     fileFilter: imageFileFilter,
   }).single("logo");
   upload(request, response, function (err) {
@@ -369,6 +376,20 @@ function handleAssetUpload(request, response, next) {
           Buffer.from(request.file.originalname, "latin1").toString("utf8"),
         ),
       );
+      // Also persist locally so logo-serving endpoints that read from
+      // getStoragePath("assets") still find the file (Issue #362).
+      try {
+        const assetsDir = getStoragePath("assets");
+        fs.mkdirSync(assetsDir, { recursive: true });
+        fs.writeFileSync(path.join(assetsDir, originalName), request.file.buffer);
+        request.file.originalname = originalName;
+      } catch (localErr) {
+        response
+          .status(500)
+          .json({ success: false, error: localErr.message })
+          .end();
+        return;
+      }
       supabaseStorage
         .uploadBuffer({
           bucket: "assets",
@@ -436,6 +457,19 @@ function handlePfpUpload(request, response, next) {
         normalizePath(request.file.originalname),
       )}`;
       request.randomFileName = randomFileName;
+      // Also persist locally so pfp-serving endpoints that read from
+      // getStoragePath("assets", "pfp") still find the file (Issue #362).
+      try {
+        const pfpDir = getStoragePath("assets", "pfp");
+        fs.mkdirSync(pfpDir, { recursive: true });
+        fs.writeFileSync(path.join(pfpDir, randomFileName), request.file.buffer);
+      } catch (localErr) {
+        response
+          .status(500)
+          .json({ success: false, error: localErr.message })
+          .end();
+        return;
+      }
       supabaseStorage
         .uploadBuffer({
           bucket: "avatars",
