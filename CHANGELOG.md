@@ -5,6 +5,43 @@ All notable changes to **OpenSIN-Chat** are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [Unreleased] — 2026-07-06 — PDF chat upload: fix indefinite hang during OCR
+
+### Fixed
+
+- **CRITICAL — chat PDF uploads could hang for up to 30 minutes before
+  erroring.** `collector/utils/OCRLoader/index.js` — scanned/image-only PDFs
+  (any PDF where the digital text layer yields zero pages) fall back to
+  OCR via `tesseract.js`. `createWorker()` — which can trigger a network
+  fetch of the OCR engine core + language model on a cold cache — was
+  called **before** this module's own `maxExecutionTime` timeout guard was
+  even constructed, in all three OCR entry points (`ocrPDF`, `ocrImage`,
+  `ocrImageBatch`). A blocked/slow network to the default tesseract.js CDN
+  therefore hung indefinitely, with the only backstop being the much
+  coarser upstream timeout chain (`COLLECTOR_PROCESS_TIMEOUT_MS` = 30 min
+  server→collector, plus the frontend's 30-min `pollParseJob` cap) —
+  from the user's perspective, attaching a scanned PDF in chat just
+  "loaded forever" before an opaque failure appeared.
+  - Added `createWorkerWithTimeout()`, a single choke point all three OCR
+    entry points now go through. Worker bootstrap is bounded by the new
+    `OCR_WORKER_BOOTSTRAP_TIMEOUT_MS` env var (default 60s) and fails fast
+    with an actionable error message instead of hanging.
+  - A worker that resolves after its bootstrap timeout has already fired
+    is terminated immediately so it can't leak.
+  - `ocrPDF`'s worker pool now times out each worker's bootstrap
+    independently (via `Promise.allSettled`) and proceeds with whichever
+    workers succeeded, same as before — just bounded now.
+  - Added optional `OCR_TESSDATA_PATH` / `OCR_CORE_PATH` env vars so
+    self-hosted/air-gapped ("sovereign") deployments can point OCR at a
+    locally pre-downloaded tessdata + core bundle instead of depending on
+    the public tesseract.js CDN at request time. Unset by default —
+    behavior is unchanged (still uses the default CDN) unless configured.
+  - New tests: `collector/__tests__/utils/OCRLoader/workerBootstrapTimeout.test.js`
+    (5 tests covering fast-fail timing, actionable error message, env-based
+    langPath/corePath forwarding, default-path preservation, and orphaned
+    late-resolving worker cleanup).
+  - Documented in `docker/.env.example`.
+
 ## [Unreleased] — 2026-06-29 — UI overhaul & chat polish
 
 ### Added
