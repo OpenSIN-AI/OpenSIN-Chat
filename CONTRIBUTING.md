@@ -177,7 +177,7 @@ The core library is written in Node.js. There are additional sub-repositories fo
 
 ## Brand guard
 
-OpenSIN-Chat is a fork of AnythingLLM (MIT). Never re-introduce `AnythingLLM` or `Mintplex Labs` strings in user-facing code, UI, or docs. The branding check (`./scripts/check-branding.sh`) must pass before merge. See [`AGENTS.md`](AGENTS.md) for the full project rules.
+OpenSIN-Chat is an independent product inspired by AnythingLLM (MIT). Nearly 100% of the codebase has been rewritten or replaced. Never re-introduce `AnythingLLM` or `Mintplex Labs` strings in user-facing code, UI, or docs. The branding check (`./scripts/check-branding.sh`) must pass before merge. See [`AGENTS.md`](AGENTS.md) for the full project rules.
 
 ## Release process
 
