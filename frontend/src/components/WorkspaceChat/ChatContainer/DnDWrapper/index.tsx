@@ -229,8 +229,8 @@ export function DnDFileUploaderProvider({
    * @returns {Promise<{status: string, files?: object[]|null, error?: string|null}>}
    */
   async function pollParseJob(jobId: string) {
-    const POLL_INTERVAL_MS = 1500;
-    const MAX_POLL_MS = 30 * 60 * 1000; // OCR on large scans can take a while
+    const POLL_INTERVAL_MS = 300; // Fast polling for instant feedback (was 1500ms)
+    const MAX_POLL_MS = 5 * 60 * 1000; // Match server-side 5min timeout (was 30min)
     const MAX_TRANSIENT_RETRIES = 20; // consecutive 429/5xx/network failures
     const MAX_BACKOFF_MS = 30 * 1000;
     const startedAt = Date.now();
