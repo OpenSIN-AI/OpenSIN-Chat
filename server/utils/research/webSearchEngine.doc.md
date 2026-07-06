@@ -2,7 +2,7 @@
 
 **What:** Web search engine wrapper that delegates to the configured search provider (SerpAPI or DuckDuckGo) from SystemSettings.
 
-**Why:** The research pipeline needs web search capability without hard-coding a specific provider. Reuses the existing AnythingLLM agent search infrastructure.
+**Why:** The research pipeline needs web search capability without hard-coding a specific provider. Reuses the existing agent search infrastructure.
 
 **Dependencies:**
 - `server/models/systemSettings.js` — reads `agent_search_provider` and `agent_search_api_key`

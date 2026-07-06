@@ -17,8 +17,8 @@ and a file named exactly `openafd.db`
 
 - Docker Instance
   - Get your OpenSIN Chat docker container id with `docker ps -a`. The container must be running to execute the next commands.
-  - Run `docker container exec -u 0 -t <ANYTHINGLLM DOCKER CONTAINER ID> mkdir -p /app/server/storage /app/server/storage/documents /app/server/storage/vector-cache /app/server/storage/lancedb`
-  - Run `docker container exec -u 0 -t <ANYTHINGLLM DOCKER CONTAINER ID> touch /app/server/storage/openafd.db`
-  - Run `docker container exec -u 0 -t <ANYTHINGLLM DOCKER CONTAINER ID> chown -R openafd:openafd /app/collector /app/server`
+  - Run `docker container exec -u 0 -t <OPENSIN DOCKER CONTAINER ID> mkdir -p /app/server/storage /app/server/storage/documents /app/server/storage/vector-cache /app/server/storage/lancedb`
+  - Run `docker container exec -u 0 -t <OPENSIN DOCKER CONTAINER ID> touch /app/server/storage/openafd.db`
+  - Run `docker container exec -u 0 -t <OPENSIN DOCKER CONTAINER ID> chown -R openafd:openafd /app/collector /app/server`
 
   - The above commands will create the appropriate folders inside of the docker container and will persist as long as you do not destroy the container and volume. This will also fix any ownership issues of folder files in the collector and the server.

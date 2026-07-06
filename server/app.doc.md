@@ -25,8 +25,8 @@ It exports three helpers:
 
 ## Important config values
 
-- `FILE_LIMIT` defaults to `5120MB` for `body-parser` (mirrors the historical
-  AnythingLLM default). Lower this in production via `BODY_LIMIT`.
+- `FILE_LIMIT` defaults to `5120MB` for `body-parser` (historical default
+  from the project's early inspiration). Lower this in production via `BODY_LIMIT`.
 - `SERVER_PORT` defaults to `3001` for the test server.
 - `TRUST_PROXY` defaults to `1` for correct client IPs behind a reverse proxy.
 

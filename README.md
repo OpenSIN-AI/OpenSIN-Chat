@@ -239,15 +239,15 @@ Distributed under the **MIT License**. See [LICENSE](./LICENSE) for details.
 
 ## Credits
 
-OpenSIN Chat is a community fork of **[AnythingLLM](https://github.com/Mintplex-Labs/anything-llm)**, developed by **[Mintplex Labs Inc.](https://github.com/Mintplex-Labs)** under MIT license.
+OpenSIN Chat was **inspired by** **[AnythingLLM](https://github.com/Mintplex-Labs/anything-llm)** by **[Mintplex Labs Inc.](https://github.com/Mintplex-Labs)** (MIT license), but has since diverged into a fully independent product with nearly 100% of the codebase rewritten or replaced.
 
-Without the excellent work of **Timothy Carambat** and the entire Mintplex team, the AnythingLLM community, and all contributors, this project would not be possible.
+We gratefully acknowledge **Timothy Carambat** and the entire Mintplex team. Their early architectural work provided the initial spark for this project.
 
-> *AnythingLLM is a full-stack application that enables you to turn any document, resource, or piece of content into context that any LLM can use as reference during chatting. Built and maintained by Mintplex Labs Inc. — used here as the foundation for OpenSIN Chat.*
+> *AnythingLLM is a full-stack application that enables you to turn any document, resource, or piece of content into context that any LLM can use as reference during chatting. Built and maintained by Mintplex Labs Inc.*
 
-**What we inherited from AnythingLLM:** complete architecture (frontend, server, collector, vector DB layer), LLM/embedding/vector DB providers, agent framework, MCP integration, web scraping, security/auth/multi-user concept, `@mintplex-labs/*` NPM packages.
+**What was originally inspired by AnythingLLM:** the basic full-stack structure (frontend + server + collector), LLM/embedding/vector DB provider abstraction, and the agent framework concept.
 
-**What OpenSIN Chat adds on top:** complete rebranding (OpenSIN blue, German language, custom logo), telemetry fully removed (not just disableable), GDPR-affine defaults, political-use-case branding, Politician Database, Deep Research Pipeline, PDF Reports, Agent Plugins, REST APIs, test & CI infrastructure.
+**What OpenSIN Chat has built independently (nearly 100% rewritten):** complete rebranding (OpenSIN blue, German language, custom logo), all telemetry removed, GDPR-affine defaults, political-use-case specialisation, Politician Database, Deep Research Pipeline, PDF Reports, Agent Plugins, NVIDIA NIM Vision OCR, async upload pipeline with parseJobs, ECharts visualisation, REST APIs, comprehensive test & CI infrastructure, and significant architectural refactoring across frontend, server, and collector.
 
 A full list of third-party components is in [THIRD_PARTY.md](./THIRD_PARTY.md).
 
