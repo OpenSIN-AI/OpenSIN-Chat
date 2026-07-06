@@ -5,6 +5,32 @@ All notable changes to **OpenSIN-Chat** are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [Unreleased] — 2026-07-06 — PDF upload: NVIDIA NIM Vision OCR overhaul
+
+### Changed — OCR engine: tesseract.js → NVIDIA NIM Vision (Nemotron 3 Nano Omni 30B)
+
+- **CRITICAL — PDF OCR is now sub-second per page via NVIDIA NIM Vision
+  API.** `collector/utils/OCRLoader/index.js` — replaced tesseract.js
+  (and the briefly-tested PaddleOCR) as the primary OCR engine with
+  NVIDIA's cloud-hosted Nemotron 3 Nano Omni 30B multimodal model.
+  - Model: `nvidia/nemotron-3-nano-omni-30b-a3b-reasoning`
+  - API: OpenAI-compatible `/v1/chat/completions` at
+    `integrate.api.nvidia.com`
+  - Input: Base64-encoded PNG images of PDF pages
+  - Output: Extracted text with layout/reading-order preservation
+  - Native OCR, document intelligence, table/diagram understanding
+  - No local model download, no CDN dependency, no worker bootstrap
+  - `enable_thinking: false` for direct text extraction (no reasoning traces)
+  - Parallel batch processing (default 4 concurrent requests)
+  - New env vars: `NVIDIA_NIM_API_KEY`, `NVIDIA_NIM_MODEL`,
+    `NVIDIA_NIM_BASE_URL`, `NVIDIA_NIM_TIMEOUT_MS`, `NVIDIA_NIM_MAX_TOKENS`,
+    `NVIDIA_NIM_CONCURRENCY`
+  - `OCR_ENGINE` default changed from `auto` to `nim`
+  - Tesseract.js remains as automatic fallback if NIM API key is missing
+    or API is unreachable
+  - Removed `ppu-paddle-ocr` and `onnxruntime-node` dependencies (PaddleOCR
+    approach replaced by NIM Vision)
+
 ## [Unreleased] — 2026-07-06 — PDF upload: state-of-the-art speed overhaul
 
 ### Changed — OCR engine: tesseract.js → PaddleOCR (PP-OCRv5)

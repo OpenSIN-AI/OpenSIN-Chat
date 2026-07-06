@@ -44,8 +44,6 @@
     "slugify": "^1.6.6",
     "strip-ansi": "^7.1.2",
     "tesseract.js": "7.0.0",
-    "ppu-paddle-ocr": "^4.0.0",
-    "onnxruntime-node": "^1.27.0",
     "turndown": "7.2.4",
     "uuid": "^14.0.1",
     "wavefile": "^11.0.0",
