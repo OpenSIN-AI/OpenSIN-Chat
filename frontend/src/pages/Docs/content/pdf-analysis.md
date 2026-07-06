@@ -58,15 +58,15 @@ Upload ─► PdfReader ─► Chunk-Plan ─► AgentPool (AIMD) ─► Synthes
 ```
 Seite laden
     │
-    ├─ Deep Scan aktiv? ──► MiniCPM-V liest Seite komplett visuell
+    ├─ Deep Scan aktiv? ──► NIM Vision liest Seite komplett visuell
     │                          (Fallback auf Text/OCR)
     │
     ├─ Text-Layer vorhanden? ──► Programmatische Extraktion (schnell, exakt)
     │                              │
-    │                              └─ Wenig Text? ──► OCR (Tesseract.js)
+    │                              └─ Wenig Text? ──► OCR (NVIDIA NIM Vision API)
     │
     └─ Signifikante Bilder? ──► Vision-Agent beschreibt Bildinhalt
-                                   (MiniCPM-V lokal ODER Cloud-LLM)
+                                   (NIM Vision API ODER Cloud-LLM)
 ```
 
 ## Komponenten
@@ -113,7 +113,7 @@ Descriptor angefordert.
 ### `deepScan.js` -- Visuelle Voll-Analyse
 
 Jede Seite wird hochauflösend gerastert (Scale 2.0) und komplett visuell gelesen
--- MiniCPM-V interpretiert Layout, Tabellen und Diagramme im Zusammenhang.
+-- NIM Vision (Nemotron 3 Nano Omni 30B) interpretiert Layout, Tabellen und Diagramme im Zusammenhang.
 
 - Aktivierung pro Job uber `deepScan=true`
 - Fallback auf Text/OCR, falls lokales Modell nicht verfugbar
@@ -482,7 +482,7 @@ Alle Werte sind per ENV ubersteuerbar. Default-Werte in Klammern.
 | `PDF_ANALYSIS_MAX_CHARS_PER_CHUNK` | `24000` | Max. Zeichen pro Chunk an LLM (1000-1000000) |
 | `PDF_ANALYSIS_FACT_MIN_CONF` | `0.7` | Mindest-Confidence fur Fakten-Speicherung |
 | `PDF_ANALYSIS_OCR` | `true` | OCR-Fallback aktiviert |
-| `PDF_ANALYSIS_OCR_LANGS` | `deu+eng` | Tesseract-Sprachen |
+| `PDF_ANALYSIS_OCR_LANGS` | `deu+eng` | Tesseract-Sprachen (Fallback) |
 | `PDF_ANALYSIS_OCR_SCALE` | `2.0` | Render-Skalierung fur OCR |
 | `PDF_ANALYSIS_OCR_MIN_CHARS` | `16` | Mindest-Zeichen fur Text-Layer-Erkennung |
 | `PDF_ANALYSIS_VISION` | `true` | Vision-Agent aktiviert |
@@ -499,7 +499,7 @@ Alle Werte sind per ENV ubersteuerbar. Default-Werte in Klammern.
 | `PDF_ANALYSIS_AIMD_COOLDOWN_MS` | `5000` | Abkuhlphase nach Rate-Limit |
 | `PDF_ANALYSIS_MAX_CHUNK_RETRIES` | `10` | Max. Rate-Limit-Retries pro Chunk |
 | `PDF_ANALYSIS_OLLAMA_URL` | `http://localhost:11434` | Ollama-Endpoint |
-| `PDF_ANALYSIS_OLLAMA_VISION_MODEL` | `minicpm-v` | Ollama-Vision-Modell |
+| `PDF_ANALYSIS_OLLAMA_VISION_MODEL` | `minicpm-v` | Ollama-Vision-Modell (optionaler Fallback) |
 | `PDF_ANALYSIS_OLLAMA_TIMEOUT_MS` | `180000` | Ollama-Timeout (3 min) |
 | `PDF_ANALYSIS_OLLAMA_NUM_CTX` | `8192` | Ollama Context-Window |
 | `PDF_ANALYSIS_LLM_RETRIES` | `4` | Max. LLM-Retries bei Vision |
@@ -596,6 +596,7 @@ deu+eng  ──►  deu  ──►  eng  ──►  osd
 
 Jede Stufe wird nur versucht, wenn die vorherige fehlschlagt. Ein fehlendes
 Sprachpaket bricht die Kaskade nicht -- `osd` ist in Tesseract immer verfugbar.
+NIM Vision API benötigt keine Sprachpakete (multilingual nativ).
 
 ### Crash-Recovery
 
