@@ -4668,6 +4668,7 @@ const TRANSLATIONS = {
     couldNotRespond: "Could not respond to message.",
     reason: "Reason: {{reason}}",
     unknown: "unknown",
+    errorId: "Error ID: {{id}}",
   },
   workspaceChat: {
     notFoundTitle: "Workspace not found",

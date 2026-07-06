@@ -4780,6 +4780,7 @@ const TRANSLATIONS = {
     couldNotRespond: "Konnte nicht auf die Nachricht antworten.",
     reason: "Grund: {{reason}}",
     unknown: "unbekannt",
+    errorId: "Fehler-ID: {{id}}",
   },
   workspaceChat: {
     notFoundTitle: "Workspace nicht gefunden",
