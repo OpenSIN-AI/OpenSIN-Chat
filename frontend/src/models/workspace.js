@@ -374,6 +374,15 @@ const Workspace = {
   uploadAndParseFile: async function (slug, formData, { onUploadProgress } = {}) {
     return new Promise((resolve) => {
       const xhr = new XMLHttpRequest();
+      // Timeout: 120s for the upload phase. If the upload stalls (e.g.
+      // nginx client_max_body_size rejects mid-transfer, or Cloudflare
+      // tunnel drops), the user gets a clear error instead of an
+      // infinite spinner at 72%.
+      const UPLOAD_TIMEOUT_MS = Number(
+        typeof window !== "undefined" &&
+          window.__OPENSIN_UPLOAD_TIMEOUT_MS__,
+      ) || 120_000;
+      xhr.timeout = UPLOAD_TIMEOUT_MS;
       xhr.open("POST", `${API_BASE}/workspace/${slug}/parse`);
       const headers = baseHeaders();
       for (const [key, value] of Object.entries(headers)) {
@@ -400,7 +409,16 @@ const Workspace = {
         resolve(data);
       };
       xhr.onerror = () =>
-        resolve({ success: false, error: "Upload failed (network error)" });
+        resolve({
+          success: false,
+          error:
+            "Upload failed (network error). This is often caused by a proxy body-size limit (nginx client_max_body_size) or a Cloudflare tunnel upload cap. Check server/nginx config.",
+        });
+      xhr.ontimeout = () =>
+        resolve({
+          success: false,
+          error: `Upload timed out after ${UPLOAD_TIMEOUT_MS / 1000}s. The server may have a body-size limit that silently drops the connection.`,
+        });
       xhr.onabort = () =>
         resolve({ success: false, error: "Upload was cancelled" });
       xhr.send(formData);
