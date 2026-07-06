@@ -130,6 +130,7 @@ function buildRows({ history, workspace, websocket, t }: any) {
         pending: props.pending,
         sources: props.sources,
         error: props.error,
+        errorId: props.errorId,
         closed: props.closed,
       });
     } else {
@@ -398,6 +399,7 @@ export default forwardRef(function (
               pending={row.pending}
               sources={row.sources}
               error={row.error}
+              errorId={row.errorId}
               closed={row.closed}
             />
           );

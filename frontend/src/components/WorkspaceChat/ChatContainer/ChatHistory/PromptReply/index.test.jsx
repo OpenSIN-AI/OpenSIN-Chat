@@ -59,6 +59,25 @@ describe("PromptReply", () => {
     expect(screen.getByText(/Something went wrong/i)).toBeInTheDocument();
   });
 
+  it("renders the error id when one is provided (Issue #371)", () => {
+    render(
+      <PromptReply
+        uuid="1"
+        error="Internal error"
+        errorId="123e4567-e89b-12d3-a456-426614174000"
+      />,
+    );
+    expect(
+      screen.getByText(/123e4567-e89b-12d3-a456-426614174000/i),
+    ).toBeInTheDocument();
+  });
+
+  it("does not render an error id line when errorId is absent", () => {
+    render(<PromptReply uuid="1" error="Internal error" />);
+    expect(screen.getByText(/could not respond/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Error ID:/i)).not.toBeInTheDocument();
+  });
+
   it("renders the reply container when a reply is provided", () => {
     const { container } = render(<PromptReply uuid="1" reply="Hello, user!" />);
     expect(

@@ -15,7 +15,7 @@ Erstelle `vercel.json` im Root mit korrektem Build-Pfad:
 ```
 
 ## Status
-- [ ] vercel.json hinzufügen
+- [x] vercel.json hinzufügen
 - [ ] Test-Deploy triggern
 - [ ] Bestätigen, dass Build erfolgreich läuft
 

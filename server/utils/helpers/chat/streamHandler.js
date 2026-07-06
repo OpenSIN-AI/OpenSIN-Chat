@@ -155,8 +155,15 @@ async function streamChatHandler(request, response, { thread = null } = {}) {
     if (stopHeartbeat) stopHeartbeat();
     const id = crypto.randomUUID();
     consoleLogger.error(`[chat SSE error id=${id}]`, e);
+    // Surface the server-generated error id to the client via a dedicated
+    // `errorId` field. The generic `error` string intentionally hides all
+    // implementation details (no stacktrace/message), but the stable id lets
+    // users quote it in support tickets so we can correlate it with the
+    // server log line above. NOTE: we cannot reuse `id` for this — the
+    // frontend consumes `uuid` as the message key and never reads `id`.
     writeResponseChunk(response, {
       id,
+      errorId: id,
       type: "abort",
       textResponse: null,
       sources: [],
