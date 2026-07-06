@@ -115,12 +115,21 @@ flowchart TB
 
 ### 2.3 nginx Reverse Proxy
 
-**Rolle:** WebSocket-Upgrade-Header-Injection zwischen Cloudflare Tunnel und Docker-Container.
+**Rolle:** WebSocket-Upgrade-Header-Injection + Upload-Size-Limit zwischen Cloudflare Tunnel und Docker-Container.
 
 **Config:**
-- `/etc/nginx/sites-available/opensin-ws-proxy`
+- `/etc/nginx/sites-available/opensin-ws-proxy` (siehe `docker/nginx/opensin-ws-proxy.conf` im Repo)
 - `/etc/nginx/conf.d/ws-upgrade.conf`
 - Lauscht auf `:38481`, weiterleitung an `127.0.0.1:38471`
+
+**WICHTIG — Upload-Limit:** nginx default `client_max_body_size` ist **1MB**. Ohne explizite Konfiguration werden PDF-Uploads >1MB bei ~72% abgebrochen (XHR stallt). Die Config setzt `client_max_body_size 256m` um multer's 200MB-Limit zu matchen.
+
+**Deploy:**
+```bash
+sudo cp docker/nginx/opensin-ws-proxy.conf /etc/nginx/sites-available/opensin-ws-proxy
+sudo ln -sf /etc/nginx/sites-available/opensin-ws-proxy /etc/nginx/sites-enabled/opensin-ws-proxy
+sudo nginx -t && sudo systemctl reload nginx
+```
 
 **Known Issue:** Cloudflare strippt `Connection: Upgrade` / `Upgrade: websocket` Header. nginx WS-Proxy hinzugefügt, aber Cloudflare Edge beendet WebSocket weiterhin. SSE-Fallback oder Cloudflare Dashboard WebSocket-Konfig noetig.
 
