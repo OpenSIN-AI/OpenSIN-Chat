@@ -315,6 +315,38 @@ describe("streamChatHandler — error handling", () => {
     expect(res.ended).toBe(true);
   });
 
+  it("includes a stable errorId in the error chunk (Issue #371)", async () => {
+    streamChatWithWorkspace.mockRejectedValue(new Error("LLM down"));
+    const req = mockRequest({ message: "hello" });
+    const res = mockResponse();
+    await streamChatHandler(req, res);
+
+    const chunk = writeResponseChunk.mock.calls.at(-1)[1];
+    // A non-empty UUID-shaped id is surfaced to the client so users can quote
+    // it in support tickets.
+    expect(typeof chunk.errorId).toBe("string");
+    expect(chunk.errorId).toMatch(
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i,
+    );
+    // The errorId must match the id logged server-side for correlation.
+    expect(chunk.errorId).toBe(chunk.id);
+  });
+
+  it("never leaks the underlying error message/stacktrace to the client", async () => {
+    streamChatWithWorkspace.mockRejectedValue(
+      new Error("super-secret-internal-detail"),
+    );
+    const req = mockRequest({ message: "hello" });
+    const res = mockResponse();
+    await streamChatHandler(req, res);
+
+    const chunk = writeResponseChunk.mock.calls.at(-1)[1];
+    expect(chunk.error).toBe("Internal error");
+    const serialized = JSON.stringify(chunk);
+    expect(serialized).not.toContain("super-secret-internal-detail");
+    expect(serialized).not.toContain("stack");
+  });
+
   it("stops heartbeat even when an error is thrown", async () => {
     const stopMock = jest.fn();
     startSSEHeartbeat.mockReturnValue(stopMock);
