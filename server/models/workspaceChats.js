@@ -144,62 +144,6 @@ const WorkspaceChats = {
   },
 
   /**
-   * @deprecated Use markThreadHistoryInvalidV2 instead.
-   */
-  markHistoryInvalid: async function (workspaceId = null, user = null) {
-    if (!workspaceId) return;
-    try {
-      await prisma.workspace_chats.updateMany({
-        where: {
-          workspaceId,
-          // user?.id evaluates to undefined when user is null, and Prisma
-          // treats undefined as "ignore this filter" — which would match
-          // ALL users' chats instead of only unassigned ones. Explicitly
-          // use null to filter for user_id IS NULL.
-          user_id: user ? user.id : null,
-          thread_id: null, // this function is now only used for the default thread on workspaces
-        },
-        data: {
-          include: false,
-        },
-      });
-      return;
-    } catch (error) {
-      consoleLogger.error(error.message);
-    }
-  },
-
-  /**
-   * @deprecated Use markThreadHistoryInvalidV2 instead.
-   */
-  markThreadHistoryInvalid: async function (
-    workspaceId = null,
-    user = null,
-    threadId = null,
-  ) {
-    if (!workspaceId || !threadId) return;
-    try {
-      await prisma.workspace_chats.updateMany({
-        where: {
-          workspaceId,
-          thread_id: threadId,
-          // user?.id evaluates to undefined when user is null, and Prisma
-          // treats undefined as "ignore this filter" — which would match
-          // ALL users' chats instead of only unassigned ones. Explicitly
-          // use null to filter for user_id IS NULL.
-          user_id: user ? user.id : null,
-        },
-        data: {
-          include: false,
-        },
-      });
-      return;
-    } catch (error) {
-      consoleLogger.error(error.message);
-    }
-  },
-
-  /**
    * @description This function is used to mark a thread's history as invalid.
    * and works with an arbitrary where clause.
    * @param {Object} whereClause - The where clause to update the chats.
