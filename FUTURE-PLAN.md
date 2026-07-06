@@ -9,7 +9,7 @@
 ## Warum das hier liegt
 
 Das ist ein kleines Chat-Projekt. Es soll laufen. Punkt.  
-Die drei Punkte unten sind strukturelle Schulden aus dem AnythingLLM-Upstream-Fork — nicht unsere Regressionen, nicht kritisch, nicht blockierend.  
+Die drei Punkte unten sind strukturelle Schulden aus der Anfangsphase (ursprünglich inspiriert von AnythingLLM) — nicht unsere Regressionen, nicht kritisch, nicht blockierend.  
 Wir machen das **nur**, wenn wir irgendwann mal entscheiden, dass es sich lohnt.  
 Aktuell: **Nein.**
 
