@@ -19,7 +19,7 @@ Quellen**, und **lokale Vision via MiniCPM-V/Ollama**.
 - Wellen-Synchronisierung mit atomaren Checkpoints (Resume nach Absturz)
 - AIMD-adaptive Parallelität (TCP-artige Regulierung: Rate-Limit → /2, N Wellen → +1)
 - Range-basiertes PDF-Streaming (konstanter RAM, 100k+ Seiten möglich)
-- OCR-Triage für gescannte PDFs (Tesseract.js, lazy init)
+- OCR-Triage für gescannte PDFs (NVIDIA NIM Vision API — Nemotron 3 Nano Omni 30B, tesseract.js Fallback)
 - Vision-Triage für Bildseiten (Operator-Liste, deterministisch)
 - **Deep-Scan-Modus** für komplexe Layouts (jede Seite hochauflösend via MiniCPM-V)
 
@@ -47,7 +47,7 @@ Quellen**, und **lokale Vision via MiniCPM-V/Ollama**.
 - Urteile werden an `fact.crossCheck` zurückgeschrieben (Verifikationshistorie)
 
 ### 5. Medien-Analyse
-- **Lokales Vision-Backend** (MiniCPM-V 4.6 via Ollama, Apple-Silicon-optimiert)
+- **Lokales Vision-Backend** (NVIDIA NIM Vision API — Nemotron 3 Nano Omni 30B, Cloud-GPU)
 - **Privacy-Garantie**: `backend=ollama` erzwungen → kein Cloud-Fallback
 - **Auto-Modus**: lokal wenn verfügbar, sonst Cloud
 - **Cloud-Modus**: multimodaler LLM-Provider (OpenAI, Anthropic, Gemini, etc.)
@@ -73,7 +73,7 @@ Quellen**, und **lokale Vision via MiniCPM-V/Ollama**.
 Phase 1: PDF einlesen (Range-Streaming)
     ├─ Deep-Scan-Modus (MiniCPM-V lokal) [opt-in]
     ├─ Text-Layer-Extraktion
-    ├─ OCR-Fallback (Tesseract.js)
+    ├─ OCR-Fallback (NVIDIA NIM Vision API — Nemotron 3 Nano Omni 30B)
     └─ Vision-Triage (Operator-Liste) → MiniCPM-V
 
 Phase 2: Parallele Multi-Agenten-Analyse (AIMD-reguliert)
