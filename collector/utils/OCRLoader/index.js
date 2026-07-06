@@ -7,85 +7,162 @@ const { VALID_LANGUAGE_CODES } = require("./validLangs");
 
 const OCR_MAX_BYTES = 5 * 1024 * 1024 * 1024;
 
-// How long to wait for an OCR engine to bootstrap before giving up.
-// Configurable via env. Default 60s for tesseract CDN download, 10s for
-// local PaddleOCR models.
+// ─── NVIDIA NIM Vision API (Nemotron 3 Nano Omni 30B) ────────────────
+//
+// State-of-the-art PDF OCR via NVIDIA's cloud-hosted Nemotron 3 Nano Omni
+// 30B multimodal model. The model natively handles OCR, document
+// intelligence, tables, diagrams, and complex layouts — no separate OCR
+// engine needed.
+//
+// API: OpenAI-compatible /v1/chat/completions at integrate.api.nvidia.com
+// Auth: Bearer token (NVIDIA_NIM_API_KEY env var, free via build.nvidia.com)
+// Input: Base64-encoded PNG images of PDF pages
+// Output: Extracted text, preserving layout and reading order
+//
+// Benchmark: sub-second per page on NVIDIA's cloud GPUs (vs 2-10s/page
+// with tesseract.js, ~188ms/page with PaddleOCR). No local model
+// download, no CDN dependency, no worker bootstrap delay.
+
+const NIM_BASE_URL =
+  process.env.NVIDIA_NIM_BASE_URL || "https://integrate.api.nvidia.com/v1";
+const NIM_MODEL =
+  process.env.NVIDIA_NIM_MODEL ||
+  "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning";
+const NIM_API_KEY = process.env.NVIDIA_NIM_API_KEY || "";
+const NIM_TIMEOUT_MS = Number(process.env.NVIDIA_NIM_TIMEOUT_MS || 120_000);
+const NIM_MAX_TOKENS = Number(process.env.NVIDIA_NIM_MAX_TOKENS || 4096);
+const NIM_CONCURRENCY = Number(process.env.NVIDIA_NIM_CONCURRENCY || 4);
+
+// Fallback: tesseract.js (only if NVIDIA NIM is unavailable/unconfigured)
 const WORKER_BOOTSTRAP_TIMEOUT_MS =
   Number(process.env.OCR_WORKER_BOOTSTRAP_TIMEOUT_MS) || 60_000;
-
-// Optional local paths for tesseract.js core/lang files (offline mode).
 const OCR_LANG_PATH = process.env.OCR_TESSDATA_PATH || undefined;
 const OCR_CORE_PATH = process.env.OCR_CORE_PATH || undefined;
+const OCR_ENGINE = (process.env.OCR_ENGINE || "nim").toLowerCase(); // nim | tesseract
 
-// Which OCR engine to use. "paddle" (PP-OCRv5 via ppu-paddle-ocr) is
-// 10-50x faster than tesseract.js and runs fully offline with bundled
-// ONNX models. "tesseract" is the legacy fallback. "auto" tries paddle
-// first and falls back to tesseract if ppu-paddle-ocr is not installed.
-const OCR_ENGINE = (process.env.OCR_ENGINE || "auto").toLowerCase();
+// OCR prompt: instruct the model to extract text faithfully
+const OCR_PROMPT =
+  "Extract ALL text from this document page image. " +
+  "Return ONLY the raw text content, preserving layout, tables, and reading order. " +
+  "No commentary, no analysis, no numbering — just the text as it appears in the image.";
 
-// Whether to pre-warm the OCR engine on collector startup. Eliminates
-// the cold-start delay on the first upload.
-const OCR_PREWARM = String(process.env.OCR_PREWARM || "true").toLowerCase() !== "false";
+// ─── NIM Vision client ───────────────────────────────────────────────
 
-// ─── PaddleOCR (PP-OCRv5 via ONNX Runtime) ───────────────────────────
-//
-// ppu-paddle-ocr runs PP-OCRv5 models on ONNX Runtime in Node.js.
-// Benchmark: ~188ms/page on Apple M1 (vs seconds with tesseract.js).
-// Models are bundled locally — no CDN download, fully offline.
-// 40+ languages including German (deu) and English (eng).
-
-let _paddleOcrInstance = null;
-let _paddleOcrInitPromise = null;
+let _nimAvailable = null;
+let _nimCheckedAt = 0;
 
 /**
- * Lazy-loads and caches a PaddleOcrService instance.
- * @returns {Promise<object|null>} The OCR service, or null if not available.
- */
-async function getPaddleOcr() {
-  if (_paddleOcrInstance) return _paddleOcrInstance;
-  if (_paddleOcrInitPromise) return _paddleOcrInitPromise;
-
-  _paddleOcrInitPromise = (async () => {
-    try {
-      const { PaddleOcrService } = require("ppu-paddle-ocr");
-      const ocr = new PaddleOcrService();
-      await ocr.initialize();
-      _paddleOcrInstance = ocr;
-      console.log(
-        "\x1b[36m[OCRLoader]\x1b[0m PaddleOCR (PP-OCRv5) engine initialized successfully"
-      );
-      return _paddleOcrInstance;
-    } catch (e) {
-      console.log(
-        `\x1b[33m[OCRLoader]\x1b[0m PaddleOCR not available (${e.message}), will use tesseract fallback`
-      );
-      return null;
-    }
-  })();
-
-  const result = await _paddleOcrInitPromise;
-  _paddleOcrInitPromise = null;
-  return result;
-}
-
-/**
- * Check if PaddleOCR is available as the fast OCR engine.
+ * Checks if NVIDIA NIM API is configured and reachable.
  * @returns {Promise<boolean>}
  */
-async function isPaddleAvailable() {
-  if (OCR_ENGINE === "tesseract") return false;
-  const instance = await getPaddleOcr();
-  return instance !== null;
+async function isNimAvailable() {
+  if (!NIM_API_KEY) return false;
+  // Cache for 60s
+  if (_nimAvailable !== null && Date.now() - _nimCheckedAt < 60_000)
+    return _nimAvailable;
+  try {
+    const res = await fetch(`${NIM_BASE_URL}/models`, {
+      headers: { Authorization: `Bearer ${NIM_API_KEY}` },
+      signal: AbortSignal.timeout(5000),
+    });
+    _nimAvailable = res.ok;
+    _nimCheckedAt = Date.now();
+    return _nimAvailable;
+  } catch {
+    _nimAvailable = false;
+    _nimCheckedAt = Date.now();
+    return false;
+  }
 }
 
-// ─── Tesseract fallback ──────────────────────────────────────────────
+/**
+ * Runs OCR on a single image buffer via NVIDIA NIM Vision API.
+ * @param {Buffer} imageBuffer - PNG/JPEG buffer of the page
+ * @returns {Promise<string>} Extracted text
+ */
+async function nimOcrImage(imageBuffer) {
+  const mime = "image/png";
+  const b64 = imageBuffer.toString("base64");
+  const dataUrl = `data:${mime};base64,${b64}`;
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), NIM_TIMEOUT_MS);
+
+  try {
+    const res = await fetch(`${NIM_BASE_URL}/chat/completions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${NIM_API_KEY}`,
+        Accept: "application/json",
+      },
+      signal: controller.signal,
+      body: JSON.stringify({
+        model: NIM_MODEL,
+        messages: [
+          {
+            role: "user",
+            content: [
+              { type: "text", text: OCR_PROMPT },
+              { type: "image_url", image_url: { url: dataUrl } },
+            ],
+          },
+        ],
+        max_tokens: NIM_MAX_TOKENS,
+        temperature: 0,
+        top_k: 1,
+        chat_template_kwargs: { enable_thinking: false },
+      }),
+    });
+
+    if (!res.ok) {
+      const body = await res.text().catch(() => "");
+      throw new Error(`NIM API HTTP ${res.status}: ${body.slice(0, 200)}`);
+    }
+
+    const data = await res.json();
+    const text = data?.choices?.[0]?.message?.content?.trim() || "";
+    return text;
+  } finally {
+    clearTimeout(timer);
+  }
+}
 
 /**
- * Creates a tesseract.js worker bounded by WORKER_BOOTSTRAP_TIMEOUT_MS.
- * @param {string[]} languages
- * @param {string} cachePath
- * @returns {Promise<import("tesseract.js").Worker>}
+ * Runs OCR on multiple image buffers in parallel via NIM.
+ * @param {Buffer[]} imageBuffers
+ * @returns {Promise<string[]>}
  */
+async function nimOcrBatch(imageBuffers) {
+  const results = new Array(imageBuffers.length).fill("");
+  const batches = [];
+  for (let i = 0; i < imageBuffers.length; i += NIM_CONCURRENCY) {
+    batches.push(imageBuffers.slice(i, i + NIM_CONCURRENCY).map((buf, j) => ({
+      idx: i + j,
+      buf,
+    })));
+  }
+
+  for (const batch of batches) {
+    const batchResults = await Promise.all(
+      batch.map(async ({ idx, buf }) => {
+        try {
+          return { idx, text: await nimOcrImage(buf) };
+        } catch (e) {
+          console.error(`[OCRLoader] NIM OCR error on image ${idx}: ${e.message}`);
+          return { idx, text: "" };
+        }
+      })
+    );
+    for (const { idx, text } of batchResults) {
+      results[idx] = text;
+    }
+  }
+  return results;
+}
+
+// ─── Tesseract fallback (only if NIM unavailable) ────────────────────
+
 async function createTesseractWorkerWithTimeout(languages, cachePath) {
   const { createWorker, OEM } = require("tesseract.js");
   const workerOptions = { cachePath };
@@ -94,7 +171,6 @@ async function createTesseractWorkerWithTimeout(languages, cachePath) {
 
   let timedOut = false;
   const workerPromise = createWorker(languages, OEM.LSTM_ONLY, workerOptions);
-
   workerPromise
     .then((worker) => {
       if (timedOut) worker?.terminate?.().catch(() => {});
@@ -108,9 +184,9 @@ async function createTesseractWorkerWithTimeout(languages, cachePath) {
         timedOut = true;
         reject(
           new Error(
-            `OCR engine failed to initialize within ${
+            `Tesseract worker failed to initialize within ${
               WORKER_BOOTSTRAP_TIMEOUT_MS / 1000
-            }s. Set OCR_TESSDATA_PATH / OCR_CORE_PATH for offline deployments.`
+            }s. Configure NVIDIA_NIM_API_KEY for state-of-the-art OCR.`
           )
         );
       }, WORKER_BOOTSTRAP_TIMEOUT_MS)
@@ -118,60 +194,29 @@ async function createTesseractWorkerWithTimeout(languages, cachePath) {
   ]);
 }
 
-// ─── Unified OCR interface ───────────────────────────────────────────
-
-/**
- * Runs OCR on a single image buffer using the best available engine.
- * @param {Buffer} imageBuffer
- * @returns {Promise<string>} Extracted text.
- */
-async function ocrImageBuffer(imageBuffer) {
-  // Try PaddleOCR first (10-50x faster)
-  if (OCR_ENGINE !== "tesseract") {
-    const paddle = await getPaddleOcr();
-    if (paddle) {
-      const { text } = await paddle.recognize(imageBuffer);
-      return text || "";
-    }
-  }
-
-  // Fall back to tesseract.js
-  return null; // Signal caller to use tesseract path
-}
-
 // ─── OCRLoader class ─────────────────────────────────────────────────
 
 class OCRLoader {
-  /**
-   * @type {string[]}
-   */
   language;
-
-  /**
-   * @type {string}
-   */
   cacheDir;
 
-  /**
-   * @param {Object} options
-   * @param {string} options.targetLanguages - comma separated language codes
-   */
   constructor({ targetLanguages = "eng" } = {}) {
     this.language = this.parseLanguages(targetLanguages);
     this.cacheDir = getStoragePath("models", "tesseract");
-
     if (!fs.existsSync(this.cacheDir))
       fs.mkdirSync(this.cacheDir, { recursive: true });
 
+    const engineLabel =
+      OCR_ENGINE === "tesseract"
+        ? "tesseract.js (fallback)"
+        : NIM_API_KEY
+          ? `NVIDIA NIM (${NIM_MODEL})`
+          : "NIM (no API key — will fall back to tesseract)";
+
     this.log(
-      `OCRLoader initialized with language support for:`,
+      `OCRLoader initialized — engine: ${engineLabel}, languages:`,
       this.language.map((lang) => VALID_LANGUAGE_CODES[lang]).join(", ")
     );
-
-    // Pre-warm PaddleOCR on construction if enabled
-    if (OCR_PREWARM && OCR_ENGINE !== "tesseract") {
-      getPaddleOcr().catch(() => {});
-    }
   }
 
   parseLanguages(language = null) {
@@ -196,8 +241,9 @@ class OCRLoader {
   }
 
   /**
-   * OCR a PDF document. Uses PaddleOCR if available (10-50x faster than
-   * tesseract.js), falls back to tesseract.js otherwise.
+   * OCR a PDF document via NVIDIA NIM Vision API.
+   * Each page is rendered to PNG (via sharp/pdfjs) and sent to the
+   * Nemotron 3 Nano Omni model for text extraction.
    * @param {string} filePath
    * @param {{maxExecutionTime?: number, batchSize?: number, maxWorkers?: number}} options
    * @returns {Promise<{pageContent: string, metadata: object}[]>}
@@ -244,18 +290,11 @@ class OCRLoader {
       },
     };
 
-    // ─── PaddleOCR fast path ──────────────────────────────────────
-    //
-    // PaddleOCR is 10-50x faster than tesseract.js (188ms/page vs
-    // seconds/page). It processes each page as an image via sharp
-    // and runs PP-OCRv5 inference on ONNX Runtime. No CDN downloads,
-    // no worker bootstrap delay, fully offline.
-
+    // ─── NVIDIA NIM Vision path ──────────────────────────────────
     if (OCR_ENGINE !== "tesseract") {
-      const paddle = await getPaddleOcr();
-      if (paddle) {
-        return await this._ocrPdfWithPaddle(
-          paddle,
+      const nimOk = await isNimAvailable();
+      if (nimOk) {
+        return await this._ocrPdfWithNim(
           pdfDocument,
           pdfjs,
           metadata,
@@ -263,10 +302,14 @@ class OCRLoader {
           maxExecutionTime
         );
       }
+      this.log(
+        `NVIDIA NIM not available (${
+          NIM_API_KEY ? "API unreachable" : "no API key set"
+        }), falling back to tesseract.js`
+      );
     }
 
-    // ─── Tesseract fallback path ──────────────────────────────────
-
+    // ─── Tesseract fallback path ─────────────────────────────────
     return await this._ocrPdfWithTesseract(
       pdfDocument,
       pdfjs,
@@ -277,17 +320,16 @@ class OCRLoader {
   }
 
   /**
-   * Fast PDF OCR using PaddleOCR (PP-OCRv5 on ONNX Runtime).
-   * @param {object} paddle - PaddleOcrService instance
-   * @param {object} pdfDocument - pdfjs document proxy
-   * @param {object} pdfjs - pdfjs module
-   * @param {object} metadata - metadata template
+   * Fast PDF OCR via NVIDIA NIM Vision API (Nemotron 3 Nano Omni 30B).
+   * Pages are rendered to PNG and sent to the cloud API in parallel batches.
+   * @param {object} pdfDocument
+   * @param {object} pdfjs
+   * @param {object} metadata
    * @param {string} documentTitle
    * @param {number} maxExecutionTime
    * @returns {Promise<{pageContent: string, metadata: object}[]>}
    */
-  async _ocrPdfWithPaddle(
-    paddle,
+  async _ocrPdfWithNim(
     pdfDocument,
     pdfjs,
     metadata,
@@ -298,7 +340,7 @@ class OCRLoader {
     const startTime = Date.now();
     const documents = [];
 
-    this.log(`Using PaddleOCR (PP-OCRv5) for ${totalPages} pages`);
+    this.log(`Using NVIDIA NIM Vision (${NIM_MODEL}) for ${totalPages} pages`);
 
     const pdfSharp = new PDFSharp({
       validOps: [
@@ -309,9 +351,8 @@ class OCRLoader {
     });
     await pdfSharp.init();
 
-    // Process pages in parallel batches for maximum throughput.
-    // PaddleOCR is fast enough that we can use larger batches.
-    const BATCH_SIZE = 16;
+    // Render pages to PNG and OCR in parallel batches
+    const BATCH_SIZE = NIM_CONCURRENCY;
     const pageNumbers = Array.from({ length: totalPages }, (_, k) => k + 1);
 
     for (let b = 0; b < pageNumbers.length; b += BATCH_SIZE) {
@@ -330,8 +371,8 @@ class OCRLoader {
             const imageBuffer = await pdfSharp.pageToBuffer({ page });
             if (!imageBuffer) return null;
 
-            const { text } = await paddle.recognize(imageBuffer);
-            this.log(`✅ PaddleOCR completed pg${pageNum}`);
+            const text = await nimOcrImage(imageBuffer);
+            this.log(`✅ NIM OCR completed pg${pageNum}`);
 
             return {
               pageContent: text || "",
@@ -341,7 +382,7 @@ class OCRLoader {
               },
             };
           } catch (e) {
-            this.log(`PaddleOCR error on pg${pageNum}: ${e.message}`);
+            this.log(`NIM OCR error on pg${pageNum}: ${e.message}`);
             return null;
           }
         })
@@ -354,7 +395,7 @@ class OCRLoader {
       }
     }
 
-    this.log(`Completed PaddleOCR of ${documentTitle}!`, {
+    this.log(`Completed NIM OCR of ${documentTitle}!`, {
       documentsParsed: documents.length,
       totalPages,
       executionTime: `${((Date.now() - startTime) / 1000).toFixed(2)}s`,
@@ -368,13 +409,7 @@ class OCRLoader {
   }
 
   /**
-   * Legacy PDF OCR using tesseract.js. Used when PaddleOCR is not available.
-   * @param {object} pdfDocument
-   * @param {object} pdfjs
-   * @param {object} metadata
-   * @param {string} documentTitle
-   * @param {{maxExecutionTime: number, batchSize: number, maxWorkers: number}} opts
-   * @returns {Promise<{pageContent: string, metadata: object}[]>}
+   * Legacy PDF OCR via tesseract.js. Only used when NIM is unavailable.
    */
   async _ocrPdfWithTesseract(
     pdfDocument,
@@ -415,7 +450,7 @@ class OCRLoader {
         );
       }
 
-      this.log("Bootstrapping tesseract OCR completed successfully!", {
+      this.log("Bootstrapping tesseract OCR (fallback) completed!", {
         MAX_EXECUTION_TIME_MS: MAX_EXECUTION_TIME,
         BATCH_SIZE,
         MAX_CONCURRENT_WORKERS: NUM_WORKERS,
@@ -514,15 +549,12 @@ class OCRLoader {
   }
 
   /**
-   * OCR a single image file.
+   * OCR a single image file via NVIDIA NIM Vision API.
    * @param {string} filePath
    * @param {{maxExecutionTime?: number}} options
    * @returns {Promise<string|null>}
    */
   async ocrImage(filePath, { maxExecutionTime = 300_000 } = {}) {
-    let content = "";
-    let worker = null;
-    let timeoutHandle = null;
     if (
       !filePath ||
       !fs.existsSync(filePath) ||
@@ -545,145 +577,165 @@ class OCRLoader {
       this.log(`Starting OCR of ${documentTitle}`);
       const startTime = Date.now();
 
-      // ─── PaddleOCR fast path ──────────────────────────────────
+      // ─── NIM Vision path ───────────────────────────────────────
       if (OCR_ENGINE !== "tesseract") {
-        const paddle = await getPaddleOcr();
-        if (paddle) {
+        const nimOk = await isNimAvailable();
+        if (nimOk) {
           // Apply EXIF orientation if needed
+          let imageBuffer = await fs.promises.readFile(filePath);
+          try {
+            const sharp = (await import("sharp")).default;
+            imageBuffer = await sharp(filePath).rotate().png().toBuffer();
+          } catch {}
+
+          const text = await nimOcrImage(imageBuffer);
+          this.log(`Completed NIM OCR of ${documentTitle}!`, {
+            executionTime: `${((Date.now() - startTime) / 1000).toFixed(2)}s`,
+          });
+          return text || "";
+        }
+        this.log(`NIM not available, falling back to tesseract.js`);
+      }
+
+      // ─── Tesseract fallback ───────────────────────────────────
+      let worker = null;
+      let timeoutHandle = null;
+      try {
+        worker = await createTesseractWorkerWithTimeout(
+          this.language,
+          this.cacheDir
+        );
+
+        const timeoutPromise = new Promise((_, reject) => {
+          timeoutHandle = setTimeout(() => {
+            reject(
+              new Error(
+                `OCR job took too long to complete (${
+                  maxExecutionTime / 1000
+                } seconds)`
+              )
+            );
+          }, maxExecutionTime);
+        });
+
+        let content = "";
+        const processImage = async () => {
           let recognizeInput = filePath;
           try {
             const sharp = (await import("sharp")).default;
             const oriented = await sharp(filePath).rotate().png().toBuffer();
             recognizeInput = oriented;
           } catch {}
+          const { data } = await worker.recognize(recognizeInput, {}, "text");
+          content = data.text;
+        };
 
-          const { text } = await paddle.recognize(recognizeInput);
-          this.log(`Completed PaddleOCR of ${documentTitle}!`, {
-            executionTime: `${((Date.now() - startTime) / 1000).toFixed(2)}s`,
-          });
-          return text || "";
-        }
+        await Promise.race([timeoutPromise, processImage()]);
+        this.log(`Completed OCR of ${documentTitle}!`, {
+          executionTime: `${((Date.now() - startTime) / 1000).toFixed(2)}s`,
+        });
+        return content;
+      } finally {
+        if (timeoutHandle) clearTimeout(timeoutHandle);
+        if (worker) await worker.terminate();
       }
-
-      // ─── Tesseract fallback ───────────────────────────────────
-      worker = await createTesseractWorkerWithTimeout(
-        this.language,
-        this.cacheDir
-      );
-
-      const timeoutPromise = new Promise((_, reject) => {
-        timeoutHandle = setTimeout(() => {
-          reject(
-            new Error(
-              `OCR job took too long to complete (${
-                maxExecutionTime / 1000
-              } seconds)`
-            )
-          );
-        }, maxExecutionTime);
-      });
-
-      const processImage = async () => {
-        let recognizeInput = filePath;
-        try {
-          const sharp = (await import("sharp")).default;
-          const oriented = await sharp(filePath).rotate().png().toBuffer();
-          recognizeInput = oriented;
-          this.log(`Applied EXIF auto-orientation for ${documentTitle}`);
-        } catch {
-          this.log(
-            `EXIF pre-processing skipped for ${documentTitle} (unsupported format or sharp unavailable)`
-          );
-        }
-        const { data } = await worker.recognize(recognizeInput, {}, "text");
-        content = data.text;
-      };
-
-      await Promise.race([timeoutPromise, processImage()]);
-      this.log(`Completed OCR of ${documentTitle}!`, {
-        executionTime: `${((Date.now() - startTime) / 1000).toFixed(2)}s`,
-      });
-
-      return content;
     } catch (e) {
       this.log(`Error: ${e.message}`);
       return null;
-    } finally {
-      if (timeoutHandle) clearTimeout(timeoutHandle);
-      if (worker) await worker.terminate();
     }
   }
 
   async ocrImageBatch(filePaths = [], { maxExecutionTime = 600_000 } = {}) {
     if (!Array.isArray(filePaths) || filePaths.length === 0) return [];
-    let worker = null;
-    let timeoutHandle = null;
     const results = new Array(filePaths.length).fill(null);
-    try {
-      const valid = [];
-      for (let i = 0; i < filePaths.length; i += 1) {
-        const filePath = filePaths[i];
-        if (
-          !filePath ||
-          !fs.existsSync(filePath) ||
-          !fs.statSync(filePath).isFile()
-        ) {
-          results[i] = null;
-          continue;
-        }
-        try {
-          const st = fs.statSync(filePath);
-          if (st.size > OCR_MAX_BYTES) {
-            this.log(
-              `Refusing batch OCR of ${filePath}: ${st.size} bytes exceeds ${OCR_MAX_BYTES} byte cap`
-            );
-            results[i] = null;
-            continue;
-          }
-        } catch {
-          results[i] = null;
-          continue;
-        }
-        valid.push(i);
+
+    // Validate files
+    const valid = [];
+    for (let i = 0; i < filePaths.length; i += 1) {
+      const filePath = filePaths[i];
+      if (
+        !filePath ||
+        !fs.existsSync(filePath) ||
+        !fs.statSync(filePath).isFile()
+      ) {
+        results[i] = null;
+        continue;
       }
-      if (valid.length === 0) return results;
+      try {
+        const st = fs.statSync(filePath);
+        if (st.size > OCR_MAX_BYTES) {
+          this.log(
+            `Refusing batch OCR of ${filePath}: ${st.size} bytes exceeds ${OCR_MAX_BYTES} byte cap`
+          );
+          results[i] = null;
+          continue;
+        }
+      } catch {
+        results[i] = null;
+        continue;
+      }
+      valid.push(i);
+    }
+    if (valid.length === 0) return results;
 
-      this.log(
-        `Starting batch OCR of ${valid.length} images.`
-      );
-      const startTime = Date.now();
+    this.log(`Starting batch OCR of ${valid.length} images.`);
+    const startTime = Date.now();
 
-      // ─── PaddleOCR fast path ──────────────────────────────────
-      if (OCR_ENGINE !== "tesseract") {
-        const paddle = await getPaddleOcr();
-        if (paddle) {
-          for (const idx of valid) {
+    // ─── NIM Vision path ───────────────────────────────────────
+    if (OCR_ENGINE !== "tesseract") {
+      const nimOk = await isNimAvailable();
+      if (nimOk) {
+        // Read and orient all images first
+        const imageBuffers = await Promise.all(
+          valid.map(async (idx) => {
             try {
-              let recognizeInput = filePaths[idx];
+              let buf = await fs.promises.readFile(filePaths[idx]);
               try {
                 const sharp = (await import("sharp")).default;
-                const oriented = await sharp(filePaths[idx])
-                  .rotate()
-                  .png()
-                  .toBuffer();
-                recognizeInput = oriented;
+                buf = await sharp(filePaths[idx]).rotate().png().toBuffer();
               } catch {}
-              const { text } = await paddle.recognize(recognizeInput);
-              results[idx] = text || "";
-            } catch (e) {
-              this.log(`PaddleOCR batch error on ${filePaths[idx]}: ${e.message}`);
-              results[idx] = null;
+              return buf;
+            } catch {
+              return null;
             }
-          }
-          this.log(`Completed PaddleOCR batch.`, {
-            processed: valid.length,
-            executionTime: `${((Date.now() - startTime) / 1000).toFixed(2)}s`,
-          });
-          return results;
-        }
-      }
+          })
+        );
 
-      // ─── Tesseract fallback ───────────────────────────────────
+        // OCR in parallel batches
+        for (let b = 0; b < valid.length; b += NIM_CONCURRENCY) {
+          const batchIndices = valid.slice(b, b + NIM_CONCURRENCY);
+          const batchBuffers = imageBuffers.slice(b, b + NIM_CONCURRENCY);
+
+          const batchResults = await Promise.all(
+            batchBuffers.map(async (buf, j) => {
+              if (!buf) return { idx: batchIndices[j], text: null };
+              try {
+                return { idx: batchIndices[j], text: await nimOcrImage(buf) };
+              } catch (e) {
+                this.log(`NIM batch error on ${filePaths[batchIndices[j]]}: ${e.message}`);
+                return { idx: batchIndices[j], text: null };
+              }
+            })
+          );
+
+          for (const { idx, text } of batchResults) {
+            results[idx] = text || "";
+          }
+        }
+
+        this.log(`Completed NIM batch OCR.`, {
+          processed: valid.length,
+          executionTime: `${((Date.now() - startTime) / 1000).toFixed(2)}s`,
+        });
+        return results;
+      }
+      this.log(`NIM not available, falling back to tesseract.js`);
+    }
+
+    // ─── Tesseract fallback ───────────────────────────────────
+    let worker = null;
+    let timeoutHandle = null;
+    try {
       worker = await createTesseractWorkerWithTimeout(
         this.language,
         this.cacheDir
@@ -712,11 +764,7 @@ class OCRLoader {
                 .png()
                 .toBuffer();
               recognizeInput = oriented;
-            } catch {
-              this.log(
-                `EXIF pre-processing skipped for ${filePaths[idx]} (unsupported format or sharp unavailable)`
-              );
-            }
+            } catch {}
             const { data } = await worker.recognize(recognizeInput, {}, "text");
             results[idx] = data.text;
           } catch (e) {
