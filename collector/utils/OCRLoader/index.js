@@ -7,6 +7,79 @@ const { VALID_LANGUAGE_CODES } = require("./validLangs");
 
 const OCR_MAX_BYTES = 5 * 1024 * 1024 * 1024;
 
+// How long to wait for tesseract.js to bootstrap a worker before giving up.
+// Worker creation can trigger a network fetch of the OCR engine core (wasm)
+// and the language model (traineddata) on a cold cache. Previously this was
+// completely UNBOUNDED: none of this module's own maxExecutionTime timers
+// started until *after* the worker already existed, so a blocked/slow
+// network to the default tesseract.js CDN hung indefinitely. The only
+// backstop was the caller's much coarser upstream timeout chain (collector
+// HTTP call + frontend poll, up to 30 minutes combined) — from the user's
+// perspective the upload just "hung forever" before finally erroring.
+// Configurable via env since slow connections/cold caches can legitimately
+// need longer than the default.
+const WORKER_BOOTSTRAP_TIMEOUT_MS =
+  Number(process.env.OCR_WORKER_BOOTSTRAP_TIMEOUT_MS) || 60_000;
+
+// Optional local paths for the tesseract.js core (wasm) and language
+// (traineddata) files. When unset, tesseract.js falls back to its default
+// remote CDNs, which requires outbound internet access the first time a
+// given language is used — not appropriate for self-hosted/air-gapped
+// "sovereign" deployments. Ops can pre-download a tessdata bundle and point
+// these at it to make OCR fully offline. See docker/.env.example.
+const OCR_LANG_PATH = process.env.OCR_TESSDATA_PATH || undefined;
+const OCR_CORE_PATH = process.env.OCR_CORE_PATH || undefined;
+
+/**
+ * Creates a tesseract.js worker bounded by WORKER_BOOTSTRAP_TIMEOUT_MS.
+ *
+ * This is the single choke point all OCR entry points in this file go
+ * through so worker bootstrap can never hang past a bounded, fast-failing
+ * timeout, regardless of network conditions. If the underlying createWorker
+ * call eventually resolves *after* we've already given up on it, the
+ * resulting worker is terminated immediately so it doesn't leak.
+ *
+ * @param {string[]} languages
+ * @param {string} cachePath
+ * @returns {Promise<import("tesseract.js").Worker>}
+ */
+async function createWorkerWithTimeout(languages, cachePath) {
+  const { createWorker, OEM } = require("tesseract.js");
+  const workerOptions = { cachePath };
+  if (OCR_LANG_PATH) workerOptions.langPath = OCR_LANG_PATH;
+  if (OCR_CORE_PATH) workerOptions.corePath = OCR_CORE_PATH;
+
+  let timedOut = false;
+  const workerPromise = createWorker(languages, OEM.LSTM_ONLY, workerOptions);
+
+  // If we time out before the worker resolves, terminate it silently once
+  // it eventually does resolve instead of leaving it dangling.
+  workerPromise
+    .then((worker) => {
+      if (timedOut) worker?.terminate?.().catch(() => {});
+    })
+    .catch(() => {});
+
+  return await Promise.race([
+    workerPromise,
+    new Promise((_, reject) =>
+      setTimeout(() => {
+        timedOut = true;
+        reject(
+          new Error(
+            `OCR engine failed to initialize within ${
+              WORKER_BOOTSTRAP_TIMEOUT_MS / 1000
+            }s. This usually means the OCR language model could not be ` +
+              `downloaded (no or blocked internet access). Set ` +
+              `OCR_TESSDATA_PATH / OCR_CORE_PATH to a local tessdata bundle ` +
+              `for offline/self-hosted deployments.`
+          )
+        );
+      }, WORKER_BOOTSTRAP_TIMEOUT_MS)
+    ),
+  ]);
+}
+
 class OCRLoader {
   /**
    * The language code(s) to use for the OCR.
@@ -119,7 +192,6 @@ class OCRLoader {
     });
     await pdfSharp.init();
 
-    const { createWorker, OEM } = require("tesseract.js");
     const BATCH_SIZE = batchSize;
     const MAX_EXECUTION_TIME = maxExecutionTime;
     const NUM_WORKERS = Math.min(maxWorkers ?? os.cpus().length, 4);
@@ -129,20 +201,29 @@ class OCRLoader {
     const savedGlobalImage = global.Image;
     const startTime = Date.now();
     try {
+      // Each worker's bootstrap (which may fetch the OCR engine + language
+      // model on a cold cache) is individually bounded by
+      // WORKER_BOOTSTRAP_TIMEOUT_MS so a blocked/slow network fails fast
+      // instead of hanging until the much coarser upstream timeouts (up to
+      // 30 minutes) kick in. See createWorkerWithTimeout() above.
       const workerResults = await Promise.allSettled(
         Array(NUM_WORKERS)
           .fill(0)
-          .map(() =>
-            createWorker(this.language, OEM.LSTM_ONLY, {
-              cachePath: this.cacheDir,
-            })
-          )
+          .map(() => createWorkerWithTimeout(this.language, this.cacheDir))
       );
       workerPool = workerResults
         .filter((r) => r.status === "fulfilled")
         .map((r) => r.value);
-      if (workerPool.length === 0)
-        throw new Error("Failed to create any OCR workers");
+      if (workerPool.length === 0) {
+        const firstError = workerResults.find(
+          (r) => r.status === "rejected"
+        )?.reason?.message;
+        throw new Error(
+          firstError
+            ? `Failed to create any OCR workers: ${firstError}`
+            : "Failed to create any OCR workers"
+        );
+      }
 
       this.log("Bootstrapping OCR completed successfully!", {
         MAX_EXECUTION_TIME_MS: MAX_EXECUTION_TIME,
@@ -276,10 +357,7 @@ class OCRLoader {
     try {
       this.log(`Starting OCR of ${documentTitle}`);
       const startTime = Date.now();
-      const { createWorker, OEM } = require("tesseract.js");
-      worker = await createWorker(this.language, OEM.LSTM_ONLY, {
-        cachePath: this.cacheDir,
-      });
+      worker = await createWorkerWithTimeout(this.language, this.cacheDir);
 
       // Race the timeout with the OCR
       const timeoutPromise = new Promise((_, reject) => {
@@ -363,10 +441,7 @@ class OCRLoader {
         `Starting batch OCR of ${valid.length} images with 1 shared worker.`
       );
       const startTime = Date.now();
-      const { createWorker, OEM } = require("tesseract.js");
-      worker = await createWorker(this.language, OEM.LSTM_ONLY, {
-        cachePath: this.cacheDir,
-      });
+      worker = await createWorkerWithTimeout(this.language, this.cacheDir);
 
       const timeoutPromise = new Promise((_, reject) => {
         timeoutHandle = setTimeout(() => {
