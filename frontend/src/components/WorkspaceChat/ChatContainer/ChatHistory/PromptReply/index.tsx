@@ -108,6 +108,11 @@ const PromptReply: any = ({
                 reason: error || t("promptReply.unknown"),
               })}
             </span>
+            {errorId ? (
+              <span className="block mt-1 text-xs opacity-75 select-all font-mono">
+                {t("promptReply.errorId", { id: errorId })}
+              </span>
+            ) : null}
           </span>
         </div>
       </div>
