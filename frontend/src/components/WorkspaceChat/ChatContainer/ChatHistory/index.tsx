@@ -393,15 +393,15 @@ export default forwardRef(function (
           );
         case "promptReply":
           return (
-            <PromptReply
-              uuid={row.uuid}
-              reply={row.reply}
-              pending={row.pending}
-              sources={row.sources}
-              error={row.error}
-              errorId={row.errorId}
-              closed={row.closed}
-            />
+              <PromptReply
+                uuid={row.uuid}
+                reply={row.reply}
+                pending={row.pending}
+                sources={row.sources}
+                error={row.error}
+                errorId={row.errorId}
+                closed={row.closed}
+              />
           );
         case "historical":
           return (
