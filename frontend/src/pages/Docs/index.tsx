@@ -188,6 +188,23 @@ export default function Docs() {
     setHeadings(next);
   }, []);
 
+  // Keyboard shortcut: "/" focuses the search input.
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "/" && !mobileNavOpen) {
+        const target = e.target as HTMLElement;
+        if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable) return;
+        e.preventDefault();
+        const searchInput = document.querySelector<HTMLInputElement>(
+          'aside input[type="search"]'
+        );
+        searchInput?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [mobileNavOpen]);
+
   // Scroll the main content area to the top when navigating between docs.
   useEffect(() => {
     mainEl?.scrollTo({ top: 0 });
@@ -351,9 +368,14 @@ export default function Docs() {
           ) : (
             <article className="mx-auto max-w-3xl lg:mx-0">
               <div className="flex items-center justify-between gap-4 mb-2">
-                <p className="text-xs font-semibold uppercase tracking-wide text-theme-text-secondary">
-                  {getCategoryLabel(entry.category, t)}
-                </p>
+                <div className="flex items-center gap-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-theme-text-secondary">
+                    {getCategoryLabel(entry.category, t)}
+                  </p>
+                  <span className="text-xs text-theme-text-secondary">
+                    {Math.max(1, Math.ceil(content.length / 1000))} min Lesezeit
+                  </span>
+                </div>
                 <a
                   href={getEditUrl(entry)}
                   target="_blank"
