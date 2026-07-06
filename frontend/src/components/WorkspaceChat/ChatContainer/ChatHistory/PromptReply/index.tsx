@@ -67,6 +67,7 @@ const PromptReply: any = ({
   reply,
   pending,
   error,
+  errorId = null,
   sources = [],
 }: any) => {
   const { t } = useTranslation();
