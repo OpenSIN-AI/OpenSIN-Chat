@@ -1,1 +1,333 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBUZXN0cyBmb3IgY29yZSBXb3Jrc3BhY2UgbW9kZWwgKElzc3VlICMzODEpCi8vIE5vdGU6IFRoZSBXb3Jrc3BhY2UgbW9kZWwgZXhwb3NlcyBgbmV3YCAobm90IGBjcmVhdGVgKSBhbmQgYGdldCh7IHNsdWcgfSlgCi8vIChub3QgYGJ5U2x1Z2ApLiBXZSB0ZXN0IHRoZSBhY3R1YWwgQVBJIHN1cmZhY2UgYmVsb3cuCgovLyBNb2NrIHByaXNtYSBiZWZvcmUgYW55IG1vZGVsIHJlcXVpcmVzCmplc3QubW9jaygiLi4vLi4vdXRpbHMvcHJpc21hIiwgKCkgPT4gewogIGNvbnN0IG1vY2tXb3Jrc3BhY2VzID0gewogICAgY3JlYXRlOiBqZXN0LmZuKCksCiAgICBmaW5kRmlyc3Q6IGplc3QuZm4oKSwKICAgIHVwZGF0ZTogamVzdC5mbigpLAogICAgZGVsZXRlOiBqZXN0LmZuKCksCiAgICBmaW5kTWFueTogamVzdC5mbigpLAogIH07CiAgY29uc3QgbW9ja1dvcmtzcGFjZVRocmVhZHMgPSB7CiAgICB1cGRhdGU6IGplc3QuZm4oKSwKICB9OwogIHJldHVybiB7CiAgICB3b3Jrc3BhY2VzOiBtb2NrV29ya3NwYWNlcywKICAgIHdvcmtzcGFjZV90aHJlYWRzOiBtb2NrV29ya3NwYWNlVGhyZWFkcywKICB9Owp9KTsKCi8vIE1vY2sgbW9kdWxlcyB0aGF0IHRyYW5zaXRpdmVseSByZXF1aXJlIEBwcmlzbWEvY2xpZW50IChub3QgZ2VuZXJhdGVkIGluIHRlc3QgZW52KQpqZXN0Lm1vY2soIi4uLy4uL21vZGVscy91c2VyIiwgKCkgPT4gKHsKICBVc2VyOiB7IGdldDogamVzdC5mbigpLCB3aGVyZTogamVzdC5mbigpIH0sCn0pKTsKCmplc3QubW9jaygiLi4vLi4vbW9kZWxzL3Byb21wdEhpc3RvcnkiLCAoKSA9PiAoewogIFByb21wdEhpc3Rvcnk6IHsgZ2V0OiBqZXN0LmZuKCksIHdoZXJlOiBqZXN0LmZuKCkgfSwKfSkpOwoKamVzdC5tb2NrKCIuLi8uLi9tb2RlbHMvc3lzdGVtU2V0dGluZ3MiLCAoKSA9PiAoewogIFN5c3RlbVNldHRpbmdzOiB7CiAgICBnZXQ6IGplc3QuZm4oKS5tb2NrUmVzb2x2ZWRWYWx1ZShudWxsKSwKICAgIHNhbmVEZWZhdWx0U3lzdGVtUHJvbXB0OiAiRGVmYXVsdCBzeXN0ZW0gcHJvbXB0IGZvciB0ZXN0aW5nLiIsCiAgfSwKfSkpOwoKamVzdC5tb2NrKCIuLi8uLi9tb2RlbHMvd29ya3NwYWNlVXNlcnMiLCAoKSA9PiAoewogIFdvcmtzcGFjZVVzZXI6IHsKICAgIGNyZWF0ZTogamVzdC5mbigpLm1vY2tSZXNvbHZlZFZhbHVlKHRydWUpLAogIH0sCn0pKTsKCmplc3QubW9jaygiLi4vLi4vbW9kZWxzL2RvY3VtZW50cyIsICgpID0+ICh7CiAgRG9jdW1lbnQ6IHsKICAgIGZvcldvcmtzcGFjZTogamVzdC5mbigpLm1vY2tSZXNvbHZlZFZhbHVlKFtdKSwKICB9LAp9KSk7CgpqZXN0Lm1vY2soIi4uLy4uL3V0aWxzL2hlbHBlcnMiLCAoKSA9PiAoewogIGdldExMTVByb3ZpZGVyQ2xhc3M6IGplc3QuZm4oKS5tb2NrUmV0dXJuVmFsdWUobnVsbCksCiAgZ2V0QmFzZUxMTVByb3ZpZGVyTW9kZWw6IGplc3QuZm4oKS5tb2NrUmV0dXJuVmFsdWUobnVsbCksCn0pKTsKCmplc3QubW9jaygiLi4vLi4vbW9kZWxzL3dvcmtzcGFjZVBhcnNlZEZpbGVzIiwgKCkgPT4gKHsKICBXb3Jrc3BhY2VQYXJzZWRGaWxlczogewogICAgdG90YWxUb2tlbkNvdW50OiBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUoMCksCiAgfSwKfSkpOwoKamVzdC5tb2NrKCIuLi8uLi91dGlscy9taWRkbGV3YXJlL211bHRpVXNlclByb3RlY3RlZCIsICgpID0+ICh7CiAgUk9MRVM6IHsgYWRtaW46ICJhZG1pbiIsIG1hbmFnZXI6ICJtYW5hZ2VyIiwgdXNlcjogInVzZXIiLCBhbGw6ICJhbGwiIH0sCn0pKTsKCmplc3QubW9jaygiLi4vLi4vdXRpbHMvZGF0YWJhc2UvcXVlcnlMaW1pdHMiLCAoKSA9PiAoewogIGNsYW1wTGltaXQ6IGplc3QuZm4oKHZhbCkgPT4gdmFsIHx8IDEwMDApLAogIE1BWF9MSVNUX0xJTUlUOiAxMDAwLAp9KSk7CgpqZXN0Lm1vY2soIi4uLy4uL3V0aWxzL2xvZ2dlci9jb25zb2xlLmpzIiwgKCkgPT4gKHsKICBlcnJvcjogamVzdC5mbigpLAogIGluZm86IGplc3QuZm4oKSwKICB3YXJuOiBqZXN0LmZuKCksCn0pKTsKCmNvbnN0IHsgV29ya3NwYWNlIH0gPSByZXF1aXJlKCIuLi8uLi9tb2RlbHMvd29ya3NwYWNlIik7CmNvbnN0IHByaXNtYSA9IHJlcXVpcmUoIi4uLy4uL3V0aWxzL3ByaXNtYSIpOwpjb25zdCB7IFN5c3RlbVNldHRpbmdzIH0gPSByZXF1aXJlKCIuLi8uLi9tb2RlbHMvc3lzdGVtU2V0dGluZ3MiKTsKY29uc3QgeyBXb3Jrc3BhY2VVc2VyIH0gPSByZXF1aXJlKCIuLi8uLi9tb2RlbHMvd29ya3NwYWNlVXNlcnMiKTsKY29uc3QgeyBEb2N1bWVudCB9ID0gcmVxdWlyZSgiLi4vLi4vbW9kZWxzL2RvY3VtZW50cyIpOwoKZGVzY3JpYmUoIldvcmtzcGFjZSBtb2RlbCIsICgpID0+IHsKICBhZnRlckVhY2goKCkgPT4gamVzdC5jbGVhckFsbE1vY2tzKCkpOwoKICAvLyDilIDilIAgV29ya3NwYWNlLm5ldyAoY3JlYXRlKSDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICBkZXNjcmliZSgiV29ya3NwYWNlLm5ldyAoY3JlYXRlKSIsICgpID0+IHsKICAgIGl0KCJjcmVhdGVzIGEgd29ya3NwYWNlIHdpdGggdmFsaWQgZGF0YSIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3QgbW9ja1dvcmtzcGFjZSA9IHsKICAgICAgICBpZDogMSwKICAgICAgICBuYW1lOiAiTXkgVGVzdCBXb3Jrc3BhY2UiLAogICAgICAgIHNsdWc6ICJteS10ZXN0LXdvcmtzcGFjZSIsCiAgICAgICAgY2hhdE1vZGU6ICJhdXRvbWF0aWMiLAogICAgICB9OwogICAgICBwcmlzbWEud29ya3NwYWNlcy5maW5kRmlyc3QubW9ja1Jlc29sdmVkVmFsdWUobnVsbCk7IC8vIG5vIGV4aXN0aW5nIHNsdWcKICAgICAgcHJpc21hLndvcmtzcGFjZXMuY3JlYXRlLm1vY2tSZXNvbHZlZFZhbHVlKG1vY2tXb3Jrc3BhY2UpOwoKICAgICAgY29uc3QgeyB3b3Jrc3BhY2UsIG1lc3NhZ2UgfSA9IGF3YWl0IFdvcmtzcGFjZS5uZXcoIk15IFRlc3QgV29ya3NwYWNlIik7CgogICAgICBleHBlY3QobWVzc2FnZSkudG9CZU51bGwoKTsKICAgICAgZXhwZWN0KHdvcmtzcGFjZSkudG9FcXVhbChtb2NrV29ya3NwYWNlKTsKICAgICAgZXhwZWN0KHByaXNtYS53b3Jrc3BhY2VzLmNyZWF0ZSkudG9IYXZlQmVlbkNhbGxlZFdpdGgoewogICAgICAgIGRhdGE6IGV4cGVjdC5vYmplY3RDb250YWluaW5nKHsKICAgICAgICAgIG5hbWU6ICJNeSBUZXN0IFdvcmtzcGFjZSIsCiAgICAgICAgICBzbHVnOiAibXktdGVzdC13b3Jrc3BhY2UiLAogICAgICAgICAgY2hhdE1vZGU6ICJhdXRvbWF0aWMiLAogICAgICAgIH0pLAogICAgICB9KTsKICAgIH0pOwoKICAgIGl0KCJjcmVhdGVzIGEgd29ya3NwYWNlIHdpdGggYSBjcmVhdG9yIGFuZCBsaW5rcyB0aGUgdXNlciIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3QgbW9ja1dvcmtzcGFjZSA9IHsKICAgICAgICBpZDogMiwKICAgICAgICBuYW1lOiAiVGVhbSBXb3Jrc3BhY2UiLAogICAgICAgIHNsdWc6ICJ0ZWFtLXdvcmtzcGFjZSIsCiAgICAgICAgY2hhdE1vZGU6ICJhdXRvbWF0aWMiLAogICAgICB9OwogICAgICBwcmlzbWEud29ya3NwYWNlcy5maW5kRmlyc3QubW9ja1Jlc29sdmVkVmFsdWUobnVsbCk7CiAgICAgIHByaXNtYS53b3Jrc3BhY2VzLmNyZWF0ZS5tb2NrUmVzb2x2ZWRWYWx1ZShtb2NrV29ya3NwYWNlKTsKCiAgICAgIGNvbnN0IHsgd29ya3NwYWNlLCBtZXNzYWdlIH0gPSBhd2FpdCBXb3Jrc3BhY2UubmV3KAogICAgICAgICJUZWFtIFdvcmtzcGFjZSIsCiAgICAgICAgNDIsCiAgICAgICk7CgogICAgICBleHBlY3QobWVzc2FnZSkudG9CZU51bGwoKTsKICAgICAgZXhwZWN0KHdvcmtzcGFjZSkudG9FcXVhbChtb2NrV29ya3NwYWNlKTsKICAgICAgZXhwZWN0KFdvcmtzcGFjZVVzZXIuY3JlYXRlKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCg0MiwgbW9ja1dvcmtzcGFjZS5pZCk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyBhbiBlcnJvciB3aGVuIG5hbWUgaXMgbnVsbCIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3QgeyB3b3Jrc3BhY2UsIG1lc3NhZ2UgfSA9IGF3YWl0IFdvcmtzcGFjZS5uZXcobnVsbCk7CiAgICAgIGV4cGVjdCh3b3Jrc3BhY2UpLnRvQmVOdWxsKCk7CiAgICAgIGV4cGVjdChtZXNzYWdlKS50b0JlKCJuYW1lIGNhbm5vdCBiZSBudWxsIik7CiAgICAgIGV4cGVjdChwcmlzbWEud29ya3NwYWNlcy5jcmVhdGUpLm5vdC50b0hhdmVCZWVuQ2FsbGVkKCk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyBhbiBlcnJvciB3aGVuIG5hbWUgaXMgZW1wdHkvd2hpdGVzcGFjZSIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3QgeyB3b3Jrc3BhY2UsIG1lc3NhZ2UgfSA9IGF3YWl0IFdvcmtzcGFjZS5uZXcoIiAgICIpOwogICAgICBleHBlY3Qod29ya3NwYWNlKS50b0JlTnVsbCgpOwogICAgICBleHBlY3QobWVzc2FnZSkudG9CZSgibmFtZSBjYW5ub3QgYmUgbnVsbCIpOwogICAgfSk7CgogICAgaXQoImdlbmVyYXRlcyBhIHNsdWcgZnJvbSB0aGUgbmFtZSIsIGFzeW5jICgpID0+IHsKICAgICAgcHJpc21hLndvcmtzcGFjZXMuZmluZEZpcnN0Lm1vY2tSZXNvbHZlZFZhbHVlKG51bGwpOwogICAgICBwcmlzbWEud29ya3NwYWNlcy5jcmVhdGUubW9ja1Jlc29sdmVkVmFsdWUoewogICAgICAgIGlkOiAzLAogICAgICAgIG5hbWU6ICJIZWxsbyBXb3JsZCIsCiAgICAgICAgc2x1ZzogImhlbGxvLXdvcmxkIiwKICAgICAgfSk7CgogICAgICBhd2FpdCBXb3Jrc3BhY2UubmV3KCJIZWxsbyBXb3JsZCIpOwoKICAgICAgY29uc3QgY3JlYXRlQ2FsbCA9IHByaXNtYS53b3Jrc3BhY2VzLmNyZWF0ZS5tb2NrLmNhbGxzWzBdWzBdOwogICAgICBleHBlY3QoY3JlYXRlQ2FsbC5kYXRhLnNsdWcpLnRvQmUoImhlbGxvLXdvcmxkIik7CiAgICB9KTsKCiAgICBpdCgicmV0cmllcyBzbHVnIGdlbmVyYXRpb24gb24gY29sbGlzaW9uIiwgYXN5bmMgKCkgPT4gewogICAgICAvLyBGaXJzdCBmaW5kRmlyc3QgcmV0dXJucyBhbiBleGlzdGluZyB3b3Jrc3BhY2UgKGNvbGxpc2lvbiksIHNlY29uZCByZXR1cm5zIG51bGwKICAgICAgcHJpc21hLndvcmtzcGFjZXMuZmluZEZpcnN0CiAgICAgICAgLm1vY2tSZXNvbHZlZFZhbHVlT25jZSh7IGlkOiA5OSwgc2x1ZzogInRlc3Qtd3MiIH0pCiAgICAgICAgLm1vY2tSZXNvbHZlZFZhbHVlT25jZShudWxsKTsKICAgICAgcHJpc21hLndvcmtzcGFjZXMuY3JlYXRlLm1vY2tSZXNvbHZlZFZhbHVlKHsKICAgICAgICBpZDogNCwKICAgICAgICBuYW1lOiAiVGVzdCBXUyIsCiAgICAgICAgc2x1ZzogInRlc3Qtd3MtYWJjZDEyMzQiLAogICAgICB9KTsKCiAgICAgIGNvbnN0IHsgd29ya3NwYWNlLCBtZXNzYWdlIH0gPSBhd2FpdCBXb3Jrc3BhY2UubmV3KCJUZXN0IFdTIik7CiAgICAgIGV4cGVjdChtZXNzYWdlKS50b0JlTnVsbCgpOwogICAgICBleHBlY3Qod29ya3NwYWNlKS50b0JlRGVmaW5lZCgpOwogICAgICBleHBlY3QocHJpc21hLndvcmtzcGFjZXMuZmluZEZpcnN0KS50b0hhdmVCZWVuQ2FsbGVkVGltZXMoMik7CiAgICB9KTsKICB9KTsKCiAgLy8g4pSA4pSAIFdvcmtzcGFjZS5nZXQg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgZGVzY3JpYmUoIldvcmtzcGFjZS5nZXQiLCAoKSA9PiB7CiAgICBpdCgicmV0dXJucyB0aGUgd29ya3NwYWNlIHdoZW4gZm91bmQgYnkgaWQiLCBhc3luYyAoKSA9PiB7CiAgICAgIGNvbnN0IG1vY2tXb3Jrc3BhY2UgPSB7CiAgICAgICAgaWQ6IDEsCiAgICAgICAgbmFtZTogIkZvdW5kIFdvcmtzcGFjZSIsCiAgICAgICAgc2x1ZzogImZvdW5kLXdvcmtzcGFjZSIsCiAgICAgICAgZG9jdW1lbnRzOiBbXSwKICAgICAgfTsKICAgICAgcHJpc21hLndvcmtzcGFjZXMuZmluZEZpcnN0Lm1vY2tSZXNvbHZlZFZhbHVlKG1vY2tXb3Jrc3BhY2UpOwoKICAgICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgV29ya3NwYWNlLmdldCh7IGlkOiAxIH0pOwoKICAgICAgZXhwZWN0KHJlc3VsdCkubm90LnRvQmVOdWxsKCk7CiAgICAgIGV4cGVjdChyZXN1bHQuaWQpLnRvQmUoMSk7CiAgICAgIGV4cGVjdChyZXN1bHQubmFtZSkudG9CZSgiRm91bmQgV29ya3NwYWNlIik7CiAgICAgIGV4cGVjdChwcmlzbWEud29ya3NwYWNlcy5maW5kRmlyc3QpLnRvSGF2ZUJlZW5DYWxsZWRXaXRoKHsKICAgICAgICB3aGVyZTogeyBpZDogMSB9LAogICAgICAgIGluY2x1ZGU6IHsgZG9jdW1lbnRzOiB0cnVlIH0sCiAgICAgIH0pOwogICAgfSk7CgogICAgaXQoInJldHVybnMgbnVsbCB3aGVuIHRoZSB3b3Jrc3BhY2UgZG9lcyBub3QgZXhpc3QiLCBhc3luYyAoKSA9PiB7CiAgICAgIHByaXNtYS53b3Jrc3BhY2VzLmZpbmRGaXJzdC5tb2NrUmVzb2x2ZWRWYWx1ZShudWxsKTsKCiAgICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IFdvcmtzcGFjZS5nZXQoeyBpZDogOTk5OTkgfSk7CgogICAgICBleHBlY3QocmVzdWx0KS50b0JlTnVsbCgpOwogICAgfSk7CgogICAgaXQoInJldHVybnMgbnVsbCBvbiBwcmlzbWEgZXJyb3IiLCBhc3luYyAoKSA9PiB7CiAgICAgIHByaXNtYS53b3Jrc3BhY2VzLmZpbmRGaXJzdC5tb2NrUmVqZWN0ZWRWYWx1ZShuZXcgRXJyb3IoIkRCIGVycm9yIikpOwoKICAgICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgV29ya3NwYWNlLmdldCh7IGlkOiAxIH0pOwoKICAgICAgZXhwZWN0KHJlc3VsdCkudG9CZU51bGwoKTsKICAgIH0pOwogIH0pOwoKICAvLyDilIDilIAgV29ya3NwYWNlLmdldCBieSBzbHVnIChlcXVpdmFsZW50IHRvIGJ5U2x1Zykg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgZGVzY3JpYmUoIldvcmtzcGFjZS5nZXQgYnkgc2x1ZyAoYnlTbHVnIGVxdWl2YWxlbnQpIiwgKCkgPT4gewogICAgaXQoInJldHVybnMgdGhlIHdvcmtzcGFjZSB3aGVuIGZvdW5kIGJ5IHNsdWciLCBhc3luYyAoKSA9PiB7CiAgICAgIGNvbnN0IG1vY2tXb3Jrc3BhY2UgPSB7CiAgICAgICAgaWQ6IDUsCiAgICAgICAgbmFtZTogIlNsdWcgV29ya3NwYWNlIiwKICAgICAgICBzbHVnOiAibXktc2x1ZyIsCiAgICAgICAgZG9jdW1lbnRzOiBbXSwKICAgICAgfTsKICAgICAgcHJpc21hLndvcmtzcGFjZXMuZmluZEZpcnN0Lm1vY2tSZXNvbHZlZFZhbHVlKG1vY2tXb3Jrc3BhY2UpOwoKICAgICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgV29ya3NwYWNlLmdldCh7IHNsdWc6ICJteS1zbHVnIiB9KTsKCiAgICAgIGV4cGVjdChyZXN1bHQpLm5vdC50b0JlTnVsbCgpOwogICAgICBleHBlY3QocmVzdWx0LnNsdWcpLnRvQmUoIm15LXNsdWciKTsKICAgICAgZXhwZWN0KHByaXNtYS53b3Jrc3BhY2VzLmZpbmRGaXJzdCkudG9IYXZlQmVlbkNhbGxlZFdpdGgoewogICAgICAgIHdoZXJlOiB7IHNsdWc6ICJteS1zbHVnIiB9LAogICAgICAgIGluY2x1ZGU6IHsgZG9jdW1lbnRzOiB0cnVlIH0sCiAgICAgIH0pOwogICAgfSk7CgogICAgaXQoInJldHVybnMgbnVsbCB3aGVuIHNsdWcgZG9lcyBub3QgZXhpc3QiLCBhc3luYyAoKSA9PiB7CiAgICAgIHByaXNtYS53b3Jrc3BhY2VzLmZpbmRGaXJzdC5tb2NrUmVzb2x2ZWRWYWx1ZShudWxsKTsKCiAgICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IFdvcmtzcGFjZS5nZXQoeyBzbHVnOiAibm9uLWV4aXN0ZW50LXNsdWciIH0pOwoKICAgICAgZXhwZWN0KHJlc3VsdCkudG9CZU51bGwoKTsKICAgIH0pOwogIH0pOwoKICAvLyDilIDilIAgV29ya3NwYWNlLnVwZGF0ZSDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICBkZXNjcmliZSgiV29ya3NwYWNlLnVwZGF0ZSIsICgpID0+IHsKICAgIGl0KCJ1cGRhdGVzIHRoZSB3b3Jrc3BhY2UgbmFtZSIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3QgdXBkYXRlZCA9IHsKICAgICAgICBpZDogMSwKICAgICAgICBuYW1lOiAiVXBkYXRlZCBOYW1lIiwKICAgICAgICBzbHVnOiAibXktd29ya3NwYWNlIiwKICAgICAgfTsKICAgICAgcHJpc21hLndvcmtzcGFjZXMudXBkYXRlLm1vY2tSZXNvbHZlZFZhbHVlKHVwZGF0ZWQpOwoKICAgICAgY29uc3QgeyB3b3Jrc3BhY2UsIG1lc3NhZ2UgfSA9IGF3YWl0IFdvcmtzcGFjZS51cGRhdGUoMSwgewogICAgICAgIG5hbWU6ICJVcGRhdGVkIE5hbWUiLAogICAgICB9KTsKCiAgICAgIGV4cGVjdChtZXNzYWdlKS50b0JlTnVsbCgpOwogICAgICBleHBlY3Qod29ya3NwYWNlKS50b0VxdWFsKHVwZGF0ZWQpOwogICAgICBleHBlY3QocHJpc21hLndvcmtzcGFjZXMudXBkYXRlKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCh7CiAgICAgICAgd2hlcmU6IHsgaWQ6IDEgfSwKICAgICAgICBkYXRhOiBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7IG5hbWU6ICJVcGRhdGVkIE5hbWUiIH0pLAogICAgICB9KTsKICAgIH0pOwoKICAgIGl0KCJ0aHJvd3Mgd2hlbiBubyBpZCBpcyBwcm92aWRlZCIsIGFzeW5jICgpID0+IHsKICAgICAgYXdhaXQgZXhwZWN0KFdvcmtzcGFjZS51cGRhdGUobnVsbCwgeyBuYW1lOiAiWCIgfSkpLnJlamVjdHMudG9UaHJvdygKICAgICAgICAiTm8gd29ya3NwYWNlIGlkIHByb3ZpZGVkIGZvciB1cGRhdGUiLAogICAgICApOwogICAgfSk7CgogICAgaXQoInJldHVybnMgYSBtZXNzYWdlIHdoZW4gbm8gdmFsaWQgZmllbGRzIGFyZSBwcm92aWRlZCIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3QgeyB3b3Jrc3BhY2UsIG1lc3NhZ2UgfSA9IGF3YWl0IFdvcmtzcGFjZS51cGRhdGUoMSwgewogICAgICAgIGludmFsaWRGaWVsZDogInZhbHVlIiwKICAgICAgfSk7CgogICAgICBleHBlY3QobWVzc2FnZSkudG9CZSgiTm8gdmFsaWQgZmllbGRzIHRvIHVwZGF0ZSEiKTsKICAgICAgZXhwZWN0KHdvcmtzcGFjZSkudG9FcXVhbCh7IGlkOiAxIH0pOwogICAgICBleHBlY3QocHJpc21hLndvcmtzcGFjZXMudXBkYXRlKS5ub3QudG9IYXZlQmVlbkNhbGxlZCgpOwogICAgfSk7CgogICAgaXQoInJldHVybnMgbnVsbCB3b3Jrc3BhY2UgYW5kIGVycm9yIG1lc3NhZ2Ugb24gcHJpc21hIGZhaWx1cmUiLCBhc3luYyAoKSA9PiB7CiAgICAgIHByaXNtYS53b3Jrc3BhY2VzLnVwZGF0ZS5tb2NrUmVqZWN0ZWRWYWx1ZShuZXcgRXJyb3IoIkRCIGVycm9yIikpOwoKICAgICAgY29uc3QgeyB3b3Jrc3BhY2UsIG1lc3NhZ2UgfSA9IGF3YWl0IFdvcmtzcGFjZS51cGRhdGUoMSwgewogICAgICAgIG5hbWU6ICJOZXcgTmFtZSIsCiAgICAgIH0pOwoKICAgICAgZXhwZWN0KHdvcmtzcGFjZSkudG9CZU51bGwoKTsKICAgICAgZXhwZWN0KG1lc3NhZ2UpLnRvQmUoIkRCIGVycm9yIik7CiAgICB9KTsKICB9KTsKCiAgLy8g4pSA4pSAIFdvcmtzcGFjZS5kZWxldGUg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgZGVzY3JpYmUoIldvcmtzcGFjZS5kZWxldGUiLCAoKSA9PiB7CiAgICBpdCgiZGVsZXRlcyB0aGUgd29ya3NwYWNlIGFuZCByZXR1cm5zIHRydWUiLCBhc3luYyAoKSA9PiB7CiAgICAgIHByaXNtYS53b3Jrc3BhY2VzLmRlbGV0ZS5tb2NrUmVzb2x2ZWRWYWx1ZSh7IGlkOiAxIH0pOwoKICAgICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgV29ya3NwYWNlLmRlbGV0ZSh7IGlkOiAxIH0pOwoKICAgICAgZXhwZWN0KHJlc3VsdCkudG9CZSh0cnVlKTsKICAgICAgZXhwZWN0KHByaXNtYS53b3Jrc3BhY2VzLmRlbGV0ZSkudG9IYXZlQmVlbkNhbGxlZFdpdGgoewogICAgICAgIHdoZXJlOiB7IGlkOiAxIH0sCiAgICAgIH0pOwogICAgfSk7CgogICAgaXQoInJldHVybnMgZmFsc2Ugd2hlbiB0aGUgd29ya3NwYWNlIGRvZXMgbm90IGV4aXN0IiwgYXN5bmMgKCkgPT4gewogICAgICBwcmlzbWEud29ya3NwYWNlcy5kZWxldGUubW9ja1JlamVjdGVkVmFsdWUoCiAgICAgICAgbmV3IEVycm9yKCJSZWNvcmQgbm90IGZvdW5kIiksCiAgICAgICk7CgogICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBXb3Jrc3BhY2UuZGVsZXRlKHsgaWQ6IDk5OTk5IH0pOwoKICAgICAgZXhwZWN0KHJlc3VsdCkudG9CZShmYWxzZSk7CiAgICB9KTsKCiAgICBpdCgidmVyaWZpZXMgdGhlIHdvcmtzcGFjZSBpcyBnb25lIGFmdGVyIGRlbGV0aW9uIiwgYXN5bmMgKCkgPT4gewogICAgICBwcmlzbWEud29ya3NwYWNlcy5kZWxldGUubW9ja1Jlc29sdmVkVmFsdWUoeyBpZDogMSB9KTsKICAgICAgLy8gQWZ0ZXIgZGVsZXRpb24sIGZpbmRGaXJzdCByZXR1cm5zIG51bGwKICAgICAgcHJpc21hLndvcmtzcGFjZXMuZmluZEZpcnN0Lm1vY2tSZXNvbHZlZFZhbHVlKG51bGwpOwoKICAgICAgYXdhaXQgV29ya3NwYWNlLmRlbGV0ZSh7IGlkOiAxIH0pOwogICAgICBjb25zdCB2ZXJpZnkgPSBhd2FpdCBXb3Jrc3BhY2UuZ2V0KHsgaWQ6IDEgfSk7CgogICAgICBleHBlY3QodmVyaWZ5KS50b0JlTnVsbCgpOwogICAgICBleHBlY3QocHJpc21hLndvcmtzcGFjZXMuZGVsZXRlKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCh7CiAgICAgICAgd2hlcmU6IHsgaWQ6IDEgfSwKICAgICAgfSk7CiAgICB9KTsKICB9KTsKfSk7Cg==
+// SPDX-License-Identifier: MIT
+// Tests for core Workspace model (Issue #381)
+// Note: The Workspace model exposes `new` (not `create`) and `get({ slug })`
+// (not `bySlug`). We test the actual API surface below.
+
+// Mock prisma before any model requires
+jest.mock("../../utils/prisma", () => {
+  const mockWorkspaces = {
+    create: jest.fn(),
+    findFirst: jest.fn(),
+    update: jest.fn(),
+    delete: jest.fn(),
+    findMany: jest.fn(),
+  };
+  const mockWorkspaceThreads = {
+    update: jest.fn(),
+  };
+  return {
+    workspaces: mockWorkspaces,
+    workspace_threads: mockWorkspaceThreads,
+  };
+});
+
+// Mock modules that transitively require @prisma/client (not generated in test env)
+jest.mock("../../models/user", () => ({
+  User: { get: jest.fn(), where: jest.fn() },
+}));
+
+jest.mock("../../models/promptHistory", () => ({
+  PromptHistory: { get: jest.fn(), where: jest.fn() },
+}));
+
+jest.mock("../../models/systemSettings", () => ({
+  SystemSettings: {
+    get: jest.fn().mockResolvedValue(null),
+    saneDefaultSystemPrompt: "Default system prompt for testing.",
+  },
+}));
+
+jest.mock("../../models/workspaceUsers", () => ({
+  WorkspaceUser: {
+    create: jest.fn().mockResolvedValue(true),
+  },
+}));
+
+jest.mock("../../models/documents", () => ({
+  Document: {
+    forWorkspace: jest.fn().mockResolvedValue([]),
+  },
+}));
+
+jest.mock("../../utils/helpers", () => ({
+  getLLMProviderClass: jest.fn().mockReturnValue(null),
+  getBaseLLMProviderModel: jest.fn().mockReturnValue(null),
+}));
+
+jest.mock("../../models/workspaceParsedFiles", () => ({
+  WorkspaceParsedFiles: {
+    totalTokenCount: jest.fn().mockResolvedValue(0),
+  },
+}));
+
+jest.mock("../../utils/middleware/multiUserProtected", () => ({
+  ROLES: { admin: "admin", manager: "manager", user: "user", all: "all" },
+}));
+
+jest.mock("../../utils/database/queryLimits", () => ({
+  clampLimit: jest.fn((val) => val || 1000),
+  MAX_LIST_LIMIT: 1000,
+}));
+
+jest.mock("../../utils/logger/console.js", () => ({
+  error: jest.fn(),
+  info: jest.fn(),
+  warn: jest.fn(),
+}));
+
+const { Workspace } = require("../../models/workspace");
+const prisma = require("../../utils/prisma");
+const { SystemSettings } = require("../../models/systemSettings");
+const { WorkspaceUser } = require("../../models/workspaceUsers");
+const { Document } = require("../../models/documents");
+
+describe("Workspace model", () => {
+  afterEach(() => jest.clearAllMocks());
+
+  // ── Workspace.new (create) ──────────────────────────────────────────
+  describe("Workspace.new (create)", () => {
+    it("creates a workspace with valid data", async () => {
+      const mockWorkspace = {
+        id: 1,
+        name: "My Test Workspace",
+        slug: "my-test-workspace",
+        chatMode: "automatic",
+      };
+      prisma.workspaces.findFirst.mockResolvedValue(null); // no existing slug
+      prisma.workspaces.create.mockResolvedValue(mockWorkspace);
+
+      const { workspace, message } = await Workspace.new("My Test Workspace");
+
+      expect(message).toBeNull();
+      expect(workspace).toEqual(mockWorkspace);
+      expect(prisma.workspaces.create).toHaveBeenCalledWith({
+        data: expect.objectContaining({
+          name: "My Test Workspace",
+          slug: "my-test-workspace",
+          chatMode: "automatic",
+        }),
+      });
+    });
+
+    it("creates a workspace with a creator and links the user", async () => {
+      const mockWorkspace = {
+        id: 2,
+        name: "Team Workspace",
+        slug: "team-workspace",
+        chatMode: "automatic",
+      };
+      prisma.workspaces.findFirst.mockResolvedValue(null);
+      prisma.workspaces.create.mockResolvedValue(mockWorkspace);
+
+      const { workspace, message } = await Workspace.new(
+        "Team Workspace",
+        42,
+      );
+
+      expect(message).toBeNull();
+      expect(workspace).toEqual(mockWorkspace);
+      expect(WorkspaceUser.create).toHaveBeenCalledWith(42, mockWorkspace.id);
+    });
+
+    it("returns an error when name is null", async () => {
+      const { workspace, message } = await Workspace.new(null);
+      expect(workspace).toBeNull();
+      expect(message).toBe("name cannot be null");
+      expect(prisma.workspaces.create).not.toHaveBeenCalled();
+    });
+
+    it("returns an error when name is empty/whitespace", async () => {
+      const { workspace, message } = await Workspace.new("   ");
+      expect(workspace).toBeNull();
+      expect(message).toBe("name cannot be null");
+    });
+
+    it("generates a slug from the name", async () => {
+      prisma.workspaces.findFirst.mockResolvedValue(null);
+      prisma.workspaces.create.mockResolvedValue({
+        id: 3,
+        name: "Hello World",
+        slug: "hello-world",
+      });
+
+      await Workspace.new("Hello World");
+
+      const createCall = prisma.workspaces.create.mock.calls[0][0];
+      expect(createCall.data.slug).toBe("hello-world");
+    });
+
+    it("retries slug generation on collision", async () => {
+      // First findFirst returns an existing workspace (collision), second returns null
+      prisma.workspaces.findFirst
+        .mockResolvedValueOnce({ id: 99, slug: "test-ws" })
+        .mockResolvedValueOnce(null);
+      prisma.workspaces.create.mockResolvedValue({
+        id: 4,
+        name: "Test WS",
+        slug: "test-ws-abcd1234",
+      });
+
+      const { workspace, message } = await Workspace.new("Test WS");
+      expect(message).toBeNull();
+      expect(workspace).toBeDefined();
+      expect(prisma.workspaces.findFirst).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  // ── Workspace.get ───────────────────────────────────────────────────
+  describe("Workspace.get", () => {
+    it("returns the workspace when found by id", async () => {
+      const mockWorkspace = {
+        id: 1,
+        name: "Found Workspace",
+        slug: "found-workspace",
+        documents: [],
+      };
+      prisma.workspaces.findFirst.mockResolvedValue(mockWorkspace);
+
+      const result = await Workspace.get({ id: 1 });
+
+      expect(result).not.toBeNull();
+      expect(result.id).toBe(1);
+      expect(result.name).toBe("Found Workspace");
+      expect(prisma.workspaces.findFirst).toHaveBeenCalledWith({
+        where: { id: 1 },
+        include: { documents: true },
+      });
+    });
+
+    it("returns null when the workspace does not exist", async () => {
+      prisma.workspaces.findFirst.mockResolvedValue(null);
+
+      const result = await Workspace.get({ id: 99999 });
+
+      expect(result).toBeNull();
+    });
+
+    it("returns null on prisma error", async () => {
+      prisma.workspaces.findFirst.mockRejectedValue(new Error("DB error"));
+
+      const result = await Workspace.get({ id: 1 });
+
+      expect(result).toBeNull();
+    });
+  });
+
+  // ── Workspace.get by slug (equivalent to bySlug) ────────────────────
+  describe("Workspace.get by slug (bySlug equivalent)", () => {
+    it("returns the workspace when found by slug", async () => {
+      const mockWorkspace = {
+        id: 5,
+        name: "Slug Workspace",
+        slug: "my-slug",
+        documents: [],
+      };
+      prisma.workspaces.findFirst.mockResolvedValue(mockWorkspace);
+
+      const result = await Workspace.get({ slug: "my-slug" });
+
+      expect(result).not.toBeNull();
+      expect(result.slug).toBe("my-slug");
+      expect(prisma.workspaces.findFirst).toHaveBeenCalledWith({
+        where: { slug: "my-slug" },
+        include: { documents: true },
+      });
+    });
+
+    it("returns null when slug does not exist", async () => {
+      prisma.workspaces.findFirst.mockResolvedValue(null);
+
+      const result = await Workspace.get({ slug: "non-existent-slug" });
+
+      expect(result).toBeNull();
+    });
+  });
+
+  // ── Workspace.update ────────────────────────────────────────────────
+  describe("Workspace.update", () => {
+    it("updates the workspace name", async () => {
+      const updated = {
+        id: 1,
+        name: "Updated Name",
+        slug: "my-workspace",
+      };
+      prisma.workspaces.update.mockResolvedValue(updated);
+
+      const { workspace, message } = await Workspace.update(1, {
+        name: "Updated Name",
+      });
+
+      expect(message).toBeNull();
+      expect(workspace).toEqual(updated);
+      expect(prisma.workspaces.update).toHaveBeenCalledWith({
+        where: { id: 1 },
+        data: expect.objectContaining({ name: "Updated Name" }),
+      });
+    });
+
+    it("throws when no id is provided", async () => {
+      await expect(Workspace.update(null, { name: "X" })).rejects.toThrow(
+        "No workspace id provided for update",
+      );
+    });
+
+    it("returns a message when no valid fields are provided", async () => {
+      const { workspace, message } = await Workspace.update(1, {
+        invalidField: "value",
+      });
+
+      expect(message).toBe("No valid fields to update!");
+      expect(workspace).toEqual({ id: 1 });
+      expect(prisma.workspaces.update).not.toHaveBeenCalled();
+    });
+
+    it("returns null workspace and error message on prisma failure", async () => {
+      prisma.workspaces.update.mockRejectedValue(new Error("DB error"));
+
+      const { workspace, message } = await Workspace.update(1, {
+        name: "New Name",
+      });
+
+      expect(workspace).toBeNull();
+      expect(message).toBe("DB error");
+    });
+  });
+
+  // ── Workspace.delete ────────────────────────────────────────────────
+  describe("Workspace.delete", () => {
+    it("deletes the workspace and returns true", async () => {
+      prisma.workspaces.delete.mockResolvedValue({ id: 1 });
+
+      const result = await Workspace.delete({ id: 1 });
+
+      expect(result).toBe(true);
+      expect(prisma.workspaces.delete).toHaveBeenCalledWith({
+        where: { id: 1 },
+      });
+    });
+
+    it("returns false when the workspace does not exist", async () => {
+      prisma.workspaces.delete.mockRejectedValue(
+        new Error("Record not found"),
+      );
+
+      const result = await Workspace.delete({ id: 99999 });
+
+      expect(result).toBe(false);
+    });
+
+    it("verifies the workspace is gone after deletion", async () => {
+      prisma.workspaces.delete.mockResolvedValue({ id: 1 });
+      // After deletion, findFirst returns null
+      prisma.workspaces.findFirst.mockResolvedValue(null);
+
+      await Workspace.delete({ id: 1 });
+      const verify = await Workspace.get({ id: 1 });
+
+      expect(verify).toBeNull();
+      expect(prisma.workspaces.delete).toHaveBeenCalledWith({
+        where: { id: 1 },
+      });
+    });
+  });
+});

@@ -1,1 +1,562 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovKiBlc2xpbnQtZW52IGplc3QgKi8KLy8gVGVzdHMgZm9yIHNlcnZlci91dGlscy9jb2xsZWN0b3JBcGkvaW5kZXguanMg4oCUIENvbGxlY3RvckFwaSAoSXNzdWUgIzM4OCkKLy8KLy8gQ29sbGVjdG9yQXBpIGNvbW11bmljYXRlcyB3aXRoIHRoZSBkb2N1bWVudCBjb2xsZWN0b3Igc2VydmljZSB2aWEgZmV0Y2guCi8vIFdlIG1vY2sgZ2xvYmFsIGZldGNoLCBDb21tdW5pY2F0aW9uS2V5LCBhbmQgRW5jcnlwdGlvbk1hbmFnZXIgdG8gaXNvbGF0ZQovLyB0aGUgQVBJIGxvZ2ljOiBlbmRwb2ludCBjb25zdHJ1Y3Rpb24sIHJlcXVlc3QgZm9ybWF0dGluZywgZXJyb3IgaGFuZGxpbmcsCi8vIHRpbWVvdXQgYmVoYXZpb3IsIGFuZCByZXNwb25zZSBwYXJzaW5nLgoKLy8gLS0tIE1vY2sgZGVwZW5kZW5jaWVzIC0tLQpqZXN0Lm1vY2soIi4uLy4uL3V0aWxzL2xvZ2dlci9jb25zb2xlLmpzIiwgKCkgPT4gKHsKICBsb2c6IGplc3QuZm4oKSwKICB3YXJuOiBqZXN0LmZuKCksCiAgZXJyb3I6IGplc3QuZm4oKSwKICBpbmZvOiBqZXN0LmZuKCksCn0pKTsKCmplc3QubW9jaygiLi4vLi4vdXRpbHMvY29tS2V5IiwgKCkgPT4gKHsKICBDb21tdW5pY2F0aW9uS2V5OiBqZXN0LmZuKCkubW9ja0ltcGxlbWVudGF0aW9uKCgpID0+ICh7CiAgICBzaWduOiBqZXN0LmZuKCkubW9ja1JldHVyblZhbHVlKCJtb2NrLXNpZ25hdHVyZSIpLAogICAgZW5jcnlwdDogamVzdC5mbigpLm1vY2tSZXR1cm5WYWx1ZSgibW9jay1lbmNyeXB0ZWQtcGF5bG9hZCIpLAogIH0pKSwKfSkpOwoKamVzdC5tb2NrKCIuLi8uLi91dGlscy9FbmNyeXB0aW9uTWFuYWdlciIsICgpID0+ICh7CiAgRW5jcnlwdGlvbk1hbmFnZXI6IGplc3QuZm4oKS5tb2NrSW1wbGVtZW50YXRpb24oKCkgPT4gKHsKICAgIHhQYXlsb2FkOiAibW9jay14LXBheWxvYWQiLAogIH0pKSwKfSkpOwoKamVzdC5tb2NrKCJ1bmRpY2kiLCAoKSA9PiAoewogIEFnZW50OiBqZXN0LmZuKCkubW9ja0ltcGxlbWVudGF0aW9uKCgpID0+ICh7fSkpLAp9KSk7CgovLyAtLS0gZmV0Y2ggbW9jayAtLS0KY29uc3QgbW9ja0ZldGNoID0gamVzdC5mbigpOwpnbG9iYWwuZmV0Y2ggPSBtb2NrRmV0Y2g7Cgpjb25zdCB7IENvbGxlY3RvckFwaSB9ID0gcmVxdWlyZSgiLi4vLi4vdXRpbHMvY29sbGVjdG9yQXBpIik7CgpiZWZvcmVFYWNoKCgpID0+IHsKICBqZXN0LmNsZWFyQWxsTW9ja3MoKTsKICBtb2NrRmV0Y2gubW9ja1Jlc2V0KCk7Cn0pOwoKYWZ0ZXJFYWNoKCgpID0+IHsKICBkZWxldGUgcHJvY2Vzcy5lbnYuQ09MTEVDVE9SX1BPUlQ7CiAgZGVsZXRlIHByb2Nlc3MuZW52LkNPTExFQ1RPUl9QUk9DRVNTX1RJTUVPVVRfTVM7CiAgZGVsZXRlIHByb2Nlc3MuZW52LldISVNQRVJfUFJPVklERVI7CiAgZGVsZXRlIHByb2Nlc3MuZW52LldISVNQRVJfTU9ERUxfUFJFRjsKICBkZWxldGUgcHJvY2Vzcy5lbnYuT1BFTl9BSV9LRVk7CiAgZGVsZXRlIHByb2Nlc3MuZW52LlRBUkdFVF9PQ1JfTEFORzsKICBkZWxldGUgcHJvY2Vzcy5lbnYuQ09MTEVDVE9SX0FMTE9XX0FOWV9JUDsKfSk7CgpkZXNjcmliZSgiQ29sbGVjdG9yQXBpIOKAlCBnZXRDb2xsZWN0b3JQb3J0IChzdGF0aWMpIiwgKCkgPT4gewogIGl0KCJyZXR1cm5zIGRlZmF1bHQgcG9ydCA4ODg4IHdoZW4gQ09MTEVDVE9SX1BPUlQgaXMgbm90IHNldCIsICgpID0+IHsKICAgIGRlbGV0ZSBwcm9jZXNzLmVudi5DT0xMRUNUT1JfUE9SVDsKICAgIGV4cGVjdChDb2xsZWN0b3JBcGkuZ2V0Q29sbGVjdG9yUG9ydCgpKS50b0JlKDg4ODgpOwogIH0pOwoKICBpdCgicmV0dXJucyB0aGUgcG9ydCBmcm9tIENPTExFQ1RPUl9QT1JUIGVudiB2YXIiLCAoKSA9PiB7CiAgICBwcm9jZXNzLmVudi5DT0xMRUNUT1JfUE9SVCA9ICI5OTk5IjsKICAgIGV4cGVjdChDb2xsZWN0b3JBcGkuZ2V0Q29sbGVjdG9yUG9ydCgpKS50b0JlKDk5OTkpOwogIH0pOwoKICBpdCgiZmFsbHMgYmFjayB0byBkZWZhdWx0IGZvciBub24taW50ZWdlciBwb3J0IiwgKCkgPT4gewogICAgcHJvY2Vzcy5lbnYuQ09MTEVDVE9SX1BPUlQgPSAiYWJjIjsKICAgIGV4cGVjdChDb2xsZWN0b3JBcGkuZ2V0Q29sbGVjdG9yUG9ydCgpKS50b0JlKDg4ODgpOwogIH0pOwoKICBpdCgiZmFsbHMgYmFjayB0byBkZWZhdWx0IGZvciBwb3J0IDAiLCAoKSA9PiB7CiAgICBwcm9jZXNzLmVudi5DT0xMRUNUT1JfUE9SVCA9ICIwIjsKICAgIGV4cGVjdChDb2xsZWN0b3JBcGkuZ2V0Q29sbGVjdG9yUG9ydCgpKS50b0JlKDg4ODgpOwogIH0pOwoKICBpdCgiZmFsbHMgYmFjayB0byBkZWZhdWx0IGZvciBuZWdhdGl2ZSBwb3J0IiwgKCkgPT4gewogICAgcHJvY2Vzcy5lbnYuQ09MTEVDVE9SX1BPUlQgPSAiLTEiOwogICAgZXhwZWN0KENvbGxlY3RvckFwaS5nZXRDb2xsZWN0b3JQb3J0KCkpLnRvQmUoODg4OCk7CiAgfSk7CgogIGl0KCJmYWxscyBiYWNrIHRvIGRlZmF1bHQgZm9yIHBvcnQgPiA2NTUzNSIsICgpID0+IHsKICAgIHByb2Nlc3MuZW52LkNPTExFQ1RPUl9QT1JUID0gIjcwMDAwIjsKICAgIGV4cGVjdChDb2xsZWN0b3JBcGkuZ2V0Q29sbGVjdG9yUG9ydCgpKS50b0JlKDg4ODgpOwogIH0pOwoKICBpdCgiYWNjZXB0cyBwb3J0IDEgKG1pbmltdW0gdmFsaWQpIiwgKCkgPT4gewogICAgcHJvY2Vzcy5lbnYuQ09MTEVDVE9SX1BPUlQgPSAiMSI7CiAgICBleHBlY3QoQ29sbGVjdG9yQXBpLmdldENvbGxlY3RvclBvcnQoKSkudG9CZSgxKTsKICB9KTsKCiAgaXQoImFjY2VwdHMgcG9ydCA2NTUzNSAobWF4aW11bSB2YWxpZCkiLCAoKSA9PiB7CiAgICBwcm9jZXNzLmVudi5DT0xMRUNUT1JfUE9SVCA9ICI2NTUzNSI7CiAgICBleHBlY3QoQ29sbGVjdG9yQXBpLmdldENvbGxlY3RvclBvcnQoKSkudG9CZSg2NTUzNSk7CiAgfSk7Cn0pOwoKZGVzY3JpYmUoIkNvbGxlY3RvckFwaSDigJQgY29uc3RydWN0b3IiLCAoKSA9PiB7CiAgaXQoImNyZWF0ZXMgYW4gZW5kcG9pbnQgd2l0aCB0aGUgY29ycmVjdCBwb3J0IiwgKCkgPT4gewogICAgcHJvY2Vzcy5lbnYuQ09MTEVDVE9SX1BPUlQgPSAiNzc3NyI7CiAgICBjb25zdCBhcGkgPSBuZXcgQ29sbGVjdG9yQXBpKCk7CiAgICBleHBlY3QoYXBpLmVuZHBvaW50KS50b0JlKCJodHRwOi8vMC4wLjAuMDo3Nzc3Iik7CiAgfSk7CgogIGl0KCJ1c2VzIGRlZmF1bHQgcG9ydCB3aGVuIENPTExFQ1RPUl9QT1JUIGlzIG5vdCBzZXQiLCAoKSA9PiB7CiAgICBkZWxldGUgcHJvY2Vzcy5lbnYuQ09MTEVDVE9SX1BPUlQ7CiAgICBjb25zdCBhcGkgPSBuZXcgQ29sbGVjdG9yQXBpKCk7CiAgICBleHBlY3QoYXBpLmVuZHBvaW50KS50b0JlKCJodHRwOi8vMC4wLjAuMDo4ODg4Iik7CiAgfSk7CgogIGl0KCJpbml0aWFsaXplcyBjb21rZXkgZm9yIHJlcXVlc3Qgc2lnbmluZyIsICgpID0+IHsKICAgIGNvbnN0IGFwaSA9IG5ldyBDb2xsZWN0b3JBcGkoKTsKICAgIGV4cGVjdChhcGkuY29ta2V5KS50b0JlRGVmaW5lZCgpOwogICAgZXhwZWN0KHR5cGVvZiBhcGkuY29ta2V5LnNpZ24pLnRvQmUoImZ1bmN0aW9uIik7CiAgICBleHBlY3QodHlwZW9mIGFwaS5jb21rZXkuZW5jcnlwdCkudG9CZSgiZnVuY3Rpb24iKTsKICB9KTsKfSk7CgpkZXNjcmliZSgiQ29sbGVjdG9yQXBpIOKAlCBvbmxpbmUoKSIsICgpID0+IHsKICBpdCgicmV0dXJucyB0cnVlIHdoZW4gL2FjY2VwdHMgcmVzcG9uZHMgb2siLCBhc3luYyAoKSA9PiB7CiAgICBtb2NrRmV0Y2gubW9ja1Jlc29sdmVkVmFsdWUoeyBvazogdHJ1ZSB9KTsKICAgIGNvbnN0IGFwaSA9IG5ldyBDb2xsZWN0b3JBcGkoKTsKCiAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBhcGkub25saW5lKCk7CgogICAgZXhwZWN0KHJlc3VsdCkudG9CZSh0cnVlKTsKICAgIGV4cGVjdChtb2NrRmV0Y2gpLnRvSGF2ZUJlZW5DYWxsZWRXaXRoKAogICAgICBleHBlY3Quc3RyaW5nQ29udGFpbmluZygiL2FjY2VwdHMiKSwKICAgICAgZXhwZWN0Lm9iamVjdENvbnRhaW5pbmcoeyBzaWduYWw6IGV4cGVjdC5hbnkoQWJvcnRTaWduYWwpIH0pLAogICAgKTsKICB9KTsKCiAgaXQoInJldHVybnMgZmFsc2Ugd2hlbiBmZXRjaCB0aHJvd3MgKG5ldHdvcmsgZXJyb3IpIiwgYXN5bmMgKCkgPT4gewogICAgbW9ja0ZldGNoLm1vY2tSZWplY3RlZFZhbHVlKG5ldyBFcnJvcigiRUNPTk5SRUZVU0VEIikpOwogICAgY29uc3QgYXBpID0gbmV3IENvbGxlY3RvckFwaSgpOwoKICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IGFwaS5vbmxpbmUoKTsKICAgIGV4cGVjdChyZXN1bHQpLnRvQmUoZmFsc2UpOwogIH0pOwoKICBpdCgicmV0dXJucyBmYWxzZSB3aGVuIHJlc3BvbnNlIGlzIG5vdCBvayIsIGFzeW5jICgpID0+IHsKICAgIG1vY2tGZXRjaC5tb2NrUmVzb2x2ZWRWYWx1ZSh7IG9rOiBmYWxzZSB9KTsKICAgIGNvbnN0IGFwaSA9IG5ldyBDb2xsZWN0b3JBcGkoKTsKCiAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBhcGkub25saW5lKCk7CiAgICBleHBlY3QocmVzdWx0KS50b0JlKGZhbHNlKTsKICB9KTsKfSk7CgpkZXNjcmliZSgiQ29sbGVjdG9yQXBpIOKAlCBhY2NlcHRlZEZpbGVUeXBlcygpIiwgKCkgPT4gewogIGl0KCJyZXR1cm5zIHBhcnNlZCBKU09OIHdoZW4gcmVzcG9uc2UgaXMgb2siLCBhc3luYyAoKSA9PiB7CiAgICBjb25zdCBtb2NrRGF0YSA9IHsgYWNjZXB0ZWQ6IFsicGRmIiwgInR4dCIsICJkb2N4Il0gfTsKICAgIG1vY2tGZXRjaC5tb2NrUmVzb2x2ZWRWYWx1ZSh7CiAgICAgIG9rOiB0cnVlLAogICAgICBqc29uOiBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUobW9ja0RhdGEpLAogICAgfSk7CiAgICBjb25zdCBhcGkgPSBuZXcgQ29sbGVjdG9yQXBpKCk7CgogICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgYXBpLmFjY2VwdGVkRmlsZVR5cGVzKCk7CiAgICBleHBlY3QocmVzdWx0KS50b0VxdWFsKG1vY2tEYXRhKTsKICB9KTsKCiAgaXQoInJldHVybnMgbnVsbCB3aGVuIGZldGNoIHRocm93cyBhIG5ldHdvcmsgZXJyb3IiLCBhc3luYyAoKSA9PiB7CiAgICBtb2NrRmV0Y2gubW9ja1JlamVjdGVkVmFsdWUobmV3IEVycm9yKCJuZXR3b3JrIGVycm9yIikpOwogICAgY29uc3QgYXBpID0gbmV3IENvbGxlY3RvckFwaSgpOwoKICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IGFwaS5hY2NlcHRlZEZpbGVUeXBlcygpOwogICAgZXhwZWN0KHJlc3VsdCkudG9CZU51bGwoKTsKICB9KTsKCiAgaXQoInJldHVybnMgbnVsbCB3aGVuIHJlc3BvbnNlIGlzIG5vdCBvayIsIGFzeW5jICgpID0+IHsKICAgIG1vY2tGZXRjaC5tb2NrUmVzb2x2ZWRWYWx1ZSh7CiAgICAgIG9rOiBmYWxzZSwKICAgICAganNvbjogamVzdC5mbigpLAogICAgfSk7CiAgICBjb25zdCBhcGkgPSBuZXcgQ29sbGVjdG9yQXBpKCk7CgogICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgYXBpLmFjY2VwdGVkRmlsZVR5cGVzKCk7CiAgICBleHBlY3QocmVzdWx0KS50b0JlTnVsbCgpOwogIH0pOwp9KTsKCmRlc2NyaWJlKCJDb2xsZWN0b3JBcGkg4oCUIHByb2Nlc3NEb2N1bWVudCgpIiwgKCkgPT4gewogIGl0KCJyZXR1cm5zIGZhbHNlIHdoZW4gZmlsZW5hbWUgaXMgZW1wdHkiLCBhc3luYyAoKSA9PiB7CiAgICBjb25zdCBhcGkgPSBuZXcgQ29sbGVjdG9yQXBpKCk7CiAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBhcGkucHJvY2Vzc0RvY3VtZW50KCIiKTsKICAgIGV4cGVjdChyZXN1bHQpLnRvQmUoZmFsc2UpOwogICAgZXhwZWN0KG1vY2tGZXRjaCkubm90LnRvSGF2ZUJlZW5DYWxsZWQoKTsKICB9KTsKCiAgaXQoInJldHVybnMgZmFsc2Ugd2hlbiBmaWxlbmFtZSBpcyBub3QgcHJvdmlkZWQiLCBhc3luYyAoKSA9PiB7CiAgICBjb25zdCBhcGkgPSBuZXcgQ29sbGVjdG9yQXBpKCk7CiAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBhcGkucHJvY2Vzc0RvY3VtZW50KCk7CiAgICBleHBlY3QocmVzdWx0KS50b0JlKGZhbHNlKTsKICB9KTsKCiAgaXQoInNlbmRzIFBPU1QgdG8gL3Byb2Nlc3Mgd2l0aCBmaWxlbmFtZSwgbWV0YWRhdGEsIGFuZCBvcHRpb25zIiwgYXN5bmMgKCkgPT4gewogICAgY29uc3QgbW9ja1Jlc3BvbnNlID0geyBzdWNjZXNzOiB0cnVlLCBkb2N1bWVudHM6IFt7IGlkOiAxIH1dIH07CiAgICBtb2NrRmV0Y2gubW9ja1Jlc29sdmVkVmFsdWUoewogICAgICBvazogdHJ1ZSwKICAgICAganNvbjogamVzdC5mbigpLm1vY2tSZXNvbHZlZFZhbHVlKG1vY2tSZXNwb25zZSksCiAgICB9KTsKICAgIGNvbnN0IGFwaSA9IG5ldyBDb2xsZWN0b3JBcGkoKTsKCiAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBhcGkucHJvY2Vzc0RvY3VtZW50KCJ0ZXN0LnBkZiIsIHsgYXV0aG9yOiAiSm9obiIgfSk7CgogICAgZXhwZWN0KG1vY2tGZXRjaCkudG9IYXZlQmVlbkNhbGxlZFdpdGgoCiAgICAgIGV4cGVjdC5zdHJpbmdDb250YWluaW5nKCIvcHJvY2VzcyIpLAogICAgICBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7CiAgICAgICAgbWV0aG9kOiAiUE9TVCIsCiAgICAgICAgaGVhZGVyczogZXhwZWN0Lm9iamVjdENvbnRhaW5pbmcoewogICAgICAgICAgIkNvbnRlbnQtVHlwZSI6ICJhcHBsaWNhdGlvbi9qc29uIiwKICAgICAgICAgICJYLUludGVncml0eSI6ICJtb2NrLXNpZ25hdHVyZSIsCiAgICAgICAgICAiWC1QYXlsb2FkLVNpZ25lciI6ICJtb2NrLWVuY3J5cHRlZC1wYXlsb2FkIiwKICAgICAgICB9KSwKICAgICAgfSksCiAgICApOwogICAgZXhwZWN0KHJlc3VsdCkudG9FcXVhbChtb2NrUmVzcG9uc2UpOwogIH0pOwoKICBpdCgicmV0dXJucyBlcnJvciBvYmplY3Qgd2hlbiByZXNwb25zZSBpcyBub3Qgb2siLCBhc3luYyAoKSA9PiB7CiAgICBtb2NrRmV0Y2gubW9ja1Jlc29sdmVkVmFsdWUoewogICAgICBvazogZmFsc2UsCiAgICAgIGpzb246IGplc3QuZm4oKSwKICAgIH0pOwogICAgY29uc3QgYXBpID0gbmV3IENvbGxlY3RvckFwaSgpOwoKICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IGFwaS5wcm9jZXNzRG9jdW1lbnQoInRlc3QucGRmIik7CgogICAgZXhwZWN0KHJlc3VsdC5zdWNjZXNzKS50b0JlKGZhbHNlKTsKICAgIGV4cGVjdChyZXN1bHQucmVhc29uKS50b0NvbnRhaW4oImNvdWxkIG5vdCBiZSBjb21wbGV0ZWQiKTsKICAgIGV4cGVjdChyZXN1bHQuZG9jdW1lbnRzKS50b0VxdWFsKFtdKTsKICB9KTsKCiAgaXQoInJldHVybnMgZXJyb3Igb2JqZWN0IG9uIG5ldHdvcmsgZmFpbHVyZSIsIGFzeW5jICgpID0+IHsKICAgIG1vY2tGZXRjaC5tb2NrUmVqZWN0ZWRWYWx1ZShuZXcgRXJyb3IoIkVDT05OUkVGVVNFRCIpKTsKICAgIGNvbnN0IGFwaSA9IG5ldyBDb2xsZWN0b3JBcGkoKTsKCiAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBhcGkucHJvY2Vzc0RvY3VtZW50KCJ0ZXN0LnBkZiIpOwoKICAgIGV4cGVjdChyZXN1bHQuc3VjY2VzcykudG9CZShmYWxzZSk7CiAgICBleHBlY3QocmVzdWx0LnJlYXNvbikudG9CZSgiRUNPTk5SRUZVU0VEIik7CiAgICBleHBlY3QocmVzdWx0LmRvY3VtZW50cykudG9FcXVhbChbXSk7CiAgfSk7Cn0pOwoKZGVzY3JpYmUoIkNvbGxlY3RvckFwaSDigJQgcHJvY2Vzc0xpbmsoKSIsICgpID0+IHsKICBpdCgicmV0dXJucyBmYWxzZSB3aGVuIGxpbmsgaXMgZW1wdHkiLCBhc3luYyAoKSA9PiB7CiAgICBjb25zdCBhcGkgPSBuZXcgQ29sbGVjdG9yQXBpKCk7CiAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBhcGkucHJvY2Vzc0xpbmsoIiIpOwogICAgZXhwZWN0KHJlc3VsdCkudG9CZShmYWxzZSk7CiAgICBleHBlY3QobW9ja0ZldGNoKS5ub3QudG9IYXZlQmVlbkNhbGxlZCgpOwogIH0pOwoKICBpdCgic2VuZHMgUE9TVCB0byAvcHJvY2Vzcy1saW5rIHdpdGggbGluayBhbmQgb3B0aW9ucyIsIGFzeW5jICgpID0+IHsKICAgIGNvbnN0IG1vY2tSZXNwb25zZSA9IHsgc3VjY2VzczogdHJ1ZSwgZG9jdW1lbnRzOiBbXSB9OwogICAgbW9ja0ZldGNoLm1vY2tSZXNvbHZlZFZhbHVlKHsKICAgICAgb2s6IHRydWUsCiAgICAgIGpzb246IGplc3QuZm4oKS5tb2NrUmVzb2x2ZWRWYWx1ZShtb2NrUmVzcG9uc2UpLAogICAgfSk7CiAgICBjb25zdCBhcGkgPSBuZXcgQ29sbGVjdG9yQXBpKCk7CgogICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgYXBpLnByb2Nlc3NMaW5rKCJodHRwczovL2V4YW1wbGUuY29tIiwge30sIHsgc291cmNlOiAid2ViIiB9KTsKCiAgICBleHBlY3QobW9ja0ZldGNoKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgKICAgICAgZXhwZWN0LnN0cmluZ0NvbnRhaW5pbmcoIi9wcm9jZXNzLWxpbmsiKSwKICAgICAgZXhwZWN0Lm9iamVjdENvbnRhaW5pbmcoeyBtZXRob2Q6ICJQT1NUIiB9KSwKICAgICk7CiAgICBleHBlY3QocmVzdWx0KS50b0VxdWFsKG1vY2tSZXNwb25zZSk7CiAgfSk7CgogIGl0KCJyZXR1cm5zIGVycm9yIG9iamVjdCBvbiBuZXR3b3JrIGZhaWx1cmUiLCBhc3luYyAoKSA9PiB7CiAgICBtb2NrRmV0Y2gubW9ja1JlamVjdGVkVmFsdWUobmV3IEVycm9yKCJ0aW1lb3V0IikpOwogICAgY29uc3QgYXBpID0gbmV3IENvbGxlY3RvckFwaSgpOwoKICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IGFwaS5wcm9jZXNzTGluaygiaHR0cHM6Ly9leGFtcGxlLmNvbSIpOwoKICAgIGV4cGVjdChyZXN1bHQuc3VjY2VzcykudG9CZShmYWxzZSk7CiAgICBleHBlY3QocmVzdWx0LnJlYXNvbikudG9CZSgidGltZW91dCIpOwogIH0pOwp9KTsKCmRlc2NyaWJlKCJDb2xsZWN0b3JBcGkg4oCUIHByb2Nlc3NSYXdUZXh0KCkiLCAoKSA9PiB7CiAgaXQoInNlbmRzIFBPU1QgdG8gL3Byb2Nlc3MtcmF3LXRleHQgd2l0aCB0ZXh0Q29udGVudCIsIGFzeW5jICgpID0+IHsKICAgIGNvbnN0IG1vY2tSZXNwb25zZSA9IHsgc3VjY2VzczogdHJ1ZSB9OwogICAgbW9ja0ZldGNoLm1vY2tSZXNvbHZlZFZhbHVlKHsKICAgICAgb2s6IHRydWUsCiAgICAgIGpzb246IGplc3QuZm4oKS5tb2NrUmVzb2x2ZWRWYWx1ZShtb2NrUmVzcG9uc2UpLAogICAgfSk7CiAgICBjb25zdCBhcGkgPSBuZXcgQ29sbGVjdG9yQXBpKCk7CgogICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgYXBpLnByb2Nlc3NSYXdUZXh0KCJIZWxsbyB3b3JsZCIsIHsgdGl0bGU6ICJ0ZXN0IiB9KTsKCiAgICBleHBlY3QobW9ja0ZldGNoKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgKICAgICAgZXhwZWN0LnN0cmluZ0NvbnRhaW5pbmcoIi9wcm9jZXNzLXJhdy10ZXh0IiksCiAgICAgIGV4cGVjdC5vYmplY3RDb250YWluaW5nKHsgbWV0aG9kOiAiUE9TVCIgfSksCiAgICApOwogICAgZXhwZWN0KHJlc3VsdCkudG9FcXVhbChtb2NrUmVzcG9uc2UpOwogIH0pOwoKICBpdCgicmV0dXJucyBlcnJvciBvYmplY3Qgd2hlbiByZXNwb25zZSBpcyBub3Qgb2siLCBhc3luYyAoKSA9PiB7CiAgICBtb2NrRmV0Y2gubW9ja1Jlc29sdmVkVmFsdWUoewogICAgICBvazogZmFsc2UsCiAgICAgIGpzb246IGplc3QuZm4oKSwKICAgIH0pOwogICAgY29uc3QgYXBpID0gbmV3IENvbGxlY3RvckFwaSgpOwoKICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IGFwaS5wcm9jZXNzUmF3VGV4dCgiSGVsbG8iKTsKCiAgICBleHBlY3QocmVzdWx0LnN1Y2Nlc3MpLnRvQmUoZmFsc2UpOwogICAgZXhwZWN0KHJlc3VsdC5kb2N1bWVudHMpLnRvRXF1YWwoW10pOwogIH0pOwp9KTsKCmRlc2NyaWJlKCJDb2xsZWN0b3JBcGkg4oCUIGNvbnZlcnRBdWRpb1RvV2F2KCkiLCAoKSA9PiB7CiAgaXQoInJldHVybnMgZXJyb3Igb2JqZWN0IHdoZW4gZmlsZW5hbWUgaXMgZW1wdHkiLCBhc3luYyAoKSA9PiB7CiAgICBjb25zdCBhcGkgPSBuZXcgQ29sbGVjdG9yQXBpKCk7CiAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBhcGkuY29udmVydEF1ZGlvVG9XYXYoIiIpOwoKICAgIGV4cGVjdChyZXN1bHQuc3VjY2VzcykudG9CZShmYWxzZSk7CiAgICBleHBlY3QocmVzdWx0LnJlYXNvbikudG9Db250YWluKCJObyBmaWxlbmFtZSBwcm92aWRlZCIpOwogICAgZXhwZWN0KHJlc3VsdC53YXZGaWxlbmFtZSkudG9CZU51bGwoKTsKICAgIGV4cGVjdChtb2NrRmV0Y2gpLm5vdC50b0hhdmVCZWVuQ2FsbGVkKCk7CiAgfSk7CgogIGl0KCJzZW5kcyBQT1NUIHRvIC91dGlsL2NvbnZlcnQtYXVkaW8tdG8td2F2IiwgYXN5bmMgKCkgPT4gewogICAgY29uc3QgbW9ja1Jlc3BvbnNlID0geyBzdWNjZXNzOiB0cnVlLCB3YXZGaWxlbmFtZTogIm91dHB1dC53YXYiIH07CiAgICBtb2NrRmV0Y2gubW9ja1Jlc29sdmVkVmFsdWUoewogICAgICBvazogdHJ1ZSwKICAgICAganNvbjogamVzdC5mbigpLm1vY2tSZXNvbHZlZFZhbHVlKG1vY2tSZXNwb25zZSksCiAgICB9KTsKICAgIGNvbnN0IGFwaSA9IG5ldyBDb2xsZWN0b3JBcGkoKTsKCiAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBhcGkuY29udmVydEF1ZGlvVG9XYXYoImF1ZGlvLm1wMyIpOwoKICAgIGV4cGVjdChtb2NrRmV0Y2gpLnRvSGF2ZUJlZW5DYWxsZWRXaXRoKAogICAgICBleHBlY3Quc3RyaW5nQ29udGFpbmluZygiL3V0aWwvY29udmVydC1hdWRpby10by13YXYiKSwKICAgICAgZXhwZWN0Lm9iamVjdENvbnRhaW5pbmcoeyBtZXRob2Q6ICJQT1NUIiB9KSwKICAgICk7CiAgICBleHBlY3QocmVzdWx0KS50b0VxdWFsKG1vY2tSZXNwb25zZSk7CiAgfSk7CgogIGl0KCJyZXR1cm5zIGVycm9yIG9iamVjdCBvbiBuZXR3b3JrIGZhaWx1cmUiLCBhc3luYyAoKSA9PiB7CiAgICBtb2NrRmV0Y2gubW9ja1JlamVjdGVkVmFsdWUobmV3IEVycm9yKCJjb25uZWN0aW9uIHJlZnVzZWQiKSk7CiAgICBjb25zdCBhcGkgPSBuZXcgQ29sbGVjdG9yQXBpKCk7CgogICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgYXBpLmNvbnZlcnRBdWRpb1RvV2F2KCJhdWRpby5tcDMiKTsKCiAgICBleHBlY3QocmVzdWx0LnN1Y2Nlc3MpLnRvQmUoZmFsc2UpOwogICAgZXhwZWN0KHJlc3VsdC5yZWFzb24pLnRvQmUoImNvbm5lY3Rpb24gcmVmdXNlZCIpOwogICAgZXhwZWN0KHJlc3VsdC53YXZGaWxlbmFtZSkudG9CZU51bGwoKTsKICB9KTsKfSk7CgpkZXNjcmliZSgiQ29sbGVjdG9yQXBpIOKAlCBmb3J3YXJkRXh0ZW5zaW9uUmVxdWVzdCgpIiwgKCkgPT4gewogIGl0KCJzZW5kcyByZXF1ZXN0IHRvIHRoZSBzcGVjaWZpZWQgZW5kcG9pbnQgd2l0aCBtZXRob2QgYW5kIGJvZHkiLCBhc3luYyAoKSA9PiB7CiAgICBjb25zdCBtb2NrUmVzcG9uc2UgPSB7IHN1Y2Nlc3M6IHRydWUsIGRhdGE6IHsgcmVzdWx0OiAib2siIH0gfTsKICAgIG1vY2tGZXRjaC5tb2NrUmVzb2x2ZWRWYWx1ZSh7CiAgICAgIG9rOiB0cnVlLAogICAgICBqc29uOiBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUobW9ja1Jlc3BvbnNlKSwKICAgIH0pOwogICAgY29uc3QgYXBpID0gbmV3IENvbGxlY3RvckFwaSgpOwoKICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IGFwaS5mb3J3YXJkRXh0ZW5zaW9uUmVxdWVzdCh7CiAgICAgIGVuZHBvaW50OiAiL2V4dC9wcm9jZXNzIiwKICAgICAgbWV0aG9kOiAiUE9TVCIsCiAgICAgIGJvZHk6IHsga2V5OiAidmFsdWUiIH0sCiAgICB9KTsKCiAgICBleHBlY3QobW9ja0ZldGNoKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgKICAgICAgZXhwZWN0LnN0cmluZ0NvbnRhaW5pbmcoIi9leHQvcHJvY2VzcyIpLAogICAgICBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7IG1ldGhvZDogIlBPU1QiIH0pLAogICAgKTsKICAgIGV4cGVjdChyZXN1bHQpLnRvRXF1YWwobW9ja1Jlc3BvbnNlKTsKICB9KTsKCiAgaXQoImFjY2VwdHMgc3RyaW5nIGJvZHkgZGlyZWN0bHkiLCBhc3luYyAoKSA9PiB7CiAgICBjb25zdCBtb2NrUmVzcG9uc2UgPSB7IHN1Y2Nlc3M6IHRydWUgfTsKICAgIG1vY2tGZXRjaC5tb2NrUmVzb2x2ZWRWYWx1ZSh7CiAgICAgIG9rOiB0cnVlLAogICAgICBqc29uOiBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUobW9ja1Jlc3BvbnNlKSwKICAgIH0pOwogICAgY29uc3QgYXBpID0gbmV3IENvbGxlY3RvckFwaSgpOwoKICAgIGF3YWl0IGFwaS5mb3J3YXJkRXh0ZW5zaW9uUmVxdWVzdCh7CiAgICAgIGVuZHBvaW50OiAiL2V4dC90ZXN0IiwKICAgICAgbWV0aG9kOiAiUFVUIiwKICAgICAgYm9keTogJ3sicmF3IjoianNvbiJ9JywKICAgIH0pOwoKICAgIGNvbnN0IGNhbGxBcmdzID0gbW9ja0ZldGNoLm1vY2suY2FsbHNbMF1bMV07CiAgICBleHBlY3QoY2FsbEFyZ3MuYm9keSkudG9CZSgneyJyYXciOiJqc29uIn0nKTsKICB9KTsKCiAgaXQoInJldHVybnMgZXJyb3Igb2JqZWN0IG9uIGZhaWx1cmUiLCBhc3luYyAoKSA9PiB7CiAgICBtb2NrRmV0Y2gubW9ja1JlamVjdGVkVmFsdWUobmV3IEVycm9yKCJuZXR3b3JrIGVycm9yIikpOwogICAgY29uc3QgYXBpID0gbmV3IENvbGxlY3RvckFwaSgpOwoKICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IGFwaS5mb3J3YXJkRXh0ZW5zaW9uUmVxdWVzdCh7CiAgICAgIGVuZHBvaW50OiAiL2V4dC90ZXN0IiwKICAgICAgbWV0aG9kOiAiR0VUIiwKICAgICAgYm9keToge30sCiAgICB9KTsKCiAgICBleHBlY3QocmVzdWx0LnN1Y2Nlc3MpLnRvQmUoZmFsc2UpOwogICAgZXhwZWN0KHJlc3VsdC5yZWFzb24pLnRvQmUoIm5ldHdvcmsgZXJyb3IiKTsKICAgIGV4cGVjdChyZXN1bHQuZGF0YSkudG9FcXVhbCh7fSk7CiAgfSk7Cn0pOwoKZGVzY3JpYmUoIkNvbGxlY3RvckFwaSDigJQgZ2V0TGlua0NvbnRlbnQoKSIsICgpID0+IHsKICBpdCgicmV0dXJucyBmYWxzZSB3aGVuIGxpbmsgaXMgZW1wdHkiLCBhc3luYyAoKSA9PiB7CiAgICBjb25zdCBhcGkgPSBuZXcgQ29sbGVjdG9yQXBpKCk7CiAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBhcGkuZ2V0TGlua0NvbnRlbnQoIiIpOwogICAgZXhwZWN0KHJlc3VsdCkudG9CZShmYWxzZSk7CiAgICBleHBlY3QobW9ja0ZldGNoKS5ub3QudG9IYXZlQmVlbkNhbGxlZCgpOwogIH0pOwoKICBpdCgic2VuZHMgUE9TVCB0byAvdXRpbC9nZXQtbGluayB3aXRoIGxpbmsgYW5kIGNhcHR1cmVBcyIsIGFzeW5jICgpID0+IHsKICAgIGNvbnN0IG1vY2tSZXNwb25zZSA9IHsgc3VjY2VzczogdHJ1ZSwgY29udGVudDogImV4dHJhY3RlZCB0ZXh0IiB9OwogICAgbW9ja0ZldGNoLm1vY2tSZXNvbHZlZFZhbHVlKHsKICAgICAgb2s6IHRydWUsCiAgICAgIGpzb246IGplc3QuZm4oKS5tb2NrUmVzb2x2ZWRWYWx1ZShtb2NrUmVzcG9uc2UpLAogICAgfSk7CiAgICBjb25zdCBhcGkgPSBuZXcgQ29sbGVjdG9yQXBpKCk7CgogICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgYXBpLmdldExpbmtDb250ZW50KCJodHRwczovL2V4YW1wbGUuY29tIiwgImh0bWwiKTsKCiAgICBleHBlY3QobW9ja0ZldGNoKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgKICAgICAgZXhwZWN0LnN0cmluZ0NvbnRhaW5pbmcoIi91dGlsL2dldC1saW5rIiksCiAgICAgIGV4cGVjdC5vYmplY3RDb250YWluaW5nKHsgbWV0aG9kOiAiUE9TVCIgfSksCiAgICApOwogICAgZXhwZWN0KHJlc3VsdCkudG9FcXVhbChtb2NrUmVzcG9uc2UpOwogIH0pOwoKICBpdCgicmV0dXJucyBlcnJvciBvYmplY3Qgb24gbmV0d29yayBmYWlsdXJlIHdpdGggbnVsbCBjb250ZW50IiwgYXN5bmMgKCkgPT4gewogICAgbW9ja0ZldGNoLm1vY2tSZWplY3RlZFZhbHVlKG5ldyBFcnJvcigidGltZW91dCIpKTsKICAgIGNvbnN0IGFwaSA9IG5ldyBDb2xsZWN0b3JBcGkoKTsKCiAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBhcGkuZ2V0TGlua0NvbnRlbnQoImh0dHBzOi8vZXhhbXBsZS5jb20iKTsKCiAgICBleHBlY3QocmVzdWx0LnN1Y2Nlc3MpLnRvQmUoZmFsc2UpOwogICAgZXhwZWN0KHJlc3VsdC5jb250ZW50KS50b0JlTnVsbCgpOwogIH0pOwp9KTsKCmRlc2NyaWJlKCJDb2xsZWN0b3JBcGkg4oCUIHBhcnNlRG9jdW1lbnQoKSIsICgpID0+IHsKICBpdCgicmV0dXJucyBmYWxzZSB3aGVuIGZpbGVuYW1lIGlzIGVtcHR5IiwgYXN5bmMgKCkgPT4gewogICAgY29uc3QgYXBpID0gbmV3IENvbGxlY3RvckFwaSgpOwogICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgYXBpLnBhcnNlRG9jdW1lbnQoIiIpOwogICAgZXhwZWN0KHJlc3VsdCkudG9CZShmYWxzZSk7CiAgICBleHBlY3QobW9ja0ZldGNoKS5ub3QudG9IYXZlQmVlbkNhbGxlZCgpOwogIH0pOwoKICBpdCgic2VuZHMgUE9TVCB0byAvcGFyc2Ugd2l0aCBmaWxlbmFtZSBhbmQgb3B0aW9ucyIsIGFzeW5jICgpID0+IHsKICAgIGNvbnN0IG1vY2tSZXNwb25zZSA9IHsgc3VjY2VzczogdHJ1ZSwgZG9jdW1lbnRzOiBbeyBwYWdlOiAxIH1dIH07CiAgICBtb2NrRmV0Y2gubW9ja1Jlc29sdmVkVmFsdWUoewogICAgICBvazogdHJ1ZSwKICAgICAganNvbjogamVzdC5mbigpLm1vY2tSZXNvbHZlZFZhbHVlKG1vY2tSZXNwb25zZSksCiAgICB9KTsKICAgIGNvbnN0IGFwaSA9IG5ldyBDb2xsZWN0b3JBcGkoKTsKCiAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBhcGkucGFyc2VEb2N1bWVudCgiZG9jLnBkZiIsIHsgYWJzb2x1dGVQYXRoOiAiL3RtcC9kb2MucGRmIiB9KTsKCiAgICBleHBlY3QobW9ja0ZldGNoKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgKICAgICAgZXhwZWN0LnN0cmluZ0NvbnRhaW5pbmcoIi9wYXJzZSIpLAogICAgICBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7IG1ldGhvZDogIlBPU1QiIH0pLAogICAgKTsKICAgIGV4cGVjdChyZXN1bHQpLnRvRXF1YWwobW9ja1Jlc3BvbnNlKTsKICB9KTsKCiAgaXQoImluY2x1ZGVzIGFic29sdXRlUGF0aCBpbiBvcHRpb25zIHdoZW4gcHJvdmlkZWQiLCBhc3luYyAoKSA9PiB7CiAgICBjb25zdCBtb2NrUmVzcG9uc2UgPSB7IHN1Y2Nlc3M6IHRydWUsIGRvY3VtZW50czogW10gfTsKICAgIG1vY2tGZXRjaC5tb2NrUmVzb2x2ZWRWYWx1ZSh7CiAgICAgIG9rOiB0cnVlLAogICAgICBqc29uOiBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUobW9ja1Jlc3BvbnNlKSwKICAgIH0pOwogICAgY29uc3QgYXBpID0gbmV3IENvbGxlY3RvckFwaSgpOwoKICAgIGF3YWl0IGFwaS5wYXJzZURvY3VtZW50KCJkb2MucGRmIiwgeyBhYnNvbHV0ZVBhdGg6ICIvY3VzdG9tL3BhdGgvZG9jLnBkZiIgfSk7CgogICAgY29uc3QgYm9keSA9IEpTT04ucGFyc2UobW9ja0ZldGNoLm1vY2suY2FsbHNbMF1bMV0uYm9keSk7CiAgICBleHBlY3QoYm9keS5vcHRpb25zLmFic29sdXRlUGF0aCkudG9CZSgiL2N1c3RvbS9wYXRoL2RvYy5wZGYiKTsKICB9KTsKCiAgaXQoInNldHMgYWJzb2x1dGVQYXRoIHRvIG51bGwgd2hlbiBub3QgcHJvdmlkZWQiLCBhc3luYyAoKSA9PiB7CiAgICBjb25zdCBtb2NrUmVzcG9uc2UgPSB7IHN1Y2Nlc3M6IHRydWUsIGRvY3VtZW50czogW10gfTsKICAgIG1vY2tGZXRjaC5tb2NrUmVzb2x2ZWRWYWx1ZSh7CiAgICAgIG9rOiB0cnVlLAogICAgICBqc29uOiBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUobW9ja1Jlc3BvbnNlKSwKICAgIH0pOwogICAgY29uc3QgYXBpID0gbmV3IENvbGxlY3RvckFwaSgpOwoKICAgIGF3YWl0IGFwaS5wYXJzZURvY3VtZW50KCJkb2MucGRmIik7CgogICAgY29uc3QgYm9keSA9IEpTT04ucGFyc2UobW9ja0ZldGNoLm1vY2suY2FsbHNbMF1bMV0uYm9keSk7CiAgICBleHBlY3QoYm9keS5vcHRpb25zLmFic29sdXRlUGF0aCkudG9CZU51bGwoKTsKICB9KTsKCiAgaXQoInJldHVybnMgZXJyb3Igb2JqZWN0IG9uIG5ldHdvcmsgZmFpbHVyZSIsIGFzeW5jICgpID0+IHsKICAgIG1vY2tGZXRjaC5tb2NrUmVqZWN0ZWRWYWx1ZShuZXcgRXJyb3IoIkVDT05OUkVTRVQiKSk7CiAgICBjb25zdCBhcGkgPSBuZXcgQ29sbGVjdG9yQXBpKCk7CgogICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgYXBpLnBhcnNlRG9jdW1lbnQoImRvYy5wZGYiKTsKCiAgICBleHBlY3QocmVzdWx0LnN1Y2Nlc3MpLnRvQmUoZmFsc2UpOwogICAgZXhwZWN0KHJlc3VsdC5yZWFzb24pLnRvQmUoIkVDT05OUkVTRVQiKTsKICAgIGV4cGVjdChyZXN1bHQuZG9jdW1lbnRzKS50b0VxdWFsKFtdKTsKICB9KTsKfSk7CgpkZXNjcmliZSgiQ29sbGVjdG9yQXBpIOKAlCByZXF1ZXN0IHNpZ25pbmciLCAoKSA9PiB7CiAgaXQoImluY2x1ZGVzIFgtSW50ZWdyaXR5IGFuZCBYLVBheWxvYWQtU2lnbmVyIGhlYWRlcnMgaW4gYWxsIFBPU1QgcmVxdWVzdHMiLCBhc3luYyAoKSA9PiB7CiAgICBtb2NrRmV0Y2gubW9ja1Jlc29sdmVkVmFsdWUoewogICAgICBvazogdHJ1ZSwKICAgICAganNvbjogamVzdC5mbigpLm1vY2tSZXNvbHZlZFZhbHVlKHsgc3VjY2VzczogdHJ1ZSB9KSwKICAgIH0pOwogICAgY29uc3QgYXBpID0gbmV3IENvbGxlY3RvckFwaSgpOwoKICAgIGF3YWl0IGFwaS5wcm9jZXNzRG9jdW1lbnQoInRlc3QucGRmIik7CgogICAgY29uc3QgaGVhZGVycyA9IG1vY2tGZXRjaC5tb2NrLmNhbGxzWzBdWzFdLmhlYWRlcnM7CiAgICBleHBlY3QoaGVhZGVyc1siWC1JbnRlZ3JpdHkiXSkudG9CZSgibW9jay1zaWduYXR1cmUiKTsKICAgIGV4cGVjdChoZWFkZXJzWyJYLVBheWxvYWQtU2lnbmVyIl0pLnRvQmUoIm1vY2stZW5jcnlwdGVkLXBheWxvYWQiKTsKICAgIGV4cGVjdChoZWFkZXJzWyJDb250ZW50LVR5cGUiXSkudG9CZSgiYXBwbGljYXRpb24vanNvbiIpOwogIH0pOwp9KTsKCmRlc2NyaWJlKCJDb2xsZWN0b3JBcGkg4oCUIHRpbWVvdXQgaGFuZGxpbmciLCAoKSA9PiB7CiAgaXQoInVzZXMgQWJvcnRTaWduYWwudGltZW91dCBmb3IgaGVhbHRoIGNoZWNrIHJlcXVlc3RzIiwgYXN5bmMgKCkgPT4gewogICAgbW9ja0ZldGNoLm1vY2tSZXNvbHZlZFZhbHVlKHsgb2s6IHRydWUgfSk7CiAgICBjb25zdCBhcGkgPSBuZXcgQ29sbGVjdG9yQXBpKCk7CgogICAgYXdhaXQgYXBpLm9ubGluZSgpOwoKICAgIGNvbnN0IHNpZ25hbCA9IG1vY2tGZXRjaC5tb2NrLmNhbGxzWzBdWzFdLnNpZ25hbDsKICAgIGV4cGVjdChzaWduYWwpLnRvQmVJbnN0YW5jZU9mKEFib3J0U2lnbmFsKTsKICB9KTsKCiAgaXQoInVzZXMgQWJvcnRTaWduYWwudGltZW91dCBmb3IgcHJvY2VzcyByZXF1ZXN0cyIsIGFzeW5jICgpID0+IHsKICAgIG1vY2tGZXRjaC5tb2NrUmVzb2x2ZWRWYWx1ZSh7CiAgICAgIG9rOiB0cnVlLAogICAgICBqc29uOiBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUoeyBzdWNjZXNzOiB0cnVlIH0pLAogICAgfSk7CiAgICBjb25zdCBhcGkgPSBuZXcgQ29sbGVjdG9yQXBpKCk7CgogICAgYXdhaXQgYXBpLnByb2Nlc3NEb2N1bWVudCgidGVzdC5wZGYiKTsKCiAgICBjb25zdCBzaWduYWwgPSBtb2NrRmV0Y2gubW9jay5jYWxsc1swXVsxXS5zaWduYWw7CiAgICBleHBlY3Qoc2lnbmFsKS50b0JlSW5zdGFuY2VPZihBYm9ydFNpZ25hbCk7CiAgfSk7CgogIGl0KCJoYW5kbGVzIHRpbWVvdXQgYWJvcnQgZXJyb3JzIGdyYWNlZnVsbHkgaW4gcHJvY2Vzc0RvY3VtZW50IiwgYXN5bmMgKCkgPT4gewogICAgbW9ja0ZldGNoLm1vY2tSZWplY3RlZFZhbHVlKG5ldyBFcnJvcigiVGhlIG9wZXJhdGlvbiB3YXMgYWJvcnRlZCIpKTsKICAgIGNvbnN0IGFwaSA9IG5ldyBDb2xsZWN0b3JBcGkoKTsKCiAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBhcGkucHJvY2Vzc0RvY3VtZW50KCJ0ZXN0LnBkZiIpOwoKICAgIGV4cGVjdChyZXN1bHQuc3VjY2VzcykudG9CZShmYWxzZSk7CiAgICBleHBlY3QocmVzdWx0LnJlYXNvbikudG9Db250YWluKCJhYm9ydGVkIik7CiAgfSk7Cn0pOwo=
+// SPDX-License-Identifier: MIT
+/* eslint-env jest */
+// Tests for server/utils/collectorApi/index.js — CollectorApi (Issue #388)
+//
+// CollectorApi communicates with the document collector service via fetch.
+// We mock global fetch, CommunicationKey, and EncryptionManager to isolate
+// the API logic: endpoint construction, request formatting, error handling,
+// timeout behavior, and response parsing.
+
+// --- Mock dependencies ---
+jest.mock("../../utils/logger/console.js", () => ({
+  log: jest.fn(),
+  warn: jest.fn(),
+  error: jest.fn(),
+  info: jest.fn(),
+}));
+
+jest.mock("../../utils/comKey", () => ({
+  CommunicationKey: jest.fn().mockImplementation(() => ({
+    sign: jest.fn().mockReturnValue("mock-signature"),
+    encrypt: jest.fn().mockReturnValue("mock-encrypted-payload"),
+  })),
+}));
+
+jest.mock("../../utils/EncryptionManager", () => ({
+  EncryptionManager: jest.fn().mockImplementation(() => ({
+    xPayload: "mock-x-payload",
+  })),
+}));
+
+jest.mock("undici", () => ({
+  Agent: jest.fn().mockImplementation(() => ({})),
+}));
+
+// --- fetch mock ---
+const mockFetch = jest.fn();
+global.fetch = mockFetch;
+
+const { CollectorApi } = require("../../utils/collectorApi");
+
+beforeEach(() => {
+  jest.clearAllMocks();
+  mockFetch.mockReset();
+});
+
+afterEach(() => {
+  delete process.env.COLLECTOR_PORT;
+  delete process.env.COLLECTOR_PROCESS_TIMEOUT_MS;
+  delete process.env.WHISPER_PROVIDER;
+  delete process.env.WHISPER_MODEL_PREF;
+  delete process.env.OPEN_AI_KEY;
+  delete process.env.TARGET_OCR_LANG;
+  delete process.env.COLLECTOR_ALLOW_ANY_IP;
+});
+
+describe("CollectorApi — getCollectorPort (static)", () => {
+  it("returns default port 8888 when COLLECTOR_PORT is not set", () => {
+    delete process.env.COLLECTOR_PORT;
+    expect(CollectorApi.getCollectorPort()).toBe(8888);
+  });
+
+  it("returns the port from COLLECTOR_PORT env var", () => {
+    process.env.COLLECTOR_PORT = "9999";
+    expect(CollectorApi.getCollectorPort()).toBe(9999);
+  });
+
+  it("falls back to default for non-integer port", () => {
+    process.env.COLLECTOR_PORT = "abc";
+    expect(CollectorApi.getCollectorPort()).toBe(8888);
+  });
+
+  it("falls back to default for port 0", () => {
+    process.env.COLLECTOR_PORT = "0";
+    expect(CollectorApi.getCollectorPort()).toBe(8888);
+  });
+
+  it("falls back to default for negative port", () => {
+    process.env.COLLECTOR_PORT = "-1";
+    expect(CollectorApi.getCollectorPort()).toBe(8888);
+  });
+
+  it("falls back to default for port > 65535", () => {
+    process.env.COLLECTOR_PORT = "70000";
+    expect(CollectorApi.getCollectorPort()).toBe(8888);
+  });
+
+  it("accepts port 1 (minimum valid)", () => {
+    process.env.COLLECTOR_PORT = "1";
+    expect(CollectorApi.getCollectorPort()).toBe(1);
+  });
+
+  it("accepts port 65535 (maximum valid)", () => {
+    process.env.COLLECTOR_PORT = "65535";
+    expect(CollectorApi.getCollectorPort()).toBe(65535);
+  });
+});
+
+describe("CollectorApi — constructor", () => {
+  it("creates an endpoint with the correct port", () => {
+    process.env.COLLECTOR_PORT = "7777";
+    const api = new CollectorApi();
+    expect(api.endpoint).toBe("http://0.0.0.0:7777");
+  });
+
+  it("uses default port when COLLECTOR_PORT is not set", () => {
+    delete process.env.COLLECTOR_PORT;
+    const api = new CollectorApi();
+    expect(api.endpoint).toBe("http://0.0.0.0:8888");
+  });
+
+  it("initializes comkey for request signing", () => {
+    const api = new CollectorApi();
+    expect(api.comkey).toBeDefined();
+    expect(typeof api.comkey.sign).toBe("function");
+    expect(typeof api.comkey.encrypt).toBe("function");
+  });
+});
+
+describe("CollectorApi — online()", () => {
+  it("returns true when /accepts responds ok", async () => {
+    mockFetch.mockResolvedValue({ ok: true });
+    const api = new CollectorApi();
+
+    const result = await api.online();
+
+    expect(result).toBe(true);
+    expect(mockFetch).toHaveBeenCalledWith(
+      expect.stringContaining("/accepts"),
+      expect.objectContaining({ signal: expect.any(AbortSignal) }),
+    );
+  });
+
+  it("returns false when fetch throws (network error)", async () => {
+    mockFetch.mockRejectedValue(new Error("ECONNREFUSED"));
+    const api = new CollectorApi();
+
+    const result = await api.online();
+    expect(result).toBe(false);
+  });
+
+  it("returns false when response is not ok", async () => {
+    mockFetch.mockResolvedValue({ ok: false });
+    const api = new CollectorApi();
+
+    const result = await api.online();
+    expect(result).toBe(false);
+  });
+});
+
+describe("CollectorApi — acceptedFileTypes()", () => {
+  it("returns parsed JSON when response is ok", async () => {
+    const mockData = { accepted: ["pdf", "txt", "docx"] };
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: jest.fn().mockResolvedValue(mockData),
+    });
+    const api = new CollectorApi();
+
+    const result = await api.acceptedFileTypes();
+    expect(result).toEqual(mockData);
+  });
+
+  it("returns null when fetch throws a network error", async () => {
+    mockFetch.mockRejectedValue(new Error("network error"));
+    const api = new CollectorApi();
+
+    const result = await api.acceptedFileTypes();
+    expect(result).toBeNull();
+  });
+
+  it("returns null when response is not ok", async () => {
+    mockFetch.mockResolvedValue({
+      ok: false,
+      json: jest.fn(),
+    });
+    const api = new CollectorApi();
+
+    const result = await api.acceptedFileTypes();
+    expect(result).toBeNull();
+  });
+});
+
+describe("CollectorApi — processDocument()", () => {
+  it("returns false when filename is empty", async () => {
+    const api = new CollectorApi();
+    const result = await api.processDocument("");
+    expect(result).toBe(false);
+    expect(mockFetch).not.toHaveBeenCalled();
+  });
+
+  it("returns false when filename is not provided", async () => {
+    const api = new CollectorApi();
+    const result = await api.processDocument();
+    expect(result).toBe(false);
+  });
+
+  it("sends POST to /process with filename, metadata, and options", async () => {
+    const mockResponse = { success: true, documents: [{ id: 1 }] };
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: jest.fn().mockResolvedValue(mockResponse),
+    });
+    const api = new CollectorApi();
+
+    const result = await api.processDocument("test.pdf", { author: "John" });
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      expect.stringContaining("/process"),
+      expect.objectContaining({
+        method: "POST",
+        headers: expect.objectContaining({
+          "Content-Type": "application/json",
+          "X-Integrity": "mock-signature",
+          "X-Payload-Signer": "mock-encrypted-payload",
+        }),
+      }),
+    );
+    expect(result).toEqual(mockResponse);
+  });
+
+  it("returns error object when response is not ok", async () => {
+    mockFetch.mockResolvedValue({
+      ok: false,
+      json: jest.fn(),
+    });
+    const api = new CollectorApi();
+
+    const result = await api.processDocument("test.pdf");
+
+    expect(result.success).toBe(false);
+    expect(result.reason).toContain("could not be completed");
+    expect(result.documents).toEqual([]);
+  });
+
+  it("returns error object on network failure", async () => {
+    mockFetch.mockRejectedValue(new Error("ECONNREFUSED"));
+    const api = new CollectorApi();
+
+    const result = await api.processDocument("test.pdf");
+
+    expect(result.success).toBe(false);
+    expect(result.reason).toBe("ECONNREFUSED");
+    expect(result.documents).toEqual([]);
+  });
+});
+
+describe("CollectorApi — processLink()", () => {
+  it("returns false when link is empty", async () => {
+    const api = new CollectorApi();
+    const result = await api.processLink("");
+    expect(result).toBe(false);
+    expect(mockFetch).not.toHaveBeenCalled();
+  });
+
+  it("sends POST to /process-link with link and options", async () => {
+    const mockResponse = { success: true, documents: [] };
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: jest.fn().mockResolvedValue(mockResponse),
+    });
+    const api = new CollectorApi();
+
+    const result = await api.processLink("https://example.com", {}, { source: "web" });
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      expect.stringContaining("/process-link"),
+      expect.objectContaining({ method: "POST" }),
+    );
+    expect(result).toEqual(mockResponse);
+  });
+
+  it("returns error object on network failure", async () => {
+    mockFetch.mockRejectedValue(new Error("timeout"));
+    const api = new CollectorApi();
+
+    const result = await api.processLink("https://example.com");
+
+    expect(result.success).toBe(false);
+    expect(result.reason).toBe("timeout");
+  });
+});
+
+describe("CollectorApi — processRawText()", () => {
+  it("sends POST to /process-raw-text with textContent", async () => {
+    const mockResponse = { success: true };
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: jest.fn().mockResolvedValue(mockResponse),
+    });
+    const api = new CollectorApi();
+
+    const result = await api.processRawText("Hello world", { title: "test" });
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      expect.stringContaining("/process-raw-text"),
+      expect.objectContaining({ method: "POST" }),
+    );
+    expect(result).toEqual(mockResponse);
+  });
+
+  it("returns error object when response is not ok", async () => {
+    mockFetch.mockResolvedValue({
+      ok: false,
+      json: jest.fn(),
+    });
+    const api = new CollectorApi();
+
+    const result = await api.processRawText("Hello");
+
+    expect(result.success).toBe(false);
+    expect(result.documents).toEqual([]);
+  });
+});
+
+describe("CollectorApi — convertAudioToWav()", () => {
+  it("returns error object when filename is empty", async () => {
+    const api = new CollectorApi();
+    const result = await api.convertAudioToWav("");
+
+    expect(result.success).toBe(false);
+    expect(result.reason).toContain("No filename provided");
+    expect(result.wavFilename).toBeNull();
+    expect(mockFetch).not.toHaveBeenCalled();
+  });
+
+  it("sends POST to /util/convert-audio-to-wav", async () => {
+    const mockResponse = { success: true, wavFilename: "output.wav" };
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: jest.fn().mockResolvedValue(mockResponse),
+    });
+    const api = new CollectorApi();
+
+    const result = await api.convertAudioToWav("audio.mp3");
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      expect.stringContaining("/util/convert-audio-to-wav"),
+      expect.objectContaining({ method: "POST" }),
+    );
+    expect(result).toEqual(mockResponse);
+  });
+
+  it("returns error object on network failure", async () => {
+    mockFetch.mockRejectedValue(new Error("connection refused"));
+    const api = new CollectorApi();
+
+    const result = await api.convertAudioToWav("audio.mp3");
+
+    expect(result.success).toBe(false);
+    expect(result.reason).toBe("connection refused");
+    expect(result.wavFilename).toBeNull();
+  });
+});
+
+describe("CollectorApi — forwardExtensionRequest()", () => {
+  it("sends request to the specified endpoint with method and body", async () => {
+    const mockResponse = { success: true, data: { result: "ok" } };
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: jest.fn().mockResolvedValue(mockResponse),
+    });
+    const api = new CollectorApi();
+
+    const result = await api.forwardExtensionRequest({
+      endpoint: "/ext/process",
+      method: "POST",
+      body: { key: "value" },
+    });
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      expect.stringContaining("/ext/process"),
+      expect.objectContaining({ method: "POST" }),
+    );
+    expect(result).toEqual(mockResponse);
+  });
+
+  it("accepts string body directly", async () => {
+    const mockResponse = { success: true };
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: jest.fn().mockResolvedValue(mockResponse),
+    });
+    const api = new CollectorApi();
+
+    await api.forwardExtensionRequest({
+      endpoint: "/ext/test",
+      method: "PUT",
+      body: '{"raw":"json"}',
+    });
+
+    const callArgs = mockFetch.mock.calls[0][1];
+    expect(callArgs.body).toBe('{"raw":"json"}');
+  });
+
+  it("returns error object on failure", async () => {
+    mockFetch.mockRejectedValue(new Error("network error"));
+    const api = new CollectorApi();
+
+    const result = await api.forwardExtensionRequest({
+      endpoint: "/ext/test",
+      method: "GET",
+      body: {},
+    });
+
+    expect(result.success).toBe(false);
+    expect(result.reason).toBe("network error");
+    expect(result.data).toEqual({});
+  });
+});
+
+describe("CollectorApi — getLinkContent()", () => {
+  it("returns false when link is empty", async () => {
+    const api = new CollectorApi();
+    const result = await api.getLinkContent("");
+    expect(result).toBe(false);
+    expect(mockFetch).not.toHaveBeenCalled();
+  });
+
+  it("sends POST to /util/get-link with link and captureAs", async () => {
+    const mockResponse = { success: true, content: "extracted text" };
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: jest.fn().mockResolvedValue(mockResponse),
+    });
+    const api = new CollectorApi();
+
+    const result = await api.getLinkContent("https://example.com", "html");
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      expect.stringContaining("/util/get-link"),
+      expect.objectContaining({ method: "POST" }),
+    );
+    expect(result).toEqual(mockResponse);
+  });
+
+  it("returns error object on network failure with null content", async () => {
+    mockFetch.mockRejectedValue(new Error("timeout"));
+    const api = new CollectorApi();
+
+    const result = await api.getLinkContent("https://example.com");
+
+    expect(result.success).toBe(false);
+    expect(result.content).toBeNull();
+  });
+});
+
+describe("CollectorApi — parseDocument()", () => {
+  it("returns false when filename is empty", async () => {
+    const api = new CollectorApi();
+    const result = await api.parseDocument("");
+    expect(result).toBe(false);
+    expect(mockFetch).not.toHaveBeenCalled();
+  });
+
+  it("sends POST to /parse with filename and options", async () => {
+    const mockResponse = { success: true, documents: [{ page: 1 }] };
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: jest.fn().mockResolvedValue(mockResponse),
+    });
+    const api = new CollectorApi();
+
+    const result = await api.parseDocument("doc.pdf", { absolutePath: "/tmp/doc.pdf" });
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      expect.stringContaining("/parse"),
+      expect.objectContaining({ method: "POST" }),
+    );
+    expect(result).toEqual(mockResponse);
+  });
+
+  it("includes absolutePath in options when provided", async () => {
+    const mockResponse = { success: true, documents: [] };
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: jest.fn().mockResolvedValue(mockResponse),
+    });
+    const api = new CollectorApi();
+
+    await api.parseDocument("doc.pdf", { absolutePath: "/custom/path/doc.pdf" });
+
+    const body = JSON.parse(mockFetch.mock.calls[0][1].body);
+    expect(body.options.absolutePath).toBe("/custom/path/doc.pdf");
+  });
+
+  it("sets absolutePath to null when not provided", async () => {
+    const mockResponse = { success: true, documents: [] };
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: jest.fn().mockResolvedValue(mockResponse),
+    });
+    const api = new CollectorApi();
+
+    await api.parseDocument("doc.pdf");
+
+    const body = JSON.parse(mockFetch.mock.calls[0][1].body);
+    expect(body.options.absolutePath).toBeNull();
+  });
+
+  it("returns error object on network failure", async () => {
+    mockFetch.mockRejectedValue(new Error("ECONNRESET"));
+    const api = new CollectorApi();
+
+    const result = await api.parseDocument("doc.pdf");
+
+    expect(result.success).toBe(false);
+    expect(result.reason).toBe("ECONNRESET");
+    expect(result.documents).toEqual([]);
+  });
+});
+
+describe("CollectorApi — request signing", () => {
+  it("includes X-Integrity and X-Payload-Signer headers in all POST requests", async () => {
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: jest.fn().mockResolvedValue({ success: true }),
+    });
+    const api = new CollectorApi();
+
+    await api.processDocument("test.pdf");
+
+    const headers = mockFetch.mock.calls[0][1].headers;
+    expect(headers["X-Integrity"]).toBe("mock-signature");
+    expect(headers["X-Payload-Signer"]).toBe("mock-encrypted-payload");
+    expect(headers["Content-Type"]).toBe("application/json");
+  });
+});
+
+describe("CollectorApi — timeout handling", () => {
+  it("uses AbortSignal.timeout for health check requests", async () => {
+    mockFetch.mockResolvedValue({ ok: true });
+    const api = new CollectorApi();
+
+    await api.online();
+
+    const signal = mockFetch.mock.calls[0][1].signal;
+    expect(signal).toBeInstanceOf(AbortSignal);
+  });
+
+  it("uses AbortSignal.timeout for process requests", async () => {
+    mockFetch.mockResolvedValue({
+      ok: true,
+      json: jest.fn().mockResolvedValue({ success: true }),
+    });
+    const api = new CollectorApi();
+
+    await api.processDocument("test.pdf");
+
+    const signal = mockFetch.mock.calls[0][1].signal;
+    expect(signal).toBeInstanceOf(AbortSignal);
+  });
+
+  it("handles timeout abort errors gracefully in processDocument", async () => {
+    mockFetch.mockRejectedValue(new Error("The operation was aborted"));
+    const api = new CollectorApi();
+
+    const result = await api.processDocument("test.pdf");
+
+    expect(result.success).toBe(false);
+    expect(result.reason).toContain("aborted");
+  });
+});

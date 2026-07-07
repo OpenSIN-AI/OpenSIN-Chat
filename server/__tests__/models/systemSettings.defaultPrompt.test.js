@@ -1,1 +1,33 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBSZWdyZXNzaW9uIHRlc3QgZm9yIHRoZSBidWc6Ci8vICAgVXNlciBhc2tzICJoYXN0IGR1IHdlYiB6dWdyaWZmPyIgd2l0aG91dCB0aGUgQGFnZW50IHByZWZpeC4KLy8gICBUaGUgTExNIG11c3QgTk9UIGNsYWltIGl0IGhhcyBubyB3ZWIgYWNjZXNzIGF0IGFsbCDigJQgaXQgbXVzdCB0ZWxsIHRoZQovLyAgIHVzZXIgdGhhdCB0b29scyBhcmUgYXZhaWxhYmxlIHZpYSB0aGUgQGFnZW50IHByZWZpeC4KCmRlc2NyaWJlKCJTeXN0ZW1TZXR0aW5ncy5zYW5lRGVmYXVsdFN5c3RlbVByb21wdCIsICgpID0+IHsKICBjb25zdCB7IFN5c3RlbVNldHRpbmdzIH0gPSByZXF1aXJlKCIuLi8uLi9tb2RlbHMvc3lzdGVtU2V0dGluZ3MiKTsKCiAgdGVzdCgiaXMgYSBub24tZW1wdHkgc3RyaW5nIiwgKCkgPT4gewogICAgZXhwZWN0KHR5cGVvZiBTeXN0ZW1TZXR0aW5ncy5zYW5lRGVmYXVsdFN5c3RlbVByb21wdCkudG9CZSgic3RyaW5nIik7CiAgICBleHBlY3QoU3lzdGVtU2V0dGluZ3Muc2FuZURlZmF1bHRTeXN0ZW1Qcm9tcHQubGVuZ3RoKS50b0JlR3JlYXRlclRoYW4oNTApOwogIH0pOwoKICB0ZXN0KCJtZW50aW9ucyB0aGF0IHRoZSBMTE0gaGFzIG5vIHdlYi90b29scyBhY2Nlc3MgaW4gdGhlIG5vcm1hbCBjaGF0IG1vZGUiLCAoKSA9PiB7CiAgICBjb25zdCBwcm9tcHQgPSBTeXN0ZW1TZXR0aW5ncy5zYW5lRGVmYXVsdFN5c3RlbVByb21wdC50b0xvd2VyQ2FzZSgpOwogICAgZXhwZWN0KHByb21wdCkudG9NYXRjaCgva2VpbmUuKndlcmt6ZXVnZXxrZWluLip3ZWJ6dWdyaWZmfGtlaW4uKmludGVybmV0Lyk7CiAgfSk7CgogIHRlc3QoIm1lbnRpb25zIHRoZSBAYWdlbnQgcHJlZml4IGFzIHRoZSB3YXkgdG8gZW5hYmxlIHRvb2xzIiwgKCkgPT4gewogICAgZXhwZWN0KFN5c3RlbVNldHRpbmdzLnNhbmVEZWZhdWx0U3lzdGVtUHJvbXB0KS50b01hdGNoKC9AYWdlbnQvKTsKICB9KTsKCiAgdGVzdCgibWVudGlvbnMgJ3dlYicgb3IgJ3dlcmt6ZXVnJyBvciAndG9vbCcgc28gdGhlIExMTSBrbm93cyBhYm91dCB0b29scyIsICgpID0+IHsKICAgIGNvbnN0IHByb21wdCA9IFN5c3RlbVNldHRpbmdzLnNhbmVEZWZhdWx0U3lzdGVtUHJvbXB0LnRvTG93ZXJDYXNlKCk7CiAgICBleHBlY3QocHJvbXB0KS50b01hdGNoKC93ZWJ8d2Vya3pldWd8dG9vbC8pOwogIH0pOwoKICB0ZXN0KCJyZW1haW5zIGluIEdlcm1hbiAocHJvamVjdCByZXF1aXJlbWVudCkiLCAoKSA9PiB7CiAgICBjb25zdCBwcm9tcHQgPSBTeXN0ZW1TZXR0aW5ncy5zYW5lRGVmYXVsdFN5c3RlbVByb21wdDsKICAgIGV4cGVjdChwcm9tcHQpLnRvTWF0Y2goL0FudHdvcnRlfFdlYnp1Z3JpZmZ8V2Vya3pldWd8TnV0emVyLyk7CiAgfSk7Cn0pOwo=
+// SPDX-License-Identifier: MIT
+// Regression test for the bug:
+//   User asks "hast du web zugriff?" without the @agent prefix.
+//   The LLM must NOT claim it has no web access at all — it must tell the
+//   user that tools are available via the @agent prefix.
+
+describe("SystemSettings.saneDefaultSystemPrompt", () => {
+  const { SystemSettings } = require("../../models/systemSettings");
+
+  test("is a non-empty string", () => {
+    expect(typeof SystemSettings.saneDefaultSystemPrompt).toBe("string");
+    expect(SystemSettings.saneDefaultSystemPrompt.length).toBeGreaterThan(50);
+  });
+
+  test("mentions that the LLM has no web/tools access in the normal chat mode", () => {
+    const prompt = SystemSettings.saneDefaultSystemPrompt.toLowerCase();
+    expect(prompt).toMatch(/keine.*werkzeuge|kein.*webzugriff|kein.*internet/);
+  });
+
+  test("mentions the @agent prefix as the way to enable tools", () => {
+    expect(SystemSettings.saneDefaultSystemPrompt).toMatch(/@agent/);
+  });
+
+  test("mentions 'web' or 'werkzeug' or 'tool' so the LLM knows about tools", () => {
+    const prompt = SystemSettings.saneDefaultSystemPrompt.toLowerCase();
+    expect(prompt).toMatch(/web|werkzeug|tool/);
+  });
+
+  test("remains in German (project requirement)", () => {
+    const prompt = SystemSettings.saneDefaultSystemPrompt;
+    expect(prompt).toMatch(/Antworte|Webzugriff|Werkzeug|Nutzer/);
+  });
+});

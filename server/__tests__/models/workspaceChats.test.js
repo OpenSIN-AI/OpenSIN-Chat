@@ -1,1 +1,218 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBUZXN0cyBmb3IgY29yZSBXb3Jrc3BhY2VDaGF0cyBtb2RlbCAoSXNzdWUgIzM4MSkKLy8gTm90ZTogVGhlIFdvcmtzcGFjZUNoYXRzIG1vZGVsIGV4cG9zZXMgYG5ld2AgKG5vdCBgY3JlYXRlYCkuCgpqZXN0Lm1vY2soIi4uLy4uL3V0aWxzL3ByaXNtYSIsICgpID0+IHsKICBjb25zdCBtb2NrV29ya3NwYWNlQ2hhdHMgPSB7CiAgICBjcmVhdGU6IGplc3QuZm4oKSwKICAgIGZpbmRNYW55OiBqZXN0LmZuKCksCiAgICBmaW5kRmlyc3Q6IGplc3QuZm4oKSwKICAgIGRlbGV0ZU1hbnk6IGplc3QuZm4oKSwKICAgIHVwZGF0ZTogamVzdC5mbigpLAogICAgY291bnQ6IGplc3QuZm4oKSwKICB9OwogIGNvbnN0IG1vY2tXb3Jrc3BhY2VUaHJlYWRzID0gewogICAgdXBkYXRlOiBqZXN0LmZuKCksCiAgfTsKICByZXR1cm4gewogICAgd29ya3NwYWNlX2NoYXRzOiBtb2NrV29ya3NwYWNlQ2hhdHMsCiAgICB3b3Jrc3BhY2VfdGhyZWFkczogbW9ja1dvcmtzcGFjZVRocmVhZHMsCiAgfTsKfSk7CgpqZXN0Lm1vY2soIi4uLy4uL3V0aWxzL2hlbHBlcnMvY2hhdC9yZXNwb25zZXMiLCAoKSA9PiAoewogIHNhZmVKU09OU3RyaW5naWZ5OiBqZXN0LmZuKChvYmopID0+IEpTT04uc3RyaW5naWZ5KG9iaikpLAp9KSk7CgpqZXN0Lm1vY2soIi4uLy4uL3V0aWxzL2xvZ2dlci9jb25zb2xlLmpzIiwgKCkgPT4gKHsKICBlcnJvcjogamVzdC5mbigpLAogIGluZm86IGplc3QuZm4oKSwKICB3YXJuOiBqZXN0LmZuKCksCn0pKTsKCmNvbnN0IHsgV29ya3NwYWNlQ2hhdHMgfSA9IHJlcXVpcmUoIi4uLy4uL21vZGVscy93b3Jrc3BhY2VDaGF0cyIpOwpjb25zdCBwcmlzbWEgPSByZXF1aXJlKCIuLi8uLi91dGlscy9wcmlzbWEiKTsKCmRlc2NyaWJlKCJXb3Jrc3BhY2VDaGF0cyBtb2RlbCIsICgpID0+IHsKICBhZnRlckVhY2goKCkgPT4gamVzdC5jbGVhckFsbE1vY2tzKCkpOwoKICAvLyDilIDilIAgV29ya3NwYWNlQ2hhdHMubmV3IChjcmVhdGUpIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIGRlc2NyaWJlKCJXb3Jrc3BhY2VDaGF0cy5uZXcgKGNyZWF0ZSkiLCAoKSA9PiB7CiAgICBpdCgiY3JlYXRlcyBhIG5ldyBjaGF0IHdpdGggdmFsaWQgZGF0YSIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3QgbW9ja0NoYXQgPSB7CiAgICAgICAgaWQ6IDEsCiAgICAgICAgd29ya3NwYWNlSWQ6IDEwLAogICAgICAgIHByb21wdDogIkhlbGxvLCB3aGF0IGlzIHRoaXM/IiwKICAgICAgICByZXNwb25zZTogJ3sidGV4dCI6IkhpIHRoZXJlISJ9JywKICAgICAgICB1c2VyX2lkOiBudWxsLAogICAgICAgIHRocmVhZF9pZDogbnVsbCwKICAgICAgICBpbmNsdWRlOiB0cnVlLAogICAgICB9OwogICAgICBwcmlzbWEud29ya3NwYWNlX2NoYXRzLmNyZWF0ZS5tb2NrUmVzb2x2ZWRWYWx1ZShtb2NrQ2hhdCk7CgogICAgICBjb25zdCB7IGNoYXQsIG1lc3NhZ2UgfSA9IGF3YWl0IFdvcmtzcGFjZUNoYXRzLm5ldyh7CiAgICAgICAgd29ya3NwYWNlSWQ6IDEwLAogICAgICAgIHByb21wdDogIkhlbGxvLCB3aGF0IGlzIHRoaXM/IiwKICAgICAgICByZXNwb25zZTogeyB0ZXh0OiAiSGkgdGhlcmUhIiB9LAogICAgICB9KTsKCiAgICAgIGV4cGVjdChtZXNzYWdlKS50b0JlTnVsbCgpOwogICAgICBleHBlY3QoY2hhdCkudG9FcXVhbChtb2NrQ2hhdCk7CiAgICAgIGV4cGVjdChwcmlzbWEud29ya3NwYWNlX2NoYXRzLmNyZWF0ZSkudG9IYXZlQmVlbkNhbGxlZFdpdGgoewogICAgICAgIGRhdGE6IGV4cGVjdC5vYmplY3RDb250YWluaW5nKHsKICAgICAgICAgIHdvcmtzcGFjZUlkOiAxMCwKICAgICAgICAgIHByb21wdDogIkhlbGxvLCB3aGF0IGlzIHRoaXM/IiwKICAgICAgICAgIHJlc3BvbnNlOiBleHBlY3QuYW55KFN0cmluZyksCiAgICAgICAgICBpbmNsdWRlOiB0cnVlLAogICAgICAgIH0pLAogICAgICB9KTsKICAgIH0pOwoKICAgIGl0KCJjcmVhdGVzIGEgY2hhdCB3aXRoIGEgdXNlciBhbmQgdGhyZWFkIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCBtb2NrQ2hhdCA9IHsKICAgICAgICBpZDogMiwKICAgICAgICB3b3Jrc3BhY2VJZDogNSwKICAgICAgICBwcm9tcHQ6ICJGb2xsb3cgdXAgcXVlc3Rpb24iLAogICAgICAgIHJlc3BvbnNlOiAneyJ0ZXh0IjoiQW5zd2VyIn0nLAogICAgICAgIHVzZXJfaWQ6IDMsCiAgICAgICAgdGhyZWFkX2lkOiA3LAogICAgICAgIGluY2x1ZGU6IHRydWUsCiAgICAgIH07CiAgICAgIHByaXNtYS53b3Jrc3BhY2VfY2hhdHMuY3JlYXRlLm1vY2tSZXNvbHZlZFZhbHVlKG1vY2tDaGF0KTsKICAgICAgcHJpc21hLndvcmtzcGFjZV90aHJlYWRzLnVwZGF0ZS5tb2NrUmVzb2x2ZWRWYWx1ZSh7fSk7CgogICAgICBjb25zdCB7IGNoYXQsIG1lc3NhZ2UgfSA9IGF3YWl0IFdvcmtzcGFjZUNoYXRzLm5ldyh7CiAgICAgICAgd29ya3NwYWNlSWQ6IDUsCiAgICAgICAgcHJvbXB0OiAiRm9sbG93IHVwIHF1ZXN0aW9uIiwKICAgICAgICByZXNwb25zZTogeyB0ZXh0OiAiQW5zd2VyIiB9LAogICAgICAgIHVzZXI6IHsgaWQ6IDMgfSwKICAgICAgICB0aHJlYWRJZDogNywKICAgICAgfSk7CgogICAgICBleHBlY3QobWVzc2FnZSkudG9CZU51bGwoKTsKICAgICAgZXhwZWN0KGNoYXQpLnRvRXF1YWwobW9ja0NoYXQpOwogICAgICBleHBlY3QocHJpc21hLndvcmtzcGFjZV9jaGF0cy5jcmVhdGUpLnRvSGF2ZUJlZW5DYWxsZWRXaXRoKHsKICAgICAgICBkYXRhOiBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7CiAgICAgICAgICB3b3Jrc3BhY2VJZDogNSwKICAgICAgICAgIHVzZXJfaWQ6IDMsCiAgICAgICAgICB0aHJlYWRfaWQ6IDcsCiAgICAgICAgfSksCiAgICAgIH0pOwogICAgICAvLyBUaHJlYWQncyBsYXN0VXBkYXRlZEF0IHNob3VsZCBiZSB1cGRhdGVkCiAgICAgIGV4cGVjdChwcmlzbWEud29ya3NwYWNlX3RocmVhZHMudXBkYXRlKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCh7CiAgICAgICAgd2hlcmU6IHsgaWQ6IDcgfSwKICAgICAgICBkYXRhOiBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7IGxhc3RVcGRhdGVkQXQ6IGV4cGVjdC5hbnkoRGF0ZSkgfSksCiAgICAgIH0pOwogICAgfSk7CgogICAgaXQoInJldHVybnMgbnVsbCBjaGF0IGFuZCBlcnJvciBtZXNzYWdlIG9uIHByaXNtYSBmYWlsdXJlIiwgYXN5bmMgKCkgPT4gewogICAgICBwcmlzbWEud29ya3NwYWNlX2NoYXRzLmNyZWF0ZS5tb2NrUmVqZWN0ZWRWYWx1ZShuZXcgRXJyb3IoIkRCIGVycm9yIikpOwoKICAgICAgY29uc3QgeyBjaGF0LCBtZXNzYWdlIH0gPSBhd2FpdCBXb3Jrc3BhY2VDaGF0cy5uZXcoewogICAgICAgIHdvcmtzcGFjZUlkOiAxLAogICAgICAgIHByb21wdDogInRlc3QiLAogICAgICB9KTsKCiAgICAgIGV4cGVjdChjaGF0KS50b0JlTnVsbCgpOwogICAgICBleHBlY3QobWVzc2FnZSkudG9CZSgiREIgZXJyb3IiKTsKICAgIH0pOwogIH0pOwoKICAvLyDilIDilIAgV29ya3NwYWNlQ2hhdHMuZm9yV29ya3NwYWNlIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIGRlc2NyaWJlKCJXb3Jrc3BhY2VDaGF0cy5mb3JXb3Jrc3BhY2UiLCAoKSA9PiB7CiAgICBpdCgibGlzdHMgY2hhdHMgZm9yIGEgd29ya3NwYWNlIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCBtb2NrQ2hhdHMgPSBbCiAgICAgICAgewogICAgICAgICAgaWQ6IDEsCiAgICAgICAgICBwcm9tcHQ6ICJRdWVzdGlvbiAxIiwKICAgICAgICAgIHJlc3BvbnNlOiAneyJ0ZXh0IjoiQW5zd2VyIDEifScsCiAgICAgICAgICBjcmVhdGVkQXQ6IG5ldyBEYXRlKCksCiAgICAgICAgICBmZWVkYmFja1Njb3JlOiBudWxsLAogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgaWQ6IDIsCiAgICAgICAgICBwcm9tcHQ6ICJRdWVzdGlvbiAyIiwKICAgICAgICAgIHJlc3BvbnNlOiAneyJ0ZXh0IjoiQW5zd2VyIDIifScsCiAgICAgICAgICBjcmVhdGVkQXQ6IG5ldyBEYXRlKCksCiAgICAgICAgICBmZWVkYmFja1Njb3JlOiBudWxsLAogICAgICAgIH0sCiAgICAgIF07CiAgICAgIHByaXNtYS53b3Jrc3BhY2VfY2hhdHMuZmluZE1hbnkubW9ja1Jlc29sdmVkVmFsdWUobW9ja0NoYXRzKTsKCiAgICAgIGNvbnN0IGNoYXRzID0gYXdhaXQgV29ya3NwYWNlQ2hhdHMuZm9yV29ya3NwYWNlKDEwKTsKCiAgICAgIGV4cGVjdChjaGF0cykudG9IYXZlTGVuZ3RoKDIpOwogICAgICBleHBlY3QoY2hhdHNbMF0ucHJvbXB0KS50b0JlKCJRdWVzdGlvbiAxIik7CiAgICAgIGV4cGVjdChjaGF0c1sxXS5wcm9tcHQpLnRvQmUoIlF1ZXN0aW9uIDIiKTsKICAgICAgZXhwZWN0KHByaXNtYS53b3Jrc3BhY2VfY2hhdHMuZmluZE1hbnkpLnRvSGF2ZUJlZW5DYWxsZWRXaXRoKAogICAgICAgIGV4cGVjdC5vYmplY3RDb250YWluaW5nKHsKICAgICAgICAgIHdoZXJlOiBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7CiAgICAgICAgICAgIHdvcmtzcGFjZUlkOiAxMCwKICAgICAgICAgICAgdGhyZWFkX2lkOiBudWxsLAogICAgICAgICAgICBhcGlfc2Vzc2lvbl9pZDogbnVsbCwKICAgICAgICAgICAgaW5jbHVkZTogdHJ1ZSwKICAgICAgICAgIH0pLAogICAgICAgIH0pLAogICAgICApOwogICAgfSk7CgogICAgaXQoInJldHVybnMgYW4gZW1wdHkgYXJyYXkgd2hlbiB3b3Jrc3BhY2VJZCBpcyBudWxsIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCBjaGF0cyA9IGF3YWl0IFdvcmtzcGFjZUNoYXRzLmZvcldvcmtzcGFjZShudWxsKTsKICAgICAgZXhwZWN0KGNoYXRzKS50b0VxdWFsKFtdKTsKICAgICAgZXhwZWN0KHByaXNtYS53b3Jrc3BhY2VfY2hhdHMuZmluZE1hbnkpLm5vdC50b0hhdmVCZWVuQ2FsbGVkKCk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyBhbiBlbXB0eSBhcnJheSBvbiBwcmlzbWEgZXJyb3IiLCBhc3luYyAoKSA9PiB7CiAgICAgIHByaXNtYS53b3Jrc3BhY2VfY2hhdHMuZmluZE1hbnkubW9ja1JlamVjdGVkVmFsdWUobmV3IEVycm9yKCJEQiBlcnJvciIpKTsKCiAgICAgIGNvbnN0IGNoYXRzID0gYXdhaXQgV29ya3NwYWNlQ2hhdHMuZm9yV29ya3NwYWNlKDEwKTsKICAgICAgZXhwZWN0KGNoYXRzKS50b0VxdWFsKFtdKTsKICAgIH0pOwoKICAgIGl0KCJyZXNwZWN0cyBhIGN1c3RvbSBvcmRlckJ5IiwgYXN5bmMgKCkgPT4gewogICAgICBwcmlzbWEud29ya3NwYWNlX2NoYXRzLmZpbmRNYW55Lm1vY2tSZXNvbHZlZFZhbHVlKFtdKTsKCiAgICAgIGF3YWl0IFdvcmtzcGFjZUNoYXRzLmZvcldvcmtzcGFjZSgxMCwgbnVsbCwgeyBpZDogImRlc2MiIH0pOwoKICAgICAgZXhwZWN0KHByaXNtYS53b3Jrc3BhY2VfY2hhdHMuZmluZE1hbnkpLnRvSGF2ZUJlZW5DYWxsZWRXaXRoKAogICAgICAgIGV4cGVjdC5vYmplY3RDb250YWluaW5nKHsKICAgICAgICAgIG9yZGVyQnk6IHsgaWQ6ICJkZXNjIiB9LAogICAgICAgIH0pLAogICAgICApOwogICAgfSk7CiAgfSk7CgogIC8vIOKUgOKUgCBXb3Jrc3BhY2VDaGF0cy5kZWxldGUg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgZGVzY3JpYmUoIldvcmtzcGFjZUNoYXRzLmRlbGV0ZSIsICgpID0+IHsKICAgIGl0KCJkZWxldGVzIGNoYXRzIG1hdGNoaW5nIHRoZSBjbGF1c2UgYW5kIHJldHVybnMgdHJ1ZSIsIGFzeW5jICgpID0+IHsKICAgICAgcHJpc21hLndvcmtzcGFjZV9jaGF0cy5kZWxldGVNYW55Lm1vY2tSZXNvbHZlZFZhbHVlKHsgY291bnQ6IDMgfSk7CgogICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBXb3Jrc3BhY2VDaGF0cy5kZWxldGUoeyB3b3Jrc3BhY2VJZDogMTAgfSk7CgogICAgICBleHBlY3QocmVzdWx0KS50b0JlKHRydWUpOwogICAgICBleHBlY3QocHJpc21hLndvcmtzcGFjZV9jaGF0cy5kZWxldGVNYW55KS50b0hhdmVCZWVuQ2FsbGVkV2l0aCh7CiAgICAgICAgd2hlcmU6IHsgd29ya3NwYWNlSWQ6IDEwIH0sCiAgICAgIH0pOwogICAgfSk7CgogICAgaXQoInJldHVybnMgZmFsc2Ugb24gcHJpc21hIGVycm9yIiwgYXN5bmMgKCkgPT4gewogICAgICBwcmlzbWEud29ya3NwYWNlX2NoYXRzLmRlbGV0ZU1hbnkubW9ja1JlamVjdGVkVmFsdWUoCiAgICAgICAgbmV3IEVycm9yKCJEQiBlcnJvciIpLAogICAgICApOwoKICAgICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgV29ya3NwYWNlQ2hhdHMuZGVsZXRlKHsgd29ya3NwYWNlSWQ6IDk5IH0pOwogICAgICBleHBlY3QocmVzdWx0KS50b0JlKGZhbHNlKTsKICAgIH0pOwoKICAgIGl0KCJ2ZXJpZmllcyBjaGF0cyBhcmUgZ29uZSBhZnRlciBkZWxldGlvbiIsIGFzeW5jICgpID0+IHsKICAgICAgcHJpc21hLndvcmtzcGFjZV9jaGF0cy5kZWxldGVNYW55Lm1vY2tSZXNvbHZlZFZhbHVlKHsgY291bnQ6IDEgfSk7CiAgICAgIC8vIEFmdGVyIGRlbGV0aW9uLCBmaW5kTWFueSByZXR1cm5zIGVtcHR5CiAgICAgIHByaXNtYS53b3Jrc3BhY2VfY2hhdHMuZmluZE1hbnkubW9ja1Jlc29sdmVkVmFsdWUoW10pOwoKICAgICAgYXdhaXQgV29ya3NwYWNlQ2hhdHMuZGVsZXRlKHsgd29ya3NwYWNlSWQ6IDEwIH0pOwogICAgICBjb25zdCByZW1haW5pbmcgPSBhd2FpdCBXb3Jrc3BhY2VDaGF0cy5mb3JXb3Jrc3BhY2UoMTApOwoKICAgICAgZXhwZWN0KHJlbWFpbmluZykudG9FcXVhbChbXSk7CiAgICB9KTsKICB9KTsKfSk7Cg==
+// SPDX-License-Identifier: MIT
+// Tests for core WorkspaceChats model (Issue #381)
+// Note: The WorkspaceChats model exposes `new` (not `create`).
+
+jest.mock("../../utils/prisma", () => {
+  const mockWorkspaceChats = {
+    create: jest.fn(),
+    findMany: jest.fn(),
+    findFirst: jest.fn(),
+    deleteMany: jest.fn(),
+    update: jest.fn(),
+    count: jest.fn(),
+  };
+  const mockWorkspaceThreads = {
+    update: jest.fn(),
+  };
+  return {
+    workspace_chats: mockWorkspaceChats,
+    workspace_threads: mockWorkspaceThreads,
+  };
+});
+
+jest.mock("../../utils/helpers/chat/responses", () => ({
+  safeJSONStringify: jest.fn((obj) => JSON.stringify(obj)),
+}));
+
+jest.mock("../../utils/logger/console.js", () => ({
+  error: jest.fn(),
+  info: jest.fn(),
+  warn: jest.fn(),
+}));
+
+const { WorkspaceChats } = require("../../models/workspaceChats");
+const prisma = require("../../utils/prisma");
+
+describe("WorkspaceChats model", () => {
+  afterEach(() => jest.clearAllMocks());
+
+  // ── WorkspaceChats.new (create) ─────────────────────────────────────
+  describe("WorkspaceChats.new (create)", () => {
+    it("creates a new chat with valid data", async () => {
+      const mockChat = {
+        id: 1,
+        workspaceId: 10,
+        prompt: "Hello, what is this?",
+        response: '{"text":"Hi there!"}',
+        user_id: null,
+        thread_id: null,
+        include: true,
+      };
+      prisma.workspace_chats.create.mockResolvedValue(mockChat);
+
+      const { chat, message } = await WorkspaceChats.new({
+        workspaceId: 10,
+        prompt: "Hello, what is this?",
+        response: { text: "Hi there!" },
+      });
+
+      expect(message).toBeNull();
+      expect(chat).toEqual(mockChat);
+      expect(prisma.workspace_chats.create).toHaveBeenCalledWith({
+        data: expect.objectContaining({
+          workspaceId: 10,
+          prompt: "Hello, what is this?",
+          response: expect.any(String),
+          include: true,
+        }),
+      });
+    });
+
+    it("creates a chat with a user and thread", async () => {
+      const mockChat = {
+        id: 2,
+        workspaceId: 5,
+        prompt: "Follow up question",
+        response: '{"text":"Answer"}',
+        user_id: 3,
+        thread_id: 7,
+        include: true,
+      };
+      prisma.workspace_chats.create.mockResolvedValue(mockChat);
+      prisma.workspace_threads.update.mockResolvedValue({});
+
+      const { chat, message } = await WorkspaceChats.new({
+        workspaceId: 5,
+        prompt: "Follow up question",
+        response: { text: "Answer" },
+        user: { id: 3 },
+        threadId: 7,
+      });
+
+      expect(message).toBeNull();
+      expect(chat).toEqual(mockChat);
+      expect(prisma.workspace_chats.create).toHaveBeenCalledWith({
+        data: expect.objectContaining({
+          workspaceId: 5,
+          user_id: 3,
+          thread_id: 7,
+        }),
+      });
+      // Thread's lastUpdatedAt should be updated
+      expect(prisma.workspace_threads.update).toHaveBeenCalledWith({
+        where: { id: 7 },
+        data: expect.objectContaining({ lastUpdatedAt: expect.any(Date) }),
+      });
+    });
+
+    it("returns null chat and error message on prisma failure", async () => {
+      prisma.workspace_chats.create.mockRejectedValue(new Error("DB error"));
+
+      const { chat, message } = await WorkspaceChats.new({
+        workspaceId: 1,
+        prompt: "test",
+      });
+
+      expect(chat).toBeNull();
+      expect(message).toBe("DB error");
+    });
+  });
+
+  // ── WorkspaceChats.forWorkspace ─────────────────────────────────────
+  describe("WorkspaceChats.forWorkspace", () => {
+    it("lists chats for a workspace", async () => {
+      const mockChats = [
+        {
+          id: 1,
+          prompt: "Question 1",
+          response: '{"text":"Answer 1"}',
+          createdAt: new Date(),
+          feedbackScore: null,
+        },
+        {
+          id: 2,
+          prompt: "Question 2",
+          response: '{"text":"Answer 2"}',
+          createdAt: new Date(),
+          feedbackScore: null,
+        },
+      ];
+      prisma.workspace_chats.findMany.mockResolvedValue(mockChats);
+
+      const chats = await WorkspaceChats.forWorkspace(10);
+
+      expect(chats).toHaveLength(2);
+      expect(chats[0].prompt).toBe("Question 1");
+      expect(chats[1].prompt).toBe("Question 2");
+      expect(prisma.workspace_chats.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: expect.objectContaining({
+            workspaceId: 10,
+            thread_id: null,
+            api_session_id: null,
+            include: true,
+          }),
+        }),
+      );
+    });
+
+    it("returns an empty array when workspaceId is null", async () => {
+      const chats = await WorkspaceChats.forWorkspace(null);
+      expect(chats).toEqual([]);
+      expect(prisma.workspace_chats.findMany).not.toHaveBeenCalled();
+    });
+
+    it("returns an empty array on prisma error", async () => {
+      prisma.workspace_chats.findMany.mockRejectedValue(new Error("DB error"));
+
+      const chats = await WorkspaceChats.forWorkspace(10);
+      expect(chats).toEqual([]);
+    });
+
+    it("respects a custom orderBy", async () => {
+      prisma.workspace_chats.findMany.mockResolvedValue([]);
+
+      await WorkspaceChats.forWorkspace(10, null, { id: "desc" });
+
+      expect(prisma.workspace_chats.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          orderBy: { id: "desc" },
+        }),
+      );
+    });
+  });
+
+  // ── WorkspaceChats.delete ───────────────────────────────────────────
+  describe("WorkspaceChats.delete", () => {
+    it("deletes chats matching the clause and returns true", async () => {
+      prisma.workspace_chats.deleteMany.mockResolvedValue({ count: 3 });
+
+      const result = await WorkspaceChats.delete({ workspaceId: 10 });
+
+      expect(result).toBe(true);
+      expect(prisma.workspace_chats.deleteMany).toHaveBeenCalledWith({
+        where: { workspaceId: 10 },
+      });
+    });
+
+    it("returns false on prisma error", async () => {
+      prisma.workspace_chats.deleteMany.mockRejectedValue(
+        new Error("DB error"),
+      );
+
+      const result = await WorkspaceChats.delete({ workspaceId: 99 });
+      expect(result).toBe(false);
+    });
+
+    it("verifies chats are gone after deletion", async () => {
+      prisma.workspace_chats.deleteMany.mockResolvedValue({ count: 1 });
+      // After deletion, findMany returns empty
+      prisma.workspace_chats.findMany.mockResolvedValue([]);
+
+      await WorkspaceChats.delete({ workspaceId: 10 });
+      const remaining = await WorkspaceChats.forWorkspace(10);
+
+      expect(remaining).toEqual([]);
+    });
+  });
+});
