@@ -1,1 +1,33 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVApleHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBTdWdnZXN0ZWRNZXNzYWdlcyh7CiAgc3VnZ2VzdGVkTWVzc2FnZXMgPSBbXSwKICBzZW5kQ29tbWFuZCwKfTogYW55KSB7CiAgaWYgKCFzdWdnZXN0ZWRNZXNzYWdlcz8ubGVuZ3RoKSByZXR1cm4gbnVsbDsKCiAgcmV0dXJuICgKICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIHctZnVsbCBtYXgtdy1bNjUwcHhdIG10LTYgcHgtNCI+CiAgICAgIHsoc3VnZ2VzdGVkTWVzc2FnZXMgYXMgYW55KS5tYXAoKG1zZywgaW5kZXgpID0+IHsKICAgICAgICBjb25zdCB0ZXh0ID0gbXNnLmhlYWRpbmc/LnRyaW0oKQogICAgICAgICAgPyBgJHttc2cuaGVhZGluZy50cmltKCl9ICR7bXNnLm1lc3NhZ2U/LnRyaW0oKSB8fCAiIn1gCiAgICAgICAgICA6IG1zZy5tZXNzYWdlPy50cmltKCkgfHwgIiI7CiAgICAgICAgaWYgKCF0ZXh0KSByZXR1cm4gbnVsbDsKCiAgICAgICAgcmV0dXJuICgKICAgICAgICAgIDxkaXYga2V5PXtgJHttc2cuaGVhZGluZyB8fCBtc2cubWVzc2FnZSB8fCAiIn0tJHtpbmRleH1gfT4KICAgICAgICAgICAge2luZGV4ID4gMCAmJiAoCiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImJvcmRlci10IGJvcmRlci16aW5jLTgwMCBsaWdodDpib3JkZXItdGhlbWUtY2hhdC1pbnB1dC1ib3JkZXIiIC8+CiAgICAgICAgICAgICl9CiAgICAgICAgICAgIDxidXR0b24KICAgICAgICAgICAgICB0eXBlPSJidXR0b24iCiAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4gc2VuZENvbW1hbmQoeyB0ZXh0LCBhdXRvU3VibWl0OiB0cnVlIH0pfQogICAgICAgICAgICAgIGNsYXNzTmFtZT0idy1mdWxsIHRleHQtbGVmdCBweS0zIHB4LTMgdGV4dC13aGl0ZS84MCB0ZXh0LXNtIGZvbnQtbm9ybWFsIGxlYWRpbmctNSBob3Zlcjp0ZXh0LXdoaXRlIHRyYW5zaXRpb24tY29sb3JzIGxpZ2h0OnRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IGxpZ2h0OmhvdmVyOnRleHQtdGhlbWUtdGV4dC1wcmltYXJ5LzgwIGhvdmVyOmJnLXppbmMtODAwIGxpZ2h0OmhvdmVyOmJnLWJsYWNrLzIwIHJvdW5kZWQtbGciCiAgICAgICAgICAgID4KICAgICAgICAgICAgICB7dGV4dH0KICAgICAgICAgICAgPC9idXR0b24+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICApOwogICAgICB9KX0KICAgIDwvZGl2PgogICk7Cn0K
+// SPDX-License-Identifier: MIT
+export default function SuggestedMessages({
+  suggestedMessages = [],
+  sendCommand,
+}: any) {
+  if (!suggestedMessages?.length) return null;
+
+  return (
+    <div className="flex flex-col w-full max-w-[650px] mt-6 px-4">
+      {(suggestedMessages as any).map((msg, index) => {
+        const text = msg.heading?.trim()
+          ? `${msg.heading.trim()} ${msg.message?.trim() || ""}`
+          : msg.message?.trim() || "";
+        if (!text) return null;
+
+        return (
+          <div key={`${msg.heading || msg.message || ""}-${index}`}>
+            {index > 0 && (
+              <div className="border-t border-zinc-800 light:border-theme-chat-input-border" />
+            )}
+            <button
+              type="button"
+              onClick={() => sendCommand({ text, autoSubmit: true })}
+              className="w-full text-left py-3 px-3 text-white/80 text-sm font-normal leading-5 hover:text-white transition-colors light:text-theme-text-primary light:hover:text-theme-text-primary/80 hover:bg-zinc-800 light:hover:bg-black/20 rounded-lg"
+            >
+              {text}
+            </button>
+          </div>
+        );
+      })}
+    </div>
+  );
+}

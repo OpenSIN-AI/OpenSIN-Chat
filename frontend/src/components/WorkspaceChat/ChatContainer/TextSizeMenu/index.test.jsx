@@ -1,1 +1,101 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyBkZXNjcmliZSwgaXQsIGV4cGVjdCwgdmksIGJlZm9yZUVhY2ggfSBmcm9tICJ2aXRlc3QiOwppbXBvcnQgeyByZW5kZXIsIHNjcmVlbiwgZmlyZUV2ZW50IH0gZnJvbSAiQHRlc3RpbmctbGlicmFyeS9yZWFjdCI7CmltcG9ydCBUZXh0U2l6ZU1lbnUgZnJvbSAiLi9pbmRleCI7CnZpLm1vY2soInJlYWN0LWkxOG5leHQiLCBhc3luYyAoKSA9PiB7CiAgY29uc3QgeyBjcmVhdGVJMThuTW9jayB9ID0gYXdhaXQgaW1wb3J0KCJAL3Rlc3QvaTE4bk1vY2siKTsKICByZXR1cm4gY3JlYXRlSTE4bk1vY2soKTsKfSk7Cgp2aS5tb2NrKCJAL2hvb2tzL3VzZUxvZ2luTW9kZSIsICgpID0+ICh7CiAgZGVmYXVsdDogKCkgPT4gbnVsbCwKfSkpOwoKY29uc3QgX19pc01vYmlsZSA9IHsgdmFsdWU6IGZhbHNlIH07CnZpLm1vY2soIkAvaG9va3MvdXNlSXNNb2JpbGVMYXlvdXQiLCAoKSA9PiAoewogIHVzZUlzTW9iaWxlTGF5b3V0OiAoKSA9PiBfX2lzTW9iaWxlLnZhbHVlLAp9KSk7Cgp2aS5tb2NrKCJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvU2xpZGVyc0hvcml6b250YWwiLCAoKSA9PiAoewogIGRlZmF1bHQ6IChwcm9wcykgPT4gPHN2ZyBkYXRhLXRlc3RpZD0ic2xpZGVycy1pY29uIiB7Li4ucHJvcHN9IC8+LAogIFNsaWRlcnNIb3Jpem9udGFsOiAocHJvcHMpID0+IDxzdmcgZGF0YS10ZXN0aWQ9InNsaWRlcnMtaWNvbiIgey4uLnByb3BzfSAvPiwKfSkpOwoKZGVzY3JpYmUoIlRleHRTaXplTWVudSIsICgpID0+IHsKICBiZWZvcmVFYWNoKCgpID0+IHsKICAgIF9faXNNb2JpbGUudmFsdWUgPSBmYWxzZTsKICAgIHdpbmRvdy5sb2NhbFN0b3JhZ2UuZ2V0SXRlbS5tb2NrUmV0dXJuVmFsdWUobnVsbCk7CiAgfSk7CgogIGl0KCJyZW5kZXJzIHRoZSB0b2dnbGUgYnV0dG9uIHdpdGggc2xpZGVyIGljb24iLCAoKSA9PiB7CiAgICByZW5kZXIoPFRleHRTaXplTWVudSAvPik7CiAgICBleHBlY3Qoc2NyZWVuLmdldEJ5VGVzdElkKCJzbGlkZXJzLWljb24iKSkudG9CZUluVGhlRG9jdW1lbnQoKTsKICB9KTsKCiAgaXQoImRvZXMgbm90IHNob3cgbWVudSBpbml0aWFsbHkiLCAoKSA9PiB7CiAgICByZW5kZXIoPFRleHRTaXplTWVudSAvPik7CiAgICBleHBlY3Qoc2NyZWVuLnF1ZXJ5QnlUZXh0KCJUZXh0IFNpemUiKSkubm90LnRvQmVJblRoZURvY3VtZW50KCk7CiAgfSk7CgogIGl0KCJvcGVucyBtZW51IG9uIGJ1dHRvbiBjbGljayIsICgpID0+IHsKICAgIHJlbmRlcig8VGV4dFNpemVNZW51IC8+KTsKICAgIGNvbnN0IGJ0biA9IHNjcmVlbi5nZXRCeVJvbGUoImJ1dHRvbiIpOwogICAgZmlyZUV2ZW50LmNsaWNrKGJ0bik7CiAgICBleHBlY3Qoc2NyZWVuLmdldEJ5VGV4dCgiVGV4dCBTaXplIikpLnRvQmVJblRoZURvY3VtZW50KCk7CiAgICBleHBlY3Qoc2NyZWVuLmdldEJ5VGV4dCgiU21hbGwiKSkudG9CZUluVGhlRG9jdW1lbnQoKTsKICAgIGV4cGVjdChzY3JlZW4uZ2V0QnlUZXh0KCJOb3JtYWwiKSkudG9CZUluVGhlRG9jdW1lbnQoKTsKICAgIGV4cGVjdChzY3JlZW4uZ2V0QnlUZXh0KCJMYXJnZSIpKS50b0JlSW5UaGVEb2N1bWVudCgpOwogIH0pOwoKICBpdCgiY2xvc2VzIG1lbnUgb24gc2Vjb25kIGJ1dHRvbiBjbGljayIsICgpID0+IHsKICAgIHJlbmRlcig8VGV4dFNpemVNZW51IC8+KTsKICAgIGNvbnN0IGJ0biA9IHNjcmVlbi5nZXRCeVJvbGUoImJ1dHRvbiIpOwogICAgZmlyZUV2ZW50LmNsaWNrKGJ0bik7CiAgICBleHBlY3Qoc2NyZWVuLmdldEJ5VGV4dCgiVGV4dCBTaXplIikpLnRvQmVJblRoZURvY3VtZW50KCk7CiAgICBmaXJlRXZlbnQuY2xpY2soYnRuKTsKICAgIGV4cGVjdChzY3JlZW4ucXVlcnlCeVRleHQoIlRleHQgU2l6ZSIpKS5ub3QudG9CZUluVGhlRG9jdW1lbnQoKTsKICB9KTsKCiAgaXQoImRlZmF1bHRzIHRvIG5vcm1hbCBzaXplIHdoZW4gbm8gbG9jYWxTdG9yYWdlIHZhbHVlIiwgKCkgPT4gewogICAgcmVuZGVyKDxUZXh0U2l6ZU1lbnUgLz4pOwogICAgZmlyZUV2ZW50LmNsaWNrKHNjcmVlbi5nZXRCeVJvbGUoImJ1dHRvbiIpKTsKICAgIGNvbnN0IG5vcm1hbEl0ZW0gPSBzY3JlZW4uZ2V0QnlUZXh0KCJOb3JtYWwiKS5jbG9zZXN0KCJkaXYiKTsKICAgIGV4cGVjdChub3JtYWxJdGVtLmNsYXNzTmFtZSkudG9Db250YWluKCJiZy16aW5jLTcwMCIpOwogIH0pOwoKICBpdCgidXNlcyBsb2NhbFN0b3JhZ2UgdmFsdWUgYXMgc2VsZWN0ZWQgc2l6ZSIsICgpID0+IHsKICAgIHdpbmRvdy5sb2NhbFN0b3JhZ2UuZ2V0SXRlbS5tb2NrUmV0dXJuVmFsdWUoImxhcmdlIik7CiAgICByZW5kZXIoPFRleHRTaXplTWVudSAvPik7CiAgICBmaXJlRXZlbnQuY2xpY2soc2NyZWVuLmdldEJ5Um9sZSgiYnV0dG9uIikpOwogICAgY29uc3QgbGFyZ2VJdGVtID0gc2NyZWVuLmdldEJ5VGV4dCgiTGFyZ2UiKS5jbG9zZXN0KCJkaXYiKTsKICAgIGV4cGVjdChsYXJnZUl0ZW0uY2xhc3NOYW1lKS50b0NvbnRhaW4oImJnLXppbmMtNzAwIik7CiAgfSk7CgogIGl0KCJzYXZlcyBzaXplIHRvIGxvY2FsU3RvcmFnZSBvbiBjbGljayIsICgpID0+IHsKICAgIHJlbmRlcig8VGV4dFNpemVNZW51IC8+KTsKICAgIGZpcmVFdmVudC5jbGljayhzY3JlZW4uZ2V0QnlSb2xlKCJidXR0b24iKSk7CiAgICBmaXJlRXZlbnQuY2xpY2soc2NyZWVuLmdldEJ5VGV4dCgiU21hbGwiKSk7CiAgICBleHBlY3Qod2luZG93LmxvY2FsU3RvcmFnZS5zZXRJdGVtKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgKICAgICAgIm9wZW5zaW5fdGV4dF9zaXplIiwKICAgICAgInNtYWxsIiwKICAgICk7CiAgfSk7CgogIGl0KCJkaXNwYXRjaGVzIHRleHRTaXplQ2hhbmdlIGV2ZW50IG9uIHNpemUgY2hhbmdlIiwgKCkgPT4gewogICAgY29uc3QgZGlzcGF0Y2hTcHkgPSB2aS5zcHlPbih3aW5kb3csICJkaXNwYXRjaEV2ZW50Iik7CiAgICByZW5kZXIoPFRleHRTaXplTWVudSAvPik7CiAgICBmaXJlRXZlbnQuY2xpY2soc2NyZWVuLmdldEJ5Um9sZSgiYnV0dG9uIikpOwogICAgZmlyZUV2ZW50LmNsaWNrKHNjcmVlbi5nZXRCeVRleHQoIkxhcmdlIikpOwogICAgZXhwZWN0KGRpc3BhdGNoU3B5KS50b0hhdmVCZWVuQ2FsbGVkKCk7CiAgICBjb25zdCBsYXN0Q2FsbCA9CiAgICAgIGRpc3BhdGNoU3B5Lm1vY2suY2FsbHNbZGlzcGF0Y2hTcHkubW9jay5jYWxscy5sZW5ndGggLSAxXVswXTsKICAgIGV4cGVjdChsYXN0Q2FsbC50eXBlKS50b0JlKCJ0ZXh0U2l6ZUNoYW5nZSIpOwogICAgZXhwZWN0KGxhc3RDYWxsLmRldGFpbCkudG9CZSgibGFyZ2UiKTsKICB9KTsKCiAgaXQoInJldHVybnMgbnVsbCBvbiBtb2JpbGUiLCAoKSA9PiB7CiAgICBfX2lzTW9iaWxlLnZhbHVlID0gdHJ1ZTsKICAgIGNvbnN0IHsgY29udGFpbmVyIH0gPSByZW5kZXIoPFRleHRTaXplTWVudSAvPik7CiAgICBleHBlY3QoY29udGFpbmVyLmlubmVySFRNTCkudG9CZSgiIik7CiAgfSk7Cn0pOwo=
+// SPDX-License-Identifier: MIT
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { render, screen, fireEvent } from "@testing-library/react";
+import TextSizeMenu from "./index";
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
+
+vi.mock("@/hooks/useLoginMode", () => ({
+  default: () => null,
+}));
+
+const __isMobile = { value: false };
+vi.mock("@/hooks/useIsMobileLayout", () => ({
+  useIsMobileLayout: () => __isMobile.value,
+}));
+
+vi.mock("@phosphor-icons/react/dist/csr/SlidersHorizontal", () => ({
+  default: (props) => <svg data-testid="sliders-icon" {...props} />,
+  SlidersHorizontal: (props) => <svg data-testid="sliders-icon" {...props} />,
+}));
+
+describe("TextSizeMenu", () => {
+  beforeEach(() => {
+    __isMobile.value = false;
+    window.localStorage.getItem.mockReturnValue(null);
+  });
+
+  it("renders the toggle button with slider icon", () => {
+    render(<TextSizeMenu />);
+    expect(screen.getByTestId("sliders-icon")).toBeInTheDocument();
+  });
+
+  it("does not show menu initially", () => {
+    render(<TextSizeMenu />);
+    expect(screen.queryByText("Text Size")).not.toBeInTheDocument();
+  });
+
+  it("opens menu on button click", () => {
+    render(<TextSizeMenu />);
+    const btn = screen.getByRole("button");
+    fireEvent.click(btn);
+    expect(screen.getByText("Text Size")).toBeInTheDocument();
+    expect(screen.getByText("Small")).toBeInTheDocument();
+    expect(screen.getByText("Normal")).toBeInTheDocument();
+    expect(screen.getByText("Large")).toBeInTheDocument();
+  });
+
+  it("closes menu on second button click", () => {
+    render(<TextSizeMenu />);
+    const btn = screen.getByRole("button");
+    fireEvent.click(btn);
+    expect(screen.getByText("Text Size")).toBeInTheDocument();
+    fireEvent.click(btn);
+    expect(screen.queryByText("Text Size")).not.toBeInTheDocument();
+  });
+
+  it("defaults to normal size when no localStorage value", () => {
+    render(<TextSizeMenu />);
+    fireEvent.click(screen.getByRole("button"));
+    const normalItem = screen.getByText("Normal").closest("div");
+    expect(normalItem.className).toContain("bg-zinc-700");
+  });
+
+  it("uses localStorage value as selected size", () => {
+    window.localStorage.getItem.mockReturnValue("large");
+    render(<TextSizeMenu />);
+    fireEvent.click(screen.getByRole("button"));
+    const largeItem = screen.getByText("Large").closest("div");
+    expect(largeItem.className).toContain("bg-zinc-700");
+  });
+
+  it("saves size to localStorage on click", () => {
+    render(<TextSizeMenu />);
+    fireEvent.click(screen.getByRole("button"));
+    fireEvent.click(screen.getByText("Small"));
+    expect(window.localStorage.setItem).toHaveBeenCalledWith(
+      "opensin_text_size",
+      "small",
+    );
+  });
+
+  it("dispatches textSizeChange event on size change", () => {
+    const dispatchSpy = vi.spyOn(window, "dispatchEvent");
+    render(<TextSizeMenu />);
+    fireEvent.click(screen.getByRole("button"));
+    fireEvent.click(screen.getByText("Large"));
+    expect(dispatchSpy).toHaveBeenCalled();
+    const lastCall =
+      dispatchSpy.mock.calls[dispatchSpy.mock.calls.length - 1][0];
+    expect(lastCall.type).toBe("textSizeChange");
+    expect(lastCall.detail).toBe("large");
+  });
+
+  it("returns null on mobile", () => {
+    __isMobile.value = true;
+    const { container } = render(<TextSizeMenu />);
+    expect(container.innerHTML).toBe("");
+  });
+});

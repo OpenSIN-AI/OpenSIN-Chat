@@ -1,1 +1,62 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyBGcmFnbWVudCB9IGZyb20gInJlYWN0IjsKaW1wb3J0IHsgQ2FyZXRMZWZ0IH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL0NhcmV0TGVmdCI7CmltcG9ydCB7IEluZm8gfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvSW5mbyI7CmltcG9ydCB7IFggfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvWCI7CmltcG9ydCB7IGRlY29kZSBhcyBIVE1MRGVjb2RlIH0gZnJvbSAiaGUiOwppbXBvcnQgeyB0cnVuY2F0ZSB9IGZyb20gIkAvdXRpbHMvc3RyaW5ncyI7CmltcG9ydCB7IHVzZVRyYW5zbGF0aW9uIH0gZnJvbSAicmVhY3QtaTE4bmV4dCI7CmltcG9ydCB7IG9taXRDaHVua0hlYWRlciB9IGZyb20gIi4uLy4uLy4uL0NoYXRIaXN0b3J5L0NpdGF0aW9uIjsKaW1wb3J0IHsgdG9QZXJjZW50U3RyaW5nIH0gZnJvbSAiQC91dGlscy9udW1iZXJzIjsKCmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIFNvdXJjZURldGFpbFZpZXcoeyBzb3VyY2UsIG9uQmFjaywgb25DbG9zZSB9OiBhbnkpIHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgLy8gR3VhcmQ6IHNvdXJjZS5jaHVua3MgbWF5IGJlIHVuZGVmaW5lZCBmb3IgbWFsZm9ybWVkIGNpdGF0aW9uczsgd2l0aG91dAogIC8vIHRoaXMgZ3VhcmQgdGhlIC5tYXAoKSBiZWxvdyB0aHJvd3MgYSBUeXBlRXJyb3IuCiAgY29uc3QgY2h1bmtzID0gQXJyYXkuaXNBcnJheShzb3VyY2U/LmNodW5rcykgPyBzb3VyY2UuY2h1bmtzIDogW107CiAgcmV0dXJuICgKICAgIDw+CiAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWJldHdlZW4iPgogICAgICAgIDxidXR0b24KICAgICAgICAgIG9uQ2xpY2s9e29uQmFja30KICAgICAgICAgIHR5cGU9ImJ1dHRvbiIKICAgICAgICAgIGNsYXNzTmFtZT0idGV4dC13aGl0ZS82MCBsaWdodDp0ZXh0LXNsYXRlLTQwMCBob3Zlcjp0ZXh0LXdoaXRlIGxpZ2h0OmhvdmVyOnRleHQtc2xhdGUtOTAwIHRyYW5zaXRpb24tY29sb3JzIgogICAgICAgID4KICAgICAgICAgIDxDYXJldExlZnQgc2l6ZT17MjB9IHdlaWdodD0iYm9sZCIgLz4KICAgICAgICA8L2J1dHRvbj4KICAgICAgICA8cCBjbGFzc05hbWU9ImZvbnQtc2VtaWJvbGQgdGV4dC1iYXNlIGxlYWRpbmctNiB0ZXh0LXdoaXRlIGxpZ2h0OnRleHQtc2xhdGUtOTAwIHRydW5jYXRlIHB4LTIiPgogICAgICAgICAge3RydW5jYXRlKHNvdXJjZT8udGl0bGUgPz8gIiIsIDMwKX0KICAgICAgICA8L3A+CiAgICAgICAgPGJ1dHRvbgogICAgICAgICAgb25DbGljaz17b25DbG9zZX0KICAgICAgICAgIHR5cGU9ImJ1dHRvbiIKICAgICAgICAgIGNsYXNzTmFtZT0idGV4dC13aGl0ZS82MCBsaWdodDp0ZXh0LXNsYXRlLTQwMCBob3Zlcjp0ZXh0LXdoaXRlIGxpZ2h0OmhvdmVyOnRleHQtc2xhdGUtOTAwIHRyYW5zaXRpb24tY29sb3JzIgogICAgICAgID4KICAgICAgICAgIDxYIHNpemU9ezE2fSB3ZWlnaHQ9ImJvbGQiIC8+CiAgICAgICAgPC9idXR0b24+CiAgICAgIDwvZGl2PgogICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCBvdmVyZmxvdy15LWF1dG8gbm8tc2Nyb2xsIj4KICAgICAgICB7KGNodW5rcyBhcyBhbnkpLm1hcCgoeyB0ZXh0LCBzY29yZSB9LCBpZHgpID0+ICgKICAgICAgICAgIDxGcmFnbWVudCBrZXk9e2BjaHVuay0ke3RleHQ/LnNsaWNlKDAsIDMwKSB8fCAiIn0tJHtpZHh9YH0+CiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIGdhcC15LTEgcHktNCI+CiAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXNtIGxlYWRpbmctWzIwcHhdIHRleHQtd2hpdGUgbGlnaHQ6dGV4dC1zbGF0ZS05MDAiPgogICAgICAgICAgICAgICAge0hUTUxEZWNvZGUob21pdENodW5rSGVhZGVyKHRleHQpKX0KICAgICAgICAgICAgICA8L3A+CiAgICAgICAgICAgICAgeyEhc2NvcmUgJiYgKAogICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIHRleHQteHMgdGV4dC13aGl0ZS82MCBsaWdodDp0ZXh0LXNsYXRlLTUwMCBnYXAteC0xIj4KICAgICAgICAgICAgICAgICAgPEluZm8gc2l6ZT17MTR9IC8+CiAgICAgICAgICAgICAgICAgIDxwPgogICAgICAgICAgICAgICAgICAgIHt0b1BlcmNlbnRTdHJpbmcoc2NvcmUpfSB7dCgiY2hhdF93aW5kb3cuc2ltaWxhcml0eV9tYXRjaCIpfQogICAgICAgICAgICAgICAgICA8L3A+CiAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICApfQogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAge2lkeCAhPT0gY2h1bmtzLmxlbmd0aCAtIDEgJiYgKAogICAgICAgICAgICAgIDxociBjbGFzc05hbWU9ImJvcmRlci16aW5jLTcwMCBsaWdodDpib3JkZXItc2xhdGUtMzAwIiAvPgogICAgICAgICAgICApfQogICAgICAgICAgPC9GcmFnbWVudD4KICAgICAgICApKX0KICAgICAgPC9kaXY+CiAgICA8Lz4KICApOwp9Cg==
+// SPDX-License-Identifier: MIT
+import { Fragment } from "react";
+import { CaretLeft } from "@phosphor-icons/react/dist/csr/CaretLeft";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { decode as HTMLDecode } from "he";
+import { truncate } from "@/utils/strings";
+import { useTranslation } from "react-i18next";
+import { omitChunkHeader } from "../../../ChatHistory/Citation";
+import { toPercentString } from "@/utils/numbers";
+
+export default function SourceDetailView({ source, onBack, onClose }: any) {
+  const { t } = useTranslation();
+  // Guard: source.chunks may be undefined for malformed citations; without
+  // this guard the .map() below throws a TypeError.
+  const chunks = Array.isArray(source?.chunks) ? source.chunks : [];
+  return (
+    <>
+      <div className="flex items-center justify-between">
+        <button
+          onClick={onBack}
+          type="button"
+          className="text-white/60 light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors"
+        >
+          <CaretLeft size={20} weight="bold" />
+        </button>
+        <p className="font-semibold text-base leading-6 text-white light:text-slate-900 truncate px-2">
+          {truncate(source?.title ?? "", 30)}
+        </p>
+        <button
+          onClick={onClose}
+          type="button"
+          className="text-white/60 light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors"
+        >
+          <X size={16} weight="bold" />
+        </button>
+      </div>
+      <div className="flex flex-col overflow-y-auto no-scroll">
+        {(chunks as any).map(({ text, score }, idx) => (
+          <Fragment key={`chunk-${text?.slice(0, 30) || ""}-${idx}`}>
+            <div className="flex flex-col gap-y-1 py-4">
+              <p className="text-sm leading-[20px] text-white light:text-slate-900">
+                {HTMLDecode(omitChunkHeader(text))}
+              </p>
+              {!!score && (
+                <div className="flex items-center text-xs text-white/60 light:text-slate-500 gap-x-1">
+                  <Info size={14} />
+                  <p>
+                    {toPercentString(score)} {t("chat_window.similarity_match")}
+                  </p>
+                </div>
+              )}
+            </div>
+            {idx !== chunks.length - 1 && (
+              <hr className="border-zinc-700 light:border-slate-300" />
+            )}
+          </Fragment>
+        ))}
+      </div>
+    </>
+  );
+}
