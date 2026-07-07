@@ -1,1 +1,224 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVApjb25zdCBjb25zb2xlTG9nZ2VyID0gcmVxdWlyZSgiLi4vdXRpbHMvbG9nZ2VyL2NvbnNvbGUuanMiKTsKCmNvbnN0IEltcG9ydGVkUGx1Z2luID0gcmVxdWlyZSgiLi4vdXRpbHMvYWdlbnRzL2ltcG9ydGVkIik7Cgpjb25zdCBIVUJfVElNRU9VVF9NUyA9IDE1XzAwMDsKCi8qKgogKiBBbiBpbnRlcmZhY2UgdG8gdGhlIE9wZW5TSU4gQ2hhdCBDb21tdW5pdHkgSHViIGV4dGVybmFsIEFQSS4KICovCmNvbnN0IENvbW11bml0eUh1YiA9IHsKICBpbXBvcnRQcmVmaXg6ICJhbGxtLWNvbW11bml0eS1pZCIsCiAgYXBpQmFzZToKICAgIHByb2Nlc3MuZW52Lk5PREVfRU5WID09PSAiZGV2ZWxvcG1lbnQiCiAgICAgID8gImh0dHA6Ly8xMjcuMC4wLjE6NTAwMS9vcGVuc2luLWh1Yi91cy1jZW50cmFsMS9leHRlcm5hbC92MSIKICAgICAgOiAiaHR0cHM6Ly9odWIuZXh0ZXJuYWwub3BlbnNpbi5jb20vdjEiLAogIHN1cHBvcnRlZFN0YXRpY0l0ZW1UeXBlczogWyJzeXN0ZW0tcHJvbXB0IiwgImFnZW50LWZsb3ciLCAic2xhc2gtY29tbWFuZCJdLAoKICAvKioKICAgKiBWYWxpZGF0ZSBhbiBpbXBvcnQgSUQgYW5kIHJldHVybiB0aGUgZW50aXR5IHR5cGUgYW5kIElELgogICAqIEBwYXJhbSB7c3RyaW5nfSBpbXBvcnRJZCAtIFRoZSBpbXBvcnQgSUQgdG8gdmFsaWRhdGUuCiAgICogQHJldHVybnMge3tlbnRpdHlUeXBlOiBzdHJpbmcgfCBudWxsLCBlbnRpdHlJZDogc3RyaW5nIHwgbnVsbH19CiAgICovCiAgdmFsaWRhdGVJbXBvcnRJZDogZnVuY3Rpb24gKGltcG9ydElkKSB7CiAgICBpZiAoCiAgICAgICFpbXBvcnRJZCB8fAogICAgICAhaW1wb3J0SWQuc3RhcnRzV2l0aCh0aGlzLmltcG9ydFByZWZpeCkgfHwKICAgICAgaW1wb3J0SWQuc3BsaXQoIjoiKS5sZW5ndGggIT09IDMKICAgICkKICAgICAgcmV0dXJuIHsgZW50aXR5VHlwZTogbnVsbCwgZW50aXR5SWQ6IG51bGwgfTsKICAgIGNvbnN0IFtfLCBlbnRpdHlUeXBlLCBlbnRpdHlJZF0gPSBpbXBvcnRJZC5zcGxpdCgiOiIpOwogICAgaWYgKCFlbnRpdHlUeXBlIHx8ICFlbnRpdHlJZCkgcmV0dXJuIHsgZW50aXR5VHlwZTogbnVsbCwgZW50aXR5SWQ6IG51bGwgfTsKICAgIHJldHVybiB7CiAgICAgIGVudGl0eVR5cGU6IFN0cmluZyhlbnRpdHlUeXBlKS50cmltKCksCiAgICAgIGVudGl0eUlkOiBTdHJpbmcoZW50aXR5SWQpLnRyaW0oKSwKICAgIH07CiAgfSwKCiAgLyoqCiAgICogRmV0Y2ggdGhlIGV4cGxvcmUgaXRlbXMgZnJvbSB0aGUgY29tbXVuaXR5IGh1YiB0aGF0IGFyZSBwdWJsaWNseSBhdmFpbGFibGUuCiAgICogQHJldHVybnMge1Byb21pc2U8e2FnZW50U2tpbGxzOiB7aXRlbXM6IFtdLCBoYXNNb3JlOiBib29sZWFuLCB0b3RhbENvdW50OiBudW1iZXJ9LCBzeXN0ZW1Qcm9tcHRzOiB7aXRlbXM6IFtdLCBoYXNNb3JlOiBib29sZWFuLCB0b3RhbENvdW50OiBudW1iZXJ9LCBzbGFzaENvbW1hbmRzOiB7aXRlbXM6IFtdLCBoYXNNb3JlOiBib29sZWFuLCB0b3RhbENvdW50OiBudW1iZXJ9fT59CiAgICovCiAgZmV0Y2hFeHBsb3JlSXRlbXM6IGFzeW5jIGZ1bmN0aW9uICgpIHsKICAgIHJldHVybiBhd2FpdCBmZXRjaChgJHt0aGlzLmFwaUJhc2V9L2V4cGxvcmVgLCB7CiAgICAgIG1ldGhvZDogIkdFVCIsCiAgICAgIHNpZ25hbDogQWJvcnRTaWduYWwudGltZW91dChIVUJfVElNRU9VVF9NUyksCiAgICB9KQogICAgICAudGhlbigocmVzcG9uc2UpID0+IHJlc3BvbnNlLmpzb24oKSkKICAgICAgLmNhdGNoKChlcnJvcikgPT4gewogICAgICAgIGNvbnNvbGVMb2dnZXIuZXJyb3IoIkVycm9yIGZldGNoaW5nIGV4cGxvcmUgaXRlbXM6IiwgZXJyb3IpOwogICAgICAgIHJldHVybiB7CiAgICAgICAgICBhZ2VudFNraWxsczogewogICAgICAgICAgICBpdGVtczogW10sCiAgICAgICAgICAgIGhhc01vcmU6IGZhbHNlLAogICAgICAgICAgICB0b3RhbENvdW50OiAwLAogICAgICAgICAgfSwKICAgICAgICAgIHN5c3RlbVByb21wdHM6IHsKICAgICAgICAgICAgaXRlbXM6IFtdLAogICAgICAgICAgICBoYXNNb3JlOiBmYWxzZSwKICAgICAgICAgICAgdG90YWxDb3VudDogMCwKICAgICAgICAgIH0sCiAgICAgICAgICBzbGFzaENvbW1hbmRzOiB7CiAgICAgICAgICAgIGl0ZW1zOiBbXSwKICAgICAgICAgICAgaGFzTW9yZTogZmFsc2UsCiAgICAgICAgICAgIHRvdGFsQ291bnQ6IDAsCiAgICAgICAgICB9LAogICAgICAgIH07CiAgICAgIH0pOwogIH0sCgogIC8qKgogICAqIEZldGNoIGEgYnVuZGxlIGl0ZW0gZnJvbSB0aGUgY29tbXVuaXR5IGh1Yi4KICAgKiBCdW5kbGUgaXRlbXMgYXJlIGVudGl0aWVzIHRoYXQgcmVxdWlyZSBhIGRvd25sb2FkVVJMIHRvIGJlIGZldGNoZWQgZnJvbSB0aGUgY29tbXVuaXR5IGh1Yi4KICAgKiBzbyB3ZSBjYW4gdW56aXAgYW5kIGltcG9ydCB0aGVtIHRvIHRoZSBPcGVuU0lOIENoYXQgaW5zdGFuY2UuCiAgICogQHBhcmFtIHtzdHJpbmd9IGltcG9ydElkIC0gVGhlIGltcG9ydCBJRCBvZiB0aGUgaXRlbS4KICAgKiBAcmV0dXJucyB7UHJvbWlzZTx7dXJsOiBzdHJpbmcgfCBudWxsLCBpdGVtOiBvYmplY3QgfCBudWxsLCBlcnJvcjogc3RyaW5nIHwgbnVsbH0+fQogICAqLwogIGdldEJ1bmRsZUl0ZW06IGFzeW5jIGZ1bmN0aW9uIChpbXBvcnRJZCkgewogICAgY29uc3QgeyBlbnRpdHlUeXBlLCBlbnRpdHlJZCB9ID0gdGhpcy52YWxpZGF0ZUltcG9ydElkKGltcG9ydElkKTsKICAgIGlmICghZW50aXR5VHlwZSB8fCAhZW50aXR5SWQpCiAgICAgIHJldHVybiB7IGl0ZW06IG51bGwsIGVycm9yOiAiSW52YWxpZCBpbXBvcnQgSUQiIH07CgogICAgY29uc3QgeyBTeXN0ZW1TZXR0aW5ncyB9ID0gcmVxdWlyZSgiLi9zeXN0ZW1TZXR0aW5ncyIpOwogICAgY29uc3QgeyBjb25uZWN0aW9uS2V5IH0gPSBhd2FpdCBTeXN0ZW1TZXR0aW5ncy5odWJTZXR0aW5ncygpOwogICAgY29uc3QgeyB1cmwsIGl0ZW0sIGVycm9yIH0gPSBhd2FpdCBmZXRjaCgKICAgICAgYCR7dGhpcy5hcGlCYXNlfS8ke2VudGl0eVR5cGV9LyR7ZW50aXR5SWR9L3B1bGxgLAogICAgICB7CiAgICAgICAgbWV0aG9kOiAiR0VUIiwKICAgICAgICBoZWFkZXJzOiB7CiAgICAgICAgICAiQ29udGVudC1UeXBlIjogImFwcGxpY2F0aW9uL2pzb24iLAogICAgICAgICAgLi4uKGNvbm5lY3Rpb25LZXkKICAgICAgICAgICAgPyB7IEF1dGhvcml6YXRpb246IGBCZWFyZXIgJHtjb25uZWN0aW9uS2V5fWAgfQogICAgICAgICAgICA6IHt9KSwKICAgICAgICB9LAogICAgICAgIHNpZ25hbDogQWJvcnRTaWduYWwudGltZW91dChIVUJfVElNRU9VVF9NUyksCiAgICAgIH0sCiAgICApCiAgICAgIC50aGVuKChyZXNwb25zZSkgPT4gcmVzcG9uc2UuanNvbigpKQogICAgICAuY2F0Y2goKGVycm9yKSA9PiB7CiAgICAgICAgY29uc29sZUxvZ2dlci5lcnJvcigKICAgICAgICAgIGBFcnJvciBmZXRjaGluZyBidW5kbGUgaXRlbSBmb3IgaW1wb3J0IElEICR7aW1wb3J0SWR9OmAsCiAgICAgICAgICBlcnJvciwKICAgICAgICApOwogICAgICAgIHJldHVybiB7IHVybDogbnVsbCwgaXRlbTogbnVsbCwgZXJyb3I6IGVycm9yLm1lc3NhZ2UgfTsKICAgICAgfSk7CiAgICByZXR1cm4geyB1cmwsIGl0ZW0sIGVycm9yIH07CiAgfSwKCiAgLyoqCiAgICogQXBwbHkgYW4gaXRlbSB0byB0aGUgT3BlblNJTiBDaGF0IGluc3RhbmNlLiBVc2VkIGZvciBzaW1wbGUgaXRlbXMgbGlrZSBzbGFzaCBjb21tYW5kcyBhbmQgc3lzdGVtIHByb21wdHMuCiAgICogQHBhcmFtIHtvYmplY3R9IGl0ZW0gLSBUaGUgaXRlbSB0byBhcHBseS4KICAgKiBAcGFyYW0ge29iamVjdH0gb3B0aW9ucyAtIEFkZGl0aW9uYWwgb3B0aW9ucyBmb3IgYXBwbHlpbmcgdGhlIGl0ZW0uCiAgICogQHBhcmFtIHtvYmplY3R8bnVsbH0gb3B0aW9ucy5jdXJyZW50VXNlciAtIFRoZSBjdXJyZW50IHVzZXIgb2JqZWN0LgogICAqIEByZXR1cm5zIHtQcm9taXNlPHtzdWNjZXNzOiBib29sZWFuLCBlcnJvcjogc3RyaW5nIHwgbnVsbH0+fQogICAqLwogIGFwcGx5SXRlbTogYXN5bmMgZnVuY3Rpb24gKGl0ZW0sIG9wdGlvbnMgPSB7fSkgewogICAgaWYgKCFpdGVtKSByZXR1cm4geyBzdWNjZXNzOiBmYWxzZSwgZXJyb3I6ICJJdGVtIGlzIHJlcXVpcmVkIiB9OwoKICAgIGlmIChpdGVtLml0ZW1UeXBlID09PSAic3lzdGVtLXByb21wdCIpIHsKICAgICAgaWYgKCFvcHRpb25zPy53b3Jrc3BhY2VTbHVnKQogICAgICAgIHJldHVybiB7IHN1Y2Nlc3M6IGZhbHNlLCBlcnJvcjogIldvcmtzcGFjZSBzbHVnIGlzIHJlcXVpcmVkIiB9OwoKICAgICAgY29uc3QgeyBXb3Jrc3BhY2UgfSA9IHJlcXVpcmUoIi4vd29ya3NwYWNlIik7CiAgICAgIGNvbnN0IHdvcmtzcGFjZSA9IGF3YWl0IFdvcmtzcGFjZS5nZXQoewogICAgICAgIHNsdWc6IFN0cmluZyhvcHRpb25zLndvcmtzcGFjZVNsdWcpLAogICAgICB9KTsKICAgICAgaWYgKCF3b3Jrc3BhY2UpIHJldHVybiB7IHN1Y2Nlc3M6IGZhbHNlLCBlcnJvcjogIldvcmtzcGFjZSBub3QgZm91bmQiIH07CiAgICAgIGF3YWl0IFdvcmtzcGFjZS51cGRhdGUod29ya3NwYWNlLmlkLCB7IG9wZW5BaVByb21wdDogaXRlbS5wcm9tcHQgfSk7CiAgICAgIHJldHVybiB7IHN1Y2Nlc3M6IHRydWUsIGVycm9yOiBudWxsIH07CiAgICB9CgogICAgaWYgKGl0ZW0uaXRlbVR5cGUgPT09ICJzbGFzaC1jb21tYW5kIikgewogICAgICBjb25zdCB7IFNsYXNoQ29tbWFuZFByZXNldHMgfSA9IHJlcXVpcmUoIi4vc2xhc2hDb21tYW5kc1ByZXNldHMiKTsKICAgICAgYXdhaXQgU2xhc2hDb21tYW5kUHJlc2V0cy5jcmVhdGUob3B0aW9ucz8uY3VycmVudFVzZXI/LmlkLCB7CiAgICAgICAgY29tbWFuZDogU2xhc2hDb21tYW5kUHJlc2V0cy5mb3JtYXRDb21tYW5kKFN0cmluZyhpdGVtLmNvbW1hbmQpKSwKICAgICAgICBwcm9tcHQ6IFN0cmluZyhpdGVtLnByb21wdCksCiAgICAgICAgZGVzY3JpcHRpb246IFN0cmluZyhpdGVtLmRlc2NyaXB0aW9uKSwKICAgICAgfSk7CiAgICAgIHJldHVybiB7IHN1Y2Nlc3M6IHRydWUsIGVycm9yOiBudWxsIH07CiAgICB9CgogICAgcmV0dXJuIHsKICAgICAgc3VjY2VzczogZmFsc2UsCiAgICAgIGVycm9yOiAiVW5zdXBwb3J0ZWQgaXRlbSB0eXBlLiBOb3RoaW5nIHRvIGFwcGx5LiIsCiAgICB9OwogIH0sCgogIC8qKgogICAqIEltcG9ydCBhIGJ1bmRsZSBpdGVtIHRvIHRoZSBPcGVuU0lOIENoYXQgaW5zdGFuY2UgYnkgZG93bmxvYWRpbmcgdGhlIHppcCBmaWxlIGFuZCBpbXBvcnRpbmcgaXQuCiAgICogb3Igd2hhdGV2ZXIgdGhlIGl0ZW0gdHlwZSByZXF1aXJlcy4KICAgKiBAcGFyYW0ge3t1cmw6IHN0cmluZywgaXRlbTogb2JqZWN0fX0gcGFyYW1zCiAgICogQHJldHVybnMge1Byb21pc2U8e3N1Y2Nlc3M6IGJvb2xlYW4sIGVycm9yOiBzdHJpbmcgfCBudWxsfT59CiAgICovCiAgaW1wb3J0QnVuZGxlSXRlbTogYXN5bmMgZnVuY3Rpb24gKHsgdXJsLCBpdGVtIH0pIHsKICAgIGlmIChpdGVtLml0ZW1UeXBlID09PSAiYWdlbnQtc2tpbGwiKSB7CiAgICAgIGNvbnN0IHsgc3VjY2VzcywgZXJyb3IgfSA9CiAgICAgICAgYXdhaXQgSW1wb3J0ZWRQbHVnaW4uaW1wb3J0Q29tbXVuaXR5SXRlbUZyb21VcmwodXJsLCBpdGVtKTsKICAgICAgcmV0dXJuIHsgc3VjY2VzcywgZXJyb3IgfTsKICAgIH0KCiAgICByZXR1cm4gewogICAgICBzdWNjZXNzOiBmYWxzZSwKICAgICAgZXJyb3I6ICJVbnN1cHBvcnRlZCBpdGVtIHR5cGUuIE5vdGhpbmcgdG8gaW1wb3J0LiIsCiAgICB9OwogIH0sCgogIGZldGNoVXNlckl0ZW1zOiBhc3luYyBmdW5jdGlvbiAoY29ubmVjdGlvbktleSkgewogICAgaWYgKCFjb25uZWN0aW9uS2V5KSByZXR1cm4geyBjcmVhdGVkQnlNZToge30sIHRlYW1JdGVtczogW10gfTsKCiAgICByZXR1cm4gYXdhaXQgZmV0Y2goYCR7dGhpcy5hcGlCYXNlfS9pdGVtc2AsIHsKICAgICAgbWV0aG9kOiAiR0VUIiwKICAgICAgaGVhZGVyczogewogICAgICAgICJDb250ZW50LVR5cGUiOiAiYXBwbGljYXRpb24vanNvbiIsCiAgICAgICAgQXV0aG9yaXphdGlvbjogYEJlYXJlciAke2Nvbm5lY3Rpb25LZXl9YCwKICAgICAgfSwKICAgICAgc2lnbmFsOiBBYm9ydFNpZ25hbC50aW1lb3V0KEhVQl9USU1FT1VUX01TKSwKICAgIH0pCiAgICAgIC50aGVuKChyZXNwb25zZSkgPT4gcmVzcG9uc2UuanNvbigpKQogICAgICAuY2F0Y2goKGVycm9yKSA9PiB7CiAgICAgICAgY29uc29sZUxvZ2dlci5lcnJvcigiRXJyb3IgZmV0Y2hpbmcgdXNlciBpdGVtczoiLCBlcnJvcik7CiAgICAgICAgcmV0dXJuIHsgY3JlYXRlZEJ5TWU6IHt9LCB0ZWFtSXRlbXM6IFtdIH07CiAgICAgIH0pOwogIH0sCgogIC8qKgogICAqIENyZWF0ZSBhIG5ldyBpdGVtIGluIHRoZSBjb21tdW5pdHkgaHViIC0gT25seSBzdXBwb3J0cyBTVEFUSUMgaXRlbXMgZm9yIG5vdy4KICAgKiBAcGFyYW0ge3N0cmluZ30gaXRlbVR5cGUgLSBUaGUgdHlwZSBvZiBpdGVtIHRvIGNyZWF0ZQogICAqIEBwYXJhbSB7b2JqZWN0fSBkYXRhIC0gVGhlIGl0ZW0gZGF0YQogICAqIEBwYXJhbSB7c3RyaW5nfSBjb25uZWN0aW9uS2V5IC0gVGhlIGh1YiBjb25uZWN0aW9uIGtleQogICAqIEByZXR1cm5zIHtQcm9taXNlPHtzdWNjZXNzOiBib29sZWFuLCBlcnJvcjogc3RyaW5nIHwgbnVsbH0+fQogICAqLwogIGNyZWF0ZVN0YXRpY0l0ZW06IGFzeW5jIGZ1bmN0aW9uIChpdGVtVHlwZSwgZGF0YSwgY29ubmVjdGlvbktleSkgewogICAgaWYgKCFjb25uZWN0aW9uS2V5KQogICAgICByZXR1cm4geyBzdWNjZXNzOiBmYWxzZSwgZXJyb3I6ICJDb25uZWN0aW9uIGtleSBpcyByZXF1aXJlZCIgfTsKICAgIGlmICghdGhpcy5zdXBwb3J0ZWRTdGF0aWNJdGVtVHlwZXMuaW5jbHVkZXMoaXRlbVR5cGUpKQogICAgICByZXR1cm4geyBzdWNjZXNzOiBmYWxzZSwgZXJyb3I6ICJVbnN1cHBvcnRlZCBpdGVtIHR5cGUiIH07CgogICAgLy8gSWYgdGhlIGl0ZW0gaGFzIHNwZWNpYWwgY29uc2lkZXJhdGlvbnMgb3IgcHJlcHJvY2Vzc2luZywgd2UgY2FuIGRlbGVnYXRlIHRoYXQgYmVsb3cgYmVmb3JlIHNlbmRpbmcgdGhlIHJlcXVlc3QuCiAgICAvLyBlZzogQWdlbnQgZmxvdyBmaWxlcyBhbmQgc3VjaC4KCiAgICByZXR1cm4gYXdhaXQgZmV0Y2goYCR7dGhpcy5hcGlCYXNlfS8ke2l0ZW1UeXBlfS9jcmVhdGVgLCB7CiAgICAgIG1ldGhvZDogIlBPU1QiLAogICAgICBoZWFkZXJzOiB7CiAgICAgICAgIkNvbnRlbnQtVHlwZSI6ICJhcHBsaWNhdGlvbi9qc29uIiwKICAgICAgICBBdXRob3JpemF0aW9uOiBgQmVhcmVyICR7Y29ubmVjdGlvbktleX1gLAogICAgICB9LAogICAgICBib2R5OiBKU09OLnN0cmluZ2lmeShkYXRhKSwKICAgICAgc2lnbmFsOiBBYm9ydFNpZ25hbC50aW1lb3V0KEhVQl9USU1FT1VUX01TKSwKICAgIH0pCiAgICAgIC50aGVuKChyZXNwb25zZSkgPT4gcmVzcG9uc2UuanNvbigpKQogICAgICAudGhlbigocmVzdWx0KSA9PiB7CiAgICAgICAgaWYgKCEhcmVzdWx0LmVycm9yKSB0aHJvdyBuZXcgRXJyb3IocmVzdWx0LmVycm9yIHx8ICJVbmtub3duIGVycm9yIik7CiAgICAgICAgaWYgKCFyZXN1bHQuaXRlbSB8fCAhcmVzdWx0Lml0ZW0uaWQpCiAgICAgICAgICB0aHJvdyBuZXcgRXJyb3IoIkh1YiBBUEkgcmV0dXJuZWQgbm8gaXRlbSBpZCIpOwogICAgICAgIHJldHVybiB7IHN1Y2Nlc3M6IHRydWUsIGVycm9yOiBudWxsLCBpdGVtSWQ6IHJlc3VsdC5pdGVtLmlkIH07CiAgICAgIH0pCiAgICAgIC5jYXRjaCgoZXJyb3IpID0+IHsKICAgICAgICBjb25zb2xlTG9nZ2VyLmVycm9yKGBFcnJvciBjcmVhdGluZyAke2l0ZW1UeXBlfTpgLCBlcnJvcik7CiAgICAgICAgcmV0dXJuIHsgc3VjY2VzczogZmFsc2UsIGVycm9yOiBlcnJvci5tZXNzYWdlIH07CiAgICAgIH0pOwogIH0sCn07Cgptb2R1bGUuZXhwb3J0cyA9IHsgQ29tbXVuaXR5SHViIH07Cg==
+// SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+
+const ImportedPlugin = require("../utils/agents/imported");
+
+const HUB_TIMEOUT_MS = 15_000;
+
+/**
+ * An interface to the OpenSIN Chat Community Hub external API.
+ */
+const CommunityHub = {
+  importPrefix: "allm-community-id",
+  apiBase:
+    process.env.NODE_ENV === "development"
+      ? "http://127.0.0.1:5001/opensin-hub/us-central1/external/v1"
+      : "https://hub.external.opensin.com/v1",
+  supportedStaticItemTypes: ["system-prompt", "agent-flow", "slash-command"],
+
+  /**
+   * Validate an import ID and return the entity type and ID.
+   * @param {string} importId - The import ID to validate.
+   * @returns {{entityType: string | null, entityId: string | null}}
+   */
+  validateImportId: function (importId) {
+    if (
+      !importId ||
+      !importId.startsWith(this.importPrefix) ||
+      importId.split(":").length !== 3
+    )
+      return { entityType: null, entityId: null };
+    const [_, entityType, entityId] = importId.split(":");
+    if (!entityType || !entityId) return { entityType: null, entityId: null };
+    return {
+      entityType: String(entityType).trim(),
+      entityId: String(entityId).trim(),
+    };
+  },
+
+  /**
+   * Fetch the explore items from the community hub that are publicly available.
+   * @returns {Promise<{agentSkills: {items: [], hasMore: boolean, totalCount: number}, systemPrompts: {items: [], hasMore: boolean, totalCount: number}, slashCommands: {items: [], hasMore: boolean, totalCount: number}}>}
+   */
+  fetchExploreItems: async function () {
+    return await fetch(`${this.apiBase}/explore`, {
+      method: "GET",
+      signal: AbortSignal.timeout(HUB_TIMEOUT_MS),
+    })
+      .then((response) => response.json())
+      .catch((error) => {
+        consoleLogger.error("Error fetching explore items:", error);
+        return {
+          agentSkills: {
+            items: [],
+            hasMore: false,
+            totalCount: 0,
+          },
+          systemPrompts: {
+            items: [],
+            hasMore: false,
+            totalCount: 0,
+          },
+          slashCommands: {
+            items: [],
+            hasMore: false,
+            totalCount: 0,
+          },
+        };
+      });
+  },
+
+  /**
+   * Fetch a bundle item from the community hub.
+   * Bundle items are entities that require a downloadURL to be fetched from the community hub.
+   * so we can unzip and import them to the OpenSIN Chat instance.
+   * @param {string} importId - The import ID of the item.
+   * @returns {Promise<{url: string | null, item: object | null, error: string | null}>}
+   */
+  getBundleItem: async function (importId) {
+    const { entityType, entityId } = this.validateImportId(importId);
+    if (!entityType || !entityId)
+      return { item: null, error: "Invalid import ID" };
+
+    const { SystemSettings } = require("./systemSettings");
+    const { connectionKey } = await SystemSettings.hubSettings();
+    const { url, item, error } = await fetch(
+      `${this.apiBase}/${entityType}/${entityId}/pull`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          ...(connectionKey
+            ? { Authorization: `Bearer ${connectionKey}` }
+            : {}),
+        },
+        signal: AbortSignal.timeout(HUB_TIMEOUT_MS),
+      },
+    )
+      .then((response) => response.json())
+      .catch((error) => {
+        consoleLogger.error(
+          `Error fetching bundle item for import ID ${importId}:`,
+          error,
+        );
+        return { url: null, item: null, error: error.message };
+      });
+    return { url, item, error };
+  },
+
+  /**
+   * Apply an item to the OpenSIN Chat instance. Used for simple items like slash commands and system prompts.
+   * @param {object} item - The item to apply.
+   * @param {object} options - Additional options for applying the item.
+   * @param {object|null} options.currentUser - The current user object.
+   * @returns {Promise<{success: boolean, error: string | null}>}
+   */
+  applyItem: async function (item, options = {}) {
+    if (!item) return { success: false, error: "Item is required" };
+
+    if (item.itemType === "system-prompt") {
+      if (!options?.workspaceSlug)
+        return { success: false, error: "Workspace slug is required" };
+
+      const { Workspace } = require("./workspace");
+      const workspace = await Workspace.get({
+        slug: String(options.workspaceSlug),
+      });
+      if (!workspace) return { success: false, error: "Workspace not found" };
+      await Workspace.update(workspace.id, { openAiPrompt: item.prompt });
+      return { success: true, error: null };
+    }
+
+    if (item.itemType === "slash-command") {
+      const { SlashCommandPresets } = require("./slashCommandsPresets");
+      await SlashCommandPresets.create(options?.currentUser?.id, {
+        command: SlashCommandPresets.formatCommand(String(item.command)),
+        prompt: String(item.prompt),
+        description: String(item.description),
+      });
+      return { success: true, error: null };
+    }
+
+    return {
+      success: false,
+      error: "Unsupported item type. Nothing to apply.",
+    };
+  },
+
+  /**
+   * Import a bundle item to the OpenSIN Chat instance by downloading the zip file and importing it.
+   * or whatever the item type requires.
+   * @param {{url: string, item: object}} params
+   * @returns {Promise<{success: boolean, error: string | null}>}
+   */
+  importBundleItem: async function ({ url, item }) {
+    if (item.itemType === "agent-skill") {
+      const { success, error } =
+        await ImportedPlugin.importCommunityItemFromUrl(url, item);
+      return { success, error };
+    }
+
+    return {
+      success: false,
+      error: "Unsupported item type. Nothing to import.",
+    };
+  },
+
+  fetchUserItems: async function (connectionKey) {
+    if (!connectionKey) return { createdByMe: {}, teamItems: [] };
+
+    return await fetch(`${this.apiBase}/items`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${connectionKey}`,
+      },
+      signal: AbortSignal.timeout(HUB_TIMEOUT_MS),
+    })
+      .then((response) => response.json())
+      .catch((error) => {
+        consoleLogger.error("Error fetching user items:", error);
+        return { createdByMe: {}, teamItems: [] };
+      });
+  },
+
+  /**
+   * Create a new item in the community hub - Only supports STATIC items for now.
+   * @param {string} itemType - The type of item to create
+   * @param {object} data - The item data
+   * @param {string} connectionKey - The hub connection key
+   * @returns {Promise<{success: boolean, error: string | null}>}
+   */
+  createStaticItem: async function (itemType, data, connectionKey) {
+    if (!connectionKey)
+      return { success: false, error: "Connection key is required" };
+    if (!this.supportedStaticItemTypes.includes(itemType))
+      return { success: false, error: "Unsupported item type" };
+
+    // If the item has special considerations or preprocessing, we can delegate that below before sending the request.
+    // eg: Agent flow files and such.
+
+    return await fetch(`${this.apiBase}/${itemType}/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${connectionKey}`,
+      },
+      body: JSON.stringify(data),
+      signal: AbortSignal.timeout(HUB_TIMEOUT_MS),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        if (!!result.error) throw new Error(result.error || "Unknown error");
+        if (!result.item || !result.item.id)
+          throw new Error("Hub API returned no item id");
+        return { success: true, error: null, itemId: result.item.id };
+      })
+      .catch((error) => {
+        consoleLogger.error(`Error creating ${itemType}:`, error);
+        return { success: false, error: error.message };
+      });
+  },
+};
+
+module.exports = { CommunityHub };
