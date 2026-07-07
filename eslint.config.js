@@ -1,1 +1,98 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgZ2xvYmFscyBmcm9tICJnbG9iYWxzIjsKaW1wb3J0IGVzbGludFJlY29tbWVuZGVkIGZyb20gIkBlc2xpbnQvanMiOwppbXBvcnQgZXNsaW50Q29uZmlnUHJldHRpZXIgZnJvbSAiZXNsaW50LWNvbmZpZy1wcmV0dGllciI7CmltcG9ydCBwcmV0dGllciBmcm9tICJlc2xpbnQtcGx1Z2luLXByZXR0aWVyIjsKaW1wb3J0IHJlYWN0IGZyb20gImVzbGludC1wbHVnaW4tcmVhY3QiOwppbXBvcnQgcmVhY3RSZWZyZXNoIGZyb20gImVzbGludC1wbHVnaW4tcmVhY3QtcmVmcmVzaCI7CmltcG9ydCByZWFjdEhvb2tzIGZyb20gImVzbGludC1wbHVnaW4tcmVhY3QtaG9va3MiOwppbXBvcnQganN4QTExeSBmcm9tICJlc2xpbnQtcGx1Z2luLWpzeC1hMTF5IjsKCmNvbnN0IHJlYWN0UmVjb21tZW5kZWQgPSByZWFjdC5jb25maWdzLnJlY29tbWVuZGVkCmNvbnN0IGpzeFJ1bnRpbWUgPSByZWFjdC5jb25maWdzWyJqc3gtcnVudGltZSJdCgovLyBEb3duZ3JhZGUgYWxsIGpzeC1hMTF5IHJlY29tbWVuZGVkIHJ1bGVzIGZyb20gImVycm9yIiB0byAid2FybiIgc28gdGhleSBhY3QgYXMKLy8gbm9uLWJsb2NraW5nIGd1aWRhbmNlIG9uIHRoZSBleGlzdGluZyBjb21wb25lbnQgYmFzZWxpbmUgaW5zdGVhZCBvZiBmYWlsaW5nIHRoZQovLyBsaW50OmNoZWNrIENJIGdhdGUuIE5ldyB2aW9sYXRpb25zIHN1cmZhY2UgYXMgd2FybmluZ3MgZHVyaW5nIGRldmVsb3BtZW50Lgpjb25zdCBqc3hBMTF5V2FyblJ1bGVzID0gT2JqZWN0LmZyb21FbnRyaWVzKAogIE9iamVjdC5rZXlzKGpzeEExMXkuZmxhdENvbmZpZ3MucmVjb21tZW5kZWQucnVsZXMpLm1hcCgocnVsZSkgPT4gW3J1bGUsICJ3YXJuIl0pCikKCmV4cG9ydCBkZWZhdWx0IFsKICBlc2xpbnRSZWNvbW1lbmRlZC5jb25maWdzLnJlY29tbWVuZGVkLAogIGVzbGludENvbmZpZ1ByZXR0aWVyLAogIHsKICAgIGxhbmd1YWdlT3B0aW9uczogewogICAgICBwYXJzZXJPcHRpb25zOiB7CiAgICAgICAgZWNtYUZlYXR1cmVzOiB7IGpzeDogdHJ1ZSB9CiAgICAgIH0sCiAgICAgIGVjbWFWZXJzaW9uOiAibGF0ZXN0IiwKICAgICAgc291cmNlVHlwZTogIm1vZHVsZSIsCiAgICAgIGdsb2JhbHM6IHsKICAgICAgICAuLi5nbG9iYWxzLmJyb3dzZXIsCiAgICAgICAgLi4uZ2xvYmFscy5lczIwMjAsCiAgICAgICAgLi4uZ2xvYmFscy5ub2RlCiAgICAgIH0KICAgIH0sCiAgICBsaW50ZXJPcHRpb25zOiB7IHJlcG9ydFVudXNlZERpc2FibGVEaXJlY3RpdmVzOiB0cnVlIH0sCiAgICBzZXR0aW5nczogeyByZWFjdDogeyB2ZXJzaW9uOiAiMTguMiIgfSB9LAogICAgcGx1Z2luczogewogICAgICByZWFjdCwKICAgICAgImpzeC1ydW50aW1lIjoganN4UnVudGltZSwKICAgICAgInJlYWN0LWhvb2tzIjogcmVhY3RIb29rcywKICAgICAgcHJldHRpZXIKICAgIH0sCiAgICBydWxlczogewogICAgICAuLi5yZWFjdFJlY29tbWVuZGVkLnJ1bGVzLAogICAgICAuLi5yZWFjdEhvb2tzLmNvbmZpZ3MucmVjb21tZW5kZWQucnVsZXMsCiAgICAgICJuby11bnVzZWQtdmFycyI6ICJ3YXJuIiwKICAgICAgIm5vLXVuZGVmIjogIndhcm4iLAogICAgICAibm8tZW1wdHkiOiAid2FybiIsCiAgICAgICJuby1leHRyYS1ib29sZWFuLWNhc3QiOiAid2FybiIsCiAgICAgICJuby1wcm90b3R5cGUtYnVpbHRpbnMiOiAib2ZmIiwKICAgICAgInByZXR0aWVyL3ByZXR0aWVyIjogIndhcm4iCiAgICB9CiAgfSwKICB7CiAgICBmaWxlczogWyJmcm9udGVuZC9zcmMvKiovKi5qcyJdLAogICAgcGx1Z2luczogewogICAgICBwcmV0dGllcgogICAgfSwKICAgIHJ1bGVzOiB7CiAgICAgICJwcmV0dGllci9wcmV0dGllciI6ICJ3YXJuIgogICAgfQogIH0sCiAgewogICAgZmlsZXM6IFsKICAgICAgInNlcnZlci9lbmRwb2ludHMvKiovKi5qcyIsCiAgICAgICJzZXJ2ZXIvbW9kZWxzLyoqLyouanMiLAogICAgICAic2VydmVyL3N3YWdnZXIvKiovKi5qcyIsCiAgICAgICJzZXJ2ZXIvdXRpbHMvKiovKi5qcyIsCiAgICAgICJzZXJ2ZXIvaW5kZXguanMiCiAgICBdLAogICAgcnVsZXM6IHsKICAgICAgIm5vLXVuZGVmIjogIndhcm4iCiAgICB9CiAgfSwKICB7CiAgICBmaWxlczogWyJmcm9udGVuZC9zcmMvKiovKi5qc3giXSwKICAgIHBsdWdpbnM6IHsKICAgICAgcmVhY3QsCiAgICAgICJqc3gtcnVudGltZSI6IGpzeFJ1bnRpbWUsCiAgICAgICJyZWFjdC1ob29rcyI6IHJlYWN0SG9va3MsCiAgICAgICJyZWFjdC1yZWZyZXNoIjogcmVhY3RSZWZyZXNoLAogICAgICAianN4LWExMXkiOiBqc3hBMTF5LAogICAgICBwcmV0dGllcgogICAgfSwKICAgIHJ1bGVzOiB7CiAgICAgIC4uLmpzeFJ1bnRpbWUucnVsZXMsCiAgICAgIC8vIEFjY2Vzc2liaWxpdHkgbGludGluZyAoZXNsaW50LXBsdWdpbi1qc3gtYTExeSkuIFN1cmZhY2VkIGFzIHdhcm5pbmdzIHNvCiAgICAgIC8vIHRoZXkgZ3VpZGUgbmV3IGNvZGUgdG93YXJkIFdDQUctY29tcGxpYW50IG1hcmt1cCB3aXRob3V0IGJyZWFraW5nIHRoZQogICAgICAvLyBleGlzdGluZyBsaW50OmNoZWNrIENJIGdhdGUgb24gdGhlIGN1cnJlbnQgMjQxLWNvbXBvbmVudCBiYXNlbGluZS4KICAgICAgLi4uanN4QTExeVdhcm5SdWxlcywKICAgICAgImpzeC1hMTF5L25vLWF1dG9mb2N1cyI6ICJvZmYiLAogICAgICAicmVhY3QvcHJvcC10eXBlcyI6ICJvZmYiLCAvLyBGSVhNRQogICAgICAicmVhY3QtcmVmcmVzaC9vbmx5LWV4cG9ydC1jb21wb25lbnRzIjogIndhcm4iCiAgICB9CiAgfQpdCg==
+// SPDX-License-Identifier: MIT
+import globals from "globals";
+import eslintRecommended from "@eslint/js";
+import eslintConfigPrettier from "eslint-config-prettier";
+import prettier from "eslint-plugin-prettier";
+import react from "eslint-plugin-react";
+import reactRefresh from "eslint-plugin-react-refresh";
+import reactHooks from "eslint-plugin-react-hooks";
+import jsxA11y from "eslint-plugin-jsx-a11y";
+
+const reactRecommended = react.configs.recommended
+const jsxRuntime = react.configs["jsx-runtime"]
+
+// Downgrade all jsx-a11y recommended rules from "error" to "warn" so they act as
+// non-blocking guidance on the existing component baseline instead of failing the
+// lint:check CI gate. New violations surface as warnings during development.
+const jsxA11yWarnRules = Object.fromEntries(
+  Object.keys(jsxA11y.flatConfigs.recommended.rules).map((rule) => [rule, "warn"])
+)
+
+export default [
+  eslintRecommended.configs.recommended,
+  eslintConfigPrettier,
+  {
+    languageOptions: {
+      parserOptions: {
+        ecmaFeatures: { jsx: true }
+      },
+      ecmaVersion: "latest",
+      sourceType: "module",
+      globals: {
+        ...globals.browser,
+        ...globals.es2020,
+        ...globals.node
+      }
+    },
+    linterOptions: { reportUnusedDisableDirectives: true },
+    settings: { react: { version: "18.2" } },
+    plugins: {
+      react,
+      "jsx-runtime": jsxRuntime,
+      "react-hooks": reactHooks,
+      prettier
+    },
+    rules: {
+      ...reactRecommended.rules,
+      ...reactHooks.configs.recommended.rules,
+      "no-unused-vars": "warn",
+      "no-undef": "warn",
+      "no-empty": "warn",
+      "no-extra-boolean-cast": "warn",
+      "no-prototype-builtins": "off",
+      "prettier/prettier": "warn"
+    }
+  },
+  {
+    files: ["frontend/src/**/*.js"],
+    plugins: {
+      prettier
+    },
+    rules: {
+      "prettier/prettier": "warn"
+    }
+  },
+  {
+    files: [
+      "server/endpoints/**/*.js",
+      "server/models/**/*.js",
+      "server/swagger/**/*.js",
+      "server/utils/**/*.js",
+      "server/index.js"
+    ],
+    rules: {
+      "no-undef": "warn"
+    }
+  },
+  {
+    files: ["frontend/src/**/*.jsx"],
+    plugins: {
+      react,
+      "jsx-runtime": jsxRuntime,
+      "react-hooks": reactHooks,
+      "react-refresh": reactRefresh,
+      "jsx-a11y": jsxA11y,
+      prettier
+    },
+    rules: {
+      ...jsxRuntime.rules,
+      // Accessibility linting (eslint-plugin-jsx-a11y). Surfaced as warnings so
+      // they guide new code toward WCAG-compliant markup without breaking the
+      // existing lint:check CI gate on the current 241-component baseline.
+      ...jsxA11yWarnRules,
+      "jsx-a11y/no-autofocus": "off",
+      "react/prop-types": "off", // FIXME
+      "react-refresh/only-export-components": "warn"
+    }
+  }
+]

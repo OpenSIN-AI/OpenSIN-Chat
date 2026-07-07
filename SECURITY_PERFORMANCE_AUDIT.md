@@ -1,1 +1,272 @@
-IyBTZWN1cml0eSAmIFBlcmZvcm1hbmNlIEF1ZGl0IFJlcG9ydCDigJQgT3BlblNJTi1DaGF0CgoqKkRhdHVtOioqIDIwMjYtMDctMDcgIAoqKkF1ZGl0b3I6KiogU2VjdXJpdHkgJiBQZXJmb3JtYW5jZSBBdWRpdCBBZ2VudCAgCioqUmVwbzoqKiBgL2hvbWUvdXNlci9vcGVuc2luLWNoYXRgCgotLS0KCiMjIDEuIENTUCBIZWFkZXIg4oCUIGBzZXJ2ZXIvdXRpbHMvbWlkZGxld2FyZS9zZWN1cml0eUhlYWRlcnMvaW5kZXguanNgCgojIyMgW0xPV10gc2VjdXJpdHlIZWFkZXJzL2luZGV4LmpzOjU2IOKAlCBgb2JqZWN0LXNyYyAnc2VsZidgIGlzdCBOSUNIVCB6dSByZXN0cmlrdGl2LCBhYmVyIHVuw7xibGljaAoKYG9iamVjdC1zcmMgJ3NlbGYnYCBlcmxhdWJ0IGA8b2JqZWN0PmAvYDxlbWJlZD5gIHZvbiBlaWdlbmVyIE9yaWdpbi4gRGllIEJlc3QgUHJhY3RpY2UgaXN0IGBvYmplY3Qtc3JjICdub25lJ2AsIGRhIG1vZGVybmUgV2ViLUFwcHMgYDxvYmplY3Q+YC9gPGVtYmVkPmAgbmljaHQgYmVuw7Z0aWdlbi4gYCdzZWxmJ2AgaXN0IGVpbiB1bm7DtnRpZ2VzIEFuZ3JpZmZzZmzDpGNoZS1SaXNpa28gKHouQi4gZsO8ciBTV0YvUERGLUVtYmVkZGluZy1BbmdyaWZmZSkuCgoqKlZvcmdlc2NobGFnZW5lciBGaXg6KiogYG9iamVjdC1zcmMgJ25vbmUnYCBzZXR6ZW4uCgojIyMgW01FRElVTV0gc2VjdXJpdHlIZWFkZXJzL2luZGV4LmpzOjU2IOKAlCBgdXBncmFkZS1pbnNlY3VyZS1yZXF1ZXN0c2AgZmVobHQKCkRpZSBDU1AgZW50aMOkbHQgbmljaHQgYHVwZ3JhZGUtaW5zZWN1cmUtcmVxdWVzdHNgLiBEaWVzZSBEaXJla3RpdmUgd2Vpc3QgZGVuIEJyb3dzZXIgYW4sIGFsbGUgSFRUUC1SZXF1ZXN0cyBhdXRvbWF0aXNjaCBhdWYgSFRUUFMgdXB6dWdyYWRlbi4gT2huZSBzaWUga2FubiBnZW1pc2NodGVyIENvbnRlbnQgKG1peGVkIGNvbnRlbnQpIGF1ZnRyZXRlbiwgd2VubiBlaW4gQ2xpZW50IHZlcnNlaGVudGxpY2ggSFRUUC1SZXNzb3VyY2VuIGzDpGR0LgoKKipWb3JnZXNjaGxhZ2VuZXIgRml4OioqIGB1cGdyYWRlLWluc2VjdXJlLXJlcXVlc3RzYCB6dXIgQ1NQIGhpbnp1ZsO8Z2VuOgpgYGBqcwoiZGVmYXVsdC1zcmMgJ3NlbGYnIiwKInVwZ3JhZGUtaW5zZWN1cmUtcmVxdWVzdHMiLApgYGAKCiMjIyBbSU5GT10gc2VjdXJpdHlIZWFkZXJzL2luZGV4LmpzOjkzLTk2IOKAlCBIU1RTIG51ciBiZWRpbmd0IGFrdGl2aWVydAoKSFNUUyB3aXJkIG51ciBnZXNldHp0LCB3ZW5uIGBFTkFCTEVfSFNUUz10cnVlYC4gRGFzIGlzdCBiZXd1c3N0IHNvIGRva3VtZW50aWVydCAodmVybWVpZGV0IExvY2tvdXQgYmVpIGJyb2tlbiBUTFMpLCBhYmVyIGltIFByb2R1a3RpdmJldHJpZWIgc29sbHRlIGRpZXMgendpbmdlbmQgYWt0aXYgc2Vpbi4KCioqRW1wZmVobHVuZzoqKiBTaWNoZXJzdGVsbGVuLCBkYXNzIGBFTkFCTEVfSFNUUz10cnVlYCBpbiBQcm9kdWt0aXYtVW1nZWJ1bmcgZ2VzZXR6dCBpc3QuCgojIyMgW0lORk9dIHNlY3VyaXR5SGVhZGVycy9pbmRleC5qczo2MCDigJQgYFgtWFNTLVByb3RlY3Rpb246IDE7IG1vZGU9YmxvY2tgIGlzdCB2ZXJhbHRldAoKRGllc2VyIEhlYWRlciBpc3QgaW4gbW9kZXJuZW4gQnJvd3Nlcm4gdmVyYWx0ZXQgdW5kIGthbm4gaW4gRWRnZS1DYXNlcyBzb2dhciBYU1MtU2Nod2FjaHN0ZWxsZW4gZWluZsO8aHJlbi4gQ2hyb21lL0VkZ2UvRmlyZWZveCBpZ25vcmllcmVuIGlobiBtaXR0bGVyd2VpbGUuCgoqKlZvcmdlc2NobGFnZW5lciBGaXg6KiogRW50ZmVybmVuIG9kZXIgYXVmIGAwYCBzZXR6ZW4sIGRhIENTUCBkZXIgbW9kZXJuZSBTY2h1dHptZWNoYW5pc211cyBpc3QuCgotLS0KCiMjIDIuIFJhdGUgTGltaXRpbmcg4oCUIGBzZXJ2ZXIvdXRpbHMvbWlkZGxld2FyZS9zaW1wbGVSYXRlTGltaXQvaW5kZXguanNgCgojIyMgW0lORk9dIHNpbXBsZVJhdGVMaW1pdC9pbmRleC5qcyDigJQgSW1wbGVtZW50aWVydW5nIGlzdCBzb2xpZGUKCkRpZSBNaWRkbGV3YXJlIGlzdCBndXQgaW1wbGVtZW50aWVydDoKLSBJUC1iYXNpZXJ0ZXMgdW5kIGFjY291bnQtYmFzaWVydGVzIFJhdGUtTGltaXRpbmcKLSBSZWRpcy1CYWNrZW5kIG1pdCBJbi1NZW1vcnktRmFsbGJhY2sKLSBgRElTQUJMRV9SQVRFX0xJTUlUUz10cnVlYCB3aXJkIGluIFByb2R1a3Rpb24gYmxvY2tpZXJ0IChgcHJvY2Vzcy5leGl0KDEpYCkKLSBgTUFYX1RSQUNLRURfS0VZUyA9IDEwMDAwYCB2ZXJoaW5kZXJ0IE1lbW9yeS1MZWFrcwotIGBSZXRyeS1BZnRlcmAgdW5kIGBYLVJhdGVMaW1pdC0qYCBIZWFkZXIgd2VyZGVuIGdlc2V0enQKLSBDbG91ZGZsYXJlIGBjZi1jb25uZWN0aW5nLWlwYCB3aXJkIGJld3Vzc3QgTklDSFQgdmVydHJhdXQgKFNwb29maW5nLVNjaHV0eikKCiMjIyBbTUVESVVNXSBzaW1wbGVSYXRlTGltaXQvaW5kZXguanM6NSDigJQgSW4tTWVtb3J5LUJhY2tlbmQgbmljaHQgZsO8ciBNdWx0aS1JbnN0YW5jZSBnZWVpZ25ldAoKV2VubiBgUkFURV9MSU1JVF9CQUNLRU5EYCBuaWNodCBhdWYgYHJlZGlzYCBnZXNldHp0IGlzdCwgZnVua3Rpb25pZXJ0IFJhdGUtTGltaXRpbmcgbnVyIHBybyBJbnN0YW56LiBCZWkgaG9yaXpvbnRhbGVyIFNrYWxpZXJ1bmcga2FubiBlaW4gQW5ncmVpZmVyIFJlcXVlc3RzIMO8YmVyIHZlcnNjaGllZGVuZSBJbnN0YW56ZW4gdmVydGVpbGVuLgoKKipWb3JnZXNjaGxhZ2VuZXIgRml4OioqIEluIFByb2R1a3Rpdi1VbWdlYnVuZyBtaXQgbWVocmVyZW4gSW5zdGFuemVuIGBSQVRFX0xJTUlUX0JBQ0tFTkQ9cmVkaXNgIHp3aW5nZW5kIHNldHplbi4KCiMjIyBbSElHSF0gZW5kcG9pbnRzL3N5c3RlbS5qcyAoYXV0aCkg4oCUIEtlaW4gUmF0ZS1MaW1pdGluZyBhdWYgTG9naW4vUGFzc3dvcmQtUmVjb3ZlcnktRW5kcG9pbnRzCgpEaWUgZ2VmdW5kZW5lbiBSYXRlLUxpbWl0cyBkZWNrZW4gYWRtaW4sIGVuaGFuY2UtcHJvbXB0LCBvcGVuYWksIG9yY2hlc3RyYXRvciwgcG9saXRpY2lhbiBhYi4gRXMgZmVobHQgZXhwbGl6aXRlcyBSYXRlLUxpbWl0aW5nIGF1ZjoKLSBMb2dpbi1FbmRwb2ludCAoYC9hcGkvc3lzdGVtL2xvZ2luYCBvLsOkLikKLSBQYXNzd29yZC1SZWNvdmVyeS1FbmRwb2ludAotIFJlZ2lzdHJpZXJ1bmdzLUVuZHBvaW50CgpEaWVzZSBzaW5kIHByaW3DpHJlIFppZWxlIGbDvHIgQnJ1dGUtRm9yY2UtIHVuZCBDcmVkZW50aWFsLVN0dWZmaW5nLUFuZ3JpZmZlLgoKKipWb3JnZXNjaGxhZ2VuZXIgRml4OioqIGBzaW1wbGVSYXRlTGltaXQoeyBidWNrZXQ6ICJhdXRoLWxvZ2luIiwgbWF4OiAxMCwgd2luZG93TXM6IDYwICogMTAwMCwgaWRlbnRpdHk6ICJ1c2VyIiB9KWAgYXVmIExvZ2luL1JlY292ZXJ5LUVuZHBvaW50cyBhbndlbmRlbi4KCiMjIyBbTE9XXSBlbmRwb2ludHMvYXBpL29wZW5haS9pbmRleC5qczoyOCDigJQgT3BlbkFJIFJhdGUtTGltaXQgbWl0IDEwMC9taW4gZ2dmLiB6dSBob2NoCgoxMDAgUmVxdWVzdHMvTWludXRlIHBybyBJUCBmw7xyIGRlbiBPcGVuQUkta29tcGF0aWJsZW4gRW5kcG9pbnQga2FubiBLb3N0ZW5zcGlyYWxlbiBlcm3DtmdsaWNoZW4sIHdlbm4gZWluIEFuZ3JlaWZlciB2aWVsZSBSZXF1ZXN0cyBzZW5kZXQuCgoqKlZvcmdlc2NobGFnZW5lciBGaXg6KiogTGltaXQgYXVmIDMwLTUwL21pbiByZWR1emllcmVuIG9kZXIgbmFjaCBBdXRoZW50aWZpemllcnVuZ3MtTGV2ZWwgc3RhZmZlbG4uCgotLS0KCiMjIDMuIEJ1bmRsZSBTaXplIOKAlCBgZnJvbnRlbmQvdml0ZS5jb25maWcuanNgCgojIyMgW0lORk9dIHZpdGUuY29uZmlnLmpzOjY4LTE5MCDigJQgQ29kZS1TcGxpdHMgc2luZCBndXQgb3B0aW1pZXJ0CgpEaWUgYG1hbnVhbENodW5rc2AtS29uZmlndXJhdGlvbiBpc3QgdW1mYW5ncmVpY2ggdW5kIGR1cmNoZGFjaHQ6Ci0gYHZlbmRvci1rYXRleGAsIGB2ZW5kb3ItaGlnaGxpZ2h0YCwgYHZlbmRvci1tYXJrZG93bmAsIGB2ZW5kb3ItdHRzYCwgYHZlbmRvci1wZGZgLCBgdmVuZG9yLWNyb25gLCBgdmVuZG9yLXNwZWVjaGAsIGB2ZW5kb3ItcXJjb2RlYCwgYHZlbmRvci1pMThuYCwgYHZlbmRvci1zdGF0ZWAsIGB2ZW5kb3ItdWlgLCBgdmVuZG9yLXJvdXRlcmAsIGB2ZW5kb3ItY2hhcnRzYCwgYHZlbmRvci1pY29uc2AsIGB2ZW5kb3ItbHVjaWRlYCwgYHZlbmRvci1hcmlhYCwgYHZlbmRvci1wb2x5ZmlsbGAsIGB2ZW5kb3ItdXRpbHNgLCBgdmVuZG9yLXV0aWxzMmAKLSBSZWFjdCBiZXd1c3N0IGltIE1haW4tQ2h1bmsgKHZlcm1laWRldCBURFotUmFjZS1Db25kaXRpb24pCi0gUmVjaGFydHMvZDMvQHRyZW1vciBiZXd1c3N0IGluIFJvdXRlLUNodW5rcyAoZ2xlaWNoZXIgUmFjZS1SZWFzb24pCi0gYGV4dGVybmFsYCBzY2hsaWXDn3QgdW5nZW51dHp0ZSBTU1ItVmFyaWFudGUgYXVzCgojIyMgW0xPV10gdml0ZS5jb25maWcuanM6NzEg4oCUIGBjaHVua1NpemVXYXJuaW5nTGltaXQ6IDIwMDBgIG1hc2tpZXJ0IGdyb8OfZSBCdW5kbGVzCgpEaWUgV2FybnNjaHdlbGxlIHd1cmRlIGF1ZiAyMDAwIEtCIGFuZ2Vob2Jlbi4gRGFzIGlzdCBsZWdpdGltIHdlZ2VuIFNTUi1FbnRyeS1QaW5uaW5nLCBhYmVyIGVzIHVudGVyZHLDvGNrdCBXYXJudW5nZW4gZsO8ciBCdW5kbGVzLCBkaWUgendpc2NoZW4gNTAwLTIwMDAgS0IgbGllZ2VuLgoKKipWb3JnZXNjaGxhZ2VuZXIgRml4OioqIFJlZ2VsbcOkw59pZyBgYnVuZGxlaW5zcGVjdG9yLmh0bWxgICh2aXN1YWxpemVyKSBwcsO8ZmVuLCBvZGVyIENJLUJ1ZGdldCBtaXQgYHZpdGUtcGx1Z2luLWJ1bmRsZS1hbmFseXplcmAgZW5mb3JjZS4KCiMjIyBbTE9XXSB2aXRlLmNvbmZpZy5qczo2NCDigJQgYGVudHJ5RmlsZU5hbWVzOiAnaW5kZXguanMnYCB2ZXJoaW5kZXJ0IENvbnRlbnQtSGFzaGluZwoKRGEgZGVyIEVudHJ5LURhdGVpbmFtZSBhdWYgYGluZGV4LmpzYCBnZXBpbm50IGlzdCAoU1NSLUFuZm9yZGVydW5nKSwga2FubiBkZXIgQnJvd3NlciBuaWNodCBkdXJjaCBIYXNoLWJhc2llcnRlbiBEYXRlaW5hbWVuIENhY2hlLUJ1c3RpbmcgZHVyY2hmw7xocmVuLiBWZW5kb3ItQ2h1bmtzIGhhYmVuIGplZG9jaCBhdXRvbWF0aXNjaGUgSGFzaGVzLgoKKipWb3JnZXNjaGxhZ2VuZXIgRml4OioqIEFremVwdGFiZWwgZsO8ciBTU1ItU2V0dXAsIGFiZXIgc2ljaGVyc3RlbGxlbiwgZGFzcyBgQ2FjaGUtQ29udHJvbDogbm8tY2FjaGVgIGbDvHIgYGluZGV4LmpzYCBnZXNldHp0IHdpcmQgdW5kIFZlbmRvci1DaHVua3MgYGltbXV0YWJsZWAgY2FjaGVuLgoKLS0tCgojIyA0LiBEYXRhYmFzZSBRdWVyaWVzIOKAlCBOKzEgUXVlcnkgUGF0dGVybnMgaW4gYHNlcnZlci9tb2RlbHMvYAoKIyMjIFtISUdIXSBtb2RlbHMvZG9jdW1lbnRzLmpzOjMwOS0zMTUg4oCUIE4rMSBiZWltIERva3VtZW50ZW4tUmVtb3ZhbAoKYGBganMKZm9yIChjb25zdCBwYXRoIG9mIHJlbW92YWxzKSB7CiAgY29uc3QgZG9jdW1lbnQgPSBhd2FpdCB0aGlzLmdldCh7IGRvY3BhdGg6IHBhdGgsIHdvcmtzcGFjZUlkOiB3b3Jrc3BhY2UuaWQgfSk7CiAgLi4uCn0KYGBgCkplZGVyIFBmYWQgbMO2c3QgZWluZSBzZXBhcmF0ZSBgZ2V0KClgLVF1ZXJ5IGF1cy4gQmVpIE4gUmVtb3ZhbHMgPSBOKzEgUXVlcmllcy4KCioqVm9yZ2VzY2hsYWdlbmVyIEZpeDoqKiBCYXRjaC1RdWVyeSBtaXQgYHdoZXJlOiB7IGRvY3BhdGg6IHsgaW46IHJlbW92YWxzIH0sIHdvcmtzcGFjZUlkOiB3b3Jrc3BhY2UuaWQgfWAuCgojIyMgW0hJR0hdIG1vZGVscy9kb2N1bWVudHMuanM6MzMzLTM0MCDigJQgTisxIGJlaW0gTMO2c2NoZW4gaW0gVHJhbnNhY3Rpb24KCmBgYGpzCmZvciAoY29uc3QgZG9jdW1lbnQgb2YgcmVzb2x2ZWREb2NzKSB7CiAgYXdhaXQgdHgud29ya3NwYWNlX2RvY3VtZW50cy5kZWxldGUoeyB3aGVyZTogeyBpZDogZG9jdW1lbnQuaWQgfSB9KTsKICBhd2FpdCB0eC5kb2N1bWVudF92ZWN0b3JzLmRlbGV0ZU1hbnkoeyB3aGVyZTogeyBkb2NJZDogZG9jdW1lbnQuZG9jSWQgfSB9KTsKfQpgYGAKMk4gUXVlcmllcyBpbm5lcmhhbGIgZWluZXIgVHJhbnNhY3Rpb24gZsO8ciBOIERva3VtZW50ZS4KCioqVm9yZ2VzY2hsYWdlbmVyIEZpeDoqKiBgZGVsZXRlTWFueSh7IHdoZXJlOiB7IGlkOiB7IGluOiByZXNvbHZlZERvY0lkcyB9IH0gfSlgIHVuZCBgZGVsZXRlTWFueSh7IHdoZXJlOiB7IGRvY0lkOiB7IGluOiByZXNvbHZlZERvY0lkcyB9IH0gfSlgLgoKIyMjIFtNRURJVU1dIG1vZGVscy9kb2N1bWVudHMuanM6MTU4IOKAlCBTZXF1ZW50aWVsbGVzIEVtYmVkZGluZyBpbiBMb29wCgpgYGBqcwpmb3IgKGNvbnN0IFtpbmRleCwgcGF0aF0gb2YgYWRkaXRpb25zLmVudHJpZXMoKSkgewogIC8vIGF3YWl0IGZpbGVEYXRhKHBhdGgpLCBhd2FpdCBlbWJlZGRpbmcuLi4KfQpgYGAKQmV3dXNzdCBzZXF1ZW50aWVsbCAobGF1dCBLb21tZW50YXI6IHZlcm1laWRldCBEdXBsaWNhdGUtRW1iZWRkaW5nKSwgYWJlciBiZWkgdmllbGVuIERva3VtZW50ZW4gc2VociBsYW5nc2FtLiBLZWluIGVjaHRlcyBOKzEsIGFiZXIgUGVyZm9ybWFuY2UtRmxhc2NoZW5oYWxzLgoKKipWb3JnZXNjaGxhZ2VuZXIgRml4OioqIFBhcmFsbGVsaXNpZXJ1bmcgbWl0IERlZHVwLUxvZ2lrIG9kZXIgQmF0Y2gtRW1iZWRkaW5nLUFQSSBudXR6ZW4uCgojIyMgW0hJR0hdIG1vZGVscy9pbnZpdGUuanM6OTEtMTAzIOKAlCBOKzEgYmVpbSBXb3Jrc3BhY2UtSW52aXRlCgpgYGBqcwpmb3IgKGNvbnN0IHdvcmtzcGFjZUlkIG9mIHZhbGlkV29ya3NwYWNlSWRzKSB7CiAgY29uc3QgZXhpc3RpbmcgPSBhd2FpdCB0eC53b3Jrc3BhY2VfdXNlcnMuZmluZEZpcnN0KHsgLi4uIH0pOwogIGlmICghZXhpc3RpbmcpIGF3YWl0IHR4LndvcmtzcGFjZV91c2Vycy5jcmVhdGUoeyAuLi4gfSk7Cn0KYGBgClBybyBXb3Jrc3BhY2U6IDEtMiBRdWVyaWVzLiBCZWkgTiBXb3Jrc3BhY2VzID0gYmlzIHp1IDJOIFF1ZXJpZXMuCgoqKlZvcmdlc2NobGFnZW5lciBGaXg6KiogQmF0Y2gtQ2hlY2sgbWl0IGBmaW5kTWFueSh7IHdoZXJlOiB7IHVzZXJfaWQsIHdvcmtzcGFjZV9pZDogeyBpbjogdmFsaWRXb3Jrc3BhY2VJZHMgfSB9IH0pYCwgZGFubiBgY3JlYXRlTWFueWAgZsO8ciBmZWhsZW5kZS4KCiMjIyBbSU5GT10gbW9kZWxzL2FwaUtleXMuanM6MTA1LTEzMCDigJQgYHdoZXJlV2l0aFVzZXJgIGlzdCBndXQgZ2Vsw7ZzdAoKYGBganMKY29uc3QgdXNlcklkcyA9IFsuLi5uZXcgU2V0KGFwaUtleXMuZmlsdGVyKC4uLikubWFwKC4uLikpXTsKY29uc3QgdXNlcnMgPSB1c2VySWRzLmxlbmd0aCA+IDAgPyBhd2FpdCBVc2VyLndoZXJlKHsgaWQ6IHsgaW46IHVzZXJJZHMgfSB9KSA6IFtdOwpgYGAKQmF0Y2gtRmV0Y2ggbWl0IGBJTmAtQ2xhdXNlLCBkYW5uIEluLU1lbW9yeS1Kb2luLiBLZWluIE4rMSDigJQgdm9yYmlsZGxpY2guCgotLS0KCiMjIDUuIENvb2tpZSBTZWN1cml0eQoKIyMjIFtJTkZPXSDigJQgS2VpbmUgYHJlcy5jb29raWUoKWAgQXVmcnVmZSBpbiBBcHBsaWNhdGlvbi1Db2RlCgpJbiBgc2VydmVyL2VuZHBvaW50cy9gLCBgc2VydmVyL3V0aWxzL2AgdW5kIGBzZXJ2ZXIvbW9kZWxzL2Agd3VyZGVuICoqa2VpbmUqKiBgcmVzLmNvb2tpZSgpYCBvZGVyIGByZXMuY2xlYXJDb29raWUoKWAgQXVmcnVmZSBnZWZ1bmRlbi4gRGllIGVpbnppZ2VuIFRyZWZmZXIgc2luZCBpbiBgbm9kZV9tb2R1bGVzL2AgKE1DUCBTREsgRGVtby1Db2RlLCBFeHByZXNzLURvY3MpLgoKRGllIEFwcCB2ZXJ3ZW5kZXQgSldULVRva2VucyBpbSBgQXV0aG9yaXphdGlvbmAtSGVhZGVyIHN0YXR0IENvb2tpZXMuIERhcyBiZWRldXRldDoKLSDinIUgS2VpbmUgQ29va2llLWJhc2llcnRlIFNlc3Npb24tRml4YXRpb24tUmlzaWtlbgotIOKchSBLZWluZSBDU1JGLVJpc2lrZW4gw7xiZXIgQ29va2llcwotIOKaoO+4jyBUb2tlbnMgbcO8c3NlbiBjbGllbnQtc2VpdGlnIHNpY2hlciBnZXNwZWljaGVydCB3ZXJkZW4gKGxvY2FsU3RvcmFnZSBoYXQgWFNTLVJpc2lrbykKCiMjIyBbTE9XXSDigJQgRmFsbHMgaW4gWnVrdW5mdCBDb29raWVzIHZlcndlbmRldCB3ZXJkZW4KClNvbGx0ZSBkaWUgQXBwIGplbWFscyBDb29raWVzIGVpbmbDvGhyZW4gKHouQi4gZsO8ciBPQXV0aC1GbG93cyksIHNpY2hlcnN0ZWxsZW4sIGRhc3MgZ2VzZXR6dCB3aXJkOgpgYGBqcwpyZXMuY29va2llKCduYW1lJywgdmFsdWUsIHsKICBodHRwT25seTogdHJ1ZSwgICAgLy8gdmVyaGluZGVydCBYU1MtWnVncmlmZgogIHNlY3VyZTogdHJ1ZSwgICAgICAvLyBudXIgw7xiZXIgSFRUUFMKICBzYW1lU2l0ZTogJ3N0cmljdCcsIC8vIHZlcmhpbmRlcnQgQ1NSRgogIG1heEFnZTogMzYwMDAwMCwgICAvLyBiZWdyZW56dGUgTGViZW5zZGF1ZXIKfSk7CmBgYAoKLS0tCgojIyA2LiBBUEkgS2V5IEV4cG9zdXJlCgojIyMgW0lORk9dIOKAlCBLZWluZSBBUEktS2V5L1NlY3JldC9QYXNzd29yZC9Ub2tlbiBMZWFrcyBpbiBMb2dzIGdlZnVuZGVuCgpHcmVwIMO8YmVyIGBzZXJ2ZXIvdXRpbHMvYCwgYHNlcnZlci9lbmRwb2ludHMvYCwgdW5kIGBzZXJ2ZXIvbW9kZWxzL2AgbmFjaCBgY29uc29sZS5sb2cvaW5mby93YXJuL2Vycm9yYCBtaXQgYGFwaUtleXxhcGlfa2V5fHNlY3JldHxwYXNzd29yZHx0b2tlbmAgZmFuZCAqKmtlaW5lIFRyZWZmZXIqKiBpbiBBcHBsaWNhdGlvbi1Db2RlLgoKIyMjIFtJTkZPXSBtb2RlbHMvYXBpS2V5cy5qczoxNC0xNyDigJQgYF9zdHJpcFNlY3JldGAgaXN0IHZvcmJpbGRsaWNoCgpgYGBqcwpfc3RyaXBTZWNyZXQ6IGZ1bmN0aW9uIChhcGlLZXkpIHsKICBpZiAoIWFwaUtleSkgcmV0dXJuIG51bGw7CiAgY29uc3QgeyBzZWNyZXQ6IF9zZWNyZXQsIC4uLnJlc3QgfSA9IGFwaUtleTsKICByZXR1cm4gcmVzdDsKfQpgYGAKU2VjcmV0cyB3ZXJkZW4gdm9yIGRlbSBSZXR1cm4gc3lzdGVtYXRpc2NoIGVudGZlcm50LiBgZ2V0KClgIHVuZCBgd2hlcmUoKWAgdmVyd2VuZGVuIGBfc3RyaXBTZWNyZXRgLgoKIyMjIFtMT1ddIG1vZGVscy9hcGlLZXlzLmpzOjMzIOKAlCBgY3JlYXRlKClgIHJldHVybnQgZGFzIFNlY3JldCBpbSBLbGFydGV4dAoKYGBganMKY29uc3QgYXBpS2V5ID0gYXdhaXQgcHJpc21hLmFwaV9rZXlzLmNyZWF0ZSh7IGRhdGE6IHsgc2VjcmV0OiB0aGlzLm1ha2VTZWNyZXQoKSwgLi4uIH0gfSk7CnJldHVybiB7IGFwaUtleSwgZXJyb3I6IG51bGwgfTsKYGBgCk5hY2ggZGVyIEVyc3RlbGx1bmcgd2lyZCBkYXMgU2VjcmV0IGltIEtsYXJ0ZXh0IHp1csO8Y2tnZWdlYmVuLiBEYXMgaXN0IG5vdHdlbmRpZyAoRWlubWFsLUFuemVpZ2UpLCBhYmVyIHNpY2hlcnN0ZWxsZW4sIGRhc3M6CjEuIERlciBSZXNwb25zZSBuaWNodCBnZWxvZ2d0IHdpcmQKMi4gRGVyIENsaWVudCBkYXMgU2VjcmV0IHNpY2hlciBzcGVpY2hlcnQKMy4gRGFzIFNlY3JldCBuaWNodCBpbiBFcnJvci1NZXNzYWdlcyBhdWZ0YXVjaHQKCiMjIyBbTE9XXSBtb2RlbHMvYXBpS2V5cy5qczoyMSDigJQgRXJyb3ItTWVzc2FnZSBrw7ZubnRlIFNlY3JldCBlbnRoYWx0ZW4KCmBgYGpzCmNvbnNvbGVMb2dnZXIuZXJyb3IoIkZBSUxFRCBUTyBDUkVBVEUgQVBJIEtFWS4iLCBlcnJvci5tZXNzYWdlKTsKYGBgClByaXNtYS1FcnJvci1NZXNzYWdlcyBrw7ZubnRlbiBpbiBFZGdlLUNhc2VzIGRlbiBJbnB1dCBlbnRoYWx0ZW4uIFNpY2hlcnN0ZWxsZW4sIGRhc3MgYGVycm9yLm1lc3NhZ2VgIG5pY2h0IGRhcyBnZW5lcmllcnRlIFNlY3JldCBlbnRow6RsdC4KCioqVm9yZ2VzY2hsYWdlbmVyIEZpeDoqKiBgY29uc29sZUxvZ2dlci5lcnJvcigiRkFJTEVEIFRPIENSRUFURSBBUEkgS0VZLiIsIGVycm9yLm1lc3NhZ2UucmVwbGFjZSgvc2VjcmV0LiokL2ksICJbUkVEQUNURURdIikpYCBvZGVyIGdlbmVyZWxsIEVycm9yLU1lc3NhZ2VzIHNhbml0aXplbi4KCi0tLQoKIyMgNy4gRnJvbnRlbmQgTG9hZGluZyDigJQgSW1hZ2UgS29tcHJpbWllcnVuZwoKIyMjIFtISUdIXSBmcm9udGVuZC9wdWJsaWMvZmF2aWNvbi1zb3VyY2UucG5nIOKAlCAxLjIgTUIgdW5rb21wcmltaWVydAoKYGZhdmljb24tc291cmNlLnBuZ2AgaXN0ICoqMS4yMTAuMzg4IEJ5dGVzICgxLjIgTUIpKiouIERhcyBpc3QgZWluZSBTb3VyY2UtRGF0ZWksIGRpZSBuaWNodCBhdXNnZWxpZWZlcnQgd2VyZGVuIHNvbGx0ZS4gV2VubiBzaWUgw7ZmZmVudGxpY2ggenVnw6RuZ2xpY2ggaXN0LCB2ZXJzY2h3ZW5kZXQgc2llIEJhbmRicmVpdGUuCgoqKlZvcmdlc2NobGFnZW5lciBGaXg6KiogQXVzIGBwdWJsaWMvYCBlbnRmZXJuZW4gb2RlciBpbiBlaW4gQnVpbGQtQXNzZXQgdW13YW5kZWxuLCBkYXMgbmljaHQgYXVzZ2VsaWVmZXJ0IHdpcmQuCgojIyMgW01FRElVTV0gZnJvbnRlbmQvcHVibGljLyDigJQgS2VpbmUgbW9kZXJuZW4gQmlsZGZvcm1hdGUgKFdlYlAvQVZJRikKCkFsbGUgQmlsZGVyIHNpbmQgUE5HOgotIGBmYXZpY29uLnBuZ2Ag4oCUIDQ3IEtCCi0gYHdvcmRtYXJrLnBuZ2Ag4oCUIDQ3IEtCCi0gYGFwcGxlLXRvdWNoLWljb24ucG5nYCDigJQgMTEgS0IKCktlaW5lIFdlYlAtIG9kZXIgQVZJRi1Gb3JtYXRlIHdlcmRlbiB2ZXJ3ZW5kZXQuIFdlYlAgd8OkcmUgfjMwLTUwJSBrbGVpbmVyIGJlaSBnbGVpY2hlciBRdWFsaXTDpHQuCgoqKlZvcmdlc2NobGFnZW5lciBGaXg6KiogQmlsZGVyIG5hY2ggV2ViUCBrb252ZXJ0aWVyZW4gdW5kIGA8cGljdHVyZT5gLVRhZ3MgbWl0IEZhbGxiYWNrIG51dHplbi4KCiMjIyBbTUVESVVNXSB2aXRlLmNvbmZpZy5qcyDigJQgS2VpbiBJbWFnZS1PcHRpbWl6YXRpb24tUGx1Z2luCgpEaWUgVml0ZS1Lb25maWd1cmF0aW9uIGVudGjDpGx0IGtlaW4gYHZpdGUtcGx1Z2luLWltYWdlbWluYCBvZGVyIMOkaG5saWNoZXMuIEJpbGRlciB3ZXJkZW4gdW52ZXJhcmJlaXRldCBhdXNnZWxpZWZlcnQuCgoqKlZvcmdlc2NobGFnZW5lciBGaXg6KiogYHZpdGUtcGx1Z2luLWltYWdlbWluYCBoaW56dWbDvGdlbjoKYGBganMKaW1wb3J0IHsgdml0ZVNpbmdsZUZpbGUgfSBmcm9tICd2aXRlLXBsdWdpbi1pbWFnZW1pbic7Ci8vIG9kZXIgaW1hZ2VtaW4gaW4gYnVpbGQgcGlwZWxpbmUKYGBgCgojIyMgW0lORk9dIGZyb250ZW5kL3NyYy8gdW5kIGZyb250ZW5kL2Fzc2V0cy8g4oCUIEtlaW5lIEJpbGRlciBnZWZ1bmRlbgoKSW0gYHNyYy9gLSB1bmQgYGFzc2V0cy9gLVZlcnplaWNobmlzIHd1cmRlbiBrZWluZSBCaWxkZGF0ZWllbiBnZWZ1bmRlbi4gQWxsZSBCaWxkZXIgbGllZ2VuIGluIGBwdWJsaWMvYCB1bmQgd2VyZGVuIHVudmVyYXJiZWl0ZXQgYXVzZ2VsaWVmZXJ0LgoKLS0tCgojIyBadXNhbW1lbmZhc3N1bmcKCnwgU2V2ZXJpdHkgfCBDb3VudCB8IEthdGVnb3JpZW4gfAp8LS0tLS0tLS0tLXwtLS0tLS0tfC0tLS0tLS0tLS0tLXwKfCBISUdIICAgICB8IDQgICAgIHwgTisxIFF1ZXJpZXMgKDMpLCBGZWhsZW5kZXMgQXV0aC1SYXRlLUxpbWl0ICgxKSwgVW5rb21wcmltaWVydGVzIEJpbGQgKDEpIHwKfCBNRURJVU0gICB8IDQgICAgIHwgQ1NQIHVwZ3JhZGUtaW5zZWN1cmUtcmVxdWVzdHMsIFJlZGlzLVJhdGUtTGltaXQsIFNlcXVlbnRpZWxsZXMgRW1iZWRkaW5nLCBLZWluZSBXZWJQIHwKfCBMT1cgICAgICB8IDUgICAgIHwgb2JqZWN0LXNyYywgWC1YU1MtUHJvdGVjdGlvbiwgY2h1bmtTaXplV2FybmluZ0xpbWl0LCBBUEktS2V5IEVycm9yLU1lc3NhZ2VzLCBPcGVuQUkgUmF0ZS1MaW1pdCB8CnwgSU5GTyAgICAgfCA3ICAgICB8IFBvc2l0aXZlIEJlZnVuZGUgLyBCZXN0IFByYWN0aWNlcyB8CgojIyMgVG9wIDMgUHJpb3JpdMOkdGVuOgoxLiAqKlJhdGUtTGltaXRpbmcgYXVmIEF1dGgtRW5kcG9pbnRzKiogKEhJR0gg4oCUIEJydXRlLUZvcmNlLVNjaHV0eikKMi4gKipOKzEgUXVlcnkgaW4gYGRvY3VtZW50cy5qc2AgdW5kIGBpbnZpdGUuanNgKiogKEhJR0gg4oCUIFBlcmZvcm1hbmNlKQozLiAqKmBmYXZpY29uLXNvdXJjZS5wbmdgIGF1cyBgcHVibGljL2AgZW50ZmVybmVuKiogKEhJR0gg4oCUIDEuMiBNQiBCYW5kYnJlaXRlKQo=
+# Security & Performance Audit Report — OpenSIN-Chat
+
+**Datum:** 2026-07-07  
+**Auditor:** Security & Performance Audit Agent  
+**Repo:** `/home/user/opensin-chat`
+
+---
+
+## 1. CSP Header — `server/utils/middleware/securityHeaders/index.js`
+
+### [LOW] securityHeaders/index.js:56 — `object-src 'self'` ist NICHT zu restriktiv, aber unüblich
+
+`object-src 'self'` erlaubt `<object>`/`<embed>` von eigener Origin. Die Best Practice ist `object-src 'none'`, da moderne Web-Apps `<object>`/`<embed>` nicht benötigen. `'self'` ist ein unnötiges Angriffsfläche-Risiko (z.B. für SWF/PDF-Embedding-Angriffe).
+
+**Vorgeschlagener Fix:** `object-src 'none'` setzen.
+
+### [MEDIUM] securityHeaders/index.js:56 — `upgrade-insecure-requests` fehlt
+
+Die CSP enthält nicht `upgrade-insecure-requests`. Diese Direktive weist den Browser an, alle HTTP-Requests automatisch auf HTTPS upzugraden. Ohne sie kann gemischter Content (mixed content) auftreten, wenn ein Client versehentlich HTTP-Ressourcen lädt.
+
+**Vorgeschlagener Fix:** `upgrade-insecure-requests` zur CSP hinzufügen:
+```js
+"default-src 'self'",
+"upgrade-insecure-requests",
+```
+
+### [INFO] securityHeaders/index.js:93-96 — HSTS nur bedingt aktiviert
+
+HSTS wird nur gesetzt, wenn `ENABLE_HSTS=true`. Das ist bewusst so dokumentiert (vermeidet Lockout bei broken TLS), aber im Produktivbetrieb sollte dies zwingend aktiv sein.
+
+**Empfehlung:** Sicherstellen, dass `ENABLE_HSTS=true` in Produktiv-Umgebung gesetzt ist.
+
+### [INFO] securityHeaders/index.js:60 — `X-XSS-Protection: 1; mode=block` ist veraltet
+
+Dieser Header ist in modernen Browsern veraltet und kann in Edge-Cases sogar XSS-Schwachstellen einführen. Chrome/Edge/Firefox ignorieren ihn mittlerweile.
+
+**Vorgeschlagener Fix:** Entfernen oder auf `0` setzen, da CSP der moderne Schutzmechanismus ist.
+
+---
+
+## 2. Rate Limiting — `server/utils/middleware/simpleRateLimit/index.js`
+
+### [INFO] simpleRateLimit/index.js — Implementierung ist solide
+
+Die Middleware ist gut implementiert:
+- IP-basiertes und account-basiertes Rate-Limiting
+- Redis-Backend mit In-Memory-Fallback
+- `DISABLE_RATE_LIMITS=true` wird in Produktion blockiert (`process.exit(1)`)
+- `MAX_TRACKED_KEYS = 10000` verhindert Memory-Leaks
+- `Retry-After` und `X-RateLimit-*` Header werden gesetzt
+- Cloudflare `cf-connecting-ip` wird bewusst NICHT vertraut (Spoofing-Schutz)
+
+### [MEDIUM] simpleRateLimit/index.js:5 — In-Memory-Backend nicht für Multi-Instance geeignet
+
+Wenn `RATE_LIMIT_BACKEND` nicht auf `redis` gesetzt ist, funktioniert Rate-Limiting nur pro Instanz. Bei horizontaler Skalierung kann ein Angreifer Requests über verschiedene Instanzen verteilen.
+
+**Vorgeschlagener Fix:** In Produktiv-Umgebung mit mehreren Instanzen `RATE_LIMIT_BACKEND=redis` zwingend setzen.
+
+### [HIGH] endpoints/system.js (auth) — Kein Rate-Limiting auf Login/Password-Recovery-Endpoints
+
+Die gefundenen Rate-Limits decken admin, enhance-prompt, openai, orchestrator, politician ab. Es fehlt explizites Rate-Limiting auf:
+- Login-Endpoint (`/api/system/login` o.ä.)
+- Password-Recovery-Endpoint
+- Registrierungs-Endpoint
+
+Diese sind primäre Ziele für Brute-Force- und Credential-Stuffing-Angriffe.
+
+**Vorgeschlagener Fix:** `simpleRateLimit({ bucket: "auth-login", max: 10, windowMs: 60 * 1000, identity: "user" })` auf Login/Recovery-Endpoints anwenden.
+
+### [LOW] endpoints/api/openai/index.js:28 — OpenAI Rate-Limit mit 100/min ggf. zu hoch
+
+100 Requests/Minute pro IP für den OpenAI-kompatiblen Endpoint kann Kostenspiralen ermöglichen, wenn ein Angreifer viele Requests sendet.
+
+**Vorgeschlagener Fix:** Limit auf 30-50/min reduzieren oder nach Authentifizierungs-Level staffeln.
+
+---
+
+## 3. Bundle Size — `frontend/vite.config.js`
+
+### [INFO] vite.config.js:68-190 — Code-Splits sind gut optimiert
+
+Die `manualChunks`-Konfiguration ist umfangreich und durchdacht:
+- `vendor-katex`, `vendor-highlight`, `vendor-markdown`, `vendor-tts`, `vendor-pdf`, `vendor-cron`, `vendor-speech`, `vendor-qrcode`, `vendor-i18n`, `vendor-state`, `vendor-ui`, `vendor-router`, `vendor-charts`, `vendor-icons`, `vendor-lucide`, `vendor-aria`, `vendor-polyfill`, `vendor-utils`, `vendor-utils2`
+- React bewusst im Main-Chunk (vermeidet TDZ-Race-Condition)
+- Recharts/d3/@tremor bewusst in Route-Chunks (gleicher Race-Reason)
+- `external` schließt ungenutzte SSR-Variante aus
+
+### [LOW] vite.config.js:71 — `chunkSizeWarningLimit: 2000` maskiert große Bundles
+
+Die Warnschwelle wurde auf 2000 KB angehoben. Das ist legitim wegen SSR-Entry-Pinning, aber es unterdrückt Warnungen für Bundles, die zwischen 500-2000 KB liegen.
+
+**Vorgeschlagener Fix:** Regelmäßig `bundleinspector.html` (visualizer) prüfen, oder CI-Budget mit `vite-plugin-bundle-analyzer` enforce.
+
+### [LOW] vite.config.js:64 — `entryFileNames: 'index.js'` verhindert Content-Hashing
+
+Da der Entry-Dateiname auf `index.js` gepinnt ist (SSR-Anforderung), kann der Browser nicht durch Hash-basierten Dateinamen Cache-Busting durchführen. Vendor-Chunks haben jedoch automatische Hashes.
+
+**Vorgeschlagener Fix:** Akzeptabel für SSR-Setup, aber sicherstellen, dass `Cache-Control: no-cache` für `index.js` gesetzt wird und Vendor-Chunks `immutable` cachen.
+
+---
+
+## 4. Database Queries — N+1 Query Patterns in `server/models/`
+
+### [HIGH] models/documents.js:309-315 — N+1 beim Dokumenten-Removal
+
+```js
+for (const path of removals) {
+  const document = await this.get({ docpath: path, workspaceId: workspace.id });
+  ...
+}
+```
+Jeder Pfad löst eine separate `get()`-Query aus. Bei N Removals = N+1 Queries.
+
+**Vorgeschlagener Fix:** Batch-Query mit `where: { docpath: { in: removals }, workspaceId: workspace.id }`.
+
+### [HIGH] models/documents.js:333-340 — N+1 beim Löschen im Transaction
+
+```js
+for (const document of resolvedDocs) {
+  await tx.workspace_documents.delete({ where: { id: document.id } });
+  await tx.document_vectors.deleteMany({ where: { docId: document.docId } });
+}
+```
+2N Queries innerhalb einer Transaction für N Dokumente.
+
+**Vorgeschlagener Fix:** `deleteMany({ where: { id: { in: resolvedDocIds } } })` und `deleteMany({ where: { docId: { in: resolvedDocIds } } })`.
+
+### [MEDIUM] models/documents.js:158 — Sequentielles Embedding in Loop
+
+```js
+for (const [index, path] of additions.entries()) {
+  // await fileData(path), await embedding...
+}
+```
+Bewusst sequentiell (laut Kommentar: vermeidet Duplicate-Embedding), aber bei vielen Dokumenten sehr langsam. Kein echtes N+1, aber Performance-Flaschenhals.
+
+**Vorgeschlagener Fix:** Parallelisierung mit Dedup-Logik oder Batch-Embedding-API nutzen.
+
+### [HIGH] models/invite.js:91-103 — N+1 beim Workspace-Invite
+
+```js
+for (const workspaceId of validWorkspaceIds) {
+  const existing = await tx.workspace_users.findFirst({ ... });
+  if (!existing) await tx.workspace_users.create({ ... });
+}
+```
+Pro Workspace: 1-2 Queries. Bei N Workspaces = bis zu 2N Queries.
+
+**Vorgeschlagener Fix:** Batch-Check mit `findMany({ where: { user_id, workspace_id: { in: validWorkspaceIds } } })`, dann `createMany` für fehlende.
+
+### [INFO] models/apiKeys.js:105-130 — `whereWithUser` ist gut gelöst
+
+```js
+const userIds = [...new Set(apiKeys.filter(...).map(...))];
+const users = userIds.length > 0 ? await User.where({ id: { in: userIds } }) : [];
+```
+Batch-Fetch mit `IN`-Clause, dann In-Memory-Join. Kein N+1 — vorbildlich.
+
+---
+
+## 5. Cookie Security
+
+### [INFO] — Keine `res.cookie()` Aufrufe in Application-Code
+
+In `server/endpoints/`, `server/utils/` und `server/models/` wurden **keine** `res.cookie()` oder `res.clearCookie()` Aufrufe gefunden. Die einzigen Treffer sind in `node_modules/` (MCP SDK Demo-Code, Express-Docs).
+
+Die App verwendet JWT-Tokens im `Authorization`-Header statt Cookies. Das bedeutet:
+- ✅ Keine Cookie-basierte Session-Fixation-Risiken
+- ✅ Keine CSRF-Risiken über Cookies
+- ⚠️ Tokens müssen client-seitig sicher gespeichert werden (localStorage hat XSS-Risiko)
+
+### [LOW] — Falls in Zukunft Cookies verwendet werden
+
+Sollte die App jemals Cookies einführen (z.B. für OAuth-Flows), sicherstellen, dass gesetzt wird:
+```js
+res.cookie('name', value, {
+  httpOnly: true,    // verhindert XSS-Zugriff
+  secure: true,      // nur über HTTPS
+  sameSite: 'strict', // verhindert CSRF
+  maxAge: 3600000,   // begrenzte Lebensdauer
+});
+```
+
+---
+
+## 6. API Key Exposure
+
+### [INFO] — Keine API-Key/Secret/Password/Token Leaks in Logs gefunden
+
+Grep über `server/utils/`, `server/endpoints/`, und `server/models/` nach `console.log/info/warn/error` mit `apiKey|api_key|secret|password|token` fand **keine Treffer** in Application-Code.
+
+### [INFO] models/apiKeys.js:14-17 — `_stripSecret` ist vorbildlich
+
+```js
+_stripSecret: function (apiKey) {
+  if (!apiKey) return null;
+  const { secret: _secret, ...rest } = apiKey;
+  return rest;
+}
+```
+Secrets werden vor dem Return systematisch entfernt. `get()` und `where()` verwenden `_stripSecret`.
+
+### [LOW] models/apiKeys.js:33 — `create()` returnt das Secret im Klartext
+
+```js
+const apiKey = await prisma.api_keys.create({ data: { secret: this.makeSecret(), ... } });
+return { apiKey, error: null };
+```
+Nach der Erstellung wird das Secret im Klartext zurückgegeben. Das ist notwendig (Einmal-Anzeige), aber sicherstellen, dass:
+1. Der Response nicht geloggt wird
+2. Der Client das Secret sicher speichert
+3. Das Secret nicht in Error-Messages auftaucht
+
+### [LOW] models/apiKeys.js:21 — Error-Message könnte Secret enthalten
+
+```js
+consoleLogger.error("FAILED TO CREATE API KEY.", error.message);
+```
+Prisma-Error-Messages könnten in Edge-Cases den Input enthalten. Sicherstellen, dass `error.message` nicht das generierte Secret enthält.
+
+**Vorgeschlagener Fix:** `consoleLogger.error("FAILED TO CREATE API KEY.", error.message.replace(/secret.*$/i, "[REDACTED]"))` oder generell Error-Messages sanitizen.
+
+---
+
+## 7. Frontend Loading — Image Komprimierung
+
+### [HIGH] frontend/public/favicon-source.png — 1.2 MB unkomprimiert
+
+`favicon-source.png` ist **1.210.388 Bytes (1.2 MB)**. Das ist eine Source-Datei, die nicht ausgeliefert werden sollte. Wenn sie öffentlich zugänglich ist, verschwendet sie Bandbreite.
+
+**Vorgeschlagener Fix:** Aus `public/` entfernen oder in ein Build-Asset umwandeln, das nicht ausgeliefert wird.
+
+### [MEDIUM] frontend/public/ — Keine modernen Bildformate (WebP/AVIF)
+
+Alle Bilder sind PNG:
+- `favicon.png` — 47 KB
+- `wordmark.png` — 47 KB
+- `apple-touch-icon.png` — 11 KB
+
+Keine WebP- oder AVIF-Formate werden verwendet. WebP wäre ~30-50% kleiner bei gleicher Qualität.
+
+**Vorgeschlagener Fix:** Bilder nach WebP konvertieren und `<picture>`-Tags mit Fallback nutzen.
+
+### [MEDIUM] vite.config.js — Kein Image-Optimization-Plugin
+
+Die Vite-Konfiguration enthält kein `vite-plugin-imagemin` oder ähnliches. Bilder werden unverarbeitet ausgeliefert.
+
+**Vorgeschlagener Fix:** `vite-plugin-imagemin` hinzufügen:
+```js
+import { viteSingleFile } from 'vite-plugin-imagemin';
+// oder imagemin in build pipeline
+```
+
+### [INFO] frontend/src/ und frontend/assets/ — Keine Bilder gefunden
+
+Im `src/`- und `assets/`-Verzeichnis wurden keine Bilddateien gefunden. Alle Bilder liegen in `public/` und werden unverarbeitet ausgeliefert.
+
+---
+
+## Zusammenfassung
+
+| Severity | Count | Kategorien |
+|----------|-------|------------|
+| HIGH     | 4     | N+1 Queries (3), Fehlendes Auth-Rate-Limit (1), Unkomprimiertes Bild (1) |
+| MEDIUM   | 4     | CSP upgrade-insecure-requests, Redis-Rate-Limit, Sequentielles Embedding, Keine WebP |
+| LOW      | 5     | object-src, X-XSS-Protection, chunkSizeWarningLimit, API-Key Error-Messages, OpenAI Rate-Limit |
+| INFO     | 7     | Positive Befunde / Best Practices |
+
+### Top 3 Prioritäten:
+1. **Rate-Limiting auf Auth-Endpoints** (HIGH — Brute-Force-Schutz)
+2. **N+1 Query in `documents.js` und `invite.js`** (HIGH — Performance)
+3. **`favicon-source.png` aus `public/` entfernen** (HIGH — 1.2 MB Bandbreite)

@@ -1,1 +1,292 @@
-IyBPcGVuU0lOLUNoYXQg4oCUIFByb2R1Y3Rpb24gRGVwbG95bWVudCBHdWlkZQoKPiAqKlByb2R1Y3Rpb24gVVJMOioqIGBodHRwczovL3NpbmNoYXQuZGVscWhpLmNvbWAKPiAqKlZNOioqIE9yYWNsZSBDbG91ZCwgYDkyLjUuNjAuODdgLCBBUk0gQTEuRmxleCAyNEdCCj4gKipTdGF0dXM6KiogTGl2ZSDigJQgRmlyZXdvcmtzIEFJIHZpYSBTSU5hdG9yIFBvb2wgUm91dGVyLCBDbG91ZGZsYXJlIFR1bm5lbCwgbmdpbnggV1MgcHJveHkKCi0tLQoKIyMgQXJjaGl0ZWN0dXJlIE92ZXJ2aWV3CgpgYGAKSW50ZXJuZXQg4oaSIENsb3VkZmxhcmUgVHVubmVsIChjbG91ZGZsYXJlZCkg4oaSIG5naW54IDozODQ4MSAoV1MgdXBncmFkZSkg4oaSIERvY2tlciA6Mzg0NzEgKDEyNy4wLjAuMSkKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIOKGkwogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG9wZW5zaW4tYXBwIGNvbnRhaW5lciAoU0VSVkVSX1BPUlQ9MzAwMSkKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIOKGkwogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIEZpcmV3b3JrcyBBSSDihpAgU0lOYXRvciBQb29sIFJvdXRlcgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFNRTGl0ZTogL2FwcC9zZXJ2ZXIvc3RvcmFnZS9vcGVuc2luLmRiCmBgYAoKfCBDb21wb25lbnQgfCBCaW5kaW5nIHwgUHVycG9zZSB8CnwtLS18LS0tfC0tLXwKfCBEb2NrZXIgY29udGFpbmVyIHwgYDEyNy4wLjAuMTozODQ3MWAg4oaSIGNvbnRhaW5lciBgMzAwMWAgfCBBcHAgc2VydmVyIChiaW5kcyBsb2NhbGhvc3Qgb25seSwgbm90IHB1YmxpYykgfAp8IG5naW54IHJldmVyc2UgcHJveHkgfCBgOjM4NDgxYCB8IFdlYlNvY2tldCBVcGdyYWRlIGhlYWRlciBpbmplY3Rpb24gfAp8IENsb3VkZmxhcmUgVHVubmVsIHwgc3lzdGVtZCBgY2xvdWRmbGFyZWQtb3BlbnNpbi1jaGF0LnNlcnZpY2VgIHwgUHVibGljIEhUVFBTIGVuZHBvaW50IOKGkiBuZ2lueCB8CnwgU0lOYXRvciBQb29sIFJvdXRlciB8IGBzaW5hdG9ycG9vbC1yb3V0ZXIuZGVscWhpLmNvbWAgfCBGaXJld29ya3MgQUkga2V5IHJvdGF0aW9uICsgbG9hZCBiYWxhbmNpbmcgfAp8IFVwdGltZSBLdW1hIHwgYHN0YXR1cy5kZWxxaGkuY29tYCB8IEV4dGVybmFsIHVwdGltZSBtb25pdG9yaW5nIHwKCi0tLQoKIyMgMS4gTExNIFByb3ZpZGVyIOKAlCBGaXJld29ya3MgQUkgdmlhIFNJTmF0b3IgUG9vbCBSb3V0ZXIKCiMjIyBDb25maWd1cmF0aW9uCgpUaGUgcHJpbWFyeSBMTE0gcHJvdmlkZXIgaXMgKipGaXJld29ya3MgQUkqKiwgcm91dGVkIHRocm91Z2ggdGhlIFNJTmF0b3IgUG9vbCBSb3V0ZXIgZm9yIEFQSSBrZXkgcm90YXRpb24gYW5kIGxvYWQgYmFsYW5jaW5nLgoKfCBFbnYgVmFyIHwgVmFsdWUgfAp8LS0tfC0tLXwKfCBgTExNX1BST1ZJREVSYCB8IGBmaXJld29ya3NBaWAgKGhhcmRjb2RlZCBpbiBgc2VydmVyL3V0aWxzL2FnZW50cy9haWJpdGF0L3Byb3ZpZGVycy9maXJld29ya3NhaS5qc2ApIHwKfCBgRklSRVdPUktTX0FJX0xMTV9CQVNFX1BBVEhgIHwgYGh0dHBzOi8vc2luYXRvcnBvb2wtcm91dGVyLmRlbHFoaS5jb20vaW5mZXJlbmNlL3YxYCB8CnwgYEZJUkVXT1JLU19BSV9MTE1fQVBJX0tFWWAgfCBgPHlvdXItcG9vbC1rZXk+YCB8CnwgYEZJUkVXT1JLU19BSV9MTE1fTU9ERUxfUFJFRmAgfCBgYWNjb3VudHMvZmlyZXdvcmtzL21vZGVscy9taW5pbWF4LW0zYCB8CnwgYEZJUkVXT1JLU19BSV9MTE1fTU9ERUxfVE9LRU5fTElNSVRgIHwgYDI1NjAwMGAgfAoKIyMjIEN1c3RvbSBVc2VyLUFnZW50IEhlYWRlcgoKVGhlIFNJTmF0b3IgUG9vbCBSb3V0ZXIgKipibG9ja3MgcmVxdWVzdHMgd2l0aCB0aGUgZGVmYXVsdCBPcGVuQUkgU0RLIFVzZXItQWdlbnQqKi4gVGhlIGBmaXJld29ya3NhaS5qc2AgcHJvdmlkZXIgc2V0cyBhIGN1c3RvbSBoZWFkZXIgdG8gYnlwYXNzIHRoaXM6CgpgYGBqcwovLyBzZXJ2ZXIvdXRpbHMvYWdlbnRzL2FpYml0YXQvcHJvdmlkZXJzL2ZpcmV3b3Jrc2FpLmpzOjI2LTI4CmRlZmF1bHRIZWFkZXJzOiB7CiAgIlVzZXItQWdlbnQiOiAiT3BlblNJTi1DaGF0LzEuMCIsCn0sCmBgYAoKSWYgeW91IGZvcmsgb3IgcmVwbGFjZSB0aGlzIHByb3ZpZGVyLCB5b3UgKiptdXN0KiogcHJlc2VydmUgdGhpcyBoZWFkZXIgb3IgdGhlIHJvdXRlciB3aWxsIHJlamVjdCBhbGwgcmVxdWVzdHMuCgotLS0KCiMjIDIuIEVudmlyb25tZW50IENvbmZpZ3VyYXRpb24gKGAuZW52YCkKClRoZSBwcm9kdWN0aW9uIGAuZW52YCBsaXZlcyBhdCBgZG9ja2VyLy5lbnZgIG9uIHRoZSBWTSBhbmQgaXMgbW91bnRlZCByZWFkLW9ubHkgaW50byB0aGUgY29udGFpbmVyIChgZG9ja2VyLy5lbnY6L2FwcC9zZXJ2ZXIvLmVudjpyb2ApLgoKIyMjIENyaXRpY2FsIFZhcmlhYmxlcwoKYGBgYmFzaAojIC0tLSBBdXRoIC0tLQpBVVRIX1RPS0VOPVNpbW9uZTEyMwpKV1RfU0VDUkVUPTxnZW5lcmF0ZS13aXRoOiBvcGVuc3NsIHJhbmQgLWhleCAyND4KU0lHX0tFWT08Z2VuZXJhdGUtd2l0aDogb3BlbnNzbCByYW5kIC1oZXggMzI+ClNJR19TQUxUPTxnZW5lcmF0ZS13aXRoOiBvcGVuc3NsIHJhbmQgLWhleCAxNj4KCiMgLS0tIExMTSAoRmlyZXdvcmtzIEFJIHZpYSBTSU5hdG9yIFBvb2wgUm91dGVyKSAtLS0KTExNX1BST1ZJREVSPWZpcmV3b3Jrc0FpCkZJUkVXT1JLU19BSV9MTE1fQkFTRV9QQVRIPWh0dHBzOi8vc2luYXRvcnBvb2wtcm91dGVyLmRlbHFoaS5jb20vaW5mZXJlbmNlL3YxCkZJUkVXT1JLU19BSV9MTE1fQVBJX0tFWT08eW91ci1rZXk+CkZJUkVXT1JLU19BSV9MTE1fTU9ERUxfUFJFRj1hY2NvdW50cy9maXJld29ya3MvbW9kZWxzL21pbmltYXgtbTMKRklSRVdPUktTX0FJX0xMTV9NT0RFTF9UT0tFTl9MSU1JVD0yNTYwMDAKCiMgLS0tIFNlcnZlciAtLS0KU0VSVkVSX1BPUlQ9MzAwMQpTVE9SQUdFX0RJUj0vYXBwL3NlcnZlci9zdG9yYWdlCgojIC0tLSBDb250YWluZXIgcG9ydCBiaW5kaW5nIChob3N0IHNpZGUpIC0tLQojIFRoZSBjb21wb3NlIGZpbGUgbWFwcyBob3N0IDM4NDcxIOKGkiBjb250YWluZXIgMzAwMS4KIyBQT1JUIGVudiB2YXIgaXMgTk9UIHVzZWQgYnkgdGhlIGFwcCBkaXJlY3RseTsgU0VSVkVSX1BPUlQgY29udHJvbHMgdGhlCiMgaW4tY29udGFpbmVyIGxpc3RlbmVyLiAzODQ3MSBpcyB0aGUgaG9zdC1mYWNpbmcgcG9ydCBib3VuZCB0byAxMjcuMC4wLjEuCmBgYAoKIyMjIEZ1bGwgVGVtcGxhdGUKClNlZSBgZG9ja2VyLy5lbnYuZXhhbXBsZWAgZm9yIHRoZSBjb21wbGV0ZSBsaXN0IG9mIGFsbCBzdXBwb3J0ZWQgcHJvdmlkZXJzLCBlbWJlZGRpbmcgZW5naW5lcywgdmVjdG9yIGRhdGFiYXNlcywgVFRTL1NUVCwgYWdlbnQgc2VhcmNoIGtleXMsIGFuZCBQREYgYW5hbHlzaXMgdHVuaW5nIHBhcmFtZXRlcnMuCgotLS0KCiMjIDMuIERvY2tlciBEZXBsb3ltZW50CgojIyMgRG9ja2VyIENvbXBvc2UgRmlsZXMKCnwgRmlsZSB8IFB1cnBvc2UgfAp8LS0tfC0tLXwKfCBgZG9ja2VyL2RvY2tlci1jb21wb3NlLnltbGAgfCBCYXNlIGNvbXBvc2UgKGFwcCArIFZhbmUgc2lkZWNhcikgfAp8IGBkb2NrZXItb3BlbnNpbi9kb2NrZXItY29tcG9zZS55bWxgIHwgT0NJIFZNIHN0YWNrIHwKfCBgZG9ja2VyLW9wZW5zaW4vZG9ja2VyLWNvbXBvc2UucHJvZHVjdGlvbi55bWxgIHwgUHJvZHVjdGlvbiBvdmVycmlkZSAoY29udGFpbmVyIG5hbWUsIHJlc291cmNlIGxpbWl0cykgfAoKIyMjIFBvcnQgQmluZGluZwoKVGhlIGNvbnRhaW5lciBiaW5kcyB0byBgMTI3LjAuMC4xOjM4NDcxYCBvbiB0aGUgaG9zdCwgbWFwcGluZyB0byBwb3J0IGAzMDAxYCBpbnNpZGUgdGhlIGNvbnRhaW5lciAoYFNFUlZFUl9QT1JUPTMwMDFgKS4gUG9ydCBgMzg0NzFgIGlzIGEgaGlnaCBwb3J0IGNob3NlbiB0byBhdm9pZCBjbGFzaGluZyB3aXRoIGxlZ2FjeSBkZXBsb3ltZW50cyBvbiBgMzAwMWAuCgpgYGB5YW1sCiMgZG9ja2VyL2RvY2tlci1jb21wb3NlLnltbApwb3J0czoKICAtICIzODQ3MTozMDAxIiAgIyBIb3N0IDM4NDcxIOKGkiBDb250YWluZXIgMzAwMSAoU0VSVkVSX1BPUlQpCmBgYAoKT24gdGhlIE9DSSBWTSwgdGhlIHByb2R1Y3Rpb24gb3ZlcnJpZGUgZW5zdXJlcyB0aGUgY29udGFpbmVyIGlzIG5hbWVkIGBvcGVuc2luLWFwcGAgYW5kIGdldHMgNEdCIC8gNCBDUFUgbGltaXRzLgoKIyMjIFN0b3JhZ2UgUGVybWlzc2lvbnMKClN0b3JhZ2UgZGlyZWN0b3JpZXMgKiptdXN0KiogYmUgb3duZWQgYnkgVUlEL0dJRCBgMTAwMDoxMDAwYCBmb3IgdGhlIGNvbnRhaW5lciB0byB3cml0ZToKCmBgYGJhc2gKY2hvd24gLVIgMTAwMDoxMDAwIHNlcnZlci9zdG9yYWdlLwpjaG93biAtUiAxMDAwOjEwMDAgY29sbGVjdG9yL2hvdGRpci8KY2hvd24gLVIgMTAwMDoxMDAwIGNvbGxlY3Rvci9vdXRwdXRzLwpgYGAKCiMjIyBSZXN0YXJ0aW5nIEFmdGVyIGAuZW52YCBDaGFuZ2VzCgoqKmBkb2NrZXIgcmVzdGFydGAgZG9lcyBOT1QgcmVsb2FkIGAuZW52YCBmaWxlcy4qKiBZb3UgbXVzdCBkbyBhIGZ1bGwgY29tcG9zZSBjeWNsZToKCmBgYGJhc2gKIyBPbiB0aGUgVk0gKHVzZSAnZG9ja2VyJyBvbiBMaW51eCwgJ29yYicgb24gbWFjT1MpCmRvY2tlciBjb21wb3NlIGRvd24gJiYgZG9ja2VyIGNvbXBvc2UgdXAgLWQKYGBgCgo+ICoqbWFjT1MgZGV2ZWxvcG1lbnQ6KiogdXNlIE9yYlN0YWNrIChgb3JiYCBDTEkpLCBuZXZlciBEb2NrZXIgRGVza3RvcC4KCi0tLQoKIyMgNC4gQ2xvdWRmbGFyZSBUdW5uZWwgU2V0dXAKCiMjIyBzeXN0ZW1kIFNlcnZpY2VzCgp8IFNlcnZpY2UgfCBJbnRlcnZhbCB8IFB1cnBvc2UgfAp8LS0tfC0tLXwtLS18CnwgYGNsb3VkZmxhcmVkLW9wZW5zaW4tY2hhdC5zZXJ2aWNlYCB8IOKAlCB8IE1haW4gdHVubmVsIGRhZW1vbiB8CnwgYGNsb3VkZmxhcmVkLXdhdGNoZG9nLnRpbWVyYCB8IDYwcyB8IFJlc3RhcnRzIHR1bm5lbCBpZiBpdCBkaWVzIHwKfCBgc2luY2hhdC1oZWFsdGhjaGVjay50aW1lcmAgfCAxMjBzIHwgTG9jYWwgaGVhbHRoIHByb2JlIChgMTI3LjAuMC4xOjM4NDcxYCkgfAp8IGBzaW5jaGF0LWV4dGVybmFsLW1vbml0b3IudGltZXJgIHwgMzAwcyB8IEV4dGVybmFsIHByb2JlIChgc2luY2hhdC5kZWxxaGkuY29tYCkgfAoKIyMjIFR1bm5lbCBDb25maWd1cmF0aW9uCgpDb25maWcgZmlsZTogYC9ob21lL3VidW50dS8uY2xvdWRmbGFyZWQvY29uZmlnLW9wZW5zaW4ueW1sYAoKVGhlIHR1bm5lbCByb3V0ZXMgYHNpbmNoYXQuZGVscWhpLmNvbWAg4oaSIGBodHRwOi8vbG9jYWxob3N0OjM4NDgxYCAobmdpbngpLCB3aGljaCB0aGVuIHByb3hpZXMgdG8gYDEyNy4wLjAuMTozODQ3MWAgKERvY2tlcikuCgojIyMgbmdpbnggV2ViU29ja2V0IFByb3h5CgpDbG91ZGZsYXJlIFR1bm5lbCBzdHJpcHMgV2ViU29ja2V0IGBVcGdyYWRlYCBoZWFkZXJzIGJ5IGRlZmF1bHQuIG5naW54IG9uIHBvcnQgYDM4NDgxYCByZS1pbmplY3RzIHRoZW0gYmVmb3JlIGZvcndhcmRpbmcgdG8gdGhlIERvY2tlciBjb250YWluZXIuCgpDb25maWcgZmlsZXM6Ci0gYC9ldGMvbmdpbngvc2l0ZXMtYXZhaWxhYmxlL29wZW5zaW4td3MtcHJveHlgCi0gYC9ldGMvbmdpbngvY29uZi5kL3dzLXVwZ3JhZGUuY29uZmAKCktleSBuZ2lueCBkaXJlY3RpdmVzOgpgYGBuZ2lueApwcm94eV9odHRwX3ZlcnNpb24gMS4xOwpwcm94eV9zZXRfaGVhZGVyIFVwZ3JhZGUgJGh0dHBfdXBncmFkZTsKcHJveHlfc2V0X2hlYWRlciBDb25uZWN0aW9uICJ1cGdyYWRlIjsKcHJveHlfc2V0X2hlYWRlciBIb3N0ICRob3N0Owpwcm94eV9yZWFkX3RpbWVvdXQgMzYwMHM7CmBgYAoKPiAqKktub3duIGlzc3VlOioqIGBAYWdlbnRgIFdlYlNvY2tldCBjb25uZWN0aW9ucyBhcmUgYnJva2VuIHRocm91Z2ggQ2xvdWRmbGFyZSBUdW5uZWwgZXZlbiB3aXRoIG5naW54LiBDbG91ZGZsYXJlIHN0cmlwcyBVcGdyYWRlIGhlYWRlcnMgYXQgdGhlIHR1bm5lbCBsYXllci4gVGhpcyBhZmZlY3RzIGFnZW50IGxpdmUtc3RhdHVzIG9ubHk7IGNoYXQgYW5kIGRvY3VtZW50IGZlYXR1cmVzIHdvcmsgbm9ybWFsbHkuCgojIyMgUmVjb3ZlcnkKCklmIGBzaW5jaGF0LmRlbHFoaS5jb21gIHJldHVybnMgQ2xvdWRmbGFyZSBlcnJvcnMgKDEwMzMsIDUyMSwgNTIyLCA1MjMpLCBzZWUgdGhlIGBza2lsbC1jbG91ZGZsYXJlZC1yZWNvdmVyeWAgc2tpbGwgZm9yIHRoZSBvbmUtc2hvdCByZWNvdmVyeSBwcm9jZWR1cmUuCgotLS0KCiMjIDUuIFZNIERldGFpbHMKCnwgUHJvcGVydHkgfCBWYWx1ZSB8CnwtLS18LS0tfAp8IFByb3ZpZGVyIHwgT3JhY2xlIENsb3VkIEluZnJhc3RydWN0dXJlIChPQ0kpIHwKfCBJUCB8IGA5Mi41LjYwLjg3YCB8CnwgSW5zdGFuY2UgfCBBUk0gQTEuRmxleCwgMjRHQiBSQU0gfAp8IENvbnRhaW5lciBuYW1lIHwgYG9wZW5zaW4tYXBwYCB8CnwgQXBwIHBhdGggfCBgL2hvbWUvdWJ1bnR1L09wZW5TSU4tQ2hhdC9gIHwKfCBEQiBwYXRoIHwgYC9ob21lL3VidW50dS9PcGVuU0lOLUNoYXQvc2VydmVyL3N0b3JhZ2Uvb3BlbnNpbi5kYmAgfAp8IERCIGJhY2t1cHMgfCBgL2hvbWUvdWJ1bnR1L2JhY2t1cHMvYCAoY3JvbiBkYWlseSBhdCAwMzowMCkgfAp8IE1vbml0b3JpbmcgfCBVcHRpbWUgS3VtYSBhdCBgc3RhdHVzLmRlbHFoaS5jb21gIHwKCiMjIyBTU0ggQWNjZXNzCgpgYGBiYXNoCnNzaCB1YnVudHVAOTIuNS42MC44NwpgYGAKCi0tLQoKIyMgNi4gRnJvbnRlbmQgRGVwbG95IFByb2Nlc3MKCkZyb250ZW5kIGNoYW5nZXMgYXJlIGJ1aWx0IGxvY2FsbHkgYW5kIHJzeW5jJ2QgdG8gdGhlIFZNLCB0aGVuIGNvcGllZCBpbnRvIHRoZSBydW5uaW5nIGNvbnRhaW5lci4KCmBgYGJhc2gKIyAxLiBCdWlsZCBmcm9udGVuZCBsb2NhbGx5CmNkIGZyb250ZW5kICYmIHlhcm4gYnVpbGQKCiMgMi4gcnN5bmMgdG8gVk0KcnN5bmMgLWF2eiAtLWRlbGV0ZSBmcm9udGVuZC9kaXN0LyB1YnVudHVAOTIuNS42MC44NzovdG1wL29wZW5zaW4tZGlzdC8KCiMgMy4gQ29weSBpbnRvIGNvbnRhaW5lcgpzc2ggdWJ1bnR1QDkyLjUuNjAuODcgImRvY2tlciBjcCAvdG1wL29wZW5zaW4tZGlzdC8uIG9wZW5zaW4tYXBwOi9hcHAvZnJvbnRlbmQvZGlzdC8iCgojIDQuIFJlc3RvcmUgaW5kZXguaHRtbCAoZG9ja2VyIGNwIG92ZXJ3cml0ZXMgaXQgd2l0aCB0aGUgYnVpbHQgdmVyc2lvbjsKIyAgICB0aGUgY29udGFpbmVyIHNoaXBzIGEgdGVtcGxhdGVkIF9pbmRleC5odG1sIHRoYXQgbXVzdCBiZSByZXN0b3JlZCkKc3NoIHVidW50dUA5Mi41LjYwLjg3ICJkb2NrZXIgZXhlYyBvcGVuc2luLWFwcCBjcCAvYXBwL2Zyb250ZW5kL2Rpc3QvX2luZGV4Lmh0bWwgL2FwcC9mcm9udGVuZC9kaXN0L2luZGV4Lmh0bWwiCmBgYAoKPiAqKk5vdGU6KiogYGNob3duYCBlcnJvcnMgZm9yIHJvb3Qtb3duZWQgaW1hZ2UgZmlsZXMgZHVyaW5nIGBkb2NrZXIgY3BgIGFyZSBpZ25vcmFibGUg4oCUIHRoZXkgZG9uJ3QgYWZmZWN0IGZ1bmN0aW9uYWxpdHkuCgotLS0KCiMjIDcuIEtub3duIElzc3VlcyAmIFdvcmthcm91bmRzCgojIyMgYGRvY2tlciByZXN0YXJ0YCBkb2VzIG5vdCByZWxvYWQgYC5lbnZgCioqU3ltcHRvbToqKiBDaGFuZ2VkIGVudiB2YXJzIGRvbid0IHRha2UgZWZmZWN0IGFmdGVyIGBkb2NrZXIgcmVzdGFydCBvcGVuc2luLWFwcGAuCioqRml4OioqIFVzZSBgZG9ja2VyIGNvbXBvc2UgZG93biAmJiBkb2NrZXIgY29tcG9zZSB1cCAtZGAgKGZ1bGwgcmVjcmVhdGUgcGlja3MgdXAgbmV3IGAuZW52YCkuCgojIyMgUHJpc21hIENMSSB2ZXJzaW9uIG1pc21hdGNoCioqU3ltcHRvbToqKiBgcHJpc21hIG1pZ3JhdGVgIGZhaWxzIGluc2lkZSB0aGUgY29udGFpbmVyLgoqKkNhdXNlOioqIENvbnRhaW5lciBoYXMgUHJpc21hIENMSSBgNy44LjBgOyBwcm9qZWN0IHNjaGVtYSB1c2VzIGA1LjMuMWAuCioqV29ya2Fyb3VuZDoqKiBSdW4gbWlncmF0aW9ucyBvbiB0aGUgaG9zdCAobm90IGluIGNvbnRhaW5lciksIG9yIGFwcGx5IHNjaGVtYSBjaGFuZ2VzIHZpYSByYXcgU1FMLiBUaGUgYHdvcmtzcGFjZV9ub3Rlc2AgdGFibGUgd2FzIGNyZWF0ZWQgdGhpcyB3YXkuCgojIyMgYEBhZ2VudGAgV2ViU29ja2V0IGJyb2tlbiB2aWEgQ2xvdWRmbGFyZSBUdW5uZWwKKipTeW1wdG9tOioqIEFnZW50IGxpdmUtc3RhdHVzIFdlYlNvY2tldCBmYWlscyB0byBjb25uZWN0IHRocm91Z2ggdGhlIHR1bm5lbC4KKipDYXVzZToqKiBDbG91ZGZsYXJlIHN0cmlwcyBgVXBncmFkZWAgaGVhZGVycyBhdCB0aGUgdHVubmVsIGxheWVyLCBldmVuIHdpdGggbmdpbnggcmUtaW5qZWN0aW5nIHRoZW0uCioqSW1wYWN0OioqIEFnZW50IHN0YXR1cyBpbmRpY2F0b3JzIGRvbid0IHVwZGF0ZSBsaXZlLiBDaGF0LCBSQUcsIGFuZCBkb2N1bWVudCBmZWF0dXJlcyBhcmUgdW5hZmZlY3RlZC4KKipXb3JrYXJvdW5kOioqIEFjY2VzcyB0aGUgYXBwIGRpcmVjdGx5IHZpYSBgaHR0cDovLzkyLjUuNjAuODc6Mzg0NzFgIGZvciBhZ2VudCBkZWJ1Z2dpbmcgKHRlbXBvcmFyeSwgbm90IGZvciBwcm9kdWN0aW9uIHVzZSkuCgotLS0KCiMjIDguIFRyb3VibGVzaG9vdGluZwoKfCBTeW1wdG9tIHwgTGlrZWx5IENhdXNlIHwgRml4IHwKfC0tLXwtLS18LS0tfAp8IEZyb250ZW5kIHNob3dzIHNwaW5uZXIgfCBCYWNrZW5kIG5vdCBydW5uaW5nIHwgYGRvY2tlciBjb21wb3NlIHVwIC1kYCBvbiBWTSB8CnwgTExNIHJldHVybnMgNDAzIHwgU0lOYXRvciBQb29sIFJvdXRlciBibG9ja2luZyBVc2VyLUFnZW50IHwgVmVyaWZ5IGBmaXJld29ya3NhaS5qc2AgaGFzIGBVc2VyLUFnZW50OiBPcGVuU0lOLUNoYXQvMS4wYCBoZWFkZXIgfAp8IExMTSByZXR1cm5zIDQyOSB8IFBvb2wga2V5IGV4aGF1c3RlZCB8IENoZWNrIFNJTmF0b3IgUG9vbCBSb3V0ZXIgZGFzaGJvYXJkOyBrZXlzIGF1dG8tcm90YXRlIHwKfCBgc2luY2hhdC5kZWxxaGkuY29tYCAxMDMzLzUyMS81MjIgfCBDbG91ZGZsYXJlIFR1bm5lbCBkb3duIHwgYHN5c3RlbWN0bCByZXN0YXJ0IGNsb3VkZmxhcmVkLW9wZW5zaW4tY2hhdGAgfAp8IENvbnRhaW5lciBjYW4ndCB3cml0ZSB0byBzdG9yYWdlIHwgV3JvbmcgVUlEL0dJRCB8IGBjaG93biAtUiAxMDAwOjEwMDAgc2VydmVyL3N0b3JhZ2UvYCB8CnwgYC5lbnZgIGNoYW5nZXMgbm90IGFwcGxpZWQgfCBVc2VkIGBkb2NrZXIgcmVzdGFydGAgfCBgZG9ja2VyIGNvbXBvc2UgZG93biAmJiBkb2NrZXIgY29tcG9zZSB1cCAtZGAgfAp8IFBvcnQgMzg0NzEgaW4gdXNlIHwgQW5vdGhlciBwcm9jZXNzIHwgYHNzIC10bG5wIHwgZ3JlcCAzODQ3MWAgfAoKLS0tCgojIyA5LiBRdWljayBSZWZlcmVuY2UgQ29tbWFuZHMKCmBgYGJhc2gKIyAtLS0gT24gdGhlIFZNIC0tLQoKIyBDaGVjayBjb250YWluZXIgc3RhdHVzCmRvY2tlciBwcyB8IGdyZXAgb3BlbnNpbi1hcHAKCiMgVmlldyBsb2dzCmRvY2tlciBsb2dzIC1mIC0tdGFpbCAxMDAgb3BlbnNpbi1hcHAKCiMgUmVzdGFydCBhZnRlciAuZW52IGNoYW5nZSAoTk9UICdkb2NrZXIgcmVzdGFydCcpCmNkIC9ob21lL3VidW50dS9PcGVuU0lOLUNoYXQvZG9ja2VyLW9wZW5zaW4KZG9ja2VyIGNvbXBvc2UgZG93biAmJiBkb2NrZXIgY29tcG9zZSB1cCAtZAoKIyBDaGVjayB0dW5uZWwKc3lzdGVtY3RsIHN0YXR1cyBjbG91ZGZsYXJlZC1vcGVuc2luLWNoYXQKCiMgQ2hlY2sgYWxsIHRpbWVycwpzeXN0ZW1jdGwgbGlzdC10aW1lcnMgfCBncmVwIC1FICdjbG91ZGZsYXJlZHxzaW5jaGF0JwoKIyBEQiBiYWNrdXAgKG1hbnVhbCkKY3AgL2hvbWUvdWJ1bnR1L09wZW5TSU4tQ2hhdC9zZXJ2ZXIvc3RvcmFnZS9vcGVuc2luLmRiIC9ob21lL3VidW50dS9iYWNrdXBzL29wZW5zaW4tJChkYXRlICslWSVtJWQpLmRiCgojIC0tLSBMb2NhbGx5IChtYWNPUykgLS0tCgojIEJ1aWxkIGZyb250ZW5kCmNkIGZyb250ZW5kICYmIHlhcm4gYnVpbGQKCiMgRGVwbG95IGZyb250ZW5kCnJzeW5jIC1hdnogLS1kZWxldGUgZnJvbnRlbmQvZGlzdC8gdWJ1bnR1QDkyLjUuNjAuODc6L3RtcC9vcGVuc2luLWRpc3QvCnNzaCB1YnVudHVAOTIuNS42MC44NyAiZG9ja2VyIGNwIC90bXAvb3BlbnNpbi1kaXN0Ly4gb3BlbnNpbi1hcHA6L2FwcC9mcm9udGVuZC9kaXN0LyIKc3NoIHVidW50dUA5Mi41LjYwLjg3ICJkb2NrZXIgZXhlYyBvcGVuc2luLWFwcCBjcCAvYXBwL2Zyb250ZW5kL2Rpc3QvX2luZGV4Lmh0bWwgL2FwcC9mcm9udGVuZC9kaXN0L2luZGV4Lmh0bWwiCmBgYAo=
+# OpenSIN-Chat — Production Deployment Guide
+
+> **Production URL:** `https://sinchat.delqhi.com`
+> **VM:** Oracle Cloud, `92.5.60.87`, ARM A1.Flex 24GB
+> **Status:** Live — Fireworks AI via SINator Pool Router, Cloudflare Tunnel, nginx WS proxy
+
+---
+
+## Architecture Overview
+
+```
+Internet → Cloudflare Tunnel (cloudflared) → nginx :38481 (WS upgrade) → Docker :38471 (127.0.0.1)
+                                                                      ↓
+                                                        opensin-app container (SERVER_PORT=3001)
+                                                                      ↓
+                                                        Fireworks AI ← SINator Pool Router
+                                                        SQLite: /app/server/storage/opensin.db
+```
+
+| Component | Binding | Purpose |
+|---|---|---|
+| Docker container | `127.0.0.1:38471` → container `3001` | App server (binds localhost only, not public) |
+| nginx reverse proxy | `:38481` | WebSocket Upgrade header injection |
+| Cloudflare Tunnel | systemd `cloudflared-opensin-chat.service` | Public HTTPS endpoint → nginx |
+| SINator Pool Router | `sinatorpool-router.delqhi.com` | Fireworks AI key rotation + load balancing |
+| Uptime Kuma | `status.delqhi.com` | External uptime monitoring |
+
+---
+
+## 1. LLM Provider — Fireworks AI via SINator Pool Router
+
+### Configuration
+
+The primary LLM provider is **Fireworks AI**, routed through the SINator Pool Router for API key rotation and load balancing.
+
+| Env Var | Value |
+|---|---|
+| `LLM_PROVIDER` | `fireworksAi` (hardcoded in `server/utils/agents/aibitat/providers/fireworksai.js`) |
+| `FIREWORKS_AI_LLM_BASE_PATH` | `https://sinatorpool-router.delqhi.com/inference/v1` |
+| `FIREWORKS_AI_LLM_API_KEY` | `<your-pool-key>` |
+| `FIREWORKS_AI_LLM_MODEL_PREF` | `accounts/fireworks/models/minimax-m3` |
+| `FIREWORKS_AI_LLM_MODEL_TOKEN_LIMIT` | `256000` |
+
+### Custom User-Agent Header
+
+The SINator Pool Router **blocks requests with the default OpenAI SDK User-Agent**. The `fireworksai.js` provider sets a custom header to bypass this:
+
+```js
+// server/utils/agents/aibitat/providers/fireworksai.js:26-28
+defaultHeaders: {
+  "User-Agent": "OpenSIN-Chat/1.0",
+},
+```
+
+If you fork or replace this provider, you **must** preserve this header or the router will reject all requests.
+
+---
+
+## 2. Environment Configuration (`.env`)
+
+The production `.env` lives at `docker/.env` on the VM and is mounted read-only into the container (`docker/.env:/app/server/.env:ro`).
+
+### Critical Variables
+
+```bash
+# --- Auth ---
+AUTH_TOKEN=Simone123
+JWT_SECRET=<generate-with: openssl rand -hex 24>
+SIG_KEY=<generate-with: openssl rand -hex 32>
+SIG_SALT=<generate-with: openssl rand -hex 16>
+
+# --- LLM (Fireworks AI via SINator Pool Router) ---
+LLM_PROVIDER=fireworksAi
+FIREWORKS_AI_LLM_BASE_PATH=https://sinatorpool-router.delqhi.com/inference/v1
+FIREWORKS_AI_LLM_API_KEY=<your-key>
+FIREWORKS_AI_LLM_MODEL_PREF=accounts/fireworks/models/minimax-m3
+FIREWORKS_AI_LLM_MODEL_TOKEN_LIMIT=256000
+
+# --- Server ---
+SERVER_PORT=3001
+STORAGE_DIR=/app/server/storage
+
+# --- Container port binding (host side) ---
+# The compose file maps host 38471 → container 3001.
+# PORT env var is NOT used by the app directly; SERVER_PORT controls the
+# in-container listener. 38471 is the host-facing port bound to 127.0.0.1.
+```
+
+### Full Template
+
+See `docker/.env.example` for the complete list of all supported providers, embedding engines, vector databases, TTS/STT, agent search keys, and PDF analysis tuning parameters.
+
+---
+
+## 3. Docker Deployment
+
+### Docker Compose Files
+
+| File | Purpose |
+|---|---|
+| `docker/docker-compose.yml` | Base compose (app + Vane sidecar) |
+| `docker-opensin/docker-compose.yml` | OCI VM stack |
+| `docker-opensin/docker-compose.production.yml` | Production override (container name, resource limits) |
+
+### Port Binding
+
+The container binds to `127.0.0.1:38471` on the host, mapping to port `3001` inside the container (`SERVER_PORT=3001`). Port `38471` is a high port chosen to avoid clashing with legacy deployments on `3001`.
+
+```yaml
+# docker/docker-compose.yml
+ports:
+  - "38471:3001"  # Host 38471 → Container 3001 (SERVER_PORT)
+```
+
+On the OCI VM, the production override ensures the container is named `opensin-app` and gets 4GB / 4 CPU limits.
+
+### Storage Permissions
+
+Storage directories **must** be owned by UID/GID `1000:1000` for the container to write:
+
+```bash
+chown -R 1000:1000 server/storage/
+chown -R 1000:1000 collector/hotdir/
+chown -R 1000:1000 collector/outputs/
+```
+
+### Restarting After `.env` Changes
+
+**`docker restart` does NOT reload `.env` files.** You must do a full compose cycle:
+
+```bash
+# On the VM (use 'docker' on Linux, 'orb' on macOS)
+docker compose down && docker compose up -d
+```
+
+> **macOS development:** use OrbStack (`orb` CLI), never Docker Desktop.
+
+---
+
+## 4. Cloudflare Tunnel Setup
+
+### systemd Services
+
+| Service | Interval | Purpose |
+|---|---|---|
+| `cloudflared-opensin-chat.service` | — | Main tunnel daemon |
+| `cloudflared-watchdog.timer` | 60s | Restarts tunnel if it dies |
+| `sinchat-healthcheck.timer` | 120s | Local health probe (`127.0.0.1:38471`) |
+| `sinchat-external-monitor.timer` | 300s | External probe (`sinchat.delqhi.com`) |
+
+### Tunnel Configuration
+
+Config file: `/home/ubuntu/.cloudflared/config-opensin.yml`
+
+The tunnel routes `sinchat.delqhi.com` → `http://localhost:38481` (nginx), which then proxies to `127.0.0.1:38471` (Docker).
+
+### nginx WebSocket Proxy
+
+Cloudflare Tunnel strips WebSocket `Upgrade` headers by default. nginx on port `38481` re-injects them before forwarding to the Docker container.
+
+Config files:
+- `/etc/nginx/sites-available/opensin-ws-proxy`
+- `/etc/nginx/conf.d/ws-upgrade.conf`
+
+Key nginx directives:
+```nginx
+proxy_http_version 1.1;
+proxy_set_header Upgrade $http_upgrade;
+proxy_set_header Connection "upgrade";
+proxy_set_header Host $host;
+proxy_read_timeout 3600s;
+```
+
+> **Known issue:** `@agent` WebSocket connections are broken through Cloudflare Tunnel even with nginx. Cloudflare strips Upgrade headers at the tunnel layer. This affects agent live-status only; chat and document features work normally.
+
+### Recovery
+
+If `sinchat.delqhi.com` returns Cloudflare errors (1033, 521, 522, 523), see the `skill-cloudflared-recovery` skill for the one-shot recovery procedure.
+
+---
+
+## 5. VM Details
+
+| Property | Value |
+|---|---|
+| Provider | Oracle Cloud Infrastructure (OCI) |
+| IP | `92.5.60.87` |
+| Instance | ARM A1.Flex, 24GB RAM |
+| Container name | `opensin-app` |
+| App path | `/home/ubuntu/OpenSIN-Chat/` |
+| DB path | `/home/ubuntu/OpenSIN-Chat/server/storage/opensin.db` |
+| DB backups | `/home/ubuntu/backups/` (cron daily at 03:00) |
+| Monitoring | Uptime Kuma at `status.delqhi.com` |
+
+### SSH Access
+
+```bash
+ssh ubuntu@92.5.60.87
+```
+
+---
+
+## 6. Frontend Deploy Process
+
+Frontend changes are built locally and rsync'd to the VM, then copied into the running container.
+
+```bash
+# 1. Build frontend locally
+cd frontend && yarn build
+
+# 2. rsync to VM
+rsync -avz --delete frontend/dist/ ubuntu@92.5.60.87:/tmp/opensin-dist/
+
+# 3. Copy into container
+ssh ubuntu@92.5.60.87 "docker cp /tmp/opensin-dist/. opensin-app:/app/frontend/dist/"
+
+# 4. Restore index.html (docker cp overwrites it with the built version;
+#    the container ships a templated _index.html that must be restored)
+ssh ubuntu@92.5.60.87 "docker exec opensin-app cp /app/frontend/dist/_index.html /app/frontend/dist/index.html"
+```
+
+> **Note:** `chown` errors for root-owned image files during `docker cp` are ignorable — they don't affect functionality.
+
+---
+
+## 7. Known Issues & Workarounds
+
+### `docker restart` does not reload `.env`
+**Symptom:** Changed env vars don't take effect after `docker restart opensin-app`.
+**Fix:** Use `docker compose down && docker compose up -d` (full recreate picks up new `.env`).
+
+### Prisma CLI version mismatch
+**Symptom:** `prisma migrate` fails inside the container.
+**Cause:** Container has Prisma CLI `7.8.0`; project schema uses `5.3.1`.
+**Workaround:** Run migrations on the host (not in container), or apply schema changes via raw SQL. The `workspace_notes` table was created this way.
+
+### `@agent` WebSocket broken via Cloudflare Tunnel
+**Symptom:** Agent live-status WebSocket fails to connect through the tunnel.
+**Cause:** Cloudflare strips `Upgrade` headers at the tunnel layer, even with nginx re-injecting them.
+**Impact:** Agent status indicators don't update live. Chat, RAG, and document features are unaffected.
+**Workaround:** Access the app directly via `http://92.5.60.87:38471` for agent debugging (temporary, not for production use).
+
+---
+
+## 8. Troubleshooting
+
+| Symptom | Likely Cause | Fix |
+|---|---|---|
+| Frontend shows spinner | Backend not running | `docker compose up -d` on VM |
+| LLM returns 403 | SINator Pool Router blocking User-Agent | Verify `fireworksai.js` has `User-Agent: OpenSIN-Chat/1.0` header |
+| LLM returns 429 | Pool key exhausted | Check SINator Pool Router dashboard; keys auto-rotate |
+| `sinchat.delqhi.com` 1033/521/522 | Cloudflare Tunnel down | `systemctl restart cloudflared-opensin-chat` |
+| Container can't write to storage | Wrong UID/GID | `chown -R 1000:1000 server/storage/` |
+| `.env` changes not applied | Used `docker restart` | `docker compose down && docker compose up -d` |
+| Port 38471 in use | Another process | `ss -tlnp | grep 38471` |
+
+---
+
+## 9. Quick Reference Commands
+
+```bash
+# --- On the VM ---
+
+# Check container status
+docker ps | grep opensin-app
+
+# View logs
+docker logs -f --tail 100 opensin-app
+
+# Restart after .env change (NOT 'docker restart')
+cd /home/ubuntu/OpenSIN-Chat/docker-opensin
+docker compose down && docker compose up -d
+
+# Check tunnel
+systemctl status cloudflared-opensin-chat
+
+# Check all timers
+systemctl list-timers | grep -E 'cloudflared|sinchat'
+
+# DB backup (manual)
+cp /home/ubuntu/OpenSIN-Chat/server/storage/opensin.db /home/ubuntu/backups/opensin-$(date +%Y%m%d).db
+
+# --- Locally (macOS) ---
+
+# Build frontend
+cd frontend && yarn build
+
+# Deploy frontend
+rsync -avz --delete frontend/dist/ ubuntu@92.5.60.87:/tmp/opensin-dist/
+ssh ubuntu@92.5.60.87 "docker cp /tmp/opensin-dist/. opensin-app:/app/frontend/dist/"
+ssh ubuntu@92.5.60.87 "docker exec opensin-app cp /app/frontend/dist/_index.html /app/frontend/dist/index.html"
+```

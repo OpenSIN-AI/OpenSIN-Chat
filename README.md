@@ -1,1 +1,263 @@
-PGEgbmFtZT0icmVhZG1lLXRvcCI+PC9hPgoKIyBPcGVuU0lOIENoYXQKCjxwIGFsaWduPSJjZW50ZXIiPgogIDxlbT5TZWxmLWhvc3RlZCBBSSB3b3Jrc3BhY2UgZm9yIHBvbGl0aWNhbCByZXNlYXJjaCDigJQgY2hhdCB3aXRoIGRvY3VtZW50cywgc2VhcmNoIHRoZSBCdW5kZXN0YWcsIGdlbmVyYXRlIHJlcG9ydHMuPC9lbT4KPC9wPgoKPCEtLSBCQURHRVMgLS0+CjxwIGFsaWduPSJjZW50ZXIiPgogIDxhIGhyZWY9Imh0dHBzOi8vc2luY2hhdC5kZWxxaGkuY29tIj4KICAgIDxpbWcgc3JjPSJodHRwczovL2ltZy5zaGllbGRzLmlvL2JhZGdlL0xpdmUtc2luY2hhdC5kZWxxaGkuY29tLTAwOWVlMD9sb2dvPWNsb3VkZmxhcmUiIGFsdD0iTGl2ZSIgLz4KICA8L2E+CiAgPGEgaHJlZj0iLi9MSUNFTlNFIj4KICAgIDxpbWcgc3JjPSJodHRwczovL2ltZy5zaGllbGRzLmlvL2JhZGdlL2xpY2Vuc2UtTUlULWJsdWUuc3ZnIiBhbHQ9IkxpY2Vuc2UiIC8+CiAgPC9hPgogIDxhIGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9PcGVuU0lOLUFJL09wZW5TSU4tQ2hhdCI+CiAgICA8aW1nIHNyYz0iaHR0cHM6Ly9pbWcuc2hpZWxkcy5pby9iYWRnZS9UZWxlbWV0cnktWkVSTy1yZWQiIGFsdD0iVGVsZW1ldHJ5IiAvPgogIDwvYT4KPC9wPgoKPCEtLSBRVUlDSyBMSU5LUyAtLT4KPHAgYWxpZ249ImNlbnRlciI+CiAgICA8YSBocmVmPSIjcXVpY2stc3RhcnQiPlF1aWNrIFN0YXJ0PC9hPiB8CiAgICA8YSBocmVmPSIjZmVhdHVyZXMiPkZlYXR1cmVzPC9hPiB8CiAgICA8YSBocmVmPSIjc2NyZWVuc2hvdHMiPlNjcmVlbnNob3RzPC9hPiB8CiAgICA8YSBocmVmPSIjYXJjaGl0ZWN0dXJlIj5BcmNoaXRlY3R1cmU8L2E+IHwKICAgIDxhIGhyZWY9IiNkZXBsb3ltZW50Ij5EZXBsb3ltZW50PC9hPiB8CiAgICA8YSBocmVmPSIjY3JlZGl0cyI+Q3JlZGl0czwvYT4KPC9wPgoKPCEtLSBIRVJPIEJBTk5FUiAoY3VzdG9tIFNWRywgZHVhbC1tb2RlKSAtLT4KPHBpY3R1cmU+CiAgPHNvdXJjZSBtZWRpYT0iKHByZWZlcnMtY29sb3Itc2NoZW1lOiBkYXJrKSIgc3Jjc2V0PSIuL2Fzc2V0cy9oZXJvLWJhbm5lci5zdmciIC8+CiAgPHNvdXJjZSBtZWRpYT0iKHByZWZlcnMtY29sb3Itc2NoZW1lOiBsaWdodCkiIHNyY3NldD0iLi9hc3NldHMvaGVyby1iYW5uZXItbGlnaHQuc3ZnIiAvPgogIDxpbWcgc3JjPSIuL2Fzc2V0cy9oZXJvLWJhbm5lci5zdmciIGFsdD0iT3BlblNJTiBDaGF0IiAvPgo8L3BpY3R1cmU+CgotLS0KCk9wZW5TSU4gQ2hhdCBpcyBhICoqc2VsZi1ob3N0ZWQgQUkgcGxhdGZvcm0qKiBmb3IgcG9saXRpY2FsIHdvcmssIHJlc2VhcmNoLCBhbmQga25vd2xlZGdlIG1hbmFnZW1lbnQuIFVwbG9hZCB5b3VyIGRvY3VtZW50cyAoQnVuZGVzdGFnIHBhcGVycywgcHJlc3MgcmVsZWFzZXMsIGxlZ2lzbGF0aW9uIGRyYWZ0cykgYW5kIHRoZSBBSSBhbnN3ZXJzIHF1ZXN0aW9ucyAqKm9ubHkgZnJvbSB5b3VyIHNvdXJjZXMqKiwgd2l0aCB0cmFjZWFibGUgY2l0YXRpb25zLiBObyBoYWxsdWNpbmF0aW9ucyBmcm9tIHRoaW4gYWlyLCBubyBjbG91ZCBkZXBlbmRlbmN5LCB6ZXJvIHRlbGVtZXRyeS4KCkEgc292ZXJlaWduLCBpbmRlcGVuZGVudCBwcm9kdWN0IGJ1aWx0IGJ5IFtPcGVuU0lOLUFJXShodHRwczovL2dpdGh1Yi5jb20vT3BlblNJTi1BSSkgYW5kIG9wdGltaXplZCBmb3IgdGhlIEdlcm1hbiBwb2xpdGljYWwgc3BoZXJlLiBPcmlnaW5hbGx5IGluc3BpcmVkIGJ5IEFueXRoaW5nTExNLCBPcGVuU0lOIENoYXQgaGFzIGV2b2x2ZWQgaW50byBhIHB1cnBvc2UtYnVpbHQgc3lzdGVtIGZvciBwb2xpdGljYWwgcmVzZWFyY2ggd2l0aCBzcGVjaWFsaXplZCBhZ2VudHMsIHBvbGl0aWNpYW4gZGF0YWJhc2VzLCBhbmQgY29tcGxpYW5jZSBmZWF0dXJlcy4KCiMjIFF1aWNrIFN0YXJ0CgpgYGBiYXNoCmdpdCBjbG9uZSBodHRwczovL2dpdGh1Yi5jb20vT3BlblNJTi1BSS9PcGVuU0lOLUNoYXQuZ2l0CmNkIE9wZW5TSU4tQ2hhdC9kb2NrZXItb3BlbnNpbgpjcCAuZW52LmV4YW1wbGUgLmVudgpkb2NrZXIgY29tcG9zZSB1cCAtZApgYGAKClRoZSBjb250YWluZXIgbWFwcyBob3N0IHBvcnQgYDQzOTM5YCB0byBpbnRlcm5hbCBwb3J0IGAzMDAxYC4gT3BlbiBgaHR0cDovL2xvY2FsaG9zdDo0MzkzOWAgYWZ0ZXIgc3RhcnR1cC4KCj4gWyFJTVBPUlRBTlRdCj4gU2V0IGBGSVJFV09SS1NfQUlfTExNX0JBU0VfUEFUSGAgYW5kIGBGSVJFV09SS1NfQUlfTExNX0FQSV9LRVlgIGluIGAuZW52YCB0byB1c2UgRmlyZXdvcmtzIEFJIGFzIHRoZSBMTE0gcHJvdmlkZXIuIFRoZSBTSU5hdG9yIFBvb2wgUm91dGVyIFVSTCBnb2VzIGluIGBGSVJFV09SS1NfQUlfTExNX0JBU0VfUEFUSGAuCgo+IFshTk9URV0KPiBGb3IgZnVsbCBzZXR1cCBpbnN0cnVjdGlvbnMsIGVudmlyb25tZW50IHZhcmlhYmxlcywgYW5kIGJhcmUtbWV0YWwgZGVwbG95bWVudCwgc2VlIFtERVBMT1lNRU5UX0dVSURFLm1kXSguL0RFUExPWU1FTlRfR1VJREUubWQpLgoKIyMgRmVhdHVyZXMKCiMjIyBDb3JlIEZlYXR1cmVzCgotICoqRG9jdW1lbnQgQ2hhdCoqIOKAlCBQREYsIERPQ1gsIFRYVCwgTWFya2Rvd24sIHdlYiBwYWdlcywgWW91VHViZSB0cmFuc2NyaXB0cwotICoqVmVjdG9yIERhdGFiYXNlcyoqIOKAlCBMYW5jZURCLCBDaHJvbWEsIFBpbmVjb25lLCBRZHJhbnQsIE1pbHZ1cywgUEdWZWN0b3IKLSAqKkxMTSBQcm92aWRlcnMqKiDigJQgRmlyZXdvcmtzIEFJIChwcmltYXJ5LCB2aWEgU0lOYXRvciBQb29sIFJvdXRlcik7IGFsdGVybmF0aXZlczogT3BlbkFJLCBBbnRocm9waWMsIE1pc3RyYWwsIERlZXBTZWVrLCBPbGxhbWEgKGxvY2FsKSwgTE0gU3R1ZGlvCi0gKipBSSBBZ2VudHMqKiDigJQgYXV0b21hdGVkIHJlc2VhcmNoLCB3ZWIgYnJvd3NpbmcsIFBERiBjcmVhdGlvbiwgY29kZSBleGVjdXRpb24KLSAqKk1DUCBDb21wYXRpYmxlKiog4oCUIGludGVncmF0ZSBhbnkgZXh0ZXJuYWwgdG9vbCB2aWEgTW9kZWwgQ29udGV4dCBQcm90b2NvbAotICoqTXVsdGktVXNlcioqIOKAlCBwZXJtaXNzaW9ucywgd29ya3NwYWNlcywgYXVkaXQgbG9ncyAoRG9ja2VyIGVkaXRpb24pCi0gKipNdWx0aWxpbmd1YWwqKiDigJQgR2VybWFuLCBFbmdsaXNoLCBhbmQgbW9yZQotICoqWmVybyBUZWxlbWV0cnkqKiDigJQgbm8gUG9zdEhvZywgbm8gQ0ROIHRyYWNraW5nLCBubyBvdXRib3VuZCBjYWxscyB0byB0aGlyZCBwYXJ0aWVzCgojIyMgUG9saXRpY2FsIFJlc2VhcmNoICYgT3BlblNJTi1BSSBTcGVjaWFsaXphdGlvbnMKCi0gKipQb2xpdGljaWFuIERhdGFiYXNlKiog4oCUIEJ1bmRlc3RhZyBBUEkgKyBBYmdlb3JkbmV0ZW53YXRjaCBhcyBzdHJ1Y3R1cmVkIHNvdXJjZXMgKGJpb2dyYXBoaWNhbCBkYXRhLCBtYW5kYXRlcywgdm90ZXMsIHNwZWVjaGVzKS4gU2VtYW50aWMgZnVsbC10ZXh0IHNlYXJjaCBvdmVyIHBsZW5hcnkgcHJvdG9jb2xzIHZpYSBMYW5jZURCIHZlY3RvciBpbmRleAotICoqRGVlcCBSZXNlYXJjaCBQaXBlbGluZSoqIOKAlCBhdXRvbWF0ZWQgd2ViIHJlc2VhcmNoIChTZWFyY2gg4oaSIEV4dHJhY3Qg4oaSIFN1bW1hcml6ZSkgd2l0aCBzb3VyY2UgdHJhY2tpbmcuIEFzeW5jIHZpYSBqb2IgSURzLCBwb2xsaW5nLWNhcGFibGUKLSAqKk9wZW5TSU4gUERGIFJlcG9ydHMqKiDigJQgYnJhbmRlZCByZXBvcnRzIChjb3ZlciwgaGVhZGVyLCBmb290ZXIgaW4gT3BlblNJTiBibHVlIGAjMDA5ZWUwYCkgd2l0aCB0YWJsZSBvZiBjb250ZW50cywgc291cmNlIGxpc3RzLCBhbmQgcG9saXRpY2lhbiByZWZlcmVuY2VzIOKAlCBnZW5lcmF0ZWQgZGlyZWN0bHkgZnJvbSByZXNlYXJjaCBqb2JzCi0gKipBZ2VudCBQbHVnaW5zKiog4oCUIGBAcG9saXRpY2lhbi1zZWFyY2hgLCBgQGRlZXAtcmVzZWFyY2hgLCBgQGdlbmVyYXRlLXJlcG9ydGAsIGBAb3JjaGVzdHJhdG9yYCwgYEBwZGYtYW5hbHl6ZWAsIGBAYnJvd3Nlci12aXNpb25gLCBgQGltYWdlLWdlbmVyYXRpb25gLCBgQGNyZWF0ZS1maWxlc2Ag4oCUIGNhbGxhYmxlIGRpcmVjdGx5IGluIGNoYXQKLSAqKkZpcmV3b3JrcyBBSSBWaXNpb24qKiDigJQgbXVsdGltb2RhbCBpbWFnZSBhbmFseXNpcyB2aWEgRmlyZXdvcmtzIEFJIG1vZGVscyAobWluaW1heC1tMywga2ltaS1rMnA1LzYvNywgcXdlbi0zcDctcGx1cykuIFVwbG9hZCBpbWFnZXMgYW5kIHRoZSBBSSBkZXNjcmliZXMgd2hhdCBpdCBzZWVzCi0gKiozLDAwMCsgVGVzdHMqKiDigJQgY29tcHJlaGVuc2l2ZSBmcm9udGVuZCAoVml0ZXN0KSBhbmQgc2VydmVyIChKZXN0KSB0ZXN0IGNvdmVyYWdlCgojIyMgVUkgRmVhdHVyZXMKCi0gKipDaGF0R1BULXN0eWxlIFVJKiog4oCUIGNlbnRlcmVkIGNoYXQgbGF5b3V0IChtYXgtdy04MDBweCksIHVzZXIgbWVzc2FnZSBidWJibGVzIHJpZ2h0LWFsaWduZWQsIEFJIG1lc3NhZ2VzIGxlZnQtYWxpZ25lZAotICoqRGFyay9MaWdodCBNb2RlKiog4oCUIHRvZ2dsZSBidXR0b24gaW4gc2lkZWJhciwgZnVsbCB0aGVtZSBzdXBwb3J0IHdpdGggYGxpZ2h0OmAgQ1NTIHByZWZpeCBzeXN0ZW0KLSAqKkNvZGUgQmxvY2tzKiog4oCUIHN5bnRheCBoaWdobGlnaHRpbmcgd2l0aCBjb3B5IGJ1dHRvbiwgbGFuZ3VhZ2UgbGFiZWwsIGJnL2JvcmRlciBzdHlsaW5nIGluIGJvdGggbW9kZXMKLSAqKk5vdGVwYWQqKiDigJQgaW5saW5lIHdvcmtzcGFjZSBub3RlcyB3aXRoIGF1dG8tc2F2ZSwgcGluLCBhbmQgZGVsZXRlICh3b3Jrc3BhY2Vfbm90ZXMgdGFibGUpCi0gKipHcm91bmRpbmcgQmFkZ2UqKiDigJQgU3BhcmtsZSBpY29uIGJhZGdlIHNob3dpbmcgd2hlbiBBSSB1c2VzIGRvY3VtZW50IHNvdXJjZXMgKFJBRykKLSAqKkF1dG8tU3VtbWFyeSBDYXJkcyoqIOKAlCBkb2N1bWVudCBzbmlwcGV0cyBwcmV2aWV3IGluIHNpZGViYXIKLSAqKk1vYmlsZSBSZXNwb25zaXZlKiog4oCUIDM3NXB4IHZpZXdwb3J0LCBvdmVybGF5IHBhbmVscywgbm8gaG9yaXpvbnRhbCBvdmVyZmxvdwotICoqTG9hZGluZyBBbmltYXRpb24qKiDigJQgMy1wdWxzZSBkb3RzIGR1cmluZyBBSSByZXNwb25zZQotICoqQWN0aW9uIEJ1dHRvbnMqKiDigJQgaG92ZXItb25seSAoVFRTLCBDb3B5LCBFZGl0LCBHb29kIFJlc3BvbnNlLCBNb3JlKSBsaWtlIENoYXRHUFQvQ2xhdWRlCi0gKipTT1RBIENoYXJ0cyAoRUNoYXJ0cykqKiDigJQgdGhlIEFJIGdlbmVyYXRlcyBpbnRlcmFjdGl2ZSBjaGFydHMgZGlyZWN0bHkgaW4gY2hhdDogYmFyLCBsaW5lLCBhcmVhLCBwaWUsIHJhZGFyLCBzY2F0dGVyLCB0cmVlbWFwLCBmdW5uZWwsIHJhZGlhbEJhci4gQXBhY2hlIEVDaGFydHMgNiByZW5kZXJpbmcgd2l0aCBncmFkaWVudCBmaWxscywgZ2xvdyBzaGFkb3dzLCByb3VuZGVkIGJhcnMsIHN0YWdnZXJlZCBlbGFzdGljIGFuaW1hdGlvbnMsIGRhcmsvbGlnaHQgdGhlbWUgc3VwcG9ydCwgaG92ZXIgdG9vbHRpcHMsIHNhdmUtYXMtaW1hZ2UgKDJ4IFBORyksIGFuZCBkYXRhLXZpZXcgdG9vbGJveC4gTXVsdGktc2VyaWVzIHN1cHBvcnQgZm9yIGdyb3VwZWQvY29tcGFyaXNvbiBjaGFydHMuIFRoZSBgY3JlYXRlLWNoYXJ0YCBhZ2VudCBwbHVnaW4gc2VuZHMgYHt0eXBlLCBkYXRhc2V0LCB0aXRsZSwgY2FwdGlvbn1gIHZpYSBXZWJTb2NrZXQg4oCUIG5vIGV4dGVybmFsIHNlcnZpY2VzLCBubyBBUEkga2V5cywgZnVsbHkgbG9jYWwgcmVuZGVyaW5nCgojIyBTY3JlZW5zaG90cwoKfCBMaWdodCBNb2RlIHwgRGFyayBNb2RlIHwgTW9iaWxlIHwKfC0tLS0tLS0tLS0tLXwtLS0tLS0tLS0tLXwtLS0tLS0tLXwKfCAhW0VtcHR5IFN0YXRlXShkb2NzL3NjcmVlbnNob3RzL2VtcHR5LXN0YXRlLWxpZ2h0LnBuZykgfCAhW0RhcmsgQ2hhdF0oZG9jcy9zY3JlZW5zaG90cy9jaGF0LWNvZGVibG9jay1kYXJrLnBuZykgfCAhW01vYmlsZV0oZG9jcy9zY3JlZW5zaG90cy9tb2JpbGUtZW1wdHktc3RhdGUucG5nKSB8CgohW0NoYXQgd2l0aCBDb2RlIEJsb2Nrc10oZG9jcy9zY3JlZW5zaG90cy9jaGF0LWNvZGVibG9jay1saWdodC5wbmcpCiFbU2lkZWJhcl0oZG9jcy9zY3JlZW5zaG90cy9zaWRlYmFyLWxpZ2h0LnBuZykKCiMjIyBFQ2hhcnRzIOKAlCBTT1RBIERpYWdyYW1tZSBkaXJla3QgaW0gQ2hhdAoKRGllIEtJIGdlbmVyaWVydCBpbnRlcmFrdGl2ZSBBcGFjaGUgRUNoYXJ0cy1EaWFncmFtbWUgb2huZSBleHRlcm5lIERpZW5zdGU6Cgp8IEZyYWt0aW9uc3ZlcnRlaWx1bmcgfCBBZkQgbmFjaCBCdW5kZXNsYW5kIHwgUmVkZWFrdGl2aXRhdCB8CnwtLS18LS0tfC0tLXwKfCAhW1BpZV0oc2NyZWVuc2hvdHMvZGVtby1jaGFydHMvMDEtZnJha3Rpb25zdmVydGVpbHVuZy5wbmcpIHwgIVtCYXJdKHNjcmVlbnNob3RzL2RlbW8tY2hhcnRzLzAyLWJ1bmRlc2xhZW5kZXIucG5nKSB8ICFbQXJlYV0oc2NyZWVuc2hvdHMvZGVtby1jaGFydHMvMDMtcmVkZWFrdGl2aXRhZXQucG5nKSB8Cgp8IFRvcCBSZWRuZXIgfCBBYnN0aW1tdW5nc3ZlcmhhbHRlbiB8IEF1c3NjaHVzcy1QcmFzZW56IHwKfC0tLXwtLS18LS0tfAp8ICFbQmFyXShzY3JlZW5zaG90cy9kZW1vLWNoYXJ0cy8wNC10b3AtcmVkbmVyLnBuZykgfCAhW1BpZV0oc2NyZWVuc2hvdHMvZGVtby1jaGFydHMvMDUtYWJzdGltbXVuZ3N2ZXJoYWx0ZW4ucG5nKSB8ICFbR3JvdXBlZCBCYXJdKHNjcmVlbnNob3RzL2RlbW8tY2hhcnRzLzA2LWF1c3NjaHVlc3NlLnBuZykgfAoKIyMgQXJjaGl0ZWN0dXJlCgpgYGBtZXJtYWlkCmZsb3djaGFydCBUQgogICAgVXNlcihbIkJyb3dzZXI8YnIvPmh0dHBzOi8vc2luY2hhdC5kZWxxaGkuY29tIl0pCgogICAgc3ViZ3JhcGggQ2xvdWRmbGFyZVsiQ2xvdWRmbGFyZSBFZGdlIChETlMgKyBUdW5uZWwpIl0KICAgICAgICBETlNbIkROUyBSZWNvcmRzIl0KICAgICAgICBUdW5uZWxbIlR1bm5lbCBCcm9rZXIiXQogICAgZW5kCgogICAgc3ViZ3JhcGggSG9zdFsiT0NJIFZNIChzaW4tc3VwYWJhc2UsIDkyLjUuNjAuODcpIl0KICAgICAgICBDbG91ZGZsYXJlZFsiY2xvdWRmbGFyZWQ8YnIvPihUdW5uZWwgQ2xpZW50KSJdCiAgICAgICAgRXhwcmVzc1siRXhwcmVzcyBTZXJ2ZXI8YnIvPjozMDAxIChib3VuZCB0byAxMjcuMC4wLjE6Mzg0NzEpIl0KICAgICAgICBDb2xsZWN0b3JbIkNvbGxlY3Rvcjxici8+Ojg4ODg8YnIvPihEb2N1bWVudCBQYXJzaW5nLCBPQ1IpIl0KICAgICAgICBGcm9udGVuZFsiZnJvbnRlbmQvZGlzdC88YnIvPihTdGF0aWMgRmlsZXMpIl0KICAgIGVuZAoKICAgIHN1YmdyYXBoIERhdGFbIlBlcnNpc3RlbmNlIChsb2NhbCkiXQogICAgICAgIFNRTGl0ZVsoInNlcnZlci9zdG9yYWdlLzxici8+b3BlbnNpbi5kYjxici8+KFByaXNtYSArIFNRTGl0ZSkiKV0KICAgICAgICBGaWxlc1soInNlcnZlci9zdG9yYWdlLzxici8+dXBsb2Fkcy8sIHZlY3RvcnMvIildCiAgICBlbmQKCiAgICBzdWJncmFwaCBMTE1bIkxMTSBCYWNrZW5kIl0KICAgICAgICBGaXJld29ya3NbIkZpcmV3b3JrcyBBSTxici8+KFNJTmF0b3IgUG9vbCBSb3V0ZXIpIl0KICAgIGVuZAoKICAgIFVzZXIgLS0+fEhUVFBTfCBETlMKICAgIEROUyAtLT4gVHVubmVsCiAgICBUdW5uZWwgPC0tPnxPdXRib3VuZCBUdW5uZWx8IENsb3VkZmxhcmVkCiAgICBDbG91ZGZsYXJlZCAtLT58bG9jYWxob3N0OjM4NDcxfCBFeHByZXNzCiAgICBFeHByZXNzIC0tPnwiLyJ8IEZyb250ZW5kCiAgICBFeHByZXNzIC0tPnwiL2FwaS8qInwgRXhwcmVzcwogICAgRXhwcmVzcyAtLT58TExNIGNhbGxzfCBGaXJld29ya3MKICAgIEV4cHJlc3MgPC0tPiBTUUxpdGUKICAgIEV4cHJlc3MgPC0tPiBGaWxlcwoKICAgIGNsYXNzRGVmIGNsb3VkIGZpbGw6I2ZmZjRlMSxzdHJva2U6I2Y0ODEyMCxjb2xvcjojMDAwCiAgICBjbGFzc0RlZiBtYWMgZmlsbDojZTNmMmZkLHN0cm9rZTojMTk3NmQyLGNvbG9yOiMwMDAKICAgIGNsYXNzRGVmIGRhdGEgZmlsbDojZjNlNWY1LHN0cm9rZTojN2IxZmEyLGNvbG9yOiMwMDAKICAgIGNsYXNzRGVmIGxsbSBmaWxsOiNlOGY1ZTksc3Ryb2tlOiMzODhlM2MsY29sb3I6IzAwMAogICAgY2xhc3MgRE5TLFR1bm5lbCBjbG91ZAogICAgY2xhc3MgQ2xvdWRmbGFyZWQsRXhwcmVzcyxDb2xsZWN0b3IsRnJvbnRlbmQgbWFjCiAgICBjbGFzcyBTUUxpdGUsRmlsZXMgZGF0YQogICAgY2xhc3MgRmlyZXdvcmtzIGxsbQpgYGAKCiMjIyBSZXBvIFN0cnVjdHVyZQoKYGBgCk9wZW5TSU4tQ2hhdC8K4pSc4pSA4pSAIGZyb250ZW5kLyAgICAgICAgICBWaXRlICsgUmVhY3QgMTggKyBUeXBlU2NyaXB0ICsgVGFpbHdpbmQgKyBpMThuZXh0CuKUnOKUgOKUgCBzZXJ2ZXIvICAgICAgICAgICAgTm9kZS5qcyArIEV4cHJlc3MgKyBQcmlzbWEgKyBTUUxpdGUvUG9zdGdyZXMK4pSCICAg4pSU4pSA4pSAIHV0aWxzLwrilIIgICAgICAg4pSc4pSA4pSAIHBvbGl0aWNpYW4vICAgIFBvbGl0aWNpYW4gREIgKEJ1bmRlc3RhZyArIEFiZ2VvcmRuZXRlbndhdGNoKQrilIIgICAgICAg4pSc4pSA4pSAIHJlc2VhcmNoLyAgICAgIERlZXAgUmVzZWFyY2ggUGlwZWxpbmUK4pSCICAgICAgIOKUnOKUgOKUgCByZXBvcnRzLyAgICAgICBQREYgUmVwb3J0IEdlbmVyYXRvcgrilIIgICAgICAg4pSc4pSA4pSAIG9yY2hlc3RyYXRvci8gIFdvcmtmbG93IEVuZ2luZSBmb3IgQWdlbnQgUGx1Z2lucwrilIIgICAgICAg4pSU4pSA4pSAIGFnZW50cy8gICAgICAgIEFnZW50IERlZmluaXRpb25zCuKUnOKUgOKUgCBjb2xsZWN0b3IvICAgICAgICAgUHl0aG9uIHNlcnZpY2UgZm9yIGRvY3VtZW50IGluZ2VzdGlvbiBhbmQgT0NSCuKUnOKUgOKUgCBkb2NrZXIvICAgICAgICAgICAgT3JpZ2luYWwgRG9ja2VyIHNldHVwIChsZWdhY3kpCuKUnOKUgOKUgCBkb2NrZXItb3BlbnNpbi8gICAgT3BlblNJTi1DaGF0IERvY2tlciAvIENvbXBvc2Ugc2V0dXAK4pSc4pSA4pSAIGNsb3VkLWRlcGxveW1lbnRzLyBBV1MsIEdDUCwgQXp1cmUsIERPLCBIZWxtLCBPcGVuU2hpZnQgc3R1YnMK4pSc4pSA4pSAIHRlc3RzLyAgICAgICAgICAgICBFMkUgYW5kIGludGVncmF0aW9uIHRlc3RzCuKUnOKUgOKUgCBzY3JpcHRzLyAgICAgICAgICAgRGVwbG95IHNjcmlwdHMgKGRlcGxveS1wcm9kdWN0aW9uLnNoKQrilJTilIDilIAgZG9jcy8gICAgICAgICAgICAgIEFyY2hpdGVjdHVyZSwgQURScywgcGxhbnMsIHJ1bmJvb2tzCmBgYAoKIyMgRGVwbG95bWVudAoKIyMjIExpdmUgRGVtbwoKKipodHRwczovL3NpbmNoYXQuZGVscWhpLmNvbSoqIOKAlCBkZXBsb3llZCBvbiBhbiBPQ0kgVk0gKGBzaW4tc3VwYWJhc2VgKSB2aWEgQ2xvdWRmbGFyZSBUdW5uZWwsIEZpcmV3b3JrcyBBSSAoU0lOYXRvciBQb29sIFJvdXRlcikgYXMgTExNIHByb3ZpZGVyLgoKIyMjIERvY2tlciBTZWxmLUhvc3RpbmcKCmBgYGJhc2gKY2QgZG9ja2VyLW9wZW5zaW4KY3AgLmVudi5leGFtcGxlIC5lbnYKIyBDb25maWd1cmU6IFNFUlZFUl9QT1JULCBKV1RfU0VDUkVULCBTSUdfS0VZL1NJR19TQUxULCBMTE0ga2V5cwpkb2NrZXIgY29tcG9zZSB1cCAtZApgYGAKCiMjIyBCYXJlIE1ldGFsIC8gRGV2ZWxvcG1lbnQKClNlZSBbQkFSRV9NRVRBTC5tZF0oLi9CQVJFX01FVEFMLm1kKSBhbmQgW0RFUExPWU1FTlRfR1VJREUubWRdKC4vREVQTE9ZTUVOVF9HVUlERS5tZCkuCgojIyMgQXV0by1EZXBsb3kKCkFuIGF1dG8tZGVwbG95IHNjcmlwdCBwb2xscyBgb3JpZ2luL21haW5gIGFuZCByZWJ1aWxkcyBhdXRvbWF0aWNhbGx5LiBTZXR1cCBpbiBbZG9jcy9BVVRPLURFUExPWS5tZF0oLi9kb2NzL0FVVE8tREVQTE9ZLm1kKS4KCiMjIyBTZWN1cml0eSBOb3RlcwoKLSAqKk5vIGNyZWRlbnRpYWxzIGluIHRoZSBidW5kbGUgb3IgcmVwby4qKiBEZW1vL29uYm9hcmRpbmcgcGFzc3dvcmRzIG11c3QgbmV2ZXIgbGFuZCBpbiB0aGUgZnJvbnRlbmQgYnVuZGxlLCBSRUFETUUsIG9yIGNvbW1pdHMKLSAqKlNlY3JldCByb3RhdGlvbi4qKiBBbGwga2V5cyBpbiBgLmVudmAgKExMTSBwcm92aWRlcnMsIGBKV1RfU0VDUkVUYCwgYFNJR19LRVlgL2BTSUdfU0FMVGApIGFyZSBkZXBsb3ltZW50LXNwZWNpZmljIChgb3BlbnNzbCByYW5kIC1iYXNlNjQgMzJgKQotICoqUmVzZWFyY2ggU1NSRiBwcm90ZWN0aW9uLioqIFRoZSBEZWVwIFJlc2VhcmNoIFBpcGVsaW5lIGJsb2NrcyBwcml2YXRlL2ludGVybmFsIHRhcmdldHMgYnkgZGVmYXVsdAotICoqSm9iIGxpbWl0cy4qKiBgUkVTRUFSQ0hfTUFYX0FDVElWRV9KT0JTYCAoZGVmYXVsdCAzKSBhbmQgYE9SQ0hFU1RSQVRPUl9NQVhfQUNUSVZFX1dPUktGTE9XU2AgKGRlZmF1bHQgMikgbGltaXQgY29uY3VycmVudCBwaXBlbGluZXMKClNlZSBbU0VDVVJJVFkubWRdKC4vU0VDVVJJVFkubWQpIGZvciBkZXRhaWxzLgoKIyMgRG9jdW1lbnRhdGlvbgoKLSAqKkluLWFwcCBkb2NzOioqIEF2YWlsYWJsZSBhdCBgL2RvY3NgIGluIHRoZSBydW5uaW5nIGZyb250ZW5kICh1c2VyIG1hbnVhbCwgQVBJIHJlZmVyZW5jZSwgYXJjaGl0ZWN0dXJlLCBkZXBsb3ltZW50IHJ1bmJvb2tzKQotICoqU291cmNlIGRvY3M6KiogQWxsIE1hcmtkb3duIGZpbGVzIGluIFtgZG9jcy9gXSguL2RvY3MvKSBhcmUgdGhlIHNpbmdsZSBzb3VyY2Ugb2YgdHJ1dGgKLSAqKkFyY2hpdGVjdHVyZSBkZWNpc2lvbnM6KiogQURScyBpbiBbYGRvY3MvYWRyL2BdKC4vZG9jcy9hZHIvKQotICoqRGF0YSBzb3VyY2VzOioqIFtgZG9jcy9EQVRBLVNPVVJDRVMubWRgXSguL2RvY3MvREFUQS1TT1VSQ0VTLm1kKSDigJQgZXh0ZXJuYWwgQVBJIHNwZWNzLCByYXRlIGxpbWl0cywgc2NoZW1hIG1hcHBpbmcKLSAqKkFQSSByZWZlcmVuY2U6KiogW2Bkb2NzL2FwaS5tZGBdKC4vZG9jcy9hcGkubWQpCgojIyBDb250cmlidXRpbmcKCjEuIEZvcmsgdGhlIHJlcG9zaXRvcnkKMi4gQ3JlYXRlIHlvdXIgYnJhbmNoIChgZ2l0IGNoZWNrb3V0IC1iIGZlYXR1cmUvYW1hemluZy1mZWF0dXJlYCkKMy4gVGVzdCB5b3VyIGNoYW5nZXMgKGB5YXJuIHRlc3RgICsgYHlhcm4gdGVzdDpzZXJ2ZXJgKQo0LiBDb21taXQgYW5kIHB1c2gKNS4gT3BlbiBhIFB1bGwgUmVxdWVzdAoKU2VlIFtDT05UUklCVVRJTkcubWRdKC4vQ09OVFJJQlVUSU5HLm1kKSBmb3IgZGV0YWlscy4gQ29kZSBjb252ZW50aW9ucywgYnJhbmNoaW5nIHN0cmF0ZWd5LCBhbmQgY29tbWl0IGZvcm1hdCBhcmUgZG9jdW1lbnRlZCB0aGVyZS4KCiMjIExpY2Vuc2UKCkRpc3RyaWJ1dGVkIHVuZGVyIHRoZSAqKk1JVCBMaWNlbnNlKiouIFNlZSBbTElDRU5TRV0oLi9MSUNFTlNFKSBmb3IgZGV0YWlscy4KCiMjIENyZWRpdHMKCk9wZW5TSU4gQ2hhdCB3YXMgKippbnNwaXJlZCBieSoqICoqW0FueXRoaW5nTExNXShodHRwczovL2dpdGh1Yi5jb20vTWludHBsZXgtTGFicy9hbnl0aGluZy1sbG0pKiogYnkgKipbTWludHBsZXggTGFicyBJbmMuXShodHRwczovL2dpdGh1Yi5jb20vTWludHBsZXgtTGFicykqKiAoTUlUIGxpY2Vuc2UpLCBidXQgaGFzIHNpbmNlIGRpdmVyZ2VkIGludG8gYSBmdWxseSBpbmRlcGVuZGVudCBwcm9kdWN0IHdpdGggbmVhcmx5IDEwMCUgb2YgdGhlIGNvZGViYXNlIHJld3JpdHRlbiBvciByZXBsYWNlZC4KCldlIGdyYXRlZnVsbHkgYWNrbm93bGVkZ2UgKipUaW1vdGh5IENhcmFtYmF0KiogYW5kIHRoZSBlbnRpcmUgTWludHBsZXggdGVhbS4gVGhlaXIgZWFybHkgYXJjaGl0ZWN0dXJhbCB3b3JrIHByb3ZpZGVkIHRoZSBpbml0aWFsIHNwYXJrIGZvciB0aGlzIHByb2plY3QuCgo+ICpBbnl0aGluZ0xMTSBpcyBhIGZ1bGwtc3RhY2sgYXBwbGljYXRpb24gdGhhdCBlbmFibGVzIHlvdSB0byB0dXJuIGFueSBkb2N1bWVudCwgcmVzb3VyY2UsIG9yIHBpZWNlIG9mIGNvbnRlbnQgaW50byBjb250ZXh0IHRoYXQgYW55IExMTSBjYW4gdXNlIGFzIHJlZmVyZW5jZSBkdXJpbmcgY2hhdHRpbmcuIEJ1aWx0IGFuZCBtYWludGFpbmVkIGJ5IE1pbnRwbGV4IExhYnMgSW5jLioKCioqV2hhdCB3YXMgb3JpZ2luYWxseSBpbnNwaXJlZCBieSBBbnl0aGluZ0xMTToqKiB0aGUgYmFzaWMgZnVsbC1zdGFjayBzdHJ1Y3R1cmUgKGZyb250ZW5kICsgc2VydmVyICsgY29sbGVjdG9yKSwgTExNL2VtYmVkZGluZy92ZWN0b3IgREIgcHJvdmlkZXIgYWJzdHJhY3Rpb24sIGFuZCB0aGUgYWdlbnQgZnJhbWV3b3JrIGNvbmNlcHQuCgoqKldoYXQgT3BlblNJTiBDaGF0IGhhcyBidWlsdCBpbmRlcGVuZGVudGx5IChuZWFybHkgMTAwJSByZXdyaXR0ZW4pOioqIGNvbXBsZXRlIHJlYnJhbmRpbmcgKE9wZW5TSU4gYmx1ZSwgR2VybWFuIGxhbmd1YWdlLCBjdXN0b20gbG9nbyksIGFsbCB0ZWxlbWV0cnkgcmVtb3ZlZCwgR0RQUi1hZmZpbmUgZGVmYXVsdHMsIHBvbGl0aWNhbC11c2UtY2FzZSBzcGVjaWFsaXNhdGlvbiwgUG9saXRpY2lhbiBEYXRhYmFzZSwgRGVlcCBSZXNlYXJjaCBQaXBlbGluZSwgUERGIFJlcG9ydHMsIEFnZW50IFBsdWdpbnMsIE5WSURJQSBOSU0gVmlzaW9uIE9DUiwgYXN5bmMgdXBsb2FkIHBpcGVsaW5lIHdpdGggcGFyc2VKb2JzLCBFQ2hhcnRzIHZpc3VhbGlzYXRpb24sIFJFU1QgQVBJcywgY29tcHJlaGVuc2l2ZSB0ZXN0ICYgQ0kgaW5mcmFzdHJ1Y3R1cmUsIGFuZCBzaWduaWZpY2FudCBhcmNoaXRlY3R1cmFsIHJlZmFjdG9yaW5nIGFjcm9zcyBmcm9udGVuZCwgc2VydmVyLCBhbmQgY29sbGVjdG9yLgoKQSBmdWxsIGxpc3Qgb2YgdGhpcmQtcGFydHkgY29tcG9uZW50cyBpcyBpbiBbVEhJUkRfUEFSVFkubWRdKC4vVEhJUkRfUEFSVFkubWQpLgoKLS0tCgo8IS0tIE9wZW5TSU4gQUkgQlJBTkRJTkcgRk9PVEVSIC0tPgo8cCBhbGlnbj0iY2VudGVyIj4KICA8cGljdHVyZT4KICAgIDxzb3VyY2UgbWVkaWE9IihwcmVmZXJzLWNvbG9yLXNjaGVtZTogZGFyaykiIHNyY3NldD0iLi9hc3NldHMvc2luLWFpLWJhbm5lci5zdmciIC8+CiAgICA8c291cmNlIG1lZGlhPSIocHJlZmVycy1jb2xvci1zY2hlbWU6IGxpZ2h0KSIgc3Jjc2V0PSIuL2Fzc2V0cy9zaW4tYWktYmFubmVyLWxpZ2h0LnN2ZyIgLz4KICAgIDxpbWcgc3JjPSIuL2Fzc2V0cy9zaW4tYWktYmFubmVyLnN2ZyIgYWx0PSJPcGVuU0lOIEFJIiAvPgogIDwvcGljdHVyZT4KPC9wPgo=
+<a name="readme-top"></a>
+
+# OpenSIN Chat
+
+<p align="center">
+  <em>Self-hosted AI workspace for political research — chat with documents, search the Bundestag, generate reports.</em>
+</p>
+
+<!-- BADGES -->
+<p align="center">
+  <a href="https://sinchat.delqhi.com">
+    <img src="https://img.shields.io/badge/Live-sinchat.delqhi.com-009ee0?logo=cloudflare" alt="Live" />
+  </a>
+  <a href="./LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" />
+  </a>
+  <a href="https://github.com/OpenSIN-AI/OpenSIN-Chat">
+    <img src="https://img.shields.io/badge/Telemetry-ZERO-red" alt="Telemetry" />
+  </a>
+</p>
+
+<!-- QUICK LINKS -->
+<p align="center">
+    <a href="#quick-start">Quick Start</a> |
+    <a href="#features">Features</a> |
+    <a href="#screenshots">Screenshots</a> |
+    <a href="#architecture">Architecture</a> |
+    <a href="#deployment">Deployment</a> |
+    <a href="#credits">Credits</a>
+</p>
+
+<!-- HERO BANNER (custom SVG, dual-mode) -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/hero-banner.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="./assets/hero-banner-light.svg" />
+  <img src="./assets/hero-banner.svg" alt="OpenSIN Chat" />
+</picture>
+
+---
+
+OpenSIN Chat is a **self-hosted AI platform** for political work, research, and knowledge management. Upload your documents (Bundestag papers, press releases, legislation drafts) and the AI answers questions **only from your sources**, with traceable citations. No hallucinations from thin air, no cloud dependency, zero telemetry.
+
+A sovereign, independent product built by [OpenSIN-AI](https://github.com/OpenSIN-AI) and optimized for the German political sphere. Originally inspired by AnythingLLM, OpenSIN Chat has evolved into a purpose-built system for political research with specialized agents, politician databases, and compliance features.
+
+## Quick Start
+
+```bash
+git clone https://github.com/OpenSIN-AI/OpenSIN-Chat.git
+cd OpenSIN-Chat/docker-opensin
+cp .env.example .env
+docker compose up -d
+```
+
+The container maps host port `43939` to internal port `3001`. Open `http://localhost:43939` after startup.
+
+> [!IMPORTANT]
+> Set `FIREWORKS_AI_LLM_BASE_PATH` and `FIREWORKS_AI_LLM_API_KEY` in `.env` to use Fireworks AI as the LLM provider. The SINator Pool Router URL goes in `FIREWORKS_AI_LLM_BASE_PATH`.
+
+> [!NOTE]
+> For full setup instructions, environment variables, and bare-metal deployment, see [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md).
+
+## Features
+
+### Core Features
+
+- **Document Chat** — PDF, DOCX, TXT, Markdown, web pages, YouTube transcripts
+- **Vector Databases** — LanceDB, Chroma, Pinecone, Qdrant, Milvus, PGVector
+- **LLM Providers** — Fireworks AI (primary, via SINator Pool Router); alternatives: OpenAI, Anthropic, Mistral, DeepSeek, Ollama (local), LM Studio
+- **AI Agents** — automated research, web browsing, PDF creation, code execution
+- **MCP Compatible** — integrate any external tool via Model Context Protocol
+- **Multi-User** — permissions, workspaces, audit logs (Docker edition)
+- **Multilingual** — German, English, and more
+- **Zero Telemetry** — no PostHog, no CDN tracking, no outbound calls to third parties
+
+### Political Research & OpenSIN-AI Specializations
+
+- **Politician Database** — Bundestag API + Abgeordnetenwatch as structured sources (biographical data, mandates, votes, speeches). Semantic full-text search over plenary protocols via LanceDB vector index
+- **Deep Research Pipeline** — automated web research (Search → Extract → Summarize) with source tracking. Async via job IDs, polling-capable
+- **OpenSIN PDF Reports** — branded reports (cover, header, footer in OpenSIN blue `#009ee0`) with table of contents, source lists, and politician references — generated directly from research jobs
+- **Agent Plugins** — `@politician-search`, `@deep-research`, `@generate-report`, `@orchestrator`, `@pdf-analyze`, `@browser-vision`, `@image-generation`, `@create-files` — callable directly in chat
+- **Fireworks AI Vision** — multimodal image analysis via Fireworks AI models (minimax-m3, kimi-k2p5/6/7, qwen-3p7-plus). Upload images and the AI describes what it sees
+- **3,000+ Tests** — comprehensive frontend (Vitest) and server (Jest) test coverage
+
+### UI Features
+
+- **ChatGPT-style UI** — centered chat layout (max-w-800px), user message bubbles right-aligned, AI messages left-aligned
+- **Dark/Light Mode** — toggle button in sidebar, full theme support with `light:` CSS prefix system
+- **Code Blocks** — syntax highlighting with copy button, language label, bg/border styling in both modes
+- **Notepad** — inline workspace notes with auto-save, pin, and delete (workspace_notes table)
+- **Grounding Badge** — Sparkle icon badge showing when AI uses document sources (RAG)
+- **Auto-Summary Cards** — document snippets preview in sidebar
+- **Mobile Responsive** — 375px viewport, overlay panels, no horizontal overflow
+- **Loading Animation** — 3-pulse dots during AI response
+- **Action Buttons** — hover-only (TTS, Copy, Edit, Good Response, More) like ChatGPT/Claude
+- **SOTA Charts (ECharts)** — the AI generates interactive charts directly in chat: bar, line, area, pie, radar, scatter, treemap, funnel, radialBar. Apache ECharts 6 rendering with gradient fills, glow shadows, rounded bars, staggered elastic animations, dark/light theme support, hover tooltips, save-as-image (2x PNG), and data-view toolbox. Multi-series support for grouped/comparison charts. The `create-chart` agent plugin sends `{type, dataset, title, caption}` via WebSocket — no external services, no API keys, fully local rendering
+
+## Screenshots
+
+| Light Mode | Dark Mode | Mobile |
+|------------|-----------|--------|
+| ![Empty State](docs/screenshots/empty-state-light.png) | ![Dark Chat](docs/screenshots/chat-codeblock-dark.png) | ![Mobile](docs/screenshots/mobile-empty-state.png) |
+
+![Chat with Code Blocks](docs/screenshots/chat-codeblock-light.png)
+![Sidebar](docs/screenshots/sidebar-light.png)
+
+### ECharts — SOTA Diagramme direkt im Chat
+
+Die KI generiert interaktive Apache ECharts-Diagramme ohne externe Dienste:
+
+| Fraktionsverteilung | AfD nach Bundesland | Redeaktivitat |
+|---|---|---|
+| ![Pie](screenshots/demo-charts/01-fraktionsverteilung.png) | ![Bar](screenshots/demo-charts/02-bundeslaender.png) | ![Area](screenshots/demo-charts/03-redeaktivitaet.png) |
+
+| Top Redner | Abstimmungsverhalten | Ausschuss-Prasenz |
+|---|---|---|
+| ![Bar](screenshots/demo-charts/04-top-redner.png) | ![Pie](screenshots/demo-charts/05-abstimmungsverhalten.png) | ![Grouped Bar](screenshots/demo-charts/06-ausschuesse.png) |
+
+## Architecture
+
+```mermaid
+flowchart TB
+    User(["Browser<br/>https://sinchat.delqhi.com"])
+
+    subgraph Cloudflare["Cloudflare Edge (DNS + Tunnel)"]
+        DNS["DNS Records"]
+        Tunnel["Tunnel Broker"]
+    end
+
+    subgraph Host["OCI VM (sin-supabase, 92.5.60.87)"]
+        Cloudflared["cloudflared<br/>(Tunnel Client)"]
+        Express["Express Server<br/>:3001 (bound to 127.0.0.1:38471)"]
+        Collector["Collector<br/>:8888<br/>(Document Parsing, OCR)"]
+        Frontend["frontend/dist/<br/>(Static Files)"]
+    end
+
+    subgraph Data["Persistence (local)"]
+        SQLite[("server/storage/<br/>opensin.db<br/>(Prisma + SQLite)")]
+        Files[("server/storage/<br/>uploads/, vectors/")]
+    end
+
+    subgraph LLM["LLM Backend"]
+        Fireworks["Fireworks AI<br/>(SINator Pool Router)"]
+    end
+
+    User -->|HTTPS| DNS
+    DNS --> Tunnel
+    Tunnel <-->|Outbound Tunnel| Cloudflared
+    Cloudflared -->|localhost:38471| Express
+    Express -->|"/"| Frontend
+    Express -->|"/api/*"| Express
+    Express -->|LLM calls| Fireworks
+    Express <--> SQLite
+    Express <--> Files
+
+    classDef cloud fill:#fff4e1,stroke:#f48120,color:#000
+    classDef mac fill:#e3f2fd,stroke:#1976d2,color:#000
+    classDef data fill:#f3e5f5,stroke:#7b1fa2,color:#000
+    classDef llm fill:#e8f5e9,stroke:#388e3c,color:#000
+    class DNS,Tunnel cloud
+    class Cloudflared,Express,Collector,Frontend mac
+    class SQLite,Files data
+    class Fireworks llm
+```
+
+### Repo Structure
+
+```
+OpenSIN-Chat/
+├── frontend/          Vite + React 18 + TypeScript + Tailwind + i18next
+├── server/            Node.js + Express + Prisma + SQLite/Postgres
+│   └── utils/
+│       ├── politician/    Politician DB (Bundestag + Abgeordnetenwatch)
+│       ├── research/      Deep Research Pipeline
+│       ├── reports/       PDF Report Generator
+│       ├── orchestrator/  Workflow Engine for Agent Plugins
+│       └── agents/        Agent Definitions
+├── collector/         Python service for document ingestion and OCR
+├── docker/            Original Docker setup (legacy)
+├── docker-opensin/    OpenSIN-Chat Docker / Compose setup
+├── cloud-deployments/ AWS, GCP, Azure, DO, Helm, OpenShift stubs
+├── tests/             E2E and integration tests
+├── scripts/           Deploy scripts (deploy-production.sh)
+└── docs/              Architecture, ADRs, plans, runbooks
+```
+
+## Deployment
+
+### Live Demo
+
+**https://sinchat.delqhi.com** — deployed on an OCI VM (`sin-supabase`) via Cloudflare Tunnel, Fireworks AI (SINator Pool Router) as LLM provider.
+
+### Docker Self-Hosting
+
+```bash
+cd docker-opensin
+cp .env.example .env
+# Configure: SERVER_PORT, JWT_SECRET, SIG_KEY/SIG_SALT, LLM keys
+docker compose up -d
+```
+
+### Bare Metal / Development
+
+See [BARE_METAL.md](./BARE_METAL.md) and [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md).
+
+### Auto-Deploy
+
+An auto-deploy script polls `origin/main` and rebuilds automatically. Setup in [docs/AUTO-DEPLOY.md](./docs/AUTO-DEPLOY.md).
+
+### Security Notes
+
+- **No credentials in the bundle or repo.** Demo/onboarding passwords must never land in the frontend bundle, README, or commits
+- **Secret rotation.** All keys in `.env` (LLM providers, `JWT_SECRET`, `SIG_KEY`/`SIG_SALT`) are deployment-specific (`openssl rand -base64 32`)
+- **Research SSRF protection.** The Deep Research Pipeline blocks private/internal targets by default
+- **Job limits.** `RESEARCH_MAX_ACTIVE_JOBS` (default 3) and `ORCHESTRATOR_MAX_ACTIVE_WORKFLOWS` (default 2) limit concurrent pipelines
+
+See [SECURITY.md](./SECURITY.md) for details.
+
+## Documentation
+
+- **In-app docs:** Available at `/docs` in the running frontend (user manual, API reference, architecture, deployment runbooks)
+- **Source docs:** All Markdown files in [`docs/`](./docs/) are the single source of truth
+- **Architecture decisions:** ADRs in [`docs/adr/`](./docs/adr/)
+- **Data sources:** [`docs/DATA-SOURCES.md`](./docs/DATA-SOURCES.md) — external API specs, rate limits, schema mapping
+- **API reference:** [`docs/api.md`](./docs/api.md)
+
+## Contributing
+
+1. Fork the repository
+2. Create your branch (`git checkout -b feature/amazing-feature`)
+3. Test your changes (`yarn test` + `yarn test:server`)
+4. Commit and push
+5. Open a Pull Request
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for details. Code conventions, branching strategy, and commit format are documented there.
+
+## License
+
+Distributed under the **MIT License**. See [LICENSE](./LICENSE) for details.
+
+## Credits
+
+OpenSIN Chat was **inspired by** **[AnythingLLM](https://github.com/Mintplex-Labs/anything-llm)** by **[Mintplex Labs Inc.](https://github.com/Mintplex-Labs)** (MIT license), but has since diverged into a fully independent product with nearly 100% of the codebase rewritten or replaced.
+
+We gratefully acknowledge **Timothy Carambat** and the entire Mintplex team. Their early architectural work provided the initial spark for this project.
+
+> *AnythingLLM is a full-stack application that enables you to turn any document, resource, or piece of content into context that any LLM can use as reference during chatting. Built and maintained by Mintplex Labs Inc.*
+
+**What was originally inspired by AnythingLLM:** the basic full-stack structure (frontend + server + collector), LLM/embedding/vector DB provider abstraction, and the agent framework concept.
+
+**What OpenSIN Chat has built independently (nearly 100% rewritten):** complete rebranding (OpenSIN blue, German language, custom logo), all telemetry removed, GDPR-affine defaults, political-use-case specialisation, Politician Database, Deep Research Pipeline, PDF Reports, Agent Plugins, NVIDIA NIM Vision OCR, async upload pipeline with parseJobs, ECharts visualisation, REST APIs, comprehensive test & CI infrastructure, and significant architectural refactoring across frontend, server, and collector.
+
+A full list of third-party components is in [THIRD_PARTY.md](./THIRD_PARTY.md).
+
+---
+
+<!-- OpenSIN AI BRANDING FOOTER -->
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/sin-ai-banner.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="./assets/sin-ai-banner-light.svg" />
+    <img src="./assets/sin-ai-banner.svg" alt="OpenSIN AI" />
+  </picture>
+</p>
