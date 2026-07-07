@@ -1,1 +1,162 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBQdXJwb3NlOiBUZXN0IG1vYmlsZSBhcHAgZW5kcG9pbnRzCi8vIERvY3M6IHRlc3RzL21vYmlsZUVuZHBvaW50cy50ZXN0LmpzCgppbXBvcnQgeyBkZXNjcmliZSwgaXQsIGV4cGVjdCwgdmksIGJlZm9yZUVhY2ggfSBmcm9tICJ2aXRlc3QiOwppbXBvcnQgeyBjcmVhdGVBcHAgfSBmcm9tICIuLi9zZXJ2ZXIvYXBwIjsKCnZpLm1vY2soIi4uL3NlcnZlci91dGlscy9oZWxwZXJzIiwgKCkgPT4gKHsKICBnZXRWZWN0b3JEYkNsYXNzOiAoKSA9PiAoeyBuYW1lc3BhY2VDb3VudDogdmkuZm4oKCkgPT4gUHJvbWlzZS5yZXNvbHZlKDApKSwgdG90YWxWZWN0b3JzOiB2aS5mbigoKSA9PiBQcm9taXNlLnJlc29sdmUoMCkpIH0pLAp9KSk7Cgp2aS5tb2NrKCIuLi9zZXJ2ZXIvdXRpbHMvaGVscGVycy9jdXN0b21Nb2RlbHMiLCAoKSA9PiAoewogIGdldEN1c3RvbU1vZGVsczogKCkgPT4gKHsgbW9kZWxzOiBbXSwgZXJyb3I6IG51bGwgfSksCn0pKTsKCnZpLm1vY2soIi4uL3NlcnZlci9tb2RlbHMvc3lzdGVtU2V0dGluZ3MiLCAoKSA9PiAoewogIFN5c3RlbVNldHRpbmdzOiB7CiAgICBjdXJyZW50U2V0dGluZ3M6IHZpLmZuKCgpID0+IFByb21pc2UucmVzb2x2ZSh7fSkpLAogICAgaXNNdWx0aVVzZXJNb2RlOiB2aS5mbigoKSA9PiBQcm9taXNlLnJlc29sdmUoZmFsc2UpKSwKICB9LAp9KSk7Cgp2aS5tb2NrKCIuLi9zZXJ2ZXIvbW9kZWxzL3VzZXIiLCAoKSA9PiAoewogIFVzZXI6IHsgX2dldDogdmkuZm4oKCkgPT4gUHJvbWlzZS5yZXNvbHZlKG51bGwpKSwgZmlsdGVyRmllbGRzOiB2aS5mbigodXNlcikgPT4gdXNlcikgfSwKfSkpOwoKdmkubW9jaygiLi4vc2VydmVyL21vZGVscy9ldmVudExvZ3MiLCAoKSA9PiAoewogIEV2ZW50TG9nczogeyBsb2dFdmVudDogdmkuZm4oKCkgPT4gUHJvbWlzZS5yZXNvbHZlKCkpIH0sCn0pKTsKCnZpLm1vY2soIi4uL3NlcnZlci9tb2RlbHMvdGVsZW1ldHJ5IiwgKCkgPT4gKHsKICBUZWxlbWV0cnk6IHsgc2VuZFRlbGVtZXRyeTogdmkuZm4oKCkgPT4gUHJvbWlzZS5yZXNvbHZlKCkpIH0sCn0pKTsKCnZpLm1vY2soIi4uL3NlcnZlci91dGlscy9oZWxwZXJzL3VwZGF0ZUVOViIsICgpID0+ICh7CiAgdXBkYXRlRU5WOiAoKSA9PiAoeyBuZXdWYWx1ZXM6IHt9LCBlcnJvcjogbnVsbCB9KSwKfSkpOwoKdmkubW9jaygiLi4vc2VydmVyL3V0aWxzL21pZGRsZXdhcmUvbXVsdGlVc2VyUHJvdGVjdGVkIiwgKCkgPT4gKHsKICBmbGV4VXNlclJvbGVWYWxpZDogKCkgPT4gKHJlcSwgcmVzLCBuZXh0KSA9PiBuZXh0KCksCiAgc3RyaWN0TXVsdGlVc2VyUm9sZVZhbGlkOiAoKSA9PiAocmVxLCByZXMsIG5leHQpID0+IG5leHQoKSwKICBST0xFUzogeyBhZG1pbjogImFkbWluIiwgbWFuYWdlcjogIm1hbmFnZXIiLCBhbGw6ICJhbGwiIH0sCiAgaXNNdWx0aVVzZXJTZXR1cDogKCkgPT4gdHJ1ZSwKfSkpOwoKdmkubW9jaygiLi4vc2VydmVyL3V0aWxzL21pZGRsZXdhcmUvdmFsaWRhdGVkUmVxdWVzdCIsICgpID0+ICh7CiAgdmFsaWRhdGVkUmVxdWVzdDogKHJlcSwgcmVzLCBuZXh0KSA9PiBuZXh0KCksCn0pKTsKCnZpLm1vY2soIi4uL3NlcnZlci91dGlscy9odHRwIiwgKCkgPT4gKHsKICByZXFCb2R5OiAocmVxKSA9PiByZXEuYm9keSB8fCB7fSwKICBtYWtlSldUOiAocGF5bG9hZCwgZXhwaXJ5KSA9PiBgdG9rZW5fJHtwYXlsb2FkLmlkfWAsCiAgdXNlckZyb21TZXNzaW9uOiAoKSA9PiBQcm9taXNlLnJlc29sdmUoeyBpZDogMSwgdXNlcm5hbWU6ICJ0ZXN0IiB9KSwKICBtdWx0aVVzZXJNb2RlOiAoKSA9PiBmYWxzZSwKICBxdWVyeVBhcmFtczogKCkgPT4gKHt9KSwKfSkpOwoKdmkubW9jaygiLi4vc2VydmVyL3V0aWxzL21pZGRsZXdhcmUvc2ltcGxlUmF0ZUxpbWl0IiwgKCkgPT4gKHsKICBzaW1wbGVSYXRlTGltaXQ6ICgpID0+IChyZXEsIHJlcywgbmV4dCkgPT4gbmV4dCgpLAp9KSk7Cgp2aS5tb2NrKCIuLi9zZXJ2ZXIvdXRpbHMvY29sbGVjdG9yQXBpIiwgKCkgPT4gKHsKICBDb2xsZWN0b3JBcGk6ICgpID0+ICh7IG9ubGluZTogKCkgPT4gUHJvbWlzZS5yZXNvbHZlKHRydWUpLCBhY2NlcHRlZEZpbGVUeXBlczogKCkgPT4gUHJvbWlzZS5yZXNvbHZlKFtdKSB9KSwKfSkpOwoKdmkubW9jaygiLi4vc2VydmVyL3V0aWxzL2NoYXRzIiwgKCkgPT4gKHsKICBWQUxJRF9DT01NQU5EUzogeyBoZWxwOiB0cnVlLCBjbGVhcjogdHJ1ZSB9LAp9KSk7CgpsZXQgYXBwOwoKYmVmb3JlRWFjaChhc3luYyAoKSA9PiB7CiAgdmkuY2xlYXJBbGxNb2NrcygpOwogIGFwcCA9IGNyZWF0ZUFwcCgpOwp9KTsKCmNvbnN0IHJlcXVlc3QgPSBhc3luYyAobWV0aG9kLCBwYXRoLCBib2R5ID0gbnVsbCwgaGVhZGVycyA9IHt9KSA9PiB7CiAgY29uc3QgdXJsID0gYGh0dHA6Ly9sb2NhbGhvc3Q6MzAwMSR7cGF0aH1gOwogIGNvbnN0IG9wdGlvbnMgPSB7CiAgICBtZXRob2QsCiAgICBoZWFkZXJzOiB7ICJDb250ZW50LVR5cGUiOiAiYXBwbGljYXRpb24vanNvbiIsIC4uLmhlYWRlcnMgfSwKICB9OwogIGlmIChib2R5KSBvcHRpb25zLmJvZHkgPSBKU09OLnN0cmluZ2lmeShib2R5KTsKICBjb25zdCByZXNwb25zZSA9IGF3YWl0IGZldGNoKHVybCwgb3B0aW9ucyk7CiAgY29uc3QgZGF0YSA9IGF3YWl0IHJlc3BvbnNlLnRleHQoKTsKICByZXR1cm4geyBzdGF0dXM6IHJlc3BvbnNlLnN0YXR1cywgaGVhZGVyczogcmVzcG9uc2UuaGVhZGVycywgYm9keTogZGF0YSA/IEpTT04ucGFyc2UoZGF0YSkgOiBudWxsIH07Cn07CgpkZXNjcmliZSgibW9iaWxlIGVuZHBvaW50cyIsICgpID0+IHsKICBkZXNjcmliZSgiUE9TVCAvbW9iaWxlL3JlZ2lzdGVyIiwgKCkgPT4gewogICAgaXQoInNob3VsZCByZWplY3QgaW52YWxpZCByZWdpc3RyYXRpb24gdG9rZW4iLCBhc3luYyAoKSA9PiB7CiAgICAgIGNvbnN0IHJlc3BvbnNlID0gYXdhaXQgcmVxdWVzdCgiUE9TVCIsICIvbW9iaWxlL3JlZ2lzdGVyIiwgewogICAgICAgIGRldmljZU5hbWU6ICJpUGhvbmUgMTUiLAogICAgICAgIGRldmljZU9zOiAiaW9zIiwKICAgICAgfSwgewogICAgICAgIEF1dGhvcml6YXRpb246ICJCZWFyZXIgaW52YWxpZC10b2tlbiIsCiAgICAgIH0pOwogICAgICBleHBlY3QocmVzcG9uc2Uuc3RhdHVzKS50b0JlKDQwMCk7CiAgICAgIGV4cGVjdChyZXNwb25zZS5ib2R5KS50b0hhdmVQcm9wZXJ0eSgiZXJyb3IiKTsKICAgIH0pOwoKICAgIGl0KCJzaG91bGQgcmVqZWN0IHJlZ2lzdHJhdGlvbiB3aXRob3V0IHRva2VuIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCByZXNwb25zZSA9IGF3YWl0IHJlcXVlc3QoIlBPU1QiLCAiL21vYmlsZS9yZWdpc3RlciIsIHsKICAgICAgICBkZXZpY2VOYW1lOiAiaVBob25lIDE1IiwKICAgICAgICBkZXZpY2VPczogImlvcyIsCiAgICAgIH0pOwogICAgICBleHBlY3QocmVzcG9uc2Uuc3RhdHVzKS50b0JlKDQwMCk7CiAgICAgIGV4cGVjdChyZXNwb25zZS5ib2R5KS50b0hhdmVQcm9wZXJ0eSgiZXJyb3IiKTsKICAgIH0pOwogIH0pOwoKICBkZXNjcmliZSgiR0VUIC9tb2JpbGUvYXV0aCIsICgpID0+IHsKICAgIGl0KCJzaG91bGQgcmVqZWN0IGludmFsaWQgZGV2aWNlIHRva2VuIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCByZXNwb25zZSA9IGF3YWl0IHJlcXVlc3QoIkdFVCIsICIvbW9iaWxlL2F1dGgiLCBudWxsLCB7CiAgICAgICAgIngtb3BlbnNpbi1tb2JpbGUtZGV2aWNlLXRva2VuIjogImludmFsaWQtdG9rZW4iLAogICAgICB9KTsKICAgICAgZXhwZWN0KHJlc3BvbnNlLnN0YXR1cykudG9CZSg0MDApOwogICAgICBleHBlY3QocmVzcG9uc2UuYm9keSkudG9IYXZlUHJvcGVydHkoImVycm9yIik7CiAgICB9KTsKCiAgICBpdCgic2hvdWxkIHJlamVjdCB3aXRob3V0IGRldmljZSB0b2tlbiIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCByZXF1ZXN0KCJHRVQiLCAiL21vYmlsZS9hdXRoIik7CiAgICAgIGV4cGVjdChyZXNwb25zZS5zdGF0dXMpLnRvQmUoNDAwKTsKICAgICAgZXhwZWN0KHJlc3BvbnNlLmJvZHkpLnRvSGF2ZVByb3BlcnR5KCJlcnJvciIpOwogICAgfSk7CiAgfSk7CgogIGRlc2NyaWJlKCJHRVQgL21vYmlsZS92ZXJzaW9uIiwgKCkgPT4gewogICAgaXQuc2tpcCgiVE9ETzogL21vYmlsZS92ZXJzaW9uIGVuZHBvaW50IGRvZXMgbm90IGV4aXN0IGluIHNlcnZlci9lbmRwb2ludHMvbW9iaWxlL2luZGV4LmpzIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCByZXNwb25zZSA9IGF3YWl0IHJlcXVlc3QoIkdFVCIsICIvbW9iaWxlL3ZlcnNpb24iLCBudWxsLCB7CiAgICAgICAgIlgtTW9iaWxlLUFwcC1WZXJzaW9uIjogIjIuMC4wIiwKICAgICAgfSk7CiAgICAgIGV4cGVjdChyZXNwb25zZS5zdGF0dXMpLnRvQmUoMjAwKTsKICAgIH0pOwogIH0pOwoKICBkZXNjcmliZSgiUE9TVCAvbW9iaWxlL3NlbmQvd29ya3NwYWNlcyIsICgpID0+IHsKICAgIGl0KCJzaG91bGQgcmVqZWN0IHdpdGhvdXQgZGV2aWNlIHRva2VuIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCByZXNwb25zZSA9IGF3YWl0IHJlcXVlc3QoIlBPU1QiLCAiL21vYmlsZS9zZW5kL3dvcmtzcGFjZXMiKTsKICAgICAgZXhwZWN0KHJlc3BvbnNlLnN0YXR1cykudG9CZSg0MDApOwogICAgICBleHBlY3QocmVzcG9uc2UuYm9keSkudG9IYXZlUHJvcGVydHkoImVycm9yIik7CiAgICB9KTsKCiAgICBpdCgic2hvdWxkIHJlamVjdCBpbnZhbGlkIGRldmljZSB0b2tlbiIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCByZXF1ZXN0KCJQT1NUIiwgIi9tb2JpbGUvc2VuZC93b3Jrc3BhY2VzIiwge30sIHsKICAgICAgICAieC1vcGVuc2luLW1vYmlsZS1kZXZpY2UtdG9rZW4iOiAiaW52YWxpZC10b2tlbiIsCiAgICAgIH0pOwogICAgICBleHBlY3QocmVzcG9uc2Uuc3RhdHVzKS50b0JlKDQwMCk7CiAgICAgIGV4cGVjdChyZXNwb25zZS5ib2R5KS50b0hhdmVQcm9wZXJ0eSgiZXJyb3IiKTsKICAgIH0pOwogIH0pOwoKICBkZXNjcmliZSgiUE9TVCAvbW9iaWxlL3NlbmQvd29ya3NwYWNlLWNvbnRlbnQiLCAoKSA9PiB7CiAgICBpdCgic2hvdWxkIHJlamVjdCB3aXRob3V0IGRldmljZSB0b2tlbiIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCByZXF1ZXN0KCJQT1NUIiwgIi9tb2JpbGUvc2VuZC93b3Jrc3BhY2UtY29udGVudCIsIHsKICAgICAgICB3b3Jrc3BhY2VTbHVnOiAidGVzdCIsCiAgICAgIH0pOwogICAgICBleHBlY3QocmVzcG9uc2Uuc3RhdHVzKS50b0JlKDQwMCk7CiAgICAgIGV4cGVjdChyZXNwb25zZS5ib2R5KS50b0hhdmVQcm9wZXJ0eSgiZXJyb3IiKTsKICAgIH0pOwogIH0pOwp9KTsK
+// SPDX-License-Identifier: MIT
+// Purpose: Test mobile app endpoints
+// Docs: tests/mobileEndpoints.test.js
+
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { createApp } from "../server/app";
+
+vi.mock("../server/utils/helpers", () => ({
+  getVectorDbClass: () => ({ namespaceCount: vi.fn(() => Promise.resolve(0)), totalVectors: vi.fn(() => Promise.resolve(0)) }),
+}));
+
+vi.mock("../server/utils/helpers/customModels", () => ({
+  getCustomModels: () => ({ models: [], error: null }),
+}));
+
+vi.mock("../server/models/systemSettings", () => ({
+  SystemSettings: {
+    currentSettings: vi.fn(() => Promise.resolve({})),
+    isMultiUserMode: vi.fn(() => Promise.resolve(false)),
+  },
+}));
+
+vi.mock("../server/models/user", () => ({
+  User: { _get: vi.fn(() => Promise.resolve(null)), filterFields: vi.fn((user) => user) },
+}));
+
+vi.mock("../server/models/eventLogs", () => ({
+  EventLogs: { logEvent: vi.fn(() => Promise.resolve()) },
+}));
+
+vi.mock("../server/models/telemetry", () => ({
+  Telemetry: { sendTelemetry: vi.fn(() => Promise.resolve()) },
+}));
+
+vi.mock("../server/utils/helpers/updateENV", () => ({
+  updateENV: () => ({ newValues: {}, error: null }),
+}));
+
+vi.mock("../server/utils/middleware/multiUserProtected", () => ({
+  flexUserRoleValid: () => (req, res, next) => next(),
+  strictMultiUserRoleValid: () => (req, res, next) => next(),
+  ROLES: { admin: "admin", manager: "manager", all: "all" },
+  isMultiUserSetup: () => true,
+}));
+
+vi.mock("../server/utils/middleware/validatedRequest", () => ({
+  validatedRequest: (req, res, next) => next(),
+}));
+
+vi.mock("../server/utils/http", () => ({
+  reqBody: (req) => req.body || {},
+  makeJWT: (payload, expiry) => `token_${payload.id}`,
+  userFromSession: () => Promise.resolve({ id: 1, username: "test" }),
+  multiUserMode: () => false,
+  queryParams: () => ({}),
+}));
+
+vi.mock("../server/utils/middleware/simpleRateLimit", () => ({
+  simpleRateLimit: () => (req, res, next) => next(),
+}));
+
+vi.mock("../server/utils/collectorApi", () => ({
+  CollectorApi: () => ({ online: () => Promise.resolve(true), acceptedFileTypes: () => Promise.resolve([]) }),
+}));
+
+vi.mock("../server/utils/chats", () => ({
+  VALID_COMMANDS: { help: true, clear: true },
+}));
+
+let app;
+
+beforeEach(async () => {
+  vi.clearAllMocks();
+  app = createApp();
+});
+
+const request = async (method, path, body = null, headers = {}) => {
+  const url = `http://localhost:3001${path}`;
+  const options = {
+    method,
+    headers: { "Content-Type": "application/json", ...headers },
+  };
+  if (body) options.body = JSON.stringify(body);
+  const response = await fetch(url, options);
+  const data = await response.text();
+  return { status: response.status, headers: response.headers, body: data ? JSON.parse(data) : null };
+};
+
+describe("mobile endpoints", () => {
+  describe("POST /mobile/register", () => {
+    it("should reject invalid registration token", async () => {
+      const response = await request("POST", "/mobile/register", {
+        deviceName: "iPhone 15",
+        deviceOs: "ios",
+      }, {
+        Authorization: "Bearer invalid-token",
+      });
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty("error");
+    });
+
+    it("should reject registration without token", async () => {
+      const response = await request("POST", "/mobile/register", {
+        deviceName: "iPhone 15",
+        deviceOs: "ios",
+      });
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty("error");
+    });
+  });
+
+  describe("GET /mobile/auth", () => {
+    it("should reject invalid device token", async () => {
+      const response = await request("GET", "/mobile/auth", null, {
+        "x-opensin-mobile-device-token": "invalid-token",
+      });
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty("error");
+    });
+
+    it("should reject without device token", async () => {
+      const response = await request("GET", "/mobile/auth");
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty("error");
+    });
+  });
+
+  describe("GET /mobile/version", () => {
+    it.skip("TODO: /mobile/version endpoint does not exist in server/endpoints/mobile/index.js", async () => {
+      const response = await request("GET", "/mobile/version", null, {
+        "X-Mobile-App-Version": "2.0.0",
+      });
+      expect(response.status).toBe(200);
+    });
+  });
+
+  describe("POST /mobile/send/workspaces", () => {
+    it("should reject without device token", async () => {
+      const response = await request("POST", "/mobile/send/workspaces");
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty("error");
+    });
+
+    it("should reject invalid device token", async () => {
+      const response = await request("POST", "/mobile/send/workspaces", {}, {
+        "x-opensin-mobile-device-token": "invalid-token",
+      });
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty("error");
+    });
+  });
+
+  describe("POST /mobile/send/workspace-content", () => {
+    it("should reject without device token", async () => {
+      const response = await request("POST", "/mobile/send/workspace-content", {
+        workspaceSlug: "test",
+      });
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty("error");
+    });
+  });
+});
