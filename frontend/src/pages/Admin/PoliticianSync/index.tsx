@@ -3,7 +3,6 @@
 // Docs: index.doc.md
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { isMobile } from "react-device-detect";
 import SettingsSidebar from "@/components/SettingsSidebar";
 import usePoliticianSync from "@/hooks/usePoliticianSync";
 import { ArrowsClockwise } from "@phosphor-icons/react/dist/csr/ArrowsClockwise";
@@ -16,6 +15,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import CTAButton from "@/components/lib/CTAButton";
 import showToast from "@/utils/toast";
 import { baseHeaders } from "@/utils/request";
+import AdminContentPanel from "@/components/AdminContentPanel";
 
 interface SyncStatus {
   lastSync: string | null;
@@ -132,10 +132,7 @@ export default function PoliticianSyncDashboard(): React.ReactElement {
   return (
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
       <SettingsSidebar />
-      <div
-        style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
-        className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
-      >
+      <AdminContentPanel>
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           {/* Header */}
           <div className="w-full flex flex-col gap-y-2 pb-6 border-white/10 border-b-2">

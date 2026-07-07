@@ -33,7 +33,10 @@ function RunNode({
     run.status === "running" || run.status === "waiting_input";
 
   return (
-    <div className="flex flex-col" style={{ paddingLeft: depth * 12 }}>
+    <div
+      className="flex flex-col pl-[calc(var(--tree-depth,0)*12px)]"
+      style={{ "--tree-depth": depth } as React.CSSProperties}
+    >
       <div className="flex items-center justify-between gap-2 py-1.5 px-2 rounded-lg hover:bg-zinc-800/50 light:hover:bg-slate-100/50 group">
         <div className="flex items-center gap-2 min-w-0">
           {statusIcon[run.status]}

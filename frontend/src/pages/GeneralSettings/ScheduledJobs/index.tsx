@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/SettingsSidebar";
-import { isMobile } from "react-device-detect";
 import ScheduledJobs from "@/models/scheduledJobs";
 import useWebPushNotifications from "@/hooks/useWebPushNotifications";
 import JobFormModal from "./JobFormModal";
@@ -13,6 +12,7 @@ import JobRow from "./components/JobRow";
 import { Bell } from "@phosphor-icons/react/dist/csr/Bell";
 import { Tooltip } from "react-tooltip";
 import useScheduledJobs from "@/hooks/useScheduledJobs";
+import AdminContentPanel from "@/components/AdminContentPanel";
 
 export default function ScheduledJobsPage() {
   const { t } = useTranslation();
@@ -171,10 +171,7 @@ function BaseLayout({
   return (
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
       <Sidebar />
-      <div
-        style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
-        className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
-      >
+      <AdminContentPanel>
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           <div className="w-full flex items-end justify-between gap-x-4 pb-6 border-white/10 light:border-slate-300 border-b-2">
             <div className="flex flex-col gap-y-2">

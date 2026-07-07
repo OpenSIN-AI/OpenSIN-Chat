@@ -78,18 +78,9 @@ const PromptReply: any = ({
       <div className="flex justify-start w-full py-2.5">
         <div className="flex items-center w-full">
           <div className="flex items-center gap-1.5 px-1">
-            <span
-              className="w-2.5 h-2.5 rounded-full bg-zinc-500 light:bg-slate-400 animate-pulse"
-              style={{ animationDelay: "0ms" }}
-            />
-            <span
-              className="w-2.5 h-2.5 rounded-full bg-zinc-500 light:bg-slate-400 animate-pulse"
-              style={{ animationDelay: "200ms" }}
-            />
-            <span
-              className="w-2.5 h-2.5 rounded-full bg-zinc-500 light:bg-slate-400 animate-pulse"
-              style={{ animationDelay: "400ms" }}
-            />
+            <span className="w-2.5 h-2.5 rounded-full bg-zinc-500 light:bg-slate-400 animate-pulse [animation-delay:0ms]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-zinc-500 light:bg-slate-400 animate-pulse [animation-delay:200ms]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-zinc-500 light:bg-slate-400 animate-pulse [animation-delay:400ms]" />
           </div>
         </div>
       </div>

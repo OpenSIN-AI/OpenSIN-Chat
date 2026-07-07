@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 import React from "react";
-import { isMobile } from "react-device-detect";
 import Sidebar from "@/components/SettingsSidebar";
 import PreLoader from "@/components/Preloader";
 import SpeechToTextProvider from "./stt";
 import TextToSpeechProvider from "./tts";
 import useSystemSettings from "@/hooks/useSystemSettings";
+import AdminContentPanel from "@/components/AdminContentPanel";
 
 export default function AudioPreference() {
   const { settings, loading } = useSystemSettings();
@@ -14,23 +14,13 @@ export default function AudioPreference() {
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
       <Sidebar />
       {loading ? (
-        <div
-          style={{
-            "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
-          }}
-          className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
-        >
+        <AdminContentPanel>
           <div className="w-full h-full flex justify-center items-center">
             <PreLoader />
           </div>
         </div>
       ) : (
-        <div
-          style={{
-            "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
-          }}
-          className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
-        >
+        <AdminContentPanel>
           <SpeechToTextProvider settings={settings} />
           <TextToSpeechProvider settings={settings} />
         </div>

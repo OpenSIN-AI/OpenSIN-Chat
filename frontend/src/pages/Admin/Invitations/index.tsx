@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
 import Sidebar from "@/components/SettingsSidebar";
-import { isMobile } from "react-device-detect";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { EnvelopeSimple } from "@phosphor-icons/react/dist/csr/EnvelopeSimple";
@@ -14,6 +13,7 @@ import ModalWrapper from "@/components/ModalWrapper";
 import CTAButton from "@/components/lib/CTAButton";
 import { mutate } from "swr";
 import { useTranslation } from "react-i18next";
+import AdminContentPanel from "@/components/AdminContentPanel";
 
 export default function AdminInvites(): JSX.Element {
   const { isOpen, openModal, closeModal } = useModal();
@@ -23,10 +23,7 @@ export default function AdminInvites(): JSX.Element {
   return (
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
       <Sidebar />
-      <div
-        style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
-        className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
-      >
+      <AdminContentPanel>
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           <div className="w-full flex flex-col gap-y-1 pb-6 border-white/10 border-b-2">
             <div className="items-center flex gap-x-4">

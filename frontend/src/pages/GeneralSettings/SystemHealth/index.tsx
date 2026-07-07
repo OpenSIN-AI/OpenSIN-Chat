@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
 import { useState } from "react";
-import { isMobile } from "react-device-detect";
 import Sidebar from "@/components/SettingsSidebar";
 import ProviderKeyStatusPanel from "@/components/ProviderKeyStatusPanel";
 import ProviderStatus from "@/models/providerStatus";
@@ -11,6 +10,7 @@ import { PlugsConnected } from "@phosphor-icons/react/dist/csr/PlugsConnected";
 import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import useProviderKeyStatus from "@/hooks/useProviderKeyStatus";
 import { useTranslation } from "react-i18next";
+import AdminContentPanel from "@/components/AdminContentPanel";
 
 type ConnectivityResult = {
   name: string;
@@ -158,9 +158,7 @@ export default function SystemHealth(): JSX.Element {
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-theme-bg-container">
       <Sidebar />
-      <div
-        style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
-        className="h-[var(--content-height)] relative w-full overflow-y-scroll bg-theme-bg-secondary no-scroll md:my-[16px] md:ml-[2px] md:mr-[16px] md:rounded-[16px]"
+      <AdminContentPanel className="h-[var(--content-height)] relative w-full overflow-y-scroll bg-theme-bg-secondary no-scroll md:my-[16px] md:ml-[2px] md:mr-[16px] md:rounded-[16px]"
       >
         <div className="flex w-full flex-col gap-y-6 p-4 pt-16 md:p-8 md:pt-6">
           <div className="flex flex-col gap-y-1">

@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React, { useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
-import { isMobile } from "react-device-detect";
 import PreLoader from "@/components/Preloader";
 import CTAButton from "@/components/lib/CTAButton";
 import Admin from "@/models/admin";
@@ -14,6 +13,7 @@ import ChangeWarningModal from "@/components/ChangeWarning";
 import useEmbeddingTextSplitterPreference from "@/hooks/useEmbeddingTextSplitterPreference";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import UnsavedChangesDialog from "@/components/UnsavedChangesDialog";
+import AdminContentPanel from "@/components/AdminContentPanel";
 
 function isNullOrNaN(value: any) {
   if (value === null) return true;
@@ -88,23 +88,13 @@ export default function EmbeddingTextSplitterPreference() {
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
       <Sidebar />
       {isLoading ? (
-        <div
-          style={{
-            "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
-          }}
-          className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
-        >
+        <AdminContentPanel>
           <div className="w-full h-full flex justify-center items-center">
             <PreLoader />
           </div>
         </div>
       ) : (
-        <div
-          style={{
-            "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
-          }}
-          className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
-        >
+        <AdminContentPanel>
           <form
             onSubmit={handleSubmit}
             onChange={() => setHasChanges(true)}
