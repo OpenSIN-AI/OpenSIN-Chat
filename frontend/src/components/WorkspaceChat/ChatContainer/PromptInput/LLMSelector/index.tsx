@@ -1,1 +1,203 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyB1c2VTdGF0ZSwgdXNlRWZmZWN0IH0gZnJvbSAicmVhY3QiOwppbXBvcnQgeyB1c2VQYXJhbXMgfSBmcm9tICJyZWFjdC1yb3V0ZXItZG9tIjsKaW1wb3J0IFByZUxvYWRlciBmcm9tICJAL2NvbXBvbmVudHMvUHJlbG9hZGVyIjsKaW1wb3J0IENoYXRNb2RlbFNlbGVjdGlvbiBmcm9tICIuL0NoYXRNb2RlbFNlbGVjdGlvbiI7CmltcG9ydCBSb3V0ZXJQaWNrZXJTZWxlY3Rpb24gZnJvbSAiLi9Sb3V0ZXJQaWNrZXJTZWxlY3Rpb24iOwppbXBvcnQgeyB1c2VUcmFuc2xhdGlvbiB9IGZyb20gInJlYWN0LWkxOG5leHQiOwppbXBvcnQgeyBQUk9WSURFUl9TRVRVUF9FVkVOVCwgU0FWRV9MTE1fU0VMRUNUT1JfRVZFTlQgfSBmcm9tICIuL2FjdGlvbiI7CmltcG9ydCB7CiAgV09SS1NQQUNFX0xMTV9QUk9WSURFUlMsCiAgYXV0b1Njcm9sbFRvU2VsZWN0ZWRMTE1Qcm92aWRlciwKICBoYXNNaXNzaW5nQ3JlZGVudGlhbHMsCiAgdmFsaWRhdGVkTW9kZWxTZWxlY3Rpb24sCn0gZnJvbSAiLi91dGlscyI7CmltcG9ydCBMTE1TZWxlY3RvclNpZGVQYW5lbCBmcm9tICIuL0xMTVNlbGVjdG9yIjsKaW1wb3J0IHsgTm9TZXR1cFdhcm5pbmcgfSBmcm9tICIuL1NldHVwUHJvdmlkZXIiOwppbXBvcnQgc2hvd1RvYXN0IGZyb20gIkAvdXRpbHMvdG9hc3QiOwppbXBvcnQgdXNlV29ya3NwYWNlIGZyb20gIkAvaG9va3MvdXNlV29ya3NwYWNlQnlTbHVnIjsKaW1wb3J0IHVzZVN5c3RlbVNldHRpbmdzIGZyb20gIkAvaG9va3MvdXNlU3lzdGVtU2V0dGluZ3MiOwppbXBvcnQgV29ya3NwYWNlIGZyb20gIkAvbW9kZWxzL3dvcmtzcGFjZSI7CgpleHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBMTE1TZWxlY3Rvck1vZGFsKHsKICB3b3Jrc3BhY2VTbHVnID0gbnVsbCwKICBpbml0aWFsUHJvdmlkZXIgPSBudWxsLAp9OiBhbnkpIHsKICBjb25zdCB7IHNsdWc6IHVybFNsdWcgfSA9IHVzZVBhcmFtcygpOwogIGNvbnN0IHNsdWcgPSB1cmxTbHVnID8/IHdvcmtzcGFjZVNsdWc7CiAgY29uc3QgeyB0IH0gPSB1c2VUcmFuc2xhdGlvbigpOwogIGNvbnN0IHsgd29ya3NwYWNlLCBpc0xvYWRpbmc6IHdvcmtzcGFjZUxvYWRpbmcgfSA9IHVzZVdvcmtzcGFjZShzbHVnKTsKICBjb25zdCB7IHNldHRpbmdzOiBzeXN0ZW1TZXR0aW5ncywgbG9hZGluZzogc2V0dGluZ3NMb2FkaW5nIH0gPQogICAgdXNlU3lzdGVtU2V0dGluZ3MoKTsKICBjb25zdCBbc2V0dGluZ3MsIHNldFNldHRpbmdzXSA9IHVzZVN0YXRlKG51bGwpOwogIGNvbnN0IFtzZWxlY3RlZExMTVByb3ZpZGVyLCBzZXRTZWxlY3RlZExMTVByb3ZpZGVyXSA9IHVzZVN0YXRlKG51bGwpOwogIGNvbnN0IFtzZWxlY3RlZExMTU1vZGVsLCBzZXRTZWxlY3RlZExMTU1vZGVsXSA9IHVzZVN0YXRlKCIiKTsKICBjb25zdCBbc2VsZWN0ZWRSb3V0ZXJJZCwgc2V0U2VsZWN0ZWRSb3V0ZXJJZF0gPSB1c2VTdGF0ZShudWxsKTsKICBjb25zdCBbYXZhaWxhYmxlUHJvdmlkZXJzLCBzZXRBdmFpbGFibGVQcm92aWRlcnNdID0gdXNlU3RhdGUoCiAgICBXT1JLU1BBQ0VfTExNX1BST1ZJREVSUywKICApOwogIGNvbnN0IFtoYXNDaGFuZ2VzLCBzZXRIYXNDaGFuZ2VzXSA9IHVzZVN0YXRlKGZhbHNlKTsKICBjb25zdCBbc2F2aW5nLCBzZXRTYXZpbmddID0gdXNlU3RhdGUoZmFsc2UpOwogIGNvbnN0IFttaXNzaW5nQ3JlZGVudGlhbHMsIHNldE1pc3NpbmdDcmVkZW50aWFsc10gPSB1c2VTdGF0ZShmYWxzZSk7CgogIGNvbnN0IGxvYWRpbmcgPSB3b3Jrc3BhY2VMb2FkaW5nIHx8IHNldHRpbmdzTG9hZGluZzsKCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIGlmICghd29ya3NwYWNlIHx8ICFzeXN0ZW1TZXR0aW5ncykgcmV0dXJuOwogICAgY29uc3Qgc2F2ZWRQcm92aWRlciA9IHdvcmtzcGFjZS5jaGF0UHJvdmlkZXIgPz8gc3lzdGVtU2V0dGluZ3MuTExNUHJvdmlkZXI7CiAgICBjb25zdCBzYXZlZE1vZGVsID0gd29ya3NwYWNlLmNoYXRNb2RlbCA/PyBzeXN0ZW1TZXR0aW5ncy5MTE1Nb2RlbDsKICAgIGNvbnN0IHByb3ZpZGVyVG9TZWxlY3QgPSBpbml0aWFsUHJvdmlkZXIgPz8gc2F2ZWRQcm92aWRlcjsKCiAgICBzZXRTZXR0aW5ncyhzeXN0ZW1TZXR0aW5ncyk7CiAgICBzZXRTZWxlY3RlZExMTVByb3ZpZGVyKHByb3ZpZGVyVG9TZWxlY3QpOwogICAgYXV0b1Njcm9sbFRvU2VsZWN0ZWRMTE1Qcm92aWRlcihwcm92aWRlclRvU2VsZWN0KTsKICAgIHNldFNlbGVjdGVkTExNTW9kZWwoc2F2ZWRNb2RlbCk7CiAgICBzZXRTZWxlY3RlZFJvdXRlcklkKAogICAgICB3b3Jrc3BhY2Uucm91dGVyX2lkIHx8IHN5c3RlbVNldHRpbmdzPy5Nb2RlbFJvdXRlcklkIHx8IG51bGwsCiAgICApOwoKICAgIGlmIChpbml0aWFsUHJvdmlkZXIgJiYgaW5pdGlhbFByb3ZpZGVyICE9PSBzYXZlZFByb3ZpZGVyKSB7CiAgICAgIHNldEhhc0NoYW5nZXModHJ1ZSk7CiAgICAgIHNldE1pc3NpbmdDcmVkZW50aWFscygKICAgICAgICBoYXNNaXNzaW5nQ3JlZGVudGlhbHMoc3lzdGVtU2V0dGluZ3MsIGluaXRpYWxQcm92aWRlciksCiAgICAgICk7CiAgICB9CiAgfSwgW3dvcmtzcGFjZSwgc3lzdGVtU2V0dGluZ3MsIGluaXRpYWxQcm92aWRlcl0pOwoKICBmdW5jdGlvbiBoYW5kbGVTZWFyY2goZSkgewogICAgY29uc3Qgc2VhcmNoVGVybSA9IGUudGFyZ2V0LnZhbHVlLnRvTG93ZXJDYXNlKCk7CiAgICBjb25zdCBmaWx0ZXJlZFByb3ZpZGVycyA9IFdPUktTUEFDRV9MTE1fUFJPVklERVJTLmZpbHRlcigocHJvdmlkZXIpID0+CiAgICAgIHByb3ZpZGVyLm5hbWUudG9Mb3dlckNhc2UoKS5pbmNsdWRlcyhzZWFyY2hUZXJtKSwKICAgICk7CiAgICBzZXRBdmFpbGFibGVQcm92aWRlcnMoZmlsdGVyZWRQcm92aWRlcnMpOwogIH0KCiAgZnVuY3Rpb24gaGFuZGxlUHJvdmlkZXJTZWxlY3Rpb24ocHJvdmlkZXIpIHsKICAgIHNldFNlbGVjdGVkTExNUHJvdmlkZXIocHJvdmlkZXIpOwogICAgc2V0QXZhaWxhYmxlUHJvdmlkZXJzKFdPUktTUEFDRV9MTE1fUFJPVklERVJTKTsKICAgIGF1dG9TY3JvbGxUb1NlbGVjdGVkTExNUHJvdmlkZXIocHJvdmlkZXIsIDUwKTsKICAgIGNvbnN0IHNlYXJjaElucHV0ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImxsbS1zZWFyY2gtaW5wdXQiKTsKICAgIGlmIChzZWFyY2hJbnB1dCkgKHNlYXJjaElucHV0IGFzIEhUTUxJbnB1dEVsZW1lbnQpLnZhbHVlID0gIiI7CiAgICBzZXRIYXNDaGFuZ2VzKHRydWUpOwogICAgc2V0TWlzc2luZ0NyZWRlbnRpYWxzKGhhc01pc3NpbmdDcmVkZW50aWFscyhzZXR0aW5ncywgcHJvdmlkZXIpKTsKICB9CgogIGFzeW5jIGZ1bmN0aW9uIGhhbmRsZVNhdmUoKSB7CiAgICBzZXRTYXZpbmcodHJ1ZSk7CiAgICB0cnkgewogICAgICBzZXRIYXNDaGFuZ2VzKGZhbHNlKTsKCiAgICAgIGNvbnN0IGlzUm91dGVyID0gc2VsZWN0ZWRMTE1Qcm92aWRlciA9PT0gIm9wZW5zaW4tcm91dGVyIjsKICAgICAgaWYgKGlzUm91dGVyICYmICFzZWxlY3RlZFJvdXRlcklkKQogICAgICAgIHRocm93IG5ldyBFcnJvcih0KCJtb2RlbC1yb3V0ZXIuY2hhdC5zZWxlY3Qtcm91dGVyLWVycm9yIikpOwoKICAgICAgY29uc3QgdXBkYXRlRGF0YSA9IGlzUm91dGVyCiAgICAgICAgPyB7IGNoYXRQcm92aWRlcjogc2VsZWN0ZWRMTE1Qcm92aWRlciwgcm91dGVyX2lkOiBzZWxlY3RlZFJvdXRlcklkIH0KICAgICAgICA6IHsKICAgICAgICAgICAgY2hhdFByb3ZpZGVyOiBzZWxlY3RlZExMTVByb3ZpZGVyLAogICAgICAgICAgICBjaGF0TW9kZWw6IHZhbGlkYXRlZE1vZGVsU2VsZWN0aW9uKHNlbGVjdGVkTExNTW9kZWwpLAogICAgICAgICAgfTsKCiAgICAgIGlmICghaXNSb3V0ZXIgJiYgIXVwZGF0ZURhdGEuY2hhdE1vZGVsKQogICAgICAgIHRocm93IG5ldyBFcnJvcih0KCJtb2RlbC1yb3V0ZXIuY2hhdC5pbnZhbGlkLW1vZGVsIikpOwoKICAgICAgY29uc3QgeyBtZXNzYWdlIH0gPSBhd2FpdCBXb3Jrc3BhY2UudXBkYXRlKHNsdWcsIHVwZGF0ZURhdGEpOwoKICAgICAgaWYgKCEhbWVzc2FnZSkgdGhyb3cgbmV3IEVycm9yKG1lc3NhZ2UpOwogICAgICB3aW5kb3cuZGlzcGF0Y2hFdmVudChuZXcgRXZlbnQoU0FWRV9MTE1fU0VMRUNUT1JfRVZFTlQpKTsKICAgIH0gY2F0Y2ggKGVycm9yKSB7CiAgICAgIHNldEhhc0NoYW5nZXModHJ1ZSk7CiAgICAgIGNvbnNvbGUuZXJyb3IoZXJyb3IpOwogICAgICBzaG93VG9hc3QoZXJyb3IubWVzc2FnZSwgImVycm9yIiwgeyBjbGVhcjogdHJ1ZSB9KTsKICAgIH0gZmluYWxseSB7CiAgICAgIHNldFNhdmluZyhmYWxzZSk7CiAgICB9CiAgfQoKICBjb25zdCBwcm92aWRlck5hbWUgPQogICAgV09SS1NQQUNFX0xMTV9QUk9WSURFUlMuZmluZCgocCkgPT4gcC52YWx1ZSA9PT0gc2VsZWN0ZWRMTE1Qcm92aWRlcikKICAgICAgPy5uYW1lIHx8IHNlbGVjdGVkTExNUHJvdmlkZXI7CgogIGlmIChsb2FkaW5nKSB7CiAgICByZXR1cm4gKAogICAgICA8ZGl2CiAgICAgICAgaWQ9ImxsbS1zZWxlY3Rvci1tb2RhbCIKICAgICAgICBjbGFzc05hbWU9InctZnVsbCBoLVszODhweF0gZmxleCBmbGV4LWNvbCBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIgZ2FwLTIiCiAgICAgID4KICAgICAgICA8UHJlTG9hZGVyIHNpemU9ezEyfSAvPgogICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC16aW5jLTQwMCBsaWdodDp0ZXh0LXNsYXRlLTUwMCB0ZXh0LXNtIj4KICAgICAgICAgIHt0KCJjaGF0X3dpbmRvdy53b3Jrc3BhY2VfbGxtX21hbmFnZXIubG9hZGluZ193b3Jrc3BhY2Vfc2V0dGluZ3MiKX0KICAgICAgICA8L3A+CiAgICAgIDwvZGl2PgogICAgKTsKICB9CgogIHJldHVybiAoCiAgICA8ZGl2IGlkPSJsbG0tc2VsZWN0b3ItbW9kYWwiIGNsYXNzTmFtZT0idy1mdWxsIGgtWzM4OHB4XSBmbGV4Ij4KICAgICAgPExMTVNlbGVjdG9yU2lkZVBhbmVsCiAgICAgICAgYXZhaWxhYmxlUHJvdmlkZXJzPXthdmFpbGFibGVQcm92aWRlcnN9CiAgICAgICAgc2VsZWN0ZWRMTE1Qcm92aWRlcj17c2VsZWN0ZWRMTE1Qcm92aWRlcn0KICAgICAgICBvblNlYXJjaENoYW5nZT17aGFuZGxlU2VhcmNofQogICAgICAgIG9uUHJvdmlkZXJDbGljaz17aGFuZGxlUHJvdmlkZXJTZWxlY3Rpb259CiAgICAgIC8+CiAgICAgIDxkaXYgY2xhc3NOYW1lPSJ3LVs2MCVdIGgtZnVsbCBwLVsxOHB4XSBmbGV4IGZsZXgtY29sIGdhcC0yLjUiPgogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIGdhcC1bMTVweF0iPgogICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgZ2FwLTEuNSI+CiAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC1zbSBmb250LW1lZGl1bSB0ZXh0LXdoaXRlIGxpZ2h0OnRleHQtc2xhdGUtODAwIj4KICAgICAgICAgICAgICB7dCgiY2hhdF93aW5kb3cud29ya3NwYWNlX2xsbV9tYW5hZ2VyLmF2YWlsYWJsZV9tb2RlbHMiLCB7CiAgICAgICAgICAgICAgICBwcm92aWRlcjogcHJvdmlkZXJOYW1lLAogICAgICAgICAgICAgIH0pfQogICAgICAgICAgICA8L3A+CiAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC14cyBmb250LW1lZGl1bSB0ZXh0LXppbmMtNDAwIGxpZ2h0OnRleHQtc2xhdGUtNTAwIj4KICAgICAgICAgICAgICB7dCgKICAgICAgICAgICAgICAgICJjaGF0X3dpbmRvdy53b3Jrc3BhY2VfbGxtX21hbmFnZXIuYXZhaWxhYmxlX21vZGVsc19kZXNjcmlwdGlvbiIsCiAgICAgICAgICAgICAgKX0KICAgICAgICAgICAgPC9wPgogICAgICAgICAgPC9kaXY+CiAgICAgICAgICB7IW1pc3NpbmdDcmVkZW50aWFscyAmJgogICAgICAgICAgICAoc2VsZWN0ZWRMTE1Qcm92aWRlciA9PT0gIm9wZW5zaW4tcm91dGVyIiA/ICgKICAgICAgICAgICAgICA8Um91dGVyUGlja2VyU2VsZWN0aW9uCiAgICAgICAgICAgICAgICBzZWxlY3RlZFJvdXRlcklkPXtzZWxlY3RlZFJvdXRlcklkfQogICAgICAgICAgICAgICAgc2V0U2VsZWN0ZWRSb3V0ZXJJZD17c2V0U2VsZWN0ZWRSb3V0ZXJJZH0KICAgICAgICAgICAgICAgIHNldEhhc0NoYW5nZXM9e3NldEhhc0NoYW5nZXN9CiAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgKSA6ICgKICAgICAgICAgICAgICA8Q2hhdE1vZGVsU2VsZWN0aW9uCiAgICAgICAgICAgICAgICBwcm92aWRlcj17c2VsZWN0ZWRMTE1Qcm92aWRlcn0KICAgICAgICAgICAgICAgIHNldEhhc0NoYW5nZXM9e3NldEhhc0NoYW5nZXN9CiAgICAgICAgICAgICAgICBzZWxlY3RlZExMTU1vZGVsPXtzZWxlY3RlZExMTU1vZGVsfQogICAgICAgICAgICAgICAgc2V0U2VsZWN0ZWRMTE1Nb2RlbD17c2V0U2VsZWN0ZWRMTE1Nb2RlbH0KICAgICAgICAgICAgICAvPgogICAgICAgICAgICApKX0KICAgICAgICA8L2Rpdj4KICAgICAgICA8Tm9TZXR1cFdhcm5pbmcKICAgICAgICAgIHNob3dpbmc9e21pc3NpbmdDcmVkZW50aWFsc30KICAgICAgICAgIG9uU2V0dXBDbGljaz17KCkgPT4gewogICAgICAgICAgICB3aW5kb3cuZGlzcGF0Y2hFdmVudCgKICAgICAgICAgICAgICBuZXcgQ3VzdG9tRXZlbnQoUFJPVklERVJfU0VUVVBfRVZFTlQsIHsKICAgICAgICAgICAgICAgIGRldGFpbDogewogICAgICAgICAgICAgICAgICBwcm92aWRlcjogV09SS1NQQUNFX0xMTV9QUk9WSURFUlMuZmluZCgKICAgICAgICAgICAgICAgICAgICAocCkgPT4gcC52YWx1ZSA9PT0gc2VsZWN0ZWRMTE1Qcm92aWRlciwKICAgICAgICAgICAgICAgICAgKSwKICAgICAgICAgICAgICAgICAgc2V0dGluZ3MsCiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgIH0pLAogICAgICAgICAgICApOwogICAgICAgICAgfX0KICAgICAgICAvPgogICAgICAgIHtoYXNDaGFuZ2VzICYmICFtaXNzaW5nQ3JlZGVudGlhbHMgJiYgKAogICAgICAgICAgPGJ1dHRvbgogICAgICAgICAgICB0eXBlPSJidXR0b24iCiAgICAgICAgICAgIGRpc2FibGVkPXtzYXZpbmd9CiAgICAgICAgICAgIG9uQ2xpY2s9e2hhbmRsZVNhdmV9CiAgICAgICAgICAgIGNsYXNzTmFtZT0iYm9yZGVyLW5vbmUgdGV4dC14cyBweC00IHB5LTEuNSBmb250LXNlbWlib2xkIHJvdW5kZWQtbGcgYmctd2hpdGUgdGV4dC16aW5jLTkwMCBob3ZlcjpiZy16aW5jLTIwMCBsaWdodDpiZy1zbGF0ZS04MDAgbGlnaHQ6dGV4dC13aGl0ZSBsaWdodDpob3ZlcjpiZy1zbGF0ZS03MDAgaC04IHctZnVsbCBjdXJzb3ItcG9pbnRlciB0cmFuc2l0aW9uLWNvbG9ycyBtdC1hdXRvIgogICAgICAgICAgPgogICAgICAgICAgICB7c2F2aW5nCiAgICAgICAgICAgICAgPyB0KCJjaGF0X3dpbmRvdy53b3Jrc3BhY2VfbGxtX21hbmFnZXIuc2F2aW5nIikKICAgICAgICAgICAgICA6IHQoImNoYXRfd2luZG93LndvcmtzcGFjZV9sbG1fbWFuYWdlci5zYXZlIil9CiAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICApfQogICAgICA8L2Rpdj4KICAgIDwvZGl2PgogICk7Cn0K
+// SPDX-License-Identifier: MIT
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import PreLoader from "@/components/Preloader";
+import ChatModelSelection from "./ChatModelSelection";
+import RouterPickerSelection from "./RouterPickerSelection";
+import { useTranslation } from "react-i18next";
+import { PROVIDER_SETUP_EVENT, SAVE_LLM_SELECTOR_EVENT } from "./action";
+import {
+  WORKSPACE_LLM_PROVIDERS,
+  autoScrollToSelectedLLMProvider,
+  hasMissingCredentials,
+  validatedModelSelection,
+} from "./utils";
+import LLMSelectorSidePanel from "./LLMSelector";
+import { NoSetupWarning } from "./SetupProvider";
+import showToast from "@/utils/toast";
+import useWorkspace from "@/hooks/useWorkspaceBySlug";
+import useSystemSettings from "@/hooks/useSystemSettings";
+import Workspace from "@/models/workspace";
+
+export default function LLMSelectorModal({
+  workspaceSlug = null,
+  initialProvider = null,
+}: any) {
+  const { slug: urlSlug } = useParams();
+  const slug = urlSlug ?? workspaceSlug;
+  const { t } = useTranslation();
+  const { workspace, isLoading: workspaceLoading } = useWorkspace(slug);
+  const { settings: systemSettings, loading: settingsLoading } =
+    useSystemSettings();
+  const [settings, setSettings] = useState(null);
+  const [selectedLLMProvider, setSelectedLLMProvider] = useState(null);
+  const [selectedLLMModel, setSelectedLLMModel] = useState("");
+  const [selectedRouterId, setSelectedRouterId] = useState(null);
+  const [availableProviders, setAvailableProviders] = useState(
+    WORKSPACE_LLM_PROVIDERS,
+  );
+  const [hasChanges, setHasChanges] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [missingCredentials, setMissingCredentials] = useState(false);
+
+  const loading = workspaceLoading || settingsLoading;
+
+  useEffect(() => {
+    if (!workspace || !systemSettings) return;
+    const savedProvider = workspace.chatProvider ?? systemSettings.LLMProvider;
+    const savedModel = workspace.chatModel ?? systemSettings.LLMModel;
+    const providerToSelect = initialProvider ?? savedProvider;
+
+    setSettings(systemSettings);
+    setSelectedLLMProvider(providerToSelect);
+    autoScrollToSelectedLLMProvider(providerToSelect);
+    setSelectedLLMModel(savedModel);
+    setSelectedRouterId(
+      workspace.router_id || systemSettings?.ModelRouterId || null,
+    );
+
+    if (initialProvider && initialProvider !== savedProvider) {
+      setHasChanges(true);
+      setMissingCredentials(
+        hasMissingCredentials(systemSettings, initialProvider),
+      );
+    }
+  }, [workspace, systemSettings, initialProvider]);
+
+  function handleSearch(e) {
+    const searchTerm = e.target.value.toLowerCase();
+    const filteredProviders = WORKSPACE_LLM_PROVIDERS.filter((provider) =>
+      provider.name.toLowerCase().includes(searchTerm),
+    );
+    setAvailableProviders(filteredProviders);
+  }
+
+  function handleProviderSelection(provider) {
+    setSelectedLLMProvider(provider);
+    setAvailableProviders(WORKSPACE_LLM_PROVIDERS);
+    autoScrollToSelectedLLMProvider(provider, 50);
+    const searchInput = document.getElementById("llm-search-input");
+    if (searchInput) (searchInput as HTMLInputElement).value = "";
+    setHasChanges(true);
+    setMissingCredentials(hasMissingCredentials(settings, provider));
+  }
+
+  async function handleSave() {
+    setSaving(true);
+    try {
+      setHasChanges(false);
+
+      const isRouter = selectedLLMProvider === "opensin-router";
+      if (isRouter && !selectedRouterId)
+        throw new Error(t("model-router.chat.select-router-error"));
+
+      const updateData = isRouter
+        ? { chatProvider: selectedLLMProvider, router_id: selectedRouterId }
+        : {
+            chatProvider: selectedLLMProvider,
+            chatModel: validatedModelSelection(selectedLLMModel),
+          };
+
+      if (!isRouter && !updateData.chatModel)
+        throw new Error(t("model-router.chat.invalid-model"));
+
+      const { message } = await Workspace.update(slug, updateData);
+
+      if (!!message) throw new Error(message);
+      window.dispatchEvent(new Event(SAVE_LLM_SELECTOR_EVENT));
+    } catch (error) {
+      setHasChanges(true);
+      console.error(error);
+      showToast(error.message, "error", { clear: true });
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  const providerName =
+    WORKSPACE_LLM_PROVIDERS.find((p) => p.value === selectedLLMProvider)
+      ?.name || selectedLLMProvider;
+
+  if (loading) {
+    return (
+      <div
+        id="llm-selector-modal"
+        className="w-full h-[388px] flex flex-col items-center justify-center gap-2"
+      >
+        <PreLoader size={12} />
+        <p className="text-zinc-400 light:text-slate-500 text-sm">
+          {t("chat_window.workspace_llm_manager.loading_workspace_settings")}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div id="llm-selector-modal" className="w-full h-[388px] flex">
+      <LLMSelectorSidePanel
+        availableProviders={availableProviders}
+        selectedLLMProvider={selectedLLMProvider}
+        onSearchChange={handleSearch}
+        onProviderClick={handleProviderSelection}
+      />
+      <div className="w-[60%] h-full p-[18px] flex flex-col gap-2.5">
+        <div className="flex flex-col gap-[15px]">
+          <div className="flex flex-col gap-1.5">
+            <p className="text-sm font-medium text-white light:text-slate-800">
+              {t("chat_window.workspace_llm_manager.available_models", {
+                provider: providerName,
+              })}
+            </p>
+            <p className="text-xs font-medium text-zinc-400 light:text-slate-500">
+              {t(
+                "chat_window.workspace_llm_manager.available_models_description",
+              )}
+            </p>
+          </div>
+          {!missingCredentials &&
+            (selectedLLMProvider === "opensin-router" ? (
+              <RouterPickerSelection
+                selectedRouterId={selectedRouterId}
+                setSelectedRouterId={setSelectedRouterId}
+                setHasChanges={setHasChanges}
+              />
+            ) : (
+              <ChatModelSelection
+                provider={selectedLLMProvider}
+                setHasChanges={setHasChanges}
+                selectedLLMModel={selectedLLMModel}
+                setSelectedLLMModel={setSelectedLLMModel}
+              />
+            ))}
+        </div>
+        <NoSetupWarning
+          showing={missingCredentials}
+          onSetupClick={() => {
+            window.dispatchEvent(
+              new CustomEvent(PROVIDER_SETUP_EVENT, {
+                detail: {
+                  provider: WORKSPACE_LLM_PROVIDERS.find(
+                    (p) => p.value === selectedLLMProvider,
+                  ),
+                  settings,
+                },
+              }),
+            );
+          }}
+        />
+        {hasChanges && !missingCredentials && (
+          <button
+            type="button"
+            disabled={saving}
+            onClick={handleSave}
+            className="border-none text-xs px-4 py-1.5 font-semibold rounded-lg bg-white text-zinc-900 hover:bg-zinc-200 light:bg-slate-800 light:text-white light:hover:bg-slate-700 h-8 w-full cursor-pointer transition-colors mt-auto"
+          >
+            {saving
+              ? t("chat_window.workspace_llm_manager.saving")
+              : t("chat_window.workspace_llm_manager.save")}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
