@@ -385,10 +385,12 @@ body {
 @media (max-width: 600px) {
   html {
     overscroll-behavior: none;
-  @keyframes pulse-slow {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
   }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
 /* ── Dark mode strategy ────────────────────────────────────────────────── */
