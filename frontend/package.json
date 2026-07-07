@@ -63,7 +63,7 @@
     "i18next-browser-languagedetector": "^7.2.2",
     "js-levenshtein": "^1.1.6",
     "jspdf": "^4.2.1",
-    "katex": "^0.16.11",
+    "katex": "^0.17.0",
     "lodash.debounce": "^4.0.8",
     "markdown-it": "^14.3.0",
     "onnxruntime-web": "^1.18.0",
