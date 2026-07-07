@@ -46,7 +46,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@hello-pangea/dnd": "^18.0.1",
     "@lobehub/icons": "^5.10.1",
-    "@microsoft/fetch-event-source": "^2.0.1",
+
     "@mintplex-labs/piper-tts-web": "^1.0.4",
     "@phosphor-icons/react": "^2.1.10",
     "@tremor/react": "^3.18.7",
@@ -61,6 +61,7 @@
     "highlight.js": "^11.11.1",
     "i18next": "^26.3.4",
     "i18next-browser-languagedetector": "^7.2.2",
+    "i18next-resources-to-backend": "^1.2.1",
     "js-levenshtein": "^1.1.6",
     "jspdf": "^4.2.1",
     "katex": "^0.17.0",

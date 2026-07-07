@@ -13,7 +13,6 @@ import { Nut } from "@phosphor-icons/react/dist/csr/Nut";
 import { Toolbox } from "@phosphor-icons/react/dist/csr/Toolbox";
 import { Plugs } from "@phosphor-icons/react/dist/csr/Plugs";
 import AgentIcon from "@/media/animations/agent-static.png";
-import CommunityHubIcon from "@/media/illustrations/community-hub.png";
 import useUser from "@/hooks/useUser";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import Footer from "../Footer";
@@ -337,37 +336,6 @@ const SidebarOptions = ({ user = null, t }: any) => (
           roles={["admin"]}
         />
         <Option
-          btnText={t("settings.community-hub.title")}
-          icon={
-            <img
-              src={CommunityHubIcon}
-              alt={t("settings.community-hub.title")}
-              className="h-5 w-5 flex-shrink-0 light:invert"
-            />
-          }
-          user={user}
-          childOptions={[
-            {
-              btnText: t("settings.community-hub.trending"),
-              href: paths.communityHub.trending(),
-              flex: true,
-              roles: ["admin"],
-            },
-            {
-              btnText: t("settings.community-hub.your-account"),
-              href: paths.communityHub.authentication(),
-              flex: true,
-              roles: ["admin"],
-            },
-            {
-              btnText: t("settings.community-hub.import-item"),
-              href: paths.communityHub.importItem(),
-              flex: true,
-              roles: ["admin"],
-            },
-          ]}
-        />
-        <Option
           btnText={t("settings.customization")}
           icon={<PencilSimpleLine className="h-5 w-5 flex-shrink-0" />}
           user={user}
@@ -447,18 +415,7 @@ const SidebarOptions = ({ user = null, t }: any) => (
               flex: true,
               roles: ["admin"],
             },
-            {
-              btnText: t("settings.browser-extension"),
-              href: paths.settings.browserExtension(),
-              flex: true,
-              roles: ["admin", "manager"],
-            },
-            {
-              btnText: t("settings.mobile-app"),
-              href: paths.settings.mobile(),
-              flex: true,
-              roles: ["admin"],
-            },
+
           ]}
         />
         <Option

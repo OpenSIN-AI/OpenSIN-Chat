@@ -5,7 +5,7 @@ const consoleLogger = require("../../logger/console.js");
 
 const { KEY_MAPPING } = require("./keyMapping");
 
-function dumpENV() {
+async function dumpENV() {
   const fs = require("fs");
   const path = require("path");
 
@@ -105,9 +105,9 @@ function dumpENV() {
 
   const envPath = path.join(__dirname, "../../../.env");
   try {
-    fs.writeFileSync(envPath, envResult, { encoding: "utf8", flag: "w" });
+    await fs.promises.writeFile(envPath, envResult, { encoding: "utf8", flag: "w" });
     try {
-      fs.chmodSync(envPath, 0o600);
+      await fs.promises.chmod(envPath, 0o600);
     } catch (e) {
       consoleLogger.error(`Failed to chmod ${envPath} to 0o600: ${e.message}`);
     }

@@ -6,7 +6,7 @@
 
 ## Context
 
-OpenSIN-Chat ist eine **Sovereignty-first / Offline-first** Plattform, ursprünglich inspiriert von AnythingLLM
+OpenSIN-Chat ist eine **Sovereignty-first / Offline-first** Fork von AnythingLLM
 (`docs/supabase-self-hosted.md`, `SECURITY.md`). Sie läuft typischerweise als
 **Single-Node auf einem Mac hinter einem Cloudflare-Tunnel** — kein Container-
 Cluster, keine Cloud-Worker, keine externen Broker.

@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { fetchEventSource } from "@microsoft/fetch-event-source";
+import { streamSSEPost } from "@/utils/chat/sseStream";
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders, safeJsonParse } from "@/utils/request";
 import Workspace from "@/models/workspace";
@@ -195,20 +195,17 @@ export function EmbeddingProgressProvider({ children }: any) {
       const ctrl = new AbortController();
       abortControllersRef.current[slug] = ctrl;
 
-      fetchEventSource(`${API_BASE}/workspace/${slug}/embed-progress`, {
+      streamSSEPost(`${API_BASE}/workspace/${slug}/embed-progress`, {
         method: "GET",
         headers: baseHeaders(),
         signal: ctrl.signal,
-        openWhenHidden: true,
         onmessage: (msg) => handleMessage(slug, msg, ctrl),
         onclose: () => {
           delete abortControllersRef.current[slug];
-          throw new Error("SSE closed by server");
         },
         onerror: (err) => {
           delete abortControllersRef.current[slug];
           ctrl?.abort();
-          throw err;
         },
       }).catch((err) => {
         console.warn("EmbeddingProgress SSE connection failed", err);

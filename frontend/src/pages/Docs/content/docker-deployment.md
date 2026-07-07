@@ -49,7 +49,7 @@ Simplest deployment — single container, storage in a bind mount.
 
 ```bash
 # 1. Create storage directory on host
-export STORAGE_LOCATION=$HOME/openafd
+export STORAGE_LOCATION=$HOME/opensin-chat
 mkdir -p $STORAGE_LOCATION
 
 # 2. Generate encryption keys (REQUIRED)
@@ -69,7 +69,7 @@ OPENSIN_CHAT_RUNTIME=docker
 EOF
 
 # 4. Run container
-docker run -d --name openafd \
+docker run -d --name opensin-chat \
   -p 3001:3001 \
   --cap-add SYS_ADMIN \
   -v $STORAGE_LOCATION:/app/server/storage \
@@ -77,7 +77,7 @@ docker run -d --name openafd \
   -e STORAGE_DIR=/app/server/storage \
   -e SIG_KEY=${SIG_KEY} \
   -e SIG_SALT=${SIG_SALT} \
-  openafd/openafd:latest
+  opensin/opensin-chat:latest
 
 # 5. Verify
 sleep 30
@@ -100,11 +100,11 @@ SIG_SALT='$env:SIG_SALT'
 STORAGE_DIR='/app/server/storage'
 "@ | Out-File "$env:STORAGE_LOCATION\.env" -Encoding utf8
 
-docker run -d --name openafd -p 3001:3001 --cap-add SYS_ADMIN `
+docker run -d --name opensin-chat -p 3001:3001 --cap-add SYS_ADMIN `
   -v "$env:STORAGE_LOCATION`:/app/server/storage" `
   -v "$env:STORAGE_LOCATION\.env:/app/server/.env" `
   -e STORAGE_DIR=/app/server/storage `
-  openafd/openafd:latest
+  opensin/opensin-chat:latest
 ```
 
 ---
@@ -114,7 +114,7 @@ docker run -d --name openafd -p 3001:3001 --cap-add SYS_ADMIN `
 `docker/docker-compose.yml`:
 
 ```yaml
-name: openafd
+name: opensin-chat
 
 networks:
   opensin-chat:
@@ -122,7 +122,7 @@ networks:
 
 services:
   opensin-chat:
-    container_name: openafd
+    container_name: opensin-chat
     build:
       context: ../.
       dockerfile: ./docker/Dockerfile
@@ -231,7 +231,7 @@ docker build -f Dockerfile -t opensin-chat:custom ../
 # Build takes 5-15 min depending on cache
 
 # 5. Run with custom image
-docker run -d --name openafd-dev -p 3001:3001 \
+docker run -d --name opensin-chat-dev -p 3001:3001 \
   --cap-add SYS_ADMIN \
   -v $(pwd)/../server/storage:/app/server/storage \
   -v $(pwd)/.env:/app/server/.env \
@@ -273,16 +273,16 @@ the endpoint was `/ping` at root — that was incorrect.
 ### Manual checks
 ```bash
 # Is the server running?
-docker exec openafd ps aux | grep "node /app/server/index.js"
+docker exec opensin-chat ps aux | grep "node /app/server/index.js"
 
 # Is the collector running?
-docker exec openafd ps aux | grep "node /app/collector/index.js"
+docker exec opensin-chat ps aux | grep "node /app/collector/index.js"
 
 # Check logs for errors
-docker logs openafd 2>&1 | grep -iE "error|crash|throw" | tail -20
+docker logs opensin-chat 2>&1 | grep -iE "error|crash|throw" | tail -20
 
 # Verify both processes
-docker exec openafd bash -c "
+docker exec opensin-chat bash -c "
   if pgrep -f 'node /app/server/index.js' > /dev/null; then
     echo 'Server: RUNNING'
   else
@@ -312,7 +312,7 @@ The Politician-DB starts empty. The sync job populates it from external APIs.
 ### Trigger manual sync
 ```bash
 # Inside container
-docker exec openafd node /app/server/jobs/sync-politician-data.js
+docker exec opensin-chat node /app/server/jobs/sync-politician-data.js
 
 # Expected output:
 # [BundestagApi] Fetching members from formular endpoint (WP 21)...
@@ -325,7 +325,7 @@ docker exec openafd node /app/server/jobs/sync-politician-data.js
 ### Verify
 ```bash
 # Count politicians
-docker exec openafd sqlite3 /app/server/storage/opensin.db \
+docker exec opensin-chat sqlite3 /app/server/storage/opensin.db \
   "SELECT COUNT(*) FROM politicians"
 # Expected: 700+
 
@@ -423,32 +423,32 @@ GID='1000'
 
 ### Container won't start
 ```bash
-docker logs openafd 2>&1 | tail -50
+docker logs opensin-chat 2>&1 | tail -50
 # Look for: TypeError, Error: EACCES, ENOENT, ECONNREFUSED
 ```
 
 ### Healthcheck fails but server runs
 ```bash
 # Manually test endpoint
-docker exec openafd curl http://localhost:3001/api/ping
+docker exec opensin-chat curl http://localhost:3001/api/ping
 # Should return: {"online":true}
 
 # If works manually but healthcheck fails:
-docker exec openafd bash /usr/local/bin/docker-healthcheck.sh
+docker exec opensin-chat bash /usr/local/bin/docker-healthcheck.sh
 # See the error output
 ```
 
 ### Database locked
 ```bash
-docker stop openafd
-docker start openafd
+docker stop opensin-chat
+docker start opensin-chat
 # If persists, check for zombie processes
-docker exec openafd ps aux | grep -E "node|prisma"
+docker exec opensin-chat ps aux | grep -E "node|prisma"
 ```
 
 ### Sync job crashes
 ```bash
-docker exec openafd tail -f /app/server/storage/logs/politician-sync.log
+docker exec opensin-chat tail -f /app/server/storage/logs/politician-sync.log
 # Look for HTTP 404, 429, 500
 # See docs/DATA-SOURCES.md for API limits
 ```
@@ -464,9 +464,9 @@ docker volume prune
 
 ### Reset everything (DANGER: data loss)
 ```bash
-docker stop openafd
-docker rm openafd
-docker volume rm openafd-storage  # DELETES ALL DATA
+docker stop opensin-chat
+docker rm opensin-chat
+docker volume rm opensin-chat-storage  # DELETES ALL DATA
 docker run ...  # Recreate
 ```
 
@@ -480,10 +480,10 @@ docker run ...  # Recreate
 docker images | grep opensin-chat
 
 # Stop current container
-docker stop openafd && docker rm openafd
+docker stop opensin-chat && docker rm opensin-chat
 
 # Run previous version
-docker run -d --name openafd -p 3001:3001 \
+docker run -d --name opensin-chat -p 3001:3001 \
   --cap-add SYS_ADMIN \
   -v $STORAGE_LOCATION:/app/server/storage \
   -v $STORAGE_LOCATION/.env:/app/server/.env \
@@ -507,7 +507,7 @@ Most updates preserve database schema. For major migrations:
 cp $STORAGE_LOCATION/opensin.db $STORAGE_LOCATION/opensin.db.bak.$(date +%Y%m%d)
 
 # After upgrade: check logs
-docker logs openafd 2>&1 | grep -iE "migration|schema"
+docker logs opensin-chat 2>&1 | grep -iE "migration|schema"
 ```
 
 ---
@@ -533,15 +533,15 @@ For production deployments via GitHub Actions, see:
 | Task | Command |
 |------|---------|
 | Build image | `docker build -f docker/Dockerfile -t opensin-chat:custom ./` |
-| Run container | `docker run -d --name openafd -p 3001:3001 --cap-add SYS_ADMIN -e STORAGE_DIR=/app/server/storage -v $STORAGE_LOCATION:/app/server/storage openafd/openafd:latest` |
-| View logs | `docker logs -f openafd` |
-| Restart | `docker restart openafd` |
+| Run container | `docker run -d --name opensin-chat -p 3001:3001 --cap-add SYS_ADMIN -e STORAGE_DIR=/app/server/storage -v $STORAGE_LOCATION:/app/server/storage opensin/opensin-chat:latest` |
+| View logs | `docker logs -f opensin-chat` |
+| Restart | `docker restart opensin-chat` |
 | Health check | `curl http://localhost:3001/api/ping` |
-| Trigger sync | `docker exec openafd node /app/server/jobs/sync-politician-data.js` |
+| Trigger sync | `docker exec opensin-chat node /app/server/jobs/sync-politician-data.js` |
 | Backup DB | `cp $STORAGE_LOCATION/opensin.db backup.db` |
-| Restore DB | `cp backup.db $STORAGE_LOCATION/opensin.db && docker restart openafd` |
-| Stop | `docker stop openafd` |
-| Remove | `docker rm openafd` |
+| Restore DB | `cp backup.db $STORAGE_LOCATION/opensin.db && docker restart opensin-chat` |
+| Stop | `docker stop opensin-chat` |
+| Remove | `docker rm opensin-chat` |
 
 ---
 

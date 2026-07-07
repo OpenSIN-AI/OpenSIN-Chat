@@ -21,7 +21,7 @@ const { getVectorDbClass } = require("../helpers");
 async function resetAllVectorStores({ vectorDbKey }) {
   try {
     const workspaces = await Workspace.where();
-    purgeEntireVectorCache(); // Purges the entire vector-cache folder.
+    await purgeEntireVectorCache(); // Purges the entire vector-cache folder.
     await DocumentVectors.delete(); // Deletes all document vectors from the database.
     await Document.delete(); // Deletes all documents from the database.
     await EventLogs.logEvent("workspace_vectors_reset", {

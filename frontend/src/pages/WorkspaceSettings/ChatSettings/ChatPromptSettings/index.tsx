@@ -8,8 +8,6 @@ const VARIABLE_SEPARATOR = ", ";
 import { Link, useSearchParams } from "react-router-dom";
 import paths from "@/utils/paths";
 import ChatPromptHistory from "./ChatPromptHistory";
-import PublishEntityModal from "@/components/CommunityHub/PublishEntityModal";
-import { useModal } from "@/hooks/useModal";
 import System from "@/models/system";
 import useSystemPromptVariables from "@/hooks/useSystemPromptVariables";
 import useDefaultSystemPrompt from "@/hooks/useDefaultSystemPrompt";
@@ -54,18 +52,9 @@ export default function ChatPromptSettings({
   const promptHistoryRef = useRef<any>(null);
   const historyButtonRef = useRef<HTMLButtonElement>(null);
 
-  // Modals
-  const {
-    isOpen: showPublishModal,
-    closeModal: closePublishModal,
-    openModal: openPublishModal,
-  } = useModal();
-
   // Derived state
   const isDirty = prompt !== savedPrompt;
   const hasBeenModified = savedPrompt?.trim() !== initialPrompt?.trim();
-  const showPublishButton =
-    !isEditing && prompt?.trim().length >= 10 && (isDirty || hasBeenModified);
 
   // Sync savedPrompt when hasChanges is cleared
   const prevHasChanges = useRef(hasChanges);
@@ -86,12 +75,6 @@ export default function ChatPromptSettings({
     setHasChanges(true);
   };
 
-  const handlePublishFromHistory = (historicalPrompt: string) => {
-    openPublishModal();
-    setShowPromptHistory(false);
-    setTimeout(() => setPrompt(historicalPrompt), 0);
-  };
-
   const handleRestoreToDefaultSystemPrompt = () => {
     System.fetchDefaultSystemPrompt()
       .then(({ defaultSystemPrompt }: any) => {
@@ -108,7 +91,6 @@ export default function ChatPromptSettings({
         workspaceSlug={workspace.slug}
         show={showPromptHistory}
         onRestore={handleRestoreFromHistory}
-        onPublishClick={handlePublishFromHistory}
         onClose={() => setShowPromptHistory(false)}
       />
       <div>
@@ -218,38 +200,9 @@ export default function ChatPromptSettings({
                 {t("chatPromptSettings.restoreToDefault")}
               </button>
             )}
-            <PublishPromptCTA
-              hidden={!showPublishButton}
-              onClick={openPublishModal}
-            />
           </div>
         </div>
       </div>
-      <PublishEntityModal
-        show={showPublishModal}
-        onClose={closePublishModal}
-        entityType="system-prompt"
-        entity={prompt}
-      />
     </>
-  );
-}
-
-interface PublishPromptCTAProps {
-  hidden?: boolean;
-  onClick: () => void;
-}
-
-function PublishPromptCTA({ hidden = false, onClick }: PublishPromptCTAProps) {
-  const { t } = useTranslation();
-  if (hidden) return null;
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="border-none text-primary-button hover:text-white light:hover:text-black text-xs font-medium"
-    >
-      {t("chatPromptSettings.publishToCommunityHub")}
-    </button>
   );
 }

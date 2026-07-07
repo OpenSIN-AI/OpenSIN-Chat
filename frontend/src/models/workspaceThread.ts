@@ -2,7 +2,7 @@
 import { ABORT_STREAM_EVENT } from "@/utils/chat";
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders, safeJsonParse } from "@/utils/request";
-import { fetchEventSource } from "@microsoft/fetch-event-source";
+import { streamSSEPost } from "@/utils/chat/sseStream";
 import { v4 } from "uuid";
 
 const WorkspaceThread: any = {
@@ -164,14 +164,13 @@ const WorkspaceThread: any = {
     window.addEventListener(ABORT_STREAM_EVENT, handleAbort);
 
     try {
-      await fetchEventSource(
+      await streamSSEPost(
         `${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}/stream-chat`,
         {
           method: "POST",
           body: JSON.stringify({ message, attachments }),
           headers: baseHeaders(),
           signal: ctrl.signal,
-          openWhenHidden: true,
           async onopen(response) {
             if (response.ok) {
               return; // everything's good

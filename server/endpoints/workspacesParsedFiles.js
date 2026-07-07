@@ -50,7 +50,9 @@ async function copyToUploads(request) {
     const filePath = request.file?.path;
     const filename = request.file?.filename;
     if (!filePath || !filename) return;
-    if (!fs.existsSync(filePath)) {
+    try {
+      await fs.promises.access(filePath);
+    } catch {
       consoleLogger.info(
         "[copyToUploads] source file no longer exists (already processed by collector):",
         filePath,

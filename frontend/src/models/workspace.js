@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { API_BASE, fullApiUrl } from "@/utils/constants";
 import { baseHeaders, safeJsonParse } from "@/utils/request";
-import { fetchEventSource } from "@microsoft/fetch-event-source";
+import { streamSSEPost } from "@/utils/chat/sseStream";
 import WorkspaceThread from "@/models/workspaceThread";
 import { v4 } from "uuid";
 import { ABORT_STREAM_EVENT } from "@/utils/chat";
@@ -204,12 +204,11 @@ const Workspace = {
     window.addEventListener(ABORT_STREAM_EVENT, handleAbort);
 
     try {
-      await fetchEventSource(`${API_BASE}/workspace/${slug}/stream-chat`, {
+      await streamSSEPost(`${API_BASE}/workspace/${slug}/stream-chat`, {
         method: "POST",
         body: JSON.stringify({ message, attachments }),
         headers: baseHeaders(),
         signal: ctrl.signal,
-        openWhenHidden: true,
         async onopen(response) {
           if (response.ok) {
             return; // everything's good

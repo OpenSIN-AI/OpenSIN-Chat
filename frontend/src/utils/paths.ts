@@ -189,17 +189,8 @@ export default {
     embedChatWidgets: () => {
       return `/settings/embed-chat-widgets`;
     },
-    browserExtension: () => {
-      return `/settings/browser-extension`;
-    },
-    mobile: () => {
-      return `/settings/mobile-connections`;
-    },
     experimental: () => {
       return "/settings/beta-features";
-    },
-    mobileConnections: () => {
-      return "/settings/mobile-connections";
     },
     telegram: () => {
       return "/settings/external-connections/telegram";
@@ -231,39 +222,7 @@ export default {
       return `/settings/agents/builder/${uuid}`;
     },
   },
-  communityHub: {
-    website: () => {
-      return "https://sinchat.delqhi.com/hub";
-    },
-    viewMoreOfType: function (type: any) {
-      return `${this.website()}/list/${type}`;
-    },
-    viewItem: function (type: any, id: any) {
-      return `${this.website()}/i/${type}/${id}`;
-    },
-    trending: () => {
-      return `/settings/community-hub/trending`;
-    },
-    authentication: () => {
-      return `/settings/community-hub/authentication`;
-    },
-    importItem: (importItemId = null) => {
-      return `/settings/community-hub/import-item${importItemId ? `?id=${importItemId}` : ""}`;
-    },
-    profile: function (username?: any) {
-      if (username) return `${this.website()}/u/${username}`;
-      return `${this.website()}/me`;
-    },
-    noPrivateItems: () => {
-      // Points to in-app docs because external docs are no longer hosted.
-      return "/docs";
-    },
-  },
-
   documentation: {
-    mobileIntroduction: () => {
-      return "/docs";
-    },
     contextWindows: () => {
       return "/docs";
     },

@@ -45,9 +45,7 @@ function apiSystemEndpoints(app) {
             type: 'object',
             example: {
              "settings": {
-                "VectorDB": "pinecone",
-                "PineConeKey": true,
-                "PineConeIndex": "my-pinecone-index",
+                "VectorDB": "lancedb",
                 "LLMProvider": "azure",
                 "[KEY_NAME]": "KEY_VALUE",
               }

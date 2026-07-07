@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 import { useState, useCallback, useMemo } from "react";
 import i18n from "@/i18n";
-import { resources as languages } from "@/locales/resources";
+import { supportedLngs } from "@/locales/resources";
 
 export function useLanguageOptions() {
-  const supportedLanguages = useMemo(() => Object.keys(languages), []);
+  const supportedLanguages = useMemo(() => supportedLngs, []);
   const languageNames = useMemo(
     () => new Intl.DisplayNames(supportedLanguages, { type: "language" }),
     [supportedLanguages],
@@ -12,7 +12,7 @@ export function useLanguageOptions() {
   const [currentLanguage, setCurrentLanguage] = useState(i18n.language || "en");
 
   const changeLanguage = useCallback((newLang = "en") => {
-    if (!Object.keys(languages).includes(newLang)) return false;
+    if (!supportedLngs.includes(newLang)) return false;
     setCurrentLanguage(newLang);
     i18n.changeLanguage(newLang);
     return true;

@@ -494,7 +494,13 @@ function utilEndpoints(app) {
         const fs = require("fs");
         const relativePath = req.query.path || "";
         const filePath = safeStorageJoin("uploads", relativePath);
-        if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
+        let fileStat;
+        try {
+          fileStat = await fs.promises.stat(filePath);
+        } catch {
+          return response.status(404).json({ error: "File not found" });
+        }
+        if (!fileStat.isFile()) {
           return response.status(404).json({ error: "File not found" });
         }
         const fileName = path.basename(filePath);

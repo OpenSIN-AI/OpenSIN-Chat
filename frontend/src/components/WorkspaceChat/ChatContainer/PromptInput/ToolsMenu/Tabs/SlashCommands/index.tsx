@@ -6,7 +6,6 @@ import { useModal } from "@/hooks/useModal";
 import useSlashCommandPresets from "@/hooks/useSlashCommandPresets";
 import AddPresetModal from "./SlashPresets/AddPresetModal";
 import EditPresetModal from "./SlashPresets/EditPresetModal";
-import PublishEntityModal from "@/components/CommunityHub/PublishEntityModal";
 import showToast from "@/utils/toast";
 import { PROMPT_INPUT_EVENT } from "@/components/WorkspaceChat/ChatContainer/PromptInput";
 import useToolsMenuItems from "../../useToolsMenuItems";
@@ -31,14 +30,8 @@ export default function SlashCommandsTab({
     openModal: openEditModal,
     closeModal: closeEditModal,
   } = useModal();
-  const {
-    isOpen: isPublishModalOpen,
-    openModal: openPublishModal,
-    closeModal: closePublishModal,
-  } = useModal();
   const { presets, refresh: refreshPresets } = useSlashCommandPresets();
   const [selectedPreset, setSelectedPreset] = useState(null);
-  const [presetToPublish, setPresetToPublish] = useState(null);
 
   const items = useMemo(
     () => [
@@ -135,16 +128,6 @@ export default function SlashCommandsTab({
     setSelectedPreset(null);
   };
 
-  const handlePublishPreset: any = (preset) => {
-    setPresetToPublish({
-      name: preset.command.slice(1),
-      description: preset.description,
-      command: preset.command,
-      prompt: preset.prompt,
-    });
-    openPublishModal();
-  };
-
   return (
     <>
       {(items as any).map((item, index) => (
@@ -159,9 +142,6 @@ export default function SlashCommandsTab({
             )
           }
           onEdit={item.preset ? () => handleEditPreset(item.preset) : undefined}
-          onPublish={
-            item.preset ? () => handlePublishPreset(item.preset) : undefined
-          }
           showMenu={!!item.preset}
           highlighted={highlightedIndex === index}
         />
@@ -198,12 +178,6 @@ export default function SlashCommandsTab({
           preset={selectedPreset}
         />
       )}
-      <PublishEntityModal
-        show={isPublishModalOpen}
-        onClose={closePublishModal}
-        entityType="slash-command"
-        entity={presetToPublish}
-      />
     </>
   );
 }
