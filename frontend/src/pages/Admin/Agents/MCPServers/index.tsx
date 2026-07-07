@@ -1,1 +1,231 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBEb2NzOiBpbmRleC5kb2MubWQKaW1wb3J0IHsgdXNlU3RhdGUsIFJlYWN0Tm9kZSwgdXNlRWZmZWN0IH0gZnJvbSAicmVhY3QiOwppbXBvcnQgeyB0aXRsZUNhc2UgfSBmcm9tICJ0ZXh0LWNhc2UiOwppbXBvcnQgeyBCb29rT3BlblRleHQgfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvQm9va09wZW5UZXh0IjsKaW1wb3J0IHsgQXJyb3dDbG9ja3dpc2UgfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvQXJyb3dDbG9ja3dpc2UiOwppbXBvcnQgeyBXYXJuaW5nIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL1dhcm5pbmciOwppbXBvcnQgeyBUb29sdGlwIH0gZnJvbSAicmVhY3QtdG9vbHRpcCI7CmltcG9ydCBNQ1BMb2dvIGZyb20gIkAvbWVkaWEvYWdlbnRzL21jcC1sb2dvLnN2ZyI7CmltcG9ydCBNQ1BTZXJ2ZXJzIGZyb20gIkAvbW9kZWxzL21jcFNlcnZlcnMiOwppbXBvcnQgc2hvd1RvYXN0IGZyb20gIkAvdXRpbHMvdG9hc3QiOwppbXBvcnQgeyB1c2VUcmFuc2xhdGlvbiB9IGZyb20gInJlYWN0LWkxOG5leHQiOwppbXBvcnQgdXNlTUNQU2VydmVycywgeyBNQ1BfU0VSVkVSU19LRVkgfSBmcm9tICJAL2hvb2tzL3VzZU1DUFNlcnZlcnMiOwppbXBvcnQgeyBtdXRhdGUgfSBmcm9tICJzd3IiOwoKdHlwZSBNQ1BTZXJ2ZXIgPSB7CiAgbmFtZTogc3RyaW5nOwogIHJ1bm5pbmc6IGJvb2xlYW47CiAgdG9vbHM6IGFueVtdOwogIGNvbmZpZz86IHsKICAgIG9wZW5zaW4/OiB7CiAgICAgIHN1cHByZXNzZWRUb29scz86IHN0cmluZ1tdOwogICAgfTsKICB9Owp9OwoKdHlwZSBNQ1BTZXJ2ZXJIZWFkZXJQcm9wcyA9IHsKICBzZXRNY3BTZXJ2ZXJzOiAoc2VydmVyczogTUNQU2VydmVyW10pID0+IHZvaWQ7CiAgc2V0U2VsZWN0ZWRNY3BTZXJ2ZXI6IChzZXJ2ZXI6IE1DUFNlcnZlciB8IG51bGwpID0+IHZvaWQ7CiAgY2hpbGRyZW46IChwcm9wczogeyBsb2FkaW5nTWNwU2VydmVyczogYm9vbGVhbiB9KSA9PiBSZWFjdE5vZGU7Cn07CgpleHBvcnQgZnVuY3Rpb24gTUNQU2VydmVySGVhZGVyKHsKICBzZXRNY3BTZXJ2ZXJzLAogIHNldFNlbGVjdGVkTWNwU2VydmVyLAogIGNoaWxkcmVuLAp9OiBNQ1BTZXJ2ZXJIZWFkZXJQcm9wcyk6IEpTWC5FbGVtZW50IHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgY29uc3QgeyBzZXJ2ZXJzLCBpc0xvYWRpbmcsIHJlZnJlc2ggfSA9IHVzZU1DUFNlcnZlcnMoKTsKICBjb25zdCBbaW5pdGlhbExvYWRlZCwgc2V0SW5pdGlhbExvYWRlZF0gPSB1c2VTdGF0ZShmYWxzZSk7CiAgY29uc3QgW3JlbG9hZGluZywgc2V0UmVsb2FkaW5nXSA9IHVzZVN0YXRlKGZhbHNlKTsKCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIGlmICghaW5pdGlhbExvYWRlZCAmJiAhaXNMb2FkaW5nKSB7CiAgICAgIHNldE1jcFNlcnZlcnMoc2VydmVycyk7CiAgICAgIHNldEluaXRpYWxMb2FkZWQodHJ1ZSk7CiAgICB9CiAgfSwgW2luaXRpYWxMb2FkZWQsIGlzTG9hZGluZywgc2VydmVycywgc2V0TWNwU2VydmVyc10pOwoKICBjb25zdCByZWZyZXNoTUNQU2VydmVycyA9ICgpID0+IHsKICAgIGlmICh3aW5kb3cuY29uZmlybSh0KCJhZ2VudC5tY3AucmVmcmVzaC1jb25maXJtIikpKSB7CiAgICAgIHNldFJlbG9hZGluZyh0cnVlKTsKICAgICAgTUNQU2VydmVycy5mb3JjZVJlbG9hZCgpCiAgICAgICAgLnRoZW4oKHsgc2VydmVycyA9IFtdIH06IGFueSkgPT4gewogICAgICAgICAgc2V0U2VsZWN0ZWRNY3BTZXJ2ZXIobnVsbCk7CiAgICAgICAgICBzZXRNY3BTZXJ2ZXJzKHNlcnZlcnMpOwogICAgICAgICAgbXV0YXRlKE1DUF9TRVJWRVJTX0tFWSk7CiAgICAgICAgfSkKICAgICAgICAuY2F0Y2goKGVycikgPT4gewogICAgICAgICAgY29uc29sZS5lcnJvcihlcnIpOwogICAgICAgICAgc2hvd1RvYXN0KHQoImFnZW50Lm1jcC5yZWZyZXNoLWZhaWxlZCIpLCAiZXJyb3IiLCB7IGNsZWFyOiB0cnVlIH0pOwogICAgICAgIH0pCiAgICAgICAgLmZpbmFsbHkoKCkgPT4gewogICAgICAgICAgc2V0UmVsb2FkaW5nKGZhbHNlKTsKICAgICAgICB9KTsKICAgIH0KICB9OwoKICByZXR1cm4gKAogICAgPD4KICAgICAgPGRpdiBjbGFzc05hbWU9InRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IGZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktYmV0d2VlbiBnYXAteC0yIG10LTQiPgogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBnYXAteC0yIj4KICAgICAgICAgIDxpbWcKICAgICAgICAgICAgc3JjPXtNQ1BMb2dvfQogICAgICAgICAgICBjbGFzc05hbWU9InctNiBoLTYgbGlnaHQ6aW52ZXJ0IgogICAgICAgICAgICBhbHQ9e3QoImNvbW1vbi5tY3BMb2dvIil9CiAgICAgICAgICAvPgogICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LWxnIGZvbnQtbWVkaXVtIj57dCgiYWdlbnQubWNwLnRpdGxlIil9PC9wPgogICAgICAgIDwvZGl2PgogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBnYXAteC0zIj4KICAgICAgICAgIDxhCiAgICAgICAgICAgIGhyZWY9Ii9kb2NzIgogICAgICAgICAgICB0YXJnZXQ9Il9ibGFuayIKICAgICAgICAgICAgcmVsPSJub29wZW5lciBub3JlZmVycmVyIgogICAgICAgICAgICBjbGFzc05hbWU9ImJvcmRlci1ub25lIHRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkgaG92ZXI6dGV4dC1jdGEtYnV0dG9uIgogICAgICAgICAgPgogICAgICAgICAgICA8Qm9va09wZW5UZXh0IHNpemU9ezE2fSAvPgogICAgICAgICAgPC9hPgogICAgICAgICAgPGJ1dHRvbgogICAgICAgICAgICB0eXBlPSJidXR0b24iCiAgICAgICAgICAgIG9uQ2xpY2s9e3JlZnJlc2hNQ1BTZXJ2ZXJzfQogICAgICAgICAgICBkaXNhYmxlZD17aXNMb2FkaW5nIHx8IHJlbG9hZGluZ30KICAgICAgICAgICAgY2xhc3NOYW1lPSJib3JkZXItbm9uZSB0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5IGhvdmVyOnRleHQtY3RhLWJ1dHRvbiBmbGV4IGl0ZW1zLWNlbnRlciBnYXAteC0xIgogICAgICAgICAgPgogICAgICAgICAgICA8QXJyb3dDbG9ja3dpc2UKICAgICAgICAgICAgICBzaXplPXsxNn0KICAgICAgICAgICAgICBjbGFzc05hbWU9e2lzTG9hZGluZyB8fCByZWxvYWRpbmcgPyAiYW5pbWF0ZS1zcGluIiA6ICIifQogICAgICAgICAgICAvPgogICAgICAgICAgICA8cCBjbGFzc05hbWU9InRleHQtc20iPgogICAgICAgICAgICAgIHtpc0xvYWRpbmcgfHwgcmVsb2FkaW5nCiAgICAgICAgICAgICAgICA/IGAke3QoImNvbW1vbi5sb2FkaW5nIil9Li4uYAogICAgICAgICAgICAgICAgOiB0KCJjb21tb24ucmVmcmVzaCIpfQogICAgICAgICAgICA8L3A+CiAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICA8L2Rpdj4KICAgICAgPC9kaXY+CiAgICAgIHtjaGlsZHJlbih7IGxvYWRpbmdNY3BTZXJ2ZXJzOiBpc0xvYWRpbmcgfHwgcmVsb2FkaW5nIH0pfQogICAgPC8+CiAgKTsKfQoKdHlwZSBNQ1BTZXJ2ZXJzTGlzdFByb3BzID0gewogIGlzTG9hZGluZz86IGJvb2xlYW47CiAgc2VydmVycz86IE1DUFNlcnZlcltdOwogIHNlbGVjdGVkU2VydmVyPzogTUNQU2VydmVyIHwgbnVsbDsKICBoYW5kbGVDbGljaz86IChzZXJ2ZXI6IE1DUFNlcnZlcikgPT4gdm9pZDsKfTsKCmV4cG9ydCBmdW5jdGlvbiBNQ1BTZXJ2ZXJzTGlzdCh7CiAgaXNMb2FkaW5nID0gZmFsc2UsCiAgc2VydmVycyA9IFtdLAogIHNlbGVjdGVkU2VydmVyLAogIGhhbmRsZUNsaWNrLAp9OiBNQ1BTZXJ2ZXJzTGlzdFByb3BzKTogSlNYLkVsZW1lbnQgewogIGNvbnN0IHsgdCB9ID0gdXNlVHJhbnNsYXRpb24oKTsKICBpZiAoaXNMb2FkaW5nKSB7CiAgICByZXR1cm4gKAogICAgICA8ZGl2IGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSB0ZXh0LWNlbnRlciB0ZXh0LXhzIGZsZXggZmxleC1jb2wgZ2FwLXktMiI+CiAgICAgICAgPHA+e2Ake3QoImFnZW50Lm1jcC5sb2FkaW5nLWZyb20tY29uZmlnIil9Li4uYH08L3A+CiAgICAgICAgPGEKICAgICAgICAgIGhyZWY9Ii9kb2NzIgogICAgICAgICAgdGFyZ2V0PSJfYmxhbmsiCiAgICAgICAgICByZWw9Im5vb3BlbmVyIG5vcmVmZXJyZXIiCiAgICAgICAgICBjbGFzc05hbWU9InRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkgdW5kZXJsaW5lIGhvdmVyOnRleHQtY3RhLWJ1dHRvbiIKICAgICAgICA+CiAgICAgICAgICB7dCgiYWdlbnQubWNwLmxlYXJuLW1vcmUiKX0KICAgICAgICA8L2E+CiAgICAgIDwvZGl2PgogICAgKTsKICB9CgogIGlmIChzZXJ2ZXJzLmxlbmd0aCA9PT0gMCkgewogICAgcmV0dXJuICgKICAgICAgPGRpdiBjbGFzc05hbWU9InRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkgdGV4dC1jZW50ZXIgdGV4dC14cyBmbGV4IGZsZXgtY29sIGdhcC15LTIiPgogICAgICAgIDxwPnt0KCJhZ2VudC5tY3Aubm8tc2VydmVycy1mb3VuZCIpfTwvcD4KICAgICAgICA8YQogICAgICAgICAgaHJlZj0iL2RvY3MiCiAgICAgICAgICB0YXJnZXQ9Il9ibGFuayIKICAgICAgICAgIHJlbD0ibm9vcGVuZXIgbm9yZWZlcnJlciIKICAgICAgICAgIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSB1bmRlcmxpbmUgaG92ZXI6dGV4dC1jdGEtYnV0dG9uIgogICAgICAgID4KICAgICAgICAgIHt0KCJhZ2VudC5tY3AubGVhcm4tbW9yZSIpfQogICAgICAgIDwvYT4KICAgICAgPC9kaXY+CiAgICApOwogIH0KCiAgcmV0dXJuICgKICAgIDxkaXYgY2xhc3NOYW1lPSJiZy10aGVtZS1iZy1zZWNvbmRhcnkgdGV4dC13aGl0ZSByb3VuZGVkLXhsIHctZnVsbCBtZDptaW4tdy1bMzYwcHhdIj4KICAgICAge3NlcnZlcnMubWFwKChzZXJ2ZXIsIGluZGV4KSA9PiAoCiAgICAgICAgPE1DUFNlcnZlckl0ZW0KICAgICAgICAgIGtleT17c2VydmVyLm5hbWV9CiAgICAgICAgICBzZXJ2ZXI9e3NlcnZlcn0KICAgICAgICAgIGlzRmlyc3Q9e2luZGV4ID09PSAwfQogICAgICAgICAgaXNMYXN0PXtpbmRleCA9PT0gc2VydmVycy5sZW5ndGggLSAxfQogICAgICAgICAgaXNTZWxlY3RlZD17c2VsZWN0ZWRTZXJ2ZXI/Lm5hbWUgPT09IHNlcnZlci5uYW1lfQogICAgICAgICAgaGFuZGxlQ2xpY2s9eygpID0+IGhhbmRsZUNsaWNrPy4oc2VydmVyKX0KICAgICAgICAvPgogICAgICApKX0KICAgICAgPFRvb2x0aXAKICAgICAgICBpZD0ibWNwLXNlcnZlci13YXJuaW5nIgogICAgICAgIHBsYWNlPSJib3R0b20iCiAgICAgICAgZGVsYXlTaG93PXszMDB9CiAgICAgICAgY2xhc3NOYW1lPSJ0b29sdGlwICF0ZXh0LXhzIgogICAgICAgIGNvbnRlbnQ9e3QoImFnZW50Lm1jcC50b29sLXdhcm5pbmciKX0KICAgICAgLz4KICAgIDwvZGl2PgogICk7Cn0KCnR5cGUgTUNQU2VydmVySXRlbVByb3BzID0gewogIHNlcnZlcjogTUNQU2VydmVyOwogIGlzRmlyc3Q6IGJvb2xlYW47CiAgaXNMYXN0OiBib29sZWFuOwogIGlzU2VsZWN0ZWQ6IGJvb2xlYW47CiAgaGFuZGxlQ2xpY2s/OiAoKSA9PiB2b2lkOwp9OwoKZnVuY3Rpb24gTUNQU2VydmVySXRlbSh7CiAgc2VydmVyLAogIGlzRmlyc3QsCiAgaXNMYXN0LAogIGlzU2VsZWN0ZWQsCiAgaGFuZGxlQ2xpY2ssCn06IE1DUFNlcnZlckl0ZW1Qcm9wcyk6IEpTWC5FbGVtZW50IHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgY29uc3Qgc3VwcHJlc3NlZFRvb2xzID0gc2VydmVyLmNvbmZpZz8ub3BlbnNpbj8uc3VwcHJlc3NlZFRvb2xzIHx8IFtdOwogIGNvbnN0IGVuYWJsZWRUb29sQ291bnQgPSBzZXJ2ZXIudG9vbHMubGVuZ3RoIC0gc3VwcHJlc3NlZFRvb2xzLmxlbmd0aDsKICBjb25zdCBzaG93V2FybmluZyA9IGVuYWJsZWRUb29sQ291bnQgPiAxMDsKICBjb25zdCBydW5uaW5nID0gc2VydmVyLnJ1bm5pbmc7CgogIHJldHVybiAoCiAgICA8ZGl2CiAgICAgIGNsYXNzTmFtZT17YHB5LTMgcHgtNCBmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWJldHdlZW4gJHsKICAgICAgICBpc0ZpcnN0ID8gInJvdW5kZWQtdC14bCIgOiAiIgogICAgICB9ICR7CiAgICAgICAgaXNMYXN0ID8gInJvdW5kZWQtYi14bCIgOiAiYm9yZGVyLWIgYm9yZGVyLXdoaXRlLzEwIgogICAgICB9IGN1cnNvci1wb2ludGVyIHRyYW5zaXRpb24tYWxsIGR1cmF0aW9uLTMwMCBob3ZlcjpiZy10aGVtZS1iZy1wcmltYXJ5ICR7CiAgICAgICAgaXNTZWxlY3RlZCA/ICJiZy13aGl0ZS8xMCBsaWdodDpiZy10aGVtZS1iZy1zaWRlYmFyIiA6ICIiCiAgICAgIH1gfQogICAgICBvbkNsaWNrPXtoYW5kbGVDbGlja30KICAgID4KICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIGdhcC14LTIgdGV4dC1zbSBmb250LWxpZ2h0Ij4KICAgICAgICB7c2hvd1dhcm5pbmcgJiYgKAogICAgICAgICAgPFdhcm5pbmcKICAgICAgICAgICAgZGF0YS10b29sdGlwLWlkPSJtY3Atc2VydmVyLXdhcm5pbmciCiAgICAgICAgICAgIGNsYXNzTmFtZT0iaC00IHctNCB0ZXh0LXllbGxvdy01MDAiCiAgICAgICAgICAvPgogICAgICAgICl9CiAgICAgICAge3RpdGxlQ2FzZShzZXJ2ZXIubmFtZS5yZXBsYWNlKC9bXy1dL2csICIgIikpfQogICAgICA8L2Rpdj4KICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIGdhcC14LTIiPgogICAgICAgIDxkaXYKICAgICAgICAgIGNsYXNzTmFtZT17YHRleHQtc20gdGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSBmb250LW1lZGl1bSAke3J1bm5pbmcgPyAidGV4dC1ncmVlbi01MDAiIDogInRleHQtcmVkLTUwMCJ9YH0KICAgICAgICA+CiAgICAgICAgICB7cnVubmluZyA/IHQoImNvbW1vbi5vbiIpIDogdCgiY29tbW9uLnN0b3BwZWQiKX0KICAgICAgICA8L2Rpdj4KICAgICAgPC9kaXY+CiAgICA8L2Rpdj4KICApOwp9Cg==
+// SPDX-License-Identifier: MIT
+// Docs: index.doc.md
+import { useState, ReactNode, useEffect } from "react";
+import { titleCase } from "text-case";
+import { BookOpenText } from "@phosphor-icons/react/dist/csr/BookOpenText";
+import { ArrowClockwise } from "@phosphor-icons/react/dist/csr/ArrowClockwise";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
+import { Tooltip } from "react-tooltip";
+import MCPLogo from "@/media/agents/mcp-logo.svg";
+import MCPServers from "@/models/mcpServers";
+import showToast from "@/utils/toast";
+import { useTranslation } from "react-i18next";
+import useMCPServers, { MCP_SERVERS_KEY } from "@/hooks/useMCPServers";
+import { mutate } from "swr";
+
+type MCPServer = {
+  name: string;
+  running: boolean;
+  tools: any[];
+  config?: {
+    opensin?: {
+      suppressedTools?: string[];
+    };
+  };
+};
+
+type MCPServerHeaderProps = {
+  setMcpServers: (servers: MCPServer[]) => void;
+  setSelectedMcpServer: (server: MCPServer | null) => void;
+  children: (props: { loadingMcpServers: boolean }) => ReactNode;
+};
+
+export function MCPServerHeader({
+  setMcpServers,
+  setSelectedMcpServer,
+  children,
+}: MCPServerHeaderProps): JSX.Element {
+  const { t } = useTranslation();
+  const { servers, isLoading, refresh } = useMCPServers();
+  const [initialLoaded, setInitialLoaded] = useState(false);
+  const [reloading, setReloading] = useState(false);
+
+  useEffect(() => {
+    if (!initialLoaded && !isLoading) {
+      setMcpServers(servers);
+      setInitialLoaded(true);
+    }
+  }, [initialLoaded, isLoading, servers, setMcpServers]);
+
+  const refreshMCPServers = () => {
+    if (window.confirm(t("agent.mcp.refresh-confirm"))) {
+      setReloading(true);
+      MCPServers.forceReload()
+        .then(({ servers = [] }: any) => {
+          setSelectedMcpServer(null);
+          setMcpServers(servers);
+          mutate(MCP_SERVERS_KEY);
+        })
+        .catch((err) => {
+          console.error(err);
+          showToast(t("agent.mcp.refresh-failed"), "error", { clear: true });
+        })
+        .finally(() => {
+          setReloading(false);
+        });
+    }
+  };
+
+  return (
+    <>
+      <div className="text-theme-text-primary flex items-center justify-between gap-x-2 mt-4">
+        <div className="flex items-center gap-x-2">
+          <img
+            src={MCPLogo}
+            className="w-6 h-6 light:invert"
+            alt={t("common.mcpLogo")}
+          />
+          <p className="text-lg font-medium">{t("agent.mcp.title")}</p>
+        </div>
+        <div className="flex items-center gap-x-3">
+          <a
+            href="/docs"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="border-none text-theme-text-secondary hover:text-cta-button"
+          >
+            <BookOpenText size={16} />
+          </a>
+          <button
+            type="button"
+            onClick={refreshMCPServers}
+            disabled={isLoading || reloading}
+            className="border-none text-theme-text-secondary hover:text-cta-button flex items-center gap-x-1"
+          >
+            <ArrowClockwise
+              size={16}
+              className={isLoading || reloading ? "animate-spin" : ""}
+            />
+            <p className="text-sm">
+              {isLoading || reloading
+                ? `${t("common.loading")}...`
+                : t("common.refresh")}
+            </p>
+          </button>
+        </div>
+      </div>
+      {children({ loadingMcpServers: isLoading || reloading })}
+    </>
+  );
+}
+
+type MCPServersListProps = {
+  isLoading?: boolean;
+  servers?: MCPServer[];
+  selectedServer?: MCPServer | null;
+  handleClick?: (server: MCPServer) => void;
+};
+
+export function MCPServersList({
+  isLoading = false,
+  servers = [],
+  selectedServer,
+  handleClick,
+}: MCPServersListProps): JSX.Element {
+  const { t } = useTranslation();
+  if (isLoading) {
+    return (
+      <div className="text-theme-text-secondary text-center text-xs flex flex-col gap-y-2">
+        <p>{`${t("agent.mcp.loading-from-config")}...`}</p>
+        <a
+          href="/docs"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-theme-text-secondary underline hover:text-cta-button"
+        >
+          {t("agent.mcp.learn-more")}
+        </a>
+      </div>
+    );
+  }
+
+  if (servers.length === 0) {
+    return (
+      <div className="text-theme-text-secondary text-center text-xs flex flex-col gap-y-2">
+        <p>{t("agent.mcp.no-servers-found")}</p>
+        <a
+          href="/docs"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-theme-text-secondary underline hover:text-cta-button"
+        >
+          {t("agent.mcp.learn-more")}
+        </a>
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-theme-bg-secondary text-white rounded-xl w-full md:min-w-[360px]">
+      {servers.map((server, index) => (
+        <MCPServerItem
+          key={server.name}
+          server={server}
+          isFirst={index === 0}
+          isLast={index === servers.length - 1}
+          isSelected={selectedServer?.name === server.name}
+          handleClick={() => handleClick?.(server)}
+        />
+      ))}
+      <Tooltip
+        id="mcp-server-warning"
+        place="bottom"
+        delayShow={300}
+        className="tooltip !text-xs"
+        content={t("agent.mcp.tool-warning")}
+      />
+    </div>
+  );
+}
+
+type MCPServerItemProps = {
+  server: MCPServer;
+  isFirst: boolean;
+  isLast: boolean;
+  isSelected: boolean;
+  handleClick?: () => void;
+};
+
+function MCPServerItem({
+  server,
+  isFirst,
+  isLast,
+  isSelected,
+  handleClick,
+}: MCPServerItemProps): JSX.Element {
+  const { t } = useTranslation();
+  const suppressedTools = server.config?.opensin?.suppressedTools || [];
+  const enabledToolCount = server.tools.length - suppressedTools.length;
+  const showWarning = enabledToolCount > 10;
+  const running = server.running;
+
+  return (
+    <div
+      className={`py-3 px-4 flex items-center justify-between ${
+        isFirst ? "rounded-t-xl" : ""
+      } ${
+        isLast ? "rounded-b-xl" : "border-b border-white/10"
+      } cursor-pointer transition-all duration-300 hover:bg-theme-bg-primary ${
+        isSelected ? "bg-white/10 light:bg-theme-bg-sidebar" : ""
+      }`}
+      onClick={handleClick}
+    >
+      <div className="flex items-center gap-x-2 text-sm font-light">
+        {showWarning && (
+          <Warning
+            data-tooltip-id="mcp-server-warning"
+            className="h-4 w-4 text-yellow-500"
+          />
+        )}
+        {titleCase(server.name.replace(/[_-]/g, " "))}
+      </div>
+      <div className="flex items-center gap-x-2">
+        <div
+          className={`text-sm text-theme-text-secondary font-medium ${running ? "text-green-500" : "text-red-500"}`}
+        >
+          {running ? t("common.on") : t("common.stopped")}
+        </div>
+      </div>
+    </div>
+  );
+}

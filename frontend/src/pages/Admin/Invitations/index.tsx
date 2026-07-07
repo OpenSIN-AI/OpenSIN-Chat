@@ -1,1 +1,115 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBEb2NzOiBpbmRleC5kb2MubWQKaW1wb3J0IFNpZGViYXIgZnJvbSAiQC9jb21wb25lbnRzL1NldHRpbmdzU2lkZWJhciI7CmltcG9ydCB7IGlzTW9iaWxlIH0gZnJvbSAicmVhY3QtZGV2aWNlLWRldGVjdCI7CmltcG9ydCBTa2VsZXRvbiBmcm9tICJyZWFjdC1sb2FkaW5nLXNrZWxldG9uIjsKaW1wb3J0ICJyZWFjdC1sb2FkaW5nLXNrZWxldG9uL2Rpc3Qvc2tlbGV0b24uY3NzIjsKaW1wb3J0IHsgRW52ZWxvcGVTaW1wbGUgfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvRW52ZWxvcGVTaW1wbGUiOwppbXBvcnQgeyBXYXJuaW5nIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL1dhcm5pbmciOwppbXBvcnQgSW52aXRlUm93IGZyb20gIi4vSW52aXRlUm93IjsKaW1wb3J0IE5ld0ludml0ZU1vZGFsIGZyb20gIi4vTmV3SW52aXRlTW9kYWwiOwppbXBvcnQgdXNlSW52aXRlcywgeyBJTlZJVEVTX0tFWSB9IGZyb20gIkAvaG9va3MvdXNlSW52aXRlcyI7CmltcG9ydCB7IHVzZU1vZGFsIH0gZnJvbSAiQC9ob29rcy91c2VNb2RhbCI7CmltcG9ydCBNb2RhbFdyYXBwZXIgZnJvbSAiQC9jb21wb25lbnRzL01vZGFsV3JhcHBlciI7CmltcG9ydCBDVEFCdXR0b24gZnJvbSAiQC9jb21wb25lbnRzL2xpYi9DVEFCdXR0b24iOwppbXBvcnQgeyBtdXRhdGUgfSBmcm9tICJzd3IiOwppbXBvcnQgeyB1c2VUcmFuc2xhdGlvbiB9IGZyb20gInJlYWN0LWkxOG5leHQiOwoKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gQWRtaW5JbnZpdGVzKCk6IEpTWC5FbGVtZW50IHsKICBjb25zdCB7IGlzT3Blbiwgb3Blbk1vZGFsLCBjbG9zZU1vZGFsIH0gPSB1c2VNb2RhbCgpOwogIGNvbnN0IHsgaW52aXRlcywgaXNMb2FkaW5nLCBlcnJvciB9ID0gdXNlSW52aXRlcygpOwogIGNvbnN0IHsgdCB9ID0gdXNlVHJhbnNsYXRpb24oKTsKCiAgcmV0dXJuICgKICAgIDxkaXYgY2xhc3NOYW1lPSJ3LXNjcmVlbiBoLXNjcmVlbiBvdmVyZmxvdy1oaWRkZW4gYmctdGhlbWUtYmctY29udGFpbmVyIGZsZXgiPgogICAgICA8U2lkZWJhciAvPgogICAgICA8ZGl2CiAgICAgICAgc3R5bGU9e3sgIi0tY29udGVudC1oZWlnaHQiOiBpc01vYmlsZSA/ICIxMDAlIiA6ICJjYWxjKDEwMCUgLSAzMnB4KSIgfX0KICAgICAgICBjbGFzc05hbWU9ImgtW3ZhcigtLWNvbnRlbnQtaGVpZ2h0KV0gcmVsYXRpdmUgbWQ6bWwtWzJweF0gbWQ6bXItWzE2cHhdIG1kOm15LVsxNnB4XSBtZDpyb3VuZGVkLVsxNnB4XSBiZy10aGVtZS1iZy1zZWNvbmRhcnkgdy1mdWxsIG92ZXJmbG93LXktc2Nyb2xsIHAtNCBtZDpwLTAiCiAgICAgID4KICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCB3LWZ1bGwgcHgtMSBtZDpwbC02IG1kOnByLVs1MHB4XSBtZDpweS02IHB5LTE2Ij4KICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJ3LWZ1bGwgZmxleCBmbGV4LWNvbCBnYXAteS0xIHBiLTYgYm9yZGVyLXdoaXRlLzEwIGJvcmRlci1iLTIiPgogICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iaXRlbXMtY2VudGVyIGZsZXggZ2FwLXgtNCI+CiAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LWxnIGxlYWRpbmctNiBmb250LWJvbGQgdGV4dC10aGVtZS10ZXh0LXByaW1hcnkiPgogICAgICAgICAgICAgICAge3QoImFkbWluLmludml0YXRpb25zLnRpdGxlIil9CiAgICAgICAgICAgICAgPC9wPgogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXhzIGxlYWRpbmctWzE4cHhdIGZvbnQtYmFzZSB0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5IG10LTIiPgogICAgICAgICAgICAgIHt0KCJhZG1pbi5pbnZpdGF0aW9ucy5kZXNjcmlwdGlvbiIpfQogICAgICAgICAgICA8L3A+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJ3LWZ1bGwganVzdGlmeS1lbmQgZmxleCI+CiAgICAgICAgICAgIDxDVEFCdXR0b24KICAgICAgICAgICAgICBvbkNsaWNrPXtvcGVuTW9kYWx9CiAgICAgICAgICAgICAgY2xhc3NOYW1lPSJtdC0zIG1yLTAgbWItNCBtZDotbWItMTIgei0xMCIKICAgICAgICAgICAgPgogICAgICAgICAgICAgIDxFbnZlbG9wZVNpbXBsZSBjbGFzc05hbWU9ImgtNCB3LTQiIHdlaWdodD0iYm9sZCIgLz57IiAifQogICAgICAgICAgICAgIHt0KCJhZG1pbi5pbnZpdGF0aW9ucy5jcmVhdGVJbnZpdGVMaW5rIil9CiAgICAgICAgICAgIDwvQ1RBQnV0dG9uPgogICAgICAgICAgPC9kaXY+CiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0ib3ZlcmZsb3cteC1hdXRvIG10LTYiPgogICAgICAgICAgICB7aXNMb2FkaW5nID8gKAogICAgICAgICAgICAgIDxTa2VsZXRvbgogICAgICAgICAgICAgICAgaGVpZ2h0PSI4MHZoIgogICAgICAgICAgICAgICAgd2lkdGg9IjEwMCUiCiAgICAgICAgICAgICAgICBoaWdobGlnaHRDb2xvcj0idmFyKC0tdGhlbWUtYmctcHJpbWFyeSkiCiAgICAgICAgICAgICAgICBiYXNlQ29sb3I9InZhcigtLXRoZW1lLWJnLXNlY29uZGFyeSkiCiAgICAgICAgICAgICAgICBjb3VudD17MX0KICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0idy1mdWxsIHAtNCByb3VuZGVkLWItMnhsIHJvdW5kZWQtdHItMnhsIHJvdW5kZWQtdGwtc20iCiAgICAgICAgICAgICAgICBjb250YWluZXJDbGFzc05hbWU9ImZsZXggdy1mdWxsIgogICAgICAgICAgICAgIC8+CiAgICAgICAgICAgICkgOiBlcnJvciA/ICgKICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIgcHktMTIgZ2FwLTIiPgogICAgICAgICAgICAgICAgPFdhcm5pbmcgY2xhc3NOYW1lPSJoLTggdy04IHRleHQtcmVkLTUwMCIgLz4KICAgICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXByaW1hcnkgdGV4dC1zbSI+CiAgICAgICAgICAgICAgICAgIHt0KCJjb21tb24ubG9hZEVycm9yIil9CiAgICAgICAgICAgICAgICA8L3A+CiAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICkgOiAoCiAgICAgICAgICAgICAgPHRhYmxlIGNsYXNzTmFtZT0idy1mdWxsIHRleHQteHMgdGV4dC1sZWZ0IHJvdW5kZWQtbGcgbWluLXctWzY0MHB4XSBib3JkZXItc3BhY2luZy0wIj4KICAgICAgICAgICAgICAgIDx0aGVhZCBjbGFzc05hbWU9InRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkgdGV4dC14cyBsZWFkaW5nLVsxOHB4XSBmb250LWJvbGQgdXBwZXJjYXNlIGJvcmRlci13aGl0ZS8xMCBib3JkZXItYiI+CiAgICAgICAgICAgICAgICAgIDx0cj4KICAgICAgICAgICAgICAgICAgICA8dGggc2NvcGU9ImNvbCIgY2xhc3NOYW1lPSJweC02IHB5LTMgcm91bmRlZC10bC1sZyI+CiAgICAgICAgICAgICAgICAgICAgICB7dCgiYWRtaW4uaW52aXRhdGlvbnMuc3RhdHVzIil9CiAgICAgICAgICAgICAgICAgICAgPC90aD4KICAgICAgICAgICAgICAgICAgICA8dGggc2NvcGU9ImNvbCIgY2xhc3NOYW1lPSJweC02IHB5LTMiPgogICAgICAgICAgICAgICAgICAgICAge3QoImFkbWluLmludml0YXRpb25zLmFjY2VwdGVkQnkiKX0KICAgICAgICAgICAgICAgICAgICA8L3RoPgogICAgICAgICAgICAgICAgICAgIDx0aCBzY29wZT0iY29sIiBjbGFzc05hbWU9InB4LTYgcHktMyI+CiAgICAgICAgICAgICAgICAgICAgICB7dCgiYWRtaW4uaW52aXRhdGlvbnMuY3JlYXRlZEJ5Iil9CiAgICAgICAgICAgICAgICAgICAgPC90aD4KICAgICAgICAgICAgICAgICAgICA8dGggc2NvcGU9ImNvbCIgY2xhc3NOYW1lPSJweC02IHB5LTMiPgogICAgICAgICAgICAgICAgICAgICAge3QoImFkbWluLmludml0YXRpb25zLmNyZWF0ZWQiKX0KICAgICAgICAgICAgICAgICAgICA8L3RoPgogICAgICAgICAgICAgICAgICAgIDx0aCBzY29wZT0iY29sIiBjbGFzc05hbWU9InB4LTYgcHktMyByb3VuZGVkLXRyLWxnIj4KICAgICAgICAgICAgICAgICAgICAgIHsiICJ9CiAgICAgICAgICAgICAgICAgICAgPC90aD4KICAgICAgICAgICAgICAgICAgPC90cj4KICAgICAgICAgICAgICAgIDwvdGhlYWQ+CiAgICAgICAgICAgICAgICA8dGJvZHk+CiAgICAgICAgICAgICAgICAgIHtpbnZpdGVzLmxlbmd0aCA9PT0gMCA/ICgKICAgICAgICAgICAgICAgICAgICA8dHIgY2xhc3NOYW1lPSJiZy10cmFuc3BhcmVudCB0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5IHRleHQtc20gZm9udC1tZWRpdW0iPgogICAgICAgICAgICAgICAgICAgICAgPHRkIGNvbFNwYW49ezV9IGNsYXNzTmFtZT0icHgtNiBweS00IHRleHQtY2VudGVyIj4KICAgICAgICAgICAgICAgICAgICAgICAge3QoImFkbWluLmludml0YXRpb25zLm5vSW52aXRhdGlvbnMiKX0KICAgICAgICAgICAgICAgICAgICAgIDwvdGQ+CiAgICAgICAgICAgICAgICAgICAgPC90cj4KICAgICAgICAgICAgICAgICAgKSA6ICgKICAgICAgICAgICAgICAgICAgICBpbnZpdGVzLm1hcCgoaW52aXRlOiBhbnkpID0+ICgKICAgICAgICAgICAgICAgICAgICAgIDxJbnZpdGVSb3cga2V5PXtpbnZpdGUuaWR9IGludml0ZT17aW52aXRlfSAvPgogICAgICAgICAgICAgICAgICAgICkpCiAgICAgICAgICAgICAgICAgICl9CiAgICAgICAgICAgICAgICA8L3Rib2R5PgogICAgICAgICAgICAgIDwvdGFibGU+CiAgICAgICAgICAgICl9CiAgICAgICAgICA8L2Rpdj4KICAgICAgICA8L2Rpdj4KICAgICAgICA8TW9kYWxXcmFwcGVyIGlzT3Blbj17aXNPcGVufSBjbG9zZU1vZGFsPXtjbG9zZU1vZGFsfT4KICAgICAgICAgIDxOZXdJbnZpdGVNb2RhbAogICAgICAgICAgICBjbG9zZU1vZGFsPXtjbG9zZU1vZGFsfQogICAgICAgICAgICBvblN1Y2Nlc3M9eygpID0+IG11dGF0ZShJTlZJVEVTX0tFWSl9CiAgICAgICAgICAvPgogICAgICAgIDwvTW9kYWxXcmFwcGVyPgogICAgICA8L2Rpdj4KICAgIDwvZGl2PgogICk7Cn0K
+// SPDX-License-Identifier: MIT
+// Docs: index.doc.md
+import Sidebar from "@/components/SettingsSidebar";
+import { isMobile } from "react-device-detect";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { EnvelopeSimple } from "@phosphor-icons/react/dist/csr/EnvelopeSimple";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
+import InviteRow from "./InviteRow";
+import NewInviteModal from "./NewInviteModal";
+import useInvites, { INVITES_KEY } from "@/hooks/useInvites";
+import { useModal } from "@/hooks/useModal";
+import ModalWrapper from "@/components/ModalWrapper";
+import CTAButton from "@/components/lib/CTAButton";
+import { mutate } from "swr";
+import { useTranslation } from "react-i18next";
+
+export default function AdminInvites(): JSX.Element {
+  const { isOpen, openModal, closeModal } = useModal();
+  const { invites, isLoading, error } = useInvites();
+  const { t } = useTranslation();
+
+  return (
+    <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
+      <Sidebar />
+      <div
+        style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
+        className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
+      >
+        <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
+          <div className="w-full flex flex-col gap-y-1 pb-6 border-white/10 border-b-2">
+            <div className="items-center flex gap-x-4">
+              <p className="text-lg leading-6 font-bold text-theme-text-primary">
+                {t("admin.invitations.title")}
+              </p>
+            </div>
+            <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
+              {t("admin.invitations.description")}
+            </p>
+          </div>
+          <div className="w-full justify-end flex">
+            <CTAButton
+              onClick={openModal}
+              className="mt-3 mr-0 mb-4 md:-mb-12 z-10"
+            >
+              <EnvelopeSimple className="h-4 w-4" weight="bold" />{" "}
+              {t("admin.invitations.createInviteLink")}
+            </CTAButton>
+          </div>
+          <div className="overflow-x-auto mt-6">
+            {isLoading ? (
+              <Skeleton
+                height="80vh"
+                width="100%"
+                highlightColor="var(--theme-bg-primary)"
+                baseColor="var(--theme-bg-secondary)"
+                count={1}
+                className="w-full p-4 rounded-b-2xl rounded-tr-2xl rounded-tl-sm"
+                containerClassName="flex w-full"
+              />
+            ) : error ? (
+              <div className="flex flex-col items-center justify-center py-12 gap-2">
+                <Warning className="h-8 w-8 text-red-500" />
+                <p className="text-theme-text-primary text-sm">
+                  {t("common.loadError")}
+                </p>
+              </div>
+            ) : (
+              <table className="w-full text-xs text-left rounded-lg min-w-[640px] border-spacing-0">
+                <thead className="text-theme-text-secondary text-xs leading-[18px] font-bold uppercase border-white/10 border-b">
+                  <tr>
+                    <th scope="col" className="px-6 py-3 rounded-tl-lg">
+                      {t("admin.invitations.status")}
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      {t("admin.invitations.acceptedBy")}
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      {t("admin.invitations.createdBy")}
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      {t("admin.invitations.created")}
+                    </th>
+                    <th scope="col" className="px-6 py-3 rounded-tr-lg">
+                      {" "}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {invites.length === 0 ? (
+                    <tr className="bg-transparent text-theme-text-secondary text-sm font-medium">
+                      <td colSpan={5} className="px-6 py-4 text-center">
+                        {t("admin.invitations.noInvitations")}
+                      </td>
+                    </tr>
+                  ) : (
+                    invites.map((invite: any) => (
+                      <InviteRow key={invite.id} invite={invite} />
+                    ))
+                  )}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </div>
+        <ModalWrapper isOpen={isOpen} closeModal={closeModal}>
+          <NewInviteModal
+            closeModal={closeModal}
+            onSuccess={() => mutate(INVITES_KEY)}
+          />
+        </ModalWrapper>
+      </div>
+    </div>
+  );
+}

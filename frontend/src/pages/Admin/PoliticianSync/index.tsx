@@ -1,1 +1,390 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBQdXJwb3NlOiBBZG1pbiBkYXNoYm9hcmQgZm9yIHBvbGl0aWNpYW4gc3luYyBtb25pdG9yaW5nCi8vIERvY3M6IGluZGV4LmRvYy5tZAppbXBvcnQgUmVhY3QgZnJvbSAicmVhY3QiOwppbXBvcnQgeyB1c2VUcmFuc2xhdGlvbiB9IGZyb20gInJlYWN0LWkxOG5leHQiOwppbXBvcnQgeyBpc01vYmlsZSB9IGZyb20gInJlYWN0LWRldmljZS1kZXRlY3QiOwppbXBvcnQgU2V0dGluZ3NTaWRlYmFyIGZyb20gIkAvY29tcG9uZW50cy9TZXR0aW5nc1NpZGViYXIiOwppbXBvcnQgdXNlUG9saXRpY2lhblN5bmMgZnJvbSAiQC9ob29rcy91c2VQb2xpdGljaWFuU3luYyI7CmltcG9ydCB7IEFycm93c0Nsb2Nrd2lzZSB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9BcnJvd3NDbG9ja3dpc2UiOwppbXBvcnQgeyBDaGVja0NpcmNsZSB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9DaGVja0NpcmNsZSI7CmltcG9ydCB7IFdhcm5pbmdDaXJjbGUgfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvV2FybmluZ0NpcmNsZSI7CmltcG9ydCB7IFhDaXJjbGUgfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvWENpcmNsZSI7CmltcG9ydCB7IFRyZW5kVXAgfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvVHJlbmRVcCI7CmltcG9ydCBTa2VsZXRvbiBmcm9tICJyZWFjdC1sb2FkaW5nLXNrZWxldG9uIjsKaW1wb3J0ICJyZWFjdC1sb2FkaW5nLXNrZWxldG9uL2Rpc3Qvc2tlbGV0b24uY3NzIjsKaW1wb3J0IENUQUJ1dHRvbiBmcm9tICJAL2NvbXBvbmVudHMvbGliL0NUQUJ1dHRvbiI7CmltcG9ydCBzaG93VG9hc3QgZnJvbSAiQC91dGlscy90b2FzdCI7CmltcG9ydCB7IGJhc2VIZWFkZXJzIH0gZnJvbSAiQC91dGlscy9yZXF1ZXN0IjsKCmludGVyZmFjZSBTeW5jU3RhdHVzIHsKICBsYXN0U3luYzogc3RyaW5nIHwgbnVsbDsKICBpc0hlYWx0aHk6IGJvb2xlYW47CiAgc291cmNlczogQXJyYXk8ewogICAgc291cmNlOiBzdHJpbmc7CiAgICBzdGF0dXM6IHN0cmluZzsKICAgIGxhc3RBdHRlbXB0OiBzdHJpbmc7CiAgICBsYXN0U3VjY2Vzczogc3RyaW5nIHwgbnVsbDsKICAgIGl0ZW1zUHJvY2Vzc2VkOiBudW1iZXI7CiAgICBpdGVtc0ZhaWxlZDogbnVtYmVyOwogICAgZXJyb3I6IHN0cmluZyB8IG51bGw7CiAgICBpc0hlYWx0aHk6IGJvb2xlYW47CiAgfT47CiAgcmV0cnlRdWV1ZTogQXJyYXk8ewogICAgcGhhc2U6IHN0cmluZzsKICAgIGF0dGVtcHRzOiBudW1iZXI7CiAgICBzdGF0dXM6IHN0cmluZzsKICAgIG5leHRSZXRyeUF0OiBzdHJpbmcgfCBudWxsOwogICAgbGFzdEVycm9yOiBzdHJpbmcgfCBudWxsOwogIH0+Owp9CgppbnRlcmZhY2UgUG9saXRpY2lhblN0YXRzIHsKICBwb2xpdGljaWFuczogbnVtYmVyOwogIHNwZWVjaGVzOiBudW1iZXI7CiAgdm90ZXM6IG51bWJlcjsKfQoKZnVuY3Rpb24gZ2V0U3RhdHVzSWNvbihzdGF0dXM6IHN0cmluZykgewogIGlmIChzdGF0dXMgPT09ICJjb21wbGV0ZWQiIHx8IHN0YXR1cyA9PT0gIm9rIikgewogICAgcmV0dXJuIDxDaGVja0NpcmNsZSBjbGFzc05hbWU9ImgtNSB3LTUgdGV4dC1ncmVlbi00MDAiIHdlaWdodD0iZmlsbCIgLz47CiAgfQogIGlmIChzdGF0dXMgPT09ICJmYWlsZWQiKSB7CiAgICByZXR1cm4gPFhDaXJjbGUgY2xhc3NOYW1lPSJoLTUgdy01IHRleHQtcmVkLTQwMCIgd2VpZ2h0PSJmaWxsIiAvPjsKICB9CiAgaWYgKHN0YXR1cyA9PT0gInJ1bm5pbmciKSB7CiAgICByZXR1cm4gKAogICAgICA8QXJyb3dzQ2xvY2t3aXNlCiAgICAgICAgY2xhc3NOYW1lPSJoLTUgdy01IHRleHQteWVsbG93LTQwMCBhbmltYXRlLXNwaW4iCiAgICAgICAgd2VpZ2h0PSJib2xkIgogICAgICAvPgogICAgKTsKICB9CiAgcmV0dXJuIDxXYXJuaW5nQ2lyY2xlIGNsYXNzTmFtZT0iaC01IHctNSB0ZXh0LWdyYXktNDAwIiB3ZWlnaHQ9ImZpbGwiIC8+Owp9CgpmdW5jdGlvbiBnZXRTdGF0dXNCYWRnZUNsYXNzKHN0YXR1czogc3RyaW5nKSB7CiAgaWYgKHN0YXR1cyA9PT0gImNvbXBsZXRlZCIgfHwgc3RhdHVzID09PSAib2siKSB7CiAgICByZXR1cm4gImJnLWdyZWVuLTUwMC8xMCB0ZXh0LWdyZWVuLTQwMCBib3JkZXItZ3JlZW4tNTAwLzIwIjsKICB9CiAgaWYgKHN0YXR1cyA9PT0gImZhaWxlZCIpIHsKICAgIHJldHVybiAiYmctcmVkLTUwMC8xMCB0ZXh0LXJlZC00MDAgYm9yZGVyLXJlZC01MDAvMjAiOwogIH0KICBpZiAoc3RhdHVzID09PSAicnVubmluZyIpIHsKICAgIHJldHVybiAiYmcteWVsbG93LTUwMC8xMCB0ZXh0LXllbGxvdy00MDAgYm9yZGVyLXllbGxvdy01MDAvMjAiOwogIH0KICByZXR1cm4gImJnLWdyYXktNTAwLzEwIHRleHQtZ3JheS00MDAgYm9yZGVyLWdyYXktNTAwLzIwIjsKfQoKZnVuY3Rpb24gZm9ybWF0RGF0ZSgKICBkYXRlU3RyaW5nOiBzdHJpbmcgfCBudWxsLAogIHQ6IChrZXk6IHN0cmluZykgPT4gc3RyaW5nLAogIGxvY2FsZT86IHN0cmluZywKKSB7CiAgaWYgKCFkYXRlU3RyaW5nKSByZXR1cm4gdCgicG9saXRpY2lhblN5bmMubmV2ZXIiKTsKICBjb25zdCBkYXRlID0gbmV3IERhdGUoZGF0ZVN0cmluZyk7CiAgcmV0dXJuIGRhdGUudG9Mb2NhbGVTdHJpbmcobG9jYWxlKTsKfQoKZnVuY3Rpb24gZm9ybWF0UmVsYXRpdmVUaW1lKAogIGRhdGVTdHJpbmc6IHN0cmluZyB8IG51bGwsCiAgdDogKGtleTogc3RyaW5nLCBvcHRzPzogYW55KSA9PiBzdHJpbmcsCikgewogIGlmICghZGF0ZVN0cmluZykgcmV0dXJuIHQoInBvbGl0aWNpYW5TeW5jLm5ldmVyIik7CiAgY29uc3QgZGF0ZSA9IG5ldyBEYXRlKGRhdGVTdHJpbmcpOwogIGlmIChpc05hTihkYXRlLmdldFRpbWUoKSkpIHJldHVybiB0KCJwb2xpdGljaWFuU3luYy5uZXZlciIpOwogIGNvbnN0IG5vdyA9IG5ldyBEYXRlKCk7CiAgY29uc3QgZGlmZk1zID0gbm93LmdldFRpbWUoKSAtIGRhdGUuZ2V0VGltZSgpOwogIGNvbnN0IGRpZmZIb3VycyA9IE1hdGguZmxvb3IoZGlmZk1zIC8gKDEwMDAgKiA2MCAqIDYwKSk7CiAgY29uc3QgZGlmZk1pbnV0ZXMgPSBNYXRoLmZsb29yKGRpZmZNcyAvICgxMDAwICogNjApKTsKCiAgaWYgKGRpZmZNaW51dGVzIDwgMSkgcmV0dXJuIHQoInBvbGl0aWNpYW5TeW5jLmp1c3ROb3ciKTsKICBpZiAoZGlmZk1pbnV0ZXMgPCA2MCkKICAgIHJldHVybiB0KCJwb2xpdGljaWFuU3luYy5taW51dGVzQWdvIiwgeyBjb3VudDogZGlmZk1pbnV0ZXMgfSk7CiAgaWYgKGRpZmZIb3VycyA8IDI0KSByZXR1cm4gdCgicG9saXRpY2lhblN5bmMuaG91cnNBZ28iLCB7IGNvdW50OiBkaWZmSG91cnMgfSk7CiAgcmV0dXJuIHQoInBvbGl0aWNpYW5TeW5jLmRheXNBZ28iLCB7IGNvdW50OiBNYXRoLmZsb29yKGRpZmZIb3VycyAvIDI0KSB9KTsKfQoKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gUG9saXRpY2lhblN5bmNEYXNoYm9hcmQoKTogUmVhY3QuUmVhY3RFbGVtZW50IHsKICBjb25zdCB7IHQsIGkxOG4gfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgY29uc3QgeyBzdGF0cywgc3luY1N0YXR1cywgaXNMb2FkaW5nLCBlcnJvciwgbXV0YXRlIH0gPSB1c2VQb2xpdGljaWFuU3luYygpOwoKICBjb25zdCBoYW5kbGVNYW51YWxTeW5jID0gYXN5bmMgKCkgPT4gewogICAgdHJ5IHsKICAgICAgY29uc3QgcmVzID0gYXdhaXQgZmV0Y2goIi9hcGkvcG9saXRpY2lhbi9zeW5jL3RyaWdnZXIiLCB7CiAgICAgICAgbWV0aG9kOiAiUE9TVCIsCiAgICAgICAgaGVhZGVyczogewogICAgICAgICAgLi4uYmFzZUhlYWRlcnMoKSwKICAgICAgICAgICJDb250ZW50LVR5cGUiOiAiYXBwbGljYXRpb24vanNvbiIsCiAgICAgICAgfSwKICAgICAgfSk7CiAgICAgIGlmICghcmVzLm9rKSB0aHJvdyBuZXcgRXJyb3IoYEhUVFAgJHtyZXMuc3RhdHVzfWApOwogICAgICBzaG93VG9hc3QodCgicG9saXRpY2lhblN5bmMuc3luY1RyaWdnZXJlZCIpLCAic3VjY2VzcyIpOwogICAgICBtdXRhdGUoKTsKICAgIH0gY2F0Y2ggKGU6IGFueSkgewogICAgICBzaG93VG9hc3QoCiAgICAgICAgdCgicG9saXRpY2lhblN5bmMuc3luY1RyaWdnZXJGYWlsZWQiLCB7IGVycm9yOiBlLm1lc3NhZ2UgfSksCiAgICAgICAgImVycm9yIiwKICAgICAgKTsKICAgIH0KICB9OwoKICByZXR1cm4gKAogICAgPGRpdiBjbGFzc05hbWU9Inctc2NyZWVuIGgtc2NyZWVuIG92ZXJmbG93LWhpZGRlbiBiZy10aGVtZS1iZy1jb250YWluZXIgZmxleCI+CiAgICAgIDxTZXR0aW5nc1NpZGViYXIgLz4KICAgICAgPGRpdgogICAgICAgIHN0eWxlPXt7ICItLWNvbnRlbnQtaGVpZ2h0IjogaXNNb2JpbGUgPyAiMTAwJSIgOiAiY2FsYygxMDAlIC0gMzJweCkiIH19CiAgICAgICAgY2xhc3NOYW1lPSJoLVt2YXIoLS1jb250ZW50LWhlaWdodCldIHJlbGF0aXZlIG1kOm1sLVsycHhdIG1kOm1yLVsxNnB4XSBtZDpteS1bMTZweF0gbWQ6cm91bmRlZC1bMTZweF0gYmctdGhlbWUtYmctc2Vjb25kYXJ5IHctZnVsbCBvdmVyZmxvdy15LXNjcm9sbCBwLTQgbWQ6cC0wIgogICAgICA+CiAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgdy1mdWxsIHB4LTEgbWQ6cGwtNiBtZDpwci1bNTBweF0gbWQ6cHktNiBweS0xNiI+CiAgICAgICAgICB7LyogSGVhZGVyICovfQogICAgICAgICAgPGRpdiBjbGFzc05hbWU9InctZnVsbCBmbGV4IGZsZXgtY29sIGdhcC15LTIgcGItNiBib3JkZXItd2hpdGUvMTAgYm9yZGVyLWItMiI+CiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJpdGVtcy1jZW50ZXIgZmxleCBnYXAteC00IGp1c3RpZnktYmV0d2VlbiI+CiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIGdhcC14LTQiPgogICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LWxnIGxlYWRpbmctNiBmb250LWJvbGQgdGV4dC10aGVtZS10ZXh0LXByaW1hcnkiPgogICAgICAgICAgICAgICAgICB7dCgicG9saXRpY2lhblN5bmMudGl0bGUiKX0KICAgICAgICAgICAgICAgIDwvcD4KICAgICAgICAgICAgICAgIHtzeW5jU3RhdHVzICYmICgKICAgICAgICAgICAgICAgICAgPGRpdgogICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT17YGZsZXggaXRlbXMtY2VudGVyIGdhcC14LTEuNSBweC0yIHB5LTEgcm91bmRlZC1mdWxsIHRleHQteHMgZm9udC1tZWRpdW0gYm9yZGVyICR7CiAgICAgICAgICAgICAgICAgICAgICBzeW5jU3RhdHVzLmlzSGVhbHRoeQogICAgICAgICAgICAgICAgICAgICAgICA/ICJiZy1ncmVlbi01MDAvMTAgdGV4dC1ncmVlbi00MDAgYm9yZGVyLWdyZWVuLTUwMC8yMCIKICAgICAgICAgICAgICAgICAgICAgICAgOiAiYmctcmVkLTUwMC8xMCB0ZXh0LXJlZC00MDAgYm9yZGVyLXJlZC01MDAvMjAiCiAgICAgICAgICAgICAgICAgICAgfWB9CiAgICAgICAgICAgICAgICAgID4KICAgICAgICAgICAgICAgICAgICB7c3luY1N0YXR1cy5pc0hlYWx0aHkgPyAoCiAgICAgICAgICAgICAgICAgICAgICA8PgogICAgICAgICAgICAgICAgICAgICAgICA8Q2hlY2tDaXJjbGUgY2xhc3NOYW1lPSJoLTMuNSB3LTMuNSIgd2VpZ2h0PSJmaWxsIiAvPgogICAgICAgICAgICAgICAgICAgICAgICB7dCgicG9saXRpY2lhblN5bmMuaGVhbHRoeSIpfQogICAgICAgICAgICAgICAgICAgICAgPC8+CiAgICAgICAgICAgICAgICAgICAgKSA6ICgKICAgICAgICAgICAgICAgICAgICAgIDw+CiAgICAgICAgICAgICAgICAgICAgICAgIDxYQ2lyY2xlIGNsYXNzTmFtZT0iaC0zLjUgdy0zLjUiIHdlaWdodD0iZmlsbCIgLz4KICAgICAgICAgICAgICAgICAgICAgICAge3QoInBvbGl0aWNpYW5TeW5jLnVuaGVhbHRoeSIpfQogICAgICAgICAgICAgICAgICAgICAgPC8+CiAgICAgICAgICAgICAgICAgICAgKX0KICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICApfQogICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgIDxDVEFCdXR0b24KICAgICAgICAgICAgICAgIG9uQ2xpY2s9e2hhbmRsZU1hbnVhbFN5bmN9CiAgICAgICAgICAgICAgICBjbGFzc05hbWU9InRleHQtdGhlbWUtYmctY2hhdCIKICAgICAgICAgICAgICA+CiAgICAgICAgICAgICAgICA8QXJyb3dzQ2xvY2t3aXNlIGNsYXNzTmFtZT0iaC00IHctNCIgd2VpZ2h0PSJib2xkIiAvPgogICAgICAgICAgICAgICAge3QoInBvbGl0aWNpYW5TeW5jLnN5bmNOb3ciKX0KICAgICAgICAgICAgICA8L0NUQUJ1dHRvbj4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC14cyBsZWFkaW5nLVsxOHB4XSBmb250LWJhc2UgdGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSI+CiAgICAgICAgICAgICAge3QoInBvbGl0aWNpYW5TeW5jLmRlc2NyaXB0aW9uIil9CiAgICAgICAgICAgIDwvcD4KICAgICAgICAgIDwvZGl2PgoKICAgICAgICAgIHsvKiBTdGF0cyBHcmlkICovfQogICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImdyaWQgZ3JpZC1jb2xzLTEgbWQ6Z3JpZC1jb2xzLTMgZ2FwLTQgbXQtNiI+CiAgICAgICAgICAgIDxTdGF0Q2FyZAogICAgICAgICAgICAgIHRpdGxlPXt0KCJwb2xpdGljaWFuU3luYy5zdGF0UG9saXRpY2lhbnMiKX0KICAgICAgICAgICAgICB2YWx1ZT17c3RhdHM/LnBvbGl0aWNpYW5zID8/IDB9CiAgICAgICAgICAgICAgaWNvbj17PFRyZW5kVXAgY2xhc3NOYW1lPSJoLTUgdy01IHRleHQtYmx1ZS00MDAiIC8+fQogICAgICAgICAgICAgIGlzTG9hZGluZz17aXNMb2FkaW5nfQogICAgICAgICAgICAvPgogICAgICAgICAgICA8U3RhdENhcmQKICAgICAgICAgICAgICB0aXRsZT17dCgicG9saXRpY2lhblN5bmMuc3RhdFNwZWVjaGVzIil9CiAgICAgICAgICAgICAgdmFsdWU9e3N0YXRzPy5zcGVlY2hlcyA/PyAwfQogICAgICAgICAgICAgIGljb249ezxUcmVuZFVwIGNsYXNzTmFtZT0iaC01IHctNSB0ZXh0LXB1cnBsZS00MDAiIC8+fQogICAgICAgICAgICAgIGlzTG9hZGluZz17aXNMb2FkaW5nfQogICAgICAgICAgICAvPgogICAgICAgICAgICA8U3RhdENhcmQKICAgICAgICAgICAgICB0aXRsZT17dCgicG9saXRpY2lhblN5bmMuc3RhdFZvdGVzIil9CiAgICAgICAgICAgICAgdmFsdWU9e3N0YXRzPy52b3RlcyA/PyAwfQogICAgICAgICAgICAgIGljb249ezxUcmVuZFVwIGNsYXNzTmFtZT0iaC01IHctNSB0ZXh0LW9yYW5nZS00MDAiIC8+fQogICAgICAgICAgICAgIGlzTG9hZGluZz17aXNMb2FkaW5nfQogICAgICAgICAgICAvPgogICAgICAgICAgPC9kaXY+CgogICAgICAgICAgey8qIFNvdXJjZSBTdGF0dXMgQ2FyZHMgKi99CiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0ibXQtOCI+CiAgICAgICAgICAgIDxoMyBjbGFzc05hbWU9InRleHQtYmFzZSBmb250LXNlbWlib2xkIHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IG1iLTQiPgogICAgICAgICAgICAgIHt0KCJwb2xpdGljaWFuU3luYy5zb3VyY2VTdGF0dXMiKX0KICAgICAgICAgICAgPC9oMz4KICAgICAgICAgICAge2lzTG9hZGluZyA/ICgKICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZ3JpZCBncmlkLWNvbHMtMSBtZDpncmlkLWNvbHMtMiBsZzpncmlkLWNvbHMtMyBnYXAtNCI+CiAgICAgICAgICAgICAgICB7WzEsIDIsIDNdLm1hcCgoaSkgPT4gKAogICAgICAgICAgICAgICAgICA8U2tlbGV0b24KICAgICAgICAgICAgICAgICAgICBrZXk9e2l9CiAgICAgICAgICAgICAgICAgICAgaGVpZ2h0PXsxNjB9CiAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJyb3VuZGVkLXhsIgogICAgICAgICAgICAgICAgICAgIGJhc2VDb2xvcj0idmFyKC0tdGhlbWUtYmctc2Vjb25kYXJ5KSIKICAgICAgICAgICAgICAgICAgICBoaWdobGlnaHRDb2xvcj0idmFyKC0tdGhlbWUtYmctcHJpbWFyeSkiCiAgICAgICAgICAgICAgICAgIC8+CiAgICAgICAgICAgICAgICApKX0KICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgKSA6IGVycm9yID8gKAogICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJiZy1yZWQtNTAwLzEwIGJvcmRlciBib3JkZXItcmVkLTUwMC8yMCByb3VuZGVkLXhsIHAtNCI+CiAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9InRleHQtcmVkLTQwMCB0ZXh0LXNtIj4KICAgICAgICAgICAgICAgICAge3QoInBvbGl0aWNpYW5TeW5jLmxvYWRFcnJvciIpfToge2Vycm9yLm1lc3NhZ2V9CiAgICAgICAgICAgICAgICA8L3A+CiAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICkgOiAoCiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImdyaWQgZ3JpZC1jb2xzLTEgbWQ6Z3JpZC1jb2xzLTIgbGc6Z3JpZC1jb2xzLTMgZ2FwLTQiPgogICAgICAgICAgICAgICAge3N5bmNTdGF0dXM/LnNvdXJjZXMubWFwKChzb3VyY2UpID0+ICgKICAgICAgICAgICAgICAgICAgPGRpdgogICAgICAgICAgICAgICAgICAgIGtleT17c291cmNlLnNvdXJjZX0KICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9ImJnLXRoZW1lLWJnLXByaW1hcnkgcm91bmRlZC14bCBwLTQgYm9yZGVyIGJvcmRlci13aGl0ZS8xMCIKICAgICAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWJldHdlZW4gbWItMyI+CiAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIgZ2FwLXgtMiI+CiAgICAgICAgICAgICAgICAgICAgICAgIHtnZXRTdGF0dXNJY29uKHNvdXJjZS5zdGF0dXMpfQogICAgICAgICAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9InRleHQtc20gZm9udC1zZW1pYm9sZCB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBjYXBpdGFsaXplIj4KICAgICAgICAgICAgICAgICAgICAgICAgICB7c291cmNlLnNvdXJjZX0KICAgICAgICAgICAgICAgICAgICAgICAgPC9zcGFuPgogICAgICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICAgICAgICA8c3BhbgogICAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9e2B0ZXh0LXhzIHB4LTIgcHktMC41IHJvdW5kZWQtZnVsbCBib3JkZXIgZm9udC1tZWRpdW0gJHtnZXRTdGF0dXNCYWRnZUNsYXNzKHNvdXJjZS5zdGF0dXMpfWB9CiAgICAgICAgICAgICAgICAgICAgICA+CiAgICAgICAgICAgICAgICAgICAgICAgIHtzb3VyY2Uuc3RhdHVzfQogICAgICAgICAgICAgICAgICAgICAgPC9zcGFuPgogICAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJzcGFjZS15LTIgdGV4dC1zbSI+CiAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBqdXN0aWZ5LWJldHdlZW4gdGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxzcGFuPnt0KCJwb2xpdGljaWFuU3luYy5sYXN0QXR0ZW1wdCIpfTwvc3Bhbj4KICAgICAgICAgICAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJ0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAge2Zvcm1hdFJlbGF0aXZlVGltZShzb3VyY2UubGFzdEF0dGVtcHQsIHQpfQogICAgICAgICAgICAgICAgICAgICAgICA8L3NwYW4+CiAgICAgICAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGp1c3RpZnktYmV0d2VlbiB0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5Ij4KICAgICAgICAgICAgICAgICAgICAgICAgPHNwYW4+e3QoInBvbGl0aWNpYW5TeW5jLmxhc3RTdWNjZXNzIil9PC9zcGFuPgogICAgICAgICAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9InRleHQtdGhlbWUtdGV4dC1wcmltYXJ5Ij4KICAgICAgICAgICAgICAgICAgICAgICAgICB7Zm9ybWF0UmVsYXRpdmVUaW1lKHNvdXJjZS5sYXN0U3VjY2VzcywgdCl9CiAgICAgICAgICAgICAgICAgICAgICAgIDwvc3Bhbj4KICAgICAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXgganVzdGlmeS1iZXR3ZWVuIHRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkiPgogICAgICAgICAgICAgICAgICAgICAgICA8c3Bhbj57dCgicG9saXRpY2lhblN5bmMuaXRlbXNQcm9jZXNzZWQiKX08L3NwYW4+CiAgICAgICAgICAgICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXByaW1hcnkiPgogICAgICAgICAgICAgICAgICAgICAgICAgIHtzb3VyY2UuaXRlbXNQcm9jZXNzZWR9CiAgICAgICAgICAgICAgICAgICAgICAgIDwvc3Bhbj4KICAgICAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgICAgICAge3NvdXJjZS5pdGVtc0ZhaWxlZCA+IDAgJiYgKAogICAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBqdXN0aWZ5LWJldHdlZW4gdGV4dC1yZWQtNDAwIj4KICAgICAgICAgICAgICAgICAgICAgICAgICA8c3Bhbj57dCgicG9saXRpY2lhblN5bmMuaXRlbXNGYWlsZWQiKX08L3NwYW4+CiAgICAgICAgICAgICAgICAgICAgICAgICAgPHNwYW4+e3NvdXJjZS5pdGVtc0ZhaWxlZH08L3NwYW4+CiAgICAgICAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgICAgICAgKX0KICAgICAgICAgICAgICAgICAgICAgIHtzb3VyY2UuZXJyb3IgJiYgKAogICAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0ibXQtMiBwLTIgYmctcmVkLTUwMC8xMCByb3VuZGVkLWxnIGJvcmRlciBib3JkZXItcmVkLTUwMC8yMCI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXJlZC00MDAgdGV4dC14cyBmb250LW1vbm8gbGluZS1jbGFtcC0yIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIHtzb3VyY2UuZXJyb3J9CiAgICAgICAgICAgICAgICAgICAgICAgICAgPC9wPgogICAgICAgICAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgICAgICAgICl9CiAgICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgKSl9CiAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICl9CiAgICAgICAgICA8L2Rpdj4KCiAgICAgICAgICB7LyogUmV0cnkgUXVldWUgKi99CiAgICAgICAgICB7c3luY1N0YXR1cyAmJiBzeW5jU3RhdHVzLnJldHJ5UXVldWUubGVuZ3RoID4gMCAmJiAoCiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJtdC04Ij4KICAgICAgICAgICAgICA8aDMgY2xhc3NOYW1lPSJ0ZXh0LWJhc2UgZm9udC1zZW1pYm9sZCB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBtYi00Ij4KICAgICAgICAgICAgICAgIHt0KCJwb2xpdGljaWFuU3luYy5yZXRyeVF1ZXVlIil9CiAgICAgICAgICAgICAgPC9oMz4KICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iYmctdGhlbWUtYmctcHJpbWFyeSByb3VuZGVkLXhsIGJvcmRlciBib3JkZXItd2hpdGUvMTAgb3ZlcmZsb3ctaGlkZGVuIj4KICAgICAgICAgICAgICAgIDx0YWJsZSBjbGFzc05hbWU9InctZnVsbCB0ZXh0LXNtIHRleHQtbGVmdCI+CiAgICAgICAgICAgICAgICAgIDx0aGVhZCBjbGFzc05hbWU9InRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkgdGV4dC14cyB1cHBlcmNhc2UgYm9yZGVyLWIgYm9yZGVyLXdoaXRlLzEwIj4KICAgICAgICAgICAgICAgICAgICA8dHI+CiAgICAgICAgICAgICAgICAgICAgICA8dGggY2xhc3NOYW1lPSJweC00IHB5LTMiPnt0KCJwb2xpdGljaWFuU3luYy5waGFzZSIpfTwvdGg+CiAgICAgICAgICAgICAgICAgICAgICA8dGggY2xhc3NOYW1lPSJweC00IHB5LTMiPgogICAgICAgICAgICAgICAgICAgICAgICB7dCgicG9saXRpY2lhblN5bmMuYXR0ZW1wdHMiKX0KICAgICAgICAgICAgICAgICAgICAgIDwvdGg+CiAgICAgICAgICAgICAgICAgICAgICA8dGggY2xhc3NOYW1lPSJweC00IHB5LTMiPgogICAgICAgICAgICAgICAgICAgICAgICB7dCgicG9saXRpY2lhblN5bmMubmV4dFJldHJ5Iil9CiAgICAgICAgICAgICAgICAgICAgICA8L3RoPgogICAgICAgICAgICAgICAgICAgICAgPHRoIGNsYXNzTmFtZT0icHgtNCBweS0zIj4KICAgICAgICAgICAgICAgICAgICAgICAge3QoInBvbGl0aWNpYW5TeW5jLnN0YXR1cyIpfQogICAgICAgICAgICAgICAgICAgICAgPC90aD4KICAgICAgICAgICAgICAgICAgICA8L3RyPgogICAgICAgICAgICAgICAgICA8L3RoZWFkPgogICAgICAgICAgICAgICAgICA8dGJvZHk+CiAgICAgICAgICAgICAgICAgICAge3N5bmNTdGF0dXMucmV0cnlRdWV1ZS5tYXAoKGl0ZW0sIGluZGV4KSA9PiAoCiAgICAgICAgICAgICAgICAgICAgICA8dHIKICAgICAgICAgICAgICAgICAgICAgICAga2V5PXtpbmRleH0KICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJib3JkZXItYiBib3JkZXItd2hpdGUvNSBsYXN0OmJvcmRlci0wIgogICAgICAgICAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgICAgICAgICA8dGQgY2xhc3NOYW1lPSJweC00IHB5LTMgdGV4dC10aGVtZS10ZXh0LXByaW1hcnkgY2FwaXRhbGl6ZSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAge2l0ZW0ucGhhc2V9CiAgICAgICAgICAgICAgICAgICAgICAgIDwvdGQ+CiAgICAgICAgICAgICAgICAgICAgICAgIDx0ZCBjbGFzc05hbWU9InB4LTQgcHktMyB0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5Ij4KICAgICAgICAgICAgICAgICAgICAgICAgICB7aXRlbS5hdHRlbXB0c30KICAgICAgICAgICAgICAgICAgICAgICAgPC90ZD4KICAgICAgICAgICAgICAgICAgICAgICAgPHRkIGNsYXNzTmFtZT0icHgtNCBweS0zIHRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkiPgogICAgICAgICAgICAgICAgICAgICAgICAgIHtpdGVtLm5leHRSZXRyeUF0CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA/IGZvcm1hdFJlbGF0aXZlVGltZShpdGVtLm5leHRSZXRyeUF0LCB0KQogICAgICAgICAgICAgICAgICAgICAgICAgICAgOiAiLSJ9CiAgICAgICAgICAgICAgICAgICAgICAgIDwvdGQ+CiAgICAgICAgICAgICAgICAgICAgICAgIDx0ZCBjbGFzc05hbWU9InB4LTQgcHktMyI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgPHNwYW4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT17YHRleHQteHMgcHgtMiBweS0wLjUgcm91bmRlZC1mdWxsIGJvcmRlciBmb250LW1lZGl1bSAke2dldFN0YXR1c0JhZGdlQ2xhc3MoaXRlbS5zdGF0dXMpfWB9CiAgICAgICAgICAgICAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgICAgICAgICAgICAge2l0ZW0uc3RhdHVzfQogICAgICAgICAgICAgICAgICAgICAgICAgIDwvc3Bhbj4KICAgICAgICAgICAgICAgICAgICAgICAgPC90ZD4KICAgICAgICAgICAgICAgICAgICAgIDwvdHI+CiAgICAgICAgICAgICAgICAgICAgKSl9CiAgICAgICAgICAgICAgICAgIDwvdGJvZHk+CiAgICAgICAgICAgICAgICA8L3RhYmxlPgogICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICl9CgogICAgICAgICAgey8qIExhc3QgU3luYyBJbmZvICovfQogICAgICAgICAge3N5bmNTdGF0dXM/Lmxhc3RTeW5jICYmICgKICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9Im10LTggdGV4dC14cyB0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5Ij4KICAgICAgICAgICAgICA8cD4KICAgICAgICAgICAgICAgIHt0KCJwb2xpdGljaWFuU3luYy5sYXN0U3luYyIpfTp7IiAifQogICAgICAgICAgICAgICAge2Zvcm1hdERhdGUoc3luY1N0YXR1cy5sYXN0U3luYywgdCwgaTE4bi5sYW5ndWFnZSl9CiAgICAgICAgICAgICAgPC9wPgogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICl9CiAgICAgICAgPC9kaXY+CiAgICAgIDwvZGl2PgogICAgPC9kaXY+CiAgKTsKfQoKaW50ZXJmYWNlIFN0YXRDYXJkUHJvcHMgewogIHRpdGxlOiBzdHJpbmc7CiAgdmFsdWU6IG51bWJlcjsKICBpY29uOiBSZWFjdC5SZWFjdEVsZW1lbnQ7CiAgaXNMb2FkaW5nOiBib29sZWFuOwp9CgpmdW5jdGlvbiBTdGF0Q2FyZCh7CiAgdGl0bGUsCiAgdmFsdWUsCiAgaWNvbiwKICBpc0xvYWRpbmcsCn06IFN0YXRDYXJkUHJvcHMpOiBSZWFjdC5SZWFjdEVsZW1lbnQgewogIHJldHVybiAoCiAgICA8ZGl2IGNsYXNzTmFtZT0iYmctdGhlbWUtYmctcHJpbWFyeSByb3VuZGVkLXhsIHAtNCBib3JkZXIgYm9yZGVyLXdoaXRlLzEwIj4KICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktYmV0d2VlbiBtYi0yIj4KICAgICAgICA8c3BhbiBjbGFzc05hbWU9InRleHQteHMgdGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSB1cHBlcmNhc2UgZm9udC1tZWRpdW0iPgogICAgICAgICAge3RpdGxlfQogICAgICAgIDwvc3Bhbj4KICAgICAgICB7aWNvbn0KICAgICAgPC9kaXY+CiAgICAgIHtpc0xvYWRpbmcgPyAoCiAgICAgICAgPFNrZWxldG9uCiAgICAgICAgICBoZWlnaHQ9ezMyfQogICAgICAgICAgd2lkdGg9ezYwfQogICAgICAgICAgYmFzZUNvbG9yPSJ2YXIoLS10aGVtZS1iZy1zZWNvbmRhcnkpIgogICAgICAgICAgaGlnaGxpZ2h0Q29sb3I9InZhcigtLXRoZW1lLWJnLXByaW1hcnkpIgogICAgICAgIC8+CiAgICAgICkgOiAoCiAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LTJ4bCBmb250LWJvbGQgdGV4dC10aGVtZS10ZXh0LXByaW1hcnkiPgogICAgICAgICAge3ZhbHVlLnRvTG9jYWxlU3RyaW5nKCl9CiAgICAgICAgPC9wPgogICAgICApfQogICAgPC9kaXY+CiAgKTsKfQo=
+// SPDX-License-Identifier: MIT
+// Purpose: Admin dashboard for politician sync monitoring
+// Docs: index.doc.md
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { isMobile } from "react-device-detect";
+import SettingsSidebar from "@/components/SettingsSidebar";
+import usePoliticianSync from "@/hooks/usePoliticianSync";
+import { ArrowsClockwise } from "@phosphor-icons/react/dist/csr/ArrowsClockwise";
+import { CheckCircle } from "@phosphor-icons/react/dist/csr/CheckCircle";
+import { WarningCircle } from "@phosphor-icons/react/dist/csr/WarningCircle";
+import { XCircle } from "@phosphor-icons/react/dist/csr/XCircle";
+import { TrendUp } from "@phosphor-icons/react/dist/csr/TrendUp";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import CTAButton from "@/components/lib/CTAButton";
+import showToast from "@/utils/toast";
+import { baseHeaders } from "@/utils/request";
+
+interface SyncStatus {
+  lastSync: string | null;
+  isHealthy: boolean;
+  sources: Array<{
+    source: string;
+    status: string;
+    lastAttempt: string;
+    lastSuccess: string | null;
+    itemsProcessed: number;
+    itemsFailed: number;
+    error: string | null;
+    isHealthy: boolean;
+  }>;
+  retryQueue: Array<{
+    phase: string;
+    attempts: number;
+    status: string;
+    nextRetryAt: string | null;
+    lastError: string | null;
+  }>;
+}
+
+interface PoliticianStats {
+  politicians: number;
+  speeches: number;
+  votes: number;
+}
+
+function getStatusIcon(status: string) {
+  if (status === "completed" || status === "ok") {
+    return <CheckCircle className="h-5 w-5 text-green-400" weight="fill" />;
+  }
+  if (status === "failed") {
+    return <XCircle className="h-5 w-5 text-red-400" weight="fill" />;
+  }
+  if (status === "running") {
+    return (
+      <ArrowsClockwise
+        className="h-5 w-5 text-yellow-400 animate-spin"
+        weight="bold"
+      />
+    );
+  }
+  return <WarningCircle className="h-5 w-5 text-gray-400" weight="fill" />;
+}
+
+function getStatusBadgeClass(status: string) {
+  if (status === "completed" || status === "ok") {
+    return "bg-green-500/10 text-green-400 border-green-500/20";
+  }
+  if (status === "failed") {
+    return "bg-red-500/10 text-red-400 border-red-500/20";
+  }
+  if (status === "running") {
+    return "bg-yellow-500/10 text-yellow-400 border-yellow-500/20";
+  }
+  return "bg-gray-500/10 text-gray-400 border-gray-500/20";
+}
+
+function formatDate(
+  dateString: string | null,
+  t: (key: string) => string,
+  locale?: string,
+) {
+  if (!dateString) return t("politicianSync.never");
+  const date = new Date(dateString);
+  return date.toLocaleString(locale);
+}
+
+function formatRelativeTime(
+  dateString: string | null,
+  t: (key: string, opts?: any) => string,
+) {
+  if (!dateString) return t("politicianSync.never");
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return t("politicianSync.never");
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+  const diffMinutes = Math.floor(diffMs / (1000 * 60));
+
+  if (diffMinutes < 1) return t("politicianSync.justNow");
+  if (diffMinutes < 60)
+    return t("politicianSync.minutesAgo", { count: diffMinutes });
+  if (diffHours < 24) return t("politicianSync.hoursAgo", { count: diffHours });
+  return t("politicianSync.daysAgo", { count: Math.floor(diffHours / 24) });
+}
+
+export default function PoliticianSyncDashboard(): React.ReactElement {
+  const { t, i18n } = useTranslation();
+  const { stats, syncStatus, isLoading, error, mutate } = usePoliticianSync();
+
+  const handleManualSync = async () => {
+    try {
+      const res = await fetch("/api/politician/sync/trigger", {
+        method: "POST",
+        headers: {
+          ...baseHeaders(),
+          "Content-Type": "application/json",
+        },
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      showToast(t("politicianSync.syncTriggered"), "success");
+      mutate();
+    } catch (e: any) {
+      showToast(
+        t("politicianSync.syncTriggerFailed", { error: e.message }),
+        "error",
+      );
+    }
+  };
+
+  return (
+    <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
+      <SettingsSidebar />
+      <div
+        style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
+        className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
+      >
+        <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
+          {/* Header */}
+          <div className="w-full flex flex-col gap-y-2 pb-6 border-white/10 border-b-2">
+            <div className="items-center flex gap-x-4 justify-between">
+              <div className="flex items-center gap-x-4">
+                <p className="text-lg leading-6 font-bold text-theme-text-primary">
+                  {t("politicianSync.title")}
+                </p>
+                {syncStatus && (
+                  <div
+                    className={`flex items-center gap-x-1.5 px-2 py-1 rounded-full text-xs font-medium border ${
+                      syncStatus.isHealthy
+                        ? "bg-green-500/10 text-green-400 border-green-500/20"
+                        : "bg-red-500/10 text-red-400 border-red-500/20"
+                    }`}
+                  >
+                    {syncStatus.isHealthy ? (
+                      <>
+                        <CheckCircle className="h-3.5 w-3.5" weight="fill" />
+                        {t("politicianSync.healthy")}
+                      </>
+                    ) : (
+                      <>
+                        <XCircle className="h-3.5 w-3.5" weight="fill" />
+                        {t("politicianSync.unhealthy")}
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+              <CTAButton
+                onClick={handleManualSync}
+                className="text-theme-bg-chat"
+              >
+                <ArrowsClockwise className="h-4 w-4" weight="bold" />
+                {t("politicianSync.syncNow")}
+              </CTAButton>
+            </div>
+            <p className="text-xs leading-[18px] font-base text-theme-text-secondary">
+              {t("politicianSync.description")}
+            </p>
+          </div>
+
+          {/* Stats Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+            <StatCard
+              title={t("politicianSync.statPoliticians")}
+              value={stats?.politicians ?? 0}
+              icon={<TrendUp className="h-5 w-5 text-blue-400" />}
+              isLoading={isLoading}
+            />
+            <StatCard
+              title={t("politicianSync.statSpeeches")}
+              value={stats?.speeches ?? 0}
+              icon={<TrendUp className="h-5 w-5 text-purple-400" />}
+              isLoading={isLoading}
+            />
+            <StatCard
+              title={t("politicianSync.statVotes")}
+              value={stats?.votes ?? 0}
+              icon={<TrendUp className="h-5 w-5 text-orange-400" />}
+              isLoading={isLoading}
+            />
+          </div>
+
+          {/* Source Status Cards */}
+          <div className="mt-8">
+            <h3 className="text-base font-semibold text-theme-text-primary mb-4">
+              {t("politicianSync.sourceStatus")}
+            </h3>
+            {isLoading ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {[1, 2, 3].map((i) => (
+                  <Skeleton
+                    key={i}
+                    height={160}
+                    className="rounded-xl"
+                    baseColor="var(--theme-bg-secondary)"
+                    highlightColor="var(--theme-bg-primary)"
+                  />
+                ))}
+              </div>
+            ) : error ? (
+              <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4">
+                <p className="text-red-400 text-sm">
+                  {t("politicianSync.loadError")}: {error.message}
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {syncStatus?.sources.map((source) => (
+                  <div
+                    key={source.source}
+                    className="bg-theme-bg-primary rounded-xl p-4 border border-white/10"
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-x-2">
+                        {getStatusIcon(source.status)}
+                        <span className="text-sm font-semibold text-theme-text-primary capitalize">
+                          {source.source}
+                        </span>
+                      </div>
+                      <span
+                        className={`text-xs px-2 py-0.5 rounded-full border font-medium ${getStatusBadgeClass(source.status)}`}
+                      >
+                        {source.status}
+                      </span>
+                    </div>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between text-theme-text-secondary">
+                        <span>{t("politicianSync.lastAttempt")}</span>
+                        <span className="text-theme-text-primary">
+                          {formatRelativeTime(source.lastAttempt, t)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-theme-text-secondary">
+                        <span>{t("politicianSync.lastSuccess")}</span>
+                        <span className="text-theme-text-primary">
+                          {formatRelativeTime(source.lastSuccess, t)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-theme-text-secondary">
+                        <span>{t("politicianSync.itemsProcessed")}</span>
+                        <span className="text-theme-text-primary">
+                          {source.itemsProcessed}
+                        </span>
+                      </div>
+                      {source.itemsFailed > 0 && (
+                        <div className="flex justify-between text-red-400">
+                          <span>{t("politicianSync.itemsFailed")}</span>
+                          <span>{source.itemsFailed}</span>
+                        </div>
+                      )}
+                      {source.error && (
+                        <div className="mt-2 p-2 bg-red-500/10 rounded-lg border border-red-500/20">
+                          <p className="text-red-400 text-xs font-mono line-clamp-2">
+                            {source.error}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Retry Queue */}
+          {syncStatus && syncStatus.retryQueue.length > 0 && (
+            <div className="mt-8">
+              <h3 className="text-base font-semibold text-theme-text-primary mb-4">
+                {t("politicianSync.retryQueue")}
+              </h3>
+              <div className="bg-theme-bg-primary rounded-xl border border-white/10 overflow-hidden">
+                <table className="w-full text-sm text-left">
+                  <thead className="text-theme-text-secondary text-xs uppercase border-b border-white/10">
+                    <tr>
+                      <th className="px-4 py-3">{t("politicianSync.phase")}</th>
+                      <th className="px-4 py-3">
+                        {t("politicianSync.attempts")}
+                      </th>
+                      <th className="px-4 py-3">
+                        {t("politicianSync.nextRetry")}
+                      </th>
+                      <th className="px-4 py-3">
+                        {t("politicianSync.status")}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {syncStatus.retryQueue.map((item, index) => (
+                      <tr
+                        key={index}
+                        className="border-b border-white/5 last:border-0"
+                      >
+                        <td className="px-4 py-3 text-theme-text-primary capitalize">
+                          {item.phase}
+                        </td>
+                        <td className="px-4 py-3 text-theme-text-secondary">
+                          {item.attempts}
+                        </td>
+                        <td className="px-4 py-3 text-theme-text-secondary">
+                          {item.nextRetryAt
+                            ? formatRelativeTime(item.nextRetryAt, t)
+                            : "-"}
+                        </td>
+                        <td className="px-4 py-3">
+                          <span
+                            className={`text-xs px-2 py-0.5 rounded-full border font-medium ${getStatusBadgeClass(item.status)}`}
+                          >
+                            {item.status}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* Last Sync Info */}
+          {syncStatus?.lastSync && (
+            <div className="mt-8 text-xs text-theme-text-secondary">
+              <p>
+                {t("politicianSync.lastSync")}:{" "}
+                {formatDate(syncStatus.lastSync, t, i18n.language)}
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+interface StatCardProps {
+  title: string;
+  value: number;
+  icon: React.ReactElement;
+  isLoading: boolean;
+}
+
+function StatCard({
+  title,
+  value,
+  icon,
+  isLoading,
+}: StatCardProps): React.ReactElement {
+  return (
+    <div className="bg-theme-bg-primary rounded-xl p-4 border border-white/10">
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-xs text-theme-text-secondary uppercase font-medium">
+          {title}
+        </span>
+        {icon}
+      </div>
+      {isLoading ? (
+        <Skeleton
+          height={32}
+          width={60}
+          baseColor="var(--theme-bg-secondary)"
+          highlightColor="var(--theme-bg-primary)"
+        />
+      ) : (
+        <p className="text-2xl font-bold text-theme-text-primary">
+          {value.toLocaleString()}
+        </p>
+      )}
+    </div>
+  );
+}

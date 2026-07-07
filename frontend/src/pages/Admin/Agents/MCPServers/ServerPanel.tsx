@@ -1,1 +1,417 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBQdXJwb3NlOiBSZW5kZXJzIGEgc2luZ2xlIE1DUCBzZXJ2ZXIgcGFuZWwgd2l0aCB0b29scywgY29uZmlnLCBhbmQgc3RhdHVzLgovLyBEb2NzOiBTZXJ2ZXJQYW5lbC5kb2MubWQKaW1wb3J0IFJlYWN0LCB7IHVzZVN0YXRlLCB1c2VFZmZlY3QsIHVzZVJlZiB9IGZyb20gInJlYWN0IjsKaW1wb3J0IHNob3dUb2FzdCBmcm9tICJAL3V0aWxzL3RvYXN0IjsKaW1wb3J0IHsgQ2FyZXREb3duIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL0NhcmV0RG93biI7CmltcG9ydCB7IEdlYXIgfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvR2VhciI7CmltcG9ydCB7IFdhcm5pbmcgfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvV2FybmluZyI7CmltcG9ydCBNQ1BMb2dvIGZyb20gIkAvbWVkaWEvYWdlbnRzL21jcC1sb2dvLnN2ZyI7CmltcG9ydCB7IHRpdGxlQ2FzZSB9IGZyb20gInRleHQtY2FzZSI7CmltcG9ydCBNQ1BTZXJ2ZXJzIGZyb20gIkAvbW9kZWxzL21jcFNlcnZlcnMiOwppbXBvcnQgeyBTaW1wbGVUb2dnbGVTd2l0Y2ggfSBmcm9tICJAL2NvbXBvbmVudHMvbGliL1RvZ2dsZSI7CmltcG9ydCB7IHVzZVRyYW5zbGF0aW9uLCBUcmFucyB9IGZyb20gInJlYWN0LWkxOG5leHQiOwoKaW50ZXJmYWNlIE1DUFNlcnZlclRvb2wgewogIG5hbWU6IHN0cmluZzsKICBkZXNjcmlwdGlvbjogc3RyaW5nOwogIGlucHV0U2NoZW1hPzogewogICAgcHJvcGVydGllcz86IHsgW2tleTogc3RyaW5nXTogeyB0eXBlPzogc3RyaW5nIH0gfTsKICAgIHJlcXVpcmVkPzogc3RyaW5nW107CiAgfTsKfQoKaW50ZXJmYWNlIE1DUFNlcnZlckNvbmZpZyB7CiAgY29tbWFuZD86IHN0cmluZzsKICBhcmdzPzogc3RyaW5nW107CiAgb3BlbnNpbj86IHsKICAgIHN1cHByZXNzZWRUb29scz86IHN0cmluZ1tdOwogIH07CiAgW2tleTogc3RyaW5nXTogYW55Owp9CgppbnRlcmZhY2UgTUNQU2VydmVyRGF0YSB7CiAgbmFtZTogc3RyaW5nOwogIHJ1bm5pbmc6IGJvb2xlYW47CiAgdG9vbHM6IE1DUFNlcnZlclRvb2xbXTsKICBjb25maWc/OiBNQ1BTZXJ2ZXJDb25maWc7CiAgZXJyb3I/OiBzdHJpbmc7CiAgW2tleTogc3RyaW5nXTogYW55Owp9CgppbnRlcmZhY2UgTWFuYWdlU2VydmVyTWVudVByb3BzIHsKICBzZXJ2ZXI6IE1DUFNlcnZlckRhdGE7CiAgdG9nZ2xlU2VydmVyOiAoc2VydmVyTmFtZTogc3RyaW5nKSA9PiB2b2lkOwogIG9uRGVsZXRlOiAoc2VydmVyTmFtZTogc3RyaW5nKSA9PiB2b2lkOwp9CgpmdW5jdGlvbiBNYW5hZ2VTZXJ2ZXJNZW51KHsKICBzZXJ2ZXIsCiAgdG9nZ2xlU2VydmVyLAogIG9uRGVsZXRlLAp9OiBNYW5hZ2VTZXJ2ZXJNZW51UHJvcHMpOiBKU1guRWxlbWVudCB7CiAgY29uc3QgeyB0IH0gPSB1c2VUcmFuc2xhdGlvbigpOwogIGNvbnN0IFtvcGVuLCBzZXRPcGVuXSA9IHVzZVN0YXRlKGZhbHNlKTsKICBjb25zdCBbcnVubmluZywgc2V0UnVubmluZ10gPSB1c2VTdGF0ZShzZXJ2ZXIucnVubmluZyk7CiAgY29uc3QgbWVudVJlZiA9IHVzZVJlZjxIVE1MRGl2RWxlbWVudCB8IG51bGw+KG51bGwpOwoKICBhc3luYyBmdW5jdGlvbiBkZWxldGVTZXJ2ZXIoKSB7CiAgICBpZiAoCiAgICAgICF3aW5kb3cuY29uZmlybSgKICAgICAgICAiQXJlIHlvdSBzdXJlIHlvdSB3YW50IHRvIGRlbGV0ZSB0aGlzIE1DUCBzZXJ2ZXI/IEl0IHdpbGwgYmUgcmVtb3ZlZCBmcm9tIHlvdXIgY29uZmlnIGZpbGUgYW5kIHlvdSB3aWxsIG5lZWQgdG8gYWRkIGl0IGJhY2sgbWFudWFsbHkuIiwKICAgICAgKQogICAgKQogICAgICByZXR1cm47CiAgICBjb25zdCB7IHN1Y2Nlc3MsIGVycm9yIH0gPSBhd2FpdCBNQ1BTZXJ2ZXJzLmRlbGV0ZVNlcnZlcihzZXJ2ZXIubmFtZSk7CiAgICBpZiAoc3VjY2VzcykgewogICAgICBzaG93VG9hc3QoIk1DUCBzZXJ2ZXIgZGVsZXRlZCBzdWNjZXNzZnVsbHkuIiwgInN1Y2Nlc3MiKTsKICAgICAgb25EZWxldGUoc2VydmVyLm5hbWUpOwogICAgfSBlbHNlIHsKICAgICAgc2hvd1RvYXN0KGVycm9yIHx8ICJGYWlsZWQgdG8gZGVsZXRlIE1DUCBzZXJ2ZXIuIiwgImVycm9yIik7CiAgICB9CiAgfQoKICBhc3luYyBmdW5jdGlvbiBoYW5kbGVUb2dnbGVTZXJ2ZXIoKSB7CiAgICBpZiAoCiAgICAgICF3aW5kb3cuY29uZmlybSgKICAgICAgICBydW5uaW5nCiAgICAgICAgICA/ICJBcmUgeW91IHN1cmUgeW91IHdhbnQgdG8gc3RvcCB0aGlzIE1DUCBzZXJ2ZXI/IEl0IHdpbGwgYmUgc3RhcnRlZCBhdXRvbWF0aWNhbGx5IHdoZW4geW91IG5leHQgc3RhcnQgdGhlIHNlcnZlci4iCiAgICAgICAgICA6ICJBcmUgeW91IHN1cmUgeW91IHdhbnQgdG8gc3RhcnQgdGhpcyBNQ1Agc2VydmVyPyBJdCB3aWxsIGJlIHN0YXJ0ZWQgYXV0b21hdGljYWxseSB3aGVuIHlvdSBuZXh0IHN0YXJ0IHRoZSBzZXJ2ZXIuIiwKICAgICAgKQogICAgKQogICAgICByZXR1cm47CgogICAgY29uc3QgeyBzdWNjZXNzLCBlcnJvciB9ID0gYXdhaXQgTUNQU2VydmVycy50b2dnbGVTZXJ2ZXIoc2VydmVyLm5hbWUpOwogICAgaWYgKHN1Y2Nlc3MpIHsKICAgICAgY29uc3QgbmV3U3RhdGUgPSAhcnVubmluZzsKICAgICAgc2V0UnVubmluZyhuZXdTdGF0ZSk7CiAgICAgIHRvZ2dsZVNlcnZlcihzZXJ2ZXIubmFtZSk7CiAgICAgIHNob3dUb2FzdCgKICAgICAgICBgTUNQIHNlcnZlciAke3NlcnZlci5uYW1lfSAke25ld1N0YXRlID8gInN0YXJ0ZWQiIDogInN0b3BwZWQifSBzdWNjZXNzZnVsbHkuYCwKICAgICAgICAic3VjY2VzcyIsCiAgICAgICAgeyBjbGVhcjogdHJ1ZSB9LAogICAgICApOwogICAgfSBlbHNlIHsKICAgICAgc2hvd1RvYXN0KGVycm9yIHx8ICJGYWlsZWQgdG8gdG9nZ2xlIE1DUCBzZXJ2ZXIuIiwgImVycm9yIiwgewogICAgICAgIGNsZWFyOiB0cnVlLAogICAgICB9KTsKICAgIH0KICB9CgogIHVzZUVmZmVjdCgoKSA9PiB7CiAgICBjb25zdCBoYW5kbGVDbGlja091dHNpZGUgPSAoZXZlbnQ6IE1vdXNlRXZlbnQpID0+IHsKICAgICAgaWYgKG1lbnVSZWYuY3VycmVudCAmJiAhbWVudVJlZi5jdXJyZW50LmNvbnRhaW5zKGV2ZW50LnRhcmdldCBhcyBOb2RlKSkgewogICAgICAgIHNldE9wZW4oZmFsc2UpOwogICAgICB9CiAgICB9OwoKICAgIGRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoIm1vdXNlZG93biIsIGhhbmRsZUNsaWNrT3V0c2lkZSk7CiAgICByZXR1cm4gKCkgPT4gewogICAgICBkb2N1bWVudC5yZW1vdmVFdmVudExpc3RlbmVyKCJtb3VzZWRvd24iLCBoYW5kbGVDbGlja091dHNpZGUpOwogICAgfTsKICB9LCBbXSk7CgogIHJldHVybiAoCiAgICA8ZGl2IGNsYXNzTmFtZT0icmVsYXRpdmUiIHJlZj17bWVudVJlZn0+CiAgICAgIDxidXR0b24KICAgICAgICB0eXBlPSJidXR0b24iCiAgICAgICAgb25DbGljaz17KCkgPT4gc2V0T3Blbighb3Blbil9CiAgICAgICAgY2xhc3NOYW1lPSJwLTEuNSByb3VuZGVkLWxnIHRleHQtd2hpdGUgaG92ZXI6YmctdGhlbWUtYWN0aW9uLW1lbnUtaXRlbS1ob3ZlciB0cmFuc2l0aW9uLWNvbG9ycyBkdXJhdGlvbi0zMDAiCiAgICAgID4KICAgICAgICA8R2VhciBjbGFzc05hbWU9ImgtNSB3LTUiIHdlaWdodD0iYm9sZCIgLz4KICAgICAgPC9idXR0b24+CiAgICAgIHtvcGVuICYmICgKICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iYWJzb2x1dGUgdy1bMTUwcHhdIHRvcC0xIGxlZnQtNyBtdC0xIGJvcmRlci1bMS41cHhdIGJvcmRlci13aGl0ZS80MCByb3VuZGVkLWxnIGJnLXRoZW1lLWFjdGlvbi1tZW51LWJnIGZsZXggZmxleC1jb2wgc2hhZG93LVswXzRweF8xNHB4X3JnYmEoMCwwLDAsMC4yNSldIHRleHQtd2hpdGUgei05OSBtZDp6LTEwIj4KICAgICAgICAgIDxidXR0b24KICAgICAgICAgICAgdHlwZT0iYnV0dG9uIgogICAgICAgICAgICBvbkNsaWNrPXtoYW5kbGVUb2dnbGVTZXJ2ZXJ9CiAgICAgICAgICAgIGNsYXNzTmFtZT0iYm9yZGVyLW5vbmUgZmxleCBpdGVtcy1jZW50ZXIgcm91bmRlZC1sZyBnYXAteC0yIGhvdmVyOmJnLXRoZW1lLWFjdGlvbi1tZW51LWl0ZW0taG92ZXIgcHktMS41IHB4LTIgdHJhbnNpdGlvbi1jb2xvcnMgZHVyYXRpb24tMjAwIHctZnVsbCB0ZXh0LWxlZnQiCiAgICAgICAgICA+CiAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0idGV4dC1zbSI+CiAgICAgICAgICAgICAge3J1bm5pbmcKICAgICAgICAgICAgICAgID8gdCgiYWdlbnQubWNwLnN0b3Atc2VydmVyIikKICAgICAgICAgICAgICAgIDogdCgiYWdlbnQubWNwLnN0YXJ0LXNlcnZlciIpfQogICAgICAgICAgICA8L3NwYW4+CiAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICAgIDxidXR0b24KICAgICAgICAgICAgdHlwZT0iYnV0dG9uIgogICAgICAgICAgICBvbkNsaWNrPXtkZWxldGVTZXJ2ZXJ9CiAgICAgICAgICAgIGNsYXNzTmFtZT0iYm9yZGVyLW5vbmUgZmxleCBpdGVtcy1jZW50ZXIgcm91bmRlZC1sZyBnYXAteC0yIGhvdmVyOmJnLXRoZW1lLWFjdGlvbi1tZW51LWl0ZW0taG92ZXIgcHktMS41IHB4LTIgdHJhbnNpdGlvbi1jb2xvcnMgZHVyYXRpb24tMjAwIHctZnVsbCB0ZXh0LWxlZnQiCiAgICAgICAgICA+CiAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0idGV4dC1zbSI+e3QoImFnZW50Lm1jcC5kZWxldGUtc2VydmVyIil9PC9zcGFuPgogICAgICAgICAgPC9idXR0b24+CiAgICAgICAgPC9kaXY+CiAgICAgICl9CiAgICA8L2Rpdj4KICApOwp9CgppbnRlcmZhY2UgU2VydmVyUGFuZWxQcm9wcyB7CiAgc2VydmVyOiBNQ1BTZXJ2ZXJEYXRhOwogIHRvZ2dsZVNlcnZlcjogKHNlcnZlck5hbWU6IHN0cmluZykgPT4gdm9pZDsKICBvbkRlbGV0ZTogKHNlcnZlck5hbWU6IHN0cmluZykgPT4gdm9pZDsKICBvblRvZ2dsZVRvb2w6ICgKICAgIHNlcnZlck5hbWU6IHN0cmluZywKICAgIHRvb2xOYW1lOiBzdHJpbmcsCiAgICBlbmFibGVkOiBib29sZWFuLAogICkgPT4gdm9pZDsKfQoKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gU2VydmVyUGFuZWwoewogIHNlcnZlciwKICB0b2dnbGVTZXJ2ZXIsCiAgb25EZWxldGUsCiAgb25Ub2dnbGVUb29sLAp9OiBTZXJ2ZXJQYW5lbFByb3BzKTogSlNYLkVsZW1lbnQgewogIGNvbnN0IHsgdCB9ID0gdXNlVHJhbnNsYXRpb24oKTsKICBjb25zdCBzdXBwcmVzc2VkVG9vbHMgPSBzZXJ2ZXIuY29uZmlnPy5vcGVuc2luPy5zdXBwcmVzc2VkVG9vbHMgfHwgW107CiAgY29uc3QgZW5hYmxlZFRvb2xDb3VudCA9IHNlcnZlci50b29scy5maWx0ZXIoCiAgICAodG9vbCkgPT4gIXN1cHByZXNzZWRUb29scy5pbmNsdWRlcyh0b29sLm5hbWUpLAogICkubGVuZ3RoOwoKICByZXR1cm4gKAogICAgPD4KICAgICAgPGRpdiBjbGFzc05hbWU9InAtMiI+CiAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgZ2FwLXktWzE4cHhdIG1heC13LVs4MDBweF0iPgogICAgICAgICAgPFRvb2xDb3VudFdhcm5pbmdCYW5uZXIKICAgICAgICAgICAgc2VydmVyPXtzZXJ2ZXJ9CiAgICAgICAgICAgIGVuYWJsZWRUb29sQ291bnQ9e2VuYWJsZWRUb29sQ291bnR9CiAgICAgICAgICAvPgogICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggdy1mdWxsIGp1c3RpZnktYmV0d2VlbiI+CiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBnYXAteC0yIj4KICAgICAgICAgICAgICA8aW1nCiAgICAgICAgICAgICAgICBzcmM9e01DUExvZ299CiAgICAgICAgICAgICAgICBjbGFzc05hbWU9InctNiBoLTYgbGlnaHQ6aW52ZXJ0IgogICAgICAgICAgICAgICAgYWx0PXt0KCJjb21tb24ubWNwTG9nbyIpfQogICAgICAgICAgICAgIC8+CiAgICAgICAgICAgICAgPGxhYmVsIGh0bWxGb3I9Im5hbWUiIGNsYXNzTmFtZT0idGV4dC13aGl0ZSB0ZXh0LW1kIGZvbnQtYm9sZCI+CiAgICAgICAgICAgICAgICB7dGl0bGVDYXNlKHNlcnZlci5uYW1lLnJlcGxhY2UoL1tfLV0vZywgIiAiKSl9CiAgICAgICAgICAgICAgPC9sYWJlbD4KICAgICAgICAgICAgICB7c2VydmVyLnRvb2xzLmxlbmd0aCA+IDAgJiYgKAogICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5IHRleHQtc20iPgogICAgICAgICAgICAgICAgICB7ZW5hYmxlZFRvb2xDb3VudH0ve3NlcnZlci50b29scy5sZW5ndGh9eyIgIn0KICAgICAgICAgICAgICAgICAge3QoImFnZW50Lm1jcC50b29scy1lbmFibGVkIil9CiAgICAgICAgICAgICAgICA8L3A+CiAgICAgICAgICAgICAgKX0KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgIDxNYW5hZ2VTZXJ2ZXJNZW51CiAgICAgICAgICAgICAga2V5PXtzZXJ2ZXIubmFtZX0KICAgICAgICAgICAgICBzZXJ2ZXI9e3NlcnZlcn0KICAgICAgICAgICAgICB0b2dnbGVTZXJ2ZXI9e3RvZ2dsZVNlcnZlcn0KICAgICAgICAgICAgICBvbkRlbGV0ZT17b25EZWxldGV9CiAgICAgICAgICAgIC8+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDxSZW5kZXJTZXJ2ZXJDb25maWcgY29uZmlnPXtzZXJ2ZXIuY29uZmlnfSAvPgogICAgICAgICAgPFJlbmRlclNlcnZlclN0YXR1cyBzZXJ2ZXI9e3NlcnZlcn0gLz4KICAgICAgICAgIDxSZW5kZXJTZXJ2ZXJUb29scwogICAgICAgICAgICBzZXJ2ZXJOYW1lPXtzZXJ2ZXIubmFtZX0KICAgICAgICAgICAgdG9vbHM9e3NlcnZlci50b29sc30KICAgICAgICAgICAgc3VwcHJlc3NlZFRvb2xzPXtzdXBwcmVzc2VkVG9vbHN9CiAgICAgICAgICAgIG9uVG9nZ2xlVG9vbD17b25Ub2dnbGVUb29sfQogICAgICAgICAgLz4KICAgICAgICA8L2Rpdj4KICAgICAgPC9kaXY+CiAgICA8Lz4KICApOwp9CgppbnRlcmZhY2UgVG9vbENvdW50V2FybmluZ0Jhbm5lclByb3BzIHsKICBzZXJ2ZXI6IE1DUFNlcnZlckRhdGE7CiAgZW5hYmxlZFRvb2xDb3VudDogbnVtYmVyOwp9CgpmdW5jdGlvbiBUb29sQ291bnRXYXJuaW5nQmFubmVyKHsKICBzZXJ2ZXIsCiAgZW5hYmxlZFRvb2xDb3VudCwKfTogVG9vbENvdW50V2FybmluZ0Jhbm5lclByb3BzKTogSlNYLkVsZW1lbnQgfCBudWxsIHsKICBpZiAoc2VydmVyLnRvb2xzLmxlbmd0aCA8PSAxMCkgcmV0dXJuIG51bGw7CiAgaWYgKGVuYWJsZWRUb29sQ291bnQgPD0gMTApIHJldHVybiBudWxsOwoKICByZXR1cm4gKAogICAgPGRpdiBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIGdhcC14LTIgcC0zIGJnLXllbGxvdy01MDAvMTAgYm9yZGVyIGJvcmRlci15ZWxsb3ctNTAwLzMwIHJvdW5kZWQtbGciPgogICAgICA8V2FybmluZyBjbGFzc05hbWU9ImgtNSB3LTUgdGV4dC15ZWxsb3ctNTAwIHNocmluay0wIiB3ZWlnaHQ9ImZpbGwiIC8+CiAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC15ZWxsb3ctNTAwIHRleHQtc20iPgogICAgICAgIDxUcmFucwogICAgICAgICAgaTE4bktleT17YGFnZW50Lm1jcC50b29sLWNvdW50LXdhcm5pbmdgfQogICAgICAgICAgdmFsdWVzPXt7IGNvdW50OiBlbmFibGVkVG9vbENvdW50IH19CiAgICAgICAgICBjb21wb25lbnRzPXt7IGI6IDxiIC8+LCBicjogPGJyIC8+IH19CiAgICAgICAgLz4KICAgICAgPC9wPgogICAgPC9kaXY+CiAgKTsKfQoKaW50ZXJmYWNlIFJlbmRlclNlcnZlckNvbmZpZ1Byb3BzIHsKICBjb25maWc/OiBNQ1BTZXJ2ZXJDb25maWcgfCBudWxsOwp9CgpmdW5jdGlvbiBSZW5kZXJTZXJ2ZXJDb25maWcoewogIGNvbmZpZywKfTogUmVuZGVyU2VydmVyQ29uZmlnUHJvcHMpOiBKU1guRWxlbWVudCB8IG51bGwgewogIGNvbnN0IHsgdCB9ID0gdXNlVHJhbnNsYXRpb24oKTsKICBpZiAoIWNvbmZpZykgcmV0dXJuIG51bGw7CiAgcmV0dXJuICgKICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIGdhcC15LTIiPgogICAgICA8cCBjbGFzc05hbWU9InRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IHRleHQtc20iPgogICAgICAgIHt0KCJhZ2VudC5tY3Auc3RhcnR1cC1jb21tYW5kIil9CiAgICAgIDwvcD4KICAgICAgPGRpdiBjbGFzc05hbWU9ImJnLXRoZW1lLWJnLXByaW1hcnkgcm91bmRlZC1sZyBwLTQiPgogICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSB0ZXh0LXNtIHRleHQtbGVmdCI+CiAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9ImZvbnQtYm9sZCI+e3QoImFnZW50Lm1jcC5jb21tYW5kIil9Ojwvc3Bhbj57IiAifQogICAgICAgICAge2NvbmZpZy5jb21tYW5kfQogICAgICAgIDwvcD4KICAgICAgICA8cCBjbGFzc05hbWU9InRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkgdGV4dC1zbSB0ZXh0LWxlZnQiPgogICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJmb250LWJvbGQiPnt0KCJhZ2VudC5tY3AuYXJndW1lbnRzIil9Ojwvc3Bhbj57IiAifQogICAgICAgICAge2NvbmZpZy5hcmdzID8gY29uZmlnLmFyZ3Muam9pbigiICIpIDogdCgiY29tbW9uLm5vbmUiKX0KICAgICAgICA8L3A+CiAgICAgIDwvZGl2PgogICAgPC9kaXY+CiAgKTsKfQoKaW50ZXJmYWNlIFJlbmRlclNlcnZlclN0YXR1c1Byb3BzIHsKICBzZXJ2ZXI6IE1DUFNlcnZlckRhdGE7Cn0KCmZ1bmN0aW9uIFJlbmRlclNlcnZlclN0YXR1cyh7CiAgc2VydmVyLAp9OiBSZW5kZXJTZXJ2ZXJTdGF0dXNQcm9wcyk6IEpTWC5FbGVtZW50IHwgbnVsbCB7CiAgY29uc3QgeyB0IH0gPSB1c2VUcmFuc2xhdGlvbigpOwogIGlmIChzZXJ2ZXIucnVubmluZyB8fCAhc2VydmVyLmVycm9yKSByZXR1cm4gbnVsbDsKICByZXR1cm4gKAogICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgZ2FwLXktMiI+CiAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXByaW1hcnkgdGV4dC1zbSI+CiAgICAgICAge3QoImFnZW50Lm1jcC5ub3QtcnVubmluZy13YXJuaW5nIil9CiAgICAgIDwvcD4KICAgICAgPGRpdiBjbGFzc05hbWU9ImJnLXRoZW1lLWJnLXByaW1hcnkgcm91bmRlZC1sZyBwLTQiPgogICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC1yZWQtNTAwIHRleHQtc20gZm9udC1tb25vIj57c2VydmVyLmVycm9yfTwvcD4KICAgICAgPC9kaXY+CiAgICA8L2Rpdj4KICApOwp9CgppbnRlcmZhY2UgUmVuZGVyU2VydmVyVG9vbHNQcm9wcyB7CiAgc2VydmVyTmFtZTogc3RyaW5nOwogIHRvb2xzPzogTUNQU2VydmVyVG9vbFtdOwogIHN1cHByZXNzZWRUb29scz86IHN0cmluZ1tdOwogIG9uVG9nZ2xlVG9vbDogKAogICAgc2VydmVyTmFtZTogc3RyaW5nLAogICAgdG9vbE5hbWU6IHN0cmluZywKICAgIGVuYWJsZWQ6IGJvb2xlYW4sCiAgKSA9PiB2b2lkOwp9CgpmdW5jdGlvbiBSZW5kZXJTZXJ2ZXJUb29scyh7CiAgc2VydmVyTmFtZSwKICB0b29scyA9IFtdLAogIHN1cHByZXNzZWRUb29scyA9IFtdLAogIG9uVG9nZ2xlVG9vbCwKfTogUmVuZGVyU2VydmVyVG9vbHNQcm9wcyk6IEpTWC5FbGVtZW50IHwgbnVsbCB7CiAgaWYgKHRvb2xzLmxlbmd0aCA9PT0gMCkgcmV0dXJuIG51bGw7CiAgcmV0dXJuICgKICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIGdhcC15LTIiPgogICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCBnYXAteS0yIj4KICAgICAgICB7dG9vbHMubWFwKCh0b29sKSA9PiAoCiAgICAgICAgICA8U2VydmVyVG9vbAogICAgICAgICAgICBrZXk9e3Rvb2wubmFtZX0KICAgICAgICAgICAgc2VydmVyTmFtZT17c2VydmVyTmFtZX0KICAgICAgICAgICAgdG9vbD17dG9vbH0KICAgICAgICAgICAgZW5hYmxlZD17IXN1cHByZXNzZWRUb29scy5pbmNsdWRlcyh0b29sLm5hbWUpfQogICAgICAgICAgICBvblRvZ2dsZT17b25Ub2dnbGVUb29sfQogICAgICAgICAgLz4KICAgICAgICApKX0KICAgICAgPC9kaXY+CiAgICA8L2Rpdj4KICApOwp9CgppbnRlcmZhY2UgU2VydmVyVG9vbFByb3BzIHsKICBzZXJ2ZXJOYW1lOiBzdHJpbmc7CiAgdG9vbDogTUNQU2VydmVyVG9vbDsKICBlbmFibGVkOiBib29sZWFuOwogIG9uVG9nZ2xlOiAoc2VydmVyTmFtZTogc3RyaW5nLCB0b29sTmFtZTogc3RyaW5nLCBlbmFibGVkOiBib29sZWFuKSA9PiB2b2lkOwp9CgpmdW5jdGlvbiBTZXJ2ZXJUb29sKHsKICBzZXJ2ZXJOYW1lLAogIHRvb2wsCiAgZW5hYmxlZCwKICBvblRvZ2dsZSwKfTogU2VydmVyVG9vbFByb3BzKTogSlNYLkVsZW1lbnQgewogIGNvbnN0IHsgdCB9ID0gdXNlVHJhbnNsYXRpb24oKTsKICBjb25zdCBbb3Blbiwgc2V0T3Blbl0gPSB1c2VTdGF0ZShmYWxzZSk7CgogIHJldHVybiAoCiAgICA8YnV0dG9uCiAgICAgIHR5cGU9ImJ1dHRvbiIKICAgICAgb25DbGljaz17KCkgPT4gc2V0T3Blbighb3Blbil9CiAgICAgIGNsYXNzTmFtZT17YGZsZXggZmxleC1jb2wgZ2FwLXktMiBweC00IHB5LTIgcm91bmRlZC1sZyBib3JkZXIgJHsKICAgICAgICBlbmFibGVkCiAgICAgICAgICA/ICJib3JkZXItdGhlbWUtdGV4dC1zZWNvbmRhcnkiCiAgICAgICAgICA6ICJib3JkZXItdGhlbWUtdGV4dC1zZWNvbmRhcnkvNTAgb3BhY2l0eS02MCIKICAgICAgfWB9CiAgICA+CiAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWJldHdlZW4iPgogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBnYXAteC0yIG1pbi13LTAgZmxleC0xIj4KICAgICAgICAgIDxTaW1wbGVUb2dnbGVTd2l0Y2gKICAgICAgICAgICAgc2l6ZT0ibWQiCiAgICAgICAgICAgIGVuYWJsZWQ9e2VuYWJsZWR9CiAgICAgICAgICAgIG9uQ2hhbmdlPXsobmV3RW5hYmxlZCkgPT4KICAgICAgICAgICAgICBvblRvZ2dsZT8uKHNlcnZlck5hbWUsIHRvb2wubmFtZSwgbmV3RW5hYmxlZCkKICAgICAgICAgICAgfQogICAgICAgICAgLz4KICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXByaW1hcnkgZm9udC1tb25vIGZvbnQtYm9sZCB0ZXh0LXNtIHNocmluay0wIj4KICAgICAgICAgICAge3Rvb2wubmFtZX0KICAgICAgICAgIDwvcD4KICAgICAgICAgIHshb3BlbiAmJiAoCiAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSB0ZXh0LXNtIHRydW5jYXRlIj4KICAgICAgICAgICAgICB7dG9vbC5kZXNjcmlwdGlvbn0KICAgICAgICAgICAgPC9wPgogICAgICAgICAgKX0KICAgICAgICA8L2Rpdj4KICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIgZ2FwLXgtMyI+CiAgICAgICAgICA8ZGl2CiAgICAgICAgICAgIGNsYXNzTmFtZT17YGJvcmRlci1ub25lIHRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkgaG92ZXI6dGV4dC1jdGEtYnV0dG9uIHRyYW5zaXRpb24tdHJhbnNmb3JtIGR1cmF0aW9uLTIwMCAkewogICAgICAgICAgICAgIG9wZW4gPyAicm90YXRlLTE4MCIgOiAiIgogICAgICAgICAgICB9YH0KICAgICAgICAgID4KICAgICAgICAgICAgPENhcmV0RG93biBzaXplPXsxNn0gLz4KICAgICAgICAgIDwvZGl2PgogICAgICAgIDwvZGl2PgogICAgICA8L2Rpdj4KICAgICAge29wZW4gJiYgKAogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIGdhcC15LTIiPgogICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgZ2FwLXktMiI+CiAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSB0ZXh0LXNtIHRleHQtbGVmdCI+CiAgICAgICAgICAgICAge3Rvb2wuZGVzY3JpcHRpb259CiAgICAgICAgICAgIDwvcD4KICAgICAgICAgIDwvZGl2PgogICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgZ2FwLXktMiI+CiAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXByaW1hcnkgdGV4dC1zbSB0ZXh0LWxlZnQiPgogICAgICAgICAgICAgIHt0KCJhZ2VudC5tY3AudG9vbC1jYWxsLWFyZ3VtZW50cyIpfQogICAgICAgICAgICA8L3A+CiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIGdhcC15LTIiPgogICAgICAgICAgICAgIHtPYmplY3QuZW50cmllcyh0b29sLmlucHV0U2NoZW1hPy5wcm9wZXJ0aWVzIHx8IHt9KS5tYXAoCiAgICAgICAgICAgICAgICAoW2tleSwgdmFsdWVdKSA9PiAoCiAgICAgICAgICAgICAgICAgIDxkaXYga2V5PXtrZXl9IGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIgZ2FwLXgtMiI+CiAgICAgICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5IHRleHQtc20gdGV4dC1sZWZ0IGZvbnQtYm9sZCI+CiAgICAgICAgICAgICAgICAgICAgICB7a2V5fQogICAgICAgICAgICAgICAgICAgICAge3Rvb2wuaW5wdXRTY2hlbWE/LnJlcXVpcmVkPy5pbmNsdWRlcyhrZXkpICYmICgKICAgICAgICAgICAgICAgICAgICAgICAgPHN1cCBjbGFzc05hbWU9InRleHQtcmVkLTUwMCI+Kjwvc3VwPgogICAgICAgICAgICAgICAgICAgICAgKX0KICAgICAgICAgICAgICAgICAgICA8L3A+CiAgICAgICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5IHRleHQtc20gdGV4dC1sZWZ0Ij4KICAgICAgICAgICAgICAgICAgICAgIHt2YWx1ZS50eXBlfQogICAgICAgICAgICAgICAgICAgIDwvcD4KICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICApLAogICAgICAgICAgICAgICl9CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgPC9kaXY+CiAgICAgICAgPC9kaXY+CiAgICAgICl9CiAgICA8L2J1dHRvbj4KICApOwp9CgpleHBvcnQgdHlwZSB7IE1DUFNlcnZlckRhdGEsIE1DUFNlcnZlclRvb2wgfTsK
+// SPDX-License-Identifier: MIT
+// Purpose: Renders a single MCP server panel with tools, config, and status.
+// Docs: ServerPanel.doc.md
+import React, { useState, useEffect, useRef } from "react";
+import showToast from "@/utils/toast";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
+import { Gear } from "@phosphor-icons/react/dist/csr/Gear";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
+import MCPLogo from "@/media/agents/mcp-logo.svg";
+import { titleCase } from "text-case";
+import MCPServers from "@/models/mcpServers";
+import { SimpleToggleSwitch } from "@/components/lib/Toggle";
+import { useTranslation, Trans } from "react-i18next";
+
+interface MCPServerTool {
+  name: string;
+  description: string;
+  inputSchema?: {
+    properties?: { [key: string]: { type?: string } };
+    required?: string[];
+  };
+}
+
+interface MCPServerConfig {
+  command?: string;
+  args?: string[];
+  opensin?: {
+    suppressedTools?: string[];
+  };
+  [key: string]: any;
+}
+
+interface MCPServerData {
+  name: string;
+  running: boolean;
+  tools: MCPServerTool[];
+  config?: MCPServerConfig;
+  error?: string;
+  [key: string]: any;
+}
+
+interface ManageServerMenuProps {
+  server: MCPServerData;
+  toggleServer: (serverName: string) => void;
+  onDelete: (serverName: string) => void;
+}
+
+function ManageServerMenu({
+  server,
+  toggleServer,
+  onDelete,
+}: ManageServerMenuProps): JSX.Element {
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const [running, setRunning] = useState(server.running);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  async function deleteServer() {
+    if (
+      !window.confirm(
+        "Are you sure you want to delete this MCP server? It will be removed from your config file and you will need to add it back manually.",
+      )
+    )
+      return;
+    const { success, error } = await MCPServers.deleteServer(server.name);
+    if (success) {
+      showToast("MCP server deleted successfully.", "success");
+      onDelete(server.name);
+    } else {
+      showToast(error || "Failed to delete MCP server.", "error");
+    }
+  }
+
+  async function handleToggleServer() {
+    if (
+      !window.confirm(
+        running
+          ? "Are you sure you want to stop this MCP server? It will be started automatically when you next start the server."
+          : "Are you sure you want to start this MCP server? It will be started automatically when you next start the server.",
+      )
+    )
+      return;
+
+    const { success, error } = await MCPServers.toggleServer(server.name);
+    if (success) {
+      const newState = !running;
+      setRunning(newState);
+      toggleServer(server.name);
+      showToast(
+        `MCP server ${server.name} ${newState ? "started" : "stopped"} successfully.`,
+        "success",
+        { clear: true },
+      );
+    } else {
+      showToast(error || "Failed to toggle MCP server.", "error", {
+        clear: true,
+      });
+    }
+  }
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <div className="relative" ref={menuRef}>
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className="p-1.5 rounded-lg text-white hover:bg-theme-action-menu-item-hover transition-colors duration-300"
+      >
+        <Gear className="h-5 w-5" weight="bold" />
+      </button>
+      {open && (
+        <div className="absolute w-[150px] top-1 left-7 mt-1 border-[1.5px] border-white/40 rounded-lg bg-theme-action-menu-bg flex flex-col shadow-[0_4px_14px_rgba(0,0,0,0.25)] text-white z-99 md:z-10">
+          <button
+            type="button"
+            onClick={handleToggleServer}
+            className="border-none flex items-center rounded-lg gap-x-2 hover:bg-theme-action-menu-item-hover py-1.5 px-2 transition-colors duration-200 w-full text-left"
+          >
+            <span className="text-sm">
+              {running
+                ? t("agent.mcp.stop-server")
+                : t("agent.mcp.start-server")}
+            </span>
+          </button>
+          <button
+            type="button"
+            onClick={deleteServer}
+            className="border-none flex items-center rounded-lg gap-x-2 hover:bg-theme-action-menu-item-hover py-1.5 px-2 transition-colors duration-200 w-full text-left"
+          >
+            <span className="text-sm">{t("agent.mcp.delete-server")}</span>
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+interface ServerPanelProps {
+  server: MCPServerData;
+  toggleServer: (serverName: string) => void;
+  onDelete: (serverName: string) => void;
+  onToggleTool: (
+    serverName: string,
+    toolName: string,
+    enabled: boolean,
+  ) => void;
+}
+
+export default function ServerPanel({
+  server,
+  toggleServer,
+  onDelete,
+  onToggleTool,
+}: ServerPanelProps): JSX.Element {
+  const { t } = useTranslation();
+  const suppressedTools = server.config?.opensin?.suppressedTools || [];
+  const enabledToolCount = server.tools.filter(
+    (tool) => !suppressedTools.includes(tool.name),
+  ).length;
+
+  return (
+    <>
+      <div className="p-2">
+        <div className="flex flex-col gap-y-[18px] max-w-[800px]">
+          <ToolCountWarningBanner
+            server={server}
+            enabledToolCount={enabledToolCount}
+          />
+          <div className="flex w-full justify-between">
+            <div className="flex items-center gap-x-2">
+              <img
+                src={MCPLogo}
+                className="w-6 h-6 light:invert"
+                alt={t("common.mcpLogo")}
+              />
+              <label htmlFor="name" className="text-white text-md font-bold">
+                {titleCase(server.name.replace(/[_-]/g, " "))}
+              </label>
+              {server.tools.length > 0 && (
+                <p className="text-theme-text-secondary text-sm">
+                  {enabledToolCount}/{server.tools.length}{" "}
+                  {t("agent.mcp.tools-enabled")}
+                </p>
+              )}
+            </div>
+            <ManageServerMenu
+              key={server.name}
+              server={server}
+              toggleServer={toggleServer}
+              onDelete={onDelete}
+            />
+          </div>
+          <RenderServerConfig config={server.config} />
+          <RenderServerStatus server={server} />
+          <RenderServerTools
+            serverName={server.name}
+            tools={server.tools}
+            suppressedTools={suppressedTools}
+            onToggleTool={onToggleTool}
+          />
+        </div>
+      </div>
+    </>
+  );
+}
+
+interface ToolCountWarningBannerProps {
+  server: MCPServerData;
+  enabledToolCount: number;
+}
+
+function ToolCountWarningBanner({
+  server,
+  enabledToolCount,
+}: ToolCountWarningBannerProps): JSX.Element | null {
+  if (server.tools.length <= 10) return null;
+  if (enabledToolCount <= 10) return null;
+
+  return (
+    <div className="flex items-center gap-x-2 p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+      <Warning className="h-5 w-5 text-yellow-500 shrink-0" weight="fill" />
+      <p className="text-yellow-500 text-sm">
+        <Trans
+          i18nKey={`agent.mcp.tool-count-warning`}
+          values={{ count: enabledToolCount }}
+          components={{ b: <b />, br: <br /> }}
+        />
+      </p>
+    </div>
+  );
+}
+
+interface RenderServerConfigProps {
+  config?: MCPServerConfig | null;
+}
+
+function RenderServerConfig({
+  config,
+}: RenderServerConfigProps): JSX.Element | null {
+  const { t } = useTranslation();
+  if (!config) return null;
+  return (
+    <div className="flex flex-col gap-y-2">
+      <p className="text-theme-text-primary text-sm">
+        {t("agent.mcp.startup-command")}
+      </p>
+      <div className="bg-theme-bg-primary rounded-lg p-4">
+        <p className="text-theme-text-secondary text-sm text-left">
+          <span className="font-bold">{t("agent.mcp.command")}:</span>{" "}
+          {config.command}
+        </p>
+        <p className="text-theme-text-secondary text-sm text-left">
+          <span className="font-bold">{t("agent.mcp.arguments")}:</span>{" "}
+          {config.args ? config.args.join(" ") : t("common.none")}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+interface RenderServerStatusProps {
+  server: MCPServerData;
+}
+
+function RenderServerStatus({
+  server,
+}: RenderServerStatusProps): JSX.Element | null {
+  const { t } = useTranslation();
+  if (server.running || !server.error) return null;
+  return (
+    <div className="flex flex-col gap-y-2">
+      <p className="text-theme-text-primary text-sm">
+        {t("agent.mcp.not-running-warning")}
+      </p>
+      <div className="bg-theme-bg-primary rounded-lg p-4">
+        <p className="text-red-500 text-sm font-mono">{server.error}</p>
+      </div>
+    </div>
+  );
+}
+
+interface RenderServerToolsProps {
+  serverName: string;
+  tools?: MCPServerTool[];
+  suppressedTools?: string[];
+  onToggleTool: (
+    serverName: string,
+    toolName: string,
+    enabled: boolean,
+  ) => void;
+}
+
+function RenderServerTools({
+  serverName,
+  tools = [],
+  suppressedTools = [],
+  onToggleTool,
+}: RenderServerToolsProps): JSX.Element | null {
+  if (tools.length === 0) return null;
+  return (
+    <div className="flex flex-col gap-y-2">
+      <div className="flex flex-col gap-y-2">
+        {tools.map((tool) => (
+          <ServerTool
+            key={tool.name}
+            serverName={serverName}
+            tool={tool}
+            enabled={!suppressedTools.includes(tool.name)}
+            onToggle={onToggleTool}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+interface ServerToolProps {
+  serverName: string;
+  tool: MCPServerTool;
+  enabled: boolean;
+  onToggle: (serverName: string, toolName: string, enabled: boolean) => void;
+}
+
+function ServerTool({
+  serverName,
+  tool,
+  enabled,
+  onToggle,
+}: ServerToolProps): JSX.Element {
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+
+  return (
+    <button
+      type="button"
+      onClick={() => setOpen(!open)}
+      className={`flex flex-col gap-y-2 px-4 py-2 rounded-lg border ${
+        enabled
+          ? "border-theme-text-secondary"
+          : "border-theme-text-secondary/50 opacity-60"
+      }`}
+    >
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-x-2 min-w-0 flex-1">
+          <SimpleToggleSwitch
+            size="md"
+            enabled={enabled}
+            onChange={(newEnabled) =>
+              onToggle?.(serverName, tool.name, newEnabled)
+            }
+          />
+          <p className="text-theme-text-primary font-mono font-bold text-sm shrink-0">
+            {tool.name}
+          </p>
+          {!open && (
+            <p className="text-theme-text-secondary text-sm truncate">
+              {tool.description}
+            </p>
+          )}
+        </div>
+        <div className="flex items-center gap-x-3">
+          <div
+            className={`border-none text-theme-text-secondary hover:text-cta-button transition-transform duration-200 ${
+              open ? "rotate-180" : ""
+            }`}
+          >
+            <CaretDown size={16} />
+          </div>
+        </div>
+      </div>
+      {open && (
+        <div className="flex flex-col gap-y-2">
+          <div className="flex flex-col gap-y-2">
+            <p className="text-theme-text-secondary text-sm text-left">
+              {tool.description}
+            </p>
+          </div>
+          <div className="flex flex-col gap-y-2">
+            <p className="text-theme-text-primary text-sm text-left">
+              {t("agent.mcp.tool-call-arguments")}
+            </p>
+            <div className="flex flex-col gap-y-2">
+              {Object.entries(tool.inputSchema?.properties || {}).map(
+                ([key, value]) => (
+                  <div key={key} className="flex items-center gap-x-2">
+                    <p className="text-theme-text-secondary text-sm text-left font-bold">
+                      {key}
+                      {tool.inputSchema?.required?.includes(key) && (
+                        <sup className="text-red-500">*</sup>
+                      )}
+                    </p>
+                    <p className="text-theme-text-secondary text-sm text-left">
+                      {value.type}
+                    </p>
+                  </div>
+                ),
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </button>
+  );
+}
+
+export type { MCPServerData, MCPServerTool };
