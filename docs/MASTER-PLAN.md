@@ -1,1 +1,282 @@
-IyBPcGVuU0lOIENoYXQg4oCUIE1hc3Rlci1QbGFuOiBBbGxlIG9mZmVuZW4gQXVmZ2FiZW4KCj4gKipTdGFuZDoqKiAyMDI2LTA2LTI5Cj4gKipTdGF0dXM6KiogQWt0aXYg4oCUIGFsbGUgQXVmZ2FiZW4gc2luZCBwcmlvcmlzaWVydCB1bmQgdHJhY2thYmxlCj4gKipSZXBvczoqKiBbT3BlblNJTi1BSS9PcGVuU0lOLUNoYXRdKGh0dHBzOi8vZ2l0aHViLmNvbS9PcGVuU0lOLUFJL09wZW5TSU4tQ2hhdCkgCj4gKipMaXZlOioqIFtzaW5jaGF0LmRlbHFoaS5jb21dKGh0dHBzOi8vc2luY2hhdC5kZWxxaGkuY29tKSAKCi0tLQoKIyMgUDAg4oCUIEpFVFpUIChEb2t1bWVudGF0aW9uICYgU2NyZWVuc2hvdHMpCgo+IEF1ZndhbmQ6IH40aCDCtyBTdGF0dXM6ICoqYmVyZWl0IHp1ciBBdXNmw7xocnVuZyoqCgojIyMgUDAtMTogU2NyZWVuc2hvdHMgcHJvZHV6aWVyZW4gKDgtMTAgU3TDvGNrKQoKfCAjIHwgU2NyZWVuc2hvdCB8IE1vZHVzIHwgWndlY2sgfCBEYXRlaW5hbWUgfAp8LS0tfC0tLS0tLS0tLS0tfC0tLS0tLS18LS0tLS0tLXwtLS0tLS0tLS0tLXwKfCAxIHwgTG9naW4tUGFnZSB8IExpZ2h0IHwgUkVBRE1FLCBVc2VyIEd1aWRlIMKnMSB8IGBzY3JlZW5zaG90cy9sb2dpbi1saWdodC5wbmdgIHwKfCAyIHwgRW1wdHkgU3RhdGUgbWl0IDQgQ2FwYWJpbGl0eS1LYXJ0ZW4gfCBMaWdodCB8IFJFQURNRSBIZXJvLCBVc2VyIEd1aWRlIMKnMSB8IGBzY3JlZW5zaG90cy9lbXB0eS1zdGF0ZS1saWdodC5wbmdgIHwKfCAzIHwgQ2hhdCBtaXQgQ29kZS1CbG9jayArIElubGluZS1Db2RlIHwgTGlnaHQgfCBSRUFETUUgRmVhdHVyZXMsIFVzZXIgR3VpZGUgwqcyIHwgYHNjcmVlbnNob3RzL2NoYXQtY29kZWJsb2NrLWxpZ2h0LnBuZ2AgfAp8IDQgfCBDaGF0IG1pdCBDb2RlLUJsb2NrIHwgRGFyayB8IFJFQURNRSBEYXJrIE1vZGUgfCBgc2NyZWVuc2hvdHMvY2hhdC1jb2RlYmxvY2stZGFyay5wbmdgIHwKfCA1IHwgRG9rdW1lbnRlbi1VcGxvYWQgLyBXb3Jrc3BhY2UgfCBMaWdodCB8IFVzZXIgR3VpZGUgwqcyIHwgYHNjcmVlbnNob3RzL2RvY3VtZW50cy1saWdodC5wbmdgIHwKfCA2IHwgU2lkZWJhciBtaXQgVGhyZWFkLUxpc3RlIHwgTGlnaHQgfCBVc2VyIEd1aWRlIMKnMSB8IGBzY3JlZW5zaG90cy9zaWRlYmFyLWxpZ2h0LnBuZ2AgfAp8IDcgfCBNb2JpbGUgKDM3NXB4KSBFbXB0eSBTdGF0ZSB8IExpZ2h0IHwgUkVBRE1FIE1vYmlsZSB8IGBzY3JlZW5zaG90cy9tb2JpbGUtZW1wdHktc3RhdGUucG5nYCB8CnwgOCB8IFNldHRpbmdzLVNlaXRlIHwgTGlnaHQgfCBVc2VyIEd1aWRlIMKnOCB8IGBzY3JlZW5zaG90cy9zZXR0aW5ncy1saWdodC5wbmdgIHwKfCA5IHwgR3JvdW5kaW5nIEJhZGdlIC8gUXVlbGxlbiB8IERhcmsgfCBVc2VyIEd1aWRlIMKnMiB8IGBzY3JlZW5zaG90cy9ncm91bmRpbmctZGFyay5wbmdgIHwKfCAxMCB8IE5vdGVwYWQgU2lkZWJhciB8IExpZ2h0IHwgVXNlciBHdWlkZSDCpzUgfCBgc2NyZWVuc2hvdHMvbm90ZXBhZC1saWdodC5wbmdgIHwKCioqQWJsYWdlb3J0OioqIGBkb2NzL3NjcmVlbnNob3RzL2AgaW4gYmVpZGVuIFJlcG9zCioqTWV0aG9kZToqKiBQbGF5d3JpZ2h0IGhlYWRsZXNzIHNjcmVlbnNob3RzIHZvbiBzaW5jaGF0LmRlbHFoaS5jb20KCiMjIyBQMC0yOiBSRUFETUUubWQgYWt0dWFsaXNpZXJlbiAoYmVpZGUgUmVwb3MpCgotIFsgXSAKLSBbIF0gCi0gWyBdIEZlYXR1cmVzLVNla3Rpb246IEZpcmV3b3JrcyBBSSBhbHMgcHJpbcOkcmVyIFByb3ZpZGVyCi0gWyBdIEZlYXR1cmVzLVNla3Rpb246IE5ldWUgVUktRmVhdHVyZXMgKENvZGUtQmxvY2tzLCBOb3RlcGFkLCBHcm91bmRpbmcgQmFkZ2UsIEVtcHR5IFN0YXRlIENhcmRzLCBEYXJrL0xpZ2h0KQotIFsgXSBRdWljayBTdGFydDogRG9ja2VyLVBvcnQgYWt0dWFsaXNpZXJlbgotIFsgXSBTY3JlZW5zaG90cyBlaW5iaW5kZW4gKDQtNiBpbSBSRUFETUUpCi0gWyBdIENyZWRpdHM6IFN0YW5kYXJkIE9wZW5TSU4gQ3JlZGl0cy1UZXh0CgoqKkRhdGVpZW46KioKLSBgT3BlblNJTi1DaGF0L1JFQURNRS5tZGAKLSBgT3BlblNJTi1DaGF0L1JFQURNRS5tZGAKCiMjIyBQMC0zOiBkb2NzL3VzZXItZ3VpZGUubWQgw7xiZXJhcmJlaXRlbgoKLSBbIF0gU3RhbmQtRGF0dW0gYWt0dWFsaXNpZXJlbiAoMjAyNi0wNi0wNyDihpIgMjAyNi0wNi0yOSkKLSBbIF0gTmV1ZSBVSS1GZWF0dXJlcyBkb2t1bWVudGllcmVuOgogIC0gRW1wdHkgU3RhdGUgbWl0IDQgQ2FwYWJpbGl0eS1LYXJ0ZW4gKFF1ZWxsZW4sIE5vdGl6ZW4sIERhdGVuYmFuaywgS0kgbWl0IFF1ZWxsZW4pCiAgLSBDb2RlLUJsb2NrIG1pdCBLb3BpZXJlbi1CdXR0b24gdW5kIExhbmd1YWdlLUxhYmVsCiAgLSBJbmxpbmUtQ29kZS1TdHlsaW5nIChIaW50ZXJncnVuZCwgUGFkZGluZykKICAtIE5vdGl6YmxvY2sgKE5vdGVwYWQgU2lkZWJhcikg4oCUIGVyc3RlbGxlbiwgYmVhcmJlaXRlbiwgcGlubmVuLCBsw7ZzY2hlbgogIC0gR3JvdW5kaW5nIEJhZGdlIChTcGFya2xlLUljb24gYmVpIFJBRy1BbnR3b3J0ZW4pCiAgLSBBdXRvLVN1bW1hcnkgQ2FyZHMgKERva3VtZW50LVNuaXBwZXQtVm9yc2NoYXUpCiAgLSBVc2VyIE1lc3NhZ2UgQnViYmxlIChyZWNodHMsIGFiZ2VydW5kZXQsIGBiZy16aW5jLTcwMGAgRGFyayAvIGBiZy1zbGF0ZS0xMDBgIExpZ2h0KQogIC0gRGFyay9MaWdodCBNb2RlIFRvZ2dsZSAoRGVzaWduLUJ1dHRvbiBpbiBTaWRlYmFyKQogIC0gTW9iaWxlIExheW91dCAoMzc1cHgg4oCUIE92ZXJsYXktUGFuZWwsIHZvbGxlIEJyZWl0ZSkKICAtIExvYWRpbmctQW5pbWF0aW9uICgzIFB1bHNlLURvdHMpCiAgLSBBY3Rpb24tQnV0dG9ucyAoaG92ZXItb25seTogVFRTLCBLb3BpZXJlbiwgQmVhcmJlaXRlbiwgR3V0ZSBBbnR3b3J0LCBNZWhyKQogIC0gTWV0cmljcyAoaG92ZXItb25seSwgZGVmYXVsdCBoaWRkZW4pCiAgLSBDZW50ZXJlZCBDaGF0IExheW91dCAoYG1heC13LTgwMHB4YCkKICAtIFNjcm9sbC10by1Cb3R0b20gQnV0dG9uCiAgLSBTdGlja3kgIk5ldWVyIENoYXQiIC8gIk5ldWVyIE9yZG5lciIgYW0gU2lkZWJhci1Cb2RlbgotIFsgXSBTY3JlZW5zaG90cyBlaW5iaW5kZW4gKDgtMTAgaW0gVXNlciBHdWlkZSkKLSBbIF0gVGFzdGF0dXItU2hvcnRjdXRzIHZlcmlmaXppZXJlbiAoYENtZCtLYCwgYENtZCtOYCwgYENtZCtVYCwgYENtZCsvYCwgYEVzY2ApCi0gWyBdIEZhbHNjaGUgR2l0SHViLUxpbmtzIGtvcnJpZ2llcmVuIChgRmFtaWx5LVRlYW0tUHJvamVjdHMvT3BlblNJTi1DaGF0YCDihpIgYE9wZW5TSU4tQUkvT3BlblNJTi1DaGF0YCkKLSBbIF0gRkFROiBLb3N0ZW4tU2VrdGlvbiBha3R1YWxpc2llcmVuIChGaXJld29ya3MgQUkgc3RhdHQgT2xsYW1hIGFscyBwcmltw6RyKQotIFsgXSBGQVE6IExpdmUtRGVtby1VUkwgYWt0dWFsaXNpZXJlbgotIFsgXSBWZXJzaW9uOiBgdjAuMS4wYCDihpIgYWt0dWVsbGUgVmVyc2lvbgoKKipEYXRlaToqKiBgZG9jcy91c2VyLWd1aWRlLm1kYCAoYmVpZGUgUmVwb3MpCgojIyMgUDAtNDogQ0hBTkdFTE9HLm1kIGFrdHVhbGlzaWVyZW4KCi0gWyBdIENvZGUtQmxvY2stSGludGVyZ3J1bmQsIEJvcmRlciwgUmFkaXVzLCBDb3B5LUJ1dHRvbgotIFsgXSBJbmxpbmUtQ29kZS1TdHlsaW5nIChiZywgcGFkZGluZywgcmFkaXVzKQotIFsgXSBCbG9ja3F1b3RlLVN0eWxpbmcKLSBbIF0gQWdlbnQgZmlyZXdvcmtzYWkuanMgUHJvdmlkZXItUGF0Y2ggKGVudi12YXIgYmFzZSBVUkwgKyBVc2VyLUFnZW50KQotIFsgXSBFbXB0eVN0YXRlOiA0IEthcnRlbiwgemVudHJpZXJ0LCBgbWF4LXctODAwcHhgCi0gWyBdIFVzZXIgQnViYmxlOiBgYmctemluYy03MDBgL2BiZy1zbGF0ZS0xMDBgLCBgcm91bmRlZC1ici1zbWAKLSBbIF0gUHJvbXB0SW5wdXQ6IGByb3VuZGVkLTJ4bGAsIGBib3JkZXItd2hpdGUvMTBgLCBgc2hhZG93LXNtYAotIFsgXSBDaGF0SGlzdG9yeTogYHB0LTJgLCBzY3JvbGwtdG8tYm90dG9tIGB3LTggaC04YAotIFsgXSBIaXN0b3JpY2FsTWVzc2FnZTogYHRleHQtemluYy01MGAgdXNlciB0ZXh0LCBncmFkaWVudCBmaXgKLSBbIF0gQWN0aW9uczogaG92ZXItb25seSBgbWQ6Z3JvdXAtaG92ZXI6b3BhY2l0eS0xMDBgCi0gWyBdIFJlbmRlck1ldHJpY3M6IGRlZmF1bHQgaGlkZGVuCi0gWyBdIFRocmVhZENvbnRhaW5lcjogc3RpY2t5IGJvdHRvbS0wCi0gWyBdIEdyb3VuZGluZ0JhZGdlOiBzdWJ0bGUgU3BhcmtsZSBzdHlsaW5nCi0gWyBdIEVtcHR5U3RhdGUgaW4gYWxsZW4gbmV1ZW4gQ2hhdHMgKG5pY2h0IG51ciB3b3Jrc3BhY2UgaG9tZSkKCioqRGF0ZWk6KiogYENIQU5HRUxPRy5tZGAgKGJlaWRlIFJlcG9zKQoKLS0tCgojIyBQMSDigJQgQkFMRCAoRG9rdW1lbnRhdGlvbiB2ZXJ0aWVmZW4gKyBUZWNobmljYWwgRGVidCkKCj4gQXVmd2FuZDogfjNoIMK3IFN0YXR1czogKipnZXBsYW50KioKCiMjIyBQMS0xOiBERVBMT1lNRU5UX0dVSURFLm1kIGFrdHVhbGlzaWVyZW4KCi0gWyBdIFBvcnQtw4RuZGVydW5nZW4gZG9rdW1lbnRpZXJlbiAoYDM4NDcxYC9gMzg0NzJgIGludGVybiwgYDM4NDgxYC9gMzg0ODJgIG5naW54KQotIFsgXSBGaXJld29ya3MgQUkgYWxzIHByaW3DpHJlciBQcm92aWRlciBkb2t1bWVudGllcmVuCi0gWyBdIFNJTmF0b3IgUG9vbCBSb3V0ZXIgQmFzZSBVUkwgKGBGSVJFV09SS1NfQUlfTExNX0JBU0VfUEFUSGApCi0gWyBdIEN1c3RvbSBVc2VyLUFnZW50IFJlcXVpcmVtZW50IChgT3BlblNJTi1DaGF0LzEuMGApCi0gWyBdIENsb3VkZmxhcmUgVHVubmVsIFNldHVwIChzeXN0ZW1kIHNlcnZpY2UsIGNvbmZpZykKLSBbIF0gYGRvY2tlciByZXN0YXJ0YCB2cyBgZG9ja2VyIGNvbXBvc2UgZG93biAmJiB1cGAgSGlud2VpcyAoLmVudi3DhG5kZXJ1bmdlbikKLSBbIF0gU3RvcmFnZS9Db2xsZWN0b3IgVmVyemVpY2huaXMtUmVjaHRlIChgMTAwMDoxMDAwYCkKCioqRGF0ZWk6KiogYERFUExPWU1FTlRfR1VJREUubWRgIChiZWlkZSBSZXBvcykKCiMjIyBQMS0yOiBkb2NzL2FyY2hpdGVjdHVyZS5tZCBha3R1YWxpc2llcmVuCgotIFsgXSBGaXJld29ya3MgQUkgUHJvdmlkZXItQXJjaGl0ZWt0dXIgKHp3ZWkgUGZhZGU6IENoYXQtTExNICsgQWdlbnQtTExNKQotIFsgXSBTSU5hdG9yIFBvb2wgUm91dGVyIEZsb3cgKEJyb3dzZXIg4oaSIENsb3VkZmxhcmUg4oaSIG5naW54IOKGkiBFeHByZXNzIOKGkiBGaXJld29ya3MpCi0gWyBdIE5ldWUgVUktS29tcG9uZW50ZW4tSGllcmFyY2hpZSAoRW1wdHlTdGF0ZSwgR3JvdW5kaW5nQmFkZ2UsIE5vdGVwYWRTaWRlYmFyKQotIFsgXSBgd29ya3NwYWNlX25vdGVzYCBUYWJlbGxlIChyYXcgU1FMLCBuaWNodCBQcmlzbWEgbWlncmF0aW9uKQotIFsgXSBXZWJTb2NrZXQtUHJveHktS2V0dGUgKG5naW54IOKGkiBDbG91ZGZsYXJlKQoKKipEYXRlaToqKiBgZG9jcy9hcmNoaXRlY3R1cmUubWRgIChiZWlkZSBSZXBvcykKCiMjIyBQMS0zOiBTRUNVUklUWS5tZCBSZXZpZXcKCi0gWyBdIEZpcmV3b3JrcyBBSSBBUEktS2V5LUhhbmRsaW5nIChgRklSRVdPUktTX0FJX0xMTV9BUElfS0VZYCkKLSBbIF0gU0lOYXRvciBQb29sIFJvdXRlciBBdXRoCi0gWyBdIGAuZW52YC1WYXJpYWJsZW4gYWt0dWFsaXNpZXJlbiAoYWxsZSBuZXVlbiBWYXJzKQotIFsgXSBBdXRoLVRva2VuIChgQVVUSF9UT0tFTmApIERva3VtZW50YXRpb24KLSBbIF0gUG9ydC1CaW5kaW5nIChgMTI3LjAuMC4xYCkgU2ljaGVyaGVpdHMtSW1wYWN0CgoqKkRhdGVpOioqIGBTRUNVUklUWS5tZGAgKGJlaWRlIFJlcG9zKQoKIyMjIFAxLTQ6IENPTlRSSUJVVElORy5tZCBha3R1YWxpc2llcmVuCgotIFsgXSBgeWFybmAgbmllIGBucG1gIChiZXJlaXRzIGluIEFHRU5UUy5tZCwgYWJlciBDT05UUklCVVRJTkcgZXJ3w6RobnQgZXMgbmljaHQpCi0gWyBdIE9yYlN0YWNrIHN0YXR0IERvY2tlciBEZXNrdG9wIGF1ZiBtYWNPUwotIFsgXSBCcmFuZC1SZWdlbG4gKGBzY3JpcHRzL2NoZWNrLWJyYW5kaW5nLnNoYCkgZXJ3w6RobmVuCi0gWyBdIENvRG9jcy1TdGFuZGFyZCBlcnfDpGhuZW4gKGAuZG9jLm1kYCBjb21wYW5pb24gZmlsZXMpCi0gWyBdIFZlcmlmeS1CZWZvcmUtWW91LUNsYWltIFJlZ2VsCi0gWyBdIENvbW1pdHMgdmlhIGBkb2NrZXIgY3BgIGbDvHIgQ29udGFpbmVyLVBhdGNoZXMgZG9rdW1lbnRpZXJlbgoKKipEYXRlaToqKiBgQ09OVFJJQlVUSU5HLm1kYCAoYmVpZGUgUmVwb3MpCgojIyMgUDEtNTogU2VydmVyLVBhdGNoZXMgaW4gR2l0IHJlcG9zCgotIFsgXSBgYWdlbnRXZWJzb2NrZXQuanNgIOKAlCBDb250YWluZXItVmVyc2lvbiBtaXQgR2l0LVZlcnNpb24gdmVyZ2xlaWNoZW4sIGdnZi4gY29tbWl0dGVuCi0gWyBdIEF1ZGl0OiBhbGxlIERhdGVpZW4gaW4gQ29udGFpbmVybiBnZWdlbiBHaXQtVmVyc2lvbmVuIGRpZmZlbgotIFsgXSBCZWkgQWJ3ZWljaHVuZ2VuOiBlbnR3ZWRlciBDb250YWluZXItVmVyc2lvbiBpbiBHaXQgY29tbWl0dGVuIG9kZXIgQ29udGFpbmVyIGF1ZiBHaXQtVmVyc2lvbiBicmluZ2VuCgoqKk1ldGhvZGU6KiogYGRvY2tlciBleGVjIC4uLiBtZDVzdW1gIGbDvHIgYWxsZSBgLmpzYCBEYXRlaWVuIOKGkiBtaXQgbG9rYWxlbiBtZDUgdmVyZ2xlaWNoZW4KCi0tLQoKIyMgUDIg4oCUIE1FRElVTSAoVUkgUG9saXNoICsgVGVjaG5pY2FsIERlYnQpCgo+IEF1ZndhbmQ6IH42aCDCtyBTdGF0dXM6ICoqZ2VwbGFudCoqCgojIyMgUDItMTogQGFnZW50IFdlYlNvY2tldCB2aWEgQ2xvdWRmbGFyZSBUdW5uZWwKCi0gKipQcm9ibGVtOioqIENsb3VkZmxhcmUgc3RyaXBwdCBgQ29ubmVjdGlvbjogVXBncmFkZWAgLyBgVXBncmFkZTogd2Vic29ja2V0YCBIZWFkZXJzIOKGkiBTdHJlYW0gY2FuY2VsCi0gKipBa3R1ZWxsZXIgU3RhbmQ6KiogbmdpbnggV1MgcHJveHkgaGluenVnZWbDvGd0LCBhYmVyIENsb3VkZmxhcmUgRWRnZSBraWxsdCBDb25uZWN0aW9uCi0gWyBdIFNTRS1GYWxsYmFjayBpbXBsZW1lbnRpZXJlbiAoU2VydmVyLVNlbnQgRXZlbnRzIHN0YXR0IFdlYlNvY2tldCkKLSBbIF0gT0RFUjogQ2xvdWRmbGFyZSBEYXNoYm9hcmQgV2ViU29ja2V0LWtvbmZpZ3VyaWVyZW4gKFpvbmUg4oaSIE5ldHdvcmsg4oaSIFdlYlNvY2tldHMpCi0gWyBdIFRlc3Q6IGBAYWdlbnRgIHZpYSBgaHR0cHM6Ly9zaW5jaGF0LmRlbHFoaS5jb21gIGF1c2bDvGhyZW4KCioqRGF0ZWllbjoqKiBgc2VydmVyL2VuZHBvaW50cy9hZ2VudFdlYnNvY2tldC5qc2AsIG5naW54IGNvbmZpZywgQ2xvdWRmbGFyZSBEYXNoYm9hcmQKCiMjIyBQMi0yOiBQcmlzbWEgQ0xJIFZlcnNpb24tTWlzbWF0Y2gKCi0gKipQcm9ibGVtOioqIENvbnRhaW5lciBoYXQgUHJpc21hIDcuOC4wLCBQcm9qZWt0IGhhdCA1LjMuMSDigJQgYHByaXNtYSBtaWdyYXRlYCBmZWhsc2NobMOkZ3QgaW4gQ29udGFpbmVyCi0gKipXb3JrYXJvdW5kOioqIGB3b3Jrc3BhY2Vfbm90ZXNgIHZpYSByYXcgU1FMIGVyc3RlbGx0Ci0gWyBdIFByaXNtYS1WZXJzaW9uIGFuZ2xlaWNoZW4gKGVudHdlZGVyIFByb2pla3QgdXBncmFkZW4gb2RlciBDb250YWluZXIgZG93bmdyYWRlbikKLSBbIF0gYHdvcmtzcGFjZV9ub3Rlc2AgYWxzIGVjaHRlIFByaXNtYSBNaWdyYXRpb24gZGVmaW5pZXJlbgotIFsgXSBgcHJpc21hIGRiIHB1c2hgIGluIENvbnRhaW5lciB0ZXN0ZW4KCioqRGF0ZWllbjoqKiBgc2VydmVyL3ByaXNtYS9zY2hlbWEucHJpc21hYCwgYHNlcnZlci9wYWNrYWdlLmpzb25gCgojIyMgUDItMzogRGVwZW5kYWJvdC1BbGVydHMKCi0gNSBWdWxuZXJhYmlsaXRpZXMgKDIgaGlnaCwgMiBtb2RlcmF0ZSwgMSBsb3cpIGF1ZiBgRmFtaWx5LVRlYW0tUHJvamVjdHMvT3BlbkFmRC1DaGF0YAotIGBkZXBlbmRhYm90L25wbV9hbmRfeWFybi9zZXJ2ZXIvY29oZXJlLWFpLTguMC4wYAotIGBkZXBlbmRhYm90L25wbV9hbmRfeWFybi9zZXJ2ZXIvZml4LXBhdGgtNS4wLjBgCi0gWyBdIGB5YXJuIGF1ZGl0YCBpbiBPcGVuQWZELUNoYXQgYXVzZsO8aHJlbgotIFsgXSBCZXRyb2ZmZW5lIFBhY2thZ2VzIHVwZ3JhZGVuCi0gWyBdIFRlc3RzIGxhdWZlbiBsYXNzZW4KLSBbIF0gSW4gT3BlblNJTi1DaGF0IHN5bmNocm9uaXNpZXJlbgoKIyMjIFAyLTQ6IFNldHRpbmdzLVNlaXRlbiB2aWEgUmVhY3QgUm91dGVyCgotICoqUHJvYmxlbToqKiBEaXJla3RlIFVSTC1OYXZpZ2F0aW9uIHp1IGAvd29ya3NwYWNlL215LXdvcmtzcGFjZS9zZXR0aW5nc2AgcmVuZGVydCBsZWVyZSBTZWl0ZQotICoqVXJzYWNoZToqKiBSZWFjdCBSb3V0ZXItUm91dGUtS29uZmlndXJhdGlvbiBvZGVyIExhenktTG9hZGluZy1Qcm9ibGVtCi0gWyBdIFJvdXRlci1Lb25maWd1cmF0aW9uIHByw7xmZW4gKGBmcm9udGVuZC9zcmMvQXBwLnRzeGAgb2RlciBgcm91dGVzLnRzeGApCi0gWyBdIFJlZGlyZWN0LUxvZ2lrIG9kZXIga29ycmVrdGVzIFJlbmRlcmluZyBiZWkgZGlyZWt0ZXIgTmF2aWdhdGlvbgotIFsgXSBUZXN0OiBgL3dvcmtzcGFjZS9teS13b3Jrc3BhY2Uvc2V0dGluZ3NgIGRpcmVrdCBhdWZydWZlbgoKIyMjIFAyLTU6IFRocmVhZC1MaXN0ZSDigJQgVmlydHVlbGxlIExpc3RlIC8gUGFnaW5hdGlvbgoKLSAqKlByb2JsZW06KiogNzUgVGhyZWFkcyB3ZXJkZW4gYWxsZSBpbSBET00gZ2VyZW5kZXJ0IOKGkiBQZXJmb3JtYW5jZQotIFsgXSBgcmVhY3Qtd2luZG93YCBvZGVyIGByZWFjdC12aXJ0dW9zb2AgZsO8ciB2aXJ0dWVsbGUgTGlzdGUKLSBbIF0gVGhyZWFkLVN1Y2hlL0ZpbHRlciBpbXBsZW1lbnRpZXJlbgotIFsgXSBUaHJlYWQtT3JkbmVyLUtvbGxhcHMgKGV4cGFuZC9jb2xsYXBzZSkKCioqRGF0ZWk6KiogYGZyb250ZW5kL3NyYy9jb21wb25lbnRzL1NpZGViYXIvQWN0aXZlV29ya3NwYWNlcy9UaHJlYWRDb250YWluZXIvaW5kZXgudHN4YAoKIyMjIFAyLTY6IFNlbmQtQnV0dG9uIFBvbGlzaAoKLSAqKkFrdHVlbGw6KiogYHNsYXRlLTgwMGAgbWl0IFRleHQsIGBzbGF0ZS00MDBgIG9obmUgKExpZ2h0IE1vZGUpCi0gWyBdIFByb21pbmVudGVyIGdlc3RhbHRlbiAoQ2hhdEdQVDogYmxhY2svZ3JheS0yMDApCi0gWyBdIEhvdmVyLVN0YXRlIG9wdGltaWVyZW4KCioqRGF0ZWk6KiogYGZyb250ZW5kL3NyYy9jb21wb25lbnRzL1dvcmtzcGFjZUNoYXQvQ2hhdENvbnRhaW5lci9Qcm9tcHRJbnB1dC9TZW5kUHJvbXB0QnV0dG9uLnRzeGAKCiMjIyBQMi03OiBAYWdlbnQgQnV0dG9uIGluIEVtcHR5IFN0YXRlCgotICoqUHJvYmxlbToqKiBBZ2VudC1CdXR0b24gbmljaHQgc2ljaHRiYXIgaW0gRW1wdHkgU3RhdGUgKG51ciBpbiBha3RpdmVtIENoYXQpCi0gWyBdIEFnZW50U2Vzc2lvbkJ1dHRvbiBpbiBFbXB0eVN0YXRlIFByb21wdElucHV0IGVpbmJpbmRlbgotIFsgXSBTaWNodGJhcmtlaXQgcHLDvGZlbgoKLS0tCgojIyBQMyDigJQgU1DDhFRFUiAoU3RydWt0dXJlbGxlIFNjaHVsZGVuICsgRmVhdHVyZXMpCgo+IEF1ZndhbmQ6IH4yMGgrIMK3IFN0YXR1czogKipwYXJrZWQqKgoKIyMjIFAzLTE6IFN0cnVrdHVyZWxsZSBTY2h1bGRlbiAoYXVzIEZVVFVSRS1QTEFOLm1kKQoKLSBbIF0gMzUgYGZpbmRNYW55YC1BdWZydWZlIG9obmUgTGltaXQg4oaSIGB0YWtlOiAxMDBgIGhpbnp1ZsO8Z2VuICh+NGgpCi0gWyBdIGB3b3Jrc3BhY2VFbmRwb2ludHMoKWAgTW9uc3Rlci1GdW5rdGlvbiAoMS41MjAgWmVpbGVuKSBhdWZ0ZWlsZW4KLSAqKlN0YXR1czoqKiBQQVJLRUQg4oCUIG51ciBhbmdlaGVuIHdlbm4gREIgd8OkY2hzdCBvZGVyIFNlcnZlciBjcmFzaHQKCiMjIyBQMy0yOiBDbG91ZGZsYXJlIEFQSSBUb2tlbgoKLSBbIF0gVG9rZW4gbWl0IGB6b25lOmVkaXRgIHNjb3BlIGbDvHIgYXV0b21hdGlzaWVydGUgSFNUUy9IVFRQUy1Lb25maWd1cmF0aW9uCi0gWyBdIEFrdHVlbGwgbWFudWVsbCBrb25maWd1cmllcnQKCiMjIyBQMy0zOiBEQi1CYWNrdXAtVmVyaWZpa2F0aW9uCgotIFsgXSBDcm9uIGRhaWx5IDAzOjAwIOKAlCBwcsO8ZmVuIG9iIEJhY2t1cHMgZnVua3Rpb25pZXJlbgotIFsgXSBUZXN0LVJlc3RvcmUgZHVyY2hmw7xocmVuCi0gWyBdIEJhY2t1cC1SZXRlbnRpb24tUG9saWN5IGRlZmluaWVyZW4KCiMjIyBQMy00OiBVcHRpbWUgS3VtYSAmIFdhdGNoZG9nLVZlcmlmaWthdGlvbgoKLSBbIF0gMiBNb25pdG9yZSBhdWYgYHN0YXR1cy5kZWxxaGkuY29tYCDigJQgQWxlcnRpbmctS29uZmlndXJhdGlvbiBwcsO8ZmVuCi0gWyBdIFdhdGNoZG9nLVRpbWVyIHZlcmlmaXppZXJlbjoKICAtIGBjbG91ZGZsYXJlZC13YXRjaGRvZ2AgKDYwcykKICAtIGBzaW5jaGF0LWhlYWx0aGNoZWNrYCAoMTIwcykKICAtIGBvcGVuYWZkLWhlYWx0aGNoZWNrYCAoMTIwcykKICAtIGBzaW5jaGF0LWV4dGVybmFsLW1vbml0b3JgICgzMDBzKQoKIyMjIFAzLTU6IEF1ZGlvIE92ZXJ2aWV3IChNdWx0aS1TcGVha2VyIFRUUykKCi0gWyBdIERva3VtZW50ZSBhbHMgUG9kY2FzdC1hcnRpZ2UgQXVkaW8tWnVzYW1tZW5mYXNzdW5nCi0gWyBdIFRUUy1QaXBlbGluZSBtaXQgbWVocmVyZW4gU3RpbW1lbgotIFsgXSBHb29nbGUgR2VtaW5pIFRUUyBvZGVyIE9wZW5BSSBUVFMgQVBJCgojIyMgUDMtNjogTm90aXpibG9jayBTaGFyaW5nIHp3aXNjaGVuIFdvcmtzcGFjZXMKCi0gWyBdIGB3b3Jrc3BhY2Vfbm90ZXNgIFRhYmVsbGUgZXhpc3RpZXJ0LCBTaGFyaW5nLUxvZ2lrIGZlaGx0Ci0gWyBdIFdvcmtzcGFjZS3DvGJlcmdyZWlmZW5kZSBOb3Rpei1GcmVpZ2FiZQoKIyMjIFAzLTc6IFRocmVhZC1Wb2xsdGV4dC1TdWNoZQoKLSBbIF0gQmVpIDc1KyBUaHJlYWRzIGJyYXVjaGJhcgotIFsgXSBWb2xsdGV4dC1TdWNoZSDDvGJlciBUaHJlYWQtTmFtZW4gdW5kIENoYXQtSW5oYWx0ZQotIFsgXSBTZWFyY2gtQm94IGluIFNpZGViYXIgKGV4aXN0aWVydCBiZXJlaXRzIGFscyBVSSwgbXVzcyBmdW5rdGlvbmFsIHdlcmRlbikKCiMjIyBQMy04OiBUaHJlYWQtT3JkbmVyLUtvbGxhcHMKCi0gWyBdIE9yZG5lciBrw7ZubmVuIGVyc3RlbGx0IHdlcmRlbiwgYWJlciBrZWluZSBLb2xsYXBzLUZ1bmt0aW9uCi0gWyBdIEV4cGFuZC9Db2xsYXBzZS1VSSBtaXQgUGVyc2lzdGVuegoKLS0tCgojIyBUcmFja2luZwoKfCBQcmlvcml0w6R0IHwgQXVmZ2FiZW4gfCBBdWZ3YW5kIHwgU3RhdHVzIHwKfC0tLS0tLS0tLS0tfC0tLS0tLS0tLXwtLS0tLS0tLS18LS0tLS0tLS18CnwgKipQMCoqIHwgNCBBdWZnYWJlbiAoU2NyZWVuc2hvdHMsIFJFQURNRSwgVXNlciBHdWlkZSwgQ2hhbmdlbG9nKSB8IH40aCB8IEJlcmVpdCB8CnwgKipQMSoqIHwgNSBBdWZnYWJlbiAoRGVwbG95bWVudCwgQXJjaGl0ZWN0dXJlLCBTZWN1cml0eSwgQ29udHJpYnV0aW5nLCBTZXJ2ZXItUGF0Y2hlcykgfCB+M2ggfCBHZXBsYW50IHwKfCAqKlAyKiogfCA3IEF1ZmdhYmVuIChXZWJTb2NrZXQsIFByaXNtYSwgRGVwZW5kYWJvdCwgUm91dGVyLCBUaHJlYWRzLCBTZW5kLUJ1dHRvbiwgQWdlbnQpIHwgfjZoIHwgR2VwbGFudCB8CnwgKipQMyoqIHwgOCBBdWZnYWJlbiAoU2NodWxkZW4sIEluZnJhLCBGZWF0dXJlcykgfCB+MjBoKyB8IFBhcmtlZCB8CgoqKkdpdEh1YiBJc3N1ZXM6KiogV2VyZGVuIGbDvHIgYmVpZGUgUmVwb3MgZXJzdGVsbHQg4oCUIHNpZWhlIGBkb2NzL2lzc3Vlcy9gIFZlcnplaWNobmlzLgo=
+# OpenSIN Chat — Master-Plan: Alle offenen Aufgaben
+
+> **Stand:** 2026-06-29
+> **Status:** Aktiv — alle Aufgaben sind priorisiert und trackable
+> **Repos:** [OpenSIN-AI/OpenSIN-Chat](https://github.com/OpenSIN-AI/OpenSIN-Chat) 
+> **Live:** [sinchat.delqhi.com](https://sinchat.delqhi.com) 
+
+---
+
+## P0 — JETZT (Dokumentation & Screenshots)
+
+> Aufwand: ~4h · Status: **bereit zur Ausführung**
+
+### P0-1: Screenshots produzieren (8-10 Stück)
+
+| # | Screenshot | Modus | Zweck | Dateiname |
+|---|-----------|-------|-------|-----------|
+| 1 | Login-Page | Light | README, User Guide §1 | `screenshots/login-light.png` |
+| 2 | Empty State mit 4 Capability-Karten | Light | README Hero, User Guide §1 | `screenshots/empty-state-light.png` |
+| 3 | Chat mit Code-Block + Inline-Code | Light | README Features, User Guide §2 | `screenshots/chat-codeblock-light.png` |
+| 4 | Chat mit Code-Block | Dark | README Dark Mode | `screenshots/chat-codeblock-dark.png` |
+| 5 | Dokumenten-Upload / Workspace | Light | User Guide §2 | `screenshots/documents-light.png` |
+| 6 | Sidebar mit Thread-Liste | Light | User Guide §1 | `screenshots/sidebar-light.png` |
+| 7 | Mobile (375px) Empty State | Light | README Mobile | `screenshots/mobile-empty-state.png` |
+| 8 | Settings-Seite | Light | User Guide §8 | `screenshots/settings-light.png` |
+| 9 | Grounding Badge / Quellen | Dark | User Guide §2 | `screenshots/grounding-dark.png` |
+| 10 | Notepad Sidebar | Light | User Guide §5 | `screenshots/notepad-light.png` |
+
+**Ablageort:** `docs/screenshots/` in beiden Repos
+**Methode:** Playwright headless screenshots von sinchat.delqhi.com
+
+### P0-2: README.md aktualisieren (beide Repos)
+
+- [ ] 
+- [ ] 
+- [ ] Features-Sektion: Fireworks AI als primärer Provider
+- [ ] Features-Sektion: Neue UI-Features (Code-Blocks, Notepad, Grounding Badge, Empty State Cards, Dark/Light)
+- [ ] Quick Start: Docker-Port aktualisieren
+- [ ] Screenshots einbinden (4-6 im README)
+- [ ] Credits: Standard OpenSIN Credits-Text
+
+**Dateien:**
+- `OpenSIN-Chat/README.md`
+- `OpenSIN-Chat/README.md`
+
+### P0-3: docs/user-guide.md überarbeiten
+
+- [ ] Stand-Datum aktualisieren (2026-06-07 → 2026-06-29)
+- [ ] Neue UI-Features dokumentieren:
+  - Empty State mit 4 Capability-Karten (Quellen, Notizen, Datenbank, KI mit Quellen)
+  - Code-Block mit Kopieren-Button und Language-Label
+  - Inline-Code-Styling (Hintergrund, Padding)
+  - Notizblock (Notepad Sidebar) — erstellen, bearbeiten, pinnen, löschen
+  - Grounding Badge (Sparkle-Icon bei RAG-Antworten)
+  - Auto-Summary Cards (Dokument-Snippet-Vorschau)
+  - User Message Bubble (rechts, abgerundet, `bg-zinc-700` Dark / `bg-slate-100` Light)
+  - Dark/Light Mode Toggle (Design-Button in Sidebar)
+  - Mobile Layout (375px — Overlay-Panel, volle Breite)
+  - Loading-Animation (3 Pulse-Dots)
+  - Action-Buttons (hover-only: TTS, Kopieren, Bearbeiten, Gute Antwort, Mehr)
+  - Metrics (hover-only, default hidden)
+  - Centered Chat Layout (`max-w-800px`)
+  - Scroll-to-Bottom Button
+  - Sticky "Neuer Chat" / "Neuer Ordner" am Sidebar-Boden
+- [ ] Screenshots einbinden (8-10 im User Guide)
+- [ ] Tastatur-Shortcuts verifizieren (`Cmd+K`, `Cmd+N`, `Cmd+U`, `Cmd+/`, `Esc`)
+- [ ] Falsche GitHub-Links korrigieren (`Family-Team-Projects/OpenSIN-Chat` → `OpenSIN-AI/OpenSIN-Chat`)
+- [ ] FAQ: Kosten-Sektion aktualisieren (Fireworks AI statt Ollama als primär)
+- [ ] FAQ: Live-Demo-URL aktualisieren
+- [ ] Version: `v0.1.0` → aktuelle Version
+
+**Datei:** `docs/user-guide.md` (beide Repos)
+
+### P0-4: CHANGELOG.md aktualisieren
+
+- [ ] Code-Block-Hintergrund, Border, Radius, Copy-Button
+- [ ] Inline-Code-Styling (bg, padding, radius)
+- [ ] Blockquote-Styling
+- [ ] Agent fireworksai.js Provider-Patch (env-var base URL + User-Agent)
+- [ ] EmptyState: 4 Karten, zentriert, `max-w-800px`
+- [ ] User Bubble: `bg-zinc-700`/`bg-slate-100`, `rounded-br-sm`
+- [ ] PromptInput: `rounded-2xl`, `border-white/10`, `shadow-sm`
+- [ ] ChatHistory: `pt-2`, scroll-to-bottom `w-8 h-8`
+- [ ] HistoricalMessage: `text-zinc-50` user text, gradient fix
+- [ ] Actions: hover-only `md:group-hover:opacity-100`
+- [ ] RenderMetrics: default hidden
+- [ ] ThreadContainer: sticky bottom-0
+- [ ] GroundingBadge: subtle Sparkle styling
+- [ ] EmptyState in allen neuen Chats (nicht nur workspace home)
+
+**Datei:** `CHANGELOG.md` (beide Repos)
+
+---
+
+## P1 — BALD (Dokumentation vertiefen + Technical Debt)
+
+> Aufwand: ~3h · Status: **geplant**
+
+### P1-1: DEPLOYMENT_GUIDE.md aktualisieren
+
+- [ ] Port-Änderungen dokumentieren (`38471`/`38472` intern, `38481`/`38482` nginx)
+- [ ] Fireworks AI als primärer Provider dokumentieren
+- [ ] SINator Pool Router Base URL (`FIREWORKS_AI_LLM_BASE_PATH`)
+- [ ] Custom User-Agent Requirement (`OpenSIN-Chat/1.0`)
+- [ ] Cloudflare Tunnel Setup (systemd service, config)
+- [ ] `docker restart` vs `docker compose down && up` Hinweis (.env-Änderungen)
+- [ ] Storage/Collector Verzeichnis-Rechte (`1000:1000`)
+
+**Datei:** `DEPLOYMENT_GUIDE.md` (beide Repos)
+
+### P1-2: docs/architecture.md aktualisieren
+
+- [ ] Fireworks AI Provider-Architektur (zwei Pfade: Chat-LLM + Agent-LLM)
+- [ ] SINator Pool Router Flow (Browser → Cloudflare → nginx → Express → Fireworks)
+- [ ] Neue UI-Komponenten-Hierarchie (EmptyState, GroundingBadge, NotepadSidebar)
+- [ ] `workspace_notes` Tabelle (raw SQL, nicht Prisma migration)
+- [ ] WebSocket-Proxy-Kette (nginx → Cloudflare)
+
+**Datei:** `docs/architecture.md` (beide Repos)
+
+### P1-3: SECURITY.md Review
+
+- [ ] Fireworks AI API-Key-Handling (`FIREWORKS_AI_LLM_API_KEY`)
+- [ ] SINator Pool Router Auth
+- [ ] `.env`-Variablen aktualisieren (alle neuen Vars)
+- [ ] Auth-Token (`AUTH_TOKEN`) Dokumentation
+- [ ] Port-Binding (`127.0.0.1`) Sicherheits-Impact
+
+**Datei:** `SECURITY.md` (beide Repos)
+
+### P1-4: CONTRIBUTING.md aktualisieren
+
+- [ ] `yarn` nie `npm` (bereits in AGENTS.md, aber CONTRIBUTING erwähnt es nicht)
+- [ ] OrbStack statt Docker Desktop auf macOS
+- [ ] Brand-Regeln (`scripts/check-branding.sh`) erwähnen
+- [ ] CoDocs-Standard erwähnen (`.doc.md` companion files)
+- [ ] Verify-Before-You-Claim Regel
+- [ ] Commits via `docker cp` für Container-Patches dokumentieren
+
+**Datei:** `CONTRIBUTING.md` (beide Repos)
+
+### P1-5: Server-Patches in Git repos
+
+- [ ] `agentWebsocket.js` — Container-Version mit Git-Version vergleichen, ggf. committen
+- [ ] Audit: alle Dateien in Containern gegen Git-Versionen diffen
+- [ ] Bei Abweichungen: entweder Container-Version in Git committen oder Container auf Git-Version bringen
+
+**Methode:** `docker exec ... md5sum` für alle `.js` Dateien → mit lokalen md5 vergleichen
+
+---
+
+## P2 — MEDIUM (UI Polish + Technical Debt)
+
+> Aufwand: ~6h · Status: **geplant**
+
+### P2-1: @agent WebSocket via Cloudflare Tunnel
+
+- **Problem:** Cloudflare strippt `Connection: Upgrade` / `Upgrade: websocket` Headers → Stream cancel
+- **Aktueller Stand:** nginx WS proxy hinzugefügt, aber Cloudflare Edge killt Connection
+- [ ] SSE-Fallback implementieren (Server-Sent Events statt WebSocket)
+- [ ] ODER: Cloudflare Dashboard WebSocket-konfigurieren (Zone → Network → WebSockets)
+- [ ] Test: `@agent` via `https://sinchat.delqhi.com` ausführen
+
+**Dateien:** `server/endpoints/agentWebsocket.js`, nginx config, Cloudflare Dashboard
+
+### P2-2: Prisma CLI Version-Mismatch
+
+- **Problem:** Container hat Prisma 7.8.0, Projekt hat 5.3.1 — `prisma migrate` fehlschlägt in Container
+- **Workaround:** `workspace_notes` via raw SQL erstellt
+- [ ] Prisma-Version angleichen (entweder Projekt upgraden oder Container downgraden)
+- [ ] `workspace_notes` als echte Prisma Migration definieren
+- [ ] `prisma db push` in Container testen
+
+**Dateien:** `server/prisma/schema.prisma`, `server/package.json`
+
+### P2-3: Dependabot-Alerts
+
+- 5 Vulnerabilities (2 high, 2 moderate, 1 low) auf `Family-Team-Projects/OpenAfD-Chat`
+- `dependabot/npm_and_yarn/server/cohere-ai-8.0.0`
+- `dependabot/npm_and_yarn/server/fix-path-5.0.0`
+- [ ] `yarn audit` in OpenAfD-Chat ausführen
+- [ ] Betroffene Packages upgraden
+- [ ] Tests laufen lassen
+- [ ] In OpenSIN-Chat synchronisieren
+
+### P2-4: Settings-Seiten via React Router
+
+- **Problem:** Direkte URL-Navigation zu `/workspace/my-workspace/settings` rendert leere Seite
+- **Ursache:** React Router-Route-Konfiguration oder Lazy-Loading-Problem
+- [ ] Router-Konfiguration prüfen (`frontend/src/App.tsx` oder `routes.tsx`)
+- [ ] Redirect-Logik oder korrektes Rendering bei direkter Navigation
+- [ ] Test: `/workspace/my-workspace/settings` direkt aufrufen
+
+### P2-5: Thread-Liste — Virtuelle Liste / Pagination
+
+- **Problem:** 75 Threads werden alle im DOM gerendert → Performance
+- [ ] `react-window` oder `react-virtuoso` für virtuelle Liste
+- [ ] Thread-Suche/Filter implementieren
+- [ ] Thread-Ordner-Kollaps (expand/collapse)
+
+**Datei:** `frontend/src/components/Sidebar/ActiveWorkspaces/ThreadContainer/index.tsx`
+
+### P2-6: Send-Button Polish
+
+- **Aktuell:** `slate-800` mit Text, `slate-400` ohne (Light Mode)
+- [ ] Prominenter gestalten (ChatGPT: black/gray-200)
+- [ ] Hover-State optimieren
+
+**Datei:** `frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SendPromptButton.tsx`
+
+### P2-7: @agent Button in Empty State
+
+- **Problem:** Agent-Button nicht sichtbar im Empty State (nur in aktivem Chat)
+- [ ] AgentSessionButton in EmptyState PromptInput einbinden
+- [ ] Sichtbarkeit prüfen
+
+---
+
+## P3 — SPÄTER (Strukturelle Schulden + Features)
+
+> Aufwand: ~20h+ · Status: **parked**
+
+### P3-1: Strukturelle Schulden (aus FUTURE-PLAN.md)
+
+- [ ] 35 `findMany`-Aufrufe ohne Limit → `take: 100` hinzufügen (~4h)
+- [ ] `workspaceEndpoints()` Monster-Funktion (1.520 Zeilen) aufteilen
+- **Status:** PARKED — nur angehen wenn DB wächst oder Server crasht
+
+### P3-2: Cloudflare API Token
+
+- [ ] Token mit `zone:edit` scope für automatisierte HSTS/HTTPS-Konfiguration
+- [ ] Aktuell manuell konfiguriert
+
+### P3-3: DB-Backup-Verifikation
+
+- [ ] Cron daily 03:00 — prüfen ob Backups funktionieren
+- [ ] Test-Restore durchführen
+- [ ] Backup-Retention-Policy definieren
+
+### P3-4: Uptime Kuma & Watchdog-Verifikation
+
+- [ ] 2 Monitore auf `status.delqhi.com` — Alerting-Konfiguration prüfen
+- [ ] Watchdog-Timer verifizieren:
+  - `cloudflared-watchdog` (60s)
+  - `sinchat-healthcheck` (120s)
+  - `openafd-healthcheck` (120s)
+  - `sinchat-external-monitor` (300s)
+
+### P3-5: Audio Overview (Multi-Speaker TTS)
+
+- [ ] Dokumente als Podcast-artige Audio-Zusammenfassung
+- [ ] TTS-Pipeline mit mehreren Stimmen
+- [ ] Google Gemini TTS oder OpenAI TTS API
+
+### P3-6: Notizblock Sharing zwischen Workspaces
+
+- [ ] `workspace_notes` Tabelle existiert, Sharing-Logik fehlt
+- [ ] Workspace-übergreifende Notiz-Freigabe
+
+### P3-7: Thread-Volltext-Suche
+
+- [ ] Bei 75+ Threads brauchbar
+- [ ] Volltext-Suche über Thread-Namen und Chat-Inhalte
+- [ ] Search-Box in Sidebar (existiert bereits als UI, muss funktional werden)
+
+### P3-8: Thread-Ordner-Kollaps
+
+- [ ] Ordner können erstellt werden, aber keine Kollaps-Funktion
+- [ ] Expand/Collapse-UI mit Persistenz
+
+---
+
+## Tracking
+
+| Priorität | Aufgaben | Aufwand | Status |
+|-----------|---------|---------|--------|
+| **P0** | 4 Aufgaben (Screenshots, README, User Guide, Changelog) | ~4h | Bereit |
+| **P1** | 5 Aufgaben (Deployment, Architecture, Security, Contributing, Server-Patches) | ~3h | Geplant |
+| **P2** | 7 Aufgaben (WebSocket, Prisma, Dependabot, Router, Threads, Send-Button, Agent) | ~6h | Geplant |
+| **P3** | 8 Aufgaben (Schulden, Infra, Features) | ~20h+ | Parked |
+
+**GitHub Issues:** Werden für beide Repos erstellt — siehe `docs/issues/` Verzeichnis.

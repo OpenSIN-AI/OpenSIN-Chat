@@ -1,1 +1,105 @@
-IyEvYmluL2Jhc2gKIyBTUERYLUxpY2Vuc2UtSWRlbnRpZmllcjogTUlUCgojIFNvdXJjZSAvYXBwLy5lbnYgaWYgaXQgZXhpc3RzIChwZXJzaXN0ZW50IHNlY3JldHMgbW91bnRlZCBhcyByZWFkLW9ubHkgdm9sdW1lKS4KIyBUaGlzIGVuc3VyZXMgc2VjcmV0cyBzdXJ2aXZlIGNvbnRhaW5lciByZWNyZWF0aW9uIGV2ZW4gd2l0aG91dCAtLWVudi1maWxlLgojIE9ubHkgc2V0cyB2YXJpYWJsZXMgdGhhdCBhcmUgbm90IGFscmVhZHkgaW4gdGhlIGVudmlyb25tZW50IChkb2NrZXIgcnVuIC1lIHdpbnMpLgppZiBbIC1mIC9hcHAvLmVudiBdOyB0aGVuCiAgd2hpbGUgSUZTPSc9JyByZWFkIC1yIGtleSByYXdfdmFsdWU7IGRvCiAgICAjIFNraXAgY29tbWVudHMgYW5kIGVtcHR5IGxpbmVzCiAgICBbWyAiJGtleSIgPX4gXltbOnNwYWNlOl1dKiMgXV0gJiYgY29udGludWUKICAgIFtbIC16ICIka2V5IiBdXSAmJiBjb250aW51ZQogICAgIyBUcmltIGtleSB3aGl0ZXNwYWNlCiAgICBrZXk9JChlY2hvICIka2V5IiB8IHhhcmdzKQogICAgIyBUcmltIHZhbHVlOiBzdHJpcCBDUkxGLCB0aGVuIGxlYWRpbmcvdHJhaWxpbmcgd2hpdGVzcGFjZQogICAgdmFsdWU9JChwcmludGYgJyVzJyAiJHJhd192YWx1ZSIgfCBzZWQgJ3MvXHIkLy8nKQogICAgdmFsdWU9IiR7dmFsdWUjIiR7dmFsdWUlJVshWzpzcGFjZTpdXSp9In0iCiAgICB2YWx1ZT0iJHt2YWx1ZSUiJHt2YWx1ZSMjKlshWzpzcGFjZTpdXX0ifSIKICAgICMgU3RyaXAgbWF0Y2hpbmcgc3Vycm91bmRpbmcgcXVvdGVzIChzaW5nbGUgb3IgZG91YmxlKQogICAgaWYgW1sgIiR2YWx1ZSIgPX4gXlwiKC4qKVwiJCBdXSB8fCBbWyAiJHZhbHVlIiA9fiBeXCcoLiopXCckIF1dOyB0aGVuCiAgICAgIHZhbHVlPSIke0JBU0hfUkVNQVRDSFsxXX0iCiAgICBmaQogICAgIyBPbmx5IHNldCBpZiBub3QgYWxyZWFkeSBpbiBlbnZpcm9ubWVudAogICAgaWYgWyAteiAiJHsha2V5fSIgXTsgdGhlbgogICAgICBleHBvcnQgIiRrZXk9JHZhbHVlIgogICAgZmkKICBkb25lIDwgL2FwcC8uZW52CmZpCgojIENoZWNrIGlmIFNUT1JBR0VfRElSIGlzIHNldAppZiBbIC16ICIkU1RPUkFHRV9ESVIiIF07IHRoZW4KICAgIGVjaG8gIj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0iCiAgICBlY2hvICLimqDvuI8gIOKaoO+4jyAg4pqg77iPICBXQVJOSU5HOiBTVE9SQUdFX0RJUiBlbnZpcm9ubWVudCB2YXJpYWJsZSBpcyBub3Qgc2V0ISDimqDvuI8gIOKaoO+4jyAg4pqg77iPIgogICAgZWNobyAiIgogICAgZWNobyAiTm90IHNldHRpbmcgdGhpcyB3aWxsIHJlc3VsdCBpbiBkYXRhIGxvc3Mgb24gY29udGFpbmVyIHJlc3RhcnQgc2luY2UiCiAgICBlY2hvICJ0aGUgYXBwbGljYXRpb24gd2lsbCBub3QgaGF2ZSBhIHBlcnNpc3RlbnQgc3RvcmFnZSBsb2NhdGlvbi4iCiAgICBlY2hvICJJdCBjYW4gYWxzbyByZXN1bHQgaW4gd2VpcmQgZXJyb3JzIGluIHZhcmlvdXMgcGFydHMgb2YgdGhlIGFwcGxpY2F0aW9uLiIKICAgIGVjaG8gIiIKICAgIGVjaG8gIlBsZWFzZSBydW4gdGhlIGNvbnRhaW5lciB3aXRoIHRoZSBvZmZpY2lhbCBkb2NrZXIgY29tbWFuZCBhdCIKICAgIGVjaG8gImh0dHBzOi8vc2luY2hhdC5kZWxxaGkuY29tL2RvY3MiCiAgICBlY2hvICIiCiAgICBlY2hvICLimqDvuI8gIOKaoO+4jyAg4pqg77iPICBXQVJOSU5HOiBTVE9SQUdFX0RJUiBlbnZpcm9ubWVudCB2YXJpYWJsZSBpcyBub3Qgc2V0ISDimqDvuI8gIOKaoO+4jyAg4pqg77iPIgogICAgZWNobyAiPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSIKZmkKCiMgRW5zdXJlIFBERiBhbmFseXNpcyBzdG9yYWdlIGRpcmVjdG9yeSBleGlzdHMgKGhlYWx0aGNoZWNrIGV4cGVjdHMgaXQpCm1rZGlyIC1wICIke1NUT1JBR0VfRElSOi0vYXBwL3NlcnZlci9zdG9yYWdlfS9wZGYtYW5hbHlzaXMiCm1rZGlyIC1wICIke1NUT1JBR0VfRElSOi0vYXBwL3NlcnZlci9zdG9yYWdlfS9wbHVnaW5zIgoKIyBGaXggb3duZXJzaGlwIG9mIGZpbGVzIHRoYXQgbWF5IGhhdmUgYmVlbiBjcmVhdGVkIGFzIHJvb3QgZHVyaW5nIGRvY2tlciBidWlsZAojIG9yIGJ5IGEgcHJldmlvdXMgY29udGFpbmVyIHJ1biB3aXRoIGRpZmZlcmVudCBVSUQgKGlzc3VlOiBFUEVSTSBvbiBjaG1vZCkKaWYgWyAtZiAiJHtTVE9SQUdFX0RJUjotL2FwcC9zZXJ2ZXIvc3RvcmFnZX0vcGx1Z2lucy9vcGVuc2luX21jcF9zZXJ2ZXJzLmpzb24iIF07IHRoZW4KICAgIGNob3duICIkKGlkIC11KTokKGlkIC1nKSIgIiR7U1RPUkFHRV9ESVI6LS9hcHAvc2VydmVyL3N0b3JhZ2V9L3BsdWdpbnMvb3BlbnNpbl9tY3Bfc2VydmVycy5qc29uIiAyPi9kZXYvbnVsbCB8fCB0cnVlCmZpCgojIERlZmVuc2UtaW4tZGVwdGggcnVudGltZSBndWFyZCBmb3IgaXNzdWUgIzExNDogdGhlIG5hdGl2ZSBlbWJlZGRlciBjcmFzaGVzCiMgd2l0aCBhIGNyeXB0aWMgTm9kZSBtb2R1bGUgZXJyb3Igd2hlbiAvYXBwL3NlcnZlci91dGlscy9wYXRocy5qcyBpcyBtaXNzaW5nLgojIElmIHRoZSBmaWxlIGlzIG5vdCBwcmVzZW50LCBmYWlsIGxvdWRseSBhbmQgdGVsbCB0aGUgb3BlcmF0b3IgdG8gcmVidWlsZC4KaWYgWyAhIC1mIC9hcHAvc2VydmVyL3V0aWxzL3BhdGhzLmpzIF07IHRoZW4KICAgIGVjaG8gIj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0iCiAgICBlY2hvICJSVU5USU1FIEVSUk9SOiAvYXBwL3NlcnZlci91dGlscy9wYXRocy5qcyBpcyBtaXNzaW5nISIKICAgIGVjaG8gIlRoZSBuYXRpdmUgZW1iZWRkZXIgd2lsbCBjcmFzaC4gUGxlYXNlIHJlYnVpbGQgdGhlIGltYWdlIHNvIHRoYXQiCiAgICBlY2hvICJzZXJ2ZXIvdXRpbHMvcGF0aHMuanMgaXMgaW5jbHVkZWQgaW4gdGhlIERvY2tlciBpbWFnZS4iCiAgICBlY2hvICI9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09IgogICAgZXhpdCAxCmZpCgojIFRyYWNrIGNoaWxkIFBJRHMgZm9yIGdyYWNlZnVsIHNodXRkb3duClNFUlZFUl9QSUQ9IiIKQ09MTEVDVE9SX1BJRD0iIgoKc2h1dGRvd24oKSB7CiAgZWNobyAiW2VudHJ5cG9pbnRdIFJlY2VpdmVkIHNodXRkb3duIHNpZ25hbCwgZm9yd2FyZGluZyB0byBjaGlsZHJlbuKApiIKICBbIC1uICIkU0VSVkVSX1BJRCIgXSAmJiBraWxsIC1URVJNICIkU0VSVkVSX1BJRCIgMj4vZGV2L251bGwKICBbIC1uICIkQ09MTEVDVE9SX1BJRCIgXSAmJiBraWxsIC1URVJNICIkQ09MTEVDVE9SX1BJRCIgMj4vZGV2L251bGwKICAjIEdpdmUgY2hpbGRyZW4gMTBzIHRvIGZpbmlzaCwgdGhlbiBmb3JjZS1raWxsCiAgc2xlZXAgMTAKICBbIC1uICIkU0VSVkVSX1BJRCIgXSAmJiBraWxsIC1LSUxMICIkU0VSVkVSX1BJRCIgMj4vZGV2L251bGwKICBbIC1uICIkQ09MTEVDVE9SX1BJRCIgXSAmJiBraWxsIC1LSUxMICIkQ09MTEVDVE9SX1BJRCIgMj4vZGV2L251bGwKICBleGl0IDAKfQoKdHJhcCBzaHV0ZG93biBTSUdURVJNIFNJR0lOVAoKewogIGNkIC9hcHAvc2VydmVyLyAmJgogICAgIyBEaXNhYmxlIFByaXNtYSBDTEkgdGVsZW1ldHJ5IChodHRwczovL3d3dy5wcmlzbWEuaW8vZG9jcy9vcm0vdG9vbHMvcHJpc21hLWNsaSNob3ctdG8tb3B0LW91dC1vZi1kYXRhLWNvbGxlY3Rpb24pCiAgICBleHBvcnQgQ0hFQ0tQT0lOVF9ESVNBQkxFPTEgJiYKICAgICMgU2V0IERBVEFCQVNFX1VSTCBmb3IgU1FMaXRlIGlmIG5vdCBhbHJlYWR5IHNldCAobmVlZGVkIGJ5IHNjaGVtYS5wcmlzbWEgZW52KCkpCiAgICBpZiBbIC16ICIkREFUQUJBU0VfVVJMIiBdOyB0aGVuCiAgICAgIGV4cG9ydCBEQVRBQkFTRV9VUkw9ImZpbGU6Li4vc3RvcmFnZS9vcGVuc2luLmRiP2Nvbm5lY3Rpb25fbGltaXQ9MSIKICAgIGZpICYmCiAgICBucHggcHJpc21hIGdlbmVyYXRlIC0tc2NoZW1hPS4vcHJpc21hL3NjaGVtYS5wcmlzbWEgJiYKICAgIG5weCBwcmlzbWEgbWlncmF0ZSBkZXBsb3kgLS1zY2hlbWE9Li9wcmlzbWEvc2NoZW1hLnByaXNtYSAmJgogICAgbm9kZSAvYXBwL3NlcnZlci9pbmRleC5qcwp9ICYKU0VSVkVSX1BJRD0kIQp7IG5vZGUgL2FwcC9jb2xsZWN0b3IvaW5kZXguanM7IH0gJgpDT0xMRUNUT1JfUElEPSQhCiMgV2FpdCBzcGVjaWZpY2FsbHkgZm9yIHRoZSBTRVJWRVIgcHJvY2VzcyDigJQgYSBjb2xsZWN0b3IgY3Jhc2ggbXVzdCBOT1QKIyB0YWtlIGRvd24gdGhlIHNlcnZlci4gIE9ubHkgZXhpdCB3aGVuIHRoZSBzZXJ2ZXIgZXhpdHM7IGNsZWFuIHVwIHRoZQojIGNvbGxlY3RvciBpZiBpdCBpcyBzdGlsbCBydW5uaW5nLgp3YWl0ICIkU0VSVkVSX1BJRCIKRVhJVF9DT0RFPSQ/ClsgLW4gIiRDT0xMRUNUT1JfUElEIiBdICYmIGtpbGwgLVRFUk0gIiRDT0xMRUNUT1JfUElEIiAyPi9kZXYvbnVsbApleGl0ICRFWElUX0NPREUK
+#!/bin/bash
+# SPDX-License-Identifier: MIT
+
+# Source /app/.env if it exists (persistent secrets mounted as read-only volume).
+# This ensures secrets survive container recreation even without --env-file.
+# Only sets variables that are not already in the environment (docker run -e wins).
+if [ -f /app/.env ]; then
+  while IFS='=' read -r key raw_value; do
+    # Skip comments and empty lines
+    [[ "$key" =~ ^[[:space:]]*# ]] && continue
+    [[ -z "$key" ]] && continue
+    # Trim key whitespace
+    key=$(echo "$key" | xargs)
+    # Trim value: strip CRLF, then leading/trailing whitespace
+    value=$(printf '%s' "$raw_value" | sed 's/\r$//')
+    value="${value#"${value%%[![:space:]]*}"}"
+    value="${value%"${value##*[![:space:]]}"}"
+    # Strip matching surrounding quotes (single or double)
+    if [[ "$value" =~ ^\"(.*)\"$ ]] || [[ "$value" =~ ^\'(.*)\'$ ]]; then
+      value="${BASH_REMATCH[1]}"
+    fi
+    # Only set if not already in environment
+    if [ -z "${!key}" ]; then
+      export "$key=$value"
+    fi
+  done < /app/.env
+fi
+
+# Check if STORAGE_DIR is set
+if [ -z "$STORAGE_DIR" ]; then
+    echo "================================================================"
+    echo "⚠️  ⚠️  ⚠️  WARNING: STORAGE_DIR environment variable is not set! ⚠️  ⚠️  ⚠️"
+    echo ""
+    echo "Not setting this will result in data loss on container restart since"
+    echo "the application will not have a persistent storage location."
+    echo "It can also result in weird errors in various parts of the application."
+    echo ""
+    echo "Please run the container with the official docker command at"
+    echo "https://sinchat.delqhi.com/docs"
+    echo ""
+    echo "⚠️  ⚠️  ⚠️  WARNING: STORAGE_DIR environment variable is not set! ⚠️  ⚠️  ⚠️"
+    echo "================================================================"
+fi
+
+# Ensure PDF analysis storage directory exists (healthcheck expects it)
+mkdir -p "${STORAGE_DIR:-/app/server/storage}/pdf-analysis"
+mkdir -p "${STORAGE_DIR:-/app/server/storage}/plugins"
+
+# Fix ownership of files that may have been created as root during docker build
+# or by a previous container run with different UID (issue: EPERM on chmod)
+if [ -f "${STORAGE_DIR:-/app/server/storage}/plugins/opensin_mcp_servers.json" ]; then
+    chown "$(id -u):$(id -g)" "${STORAGE_DIR:-/app/server/storage}/plugins/opensin_mcp_servers.json" 2>/dev/null || true
+fi
+
+# Defense-in-depth runtime guard for issue #114: the native embedder crashes
+# with a cryptic Node module error when /app/server/utils/paths.js is missing.
+# If the file is not present, fail loudly and tell the operator to rebuild.
+if [ ! -f /app/server/utils/paths.js ]; then
+    echo "================================================================"
+    echo "RUNTIME ERROR: /app/server/utils/paths.js is missing!"
+    echo "The native embedder will crash. Please rebuild the image so that"
+    echo "server/utils/paths.js is included in the Docker image."
+    echo "================================================================"
+    exit 1
+fi
+
+# Track child PIDs for graceful shutdown
+SERVER_PID=""
+COLLECTOR_PID=""
+
+shutdown() {
+  echo "[entrypoint] Received shutdown signal, forwarding to children…"
+  [ -n "$SERVER_PID" ] && kill -TERM "$SERVER_PID" 2>/dev/null
+  [ -n "$COLLECTOR_PID" ] && kill -TERM "$COLLECTOR_PID" 2>/dev/null
+  # Give children 10s to finish, then force-kill
+  sleep 10
+  [ -n "$SERVER_PID" ] && kill -KILL "$SERVER_PID" 2>/dev/null
+  [ -n "$COLLECTOR_PID" ] && kill -KILL "$COLLECTOR_PID" 2>/dev/null
+  exit 0
+}
+
+trap shutdown SIGTERM SIGINT
+
+{
+  cd /app/server/ &&
+    # Disable Prisma CLI telemetry (https://www.prisma.io/docs/orm/tools/prisma-cli#how-to-opt-out-of-data-collection)
+    export CHECKPOINT_DISABLE=1 &&
+    # Set DATABASE_URL for SQLite if not already set (needed by schema.prisma env())
+    if [ -z "$DATABASE_URL" ]; then
+      export DATABASE_URL="file:../storage/opensin.db?connection_limit=1"
+    fi &&
+    npx prisma generate --schema=./prisma/schema.prisma &&
+    npx prisma migrate deploy --schema=./prisma/schema.prisma &&
+    node /app/server/index.js
+} &
+SERVER_PID=$!
+{ node /app/collector/index.js; } &
+COLLECTOR_PID=$!
+# Wait specifically for the SERVER process — a collector crash must NOT
+# take down the server.  Only exit when the server exits; clean up the
+# collector if it is still running.
+wait "$SERVER_PID"
+EXIT_CODE=$?
+[ -n "$COLLECTOR_PID" ] && kill -TERM "$COLLECTOR_PID" 2>/dev/null
+exit $EXIT_CODE

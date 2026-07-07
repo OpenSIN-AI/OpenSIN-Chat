@@ -1,1 +1,124 @@
-IyBBdXRvLURlcGxveSAoTG9rYWxlciBQb2xsaW5nLUNyb24gYXVmIGRlbSBNYWMpCgo+ICoqU3RhdHVzOioqIERpZXNlcyBEb2t1bWVudCBiZXNjaHJlaWJ0IGRlbiAqKmxva2FsZW4gTWFjKiotQXV0by1EZXBsb3kuIERpZQo+IFByb2R1a3Rpb25zLVNpdGUgYHNpbmNoYXQuZGVscWhpLmNvbWAgbMOkdWZ0IHNlaXQgZGVyIE1pZ3JhdGlvbiBhdWYgZGVyIE9DSSBWTQo+IGBzaW4tc3VwYWJhc2VgLiBGw7xyIFByb2R1a3Rpb25zLURlcGxveXMgc2llaGUgYGRvY3MvT1BFTlNJTi1DSEFULURFUExPWU1FTlQubWRgCj4gdW5kIGBzY3JpcHRzL2RlcGxveS1wcm9kdWN0aW9uLnNoYC4gRWluIEF1dG8tRGVwbG95IGbDvHIgYHNpbi1zdXBhYmFzZWAgaXN0Cj4gbm9jaCBlaW56dXJpY2h0ZW4uCgpEaWVzZXMgU2V0dXAgc29yZ3QgZGFmw7xyLCBkYXNzIGRpZSAqKmxva2FsZSoqIE9wZW5TSU4tQ2hhdC1JbnN0YW56IGF1dG9tYXRpc2NoCmFrdHVhbGlzaWVydCB3aXJkLCBzb2JhbGQgZXR3YXMgYXVmIGRlbiBgbWFpbmAtQnJhbmNoIGdlcHVzaHQgd2lyZC4KCiMjIFdpZSBlcyBmdW5rdGlvbmllcnQKCkRlciBNYWMgcHLDvGZ0IHBlciBjcm9uIChvZGVyIGxhdW5jaGQpIGluIGVpbmVtIGZlc3RlbiBJbnRlcnZhbGwsIG9iIGVzIG5ldWUKQ29tbWl0cyBhdWYgYG9yaWdpbi9tYWluYCBnaWJ0LiBGYWxscyBqYToKCjEuIGBnaXQgcmVzZXQgLS1oYXJkIG9yaWdpbi9tYWluYCAoQ29kZSBha3R1YWxpc2llcmVuKQoyLiBgZG9ja2VyIGNvbXBvc2UgYnVpbGQgLS1uby1jYWNoZWAgKEltYWdlICoqZnJpc2NoKiogYmF1ZW4g4oCUIHdpY2h0aWcgZsO8cnMgRnJvbnRlbmQtQnVuZGxlKQozLiBgZG9ja2VyIGNvbXBvc2UgdXAgLWRgIChDb250YWluZXIgbmV1IHN0YXJ0ZW4pCjQuIEhlYWx0aGNoZWNrIGdlZ2VuIGBodHRwOi8vbG9jYWxob3N0OjQzOTM5L2FwaS9waW5nYAoKRGFzIFNrcmlwdCBkYXp1OiBbYHNjcmlwdHMvYXV0by1kZXBsb3kuc2hgXSguLi9zY3JpcHRzL2F1dG8tZGVwbG95LnNoKS4KCj4gKipXYXJ1bSBgLS1uby1jYWNoZWA/KiogT2huZSBkaWVzZW4gU2NoYWx0ZXIgZGFyZiBEb2NrZXIgZGVuIEZyb250ZW5kLUJ1aWxkLUxheWVyCj4gYXVzIGRlbSBDYWNoZSB3aWVkZXJ2ZXJ3ZW5kZW4uIERhbm4gbMOkdWZ0IGB5YXJuIGJ1aWxkYCBuaWNodCBlcm5ldXQgdW5kIGRhcyBhbHRlCj4gSlMtQnVuZGxlIGJsZWlidCBpbSBJbWFnZSDigJQgZ2VuYXUgZGFzIHdhciBkZXIgdXJzcHLDvG5nbGljaGUgQnVnLgoKIyMgRWlucmljaHR1bmcKCiMjIyAxLiBTa3JpcHQgYXVzZsO8aHJiYXIgbWFjaGVuCgpgYGBiYXNoCmNkIC9wZmFkL3p1L09wZW5TSU4tQ2hhdApjaG1vZCAreCBzY3JpcHRzL2F1dG8tZGVwbG95LnNoCmBgYAoKIyMjIDIuIEVpbm1hbCBtYW51ZWxsIHRlc3RlbgoKYGBgYmFzaAouL3NjcmlwdHMvYXV0by1kZXBsb3kuc2gKIyBBdXNnYWJlIHVuZCBMb2cgcHLDvGZlbjoKY2F0IGxvZ3MvYXV0by1kZXBsb3kubG9nCmBgYAoKIyMjIDNhLiBQZXIgY3JvbiAoZWluZmFjaHN0ZSBWYXJpYW50ZSkKCmBjcm9udGFiIC1lYCDDtmZmbmVuIHVuZCBoaW56dWbDvGdlbiAoYWxsZSAzIE1pbnV0ZW4pOgoKYGBgY3JvbgoqLzMgKiAqICogKiAvcGZhZC96dS9PcGVuU0lOLUNoYXQvc2NyaXB0cy9hdXRvLWRlcGxveS5zaCA+PiAvcGZhZC96dS9PcGVuU0lOLUNoYXQvbG9ncy9jcm9uLmxvZyAyPiYxCmBgYAoKPiBIaW53ZWlzIG1hY09TOiBgY3JvbmAgYnJhdWNodCBnZ2YuICJGdWxsIERpc2sgQWNjZXNzIiBmw7xyIGAvdXNyL3NiaW4vY3JvbmAgaW4KPiBkZW4gU3lzdGVtZWluc3RlbGx1bmdlbiDihpIgRGF0ZW5zY2h1dHogJiBTaWNoZXJoZWl0LCBzb25zdCBzY2hlaXRlcnQgYGRvY2tlcmAuCgojIyMgM2IuIFBlciBsYXVuY2hkIChlbXBmb2hsZW4gYXVmIGRlbSBNYWMsIMO8YmVybGVidCBSZWJvb3RzIHNhdWJlcmVyKQoKRGF0ZWkgYH4vTGlicmFyeS9MYXVuY2hBZ2VudHMvY29tLm9wZW5zaW4uYXV0b2RlcGxveS5wbGlzdGAgYW5sZWdlbjoKCmBgYHhtbAo8P3htbCB2ZXJzaW9uPSIxLjAiIGVuY29kaW5nPSJVVEYtOCI/Pgo8IURPQ1RZUEUgcGxpc3QgUFVCTElDICItLy9BcHBsZS8vRFREIFBMSVNUIDEuMC8vRU4iICJodHRwOi8vd3d3LmFwcGxlLmNvbS9EVERzL1Byb3BlcnR5TGlzdC0xLjAuZHRkIj4KPHBsaXN0IHZlcnNpb249IjEuMCI+CjxkaWN0PgogICAgPGtleT5MYWJlbDwva2V5PgogICAgPHN0cmluZz5jb20ub3BlbnNpbi5hdXRvZGVwbG95PC9zdHJpbmc+CiAgICA8a2V5PlByb2dyYW1Bcmd1bWVudHM8L2tleT4KICAgIDxhcnJheT4KICAgICAgICA8c3RyaW5nPi9wZmFkL3p1L09wZW5TSU4tQ2hhdC9zY3JpcHRzL2F1dG8tZGVwbG95LnNoPC9zdHJpbmc+CiAgICA8L2FycmF5PgogICAgPGtleT5TdGFydEludGVydmFsPC9rZXk+CiAgICA8aW50ZWdlcj4xODA8L2ludGVnZXI+CiAgICA8a2V5PlN0YW5kYXJkT3V0UGF0aDwva2V5PgogICAgPHN0cmluZz4vcGZhZC96dS9PcGVuU0lOLUNoYXQvbG9ncy9sYXVuY2hkLm91dC5sb2c8L3N0cmluZz4KICAgIDxrZXk+U3RhbmRhcmRFcnJvclBhdGg8L2tleT4KICAgIDxzdHJpbmc+L3BmYWQvenUvT3BlblNJTi1DaGF0L2xvZ3MvbGF1bmNoZC5lcnIubG9nPC9zdHJpbmc+CiAgICA8a2V5PkVudmlyb25tZW50VmFyaWFibGVzPC9rZXk+CiAgICA8ZGljdD4KICAgICAgICA8a2V5PlBBVEg8L2tleT4KICAgICAgICA8c3RyaW5nPi91c3IvbG9jYWwvYmluOi9vcHQvaG9tZWJyZXcvYmluOi91c3IvYmluOi9iaW46L3Vzci9zYmluOi9zYmluPC9zdHJpbmc+CiAgICA8L2RpY3Q+CjwvZGljdD4KPC9wbGlzdD4KYGBgCgpMYWRlbjoKCmBgYGJhc2gKbGF1bmNoY3RsIGxvYWQgfi9MaWJyYXJ5L0xhdW5jaEFnZW50cy9jb20ub3BlbnNpbi5hdXRvZGVwbG95LnBsaXN0CiMgU3RhdHVzIHByw7xmZW46CmxhdW5jaGN0bCBsaXN0IHwgZ3JlcCBvcGVuc2luCmBgYAoKRW50bGFkZW4gKHp1bSBTdG9wcGVuKToKCmBgYGJhc2gKbGF1bmNoY3RsIHVubG9hZCB+L0xpYnJhcnkvTGF1bmNoQWdlbnRzL2NvbS5vcGVuc2luLmF1dG9kZXBsb3kucGxpc3QKYGBgCgojIyBLb25maWd1cmF0aW9uIChVbWdlYnVuZ3N2YXJpYWJsZW4pCgpEYXMgU2tyaXB0IGZ1bmt0aW9uaWVydCBvaG5lIEFucGFzc3VuZywgbMOkc3N0IHNpY2ggYWJlciDDvGJlciBFbnYtVmFycyBzdGV1ZXJuOgoKfCBWYXJpYWJsZSB8IFN0YW5kYXJkIHwgQmVkZXV0dW5nIHwKfC0tLXwtLS18LS0tfAp8IGBPUEVOU0lOX1JFUE9fRElSYCB8IEF1dG8gKFNrcmlwdC1QZmFkKSB8IFJlcG8tV3VyemVsIHwKfCBgT1BFTlNJTl9CUkFOQ0hgIHwgYG1haW5gIHwgQnJhbmNoLCBkZXIgZGVwbG95dCB3aXJkIHwKfCBgT1BFTlNJTl9DT01QT1NFX0ZJTEVgIHwgYGRvY2tlci1vcGVuc2luL2RvY2tlci1jb21wb3NlLnltbGAgfCBjb21wb3NlLURhdGVpIHwKfCBgT1BFTlNJTl9IRUFMVEhfVVJMYCB8IGBodHRwOi8vbG9jYWxob3N0OjQzOTM5L2FwaS9waW5nYCB8IEhlYWx0aGNoZWNrLVVSTCB8CnwgYE9QRU5TSU5fTE9HX0ZJTEVgIHwgYDxyZXBvPi9sb2dzL2F1dG8tZGVwbG95LmxvZ2AgfCBMb2dkYXRlaSB8CgojIyBUcm91Ymxlc2hvb3RpbmcKCi0gKipPbmxpbmUgaW1tZXIgbm9jaCBhbHQgbmFjaCBEZXBsb3k/KiogWnVlcnN0IHByw7xmZW4gb2IgZWluICoqcm9ndWUgTm9kZS1Qcm96ZXNzKioKICBQb3J0IDMwMDEgYmxvY2tpZXJ0OiBgbHNvZiAtaSA6MzAwMSAtUCAtbmAuIFdlbm4gZG9ydCBgbm9kZSAqOjMwMDEgKExJU1RFTilgIHN0ZWh0CiAgKG5pY2h0IERvY2tlci9PcmJTdGFjayksIHd1cmRlIGVpbiBtYW51ZWxsZXMgYG5vZGUgaW5kZXguanNgIGF1cyBgL3NlcnZlci9gCiAgZ2VzdGFydGV0LiBUw7Z0ZW4gbWl0IGBraWxsIDxQSUQ+YCwgZGFubiBEb2NrZXIgdW5kIENsb3VkZmxhcmVkIG5ldXN0YXJ0ZW4uCiAgRGFuYWNoIEJyb3dzZXIgSGFyZC1SZWxvYWQgKGBDbWQrU2hpZnQrUmApLgotICoqNTAyIEJhZCBHYXRld2F5IGF1ZiBzaW5jaGF0LmRlbHFoaS5jb20/KiogUHJvZHVrdGlvbiBsw6R1ZnQgYXVmIGBzaW4tc3VwYWJhc2VgIOKAlCBzaWVoZSBgZG9jcy9PUEVOU0lOLUNIQVQtREVQTE9ZTUVOVC5tZGAuIExva2FsOiBwcsO8ZmVuIG9iIGByZXN0YXJ0OiBhbHdheXNgIGZlaGx0IChgZG9ja2VyIHBzIHwgZ3JlcCBvcGVuc2luLWNoYXRgKS4gRml4OiBgZG9ja2VyIHVwZGF0ZSAtLXJlc3RhcnQgYWx3YXlzIG9wZW5zaW4tY2hhdCAmJiBkb2NrZXIgc3RhcnQgb3BlbnNpbi1jaGF0YC4KLSAqKmBkb2NrZXI6IGNvbW1hbmQgbm90IGZvdW5kYCBpbSBjcm9uLUxvZz8qKiBgUEFUSGAgaW0gbGF1bmNoZC1wbGlzdCBiencuIGNyb24KICBlcmfDpG56ZW4gKERvY2tlciBEZXNrdG9wIGxpZWd0IG9mdCB1bnRlciBgL3Vzci9sb2NhbC9iaW5gKS4KLSAqKkJ1aWxkIGRhdWVydCBsYW5nZSAvIGJsb2NraWVydD8qKiBEZXIgYGZsb2NrYC1Mb2NrIHZlcmhpbmRlcnQgw7xiZXJsYXBwZW5kZQogIEzDpHVmZSDigJQgZWluIHp3ZWl0ZXIgY3Jvbi1UaWNrIHdpcmQgw7xiZXJzcHJ1bmdlbiwgYmlzIGRlciBCdWlsZCBmZXJ0aWcgaXN0LgotICoqTG9ncyBhbnNlaGVuOioqIGB0YWlsIC1mIGxvZ3MvYXV0by1kZXBsb3kubG9nYAo=
+# Auto-Deploy (Lokaler Polling-Cron auf dem Mac)
+
+> **Status:** Dieses Dokument beschreibt den **lokalen Mac**-Auto-Deploy. Die
+> Produktions-Site `sinchat.delqhi.com` läuft seit der Migration auf der OCI VM
+> `sin-supabase`. Für Produktions-Deploys siehe `docs/OPENSIN-CHAT-DEPLOYMENT.md`
+> und `scripts/deploy-production.sh`. Ein Auto-Deploy für `sin-supabase` ist
+> noch einzurichten.
+
+Dieses Setup sorgt dafür, dass die **lokale** OpenSIN-Chat-Instanz automatisch
+aktualisiert wird, sobald etwas auf den `main`-Branch gepusht wird.
+
+## Wie es funktioniert
+
+Der Mac prüft per cron (oder launchd) in einem festen Intervall, ob es neue
+Commits auf `origin/main` gibt. Falls ja:
+
+1. `git reset --hard origin/main` (Code aktualisieren)
+2. `docker compose build --no-cache` (Image **frisch** bauen — wichtig fürs Frontend-Bundle)
+3. `docker compose up -d` (Container neu starten)
+4. Healthcheck gegen `http://localhost:43939/api/ping`
+
+Das Skript dazu: [`scripts/auto-deploy.sh`](../scripts/auto-deploy.sh).
+
+> **Warum `--no-cache`?** Ohne diesen Schalter darf Docker den Frontend-Build-Layer
+> aus dem Cache wiederverwenden. Dann läuft `yarn build` nicht erneut und das alte
+> JS-Bundle bleibt im Image — genau das war der ursprüngliche Bug.
+
+## Einrichtung
+
+### 1. Skript ausführbar machen
+
+```bash
+cd /pfad/zu/OpenSIN-Chat
+chmod +x scripts/auto-deploy.sh
+```
+
+### 2. Einmal manuell testen
+
+```bash
+./scripts/auto-deploy.sh
+# Ausgabe und Log prüfen:
+cat logs/auto-deploy.log
+```
+
+### 3a. Per cron (einfachste Variante)
+
+`crontab -e` öffnen und hinzufügen (alle 3 Minuten):
+
+```cron
+*/3 * * * * /pfad/zu/OpenSIN-Chat/scripts/auto-deploy.sh >> /pfad/zu/OpenSIN-Chat/logs/cron.log 2>&1
+```
+
+> Hinweis macOS: `cron` braucht ggf. "Full Disk Access" für `/usr/sbin/cron` in
+> den Systemeinstellungen → Datenschutz & Sicherheit, sonst scheitert `docker`.
+
+### 3b. Per launchd (empfohlen auf dem Mac, überlebt Reboots sauberer)
+
+Datei `~/Library/LaunchAgents/com.opensin.autodeploy.plist` anlegen:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.opensin.autodeploy</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/pfad/zu/OpenSIN-Chat/scripts/auto-deploy.sh</string>
+    </array>
+    <key>StartInterval</key>
+    <integer>180</integer>
+    <key>StandardOutPath</key>
+    <string>/pfad/zu/OpenSIN-Chat/logs/launchd.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>/pfad/zu/OpenSIN-Chat/logs/launchd.err.log</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+</dict>
+</plist>
+```
+
+Laden:
+
+```bash
+launchctl load ~/Library/LaunchAgents/com.opensin.autodeploy.plist
+# Status prüfen:
+launchctl list | grep opensin
+```
+
+Entladen (zum Stoppen):
+
+```bash
+launchctl unload ~/Library/LaunchAgents/com.opensin.autodeploy.plist
+```
+
+## Konfiguration (Umgebungsvariablen)
+
+Das Skript funktioniert ohne Anpassung, lässt sich aber über Env-Vars steuern:
+
+| Variable | Standard | Bedeutung |
+|---|---|---|
+| `OPENSIN_REPO_DIR` | Auto (Skript-Pfad) | Repo-Wurzel |
+| `OPENSIN_BRANCH` | `main` | Branch, der deployt wird |
+| `OPENSIN_COMPOSE_FILE` | `docker-opensin/docker-compose.yml` | compose-Datei |
+| `OPENSIN_HEALTH_URL` | `http://localhost:43939/api/ping` | Healthcheck-URL |
+| `OPENSIN_LOG_FILE` | `<repo>/logs/auto-deploy.log` | Logdatei |
+
+## Troubleshooting
+
+- **Online immer noch alt nach Deploy?** Zuerst prüfen ob ein **rogue Node-Prozess**
+  Port 3001 blockiert: `lsof -i :3001 -P -n`. Wenn dort `node *:3001 (LISTEN)` steht
+  (nicht Docker/OrbStack), wurde ein manuelles `node index.js` aus `/server/`
+  gestartet. Töten mit `kill <PID>`, dann Docker und Cloudflared neustarten.
+  Danach Browser Hard-Reload (`Cmd+Shift+R`).
+- **502 Bad Gateway auf sinchat.delqhi.com?** Produktion läuft auf `sin-supabase` — siehe `docs/OPENSIN-CHAT-DEPLOYMENT.md`. Lokal: prüfen ob `restart: always` fehlt (`docker ps | grep opensin-chat`). Fix: `docker update --restart always opensin-chat && docker start opensin-chat`.
+- **`docker: command not found` im cron-Log?** `PATH` im launchd-plist bzw. cron
+  ergänzen (Docker Desktop liegt oft unter `/usr/local/bin`).
+- **Build dauert lange / blockiert?** Der `flock`-Lock verhindert überlappende
+  Läufe — ein zweiter cron-Tick wird übersprungen, bis der Build fertig ist.
+- **Logs ansehen:** `tail -f logs/auto-deploy.log`

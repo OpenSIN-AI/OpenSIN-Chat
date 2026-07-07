@@ -1,1 +1,550 @@
-IyBPcGVuU0lOIENoYXQg4oCUIERvY2tlciBEZXBsb3ltZW50IEd1aWRlCgo+ICoqUHVycG9zZToqKiBQcm9kdWN0aW9uLXJlYWR5IERvY2tlciBkZXBsb3ltZW50IGZvciBPcGVuU0lOIENoYXQgd2l0aCBhbGwga25vd24gaXNzdWVzLCBoZWFsdGgtY2hlY2tzLCBhbmQgdGhlIHBvbGl0aWNpYW4tREIgc3luYyBwcmUtZmxpZ2h0IGRvY3VtZW50ZWQuCj4KPiAqKkRvY3M6KiogYERPQ0tFUi1ERVBMT1lNRU5ULmRvYy5tZGAgKHRoaXMgZmlsZSkKPiAqKlJlbGF0ZWQ6KiogYGRvY2tlci9IT1dfVE9fVVNFX0RPQ0tFUi5tZGAsIGBkb2NzL2FyY2hpdGVjdHVyZS5tZGAsIGBkb2NzL0RBVEEtU09VUkNFUy5tZGAKCi0tLQoKIyMgT3ZlcnZpZXcKClRoaXMgZ3VpZGUgY292ZXJzOgoKMS4gKipQcmUtZmxpZ2h0OioqIERpc2ssIFJBTSwgYW5kIGFyY2hpdGVjdHVyZSByZXF1aXJlbWVudHMKMi4gKipRdWljayBzdGFydDoqKiBgZG9ja2VyIHJ1bmAgKHNpbmdsZS1jb250YWluZXIsIG5vIGNvbXBvc2UpCjMuICoqZG9ja2VyLWNvbXBvc2U6KiogTXVsdGktY29udGFpbmVyIHdpdGggcGVyc2lzdGVudCBzdG9yYWdlCjQuICoqQnVpbGQgZnJvbSBzb3VyY2U6KiogQ3VzdG9tIGltYWdlIHdpdGggY3VycmVudCBgbWFpbmAgYnJhbmNoCjUuICoqSGVhbHRoIGNoZWNrczoqKiBWZXJpZnlpbmcgdGhlIGNvbnRhaW5lciBpcyBmdWxseSBydW5uaW5nIChzZXJ2ZXIgKyBjb2xsZWN0b3IpCjYuICoqUG9saXRpY2lhbiBEQiBzeW5jOioqIFByZS1mbGlnaHQgZm9yIHRoZSAyMS4gV2FobHBlcmlvZGUKNy4gKipDb21tb24gcGl0ZmFsbHM6KiogU1RPUkFHRV9ESVIsIC9hcGkvcGluZyBlbmRwb2ludCBwYXRoLCAuZW52IGZpbGUgdnMgZGlyZWN0b3J5CjguICoqVHJvdWJsZXNob290aW5nOioqIExvZ3MsIHBvcnQgY29uZmxpY3RzLCBwZXJtaXNzaW9uIGlzc3Vlcwo5LiAqKlJvbGxiYWNrIHN0cmF0ZWd5OioqIEhvdyB0byByZXZlcnQgdG8gYSBwcmV2aW91cyBpbWFnZQoKLS0tCgojIyAxLiBQcmUtZmxpZ2h0CgojIyMgSGFyZHdhcmUKLSAqKlJBTToqKiAyIEdCIG1pbmltdW0sIDQgR0IgcmVjb21tZW5kZWQgKExMTS1lbWJlZGRpbmcgZW5naW5lIGxvYWRzIG1vZGVscyBvbiBzdGFydHVwKQotICoqRGlzazoqKiAxMCBHQiBtaW5pbXVtIChzdG9yYWdlIGdyb3dzIHdpdGggZG9jdW1lbnRzL3ZlY3RvcnMvZW1iZWRkaW5ncykKLSAqKkNQVToqKiBhcm02NCBvciBhbWQ2NCBzdXBwb3J0ZWQgKG11bHRpLWFyY2ggaW1hZ2VzIGJ1aWx0KQoKIyMjIFNvZnR3YXJlCi0gKipEb2NrZXIgRW5naW5lIDIwLjEwKyoqIChMaW51eCkgb3IgKipEb2NrZXIgRGVza3RvcCA0LjArKiogKE1hYy9XaW4pCiAgLSBtYWNPUzogUHJlZmVyICoqT3JiU3RhY2sqKiBvdmVyIERvY2tlciBEZXNrdG9wIChsZXNzIHJlc291cmNlLWhlYXZ5KQogIC0gUmVxdWlyZWQgZmVhdHVyZTogYGhvc3QuZG9ja2VyLmludGVybmFsYCByZXNvbHV0aW9uCi0gKipPcHRpb25hbDoqKiBgZG9ja2VyLWNvbXBvc2VgIHYyIChidW5kbGVkIHdpdGggRG9ja2VyIERlc2t0b3ApCgojIyMgTExNIEJhY2tlbmQKLSBFaXRoZXIgbG9jYWwgKE9sbGFtYSwgTE1TdHVkaW8sIExvY2FsQUkpIG9uIGhvc3QKLSBPciBjbG91ZCBBUEkga2V5cyAoT3BlbkFJLCBBbnRocm9waWMsIEdlbWluaSwgZXRjLikKLSBTZWUgYGRvY2tlci8uZW52LmV4YW1wbGVgIGZvciBmdWxsIGxpc3Qgb2YgcHJvdmlkZXJzCgotLS0KCiMjIDIuIFF1aWNrIHN0YXJ0OiBgZG9ja2VyIHJ1bmAKClNpbXBsZXN0IGRlcGxveW1lbnQg4oCUIHNpbmdsZSBjb250YWluZXIsIHN0b3JhZ2UgaW4gYSBiaW5kIG1vdW50LgoKYGBgYmFzaAojIDEuIENyZWF0ZSBzdG9yYWdlIGRpcmVjdG9yeSBvbiBob3N0CmV4cG9ydCBTVE9SQUdFX0xPQ0FUSU9OPSRIT01FL29wZW5zaW4tY2hhdApta2RpciAtcCAkU1RPUkFHRV9MT0NBVElPTgoKIyAyLiBHZW5lcmF0ZSBlbmNyeXB0aW9uIGtleXMgKFJFUVVJUkVEKQojIFNJR19LRVk6IDY0IGhleCBjaGFycyAoMzIgYnl0ZXMpCiMgU0lHX1NBTFQ6IDMyIGhleCBjaGFycyAoMTYgYnl0ZXMpCmV4cG9ydCBTSUdfS0VZPSQob3BlbnNzbCByYW5kIC1oZXggMzIpCmV4cG9ydCBTSUdfU0FMVD0kKG9wZW5zc2wgcmFuZCAtaGV4IDE2KQoKIyAzLiBDcmVhdGUgLmVudiBmaWxlIGluIHN0b3JhZ2UgZGlyCmNhdCA+ICRTVE9SQUdFX0xPQ0FUSU9OLy5lbnYgPDxFT0YKU0lHX0tFWT0nJHtTSUdfS0VZfScKU0lHX1NBTFQ9JyR7U0lHX1NBTFR9JwpTVE9SQUdFX0RJUj0iL2FwcC9zZXJ2ZXIvc3RvcmFnZSIKU0VSVkVSX1BPUlQ9MzAwMQpESVNBQkxFX1RFTEVNRVRSWT10cnVlCk9QRU5TSU5fQ0hBVF9SVU5USU1FPWRvY2tlcgpFT0YKCiMgNC4gUnVuIGNvbnRhaW5lcgpkb2NrZXIgcnVuIC1kIC0tbmFtZSBvcGVuc2luLWNoYXQgXAogIC1wIDMwMDE6MzAwMSBcCiAgLS1jYXAtYWRkIFNZU19BRE1JTiBcCiAgLXYgJFNUT1JBR0VfTE9DQVRJT046L2FwcC9zZXJ2ZXIvc3RvcmFnZSBcCiAgLXYgJFNUT1JBR0VfTE9DQVRJT04vLmVudjovYXBwL3NlcnZlci8uZW52IFwKICAtZSBTVE9SQUdFX0RJUj0vYXBwL3NlcnZlci9zdG9yYWdlIFwKICAtZSBTSUdfS0VZPSR7U0lHX0tFWX0gXAogIC1lIFNJR19TQUxUPSR7U0lHX1NBTFR9IFwKICBvcGVuc2luL29wZW5zaW4tY2hhdDpsYXRlc3QKCiMgNS4gVmVyaWZ5CnNsZWVwIDMwCmRvY2tlciBwcyAgIyBTdGF0dXM6IGhlYWx0aHkKY3VybCBodHRwOi8vbG9jYWxob3N0OjMwMDEvYXBpL3BpbmcgICMgeyJvbmxpbmUiOnRydWV9CmBgYAoKIyMjIFdpbmRvd3MgKFBvd2VyU2hlbGwpCgpgYGBwb3dlcnNoZWxsCiRlbnY6U1RPUkFHRV9MT0NBVElPTj0iJGVudjpVU0VSUFJPRklMRVxvcGVuYWZkIgpOZXctSXRlbSAtSXRlbVR5cGUgRGlyZWN0b3J5IC1QYXRoICRlbnY6U1RPUkFHRV9MT0NBVElPTiAtRm9yY2UKCiRlbnY6U0lHX0tFWSA9IC1qb2luICgoMS4uNjQpIHwgRm9yRWFjaC1PYmplY3QgeyAnezA6eH0nIC1mIChHZXQtUmFuZG9tIC1NYXggMTYpIH0pCiRlbnY6U0lHX1NBTFQgPSAtam9pbiAoKDEuLjMyKSB8IEZvckVhY2gtT2JqZWN0IHsgJ3swOnh9JyAtZiAoR2V0LVJhbmRvbSAtTWF4IDE2KSB9KQoKQCIKU0lHX0tFWT0nJGVudjpTSUdfS0VZJwpTSUdfU0FMVD0nJGVudjpTSUdfU0FMVCcKU1RPUkFHRV9ESVI9Jy9hcHAvc2VydmVyL3N0b3JhZ2UnCiJAIHwgT3V0LUZpbGUgIiRlbnY6U1RPUkFHRV9MT0NBVElPTlwuZW52IiAtRW5jb2RpbmcgdXRmOAoKZG9ja2VyIHJ1biAtZCAtLW5hbWUgb3BlbnNpbi1jaGF0IC1wIDMwMDE6MzAwMSAtLWNhcC1hZGQgU1lTX0FETUlOIGAKICAtdiAiJGVudjpTVE9SQUdFX0xPQ0FUSU9OYDovYXBwL3NlcnZlci9zdG9yYWdlIiBgCiAgLXYgIiRlbnY6U1RPUkFHRV9MT0NBVElPTlwuZW52Oi9hcHAvc2VydmVyLy5lbnYiIGAKICAtZSBTVE9SQUdFX0RJUj0vYXBwL3NlcnZlci9zdG9yYWdlIGAKICBvcGVuc2luL29wZW5zaW4tY2hhdDpsYXRlc3QKYGBgCgotLS0KCiMjIDMuIGRvY2tlci1jb21wb3NlIChyZWNvbW1lbmRlZCBmb3IgcHJvZHVjdGlvbikKCmBkb2NrZXIvZG9ja2VyLWNvbXBvc2UueW1sYDoKCmBgYHlhbWwKbmFtZTogb3BlbnNpbi1jaGF0CgpuZXR3b3JrczoKICBvcGVuc2luLWNoYXQ6CiAgICBkcml2ZXI6IGJyaWRnZQoKc2VydmljZXM6CiAgb3BlbnNpbi1jaGF0OgogICAgY29udGFpbmVyX25hbWU6IG9wZW5zaW4tY2hhdAogICAgYnVpbGQ6CiAgICAgIGNvbnRleHQ6IC4uLy4KICAgICAgZG9ja2VyZmlsZTogLi9kb2NrZXIvRG9ja2VyZmlsZQogICAgICBhcmdzOgogICAgICAgIEFSR19VSUQ6ICR7VUlEOi0xMDAwfQogICAgICAgIEFSR19HSUQ6ICR7R0lEOi0xMDAwfQogICAgY2FwX2FkZDoKICAgICAgLSBTWVNfQURNSU4KICAgIHZvbHVtZXM6CiAgICAgIC0gIi4vLmVudjovYXBwL3NlcnZlci8uZW52IiAgICAgICAgICAgICMg4oaQIENSSVRJQ0FMOiBtdXN0IGJlIGEgRklMRSwgbm90IGEgZGlyZWN0b3J5CiAgICAgIC0gIi4uL3NlcnZlci9zdG9yYWdlOi9hcHAvc2VydmVyL3N0b3JhZ2UiCiAgICAgIC0gIi4uL2NvbGxlY3Rvci9ob3RkaXIvOi9hcHAvY29sbGVjdG9yL2hvdGRpciIKICAgICAgLSAiLi4vY29sbGVjdG9yL291dHB1dHMvOi9hcHAvY29sbGVjdG9yL291dHB1dHMiCiAgICB1c2VyOiAiJHtVSUQ6LTEwMDB9OiR7R0lEOi0xMDAwfSIKICAgIHBvcnRzOgogICAgICAtICIzMDAxOjMwMDEiCiAgICBlbnZpcm9ubWVudDogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAjIOKGkCBDUklUSUNBTDogdGhlc2UgYXJlIHJlcXVpcmVkCiAgICAgIC0gU1RPUkFHRV9ESVI9L2FwcC9zZXJ2ZXIvc3RvcmFnZQogICAgICAtIFNFUlZFUl9QT1JUPTMwMDEKICAgICAgLSBPUEVOU0lOX0NIQVRfUlVOVElNRT1kb2NrZXIKICAgICAgLSBESVNBQkxFX1RFTEVNRVRSWT10cnVlCiAgICBlbnZfZmlsZToKICAgICAgLSAuZW52CiAgICBuZXR3b3JrczoKICAgICAgLSBvcGVuc2luLWNoYXQKICAgIGV4dHJhX2hvc3RzOgogICAgICAtICJob3N0LmRvY2tlci5pbnRlcm5hbDpob3N0LWdhdGV3YXkiCiAgICBoZWFsdGhjaGVjazoKICAgICAgdGVzdDogWyJDTUQiLCAiL2Jpbi9iYXNoIiwgIi91c3IvbG9jYWwvYmluL2RvY2tlci1oZWFsdGhjaGVjay5zaCJdCiAgICAgIGludGVydmFsOiAxbQogICAgICB0aW1lb3V0OiAxMHMKICAgICAgc3RhcnRfcGVyaW9kOiAxbQogICAgICByZXRyaWVzOiAzCmBgYAoKIyMjIC5lbnYgZmlsZSAoaW4gYGRvY2tlci8uZW52YCkKClRoaXMgZmlsZSAqKk1VU1QgYmUgYSBmaWxlLCBub3QgYSBkaXJlY3RvcnkqKiAoc2VlIENvbW1vbiBQaXRmYWxsICMxIGJlbG93KS4KCmBgYGJhc2gKIyBHZW5lcmF0ZSBrZXlzClNJR19LRVk9JChvcGVuc3NsIHJhbmQgLWhleCAzMikgICMgNjQgaGV4IGNoYXJzClNJR19TQUxUPSQob3BlbnNzbCByYW5kIC1oZXggMTYpICAjIDMyIGhleCBjaGFycwpKV1RfU0VDUkVUPSQob3BlbnNzbCByYW5kIC1oZXggMjQpICAjIDQ4IGhleCBjaGFycyAoYXV0by1leHRlbmRlZCB0byA2NCBvbiBib290KQoKY2F0ID4gZG9ja2VyLy5lbnYgPDxFT0YKU0VSVkVSX1BPUlQ9MzAwMQpTVE9SQUdFX0RJUj0iL2FwcC9zZXJ2ZXIvc3RvcmFnZSIKVUlEPScxMDAwJwpHSUQ9JzEwMDAnCgojIFJlcXVpcmVkIGVuY3J5cHRpb24ga2V5cyAoZ2VuZXJhdGVkKQpTSUdfS0VZPScke1NJR19LRVl9JwpTSUdfU0FMVD0nJHtTSUdfU0FMVH0nCkpXVF9TRUNSRVQ9IiR7SldUX1NFQ1JFVH0iCkpXVF9FWFBJUlk9IjMwZCIKCiMgVGVsZW1ldHJ5CkRJU0FCTEVfVEVMRU1FVFJZPXRydWUKT1BFTlNJTl9DSEFUX1JVTlRJTUU9ZG9ja2VyCgojIExMTSAodW5jb21tZW50IG9uZSBwcm92aWRlcikKIyBMTE1fUFJPVklERVI9J29wZW5haScKIyBPUEVOX0FJX0tFWT0nc2stLi4uJwojIE9QRU5fTU9ERUxfUFJFRj0nZ3B0LTRvJwpFT0YKCmNobW9kIDYwMCBkb2NrZXIvLmVudgpgYGAKCiMjIyBTdGFydAoKYGBgYmFzaApjZCBkb2NrZXIKZG9ja2VyIGNvbXBvc2UgdXAgLWQgLS1idWlsZAojIFdhaXQgfjUtMTAgbWluIGZvciBidWlsZCAoZmlyc3QgdGltZSkKZG9ja2VyIHBzCiMgU3RhdHVzOiBoZWFsdGh5CmRvY2tlciBjb21wb3NlIGxvZ3MgLWYgb3BlbnNpbi1jaGF0ICAjIEN0cmwtQyB0byBleGl0CmBgYAoKLS0tCgojIyA0LiBCdWlsZCBmcm9tIHNvdXJjZQoKRm9yIGRldmVsb3BtZW50IG9yIGN1c3RvbSBtb2RpZmljYXRpb25zLgoKYGBgYmFzaAojIDEuIENsb25lIHJlcG8KZ2l0IGNsb25lIGh0dHBzOi8vZ2l0aHViLmNvbS9GYW1pbHktVGVhbS1Qcm9qZWN0cy9PcGVuU0lOLUNoYXQuZ2l0CmNkIE9wZW5TSU4tQ2hhdAoKIyAyLiBDaGVja291dCB2ZXJzaW9uCmdpdCBjaGVja291dCBtYWluICAjIG9yIGEgdGFnZ2VkIHZlcnNpb24gbGlrZSB2MS4yLjMKCiMgMy4gQ3JlYXRlIHN0b3JhZ2UgYW5kIC5lbnYgKHNlZSBRdWljayBTdGFydCBhYm92ZSkKbWtkaXIgLXAgc2VydmVyL3N0b3JhZ2UKY2QgZG9ja2VyCmNwIC5lbnYuZXhhbXBsZSAuZW52CiMgRWRpdCBkb2NrZXIvLmVudiB0byBhZGQgU0lHX0tFWSwgU0lHX1NBTFQsIGV0Yy4KY2QgLi4KCiMgNC4gQnVpbGQgaW1hZ2UgKG11bHRpLWFyY2g6IGFybTY0ICsgYW1kNjQpCmNkIGRvY2tlcgpkb2NrZXIgYnVpbGQgLWYgRG9ja2VyZmlsZSAtdCBvcGVuc2luLWNoYXQ6Y3VzdG9tIC4uLwojIEJ1aWxkIHRha2VzIDUtMTUgbWluIGRlcGVuZGluZyBvbiBjYWNoZQoKIyA1LiBSdW4gd2l0aCBjdXN0b20gaW1hZ2UKZG9ja2VyIHJ1biAtZCAtLW5hbWUgb3BlbnNpbi1jaGF0LWRldiAtcCAzMDAxOjMwMDEgXAogIC0tY2FwLWFkZCBTWVNfQURNSU4gXAogIC12ICQocHdkKS8uLi9zZXJ2ZXIvc3RvcmFnZTovYXBwL3NlcnZlci9zdG9yYWdlIFwKICAtdiAkKHB3ZCkvLmVudjovYXBwL3NlcnZlci8uZW52IFwKICAtZSBTVE9SQUdFX0RJUj0vYXBwL3NlcnZlci9zdG9yYWdlIFwKICBvcGVuc2luLWNoYXQ6Y3VzdG9tCmBgYAoKIyMjIEJ1aWxkIGNhY2hlIHRpcHMKLSAqKkZpcnN0IGJ1aWxkOioqIDE1LTIwIG1pbiAoZG93bmxvYWRzIG5vZGUsIHlhcm4sIGRlcHMpCi0gKipTdWJzZXF1ZW50IGJ1aWxkczoqKiAxLTMgbWluICh1c2VzIERvY2tlciBsYXllciBjYWNoZSkKLSAqKkNsZWFuIHJlYnVpbGQ6KiogYGRvY2tlciBidWlsZCAtLW5vLWNhY2hlIC1mIGRvY2tlci9Eb2NrZXJmaWxlIC10IG9wZW5zaW4tY2hhdDpjdXN0b20gLi9gCgotLS0KCiMjIDUuIEhlYWx0aCBjaGVja3MKClRoZSBjb250YWluZXIgaGFzICoqdHdvIHByb2Nlc3NlcyoqIHRoYXQgbXVzdCBib3RoIHN0YXkgYWxpdmU6CjEuICoqU2VydmVyKiogKE5vZGUuanMgRXhwcmVzcyBvbiBwb3J0IDMwMDEpCjIuICoqQ29sbGVjdG9yKiogKE5vZGUuanMgZm9yIGRvY3VtZW50IHByb2Nlc3NpbmcpCgojIyMgQ29udGFpbmVyIGhlYWx0aApgYGBiYXNoCmRvY2tlciBwcwojIFNUQVRVUyBjb2x1bW4gc2hvd3M6ICJVcCBYIG1pbnV0ZXMgKGhlYWx0aHkpIiBvciAiVXAgWCBtaW51dGVzICh1bmhlYWx0aHkpIgpgYGAKCiMjIyBIZWFsdGhjaGVjayBlbmRwb2ludApgYGBiYXNoCiMgc3lzdGVtLmpzIHJlZ2lzdGVycyBhcHAuZ2V0KCIvcGluZyIsIC4uLikgb24gdGhlIGFwaVJvdXRlciwgYW5kCiMgc2VydmVyL2luZGV4LmpzIG1vdW50cyBhcGlSb3V0ZXIgdW5kZXIgL2FwaSDihpIgcmVhbCBwYXRoIGlzIC9hcGkvcGluZwpjdXJsIGh0dHA6Ly9sb2NhbGhvc3Q6MzAwMS9hcGkvcGluZwojIFJldHVybnM6IHsib25saW5lIjp0cnVlfSAoSFRUUCAyMDApCmBgYAoK4pyFICoqTm90ZToqKiBUaGUgZW5kcG9pbnQgaXMgYC9hcGkvcGluZ2AuIGBkb2NrZXIvZG9ja2VyLWhlYWx0aGNoZWNrLnNoYCBhbHJlYWR5CmNoZWNrcyBgL2FwaS9waW5nYCwgd2hpY2ggbWF0Y2hlcyB0aGUgY29kZS4gRWFybGllciBkcmFmdHMgb2YgdGhpcyBkb2MgY2xhaW1lZAp0aGUgZW5kcG9pbnQgd2FzIGAvcGluZ2AgYXQgcm9vdCDigJQgdGhhdCB3YXMgaW5jb3JyZWN0LgoKIyMjIE1hbnVhbCBjaGVja3MKYGBgYmFzaAojIElzIHRoZSBzZXJ2ZXIgcnVubmluZz8KZG9ja2VyIGV4ZWMgb3BlbnNpbi1jaGF0IHBzIGF1eCB8IGdyZXAgIm5vZGUgL2FwcC9zZXJ2ZXIvaW5kZXguanMiCgojIElzIHRoZSBjb2xsZWN0b3IgcnVubmluZz8KZG9ja2VyIGV4ZWMgb3BlbnNpbi1jaGF0IHBzIGF1eCB8IGdyZXAgIm5vZGUgL2FwcC9jb2xsZWN0b3IvaW5kZXguanMiCgojIENoZWNrIGxvZ3MgZm9yIGVycm9ycwpkb2NrZXIgbG9ncyBvcGVuc2luLWNoYXQgMj4mMSB8IGdyZXAgLWlFICJlcnJvcnxjcmFzaHx0aHJvdyIgfCB0YWlsIC0yMAoKIyBWZXJpZnkgYm90aCBwcm9jZXNzZXMKZG9ja2VyIGV4ZWMgb3BlbnNpbi1jaGF0IGJhc2ggLWMgIgogIGlmIHBncmVwIC1mICdub2RlIC9hcHAvc2VydmVyL2luZGV4LmpzJyA+IC9kZXYvbnVsbDsgdGhlbgogICAgZWNobyAnU2VydmVyOiBSVU5OSU5HJwogIGVsc2UKICAgIGVjaG8gJ1NlcnZlcjogRE9XTicKICBmaQogIGlmIHBncmVwIC1mICdub2RlIC9hcHAvY29sbGVjdG9yL2luZGV4LmpzJyA+IC9kZXYvbnVsbDsgdGhlbgogICAgZWNobyAnQ29sbGVjdG9yOiBSVU5OSU5HJwogIGVsc2UKICAgIGVjaG8gJ0NvbGxlY3RvcjogRE9XTicKICBmaQoiCmBgYAoKLS0tCgojIyA2LiBQb2xpdGljaWFuIERCIHN5bmMgKDIxLiBXUCBwcmUtZmxpZ2h0KQoKVGhlIFBvbGl0aWNpYW4tREIgc3RhcnRzIGVtcHR5LiBUaGUgc3luYyBqb2IgcG9wdWxhdGVzIGl0IGZyb20gZXh0ZXJuYWwgQVBJcy4KCiMjIyBSZXF1aXJlbWVudHMKLSBJbnRlcm5ldCBhY2Nlc3MgZnJvbSBjb250YWluZXIgdG86CiAgLSBgaHR0cHM6Ly93d3cuYWJnZW9yZG5ldGVud2F0Y2guZGUvYXBpL3YyLy4uLmAKICAtIGBodHRwczovL3d3dy5idW5kZXN0YWcuZGUvLi4uYCAob3IgRElQIEFQSSBmYWxsYmFjaykKLSBQcmlzbWEgbWlncmF0aW9ucyBhcHBsaWVkIChhdXRvIG9uIGZpcnN0IHN0YXJ0KQotIDItMTAgbWludXRlcyBmb3IgZmlyc3Qgc3luYwoKIyMjIFRyaWdnZXIgbWFudWFsIHN5bmMKYGBgYmFzaAojIEluc2lkZSBjb250YWluZXIKZG9ja2VyIGV4ZWMgb3BlbnNpbi1jaGF0IG5vZGUgL2FwcC9zZXJ2ZXIvam9icy9zeW5jLXBvbGl0aWNpYW4tZGF0YS5qcwoKIyBFeHBlY3RlZCBvdXRwdXQ6CiMgW0J1bmRlc3RhZ0FwaV0gRmV0Y2hpbmcgbWVtYmVycyBmcm9tIGZvcm11bGFyIGVuZHBvaW50IChXUCAyMSkuLi4KIyBbQWJnZW9yZG5ldGVud2F0Y2hBcGldIEZldGNoaW5nIGFsbCBwb2xpdGljaWFucy4uLgojIFtzeW5jLXBvbGl0aWNpYW4tZGF0YV0gUGhhc2UgMTogNzMwIG1lbWJlcnMgcHJvY2Vzc2VkCiMgW3N5bmMtcG9saXRpY2lhbi1kYXRhXSBQaGFzZSAyOiA2MTIgcG9saXRpY2lhbnMgY3JlYXRlZAojIFtzeW5jLXBvbGl0aWNpYW4tZGF0YV0gUGhhc2UgMzogMTI0IHNwZWVjaGVzIHN5bmNlZApgYGAKCiMjIyBWZXJpZnkKYGBgYmFzaAojIENvdW50IHBvbGl0aWNpYW5zCmRvY2tlciBleGVjIG9wZW5zaW4tY2hhdCBzcWxpdGUzIC9hcHAvc2VydmVyL3N0b3JhZ2Uvb3BlbnNpbi5kYiBcCiAgIlNFTEVDVCBDT1VOVCgqKSBGUk9NIHBvbGl0aWNpYW5zIgojIEV4cGVjdGVkOiA3MDArCgojIFNlYXJjaCBmb3IgYSBrbm93biBBZkQgcG9saXRpY2lhbgpjdXJsICJodHRwOi8vbG9jYWxob3N0OjMwMDEvYXBpL3BvbGl0aWNpYW4vc2VhcmNoP3E9V2VpZGVsIgojIEV4cGVjdGVkOiAxKyByZXN1bHRzIChBbGljZSBXZWlkZWwgaXMgQWZEIGNvLWNoYWlyKQoKIyBTdGF0cyBlbmRwb2ludApjdXJsICJodHRwOi8vbG9jYWxob3N0OjMwMDEvYXBpL3BvbGl0aWNpYW4vc3RhdHMiCiMgRXhwZWN0ZWQ6IG5vbi16ZXJvIGNvdW50cyBmb3IgYnVuZGVzdGFnICsgYWJnZW9yZG5ldGVud2F0Y2gKYGBgCgojIyMgQXV0b21hdGljIHN5bmMKLSBCcmVlIHNjaGVkdWxlciBydW5zIHN5bmMgZXZlcnkgNiBob3VycyAoY29uZmlndXJlZCBpbiBgQmFja2dyb3VuZFdvcmtlcnMvaW5kZXguanNgKQotIFNlZSBgZG9jcy9EQVRBLVNPVVJDRVMubWRgIGZvciB0aGUgYXJjaGl0ZWN0dXJlCgojIyMgRW52IHZhcnMKLSBgQlVOREVTVEFHX1dBSExQRVJJT0RFPTIxYCAoZGVmYXVsdCkKLSBgQVdfUEFSTElBTUVOVF9QRVJJT0Q9MTMyYCAoMjEuIFdQKQotIGBQT0xJVElDSUFOX1NZTkNfU0lUVElOR1NfUEVSX1JVTj01YCAoUGxlbmFycHJvdG9rb2xsZSkKCi0tLQoKIyMgNy4gQ29tbW9uIHBpdGZhbGxzCgojIyMgUGl0ZmFsbCAxOiBgZG9ja2VyLy5lbnZgIGlzIGEgZGlyZWN0b3J5CgoqKlN5bXB0b206KioKYGBgCmRvY2tlciBydW4gLi4uIC12IC4vZG9ja2VyLy5lbnY6L2FwcC9zZXJ2ZXIvLmVudgpkb2NrZXI6IEVycm9yIHJlc3BvbnNlIGZyb20gZGFlbW9uOiBpbnZhbGlkIG1vdW50IGNvbmZpZyBmb3IgdHlwZSAiYmluZCI6IGludmFsaWQgbW91bnQgcGF0aDogLi9kb2NrZXIvLmVudgpgYGAKKipDYXVzZToqKiBTb21lb25lIChvciBhIHNjcmlwdCkgYWNjaWRlbnRhbGx5IGNyZWF0ZWQgYSBkaXJlY3RvcnkgYXQgYGRvY2tlci8uZW52YCBpbnN0ZWFkIG9mIGEgZmlsZS4KKipGaXg6KioKYGBgYmFzaApybSAtcmYgZG9ja2VyLy5lbnYKY3AgZG9ja2VyLy5lbnYuZXhhbXBsZSBkb2NrZXIvLmVudgojIEVkaXQgZG9ja2VyLy5lbnYgd2l0aCB2YWxpZCBrZXlzCmNobW9kIDYwMCBkb2NrZXIvLmVudgpgYGAKCiMjIyBQaXRmYWxsIDI6IGBTVE9SQUdFX0RJUmAgbm90IHNldCBpbiBjb250YWluZXIKCioqU3ltcHRvbToqKgpgYGAKPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQrimqDvuI8gIFdBUk5JTkc6IFNUT1JBR0VfRElSIGVudmlyb25tZW50IHZhcmlhYmxlIGlzIG5vdCBzZXQhIOKaoO+4jwo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09ClR5cGVFcnJvciBbRVJSX0lOVkFMSURfQVJHX1RZUEVdOiBUaGUgInBhdGhzWzBdIiBhcmd1bWVudCBtdXN0IGJlIG9mIHR5cGUgc3RyaW5nLiBSZWNlaXZlZCB1bmRlZmluZWQKICAgIGF0IE9iamVjdC5yZXNvbHZlIChub2RlOnBhdGg6MTI3Mjo3KQogICAgYXQgL2FwcC9jb2xsZWN0b3IvdXRpbHMvZmlsZXMvaW5kZXguanM6MTM6MTIKYGBgCioqQ2F1c2U6KiogYFNUT1JBR0VfRElSYCBub3QgcGFzc2VkIHZpYSBgLWVgIG9yIGBlbnZfZmlsZWAuCioqRml4OioqIEFkZCB0byBkb2NrZXItY29tcG9zZS55bWwgYGVudmlyb25tZW50OmAgc2VjdGlvbiBvciBgZG9ja2VyIHJ1biAtZWAuCgojIyMgUGl0ZmFsbCAzOiBVc2luZyB0aGUgd3JvbmcgaGVhbHRoIGVuZHBvaW50IHBhdGgKCioqU3ltcHRvbToqKiBBIG1hbnVhbCBgY3VybCBodHRwOi8vbG9jYWxob3N0OjMwMDEvcGluZ2AgcmV0dXJucyA0MDQgYW5kIHlvdSB0aGluayB0aGUgc2VydmVyIGlzIGJyb2tlbi4KKipDYXVzZToqKiBgYXBwLmdldCgiL3BpbmciLCAuLi4pYCBpcyByZWdpc3RlcmVkIG9uIHRoZSBgYXBpUm91dGVyYCwgd2hpY2ggYHNlcnZlci9pbmRleC5qc2AgbW91bnRzIHVuZGVyIGAvYXBpYC4gVGhlIHJlYWwgcGF0aCBpcyB0aGVyZWZvcmUgYC9hcGkvcGluZ2AsIG5vdCBgL3BpbmdgLgoqKkZpeDoqKiBVc2UgYGN1cmwgaHR0cDovL2xvY2FsaG9zdDozMDAxL2FwaS9waW5nYC4gYGRvY2tlci9kb2NrZXItaGVhbHRoY2hlY2suc2hgIGFscmVhZHkgdXNlcyB0aGUgY29ycmVjdCBgL2FwaS9waW5nYCBwYXRoLgoKIyMjIFBpdGZhbGwgNDogYFNJR19LRVk9J3Bhc3NwaHJhc2UnYCBpbiAuZW52LmV4YW1wbGUgaXMgdG9vIHNob3J0CgoqKlN5bXB0b206KiogRW5jcnlwdGlvbk1hbmFnZXIgbG9ncyBgU2VsZi1hc3NpZ25pbmcga2V5ICYgc2FsdGAgYW5kIGR1bXBzIGEgbmV3IGtleSB0byAuZW52IG9uIGV2ZXJ5IHJlc3RhcnQg4oCUIGJ1dCBkYXRhIGVuY3J5cHRlZCB3aXRoIG9sZCBrZXkgaXMgbG9zdC4KKipGaXg6KiogR2VuZXJhdGUgYSAzMisgY2hhciByYW5kb20ga2V5OgpgYGBiYXNoClNJR19LRVk9JChvcGVuc3NsIHJhbmQgLWhleCAzMikgICMgNjQgaGV4IGNoYXJzCmBgYAoKIyMjIFBpdGZhbGwgNTogVm9sdW1lIG1vdW50IHBlcm1pc3Npb25zCgoqKlN5bXB0b206KioKYGBgCkVycm9yOiBFQUNDRVM6IHBlcm1pc3Npb24gZGVuaWVkLCBvcGVuICcvYXBwL3NlcnZlci9zdG9yYWdlL29wZW5zaW4uZGInCmBgYAoqKkNhdXNlOioqIFVJRCBtaXNtYXRjaCBiZXR3ZWVuIGhvc3QgYW5kIGNvbnRhaW5lci4KKipGaXg6KiogTWF0Y2ggYFVJRGAgYW5kIGBHSURgIGluIGAuZW52YCB0byB5b3VyIGhvc3QgdXNlcjoKYGBgYmFzaAojIEdldCBob3N0IFVJRDpHSUQKaWQgLXUgICMgZS5nLiAxMDAwCmlkIC1nICAjIGUuZy4gMTAwMAojIFNldCBpbiBkb2NrZXIvLmVudgpVSUQ9JzEwMDAnCkdJRD0nMTAwMCcKYGBgCgojIyMgUGl0ZmFsbCA2OiBgaG9zdC5kb2NrZXIuaW50ZXJuYWxgIG5vdCByZXNvbHZpbmcgb24gTGludXgKCioqU3ltcHRvbToqKiBDb250YWluZXIgY2FuJ3QgcmVhY2ggc2VydmljZXMgb24gaG9zdCAoZS5nLiBsb2NhbCBPbGxhbWEpLgoqKkZpeDoqKiBBZGQgYC0tYWRkLWhvc3Q9aG9zdC5kb2NrZXIuaW50ZXJuYWw6aG9zdC1nYXRld2F5YCB0byBgZG9ja2VyIHJ1bmAsIG9yIGBleHRyYV9ob3N0czpgIHRvIGNvbXBvc2UuCgotLS0KCiMjIDguIFRyb3VibGVzaG9vdGluZwoKIyMjIENvbnRhaW5lciB3b24ndCBzdGFydApgYGBiYXNoCmRvY2tlciBsb2dzIG9wZW5zaW4tY2hhdCAyPiYxIHwgdGFpbCAtNTAKIyBMb29rIGZvcjogVHlwZUVycm9yLCBFcnJvcjogRUFDQ0VTLCBFTk9FTlQsIEVDT05OUkVGVVNFRApgYGAKCiMjIyBIZWFsdGhjaGVjayBmYWlscyBidXQgc2VydmVyIHJ1bnMKYGBgYmFzaAojIE1hbnVhbGx5IHRlc3QgZW5kcG9pbnQKZG9ja2VyIGV4ZWMgb3BlbnNpbi1jaGF0IGN1cmwgaHR0cDovL2xvY2FsaG9zdDozMDAxL2FwaS9waW5nCiMgU2hvdWxkIHJldHVybjogeyJvbmxpbmUiOnRydWV9CgojIElmIHdvcmtzIG1hbnVhbGx5IGJ1dCBoZWFsdGhjaGVjayBmYWlsczoKZG9ja2VyIGV4ZWMgb3BlbnNpbi1jaGF0IGJhc2ggL3Vzci9sb2NhbC9iaW4vZG9ja2VyLWhlYWx0aGNoZWNrLnNoCiMgU2VlIHRoZSBlcnJvciBvdXRwdXQKYGBgCgojIyMgRGF0YWJhc2UgbG9ja2VkCmBgYGJhc2gKZG9ja2VyIHN0b3Agb3BlbnNpbi1jaGF0CmRvY2tlciBzdGFydCBvcGVuc2luLWNoYXQKIyBJZiBwZXJzaXN0cywgY2hlY2sgZm9yIHpvbWJpZSBwcm9jZXNzZXMKZG9ja2VyIGV4ZWMgb3BlbnNpbi1jaGF0IHBzIGF1eCB8IGdyZXAgLUUgIm5vZGV8cHJpc21hIgpgYGAKCiMjIyBTeW5jIGpvYiBjcmFzaGVzCmBgYGJhc2gKZG9ja2VyIGV4ZWMgb3BlbnNpbi1jaGF0IHRhaWwgLWYgL2FwcC9zZXJ2ZXIvc3RvcmFnZS9sb2dzL3BvbGl0aWNpYW4tc3luYy5sb2cKIyBMb29rIGZvciBIVFRQIDQwNCwgNDI5LCA1MDAKIyBTZWUgZG9jcy9EQVRBLVNPVVJDRVMubWQgZm9yIEFQSSBsaW1pdHMKYGBgCgojIyMgT3V0IG9mIGRpc2sgc3BhY2UKYGBgYmFzaApkb2NrZXIgc3lzdGVtIGRmCiMgQ2xlYW4gdXAgb2xkIGltYWdlcwpkb2NrZXIgaW1hZ2UgcHJ1bmUgLWEKIyBDbGVhbiB1cCB1bnVzZWQgdm9sdW1lcyAoQ0FSRUZVTCkKZG9ja2VyIHZvbHVtZSBwcnVuZQpgYGAKCiMjIyBSZXNldCBldmVyeXRoaW5nIChEQU5HRVI6IGRhdGEgbG9zcykKYGBgYmFzaApkb2NrZXIgc3RvcCBvcGVuc2luLWNoYXQKZG9ja2VyIHJtIG9wZW5zaW4tY2hhdApkb2NrZXIgdm9sdW1lIHJtIG9wZW5zaW4tY2hhdC1zdG9yYWdlICAjIERFTEVURVMgQUxMIERBVEEKZG9ja2VyIHJ1biAuLi4gICMgUmVjcmVhdGUKYGBgCgotLS0KCiMjIDkuIFJvbGxiYWNrIHN0cmF0ZWd5CgojIyMgUm9sbGJhY2sgdG8gcHJldmlvdXMgaW1hZ2UKYGBgYmFzaAojIExpc3QgYXZhaWxhYmxlIGltYWdlcwpkb2NrZXIgaW1hZ2VzIHwgZ3JlcCBvcGVuc2luLWNoYXQKCiMgU3RvcCBjdXJyZW50IGNvbnRhaW5lcgpkb2NrZXIgc3RvcCBvcGVuc2luLWNoYXQgJiYgZG9ja2VyIHJtIG9wZW5zaW4tY2hhdAoKIyBSdW4gcHJldmlvdXMgdmVyc2lvbgpkb2NrZXIgcnVuIC1kIC0tbmFtZSBvcGVuc2luLWNoYXQgLXAgMzAwMTozMDAxIFwKICAtLWNhcC1hZGQgU1lTX0FETUlOIFwKICAtdiAkU1RPUkFHRV9MT0NBVElPTjovYXBwL3NlcnZlci9zdG9yYWdlIFwKICAtdiAkU1RPUkFHRV9MT0NBVElPTi8uZW52Oi9hcHAvc2VydmVyLy5lbnYgXAogIC1lIFNUT1JBR0VfRElSPS9hcHAvc2VydmVyL3N0b3JhZ2UgXAogIG9wZW5zaW4tY2hhdDpsb2NhbC12NyAgIyBwcmV2aW91cyB0YWcKYGBgCgojIyMgUm9sbGJhY2sgY29kZQpgYGBiYXNoCmNkIC9wYXRoL3RvL3JlcG8KZ2l0IGxvZyAtLW9uZWxpbmUgLTEwICAjIEZpbmQgbGFzdCBnb29kIGNvbW1pdApnaXQgY2hlY2tvdXQgPGNvbW1pdC1oYXNoPgpjZCBkb2NrZXIKZG9ja2VyIGNvbXBvc2UgdXAgLWQgLS1idWlsZApgYGAKCiMjIyBEYXRhIG1pZ3JhdGlvbiBiZXR3ZWVuIHZlcnNpb25zCk1vc3QgdXBkYXRlcyBwcmVzZXJ2ZSBkYXRhYmFzZSBzY2hlbWEuIEZvciBtYWpvciBtaWdyYXRpb25zOgpgYGBiYXNoCiMgQmVmb3JlIHVwZ3JhZGU6IGJhY2t1cApjcCAkU1RPUkFHRV9MT0NBVElPTi9vcGVuc2luLmRiICRTVE9SQUdFX0xPQ0FUSU9OL29wZW5zaW4uZGIuYmFrLiQoZGF0ZSArJVklbSVkKQoKIyBBZnRlciB1cGdyYWRlOiBjaGVjayBsb2dzCmRvY2tlciBsb2dzIG9wZW5zaW4tY2hhdCAyPiYxIHwgZ3JlcCAtaUUgIm1pZ3JhdGlvbnxzY2hlbWEiCmBgYAoKLS0tCgojIyAxMC4gQ0kvQ0QgaW50ZWdyYXRpb24KCkZvciBwcm9kdWN0aW9uIGRlcGxveW1lbnRzIHZpYSBHaXRIdWIgQWN0aW9ucywgc2VlOgotIGAuZ2l0aHViL3dvcmtmbG93cy9yZWxlYXNlLnltbGAg4oCUIFJlbGVhc2UgcGlwZWxpbmUKLSBgLmdpdGh1Yi93b3JrZmxvd3MvY2VvLWF1ZGl0LnltbGAg4oCUIFByZS1yZWxlYXNlIHF1YWxpdHkgY2hlY2sKLSBgLmdpdGh1Yi93b3JrZmxvd3Mvc2JvbS55bWxgIOKAlCBTQk9NIGdlbmVyYXRpb24KCiMjIyBSZWNvbW1lbmRlZCBwcmUtZGVwbG95IGNoZWNrcwoxLiDinIUgYG5wbSBhdWRpdGAgc2hvd3MgMCB2dWxuZXJhYmlsaXRpZXMKMi4g4pyFIGBucG0gdGVzdGAgYWxsIHN1aXRlcyBwYXNzaW5nCjMuIOKchSBgY2Vva2l0IGF1ZGl0YCBncmFkZSBCKyBvciBiZXR0ZXIKNC4g4pyFIFNCT00gZ2VuZXJhdGVkCjUuIOKchSBEYXRhYmFzZSBtaWdyYXRpb25zIHRlc3RlZCBvbiBzdGFnaW5nCgotLS0KCiMjIFF1aWNrIHJlZmVyZW5jZQoKfCBUYXNrIHwgQ29tbWFuZCB8CnwtLS0tLS18LS0tLS0tLS0tfAp8IEJ1aWxkIGltYWdlIHwgYGRvY2tlciBidWlsZCAtZiBkb2NrZXIvRG9ja2VyZmlsZSAtdCBvcGVuc2luLWNoYXQ6Y3VzdG9tIC4vYCB8CnwgUnVuIGNvbnRhaW5lciB8IGBkb2NrZXIgcnVuIC1kIC0tbmFtZSBvcGVuc2luLWNoYXQgLXAgMzAwMTozMDAxIC0tY2FwLWFkZCBTWVNfQURNSU4gLWUgU1RPUkFHRV9ESVI9L2FwcC9zZXJ2ZXIvc3RvcmFnZSAtdiAkU1RPUkFHRV9MT0NBVElPTjovYXBwL3NlcnZlci9zdG9yYWdlIG9wZW5zaW4vb3BlbnNpbi1jaGF0OmxhdGVzdGAgfAp8IFZpZXcgbG9ncyB8IGBkb2NrZXIgbG9ncyAtZiBvcGVuc2luLWNoYXRgIHwKfCBSZXN0YXJ0IHwgYGRvY2tlciByZXN0YXJ0IG9wZW5zaW4tY2hhdGAgfAp8IEhlYWx0aCBjaGVjayB8IGBjdXJsIGh0dHA6Ly9sb2NhbGhvc3Q6MzAwMS9hcGkvcGluZ2AgfAp8IFRyaWdnZXIgc3luYyB8IGBkb2NrZXIgZXhlYyBvcGVuc2luLWNoYXQgbm9kZSAvYXBwL3NlcnZlci9qb2JzL3N5bmMtcG9saXRpY2lhbi1kYXRhLmpzYCB8CnwgQmFja3VwIERCIHwgYGNwICRTVE9SQUdFX0xPQ0FUSU9OL29wZW5zaW4uZGIgYmFja3VwLmRiYCB8CnwgUmVzdG9yZSBEQiB8IGBjcCBiYWNrdXAuZGIgJFNUT1JBR0VfTE9DQVRJT04vb3BlbnNpbi5kYiAmJiBkb2NrZXIgcmVzdGFydCBvcGVuc2luLWNoYXRgIHwKfCBTdG9wIHwgYGRvY2tlciBzdG9wIG9wZW5zaW4tY2hhdGAgfAp8IFJlbW92ZSB8IGBkb2NrZXIgcm0gb3BlbnNpbi1jaGF0YCB8CgotLS0KCioqTGFzdCB1cGRhdGVkOioqIDIwMjYtMDYtMDgKKipWZXJzaW9uOioqIDEuMAoqKlN0YXR1czoqKiBQcm9kdWN0aW9uLXJlYWR5IChhZnRlciBJc3N1ZSAjODYgZml4KQo=
+# OpenSIN Chat — Docker Deployment Guide
+
+> **Purpose:** Production-ready Docker deployment for OpenSIN Chat with all known issues, health-checks, and the politician-DB sync pre-flight documented.
+>
+> **Docs:** `DOCKER-DEPLOYMENT.doc.md` (this file)
+> **Related:** `docker/HOW_TO_USE_DOCKER.md`, `docs/architecture.md`, `docs/DATA-SOURCES.md`
+
+---
+
+## Overview
+
+This guide covers:
+
+1. **Pre-flight:** Disk, RAM, and architecture requirements
+2. **Quick start:** `docker run` (single-container, no compose)
+3. **docker-compose:** Multi-container with persistent storage
+4. **Build from source:** Custom image with current `main` branch
+5. **Health checks:** Verifying the container is fully running (server + collector)
+6. **Politician DB sync:** Pre-flight for the 21. Wahlperiode
+7. **Common pitfalls:** STORAGE_DIR, /api/ping endpoint path, .env file vs directory
+8. **Troubleshooting:** Logs, port conflicts, permission issues
+9. **Rollback strategy:** How to revert to a previous image
+
+---
+
+## 1. Pre-flight
+
+### Hardware
+- **RAM:** 2 GB minimum, 4 GB recommended (LLM-embedding engine loads models on startup)
+- **Disk:** 10 GB minimum (storage grows with documents/vectors/embeddings)
+- **CPU:** arm64 or amd64 supported (multi-arch images built)
+
+### Software
+- **Docker Engine 20.10+** (Linux) or **Docker Desktop 4.0+** (Mac/Win)
+  - macOS: Prefer **OrbStack** over Docker Desktop (less resource-heavy)
+  - Required feature: `host.docker.internal` resolution
+- **Optional:** `docker-compose` v2 (bundled with Docker Desktop)
+
+### LLM Backend
+- Either local (Ollama, LMStudio, LocalAI) on host
+- Or cloud API keys (OpenAI, Anthropic, Gemini, etc.)
+- See `docker/.env.example` for full list of providers
+
+---
+
+## 2. Quick start: `docker run`
+
+Simplest deployment — single container, storage in a bind mount.
+
+```bash
+# 1. Create storage directory on host
+export STORAGE_LOCATION=$HOME/opensin-chat
+mkdir -p $STORAGE_LOCATION
+
+# 2. Generate encryption keys (REQUIRED)
+# SIG_KEY: 64 hex chars (32 bytes)
+# SIG_SALT: 32 hex chars (16 bytes)
+export SIG_KEY=$(openssl rand -hex 32)
+export SIG_SALT=$(openssl rand -hex 16)
+
+# 3. Create .env file in storage dir
+cat > $STORAGE_LOCATION/.env <<EOF
+SIG_KEY='${SIG_KEY}'
+SIG_SALT='${SIG_SALT}'
+STORAGE_DIR="/app/server/storage"
+SERVER_PORT=3001
+DISABLE_TELEMETRY=true
+OPENSIN_CHAT_RUNTIME=docker
+EOF
+
+# 4. Run container
+docker run -d --name opensin-chat \
+  -p 3001:3001 \
+  --cap-add SYS_ADMIN \
+  -v $STORAGE_LOCATION:/app/server/storage \
+  -v $STORAGE_LOCATION/.env:/app/server/.env \
+  -e STORAGE_DIR=/app/server/storage \
+  -e SIG_KEY=${SIG_KEY} \
+  -e SIG_SALT=${SIG_SALT} \
+  opensin/opensin-chat:latest
+
+# 5. Verify
+sleep 30
+docker ps  # Status: healthy
+curl http://localhost:3001/api/ping  # {"online":true}
+```
+
+### Windows (PowerShell)
+
+```powershell
+$env:STORAGE_LOCATION="$env:USERPROFILE\openafd"
+New-Item -ItemType Directory -Path $env:STORAGE_LOCATION -Force
+
+$env:SIG_KEY = -join ((1..64) | ForEach-Object { '{0:x}' -f (Get-Random -Max 16) })
+$env:SIG_SALT = -join ((1..32) | ForEach-Object { '{0:x}' -f (Get-Random -Max 16) })
+
+@"
+SIG_KEY='$env:SIG_KEY'
+SIG_SALT='$env:SIG_SALT'
+STORAGE_DIR='/app/server/storage'
+"@ | Out-File "$env:STORAGE_LOCATION\.env" -Encoding utf8
+
+docker run -d --name opensin-chat -p 3001:3001 --cap-add SYS_ADMIN `
+  -v "$env:STORAGE_LOCATION`:/app/server/storage" `
+  -v "$env:STORAGE_LOCATION\.env:/app/server/.env" `
+  -e STORAGE_DIR=/app/server/storage `
+  opensin/opensin-chat:latest
+```
+
+---
+
+## 3. docker-compose (recommended for production)
+
+`docker/docker-compose.yml`:
+
+```yaml
+name: opensin-chat
+
+networks:
+  opensin-chat:
+    driver: bridge
+
+services:
+  opensin-chat:
+    container_name: opensin-chat
+    build:
+      context: ../.
+      dockerfile: ./docker/Dockerfile
+      args:
+        ARG_UID: ${UID:-1000}
+        ARG_GID: ${GID:-1000}
+    cap_add:
+      - SYS_ADMIN
+    volumes:
+      - "./.env:/app/server/.env"            # ← CRITICAL: must be a FILE, not a directory
+      - "../server/storage:/app/server/storage"
+      - "../collector/hotdir/:/app/collector/hotdir"
+      - "../collector/outputs/:/app/collector/outputs"
+    user: "${UID:-1000}:${GID:-1000}"
+    ports:
+      - "3001:3001"
+    environment:                              # ← CRITICAL: these are required
+      - STORAGE_DIR=/app/server/storage
+      - SERVER_PORT=3001
+      - OPENSIN_CHAT_RUNTIME=docker
+      - DISABLE_TELEMETRY=true
+    env_file:
+      - .env
+    networks:
+      - opensin-chat
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "/bin/bash", "/usr/local/bin/docker-healthcheck.sh"]
+      interval: 1m
+      timeout: 10s
+      start_period: 1m
+      retries: 3
+```
+
+### .env file (in `docker/.env`)
+
+This file **MUST be a file, not a directory** (see Common Pitfall #1 below).
+
+```bash
+# Generate keys
+SIG_KEY=$(openssl rand -hex 32)  # 64 hex chars
+SIG_SALT=$(openssl rand -hex 16)  # 32 hex chars
+JWT_SECRET=$(openssl rand -hex 24)  # 48 hex chars (auto-extended to 64 on boot)
+
+cat > docker/.env <<EOF
+SERVER_PORT=3001
+STORAGE_DIR="/app/server/storage"
+UID='1000'
+GID='1000'
+
+# Required encryption keys (generated)
+SIG_KEY='${SIG_KEY}'
+SIG_SALT='${SIG_SALT}'
+JWT_SECRET="${JWT_SECRET}"
+JWT_EXPIRY="30d"
+
+# Telemetry
+DISABLE_TELEMETRY=true
+OPENSIN_CHAT_RUNTIME=docker
+
+# LLM (uncomment one provider)
+# LLM_PROVIDER='openai'
+# OPEN_AI_KEY='sk-...'
+# OPEN_MODEL_PREF='gpt-4o'
+EOF
+
+chmod 600 docker/.env
+```
+
+### Start
+
+```bash
+cd docker
+docker compose up -d --build
+# Wait ~5-10 min for build (first time)
+docker ps
+# Status: healthy
+docker compose logs -f opensin-chat  # Ctrl-C to exit
+```
+
+---
+
+## 4. Build from source
+
+For development or custom modifications.
+
+```bash
+# 1. Clone repo
+git clone https://github.com/Family-Team-Projects/OpenSIN-Chat.git
+cd OpenSIN-Chat
+
+# 2. Checkout version
+git checkout main  # or a tagged version like v1.2.3
+
+# 3. Create storage and .env (see Quick Start above)
+mkdir -p server/storage
+cd docker
+cp .env.example .env
+# Edit docker/.env to add SIG_KEY, SIG_SALT, etc.
+cd ..
+
+# 4. Build image (multi-arch: arm64 + amd64)
+cd docker
+docker build -f Dockerfile -t opensin-chat:custom ../
+# Build takes 5-15 min depending on cache
+
+# 5. Run with custom image
+docker run -d --name opensin-chat-dev -p 3001:3001 \
+  --cap-add SYS_ADMIN \
+  -v $(pwd)/../server/storage:/app/server/storage \
+  -v $(pwd)/.env:/app/server/.env \
+  -e STORAGE_DIR=/app/server/storage \
+  opensin-chat:custom
+```
+
+### Build cache tips
+- **First build:** 15-20 min (downloads node, yarn, deps)
+- **Subsequent builds:** 1-3 min (uses Docker layer cache)
+- **Clean rebuild:** `docker build --no-cache -f docker/Dockerfile -t opensin-chat:custom ./`
+
+---
+
+## 5. Health checks
+
+The container has **two processes** that must both stay alive:
+1. **Server** (Node.js Express on port 3001)
+2. **Collector** (Node.js for document processing)
+
+### Container health
+```bash
+docker ps
+# STATUS column shows: "Up X minutes (healthy)" or "Up X minutes (unhealthy)"
+```
+
+### Healthcheck endpoint
+```bash
+# system.js registers app.get("/ping", ...) on the apiRouter, and
+# server/index.js mounts apiRouter under /api → real path is /api/ping
+curl http://localhost:3001/api/ping
+# Returns: {"online":true} (HTTP 200)
+```
+
+✅ **Note:** The endpoint is `/api/ping`. `docker/docker-healthcheck.sh` already
+checks `/api/ping`, which matches the code. Earlier drafts of this doc claimed
+the endpoint was `/ping` at root — that was incorrect.
+
+### Manual checks
+```bash
+# Is the server running?
+docker exec opensin-chat ps aux | grep "node /app/server/index.js"
+
+# Is the collector running?
+docker exec opensin-chat ps aux | grep "node /app/collector/index.js"
+
+# Check logs for errors
+docker logs opensin-chat 2>&1 | grep -iE "error|crash|throw" | tail -20
+
+# Verify both processes
+docker exec opensin-chat bash -c "
+  if pgrep -f 'node /app/server/index.js' > /dev/null; then
+    echo 'Server: RUNNING'
+  else
+    echo 'Server: DOWN'
+  fi
+  if pgrep -f 'node /app/collector/index.js' > /dev/null; then
+    echo 'Collector: RUNNING'
+  else
+    echo 'Collector: DOWN'
+  fi
+"
+```
+
+---
+
+## 6. Politician DB sync (21. WP pre-flight)
+
+The Politician-DB starts empty. The sync job populates it from external APIs.
+
+### Requirements
+- Internet access from container to:
+  - `https://www.abgeordnetenwatch.de/api/v2/...`
+  - `https://www.bundestag.de/...` (or DIP API fallback)
+- Prisma migrations applied (auto on first start)
+- 2-10 minutes for first sync
+
+### Trigger manual sync
+```bash
+# Inside container
+docker exec opensin-chat node /app/server/jobs/sync-politician-data.js
+
+# Expected output:
+# [BundestagApi] Fetching members from formular endpoint (WP 21)...
+# [AbgeordnetenwatchApi] Fetching all politicians...
+# [sync-politician-data] Phase 1: 730 members processed
+# [sync-politician-data] Phase 2: 612 politicians created
+# [sync-politician-data] Phase 3: 124 speeches synced
+```
+
+### Verify
+```bash
+# Count politicians
+docker exec opensin-chat sqlite3 /app/server/storage/opensin.db \
+  "SELECT COUNT(*) FROM politicians"
+# Expected: 700+
+
+# Search for a known AfD politician
+curl "http://localhost:3001/api/politician/search?q=Weidel"
+# Expected: 1+ results (Alice Weidel is AfD co-chair)
+
+# Stats endpoint
+curl "http://localhost:3001/api/politician/stats"
+# Expected: non-zero counts for bundestag + abgeordnetenwatch
+```
+
+### Automatic sync
+- Bree scheduler runs sync every 6 hours (configured in `BackgroundWorkers/index.js`)
+- See `docs/DATA-SOURCES.md` for the architecture
+
+### Env vars
+- `BUNDESTAG_WAHLPERIODE=21` (default)
+- `AW_PARLIAMENT_PERIOD=132` (21. WP)
+- `POLITICIAN_SYNC_SITTINGS_PER_RUN=5` (Plenarprotokolle)
+
+---
+
+## 7. Common pitfalls
+
+### Pitfall 1: `docker/.env` is a directory
+
+**Symptom:**
+```
+docker run ... -v ./docker/.env:/app/server/.env
+docker: Error response from daemon: invalid mount config for type "bind": invalid mount path: ./docker/.env
+```
+**Cause:** Someone (or a script) accidentally created a directory at `docker/.env` instead of a file.
+**Fix:**
+```bash
+rm -rf docker/.env
+cp docker/.env.example docker/.env
+# Edit docker/.env with valid keys
+chmod 600 docker/.env
+```
+
+### Pitfall 2: `STORAGE_DIR` not set in container
+
+**Symptom:**
+```
+================================================================
+⚠️  WARNING: STORAGE_DIR environment variable is not set! ⚠️
+================================================================
+TypeError [ERR_INVALID_ARG_TYPE]: The "paths[0]" argument must be of type string. Received undefined
+    at Object.resolve (node:path:1272:7)
+    at /app/collector/utils/files/index.js:13:12
+```
+**Cause:** `STORAGE_DIR` not passed via `-e` or `env_file`.
+**Fix:** Add to docker-compose.yml `environment:` section or `docker run -e`.
+
+### Pitfall 3: Using the wrong health endpoint path
+
+**Symptom:** A manual `curl http://localhost:3001/ping` returns 404 and you think the server is broken.
+**Cause:** `app.get("/ping", ...)` is registered on the `apiRouter`, which `server/index.js` mounts under `/api`. The real path is therefore `/api/ping`, not `/ping`.
+**Fix:** Use `curl http://localhost:3001/api/ping`. `docker/docker-healthcheck.sh` already uses the correct `/api/ping` path.
+
+### Pitfall 4: `SIG_KEY='passphrase'` in .env.example is too short
+
+**Symptom:** EncryptionManager logs `Self-assigning key & salt` and dumps a new key to .env on every restart — but data encrypted with old key is lost.
+**Fix:** Generate a 32+ char random key:
+```bash
+SIG_KEY=$(openssl rand -hex 32)  # 64 hex chars
+```
+
+### Pitfall 5: Volume mount permissions
+
+**Symptom:**
+```
+Error: EACCES: permission denied, open '/app/server/storage/opensin.db'
+```
+**Cause:** UID mismatch between host and container.
+**Fix:** Match `UID` and `GID` in `.env` to your host user:
+```bash
+# Get host UID:GID
+id -u  # e.g. 1000
+id -g  # e.g. 1000
+# Set in docker/.env
+UID='1000'
+GID='1000'
+```
+
+### Pitfall 6: `host.docker.internal` not resolving on Linux
+
+**Symptom:** Container can't reach services on host (e.g. local Ollama).
+**Fix:** Add `--add-host=host.docker.internal:host-gateway` to `docker run`, or `extra_hosts:` to compose.
+
+---
+
+## 8. Troubleshooting
+
+### Container won't start
+```bash
+docker logs opensin-chat 2>&1 | tail -50
+# Look for: TypeError, Error: EACCES, ENOENT, ECONNREFUSED
+```
+
+### Healthcheck fails but server runs
+```bash
+# Manually test endpoint
+docker exec opensin-chat curl http://localhost:3001/api/ping
+# Should return: {"online":true}
+
+# If works manually but healthcheck fails:
+docker exec opensin-chat bash /usr/local/bin/docker-healthcheck.sh
+# See the error output
+```
+
+### Database locked
+```bash
+docker stop opensin-chat
+docker start opensin-chat
+# If persists, check for zombie processes
+docker exec opensin-chat ps aux | grep -E "node|prisma"
+```
+
+### Sync job crashes
+```bash
+docker exec opensin-chat tail -f /app/server/storage/logs/politician-sync.log
+# Look for HTTP 404, 429, 500
+# See docs/DATA-SOURCES.md for API limits
+```
+
+### Out of disk space
+```bash
+docker system df
+# Clean up old images
+docker image prune -a
+# Clean up unused volumes (CAREFUL)
+docker volume prune
+```
+
+### Reset everything (DANGER: data loss)
+```bash
+docker stop opensin-chat
+docker rm opensin-chat
+docker volume rm opensin-chat-storage  # DELETES ALL DATA
+docker run ...  # Recreate
+```
+
+---
+
+## 9. Rollback strategy
+
+### Rollback to previous image
+```bash
+# List available images
+docker images | grep opensin-chat
+
+# Stop current container
+docker stop opensin-chat && docker rm opensin-chat
+
+# Run previous version
+docker run -d --name opensin-chat -p 3001:3001 \
+  --cap-add SYS_ADMIN \
+  -v $STORAGE_LOCATION:/app/server/storage \
+  -v $STORAGE_LOCATION/.env:/app/server/.env \
+  -e STORAGE_DIR=/app/server/storage \
+  opensin-chat:local-v7  # previous tag
+```
+
+### Rollback code
+```bash
+cd /path/to/repo
+git log --oneline -10  # Find last good commit
+git checkout <commit-hash>
+cd docker
+docker compose up -d --build
+```
+
+### Data migration between versions
+Most updates preserve database schema. For major migrations:
+```bash
+# Before upgrade: backup
+cp $STORAGE_LOCATION/opensin.db $STORAGE_LOCATION/opensin.db.bak.$(date +%Y%m%d)
+
+# After upgrade: check logs
+docker logs opensin-chat 2>&1 | grep -iE "migration|schema"
+```
+
+---
+
+## 10. CI/CD integration
+
+For production deployments via GitHub Actions, see:
+- `.github/workflows/release.yml` — Release pipeline
+- `.github/workflows/ceo-audit.yml` — Pre-release quality check
+- `.github/workflows/sbom.yml` — SBOM generation
+
+### Recommended pre-deploy checks
+1. ✅ `npm audit` shows 0 vulnerabilities
+2. ✅ `npm test` all suites passing
+3. ✅ `ceokit audit` grade B+ or better
+4. ✅ SBOM generated
+5. ✅ Database migrations tested on staging
+
+---
+
+## Quick reference
+
+| Task | Command |
+|------|---------|
+| Build image | `docker build -f docker/Dockerfile -t opensin-chat:custom ./` |
+| Run container | `docker run -d --name opensin-chat -p 3001:3001 --cap-add SYS_ADMIN -e STORAGE_DIR=/app/server/storage -v $STORAGE_LOCATION:/app/server/storage opensin/opensin-chat:latest` |
+| View logs | `docker logs -f opensin-chat` |
+| Restart | `docker restart opensin-chat` |
+| Health check | `curl http://localhost:3001/api/ping` |
+| Trigger sync | `docker exec opensin-chat node /app/server/jobs/sync-politician-data.js` |
+| Backup DB | `cp $STORAGE_LOCATION/opensin.db backup.db` |
+| Restore DB | `cp backup.db $STORAGE_LOCATION/opensin.db && docker restart opensin-chat` |
+| Stop | `docker stop opensin-chat` |
+| Remove | `docker rm opensin-chat` |
+
+---
+
+**Last updated:** 2026-06-08
+**Version:** 1.0
+**Status:** Production-ready (after Issue #86 fix)

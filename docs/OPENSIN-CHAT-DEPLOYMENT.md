@@ -1,1 +1,176 @@
-IyBPcGVuU0lOLUNoYXQgRGVwbG95bWVudCDigJQgc2luY2hhdC5kZWxxaGkuY29tCgoqKlppZWw6KiogR2V0cmVubnRlcyBEZXBsb3ltZW50IGbDvHIgT3BlblNJTi1DaGF0LCAqKnVuYWJow6RuZ2lnKiogdm9tIGxhdWZlbmRlbiBgb3BlbmFmZGAgKHNpbmNoYXQuZGVscWhpLmNvbSkuCgoqKldpY2h0aWc6KiogUHJvZHVrdGlvbiBsw6R1ZnQgYXVmIGRlciBPQ0kgVk0gYHNpbi1zdXBhYmFzZWAgKGA5Mi41LjYwLjg3YCksICoqbmljaHQqKiBtZWhyIGF1ZiBkZW0gbG9rYWxlbiBNYWMuIERlciBNYWMtUG9ydCA0MzkzOSBpc3QgbnVyIG5vY2ggZsO8ciBsb2thbGUgRW50d2lja2x1bmcvVGVzdHMuCgotLS0KCiMjIEFyY2hpdGVrdHVyCgp8IEtvbXBvbmVudGUgfCBvcGVuYWZkIChPcmlnaW5hbCkgfCBPcGVuU0lOLUNoYXQgKFByb2R1a3Rpb24pIHwKfC0tLS0tLS0tLS0tLXwtLS0tLS0tLS0tLS0tLS0tLS0tfC0tLS0tLS0tLS0tLS0tLS0tLS18CnwgKipIb3N0KiogfCBsb2thbGVyIE1hYyB8IE9DSSBWTSBgc2luLXN1cGFiYXNlYCAoYDkyLjUuNjAuODdgKSB8CnwgKipDb250YWluZXIqKiB8IGBvcGVuYWZkYCB8IGBvcGVuc2luLWFwcGAgfAp8ICoqSW50ZXJuZXIgUG9ydCoqIHwgMzAwMSB8IDMwMDEgfAp8ICoqRXh0ZXJuZXIgUG9ydCAoSG9zdCkqKiB8IDMwMDEgfCAqKjM4NDcxKiogfAp8ICoqRG9tYWluKiogfCBzaW5jaGF0LmRlbHFoaS5jb20gfCAqKnNpbmNoYXQuZGVscWhpLmNvbSoqIHwKfCAqKkNsb3VkZmxhcmUgVHVubmVsIElEKiogfCBgMzJhYjNiODAtOTRiNC00OTExLWFmZjEtZmFlNWEzZWFlM2M2YCB8IGBhYTZhNDcxNS0xYTRkLTRjZjktYTE3ZS1hZDI3YzUzZmVlOTNgIHwKfCAqKlR1bm5lbCBDb25maWcqKiB8IGB+Ly5jbG91ZGZsYXJlZC9jb25maWctb3BlbnNpbi55bWxgIHwgYH4vLmNsb3VkZmxhcmVkL2NvbmZpZy1vcGVuc2luLnltbGAgKGF1ZiBgc2luLXN1cGFiYXNlYCkgfAp8ICoqU3RvcmFnZSoqIHwgYC4uL3NlcnZlci9zdG9yYWdlYCB8IGAuLi9zZXJ2ZXIvc3RvcmFnZS1vcGVuc2luYCB8CnwgKipIZWFsdGggRW5kcG9pbnQqKiB8IGBodHRwczovL3NpbmNoYXQuZGVscWhpLmNvbS9hcGkvcGluZ2AgfCBgaHR0cHM6Ly9zaW5jaGF0LmRlbHFoaS5jb20vYXBpL3BpbmdgIHwKCi0tLQoKIyMgRG9ja2VyIENvbXBvc2UKCioqQmFzZToqKiBgZG9ja2VyLW9wZW5zaW4vZG9ja2VyLWNvbXBvc2UueW1sYCDigJQgbG9rYWxlIEVudHdpY2tsdW5nIChQb3J0IDQzOTM5LCBDb250YWluZXIgYG9wZW5zaW4tY2hhdGApLgoKKipQcm9kdWt0aW9uOioqIGBkb2NrZXItb3BlbnNpbi9kb2NrZXItY29tcG9zZS5wcm9kdWN0aW9uLnltbGAg4oCUIE9DSSBWTSAoUG9ydCAzODQ3MSwgQ29udGFpbmVyIGBvcGVuc2luLWFwcGAsIG1laHIgQ1BVL1JBTSkuIEJlaWRlIERhdGVpZW4genVzYW1tZW46CgpgYGBiYXNoCmNkIGRvY2tlci1vcGVuc2luCmRvY2tlciBjb21wb3NlIC1mIGRvY2tlci1jb21wb3NlLnltbCAtZiBkb2NrZXItY29tcG9zZS5wcm9kdWN0aW9uLnltbCB1cCAtZApgYGAKCkRlciBCYXNlLVBvcnQgdW5kIGRlciBDb250YWluZXItTmFtZSBzaW5kIHBlciBFbnYtVmFyIMO8YmVyc2NocmVpYmJhci4gQXVmCmBzaW4tc3VwYWJhc2VgIG11c3MgYGRvY2tlci1vcGVuc2luLy5lbnZgIGRpZXNlIFdlcnRlIGVudGhhbHRlbjoKCmBgYGJhc2gKQ09NUE9TRV9QT1JUPTM4NDcxCkNPTVBPU0VfQ09OVEFJTkVSX05BTUU9b3BlbnNpbi1hcHAKYGBgCgp8IFZhcmlhYmxlIHwgU3RhbmRhcmQgfCBQcm9kdWt0aW9uIHwKfC0tLXwtLS18LS0tfAp8IGBDT01QT1NFX1BPUlRgIHwgYDQzOTM5YCB8IGAzODQ3MWAgfAp8IGBDT01QT1NFX0NPTlRBSU5FUl9OQU1FYCB8IGBvcGVuc2luLWNoYXRgIHwgYG9wZW5zaW4tYXBwYCB8CgotLS0KCiMjIENsb3VkZmxhcmUgVHVubmVsCgoqKkNvbmZpZyBhdWYgYHNpbi1zdXBhYmFzZWA6KiogYH4vLmNsb3VkZmxhcmVkL2NvbmZpZy1vcGVuc2luLnltbGAKYGBgeWFtbAp0dW5uZWw6IGFhNmE0NzE1LTFhNGQtNGNmOS1hMTdlLWFkMjdjNTNmZWU5MwpjcmVkZW50aWFscy1maWxlOiB+Ly5jbG91ZGZsYXJlZC9hYTZhNDcxNS0xYTRkLTRjZjktYTE3ZS1hZDI3YzUzZmVlOTMuanNvbgppbmdyZXNzOgogIC0gaG9zdG5hbWU6IHNpbmNoYXQuZGVscWhpLmNvbQogICAgc2VydmljZTogaHR0cDovL2xvY2FsaG9zdDozODQ3MQogIC0gc2VydmljZTogaHR0cF9zdGF0dXM6NDA0CmBgYAoKPiAqKkhpbndlaXM6KiogRGVyIFR1bm5lbC1Db25uZWN0b3IgbMOkdWZ0IGF1ZiBkZXIgT0NJIFZNIChgc2luLXN1cGFiYXNlYCksIG5pY2h0IGF1ZiBkZW0gTWFjLiBEaWUgTWFjLUtvbmZpZ3VyYXRpb24gKGBjb20ub3BlbnNpbi50dW5uZWwucGxpc3RgKSBpc3QgdmVyYWx0ZXQgdW5kIHNvbGx0ZSBlbnRsYWRlbiB3ZXJkZW4sIGZhbGxzIHNpZSBub2NoIGFrdGl2IGlzdC4KCioqVHVubmVsLVN0YXR1cyBwcsO8ZmVuICh2b20gTWFjKToqKgpgYGBiYXNoCnNzaCBzaW4tc3VwYWJhc2UgJ2RvY2tlciBwcyB8IGdyZXAgb3BlbnNpbiAmJiBjdXJsIC1zUyBodHRwOi8vbG9jYWxob3N0OjM4NDcxL2FwaS9waW5nJwpgYGAKCioqTWFudWVsbCBhdWYgYHNpbi1zdXBhYmFzZWAgc3RhcnRlbiAobnVyIGltIE5vdGZhbGwpOioqCmBgYGJhc2gKc3NoIHNpbi1zdXBhYmFzZQpub2h1cCBjbG91ZGZsYXJlZCB0dW5uZWwgLS1jb25maWcgfi8uY2xvdWRmbGFyZWQvY29uZmlnLW9wZW5zaW4ueW1sIHJ1biBvcGVuc2luLWNoYXQgPiAvdG1wL2Nsb3VkZmxhcmVkLW9wZW5zaW4ubG9nIDI+JjEgJgpgYGAKCi0tLQoKIyMgQmVmZWhsZSAoQ2hlYXQgU2hlZXQpCgojIyMgUHJvZHVrdGlvbiAoYHNpbi1zdXBhYmFzZWApCgpgYGBiYXNoCiMgT25lLVNob3QgRGVwbG95ICh2b20gTWFjIGF1cykKc3NoIHNpbi1zdXBhYmFzZSAnYmFzaCAtcycgPCAvVXNlcnMvamVyZW15L2Rldi9PcGVuU0lOLUNoYXQvc2NyaXB0cy9kZXBsb3ktcHJvZHVjdGlvbi5zaAoKIyBPZGVyIG1hbnVlbGwgYXVmIGRlciBWTQpjZCB+L09wZW5TSU4tQ2hhdC9kb2NrZXItb3BlbnNpbgpnaXQgcHVsbCBvcmlnaW4gbWFpbgpkb2NrZXIgY29tcG9zZSAtZiBkb2NrZXItY29tcG9zZS55bWwgLWYgZG9ja2VyLWNvbXBvc2UucHJvZHVjdGlvbi55bWwgYnVpbGQgLS1uby1jYWNoZQpkb2NrZXIgY29tcG9zZSAtZiBkb2NrZXItY29tcG9zZS55bWwgLWYgZG9ja2VyLWNvbXBvc2UucHJvZHVjdGlvbi55bWwgdXAgLWQKCiMgU3RhdHVzCmRvY2tlciBwcyB8IGdyZXAgb3BlbnNpbgpjdXJsIC1zUyBodHRwOi8vbG9jYWxob3N0OjM4NDcxL2FwaS9waW5nCmBgYAoKIyMjIExva2FsZSBFbnR3aWNrbHVuZyAoTWFjKQoKYGBgYmFzaApjZCAvVXNlcnMvamVyZW15L2Rldi9PcGVuU0lOLUNoYXQvZG9ja2VyLW9wZW5zaW4KZG9ja2VyIGNvbXBvc2UgYnVpbGQgLS1uby1jYWNoZQpkb2NrZXIgY29tcG9zZSB1cCAtZAoKIyBTdGF0dXMKZG9ja2VyIHBzIHwgZ3JlcCBvcGVuc2luCmN1cmwgLXNTIGh0dHA6Ly9sb2NhbGhvc3Q6NDM5MzkvYXBpL3BpbmcKCiMgU3RvcApkb2NrZXIgY29tcG9zZSBkb3duCmBgYAoKIyMjIExpdmUtVGVzdAoKYGBgYmFzaApjdXJsIC1zUyBodHRwczovL3NpbmNoYXQuZGVscWhpLmNvbS9hcGkvcGluZwpjdXJsIC1zUyBodHRwczovL3NpbmNoYXQuZGVscWhpLmNvbS8gfCBoZWFkIC01CmBgYAoKIyMjIExvZ3MKCmBgYGJhc2gKIyBQcm9kdWt0aW9uIChhdWYgc2luLXN1cGFiYXNlKQpzc2ggc2luLXN1cGFiYXNlICdkb2NrZXIgbG9ncyBvcGVuc2luLWFwcCAtZicKCiMgTG9rYWwgKE1hYykKZG9ja2VyIGxvZ3Mgb3BlbnNpbi1jaGF0IC1mCmBgYAoKLS0tCgojIyBXaWNodGlnZSBSZWdlbG4KCjEuICoqTklFTUFMUyoqIGBkb2NrZXIgY29tcG9zZSBkb3duL3VwYCBpbSBgZG9ja2VyL2AgVmVyemVpY2huaXMgZsO8ciBPcGVuU0lOLUNoYXQgbWFjaGVuIOKAlCBkYXMgaXN0IGRlciBhbHRlIGBvcGVuYWZkYCBDb250YWluZXIhCjIuICoqTklFTUFMUyoqIFBvcnQgMzAwMSBhdWYgZGVtIEhvc3QgZsO8ciBPcGVuU0lOLUNoYXQgbnV0emVuIOKAlCBkZXIgZ2Vow7ZydCBgb3BlbmFmZGAuCjMuICoqTklFTUFMUyoqIGAuLi9zZXJ2ZXIvc3RvcmFnZWAgZsO8ciBPcGVuU0lOLUNoYXQgbW91bnRlbiDigJQgbnV0enQgYC4uL3NlcnZlci9zdG9yYWdlLW9wZW5zaW5gLgo0LiAqKkltbWVyKiogYC0tbm8tY2FjaGVgIGJlaW0gQnVpbGQgKHNvbnN0IGFsdGVzIEZyb250ZW5kLUJ1bmRsZSkuCjUuICoqVm9yIGplZGVtIGxva2FsZW4gRGVwbG95OioqIGBsc29mIC1pIDo0MzkzOWAgcHLDvGZlbiDigJQga2VpbiBhbmRlcmVyIFByb3plc3MgZGFyZiBkZW4gUG9ydCBibG9ja2llcmVuLgo2LiAqKlByb2R1a3Rpb24gbnV0enQgaW1tZXIgZGFzIE92ZXJyaWRlOioqIGBkb2NrZXIgY29tcG9zZSAtZiBkb2NrZXItY29tcG9zZS55bWwgLWYgZG9ja2VyLWNvbXBvc2UucHJvZHVjdGlvbi55bWwgLi4uYCBhdWYgYHNpbi1zdXBhYmFzZWAuCjcuICoqTWFjLUNsb3VkZmxhcmVkIFR1bm5lbCBtdXNzIGF1ZiBgc2luLXN1cGFiYXNlYCBsYXVmZW4uKiogRmFsbHMgZGllIGFsdGUgTWFjLVBsaXN0IG5vY2ggYWt0aXYgaXN0OiBgbGF1bmNoY3RsIHVubG9hZCB+L0xpYnJhcnkvTGF1bmNoQWdlbnRzL2NvbS5vcGVuc2luLnR1bm5lbC5wbGlzdGAuCgotLS0KCiMjIFZlcmlmaXppZXJ1bmcKCmBgYGJhc2gKIyBQcm9kdWt0aW9uIChhdWYgc2luLXN1cGFiYXNlKQpzc2ggc2luLXN1cGFiYXNlICdjdXJsIC1zUyBodHRwOi8vbG9jYWxob3N0OjM4NDcxL2FwaS9waW5nJwojIOKGkiB7Im9ubGluZSI6dHJ1ZX0KCiMgTGl2ZQpjdXJsIC1zUyBodHRwczovL3NpbmNoYXQuZGVscWhpLmNvbS9hcGkvcGluZwojIOKGkiB7Im9ubGluZSI6dHJ1ZX0KCmN1cmwgLXNTIGh0dHBzOi8vc2luY2hhdC5kZWxxaGkuY29tLyB8IGdyZXAgLW8gIk9wZW5TSU4gQ2hhdCIKIyDihpIgT3BlblNJTiBDaGF0IChUaXRlbCBpbSBIVE1MKQpgYGAKCi0tLQoKIyMgVHJvdWJsZXNob290aW5nCgp8IFByb2JsZW0gfCBMw7ZzdW5nIHwKfC0tLS0tLS0tLXwtLS0tLS0tLXwKfCA1MDIgQmFkIEdhdGV3YXkgfCBDb250YWluZXIgdG90IHdlaWwga2VpbiBgcmVzdGFydDogYWx3YXlzYC4gRml4OiBgZG9ja2VyIHVwZGF0ZSAtLXJlc3RhcnQgYWx3YXlzIG9wZW5zaW4tYXBwICYmIGRvY2tlciBzdGFydCBvcGVuc2luLWFwcGAgKGF1ZiBgc2luLXN1cGFiYXNlYCkuIHwKfCBDb250YWluZXIgbmljaHQgaGVhbHRoeSAvIGNyYXNoZWQgfCBgc3NoIHNpbi1zdXBhYmFzZSAnZG9ja2VyIGxvZ3Mgb3BlbnNpbi1hcHAnYCBwcsO8ZmVuOyBEQiBmZWhsdCBUYWJlbGxlIOKGkiBEQiB2b24gb3BlbmFmZCBrb3BpZXJlbi4gfAp8IFR1bm5lbCBuaWNodCBlcnJlaWNoYmFyIHwgQ2xvdWRmbGFyZWQgbMOkdWZ0IGF1ZiBgc2luLXN1cGFiYXNlYDogYHNzaCBzaW4tc3VwYWJhc2UgJ3BncmVwIC1hIGNsb3VkZmxhcmVkJ2AgdW5kIGdnZi4gbmV1c3RhcnRlbi4gfAp8IEROUyBuaWNodCBhdWZsw7ZzYmFyIHwgYGNsb3VkZmxhcmVkIHR1bm5lbCByb3V0ZSBkbnMgb3BlbnNpbi1jaGF0IHNpbmNoYXQuZGVscWhpLmNvbWAgKGF1ZiBgc2luLXN1cGFiYXNlYCkuIHwKfCBCdWlsZCBmYWlscyAoc3NoKSB8IERvY2tlcmZpbGUgaGF0IGBnaXQgY29uZmlnIC0tZ2xvYmFsIHVybC4iaHR0cHM6Ly9naXRodWIuY29tLyIuaW5zdGVhZE9mICJzc2g6Ly9naXRAZ2l0aHViLmNvbS8iYCBpbSBjb2xsZWN0b3Itc3RhZ2UuIHwKCi0tLQoKIyMgTsOkY2hzdGUgU2Nocml0dGUKCi0gW3hdIFByb2R1a3Rpb25zLURlcGxveS1TY3JpcHQgKGBzY3JpcHRzL2RlcGxveS1wcm9kdWN0aW9uLnNoYCkgZXJzdGVsbHQKLSBbIF0gQXV0by1EZXBsb3kgZsO8ciBgc2luLXN1cGFiYXNlYCAoY3Jvbi9zeXN0ZW1kKSBlaW5yaWNodGVuCi0gWyBdIE1vbml0b3JpbmcgLyBBbGVydGluZyBmw7xyIGJlaWRlIEluc3RhbnplbiB0cmVubmVu
+# OpenSIN-Chat Deployment — sinchat.delqhi.com
+
+**Ziel:** Getrenntes Deployment für OpenSIN-Chat, **unabhängig** vom laufenden `openafd` (sinchat.delqhi.com).
+
+**Wichtig:** Produktion läuft auf der OCI VM `sin-supabase` (`92.5.60.87`), **nicht** mehr auf dem lokalen Mac. Der Mac-Port 43939 ist nur noch für lokale Entwicklung/Tests.
+
+---
+
+## Architektur
+
+| Komponente | openafd (Original) | OpenSIN-Chat (Produktion) |
+|------------|-------------------|-------------------|
+| **Host** | lokaler Mac | OCI VM `sin-supabase` (`92.5.60.87`) |
+| **Container** | `openafd` | `opensin-app` |
+| **Interner Port** | 3001 | 3001 |
+| **Externer Port (Host)** | 3001 | **38471** |
+| **Domain** | sinchat.delqhi.com | **sinchat.delqhi.com** |
+| **Cloudflare Tunnel ID** | `32ab3b80-94b4-4911-aff1-fae5a3eae3c6` | `aa6a4715-1a4d-4cf9-a17e-ad27c53fee93` |
+| **Tunnel Config** | `~/.cloudflared/config-opensin.yml` | `~/.cloudflared/config-opensin.yml` (auf `sin-supabase`) |
+| **Storage** | `../server/storage` | `../server/storage-opensin` |
+| **Health Endpoint** | `https://sinchat.delqhi.com/api/ping` | `https://sinchat.delqhi.com/api/ping` |
+
+---
+
+## Docker Compose
+
+**Base:** `docker-opensin/docker-compose.yml` — lokale Entwicklung (Port 43939, Container `opensin-chat`).
+
+**Produktion:** `docker-opensin/docker-compose.production.yml` — OCI VM (Port 38471, Container `opensin-app`, mehr CPU/RAM). Beide Dateien zusammen:
+
+```bash
+cd docker-opensin
+docker compose -f docker-compose.yml -f docker-compose.production.yml up -d
+```
+
+Der Base-Port und der Container-Name sind per Env-Var überschreibbar. Auf
+`sin-supabase` muss `docker-opensin/.env` diese Werte enthalten:
+
+```bash
+COMPOSE_PORT=38471
+COMPOSE_CONTAINER_NAME=opensin-app
+```
+
+| Variable | Standard | Produktion |
+|---|---|---|
+| `COMPOSE_PORT` | `43939` | `38471` |
+| `COMPOSE_CONTAINER_NAME` | `opensin-chat` | `opensin-app` |
+
+---
+
+## Cloudflare Tunnel
+
+**Config auf `sin-supabase`:** `~/.cloudflared/config-opensin.yml`
+```yaml
+tunnel: aa6a4715-1a4d-4cf9-a17e-ad27c53fee93
+credentials-file: ~/.cloudflared/aa6a4715-1a4d-4cf9-a17e-ad27c53fee93.json
+ingress:
+  - hostname: sinchat.delqhi.com
+    service: http://localhost:38471
+  - service: http_status:404
+```
+
+> **Hinweis:** Der Tunnel-Connector läuft auf der OCI VM (`sin-supabase`), nicht auf dem Mac. Die Mac-Konfiguration (`com.opensin.tunnel.plist`) ist veraltet und sollte entladen werden, falls sie noch aktiv ist.
+
+**Tunnel-Status prüfen (vom Mac):**
+```bash
+ssh sin-supabase 'docker ps | grep opensin && curl -sS http://localhost:38471/api/ping'
+```
+
+**Manuell auf `sin-supabase` starten (nur im Notfall):**
+```bash
+ssh sin-supabase
+nohup cloudflared tunnel --config ~/.cloudflared/config-opensin.yml run opensin-chat > /tmp/cloudflared-opensin.log 2>&1 &
+```
+
+---
+
+## Befehle (Cheat Sheet)
+
+### Produktion (`sin-supabase`)
+
+```bash
+# One-Shot Deploy (vom Mac aus)
+ssh sin-supabase 'bash -s' < /Users/jeremy/dev/OpenSIN-Chat/scripts/deploy-production.sh
+
+# Oder manuell auf der VM
+cd ~/OpenSIN-Chat/docker-opensin
+git pull origin main
+docker compose -f docker-compose.yml -f docker-compose.production.yml build --no-cache
+docker compose -f docker-compose.yml -f docker-compose.production.yml up -d
+
+# Status
+docker ps | grep opensin
+curl -sS http://localhost:38471/api/ping
+```
+
+### Lokale Entwicklung (Mac)
+
+```bash
+cd /Users/jeremy/dev/OpenSIN-Chat/docker-opensin
+docker compose build --no-cache
+docker compose up -d
+
+# Status
+docker ps | grep opensin
+curl -sS http://localhost:43939/api/ping
+
+# Stop
+docker compose down
+```
+
+### Live-Test
+
+```bash
+curl -sS https://sinchat.delqhi.com/api/ping
+curl -sS https://sinchat.delqhi.com/ | head -5
+```
+
+### Logs
+
+```bash
+# Produktion (auf sin-supabase)
+ssh sin-supabase 'docker logs opensin-app -f'
+
+# Lokal (Mac)
+docker logs opensin-chat -f
+```
+
+---
+
+## Wichtige Regeln
+
+1. **NIEMALS** `docker compose down/up` im `docker/` Verzeichnis für OpenSIN-Chat machen — das ist der alte `openafd` Container!
+2. **NIEMALS** Port 3001 auf dem Host für OpenSIN-Chat nutzen — der gehört `openafd`.
+3. **NIEMALS** `../server/storage` für OpenSIN-Chat mounten — nutzt `../server/storage-opensin`.
+4. **Immer** `--no-cache` beim Build (sonst altes Frontend-Bundle).
+5. **Vor jedem lokalen Deploy:** `lsof -i :43939` prüfen — kein anderer Prozess darf den Port blockieren.
+6. **Produktion nutzt immer das Override:** `docker compose -f docker-compose.yml -f docker-compose.production.yml ...` auf `sin-supabase`.
+7. **Mac-Cloudflared Tunnel muss auf `sin-supabase` laufen.** Falls die alte Mac-Plist noch aktiv ist: `launchctl unload ~/Library/LaunchAgents/com.opensin.tunnel.plist`.
+
+---
+
+## Verifizierung
+
+```bash
+# Produktion (auf sin-supabase)
+ssh sin-supabase 'curl -sS http://localhost:38471/api/ping'
+# → {"online":true}
+
+# Live
+curl -sS https://sinchat.delqhi.com/api/ping
+# → {"online":true}
+
+curl -sS https://sinchat.delqhi.com/ | grep -o "OpenSIN Chat"
+# → OpenSIN Chat (Titel im HTML)
+```
+
+---
+
+## Troubleshooting
+
+| Problem | Lösung |
+|---------|--------|
+| 502 Bad Gateway | Container tot weil kein `restart: always`. Fix: `docker update --restart always opensin-app && docker start opensin-app` (auf `sin-supabase`). |
+| Container nicht healthy / crashed | `ssh sin-supabase 'docker logs opensin-app'` prüfen; DB fehlt Tabelle → DB von openafd kopieren. |
+| Tunnel nicht erreichbar | Cloudflared läuft auf `sin-supabase`: `ssh sin-supabase 'pgrep -a cloudflared'` und ggf. neustarten. |
+| DNS nicht auflösbar | `cloudflared tunnel route dns opensin-chat sinchat.delqhi.com` (auf `sin-supabase`). |
+| Build fails (ssh) | Dockerfile hat `git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"` im collector-stage. |
+
+---
+
+## Nächste Schritte
+
+- [x] Produktions-Deploy-Script (`scripts/deploy-production.sh`) erstellt
+- [ ] Auto-Deploy für `sin-supabase` (cron/systemd) einrichten
+- [ ] Monitoring / Alerting für beide Instanzen trennen
