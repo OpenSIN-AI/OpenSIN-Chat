@@ -1,1 +1,214 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgUmVhY3QgZnJvbSAicmVhY3QiOwppbXBvcnQgT3BlblNJTkNoYXRJY29uIGZyb20gIkAvbWVkaWEvbG9nby9vcGVuc2luLWljb24uc3ZnIjsKaW1wb3J0IE9wZW5BaUxvZ28gZnJvbSAiQC9tZWRpYS9sbG1wcm92aWRlci9vcGVuYWkucG5nIjsKaW1wb3J0IEdlbmVyaWNPcGVuQWlMb2dvIGZyb20gIkAvbWVkaWEvbGxtcHJvdmlkZXIvZ2VuZXJpYy1vcGVuYWkucG5nIjsKaW1wb3J0IEFudGhyb3BpY0xvZ28gZnJvbSAiQC9tZWRpYS9sbG1wcm92aWRlci9hbnRocm9waWMucG5nIjsKaW1wb3J0IEdlbWluaUxvZ28gZnJvbSAiQC9tZWRpYS9sbG1wcm92aWRlci9nZW1pbmkucG5nIjsKaW1wb3J0IE9sbGFtYUxvZ28gZnJvbSAiQC9tZWRpYS9sbG1wcm92aWRlci9vbGxhbWEucG5nIjsKaW1wb3J0IExNU3R1ZGlvTG9nbyBmcm9tICJAL21lZGlhL2xsbXByb3ZpZGVyL2xtc3R1ZGlvLnBuZyI7CmltcG9ydCBMb2NhbEFpTG9nbyBmcm9tICJAL21lZGlhL2xsbXByb3ZpZGVyL2xvY2FsYWkucG5nIjsKaW1wb3J0IEZpcmV3b3Jrc0FJTG9nbyBmcm9tICJAL21lZGlhL2xsbXByb3ZpZGVyL2ZpcmV3b3Jrc2FpLmpwZWciOwppbXBvcnQgTWlzdHJhbExvZ28gZnJvbSAiQC9tZWRpYS9sbG1wcm92aWRlci9taXN0cmFsLmpwZWciOwppbXBvcnQgSHVnZ2luZ0ZhY2VMb2dvIGZyb20gIkAvbWVkaWEvbGxtcHJvdmlkZXIvaHVnZ2luZ2ZhY2UucG5nIjsKaW1wb3J0IEdyb3FMb2dvIGZyb20gIkAvbWVkaWEvbGxtcHJvdmlkZXIvZ3JvcS5wbmciOwppbXBvcnQgTGl0ZUxMTUxvZ28gZnJvbSAiQC9tZWRpYS9sbG1wcm92aWRlci9saXRlbGxtLnBuZyI7CmltcG9ydCBYQUlMb2dvIGZyb20gIkAvbWVkaWEvbGxtcHJvdmlkZXIveGFpLnBuZyI7CmltcG9ydCBOdmlkaWFOaW1Mb2dvIGZyb20gIkAvbWVkaWEvbGxtcHJvdmlkZXIvbnZpZGlhLW5pbS5wbmciOwppbXBvcnQgT3BlbmNvZGVaZW5Mb2dvIGZyb20gIkAvbWVkaWEvbGxtcHJvdmlkZXIvb3BlbmNvZGUtemVuLnBuZyI7CmltcG9ydCBEb2NrZXJNb2RlbFJ1bm5lckxvZ28gZnJvbSAiQC9tZWRpYS9sbG1wcm92aWRlci9kb2NrZXItbW9kZWwtcnVubmVyLnBuZyI7CgovLyBDb21wb25lbnQgaW1wb3J0cwppbXBvcnQgTW9kZWxSb3V0ZXJPcHRpb25zIGZyb20gIkAvY29tcG9uZW50cy9MTE1TZWxlY3Rpb24vTW9kZWxSb3V0ZXJPcHRpb25zIjsKaW1wb3J0IE9wZW5BaU9wdGlvbnMgZnJvbSAiQC9jb21wb25lbnRzL0xMTVNlbGVjdGlvbi9PcGVuQWlPcHRpb25zIjsKaW1wb3J0IEdlbmVyaWNPcGVuQWlPcHRpb25zIGZyb20gIkAvY29tcG9uZW50cy9MTE1TZWxlY3Rpb24vR2VuZXJpY09wZW5BaU9wdGlvbnMiOwppbXBvcnQgQW50aHJvcGljQWlPcHRpb25zIGZyb20gIkAvY29tcG9uZW50cy9MTE1TZWxlY3Rpb24vQW50aHJvcGljQWlPcHRpb25zIjsKaW1wb3J0IExNU3R1ZGlvT3B0aW9ucyBmcm9tICJAL2NvbXBvbmVudHMvTExNU2VsZWN0aW9uL0xNU3R1ZGlvT3B0aW9ucyI7CmltcG9ydCBMb2NhbEFpT3B0aW9ucyBmcm9tICJAL2NvbXBvbmVudHMvTExNU2VsZWN0aW9uL0xvY2FsQWlPcHRpb25zIjsKaW1wb3J0IEdlbWluaUxMTU9wdGlvbnMgZnJvbSAiQC9jb21wb25lbnRzL0xMTVNlbGVjdGlvbi9HZW1pbmlMTE1PcHRpb25zIjsKaW1wb3J0IE9sbGFtYUxMTU9wdGlvbnMgZnJvbSAiQC9jb21wb25lbnRzL0xMTVNlbGVjdGlvbi9PbGxhbWFMTE1PcHRpb25zIjsKaW1wb3J0IEZpcmV3b3Jrc0FpT3B0aW9ucyBmcm9tICJAL2NvbXBvbmVudHMvTExNU2VsZWN0aW9uL0ZpcmV3b3Jrc0FpT3B0aW9ucyI7CmltcG9ydCBNaXN0cmFsT3B0aW9ucyBmcm9tICJAL2NvbXBvbmVudHMvTExNU2VsZWN0aW9uL01pc3RyYWxPcHRpb25zIjsKaW1wb3J0IEh1Z2dpbmdGYWNlT3B0aW9ucyBmcm9tICJAL2NvbXBvbmVudHMvTExNU2VsZWN0aW9uL0h1Z2dpbmdGYWNlT3B0aW9ucyI7CmltcG9ydCBHcm9xQWlPcHRpb25zIGZyb20gIkAvY29tcG9uZW50cy9MTE1TZWxlY3Rpb24vR3JvcUFpT3B0aW9ucyI7CmltcG9ydCBMaXRlTExNT3B0aW9ucyBmcm9tICJAL2NvbXBvbmVudHMvTExNU2VsZWN0aW9uL0xpdGVMTE1PcHRpb25zIjsKaW1wb3J0IFhBSUxMTU9wdGlvbnMgZnJvbSAiQC9jb21wb25lbnRzL0xMTVNlbGVjdGlvbi9YQWlMTE1PcHRpb25zIjsKaW1wb3J0IE52aWRpYU5pbU9wdGlvbnMgZnJvbSAiQC9jb21wb25lbnRzL0xMTVNlbGVjdGlvbi9OdmlkaWFOaW1PcHRpb25zIjsKaW1wb3J0IE9wZW5jb2RlWmVuT3B0aW9ucyBmcm9tICJAL2NvbXBvbmVudHMvTExNU2VsZWN0aW9uL09wZW5jb2RlWmVuT3B0aW9ucyI7CmltcG9ydCBEb2NrZXJNb2RlbFJ1bm5lck9wdGlvbnMgZnJvbSAiQC9jb21wb25lbnRzL0xMTVNlbGVjdGlvbi9Eb2NrZXJNb2RlbFJ1bm5lck9wdGlvbnMiOwoKZXhwb3J0IGludGVyZmFjZSBMTE1Qcm92aWRlciB7CiAgbmFtZTogc3RyaW5nOwogIHZhbHVlOiBzdHJpbmc7CiAgbG9nbzogc3RyaW5nOwogIG9wdGlvbnM6IChzZXR0aW5nczogYW55KSA9PiBSZWFjdC5SZWFjdE5vZGU7CiAgZGVzY3JpcHRpb246IHN0cmluZzsKICByZXF1aXJlZENvbmZpZz86IHN0cmluZ1tdOwogIGNvbm5lY3Rpb25Db25maWc/OiBzdHJpbmdbXTsKfQoKZXhwb3J0IGNvbnN0IE1PREVMX1JPVVRFUl9QUk9WSURFUjogTExNUHJvdmlkZXIgPSB7CiAgbmFtZTogIk1vZGVsIFJvdXRlciIsCiAgdmFsdWU6ICJvcGVuc2luLXJvdXRlciIsCiAgbG9nbzogT3BlblNJTkNoYXRJY29uLAogIG9wdGlvbnM6IChzZXR0aW5nczogYW55KSA9PiA8TW9kZWxSb3V0ZXJPcHRpb25zIHNldHRpbmdzPXtzZXR0aW5nc30gLz4sCiAgZGVzY3JpcHRpb246CiAgICAiUm91dGUgbWVzc2FnZXMgdG8gZGlmZmVyZW50IExMTSBwcm92aWRlcnMgYmFzZWQgb24gcnVsZXMgeW91IGRlZmluZS4iLAogIHJlcXVpcmVkQ29uZmlnOiBbXSwKfTsKCmV4cG9ydCBjb25zdCBBVkFJTEFCTEVfTExNX1BST1ZJREVSUzogTExNUHJvdmlkZXJbXSA9IFsKICB7CiAgICBuYW1lOiAiT3BlbkFJIiwKICAgIHZhbHVlOiAib3BlbmFpIiwKICAgIGxvZ286IE9wZW5BaUxvZ28sCiAgICBvcHRpb25zOiAoc2V0dGluZ3M6IGFueSkgPT4gPE9wZW5BaU9wdGlvbnMgc2V0dGluZ3M9e3NldHRpbmdzfSAvPiwKICAgIGRlc2NyaXB0aW9uOiAiVGhlIHN0YW5kYXJkIG9wdGlvbiBmb3IgbW9zdCBub24tY29tbWVyY2lhbCB1c2UuIiwKICAgIHJlcXVpcmVkQ29uZmlnOiBbIk9wZW5BaUtleSJdLAogIH0sCiAgewogICAgbmFtZTogIkFudGhyb3BpYyIsCiAgICB2YWx1ZTogImFudGhyb3BpYyIsCiAgICBsb2dvOiBBbnRocm9waWNMb2dvLAogICAgb3B0aW9uczogKHNldHRpbmdzOiBhbnkpID0+IDxBbnRocm9waWNBaU9wdGlvbnMgc2V0dGluZ3M9e3NldHRpbmdzfSAvPiwKICAgIGRlc2NyaXB0aW9uOiAiQSBmcmllbmRseSBBSSBBc3Npc3RhbnQgaG9zdGVkIGJ5IEFudGhyb3BpYy4iLAogICAgcmVxdWlyZWRDb25maWc6IFsiQW50aHJvcGljQXBpS2V5Il0sCiAgfSwKICB7CiAgICBuYW1lOiAiR2VtaW5pIiwKICAgIHZhbHVlOiAiZ2VtaW5pIiwKICAgIGxvZ286IEdlbWluaUxvZ28sCiAgICBvcHRpb25zOiAoc2V0dGluZ3M6IGFueSkgPT4gPEdlbWluaUxMTU9wdGlvbnMgc2V0dGluZ3M9e3NldHRpbmdzfSAvPiwKICAgIGRlc2NyaXB0aW9uOiAiR29vZ2xlJ3MgbGFyZ2VzdCBhbmQgbW9zdCBjYXBhYmxlIEFJIG1vZGVsIiwKICAgIHJlcXVpcmVkQ29uZmlnOiBbIkdlbWluaUxMTUFwaUtleSJdLAogIH0sCiAgewogICAgbmFtZTogIk5WSURJQSBOSU0iLAogICAgdmFsdWU6ICJudmlkaWEtbmltIiwKICAgIGxvZ286IE52aWRpYU5pbUxvZ28sCiAgICBvcHRpb25zOiAoc2V0dGluZ3M6IGFueSkgPT4gPE52aWRpYU5pbU9wdGlvbnMgc2V0dGluZ3M9e3NldHRpbmdzfSAvPiwKICAgIGRlc2NyaXB0aW9uOgogICAgICAiUnVuIGZ1bGwgcGFyYW1ldGVyIExMTXMgZGlyZWN0bHkgb24geW91ciBOVklESUEgUlRYIEdQVSB1c2luZyBOVklESUEgTklNLiIsCiAgICByZXF1aXJlZENvbmZpZzogWyJOdmlkaWFOaW1MTE1CYXNlUGF0aCJdLAogIH0sCiAgewogICAgbmFtZTogIk9wZW5Db2RlIFplbiIsCiAgICB2YWx1ZTogIm9wZW5jb2RlLXplbiIsCiAgICBsb2dvOiBPcGVuY29kZVplbkxvZ28sCiAgICBvcHRpb25zOiAoc2V0dGluZ3M6IGFueSkgPT4gPE9wZW5jb2RlWmVuT3B0aW9ucyBzZXR0aW5ncz17c2V0dGluZ3N9IC8+LAogICAgZGVzY3JpcHRpb246CiAgICAgICJDdXJhdGVkIEFJIG1vZGVscyBnYXRld2F5IGJ5IE9wZW5Db2RlLiBGcmVlIG1vZGVscyBhdmFpbGFibGUgKE5lbW90cm9uLCBEZWVwU2VlaywgTWlNbykuIiwKICAgIHJlcXVpcmVkQ29uZmlnOiBbIk9wZW5jb2RlWmVuQmFzZVBhdGgiXSwKICB9LAogIHsKICAgIG5hbWU6ICJIdWdnaW5nRmFjZSIsCiAgICB2YWx1ZTogImh1Z2dpbmdmYWNlIiwKICAgIGxvZ286IEh1Z2dpbmdGYWNlTG9nbywKICAgIG9wdGlvbnM6IChzZXR0aW5nczogYW55KSA9PiA8SHVnZ2luZ0ZhY2VPcHRpb25zIHNldHRpbmdzPXtzZXR0aW5nc30gLz4sCiAgICBkZXNjcmlwdGlvbjoKICAgICAgIkFjY2VzcyAxNTAsMDAwKyBvcGVuLXNvdXJjZSBMTE1zIGFuZCB0aGUgd29ybGQncyBBSSBjb21tdW5pdHkiLAogICAgcmVxdWlyZWRDb25maWc6IFsKICAgICAgIkh1Z2dpbmdGYWNlTExNRW5kcG9pbnQiLAogICAgICAiSHVnZ2luZ0ZhY2VMTE1BY2Nlc3NUb2tlbiIsCiAgICAgICJIdWdnaW5nRmFjZUxMTVRva2VuTGltaXQiLAogICAgXSwKICB9LAogIHsKICAgIG5hbWU6ICJPbGxhbWEiLAogICAgdmFsdWU6ICJvbGxhbWEiLAogICAgbG9nbzogT2xsYW1hTG9nbywKICAgIG9wdGlvbnM6IChzZXR0aW5nczogYW55KSA9PiA8T2xsYW1hTExNT3B0aW9ucyBzZXR0aW5ncz17c2V0dGluZ3N9IC8+LAogICAgZGVzY3JpcHRpb246ICJSdW4gTExNcyBsb2NhbGx5IG9uIHlvdXIgb3duIG1hY2hpbmUuIiwKICAgIHJlcXVpcmVkQ29uZmlnOiBbIk9sbGFtYUxMTUJhc2VQYXRoIl0sCiAgfSwKICB7CiAgICBuYW1lOiAiTE0gU3R1ZGlvIiwKICAgIHZhbHVlOiAibG1zdHVkaW8iLAogICAgbG9nbzogTE1TdHVkaW9Mb2dvLAogICAgb3B0aW9uczogKHNldHRpbmdzOiBhbnkpID0+IDxMTVN0dWRpb09wdGlvbnMgc2V0dGluZ3M9e3NldHRpbmdzfSAvPiwKICAgIGRlc2NyaXB0aW9uOgogICAgICAiRGlzY292ZXIsIGRvd25sb2FkLCBhbmQgcnVuIHRob3VzYW5kcyBvZiBjdXR0aW5nIGVkZ2UgTExNcyBpbiBhIGZldyBjbGlja3MuIiwKICAgIHJlcXVpcmVkQ29uZmlnOiBbIkxNU3R1ZGlvQmFzZVBhdGgiXSwKICB9LAogIHsKICAgIG5hbWU6ICJEb2NrZXIgTW9kZWwgUnVubmVyIiwKICAgIHZhbHVlOiAiZG9ja2VyLW1vZGVsLXJ1bm5lciIsCiAgICBsb2dvOiBEb2NrZXJNb2RlbFJ1bm5lckxvZ28sCiAgICBvcHRpb25zOiAoc2V0dGluZ3M6IGFueSkgPT4gKAogICAgICA8RG9ja2VyTW9kZWxSdW5uZXJPcHRpb25zIHNldHRpbmdzPXtzZXR0aW5nc30gLz4KICAgICksCiAgICBkZXNjcmlwdGlvbjogIlJ1biBMTE1zIHVzaW5nIERvY2tlciBNb2RlbCBSdW5uZXIuIiwKICAgIHJlcXVpcmVkQ29uZmlnOiBbCiAgICAgICJEb2NrZXJNb2RlbFJ1bm5lckJhc2VQYXRoIiwKICAgICAgIkRvY2tlck1vZGVsUnVubmVyTW9kZWxQcmVmIiwKICAgICAgIkRvY2tlck1vZGVsUnVubmVyTW9kZWxUb2tlbkxpbWl0IiwKICAgIF0sCiAgfSwKICB7CiAgICBuYW1lOiAiTG9jYWwgQUkiLAogICAgdmFsdWU6ICJsb2NhbGFpIiwKICAgIGxvZ286IExvY2FsQWlMb2dvLAogICAgb3B0aW9uczogKHNldHRpbmdzOiBhbnkpID0+IDxMb2NhbEFpT3B0aW9ucyBzZXR0aW5ncz17c2V0dGluZ3N9IC8+LAogICAgZGVzY3JpcHRpb246ICJSdW4gTExNcyBsb2NhbGx5IG9uIHlvdXIgb3duIG1hY2hpbmUuIiwKICAgIHJlcXVpcmVkQ29uZmlnOiBbIkxvY2FsQWlBcGlLZXkiLCAiTG9jYWxBaUJhc2VQYXRoIiwgIkxvY2FsQWlUb2tlbkxpbWl0Il0sCiAgfSwKICB7CiAgICBuYW1lOiAiRmlyZXdvcmtzIEFJIiwKICAgIHZhbHVlOiAiZmlyZXdvcmtzYWkiLAogICAgbG9nbzogRmlyZXdvcmtzQUlMb2dvLAogICAgb3B0aW9uczogKHNldHRpbmdzOiBhbnkpID0+IDxGaXJld29ya3NBaU9wdGlvbnMgc2V0dGluZ3M9e3NldHRpbmdzfSAvPiwKICAgIGRlc2NyaXB0aW9uOgogICAgICAiVGhlIGZhc3Rlc3QgYW5kIG1vc3QgZWZmaWNpZW50IGluZmVyZW5jZSBlbmdpbmUgdG8gYnVpbGQgcHJvZHVjdGlvbi1yZWFkeSwgY29tcG91bmQgQUkgc3lzdGVtcy4iLAogICAgcmVxdWlyZWRDb25maWc6IFsiRmlyZXdvcmtzQWlMTE1BcGlLZXkiXSwKICB9LAogIHsKICAgIG5hbWU6ICJNaXN0cmFsIiwKICAgIHZhbHVlOiAibWlzdHJhbCIsCiAgICBsb2dvOiBNaXN0cmFsTG9nbywKICAgIG9wdGlvbnM6IChzZXR0aW5nczogYW55KSA9PiA8TWlzdHJhbE9wdGlvbnMgc2V0dGluZ3M9e3NldHRpbmdzfSAvPiwKICAgIGRlc2NyaXB0aW9uOiAiUnVuIG9wZW4gc291cmNlIG1vZGVscyBmcm9tIE1pc3RyYWwgQUkuIiwKICAgIHJlcXVpcmVkQ29uZmlnOiBbIk1pc3RyYWxBcGlLZXkiXSwKICB9LAogIHsKICAgIG5hbWU6ICJHcm9xIiwKICAgIHZhbHVlOiAiZ3JvcSIsCiAgICBsb2dvOiBHcm9xTG9nbywKICAgIG9wdGlvbnM6IChzZXR0aW5nczogYW55KSA9PiA8R3JvcUFpT3B0aW9ucyBzZXR0aW5ncz17c2V0dGluZ3N9IC8+LAogICAgZGVzY3JpcHRpb246CiAgICAgICJUaGUgZmFzdGVzdCBMTE0gaW5mZXJlbmNpbmcgYXZhaWxhYmxlIGZvciByZWFsLXRpbWUgQUkgYXBwbGljYXRpb25zLiIsCiAgICByZXF1aXJlZENvbmZpZzogWyJHcm9xQXBpS2V5Il0sCiAgfSwKICB7CiAgICBuYW1lOiAiTGl0ZUxMTSIsCiAgICB2YWx1ZTogImxpdGVsbG0iLAogICAgbG9nbzogTGl0ZUxMTUxvZ28sCiAgICBvcHRpb25zOiAoc2V0dGluZ3M6IGFueSkgPT4gPExpdGVMTE1PcHRpb25zIHNldHRpbmdzPXtzZXR0aW5nc30gLz4sCiAgICBkZXNjcmlwdGlvbjogIlJ1biBMaXRlTExNJ3MgT3BlbkFJIGNvbXBhdGlibGUgcHJveHkgZm9yIHZhcmlvdXMgTExNcy4iLAogICAgcmVxdWlyZWRDb25maWc6IFsiTGl0ZUxMTUJhc2VQYXRoIl0sCiAgfSwKICB7CiAgICBuYW1lOiAieEFJIiwKICAgIHZhbHVlOiAieGFpIiwKICAgIGxvZ286IFhBSUxvZ28sCiAgICBvcHRpb25zOiAoc2V0dGluZ3M6IGFueSkgPT4gPFhBSUxMTU9wdGlvbnMgc2V0dGluZ3M9e3NldHRpbmdzfSAvPiwKICAgIGRlc2NyaXB0aW9uOiAiUnVuIHhBSSdzIHBvd2VyZnVsIExMTXMgbGlrZSBHcm9rLTIgYW5kIG1vcmUuIiwKICAgIHJlcXVpcmVkQ29uZmlnOiBbIlhBSUFwaUtleSIsICJYQUlNb2RlbFByZWYiXSwKICB9LAogIHsKICAgIG5hbWU6ICJHZW5lcmljIE9wZW5BSSIsCiAgICB2YWx1ZTogImdlbmVyaWMtb3BlbmFpIiwKICAgIGxvZ286IEdlbmVyaWNPcGVuQWlMb2dvLAogICAgb3B0aW9uczogKHNldHRpbmdzOiBhbnkpID0+IDxHZW5lcmljT3BlbkFpT3B0aW9ucyBzZXR0aW5ncz17c2V0dGluZ3N9IC8+LAogICAgZGVzY3JpcHRpb246CiAgICAgICJDb25uZWN0IHRvIGFueSBPcGVuQWktY29tcGF0aWJsZSBzZXJ2aWNlIHZpYSBhIGN1c3RvbSBjb25maWd1cmF0aW9uIiwKICAgIHJlcXVpcmVkQ29uZmlnOiBbIkdlbmVyaWNPcGVuQWlCYXNlUGF0aCIsICJHZW5lcmljT3BlbkFpTW9kZWxQcmVmIl0sCiAgICBjb25uZWN0aW9uQ29uZmlnOiBbIkdlbmVyaWNPcGVuQWlCYXNlUGF0aCJdLAogIH0sCl07CgpleHBvcnQgY29uc3QgQUxMX0xMTV9QUk9WSURFUlM6IExMTVByb3ZpZGVyW10gPSBbCiAgTU9ERUxfUk9VVEVSX1BST1ZJREVSLAogIC4uLkFWQUlMQUJMRV9MTE1fUFJPVklERVJTLApdOwoKZXhwb3J0IGNvbnN0IExMTV9QUkVGRVJFTkNFX0NIQU5HRURfRVZFTlQgPSAibGxtLXByZWZlcmVuY2UtY2hhbmdlZCI7Cg==
+// SPDX-License-Identifier: MIT
+import React from "react";
+import OpenSINChatIcon from "@/media/logo/opensin-icon.svg";
+import OpenAiLogo from "@/media/llmprovider/openai.png";
+import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";
+import AnthropicLogo from "@/media/llmprovider/anthropic.png";
+import GeminiLogo from "@/media/llmprovider/gemini.png";
+import OllamaLogo from "@/media/llmprovider/ollama.png";
+import LMStudioLogo from "@/media/llmprovider/lmstudio.png";
+import LocalAiLogo from "@/media/llmprovider/localai.png";
+import FireworksAILogo from "@/media/llmprovider/fireworksai.jpeg";
+import MistralLogo from "@/media/llmprovider/mistral.jpeg";
+import HuggingFaceLogo from "@/media/llmprovider/huggingface.png";
+import GroqLogo from "@/media/llmprovider/groq.png";
+import LiteLLMLogo from "@/media/llmprovider/litellm.png";
+import XAILogo from "@/media/llmprovider/xai.png";
+import NvidiaNimLogo from "@/media/llmprovider/nvidia-nim.png";
+import OpencodeZenLogo from "@/media/llmprovider/opencode-zen.png";
+import DockerModelRunnerLogo from "@/media/llmprovider/docker-model-runner.png";
+
+// Component imports
+import ModelRouterOptions from "@/components/LLMSelection/ModelRouterOptions";
+import OpenAiOptions from "@/components/LLMSelection/OpenAiOptions";
+import GenericOpenAiOptions from "@/components/LLMSelection/GenericOpenAiOptions";
+import AnthropicAiOptions from "@/components/LLMSelection/AnthropicAiOptions";
+import LMStudioOptions from "@/components/LLMSelection/LMStudioOptions";
+import LocalAiOptions from "@/components/LLMSelection/LocalAiOptions";
+import GeminiLLMOptions from "@/components/LLMSelection/GeminiLLMOptions";
+import OllamaLLMOptions from "@/components/LLMSelection/OllamaLLMOptions";
+import FireworksAiOptions from "@/components/LLMSelection/FireworksAiOptions";
+import MistralOptions from "@/components/LLMSelection/MistralOptions";
+import HuggingFaceOptions from "@/components/LLMSelection/HuggingFaceOptions";
+import GroqAiOptions from "@/components/LLMSelection/GroqAiOptions";
+import LiteLLMOptions from "@/components/LLMSelection/LiteLLMOptions";
+import XAILLMOptions from "@/components/LLMSelection/XAiLLMOptions";
+import NvidiaNimOptions from "@/components/LLMSelection/NvidiaNimOptions";
+import OpencodeZenOptions from "@/components/LLMSelection/OpencodeZenOptions";
+import DockerModelRunnerOptions from "@/components/LLMSelection/DockerModelRunnerOptions";
+
+export interface LLMProvider {
+  name: string;
+  value: string;
+  logo: string;
+  options: (settings: any) => React.ReactNode;
+  description: string;
+  requiredConfig?: string[];
+  connectionConfig?: string[];
+}
+
+export const MODEL_ROUTER_PROVIDER: LLMProvider = {
+  name: "Model Router",
+  value: "opensin-router",
+  logo: OpenSINChatIcon,
+  options: (settings: any) => <ModelRouterOptions settings={settings} />,
+  description:
+    "Route messages to different LLM providers based on rules you define.",
+  requiredConfig: [],
+};
+
+export const AVAILABLE_LLM_PROVIDERS: LLMProvider[] = [
+  {
+    name: "OpenAI",
+    value: "openai",
+    logo: OpenAiLogo,
+    options: (settings: any) => <OpenAiOptions settings={settings} />,
+    description: "The standard option for most non-commercial use.",
+    requiredConfig: ["OpenAiKey"],
+  },
+  {
+    name: "Anthropic",
+    value: "anthropic",
+    logo: AnthropicLogo,
+    options: (settings: any) => <AnthropicAiOptions settings={settings} />,
+    description: "A friendly AI Assistant hosted by Anthropic.",
+    requiredConfig: ["AnthropicApiKey"],
+  },
+  {
+    name: "Gemini",
+    value: "gemini",
+    logo: GeminiLogo,
+    options: (settings: any) => <GeminiLLMOptions settings={settings} />,
+    description: "Google's largest and most capable AI model",
+    requiredConfig: ["GeminiLLMApiKey"],
+  },
+  {
+    name: "NVIDIA NIM",
+    value: "nvidia-nim",
+    logo: NvidiaNimLogo,
+    options: (settings: any) => <NvidiaNimOptions settings={settings} />,
+    description:
+      "Run full parameter LLMs directly on your NVIDIA RTX GPU using NVIDIA NIM.",
+    requiredConfig: ["NvidiaNimLLMBasePath"],
+  },
+  {
+    name: "OpenCode Zen",
+    value: "opencode-zen",
+    logo: OpencodeZenLogo,
+    options: (settings: any) => <OpencodeZenOptions settings={settings} />,
+    description:
+      "Curated AI models gateway by OpenCode. Free models available (Nemotron, DeepSeek, MiMo).",
+    requiredConfig: ["OpencodeZenBasePath"],
+  },
+  {
+    name: "HuggingFace",
+    value: "huggingface",
+    logo: HuggingFaceLogo,
+    options: (settings: any) => <HuggingFaceOptions settings={settings} />,
+    description:
+      "Access 150,000+ open-source LLMs and the world's AI community",
+    requiredConfig: [
+      "HuggingFaceLLMEndpoint",
+      "HuggingFaceLLMAccessToken",
+      "HuggingFaceLLMTokenLimit",
+    ],
+  },
+  {
+    name: "Ollama",
+    value: "ollama",
+    logo: OllamaLogo,
+    options: (settings: any) => <OllamaLLMOptions settings={settings} />,
+    description: "Run LLMs locally on your own machine.",
+    requiredConfig: ["OllamaLLMBasePath"],
+  },
+  {
+    name: "LM Studio",
+    value: "lmstudio",
+    logo: LMStudioLogo,
+    options: (settings: any) => <LMStudioOptions settings={settings} />,
+    description:
+      "Discover, download, and run thousands of cutting edge LLMs in a few clicks.",
+    requiredConfig: ["LMStudioBasePath"],
+  },
+  {
+    name: "Docker Model Runner",
+    value: "docker-model-runner",
+    logo: DockerModelRunnerLogo,
+    options: (settings: any) => (
+      <DockerModelRunnerOptions settings={settings} />
+    ),
+    description: "Run LLMs using Docker Model Runner.",
+    requiredConfig: [
+      "DockerModelRunnerBasePath",
+      "DockerModelRunnerModelPref",
+      "DockerModelRunnerModelTokenLimit",
+    ],
+  },
+  {
+    name: "Local AI",
+    value: "localai",
+    logo: LocalAiLogo,
+    options: (settings: any) => <LocalAiOptions settings={settings} />,
+    description: "Run LLMs locally on your own machine.",
+    requiredConfig: ["LocalAiApiKey", "LocalAiBasePath", "LocalAiTokenLimit"],
+  },
+  {
+    name: "Fireworks AI",
+    value: "fireworksai",
+    logo: FireworksAILogo,
+    options: (settings: any) => <FireworksAiOptions settings={settings} />,
+    description:
+      "The fastest and most efficient inference engine to build production-ready, compound AI systems.",
+    requiredConfig: ["FireworksAiLLMApiKey"],
+  },
+  {
+    name: "Mistral",
+    value: "mistral",
+    logo: MistralLogo,
+    options: (settings: any) => <MistralOptions settings={settings} />,
+    description: "Run open source models from Mistral AI.",
+    requiredConfig: ["MistralApiKey"],
+  },
+  {
+    name: "Groq",
+    value: "groq",
+    logo: GroqLogo,
+    options: (settings: any) => <GroqAiOptions settings={settings} />,
+    description:
+      "The fastest LLM inferencing available for real-time AI applications.",
+    requiredConfig: ["GroqApiKey"],
+  },
+  {
+    name: "LiteLLM",
+    value: "litellm",
+    logo: LiteLLMLogo,
+    options: (settings: any) => <LiteLLMOptions settings={settings} />,
+    description: "Run LiteLLM's OpenAI compatible proxy for various LLMs.",
+    requiredConfig: ["LiteLLMBasePath"],
+  },
+  {
+    name: "xAI",
+    value: "xai",
+    logo: XAILogo,
+    options: (settings: any) => <XAILLMOptions settings={settings} />,
+    description: "Run xAI's powerful LLMs like Grok-2 and more.",
+    requiredConfig: ["XAIApiKey", "XAIModelPref"],
+  },
+  {
+    name: "Generic OpenAI",
+    value: "generic-openai",
+    logo: GenericOpenAiLogo,
+    options: (settings: any) => <GenericOpenAiOptions settings={settings} />,
+    description:
+      "Connect to any OpenAi-compatible service via a custom configuration",
+    requiredConfig: ["GenericOpenAiBasePath", "GenericOpenAiModelPref"],
+    connectionConfig: ["GenericOpenAiBasePath"],
+  },
+];
+
+export const ALL_LLM_PROVIDERS: LLMProvider[] = [
+  MODEL_ROUTER_PROVIDER,
+  ...AVAILABLE_LLM_PROVIDERS,
+];
+
+export const LLM_PREFERENCE_CHANGED_EVENT = "llm-preference-changed";

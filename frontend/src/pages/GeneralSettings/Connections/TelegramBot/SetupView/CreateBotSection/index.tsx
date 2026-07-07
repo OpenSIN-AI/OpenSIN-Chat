@@ -1,1 +1,108 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBEb2NzOiBpbmRleC5kb2MubWQKaW1wb3J0IHsgUVJDb2RlU1ZHIH0gZnJvbSAicXJjb2RlLnJlYWN0IjsKaW1wb3J0IHsgVGVsZWdyYW1Mb2dvIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL1RlbGVncmFtTG9nbyI7CmltcG9ydCBMb2dvIGZyb20gIkAvbWVkaWEvbG9nby9vcGVuc2luLWljb24uc3ZnIjsKaW1wb3J0IHsgVHJhbnMsIHVzZVRyYW5zbGF0aW9uIH0gZnJvbSAicmVhY3QtaTE4bmV4dCI7CmltcG9ydCB7IExpbmsgfSBmcm9tICJyZWFjdC1yb3V0ZXItZG9tIjsKCmNvbnN0IEJPVEZBVEhFUl9VUkwgPSAiaHR0cHM6Ly90Lm1lL0JvdEZhdGhlciI7CgpleHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBDcmVhdGVCb3RTZWN0aW9uKCk6IEpTWC5FbGVtZW50IHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgY29uc3QgcXJTaXplID0gMTM3OwogIGNvbnN0IGxvZ29TaXplID0geyB3aWR0aDogMzUsIGhlaWdodDogMjIgfTsKCiAgcmV0dXJuICgKICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIGdhcC15LTgiPgogICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCBnYXAteS0xIj4KICAgICAgICA8cCBjbGFzc05hbWU9InRleHQtc20gbGlnaHQ6dGV4dC1iYXNlIGZvbnQtc2VtaWJvbGQgdGV4dC13aGl0ZSBsaWdodDp0ZXh0LXNsYXRlLTkwMCI+CiAgICAgICAgICB7dCgidGVsZWdyYW0uc2V0dXAuc3RlcDEudGl0bGUiKX0KICAgICAgICA8L3A+CiAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXhzIHRleHQtemluYy00MDAgbGlnaHQ6dGV4dC1zbGF0ZS02MDAgbWF4LXctWzYwMHB4XSI+CiAgICAgICAgICA8VHJhbnMKICAgICAgICAgICAgaTE4bktleT0idGVsZWdyYW0uc2V0dXAuc3RlcDEuZGVzY3JpcHRpb24iCiAgICAgICAgICAgIGNvbXBvbmVudHM9e3sKICAgICAgICAgICAgICBjb2RlOiAoCiAgICAgICAgICAgICAgICA8Y29kZSBjbGFzc05hbWU9ImJnLXppbmMtODAwIGxpZ2h0OmJnLXNsYXRlLTIwMCBweC0xIHB5LTAuNSByb3VuZGVkIHRleHQtd2hpdGUgbGlnaHQ6dGV4dC1zbGF0ZS05MDAiIC8+CiAgICAgICAgICAgICAgKSwKICAgICAgICAgICAgfX0KICAgICAgICAgIC8+CiAgICAgICAgPC9wPgogICAgICA8L2Rpdj4KICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIGdhcC14LTgiPgogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIGl0ZW1zLXN0YXJ0IGdhcC15LTIiPgogICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImJnLXppbmMtNzAwIGxpZ2h0OmJnLXNsYXRlLTIwMCByb3VuZGVkLTJ4bCBwLVsxOHB4XSI+CiAgICAgICAgICAgIDxRUkNvZGVTVkcKICAgICAgICAgICAgICB2YWx1ZT17Qk9URkFUSEVSX1VSTH0KICAgICAgICAgICAgICBzaXplPXtxclNpemV9CiAgICAgICAgICAgICAgYmdDb2xvcj0idHJhbnNwYXJlbnQiCiAgICAgICAgICAgICAgZmdDb2xvcj0iY3VycmVudENvbG9yIgogICAgICAgICAgICAgIGNsYXNzTmFtZT0idGV4dC13aGl0ZSBsaWdodDp0ZXh0LXNsYXRlLTkwMCBsaWdodDpbJl9pbWFnZV06aW52ZXJ0IgogICAgICAgICAgICAgIGxldmVsPSJMIgogICAgICAgICAgICAgIGltYWdlU2V0dGluZ3M9e3sKICAgICAgICAgICAgICAgIHNyYzogTG9nbywKICAgICAgICAgICAgICAgIHg6IHFyU2l6ZSAvIDIgLSBsb2dvU2l6ZS53aWR0aCAvIDIsCiAgICAgICAgICAgICAgICB5OiBxclNpemUgLyAyIC0gbG9nb1NpemUuaGVpZ2h0IC8gMiwKICAgICAgICAgICAgICAgIGhlaWdodDogbG9nb1NpemUuaGVpZ2h0LAogICAgICAgICAgICAgICAgd2lkdGg6IGxvZ29TaXplLndpZHRoLAogICAgICAgICAgICAgICAgZXhjYXZhdGU6IHRydWUsCiAgICAgICAgICAgICAgfX0KICAgICAgICAgICAgLz4KICAgICAgICAgIDwvZGl2PgogICAgICAgICAgPExpbmsKICAgICAgICAgICAgdG89e0JPVEZBVEhFUl9VUkx9CiAgICAgICAgICAgIHRhcmdldD0iX2JsYW5rIgogICAgICAgICAgICByZWw9Im5vcmVmZXJyZXIiCiAgICAgICAgICAgIGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIgZ2FwLXgtMS41IHRleHQtc20gZm9udC1tZWRpdW0gYmctemluYy01MCBsaWdodDpiZy1zbGF0ZS05MDAgdGV4dC16aW5jLTkwMCBsaWdodDp0ZXh0LXdoaXRlIHJvdW5kZWQtbGcgaC05IHctWzE3MnB4XSBob3ZlcjpvcGFjaXR5LTkwIHRyYW5zaXRpb24tb3BhY2l0eSBkdXJhdGlvbi0yMDAiCiAgICAgICAgICA+CiAgICAgICAgICAgIDxUZWxlZ3JhbUxvZ28gY2xhc3NOYW1lPSJoLTUgdy01IiB3ZWlnaHQ9ImZpbGwiIC8+CiAgICAgICAgICAgIHt0KCJ0ZWxlZ3JhbS5zZXR1cC5zdGVwMS5vcGVuLWJvdGZhdGhlciIpfQogICAgICAgICAgPC9MaW5rPgogICAgICAgIDwvZGl2PgogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIHRleHQtc20gdGV4dC13aGl0ZSBsaWdodDp0ZXh0LXNsYXRlLTkwMCI+CiAgICAgICAgICA8cCBjbGFzc05hbWU9ImxlYWRpbmctNSI+e3QoInRlbGVncmFtLnNldHVwLnN0ZXAxLmluc3RydWN0aW9uLTEiKX08L3A+CiAgICAgICAgICA8cCBjbGFzc05hbWU9ImxlYWRpbmctNSI+CiAgICAgICAgICAgIDxUcmFucwogICAgICAgICAgICAgIGkxOG5LZXk9InRlbGVncmFtLnNldHVwLnN0ZXAxLmluc3RydWN0aW9uLTIiCiAgICAgICAgICAgICAgY29tcG9uZW50cz17ewogICAgICAgICAgICAgICAgY29kZTogKAogICAgICAgICAgICAgICAgICA8Y29kZSBjbGFzc05hbWU9ImJnLXppbmMtODAwIGxpZ2h0OmJnLXNsYXRlLTIwMCBweC0xIHB5LTAuNSByb3VuZGVkIiAvPgogICAgICAgICAgICAgICAgKSwKICAgICAgICAgICAgICB9fQogICAgICAgICAgICAvPgogICAgICAgICAgPC9wPgogICAgICAgICAgPHAgY2xhc3NOYW1lPSJsZWFkaW5nLTUiPnt0KCJ0ZWxlZ3JhbS5zZXR1cC5zdGVwMS5pbnN0cnVjdGlvbi0zIil9PC9wPgogICAgICAgICAgPHAgY2xhc3NOYW1lPSJsZWFkaW5nLTUiPnt0KCJ0ZWxlZ3JhbS5zZXR1cC5zdGVwMS5pbnN0cnVjdGlvbi00Iil9PC9wPgogICAgICAgIDwvZGl2PgogICAgICA8L2Rpdj4KICAgICAgPFNlY3VyaXR5VGlwcyAvPgogICAgPC9kaXY+CiAgKTsKfQoKZnVuY3Rpb24gU2VjdXJpdHlUaXBzKCk6IEpTWC5FbGVtZW50IHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CgogIHJldHVybiAoCiAgICA8ZGl2IGNsYXNzTmFtZT0iYm9yZGVyIGJvcmRlci16aW5jLTYwMCBsaWdodDpib3JkZXItc2xhdGUtNDAwIHJvdW5kZWQteGwgcC1bMThweF0gbWF4LXctWzY0MHB4XSI+CiAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC1zbSBmb250LW1lZGl1bSB0ZXh0LXdoaXRlIGxpZ2h0OnRleHQtc2xhdGUtOTAwIG1iLTEiPgogICAgICAgIHt0KCJ0ZWxlZ3JhbS5zZXR1cC5zZWN1cml0eS50aXRsZSIpfQogICAgICA8L3A+CiAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC1zbSB0ZXh0LXppbmMtNDAwIGxpZ2h0OnRleHQtc2xhdGUtNjAwIG1iLTIiPgogICAgICAgIHt0KCJ0ZWxlZ3JhbS5zZXR1cC5zZWN1cml0eS5kZXNjcmlwdGlvbiIpfQogICAgICA8L3A+CiAgICAgIDx1bCBjbGFzc05hbWU9InRleHQtc20gdGV4dC16aW5jLTQwMCBsaWdodDp0ZXh0LXNsYXRlLTYwMCBsaXN0LWRpc2MgbGlzdC1pbnNpZGUgc3BhY2UteS0wLjUiPgogICAgICAgIDxsaT4KICAgICAgICAgIHt0KCJ0ZWxlZ3JhbS5zZXR1cC5zZWN1cml0eS5kaXNhYmxlR3JvdXBzIil9eyIgIn0KICAgICAgICAgIHt0KCJ0ZWxlZ3JhbS5zZXR1cC5zZWN1cml0eS5kaXNhYmxlLWdyb3VwcyIpfQogICAgICAgIDwvbGk+CiAgICAgICAgPGxpPgogICAgICAgICAge3QoInRlbGVncmFtLnNldHVwLnNlY3VyaXR5LmRpc2FibGVJbmxpbmUiKX17IiAifQogICAgICAgICAge3QoInRlbGVncmFtLnNldHVwLnNlY3VyaXR5LmRpc2FibGUtaW5saW5lIil9CiAgICAgICAgPC9saT4KICAgICAgICA8bGk+e3QoInRlbGVncmFtLnNldHVwLnNlY3VyaXR5Lm9ic2N1cmUtdXNlcm5hbWUiKX08L2xpPgogICAgICA8L3VsPgogICAgPC9kaXY+CiAgKTsKfQo=
+// SPDX-License-Identifier: MIT
+// Docs: index.doc.md
+import { QRCodeSVG } from "qrcode.react";
+import { TelegramLogo } from "@phosphor-icons/react/dist/csr/TelegramLogo";
+import Logo from "@/media/logo/opensin-icon.svg";
+import { Trans, useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+
+const BOTFATHER_URL = "https://t.me/BotFather";
+
+export default function CreateBotSection(): JSX.Element {
+  const { t } = useTranslation();
+  const qrSize = 137;
+  const logoSize = { width: 35, height: 22 };
+
+  return (
+    <div className="flex flex-col gap-y-8">
+      <div className="flex flex-col gap-y-1">
+        <p className="text-sm light:text-base font-semibold text-white light:text-slate-900">
+          {t("telegram.setup.step1.title")}
+        </p>
+        <p className="text-xs text-zinc-400 light:text-slate-600 max-w-[600px]">
+          <Trans
+            i18nKey="telegram.setup.step1.description"
+            components={{
+              code: (
+                <code className="bg-zinc-800 light:bg-slate-200 px-1 py-0.5 rounded text-white light:text-slate-900" />
+              ),
+            }}
+          />
+        </p>
+      </div>
+      <div className="flex items-center gap-x-8">
+        <div className="flex flex-col items-start gap-y-2">
+          <div className="bg-zinc-700 light:bg-slate-200 rounded-2xl p-[18px]">
+            <QRCodeSVG
+              value={BOTFATHER_URL}
+              size={qrSize}
+              bgColor="transparent"
+              fgColor="currentColor"
+              className="text-white light:text-slate-900 light:[&_image]:invert"
+              level="L"
+              imageSettings={{
+                src: Logo,
+                x: qrSize / 2 - logoSize.width / 2,
+                y: qrSize / 2 - logoSize.height / 2,
+                height: logoSize.height,
+                width: logoSize.width,
+                excavate: true,
+              }}
+            />
+          </div>
+          <Link
+            to={BOTFATHER_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center justify-center gap-x-1.5 text-sm font-medium bg-zinc-50 light:bg-slate-900 text-zinc-900 light:text-white rounded-lg h-9 w-[172px] hover:opacity-90 transition-opacity duration-200"
+          >
+            <TelegramLogo className="h-5 w-5" weight="fill" />
+            {t("telegram.setup.step1.open-botfather")}
+          </Link>
+        </div>
+        <div className="flex flex-col text-sm text-white light:text-slate-900">
+          <p className="leading-5">{t("telegram.setup.step1.instruction-1")}</p>
+          <p className="leading-5">
+            <Trans
+              i18nKey="telegram.setup.step1.instruction-2"
+              components={{
+                code: (
+                  <code className="bg-zinc-800 light:bg-slate-200 px-1 py-0.5 rounded" />
+                ),
+              }}
+            />
+          </p>
+          <p className="leading-5">{t("telegram.setup.step1.instruction-3")}</p>
+          <p className="leading-5">{t("telegram.setup.step1.instruction-4")}</p>
+        </div>
+      </div>
+      <SecurityTips />
+    </div>
+  );
+}
+
+function SecurityTips(): JSX.Element {
+  const { t } = useTranslation();
+
+  return (
+    <div className="border border-zinc-600 light:border-slate-400 rounded-xl p-[18px] max-w-[640px]">
+      <p className="text-sm font-medium text-white light:text-slate-900 mb-1">
+        {t("telegram.setup.security.title")}
+      </p>
+      <p className="text-sm text-zinc-400 light:text-slate-600 mb-2">
+        {t("telegram.setup.security.description")}
+      </p>
+      <ul className="text-sm text-zinc-400 light:text-slate-600 list-disc list-inside space-y-0.5">
+        <li>
+          {t("telegram.setup.security.disableGroups")}{" "}
+          {t("telegram.setup.security.disable-groups")}
+        </li>
+        <li>
+          {t("telegram.setup.security.disableInline")}{" "}
+          {t("telegram.setup.security.disable-inline")}
+        </li>
+        <li>{t("telegram.setup.security.obscure-username")}</li>
+      </ul>
+    </div>
+  );
+}

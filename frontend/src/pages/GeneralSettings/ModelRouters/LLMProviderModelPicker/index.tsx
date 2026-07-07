@@ -1,1 +1,298 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyB1c2VFZmZlY3QsIHVzZVN0YXRlLCBGb3JtRXZlbnQgfSBmcm9tICJyZWFjdCI7CmltcG9ydCB7IHVzZVRyYW5zbGF0aW9uIH0gZnJvbSAicmVhY3QtaTE4bmV4dCI7CmltcG9ydCB7IEFWQUlMQUJMRV9MTE1fUFJPVklERVJTIH0gZnJvbSAiQC9wYWdlcy9HZW5lcmFsU2V0dGluZ3MvTExNUHJlZmVyZW5jZS9sbG1Qcm92aWRlcnMiOwppbXBvcnQgU3lzdGVtIGZyb20gIkAvbW9kZWxzL3N5c3RlbSI7CmltcG9ydCBNb2RhbFdyYXBwZXIgZnJvbSAiQC9jb21wb25lbnRzL01vZGFsV3JhcHBlciI7CmltcG9ydCB7IHVzZU1vZGFsIH0gZnJvbSAiQC9ob29rcy91c2VNb2RhbCI7CmltcG9ydCB7IFggfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvWCI7CmltcG9ydCBzaG93VG9hc3QgZnJvbSAiQC91dGlscy90b2FzdCI7CmltcG9ydCB1c2VTeXN0ZW1TZXR0aW5ncyBmcm9tICJAL2hvb2tzL3VzZVN5c3RlbVNldHRpbmdzIjsKCmludGVyZmFjZSBMTE1Qcm92aWRlciB7CiAgbmFtZTogc3RyaW5nOwogIHZhbHVlOiBzdHJpbmc7CiAgbG9nbzogc3RyaW5nOwogIG9wdGlvbnM6IChzZXR0aW5nczogYW55KSA9PiBSZWFjdC5SZWFjdE5vZGU7CiAgZGVzY3JpcHRpb246IHN0cmluZzsKICByZXF1aXJlZENvbmZpZz86IHN0cmluZ1tdOwogIGNvbm5lY3Rpb25Db25maWc/OiBzdHJpbmdbXTsKfQoKLy8gUHJvdmlkZXJzIHRoYXQgY2FuJ3QgYmUgcm91dGluZyB0YXJnZXRzCmNvbnN0IEVYQ0xVREVEX1BST1ZJREVSUyA9IFsib3BlbnNpbi1yb3V0ZXIiXTsKCmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIExMTVByb3ZpZGVyTW9kZWxQaWNrZXIoewogIHByb3ZpZGVyRmllbGROYW1lID0gImZhbGxiYWNrX3Byb3ZpZGVyIiwKICBtb2RlbEZpZWxkTmFtZSA9ICJmYWxsYmFja19tb2RlbCIsCiAgbGFiZWwgPSAiUHJvdmlkZXIgJiBNb2RlbCIsCiAgZGVzY3JpcHRpb24gPSAiIiwKICBkZWZhdWx0UHJvdmlkZXIgPSAiIiwKICBkZWZhdWx0TW9kZWwgPSAiIiwKfTogewogIHByb3ZpZGVyRmllbGROYW1lPzogc3RyaW5nOwogIG1vZGVsRmllbGROYW1lPzogc3RyaW5nOwogIGxhYmVsPzogc3RyaW5nOwogIGRlc2NyaXB0aW9uPzogc3RyaW5nOwogIGRlZmF1bHRQcm92aWRlcj86IHN0cmluZzsKICBkZWZhdWx0TW9kZWw/OiBzdHJpbmc7Cn0pIHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgY29uc3QgeyBzZXR0aW5ncywgcmVmcmVzaDogcmVmcmVzaFNldHRpbmdzIH0gPSB1c2VTeXN0ZW1TZXR0aW5ncygpOwogIGNvbnN0IFtzZWxlY3RlZFByb3ZpZGVyLCBzZXRTZWxlY3RlZFByb3ZpZGVyXSA9IHVzZVN0YXRlKAogICAgZGVmYXVsdFByb3ZpZGVyIHx8ICIiLAogICk7CiAgY29uc3QgW3NlbGVjdGVkTW9kZWwsIHNldFNlbGVjdGVkTW9kZWxdID0gdXNlU3RhdGUoZGVmYXVsdE1vZGVsIHx8ICIiKTsKICBjb25zdCBbbW9kZWxzLCBzZXRNb2RlbHNdID0gdXNlU3RhdGU8YW55W10+KFtdKTsKICBjb25zdCBbbG9hZGluZ01vZGVscywgc2V0TG9hZGluZ01vZGVsc10gPSB1c2VTdGF0ZShmYWxzZSk7CiAgY29uc3QgeyBpc09wZW4sIG9wZW5Nb2RhbCwgY2xvc2VNb2RhbCB9ID0gdXNlTW9kYWwoKTsKCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIGlmIChkZWZhdWx0UHJvdmlkZXIgJiYgIXNlbGVjdGVkUHJvdmlkZXIpCiAgICAgIHNldFNlbGVjdGVkUHJvdmlkZXIoZGVmYXVsdFByb3ZpZGVyKTsKICB9LCBbZGVmYXVsdFByb3ZpZGVyXSk7CgogIHVzZUVmZmVjdCgoKSA9PiB7CiAgICBpZiAoZGVmYXVsdE1vZGVsICYmICFzZWxlY3RlZE1vZGVsKSBzZXRTZWxlY3RlZE1vZGVsKGRlZmF1bHRNb2RlbCk7CiAgfSwgW2RlZmF1bHRNb2RlbF0pOwoKICBjb25zdCBhdmFpbGFibGVQcm92aWRlcnMgPSBBVkFJTEFCTEVfTExNX1BST1ZJREVSUy5maWx0ZXIoCiAgICAobGxtOiBMTE1Qcm92aWRlcikgPT4gIUVYQ0xVREVEX1BST1ZJREVSUy5pbmNsdWRlcyhsbG0udmFsdWUpLAogICk7CgogIGZ1bmN0aW9uIGlzQ29uZmlndXJlZChwcm92aWRlclZhbHVlOiBzdHJpbmcpIHsKICAgIGlmICghc2V0dGluZ3MpIHJldHVybiB0cnVlOwogICAgY29uc3QgbGxtID0gYXZhaWxhYmxlUHJvdmlkZXJzLmZpbmQoKGwpID0+IGwudmFsdWUgPT09IHByb3ZpZGVyVmFsdWUpOwogICAgY29uc3Qga2V5cyA9IGxsbT8uY29ubmVjdGlvbkNvbmZpZyB8fCBsbG0/LnJlcXVpcmVkQ29uZmlnOwogICAgaWYgKCFrZXlzPy5sZW5ndGgpIHJldHVybiB0cnVlOwogICAgcmV0dXJuIGtleXMuZXZlcnkoKGtleSkgPT4gISFzZXR0aW5nc1trZXldKTsKICB9CgogIHVzZUVmZmVjdCgoKSA9PiB7CiAgICBpZiAoIXNlbGVjdGVkUHJvdmlkZXIgfHwgIXNldHRpbmdzKSB7CiAgICAgIHNldE1vZGVscyhbXSk7CiAgICAgIHJldHVybjsKICAgIH0KICAgIGlmICghaXNDb25maWd1cmVkKHNlbGVjdGVkUHJvdmlkZXIpKSByZXR1cm47CgogICAgbGV0IGNhbmNlbGxlZCA9IGZhbHNlOwogICAgYXN5bmMgZnVuY3Rpb24gZmV0Y2hNb2RlbHMoKSB7CiAgICAgIHNldExvYWRpbmdNb2RlbHModHJ1ZSk7CiAgICAgIGNvbnN0IHsgbW9kZWxzOiBmZXRjaGVkTW9kZWxzID0gW10gfSA9CiAgICAgICAgYXdhaXQgU3lzdGVtLmN1c3RvbU1vZGVscyhzZWxlY3RlZFByb3ZpZGVyKTsKICAgICAgaWYgKGNhbmNlbGxlZCkgcmV0dXJuOwogICAgICBzZXRNb2RlbHMoZmV0Y2hlZE1vZGVscyk7CiAgICAgIHNldExvYWRpbmdNb2RlbHMoZmFsc2UpOwogICAgfQogICAgZmV0Y2hNb2RlbHMoKTsKICAgIHJldHVybiAoKSA9PiB7CiAgICAgIGNhbmNlbGxlZCA9IHRydWU7CiAgICB9OwogIH0sIFtzZWxlY3RlZFByb3ZpZGVyLCBzZXR0aW5nc10pOwoKICBmdW5jdGlvbiBoYW5kbGVQcm92aWRlckNoYW5nZShlOiBSZWFjdC5DaGFuZ2VFdmVudDxIVE1MU2VsZWN0RWxlbWVudD4pIHsKICAgIGNvbnN0IHZhbHVlID0gZS50YXJnZXQudmFsdWU7CiAgICBzZXRTZWxlY3RlZFByb3ZpZGVyKHZhbHVlKTsKICAgIHNldFNlbGVjdGVkTW9kZWwoIiIpOwogICAgc2V0TW9kZWxzKFtdKTsKICAgIGlmICh2YWx1ZSAmJiAhaXNDb25maWd1cmVkKHZhbHVlKSkgb3Blbk1vZGFsKCk7CiAgfQoKICBmdW5jdGlvbiBoYW5kbGVTZXR1cENhbmNlbCgpIHsKICAgIGNsb3NlTW9kYWwoKTsKICAgIGlmICghaXNDb25maWd1cmVkKHNlbGVjdGVkUHJvdmlkZXIpKSB7CiAgICAgIHNldFNlbGVjdGVkUHJvdmlkZXIoZGVmYXVsdFByb3ZpZGVyIHx8ICIiKTsKICAgICAgc2V0U2VsZWN0ZWRNb2RlbChkZWZhdWx0TW9kZWwgfHwgIiIpOwogICAgfQogIH0KCiAgYXN5bmMgZnVuY3Rpb24gaGFuZGxlU2V0dXBTYXZlKGU6IEZvcm1FdmVudDxIVE1MRm9ybUVsZW1lbnQ+KSB7CiAgICBlLnByZXZlbnREZWZhdWx0KCk7CiAgICBlLnN0b3BQcm9wYWdhdGlvbigpOwogICAgY29uc3QgZGF0YTogYW55ID0ge307CiAgICBjb25zdCBmb3JtID0gbmV3IEZvcm1EYXRhKGUuY3VycmVudFRhcmdldCk7CiAgICBmb3IgKGNvbnN0IFtrZXksIHZhbHVlXSBvZiBmb3JtLmVudHJpZXMoKSkgZGF0YVtrZXldID0gdmFsdWU7CiAgICBjb25zdCB7IGVycm9yIH0gPSBhd2FpdCBTeXN0ZW0udXBkYXRlU3lzdGVtKGRhdGEpOwogICAgaWYgKGVycm9yKSB7CiAgICAgIHNob3dUb2FzdCgKICAgICAgICB0KCJtb2RlbC1yb3V0ZXIucHJvdmlkZXItcGlja2VyLnRvYXN0LXNhdmUtZmFpbGVkIiwgeyBlcnJvciB9KSwKICAgICAgICAiZXJyb3IiLAogICAgICApOwogICAgICByZXR1cm47CiAgICB9CiAgICBhd2FpdCByZWZyZXNoU2V0dGluZ3MoKTsKICAgIGNsb3NlTW9kYWwoKTsKICB9CgogIGNvbnN0IHNlbGVjdGVkTGxtID0gYXZhaWxhYmxlUHJvdmlkZXJzLmZpbmQoCiAgICAobCkgPT4gbC52YWx1ZSA9PT0gc2VsZWN0ZWRQcm92aWRlciwKICApOwogIGNvbnN0IG5lZWRzU2V0dXAgPQogICAgc2VsZWN0ZWRQcm92aWRlciAmJiBzZWxlY3RlZExsbSAmJiAhaXNDb25maWd1cmVkKHNlbGVjdGVkUHJvdmlkZXIpOwoKICByZXR1cm4gKAogICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgZ2FwLXktMS41Ij4KICAgICAgPGxhYmVsIGNsYXNzTmFtZT0idGV4dC1zbSBmb250LW1lZGl1bSBsZWFkaW5nLTUgdGV4dC13aGl0ZSBsaWdodDp0ZXh0LXNsYXRlLTk1MCI+CiAgICAgICAge2xhYmVsfQogICAgICA8L2xhYmVsPgogICAgICB7ZGVzY3JpcHRpb24gJiYgKAogICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC14cyBsZWFkaW5nLTQgdGV4dC16aW5jLTQwMCBsaWdodDp0ZXh0LXNsYXRlLTYwMCI+CiAgICAgICAgICB7ZGVzY3JpcHRpb259CiAgICAgICAgPC9wPgogICAgICApfQogICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBnYXAteC0zIj4KICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleC0xIj4KICAgICAgICAgIDxzZWxlY3QKICAgICAgICAgICAgbmFtZT17cHJvdmlkZXJGaWVsZE5hbWV9CiAgICAgICAgICAgIHZhbHVlPXtzZWxlY3RlZFByb3ZpZGVyfQogICAgICAgICAgICBvbkNoYW5nZT17aGFuZGxlUHJvdmlkZXJDaGFuZ2V9CiAgICAgICAgICAgIGNsYXNzTmFtZT0iYmctemluYy04MDAgbGlnaHQ6Ymctd2hpdGUgbGlnaHQ6Ym9yZGVyIGxpZ2h0OmJvcmRlci1zbGF0ZS0zMDAgdGV4dC13aGl0ZSBsaWdodDp0ZXh0LXNsYXRlLTcwMCB0ZXh0LXNtIHJvdW5kZWQtWzhweF0gb3V0bGluZS1ub25lIGJsb2NrIHctZnVsbCBoLTggcHgtMy41IgogICAgICAgICAgICByZXF1aXJlZAogICAgICAgICAgPgogICAgICAgICAgICA8b3B0aW9uIHZhbHVlPSIiPgogICAgICAgICAgICAgIHt0KCJtb2RlbC1yb3V0ZXIucHJvdmlkZXItcGlja2VyLnNlbGVjdC1wcm92aWRlciIpfQogICAgICAgICAgICA8L29wdGlvbj4KICAgICAgICAgICAge2F2YWlsYWJsZVByb3ZpZGVycy5tYXAoKGxsbSkgPT4gKAogICAgICAgICAgICAgIDxvcHRpb24ga2V5PXtsbG0udmFsdWV9IHZhbHVlPXtsbG0udmFsdWV9PgogICAgICAgICAgICAgICAge2xsbS5uYW1lfQogICAgICAgICAgICAgICAgeyFpc0NvbmZpZ3VyZWQobGxtLnZhbHVlKQogICAgICAgICAgICAgICAgICA/IGAgJHt0KCJtb2RlbC1yb3V0ZXIucHJvdmlkZXItcGlja2VyLnNldHVwLXJlcXVpcmVkIil9YAogICAgICAgICAgICAgICAgICA6ICIifQogICAgICAgICAgICAgIDwvb3B0aW9uPgogICAgICAgICAgICApKX0KICAgICAgICAgIDwvc2VsZWN0PgogICAgICAgIDwvZGl2PgogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4LTEiPgogICAgICAgICAge25lZWRzU2V0dXAgPyAoCiAgICAgICAgICAgIDxidXR0b24KICAgICAgICAgICAgICB0eXBlPSJidXR0b24iCiAgICAgICAgICAgICAgb25DbGljaz17b3Blbk1vZGFsfQogICAgICAgICAgICAgIGNsYXNzTmFtZT0iYm9yZGVyLW5vbmUgYmctemluYy04MDAgbGlnaHQ6Ymctd2hpdGUgbGlnaHQ6Ym9yZGVyIGxpZ2h0OmJvcmRlci1zbGF0ZS0zMDAgdGV4dC1ibHVlLTQwMCBsaWdodDp0ZXh0LWJsdWUtNTAwIHRleHQtc20gcm91bmRlZC1bOHB4XSBibG9jayB3LWZ1bGwgaC04IHB4LTMuNSB0ZXh0LWxlZnQgaG92ZXI6dGV4dC1ibHVlLTMwMCBsaWdodDpob3Zlcjp0ZXh0LWJsdWUtNjAwIHRyYW5zaXRpb24tY29sb3JzIgogICAgICAgICAgICA+CiAgICAgICAgICAgICAge3QoIm1vZGVsLXJvdXRlci5wcm92aWRlci1waWNrZXIuY29uZmlndXJlLXRvLWNvbnRpbnVlIiwgewogICAgICAgICAgICAgICAgbmFtZTogc2VsZWN0ZWRMbG0ubmFtZSwKICAgICAgICAgICAgICB9KX0KICAgICAgICAgICAgPC9idXR0b24+CiAgICAgICAgICApIDogbG9hZGluZ01vZGVscyA/ICgKICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImJnLXppbmMtODAwIGxpZ2h0OmJnLXdoaXRlIGxpZ2h0OmJvcmRlciBsaWdodDpib3JkZXItc2xhdGUtMzAwIHRleHQtemluYy00MDAgbGlnaHQ6dGV4dC1zbGF0ZS01MDAgdGV4dC1zbSByb3VuZGVkLVs4cHhdIGgtOCBweC0zLjUgZmxleCBpdGVtcy1jZW50ZXIiPgogICAgICAgICAgICAgIHt0KCJtb2RlbC1yb3V0ZXIucHJvdmlkZXItcGlja2VyLmxvYWRpbmctbW9kZWxzIil9CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgKSA6IG1vZGVscy5sZW5ndGggPiAwID8gKAogICAgICAgICAgICA8c2VsZWN0CiAgICAgICAgICAgICAgbmFtZT17bW9kZWxGaWVsZE5hbWV9CiAgICAgICAgICAgICAgdmFsdWU9e3NlbGVjdGVkTW9kZWx9CiAgICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBzZXRTZWxlY3RlZE1vZGVsKGUudGFyZ2V0LnZhbHVlKX0KICAgICAgICAgICAgICBjbGFzc05hbWU9ImJnLXppbmMtODAwIGxpZ2h0OmJnLXdoaXRlIGxpZ2h0OmJvcmRlciBsaWdodDpib3JkZXItc2xhdGUtMzAwIHRleHQtd2hpdGUgbGlnaHQ6dGV4dC1zbGF0ZS03MDAgdGV4dC1zbSByb3VuZGVkLVs4cHhdIG91dGxpbmUtbm9uZSBibG9jayB3LWZ1bGwgaC04IHB4LTMuNSIKICAgICAgICAgICAgICByZXF1aXJlZAogICAgICAgICAgICA+CiAgICAgICAgICAgICAgPG9wdGlvbiB2YWx1ZT0iIj4KICAgICAgICAgICAgICAgIHt0KCJtb2RlbC1yb3V0ZXIucHJvdmlkZXItcGlja2VyLnNlbGVjdC1tb2RlbCIpfQogICAgICAgICAgICAgIDwvb3B0aW9uPgogICAgICAgICAgICAgIHttb2RlbHMubWFwKChtb2RlbCkgPT4gKAogICAgICAgICAgICAgICAgPG9wdGlvbiBrZXk9e21vZGVsLmlkfSB2YWx1ZT17bW9kZWwuaWR9PgogICAgICAgICAgICAgICAgICB7bW9kZWwuaWR9CiAgICAgICAgICAgICAgICA8L29wdGlvbj4KICAgICAgICAgICAgICApKX0KICAgICAgICAgICAgPC9zZWxlY3Q+CiAgICAgICAgICApIDogKAogICAgICAgICAgICA8aW5wdXQKICAgICAgICAgICAgICB0eXBlPSJ0ZXh0IgogICAgICAgICAgICAgIG5hbWU9e21vZGVsRmllbGROYW1lfQogICAgICAgICAgICAgIHZhbHVlPXtzZWxlY3RlZE1vZGVsfQogICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gc2V0U2VsZWN0ZWRNb2RlbChlLnRhcmdldC52YWx1ZSl9CiAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9ewogICAgICAgICAgICAgICAgc2VsZWN0ZWRQcm92aWRlcgogICAgICAgICAgICAgICAgICA/IHQoIm1vZGVsLXJvdXRlci5wcm92aWRlci1waWNrZXIuZW50ZXItbW9kZWwiKQogICAgICAgICAgICAgICAgICA6IHQoIm1vZGVsLXJvdXRlci5wcm92aWRlci1waWNrZXIuc2VsZWN0LXByb3ZpZGVyLWZpcnN0IikKICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgZGlzYWJsZWQ9eyFzZWxlY3RlZFByb3ZpZGVyfQogICAgICAgICAgICAgIGNsYXNzTmFtZT0iYmctemluYy04MDAgbGlnaHQ6Ymctd2hpdGUgbGlnaHQ6Ym9yZGVyIGxpZ2h0OmJvcmRlci1zbGF0ZS0zMDAgdGV4dC13aGl0ZSBsaWdodDp0ZXh0LXNsYXRlLTcwMCBwbGFjZWhvbGRlcjp0ZXh0LXppbmMtNDAwIGxpZ2h0OnBsYWNlaG9sZGVyOnRleHQtc2xhdGUtNDAwIHRleHQtc20gcm91bmRlZC1bOHB4XSBvdXRsaW5lLW5vbmUgYmxvY2sgdy1mdWxsIGgtOCBweC0zLjUgZGlzYWJsZWQ6b3BhY2l0eS01MCIKICAgICAgICAgICAgICByZXF1aXJlZAogICAgICAgICAgICAvPgogICAgICAgICAgKX0KICAgICAgICA8L2Rpdj4KICAgICAgPC9kaXY+CgogICAgICA8UHJvdmlkZXJTZXR1cE1vZGFsCiAgICAgICAgaXNPcGVuPXtpc09wZW59CiAgICAgICAgcHJvdmlkZXI9e3NlbGVjdGVkTGxtfQogICAgICAgIHNldHRpbmdzPXtzZXR0aW5nc30KICAgICAgICBvblNhdmU9e2hhbmRsZVNldHVwU2F2ZX0KICAgICAgICBvbkNsb3NlPXtoYW5kbGVTZXR1cENhbmNlbH0KICAgICAgLz4KICAgIDwvZGl2PgogICk7Cn0KCmZ1bmN0aW9uIFByb3ZpZGVyU2V0dXBNb2RhbCh7CiAgaXNPcGVuLAogIHByb3ZpZGVyLAogIHNldHRpbmdzLAogIG9uU2F2ZSwKICBvbkNsb3NlLAp9OiB7CiAgaXNPcGVuOiBib29sZWFuOwogIHByb3ZpZGVyOiBMTE1Qcm92aWRlciB8IHVuZGVmaW5lZDsKICBzZXR0aW5nczogYW55OwogIG9uU2F2ZTogKGU6IEZvcm1FdmVudDxIVE1MRm9ybUVsZW1lbnQ+KSA9PiB2b2lkOwogIG9uQ2xvc2U6ICgpID0+IHZvaWQ7Cn0pIHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgaWYgKCFpc09wZW4gfHwgIXByb3ZpZGVyKSByZXR1cm4gbnVsbDsKCiAgcmV0dXJuICgKICAgIDxNb2RhbFdyYXBwZXIgaXNPcGVuPXtpc09wZW59IGNsb3NlTW9kYWw9e29uQ2xvc2V9PgogICAgICA8ZGl2IGNsYXNzTmFtZT0idy1mdWxsIG1heC13LTJ4bCBiZy16aW5jLTkwMCBsaWdodDpiZy13aGl0ZSByb3VuZGVkLVs4cHhdIHNoYWRvdy1sZyBib3JkZXIgYm9yZGVyLXppbmMtNzAwIGxpZ2h0OmJvcmRlci1zbGF0ZS0zMDAiPgogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWJldHdlZW4gcC02IGJvcmRlci1iIGJvcmRlci16aW5jLTcwMCBsaWdodDpib3JkZXItc2xhdGUtMzAwIj4KICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBnYXAteC0zIj4KICAgICAgICAgICAge3Byb3ZpZGVyLmxvZ28gJiYgKAogICAgICAgICAgICAgIDxpbWcKICAgICAgICAgICAgICAgIHNyYz17cHJvdmlkZXIubG9nb30KICAgICAgICAgICAgICAgIGFsdD17YCR7cHJvdmlkZXIubmFtZX0gbG9nb2B9CiAgICAgICAgICAgICAgICBjbGFzc05hbWU9InctOCBoLTggcm91bmRlZC1tZCIKICAgICAgICAgICAgICAvPgogICAgICAgICAgICApfQogICAgICAgICAgICA8aDMgY2xhc3NOYW1lPSJ0ZXh0LWJhc2UgZm9udC1zZW1pYm9sZCBsZWFkaW5nLTYgdGV4dC13aGl0ZSBsaWdodDp0ZXh0LXNsYXRlLTk1MCI+CiAgICAgICAgICAgICAge3QoIm1vZGVsLXJvdXRlci5wcm92aWRlci1waWNrZXIuY29uZmlndXJlLXByb3ZpZGVyIiwgewogICAgICAgICAgICAgICAgbmFtZTogcHJvdmlkZXIubmFtZSwKICAgICAgICAgICAgICB9KX0KICAgICAgICAgICAgPC9oMz4KICAgICAgICAgIDwvZGl2PgogICAgICAgICAgPGJ1dHRvbgogICAgICAgICAgICBvbkNsaWNrPXtvbkNsb3NlfQogICAgICAgICAgICB0eXBlPSJidXR0b24iCiAgICAgICAgICAgIGNsYXNzTmFtZT0iYm9yZGVyLW5vbmUgcC0xIHJvdW5kZWQtbGcgdGV4dC16aW5jLTQwMCBsaWdodDp0ZXh0LXNsYXRlLTUwMCBob3Zlcjp0ZXh0LXdoaXRlIGxpZ2h0OmhvdmVyOnRleHQtc2xhdGUtOTAwIGhvdmVyOmJnLXppbmMtODAwIGxpZ2h0OmhvdmVyOmJnLXNsYXRlLTEwMCB0cmFuc2l0aW9uLWNvbG9ycyIKICAgICAgICAgID4KICAgICAgICAgICAgPFggc2l6ZT17MTZ9IHdlaWdodD0iYm9sZCIgLz4KICAgICAgICAgIDwvYnV0dG9uPgogICAgICAgIDwvZGl2PgogICAgICAgIDxmb3JtIGlkPSJwcm92aWRlci1zZXR1cC1mb3JtIiBvblN1Ym1pdD17b25TYXZlfT4KICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJweC02IHB5LTUiPgogICAgICAgICAgICA8cCBjbGFzc05hbWU9InRleHQteHMgbGVhZGluZy00IHRleHQtemluYy00MDAgbGlnaHQ6dGV4dC1zbGF0ZS02MDAgbWItNCI+CiAgICAgICAgICAgICAge3QoIm1vZGVsLXJvdXRlci5wcm92aWRlci1waWNrZXIuc2V0dXAtY3JlZGVudGlhbHMiLCB7CiAgICAgICAgICAgICAgICBuYW1lOiBwcm92aWRlci5uYW1lLAogICAgICAgICAgICAgIH0pfQogICAgICAgICAgICA8L3A+CiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJzcGFjZS15LTQiPntwcm92aWRlci5vcHRpb25zKHNldHRpbmdzID8/IHt9KX08L2Rpdj4KICAgICAgICAgIDwvZGl2PgogICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXgganVzdGlmeS1iZXR3ZWVuIGdhcC14LTMgcHgtNiBweS00IGJvcmRlci10IGJvcmRlci16aW5jLTcwMCBsaWdodDpib3JkZXItc2xhdGUtMzAwIj4KICAgICAgICAgICAgPGJ1dHRvbgogICAgICAgICAgICAgIHR5cGU9ImJ1dHRvbiIKICAgICAgICAgICAgICBvbkNsaWNrPXtvbkNsb3NlfQogICAgICAgICAgICAgIGNsYXNzTmFtZT0iYm9yZGVyIGJvcmRlci16aW5jLTYwMCBsaWdodDpib3JkZXItc2xhdGUtNjAwIHRleHQtd2hpdGUgbGlnaHQ6dGV4dC1zbGF0ZS05MDAgdGV4dC1zbSBmb250LW1lZGl1bSBsZWFkaW5nLTUgcm91bmRlZC1bOHB4XSBoLVszNHB4XSBweC0zLjUgaG92ZXI6b3BhY2l0eS05MCB0cmFuc2l0aW9uLW9wYWNpdHkiCiAgICAgICAgICAgID4KICAgICAgICAgICAgICB7dCgibW9kZWwtcm91dGVyLnByb3ZpZGVyLXBpY2tlci5jYW5jZWwiKX0KICAgICAgICAgICAgPC9idXR0b24+CiAgICAgICAgICAgIDxidXR0b24KICAgICAgICAgICAgICB0eXBlPSJzdWJtaXQiCiAgICAgICAgICAgICAgZm9ybT0icHJvdmlkZXItc2V0dXAtZm9ybSIKICAgICAgICAgICAgICBjbGFzc05hbWU9ImJvcmRlci1ub25lIHRleHQtc20gZm9udC1tZWRpdW0gbGVhZGluZy01IGJnLXppbmMtNTAgbGlnaHQ6Ymctc2xhdGUtOTAwIHRleHQtemluYy05MDAgbGlnaHQ6dGV4dC13aGl0ZSByb3VuZGVkLVs4cHhdIGgtWzM0cHhdIHB4LTMuNSBob3ZlcjpvcGFjaXR5LTkwIHRyYW5zaXRpb24tb3BhY2l0eSIKICAgICAgICAgICAgPgogICAgICAgICAgICAgIHt0KCJtb2RlbC1yb3V0ZXIucHJvdmlkZXItcGlja2VyLnNhdmUtc2V0dGluZ3MiKX0KICAgICAgICAgICAgPC9idXR0b24+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICA8L2Zvcm0+CiAgICAgIDwvZGl2PgogICAgPC9Nb2RhbFdyYXBwZXI+CiAgKTsKfQo=
+// SPDX-License-Identifier: MIT
+import { useEffect, useState, FormEvent } from "react";
+import { useTranslation } from "react-i18next";
+import { AVAILABLE_LLM_PROVIDERS } from "@/pages/GeneralSettings/LLMPreference/llmProviders";
+import System from "@/models/system";
+import ModalWrapper from "@/components/ModalWrapper";
+import { useModal } from "@/hooks/useModal";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import showToast from "@/utils/toast";
+import useSystemSettings from "@/hooks/useSystemSettings";
+
+interface LLMProvider {
+  name: string;
+  value: string;
+  logo: string;
+  options: (settings: any) => React.ReactNode;
+  description: string;
+  requiredConfig?: string[];
+  connectionConfig?: string[];
+}
+
+// Providers that can't be routing targets
+const EXCLUDED_PROVIDERS = ["opensin-router"];
+
+export default function LLMProviderModelPicker({
+  providerFieldName = "fallback_provider",
+  modelFieldName = "fallback_model",
+  label = "Provider & Model",
+  description = "",
+  defaultProvider = "",
+  defaultModel = "",
+}: {
+  providerFieldName?: string;
+  modelFieldName?: string;
+  label?: string;
+  description?: string;
+  defaultProvider?: string;
+  defaultModel?: string;
+}) {
+  const { t } = useTranslation();
+  const { settings, refresh: refreshSettings } = useSystemSettings();
+  const [selectedProvider, setSelectedProvider] = useState(
+    defaultProvider || "",
+  );
+  const [selectedModel, setSelectedModel] = useState(defaultModel || "");
+  const [models, setModels] = useState<any[]>([]);
+  const [loadingModels, setLoadingModels] = useState(false);
+  const { isOpen, openModal, closeModal } = useModal();
+
+  useEffect(() => {
+    if (defaultProvider && !selectedProvider)
+      setSelectedProvider(defaultProvider);
+  }, [defaultProvider]);
+
+  useEffect(() => {
+    if (defaultModel && !selectedModel) setSelectedModel(defaultModel);
+  }, [defaultModel]);
+
+  const availableProviders = AVAILABLE_LLM_PROVIDERS.filter(
+    (llm: LLMProvider) => !EXCLUDED_PROVIDERS.includes(llm.value),
+  );
+
+  function isConfigured(providerValue: string) {
+    if (!settings) return true;
+    const llm = availableProviders.find((l) => l.value === providerValue);
+    const keys = llm?.connectionConfig || llm?.requiredConfig;
+    if (!keys?.length) return true;
+    return keys.every((key) => !!settings[key]);
+  }
+
+  useEffect(() => {
+    if (!selectedProvider || !settings) {
+      setModels([]);
+      return;
+    }
+    if (!isConfigured(selectedProvider)) return;
+
+    let cancelled = false;
+    async function fetchModels() {
+      setLoadingModels(true);
+      const { models: fetchedModels = [] } =
+        await System.customModels(selectedProvider);
+      if (cancelled) return;
+      setModels(fetchedModels);
+      setLoadingModels(false);
+    }
+    fetchModels();
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedProvider, settings]);
+
+  function handleProviderChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const value = e.target.value;
+    setSelectedProvider(value);
+    setSelectedModel("");
+    setModels([]);
+    if (value && !isConfigured(value)) openModal();
+  }
+
+  function handleSetupCancel() {
+    closeModal();
+    if (!isConfigured(selectedProvider)) {
+      setSelectedProvider(defaultProvider || "");
+      setSelectedModel(defaultModel || "");
+    }
+  }
+
+  async function handleSetupSave(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    e.stopPropagation();
+    const data: any = {};
+    const form = new FormData(e.currentTarget);
+    for (const [key, value] of form.entries()) data[key] = value;
+    const { error } = await System.updateSystem(data);
+    if (error) {
+      showToast(
+        t("model-router.provider-picker.toast-save-failed", { error }),
+        "error",
+      );
+      return;
+    }
+    await refreshSettings();
+    closeModal();
+  }
+
+  const selectedLlm = availableProviders.find(
+    (l) => l.value === selectedProvider,
+  );
+  const needsSetup =
+    selectedProvider && selectedLlm && !isConfigured(selectedProvider);
+
+  return (
+    <div className="flex flex-col gap-y-1.5">
+      <label className="text-sm font-medium leading-5 text-white light:text-slate-950">
+        {label}
+      </label>
+      {description && (
+        <p className="text-xs leading-4 text-zinc-400 light:text-slate-600">
+          {description}
+        </p>
+      )}
+      <div className="flex gap-x-3">
+        <div className="flex-1">
+          <select
+            name={providerFieldName}
+            value={selectedProvider}
+            onChange={handleProviderChange}
+            className="bg-zinc-800 light:bg-white light:border light:border-slate-300 text-white light:text-slate-700 text-sm rounded-[8px] outline-none block w-full h-8 px-3.5"
+            required
+          >
+            <option value="">
+              {t("model-router.provider-picker.select-provider")}
+            </option>
+            {availableProviders.map((llm) => (
+              <option key={llm.value} value={llm.value}>
+                {llm.name}
+                {!isConfigured(llm.value)
+                  ? ` ${t("model-router.provider-picker.setup-required")}`
+                  : ""}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="flex-1">
+          {needsSetup ? (
+            <button
+              type="button"
+              onClick={openModal}
+              className="border-none bg-zinc-800 light:bg-white light:border light:border-slate-300 text-blue-400 light:text-blue-500 text-sm rounded-[8px] block w-full h-8 px-3.5 text-left hover:text-blue-300 light:hover:text-blue-600 transition-colors"
+            >
+              {t("model-router.provider-picker.configure-to-continue", {
+                name: selectedLlm.name,
+              })}
+            </button>
+          ) : loadingModels ? (
+            <div className="bg-zinc-800 light:bg-white light:border light:border-slate-300 text-zinc-400 light:text-slate-500 text-sm rounded-[8px] h-8 px-3.5 flex items-center">
+              {t("model-router.provider-picker.loading-models")}
+            </div>
+          ) : models.length > 0 ? (
+            <select
+              name={modelFieldName}
+              value={selectedModel}
+              onChange={(e) => setSelectedModel(e.target.value)}
+              className="bg-zinc-800 light:bg-white light:border light:border-slate-300 text-white light:text-slate-700 text-sm rounded-[8px] outline-none block w-full h-8 px-3.5"
+              required
+            >
+              <option value="">
+                {t("model-router.provider-picker.select-model")}
+              </option>
+              {models.map((model) => (
+                <option key={model.id} value={model.id}>
+                  {model.id}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <input
+              type="text"
+              name={modelFieldName}
+              value={selectedModel}
+              onChange={(e) => setSelectedModel(e.target.value)}
+              placeholder={
+                selectedProvider
+                  ? t("model-router.provider-picker.enter-model")
+                  : t("model-router.provider-picker.select-provider-first")
+              }
+              disabled={!selectedProvider}
+              className="bg-zinc-800 light:bg-white light:border light:border-slate-300 text-white light:text-slate-700 placeholder:text-zinc-400 light:placeholder:text-slate-400 text-sm rounded-[8px] outline-none block w-full h-8 px-3.5 disabled:opacity-50"
+              required
+            />
+          )}
+        </div>
+      </div>
+
+      <ProviderSetupModal
+        isOpen={isOpen}
+        provider={selectedLlm}
+        settings={settings}
+        onSave={handleSetupSave}
+        onClose={handleSetupCancel}
+      />
+    </div>
+  );
+}
+
+function ProviderSetupModal({
+  isOpen,
+  provider,
+  settings,
+  onSave,
+  onClose,
+}: {
+  isOpen: boolean;
+  provider: LLMProvider | undefined;
+  settings: any;
+  onSave: (e: FormEvent<HTMLFormElement>) => void;
+  onClose: () => void;
+}) {
+  const { t } = useTranslation();
+  if (!isOpen || !provider) return null;
+
+  return (
+    <ModalWrapper isOpen={isOpen} closeModal={onClose}>
+      <div className="w-full max-w-2xl bg-zinc-900 light:bg-white rounded-[8px] shadow-lg border border-zinc-700 light:border-slate-300">
+        <div className="flex items-center justify-between p-6 border-b border-zinc-700 light:border-slate-300">
+          <div className="flex items-center gap-x-3">
+            {provider.logo && (
+              <img
+                src={provider.logo}
+                alt={`${provider.name} logo`}
+                className="w-8 h-8 rounded-md"
+              />
+            )}
+            <h3 className="text-base font-semibold leading-6 text-white light:text-slate-950">
+              {t("model-router.provider-picker.configure-provider", {
+                name: provider.name,
+              })}
+            </h3>
+          </div>
+          <button
+            onClick={onClose}
+            type="button"
+            className="border-none p-1 rounded-lg text-zinc-400 light:text-slate-500 hover:text-white light:hover:text-slate-900 hover:bg-zinc-800 light:hover:bg-slate-100 transition-colors"
+          >
+            <X size={16} weight="bold" />
+          </button>
+        </div>
+        <form id="provider-setup-form" onSubmit={onSave}>
+          <div className="px-6 py-5">
+            <p className="text-xs leading-4 text-zinc-400 light:text-slate-600 mb-4">
+              {t("model-router.provider-picker.setup-credentials", {
+                name: provider.name,
+              })}
+            </p>
+            <div className="space-y-4">{provider.options(settings ?? {})}</div>
+          </div>
+          <div className="flex justify-between gap-x-3 px-6 py-4 border-t border-zinc-700 light:border-slate-300">
+            <button
+              type="button"
+              onClick={onClose}
+              className="border border-zinc-600 light:border-slate-600 text-white light:text-slate-900 text-sm font-medium leading-5 rounded-[8px] h-[34px] px-3.5 hover:opacity-90 transition-opacity"
+            >
+              {t("model-router.provider-picker.cancel")}
+            </button>
+            <button
+              type="submit"
+              form="provider-setup-form"
+              className="border-none text-sm font-medium leading-5 bg-zinc-50 light:bg-slate-900 text-zinc-900 light:text-white rounded-[8px] h-[34px] px-3.5 hover:opacity-90 transition-opacity"
+            >
+              {t("model-router.provider-picker.save-settings")}
+            </button>
+          </div>
+        </form>
+      </div>
+    </ModalWrapper>
+  );
+}

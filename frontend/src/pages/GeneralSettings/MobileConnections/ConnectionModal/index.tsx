@@ -1,1 +1,160 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBEb2NzOiBpbmRleC5kb2MubWQKaW1wb3J0IHsgWCB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9YIjsKaW1wb3J0IE1vZGFsV3JhcHBlciBmcm9tICJAL2NvbXBvbmVudHMvTW9kYWxXcmFwcGVyIjsKaW1wb3J0IEJHIGZyb20gIi4vYmcucG5nIjsKaW1wb3J0IHsgUVJDb2RlU1ZHIH0gZnJvbSAicXJjb2RlLnJlYWN0IjsKaW1wb3J0IHsgTGluayB9IGZyb20gInJlYWN0LXJvdXRlci1kb20iOwppbXBvcnQgeyB1c2VFZmZlY3QsIHVzZVN0YXRlIH0gZnJvbSAicmVhY3QiOwppbXBvcnQgTW9iaWxlQ29ubmVjdGlvbiBmcm9tICJAL21vZGVscy9tb2JpbGUiOwppbXBvcnQgUHJlTG9hZGVyIGZyb20gIkAvY29tcG9uZW50cy9QcmVsb2FkZXIiOwppbXBvcnQgTG9nbyBmcm9tICJAL21lZGlhL2xvZ28vb3BlbnNpbi1pY29uLnN2ZyI7CmltcG9ydCBwYXRocyBmcm9tICJAL3V0aWxzL3BhdGhzIjsKaW1wb3J0IEdldE9uR29vZ2xlUGxheSBmcm9tICIuL2dwbGF5LWJhZGdlLnN2ZyI7CmltcG9ydCB7IHVzZVRyYW5zbGF0aW9uIH0gZnJvbSAicmVhY3QtaTE4bmV4dCI7Cgp0eXBlIE1vYmlsZUNvbm5lY3RNb2RhbFByb3BzID0gewogIGlzT3BlbjogYm9vbGVhbjsKICBvbkNsb3NlOiAoKSA9PiB2b2lkOwp9OwoKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gTW9iaWxlQ29ubmVjdE1vZGFsKHsKICBpc09wZW4sCiAgb25DbG9zZSwKfTogTW9iaWxlQ29ubmVjdE1vZGFsUHJvcHMpOiBKU1guRWxlbWVudCB7CiAgY29uc3QgeyB0IH0gPSB1c2VUcmFuc2xhdGlvbigpOwogIHJldHVybiAoCiAgICA8TW9kYWxXcmFwcGVyIGlzT3Blbj17aXNPcGVufT4KICAgICAgey8qIGJhY2tncm91bmRJbWFnZSBrZWVwcyBhIHN0eWxlIGF0dHI6IGJ1bmRsZXItaGFzaGVkIGFzc2V0IFVSTCBvbmx5IGtub3duIGF0IGJ1aWxkIHRpbWUgKi99CiAgICAgIDxkaXYKICAgICAgICBjbGFzc05hbWU9InJlbGF0aXZlIHctZnVsbCByb3VuZGVkLWxnIHNoYWRvdyBtaW4taC1bNjB2aF0gbWF4LXctWzcwdnddIGJnLWNvdmVyIGJnLWNlbnRlciBiZy1bdmFyKC0tY29ubmVjdGlvbi1tb2RhbC1iZyldIgogICAgICAgIHN0eWxlPXt7ICItLWNvbm5lY3Rpb24tbW9kYWwtYmciOiBgdXJsKCR7Qkd9KWAgfSBhcyBSZWFjdC5DU1NQcm9wZXJ0aWVzfQogICAgICA+CiAgICAgICAgPGJ1dHRvbgogICAgICAgICAgb25DbGljaz17b25DbG9zZX0KICAgICAgICAgIHR5cGU9ImJ1dHRvbiIKICAgICAgICAgIGNsYXNzTmFtZT0iYWJzb2x1dGUgdG9wLTQgcmlnaHQtNCB0cmFuc2l0aW9uLWFsbCBkdXJhdGlvbi0zMDAgYmctdHJhbnNwYXJlbnQgcm91bmRlZC1sZyB0ZXh0LXNtIHAtMSBpbmxpbmUtZmxleCBpdGVtcy1jZW50ZXIgaG92ZXI6YmctdGhlbWUtbW9kYWwtYm9yZGVyIGhvdmVyOmJvcmRlci10aGVtZS1tb2RhbC1ib3JkZXIgaG92ZXI6Ym9yZGVyLW9wYWNpdHktNTAgYm9yZGVyLXRyYW5zcGFyZW50IGJvcmRlciIKICAgICAgICA+CiAgICAgICAgICA8WCBzaXplPXsyNH0gd2VpZ2h0PSJib2xkIiBjbGFzc05hbWU9InRleHQtWyNGRkZdIiAvPgogICAgICAgIDwvYnV0dG9uPgoKICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCB3LWZ1bGwgaC1mdWxsIGp1c3RpZnktYmV0d2VlbiBwLVszNXB4XSI+CiAgICAgICAgICB7LyogbGVmdCBjb2x1bW4gKi99CiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCB3LTEvMiBnYXAteS1bMTZweF0iPgogICAgICAgICAgICA8cCBjbGFzc05hbWU9InRleHQtWyNGRkZdIHRleHQteGwgZm9udC1ib2xkIj4KICAgICAgICAgICAgICB7dCgibW9iaWxlQ29ubmVjdGlvbnMuY29ubmVjdGlvbk1vZGFsLnRpdGxlIil9CiAgICAgICAgICAgIDwvcD4KICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LVsjRkZGXSB0ZXh0LWxnIj4KICAgICAgICAgICAgICB7dCgibW9iaWxlQ29ubmVjdGlvbnMuY29ubmVjdGlvbk1vZGFsLmRlc2NyaXB0aW9uIil9CiAgICAgICAgICAgIDwvcD4KICAgICAgICAgICAgPExpbmsKICAgICAgICAgICAgICB0bz0iaHR0cHM6Ly9wbGF5Lmdvb2dsZS5jb20vc3RvcmUvYXBwcy9kZXRhaWxzP2lkPWNvbS5vcGVuc2luLmNoYXQiCiAgICAgICAgICAgICAgdGFyZ2V0PSJfYmxhbmsiCiAgICAgICAgICAgID4KICAgICAgICAgICAgICA8aW1nCiAgICAgICAgICAgICAgICBzcmM9e0dldE9uR29vZ2xlUGxheX0KICAgICAgICAgICAgICAgIGFsdD17dCgiY29tbW9uLmdldE9uR29vZ2xlUGxheSIpfQogICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJ3LVsxNTBweF0gaC1hdXRvIgogICAgICAgICAgICAgIC8+CiAgICAgICAgICAgIDwvTGluaz4KICAgICAgICAgIDwvZGl2PgoKICAgICAgICAgIHsvKiByaWdodCBjb2x1bW4gKi99CiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIgc2hyaW5rLTAgdy0xLzIgZ2FwLXktWzE2cHhdIj4KICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImJnLXdoaXRlLzEwIHJvdW5kZWQtbGcgcC1bNDBweF0gdy1bMzAwcHhdIGgtWzMwMHB4XSBmbGV4IGZsZXgtY29sIGdhcC15LVsxNnB4XSBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIiPgogICAgICAgICAgICAgIDxDb25uZWN0aW9uUXJDb2RlIGlzT3Blbj17aXNPcGVufSAvPgogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LVsjRkZGXSB0ZXh0LXNtIHctWzMwMHB4XSB0ZXh0LWNlbnRlciI+CiAgICAgICAgICAgICAge3QoIm1vYmlsZUNvbm5lY3Rpb25zLmNvbm5lY3Rpb25Nb2RhbC5zY2FuSGludCIpfQogICAgICAgICAgICAgIDxiciAvPgogICAgICAgICAgICAgIDxMaW5rCiAgICAgICAgICAgICAgICB0bz17cGF0aHMuZG9jdW1lbnRhdGlvbi5tb2JpbGVJbnRyb2R1Y3Rpb24oKX0KICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0idGV4dC1jdGEtYnV0dG9uIGZvbnQtc2VtaWJvbGQiCiAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAge3QoIm1vYmlsZUNvbm5lY3Rpb25zLmNvbm5lY3Rpb25Nb2RhbC5sZWFybk1vcmUiKX0KICAgICAgICAgICAgICA8L0xpbms+CiAgICAgICAgICAgIDwvcD4KICAgICAgICAgIDwvZGl2PgogICAgICAgIDwvZGl2PgogICAgICA8L2Rpdj4KICAgIDwvTW9kYWxXcmFwcGVyPgogICk7Cn0KCi8qKgogKiBQcm9jZXNzIHRoZSBjb25uZWN0aW9uIHVybCB0byBtYWtlIGl0IGFic29sdXRlIGlmIGl0IGlzIGEgcmVsYXRpdmUgcGF0aAogKi8KZnVuY3Rpb24gcHJvY2Vzc0Nvbm5lY3Rpb25VcmwodXJsOiBzdHJpbmcpOiBzdHJpbmcgewogIC8qCiAgICogSW4gZGV2IG1vZGUsIHRoZSBjb25uZWN0aW9uVVJMKCkgbWV0aG9kIHVzZXMgdGhlIGBpcGAgbW9kdWxlCiAgICogc2VlIHNlcnZlci9tb2RlbHMvbW9iaWxlRGV2aWNlLmpzIGBjb25uZWN0aW9uVVJMKClgIG1ldGhvZC4KICAgKgogICAqIEluIHByb2QgbW9kZSwgdGhpcyBtZXRob2QgcmV0dXJucyB0aGUgYWJzb2x1dGUgcGF0aCBzaW5jZSB3ZSB3aWxsIGFsd2F5cyB3YW50IHRvIHVzZQogICAqIHRoZSByZWFsIGluc3RhbmNlIGhvc3RuYW1lLiBJZiB0aGUgZG9tYWluIGNoYW5nZXMsIHdlIHNob3VsZCBiZSBhYmxlIHRvIGluaGVyaXQgaXQgZnJvbSB0aGUgY2xpZW50IHNpZGUKICAgKiBzaW5jZSB0aGUgYmFja2VuZCBoYXMgbm8ga25vd2xlZGdlIG9mIHRoZSBkb21haW4gc2luY2UgdHlwaWNhbGx5IGl0IGlzIHJ1biBiZWhpbmQgYSByZXZlcnNlIHByb3h5IG9yIGluIGEgY29udGFpbmVyIC0gb3IgYm90aC4KICAgKiBTbyBgaXBgIGlzIHVzZWxlc3MgaW4gcHJvZCBtb2RlIHNpbmNlIGl0IHdvdWxkIG9ubHkgcmVzb2x2ZSB0byB0aGUgaW50ZXJuYWwgSVAgYWRkcmVzcyBvZiB0aGUgY29udGFpbmVyIG9yIGlmIG5vbi1jb250YWluZXJpemVkLAogICAqIHRoZSBsb2NhbCBJUCBhZGRyZXNzIG1heSBub3QgYmUgdGhlIHByZWZlcnJlZCBpbnN0YW5jZSBhY2Nlc3MgcG9pbnQgKGVnOiB1c2luZyBjdXN0b20gZG9tYWluKQogICAqCiAgICogSWYgdGhlIHVybCBkb2VzIG5vdCBzdGFydCB3aXRoIGh0dHAsIHdlIGFzc3VtZSBpdCBpcyBhIHJlbGF0aXZlIHBhdGggYW5kIGFkZCB0aGUgb3JpZ2luIHRvIGl0LgogICAqIFRoZW4gd2UgY2hlY2sgaWYgdGhlIGhvc3RuYW1lIGlzIGxvY2FsaG9zdCwgMTI3LjAuMC4xLCBvciAwLjAuMC4wLiBJZiBpdCBpcywgd2UgdGhyb3cgYW4gZXJyb3Igc2luY2UgdGhhdCBpcyBub3QKICAgKiBhIExBTiByZXNvbHZhYmxlIGFkZHJlc3MgdGhhdCBvdGhlciBkZXZpY2VzIGNhbiB1c2UgdG8gY29ubmVjdCB0byB0aGUgaW5zdGFuY2UuCiAgICovCiAgaWYgKHVybC5zdGFydHNXaXRoKCJodHRwIikpIHJldHVybiBuZXcgVVJMKHVybCkudG9TdHJpbmcoKTsKICBjb25zdCBjb25uZWN0aW9uVXJsID0gbmV3IFVSTChgJHt3aW5kb3cubG9jYXRpb24ub3JpZ2lufSR7dXJsfWApOwogIGlmIChbImxvY2FsaG9zdCIsICIxMjcuMC4wLjEiLCAiMC4wLjAuMCJdLmluY2x1ZGVzKGNvbm5lY3Rpb25VcmwuaG9zdG5hbWUpKQogICAgdGhyb3cgbmV3IEVycm9yKAogICAgICAiUGxlYXNlIG9wZW4gdGhpcyBwYWdlIHZpYSB5b3VyIG1hY2hpbmVzIHByaXZhdGUgSVAgYWRkcmVzcyBvciBjdXN0b20gZG9tYWluLiBMb2NhbGhvc3QgVVJMcyB3aWxsIG5vdCB3b3JrIHdpdGggdGhlIG1vYmlsZSBhcHAuIiwKICAgICk7CiAgcmV0dXJuIGNvbm5lY3Rpb25VcmwudG9TdHJpbmcoKTsKfQoKZnVuY3Rpb24gQ29ubmVjdGlvblFyQ29kZSh7IGlzT3BlbiB9OiB7IGlzT3BlbjogYm9vbGVhbiB9KTogSlNYLkVsZW1lbnQgewogIGNvbnN0IFtjb25uZWN0aW9uSW5mbywgc2V0Q29ubmVjdGlvbkluZm9dID0gdXNlU3RhdGU8c3RyaW5nIHwgbnVsbD4obnVsbCk7CiAgY29uc3QgW2lzTG9hZGluZywgc2V0SXNMb2FkaW5nXSA9IHVzZVN0YXRlKGZhbHNlKTsKICBjb25zdCBbZXJyb3IsIHNldEVycm9yXSA9IHVzZVN0YXRlPHN0cmluZyB8IG51bGw+KG51bGwpOwoKICB1c2VFZmZlY3QoKCkgPT4gewogICAgaWYgKCFpc09wZW4pIHJldHVybjsKICAgIHNldElzTG9hZGluZyh0cnVlKTsKICAgIE1vYmlsZUNvbm5lY3Rpb24uZ2V0Q29ubmVjdGlvbkluZm8oKQogICAgICAudGhlbigocmVzOiBhbnkpID0+IHsKICAgICAgICBpZiAocmVzLmVycm9yKSB0aHJvdyBuZXcgRXJyb3IocmVzLmVycm9yKTsKICAgICAgICBjb25zdCB1cmwgPSBwcm9jZXNzQ29ubmVjdGlvblVybChyZXMuY29ubmVjdGlvblVybCk7CiAgICAgICAgc2V0Q29ubmVjdGlvbkluZm8odXJsKTsKICAgICAgfSkKICAgICAgLmNhdGNoKChlcnI6IGFueSkgPT4gewogICAgICAgIHNldEVycm9yKGVyci5tZXNzYWdlKTsKICAgICAgfSkKICAgICAgLmZpbmFsbHkoKCkgPT4gewogICAgICAgIHNldElzTG9hZGluZyhmYWxzZSk7CiAgICAgIH0pOwogIH0sIFtpc09wZW5dKTsKCiAgaWYgKGlzTG9hZGluZykgcmV0dXJuIDxQcmVMb2FkZXIgc2l6ZT0iWzEwMHB4XSIgLz47CiAgaWYgKGVycm9yKQogICAgcmV0dXJuICgKICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXJlZC01MDAgdGV4dC1zbSB3LVszMDBweF0gcC00IHRleHQtY2VudGVyIj57ZXJyb3J9PC9wPgogICAgKTsKCiAgY29uc3Qgc2l6ZSA9IHsKICAgIHdpZHRoOiAzNSAqIDEuNSwKICAgIGhlaWdodDogMjIgKiAxLjUsCiAgfTsKICByZXR1cm4gKAogICAgPFFSQ29kZVNWRwogICAgICB2YWx1ZT17Y29ubmVjdGlvbkluZm8gfHwgIiJ9CiAgICAgIHNpemU9ezMwMH0KICAgICAgYmdDb2xvcj0idHJhbnNwYXJlbnQiCiAgICAgIGZnQ29sb3I9IndoaXRlIgogICAgICBsZXZlbD0iTCIKICAgICAgaW1hZ2VTZXR0aW5ncz17ewogICAgICAgIHNyYzogTG9nbywKICAgICAgICB4OiAzMDAgLyAyIC0gc2l6ZS53aWR0aCAvIDIsCiAgICAgICAgeTogMzAwIC8gMiAtIHNpemUuaGVpZ2h0IC8gMiwKICAgICAgICBoZWlnaHQ6IHNpemUuaGVpZ2h0LAogICAgICAgIHdpZHRoOiBzaXplLndpZHRoLAogICAgICAgIGV4Y2F2YXRlOiB0cnVlLAogICAgICB9fQogICAgLz4KICApOwp9Cg==
+// SPDX-License-Identifier: MIT
+// Docs: index.doc.md
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import ModalWrapper from "@/components/ModalWrapper";
+import BG from "./bg.png";
+import { QRCodeSVG } from "qrcode.react";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import MobileConnection from "@/models/mobile";
+import PreLoader from "@/components/Preloader";
+import Logo from "@/media/logo/opensin-icon.svg";
+import paths from "@/utils/paths";
+import GetOnGooglePlay from "./gplay-badge.svg";
+import { useTranslation } from "react-i18next";
+
+type MobileConnectModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+export default function MobileConnectModal({
+  isOpen,
+  onClose,
+}: MobileConnectModalProps): JSX.Element {
+  const { t } = useTranslation();
+  return (
+    <ModalWrapper isOpen={isOpen}>
+      {/* backgroundImage keeps a style attr: bundler-hashed asset URL only known at build time */}
+      <div
+        className="relative w-full rounded-lg shadow min-h-[60vh] max-w-[70vw] bg-cover bg-center bg-[var(--connection-modal-bg)]"
+        style={{ "--connection-modal-bg": `url(${BG})` } as React.CSSProperties}
+      >
+        <button
+          onClick={onClose}
+          type="button"
+          className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
+        >
+          <X size={24} weight="bold" className="text-[#FFF]" />
+        </button>
+
+        <div className="flex w-full h-full justify-between p-[35px]">
+          {/* left column */}
+          <div className="flex flex-col w-1/2 gap-y-[16px]">
+            <p className="text-[#FFF] text-xl font-bold">
+              {t("mobileConnections.connectionModal.title")}
+            </p>
+            <p className="text-[#FFF] text-lg">
+              {t("mobileConnections.connectionModal.description")}
+            </p>
+            <Link
+              to="https://play.google.com/store/apps/details?id=com.opensin.chat"
+              target="_blank"
+            >
+              <img
+                src={GetOnGooglePlay}
+                alt={t("common.getOnGooglePlay")}
+                className="w-[150px] h-auto"
+              />
+            </Link>
+          </div>
+
+          {/* right column */}
+          <div className="flex flex-col items-center justify-center shrink-0 w-1/2 gap-y-[16px]">
+            <div className="bg-white/10 rounded-lg p-[40px] w-[300px] h-[300px] flex flex-col gap-y-[16px] items-center justify-center">
+              <ConnectionQrCode isOpen={isOpen} />
+            </div>
+            <p className="text-[#FFF] text-sm w-[300px] text-center">
+              {t("mobileConnections.connectionModal.scanHint")}
+              <br />
+              <Link
+                to={paths.documentation.mobileIntroduction()}
+                className="text-cta-button font-semibold"
+              >
+                {t("mobileConnections.connectionModal.learnMore")}
+              </Link>
+            </p>
+          </div>
+        </div>
+      </div>
+    </ModalWrapper>
+  );
+}
+
+/**
+ * Process the connection url to make it absolute if it is a relative path
+ */
+function processConnectionUrl(url: string): string {
+  /*
+   * In dev mode, the connectionURL() method uses the `ip` module
+   * see server/models/mobileDevice.js `connectionURL()` method.
+   *
+   * In prod mode, this method returns the absolute path since we will always want to use
+   * the real instance hostname. If the domain changes, we should be able to inherit it from the client side
+   * since the backend has no knowledge of the domain since typically it is run behind a reverse proxy or in a container - or both.
+   * So `ip` is useless in prod mode since it would only resolve to the internal IP address of the container or if non-containerized,
+   * the local IP address may not be the preferred instance access point (eg: using custom domain)
+   *
+   * If the url does not start with http, we assume it is a relative path and add the origin to it.
+   * Then we check if the hostname is localhost, 127.0.0.1, or 0.0.0.0. If it is, we throw an error since that is not
+   * a LAN resolvable address that other devices can use to connect to the instance.
+   */
+  if (url.startsWith("http")) return new URL(url).toString();
+  const connectionUrl = new URL(`${window.location.origin}${url}`);
+  if (["localhost", "127.0.0.1", "0.0.0.0"].includes(connectionUrl.hostname))
+    throw new Error(
+      "Please open this page via your machines private IP address or custom domain. Localhost URLs will not work with the mobile app.",
+    );
+  return connectionUrl.toString();
+}
+
+function ConnectionQrCode({ isOpen }: { isOpen: boolean }): JSX.Element {
+  const [connectionInfo, setConnectionInfo] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    setIsLoading(true);
+    MobileConnection.getConnectionInfo()
+      .then((res: any) => {
+        if (res.error) throw new Error(res.error);
+        const url = processConnectionUrl(res.connectionUrl);
+        setConnectionInfo(url);
+      })
+      .catch((err: any) => {
+        setError(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [isOpen]);
+
+  if (isLoading) return <PreLoader size="[100px]" />;
+  if (error)
+    return (
+      <p className="text-red-500 text-sm w-[300px] p-4 text-center">{error}</p>
+    );
+
+  const size = {
+    width: 35 * 1.5,
+    height: 22 * 1.5,
+  };
+  return (
+    <QRCodeSVG
+      value={connectionInfo || ""}
+      size={300}
+      bgColor="transparent"
+      fgColor="white"
+      level="L"
+      imageSettings={{
+        src: Logo,
+        x: 300 / 2 - size.width / 2,
+        y: 300 / 2 - size.height / 2,
+        height: size.height,
+        width: size.width,
+        excavate: true,
+      }}
+    />
+  );
+}

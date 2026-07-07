@@ -1,1 +1,393 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgUmVhY3QsIHsgdXNlU3RhdGUsIHVzZVJlZiwgdXNlRWZmZWN0LCBGb3JtRXZlbnQgfSBmcm9tICJyZWFjdCI7CmltcG9ydCBTaWRlYmFyIGZyb20gIkAvY29tcG9uZW50cy9TZXR0aW5nc1NpZGViYXIiOwppbXBvcnQgeyBpc01vYmlsZSB9IGZyb20gInJlYWN0LWRldmljZS1kZXRlY3QiOwppbXBvcnQgU3lzdGVtIGZyb20gIkAvbW9kZWxzL3N5c3RlbSI7CmltcG9ydCBzaG93VG9hc3QgZnJvbSAiQC91dGlscy90b2FzdCI7CmltcG9ydCBPcGVuU0lOQ2hhdEljb24gZnJvbSAiQC9tZWRpYS9sb2dvL29wZW5zaW4taWNvbi5zdmciOwppbXBvcnQgT3BlbkFpTG9nbyBmcm9tICJAL21lZGlhL2xsbXByb3ZpZGVyL29wZW5haS5wbmciOwppbXBvcnQgR2VtaW5pQWlMb2dvIGZyb20gIkAvbWVkaWEvbGxtcHJvdmlkZXIvZ2VtaW5pLnBuZyI7CmltcG9ydCBMb2NhbEFpTG9nbyBmcm9tICJAL21lZGlhL2xsbXByb3ZpZGVyL2xvY2FsYWkucG5nIjsKaW1wb3J0IE9sbGFtYUxvZ28gZnJvbSAiQC9tZWRpYS9sbG1wcm92aWRlci9vbGxhbWEucG5nIjsKaW1wb3J0IExNU3R1ZGlvTG9nbyBmcm9tICJAL21lZGlhL2xsbXByb3ZpZGVyL2xtc3R1ZGlvLnBuZyI7CmltcG9ydCBWb3lhZ2VBaUxvZ28gZnJvbSAiQC9tZWRpYS9lbWJlZGRpbmdwcm92aWRlci92b3lhZ2VhaS5wbmciOwppbXBvcnQgTGl0ZUxMTUxvZ28gZnJvbSAiQC9tZWRpYS9sbG1wcm92aWRlci9saXRlbGxtLnBuZyI7CmltcG9ydCBHZW5lcmljT3BlbkFpTG9nbyBmcm9tICJAL21lZGlhL2xsbXByb3ZpZGVyL2dlbmVyaWMtb3BlbmFpLnBuZyI7CmltcG9ydCBNaXN0cmFsQWlMb2dvIGZyb20gIkAvbWVkaWEvbGxtcHJvdmlkZXIvbWlzdHJhbC5qcGVnIjsKCmltcG9ydCBQcmVMb2FkZXIgZnJvbSAiQC9jb21wb25lbnRzL1ByZWxvYWRlciI7CmltcG9ydCB7IHVzZVVuc2F2ZWRDaGFuZ2VzIH0gZnJvbSAiQC9ob29rcy91c2VVbnNhdmVkQ2hhbmdlcyI7CmltcG9ydCBVbnNhdmVkQ2hhbmdlc0RpYWxvZyBmcm9tICJAL2NvbXBvbmVudHMvVW5zYXZlZENoYW5nZXNEaWFsb2ciOwppbXBvcnQgQ2hhbmdlV2FybmluZ01vZGFsIGZyb20gIkAvY29tcG9uZW50cy9DaGFuZ2VXYXJuaW5nIjsKaW1wb3J0IE9wZW5BaU9wdGlvbnMgZnJvbSAiQC9jb21wb25lbnRzL0VtYmVkZGluZ1NlbGVjdGlvbi9PcGVuQWlPcHRpb25zIjsKaW1wb3J0IEdlbWluaU9wdGlvbnMgZnJvbSAiQC9jb21wb25lbnRzL0VtYmVkZGluZ1NlbGVjdGlvbi9HZW1pbmlPcHRpb25zIjsKaW1wb3J0IExvY2FsQWlPcHRpb25zIGZyb20gIkAvY29tcG9uZW50cy9FbWJlZGRpbmdTZWxlY3Rpb24vTG9jYWxBaU9wdGlvbnMiOwppbXBvcnQgTmF0aXZlRW1iZWRkaW5nT3B0aW9ucyBmcm9tICJAL2NvbXBvbmVudHMvRW1iZWRkaW5nU2VsZWN0aW9uL05hdGl2ZUVtYmVkZGluZ09wdGlvbnMiOwppbXBvcnQgT2xsYW1hRW1iZWRkaW5nT3B0aW9ucyBmcm9tICJAL2NvbXBvbmVudHMvRW1iZWRkaW5nU2VsZWN0aW9uL09sbGFtYU9wdGlvbnMiOwppbXBvcnQgTE1TdHVkaW9FbWJlZGRpbmdPcHRpb25zIGZyb20gIkAvY29tcG9uZW50cy9FbWJlZGRpbmdTZWxlY3Rpb24vTE1TdHVkaW9PcHRpb25zIjsKaW1wb3J0IFZveWFnZUFpT3B0aW9ucyBmcm9tICJAL2NvbXBvbmVudHMvRW1iZWRkaW5nU2VsZWN0aW9uL1ZveWFnZUFpT3B0aW9ucyI7CmltcG9ydCBMaXRlTExNT3B0aW9ucyBmcm9tICJAL2NvbXBvbmVudHMvRW1iZWRkaW5nU2VsZWN0aW9uL0xpdGVMTE1PcHRpb25zIjsKaW1wb3J0IEdlbmVyaWNPcGVuQWlFbWJlZGRpbmdPcHRpb25zIGZyb20gIkAvY29tcG9uZW50cy9FbWJlZGRpbmdTZWxlY3Rpb24vR2VuZXJpY09wZW5BaU9wdGlvbnMiOwppbXBvcnQgTWlzdHJhbEFpT3B0aW9ucyBmcm9tICJAL2NvbXBvbmVudHMvRW1iZWRkaW5nU2VsZWN0aW9uL01pc3RyYWxBaU9wdGlvbnMiOwoKaW1wb3J0IEVtYmVkZGVySXRlbSBmcm9tICJAL2NvbXBvbmVudHMvRW1iZWRkaW5nU2VsZWN0aW9uL0VtYmVkZGVySXRlbSI7CmltcG9ydCB7IENhcmV0VXBEb3duIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL0NhcmV0VXBEb3duIjsKaW1wb3J0IHsgTWFnbmlmeWluZ0dsYXNzIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL01hZ25pZnlpbmdHbGFzcyI7CmltcG9ydCB7IFggfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvWCI7CmltcG9ydCB7IHVzZU1vZGFsIH0gZnJvbSAiQC9ob29rcy91c2VNb2RhbCI7CmltcG9ydCBNb2RhbFdyYXBwZXIgZnJvbSAiQC9jb21wb25lbnRzL01vZGFsV3JhcHBlciI7CmltcG9ydCBDVEFCdXR0b24gZnJvbSAiQC9jb21wb25lbnRzL2xpYi9DVEFCdXR0b24iOwppbXBvcnQgeyB1c2VUcmFuc2xhdGlvbiB9IGZyb20gInJlYWN0LWkxOG5leHQiOwppbXBvcnQgdXNlRW1iZWRkaW5nUHJlZmVyZW5jZSBmcm9tICJAL2hvb2tzL3VzZUVtYmVkZGluZ1ByZWZlcmVuY2UiOwoKaW50ZXJmYWNlIEVtYmVkZGVyIHsKICBuYW1lOiBzdHJpbmc7CiAgdmFsdWU6IHN0cmluZzsKICBsb2dvOiBzdHJpbmc7CiAgb3B0aW9uczogKHNldHRpbmdzOiBhbnkpID0+IFJlYWN0LlJlYWN0Tm9kZTsKICBkZXNjcmlwdGlvbjogc3RyaW5nOwp9Cgpjb25zdCBFTUJFRERFUlM6IEVtYmVkZGVyW10gPSBbCiAgewogICAgbmFtZTogIk9wZW5TSU4gQ2hhdCBFbWJlZGRlciIsCiAgICB2YWx1ZTogIm5hdGl2ZSIsCiAgICBsb2dvOiBPcGVuU0lOQ2hhdEljb24sCiAgICBvcHRpb25zOiAoc2V0dGluZ3M6IGFueSkgPT4gPE5hdGl2ZUVtYmVkZGluZ09wdGlvbnMgc2V0dGluZ3M9e3NldHRpbmdzfSAvPiwKICAgIGRlc2NyaXB0aW9uOgogICAgICAiVXNlIHRoZSBidWlsdC1pbiBlbWJlZGRpbmcgcHJvdmlkZXIgZm9yIE9wZW5TSU4gQ2hhdC4gWmVybyBzZXR1cCEiLAogIH0sCiAgewogICAgbmFtZTogIk9wZW5BSSIsCiAgICB2YWx1ZTogIm9wZW5haSIsCiAgICBsb2dvOiBPcGVuQWlMb2dvLAogICAgb3B0aW9uczogKHNldHRpbmdzOiBhbnkpID0+IDxPcGVuQWlPcHRpb25zIHNldHRpbmdzPXtzZXR0aW5nc30gLz4sCiAgICBkZXNjcmlwdGlvbjogIlRoZSBzdGFuZGFyZCBvcHRpb24gZm9yIG1vc3Qgbm9uLWNvbW1lcmNpYWwgdXNlLiIsCiAgfSwKICB7CiAgICBuYW1lOiAiR2VtaW5pIiwKICAgIHZhbHVlOiAiZ2VtaW5pIiwKICAgIGxvZ286IEdlbWluaUFpTG9nbywKICAgIG9wdGlvbnM6IChzZXR0aW5nczogYW55KSA9PiA8R2VtaW5pT3B0aW9ucyBzZXR0aW5ncz17c2V0dGluZ3N9IC8+LAogICAgZGVzY3JpcHRpb246ICJSdW4gcG93ZXJmdWwgZW1iZWRkaW5nIG1vZGVscyBmcm9tIEdvb2dsZSBBSS4iLAogIH0sCiAgewogICAgbmFtZTogIkxvY2FsIEFJIiwKICAgIHZhbHVlOiAibG9jYWxhaSIsCiAgICBsb2dvOiBMb2NhbEFpTG9nbywKICAgIG9wdGlvbnM6IChzZXR0aW5nczogYW55KSA9PiA8TG9jYWxBaU9wdGlvbnMgc2V0dGluZ3M9e3NldHRpbmdzfSAvPiwKICAgIGRlc2NyaXB0aW9uOiAiUnVuIGVtYmVkZGluZyBtb2RlbHMgbG9jYWxseSBvbiB5b3VyIG93biBtYWNoaW5lLiIsCiAgfSwKICB7CiAgICBuYW1lOiAiT2xsYW1hIiwKICAgIHZhbHVlOiAib2xsYW1hIiwKICAgIGxvZ286IE9sbGFtYUxvZ28sCiAgICBvcHRpb25zOiAoc2V0dGluZ3M6IGFueSkgPT4gPE9sbGFtYUVtYmVkZGluZ09wdGlvbnMgc2V0dGluZ3M9e3NldHRpbmdzfSAvPiwKICAgIGRlc2NyaXB0aW9uOiAiUnVuIGVtYmVkZGluZyBtb2RlbHMgbG9jYWxseSBvbiB5b3VyIG93biBtYWNoaW5lLiIsCiAgfSwKICB7CiAgICBuYW1lOiAiTE0gU3R1ZGlvIiwKICAgIHZhbHVlOiAibG1zdHVkaW8iLAogICAgbG9nbzogTE1TdHVkaW9Mb2dvLAogICAgb3B0aW9uczogKHNldHRpbmdzOiBhbnkpID0+ICgKICAgICAgPExNU3R1ZGlvRW1iZWRkaW5nT3B0aW9ucyBzZXR0aW5ncz17c2V0dGluZ3N9IC8+CiAgICApLAogICAgZGVzY3JpcHRpb246CiAgICAgICJEaXNjb3ZlciwgZG93bmxvYWQsIGFuZCBydW4gdGhvdXNhbmRzIG9mIGN1dHRpbmcgZWRnZSBMTE1zIGluIGEgZmV3IGNsaWNrcy4iLAogIH0sCiAgewogICAgbmFtZTogIkxpdGVMTE0iLAogICAgdmFsdWU6ICJsaXRlbGxtIiwKICAgIGxvZ286IExpdGVMTE1Mb2dvLAogICAgb3B0aW9uczogKHNldHRpbmdzOiBhbnkpID0+IDxMaXRlTExNT3B0aW9ucyBzZXR0aW5ncz17c2V0dGluZ3N9IC8+LAogICAgZGVzY3JpcHRpb246ICJSdW4gcG93ZXJmdWwgZW1iZWRkaW5nIG1vZGVscyBmcm9tIExpdGVMTE0uIiwKICB9LAogIHsKICAgIG5hbWU6ICJWb3lhZ2UgQUkiLAogICAgdmFsdWU6ICJ2b3lhZ2VhaSIsCiAgICBsb2dvOiBWb3lhZ2VBaUxvZ28sCiAgICBvcHRpb25zOiAoc2V0dGluZ3M6IGFueSkgPT4gPFZveWFnZUFpT3B0aW9ucyBzZXR0aW5ncz17c2V0dGluZ3N9IC8+LAogICAgZGVzY3JpcHRpb246ICJSdW4gcG93ZXJmdWwgZW1iZWRkaW5nIG1vZGVscyBmcm9tIFZveWFnZSBBSS4iLAogIH0sCiAgewogICAgbmFtZTogIk1pc3RyYWwgQUkiLAogICAgdmFsdWU6ICJtaXN0cmFsIiwKICAgIGxvZ286IE1pc3RyYWxBaUxvZ28sCiAgICBvcHRpb25zOiAoc2V0dGluZ3M6IGFueSkgPT4gPE1pc3RyYWxBaU9wdGlvbnMgc2V0dGluZ3M9e3NldHRpbmdzfSAvPiwKICAgIGRlc2NyaXB0aW9uOiAiUnVuIHBvd2VyZnVsIGVtYmVkZGluZyBtb2RlbHMgZnJvbSBNaXN0cmFsIEFJLiIsCiAgfSwKICB7CiAgICBuYW1lOiAiR2VuZXJpYyBPcGVuQUkiLAogICAgdmFsdWU6ICJnZW5lcmljLW9wZW5haSIsCiAgICBsb2dvOiBHZW5lcmljT3BlbkFpTG9nbywKICAgIG9wdGlvbnM6IChzZXR0aW5nczogYW55KSA9PiAoCiAgICAgIDxHZW5lcmljT3BlbkFpRW1iZWRkaW5nT3B0aW9ucyBzZXR0aW5ncz17c2V0dGluZ3N9IC8+CiAgICApLAogICAgZGVzY3JpcHRpb246ICJSdW4gZW1iZWRkaW5nIG1vZGVscyBmcm9tIGFueSBPcGVuQUkgY29tcGF0aWJsZSBBUEkgc2VydmljZS4iLAogIH0sCl07CgpleHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBHZW5lcmFsRW1iZWRkaW5nUHJlZmVyZW5jZSgpIHsKICBjb25zdCB7IHNldHRpbmdzLCBpc0xvYWRpbmcgfSA9IHVzZUVtYmVkZGluZ1ByZWZlcmVuY2UoKTsKICBjb25zdCBbc2F2aW5nLCBzZXRTYXZpbmddID0gdXNlU3RhdGUoZmFsc2UpOwogIGNvbnN0IFtoYXNDaGFuZ2VzLCBzZXRIYXNDaGFuZ2VzXSA9IHVzZVN0YXRlKGZhbHNlKTsKICBjb25zdCBibG9ja2VyID0gdXNlVW5zYXZlZENoYW5nZXMoaGFzQ2hhbmdlcyk7CiAgY29uc3QgW2hhc0VtYmVkZGluZ3MsIHNldEhhc0VtYmVkZGluZ3NdID0gdXNlU3RhdGUoZmFsc2UpOwogIGNvbnN0IFtoYXNDYWNoZWRFbWJlZGRpbmdzLCBzZXRIYXNDYWNoZWRFbWJlZGRpbmdzXSA9IHVzZVN0YXRlKGZhbHNlKTsKICBjb25zdCBbc2VhcmNoUXVlcnksIHNldFNlYXJjaFF1ZXJ5XSA9IHVzZVN0YXRlKCIiKTsKICBjb25zdCBbZmlsdGVyZWRFbWJlZGRlcnMsIHNldEZpbHRlcmVkRW1iZWRkZXJzXSA9IHVzZVN0YXRlPEVtYmVkZGVyW10+KFtdKTsKICBjb25zdCBbc2VsZWN0ZWRFbWJlZGRlciwgc2V0U2VsZWN0ZWRFbWJlZGRlcl0gPSB1c2VTdGF0ZTxzdHJpbmcgfCBudWxsPihudWxsKTsKICBjb25zdCBbc2VhcmNoTWVudU9wZW4sIHNldFNlYXJjaE1lbnVPcGVuXSA9IHVzZVN0YXRlKGZhbHNlKTsKICBjb25zdCBzZWFyY2hJbnB1dFJlZiA9IHVzZVJlZjxIVE1MSW5wdXRFbGVtZW50PihudWxsKTsKICBjb25zdCB7IGlzT3Blbiwgb3Blbk1vZGFsLCBjbG9zZU1vZGFsIH0gPSB1c2VNb2RhbCgpOwogIGNvbnN0IHsgdCB9ID0gdXNlVHJhbnNsYXRpb24oKTsKCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIGlmIChpc0xvYWRpbmcgfHwgIXNldHRpbmdzKSByZXR1cm47CiAgICBzZXRTZWxlY3RlZEVtYmVkZGVyKHNldHRpbmdzPy5FbWJlZGRpbmdFbmdpbmUgfHwgIm5hdGl2ZSIpOwogICAgc2V0SGFzRW1iZWRkaW5ncyhzZXR0aW5ncz8uSGFzRXhpc3RpbmdFbWJlZGRpbmdzIHx8IGZhbHNlKTsKICAgIHNldEhhc0NhY2hlZEVtYmVkZGluZ3Moc2V0dGluZ3M/Lkhhc0NhY2hlZEVtYmVkZGluZ3MgfHwgZmFsc2UpOwogIH0sIFtpc0xvYWRpbmcsIHNldHRpbmdzXSk7CgogIHVzZUVmZmVjdCgoKSA9PiB7CiAgICBpZiAoIXNlYXJjaE1lbnVPcGVuKSByZXR1cm47CiAgICBmdW5jdGlvbiBoYW5kbGVFc2NhcGUoZTogS2V5Ym9hcmRFdmVudCkgewogICAgICBpZiAoZS5rZXkgPT09ICJFc2NhcGUiKSBzZXRTZWFyY2hNZW51T3BlbihmYWxzZSk7CiAgICB9CiAgICBkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCJrZXlkb3duIiwgaGFuZGxlRXNjYXBlKTsKICAgIHJldHVybiAoKSA9PiBkb2N1bWVudC5yZW1vdmVFdmVudExpc3RlbmVyKCJrZXlkb3duIiwgaGFuZGxlRXNjYXBlKTsKICB9LCBbc2VhcmNoTWVudU9wZW5dKTsKCiAgZnVuY3Rpb24gZW1iZWRkZXJNb2RlbENoYW5nZWQoZm9ybUVsOiBIVE1MRm9ybUVsZW1lbnQpIHsKICAgIHRyeSB7CiAgICAgIGNvbnN0IG5ld01vZGVsID0gbmV3IEZvcm1EYXRhKGZvcm1FbCkuZ2V0KCJFbWJlZGRpbmdNb2RlbFByZWYiKSA/PyBudWxsOwogICAgICBpZiAobmV3TW9kZWwgPT09IG51bGwpIHJldHVybiBmYWxzZTsKICAgICAgcmV0dXJuIHNldHRpbmdzPy5FbWJlZGRpbmdNb2RlbFByZWYgIT09IG5ld01vZGVsOwogICAgfSBjYXRjaCAoZXJyb3IpIHsKICAgICAgY29uc29sZS5lcnJvcihlcnJvcik7CiAgICB9CiAgICByZXR1cm4gZmFsc2U7CiAgfQoKICBjb25zdCBoYW5kbGVTdWJtaXQgPSBhc3luYyAoZT86IEZvcm1FdmVudDxIVE1MRm9ybUVsZW1lbnQ+KSA9PiB7CiAgICBlPy5wcmV2ZW50RGVmYXVsdCgpOwogICAgY29uc3QgZm9ybSA9IChlPy50YXJnZXQgPz8KICAgICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImVtYmVkZGluZy1mb3JtIikpIGFzIEhUTUxGb3JtRWxlbWVudDsKICAgIGlmICgKICAgICAgKHNlbGVjdGVkRW1iZWRkZXIgIT09IHNldHRpbmdzPy5FbWJlZGRpbmdFbmdpbmUgfHwKICAgICAgICBlbWJlZGRlck1vZGVsQ2hhbmdlZChmb3JtKSkgJiYKICAgICAgaGFzQ2hhbmdlcyAmJgogICAgICAoaGFzRW1iZWRkaW5ncyB8fCBoYXNDYWNoZWRFbWJlZGRpbmdzKQogICAgKSB7CiAgICAgIG9wZW5Nb2RhbCgpOwogICAgfSBlbHNlIHsKICAgICAgYXdhaXQgaGFuZGxlU2F2ZVNldHRpbmdzKCk7CiAgICB9CiAgfTsKCiAgY29uc3QgaGFuZGxlU2F2ZVNldHRpbmdzID0gYXN5bmMgKCkgPT4gewogICAgc2V0U2F2aW5nKHRydWUpOwogICAgY29uc3QgZm9ybSA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJlbWJlZGRpbmctZm9ybSIpIGFzIEhUTUxGb3JtRWxlbWVudDsKICAgIGNvbnN0IHNldHRpbmdzRGF0YTogYW55ID0ge307CiAgICBjb25zdCBmb3JtRGF0YSA9IG5ldyBGb3JtRGF0YShmb3JtKTsKICAgIHNldHRpbmdzRGF0YS5FbWJlZGRpbmdFbmdpbmUgPSBzZWxlY3RlZEVtYmVkZGVyOwogICAgZm9yIChjb25zdCBba2V5LCB2YWx1ZV0gb2YgZm9ybURhdGEuZW50cmllcygpKSBzZXR0aW5nc0RhdGFba2V5XSA9IHZhbHVlOwoKICAgIGNvbnN0IHsgZXJyb3IgfSA9IGF3YWl0IFN5c3RlbS51cGRhdGVTeXN0ZW0oc2V0dGluZ3NEYXRhKTsKICAgIGlmIChlcnJvcikgewogICAgICBzaG93VG9hc3QodCgiZW1iZWRkaW5nLnNhdmVGYWlsZWQiLCB7IGVycm9yIH0pLCAiZXJyb3IiKTsKICAgICAgc2V0SGFzQ2hhbmdlcyh0cnVlKTsKICAgIH0gZWxzZSB7CiAgICAgIHNob3dUb2FzdCh0KCJlbWJlZGRpbmcuc2F2ZVN1Y2Nlc3MiKSwgInN1Y2Nlc3MiKTsKICAgICAgc2V0SGFzQ2hhbmdlcyhmYWxzZSk7CiAgICB9CiAgICBzZXRTYXZpbmcoZmFsc2UpOwogICAgY2xvc2VNb2RhbCgpOwogIH07CgogIGNvbnN0IHVwZGF0ZUNob2ljZSA9IChzZWxlY3Rpb246IHN0cmluZykgPT4gewogICAgc2V0U2VhcmNoUXVlcnkoIiIpOwogICAgc2V0U2VsZWN0ZWRFbWJlZGRlcihzZWxlY3Rpb24pOwogICAgc2V0U2VhcmNoTWVudU9wZW4oZmFsc2UpOwogICAgc2V0SGFzQ2hhbmdlcyh0cnVlKTsKICB9OwoKICBjb25zdCBoYW5kbGVYQnV0dG9uID0gKCkgPT4gewogICAgaWYgKHNlYXJjaFF1ZXJ5Lmxlbmd0aCA+IDApIHsKICAgICAgc2V0U2VhcmNoUXVlcnkoIiIpOwogICAgICBpZiAoc2VhcmNoSW5wdXRSZWYuY3VycmVudCkgc2VhcmNoSW5wdXRSZWYuY3VycmVudC52YWx1ZSA9ICIiOwogICAgfSBlbHNlIHsKICAgICAgc2V0U2VhcmNoTWVudU9wZW4oIXNlYXJjaE1lbnVPcGVuKTsKICAgIH0KICB9OwoKICB1c2VFZmZlY3QoKCkgPT4gewogICAgY29uc3QgZmlsdGVyZWQgPSBFTUJFRERFUlMuZmlsdGVyKChlbWJlZGRlcikgPT4KICAgICAgZW1iZWRkZXIubmFtZS50b0xvd2VyQ2FzZSgpLmluY2x1ZGVzKHNlYXJjaFF1ZXJ5LnRvTG93ZXJDYXNlKCkpLAogICAgKTsKICAgIHNldEZpbHRlcmVkRW1iZWRkZXJzKGZpbHRlcmVkKTsKICB9LCBbc2VhcmNoUXVlcnksIHNlbGVjdGVkRW1iZWRkZXJdKTsKCiAgY29uc3Qgc2VsZWN0ZWRFbWJlZGRlck9iamVjdCA9IEVNQkVEREVSUy5maW5kKAogICAgKGVtYmVkZGVyKSA9PiBlbWJlZGRlci52YWx1ZSA9PT0gc2VsZWN0ZWRFbWJlZGRlciwKICApOwoKICByZXR1cm4gKAogICAgPGRpdiBjbGFzc05hbWU9Inctc2NyZWVuIGgtc2NyZWVuIG92ZXJmbG93LWhpZGRlbiBiZy10aGVtZS1iZy1jb250YWluZXIgZmxleCI+CiAgICAgIDxTaWRlYmFyIC8+CiAgICAgIHtpc0xvYWRpbmcgPyAoCiAgICAgICAgPGRpdgogICAgICAgICAgc3R5bGU9ewogICAgICAgICAgICB7CiAgICAgICAgICAgICAgIi0tY29udGVudC1oZWlnaHQiOiBpc01vYmlsZSA/ICIxMDAlIiA6ICJjYWxjKDEwMCUgLSAzMnB4KSIsCiAgICAgICAgICAgIH0gYXMgUmVhY3QuQ1NTUHJvcGVydGllcwogICAgICAgICAgfQogICAgICAgICAgY2xhc3NOYW1lPSJoLVt2YXIoLS1jb250ZW50LWhlaWdodCldIHJlbGF0aXZlIG1kOm1sLVsycHhdIG1kOm1yLVsxNnB4XSBtZDpteS1bMTZweF0gbWQ6cm91bmRlZC1bMTZweF0gYmctdGhlbWUtYmctc2Vjb25kYXJ5IHctZnVsbCBvdmVyZmxvdy15LXNjcm9sbCBwLTQgbWQ6cC0wIgogICAgICAgID4KICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJ3LWZ1bGwgaC1mdWxsIGZsZXgganVzdGlmeS1jZW50ZXIgaXRlbXMtY2VudGVyIj4KICAgICAgICAgICAgPFByZUxvYWRlciAvPgogICAgICAgICAgPC9kaXY+CiAgICAgICAgPC9kaXY+CiAgICAgICkgOiAoCiAgICAgICAgPGRpdgogICAgICAgICAgc3R5bGU9ewogICAgICAgICAgICB7CiAgICAgICAgICAgICAgIi0tY29udGVudC1oZWlnaHQiOiBpc01vYmlsZSA/ICIxMDAlIiA6ICJjYWxjKDEwMCUgLSAzMnB4KSIsCiAgICAgICAgICAgIH0gYXMgUmVhY3QuQ1NTUHJvcGVydGllcwogICAgICAgICAgfQogICAgICAgICAgY2xhc3NOYW1lPSJoLVt2YXIoLS1jb250ZW50LWhlaWdodCldIHJlbGF0aXZlIG1kOm1sLVsycHhdIG1kOm1yLVsxNnB4XSBtZDpteS1bMTZweF0gbWQ6cm91bmRlZC1bMTZweF0gYmctdGhlbWUtYmctc2Vjb25kYXJ5IHctZnVsbCBvdmVyZmxvdy15LXNjcm9sbCBwLTQgbWQ6cC0wIgogICAgICAgID4KICAgICAgICAgIDxmb3JtCiAgICAgICAgICAgIGlkPSJlbWJlZGRpbmctZm9ybSIKICAgICAgICAgICAgb25TdWJtaXQ9e2hhbmRsZVN1Ym1pdH0KICAgICAgICAgICAgY2xhc3NOYW1lPSJmbGV4IHctZnVsbCIKICAgICAgICAgID4KICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgdy1mdWxsIHB4LTEgbWQ6cGwtNiBtZDpwci1bNTBweF0gcHktMTYgbWQ6cHktNiI+CiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9InctZnVsbCBmbGV4IGZsZXgtY29sIGdhcC15LTEgcGItNiBib3JkZXItd2hpdGUgbGlnaHQ6Ym9yZGVyLXRoZW1lLXNpZGViYXItYm9yZGVyIGJvcmRlci1iLTIgYm9yZGVyLW9wYWNpdHktMTAiPgogICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZ2FwLXgtNCBpdGVtcy1jZW50ZXIiPgogICAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9InRleHQtbGcgbGVhZGluZy02IGZvbnQtYm9sZCB0ZXh0LXdoaXRlIj4KICAgICAgICAgICAgICAgICAgICB7dCgiZW1iZWRkaW5nLnRpdGxlIil9CiAgICAgICAgICAgICAgICAgIDwvcD4KICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXhzIGxlYWRpbmctWzE4cHhdIGZvbnQtYmFzZSB0ZXh0LXdoaXRlIHRleHQtb3BhY2l0eS02MCI+CiAgICAgICAgICAgICAgICAgIHt0KCJlbWJlZGRpbmcuZGVzYy1zdGFydCIpfQogICAgICAgICAgICAgICAgICA8YnIgLz4KICAgICAgICAgICAgICAgICAge3QoImVtYmVkZGluZy5kZXNjLWVuZCIpfQogICAgICAgICAgICAgICAgPC9wPgogICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJ3LWZ1bGwganVzdGlmeS1lbmQgZmxleCI+CiAgICAgICAgICAgICAgICB7aGFzQ2hhbmdlcyAmJiAoCiAgICAgICAgICAgICAgICAgIDxDVEFCdXR0b24KICAgICAgICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBoYW5kbGVTdWJtaXQoKX0KICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9Im10LTMgbXItMCAtbWItMTQgei0xMCIKICAgICAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgICAgIHtzYXZpbmcgPyB0KCJjb21tb24uc2F2aW5nIikgOiB0KCJjb21tb24uc2F2ZSIpfQogICAgICAgICAgICAgICAgICA8L0NUQUJ1dHRvbj4KICAgICAgICAgICAgICAgICl9CiAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9InRleHQtYmFzZSBmb250LWJvbGQgdGV4dC13aGl0ZSBtdC02IG1iLTQiPgogICAgICAgICAgICAgICAge3QoImVtYmVkZGluZy5wcm92aWRlci50aXRsZSIpfQogICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJyZWxhdGl2ZSI+CiAgICAgICAgICAgICAgICB7c2VhcmNoTWVudU9wZW4gJiYgKAogICAgICAgICAgICAgICAgICA8ZGl2CiAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJmaXhlZCB0b3AtMCBsZWZ0LTAgdy1mdWxsIGgtZnVsbCBiZy1ibGFjayBiZy1vcGFjaXR5LTcwIGJhY2tkcm9wLWJsdXItc20gei0xMCIKICAgICAgICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBzZXRTZWFyY2hNZW51T3BlbihmYWxzZSl9CiAgICAgICAgICAgICAgICAgIC8+CiAgICAgICAgICAgICAgICApfQogICAgICAgICAgICAgICAge3NlYXJjaE1lbnVPcGVuID8gKAogICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iYWJzb2x1dGUgdG9wLTAgbGVmdC0wIHctZnVsbCBtYXgtdy1bNjQwcHhdIG1heC1oLVszMTBweF0gbWluLWgtWzY0cHhdIGJnLXRoZW1lLXNldHRpbmdzLWlucHV0LWJnIHJvdW5kZWQtbGcgZmxleCBmbGV4LWNvbCBqdXN0aWZ5LWJldHdlZW4gY3Vyc29yLXBvaW50ZXIgYm9yZGVyLTIgYm9yZGVyLXByaW1hcnktYnV0dG9uIHotMjAiPgogICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJ3LWZ1bGwgZmxleCBmbGV4LWNvbCBnYXAteS0xIj4KICAgICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBzdGlja3kgdG9wLTAgei0xMCBib3JkZXItYiBib3JkZXItWyM5Q0EzQUZdIG14LTQgYmctdGhlbWUtc2V0dGluZ3MtaW5wdXQtYmciPgogICAgICAgICAgICAgICAgICAgICAgICA8TWFnbmlmeWluZ0dsYXNzCiAgICAgICAgICAgICAgICAgICAgICAgICAgc2l6ZT17MjB9CiAgICAgICAgICAgICAgICAgICAgICAgICAgd2VpZ2h0PSJib2xkIgogICAgICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0iYWJzb2x1dGUgbGVmdC00IHotMzAgdGV4dC10aGVtZS10ZXh0LXByaW1hcnkgLW1sLTQgbXktMiIKICAgICAgICAgICAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgICAgICAgICAgICAgPGlucHV0CiAgICAgICAgICAgICAgICAgICAgICAgICAgdHlwZT0idGV4dCIKICAgICAgICAgICAgICAgICAgICAgICAgICBuYW1lPSJlbWJlZGRlci1zZWFyY2giCiAgICAgICAgICAgICAgICAgICAgICAgICAgYXV0b0NvbXBsZXRlPSJvZmYiCiAgICAgICAgICAgICAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9e3QoImNvbW1vbi5zZWFyY2hFbWJlZGRpbmdQcm92aWRlcnMiKX0KICAgICAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9ImJvcmRlci1ub25lIC1tbC00IG15LTIgYmctdHJhbnNwYXJlbnQgei0yMCBwbC0xMiBoLVszOHB4XSB3LWZ1bGwgcHgtNCBweS0xIHRleHQtc20gb3V0bGluZS1ub25lIHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IHBsYWNlaG9sZGVyOnRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IHBsYWNlaG9sZGVyOmZvbnQtbWVkaXVtIgogICAgICAgICAgICAgICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gc2V0U2VhcmNoUXVlcnkoZS50YXJnZXQudmFsdWUpfQogICAgICAgICAgICAgICAgICAgICAgICAgIHJlZj17c2VhcmNoSW5wdXRSZWZ9CiAgICAgICAgICAgICAgICAgICAgICAgICAgb25LZXlEb3duPXsoZSkgPT4gewogICAgICAgICAgICAgICAgICAgICAgICAgICAgaWYgKGUua2V5ID09PSAiRW50ZXIiKSBlLnByZXZlbnREZWZhdWx0KCk7CiAgICAgICAgICAgICAgICAgICAgICAgICAgfX0KICAgICAgICAgICAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgICAgICAgICAgICAgPFgKICAgICAgICAgICAgICAgICAgICAgICAgICBzaXplPXsyMH0KICAgICAgICAgICAgICAgICAgICAgICAgICB3ZWlnaHQ9ImJvbGQiCiAgICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJjdXJzb3ItcG9pbnRlciB0ZXh0LXdoaXRlIGhvdmVyOnRleHQteC1idXR0b24iCiAgICAgICAgICAgICAgICAgICAgICAgICAgb25DbGljaz17aGFuZGxlWEJ1dHRvbn0KICAgICAgICAgICAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXgtMSBwbC00IHByLTIgZmxleCBmbGV4LWNvbCBnYXAteS0xIG92ZXJmbG93LXktYXV0byB3aGl0ZS1zY3JvbGxiYXIgcGItNCBtYXgtaC1bMjQ1cHhdIj4KICAgICAgICAgICAgICAgICAgICAgICAge2ZpbHRlcmVkRW1iZWRkZXJzLm1hcCgoZW1iZWRkZXIpID0+ICgKICAgICAgICAgICAgICAgICAgICAgICAgICA8RW1iZWRkZXJJdGVtCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBrZXk9e2VtYmVkZGVyLm5hbWV9CiAgICAgICAgICAgICAgICAgICAgICAgICAgICBuYW1lPXtlbWJlZGRlci5uYW1lfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgdmFsdWU9e2VtYmVkZGVyLnZhbHVlfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgaW1hZ2U9e2VtYmVkZGVyLmxvZ299CiAgICAgICAgICAgICAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbj17ZW1iZWRkZXIuZGVzY3JpcHRpb259CiAgICAgICAgICAgICAgICAgICAgICAgICAgICBjaGVja2VkPXtzZWxlY3RlZEVtYmVkZGVyID09PSBlbWJlZGRlci52YWx1ZX0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IHVwZGF0ZUNob2ljZShlbWJlZGRlci52YWx1ZSl9CiAgICAgICAgICAgICAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgICAgICAgICAgICAgKSl9CiAgICAgICAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICApIDogKAogICAgICAgICAgICAgICAgICA8YnV0dG9uCiAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJ3LWZ1bGwgbWF4LXctWzY0MHB4XSBoLVs2NHB4XSBiZy10aGVtZS1zZXR0aW5ncy1pbnB1dC1iZyByb3VuZGVkLWxnIGZsZXggaXRlbXMtY2VudGVyIHAtWzE0cHhdIGp1c3RpZnktYmV0d2VlbiBjdXJzb3ItcG9pbnRlciBib3JkZXItMiBib3JkZXItdHJhbnNwYXJlbnQgaG92ZXI6Ym9yZGVyLXByaW1hcnktYnV0dG9uIHRyYW5zaXRpb24tYWxsIGR1cmF0aW9uLTMwMCIKICAgICAgICAgICAgICAgICAgICB0eXBlPSJidXR0b24iCiAgICAgICAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4gc2V0U2VhcmNoTWVudU9wZW4odHJ1ZSl9CiAgICAgICAgICAgICAgICAgID4KICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBnYXAteC00IGl0ZW1zLWNlbnRlciI+CiAgICAgICAgICAgICAgICAgICAgICA8aW1nCiAgICAgICAgICAgICAgICAgICAgICAgIHNyYz17c2VsZWN0ZWRFbWJlZGRlck9iamVjdD8ubG9nb30KICAgICAgICAgICAgICAgICAgICAgICAgYWx0PXtgJHtzZWxlY3RlZEVtYmVkZGVyT2JqZWN0Py5uYW1lfSBsb2dvYH0KICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJ3LTEwIGgtMTAgcm91bmRlZC1tZCIKICAgICAgICAgICAgICAgICAgICAgIC8+CiAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCB0ZXh0LWxlZnQiPgogICAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0idGV4dC1zbSBmb250LXNlbWlib2xkIHRleHQtd2hpdGUiPgogICAgICAgICAgICAgICAgICAgICAgICAgIHtzZWxlY3RlZEVtYmVkZGVyT2JqZWN0Py5uYW1lfQogICAgICAgICAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9Im10LTEgdGV4dC14cyB0ZXh0LWRlc2NyaXB0aW9uIj4KICAgICAgICAgICAgICAgICAgICAgICAgICB7c2VsZWN0ZWRFbWJlZGRlck9iamVjdD8uZGVzY3JpcHRpb259CiAgICAgICAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICAgICAgPENhcmV0VXBEb3duCiAgICAgICAgICAgICAgICAgICAgICBzaXplPXsyNH0KICAgICAgICAgICAgICAgICAgICAgIHdlaWdodD0iYm9sZCIKICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0idGV4dC13aGl0ZSIKICAgICAgICAgICAgICAgICAgICAvPgogICAgICAgICAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICAgICAgICAgICl9CiAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgPGRpdgogICAgICAgICAgICAgICAgb25DaGFuZ2U9eygpID0+IHNldEhhc0NoYW5nZXModHJ1ZSl9CiAgICAgICAgICAgICAgICBjbGFzc05hbWU9Im10LTQgZmxleCBmbGV4LWNvbCBnYXAteS0xIgogICAgICAgICAgICAgID4KICAgICAgICAgICAgICAgIHtzZWxlY3RlZEVtYmVkZGVyICYmCiAgICAgICAgICAgICAgICAgIEVNQkVEREVSUy5maW5kKAogICAgICAgICAgICAgICAgICAgIChlbWJlZGRlcikgPT4gZW1iZWRkZXIudmFsdWUgPT09IHNlbGVjdGVkRW1iZWRkZXIsCiAgICAgICAgICAgICAgICAgICk/Lm9wdGlvbnMoc2V0dGluZ3MpfQogICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDwvZm9ybT4KICAgICAgICA8L2Rpdj4KICAgICAgKX0KICAgICAgPE1vZGFsV3JhcHBlciBpc09wZW49e2lzT3Blbn0gY2xvc2VNb2RhbD17Y2xvc2VNb2RhbH0+CiAgICAgICAgPENoYW5nZVdhcm5pbmdNb2RhbAogICAgICAgICAgd2FybmluZ1RleHQ9IlN3aXRjaGluZyB0aGUgZW1iZWRkaW5nIG1vZGVsIHdpbGwgcmVzZXQgYWxsIHByZXZpb3VzbHkgZW1iZWRkZWQgZG9jdW1lbnRzIGluIGFsbCB3b3Jrc3BhY2VzLlxuXG5Db25maXJtaW5nIHdpbGwgY2xlYXIgYWxsIGVtYmVkZGluZ3MgZnJvbSB5b3VyIHZlY3RvciBkYXRhYmFzZSBhbmQgcmVtb3ZlIGFsbCBkb2N1bWVudHMgZnJvbSB5b3VyIHdvcmtzcGFjZXMuIFlvdXIgdXBsb2FkZWQgZG9jdW1lbnRzIHdpbGwgbm90IGJlIGRlbGV0ZWQsIHRoZXkgd2lsbCBiZSBhdmFpbGFibGUgZm9yIHJlLWVtYmVkZGluZy4iCiAgICAgICAgICBvbkNsb3NlPXtjbG9zZU1vZGFsfQogICAgICAgICAgb25Db25maXJtPXtoYW5kbGVTYXZlU2V0dGluZ3N9CiAgICAgICAgLz4KICAgICAgPC9Nb2RhbFdyYXBwZXI+CiAgICAgIDxVbnNhdmVkQ2hhbmdlc0RpYWxvZyBibG9ja2VyPXtibG9ja2VyfSAvPgogICAgPC9kaXY+CiAgKTsKfQo=
+// SPDX-License-Identifier: MIT
+import React, { useState, useRef, useEffect, FormEvent } from "react";
+import Sidebar from "@/components/SettingsSidebar";
+import { isMobile } from "react-device-detect";
+import System from "@/models/system";
+import showToast from "@/utils/toast";
+import OpenSINChatIcon from "@/media/logo/opensin-icon.svg";
+import OpenAiLogo from "@/media/llmprovider/openai.png";
+import GeminiAiLogo from "@/media/llmprovider/gemini.png";
+import LocalAiLogo from "@/media/llmprovider/localai.png";
+import OllamaLogo from "@/media/llmprovider/ollama.png";
+import LMStudioLogo from "@/media/llmprovider/lmstudio.png";
+import VoyageAiLogo from "@/media/embeddingprovider/voyageai.png";
+import LiteLLMLogo from "@/media/llmprovider/litellm.png";
+import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";
+import MistralAiLogo from "@/media/llmprovider/mistral.jpeg";
+
+import PreLoader from "@/components/Preloader";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import UnsavedChangesDialog from "@/components/UnsavedChangesDialog";
+import ChangeWarningModal from "@/components/ChangeWarning";
+import OpenAiOptions from "@/components/EmbeddingSelection/OpenAiOptions";
+import GeminiOptions from "@/components/EmbeddingSelection/GeminiOptions";
+import LocalAiOptions from "@/components/EmbeddingSelection/LocalAiOptions";
+import NativeEmbeddingOptions from "@/components/EmbeddingSelection/NativeEmbeddingOptions";
+import OllamaEmbeddingOptions from "@/components/EmbeddingSelection/OllamaOptions";
+import LMStudioEmbeddingOptions from "@/components/EmbeddingSelection/LMStudioOptions";
+import VoyageAiOptions from "@/components/EmbeddingSelection/VoyageAiOptions";
+import LiteLLMOptions from "@/components/EmbeddingSelection/LiteLLMOptions";
+import GenericOpenAiEmbeddingOptions from "@/components/EmbeddingSelection/GenericOpenAiOptions";
+import MistralAiOptions from "@/components/EmbeddingSelection/MistralAiOptions";
+
+import EmbedderItem from "@/components/EmbeddingSelection/EmbedderItem";
+import { CaretUpDown } from "@phosphor-icons/react/dist/csr/CaretUpDown";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { useModal } from "@/hooks/useModal";
+import ModalWrapper from "@/components/ModalWrapper";
+import CTAButton from "@/components/lib/CTAButton";
+import { useTranslation } from "react-i18next";
+import useEmbeddingPreference from "@/hooks/useEmbeddingPreference";
+
+interface Embedder {
+  name: string;
+  value: string;
+  logo: string;
+  options: (settings: any) => React.ReactNode;
+  description: string;
+}
+
+const EMBEDDERS: Embedder[] = [
+  {
+    name: "OpenSIN Chat Embedder",
+    value: "native",
+    logo: OpenSINChatIcon,
+    options: (settings: any) => <NativeEmbeddingOptions settings={settings} />,
+    description:
+      "Use the built-in embedding provider for OpenSIN Chat. Zero setup!",
+  },
+  {
+    name: "OpenAI",
+    value: "openai",
+    logo: OpenAiLogo,
+    options: (settings: any) => <OpenAiOptions settings={settings} />,
+    description: "The standard option for most non-commercial use.",
+  },
+  {
+    name: "Gemini",
+    value: "gemini",
+    logo: GeminiAiLogo,
+    options: (settings: any) => <GeminiOptions settings={settings} />,
+    description: "Run powerful embedding models from Google AI.",
+  },
+  {
+    name: "Local AI",
+    value: "localai",
+    logo: LocalAiLogo,
+    options: (settings: any) => <LocalAiOptions settings={settings} />,
+    description: "Run embedding models locally on your own machine.",
+  },
+  {
+    name: "Ollama",
+    value: "ollama",
+    logo: OllamaLogo,
+    options: (settings: any) => <OllamaEmbeddingOptions settings={settings} />,
+    description: "Run embedding models locally on your own machine.",
+  },
+  {
+    name: "LM Studio",
+    value: "lmstudio",
+    logo: LMStudioLogo,
+    options: (settings: any) => (
+      <LMStudioEmbeddingOptions settings={settings} />
+    ),
+    description:
+      "Discover, download, and run thousands of cutting edge LLMs in a few clicks.",
+  },
+  {
+    name: "LiteLLM",
+    value: "litellm",
+    logo: LiteLLMLogo,
+    options: (settings: any) => <LiteLLMOptions settings={settings} />,
+    description: "Run powerful embedding models from LiteLLM.",
+  },
+  {
+    name: "Voyage AI",
+    value: "voyageai",
+    logo: VoyageAiLogo,
+    options: (settings: any) => <VoyageAiOptions settings={settings} />,
+    description: "Run powerful embedding models from Voyage AI.",
+  },
+  {
+    name: "Mistral AI",
+    value: "mistral",
+    logo: MistralAiLogo,
+    options: (settings: any) => <MistralAiOptions settings={settings} />,
+    description: "Run powerful embedding models from Mistral AI.",
+  },
+  {
+    name: "Generic OpenAI",
+    value: "generic-openai",
+    logo: GenericOpenAiLogo,
+    options: (settings: any) => (
+      <GenericOpenAiEmbeddingOptions settings={settings} />
+    ),
+    description: "Run embedding models from any OpenAI compatible API service.",
+  },
+];
+
+export default function GeneralEmbeddingPreference() {
+  const { settings, isLoading } = useEmbeddingPreference();
+  const [saving, setSaving] = useState(false);
+  const [hasChanges, setHasChanges] = useState(false);
+  const blocker = useUnsavedChanges(hasChanges);
+  const [hasEmbeddings, setHasEmbeddings] = useState(false);
+  const [hasCachedEmbeddings, setHasCachedEmbeddings] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredEmbedders, setFilteredEmbedders] = useState<Embedder[]>([]);
+  const [selectedEmbedder, setSelectedEmbedder] = useState<string | null>(null);
+  const [searchMenuOpen, setSearchMenuOpen] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const { isOpen, openModal, closeModal } = useModal();
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    if (isLoading || !settings) return;
+    setSelectedEmbedder(settings?.EmbeddingEngine || "native");
+    setHasEmbeddings(settings?.HasExistingEmbeddings || false);
+    setHasCachedEmbeddings(settings?.HasCachedEmbeddings || false);
+  }, [isLoading, settings]);
+
+  useEffect(() => {
+    if (!searchMenuOpen) return;
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === "Escape") setSearchMenuOpen(false);
+    }
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [searchMenuOpen]);
+
+  function embedderModelChanged(formEl: HTMLFormElement) {
+    try {
+      const newModel = new FormData(formEl).get("EmbeddingModelPref") ?? null;
+      if (newModel === null) return false;
+      return settings?.EmbeddingModelPref !== newModel;
+    } catch (error) {
+      console.error(error);
+    }
+    return false;
+  }
+
+  const handleSubmit = async (e?: FormEvent<HTMLFormElement>) => {
+    e?.preventDefault();
+    const form = (e?.target ??
+      document.getElementById("embedding-form")) as HTMLFormElement;
+    if (
+      (selectedEmbedder !== settings?.EmbeddingEngine ||
+        embedderModelChanged(form)) &&
+      hasChanges &&
+      (hasEmbeddings || hasCachedEmbeddings)
+    ) {
+      openModal();
+    } else {
+      await handleSaveSettings();
+    }
+  };
+
+  const handleSaveSettings = async () => {
+    setSaving(true);
+    const form = document.getElementById("embedding-form") as HTMLFormElement;
+    const settingsData: any = {};
+    const formData = new FormData(form);
+    settingsData.EmbeddingEngine = selectedEmbedder;
+    for (const [key, value] of formData.entries()) settingsData[key] = value;
+
+    const { error } = await System.updateSystem(settingsData);
+    if (error) {
+      showToast(t("embedding.saveFailed", { error }), "error");
+      setHasChanges(true);
+    } else {
+      showToast(t("embedding.saveSuccess"), "success");
+      setHasChanges(false);
+    }
+    setSaving(false);
+    closeModal();
+  };
+
+  const updateChoice = (selection: string) => {
+    setSearchQuery("");
+    setSelectedEmbedder(selection);
+    setSearchMenuOpen(false);
+    setHasChanges(true);
+  };
+
+  const handleXButton = () => {
+    if (searchQuery.length > 0) {
+      setSearchQuery("");
+      if (searchInputRef.current) searchInputRef.current.value = "";
+    } else {
+      setSearchMenuOpen(!searchMenuOpen);
+    }
+  };
+
+  useEffect(() => {
+    const filtered = EMBEDDERS.filter((embedder) =>
+      embedder.name.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
+    setFilteredEmbedders(filtered);
+  }, [searchQuery, selectedEmbedder]);
+
+  const selectedEmbedderObject = EMBEDDERS.find(
+    (embedder) => embedder.value === selectedEmbedder,
+  );
+
+  return (
+    <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
+      <Sidebar />
+      {isLoading ? (
+        <div
+          style={
+            {
+              "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
+            } as React.CSSProperties
+          }
+          className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
+        >
+          <div className="w-full h-full flex justify-center items-center">
+            <PreLoader />
+          </div>
+        </div>
+      ) : (
+        <div
+          style={
+            {
+              "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
+            } as React.CSSProperties
+          }
+          className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
+        >
+          <form
+            id="embedding-form"
+            onSubmit={handleSubmit}
+            className="flex w-full"
+          >
+            <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] py-16 md:py-6">
+              <div className="w-full flex flex-col gap-y-1 pb-6 border-white light:border-theme-sidebar-border border-b-2 border-opacity-10">
+                <div className="flex gap-x-4 items-center">
+                  <p className="text-lg leading-6 font-bold text-white">
+                    {t("embedding.title")}
+                  </p>
+                </div>
+                <p className="text-xs leading-[18px] font-base text-white text-opacity-60">
+                  {t("embedding.desc-start")}
+                  <br />
+                  {t("embedding.desc-end")}
+                </p>
+              </div>
+              <div className="w-full justify-end flex">
+                {hasChanges && (
+                  <CTAButton
+                    onClick={() => handleSubmit()}
+                    className="mt-3 mr-0 -mb-14 z-10"
+                  >
+                    {saving ? t("common.saving") : t("common.save")}
+                  </CTAButton>
+                )}
+              </div>
+              <div className="text-base font-bold text-white mt-6 mb-4">
+                {t("embedding.provider.title")}
+              </div>
+              <div className="relative">
+                {searchMenuOpen && (
+                  <div
+                    className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-70 backdrop-blur-sm z-10"
+                    onClick={() => setSearchMenuOpen(false)}
+                  />
+                )}
+                {searchMenuOpen ? (
+                  <div className="absolute top-0 left-0 w-full max-w-[640px] max-h-[310px] min-h-[64px] bg-theme-settings-input-bg rounded-lg flex flex-col justify-between cursor-pointer border-2 border-primary-button z-20">
+                    <div className="w-full flex flex-col gap-y-1">
+                      <div className="flex items-center sticky top-0 z-10 border-b border-[#9CA3AF] mx-4 bg-theme-settings-input-bg">
+                        <MagnifyingGlass
+                          size={20}
+                          weight="bold"
+                          className="absolute left-4 z-30 text-theme-text-primary -ml-4 my-2"
+                        />
+                        <input
+                          type="text"
+                          name="embedder-search"
+                          autoComplete="off"
+                          placeholder={t("common.searchEmbeddingProviders")}
+                          className="border-none -ml-4 my-2 bg-transparent z-20 pl-12 h-[38px] w-full px-4 py-1 text-sm outline-none text-theme-text-primary placeholder:text-theme-text-primary placeholder:font-medium"
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          ref={searchInputRef}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") e.preventDefault();
+                          }}
+                        />
+                        <X
+                          size={20}
+                          weight="bold"
+                          className="cursor-pointer text-white hover:text-x-button"
+                          onClick={handleXButton}
+                        />
+                      </div>
+                      <div className="flex-1 pl-4 pr-2 flex flex-col gap-y-1 overflow-y-auto white-scrollbar pb-4 max-h-[245px]">
+                        {filteredEmbedders.map((embedder) => (
+                          <EmbedderItem
+                            key={embedder.name}
+                            name={embedder.name}
+                            value={embedder.value}
+                            image={embedder.logo}
+                            description={embedder.description}
+                            checked={selectedEmbedder === embedder.value}
+                            onClick={() => updateChoice(embedder.value)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    className="w-full max-w-[640px] h-[64px] bg-theme-settings-input-bg rounded-lg flex items-center p-[14px] justify-between cursor-pointer border-2 border-transparent hover:border-primary-button transition-all duration-300"
+                    type="button"
+                    onClick={() => setSearchMenuOpen(true)}
+                  >
+                    <div className="flex gap-x-4 items-center">
+                      <img
+                        src={selectedEmbedderObject?.logo}
+                        alt={`${selectedEmbedderObject?.name} logo`}
+                        className="w-10 h-10 rounded-md"
+                      />
+                      <div className="flex flex-col text-left">
+                        <div className="text-sm font-semibold text-white">
+                          {selectedEmbedderObject?.name}
+                        </div>
+                        <div className="mt-1 text-xs text-description">
+                          {selectedEmbedderObject?.description}
+                        </div>
+                      </div>
+                    </div>
+                    <CaretUpDown
+                      size={24}
+                      weight="bold"
+                      className="text-white"
+                    />
+                  </button>
+                )}
+              </div>
+              <div
+                onChange={() => setHasChanges(true)}
+                className="mt-4 flex flex-col gap-y-1"
+              >
+                {selectedEmbedder &&
+                  EMBEDDERS.find(
+                    (embedder) => embedder.value === selectedEmbedder,
+                  )?.options(settings)}
+              </div>
+            </div>
+          </form>
+        </div>
+      )}
+      <ModalWrapper isOpen={isOpen} closeModal={closeModal}>
+        <ChangeWarningModal
+          warningText="Switching the embedding model will reset all previously embedded documents in all workspaces.\n\nConfirming will clear all embeddings from your vector database and remove all documents from your workspaces. Your uploaded documents will not be deleted, they will be available for re-embedding."
+          onClose={closeModal}
+          onConfirm={handleSaveSettings}
+        />
+      </ModalWrapper>
+      <UnsavedChangesDialog blocker={blocker} />
+    </div>
+  );
+}
