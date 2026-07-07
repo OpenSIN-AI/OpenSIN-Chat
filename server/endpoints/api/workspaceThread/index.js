@@ -1,1 +1,715 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVApjb25zdCBjb25zb2xlTG9nZ2VyID0gcmVxdWlyZSgiLi4vLi4vLi4vdXRpbHMvbG9nZ2VyL2NvbnNvbGUuanMiKTsKCmNvbnN0IHsgdjQ6IHV1aWR2NCB9ID0gcmVxdWlyZSgidXVpZCIpOwpjb25zdCB7IFdvcmtzcGFjZVRocmVhZCB9ID0gcmVxdWlyZSgiLi4vLi4vLi4vbW9kZWxzL3dvcmtzcGFjZVRocmVhZCIpOwpjb25zdCB7IFdvcmtzcGFjZSB9ID0gcmVxdWlyZSgiLi4vLi4vLi4vbW9kZWxzL3dvcmtzcGFjZSIpOwpjb25zdCB7IHZhbGlkQXBpS2V5IH0gPSByZXF1aXJlKCIuLi8uLi8uLi91dGlscy9taWRkbGV3YXJlL3ZhbGlkQXBpS2V5Iik7CmNvbnN0IHsgcmVxQm9keSwgbXVsdGlVc2VyTW9kZSB9ID0gcmVxdWlyZSgiLi4vLi4vLi4vdXRpbHMvaHR0cCIpOwpjb25zdCB7IFZBTElEX0NIQVRfTU9ERSB9ID0gcmVxdWlyZSgiLi4vLi4vLi4vdXRpbHMvY2hhdHMvc3RyZWFtIik7CmNvbnN0IHsgVGVsZW1ldHJ5IH0gPSByZXF1aXJlKCIuLi8uLi8uLi9tb2RlbHMvdGVsZW1ldHJ5Iik7CmNvbnN0IHsgRXZlbnRMb2dzIH0gPSByZXF1aXJlKCIuLi8uLi8uLi9tb2RlbHMvZXZlbnRMb2dzIik7CmNvbnN0IHsKICB3cml0ZVJlc3BvbnNlQ2h1bmssCiAgY29udmVydFRvQ2hhdEhpc3RvcnksCn0gPSByZXF1aXJlKCIuLi8uLi8uLi91dGlscy9oZWxwZXJzL2NoYXQvcmVzcG9uc2VzIik7CmNvbnN0IHsgc3RhcnRTU0VIZWFydGJlYXQgfSA9IHJlcXVpcmUoIi4uLy4uLy4uL3V0aWxzL2hlbHBlcnMvc3NlIik7CmNvbnN0IHsgV29ya3NwYWNlQ2hhdHMgfSA9IHJlcXVpcmUoIi4uLy4uLy4uL21vZGVscy93b3Jrc3BhY2VDaGF0cyIpOwpjb25zdCB7IFVzZXIgfSA9IHJlcXVpcmUoIi4uLy4uLy4uL21vZGVscy91c2VyIik7CmNvbnN0IHsgQXBpQ2hhdEhhbmRsZXIgfSA9IHJlcXVpcmUoIi4uLy4uLy4uL3V0aWxzL2NoYXRzL2FwaUNoYXRIYW5kbGVyIik7CmNvbnN0IHsgZ2V0TW9kZWxUYWcgfSA9IHJlcXVpcmUoIi4uLy4uL3V0aWxzIik7CgpmdW5jdGlvbiBhcGlXb3Jrc3BhY2VUaHJlYWRFbmRwb2ludHMoYXBwKSB7CiAgaWYgKCFhcHApIHJldHVybjsKCiAgYXBwLnBvc3QoCiAgICAiL3YxL3dvcmtzcGFjZS86c2x1Zy90aHJlYWQvbmV3IiwKICAgIFt2YWxpZEFwaUtleV0sCiAgICBhc3luYyAocmVxdWVzdCwgcmVzcG9uc2UpID0+IHsKICAgICAgLyoKICAgICAgI3N3YWdnZXIudGFncyA9IFsnV29ya3NwYWNlIFRocmVhZHMnXQogICAgICAjc3dhZ2dlci5kZXNjcmlwdGlvbiA9ICdDcmVhdGUgYSBuZXcgd29ya3NwYWNlIHRocmVhZCcKICAgICAgI3N3YWdnZXIucGFyYW1ldGVyc1snc2x1ZyddID0gewogICAgICAgICAgaW46ICdwYXRoJywKICAgICAgICAgIGRlc2NyaXB0aW9uOiAnVW5pcXVlIHNsdWcgb2Ygd29ya3NwYWNlJywKICAgICAgICAgIHJlcXVpcmVkOiB0cnVlLAogICAgICAgICAgdHlwZTogJ3N0cmluZycKICAgICAgfQogICAgICAjc3dhZ2dlci5yZXF1ZXN0Qm9keSA9IHsKICAgICAgICBkZXNjcmlwdGlvbjogJ09wdGlvbmFsIHVzZXJJZCBhc3NvY2lhdGVkIHdpdGggdGhlIHRocmVhZCwgdGhyZWFkIHNsdWcgYW5kIHRocmVhZCBuYW1lJywKICAgICAgICByZXF1aXJlZDogZmFsc2UsCiAgICAgICAgY29udGVudDogewogICAgICAgICAgImFwcGxpY2F0aW9uL2pzb24iOiB7CiAgICAgICAgICAgIGV4YW1wbGU6IHsKICAgICAgICAgICAgICB1c2VySWQ6IDEsCiAgICAgICAgICAgICAgbmFtZTogJ05hbWUnLAogICAgICAgICAgICAgIHNsdWc6ICd0aHJlYWQtc2x1ZycKICAgICAgICAgICAgfQogICAgICAgICAgfQogICAgICAgIH0KICAgICAgfQogICAgICAjc3dhZ2dlci5yZXNwb25zZXNbMjAwXSA9IHsKICAgICAgICBjb250ZW50OiB7CiAgICAgICAgICAiYXBwbGljYXRpb24vanNvbiI6IHsKICAgICAgICAgICAgc2NoZW1hOiB7CiAgICAgICAgICAgICAgdHlwZTogJ29iamVjdCcsCiAgICAgICAgICAgICAgZXhhbXBsZTogewogICAgICAgICAgICAgICAgdGhyZWFkOiB7CiAgICAgICAgICAgICAgICAgICJpZCI6IDEsCiAgICAgICAgICAgICAgICAgICJuYW1lIjogIlRocmVhZCIsCiAgICAgICAgICAgICAgICAgICJzbHVnIjogInRocmVhZC11dWlkIiwKICAgICAgICAgICAgICAgICAgInVzZXJfaWQiOiAxLAogICAgICAgICAgICAgICAgICAid29ya3NwYWNlX2lkIjogMQogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIG1lc3NhZ2U6IG51bGwKICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KICAgICAgICAgIH0KICAgICAgICB9CiAgICAgIH0KICAgICAgI3N3YWdnZXIucmVzcG9uc2VzWzQwM10gPSB7CiAgICAgICAgc2NoZW1hOiB7CiAgICAgICAgICAiJHJlZiI6ICIjL2RlZmluaXRpb25zL0ludmFsaWRBUElLZXkiCiAgICAgICAgfQogICAgICB9CiAgICAgICovCiAgICAgIHRyeSB7CiAgICAgICAgY29uc3Qgd3NsdWcgPSByZXF1ZXN0LnBhcmFtcy5zbHVnOwogICAgICAgIGxldCB7IHVzZXJJZCA9IG51bGwsIG5hbWUgPSBudWxsLCBzbHVnID0gbnVsbCB9ID0gcmVxQm9keShyZXF1ZXN0KTsKICAgICAgICBjb25zdCB3b3Jrc3BhY2UgPSBhd2FpdCBXb3Jrc3BhY2UuZ2V0KHsgc2x1Zzogd3NsdWcgfSk7CgogICAgICAgIGlmICghd29ya3NwYWNlKSB7CiAgICAgICAgICByZXNwb25zZS5zZW5kU3RhdHVzKDQwMCk7CiAgICAgICAgICByZXR1cm47CiAgICAgICAgfQoKICAgICAgICAvLyBJZiB0aGUgc3lzdGVtIGlzIG5vdCBtdWx0aS11c2VyIGFuZCB5b3UgcGFzcyBpbiBhIHVzZXJJZAogICAgICAgIC8vIGl0IG5lZWRzIHRvIGJlIG51bGxpZmllZCBhcyBubyB1c2VycyBleGlzdC4gVGhpcyBjYW4gc3RpbGwgZmFpbCB2YWxpZGF0aW9uCiAgICAgICAgLy8gYXMgd2UgZG9uJ3QgY2hlY2sgaWYgdGhlIHVzZXJJRCBpcyB2YWxpZC4KICAgICAgICBpZiAoIXJlc3BvbnNlLmxvY2Fscy5tdWx0aVVzZXJNb2RlICYmICEhdXNlcklkKSB1c2VySWQgPSBudWxsOwoKICAgICAgICBjb25zdCB7IHRocmVhZCwgbWVzc2FnZSB9ID0gYXdhaXQgV29ya3NwYWNlVGhyZWFkLm5ldygKICAgICAgICAgIHdvcmtzcGFjZSwKICAgICAgICAgIHVzZXJJZCA/IE51bWJlcih1c2VySWQpIDogbnVsbCwKICAgICAgICAgIHsgbmFtZSwgc2x1ZyB9LAogICAgICAgICk7CgogICAgICAgIGF3YWl0IFRlbGVtZXRyeS5zZW5kVGVsZW1ldHJ5KCJ3b3Jrc3BhY2VfdGhyZWFkX2NyZWF0ZWQiLCB7CiAgICAgICAgICBtdWx0aVVzZXJNb2RlOiBtdWx0aVVzZXJNb2RlKHJlc3BvbnNlKSwKICAgICAgICAgIExMTVNlbGVjdGlvbjogcHJvY2Vzcy5lbnYuTExNX1BST1ZJREVSIHx8ICJvcGVuYWkiLAogICAgICAgICAgRW1iZWRkZXI6IHByb2Nlc3MuZW52LkVNQkVERElOR19FTkdJTkUgfHwgImluaGVyaXQiLAogICAgICAgICAgVmVjdG9yRGJTZWxlY3Rpb246IHByb2Nlc3MuZW52LlZFQ1RPUl9EQiB8fCAibGFuY2VkYiIsCiAgICAgICAgICBUVFNTZWxlY3Rpb246IHByb2Nlc3MuZW52LlRUU19QUk9WSURFUiB8fCAibmF0aXZlIiwKICAgICAgICB9KTsKICAgICAgICBhd2FpdCBFdmVudExvZ3MubG9nRXZlbnQoImFwaV93b3Jrc3BhY2VfdGhyZWFkX2NyZWF0ZWQiLCB7CiAgICAgICAgICB3b3Jrc3BhY2VOYW1lOiB3b3Jrc3BhY2U/Lm5hbWUgfHwgIlVua25vd24gV29ya3NwYWNlIiwKICAgICAgICB9KTsKICAgICAgICByZXNwb25zZS5zdGF0dXMoMjAwKS5qc29uKHsgdGhyZWFkLCBtZXNzYWdlIH0pOwogICAgICB9IGNhdGNoIChlKSB7CiAgICAgICAgY29uc29sZUxvZ2dlci5lcnJvcihlLm1lc3NhZ2UsIGUpOwogICAgICAgIHJlc3BvbnNlLnNlbmRTdGF0dXMoNTAwKTsKICAgICAgfQogICAgfSwKICApOwoKICBhcHAucG9zdCgKICAgICIvdjEvd29ya3NwYWNlLzpzbHVnL3RocmVhZC86dGhyZWFkU2x1Zy91cGRhdGUiLAogICAgW3ZhbGlkQXBpS2V5XSwKICAgIGFzeW5jIChyZXF1ZXN0LCByZXNwb25zZSkgPT4gewogICAgICAvKgogICAgICAjc3dhZ2dlci50YWdzID0gWydXb3Jrc3BhY2UgVGhyZWFkcyddCiAgICAgICNzd2FnZ2VyLmRlc2NyaXB0aW9uID0gJ1VwZGF0ZSB0aHJlYWQgbmFtZSBieSBpdHMgdW5pcXVlIHNsdWcuJwogICAgICAjc3dhZ2dlci5wYXJhbWV0ZXJzWydzbHVnJ10gPSB7CiAgICAgICAgICBpbjogJ3BhdGgnLAogICAgICAgICAgZGVzY3JpcHRpb246ICdVbmlxdWUgc2x1ZyBvZiB3b3Jrc3BhY2UnLAogICAgICAgICAgcmVxdWlyZWQ6IHRydWUsCiAgICAgICAgICB0eXBlOiAnc3RyaW5nJwogICAgICB9CiAgICAgICNzd2FnZ2VyLnBhcmFtZXRlcnNbJ3RocmVhZFNsdWcnXSA9IHsKICAgICAgICAgIGluOiAncGF0aCcsCiAgICAgICAgICBkZXNjcmlwdGlvbjogJ1VuaXF1ZSBzbHVnIG9mIHRocmVhZCcsCiAgICAgICAgICByZXF1aXJlZDogdHJ1ZSwKICAgICAgICAgIHR5cGU6ICdzdHJpbmcnCiAgICAgIH0KICAgICAgI3N3YWdnZXIucmVxdWVzdEJvZHkgPSB7CiAgICAgICAgZGVzY3JpcHRpb246ICdKU09OIG9iamVjdCBjb250YWluaW5nIG5ldyBuYW1lIHRvIHVwZGF0ZSB0aGUgdGhyZWFkLicsCiAgICAgICAgcmVxdWlyZWQ6IHRydWUsCiAgICAgICAgY29udGVudDogewogICAgICAgICAgImFwcGxpY2F0aW9uL2pzb24iOiB7CiAgICAgICAgICAgIGV4YW1wbGU6IHsKICAgICAgICAgICAgICAibmFtZSI6ICdVcGRhdGVkIFRocmVhZCBOYW1lJwogICAgICAgICAgICB9CiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9CiAgICAgICNzd2FnZ2VyLnJlc3BvbnNlc1syMDBdID0gewogICAgICAgIGNvbnRlbnQ6IHsKICAgICAgICAgICJhcHBsaWNhdGlvbi9qc29uIjogewogICAgICAgICAgICBzY2hlbWE6IHsKICAgICAgICAgICAgICB0eXBlOiAnb2JqZWN0JywKICAgICAgICAgICAgICBleGFtcGxlOiB7CiAgICAgICAgICAgICAgICB0aHJlYWQ6IHsKICAgICAgICAgICAgICAgICAgImlkIjogMSwKICAgICAgICAgICAgICAgICAgIm5hbWUiOiAiVXBkYXRlZCBUaHJlYWQgTmFtZSIsCiAgICAgICAgICAgICAgICAgICJzbHVnIjogInRocmVhZC11dWlkIiwKICAgICAgICAgICAgICAgICAgInVzZXJfaWQiOiAxLAogICAgICAgICAgICAgICAgICAid29ya3NwYWNlX2lkIjogMQogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIG1lc3NhZ2U6IG51bGwsCiAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9CiAgICAgICNzd2FnZ2VyLnJlc3BvbnNlc1s0MDNdID0gewogICAgICAgIHNjaGVtYTogewogICAgICAgICAgIiRyZWYiOiAiIy9kZWZpbml0aW9ucy9JbnZhbGlkQVBJS2V5IgogICAgICAgIH0KICAgICAgfQogICAgICAqLwogICAgICB0cnkgewogICAgICAgIGNvbnN0IHsgc2x1ZywgdGhyZWFkU2x1ZyB9ID0gcmVxdWVzdC5wYXJhbXM7CiAgICAgICAgY29uc3QgeyBuYW1lIH0gPSByZXFCb2R5KHJlcXVlc3QpOwogICAgICAgIGlmICghbmFtZSB8fCB0eXBlb2YgbmFtZSAhPT0gInN0cmluZyIgfHwgIW5hbWUudHJpbSgpKSB7CiAgICAgICAgICByZXNwb25zZS5zdGF0dXMoNDAwKS5qc29uKHsKICAgICAgICAgICAgdGhyZWFkOiBudWxsLAogICAgICAgICAgICBtZXNzYWdlOiAibmFtZSBpcyByZXF1aXJlZCBhbmQgbXVzdCBiZSBhIG5vbi1lbXB0eSBzdHJpbmcuIiwKICAgICAgICAgIH0pOwogICAgICAgICAgcmV0dXJuOwogICAgICAgIH0KICAgICAgICBjb25zdCB3b3Jrc3BhY2UgPSBhd2FpdCBXb3Jrc3BhY2UuZ2V0KHsgc2x1ZyB9KTsKCiAgICAgICAgaWYgKCF3b3Jrc3BhY2UpIHsKICAgICAgICAgIHJlc3BvbnNlLnNlbmRTdGF0dXMoNDAwKTsKICAgICAgICAgIHJldHVybjsKICAgICAgICB9CgogICAgICAgIGNvbnN0IHRocmVhZCA9IGF3YWl0IFdvcmtzcGFjZVRocmVhZC5nZXQoewogICAgICAgICAgc2x1ZzogdGhyZWFkU2x1ZywKICAgICAgICAgIHdvcmtzcGFjZV9pZDogd29ya3NwYWNlLmlkLAogICAgICAgIH0pOwoKICAgICAgICBpZiAoIXRocmVhZCkgewogICAgICAgICAgcmVzcG9uc2Uuc2VuZFN0YXR1cyg0MDApOwogICAgICAgICAgcmV0dXJuOwogICAgICAgIH0KCiAgICAgICAgY29uc3QgeyB0aHJlYWQ6IHVwZGF0ZWRUaHJlYWQsIG1lc3NhZ2UgfSA9IGF3YWl0IFdvcmtzcGFjZVRocmVhZC51cGRhdGUoCiAgICAgICAgICB0aHJlYWQsCiAgICAgICAgICB7IG5hbWUgfSwKICAgICAgICApOwogICAgICAgIHJlc3BvbnNlLnN0YXR1cygyMDApLmpzb24oeyB0aHJlYWQ6IHVwZGF0ZWRUaHJlYWQsIG1lc3NhZ2UgfSk7CiAgICAgIH0gY2F0Y2ggKGUpIHsKICAgICAgICBjb25zb2xlTG9nZ2VyLmVycm9yKGUubWVzc2FnZSwgZSk7CiAgICAgICAgcmVzcG9uc2Uuc2VuZFN0YXR1cyg1MDApOwogICAgICB9CiAgICB9LAogICk7CgogIGFwcC5kZWxldGUoCiAgICAiL3YxL3dvcmtzcGFjZS86c2x1Zy90aHJlYWQvOnRocmVhZFNsdWciLAogICAgW3ZhbGlkQXBpS2V5XSwKICAgIGFzeW5jIChyZXF1ZXN0LCByZXNwb25zZSkgPT4gewogICAgICAvKgogICAgI3N3YWdnZXIudGFncyA9IFsnV29ya3NwYWNlIFRocmVhZHMnXQogICAgI3N3YWdnZXIuZGVzY3JpcHRpb24gPSAnRGVsZXRlIGEgd29ya3NwYWNlIHRocmVhZCcKICAgICNzd2FnZ2VyLnBhcmFtZXRlcnNbJ3NsdWcnXSA9IHsKICAgICAgICBpbjogJ3BhdGgnLAogICAgICAgIGRlc2NyaXB0aW9uOiAnVW5pcXVlIHNsdWcgb2Ygd29ya3NwYWNlJywKICAgICAgICByZXF1aXJlZDogdHJ1ZSwKICAgICAgICB0eXBlOiAnc3RyaW5nJwogICAgfQogICAgI3N3YWdnZXIucGFyYW1ldGVyc1sndGhyZWFkU2x1ZyddID0gewogICAgICAgIGluOiAncGF0aCcsCiAgICAgICAgZGVzY3JpcHRpb246ICdVbmlxdWUgc2x1ZyBvZiB0aHJlYWQnLAogICAgICAgIHJlcXVpcmVkOiB0cnVlLAogICAgICAgIHR5cGU6ICdzdHJpbmcnCiAgICB9CiAgICAjc3dhZ2dlci5yZXNwb25zZXNbMjAwXSA9IHsKICAgICAgZGVzY3JpcHRpb246ICdUaHJlYWQgZGVsZXRlZCBzdWNjZXNzZnVsbHknCiAgICB9CiAgICAjc3dhZ2dlci5yZXNwb25zZXNbNDAzXSA9IHsKICAgICAgc2NoZW1hOiB7CiAgICAgICAgIiRyZWYiOiAiIy9kZWZpbml0aW9ucy9JbnZhbGlkQVBJS2V5IgogICAgICB9CiAgICB9CiAgICAqLwogICAgICB0cnkgewogICAgICAgIGNvbnN0IHsgc2x1ZywgdGhyZWFkU2x1ZyB9ID0gcmVxdWVzdC5wYXJhbXM7CiAgICAgICAgY29uc3Qgd29ya3NwYWNlID0gYXdhaXQgV29ya3NwYWNlLmdldCh7IHNsdWcgfSk7CgogICAgICAgIGlmICghd29ya3NwYWNlKSB7CiAgICAgICAgICByZXNwb25zZS5zZW5kU3RhdHVzKDQwMCk7CiAgICAgICAgICByZXR1cm47CiAgICAgICAgfQoKICAgICAgICBhd2FpdCBXb3Jrc3BhY2VUaHJlYWQuZGVsZXRlKHsKICAgICAgICAgIHNsdWc6IHRocmVhZFNsdWcsCiAgICAgICAgICB3b3Jrc3BhY2VfaWQ6IHdvcmtzcGFjZS5pZCwKICAgICAgICB9KTsKICAgICAgICByZXNwb25zZS5zZW5kU3RhdHVzKDIwMCk7CiAgICAgIH0gY2F0Y2ggKGUpIHsKICAgICAgICBjb25zb2xlTG9nZ2VyLmVycm9yKGUubWVzc2FnZSwgZSk7CiAgICAgICAgcmVzcG9uc2Uuc2VuZFN0YXR1cyg1MDApOwogICAgICB9CiAgICB9LAogICk7CgogIGFwcC5nZXQoCiAgICAiL3YxL3dvcmtzcGFjZS86c2x1Zy90aHJlYWQvOnRocmVhZFNsdWcvY2hhdHMiLAogICAgW3ZhbGlkQXBpS2V5XSwKICAgIGFzeW5jIChyZXF1ZXN0LCByZXNwb25zZSkgPT4gewogICAgICAvKgogICAgICAjc3dhZ2dlci50YWdzID0gWydXb3Jrc3BhY2UgVGhyZWFkcyddCiAgICAgICNzd2FnZ2VyLmRlc2NyaXB0aW9uID0gJ0dldCBjaGF0cyBmb3IgYSB3b3Jrc3BhY2UgdGhyZWFkJwogICAgICAjc3dhZ2dlci5wYXJhbWV0ZXJzWydzbHVnJ10gPSB7CiAgICAgICAgICBpbjogJ3BhdGgnLAogICAgICAgICAgZGVzY3JpcHRpb246ICdVbmlxdWUgc2x1ZyBvZiB3b3Jrc3BhY2UnLAogICAgICAgICAgcmVxdWlyZWQ6IHRydWUsCiAgICAgICAgICB0eXBlOiAnc3RyaW5nJwogICAgICB9CiAgICAgICNzd2FnZ2VyLnBhcmFtZXRlcnNbJ3RocmVhZFNsdWcnXSA9IHsKICAgICAgICAgIGluOiAncGF0aCcsCiAgICAgICAgICBkZXNjcmlwdGlvbjogJ1VuaXF1ZSBzbHVnIG9mIHRocmVhZCcsCiAgICAgICAgICByZXF1aXJlZDogdHJ1ZSwKICAgICAgICAgIHR5cGU6ICdzdHJpbmcnCiAgICAgIH0KICAgICAgI3N3YWdnZXIucmVzcG9uc2VzWzIwMF0gPSB7CiAgICAgICAgY29udGVudDogewogICAgICAgICAgImFwcGxpY2F0aW9uL2pzb24iOiB7CiAgICAgICAgICAgIHNjaGVtYTogewogICAgICAgICAgICAgIHR5cGU6ICdvYmplY3QnLAogICAgICAgICAgICAgIGV4YW1wbGU6IHsKICAgICAgICAgICAgICAgIGhpc3Rvcnk6IFsKICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJyb2xlIjogInVzZXIiLAogICAgICAgICAgICAgICAgICAgICJjb250ZW50IjogIldoYXQgaXMgT3BlblNJTiBDaGF0PyIsCiAgICAgICAgICAgICAgICAgICAgInNlbnRBdCI6IDE2OTI4NTE2MzAKICAgICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJyb2xlIjogImFzc2lzdGFudCIsCiAgICAgICAgICAgICAgICAgICAgImNvbnRlbnQiOiAiT3BlblNJTiBDaGF0IGlzIGEgcGxhdGZvcm0gdGhhdCBhbGxvd3MgeW91IHRvIGNvbnZlcnQgbm90ZXMsIFBERnMsIGFuZCBvdGhlciBzb3VyY2UgbWF0ZXJpYWxzIGludG8gYSBjaGF0Ym90LiBJdCBlbnN1cmVzIHByaXZhY3ksIGNpdGVzIGl0cyBhbnN3ZXJzLCBhbmQgYWxsb3dzIG11bHRpcGxlIHBlb3BsZSB0byBpbnRlcmFjdCB3aXRoIHRoZSBzYW1lIGRvY3VtZW50cyBzaW11bHRhbmVvdXNseS4gSXQgaXMgcGFydGljdWxhcmx5IHVzZWZ1bCBmb3IgYnVzaW5lc3NlcyB0byBlbmhhbmNlIHRoZSB2aXNpYmlsaXR5IGFuZCByZWFkYWJpbGl0eSBvZiB2YXJpb3VzIHdyaXR0ZW4gY29tbXVuaWNhdGlvbnMgc3VjaCBhcyBTT1BzLCBjb250cmFjdHMsIGFuZCBzYWxlcyBjYWxscy4gWW91IGNhbiB0cnkgaXQgb3V0IHdpdGggYSBmcmVlIHRyaWFsIHRvIHNlZSBpZiBpdCBtZWV0cyB5b3VyIGJ1c2luZXNzIG5lZWRzLiIsCiAgICAgICAgICAgICAgICAgICAgInNvdXJjZXMiOiBbeyJzb3VyY2UiOiAib2JqZWN0IGFib3V0IHNvdXJjZSBkb2N1bWVudCBhbmQgc25pcHBldHMgdXNlZCJ9XQogICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICBdCiAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9CiAgICAgICNzd2FnZ2VyLnJlc3BvbnNlc1s0MDNdID0gewogICAgICAgIHNjaGVtYTogewogICAgICAgICAgIiRyZWYiOiAiIy9kZWZpbml0aW9ucy9JbnZhbGlkQVBJS2V5IgogICAgICAgIH0KICAgICAgfQogICAgICAqLwogICAgICB0cnkgewogICAgICAgIGNvbnN0IHsgc2x1ZywgdGhyZWFkU2x1ZyB9ID0gcmVxdWVzdC5wYXJhbXM7CiAgICAgICAgY29uc3Qgd29ya3NwYWNlID0gYXdhaXQgV29ya3NwYWNlLmdldCh7IHNsdWcgfSk7CgogICAgICAgIGlmICghd29ya3NwYWNlKSB7CiAgICAgICAgICByZXNwb25zZS5zZW5kU3RhdHVzKDQwMCk7CiAgICAgICAgICByZXR1cm47CiAgICAgICAgfQoKICAgICAgICBjb25zdCB0aHJlYWQgPSBhd2FpdCBXb3Jrc3BhY2VUaHJlYWQuZ2V0KHsKICAgICAgICAgIHNsdWc6IHRocmVhZFNsdWcsCiAgICAgICAgICB3b3Jrc3BhY2VfaWQ6IHdvcmtzcGFjZS5pZCwKICAgICAgICB9KTsKCiAgICAgICAgaWYgKCF0aHJlYWQpIHsKICAgICAgICAgIHJlc3BvbnNlLnNlbmRTdGF0dXMoNDAwKTsKICAgICAgICAgIHJldHVybjsKICAgICAgICB9CgogICAgICAgIGNvbnN0IGhpc3RvcnkgPSBhd2FpdCBXb3Jrc3BhY2VDaGF0cy53aGVyZSgKICAgICAgICAgIHsKICAgICAgICAgICAgd29ya3NwYWNlSWQ6IHdvcmtzcGFjZS5pZCwKICAgICAgICAgICAgdGhyZWFkX2lkOiB0aHJlYWQuaWQsCiAgICAgICAgICAgIGFwaV9zZXNzaW9uX2lkOiBudWxsLCAvLyBEbyBub3QgaW5jbHVkZSBBUEkgc2Vzc2lvbiBjaGF0cy4KICAgICAgICAgICAgaW5jbHVkZTogdHJ1ZSwKICAgICAgICAgIH0sCiAgICAgICAgICBudWxsLAogICAgICAgICAgeyBpZDogImFzYyIgfSwKICAgICAgICApOwoKICAgICAgICByZXNwb25zZS5zdGF0dXMoMjAwKS5qc29uKHsgaGlzdG9yeTogY29udmVydFRvQ2hhdEhpc3RvcnkoaGlzdG9yeSkgfSk7CiAgICAgIH0gY2F0Y2ggKGUpIHsKICAgICAgICBjb25zb2xlTG9nZ2VyLmVycm9yKGUubWVzc2FnZSwgZSk7CiAgICAgICAgcmVzcG9uc2Uuc2VuZFN0YXR1cyg1MDApOwogICAgICB9CiAgICB9LAogICk7CgogIGFwcC5wb3N0KAogICAgIi92MS93b3Jrc3BhY2UvOnNsdWcvdGhyZWFkLzp0aHJlYWRTbHVnL2NoYXQiLAogICAgW3ZhbGlkQXBpS2V5XSwKICAgIGFzeW5jIChyZXF1ZXN0LCByZXNwb25zZSkgPT4gewogICAgICAvKgogICAgICAjc3dhZ2dlci50YWdzID0gWydXb3Jrc3BhY2UgVGhyZWFkcyddCiAgICAgICNzd2FnZ2VyLmRlc2NyaXB0aW9uID0gJ0NoYXQgd2l0aCBhIHdvcmtzcGFjZSB0aHJlYWQnCiAgICAgICNzd2FnZ2VyLnBhcmFtZXRlcnNbJ3NsdWcnXSA9IHsKICAgICAgICAgIGluOiAncGF0aCcsCiAgICAgICAgICBkZXNjcmlwdGlvbjogJ1VuaXF1ZSBzbHVnIG9mIHdvcmtzcGFjZScsCiAgICAgICAgICByZXF1aXJlZDogdHJ1ZSwKICAgICAgICAgIHR5cGU6ICdzdHJpbmcnCiAgICAgIH0KICAgICAgI3N3YWdnZXIucGFyYW1ldGVyc1sndGhyZWFkU2x1ZyddID0gewogICAgICAgICAgaW46ICdwYXRoJywKICAgICAgICAgIGRlc2NyaXB0aW9uOiAnVW5pcXVlIHNsdWcgb2YgdGhyZWFkJywKICAgICAgICAgIHJlcXVpcmVkOiB0cnVlLAogICAgICAgICAgdHlwZTogJ3N0cmluZycKICAgICAgfQogICAgICAjc3dhZ2dlci5yZXF1ZXN0Qm9keSA9IHsKICAgICAgICBkZXNjcmlwdGlvbjogJ1NlbmQgYSBwcm9tcHQgdG8gdGhlIHdvcmtzcGFjZSB0aHJlYWQgYW5kIHRoZSB0eXBlIG9mIGNvbnZlcnNhdGlvbiAocXVlcnkgb3IgY2hhdCkuJywKICAgICAgICByZXF1aXJlZDogdHJ1ZSwKICAgICAgICBjb250ZW50OiB7CiAgICAgICAgICAiYXBwbGljYXRpb24vanNvbiI6IHsKICAgICAgICAgICAgZXhhbXBsZTogewogICAgICAgICAgICAgIG1lc3NhZ2U6ICJXaGF0IGlzIE9wZW5TSU4gQ2hhdD8iLAogICAgICAgICAgICAgIG1vZGU6ICJxdWVyeSB8IGNoYXQiLAogICAgICAgICAgICAgIHVzZXJJZDogMSwKICAgICAgICAgICAgICBhdHRhY2htZW50czogWwogICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgbmFtZTogImltYWdlLnBuZyIsCiAgICAgICAgICAgICAgICAgbWltZTogImltYWdlL3BuZyIsCiAgICAgICAgICAgICAgICAgY29udGVudFN0cmluZzogImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUEuLi4iCiAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICBdLAogICAgICAgICAgICAgIHJlc2V0OiBmYWxzZQogICAgICAgICAgICB9CiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9CiAgICAgICNzd2FnZ2VyLnJlc3BvbnNlc1syMDBdID0gewogICAgICAgIGNvbnRlbnQ6IHsKICAgICAgICAgICJhcHBsaWNhdGlvbi9qc29uIjogewogICAgICAgICAgICBzY2hlbWE6IHsKICAgICAgICAgICAgICB0eXBlOiAnb2JqZWN0JywKICAgICAgICAgICAgICBleGFtcGxlOiB7CiAgICAgICAgICAgICAgICBpZDogJ2NoYXQtdXVpZCcsCiAgICAgICAgICAgICAgICB0eXBlOiAiYWJvcnQgfCB0ZXh0UmVzcG9uc2UiLAogICAgICAgICAgICAgICAgdGV4dFJlc3BvbnNlOiAiUmVzcG9uc2UgdG8geW91ciBxdWVyeSIsCiAgICAgICAgICAgICAgICBzb3VyY2VzOiBbe3RpdGxlOiAib3BlbnNpbi50eHQiLCBjaHVuazogIlRoaXMgaXMgYSBjb250ZXh0IGNodW5rIHVzZWQgaW4gdGhlIGFuc3dlciBvZiB0aGUgcHJvbXB0IGJ5IHRoZSBMTE0uIn1dLAogICAgICAgICAgICAgICAgY2xvc2U6IHRydWUsCiAgICAgICAgICAgICAgICBlcnJvcjogIm51bGwgfCB0ZXh0IHN0cmluZyBvZiB0aGUgZmFpbHVyZSBtb2RlLiIKICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KICAgICAgICAgIH0KICAgICAgICB9CiAgICAgIH0KICAgICAgI3N3YWdnZXIucmVzcG9uc2VzWzQwM10gPSB7CiAgICAgICAgc2NoZW1hOiB7CiAgICAgICAgICAiJHJlZiI6ICIjL2RlZmluaXRpb25zL0ludmFsaWRBUElLZXkiCiAgICAgICAgfQogICAgICB9CiAgICAgICovCiAgICAgIHRyeSB7CiAgICAgICAgY29uc3QgeyBzbHVnLCB0aHJlYWRTbHVnIH0gPSByZXF1ZXN0LnBhcmFtczsKICAgICAgICBjb25zdCB7CiAgICAgICAgICBtZXNzYWdlLAogICAgICAgICAgbW9kZSA9IG51bGwsCiAgICAgICAgICB1c2VySWQsCiAgICAgICAgICBhdHRhY2htZW50cyA9IFtdLAogICAgICAgICAgcmVzZXQgPSBmYWxzZSwKICAgICAgICB9ID0gcmVxQm9keShyZXF1ZXN0KTsKICAgICAgICBjb25zdCB3b3Jrc3BhY2UgPSBhd2FpdCBXb3Jrc3BhY2UuZ2V0KHsgc2x1ZyB9KTsKCiAgICAgICAgaWYgKCF3b3Jrc3BhY2UpIHsKICAgICAgICAgIHJlc3BvbnNlLnN0YXR1cyg0MDApLmpzb24oewogICAgICAgICAgICBpZDogdXVpZHY0KCksCiAgICAgICAgICAgIHR5cGU6ICJhYm9ydCIsCiAgICAgICAgICAgIHRleHRSZXNwb25zZTogbnVsbCwKICAgICAgICAgICAgc291cmNlczogW10sCiAgICAgICAgICAgIGNsb3NlOiB0cnVlLAogICAgICAgICAgICBlcnJvcjogYFdvcmtzcGFjZSAke3NsdWd9IGlzIG5vdCB2YWxpZC5gLAogICAgICAgICAgfSk7CiAgICAgICAgICByZXR1cm47CiAgICAgICAgfQoKICAgICAgICBjb25zdCB0aHJlYWQgPSBhd2FpdCBXb3Jrc3BhY2VUaHJlYWQuZ2V0KHsKICAgICAgICAgIHNsdWc6IHRocmVhZFNsdWcsCiAgICAgICAgICB3b3Jrc3BhY2VfaWQ6IHdvcmtzcGFjZS5pZCwKICAgICAgICB9KTsKCiAgICAgICAgaWYgKCF0aHJlYWQpIHsKICAgICAgICAgIHJlc3BvbnNlLnN0YXR1cyg0MDApLmpzb24oewogICAgICAgICAgICBpZDogdXVpZHY0KCksCiAgICAgICAgICAgIHR5cGU6ICJhYm9ydCIsCiAgICAgICAgICAgIHRleHRSZXNwb25zZTogbnVsbCwKICAgICAgICAgICAgc291cmNlczogW10sCiAgICAgICAgICAgIGNsb3NlOiB0cnVlLAogICAgICAgICAgICBlcnJvcjogYFRocmVhZCAke3RocmVhZFNsdWd9IGlzIG5vdCB2YWxpZC5gLAogICAgICAgICAgfSk7CiAgICAgICAgICByZXR1cm47CiAgICAgICAgfQoKICAgICAgICBjb25zdCByZXNvbHZlZE1vZGUgPSBtb2RlID8/IHdvcmtzcGFjZS5jaGF0TW9kZTsKICAgICAgICBpZiAoCiAgICAgICAgICAodHlwZW9mIG1lc3NhZ2UgIT09ICJzdHJpbmciIHx8CiAgICAgICAgICAgICFtZXNzYWdlLmxlbmd0aCB8fAogICAgICAgICAgICAhVkFMSURfQ0hBVF9NT0RFLmluY2x1ZGVzKHJlc29sdmVkTW9kZSkpICYmCiAgICAgICAgICAhcmVzZXQKICAgICAgICApIHsKICAgICAgICAgIHJlc3BvbnNlLnN0YXR1cyg0MDApLmpzb24oewogICAgICAgICAgICBpZDogdXVpZHY0KCksCiAgICAgICAgICAgIHR5cGU6ICJhYm9ydCIsCiAgICAgICAgICAgIHRleHRSZXNwb25zZTogbnVsbCwKICAgICAgICAgICAgc291cmNlczogW10sCiAgICAgICAgICAgIGNsb3NlOiB0cnVlLAogICAgICAgICAgICBlcnJvcjoKICAgICAgICAgICAgICB0eXBlb2YgbWVzc2FnZSAhPT0gInN0cmluZyIgfHwgIW1lc3NhZ2UubGVuZ3RoCiAgICAgICAgICAgICAgICA/ICJNZXNzYWdlIGlzIGVtcHR5IgogICAgICAgICAgICAgICAgOiBgJHtyZXNvbHZlZE1vZGV9IGlzIG5vdCBhIHZhbGlkIG1vZGUuYCwKICAgICAgICAgIH0pOwogICAgICAgICAgcmV0dXJuOwogICAgICAgIH0KCiAgICAgICAgY29uc3QgdXNlciA9IHVzZXJJZCA/IGF3YWl0IFVzZXIuZ2V0KHsgaWQ6IE51bWJlcih1c2VySWQpIH0pIDogbnVsbDsKICAgICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBBcGlDaGF0SGFuZGxlci5jaGF0U3luYyh7CiAgICAgICAgICB3b3Jrc3BhY2UsCiAgICAgICAgICBtZXNzYWdlLAogICAgICAgICAgbW9kZTogcmVzb2x2ZWRNb2RlLAogICAgICAgICAgdXNlciwKICAgICAgICAgIHRocmVhZCwKICAgICAgICAgIGF0dGFjaG1lbnRzLAogICAgICAgICAgcmVzZXQsCiAgICAgICAgfSk7CiAgICAgICAgYXdhaXQgVGVsZW1ldHJ5LnNlbmRUZWxlbWV0cnkoInNlbnRfY2hhdCIsIHsKICAgICAgICAgIExMTVNlbGVjdGlvbjoKICAgICAgICAgICAgd29ya3NwYWNlLmNoYXRQcm92aWRlciA/PyBwcm9jZXNzLmVudi5MTE1fUFJPVklERVIgPz8gIm9wZW5haSIsCiAgICAgICAgICBFbWJlZGRlcjogcHJvY2Vzcy5lbnYuRU1CRURESU5HX0VOR0lORSB8fCAiaW5oZXJpdCIsCiAgICAgICAgICBWZWN0b3JEYlNlbGVjdGlvbjogcHJvY2Vzcy5lbnYuVkVDVE9SX0RCIHx8ICJsYW5jZWRiIiwKICAgICAgICAgIFRUU1NlbGVjdGlvbjogcHJvY2Vzcy5lbnYuVFRTX1BST1ZJREVSIHx8ICJuYXRpdmUiLAogICAgICAgICAgTExNTW9kZWw6IGdldE1vZGVsVGFnKCksCiAgICAgICAgfSk7CiAgICAgICAgYXdhaXQgRXZlbnRMb2dzLmxvZ0V2ZW50KCJhcGlfc2VudF9jaGF0IiwgewogICAgICAgICAgd29ya3NwYWNlTmFtZTogd29ya3NwYWNlPy5uYW1lLAogICAgICAgICAgY2hhdE1vZGVsOiB3b3Jrc3BhY2U/LmNoYXRNb2RlbCB8fCAiU3lzdGVtIERlZmF1bHQiLAogICAgICAgICAgdGhyZWFkTmFtZTogdGhyZWFkPy5uYW1lLAogICAgICAgICAgdXNlcklkOiB1c2VyPy5pZCwKICAgICAgICB9KTsKICAgICAgICByZXNwb25zZS5zdGF0dXMoMjAwKS5qc29uKHsgLi4ucmVzdWx0IH0pOwogICAgICB9IGNhdGNoIChlKSB7CiAgICAgICAgY29uc29sZUxvZ2dlci5lcnJvcihlPy5tZXNzYWdlIHx8ICJVbmtub3duIGVycm9yIiwgZSk7CiAgICAgICAgcmVzcG9uc2Uuc3RhdHVzKDUwMCkuanNvbih7CiAgICAgICAgICBpZDogdXVpZHY0KCksCiAgICAgICAgICB0eXBlOiAiYWJvcnQiLAogICAgICAgICAgdGV4dFJlc3BvbnNlOiBudWxsLAogICAgICAgICAgc291cmNlczogW10sCiAgICAgICAgICBjbG9zZTogdHJ1ZSwKICAgICAgICAgIGVycm9yOiAiSW50ZXJuYWwgc2VydmVyIGVycm9yLiIsCiAgICAgICAgfSk7CiAgICAgIH0KICAgIH0sCiAgKTsKCiAgYXBwLnBvc3QoCiAgICAiL3YxL3dvcmtzcGFjZS86c2x1Zy90aHJlYWQvOnRocmVhZFNsdWcvc3RyZWFtLWNoYXQiLAogICAgW3ZhbGlkQXBpS2V5XSwKICAgIGFzeW5jIChyZXF1ZXN0LCByZXNwb25zZSkgPT4gewogICAgICAvKgogICAgICAjc3dhZ2dlci50YWdzID0gWydXb3Jrc3BhY2UgVGhyZWFkcyddCiAgICAgICNzd2FnZ2VyLmRlc2NyaXB0aW9uID0gJ1N0cmVhbSBjaGF0IHdpdGggYSB3b3Jrc3BhY2UgdGhyZWFkJwogICAgICAjc3dhZ2dlci5wYXJhbWV0ZXJzWydzbHVnJ10gPSB7CiAgICAgICAgICBpbjogJ3BhdGgnLAogICAgICAgICAgZGVzY3JpcHRpb246ICdVbmlxdWUgc2x1ZyBvZiB3b3Jrc3BhY2UnLAogICAgICAgICAgcmVxdWlyZWQ6IHRydWUsCiAgICAgICAgICB0eXBlOiAnc3RyaW5nJwogICAgICB9CiAgICAgICNzd2FnZ2VyLnBhcmFtZXRlcnNbJ3RocmVhZFNsdWcnXSA9IHsKICAgICAgICAgIGluOiAncGF0aCcsCiAgICAgICAgICBkZXNjcmlwdGlvbjogJ1VuaXF1ZSBzbHVnIG9mIHRocmVhZCcsCiAgICAgICAgICByZXF1aXJlZDogdHJ1ZSwKICAgICAgICAgIHR5cGU6ICdzdHJpbmcnCiAgICAgIH0KICAgICAgI3N3YWdnZXIucmVxdWVzdEJvZHkgPSB7CiAgICAgICAgZGVzY3JpcHRpb246ICdTZW5kIGEgcHJvbXB0IHRvIHRoZSB3b3Jrc3BhY2UgdGhyZWFkIGFuZCB0aGUgdHlwZSBvZiBjb252ZXJzYXRpb24gKHF1ZXJ5IG9yIGNoYXQpLicsCiAgICAgICAgcmVxdWlyZWQ6IHRydWUsCiAgICAgICAgY29udGVudDogewogICAgICAgICAgImFwcGxpY2F0aW9uL2pzb24iOiB7CiAgICAgICAgICAgIGV4YW1wbGU6IHsKICAgICAgICAgICAgICBtZXNzYWdlOiAiV2hhdCBpcyBPcGVuU0lOIENoYXQ/IiwKICAgICAgICAgICAgICBtb2RlOiAicXVlcnkgfCBjaGF0IiwKICAgICAgICAgICAgICB1c2VySWQ6IDEsCiAgICAgICAgICAgICAgYXR0YWNobWVudHM6IFsKICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgIG5hbWU6ICJpbWFnZS5wbmciLAogICAgICAgICAgICAgICAgIG1pbWU6ICJpbWFnZS9wbmciLAogICAgICAgICAgICAgICAgIGNvbnRlbnRTdHJpbmc6ICJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBLi4uIgogICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgbmFtZTogInRoaXMgaXMgYSBkb2N1bWVudC5wZGYiLAogICAgICAgICAgICAgICAgIG1pbWU6ICJhcHBsaWNhdGlvbi9vcGVuc2luLWRvY3VtZW50IiwKICAgICAgICAgICAgICAgICBjb250ZW50U3RyaW5nOiAiZGF0YTphcHBsaWNhdGlvbi9wZGY7YmFzZTY0LGlWQk9SdzBLR2dvQUFBQU5TVWhFVWdBQS4uLiIKICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgIF0sCiAgICAgICAgICAgICAgcmVzZXQ6IGZhbHNlCiAgICAgICAgICAgIH0KICAgICAgICAgIH0KICAgICAgICB9CiAgICAgIH0KICAgICAgI3N3YWdnZXIucmVzcG9uc2VzWzIwMF0gPSB7CiAgICAgICAgY29udGVudDogewogICAgICAgICAgInRleHQvZXZlbnQtc3RyZWFtIjogewogICAgICAgICAgICBzY2hlbWE6IHsKICAgICAgICAgICAgICB0eXBlOiAnYXJyYXknLAogICAgICAgICAgICAgIGl0ZW1zOiB7CiAgICAgICAgICAgICAgICAgIHR5cGU6ICdzdHJpbmcnLAogICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgZXhhbXBsZTogWwogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICBpZDogJ3V1aWQtMTIzJywKICAgICAgICAgICAgICAgICAgdHlwZTogImFib3J0IHwgdGV4dFJlc3BvbnNlQ2h1bmsiLAogICAgICAgICAgICAgICAgICB0ZXh0UmVzcG9uc2U6ICJGaXJzdCBjaHVuayIsCiAgICAgICAgICAgICAgICAgIHNvdXJjZXM6IFtdLAogICAgICAgICAgICAgICAgICBjbG9zZTogZmFsc2UsCiAgICAgICAgICAgICAgICAgIGVycm9yOiAibnVsbCB8IHRleHQgc3RyaW5nIG9mIHRoZSBmYWlsdXJlIG1vZGUuIgogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgaWQ6ICd1dWlkLTEyMycsCiAgICAgICAgICAgICAgICAgIHR5cGU6ICJhYm9ydCB8IHRleHRSZXNwb25zZUNodW5rIiwKICAgICAgICAgICAgICAgICAgdGV4dFJlc3BvbnNlOiAiY2h1bmsgdHdvIiwKICAgICAgICAgICAgICAgICAgc291cmNlczogW10sCiAgICAgICAgICAgICAgICAgIGNsb3NlOiBmYWxzZSwKICAgICAgICAgICAgICAgICAgZXJyb3I6ICJudWxsIHwgdGV4dCBzdHJpbmcgb2YgdGhlIGZhaWx1cmUgbW9kZS4iCiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICBpZDogJ3V1aWQtMTIzJywKICAgICAgICAgICAgICAgICAgdHlwZTogImFib3J0IHwgdGV4dFJlc3BvbnNlQ2h1bmsiLAogICAgICAgICAgICAgICAgICB0ZXh0UmVzcG9uc2U6ICJmaW5hbCBjaHVuayBvZiBMTE0gb3V0cHV0ISIsCiAgICAgICAgICAgICAgICAgIHNvdXJjZXM6IFt7dGl0bGU6ICJvcGVuc2luLnR4dCIsIGNodW5rOiAiVGhpcyBpcyBhIGNvbnRleHQgY2h1bmsgdXNlZCBpbiB0aGUgYW5zd2VyIG9mIHRoZSBwcm9tcHQgYnkgdGhlIExMTS4gVGhpcyB3aWxsIG9ubHkgcmV0dXJuIGluIHRoZSBmaW5hbCBjaHVuay4ifV0sCiAgICAgICAgICAgICAgICAgIGNsb3NlOiB0cnVlLAogICAgICAgICAgICAgICAgICBlcnJvcjogIm51bGwgfCB0ZXh0IHN0cmluZyBvZiB0aGUgZmFpbHVyZSBtb2RlLiIKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICBdCiAgICAgICAgICAgIH0KICAgICAgICAgIH0KICAgICAgICB9CiAgICAgIH0KICAgICAgI3N3YWdnZXIucmVzcG9uc2VzWzQwM10gPSB7CiAgICAgICAgc2NoZW1hOiB7CiAgICAgICAgICAiJHJlZiI6ICIjL2RlZmluaXRpb25zL0ludmFsaWRBUElLZXkiCiAgICAgICAgfQogICAgICB9CiAgICAgICovCiAgICAgIGxldCBzdG9wSGVhcnRiZWF0ID0gbnVsbDsKICAgICAgdHJ5IHsKICAgICAgICBjb25zdCB7IHNsdWcsIHRocmVhZFNsdWcgfSA9IHJlcXVlc3QucGFyYW1zOwogICAgICAgIGNvbnN0IHsKICAgICAgICAgIG1lc3NhZ2UsCiAgICAgICAgICBtb2RlID0gbnVsbCwKICAgICAgICAgIHVzZXJJZCwKICAgICAgICAgIGF0dGFjaG1lbnRzID0gW10sCiAgICAgICAgICByZXNldCA9IGZhbHNlLAogICAgICAgIH0gPSByZXFCb2R5KHJlcXVlc3QpOwogICAgICAgIGNvbnN0IHdvcmtzcGFjZSA9IGF3YWl0IFdvcmtzcGFjZS5nZXQoeyBzbHVnIH0pOwoKICAgICAgICBpZiAoIXdvcmtzcGFjZSkgewogICAgICAgICAgcmVzcG9uc2Uuc3RhdHVzKDQwMCkuanNvbih7CiAgICAgICAgICAgIGlkOiB1dWlkdjQoKSwKICAgICAgICAgICAgdHlwZTogImFib3J0IiwKICAgICAgICAgICAgdGV4dFJlc3BvbnNlOiBudWxsLAogICAgICAgICAgICBzb3VyY2VzOiBbXSwKICAgICAgICAgICAgY2xvc2U6IHRydWUsCiAgICAgICAgICAgIGVycm9yOiBgV29ya3NwYWNlICR7c2x1Z30gaXMgbm90IHZhbGlkLmAsCiAgICAgICAgICB9KTsKICAgICAgICAgIHJldHVybjsKICAgICAgICB9CgogICAgICAgIGNvbnN0IHRocmVhZCA9IGF3YWl0IFdvcmtzcGFjZVRocmVhZC5nZXQoewogICAgICAgICAgc2x1ZzogdGhyZWFkU2x1ZywKICAgICAgICAgIHdvcmtzcGFjZV9pZDogd29ya3NwYWNlLmlkLAogICAgICAgIH0pOwoKICAgICAgICBpZiAoIXRocmVhZCkgewogICAgICAgICAgcmVzcG9uc2Uuc3RhdHVzKDQwMCkuanNvbih7CiAgICAgICAgICAgIGlkOiB1dWlkdjQoKSwKICAgICAgICAgICAgdHlwZTogImFib3J0IiwKICAgICAgICAgICAgdGV4dFJlc3BvbnNlOiBudWxsLAogICAgICAgICAgICBzb3VyY2VzOiBbXSwKICAgICAgICAgICAgY2xvc2U6IHRydWUsCiAgICAgICAgICAgIGVycm9yOiBgVGhyZWFkICR7dGhyZWFkU2x1Z30gaXMgbm90IHZhbGlkLmAsCiAgICAgICAgICB9KTsKICAgICAgICAgIHJldHVybjsKICAgICAgICB9CgogICAgICAgIGNvbnN0IHJlc29sdmVkTW9kZSA9IG1vZGUgPz8gd29ya3NwYWNlLmNoYXRNb2RlOwogICAgICAgIGlmICgKICAgICAgICAgICh0eXBlb2YgbWVzc2FnZSAhPT0gInN0cmluZyIgfHwKICAgICAgICAgICAgIW1lc3NhZ2UubGVuZ3RoIHx8CiAgICAgICAgICAgICFWQUxJRF9DSEFUX01PREUuaW5jbHVkZXMocmVzb2x2ZWRNb2RlKSkgJiYKICAgICAgICAgICFyZXNldAogICAgICAgICkgewogICAgICAgICAgcmVzcG9uc2Uuc3RhdHVzKDQwMCkuanNvbih7CiAgICAgICAgICAgIGlkOiB1dWlkdjQoKSwKICAgICAgICAgICAgdHlwZTogImFib3J0IiwKICAgICAgICAgICAgdGV4dFJlc3BvbnNlOiBudWxsLAogICAgICAgICAgICBzb3VyY2VzOiBbXSwKICAgICAgICAgICAgY2xvc2U6IHRydWUsCiAgICAgICAgICAgIGVycm9yOgogICAgICAgICAgICAgIHR5cGVvZiBtZXNzYWdlICE9PSAic3RyaW5nIiB8fCAhbWVzc2FnZS5sZW5ndGgKICAgICAgICAgICAgICAgID8gIk1lc3NhZ2UgaXMgZW1wdHkiCiAgICAgICAgICAgICAgICA6IGAke3Jlc29sdmVkTW9kZX0gaXMgbm90IGEgdmFsaWQgbW9kZS5gLAogICAgICAgICAgfSk7CiAgICAgICAgICByZXR1cm47CiAgICAgICAgfQoKICAgICAgICBjb25zdCB1c2VyID0gdXNlcklkID8gYXdhaXQgVXNlci5nZXQoeyBpZDogTnVtYmVyKHVzZXJJZCkgfSkgOiBudWxsOwoKICAgICAgICByZXNwb25zZS5zZXRIZWFkZXIoCiAgICAgICAgICAiQ2FjaGUtQ29udHJvbCIsCiAgICAgICAgICAibm8tc3RvcmUsIG5vLWNhY2hlLCBtdXN0LXJldmFsaWRhdGUiLAogICAgICAgICk7CiAgICAgICAgcmVzcG9uc2Uuc2V0SGVhZGVyKCJDb250ZW50LVR5cGUiLCAidGV4dC9ldmVudC1zdHJlYW0iKTsKICAgICAgICByZXNwb25zZS5zZXRIZWFkZXIoIkNvbm5lY3Rpb24iLCAia2VlcC1hbGl2ZSIpOwogICAgICAgIHJlc3BvbnNlLmZsdXNoSGVhZGVycygpOwoKICAgICAgICBzdG9wSGVhcnRiZWF0ID0gc3RhcnRTU0VIZWFydGJlYXQocmVzcG9uc2UpOwoKICAgICAgICBhd2FpdCBBcGlDaGF0SGFuZGxlci5zdHJlYW1DaGF0KHsKICAgICAgICAgIHJlc3BvbnNlLAogICAgICAgICAgd29ya3NwYWNlLAogICAgICAgICAgbWVzc2FnZSwKICAgICAgICAgIG1vZGU6IHJlc29sdmVkTW9kZSwKICAgICAgICAgIHVzZXIsCiAgICAgICAgICB0aHJlYWQsCiAgICAgICAgICBhdHRhY2htZW50cywKICAgICAgICAgIHJlc2V0LAogICAgICAgIH0pOwogICAgICAgIHN0b3BIZWFydGJlYXQoKTsKICAgICAgICBzdG9wSGVhcnRiZWF0ID0gbnVsbDsKICAgICAgICBhd2FpdCBUZWxlbWV0cnkuc2VuZFRlbGVtZXRyeSgic2VudF9jaGF0IiwgewogICAgICAgICAgTExNU2VsZWN0aW9uOgogICAgICAgICAgICB3b3Jrc3BhY2UuY2hhdFByb3ZpZGVyID8/IHByb2Nlc3MuZW52LkxMTV9QUk9WSURFUiA/PyAib3BlbmFpIiwKICAgICAgICAgIEVtYmVkZGVyOiBwcm9jZXNzLmVudi5FTUJFRERJTkdfRU5HSU5FIHx8ICJpbmhlcml0IiwKICAgICAgICAgIFZlY3RvckRiU2VsZWN0aW9uOiBwcm9jZXNzLmVudi5WRUNUT1JfREIgfHwgImxhbmNlZGIiLAogICAgICAgICAgVFRTU2VsZWN0aW9uOiBwcm9jZXNzLmVudi5UVFNfUFJPVklERVIgfHwgIm5hdGl2ZSIsCiAgICAgICAgICBMTE1Nb2RlbDogZ2V0TW9kZWxUYWcoKSwKICAgICAgICB9KTsKICAgICAgICBhd2FpdCBFdmVudExvZ3MubG9nRXZlbnQoImFwaV9zZW50X2NoYXQiLCB7CiAgICAgICAgICB3b3Jrc3BhY2VOYW1lOiB3b3Jrc3BhY2U/Lm5hbWUsCiAgICAgICAgICBjaGF0TW9kZWw6IHdvcmtzcGFjZT8uY2hhdE1vZGVsIHx8ICJTeXN0ZW0gRGVmYXVsdCIsCiAgICAgICAgICB0aHJlYWROYW1lOiB0aHJlYWQ/Lm5hbWUsCiAgICAgICAgICB1c2VySWQ6IHVzZXI/LmlkLAogICAgICAgIH0pOwogICAgICAgIHJlc3BvbnNlLmVuZCgpOwogICAgICB9IGNhdGNoIChlKSB7CiAgICAgICAgaWYgKHN0b3BIZWFydGJlYXQpIHN0b3BIZWFydGJlYXQoKTsKCiAgICAgICAgY29uc29sZUxvZ2dlci5lcnJvcihlPy5tZXNzYWdlIHx8ICJVbmtub3duIGVycm9yIiwgZSk7CiAgICAgICAgd3JpdGVSZXNwb25zZUNodW5rKHJlc3BvbnNlLCB7CiAgICAgICAgICBpZDogdXVpZHY0KCksCiAgICAgICAgICB0eXBlOiAiYWJvcnQiLAogICAgICAgICAgdGV4dFJlc3BvbnNlOiBudWxsLAogICAgICAgICAgc291cmNlczogW10sCiAgICAgICAgICBjbG9zZTogdHJ1ZSwKICAgICAgICAgIGVycm9yOiAiSW50ZXJuYWwgc2VydmVyIGVycm9yLiIsCiAgICAgICAgfSk7CiAgICAgICAgcmVzcG9uc2UuZW5kKCk7CiAgICAgIH0KICAgIH0sCiAgKTsKfQoKbW9kdWxlLmV4cG9ydHMgPSB7IGFwaVdvcmtzcGFjZVRocmVhZEVuZHBvaW50cyB9Owo=
+// SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../utils/logger/console.js");
+
+const { v4: uuidv4 } = require("uuid");
+const { WorkspaceThread } = require("../../../models/workspaceThread");
+const { Workspace } = require("../../../models/workspace");
+const { validApiKey } = require("../../../utils/middleware/validApiKey");
+const { reqBody, multiUserMode } = require("../../../utils/http");
+const { VALID_CHAT_MODE } = require("../../../utils/chats/stream");
+const { Telemetry } = require("../../../models/telemetry");
+const { EventLogs } = require("../../../models/eventLogs");
+const {
+  writeResponseChunk,
+  convertToChatHistory,
+} = require("../../../utils/helpers/chat/responses");
+const { startSSEHeartbeat } = require("../../../utils/helpers/sse");
+const { WorkspaceChats } = require("../../../models/workspaceChats");
+const { User } = require("../../../models/user");
+const { ApiChatHandler } = require("../../../utils/chats/apiChatHandler");
+const { getModelTag } = require("../../utils");
+
+function apiWorkspaceThreadEndpoints(app) {
+  if (!app) return;
+
+  app.post(
+    "/v1/workspace/:slug/thread/new",
+    [validApiKey],
+    async (request, response) => {
+      /*
+      #swagger.tags = ['Workspace Threads']
+      #swagger.description = 'Create a new workspace thread'
+      #swagger.parameters['slug'] = {
+          in: 'path',
+          description: 'Unique slug of workspace',
+          required: true,
+          type: 'string'
+      }
+      #swagger.requestBody = {
+        description: 'Optional userId associated with the thread, thread slug and thread name',
+        required: false,
+        content: {
+          "application/json": {
+            example: {
+              userId: 1,
+              name: 'Name',
+              slug: 'thread-slug'
+            }
+          }
+        }
+      }
+      #swagger.responses[200] = {
+        content: {
+          "application/json": {
+            schema: {
+              type: 'object',
+              example: {
+                thread: {
+                  "id": 1,
+                  "name": "Thread",
+                  "slug": "thread-uuid",
+                  "user_id": 1,
+                  "workspace_id": 1
+                },
+                message: null
+              }
+            }
+          }
+        }
+      }
+      #swagger.responses[403] = {
+        schema: {
+          "$ref": "#/definitions/InvalidAPIKey"
+        }
+      }
+      */
+      try {
+        const wslug = request.params.slug;
+        let { userId = null, name = null, slug = null } = reqBody(request);
+        const workspace = await Workspace.get({ slug: wslug });
+
+        if (!workspace) {
+          response.sendStatus(400);
+          return;
+        }
+
+        // If the system is not multi-user and you pass in a userId
+        // it needs to be nullified as no users exist. This can still fail validation
+        // as we don't check if the userID is valid.
+        if (!response.locals.multiUserMode && !!userId) userId = null;
+
+        const { thread, message } = await WorkspaceThread.new(
+          workspace,
+          userId ? Number(userId) : null,
+          { name, slug },
+        );
+
+        await Telemetry.sendTelemetry("workspace_thread_created", {
+          multiUserMode: multiUserMode(response),
+          LLMSelection: process.env.LLM_PROVIDER || "openai",
+          Embedder: process.env.EMBEDDING_ENGINE || "inherit",
+          VectorDbSelection: process.env.VECTOR_DB || "lancedb",
+          TTSSelection: process.env.TTS_PROVIDER || "native",
+        });
+        await EventLogs.logEvent("api_workspace_thread_created", {
+          workspaceName: workspace?.name || "Unknown Workspace",
+        });
+        response.status(200).json({ thread, message });
+      } catch (e) {
+        consoleLogger.error(e.message, e);
+        response.sendStatus(500);
+      }
+    },
+  );
+
+  app.post(
+    "/v1/workspace/:slug/thread/:threadSlug/update",
+    [validApiKey],
+    async (request, response) => {
+      /*
+      #swagger.tags = ['Workspace Threads']
+      #swagger.description = 'Update thread name by its unique slug.'
+      #swagger.parameters['slug'] = {
+          in: 'path',
+          description: 'Unique slug of workspace',
+          required: true,
+          type: 'string'
+      }
+      #swagger.parameters['threadSlug'] = {
+          in: 'path',
+          description: 'Unique slug of thread',
+          required: true,
+          type: 'string'
+      }
+      #swagger.requestBody = {
+        description: 'JSON object containing new name to update the thread.',
+        required: true,
+        content: {
+          "application/json": {
+            example: {
+              "name": 'Updated Thread Name'
+            }
+          }
+        }
+      }
+      #swagger.responses[200] = {
+        content: {
+          "application/json": {
+            schema: {
+              type: 'object',
+              example: {
+                thread: {
+                  "id": 1,
+                  "name": "Updated Thread Name",
+                  "slug": "thread-uuid",
+                  "user_id": 1,
+                  "workspace_id": 1
+                },
+                message: null,
+              }
+            }
+          }
+        }
+      }
+      #swagger.responses[403] = {
+        schema: {
+          "$ref": "#/definitions/InvalidAPIKey"
+        }
+      }
+      */
+      try {
+        const { slug, threadSlug } = request.params;
+        const { name } = reqBody(request);
+        if (!name || typeof name !== "string" || !name.trim()) {
+          response.status(400).json({
+            thread: null,
+            message: "name is required and must be a non-empty string.",
+          });
+          return;
+        }
+        const workspace = await Workspace.get({ slug });
+
+        if (!workspace) {
+          response.sendStatus(400);
+          return;
+        }
+
+        const thread = await WorkspaceThread.get({
+          slug: threadSlug,
+          workspace_id: workspace.id,
+        });
+
+        if (!thread) {
+          response.sendStatus(400);
+          return;
+        }
+
+        const { thread: updatedThread, message } = await WorkspaceThread.update(
+          thread,
+          { name },
+        );
+        response.status(200).json({ thread: updatedThread, message });
+      } catch (e) {
+        consoleLogger.error(e.message, e);
+        response.sendStatus(500);
+      }
+    },
+  );
+
+  app.delete(
+    "/v1/workspace/:slug/thread/:threadSlug",
+    [validApiKey],
+    async (request, response) => {
+      /*
+    #swagger.tags = ['Workspace Threads']
+    #swagger.description = 'Delete a workspace thread'
+    #swagger.parameters['slug'] = {
+        in: 'path',
+        description: 'Unique slug of workspace',
+        required: true,
+        type: 'string'
+    }
+    #swagger.parameters['threadSlug'] = {
+        in: 'path',
+        description: 'Unique slug of thread',
+        required: true,
+        type: 'string'
+    }
+    #swagger.responses[200] = {
+      description: 'Thread deleted successfully'
+    }
+    #swagger.responses[403] = {
+      schema: {
+        "$ref": "#/definitions/InvalidAPIKey"
+      }
+    }
+    */
+      try {
+        const { slug, threadSlug } = request.params;
+        const workspace = await Workspace.get({ slug });
+
+        if (!workspace) {
+          response.sendStatus(400);
+          return;
+        }
+
+        await WorkspaceThread.delete({
+          slug: threadSlug,
+          workspace_id: workspace.id,
+        });
+        response.sendStatus(200);
+      } catch (e) {
+        consoleLogger.error(e.message, e);
+        response.sendStatus(500);
+      }
+    },
+  );
+
+  app.get(
+    "/v1/workspace/:slug/thread/:threadSlug/chats",
+    [validApiKey],
+    async (request, response) => {
+      /*
+      #swagger.tags = ['Workspace Threads']
+      #swagger.description = 'Get chats for a workspace thread'
+      #swagger.parameters['slug'] = {
+          in: 'path',
+          description: 'Unique slug of workspace',
+          required: true,
+          type: 'string'
+      }
+      #swagger.parameters['threadSlug'] = {
+          in: 'path',
+          description: 'Unique slug of thread',
+          required: true,
+          type: 'string'
+      }
+      #swagger.responses[200] = {
+        content: {
+          "application/json": {
+            schema: {
+              type: 'object',
+              example: {
+                history: [
+                  {
+                    "role": "user",
+                    "content": "What is OpenSIN Chat?",
+                    "sentAt": 1692851630
+                  },
+                  {
+                    "role": "assistant",
+                    "content": "OpenSIN Chat is a platform that allows you to convert notes, PDFs, and other source materials into a chatbot. It ensures privacy, cites its answers, and allows multiple people to interact with the same documents simultaneously. It is particularly useful for businesses to enhance the visibility and readability of various written communications such as SOPs, contracts, and sales calls. You can try it out with a free trial to see if it meets your business needs.",
+                    "sources": [{"source": "object about source document and snippets used"}]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+      #swagger.responses[403] = {
+        schema: {
+          "$ref": "#/definitions/InvalidAPIKey"
+        }
+      }
+      */
+      try {
+        const { slug, threadSlug } = request.params;
+        const workspace = await Workspace.get({ slug });
+
+        if (!workspace) {
+          response.sendStatus(400);
+          return;
+        }
+
+        const thread = await WorkspaceThread.get({
+          slug: threadSlug,
+          workspace_id: workspace.id,
+        });
+
+        if (!thread) {
+          response.sendStatus(400);
+          return;
+        }
+
+        const history = await WorkspaceChats.where(
+          {
+            workspaceId: workspace.id,
+            thread_id: thread.id,
+            api_session_id: null, // Do not include API session chats.
+            include: true,
+          },
+          null,
+          { id: "asc" },
+        );
+
+        response.status(200).json({ history: convertToChatHistory(history) });
+      } catch (e) {
+        consoleLogger.error(e.message, e);
+        response.sendStatus(500);
+      }
+    },
+  );
+
+  app.post(
+    "/v1/workspace/:slug/thread/:threadSlug/chat",
+    [validApiKey],
+    async (request, response) => {
+      /*
+      #swagger.tags = ['Workspace Threads']
+      #swagger.description = 'Chat with a workspace thread'
+      #swagger.parameters['slug'] = {
+          in: 'path',
+          description: 'Unique slug of workspace',
+          required: true,
+          type: 'string'
+      }
+      #swagger.parameters['threadSlug'] = {
+          in: 'path',
+          description: 'Unique slug of thread',
+          required: true,
+          type: 'string'
+      }
+      #swagger.requestBody = {
+        description: 'Send a prompt to the workspace thread and the type of conversation (query or chat).',
+        required: true,
+        content: {
+          "application/json": {
+            example: {
+              message: "What is OpenSIN Chat?",
+              mode: "query | chat",
+              userId: 1,
+              attachments: [
+               {
+                 name: "image.png",
+                 mime: "image/png",
+                 contentString: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."
+               }
+              ],
+              reset: false
+            }
+          }
+        }
+      }
+      #swagger.responses[200] = {
+        content: {
+          "application/json": {
+            schema: {
+              type: 'object',
+              example: {
+                id: 'chat-uuid',
+                type: "abort | textResponse",
+                textResponse: "Response to your query",
+                sources: [{title: "opensin.txt", chunk: "This is a context chunk used in the answer of the prompt by the LLM."}],
+                close: true,
+                error: "null | text string of the failure mode."
+              }
+            }
+          }
+        }
+      }
+      #swagger.responses[403] = {
+        schema: {
+          "$ref": "#/definitions/InvalidAPIKey"
+        }
+      }
+      */
+      try {
+        const { slug, threadSlug } = request.params;
+        const {
+          message,
+          mode = null,
+          userId,
+          attachments = [],
+          reset = false,
+        } = reqBody(request);
+        const workspace = await Workspace.get({ slug });
+
+        if (!workspace) {
+          response.status(400).json({
+            id: uuidv4(),
+            type: "abort",
+            textResponse: null,
+            sources: [],
+            close: true,
+            error: `Workspace ${slug} is not valid.`,
+          });
+          return;
+        }
+
+        const thread = await WorkspaceThread.get({
+          slug: threadSlug,
+          workspace_id: workspace.id,
+        });
+
+        if (!thread) {
+          response.status(400).json({
+            id: uuidv4(),
+            type: "abort",
+            textResponse: null,
+            sources: [],
+            close: true,
+            error: `Thread ${threadSlug} is not valid.`,
+          });
+          return;
+        }
+
+        const resolvedMode = mode ?? workspace.chatMode;
+        if (
+          (typeof message !== "string" ||
+            !message.length ||
+            !VALID_CHAT_MODE.includes(resolvedMode)) &&
+          !reset
+        ) {
+          response.status(400).json({
+            id: uuidv4(),
+            type: "abort",
+            textResponse: null,
+            sources: [],
+            close: true,
+            error:
+              typeof message !== "string" || !message.length
+                ? "Message is empty"
+                : `${resolvedMode} is not a valid mode.`,
+          });
+          return;
+        }
+
+        const user = userId ? await User.get({ id: Number(userId) }) : null;
+        const result = await ApiChatHandler.chatSync({
+          workspace,
+          message,
+          mode: resolvedMode,
+          user,
+          thread,
+          attachments,
+          reset,
+        });
+        await Telemetry.sendTelemetry("sent_chat", {
+          LLMSelection:
+            workspace.chatProvider ?? process.env.LLM_PROVIDER ?? "openai",
+          Embedder: process.env.EMBEDDING_ENGINE || "inherit",
+          VectorDbSelection: process.env.VECTOR_DB || "lancedb",
+          TTSSelection: process.env.TTS_PROVIDER || "native",
+          LLMModel: getModelTag(),
+        });
+        await EventLogs.logEvent("api_sent_chat", {
+          workspaceName: workspace?.name,
+          chatModel: workspace?.chatModel || "System Default",
+          threadName: thread?.name,
+          userId: user?.id,
+        });
+        response.status(200).json({ ...result });
+      } catch (e) {
+        consoleLogger.error(e?.message || "Unknown error", e);
+        response.status(500).json({
+          id: uuidv4(),
+          type: "abort",
+          textResponse: null,
+          sources: [],
+          close: true,
+          error: "Internal server error.",
+        });
+      }
+    },
+  );
+
+  app.post(
+    "/v1/workspace/:slug/thread/:threadSlug/stream-chat",
+    [validApiKey],
+    async (request, response) => {
+      /*
+      #swagger.tags = ['Workspace Threads']
+      #swagger.description = 'Stream chat with a workspace thread'
+      #swagger.parameters['slug'] = {
+          in: 'path',
+          description: 'Unique slug of workspace',
+          required: true,
+          type: 'string'
+      }
+      #swagger.parameters['threadSlug'] = {
+          in: 'path',
+          description: 'Unique slug of thread',
+          required: true,
+          type: 'string'
+      }
+      #swagger.requestBody = {
+        description: 'Send a prompt to the workspace thread and the type of conversation (query or chat).',
+        required: true,
+        content: {
+          "application/json": {
+            example: {
+              message: "What is OpenSIN Chat?",
+              mode: "query | chat",
+              userId: 1,
+              attachments: [
+               {
+                 name: "image.png",
+                 mime: "image/png",
+                 contentString: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."
+               },
+               {
+                 name: "this is a document.pdf",
+                 mime: "application/opensin-document",
+                 contentString: "data:application/pdf;base64,iVBORw0KGgoAAAANSUhEUgAA..."
+               }
+              ],
+              reset: false
+            }
+          }
+        }
+      }
+      #swagger.responses[200] = {
+        content: {
+          "text/event-stream": {
+            schema: {
+              type: 'array',
+              items: {
+                  type: 'string',
+              },
+              example: [
+                {
+                  id: 'uuid-123',
+                  type: "abort | textResponseChunk",
+                  textResponse: "First chunk",
+                  sources: [],
+                  close: false,
+                  error: "null | text string of the failure mode."
+                },
+                {
+                  id: 'uuid-123',
+                  type: "abort | textResponseChunk",
+                  textResponse: "chunk two",
+                  sources: [],
+                  close: false,
+                  error: "null | text string of the failure mode."
+                },
+                {
+                  id: 'uuid-123',
+                  type: "abort | textResponseChunk",
+                  textResponse: "final chunk of LLM output!",
+                  sources: [{title: "opensin.txt", chunk: "This is a context chunk used in the answer of the prompt by the LLM. This will only return in the final chunk."}],
+                  close: true,
+                  error: "null | text string of the failure mode."
+                }
+              ]
+            }
+          }
+        }
+      }
+      #swagger.responses[403] = {
+        schema: {
+          "$ref": "#/definitions/InvalidAPIKey"
+        }
+      }
+      */
+      let stopHeartbeat = null;
+      try {
+        const { slug, threadSlug } = request.params;
+        const {
+          message,
+          mode = null,
+          userId,
+          attachments = [],
+          reset = false,
+        } = reqBody(request);
+        const workspace = await Workspace.get({ slug });
+
+        if (!workspace) {
+          response.status(400).json({
+            id: uuidv4(),
+            type: "abort",
+            textResponse: null,
+            sources: [],
+            close: true,
+            error: `Workspace ${slug} is not valid.`,
+          });
+          return;
+        }
+
+        const thread = await WorkspaceThread.get({
+          slug: threadSlug,
+          workspace_id: workspace.id,
+        });
+
+        if (!thread) {
+          response.status(400).json({
+            id: uuidv4(),
+            type: "abort",
+            textResponse: null,
+            sources: [],
+            close: true,
+            error: `Thread ${threadSlug} is not valid.`,
+          });
+          return;
+        }
+
+        const resolvedMode = mode ?? workspace.chatMode;
+        if (
+          (typeof message !== "string" ||
+            !message.length ||
+            !VALID_CHAT_MODE.includes(resolvedMode)) &&
+          !reset
+        ) {
+          response.status(400).json({
+            id: uuidv4(),
+            type: "abort",
+            textResponse: null,
+            sources: [],
+            close: true,
+            error:
+              typeof message !== "string" || !message.length
+                ? "Message is empty"
+                : `${resolvedMode} is not a valid mode.`,
+          });
+          return;
+        }
+
+        const user = userId ? await User.get({ id: Number(userId) }) : null;
+
+        response.setHeader(
+          "Cache-Control",
+          "no-store, no-cache, must-revalidate",
+        );
+        response.setHeader("Content-Type", "text/event-stream");
+        response.setHeader("Connection", "keep-alive");
+        response.flushHeaders();
+
+        stopHeartbeat = startSSEHeartbeat(response);
+
+        await ApiChatHandler.streamChat({
+          response,
+          workspace,
+          message,
+          mode: resolvedMode,
+          user,
+          thread,
+          attachments,
+          reset,
+        });
+        stopHeartbeat();
+        stopHeartbeat = null;
+        await Telemetry.sendTelemetry("sent_chat", {
+          LLMSelection:
+            workspace.chatProvider ?? process.env.LLM_PROVIDER ?? "openai",
+          Embedder: process.env.EMBEDDING_ENGINE || "inherit",
+          VectorDbSelection: process.env.VECTOR_DB || "lancedb",
+          TTSSelection: process.env.TTS_PROVIDER || "native",
+          LLMModel: getModelTag(),
+        });
+        await EventLogs.logEvent("api_sent_chat", {
+          workspaceName: workspace?.name,
+          chatModel: workspace?.chatModel || "System Default",
+          threadName: thread?.name,
+          userId: user?.id,
+        });
+        response.end();
+      } catch (e) {
+        if (stopHeartbeat) stopHeartbeat();
+
+        consoleLogger.error(e?.message || "Unknown error", e);
+        writeResponseChunk(response, {
+          id: uuidv4(),
+          type: "abort",
+          textResponse: null,
+          sources: [],
+          close: true,
+          error: "Internal server error.",
+        });
+        response.end();
+      }
+    },
+  );
+}
+
+module.exports = { apiWorkspaceThreadEndpoints };
