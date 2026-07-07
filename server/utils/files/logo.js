@@ -2,7 +2,7 @@
 const { getStoragePath } = require("../paths");
 const path = require("path");
 const fs = require("fs");
-const { getType } = require("mime");
+const mime = require("mime");
 const { v4 } = require("uuid");
 const { SystemSettings } = require("../../models/systemSettings");
 const { normalizePath, isWithin } = require(".");
@@ -97,13 +97,13 @@ function fetchLogo(logoPath) {
     };
   }
 
-  const mime = getType(logoPath);
+  const mimeType = mime.getType(logoPath);
   const buffer = fs.readFileSync(logoPath);
   return {
     found: true,
     buffer,
     size: buffer.length,
-    mime,
+    mime: mimeType,
   };
 }
 

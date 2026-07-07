@@ -2,7 +2,7 @@
 const { getStoragePath } = require("../paths");
 const path = require("path");
 const fs = require("fs");
-const { getType } = require("mime");
+const mime = require("mime");
 const { User } = require("../../models/user");
 const { normalizePath, isWithin } = require(".");
 const { Workspace } = require("../../models/workspace");
@@ -17,13 +17,13 @@ function fetchPfp(pfpPath) {
     };
   }
 
-  const mime = getType(pfpPath);
+  const mimeType = mime.getType(pfpPath);
   const buffer = fs.readFileSync(pfpPath);
   return {
     found: true,
     buffer,
     size: buffer.length,
-    mime,
+    mime: mimeType,
   };
 }
 
