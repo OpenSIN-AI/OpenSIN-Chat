@@ -1,8 +1,12 @@
 // SPDX-License-Identifier: MIT
-import tailwind from 'tailwindcss'
-import autoprefixer from 'autoprefixer'
-import tailwindConfig from './tailwind.config.js'
-
+// Issue #460: Tailwind CSS v3 → v4 migration.
+// @tailwindcss/postcss replaces the tailwindcss PostCSS plugin.
+// The @theme block in index.css replaces tailwind.config.js theme config.
+// @source directives replace the content array.
+// @import "tailwindcss" replaces @tailwind base/components/utilities.
 export default {
-  plugins: [tailwind(tailwindConfig), autoprefixer],
-}
+  plugins: {
+    "@tailwindcss/postcss": {},
+    autoprefixer: {},
+  },
+};

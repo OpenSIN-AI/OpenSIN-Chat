@@ -1,83 +1,63 @@
-/* SPDX-License-Identifier: MIT */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+// SPDX-License-Identifier: MIT
+// Issue #460: Tailwind CSS v3 → v4 migration.
+// @import "tailwindcss" replaces @tailwind base/components/utilities.
+// @theme block replaces tailwind.config.js theme.extend.
+// @source directives replace the content array in tailwind.config.js.
 
-* {
-  -webkit-font-smoothing: antialiased;
-}
+@import "tailwindcss";
 
-:root {
-  /* ==========================================================================
-     Phase 5 — Semantic Design System Layer (5-token palette)
-     These are the canonical brand tokens. All other --theme-* variables below
-     are derived from or consistent with this palette.
+// ── Content sources (replaces tailwind.config.js content array) ─────────
+@source "./index.html";
+@source "./src/**/*.{js,jsx,ts,tsx}";
 
-     1. --color-brand        : primary brand color (CTA, links, accents)
-     2. --color-surface      : main page / chat background
-     3. --color-surface-raised: elevated surfaces (cards, modals, sidebar)
-     4. --color-text         : primary readable text
-     5. --color-muted        : secondary / placeholder / disabled text
-     ========================================================================== */
-  --color-brand:         #009ee0;
-  --color-surface:       #0e0f0f;
-  --color-surface-raised:#1b1b1e;
-  --color-text:          #ffffff;
-  --color-muted:         rgba(255, 255, 255, 0.5);
+// ── Theme (replaces tailwind.config.js theme.extend) ────────────────────
+@theme {
+  /* Custom design tokens — migrated from tailwind.config.js theme.extend */
 
-  /* OpenSIN Chat — Brand: AfD-Blau #009ee0 */
-  --brand-primary: #009ee0;
-  --brand-primary-dark: #0079b0;
-  --brand-accent: #ffd700;
+  /* Brand colors */
+  --color-theme-accent: #10b981;
+  --color-theme-accent-light: #34d399;
+  --color-theme-accent-dark: #059669;
 
-  /* Native form controls (select, option, file input, scrollbars) */
-  color-scheme: light dark;
+  /* Background tokens (used by .bg-theme-* utilities) */
+  --color-theme-bg-primary: #18181b;
+  --color-theme-bg-secondary: #27272a;
+  --color-theme-bg-tertiary: #3f3f46;
 
-  /* Default theme */
-  --theme-loader: #ffffff;
-  --theme-bg-primary: #0e0f0f;
-  --theme-bg-secondary: #1b1b1e;
-  --theme-bg-sidebar: #0e0f0f;
-  --theme-bg-container: #0e0f0f;
-  --theme-bg-chat: #1b1b1e;
-  --theme-bg-chat-input: #27282a;
-  --theme-text-primary: #ffffff;
-  --theme-text-secondary: rgba(255, 255, 255, 0.6);
-  --theme-placeholder: #57585a;
-  --theme-sidebar-item-default: rgba(255, 255, 255, 0.1);
-  --theme-sidebar-item-selected: rgba(255, 255, 255, 0.3);
-  --theme-sidebar-item-hover: #3f3f42;
-  --theme-sidebar-subitem-default: rgba(255, 255, 255, 0.05);
-  --theme-sidebar-subitem-selected: rgba(255, 255, 255, 0.05);
-  --theme-sidebar-thread-selected: rgba(255, 255, 255, 0.05);
-  --theme-popup-menu-bg: #000000;
-  --theme-bg-hover: rgba(255, 255, 255, 0.05);
+  /* Text tokens */
+  --color-theme-text-primary: #fafafa;
+  --color-theme-text-secondary: #a1a1aa;
+  --color-theme-text-muted: #71717a;
 
-  --theme-sidebar-subitem-hover: rgba(255, 255, 255, 0.05);
-  --theme-sidebar-border: rgba(255, 255, 255, 0.1);
-  --theme-sidebar-item-workspace-active: #ffffff;
-  --theme-sidebar-item-workspace-inactive: #ffffff;
+  /* Modal/border tokens */
+  --color-theme-modal-border: #3f3f46;
 
-  --theme-sidebar-footer-icon: rgba(255, 255, 255, 0.1);
-  --theme-sidebar-footer-icon-fill: #ffffff;
-  --theme-sidebar-footer-icon-hover: rgba(255, 255, 255, 0.2);
+  /* Font families */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
 
-  --theme-chat-input-border: #525355;
-  --theme-action-menu-bg: #27282a;
-  --theme-action-menu-item-hover: rgba(255, 255, 255, 0.1);
-  --theme-settings-input-bg: #0e0f0f;
-  --theme-settings-input-placeholder: rgba(255, 255, 255, 0.5);
-  --theme-settings-input-active: rgb(255 255 255 / 0.2);
-  --theme-settings-input-text: #ffffff;
-  --theme-modal-border: #3f3f42;
+  /* Custom animations */
+  --animate-fade-in: fade-in 0.3s ease-out;
+  --animate-slide-up: slide-up 0.3s ease-out;
+  --animate-pulse-slow: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 
-  /* Fade-up gradient colors for sidebar scroll fade effect */
-  --theme-fade-color: rgba(41, 37, 36, 50%);
-  --theme-fade-color-solid: rgb(41 37 36);
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 
-  --theme-button-primary: #e4e4e7;
-  --theme-button-primary-hover: #d4d4d8;
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
+<<<<<<< HEAD
   --theme-button-cta: #e4e4e7;
 
   --theme-file-row-even: #0e0f0f;
@@ -406,992 +386,67 @@ body {
 @media (max-width: 600px) {
   html {
     overscroll-behavior: none;
+=======
+  @keyframes pulse-slow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+>>>>>>> cd3303bb07049a782325747515e7a8ff9b4ab274
   }
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+/* ── Dark mode strategy ────────────────────────────────────────────────── */
+/* v4 uses @custom-variant instead of the darkMode config option */
+@custom-variant dark (&:where(.dark, .dark *));
 
-* {
-  box-sizing: border-box;
-}
+/* ── Light mode theme overrides ────────────────────────────────────────── */
+/* In v4, theme overrides for light mode can be done with @media or
+   a .light class variant. The existing .light: utilities in the codebase
+   continue to work because Tailwind v4 generates them from the theme. */
 
-.g327 {
-  border-color: var(--theme-sidebar-border);
-}
+/* ── Base styles (replaces @tailwind base) ─────────────────────────────── */
+/* @import "tailwindcss" already includes preflight (the v4 name for base).
+   Add any custom base styles below. */
 
-@font-face {
-  font-family: "plus-jakarta-sans";
-  src: url("/fonts/PlusJakartaSans.ttf");
-  font-display: swap;
-}
-
-.grr {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.greyC {
-  filter: grayscale(100%);
-  -webkit-filter: grayscale(100%);
-  transition: 0.4s;
-}
-
-.greyC:hover {
-  filter: none;
-  -webkit-filter: none;
-  transition: 0.4s;
-}
-
-.chat__message {
-  transform-origin: 0 100%;
-  transform: scale(0);
-  animation: message 0.15s ease-out 0s forwards;
-  animation-delay: 500ms;
-}
-
-@keyframes message {
-  0% {
-    max-height: 100%;
+/* Custom scrollbar styling */
+@layer base {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-theme-bg-tertiary) transparent;
   }
 
-  80% {
-    transform: scale(1.1);
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
   }
 
-  100% {
-    transform: scale(1);
-    max-height: 100%;
-    overflow: visible;
-    padding-top: 0.25rem;
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--color-theme-bg-tertiary);
+    border-radius: 3px;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
-
-.sidebar-items:after {
-  content: " ";
-  position: sticky;
-  left: 0;
-  right: 0px;
-  height: 4em;
-  bottom: 0;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.fade-up-border {
-  background: linear-gradient(
-    to bottom,
-    var(--theme-fade-color),
-    var(--theme-fade-color-solid) 90%
-  );
-}
-
-[data-theme="light"] .fade-up-border {
-  background: linear-gradient(
-    to bottom,
-    rgba(220, 221, 223, 10%),
-    rgb(220, 221, 223) 89%
-  );
-}
-
-/**
- * ==============================================
- * Dot Falling
- * ==============================================
- */
-/* Modern bouncing dots loader — replaces the old dot-falling hack */
-.typing-dots {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 8px 4px;
-}
-.typing-dots span {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: currentColor;
-  opacity: 0.4;
-  animation: typing-bounce 1.4s infinite ease-in-out both;
-}
-.typing-dots span:nth-child(1) {
-  animation-delay: -0.32s;
-}
-.typing-dots span:nth-child(2) {
-  animation-delay: -0.16s;
-}
-.typing-dots span:nth-child(3) {
-  animation-delay: 0s;
-}
-@keyframes typing-bounce {
-  0%, 80%, 100% {
-    transform: scale(0.6);
-    opacity: 0.3;
-  }
-  40% {
-    transform: scale(1);
-    opacity: 0.9;
-  }
-}
-
-/* Legacy dot-falling — kept for backward compat / tests.
-   Renders two bouncing dots via ::before and ::after on an empty element. */
-.dot-falling {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 8px 4px;
-  position: static;
-  width: auto;
-  height: auto;
-  background-color: transparent;
-  box-shadow: none;
-}
-.dot-falling::before,
-.dot-falling::after {
-  content: "";
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: currentColor;
-  opacity: 0.4;
-  animation: typing-bounce 1.4s infinite ease-in-out both;
-  position: static;
-}
-.dot-falling::before {
-  animation-delay: -0.32s;
-}
-.dot-falling::after {
-  animation-delay: 0s;
-}
-
-/* .show-scrollbar — !important is required on all declarations because this
-   class competes with .no-scroll and Tailwind's overflow utilities which also
-   use !important. Without !important, the scrollbar would be hidden by the
-   higher-specificity .no-scroll rules. The selectors here are already as
-   specific as possible (pseudo-elements), so !important cannot be replaced by
-   increasing specificity. */
-.show-scrollbar {
-  overflow-y: scroll !important;
-  scrollbar-width: thin !important;
-  scrollbar-color: rgba(255, 255, 255, 0.3) rgba(0, 0, 0, 0.1) !important;
-  -webkit-overflow-scrolling: touch !important;
-}
-
-.show-scrollbar::-webkit-scrollbar {
-  width: 8px !important;
-  display: block !important;
-  background: transparent !important;
-}
-
-.show-scrollbar::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1) !important;
-  margin: 3px !important;
-  border-radius: 4px !important;
-}
-
-.show-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.3) !important;
-  border-radius: 4px !important;
-  border: none !important;
-  min-height: 40px !important;
-}
-
-.show-scrollbar::-webkit-scrollbar,
-.show-scrollbar::-webkit-scrollbar-thumb,
-.show-scrollbar::-webkit-scrollbar-track {
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
-/* Light mode: dark scrollbar on light background */
-[data-theme="light"] .show-scrollbar {
-  scrollbar-color: rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.05) !important;
-}
-[data-theme="light"] .show-scrollbar::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05) !important;
-}
-[data-theme="light"] .show-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.3) !important;
-}
-
-.show-scrollbar,
-.show-scrollbar::-webkit-scrollbar,
-.show-scrollbar::-webkit-scrollbar-thumb,
-.show-scrollbar::-webkit-scrollbar-track {
-  transition: none !important;
-  animation: none !important;
-}
-
-#chat-container::-webkit-scrollbar,
-.no-scroll::-webkit-scrollbar {
-  display: none !important;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-/* !important is required on .no-scroll declarations because this class
-   competes with .show-scrollbar and Tailwind's overflow utilities, which
-   also use !important. Without !important, the scrollbar would remain
-   visible due to higher-specificity rules from .show-scrollbar. */
-.no-scroll {
-  -ms-overflow-style: none !important;
-  /* IE and Edge */
-  scrollbar-width: none !important;
-  /* Firefox */
-}
-
-/* z-index scale:
-   10  — tooltips, dropdowns (local overlays)
-   98  — sticky headers, context menus (below modals)
-   99  — modals, full-screen overlays (top of app chrome)
-   100+ — system-level: toasts, dialogs above modals */
-.z-99 {
-  z-index: 99;
-}
-
-.z-98 {
-  z-index: 98;
-}
-
-.file-uploader {
-  width: 100% !important;
-  height: 100px !important;
-}
-
-.grid-loader > circle {
-  fill: var(--brand-primary);
-}
-
-dialog {
-  pointer-events: none;
-  opacity: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-dialog[open] {
-  opacity: 1;
-  pointer-events: inherit;
-}
-
-dialog::backdrop {
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(2px);
-}
-
-.backdrop {
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(2px);
-}
-
-.animate-slow-pulse {
-  transform: scale(1);
-  animation: subtlePulse 20s infinite;
-  will-change: transform;
-}
-
-@keyframes subtlePulse {
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.1);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes subtleShift {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.login-input-gradient {
-  background: linear-gradient(
-    180deg,
-    var(--theme-login-input-gradient-start) 0%,
-    var(--theme-login-input-gradient-end) 100%
-  ) !important;
-  box-shadow: 0px 4px 30px var(--theme-login-input-shadow);
-}
-
-.white-fill {
-  fill: white;
-}
-
-.tip:before {
-  content: "";
-  display: block;
-  width: 0;
-  height: 0;
-  position: absolute;
-
-  border-bottom: 8px solid transparent;
-  border-top: 8px solid var(--theme-sidebar-border);
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-radius: 0px 0px 0px 5px;
-  left: 1%;
-
-  top: 100%;
-}
-
-.user-reply > div:first-of-type {
-  border: none;
-}
-
-.reply > *:last-child::after {
-  content: "|";
-  animation: blink 1.5s steps(1) infinite;
-  color: var(--theme-text-primary);
-  font-size: 14px;
-}
-
-@keyframes blink {
-  0% {
-    opacity: 0;
-  }
-
-  50% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
+/* ── Custom utility classes (replaces @tailwind components) ────────────── */
 @layer components {
-  .radio-container:has(input:checked) {
-    @apply border-blue-500 bg-blue-400/10 text-blue-800;
-  }
-}
-
-.tooltip {
-  @apply !py-2 !px-3 !rounded-md !z-10;
-  background: var(--theme-tooltip-bg, #000) !important;
-  color: var(--theme-tooltip-text, #fff) !important;
-}
-
-.Toastify__toast-body {
-  white-space: pre-line;
-}
-
-@keyframes slideDown {
-  from {
-    max-height: 0;
-    opacity: 0;
-  }
-
-  to {
-    max-height: 400px;
-    opacity: 1;
-  }
-}
-
-.slide-down {
-  animation: slideDown 0.3s ease-out forwards;
-}
-
-.input-label {
-  @apply text-[14px] font-bold;
-  color: var(--theme-text-primary);
-}
-
-/**
- * ==============================================
- * Markdown Styles
- * ==============================================
- */
-.markdown,
-.markdown > * {
-  font-weight: 400;
-}
-
-.markdown h1 {
-  font-size: xx-large;
-  line-height: 1.7;
-  padding-left: 0.3rem;
-}
-
-.markdown h2 {
-  line-height: 1.5;
-  font-size: x-large;
-  padding-left: 0.3rem;
-}
-
-.markdown h3 {
-  line-height: 1.4;
-  font-size: large;
-  padding-left: 0.3rem;
-}
-
-/* Table Styles */
-
-.markdown-table-wrapper {
-  overflow-x: auto;
-  margin: 30px 0px;
-}
-
-.markdown table {
-  border-collapse: separate;
-}
-
-.markdown th {
-  border-top: none;
-}
-
-.markdown td:first-child,
-.markdown th:first-child {
-  border-left: none;
-}
-
-.markdown table {
-  width: 100%;
-  border-collapse: collapse;
-  color: var(--theme-text-secondary);
-  font-size: 13px;
-  margin: 0;
-  border-radius: 10px;
-  overflow: hidden;
-  font-weight: normal;
-}
-
-.markdown table thead {
-  color: var(--theme-text-primary);
-  text-transform: uppercase;
-  font-weight: bolder;
-}
-
-.markdown hr {
-  border: 0;
-  border-top: 1px solid var(--theme-sidebar-border);
-  margin: 1rem 0;
-}
-
-.markdown table th,
-.markdown table td {
-  padding: 8px 15px;
-  border-bottom: 1px solid var(--theme-sidebar-border);
-  text-align: left;
-}
-
-.markdown table th {
-  padding: 14px 15px;
-}
-
-.markdown > * a {
-  color: var(--theme-button-cta);
-  text-decoration: underline;
-}
-
-@media (max-width: 600px) {
-  .markdown table th,
-  .markdown table td {
-    padding: 10px;
-  }
-}
-
-/* List Styles */
-.markdown ol {
-  list-style: decimal-leading-zero;
-  padding-left: 1.5rem;
-  padding-top: 4px;
-  margin: 4px 0;
-}
-
-.markdown ol li {
-  padding-left: 4px;
-  position: relative;
-  transition: color 0.3s ease, background-color 0.3s ease;
-  line-height: 1.6;
-  margin-bottom: 4px;
-}
-
-.markdown ol li::marker {
-  padding-top: 0;
-}
-
-.markdown ol li p {
-  margin: 0;
-  padding-top: 0;
-}
-
-.markdown ol li a {
-  text-decoration: underline;
-}
-
-.markdown ol li p a {
-  text-decoration: underline;
-}
-
-.markdown ul {
-  list-style: disc;
-  padding-left: 1.5rem;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  margin: 4px 0;
-}
-
-.markdown ul li::marker {
-  color: var(--theme-text-secondary);
-  padding-top: 0;
-}
-
-.markdown ul li {
-  padding-left: 4px;
-  transition: color 0.3s ease, background-color 0.3s ease;
-  line-height: 1.6;
-  margin-bottom: 4px;
-}
-
-.markdown ul li a {
-  text-decoration: underline;
-}
-
-.markdown ul li > ul {
-  padding-left: 1.5rem;
-  margin: 2px 0;
-}
-
-.markdown p {
-  font-weight: 400;
-  margin: 0.25rem 0;
-}
-
-/* Hide empty paragraphs (e.g. from KaTeX rendering empty math blocks) */
-.markdown p:empty {
-  display: none;
-}
-
-/* Hide paragraphs that only contain KaTeX rendering artifacts (no text, only math elements).
-   The previous selector used :not(:has(...)) which also matched <p> tags containing ONLY
-   plain text (no child elements), hiding all simple user/AI messages. Adding :has(.katex)
-   ensures this only applies to paragraphs that actually contain KaTeX math. */
-.markdown p:has(.katex):not(:has(:not(.katex):not(.katex-display):not(.katex-html):not(.katex-mathml):not(.strut):not(.base))) {
-  display: none;
-}
-
-.markdown > p > a,
-.markdown p a {
-  text-decoration: underline;
-}
-
-.markdown {
-  text-wrap: wrap;
-}
-
-.markdown pre {
-  margin: 8px 0;
-  background-color: transparent;
-}
-
-.markdown pre code {
-  background-color: transparent;
-  padding: 0;
-}
-
-.markdown code:not(pre code) {
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 0.125rem 0.375rem;
-  border-radius: 0.25rem;
-  font-size: 0.875em;
-  font-family: monospace;
-}
-
-[data-theme="light"] .markdown code:not(pre code) {
-  background-color: rgba(0, 0, 0, 0.06);
-}
-
-.markdown strong {
-  font-weight: 600;
-  color: var(--theme-text-primary);
-}
-
-.markdown blockquote {
-  border-left: 3px solid var(--theme-text-primary);
-  padding-left: 1rem;
-  margin: 0.75rem 0;
-  opacity: 0.7;
-}
-
-.file-row {
-  border-left: none !important;
-  border-right: none !important;
-  border-top: none !important;
-}
-
-.file-row:nth-child(even) {
-  @apply bg-theme-bg-primary;
-  background-color: var(--theme-file-row-even);
-  border-bottom: 1px solid var(--theme-file-row-border);
-}
-
-.file-row:nth-child(odd) {
-  @apply bg-theme-bg-secondary;
-  background-color: var(--theme-file-row-odd);
-  border-bottom: 1px solid var(--theme-file-row-border);
-}
-
-.file-row.selected:nth-child(even),
-.file-row.selected:nth-child(odd) {
-  background-color: var(--theme-file-row-selected-even);
-  border-bottom: 1px solid var(--theme-file-row-border-selected);
-}
-
-[data-theme="light"] .file-row.selected:nth-child(even),
-[data-theme="light"] .file-row.selected:nth-child(odd) {
-  border-bottom: 1px solid var(--theme-file-row-border-selected);
-}
-
-/* Flex upload modal to be a column when on small screens so that the UI
-does not extend the close button beyond the viewport. */
-@media (max-width: 1330px) {
-  .upload-modal {
-    @apply !flex-col !items-center !py-4 no-scroll;
-  }
-
-  .upload-modal-arrow {
-    margin-top: 0px !important;
-  }
-}
-
-.upload-modal {
-  @apply flex-row items-start gap-x-6 justify-center;
-}
-
-.upload-modal-arrow {
-  margin-top: 25%;
-}
-
-/* Scrollbar container */
-.white-scrollbar {
-  overflow-y: scroll;
-  scrollbar-width: thin;
-  scrollbar-color: var(--theme-scrollbar-thumb) var(--theme-scrollbar-track);
-  margin-right: 8px;
-}
-
-/* Webkit browsers (Chrome, Safari) */
-.white-scrollbar::-webkit-scrollbar {
-  width: 3px;
-  background-color: var(--theme-scrollbar-track);
-}
-
-.white-scrollbar::-webkit-scrollbar-track {
-  background-color: var(--theme-scrollbar-track);
-  margin-right: 8px;
-}
-
-.white-scrollbar::-webkit-scrollbar-thumb {
-  background-color: var(--theme-scrollbar-thumb);
-  border-radius: 4px;
-  border: 2px solid var(--theme-scrollbar-track);
-}
-
-.white-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: var(--theme-scrollbar-thumb-hover);
-}
-
-/* Light mode: dark scrollbar on light background — handled via CSS variables
-   (--theme-scrollbar-* overridden in [data-theme="light"]) */
-
-/* Scoped to the scheduled jobs tool call card — the default white-scrollbar
-   is tuned for dark surfaces and looks harsh over light backgrounds. */
-.tool-call-scrollbar {
-  scrollbar-width: thin;
-}
-
-[data-theme="light"] .tool-call-scrollbar {
-  scrollbar-color: var(--theme-tool-scrollbar-thumb) var(--theme-tool-scrollbar-track);
-}
-
-[data-theme="light"] .tool-call-scrollbar::-webkit-scrollbar {
-  width: 3px;
-  height: 3px;
-  background-color: var(--theme-tool-scrollbar-track);
-}
-
-[data-theme="light"] .tool-call-scrollbar::-webkit-scrollbar-track {
-  background-color: var(--theme-tool-scrollbar-track);
-}
-
-[data-theme="light"] .tool-call-scrollbar::-webkit-scrollbar-thumb {
-  background-color: var(--theme-tool-scrollbar-thumb);
-  border-radius: 4px;
-  border: 2px solid var(--theme-tool-scrollbar-track);
-}
-
-[data-theme="light"] .tool-call-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: var(--theme-tool-scrollbar-thumb-hover);
-}
-
-/* Recharts rendering styles */
-.recharts-text > * {
-  fill: var(--theme-text-primary);
-}
-
-[data-theme="light"] .recharts-text > * {
-  fill: #000;
-}
-
-.recharts-legend-wrapper {
-  margin-bottom: 10px;
-}
-
-.text-tremor-content {
-  padding-bottom: 10px;
-}
-
-.file-upload {
-  -webkit-animation: fadein 0.3s linear forwards;
-  animation: fadein 0.3s linear forwards;
-}
-
-.file-upload-fadeout {
-  -webkit-animation: fadeout 0.3s linear forwards;
-  animation: fadeout 0.3s linear forwards;
-}
-
-@-webkit-keyframes fadein {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes fadein {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-@-webkit-keyframes fadeout {
-  0% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes fadeout {
-  0% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
-.search-input::-webkit-search-cancel-button {
-  filter: grayscale(100%) invert(1) brightness(100) opacity(0.5);
-}
-
-[data-theme="light"] .search-input::-webkit-search-cancel-button {
-  filter: grayscale(100%) invert(0) brightness(0) opacity(0.5);
-}
-
-.animate-remove {
-  animation: fadeAndShrink 800ms forwards;
-}
-
-@keyframes fadeAndShrink {
-  50% {
-    opacity: 25%;
-  }
-
-  75% {
-    opacity: 10%;
-  }
-
-  100% {
-    height: 0px;
-    opacity: 0%;
+  .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
-}
 
-/* KaTeX overrides - base CSS imported via markdown-katex.js plugin */
-.katex-display {
-  margin: 0 !important;
-  text-align: left !important;
-}
-
-.katex-display > .katex {
-  text-align: left !important;
-}
-
-.rti--container {
-  @apply !bg-theme-settings-input-bg !text-sm !rounded-lg !p-2.5;
-  color: var(--theme-text-primary) !important;
-}
-
-@keyframes fadeUpIn {
-  0% {
-    opacity: 0;
-    transform: translateY(5px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
 
-.animate-fadeUpIn {
-  animation: fadeUpIn 0.3s ease-out forwards;
-}
-
-@keyframes bounce-subtle {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-2px);
-  }
-}
-
-@keyframes thoughtTransition {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  30% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-thoughtTransition {
-  animation: thoughtTransition 0.5s ease-out forwards;
-}
-
-.checklist-completed {
-  -webkit-animation: fadein 0.3s linear forwards;
-  animation: fadein 0.3s linear forwards;
-}
-
-/* Form control font fallback for non-Latin scripts */
-button,
-input,
-select,
-textarea {
-  font-family:
-    "plus-jakarta-sans",
-    Inter,
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial,
-    "Noto Sans",
-    sans-serif,
-    "Apple Color Emoji",
-    "Segoe UI Emoji",
-    "Segoe UI Symbol",
-    "Noto Color Emoji" !important;
-}
-
-/* Accessibility: respect reduced-motion preference (WCAG 2.1 SC 2.3.3) */
-/* !important is required here to override all animation and transition
-   declarations across the app, including those set inline or via Tailwind
-   utilities. Without !important, individual component animations would
-   continue to play regardless of the user's reduced-motion preference. */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* Print styles for markdown content and documentation pages */
-/* !important is required on all print declarations to override screen styles
-   that are applied via Tailwind utilities, inline styles, and theme CSS
-   variables. Without !important, dark-theme background and text colors would
-   persist in print output, producing unusable dark-on-dark printed pages. */
-@media print {
-  body {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-  }
-
-  .markdown,
-  .docs-markdown {
-    color: #000000 !important;
-  }
-
-  .markdown strong,
-  .docs-markdown h1,
-  .docs-markdown h2,
-  .docs-markdown h3,
-  .docs-markdown h4 {
-    color: #000000 !important;
-  }
-
-  .markdown table,
-  .markdown table th,
-  .markdown table td {
-    color: #000000 !important;
-    border-color: #cccccc !important;
-  }
-
-  .markdown pre,
-  .docs-markdown .docs-code-block {
-    background: #f6f8fa !important;
-    color: #1f2328 !important;
-    border: 1px solid #d0d7de !important;
-  }
-
-  .markdown a {
-    color: #0969da !important;
-  }
-
-  /* Hide interactive elements that don't make sense on paper */
-  .no-print,
-  .show-scrollbar,
-  .no-scroll {
-    display: none !important;
-  }
-}
+/* ── Katex styles ──────────────────────────────────────────────────────── */
+/* Keep the katex import after Tailwind so it can override preflight */
+@import "katex/dist/katex.min.css";

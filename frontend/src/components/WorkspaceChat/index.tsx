@@ -11,6 +11,7 @@ import paths from "@/utils/paths";
 import ModalWrapper from "../ModalWrapper";
 import { useParams } from "react-router-dom";
 import { DnDFileUploaderProvider } from "./ChatContainer/DnDWrapper";
+import { AgentRunsProvider } from "./ChatContainer/AgentSessionsSidebar/AgentRunsContext";
 import { WarningCircle } from "@phosphor-icons/react/dist/csr/WarningCircle";
 import { useTranslation } from "react-i18next";
 import i18n from "@/i18n";
@@ -123,12 +124,18 @@ export default function WorkspaceChat({
           workspace={loaded.workspace}
           threadSlug={loaded.threadSlug}
         >
-          <ChatContainer
-            key={loaded.key}
-            workspace={loaded.workspace}
-            threadSlug={loaded.threadSlug}
-            knownHistory={loaded.history}
-          />
+          <AgentRunsProvider
+            workspaceSlug={loaded.workspace?.slug || ""}
+            authToken={typeof window !== "undefined" ? localStorage.getItem("opensin_chat_auth_token") || "" : ""}
+            apiBase="/api"
+          >
+            <ChatContainer
+              key={loaded.key}
+              workspace={loaded.workspace}
+              threadSlug={loaded.threadSlug}
+              knownHistory={loaded.history}
+            />
+          </AgentRunsProvider>
         </DnDFileUploaderProvider>
       </ErrorBoundary>
     </TTSProvider>

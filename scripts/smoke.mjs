@@ -1,134 +1,117 @@
 #!/usr/bin/env node
 // SPDX-License-Identifier: MIT
-// Purpose: Lightweight post-boot smoke test. Verifies the core server
-//          endpoints are reachable and healthy, then exits with a clear
-//          pass/fail code (0 = all pass, 1 = any fail). Intended for CI and
-//          post-deploy verification. Resolves #375.
+// Smoke test script for OpenSIN-Chat (Issue #375).
+// Run with: node scripts/smoke.mjs [base-url]
+// Default base URL: http://localhost:3001
 //
-// Usage:
-//   node scripts/smoke.mjs                 # checks http://localhost:3001
-//   SMOKE_BASE_URL=https://host node scripts/smoke.mjs
-//   node scripts/smoke.mjs --base https://host --timeout 8000
+// Checks the most critical endpoints after boot:
+//   1. /api/ping — server is alive
+//   2. /api/setup-complete — system initialization status
+//   3. /api/system/env-dump — configuration is loaded (non-sensitive)
 //
-// Endpoints checked (all under the /api prefix):
-//   GET /api/ping            -> 200 { online: true }
-//   GET /api/setup-complete  -> 200 (JSON body with results)
-//   GET /api/system/ping-stream (optional chat-stream contact; non-fatal)
+// Exits 0 on success, 1 on any failure. Each check prints a clear
+// PASS/FAIL line with a hint on failure.
 
-const args = process.argv.slice(2);
-function argVal(flag, fallback) {
-  const i = args.indexOf(flag);
-  return i !== -1 && args[i + 1] ? args[i + 1] : fallback;
-}
+const BASE_URL = process.argv[2] || process.env.SMOKE_BASE_URL || "http://localhost:3001";
+const TIMEOUT_MS = 5000;
 
-const BASE = (
-  argVal("--base", process.env.SMOKE_BASE_URL || "http://localhost:3001")
-).replace(/\/+$/, "");
-const TIMEOUT_MS = Number(argVal("--timeout", process.env.SMOKE_TIMEOUT_MS || "8000"));
+const checks = [
+  {
+    name: "/api/ping (server alive)",
+    path: "/api/ping",
+    method: "GET",
+    expect: (res, body) => {
+      if (res.status !== 200) return `expected 200, got ${res.status}`;
+      if (!body?.success && body?.message !== "pong") {
+        return `expected { success: true } or { message: "pong" }, got ${JSON.stringify(body).slice(0, 200)}`;
+      }
+      return null;
+    },
+  },
+  {
+    name: "/api/setup-complete (system initialized)",
+    path: "/api/setup-complete",
+    method: "GET",
+    expect: (res, body) => {
+      if (res.status !== 200) return `expected 200, got ${res.status}`;
+      if (typeof body?.setupComplete !== "boolean") {
+        return `expected { setupComplete: boolean }, got ${JSON.stringify(body).slice(0, 200)}`;
+      }
+      return null;
+    },
+  },
+  {
+    name: "/api/system/env-dump (config loaded)",
+    path: "/api/system/env-dump",
+    method: "GET",
+    expect: (res, body) => {
+      // This endpoint may return 200 or 403 depending on auth/multi-user mode.
+      // A 200 means the server is serving config; a 403 is also acceptable
+      // (means auth is working). Anything else is a failure.
+      if (res.status === 200 || res.status === 403) return null;
+      return `expected 200 or 403, got ${res.status}`;
+    },
+  },
+];
 
-const GREEN = "\x1b[32m";
-const RED = "\x1b[31m";
-const DIM = "\x1b[2m";
-const RESET = "\x1b[0m";
-
-/**
- * Fetch a URL with a hard timeout. Returns {ok, status, json, error}.
- * @param {string} url
- */
-async function get(url) {
+async function fetchWithTimeout(url, opts = {}, timeoutMs = TIMEOUT_MS) {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const res = await fetch(url, {
-      signal: controller.signal,
-      headers: { Accept: "application/json" },
-    });
-    let json = null;
+    const res = await fetch(url, { ...opts, signal: controller.signal });
+    const text = await res.text();
+    let body = null;
     try {
-      json = await res.json();
+      body = JSON.parse(text);
     } catch {
-      /* body may be empty or non-JSON — that's fine for some checks */
+      body = text;
     }
-    return { ok: res.ok, status: res.status, json, error: null };
-  } catch (err) {
-    return {
-      ok: false,
-      status: 0,
-      json: null,
-      error: err?.name === "AbortError" ? `timeout after ${TIMEOUT_MS}ms` : String(err?.message || err),
-    };
+    return { status: res.status, body };
   } finally {
     clearTimeout(timer);
   }
 }
 
-/**
- * A single named check. `validate` receives the fetch result and returns
- * true/false or a string reason for failure.
- */
-const checks = [
-  {
-    name: "GET /api/ping",
-    required: true,
-    run: () => get(`${BASE}/api/ping`),
-    validate: (r) =>
-      r.status === 200 && r.json?.online === true
-        ? true
-        : `expected 200 {online:true}, got ${r.status} ${JSON.stringify(r.json)}`,
-  },
-  {
-    name: "GET /api/setup-complete",
-    required: true,
-    run: () => get(`${BASE}/api/setup-complete`),
-    validate: (r) =>
-      r.status === 200
-        ? true
-        : `expected 200, got ${r.status}${r.error ? ` (${r.error})` : ""}`,
-  },
-  {
-    // Non-fatal: confirms the app router responds on an unknown /api route
-    // with a controlled status (not a hang / connection refused).
-    name: "GET /api/__smoke_probe__ (router reachable)",
-    required: false,
-    run: () => get(`${BASE}/api/__smoke_probe__`),
-    validate: (r) =>
-      r.status > 0
-        ? true
-        : `no HTTP response${r.error ? ` (${r.error})` : ""}`,
-  },
-];
+async function runCheck(check) {
+  const url = `${BASE_URL}${check.path}`;
+  try {
+    const res = await fetchWithTimeout(url, { method: check.method });
+    const error = check.expect(res, res.body);
+    if (error) {
+      console.error(`FAIL  ${check.name} — ${error}`);
+      return false;
+    }
+    console.log(`PASS  ${check.name}`);
+    return true;
+  } catch (err) {
+    if (err.name === "AbortError") {
+      console.error(`FAIL  ${check.name} — request timed out after ${TIMEOUT_MS}ms`);
+    } else {
+      console.error(`FAIL  ${check.name} — ${err.message}`);
+    }
+    console.error(`      URL: ${url}`);
+    return false;
+  }
+}
 
 async function main() {
-  console.log(`${DIM}Smoke test against ${BASE} (timeout ${TIMEOUT_MS}ms)${RESET}\n`);
-  let failed = 0;
-  let requiredFailed = 0;
-
+  console.log(`\nSmoke test against: ${BASE_URL}\n`);
+  let allPassed = true;
   for (const check of checks) {
-    const started = Date.now();
-    const result = await check.run();
-    const verdict = check.validate(result);
-    const ms = Date.now() - started;
-    if (verdict === true) {
-      console.log(`${GREEN}PASS${RESET} ${check.name} ${DIM}(${ms}ms)${RESET}`);
-    } else {
-      const tag = check.required ? `${RED}FAIL${RESET}` : `${DIM}WARN${RESET}`;
-      console.log(`${tag} ${check.name} ${DIM}(${ms}ms)${RESET}\n     ${verdict}`);
-      failed += 1;
-      if (check.required) requiredFailed += 1;
-    }
+    const passed = await runCheck(check);
+    if (!passed) allPassed = false;
   }
-
   console.log("");
-  if (requiredFailed === 0) {
-    console.log(`${GREEN}✔ smoke test passed${RESET}${failed ? ` (${failed} non-fatal warning[s])` : ""}`);
+  if (allPassed) {
+    console.log("All smoke checks passed. ✅");
     process.exit(0);
   } else {
-    console.log(`${RED}x smoke test failed - ${requiredFailed} required check(s) failed${RESET}`);
+    console.log("One or more smoke checks failed. ❌");
     process.exit(1);
   }
 }
 
 main().catch((err) => {
-  console.error(`${RED}smoke test crashed:${RESET}`, err);
+  console.error(`Fatal error: ${err.message}`);
   process.exit(1);
 });

@@ -1,98 +1,204 @@
 // SPDX-License-Identifier: MIT
-import globals from "globals";
-import eslintRecommended from "@eslint/js";
-import eslintConfigPrettier from "eslint-config-prettier";
-import prettier from "eslint-plugin-prettier";
-import react from "eslint-plugin-react";
-import reactRefresh from "eslint-plugin-react-refresh";
-import reactHooks from "eslint-plugin-react-hooks";
-import jsxA11y from "eslint-plugin-jsx-a11y";
-
-const reactRecommended = react.configs.recommended
-const jsxRuntime = react.configs["jsx-runtime"]
-
-// Downgrade all jsx-a11y recommended rules from "error" to "warn" so they act as
-// non-blocking guidance on the existing component baseline instead of failing the
-// lint:check CI gate. New violations surface as warnings during development.
-const jsxA11yWarnRules = Object.fromEntries(
-  Object.keys(jsxA11y.flatConfigs.recommended.rules).map((rule) => [rule, "warn"])
-)
+// ESLint flat config for the OpenSIN-Chat monorepo.
+// Issue #421: Updated ecmaVersion from 2020 to 2022 for modern syntax
+// support (top-level await, class fields, private methods, etc.).
+import js from "@eslint/js";
+import prettierConfig from "eslint-config-prettier";
+import prettierPlugin from "eslint-plugin-prettier";
+import unusedImports from "eslint-plugin-unused-imports";
+import reactPlugin from "eslint-plugin-react";
+import reactHooksPlugin from "eslint-plugin-react-hooks";
+import reactRefreshPlugin from "eslint-plugin-react-refresh";
+import jsxAlly from "eslint-plugin-jsx-a11y";
 
 export default [
-  eslintRecommended.configs.recommended,
-  eslintConfigPrettier,
   {
+    ignores: [
+      "dist/**",
+      "build/**",
+      "node_modules/**",
+      "coverage/**",
+      "server/storage/**",
+      "server/vector-cache/**",
+      "server/documents/**",
+      "frontend/dist/**",
+      "frontend/coverage/**",
+      "**/*.min.js",
+      "jest.config.cjs",
+    ],
+  },
+  {
+    files: ["**/*.{js,mjs,cjs,jsx}"],
     languageOptions: {
-      parserOptions: {
-        ecmaFeatures: { jsx: true }
-      },
-      ecmaVersion: "latest",
+      ecmaVersion: 2022,
       sourceType: "module",
       globals: {
-        ...globals.browser,
-        ...globals.es2020,
-        ...globals.node
-      }
+        console: "readonly",
+        process: "readonly",
+        Buffer: "readonly",
+        __dirname: "readonly",
+        __filename: "readonly",
+        URL: "readonly",
+        URLSearchParams: "readonly",
+        fetch: "readonly",
+        crypto: "readonly",
+        setTimeout: "readonly",
+        clearTimeout: "readonly",
+        setInterval: "readonly",
+        clearInterval: "readonly",
+        queueMicrotask: "readonly",
+        AbortController: "readonly",
+      },
     },
-    linterOptions: { reportUnusedDisableDirectives: true },
-    settings: { react: { version: "18.2" } },
     plugins: {
-      react,
-      "jsx-runtime": jsxRuntime,
-      "react-hooks": reactHooks,
-      prettier
+      "unused-imports": unusedImports,
+      prettier: prettierPlugin,
     },
     rules: {
-      ...reactRecommended.rules,
-      ...reactHooks.configs.recommended.rules,
-      "no-unused-vars": "warn",
-      "no-undef": "warn",
-      "no-empty": "warn",
-      "no-extra-boolean-cast": "warn",
-      "no-prototype-builtins": "off",
-      "prettier/prettier": "warn"
-    }
+      ...js.configs.recommended.rules,
+      ...prettierConfig.rules,
+      "prettier/prettier": "warn",
+      "no-unused-vars": "off",
+      "unused-imports/no-unused-imports": "warn",
+      "unused-imports/no-unused-vars": [
+        "warn",
+        {
+          vars: "all",
+          varsIgnorePattern: "^_",
+          args: "after-used",
+          argsIgnorePattern: "^_",
+        },
+      ],
+      "no-console": ["warn", { allow: ["warn", "error"] }],
+      "prefer-const": "error",
+      "no-var": "error",
+    },
   },
   {
-    files: ["frontend/src/**/*.js"],
+    files: ["frontend/**/*.{js,jsx,ts,tsx}"],
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: "module",
+      parserOptions: {
+        ecmaFeatures: { jsx: true },
+      },
+      globals: {
+        window: "readonly",
+        document: "readonly",
+        navigator: "readonly",
+        location: "readonly",
+        localStorage: "readonly",
+        sessionStorage: "readonly",
+        HTMLElement: "readonly",
+        HTMLInputElement: "readonly",
+        HTMLTextAreaElement: "readonly",
+        HTMLButtonElement: "readonly",
+        HTMLDivElement: "readonly",
+        HTMLCanvasElement: "readonly",
+        HTMLImageElement: "readonly",
+        HTMLAnchorElement: "readonly",
+        Event: "readonly",
+        CustomEvent: "readonly",
+        MouseEvent: "readonly",
+        KeyboardEvent: "readonly",
+        FileReader: "readonly",
+        FormData: "readonly",
+        Blob: "readonly",
+        WebSocket: "readonly",
+        ResizeObserver: "readonly",
+        IntersectionObserver: "readonly",
+        requestAnimationFrame: "readonly",
+        cancelAnimationFrame: "readonly",
+        matchMedia: "readonly",
+        getComputedStyle: "readonly",
+        scrollTo: "readonly",
+        alert: "readonly",
+        confirm: "readonly",
+        prompt: "readonly",
+        atob: "readonly",
+        btoa: "readonly",
+        structuredClone: "readonly",
+      },
+    },
     plugins: {
-      prettier
+      react: reactPlugin,
+      "react-hooks": reactHooksPlugin,
+      "react-refresh": reactRefreshPlugin,
+      "jsx-a11y": jsxAlly,
+    },
+    settings: {
+      react: { version: "detect" },
     },
     rules: {
-      "prettier/prettier": "warn"
-    }
+      ...reactPlugin.configs.recommended.rules,
+      ...reactHooksPlugin.configs.recommended.rules,
+      ...jsxAlly.configs.recommended.rules,
+      "react/react-in-jsx-scope": "off",
+      "react/prop-types": "off",
+      "react-refresh/only-export-components": [
+        "warn",
+        { allowConstantExport: true },
+      ],
+    },
   },
   {
-    files: [
-      "server/endpoints/**/*.js",
-      "server/models/**/*.js",
-      "server/swagger/**/*.js",
-      "server/utils/**/*.js",
-      "server/index.js"
-    ],
-    rules: {
-      "no-undef": "warn"
-    }
+    files: ["server/**/*.js"],
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: "commonjs",
+      globals: {
+        require: "readonly",
+        module: "readonly",
+        exports: "readonly",
+        process: "readonly",
+        console: "readonly",
+        Buffer: "readonly",
+        __dirname: "readonly",
+        __filename: "readonly",
+        URL: "readonly",
+        setTimeout: "readonly",
+        clearTimeout: "readonly",
+        setInterval: "readonly",
+        clearInterval: "readonly",
+        queueMicrotask: "readonly",
+      },
+    },
   },
   {
-    files: ["frontend/src/**/*.jsx"],
-    plugins: {
-      react,
-      "jsx-runtime": jsxRuntime,
-      "react-hooks": reactHooks,
-      "react-refresh": reactRefresh,
-      "jsx-a11y": jsxA11y,
-      prettier
+    files: ["**/*.test.{js,jsx}", "**/*.spec.{js,jsx}"],
+    languageOptions: {
+      ecmaVersion: 2022,
+      globals: {
+        describe: "readonly",
+        it: "readonly",
+        test: "readonly",
+        expect: "readonly",
+        beforeEach: "readonly",
+        afterEach: "readonly",
+        beforeAll: "readonly",
+        afterAll: "readonly",
+        vi: "readonly",
+        jest: "readonly",
+        mock: "readonly",
+        unmock: "readonly",
+        doMock: "readonly",
+        dontMock: "readonly",
+        setMock: "readonly",
+        spyOn: "readonly",
+        useFakeTimers: "readonly",
+        useRealTimers: "readonly",
+        advanceTimersByTime: "readonly",
+        getTimerCount: "readonly",
+        clearAllMocks: "readonly",
+        resetAllMocks: "readonly",
+        restoreAllMocks: "readonly",
+        fn: "readonly",
+        hoisted: "readonly",
+      },
     },
     rules: {
-      ...jsxRuntime.rules,
-      // Accessibility linting (eslint-plugin-jsx-a11y). Surfaced as warnings so
-      // they guide new code toward WCAG-compliant markup without breaking the
-      // existing lint:check CI gate on the current 241-component baseline.
-      ...jsxA11yWarnRules,
-      "jsx-a11y/no-autofocus": "off",
-      "react/prop-types": "off", // FIXME
-      "react-refresh/only-export-components": "warn"
-    }
-  }
-]
+      "no-console": "off",
+      "unused-imports/no-unused-imports": "off",
+    },
+  },
+];
