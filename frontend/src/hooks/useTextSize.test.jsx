@@ -1,1 +1,36 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyBkZXNjcmliZSwgaXQsIGV4cGVjdCB9IGZyb20gInZpdGVzdCI7CmltcG9ydCB7IHJlbmRlckhvb2ssIHdhaXRGb3IsIGFjdCB9IGZyb20gIkB0ZXN0aW5nLWxpYnJhcnkvcmVhY3QiOwppbXBvcnQgdXNlVGV4dFNpemUgZnJvbSAiLi91c2VUZXh0U2l6ZSI7CgpkZXNjcmliZSgidXNlVGV4dFNpemUiLCAoKSA9PiB7CiAgYmVmb3JlRWFjaCgoKSA9PiB7CiAgICB3aW5kb3cubG9jYWxTdG9yYWdlLmdldEl0ZW0ubW9ja0ltcGxlbWVudGF0aW9uKCgpID0+IG51bGwpOwogIH0pOwoKICBpdCgicmV0dXJucyBkZWZhdWx0IHRleHQgc2l6ZSIsICgpID0+IHsKICAgIGNvbnN0IHsgcmVzdWx0IH0gPSByZW5kZXJIb29rKCgpID0+IHVzZVRleHRTaXplKCkpOwogICAgZXhwZWN0KHJlc3VsdC5jdXJyZW50LnRleHRTaXplKS50b0JlKCJub3JtYWwiKTsKICAgIGV4cGVjdChyZXN1bHQuY3VycmVudC50ZXh0U2l6ZUNsYXNzKS50b0JlKCJ0ZXh0LVsxNHB4XSIpOwogIH0pOwoKICBpdCgibG9hZHMgc3RvcmVkIHRleHQgc2l6ZSBmcm9tIGxvY2FsU3RvcmFnZSIsICgpID0+IHsKICAgIHdpbmRvdy5sb2NhbFN0b3JhZ2UuZ2V0SXRlbS5tb2NrSW1wbGVtZW50YXRpb24oKGtleSkgPT4KICAgICAga2V5ID09PSAib3BlbnNpbl90ZXh0X3NpemUiID8gImxhcmdlIiA6IG51bGwsCiAgICApOwogICAgY29uc3QgeyByZXN1bHQgfSA9IHJlbmRlckhvb2soKCkgPT4gdXNlVGV4dFNpemUoKSk7CiAgICBleHBlY3QocmVzdWx0LmN1cnJlbnQudGV4dFNpemUpLnRvQmUoImxhcmdlIik7CiAgICBleHBlY3QocmVzdWx0LmN1cnJlbnQudGV4dFNpemVDbGFzcykudG9CZSgidGV4dC1bMThweF0iKTsKICB9KTsKCiAgaXQoInVwZGF0ZXMgd2hlbiB0ZXh0U2l6ZUNoYW5nZSBldmVudCBmaXJlcyIsIGFzeW5jICgpID0+IHsKICAgIGNvbnN0IHsgcmVzdWx0IH0gPSByZW5kZXJIb29rKCgpID0+IHVzZVRleHRTaXplKCkpOwogICAgYWN0KCgpID0+IHsKICAgICAgd2luZG93LmRpc3BhdGNoRXZlbnQoCiAgICAgICAgbmV3IEN1c3RvbUV2ZW50KCJ0ZXh0U2l6ZUNoYW5nZSIsIHsgZGV0YWlsOiAic21hbGwiIH0pLAogICAgICApOwogICAgfSk7CiAgICBhd2FpdCB3YWl0Rm9yKCgpID0+IGV4cGVjdChyZXN1bHQuY3VycmVudC50ZXh0U2l6ZSkudG9CZSgic21hbGwiKSk7CiAgICBleHBlY3QocmVzdWx0LmN1cnJlbnQudGV4dFNpemVDbGFzcykudG9CZSgidGV4dC1bMTJweF0iKTsKICB9KTsKfSk7Cg==
+// SPDX-License-Identifier: MIT
+import { describe, it, expect } from "vitest";
+import { renderHook, waitFor, act } from "@testing-library/react";
+import useTextSize from "./useTextSize";
+
+describe("useTextSize", () => {
+  beforeEach(() => {
+    window.localStorage.getItem.mockImplementation(() => null);
+  });
+
+  it("returns default text size", () => {
+    const { result } = renderHook(() => useTextSize());
+    expect(result.current.textSize).toBe("normal");
+    expect(result.current.textSizeClass).toBe("text-[14px]");
+  });
+
+  it("loads stored text size from localStorage", () => {
+    window.localStorage.getItem.mockImplementation((key) =>
+      key === "opensin_text_size" ? "large" : null,
+    );
+    const { result } = renderHook(() => useTextSize());
+    expect(result.current.textSize).toBe("large");
+    expect(result.current.textSizeClass).toBe("text-[18px]");
+  });
+
+  it("updates when textSizeChange event fires", async () => {
+    const { result } = renderHook(() => useTextSize());
+    act(() => {
+      window.dispatchEvent(
+        new CustomEvent("textSizeChange", { detail: "small" }),
+      );
+    });
+    await waitFor(() => expect(result.current.textSize).toBe("small"));
+    expect(result.current.textSizeClass).toBe("text-[12px]");
+  });
+});
