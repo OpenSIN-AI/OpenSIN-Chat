@@ -1,1 +1,201 @@
-IyEvdXNyL2Jpbi9lbnYgbm9kZQovLyBTUERYLUxpY2Vuc2UtSWRlbnRpZmllcjogTUlUCi8qKgogKiBCYWNrZmlsbCBzY3JpcHQ6IHJlcGFpciBwb2xpdGljaWFuIHN0YXRlIGFuZCBwcm9maWxlVXJsLgogKgogKiBVc2FnZToKICogICBub2RlIHNlcnZlci9qb2JzL2JhY2tmaWxsLXBvbGl0aWNpYW4tc3RhdGUuanMKICogICBub2RlIHNlcnZlci9qb2JzL2JhY2tmaWxsLXBvbGl0aWNpYW4tc3RhdGUuanMgLS1kcnktcnVuICAgICAjIGNvdW50IG9ubHksIG5vIHVwZGF0ZXMKICogICBub2RlIHNlcnZlci9qb2JzL2JhY2tmaWxsLXBvbGl0aWNpYW4tc3RhdGUuanMgLS1saW1pdD0xMDAgICAjIG9ubHkgdG91Y2ggMTAwIHJlY29yZHMKICogICBub2RlIHNlcnZlci9qb2JzL2JhY2tmaWxsLXBvbGl0aWNpYW4tc3RhdGUuanMgLS1uby1hdyAgICAgICAgIyBza2lwIEFiZ2VvcmRuZXRlbndhdGNoIGNyb3NzLXJlZmVyZW5jZQogKgogKiBQdXJwb3NlOiBPbmUtdGltZSByZXBhaXIgam9iLiBUaGUgQWJnZW9yZG5ldGVud2F0Y2ggc3luYyBoaXN0b3JpY2FsbHkgc3RvcmVkCiAqICAgICAgICAgIHBvbGl0aWNpYW5BcGlVcmwgYXMgcHJvZmlsZVVybCBhbmQgbGVmdCBzdGF0ZSBudWxsLiBGb3IgQnVuZGVzdGFnCiAqICAgICAgICAgIChESVApIHJlY29yZHMsIHRoZSBESVAgQVBJIGRvZXMgbm90IGV4cG9zZSBzdGF0ZSBvciBhIHB1YmxpYyBwcm9maWxlCiAqICAgICAgICAgIFVSTCwgc28gd2UgY3Jvc3MtcmVmZXJlbmNlIHdpdGggQWJnZW9yZG5ldGVud2F0Y2ggYnkgbmFtZSArIHBhcnR5LgogKi8KCmNvbnN0IHsgUHJpc21hQ2xpZW50IH0gPSByZXF1aXJlKCJAcHJpc21hL2NsaWVudCIpOwpjb25zdCB7IFByaXNtYUJldHRlclNxbGl0ZTMgfSA9IHJlcXVpcmUoIkBwcmlzbWEvYWRhcHRlci1iZXR0ZXItc3FsaXRlMyIpOwpjb25zdCB7CiAgQWJnZW9yZG5ldGVud2F0Y2hBcGksCn0gPSByZXF1aXJlKCIuLi91dGlscy9wb2xpdGljaWFuL2FiZ2VvcmRuZXRlbndhdGNoQXBpIik7CmNvbnN0IHsKICBleHRyYWN0U3RhdGVGcm9tQXdSYXdEYXRhLAogIGV4dHJhY3RQcm9maWxlVXJsRnJvbUF3UmF3RGF0YSwKICBleHRyYWN0U3RhdGVGcm9tQnVuZGVzdGFnUmF3RGF0YSwKICBleHRyYWN0UGFydHlGcm9tQnVuZGVzdGFnUmF3RGF0YSwKfSA9IHJlcXVpcmUoIi4uL3V0aWxzL3BvbGl0aWNpYW4vZXh0cmFjdG9ycyIpOwoKLy8gUHJpc21hQmV0dGVyU3FsaXRlMyB0cmVhdHMgYD9gIHBhcmFtcyBhcyBwYXJ0IG9mIHRoZSBmaWxlbmFtZSDigJQgc3RyaXAgdGhlbS4KY29uc3Qgc3FsaXRlVXJsID0gcHJvY2Vzcy5lbnYuREFUQUJBU0VfVVJMIHx8ICJmaWxlOi4uL3N0b3JhZ2Uvb3BlbnNpbi5kYiI7CmNvbnN0IGFkYXB0ZXIgPSBuZXcgUHJpc21hQmV0dGVyU3FsaXRlMyh7CiAgdXJsOiBzcWxpdGVVcmwuc3BsaXQoIj8iKVswXSwKfSk7CmNvbnN0IHByaXNtYSA9IG5ldyBQcmlzbWFDbGllbnQoeyBhZGFwdGVyIH0pOwoKZnVuY3Rpb24gbm9ybWFsaXplTmFtZShuYW1lKSB7CiAgcmV0dXJuIChuYW1lIHx8ICIiKS50b0xvd2VyQ2FzZSgpLnJlcGxhY2UoL1xzKy9nLCAiICIpLnRyaW0oKTsKfQoKZnVuY3Rpb24gbWF0Y2hLZXkocCkgewogIHJldHVybiBgJHtub3JtYWxpemVOYW1lKHAuZnVsbE5hbWUpfXwke3AucGFydHkgfHwgIiJ9YDsKfQoKYXN5bmMgZnVuY3Rpb24gbG9hZEF3TG9va3VwKCkgewogIHRyeSB7CiAgICBjb25zdCBhcGkgPSBuZXcgQWJnZW9yZG5ldGVud2F0Y2hBcGkoKTsKICAgIGNvbnN0IHBvbGl0aWNpYW5zID0gYXdhaXQgYXBpLmZldGNoQWxsUG9saXRpY2lhbnMoeyBlbnJpY2g6IGZhbHNlIH0pOwogICAgY29uc3QgYnlLZXkgPSBuZXcgTWFwKCk7CiAgICBmb3IgKGNvbnN0IHAgb2YgcG9saXRpY2lhbnMpIHsKICAgICAgY29uc3Qga2V5ID0gbWF0Y2hLZXkocCk7CiAgICAgIGlmICghYnlLZXkuaGFzKGtleSkpIGJ5S2V5LnNldChrZXksIHApOwogICAgfQogICAgY29uc29sZS5sb2coCiAgICAgIGBbYmFja2ZpbGxdIExvYWRlZCAke2J5S2V5LnNpemV9IEFiZ2VvcmRuZXRlbndhdGNoIHJlY29yZHMgZm9yIGNyb3NzLXJlZmVyZW5jZWAsCiAgICApOwogICAgcmV0dXJuIGJ5S2V5OwogIH0gY2F0Y2ggKGVycikgewogICAgY29uc29sZS5lcnJvcigKICAgICAgYFtiYWNrZmlsbF0gRmFpbGVkIHRvIGxvYWQgQWJnZW9yZG5ldGVud2F0Y2ggZGF0YTogJHtlcnIubWVzc2FnZX1gLAogICAgKTsKICAgIHJldHVybiBuZXcgTWFwKCk7CiAgfQp9Cgphc3luYyBmdW5jdGlvbiBtYWluKCkgewogIGNvbnN0IGFyZ3MgPSBwcm9jZXNzLmFyZ3Yuc2xpY2UoMik7CiAgY29uc3QgZHJ5UnVuID0gYXJncy5pbmNsdWRlcygiLS1kcnktcnVuIik7CiAgY29uc3Qgbm9BdyA9IGFyZ3MuaW5jbHVkZXMoIi0tbm8tYXciKTsKICBjb25zdCBsaW1pdEFyZyA9IGFyZ3MuZmluZCgoYSkgPT4gYS5zdGFydHNXaXRoKCItLWxpbWl0PSIpKTsKICBjb25zdCBsaW1pdCA9IGxpbWl0QXJnID8gcGFyc2VJbnQobGltaXRBcmcuc3BsaXQoIj0iKVsxXSwgMTApIDogbnVsbDsKCiAgY29uc3QgdG90YWwgPSBhd2FpdCBwcmlzbWEucG9saXRpY2lhbnMuY291bnQoKTsKICBjb25zb2xlLmxvZyhgW2JhY2tmaWxsXSBUb3RhbCBwb2xpdGljaWFuczogJHt0b3RhbH1gKTsKICBpZiAobGltaXQpIGNvbnNvbGUubG9nKGBbYmFja2ZpbGxdIExpbWl0OiAke2xpbWl0fWApOwogIGlmIChkcnlSdW4pIGNvbnNvbGUubG9nKCJbYmFja2ZpbGxdIERyeSBydW4g4oCUIG5vIHVwZGF0ZXMgd2lsbCBiZSBwZXJmb3JtZWQuIik7CgogIGNvbnN0IGF3TG9va3VwID0gbm9BdyA/IG5ldyBNYXAoKSA6IGF3YWl0IGxvYWRBd0xvb2t1cCgpOwoKICBjb25zdCBCQVRDSF9TSVpFID0gMTAwOwogIGxldCBwcm9jZXNzZWQgPSAwOwogIGxldCB1cGRhdGVkID0gMDsKICBsZXQgZmFpbGVkID0gMDsKICBjb25zdCBzdGFydFRpbWUgPSBEYXRlLm5vdygpOwoKICBmb3IgKGxldCBvZmZzZXQgPSAwOyBvZmZzZXQgPCB0b3RhbDsgb2Zmc2V0ICs9IEJBVENIX1NJWkUpIHsKICAgIGlmIChsaW1pdCAmJiBwcm9jZXNzZWQgPj0gbGltaXQpIGJyZWFrOwoKICAgIGNvbnN0IHBvbGl0aWNpYW5zID0gYXdhaXQgcHJpc21hLnBvbGl0aWNpYW5zLmZpbmRNYW55KHsKICAgICAgdGFrZTogQkFUQ0hfU0laRSwKICAgICAgc2tpcDogb2Zmc2V0LAogICAgICBvcmRlckJ5OiB7IGlkOiAiYXNjIiB9LAogICAgICBzZWxlY3Q6IHsKICAgICAgICBpZDogdHJ1ZSwKICAgICAgICBzb3VyY2U6IHRydWUsCiAgICAgICAgc3RhdGU6IHRydWUsCiAgICAgICAgcHJvZmlsZVVybDogdHJ1ZSwKICAgICAgICByYXdEYXRhOiB0cnVlLAogICAgICAgIGZ1bGxOYW1lOiB0cnVlLAogICAgICAgIHBhcnR5OiB0cnVlLAogICAgICB9LAogICAgfSk7CgogICAgZm9yIChjb25zdCBwb2xpdGljaWFuIG9mIHBvbGl0aWNpYW5zKSB7CiAgICAgIGlmIChsaW1pdCAmJiBwcm9jZXNzZWQgPj0gbGltaXQpIGJyZWFrOwogICAgICBwcm9jZXNzZWQrKzsKCiAgICAgIGxldCBzdGF0ZSA9IG51bGw7CiAgICAgIGxldCBwcm9maWxlVXJsID0gbnVsbDsKICAgICAgbGV0IHBhcnR5ID0gbnVsbDsKCiAgICAgIHRyeSB7CiAgICAgICAgaWYgKHBvbGl0aWNpYW4uc291cmNlID09PSAiYWJnZW9yZG5ldGVud2F0Y2giKSB7CiAgICAgICAgICBjb25zdCBub3JtYWxpemVkID0gcG9saXRpY2lhbi5yYXdEYXRhCiAgICAgICAgICAgID8gSlNPTi5wYXJzZShwb2xpdGljaWFuLnJhd0RhdGEpCiAgICAgICAgICAgIDogbnVsbDsKICAgICAgICAgIGNvbnN0IG9yaWdpbmFsTWFuZGF0ZSA9IG5vcm1hbGl6ZWQ/LnJhd0RhdGEgfHwgbnVsbDsKICAgICAgICAgIHN0YXRlID0gZXh0cmFjdFN0YXRlRnJvbUF3UmF3RGF0YShvcmlnaW5hbE1hbmRhdGUpOwogICAgICAgICAgcHJvZmlsZVVybCA9IGV4dHJhY3RQcm9maWxlVXJsRnJvbUF3UmF3RGF0YShvcmlnaW5hbE1hbmRhdGUpOwogICAgICAgIH0gZWxzZSBpZiAocG9saXRpY2lhbi5zb3VyY2UgPT09ICJidW5kZXN0YWciKSB7CiAgICAgICAgICAvLyBGaXJzdCB0cnkgdG8gZXh0cmFjdCBwYXJ0eSBhbmQgc3RhdGUgZGlyZWN0bHkgZnJvbSB0aGUgRElQIHJhdyByZWNvcmQuCiAgICAgICAgICAvLyBUaGUgc3luYy1wb2xpdGljaWFuLWRhdGEgZmFsbGJhY2sgaGlzdG9yaWNhbGx5IHN0b3JlZCB0aGUgcmF3IERJUAogICAgICAgICAgLy8gcGVyc29uIG9iamVjdCBidXQgbGVmdCBwYXJ0eS9zdGF0ZSBudWxsLCBzbyB3ZSByZXBhaXIgYWxsIHRocmVlLgogICAgICAgICAgY29uc3QgZXh0cmFjdGVkUGFydHkgPSBleHRyYWN0UGFydHlGcm9tQnVuZGVzdGFnUmF3RGF0YSgKICAgICAgICAgICAgcG9saXRpY2lhbi5yYXdEYXRhLAogICAgICAgICAgKTsKICAgICAgICAgIHN0YXRlID0gZXh0cmFjdFN0YXRlRnJvbUJ1bmRlc3RhZ1Jhd0RhdGEocG9saXRpY2lhbi5yYXdEYXRhKTsKICAgICAgICAgIGlmIChhd0xvb2t1cC5zaXplID4gMCkgewogICAgICAgICAgICBjb25zdCBrZXkgPSBtYXRjaEtleSh7CiAgICAgICAgICAgICAgLi4ucG9saXRpY2lhbiwKICAgICAgICAgICAgICBwYXJ0eTogZXh0cmFjdGVkUGFydHkgfHwgcG9saXRpY2lhbi5wYXJ0eSwKICAgICAgICAgICAgfSk7CiAgICAgICAgICAgIGNvbnN0IGF3TWF0Y2ggPSBhd0xvb2t1cC5nZXQoa2V5KTsKICAgICAgICAgICAgaWYgKGF3TWF0Y2gpIHsKICAgICAgICAgICAgICBjb25zdCBvcmlnaW5hbE1hbmRhdGUgPSBhd01hdGNoLnJhd0RhdGEgfHwgbnVsbDsKICAgICAgICAgICAgICBzdGF0ZSA9IHN0YXRlIHx8IGV4dHJhY3RTdGF0ZUZyb21Bd1Jhd0RhdGEob3JpZ2luYWxNYW5kYXRlKTsKICAgICAgICAgICAgICBwcm9maWxlVXJsID0gZXh0cmFjdFByb2ZpbGVVcmxGcm9tQXdSYXdEYXRhKG9yaWdpbmFsTWFuZGF0ZSk7CiAgICAgICAgICAgIH0KICAgICAgICAgIH0KICAgICAgICAgIC8vIFJlcGFpciB0aGUgcGFydHkgY29sdW1uIHRvbywgYnV0IG9ubHkgaWYgaXQgaXMgY3VycmVudGx5IGVtcHR5LgogICAgICAgICAgaWYgKCFwb2xpdGljaWFuLnBhcnR5ICYmIGV4dHJhY3RlZFBhcnR5KSB7CiAgICAgICAgICAgIHBhcnR5ID0gZXh0cmFjdGVkUGFydHk7CiAgICAgICAgICB9CiAgICAgICAgfQoKICAgICAgICBjb25zdCBuZWVkc1VwZGF0ZSA9CiAgICAgICAgICAoc3RhdGUgJiYgcG9saXRpY2lhbi5zdGF0ZSAhPT0gc3RhdGUpIHx8CiAgICAgICAgICAocHJvZmlsZVVybCAmJiBwb2xpdGljaWFuLnByb2ZpbGVVcmwgIT09IHByb2ZpbGVVcmwpIHx8CiAgICAgICAgICAocGFydHkgJiYgcG9saXRpY2lhbi5wYXJ0eSAhPT0gcGFydHkpOwoKICAgICAgICBpZiAoIW5lZWRzVXBkYXRlKSBjb250aW51ZTsKCiAgICAgICAgaWYgKGRyeVJ1bikgewogICAgICAgICAgY29uc29sZS5sb2coCiAgICAgICAgICAgIGBbYmFja2ZpbGxdIFdvdWxkIHVwZGF0ZSAke3BvbGl0aWNpYW4uaWR9OiBwYXJ0eT0ke3BhcnR5ID8/IHBvbGl0aWNpYW4ucGFydHl9LCBzdGF0ZT0ke3N0YXRlID8/IHBvbGl0aWNpYW4uc3RhdGV9LCBwcm9maWxlVXJsPSR7cHJvZmlsZVVybCA/PyBwb2xpdGljaWFuLnByb2ZpbGVVcmx9YCwKICAgICAgICAgICk7CiAgICAgICAgICB1cGRhdGVkKys7CiAgICAgICAgICBjb250aW51ZTsKICAgICAgICB9CgogICAgICAgIGF3YWl0IHByaXNtYS5wb2xpdGljaWFucy51cGRhdGUoewogICAgICAgICAgd2hlcmU6IHsgaWQ6IHBvbGl0aWNpYW4uaWQgfSwKICAgICAgICAgIGRhdGE6IHsKICAgICAgICAgICAgLi4uKHBhcnR5ICYmIHsgcGFydHkgfSksCiAgICAgICAgICAgIC4uLihzdGF0ZSAmJiB7IHN0YXRlIH0pLAogICAgICAgICAgICAuLi4ocHJvZmlsZVVybCAmJiB7IHByb2ZpbGVVcmwgfSksCiAgICAgICAgICB9LAogICAgICAgIH0pOwogICAgICAgIHVwZGF0ZWQrKzsKICAgICAgfSBjYXRjaCAoZXJyKSB7CiAgICAgICAgZmFpbGVkKys7CiAgICAgICAgaWYgKGZhaWxlZCA8PSA1KSB7CiAgICAgICAgICBjb25zb2xlLmVycm9yKAogICAgICAgICAgICBgW2JhY2tmaWxsXSBFcnJvciBwcm9jZXNzaW5nICR7cG9saXRpY2lhbi5pZH06ICR7ZXJyLm1lc3NhZ2V9YCwKICAgICAgICAgICk7CiAgICAgICAgfQogICAgICB9CiAgICB9CgogICAgaWYgKHByb2Nlc3NlZCAlIDUwMCA8IEJBVENIX1NJWkUpIHsKICAgICAgY29uc3QgZWxhcHNlZCA9ICgoRGF0ZS5ub3coKSAtIHN0YXJ0VGltZSkgLyAxMDAwKS50b0ZpeGVkKDEpOwogICAgICBjb25zb2xlLmxvZygKICAgICAgICBgW2JhY2tmaWxsXSBQcm9ncmVzczogcHJvY2Vzc2VkPSR7cHJvY2Vzc2VkfSB1cGRhdGVkPSR7dXBkYXRlZH0gZmFpbGVkPSR7ZmFpbGVkfSBlbGFwc2VkPSR7ZWxhcHNlZH1zYCwKICAgICAgKTsKICAgIH0KICB9CgogIGNvbnN0IGVsYXBzZWQgPSAoKERhdGUubm93KCkgLSBzdGFydFRpbWUpIC8gMTAwMCkudG9GaXhlZCgxKTsKICBjb25zb2xlLmxvZyhgXG5bYmFja2ZpbGxdIERvbmUgaW4gJHtlbGFwc2VkfXNgKTsKICBjb25zb2xlLmxvZygKICAgIGBbYmFja2ZpbGxdIFByb2Nlc3NlZDogJHtwcm9jZXNzZWR9LCBVcGRhdGVkOiAke3VwZGF0ZWR9LCBGYWlsZWQ6ICR7ZmFpbGVkfWAsCiAgKTsKCiAgYXdhaXQgcHJpc21hLiRkaXNjb25uZWN0KCk7Cn0KCm1haW4oKS5jYXRjaChhc3luYyAoZXJyKSA9PiB7CiAgY29uc29sZS5lcnJvcigiW2JhY2tmaWxsXSBGYXRhbCBlcnJvcjoiLCBlcnIubWVzc2FnZSk7CiAgYXdhaXQgcHJpc21hLiRkaXNjb25uZWN0KCkuY2F0Y2goKCkgPT4ge30pOwogIHByb2Nlc3MuZXhpdCgxKTsKfSk7Cg==
+#!/usr/bin/env node
+// SPDX-License-Identifier: MIT
+/**
+ * Backfill script: repair politician state and profileUrl.
+ *
+ * Usage:
+ *   node server/jobs/backfill-politician-state.js
+ *   node server/jobs/backfill-politician-state.js --dry-run     # count only, no updates
+ *   node server/jobs/backfill-politician-state.js --limit=100   # only touch 100 records
+ *   node server/jobs/backfill-politician-state.js --no-aw        # skip Abgeordnetenwatch cross-reference
+ *
+ * Purpose: One-time repair job. The Abgeordnetenwatch sync historically stored
+ *          politicianApiUrl as profileUrl and left state null. For Bundestag
+ *          (DIP) records, the DIP API does not expose state or a public profile
+ *          URL, so we cross-reference with Abgeordnetenwatch by name + party.
+ */
+
+const { PrismaClient } = require("@prisma/client");
+const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
+const {
+  AbgeordnetenwatchApi,
+} = require("../utils/politician/abgeordnetenwatchApi");
+const {
+  extractStateFromAwRawData,
+  extractProfileUrlFromAwRawData,
+  extractStateFromBundestagRawData,
+  extractPartyFromBundestagRawData,
+} = require("../utils/politician/extractors");
+
+// PrismaBetterSqlite3 treats `?` params as part of the filename — strip them.
+const sqliteUrl = process.env.DATABASE_URL || "file:../storage/opensin.db";
+const adapter = new PrismaBetterSqlite3({
+  url: sqliteUrl.split("?")[0],
+});
+const prisma = new PrismaClient({ adapter });
+
+function normalizeName(name) {
+  return (name || "").toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+function matchKey(p) {
+  return `${normalizeName(p.fullName)}|${p.party || ""}`;
+}
+
+async function loadAwLookup() {
+  try {
+    const api = new AbgeordnetenwatchApi();
+    const politicians = await api.fetchAllPoliticians({ enrich: false });
+    const byKey = new Map();
+    for (const p of politicians) {
+      const key = matchKey(p);
+      if (!byKey.has(key)) byKey.set(key, p);
+    }
+    console.log(
+      `[backfill] Loaded ${byKey.size} Abgeordnetenwatch records for cross-reference`,
+    );
+    return byKey;
+  } catch (err) {
+    console.error(
+      `[backfill] Failed to load Abgeordnetenwatch data: ${err.message}`,
+    );
+    return new Map();
+  }
+}
+
+async function main() {
+  const args = process.argv.slice(2);
+  const dryRun = args.includes("--dry-run");
+  const noAw = args.includes("--no-aw");
+  const limitArg = args.find((a) => a.startsWith("--limit="));
+  const limit = limitArg ? parseInt(limitArg.split("=")[1], 10) : null;
+
+  const total = await prisma.politicians.count();
+  console.log(`[backfill] Total politicians: ${total}`);
+  if (limit) console.log(`[backfill] Limit: ${limit}`);
+  if (dryRun) console.log("[backfill] Dry run — no updates will be performed.");
+
+  const awLookup = noAw ? new Map() : await loadAwLookup();
+
+  const BATCH_SIZE = 100;
+  let processed = 0;
+  let updated = 0;
+  let failed = 0;
+  const startTime = Date.now();
+
+  for (let offset = 0; offset < total; offset += BATCH_SIZE) {
+    if (limit && processed >= limit) break;
+
+    const politicians = await prisma.politicians.findMany({
+      take: BATCH_SIZE,
+      skip: offset,
+      orderBy: { id: "asc" },
+      select: {
+        id: true,
+        source: true,
+        state: true,
+        profileUrl: true,
+        rawData: true,
+        fullName: true,
+        party: true,
+      },
+    });
+
+    for (const politician of politicians) {
+      if (limit && processed >= limit) break;
+      processed++;
+
+      let state = null;
+      let profileUrl = null;
+      let party = null;
+
+      try {
+        if (politician.source === "abgeordnetenwatch") {
+          const normalized = politician.rawData
+            ? JSON.parse(politician.rawData)
+            : null;
+          const originalMandate = normalized?.rawData || null;
+          state = extractStateFromAwRawData(originalMandate);
+          profileUrl = extractProfileUrlFromAwRawData(originalMandate);
+        } else if (politician.source === "bundestag") {
+          // First try to extract party and state directly from the DIP raw record.
+          // The sync-politician-data fallback historically stored the raw DIP
+          // person object but left party/state null, so we repair all three.
+          const extractedParty = extractPartyFromBundestagRawData(
+            politician.rawData,
+          );
+          state = extractStateFromBundestagRawData(politician.rawData);
+          if (awLookup.size > 0) {
+            const key = matchKey({
+              ...politician,
+              party: extractedParty || politician.party,
+            });
+            const awMatch = awLookup.get(key);
+            if (awMatch) {
+              const originalMandate = awMatch.rawData || null;
+              state = state || extractStateFromAwRawData(originalMandate);
+              profileUrl = extractProfileUrlFromAwRawData(originalMandate);
+            }
+          }
+          // Repair the party column too, but only if it is currently empty.
+          if (!politician.party && extractedParty) {
+            party = extractedParty;
+          }
+        }
+
+        const needsUpdate =
+          (state && politician.state !== state) ||
+          (profileUrl && politician.profileUrl !== profileUrl) ||
+          (party && politician.party !== party);
+
+        if (!needsUpdate) continue;
+
+        if (dryRun) {
+          console.log(
+            `[backfill] Would update ${politician.id}: party=${party ?? politician.party}, state=${state ?? politician.state}, profileUrl=${profileUrl ?? politician.profileUrl}`,
+          );
+          updated++;
+          continue;
+        }
+
+        await prisma.politicians.update({
+          where: { id: politician.id },
+          data: {
+            ...(party && { party }),
+            ...(state && { state }),
+            ...(profileUrl && { profileUrl }),
+          },
+        });
+        updated++;
+      } catch (err) {
+        failed++;
+        if (failed <= 5) {
+          console.error(
+            `[backfill] Error processing ${politician.id}: ${err.message}`,
+          );
+        }
+      }
+    }
+
+    if (processed % 500 < BATCH_SIZE) {
+      const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+      console.log(
+        `[backfill] Progress: processed=${processed} updated=${updated} failed=${failed} elapsed=${elapsed}s`,
+      );
+    }
+  }
+
+  const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+  console.log(`\n[backfill] Done in ${elapsed}s`);
+  console.log(
+    `[backfill] Processed: ${processed}, Updated: ${updated}, Failed: ${failed}`,
+  );
+
+  await prisma.$disconnect();
+}
+
+main().catch(async (err) => {
+  console.error("[backfill] Fatal error:", err.message);
+  await prisma.$disconnect().catch(() => {});
+  process.exit(1);
+});
