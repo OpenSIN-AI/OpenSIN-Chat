@@ -32,8 +32,14 @@ const ApiKey = {
 
       return { apiKey, error: null };
     } catch (error) {
-      consoleLogger.error("FAILED TO CREATE API KEY.", error.message);
-      return { apiKey: null, error: error.message };
+      // Sanitize error message to avoid leaking the generated secret in logs.
+      // Prisma error messages can echo back input data in edge cases.
+      const sanitizedMessage = (error.message || "Unknown error").replace(
+        /secret["\s:]+[^\s,}"]+/gi,
+        "secret: [REDACTED]",
+      );
+      consoleLogger.error("FAILED TO CREATE API KEY.", sanitizedMessage);
+      return { apiKey: null, error: sanitizedMessage };
     }
   },
 

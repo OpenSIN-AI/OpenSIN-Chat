@@ -88,24 +88,29 @@ const Invite = {
           const validWorkspaceIds = ids.filter((id) => validIds.has(id));
 
           if (validWorkspaceIds.length !== 0) {
-            for (const workspaceId of validWorkspaceIds) {
-              // Check for existing membership to avoid duplicate
-              // workspace_users entries (the table has no unique
-              // constraint on user_id + workspace_id).
-              const existing = await tx.workspace_users.findFirst({
-                where: {
+            // Batch check for existing memberships to avoid N+1 findFirst calls
+            const existingMemberships = await tx.workspace_users.findMany({
+              where: {
+                user_id: Number(user.id),
+                workspace_id: { in: validWorkspaceIds },
+              },
+              select: { workspace_id: true },
+            });
+            const existingWorkspaceIds = new Set(
+              existingMemberships.map((m) => m.workspace_id),
+            );
+            const newWorkspaceIds = validWorkspaceIds.filter(
+              (id) => !existingWorkspaceIds.has(id),
+            );
+
+            // Batch create all new memberships in a single createMany call
+            if (newWorkspaceIds.length > 0) {
+              await tx.workspace_users.createMany({
+                data: newWorkspaceIds.map((workspaceId) => ({
                   user_id: Number(user.id),
                   workspace_id: workspaceId,
-                },
+                })),
               });
-              if (!existing) {
-                await tx.workspace_users.create({
-                  data: {
-                    user_id: Number(user.id),
-                    workspace_id: workspaceId,
-                  },
-                });
-              }
             }
           }
         }

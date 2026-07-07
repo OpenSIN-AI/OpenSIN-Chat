@@ -54,7 +54,15 @@ function settingsEndpoints(app) {
 
   app.post(
     "/system/update-password",
-    [validatedRequest],
+    [
+      validatedRequest,
+      simpleRateLimit({
+        bucket: "password-update-ip",
+        max: 10,
+        windowMs: 60 * 60 * 1000,
+        identity: "user",
+      }),
+    ],
     async (request, response) => {
       try {
         // Cannot update password in multi - user mode.

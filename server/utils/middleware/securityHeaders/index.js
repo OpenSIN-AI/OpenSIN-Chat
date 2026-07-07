@@ -1,1 +1,145 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovKioKICogc2VjdXJpdHlIZWFkZXJzIOKAlCBkZXBlbmRlbmN5LWZyZWUgc2VjdXJpdHkgcmVzcG9uc2UgaGVhZGVycyBmb3IgQUxMIHJvdXRlcy4KICoKICogUHVycG9zZTogUHJldmlvdXNseSBYLUZyYW1lLU9wdGlvbnMgd2FzIG9ubHkgc2V0IG9uIHN0YXRpYyBhc3NldHM7IEFQSQogKiByZXNwb25zZXMgYW5kIHRoZSBTU1IgaW5kZXggcGFnZSBzaGlwcGVkIHdpdGggbm8gc2VjdXJpdHkgaGVhZGVycyBhdCBhbGwuCiAqIFRoaXMgbWlkZGxld2FyZSBpcyBtb3VudGVkIGdsb2JhbGx5IChiZWZvcmUgYWxsIHJvdXRlcnMpIGluIHNlcnZlci9pbmRleC5qcy4KICoKICogSGVhZGVycyBzZXQ6CiAqICAtIFgtQ29udGVudC1UeXBlLU9wdGlvbnM6IG5vc25pZmYgICAgICAoYmxvY2tzIE1JTUUgc25pZmZpbmcpCiAqICAtIFgtRnJhbWUtT3B0aW9uczogREVOWSAgICAgICAgICAgICAgICAoY2xpY2tqYWNraW5nLCBhbGwgcm91dGVzIG5vdykKICogIC0gWC1YU1MtUHJvdGVjdGlvbjogMTsgbW9kZT1ibG9jayAgICAobGVnYWN5IFhTUyBwcm90ZWN0aW9uIGZvciBvbGRlciBicm93c2VycykKICogIC0gUmVmZXJyZXItUG9saWN5OiBzdHJpY3Qtb3JpZ2luLXdoZW4tY3Jvc3Mtb3JpZ2luCiAqICAtIFBlcm1pc3Npb25zLVBvbGljeSAgICAgICAgICAgICAgICAgICAoa2lsbHMgdW51c2VkIHBvd2VyZnVsIEFQSXMpCiAqICAtIFgtUG93ZXJlZC1CeSAgICAgICAgICAgICAgICAgICAgICAgICAocmVtb3ZlZCDigJQgbm8gc3RhY2sgZmluZ2VycHJpbnRpbmcpCiAqICAtIFN0cmljdC1UcmFuc3BvcnQtU2VjdXJpdHkgICAgICAgICAgICAob25seSB3aGVuIEVOQUJMRV9IU1RTPXRydWU7IHNldCBpdAogKiAgICBvbmNlIFRMUyB0ZXJtaW5hdGlvbiBpcyBjb25maXJtZWQg4oCUIEhTVFMgb24gcGxhaW4gSFRUUCBpcyBoYXJtbGVzcyBidXQKICogICAgbWlzbGVhZGluZywgSFNUUyBiZWhpbmQgYnJva2VuIFRMUyBsb2NrcyB1c2VycyBvdXQpCiAqICAtIENvbnRlbnQtU2VjdXJpdHktUG9saWN5ICAgICAgICAgICAgICAoZW5mb3JjZWQ7IHJlc3RyaWN0cyBvdXRib3VuZAogKiAgICBmZXRjaGVzIHRvIGtub3duIExMTSArIHN0b3JhZ2UgZW5kcG9pbnRzLCBubyBpbmxpbmUgc2NyaXB0cykKICogIC0gQ29udGVudC1TZWN1cml0eS1Qb2xpY3ktUmVwb3J0LU9ubHkgIChvbmx5IHdoZW4gQ1NQX1JFUE9SVF9PTkxZPXRydWU7CiAqICAgIG1lYXN1cmUgdmlvbGF0aW9ucyBmaXJzdCwga2VwdCBvbiBhcyBhIHBhcmFsbGVsIHNpZ25hbCkKICovCgpjb25zdCB7IHJhbmRvbVVVSUQgfSA9IHJlcXVpcmUoImNyeXB0byIpOwoKY29uc3QgUEVSTUlTU0lPTlNfUE9MSUNZID0gWwogICJjYW1lcmE9KCkiLAogICJnZW9sb2NhdGlvbj0oKSIsCiAgInBheW1lbnQ9KCkiLAogICJ1c2I9KCkiLAogIC8vIG1pY3JvcGhvbmUgc3RheXMgc2VsZi1hbGxvd2VkOiBzcGVlY2gtdG8tdGV4dCB1c2VzIGl0CiAgIm1pY3JvcGhvbmU9KHNlbGYpIiwKXS5qb2luKCIsICIpOwoKY29uc3QgRU5GT1JDRURfQ1NQX0NPTk5FQ1RfU1JDID0gWwogICInc2VsZiciLAogICJibG9iOiIsCiAgImRhdGE6IiwKICAiaHR0cHM6Ly9hcGkuYW50aHJvcGljLmNvbSIsCiAgImh0dHBzOi8vYXBpLmZpcmV3b3Jrcy5haSIsCiAgImh0dHBzOi8vYXBpLmNvaGVyZS5haSIsCiAgImh0dHBzOi8vYXBpLmdyb3EuY29tIiwKICAiaHR0cHM6Ly9nZW5lcmF0aXZlbGFuZ3VhZ2UuZ29vZ2xlYXBpcy5jb20iLAogICJodHRwczovL2FwaS5taXN0cmFsLmFpIiwKICAiaHR0cHM6Ly9hcGkuZGVlcHNlZWsuY29tIiwKICAiaHR0cHM6Ly9hcGkucGVycGxleGl0eS5haSIsCiAgImh0dHBzOi8vYXBpLnRvZ2V0aGVyLnh5eiIsCiAgImh0dHBzOi8vb3BlbnJvdXRlci5haSIsCiAgImh0dHBzOi8vYXBpLnguYWkiLAogICJodHRwczovL2Fyay5jbi1iZWlqaW5nLnZvbGNlcy5jb20iLAogICJodHRwczovL2Rhc2hzY29wZS5hbGl5dW5jcy5jb20iLAogICJodHRwczovL2FwaS5vcGVuYWkuY29tL3YxIiwKICAiaHR0cHM6Ly9hcGkuZWxldmVubGFicy5pbyIsCiAgImh0dHBzOi8vKi5zdXBhYmFzZS5jbyIsCiAgImh0dHBzOi8vKi5hbWF6b25hd3MuY29tIiwKICAiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwKICAiaHR0cHM6Ly9saDQuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwKICAiaHR0cHM6Ly9saDUuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwKICAiaHR0cHM6Ly9saDYuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwKXTsKCmZ1bmN0aW9uIGJ1aWxkRW5mb3JjZWRDc3Aobm9uY2UpIHsKICBjb25zdCBzY3JpcHRTcmMgPQogICAgcHJvY2Vzcy5lbnYuTk9ERV9FTlYgPT09ICJwcm9kdWN0aW9uIgogICAgICA/IGAnc2VsZicgJ25vbmNlLSR7bm9uY2V9JyAnd2FzbS11bnNhZmUtZXZhbCdgCiAgICAgIDogIidzZWxmJyAndW5zYWZlLWlubGluZScgJ3dhc20tdW5zYWZlLWV2YWwnIjsKICByZXR1cm4gWwogICAgImRlZmF1bHQtc3JjICdzZWxmJyIsCiAgICBgc2NyaXB0LXNyYyAke3NjcmlwdFNyY31gLAogICAgInN0eWxlLXNyYyAnc2VsZicgJ3Vuc2FmZS1pbmxpbmUnIiwKICAgICJmb250LXNyYyAnc2VsZicgZGF0YToiLAogICAgImltZy1zcmMgJ3NlbGYnIGRhdGE6IGJsb2I6IGh0dHBzOiIsCiAgICAibWVkaWEtc3JjICdzZWxmJyBibG9iOiIsCiAgICAid29ya2VyLXNyYyAnc2VsZicgYmxvYjoiLAogICAgYGNvbm5lY3Qtc3JjICR7RU5GT1JDRURfQ1NQX0NPTk5FQ1RfU1JDLmpvaW4oIiAiKX1gLAogICAgIm9iamVjdC1zcmMgJ25vbmUnIiwKICAgICJ1cGdyYWRlLWluc2VjdXJlLXJlcXVlc3RzIiwKICAgICJmcmFtZS1zcmMgJ3NlbGYnIGJsb2I6IGRhdGE6IiwKICAgICJiYXNlLXVyaSAnc2VsZiciLAogICAgImZyYW1lLWFuY2VzdG9ycyAnc2VsZiciLAogICAgInJlcG9ydC11cmkgL2FwaS9jc3AtdmlvbGF0aW9uIiwKICBdLmpvaW4oIjsgIik7Cn0KCmNvbnN0IFJFUE9SVF9PTkxZX0NTUCA9IFsKICAiZGVmYXVsdC1zcmMgJ3NlbGYnIiwKICAic2NyaXB0LXNyYyAnc2VsZicgJ3dhc20tdW5zYWZlLWV2YWwnIiwKICAic3R5bGUtc3JjICdzZWxmJyAndW5zYWZlLWlubGluZSciLAogICJmb250LXNyYyAnc2VsZicgZGF0YToiLAogICJpbWctc3JjICdzZWxmJyBkYXRhOiBibG9iOiBodHRwczoiLAogICJtZWRpYS1zcmMgJ3NlbGYnIGJsb2I6IiwKICAid29ya2VyLXNyYyAnc2VsZicgYmxvYjoiLAogICJjb25uZWN0LXNyYyAqIiwKICAib2JqZWN0LXNyYyAnbm9uZSciLAogICJ1cGdyYWRlLWluc2VjdXJlLXJlcXVlc3RzIiwgImZyYW1lLXNyYyAnc2VsZicgYmxvYjogZGF0YToiLAogICJiYXNlLXVyaSAnc2VsZiciLAogICJmcmFtZS1hbmNlc3RvcnMgJ3NlbGYnIiwKXS5qb2luKCI7ICIpOwoKLyoqCiAqIENyZWF0ZSB0aGUgZ2xvYmFsIHNlY3VyaXR5LWhlYWRlcnMgbWlkZGxld2FyZS4KICogQHJldHVybnMge2ltcG9ydCgiZXhwcmVzcyIpLlJlcXVlc3RIYW5kbGVyfQogKi8KZnVuY3Rpb24gc2VjdXJpdHlIZWFkZXJzKCkgewogIGNvbnN0IGhzdHNFbmFibGVkID0gU3RyaW5nKHByb2Nlc3MuZW52LkVOQUJMRV9IU1RTKS50b0xvd2VyQ2FzZSgpID09PSAidHJ1ZSI7CiAgY29uc3QgY3NwUmVwb3J0T25seSA9CiAgICBTdHJpbmcocHJvY2Vzcy5lbnYuQ1NQX1JFUE9SVF9PTkxZKS50b0xvd2VyQ2FzZSgpID09PSAidHJ1ZSI7CgogIHJldHVybiBmdW5jdGlvbiBzZWN1cml0eUhlYWRlcnNNaWRkbGV3YXJlKF9yZXF1ZXN0LCByZXNwb25zZSwgbmV4dCkgewogICAgcmVzcG9uc2UucmVtb3ZlSGVhZGVyKCJYLVBvd2VyZWQtQnkiKTsKICAgIHJlc3BvbnNlLnNldEhlYWRlcigiWC1Db250ZW50LVR5cGUtT3B0aW9ucyIsICJub3NuaWZmIik7CiAgICByZXNwb25zZS5zZXRIZWFkZXIoIlgtRnJhbWUtT3B0aW9ucyIsICJERU5ZIik7CiAgICByZXNwb25zZS5zZXRIZWFkZXIoIlgtWFNTLVByb3RlY3Rpb24iLCAiMTsgbW9kZT1ibG9jayIpOwogICAgcmVzcG9uc2Uuc2V0SGVhZGVyKCJSZWZlcnJlci1Qb2xpY3kiLCAic3RyaWN0LW9yaWdpbi13aGVuLWNyb3NzLW9yaWdpbiIpOwogICAgcmVzcG9uc2Uuc2V0SGVhZGVyKCJQZXJtaXNzaW9ucy1Qb2xpY3kiLCBQRVJNSVNTSU9OU19QT0xJQ1kpOwoKICAgIGlmIChyZXNwb25zZS5sb2NhbHMgJiYgdHlwZW9mIHJlc3BvbnNlLmxvY2FscyA9PT0gIm9iamVjdCIpIHsKICAgICAgcmVzcG9uc2UubG9jYWxzLmNzcE5vbmNlID0gcmFuZG9tVVVJRCgpLnJlcGxhY2VBbGwoIi0iLCAiIik7CiAgICB9CiAgICByZXNwb25zZS5zZXRIZWFkZXIoCiAgICAgICJDb250ZW50LVNlY3VyaXR5LVBvbGljeSIsCiAgICAgIGJ1aWxkRW5mb3JjZWRDc3AocmVzcG9uc2UubG9jYWxzPy5jc3BOb25jZSB8fCAiIiksCiAgICApOwoKICAgIGlmIChoc3RzRW5hYmxlZCkKICAgICAgcmVzcG9uc2Uuc2V0SGVhZGVyKAogICAgICAgICJTdHJpY3QtVHJhbnNwb3J0LVNlY3VyaXR5IiwKICAgICAgICAibWF4LWFnZT0xNTU1MjAwMDsgaW5jbHVkZVN1YkRvbWFpbnMiLAogICAgICApOwoKICAgIGlmIChjc3BSZXBvcnRPbmx5KQogICAgICByZXNwb25zZS5zZXRIZWFkZXIoCiAgICAgICAgIkNvbnRlbnQtU2VjdXJpdHktUG9saWN5LVJlcG9ydC1Pbmx5IiwKICAgICAgICBSRVBPUlRfT05MWV9DU1AsCiAgICAgICk7CgogICAgbmV4dCgpOwogIH07Cn0KCm1vZHVsZS5leHBvcnRzID0geyBzZWN1cml0eUhlYWRlcnMgfTsK
+// SPDX-License-Identifier: MIT
+/**
+ * securityHeaders — dependency-free security response headers for ALL routes.
+ *
+ * Purpose: Previously X-Frame-Options was only set on static assets; API
+ * responses and the SSR index page shipped with no security headers at all.
+ * This middleware is mounted globally (before all routers) in server/index.js.
+ *
+ * Headers set:
+ *  - X-Content-Type-Options: nosniff      (blocks MIME sniffing)
+ *  - X-Frame-Options: DENY                (clickjacking, all routes now)
+ *  - X-XSS-Protection: 1; mode=block    (legacy XSS protection for older browsers)
+ *  - Referrer-Policy: strict-origin-when-cross-origin
+ *  - Permissions-Policy                   (kills unused powerful APIs)
+ *  - X-Powered-By                         (removed — no stack fingerprinting)
+ *  - Strict-Transport-Security            (only when ENABLE_HSTS=true; set it
+ *    once TLS termination is confirmed — HSTS on plain HTTP is harmless but
+ *    misleading, HSTS behind broken TLS locks users out)
+ *  - Content-Security-Policy              (enforced; restricts outbound
+ *    fetches to known LLM + storage endpoints, no inline scripts)
+ *  - Content-Security-Policy-Report-Only  (only when CSP_REPORT_ONLY=true;
+ *    measure violations first, kept on as a parallel signal)
+ */
+
+const { randomUUID } = require("crypto");
+
+const PERMISSIONS_POLICY = [
+  "camera=()",
+  "geolocation=()",
+  "payment=()",
+  "usb=()",
+  // microphone stays self-allowed: speech-to-text uses it
+  "microphone=(self)",
+].join(", ");
+
+const ENFORCED_CSP_CONNECT_SRC = [
+  "'self'",
+  "blob:",
+  "data:",
+  "https://api.anthropic.com",
+  "https://api.fireworks.ai",
+  "https://api.cohere.ai",
+  "https://api.groq.com",
+  "https://generativelanguage.googleapis.com",
+  "https://api.mistral.ai",
+  "https://api.deepseek.com",
+  "https://api.perplexity.ai",
+  "https://api.together.xyz",
+  "https://openrouter.ai",
+  "https://api.x.ai",
+  "https://ark.cn-beijing.volces.com",
+  "https://dashscope.aliyuncs.com",
+  "https://api.openai.com/v1",
+  "https://api.elevenlabs.io",
+  "https://*.supabase.co",
+  "https://*.amazonaws.com",
+  "https://lh3.googleusercontent.com",
+  "https://lh4.googleusercontent.com",
+  "https://lh5.googleusercontent.com",
+  "https://lh6.googleusercontent.com",
+];
+
+function buildEnforcedCsp(nonce) {
+  const scriptSrc =
+    process.env.NODE_ENV === "production"
+      ? `'self' 'nonce-${nonce}' 'wasm-unsafe-eval'`
+      : "'self' 'unsafe-inline' 'wasm-unsafe-eval'";
+  return [
+    "default-src 'self'",
+    `script-src ${scriptSrc}`,
+    "style-src 'self' 'unsafe-inline'",
+    "font-src 'self' data:",
+    "img-src 'self' data: blob: https:",
+    "media-src 'self' blob:",
+    "worker-src 'self' blob:",
+    `connect-src ${ENFORCED_CSP_CONNECT_SRC.join(" ")}`,
+    "object-src 'none'",
+    "upgrade-insecure-requests",
+    "frame-src 'self' blob: data:",
+    "base-uri 'self'",
+    "frame-ancestors 'self'",
+    "report-uri /api/csp-violation",
+  ].join("; ");
+}
+
+const REPORT_ONLY_CSP = [
+  "default-src 'self'",
+  "script-src 'self' 'wasm-unsafe-eval'",
+  "style-src 'self' 'unsafe-inline'",
+  "font-src 'self' data:",
+  "img-src 'self' data: blob: https:",
+  "media-src 'self' blob:",
+  "worker-src 'self' blob:",
+  "connect-src *",
+  "object-src 'none'",
+  "upgrade-insecure-requests", "frame-src 'self' blob: data:",
+  "base-uri 'self'",
+  "frame-ancestors 'self'",
+].join("; ");
+
+/**
+ * Create the global security-headers middleware.
+ * @returns {import("express").RequestHandler}
+ */
+function securityHeaders() {
+  const hstsEnabled = String(process.env.ENABLE_HSTS).toLowerCase() === "true";
+  const cspReportOnly =
+    String(process.env.CSP_REPORT_ONLY).toLowerCase() === "true";
+
+  return function securityHeadersMiddleware(_request, response, next) {
+    response.removeHeader("X-Powered-By");
+    response.setHeader("X-Content-Type-Options", "nosniff");
+    response.setHeader("X-Frame-Options", "DENY");
+        // X-XSS-Protection is deprecated in modern browsers and can introduce
+    // vulnerabilities in edge cases. CSP is the modern protection mechanism.
+    // Setting to "0" explicitly disables the legacy filter.
+    response.setHeader("X-XSS-Protection", "0");
+    response.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+    response.setHeader("Permissions-Policy", PERMISSIONS_POLICY);
+
+    if (response.locals && typeof response.locals === "object") {
+      response.locals.cspNonce = randomUUID().replaceAll("-", "");
+    }
+    response.setHeader(
+      "Content-Security-Policy",
+      buildEnforcedCsp(response.locals?.cspNonce || ""),
+    );
+
+    if (hstsEnabled)
+      response.setHeader(
+        "Strict-Transport-Security",
+        "max-age=15552000; includeSubDomains",
+      );
+
+    if (cspReportOnly)
+      response.setHeader(
+        "Content-Security-Policy-Report-Only",
+        REPORT_ONLY_CSP,
+      );
+
+    next();
+  };
+}
+
+module.exports = { securityHeaders };

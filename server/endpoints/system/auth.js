@@ -459,6 +459,12 @@ function authEndpoints(app) {
         max: 5,
         windowMs: 15 * 60 * 1000,
       }),
+      simpleRateLimit({
+        bucket: "account-recovery-ip",
+        max: 3,
+        windowMs: 60 * 60 * 1000,
+        identity: "user",
+      }),
     ],
     async (request, response) => {
       try {
@@ -490,6 +496,12 @@ function authEndpoints(app) {
         bucket: "password-reset",
         max: 5,
         windowMs: 15 * 60 * 1000,
+      }),
+      simpleRateLimit({
+        bucket: "password-reset-ip",
+        max: 5,
+        windowMs: 60 * 60 * 1000,
+        identity: "user",
       }),
     ],
     async (request, response) => {

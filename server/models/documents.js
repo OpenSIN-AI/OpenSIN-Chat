@@ -315,29 +315,55 @@ const Document = {
       resolvedDocs.push(document);
     }
 
-    for (const document of resolvedDocs) {
-      try {
-        await VectorDb.deleteDocumentFromNamespace(
-          workspace.slug,
-          document.docId,
-        );
-      } catch (err) {
-        consoleLogger.error(
-          `Failed to delete vectors for document ${document.docId}:`,
-          err.message,
-        );
+    // Batched DB deletes: single deleteMany instead of per-doc loop
+    const docIds = resolvedDocs.map((d) => d.docId);
+    try {
+      // Try batch delete from vector DB if the adapter supports it
+      if (typeof VectorDb.deleteDocumentsFromNamespace === "function") {
+        await VectorDb.deleteDocumentsFromNamespace(workspace.slug, docIds);
+      } else {
+        for (const document of resolvedDocs) {
+          try {
+            await VectorDb.deleteDocumentFromNamespace(
+              workspace.slug,
+              document.docId,
+            );
+          } catch (err) {
+            consoleLogger.error(
+              `Failed to delete vectors for document ${document.docId}:`,
+              err.message,
+            );
+          }
+        }
+      }
+    } catch (err) {
+      consoleLogger.error(
+        `Failed to batch-delete vectors for documents:`,
+        err.message,
+      );
+      // Fallback to per-doc deletion
+      for (const document of resolvedDocs) {
+        try {
+          await VectorDb.deleteDocumentFromNamespace(
+            workspace.slug,
+            document.docId,
+          );
+        } catch (err) {
+          consoleLogger.error(
+            `Failed to delete vectors for document ${document.docId}:`,
+            err.message,
+          );
+        }
       }
     }
 
     await prisma.$transaction(async (tx) => {
-      for (const document of resolvedDocs) {
-        await tx.workspace_documents.delete({
-          where: { id: document.id },
-        });
-        await tx.document_vectors.deleteMany({
-          where: { docId: document.docId },
-        });
-      }
+      await tx.workspace_documents.deleteMany({
+        where: { id: { in: resolvedDocs.map((d) => d.id) } },
+      });
+      await tx.document_vectors.deleteMany({
+        where: { docId: { in: docIds } },
+      });
     });
 
     await EventLogs.logEvent(

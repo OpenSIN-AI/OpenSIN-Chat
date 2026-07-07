@@ -27,7 +27,7 @@ function apiKeyQuota(request, _response, next) {
   const bearer = auth ? auth.split(" ")[1] : "anon";
   return simpleRateLimit({
     bucket: `api-key:${bearer}`,
-    max: 100,
+    max: 50,
     windowMs: 60 * 1000,
   })(request, _response, next);
 }
