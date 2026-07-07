@@ -180,6 +180,7 @@ export default function SettingsSidebar() {
             <div className="relative h-[calc(100%-60px)] flex flex-col w-full justify-between pt-[10px] overflow-y-scroll no-scroll">
               <div className="h-auto sidebar-items">
                 <div className="flex flex-col gap-y-2 pb-[60px] overflow-y-scroll no-scroll">
+                  <BackToChatButton t={t} />
                   <SidebarOptions user={user} t={t} />
                   <div className="h-[1.5px] bg-[#3D4147] mx-3 mt-[14px]" />
                   <SupportEmail />
@@ -560,3 +561,4 @@ function AppVersion() {
     </>
   );
 }
+
