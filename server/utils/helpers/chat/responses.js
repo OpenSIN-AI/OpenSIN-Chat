@@ -2,8 +2,6 @@
 const consoleLogger = require("../../logger/console.js");
 
 const { v4: uuidv4 } = require("uuid");
-const moment = require("moment");
-
 function clientAbortedHandler(resolve, fullText) {
   consoleLogger.log(
     "\x1b[43m\x1b[34m[STREAM ABORTED]\x1b[0m Client requested to abort stream. Exiting LLM stream handler early.",
@@ -191,7 +189,7 @@ function convertToChatHistory(history = []) {
       {
         role: "user",
         content: prompt,
-        sentAt: moment(createdAt).unix(),
+        sentAt: Math.floor(new Date(createdAt).getTime() / 1000),
         attachments: data?.attachments ?? [],
         chatId: id,
       },
@@ -201,7 +199,7 @@ function convertToChatHistory(history = []) {
         content: data.text,
         sources: data.sources || [],
         chatId: id,
-        sentAt: moment(createdAt).unix(),
+        sentAt: Math.floor(new Date(createdAt).getTime() / 1000),
         feedbackScore,
         metrics: data?.metrics || {},
         ...(data?.outputs?.length > 0 ? { outputs: data.outputs } : {}),

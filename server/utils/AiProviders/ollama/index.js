@@ -139,7 +139,6 @@ class OllamaAILLM {
     try {
       if (!("OLLAMA_RESPONSE_TIMEOUT" in process.env)) return fetch;
       const { Agent } = require("undici");
-      const moment = require("moment");
       let timeout = process.env.OLLAMA_RESPONSE_TIMEOUT;
 
       if (!timeout || isNaN(Number(timeout)) || Number(timeout) <= 5 * 60_000) {
@@ -157,7 +156,9 @@ class OllamaAILLM {
         });
       };
 
-      const humanDiff = moment.duration(timeout).humanize();
+      const humanDiff = timeout >= 60_000
+        ? `${Math.round(timeout / 60_000)} min`
+        : `${Math.round(timeout / 1_000)} sec`;
       OllamaAILLM.#slog(`Applying custom fetch w/timeout of ${humanDiff}.`);
       return noTimeoutFetch;
     } catch (error) {

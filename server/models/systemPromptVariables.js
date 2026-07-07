@@ -2,8 +2,6 @@
 const consoleLogger = require("../utils/logger/console.js");
 
 const prisma = require("../utils/prisma");
-const moment = require("moment");
-
 /**
  * @typedef {Object} SystemPromptVariable
  * @property {number} id
@@ -20,21 +18,21 @@ const SystemPromptVariables = {
   DEFAULT_VARIABLES: [
     {
       key: "time",
-      value: () => moment().format("LTS"),
+      value: () => new Intl.DateTimeFormat(undefined, { timeStyle: "medium" }).format(new Date()),
       description: "Current time",
       type: "system",
       multiUserRequired: false,
     },
     {
       key: "date",
-      value: () => moment().format("LL"),
+      value: () => new Intl.DateTimeFormat(undefined, { dateStyle: "long" }).format(new Date()),
       description: "Current date",
       type: "system",
       multiUserRequired: false,
     },
     {
       key: "datetime",
-      value: () => moment().format("LLLL"),
+      value: () => new Intl.DateTimeFormat(undefined, { dateStyle: "full", timeStyle: "short" }).format(new Date()),
       description: "Current date and time",
       type: "system",
       multiUserRequired: false,

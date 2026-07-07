@@ -39,14 +39,13 @@ class NativeEmbedder {
     this.modelInfo = this.getEmbedderInfo();
     this.cacheDir = getStoragePath("models");
     this.modelPath = path.resolve(this.cacheDir, ...this.model.split("/"));
-    this.modelDownloaded = fs.existsSync(this.modelPath);
-
     // Limit of how many strings we can process in a single pass to stay with resource or network limits
     this.maxConcurrentChunks = this.modelInfo.maxConcurrentChunks;
     this.embeddingMaxChunkLength = this.modelInfo.embeddingMaxChunkLength;
 
-    // Make directory when it does not exist in existing installations
-    if (!fs.existsSync(this.cacheDir)) fs.mkdirSync(this.cacheDir);
+    // Lazily checked on first embed; constructor must stay sync for DI compatibility.
+    this.modelDownloaded = false;
+    fs.mkdirSync(this.cacheDir, { recursive: true });
     this.log(`Initialized ${this.model}`);
   }
 
@@ -114,7 +113,7 @@ class NativeEmbedder {
   #tempfilePath() {
     const filename = `${v4()}.tmp`;
     const tmpPath = getStoragePath("tmp");
-    if (!fs.existsSync(tmpPath)) fs.mkdirSync(tmpPath, { recursive: true });
+    fs.mkdirSync(tmpPath, { recursive: true });
     return path.resolve(tmpPath, filename);
   }
 
@@ -130,7 +129,7 @@ class NativeEmbedder {
     try {
       // Convert ESM to CommonJS via import so we can load this library.
       const pipeline = (...args) =>
-        import("@xenova/transformers").then(({ pipeline, env }) => {
+        import("@huggingface/transformers").then(({ pipeline, env }) => {
           if (!this.modelDownloaded) {
             // if model is not downloaded, we will log where we are fetching from.
             if (hostOverride) {
@@ -288,12 +287,11 @@ class NativeEmbedder {
 
       if (!wroteAnyData) return [];
 
-      const embeddingResults = JSON.parse(
-        fs.readFileSync(tmpFilePath, { encoding: "utf-8" }),
-      );
+      const raw = await fs.promises.readFile(tmpFilePath, { encoding: "utf-8" });
+      const embeddingResults = JSON.parse(raw);
       return embeddingResults.length > 0 ? embeddingResults.flat() : null;
     } finally {
-      fs.rmSync(tmpFilePath, { force: true });
+      await fs.promises.rm(tmpFilePath, { force: true });
     }
   }
 }

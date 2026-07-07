@@ -1,23 +1,19 @@
 // SPDX-License-Identifier: MIT
 const consoleLogger = require("../../logger/console.js");
 
+// Direct Voyage AI REST API — no @langchain/community dependency.
+// API docs: https://docs.voyageai.com/docs/embeddings
+const VOYAGE_EMBED_URL = "https://api.voyageai.com/v1/embeddings";
+const VOYAGE_BATCH_SIZE = 128; // Voyage AI's per-request limit
+
 class VoyageAiEmbedder {
   constructor() {
     if (!process.env.VOYAGEAI_API_KEY)
       throw new Error("No Voyage AI API key was set.");
 
-    const {
-      VoyageEmbeddings,
-    } = require("@langchain/community/embeddings/voyage");
-
+    this.apiKey = process.env.VOYAGEAI_API_KEY;
     this.model = process.env.EMBEDDING_MODEL_PREF || "voyage-3-lite";
-    this.voyage = new VoyageEmbeddings({
-      apiKey: process.env.VOYAGEAI_API_KEY,
-      modelName: this.model,
-      // Voyage AI's limit per request is 128 https://docs.voyageai.com/docs/rate-limits#use-larger-batches
-      batchSize: 128,
-    });
-    this.maxConcurrentChunks = 128;
+    this.maxConcurrentChunks = VOYAGE_BATCH_SIZE;
     this.embeddingMaxChunkLength = this.#getMaxEmbeddingLength();
   }
 
@@ -43,11 +39,35 @@ class VoyageAiEmbedder {
     }
   }
 
-  async embedTextInput(textInput) {
-    const result = await this.voyage.embedDocuments(
-      Array.isArray(textInput) ? textInput : [textInput],
-    );
+  async #embed(inputs) {
+    const response = await fetch(VOYAGE_EMBED_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.apiKey}`,
+      },
+      body: JSON.stringify({ model: this.model, input: inputs }),
+    });
 
+    if (!response.ok) {
+      const body = await response.text().catch(() => "");
+      if (response.status === 429)
+        throw new Error("Voyage AI failed to embed: Rate limit reached");
+      throw new Error(
+        `Voyage AI embedding request failed (${response.status}): ${body}`,
+      );
+    }
+
+    const json = await response.json();
+    // Sort by index to guarantee order, then extract the embedding vectors.
+    return json.data
+      .sort((a, b) => a.index - b.index)
+      .map((item) => item.embedding);
+  }
+
+  async embedTextInput(textInput) {
+    const inputs = Array.isArray(textInput) ? textInput : [textInput];
+    const result = await this.#embed(inputs);
     if (!result) return [];
     return Array.isArray(textInput) ? result : result.flat();
   }
@@ -55,18 +75,16 @@ class VoyageAiEmbedder {
   async embedChunks(textChunks = []) {
     if (textChunks.length === 0) return [];
     try {
-      const embeddings = await this.voyage.embedDocuments(textChunks);
-      return embeddings;
+      // Voyage AI's per-request limit is 128 — batch if needed.
+      const results = [];
+      for (let i = 0; i < textChunks.length; i += VOYAGE_BATCH_SIZE) {
+        const batch = textChunks.slice(i, i + VOYAGE_BATCH_SIZE);
+        const embeddings = await this.#embed(batch);
+        results.push(...embeddings);
+      }
+      return results;
     } catch (error) {
       consoleLogger.error("Voyage AI Failed to embed:", error);
-      if (
-        error.message.includes(
-          "Cannot read properties of undefined (reading '0')",
-        )
-      )
-        throw new Error("Voyage AI failed to embed: Rate limit reached", {
-          cause: error,
-        });
       throw error;
     }
   }
