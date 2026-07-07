@@ -1,1 +1,119 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyB1c2VNZW1vIH0gZnJvbSAicmVhY3QiOwppbXBvcnQgdXNlU3lzdGVtU2V0dGluZ3MgZnJvbSAiQC9ob29rcy91c2VTeXN0ZW1TZXR0aW5ncyI7CmltcG9ydCB7IFBST1ZJREVSX1BSSVZBQ1lfTUFQIH0gZnJvbSAiLi9jb25zdGFudHMiOwppbXBvcnQgeyBBcnJvd1NxdWFyZU91dCB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9BcnJvd1NxdWFyZU91dCI7CmltcG9ydCBPcGVuU0lOQ2hhdEljb24gZnJvbSAiQC9tZWRpYS9sb2dvL29wZW5zaW4taWNvbi5zdmciOwppbXBvcnQgeyBMaW5rIH0gZnJvbSAicmVhY3Qtcm91dGVyLWRvbSI7CmltcG9ydCB7IHRpdGxlQ2FzZSwgc2VudGVuY2VDYXNlIH0gZnJvbSAidGV4dC1jYXNlIjsKaW1wb3J0IHsgdXNlVHJhbnNsYXRpb24gfSBmcm9tICJyZWFjdC1pMThuZXh0IjsKCmZ1bmN0aW9uIGRlZmF1bHRQcm92aWRlcihwcm92aWRlclN0cmluZywgdCkgewogIHJldHVybiB7CiAgICBuYW1lOiBwcm92aWRlclN0cmluZwogICAgICA/IHRpdGxlQ2FzZShzZW50ZW5jZUNhc2UoU3RyaW5nKHByb3ZpZGVyU3RyaW5nKSkpCiAgICAgIDogdCgicHJvdmlkZXJQcml2YWN5LnVua25vd24iKSwKICAgIGRlc2NyaXB0aW9uOiBbCiAgICAgIHQoInByb3ZpZGVyUHJpdmFjeS5ub1BvbGljeURlZmluZWQiLCB7IHByb3ZpZGVyOiBwcm92aWRlclN0cmluZyB9KSwKICAgIF0sCiAgICBsb2dvOiBPcGVuU0lOQ2hhdEljb24sCiAgfTsKfQoKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gUHJvdmlkZXJQcml2YWN5KCkgewogIGNvbnN0IHsgdCB9ID0gdXNlVHJhbnNsYXRpb24oKTsKICBjb25zdCB7IHNldHRpbmdzLCBsb2FkaW5nIH0gPSB1c2VTeXN0ZW1TZXR0aW5ncygpOwoKICBjb25zdCBwcm92aWRlcnMgPSB1c2VNZW1vKCgpID0+IHsKICAgIGlmICghc2V0dGluZ3MpCiAgICAgIHJldHVybiB7IGxsbVByb3ZpZGVyOiBudWxsLCBlbWJlZGRpbmdFbmdpbmU6IG51bGwsIHZlY3RvckRiOiBudWxsIH07CiAgICBjb25zdCBwcm92aWRlckRlZmluaXRpb24gPQogICAgICBQUk9WSURFUl9QUklWQUNZX01BUC5sbG1bc2V0dGluZ3M/LkxMTVByb3ZpZGVyXSB8fAogICAgICBkZWZhdWx0UHJvdmlkZXIoc2V0dGluZ3M/LkxMTVByb3ZpZGVyLCB0KTsKICAgIGNvbnN0IGVtYmVkZGluZ0VuZ2luZURlZmluaXRpb24gPQogICAgICBQUk9WSURFUl9QUklWQUNZX01BUC5lbWJlZGRpbmdFbmdpbmVbc2V0dGluZ3M/LkVtYmVkZGluZ0VuZ2luZV0gfHwKICAgICAgZGVmYXVsdFByb3ZpZGVyKHNldHRpbmdzPy5FbWJlZGRpbmdFbmdpbmUsIHQpOwogICAgY29uc3QgdmVjdG9yRGJEZWZpbml0aW9uID0KICAgICAgUFJPVklERVJfUFJJVkFDWV9NQVAudmVjdG9yRGJbc2V0dGluZ3M/LlZlY3RvckRCXSB8fAogICAgICBkZWZhdWx0UHJvdmlkZXIoc2V0dGluZ3M/LlZlY3RvckRCLCB0KTsKCiAgICByZXR1cm4gewogICAgICBsbG1Qcm92aWRlcjogcHJvdmlkZXJEZWZpbml0aW9uLAogICAgICBlbWJlZGRpbmdFbmdpbmU6IGVtYmVkZGluZ0VuZ2luZURlZmluaXRpb24sCiAgICAgIHZlY3RvckRiOiB2ZWN0b3JEYkRlZmluaXRpb24sCiAgICB9OwogIH0sIFtzZXR0aW5nc10pOwoKICBpZiAobG9hZGluZykgcmV0dXJuIG51bGw7CiAgcmV0dXJuICgKICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIGdhcC04IHctZnVsbCBtYXgtdy0yeGwiPgogICAgICA8UHJvdmlkZXJQcml2YWN5SXRlbQogICAgICAgIHRpdGxlPXt0KCJwcm92aWRlclByaXZhY3kubGxtUHJvdmlkZXIiKX0KICAgICAgICBwcm92aWRlcj17cHJvdmlkZXJzLmxsbVByb3ZpZGVyfQogICAgICAgIGFsdFRleHQ9e3QoInByb3ZpZGVyUHJpdmFjeS5sbG1Mb2dvIil9CiAgICAgIC8+CiAgICAgIDxQcm92aWRlclByaXZhY3lJdGVtCiAgICAgICAgdGl0bGU9e3QoInByb3ZpZGVyUHJpdmFjeS5lbWJlZGRpbmdQcmVmZXJlbmNlIil9CiAgICAgICAgcHJvdmlkZXI9e3Byb3ZpZGVycy5lbWJlZGRpbmdFbmdpbmV9CiAgICAgICAgYWx0VGV4dD17dCgicHJvdmlkZXJQcml2YWN5LmVtYmVkZGluZ0xvZ28iKX0KICAgICAgLz4KICAgICAgPFByb3ZpZGVyUHJpdmFjeUl0ZW0KICAgICAgICB0aXRsZT17dCgicHJvdmlkZXJQcml2YWN5LnZlY3RvckRhdGFiYXNlIil9CiAgICAgICAgcHJvdmlkZXI9e3Byb3ZpZGVycy52ZWN0b3JEYn0KICAgICAgICBhbHRUZXh0PXt0KCJwcm92aWRlclByaXZhY3kudmVjdG9yRGJMb2dvIil9CiAgICAgIC8+CiAgICA8L2Rpdj4KICApOwp9CgpmdW5jdGlvbiBQcm92aWRlclByaXZhY3lJdGVtKHsgdGl0bGUsIHByb3ZpZGVyLCBhbHRUZXh0IH06IGFueSkgewogIGNvbnN0IHsgdCB9ID0gdXNlVHJhbnNsYXRpb24oKTsKICByZXR1cm4gKAogICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgaXRlbXMtc3RhcnQgZ2FwLXktMyBwYi00IGJvcmRlci1iIGJvcmRlci10aGVtZS1zaWRlYmFyLWJvcmRlciI+CiAgICAgIDxkaXYgY2xhc3NOYW1lPSJ0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSB0ZXh0LWJhc2UgZm9udC1ib2xkIj57dGl0bGV9PC9kaXY+CiAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLXN0YXJ0IGdhcC0zIj4KICAgICAgICA8aW1nCiAgICAgICAgICBzcmM9e3Byb3ZpZGVyLmxvZ299CiAgICAgICAgICBhbHQ9e2FsdFRleHR9CiAgICAgICAgICBjbGFzc05hbWU9InctOCBoLTggcm91bmRlZCBmbGV4LXNocmluay0wIG10LTAuNSIKICAgICAgICAvPgogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIGdhcC0yIGZsZXgtMSI+CiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTIgZmxleC13cmFwIj4KICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJ0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSB0ZXh0LXNtIGZvbnQtc2VtaWJvbGQiPgogICAgICAgICAgICAgIHtwcm92aWRlci5uYW1lfQogICAgICAgICAgICA8L3NwYW4+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIHtwcm92aWRlci5wb2xpY3lVcmwgPyAoCiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJ0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5IHRleHQtc20iPgogICAgICAgICAgICAgIHt0KCJwcm92aWRlclByaXZhY3kudXNhZ2VTdWJqZWN0VG8iKX17IiAifQogICAgICAgICAgICAgIDxMaW5rCiAgICAgICAgICAgICAgICBjbGFzc05hbWU9InRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkgaG92ZXI6dGV4dC10aGVtZS10ZXh0LXByaW1hcnkgdGV4dC1zbSBmb250LW1lZGl1bSB1bmRlcmxpbmUgdHJhbnNpdGlvbi1jb2xvcnMgaW5saW5lLWZsZXggaXRlbXMtY2VudGVyIGdhcC0xIgogICAgICAgICAgICAgICAgdG89e3Byb3ZpZGVyLnBvbGljeVVybH0KICAgICAgICAgICAgICAgIHRhcmdldD0iX2JsYW5rIgogICAgICAgICAgICAgICAgcmVsPSJub29wZW5lciBub3JlZmVycmVyIgogICAgICAgICAgICAgID4KICAgICAgICAgICAgICAgIHt0KCJwcm92aWRlclByaXZhY3kucHJpdmFjeVBvbGljeSIpfQogICAgICAgICAgICAgICAgPEFycm93U3F1YXJlT3V0IHNpemU9ezEyfSAvPgogICAgICAgICAgICAgIDwvTGluaz4KICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAvLyBlc2xpbnQtZGlzYWJsZS1uZXh0LWxpbmUgaTE4bmV4dC9uby1saXRlcmFsLXN0cmluZwogICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAuCiAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgKSA6ICgKICAgICAgICAgICAgcHJvdmlkZXIuZGVzY3JpcHRpb24gJiYgKAogICAgICAgICAgICAgIDx1bCBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgbGlzdC1ub25lIGdhcC0xIj4KICAgICAgICAgICAgICAgIHsvKiBpbmRleCBrZXkgT0s6IHN0YXRpYyBsaXN0ICovfQogICAgICAgICAgICAgICAge3Byb3ZpZGVyLmRlc2NyaXB0aW9uLm1hcCgoZGVzYywgaWR4KSA9PiAoCiAgICAgICAgICAgICAgICAgIDxsaSBrZXk9e2lkeH0gY2xhc3NOYW1lPSJ0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5IHRleHQtc20iPgogICAgICAgICAgICAgICAgICAgIHtkZXNjfQogICAgICAgICAgICAgICAgICA8L2xpPgogICAgICAgICAgICAgICAgKSl9CiAgICAgICAgICAgICAgPC91bD4KICAgICAgICAgICAgKQogICAgICAgICAgKX0KICAgICAgICA8L2Rpdj4KICAgICAgPC9kaXY+CiAgICA8L2Rpdj4KICApOwp9Cg==
+// SPDX-License-Identifier: MIT
+import { useMemo } from "react";
+import useSystemSettings from "@/hooks/useSystemSettings";
+import { PROVIDER_PRIVACY_MAP } from "./constants";
+import { ArrowSquareOut } from "@phosphor-icons/react/dist/csr/ArrowSquareOut";
+import OpenSINChatIcon from "@/media/logo/opensin-icon.svg";
+import { Link } from "react-router-dom";
+import { titleCase, sentenceCase } from "text-case";
+import { useTranslation } from "react-i18next";
+
+function defaultProvider(providerString, t) {
+  return {
+    name: providerString
+      ? titleCase(sentenceCase(String(providerString)))
+      : t("providerPrivacy.unknown"),
+    description: [
+      t("providerPrivacy.noPolicyDefined", { provider: providerString }),
+    ],
+    logo: OpenSINChatIcon,
+  };
+}
+
+export default function ProviderPrivacy() {
+  const { t } = useTranslation();
+  const { settings, loading } = useSystemSettings();
+
+  const providers = useMemo(() => {
+    if (!settings)
+      return { llmProvider: null, embeddingEngine: null, vectorDb: null };
+    const providerDefinition =
+      PROVIDER_PRIVACY_MAP.llm[settings?.LLMProvider] ||
+      defaultProvider(settings?.LLMProvider, t);
+    const embeddingEngineDefinition =
+      PROVIDER_PRIVACY_MAP.embeddingEngine[settings?.EmbeddingEngine] ||
+      defaultProvider(settings?.EmbeddingEngine, t);
+    const vectorDbDefinition =
+      PROVIDER_PRIVACY_MAP.vectorDb[settings?.VectorDB] ||
+      defaultProvider(settings?.VectorDB, t);
+
+    return {
+      llmProvider: providerDefinition,
+      embeddingEngine: embeddingEngineDefinition,
+      vectorDb: vectorDbDefinition,
+    };
+  }, [settings]);
+
+  if (loading) return null;
+  return (
+    <div className="flex flex-col gap-8 w-full max-w-2xl">
+      <ProviderPrivacyItem
+        title={t("providerPrivacy.llmProvider")}
+        provider={providers.llmProvider}
+        altText={t("providerPrivacy.llmLogo")}
+      />
+      <ProviderPrivacyItem
+        title={t("providerPrivacy.embeddingPreference")}
+        provider={providers.embeddingEngine}
+        altText={t("providerPrivacy.embeddingLogo")}
+      />
+      <ProviderPrivacyItem
+        title={t("providerPrivacy.vectorDatabase")}
+        provider={providers.vectorDb}
+        altText={t("providerPrivacy.vectorDbLogo")}
+      />
+    </div>
+  );
+}
+
+function ProviderPrivacyItem({ title, provider, altText }: any) {
+  const { t } = useTranslation();
+  return (
+    <div className="flex flex-col items-start gap-y-3 pb-4 border-b border-theme-sidebar-border">
+      <div className="text-theme-text-primary text-base font-bold">{title}</div>
+      <div className="flex items-start gap-3">
+        <img
+          src={provider.logo}
+          alt={altText}
+          className="w-8 h-8 rounded flex-shrink-0 mt-0.5"
+        />
+        <div className="flex flex-col gap-2 flex-1">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-theme-text-primary text-sm font-semibold">
+              {provider.name}
+            </span>
+          </div>
+          {provider.policyUrl ? (
+            <div className="text-theme-text-secondary text-sm">
+              {t("providerPrivacy.usageSubjectTo")}{" "}
+              <Link
+                className="text-theme-text-secondary hover:text-theme-text-primary text-sm font-medium underline transition-colors inline-flex items-center gap-1"
+                to={provider.policyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t("providerPrivacy.privacyPolicy")}
+                <ArrowSquareOut size={12} />
+              </Link>
+              {
+                // eslint-disable-next-line i18next/no-literal-string
+              }
+              .
+            </div>
+          ) : (
+            provider.description && (
+              <ul className="flex flex-col list-none gap-1">
+                {/* index key OK: static list */}
+                {provider.description.map((desc, idx) => (
+                  <li key={idx} className="text-theme-text-secondary text-sm">
+                    {desc}
+                  </li>
+                ))}
+              </ul>
+            )
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

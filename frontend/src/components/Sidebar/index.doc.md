@@ -22,7 +22,7 @@
 
 ## Important config values
 
-- `SIDEBAR_WIDTH_STORAGE_KEY` = "openafd-sidebar-width".
+- `SIDEBAR_WIDTH_STORAGE_KEY` = "opensin_sidebar_width".
 - `SIDEBAR_MIN_WIDTH` = 220, `SIDEBAR_MAX_WIDTH` = 480, `SIDEBAR_DEFAULT_WIDTH` = 292.
 
 ## Why certain decisions were made

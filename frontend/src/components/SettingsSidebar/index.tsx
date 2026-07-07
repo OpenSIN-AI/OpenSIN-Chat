@@ -1,1 +1,541 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgUmVhY3QsIHsgdXNlRWZmZWN0LCB1c2VSZWYsIHVzZVN0YXRlIH0gZnJvbSAicmVhY3QiOwppbXBvcnQgcGF0aHMgZnJvbSAiQC91dGlscy9wYXRocyI7CmltcG9ydCB1c2VMb2dvIGZyb20gIkAvaG9va3MvdXNlTG9nbyI7CmltcG9ydCB7IEhvdXNlIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL0hvdXNlIjsKaW1wb3J0IHsgTGlzdCB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9MaXN0IjsKaW1wb3J0IHsgRmxhc2sgfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvRmxhc2siOwppbXBvcnQgeyBHZWFyIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL0dlYXIiOwppbXBvcnQgeyBVc2VyQ2lyY2xlR2VhciB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9Vc2VyQ2lyY2xlR2VhciI7CmltcG9ydCB7IFBlbmNpbFNpbXBsZUxpbmUgfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvUGVuY2lsU2ltcGxlTGluZSI7CmltcG9ydCB7IE51dCB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9OdXQiOwppbXBvcnQgeyBUb29sYm94IH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL1Rvb2xib3giOwppbXBvcnQgeyBQbHVncyB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9QbHVncyI7CmltcG9ydCBBZ2VudEljb24gZnJvbSAiQC9tZWRpYS9hbmltYXRpb25zL2FnZW50LXN0YXRpYy5wbmciOwppbXBvcnQgQ29tbXVuaXR5SHViSWNvbiBmcm9tICJAL21lZGlhL2lsbHVzdHJhdGlvbnMvY29tbXVuaXR5LWh1Yi5wbmciOwppbXBvcnQgdXNlVXNlciBmcm9tICJAL2hvb2tzL3VzZVVzZXIiOwppbXBvcnQgeyB1c2VJc01vYmlsZUxheW91dCB9IGZyb20gIkAvaG9va3MvdXNlSXNNb2JpbGVMYXlvdXQiOwppbXBvcnQgRm9vdGVyIGZyb20gIi4uL0Zvb3RlciI7CmltcG9ydCB7IExpbmsgfSBmcm9tICJyZWFjdC1yb3V0ZXItZG9tIjsKaW1wb3J0IHsgdXNlVHJhbnNsYXRpb24gfSBmcm9tICJyZWFjdC1pMThuZXh0IjsKaW1wb3J0IHNob3dUb2FzdCBmcm9tICJAL3V0aWxzL3RvYXN0IjsKaW1wb3J0IHsgc2FmZUdldEl0ZW0sIHNhZmVTZXRJdGVtIH0gZnJvbSAiQC91dGlscy9zYWZlU3RvcmFnZSI7CmltcG9ydCBPcHRpb24gZnJvbSAiLi9NZW51T3B0aW9uIjsKaW1wb3J0IHsgQ2FuVmlld0NoYXRIaXN0b3J5UHJvdmlkZXIgfSBmcm9tICIuLi9DYW5WaWV3Q2hhdEhpc3RvcnkiOwppbXBvcnQgdXNlQXBwVmVyc2lvbiBmcm9tICJAL2hvb2tzL3VzZUFwcFZlcnNpb24iOwppbXBvcnQgdXNlU3VwcG9ydEVtYWlsIGZyb20gIkAvaG9va3MvdXNlU3VwcG9ydEVtYWlsIjsKCmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIFNldHRpbmdzU2lkZWJhcigpIHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgY29uc3QgeyBsb2dvIH0gPSB1c2VMb2dvKCk7CiAgY29uc3QgeyB1c2VyIH0gPSB1c2VVc2VyKCk7CiAgY29uc3QgaXNNb2JpbGUgPSB1c2VJc01vYmlsZUxheW91dCgpOwogIGNvbnN0IHNpZGViYXJSZWYgPSB1c2VSZWYobnVsbCk7CiAgY29uc3QgW3Nob3dTaWRlYmFyLCBzZXRTaG93U2lkZWJhcl0gPSB1c2VTdGF0ZShmYWxzZSBhcyBhbnkpOwogIGNvbnN0IFtzaG93QmdPdmVybGF5LCBzZXRTaG93QmdPdmVybGF5XSA9IHVzZVN0YXRlKGZhbHNlIGFzIGFueSk7CgogIHVzZUVmZmVjdCgoKSA9PiB7CiAgICBpZiAoc2hvd1NpZGViYXIpIHsKICAgICAgY29uc3QgdGltZXIgPSBzZXRUaW1lb3V0KCgpID0+IHsKICAgICAgICBzZXRTaG93QmdPdmVybGF5KHRydWUpOwogICAgICB9LCAzMDApOwogICAgICByZXR1cm4gKCkgPT4gY2xlYXJUaW1lb3V0KHRpbWVyKTsKICAgIH0gZWxzZSB7CiAgICAgIHNldFNob3dCZ092ZXJsYXkoZmFsc2UpOwogICAgfQogIH0sIFtzaG93U2lkZWJhcl0pOwoKICBpZiAoaXNNb2JpbGUpIHsKICAgIHJldHVybiAoCiAgICAgIDw+CiAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZpeGVkIHRvcC0wIGxlZnQtMCByaWdodC0wIHotMTAgZmxleCBqdXN0aWZ5LWJldHdlZW4gaXRlbXMtY2VudGVyIHB4LTQgcHktMiBiZy10aGVtZS1iZy1zaWRlYmFyIGxpZ2h0OmJnLXdoaXRlIHRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkgc2hhZG93LWxnIGgtMTYiPgogICAgICAgICAgPGJ1dHRvbgogICAgICAgICAgICB0eXBlPSJidXR0b24iCiAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IHNldFNob3dTaWRlYmFyKHRydWUpfQogICAgICAgICAgICBjbGFzc05hbWU9InJvdW5kZWQtbWQgcC0yIGZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIHRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkiCiAgICAgICAgICA+CiAgICAgICAgICAgIDxMaXN0IGNsYXNzTmFtZT0iaC02IHctNiIgLz4KICAgICAgICAgIDwvYnV0dG9uPgogICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIGZsZXgtZ3JvdyBnYXAteC0yIj4KICAgICAgICAgICAgPGltZwogICAgICAgICAgICAgIHNyYz17bG9nb30KICAgICAgICAgICAgICBhbHQ9e3QoImNvbW1vbi5sb2dvIil9CiAgICAgICAgICAgICAgY2xhc3NOYW1lPSJoLTYgdy02IG1heC1oLTYgbWF4LXctNiBvYmplY3QtY29udGFpbiIKICAgICAgICAgICAgLz4KICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJ0ZXh0LXdoaXRlIGZvbnQtYm9sZCB0ZXh0LWJhc2UiPk9wZW5TSU48L3NwYW4+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJ3LTEyIj48L2Rpdj4KICAgICAgICA8L2Rpdj4KICAgICAgICA8ZGl2CiAgICAgICAgICBjbGFzc05hbWU9e2B6LTk5IGZpeGVkIHRvcC0wIGxlZnQtMCB0cmFuc2l0aW9uLWFsbCBkdXJhdGlvbi01MDAgdy1bMTAwdnddIGgtWzEwMHZoXSAkewogICAgICAgICAgICBzaG93U2lkZWJhciA/ICJ0cmFuc2xhdGUteC0wIiA6ICItdHJhbnNsYXRlLXgtWzEwMHZ3XSIKICAgICAgICAgIH1gfQogICAgICAgID4KICAgICAgICAgIDxkaXYKICAgICAgICAgICAgY2xhc3NOYW1lPXtgJHsKICAgICAgICAgICAgICBzaG93QmdPdmVybGF5CiAgICAgICAgICAgICAgICA/ICJ0cmFuc2l0aW9uLWFsbCBvcGFjaXR5LTEiCiAgICAgICAgICAgICAgICA6ICJ0cmFuc2l0aW9uLW5vbmUgb3BhY2l0eS0wIgogICAgICAgICAgICB9ICBkdXJhdGlvbi01MDAgZml4ZWQgdG9wLTAgbGVmdC0wIGJnLXRoZW1lLWJnLXNlY29uZGFyeSBiZy1vcGFjaXR5LTc1IHctc2NyZWVuIGgtc2NyZWVuYH0KICAgICAgICAgICAgb25DbGljaz17KCkgPT4gc2V0U2hvd1NpZGViYXIoZmFsc2UpfQogICAgICAgICAgLz4KICAgICAgICAgIDxkaXYKICAgICAgICAgICAgcmVmPXtzaWRlYmFyUmVmfQogICAgICAgICAgICBjbGFzc05hbWU9ImgtWzEwMHZoXSBmaXhlZCB0b3AtMCBsZWZ0LTAgcm91bmRlZC1yLVsyNnB4XSBiZy10aGVtZS1iZy1zaWRlYmFyIHctWzgwJV0gcC1bMThweF0iCiAgICAgICAgICA+CiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJ3LWZ1bGwgaC1mdWxsIGZsZXggZmxleC1jb2wgb3ZlcmZsb3cteC1oaWRkZW4ganVzdGlmeS1iZXR3ZWVuIj4KICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCB3LWZ1bGwgaXRlbXMtY2VudGVyIGp1c3RpZnktYmV0d2VlbiBnYXAteC00Ij4KICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IHNocmluay0wIHctZml0IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LXN0YXJ0IGdhcC14LTIiPgogICAgICAgICAgICAgICAgICA8aW1nCiAgICAgICAgICAgICAgICAgICAgc3JjPXtsb2dvfQogICAgICAgICAgICAgICAgICAgIGFsdD17dCgiY29tbW9uLmxvZ28iKX0KICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9InctOCBoLTggbWF4LWgtWzMycHhdIG1heC13LVszMnB4XSBvYmplY3QtY29udGFpbiIKICAgICAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJ0ZXh0LXdoaXRlIGZvbnQtYm9sZCB0ZXh0LWJhc2UiPgogICAgICAgICAgICAgICAgICAgIE9wZW5TSU4KICAgICAgICAgICAgICAgICAgPC9zcGFuPgogICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBnYXAteC0yIGl0ZW1zLWNlbnRlciB0ZXh0LXNsYXRlLTUwMCBzaHJpbmstMCI+CiAgICAgICAgICAgICAgICAgIDxhCiAgICAgICAgICAgICAgICAgICAgaHJlZj17cGF0aHMuaG9tZSgpfQogICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0idHJhbnNpdGlvbi1hbGwgZHVyYXRpb24tMzAwIHAtMiByb3VuZGVkLWZ1bGwgdGV4dC13aGl0ZSBiZy10aGVtZS1hY3Rpb24tbWVudS1iZyBob3ZlcjpiZy10aGVtZS1hY3Rpb24tbWVudS1pdGVtLWhvdmVyIGhvdmVyOmJvcmRlci1zbGF0ZS0xMDAgaG92ZXI6Ym9yZGVyLW9wYWNpdHktNTAgYm9yZGVyLXRyYW5zcGFyZW50IGJvcmRlciIKICAgICAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgICAgIDxIb3VzZSBjbGFzc05hbWU9ImgtNCB3LTQiIC8+CiAgICAgICAgICAgICAgICAgIDwvYT4KICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgIDwvZGl2PgoKICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iaC1mdWxsIGZsZXggZmxleC1jb2wgdy1mdWxsIGp1c3RpZnktYmV0d2VlbiBwdC00IG92ZXJmbG93LXktc2Nyb2xsIG5vLXNjcm9sbCI+CiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iaC1hdXRvIG1kOnNpZGViYXItaXRlbXMiPgogICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCBnYXAteS00IHBiLVs2MHB4XSBvdmVyZmxvdy15LXNjcm9sbCBuby1zY3JvbGwiPgogICAgICAgICAgICAgICAgICAgIDxTaWRlYmFyT3B0aW9ucyB1c2VyPXt1c2VyfSB0PXt0fSAvPgogICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJoLVsxLjVweF0gYmctWyMzRDQxNDddIG14LTMgbXQtWzE0cHhdIiAvPgogICAgICAgICAgICAgICAgICAgIDxTdXBwb3J0RW1haWwgLz4KICAgICAgICAgICAgICAgICAgICA8TGluawogICAgICAgICAgICAgICAgICAgICAgaGlkZGVuPXsKICAgICAgICAgICAgICAgICAgICAgICAgdXNlcj8uaGFzT3duUHJvcGVydHkoInJvbGUiKSAmJiB1c2VyLnJvbGUgIT09ICJhZG1pbiIKICAgICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICAgIHRvPXtwYXRocy5zZXR0aW5ncy5wcml2YWN5KCl9CiAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9InRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkgaG92ZXI6dGV4dC13aGl0ZSB0ZXh0LXhzIGxlYWRpbmctWzE4cHhdIG14LTMiCiAgICAgICAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgICAgICAge3QoInNldHRpbmdzLnByaXZhY3kiKX0KICAgICAgICAgICAgICAgICAgICA8L0xpbms+CiAgICAgICAgICAgICAgICAgICAgPEFwcFZlcnNpb24gLz4KICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iYWJzb2x1dGUgYm90dG9tLTIgbGVmdC0wIHJpZ2h0LTAgcHQtMiBiZy10aGVtZS1iZy1zaWRlYmFyIGJnLW9wYWNpdHktODAgYmFja2Ryb3AtZmlsdGVyIGJhY2tkcm9wLWJsdXItbWQiPgogICAgICAgICAgICAgICAgPEZvb3RlciAvPgogICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDwvZGl2PgogICAgICAgIDwvZGl2PgogICAgICA8Lz4KICAgICk7CiAgfQoKICByZXR1cm4gKAogICAgPD4KICAgICAgPGRpdj4KICAgICAgICA8TGluawogICAgICAgICAgdG89e3BhdGhzLmhvbWUoKX0KICAgICAgICAgIGNsYXNzTmFtZT0iZmxleCBzaHJpbmstMCBtYXgtdy1bNTUlXSBpdGVtcy1jZW50ZXIganVzdGlmeS1zdGFydCBteC1bMjAuNXB4XSBteS1bMThweF0gZ2FwLXgtMiIKICAgICAgICA+CiAgICAgICAgICA8aW1nCiAgICAgICAgICAgIHNyYz17bG9nb30KICAgICAgICAgICAgYWx0PXt0KCJjb21tb24ubG9nbyIpfQogICAgICAgICAgICBjbGFzc05hbWU9ImgtNiB3LTYgbWF4LWgtWzI0cHhdIG1heC13LVsyNHB4XSBvYmplY3QtY29udGFpbiIKICAgICAgICAgIC8+CiAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9InRleHQtd2hpdGUgZm9udC1ib2xkIHRleHQtc20iPk9wZW5TSU48L3NwYW4+CiAgICAgICAgPC9MaW5rPgogICAgICAgIDxkaXYKICAgICAgICAgIHJlZj17c2lkZWJhclJlZn0KICAgICAgICAgIGNsYXNzTmFtZT0idHJhbnNpdGlvbi1hbGwgZHVyYXRpb24tNTAwIHJlbGF0aXZlIG0tWzE2cHhdIHJvdW5kZWQtWzE2cHhdIGJnLXRoZW1lLWJnLXNpZGViYXIgYm9yZGVyLVsycHhdIGJvcmRlci10aGVtZS1zaWRlYmFyLWJvcmRlciBsaWdodDpib3JkZXItbm9uZSBtaW4tdy1bMjUwcHhdIHAtWzEwcHhdIGgtW2NhbGMoMTAwJS03NnB4KV0iCiAgICAgICAgPgogICAgICAgICAgPGRpdiBjbGFzc05hbWU9InctZnVsbCBoLWZ1bGwgZmxleCBmbGV4LWNvbCBvdmVyZmxvdy14LWhpZGRlbiBpdGVtcy1zdHJldGNoIG1pbi13LVsyMzVweF0iPgogICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSB0ZXh0LXNtIGZvbnQtbWVkaXVtIHVwcGVyY2FzZSBtdC1bNHB4XSBtYi0wIG1sLTIiPgogICAgICAgICAgICAgIHt0KCJzZXR0aW5ncy50aXRsZSIpfQogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9InJlbGF0aXZlIGgtW2NhbGMoMTAwJS02MHB4KV0gZmxleCBmbGV4LWNvbCB3LWZ1bGwganVzdGlmeS1iZXR3ZWVuIHB0LVsxMHB4XSBvdmVyZmxvdy15LXNjcm9sbCBuby1zY3JvbGwiPgogICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJoLWF1dG8gc2lkZWJhci1pdGVtcyI+CiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCBnYXAteS0yIHBiLVs2MHB4XSBvdmVyZmxvdy15LXNjcm9sbCBuby1zY3JvbGwiPgogICAgICAgICAgICAgICAgICA8U2lkZWJhck9wdGlvbnMgdXNlcj17dXNlcn0gdD17dH0gLz4KICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImgtWzEuNXB4XSBiZy1bIzNENDE0N10gbXgtMyBtdC1bMTRweF0iIC8+CiAgICAgICAgICAgICAgICAgIDxTdXBwb3J0RW1haWwgLz4KICAgICAgICAgICAgICAgICAgPExpbmsKICAgICAgICAgICAgICAgICAgICBoaWRkZW49ewogICAgICAgICAgICAgICAgICAgICAgdXNlcj8uaGFzT3duUHJvcGVydHkoInJvbGUiKSAmJiB1c2VyLnJvbGUgIT09ICJhZG1pbiIKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgdG89e3BhdGhzLnNldHRpbmdzLnByaXZhY3koKX0KICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9InRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkgaG92ZXI6dGV4dC13aGl0ZSBob3ZlcjpsaWdodDp0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSB0ZXh0LXhzIGxlYWRpbmctWzE4cHhdIG14LTMiCiAgICAgICAgICAgICAgICAgID4KICAgICAgICAgICAgICAgICAgICB7dCgic2V0dGluZ3MucHJpdmFjeSIpfQogICAgICAgICAgICAgICAgICA8L0xpbms+CiAgICAgICAgICAgICAgICAgIDxBcHBWZXJzaW9uIC8+CiAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJhYnNvbHV0ZSBib3R0b20tMCBsZWZ0LTAgcmlnaHQtMCBwdC00IHBiLTMgcm91bmRlZC1iLVsxNnB4XSBiZy10aGVtZS1iZy1zaWRlYmFyIGJnLW9wYWNpdHktODAgYmFja2Ryb3AtZmlsdGVyIGJhY2tkcm9wLWJsdXItbWQgei0xMCI+CiAgICAgICAgICAgICAgPEZvb3RlciAvPgogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDwvZGl2PgogICAgICAgIDwvZGl2PgogICAgICA8L2Rpdj4KICAgIDwvPgogICk7Cn0KCmZ1bmN0aW9uIFN1cHBvcnRFbWFpbCgpIHsKICBjb25zdCB7IGVtYWlsIH0gPSB1c2VTdXBwb3J0RW1haWwoKTsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgY29uc3Qgc3VwcG9ydExpbmsgPSBlbWFpbCA/IGBtYWlsdG86JHtlbWFpbH1gIDogcGF0aHMubWFpbFRvU3VwcG9ydCgpOwoKICByZXR1cm4gKAogICAgPExpbmsKICAgICAgdG89e3N1cHBvcnRMaW5rfQogICAgICBjbGFzc05hbWU9InRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkgaG92ZXI6dGV4dC13aGl0ZSBob3ZlcjpsaWdodDp0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSB0ZXh0LXhzIGxlYWRpbmctWzE4cHhdIG14LTMgbXQtMSIKICAgID4KICAgICAge3QoInNldHRpbmdzLmNvbnRhY3QiKX0KICAgIDwvTGluaz4KICApOwp9Cgpjb25zdCBTaWRlYmFyT3B0aW9ucyA9ICh7IHVzZXIgPSBudWxsLCB0IH06IGFueSkgPT4gKAogIDxDYW5WaWV3Q2hhdEhpc3RvcnlQcm92aWRlcj4KICAgIHsoeyB2aWV3YWJsZTogY2FuVmlld0NoYXRIaXN0b3J5IH06IGFueSkgPT4gKAogICAgICA8PgogICAgICAgIDxPcHRpb24KICAgICAgICAgIGJ0blRleHQ9e3QoInNldHRpbmdzLmFpLXByb3ZpZGVycyIpfQogICAgICAgICAgaWNvbj17PEdlYXIgY2xhc3NOYW1lPSJoLTUgdy01IGZsZXgtc2hyaW5rLTAiIC8+fQogICAgICAgICAgdXNlcj17dXNlcn0KICAgICAgICAgIGNoaWxkT3B0aW9ucz17WwogICAgICAgICAgICB7CiAgICAgICAgICAgICAgYnRuVGV4dDogdCgic2V0dGluZ3MubGxtIiksCiAgICAgICAgICAgICAgaHJlZjogcGF0aHMuc2V0dGluZ3MubGxtUHJlZmVyZW5jZSgpLAogICAgICAgICAgICAgIGZsZXg6IHRydWUsCiAgICAgICAgICAgICAgcm9sZXM6IFsiYWRtaW4iXSwKICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgIGJ0blRleHQ6IHQoInNldHRpbmdzU2lkZWJhci5zeXN0ZW1IZWFsdGgiKSwKICAgICAgICAgICAgICBocmVmOiBwYXRocy5zZXR0aW5ncy5zeXN0ZW1IZWFsdGgoKSwKICAgICAgICAgICAgICBmbGV4OiB0cnVlLAogICAgICAgICAgICAgIHJvbGVzOiBbImFkbWluIl0sCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICBidG5UZXh0OiB0KCJzZXR0aW5ncy52ZWN0b3ItZGF0YWJhc2UiKSwKICAgICAgICAgICAgICBocmVmOiBwYXRocy5zZXR0aW5ncy52ZWN0b3JEYXRhYmFzZSgpLAogICAgICAgICAgICAgIGZsZXg6IHRydWUsCiAgICAgICAgICAgICAgcm9sZXM6IFsiYWRtaW4iXSwKICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgIGJ0blRleHQ6IHQoInNldHRpbmdzLmVtYmVkZGVyIiksCiAgICAgICAgICAgICAgaHJlZjogcGF0aHMuc2V0dGluZ3MuZW1iZWRkZXIubW9kZWxQcmVmZXJlbmNlKCksCiAgICAgICAgICAgICAgZmxleDogdHJ1ZSwKICAgICAgICAgICAgICByb2xlczogWyJhZG1pbiJdLAogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgYnRuVGV4dDogdCgic2V0dGluZ3MudGV4dC1zcGxpdHRpbmciKSwKICAgICAgICAgICAgICBocmVmOiBwYXRocy5zZXR0aW5ncy5lbWJlZGRlci5jaHVua2luZ1ByZWZlcmVuY2UoKSwKICAgICAgICAgICAgICBmbGV4OiB0cnVlLAogICAgICAgICAgICAgIHJvbGVzOiBbImFkbWluIl0sCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICBidG5UZXh0OiB0KCJzZXR0aW5ncy52b2ljZS1zcGVlY2giKSwKICAgICAgICAgICAgICBocmVmOiBwYXRocy5zZXR0aW5ncy5hdWRpb1ByZWZlcmVuY2UoKSwKICAgICAgICAgICAgICBmbGV4OiB0cnVlLAogICAgICAgICAgICAgIHJvbGVzOiBbImFkbWluIl0sCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICBidG5UZXh0OiB0KCJzZXR0aW5ncy50cmFuc2NyaXB0aW9uIiksCiAgICAgICAgICAgICAgaHJlZjogcGF0aHMuc2V0dGluZ3MudHJhbnNjcmlwdGlvblByZWZlcmVuY2UoKSwKICAgICAgICAgICAgICBmbGV4OiB0cnVlLAogICAgICAgICAgICAgIHJvbGVzOiBbImFkbWluIl0sCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICBidG5UZXh0OiB0KCJzZXR0aW5ncy5tb2RlbC1yb3V0ZXIiKSwKICAgICAgICAgICAgICBocmVmOiBwYXRocy5zZXR0aW5ncy5tb2RlbFJvdXRlcnMoKSwKICAgICAgICAgICAgICBmbGV4OiB0cnVlLAogICAgICAgICAgICAgIHJvbGVzOiBbImFkbWluIl0sCiAgICAgICAgICAgIH0sCiAgICAgICAgICBdfQogICAgICAgIC8+CiAgICAgICAgPE9wdGlvbgogICAgICAgICAgYnRuVGV4dD17dCgic2V0dGluZ3MuYWRtaW4iKX0KICAgICAgICAgIGljb249ezxVc2VyQ2lyY2xlR2VhciBjbGFzc05hbWU9ImgtNSB3LTUgZmxleC1zaHJpbmstMCIgLz59CiAgICAgICAgICB1c2VyPXt1c2VyfQogICAgICAgICAgY2hpbGRPcHRpb25zPXtbCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICBidG5UZXh0OiB0KCJzZXR0aW5ncy51c2VycyIpLAogICAgICAgICAgICAgIGhyZWY6IHBhdGhzLnNldHRpbmdzLnVzZXJzKCksCiAgICAgICAgICAgICAgcm9sZXM6IFsiYWRtaW4iLCAibWFuYWdlciJdLAogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgYnRuVGV4dDogdCgic2V0dGluZ3Mud29ya3NwYWNlcyIpLAogICAgICAgICAgICAgIGhyZWY6IHBhdGhzLnNldHRpbmdzLndvcmtzcGFjZXMoKSwKICAgICAgICAgICAgICByb2xlczogWyJhZG1pbiIsICJtYW5hZ2VyIl0sCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICBoaWRkZW46ICFjYW5WaWV3Q2hhdEhpc3RvcnksCiAgICAgICAgICAgICAgYnRuVGV4dDogdCgic2V0dGluZ3Mud29ya3NwYWNlLWNoYXRzIiksCiAgICAgICAgICAgICAgaHJlZjogcGF0aHMuc2V0dGluZ3MuY2hhdHMoKSwKICAgICAgICAgICAgICBmbGV4OiB0cnVlLAogICAgICAgICAgICAgIHJvbGVzOiBbImFkbWluIiwgIm1hbmFnZXIiXSwKICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgIGJ0blRleHQ6IHQoInNldHRpbmdzLmludml0ZXMiKSwKICAgICAgICAgICAgICBocmVmOiBwYXRocy5zZXR0aW5ncy5pbnZpdGVzKCksCiAgICAgICAgICAgICAgcm9sZXM6IFsiYWRtaW4iLCAibWFuYWdlciJdLAogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgYnRuVGV4dDogdCgic2V0dGluZ3NTaWRlYmFyLmRlZmF1bHRTeXN0ZW1Qcm9tcHQiKSwKICAgICAgICAgICAgICBocmVmOiBwYXRocy5zZXR0aW5ncy5kZWZhdWx0U3lzdGVtUHJvbXB0KCksCiAgICAgICAgICAgICAgZmxleDogdHJ1ZSwKICAgICAgICAgICAgICByb2xlczogWyJhZG1pbiJdLAogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgYnRuVGV4dDogdCgic2V0dGluZ3NTaWRlYmFyLnBvbGl0aWNpYW5TeW5jIiksCiAgICAgICAgICAgICAgaHJlZjogcGF0aHMuc2V0dGluZ3MucG9saXRpY2lhblN5bmMoKSwKICAgICAgICAgICAgICBmbGV4OiB0cnVlLAogICAgICAgICAgICAgIHJvbGVzOiBbImFkbWluIl0sCiAgICAgICAgICAgIH0sCiAgICAgICAgICBdfQogICAgICAgIC8+CiAgICAgICAgPE9wdGlvbgogICAgICAgICAgYnRuVGV4dD17dCgic2V0dGluZ3MuYWdlbnQtc2tpbGxzIil9CiAgICAgICAgICBpY29uPXsKICAgICAgICAgICAgPGltZwogICAgICAgICAgICAgIHNyYz17QWdlbnRJY29ufQogICAgICAgICAgICAgIGFsdD17dCgiY29tbW9uLmFnZW50Iil9CiAgICAgICAgICAgICAgY2xhc3NOYW1lPSJoLTUgdy01IGZsZXgtc2hyaW5rLTAgbGlnaHQ6aW52ZXJ0IgogICAgICAgICAgICAvPgogICAgICAgICAgfQogICAgICAgICAgaHJlZj17cGF0aHMuc2V0dGluZ3MuYWdlbnRTa2lsbHMoKX0KICAgICAgICAgIHVzZXI9e3VzZXJ9CiAgICAgICAgICBmbGV4PXt0cnVlfQogICAgICAgICAgcm9sZXM9e1siYWRtaW4iXX0KICAgICAgICAvPgogICAgICAgIDxPcHRpb24KICAgICAgICAgIGJ0blRleHQ9e3QoInNldHRpbmdzLmNvbW11bml0eS1odWIudGl0bGUiKX0KICAgICAgICAgIGljb249ewogICAgICAgICAgICA8aW1nCiAgICAgICAgICAgICAgc3JjPXtDb21tdW5pdHlIdWJJY29ufQogICAgICAgICAgICAgIGFsdD17dCgic2V0dGluZ3MuY29tbXVuaXR5LWh1Yi50aXRsZSIpfQogICAgICAgICAgICAgIGNsYXNzTmFtZT0iaC01IHctNSBmbGV4LXNocmluay0wIGxpZ2h0OmludmVydCIKICAgICAgICAgICAgLz4KICAgICAgICAgIH0KICAgICAgICAgIHVzZXI9e3VzZXJ9CiAgICAgICAgICBjaGlsZE9wdGlvbnM9e1sKICAgICAgICAgICAgewogICAgICAgICAgICAgIGJ0blRleHQ6IHQoInNldHRpbmdzLmNvbW11bml0eS1odWIudHJlbmRpbmciKSwKICAgICAgICAgICAgICBocmVmOiBwYXRocy5jb21tdW5pdHlIdWIudHJlbmRpbmcoKSwKICAgICAgICAgICAgICBmbGV4OiB0cnVlLAogICAgICAgICAgICAgIHJvbGVzOiBbImFkbWluIl0sCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICBidG5UZXh0OiB0KCJzZXR0aW5ncy5jb21tdW5pdHktaHViLnlvdXItYWNjb3VudCIpLAogICAgICAgICAgICAgIGhyZWY6IHBhdGhzLmNvbW11bml0eUh1Yi5hdXRoZW50aWNhdGlvbigpLAogICAgICAgICAgICAgIGZsZXg6IHRydWUsCiAgICAgICAgICAgICAgcm9sZXM6IFsiYWRtaW4iXSwKICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgIGJ0blRleHQ6IHQoInNldHRpbmdzLmNvbW11bml0eS1odWIuaW1wb3J0LWl0ZW0iKSwKICAgICAgICAgICAgICBocmVmOiBwYXRocy5jb21tdW5pdHlIdWIuaW1wb3J0SXRlbSgpLAogICAgICAgICAgICAgIGZsZXg6IHRydWUsCiAgICAgICAgICAgICAgcm9sZXM6IFsiYWRtaW4iXSwKICAgICAgICAgICAgfSwKICAgICAgICAgIF19CiAgICAgICAgLz4KICAgICAgICA8T3B0aW9uCiAgICAgICAgICBidG5UZXh0PXt0KCJzZXR0aW5ncy5jdXN0b21pemF0aW9uIil9CiAgICAgICAgICBpY29uPXs8UGVuY2lsU2ltcGxlTGluZSBjbGFzc05hbWU9ImgtNSB3LTUgZmxleC1zaHJpbmstMCIgLz59CiAgICAgICAgICB1c2VyPXt1c2VyfQogICAgICAgICAgY2hpbGRPcHRpb25zPXtbCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICBidG5UZXh0OiB0KCJzZXR0aW5ncy5pbnRlcmZhY2UiKSwKICAgICAgICAgICAgICBocmVmOiBwYXRocy5zZXR0aW5ncy5pbnRlcmZhY2UoKSwKICAgICAgICAgICAgICBmbGV4OiB0cnVlLAogICAgICAgICAgICAgIHJvbGVzOiBbImFkbWluIiwgIm1hbmFnZXIiXSwKICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgIGJ0blRleHQ6IHQoInNldHRpbmdzLmJyYW5kaW5nIiksCiAgICAgICAgICAgICAgaHJlZjogcGF0aHMuc2V0dGluZ3MuYnJhbmRpbmcoKSwKICAgICAgICAgICAgICBmbGV4OiB0cnVlLAogICAgICAgICAgICAgIHJvbGVzOiBbImFkbWluIiwgIm1hbmFnZXIiXSwKICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgIGJ0blRleHQ6IHQoInNldHRpbmdzLmNoYXQiKSwKICAgICAgICAgICAgICBocmVmOiBwYXRocy5zZXR0aW5ncy5jaGF0KCksCiAgICAgICAgICAgICAgZmxleDogdHJ1ZSwKICAgICAgICAgICAgICByb2xlczogWyJhZG1pbiIsICJtYW5hZ2VyIl0sCiAgICAgICAgICAgIH0sCiAgICAgICAgICBdfQogICAgICAgIC8+CiAgICAgICAgPE9wdGlvbgogICAgICAgICAgYnRuVGV4dD17dCgic2V0dGluZ3MuY2hhbm5lbHMiKX0KICAgICAgICAgIGljb249ezxQbHVncyBjbGFzc05hbWU9ImgtNSB3LTUgZmxleC1zaHJpbmstMCIgLz59CiAgICAgICAgICB1c2VyPXt1c2VyfQogICAgICAgICAgY2hpbGRPcHRpb25zPXtbCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICBidG5UZXh0OiB0KCJzZXR0aW5ncy5hdmFpbGFibGUtY2hhbm5lbHMudGVsZWdyYW0iKSwKICAgICAgICAgICAgICBocmVmOiBwYXRocy5zZXR0aW5ncy50ZWxlZ3JhbSgpLAogICAgICAgICAgICAgIGZsZXg6IHRydWUsCiAgICAgICAgICAgICAgaGlkZGVuOiAhIXVzZXIsCiAgICAgICAgICAgIH0sCiAgICAgICAgICBdfQogICAgICAgIC8+CiAgICAgICAgPE9wdGlvbgogICAgICAgICAgYnRuVGV4dD17dCgic2V0dGluZ3MudG9vbHMiKX0KICAgICAgICAgIGljb249ezxUb29sYm94IGNsYXNzTmFtZT0iaC01IHctNSBmbGV4LXNocmluay0wIiAvPn0KICAgICAgICAgIHVzZXI9e3VzZXJ9CiAgICAgICAgICBjaGlsZE9wdGlvbnM9e1sKICAgICAgICAgICAgewogICAgICAgICAgICAgIGhpZGRlbjogIWNhblZpZXdDaGF0SGlzdG9yeSwKICAgICAgICAgICAgICBidG5UZXh0OiB0KCJzZXR0aW5ncy5lbWJlZHMiKSwKICAgICAgICAgICAgICBocmVmOiBwYXRocy5zZXR0aW5ncy5lbWJlZENoYXRXaWRnZXRzKCksCiAgICAgICAgICAgICAgZmxleDogdHJ1ZSwKICAgICAgICAgICAgICByb2xlczogWyJhZG1pbiJdLAogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgYnRuVGV4dDogdCgic2V0dGluZ3MuZXZlbnQtbG9ncyIpLAogICAgICAgICAgICAgIGhyZWY6IHBhdGhzLnNldHRpbmdzLmxvZ3MoKSwKICAgICAgICAgICAgICBmbGV4OiB0cnVlLAogICAgICAgICAgICAgIHJvbGVzOiBbImFkbWluIl0sCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICBidG5UZXh0OiB0KCJzZXR0aW5ncy5zY2hlZHVsZWQtam9icyIpLAogICAgICAgICAgICAgIGhyZWY6IHBhdGhzLnNldHRpbmdzLnNjaGVkdWxlZEpvYnMoKSwKICAgICAgICAgICAgICBmbGV4OiB0cnVlLAogICAgICAgICAgICAgIHJvbGVzOiBbImFkbWluIl0sCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICBidG5UZXh0OiB0KCJzZXR0aW5ncy5hcGkta2V5cyIpLAogICAgICAgICAgICAgIGhyZWY6IHBhdGhzLnNldHRpbmdzLmFwaUtleXMoKSwKICAgICAgICAgICAgICBmbGV4OiB0cnVlLAogICAgICAgICAgICAgIHJvbGVzOiBbImFkbWluIl0sCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICBidG5UZXh0OiB0KCJzZXR0aW5ncy50ZXJtaW5hbCIpLAogICAgICAgICAgICAgIGhyZWY6IHBhdGhzLnNldHRpbmdzLnRlcm1pbmFsKCksCiAgICAgICAgICAgICAgZmxleDogdHJ1ZSwKICAgICAgICAgICAgICByb2xlczogWyJhZG1pbiJdLAogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgYnRuVGV4dDogdCgic2V0dGluZ3Muc3lzdGVtLXByb21wdC12YXJpYWJsZXMiKSwKICAgICAgICAgICAgICBocmVmOiBwYXRocy5zZXR0aW5ncy5zeXN0ZW1Qcm9tcHRWYXJpYWJsZXMoKSwKICAgICAgICAgICAgICBmbGV4OiB0cnVlLAogICAgICAgICAgICAgIHJvbGVzOiBbImFkbWluIl0sCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICBidG5UZXh0OiB0KCJzZXR0aW5ncy5icm93c2VyLWV4dGVuc2lvbiIpLAogICAgICAgICAgICAgIGhyZWY6IHBhdGhzLnNldHRpbmdzLmJyb3dzZXJFeHRlbnNpb24oKSwKICAgICAgICAgICAgICBmbGV4OiB0cnVlLAogICAgICAgICAgICAgIHJvbGVzOiBbImFkbWluIiwgIm1hbmFnZXIiXSwKICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgIGJ0blRleHQ6IHQoInNldHRpbmdzLm1vYmlsZS1hcHAiKSwKICAgICAgICAgICAgICBocmVmOiBwYXRocy5zZXR0aW5ncy5tb2JpbGUoKSwKICAgICAgICAgICAgICBmbGV4OiB0cnVlLAogICAgICAgICAgICAgIHJvbGVzOiBbImFkbWluIl0sCiAgICAgICAgICAgIH0sCiAgICAgICAgICBdfQogICAgICAgIC8+CiAgICAgICAgPE9wdGlvbgogICAgICAgICAgYnRuVGV4dD17dCgic2V0dGluZ3Muc2VjdXJpdHkiKX0KICAgICAgICAgIGljb249ezxOdXQgY2xhc3NOYW1lPSJoLTUgdy01IGZsZXgtc2hyaW5rLTAiIC8+fQogICAgICAgICAgaHJlZj17cGF0aHMuc2V0dGluZ3Muc2VjdXJpdHkoKX0KICAgICAgICAgIHVzZXI9e3VzZXJ9CiAgICAgICAgICBmbGV4PXt0cnVlfQogICAgICAgICAgcm9sZXM9e1siYWRtaW4iLCAibWFuYWdlciJdfQogICAgICAgICAgaGlkZGVuPXt1c2VyPy5yb2xlfQogICAgICAgIC8+CiAgICAgICAgPEhvbGRUb1JldmVhbCBrZXk9ImV4cF9mZWF0dXJlcyI+CiAgICAgICAgICA8T3B0aW9uCiAgICAgICAgICAgIGJ0blRleHQ9e3QoInNldHRpbmdzLmV4cGVyaW1lbnRhbC1mZWF0dXJlcyIpfQogICAgICAgICAgICBpY29uPXs8Rmxhc2sgY2xhc3NOYW1lPSJoLTUgdy01IGZsZXgtc2hyaW5rLTAiIC8+fQogICAgICAgICAgICBocmVmPXtwYXRocy5zZXR0aW5ncy5leHBlcmltZW50YWwoKX0KICAgICAgICAgICAgdXNlcj17dXNlcn0KICAgICAgICAgICAgZmxleD17dHJ1ZX0KICAgICAgICAgICAgcm9sZXM9e1siYWRtaW4iXX0KICAgICAgICAgIC8+CiAgICAgICAgPC9Ib2xkVG9SZXZlYWw+CiAgICAgIDwvPgogICAgKX0KICA8L0NhblZpZXdDaGF0SGlzdG9yeVByb3ZpZGVyPgopOwoKZnVuY3Rpb24gSG9sZFRvUmV2ZWFsKHsgY2hpbGRyZW4sIGhvbGRGb3JNcyA9IDNfMDAwIH06IGFueSkgewogIGNvbnN0IHsgdCB9ID0gdXNlVHJhbnNsYXRpb24oKTsKICBjb25zdCB0aW1lb3V0UmVmID0gdXNlUmVmPFJldHVyblR5cGU8dHlwZW9mIHNldFRpbWVvdXQ+IHwgbnVsbD4obnVsbCk7CiAgY29uc3QgW3Nob3dpbmcsIHNldFNob3dpbmddID0gdXNlU3RhdGUoKCkgPT4KICAgIHNhZmVHZXRJdGVtKCJvcGVuc2luX2V4cGVyaW1lbnRhbF9mZWF0dXJlX3ByZXZpZXdfdW5sb2NrZWQiKSwKICApOwoKICB1c2VFZmZlY3QoKCkgPT4gewogICAgY29uc3Qgb25QcmVzczogYW55ID0gKGUpID0+IHsKICAgICAgaWYgKCFbIkNvbnRyb2wiLCAiTWV0YSJdLmluY2x1ZGVzKGUua2V5KSB8fCB0aW1lb3V0UmVmLmN1cnJlbnQgIT09IG51bGwpCiAgICAgICAgcmV0dXJuOwogICAgICB0aW1lb3V0UmVmLmN1cnJlbnQgPSBzZXRUaW1lb3V0KCgpID0+IHsKICAgICAgICBzZXRTaG93aW5nKCJlbmFibGVkIik7CiAgICAgICAgc2hvd1RvYXN0KHQoInNldHRpbmdzU2lkZWJhci5leHBlcmltZW50YWxGZWF0dXJlc1VubG9ja2VkIikpOwogICAgICAgIHNhZmVTZXRJdGVtKCJvcGVuc2luX2V4cGVyaW1lbnRhbF9mZWF0dXJlX3ByZXZpZXdfdW5sb2NrZWQiLCAiZW5hYmxlZCIpOwogICAgICAgIHdpbmRvdy5yZW1vdmVFdmVudExpc3RlbmVyKCJrZXlkb3duIiwgb25QcmVzcyk7CiAgICAgICAgd2luZG93LnJlbW92ZUV2ZW50TGlzdGVuZXIoImtleXVwIiwgb25SZWxlYXNlKTsKICAgICAgICBpZiAodGltZW91dFJlZi5jdXJyZW50ICE9PSBudWxsKSB7CiAgICAgICAgICBjbGVhclRpbWVvdXQodGltZW91dFJlZi5jdXJyZW50KTsKICAgICAgICAgIHRpbWVvdXRSZWYuY3VycmVudCA9IG51bGw7CiAgICAgICAgfQogICAgICB9LCBob2xkRm9yTXMpOwogICAgfTsKICAgIGNvbnN0IG9uUmVsZWFzZTogYW55ID0gKGUpID0+IHsKICAgICAgaWYgKCFbIkNvbnRyb2wiLCAiTWV0YSJdLmluY2x1ZGVzKGUua2V5KSkgcmV0dXJuOwogICAgICBpZiAoc2hvd2luZykgewogICAgICAgIHdpbmRvdy5yZW1vdmVFdmVudExpc3RlbmVyKCJrZXlkb3duIiwgb25QcmVzcyk7CiAgICAgICAgd2luZG93LnJlbW92ZUV2ZW50TGlzdGVuZXIoImtleXVwIiwgb25SZWxlYXNlKTsKICAgICAgICBpZiAodGltZW91dFJlZi5jdXJyZW50ICE9PSBudWxsKSB7CiAgICAgICAgICBjbGVhclRpbWVvdXQodGltZW91dFJlZi5jdXJyZW50KTsKICAgICAgICAgIHRpbWVvdXRSZWYuY3VycmVudCA9IG51bGw7CiAgICAgICAgfQogICAgICAgIHJldHVybjsKICAgICAgfQogICAgICBpZiAodGltZW91dFJlZi5jdXJyZW50ICE9PSBudWxsKSB7CiAgICAgICAgY2xlYXJUaW1lb3V0KHRpbWVvdXRSZWYuY3VycmVudCk7CiAgICAgICAgdGltZW91dFJlZi5jdXJyZW50ID0gbnVsbDsKICAgICAgfQogICAgfTsKCiAgICBpZiAoIXNob3dpbmcpIHsKICAgICAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoImtleWRvd24iLCBvblByZXNzKTsKICAgICAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoImtleXVwIiwgb25SZWxlYXNlKTsKICAgIH0KICAgIHJldHVybiAoKSA9PiB7CiAgICAgIHdpbmRvdy5yZW1vdmVFdmVudExpc3RlbmVyKCJrZXlkb3duIiwgb25QcmVzcyk7CiAgICAgIHdpbmRvdy5yZW1vdmVFdmVudExpc3RlbmVyKCJrZXl1cCIsIG9uUmVsZWFzZSk7CiAgICAgIGlmICh0aW1lb3V0UmVmLmN1cnJlbnQgIT09IG51bGwpIHsKICAgICAgICBjbGVhclRpbWVvdXQodGltZW91dFJlZi5jdXJyZW50KTsKICAgICAgICB0aW1lb3V0UmVmLmN1cnJlbnQgPSBudWxsOwogICAgICB9CiAgICB9OwogIH0sIFtzaG93aW5nLCB0XSk7CgogIGlmICghc2hvd2luZykgcmV0dXJuIG51bGw7CiAgcmV0dXJuIGNoaWxkcmVuOwp9CgpmdW5jdGlvbiBBcHBWZXJzaW9uKCkgewogIGNvbnN0IHsgdmVyc2lvbiwgaXNMb2FkaW5nIH0gPSB1c2VBcHBWZXJzaW9uKCk7CiAgaWYgKGlzTG9hZGluZyB8fCAhdmVyc2lvbikgcmV0dXJuIG51bGw7CiAgcmV0dXJuICgKICAgIDw+CiAgICAgIHsvKiBlc2xpbnQtZGlzYWJsZSBpMThuZXh0L25vLWxpdGVyYWwtc3RyaW5nICovfQogICAgICA8TGluawogICAgICAgIHRvPXtgaHR0cHM6Ly9naXRodWIuY29tL09wZW5TSU4tQUkvT3BlblNJTi1DaGF0L3JlbGVhc2VzL3RhZy92JHt2ZXJzaW9ufWB9CiAgICAgICAgdGFyZ2V0PSJfYmxhbmsiCiAgICAgICAgcmVsPSJub3JlZmVycmVyIgogICAgICAgIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSBsaWdodDpvcGFjaXR5LTgwIG9wYWNpdHktNTAgdGV4dC14cyBteC0zIgogICAgICA+CiAgICAgICAgdnt2ZXJzaW9ufQogICAgICA8L0xpbms+CiAgICAgIHsvKiBlc2xpbnQtZW5hYmxlIGkxOG5leHQvbm8tbGl0ZXJhbC1zdHJpbmcgKi99CiAgICA8Lz4KICApOwp9Cg==
+// SPDX-License-Identifier: MIT
+import React, { useEffect, useRef, useState } from "react";
+import paths from "@/utils/paths";
+import useLogo from "@/hooks/useLogo";
+import { House } from "@phosphor-icons/react/dist/csr/House";
+import { List } from "@phosphor-icons/react/dist/csr/List";
+import { Flask } from "@phosphor-icons/react/dist/csr/Flask";
+import { Gear } from "@phosphor-icons/react/dist/csr/Gear";
+import { UserCircleGear } from "@phosphor-icons/react/dist/csr/UserCircleGear";
+import { PencilSimpleLine } from "@phosphor-icons/react/dist/csr/PencilSimpleLine";
+import { Nut } from "@phosphor-icons/react/dist/csr/Nut";
+import { Toolbox } from "@phosphor-icons/react/dist/csr/Toolbox";
+import { Plugs } from "@phosphor-icons/react/dist/csr/Plugs";
+import AgentIcon from "@/media/animations/agent-static.png";
+import CommunityHubIcon from "@/media/illustrations/community-hub.png";
+import useUser from "@/hooks/useUser";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
+import Footer from "../Footer";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import showToast from "@/utils/toast";
+import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
+import Option from "./MenuOption";
+import { CanViewChatHistoryProvider } from "../CanViewChatHistory";
+import useAppVersion from "@/hooks/useAppVersion";
+import useSupportEmail from "@/hooks/useSupportEmail";
+
+export default function SettingsSidebar() {
+  const { t } = useTranslation();
+  const { logo } = useLogo();
+  const { user } = useUser();
+  const isMobile = useIsMobileLayout();
+  const sidebarRef = useRef(null);
+  const [showSidebar, setShowSidebar] = useState(false as any);
+  const [showBgOverlay, setShowBgOverlay] = useState(false as any);
+
+  useEffect(() => {
+    if (showSidebar) {
+      const timer = setTimeout(() => {
+        setShowBgOverlay(true);
+      }, 300);
+      return () => clearTimeout(timer);
+    } else {
+      setShowBgOverlay(false);
+    }
+  }, [showSidebar]);
+
+  if (isMobile) {
+    return (
+      <>
+        <div className="fixed top-0 left-0 right-0 z-10 flex justify-between items-center px-4 py-2 bg-theme-bg-sidebar light:bg-white text-theme-text-secondary shadow-lg h-16">
+          <button
+            type="button"
+            onClick={() => setShowSidebar(true)}
+            className="rounded-md p-2 flex items-center justify-center text-theme-text-secondary"
+          >
+            <List className="h-6 w-6" />
+          </button>
+          <div className="flex items-center justify-center flex-grow gap-x-2">
+            <img
+              src={logo}
+              alt={t("common.logo")}
+              className="h-6 w-6 max-h-6 max-w-6 object-contain"
+            />
+            <span className="text-white font-bold text-base">OpenSIN</span>
+          </div>
+          <div className="w-12"></div>
+        </div>
+        <div
+          className={`z-99 fixed top-0 left-0 transition-all duration-500 w-[100vw] h-[100vh] ${
+            showSidebar ? "translate-x-0" : "-translate-x-[100vw]"
+          }`}
+        >
+          <div
+            className={`${
+              showBgOverlay
+                ? "transition-all opacity-1"
+                : "transition-none opacity-0"
+            }  duration-500 fixed top-0 left-0 bg-theme-bg-secondary bg-opacity-75 w-screen h-screen`}
+            onClick={() => setShowSidebar(false)}
+          />
+          <div
+            ref={sidebarRef}
+            className="h-[100vh] fixed top-0 left-0 rounded-r-[26px] bg-theme-bg-sidebar w-[80%] p-[18px]"
+          >
+            <div className="w-full h-full flex flex-col overflow-x-hidden justify-between">
+              <div className="flex w-full items-center justify-between gap-x-4">
+                <div className="flex shrink-0 w-fit items-center justify-start gap-x-2">
+                  <img
+                    src={logo}
+                    alt={t("common.logo")}
+                    className="w-8 h-8 max-h-[32px] max-w-[32px] object-contain"
+                  />
+                  <span className="text-white font-bold text-base">
+                    OpenSIN
+                  </span>
+                </div>
+                <div className="flex gap-x-2 items-center text-slate-500 shrink-0">
+                  <a
+                    href={paths.home()}
+                    className="transition-all duration-300 p-2 rounded-full text-white bg-theme-action-menu-bg hover:bg-theme-action-menu-item-hover hover:border-slate-100 hover:border-opacity-50 border-transparent border"
+                  >
+                    <House className="h-4 w-4" />
+                  </a>
+                </div>
+              </div>
+
+              <div className="h-full flex flex-col w-full justify-between pt-4 overflow-y-scroll no-scroll">
+                <div className="h-auto md:sidebar-items">
+                  <div className="flex flex-col gap-y-4 pb-[60px] overflow-y-scroll no-scroll">
+                    <SidebarOptions user={user} t={t} />
+                    <div className="h-[1.5px] bg-[#3D4147] mx-3 mt-[14px]" />
+                    <SupportEmail />
+                    <Link
+                      hidden={
+                        user?.hasOwnProperty("role") && user.role !== "admin"
+                      }
+                      to={paths.settings.privacy()}
+                      className="text-theme-text-secondary hover:text-white text-xs leading-[18px] mx-3"
+                    >
+                      {t("settings.privacy")}
+                    </Link>
+                    <AppVersion />
+                  </div>
+                </div>
+              </div>
+              <div className="absolute bottom-2 left-0 right-0 pt-2 bg-theme-bg-sidebar bg-opacity-80 backdrop-filter backdrop-blur-md">
+                <Footer />
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <div>
+        <Link
+          to={paths.home()}
+          className="flex shrink-0 max-w-[55%] items-center justify-start mx-[20.5px] my-[18px] gap-x-2"
+        >
+          <img
+            src={logo}
+            alt={t("common.logo")}
+            className="h-6 w-6 max-h-[24px] max-w-[24px] object-contain"
+          />
+          <span className="text-white font-bold text-sm">OpenSIN</span>
+        </Link>
+        <div
+          ref={sidebarRef}
+          className="transition-all duration-500 relative m-[16px] rounded-[16px] bg-theme-bg-sidebar border-[2px] border-theme-sidebar-border light:border-none min-w-[250px] p-[10px] h-[calc(100%-76px)]"
+        >
+          <div className="w-full h-full flex flex-col overflow-x-hidden items-stretch min-w-[235px]">
+            <div className="text-theme-text-secondary text-sm font-medium uppercase mt-[4px] mb-0 ml-2">
+              {t("settings.title")}
+            </div>
+            <div className="relative h-[calc(100%-60px)] flex flex-col w-full justify-between pt-[10px] overflow-y-scroll no-scroll">
+              <div className="h-auto sidebar-items">
+                <div className="flex flex-col gap-y-2 pb-[60px] overflow-y-scroll no-scroll">
+                  <SidebarOptions user={user} t={t} />
+                  <div className="h-[1.5px] bg-[#3D4147] mx-3 mt-[14px]" />
+                  <SupportEmail />
+                  <Link
+                    hidden={
+                      user?.hasOwnProperty("role") && user.role !== "admin"
+                    }
+                    to={paths.settings.privacy()}
+                    className="text-theme-text-secondary hover:text-white hover:light:text-theme-text-primary text-xs leading-[18px] mx-3"
+                  >
+                    {t("settings.privacy")}
+                  </Link>
+                  <AppVersion />
+                </div>
+              </div>
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 pt-4 pb-3 rounded-b-[16px] bg-theme-bg-sidebar bg-opacity-80 backdrop-filter backdrop-blur-md z-10">
+              <Footer />
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function SupportEmail() {
+  const { email } = useSupportEmail();
+  const { t } = useTranslation();
+  const supportLink = email ? `mailto:${email}` : paths.mailToSupport();
+
+  return (
+    <Link
+      to={supportLink}
+      className="text-theme-text-secondary hover:text-white hover:light:text-theme-text-primary text-xs leading-[18px] mx-3 mt-1"
+    >
+      {t("settings.contact")}
+    </Link>
+  );
+}
+
+const SidebarOptions = ({ user = null, t }: any) => (
+  <CanViewChatHistoryProvider>
+    {({ viewable: canViewChatHistory }: any) => (
+      <>
+        <Option
+          btnText={t("settings.ai-providers")}
+          icon={<Gear className="h-5 w-5 flex-shrink-0" />}
+          user={user}
+          childOptions={[
+            {
+              btnText: t("settings.llm"),
+              href: paths.settings.llmPreference(),
+              flex: true,
+              roles: ["admin"],
+            },
+            {
+              btnText: t("settingsSidebar.systemHealth"),
+              href: paths.settings.systemHealth(),
+              flex: true,
+              roles: ["admin"],
+            },
+            {
+              btnText: t("settings.vector-database"),
+              href: paths.settings.vectorDatabase(),
+              flex: true,
+              roles: ["admin"],
+            },
+            {
+              btnText: t("settings.embedder"),
+              href: paths.settings.embedder.modelPreference(),
+              flex: true,
+              roles: ["admin"],
+            },
+            {
+              btnText: t("settings.text-splitting"),
+              href: paths.settings.embedder.chunkingPreference(),
+              flex: true,
+              roles: ["admin"],
+            },
+            {
+              btnText: t("settings.voice-speech"),
+              href: paths.settings.audioPreference(),
+              flex: true,
+              roles: ["admin"],
+            },
+            {
+              btnText: t("settings.transcription"),
+              href: paths.settings.transcriptionPreference(),
+              flex: true,
+              roles: ["admin"],
+            },
+            {
+              btnText: t("settings.model-router"),
+              href: paths.settings.modelRouters(),
+              flex: true,
+              roles: ["admin"],
+            },
+          ]}
+        />
+        <Option
+          btnText={t("settings.admin")}
+          icon={<UserCircleGear className="h-5 w-5 flex-shrink-0" />}
+          user={user}
+          childOptions={[
+            {
+              btnText: t("settings.users"),
+              href: paths.settings.users(),
+              roles: ["admin", "manager"],
+            },
+            {
+              btnText: t("settings.workspaces"),
+              href: paths.settings.workspaces(),
+              roles: ["admin", "manager"],
+            },
+            {
+              hidden: !canViewChatHistory,
+              btnText: t("settings.workspace-chats"),
+              href: paths.settings.chats(),
+              flex: true,
+              roles: ["admin", "manager"],
+            },
+            {
+              btnText: t("settings.invites"),
+              href: paths.settings.invites(),
+              roles: ["admin", "manager"],
+            },
+            {
+              btnText: t("settingsSidebar.defaultSystemPrompt"),
+              href: paths.settings.defaultSystemPrompt(),
+              flex: true,
+              roles: ["admin"],
+            },
+            {
+              btnText: t("settingsSidebar.politicianSync"),
+              href: paths.settings.politicianSync(),
+              flex: true,
+              roles: ["admin"],
+            },
+          ]}
+        />
+        <Option
+          btnText={t("settings.agent-skills")}
+          icon={
+            <img
+              src={AgentIcon}
+              alt={t("common.agent")}
+              className="h-5 w-5 flex-shrink-0 light:invert"
+            />
+          }
+          href={paths.settings.agentSkills()}
+          user={user}
+          flex={true}
+          roles={["admin"]}
+        />
+        <Option
+          btnText={t("settings.community-hub.title")}
+          icon={
+            <img
+              src={CommunityHubIcon}
+              alt={t("settings.community-hub.title")}
+              className="h-5 w-5 flex-shrink-0 light:invert"
+            />
+          }
+          user={user}
+          childOptions={[
+            {
+              btnText: t("settings.community-hub.trending"),
+              href: paths.communityHub.trending(),
+              flex: true,
+              roles: ["admin"],
+            },
+            {
+              btnText: t("settings.community-hub.your-account"),
+              href: paths.communityHub.authentication(),
+              flex: true,
+              roles: ["admin"],
+            },
+            {
+              btnText: t("settings.community-hub.import-item"),
+              href: paths.communityHub.importItem(),
+              flex: true,
+              roles: ["admin"],
+            },
+          ]}
+        />
+        <Option
+          btnText={t("settings.customization")}
+          icon={<PencilSimpleLine className="h-5 w-5 flex-shrink-0" />}
+          user={user}
+          childOptions={[
+            {
+              btnText: t("settings.interface"),
+              href: paths.settings.interface(),
+              flex: true,
+              roles: ["admin", "manager"],
+            },
+            {
+              btnText: t("settings.branding"),
+              href: paths.settings.branding(),
+              flex: true,
+              roles: ["admin", "manager"],
+            },
+            {
+              btnText: t("settings.chat"),
+              href: paths.settings.chat(),
+              flex: true,
+              roles: ["admin", "manager"],
+            },
+          ]}
+        />
+        <Option
+          btnText={t("settings.channels")}
+          icon={<Plugs className="h-5 w-5 flex-shrink-0" />}
+          user={user}
+          childOptions={[
+            {
+              btnText: t("settings.available-channels.telegram"),
+              href: paths.settings.telegram(),
+              flex: true,
+              hidden: !!user,
+            },
+          ]}
+        />
+        <Option
+          btnText={t("settings.tools")}
+          icon={<Toolbox className="h-5 w-5 flex-shrink-0" />}
+          user={user}
+          childOptions={[
+            {
+              hidden: !canViewChatHistory,
+              btnText: t("settings.embeds"),
+              href: paths.settings.embedChatWidgets(),
+              flex: true,
+              roles: ["admin"],
+            },
+            {
+              btnText: t("settings.event-logs"),
+              href: paths.settings.logs(),
+              flex: true,
+              roles: ["admin"],
+            },
+            {
+              btnText: t("settings.scheduled-jobs"),
+              href: paths.settings.scheduledJobs(),
+              flex: true,
+              roles: ["admin"],
+            },
+            {
+              btnText: t("settings.api-keys"),
+              href: paths.settings.apiKeys(),
+              flex: true,
+              roles: ["admin"],
+            },
+            {
+              btnText: t("settings.terminal"),
+              href: paths.settings.terminal(),
+              flex: true,
+              roles: ["admin"],
+            },
+            {
+              btnText: t("settings.system-prompt-variables"),
+              href: paths.settings.systemPromptVariables(),
+              flex: true,
+              roles: ["admin"],
+            },
+            {
+              btnText: t("settings.browser-extension"),
+              href: paths.settings.browserExtension(),
+              flex: true,
+              roles: ["admin", "manager"],
+            },
+            {
+              btnText: t("settings.mobile-app"),
+              href: paths.settings.mobile(),
+              flex: true,
+              roles: ["admin"],
+            },
+          ]}
+        />
+        <Option
+          btnText={t("settings.security")}
+          icon={<Nut className="h-5 w-5 flex-shrink-0" />}
+          href={paths.settings.security()}
+          user={user}
+          flex={true}
+          roles={["admin", "manager"]}
+          hidden={user?.role}
+        />
+        <HoldToReveal key="exp_features">
+          <Option
+            btnText={t("settings.experimental-features")}
+            icon={<Flask className="h-5 w-5 flex-shrink-0" />}
+            href={paths.settings.experimental()}
+            user={user}
+            flex={true}
+            roles={["admin"]}
+          />
+        </HoldToReveal>
+      </>
+    )}
+  </CanViewChatHistoryProvider>
+);
+
+function HoldToReveal({ children, holdForMs = 3_000 }: any) {
+  const { t } = useTranslation();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [showing, setShowing] = useState(() =>
+    safeGetItem("opensin_experimental_feature_preview_unlocked"),
+  );
+
+  useEffect(() => {
+    const onPress: any = (e) => {
+      if (!["Control", "Meta"].includes(e.key) || timeoutRef.current !== null)
+        return;
+      timeoutRef.current = setTimeout(() => {
+        setShowing("enabled");
+        showToast(t("settingsSidebar.experimentalFeaturesUnlocked"));
+        safeSetItem("opensin_experimental_feature_preview_unlocked", "enabled");
+        window.removeEventListener("keydown", onPress);
+        window.removeEventListener("keyup", onRelease);
+        if (timeoutRef.current !== null) {
+          clearTimeout(timeoutRef.current);
+          timeoutRef.current = null;
+        }
+      }, holdForMs);
+    };
+    const onRelease: any = (e) => {
+      if (!["Control", "Meta"].includes(e.key)) return;
+      if (showing) {
+        window.removeEventListener("keydown", onPress);
+        window.removeEventListener("keyup", onRelease);
+        if (timeoutRef.current !== null) {
+          clearTimeout(timeoutRef.current);
+          timeoutRef.current = null;
+        }
+        return;
+      }
+      if (timeoutRef.current !== null) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+    };
+
+    if (!showing) {
+      window.addEventListener("keydown", onPress);
+      window.addEventListener("keyup", onRelease);
+    }
+    return () => {
+      window.removeEventListener("keydown", onPress);
+      window.removeEventListener("keyup", onRelease);
+      if (timeoutRef.current !== null) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+    };
+  }, [showing, t]);
+
+  if (!showing) return null;
+  return children;
+}
+
+function AppVersion() {
+  const { version, isLoading } = useAppVersion();
+  if (isLoading || !version) return null;
+  return (
+    <>
+      {/* eslint-disable i18next/no-literal-string */}
+      <Link
+        to={`https://github.com/OpenSIN-AI/OpenSIN-Chat/releases/tag/v${version}`}
+        target="_blank"
+        rel="noreferrer"
+        className="text-theme-text-secondary light:opacity-80 opacity-50 text-xs mx-3"
+      >
+        v{version}
+      </Link>
+      {/* eslint-enable i18next/no-literal-string */}
+    </>
+  );
+}

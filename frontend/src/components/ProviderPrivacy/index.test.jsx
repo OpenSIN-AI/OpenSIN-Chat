@@ -1,1 +1,139 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyBkZXNjcmliZSwgaXQsIGV4cGVjdCwgdmksIGJlZm9yZUVhY2ggfSBmcm9tICJ2aXRlc3QiOwppbXBvcnQgeyByZW5kZXIsIHNjcmVlbiB9IGZyb20gIkB0ZXN0aW5nLWxpYnJhcnkvcmVhY3QiOwppbXBvcnQgUHJvdmlkZXJQcml2YWN5IGZyb20gIi4vaW5kZXgiOwoKdmkubW9jaygiQC9ob29rcy91c2VTeXN0ZW1TZXR0aW5ncyIsICgpID0+ICh7CiAgZGVmYXVsdDogdmkuZm4oKSwKfSkpOwoKdmkubW9jaygiQC9tZWRpYS9sb2dvL29wZW5zaW4taWNvbi5zdmciLCAoKSA9PiAoewogIGRlZmF1bHQ6ICJtb2NrLWxvZ28uc3ZnIiwKfSkpOwoKdmkubW9jaygiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL0Fycm93U3F1YXJlT3V0IiwgKCkgPT4gKHsKICBkZWZhdWx0OiAocHJvcHMpID0+IDxzdmcgZGF0YS10ZXN0aWQ9ImFycm93LXNxdWFyZS1vdXQtaWNvbiIgey4uLnByb3BzfSAvPiwKICBBcnJvd1NxdWFyZU91dDogKHByb3BzKSA9PiAoCiAgICA8c3ZnIGRhdGEtdGVzdGlkPSJhcnJvdy1zcXVhcmUtb3V0LWljb24iIHsuLi5wcm9wc30gLz4KICApLAp9KSk7Cgp2aS5tb2NrKCJyZWFjdC1yb3V0ZXItZG9tIiwgKCkgPT4gKHsKICBMaW5rOiAoeyBjaGlsZHJlbiwgdG8sIC4uLnByb3BzIH0pID0+ICgKICAgIDxhIGhyZWY9e3RvfSBkYXRhLXRlc3RpZD0icG9saWN5LWxpbmsiIHsuLi5wcm9wc30+CiAgICAgIHtjaGlsZHJlbn0KICAgIDwvYT4KICApLAp9KSk7Cgp2aS5tb2NrKCJyZWFjdC1pMThuZXh0IiwgYXN5bmMgKCkgPT4gewogIGNvbnN0IHsgY3JlYXRlSTE4bk1vY2sgfSA9IGF3YWl0IGltcG9ydCgiQC90ZXN0L2kxOG5Nb2NrIik7CiAgcmV0dXJuIGNyZWF0ZUkxOG5Nb2NrKCk7Cn0pOwoKdmkubW9jaygidGV4dC1jYXNlIiwgKCkgPT4gKHsKICB0aXRsZUNhc2U6IChzKSA9PiBzLAogIHNlbnRlbmNlQ2FzZTogKHMpID0+IHMsCn0pKTsKCmltcG9ydCB1c2VTeXN0ZW1TZXR0aW5ncyBmcm9tICJAL2hvb2tzL3VzZVN5c3RlbVNldHRpbmdzIjsKCmRlc2NyaWJlKCJQcm92aWRlclByaXZhY3kiLCAoKSA9PiB7CiAgYmVmb3JlRWFjaCgoKSA9PiB7CiAgICB2aS5jbGVhckFsbE1vY2tzKCk7CiAgfSk7CgogIGl0KCJyZW5kZXJzIG51bGwgd2hpbGUgbG9hZGluZyIsICgpID0+IHsKICAgIHVzZVN5c3RlbVNldHRpbmdzLm1vY2tSZXR1cm5WYWx1ZSh7IHNldHRpbmdzOiBudWxsLCBsb2FkaW5nOiB0cnVlIH0pOwogICAgY29uc3QgeyBjb250YWluZXIgfSA9IHJlbmRlcig8UHJvdmlkZXJQcml2YWN5IC8+KTsKICAgIGV4cGVjdChjb250YWluZXIuaW5uZXJIVE1MKS50b0JlKCIiKTsKICB9KTsKCiAgaXQoInJlbmRlcnMgdGhyZWUgcHJvdmlkZXIgc2VjdGlvbnMgd2hlbiBzZXR0aW5ncyBhcmUgbG9hZGVkIiwgKCkgPT4gewogICAgdXNlU3lzdGVtU2V0dGluZ3MubW9ja1JldHVyblZhbHVlKHsKICAgICAgc2V0dGluZ3M6IHsKICAgICAgICBMTE1Qcm92aWRlcjogIm9wZW5haSIsCiAgICAgICAgRW1iZWRkaW5nRW5naW5lOiAibmF0aXZlIiwKICAgICAgICBWZWN0b3JEQjogImNocm9tYSIsCiAgICAgIH0sCiAgICAgIGxvYWRpbmc6IGZhbHNlLAogICAgfSk7CiAgICByZW5kZXIoPFByb3ZpZGVyUHJpdmFjeSAvPik7CiAgICBleHBlY3Qoc2NyZWVuLmdldEJ5VGV4dCgiTExNIFByb3ZpZGVyIikpLnRvQmVJblRoZURvY3VtZW50KCk7CiAgICBleHBlY3Qoc2NyZWVuLmdldEJ5VGV4dCgiRW1iZWRkaW5nIFByZWZlcmVuY2UiKSkudG9CZUluVGhlRG9jdW1lbnQoKTsKICAgIGV4cGVjdChzY3JlZW4uZ2V0QnlUZXh0KCJWZWN0b3IgRGF0YWJhc2UiKSkudG9CZUluVGhlRG9jdW1lbnQoKTsKICB9KTsKCiAgaXQoInJlbmRlcnMgcHJvdmlkZXIgbmFtZSBmcm9tIFBST1ZJREVSX1BSSVZBQ1lfTUFQIiwgKCkgPT4gewogICAgdXNlU3lzdGVtU2V0dGluZ3MubW9ja1JldHVyblZhbHVlKHsKICAgICAgc2V0dGluZ3M6IHsKICAgICAgICBMTE1Qcm92aWRlcjogIm9wZW5haSIsCiAgICAgICAgRW1iZWRkaW5nRW5naW5lOiAibmF0aXZlIiwKICAgICAgICBWZWN0b3JEQjogImNocm9tYSIsCiAgICAgIH0sCiAgICAgIGxvYWRpbmc6IGZhbHNlLAogICAgfSk7CiAgICByZW5kZXIoPFByb3ZpZGVyUHJpdmFjeSAvPik7CiAgICBleHBlY3Qoc2NyZWVuLmdldEJ5VGV4dCgiT3BlbkFJIikpLnRvQmVJblRoZURvY3VtZW50KCk7CiAgICBleHBlY3Qoc2NyZWVuLmdldEJ5VGV4dCgiQ2hyb21hIikpLnRvQmVJblRoZURvY3VtZW50KCk7CiAgfSk7CgogIGl0KCJyZW5kZXJzIHByaXZhY3kgcG9saWN5IGxpbmsgd2hlbiBwcm92aWRlciBoYXMgcG9saWN5VXJsIiwgKCkgPT4gewogICAgdXNlU3lzdGVtU2V0dGluZ3MubW9ja1JldHVyblZhbHVlKHsKICAgICAgc2V0dGluZ3M6IHsKICAgICAgICBMTE1Qcm92aWRlcjogIm9wZW5haSIsCiAgICAgICAgRW1iZWRkaW5nRW5naW5lOiAibmF0aXZlIiwKICAgICAgICBWZWN0b3JEQjogImNocm9tYSIsCiAgICAgIH0sCiAgICAgIGxvYWRpbmc6IGZhbHNlLAogICAgfSk7CiAgICByZW5kZXIoPFByb3ZpZGVyUHJpdmFjeSAvPik7CiAgICBjb25zdCBsaW5rID0gc2NyZWVuLmdldEJ5VGVzdElkKCJwb2xpY3ktbGluayIpOwogICAgZXhwZWN0KGxpbmspLnRvQmVJblRoZURvY3VtZW50KCk7CiAgICBleHBlY3QobGluay5nZXRBdHRyaWJ1dGUoImhyZWYiKSkudG9CZSgKICAgICAgImh0dHBzOi8vb3BlbmFpLmNvbS9wb2xpY2llcy9wcml2YWN5LXBvbGljeS8iLAogICAgKTsKICAgIGV4cGVjdChzY3JlZW4uZ2V0QnlUZXh0KCJwcml2YWN5IHBvbGljeSIpKS50b0JlSW5UaGVEb2N1bWVudCgpOwogIH0pOwoKICBpdCgicmVuZGVycyBkZXNjcmlwdGlvbiBsaXN0IHdoZW4gcHJvdmlkZXIgaGFzIG5vIHBvbGljeVVybCIsICgpID0+IHsKICAgIHVzZVN5c3RlbVNldHRpbmdzLm1vY2tSZXR1cm5WYWx1ZSh7CiAgICAgIHNldHRpbmdzOiB7CiAgICAgICAgTExNUHJvdmlkZXI6ICJvbGxhbWEiLAogICAgICAgIEVtYmVkZGluZ0VuZ2luZTogIm5hdGl2ZSIsCiAgICAgICAgVmVjdG9yREI6ICJsYW5jZWRiIiwKICAgICAgfSwKICAgICAgbG9hZGluZzogZmFsc2UsCiAgICB9KTsKICAgIHJlbmRlcig8UHJvdmlkZXJQcml2YWN5IC8+KTsKICAgIGV4cGVjdCgKICAgICAgc2NyZWVuLmdldEJ5VGV4dCgKICAgICAgICAiWW91ciBtb2RlbCBhbmQgY2hhdHMgYXJlIG9ubHkgYWNjZXNzaWJsZSBvbiB0aGUgbWFjaGluZSBydW5uaW5nIE9sbGFtYSBtb2RlbHMuIiwKICAgICAgKSwKICAgICkudG9CZUluVGhlRG9jdW1lbnQoKTsKICB9KTsKCiAgaXQoInJlbmRlcnMgVW5rbm93biBmb3IgbnVsbCBwcm92aWRlciBzZXR0aW5ncyIsICgpID0+IHsKICAgIHVzZVN5c3RlbVNldHRpbmdzLm1vY2tSZXR1cm5WYWx1ZSh7CiAgICAgIHNldHRpbmdzOiB7IExMTVByb3ZpZGVyOiBudWxsLCBFbWJlZGRpbmdFbmdpbmU6IG51bGwsIFZlY3RvckRCOiBudWxsIH0sCiAgICAgIGxvYWRpbmc6IGZhbHNlLAogICAgfSk7CiAgICByZW5kZXIoPFByb3ZpZGVyUHJpdmFjeSAvPik7CiAgICBjb25zdCB1bmtub3ducyA9IHNjcmVlbi5nZXRBbGxCeVRleHQoIlVua25vd24iKTsKICAgIGV4cGVjdCh1bmtub3ducy5sZW5ndGgpLnRvQmUoMyk7CiAgfSk7CgogIGl0KCJyZW5kZXJzIGRlZmF1bHQgcHJvdmlkZXIgbmFtZSBmb3IgdW5rbm93biBwcm92aWRlciBzdHJpbmdzIiwgKCkgPT4gewogICAgdXNlU3lzdGVtU2V0dGluZ3MubW9ja1JldHVyblZhbHVlKHsKICAgICAgc2V0dGluZ3M6IHsKICAgICAgICBMTE1Qcm92aWRlcjogInNvbWUtdW5rbm93bi1wcm92aWRlciIsCiAgICAgICAgRW1iZWRkaW5nRW5naW5lOiAibmF0aXZlIiwKICAgICAgICBWZWN0b3JEQjogImNocm9tYSIsCiAgICAgIH0sCiAgICAgIGxvYWRpbmc6IGZhbHNlLAogICAgfSk7CiAgICByZW5kZXIoPFByb3ZpZGVyUHJpdmFjeSAvPik7CiAgICBjb25zdCBtYXRjaGVzID0gc2NyZWVuLmdldEFsbEJ5VGV4dCgvc29tZS11bmtub3duLXByb3ZpZGVyLyk7CiAgICBleHBlY3QobWF0Y2hlcy5sZW5ndGgpLnRvQmVHcmVhdGVyVGhhbk9yRXF1YWwoMSk7CiAgfSk7Cn0pOwo=
+// SPDX-License-Identifier: MIT
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { render, screen } from "@testing-library/react";
+import ProviderPrivacy from "./index";
+
+vi.mock("@/hooks/useSystemSettings", () => ({
+  default: vi.fn(),
+}));
+
+vi.mock("@/media/logo/opensin-icon.svg", () => ({
+  default: "mock-logo.svg",
+}));
+
+vi.mock("@phosphor-icons/react/dist/csr/ArrowSquareOut", () => ({
+  default: (props) => <svg data-testid="arrow-square-out-icon" {...props} />,
+  ArrowSquareOut: (props) => (
+    <svg data-testid="arrow-square-out-icon" {...props} />
+  ),
+}));
+
+vi.mock("react-router-dom", () => ({
+  Link: ({ children, to, ...props }) => (
+    <a href={to} data-testid="policy-link" {...props}>
+      {children}
+    </a>
+  ),
+}));
+
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
+
+vi.mock("text-case", () => ({
+  titleCase: (s) => s,
+  sentenceCase: (s) => s,
+}));
+
+import useSystemSettings from "@/hooks/useSystemSettings";
+
+describe("ProviderPrivacy", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("renders null while loading", () => {
+    useSystemSettings.mockReturnValue({ settings: null, loading: true });
+    const { container } = render(<ProviderPrivacy />);
+    expect(container.innerHTML).toBe("");
+  });
+
+  it("renders three provider sections when settings are loaded", () => {
+    useSystemSettings.mockReturnValue({
+      settings: {
+        LLMProvider: "openai",
+        EmbeddingEngine: "native",
+        VectorDB: "chroma",
+      },
+      loading: false,
+    });
+    render(<ProviderPrivacy />);
+    expect(screen.getByText("LLM Provider")).toBeInTheDocument();
+    expect(screen.getByText("Embedding Preference")).toBeInTheDocument();
+    expect(screen.getByText("Vector Database")).toBeInTheDocument();
+  });
+
+  it("renders provider name from PROVIDER_PRIVACY_MAP", () => {
+    useSystemSettings.mockReturnValue({
+      settings: {
+        LLMProvider: "openai",
+        EmbeddingEngine: "native",
+        VectorDB: "chroma",
+      },
+      loading: false,
+    });
+    render(<ProviderPrivacy />);
+    expect(screen.getByText("OpenAI")).toBeInTheDocument();
+    expect(screen.getByText("Chroma")).toBeInTheDocument();
+  });
+
+  it("renders privacy policy link when provider has policyUrl", () => {
+    useSystemSettings.mockReturnValue({
+      settings: {
+        LLMProvider: "openai",
+        EmbeddingEngine: "native",
+        VectorDB: "chroma",
+      },
+      loading: false,
+    });
+    render(<ProviderPrivacy />);
+    const link = screen.getByTestId("policy-link");
+    expect(link).toBeInTheDocument();
+    expect(link.getAttribute("href")).toBe(
+      "https://openai.com/policies/privacy-policy/",
+    );
+    expect(screen.getByText("privacy policy")).toBeInTheDocument();
+  });
+
+  it("renders description list when provider has no policyUrl", () => {
+    useSystemSettings.mockReturnValue({
+      settings: {
+        LLMProvider: "ollama",
+        EmbeddingEngine: "native",
+        VectorDB: "lancedb",
+      },
+      loading: false,
+    });
+    render(<ProviderPrivacy />);
+    expect(
+      screen.getByText(
+        "Your model and chats are only accessible on the machine running Ollama models.",
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it("renders Unknown for null provider settings", () => {
+    useSystemSettings.mockReturnValue({
+      settings: { LLMProvider: null, EmbeddingEngine: null, VectorDB: null },
+      loading: false,
+    });
+    render(<ProviderPrivacy />);
+    const unknowns = screen.getAllByText("Unknown");
+    expect(unknowns.length).toBe(3);
+  });
+
+  it("renders default provider name for unknown provider strings", () => {
+    useSystemSettings.mockReturnValue({
+      settings: {
+        LLMProvider: "some-unknown-provider",
+        EmbeddingEngine: "native",
+        VectorDB: "chroma",
+      },
+      loading: false,
+    });
+    render(<ProviderPrivacy />);
+    const matches = screen.getAllByText(/some-unknown-provider/);
+    expect(matches.length).toBeGreaterThanOrEqual(1);
+  });
+});
