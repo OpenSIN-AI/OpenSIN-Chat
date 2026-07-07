@@ -1,1 +1,154 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBEb2NzOiBpbmRleC5kb2MubWQKaW1wb3J0IFJlYWN0LCB7IHVzZVN0YXRlIH0gZnJvbSAicmVhY3QiOwoKaW1wb3J0IEludml0ZSBmcm9tICJAL21vZGVscy9pbnZpdGUiOwppbXBvcnQgcGF0aHMgZnJvbSAiQC91dGlscy9wYXRocyI7CmltcG9ydCB7IHVzZVBhcmFtcyB9IGZyb20gInJlYWN0LXJvdXRlci1kb20iOwppbXBvcnQgeyBBVVRIX1RPS0VOLCBBVVRIX1VTRVIgfSBmcm9tICJAL3V0aWxzL2NvbnN0YW50cyI7CmltcG9ydCB7IHNhZmVTZXRJdGVtIH0gZnJvbSAiQC91dGlscy9zYWZlU3RvcmFnZSI7CmltcG9ydCBTeXN0ZW0gZnJvbSAiQC9tb2RlbHMvc3lzdGVtIjsKaW1wb3J0IHsgdXNlVHJhbnNsYXRpb24gfSBmcm9tICJyZWFjdC1pMThuZXh0IjsKaW1wb3J0IHsKICBVU0VSTkFNRV9NSU5fTEVOR1RILAogIFVTRVJOQU1FX01BWF9MRU5HVEgsCiAgVVNFUk5BTUVfUEFUVEVSTiwKfSBmcm9tICJAL3V0aWxzL3VzZXJuYW1lIjsKCmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIE5ld1VzZXJNb2RhbCgpOiBKU1guRWxlbWVudCB7CiAgY29uc3QgeyBjb2RlIH0gPSB1c2VQYXJhbXMoKTsKICBjb25zdCBbZXJyb3IsIHNldEVycm9yXSA9IHVzZVN0YXRlPHN0cmluZyB8IG51bGw+KG51bGwpOwogIGNvbnN0IFtsb2FkaW5nLCBzZXRMb2FkaW5nXSA9IHVzZVN0YXRlKGZhbHNlKTsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CgogIGNvbnN0IGhhbmRsZUNyZWF0ZSA9IGFzeW5jIChlOiBSZWFjdC5Gb3JtRXZlbnQ8SFRNTEZvcm1FbGVtZW50PikgPT4gewogICAgc2V0RXJyb3IobnVsbCk7CiAgICBlLnByZXZlbnREZWZhdWx0KCk7CiAgICBzZXRMb2FkaW5nKHRydWUpOwogICAgdHJ5IHsKICAgICAgY29uc3QgZGF0YTogUmVjb3JkPHN0cmluZywgYW55PiA9IHt9OwogICAgICBjb25zdCBmb3JtID0gbmV3IEZvcm1EYXRhKGUuY3VycmVudFRhcmdldCk7CiAgICAgIGZvciAoY29uc3QgW2tleSwgdmFsdWVdIG9mIGZvcm0uZW50cmllcygpKSBkYXRhW2tleV0gPSB2YWx1ZTsKCiAgICAgIGlmIChkYXRhLnBhc3N3b3JkICE9PSBkYXRhLnBhc3N3b3JkX2NvbmZpcm1hdGlvbikgewogICAgICAgIHNldEVycm9yKCJQYXNzd29yZHMgZG8gbm90IG1hdGNoLiBQbGVhc2UgY29uZmlybSB5b3VyIHBhc3N3b3JkLiIpOwogICAgICAgIHNldExvYWRpbmcoZmFsc2UpOwogICAgICAgIHJldHVybjsKICAgICAgfQoKICAgICAgY29uc3QgeyBzdWNjZXNzLCBlcnJvciB9ID0gYXdhaXQgSW52aXRlLmFjY2VwdEludml0ZShjb2RlLCBkYXRhKTsKICAgICAgaWYgKHN1Y2Nlc3MpIHsKICAgICAgICBjb25zdCB7IHZhbGlkLCB1c2VyLCB0b2tlbiwgbWVzc2FnZSB9ID0gYXdhaXQgU3lzdGVtLnJlcXVlc3RUb2tlbihkYXRhKTsKICAgICAgICBpZiAodmFsaWQgJiYgISF0b2tlbiAmJiAhIXVzZXIpIHsKICAgICAgICAgIHNhZmVTZXRJdGVtKEFVVEhfVVNFUiwgSlNPTi5zdHJpbmdpZnkodXNlcikpOwogICAgICAgICAgc2FmZVNldEl0ZW0oQVVUSF9UT0tFTiwgdG9rZW4pOwogICAgICAgICAgd2luZG93LmxvY2F0aW9uLmhyZWYgPSBwYXRocy5ob21lKCk7CiAgICAgICAgfSBlbHNlIHsKICAgICAgICAgIHNldEVycm9yKAogICAgICAgICAgICBtZXNzYWdlIHx8CiAgICAgICAgICAgICAgIllvdXIgYWNjb3VudCB3YXMgY3JlYXRlZCBzdWNjZXNzZnVsbHksIGJ1dCB3ZSBjb3VsZCBub3Qgc2lnbiB5b3UgaW4gYXV0b21hdGljYWxseS4gUGxlYXNlIGxvZyBpbiB3aXRoIHlvdXIgY3JlZGVudGlhbHMuIiwKICAgICAgICAgICk7CiAgICAgICAgfQogICAgICAgIHJldHVybjsKICAgICAgfQogICAgICBzZXRFcnJvcihlcnJvcik7CiAgICB9IGNhdGNoIChlcnI6IGFueSkgewogICAgICBzZXRFcnJvcihlcnI/Lm1lc3NhZ2UgfHwgIkZhaWxlZCB0byBjcmVhdGUgYWNjb3VudC4gUGxlYXNlIHRyeSBhZ2Fpbi4iKTsKICAgIH0gZmluYWxseSB7CiAgICAgIHNldExvYWRpbmcoZmFsc2UpOwogICAgfQogIH07CgogIHJldHVybiAoCiAgICA8ZGl2IGNsYXNzTmFtZT0icmVsYXRpdmUgdy1mdWxsIG1heC13LTJ4bCBtYXgtaC1mdWxsIj4KICAgICAgPGRpdiBjbGFzc05hbWU9InJlbGF0aXZlIHctZnVsbCBtYXgtdy0yeGwgYmctdGhlbWUtYmctc2Vjb25kYXJ5IHJvdW5kZWQtbGcgc2hhZG93IGJvcmRlci0yIGJvcmRlci10aGVtZS1tb2RhbC1ib3JkZXIiPgogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLXN0YXJ0IGp1c3RpZnktYmV0d2VlbiBwLTQgYm9yZGVyLWIgcm91bmRlZC10IGJvcmRlci10aGVtZS1tb2RhbC1ib3JkZXIiPgogICAgICAgICAgPGgzIGNsYXNzTmFtZT0idGV4dC14bCBmb250LXNlbWlib2xkIHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5Ij4KICAgICAgICAgICAge3QoImludml0ZS5uZXdVc2VyLmNyZWF0ZUFjY291bnQiKX0KICAgICAgICAgIDwvaDM+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPGZvcm0gb25TdWJtaXQ9e2hhbmRsZUNyZWF0ZX0+CiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0icC02IHNwYWNlLXktNiBmbGV4IGgtZnVsbCB3LWZ1bGwiPgogICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0idy1mdWxsIGZsZXggZmxleC1jb2wgZ2FwLXktNCI+CiAgICAgICAgICAgICAgPGRpdj4KICAgICAgICAgICAgICAgIDxsYWJlbAogICAgICAgICAgICAgICAgICBodG1sRm9yPSJ1c2VybmFtZSIKICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJibG9jayBtYi0yIHRleHQtc20gZm9udC1tZWRpdW0gdGV4dC10aGVtZS10ZXh0LXByaW1hcnkiCiAgICAgICAgICAgICAgICA+CiAgICAgICAgICAgICAgICAgIHt0KCJpbnZpdGUubmV3VXNlci51c2VybmFtZSIpfQogICAgICAgICAgICAgICAgPC9sYWJlbD4KICAgICAgICAgICAgICAgIDxpbnB1dAogICAgICAgICAgICAgICAgICBuYW1lPSJ1c2VybmFtZSIKICAgICAgICAgICAgICAgICAgdHlwZT0idGV4dCIKICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJib3JkZXItbm9uZSBiZy10aGVtZS1zZXR0aW5ncy1pbnB1dC1iZyB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBwbGFjZWhvbGRlcjp0ZXh0LXRoZW1lLXNldHRpbmdzLWlucHV0LXBsYWNlaG9sZGVyIHRleHQtc20gcm91bmRlZC1sZyBmb2N1czpvdXRsaW5lLXByaW1hcnktYnV0dG9uIGFjdGl2ZTpvdXRsaW5lLXByaW1hcnktYnV0dG9uIG91dGxpbmUtbm9uZSBibG9jayB3LWZ1bGwgcC0yLjUiCiAgICAgICAgICAgICAgICAgIHBsYWNlaG9sZGVyPXt0KCJpbnZpdGUubmV3VXNlci51c2VybmFtZVBsYWNlaG9sZGVyIil9CiAgICAgICAgICAgICAgICAgIG1pbkxlbmd0aD17VVNFUk5BTUVfTUlOX0xFTkdUSH0KICAgICAgICAgICAgICAgICAgbWF4TGVuZ3RoPXtVU0VSTkFNRV9NQVhfTEVOR1RIfQogICAgICAgICAgICAgICAgICBwYXR0ZXJuPXtVU0VSTkFNRV9QQVRURVJOfQogICAgICAgICAgICAgICAgICByZXF1aXJlZD17dHJ1ZX0KICAgICAgICAgICAgICAgICAgYXV0b0NvbXBsZXRlPSJ1c2VybmFtZSIKICAgICAgICAgICAgICAgIC8+CiAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9Im10LTIgdGV4dC14cyB0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5Ij4KICAgICAgICAgICAgICAgICAge3QoImNvbW1vbi51c2VybmFtZV9yZXF1aXJlbWVudHMiKX0KICAgICAgICAgICAgICAgIDwvcD4KICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICA8ZGl2PgogICAgICAgICAgICAgICAgPGxhYmVsCiAgICAgICAgICAgICAgICAgIGh0bWxGb3I9InBhc3N3b3JkIgogICAgICAgICAgICAgICAgICBjbGFzc05hbWU9ImJsb2NrIG1iLTIgdGV4dC1zbSBmb250LW1lZGl1bSB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSIKICAgICAgICAgICAgICAgID4KICAgICAgICAgICAgICAgICAge3QoImludml0ZS5uZXdVc2VyLnBhc3N3b3JkIil9CiAgICAgICAgICAgICAgICA8L2xhYmVsPgogICAgICAgICAgICAgICAgPGlucHV0CiAgICAgICAgICAgICAgICAgIG5hbWU9InBhc3N3b3JkIgogICAgICAgICAgICAgICAgICB0eXBlPSJwYXNzd29yZCIKICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJib3JkZXItbm9uZSBiZy10aGVtZS1zZXR0aW5ncy1pbnB1dC1iZyB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBwbGFjZWhvbGRlcjp0ZXh0LXRoZW1lLXNldHRpbmdzLWlucHV0LXBsYWNlaG9sZGVyIHRleHQtc20gcm91bmRlZC1sZyBmb2N1czpvdXRsaW5lLXByaW1hcnktYnV0dG9uIGFjdGl2ZTpvdXRsaW5lLXByaW1hcnktYnV0dG9uIG91dGxpbmUtbm9uZSBibG9jayB3LWZ1bGwgcC0yLjUiCiAgICAgICAgICAgICAgICAgIHBsYWNlaG9sZGVyPXt0KCJpbnZpdGUubmV3VXNlci5wYXNzd29yZFBsYWNlaG9sZGVyIil9CiAgICAgICAgICAgICAgICAgIHJlcXVpcmVkPXt0cnVlfQogICAgICAgICAgICAgICAgICBtaW5MZW5ndGg9ezh9CiAgICAgICAgICAgICAgICAgIGF1dG9Db21wbGV0ZT0ibmV3LXBhc3N3b3JkIgogICAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICA8ZGl2PgogICAgICAgICAgICAgICAgPGxhYmVsCiAgICAgICAgICAgICAgICAgIGh0bWxGb3I9InBhc3N3b3JkX2NvbmZpcm1hdGlvbiIKICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJibG9jayBtYi0yIHRleHQtc20gZm9udC1tZWRpdW0gdGV4dC10aGVtZS10ZXh0LXByaW1hcnkiCiAgICAgICAgICAgICAgICA+CiAgICAgICAgICAgICAgICAgIHt0KCJpbnZpdGUubmV3VXNlci5wYXNzd29yZENvbmZpcm1hdGlvbiIpfQogICAgICAgICAgICAgICAgPC9sYWJlbD4KICAgICAgICAgICAgICAgIDxpbnB1dAogICAgICAgICAgICAgICAgICBuYW1lPSJwYXNzd29yZF9jb25maXJtYXRpb24iCiAgICAgICAgICAgICAgICAgIHR5cGU9InBhc3N3b3JkIgogICAgICAgICAgICAgICAgICBjbGFzc05hbWU9ImJvcmRlci1ub25lIGJnLXRoZW1lLXNldHRpbmdzLWlucHV0LWJnIHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IHBsYWNlaG9sZGVyOnRleHQtdGhlbWUtc2V0dGluZ3MtaW5wdXQtcGxhY2Vob2xkZXIgdGV4dC1zbSByb3VuZGVkLWxnIGZvY3VzOm91dGxpbmUtcHJpbWFyeS1idXR0b24gYWN0aXZlOm91dGxpbmUtcHJpbWFyeS1idXR0b24gb3V0bGluZS1ub25lIGJsb2NrIHctZnVsbCBwLTIuNSIKICAgICAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9e3QoImludml0ZS5uZXdVc2VyLnBhc3N3b3JkQ29uZmlybWF0aW9uUGxhY2Vob2xkZXIiKX0KICAgICAgICAgICAgICAgICAgcmVxdWlyZWQ9e3RydWV9CiAgICAgICAgICAgICAgICAgIG1pbkxlbmd0aD17OH0KICAgICAgICAgICAgICAgICAgYXV0b0NvbXBsZXRlPSJuZXctcGFzc3dvcmQiCiAgICAgICAgICAgICAgICAvPgogICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgIHtlcnJvciAmJiAoCiAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9InRleHQtcmVkLTQwMCB0ZXh0LXNtIj4KICAgICAgICAgICAgICAgICAge3QoImludml0ZS5uZXdVc2VyLmVycm9yIiwgeyBlcnJvciB9KX0KICAgICAgICAgICAgICAgIDwvcD4KICAgICAgICAgICAgICApfQogICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSB0ZXh0LXhzIG1kOnRleHQtc20iPgogICAgICAgICAgICAgICAge3QoImludml0ZS5uZXdVc2VyLmFmdGVyQ3JlYXRlSGludCIpfQogICAgICAgICAgICAgIDwvcD4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IHctZnVsbCBqdXN0aWZ5LWJldHdlZW4gaXRlbXMtY2VudGVyIHAtNiBzcGFjZS14LTIgYm9yZGVyLXQgcm91bmRlZC1iIGJvcmRlci10aGVtZS1tb2RhbC1ib3JkZXIiPgogICAgICAgICAgICA8YnV0dG9uCiAgICAgICAgICAgICAgdHlwZT0ic3VibWl0IgogICAgICAgICAgICAgIGRpc2FibGVkPXtsb2FkaW5nfQogICAgICAgICAgICAgIGNsYXNzTmFtZT0idy1mdWxsIHRyYW5zaXRpb24tYWxsIGR1cmF0aW9uLTMwMCBib3JkZXIgYm9yZGVyLXRoZW1lLXRleHQtcHJpbWFyeSBweC00IHB5LTIgcm91bmRlZC1sZyB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSB0ZXh0LXNtIGl0ZW1zLWNlbnRlciBmbGV4IGdhcC14LTIgaG92ZXI6YmctdGhlbWUtdGV4dC1wcmltYXJ5IGhvdmVyOnRleHQtdGhlbWUtYmctcHJpbWFyeSBmb2N1czpyaW5nLWdyYXktODAwIHRleHQtY2VudGVyIGp1c3RpZnktY2VudGVyIGRpc2FibGVkOm9wYWNpdHktNTAgZGlzYWJsZWQ6Y3Vyc29yLW5vdC1hbGxvd2VkIgogICAgICAgICAgICA+CiAgICAgICAgICAgICAge2xvYWRpbmcKICAgICAgICAgICAgICAgID8gdCgibG9naW4ubXVsdGktdXNlci52YWxpZGF0aW5nIikKICAgICAgICAgICAgICAgIDogdCgiaW52aXRlLm5ld1VzZXIuYWNjZXB0SW52aXRhdGlvbiIpfQogICAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICAgIDwvZGl2PgogICAgICAgIDwvZm9ybT4KICAgICAgPC9kaXY+CiAgICA8L2Rpdj4KICApOwp9Cg==
+// SPDX-License-Identifier: MIT
+// Docs: index.doc.md
+import React, { useState } from "react";
+
+import Invite from "@/models/invite";
+import paths from "@/utils/paths";
+import { useParams } from "react-router-dom";
+import { AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
+import { safeSetItem } from "@/utils/safeStorage";
+import System from "@/models/system";
+import { useTranslation } from "react-i18next";
+import {
+  USERNAME_MIN_LENGTH,
+  USERNAME_MAX_LENGTH,
+  USERNAME_PATTERN,
+} from "@/utils/username";
+
+export default function NewUserModal(): JSX.Element {
+  const { code } = useParams();
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
+
+  const handleCreate = async (e: React.FormEvent<HTMLFormElement>) => {
+    setError(null);
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const data: Record<string, any> = {};
+      const form = new FormData(e.currentTarget);
+      for (const [key, value] of form.entries()) data[key] = value;
+
+      if (data.password !== data.password_confirmation) {
+        setError("Passwords do not match. Please confirm your password.");
+        setLoading(false);
+        return;
+      }
+
+      const { success, error } = await Invite.acceptInvite(code, data);
+      if (success) {
+        const { valid, user, token, message } = await System.requestToken(data);
+        if (valid && !!token && !!user) {
+          safeSetItem(AUTH_USER, JSON.stringify(user));
+          safeSetItem(AUTH_TOKEN, token);
+          window.location.href = paths.home();
+        } else {
+          setError(
+            message ||
+              "Your account was created successfully, but we could not sign you in automatically. Please log in with your credentials.",
+          );
+        }
+        return;
+      }
+      setError(error);
+    } catch (err: any) {
+      setError(err?.message || "Failed to create account. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="relative w-full max-w-2xl max-h-full">
+      <div className="relative w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border">
+        <div className="flex items-start justify-between p-4 border-b rounded-t border-theme-modal-border">
+          <h3 className="text-xl font-semibold text-theme-text-primary">
+            {t("invite.newUser.createAccount")}
+          </h3>
+        </div>
+        <form onSubmit={handleCreate}>
+          <div className="p-6 space-y-6 flex h-full w-full">
+            <div className="w-full flex flex-col gap-y-4">
+              <div>
+                <label
+                  htmlFor="username"
+                  className="block mb-2 text-sm font-medium text-theme-text-primary"
+                >
+                  {t("invite.newUser.username")}
+                </label>
+                <input
+                  name="username"
+                  type="text"
+                  className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  placeholder={t("invite.newUser.usernamePlaceholder")}
+                  minLength={USERNAME_MIN_LENGTH}
+                  maxLength={USERNAME_MAX_LENGTH}
+                  pattern={USERNAME_PATTERN}
+                  required={true}
+                  autoComplete="username"
+                />
+                <p className="mt-2 text-xs text-theme-text-secondary">
+                  {t("common.username_requirements")}
+                </p>
+              </div>
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block mb-2 text-sm font-medium text-theme-text-primary"
+                >
+                  {t("invite.newUser.password")}
+                </label>
+                <input
+                  name="password"
+                  type="password"
+                  className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  placeholder={t("invite.newUser.passwordPlaceholder")}
+                  required={true}
+                  minLength={8}
+                  autoComplete="new-password"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="password_confirmation"
+                  className="block mb-2 text-sm font-medium text-theme-text-primary"
+                >
+                  {t("invite.newUser.passwordConfirmation")}
+                </label>
+                <input
+                  name="password_confirmation"
+                  type="password"
+                  className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  placeholder={t("invite.newUser.passwordConfirmationPlaceholder")}
+                  required={true}
+                  minLength={8}
+                  autoComplete="new-password"
+                />
+              </div>
+              {error && (
+                <p className="text-red-400 text-sm">
+                  {t("invite.newUser.error", { error })}
+                </p>
+              )}
+              <p className="text-theme-text-secondary text-xs md:text-sm">
+                {t("invite.newUser.afterCreateHint")}
+              </p>
+            </div>
+          </div>
+          <div className="flex w-full justify-between items-center p-6 space-x-2 border-t rounded-b border-theme-modal-border">
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full transition-all duration-300 border border-theme-text-primary px-4 py-2 rounded-lg text-theme-text-primary text-sm items-center flex gap-x-2 hover:bg-theme-text-primary hover:text-theme-bg-primary focus:ring-gray-800 text-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading
+                ? t("login.multi-user.validating")
+                : t("invite.newUser.acceptInvitation")}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}

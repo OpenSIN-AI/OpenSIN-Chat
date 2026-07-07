@@ -1,1 +1,106 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgUmVhY3QsIHsgdXNlRWZmZWN0LCB1c2VSZWYsIHVzZVN0YXRlIH0gZnJvbSAicmVhY3QiOwppbXBvcnQgeyBkZWZhdWx0IGFzIFdvcmtzcGFjZUNoYXRDb250YWluZXIgfSBmcm9tICJAL2NvbXBvbmVudHMvV29ya3NwYWNlQ2hhdCI7CmltcG9ydCBTaWRlYmFyLCB7IFNpZGViYXJNb2JpbGVIZWFkZXIgfSBmcm9tICJAL2NvbXBvbmVudHMvU2lkZWJhciI7CmltcG9ydCBMZWZ0U2lkZWJhckljb25CYXIgZnJvbSAiQC9jb21wb25lbnRzL1dvcmtzcGFjZUNoYXQvQ2hhdENvbnRhaW5lci9MZWZ0U2lkZWJhckljb25CYXIiOwppbXBvcnQgewogIFNpZGViYXJUb2dnbGVQcm92aWRlciwKICB1c2VTaWRlYmFyVG9nZ2xlLAp9IGZyb20gIkAvY29tcG9uZW50cy9TaWRlYmFyL1NpZGViYXJUb2dnbGUiOwppbXBvcnQgeyBOYXZpZ2F0ZSwgdXNlUGFyYW1zIH0gZnJvbSAicmVhY3Qtcm91dGVyLWRvbSI7CmltcG9ydCBQYXNzd29yZE1vZGFsLCB7IHVzZVBhc3N3b3JkTW9kYWwgfSBmcm9tICJAL2NvbXBvbmVudHMvTW9kYWxzL1Bhc3N3b3JkIjsKaW1wb3J0IHsgdXNlSXNNb2JpbGVMYXlvdXQgfSBmcm9tICJAL2hvb2tzL3VzZUlzTW9iaWxlTGF5b3V0IjsKaW1wb3J0IHsgRnVsbFNjcmVlbkxvYWRlciB9IGZyb20gIkAvY29tcG9uZW50cy9QcmVsb2FkZXIiOwppbXBvcnQgeyBMQVNUX1ZJU0lURURfV09SS1NQQUNFIH0gZnJvbSAiQC91dGlscy9jb25zdGFudHMiOwppbXBvcnQgeyBzYWZlU2V0SXRlbSB9IGZyb20gIkAvdXRpbHMvc2FmZVN0b3JhZ2UiOwppbXBvcnQgdXNlV29ya3NwYWNlQ2hhdHMgZnJvbSAiQC9ob29rcy91c2VXb3Jrc3BhY2VDaGF0cyI7CgpleHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBXb3Jrc3BhY2VDaGF0KCkgewogIGNvbnN0IHsgbG9hZGluZywgcmVxdWlyZXNBdXRoLCBtb2RlIH0gPSB1c2VQYXNzd29yZE1vZGFsKCk7CgogIGlmIChsb2FkaW5nKSByZXR1cm4gPEZ1bGxTY3JlZW5Mb2FkZXIgLz47CiAgaWYgKHJlcXVpcmVzQXV0aCAhPT0gZmFsc2UpIHsKICAgIHJldHVybiA8PntyZXF1aXJlc0F1dGggIT09IG51bGwgJiYgPFBhc3N3b3JkTW9kYWwgbW9kZT17bW9kZX0gLz59PC8+OwogIH0KCiAgcmV0dXJuICgKICAgIDxTaWRlYmFyVG9nZ2xlUHJvdmlkZXI+CiAgICAgIDxXb3Jrc3BhY2VDaGF0TGF5b3V0IC8+CiAgICA8L1NpZGViYXJUb2dnbGVQcm92aWRlcj4KICApOwp9CgpmdW5jdGlvbiBXb3Jrc3BhY2VDaGF0TGF5b3V0KCkgewogIGNvbnN0IHsgc2hvd1NpZGViYXIgfSA9IHVzZVNpZGViYXJUb2dnbGUoKTsKICBjb25zdCBpc01vYmlsZSA9IHVzZUlzTW9iaWxlTGF5b3V0KCk7CiAgY29uc3QgcmFpbFZpc2libGUgPSAhaXNNb2JpbGUgJiYgIXNob3dTaWRlYmFyOwogIHJldHVybiAoCiAgICA8ZGl2IGNsYXNzTmFtZT0idy1zY3JlZW4gaC1zY3JlZW4gb3ZlcmZsb3ctaGlkZGVuIGJnLXppbmMtOTUwIGxpZ2h0OmJnLXNsYXRlLTUwIGZsZXgiPgogICAgICB7IWlzTW9iaWxlICYmIDxMZWZ0U2lkZWJhckljb25CYXIgLz59CiAgICAgIHshaXNNb2JpbGUgPyA8U2lkZWJhciAvPiA6IDxTaWRlYmFyTW9iaWxlSGVhZGVyIC8+fQogICAgICA8ZGl2CiAgICAgICAgY2xhc3NOYW1lPXtgZmxleC0xIG1pbi13LTAgdHJhbnNpdGlvbi1hbGwgZHVyYXRpb24tNTAwICR7cmFpbFZpc2libGUgPyAibWQ6bWwtWzUycHhdIiA6ICIifWB9CiAgICAgID4KICAgICAgICA8U2hvd1dvcmtzcGFjZUNoYXQgLz4KICAgICAgPC9kaXY+CiAgICA8L2Rpdj4KICApOwp9CgpmdW5jdGlvbiBTaG93V29ya3NwYWNlQ2hhdCgpIHsKICBjb25zdCB7IHNsdWcsIHRocmVhZFNsdWcgfSA9IHVzZVBhcmFtcygpOwogIGNvbnN0IHsKICAgIHdvcmtzcGFjZTogcmF3V29ya3NwYWNlLAogICAgc3VnZ2VzdGVkTWVzc2FnZXMsCiAgICBzaG93QWdlbnRDb21tYW5kLAogICAgaXNMb2FkaW5nLAogIH0gPSB1c2VXb3Jrc3BhY2VDaGF0cyhzbHVnKTsKICBjb25zdCBbd29ya3NwYWNlLCBzZXRXb3Jrc3BhY2VdID0gdXNlU3RhdGU8YW55PihudWxsKTsKICBjb25zdCBbbG9hZGVkU2x1Zywgc2V0TG9hZGVkU2x1Z10gPSB1c2VTdGF0ZTxzdHJpbmcgfCBudWxsPihudWxsKTsKICBjb25zdCBbbm90Rm91bmQsIHNldE5vdEZvdW5kXSA9IHVzZVN0YXRlKGZhbHNlKTsKICBjb25zdCBzdWdnZXN0ZWRNZXNzYWdlc1JlZiA9IHVzZVJlZihzdWdnZXN0ZWRNZXNzYWdlcyk7CiAgY29uc3Qgc2hvd0FnZW50Q29tbWFuZFJlZiA9IHVzZVJlZihzaG93QWdlbnRDb21tYW5kKTsKCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIHN1Z2dlc3RlZE1lc3NhZ2VzUmVmLmN1cnJlbnQgPSBzdWdnZXN0ZWRNZXNzYWdlczsKICAgIHNob3dBZ2VudENvbW1hbmRSZWYuY3VycmVudCA9IHNob3dBZ2VudENvbW1hbmQ7CiAgfSwgW3N1Z2dlc3RlZE1lc3NhZ2VzLCBzaG93QWdlbnRDb21tYW5kXSk7CgogIHVzZUVmZmVjdCgoKSA9PiB7CiAgICBpZiAoaXNMb2FkaW5nKSByZXR1cm47CiAgICBpZiAoIXNsdWcpIHJldHVybjsKICAgIGlmICghcmF3V29ya3NwYWNlKSB7CiAgICAgIHNldFdvcmtzcGFjZShudWxsKTsKICAgICAgc2V0TG9hZGVkU2x1ZyhzbHVnKTsKICAgICAgc2V0Tm90Rm91bmQodHJ1ZSk7CiAgICAgIHJldHVybjsKICAgIH0KCiAgICBzZXROb3RGb3VuZChmYWxzZSk7CiAgICBzZXRXb3Jrc3BhY2UoewogICAgICAuLi5yYXdXb3Jrc3BhY2UsCiAgICAgIHN1Z2dlc3RlZE1lc3NhZ2VzOiBzdWdnZXN0ZWRNZXNzYWdlc1JlZi5jdXJyZW50LAogICAgICBzaG93QWdlbnRDb21tYW5kOiBzaG93QWdlbnRDb21tYW5kUmVmLmN1cnJlbnQsCiAgICB9KTsKICAgIHNldExvYWRlZFNsdWcoc2x1Zyk7CiAgICBzYWZlU2V0SXRlbSgKICAgICAgTEFTVF9WSVNJVEVEX1dPUktTUEFDRSwKICAgICAgSlNPTi5zdHJpbmdpZnkoewogICAgICAgIHNsdWc6IHJhd1dvcmtzcGFjZS5zbHVnLAogICAgICAgIG5hbWU6IHJhd1dvcmtzcGFjZS5uYW1lLAogICAgICB9KSwKICAgICk7CiAgfSwgW3NsdWcsIGlzTG9hZGluZywgcmF3V29ya3NwYWNlXSk7CgogIGlmIChub3RGb3VuZCAmJiAhaXNMb2FkaW5nKSB7CiAgICByZXR1cm4gPE5hdmlnYXRlIHRvPSIvIiByZXBsYWNlIC8+OwogIH0KCiAgcmV0dXJuICgKICAgIDxXb3Jrc3BhY2VDaGF0Q29udGFpbmVyCiAgICAgIGxvYWRpbmc9e2xvYWRlZFNsdWcgIT09IHNsdWd9CiAgICAgIHdvcmtzcGFjZT17d29ya3NwYWNlfQogICAgICB0aHJlYWRTbHVnPXt0aHJlYWRTbHVnfQogICAgLz4KICApOwp9Cg==
+// SPDX-License-Identifier: MIT
+import React, { useEffect, useRef, useState } from "react";
+import { default as WorkspaceChatContainer } from "@/components/WorkspaceChat";
+import Sidebar, { SidebarMobileHeader } from "@/components/Sidebar";
+import LeftSidebarIconBar from "@/components/WorkspaceChat/ChatContainer/LeftSidebarIconBar";
+import {
+  SidebarToggleProvider,
+  useSidebarToggle,
+} from "@/components/Sidebar/SidebarToggle";
+import { Navigate, useParams } from "react-router-dom";
+import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
+import { FullScreenLoader } from "@/components/Preloader";
+import { LAST_VISITED_WORKSPACE } from "@/utils/constants";
+import { safeSetItem } from "@/utils/safeStorage";
+import useWorkspaceChats from "@/hooks/useWorkspaceChats";
+
+export default function WorkspaceChat() {
+  const { loading, requiresAuth, mode } = usePasswordModal();
+
+  if (loading) return <FullScreenLoader />;
+  if (requiresAuth !== false) {
+    return <>{requiresAuth !== null && <PasswordModal mode={mode} />}</>;
+  }
+
+  return (
+    <SidebarToggleProvider>
+      <WorkspaceChatLayout />
+    </SidebarToggleProvider>
+  );
+}
+
+function WorkspaceChatLayout() {
+  const { showSidebar } = useSidebarToggle();
+  const isMobile = useIsMobileLayout();
+  const railVisible = !isMobile && !showSidebar;
+  return (
+    <div className="w-screen h-screen overflow-hidden bg-zinc-950 light:bg-slate-50 flex">
+      {!isMobile && <LeftSidebarIconBar />}
+      {!isMobile ? <Sidebar /> : <SidebarMobileHeader />}
+      <div
+        className={`flex-1 min-w-0 transition-all duration-500 ${railVisible ? "md:ml-[52px]" : ""}`}
+      >
+        <ShowWorkspaceChat />
+      </div>
+    </div>
+  );
+}
+
+function ShowWorkspaceChat() {
+  const { slug, threadSlug } = useParams();
+  const {
+    workspace: rawWorkspace,
+    suggestedMessages,
+    showAgentCommand,
+    isLoading,
+  } = useWorkspaceChats(slug);
+  const [workspace, setWorkspace] = useState<any>(null);
+  const [loadedSlug, setLoadedSlug] = useState<string | null>(null);
+  const [notFound, setNotFound] = useState(false);
+  const suggestedMessagesRef = useRef(suggestedMessages);
+  const showAgentCommandRef = useRef(showAgentCommand);
+
+  useEffect(() => {
+    suggestedMessagesRef.current = suggestedMessages;
+    showAgentCommandRef.current = showAgentCommand;
+  }, [suggestedMessages, showAgentCommand]);
+
+  useEffect(() => {
+    if (isLoading) return;
+    if (!slug) return;
+    if (!rawWorkspace) {
+      setWorkspace(null);
+      setLoadedSlug(slug);
+      setNotFound(true);
+      return;
+    }
+
+    setNotFound(false);
+    setWorkspace({
+      ...rawWorkspace,
+      suggestedMessages: suggestedMessagesRef.current,
+      showAgentCommand: showAgentCommandRef.current,
+    });
+    setLoadedSlug(slug);
+    safeSetItem(
+      LAST_VISITED_WORKSPACE,
+      JSON.stringify({
+        slug: rawWorkspace.slug,
+        name: rawWorkspace.name,
+      }),
+    );
+  }, [slug, isLoading, rawWorkspace]);
+
+  if (notFound && !isLoading) {
+    return <Navigate to="/" replace />;
+  }
+
+  return (
+    <WorkspaceChatContainer
+      loading={loadedSlug !== slug}
+      workspace={workspace}
+      threadSlug={threadSlug}
+    />
+  );
+}

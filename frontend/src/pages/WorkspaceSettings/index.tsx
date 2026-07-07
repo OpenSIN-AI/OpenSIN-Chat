@@ -1,1 +1,197 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBEb2NzOiBpbmRleC5kb2MubWQKaW1wb3J0IFJlYWN0LCB7IHVzZUVmZmVjdCwgdXNlU3RhdGUgfSBmcm9tICJyZWFjdCI7CmltcG9ydCB7IHVzZVBhcmFtcyB9IGZyb20gInJlYWN0LXJvdXRlci1kb20iOwppbXBvcnQgU2lkZWJhciwgeyBTaWRlYmFyTW9iaWxlSGVhZGVyIH0gZnJvbSAiQC9jb21wb25lbnRzL1NpZGViYXIiOwppbXBvcnQgUGFzc3dvcmRNb2RhbCwgeyB1c2VQYXNzd29yZE1vZGFsIH0gZnJvbSAiQC9jb21wb25lbnRzL01vZGFscy9QYXNzd29yZCI7CmltcG9ydCB7IGlzTW9iaWxlIH0gZnJvbSAicmVhY3QtZGV2aWNlLWRldGVjdCI7CmltcG9ydCB7IEZ1bGxTY3JlZW5Mb2FkZXIgfSBmcm9tICJAL2NvbXBvbmVudHMvUHJlbG9hZGVyIjsKaW1wb3J0IHsgQXJyb3dVVXBMZWZ0IH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL0Fycm93VVVwTGVmdCI7CmltcG9ydCB7IENoYXRUZXh0IH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL0NoYXRUZXh0IjsKaW1wb3J0IHsgRGF0YWJhc2UgfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvRGF0YWJhc2UiOwppbXBvcnQgeyBSb2JvdCB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9Sb2JvdCI7CmltcG9ydCB7IFVzZXIgfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvVXNlciI7CmltcG9ydCB7IFdyZW5jaCB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9XcmVuY2giOwppbXBvcnQgcGF0aHMgZnJvbSAiQC91dGlscy9wYXRocyI7CmltcG9ydCB7IExpbmssIE5hdkxpbmssIE5hdmlnYXRlIH0gZnJvbSAicmVhY3Qtcm91dGVyLWRvbSI7CmltcG9ydCBHZW5lcmFsQXBwZWFyYW5jZSBmcm9tICIuL0dlbmVyYWxBcHBlYXJhbmNlIjsKaW1wb3J0IENoYXRTZXR0aW5ncyBmcm9tICIuL0NoYXRTZXR0aW5ncyI7CmltcG9ydCBWZWN0b3JEYXRhYmFzZSBmcm9tICIuL1ZlY3RvckRhdGFiYXNlIjsKaW1wb3J0IE1lbWJlcnMgZnJvbSAiLi9NZW1iZXJzIjsKaW1wb3J0IFdvcmtzcGFjZUFnZW50Q29uZmlndXJhdGlvbiBmcm9tICIuL0FnZW50Q29uZmlnIjsKaW1wb3J0IHVzZVVzZXIgZnJvbSAiQC9ob29rcy91c2VVc2VyIjsKaW1wb3J0IHsgdXNlVHJhbnNsYXRpb24gfSBmcm9tICJyZWFjdC1pMThuZXh0IjsKaW1wb3J0IHVzZVdvcmtzcGFjZUNoYXRzIGZyb20gIkAvaG9va3MvdXNlV29ya3NwYWNlQ2hhdHMiOwppbXBvcnQgdXNlU3lzdGVtU2V0dGluZ3MgZnJvbSAiQC9ob29rcy91c2VTeXN0ZW1TZXR0aW5ncyI7Cgpjb25zdCBUQUJTOiBSZWNvcmQ8c3RyaW5nLCBSZWFjdC5Db21wb25lbnRUeXBlPGFueT4+ID0gewogICJnZW5lcmFsLWFwcGVhcmFuY2UiOiBHZW5lcmFsQXBwZWFyYW5jZSwKICAiY2hhdC1zZXR0aW5ncyI6IENoYXRTZXR0aW5ncywKICAidmVjdG9yLWRhdGFiYXNlIjogVmVjdG9yRGF0YWJhc2UsCiAgbWVtYmVyczogTWVtYmVycywKICAiYWdlbnQtY29uZmlnIjogV29ya3NwYWNlQWdlbnRDb25maWd1cmF0aW9uLAp9OwoKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gV29ya3NwYWNlU2V0dGluZ3MoKTogSlNYLkVsZW1lbnQgfCBudWxsIHsKICBjb25zdCB7IGxvYWRpbmcsIHJlcXVpcmVzQXV0aCwgbW9kZSB9ID0gdXNlUGFzc3dvcmRNb2RhbCgpOwoKICBpZiAobG9hZGluZykgcmV0dXJuIDxGdWxsU2NyZWVuTG9hZGVyIC8+OwogIGlmIChyZXF1aXJlc0F1dGggIT09IGZhbHNlKSB7CiAgICByZXR1cm4gPD57cmVxdWlyZXNBdXRoICE9PSBudWxsICYmIDxQYXNzd29yZE1vZGFsIG1vZGU9e21vZGV9IC8+fTwvPjsKICB9CgogIHJldHVybiA8U2hvd1dvcmtzcGFjZUNoYXQgLz47Cn0KCmZ1bmN0aW9uIFNob3dXb3Jrc3BhY2VDaGF0KCk6IEpTWC5FbGVtZW50IHwgbnVsbCB7CiAgY29uc3QgeyB0IH0gPSB1c2VUcmFuc2xhdGlvbigpOwogIGNvbnN0IHsgc2x1ZywgdGFiIH0gPSB1c2VQYXJhbXMoKSBhcyB7IHNsdWc/OiBzdHJpbmc7IHRhYj86IHN0cmluZyB9OwogIGNvbnN0IHsgdXNlciB9ID0gdXNlVXNlcigpOwogIGNvbnN0IHsKICAgIHdvcmtzcGFjZTogcmF3V29ya3NwYWNlLAogICAgc3VnZ2VzdGVkTWVzc2FnZXMsCiAgICBpc0xvYWRpbmc6IHdvcmtzcGFjZUxvYWRpbmcsCiAgICBlcnJvcjogd29ya3NwYWNlRXJyb3IsCiAgfSA9IHVzZVdvcmtzcGFjZUNoYXRzKHNsdWcpOwogIGNvbnN0IHsKICAgIHNldHRpbmdzOiBzeXN0ZW1TZXR0aW5ncywKICAgIGxvYWRpbmc6IHNldHRpbmdzTG9hZGluZywKICAgIGVycm9yOiBzZXR0aW5nc0Vycm9yLAogIH0gPSB1c2VTeXN0ZW1TZXR0aW5ncygpOwogIGNvbnN0IFt3b3Jrc3BhY2UsIHNldFdvcmtzcGFjZV0gPSB1c2VTdGF0ZTxhbnk+KG51bGwpOwogIGNvbnN0IFtkZWxldGlvblByb3RlY3RlZCwgc2V0RGVsZXRpb25Qcm90ZWN0ZWRdID0gdXNlU3RhdGUoZmFsc2UpOwogIGNvbnN0IFtsb2FkaW5nLCBzZXRMb2FkaW5nXSA9IHVzZVN0YXRlKHRydWUpOwogIGNvbnN0IGlzTG9hZGluZyA9IEJvb2xlYW4od29ya3NwYWNlTG9hZGluZyB8fCBzZXR0aW5nc0xvYWRpbmcgfHwgbG9hZGluZyk7CgogIHVzZUVmZmVjdCgoKSA9PiB7CiAgICBpZiAod29ya3NwYWNlTG9hZGluZyB8fCBzZXR0aW5nc0xvYWRpbmcpIHJldHVybjsKICAgIGlmICh3b3Jrc3BhY2VFcnJvciB8fCBzZXR0aW5nc0Vycm9yKSB7CiAgICAgIHNldExvYWRpbmcoZmFsc2UpOwogICAgICByZXR1cm47CiAgICB9CiAgICBpZiAoIXNsdWcpIHsKICAgICAgc2V0TG9hZGluZyhmYWxzZSk7CiAgICAgIHJldHVybjsKICAgIH0KICAgIGlmICghcmF3V29ya3NwYWNlKSB7CiAgICAgIHNldExvYWRpbmcoZmFsc2UpOwogICAgICByZXR1cm47CiAgICB9CgogICAgc2V0V29ya3NwYWNlKHsKICAgICAgLi4ucmF3V29ya3NwYWNlLAogICAgICB2ZWN0b3JEQjogc3lzdGVtU2V0dGluZ3M/LlZlY3RvckRCLAogICAgICBzdWdnZXN0ZWRNZXNzYWdlcywKICAgIH0pOwogICAgc2V0RGVsZXRpb25Qcm90ZWN0ZWQoc3lzdGVtU2V0dGluZ3M/LldvcmtzcGFjZURlbGV0aW9uUHJvdGVjdGlvbiA9PT0gdHJ1ZSk7CiAgICBzZXRMb2FkaW5nKGZhbHNlKTsKICB9LCBbCiAgICBzbHVnLAogICAgdGFiLAogICAgd29ya3NwYWNlTG9hZGluZywKICAgIHNldHRpbmdzTG9hZGluZywKICAgIHdvcmtzcGFjZUVycm9yLAogICAgc2V0dGluZ3NFcnJvciwKICAgIHJhd1dvcmtzcGFjZSwKICAgIHN1Z2dlc3RlZE1lc3NhZ2VzLAogICAgc3lzdGVtU2V0dGluZ3MsCiAgXSk7CgogIGlmIChpc0xvYWRpbmcpIHJldHVybiA8RnVsbFNjcmVlbkxvYWRlciAvPjsKCiAgLy8gR3VhcmQ6IGFuIGludmFsaWQgb3IgbWlzc2luZyB0YWIgd291bGQgbWFrZSBUQUJTW3RhYl0gdW5kZWZpbmVkIGFuZAogIC8vIGNyYXNoIFJlYWN0IHdpdGggIkVsZW1lbnQgdHlwZSBpcyBpbnZhbGlkIi4gUmVkaXJlY3QgdG8gdGhlIGRlZmF1bHQgdGFiLgogIC8vIEFsc28gZ3VhcmQgYWdhaW5zdCBhIG51bGwgd29ya3NwYWNlIChlLmcuIHNsdWcgbm90IGZvdW5kKSDigJQgcGFzc2luZyBudWxsCiAgLy8gdG8gdGFiIGNvbXBvbmVudHMgbGlrZSBNZW1iZXJzIHdvdWxkIGNyYXNoIG9uIHdvcmtzcGFjZS5pZCBhY2Nlc3MuCiAgY29uc3QgVGFiQ29udGVudCA9IFRBQlNbdGFiID8/ICIiXTsKICBpZiAoIVRhYkNvbnRlbnQgfHwgIXNsdWcgfHwgIXdvcmtzcGFjZSkgewogICAgcmV0dXJuICgKICAgICAgPE5hdmlnYXRlCiAgICAgICAgdG89e3BhdGhzLndvcmtzcGFjZS5zZXR0aW5ncy5nZW5lcmFsQXBwZWFyYW5jZShzbHVnID8/ICIiKX0KICAgICAgICByZXBsYWNlCiAgICAgIC8+CiAgICApOwogIH0KICByZXR1cm4gKAogICAgPGRpdiBjbGFzc05hbWU9Inctc2NyZWVuIGgtc2NyZWVuIG92ZXJmbG93LWhpZGRlbiBiZy16aW5jLTk1MCBsaWdodDpiZy1zbGF0ZS01MCBmbGV4Ij4KICAgICAgeyFpc01vYmlsZSA/IDxTaWRlYmFyIC8+IDogPFNpZGViYXJNb2JpbGVIZWFkZXIgLz59CiAgICAgIDxkaXYKICAgICAgICBzdHlsZT17eyAiLS1jb250ZW50LWhlaWdodCI6IGlzTW9iaWxlID8gIjEwMCUiIDogImNhbGMoMTAwJSAtIDMycHgpIiB9fQogICAgICAgIGNsYXNzTmFtZT0iaC1bdmFyKC0tY29udGVudC1oZWlnaHQpXSB0cmFuc2l0aW9uLWFsbCBkdXJhdGlvbi01MDAgcmVsYXRpdmUgbWQ6bWwtWzJweF0gbWQ6bXItWzE2cHhdIG1kOm15LVsxNnB4XSBtZDpyb3VuZGVkLVsxNnB4XSBiZy10aGVtZS1iZy1zZWNvbmRhcnkgdy1mdWxsIG92ZXJmbG93LXktc2Nyb2xsIgogICAgICA+CiAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZ2FwLXgtMTAgcHQtNiBwYi00IG1sLTE2IG1yLTggYm9yZGVyLWItMiBib3JkZXItd2hpdGUgbGlnaHQ6Ym9yZGVyLXRoZW1lLWNoYXQtaW5wdXQtYm9yZGVyIGJvcmRlci1vcGFjaXR5LTEwIj4KICAgICAgICAgIDxMaW5rCiAgICAgICAgICAgIHRvPXtwYXRocy53b3Jrc3BhY2UuY2hhdChzbHVnKX0KICAgICAgICAgICAgY2xhc3NOYW1lPSJhYnNvbHV0ZSB0b3AtMiBsZWZ0LTIgbWQ6dG9wLTQgbWQ6bGVmdC00IHRyYW5zaXRpb24tYWxsIGR1cmF0aW9uLTMwMCBwLTIgcm91bmRlZC1mdWxsIHRleHQtd2hpdGUgYmctdGhlbWUtc2lkZWJhci1mb290ZXItaWNvbiBob3ZlcjpiZy10aGVtZS1zaWRlYmFyLWZvb3Rlci1pY29uLWhvdmVyIHotMTAiCiAgICAgICAgICA+CiAgICAgICAgICAgIDxBcnJvd1VVcExlZnQgY2xhc3NOYW1lPSJoLTUgdy01IiB3ZWlnaHQ9ImZpbGwiIC8+CiAgICAgICAgICA8L0xpbms+CiAgICAgICAgICA8VGFiSXRlbQogICAgICAgICAgICB0aXRsZT17dCgid29ya3NwYWNlc+KAlHNldHRpbmdzLmdlbmVyYWwiKX0KICAgICAgICAgICAgaWNvbj17PFdyZW5jaCBjbGFzc05hbWU9ImgtNiB3LTYiIC8+fQogICAgICAgICAgICB0bz17cGF0aHMud29ya3NwYWNlLnNldHRpbmdzLmdlbmVyYWxBcHBlYXJhbmNlKHNsdWcpfQogICAgICAgICAgLz4KICAgICAgICAgIDxUYWJJdGVtCiAgICAgICAgICAgIHRpdGxlPXt0KCJ3b3Jrc3BhY2Vz4oCUc2V0dGluZ3MuY2hhdCIpfQogICAgICAgICAgICBpY29uPXs8Q2hhdFRleHQgY2xhc3NOYW1lPSJoLTYgdy02IiAvPn0KICAgICAgICAgICAgdG89e3BhdGhzLndvcmtzcGFjZS5zZXR0aW5ncy5jaGF0U2V0dGluZ3Moc2x1Zyl9CiAgICAgICAgICAvPgogICAgICAgICAgPFRhYkl0ZW0KICAgICAgICAgICAgdGl0bGU9e3QoIndvcmtzcGFjZXPigJRzZXR0aW5ncy52ZWN0b3IiKX0KICAgICAgICAgICAgaWNvbj17PERhdGFiYXNlIGNsYXNzTmFtZT0iaC02IHctNiIgLz59CiAgICAgICAgICAgIHRvPXtwYXRocy53b3Jrc3BhY2Uuc2V0dGluZ3MudmVjdG9yRGF0YWJhc2Uoc2x1Zyl9CiAgICAgICAgICAvPgogICAgICAgICAgPFRhYkl0ZW0KICAgICAgICAgICAgdGl0bGU9e3QoIndvcmtzcGFjZXPigJRzZXR0aW5ncy5tZW1iZXJzIil9CiAgICAgICAgICAgIGljb249ezxVc2VyIGNsYXNzTmFtZT0iaC02IHctNiIgLz59CiAgICAgICAgICAgIHRvPXtwYXRocy53b3Jrc3BhY2Uuc2V0dGluZ3MubWVtYmVycyhzbHVnKX0KICAgICAgICAgICAgdmlzaWJsZT17WyJhZG1pbiIsICJtYW5hZ2VyIl0uaW5jbHVkZXModXNlcj8ucm9sZSl9CiAgICAgICAgICAvPgogICAgICAgICAgPFRhYkl0ZW0KICAgICAgICAgICAgdGl0bGU9e3QoIndvcmtzcGFjZXPigJRzZXR0aW5ncy5hZ2VudCIpfQogICAgICAgICAgICBpY29uPXs8Um9ib3QgY2xhc3NOYW1lPSJoLTYgdy02IiAvPn0KICAgICAgICAgICAgdG89e3BhdGhzLndvcmtzcGFjZS5zZXR0aW5ncy5hZ2VudENvbmZpZyhzbHVnKX0KICAgICAgICAgIC8+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPGRpdiBjbGFzc05hbWU9InB4LTE2IHB5LTYiPgogICAgICAgICAgPFRhYkNvbnRlbnQKICAgICAgICAgICAgc2x1Zz17c2x1Z30KICAgICAgICAgICAgd29ya3NwYWNlPXt3b3Jrc3BhY2V9CiAgICAgICAgICAgIGRlbGV0aW9uUHJvdGVjdGVkPXtkZWxldGlvblByb3RlY3RlZH0KICAgICAgICAgIC8+CiAgICAgICAgPC9kaXY+CiAgICAgIDwvZGl2PgogICAgPC9kaXY+CiAgKTsKfQoKdHlwZSBUYWJJdGVtUHJvcHMgPSB7CiAgdGl0bGU6IHN0cmluZzsKICBpY29uOiBSZWFjdC5SZWFjdE5vZGU7CiAgdG86IHN0cmluZzsKICB2aXNpYmxlPzogYm9vbGVhbjsKfTsKCmZ1bmN0aW9uIFRhYkl0ZW0oewogIHRpdGxlLAogIGljb24sCiAgdG8sCiAgdmlzaWJsZSA9IHRydWUsCn06IFRhYkl0ZW1Qcm9wcyk6IEpTWC5FbGVtZW50IHwgbnVsbCB7CiAgaWYgKCF2aXNpYmxlKSByZXR1cm4gbnVsbDsKICByZXR1cm4gKAogICAgPE5hdkxpbmsKICAgICAgdG89e3RvfQogICAgICBjbGFzc05hbWU9eyh7IGlzQWN0aXZlIH0pID0+CiAgICAgICAgYCR7CiAgICAgICAgICBpc0FjdGl2ZQogICAgICAgICAgICA/ICJ0ZXh0LXNreS00MDAgcGItNCBib3JkZXItYi1bNHB4XSAtbWItWzE5cHhdIGJvcmRlci1za3ktNDAwIgogICAgICAgICAgICA6ICJ0ZXh0LXdoaXRlLzYwIGhvdmVyOnRleHQtc2t5LTQwMCIKICAgICAgICB9IGAgKyAiIGZsZXggZ2FwLXgtMiBpdGVtcy1jZW50ZXIgZm9udC1tZWRpdW0iCiAgICAgIH0KICAgID4KICAgICAge2ljb259CiAgICAgIDxkaXY+e3RpdGxlfTwvZGl2PgogICAgPC9OYXZMaW5rPgogICk7Cn0K
+// SPDX-License-Identifier: MIT
+// Docs: index.doc.md
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import Sidebar, { SidebarMobileHeader } from "@/components/Sidebar";
+import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
+import { isMobile } from "react-device-detect";
+import { FullScreenLoader } from "@/components/Preloader";
+import { ArrowUUpLeft } from "@phosphor-icons/react/dist/csr/ArrowUUpLeft";
+import { ChatText } from "@phosphor-icons/react/dist/csr/ChatText";
+import { Database } from "@phosphor-icons/react/dist/csr/Database";
+import { Robot } from "@phosphor-icons/react/dist/csr/Robot";
+import { User } from "@phosphor-icons/react/dist/csr/User";
+import { Wrench } from "@phosphor-icons/react/dist/csr/Wrench";
+import paths from "@/utils/paths";
+import { Link, NavLink, Navigate } from "react-router-dom";
+import GeneralAppearance from "./GeneralAppearance";
+import ChatSettings from "./ChatSettings";
+import VectorDatabase from "./VectorDatabase";
+import Members from "./Members";
+import WorkspaceAgentConfiguration from "./AgentConfig";
+import useUser from "@/hooks/useUser";
+import { useTranslation } from "react-i18next";
+import useWorkspaceChats from "@/hooks/useWorkspaceChats";
+import useSystemSettings from "@/hooks/useSystemSettings";
+
+const TABS: Record<string, React.ComponentType<any>> = {
+  "general-appearance": GeneralAppearance,
+  "chat-settings": ChatSettings,
+  "vector-database": VectorDatabase,
+  members: Members,
+  "agent-config": WorkspaceAgentConfiguration,
+};
+
+export default function WorkspaceSettings(): JSX.Element | null {
+  const { loading, requiresAuth, mode } = usePasswordModal();
+
+  if (loading) return <FullScreenLoader />;
+  if (requiresAuth !== false) {
+    return <>{requiresAuth !== null && <PasswordModal mode={mode} />}</>;
+  }
+
+  return <ShowWorkspaceChat />;
+}
+
+function ShowWorkspaceChat(): JSX.Element | null {
+  const { t } = useTranslation();
+  const { slug, tab } = useParams() as { slug?: string; tab?: string };
+  const { user } = useUser();
+  const {
+    workspace: rawWorkspace,
+    suggestedMessages,
+    isLoading: workspaceLoading,
+    error: workspaceError,
+  } = useWorkspaceChats(slug);
+  const {
+    settings: systemSettings,
+    loading: settingsLoading,
+    error: settingsError,
+  } = useSystemSettings();
+  const [workspace, setWorkspace] = useState<any>(null);
+  const [deletionProtected, setDeletionProtected] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const isLoading = Boolean(workspaceLoading || settingsLoading || loading);
+
+  useEffect(() => {
+    if (workspaceLoading || settingsLoading) return;
+    if (workspaceError || settingsError) {
+      setLoading(false);
+      return;
+    }
+    if (!slug) {
+      setLoading(false);
+      return;
+    }
+    if (!rawWorkspace) {
+      setLoading(false);
+      return;
+    }
+
+    setWorkspace({
+      ...rawWorkspace,
+      vectorDB: systemSettings?.VectorDB,
+      suggestedMessages,
+    });
+    setDeletionProtected(systemSettings?.WorkspaceDeletionProtection === true);
+    setLoading(false);
+  }, [
+    slug,
+    tab,
+    workspaceLoading,
+    settingsLoading,
+    workspaceError,
+    settingsError,
+    rawWorkspace,
+    suggestedMessages,
+    systemSettings,
+  ]);
+
+  if (isLoading) return <FullScreenLoader />;
+
+  // Guard: an invalid or missing tab would make TABS[tab] undefined and
+  // crash React with "Element type is invalid". Redirect to the default tab.
+  // Also guard against a null workspace (e.g. slug not found) — passing null
+  // to tab components like Members would crash on workspace.id access.
+  const TabContent = TABS[tab ?? ""];
+  if (!TabContent || !slug || !workspace) {
+    return (
+      <Navigate
+        to={paths.workspace.settings.generalAppearance(slug ?? "")}
+        replace
+      />
+    );
+  }
+  return (
+    <div className="w-screen h-screen overflow-hidden bg-zinc-950 light:bg-slate-50 flex">
+      {!isMobile ? <Sidebar /> : <SidebarMobileHeader />}
+      <div
+        style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
+        className="h-[var(--content-height)] transition-all duration-500 relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll"
+      >
+        <div className="flex gap-x-10 pt-6 pb-4 ml-16 mr-8 border-b-2 border-white light:border-theme-chat-input-border border-opacity-10">
+          <Link
+            to={paths.workspace.chat(slug)}
+            className="absolute top-2 left-2 md:top-4 md:left-4 transition-all duration-300 p-2 rounded-full text-white bg-theme-sidebar-footer-icon hover:bg-theme-sidebar-footer-icon-hover z-10"
+          >
+            <ArrowUUpLeft className="h-5 w-5" weight="fill" />
+          </Link>
+          <TabItem
+            title={t("workspaces—settings.general")}
+            icon={<Wrench className="h-6 w-6" />}
+            to={paths.workspace.settings.generalAppearance(slug)}
+          />
+          <TabItem
+            title={t("workspaces—settings.chat")}
+            icon={<ChatText className="h-6 w-6" />}
+            to={paths.workspace.settings.chatSettings(slug)}
+          />
+          <TabItem
+            title={t("workspaces—settings.vector")}
+            icon={<Database className="h-6 w-6" />}
+            to={paths.workspace.settings.vectorDatabase(slug)}
+          />
+          <TabItem
+            title={t("workspaces—settings.members")}
+            icon={<User className="h-6 w-6" />}
+            to={paths.workspace.settings.members(slug)}
+            visible={["admin", "manager"].includes(user?.role)}
+          />
+          <TabItem
+            title={t("workspaces—settings.agent")}
+            icon={<Robot className="h-6 w-6" />}
+            to={paths.workspace.settings.agentConfig(slug)}
+          />
+        </div>
+        <div className="px-16 py-6">
+          <TabContent
+            slug={slug}
+            workspace={workspace}
+            deletionProtected={deletionProtected}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+type TabItemProps = {
+  title: string;
+  icon: React.ReactNode;
+  to: string;
+  visible?: boolean;
+};
+
+function TabItem({
+  title,
+  icon,
+  to,
+  visible = true,
+}: TabItemProps): JSX.Element | null {
+  if (!visible) return null;
+  return (
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        `${
+          isActive
+            ? "text-sky-400 pb-4 border-b-[4px] -mb-[19px] border-sky-400"
+            : "text-white/60 hover:text-sky-400"
+        } ` + " flex gap-x-2 items-center font-medium"
+      }
+    >
+      {icon}
+      <div>{title}</div>
+    </NavLink>
+  );
+}
