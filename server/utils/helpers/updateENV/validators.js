@@ -171,18 +171,7 @@ function supportedEmbeddingModel(input = "") {
 }
 
 function supportedVectorDB(input = "") {
-  const supported = [
-    "chroma",
-    "chromacloud",
-    "pinecone",
-    "lancedb",
-    "weaviate",
-    "qdrant",
-    "milvus",
-    "zilliz",
-    "astra",
-    "pgvector",
-  ];
+  const supported = ["lancedb", "pgvector"];
   return supported.includes(input)
     ? null
     : `Invalid VectorDB type. Must be one of ${supported.join(", ")}.`;

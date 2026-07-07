@@ -84,39 +84,15 @@ const consoleLogger = require("../logger/console.js");
 
 /**
  * Gets the systems current vector database provider.
- * @param {('pinecone' | 'chroma' | 'chromacloud' | 'lancedb' | 'weaviate' | 'qdrant' | 'milvus' | 'zilliz' | 'astra') | null} getExactly - If provided, this will return an explit provider.
+ * @param {('lancedb' | 'pgvector') | null} getExactly - If provided, this will return an explicit provider.
  * @returns { BaseVectorDatabaseProvider}
  */
 function getVectorDbClass(getExactly = null) {
   const vectorSelection = getExactly ?? process.env.VECTOR_DB ?? "lancedb";
   switch (vectorSelection) {
-    case "pinecone":
-      const { Pinecone } = require("../vectorDbProviders/pinecone");
-      return new Pinecone();
-    case "chroma":
-      const { Chroma } = require("../vectorDbProviders/chroma");
-      return new Chroma();
-    case "chromacloud":
-      const { ChromaCloud } = require("../vectorDbProviders/chromacloud");
-      return new ChromaCloud();
     case "lancedb":
       const { LanceDb } = require("../vectorDbProviders/lance");
       return new LanceDb();
-    case "weaviate":
-      const { Weaviate } = require("../vectorDbProviders/weaviate");
-      return new Weaviate();
-    case "qdrant":
-      const { QDrant } = require("../vectorDbProviders/qdrant");
-      return new QDrant();
-    case "milvus":
-      const { Milvus } = require("../vectorDbProviders/milvus");
-      return new Milvus();
-    case "zilliz":
-      const { Zilliz } = require("../vectorDbProviders/zilliz");
-      return new Zilliz();
-    case "astra":
-      const { AstraDB } = require("../vectorDbProviders/astra");
-      return new AstraDB();
     case "pgvector":
       const { PGVector } = require("../vectorDbProviders/pgvector");
       return new PGVector();

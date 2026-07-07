@@ -15,14 +15,7 @@ import HuggingFaceLogo from "@/media/llmprovider/huggingface.png";
 import GroqLogo from "@/media/llmprovider/groq.png";
 import LiteLLMLogo from "@/media/llmprovider/litellm.png";
 import XAILogo from "@/media/llmprovider/xai.png";
-import ZillizLogo from "@/media/vectordbs/zilliz.png";
-import AstraDBLogo from "@/media/vectordbs/astraDB.png";
-import ChromaLogo from "@/media/vectordbs/chroma.png";
-import PineconeLogo from "@/media/vectordbs/pinecone.png";
 import LanceDbLogo from "@/media/vectordbs/lancedb.png";
-import WeaviateLogo from "@/media/vectordbs/weaviate.png";
-import QDrantLogo from "@/media/vectordbs/qdrant.png";
-import MilvusLogo from "@/media/vectordbs/milvus.png";
 import VoyageAiLogo from "@/media/embeddingprovider/voyageai.png";
 import PGVectorLogo from "@/media/vectordbs/pgvector.png";
 import DockerModelRunnerLogo from "@/media/llmprovider/docker-model-runner.png";
@@ -135,51 +128,6 @@ const VECTOR_DB_PROVIDER_PRIVACY_MAP = {
       "Access to your instance is managed by you.",
     ],
     logo: PGVectorLogo,
-  },
-  chroma: {
-    name: "Chroma",
-    description: [
-      "Your vectors and document text are stored on your Chroma instance.",
-      "Access to your instance is managed by you.",
-    ],
-    logo: ChromaLogo,
-  },
-  chromacloud: {
-    name: "Chroma Cloud",
-    policyUrl: "https://www.trychroma.com/privacy",
-    logo: ChromaLogo,
-  },
-  pinecone: {
-    name: "Pinecone",
-    policyUrl: "https://www.pinecone.io/privacy/",
-    logo: PineconeLogo,
-  },
-  qdrant: {
-    name: "Qdrant",
-    policyUrl: "https://qdrant.tech/legal/privacy-policy/",
-    logo: QDrantLogo,
-  },
-  weaviate: {
-    name: "Weaviate",
-    policyUrl: "https://weaviate.io/privacy",
-    logo: WeaviateLogo,
-  },
-  milvus: {
-    name: "Milvus",
-    description: [
-      "Your vectors and document text are stored on your Milvus instance (cloud or self-hosted).",
-    ],
-    logo: MilvusLogo,
-  },
-  zilliz: {
-    name: "Zilliz Cloud",
-    policyUrl: "https://zilliz.com/privacy-policy",
-    logo: ZillizLogo,
-  },
-  astra: {
-    name: "AstraDB",
-    policyUrl: "https://www.ibm.com/us-en/privacy",
-    logo: AstraDBLogo,
   },
   lancedb: {
     name: "LanceDB",
