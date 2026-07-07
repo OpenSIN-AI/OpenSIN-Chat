@@ -14,7 +14,6 @@ import AgentFlows from "@/models/agentFlows";
 import { useTheme } from "@/hooks/useTheme";
 import HeaderMenu from "./HeaderMenu";
 import paths from "@/utils/paths";
-import PublishEntityModal from "@/components/CommunityHub/PublishEntityModal";
 
 interface FlowStep {
   type: string;
@@ -75,7 +74,7 @@ export default function AgentBuilder(): JSX.Element {
   const [availableFlows, setAvailableFlows] = useState<Flow[]>([]);
   const nameRef = useRef<HTMLInputElement | null>(null);
   const descriptionRef = useRef<HTMLInputElement | null>(null);
-  const [showPublishModal, setShowPublishModal] = useState(false);
+
 
   useEffect(() => {
     loadAvailableFlows();
@@ -380,25 +379,6 @@ export default function AgentBuilder(): JSX.Element {
     });
   };
 
-  const handlePublishFlow = () => {
-    setShowPublishModal(true);
-  };
-
-  const flowInfoBlock = blocks.find(
-    (block) => block.type === BLOCK_TYPES.FLOW_INFO,
-  );
-  const flowEntity = {
-    name: flowInfoBlock?.config?.name || "",
-    description: flowInfoBlock?.config?.description || "",
-    steps: blocks
-      .filter(
-        (block) =>
-          block.type !== BLOCK_TYPES.FINISH &&
-          block.type !== BLOCK_TYPES.FLOW_INFO,
-      )
-      .map((block) => ({ type: block.type, config: block.config })),
-  };
-
   return (
     <div
       className={`relative w-screen h-screen flex flex-col bg-theme-bg-primary overflow-clip bg-[length:15px_15px] bg-[position:-7.5px_-7.5px] ${
@@ -407,18 +387,11 @@ export default function AgentBuilder(): JSX.Element {
           : "bg-[radial-gradient(rgba(255,_255,_255,_0.1)_1px,_transparent_0)]"
       }`}
     >
-      <PublishEntityModal
-        show={showPublishModal}
-        onClose={() => setShowPublishModal(false)}
-        entityType="agent-flow"
-        entity={flowEntity}
-      />
       <HeaderMenu
         agentName={agentName}
         availableFlows={availableFlows}
         onNewFlow={clearFlow}
         onSaveFlow={saveFlow}
-        onPublishFlow={handlePublishFlow}
       />
       <div className="flex-1 min-h-0 p-6 overflow-y-auto">
         <div

@@ -44,11 +44,8 @@ const {
 } = require("./endpoints/agentSkillWhitelist");
 const { agentFileServerEndpoints } = require("./endpoints/agentFileServer");
 const { experimentalEndpoints } = require("./endpoints/experimental");
-const { browserExtensionEndpoints } = require("./endpoints/browserExtension");
-const { communityHubEndpoints } = require("./endpoints/communityHub");
 const { agentFlowEndpoints } = require("./endpoints/agentFlows");
 const { mcpServersEndpoints } = require("./endpoints/mcpServers");
-const { mobileEndpoints } = require("./endpoints/mobile");
 const { scheduledJobEndpoints } = require("./endpoints/scheduledJobs");
 const {
   outlookAgentEndpoints,
@@ -209,10 +206,8 @@ function buildApp() {
   agentFileServerEndpoints(apiRouter);
   experimentalEndpoints(apiRouter);
   developerEndpoints(app, apiRouter);
-  communityHubEndpoints(apiRouter);
   agentFlowEndpoints(apiRouter);
   mcpServersEndpoints(apiRouter);
-  mobileEndpoints(apiRouter);
   scheduledJobEndpoints(apiRouter);
   outlookAgentEndpoints(apiRouter);
   googleAgentSkillEndpoints(apiRouter);
@@ -224,7 +219,6 @@ function buildApp() {
   telegramEndpoints(apiRouter);
   logBootDiagnostics();
   embeddedEndpoints(apiRouter);
-  browserExtensionEndpoints(apiRouter);
   cspViolationEndpoint(apiRouter);
 
   if (
