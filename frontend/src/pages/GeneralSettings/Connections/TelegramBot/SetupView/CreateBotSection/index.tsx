@@ -16,7 +16,7 @@ export default function CreateBotSection(): JSX.Element {
   return (
     <div className="flex flex-col gap-y-8">
       <div className="flex flex-col gap-y-1">
-        <p className="text-sm light:text-base font-semibold text-white light:text-slate-900">
+        <p className="text-sm light:text-base font-semibold text-theme-text-primary light:text-theme-text-primary">
           {t("telegram.setup.step1.title")}
         </p>
         <p className="text-xs text-zinc-400 light:text-slate-600 max-w-[600px]">
@@ -24,7 +24,7 @@ export default function CreateBotSection(): JSX.Element {
             i18nKey="telegram.setup.step1.description"
             components={{
               code: (
-                <code className="bg-zinc-800 light:bg-slate-200 px-1 py-0.5 rounded text-white light:text-slate-900" />
+                <code className="bg-zinc-800 light:bg-slate-200 px-1 py-0.5 rounded text-theme-text-primary light:text-theme-text-primary" />
               ),
             }}
           />
@@ -38,7 +38,7 @@ export default function CreateBotSection(): JSX.Element {
               size={qrSize}
               bgColor="transparent"
               fgColor="currentColor"
-              className="text-white light:text-slate-900 light:[&_image]:invert"
+              className="text-theme-text-primary light:text-theme-text-primary light:[&_image]:invert"
               level="L"
               imageSettings={{
                 src: Logo,
@@ -60,7 +60,7 @@ export default function CreateBotSection(): JSX.Element {
             {t("telegram.setup.step1.open-botfather")}
           </Link>
         </div>
-        <div className="flex flex-col text-sm text-white light:text-slate-900">
+        <div className="flex flex-col text-sm text-theme-text-primary light:text-theme-text-primary">
           <p className="leading-5">{t("telegram.setup.step1.instruction-1")}</p>
           <p className="leading-5">
             <Trans
@@ -86,7 +86,7 @@ function SecurityTips(): JSX.Element {
 
   return (
     <div className="border border-zinc-600 light:border-slate-400 rounded-xl p-[18px] max-w-[640px]">
-      <p className="text-sm font-medium text-white light:text-slate-900 mb-1">
+      <p className="text-sm font-medium text-theme-text-primary light:text-theme-text-primary mb-1">
         {t("telegram.setup.security.title")}
       </p>
       <p className="text-sm text-zinc-400 light:text-slate-600 mb-2">

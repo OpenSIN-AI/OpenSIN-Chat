@@ -94,7 +94,7 @@ export default function NewRouterModal({
         <form onSubmit={handleSubmit} className="flex flex-col gap-y-5 p-6">
           <div className="flex flex-col gap-y-1">
             <div className="flex items-start justify-between">
-              <h3 className="text-base font-semibold leading-6 text-white light:text-slate-950">
+              <h3 className="text-base font-semibold leading-6 text-theme-text-primary light:text-theme-text-primary">
                 {isEdit
                   ? t("model-router.edit-router.title", { name: router?.name })
                   : t("model-router.new-router.title")}
@@ -102,7 +102,7 @@ export default function NewRouterModal({
               <button
                 onClick={closeModal}
                 type="button"
-                className="border-none text-zinc-400 light:text-slate-500 hover:text-white light:hover:text-slate-900 transition-colors"
+                className="border-none text-zinc-400 light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors"
               >
                 <X size={16} weight="bold" />
               </button>
@@ -115,7 +115,7 @@ export default function NewRouterModal({
           </div>
 
           <div className="flex flex-col gap-y-1.5">
-            <label className="text-sm font-medium leading-5 text-white light:text-slate-950">
+            <label className="text-sm font-medium leading-5 text-theme-text-primary light:text-theme-text-primary">
               {t("model-router.new-router.name")}
             </label>
             <input
@@ -123,13 +123,13 @@ export default function NewRouterModal({
               name="name"
               defaultValue={router?.name || ""}
               placeholder={t("model-router.new-router.name-placeholder")}
-              className="bg-zinc-800 light:bg-white light:border light:border-slate-300 text-white light:text-slate-700 placeholder:text-zinc-400 light:placeholder:text-slate-400 text-sm rounded-[8px] outline-none block w-full h-8 px-3.5"
+              className="bg-zinc-800 light:bg-white light:border light:border-slate-300 text-theme-text-primary light:text-theme-text-primary placeholder:text-zinc-400 light:placeholder:text-slate-400 text-sm rounded-[8px] outline-none block w-full h-8 px-3.5"
               required
             />
           </div>
 
           <div className="flex flex-col gap-y-1.5">
-            <label className="text-sm font-medium leading-5 text-white light:text-slate-950">
+            <label className="text-sm font-medium leading-5 text-theme-text-primary light:text-theme-text-primary">
               {t("model-router.new-router.description")}
             </label>
             <input
@@ -137,7 +137,7 @@ export default function NewRouterModal({
               name="description"
               defaultValue={router?.description || ""}
               placeholder={t("model-router.new-router.description-placeholder")}
-              className="bg-zinc-800 light:bg-white light:border light:border-slate-300 text-white light:text-slate-700 placeholder:text-zinc-400 light:placeholder:text-slate-400 text-sm rounded-[8px] outline-none block w-full h-8 px-3.5"
+              className="bg-zinc-800 light:bg-white light:border light:border-slate-300 text-theme-text-primary light:text-theme-text-primary placeholder:text-zinc-400 light:placeholder:text-slate-400 text-sm rounded-[8px] outline-none block w-full h-8 px-3.5"
             />
           </div>
 
@@ -153,7 +153,7 @@ export default function NewRouterModal({
           />
 
           <div className="flex flex-col gap-y-1.5">
-            <label className="text-sm font-medium leading-5 text-white light:text-slate-950">
+            <label className="text-sm font-medium leading-5 text-theme-text-primary light:text-theme-text-primary">
               {t("model-router.new-router.cooldown-label")}
             </label>
             <input
@@ -161,7 +161,7 @@ export default function NewRouterModal({
               name="cooldown_seconds"
               defaultValue={router?.cooldown_seconds ?? 300}
               min={0}
-              className="bg-zinc-800 light:bg-white light:border light:border-slate-300 text-white light:text-slate-700 placeholder:text-zinc-400 light:placeholder:text-slate-400 text-sm rounded-[8px] outline-none block w-full h-8 px-3.5"
+              className="bg-zinc-800 light:bg-white light:border light:border-slate-300 text-theme-text-primary light:text-theme-text-primary placeholder:text-zinc-400 light:placeholder:text-slate-400 text-sm rounded-[8px] outline-none block w-full h-8 px-3.5"
             />
             <p className="text-xs leading-4 text-zinc-400 light:text-slate-600">
               {t("model-router.new-router.cooldown-help")}
@@ -178,7 +178,7 @@ export default function NewRouterModal({
             <button
               onClick={closeModal}
               type="button"
-              className="border border-zinc-600 light:border-slate-600 text-white light:text-slate-900 text-sm font-medium leading-5 rounded-[8px] h-[34px] px-3.5 hover:opacity-90 transition-opacity"
+              className="border border-zinc-600 light:border-slate-600 text-theme-text-primary light:text-theme-text-primary text-sm font-medium leading-5 rounded-[8px] h-[34px] px-3.5 hover:opacity-90 transition-opacity"
             >
               {t("model-router.new-router.cancel")}
             </button>

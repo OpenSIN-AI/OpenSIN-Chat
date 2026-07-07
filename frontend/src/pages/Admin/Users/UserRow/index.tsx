@@ -84,7 +84,7 @@ export default function UserRow({ currUser, user }: UserRowProps): JSX.Element {
             <button
               type="button"
               onClick={openModal}
-              className="text-xs font-medium text-theme-text-primary light:text-black/80 rounded-lg hover:text-white hover:light:text-gray-500 px-2 py-1 hover:bg-white hover:bg-opacity-10"
+              className="text-xs font-medium text-theme-text-primary light:text-black/80 rounded-lg hover:text-theme-text-primary light:hover:text-theme-text-primary hover:light:text-gray-500 px-2 py-1 hover:bg-white hover:bg-opacity-10"
             >
               {t("userRow.edit")}
             </button>

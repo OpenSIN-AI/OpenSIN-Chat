@@ -99,7 +99,7 @@ function WorkspaceChatsTab({ workspace, onClose }: any) {
             <span
               className={`text-sm font-medium truncate ${
                 isActive
-                  ? "text-white light:text-slate-900"
+                  ? "text-theme-text-primary light:text-theme-text-primary"
                   : "text-zinc-200 light:text-slate-700"
               }`}
             >
@@ -136,10 +136,10 @@ function WorkspaceUrlsTab({ workspace }: any) {
           <div key={doc.docId || idx} className="flex flex-col gap-[2px]">
             <div className="flex gap-2 items-start">
               <div className="w-4 h-4 rounded-full bg-zinc-700 light:bg-slate-200 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <Globe size={10} className="text-white light:text-slate-700" />
+                <Globe size={10} className="text-theme-text-primary light:text-theme-text-primary" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-white light:text-slate-900 truncate leading-[15px]">
+                <p className="text-sm font-medium text-theme-text-primary light:text-theme-text-primary truncate leading-[15px]">
                   {title}
                 </p>
                 {isHttpUrl ? (
@@ -242,7 +242,7 @@ function SidebarHeaderWithTabs({ workspace }: any) {
         <button
           onClick={closeSidebar}
           type="button"
-          className="text-zinc-50 light:text-slate-900 hover:text-white light:hover:text-slate-400 transition-colors border-none bg-transparent cursor-pointer"
+          className="text-zinc-50 light:text-slate-900 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
         >
           <X size={16} weight="bold" />
         </button>
@@ -255,7 +255,7 @@ function SidebarHeaderWithTabs({ workspace }: any) {
           onClick={() => setActiveTab("memories")}
           className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium transition-colors ${
             activeTab === "memories"
-              ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
+              ? "bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary"
               : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-100 text-zinc-400 light:text-slate-500"
           }`}
         >
@@ -266,7 +266,7 @@ function SidebarHeaderWithTabs({ workspace }: any) {
           onClick={() => setActiveTab("chats")}
           className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium transition-colors ${
             activeTab === "chats"
-              ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
+              ? "bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary"
               : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-100 text-zinc-400 light:text-slate-500"
           }`}
         >
@@ -278,7 +278,7 @@ function SidebarHeaderWithTabs({ workspace }: any) {
           onClick={() => setActiveTab("urls")}
           className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium transition-colors ${
             activeTab === "urls"
-              ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
+              ? "bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary"
               : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-100 text-zinc-400 light:text-slate-500"
           }`}
         >

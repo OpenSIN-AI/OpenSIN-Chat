@@ -40,7 +40,7 @@ export default function AgentSessionButton({
       >
         <At
           size={18}
-          className="pointer-events-none text-zinc-300 light:text-slate-600 group-hover:text-white light:group-hover:text-slate-600 shrink-0"
+          className="pointer-events-none text-zinc-300 light:text-slate-600 group-hover:text-theme-text-primary light:hover:text-theme-text-primary light:group-hover:text-slate-600 shrink-0"
         />
       </button>
       <Tooltip

@@ -211,13 +211,13 @@ export default function NotepadSidebar({ workspace }: any) {
       <div className="w-full h-full bg-zinc-900 light:bg-white flex flex-col overflow-hidden">
         <div className="flex flex-col shrink-0 gap-2 p-4 pb-2">
           <div className="flex items-start justify-between">
-            <p className="font-medium text-base leading-6 text-white light:text-slate-900">
+            <p className="font-medium text-base leading-6 text-theme-text-primary light:text-theme-text-primary">
               {t("chat_window.notepad", "Notizblock")}
             </p>
             <button
               onClick={closeSidebar}
               type="button"
-              className="text-theme-text-secondary light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer"
+              className="text-theme-text-secondary light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
             >
               <X size={16} weight="bold" />
             </button>
@@ -285,7 +285,7 @@ export default function NotepadSidebar({ workspace }: any) {
                         className="text-theme-text-secondary flex-shrink-0"
                       />
                     )}
-                    <p className="flex-1 text-xs text-white light:text-slate-900 truncate">
+                    <p className="flex-1 text-xs text-theme-text-primary light:text-theme-text-primary truncate">
                       {(note.content || "").slice(0, 40) ||
                         t("chat_window.empty_note", "Leere Notiz")}
                     </p>
@@ -334,7 +334,7 @@ export default function NotepadSidebar({ workspace }: any) {
                             onClick={() =>
                               handleShareToWorkspace(note.id, ws.slug)
                             }
-                            className="w-full text-left px-3 py-1.5 text-xs text-white light:text-slate-900 hover:bg-zinc-700 light:hover:bg-slate-100 transition-colors bg-transparent border-none cursor-pointer truncate"
+                            className="w-full text-left px-3 py-1.5 text-xs text-theme-text-primary light:text-theme-text-primary hover:bg-zinc-700 light:hover:bg-slate-100 transition-colors bg-transparent border-none cursor-pointer truncate"
                           >
                             {ws.name}
                           </button>
@@ -368,7 +368,7 @@ export default function NotepadSidebar({ workspace }: any) {
                           weight="fill"
                           className="text-primary-button flex-shrink-0"
                         />
-                        <p className="flex-1 text-xs text-white light:text-slate-900 truncate">
+                        <p className="flex-1 text-xs text-theme-text-primary light:text-theme-text-primary truncate">
                           {(note.content || "").slice(0, 35) ||
                             t("chat_window.empty_note", "Leere Notiz")}
                         </p>
@@ -437,7 +437,7 @@ export default function NotepadSidebar({ workspace }: any) {
                       "chat_window.note_placeholder",
                       "Hier Notiz schreiben...",
                     )}
-                    className="flex-1 w-full bg-transparent text-sm text-white light:text-slate-900 p-3 outline-none resize-none placeholder:text-zinc-500"
+                    className="flex-1 w-full bg-transparent text-sm text-theme-text-primary light:text-theme-text-primary p-3 outline-none resize-none placeholder:text-zinc-500"
                   />
                 </>
               ) : activeSharedNote ? (
@@ -460,7 +460,7 @@ export default function NotepadSidebar({ workspace }: any) {
                       "chat_window.note_placeholder",
                       "Hier Notiz schreiben...",
                     )}
-                    className="flex-1 w-full bg-transparent text-sm text-white light:text-slate-900 p-3 outline-none resize-none placeholder:text-zinc-500 cursor-default opacity-70"
+                    className="flex-1 w-full bg-transparent text-sm text-theme-text-primary light:text-theme-text-primary p-3 outline-none resize-none placeholder:text-zinc-500 cursor-default opacity-70"
                   />
                 </>
               ) : (

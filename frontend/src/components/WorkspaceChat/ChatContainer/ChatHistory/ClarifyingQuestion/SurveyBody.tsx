@@ -20,7 +20,7 @@ function AnswerRow({ question, answer, index, showNumber, skippedLabel }: any) {
         <span className="text-theme-text-secondary light:text-slate-600">
           {question.question}
         </span>
-        <span className="font-medium text-white light:text-slate-900">
+        <span className="font-medium text-theme-text-primary light:text-theme-text-primary">
           {formatAnswerDisplay(answer, skippedLabel)}
         </span>
       </div>

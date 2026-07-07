@@ -122,7 +122,7 @@ function ThreadItem({
                 onClick={() => toggleMarkForDeletion(thread.id)}
               >
                 <ArrowCounterClockwise
-                  className="text-zinc-300 hover:text-white light:text-theme-text-secondary hover:light:text-theme-text-primary"
+                  className="text-zinc-300 hover:text-theme-text-primary light:hover:text-theme-text-primary light:text-theme-text-secondary hover:light:text-theme-text-primary"
                   size={18}
                 />
               </button>
@@ -160,7 +160,7 @@ function ThreadItem({
                 onClick={() => toggleMarkForDeletion(thread.id)}
               >
                 <X
-                  className="text-zinc-300 light:text-theme-text-secondary hover:text-white hover:light:text-theme-text-primary"
+                  className="text-zinc-300 light:text-theme-text-secondary hover:text-theme-text-primary light:hover:text-theme-text-primary hover:light:text-theme-text-primary"
                   weight="bold"
                   size={18}
                 />
@@ -174,7 +174,7 @@ function ThreadItem({
                   aria-label={t("threadItem.threadOptions")}
                 >
                   <DotsThree
-                    className="text-slate-300 light:text-theme-text-secondary hover:text-white hover:light:text-theme-text-primary"
+                    className="text-slate-300 light:text-theme-text-secondary hover:text-theme-text-primary light:hover:text-theme-text-primary hover:light:text-theme-text-primary"
                     size={25}
                   />
                 </button>

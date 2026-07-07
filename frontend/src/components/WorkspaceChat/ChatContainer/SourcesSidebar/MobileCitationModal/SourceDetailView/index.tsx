@@ -20,17 +20,17 @@ export default function SourceDetailView({ source, onBack, onClose }: any) {
         <button
           onClick={onBack}
           type="button"
-          className="text-theme-text-secondary light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors"
+          className="text-theme-text-secondary light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors"
         >
           <CaretLeft size={20} weight="bold" />
         </button>
-        <p className="font-semibold text-base leading-6 text-white light:text-slate-900 truncate px-2">
+        <p className="font-semibold text-base leading-6 text-theme-text-primary light:text-theme-text-primary truncate px-2">
           {truncate(source?.title ?? "", 30)}
         </p>
         <button
           onClick={onClose}
           type="button"
-          className="text-theme-text-secondary light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors"
+          className="text-theme-text-secondary light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors"
         >
           <X size={16} weight="bold" />
         </button>
@@ -39,7 +39,7 @@ export default function SourceDetailView({ source, onBack, onClose }: any) {
         {(chunks as any).map(({ text, score }, idx) => (
           <Fragment key={`chunk-${text?.slice(0, 30) || ""}-${idx}`}>
             <div className="flex flex-col gap-y-1 py-4">
-              <p className="text-sm leading-[20px] text-white light:text-slate-900">
+              <p className="text-sm leading-[20px] text-theme-text-primary light:text-theme-text-primary">
                 {HTMLDecode(omitChunkHeader(text))}
               </p>
               {!!score && (

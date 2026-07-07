@@ -26,8 +26,8 @@ export default function LeftSidebarIconBar() {
           }
           className={`flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all ${
             showSidebar
-              ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
-              : "text-zinc-400 light:text-slate-500 hover:bg-zinc-800 light:hover:bg-slate-100 hover:text-white light:hover:text-slate-900"
+              ? "bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary"
+              : "text-zinc-400 light:text-slate-500 hover:bg-zinc-800 light:hover:bg-slate-100 hover:text-theme-text-primary light:hover:text-theme-text-primary"
           }`}
         >
           <SidebarSimple size={18} weight={showSidebar ? "fill" : "regular"} />

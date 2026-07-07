@@ -98,9 +98,9 @@ export function NoSetupWarning({ showing, onSetupClick }: any) {
     <div className="flex items-start gap-1.5">
       <WarningCircle
         size={16}
-        className="text-white light:text-slate-800 shrink-0 mt-0.5"
+        className="text-theme-text-primary light:text-theme-text-primary shrink-0 mt-0.5"
       />
-      <p className="text-[13px] text-white light:text-slate-800 leading-5">
+      <p className="text-[13px] text-theme-text-primary light:text-theme-text-primary leading-5">
         {t("chat_window.workspace_llm_manager.missing_credentials")}{" "}
         <span
           onClick={onSetupClick}

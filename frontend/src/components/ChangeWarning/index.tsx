@@ -56,7 +56,7 @@ export default function ChangeWarningModal({
         <button
           onClick={onConfirm}
           type="submit"
-          className="transition-all duration-300 bg-red-500 light:text-white text-white hover:opacity-60 px-4 py-2 rounded-lg text-sm border-none"
+          className="transition-all duration-300 bg-red-500 light:text-theme-text-primary text-white hover:opacity-60 px-4 py-2 rounded-lg text-sm border-none"
         >
           {t("changeWarning.confirm")}
         </button>

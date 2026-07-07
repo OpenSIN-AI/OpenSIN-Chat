@@ -154,9 +154,9 @@ export default function SlashCommandsTab({
         <Plus
           size={12}
           weight="bold"
-          className="text-white light:text-slate-900"
+          className="text-theme-text-primary light:text-theme-text-primary"
         />
-        <span className="text-xs text-white light:text-slate-900">
+        <span className="text-xs text-theme-text-primary light:text-theme-text-primary">
           {t("chat_window.add_new")}
         </span>
       </div>

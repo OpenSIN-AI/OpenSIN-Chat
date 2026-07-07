@@ -5,11 +5,11 @@ import { X } from "@phosphor-icons/react/dist/csr/X";
 import { useTranslation } from "react-i18next";
 
 const NAV_BUTTON_CLASS =
-  "border-none p-0 flex items-center justify-center text-theme-text-primary light:text-slate-700 hover:text-white light:hover:text-slate-900 disabled:opacity-30 disabled:cursor-not-allowed";
+  "border-none p-0 flex items-center justify-center text-theme-text-primary light:text-slate-700 hover:text-theme-text-primary light:hover:text-theme-text-primary disabled:opacity-30 disabled:cursor-not-allowed";
 
 function QuestionText({ children }: any) {
   return (
-    <p className="flex-1 min-w-0 text-white light:text-slate-900 text-sm font-medium leading-5 break-words">
+    <p className="flex-1 min-w-0 text-theme-text-primary light:text-theme-text-primary text-sm font-medium leading-5 break-words">
       {children}
     </p>
   );
@@ -62,7 +62,7 @@ function CloseButton({ disabled, onClick }: any) {
       onClick={onClick}
       disabled={disabled}
       aria-label={t("chat_window.agent_invocation.clarifying_close_aria")}
-      className="border-none p-0 flex items-center justify-center text-theme-text-primary light:text-slate-700 hover:text-white light:hover:text-slate-900 disabled:opacity-30 shrink-0"
+      className="border-none p-0 flex items-center justify-center text-theme-text-primary light:text-slate-700 hover:text-theme-text-primary light:hover:text-theme-text-primary disabled:opacity-30 shrink-0"
     >
       <X size={16} />
     </button>

@@ -31,7 +31,7 @@ function CapabilityCard({ icon: Icon, title, description, onClick }: any) {
         <Icon size={16} className="text-theme-accent" />
       </div>
       <div className="flex flex-col gap-0.5">
-        <span className="text-sm font-medium text-white light:text-slate-900">
+        <span className="text-sm font-medium text-theme-text-primary light:text-theme-text-primary">
           {title}
         </span>
         <span className="text-xs text-zinc-500 light:text-slate-500 leading-tight">

@@ -29,7 +29,7 @@ export default function SkillRow({
       onClick={() => !disabled && onToggle()}
       data-tooltip-id={disabled ? "agent-skill-disabled-tooltip" : undefined}
     >
-      <span className="text-xs text-white light:text-slate-900">{name}</span>
+      <span className="text-xs text-theme-text-primary light:text-theme-text-primary">{name}</span>
       <div className="pointer-events-none" aria-hidden="true">
         <SimpleToggleSwitch size="sm" enabled={enabled} />
       </div>

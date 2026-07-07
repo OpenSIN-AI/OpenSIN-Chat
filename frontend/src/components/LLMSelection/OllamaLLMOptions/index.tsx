@@ -94,7 +94,7 @@ export default function OllamaLLMOptions({ settings }: any) {
                       <button
                         type="button"
                         onClick={handleAutoDetectClick}
-                        className="bg-primary-button text-xs font-medium px-2 py-1 rounded-lg hover:bg-secondary hover:text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
+                        className="bg-primary-button text-xs font-medium px-2 py-1 rounded-lg hover:bg-secondary hover:text-theme-text-primary light:hover:text-theme-text-primary shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
                       >
                         {t("ollama.autoDetect")}
                       </button>

@@ -65,7 +65,7 @@ export default function SidebarTabs() {
           aria-pressed={activeSidebar === "sources"}
           className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium uppercase tracking-[1.2px] whitespace-nowrap transition-colors min-w-0 ${
             activeSidebar === "sources"
-              ? "bg-zinc-800 light:bg-slate-300 text-white light:text-slate-900"
+              ? "bg-zinc-800 light:bg-slate-300 text-theme-text-primary light:text-theme-text-primary"
               : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-200 text-zinc-300 light:text-slate-700"
           }`}
         >
@@ -82,7 +82,7 @@ export default function SidebarTabs() {
           aria-pressed={isMemoriesActive && memoriesActiveTab === "workspace"}
           className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium uppercase tracking-[1.2px] whitespace-nowrap transition-colors min-w-0 ${
             isMemoriesActive && memoriesActiveTab === "workspace"
-              ? "bg-zinc-800 light:bg-slate-300 text-white light:text-slate-900"
+              ? "bg-zinc-800 light:bg-slate-300 text-theme-text-primary light:text-theme-text-primary"
               : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-200 text-zinc-300 light:text-slate-700"
           }`}
         >
@@ -105,7 +105,7 @@ export default function SidebarTabs() {
           aria-pressed={isMemoriesActive && memoriesActiveTab === "global"}
           className={`flex items-center gap-0.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium uppercase tracking-[1.2px] whitespace-nowrap transition-colors min-w-0 ${
             isMemoriesActive && memoriesActiveTab === "global"
-              ? "bg-zinc-800 light:bg-slate-300 text-white light:text-slate-900"
+              ? "bg-zinc-800 light:bg-slate-300 text-theme-text-primary light:text-theme-text-primary"
               : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-200 text-zinc-300 light:text-slate-700"
           }`}
         >

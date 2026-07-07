@@ -243,14 +243,14 @@ export default function ConsoleSidebar() {
             className="text-zinc-400 light:text-slate-500"
             aria-hidden="true"
           />
-          <p className="flex-1 font-medium text-sm text-white light:text-slate-900">
+          <p className="flex-1 font-medium text-sm text-theme-text-primary light:text-theme-text-primary">
             {t("console.title")}
           </p>
           <button
             onClick={closeSidebar}
             type="button"
             aria-label={t("console.close")}
-            className="text-theme-text-secondary light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer"
+            className="text-theme-text-secondary light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
           >
             <X size={14} weight="bold" aria-hidden="true" />
           </button>
@@ -270,7 +270,7 @@ export default function ConsoleSidebar() {
               onClick={() => setActiveTab(tab)}
               className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium uppercase tracking-[1.2px] whitespace-nowrap transition-colors ${
                 activeTab === tab
-                  ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
+                  ? "bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary"
                   : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-100 text-zinc-400 light:text-slate-500"
               }`}
             >

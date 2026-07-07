@@ -97,7 +97,7 @@ function Layout({ t, showAction, onAction, children }: LayoutProps) {
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-0 py-16">
           <div className="flex items-end justify-between pr-8 py-6 border-b border-white/20 light:border-slate-300">
             <div className="flex flex-col gap-y-2">
-              <p className="text-lg font-semibold leading-7 text-white light:text-slate-900">
+              <p className="text-lg font-semibold leading-7 text-theme-text-primary light:text-theme-text-primary">
                 {t("model-router.title")}
               </p>
               <p className="text-xs leading-4 text-zinc-400 light:text-slate-600 max-w-[700px]">
@@ -239,7 +239,7 @@ function RouterRow({
         onClick={goToRules}
         className="group grid grid-cols-[2fr_2fr_1fr_1fr_88px] gap-x-4 items-center h-9 px-4 rounded-lg cursor-pointer hover:bg-white/5 light:hover:bg-slate-100 transition-colors"
       >
-        <span className="text-sm font-medium leading-5 text-white light:text-slate-900 truncate">
+        <span className="text-sm font-medium leading-5 text-theme-text-primary light:text-theme-text-primary truncate">
           {router.name}
         </span>
         <span className="text-sm font-normal leading-5 text-zinc-400 light:text-slate-500 truncate">
@@ -258,7 +258,7 @@ function RouterRow({
             aria-label={t("model-router.edit-router.title", {
               name: router.name,
             })}
-            className="border-none text-zinc-400 light:text-slate-500 hover:text-white light:hover:text-slate-900 transition-colors"
+            className="border-none text-zinc-400 light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors"
           >
             <PencilSimple size={16} weight="bold" />
           </button>

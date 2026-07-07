@@ -133,8 +133,8 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
         <Plus
           className={`h-[20px] w-[20px] ${
             isActive
-              ? "text-zinc-400 hover:text-white light:text-blue-700 light:group-hover/plus:text-blue-900"
-              : "text-zinc-400 hover:text-white light:text-slate-600 light:group-hover/plus:text-slate-950"
+              ? "text-zinc-400 hover:text-theme-text-primary light:hover:text-theme-text-primary light:text-blue-700 light:group-hover/plus:text-blue-900"
+              : "text-zinc-400 hover:text-theme-text-primary light:text-theme-text-primary light:group-hover/plus:text-slate-950"
           }`}
         />
       </button>
@@ -278,7 +278,7 @@ export default function ActiveWorkspaces() {
                           className={`
                             transition-all duration-[200ms]
                             flex flex-grow w-[75%] gap-x-2 py-[8px] pl-[10px] pr-[6px] rounded-[8px] text-sm justify-start items-center
-                            ${isActive ? "bg-white/10 light:bg-blue-200/70 font-semibold text-white light:text-blue-900" : "text-theme-text-primary light:text-slate-600 hover:bg-white/5 light:hover:bg-slate-200/70 hover:text-white light:hover:text-slate-900"}
+                            ${isActive ? "bg-white/10 light:bg-blue-200/70 font-semibold text-white light:text-blue-900" : "text-theme-text-primary light:text-slate-600 hover:bg-white/5 light:hover:bg-slate-200/70 hover:text-theme-text-primary light:hover:text-theme-text-primary"}
                           `}
                         >
                           <div className="flex flex-row justify-between w-full items-center">
@@ -339,7 +339,7 @@ export default function ActiveWorkspaces() {
                                   className={`group/upload border-none rounded-md flex items-center justify-center ml-auto p-[2px] ${isActive ? "hover:bg-zinc-500 light:hover:bg-sky-800/30" : "hover:bg-zinc-500 light:hover:bg-slate-400"}`}
                                 >
                                   <UploadSimple
-                                    className={`h-[20px] w-[20px] ${isActive ? "text-zinc-400 hover:text-white light:text-blue-700 light:group-hover/upload:text-blue-900" : "text-zinc-400 hover:text-white light:text-slate-600 light:group-hover/upload:text-slate-950"}`}
+                                    className={`h-[20px] w-[20px] ${isActive ? "text-zinc-400 hover:text-theme-text-primary light:hover:text-theme-text-primary light:text-blue-700 light:group-hover/upload:text-blue-900" : "text-zinc-400 hover:text-theme-text-primary light:text-theme-text-primary light:group-hover/upload:text-slate-950"}`}
                                   />
                                 </button>
                                 <button
@@ -371,7 +371,7 @@ export default function ActiveWorkspaces() {
                                         ? "var(--theme-accent)"
                                         : undefined
                                     }
-                                    className={`h-[20px] w-[20px] ${isActive ? "text-zinc-400 hover:text-white light:text-blue-700 light:group-hover/gear:text-blue-900" : "text-zinc-400 hover:text-white light:text-slate-600 light:group-hover/gear:text-slate-950"}`}
+                                    className={`h-[20px] w-[20px] ${isActive ? "text-zinc-400 hover:text-theme-text-primary light:hover:text-theme-text-primary light:text-blue-700 light:group-hover/gear:text-blue-900" : "text-zinc-400 hover:text-theme-text-primary light:text-theme-text-primary light:group-hover/gear:text-slate-950"}`}
                                   />
                                 </button>
                               </div>

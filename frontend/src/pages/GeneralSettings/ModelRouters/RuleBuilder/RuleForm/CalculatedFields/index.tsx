@@ -168,7 +168,7 @@ export default function CalculatedFields({
         type="button"
         onClick={addCondition}
         aria-label={t("model-router.rule-form.add-condition")}
-        className="border-none mt-3 bg-zinc-800 light:bg-slate-900 text-white light:text-white rounded-md p-1 hover:opacity-90 transition-opacity"
+        className="border-none mt-3 bg-zinc-800 light:bg-slate-900 text-white light:text-theme-text-primary rounded-md p-1 hover:opacity-90 transition-opacity"
       >
         <Plus size={16} weight="bold" />
       </button>
@@ -187,7 +187,7 @@ function LogicBadge({
     <button
       type="button"
       onClick={onClick}
-      className="border-none shrink-0 self-start bg-zinc-700 light:bg-slate-200 text-white light:text-slate-950 text-xs font-medium leading-4 tracking-[1.2px] uppercase px-2.5 py-1.5 rounded-md hover:opacity-80 transition-opacity"
+      className="border-none shrink-0 self-start bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary text-xs font-medium leading-4 tracking-[1.2px] uppercase px-2.5 py-1.5 rounded-md hover:opacity-80 transition-opacity"
     >
       {value}
     </button>
@@ -246,7 +246,7 @@ function ConditionRow({
           <select
             value={condition.property}
             onChange={(e) => handlePropertyChange(e.target.value)}
-            className="bg-zinc-800 light:bg-white light:border light:border-slate-300 text-white light:text-slate-700 text-sm rounded-[8px] outline-none block w-full h-8 px-3.5"
+            className="bg-zinc-800 light:bg-white light:border light:border-slate-300 text-theme-text-primary light:text-theme-text-primary text-sm rounded-[8px] outline-none block w-full h-8 px-3.5"
             required
           >
             <option value="">
@@ -302,7 +302,7 @@ function FieldColumn({
   return (
     <div className="flex flex-col gap-y-1.5">
       {label && (
-        <label className="text-sm font-medium leading-5 text-white light:text-slate-950">
+        <label className="text-sm font-medium leading-5 text-theme-text-primary light:text-theme-text-primary">
           {label}
         </label>
       )}
@@ -323,7 +323,7 @@ function BooleanValueField({
     <select
       value={value || "true"}
       onChange={(e) => onChange(e.target.value)}
-      className="bg-zinc-800 light:bg-white light:border light:border-slate-300 text-white light:text-slate-700 text-sm rounded-[8px] outline-none block w-full h-8 px-3.5"
+      className="bg-zinc-800 light:bg-white light:border light:border-slate-300 text-theme-text-primary light:text-theme-text-primary text-sm rounded-[8px] outline-none block w-full h-8 px-3.5"
       required
     >
       <option value="true">{t("model-router.rule-form.bool-true")}</option>
@@ -351,7 +351,7 @@ function ComparatorAndValueFields({
         <select
           value={condition.comparator}
           onChange={(e) => onChange({ comparator: e.target.value })}
-          className="bg-zinc-800 light:bg-white light:border light:border-slate-300 text-white light:text-slate-700 text-sm rounded-[8px] outline-none block w-full h-8 px-3.5"
+          className="bg-zinc-800 light:bg-white light:border light:border-slate-300 text-theme-text-primary light:text-theme-text-primary text-sm rounded-[8px] outline-none block w-full h-8 px-3.5"
           required
         >
           <option value="">
@@ -377,7 +377,7 @@ function ComparatorAndValueFields({
             condition.property,
             condition.comparator,
           )}
-          className={`bg-zinc-800 light:bg-white light:border light:border-slate-300 text-white light:text-slate-700 placeholder:text-zinc-400 light:placeholder:text-slate-400 text-sm rounded-[8px] outline-none block w-full h-8 px-3.5 ${
+          className={`bg-zinc-800 light:bg-white light:border light:border-slate-300 text-theme-text-primary light:text-theme-text-primary placeholder:text-zinc-400 light:placeholder:text-slate-400 text-sm rounded-[8px] outline-none block w-full h-8 px-3.5 ${
             condition.comparator === "matches" ? "font-mono" : ""
           }`}
           required

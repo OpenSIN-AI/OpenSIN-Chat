@@ -712,13 +712,13 @@ function NewThreadButton({ workspace, mutate }) {
           <CircleNotch
             weight="bold"
             size={14}
-            className="shrink-0 animate-spin text-white light:text-slate-700"
+            className="shrink-0 animate-spin text-theme-text-primary light:text-theme-text-primary"
           />
         ) : (
           <Plus
             weight="bold"
             size={14}
-            className="shrink-0 text-white light:text-slate-700"
+            className="shrink-0 text-theme-text-primary light:text-theme-text-primary"
           />
         )}
         {loading ? (
@@ -836,14 +836,14 @@ function ThreadSearchBar({ value, onChange, onClear }) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={t("threadContainer.searchThreads")}
-        className="w-full h-[30px] pl-8 pr-7 text-[13px] bg-white/5 light:bg-slate-200/70 border border-white/10 light:border-slate-300 rounded-[8px] text-white light:text-slate-700 placeholder:text-theme-placeholder light:placeholder:text-slate-400 focus:outline-none focus:border-white/20 light:focus:border-slate-400 transition-colors"
+        className="w-full h-[30px] pl-8 pr-7 text-[13px] bg-white/5 light:bg-slate-200/70 border border-white/10 light:border-slate-300 rounded-[8px] text-theme-text-primary light:text-theme-text-primary placeholder:text-theme-placeholder light:placeholder:text-slate-400 focus:outline-none focus:border-white/20 light:focus:border-slate-400 transition-colors"
       />
       {value && (
         <button
           type="button"
           onClick={onClear}
           aria-label={t("threadContainer.clearSearch")}
-          className="absolute right-2 shrink-0 text-theme-placeholder light:text-slate-400 hover:text-white light:hover:text-slate-600 transition-colors"
+          className="absolute right-2 shrink-0 text-theme-placeholder light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors"
         >
           <X size={14} weight="bold" />
         </button>

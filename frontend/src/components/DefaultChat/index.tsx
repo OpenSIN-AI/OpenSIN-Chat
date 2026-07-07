@@ -74,7 +74,7 @@ export default function DefaultChatContainer() {
           alt={t("home.logoAlt")}
           className=" w-[200px] h-fit mb-5 rounded-lg"
         />
-        <h1 className="text-white light:text-slate-950 text-2xl font-semibold">
+        <h1 className="text-theme-text-primary light:text-theme-text-primary text-2xl font-semibold">
           {t("home.welcome")}
           {COMMA} {user.username}
           {BANG}

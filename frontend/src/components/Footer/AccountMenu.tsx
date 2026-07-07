@@ -33,7 +33,7 @@ import { safeRemoveItem } from "@/utils/safeStorage";
 const FEEDBACK_URL = `${paths.github()}/issues/new`;
 
 const ITEM_CLASSES =
-  "group flex items-center gap-x-3 w-full text-left px-2.5 py-2 rounded-lg text-sm text-white light:text-slate-700 hover:bg-theme-action-menu-item-hover transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400";
+  "group flex items-center gap-x-3 w-full text-left px-2.5 py-2 rounded-lg text-sm text-theme-text-primary light:text-theme-text-primary hover:bg-theme-action-menu-item-hover transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400";
 
 const ICON_CLASSES = "h-[18px] w-[18px] shrink-0 opacity-80";
 
@@ -89,7 +89,7 @@ function ThemeSegment() {
 
   return (
     <div className="flex items-center justify-between px-2.5 py-1.5">
-      <span className="text-sm text-white light:text-slate-700">
+      <span className="text-sm text-theme-text-primary light:text-theme-text-primary">
         {t("common.theme")}
       </span>
       <div className="flex items-center gap-0.5 rounded-lg bg-black/20 light:bg-black/5 p-0.5">
@@ -106,7 +106,7 @@ function ThemeSegment() {
               className={`flex items-center justify-center h-6 w-7 rounded-md transition-colors duration-150 ${
                 active
                   ? "bg-white text-slate-900"
-                  : "text-theme-text-primary light:text-slate-500 hover:text-white light:hover:text-slate-800"
+                  : "text-theme-text-primary light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary"
               }`}
             >
               <Icon className="h-4 w-4" weight={active ? "fill" : "regular"} />
@@ -128,14 +128,14 @@ function LanguageRow() {
   } = useLanguageOptions();
   return (
     <div className="flex items-center justify-between px-2.5 py-1.5">
-      <span className="text-sm text-white light:text-slate-700">
+      <span className="text-sm text-theme-text-primary light:text-theme-text-primary">
         {t("common.language")}
       </span>
       <select
         aria-label={t("common.language")}
         value={currentLanguage || "en"}
         onChange={(e) => changeLanguage(e.target.value)}
-        className="border-none bg-black/20 light:bg-black/5 text-white light:text-slate-700 text-xs rounded-md py-1.5 pl-2.5 pr-6 outline-none focus:ring-2 focus:ring-white/40 cursor-pointer"
+        className="border-none bg-black/20 light:bg-black/5 text-theme-text-primary light:text-theme-text-primary text-xs rounded-md py-1.5 pl-2.5 pr-6 outline-none focus:ring-2 focus:ring-white/40 cursor-pointer"
       >
         {supportedLanguages.map((lang) => (
           <option key={lang} value={lang}>
@@ -251,7 +251,7 @@ export default function AccountMenu({
           <>
             <Avatar pfp={pfp} initials={initials} />
             <div className="flex flex-col items-start min-w-0 flex-grow">
-              <span className="text-sm font-semibold text-white light:text-slate-800 truncate max-w-full">
+              <span className="text-sm font-semibold text-theme-text-primary light:text-theme-text-primary truncate max-w-full">
                 {displayName}
               </span>
               <span className="text-xs text-theme-text-secondary light:text-slate-500 truncate max-w-full">
@@ -286,7 +286,7 @@ export default function AccountMenu({
             <div className="flex items-center gap-x-2.5 px-2.5 py-2">
               <Avatar pfp={pfp} initials={initials} />
               <div className="flex flex-col min-w-0">
-                <span className="text-sm font-semibold text-white light:text-slate-800 truncate">
+                <span className="text-sm font-semibold text-theme-text-primary light:text-theme-text-primary truncate">
                   {displayName}
                 </span>
                 <span className="text-xs text-theme-text-secondary light:text-slate-500 truncate">

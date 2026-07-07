@@ -22,7 +22,7 @@ function SkipButton({ isSingle, onClick }: any) {
     <button
       type="button"
       onClick={onClick}
-      className="border-none text-white light:text-slate-900 text-sm font-medium px-3 py-2 rounded-lg hover:bg-white/5 light:hover:bg-slate-300 flex items-center gap-1"
+      className="border-none text-theme-text-primary light:text-theme-text-primary text-sm font-medium px-3 py-2 rounded-lg hover:bg-white/5 light:hover:bg-slate-300 flex items-center gap-1"
     >
       <SkipForward size={14} />
       {isSingle

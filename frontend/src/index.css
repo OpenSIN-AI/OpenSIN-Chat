@@ -281,19 +281,25 @@
 }
 
 /*
- * Issue #5 (complete) — text-white/x migration.
+ * Issue #5 Light Theme Compatibility Layer
  *
- * All 173 occurrences of text-white/{20..90} across 87 component files have
- * been replaced with the correct semantic token classes:
+ * COMPLETED: Migration of text-white/{20..90} opacity variants to semantic tokens
  *   text-white/70-90  ->  text-theme-text-primary
  *   text-white/45-60  ->  text-theme-text-secondary
  *   text-white/20-40  ->  text-theme-placeholder
+ * All 173 opacity variant occurrences migrated across 87 component files.
  *
- * The override rules below are kept as a safety net for third-party or
- * dynamically injected content that may still emit text-white/* classes at
- * runtime. They will naturally become dead code as dependencies are updated.
+ * REMAINING: ~937 occurrences of plain text-white need case-by-case review:
+ *   - 97 are intentional-white on colored backgrounds (buttons, badges) -> keep as-is
+ *   - ~840 should be migrated to text-theme-text-primary or light:text-theme-text-primary
+ * This requires per-component analysis to avoid regressions (not a sed-replace task).
  *
- * DO NOT add new text-white/* classes anywhere in the component tree.
+ * CURRENT APPROACH: The override rules below serve as a light-theme compatibility
+ * layer for all text-white usage (plain + opacity variants). This allows incremental
+ * migration without breaking light theme. These rules become dead code as components
+ * are progressively updated to use semantic tokens.
+ *
+ * DO NOT add new text-white/* classes. Use text-theme-text-primary or its variants.
  */
 [data-theme="light"] .text-white {
   color: var(--color-text);

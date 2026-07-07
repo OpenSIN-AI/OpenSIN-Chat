@@ -195,7 +195,7 @@ export default function ImportedSkillConfig({
                 <button
                   onClick={handleSubmit as any}
                   type="button"
-                  className="bg-blue-500 text-white light:text-white rounded-md p-2"
+                  className="bg-blue-500 text-white light:text-theme-text-primary rounded-md p-2"
                 >
                   {t("importedSkillConfig.save")}
                 </button>

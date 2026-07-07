@@ -64,7 +64,7 @@ export default function EnhancePromptButton({
           className={`pointer-events-none shrink-0 ${
             loading
               ? "text-yellow-400 animate-spin"
-              : "text-zinc-300 light:text-slate-600 group-hover:text-white light:group-hover:text-slate-800"
+              : "text-zinc-300 light:text-slate-600 group-hover:text-theme-text-primary light:hover:text-theme-text-primary light:group-hover:text-slate-800"
           }`}
         />
       </button>

@@ -23,7 +23,7 @@ export default function LLMSelectorSidePanel({
           type="search"
           placeholder={t("chat_window.workspace_llm_manager.search")}
           onChange={onSearchChange}
-          className="bg-zinc-900 light:bg-white text-white light:text-slate-900 placeholder:text-zinc-500 light:placeholder:text-slate-400 text-sm rounded-lg pl-8 pr-2.5 h-8 w-full outline-none border border-zinc-900 light:border-slate-400"
+          className="bg-zinc-900 light:bg-white text-theme-text-primary light:text-theme-text-primary placeholder:text-zinc-500 light:placeholder:text-slate-400 text-sm rounded-lg pl-8 pr-2.5 h-8 w-full outline-none border border-zinc-900 light:border-slate-400"
         />
       </div>
       <div className="flex flex-col gap-0 overflow-y-auto min-h-0 flex-1">
@@ -44,7 +44,7 @@ export default function LLMSelectorSidePanel({
               alt={`${llm.name} logo`}
               className="w-6 h-6 rounded"
             />
-            <span className="text-sm text-white light:text-slate-900">
+            <span className="text-sm text-theme-text-primary light:text-theme-text-primary">
               {llm.name}
             </span>
           </button>

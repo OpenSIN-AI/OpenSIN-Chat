@@ -65,14 +65,14 @@ export default function PoliticalSidebar() {
         {/* Header */}
         <div className="flex items-center gap-2 px-4 pt-4 pb-3 shrink-0 border-b border-zinc-800 light:border-slate-200">
           <Newspaper size={15} className="text-zinc-400 light:text-slate-500" />
-          <p className="flex-1 font-medium text-sm text-white light:text-slate-900">
+          <p className="flex-1 font-medium text-sm text-theme-text-primary light:text-theme-text-primary">
             {t("sidebar.political.title")}
           </p>
           <button
             onClick={refreshAll}
             type="button"
             disabled={loadingDrucksachen || loadingRss}
-            className="text-zinc-500 hover:text-white transition-colors border-none bg-transparent cursor-pointer disabled:opacity-40 mr-1"
+            className="text-zinc-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer disabled:opacity-40 mr-1"
             aria-label={t("common.refresh")}
           >
             <ArrowClockwise
@@ -85,7 +85,7 @@ export default function PoliticalSidebar() {
             onClick={closeSidebar}
             type="button"
             aria-label={t("common.close")}
-            className="text-theme-text-secondary light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer"
+            className="text-theme-text-secondary light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
           >
             <X size={14} weight="bold" />
           </button>

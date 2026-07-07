@@ -163,7 +163,7 @@ function TextContent({
     <div className={`flex flex-col ${gapClassName ?? labelStyles.gap}`}>
       {label && (
         <span
-          className={`flex items-center gap-x-1 text-white light:text-slate-950 ${labelClassName ?? labelStyles.label}`}
+          className={`flex items-center gap-x-1 text-theme-text-primary light:text-theme-text-primary ${labelClassName ?? labelStyles.label}`}
         >
           {label}
           {hint && (

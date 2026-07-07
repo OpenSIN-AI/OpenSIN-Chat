@@ -89,7 +89,7 @@ function ConnectionsLayout({
         {fullPage ? (
           <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
             <div className="w-full flex flex-col gap-y-2 pb-6 border-b border-white/20 light:border-slate-300">
-              <p className="text-lg font-semibold leading-7 text-white light:text-slate-900">
+              <p className="text-lg font-semibold leading-7 text-theme-text-primary light:text-theme-text-primary">
                 {t("telegram.title")}
               </p>
               <p className="text-xs leading-4 text-zinc-400 light:text-slate-600 max-w-[700px]">
@@ -99,7 +99,7 @@ function ConnectionsLayout({
                 href={paths.docs("/channels/telegram")}
                 target="_blank"
                 rel="noreferrer"
-                className="text-xs leading-4 text-white light:text-slate-900 underline w-fit"
+                className="text-xs leading-4 text-theme-text-primary light:text-theme-text-primary underline w-fit"
               >
                 {t("common.viewDocumentation")}
               </a>

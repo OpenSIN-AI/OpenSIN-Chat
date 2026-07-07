@@ -14,7 +14,7 @@ export default function RouterPickerSelection({
     return (
       <select
         disabled
-        className="bg-zinc-900 light:bg-white text-white light:text-slate-900 text-sm rounded-lg h-8 w-full px-2.5 outline-none border border-zinc-900 light:border-slate-400 cursor-not-allowed"
+        className="bg-zinc-900 light:bg-white text-theme-text-primary light:text-theme-text-primary text-sm rounded-lg h-8 w-full px-2.5 outline-none border border-zinc-900 light:border-slate-400 cursor-not-allowed"
       >
         <option>{t("model-router.router-selection.loading-routers")}</option>
       </select>
@@ -36,7 +36,7 @@ export default function RouterPickerSelection({
         setSelectedRouterId(Number((e.target as unknown as any)?.value));
         setHasChanges(true);
       }}
-      className="bg-zinc-900 light:bg-white text-white light:text-slate-900 text-sm rounded-lg h-8 w-full px-2.5 outline-none border border-zinc-900 light:border-slate-400 cursor-pointer"
+      className="bg-zinc-900 light:bg-white text-theme-text-primary light:text-theme-text-primary text-sm rounded-lg h-8 w-full px-2.5 outline-none border border-zinc-900 light:border-slate-400 cursor-pointer"
     >
       <option value="">
         {t("model-router.router-selection.select-router")}

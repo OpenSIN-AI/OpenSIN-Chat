@@ -311,7 +311,7 @@ function RunHeader({
 function PromptSection({ t, prompt }: { t: any; prompt?: string }) {
   return (
     <div className="border border-zinc-700 light:border-slate-400 rounded-lg p-[18px]">
-      <p className="text-sm font-medium text-white light:text-slate-950 uppercase tracking-[1.4px] mb-1">
+      <p className="text-sm font-medium text-theme-text-primary light:text-theme-text-primary uppercase tracking-[1.4px] mb-1">
         {t("scheduledJobs.runDetail.sections.prompt")}
       </p>
       <p className="text-sm text-zinc-400 light:text-slate-600 whitespace-pre-wrap">

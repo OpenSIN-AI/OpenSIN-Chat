@@ -95,17 +95,17 @@ export default function RunRow({
         )}
         <StatusBadge status={run.status} />
       </div>
-      <span className="w-[260px] text-sm font-medium text-white light:text-slate-950 truncate">
+      <span className="w-[260px] text-sm font-medium text-theme-text-primary light:text-theme-text-primary truncate">
         {run.startedAt ? new Date(run.startedAt).toLocaleString() : "—"}
       </span>
-      <span className="w-[160px] text-sm font-medium text-white light:text-slate-950 truncate">
+      <span className="w-[160px] text-sm font-medium text-theme-text-primary light:text-theme-text-primary truncate">
         {formatRunDuration(run)}
       </span>
       <span
         className={`flex-1 text-sm truncate pr-4 ${
           run.error
             ? "text-red-400 light:text-red-600 italic"
-            : "font-medium text-white light:text-slate-950"
+            : "font-medium text-theme-text-primary light:text-theme-text-primary"
         }`}
       >
         {run.error || `—`}

@@ -115,7 +115,7 @@ function VersionDropdown({ versions, activeVersion, onSelect }: any) {
               }}
               className={`w-full text-left px-3 py-1.5 text-xs transition-colors border-none cursor-pointer ${
                 idx === activeVersion
-                  ? "bg-zinc-700 light:bg-slate-100 text-white light:text-slate-900"
+                  ? "bg-zinc-700 light:bg-slate-100 text-theme-text-primary light:text-theme-text-primary"
                   : "bg-transparent text-zinc-300 light:text-slate-600 hover:bg-zinc-700/60 light:hover:bg-slate-50"
               }`}
             >
@@ -193,7 +193,7 @@ function ThreeDotsMenu({ previewData, onAddToSources, addingSource }: any) {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center justify-center w-6 h-6 rounded border-none bg-transparent text-zinc-400 light:text-slate-500 hover:text-white light:hover:text-slate-900 hover:bg-zinc-700 light:hover:bg-slate-100 cursor-pointer transition-colors"
+        className="flex items-center justify-center w-6 h-6 rounded border-none bg-transparent text-zinc-400 light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary hover:bg-zinc-700 light:hover:bg-slate-100 cursor-pointer transition-colors"
         aria-label={t("common.moreOptions")}
       >
         <DotsThree size={16} weight="bold" />
@@ -260,7 +260,7 @@ function IframePreview({ url, title }: any) {
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-800 light:bg-slate-100 text-xs text-zinc-300 light:text-slate-600 hover:text-white light:hover:text-slate-900 transition-colors no-underline"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-800 light:bg-slate-100 text-xs text-zinc-300 light:text-slate-600 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors no-underline"
         >
           <ArrowSquareOut size={12} />
           {t("preview.open_externally")}
@@ -314,7 +314,7 @@ function IframePreview({ url, title }: any) {
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-800 light:bg-slate-100 text-xs text-zinc-300 light:text-slate-600 hover:text-white light:hover:text-slate-900 transition-colors no-underline"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-800 light:bg-slate-100 text-xs text-zinc-300 light:text-slate-600 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors no-underline"
         >
           <ArrowSquareOut size={12} />
           {t("preview.open_externally")}
@@ -510,7 +510,7 @@ export default function PreviewSidebar() {
             size={16}
             className="text-zinc-400 light:text-slate-500 shrink-0"
           />
-          <p className="flex-1 font-medium text-sm text-white light:text-slate-900 truncate">
+          <p className="flex-1 font-medium text-sm text-theme-text-primary light:text-theme-text-primary truncate">
             {previewData?.title || t("preview.title")}
           </p>
           <VersionDropdown
@@ -527,7 +527,7 @@ export default function PreviewSidebar() {
             onClick={closeSidebar}
             type="button"
             aria-label={t("common.close")}
-            className="text-theme-text-secondary light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer flex-shrink-0"
+            className="text-theme-text-secondary light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer flex-shrink-0"
           >
             <X size={14} weight="bold" />
           </button>

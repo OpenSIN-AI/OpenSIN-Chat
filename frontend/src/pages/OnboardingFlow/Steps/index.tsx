@@ -156,7 +156,7 @@ export function OnboardingLayout({
             aria-label={t("common.continue")}
           >
             <ArrowRight
-              className="text-theme-text-secondary group-hover:text-white group-disabled:text-gray-500"
+              className="text-theme-text-secondary group-hover:text-theme-text-primary light:hover:text-theme-text-primary group-disabled:text-gray-500"
               size={30}
             />
           </button>

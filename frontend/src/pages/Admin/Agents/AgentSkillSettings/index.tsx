@@ -44,7 +44,7 @@ function AgentSkillSettingsModal({
           <button
             type="button"
             onClick={closeModal}
-            className="text-white opacity-60 hover:text-white hover:opacity-100 border-none outline-none"
+            className="text-white opacity-60 hover:text-theme-text-primary light:hover:text-theme-text-primary hover:opacity-100 border-none outline-none"
           >
             <X size={20} />
           </button>

@@ -416,7 +416,7 @@ function SourcesView({ t, workspaceSlug, onBack, onClose }) {
                   size={15}
                   className="text-zinc-300 light:text-slate-600 flex-shrink-0"
                 />
-                <span className="flex-1 text-sm text-white light:text-slate-800 truncate">
+                <span className="flex-1 text-sm text-theme-text-primary light:text-theme-text-primary truncate">
                   {file.title}
                 </span>
                 {addingId === file.id && (
@@ -578,7 +578,7 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
             placeholder="https://..." // eslint-disable-line i18next/no-literal-string
             disabled={submitting}
             aria-invalid={!!error}
-            className="flex-1 bg-transparent border-none outline-none text-sm text-white light:text-slate-800 py-2 placeholder:text-zinc-500 light:placeholder:text-slate-400"
+            className="flex-1 bg-transparent border-none outline-none text-sm text-theme-text-primary light:text-theme-text-primary py-2 placeholder:text-zinc-500 light:placeholder:text-slate-400"
           />
           {link && !submitting && (
             <button
@@ -587,7 +587,7 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
                 setLink("");
                 setError("");
               }}
-              className="border-none bg-transparent cursor-pointer text-zinc-400 light:text-slate-500 hover:text-white light:hover:text-slate-800 flex-shrink-0"
+              className="border-none bg-transparent cursor-pointer text-zinc-400 light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary flex-shrink-0"
               aria-label={t("common.clearUrl")}
             >
               <X size={14} />

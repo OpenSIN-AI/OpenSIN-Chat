@@ -136,7 +136,7 @@ export default function SettingsSidebar() {
                         user?.hasOwnProperty("role") && user.role !== "admin"
                       }
                       to={paths.settings.privacy()}
-                      className="text-theme-text-secondary hover:text-white text-xs leading-[18px] mx-3"
+                      className="text-theme-text-secondary hover:text-theme-text-primary light:hover:text-theme-text-primary text-xs leading-[18px] mx-3"
                     >
                       {t("settings.privacy")}
                     </Link>
@@ -188,7 +188,7 @@ export default function SettingsSidebar() {
                       user?.hasOwnProperty("role") && user.role !== "admin"
                     }
                     to={paths.settings.privacy()}
-                    className="text-theme-text-secondary hover:text-white hover:light:text-theme-text-primary text-xs leading-[18px] mx-3"
+                    className="text-theme-text-secondary hover:text-theme-text-primary light:hover:text-theme-text-primary hover:light:text-theme-text-primary text-xs leading-[18px] mx-3"
                   >
                     {t("settings.privacy")}
                   </Link>
@@ -214,7 +214,7 @@ function SupportEmail() {
   return (
     <Link
       to={supportLink}
-      className="text-theme-text-secondary hover:text-white hover:light:text-theme-text-primary text-xs leading-[18px] mx-3 mt-1"
+      className="text-theme-text-secondary hover:text-theme-text-primary light:hover:text-theme-text-primary hover:light:text-theme-text-primary text-xs leading-[18px] mx-3 mt-1"
     >
       {t("settings.contact")}
     </Link>

@@ -115,7 +115,7 @@ export default function AgentLLMItem({
                   e.preventDefault();
                   openModal();
                 }}
-                className="border-none p-2 text-theme-text-secondary hover:text-white hover:bg-theme-bg-hover rounded-md transition-all duration-300"
+                className="border-none p-2 text-theme-text-secondary hover:text-theme-text-primary light:hover:text-theme-text-primary hover:bg-theme-bg-hover rounded-md transition-all duration-300"
                 title={t("agentLLMItem.editSettings")}
               >
                 <Gear size={20} weight="bold" />

@@ -29,13 +29,13 @@ export default function MobileCitationModal({
         ) : (
           <>
             <div className="flex items-center justify-between">
-              <p className="font-semibold text-base leading-6 text-white light:text-slate-900">
+              <p className="font-semibold text-base leading-6 text-theme-text-primary light:text-theme-text-primary">
                 {t("chat_window.sources")}
               </p>
               <button
                 onClick={onClose}
                 type="button"
-                className="text-theme-text-secondary light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors"
+                className="text-theme-text-secondary light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors"
               >
                 <X size={16} weight="bold" />
               </button>

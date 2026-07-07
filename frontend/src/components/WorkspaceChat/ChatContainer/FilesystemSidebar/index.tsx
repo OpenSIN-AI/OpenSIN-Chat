@@ -538,7 +538,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
                 weight="duotone"
                 className="text-zinc-300 light:text-slate-400"
               />
-              <p className="text-lg font-semibold text-white light:text-slate-900">
+              <p className="text-lg font-semibold text-theme-text-primary light:text-theme-text-primary">
                 {t("sidebar.filesystem.dropHere")}
               </p>
               <p className="text-sm text-zinc-400 light:text-slate-500">
@@ -582,7 +582,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
             weight="fill"
             className="text-zinc-300 light:text-slate-400 flex-shrink-0"
           />
-          <p className="flex-1 font-semibold text-sm text-white light:text-slate-900">
+          <p className="flex-1 font-semibold text-sm text-theme-text-primary light:text-theme-text-primary">
             {t("sidebar.filesystem.title")}
           </p>
           {fileCount > 0 && (
@@ -609,7 +609,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
               setNewItemName("");
               setItemActionMsg(null);
             }}
-            className="flex items-center justify-center text-zinc-400 light:text-slate-500 hover:text-white light:hover:text-slate-900 hover:bg-white/5 light:hover:bg-slate-100 rounded-lg w-7 h-7 border-none cursor-pointer transition-colors"
+            className="flex items-center justify-center text-zinc-400 light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary hover:bg-white/5 light:hover:bg-slate-100 rounded-lg w-7 h-7 border-none cursor-pointer transition-colors"
             aria-label={t("sidebar.filesystem.newFile")}
           >
             <Plus size={16} weight="bold" />
@@ -617,7 +617,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
           <button
             type="button"
             onClick={() => setShowSysInfo(!showSysInfo)}
-            className="text-zinc-500 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer"
+            className="text-zinc-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
             aria-label={t("sidebar.filesystem.systemInfo")}
           >
             <Info size={14} weight="bold" />
@@ -626,7 +626,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
             type="button"
             onClick={() => browse(currentPath || "")}
             disabled={loading}
-            className="text-zinc-500 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer disabled:opacity-40"
+            className="text-zinc-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer disabled:opacity-40"
             aria-label={t("common.refresh")}
           >
             <ArrowClockwise
@@ -639,7 +639,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
             type="button"
             onClick={closeSidebar}
             aria-label={t("common.close")}
-            className="text-zinc-400 light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer"
+            className="text-zinc-400 light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
           >
             <X size={16} weight="bold" />
           </button>
@@ -687,13 +687,13 @@ export default function FilesystemSidebar({ workspace = null }: any) {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={t("sidebar.filesystem.searchPlaceholder")}
-              className="w-full text-xs bg-zinc-800 light:bg-slate-100 border border-white/5 light:border-slate-200 rounded-lg pl-8 pr-3 py-2 text-white light:text-slate-900 placeholder:text-zinc-500 light:placeholder:text-slate-400 outline-none focus:border-white/20 light:focus:border-slate-400 transition-colors"
+              className="w-full text-xs bg-zinc-800 light:bg-slate-100 border border-white/5 light:border-slate-200 rounded-lg pl-8 pr-3 py-2 text-theme-text-primary light:text-theme-text-primary placeholder:text-zinc-500 light:placeholder:text-slate-400 outline-none focus:border-white/20 light:focus:border-slate-400 transition-colors"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
               >
                 <X size={12} weight="bold" />
               </button>
@@ -731,7 +731,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
                     ? t("sidebar.filesystem.folderName")
                     : t("sidebar.filesystem.fileName")
                 }
-                className="flex-1 text-xs bg-zinc-950 light:bg-white border border-zinc-700 light:border-slate-300 rounded-md px-2 py-1.5 text-white light:text-slate-900 outline-none focus:border-white/30 light:focus:border-slate-400"
+                className="flex-1 text-xs bg-zinc-950 light:bg-white border border-zinc-700 light:border-slate-300 rounded-md px-2 py-1.5 text-theme-text-primary light:text-theme-text-primary outline-none focus:border-white/30 light:focus:border-slate-400"
               />
               <button
                 type="button"
@@ -747,7 +747,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
                   setCreatingType(null);
                   setNewItemName("");
                 }}
-                className="text-xs text-zinc-400 hover:text-white border-none bg-transparent cursor-pointer"
+                className="text-xs text-zinc-400 hover:text-theme-text-primary light:hover:text-theme-text-primary border-none bg-transparent cursor-pointer"
               >
                 {t("sidebar.filesystem.cancel")}
               </button>
@@ -773,7 +773,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
               <button
                 type="button"
                 onClick={navigateUp}
-                className="text-zinc-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer flex-shrink-0"
+                className="text-zinc-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer flex-shrink-0"
                 aria-label={t("sidebar.filesystem.goUp")}
               >
                 <ArrowLeft size={14} weight="bold" />
@@ -794,8 +794,8 @@ export default function FilesystemSidebar({ workspace = null }: any) {
                   onClick={() => navigateTo(crumb.path)}
                   className={`text-xs border-none bg-transparent cursor-pointer transition-colors ${
                     i === breadcrumbs.length - 1
-                      ? "text-white light:text-slate-900 font-medium"
-                      : "text-zinc-400 hover:text-white light:hover:text-slate-900"
+                      ? "text-theme-text-primary light:text-theme-text-primary font-medium"
+                      : "text-zinc-400 hover:text-theme-text-primary light:hover:text-theme-text-primary"
                   }`}
                 >
                   {crumb.name}
@@ -846,7 +846,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
                   className="text-zinc-500 light:text-slate-400"
                 />
               </div>
-              <p className="text-sm font-medium text-white light:text-slate-900 mb-1">
+              <p className="text-sm font-medium text-theme-text-primary light:text-theme-text-primary mb-1">
                 {t("sidebar.filesystem.emptyTitle")}
               </p>
               <p className="text-xs text-zinc-500 light:text-slate-400 mb-4">
@@ -924,7 +924,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
                         />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm text-white light:text-slate-900 font-medium truncate">
+                        <p className="text-sm text-theme-text-primary light:text-theme-text-primary font-medium truncate">
                           {item.name}
                         </p>
                         <p className="text-xs text-zinc-500 light:text-slate-400">
@@ -999,7 +999,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
                                 weight="fill"
                                 className="text-zinc-400 light:text-slate-500 flex-shrink-0"
                               />
-                              <p className="text-xs text-white light:text-slate-900 font-medium truncate flex-1">
+                              <p className="text-xs text-theme-text-primary light:text-theme-text-primary font-medium truncate flex-1">
                                 {sub.name}
                               </p>
                             </div>
@@ -1022,7 +1022,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
                                   />
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                  <p className="text-xs text-white light:text-slate-900 font-medium truncate">
+                                  <p className="text-xs text-theme-text-primary light:text-theme-text-primary font-medium truncate">
                                     {file.name}
                                   </p>
                                   <span className="text-[10px] text-zinc-500 light:text-slate-400">
@@ -1036,7 +1036,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
                                       e.stopPropagation();
                                       handleDownload(file);
                                     }}
-                                    className="text-zinc-500 light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer p-0.5"
+                                    className="text-zinc-500 light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer p-0.5"
                                   >
                                     <Download size={12} weight="regular" />
                                   </button>
@@ -1107,7 +1107,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
                               />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm text-white light:text-slate-900 font-medium truncate">
+                              <p className="text-sm text-theme-text-primary light:text-theme-text-primary font-medium truncate">
                                 {item.name}
                               </p>
                               <div className="flex items-center gap-2">
@@ -1140,7 +1140,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
                                   e.stopPropagation();
                                   handleDownload(item);
                                 }}
-                                className="text-zinc-500 light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer p-1"
+                                className="text-zinc-500 light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer p-1"
                                 aria-label={t("sidebar.filesystem.download")}
                               >
                                 <Download size={14} weight="regular" />
@@ -1225,7 +1225,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
                               />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm text-white light:text-slate-900 font-medium truncate">
+                              <p className="text-sm text-theme-text-primary light:text-theme-text-primary font-medium truncate">
                                 {item.name}
                               </p>
                               <div className="flex items-center gap-2">
@@ -1258,7 +1258,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
                                   e.stopPropagation();
                                   handleDownload(item);
                                 }}
-                                className="text-zinc-500 light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer p-1"
+                                className="text-zinc-500 light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer p-1"
                                 aria-label={t("sidebar.filesystem.download")}
                               >
                                 <Download size={14} weight="regular" />
@@ -1307,7 +1307,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
               <button
                 type="button"
                 onClick={clearSelection}
-                className="text-xs text-zinc-400 hover:text-white light:hover:text-slate-900 border-none bg-transparent cursor-pointer transition-colors"
+                className="text-xs text-zinc-400 hover:text-theme-text-primary light:hover:text-theme-text-primary border-none bg-transparent cursor-pointer transition-colors"
               >
                 {t("sidebar.filesystem.clearSelection")}
               </button>

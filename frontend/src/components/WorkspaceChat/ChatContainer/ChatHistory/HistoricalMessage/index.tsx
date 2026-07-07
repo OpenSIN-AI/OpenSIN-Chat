@@ -356,7 +356,7 @@ function TruncatableContent({ children }: any) {
         <button
           type="button"
           onClick={() => setIsExpanded(!isExpanded)}
-          className="text-zinc-300 light:text-slate-700 hover:text-white light:hover:text-slate-900 text-xs font-medium leading-4 mt-2"
+          className="text-zinc-300 light:text-slate-700 hover:text-theme-text-primary light:hover:text-theme-text-primary text-xs font-medium leading-4 mt-2"
         >
           {isExpanded ? t("chat_window.see_less") : t("chat_window.see_more")}
         </button>
@@ -403,7 +403,7 @@ const RenderChatContent = memo(
     return (
       <>
         <span
-          className="flex flex-col gap-y-0.5 text-white light:text-slate-900"
+          className="flex flex-col gap-y-0.5 text-theme-text-primary light:text-theme-text-primary"
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(renderMarkdown(msgToRender)),
           }}

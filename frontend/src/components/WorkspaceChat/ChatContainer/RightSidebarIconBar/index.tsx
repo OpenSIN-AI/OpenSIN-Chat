@@ -129,8 +129,8 @@ export default function RightSidebarIconBar() {
           aria-label={label}
           className={`flex items-center justify-center w-8 h-8 rounded-lg border-none transition-all ${
             isActive
-              ? "cursor-pointer bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
-              : "cursor-pointer text-zinc-400 light:text-slate-500 hover:bg-zinc-800 light:hover:bg-slate-100 hover:text-white light:hover:text-slate-900"
+              ? "cursor-pointer bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary"
+              : "cursor-pointer text-zinc-400 light:text-slate-500 hover:bg-zinc-800 light:hover:bg-slate-100 hover:text-theme-text-primary light:hover:text-theme-text-primary"
           }`}
         >
           <Icon size={18} weight={isActive ? "fill" : "regular"} />

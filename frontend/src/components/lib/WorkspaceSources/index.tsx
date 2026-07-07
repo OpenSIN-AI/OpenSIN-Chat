@@ -74,7 +74,7 @@ export default function WorkspaceSources({
     <div className="w-full mt-8">
       <div className="rounded-2xl border border-theme-sidebar-border light:border-slate-300 bg-theme-bg-chat-input/40 light:bg-slate-50 p-5">
         <div className="flex items-center justify-between gap-2 mb-3">
-          <p className="text-sm font-semibold text-white light:text-slate-900">
+          <p className="text-sm font-semibold text-theme-text-primary light:text-theme-text-primary">
             {t("main-page.workspaceSources.title")}
           </p>
           <button
@@ -99,11 +99,11 @@ export default function WorkspaceSources({
                   <div className="w-6 h-6 rounded-full bg-zinc-700 light:bg-slate-200 flex items-center justify-center flex-shrink-0">
                     <Icon
                       size={13}
-                      className="text-white light:text-slate-800"
+                      className="text-theme-text-primary light:text-theme-text-primary"
                     />
                   </div>
                   <div className="flex flex-col min-w-0">
-                    <p className="text-sm text-white light:text-slate-900 truncate leading-tight">
+                    <p className="text-sm text-theme-text-primary light:text-theme-text-primary truncate leading-tight">
                       {getTitle(doc)}
                     </p>
                     <p className="text-[11px] text-zinc-400 light:text-slate-500 leading-tight">

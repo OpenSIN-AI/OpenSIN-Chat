@@ -50,7 +50,7 @@ export default function OnboardingHome() {
       </button>
 
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center -mt-8">
-        <h1 className="relative font-medium text-white light:text-slate-700 text-[64px] md:text-[96px] lg:text-[160px] leading-none tracking-[-0.06em] select-none drop-shadow-lg">
+        <h1 className="relative font-medium text-theme-text-primary light:text-theme-text-primary text-[64px] md:text-[96px] lg:text-[160px] leading-none tracking-[-0.06em] select-none drop-shadow-lg">
           {t("onboarding.home.welcome")}
         </h1>
 
@@ -63,7 +63,7 @@ export default function OnboardingHome() {
         </button>
         <Link
           to={paths.appDocs()}
-          className="relative z-10 mt-6 inline-flex items-center gap-2 text-sm text-theme-text-primary light:text-slate-600 hover:text-white light:hover:text-slate-900 transition-colors"
+          className="relative z-10 mt-6 inline-flex items-center gap-2 text-sm text-theme-text-primary light:text-slate-600 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors"
           aria-label={t("onboarding.home.readDocs")}
         >
           <BookOpen className="w-4 h-4" />

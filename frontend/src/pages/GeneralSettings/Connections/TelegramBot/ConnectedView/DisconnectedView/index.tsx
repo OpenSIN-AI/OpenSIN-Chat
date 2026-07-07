@@ -56,7 +56,7 @@ export default function DisconnectedView({
   return (
     <div className="flex flex-col gap-y-8 mt-8">
       <div className="flex flex-col gap-y-[18px]">
-        <p className="text-base font-semibold text-white light:text-slate-900">
+        <p className="text-base font-semibold text-theme-text-primary light:text-theme-text-primary">
           {t("telegram.connected.connectedBot")}
         </p>
         <div className="flex items-start gap-x-1 border border-red-500/30 light:border-red-300 rounded-xl p-3 w-[700px]">
@@ -67,7 +67,7 @@ export default function DisconnectedView({
             />
           </div>
           <div className="flex flex-col gap-y-1 ml-1">
-            <p className="text-sm font-semibold text-white light:text-slate-900">
+            <p className="text-sm font-semibold text-theme-text-primary light:text-theme-text-primary">
               {`@${config.bot_username}`}
             </p>
             <p className="text-xs text-red-400 light:text-red-500">
@@ -92,7 +92,7 @@ export default function DisconnectedView({
               value={newToken}
               onChange={(e) => setNewToken(e.target.value)}
               placeholder={t("telegram.connected.placeholder-token")}
-              className="bg-transparent flex-1 text-sm text-white light:text-slate-900 placeholder:text-zinc-400 light:placeholder:text-slate-500 outline-none min-w-0"
+              className="bg-transparent flex-1 text-sm text-theme-text-primary light:text-theme-text-primary placeholder:text-zinc-400 light:placeholder:text-slate-500 outline-none min-w-0"
               autoComplete="off"
             />
           </div>

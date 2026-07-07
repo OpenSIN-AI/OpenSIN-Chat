@@ -21,7 +21,7 @@ export default function SourcesRow({ onClose }: any) {
       onClick={handleClick}
       className="flex items-center px-2 py-1 rounded cursor-pointer hover:bg-zinc-700 light:hover:bg-slate-200"
     >
-      <span className="text-sm font-normal text-white light:text-slate-800">
+      <span className="text-sm font-normal text-theme-text-primary light:text-theme-text-primary">
         {t("chat_window.sources")}
       </span>
     </div>

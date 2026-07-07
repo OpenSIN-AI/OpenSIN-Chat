@@ -34,8 +34,8 @@ export default function ToolsButton({
       <span
         className={`text-sm font-medium ${
           showTools
-            ? "text-white light:text-slate-800"
-            : "text-zinc-300 light:text-slate-600 group-hover:text-white light:group-hover:text-slate-800"
+            ? "text-theme-text-primary light:text-theme-text-primary"
+            : "text-zinc-300 light:text-slate-600 group-hover:text-theme-text-primary light:hover:text-theme-text-primary light:group-hover:text-slate-800"
         }`}
       >
         {t("chat_window.tools")}

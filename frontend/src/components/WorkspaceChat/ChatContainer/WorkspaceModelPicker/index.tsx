@@ -177,8 +177,8 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
           <span
             className={`text-xs ${
               showSelector
-                ? "text-white light:text-slate-800"
-                : "text-zinc-500 light:text-slate-500 group-hover:text-white light:group-hover:text-slate-800"
+                ? "text-theme-text-primary light:text-theme-text-primary"
+                : "text-zinc-500 light:text-slate-500 group-hover:text-theme-text-primary light:hover:text-theme-text-primary light:group-hover:text-slate-800"
             }`}
           >
             {modelName || t("chat_window.select_model")}

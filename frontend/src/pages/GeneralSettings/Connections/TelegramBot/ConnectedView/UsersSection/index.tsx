@@ -70,7 +70,7 @@ export default function UsersSection({
   return (
     <div className="flex flex-col gap-y-[18px] w-[700px]">
       <div className="flex flex-col gap-y-2">
-        <p className="text-base font-semibold text-white light:text-slate-900">
+        <p className="text-base font-semibold text-theme-text-primary light:text-theme-text-primary">
           {t("common.users")}
         </p>
         <p className="text-xs text-zinc-400 light:text-slate-600">
@@ -130,11 +130,11 @@ function UserRow({
       <div className="flex items-center">
         <div className="flex items-center gap-x-3 flex-1 min-w-0">
           <div className="bg-zinc-800 light:bg-slate-300 size-8 rounded-full flex items-center justify-center shrink-0">
-            <span className="text-sm font-semibold text-white light:text-slate-900">
+            <span className="text-sm font-semibold text-theme-text-primary light:text-theme-text-primary">
               {initial}
             </span>
           </div>
-          <span className="text-sm font-medium text-white light:text-slate-900 truncate">
+          <span className="text-sm font-medium text-theme-text-primary light:text-theme-text-primary truncate">
             {displayName}
           </span>
         </div>
@@ -169,7 +169,7 @@ function UserRow({
             <button
               type="button"
               onClick={() => onRevoke?.(chatId)}
-              className="text-sm text-theme-text-primary light:text-slate-500 hover:text-white light:hover:text-slate-700 transition-colors"
+              className="text-sm text-theme-text-primary light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors"
             >
               {t("common.remove")}
             </button>

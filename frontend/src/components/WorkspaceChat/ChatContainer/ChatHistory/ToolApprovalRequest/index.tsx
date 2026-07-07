@@ -183,7 +183,7 @@ function ToolApprovalResponseOption({
         <button
           type="button"
           onClick={onReject}
-          className="border-none text-white light:text-slate-900 text-sm font-medium w-[70px] h-9 rounded-lg hover:bg-white/5 light:hover:bg-slate-300"
+          className="border-none text-theme-text-primary light:text-theme-text-primary text-sm font-medium w-[70px] h-9 rounded-lg hover:bg-white/5 light:hover:bg-slate-300"
         >
           {t("chat_window.agent_invocation.reject")}
         </button>

@@ -132,7 +132,7 @@ export default function GeneratedFileCard({
           {badge}
         </div>
         <div className="flex flex-col min-w-0">
-          <p className="text-sm text-white light:text-slate-950 truncate">
+          <p className="text-sm text-theme-text-primary light:text-theme-text-primary truncate">
             {file.filename || t("scheduledJobs.file.unknown")}
           </p>
           <p className="text-sm text-zinc-400 light:text-slate-600">

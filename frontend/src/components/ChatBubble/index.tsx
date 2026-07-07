@@ -70,7 +70,7 @@ export default function ChatBubble({ message, type }: { message: string; type: s
           <div
             role="article"
             aria-label={isUser ? "User message" : "Assistant message"}
-            className={`markdown whitespace-pre-line text-white light:text-slate-950 font-normal text-sm md:text-sm flex flex-col gap-y-1 mt-2`}
+            className={`markdown whitespace-pre-line text-theme-text-primary light:text-theme-text-primary font-normal text-sm md:text-sm flex flex-col gap-y-1 mt-2`}
             dangerouslySetInnerHTML={{
               __html: safeMarkdown(renderMarkdown(message)),
             }}

@@ -75,7 +75,7 @@ export default function RuleRow({
       {dragHandleProps ? (
         <div
           {...dragHandleProps}
-          className="cursor-grab shrink-0 text-zinc-400 light:text-slate-500 hover:text-white light:hover:text-slate-700 transition-colors"
+          className="cursor-grab shrink-0 text-zinc-400 light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors"
           aria-label={t("model-router.rules.aria-drag-to-reorder")}
         >
           <DotsSixVertical size={24} weight="bold" />
@@ -90,7 +90,7 @@ export default function RuleRow({
       )}
       <div className="flex flex-col flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium leading-5 text-white light:text-slate-900 truncate">
+          <span className="text-sm font-medium leading-5 text-theme-text-primary light:text-theme-text-primary truncate">
             {rule.title}
           </span>
           {rule.type === "llm" ? (
@@ -118,7 +118,7 @@ export default function RuleRow({
         <button
           type="button"
           onClick={onEdit}
-          className="border-none text-zinc-400 light:text-slate-500 hover:text-white light:hover:text-slate-900 transition-colors"
+          className="border-none text-zinc-400 light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors"
           aria-label={t("model-router.rules.aria-edit-rule")}
         >
           <PencilSimple size={16} weight="bold" />

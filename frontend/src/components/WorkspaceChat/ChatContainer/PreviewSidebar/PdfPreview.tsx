@@ -33,7 +33,7 @@ export default function PdfPreview({ blobUrl }: { blobUrl: string }) {
           href={blobUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-800 light:bg-slate-100 text-xs text-zinc-300 light:text-slate-600 hover:text-white light:hover:text-slate-900 transition-colors no-underline"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-800 light:bg-slate-100 text-xs text-zinc-300 light:text-slate-600 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors no-underline"
         >
           <ArrowSquareOut size={12} />
           In neuem Tab öffnen

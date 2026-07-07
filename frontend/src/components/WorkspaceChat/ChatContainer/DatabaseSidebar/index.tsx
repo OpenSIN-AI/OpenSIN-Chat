@@ -211,14 +211,14 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
         {/* Header */}
         <div className="flex items-center gap-2 px-4 pt-4 pb-3 shrink-0 border-b border-zinc-800 light:border-slate-200">
           <Database size={15} className="text-zinc-400 light:text-slate-500" />
-          <p className="flex-1 font-medium text-sm text-white light:text-slate-900">
+          <p className="flex-1 font-medium text-sm text-theme-text-primary light:text-theme-text-primary">
             {t("sidebar.database.title", "Politiker-Datenbank")}
           </p>
           <button
             onClick={refresh}
             type="button"
             disabled={loading}
-            className="text-zinc-500 hover:text-white transition-colors border-none bg-transparent cursor-pointer disabled:opacity-40 mr-1"
+            className="text-zinc-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer disabled:opacity-40 mr-1"
             aria-label={t("common.refresh", "Aktualisieren")}
           >
             <ArrowClockwise
@@ -231,7 +231,7 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
             onClick={closeSidebar}
             type="button"
             aria-label={t("common.close", "Schließen")}
-            className="text-theme-text-secondary light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer"
+            className="text-theme-text-secondary light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
           >
             <X size={14} weight="bold" />
           </button>
@@ -249,7 +249,7 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
               }}
               className={`flex-1 flex items-center justify-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium border-none cursor-pointer transition-colors ${
                 activeTab === "politicians"
-                  ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
+                  ? "bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary"
                   : "bg-transparent text-zinc-500 light:text-slate-400 hover:text-zinc-300"
               }`}
             >
@@ -264,7 +264,7 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
               }}
               className={`flex-1 flex items-center justify-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium border-none cursor-pointer transition-colors ${
                 activeTab === "speeches"
-                  ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
+                  ? "bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary"
                   : "bg-transparent text-zinc-500 light:text-slate-400 hover:text-zinc-300"
               }`}
             >
@@ -279,7 +279,7 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
               }}
               className={`flex-1 flex items-center justify-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium border-none cursor-pointer transition-colors ${
                 activeTab === "drucksachen"
-                  ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
+                  ? "bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary"
                   : "bg-transparent text-zinc-500 light:text-slate-400 hover:text-zinc-300"
               }`}
             >
@@ -309,7 +309,7 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
                     "sidebar.database.speechSearch",
                     "Thema suchen...",
                   )}
-                  className="w-full border border-zinc-700 light:border-slate-300 rounded-md pl-8 pr-2 py-1.5 text-sm text-white light:text-slate-900 bg-zinc-950 light:bg-white outline-none focus:border-blue-500 placeholder:text-zinc-500 light:placeholder:text-slate-400"
+                  className="w-full border border-zinc-700 light:border-slate-300 rounded-md pl-8 pr-2 py-1.5 text-sm text-theme-text-primary light:text-theme-text-primary bg-zinc-950 light:bg-white outline-none focus:border-blue-500 placeholder:text-zinc-500 light:placeholder:text-slate-400"
                 />
               </div>
               <button
@@ -341,7 +341,7 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
                     "sidebar.database.dipSearch",
                     "Bundestags-Drucksachen durchsuchen...",
                   )}
-                  className="w-full border border-zinc-700 light:border-slate-300 rounded-md pl-8 pr-2 py-1.5 text-sm text-white light:text-slate-900 bg-zinc-950 light:bg-white outline-none focus:border-blue-500 placeholder:text-zinc-500 light:placeholder:text-slate-400"
+                  className="w-full border border-zinc-700 light:border-slate-300 rounded-md pl-8 pr-2 py-1.5 text-sm text-theme-text-primary light:text-theme-text-primary bg-zinc-950 light:bg-white outline-none focus:border-blue-500 placeholder:text-zinc-500 light:placeholder:text-slate-400"
                 />
               </div>
               <button
@@ -367,14 +367,14 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder={t("sidebar.database.search", "Name suchen...")}
                   aria-label={t("sidebar.database.search", "Name suchen...")}
-                  className="w-full border border-zinc-700 light:border-slate-300 rounded-md pl-8 pr-2 py-1.5 text-sm text-white light:text-slate-900 bg-zinc-950 light:bg-white outline-none focus:border-blue-500 placeholder:text-zinc-500 light:placeholder:text-slate-400"
+                  className="w-full border border-zinc-700 light:border-slate-300 rounded-md pl-8 pr-2 py-1.5 text-sm text-theme-text-primary light:text-theme-text-primary bg-zinc-950 light:bg-white outline-none focus:border-blue-500 placeholder:text-zinc-500 light:placeholder:text-slate-400"
                 />
               </div>
               <div className="flex gap-2">
                 <select
                   value={party}
                   onChange={(e) => setParty(e.target.value)}
-                  className="flex-1 border border-zinc-700 light:border-slate-300 rounded-md px-2 py-1.5 text-sm text-white light:text-slate-900 bg-zinc-950 light:bg-white outline-none focus:border-blue-500 cursor-pointer"
+                  className="flex-1 border border-zinc-700 light:border-slate-300 rounded-md px-2 py-1.5 text-sm text-theme-text-primary light:text-theme-text-primary bg-zinc-950 light:bg-white outline-none focus:border-blue-500 cursor-pointer"
                   aria-label={t("sidebar.database.partyFilter", "Partei")}
                 >
                   <option value="">
@@ -389,7 +389,7 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
                 <select
                   value={state}
                   onChange={(e) => setState(e.target.value)}
-                  className="flex-1 border border-zinc-700 light:border-slate-300 rounded-md px-2 py-1.5 text-sm text-white light:text-slate-900 bg-zinc-950 light:bg-white outline-none focus:border-blue-500 cursor-pointer"
+                  className="flex-1 border border-zinc-700 light:border-slate-300 rounded-md px-2 py-1.5 text-sm text-theme-text-primary light:text-theme-text-primary bg-zinc-950 light:bg-white outline-none focus:border-blue-500 cursor-pointer"
                   aria-label={t("sidebar.database.stateFilter", "Bundesland")}
                 >
                   <option value="">
@@ -412,7 +412,7 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
             <button
               type="button"
               onClick={selectAll}
-              className="flex items-center gap-1.5 text-xs text-zinc-400 light:text-slate-500 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer"
+              className="flex items-center gap-1.5 text-xs text-zinc-400 light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
             >
               {allSelected ? (
                 <CheckSquare
@@ -472,7 +472,7 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
               <button
                 type="button"
                 onClick={() => setProfileData(null)}
-                className="flex items-center gap-1.5 text-xs text-zinc-400 light:text-slate-500 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer self-start"
+                className="flex items-center gap-1.5 text-xs text-zinc-400 light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer self-start"
               >
                 <ArrowLeft size={12} weight="bold" />
                 {t("common.back", "Zurück")}
@@ -485,7 +485,7 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
                   />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-white light:text-slate-900 truncate">
+                  <p className="text-sm font-semibold text-theme-text-primary light:text-theme-text-primary truncate">
                     {profileData.fullName ||
                       `${profileData.firstName || ""} ${profileData.lastName || ""}`.trim() ||
                       profileData.id}
@@ -562,7 +562,7 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
               {profileData.stats && (
                 <div className="grid grid-cols-3 gap-2">
                   <div className="p-2 rounded-lg bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-200 text-center">
-                    <p className="text-lg font-bold text-white light:text-slate-900">
+                    <p className="text-lg font-bold text-theme-text-primary light:text-theme-text-primary">
                       {profileData.stats.speeches ?? 0}
                     </p>
                     <p className="text-[10px] text-zinc-500 light:text-slate-400">
@@ -570,7 +570,7 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
                     </p>
                   </div>
                   <div className="p-2 rounded-lg bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-200 text-center">
-                    <p className="text-lg font-bold text-white light:text-slate-900">
+                    <p className="text-lg font-bold text-theme-text-primary light:text-theme-text-primary">
                       {profileData.stats.votes ?? 0}
                     </p>
                     <p className="text-[10px] text-zinc-500 light:text-slate-400">
@@ -578,7 +578,7 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
                     </p>
                   </div>
                   <div className="p-2 rounded-lg bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-200 text-center">
-                    <p className="text-lg font-bold text-white light:text-slate-900">
+                    <p className="text-lg font-bold text-theme-text-primary light:text-theme-text-primary">
                       {profileData.stats.mandates ?? 0}
                     </p>
                     <p className="text-[10px] text-zinc-500 light:text-slate-400">
@@ -671,7 +671,7 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
                       size={12}
                       className="text-zinc-400 flex-shrink-0"
                     />
-                    <p className="text-xs font-medium text-white light:text-slate-900 truncate">
+                    <p className="text-xs font-medium text-theme-text-primary light:text-theme-text-primary truncate">
                       {s.politicianName || s.politician_name || "—"}
                     </p>
                     {s.party && (
@@ -754,7 +754,7 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
                       size={12}
                       className="text-zinc-400 flex-shrink-0"
                     />
-                    <p className="text-xs font-medium text-white light:text-slate-900 truncate flex-1">
+                    <p className="text-xs font-medium text-theme-text-primary light:text-theme-text-primary truncate flex-1">
                       {doc.titel || doc.title || "—"}
                     </p>
                   </div>
@@ -859,7 +859,7 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
                         e.stopPropagation();
                         toggleSelected(p.id);
                       }}
-                      className="text-zinc-400 light:text-slate-500 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer flex-shrink-0"
+                      className="text-zinc-400 light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer flex-shrink-0"
                       aria-label={t("sidebar.database.select", "Auswählen")}
                     >
                       {isSelected ? (
@@ -879,7 +879,7 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-white light:text-slate-900 truncate">
+                      <p className="text-sm font-medium text-theme-text-primary light:text-theme-text-primary truncate">
                         {name}
                       </p>
                       <p className="text-[11px] text-zinc-500 light:text-slate-400 truncate">

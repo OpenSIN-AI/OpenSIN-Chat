@@ -138,13 +138,13 @@ export default function RuleForm({
         <form onSubmit={handleSubmit} className="flex flex-col gap-y-5 p-6">
           <div className="flex flex-col gap-y-1">
             <div className="flex items-start justify-between">
-              <h3 className="text-base font-semibold leading-6 text-white light:text-slate-950">
+              <h3 className="text-base font-semibold leading-6 text-theme-text-primary light:text-theme-text-primary">
                 {t("model-router.rules.title")}
               </h3>
               <button
                 onClick={closeModal}
                 type="button"
-                className="border-none text-zinc-400 light:text-slate-500 hover:text-white light:hover:text-slate-900 transition-colors"
+                className="border-none text-zinc-400 light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors"
               >
                 <X size={16} weight="bold" />
               </button>
@@ -157,7 +157,7 @@ export default function RuleForm({
           <div className="flex flex-col gap-y-5 max-h-[60vh] overflow-y-auto">
             <div className="flex gap-x-5 items-start">
               <div className="flex flex-col gap-y-1.5 w-[500px]">
-                <label className="text-sm font-medium leading-5 text-white light:text-slate-950">
+                <label className="text-sm font-medium leading-5 text-theme-text-primary light:text-theme-text-primary">
                   {t("model-router.rule-form.title-label")}
                 </label>
                 <input
@@ -165,18 +165,18 @@ export default function RuleForm({
                   name="title"
                   defaultValue={existingRule?.title || ""}
                   placeholder="e.g. route_code_to_claude" // eslint-disable-line i18next/no-literal-string
-                  className="bg-zinc-800 light:bg-white light:border light:border-slate-300 text-white light:text-slate-700 placeholder:text-zinc-400 light:placeholder:text-slate-400 text-sm rounded-[8px] outline-none block w-full h-8 px-3.5 font-mono"
+                  className="bg-zinc-800 light:bg-white light:border light:border-slate-300 text-theme-text-primary light:text-theme-text-primary placeholder:text-zinc-400 light:placeholder:text-slate-400 text-sm rounded-[8px] outline-none block w-full h-8 px-3.5 font-mono"
                   required
                 />
               </div>
               <div className="flex flex-col gap-y-1.5 w-[300px]">
-                <label className="text-sm font-medium leading-5 text-white light:text-slate-950">
+                <label className="text-sm font-medium leading-5 text-theme-text-primary light:text-theme-text-primary">
                   {t("model-router.rule-form.rule-type")}
                 </label>
                 <select
                   value={ruleType}
                   onChange={(e) => setRuleType(e.target.value)}
-                  className="bg-zinc-800 light:bg-white light:border light:border-slate-300 text-white light:text-slate-700 text-sm rounded-[8px] outline-none block w-full h-8 px-3.5"
+                  className="bg-zinc-800 light:bg-white light:border light:border-slate-300 text-theme-text-primary light:text-theme-text-primary text-sm rounded-[8px] outline-none block w-full h-8 px-3.5"
                 >
                   {ruleTypes.map((rt: any) => (
                     <option key={rt.value} value={rt.value}>
@@ -218,7 +218,7 @@ export default function RuleForm({
             <button
               type="button"
               onClick={closeModal}
-              className="border border-zinc-600 light:border-slate-600 text-white light:text-slate-900 text-sm font-medium leading-5 rounded-[8px] h-[34px] px-3.5 hover:opacity-90 transition-opacity"
+              className="border border-zinc-600 light:border-slate-600 text-theme-text-primary light:text-theme-text-primary text-sm font-medium leading-5 rounded-[8px] h-[34px] px-3.5 hover:opacity-90 transition-opacity"
             >
               {t("model-router.rule-form.cancel")}
             </button>

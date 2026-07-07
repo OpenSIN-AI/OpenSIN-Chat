@@ -34,7 +34,7 @@ describe("chat/markdown – real markdown-it renderer", () => {
   it("wraps bold in text-white class", () => {
     const out = renderMarkdown("**bold**");
     expect(out).toContain(
-      '<strong class="text-white light:text-slate-900">bold</strong>',
+      '<strong class="text-theme-text-primary light:text-theme-text-primary">bold</strong>',
     );
   });
 

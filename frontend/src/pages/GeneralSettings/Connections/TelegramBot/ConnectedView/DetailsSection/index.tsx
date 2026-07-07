@@ -27,7 +27,7 @@ export default function DetailsSection({
   const { t } = useTranslation();
   return (
     <div className="flex flex-col gap-y-[18px]">
-      <p className="text-base font-semibold text-white light:text-slate-900">
+      <p className="text-base font-semibold text-theme-text-primary light:text-theme-text-primary">
         {t("telegram.details.title")}
       </p>
       <div className="border border-zinc-700 light:border-slate-200 rounded-xl p-4 w-[700px]">
@@ -72,7 +72,7 @@ interface DetailRowProps {
 function DetailRow({ label, value }: DetailRowProps): React.ReactElement {
   return (
     <div className="flex items-start justify-between">
-      <span className="font-medium text-white light:text-slate-900">
+      <span className="font-medium text-theme-text-primary light:text-theme-text-primary">
         {label}
       </span>
       <span className="text-zinc-300 light:text-slate-700">{value}</span>

@@ -140,7 +140,7 @@ export function FileTree({
                   <button
                     type="button"
                     onClick={toggleSelectAll}
-                    className="border-none text-sm font-semibold bg-white light:bg-[#E0F2FE] h-[30px] px-2.5 rounded-lg hover:bg-neutral-800/80 hover:text-white light:text-[#026AA2] light:hover:bg-[#026AA2] light:hover:text-white"
+                    className="border-none text-sm font-semibold bg-white light:bg-[#E0F2FE] h-[30px] px-2.5 rounded-lg hover:bg-neutral-800/80 hover:text-theme-text-primary light:hover:text-theme-text-primary light:text-[#026AA2] light:hover:bg-[#026AA2] light:hover:text-theme-text-primary light:hover:text-theme-text-primary"
                   >
                     {allSelected
                       ? t("connectors.directory.deselect_all")
@@ -149,7 +149,7 @@ export function FileTree({
                   <button
                     type="button"
                     onClick={removeSelectedItems}
-                    className="border-none text-sm font-semibold bg-white light:bg-[#E0F2FE] h-[30px] px-2.5 rounded-lg hover:bg-neutral-800/80 hover:text-white light:text-[#026AA2] light:hover:bg-[#026AA2] light:hover:text-white"
+                    className="border-none text-sm font-semibold bg-white light:bg-[#E0F2FE] h-[30px] px-2.5 rounded-lg hover:bg-neutral-800/80 hover:text-theme-text-primary light:hover:text-theme-text-primary light:text-[#026AA2] light:hover:bg-[#026AA2] light:hover:text-theme-text-primary light:hover:text-theme-text-primary"
                   >
                     {t("connectors.directory.remove_selected")}
                   </button>

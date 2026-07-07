@@ -65,13 +65,13 @@ export default function MicButton({
         <CircleNotch
           size={18}
           weight="bold"
-          className="pointer-events-none text-white light:text-slate-800 animate-spin shrink-0"
+          className="pointer-events-none text-theme-text-primary light:text-theme-text-primary animate-spin shrink-0"
         />
       ) : (
         <Microphone
           weight="regular"
           size={18}
-          className={`pointer-events-none text-zinc-300 light:text-slate-600 group-hover:text-white light:group-hover:text-slate-600 shrink-0 ${
+          className={`pointer-events-none text-zinc-300 light:text-slate-600 group-hover:text-theme-text-primary light:hover:text-theme-text-primary light:group-hover:text-slate-600 shrink-0 ${
             listening
               ? "animate-pulse-glow !text-white light:!text-slate-800"
               : ""

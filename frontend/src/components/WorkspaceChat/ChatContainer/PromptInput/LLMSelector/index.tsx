@@ -143,7 +143,7 @@ export default function LLMSelectorModal({
       <div className="w-[60%] h-full p-[18px] flex flex-col gap-2.5">
         <div className="flex flex-col gap-[15px]">
           <div className="flex flex-col gap-1.5">
-            <p className="text-sm font-medium text-white light:text-slate-800">
+            <p className="text-sm font-medium text-theme-text-primary light:text-theme-text-primary">
               {t("chat_window.workspace_llm_manager.available_models", {
                 provider: providerName,
               })}

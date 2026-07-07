@@ -63,14 +63,14 @@ function Checkbox({
         <Check
           size={12}
           weight="bold"
-          className="text-white light:text-white"
+          className="text-white light:text-theme-text-primary"
         />
       )}
       {state === "indeterminate" && (
         <Minus
           size={12}
           weight="bold"
-          className="text-white light:text-white"
+          className="text-white light:text-theme-text-primary"
         />
       )}
     </span>

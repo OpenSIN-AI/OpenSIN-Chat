@@ -83,9 +83,9 @@ function WorkspaceSourceItem({ doc, onClick, snippet }: any) {
     >
       <div className="flex gap-[6px] items-start w-full">
         <div className="w-5 h-5 rounded-full bg-zinc-700 light:bg-slate-200 flex items-center justify-center flex-shrink-0">
-          <Icon size={11} className="text-white light:text-slate-800" />
+          <Icon size={11} className="text-theme-text-primary light:text-theme-text-primary" />
         </div>
-        <p className="flex-1 font-medium text-sm text-white light:text-slate-900 leading-[15px] line-clamp-2">
+        <p className="flex-1 font-medium text-sm text-theme-text-primary light:text-theme-text-primary leading-[15px] line-clamp-2">
           {title}
         </p>
       </div>
@@ -167,7 +167,7 @@ function WorkspaceChatsTab({ workspace, onClose }: any) {
             <span
               className={`text-sm font-medium truncate ${
                 isActive
-                  ? "text-white light:text-slate-900"
+                  ? "text-theme-text-primary light:text-theme-text-primary"
                   : "text-zinc-200 light:text-slate-700"
               }`}
             >
@@ -256,7 +256,7 @@ export default function SourcesSidebar({ workspace }: any) {
           {/* Header */}
           <div className="flex flex-col shrink-0 gap-2">
             <div className="flex items-start justify-between">
-              <p className="font-medium text-base leading-6 text-white light:text-slate-900">
+              <p className="font-medium text-base leading-6 text-theme-text-primary light:text-theme-text-primary">
                 {isWorkspaceMode
                   ? t("chat_window.workspace_sources")
                   : t("chat_window.sources")}
@@ -264,7 +264,7 @@ export default function SourcesSidebar({ workspace }: any) {
               <button
                 onClick={closeSidebar}
                 type="button"
-                className="text-theme-text-secondary light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer"
+                className="text-theme-text-secondary light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
               >
                 <X size={16} weight="bold" />
               </button>

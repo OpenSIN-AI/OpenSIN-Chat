@@ -46,7 +46,7 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
       <div className="flex items-start justify-between pt-7 pb-9">
         <div className="flex items-center flex-col gap-y-[18px] max-w-[300px]">
           <div className="flex gap-x-1">
-            <h3 className="text-white light:text-slate-950 text-3xl leading-[28px] font-medium text-center white-space-nowrap block">
+            <h3 className="text-theme-text-primary light:text-theme-text-primary text-3xl leading-[28px] font-medium text-center white-space-nowrap block">
               {t("login.password-reset.title")}
             </h3>
           </div>
@@ -147,7 +147,7 @@ const ResetPasswordForm = ({ onSubmit }) => {
       <div className="flex items-start justify-between pt-7 pb-9">
         <div className="flex items-center flex-col gap-y-[18px] max-w-[300px]">
           <div className="flex gap-x-1">
-            <h3 className="text-white light:text-slate-950 text-[38px] leading-[28px] font-medium text-center white-space-nowrap block">
+            <h3 className="text-theme-text-primary light:text-theme-text-primary text-[38px] leading-[28px] font-medium text-center white-space-nowrap block">
               {t("multiUserAuth.resetPassword.title")}
             </h3>
           </div>
@@ -345,7 +345,7 @@ export default function MultiUserAuth() {
         <div className="flex items-start justify-between pt-7 pb-9">
           <div className="flex items-center flex-col gap-y-[18px] max-w-[300px]">
             <div className="flex gap-x-1">
-              <h3 className="text-white light:text-slate-950 text-[38px] leading-[28px] font-medium text-center white-space-nowrap block">
+              <h3 className="text-theme-text-primary light:text-theme-text-primary text-[38px] leading-[28px] font-medium text-center white-space-nowrap block">
                 {t("login.multi-user.welcome")}
               </h3>
             </div>

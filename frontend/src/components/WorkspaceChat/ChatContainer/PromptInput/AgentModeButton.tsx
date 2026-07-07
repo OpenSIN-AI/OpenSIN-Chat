@@ -218,7 +218,7 @@ export default function AgentModeButton({
             className={`pointer-events-none shrink-0 ${
               activeMode
                 ? "text-theme-accent"
-                : "text-zinc-300 light:text-slate-600 group-hover:text-white light:group-hover:text-slate-600"
+                : "text-zinc-300 light:text-slate-600 group-hover:text-theme-text-primary light:hover:text-theme-text-primary light:group-hover:text-slate-600"
             }`}
           />
           {activeMode && (
@@ -287,7 +287,7 @@ export default function AgentModeButton({
                   weight="fill"
                   className="text-theme-accent"
                 />
-                <span className="text-xs font-semibold text-white light:text-slate-900">
+                <span className="text-xs font-semibold text-theme-text-primary light:text-theme-text-primary">
                   {t("agentMode.title")}
                 </span>
               </div>
@@ -331,7 +331,7 @@ export default function AgentModeButton({
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5">
-                        <span className="text-sm font-medium text-white light:text-slate-900">
+                        <span className="text-sm font-medium text-theme-text-primary light:text-theme-text-primary">
                           {mode.label}
                         </span>
                         {mode.badge && (

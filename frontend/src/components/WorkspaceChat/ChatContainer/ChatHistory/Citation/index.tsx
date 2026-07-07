@@ -158,7 +158,7 @@ export default function Citations({ sources = [] }: any) {
       className="w-fit flex items-center gap-[5px] px-[10px] py-[4px] rounded-full hover:bg-white/5 light:hover:bg-black/5 transition-colors"
       type="button"
     >
-      <span className="text-xs text-white light:text-slate-800">
+      <span className="text-xs text-theme-text-primary light:text-theme-text-primary">
         {t(CITATION_KEYS.sources)}
       </span>
       <div
@@ -191,7 +191,7 @@ export default function Citations({ sources = [] }: any) {
         })}
       </div>
       {remainingCount > 0 && (
-        <span className="text-xs text-white light:text-slate-800">
+        <span className="text-xs text-theme-text-primary light:text-theme-text-primary">
           {t("citation.moreCount", { count: remainingCount })}
         </span>
       )}
@@ -219,7 +219,7 @@ export function CitationDetailModal({ source, onClose }: any) {
                 href={linkTo}
                 target="_blank"
                 rel="noreferrer"
-                className="text-xl w-[90%] font-semibold text-white light:text-slate-900 whitespace-nowrap hover:underline hover:text-blue-300 light:hover:text-blue-600 flex items-center gap-x-1"
+                className="text-xl w-[90%] font-semibold text-theme-text-primary light:text-theme-text-primary whitespace-nowrap hover:underline hover:text-blue-300 light:hover:text-blue-600 flex items-center gap-x-1"
               >
                 <div className="flex items-center gap-x-1 max-w-full overflow-hidden">
                   <h3 className="truncate text-ellipsis whitespace-nowrap overflow-hidden w-full">
@@ -229,7 +229,7 @@ export function CitationDetailModal({ source, onClose }: any) {
                 </div>
               </a>
             ) : (
-              <h3 className="text-xl font-semibold text-white light:text-slate-900 overflow-hidden overflow-ellipsis whitespace-nowrap">
+              <h3 className="text-xl font-semibold text-theme-text-primary light:text-theme-text-primary overflow-hidden overflow-ellipsis whitespace-nowrap">
                 {truncate(title, 45)}
               </h3>
             )}
@@ -247,7 +247,7 @@ export function CitationDetailModal({ source, onClose }: any) {
             <X
               size={24}
               weight="bold"
-              className="text-white light:text-slate-900"
+              className="text-theme-text-primary light:text-theme-text-primary"
             />
           </button>
         </div>
@@ -255,10 +255,10 @@ export function CitationDetailModal({ source, onClose }: any) {
           <div className="py-7 px-9 space-y-2 flex-col">
             {(chunks as any).map(({ text, score }, idx) => (
               <Fragment key={`${idx}-${text?.slice(0, 32) ?? ""}`}>
-                <div className="pt-6 text-white light:text-slate-900">
+                <div className="pt-6 text-theme-text-primary light:text-theme-text-primary">
                   <div className="flex flex-col w-full justify-start pb-6 gap-y-1">
                     <p
-                      className="text-white light:text-slate-900 whitespace-pre-line"
+                      className="text-theme-text-primary light:text-theme-text-primary whitespace-pre-line"
                       dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(
                           HTMLDecode(omitChunkHeader(text)),

@@ -42,7 +42,7 @@ export default function ChatContainer({
       >
         <ChatHeader workspaceSlug={workspace?.slug} isEmpty={isEmpty} />
         <div
-          className={`flex-1 min-w-0 transition-all duration-500 relative md:rounded-[16px] bg-zinc-900 light:bg-white w-full h-full overflow-hidden border-none light:border-solid light:border light:border-theme-modal-border${isEmpty ? "" : " text-white light:text-slate-900"}`}
+          className={`flex-1 min-w-0 transition-all duration-500 relative md:rounded-[16px] bg-zinc-900 light:bg-white w-full h-full overflow-hidden border-none light:border-solid light:border light:border-theme-modal-border${isEmpty ? "" : " text-theme-text-primary light:text-theme-text-primary"}`}
         >
           <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
             <DnDFileUploaderWrapper>

@@ -299,7 +299,7 @@ function SearchInput({ value, onChange, placeholder }: any) {
           }
           if (e.key === "Enter") e.preventDefault();
         }}
-        className="w-full pl-7 pr-2 py-1 text-xs bg-zinc-700/50 light:bg-slate-100 border border-zinc-600 light:border-slate-300 rounded text-white light:text-slate-900 placeholder:text-zinc-500 light:placeholder:text-slate-400 outline-none focus:border-zinc-500 light:focus:border-slate-400"
+        className="w-full pl-7 pr-2 py-1 text-xs bg-zinc-700/50 light:bg-slate-100 border border-zinc-600 light:border-slate-300 rounded text-theme-text-primary light:text-theme-text-primary placeholder:text-zinc-500 light:placeholder:text-slate-400 outline-none focus:border-zinc-500 light:focus:border-slate-400"
       />
     </div>
   );

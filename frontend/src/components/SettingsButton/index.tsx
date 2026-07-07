@@ -24,7 +24,7 @@ export default function SettingsButton() {
           data-tooltip-content={t("sidebar.backToWorkspaces")}
         >
           <ArrowUUpLeft
-            className="h-5 w-5 text-white light:text-slate-800"
+            className="h-5 w-5 text-theme-text-primary light:text-theme-text-primary"
             weight="fill"
             aria-hidden="true"
           />
@@ -42,7 +42,7 @@ export default function SettingsButton() {
         data-tooltip-content={t("sidebar.openSettings")}
       >
         <Wrench
-          className="h-5 w-5 text-white light:text-slate-800"
+          className="h-5 w-5 text-theme-text-primary light:text-theme-text-primary"
           weight="fill"
           aria-hidden="true"
         />

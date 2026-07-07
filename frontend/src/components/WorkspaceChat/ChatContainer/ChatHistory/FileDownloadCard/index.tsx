@@ -304,7 +304,7 @@ function FileDownloadCard({ props, autoPreview = false }) {
               {badge}
             </div>
             <div className="flex flex-col min-w-0 flex-1">
-              <p className="text-white light:text-slate-900 text-sm font-medium truncate leading-snug">
+              <p className="text-theme-text-primary light:text-theme-text-primary text-sm font-medium truncate leading-snug">
                 {filename || t("preview.unknown_file")}
               </p>
               <p className="text-zinc-400 light:text-slate-500 text-xs leading-snug">

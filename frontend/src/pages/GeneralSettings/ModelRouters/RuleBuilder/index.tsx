@@ -239,7 +239,7 @@ export default function RuleBuilder({
     <div>
       <div className="flex items-end justify-between pb-6 border-b border-white/20 light:border-slate-300">
         <div className="flex flex-col gap-y-2">
-          <p className="text-lg font-semibold leading-7 text-white light:text-slate-900">
+          <p className="text-lg font-semibold leading-7 text-theme-text-primary light:text-theme-text-primary">
             {routerName
               ? t("model-router.rules.title-with-name", { name: routerName })
               : t("model-router.rules.title")}

@@ -10,7 +10,7 @@ export function SendPromptButton({ formRef, promptInput, isDisabled }: any) {
       ref={formRef}
       type="submit"
       disabled={isDisabled}
-      className={`text-theme-text-primary hover:text-white transition-colors duration-200 ${
+      className={`text-theme-text-primary hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors duration-200 ${
         isDisabled ? "cursor-not-allowed opacity-50" : ""
       }`}
     >
@@ -38,7 +38,7 @@ export function EnhancePromptButton({
       type="button"
       onClick={handleEnhance}
       disabled={!promptInput.trim() || isStreaming || enhancing}
-      className="text-theme-text-primary hover:text-white transition-colors duration-200"
+      className="text-theme-text-primary hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors duration-200"
     >
       <Sparkle size={20} weight="fill" />
     </button>

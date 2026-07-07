@@ -44,7 +44,7 @@ export default function SetupView({
       <CreateBotSection />
       <form onSubmit={handleConnect} className="flex flex-col gap-y-[18px]">
         <div className="flex flex-col gap-y-2">
-          <p className="text-sm light:text-base font-semibold text-white light:text-slate-900">
+          <p className="text-sm light:text-base font-semibold text-theme-text-primary light:text-theme-text-primary">
             {t("telegram.setup.step2.title")}
           </p>
           <p className="text-xs text-zinc-400 light:text-slate-600 max-w-[700px]">
@@ -105,7 +105,7 @@ function BotTokenInput({
           value={botToken}
           onChange={(e) => setBotToken(e.target.value)}
           placeholder="123456:ABC-DEF123ghlkl-zyx57W2v" // eslint-disable-line i18next/no-literal-string
-          className="bg-transparent flex-1 text-sm text-white light:text-slate-900 placeholder:text-zinc-400 light:placeholder:text-slate-500 outline-none min-w-0"
+          className="bg-transparent flex-1 text-sm text-theme-text-primary light:text-theme-text-primary placeholder:text-zinc-400 light:placeholder:text-slate-500 outline-none min-w-0"
           autoComplete="off"
         />
       </div>

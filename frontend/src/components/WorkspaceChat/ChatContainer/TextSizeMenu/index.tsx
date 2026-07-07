@@ -75,8 +75,8 @@ export default function TextSizeMenu() {
           size={18}
           className={
             showMenu
-              ? "text-white light:text-slate-800"
-              : "text-zinc-300 light:text-slate-600 group-hover:text-white light:group-hover:text-slate-800"
+              ? "text-theme-text-primary light:text-theme-text-primary"
+              : "text-zinc-300 light:text-slate-600 group-hover:text-theme-text-primary light:hover:text-theme-text-primary light:group-hover:text-slate-800"
           }
         />
       </button>
@@ -99,7 +99,7 @@ export default function TextSizeMenu() {
                   : "hover:bg-zinc-700/50 light:hover:bg-slate-100"
               }`}
             >
-              <span className={`${textClass} text-white light:text-slate-900`}>
+              <span className={`${textClass} text-theme-text-primary light:text-theme-text-primary`}>
                 {label}
               </span>
             </div>

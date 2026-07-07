@@ -14,11 +14,11 @@ function OptionButton({ label, description, index, selected, onClick }: any) {
           : "bg-transparent hover:bg-zinc-800/60 light:hover:bg-slate-200/60"
       }`}
     >
-      <span className="flex items-center justify-center shrink-0 w-7 h-7 rounded-lg bg-zinc-700 light:bg-slate-300 text-white light:text-slate-900 text-base font-medium leading-6">
+      <span className="flex items-center justify-center shrink-0 w-7 h-7 rounded-lg bg-zinc-700 light:bg-slate-300 text-theme-text-primary light:text-theme-text-primary text-base font-medium leading-6">
         {index + 1}
       </span>
       <span className="flex flex-col min-w-0">
-        <span className="text-white light:text-slate-900 text-sm leading-5">
+        <span className="text-theme-text-primary light:text-theme-text-primary text-sm leading-5">
           {label}
         </span>
         {description && (
@@ -45,13 +45,13 @@ function OtherRow({ selected, onToggle, allowSkip, onSkip }: any) {
             : "bg-transparent hover:bg-zinc-800/60 light:hover:bg-slate-200/60"
         }`}
       >
-        <span className="flex items-center justify-center shrink-0 w-7 h-7 rounded-lg bg-zinc-700 light:bg-slate-300 text-white light:text-slate-900">
+        <span className="flex items-center justify-center shrink-0 w-7 h-7 rounded-lg bg-zinc-700 light:bg-slate-300 text-theme-text-primary light:text-theme-text-primary">
           <PencilSimple size={16} />
         </span>
         <span
           className={`text-sm leading-5 ${
             selected
-              ? "text-white light:text-slate-900"
+              ? "text-theme-text-primary light:text-theme-text-primary"
               : "text-zinc-400 light:text-slate-600"
           }`}
         >
@@ -69,7 +69,7 @@ function SkipButton({ onClick }: any) {
     <button
       type="button"
       onClick={onClick}
-      className="border border-solid border-zinc-600 light:border-slate-300 bg-transparent rounded-lg h-7 px-3 flex items-center justify-center text-white light:text-slate-900 text-xs font-medium leading-4 shrink-0 hover:bg-zinc-700/40 light:hover:bg-slate-200/60"
+      className="border border-solid border-zinc-600 light:border-slate-300 bg-transparent rounded-lg h-7 px-3 flex items-center justify-center text-theme-text-primary light:text-theme-text-primary text-xs font-medium leading-4 shrink-0 hover:bg-zinc-700/40 light:hover:bg-slate-200/60"
     >
       {t("chat_window.agent_invocation.batch_skip_this")}
     </button>
@@ -87,7 +87,7 @@ function OtherInput({ value, onChange }: any) {
       placeholder={t(
         "chat_window.agent_invocation.clarifying_other_placeholder",
       )}
-      className="mt-2 w-full border border-solid border-zinc-700 light:border-slate-500 bg-zinc-800 light:bg-white text-white light:text-slate-900 placeholder:text-zinc-500 light:placeholder:text-slate-500 text-sm rounded-lg focus:outline-white light:focus:outline-slate-400 outline-none p-2"
+      className="mt-2 w-full border border-solid border-zinc-700 light:border-slate-500 bg-zinc-800 light:bg-white text-theme-text-primary light:text-theme-text-primary placeholder:text-zinc-500 light:placeholder:text-slate-500 text-sm rounded-lg focus:outline-white light:focus:outline-slate-400 outline-none p-2"
     />
   );
 }

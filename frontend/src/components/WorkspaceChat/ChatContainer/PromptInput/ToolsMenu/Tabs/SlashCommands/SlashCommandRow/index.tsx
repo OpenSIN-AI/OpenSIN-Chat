@@ -55,7 +55,7 @@ export default function SlashCommandRow({
       }`}
     >
       <div className="flex gap-1.5 items-center text-xs min-w-0 flex-1">
-        <span className="text-white light:text-slate-900 shrink-0">
+        <span className="text-theme-text-primary light:text-theme-text-primary shrink-0">
           {command}
         </span>
         <span className="text-zinc-400 light:text-slate-500 italic truncate">
@@ -72,7 +72,7 @@ export default function SlashCommandRow({
               e.stopPropagation();
               setMenuOpen(!menuOpen);
             }}
-            className="border-none cursor-pointer text-zinc-400 light:text-slate-500 p-0.5 hover:text-white light:hover:text-slate-900 rounded opacity-0 group-hover:opacity-100"
+            className="border-none cursor-pointer text-zinc-400 light:text-slate-500 p-0.5 hover:text-theme-text-primary light:hover:text-theme-text-primary rounded opacity-0 group-hover:opacity-100"
           >
             <DotsThree size={16} weight="bold" />
           </button>
@@ -89,7 +89,7 @@ export default function SlashCommandRow({
               >
                 <button
                   type="button"
-                  className="border-none px-3 py-1.5 text-xs text-white light:text-slate-900 hover:bg-zinc-700 light:hover:bg-slate-100 cursor-pointer text-left"
+                  className="border-none px-3 py-1.5 text-xs text-theme-text-primary light:text-theme-text-primary hover:bg-zinc-700 light:hover:bg-slate-100 cursor-pointer text-left"
                   onClick={(e) => {
                     e.stopPropagation();
                     setMenuOpen(false);
@@ -100,7 +100,7 @@ export default function SlashCommandRow({
                 </button>
                 <button
                   type="button"
-                  className="border-none px-3 py-1.5 text-xs text-white light:text-slate-900 hover:bg-zinc-700 light:hover:bg-slate-100 cursor-pointer text-left"
+                  className="border-none px-3 py-1.5 text-xs text-theme-text-primary light:text-theme-text-primary hover:bg-zinc-700 light:hover:bg-slate-100 cursor-pointer text-left"
                   onClick={(e) => {
                     e.stopPropagation();
                     setMenuOpen(false);

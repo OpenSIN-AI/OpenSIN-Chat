@@ -144,7 +144,7 @@ export default function AgentBody({
                     setShowSkillModal(false);
                     setSelectedSkill("");
                   }}
-                  className="text-theme-text-secondary hover:text-white transition-colors duration-200"
+                  className="text-theme-text-secondary hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors duration-200"
                 >
                   <div className="flex items-center text-sky-400">
                     <CaretLeft size={24} />

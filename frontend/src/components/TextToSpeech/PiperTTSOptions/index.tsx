@@ -117,7 +117,7 @@ function PiperTTSModelSelection({ settings }: any) {
         <button
           type="button"
           onClick={flushVoices}
-          className="w-fit border-none hover:text-white hover:underline text-theme-placeholder text-sm my-4"
+          className="w-fit border-none hover:text-theme-text-primary light:hover:text-theme-text-primary hover:underline text-theme-placeholder text-sm my-4"
         >
           {t("textToSpeech.piper.flushVoiceCache")}
         </button>
