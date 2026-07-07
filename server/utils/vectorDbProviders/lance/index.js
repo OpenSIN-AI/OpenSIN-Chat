@@ -380,8 +380,7 @@ class LanceDb extends VectorDatabase {
             id: uuidv4(),
             values: vector,
             // [DO NOT REMOVE]
-            // LangChain will be unable to find your text if you embed manually and dont include the `text` key.
-            // https://github.com/hwchase17/langchainjs/blob/2def486af734c0ca87285a48f1a04c057ab74bdf/langchain/src/vectorstores/pinecone.ts#L64
+            // Vector stores require the `text` key in metadata for full-text search and retrieval.
             metadata: { ...metadata, text: textChunks[i] },
           };
 
