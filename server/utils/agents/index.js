@@ -574,6 +574,8 @@ class AgentHandler {
     this.#funcsToLoad = [
       ...(userAgentDef?.functions || []),
       ...(workspaceAgentDef?.functions || []),
+      // Phase 6: Always enable subagent spawning
+      "subagent-spawner",
     ];
   }
 
@@ -671,6 +673,14 @@ class AgentHandler {
         routingMetadata: this.routingMetadata || null,
       },
     });
+
+    // Phase 6: Pass run context to AIbitat so subagent plugin can access it
+    if (this._runId) {
+      this.aibitat._runId = this._runId;
+      this.aibitat._workspaceSlug = this._workspaceSlug;
+      this.aibitat._workspaceId = this.invocation?.workspace?.id;
+      this.aibitat._scratchDir = this._scratchDir;
+    }
 
     // Register callback to fetch fresh parsed file context on each chat turn
     // This injects parsed files into user messages instead of system prompt
