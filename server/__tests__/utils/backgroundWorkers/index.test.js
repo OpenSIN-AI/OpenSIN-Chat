@@ -1,1 +1,481 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovKiBlc2xpbnQtZW52IGplc3QgKi8KLy8gVGVzdHMgZm9yIHNlcnZlci91dGlscy9CYWNrZ3JvdW5kV29ya2Vycy9pbmRleC5qcyDigJQgQmFja2dyb3VuZFNlcnZpY2UgKElzc3VlICMzODgpCi8vCi8vIEJhY2tncm91bmRTZXJ2aWNlIHVzZXMgQnJlZSAoam9iIHNjaGVkdWxlciksIHAtcXVldWUgKGNvbmN1cnJlbmN5KSwgYW5kCi8vIHNldmVyYWwgUHJpc21hIG1vZGVscy4gV2UgbW9jayBhbGwgZXh0ZXJuYWwgZGVwZW5kZW5jaWVzIHRvIGlzb2xhdGUgdGhlCi8vIHNlcnZpY2UgbG9naWM6IHNpbmdsZXRvbiwgam9iIGxpc3QsIHdvcmtlciBzcGF3bmluZywgc2NoZWR1bGVkIGpvYgovLyBtYW5hZ2VtZW50LCBlcnJvciBoYW5kbGluZywgYW5kIG1lc3NhZ2UgaGFuZGxpbmcuCgovLyAtLS0gTW9jayBkZXBlbmRlbmNpZXMgLS0tCmNvbnN0IG1vY2tCcmVlSW5zdGFuY2UgPSB7CiAgc3RhcnQ6IGplc3QuZm4oKS5tb2NrUmVzb2x2ZWRWYWx1ZSh1bmRlZmluZWQpLAogIHN0b3A6IGplc3QuZm4oKS5tb2NrUmVzb2x2ZWRWYWx1ZSh1bmRlZmluZWQpLAogIGFkZDogamVzdC5mbigpLm1vY2tSZXNvbHZlZFZhbHVlKHVuZGVmaW5lZCksCiAgcmVtb3ZlOiBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUodW5kZWZpbmVkKSwKICBydW46IGplc3QuZm4oKS5tb2NrUmVzb2x2ZWRWYWx1ZSh1bmRlZmluZWQpLAogIHN0YXJ0OiBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUodW5kZWZpbmVkKSwKICBzdG9wOiBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUodW5kZWZpbmVkKSwKICB3b3JrZXJzOiBuZXcgTWFwKCksCiAgY29uZmlnOiB7IGpvYnM6IFtdIH0sCn07CgpqZXN0Lm1vY2soIkBtaW50cGxleC1sYWJzL2JyZWUiLCAoKSA9PiB7CiAgcmV0dXJuIGplc3QuZm4oKS5tb2NrSW1wbGVtZW50YXRpb24oZnVuY3Rpb24gKG9wdHMpIHsKICAgIE9iamVjdC5hc3NpZ24obW9ja0JyZWVJbnN0YW5jZSwgb3B0cyk7CiAgICByZXR1cm4gbW9ja0JyZWVJbnN0YW5jZTsKICB9KTsKfSk7CgpqZXN0Lm1vY2soIkBsYWRqcy9ncmFjZWZ1bCIsICgpID0+IHsKICByZXR1cm4gamVzdC5mbigpLm1vY2tJbXBsZW1lbnRhdGlvbihmdW5jdGlvbiAob3B0cykgewogICAgdGhpcy5icmVlcyA9IG9wdHM/LmJyZWVzIHx8IFtdOwogICAgdGhpcy5saXN0ZW4gPSBqZXN0LmZuKCk7CiAgICB0aGlzLnN0b3BCcmVlID0gamVzdC5mbigpOwogICAgdGhpcy5zdG9wID0gamVzdC5mbigpOwogICAgcmV0dXJuIHRoaXM7CiAgfSk7Cn0pOwoKamVzdC5tb2NrKCJAYnJlZWpzL2xhdGVyIiwgKCkgPT4gKHsKICBkYXRlOiB7IFVUQzogamVzdC5mbigpIH0sCiAgcGFyc2U6IHsgY3JvbjogamVzdC5mbigpLm1vY2tSZXR1cm5WYWx1ZSh7fSkgfSwKICBzZXRJbnRlcnZhbDogamVzdC5mbigpLm1vY2tSZXR1cm5WYWx1ZSh7IGNsZWFyOiBqZXN0LmZuKCkgfSksCn0pKTsKCmplc3QubW9jaygicC1xdWV1ZSIsICgpID0+IHsKICByZXR1cm4gewogICAgZGVmYXVsdDogamVzdC5mbigpLm1vY2tJbXBsZW1lbnRhdGlvbihmdW5jdGlvbiAob3B0cykgewogICAgICB0aGlzLmNvbmN1cnJlbmN5ID0gb3B0cz8uY29uY3VycmVuY3kgfHwgMTsKICAgICAgdGhpcy5hZGQgPSBqZXN0LmZuKCkubW9ja0ltcGxlbWVudGF0aW9uKGFzeW5jIChmbikgPT4gewogICAgICAgIGlmICh0eXBlb2YgZm4gPT09ICJmdW5jdGlvbiIpIHJldHVybiBmbigpOwogICAgICB9KTsKICAgICAgdGhpcy5jbGVhciA9IGplc3QuZm4oKTsKICAgICAgcmV0dXJuIHRoaXM7CiAgICB9KSwKICB9Owp9KTsKCmplc3QubW9jaygiLi4vLi4vLi4vdXRpbHMvbG9nZ2VyIiwgKCkgPT4gewogIHJldHVybiBqZXN0LmZuKCkubW9ja1JldHVyblZhbHVlKHsKICAgIGluZm86IGplc3QuZm4oKSwKICAgIGVycm9yOiBqZXN0LmZuKCksCiAgICBsb2c6IGplc3QuZm4oKSwKICAgIHdhcm46IGplc3QuZm4oKSwKICB9KTsKfSk7CgpqZXN0Lm1vY2soIi4uLy4uLy4uL3V0aWxzL2xvZ2dlci9jb25zb2xlLmpzIiwgKCkgPT4gKHsKICBsb2c6IGplc3QuZm4oKSwKICB3YXJuOiBqZXN0LmZuKCksCiAgZXJyb3I6IGplc3QuZm4oKSwKICBpbmZvOiBqZXN0LmZuKCksCn0pKTsKCi8vIE1vY2sgbW9kZWxzIHRoYXQgYXJlIGxhemlseSByZXF1aXJlZCBpbnNpZGUgYm9vdCgpCmplc3QubW9jaygiLi4vLi4vLi4vbW9kZWxzL2RvY3VtZW50U3luY1F1ZXVlIiwgKCkgPT4gKHsKICBEb2N1bWVudFN5bmNRdWV1ZTogeyBlbmFibGVkOiBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUoZmFsc2UpIH0sCn0pKTsKCmplc3QubW9jaygiLi4vLi4vLi4vbW9kZWxzL3N5c3RlbVNldHRpbmdzIiwgKCkgPT4gKHsKICBTeXN0ZW1TZXR0aW5nczogeyBhdXRvTWVtb3JpZXNFbmFibGVkOiBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUoZmFsc2UpIH0sCn0pKTsKCmplc3QubW9jaygiLi4vLi4vLi4vbW9kZWxzL3NjaGVkdWxlZEpvYlJ1biIsICgpID0+ICh7CiAgU2NoZWR1bGVkSm9iUnVuOiB7CiAgICBmYWlsT3JwaGFuZWRSdW5zOiBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUoMCksCiAgICBjbGVhbnVwT2xkUnVuczogamVzdC5mbigpLm1vY2tSZXNvbHZlZFZhbHVlKDApLAogICAgc3RhcnQ6IGplc3QuZm4oKS5tb2NrUmVzb2x2ZWRWYWx1ZSh7IGlkOiAxIH0pLAogICAgZmFpbElmTm90VGVybWluYWw6IGplc3QuZm4oKS5tb2NrUmVzb2x2ZWRWYWx1ZSh1bmRlZmluZWQpLAogIH0sCn0pKTsKCmplc3QubW9jaygiLi4vLi4vLi4vbW9kZWxzL3NjaGVkdWxlZEpvYiIsICgpID0+ICh7CiAgU2NoZWR1bGVkSm9iOiB7CiAgICBhbGxFbmFibGVkOiBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUoW10pLAogICAgcmVjb21wdXRlTmV4dFJ1bkF0OiBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUodW5kZWZpbmVkKSwKICAgIGdldDogamVzdC5mbigpLm1vY2tSZXNvbHZlZFZhbHVlKG51bGwpLAogIH0sCn0pKTsKCmNvbnN0IHsgQmFja2dyb3VuZFNlcnZpY2UgfSA9IHJlcXVpcmUoIi4uLy4uLy4uL3V0aWxzL0JhY2tncm91bmRXb3JrZXJzIik7CgpiZWZvcmVFYWNoKCgpID0+IHsKICBqZXN0LmNsZWFyQWxsTW9ja3MoKTsKICAvLyBSZXNldCBzaW5nbGV0b24gYmV0d2VlbiB0ZXN0cwogIEJhY2tncm91bmRTZXJ2aWNlLl9pbnN0YW5jZSA9IG51bGw7CiAgbW9ja0JyZWVJbnN0YW5jZS53b3JrZXJzID0gbmV3IE1hcCgpOwogIG1vY2tCcmVlSW5zdGFuY2UuY29uZmlnID0geyBqb2JzOiBbXSB9OwogIG1vY2tCcmVlSW5zdGFuY2UuYWRkLm1vY2tSZXNvbHZlZFZhbHVlKHVuZGVmaW5lZCk7CiAgbW9ja0JyZWVJbnN0YW5jZS5yZW1vdmUubW9ja1Jlc29sdmVkVmFsdWUodW5kZWZpbmVkKTsKICBtb2NrQnJlZUluc3RhbmNlLnJ1bi5tb2NrUmVzb2x2ZWRWYWx1ZSh1bmRlZmluZWQpOwp9KTsKCmRlc2NyaWJlKCJCYWNrZ3JvdW5kU2VydmljZSDigJQgc2luZ2xldG9uIHBhdHRlcm4iLCAoKSA9PiB7CiAgaXQoInJldHVybnMgdGhlIHNhbWUgaW5zdGFuY2Ugb24gc3Vic2VxdWVudCBjb25zdHJ1Y3Rpb24iLCAoKSA9PiB7CiAgICBjb25zdCBhID0gbmV3IEJhY2tncm91bmRTZXJ2aWNlKCk7CiAgICBjb25zdCBiID0gbmV3IEJhY2tncm91bmRTZXJ2aWNlKCk7CiAgICBleHBlY3QoYSkudG9CZShiKTsKICB9KTsKCiAgaXQoInByZXNlcnZlcyBzaW5nbGV0b24gYWNyb3NzIG11bHRpcGxlIGNvbnN0cnVjdGlvbnMiLCAoKSA9PiB7CiAgICBjb25zdCBhID0gbmV3IEJhY2tncm91bmRTZXJ2aWNlKCk7CiAgICBhLmN1c3RvbVByb3AgPSAidGVzdCI7CiAgICBjb25zdCBiID0gbmV3IEJhY2tncm91bmRTZXJ2aWNlKCk7CiAgICBleHBlY3QoYi5jdXN0b21Qcm9wKS50b0JlKCJ0ZXN0Iik7CiAgfSk7Cn0pOwoKZGVzY3JpYmUoIkJhY2tncm91bmRTZXJ2aWNlIOKAlCBqb2JzKCkiLCAoKSA9PiB7CiAgaXQoInJldHVybnMgYWx3YXlzLXJ1biBqb2JzIHdoZW4gbm8gb3B0aW9uYWwgZmVhdHVyZXMgYXJlIGVuYWJsZWQiLCAoKSA9PiB7CiAgICBjb25zdCBzdmMgPSBuZXcgQmFja2dyb3VuZFNlcnZpY2UoKTsKICAgIHN2Yy5kb2N1bWVudFN5bmNFbmFibGVkID0gZmFsc2U7CiAgICBzdmMubWVtb3J5RXh0cmFjdGlvbkVuYWJsZWQgPSBmYWxzZTsKCiAgICBjb25zdCBqb2JzID0gc3ZjLmpvYnMoKTsKICAgIGNvbnN0IGpvYk5hbWVzID0gam9icy5tYXAoKGopID0+IGoubmFtZSk7CgogICAgZXhwZWN0KGpvYk5hbWVzKS50b0NvbnRhaW4oImNsZWFudXAtb3JwaGFuLWRvY3VtZW50cyIpOwogICAgZXhwZWN0KGpvYk5hbWVzKS50b0NvbnRhaW4oImNsZWFudXAtZ2VuZXJhdGVkLWZpbGVzIik7CiAgICBleHBlY3Qoam9iTmFtZXMpLnRvQ29udGFpbigic3luYy1wb2xpdGljaWFuLWRhdGEiKTsKICAgIGV4cGVjdChqb2JzKS50b0hhdmVMZW5ndGgoMyk7CiAgfSk7CgogIGl0KCJpbmNsdWRlcyBtZW1vcnkgam9icyB3aGVuIG1lbW9yeUV4dHJhY3Rpb25FbmFibGVkIGlzIHRydWUiLCAoKSA9PiB7CiAgICBjb25zdCBzdmMgPSBuZXcgQmFja2dyb3VuZFNlcnZpY2UoKTsKICAgIHN2Yy5tZW1vcnlFeHRyYWN0aW9uRW5hYmxlZCA9IHRydWU7CiAgICBzdmMuZG9jdW1lbnRTeW5jRW5hYmxlZCA9IGZhbHNlOwoKICAgIGNvbnN0IGpvYnMgPSBzdmMuam9icygpOwogICAgY29uc3Qgam9iTmFtZXMgPSBqb2JzLm1hcCgoaikgPT4gai5uYW1lKTsKCiAgICBleHBlY3Qoam9iTmFtZXMpLnRvQ29udGFpbigiZXh0cmFjdC1tZW1vcmllcyIpOwogICAgZXhwZWN0KGpvYnMpLnRvSGF2ZUxlbmd0aCg0KTsKICB9KTsKCiAgaXQoImluY2x1ZGVzIGRvY3VtZW50IHN5bmMgam9icyB3aGVuIGRvY3VtZW50U3luY0VuYWJsZWQgaXMgdHJ1ZSIsICgpID0+IHsKICAgIGNvbnN0IHN2YyA9IG5ldyBCYWNrZ3JvdW5kU2VydmljZSgpOwogICAgc3ZjLmRvY3VtZW50U3luY0VuYWJsZWQgPSB0cnVlOwogICAgc3ZjLm1lbW9yeUV4dHJhY3Rpb25FbmFibGVkID0gZmFsc2U7CgogICAgY29uc3Qgam9icyA9IHN2Yy5qb2JzKCk7CiAgICBjb25zdCBqb2JOYW1lcyA9IGpvYnMubWFwKChqKSA9PiBqLm5hbWUpOwoKICAgIGV4cGVjdChqb2JOYW1lcykudG9Db250YWluKCJzeW5jLXdhdGNoZWQtZG9jdW1lbnRzIik7CiAgICBleHBlY3Qoam9icykudG9IYXZlTGVuZ3RoKDQpOwogIH0pOwoKICBpdCgiaW5jbHVkZXMgYWxsIGpvYnMgd2hlbiBib3RoIGZlYXR1cmVzIGFyZSBlbmFibGVkIiwgKCkgPT4gewogICAgY29uc3Qgc3ZjID0gbmV3IEJhY2tncm91bmRTZXJ2aWNlKCk7CiAgICBzdmMuZG9jdW1lbnRTeW5jRW5hYmxlZCA9IHRydWU7CiAgICBzdmMubWVtb3J5RXh0cmFjdGlvbkVuYWJsZWQgPSB0cnVlOwoKICAgIGNvbnN0IGpvYnMgPSBzdmMuam9icygpOwogICAgZXhwZWN0KGpvYnMpLnRvSGF2ZUxlbmd0aCg1KTsKICB9KTsKCiAgaXQoImVhY2ggam9iIGhhcyBuYW1lLCB0aW1lb3V0LCBhbmQgaW50ZXJ2YWwgcHJvcGVydGllcyIsICgpID0+IHsKICAgIGNvbnN0IHN2YyA9IG5ldyBCYWNrZ3JvdW5kU2VydmljZSgpOwogICAgY29uc3Qgam9icyA9IHN2Yy5qb2JzKCk7CiAgICBmb3IgKGNvbnN0IGpvYiBvZiBqb2JzKSB7CiAgICAgIGV4cGVjdChqb2IpLnRvSGF2ZVByb3BlcnR5KCJuYW1lIik7CiAgICAgIGV4cGVjdChqb2IpLnRvSGF2ZVByb3BlcnR5KCJ0aW1lb3V0Iik7CiAgICAgIGV4cGVjdChqb2IpLnRvSGF2ZVByb3BlcnR5KCJpbnRlcnZhbCIpOwogICAgfQogIH0pOwp9KTsKCmRlc2NyaWJlKCJCYWNrZ3JvdW5kU2VydmljZSDigJQgam9ic1Jvb3QgZ2V0dGVyIiwgKCkgPT4gewogIGl0KCJyZXR1cm5zIGEgcGF0aCBlbmRpbmcgaW4gL2pvYnMiLCAoKSA9PiB7CiAgICBjb25zdCBzdmMgPSBuZXcgQmFja2dyb3VuZFNlcnZpY2UoKTsKICAgIGNvbnN0IHJvb3QgPSBzdmMuam9ic1Jvb3Q7CiAgICBleHBlY3Qocm9vdCkudG9Db250YWluKCJqb2JzIik7CiAgICBleHBlY3QodHlwZW9mIHJvb3QpLnRvQmUoInN0cmluZyIpOwogIH0pOwp9KTsKCmRlc2NyaWJlKCJCYWNrZ3JvdW5kU2VydmljZSDigJQgb25FcnJvciIsICgpID0+IHsKICBpdCgibG9ncyBlcnJvciB3aXRoIHNlcnZpY2UgYW5kIG9yaWdpbiBtZXRhZGF0YSIsICgpID0+IHsKICAgIGNvbnN0IHN2YyA9IG5ldyBCYWNrZ3JvdW5kU2VydmljZSgpOwogICAgc3ZjLmxvZ2dlciA9IHsgZXJyb3I6IGplc3QuZm4oKSB9OwogICAgY29uc3QgZXJyID0gbmV3IEVycm9yKCJ3b3JrZXIgY3Jhc2hlZCIpOwogICAgZXJyLm5hbWUgPSAiV29ya2VyRXJyb3IiOwoKICAgIHN2Yy5vbkVycm9yKGVyciwgeyBuYW1lOiAidGVzdC13b3JrZXIiIH0pOwoKICAgIGV4cGVjdChzdmMubG9nZ2VyLmVycm9yKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgKICAgICAgIndvcmtlciBjcmFzaGVkIiwKICAgICAgZXhwZWN0Lm9iamVjdENvbnRhaW5pbmcoewogICAgICAgIHNlcnZpY2U6ICJiZy13b3JrZXIiLAogICAgICAgIG9yaWdpbjogIldvcmtlckVycm9yIiwKICAgICAgfSksCiAgICApOwogIH0pOwp9KTsKCmRlc2NyaWJlKCJCYWNrZ3JvdW5kU2VydmljZSDigJQgb25Xb3JrZXJNZXNzYWdlSGFuZGxlciIsICgpID0+IHsKICBpdCgibG9ncyBub24tc2lsZW50IHdvcmtlciBtZXNzYWdlcyIsICgpID0+IHsKICAgIGNvbnN0IHN2YyA9IG5ldyBCYWNrZ3JvdW5kU2VydmljZSgpOwogICAgc3ZjLmxvZ2dlciA9IHsgaW5mbzogamVzdC5mbigpIH07CiAgICBjb25zdCBtZXNzYWdlID0geyBtZXNzYWdlOiAiam9iIGNvbXBsZXRlZCIsIG5hbWU6ICJjbGVhbnVwLWpvYiIgfTsKCiAgICBzdmMub25Xb3JrZXJNZXNzYWdlSGFuZGxlcihtZXNzYWdlLCB7fSk7CgogICAgZXhwZWN0KHN2Yy5sb2dnZXIuaW5mbykudG9IYXZlQmVlbkNhbGxlZFdpdGgoCiAgICAgICJqb2IgY29tcGxldGVkIiwKICAgICAgZXhwZWN0Lm9iamVjdENvbnRhaW5pbmcoeyBzZXJ2aWNlOiAiYmctd29ya2VyIiwgb3JpZ2luOiAiY2xlYW51cC1qb2IiIH0pLAogICAgKTsKICB9KTsKCiAgaXQoInN1cHByZXNzZXMgc2lsZW50IHdvcmtlciBtZXNzYWdlcyIsICgpID0+IHsKICAgIGNvbnN0IHN2YyA9IG5ldyBCYWNrZ3JvdW5kU2VydmljZSgpOwogICAgc3ZjLmxvZ2dlciA9IHsgaW5mbzogamVzdC5mbigpIH07CiAgICBjb25zdCBtZXNzYWdlID0geyBzaWxlbnQ6IHRydWUsIG1lc3NhZ2U6ICJoZWFydGJlYXQiLCBuYW1lOiAiY2xlYW51cC1qb2IiIH07CgogICAgc3ZjLm9uV29ya2VyTWVzc2FnZUhhbmRsZXIobWVzc2FnZSwge30pOwoKICAgIGV4cGVjdChzdmMubG9nZ2VyLmluZm8pLm5vdC50b0hhdmVCZWVuQ2FsbGVkKCk7CiAgfSk7CgogIGl0KCJzdXBwcmVzc2VzIG1lc3NhZ2VzIHdpdGggbmVzdGVkIHNpbGVudCBmbGFnIiwgKCkgPT4gewogICAgY29uc3Qgc3ZjID0gbmV3IEJhY2tncm91bmRTZXJ2aWNlKCk7CiAgICBzdmMubG9nZ2VyID0geyBpbmZvOiBqZXN0LmZuKCkgfTsKICAgIGNvbnN0IG1lc3NhZ2UgPSB7IG1lc3NhZ2U6IHsgc2lsZW50OiB0cnVlLCBjb250ZW50OiAiaGVhcnRiZWF0IiB9LCBuYW1lOiAieCIgfTsKCiAgICBzdmMub25Xb3JrZXJNZXNzYWdlSGFuZGxlcihtZXNzYWdlLCB7fSk7CgogICAgZXhwZWN0KHN2Yy5sb2dnZXIuaW5mbykubm90LnRvSGF2ZUJlZW5DYWxsZWQoKTsKICB9KTsKfSk7CgpkZXNjcmliZSgiQmFja2dyb3VuZFNlcnZpY2Ug4oCUIHNwYXduV29ya2VyIiwgKCkgPT4gewogIGl0KCJ0aHJvd3MgaWYgYnJlZSBoYXMgbm90IGJlZW4gYm9vdGVkIiwgYXN5bmMgKCkgPT4gewogICAgY29uc3Qgc3ZjID0gbmV3IEJhY2tncm91bmRTZXJ2aWNlKCk7CiAgICBzdmMuYnJlZSA9IG51bGw7CgogICAgYXdhaXQgZXhwZWN0KHN2Yy5zcGF3bldvcmtlcigiL3BhdGgvdG8vc2NyaXB0LmpzIikpLnJlamVjdHMudG9UaHJvdygKICAgICAgImhhcyBub3QgYmVlbiBib290ZWQiLAogICAgKTsKICB9KTsKCiAgaXQoImFkZHMgam9iIHRvIGJyZWUsIHJ1bnMgaXQsIGFuZCByZXR1cm5zIHdvcmtlciArIGpvYklkIiwgYXN5bmMgKCkgPT4gewogICAgY29uc3Qgc3ZjID0gbmV3IEJhY2tncm91bmRTZXJ2aWNlKCk7CiAgICBjb25zdCBtb2NrV29ya2VyID0geyBwaWQ6IDEyMzQ1LCBraWxsOiBqZXN0LmZuKCksIHNlbmQ6IGplc3QuZm4oKSwgb246IGplc3QuZm4oKSB9OwogICAgY29uc3Qgd29ya2Vyc01hcCA9IG5ldyBNYXAoKTsKICAgIHN2Yy5icmVlID0gewogICAgICBhZGQ6IGplc3QuZm4oKS5tb2NrSW1wbGVtZW50YXRpb24oYXN5bmMgKGpvYikgPT4gewogICAgICAgIHdvcmtlcnNNYXAuc2V0KGpvYi5uYW1lLCBtb2NrV29ya2VyKTsKICAgICAgfSksCiAgICAgIHJ1bjogamVzdC5mbigpLm1vY2tSZXNvbHZlZFZhbHVlKHVuZGVmaW5lZCksCiAgICAgIHdvcmtlcnM6IHdvcmtlcnNNYXAsCiAgICB9OwoKICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IHN2Yy5zcGF3bldvcmtlcigiL3BhdGgvdG8vc2NyaXB0LmpzIik7CgogICAgZXhwZWN0KHJlc3VsdC53b3JrZXIpLnRvQmUobW9ja1dvcmtlcik7CiAgICBleHBlY3QocmVzdWx0LmpvYklkKS50b01hdGNoKC9ec2NyaXB0LVxkKyQvKTsKICAgIGV4cGVjdChzdmMuYnJlZS5hZGQpLnRvSGF2ZUJlZW5DYWxsZWRXaXRoKAogICAgICBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7IHBhdGg6ICIvcGF0aC90by9zY3JpcHQuanMiIH0pLAogICAgKTsKICB9KTsKCiAgaXQoInRocm93cyB3aGVuIHdvcmtlciByZWZlcmVuY2UgY2Fubm90IGJlIG9idGFpbmVkIGZyb20gYnJlZSIsIGFzeW5jICgpID0+IHsKICAgIGNvbnN0IHN2YyA9IG5ldyBCYWNrZ3JvdW5kU2VydmljZSgpOwogICAgc3ZjLmJyZWUgPSB7CiAgICAgIGFkZDogamVzdC5mbigpLm1vY2tSZXNvbHZlZFZhbHVlKHVuZGVmaW5lZCksCiAgICAgIHJ1bjogamVzdC5mbigpLm1vY2tSZXNvbHZlZFZhbHVlKHVuZGVmaW5lZCksCiAgICAgIHdvcmtlcnM6IG5ldyBNYXAoKSwgLy8gZW1wdHkg4oCUIG5vIHdvcmtlciB3aWxsIGJlIGZvdW5kCiAgICB9OwoKICAgIGF3YWl0IGV4cGVjdChzdmMuc3Bhd25Xb3JrZXIoIi9wYXRoL3RvL3NjcmlwdC5qcyIpKS5yZWplY3RzLnRvVGhyb3coCiAgICAgICJGYWlsZWQgdG8gZ2V0IHdvcmtlciByZWZlcmVuY2UiLAogICAgKTsKICB9KTsKfSk7CgpkZXNjcmliZSgiQmFja2dyb3VuZFNlcnZpY2Ug4oCUIHJlbW92ZUpvYiIsICgpID0+IHsKICBpdCgiZG9lcyBub3RoaW5nIHdoZW4gam9iSWQgaXMgZmFsc3kiLCBhc3luYyAoKSA9PiB7CiAgICBjb25zdCBzdmMgPSBuZXcgQmFja2dyb3VuZFNlcnZpY2UoKTsKICAgIHN2Yy5icmVlID0geyByZW1vdmU6IGplc3QuZm4oKSB9OwoKICAgIGF3YWl0IHN2Yy5yZW1vdmVKb2IobnVsbCk7CiAgICBhd2FpdCBzdmMucmVtb3ZlSm9iKCIiKTsKICAgIGF3YWl0IHN2Yy5yZW1vdmVKb2IodW5kZWZpbmVkKTsKCiAgICBleHBlY3Qoc3ZjLmJyZWUucmVtb3ZlKS5ub3QudG9IYXZlQmVlbkNhbGxlZCgpOwogIH0pOwoKICBpdCgiY2FsbHMgYnJlZS5yZW1vdmUgd2l0aCB0aGUgam9iSWQiLCBhc3luYyAoKSA9PiB7CiAgICBjb25zdCBzdmMgPSBuZXcgQmFja2dyb3VuZFNlcnZpY2UoKTsKICAgIHN2Yy5icmVlID0geyByZW1vdmU6IGplc3QuZm4oKS5tb2NrUmVzb2x2ZWRWYWx1ZSh1bmRlZmluZWQpIH07CgogICAgYXdhaXQgc3ZjLnJlbW92ZUpvYigibXktam9iLTEyMyIpOwoKICAgIGV4cGVjdChzdmMuYnJlZS5yZW1vdmUpLnRvSGF2ZUJlZW5DYWxsZWRXaXRoKCJteS1qb2ItMTIzIik7CiAgfSk7CgogIGl0KCJkb2VzIG5vdCB0aHJvdyB3aGVuIGJyZWUucmVtb3ZlIGZhaWxzIChqb2IgYWxyZWFkeSBnb25lKSIsIGFzeW5jICgpID0+IHsKICAgIGNvbnN0IHN2YyA9IG5ldyBCYWNrZ3JvdW5kU2VydmljZSgpOwogICAgc3ZjLmJyZWUgPSB7IHJlbW92ZTogamVzdC5mbigpLm1vY2tSZWplY3RlZFZhbHVlKG5ldyBFcnJvcigibm90IGZvdW5kIikpIH07CgogICAgYXdhaXQgZXhwZWN0KHN2Yy5yZW1vdmVKb2IoImdvbmUtam9iIikpLnJlc29sdmVzLm5vdC50b1Rocm93KCk7CiAgfSk7CgogIGl0KCJoYW5kbGVzIGJyZWUgYmVpbmcgbnVsbCIsIGFzeW5jICgpID0+IHsKICAgIGNvbnN0IHN2YyA9IG5ldyBCYWNrZ3JvdW5kU2VydmljZSgpOwogICAgc3ZjLmJyZWUgPSBudWxsOwoKICAgIGF3YWl0IGV4cGVjdChzdmMucmVtb3ZlSm9iKCJzb21lLWpvYiIpKS5yZXNvbHZlcy5ub3QudG9UaHJvdygpOwogIH0pOwp9KTsKCmRlc2NyaWJlKCJCYWNrZ3JvdW5kU2VydmljZSDigJQgYWRkU2NoZWR1bGVkSm9iIiwgKCkgPT4gewogIGl0KCJyZWdpc3RlcnMgYSBjcm9uIHRpbWVyIGZvciB0aGUgam9iIiwgKCkgPT4gewogICAgY29uc3QgbGF0ZXIgPSByZXF1aXJlKCJAYnJlZWpzL2xhdGVyIik7CiAgICBjb25zdCBzdmMgPSBuZXcgQmFja2dyb3VuZFNlcnZpY2UoKTsKICAgIGNvbnN0IGpvYiA9IHsgaWQ6IDEsIG5hbWU6ICJ0ZXN0LWpvYiIsIHNjaGVkdWxlOiAiMCAqICogKiAqIiB9OwoKICAgIHN2Yy5hZGRTY2hlZHVsZWRKb2Ioam9iKTsKCiAgICBleHBlY3QobGF0ZXIucGFyc2UuY3JvbikudG9IYXZlQmVlbkNhbGxlZFdpdGgoIjAgKiAqICogKiIpOwogICAgZXhwZWN0KGxhdGVyLnNldEludGVydmFsKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgKICAgICAgZXhwZWN0LmFueShGdW5jdGlvbiksCiAgICAgIGV4cGVjdC5hbnkoT2JqZWN0KSwKICAgICk7CiAgfSk7CgogIGl0KCJsb2dzIGVycm9yIGFuZCBkb2VzIG5vdCB0aHJvdyB3aGVuIGNyb24gcGFyc2UgZmFpbHMiLCAoKSA9PiB7CiAgICBjb25zdCBsYXRlciA9IHJlcXVpcmUoIkBicmVlanMvbGF0ZXIiKTsKICAgIGxhdGVyLnBhcnNlLmNyb24ubW9ja0ltcGxlbWVudGF0aW9uKCgpID0+IHsKICAgICAgdGhyb3cgbmV3IEVycm9yKCJpbnZhbGlkIGNyb24iKTsKICAgIH0pOwogICAgY29uc3Qgc3ZjID0gbmV3IEJhY2tncm91bmRTZXJ2aWNlKCk7CiAgICBjb25zdCBqb2IgPSB7IGlkOiAyLCBuYW1lOiAiYmFkLWpvYiIsIHNjaGVkdWxlOiAiaW52YWxpZCIgfTsKCiAgICBleHBlY3QoKCkgPT4gc3ZjLmFkZFNjaGVkdWxlZEpvYihqb2IpKS5ub3QudG9UaHJvdygpOwogIH0pOwp9KTsKCmRlc2NyaWJlKCJCYWNrZ3JvdW5kU2VydmljZSDigJQgcmVtb3ZlU2NoZWR1bGVkSm9iIiwgKCkgPT4gewogIGl0KCJjbGVhcnMgZXhpc3RpbmcgdGltZXIgYW5kIHJlbW92ZXMgaXQiLCAoKSA9PiB7CiAgICBjb25zdCBsYXRlciA9IHJlcXVpcmUoIkBicmVlanMvbGF0ZXIiKTsKICAgIGNvbnN0IG1vY2tUaW1lciA9IHsgY2xlYXI6IGplc3QuZm4oKSB9OwogICAgbGF0ZXIuc2V0SW50ZXJ2YWwubW9ja1JldHVyblZhbHVlKG1vY2tUaW1lcik7CiAgICBsYXRlci5wYXJzZS5jcm9uLm1vY2tSZXR1cm5WYWx1ZSh7fSk7CiAgICBjb25zdCBzdmMgPSBuZXcgQmFja2dyb3VuZFNlcnZpY2UoKTsKICAgIGNvbnN0IGpvYiA9IHsgaWQ6IDUsIG5hbWU6ICJqIiwgc2NoZWR1bGU6ICIwICogKiAqICoiIH07CgogICAgc3ZjLmFkZFNjaGVkdWxlZEpvYihqb2IpOwogICAgc3ZjLnJlbW92ZVNjaGVkdWxlZEpvYig1KTsKCiAgICBleHBlY3QobW9ja1RpbWVyLmNsZWFyKS50b0hhdmVCZWVuQ2FsbGVkKCk7CiAgfSk7CgogIGl0KCJkb2VzIG5vdCB0aHJvdyB3aGVuIHRpbWVyIGRvZXMgbm90IGV4aXN0IiwgKCkgPT4gewogICAgY29uc3Qgc3ZjID0gbmV3IEJhY2tncm91bmRTZXJ2aWNlKCk7CiAgICBleHBlY3QoKCkgPT4gc3ZjLnJlbW92ZVNjaGVkdWxlZEpvYig5OTkpKS5ub3QudG9UaHJvdygpOwogIH0pOwp9KTsKCmRlc2NyaWJlKCJCYWNrZ3JvdW5kU2VydmljZSDigJQga2lsbFJ1biIsICgpID0+IHsKICBpdCgicmV0dXJucyBmYWxzZSB3aGVuIG5vIHdvcmtlcnMgZXhpc3QgZm9yIHRoZSBqb2IiLCAoKSA9PiB7CiAgICBjb25zdCBzdmMgPSBuZXcgQmFja2dyb3VuZFNlcnZpY2UoKTsKICAgIGV4cGVjdChzdmMua2lsbFJ1big5OTksIDEpKS50b0JlKGZhbHNlKTsKICB9KTsKfSk7CgpkZXNjcmliZSgiQmFja2dyb3VuZFNlcnZpY2Ug4oCUIHN5bmNNZW1vcnlKb2IiLCAoKSA9PiB7CiAgaXQoImRvZXMgbm90aGluZyB3aGVuIGJyZWUgaXMgbm90IGluaXRpYWxpemVkIiwgYXN5bmMgKCkgPT4gewogICAgY29uc3Qgc3ZjID0gbmV3IEJhY2tncm91bmRTZXJ2aWNlKCk7CiAgICBzdmMuYnJlZSA9IG51bGw7CgogICAgYXdhaXQgZXhwZWN0KHN2Yy5zeW5jTWVtb3J5Sm9iKHRydWUpKS5yZXNvbHZlcy5ub3QudG9UaHJvdygpOwogIH0pOwoKICBpdCgiYWRkcyBhbmQgc3RhcnRzIG1lbW9yeSBqb2Igd2hlbiBlbmFibGVkIGFuZCBub3QgY3VycmVudGx5IHJ1bm5pbmciLCBhc3luYyAoKSA9PiB7CiAgICBjb25zdCBzdmMgPSBuZXcgQmFja2dyb3VuZFNlcnZpY2UoKTsKICAgIHN2Yy5icmVlID0gewogICAgICBjb25maWc6IHsgam9iczogW10gfSwKICAgICAgYWRkOiBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUodW5kZWZpbmVkKSwKICAgICAgc3RhcnQ6IGplc3QuZm4oKS5tb2NrUmVzb2x2ZWRWYWx1ZSh1bmRlZmluZWQpLAogICAgICBzdG9wOiBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUodW5kZWZpbmVkKSwKICAgICAgcmVtb3ZlOiBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUodW5kZWZpbmVkKSwKICAgIH07CgogICAgYXdhaXQgc3ZjLnN5bmNNZW1vcnlKb2IodHJ1ZSk7CgogICAgZXhwZWN0KHN2Yy5icmVlLmFkZCkudG9IYXZlQmVlbkNhbGxlZCgpOwogICAgZXhwZWN0KHN2Yy5icmVlLnN0YXJ0KS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgiZXh0cmFjdC1tZW1vcmllcyIpOwogICAgZXhwZWN0KHN2Yy5tZW1vcnlFeHRyYWN0aW9uRW5hYmxlZCkudG9CZSh0cnVlKTsKICB9KTsKCiAgaXQoInN0b3BzIGFuZCByZW1vdmVzIG1lbW9yeSBqb2Igd2hlbiBkaXNhYmxlZCBhbmQgY3VycmVudGx5IHJ1bm5pbmciLCBhc3luYyAoKSA9PiB7CiAgICBjb25zdCBzdmMgPSBuZXcgQmFja2dyb3VuZFNlcnZpY2UoKTsKICAgIHN2Yy5icmVlID0gewogICAgICBjb25maWc6IHsgam9iczogW3sgbmFtZTogImV4dHJhY3QtbWVtb3JpZXMiIH1dIH0sCiAgICAgIGFkZDogamVzdC5mbigpLAogICAgICBzdGFydDogamVzdC5mbigpLAogICAgICBzdG9wOiBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUodW5kZWZpbmVkKSwKICAgICAgcmVtb3ZlOiBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUodW5kZWZpbmVkKSwKICAgIH07CgogICAgYXdhaXQgc3ZjLnN5bmNNZW1vcnlKb2IoZmFsc2UpOwoKICAgIGV4cGVjdChzdmMuYnJlZS5zdG9wKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgiZXh0cmFjdC1tZW1vcmllcyIpOwogICAgZXhwZWN0KHN2Yy5icmVlLnJlbW92ZSkudG9IYXZlQmVlbkNhbGxlZFdpdGgoImV4dHJhY3QtbWVtb3JpZXMiKTsKICAgIGV4cGVjdChzdmMubWVtb3J5RXh0cmFjdGlvbkVuYWJsZWQpLnRvQmUoZmFsc2UpOwogIH0pOwoKICBpdCgiZG9lcyBub3RoaW5nIHdoZW4gZW5hYmxlZCBhbmQgYWxyZWFkeSBydW5uaW5nIiwgYXN5bmMgKCkgPT4gewogICAgY29uc3Qgc3ZjID0gbmV3IEJhY2tncm91bmRTZXJ2aWNlKCk7CiAgICBzdmMuYnJlZSA9IHsKICAgICAgY29uZmlnOiB7IGpvYnM6IFt7IG5hbWU6ICJleHRyYWN0LW1lbW9yaWVzIiB9XSB9LAogICAgICBhZGQ6IGplc3QuZm4oKSwKICAgICAgc3RhcnQ6IGplc3QuZm4oKSwKICAgICAgc3RvcDogamVzdC5mbigpLAogICAgICByZW1vdmU6IGplc3QuZm4oKSwKICAgIH07CgogICAgYXdhaXQgc3ZjLnN5bmNNZW1vcnlKb2IodHJ1ZSk7CgogICAgZXhwZWN0KHN2Yy5icmVlLmFkZCkubm90LnRvSGF2ZUJlZW5DYWxsZWQoKTsKICAgIGV4cGVjdChzdmMuYnJlZS5zdGFydCkubm90LnRvSGF2ZUJlZW5DYWxsZWQoKTsKICB9KTsKCiAgaXQoImRvZXMgbm90aGluZyB3aGVuIGRpc2FibGVkIGFuZCBub3QgcnVubmluZyIsIGFzeW5jICgpID0+IHsKICAgIGNvbnN0IHN2YyA9IG5ldyBCYWNrZ3JvdW5kU2VydmljZSgpOwogICAgc3ZjLmJyZWUgPSB7CiAgICAgIGNvbmZpZzogeyBqb2JzOiBbXSB9LAogICAgICBhZGQ6IGplc3QuZm4oKSwKICAgICAgc3RhcnQ6IGplc3QuZm4oKSwKICAgICAgc3RvcDogamVzdC5mbigpLAogICAgICByZW1vdmU6IGplc3QuZm4oKSwKICAgIH07CgogICAgYXdhaXQgc3ZjLnN5bmNNZW1vcnlKb2IoZmFsc2UpOwoKICAgIGV4cGVjdChzdmMuYnJlZS5zdG9wKS5ub3QudG9IYXZlQmVlbkNhbGxlZCgpOwogICAgZXhwZWN0KHN2Yy5icmVlLnJlbW92ZSkubm90LnRvSGF2ZUJlZW5DYWxsZWQoKTsKICB9KTsKfSk7CgpkZXNjcmliZSgiQmFja2dyb3VuZFNlcnZpY2Ug4oCUIHN0b3AiLCAoKSA9PiB7CiAgaXQoImNsZWFucyB1cCBhbmQgbnVsbGlmaWVzIGJyZWUgYW5kIGdyYWNlZnVsIiwgYXN5bmMgKCkgPT4gewogICAgY29uc3Qgc3ZjID0gbmV3IEJhY2tncm91bmRTZXJ2aWNlKCk7CiAgICBzdmMuYnJlZSA9IG1vY2tCcmVlSW5zdGFuY2U7CiAgICBzdmMuZ3JhY2VmdWwgPSB7IHN0b3BCcmVlOiBqZXN0LmZuKCkgfTsKCiAgICBhd2FpdCBzdmMuc3RvcCgpOwoKICAgIGV4cGVjdChzdmMuYnJlZSkudG9CZU51bGwoKTsKICAgIGV4cGVjdChzdmMuZ3JhY2VmdWwpLnRvQmVOdWxsKCk7CiAgfSk7CgogIGl0KCJkb2VzIG5vdCB0aHJvdyB3aGVuIGJyZWUgb3IgZ3JhY2VmdWwgaXMgbnVsbCIsIGFzeW5jICgpID0+IHsKICAgIGNvbnN0IHN2YyA9IG5ldyBCYWNrZ3JvdW5kU2VydmljZSgpOwogICAgc3ZjLmJyZWUgPSBudWxsOwogICAgc3ZjLmdyYWNlZnVsID0gbnVsbDsKCiAgICBhd2FpdCBleHBlY3Qoc3ZjLnN0b3AoKSkucmVzb2x2ZXMubm90LnRvVGhyb3coKTsKICB9KTsKfSk7Cg==
+// SPDX-License-Identifier: MIT
+/* eslint-env jest */
+// Tests for server/utils/BackgroundWorkers/index.js — BackgroundService (Issue #388)
+//
+// BackgroundService uses Bree (job scheduler), p-queue (concurrency), and
+// several Prisma models. We mock all external dependencies to isolate the
+// service logic: singleton, job list, worker spawning, scheduled job
+// management, error handling, and message handling.
+
+// --- Mock dependencies ---
+const mockBreeInstance = {
+  start: jest.fn().mockResolvedValue(undefined),
+  stop: jest.fn().mockResolvedValue(undefined),
+  add: jest.fn().mockResolvedValue(undefined),
+  remove: jest.fn().mockResolvedValue(undefined),
+  run: jest.fn().mockResolvedValue(undefined),
+  start: jest.fn().mockResolvedValue(undefined),
+  stop: jest.fn().mockResolvedValue(undefined),
+  workers: new Map(),
+  config: { jobs: [] },
+};
+
+jest.mock("@mintplex-labs/bree", () => {
+  return jest.fn().mockImplementation(function (opts) {
+    Object.assign(mockBreeInstance, opts);
+    return mockBreeInstance;
+  });
+});
+
+jest.mock("@ladjs/graceful", () => {
+  return jest.fn().mockImplementation(function (opts) {
+    this.brees = opts?.brees || [];
+    this.listen = jest.fn();
+    this.stopBree = jest.fn();
+    this.stop = jest.fn();
+    return this;
+  });
+});
+
+jest.mock("@breejs/later", () => ({
+  date: { UTC: jest.fn() },
+  parse: { cron: jest.fn().mockReturnValue({}) },
+  setInterval: jest.fn().mockReturnValue({ clear: jest.fn() }),
+}));
+
+jest.mock("p-queue", () => {
+  return {
+    default: jest.fn().mockImplementation(function (opts) {
+      this.concurrency = opts?.concurrency || 1;
+      this.add = jest.fn().mockImplementation(async (fn) => {
+        if (typeof fn === "function") return fn();
+      });
+      this.clear = jest.fn();
+      return this;
+    }),
+  };
+});
+
+jest.mock("../../../utils/logger", () => {
+  return jest.fn().mockReturnValue({
+    info: jest.fn(),
+    error: jest.fn(),
+    log: jest.fn(),
+    warn: jest.fn(),
+  });
+});
+
+jest.mock("../../../utils/logger/console.js", () => ({
+  log: jest.fn(),
+  warn: jest.fn(),
+  error: jest.fn(),
+  info: jest.fn(),
+}));
+
+// Mock models that are lazily required inside boot()
+jest.mock("../../../models/documentSyncQueue", () => ({
+  DocumentSyncQueue: { enabled: jest.fn().mockResolvedValue(false) },
+}));
+
+jest.mock("../../../models/systemSettings", () => ({
+  SystemSettings: { autoMemoriesEnabled: jest.fn().mockResolvedValue(false) },
+}));
+
+jest.mock("../../../models/scheduledJobRun", () => ({
+  ScheduledJobRun: {
+    failOrphanedRuns: jest.fn().mockResolvedValue(0),
+    cleanupOldRuns: jest.fn().mockResolvedValue(0),
+    start: jest.fn().mockResolvedValue({ id: 1 }),
+    failIfNotTerminal: jest.fn().mockResolvedValue(undefined),
+  },
+}));
+
+jest.mock("../../../models/scheduledJob", () => ({
+  ScheduledJob: {
+    allEnabled: jest.fn().mockResolvedValue([]),
+    recomputeNextRunAt: jest.fn().mockResolvedValue(undefined),
+    get: jest.fn().mockResolvedValue(null),
+  },
+}));
+
+const { BackgroundService } = require("../../../utils/BackgroundWorkers");
+
+beforeEach(() => {
+  jest.clearAllMocks();
+  // Reset singleton between tests
+  BackgroundService._instance = null;
+  mockBreeInstance.workers = new Map();
+  mockBreeInstance.config = { jobs: [] };
+  mockBreeInstance.add.mockResolvedValue(undefined);
+  mockBreeInstance.remove.mockResolvedValue(undefined);
+  mockBreeInstance.run.mockResolvedValue(undefined);
+});
+
+describe("BackgroundService — singleton pattern", () => {
+  it("returns the same instance on subsequent construction", () => {
+    const a = new BackgroundService();
+    const b = new BackgroundService();
+    expect(a).toBe(b);
+  });
+
+  it("preserves singleton across multiple constructions", () => {
+    const a = new BackgroundService();
+    a.customProp = "test";
+    const b = new BackgroundService();
+    expect(b.customProp).toBe("test");
+  });
+});
+
+describe("BackgroundService — jobs()", () => {
+  it("returns always-run jobs when no optional features are enabled", () => {
+    const svc = new BackgroundService();
+    svc.documentSyncEnabled = false;
+    svc.memoryExtractionEnabled = false;
+
+    const jobs = svc.jobs();
+    const jobNames = jobs.map((j) => j.name);
+
+    expect(jobNames).toContain("cleanup-orphan-documents");
+    expect(jobNames).toContain("cleanup-generated-files");
+    expect(jobNames).toContain("sync-politician-data");
+    expect(jobs).toHaveLength(3);
+  });
+
+  it("includes memory jobs when memoryExtractionEnabled is true", () => {
+    const svc = new BackgroundService();
+    svc.memoryExtractionEnabled = true;
+    svc.documentSyncEnabled = false;
+
+    const jobs = svc.jobs();
+    const jobNames = jobs.map((j) => j.name);
+
+    expect(jobNames).toContain("extract-memories");
+    expect(jobs).toHaveLength(4);
+  });
+
+  it("includes document sync jobs when documentSyncEnabled is true", () => {
+    const svc = new BackgroundService();
+    svc.documentSyncEnabled = true;
+    svc.memoryExtractionEnabled = false;
+
+    const jobs = svc.jobs();
+    const jobNames = jobs.map((j) => j.name);
+
+    expect(jobNames).toContain("sync-watched-documents");
+    expect(jobs).toHaveLength(4);
+  });
+
+  it("includes all jobs when both features are enabled", () => {
+    const svc = new BackgroundService();
+    svc.documentSyncEnabled = true;
+    svc.memoryExtractionEnabled = true;
+
+    const jobs = svc.jobs();
+    expect(jobs).toHaveLength(5);
+  });
+
+  it("each job has name, timeout, and interval properties", () => {
+    const svc = new BackgroundService();
+    const jobs = svc.jobs();
+    for (const job of jobs) {
+      expect(job).toHaveProperty("name");
+      expect(job).toHaveProperty("timeout");
+      expect(job).toHaveProperty("interval");
+    }
+  });
+});
+
+describe("BackgroundService — jobsRoot getter", () => {
+  it("returns a path ending in /jobs", () => {
+    const svc = new BackgroundService();
+    const root = svc.jobsRoot;
+    expect(root).toContain("jobs");
+    expect(typeof root).toBe("string");
+  });
+});
+
+describe("BackgroundService — onError", () => {
+  it("logs error with service and origin metadata", () => {
+    const svc = new BackgroundService();
+    svc.logger = { error: jest.fn() };
+    const err = new Error("worker crashed");
+    err.name = "WorkerError";
+
+    svc.onError(err, { name: "test-worker" });
+
+    expect(svc.logger.error).toHaveBeenCalledWith(
+      "worker crashed",
+      expect.objectContaining({
+        service: "bg-worker",
+        origin: "WorkerError",
+      }),
+    );
+  });
+});
+
+describe("BackgroundService — onWorkerMessageHandler", () => {
+  it("logs non-silent worker messages", () => {
+    const svc = new BackgroundService();
+    svc.logger = { info: jest.fn() };
+    const message = { message: "job completed", name: "cleanup-job" };
+
+    svc.onWorkerMessageHandler(message, {});
+
+    expect(svc.logger.info).toHaveBeenCalledWith(
+      "job completed",
+      expect.objectContaining({ service: "bg-worker", origin: "cleanup-job" }),
+    );
+  });
+
+  it("suppresses silent worker messages", () => {
+    const svc = new BackgroundService();
+    svc.logger = { info: jest.fn() };
+    const message = { silent: true, message: "heartbeat", name: "cleanup-job" };
+
+    svc.onWorkerMessageHandler(message, {});
+
+    expect(svc.logger.info).not.toHaveBeenCalled();
+  });
+
+  it("suppresses messages with nested silent flag", () => {
+    const svc = new BackgroundService();
+    svc.logger = { info: jest.fn() };
+    const message = { message: { silent: true, content: "heartbeat" }, name: "x" };
+
+    svc.onWorkerMessageHandler(message, {});
+
+    expect(svc.logger.info).not.toHaveBeenCalled();
+  });
+});
+
+describe("BackgroundService — spawnWorker", () => {
+  it("throws if bree has not been booted", async () => {
+    const svc = new BackgroundService();
+    svc.bree = null;
+
+    await expect(svc.spawnWorker("/path/to/script.js")).rejects.toThrow(
+      "has not been booted",
+    );
+  });
+
+  it("adds job to bree, runs it, and returns worker + jobId", async () => {
+    const svc = new BackgroundService();
+    const mockWorker = { pid: 12345, kill: jest.fn(), send: jest.fn(), on: jest.fn() };
+    const workersMap = new Map();
+    svc.bree = {
+      add: jest.fn().mockImplementation(async (job) => {
+        workersMap.set(job.name, mockWorker);
+      }),
+      run: jest.fn().mockResolvedValue(undefined),
+      workers: workersMap,
+    };
+
+    const result = await svc.spawnWorker("/path/to/script.js");
+
+    expect(result.worker).toBe(mockWorker);
+    expect(result.jobId).toMatch(/^script-\d+$/);
+    expect(svc.bree.add).toHaveBeenCalledWith(
+      expect.objectContaining({ path: "/path/to/script.js" }),
+    );
+  });
+
+  it("throws when worker reference cannot be obtained from bree", async () => {
+    const svc = new BackgroundService();
+    svc.bree = {
+      add: jest.fn().mockResolvedValue(undefined),
+      run: jest.fn().mockResolvedValue(undefined),
+      workers: new Map(), // empty — no worker will be found
+    };
+
+    await expect(svc.spawnWorker("/path/to/script.js")).rejects.toThrow(
+      "Failed to get worker reference",
+    );
+  });
+});
+
+describe("BackgroundService — removeJob", () => {
+  it("does nothing when jobId is falsy", async () => {
+    const svc = new BackgroundService();
+    svc.bree = { remove: jest.fn() };
+
+    await svc.removeJob(null);
+    await svc.removeJob("");
+    await svc.removeJob(undefined);
+
+    expect(svc.bree.remove).not.toHaveBeenCalled();
+  });
+
+  it("calls bree.remove with the jobId", async () => {
+    const svc = new BackgroundService();
+    svc.bree = { remove: jest.fn().mockResolvedValue(undefined) };
+
+    await svc.removeJob("my-job-123");
+
+    expect(svc.bree.remove).toHaveBeenCalledWith("my-job-123");
+  });
+
+  it("does not throw when bree.remove fails (job already gone)", async () => {
+    const svc = new BackgroundService();
+    svc.bree = { remove: jest.fn().mockRejectedValue(new Error("not found")) };
+
+    await expect(svc.removeJob("gone-job")).resolves.not.toThrow();
+  });
+
+  it("handles bree being null", async () => {
+    const svc = new BackgroundService();
+    svc.bree = null;
+
+    await expect(svc.removeJob("some-job")).resolves.not.toThrow();
+  });
+});
+
+describe("BackgroundService — addScheduledJob", () => {
+  it("registers a cron timer for the job", () => {
+    const later = require("@breejs/later");
+    const svc = new BackgroundService();
+    const job = { id: 1, name: "test-job", schedule: "0 * * * *" };
+
+    svc.addScheduledJob(job);
+
+    expect(later.parse.cron).toHaveBeenCalledWith("0 * * * *");
+    expect(later.setInterval).toHaveBeenCalledWith(
+      expect.any(Function),
+      expect.any(Object),
+    );
+  });
+
+  it("logs error and does not throw when cron parse fails", () => {
+    const later = require("@breejs/later");
+    later.parse.cron.mockImplementation(() => {
+      throw new Error("invalid cron");
+    });
+    const svc = new BackgroundService();
+    const job = { id: 2, name: "bad-job", schedule: "invalid" };
+
+    expect(() => svc.addScheduledJob(job)).not.toThrow();
+  });
+});
+
+describe("BackgroundService — removeScheduledJob", () => {
+  it("clears existing timer and removes it", () => {
+    const later = require("@breejs/later");
+    const mockTimer = { clear: jest.fn() };
+    later.setInterval.mockReturnValue(mockTimer);
+    later.parse.cron.mockReturnValue({});
+    const svc = new BackgroundService();
+    const job = { id: 5, name: "j", schedule: "0 * * * *" };
+
+    svc.addScheduledJob(job);
+    svc.removeScheduledJob(5);
+
+    expect(mockTimer.clear).toHaveBeenCalled();
+  });
+
+  it("does not throw when timer does not exist", () => {
+    const svc = new BackgroundService();
+    expect(() => svc.removeScheduledJob(999)).not.toThrow();
+  });
+});
+
+describe("BackgroundService — killRun", () => {
+  it("returns false when no workers exist for the job", () => {
+    const svc = new BackgroundService();
+    expect(svc.killRun(999, 1)).toBe(false);
+  });
+});
+
+describe("BackgroundService — syncMemoryJob", () => {
+  it("does nothing when bree is not initialized", async () => {
+    const svc = new BackgroundService();
+    svc.bree = null;
+
+    await expect(svc.syncMemoryJob(true)).resolves.not.toThrow();
+  });
+
+  it("adds and starts memory job when enabled and not currently running", async () => {
+    const svc = new BackgroundService();
+    svc.bree = {
+      config: { jobs: [] },
+      add: jest.fn().mockResolvedValue(undefined),
+      start: jest.fn().mockResolvedValue(undefined),
+      stop: jest.fn().mockResolvedValue(undefined),
+      remove: jest.fn().mockResolvedValue(undefined),
+    };
+
+    await svc.syncMemoryJob(true);
+
+    expect(svc.bree.add).toHaveBeenCalled();
+    expect(svc.bree.start).toHaveBeenCalledWith("extract-memories");
+    expect(svc.memoryExtractionEnabled).toBe(true);
+  });
+
+  it("stops and removes memory job when disabled and currently running", async () => {
+    const svc = new BackgroundService();
+    svc.bree = {
+      config: { jobs: [{ name: "extract-memories" }] },
+      add: jest.fn(),
+      start: jest.fn(),
+      stop: jest.fn().mockResolvedValue(undefined),
+      remove: jest.fn().mockResolvedValue(undefined),
+    };
+
+    await svc.syncMemoryJob(false);
+
+    expect(svc.bree.stop).toHaveBeenCalledWith("extract-memories");
+    expect(svc.bree.remove).toHaveBeenCalledWith("extract-memories");
+    expect(svc.memoryExtractionEnabled).toBe(false);
+  });
+
+  it("does nothing when enabled and already running", async () => {
+    const svc = new BackgroundService();
+    svc.bree = {
+      config: { jobs: [{ name: "extract-memories" }] },
+      add: jest.fn(),
+      start: jest.fn(),
+      stop: jest.fn(),
+      remove: jest.fn(),
+    };
+
+    await svc.syncMemoryJob(true);
+
+    expect(svc.bree.add).not.toHaveBeenCalled();
+    expect(svc.bree.start).not.toHaveBeenCalled();
+  });
+
+  it("does nothing when disabled and not running", async () => {
+    const svc = new BackgroundService();
+    svc.bree = {
+      config: { jobs: [] },
+      add: jest.fn(),
+      start: jest.fn(),
+      stop: jest.fn(),
+      remove: jest.fn(),
+    };
+
+    await svc.syncMemoryJob(false);
+
+    expect(svc.bree.stop).not.toHaveBeenCalled();
+    expect(svc.bree.remove).not.toHaveBeenCalled();
+  });
+});
+
+describe("BackgroundService — stop", () => {
+  it("cleans up and nullifies bree and graceful", async () => {
+    const svc = new BackgroundService();
+    svc.bree = mockBreeInstance;
+    svc.graceful = { stopBree: jest.fn() };
+
+    await svc.stop();
+
+    expect(svc.bree).toBeNull();
+    expect(svc.graceful).toBeNull();
+  });
+
+  it("does not throw when bree or graceful is null", async () => {
+    const svc = new BackgroundService();
+    svc.bree = null;
+    svc.graceful = null;
+
+    await expect(svc.stop()).resolves.not.toThrow();
+  });
+});

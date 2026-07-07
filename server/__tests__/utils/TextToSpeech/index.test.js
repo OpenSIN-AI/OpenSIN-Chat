@@ -1,1 +1,368 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovKiBlc2xpbnQtZW52IGplc3QgKi8KLy8gVGVzdHMgZm9yIHNlcnZlci91dGlscy9UZXh0VG9TcGVlY2gg4oCUIHByb3ZpZGVyIGZhY3RvcnkgKyB0dHNCdWZmZXIgbWV0aG9kcy4KLy8gSXNzdWUgIzM4OQoKY29uc3QgVFRTX01PRFVMRSA9ICIuLi8uLi8uLi91dGlscy9UZXh0VG9TcGVlY2gvaW5kZXgiOwpjb25zdCBPUEVOQUlfVFRTX01PRFVMRSA9ICIuLi8uLi8uLi91dGlscy9UZXh0VG9TcGVlY2gvb3BlbkFpIjsKY29uc3QgR0VORVJJQ19UVFNfTU9EVUxFID0gIi4uLy4uLy4uL3V0aWxzL1RleHRUb1NwZWVjaC9vcGVuQWlHZW5lcmljIjsKY29uc3QgS09LT1JPX1RUU19NT0RVTEUgPSAiLi4vLi4vLi4vdXRpbHMvVGV4dFRvU3BlZWNoL2tva29ybyI7CmNvbnN0IE5WSURJQV9UVFNfTU9EVUxFID0gIi4uLy4uLy4uL3V0aWxzL1RleHRUb1NwZWVjaC9udmlkaWFOaW0iOwoKZGVzY3JpYmUoIlRleHRUb1NwZWVjaCDigJMgZ2V0VFRTUHJvdmlkZXIgZmFjdG9yeSIsICgpID0+IHsKICBjb25zdCBPUklHSU5BTF9FTlYgPSB7IC4uLnByb2Nlc3MuZW52IH07CgogIGFmdGVyRWFjaCgoKSA9PiB7CiAgICBwcm9jZXNzLmVudiA9IHsgLi4uT1JJR0lOQUxfRU5WIH07CiAgICBqZXN0LnJlc2V0TW9kdWxlcygpOwogIH0pOwoKICBmdW5jdGlvbiBsb2FkVHRzKHByb3ZpZGVyKSB7CiAgICBqZXN0LnJlc2V0TW9kdWxlcygpOwogICAgaWYgKHByb3ZpZGVyID09PSB1bmRlZmluZWQpIGRlbGV0ZSBwcm9jZXNzLmVudi5UVFNfUFJPVklERVI7CiAgICBlbHNlIHByb2Nlc3MuZW52LlRUU19QUk9WSURFUiA9IHByb3ZpZGVyOwogICAgLy8gTW9jayBvcGVuYWkgZm9yIGFsbCBwcm92aWRlcnMgdGhhdCB1c2UgaXQKICAgIGplc3QubW9jaygib3BlbmFpIiwgKCkgPT4gKHsKICAgICAgT3BlbkFJOiBqZXN0LmZuKCkubW9ja0ltcGxlbWVudGF0aW9uKCgpID0+ICh7CiAgICAgICAgYXVkaW86IHsgc3BlZWNoOiB7IGNyZWF0ZTogamVzdC5mbigpIH0gfSwKICAgICAgfSkpLAogICAgfSkpOwogICAgcmV0dXJuIHJlcXVpcmUoVFRTX01PRFVMRSk7CiAgfQoKICB0ZXN0KCJyZXR1cm5zIE9wZW5BaVRUUyBpbnN0YW5jZSB3aGVuIFRUU19QUk9WSURFUj1vcGVuYWkiLCAoKSA9PiB7CiAgICBwcm9jZXNzLmVudi5UVFNfT1BFTl9BSV9LRVkgPSAidGVzdC1rZXkiOwogICAgY29uc3QgeyBnZXRUVFNQcm92aWRlciB9ID0gbG9hZFR0cygib3BlbmFpIik7CiAgICBjb25zdCBwcm92aWRlciA9IGdldFRUU1Byb3ZpZGVyKCk7CiAgICBleHBlY3QocHJvdmlkZXIpLnRvQmVEZWZpbmVkKCk7CiAgICBleHBlY3QodHlwZW9mIHByb3ZpZGVyLnR0c0J1ZmZlcikudG9CZSgiZnVuY3Rpb24iKTsKICB9KTsKCiAgdGVzdCgicmV0dXJucyBHZW5lcmljT3BlbkFpVFRTIGluc3RhbmNlIHdoZW4gVFRTX1BST1ZJREVSPWdlbmVyaWMtb3BlbmFpIiwgKCkgPT4gewogICAgcHJvY2Vzcy5lbnYuVFRTX09QRU5fQUlfQ09NUEFUSUJMRV9FTkRQT0lOVCA9ICJodHRwOi8vbG9jYWxob3N0OjgwODAvdjEiOwogICAgcHJvY2Vzcy5lbnYuVFRTX09QRU5fQUlfQ09NUEFUSUJMRV9LRVkgPSAidGVzdC1rZXkiOwogICAgY29uc3QgeyBnZXRUVFNQcm92aWRlciB9ID0gbG9hZFR0cygiZ2VuZXJpYy1vcGVuYWkiKTsKICAgIGNvbnN0IHByb3ZpZGVyID0gZ2V0VFRTUHJvdmlkZXIoKTsKICAgIGV4cGVjdChwcm92aWRlcikudG9CZURlZmluZWQoKTsKICAgIGV4cGVjdCh0eXBlb2YgcHJvdmlkZXIudHRzQnVmZmVyKS50b0JlKCJmdW5jdGlvbiIpOwogIH0pOwoKICB0ZXN0KCJyZXR1cm5zIEtva29yb1RUUyBpbnN0YW5jZSB3aGVuIFRUU19QUk9WSURFUj1rb2tvcm8iLCAoKSA9PiB7CiAgICBwcm9jZXNzLmVudi5UVFNfS09LT1JPX0VORFBPSU5UID0gImh0dHA6Ly9sb2NhbGhvc3Q6ODg4MC92MSI7CiAgICBjb25zdCB7IGdldFRUU1Byb3ZpZGVyIH0gPSBsb2FkVHRzKCJrb2tvcm8iKTsKICAgIGNvbnN0IHByb3ZpZGVyID0gZ2V0VFRTUHJvdmlkZXIoKTsKICAgIGV4cGVjdChwcm92aWRlcikudG9CZURlZmluZWQoKTsKICAgIGV4cGVjdCh0eXBlb2YgcHJvdmlkZXIudHRzQnVmZmVyKS50b0JlKCJmdW5jdGlvbiIpOwogIH0pOwoKICB0ZXN0KCJyZXR1cm5zIE52aWRpYU5pbVRUUyBpbnN0YW5jZSB3aGVuIFRUU19QUk9WSURFUj1udmlkaWEtbmltIiwgKCkgPT4gewogICAgcHJvY2Vzcy5lbnYuVFRTX05WSURJQV9OSU1fQVBJX0tFWSA9ICJ0ZXN0LWtleSI7CiAgICBjb25zdCB7IGdldFRUU1Byb3ZpZGVyIH0gPSBsb2FkVHRzKCJudmlkaWEtbmltIik7CiAgICBjb25zdCBwcm92aWRlciA9IGdldFRUU1Byb3ZpZGVyKCk7CiAgICBleHBlY3QocHJvdmlkZXIpLnRvQmVEZWZpbmVkKCk7CiAgICBleHBlY3QodHlwZW9mIHByb3ZpZGVyLnR0c0J1ZmZlcikudG9CZSgiZnVuY3Rpb24iKTsKICB9KTsKCiAgdGVzdCgidGhyb3dzIG9uIHVua25vd24gcHJvdmlkZXIiLCAoKSA9PiB7CiAgICBjb25zdCB7IGdldFRUU1Byb3ZpZGVyIH0gPSBsb2FkVHRzKCJ1bmtub3duLXByb3ZpZGVyIik7CiAgICBleHBlY3QoKCkgPT4gZ2V0VFRTUHJvdmlkZXIoKSkudG9UaHJvdygKICAgICAgL05vIFRUU19QUk9WSURFUiB2YWx1ZSBmb3VuZC8sCiAgICApOwogIH0pOwoKICB0ZXN0KCJkZWZhdWx0cyB0byAnb3BlbmFpJyB3aGVuIFRUU19QUk9WSURFUiBpcyB1bnNldCIsICgpID0+IHsKICAgIHByb2Nlc3MuZW52LlRUU19PUEVOX0FJX0tFWSA9ICJ0ZXN0LWtleSI7CiAgICBjb25zdCB7IGdldFRUU1Byb3ZpZGVyIH0gPSBsb2FkVHRzKHVuZGVmaW5lZCk7CiAgICBjb25zdCBwcm92aWRlciA9IGdldFRUU1Byb3ZpZGVyKCk7CiAgICBleHBlY3QocHJvdmlkZXIpLnRvQmVEZWZpbmVkKCk7CiAgICBleHBlY3QodHlwZW9mIHByb3ZpZGVyLnR0c0J1ZmZlcikudG9CZSgiZnVuY3Rpb24iKTsKICB9KTsKfSk7CgpkZXNjcmliZSgiVGV4dFRvU3BlZWNoIOKAkyBPcGVuQWlUVFMudHRzQnVmZmVyIiwgKCkgPT4gewogIGNvbnN0IE9SSUdJTkFMX0VOViA9IHsgLi4ucHJvY2Vzcy5lbnYgfTsKCiAgYWZ0ZXJFYWNoKCgpID0+IHsKICAgIHByb2Nlc3MuZW52ID0geyAuLi5PUklHSU5BTF9FTlYgfTsKICAgIGplc3QucmVzdG9yZUFsbE1vY2tzKCk7CiAgICBqZXN0LnJlc2V0TW9kdWxlcygpOwogIH0pOwoKICBmdW5jdGlvbiBnZXRPcGVuQWlUVFMobW9ja0NyZWF0ZSkgewogICAgcHJvY2Vzcy5lbnYuVFRTX09QRU5fQUlfS0VZID0gInRlc3Qta2V5IjsKICAgIGplc3QucmVzZXRNb2R1bGVzKCk7CiAgICBqZXN0Lm1vY2soIm9wZW5haSIsICgpID0+ICh7CiAgICAgIE9wZW5BSTogamVzdC5mbigoKSA9PiAoewogICAgICAgIGF1ZGlvOiB7IHNwZWVjaDogeyBjcmVhdGU6IG1vY2tDcmVhdGUgfSB9LAogICAgICB9KSksCiAgICB9KSk7CiAgICBjb25zdCB7IE9wZW5BaVRUUyB9ID0gcmVxdWlyZShPUEVOQUlfVFRTX01PRFVMRSk7CiAgICByZXR1cm4gbmV3IE9wZW5BaVRUUygpOwogIH0KCiAgdGVzdCgicmV0dXJucyBhIEJ1ZmZlciBvbiBzdWNjZXNzIiwgYXN5bmMgKCkgPT4gewogICAgY29uc3QgbW9ja0FycmF5QnVmZmVyID0gbmV3IEFycmF5QnVmZmVyKDQpOwogICAgY29uc3QgdmlldyA9IG5ldyBVaW50OEFycmF5KG1vY2tBcnJheUJ1ZmZlcik7CiAgICB2aWV3WzBdID0gMTsgdmlld1sxXSA9IDI7IHZpZXdbMl0gPSAzOyB2aWV3WzNdID0gNDsKICAgIGNvbnN0IG1vY2tDcmVhdGUgPSBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUoewogICAgICBhcnJheUJ1ZmZlcjogYXN5bmMgKCkgPT4gbW9ja0FycmF5QnVmZmVyLAogICAgfSk7CiAgICBjb25zdCB0dHMgPSBnZXRPcGVuQWlUVFMobW9ja0NyZWF0ZSk7CiAgICBjb25zdCByZXN1bHQgPSBhd2FpdCB0dHMudHRzQnVmZmVyKCJIZWxsbyB3b3JsZCIpOwogICAgZXhwZWN0KEJ1ZmZlci5pc0J1ZmZlcihyZXN1bHQpKS50b0JlKHRydWUpOwogICAgZXhwZWN0KHJlc3VsdC5sZW5ndGgpLnRvQmUoNCk7CiAgfSk7CgogIHRlc3QoInJldHVybnMgbnVsbCBvbiBBUEkgZXJyb3IgKHN3YWxsb3dlZCBieSBjYXRjaCkiLCBhc3luYyAoKSA9PiB7CiAgICBjb25zdCBtb2NrQ3JlYXRlID0gamVzdAogICAgICAuZm4oKQogICAgICAubW9ja1JlamVjdGVkVmFsdWUobmV3IEVycm9yKCJBUEkgdGltZW91dCIpKTsKICAgIGNvbnN0IHR0cyA9IGdldE9wZW5BaVRUUyhtb2NrQ3JlYXRlKTsKICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IHR0cy50dHNCdWZmZXIoIkhlbGxvIHdvcmxkIik7CiAgICBleHBlY3QocmVzdWx0KS50b0JlTnVsbCgpOwogIH0pOwoKICB0ZXN0KCJ0aHJvd3Mgb24gY29uc3RydWN0aW9uIHdoZW4gVFRTX09QRU5fQUlfS0VZIGlzIG1pc3NpbmciLCAoKSA9PiB7CiAgICBkZWxldGUgcHJvY2Vzcy5lbnYuVFRTX09QRU5fQUlfS0VZOwogICAgamVzdC5yZXNldE1vZHVsZXMoKTsKICAgIGplc3QubW9jaygib3BlbmFpIiwgKCkgPT4gKHsgT3BlbkFJOiBqZXN0LmZuKCkgfSkpOwogICAgY29uc3QgeyBPcGVuQWlUVFMgfSA9IHJlcXVpcmUoT1BFTkFJX1RUU19NT0RVTEUpOwogICAgZXhwZWN0KCgpID0+IG5ldyBPcGVuQWlUVFMoKSkudG9UaHJvdygvTm8gT3BlbkFJIEFQSSBrZXkgd2FzIHNldC8pOwogIH0pOwoKICB0ZXN0KCJyZXNwZWN0cyBUVFNfT1BFTl9BSV9WT0lDRV9NT0RFTCBlbnYgdmFyIiwgKCkgPT4gewogICAgcHJvY2Vzcy5lbnYuVFRTX09QRU5fQUlfS0VZID0gInRlc3Qta2V5IjsKICAgIHByb2Nlc3MuZW52LlRUU19PUEVOX0FJX1ZPSUNFX01PREVMID0gImVjaG8iOwogICAgamVzdC5yZXNldE1vZHVsZXMoKTsKICAgIGplc3QubW9jaygib3BlbmFpIiwgKCkgPT4gKHsKICAgICAgT3BlbkFJOiBqZXN0LmZuKCgpID0+ICh7CiAgICAgICAgYXVkaW86IHsgc3BlZWNoOiB7IGNyZWF0ZTogamVzdC5mbigpIH0gfSwKICAgICAgfSkpLAogICAgfSkpOwogICAgY29uc3QgeyBPcGVuQWlUVFMgfSA9IHJlcXVpcmUoT1BFTkFJX1RUU19NT0RVTEUpOwogICAgY29uc3QgdHRzID0gbmV3IE9wZW5BaVRUUygpOwogICAgZXhwZWN0KHR0cy52b2ljZSkudG9CZSgiZWNobyIpOwogIH0pOwoKICB0ZXN0KCJkZWZhdWx0cyB2b2ljZSB0byAnYWxsb3knIHdoZW4gbm8gZW52IHZhciBzZXQiLCAoKSA9PiB7CiAgICBwcm9jZXNzLmVudi5UVFNfT1BFTl9BSV9LRVkgPSAidGVzdC1rZXkiOwogICAgZGVsZXRlIHByb2Nlc3MuZW52LlRUU19PUEVOX0FJX1ZPSUNFX01PREVMOwogICAgamVzdC5yZXNldE1vZHVsZXMoKTsKICAgIGplc3QubW9jaygib3BlbmFpIiwgKCkgPT4gKHsKICAgICAgT3BlbkFJOiBqZXN0LmZuKCgpID0+ICh7CiAgICAgICAgYXVkaW86IHsgc3BlZWNoOiB7IGNyZWF0ZTogamVzdC5mbigpIH0gfSwKICAgICAgfSkpLAogICAgfSkpOwogICAgY29uc3QgeyBPcGVuQWlUVFMgfSA9IHJlcXVpcmUoT1BFTkFJX1RUU19NT0RVTEUpOwogICAgY29uc3QgdHRzID0gbmV3IE9wZW5BaVRUUygpOwogICAgZXhwZWN0KHR0cy52b2ljZSkudG9CZSgiYWxsb3kiKTsKICB9KTsKfSk7CgpkZXNjcmliZSgiVGV4dFRvU3BlZWNoIOKAkyBHZW5lcmljT3BlbkFpVFRTLnR0c0J1ZmZlciIsICgpID0+IHsKICBjb25zdCBPUklHSU5BTF9FTlYgPSB7IC4uLnByb2Nlc3MuZW52IH07CgogIGFmdGVyRWFjaCgoKSA9PiB7CiAgICBwcm9jZXNzLmVudiA9IHsgLi4uT1JJR0lOQUxfRU5WIH07CiAgICBqZXN0LnJlc3RvcmVBbGxNb2NrcygpOwogICAgamVzdC5yZXNldE1vZHVsZXMoKTsKICB9KTsKCiAgZnVuY3Rpb24gZ2V0R2VuZXJpY1RUUyhtb2NrQ3JlYXRlKSB7CiAgICBwcm9jZXNzLmVudi5UVFNfT1BFTl9BSV9DT01QQVRJQkxFX0VORFBPSU5UID0gImh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC92MSI7CiAgICBwcm9jZXNzLmVudi5UVFNfT1BFTl9BSV9DT01QQVRJQkxFX0tFWSA9ICJ0ZXN0LWtleSI7CiAgICBwcm9jZXNzLmVudi5UVFNfT1BFTl9BSV9DT01QQVRJQkxFX01PREVMID0gInR0cy0xIjsKICAgIHByb2Nlc3MuZW52LlRUU19PUEVOX0FJX0NPTVBBVElCTEVfVk9JQ0VfTU9ERUwgPSAiYWxsb3kiOwogICAgamVzdC5yZXNldE1vZHVsZXMoKTsKICAgIGplc3QubW9jaygib3BlbmFpIiwgKCkgPT4gKHsKICAgICAgT3BlbkFJOiBqZXN0LmZuKCgpID0+ICh7CiAgICAgICAgYXVkaW86IHsgc3BlZWNoOiB7IGNyZWF0ZTogbW9ja0NyZWF0ZSB9IH0sCiAgICAgIH0pKSwKICAgIH0pKTsKICAgIGNvbnN0IHsgR2VuZXJpY09wZW5BaVRUUyB9ID0gcmVxdWlyZShHRU5FUklDX1RUU19NT0RVTEUpOwogICAgcmV0dXJuIG5ldyBHZW5lcmljT3BlbkFpVFRTKCk7CiAgfQoKICB0ZXN0KCJyZXR1cm5zIGEgQnVmZmVyIG9uIHN1Y2Nlc3MiLCBhc3luYyAoKSA9PiB7CiAgICBjb25zdCBtb2NrQXJyYXlCdWZmZXIgPSBuZXcgQXJyYXlCdWZmZXIoMik7CiAgICBjb25zdCB2aWV3ID0gbmV3IFVpbnQ4QXJyYXkobW9ja0FycmF5QnVmZmVyKTsKICAgIHZpZXdbMF0gPSAweGZmOyB2aWV3WzFdID0gMHhmZTsKICAgIGNvbnN0IG1vY2tDcmVhdGUgPSBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUoewogICAgICBhcnJheUJ1ZmZlcjogYXN5bmMgKCkgPT4gbW9ja0FycmF5QnVmZmVyLAogICAgfSk7CiAgICBjb25zdCB0dHMgPSBnZXRHZW5lcmljVFRTKG1vY2tDcmVhdGUpOwogICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgdHRzLnR0c0J1ZmZlcigiVGVzdCB0ZXh0Iik7CiAgICBleHBlY3QoQnVmZmVyLmlzQnVmZmVyKHJlc3VsdCkpLnRvQmUodHJ1ZSk7CiAgICBleHBlY3QocmVzdWx0Lmxlbmd0aCkudG9CZSgyKTsKICB9KTsKCiAgdGVzdCgicmV0dXJucyBudWxsIG9uIEFQSSBlcnJvciIsIGFzeW5jICgpID0+IHsKICAgIGNvbnN0IG1vY2tDcmVhdGUgPSBqZXN0CiAgICAgIC5mbigpCiAgICAgIC5tb2NrUmVqZWN0ZWRWYWx1ZShuZXcgRXJyb3IoIkNvbm5lY3Rpb24gcmVmdXNlZCIpKTsKICAgIGNvbnN0IHR0cyA9IGdldEdlbmVyaWNUVFMobW9ja0NyZWF0ZSk7CiAgICBjb25zdCByZXN1bHQgPSBhd2FpdCB0dHMudHRzQnVmZmVyKCJUZXN0IHRleHQiKTsKICAgIGV4cGVjdChyZXN1bHQpLnRvQmVOdWxsKCk7CiAgfSk7CgogIHRlc3QoInRocm93cyBvbiBjb25zdHJ1Y3Rpb24gd2hlbiBlbmRwb2ludCBpcyBtaXNzaW5nIiwgKCkgPT4gewogICAgZGVsZXRlIHByb2Nlc3MuZW52LlRUU19PUEVOX0FJX0NPTVBBVElCTEVfRU5EUE9JTlQ7CiAgICBwcm9jZXNzLmVudi5UVFNfT1BFTl9BSV9DT01QQVRJQkxFX0tFWSA9ICJ0ZXN0LWtleSI7CiAgICBqZXN0LnJlc2V0TW9kdWxlcygpOwogICAgamVzdC5tb2NrKCJvcGVuYWkiLCAoKSA9PiAoeyBPcGVuQUk6IGplc3QuZm4oKSB9KSk7CiAgICBjb25zdCB7IEdlbmVyaWNPcGVuQWlUVFMgfSA9IHJlcXVpcmUoR0VORVJJQ19UVFNfTU9EVUxFKTsKICAgIGV4cGVjdCgoKSA9PiBuZXcgR2VuZXJpY09wZW5BaVRUUygpKS50b1Rocm93KAogICAgICAvTm8gT3BlbkFJIGNvbXBhdGlibGUgZW5kcG9pbnQgd2FzIHNldC8sCiAgICApOwogIH0pOwp9KTsKCmRlc2NyaWJlKCJUZXh0VG9TcGVlY2gg4oCTIEtva29yb1RUUy50dHNCdWZmZXIiLCAoKSA9PiB7CiAgY29uc3QgT1JJR0lOQUxfRU5WID0geyAuLi5wcm9jZXNzLmVudiB9OwoKICBhZnRlckVhY2goKCkgPT4gewogICAgcHJvY2Vzcy5lbnYgPSB7IC4uLk9SSUdJTkFMX0VOViB9OwogICAgamVzdC5yZXN0b3JlQWxsTW9ja3MoKTsKICAgIGplc3QucmVzZXRNb2R1bGVzKCk7CiAgfSk7CgogIGZ1bmN0aW9uIGdldEtva29yb1RUUyhtb2NrQ3JlYXRlKSB7CiAgICBwcm9jZXNzLmVudi5UVFNfS09LT1JPX0VORFBPSU5UID0gImh0dHA6Ly9sb2NhbGhvc3Q6ODg4MC92MSI7CiAgICBwcm9jZXNzLmVudi5UVFNfS09LT1JPX0tFWSA9ICJ0ZXN0LWtleSI7CiAgICBqZXN0LnJlc2V0TW9kdWxlcygpOwogICAgamVzdC5tb2NrKCJvcGVuYWkiLCAoKSA9PiAoewogICAgICBPcGVuQUk6IGplc3QuZm4oKCkgPT4gKHsKICAgICAgICBhdWRpbzogeyBzcGVlY2g6IHsgY3JlYXRlOiBtb2NrQ3JlYXRlIH0gfSwKICAgICAgfSkpLAogICAgfSkpOwogICAgY29uc3QgeyBLb2tvcm9UVFMgfSA9IHJlcXVpcmUoS09LT1JPX1RUU19NT0RVTEUpOwogICAgcmV0dXJuIG5ldyBLb2tvcm9UVFMoKTsKICB9CgogIHRlc3QoInJldHVybnMgYSBCdWZmZXIgb24gc3VjY2VzcyIsIGFzeW5jICgpID0+IHsKICAgIGNvbnN0IG1vY2tBcnJheUJ1ZmZlciA9IG5ldyBBcnJheUJ1ZmZlcig4KTsKICAgIGNvbnN0IG1vY2tDcmVhdGUgPSBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUoewogICAgICBhcnJheUJ1ZmZlcjogYXN5bmMgKCkgPT4gbW9ja0FycmF5QnVmZmVyLAogICAgfSk7CiAgICBjb25zdCB0dHMgPSBnZXRLb2tvcm9UVFMobW9ja0NyZWF0ZSk7CiAgICBjb25zdCByZXN1bHQgPSBhd2FpdCB0dHMudHRzQnVmZmVyKCJIZWxsbyIpOwogICAgZXhwZWN0KEJ1ZmZlci5pc0J1ZmZlcihyZXN1bHQpKS50b0JlKHRydWUpOwogICAgZXhwZWN0KHJlc3VsdC5sZW5ndGgpLnRvQmUoOCk7CiAgfSk7CgogIHRlc3QoInJldHVybnMgbnVsbCBvbiBBUEkgZXJyb3IiLCBhc3luYyAoKSA9PiB7CiAgICBjb25zdCBtb2NrQ3JlYXRlID0gamVzdAogICAgICAuZm4oKQogICAgICAubW9ja1JlamVjdGVkVmFsdWUobmV3IEVycm9yKCJLb2tvcm8gc2VydmVyIGRvd24iKSk7CiAgICBjb25zdCB0dHMgPSBnZXRLb2tvcm9UVFMobW9ja0NyZWF0ZSk7CiAgICBjb25zdCByZXN1bHQgPSBhd2FpdCB0dHMudHRzQnVmZmVyKCJIZWxsbyIpOwogICAgZXhwZWN0KHJlc3VsdCkudG9CZU51bGwoKTsKICB9KTsKCiAgdGVzdCgidGhyb3dzIG9uIGNvbnN0cnVjdGlvbiB3aGVuIGVuZHBvaW50IGlzIG1pc3NpbmciLCAoKSA9PiB7CiAgICBkZWxldGUgcHJvY2Vzcy5lbnYuVFRTX0tPS09ST19FTkRQT0lOVDsKICAgIGplc3QucmVzZXRNb2R1bGVzKCk7CiAgICBqZXN0Lm1vY2soIm9wZW5haSIsICgpID0+ICh7IE9wZW5BSTogamVzdC5mbigpIH0pKTsKICAgIGNvbnN0IHsgS29rb3JvVFRTIH0gPSByZXF1aXJlKEtPS09ST19UVFNfTU9EVUxFKTsKICAgIGV4cGVjdCgoKSA9PiBuZXcgS29rb3JvVFRTKCkpLnRvVGhyb3coL05vIEtva29ybyBlbmRwb2ludCB3YXMgc2V0Lyk7CiAgfSk7CgogIHRlc3QoImRlZmF1bHRzIHZvaWNlIHRvICdhZl9iZWxsYSciLCAoKSA9PiB7CiAgICBwcm9jZXNzLmVudi5UVFNfS09LT1JPX0VORFBPSU5UID0gImh0dHA6Ly9sb2NhbGhvc3Q6ODg4MC92MSI7CiAgICBkZWxldGUgcHJvY2Vzcy5lbnYuVFRTX0tPS09ST19WT0lDRV9NT0RFTDsKICAgIGplc3QucmVzZXRNb2R1bGVzKCk7CiAgICBqZXN0Lm1vY2soIm9wZW5haSIsICgpID0+ICh7CiAgICAgIE9wZW5BSTogamVzdC5mbigoKSA9PiAoewogICAgICAgIGF1ZGlvOiB7IHNwZWVjaDogeyBjcmVhdGU6IGplc3QuZm4oKSB9IH0sCiAgICAgIH0pKSwKICAgIH0pKTsKICAgIGNvbnN0IHsgS29rb3JvVFRTIH0gPSByZXF1aXJlKEtPS09ST19UVFNfTU9EVUxFKTsKICAgIGNvbnN0IHR0cyA9IG5ldyBLb2tvcm9UVFMoKTsKICAgIGV4cGVjdCh0dHMudm9pY2UpLnRvQmUoImFmX2JlbGxhIik7CiAgfSk7CgogIHRlc3QoImFwcGVuZHMgL3YxIHRvIGVuZHBvaW50IGlmIG1pc3NpbmciLCAoKSA9PiB7CiAgICBwcm9jZXNzLmVudi5UVFNfS09LT1JPX0VORFBPSU5UID0gImh0dHA6Ly9sb2NhbGhvc3Q6ODg4MCI7CiAgICBqZXN0LnJlc2V0TW9kdWxlcygpOwogICAgamVzdC5tb2NrKCJvcGVuYWkiLCAoKSA9PiAoewogICAgICBPcGVuQUk6IGplc3QuZm4oKCkgPT4gKHsKICAgICAgICBhdWRpbzogeyBzcGVlY2g6IHsgY3JlYXRlOiBqZXN0LmZuKCkgfSB9LAogICAgICB9KSksCiAgICB9KSk7CiAgICBjb25zdCB7IEtva29yb1RUUyB9ID0gcmVxdWlyZShLT0tPUk9fVFRTX01PRFVMRSk7CiAgICBjb25zdCB0dHMgPSBuZXcgS29rb3JvVFRTKCk7CiAgICAvLyBUaGUgT3BlbkFJIGNsaWVudCBzaG91bGQgaGF2ZSBiZWVuIGNyZWF0ZWQgd2l0aCBhIGJhc2VVUkwgZW5kaW5nIGluIC92MQogICAgY29uc3Qgb3BlbmFpID0gcmVxdWlyZSgib3BlbmFpIik7CiAgICBleHBlY3Qob3BlbmFpLk9wZW5BSSkudG9IYXZlQmVlbkNhbGxlZFdpdGgoCiAgICAgIGV4cGVjdC5vYmplY3RDb250YWluaW5nKHsKICAgICAgICBiYXNlVVJMOiAiaHR0cDovL2xvY2FsaG9zdDo4ODgwL3YxIiwKICAgICAgfSksCiAgICApOwogIH0pOwp9KTsKCmRlc2NyaWJlKCJUZXh0VG9TcGVlY2gg4oCTIE52aWRpYU5pbVRUUy50dHNCdWZmZXIiLCAoKSA9PiB7CiAgY29uc3QgT1JJR0lOQUxfRU5WID0geyAuLi5wcm9jZXNzLmVudiB9OwoKICBhZnRlckVhY2goKCkgPT4gewogICAgcHJvY2Vzcy5lbnYgPSB7IC4uLk9SSUdJTkFMX0VOViB9OwogICAgamVzdC5yZXN0b3JlQWxsTW9ja3MoKTsKICAgIGplc3QucmVzZXRNb2R1bGVzKCk7CiAgfSk7CgogIGZ1bmN0aW9uIGdldE52aWRpYVRUUyhtb2NrQ3JlYXRlKSB7CiAgICBwcm9jZXNzLmVudi5UVFNfTlZJRElBX05JTV9BUElfS0VZID0gInRlc3Qta2V5IjsKICAgIGplc3QucmVzZXRNb2R1bGVzKCk7CiAgICBqZXN0Lm1vY2soIm9wZW5haSIsICgpID0+ICh7CiAgICAgIE9wZW5BSTogamVzdC5mbigoKSA9PiAoewogICAgICAgIGF1ZGlvOiB7IHNwZWVjaDogeyBjcmVhdGU6IG1vY2tDcmVhdGUgfSB9LAogICAgICB9KSksCiAgICB9KSk7CiAgICBjb25zdCB7IE52aWRpYU5pbVRUUyB9ID0gcmVxdWlyZShOVklESUFfVFRTX01PRFVMRSk7CiAgICByZXR1cm4gbmV3IE52aWRpYU5pbVRUUygpOwogIH0KCiAgdGVzdCgicmV0dXJucyBhIEJ1ZmZlciBvbiBzdWNjZXNzIiwgYXN5bmMgKCkgPT4gewogICAgY29uc3QgbW9ja0FycmF5QnVmZmVyID0gbmV3IEFycmF5QnVmZmVyKDYpOwogICAgY29uc3QgbW9ja0NyZWF0ZSA9IGplc3QuZm4oKS5tb2NrUmVzb2x2ZWRWYWx1ZSh7CiAgICAgIGFycmF5QnVmZmVyOiBhc3luYyAoKSA9PiBtb2NrQXJyYXlCdWZmZXIsCiAgICB9KTsKICAgIGNvbnN0IHR0cyA9IGdldE52aWRpYVRUUyhtb2NrQ3JlYXRlKTsKICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IHR0cy50dHNCdWZmZXIoIkhlbGxvIik7CiAgICBleHBlY3QoQnVmZmVyLmlzQnVmZmVyKHJlc3VsdCkpLnRvQmUodHJ1ZSk7CiAgICBleHBlY3QocmVzdWx0Lmxlbmd0aCkudG9CZSg2KTsKICB9KTsKCiAgdGVzdCgicmV0dXJucyBudWxsIG9uIEFQSSBlcnJvciIsIGFzeW5jICgpID0+IHsKICAgIGNvbnN0IG1vY2tDcmVhdGUgPSBqZXN0CiAgICAgIC5mbigpCiAgICAgIC5tb2NrUmVqZWN0ZWRWYWx1ZShuZXcgRXJyb3IoIk5WSURJQSBOSU0gZXJyb3IiKSk7CiAgICBjb25zdCB0dHMgPSBnZXROdmlkaWFUVFMobW9ja0NyZWF0ZSk7CiAgICBjb25zdCByZXN1bHQgPSBhd2FpdCB0dHMudHRzQnVmZmVyKCJIZWxsbyIpOwogICAgZXhwZWN0KHJlc3VsdCkudG9CZU51bGwoKTsKICB9KTsKCiAgdGVzdCgidGhyb3dzIG9uIGNvbnN0cnVjdGlvbiB3aGVuIEFQSSBrZXkgaXMgbWlzc2luZyIsICgpID0+IHsKICAgIGRlbGV0ZSBwcm9jZXNzLmVudi5UVFNfTlZJRElBX05JTV9BUElfS0VZOwogICAgamVzdC5yZXNldE1vZHVsZXMoKTsKICAgIGplc3QubW9jaygib3BlbmFpIiwgKCkgPT4gKHsgT3BlbkFJOiBqZXN0LmZuKCkgfSkpOwogICAgY29uc3QgeyBOdmlkaWFOaW1UVFMgfSA9IHJlcXVpcmUoTlZJRElBX1RUU19NT0RVTEUpOwogICAgZXhwZWN0KCgpID0+IG5ldyBOdmlkaWFOaW1UVFMoKSkudG9UaHJvdygvTm8gTlZJRElBIE5JTSBBUEkga2V5IHdhcyBzZXQvKTsKICB9KTsKCiAgdGVzdCgidXNlcyBkZWZhdWx0IG1vZGVsIGFuZCB2b2ljZSB3aGVuIGVudiB2YXJzIGFyZSB1bnNldCIsICgpID0+IHsKICAgIHByb2Nlc3MuZW52LlRUU19OVklESUFfTklNX0FQSV9LRVkgPSAidGVzdC1rZXkiOwogICAgZGVsZXRlIHByb2Nlc3MuZW52LlRUU19OVklESUFfTklNX01PREVMOwogICAgZGVsZXRlIHByb2Nlc3MuZW52LlRUU19OVklESUFfTklNX1ZPSUNFX01PREVMOwogICAgamVzdC5yZXNldE1vZHVsZXMoKTsKICAgIGplc3QubW9jaygib3BlbmFpIiwgKCkgPT4gKHsKICAgICAgT3BlbkFJOiBqZXN0LmZuKCgpID0+ICh7CiAgICAgICAgYXVkaW86IHsgc3BlZWNoOiB7IGNyZWF0ZTogamVzdC5mbigpIH0gfSwKICAgICAgfSkpLAogICAgfSkpOwogICAgY29uc3QgeyBOdmlkaWFOaW1UVFMgfSA9IHJlcXVpcmUoTlZJRElBX1RUU19NT0RVTEUpOwogICAgY29uc3QgdHRzID0gbmV3IE52aWRpYU5pbVRUUygpOwogICAgZXhwZWN0KHR0cy5tb2RlbCkudG9CZSgiYWktbWFnbmlmeS9hcmN0aWMtdHRzIik7CiAgICBleHBlY3QodHRzLnZvaWNlKS50b0JlKCJFbmdsaXNoLVVTLkZlbWFsZS0xIik7CiAgfSk7Cn0pOwo=
+// SPDX-License-Identifier: MIT
+/* eslint-env jest */
+// Tests for server/utils/TextToSpeech — provider factory + ttsBuffer methods.
+// Issue #389
+
+const TTS_MODULE = "../../../utils/TextToSpeech/index";
+const OPENAI_TTS_MODULE = "../../../utils/TextToSpeech/openAi";
+const GENERIC_TTS_MODULE = "../../../utils/TextToSpeech/openAiGeneric";
+const KOKORO_TTS_MODULE = "../../../utils/TextToSpeech/kokoro";
+const NVIDIA_TTS_MODULE = "../../../utils/TextToSpeech/nvidiaNim";
+
+describe("TextToSpeech – getTTSProvider factory", () => {
+  const ORIGINAL_ENV = { ...process.env };
+
+  afterEach(() => {
+    process.env = { ...ORIGINAL_ENV };
+    jest.resetModules();
+  });
+
+  function loadTts(provider) {
+    jest.resetModules();
+    if (provider === undefined) delete process.env.TTS_PROVIDER;
+    else process.env.TTS_PROVIDER = provider;
+    // Mock openai for all providers that use it
+    jest.mock("openai", () => ({
+      OpenAI: jest.fn().mockImplementation(() => ({
+        audio: { speech: { create: jest.fn() } },
+      })),
+    }));
+    return require(TTS_MODULE);
+  }
+
+  test("returns OpenAiTTS instance when TTS_PROVIDER=openai", () => {
+    process.env.TTS_OPEN_AI_KEY = "test-key";
+    const { getTTSProvider } = loadTts("openai");
+    const provider = getTTSProvider();
+    expect(provider).toBeDefined();
+    expect(typeof provider.ttsBuffer).toBe("function");
+  });
+
+  test("returns GenericOpenAiTTS instance when TTS_PROVIDER=generic-openai", () => {
+    process.env.TTS_OPEN_AI_COMPATIBLE_ENDPOINT = "http://localhost:8080/v1";
+    process.env.TTS_OPEN_AI_COMPATIBLE_KEY = "test-key";
+    const { getTTSProvider } = loadTts("generic-openai");
+    const provider = getTTSProvider();
+    expect(provider).toBeDefined();
+    expect(typeof provider.ttsBuffer).toBe("function");
+  });
+
+  test("returns KokoroTTS instance when TTS_PROVIDER=kokoro", () => {
+    process.env.TTS_KOKORO_ENDPOINT = "http://localhost:8880/v1";
+    const { getTTSProvider } = loadTts("kokoro");
+    const provider = getTTSProvider();
+    expect(provider).toBeDefined();
+    expect(typeof provider.ttsBuffer).toBe("function");
+  });
+
+  test("returns NvidiaNimTTS instance when TTS_PROVIDER=nvidia-nim", () => {
+    process.env.TTS_NVIDIA_NIM_API_KEY = "test-key";
+    const { getTTSProvider } = loadTts("nvidia-nim");
+    const provider = getTTSProvider();
+    expect(provider).toBeDefined();
+    expect(typeof provider.ttsBuffer).toBe("function");
+  });
+
+  test("throws on unknown provider", () => {
+    const { getTTSProvider } = loadTts("unknown-provider");
+    expect(() => getTTSProvider()).toThrow(
+      /No TTS_PROVIDER value found/,
+    );
+  });
+
+  test("defaults to 'openai' when TTS_PROVIDER is unset", () => {
+    process.env.TTS_OPEN_AI_KEY = "test-key";
+    const { getTTSProvider } = loadTts(undefined);
+    const provider = getTTSProvider();
+    expect(provider).toBeDefined();
+    expect(typeof provider.ttsBuffer).toBe("function");
+  });
+});
+
+describe("TextToSpeech – OpenAiTTS.ttsBuffer", () => {
+  const ORIGINAL_ENV = { ...process.env };
+
+  afterEach(() => {
+    process.env = { ...ORIGINAL_ENV };
+    jest.restoreAllMocks();
+    jest.resetModules();
+  });
+
+  function getOpenAiTTS(mockCreate) {
+    process.env.TTS_OPEN_AI_KEY = "test-key";
+    jest.resetModules();
+    jest.mock("openai", () => ({
+      OpenAI: jest.fn(() => ({
+        audio: { speech: { create: mockCreate } },
+      })),
+    }));
+    const { OpenAiTTS } = require(OPENAI_TTS_MODULE);
+    return new OpenAiTTS();
+  }
+
+  test("returns a Buffer on success", async () => {
+    const mockArrayBuffer = new ArrayBuffer(4);
+    const view = new Uint8Array(mockArrayBuffer);
+    view[0] = 1; view[1] = 2; view[2] = 3; view[3] = 4;
+    const mockCreate = jest.fn().mockResolvedValue({
+      arrayBuffer: async () => mockArrayBuffer,
+    });
+    const tts = getOpenAiTTS(mockCreate);
+    const result = await tts.ttsBuffer("Hello world");
+    expect(Buffer.isBuffer(result)).toBe(true);
+    expect(result.length).toBe(4);
+  });
+
+  test("returns null on API error (swallowed by catch)", async () => {
+    const mockCreate = jest
+      .fn()
+      .mockRejectedValue(new Error("API timeout"));
+    const tts = getOpenAiTTS(mockCreate);
+    const result = await tts.ttsBuffer("Hello world");
+    expect(result).toBeNull();
+  });
+
+  test("throws on construction when TTS_OPEN_AI_KEY is missing", () => {
+    delete process.env.TTS_OPEN_AI_KEY;
+    jest.resetModules();
+    jest.mock("openai", () => ({ OpenAI: jest.fn() }));
+    const { OpenAiTTS } = require(OPENAI_TTS_MODULE);
+    expect(() => new OpenAiTTS()).toThrow(/No OpenAI API key was set/);
+  });
+
+  test("respects TTS_OPEN_AI_VOICE_MODEL env var", () => {
+    process.env.TTS_OPEN_AI_KEY = "test-key";
+    process.env.TTS_OPEN_AI_VOICE_MODEL = "echo";
+    jest.resetModules();
+    jest.mock("openai", () => ({
+      OpenAI: jest.fn(() => ({
+        audio: { speech: { create: jest.fn() } },
+      })),
+    }));
+    const { OpenAiTTS } = require(OPENAI_TTS_MODULE);
+    const tts = new OpenAiTTS();
+    expect(tts.voice).toBe("echo");
+  });
+
+  test("defaults voice to 'alloy' when no env var set", () => {
+    process.env.TTS_OPEN_AI_KEY = "test-key";
+    delete process.env.TTS_OPEN_AI_VOICE_MODEL;
+    jest.resetModules();
+    jest.mock("openai", () => ({
+      OpenAI: jest.fn(() => ({
+        audio: { speech: { create: jest.fn() } },
+      })),
+    }));
+    const { OpenAiTTS } = require(OPENAI_TTS_MODULE);
+    const tts = new OpenAiTTS();
+    expect(tts.voice).toBe("alloy");
+  });
+});
+
+describe("TextToSpeech – GenericOpenAiTTS.ttsBuffer", () => {
+  const ORIGINAL_ENV = { ...process.env };
+
+  afterEach(() => {
+    process.env = { ...ORIGINAL_ENV };
+    jest.restoreAllMocks();
+    jest.resetModules();
+  });
+
+  function getGenericTTS(mockCreate) {
+    process.env.TTS_OPEN_AI_COMPATIBLE_ENDPOINT = "http://localhost:8080/v1";
+    process.env.TTS_OPEN_AI_COMPATIBLE_KEY = "test-key";
+    process.env.TTS_OPEN_AI_COMPATIBLE_MODEL = "tts-1";
+    process.env.TTS_OPEN_AI_COMPATIBLE_VOICE_MODEL = "alloy";
+    jest.resetModules();
+    jest.mock("openai", () => ({
+      OpenAI: jest.fn(() => ({
+        audio: { speech: { create: mockCreate } },
+      })),
+    }));
+    const { GenericOpenAiTTS } = require(GENERIC_TTS_MODULE);
+    return new GenericOpenAiTTS();
+  }
+
+  test("returns a Buffer on success", async () => {
+    const mockArrayBuffer = new ArrayBuffer(2);
+    const view = new Uint8Array(mockArrayBuffer);
+    view[0] = 0xff; view[1] = 0xfe;
+    const mockCreate = jest.fn().mockResolvedValue({
+      arrayBuffer: async () => mockArrayBuffer,
+    });
+    const tts = getGenericTTS(mockCreate);
+    const result = await tts.ttsBuffer("Test text");
+    expect(Buffer.isBuffer(result)).toBe(true);
+    expect(result.length).toBe(2);
+  });
+
+  test("returns null on API error", async () => {
+    const mockCreate = jest
+      .fn()
+      .mockRejectedValue(new Error("Connection refused"));
+    const tts = getGenericTTS(mockCreate);
+    const result = await tts.ttsBuffer("Test text");
+    expect(result).toBeNull();
+  });
+
+  test("throws on construction when endpoint is missing", () => {
+    delete process.env.TTS_OPEN_AI_COMPATIBLE_ENDPOINT;
+    process.env.TTS_OPEN_AI_COMPATIBLE_KEY = "test-key";
+    jest.resetModules();
+    jest.mock("openai", () => ({ OpenAI: jest.fn() }));
+    const { GenericOpenAiTTS } = require(GENERIC_TTS_MODULE);
+    expect(() => new GenericOpenAiTTS()).toThrow(
+      /No OpenAI compatible endpoint was set/,
+    );
+  });
+});
+
+describe("TextToSpeech – KokoroTTS.ttsBuffer", () => {
+  const ORIGINAL_ENV = { ...process.env };
+
+  afterEach(() => {
+    process.env = { ...ORIGINAL_ENV };
+    jest.restoreAllMocks();
+    jest.resetModules();
+  });
+
+  function getKokoroTTS(mockCreate) {
+    process.env.TTS_KOKORO_ENDPOINT = "http://localhost:8880/v1";
+    process.env.TTS_KOKORO_KEY = "test-key";
+    jest.resetModules();
+    jest.mock("openai", () => ({
+      OpenAI: jest.fn(() => ({
+        audio: { speech: { create: mockCreate } },
+      })),
+    }));
+    const { KokoroTTS } = require(KOKORO_TTS_MODULE);
+    return new KokoroTTS();
+  }
+
+  test("returns a Buffer on success", async () => {
+    const mockArrayBuffer = new ArrayBuffer(8);
+    const mockCreate = jest.fn().mockResolvedValue({
+      arrayBuffer: async () => mockArrayBuffer,
+    });
+    const tts = getKokoroTTS(mockCreate);
+    const result = await tts.ttsBuffer("Hello");
+    expect(Buffer.isBuffer(result)).toBe(true);
+    expect(result.length).toBe(8);
+  });
+
+  test("returns null on API error", async () => {
+    const mockCreate = jest
+      .fn()
+      .mockRejectedValue(new Error("Kokoro server down"));
+    const tts = getKokoroTTS(mockCreate);
+    const result = await tts.ttsBuffer("Hello");
+    expect(result).toBeNull();
+  });
+
+  test("throws on construction when endpoint is missing", () => {
+    delete process.env.TTS_KOKORO_ENDPOINT;
+    jest.resetModules();
+    jest.mock("openai", () => ({ OpenAI: jest.fn() }));
+    const { KokoroTTS } = require(KOKORO_TTS_MODULE);
+    expect(() => new KokoroTTS()).toThrow(/No Kokoro endpoint was set/);
+  });
+
+  test("defaults voice to 'af_bella'", () => {
+    process.env.TTS_KOKORO_ENDPOINT = "http://localhost:8880/v1";
+    delete process.env.TTS_KOKORO_VOICE_MODEL;
+    jest.resetModules();
+    jest.mock("openai", () => ({
+      OpenAI: jest.fn(() => ({
+        audio: { speech: { create: jest.fn() } },
+      })),
+    }));
+    const { KokoroTTS } = require(KOKORO_TTS_MODULE);
+    const tts = new KokoroTTS();
+    expect(tts.voice).toBe("af_bella");
+  });
+
+  test("appends /v1 to endpoint if missing", () => {
+    process.env.TTS_KOKORO_ENDPOINT = "http://localhost:8880";
+    jest.resetModules();
+    jest.mock("openai", () => ({
+      OpenAI: jest.fn(() => ({
+        audio: { speech: { create: jest.fn() } },
+      })),
+    }));
+    const { KokoroTTS } = require(KOKORO_TTS_MODULE);
+    const tts = new KokoroTTS();
+    // The OpenAI client should have been created with a baseURL ending in /v1
+    const openai = require("openai");
+    expect(openai.OpenAI).toHaveBeenCalledWith(
+      expect.objectContaining({
+        baseURL: "http://localhost:8880/v1",
+      }),
+    );
+  });
+});
+
+describe("TextToSpeech – NvidiaNimTTS.ttsBuffer", () => {
+  const ORIGINAL_ENV = { ...process.env };
+
+  afterEach(() => {
+    process.env = { ...ORIGINAL_ENV };
+    jest.restoreAllMocks();
+    jest.resetModules();
+  });
+
+  function getNvidiaTTS(mockCreate) {
+    process.env.TTS_NVIDIA_NIM_API_KEY = "test-key";
+    jest.resetModules();
+    jest.mock("openai", () => ({
+      OpenAI: jest.fn(() => ({
+        audio: { speech: { create: mockCreate } },
+      })),
+    }));
+    const { NvidiaNimTTS } = require(NVIDIA_TTS_MODULE);
+    return new NvidiaNimTTS();
+  }
+
+  test("returns a Buffer on success", async () => {
+    const mockArrayBuffer = new ArrayBuffer(6);
+    const mockCreate = jest.fn().mockResolvedValue({
+      arrayBuffer: async () => mockArrayBuffer,
+    });
+    const tts = getNvidiaTTS(mockCreate);
+    const result = await tts.ttsBuffer("Hello");
+    expect(Buffer.isBuffer(result)).toBe(true);
+    expect(result.length).toBe(6);
+  });
+
+  test("returns null on API error", async () => {
+    const mockCreate = jest
+      .fn()
+      .mockRejectedValue(new Error("NVIDIA NIM error"));
+    const tts = getNvidiaTTS(mockCreate);
+    const result = await tts.ttsBuffer("Hello");
+    expect(result).toBeNull();
+  });
+
+  test("throws on construction when API key is missing", () => {
+    delete process.env.TTS_NVIDIA_NIM_API_KEY;
+    jest.resetModules();
+    jest.mock("openai", () => ({ OpenAI: jest.fn() }));
+    const { NvidiaNimTTS } = require(NVIDIA_TTS_MODULE);
+    expect(() => new NvidiaNimTTS()).toThrow(/No NVIDIA NIM API key was set/);
+  });
+
+  test("uses default model and voice when env vars are unset", () => {
+    process.env.TTS_NVIDIA_NIM_API_KEY = "test-key";
+    delete process.env.TTS_NVIDIA_NIM_MODEL;
+    delete process.env.TTS_NVIDIA_NIM_VOICE_MODEL;
+    jest.resetModules();
+    jest.mock("openai", () => ({
+      OpenAI: jest.fn(() => ({
+        audio: { speech: { create: jest.fn() } },
+      })),
+    }));
+    const { NvidiaNimTTS } = require(NVIDIA_TTS_MODULE);
+    const tts = new NvidiaNimTTS();
+    expect(tts.model).toBe("ai-magnify/arctic-tts");
+    expect(tts.voice).toBe("English-US.Female-1");
+  });
+});
