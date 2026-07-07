@@ -32,9 +32,9 @@ async function login(page) {
   if (!r.ok()) throw new Error('login token: ' + r.status());
   const { token } = await r.json();
   await page.addInitScript((t) => {
-    localStorage.setItem('openafd_authToken', t);
-    localStorage.setItem('openafd_user', JSON.stringify({ username: 'admin', role: 'admin' }));
-    localStorage.setItem('openafd_theme', 'dark');
+    localStorage.setItem('opensin_authToken', t);
+    localStorage.setItem('opensin_user', JSON.stringify({ username: 'admin', role: 'admin' }));
+    localStorage.setItem('opensin_theme', 'dark');
   }, token);
   return token;
 }
