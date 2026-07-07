@@ -11,6 +11,33 @@ const eagerLoadContextWindows = require("./eagerLoadContextWindows");
 const markOnboarded = require("./markOnboarded");
 const ensureLLMProvider = require("./ensureLLMProvider");
 
+/**
+ * Idempotent one-time ENV->DB migration (Issue #2).
+ * Reads every KEY_MAPPING envKey from process.env and upserts it into the
+ * managed_env_settings table via SettingsManager. A flag in system_settings
+ * (`env_to_db_migrated`) prevents re-running after the first successful boot.
+ */
+async function runEnvToDbMigrationOnce() {
+  try {
+    const { SystemSettings } = require("../../models/systemSettings");
+    const { migrateEnvToDb } = require("../../scripts/migrate-env-to-db");
+    const flag = await SystemSettings.get({ label: "env_to_db_migrated" });
+    if (flag?.value === "true") return; // already done — no-op
+
+    const { migrated } = await migrateEnvToDb({ silent: true });
+    if (migrated > 0) {
+      await SystemSettings._updateSettings({ env_to_db_migrated: "true" });
+      consoleLogger.log(
+        `[boot] ENV->DB migration complete — ${migrated} setting(s) persisted.`,
+      );
+    }
+  } catch (e) {
+    // Non-fatal: if the DB or migration script is unavailable, the server
+    // still boots using the process.env values already in memory.
+    consoleLogger.error(`[boot] ENV->DB migration skipped: ${e.message}`);
+  }
+}
+
 // Testing SSL? You can make a self signed certificate and point the ENVs to that location
 // make a directory in server called 'sslcert' - cd into it
 // - openssl genrsa -aes256 -passout pass:gsahdg -out server.pass.key 4096
@@ -49,6 +76,10 @@ function bootSSL(app, port = 3001, onReady) {
             // Phase 4: load DB-persisted settings into runtime env (source of
             // truth) now that the encryption layer is available.
             await SettingsManager.hydrate();
+            // Phase 4 / Issue #2: idempotent one-time ENV->DB migration.
+            // Runs only on the very first boot after the Phase-4 upgrade;
+            // subsequent boots are no-ops (flag stored in system_settings).
+            await runEnvToDbMigrationOnce();
             new BackgroundService().boot();
             await eagerLoadContextWindows();
             if (onReady) await onReady();
@@ -95,6 +126,8 @@ function bootHTTP(app, port = 3001, onReady) {
           await setupTelemetry();
           new CommunicationKey(true);
           new EncryptionManager();
+          await SettingsManager.hydrate();
+          await runEnvToDbMigrationOnce();
           new BackgroundService().boot();
           await eagerLoadContextWindows();
           if (onReady) await onReady();

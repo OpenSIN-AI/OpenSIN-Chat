@@ -18,14 +18,20 @@ process.env.NODE_ENV === "development"
 const { KEY_MAPPING } = require("../utils/helpers/updateENV/keyMapping");
 const { SettingsManager } = require("../utils/SettingsManager");
 
-async function main() {
+/**
+ * Migrate all KEY_MAPPING env vars from process.env into the DB via
+ * SettingsManager. Idempotent — safe to call multiple times (upserts).
+ * @param {{ silent?: boolean }} opts
+ */
+async function migrateEnvToDb({ silent = false } = {}) {
   const managedEnvKeys = Object.values(KEY_MAPPING).map((v) => v.envKey);
   let migrated = 0;
   let skipped = 0;
 
-  console.log(
-    `[migrate-env-to-db] Scanning ${managedEnvKeys.length} managed settings...`,
-  );
+  if (!silent)
+    console.log(
+      `[migrate-env-to-db] Scanning ${managedEnvKeys.length} managed settings...`,
+    );
 
   for (const envKey of managedEnvKeys) {
     const value = process.env[envKey];
@@ -39,22 +45,32 @@ async function main() {
         action: "migrate",
         category: "env-migration",
       });
-      const label = SettingsManager.isSensitive(envKey) ? "(encrypted)" : "";
-      console.log(`  migrated ${envKey} ${label}`);
+      if (!silent) {
+        const label = SettingsManager.isSensitive(envKey) ? "(encrypted)" : "";
+        console.log(`  migrated ${envKey} ${label}`);
+      }
       migrated++;
     } catch (e) {
       console.error(`  FAILED ${envKey}: ${e.message}`);
     }
   }
 
-  console.log(
-    `[migrate-env-to-db] Done. Migrated ${migrated}, skipped ${skipped} (unset).`,
-  );
+  if (!silent)
+    console.log(
+      `[migrate-env-to-db] Done. Migrated ${migrated}, skipped ${skipped} (unset).`,
+    );
+
+  return { migrated, skipped };
 }
 
-main()
-  .then(() => process.exit(0))
-  .catch((e) => {
-    console.error(`[migrate-env-to-db] Fatal: ${e.message}`);
-    process.exit(1);
-  });
+module.exports = { migrateEnvToDb };
+
+// Allow direct CLI execution: node scripts/migrate-env-to-db.js
+if (require.main === module) {
+  migrateEnvToDb()
+    .then(() => process.exit(0))
+    .catch((e) => {
+      console.error(`[migrate-env-to-db] Fatal: ${e.message}`);
+      process.exit(1);
+    });
+}

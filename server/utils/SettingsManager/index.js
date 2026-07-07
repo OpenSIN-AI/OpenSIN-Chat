@@ -250,6 +250,34 @@ class SettingsManager {
   }
 
   /**
+   * Rollback a setting to its previous value using the audit log.
+   * Reads the most recent audit entry for the key, takes its `previousValue`,
+   * and persists it back. A new audit entry with action "rollback" is written.
+   * @param {string} envKey
+   * @param {{ userId?: number|null }} [opts]
+   * @returns {Promise<{ restored: boolean, value: string|null, error?: string }>}
+   */
+  static async rollback(envKey, { userId = null } = {}) {
+    if (!envKey) return { restored: false, value: null, error: "envKey required" };
+    try {
+      const history = await this.auditLog({ envKey, limit: 1 });
+      const previous = history?.[0]?.previousValue ?? null;
+      // If the stored previous value was redacted, we cannot safely restore it.
+      if (previous === "***redacted***")
+        return {
+          restored: false,
+          value: null,
+          error: "Previous value was redacted — cannot restore automatically.",
+        };
+      await this.set(envKey, previous, { userId, action: "rollback" });
+      return { restored: true, value: previous };
+    } catch (e) {
+      this.log(`rollback() failed for "${envKey}": ${e.message}`);
+      return { restored: false, value: null, error: e.message };
+    }
+  }
+
+  /**
    * Read recent audit log entries (admin surface / rollback support).
    * @param {{ envKey?: string, limit?: number }} [opts]
    */

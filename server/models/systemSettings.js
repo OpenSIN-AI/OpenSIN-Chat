@@ -12,6 +12,7 @@ const { isValidUrl, safeJsonParse } = require("../utils/http");
 const { getStoragePath } = require("../utils/paths");
 const prisma = require("../utils/prisma");
 const { MetaGenerator } = require("../utils/boot/MetaGenerator");
+const { SettingsManager } = require("../utils/SettingsManager");
 const { PGVector } = require("../utils/vectorDbProviders/pgvector");
 const { NativeEmbedder } = require("../utils/EmbeddingEngines/native");
 const { getBaseLLMProviderModel } = require("../utils/helpers");
@@ -531,12 +532,18 @@ const SystemSettings = {
     } = require("../utils/agents/aibitat/utils/toolReranker");
     const AIbitat = require("../utils/agents/aibitat");
 
-    const llmProvider = process.env.LLM_PROVIDER;
-    const vectorDB = process.env.VECTOR_DB;
-    const embeddingEngine = process.env.EMBEDDING_ENGINE ?? "native";
+    // Issue #3: Read provider selection settings from the DB-backed
+    // SettingsManager (source of truth after Phase 4). Falls back to
+    // process.env gracefully during migration / first boot.
+    const llmProvider = await SettingsManager.get("LLM_PROVIDER");
+    const vectorDB = await SettingsManager.get("VECTOR_DB");
+    const embeddingEngine =
+      (await SettingsManager.get("EMBEDDING_ENGINE")) ?? "native";
     return {
       // --------------------------------------------------------
       // General Settings
+      // Bootstrap secrets (AUTH_TOKEN, JWT_SECRET) stay in process.env —
+      // they are loaded before the DB/encryption layer is available.
       // --------------------------------------------------------
       RequiresAuth: !!process.env.AUTH_TOKEN,
       AuthToken: !!process.env.AUTH_TOKEN,
@@ -545,30 +552,37 @@ const SystemSettings = {
       MultiUserMode: await this.isMultiUserMode(),
       MemoryEnabled: await this.memoriesEnabled(),
       MemoryAutoExtraction: await this.memoryAutoExtractionSetting(),
-      DisableTelemetry: process.env.DISABLE_TELEMETRY || "false",
+      DisableTelemetry:
+        (await SettingsManager.get("DISABLE_TELEMETRY")) || "false",
 
       // --------------------------------------------------------
       // Embedder Provider Selection Settings & Configs
       // --------------------------------------------------------
       EmbeddingEngine: embeddingEngine,
-      HasExistingEmbeddings: await this.hasEmbeddings(), // check if they have any currently embedded documents active in workspaces.
-      HasCachedEmbeddings: await hasVectorCachedFiles(), // check if they any currently cached embedded docs.
-      EmbeddingBasePath: process.env.EMBEDDING_BASE_PATH,
+      HasExistingEmbeddings: await this.hasEmbeddings(),
+      HasCachedEmbeddings: await hasVectorCachedFiles(),
+      EmbeddingBasePath: await SettingsManager.get("EMBEDDING_BASE_PATH"),
       EmbeddingModelPref:
         embeddingEngine === "native"
           ? NativeEmbedder._getEmbeddingModel()
-          : process.env.EMBEDDING_MODEL_PREF,
+          : await SettingsManager.get("EMBEDDING_MODEL_PREF"),
       EmbeddingOutputDimensions:
-        process.env.EMBEDDING_OUTPUT_DIMENSIONS || null,
-      EmbeddingModelMaxChunkLength:
-        process.env.EMBEDDING_MODEL_MAX_CHUNK_LENGTH,
-      OllamaEmbeddingBatchSize: process.env.OLLAMA_EMBEDDING_BATCH_SIZE || 1,
-      VoyageAiApiKey: !!process.env.VOYAGEAI_API_KEY,
+        (await SettingsManager.get("EMBEDDING_OUTPUT_DIMENSIONS")) || null,
+      EmbeddingModelMaxChunkLength: await SettingsManager.get(
+        "EMBEDDING_MODEL_MAX_CHUNK_LENGTH",
+      ),
+      OllamaEmbeddingBatchSize:
+        (await SettingsManager.get("OLLAMA_EMBEDDING_BATCH_SIZE")) || 1,
+      VoyageAiApiKey: !!(await SettingsManager.get("VOYAGEAI_API_KEY")),
       GenericOpenAiEmbeddingApiKey:
-        !!process.env.GENERIC_OPEN_AI_EMBEDDING_API_KEY,
+        !!(await SettingsManager.get("GENERIC_OPEN_AI_EMBEDDING_API_KEY")),
       GenericOpenAiEmbeddingMaxConcurrentChunks:
-        process.env.GENERIC_OPEN_AI_EMBEDDING_MAX_CONCURRENT_CHUNKS || 500,
-      GeminiEmbeddingApiKey: !!process.env.GEMINI_EMBEDDING_API_KEY,
+        (await SettingsManager.get(
+          "GENERIC_OPEN_AI_EMBEDDING_MAX_CONCURRENT_CHUNKS",
+        )) || 500,
+      GeminiEmbeddingApiKey: !!(await SettingsManager.get(
+        "GEMINI_EMBEDDING_API_KEY",
+      )),
 
       // --------------------------------------------------------
       // VectorDB Provider Selection Settings & Configs
@@ -581,56 +595,74 @@ const SystemSettings = {
       // --------------------------------------------------------
       LLMProvider: llmProvider,
       LLMModel: getBaseLLMProviderModel({ provider: llmProvider }) || null,
-      ModelRouterId: process.env.MODEL_ROUTER_ID || null,
+      ModelRouterId:
+        (await SettingsManager.get("MODEL_ROUTER_ID")) || null,
       ...this.llmPreferenceKeys(),
 
       // --------------------------------------------------------
       // Whisper (Audio transcription) Selection Settings & Configs
-      // - Currently the only 3rd party is OpenAI, so is OPEN_AI_KEY is set
-      // - then it can be shared.
       // --------------------------------------------------------
-      WhisperProvider: process.env.WHISPER_PROVIDER || "local",
+      WhisperProvider:
+        (await SettingsManager.get("WHISPER_PROVIDER")) || "local",
       WhisperModelPref:
-        process.env.WHISPER_MODEL_PREF || "Xenova/whisper-small",
+        (await SettingsManager.get("WHISPER_MODEL_PREF")) ||
+        "Xenova/whisper-small",
 
       // --------------------------------------------------------
-      // TTS/STT  Selection Settings & Configs
-      // - Currently the only 3rd party is OpenAI or the native browser-built in
+      // TTS/STT Selection Settings & Configs
       // --------------------------------------------------------
-      TextToSpeechProvider: process.env.TTS_PROVIDER || "native",
-      TTSOpenAIKey: !!process.env.TTS_OPEN_AI_KEY,
-      TTSOpenAIVoiceModel: process.env.TTS_OPEN_AI_VOICE_MODEL,
+      TextToSpeechProvider:
+        (await SettingsManager.get("TTS_PROVIDER")) || "native",
+      TTSOpenAIKey: !!(await SettingsManager.get("TTS_OPEN_AI_KEY")),
+      TTSOpenAIVoiceModel: await SettingsManager.get("TTS_OPEN_AI_VOICE_MODEL"),
 
       // Eleven Labs TTS
-      TTSElevenLabsKey: !!process.env.TTS_ELEVEN_LABS_KEY,
-      TTSElevenLabsVoiceModel: process.env.TTS_ELEVEN_LABS_VOICE_MODEL,
+      TTSElevenLabsKey: !!(await SettingsManager.get("TTS_ELEVEN_LABS_KEY")),
+      TTSElevenLabsVoiceModel: await SettingsManager.get(
+        "TTS_ELEVEN_LABS_VOICE_MODEL",
+      ),
       // Piper TTS
       TTSPiperTTSVoiceModel:
-        process.env.TTS_PIPER_VOICE_MODEL ?? "en_US-hfc_female-medium",
+        (await SettingsManager.get("TTS_PIPER_VOICE_MODEL")) ??
+        "en_US-hfc_female-medium",
       // OpenAI Generic TTS
-      TTSOpenAICompatibleKey: !!process.env.TTS_OPEN_AI_COMPATIBLE_KEY,
-      TTSOpenAICompatibleModel: process.env.TTS_OPEN_AI_COMPATIBLE_MODEL,
-      TTSOpenAICompatibleVoiceModel:
-        process.env.TTS_OPEN_AI_COMPATIBLE_VOICE_MODEL,
-      TTSOpenAICompatibleEndpoint: process.env.TTS_OPEN_AI_COMPATIBLE_ENDPOINT,
+      TTSOpenAICompatibleKey: !!(await SettingsManager.get(
+        "TTS_OPEN_AI_COMPATIBLE_KEY",
+      )),
+      TTSOpenAICompatibleModel: await SettingsManager.get(
+        "TTS_OPEN_AI_COMPATIBLE_MODEL",
+      ),
+      TTSOpenAICompatibleVoiceModel: await SettingsManager.get(
+        "TTS_OPEN_AI_COMPATIBLE_VOICE_MODEL",
+      ),
+      TTSOpenAICompatibleEndpoint: await SettingsManager.get(
+        "TTS_OPEN_AI_COMPATIBLE_ENDPOINT",
+      ),
       // Kokoro TTS
-      TTSKokoroEndpoint: process.env.TTS_KOKORO_ENDPOINT,
-      TTSKokoroKey: !!process.env.TTS_KOKORO_KEY,
-      TTSKokoroVoiceModel: process.env.TTS_KOKORO_VOICE_MODEL,
+      TTSKokoroEndpoint: await SettingsManager.get("TTS_KOKORO_ENDPOINT"),
+      TTSKokoroKey: !!(await SettingsManager.get("TTS_KOKORO_KEY")),
+      TTSKokoroVoiceModel: await SettingsManager.get("TTS_KOKORO_VOICE_MODEL"),
 
       // STT Selection
-      SpeechToTextProvider: process.env.STT_PROVIDER || "native",
+      SpeechToTextProvider:
+        (await SettingsManager.get("STT_PROVIDER")) || "native",
       // STT OpenAI
-      STTOpenAIModel: process.env.STT_OPEN_AI_MODEL,
+      STTOpenAIModel: await SettingsManager.get("STT_OPEN_AI_MODEL"),
 
       // STT Deepgram
-      STTDeepgramApiKey: !!process.env.STT_DEEPGRAM_API_KEY,
-      STTDeepgramModel: process.env.STT_DEEPGRAM_MODEL,
+      STTDeepgramApiKey: !!(await SettingsManager.get("STT_DEEPGRAM_API_KEY")),
+      STTDeepgramModel: await SettingsManager.get("STT_DEEPGRAM_MODEL"),
 
       // STT Generic OpenAI
-      STTOpenAICompatibleKey: !!process.env.STT_OPEN_AI_COMPATIBLE_KEY,
-      STTOpenAICompatibleModel: process.env.STT_OPEN_AI_COMPATIBLE_MODEL,
-      STTOpenAICompatibleEndpoint: process.env.STT_OPEN_AI_COMPATIBLE_ENDPOINT,
+      STTOpenAICompatibleKey: !!(await SettingsManager.get(
+        "STT_OPEN_AI_COMPATIBLE_KEY",
+      )),
+      STTOpenAICompatibleModel: await SettingsManager.get(
+        "STT_OPEN_AI_COMPATIBLE_MODEL",
+      ),
+      STTOpenAICompatibleEndpoint: await SettingsManager.get(
+        "STT_OPEN_AI_COMPATIBLE_ENDPOINT",
+      ),
 
       // --------------------------------------------------------
       // Agent Settings & Configs

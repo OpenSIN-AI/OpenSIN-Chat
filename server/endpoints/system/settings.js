@@ -18,6 +18,7 @@ const { SlashCommandPresets } = require("../../models/slashCommandsPresets");
 const { AgentSkillWhitelist } = require("../../models/agentSkillWhitelist");
 const { reqBody, multiUserMode } = require("../../utils/http");
 const { updateENV } = require("../../utils/helpers/updateENV");
+const { SettingsManager } = require("../../utils/SettingsManager");
 const {
   validatedRequest,
   invalidateAuthTokenHash,
@@ -254,6 +255,46 @@ function settingsEndpoints(app) {
           message: "Internal server error",
           id,
         });
+      }
+    },
+  );
+  // Issue #4 — Settings rollback: restore a setting to its previous value
+  // using the audit log entry. Admin-only.
+  app.post(
+    "/system/settings/rollback",
+    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    async (request, response) => {
+      try {
+        const { envKey } = reqBody(request);
+        if (!envKey)
+          return response
+            .status(400)
+            .json({ restored: false, error: "envKey is required" });
+        const userId = response?.locals?.user?.id ?? null;
+        const result = await SettingsManager.rollback(envKey, { userId });
+        response.status(result.restored ? 200 : 400).json(result);
+      } catch (e) {
+        consoleLogger.error(e.message, e);
+        response.status(500).json({ restored: false, error: e.message });
+      }
+    },
+  );
+
+  // Issue #4 — Settings audit log: read recent mutations for a key. Admin-only.
+  app.get(
+    "/system/settings/audit-log",
+    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    async (request, response) => {
+      try {
+        const { envKey, limit } = request.query;
+        const entries = await SettingsManager.auditLog({
+          envKey: envKey || null,
+          limit: limit ? Number(limit) : 100,
+        });
+        response.status(200).json({ entries });
+      } catch (e) {
+        consoleLogger.error(e.message, e);
+        response.status(500).json({ entries: [], error: e.message });
       }
     },
   );
