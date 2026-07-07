@@ -1,1 +1,278 @@
-IyBBRFItMDAxOiBQZXJzaXN0ZW50ZSBCYWNrZ3JvdW5kLUpvYi1RdWV1ZSB2aWEgU1FMaXRlCgoqKlN0YXR1czoqKiBBY2NlcHRlZAoqKkRhdGU6KiogMjAyNi0wNi0wNwoqKkRlY2lkZXJzOioqIEplcmVteSAoT3BlblNJTi1DaGF0IG1haW50YWluZXIpCgojIyBDb250ZXh0CgpPcGVuU0lOLUNoYXQgaXN0IGVpbmUgKipTb3ZlcmVpZ250eS1maXJzdCAvIE9mZmxpbmUtZmlyc3QqKiBGb3JrIHZvbiBBbnl0aGluZ0xMTQooYGRvY3Mvc3VwYWJhc2Utc2VsZi1ob3N0ZWQubWRgLCBgU0VDVVJJVFkubWRgKS4gU2llIGzDpHVmdCB0eXBpc2NoZXJ3ZWlzZSBhbHMKKipTaW5nbGUtTm9kZSBhdWYgZWluZW0gTWFjIGhpbnRlciBlaW5lbSBDbG91ZGZsYXJlLVR1bm5lbCoqIOKAlCBrZWluIENvbnRhaW5lci0KQ2x1c3Rlciwga2VpbmUgQ2xvdWQtV29ya2VyLCBrZWluZSBleHRlcm5lbiBCcm9rZXIuCgojIyMgRGFzIFByb2JsZW0KCkhpbnRlcmdydW5kLUpvYnMgKHouQi4gZGFzIEdlbmVyaWVyZW4gZWluZXMgc3ByZWNoZW5kZW4gVGhyZWFkLVRpdGVscyBuYWNoCmVpbmVyIENoYXQtQW50d29ydCkgd2FyZW4gdm9yaGVyICoqbmljaHQgcGVyc2lzdGVudCoqOgoKKiBJbi1NZW1vcnktUXVldWVzIHZlcnNjaHdpbmRlbiBiZWltIGBub2RlYC1Qcm96ZXNzLUV4aXQsIGJlaW0gYFNJR1RFUk1gLAogIGJlaW0gTWFjLVNsZWVwIG9kZXIgYmVpbSBEb2NrZXItUmVzdGFydC4KKiBEZXIgTWFjIGdlaHQgcmVnZWxtw6TDn2lnIGluIGRlbiBTdGFuZGJ5LU1vZHVzLiBCZWltIEF1ZndhY2hlbiB3YXJlbiBhbGxlCiAgaW4tZmxpZ2h0IEpvYnMgdmVybG9yZW4g4oCUIGRlciBVc2VyIHNhaCBlbnR3ZWRlciBkZW4gRGVmYXVsdC1OYW1lbgogIGAiVGhyZWFkImAgb2RlciBlaW5lbiBgdHJ1bmNhdGUocHJvbXB0LCAyMilgLUhhY2sgYXVzCiAgYHNlcnZlci9tb2RlbHMvd29ya3NwYWNlVGhyZWFkLmpzOjE0OWAuCiogTExNLUF1ZnJ1ZmUgaW0gSFRUUC1SZXF1ZXN0LUxvb3AgYmxvY2tpZXJlbiBkaWUgQW50d29ydCB1bmQga29wcGVsbgogIExhdGVueiBhbiBkaWUgTExNLUFudHdvcnR6ZWl0ICh0eXBpc2NoIDItMTAgcykuCgojIyMgRGllIEtyw6RmdGUgKEZvcmNlcykKCiogKipTb3ZlcmVpZ250eToqKiBLZWluZSBDbG91ZC1QZmxpY2h0LCBEU0dWTy1rb25mb3JtLCBrZWluIE5ldHp3ZXJrLQogIERlcGVuZGVuY3kgZsO8ciBpbnRlcm5lIEFibMOkdWZlLgoqICoqUmVzaWxpZW56OioqIEpvYnMgbcO8c3NlbiBNYWMtU2xlZXAsIFNlcnZlci1DcmFzaGVzLCBEb2NrZXItTmV1c3RhcnRzCiAgw7xiZXJsZWJlbi4KKiAqKkVpbmZhY2hoZWl0OioqIFNpbmdsZS1Ob2RlLCBTaW5nbGUtUHJvY2Vzcywga2VpbiBPcGVyYXRvci1PdmVyaGVhZC4KKiAqKlNjaGVtYS1Lb25zaXN0ZW56OioqIE9wZW5TSU4tQ2hhdCBudXR6dCBiZXJlaXRzIFByaXNtYSArIFNRTGl0ZQogIChgb3BlbnNpbi5kYmApLiBFaW5lIG5ldWUgREItRW5naW5lIGVpbnp1ZsO8aHJlbiB3w6RyZSBBcmNoaXRla3R1ci1CbG9hdC4KKiAqKlBlcmZvcm1hbmNlOioqIDEgQ2hhdCA9IDEgSm9iLiBCdXJzdC1SYXRlbiBzaW5kIGtsZWluIChVc2VyLWdldHJpZWJlbiwKICBrZWluIEJhdGNoLVByb2Nlc3NpbmcpLgoqICoqQmVzdGFuZDoqKiBgYXV0b1JlbmFtZVRocmVhZGAgaW4gYHNlcnZlci9tb2RlbHMvd29ya3NwYWNlVGhyZWFkLmpzOjEzMWAKICBtYWNodCBiZXJlaXRzIGB0cnVuY2F0ZShwcm9tcHQsIDIyKWAgc3luY2hyb24gaW0gUmVxdWVzdC1Mb29wIOKAlCBmdW5rdGlvbmFsLAogIGFiZXIgcXVhbGl0YXRpdiBzY2hsZWNodCB1bmQgVUktZmxhY2tlcnQuCgojIyBEZWNpc2lvbgoKV2lyIGltcGxlbWVudGllcmVuIGVpbmUgKipwZXJzaXN0ZW50ZSwgU1FMaXRlLWJhc2llcnRlIEJhY2tncm91bmQtSm9iLVF1ZXVlKioKYWxzIE1vZHVsIGBzZXJ2ZXIvdXRpbHMvYmFja2dyb3VuZEpvYnMvcXVldWUuanNgLCBkaWU6CgoxLiAqKkltIGJlc3RlaGVuZGVuIFByaXNtYS1TY2hlbWEqKiBsZWJ0IChNb2RlbGwgYGpvYl9xdWV1ZWApLCBrZWluZQogICBuZXVlIERhdGVuYmFuay1FbmdpbmUuCjIuICoqU2luZ2xlLVdvcmtlciBwZXIgUG9sbGluZyoqIGFyYmVpdGV0ICg1IHMgSW50ZXJ2YWxsKSDigJQga2VpbgogICBwYXJhbGxlbGVyIFdvcmtlci1Qb29sLCBrZWluZSBleHRlcm5lIEJyb2tlci1MaWIuCjMuICoqQXRvbWFyZW4gQ0FTLUxvY2sqKiB2aWEgYHByaXNtYS51cGRhdGVNYW55KHdoZXJlOiB7IHN0YXR1czogInBlbmRpbmciIH0pYAogICB2ZXJ3ZW5kZXQg4oCUIHZlcmhpbmRlcnQgRG9wcGVsLVZlcmFyYmVpdHVuZyBhdWNoIGJlaSBwYXJhbGxlbGVuIGBhZGQoKWAtCiAgIENhbGxzIG9obmUgYFNFTEVDVCBGT1IgVVBEQVRFYCBvZGVyIEFkdmlzb3J5IExvY2tzLgo0LiAqKkF1dG8tUmVjb3ZlcnkgYmVpIFN0YWxlIExvY2tzKiogKDUgbWluIFRocmVzaG9sZCkg4oCUIMO8YmVybGVidAogICBTZXJ2ZXItQ3Jhc2hlcyB1bmQgTWFjLVNsZWVwLgo1LiAqKkF1dG8tUHJ1bmluZyoqIHZvbiBgY29tcGxldGVkYC9gZmFpbGVkYCBKb2JzIG5hY2ggNyBUYWdlbiDigJQKICAgdmVyaGluZGVydCBEQi1CbG9hdCBiZWkgamFocmVsYW5nZW0gRGF1ZXJiZXRyaWViLgo2LiAqKlRyaWdnZXIgaW0gU3RyZWFtKiogKGBzZXJ2ZXIvdXRpbHMvY2hhdHMvc3RyZWFtLmpzYCkgZW5xdWV1ZWQgZGVuCiAgIEpvYiAqKm5hY2gqKiBgV29ya3NwYWNlQ2hhdHMubmV3KClgIG1pdCBudXIgc2VyaWFsaXNpZXJiYXJlbiBEYXRlbgogICAoSURzLCBTbHVncywgU3RyaW5ncykgaW0gUGF5bG9hZC4KNy4gKipPdmVycmlkZS1IZXVyaXN0aWsqKiBpbSBgZ2VuZXJhdGVUaXRsZWAtSm9iIMO8YmVyc2NocmVpYnQgZGVuCiAgIGB0cnVuY2F0ZShwcm9tcHQsIDIyKWAtTmFtZW4sIGFiZXIgKipuaWNodCoqIFVzZXItc2V0enRlIE5hbWVuCiAgIChTY2h1dHogdm9yIERhdGVudmVybHVzdCBiZWkgbWFudWVsbGVyIFVtYmVuZW5udW5nKS4KCiMjIyBLb25rcmV0ZSBLb25zdGFudGVuCgp8IFBhcmFtZXRlciB8IFdlcnQgfCBCZWdyw7xuZHVuZyB8CnwtLS18LS0tfC0tLXwKfCBgUE9MTF9JTlRFUlZBTF9NU2AgfCA1MDAwIHwgNSBzIOKAlCBzY2huZWxsIGdlbnVnIGbDvHIgVVgsIGlkbGUtZnJldW5kbGljaCB8CnwgYEpPQl9MT0NLX1RJTUVPVVRfTVNgIHwgNSBtaW4gfCBMw6RuZ2VyIGFscyBqZWRlciByZWFsaXN0aXNjaGUgTExNLUF1ZnJ1ZiB8CnwgYFBSVU5FX0lOVEVSVkFMX1BPTExTYCB8IDEwMDAgfCB+ODMgTWluIHp3aXNjaGVuIENsZWFudXAtUnVucyB8CnwgYFJFVEVOVElPTl9EQVlTYCB8IDcgfCBEZWJ1Z2dpbmctRmVuc3RlciBmw7xyIGZlaGxnZXNjaGxhZ2VuZSBKb2JzIHwKCiMjIyBKb2ItTGlmZWN5Y2xlCgpgYGAKYWRkKCkg4oaSIHBlbmRpbmcg4oaSIHByb2Nlc3NpbmcgKENBUy1Mb2NrKSDihpIgY29tcGxldGVkCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIOKGkyAodGhyb3cpCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGF0dGVtcHRzIDwgbWF4X2F0dGVtcHRzPwogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICDihpMgeWVzIC8gbm8g4oaTCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHBlbmRpbmcgIC8gIGZhaWxlZApgYGAKCiMjIyBEYXRlaS1MYXlvdXQKCmBgYApzZXJ2ZXIvdXRpbHMvYmFja2dyb3VuZEpvYnMvCuKUnOKUgOKUgCBxdWV1ZS5qcyAgICAgICAgICAgICAgICMgUGVyc2lzdGVudEJhY2tncm91bmRRdWV1ZSAoU2luZ2xldG9uKQrilJzilIDilIAgcXVldWUuZG9jLm1kICAgICAgICAgICAjIENvRG9jOiB3YXMvd296dS93aWUK4pSU4pSA4pSAIGpvYnMvCiAgICDilJzilIDilIAgZ2VuZXJhdGVUaXRsZS5qcyAgICMgR0VORVJBVEVfVEhSRUFEX1RJVExFIEhhbmRsZXIKICAgIOKUlOKUgOKUgCBnZW5lcmF0ZVRpdGxlLmRvYy5tZApgYGAKCiMjIyBTY2hlbWEKCmBgYHByaXNtYQptb2RlbCBqb2JfcXVldWUgewogIGlkICAgICAgICAgICBJbnQgICAgICAgQGlkIEBkZWZhdWx0KGF1dG9pbmNyZW1lbnQoKSkKICBqb2JfbmFtZSAgICAgU3RyaW5nCiAgcGF5bG9hZCAgICAgIFN0cmluZyAgICAvLyBKU09OLCBudXIgc2VyaWFsaXNpZXJiYXJlIERhdGVuCiAgc3RhdHVzICAgICAgIFN0cmluZyAgICBAZGVmYXVsdCgicGVuZGluZyIpIC8vIHBlbmRpbmd8cHJvY2Vzc2luZ3xjb21wbGV0ZWR8ZmFpbGVkCiAgYXR0ZW1wdHMgICAgIEludCAgICAgICBAZGVmYXVsdCgwKQogIG1heF9hdHRlbXB0cyBJbnQgICAgICAgQGRlZmF1bHQoMykKICBsYXN0X2Vycm9yICAgU3RyaW5nPwogIGxvY2tlZF9hdCAgICBEYXRlVGltZT8KICBjcmVhdGVkX2F0ICAgRGF0ZVRpbWUgIEBkZWZhdWx0KG5vdygpKQogIHVwZGF0ZWRfYXQgICBEYXRlVGltZSAgQHVwZGF0ZWRBdAoKICBAQGluZGV4KFtzdGF0dXMsIGNyZWF0ZWRfYXRdKQogIEBAaW5kZXgoW3N0YXR1cywgbG9ja2VkX2F0XSkKfQpgYGAKCiMjIyBTUUxpdGUtS29uZmlndXJhdGlvbgoKKiBgam91cm5hbF9tb2RlPVdBTGAgYWt0aXZpZXJ0ICh2ZXJoaW5kZXJ0IFJlYWRlci9Xcml0ZXItQmxvY2thZGUgendpc2NoZW4KICBQb2xsaW5nIHVuZCBDaGF0LVNhdmVzKS4KKiBgbnB4IHByaXNtYSBkYiBwdXNoYCBzeW5jdCBkYXMgU2NoZW1hOyBgbnB4IHByaXNtYSBnZW5lcmF0ZWAgYWt0dWFsaXNpZXJ0CiAgZGVuIENsaWVudC4KCiMjIENvbnNlcXVlbmNlcwoKIyMjIFBvc2l0aXYKCiogKipNYWMtU2xlZXAtc2ljaGVyOioqIFF1ZXVlIGZyaWVydCBiZWltIFN0YW5kYnkgZWluLCB3YWNodCBhdXRvbWF0aXNjaAogIGF1ZiB1bmQgYXJiZWl0ZXQgcGVuZGluZyBKb2JzIGFiLiBgX3JlY292ZXJTdGFsZUpvYnNgIGVya2VubnQKICBhYmdlbGF1ZmVuZSBMb2NrcyBuYWNoIDUgbWluLgoqICoqU2VydmVyLUNyYXNoLXNpY2hlcjoqKiBBbGxlIGBwZW5kaW5nYC9gcHJvY2Vzc2luZ2AgSm9icyDDvGJlcmxlYmVuCiAgYG5vZGVgLUNyYXNoIG9kZXIgYFNJR0tJTExgLiBSZWNvdmVyeSBhdXRvbWF0aXNjaC4KKiAqKkRTR1ZPLS9Tb3ZlcmVpZ250eS1rb25mb3JtOioqIEtlaW5lIENsb3VkLVF1ZXVlLCBrZWluZSBleHRlcm5lbgogIEFQSS1LZXlzLCBrZWluZSBUZWxlbWV0cmllLiBBbGxlcyBpbiBgb3BlbnNpbi5kYmAuCiogKipCZXNzZXJlIFVYOioqIExMTS1nZW5lcmllcnRlIFRocmVhZC1OYW1lbiAo4omkNSBXw7ZydGVyLCBzcHJhY2hiZXd1c3N0KQogIHN0YXR0IGB0cnVuY2F0ZShwcm9tcHQsIDIyKWAuIEUyRS12ZXJpZml6aWVydDoKICBgIlRocmVhZCJgIOKGkiBgIktlaW5lIFdhaGxwcm9ncmFtbWUgMjAyNSJgIG1pdCBOdmlkaWEgTklNIG5lbW90cm9uLgoqICoqU2luZ2xlLVByb2Nlc3MtUmFjZS1mcmVpOioqIENBUy1Mb2NrIHZpYSBgdXBkYXRlTWFueWAgZnVua3Rpb25pZXJ0CiAgb2huZSBBZHZpc29yeSBMb2NrcyBvZGVyIFRyYW5zYWt0aW9uZW4uCiogKipXYXJ0dW5nc2FybToqKiBBdXRvLVBydW5pbmcgdmVyaGluZGVydCBEQi1CbG9hdC4gU3RhdHMtSGVscGVyCiAgKGBCYWNrZ3JvdW5kUXVldWUuc3RhdHMoKWApIGxpZWZlcnQgUXVldWUtU3RhdHVzIGbDvHIgTW9uaXRvcmluZy4KKiAqKlNjaGVtYS1rb25zaXN0ZW50OioqIFByaXNtYS1UYWJlbGxlIG5lYmVuIGFuZGVyZW4sIGtlaW5lCiAgc2VwYXJhdGUgREItRW5naW5lLgoqICoqR2V0ZXN0ZXQ6KiogOC84IFRlc3RzIGJlc3RhbmRlbiBpbmtsLiBFMkU6IHJlYWxlciBIVFRQLUNoYXQKICDihpIgUXVldWUg4oaSIExMTSDihpIgVGhyZWFkLVJlbmFtZSwgU0lHVEVSTS1TaHV0ZG93biwgU3RhbGUtUmVjb3ZlcnkuCgojIyMgTmVnYXRpdiAvIFRyYWRlLW9mZnMKCiogKipTaW5nbGUtV29ya2VyLVRocm91Z2hwdXQ6KiogMSBKb2IgcHJvIDUgcy4gQmVpIEJ1bGstV29ya2xvYWRzCiAgKHouQi4gMTAwMCBEb2t1bWVudC1FbWJlZGRpbmdzKSB3w6RyZSBkYXMgenUgbGFuZ3NhbS4KICAqIE1pdGlnYXRpb246IFBvbGwtSW50ZXJ2YWxsIGlzdCBlaW5lIGVpbnplbG5lIEtvbnN0YW50ZTsgcGFyYWxsZWxlCiAgICBXb3JrZXIgdmlhIGBzZXRUaW1lb3V0YC1TdGFnZ2VyaW5nIHfDpHJlbiBlaW5lIDMwLVplaWxlbi1FcndlaXRlcnVuZy4KKiAqKlNRTGl0ZS1MaW1pdDoqKiBTY2hyZWlicmF0ZSBpc3QgZHVyY2ggV0FMIHVuZCBEaXNrLUkvTyBsaW1pdGllcnQuCiAgQmVpID4xMDAgSm9icy9zIHfDvHJkZSBkaWUgUXVldWUgQm90dGxlbmVjay4KICAqIE1pdGlnYXRpb246IFJlYWxpc3Rpc2NoZSBMYXN0IGlzdCA8MSBKb2IvcyAoMSBDaGF0ID0gMSBKb2IsCiAgICB1c2VyLWRyaXZlbikuIFNrYWxpZXJ0IG1pdCBDaGF0LVZvbHVtZW4sIG5pY2h0IG1pdCBTZXJ2ZXItTGFzdC4KKiAqKk11bHRpLUluc3RhbmNlLXVuc2ljaGVyOioqIENBUy1Mb2NrIGZ1bmt0aW9uaWVydCBudXIgaW5uZXJoYWxiCiAgZWluZXMgYG5vZGVgLVByb3plc3Nlcy4gWndlaSBTZXJ2ZXItSW5zdGFuemVuIGF1ZiBkZXJzZWxiZW4gREIKICBrw7ZubnRlbiBkZW5zZWxiZW4gSm9iIHBpY2tlbiAobGV0enRlciBgdXBkYXRlTWFueWAgZ2V3aW5udCwKICBhYmVyIGVpbiBKb2Iga8O2bm50ZSAyeCBsYXVmZW4gYmV2b3IgTG9jayBzaWNodGJhciB3aXJkKS4KICAqIE1pdGlnYXRpb246IE9wZW5TSU4tQ2hhdCBpc3QgU2luZ2xlLUluc3RhbmNlIHBlciBEZXNpZ24KICAgIChNYWMtU2VydmVyLCBEb2NrZXIsIGtlaW4gQ2x1c3RlcikuIEbDvHIgTXVsdGktSW5zdGFuY2U6CiAgICBzaWVoZSAiQWx0ZXJuYXRpdmVzIENvbnNpZGVyZWQiLgoqICoqUG9sbGluZy1MYXRlbno6KiogNSBzIFdvcnN0LUNhc2Ugendpc2NoZW4gYGFkZCgpYCB1bmQgVmVyYXJiZWl0dW5nLgogICogQWt6ZXB0YWJlbDogVGl0bGUtUmVuYW1lIGlzdCBuaWNodCB6ZWl0a3JpdGlzY2gsIGRhcyBGcm9udGVuZCB6ZWlndAogICAgc29mb3J0IGRlbiBgYXV0b1JlbmFtZVRocmVhZGAtTmFtZW4gdW5kIMO8YmVyc2NocmVpYnQgaWhuIH41IHMgc3DDpHRlcgogICAgcGVyIFNTRS1FdmVudCAodm9tIEZyb250ZW5kIHp1IGltcGxlbWVudGllcmVuLCBmYWxscyBnZXfDvG5zY2h0KS4KKiAqKk9wLUxvY2sgYXVmIEJpZy1Kb2JzOioqIGBfcmVjb3ZlclN0YWxlSm9ic2Agc2V0enQgamVkZW4gSm9iIHp1csO8Y2sKICBkZXIgPjUgbWluIGJyYXVjaHQuIEVpbiBEb2t1bWVudC1FbWJlZGRpbmctSm9iIG1pdCAxIE1pbyBUb2tlbnMKICB3w7xyZGUgZGFzIHNjaGFmZmVuLiBIaWVyIG11c3MgYEpPQl9MT0NLX1RJTUVPVVRfTVNgIHBlciBKb2IgZXJow7ZodAogIHdlcmRlbiAoenVrw7xuZnRpZ2VzIEZlYXR1cmUpLgoKIyMgQWx0ZXJuYXRpdmVzIENvbnNpZGVyZWQKCiMjIyAxLiBJbi1NZW1vcnktUXVldWUgKFN0YXR1cyBxdW8gYW50ZSkKCiogKipQcm86KiogU2ltcGVsLCBrZWluZSBEQi1TY2hyZWlienVncmlmZmUuCiogKipDb250cmE6KiogVmVybGllcnQgYWxsZSBKb2JzIGJlaSBNYWMtU2xlZXAsIFNlcnZlci1DcmFzaCwgRG9ja2VyLVJlc3RhcnQuCiAgSW5ha3plcHRhYmVsIGF1ZiBlaW5lciBTb3ZlcmVpZ250eS1QbGF0dGZvcm0uCiogKipWZXJkaWN0OioqIFZlcndvcmZlbi4KCiMjIyAyLiBTdXBhYmFzZS1iYXNpZXJ0ZSBRdWV1ZQoKT3BlblNJTi1DaGF0IGhhdCBiZXJlaXRzIG9wdGlvbmFsZSBTdXBhYmFzZS1TdG9yYWdlLUFuYmluZHVuZwooYHNlcnZlci91dGlscy9zdG9yYWdlL3N1cGFiYXNlLmpzYCwgYGRvY2tlci9kb2NrZXItY29tcG9zZS5zdXBhYmFzZS55bWxgKS4KCiogKipQcm86KiogQmVzdGVoZW5kZSBJbmZyYXN0cnVrdHVyIHdpZWRlcnp1dmVyd2VuZGVuIGtsaW5ndCBlZmZpemllbnQuCiogKipDb250cmE6KioKICAqIFZlcmxldHp0IFNvdmVyZWlnbnR5LVByaW56aXA6IENsb3VkLVF1ZXVlID0gZXh0ZXJuZXMgTmV0endlcmstRGVwZW5kZW5jeQogICAgZsO8ciBpbnRlcm5lIEFibMOkdWZlLgogICogU2VsZi1ob3N0ZWQgU3VwYWJhc2UgaXN0ICoqa2VpbioqICJrZWluIENsb3VkIiDigJQgS29uZy1HYXRld2F5LAogICAgUG9zdGdyZXMsIFN0b3JhZ2UtQVBJLCBKV1QtVmVyd2FsdHVuZy4gSG9oZXIgT3BlcmF0aW9ucy1PdmVyaGVhZC4KICAqIFdlbm4gU3VwYWJhc2UgYXVzZsOkbGx0LCBzb2xsZW4gVGl0ZWwtR2VuZXJpZXJ1bmdlbiB0cm90emRlbSBsYXVmZW4KICAgIChDaGF0LVNhdmVzIGxpZWdlbiBpbiBTUUxpdGUsIFVwbG9hZHMgbnVyICpvcHRpb25hbCogaW4gU3VwYWJhc2UpLgogICogUXVldWUtRGF0ZW4gYnJhdWNoZW4ga2VpbmUgUG9zdGdyZXMtRmVhdHVyZXMgKFJlcGxpa2F0aW9uLCBSTFMsIEpTT05CKS4KKiAqKlZlcmRpY3Q6KiogVmVyd29yZmVuLiBTdG9yYWdlLUFuYmluZHVuZyBibGVpYnQgb3B0aW9uYWwsIFF1ZXVlIG5pY2h0LgoKIyMjIDMuIFJlZGlzICsgQnVsbE1RCgoqICoqUHJvOioqIFByb2R1Y3Rpb24tZ3JhZGUsIHBhcmFsbGVsZSBXb3JrZXIsIFJldHJpZXMsIFNjaGVkdWxlcy4KKiAqKkNvbnRyYToqKgogICogUmVkaXMgaXN0IGVpbmUgKip6dXPDpHR6bGljaGUqKiBJbmZyYXN0cnVrdHVyLUtvbXBvbmVudGUsIGRpZSBuaWNodHMKICAgIGFuZGVyZXMgaW4gT3BlblNJTi1DaGF0IG51dHp0LgogICogRFNHVk86IFJlZGlzLVNuYXBzaG90cyBtw7xzc2VuIHZlcnNjaGzDvHNzZWx0L3NvZm9ydCBnZWzDtnNjaHQgd2VyZGVuLgogICogTWFjLVNsZWVwOiBSZWRpcyBtw7xzc3RlIGF1Y2ggbGF1ZmVuIChIb21lYnJldy1TZXJ2aWNlKSwgenVzw6R0emxpY2hlcgogICAgQm9vdC1PcmRlci1Lb25mbGlrdC4KICAqIE92ZXJraWxsIGbDvHIgMSBKb2IvcyBMYXN0LgoqICoqVmVyZGljdDoqKiBWZXJ3b3JmZW4uIFdlbm4gQnVsay1Xb3JrbG9hZHMga29tbWVuLCBBRFItMDAyLgoKIyMjIDQuIFBvc3RncmVTUUwgKGdsZWljaGVyIERCLVNlcnZlciB3aWUgU3VwYWJhc2UsIGFiZXIgYWxzIFF1ZXVlLVRhYmVsbGUpCgoqICoqUHJvOioqIFRyYW5zYWN0aW9uYWwgU2FmZXR5LCBSb3ctTGV2ZWwtTG9ja3MuCiogKipDb250cmE6KiogT3BlblNJTi1DaGF0IGzDpHVmdCBwcmltw6RyIGF1ZiBTUUxpdGUgKHNpZWhlCiAgYG1pZ3JhdGlvbl9sb2NrLnRvbWw6cHJvdmlkZXIgPSAic3FsaXRlImAgdW5kIGBvcGVuc2luLmRiYC1QZmFkKS4KICBQb3N0Z3Jlcy1Td2l0Y2ggaXN0IGV4cGxpeml0ICJvdXQgb2Ygc2NvcGUiIHVuZCBuaWNodCBpbiBkZXIKICBgc2V0dXBgL2BwcmlzbWE6c2V0dXBgIFNjcmlwdC1DaGFpbi4KKiAqKlZlcmRpY3Q6KiogVmVyd29yZmVuLiBXw7xyZGUgQXJjaGl0ZWt0dXItV2VjaHNlbCB2b3JhdXNzZXR6ZW4uCgojIyMgNS4gUG9zdGdyZVNRTCBgTElTVEVOL05PVElGWWAgZsO8ciBzb2ZvcnRpZ2VzIFBvbGxpbmctVHJpZ2dlcgoKKiAqKlBybzoqKiBTdWItU2VrdW5kZW4tTGF0ZW56LCBrZWluIFBvbGxpbmcuCiogKipDb250cmE6KiogU1FMaXRlIGhhdCBrZWluIGBMSVNURU4vTk9USUZZYC4gV8O8cmRlIG51ciBtaXQgUG9zdGdyZXMKICBmdW5rdGlvbmllcmVuIOKGkiBzaWVoZSAjNC4KKiAqKlZlcmRpY3Q6KiogVmVyd29yZmVuIGF1cyBTUUxpdGUtQ29uc3RyYWludC4KCiMjIyA2LiBOb2RlJ3MgYHdvcmtlcl90aHJlYWRzYCBmw7xyIEluLVByb2Nlc3MtUXVldWUKCiogKipQcm86KiogU2hhcmVkLU1lbW9yeSwgc2NobmVsbCwga2VpbiBEQi1Sb3VuZHRyaXAuCiogKipDb250cmE6KiogVmVybGllcnQgYmVpIFByb2Nlc3MtRXhpdC4gV29ya2VyLVRocmVhZHMgc2luZCBrZWluZQogIFBlcnNpc3RlbnotTMO2c3VuZy4KKiAqKlZlcmRpY3Q6KiogVmVyd29yZmVuLiBTZWxiZXMgUHJvYmxlbSB3aWUgIzEuCgojIyMgNy4gYHAtcXVldWVgIChiZXJlaXRzIGltIERlcGVuZGVuY3ktVHJlZTogYHNlcnZlci9wYWNrYWdlLmpzb246NzhgKQoKKiAqKlBybzoqKiBCYXR0bGUtdGVzdGVkLCBndXQgZG9rdW1lbnRpZXJ0LCBpbi1tZW1vcnkgbWl0IFByb21pc2UtQVBJLgoqICoqQ29udHJhOioqIFJlaW4gaW4tbWVtb3J5LiBLZWluZSBQZXJzaXN0ZW56LgoqICoqVmVyZGljdDoqKiBWZXJ3b3JmZW4gZsO8ciBwZXJzaXN0ZW50ZSBKb2JzLiBCbGVpYnQgbsO8dHpsaWNoIGbDvHIKICBidXJzdHkgSW4tTWVtb3J5LUNvbmN1cnJlbmN5LUxpbWl0cyAoTExNLVByb3ZpZGVyLVJhdGUtTGltaXRzKS4KCiMjIFJlZmVyZW5jZXMKCiMjIyBDb2RlCgoqIGBzZXJ2ZXIvdXRpbHMvYmFja2dyb3VuZEpvYnMvcXVldWUuanNgIOKAlCBJbXBsZW1lbnRpZXJ1bmcKKiBgc2VydmVyL3V0aWxzL2JhY2tncm91bmRKb2JzL3F1ZXVlLmRvYy5tZGAg4oCUIENvRG9jLUNvbXBhbmlvbgoqIGBzZXJ2ZXIvdXRpbHMvYmFja2dyb3VuZEpvYnMvam9icy9nZW5lcmF0ZVRpdGxlLmpzYCDigJQgSm9iLUhhbmRsZXIKKiBgc2VydmVyL3ByaXNtYS9zY2hlbWEucHJpc21hYCDigJQgYGpvYl9xdWV1ZWAgTW9kZWxsCiogYHNlcnZlci91dGlscy9jaGF0cy9zdHJlYW0uanM6MzM1LTM0NGAg4oCUIFRyaWdnZXIKKiBgc2VydmVyL2luZGV4LmpzOjIwMi0yMjBgIOKAlCBgc3RhcnQoKWAgKyBTSUdURVJNL1NJR0lOVAoqIGBzZXJ2ZXIvbW9kZWxzL3dvcmtzcGFjZVRocmVhZC5qczoxMzEtMTU0YCDigJQgYGF1dG9SZW5hbWVUaHJlYWRgIChzeW5jaHJvbmVyIFByZS1TdGVwKQoqIGBzZXJ2ZXIvZW5kcG9pbnRzL2NoYXQuanM6MTUxLTE2MmAg4oCUIHdvIGBhdXRvUmVuYW1lVGhyZWFkYCBhdWZnZXJ1ZmVuIHdpcmQKCiMjIyBLb256ZXB0ICYgSW5zcGlyYXRpb24KCiogQW55dGhpbmdMTE0gQmFja2dyb3VuZFdvcmtlclNlcnZpY2UgKGBzZXJ2ZXIvdXRpbHMvQmFja2dyb3VuZFdvcmtlcnMvYCkKICDigJQgSW5zcGlyYXRpb24gZsO8ciBkaWUgTGlmZWN5Y2xlLUdyYW51bGFyaXTDpHQsIGFiZXIgbmljaHQgZsO8ciBkaWUKICBQZXJzaXN0ZW56LgoqIFtBbnl0aGluZ0xMTSBQUiAjMTkwN10oaHR0cHM6Ly9naXRodWIuY29tL01pbnRwbGV4LUxhYnMvYW55dGhpbmctbGxtL3B1bGwvMTkwNykKICDigJQgYGI1YTI0MzdiIHBhdGNoIGRvY2tlciBzY291dCBDVkUgaW4gb2xkIGV4cHJlc3Mtd3MgcGtnYCDigJQKICBIaW53ZWlzIGRhc3MgTWludHBsZXggYWt0aXYgYW4gQ1ZFcyBhcmJlaXRldDsgT3BlblNJTi1DaGF0IHNvbGx0ZQogIHVwc3RyZWFtLXN5bmNoZW4gdW5kICoqZGllc2VuIEFEUiB1bnZlcsOkbmRlcnQgbGFzc2VuKiogKGtlaW4KICBzY2hlbWEtbWVyZ2Uta29uZmxpa3QsIGRhIGBqb2JfcXVldWVgIGFtIEVuZGUgdm9uIGBzY2hlbWEucHJpc21hYCkuCgojIyMgQ29tbWl0CgoqIGBhY2M5Nzk1OCBmZWF0KHNlcnZlcik6IHBlcnNpc3RlbnRlciBCYWNrZ3JvdW5kLUpvYi1RdWV1ZSArIGRlZmVuc2l2ZXIgV1MtR3VhcmRgCiAg4oCUIGVudGjDpGx0IGRlbiBDb2RlLCBkaWUgU2NoZW1hLU1pZ3JhdGlvbiwgZGVuIFN0cmVhbS1UcmlnZ2VyIHVuZCBkZW4KICBCb251cy1GaXggaW4gYGFnZW50V2Vic29ja2V0LmpzYCAoZGVmZW5zaXZlciBHdWFyZCBnZWdlbiBwcmUtZXhpc3RpbmcKICBgYXBwLndzYC1CdWcsIGRlciBkZW4gU2VydmVyLUJvb3QgYmxvY2tpZXJ0ZSkuCgojIyMgVmVyaWZpa2F0aW9uCgoqICoqV0FMIGFrdGl2OioqIGBzcWxpdGUzIHNlcnZlci9zdG9yYWdlL29wZW5zaW4uZGIgIlBSQUdNQSBqb3VybmFsX21vZGU7ImAg4oaSIGB3YWxgCiogKipFMkUtVGVzdDoqKiBgY3VybCBQT1NUIC9hcGkvd29ya3NwYWNlL3Rlc3QvdGhyZWFkLzxzbHVnPi9zdHJlYW0tY2hhdGAKICBtaXQgYCJXYXMgc2luZCBkaWUgd2ljaHRpZ3N0ZW4gV2FobHByb2dyYW1tZSB6dXIgQnVuZGVzdGFnc3dhaGwgMjAyNT8iYAogIOKGkiBTU0UtU3RyZWFtIOKGkiBgYXV0b1JlbmFtZVRocmVhZGAgc2V0enQgdHJ1bmNhdGVkIE5hbWUg4oaSCiAgUXVldWUgcGlja3QgSm9iIG5hY2ggNSBzIOKGkiBMTE0gKE52aWRpYSBOSU0gbmVtb3Ryb24pIGdlbmVyaWVydAogIGAiS2VpbmUgV2FobHByb2dyYW1tZSAyMDI1ImAgKDQgV8O2cnRlciwgZGV1dHNjaGUgU3ByYWNoZSkuCiogKipTSUdURVJNLVRlc3Q6KiogUHJvY2VzcyBiZWVuZGV0IHNpY2ggbWl0ICJCYWNrZ3JvdW5kIHF1ZXVlIHN0b3BwZWQuIgo=
+# ADR-001: Persistente Background-Job-Queue via SQLite
+
+**Status:** Accepted
+**Date:** 2026-06-07
+**Deciders:** Jeremy (OpenSIN-Chat maintainer)
+
+## Context
+
+OpenSIN-Chat ist eine **Sovereignty-first / Offline-first** Fork von AnythingLLM
+(`docs/supabase-self-hosted.md`, `SECURITY.md`). Sie läuft typischerweise als
+**Single-Node auf einem Mac hinter einem Cloudflare-Tunnel** — kein Container-
+Cluster, keine Cloud-Worker, keine externen Broker.
+
+### Das Problem
+
+Hintergrund-Jobs (z.B. das Generieren eines sprechenden Thread-Titels nach
+einer Chat-Antwort) waren vorher **nicht persistent**:
+
+* In-Memory-Queues verschwinden beim `node`-Prozess-Exit, beim `SIGTERM`,
+  beim Mac-Sleep oder beim Docker-Restart.
+* Der Mac geht regelmäßig in den Standby-Modus. Beim Aufwachen waren alle
+  in-flight Jobs verloren — der User sah entweder den Default-Namen
+  `"Thread"` oder einen `truncate(prompt, 22)`-Hack aus
+  `server/models/workspaceThread.js:149`.
+* LLM-Aufrufe im HTTP-Request-Loop blockieren die Antwort und koppeln
+  Latenz an die LLM-Antwortzeit (typisch 2-10 s).
+
+### Die Kräfte (Forces)
+
+* **Sovereignty:** Keine Cloud-Pflicht, DSGVO-konform, kein Netzwerk-
+  Dependency für interne Abläufe.
+* **Resilienz:** Jobs müssen Mac-Sleep, Server-Crashes, Docker-Neustarts
+  überleben.
+* **Einfachheit:** Single-Node, Single-Process, kein Operator-Overhead.
+* **Schema-Konsistenz:** OpenSIN-Chat nutzt bereits Prisma + SQLite
+  (`opensin.db`). Eine neue DB-Engine einzuführen wäre Architektur-Bloat.
+* **Performance:** 1 Chat = 1 Job. Burst-Raten sind klein (User-getrieben,
+  kein Batch-Processing).
+* **Bestand:** `autoRenameThread` in `server/models/workspaceThread.js:131`
+  macht bereits `truncate(prompt, 22)` synchron im Request-Loop — funktional,
+  aber qualitativ schlecht und UI-flackert.
+
+## Decision
+
+Wir implementieren eine **persistente, SQLite-basierte Background-Job-Queue**
+als Modul `server/utils/backgroundJobs/queue.js`, die:
+
+1. **Im bestehenden Prisma-Schema** lebt (Modell `job_queue`), keine
+   neue Datenbank-Engine.
+2. **Single-Worker per Polling** arbeitet (5 s Intervall) — kein
+   paralleler Worker-Pool, keine externe Broker-Lib.
+3. **Atomaren CAS-Lock** via `prisma.updateMany(where: { status: "pending" })`
+   verwendet — verhindert Doppel-Verarbeitung auch bei parallelen `add()`-
+   Calls ohne `SELECT FOR UPDATE` oder Advisory Locks.
+4. **Auto-Recovery bei Stale Locks** (5 min Threshold) — überlebt
+   Server-Crashes und Mac-Sleep.
+5. **Auto-Pruning** von `completed`/`failed` Jobs nach 7 Tagen —
+   verhindert DB-Bloat bei jahrelangem Dauerbetrieb.
+6. **Trigger im Stream** (`server/utils/chats/stream.js`) enqueued den
+   Job **nach** `WorkspaceChats.new()` mit nur serialisierbaren Daten
+   (IDs, Slugs, Strings) im Payload.
+7. **Override-Heuristik** im `generateTitle`-Job überschreibt den
+   `truncate(prompt, 22)`-Namen, aber **nicht** User-setzte Namen
+   (Schutz vor Datenverlust bei manueller Umbenennung).
+
+### Konkrete Konstanten
+
+| Parameter | Wert | Begründung |
+|---|---|---|
+| `POLL_INTERVAL_MS` | 5000 | 5 s — schnell genug für UX, idle-freundlich |
+| `JOB_LOCK_TIMEOUT_MS` | 5 min | Länger als jeder realistische LLM-Aufruf |
+| `PRUNE_INTERVAL_POLLS` | 1000 | ~83 Min zwischen Cleanup-Runs |
+| `RETENTION_DAYS` | 7 | Debugging-Fenster für fehlgeschlagene Jobs |
+
+### Job-Lifecycle
+
+```
+add() → pending → processing (CAS-Lock) → completed
+                                    ↓ (throw)
+                              attempts < max_attempts?
+                                    ↓ yes / no ↓
+                                 pending  /  failed
+```
+
+### Datei-Layout
+
+```
+server/utils/backgroundJobs/
+├── queue.js               # PersistentBackgroundQueue (Singleton)
+├── queue.doc.md           # CoDoc: was/wozu/wie
+└── jobs/
+    ├── generateTitle.js   # GENERATE_THREAD_TITLE Handler
+    └── generateTitle.doc.md
+```
+
+### Schema
+
+```prisma
+model job_queue {
+  id           Int       @id @default(autoincrement())
+  job_name     String
+  payload      String    // JSON, nur serialisierbare Daten
+  status       String    @default("pending") // pending|processing|completed|failed
+  attempts     Int       @default(0)
+  max_attempts Int       @default(3)
+  last_error   String?
+  locked_at    DateTime?
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+
+  @@index([status, created_at])
+  @@index([status, locked_at])
+}
+```
+
+### SQLite-Konfiguration
+
+* `journal_mode=WAL` aktiviert (verhindert Reader/Writer-Blockade zwischen
+  Polling und Chat-Saves).
+* `npx prisma db push` synct das Schema; `npx prisma generate` aktualisiert
+  den Client.
+
+## Consequences
+
+### Positiv
+
+* **Mac-Sleep-sicher:** Queue friert beim Standby ein, wacht automatisch
+  auf und arbeitet pending Jobs ab. `_recoverStaleJobs` erkennt
+  abgelaufene Locks nach 5 min.
+* **Server-Crash-sicher:** Alle `pending`/`processing` Jobs überleben
+  `node`-Crash oder `SIGKILL`. Recovery automatisch.
+* **DSGVO-/Sovereignty-konform:** Keine Cloud-Queue, keine externen
+  API-Keys, keine Telemetrie. Alles in `opensin.db`.
+* **Bessere UX:** LLM-generierte Thread-Namen (≤5 Wörter, sprachbewusst)
+  statt `truncate(prompt, 22)`. E2E-verifiziert:
+  `"Thread"` → `"Keine Wahlprogramme 2025"` mit Nvidia NIM nemotron.
+* **Single-Process-Race-frei:** CAS-Lock via `updateMany` funktioniert
+  ohne Advisory Locks oder Transaktionen.
+* **Wartungsarm:** Auto-Pruning verhindert DB-Bloat. Stats-Helper
+  (`BackgroundQueue.stats()`) liefert Queue-Status für Monitoring.
+* **Schema-konsistent:** Prisma-Tabelle neben anderen, keine
+  separate DB-Engine.
+* **Getestet:** 8/8 Tests bestanden inkl. E2E: realer HTTP-Chat
+  → Queue → LLM → Thread-Rename, SIGTERM-Shutdown, Stale-Recovery.
+
+### Negativ / Trade-offs
+
+* **Single-Worker-Throughput:** 1 Job pro 5 s. Bei Bulk-Workloads
+  (z.B. 1000 Dokument-Embeddings) wäre das zu langsam.
+  * Mitigation: Poll-Intervall ist eine einzelne Konstante; parallele
+    Worker via `setTimeout`-Staggering wären eine 30-Zeilen-Erweiterung.
+* **SQLite-Limit:** Schreibrate ist durch WAL und Disk-I/O limitiert.
+  Bei >100 Jobs/s würde die Queue Bottleneck.
+  * Mitigation: Realistische Last ist <1 Job/s (1 Chat = 1 Job,
+    user-driven). Skaliert mit Chat-Volumen, nicht mit Server-Last.
+* **Multi-Instance-unsicher:** CAS-Lock funktioniert nur innerhalb
+  eines `node`-Prozesses. Zwei Server-Instanzen auf derselben DB
+  könnten denselben Job picken (letzter `updateMany` gewinnt,
+  aber ein Job könnte 2x laufen bevor Lock sichtbar wird).
+  * Mitigation: OpenSIN-Chat ist Single-Instance per Design
+    (Mac-Server, Docker, kein Cluster). Für Multi-Instance:
+    siehe "Alternatives Considered".
+* **Polling-Latenz:** 5 s Worst-Case zwischen `add()` und Verarbeitung.
+  * Akzeptabel: Title-Rename ist nicht zeitkritisch, das Frontend zeigt
+    sofort den `autoRenameThread`-Namen und überschreibt ihn ~5 s später
+    per SSE-Event (vom Frontend zu implementieren, falls gewünscht).
+* **Op-Lock auf Big-Jobs:** `_recoverStaleJobs` setzt jeden Job zurück
+  der >5 min braucht. Ein Dokument-Embedding-Job mit 1 Mio Tokens
+  würde das schaffen. Hier muss `JOB_LOCK_TIMEOUT_MS` per Job erhöht
+  werden (zukünftiges Feature).
+
+## Alternatives Considered
+
+### 1. In-Memory-Queue (Status quo ante)
+
+* **Pro:** Simpel, keine DB-Schreibzugriffe.
+* **Contra:** Verliert alle Jobs bei Mac-Sleep, Server-Crash, Docker-Restart.
+  Inakzeptabel auf einer Sovereignty-Plattform.
+* **Verdict:** Verworfen.
+
+### 2. Supabase-basierte Queue
+
+OpenSIN-Chat hat bereits optionale Supabase-Storage-Anbindung
+(`server/utils/storage/supabase.js`, `docker/docker-compose.supabase.yml`).
+
+* **Pro:** Bestehende Infrastruktur wiederzuverwenden klingt effizient.
+* **Contra:**
+  * Verletzt Sovereignty-Prinzip: Cloud-Queue = externes Netzwerk-Dependency
+    für interne Abläufe.
+  * Self-hosted Supabase ist **kein** "kein Cloud" — Kong-Gateway,
+    Postgres, Storage-API, JWT-Verwaltung. Hoher Operations-Overhead.
+  * Wenn Supabase ausfällt, sollen Titel-Generierungen trotzdem laufen
+    (Chat-Saves liegen in SQLite, Uploads nur *optional* in Supabase).
+  * Queue-Daten brauchen keine Postgres-Features (Replikation, RLS, JSONB).
+* **Verdict:** Verworfen. Storage-Anbindung bleibt optional, Queue nicht.
+
+### 3. Redis + BullMQ
+
+* **Pro:** Production-grade, parallele Worker, Retries, Schedules.
+* **Contra:**
+  * Redis ist eine **zusätzliche** Infrastruktur-Komponente, die nichts
+    anderes in OpenSIN-Chat nutzt.
+  * DSGVO: Redis-Snapshots müssen verschlüsselt/sofort gelöscht werden.
+  * Mac-Sleep: Redis müsste auch laufen (Homebrew-Service), zusätzlicher
+    Boot-Order-Konflikt.
+  * Overkill für 1 Job/s Last.
+* **Verdict:** Verworfen. Wenn Bulk-Workloads kommen, ADR-002.
+
+### 4. PostgreSQL (gleicher DB-Server wie Supabase, aber als Queue-Tabelle)
+
+* **Pro:** Transactional Safety, Row-Level-Locks.
+* **Contra:** OpenSIN-Chat läuft primär auf SQLite (siehe
+  `migration_lock.toml:provider = "sqlite"` und `opensin.db`-Pfad).
+  Postgres-Switch ist explizit "out of scope" und nicht in der
+  `setup`/`prisma:setup` Script-Chain.
+* **Verdict:** Verworfen. Würde Architektur-Wechsel voraussetzen.
+
+### 5. PostgreSQL `LISTEN/NOTIFY` für sofortiges Polling-Trigger
+
+* **Pro:** Sub-Sekunden-Latenz, kein Polling.
+* **Contra:** SQLite hat kein `LISTEN/NOTIFY`. Würde nur mit Postgres
+  funktionieren → siehe #4.
+* **Verdict:** Verworfen aus SQLite-Constraint.
+
+### 6. Node's `worker_threads` für In-Process-Queue
+
+* **Pro:** Shared-Memory, schnell, kein DB-Roundtrip.
+* **Contra:** Verliert bei Process-Exit. Worker-Threads sind keine
+  Persistenz-Lösung.
+* **Verdict:** Verworfen. Selbes Problem wie #1.
+
+### 7. `p-queue` (bereits im Dependency-Tree: `server/package.json:78`)
+
+* **Pro:** Battle-tested, gut dokumentiert, in-memory mit Promise-API.
+* **Contra:** Rein in-memory. Keine Persistenz.
+* **Verdict:** Verworfen für persistente Jobs. Bleibt nützlich für
+  bursty In-Memory-Concurrency-Limits (LLM-Provider-Rate-Limits).
+
+## References
+
+### Code
+
+* `server/utils/backgroundJobs/queue.js` — Implementierung
+* `server/utils/backgroundJobs/queue.doc.md` — CoDoc-Companion
+* `server/utils/backgroundJobs/jobs/generateTitle.js` — Job-Handler
+* `server/prisma/schema.prisma` — `job_queue` Modell
+* `server/utils/chats/stream.js:335-344` — Trigger
+* `server/index.js:202-220` — `start()` + SIGTERM/SIGINT
+* `server/models/workspaceThread.js:131-154` — `autoRenameThread` (synchroner Pre-Step)
+* `server/endpoints/chat.js:151-162` — wo `autoRenameThread` aufgerufen wird
+
+### Konzept & Inspiration
+
+* AnythingLLM BackgroundWorkerService (`server/utils/BackgroundWorkers/`)
+  — Inspiration für die Lifecycle-Granularität, aber nicht für die
+  Persistenz.
+* [AnythingLLM PR #1907](https://github.com/Mintplex-Labs/anything-llm/pull/1907)
+  — `b5a2437b patch docker scout CVE in old express-ws pkg` —
+  Hinweis dass Mintplex aktiv an CVEs arbeitet; OpenSIN-Chat sollte
+  upstream-synchen und **diesen ADR unverändert lassen** (kein
+  schema-merge-konflikt, da `job_queue` am Ende von `schema.prisma`).
+
+### Commit
+
+* `acc97958 feat(server): persistenter Background-Job-Queue + defensiver WS-Guard`
+  — enthält den Code, die Schema-Migration, den Stream-Trigger und den
+  Bonus-Fix in `agentWebsocket.js` (defensiver Guard gegen pre-existing
+  `app.ws`-Bug, der den Server-Boot blockierte).
+
+### Verifikation
+
+* **WAL aktiv:** `sqlite3 server/storage/opensin.db "PRAGMA journal_mode;"` → `wal`
+* **E2E-Test:** `curl POST /api/workspace/test/thread/<slug>/stream-chat`
+  mit `"Was sind die wichtigsten Wahlprogramme zur Bundestagswahl 2025?"`
+  → SSE-Stream → `autoRenameThread` setzt truncated Name →
+  Queue pickt Job nach 5 s → LLM (Nvidia NIM nemotron) generiert
+  `"Keine Wahlprogramme 2025"` (4 Wörter, deutsche Sprache).
+* **SIGTERM-Test:** Process beendet sich mit "Background queue stopped."

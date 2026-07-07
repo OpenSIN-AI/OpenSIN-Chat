@@ -1,1 +1,215 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQganMgZnJvbSAiQGVzbGludC9qcyIKaW1wb3J0IGdsb2JhbHMgZnJvbSAiZ2xvYmFscyIKaW1wb3J0IHBsdWdpblJlYWN0IGZyb20gImVzbGludC1wbHVnaW4tcmVhY3QiCmltcG9ydCBwbHVnaW5SZWFjdEhvb2tzIGZyb20gImVzbGludC1wbHVnaW4tcmVhY3QtaG9va3MiCmltcG9ydCBwbHVnaW5Kc3hBMTF5IGZyb20gImVzbGludC1wbHVnaW4tanN4LWExMXkiCmltcG9ydCBwbHVnaW5QcmV0dGllciBmcm9tICJlc2xpbnQtcGx1Z2luLXByZXR0aWVyIgppbXBvcnQgY29uZmlnUHJldHRpZXIgZnJvbSAiZXNsaW50LWNvbmZpZy1wcmV0dGllciIKaW1wb3J0IHVudXNlZEltcG9ydHMgZnJvbSAiZXNsaW50LXBsdWdpbi11bnVzZWQtaW1wb3J0cyIKaW1wb3J0IHRzZXNsaW50IGZyb20gInR5cGVzY3JpcHQtZXNsaW50IgppbXBvcnQgcGx1Z2luSTE4bmV4dE1vZHVsZSBmcm9tICJlc2xpbnQtcGx1Z2luLWkxOG5leHQiCmNvbnN0IHBsdWdpbkkxOG5leHQgPSBwbHVnaW5JMThuZXh0TW9kdWxlLmRlZmF1bHQgfHwgcGx1Z2luSTE4bmV4dE1vZHVsZQoKLy8gT25seSBhbGxvdyBpbmxpbmUgc3R5bGVzIHdoZW4gdGhleSBhcmUgdXNlZCBleGNsdXNpdmVseSBmb3IgQ1NTIGN1c3RvbQovLyBwcm9wZXJ0aWVzIChydW50aW1lIGRlc2lnbiB0b2tlbnMpLiBBbGwgb3RoZXIgbGF5b3V0L2NvbG9yIHN0eWxlcyBzaG91bGQgYmUKLy8gVGFpbHdpbmQgdXRpbGl0aWVzLiBTZWUgZG9jcy9JTkxJTkUtU1RZTEVTLUFVRElULm1kIGZvciBleGNlcHRpb25zLgpjb25zdCBpbmxpbmVTdHlsZXNQbHVnaW4gPSB7CiAgcnVsZXM6IHsKICAgICJjc3MtdmFycy1vbmx5IjogewogICAgICBtZXRhOiB7CiAgICAgICAgdHlwZTogInN1Z2dlc3Rpb24iLAogICAgICAgIGRvY3M6IHsKICAgICAgICAgIGRlc2NyaXB0aW9uOgogICAgICAgICAgICAiRGlzYWxsb3cgaW5saW5lIHN0eWxlcyB1bmxlc3MgdGhleSBvbmx5IHNldCBDU1MgY3VzdG9tIHByb3BlcnRpZXMuIiwKICAgICAgICB9LAogICAgICAgIG1lc3NhZ2VzOiB7CiAgICAgICAgICBub0lubGluZVN0eWxlczoKICAgICAgICAgICAgIklubGluZSBzdHlsZXMgYXJlIGFsbG93ZWQgb25seSBmb3IgQ1NTIGN1c3RvbSBwcm9wZXJ0aWVzICgtLSopLiBVc2UgVGFpbHdpbmQgdXRpbGl0aWVzIG9yIGRvY3VtZW50IGFuIGV4Y2VwdGlvbiBpbiBkb2NzL0lOTElORS1TVFlMRVMtQVVESVQubWQuIiwKICAgICAgICB9LAogICAgICB9LAogICAgICBjcmVhdGUoY29udGV4dCkgewogICAgICAgIHJldHVybiB7CiAgICAgICAgICBKU1hBdHRyaWJ1dGUobm9kZSkgewogICAgICAgICAgICBpZiAobm9kZS5uYW1lPy5uYW1lICE9PSAic3R5bGUiKSByZXR1cm47CiAgICAgICAgICAgIGNvbnN0IGV4cHIgPSBub2RlLnZhbHVlPy5leHByZXNzaW9uOwogICAgICAgICAgICBpZiAoIWV4cHIgfHwgZXhwci50eXBlICE9PSAiT2JqZWN0RXhwcmVzc2lvbiIpIHJldHVybjsKICAgICAgICAgICAgY29uc3QgaGFzTm9uVmFyID0gZXhwci5wcm9wZXJ0aWVzLnNvbWUoKHByb3ApID0+IHsKICAgICAgICAgICAgICBpZiAocHJvcC50eXBlICE9PSAiUHJvcGVydHkiKSByZXR1cm4gdHJ1ZTsKICAgICAgICAgICAgICBpZiAocHJvcC5rZXkudHlwZSA9PT0gIklkZW50aWZpZXIiKQogICAgICAgICAgICAgICAgcmV0dXJuICFwcm9wLmtleS5uYW1lLnN0YXJ0c1dpdGgoIi0tIik7CiAgICAgICAgICAgICAgaWYgKHByb3Aua2V5LnR5cGUgPT09ICJMaXRlcmFsIikKICAgICAgICAgICAgICAgIHJldHVybiAhU3RyaW5nKHByb3Aua2V5LnZhbHVlKS5zdGFydHNXaXRoKCItLSIpOwogICAgICAgICAgICAgIHJldHVybiB0cnVlOwogICAgICAgICAgICB9KTsKICAgICAgICAgICAgaWYgKGhhc05vblZhcikgewogICAgICAgICAgICAgIGNvbnRleHQucmVwb3J0KHsgbm9kZSwgbWVzc2FnZUlkOiAibm9JbmxpbmVTdHlsZXMiIH0pOwogICAgICAgICAgICB9CiAgICAgICAgICB9LAogICAgICAgIH07CiAgICAgIH0sCiAgICB9LAogIH0sCn07CgovLyBFbmFibGUgdGhlIGZ1bGwganN4LWExMXkgcmVjb21tZW5kZWQgc2V0IGJ1dCBhcyB3YXJuaW5ncywgc28gaXQgc3VyZmFjZXMKLy8gYWNjZXNzaWJpbGl0eSBpc3N1ZXMgaW4gQ0kgd2l0aG91dCBicmVha2luZyB0aGUgYnVpbGQgb24gdGhlIGV4aXN0aW5nCi8vIGJhY2tsb2cuIFRpZ2h0ZW4gaW5kaXZpZHVhbCBydWxlcyB0byAiZXJyb3IiIGFzIHRoZXkgZ2V0IGZpeGVkLgpjb25zdCBhMTF5UmVjb21tZW5kZWRBc1dhcm5pbmdzID0gT2JqZWN0LmZyb21FbnRyaWVzKAogIE9iamVjdC5rZXlzKHBsdWdpbkpzeEExMXkuZmxhdENvbmZpZ3MucmVjb21tZW5kZWQucnVsZXMpLm1hcCgocnVsZSkgPT4gWwogICAgcnVsZSwKICAgICJ3YXJuIgogIF0pCikKCmV4cG9ydCBkZWZhdWx0IFsKICB7CiAgICBpZ25vcmVzOiBbIioqLyoubWluLmpzIiwgInNyYy9tZWRpYS8qKi8qIl0KICB9LAoKICAvLyBCYXNlIEpTIHJlY29tbWVuZGVkIHJ1bGVzCiAganMuY29uZmlncy5yZWNvbW1lbmRlZCwKCiAgLy8gVHlwZVNjcmlwdCBFU0xpbnQgcmVjb21tZW5kZWQgcnVsZXMKICAuLi50c2VzbGludC5jb25maWdzLnJlY29tbWVuZGVkLAoKICAvLyBZb3VyIFJlYWN0L0pTWCBmaWxlcyAoYm90aCAuanMvLmpzeCBhbmQgLnRzLy50c3gpCiAgewogICAgZmlsZXM6IFsic3JjLyoqLyoue2pzLGpzeCxtanMsY2pzLHRzLHRzeH0iXSwKICAgIGxhbmd1YWdlT3B0aW9uczogewogICAgICBlY21hVmVyc2lvbjogImxhdGVzdCIsCiAgICAgIHNvdXJjZVR5cGU6ICJtb2R1bGUiLAogICAgICBwYXJzZXJPcHRpb25zOiB7CiAgICAgICAgZWNtYUZlYXR1cmVzOiB7IGpzeDogdHJ1ZSB9CiAgICAgIH0sCiAgICAgIGdsb2JhbHM6IGdsb2JhbHMuYnJvd3NlcgogICAgfSwKICAgIHBsdWdpbnM6IHsKICAgICAgcmVhY3Q6IHBsdWdpblJlYWN0LAogICAgICAicmVhY3QtaG9va3MiOiBwbHVnaW5SZWFjdEhvb2tzLAogICAgICAianN4LWExMXkiOiBwbHVnaW5Kc3hBMTF5LAogICAgICAidW51c2VkLWltcG9ydHMiOiB1bnVzZWRJbXBvcnRzLAogICAgICBwcmV0dGllcjogcGx1Z2luUHJldHRpZXIsCiAgICAgIGkxOG5leHQ6IHBsdWdpbkkxOG5leHQsCiAgICAgIGlubGluZVN0eWxlczogaW5saW5lU3R5bGVzUGx1Z2luLAogICAgfSwKICAgIHNldHRpbmdzOiB7CiAgICAgIHJlYWN0OiB7IHZlcnNpb246ICJkZXRlY3QiIH0KICAgIH0sCiAgICBydWxlczogewogICAgICAuLi5wbHVnaW5SZWFjdC5jb25maWdzLmZsYXQucmVjb21tZW5kZWQucnVsZXMsCiAgICAgIC4uLnBsdWdpblJlYWN0SG9va3MuY29uZmlncy5yZWNvbW1lbmRlZC5ydWxlcywKICAgICAgLy8gQWNjZXNzaWJpbGl0eSByZWNvbW1lbmRlZCBydWxlcyAoYXMgd2FybmluZ3MsIHNlZSBub3RlIGFib3ZlKQogICAgICAuLi5hMTF5UmVjb21tZW5kZWRBc1dhcm5pbmdzLAogICAgICAuLi5jb25maWdQcmV0dGllci5ydWxlcywKICAgICAgInByZXR0aWVyL3ByZXR0aWVyIjogImVycm9yIiwKCiAgICAgICJyZWFjdC9yZWFjdC1pbi1qc3gtc2NvcGUiOiAib2ZmIiwKICAgICAgInJlYWN0LWhvb2tzL2V4aGF1c3RpdmUtZGVwcyI6ICJvZmYiLAogICAgICAicmVhY3QvcHJvcC10eXBlcyI6ICJvZmYiLAogICAgICAicmVhY3QtaG9va3Mvc2V0LXN0YXRlLWluLWVmZmVjdCI6ICJvZmYiLAogICAgICAicmVhY3QtaG9va3Mvc3RhdGljLWNvbXBvbmVudHMiOiAib2ZmIiwKICAgICAgInJlYWN0LWhvb2tzL3VzZS1tZW1vIjogIm9mZiIsCiAgICAgIC8vIHJlZnMgcnVsZSBwcm9kdWNlcyBmYWxzZSBwb3NpdGl2ZXMgb24gbGVnaXRpbWF0ZSByZWYtZm9yd2FyZGluZyBwYXR0ZXJucwogICAgICAicmVhY3QtaG9va3MvcmVmcyI6ICJ3YXJuIiwKICAgICAgInJlYWN0L2pzeC1uby10YXJnZXQtYmxhbmsiOiAiZXJyb3IiLAogICAgICAvLyBTdXJmYWNlIG5ldyB1bnNhbml0aXplZCBkYW5nZXJvdXNseVNldElubmVySFRNTCB1c2FnZXMgKHRpZ2h0ZW4gdG8gImVycm9yIiBsYXRlcikKICAgICAgInJlYWN0L25vLWRhbmdlciI6ICJ3YXJuIiwKICAgICAgInJlYWN0L25vLXVuZXNjYXBlZC1lbnRpdGllcyI6ICJvZmYiLAogICAgICAicmVhY3QvZGlzcGxheS1uYW1lIjogIm9mZiIsCiAgICAgICJyZWFjdC1ob29rcy9pbW11dGFiaWxpdHkiOiAib2ZmIiwKICAgICAgInJlYWN0LWhvb2tzL3ByZXNlcnZlLW1hbnVhbC1tZW1vaXphdGlvbiI6ICJvZmYiLAogICAgICAibm8tZXh0cmEtYm9vbGVhbi1jYXN0IjogIm9mZiIsCiAgICAgICJuby1wcm90b3R5cGUtYnVpbHRpbnMiOiAib2ZmIiwKICAgICAgIm5vLWVtcHR5IjogIm9mZiIsCiAgICAgICJuby11c2VsZXNzLWVzY2FwZSI6ICJvZmYiLAogICAgICAibm8tdW5kZWYiOiAiZXJyb3IiLAogICAgICAibm8tdW5zYWZlLW9wdGlvbmFsLWNoYWluaW5nIjogIm9mZiIsCiAgICAgICJuby1jb25zdGFudC1iaW5hcnktZXhwcmVzc2lvbiI6ICJvZmYiLAoKICAgICAgIm5vLWNvbnNvbGUiOiBbIndhcm4iLCB7ICJhbGxvdyI6IFsid2FybiIsICJlcnJvciJdIH1dLAogICAgICAvLyBIYW5kbGVkIGJ5IHRzY29uZmlnIG5vVW51c2VkTG9jYWxzCiAgICAgICJuby11bnVzZWQtdmFycyI6ICJvZmYiLAogICAgICAiQHR5cGVzY3JpcHQtZXNsaW50L25vLXVudXNlZC12YXJzIjogIm9mZiIsCiAgICAgICJ1bnVzZWQtaW1wb3J0cy9uby11bnVzZWQtaW1wb3J0cyI6ICJlcnJvciIsCiAgICAgICJ1bnVzZWQtaW1wb3J0cy9uby11bnVzZWQtdmFycyI6IFsKICAgICAgICAid2FybiIsCiAgICAgICAgewogICAgICAgICAgdmFyczogImFsbCIsCiAgICAgICAgICB2YXJzSWdub3JlUGF0dGVybjogIl5fIiwKICAgICAgICAgIGFyZ3M6ICJhZnRlci11c2VkIiwKICAgICAgICAgIGFyZ3NJZ25vcmVQYXR0ZXJuOiAiXl8iCiAgICAgICAgfQogICAgICBdLAogICAgICAvLyBUT0RPOiB0aWdodGVuIHRvICdlcnJvcicgYWZ0ZXIgY29tcG9uZW50IHByb3AgdHlwZXMgYXJlIGNsZWFuZWQgdXAKICAgICAgIkB0eXBlc2NyaXB0LWVzbGludC9uby1leHBsaWNpdC1hbnkiOiAid2FybiIsCiAgICAgICJAdHlwZXNjcmlwdC1lc2xpbnQvZXhwbGljaXQtZnVuY3Rpb24tcmV0dXJuLXR5cGVzIjogIm9mZiIsCiAgICAgICJAdHlwZXNjcmlwdC1lc2xpbnQvbm8tcmVxdWlyZS1pbXBvcnRzIjogIm9mZiIsCgogICAgICAvLyBQcmV2ZW50IG5ldyBpbmxpbmUgc3R5bGVzIGFmdGVyICM2NSBtaWdyYXRpb24uCiAgICAgIC8vIEFsbG93ZWQ6IHN0eWxlIG9iamVjdHMgdGhhdCBvbmx5IHNldCBDU1MgY3VzdG9tIHByb3BlcnRpZXMgKHJ1bnRpbWUKICAgICAgLy8gZGVzaWduIHRva2VucykuIEV2ZXJ5dGhpbmcgZWxzZSBzaG91bGQgYmUgYSBUYWlsd2luZCB1dGlsaXR5LgogICAgICAvLyBFeGNlcHRpb25zIG11c3QgYmUgZG9jdW1lbnRlZCBpbiBkb2NzL0lOTElORS1TVFlMRVMtQVVESVQubWQuCiAgICAgICJpbmxpbmVTdHlsZXMvY3NzLXZhcnMtb25seSI6ICJ3YXJuIiwKICAgICAgLy8gaTE4bjogZm9yYmlkIGhhcmRjb2RlZCB1c2VyLWZhY2luZyBzdHJpbmdzIGluIEpTWCDigJQgZXZlcnkgdmlzaWJsZSBzdHJpbmcKICAgICAgLy8gbXVzdCBnbyB0aHJvdWdoIHQoKS4gU2V0IHRvICJ3YXJuIiBzbyB0aGUgZXhpc3RpbmcgYmFja2xvZyBzdXJmYWNlcyBpbiBDSQogICAgICAvLyB3aXRob3V0IGJyZWFraW5nIHRoZSBidWlsZC4gVGlnaHRlbiB0byAiZXJyb3IiIG9uY2UgdGhlIGJhY2tsb2cgaXMgY2xlYXJlZC4KICAgICAgLy8gUHJldmVudHMgcmVncmVzc2lvbnMgb2YgdGhlIHYwLjYuMC92MC42LjEgaGFyZGNvZGVkLUdlcm1hbi9FbmdsaXNoIHBhdHRlcm4uCiAgICAgICJpMThuZXh0L25vLWxpdGVyYWwtc3RyaW5nIjogWwogICAgICAgICJ3YXJuIiwKICAgICAgICB7CiAgICAgICAgICBtb2RlOiAianN4LW9ubHkiLAogICAgICAgICAgImpzeC1hdHRyaWJ1dGVzIjogewogICAgICAgICAgICBpbmNsdWRlOiBbImFsdCIsICJ0aXRsZSIsICJwbGFjZWhvbGRlciIsICJhcmlhLWxhYmVsIiwgImxhYmVsIl0KICAgICAgICAgIH0sCiAgICAgICAgICB3b3JkczogewogICAgICAgICAgICAvLyBCcmFuZCBuYW1lcywgdGVjaG5pY2FsIHRva2VucywgYW5kIHB1cmUgcHVuY3R1YXRpb24gYXJlIGZpbmUuCiAgICAgICAgICAgIGV4Y2x1ZGU6IFsKICAgICAgICAgICAgICAiT3BlblNJTiIsCiAgICAgICAgICAgICAgIlBERiIsICJET0MiLCAiWExTIiwgIkNTViIsICJJTUciLCAiU1ZHIiwgIlBQVCIsCiAgICAgICAgICAgICAgIk91dGxvb2siLAogICAgICAgICAgICAgICJodHRwczovL2FwaS5vcGVuYWkuY29tIiwKICAgICAgICAgICAgICAic2stLi4uIiwKICAgICAgICAgICAgICAiZGFsbC1lLTMiLAogICAgICAgICAgICAgICLCtyIsICJcXCoiLCAiLSIsICIvIiwgIjoiLCAiJSIKICAgICAgICAgICAgXQogICAgICAgICAgfQogICAgICAgIH0KICAgICAgXQogICAgfQogIH0sCgogIC8vIFRlc3RzIG1heSB1c2UgbGl0ZXJhbCBzdHJpbmdzIGZyZWVseSAoYXNzZXJ0aW9ucyBvbiB2aXNpYmxlIHRleHQpLgogIHsKICAgIGZpbGVzOiBbInNyYy8qKi8qLnt0ZXN0LHNwZWN9Lntqcyxqc3gsdHMsdHN4fSIsICJzcmMvKiovX190ZXN0c19fLyoqIl0sCiAgICBsYW5ndWFnZU9wdGlvbnM6IHsKICAgICAgZ2xvYmFsczogewogICAgICAgIGdsb2JhbDogInJlYWRvbmx5IiwKICAgICAgICB2aTogInJlYWRvbmx5IiwKICAgICAgICBkZXNjcmliZTogInJlYWRvbmx5IiwKICAgICAgICBpdDogInJlYWRvbmx5IiwKICAgICAgICB0ZXN0OiAicmVhZG9ubHkiLAogICAgICAgIGV4cGVjdDogInJlYWRvbmx5IiwKICAgICAgICBiZWZvcmVFYWNoOiAicmVhZG9ubHkiLAogICAgICAgIGFmdGVyRWFjaDogInJlYWRvbmx5IiwKICAgICAgICBiZWZvcmVBbGw6ICJyZWFkb25seSIsCiAgICAgICAgYWZ0ZXJBbGw6ICJyZWFkb25seSIKICAgICAgfQogICAgfSwKICAgIHJ1bGVzOiB7CiAgICAgICJpMThuZXh0L25vLWxpdGVyYWwtc3RyaW5nIjogIm9mZiIKICAgIH0KICB9LAoKICAvLyBUeXBlU2NyaXB0IGZpbGVzOiBkaXNhYmxlIG5vLXVuZGVmIGJlY2F1c2UgVHlwZVNjcmlwdCBpdHNlbGYgcGVyZm9ybXMgdGhpcwogIC8vIGNoZWNrIGF0IGNvbXBpbGUgdGltZSBhbmQgdW5kZXJzdGFuZHMgYW1iaWVudCB0eXBlcyBmcm9tIEB0eXBlcy8qIChlLmcuCiAgLy8gRXZlbnRMaXN0ZW5lciBmcm9tIGxpYi5kb20uZC50cywgSlNYIGZyb20gQHR5cGVzL3JlYWN0KS4gRVNMaW50J3Mgbm8tdW5kZWYKICAvLyBvbmx5IGtub3dzIGFib3V0IHJ1bnRpbWUgZ2xvYmFscyBhbmQgcHJvZHVjZXMgZmFsc2UgcG9zaXRpdmVzIG9uIHZhbGlkIFRTLgogIC8vIFRoaXMgYmxvY2sgbXVzdCBhcHBlYXIgbGFzdCBzbyBpdCB0YWtlcyBwcmVjZWRlbmNlIG92ZXIgdGhlIG1haW4gYmxvY2sgYWJvdmUuCiAgewogICAgZmlsZXM6IFsic3JjLyoqLyoue3RzLHRzeH0iXSwKICAgIHJ1bGVzOiB7CiAgICAgICJuby11bmRlZiI6ICJvZmYiLAogICAgfSwKICB9LApdCg==
+// SPDX-License-Identifier: MIT
+import js from "@eslint/js"
+import globals from "globals"
+import pluginReact from "eslint-plugin-react"
+import pluginReactHooks from "eslint-plugin-react-hooks"
+import pluginJsxA11y from "eslint-plugin-jsx-a11y"
+import pluginPrettier from "eslint-plugin-prettier"
+import configPrettier from "eslint-config-prettier"
+import unusedImports from "eslint-plugin-unused-imports"
+import tseslint from "typescript-eslint"
+import pluginI18nextModule from "eslint-plugin-i18next"
+const pluginI18next = pluginI18nextModule.default || pluginI18nextModule
+
+// Only allow inline styles when they are used exclusively for CSS custom
+// properties (runtime design tokens). All other layout/color styles should be
+// Tailwind utilities. See docs/INLINE-STYLES-AUDIT.md for exceptions.
+const inlineStylesPlugin = {
+  rules: {
+    "css-vars-only": {
+      meta: {
+        type: "suggestion",
+        docs: {
+          description:
+            "Disallow inline styles unless they only set CSS custom properties.",
+        },
+        messages: {
+          noInlineStyles:
+            "Inline styles are allowed only for CSS custom properties (--*). Use Tailwind utilities or document an exception in docs/INLINE-STYLES-AUDIT.md.",
+        },
+      },
+      create(context) {
+        return {
+          JSXAttribute(node) {
+            if (node.name?.name !== "style") return;
+            const expr = node.value?.expression;
+            if (!expr || expr.type !== "ObjectExpression") return;
+            const hasNonVar = expr.properties.some((prop) => {
+              if (prop.type !== "Property") return true;
+              if (prop.key.type === "Identifier")
+                return !prop.key.name.startsWith("--");
+              if (prop.key.type === "Literal")
+                return !String(prop.key.value).startsWith("--");
+              return true;
+            });
+            if (hasNonVar) {
+              context.report({ node, messageId: "noInlineStyles" });
+            }
+          },
+        };
+      },
+    },
+  },
+};
+
+// Enable the full jsx-a11y recommended set but as warnings, so it surfaces
+// accessibility issues in CI without breaking the build on the existing
+// backlog. Tighten individual rules to "error" as they get fixed.
+const a11yRecommendedAsWarnings = Object.fromEntries(
+  Object.keys(pluginJsxA11y.flatConfigs.recommended.rules).map((rule) => [
+    rule,
+    "warn"
+  ])
+)
+
+export default [
+  {
+    ignores: ["**/*.min.js", "src/media/**/*"]
+  },
+
+  // Base JS recommended rules
+  js.configs.recommended,
+
+  // TypeScript ESLint recommended rules
+  ...tseslint.configs.recommended,
+
+  // Your React/JSX files (both .js/.jsx and .ts/.tsx)
+  {
+    files: ["src/**/*.{js,jsx,mjs,cjs,ts,tsx}"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      parserOptions: {
+        ecmaFeatures: { jsx: true }
+      },
+      globals: globals.browser
+    },
+    plugins: {
+      react: pluginReact,
+      "react-hooks": pluginReactHooks,
+      "jsx-a11y": pluginJsxA11y,
+      "unused-imports": unusedImports,
+      prettier: pluginPrettier,
+      i18next: pluginI18next,
+      inlineStyles: inlineStylesPlugin,
+    },
+    settings: {
+      react: { version: "detect" }
+    },
+    rules: {
+      ...pluginReact.configs.flat.recommended.rules,
+      ...pluginReactHooks.configs.recommended.rules,
+      // Accessibility recommended rules (as warnings, see note above)
+      ...a11yRecommendedAsWarnings,
+      ...configPrettier.rules,
+      "prettier/prettier": "error",
+
+      "react/react-in-jsx-scope": "off",
+      "react-hooks/exhaustive-deps": "off",
+      "react/prop-types": "off",
+      "react-hooks/set-state-in-effect": "off",
+      "react-hooks/static-components": "off",
+      "react-hooks/use-memo": "off",
+      // refs rule produces false positives on legitimate ref-forwarding patterns
+      "react-hooks/refs": "warn",
+      "react/jsx-no-target-blank": "error",
+      // Surface new unsanitized dangerouslySetInnerHTML usages (tighten to "error" later)
+      "react/no-danger": "warn",
+      "react/no-unescaped-entities": "off",
+      "react/display-name": "off",
+      "react-hooks/immutability": "off",
+      "react-hooks/preserve-manual-memoization": "off",
+      "no-extra-boolean-cast": "off",
+      "no-prototype-builtins": "off",
+      "no-empty": "off",
+      "no-useless-escape": "off",
+      "no-undef": "error",
+      "no-unsafe-optional-chaining": "off",
+      "no-constant-binary-expression": "off",
+
+      "no-console": ["warn", { "allow": ["warn", "error"] }],
+      // Handled by tsconfig noUnusedLocals
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "unused-imports/no-unused-imports": "error",
+      "unused-imports/no-unused-vars": [
+        "warn",
+        {
+          vars: "all",
+          varsIgnorePattern: "^_",
+          args: "after-used",
+          argsIgnorePattern: "^_"
+        }
+      ],
+      // TODO: tighten to 'error' after component prop types are cleaned up
+      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/explicit-function-return-types": "off",
+      "@typescript-eslint/no-require-imports": "off",
+
+      // Prevent new inline styles after #65 migration.
+      // Allowed: style objects that only set CSS custom properties (runtime
+      // design tokens). Everything else should be a Tailwind utility.
+      // Exceptions must be documented in docs/INLINE-STYLES-AUDIT.md.
+      "inlineStyles/css-vars-only": "warn",
+      // i18n: forbid hardcoded user-facing strings in JSX — every visible string
+      // must go through t(). Set to "warn" so the existing backlog surfaces in CI
+      // without breaking the build. Tighten to "error" once the backlog is cleared.
+      // Prevents regressions of the v0.6.0/v0.6.1 hardcoded-German/English pattern.
+      "i18next/no-literal-string": [
+        "warn",
+        {
+          mode: "jsx-only",
+          "jsx-attributes": {
+            include: ["alt", "title", "placeholder", "aria-label", "label"]
+          },
+          words: {
+            // Brand names, technical tokens, and pure punctuation are fine.
+            exclude: [
+              "OpenSIN",
+              "PDF", "DOC", "XLS", "CSV", "IMG", "SVG", "PPT",
+              "Outlook",
+              "https://api.openai.com",
+              "sk-...",
+              "dall-e-3",
+              "·", "\\*", "-", "/", ":", "%"
+            ]
+          }
+        }
+      ]
+    }
+  },
+
+  // Tests may use literal strings freely (assertions on visible text).
+  {
+    files: ["src/**/*.{test,spec}.{js,jsx,ts,tsx}", "src/**/__tests__/**"],
+    languageOptions: {
+      globals: {
+        global: "readonly",
+        vi: "readonly",
+        describe: "readonly",
+        it: "readonly",
+        test: "readonly",
+        expect: "readonly",
+        beforeEach: "readonly",
+        afterEach: "readonly",
+        beforeAll: "readonly",
+        afterAll: "readonly"
+      }
+    },
+    rules: {
+      "i18next/no-literal-string": "off"
+    }
+  },
+
+  // TypeScript files: disable no-undef because TypeScript itself performs this
+  // check at compile time and understands ambient types from @types/* (e.g.
+  // EventListener from lib.dom.d.ts, JSX from @types/react). ESLint's no-undef
+  // only knows about runtime globals and produces false positives on valid TS.
+  // This block must appear last so it takes precedence over the main block above.
+  {
+    files: ["src/**/*.{ts,tsx}"],
+    rules: {
+      "no-undef": "off",
+    },
+  },
+]

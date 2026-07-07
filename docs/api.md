@@ -512,7 +512,7 @@ curl "http://localhost:3001/api/politician/stats" \
 ```
 
 > Hinweis: Auf einer frisch initialisierten Datenbank sind alle Counts `0`.
-> Sync ausführen: `docker exec openafd node /app/server/jobs/sync-politician-data.js`
+> Sync ausführen: `docker exec opensin node /app/server/jobs/sync-politician-data.js`
 > (siehe [docs/SYNC-RUNBOOK.md](./SYNC-RUNBOOK.md)).
 
 ---
@@ -1032,7 +1032,7 @@ POST /api/v1/webhooks
 ### 9.1 Node.js
 
 ```javascript
-const API_KEY = process.env.OPENAFD_API_KEY;
+const API_KEY = process.env.OPENSIN_API_KEY;
 const BASE = "http://localhost:3001";
 
 async function searchPolitician(name) {
@@ -1153,9 +1153,9 @@ curl -s "http://localhost:3001/api/reports/$REPORT_ID" \
 
 | Sprache | Status | Package |
 |---------|--------|---------|
-| JavaScript/TypeScript | 📅 Geplant | `@openafd/sdk` |
-| Python | 📅 Geplant | `openafd-sdk` |
-| Go | 📅 Geplant | `github.com/family-team-projects/openafd-go` |
+| JavaScript/TypeScript | 📅 Geplant | `@opensin/sdk` |
+| Python | 📅 Geplant | `opensin-sdk` |
+| Go | 📅 Geplant | `github.com/Family-Team-Projects/opensin-go` |
 
 Bei Interesse: Issue auf GitHub erstellen.
 
