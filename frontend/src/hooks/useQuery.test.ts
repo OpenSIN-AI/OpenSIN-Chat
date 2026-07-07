@@ -1,1 +1,80 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBUZXN0cyBmb3IgdXNlUXVlcnkgaG9vayDigJQgVVJMIHBhcmFtZXRlciBoYW5kbGluZy4KLy8gSXNzdWUgIzM5MQppbXBvcnQgeyBkZXNjcmliZSwgaXQsIGV4cGVjdCwgYWZ0ZXJFYWNoIH0gZnJvbSAidml0ZXN0IjsKaW1wb3J0IHsgcmVuZGVySG9vayB9IGZyb20gIkB0ZXN0aW5nLWxpYnJhcnkvcmVhY3QiOwppbXBvcnQgeyBNZW1vcnlSb3V0ZXIgfSBmcm9tICJyZWFjdC1yb3V0ZXItZG9tIjsKaW1wb3J0IHsgY3JlYXRlRWxlbWVudCB9IGZyb20gInJlYWN0IjsKaW1wb3J0IHVzZVF1ZXJ5IGZyb20gIi4vdXNlUXVlcnkiOwoKZnVuY3Rpb24gcmVuZGVySG9va1dpdGhSb3V0ZXIoaW5pdGlhbFBhdGg6IHN0cmluZykgewogIGNvbnN0IHdyYXBwZXIgPSAoeyBjaGlsZHJlbiB9OiB7IGNoaWxkcmVuOiBSZWFjdC5SZWFjdE5vZGUgfSkgPT4KICAgIGNyZWF0ZUVsZW1lbnQoTWVtb3J5Um91dGVyLCB7IGluaXRpYWxFbnRyaWVzOiBbaW5pdGlhbFBhdGhdIH0sIGNoaWxkcmVuKTsKICByZXR1cm4gcmVuZGVySG9vaygoKSA9PiB1c2VRdWVyeSgpLCB7IHdyYXBwZXIgfSk7Cn0KCmRlc2NyaWJlKCJ1c2VRdWVyeSDigJMgVVJMIHBhcmFtZXRlciBoYW5kbGluZyIsICgpID0+IHsKICBhZnRlckVhY2goKCkgPT4gewogICAgd2luZG93Lmhpc3RvcnkucHVzaFN0YXRlKHt9LCAiIiwgIi8iKTsKICB9KTsKCiAgaXQoInJldHVybnMgVVJMU2VhcmNoUGFyYW1zIGZvciBhIHNpbmdsZSBxdWVyeSBwYXJhbWV0ZXIiLCAoKSA9PiB7CiAgICBjb25zdCB7IHJlc3VsdCB9ID0gcmVuZGVySG9va1dpdGhSb3V0ZXIoIi8/Zm9vPWJhciIpOwogICAgZXhwZWN0KHJlc3VsdC5jdXJyZW50LmdldCgiZm9vIikpLnRvQmUoImJhciIpOwogIH0pOwoKICBpdCgicmV0dXJucyBVUkxTZWFyY2hQYXJhbXMgZm9yIG11bHRpcGxlIHF1ZXJ5IHBhcmFtZXRlcnMiLCAoKSA9PiB7CiAgICBjb25zdCB7IHJlc3VsdCB9ID0gcmVuZGVySG9va1dpdGhSb3V0ZXIoIi8/Zm9vPWJhciZiYXo9cXV4Iik7CiAgICBleHBlY3QocmVzdWx0LmN1cnJlbnQuZ2V0KCJmb28iKSkudG9CZSgiYmFyIik7CiAgICBleHBlY3QocmVzdWx0LmN1cnJlbnQuZ2V0KCJiYXoiKSkudG9CZSgicXV4Iik7CiAgfSk7CgogIGl0KCJyZXR1cm5zIG51bGwgZm9yIGEgbm9uLWV4aXN0ZW50IHBhcmFtZXRlciIsICgpID0+IHsKICAgIGNvbnN0IHsgcmVzdWx0IH0gPSByZW5kZXJIb29rV2l0aFJvdXRlcigiLz9mb289YmFyIik7CiAgICBleHBlY3QocmVzdWx0LmN1cnJlbnQuZ2V0KCJub25leGlzdGVudCIpKS50b0JlTnVsbCgpOwogIH0pOwoKICBpdCgiaGFuZGxlcyBudW1lcmljIHF1ZXJ5IHBhcmFtZXRlcnMgYXMgc3RyaW5ncyIsICgpID0+IHsKICAgIGNvbnN0IHsgcmVzdWx0IH0gPSByZW5kZXJIb29rV2l0aFJvdXRlcigiLz9jb3VudD00MiZwYWdlPTEiKTsKICAgIGV4cGVjdChyZXN1bHQuY3VycmVudC5nZXQoImNvdW50IikpLnRvQmUoIjQyIik7CiAgICBleHBlY3QocmVzdWx0LmN1cnJlbnQuZ2V0KCJwYWdlIikpLnRvQmUoIjEiKTsKICB9KTsKCiAgaXQoInJldHVybnMgZW1wdHkgVVJMU2VhcmNoUGFyYW1zIHdoZW4gbm8gcXVlcnkgc3RyaW5nIGlzIHByZXNlbnQiLCAoKSA9PiB7CiAgICBjb25zdCB7IHJlc3VsdCB9ID0gcmVuZGVySG9va1dpdGhSb3V0ZXIoIi8iKTsKICAgIGV4cGVjdChyZXN1bHQuY3VycmVudC5nZXQoImZvbyIpKS50b0JlTnVsbCgpOwogICAgZXhwZWN0KHJlc3VsdC5jdXJyZW50LnRvU3RyaW5nKCkpLnRvQmUoIiIpOwogIH0pOwoKICBpdCgiaGFuZGxlcyBVUkwtZW5jb2RlZCB2YWx1ZXMiLCAoKSA9PiB7CiAgICBjb25zdCB7IHJlc3VsdCB9ID0gcmVuZGVySG9va1dpdGhSb3V0ZXIoIi8/cT1oZWxsbyUyMHdvcmxkIik7CiAgICBleHBlY3QocmVzdWx0LmN1cnJlbnQuZ2V0KCJxIikpLnRvQmUoImhlbGxvIHdvcmxkIik7CiAgfSk7CgogIGl0KCJoYW5kbGVzIHBhcmFtZXRlcnMgd2l0aCBzcGVjaWFsIGNoYXJhY3RlcnMiLCAoKSA9PiB7CiAgICBjb25zdCB7IHJlc3VsdCB9ID0gcmVuZGVySG9va1dpdGhSb3V0ZXIoIi8/ZmlsdGVyPW5hbWUlM0Rqb2huIik7CiAgICBleHBlY3QocmVzdWx0LmN1cnJlbnQuZ2V0KCJmaWx0ZXIiKSkudG9CZSgibmFtZT1qb2huIik7CiAgfSk7CgogIGl0KCJoYW5kbGVzIGVtcHR5IHBhcmFtZXRlciB2YWx1ZXMiLCAoKSA9PiB7CiAgICBjb25zdCB7IHJlc3VsdCB9ID0gcmVuZGVySG9va1dpdGhSb3V0ZXIoIi8/Zm9vPSZiYXI9YmF6Iik7CiAgICBleHBlY3QocmVzdWx0LmN1cnJlbnQuZ2V0KCJmb28iKSkudG9CZSgiIik7CiAgICBleHBlY3QocmVzdWx0LmN1cnJlbnQuZ2V0KCJiYXIiKSkudG9CZSgiYmF6Iik7CiAgfSk7CgogIGl0KCJoYW5kbGVzIG11bHRpcGxlIHZhbHVlcyBmb3IgdGhlIHNhbWUgcGFyYW1ldGVyIiwgKCkgPT4gewogICAgY29uc3QgeyByZXN1bHQgfSA9IHJlbmRlckhvb2tXaXRoUm91dGVyKCIvP3RhZz1hJnRhZz1iIik7CiAgICBleHBlY3QocmVzdWx0LmN1cnJlbnQuZ2V0QWxsKCJ0YWciKSkudG9FcXVhbChbImEiLCAiYiJdKTsKICB9KTsKCiAgaXQoInJldHVybnMgYSBVUkxTZWFyY2hQYXJhbXMgaW5zdGFuY2UiLCAoKSA9PiB7CiAgICBjb25zdCB7IHJlc3VsdCB9ID0gcmVuZGVySG9va1dpdGhSb3V0ZXIoIi8/Zm9vPWJhciIpOwogICAgZXhwZWN0KHJlc3VsdC5jdXJyZW50KS50b0JlSW5zdGFuY2VPZihVUkxTZWFyY2hQYXJhbXMpOwogIH0pOwoKICBpdCgiaGFzIGhhcygpIG1ldGhvZCB0aGF0IHdvcmtzIGNvcnJlY3RseSIsICgpID0+IHsKICAgIGNvbnN0IHsgcmVzdWx0IH0gPSByZW5kZXJIb29rV2l0aFJvdXRlcigiLz9mb289YmFyIik7CiAgICBleHBlY3QocmVzdWx0LmN1cnJlbnQuaGFzKCJmb28iKSkudG9CZSh0cnVlKTsKICAgIGV4cGVjdChyZXN1bHQuY3VycmVudC5oYXMoIm1pc3NpbmciKSkudG9CZShmYWxzZSk7CiAgfSk7Cn0pOwo=
+// SPDX-License-Identifier: MIT
+// Tests for useQuery hook — URL parameter handling.
+// Issue #391
+import { describe, it, expect, afterEach } from "vitest";
+import { renderHook } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
+import { createElement } from "react";
+import useQuery from "./useQuery";
+
+function renderHookWithRouter(initialPath: string) {
+  const wrapper = ({ children }: { children: React.ReactNode }) =>
+    createElement(MemoryRouter, { initialEntries: [initialPath] }, children);
+  return renderHook(() => useQuery(), { wrapper });
+}
+
+describe("useQuery – URL parameter handling", () => {
+  afterEach(() => {
+    window.history.pushState({}, "", "/");
+  });
+
+  it("returns URLSearchParams for a single query parameter", () => {
+    const { result } = renderHookWithRouter("/?foo=bar");
+    expect(result.current.get("foo")).toBe("bar");
+  });
+
+  it("returns URLSearchParams for multiple query parameters", () => {
+    const { result } = renderHookWithRouter("/?foo=bar&baz=qux");
+    expect(result.current.get("foo")).toBe("bar");
+    expect(result.current.get("baz")).toBe("qux");
+  });
+
+  it("returns null for a non-existent parameter", () => {
+    const { result } = renderHookWithRouter("/?foo=bar");
+    expect(result.current.get("nonexistent")).toBeNull();
+  });
+
+  it("handles numeric query parameters as strings", () => {
+    const { result } = renderHookWithRouter("/?count=42&page=1");
+    expect(result.current.get("count")).toBe("42");
+    expect(result.current.get("page")).toBe("1");
+  });
+
+  it("returns empty URLSearchParams when no query string is present", () => {
+    const { result } = renderHookWithRouter("/");
+    expect(result.current.get("foo")).toBeNull();
+    expect(result.current.toString()).toBe("");
+  });
+
+  it("handles URL-encoded values", () => {
+    const { result } = renderHookWithRouter("/?q=hello%20world");
+    expect(result.current.get("q")).toBe("hello world");
+  });
+
+  it("handles parameters with special characters", () => {
+    const { result } = renderHookWithRouter("/?filter=name%3Djohn");
+    expect(result.current.get("filter")).toBe("name=john");
+  });
+
+  it("handles empty parameter values", () => {
+    const { result } = renderHookWithRouter("/?foo=&bar=baz");
+    expect(result.current.get("foo")).toBe("");
+    expect(result.current.get("bar")).toBe("baz");
+  });
+
+  it("handles multiple values for the same parameter", () => {
+    const { result } = renderHookWithRouter("/?tag=a&tag=b");
+    expect(result.current.getAll("tag")).toEqual(["a", "b"]);
+  });
+
+  it("returns a URLSearchParams instance", () => {
+    const { result } = renderHookWithRouter("/?foo=bar");
+    expect(result.current).toBeInstanceOf(URLSearchParams);
+  });
+
+  it("has has() method that works correctly", () => {
+    const { result } = renderHookWithRouter("/?foo=bar");
+    expect(result.current.has("foo")).toBe(true);
+    expect(result.current.has("missing")).toBe(false);
+  });
+});

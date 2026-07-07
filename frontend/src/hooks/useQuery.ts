@@ -1,1 +1,14 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyB1c2VNZW1vIH0gZnJvbSAicmVhY3QiOwppbXBvcnQgeyB1c2VMb2NhdGlvbiB9IGZyb20gInJlYWN0LXJvdXRlci1kb20iOwoKLyoqCiAqIFJldHVybnMgYSByZWFjdGl2ZSBVUkxTZWFyY2hQYXJhbXMgdGhhdCB1cGRhdGVzIG9uIFNQQSBuYXZpZ2F0aW9uLgogKiBQcmV2aW91c2x5IHRoaXMgaG9vayByZXR1cm5lZCBgbmV3IFVSTFNlYXJjaFBhcmFtcyh3aW5kb3cubG9jYXRpb24uc2VhcmNoKWAKICogZGlyZWN0bHksIHdoaWNoIG1lYW50IGNvbXBvbmVudHMgdXNpbmcgaXQgc2hvd2VkIHN0YWxlIHF1ZXJ5IHBhcmFtZXRlcnMKICogYWZ0ZXIgY2xpZW50LXNpZGUgcm91dGUgY2hhbmdlcy4KICovCmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIHVzZVF1ZXJ5KCkgewogIGNvbnN0IHsgc2VhcmNoIH0gPSB1c2VMb2NhdGlvbigpOwogIHJldHVybiB1c2VNZW1vKCgpID0+IG5ldyBVUkxTZWFyY2hQYXJhbXMoc2VhcmNoKSwgW3NlYXJjaF0pOwp9Cg==
+// SPDX-License-Identifier: MIT
+import { useMemo } from "react";
+import { useLocation } from "react-router-dom";
+
+/**
+ * Returns a reactive URLSearchParams that updates on SPA navigation.
+ * Previously this hook returned `new URLSearchParams(window.location.search)`
+ * directly, which meant components using it showed stale query parameters
+ * after client-side route changes.
+ */
+export default function useQuery() {
+  const { search } = useLocation();
+  return useMemo(() => new URLSearchParams(search), [search]);
+}
