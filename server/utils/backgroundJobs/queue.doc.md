@@ -1,1 +1,43 @@
-IyBzZXJ2ZXIvdXRpbHMvYmFja2dyb3VuZEpvYnMvcXVldWUuanMKCiMjIFdoYXQgaXQgZG9lcwpQZXJzaXN0ZW50LCBTUUxpdGUtYmFja2VkIGJhY2tncm91bmQgam9iIHF1ZXVlIGZvciBPcGVuU0lOLUNoYXQuIFJlcGxhY2VzIGFueQppbi1tZW1vcnkgcXVldWUgd2l0aCBvbmUgdGhhdCBzdXJ2aXZlcyBNYWMtU2xlZXAsIHNlcnZlciBjcmFzaGVzLCBhbmQgRG9ja2VyCnJlc3RhcnRzLiBTaW5nbGUtcHJvY2VzcyBzYWZlIHZpYSBhdG9taWMgQ0FTLWxvY2sgKGBwcmlzbWEudXBkYXRlTWFueWApLgoKIyMgVG91Y2hlZCBieQotICoqVHJpZ2dlcjoqKiBgc2VydmVyL3V0aWxzL2NoYXRzL3N0cmVhbS5qc2AgKGFmdGVyIGBXb3Jrc3BhY2VDaGF0cy5uZXcoKWAgZm9yCiAgYEdFTkVSQVRFX1RIUkVBRF9USVRMRWApCi0gKipCb290OioqIGBzZXJ2ZXIvaW5kZXguanNgIChjYWxscyBgc3RhcnQoKWAgYWZ0ZXIgcm91dGUgbW91bnRpbmcsIGBzdG9wKClgCiAgb24gU0lHVEVSTS9TSUdJTlQpCi0gKipTY2hlbWE6KiogYHNlcnZlci9wcmlzbWEvc2NoZW1hLnByaXNtYWAgKG1vZGVsIGBqb2JfcXVldWVgKQotICoqREI6KiogYHNlcnZlci9zdG9yYWdlL29wZW5zaW4uZGJgICh0YWJsZSBgam9iX3F1ZXVlYCkKCiMjIEtleSBjb25zdGFudHMKfCBOYW1lIHwgVmFsdWUgfCBXaHkgfAp8LS0tfC0tLXwtLS18CnwgYFBPTExfSU5URVJWQUxfTVNgIHwgNTAwMCB8IDVzIOKAlCBmYXN0IGVub3VnaCBmb3IgVVgsIGlkbGUtZnJpZW5kbHkgfAp8IGBKT0JfTE9DS19USU1FT1VUX01TYCB8IDUgbWluIHwgU3RhbGUgInByb2Nlc3NpbmciIGpvYnMgb2xkZXIgdGhhbiB0aGlzIGFyZSByZXNldCB8CnwgYFBSVU5FX0lOVEVSVkFMX1BPTExTYCB8IDEwMDAgfCB+ODMgbWluIGJldHdlZW4gYXV0by1jbGVhbnVwIHJ1bnMgfAp8IGBSRVRFTlRJT05fREFZU2AgfCA3IHwgQ29tcGxldGVkL2ZhaWxlZCBqb2JzIG9sZGVyIHRoYW4gN2QgYXJlIGRlbGV0ZWQgfAoKIyMgSm9iIGxpZmVjeWNsZQpgYGAKYWRkKCkgIOKGkiAgcGVuZGluZyAg4oaSICBwcm9jZXNzaW5nIChDQVMtbG9jaykgIOKGkiAgY29tcGxldGVkCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4oaTIChvbiB0aHJvdykKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYXR0ZW1wdHMgPCBtYXhfYXR0ZW1wdHM/CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg4oaTIHllcyAvIG5vIOKGkwogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHBlbmRpbmcgIC8gIGZhaWxlZApgYGAKCiMjIEFkZGluZyBhIG5ldyBqb2IgdHlwZQoxLiBBZGQgYSBuZXcgbW9kdWxlIHVuZGVyIGBzZXJ2ZXIvdXRpbHMvYmFja2dyb3VuZEpvYnMvam9icy9gCjIuIFJlZ2lzdGVyIGl0IGluIGBfZXhlY3V0ZUpvYigpYCBzd2l0Y2ggc3RhdGVtZW50CjMuIENhbGwgYEJhY2tncm91bmRRdWV1ZS5hZGQoIllPVVJfSk9CX05BTUUiLCBwYXlsb2FkKWAgZnJvbSB5b3VyIHRyaWdnZXIKCiMjIEtub3duIGNhdmVhdHMKLSAqKlNpbmdsZS1wcm9jZXNzIG9ubHkuKiogVGhlIENBUy1sb2NrIHByZXZlbnRzIHJhY2VzIHdpdGhpbiBvbmUgTm9kZSBwcm9jZXNzLgogIEZvciBtdWx0aS1pbnN0YW5jZSBkZXBsb3ltZW50cywgc3dpdGNoIHRvIGEgcmVhbCBicm9rZXIgKEJ1bGxNUS9SZWRpcykuCi0gKipTUUxpdGUgaXMgdGhlIHRydXRoLioqIElmIHRoZSBPcGVuU0lOLUNoYXQgREIgZXZlciBzd2l0Y2hlcyB0byBQb3N0Z3JlU1FMLAogIHRoZSBgZmlsZTouLi9zdG9yYWdlL29wZW5zaW4uZGJgIGRhdGFzb3VyY2UgbXVzdCBiZSB1cGRhdGVkIGFjY29yZGluZ2x5CiAgKGFuZCB0aGUgUHJpc21hIHNjaGVtYSArIG1pZ3JhdGlvbikuCg==
+# server/utils/backgroundJobs/queue.js
+
+## What it does
+Persistent, SQLite-backed background job queue for OpenSIN-Chat. Replaces any
+in-memory queue with one that survives Mac-Sleep, server crashes, and Docker
+restarts. Single-process safe via atomic CAS-lock (`prisma.updateMany`).
+
+## Touched by
+- **Trigger:** `server/utils/chats/stream.js` (after `WorkspaceChats.new()` for
+  `GENERATE_THREAD_TITLE`)
+- **Boot:** `server/index.js` (calls `start()` after route mounting, `stop()`
+  on SIGTERM/SIGINT)
+- **Schema:** `server/prisma/schema.prisma` (model `job_queue`)
+- **DB:** `server/storage/opensin.db` (table `job_queue`)
+
+## Key constants
+| Name | Value | Why |
+|---|---|---|
+| `POLL_INTERVAL_MS` | 5000 | 5s — fast enough for UX, idle-friendly |
+| `JOB_LOCK_TIMEOUT_MS` | 5 min | Stale "processing" jobs older than this are reset |
+| `PRUNE_INTERVAL_POLLS` | 1000 | ~83 min between auto-cleanup runs |
+| `RETENTION_DAYS` | 7 | Completed/failed jobs older than 7d are deleted |
+
+## Job lifecycle
+```
+add()  →  pending  →  processing (CAS-lock)  →  completed
+                                   ↓ (on throw)
+                              attempts < max_attempts?
+                                   ↓ yes / no ↓
+                                pending  /  failed
+```
+
+## Adding a new job type
+1. Add a new module under `server/utils/backgroundJobs/jobs/`
+2. Register it in `_executeJob()` switch statement
+3. Call `BackgroundQueue.add("YOUR_JOB_NAME", payload)` from your trigger
+
+## Known caveats
+- **Single-process only.** The CAS-lock prevents races within one Node process.
+  For multi-instance deployments, switch to a real broker (BullMQ/Redis).
+- **SQLite is the truth.** If the OpenSIN-Chat DB ever switches to PostgreSQL,
+  the `file:../storage/opensin.db` datasource must be updated accordingly
+  (and the Prisma schema + migration).
