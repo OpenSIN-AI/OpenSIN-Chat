@@ -54,6 +54,9 @@ docker compose up -d
 The container maps host port `43939` to internal port `3001`. Open `http://localhost:43939` after startup.
 
 > [!IMPORTANT]
+> **Node.js 22+ is required** for development and bare-metal builds. The root `package.json` declares `engines.node: ">=22.0.0"`. If you have an older Node version, install Node 22 first (e.g. via `nvm install 22 && nvm use 22`) or use the Docker setup above which bundles the correct runtime.
+
+> [!IMPORTANT]
 > Set `FIREWORKS_AI_LLM_BASE_PATH` and `FIREWORKS_AI_LLM_API_KEY` in `.env` to use Fireworks AI as the LLM provider. The SINator Pool Router URL goes in `FIREWORKS_AI_LLM_BASE_PATH`.
 
 > [!NOTE]
