@@ -1,1 +1,58 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyB1c2VFZmZlY3QsIHVzZVJlZiB9IGZyb20gInJlYWN0IjsKCi8qKgogKiBQb2xscyBhIGNhbGxiYWNrIG9uIGFuIGludGVydmFsLCBidXQgb25seSB3aGlsZSB0aGUgdGFiIGlzIHZpc2libGUuCiAqIEF1dG9tYXRpY2FsbHkgcGF1c2VzIHdoZW4gdGhlIHVzZXIgc3dpdGNoZXMgYXdheSBhbmQgcmVzdW1lcyBvbiByZXR1cm4uCiAqCiAqIEBwYXJhbSB7KCkgPT4gdm9pZCB8IFByb21pc2U8dm9pZD59IGNhbGxiYWNrIC0gVGhlIGZ1bmN0aW9uIHRvIGludm9rZSBvbiBlYWNoIHRpY2sKICogQHBhcmFtIHtudW1iZXJ9IGludGVydmFsTXMgLSBQb2xsaW5nIGludGVydmFsIGluIG1pbGxpc2Vjb25kcwogKiBAcGFyYW0ge2Jvb2xlYW59IFtlbmFibGVkPXRydWVdIC0gV2hlbiBmYWxzZSwgcG9sbGluZyBpcyBzdXNwZW5kZWQKICovCmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIHVzZVBvbGxpbmcoY2FsbGJhY2ssIGludGVydmFsTXMsIGVuYWJsZWQgPSB0cnVlKSB7CiAgY29uc3Qgc2F2ZWRDYWxsYmFjayA9IHVzZVJlZihjYWxsYmFjayk7CgogIHVzZUVmZmVjdCgoKSA9PiB7CiAgICBzYXZlZENhbGxiYWNrLmN1cnJlbnQgPSBjYWxsYmFjazsKICB9LCBbY2FsbGJhY2tdKTsKCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIGlmICghZW5hYmxlZCB8fCAhaW50ZXJ2YWxNcykgcmV0dXJuOwoKICAgIGxldCB0aW1lcklkID0gbnVsbDsKCiAgICBjb25zdCBzdGFydCA9ICgpID0+IHsKICAgICAgaWYgKHRpbWVySWQpIHJldHVybjsKICAgICAgdGltZXJJZCA9IHNldEludGVydmFsKCgpID0+IHNhdmVkQ2FsbGJhY2suY3VycmVudCgpLCBpbnRlcnZhbE1zKTsKICAgIH07CgogICAgY29uc3Qgc3RvcCA9ICgpID0+IHsKICAgICAgaWYgKCF0aW1lcklkKSByZXR1cm47CiAgICAgIGNsZWFySW50ZXJ2YWwodGltZXJJZCk7CiAgICAgIHRpbWVySWQgPSBudWxsOwogICAgfTsKCiAgICBjb25zdCBoYW5kbGVWaXNpYmlsaXR5Q2hhbmdlID0gKCkgPT4gewogICAgICBpZiAoZG9jdW1lbnQudmlzaWJpbGl0eVN0YXRlID09PSAidmlzaWJsZSIpIHsKICAgICAgICAvLyBGaXJlIGltbWVkaWF0ZWx5IG9uIHJldHVybiBzbyB0aGUgVUkgZmVlbHMgZnJlc2gsIHRoZW4gcmVzdW1lIGludGVydmFsCiAgICAgICAgc2F2ZWRDYWxsYmFjay5jdXJyZW50KCk7CiAgICAgICAgc3RhcnQoKTsKICAgICAgfSBlbHNlIHsKICAgICAgICBzdG9wKCk7CiAgICAgIH0KICAgIH07CgogICAgaWYgKGRvY3VtZW50LnZpc2liaWxpdHlTdGF0ZSA9PT0gInZpc2libGUiKSB7CiAgICAgIC8vIEZpcmUgaW1tZWRpYXRlbHkgb24gaW5pdGlhbCBtb3VudCBzbyB0aGUgZmlyc3QgcG9sbCBpc24ndCBkZWxheWVkCiAgICAgIC8vIGJ5IG9uZSBpbnRlcnZhbCBjeWNsZSwgdGhlbiBzdGFydCB0aGUgaW50ZXJ2YWwuCiAgICAgIHNhdmVkQ2FsbGJhY2suY3VycmVudCgpOwogICAgICBzdGFydCgpOwogICAgfQogICAgZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcigidmlzaWJpbGl0eWNoYW5nZSIsIGhhbmRsZVZpc2liaWxpdHlDaGFuZ2UpOwoKICAgIHJldHVybiAoKSA9PiB7CiAgICAgIHN0b3AoKTsKICAgICAgZG9jdW1lbnQucmVtb3ZlRXZlbnRMaXN0ZW5lcigidmlzaWJpbGl0eWNoYW5nZSIsIGhhbmRsZVZpc2liaWxpdHlDaGFuZ2UpOwogICAgfTsKICB9LCBbaW50ZXJ2YWxNcywgZW5hYmxlZF0pOwp9Cg==
+// SPDX-License-Identifier: MIT
+import { useEffect, useRef } from "react";
+
+/**
+ * Polls a callback on an interval, but only while the tab is visible.
+ * Automatically pauses when the user switches away and resumes on return.
+ *
+ * @param {() => void | Promise<void>} callback - The function to invoke on each tick
+ * @param {number} intervalMs - Polling interval in milliseconds
+ * @param {boolean} [enabled=true] - When false, polling is suspended
+ */
+export default function usePolling(callback, intervalMs, enabled = true) {
+  const savedCallback = useRef(callback);
+
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  useEffect(() => {
+    if (!enabled || !intervalMs) return;
+
+    let timerId = null;
+
+    const start = () => {
+      if (timerId) return;
+      timerId = setInterval(() => savedCallback.current(), intervalMs);
+    };
+
+    const stop = () => {
+      if (!timerId) return;
+      clearInterval(timerId);
+      timerId = null;
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        // Fire immediately on return so the UI feels fresh, then resume interval
+        savedCallback.current();
+        start();
+      } else {
+        stop();
+      }
+    };
+
+    if (document.visibilityState === "visible") {
+      // Fire immediately on initial mount so the first poll isn't delayed
+      // by one interval cycle, then start the interval.
+      savedCallback.current();
+      start();
+    }
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      stop();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [intervalMs, enabled]);
+}

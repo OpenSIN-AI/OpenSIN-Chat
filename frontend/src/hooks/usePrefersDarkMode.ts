@@ -1,1 +1,10 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVApleHBvcnQgZGVmYXVsdCBmdW5jdGlvbiB1c2VQcmVmZXJzRGFya01vZGUoKSB7CiAgaWYgKHR5cGVvZiB3aW5kb3cgIT09ICJ1bmRlZmluZWQiICYmIHdpbmRvdz8ubWF0Y2hNZWRpYSkgewogICAgaWYgKHdpbmRvdz8ubWF0Y2hNZWRpYSgiKHByZWZlcnMtY29sb3Itc2NoZW1lOiBkYXJrKSIpPy5tYXRjaGVzKSB7CiAgICAgIHJldHVybiB0cnVlOwogICAgfQogICAgcmV0dXJuIGZhbHNlOwogIH0KICByZXR1cm4gZmFsc2U7Cn0K
+// SPDX-License-Identifier: MIT
+export default function usePrefersDarkMode() {
+  if (typeof window !== "undefined" && window?.matchMedia) {
+    if (window?.matchMedia("(prefers-color-scheme: dark)")?.matches) {
+      return true;
+    }
+    return false;
+  }
+  return false;
+}

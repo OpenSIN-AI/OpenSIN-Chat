@@ -1,1 +1,82 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyBVU0VSX1BST01QVF9JTlBVVF9NQVAgfSBmcm9tICJAL3V0aWxzL2NvbnN0YW50cyI7CmltcG9ydCB7IHVzZUVmZmVjdCwgdXNlTWVtbyB9IGZyb20gInJlYWN0IjsKaW1wb3J0IHsgdXNlUGFyYW1zIH0gZnJvbSAicmVhY3Qtcm91dGVyLWRvbSI7CmltcG9ydCBkZWJvdW5jZSBmcm9tICJsb2Rhc2guZGVib3VuY2UiOwppbXBvcnQgeyBzYWZlSnNvblBhcnNlIH0gZnJvbSAiQC91dGlscy9yZXF1ZXN0IjsKaW1wb3J0IHsgc2FmZUdldEl0ZW0sIHNhZmVTZXRJdGVtIH0gZnJvbSAiQC91dGlscy9zYWZlU3RvcmFnZSI7CgovKioKICogU3luY2hyb25pemVzIHByb21wdCBpbnB1dCB2YWx1ZSB3aXRoIGxvY2FsU3RvcmFnZSwgc2NvcGVkIHRvIHRoZSBjdXJyZW50IHRocmVhZC4KICoKICogUGVyc2lzdHMgdW5zZW50IHByb21wdCB0ZXh0IGFjcm9zcyBwYWdlIHJlZnJlc2hlcyBhbmQgbmF2aWdhdGlvbi4gRWFjaCB0aHJlYWQvd29ya3NwYWNlIG1haW50YWlucwogKiBpdHMgb3duIGRyYWZ0IHN0YXRlIGluZGVwZW5kZW50bHkuIFN0b3JhZ2Uga2V5IGlzIGRldGVybWluZWQgYnkgdGhyZWFkIHNsdWcgKGlmIGluIGEgdGhyZWFkKSBvcgogKiB3b3Jrc3BhY2Ugc2x1ZyAoaWYgaW4gZGVmYXVsdCBjaGF0KS4KICoKICogU3RvcmFnZSBmb3JtYXQgKHN0b3JlZCB1bmRlciBVU0VSX1BST01QVF9JTlBVVF9NQVAga2V5KToKICogYGBganNvbgogKiB7CiAqICAgInRocmVhZC1zbHVnIjogInVzZXIncyBkcmFmdCBtZXNzYWdlLi4uIiwKICogICAid29ya3NwYWNlLXNsdWciOiAiYW5vdGhlciBkcmFmdCBtZXNzYWdlLi4uIgogKiB9CiAqIGBgYAogKgogKiBAcGFyYW0ge09iamVjdH0gcHJvcHMKICogQHBhcmFtIHtzdHJpbmd9IHByb3BzLnByb21wdElucHV0IC0gQ3VycmVudCBwcm9tcHQgaW5wdXQgdmFsdWUgdG8gc3luYwogKiBAcGFyYW0ge0Z1bmN0aW9ufSBwcm9wcy5zZXRQcm9tcHRJbnB1dCAtIFN0YXRlIHNldHRlciBmdW5jdGlvbiBmb3IgcHJvbXB0IGlucHV0CiAqIEByZXR1cm5zIHt2b2lkfQogKi8KLyoqCiAqIEltbWVkaWF0ZWx5IGNsZWFycyB0aGUgc3RvcmVkIGRyYWZ0IGZvciBhIGdpdmVuIHRocmVhZC93b3Jrc3BhY2Uga2V5LgogKiBVc2VkIGJlZm9yZSBzdGF0ZSB1cGRhdGVzIHRoYXQgbWF5IHJlbW91bnQgUHJvbXB0SW5wdXQgdG8gcHJldmVudAogKiBzdGFsZSB0ZXh0IGZyb20gYmVpbmcgcmVzdG9yZWQuCiAqIEBwYXJhbSB7c3RyaW5nfSBzdG9yYWdlS2V5IC0gdGhyZWFkIHNsdWcgb3Igd29ya3NwYWNlIHNsdWcKICovCmV4cG9ydCBmdW5jdGlvbiBjbGVhclByb21wdElucHV0RHJhZnQoc3RvcmFnZUtleSkgewogIHRyeSB7CiAgICBjb25zdCBtYXAgPSBzYWZlSnNvblBhcnNlKHNhZmVHZXRJdGVtKFVTRVJfUFJPTVBUX0lOUFVUX01BUCksIHt9KTsKICAgIG1hcFtzdG9yYWdlS2V5XSA9ICIiOwogICAgc2FmZVNldEl0ZW0oVVNFUl9QUk9NUFRfSU5QVVRfTUFQLCBKU09OLnN0cmluZ2lmeShtYXApKTsKICB9IGNhdGNoIHt9Cn0KCmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIHVzZVByb21wdElucHV0U3RvcmFnZSh7IHByb21wdElucHV0LCBzZXRQcm9tcHRJbnB1dCB9KSB7CiAgY29uc3QgeyB0aHJlYWRTbHVnID0gbnVsbCwgc2x1Zzogd29ya3NwYWNlU2x1ZyB9ID0gdXNlUGFyYW1zKCk7CiAgLy8gVHJhY2sgdGhlIHN0b3JhZ2Uga2V5IHNvIHdlIGNhbiBkZXRlY3Qgcm91dGUgY2hhbmdlcyAodGhyZWFkL3dvcmtzcGFjZQogIC8vIHN3aXRjaCkgYW5kIHJlc3RvcmUgdGhlIGNvcnJlY3QgZHJhZnQuIFdpdGhvdXQgdGhpcywgbmF2aWdhdGluZyBiZXR3ZWVuCiAgLy8gdGhyZWFkcyB3aXRob3V0IGEgZnVsbCBjb21wb25lbnQgcmVtb3VudCB3b3VsZCBzaG93IHRoZSBwcmV2aW91cyB0aHJlYWQncwogIC8vIGRyYWZ0IGluZGVmaW5pdGVseS4KICBjb25zdCBzdG9yYWdlS2V5ID0gdGhyZWFkU2x1ZyA/PyB3b3Jrc3BhY2VTbHVnOwogIHVzZUVmZmVjdCgoKSA9PiB7CiAgICBjb25zdCBzZXJpYWxpemVkUHJvbXB0SW5wdXRNYXAgPSBzYWZlR2V0SXRlbShVU0VSX1BST01QVF9JTlBVVF9NQVApIHx8ICJ7fSI7CgogICAgY29uc3QgcHJvbXB0SW5wdXRNYXAgPSBzYWZlSnNvblBhcnNlKHNlcmlhbGl6ZWRQcm9tcHRJbnB1dE1hcCwge30pOwoKICAgIGNvbnN0IHVzZXJQcm9tcHRJbnB1dFZhbHVlID0gcHJvbXB0SW5wdXRNYXBbc3RvcmFnZUtleV07CiAgICBpZiAodXNlclByb21wdElucHV0VmFsdWUpIHsKICAgICAgc2V0UHJvbXB0SW5wdXQodXNlclByb21wdElucHV0VmFsdWUpOwogICAgfQogICAgLy8gUmUtcnVuIHdoZW4gdGhlIHN0b3JhZ2Uga2V5IGNoYW5nZXMgKHRocmVhZC93b3Jrc3BhY2Ugc3dpdGNoKS4KICAgIC8vIGVzbGludC1kaXNhYmxlLW5leHQtbGluZSByZWFjdC1ob29rcy9leGhhdXN0aXZlLWRlcHMKICB9LCBbc3RvcmFnZUtleV0pOwoKICBjb25zdCBkZWJvdW5jZWRXcml0ZVRvU3RvcmFnZSA9IHVzZU1lbW8oCiAgICAoKSA9PgogICAgICBkZWJvdW5jZSgodmFsdWUsIHNsdWcpID0+IHsKICAgICAgICBjb25zdCBzZXJpYWxpemVkUHJvbXB0SW5wdXRNYXAgPQogICAgICAgICAgc2FmZUdldEl0ZW0oVVNFUl9QUk9NUFRfSU5QVVRfTUFQKSB8fCAie30iOwogICAgICAgIGNvbnN0IHByb21wdElucHV0TWFwID0gc2FmZUpzb25QYXJzZShzZXJpYWxpemVkUHJvbXB0SW5wdXRNYXAsIHt9KTsKICAgICAgICBwcm9tcHRJbnB1dE1hcFtzbHVnXSA9IHZhbHVlOwogICAgICAgIHNhZmVTZXRJdGVtKFVTRVJfUFJPTVBUX0lOUFVUX01BUCwgSlNPTi5zdHJpbmdpZnkocHJvbXB0SW5wdXRNYXApKTsKICAgICAgfSwgNTAwKSwKICAgIFtdLAogICk7CgogIHVzZUVmZmVjdCgoKSA9PiB7CiAgICBkZWJvdW5jZWRXcml0ZVRvU3RvcmFnZShwcm9tcHRJbnB1dCwgdGhyZWFkU2x1ZyA/PyB3b3Jrc3BhY2VTbHVnKTsKCiAgICByZXR1cm4gKCkgPT4gewogICAgICBkZWJvdW5jZWRXcml0ZVRvU3RvcmFnZS5jYW5jZWwoKTsKICAgIH07CiAgfSwgW3Byb21wdElucHV0LCB0aHJlYWRTbHVnLCB3b3Jrc3BhY2VTbHVnLCBkZWJvdW5jZWRXcml0ZVRvU3RvcmFnZV0pOwp9Cg==
+// SPDX-License-Identifier: MIT
+import { USER_PROMPT_INPUT_MAP } from "@/utils/constants";
+import { useEffect, useMemo } from "react";
+import { useParams } from "react-router-dom";
+import debounce from "lodash.debounce";
+import { safeJsonParse } from "@/utils/request";
+import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
+
+/**
+ * Synchronizes prompt input value with localStorage, scoped to the current thread.
+ *
+ * Persists unsent prompt text across page refreshes and navigation. Each thread/workspace maintains
+ * its own draft state independently. Storage key is determined by thread slug (if in a thread) or
+ * workspace slug (if in default chat).
+ *
+ * Storage format (stored under USER_PROMPT_INPUT_MAP key):
+ * ```json
+ * {
+ *   "thread-slug": "user's draft message...",
+ *   "workspace-slug": "another draft message..."
+ * }
+ * ```
+ *
+ * @param {Object} props
+ * @param {string} props.promptInput - Current prompt input value to sync
+ * @param {Function} props.setPromptInput - State setter function for prompt input
+ * @returns {void}
+ */
+/**
+ * Immediately clears the stored draft for a given thread/workspace key.
+ * Used before state updates that may remount PromptInput to prevent
+ * stale text from being restored.
+ * @param {string} storageKey - thread slug or workspace slug
+ */
+export function clearPromptInputDraft(storageKey) {
+  try {
+    const map = safeJsonParse(safeGetItem(USER_PROMPT_INPUT_MAP), {});
+    map[storageKey] = "";
+    safeSetItem(USER_PROMPT_INPUT_MAP, JSON.stringify(map));
+  } catch {}
+}
+
+export default function usePromptInputStorage({ promptInput, setPromptInput }) {
+  const { threadSlug = null, slug: workspaceSlug } = useParams();
+  // Track the storage key so we can detect route changes (thread/workspace
+  // switch) and restore the correct draft. Without this, navigating between
+  // threads without a full component remount would show the previous thread's
+  // draft indefinitely.
+  const storageKey = threadSlug ?? workspaceSlug;
+  useEffect(() => {
+    const serializedPromptInputMap = safeGetItem(USER_PROMPT_INPUT_MAP) || "{}";
+
+    const promptInputMap = safeJsonParse(serializedPromptInputMap, {});
+
+    const userPromptInputValue = promptInputMap[storageKey];
+    if (userPromptInputValue) {
+      setPromptInput(userPromptInputValue);
+    }
+    // Re-run when the storage key changes (thread/workspace switch).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [storageKey]);
+
+  const debouncedWriteToStorage = useMemo(
+    () =>
+      debounce((value, slug) => {
+        const serializedPromptInputMap =
+          safeGetItem(USER_PROMPT_INPUT_MAP) || "{}";
+        const promptInputMap = safeJsonParse(serializedPromptInputMap, {});
+        promptInputMap[slug] = value;
+        safeSetItem(USER_PROMPT_INPUT_MAP, JSON.stringify(promptInputMap));
+      }, 500),
+    [],
+  );
+
+  useEffect(() => {
+    debouncedWriteToStorage(promptInput, threadSlug ?? workspaceSlug);
+
+    return () => {
+      debouncedWriteToStorage.cancel();
+    };
+  }, [promptInput, threadSlug, workspaceSlug, debouncedWriteToStorage]);
+}
