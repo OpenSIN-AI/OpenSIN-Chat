@@ -46,7 +46,7 @@ async function fileData(filePath = null) {
 }
 
 async function viewLocalFiles() {
-  if (!fs.existsSync(documentsPath)) fs.mkdirSync(documentsPath);
+  await fs.promises.mkdir(documentsPath, { recursive: true });
   const liveSyncAvailable = await DocumentSyncQueue.enabled();
   const directory = {
     name: "documents",
@@ -54,12 +54,12 @@ async function viewLocalFiles() {
     items: [],
   };
 
-  for (const file of fs.readdirSync(documentsPath)) {
+  for (const file of await fs.promises.readdir(documentsPath)) {
     if (path.extname(file) === ".md") continue;
     const folderPath = path.resolve(documentsPath, file);
     let isFolder;
     try {
-      isFolder = fs.lstatSync(folderPath).isDirectory();
+      isFolder = (await fs.promises.lstat(folderPath)).isDirectory();
     } catch {
       continue;
     }
@@ -70,7 +70,7 @@ async function viewLocalFiles() {
         items: [],
       };
 
-      const subfiles = fs.readdirSync(folderPath);
+      const subfiles = await fs.promises.readdir(folderPath);
       const filenames = {};
       const filePromises = [];
 

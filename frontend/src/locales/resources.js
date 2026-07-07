@@ -1,28 +1,13 @@
 // SPDX-License-Identifier: MIT
-// Looking for a language to translate OpenSIN Chat to?
-// Create a `common.js` file in the language's ISO code https://www.w3.org/International/O-charset-lang.html
-// eg: German => de/common.js
-// You should copy the en/common.js file as your template and just translate every string in there.
-// By default, we try to see what the browsers native language is set to and use that. If a string
-// is not defined or is null in the translation file, it will fallback to the value in the en/common.js file
-// RULES:
-// The EN translation file is the ground-truth for what keys and options are available. DO NOT add a special key
-// to a specific language file as this will break the other languages. Any new keys should be added to english
-// and the language file you are working on.
-
-// Contributor Notice: If you are adding a translation you MUST locally run `npm run verify:translations` from the frontend directory prior to PR.
-// please do not submit PR's without first verifying this test passes as it will tell you about missing keys or values
-// from the primary dictionary.
-
-import English from "./en/common.js";
-import German from "./de/common.js";
+// This file no longer eagerly imports locale data.
+// Locale bundles are loaded lazily via dynamic import() inside i18n.ts using
+// i18next-resources-to-backend. Only metadata lives here so tree-shaking keeps
+// locale files out of the initial JS bundle.
+//
+// To add a language: create src/locales/<iso>/common.js and add the code below.
+// Run `npm run verify:translations` in frontend/ to validate completeness.
 
 export const defaultNS = "common";
-export const resources = {
-  en: {
-    common: English,
-  },
-  de: {
-    common: German,
-  },
-};
+
+/** ISO codes for all supported locales. */
+export const supportedLngs = ["en", "de"];
