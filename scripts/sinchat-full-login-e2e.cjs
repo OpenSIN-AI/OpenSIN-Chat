@@ -68,7 +68,7 @@ if (!PASSWORD) {
     const lsKeys = Object.keys(localStorage);
     const ls = {};
     for (const k of lsKeys) ls[k] = localStorage.getItem(k)?.slice(0, 80);
-    const t = localStorage.getItem("token") || localStorage.getItem("openafd_auth_token") || "";
+    const t = localStorage.getItem("token") || localStorage.getItem("opensin_authToken") || "";
     const h = t ? { Authorization: `Bearer ${t}` } : {};
     const out = { localStorageKeys: lsKeys, localStorage: ls, probes: {} };
     for (const path of [

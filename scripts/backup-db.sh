@@ -1,1 +1,62 @@
-IyEvdXNyL2Jpbi9lbnYgYmFzaAojIFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBNSVQKIwojIGJhY2t1cC1kYi5zaCDigJQgb25saW5lLXNhZmUgYmFja3VwIG9mIHRoZSBPcGVuU0lOLUNoYXQgU1FMaXRlIGRhdGFiYXNlLgojCiMgVXNlcyBgc3FsaXRlMyAuYmFja3VwYCAoY29uc2lzdGVudCBzbmFwc2hvdCwgc2FmZSB3aGlsZSB0aGUgc2VydmVyIHJ1bnMg4oCUCiMgbmV2ZXIgYGNwYCBhIGxpdmUgU1FMaXRlIGZpbGUhKSBwbHVzIGd6aXAgY29tcHJlc3Npb24gYW5kIHJldGVudGlvbi4KIwojIFVzYWdlOgojICAgLi9zY3JpcHRzL2JhY2t1cC1kYi5zaCAgICAgICAgICAgICAgICAgICMgYmFja3VwIHdpdGggZGVmYXVsdHMKIyAgIEJBQ0tVUF9ESVI9L21udC9uYXMvb3BlbnNpbiAuL3NjcmlwdHMvYmFja3VwLWRiLnNoCiMKIyBDcm9uIChkYWlseSBhdCAwMzozMCk6CiMgICAzMCAzICogKiAqIGNkIC9wYXRoL3RvL09wZW5TSU4tQ2hhdCAmJiAuL3NjcmlwdHMvYmFja3VwLWRiLnNoID4+IHN0b3JhZ2UvYmFja3Vwcy9iYWNrdXAubG9nIDI+JjEKIwojIEVudjoKIyAgIERCX1BBVEggICAgICAgICAgICAgIChkZWZhdWx0OiBzZXJ2ZXIvc3RvcmFnZS9vcGVuc2luLmRiKQojICAgQkFDS1VQX0RJUiAgICAgICAgICAgKGRlZmF1bHQ6IHNlcnZlci9zdG9yYWdlL2JhY2t1cHMpCiMgICBCQUNLVVBfUkVURU5USU9OX0RBWVMgKGRlZmF1bHQ6IDE0KQpzZXQgLWV1byBwaXBlZmFpbAoKU0NSSVBUX0RJUj0iJChjZCAiJChkaXJuYW1lICIke0JBU0hfU09VUkNFWzBdfSIpIiAmJiBwd2QpIgpSRVBPX1JPT1Q9IiQoZGlybmFtZSAiJFNDUklQVF9ESVIiKSIKCkRCX1BBVEg9IiR7REJfUEFUSDotJFJFUE9fUk9PVC9zZXJ2ZXIvc3RvcmFnZS9vcGVuc2luLmRifSIKQkFDS1VQX0RJUj0iJHtCQUNLVVBfRElSOi0kUkVQT19ST09UL3NlcnZlci9zdG9yYWdlL2JhY2t1cHN9IgpSRVRFTlRJT05fREFZUz0iJHtCQUNLVVBfUkVURU5USU9OX0RBWVM6LTE0fSIKCmlmICEgY29tbWFuZCAtdiBzcWxpdGUzID4vZGV2L251bGwgMj4mMTsgdGhlbgogIGVjaG8gIltiYWNrdXAtZGJdIEVSUk9SOiBzcWxpdGUzIENMSSBub3QgZm91bmQuIEluc3RhbGwgaXQgKG1hY09TOiBwcmVpbnN0YWxsZWQ7IERlYmlhbjogYXB0LWdldCBpbnN0YWxsIHNxbGl0ZTMpLiIgPiYyCiAgZXhpdCAxCmZpCgppZiBbICEgLWYgIiREQl9QQVRIIiBdOyB0aGVuCiAgZWNobyAiW2JhY2t1cC1kYl0gRVJST1I6IGRhdGFiYXNlIG5vdCBmb3VuZCBhdCAkREJfUEFUSCIgPiYyCiAgZXhpdCAxCmZpCgpta2RpciAtcCAiJEJBQ0tVUF9ESVIiClNUQU1QPSIkKGRhdGUgKyVZJW0lZC0lSCVNJVMpIgpUQVJHRVQ9IiRCQUNLVVBfRElSL29wZW5zaW4tJFNUQU1QLmRiIgoKZWNobyAiW2JhY2t1cC1kYl0gQ3JlYXRpbmcgY29uc2lzdGVudCBzbmFwc2hvdCBvZiAkREJfUEFUSCAuLi4iCnNxbGl0ZTMgIiREQl9QQVRIIiAiLmJhY2t1cCAnJFRBUkdFVCciCgplY2hvICJbYmFja3VwLWRiXSBWZXJpZnlpbmcgc25hcHNob3QgaW50ZWdyaXR5IC4uLiIKQ0hFQ0s9IiQoc3FsaXRlMyAiJFRBUkdFVCIgIlBSQUdNQSBpbnRlZ3JpdHlfY2hlY2s7IikiCmlmIFsgIiRDSEVDSyIgIT0gIm9rIiBdOyB0aGVuCiAgZWNobyAiW2JhY2t1cC1kYl0gRVJST1I6IGludGVncml0eSBjaGVjayBmYWlsZWQ6ICRDSEVDSyIgPiYyCiAgcm0gLWYgIiRUQVJHRVQiCiAgZXhpdCAxCmZpCgpnemlwIC1mICIkVEFSR0VUIgpTSVpFPSIkKGR1IC1oICIkVEFSR0VULmd6IiB8IGN1dCAtZjEpIgplY2hvICJbYmFja3VwLWRiXSBPSzogJFRBUkdFVC5neiAoJFNJWkUpIgoKZWNobyAiW2JhY2t1cC1kYl0gUHJ1bmluZyBiYWNrdXBzIG9sZGVyIHRoYW4gJFJFVEVOVElPTl9EQVlTIGRheXMgLi4uIgpmaW5kICIkQkFDS1VQX0RJUiIgLW5hbWUgIm9wZW5zaW4tKi5kYi5neiIgLXR5cGUgZiAtbXRpbWUgIiskUkVURU5USU9OX0RBWVMiIC1kZWxldGUKCkNPVU5UPSIkKGZpbmQgIiRCQUNLVVBfRElSIiAtbmFtZSAnb3BlbnNpbi0qLmRiLmd6JyAtdHlwZSBmIHwgd2MgLWwgfCB0ciAtZCAnICcpIgplY2hvICJbYmFja3VwLWRiXSBEb25lLiAkQ09VTlQgYmFja3VwKHMpIHJldGFpbmVkIGluICRCQUNLVVBfRElSIgo=
+#!/usr/bin/env bash
+# SPDX-License-Identifier: MIT
+#
+# backup-db.sh — online-safe backup of the OpenSIN-Chat SQLite database.
+#
+# Uses `sqlite3 .backup` (consistent snapshot, safe while the server runs —
+# never `cp` a live SQLite file!) plus gzip compression and retention.
+#
+# Usage:
+#   ./scripts/backup-db.sh                  # backup with defaults
+#   BACKUP_DIR=/mnt/nas/opensin ./scripts/backup-db.sh
+#
+# Cron (daily at 03:30):
+#   30 3 * * * cd /path/to/OpenSIN-Chat && ./scripts/backup-db.sh >> storage/backups/backup.log 2>&1
+#
+# Env:
+#   DB_PATH              (default: server/storage/opensin.db)
+#   BACKUP_DIR           (default: server/storage/backups)
+#   BACKUP_RETENTION_DAYS (default: 14)
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(dirname "$SCRIPT_DIR")"
+
+DB_PATH="${DB_PATH:-$REPO_ROOT/server/storage/opensin.db}"
+BACKUP_DIR="${BACKUP_DIR:-$REPO_ROOT/server/storage/backups}"
+RETENTION_DAYS="${BACKUP_RETENTION_DAYS:-14}"
+
+if ! command -v sqlite3 >/dev/null 2>&1; then
+  echo "[backup-db] ERROR: sqlite3 CLI not found. Install it (macOS: preinstalled; Debian: apt-get install sqlite3)." >&2
+  exit 1
+fi
+
+if [ ! -f "$DB_PATH" ]; then
+  echo "[backup-db] ERROR: database not found at $DB_PATH" >&2
+  exit 1
+fi
+
+mkdir -p "$BACKUP_DIR"
+STAMP="$(date +%Y%m%d-%H%M%S)"
+TARGET="$BACKUP_DIR/opensin-$STAMP.db"
+
+echo "[backup-db] Creating consistent snapshot of $DB_PATH ..."
+sqlite3 "$DB_PATH" ".backup '$TARGET'"
+
+echo "[backup-db] Verifying snapshot integrity ..."
+CHECK="$(sqlite3 "$TARGET" "PRAGMA integrity_check;")"
+if [ "$CHECK" != "ok" ]; then
+  echo "[backup-db] ERROR: integrity check failed: $CHECK" >&2
+  rm -f "$TARGET"
+  exit 1
+fi
+
+gzip -f "$TARGET"
+SIZE="$(du -h "$TARGET.gz" | cut -f1)"
+echo "[backup-db] OK: $TARGET.gz ($SIZE)"
+
+echo "[backup-db] Pruning backups older than $RETENTION_DAYS days ..."
+find "$BACKUP_DIR" -name "opensin-*.db.gz" -type f -mtime "+$RETENTION_DAYS" -delete
+
+COUNT="$(find "$BACKUP_DIR" -name 'opensin-*.db.gz' -type f | wc -l | tr -d ' ')"
+echo "[backup-db] Done. $COUNT backup(s) retained in $BACKUP_DIR"

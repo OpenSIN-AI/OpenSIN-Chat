@@ -1,1 +1,60 @@
-IyEvdXNyL2Jpbi9lbnYgYmFzaAojIFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBNSVQKCnNldCAtZXVvIHBpcGVmYWlsCgpCQUNLVVBfRElSPSIkezE6LS9ob21lL3VidW50dS9iYWNrdXBzfSIKREJfUEFUSD0iJHsyOi0vaG9tZS91YnVudHUvT3BlblNJTi1DaGF0L3NlcnZlci9zdG9yYWdlL29wZW5zaW4uZGJ9IgpURU1QX0RCPSIvdG1wL29wZW5zaW4tYmFja3VwLXZlcmlmeS5kYiIKTE9HX0ZJTEU9Ii9ob21lL3VidW50dS9iYWNrdXBzL3ZlcmlmeS5sb2ciCgpMQVRFU1RfQkFDS1VQPSQobHMgLXQgIiRCQUNLVVBfRElSIi8qLmRiIDI+L2Rldi9udWxsIHwgaGVhZCAtMSB8fCBscyAtdCAiJEJBQ0tVUF9ESVIiLyoudGFyLmd6IDI+L2Rldi9udWxsIHwgaGVhZCAtMSkKCmlmIFsgLXogIiRMQVRFU1RfQkFDS1VQIiBdOyB0aGVuCiAgZWNobyAiWyQoZGF0ZSldIEVSUk9SOiBObyBiYWNrdXAgZm91bmQgaW4gJEJBQ0tVUF9ESVIiID4+ICIkTE9HX0ZJTEUiCiAgZXhpdCAxCmZpCgplY2hvICJbJChkYXRlKV0gVmVyaWZ5aW5nIGJhY2t1cDogJExBVEVTVF9CQUNLVVAiID4+ICIkTE9HX0ZJTEUiCgpybSAtZiAiJFRFTVBfREIiCgppZiBbWyAiJExBVEVTVF9CQUNLVVAiID09ICouZGIgXV07IHRoZW4KICBjcCAiJExBVEVTVF9CQUNLVVAiICIkVEVNUF9EQiIKZWxpZiBbWyAiJExBVEVTVF9CQUNLVVAiID09ICoudGFyLmd6IF1dOyB0aGVuCiAgdGFyIC14emYgIiRMQVRFU1RfQkFDS1VQIiAtQyAvdG1wLyAtLXdpbGRjYXJkcyAiKi5kYiIgLS1zdHJpcC1jb21wb25lbnRzPTAKICBFWFRSQUNURUQ9JChmaW5kIC90bXAvIC1uYW1lICIqLmRiIiAtbmV3ZXIgIiRMQVRFU1RfQkFDS1VQIiB8IGhlYWQgLTEpCiAgWyAteiAiJEVYVFJBQ1RFRCIgXSAmJiB7IGVjaG8gIlskKGRhdGUpXSBFUlJPUjogTm8gLmRiIGluIGFyY2hpdmUiID4+ICIkTE9HX0ZJTEUiOyBleGl0IDE7IH0KICBjcCAiJEVYVFJBQ1RFRCIgIiRURU1QX0RCIgogIHJtIC1mICIkRVhUUkFDVEVEIgpmaQoKaWYgISBzcWxpdGUzICIkVEVNUF9EQiIgIlBSQUdNQSBpbnRlZ3JpdHlfY2hlY2s7IiA+IC9kZXYvbnVsbCAyPiYxOyB0aGVuCiAgZWNobyAiWyQoZGF0ZSldIEVSUk9SOiBJbnRlZ3JpdHkgY2hlY2sgZmFpbGVkIGZvciAkTEFURVNUX0JBQ0tVUCIgPj4gIiRMT0dfRklMRSIKICBybSAtZiAiJFRFTVBfREIiCiAgZXhpdCAxCmZpCgpUQUJMRVM9InVzZXJzIHdvcmtzcGFjZXMgd29ya3NwYWNlX3RocmVhZHMgd29ya3NwYWNlX2NoYXRzIHdvcmtzcGFjZV9kb2N1bWVudHMgd29ya3NwYWNlX25vdGVzIgpmb3IgdGFibGUgaW4gJFRBQkxFUzsgZG8KICBDT1VOVD0kKHNxbGl0ZTMgIiRURU1QX0RCIiAiU0VMRUNUIGNvdW50KCopIEZST00gJHRhYmxlOyIgMj4vZGV2L251bGwgfHwgZWNobyAiLTEiKQogIGlmIFsgIiRDT1VOVCIgPSAiLTEiIF07IHRoZW4KICAgIGVjaG8gIlskKGRhdGUpXSBXQVJOOiBUYWJsZSAnJHRhYmxlJyBtaXNzaW5nIG9yIGVtcHR5IiA+PiAiJExPR19GSUxFIgogIGVsc2UKICAgIGVjaG8gIlskKGRhdGUpXSBPSzogJHRhYmxlIGhhcyAkQ09VTlQgcm93cyIgPj4gIiRMT0dfRklMRSIKICBmaQpkb25lCgppZiBbIC1mICIkREJfUEFUSCIgXTsgdGhlbgogIGZvciB0YWJsZSBpbiAkVEFCTEVTOyBkbwogICAgUFJPRF9DT1VOVD0kKHNxbGl0ZTMgIiREQl9QQVRIIiAiU0VMRUNUIGNvdW50KCopIEZST00gJHRhYmxlOyIgMj4vZGV2L251bGwgfHwgZWNobyAiLTEiKQogICAgQkFDS1VQX0NPVU5UPSQoc3FsaXRlMyAiJFRFTVBfREIiICJTRUxFQ1QgY291bnQoKikgRlJPTSAkdGFibGU7IiAyPi9kZXYvbnVsbCB8fCBlY2hvICItMSIpCiAgICBpZiBbICIkUFJPRF9DT1VOVCIgIT0gIiRCQUNLVVBfQ09VTlQiIF07IHRoZW4KICAgICAgZWNobyAiWyQoZGF0ZSldIFdBUk46ICR0YWJsZSBjb3VudCBtaXNtYXRjaCAocHJvZD0kUFJPRF9DT1VOVCwgYmFja3VwPSRCQUNLVVBfQ09VTlQpIiA+PiAiJExPR19GSUxFIgogICAgZmkKICBkb25lCmZpCgplY2hvICJbJChkYXRlKV0gVmVyaWZpY2F0aW9uIGNvbXBsZXRlOiAkTEFURVNUX0JBQ0tVUCIgPj4gIiRMT0dfRklMRSIKcm0gLWYgIiRURU1QX0RCIgpleGl0IDAK
+#!/usr/bin/env bash
+# SPDX-License-Identifier: MIT
+
+set -euo pipefail
+
+BACKUP_DIR="${1:-/home/ubuntu/backups}"
+DB_PATH="${2:-/home/ubuntu/OpenSIN-Chat/server/storage/opensin.db}"
+TEMP_DB="/tmp/opensin-backup-verify.db"
+LOG_FILE="/home/ubuntu/backups/verify.log"
+
+LATEST_BACKUP=$(ls -t "$BACKUP_DIR"/*.db 2>/dev/null | head -1 || ls -t "$BACKUP_DIR"/*.tar.gz 2>/dev/null | head -1)
+
+if [ -z "$LATEST_BACKUP" ]; then
+  echo "[$(date)] ERROR: No backup found in $BACKUP_DIR" >> "$LOG_FILE"
+  exit 1
+fi
+
+echo "[$(date)] Verifying backup: $LATEST_BACKUP" >> "$LOG_FILE"
+
+rm -f "$TEMP_DB"
+
+if [[ "$LATEST_BACKUP" == *.db ]]; then
+  cp "$LATEST_BACKUP" "$TEMP_DB"
+elif [[ "$LATEST_BACKUP" == *.tar.gz ]]; then
+  tar -xzf "$LATEST_BACKUP" -C /tmp/ --wildcards "*.db" --strip-components=0
+  EXTRACTED=$(find /tmp/ -name "*.db" -newer "$LATEST_BACKUP" | head -1)
+  [ -z "$EXTRACTED" ] && { echo "[$(date)] ERROR: No .db in archive" >> "$LOG_FILE"; exit 1; }
+  cp "$EXTRACTED" "$TEMP_DB"
+  rm -f "$EXTRACTED"
+fi
+
+if ! sqlite3 "$TEMP_DB" "PRAGMA integrity_check;" > /dev/null 2>&1; then
+  echo "[$(date)] ERROR: Integrity check failed for $LATEST_BACKUP" >> "$LOG_FILE"
+  rm -f "$TEMP_DB"
+  exit 1
+fi
+
+TABLES="users workspaces workspace_threads workspace_chats workspace_documents workspace_notes"
+for table in $TABLES; do
+  COUNT=$(sqlite3 "$TEMP_DB" "SELECT count(*) FROM $table;" 2>/dev/null || echo "-1")
+  if [ "$COUNT" = "-1" ]; then
+    echo "[$(date)] WARN: Table '$table' missing or empty" >> "$LOG_FILE"
+  else
+    echo "[$(date)] OK: $table has $COUNT rows" >> "$LOG_FILE"
+  fi
+done
+
+if [ -f "$DB_PATH" ]; then
+  for table in $TABLES; do
+    PROD_COUNT=$(sqlite3 "$DB_PATH" "SELECT count(*) FROM $table;" 2>/dev/null || echo "-1")
+    BACKUP_COUNT=$(sqlite3 "$TEMP_DB" "SELECT count(*) FROM $table;" 2>/dev/null || echo "-1")
+    if [ "$PROD_COUNT" != "$BACKUP_COUNT" ]; then
+      echo "[$(date)] WARN: $table count mismatch (prod=$PROD_COUNT, backup=$BACKUP_COUNT)" >> "$LOG_FILE"
+    fi
+  done
+fi
+
+echo "[$(date)] Verification complete: $LATEST_BACKUP" >> "$LOG_FILE"
+rm -f "$TEMP_DB"
+exit 0

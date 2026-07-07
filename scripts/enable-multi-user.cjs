@@ -18,7 +18,7 @@
 //   OPEN_SIN_CHAT_HASHED_PASSWORD='$2a$10$...' sudo -E node scripts/enable-multi-user.cjs
 //
 // Env:
-//   OPEN_SIN_CHAT_DB_PATH          (default: server/storage/openafd.db)
+//   OPENSIN_CHAT_DB_PATH          (default: server/storage/opensin.db)
 //   OPEN_SIN_CHAT_USERNAME         (default: admin)
 //   OPEN_SIN_CHAT_PASSWORD         plaintext password to hash (default: Simone123)
 //   OPEN_SIN_CHAT_HASHED_PASSWORD  pre-computed bcrypt hash to store
@@ -32,9 +32,9 @@ const path = require("path");
 const scriptDir = __dirname;
 const repoRoot = path.resolve(scriptDir, "..");
 
-const DB_PATH = process.env.OPEN_SIN_CHAT_DB_PATH
-  ? path.resolve(process.env.OPEN_SIN_CHAT_DB_PATH)
-  : path.resolve(repoRoot, "server", "storage", "openafd.db");
+const DB_PATH = process.env.OPENSIN_CHAT_DB_PATH
+  ? path.resolve(process.env.OPENSIN_CHAT_DB_PATH)
+  : path.resolve(repoRoot, "server", "storage", "opensin.db");
 const USERNAME = process.env.OPEN_SIN_CHAT_USERNAME || "admin";
 const ROLE = process.env.OPEN_SIN_CHAT_ROLE || "admin";
 const SQLITE3_BIN = process.env.OPEN_SIN_CHAT_SQLITE3 || "sqlite3";

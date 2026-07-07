@@ -40,7 +40,7 @@ values in the file.
 
 | Env | Default | Meaning |
 | --- | --- | --- |
-| `OPEN_SIN_CHAT_DB_PATH` | `server/storage/openafd.db` | Path to the SQLite database |
+| `OPENSIN_CHAT_DB_PATH` | `server/storage/opensin.db` | Path to the SQLite database |
 | `OPEN_SIN_CHAT_USERNAME` | `admin` | Username to create or rename the admin to |
 | `OPEN_SIN_CHAT_PASSWORD` | `Simone123` | Plaintext password to hash and store |
 | `OPEN_SIN_CHAT_HASHED_PASSWORD` | — | Pre-computed bcrypt hash to store |
@@ -79,6 +79,6 @@ If you need to go back to single-user mode, set the setting back to `false` and
 restart:
 
 ```bash
-sqlite3 server/storage/openafd.db \
+sqlite3 server/storage/opensin.db \
   "INSERT INTO system_settings (label, value) VALUES ('multi_user_mode', 'false') ON CONFLICT (label) DO UPDATE SET value = 'false';"
 ```

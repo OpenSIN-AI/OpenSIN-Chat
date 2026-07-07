@@ -1,1 +1,306 @@
-IyEvdXNyL2Jpbi9lbnYgYmFzaAojIFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBNSVQKCiMgT3BlblNJTiBDaGF0IOKAlCBCcmFuZGluZyBMaW50ZXIKIyBGYWlscyBDSSB3aGVuIEFueXRoaW5nTExNIC8gTWludHBsZXggTGFicyBicmFuZCBzdHJpbmdzIGFwcGVhciBvdXRzaWRlIHRoZQojIHdoaXRlbGlzdCBvZiBmaWxlcyB0aGF0IExFR0lUSU1BVEVMWSBjcmVkaXQgdGhlIHVwc3RyZWFtIHByb2plY3QuCiMKIyBEb2NzOiBzY3JpcHRzL2NoZWNrLWJyYW5kaW5nLmRvYy5tZApzZXQgLWV1byBwaXBlZmFpbAoKUkVQT19ST09UPSIkKGNkICIkKGRpcm5hbWUgIiQwIikvLi4iICYmIHB3ZCkiCmNkICIkUkVQT19ST09UIgoKIyDilIDilIAgV2hpdGVsaXN0IOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAojIEZpbGVzIHdoZXJlICJBbnl0aGluZ0xMTSIgLyAiTWludHBsZXgiIG1lbnRpb25zIGFyZSBJTlRFTlRJT05BTC4KIyBFdmVyeXRoaW5nIGVsc2UgaW4gdGhlIHJlcG8gbXVzdCBub3QgY29udGFpbiB0aGVzZSBzdHJpbmdzLgojIEFkZCBhIGNvbW1lbnQgbmV4dCB0byBlYWNoIGVudHJ5IGV4cGxhaW5pbmcgV0hZIHRoZSBleGNlcHRpb24gZXhpc3RzLgpBTExPV0VEX0ZJTEVTPSgKICAjIOKUgOKUgCBJbnRlbnRpb25hbCB1cHN0cmVhbSBjcmVkaXQg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgIlRISVJEX1BBUlRZLm1kIiAgICAgICAgICAgICAgICAgICAgICMgY2Fub25pY2FsIGNyZWRpdCBkb2MgKG1lcmdlZDogYWNrbm93bGVkZ21lbnRzICsgTlBNIHBhY2thZ2VzKQogICJCUkFORElORy5tZCIgICAgICAgICAgICAgICAgICAgICAgICAjIGJyYW5kaW5nIHBvbGljeSByZWZlcmVuY2VzIHVwc3RyZWFtCiAgIlJFQURNRS5tZCIgICAgICAgICAgICAgICAgICAgICAgICAgICMgIlN0YW5kIGF1ZiBTY2h1bHRlcm4gdm9uIFJpZXNlbiIgc2VjdGlvbgogICJURVJNU19TRUxGX0hPU1RFRC5tZCIgICAgICAgICAgICAgICAjIMKnMiByZWZlcmVuY2VzIEFueXRoaW5nTExNIHRlbGVtZXRyeQogICJURVJNUy5tZCIgICAgICAgICAgICAgICAgICAgICAgICAgICAjIGdlbmVyaWMgdGVybXMKICAiZG9jcy9jaGFuZ2Vsb2ctcmVjZW50Lm1kIiAgICAgICAgICAgIyByZWNlbnQgY2hhbmdlbG9nIGVudHJpZXMgcmVmZXJlbmNpbmcgdXBzdHJlYW0KICAiZG9jcy9hYmFuZG9uZWQtcGFja2FnZXMtYXVkaXQubWQiICAgIyBhdWRpdCBkb2MgcmVmZXJlbmNpbmcgdXBzdHJlYW0gZ2l0IGRlcHMKCiAgIyDilIDilIAgTGljZW5zZSAvIHBhY2thZ2UgbWV0YWRhdGEg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgIkxJQ0VOU0UiCiAgIkxJQ0VOU0UubWQiCiAgInBhY2thZ2UuanNvbiIgICAgICAgICAgICAgICAgICAgICAgICMgY29udHJpYnV0b3JzW10gY3JlZGl0cyBNaW50cGxleCBMYWJzCiAgInNlcnZlci9wYWNrYWdlLmpzb24iICAgICAgICAgICAgICAgICMgdXBzdHJlYW0gbnBtLXNjb3BlIGRlcHM6IEBtaW50cGxleC1sYWJzL3ticmVlLGV4cHJlc3Mtd3MsbWRwZGZ9IOKAlCB0aGVzZSBhcmUgbWludHBsZXgtcHVibGlzaGVkIHBhY2thZ2VzIHdlIGRlcGVuZCBvbiBhcy1pcyAobm8gdXBzdHJlYW0gcmVicmFuZCkKICAic2VydmVyL2luZGV4LmpzIiAgICAgICAgICAgICAgICAgICAgIyByZXF1aXJlKCdAbWludHBsZXgtbGFicy9leHByZXNzLXdzJykg4oCUIHVwc3RyZWFtIFdlYlNvY2tldCBsYXllcgogICJzZXJ2ZXIvdXRpbHMvYm9vdC9pbmRleC5qcyIgICAgICAgICAjIHJlcXVpcmUoJ0BtaW50cGxleC1sYWJzL2V4cHJlc3Mtd3MnKSDigJQgU1NMIFdlYlNvY2tldCBib290CiAgInNlcnZlci91dGlscy9CYWNrZ3JvdW5kV29ya2Vycy9pbmRleC5qcyIgICAjIHJlcXVpcmUoJ0BtaW50cGxleC1sYWJzL2JyZWUnKSArIEpTRG9jIEBvcGVuc2luL2JyZWUgdHlwZSByZWYg4oCUIHVwc3RyZWFtIHNjaGVkdWxlcgogICJzZXJ2ZXIvdXRpbHMvYWdlbnRzL2FpYml0YXQvZXhhbXBsZS93ZWJzb2NrZXQvd2Vic29jay1tdWx0aS10dXJuLWNoYXQuanMiICAjIHJlcXVpcmUoJ0BtaW50cGxleC1sYWJzL2V4cHJlc3Mtd3MnKSDigJQgZXhhbXBsZQogICJzZXJ2ZXIvdXRpbHMvYWdlbnRzL2FpYml0YXQvZXhhbXBsZS93ZWJzb2NrZXQvd2Vic29jay1icmFuZGluZy1jb2xsYWIuanMiICAgIyByZXF1aXJlKCdAbWludHBsZXgtbGFicy9leHByZXNzLXdzJykg4oCUIGV4YW1wbGUKICAic2VydmVyL3V0aWxzL2FnZW50cy9haWJpdGF0L3BsdWdpbnMvY3JlYXRlLWZpbGVzL3BkZi9jcmVhdGUtcGRmLWZpbGUuanMiICAgICMgaW1wb3J0KCdAbWludHBsZXgtbGFicy9tZHBkZicpIOKAlCB1cHN0cmVhbSBQREYgY29udmVydGVyCiAgImZyb250ZW5kL3BhY2thZ2UuanNvbiIgICAgICAgICAgICAgICAgIyB1cHN0cmVhbSBucG0tc2NvcGUgZGVwOiBAbWludHBsZXgtbGFicy9waXBlci10dHMtd2ViIOKAlCBtaW50cGxleC1wdWJsaXNoZWQgVFRTIHZvaWNlIHBhY2thZ2Ugd2UgZGVwZW5kIG9uIGFzLWlzCgogICMg4pSA4pSAIFVwc3RyZWFtIG5wbS1zY29wZSBkZXBzIHVzZWQgYXMtaXMgaW4gY29kZSDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAic2VydmVyL3V0aWxzL3JlcG9ydHMvaW5kZXguanMiICAgICAgICAjIHJlcXVpcmUoJ0BtaW50cGxleC1sYWJzL21kcGRmJykg4oCUIHVwc3RyZWFtIE1hcmtkb3duLXRvLVBERiBjb252ZXJ0ZXIKICAiZnJvbnRlbmQvc3JjL3V0aWxzL3BpcGVyVFRTL2luZGV4LmpzIiAgICMgSlNEb2MgdHlwZSByZWZzIHRvIEBtaW50cGxleC1sYWJzL3BpcGVyLXR0cy13ZWIKICAiZnJvbnRlbmQvc3JjL3V0aWxzL3BpcGVyVFRTL3dvcmtlci5qcyIgICMgaW1wb3J0ICdAbWludHBsZXgtbGFicy9waXBlci10dHMtd2ViJyDigJQgdXBzdHJlYW0gVFRTIHZvaWNlIGVuZ2luZQogICJmcm9udGVuZC92aXRlLmNvbmZpZy5qcyIgICAgICAgICAgICAgICAjIG1hbnVhbENodW5rcyByZWdleCBtYXRjaGVzIEBtaW50cGxleC1sYWJzL3ttZHBkZixwaXBlci10dHMtd2VifSBmb3IgdmVuZG9yLXNwbGl0dGluZwoKICAjIOKUgOKUgCBNb2R1bGUgZG9jcyB0aGF0IGNyZWRpdCB0aGUgdXBzdHJlYW0gcGFja2FnZSB0aGV5IHdyYXAg4pSACiAgInNlcnZlci91dGlscy9yZXBvcnRzL2luZGV4LmRvYy5tZCIgICAgICAgICMgZG9jdW1lbnRzIEBtaW50cGxleC1sYWJzL21kcGRmIGRlcGVuZGVuY3kKICAic2VydmVyL3V0aWxzL3Jlc2VhcmNoL3dlYlNlYXJjaEVuZ2luZS5kb2MubWQiICAjIGNyZWRpdHMgcmV1c2VkIEFueXRoaW5nTExNIGFnZW50IHNlYXJjaCBpbmZyYQogICJST0FETUFQLm1kIiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAjIGNoYW5nZWxvZyByb3dzIHJlZmVyZW5jZSBAbWludHBsZXgtbGFicy8qIHBhY2thZ2UgcmV2ZXJ0cwoKICAjIOKUgOKUgCBDRU8gYXVkaXQgcmVwb3J0cyAocmVmZXJlbmNlIHVwc3RyZWFtIGNvZGViYXNlIGxpbmVhZ2UpIOKUgAogICJjZW8tYXVkaXRzLyIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAjIGF1ZGl0IGRvY3MgZGVzY3JpYmUgdGhlIEFueXRoaW5nTExNIGNvZGViYXNlIE9wZW5TSU4tQ2hhdCBpcyBidWlsdCBvbgoKICAjIOKUgOKUgCBTZWxmLXJlZmVyZW5jZSAobGludGVyIG1lbnRpb25zIHRoZSBzdHJpbmdzIGl0IGZvcmJpZHMpIOKUgAogICJzY3JpcHRzL2NoZWNrLWJyYW5kaW5nLnNoIgogICJzY3JpcHRzL2NoZWNrLWJyYW5kaW5nLmRvYy5tZCIKCiAgIyDilIDilIAgRnVuY3Rpb25hbCBiYWNrd2FyZC1jb21wYXQ6IEFueXRoaW5nTExNIGVudiB2YXJzIHByZXNlcnZlZAogICMgICAgc28gZXhpc3RpbmcgdXNlciAuZW52IGZpbGVzIC8gZG9ja2VyIHNldHVwcyBrZWVwIHdvcmtpbmcuCiAgInNlcnZlci91dGlscy9oZWxwZXJzL3VwZGF0ZUVOVi5qcyIgICMga25vd24tZW52LXZhciB3aGl0ZWxpc3QgKHRoaW4gc2hpbSkKICAic2VydmVyL3V0aWxzL2hlbHBlcnMvdXBkYXRlRU5WL2R1bXBFTlYuanMiICAjIGtub3duLWVudi12YXIgd2hpdGVsaXN0IChzcGxpdCBmcm9tIHVwZGF0ZUVOVi5qcykKICAic2VydmVyL3V0aWxzL2Jvb3QvcGF0Y2hTZGtUaW1lb3V0cy5qcyIgICMgcmVhZHMgQU5ZVEhJTkdMTE1fRkVUQ0hfVElNRU9VVCAvIEFOWVRISU5HTExNX01BWF9SRVRSSUVTCiAgInNlcnZlci91dGlscy9jb2xsZWN0b3JBcGkvaW5kZXguanMiICAjIHJlYWRzIEFOWVRISU5HTExNX0NIUk9NSVVNX0FSR1MKCiAgIyDilIDilIAgRnVuY3Rpb25hbCBiYWNrd2FyZC1jb21wYXQ6IGxvZ28gZmlsZSBzaGltCiAgIyAgICBzZXJ2ZXIgbXVzdCBhY2NlcHQgdGhlIGxlZ2FjeSAiYW55dGhpbmdsbG0tbG9nby5wbmciIGZpbGVuYW1lCiAgIyAgICBzbyBleGlzdGluZyBBbnl0aGluZ0xMTSBpbnN0YWxscyB1cGdyYWRpbmcgdG8gT3BlblNJTi1DaGF0CiAgIyAgICBkbyBub3Qgc2hvdyBhIGJyb2tlbiBpbWFnZS4KICAic2VydmVyL3V0aWxzL2ZpbGVzL2xvZ28uanMiICAgICAgICAgIyBsZWdhY3kgbG9nbyBmaWxlbmFtZSBzaGltCgogICMg4pSA4pSAIE9wZXJhdGlvbmFsIGRvY3MgKERvY2tlciBzZXR1cCBpbnN0cnVjdGlvbnMpIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogICJzZXJ2ZXIvc3RvcmFnZS9SRUFETUUubWQiICAgICAgICAgICAjIGRvY2tlciBleGVjIGNvbW1hbmRzIHJlZmVyZW5jZSB1cHN0cmVhbSBpbWFnZQoKICAjIOKUgOKUgCBWZW5kb3JlZCB0aGlyZC1wYXJ0eSBlbWJlZCB3aWRnZXQg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgIyAgICBOZXdlciBPcGVuU0lOLWJyYW5kZWQgZW1iZWQgaXMgYSB0cmFuc2l0aW9uYWwgdmVuZG9yZWQgY29weSBvZiB0aGUKICAjICAgIHVwc3RyZWFtIHdpZGdldDsgaXRzIG1pbmlmaWVkIGJvZHkgc3RpbGwgY29udGFpbnMgbGVnYWN5IEFueXRoaW5nTExNLwogICMgICAgTWludHBsZXggc3RyaW5ncy4gQ2xlYW5pbmcgaXQgaXMgdHJhY2tlZCBzZXBhcmF0ZWx5OyBmb3Igbm93IGl0IGlzCiAgIyAgICB0cmVhdGVkIHRoZSBzYW1lIGFzIHRoZSBsZWdhY3kgYXNzZXQuCiAgImZyb250ZW5kL3B1YmxpYy9lbWJlZC9vcGVuc2luLWNoYXQtd2lkZ2V0Lm1pbi5qcyIKCiAgIyDilIDilIAgVXBzdHJlYW0tc3luYyB0b29saW5nIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogICMgICAgZG9jcy9VUFNUUkVBTS1TWU5DLm1kICsgc2NyaXB0cy91cHN0cmVhbS1zeW5jLyogZXhwbGFpbiBhbmQgZXhlY3V0ZQogICMgICAgdGhlIHNuYXBzaG90LXN5bmMgZnJvbSBNaW50cGxleC1MYWJzL2FueXRoaW5nLWxsbS4gVGhleSBsZWdpdGltYXRlbHkKICAjICAgIHJlZmVyZW5jZSB1cHN0cmVhbSBuYW1lcyArIFVSTHMgKyB0aGUgcmF3IHBhdGNoIGZpbGVzICh3aGljaCBhcmUKICAjICAgIHZlcmJhdGltIGZyb20gdXBzdHJlYW0gYW5kIG5lZWQgdG8gcmVtYWluIGludGFjdCBmb3IgYGdpdCBhbWApLgogICJkb2NzL1VQU1RSRUFNLVNZTkMubWQiCiAgImRvY3MvdmVyY2VsLWRlcGxveS1maXgubWQiICAgICAgICAjIHJlZmVyZW5jZXMgdXBzdHJlYW0gYXMgQW55dGhpbmdMTE0tRm9yawogICJkb2NzL2FyY2hpdGVjdHVyZS5tZCIgICAgICAgICAgICAgIyBTU29UIHByb2R1Y3Rpb24gYXJjaGl0ZWN0dXJlIOKAlCByZWZlcmVuY2VzIEFueXRoaW5nTExNIGFzIHVwc3RyZWFtLWZvcmsgY29udGV4dAogICJzY3JpcHRzL3Vwc3RyZWFtLXN5bmMvIgoKICAjIOKUgOKUgCBTZXJ2ZXIgdW5pdCB0ZXN0cyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAjICAgIHNlcnZlci9fX3Rlc3RzX18vKiBtb2NrcyB1cHN0cmVhbSBucG0tc2NvcGUgbW9kdWxlcyAoZS5nLgogICMgICAgQG1pbnRwbGV4LWxhYnMvbWRwZGYpIHZpYSBqZXN0Lm1vY2soLi4uKSDigJQgdGhlIHRlc3QgbXVzdCByZWZlcmVuY2UKICAjICAgIHRoZSByZWFsIHVwc3RyZWFtIG1vZHVsZSBuYW1lIHRvIG1vY2sgaXQuCiAgInNlcnZlci9fX3Rlc3RzX18vIgoKICAjIOKUgOKUgCBBdXRvLWdlbmVyYXRlZCBTQk9NIGFydGVmYWN0cyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAjICAgIHNib20vKi5qc29uIChDeWNsb25lRFggMS41ICsgU1BEWCAyLjMpIGVudW1lcmF0ZSBldmVyeSBkaXJlY3QrdHJhbnNpdGl2ZQogICMgICAgZGVwZW5kZW5jeSBpbmNsdWRpbmcgdXBzdHJlYW0gQG1pbnRwbGV4LWxhYnMvKiBwYWNrYWdlcy4gUGFja2FnZQogICMgICAgaWRlbnRpdHkgaXMgdGhlIGdyb3VuZCB0cnV0aCBvZiBwYWNrYWdlLmpzb24veWFybi5sb2NrIOKAlCBpdCBjYW5ub3QKICAjICAgIGJlIHJlYnJhbmRlZCB3aXRob3V0IGJyZWFraW5nIHRoZSBTQk9NJ3MgcHVybC9kZXBlbmRzT24gcmVmZXJlbmNlcy4KICAic2JvbS8iCgogICMg4pSA4pSAIEVudiBleGFtcGxlcyDigJQgdXBzdHJlYW0gZG9jcyBsaW5rcyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAjICAgIGRvY2tlci8uZW52LmV4YW1wbGUgKyBzZXJ2ZXIvLmVudi5leGFtcGxlIHJlZmVyZW5jZSBkb2NzLmFueXRoaW5nbGxtLmNvbQogICMgICAgZm9yIHVwc3RyZWFtIGNvbmZpZ3VyYXRpb24gZG9jcyAobGluayBpcyBnZW51aW5lLCBub3QgYnJhbmQgcHJvbW90aW9uKS4KICAiZG9ja2VyLy5lbnYuZXhhbXBsZSIKICAic2VydmVyLy5lbnYuZXhhbXBsZSIKCiAgIyDilIDilIAgSGVsbSBjaGFydCDigJQgdXBzdHJlYW0gaW1hZ2UgcmVmZXJlbmNlIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogICMgICAgdmFsdWVzLnlhbWwgdXNlcyBtaW50cGxleGxhYnMvYW55dGhpbmdsbG0gYXMgdGhlIE9DSSBpbWFnZSByZXBvCiAgIyAgICAodGhlIERvY2tlciBpbWFnZSB3ZSBydW4gSVMgdGhlIHVwc3RyZWFtIGFueXRoaW5nbGxtIGltYWdlKS4KICAjICAgIENoYXJ0LnlhbWwgbWVudGlvbnMgIkZvcmsgdm9uIEFueXRoaW5nTExNIiBhcyBjb250ZXh0dWFsIGRlc2NyaXB0aW9uLgogICJjbG91ZC1kZXBsb3ltZW50cy9oZWxtL2NoYXJ0cy9vcGVuc2luLWNoYXQvdmFsdWVzLnlhbWwiCiAgImNsb3VkLWRlcGxveW1lbnRzL2hlbG0vY2hhcnRzL29wZW5zaW4tY2hhdC9DaGFydC55YW1sIgoKICAjIOKUgOKUgCBEb2NrZXJmaWxlIOKAlCB1cHN0cmVhbSBhc3NldCBkb3dubG9hZCDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAjICAgIERvd25sb2FkcyBDaHJvbWl1bSBmb3IgQVJNIGZyb20gd2ViYXNzZXRzLmFueXRoaW5nbGxtLmNvbSAodXBzdHJlYW0KICAjICAgIHByZWJ1aWx0IGJpbmFyeSkuIFRoZSBVUkwgaXMgYSBmYWN0dWFsIGRlcGVuZGVuY3ksIG5vdCBicmFuZCBwcm9tb3Rpb24uCiAgImRvY2tlci9Eb2NrZXJmaWxlIgogICJjbG91ZC1kZXBsb3ltZW50cy9vcGVuc2hpZnQvRG9ja2VyZmlsZSIgICAjIHNhbWUgdXBzdHJlYW0gQ2hyb21pdW0gQVJNIGRvd25sb2FkIGFzIGRvY2tlci9Eb2NrZXJmaWxlCgogICMg4pSA4pSAIEFyY2hpdGVjdHVyYWwgZGVjaXNpb24gcmVjb3JkcyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAjICAgIGRvY3MvYWRyLyoubWQgcmVmZXJlbmNlIHRoZSB1cHN0cmVhbSBBbnl0aGluZ0xMTSBjb2RlYmFzZSArIGlzc3VlcwogICMgICAgdG8ganVzdGlmeSBhcmNoaXRlY3R1cmFsIGRlY2lzaW9ucyAoY29udGV4dCwgbm90IHByb21vdGlvbikuCiAgImRvY3MvYWRyLyIKCiAgIyDilIDilIAgUmVicmFuZCBzY3JpcHQg4oCUIHVwc3RyZWFtIG1lbnRpb24gaW4gY29tbWVudCDilIDilIDilIDilIDilIDilIAKICAjICAgIHNjcmlwdHMvcmVicmFuZC1vcGVuc2luLnNoIGNvbW1lbnQgZXhwbGFpbnMgaXQgYXZvaWRzIHJlbmFtaW5nCiAgIyAgICBBbnl0aGluZ0xMTSBlbnYtdmFycyAvIGZ1bmN0aW9uYWwga2V5cy4gSW50ZW50IGlzIGZ1bmN0aW9uYWwsIG5vdCBicmFuZC4KICAic2NyaXB0cy9yZWJyYW5kLW9wZW5zaW4uc2giCgogICMg4pSA4pSAIEdlbmVyYXRlZCBTQk9NIEpTT04gKGJvbS5qc29uKSDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAjICAgIEN5Y2xvbmVEWCAxLjcgYXV0by1nZW5lcmF0ZWQgYnkgY2R4Z2VuIOKAlCBpbmNsdWRlcyB1cHN0cmVhbSBwYWNrYWdlIHJlZnMKICAjICAgIGFuZCBwcmUtcmVicmFuZCBtZXRhZGF0YSBmb3IgcHJvdmVuYW5jZS4KICAiYm9tLmpzb24iCiAgInNib20uc3BkeC5qc29uIgogICJzYm9tLmNkeC5qc29uIgoKICAjIOKUgOKUgCBXZWJTb2NrZXQgYWdlbnQgZW5kcG9pbnQg4oCUIG1pbnRwbGV4IE5QTSBkZXAg4pSA4pSA4pSA4pSA4pSA4pSACiAgIyAgICByZXF1aXJlKCdAbWludHBsZXgtbGFicy9leHByZXNzLXdzJykg4oCUIHVwc3RyZWFtIFdlYlNvY2tldCBsYXllciB1c2VkIGFzLWlzLgogICJzZXJ2ZXIvZW5kcG9pbnRzL2FnZW50V2Vic29ja2V0LmpzIgoKICAjIOKUgOKUgCBUZXJtaW5hbCBlbmRwb2ludCDigJQgbGVnYWN5IHBhdGggcmVkYWN0aW9uIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogICMgICAgdGVybWluYWxFeGVjLmpzIHJlZGFjdHMgL3Zhci9saWIvYW55dGhpbmdsbG0gZnJvbSBjb21tYW5kIG91dHB1dCBzbwogICMgICAgdGhhdCBsZWdhY3kgRG9ja2VyIGluc3RhbGxhdGlvbnMgdXBncmFkaW5nIHRvIE9wZW5TSU4tQ2hhdCBkb24ndCBsZWFrCiAgIyAgICB0aGVpciBob3N0IHN0b3JhZ2UgcGF0aC4gVGhlIHBhdGggaXMgYSBiYWNrd2FyZC1jb21wYXQgc2VjdXJpdHkgcmVkYWN0aW9uLgogICJzZXJ2ZXIvZW5kcG9pbnRzL3V0aWxzL3Rlcm1pbmFsRXhlYy5qcyIKCiAgIyDilIDilIAgQ29sbGVjdG9yIHBhY2thZ2UuanNvbiDigJQgdXBzdHJlYW0gTlBNIGRlcCDilIDilIDilIDilIDilIDilIDilIDilIAKICAjICAgIGVwdWIyOiAiZ2l0K2h0dHBzOi8vZ2l0aHViLmNvbS9NaW50cGxleC1MYWJzL2VwdWIyLXN0YXRpYy5naXQjbWFpbiIKICAjICAgIFVwc3RyZWFtIEVQVUIgcGFyc2luZyBwYWNrYWdlIHdlIHVzZSBhcy1pcy4KICAiY29sbGVjdG9yL3BhY2thZ2UuanNvbiIKCiAgIyDilIDilIAgUGlwZXIgVFRTIGZyb250ZW5kIOKAlCB1cHN0cmVhbSBOUE0gZGVwIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogICMgICAgaW1wb3J0ICdAbWludHBsZXgtbGFicy9waXBlci10dHMtd2ViJyDigJQgdXBzdHJlYW0gVFRTIHZvaWNlIGVuZ2luZSB1c2VkIGFzLWlzLgogICMgICAgSlNEb2MgdHlwZSByZWZzIHRvIEBtaW50cGxleC1sYWJzL3BpcGVyLXR0cy13ZWIgYW5kIEBtaW50cGxleC1sYWJzL3BpcGVyLXdlYi10dHMuCiAgImZyb250ZW5kL3NyYy91dGlscy9waXBlclRUUy9pbmRleC50cyIKICAiZnJvbnRlbmQvc3JjL3V0aWxzL3BpcGVyVFRTL3dvcmtlci50cyIKCiAgIyDilIDilIAgc2VydmVyL2FwcC5qcyDigJQgbWludHBsZXggTlBNIGRlcCDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAjICAgIHJlcXVpcmUoJ0BtaW50cGxleC1sYWJzL2V4cHJlc3Mtd3MnKSBpbiBub24tSFRUUFMsIG5vbi10ZXN0IG1vZGUuCiAgInNlcnZlci9hcHAuanMiCgogICMg4pSA4pSAIEZ1bmN0aW9uYWwgYmFja3dhcmQtY29tcGF0OiBsb2NhbFN0b3JhZ2Uga2V5cyDilIDilIDilIAKICAjICAgIEZyb250ZW5kIHJlYWRzIGxlZ2FjeSAiYW55dGhpbmdsbG1fZGlzYWJsZV9vbmJvYXJkaW5nIiBhbmQgbW9jayBmbGFncwogICMgICAgKCJhbnl0aGluZ2xsbV9wZGZfbW9jayIsICJhbnl0aGluZ2xsbV93c19tb2NrIikgZnJvbSBsb2NhbFN0b3JhZ2Ugc28KICAjICAgIGV4aXN0aW5nIHVzZXIgYnJvd3NlcnMga2VlcCB3b3JraW5nIGFmdGVyIHRoZSByZWJyYW5kLgogICJmcm9udGVuZC9zcmMvbW9kZWxzL3N5c3RlbS50cyIKICAiZnJvbnRlbmQvc3JjL21vZGVscy9zeXN0ZW0uanMiCiAgImZyb250ZW5kL3NyYy9tYWluLnRzeCIKICAiZnJvbnRlbmQvc3JjL21vY2tzL2Jyb3dzZXIudHMiCiAgImZyb250ZW5kL3NyYy9tb2Nrcy9wZGZBbmFseXNpc0hhbmRsZXJzLnRzIgogICJmcm9udGVuZC9zcmMvbW9ja3MvYXVkaXRIYW5kbGVycy50cyIKCiAgIyDilIDilIAgUHJvamVjdCBpZGVudGl0eSAmIHBvbGljeSBkb2NzIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogICMgICAgUmVmZXJlbmNlIHRoZSB1cHN0cmVhbSBBbnl0aGluZ0xMTSAvIE1pbnRwbGV4IExhYnMgb3JpZ2luIGZvciBjb250ZXh0LgogICJBR0VOVFMubWQiCiAgIkNPTlRSSUJVVElORy5tZCIKICAiU0VDVVJJVFkubWQiCiAgIkNIQU5HRUxPRy5tZCIKCiAgIyDilIDilIAgQXVkaXQgJiBmZWF0dXJlIGRvY3MgKHVwc3RyZWFtIGNvbnRleHQpIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogICJkb2NzL2Nlby1hdWRpdC1maW5hbC5tZCIKICAiZG9jcy9DRU8tQVVESVQtUkVQT1JULm1kIgogICJkb2NzL2FkbWluL29uYm9hcmRpbmcubWQiCiAgInNlcnZlci9QREZfQU5BTFlTSVMubWQiCiAgInNlcnZlci9hcHAuZG9jLm1kIgogICJzY3JpcHRzL3NraWxsLW9jaS1vcmFjbGUtY2xvdWQtU0tJTEwubWQiCiAgIlJFU0VBUkNILm1kIiAgICAgICAgICAgICAgICAgICAgICAgICMgcmVzZWFyY2ggY29tcGFyaXNvbiBkb2MgcmVmZXJlbmNpbmcgdGhlIHVwc3RyZWFtIEFueXRoaW5nTExNL01pbnRwbGV4IG9yaWdpbiBmb3IgY29udGV4dAogICJQUk9EVUNUSU9OLVJFQURJTkVTUy1SRVBPUlQubWQiICAgICAjIGF1ZGl0IHJlcG9ydCBkb2N1bWVudGluZyBmaW5kaW5ncyBhYm91dCB1cHN0cmVhbSBBbnl0aGluZ0xMTS9NaW50cGxleCBzdHJpbmdzCiAgIkNFTy1BVURJVC1SRVBPUlQtMjAyNi0wNi0yNy5tZCIgICAgIyBDRU8gYXVkaXQgcmVwb3J0IHJlZmVyZW5jaW5nIHVwc3RyZWFtIGZvcmsgbGluZWFnZQogICJGVVRVUkUtUExBTi5tZCIgICAgICAgICAgICAgICAgICAgICAjIGZ1dHVyZSBwbGFuIHJlZmVyZW5jaW5nIHVwc3RyZWFtIHN0cnVjdHVyYWwgZGVidAoKICAjIOKUgOKUgCBJbi1hcHAgZG9jdW1lbnRhdGlvbiBwYWdlcyAodXBzdHJlYW0gY29udGV4dCkg4pSA4pSA4pSACiAgIyAgICBmcm9udGVuZC9zcmMvcGFnZXMvRG9jcy9jb250ZW50LyBtaXJyb3JzIGRvY3MvIGZvciB0aGUgaW4tYXBwIGRvY3Mgdmlld2VyLgogICJmcm9udGVuZC9zcmMvcGFnZXMvRG9jcy9jb250ZW50LyIKKQoKIyBCdWlsZCByaXBncmVwIGV4Y2x1ZGUtZnJvbS1maWxlCkVYQ0xVREVfRklMRT0iJChta3RlbXAgLXQgb3BlbnNpbi1icmFuZGluZy1YWFhYWFgpIgp0cmFwICdybSAtZiAiJEVYQ0xVREVfRklMRSInIEVYSVQKewogIGZvciBmIGluICIke0FMTE9XRURfRklMRVNbQF19IjsgZG8KICAgIGlmIFtbICIkZiIgPT0gKi8gXV07IHRoZW4KICAgICAgIyBEaXJlY3Rvcnkgd2lsZGNhcmQg4oCUIGV4Y2x1ZGUgZXZlcnl0aGluZyB1bmRlciBpdAogICAgICBlY2hvICIhXiR7Zn0uKiIKICAgIGVsc2UKICAgICAgZWNobyAiIV4ke2Z9XCQiCiAgICBmaQogIGRvbmUKICAjIFN0YW5kYXJkIGV4Y2x1ZGVzCiAgZWNobyAiIV5cXC5naXQvIgogIGVjaG8gIiFebm9kZV9tb2R1bGVzLyIKICBlY2hvICIhXmZyb250ZW5kL25vZGVfbW9kdWxlcy8iCiAgZWNobyAiIV5zZXJ2ZXIvbm9kZV9tb2R1bGVzLyIKICBlY2hvICIhXmNvbGxlY3Rvci9ub2RlX21vZHVsZXMvIgogIGVjaG8gIiFec3RvcmFnZS8iCiAgZWNobyAiIV5kaXN0LyIKICBlY2hvICIhXmJ1aWxkLyIKICBlY2hvICIhXmNvdmVyYWdlLyIKICBlY2hvICIhIioiLmxvY2tcJCIgICAgICAgICAgICAgIyBwYWNrYWdlLWxvY2ssIHlhcm4ubG9jawogIGVjaG8gIiEiKiIubG9nXCQiCiAgZWNobyAiISIqIi1sb2NrXFwueWFtbFwkIiAgICAgICMgcG5wbS1sb2NrLnlhbWwKICBlY2hvICIhIioiLWxvY2tcXC5qc29uXCQiCiAgIyBCcmFuZCBzdHJpbmdzIHRoYXQgYXJlIEVYUEVDVEVEIGluIGNvZGUgKGRlbGliZXJhdGUgZXNjYXBlIGhhdGNoKQogIGVjaG8gIiFec2VydmVyL21vZGVscy9jb21tdW5pdHlIdWJcXC5qc1wkIiAgICMgaW1wb3J0UHJlZml4ICJhbGxtLWNvbW11bml0eS1pZCIKICBlY2hvICIhXnNlcnZlci9tb2RlbHMvd29ya3NwYWNlXFwuanNcJCIgICAgICAjIHByb3ZpZGVyICJhbnl0aGluZ2xsbS1yb3V0ZXIiCn0gPiAiJEVYQ0xVREVfRklMRSIKCiMg4pSA4pSAIFNlYXJjaCBwYXR0ZXJucyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKIyBXaGF0IHdlIGZvcmJpZCBpbiBub24td2hpdGVsaXN0ZWQgZmlsZXM6CiMgIC0gIkFueXRoaW5nTExNIiAvICJhbnl0aGluZ2xsbSIgICAoZGlzcGxheSBuYW1lLCBsb3dlci1jYXNlIGlkZW50aWZpZXIpCiMgIC0gIk1pbnRwbGV4IExhYnMiIC8gIk1pbnRwbGV4TGFicyIgLyAibWludHBsZXgiCiMgIC0gImNkbi5hbnl0aGluZ2xsbS5jb20iIC8gImh1Yi5hbnl0aGluZ2xsbS5jb20iIC8gImRvY3MuYW55dGhpbmdsbG0uY29tIgojICAtICJ0ZWFtQG1pbnRwbGV4bGFicy5jb20iIC8gIkBtaW50cGxleGxhYnMiClBBVFRFUk5TPSgKICAiQW55dGhpbmdMTE0iCiAgImFueXRoaW5nbGxtIgogICJNaW50cGxleCIKICAibWludHBsZXgiCiAgImNkblwuYW55dGhpbmdsbG1cLmNvbSIKICAiaHViXC5hbnl0aGluZ2xsbVwuY29tIgogICJkb2NzXC5hbnl0aGluZ2xsbVwuY29tIgogICJtaW50cGxleGxhYnNcLmNvbSIKICAidGVhbUBtaW50cGxleCIKICAiRmFtaWx5IFRlYW0gUHJvamVjdHMiCikKCiMg4pSA4pSAIFJ1biDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKIyBCdWlsZCB0aGUgYWxsb3ctbGlzdCByZWdleCBkeW5hbWljYWxseSBmcm9tIEFMTE9XRURfRklMRVMuCiMgVGhpcyBndWFyYW50ZWVzIHRoZSBmaWx0ZXIgc3RheXMgaW4gc3luYyB3aXRoIHRoZSB3aGl0ZWxpc3QgYWJvdmUuCiMgRGlyZWN0b3J5IHdpbGRjYXJkcyAoZW50cmllcyBlbmRpbmcgaW4gYC9gKSBtYXRjaCBldmVyeXRoaW5nIHVuZGVyIHRoYXQgZGlyLgphbGxvd19yZV9wcmV0dHk9J14oXC4vKT8oJwphbGxvd19yZV9wcmV0dHlfYWx0PSgpCmZvciBmIGluICIke0FMTE9XRURfRklMRVNbQF19IjsgZG8KICAjIEVzY2FwZSByZWdleCBtZXRhY2hhcnMgaW4gZmlsZW5hbWUKICBlc2M9JChwcmludGYgJyVzJyAiJGYiIHwgc2VkICdzL1wuL1xcLi9nJykKICBpZiBbWyAiJGYiID09ICovIF1dOyB0aGVuCiAgICAjIERpcmVjdG9yeSBlbnRyeSDigJQgbWF0Y2ggdGhlIGRpciBhbmQgZXZlcnl0aGluZyB1bmRlciBpdAogICAgYWxsb3dfcmVfcHJldHR5X2FsdCs9KCIke2VzY30uKiIpCiAgZWxzZQogICAgYWxsb3dfcmVfcHJldHR5X2FsdCs9KCIkZXNjIikKICBmaQpkb25lCmFsbG93X3JlX3ByZXR0eSs9JChJRlM9J3wnOyBlY2hvICIke2FsbG93X3JlX3ByZXR0eV9hbHRbKl19IikKYWxsb3dfcmVfcHJldHR5Kz0nKTonCgp2aW9sYXRpb25zPTAKZm9yIHBhdHRlcm4gaW4gIiR7UEFUVEVSTlNbQF19IjsgZG8KICBlY2hvICLilIDilIAgcGF0dGVybjogJHtwYXR0ZXJufSDilIDilIAiCiAgIyBzaGVsbGNoZWNrIGRpc2FibGU9U0MyMDg2CiAgaGl0cz0kKHJnIC1uIC1pIC0tbm8taGVhZGluZyBcCiAgICAgIC0tZ2xvYiAnIXsuZ2l0LG5vZGVfbW9kdWxlcyxmcm9udGVuZC9ub2RlX21vZHVsZXMsc2VydmVyL25vZGVfbW9kdWxlcyxjb2xsZWN0b3Ivbm9kZV9tb2R1bGVzLHN0b3JhZ2UsZGlzdCxidWlsZCxjb3ZlcmFnZX0vKionIFwKICAgICAgLS1nbG9iICchKiovKi5sb2NrJyBcCiAgICAgIC0tZ2xvYiAnISoqLyoubG9nJyBcCiAgICAgIC0tZ2xvYiAnISoqLyotbG9jay55YW1sJyBcCiAgICAgIC0tZ2xvYiAnISoqLyotbG9jay5qc29uJyBcCiAgICAgICIkcGF0dGVybiIgLiAyPi9kZXYvbnVsbCBcCiAgICB8IHJnIC12ICJzY3JpcHRzL2NoZWNrLWJyYW5kaW5nIiBcCiAgICB8IHJnIC12ICIkYWxsb3dfcmVfcHJldHR5IiB8fCB0cnVlKQoKICBpZiBbIC1uICIkaGl0cyIgXTsgdGhlbgogICAgZWNobyAiJGhpdHMiCiAgICB2aW9sYXRpb25zPSQoKHZpb2xhdGlvbnMgKyAxKSkKICBmaQpkb25lCgplY2hvICIiCmlmIFsgIiR2aW9sYXRpb25zIiAtZ3QgMCBdOyB0aGVuCiAgZWNobyAi4p2MIEJyYW5kaW5nIGxpbnRlciBGQUlMRUQg4oCUICR2aW9sYXRpb25zIHBhdHRlcm4ocykgZm91bmQgaW4gbm9uLXdoaXRlbGlzdGVkIGZpbGVzLiIKICBlY2hvICIiCiAgZWNobyAiT3BlblNJTi1DaGF0IGJyYW5kaW5nIHBvbGljeToiCiAgZWNobyAiICAtICdBbnl0aGluZ0xMTScgLyAnTWludHBsZXgnIG1heSBvbmx5IGFwcGVhciBpbjoiCiAgZm9yIGYgaW4gIiR7QUxMT1dFRF9GSUxFU1tAXX0iOyBkbwogICAgZWNobyAiICAgIOKAoiAkZiIKICBkb25lCiAgZWNobyAiICAtIEFueSBuZXcgbWVudGlvbiBtdXN0IGJlIGFkZGVkIHRvIFRISVJEX1BBUlRZLm1kIChub3QgdGhlIGNvZGUpLiIKICBlY2hvICIiCiAgZWNobyAiSWYgYSBtZW50aW9uIGlzIEdFTlVJTkVMWSByZXF1aXJlZCBpbiBjb2RlLCBhZGQgdGhlIGZpbGUgdG8gQUxMT1dFRF9GSUxFUyIKICBlY2hvICJpbiBzY3JpcHRzL2NoZWNrLWJyYW5kaW5nLnNoIEFORCBhZGQgYSBjb21tZW50IGV4cGxhaW5pbmcgd2h5LiIKICBleGl0IDEKZmkKCmVjaG8gIuKchSBCcmFuZGluZyBsaW50ZXIgUEFTU0VEIOKAlCBubyBBbnl0aGluZ0xMTSAvIE1pbnRwbGV4IHN0cmluZ3Mgb3V0c2lkZSB0aGUgd2hpdGVsaXN0LiIK
+#!/usr/bin/env bash
+# SPDX-License-Identifier: MIT
+
+# OpenSIN Chat — Branding Linter
+# Fails CI when AnythingLLM / Mintplex Labs brand strings appear outside the
+# whitelist of files that LEGITIMATELY credit the upstream project.
+#
+# Docs: scripts/check-branding.doc.md
+set -euo pipefail
+
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$REPO_ROOT"
+
+# ── Whitelist ───────────────────────────────────────────────────────
+# Files where "AnythingLLM" / "Mintplex" mentions are INTENTIONAL.
+# Everything else in the repo must not contain these strings.
+# Add a comment next to each entry explaining WHY the exception exists.
+ALLOWED_FILES=(
+  # ── Intentional upstream credit ───────────────────────────
+  "THIRD_PARTY.md"                     # canonical credit doc (merged: acknowledgments + NPM packages)
+  "BRANDING.md"                        # branding policy references upstream
+  "README.md"                          # "Stand auf Schultern von Riesen" section
+  "TERMS_SELF_HOSTED.md"               # §2 references AnythingLLM telemetry
+  "TERMS.md"                           # generic terms
+  "docs/changelog-recent.md"           # recent changelog entries referencing upstream
+  "docs/abandoned-packages-audit.md"   # audit doc referencing upstream git deps
+
+  # ── License / package metadata ───────────────────────────
+  "LICENSE"
+  "LICENSE.md"
+  "package.json"                       # contributors[] credits Mintplex Labs
+  "server/package.json"                # upstream npm-scope deps: @mintplex-labs/{bree,express-ws,mdpdf} — these are mintplex-published packages we depend on as-is (no upstream rebrand)
+  "server/index.js"                    # require('@mintplex-labs/express-ws') — upstream WebSocket layer
+  "server/utils/boot/index.js"         # require('@mintplex-labs/express-ws') — SSL WebSocket boot
+  "server/utils/BackgroundWorkers/index.js"   # require('@mintplex-labs/bree') + JSDoc @opensin/bree type ref — upstream scheduler
+  "server/utils/agents/aibitat/example/websocket/websock-multi-turn-chat.js"  # require('@mintplex-labs/express-ws') — example
+  "server/utils/agents/aibitat/example/websocket/websock-branding-collab.js"   # require('@mintplex-labs/express-ws') — example
+  "server/utils/agents/aibitat/plugins/create-files/pdf/create-pdf-file.js"    # import('@mintplex-labs/mdpdf') — upstream PDF converter
+  "frontend/package.json"                # upstream npm-scope dep: @mintplex-labs/piper-tts-web — mintplex-published TTS voice package we depend on as-is
+
+  # ── Upstream npm-scope deps used as-is in code ────────────
+  "server/utils/reports/index.js"        # require('@mintplex-labs/mdpdf') — upstream Markdown-to-PDF converter
+  "frontend/src/utils/piperTTS/index.js"   # JSDoc type refs to @mintplex-labs/piper-tts-web
+  "frontend/src/utils/piperTTS/worker.js"  # import '@mintplex-labs/piper-tts-web' — upstream TTS voice engine
+  "frontend/vite.config.js"               # manualChunks regex matches @mintplex-labs/{mdpdf,piper-tts-web} for vendor-splitting
+
+  # ── Module docs that credit the upstream package they wrap ─
+  "server/utils/reports/index.doc.md"        # documents @mintplex-labs/mdpdf dependency
+  "server/utils/research/webSearchEngine.doc.md"  # credits reused AnythingLLM agent search infra
+  "ROADMAP.md"                               # changelog rows reference @mintplex-labs/* package reverts
+
+  # ── CEO audit reports (reference upstream codebase lineage) ─
+  "ceo-audits/"                              # audit docs describe the AnythingLLM codebase OpenSIN-Chat is built on
+
+  # ── Self-reference (linter mentions the strings it forbids) ─
+  "scripts/check-branding.sh"
+  "scripts/check-branding.doc.md"
+
+  # ── Functional backward-compat: AnythingLLM env vars preserved
+  #    so existing user .env files / docker setups keep working.
+  "server/utils/helpers/updateENV.js"  # known-env-var whitelist (thin shim)
+  "server/utils/helpers/updateENV/dumpENV.js"  # known-env-var whitelist (split from updateENV.js)
+  "server/utils/boot/patchSdkTimeouts.js"  # reads ANYTHINGLLM_FETCH_TIMEOUT / ANYTHINGLLM_MAX_RETRIES
+  "server/utils/collectorApi/index.js"  # reads ANYTHINGLLM_CHROMIUM_ARGS
+
+  # ── Functional backward-compat: logo file shim
+  #    server must accept the legacy "anythingllm-logo.png" filename
+  #    so existing AnythingLLM installs upgrading to OpenSIN-Chat
+  #    do not show a broken image.
+  "server/utils/files/logo.js"         # legacy logo filename shim
+
+  # ── Operational docs (Docker setup instructions) ─────────
+  "server/storage/README.md"           # docker exec commands reference upstream image
+
+  # ── Vendored third-party embed widget ───────────────────
+  #    Newer OpenSIN-branded embed is a transitional vendored copy of the
+  #    upstream widget; its minified body still contains legacy AnythingLLM/
+  #    Mintplex strings. Cleaning it is tracked separately; for now it is
+  #    treated the same as the legacy asset.
+  "frontend/public/embed/opensin-chat-widget.min.js"
+
+  # ── Upstream-sync tooling ───────────────────────────────
+  #    docs/UPSTREAM-SYNC.md + scripts/upstream-sync/* explain and execute
+  #    the snapshot-sync from Mintplex-Labs/anything-llm. They legitimately
+  #    reference upstream names + URLs + the raw patch files (which are
+  #    verbatim from upstream and need to remain intact for `git am`).
+  "docs/UPSTREAM-SYNC.md"
+  "docs/vercel-deploy-fix.md"        # references upstream as AnythingLLM-Fork
+  "docs/architecture.md"             # SSoT production architecture — references AnythingLLM as upstream-fork context
+  "scripts/upstream-sync/"
+
+  # ── Server unit tests ──────────────────────────────────
+  #    server/__tests__/* mocks upstream npm-scope modules (e.g.
+  #    @mintplex-labs/mdpdf) via jest.mock(...) — the test must reference
+  #    the real upstream module name to mock it.
+  "server/__tests__/"
+
+  # ── Auto-generated SBOM artefacts ──────────────────────
+  #    sbom/*.json (CycloneDX 1.5 + SPDX 2.3) enumerate every direct+transitive
+  #    dependency including upstream @mintplex-labs/* packages. Package
+  #    identity is the ground truth of package.json/yarn.lock — it cannot
+  #    be rebranded without breaking the SBOM's purl/dependsOn references.
+  "sbom/"
+
+  # ── Env examples — upstream docs links ────────────────
+  #    docker/.env.example + server/.env.example reference docs.anythingllm.com
+  #    for upstream configuration docs (link is genuine, not brand promotion).
+  "docker/.env.example"
+  "server/.env.example"
+
+  # ── Helm chart — upstream image reference ──────────────
+  #    values.yaml uses mintplexlabs/anythingllm as the OCI image repo
+  #    (the Docker image we run IS the upstream anythingllm image).
+  #    Chart.yaml mentions "Fork von AnythingLLM" as contextual description.
+  "cloud-deployments/helm/charts/opensin-chat/values.yaml"
+  "cloud-deployments/helm/charts/opensin-chat/Chart.yaml"
+
+  # ── Dockerfile — upstream asset download ──────────────
+  #    Downloads Chromium for ARM from webassets.anythingllm.com (upstream
+  #    prebuilt binary). The URL is a factual dependency, not brand promotion.
+  "docker/Dockerfile"
+  "cloud-deployments/openshift/Dockerfile"   # same upstream Chromium ARM download as docker/Dockerfile
+
+  # ── Architectural decision records ────────────────────
+  #    docs/adr/*.md reference the upstream AnythingLLM codebase + issues
+  #    to justify architectural decisions (context, not promotion).
+  "docs/adr/"
+
+  # ── Rebrand script — upstream mention in comment ──────
+  #    scripts/rebrand-opensin.sh comment explains it avoids renaming
+  #    AnythingLLM env-vars / functional keys. Intent is functional, not brand.
+  "scripts/rebrand-opensin.sh"
+
+  # ── Generated SBOM JSON (bom.json) ──────────────────
+  #    CycloneDX 1.7 auto-generated by cdxgen — includes upstream package refs
+  #    and pre-rebrand metadata for provenance.
+  "bom.json"
+  "sbom.spdx.json"
+  "sbom.cdx.json"
+
+  # ── WebSocket agent endpoint — mintplex NPM dep ──────
+  #    require('@mintplex-labs/express-ws') — upstream WebSocket layer used as-is.
+  "server/endpoints/agentWebsocket.js"
+
+  # ── Terminal endpoint — legacy path redaction ──────────
+  #    terminalExec.js redacts /var/lib/anythingllm from command output so
+  #    that legacy Docker installations upgrading to OpenSIN-Chat don't leak
+  #    their host storage path. The path is a backward-compat security redaction.
+  "server/endpoints/utils/terminalExec.js"
+
+  # ── Collector package.json — upstream NPM dep ────────
+  #    epub2: "git+https://github.com/Mintplex-Labs/epub2-static.git#main"
+  #    Upstream EPUB parsing package we use as-is.
+  "collector/package.json"
+
+  # ── Piper TTS frontend — upstream NPM dep ────────────
+  #    import '@mintplex-labs/piper-tts-web' — upstream TTS voice engine used as-is.
+  #    JSDoc type refs to @mintplex-labs/piper-tts-web and @mintplex-labs/piper-web-tts.
+  "frontend/src/utils/piperTTS/index.ts"
+  "frontend/src/utils/piperTTS/worker.ts"
+
+  # ── server/app.js — mintplex NPM dep ────────────────
+  #    require('@mintplex-labs/express-ws') in non-HTTPS, non-test mode.
+  "server/app.js"
+
+  # ── Functional backward-compat: localStorage keys ───
+  #    Frontend reads legacy "anythingllm_disable_onboarding" and mock flags
+  #    ("anythingllm_pdf_mock", "anythingllm_ws_mock") from localStorage so
+  #    existing user browsers keep working after the rebrand.
+  "frontend/src/models/system.ts"
+  "frontend/src/models/system.js"
+  "frontend/src/main.tsx"
+  "frontend/src/mocks/browser.ts"
+  "frontend/src/mocks/pdfAnalysisHandlers.ts"
+  "frontend/src/mocks/auditHandlers.ts"
+
+  # ── Project identity & policy docs ──────────────────
+  #    Reference the upstream AnythingLLM / Mintplex Labs origin for context.
+  "AGENTS.md"
+  "CONTRIBUTING.md"
+  "SECURITY.md"
+  "CHANGELOG.md"
+
+  # ── Audit & feature docs (upstream context) ─────────
+  "docs/ceo-audit-final.md"
+  "docs/CEO-AUDIT-REPORT.md"
+  "docs/admin/onboarding.md"
+  "server/PDF_ANALYSIS.md"
+  "server/app.doc.md"
+  "scripts/skill-oci-oracle-cloud-SKILL.md"
+  "RESEARCH.md"                        # research comparison doc referencing the upstream AnythingLLM/Mintplex origin for context
+  "PRODUCTION-READINESS-REPORT.md"     # audit report documenting findings about upstream AnythingLLM/Mintplex strings
+  "CEO-AUDIT-REPORT-2026-06-27.md"    # CEO audit report referencing upstream fork lineage
+  "FUTURE-PLAN.md"                     # future plan referencing upstream structural debt
+
+  # ── In-app documentation pages (upstream context) ───
+  #    frontend/src/pages/Docs/content/ mirrors docs/ for the in-app docs viewer.
+  "frontend/src/pages/Docs/content/"
+)
+
+# Build ripgrep exclude-from-file
+EXCLUDE_FILE="$(mktemp -t opensin-branding-XXXXXX)"
+trap 'rm -f "$EXCLUDE_FILE"' EXIT
+{
+  for f in "${ALLOWED_FILES[@]}"; do
+    if [[ "$f" == */ ]]; then
+      # Directory wildcard — exclude everything under it
+      echo "!^${f}.*"
+    else
+      echo "!^${f}\$"
+    fi
+  done
+  # Standard excludes
+  echo "!^\\.git/"
+  echo "!^node_modules/"
+  echo "!^frontend/node_modules/"
+  echo "!^server/node_modules/"
+  echo "!^collector/node_modules/"
+  echo "!^storage/"
+  echo "!^dist/"
+  echo "!^build/"
+  echo "!^coverage/"
+  echo "!"*".lock\$"             # package-lock, yarn.lock
+  echo "!"*".log\$"
+  echo "!"*"-lock\\.yaml\$"      # pnpm-lock.yaml
+  echo "!"*"-lock\\.json\$"
+  # Brand strings that are EXPECTED in code (deliberate escape hatch)
+  echo "!^server/models/communityHub\\.js\$"   # importPrefix "allm-community-id"
+  echo "!^server/models/workspace\\.js\$"      # provider "anythingllm-router"
+} > "$EXCLUDE_FILE"
+
+# ── Search patterns ─────────────────────────────────────────────────
+# What we forbid in non-whitelisted files:
+#  - "AnythingLLM" / "anythingllm"   (display name, lower-case identifier)
+#  - "Mintplex Labs" / "MintplexLabs" / "mintplex"
+#  - "cdn.anythingllm.com" / "hub.anythingllm.com" / "docs.anythingllm.com"
+#  - "team@mintplexlabs.com" / "@mintplexlabs"
+PATTERNS=(
+  "AnythingLLM"
+  "anythingllm"
+  "Mintplex"
+  "mintplex"
+  "cdn\.anythingllm\.com"
+  "hub\.anythingllm\.com"
+  "docs\.anythingllm\.com"
+  "mintplexlabs\.com"
+  "team@mintplex"
+  "Family Team Projects"
+)
+
+# ── Run ─────────────────────────────────────────────────────────────
+# Build the allow-list regex dynamically from ALLOWED_FILES.
+# This guarantees the filter stays in sync with the whitelist above.
+# Directory wildcards (entries ending in `/`) match everything under that dir.
+allow_re_pretty='^(\./)?('
+allow_re_pretty_alt=()
+for f in "${ALLOWED_FILES[@]}"; do
+  # Escape regex metachars in filename
+  esc=$(printf '%s' "$f" | sed 's/\./\\./g')
+  if [[ "$f" == */ ]]; then
+    # Directory entry — match the dir and everything under it
+    allow_re_pretty_alt+=("${esc}.*")
+  else
+    allow_re_pretty_alt+=("$esc")
+  fi
+done
+allow_re_pretty+=$(IFS='|'; echo "${allow_re_pretty_alt[*]}")
+allow_re_pretty+='):'
+
+violations=0
+for pattern in "${PATTERNS[@]}"; do
+  echo "── pattern: ${pattern} ──"
+  # shellcheck disable=SC2086
+  hits=$(rg -n -i --no-heading \
+      --glob '!{.git,node_modules,frontend/node_modules,server/node_modules,collector/node_modules,storage,dist,build,coverage}/**' \
+      --glob '!**/*.lock' \
+      --glob '!**/*.log' \
+      --glob '!**/*-lock.yaml' \
+      --glob '!**/*-lock.json' \
+      "$pattern" . 2>/dev/null \
+    | rg -v "scripts/check-branding" \
+    | rg -v "$allow_re_pretty" || true)
+
+  if [ -n "$hits" ]; then
+    echo "$hits"
+    violations=$((violations + 1))
+  fi
+done
+
+echo ""
+if [ "$violations" -gt 0 ]; then
+  echo "❌ Branding linter FAILED — $violations pattern(s) found in non-whitelisted files."
+  echo ""
+  echo "OpenSIN-Chat branding policy:"
+  echo "  - 'AnythingLLM' / 'Mintplex' may only appear in:"
+  for f in "${ALLOWED_FILES[@]}"; do
+    echo "    • $f"
+  done
+  echo "  - Any new mention must be added to THIRD_PARTY.md (not the code)."
+  echo ""
+  echo "If a mention is GENUINELY required in code, add the file to ALLOWED_FILES"
+  echo "in scripts/check-branding.sh AND add a comment explaining why."
+  exit 1
+fi
+
+echo "✅ Branding linter PASSED — no AnythingLLM / Mintplex strings outside the whitelist."

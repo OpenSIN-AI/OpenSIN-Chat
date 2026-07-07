@@ -3,7 +3,7 @@
 ## Purpose
 
 Online-safe backups of the production SQLite database
-(`server/storage/openafd.db`) — the single file that contains all users,
+(`server/storage/opensin.db`) — the single file that contains all users,
 workspaces, API keys, chats, and settings. Losing it without a backup is an
 unrecoverable total loss.
 
@@ -25,7 +25,7 @@ compressing.
 
 | Env | Default | Meaning |
 | --- | --- | --- |
-| `DB_PATH` | `server/storage/openafd.db` | Source database |
+| `DB_PATH` | `server/storage/opensin.db` | Source database |
 | `BACKUP_DIR` | `server/storage/backups` | Backup destination |
 | `BACKUP_RETENTION_DAYS` | `14` | Delete `.db.gz` files older than N days |
 
@@ -41,5 +41,5 @@ compressing.
 ## Restore procedure
 
 1. Stop the server / container.
-2. `gunzip -c server/storage/backups/openafd-<stamp>.db.gz > server/storage/openafd.db`
+2. `gunzip -c server/storage/backups/opensin-<stamp>.db.gz > server/storage/opensin.db`
 3. Restart. Verify login + one workspace chat.
