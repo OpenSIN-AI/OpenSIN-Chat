@@ -1,1 +1,169 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBFbmQtdG8tZW5kIHRlc3QgZm9yIHRoZSBidWc6Ci8vICAgVXNlciBhc2tzICJoYXN0IGR1IHdlYiB6dWdyaWZmPyIgd2l0aG91dCBAYWdlbnQgcHJlZml4IC0+IExMTSBzYXlzICJubyIuCi8vCi8vIFRoZSBMTE0gbXVzdCBpbnN0ZWFkIGFja25vd2xlZGdlIHRoYXQgdG9vbHMgYXJlIGF2YWlsYWJsZSB2aWEgdGhlIEBhZ2VudAovLyBwcmVmaXggKHdvcmtzcGFjZSBwcm9tcHQgdGVhY2hlcyBpdCBzbyksIGFuZCB0aGUgQGFnZW50IGZsb3cgaXRzZWxmIG11c3QKLy8gcmVtYWluIGZ1bmN0aW9uYWwuCi8vCi8vIFJ1biBsb2NhbGx5ICh0aGUgUHJpc21hIGNsaWVudCBwYXRoIGlzIHJlc29sdmVkIGF1dG9tYXRpY2FsbHkpOgovLyAgIG5vZGUgdGVzdHMvZTJlL3dlYkFjY2Vzc1Byb21wdC50ZXN0LmNqcwovLwovLyBPciBydW4gaW5zaWRlIHRoZSBPcGVuU0lOIGNvbnRhaW5lciAobGVnYWN5IHBhdGgpOgovLyAgIGRvY2tlciBjcCB0ZXN0cy9lMmUvd2ViQWNjZXNzUHJvbXB0LnRlc3QuY2pzIG9wZW5zaW4tY2hhdDovdG1wL3Rlc3QuY2pzCi8vICAgZG9ja2VyIGV4ZWMgb3BlbmFmZCBzaCAtYyAnY2QgL2FwcC9zZXJ2ZXIgJiYgbm9kZSAvdG1wL3Rlc3QuY2pzJwoKY29uc3QgaHR0cCA9IHJlcXVpcmUoImh0dHAiKTsKY29uc3QgcGF0aCA9IHJlcXVpcmUoInBhdGgiKTsKY29uc3QgeyBleGlzdHNTeW5jIH0gPSByZXF1aXJlKCJmcyIpOwoKLy8gUmVzb2x2ZSB0aGUgUHJpc21hIGNsaWVudCBsb2NhdGlvbiB3aXRob3V0IGhhcmRjb2RpbmcgdGhlIERvY2tlciAvYXBwLyBwYXRoLgovLyBQcmlvcml0eTogMSkgUFJJU01BX0NMSUVOVF9QQVRIIGVudiB2YXIsIDIpIGxvY2FsIHJlcG8gY2hlY2tvdXQgcmVsYXRpdmUgdG8gdGhpcyB0ZXN0LAovLyAzKSBsZWdhY3kgRG9ja2VyIHBhdGggc28gdGhlIG9sZCBkb2N1bWVudGVkIGNvbnRhaW5lciBjb21tYW5kIHN0aWxsIHdvcmtzLgpjb25zdCBQUklTTUFfQ0xJRU5UX1BBVEggPSAoKCkgPT4gewogIGlmIChwcm9jZXNzLmVudi5QUklTTUFfQ0xJRU5UX1BBVEgpIHJldHVybiBwcm9jZXNzLmVudi5QUklTTUFfQ0xJRU5UX1BBVEg7CgogIGNvbnN0IGxvY2FsUGF0aCA9IHBhdGgucmVzb2x2ZShfX2Rpcm5hbWUsICIuLi8uLi9zZXJ2ZXIvbm9kZV9tb2R1bGVzL0BwcmlzbWEvY2xpZW50Iik7CiAgaWYgKGV4aXN0c1N5bmMobG9jYWxQYXRoKSkgcmV0dXJuIGxvY2FsUGF0aDsKCiAgcmV0dXJuICIvYXBwL3NlcnZlci9ub2RlX21vZHVsZXMvQHByaXNtYS9jbGllbnQiOwp9KSgpOwoKY29uc3QgeyBQcmlzbWFDbGllbnQgfSA9IHJlcXVpcmUoUFJJU01BX0NMSUVOVF9QQVRIKTsKCmNvbnN0IEFQSV9LRVkgPSAicG9sLXRlc3Qta2V5LTAwMSI7CmNvbnN0IFdPUktTUEFDRV9TTFVHID0gInRlc3QiOwpjb25zdCBCQVNFID0gImh0dHA6Ly9sb2NhbGhvc3Q6MzAwMS9hcGkiOwoKZnVuY3Rpb24gcG9zdEpTT04ocGF0aCwgYm9keSkgewogIHJldHVybiBuZXcgUHJvbWlzZSgocmVzb2x2ZSwgcmVqZWN0KSA9PiB7CiAgICBjb25zdCBkYXRhID0gSlNPTi5zdHJpbmdpZnkoYm9keSk7CiAgICBjb25zdCByZXEgPSBodHRwLnJlcXVlc3QoCiAgICAgIEJBU0UgKyBwYXRoLAogICAgICB7CiAgICAgICAgbWV0aG9kOiAiUE9TVCIsCiAgICAgICAgaGVhZGVyczogewogICAgICAgICAgIkNvbnRlbnQtVHlwZSI6ICJhcHBsaWNhdGlvbi9qc29uIiwKICAgICAgICAgIEF1dGhvcml6YXRpb246ICJCZWFyZXIgIiArIEFQSV9LRVksCiAgICAgICAgICBBY2NlcHQ6ICJ0ZXh0L2V2ZW50LXN0cmVhbSIsCiAgICAgICAgfSwKICAgICAgfSwKICAgICAgKHJlcykgPT4gewogICAgICAgIGxldCBidWYgPSAiIjsKICAgICAgICByZXMub24oImRhdGEiLCAoY2h1bmspID0+IChidWYgKz0gY2h1bmspKTsKICAgICAgICByZXMub24oImVuZCIsICgpID0+IHJlc29sdmUoeyBzdGF0dXM6IHJlcy5zdGF0dXNDb2RlLCBib2R5OiBidWYgfSkpOwogICAgICB9CiAgICApOwogICAgcmVxLm9uKCJlcnJvciIsIHJlamVjdCk7CiAgICByZXEud3JpdGUoZGF0YSk7CiAgICByZXEuZW5kKCk7CiAgfSk7Cn0KCmZ1bmN0aW9uIHBhcnNlU1NFKGJvZHkpIHsKICBjb25zdCBldmVudHMgPSBbXTsKICBmb3IgKGNvbnN0IGxpbmUgb2YgYm9keS5zcGxpdCgiXG4iKSkgewogICAgaWYgKCFsaW5lLnN0YXJ0c1dpdGgoImRhdGE6ICIpKSBjb250aW51ZTsKICAgIHRyeSB7CiAgICAgIGV2ZW50cy5wdXNoKEpTT04ucGFyc2UobGluZS5zbGljZSg2KSkpOwogICAgfSBjYXRjaCB7fQogIH0KICByZXR1cm4gZXZlbnRzOwp9CgooYXN5bmMgKCkgPT4gewogIGNvbnNvbGUubG9nKCI9PT0gRTJFIFRlc3Q6IExMTSBhd2FyZW5lc3Mgb2YgQGFnZW50IHRvb2xpbmcgPT09XG4iKTsKCiAgLy8gMS4gUHJvbXB0IGluIERCCiAgY29uc3QgcHJpc21hID0gbmV3IFByaXNtYUNsaWVudCgpOwogIGNvbnN0IHdzID0gYXdhaXQgcHJpc21hLndvcmtzcGFjZXMuZmluZFVuaXF1ZSh7IHdoZXJlOiB7IHNsdWc6IFdPUktTUEFDRV9TTFVHIH0gfSk7CiAgYXdhaXQgcHJpc21hLiRkaXNjb25uZWN0KCk7CiAgaWYgKCF3cykgewogICAgY29uc29sZS5lcnJvcigiRkFJTDogd29ya3NwYWNlICd0ZXN0JyBub3QgZm91bmQiKTsKICAgIHByb2Nlc3MuZXhpdCgxKTsKICB9CiAgY29uc3QgcHJvbXB0ID0gd3Mub3BlbkFpUHJvbXB0IHx8ICIiOwogIGNvbnNvbGUubG9nKCJbMV0gV29ya3NwYWNlIHByb21wdCBsZW5ndGg6ICIgKyBwcm9tcHQubGVuZ3RoKTsKICBjb25zb2xlLmxvZygiWzFdIENvbnRhaW5zIEBhZ2VudDogIiArIHByb21wdC5pbmNsdWRlcygiQGFnZW50IikpOwogIGNvbnNvbGUubG9nKCJbMV0gQ29udGFpbnMgV2Vya3pldWc6ICIgKyBwcm9tcHQuaW5jbHVkZXMoIldlcmt6ZXVnIikpOwogIGlmICghcHJvbXB0LmluY2x1ZGVzKCJAYWdlbnQiKSB8fCAhcHJvbXB0LmluY2x1ZGVzKCJXZXJremV1ZyIpKSB7CiAgICBjb25zb2xlLmVycm9yKCJGQUlMOiBwcm9tcHQgbm90IHVwZGF0ZWQiKTsKICAgIHByb2Nlc3MuZXhpdCgxKTsKICB9CiAgY29uc29sZS5sb2coIlBBU1M6IHN5c3RlbSBwcm9tcHQgaGFzIHRoZSBuZXcgcnVsZSA3XG4iKTsKCiAgLy8gMi4gU2VuZCB0aGUgYnVnLXRyaWdnZXIgY2hhdAogIGNvbnNvbGUubG9nKCJbMl0gUE9TVCAvd29ya3NwYWNlLyIgKyBXT1JLU1BBQ0VfU0xVRyArICIvc3RyZWFtLWNoYXQgJ2hhc3QgZHUgd2ViIHp1Z3JpZmY/JyIpOwogIGNvbnN0IHQwID0gRGF0ZS5ub3coKTsKICBjb25zdCB7IHN0YXR1cywgYm9keSB9ID0gYXdhaXQgcG9zdEpTT04oCiAgICAiL3dvcmtzcGFjZS8iICsgV09SS1NQQUNFX1NMVUcgKyAiL3N0cmVhbS1jaGF0IiwKICAgIHsgbWVzc2FnZTogImhhc3QgZHUgd2ViIHp1Z3JpZmY/IiB9CiAgKTsKICBjb25zb2xlLmxvZygiWzJdIEhUVFAgIiArIHN0YXR1cyArICIgaW4gIiArIChEYXRlLm5vdygpIC0gdDApICsgIm1zLCBib2R5IHNpemU9IiArIGJvZHkubGVuZ3RoKTsKCiAgaWYgKHN0YXR1cyAhPT0gMjAwKSB7CiAgICBjb25zb2xlLmVycm9yKCJGQUlMOiBleHBlY3RlZCAyMDAsIGdvdCAiICsgc3RhdHVzKTsKICAgIGNvbnNvbGUuZXJyb3IoYm9keS5zbGljZSgwLCA1MDApKTsKICAgIHByb2Nlc3MuZXhpdCgxKTsKICB9CgogIGNvbnN0IGV2ZW50cyA9IHBhcnNlU1NFKGJvZHkpOwogIGNvbnN0IGFib3J0ZWQgPSBldmVudHMuZmluZCgoZSkgPT4gZS50eXBlID09PSAiYWJvcnQiKTsKICBpZiAoYWJvcnRlZCkgewogICAgY29uc29sZS5lcnJvcigiRkFJTDogc3RyZWFtIGFib3J0ZWQ6IiwgYWJvcnRlZC5lcnJvciB8fCBhYm9ydGVkLnRleHRSZXNwb25zZSk7CiAgICBwcm9jZXNzLmV4aXQoMSk7CiAgfQoKICAvLyBDb25jYXRlbmF0ZSBhbGwgdGV4dFJlc3BvbnNlIHBheWxvYWRzLCBzdHJpcCA8dGhpbms+Li4uPC90aGluaz4gYmxvY2tzCiAgLy8gKE5lbW90cm9uIHJlYXNvbmluZyBtb2RlbCBlbWl0cyBjaGFpbi1vZi10aG91Z2h0KS4KICBjb25zdCB0ZXh0Q2h1bmtzID0gZXZlbnRzCiAgICAubWFwKChlKSA9PiBlLnRleHRSZXNwb25zZSB8fCAiIikKICAgIC5maWx0ZXIoKHQpID0+IHR5cGVvZiB0ID09PSAic3RyaW5nIiAmJiB0Lmxlbmd0aCA+IDApOwogIGNvbnN0IGZ1bGxUZXh0ID0gdGV4dENodW5rcy5qb2luKCIiKQogICAgLnJlcGxhY2UoLzx0aGluaz5bXHNcU10qPzxcL3RoaW5rPi9naSwgIiIpCiAgICAudHJpbSgpOwoKICBjb25zb2xlLmxvZygiWzNdIFJlc3BvbnNlIHRleHQgKCIgKyBmdWxsVGV4dC5sZW5ndGggKyAiIGNoYXJzKToiKTsKICBjb25zb2xlLmxvZygiLS0tIik7CiAgY29uc29sZS5sb2coZnVsbFRleHQpOwogIGNvbnNvbGUubG9nKCItLS0iKTsKCiAgaWYgKCFmdWxsVGV4dCkgewogICAgY29uc29sZS5lcnJvcigiRkFJTDogZW1wdHkgcmVzcG9uc2UiKTsKICAgIHByb2Nlc3MuZXhpdCgxKTsKICB9CgogIGNvbnN0IGxvd2VyID0gZnVsbFRleHQudG9Mb3dlckNhc2UoKTsKICBpZiAoIShsb3dlci5pbmNsdWRlcygiQGFnZW50IikgfHwgbG93ZXIuaW5jbHVkZXMoImFnZW50IikgfHwgbG93ZXIuaW5jbHVkZXMoInByw6RmaXgiKSkpIHsKICAgIGNvbnNvbGUuZXJyb3IoIkZBSUw6IHJlc3BvbnNlIGRvZXMgbm90IG1lbnRpb24gQGFnZW50IG9yICdhZ2VudCciKTsKICAgIHByb2Nlc3MuZXhpdCgxKTsKICB9CiAgY29uc29sZS5sb2coIlBBU1M6IHJlc3BvbnNlIGFja25vd2xlZGdlcyBAYWdlbnQgdG9vbGluZ1xuIik7CgogIC8vIDMuIEJhY2t3YXJkIGNvbXBhdDogQGFnZW50IHByZWZpeCBtdXN0IHN0aWxsIHdvcmsKICBjb25zb2xlLmxvZygiWzRdIEJhY2t3YXJkLWNvbXBhdDogUE9TVCAnQGFnZW50IFN1Y2hlIGltIFdlYiBuYWNoIFdldHRlciBCZXJsaW4nIik7CiAgY29uc3QgeyBzdGF0dXM6IHMyLCBib2R5OiBiMiB9ID0gYXdhaXQgcG9zdEpTT04oCiAgICAiL3dvcmtzcGFjZS8iICsgV09SS1NQQUNFX1NMVUcgKyAiL3N0cmVhbS1jaGF0IiwKICAgIHsgbWVzc2FnZTogIkBhZ2VudCBTdWNoZSBpbSBXZWIgbmFjaCBXZXR0ZXIgQmVybGluIiB9CiAgKTsKICBjb25zdCBldjIgPSBwYXJzZVNTRShiMik7CiAgY29uc3QgaW5pdEV2ID0gZXYyLmZpbmQoKGUpID0+IGUudHlwZSA9PT0gImFnZW50SW5pdFdlYnNvY2tldENvbm5lY3Rpb24iKTsKICBjb25zdCBzdGF0dXNFdiA9IGV2Mi5maW5kKAogICAgKGUpID0+IGUudHlwZSA9PT0gInN0YXR1c1Jlc3BvbnNlIiAmJiBlLnRleHRSZXNwb25zZSAmJiBlLnRleHRSZXNwb25zZS5pbmNsdWRlcygiQGFnZW50IikKICApOwogIGNvbnNvbGUubG9nKCJbNF0gSFRUUCAiICsgczIgKyAiIGFnZW50SW5pdD0iICsgISFpbml0RXYgKyAiIHN0YXR1cz0iICsgISFzdGF0dXNFdik7CiAgaWYgKHMyICE9PSAyMDAgfHwgIWluaXRFdiB8fCAhc3RhdHVzRXYpIHsKICAgIGNvbnNvbGUuZXJyb3IoIkZBSUw6IEBhZ2VudCBmbG93IGJyb2tlbiIpOwogICAgcHJvY2Vzcy5leGl0KDEpOwogIH0KICBjb25zb2xlLmxvZygiUEFTUzogQGFnZW50IGZsb3cgc3RpbGwgd29ya3MgKGJhY2t3YXJkIGNvbXBhdClcbiIpOwoKICBjb25zb2xlLmxvZygiPT09IEFMTCBDSEVDS1MgUEFTU0VEID09PSIpOwogIGNvbnNvbGUubG9nKCItIHByb21wdCBsZW5ndGg6ICAgIiArIHByb21wdC5sZW5ndGgpOwogIGNvbnNvbGUubG9nKCItIHJlc3BvbnNlIGxlbmd0aDogIiArIGZ1bGxUZXh0Lmxlbmd0aCk7CiAgY29uc29sZS5sb2coIi0gbWVudGlvbnMgQGFnZW50OiB5ZXMiKTsKICBwcm9jZXNzLmV4aXQoMCk7Cn0pKCkuY2F0Y2goKGVycikgPT4gewogIGNvbnNvbGUuZXJyb3IoIkVSUk9SOiIsIGVycik7CiAgcHJvY2Vzcy5leGl0KDEpOwp9KTsK
+// SPDX-License-Identifier: MIT
+// End-to-end test for the bug:
+//   User asks "hast du web zugriff?" without @agent prefix -> LLM says "no".
+//
+// The LLM must instead acknowledge that tools are available via the @agent
+// prefix (workspace prompt teaches it so), and the @agent flow itself must
+// remain functional.
+//
+// Run locally (the Prisma client path is resolved automatically):
+//   node tests/e2e/webAccessPrompt.test.cjs
+//
+// Or run inside the OpenSIN container (legacy path):
+//   docker cp tests/e2e/webAccessPrompt.test.cjs opensin-chat:/tmp/test.cjs
+//   docker exec openafd sh -c 'cd /app/server && node /tmp/test.cjs'
+
+const http = require("http");
+const path = require("path");
+const { existsSync } = require("fs");
+
+// Resolve the Prisma client location without hardcoding the Docker /app/ path.
+// Priority: 1) PRISMA_CLIENT_PATH env var, 2) local repo checkout relative to this test,
+// 3) legacy Docker path so the old documented container command still works.
+const PRISMA_CLIENT_PATH = (() => {
+  if (process.env.PRISMA_CLIENT_PATH) return process.env.PRISMA_CLIENT_PATH;
+
+  const localPath = path.resolve(__dirname, "../../server/node_modules/@prisma/client");
+  if (existsSync(localPath)) return localPath;
+
+  return "/app/server/node_modules/@prisma/client";
+})();
+
+const { PrismaClient } = require(PRISMA_CLIENT_PATH);
+
+const API_KEY = "pol-test-key-001";
+const WORKSPACE_SLUG = "test";
+const BASE = "http://localhost:3001/api";
+
+function postJSON(path, body) {
+  return new Promise((resolve, reject) => {
+    const data = JSON.stringify(body);
+    const req = http.request(
+      BASE + path,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + API_KEY,
+          Accept: "text/event-stream",
+        },
+      },
+      (res) => {
+        let buf = "";
+        res.on("data", (chunk) => (buf += chunk));
+        res.on("end", () => resolve({ status: res.statusCode, body: buf }));
+      }
+    );
+    req.on("error", reject);
+    req.write(data);
+    req.end();
+  });
+}
+
+function parseSSE(body) {
+  const events = [];
+  for (const line of body.split("\n")) {
+    if (!line.startsWith("data: ")) continue;
+    try {
+      events.push(JSON.parse(line.slice(6)));
+    } catch {}
+  }
+  return events;
+}
+
+(async () => {
+  console.log("=== E2E Test: LLM awareness of @agent tooling ===\n");
+
+  // 1. Prompt in DB
+  const prisma = new PrismaClient();
+  const ws = await prisma.workspaces.findUnique({ where: { slug: WORKSPACE_SLUG } });
+  await prisma.$disconnect();
+  if (!ws) {
+    console.error("FAIL: workspace 'test' not found");
+    process.exit(1);
+  }
+  const prompt = ws.openAiPrompt || "";
+  console.log("[1] Workspace prompt length: " + prompt.length);
+  console.log("[1] Contains @agent: " + prompt.includes("@agent"));
+  console.log("[1] Contains Werkzeug: " + prompt.includes("Werkzeug"));
+  if (!prompt.includes("@agent") || !prompt.includes("Werkzeug")) {
+    console.error("FAIL: prompt not updated");
+    process.exit(1);
+  }
+  console.log("PASS: system prompt has the new rule 7\n");
+
+  // 2. Send the bug-trigger chat
+  console.log("[2] POST /workspace/" + WORKSPACE_SLUG + "/stream-chat 'hast du web zugriff?'");
+  const t0 = Date.now();
+  const { status, body } = await postJSON(
+    "/workspace/" + WORKSPACE_SLUG + "/stream-chat",
+    { message: "hast du web zugriff?" }
+  );
+  console.log("[2] HTTP " + status + " in " + (Date.now() - t0) + "ms, body size=" + body.length);
+
+  if (status !== 200) {
+    console.error("FAIL: expected 200, got " + status);
+    console.error(body.slice(0, 500));
+    process.exit(1);
+  }
+
+  const events = parseSSE(body);
+  const aborted = events.find((e) => e.type === "abort");
+  if (aborted) {
+    console.error("FAIL: stream aborted:", aborted.error || aborted.textResponse);
+    process.exit(1);
+  }
+
+  // Concatenate all textResponse payloads, strip <think>...</think> blocks
+  // (Nemotron reasoning model emits chain-of-thought).
+  const textChunks = events
+    .map((e) => e.textResponse || "")
+    .filter((t) => typeof t === "string" && t.length > 0);
+  const fullText = textChunks.join("")
+    .replace(/<think>[\s\S]*?<\/think>/gi, "")
+    .trim();
+
+  console.log("[3] Response text (" + fullText.length + " chars):");
+  console.log("---");
+  console.log(fullText);
+  console.log("---");
+
+  if (!fullText) {
+    console.error("FAIL: empty response");
+    process.exit(1);
+  }
+
+  const lower = fullText.toLowerCase();
+  if (!(lower.includes("@agent") || lower.includes("agent") || lower.includes("präfix"))) {
+    console.error("FAIL: response does not mention @agent or 'agent'");
+    process.exit(1);
+  }
+  console.log("PASS: response acknowledges @agent tooling\n");
+
+  // 3. Backward compat: @agent prefix must still work
+  console.log("[4] Backward-compat: POST '@agent Suche im Web nach Wetter Berlin'");
+  const { status: s2, body: b2 } = await postJSON(
+    "/workspace/" + WORKSPACE_SLUG + "/stream-chat",
+    { message: "@agent Suche im Web nach Wetter Berlin" }
+  );
+  const ev2 = parseSSE(b2);
+  const initEv = ev2.find((e) => e.type === "agentInitWebsocketConnection");
+  const statusEv = ev2.find(
+    (e) => e.type === "statusResponse" && e.textResponse && e.textResponse.includes("@agent")
+  );
+  console.log("[4] HTTP " + s2 + " agentInit=" + !!initEv + " status=" + !!statusEv);
+  if (s2 !== 200 || !initEv || !statusEv) {
+    console.error("FAIL: @agent flow broken");
+    process.exit(1);
+  }
+  console.log("PASS: @agent flow still works (backward compat)\n");
+
+  console.log("=== ALL CHECKS PASSED ===");
+  console.log("- prompt length:   " + prompt.length);
+  console.log("- response length: " + fullText.length);
+  console.log("- mentions @agent: yes");
+  process.exit(0);
+})().catch((err) => {
+  console.error("ERROR:", err);
+  process.exit(1);
+});

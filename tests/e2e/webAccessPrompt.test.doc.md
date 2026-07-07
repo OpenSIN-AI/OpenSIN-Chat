@@ -21,8 +21,8 @@ node tests/e2e/webAccessPrompt.test.cjs
 
 Inside the OpenSIN container (legacy path):
 ```bash
-docker cp tests/e2e/webAccessPrompt.test.cjs openafd:/tmp/test.cjs
-docker exec openafd sh -c 'cd /app/server && node /tmp/test.cjs'
+docker cp tests/e2e/webAccessPrompt.test.cjs opensin:/tmp/test.cjs
+docker exec opensin sh -c 'cd /app/server && node /tmp/test.cjs'
 ```
 
 The Prisma client path is resolved automatically (local repo first, then Docker
