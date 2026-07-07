@@ -1,1 +1,123 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgQ29ubmVjdG9ySW1hZ2VzIGZyb20gIkAvY29tcG9uZW50cy9EYXRhQ29ubmVjdG9yT3B0aW9uL21lZGlhIjsKaW1wb3J0IHsgTWFnbmlmeWluZ0dsYXNzIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL01hZ25pZnlpbmdHbGFzcyI7CmltcG9ydCB7IHVzZVRyYW5zbGF0aW9uIH0gZnJvbSAicmVhY3QtaTE4bmV4dCI7CmltcG9ydCBHaXRodWJPcHRpb25zIGZyb20gIi4vQ29ubmVjdG9ycy9HaXRodWIiOwppbXBvcnQgR2l0bGFiT3B0aW9ucyBmcm9tICIuL0Nvbm5lY3RvcnMvR2l0bGFiIjsKaW1wb3J0IFlvdXR1YmVPcHRpb25zIGZyb20gIi4vQ29ubmVjdG9ycy9Zb3V0dWJlIjsKaW1wb3J0IENvbmZsdWVuY2VPcHRpb25zIGZyb20gIi4vQ29ubmVjdG9ycy9Db25mbHVlbmNlIjsKaW1wb3J0IERydXBhbFdpa2lPcHRpb25zIGZyb20gIi4vQ29ubmVjdG9ycy9EcnVwYWxXaWtpIjsKaW1wb3J0IHsgdXNlU3RhdGUgfSBmcm9tICJyZWFjdCI7CmltcG9ydCBDb25uZWN0b3JPcHRpb24gZnJvbSAiLi9Db25uZWN0b3JPcHRpb24iOwppbXBvcnQgV2Vic2l0ZURlcHRoT3B0aW9ucyBmcm9tICIuL0Nvbm5lY3RvcnMvV2Vic2l0ZURlcHRoIjsKaW1wb3J0IE9ic2lkaWFuT3B0aW9ucyBmcm9tICIuL0Nvbm5lY3RvcnMvT2JzaWRpYW4iOwppbXBvcnQgUGFwZXJsZXNzTmd4T3B0aW9ucyBmcm9tICIuL0Nvbm5lY3RvcnMvUGFwZXJsZXNzTmd4IjsKCmV4cG9ydCBjb25zdCBnZXREYXRhQ29ubmVjdG9ycyA9ICh0KSA9PiAoewogIGdpdGh1YjogewogICAgbmFtZTogdCgiY29ubmVjdG9ycy5naXRodWIubmFtZSIpLAogICAgaW1hZ2U6IENvbm5lY3RvckltYWdlcy5naXRodWIsCiAgICBkZXNjcmlwdGlvbjogdCgiY29ubmVjdG9ycy5naXRodWIuZGVzY3JpcHRpb24iKSwKICAgIG9wdGlvbnM6IDxHaXRodWJPcHRpb25zIC8+LAogIH0sCiAgZ2l0bGFiOiB7CiAgICBuYW1lOiB0KCJjb25uZWN0b3JzLmdpdGxhYi5uYW1lIiksCiAgICBpbWFnZTogQ29ubmVjdG9ySW1hZ2VzLmdpdGxhYiwKICAgIGRlc2NyaXB0aW9uOiB0KCJjb25uZWN0b3JzLmdpdGxhYi5kZXNjcmlwdGlvbiIpLAogICAgb3B0aW9uczogPEdpdGxhYk9wdGlvbnMgLz4sCiAgfSwKICAieW91dHViZS10cmFuc2NyaXB0IjogewogICAgbmFtZTogdCgiY29ubmVjdG9ycy55b3V0dWJlLm5hbWUiKSwKICAgIGltYWdlOiBDb25uZWN0b3JJbWFnZXMueW91dHViZSwKICAgIGRlc2NyaXB0aW9uOiB0KCJjb25uZWN0b3JzLnlvdXR1YmUuZGVzY3JpcHRpb24iKSwKICAgIG9wdGlvbnM6IDxZb3V0dWJlT3B0aW9ucyAvPiwKICB9LAogICJ3ZWJzaXRlLWRlcHRoIjogewogICAgbmFtZTogdCgiY29ubmVjdG9ycy53ZWJzaXRlLWRlcHRoLm5hbWUiKSwKICAgIGltYWdlOiBDb25uZWN0b3JJbWFnZXMud2Vic2l0ZURlcHRoLAogICAgZGVzY3JpcHRpb246IHQoImNvbm5lY3RvcnMud2Vic2l0ZS1kZXB0aC5kZXNjcmlwdGlvbiIpLAogICAgb3B0aW9uczogPFdlYnNpdGVEZXB0aE9wdGlvbnMgLz4sCiAgfSwKICBjb25mbHVlbmNlOiB7CiAgICBuYW1lOiB0KCJjb25uZWN0b3JzLmNvbmZsdWVuY2UubmFtZSIpLAogICAgaW1hZ2U6IENvbm5lY3RvckltYWdlcy5jb25mbHVlbmNlLAogICAgZGVzY3JpcHRpb246IHQoImNvbm5lY3RvcnMuY29uZmx1ZW5jZS5kZXNjcmlwdGlvbiIpLAogICAgb3B0aW9uczogPENvbmZsdWVuY2VPcHRpb25zIC8+LAogIH0sCiAgZHJ1cGFsd2lraTogewogICAgbmFtZTogIkRydXBhbCBXaWtpIiwKICAgIGltYWdlOiBDb25uZWN0b3JJbWFnZXMuZHJ1cGFsd2lraSwKICAgIGRlc2NyaXB0aW9uOiAiSW1wb3J0IERydXBhbCBXaWtpIHNwYWNlcyBpbiBhIHNpbmdsZSBjbGljay4iLAogICAgb3B0aW9uczogPERydXBhbFdpa2lPcHRpb25zIC8+LAogIH0sCiAgb2JzaWRpYW46IHsKICAgIG5hbWU6ICJPYnNpZGlhbiIsCiAgICBpbWFnZTogQ29ubmVjdG9ySW1hZ2VzLm9ic2lkaWFuLAogICAgZGVzY3JpcHRpb246ICJJbXBvcnQgT2JzaWRpYW4gdmF1bHQgaW4gYSBzaW5nbGUgY2xpY2suIiwKICAgIG9wdGlvbnM6IDxPYnNpZGlhbk9wdGlvbnMgLz4sCiAgfSwKICAicGFwZXJsZXNzLW5neCI6IHsKICAgIG5hbWU6ICJQYXBlcmxlc3Mtbmd4IiwKICAgIGltYWdlOiBDb25uZWN0b3JJbWFnZXMucGFwZXJsZXNzTmd4LAogICAgZGVzY3JpcHRpb246ICJJbXBvcnQgZG9jdW1lbnRzIGZyb20geW91ciBQYXBlcmxlc3Mtbmd4IGluc3RhbmNlLiIsCiAgICBvcHRpb25zOiA8UGFwZXJsZXNzTmd4T3B0aW9ucyAvPiwKICB9LAp9KTsKCmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIERhdGFDb25uZWN0b3JzKCkgewogIGNvbnN0IHsgdCB9ID0gdXNlVHJhbnNsYXRpb24oKTsKICBjb25zdCBbc2VsZWN0ZWRDb25uZWN0b3IsIHNldFNlbGVjdGVkQ29ubmVjdG9yXSA9IHVzZVN0YXRlKCJnaXRodWIiKTsKICBjb25zdCBbc2VhcmNoUXVlcnksIHNldFNlYXJjaFF1ZXJ5XSA9IHVzZVN0YXRlKCIiKTsKICBjb25zdCBEQVRBX0NPTk5FQ1RPUlMgPSBnZXREYXRhQ29ubmVjdG9ycyh0KTsKCiAgY29uc3QgZmlsdGVyZWRDb25uZWN0b3JzID0gT2JqZWN0LmtleXMoREFUQV9DT05ORUNUT1JTKS5maWx0ZXIoKHNsdWcpID0+CiAgICBEQVRBX0NPTk5FQ1RPUlNbc2x1Z10ubmFtZQogICAgICAudG9Mb3dlckNhc2UoKQogICAgICAuaW5jbHVkZXMoc2VhcmNoUXVlcnkudG9Mb3dlckNhc2UoKSksCiAgKTsKCiAgcmV0dXJuICgKICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IHVwbG9hZC1tb2RhbCAtbXQtMTAgcmVsYXRpdmUgbWluLWgtWzgwdmhdIHctWzcwdnddIj4KICAgICAgPGRpdiBjbGFzc05hbWU9InctZnVsbCBwLTQgdG9wLTAgei0yMCI+CiAgICAgICAgPGRpdiBjbGFzc05hbWU9InctZnVsbCBmbGV4IGl0ZW1zLWNlbnRlciBzdGlja3kgdG9wLTAgei01MCI+CiAgICAgICAgICA8TWFnbmlmeWluZ0dsYXNzCiAgICAgICAgICAgIHNpemU9ezE2fQogICAgICAgICAgICB3ZWlnaHQ9ImJvbGQiCiAgICAgICAgICAgIGNsYXNzTmFtZT0iYWJzb2x1dGUgbGVmdC00IHotMzAgdGV4dC13aGl0ZSIKICAgICAgICAgIC8+CiAgICAgICAgICA8aW5wdXQKICAgICAgICAgICAgdHlwZT0idGV4dCIKICAgICAgICAgICAgcGxhY2Vob2xkZXI9e3QoImNvbm5lY3RvcnMuc2VhcmNoLXBsYWNlaG9sZGVyIil9CiAgICAgICAgICAgIGNsYXNzTmFtZT0iYm9yZGVyLW5vbmUgei0yMCBwbC0xMCBoLVszOHB4XSByb3VuZGVkLWZ1bGwgdy1mdWxsIHB4LTQgcHktMSB0ZXh0LXNtIGJvcmRlci0yIGJvcmRlci1zbGF0ZS0zMDAvNDAgb3V0bGluZS1ub25lIGZvY3VzOm91dGxpbmUtcHJpbWFyeS1idXR0b24gYWN0aXZlOm91dGxpbmUtcHJpbWFyeS1idXR0b24gb3V0bGluZS1ub25lIHBsYWNlaG9sZGVyOnRleHQtdGhlbWUtc2V0dGluZ3MtaW5wdXQtcGxhY2Vob2xkZXIgdGV4dC13aGl0ZSBiZy10aGVtZS1zZXR0aW5ncy1pbnB1dC1iZyIKICAgICAgICAgICAgYXV0b0NvbXBsZXRlPSJvZmYiCiAgICAgICAgICAgIHZhbHVlPXtzZWFyY2hRdWVyeX0KICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBzZXRTZWFyY2hRdWVyeShlLnRhcmdldC52YWx1ZSl9CiAgICAgICAgICAvPgogICAgICAgIDwvZGl2PgogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJtdC0yIGZsZXggZmxleC1jb2wgZ2FwLXktMiI+CiAgICAgICAgICB7ZmlsdGVyZWRDb25uZWN0b3JzLmxlbmd0aCA+IDAgPyAoCiAgICAgICAgICAgIChmaWx0ZXJlZENvbm5lY3RvcnMgYXMgYW55KS5tYXAoKHNsdWcsIGluZGV4KSA9PiAoCiAgICAgICAgICAgICAgPENvbm5lY3Rvck9wdGlvbgogICAgICAgICAgICAgICAga2V5PXtzbHVnfQogICAgICAgICAgICAgICAgc2x1Zz17c2x1Z30KICAgICAgICAgICAgICAgIHNlbGVjdGVkQ29ubmVjdG9yPXtzZWxlY3RlZENvbm5lY3Rvcn0KICAgICAgICAgICAgICAgIHNldFNlbGVjdGVkQ29ubmVjdG9yPXtzZXRTZWxlY3RlZENvbm5lY3Rvcn0KICAgICAgICAgICAgICAgIGltYWdlPXtEQVRBX0NPTk5FQ1RPUlNbc2x1Z10uaW1hZ2V9CiAgICAgICAgICAgICAgICBuYW1lPXtEQVRBX0NPTk5FQ1RPUlNbc2x1Z10ubmFtZX0KICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uPXtEQVRBX0NPTk5FQ1RPUlNbc2x1Z10uZGVzY3JpcHRpb259CiAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgKSkKICAgICAgICAgICkgOiAoCiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJ0ZXh0LXdoaXRlIHRleHQtY2VudGVyIG10LTQiPgogICAgICAgICAgICAgIHt0KCJjb25uZWN0b3JzLm5vLWNvbm5lY3RvcnMiKX0KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICApfQogICAgICAgIDwvZGl2PgogICAgICA8L2Rpdj4KICAgICAgPGRpdiBjbGFzc05hbWU9InhsOmJsb2NrIGhpZGRlbiBhYnNvbHV0ZSBsZWZ0LTEvMiB0b3AtMCBib3R0b20tMCB3LVswLjVweF0gYmctd2hpdGUvMjAgLXRyYW5zbGF0ZS14LTEvMiI+PC9kaXY+CiAgICAgIDxkaXYgY2xhc3NOYW1lPSJ3LWZ1bGwgcC00IHRvcC0wIHRleHQtd2hpdGUgbWluLXctWzUwMHB4XSI+CiAgICAgICAge0RBVEFfQ09OTkVDVE9SU1tzZWxlY3RlZENvbm5lY3Rvcl0ub3B0aW9uc30KICAgICAgPC9kaXY+CiAgICA8L2Rpdj4KICApOwp9Cg==
+// SPDX-License-Identifier: MIT
+import ConnectorImages from "@/components/DataConnectorOption/media";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
+import { useTranslation } from "react-i18next";
+import GithubOptions from "./Connectors/Github";
+import GitlabOptions from "./Connectors/Gitlab";
+import YoutubeOptions from "./Connectors/Youtube";
+import ConfluenceOptions from "./Connectors/Confluence";
+import DrupalWikiOptions from "./Connectors/DrupalWiki";
+import { useState } from "react";
+import ConnectorOption from "./ConnectorOption";
+import WebsiteDepthOptions from "./Connectors/WebsiteDepth";
+import ObsidianOptions from "./Connectors/Obsidian";
+import PaperlessNgxOptions from "./Connectors/PaperlessNgx";
+
+export const getDataConnectors = (t) => ({
+  github: {
+    name: t("connectors.github.name"),
+    image: ConnectorImages.github,
+    description: t("connectors.github.description"),
+    options: <GithubOptions />,
+  },
+  gitlab: {
+    name: t("connectors.gitlab.name"),
+    image: ConnectorImages.gitlab,
+    description: t("connectors.gitlab.description"),
+    options: <GitlabOptions />,
+  },
+  "youtube-transcript": {
+    name: t("connectors.youtube.name"),
+    image: ConnectorImages.youtube,
+    description: t("connectors.youtube.description"),
+    options: <YoutubeOptions />,
+  },
+  "website-depth": {
+    name: t("connectors.website-depth.name"),
+    image: ConnectorImages.websiteDepth,
+    description: t("connectors.website-depth.description"),
+    options: <WebsiteDepthOptions />,
+  },
+  confluence: {
+    name: t("connectors.confluence.name"),
+    image: ConnectorImages.confluence,
+    description: t("connectors.confluence.description"),
+    options: <ConfluenceOptions />,
+  },
+  drupalwiki: {
+    name: "Drupal Wiki",
+    image: ConnectorImages.drupalwiki,
+    description: "Import Drupal Wiki spaces in a single click.",
+    options: <DrupalWikiOptions />,
+  },
+  obsidian: {
+    name: "Obsidian",
+    image: ConnectorImages.obsidian,
+    description: "Import Obsidian vault in a single click.",
+    options: <ObsidianOptions />,
+  },
+  "paperless-ngx": {
+    name: "Paperless-ngx",
+    image: ConnectorImages.paperlessNgx,
+    description: "Import documents from your Paperless-ngx instance.",
+    options: <PaperlessNgxOptions />,
+  },
+});
+
+export default function DataConnectors() {
+  const { t } = useTranslation();
+  const [selectedConnector, setSelectedConnector] = useState("github");
+  const [searchQuery, setSearchQuery] = useState("");
+  const DATA_CONNECTORS = getDataConnectors(t);
+
+  const filteredConnectors = Object.keys(DATA_CONNECTORS).filter((slug) =>
+    DATA_CONNECTORS[slug].name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase()),
+  );
+
+  return (
+    <div className="flex upload-modal -mt-10 relative min-h-[80vh] w-[70vw]">
+      <div className="w-full p-4 top-0 z-20">
+        <div className="w-full flex items-center sticky top-0 z-50">
+          <MagnifyingGlass
+            size={16}
+            weight="bold"
+            className="absolute left-4 z-30 text-white"
+          />
+          <input
+            type="text"
+            placeholder={t("connectors.search-placeholder")}
+            className="border-none z-20 pl-10 h-[38px] rounded-full w-full px-4 py-1 text-sm border-2 border-slate-300/40 outline-none focus:outline-primary-button active:outline-primary-button outline-none placeholder:text-theme-settings-input-placeholder text-white bg-theme-settings-input-bg"
+            autoComplete="off"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+        <div className="mt-2 flex flex-col gap-y-2">
+          {filteredConnectors.length > 0 ? (
+            (filteredConnectors as any).map((slug, index) => (
+              <ConnectorOption
+                key={slug}
+                slug={slug}
+                selectedConnector={selectedConnector}
+                setSelectedConnector={setSelectedConnector}
+                image={DATA_CONNECTORS[slug].image}
+                name={DATA_CONNECTORS[slug].name}
+                description={DATA_CONNECTORS[slug].description}
+              />
+            ))
+          ) : (
+            <div className="text-white text-center mt-4">
+              {t("connectors.no-connectors")}
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="xl:block hidden absolute left-1/2 top-0 bottom-0 w-[0.5px] bg-white/20 -translate-x-1/2"></div>
+      <div className="w-full p-4 top-0 text-white min-w-[500px]">
+        {DATA_CONNECTORS[selectedConnector].options}
+      </div>
+    </div>
+  );
+}
