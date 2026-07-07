@@ -22,11 +22,8 @@
     "prisma:migrate": "prisma migrate deploy --schema=./prisma/schema.prisma",
     "prisma:setup": "yarn prisma:generate && yarn prisma:migrate",
     "postinstall": "prisma generate --schema=./prisma/schema.prisma",
-<<<<<<< HEAD
-    "env:sync": "node scripts/sync-env-example.js"
-=======
+    "env:sync": "node scripts/sync-env-example.js",
     "smoke": "node scripts/smoke.mjs"
->>>>>>> cd3303bb07049a782325747515e7a8ff9b4ab274
   },
   "prisma": {
     "seed": "node prisma/seed.js"

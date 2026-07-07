@@ -57,7 +57,6 @@
     }
   }
 
-<<<<<<< HEAD
   --theme-button-cta: #e4e4e7;
 
   --theme-file-row-even: #0e0f0f;
@@ -386,11 +385,9 @@ body {
 @media (max-width: 600px) {
   html {
     overscroll-behavior: none;
-=======
   @keyframes pulse-slow {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }
->>>>>>> cd3303bb07049a782325747515e7a8ff9b4ab274
   }
 }
 
