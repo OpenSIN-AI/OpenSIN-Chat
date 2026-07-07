@@ -1,1 +1,487 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovKioKICogYnJvd3Nlci12aXNpb24gYWdlbnQgcGx1Z2luCiAqCiAqIFByb3ZpZGVzIHR3byBhZ2VudC1jYWxsYWJsZSB0b29scyB0aGF0IGVuYWJsZSBzdHJ1Y3R1cmVkIGluc3BlY3Rpb24gb2YKICogd2ViIHBhZ2VzIHdpdGhvdXQgcmVxdWlyaW5nIGEgcnVubmluZyBicm93c2VyIHByb2Nlc3MgaW4gQ0k6CiAqCiAqICAgMS4gZmV0Y2gtcGFnZS10ZXh0ICDigJQgZmV0Y2hlcyBhIFVSTCBhbmQgcmV0dXJucyBjbGVhbmVkIHRleHQgY29udGVudAogKiAgICAgICAgICAgICAgICAgICAgICAgICAobGlua3MsIGhlYWRpbmdzLCBib2R5IHRleHQsIG1ldGEgZGVzY3JpcHRpb24pLgogKiAgICAgICAgICAgICAgICAgICAgICAgICBTdWl0YWJsZSBmb3IgcmVhZGluZyBhcnRpY2xlcywgZG9jdW1lbnRhdGlvbiwgYW5kCiAqICAgICAgICAgICAgICAgICAgICAgICAgIHB1YmxpYyBkYXRhIHBhZ2VzLgogKgogKiAgIDIuIGZldGNoLXBhZ2UtbWV0YSAg4oCUIHJldHVybnMgbGlnaHR3ZWlnaHQgbWV0YWRhdGEgZm9yIGEgVVJMOgogKiAgICAgICAgICAgICAgICAgICAgICAgICB0aXRsZSwgZGVzY3JpcHRpb24sIE9wZW4gR3JhcGggdGFncywgY2Fub25pY2FsIFVSTCwKICogICAgICAgICAgICAgICAgICAgICAgICAgYW5kIHByaW1hcnkgb3V0Ym91bmQgbGlua3MuIERvZXMgbm90IGRvd25sb2FkIHRoZQogKiAgICAgICAgICAgICAgICAgICAgICAgICBmdWxsIHBhZ2UgYm9keSwgbWFraW5nIGl0IGZhc3QgYW5kIHRva2VuLWVmZmljaWVudC4KICoKICogV2hlbiBBR0VOVF9CUk9XU0VSX1ZJU0lPTl9QTEFZV1JJR0hUPXRydWUgaXMgc2V0IGluIHRoZSBlbnZpcm9ubWVudCBBTkQKICogdGhlIG9wdGlvbmFsIGBwbGF5d3JpZ2h0YCBwYWNrYWdlIGlzIGluc3RhbGxlZCwgdGhlIHBsdWdpbiB1cGdyYWRlcyB0byBhCiAqIGhlYWRsZXNzIENocm9taXVtIHJlbmRlciBmb3IgSmF2YVNjcmlwdC1yZW5kZXJlZCBwYWdlcy4gV2l0aG91dCBpdCB0aGUKICogcGx1Z2luIGZhbGxzIGJhY2sgY2xlYW5seSB0byBwbGFpbiBIVFRQIGZldGNoICsgSFRNTCBwYXJzaW5nLCB3aGljaCBjb3ZlcnMKICogdGhlIHZhc3QgbWFqb3JpdHkgb2YgcHVibGljLWZhY2luZyBwYWdlcyBpbmNsdWRpbmcgQnVuZGVzdGFnLCBXaWtpcGVkaWEsIGFuZAogKiBuZXdzIHNpdGVzLgogKgogKiBEb2NzOiAgIGJyb3dzZXItdmlzaW9uLmRvYy5tZAogKiBJc3N1ZXM6ICM4IChCcm93c2VyIEFnZW50IEludGVncmF0aW9uKSwgIzIwIChTSU4gQnJvd3NlciBWaXNpb24gVG9vbHMpCiAqLwoKY29uc3QgeyBUb2tlbk1hbmFnZXIgfSA9IHJlcXVpcmUoIi4uLy4uLy4uL2hlbHBlcnMvdGlrdG9rZW4iKTsKY29uc3QgeyB2YWxpZGF0ZVVybCwgc2FmZUZldGNoIH0gPSByZXF1aXJlKCIuLi8uLi8uLi9zc3JmIik7CmNvbnN0IHRpa3Rva2VuID0gbmV3IFRva2VuTWFuYWdlcigpOwoKLy8g4pSA4pSAIEhUTUwgcGFyc2luZyBoZWxwZXJzIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAoKLyoqCiAqIFN0cmlwIEhUTUwgdGFncywgY29sbGFwc2Ugd2hpdGVzcGFjZSwgYW5kIGRlY29kZSBjb21tb24gSFRNTCBlbnRpdGllcy4KICogQHBhcmFtIHtzdHJpbmd9IGh0bWwKICogQHJldHVybnMge3N0cmluZ30KICovCmZ1bmN0aW9uIHN0cmlwSHRtbChodG1sKSB7CiAgcmV0dXJuIGh0bWwKICAgIC5yZXBsYWNlKC88c2NyaXB0W1xzXFNdKj88XC9zY3JpcHQ+L2dpLCAiICIpCiAgICAucmVwbGFjZSgvPHN0eWxlW1xzXFNdKj88XC9zdHlsZT4vZ2ksICIgIikKICAgIC5yZXBsYWNlKC88W14+XSs+L2csICIgIikKICAgIC5yZXBsYWNlKC8mYW1wOy9nLCAiJiIpCiAgICAucmVwbGFjZSgvJmx0Oy9nLCAiPCIpCiAgICAucmVwbGFjZSgvJmd0Oy9nLCAiPiIpCiAgICAucmVwbGFjZSgvJnF1b3Q7L2csICciJykKICAgIC5yZXBsYWNlKC8mIzM5Oy9nLCAiJyIpCiAgICAucmVwbGFjZSgvJm5ic3A7L2csICIgIikKICAgIC5yZXBsYWNlKC9cc3syLH0vZywgIiAiKQogICAgLnRyaW0oKTsKfQoKLyoqCiAqIEV4dHJhY3QgdGhlIHZhbHVlIG9mIGEgPG1ldGE+IHRhZyBieSBuYW1lIG9yIHByb3BlcnR5LgogKiBAcGFyYW0ge3N0cmluZ30gaHRtbAogKiBAcGFyYW0ge3N0cmluZ30gbmFtZU9yUHJvcAogKiBAcmV0dXJucyB7c3RyaW5nfG51bGx9CiAqLwpmdW5jdGlvbiBleHRyYWN0TWV0YShodG1sLCBuYW1lT3JQcm9wKSB7CiAgY29uc3QgcmUgPSBuZXcgUmVnRXhwKAogICAgYDxtZXRhW14+XSsoPzpuYW1lfHByb3BlcnR5KT1bIiddJHtuYW1lT3JQcm9wfVsiJ11bXj5dK2NvbnRlbnQ9WyInXShbXiInXSspWyInXWAsCiAgICAiaSIsCiAgKTsKICBjb25zdCBtID0gaHRtbC5tYXRjaChyZSk7CiAgaWYgKG0pIHJldHVybiBtWzFdOwoKICBjb25zdCByZTIgPSBuZXcgUmVnRXhwKAogICAgYDxtZXRhW14+XStjb250ZW50PVsiJ10oW14iJ10rKVsiJ11bXj5dKyg/Om5hbWV8cHJvcGVydHkpPVsiJ10ke25hbWVPclByb3B9WyInXWAsCiAgICAiaSIsCiAgKTsKICBjb25zdCBtMiA9IGh0bWwubWF0Y2gocmUyKTsKICByZXR1cm4gbTIgPyBtMlsxXSA6IG51bGw7Cn0KCi8qKgogKiBFeHRyYWN0IHRoZSBwYWdlIDx0aXRsZT4uCiAqIEBwYXJhbSB7c3RyaW5nfSBodG1sCiAqIEByZXR1cm5zIHtzdHJpbmd8bnVsbH0KICovCmZ1bmN0aW9uIGV4dHJhY3RUaXRsZShodG1sKSB7CiAgY29uc3QgbSA9IGh0bWwubWF0Y2goLzx0aXRsZVtePl0qPihbXjxdKyk8XC90aXRsZT4vaSk7CiAgcmV0dXJuIG0gPyBtWzFdLnRyaW0oKSA6IG51bGw7Cn0KCi8qKgogKiBFeHRyYWN0IGFsbCBoZWFkaW5ncyAoaDHigJNoMykgaW4gb3JkZXIuCiAqIEBwYXJhbSB7c3RyaW5nfSBodG1sCiAqIEByZXR1cm5zIHtzdHJpbmdbXX0KICovCmZ1bmN0aW9uIGV4dHJhY3RIZWFkaW5ncyhodG1sKSB7CiAgY29uc3QgaGVhZGluZ3MgPSBbXTsKICBjb25zdCByZSA9IC88aFsxLTNdW14+XSo+KFtcc1xTXSo/KTxcL2hbMS0zXT4vZ2k7CiAgbGV0IG07CiAgd2hpbGUgKChtID0gcmUuZXhlYyhodG1sKSkgIT09IG51bGwpIHsKICAgIGNvbnN0IHRleHQgPSBzdHJpcEh0bWwobVsxXSkudHJpbSgpOwogICAgaWYgKHRleHQpIGhlYWRpbmdzLnB1c2godGV4dCk7CiAgfQogIHJldHVybiBoZWFkaW5nczsKfQoKLyoqCiAqIEV4dHJhY3QgYW5jaG9yIGhyZWZzIHRoYXQgbG9vayBsaWtlIGFic29sdXRlIFVSTHMuCiAqIEBwYXJhbSB7c3RyaW5nfSBodG1sCiAqIEBwYXJhbSB7c3RyaW5nfSBiYXNlVXJsIC0gdXNlZCB0byByZXNvbHZlIHJlbGF0aXZlIGxpbmtzCiAqIEBwYXJhbSB7bnVtYmVyfSBbbGltaXQ9MjBdCiAqIEByZXR1cm5zIHtzdHJpbmdbXX0KICovCmZ1bmN0aW9uIGV4dHJhY3RMaW5rcyhodG1sLCBiYXNlVXJsLCBsaW1pdCA9IDIwKSB7CiAgY29uc3QgbGlua3MgPSBbXTsKICBjb25zdCByZSA9IC88YVtePl0raHJlZj1bIiddKFteIicjXSspWyInXVtePl0qPi9naTsKICBsZXQgbTsKICBjb25zdCBiYXNlID0gbmV3IFVSTChiYXNlVXJsKTsKCiAgd2hpbGUgKChtID0gcmUuZXhlYyhodG1sKSkgIT09IG51bGwgJiYgbGlua3MubGVuZ3RoIDwgbGltaXQpIHsKICAgIGNvbnN0IGhyZWYgPSBtWzFdLnRyaW0oKTsKICAgIHRyeSB7CiAgICAgIGNvbnN0IGFicyA9IG5ldyBVUkwoaHJlZiwgYmFzZSkudG9TdHJpbmcoKTsKICAgICAgaWYgKCFsaW5rcy5pbmNsdWRlcyhhYnMpKSBsaW5rcy5wdXNoKGFicyk7CiAgICB9IGNhdGNoIHsKICAgICAgLy8gc2tpcCBtYWxmb3JtZWQgaHJlZnMKICAgIH0KICB9CiAgcmV0dXJuIGxpbmtzOwp9CgovLyDilIDilIAgSFRUUCBmZXRjaCB3aXRoIHJldHJpZXMg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACgpjb25zdCBGRVRDSF9USU1FT1VUX01TID0gMTVfMDAwOwpjb25zdCBNQVhfRkVUQ0hfUkVUUklFUyA9IDI7CgovKioKICogRmV0Y2ggYSBVUkwgd2l0aCBhIHRpbWVvdXQgYW5kIHNpbXBsZSByZXRyeSBsb2dpYy4KICogQHBhcmFtIHtzdHJpbmd9IHVybAogKiBAcmV0dXJucyB7UHJvbWlzZTx7aHRtbDogc3RyaW5nLCBmaW5hbFVybDogc3RyaW5nfT59CiAqLwphc3luYyBmdW5jdGlvbiBmZXRjaFdpdGhSZXRyeSh1cmwpIHsKICB2YWxpZGF0ZVVybCh1cmwpOwogIGxldCBsYXN0RXJyOwogIGZvciAobGV0IGF0dGVtcHQgPSAxOyBhdHRlbXB0IDw9IE1BWF9GRVRDSF9SRVRSSUVTOyBhdHRlbXB0KyspIHsKICAgIGNvbnN0IGNvbnRyb2xsZXIgPSBuZXcgQWJvcnRDb250cm9sbGVyKCk7CiAgICBjb25zdCB0aW1lciA9IHNldFRpbWVvdXQoKCkgPT4gY29udHJvbGxlci5hYm9ydCgpLCBGRVRDSF9USU1FT1VUX01TKTsKICAgIHRyeSB7CiAgICAgIC8vIHNhZmVGZXRjaCBmb2xsb3dzIHJlZGlyZWN0cyBtYW51YWxseSBhbmQgcmUtdmFsaWRhdGVzIGV2ZXJ5IGhvcCwgc28gYQogICAgICAvLyAzeHggdG8gYSBwcml2YXRlL2ludGVybmFsIGFkZHJlc3MgKGUuZy4gY2xvdWQgbWV0YWRhdGEpIGNhbm5vdCBieXBhc3MKICAgICAgLy8gdGhlIFNTUkYgZ3VhcmQgdGhlIHdheSBgcmVkaXJlY3Q6ICJmb2xsb3ciYCB3b3VsZC4KICAgICAgY29uc3QgcmVzID0gYXdhaXQgc2FmZUZldGNoKHVybCwgewogICAgICAgIHNpZ25hbDogY29udHJvbGxlci5zaWduYWwsCiAgICAgICAgaGVhZGVyczogewogICAgICAgICAgIlVzZXItQWdlbnQiOgogICAgICAgICAgICAiTW96aWxsYS81LjAgKGNvbXBhdGlibGU7IE9wZW5TSU4tQnJvd3NlclZpc2lvbi8xLjA7ICtodHRwczovL3NpbmNoYXQuZGVscWhpLmNvbSkiLAogICAgICAgICAgQWNjZXB0OiAidGV4dC9odG1sLGFwcGxpY2F0aW9uL3hodG1sK3htbCwqLyo7cT0wLjgiLAogICAgICAgICAgIkFjY2VwdC1MYW5ndWFnZSI6ICJkZSxlbjtxPTAuNyIsCiAgICAgICAgfSwKICAgICAgfSk7CiAgICAgIGNsZWFyVGltZW91dCh0aW1lcik7CgogICAgICBpZiAoIXJlcy5vaykgdGhyb3cgbmV3IEVycm9yKGBIVFRQICR7cmVzLnN0YXR1c30gJHtyZXMuc3RhdHVzVGV4dH1gKTsKCiAgICAgIGNvbnN0IGNvbnRlbnRUeXBlID0gcmVzLmhlYWRlcnMuZ2V0KCJjb250ZW50LXR5cGUiKSB8fCAiIjsKICAgICAgaWYgKCFjb250ZW50VHlwZS5pbmNsdWRlcygiaHRtbCIpICYmICFjb250ZW50VHlwZS5pbmNsdWRlcygidGV4dCIpKSB7CiAgICAgICAgdGhyb3cgbmV3IEVycm9yKAogICAgICAgICAgYFVuc3VwcG9ydGVkIGNvbnRlbnQtdHlwZTogJHtjb250ZW50VHlwZX0uIE9ubHkgSFRNTC90ZXh0IHBhZ2VzIGFyZSBzdXBwb3J0ZWQuYCwKICAgICAgICApOwogICAgICB9CgogICAgICBjb25zdCBodG1sID0gYXdhaXQgcmVzLnRleHQoKTsKICAgICAgcmV0dXJuIHsgaHRtbCwgZmluYWxVcmw6IHJlcy51cmwgfHwgdXJsIH07CiAgICB9IGNhdGNoIChlcnIpIHsKICAgICAgY2xlYXJUaW1lb3V0KHRpbWVyKTsKICAgICAgbGFzdEVyciA9IGVycjsKICAgICAgaWYgKGF0dGVtcHQgPCBNQVhfRkVUQ0hfUkVUUklFUykgewogICAgICAgIGF3YWl0IG5ldyBQcm9taXNlKChyKSA9PiBzZXRUaW1lb3V0KHIsIDgwMCAqIGF0dGVtcHQpKTsKICAgICAgfQogICAgfQogIH0KICB0aHJvdyBsYXN0RXJyOwp9CgovKioKICogT3B0aW9uYWxseSByZW5kZXIgd2l0aCBQbGF5d3JpZ2h0IGlmIGF2YWlsYWJsZSBhbmQgb3B0ZWQtaW4uCiAqIEZhbGxzIGJhY2sgc2lsZW50bHkgdG8gcGxhaW4gZmV0Y2guCiAqIEBwYXJhbSB7c3RyaW5nfSB1cmwKICogQHJldHVybnMge1Byb21pc2U8e2h0bWw6IHN0cmluZywgZmluYWxVcmw6IHN0cmluZ30+fQogKi8KYXN5bmMgZnVuY3Rpb24gZmV0Y2hIdG1sKHVybCkgewogIHZhbGlkYXRlVXJsKHVybCk7CiAgaWYgKHByb2Nlc3MuZW52LkFHRU5UX0JST1dTRVJfVklTSU9OX1BMQVlXUklHSFQgPT09ICJ0cnVlIikgewogICAgbGV0IGJyb3dzZXI7CiAgICB0cnkgewogICAgICBjb25zdCB7IGNocm9taXVtIH0gPSByZXF1aXJlKCJwbGF5d3JpZ2h0Iik7CiAgICAgIGNvbnN0IGxhdW5jaEFyZ3MgPSBbCiAgICAgICAgIi0tbm8tc2FuZGJveCIsCiAgICAgICAgIi0tZGlzYWJsZS1zZXR1aWQtc2FuZGJveCIsCiAgICAgICAgIi0tZGlzYWJsZS1kZXYtc2htLXVzYWdlIiwKICAgICAgICAiLS1uby16eWdvdGUiLAogICAgICAgICItLXNpbmdsZS1wcm9jZXNzIiwKICAgICAgXTsKICAgICAgaWYgKHByb2Nlc3MuZW52Lk5PREVfRU5WID09PSAicHJvZHVjdGlvbiIpIHsKICAgICAgICBsYXVuY2hBcmdzLnB1c2goCiAgICAgICAgICAiLS1lbmFibGUtZmVhdHVyZXM9VXNlT3pvbmVQbGF0Zm9ybSIsCiAgICAgICAgICAiLS1vem9uZS1wbGF0Zm9ybT1oZWFkbGVzcyIsCiAgICAgICAgKTsKICAgICAgfQogICAgICBicm93c2VyID0gYXdhaXQgY2hyb21pdW0ubGF1bmNoKHsgaGVhZGxlc3M6IHRydWUsIGFyZ3M6IGxhdW5jaEFyZ3MgfSk7CiAgICAgIGNvbnN0IHBhZ2UgPSBhd2FpdCBicm93c2VyLm5ld1BhZ2UoKTsKICAgICAgYXdhaXQgcGFnZS5nb3RvKHVybCwgeyB3YWl0VW50aWw6ICJkb21jb250ZW50bG9hZGVkIiwgdGltZW91dDogMjBfMDAwIH0pOwogICAgICBjb25zdCBodG1sID0gYXdhaXQgcGFnZS5jb250ZW50KCk7CiAgICAgIGNvbnN0IGZpbmFsVXJsID0gcGFnZS51cmwoKTsKICAgICAgcmV0dXJuIHsgaHRtbCwgZmluYWxVcmwgfTsKICAgIH0gY2F0Y2ggewogICAgICAvLyBQbGF5d3JpZ2h0IG5vdCBpbnN0YWxsZWQgb3IgbGF1bmNoIGZhaWxlZCDigJQgZmFsbCB0aHJvdWdoIHRvIGZldGNoCiAgICB9IGZpbmFsbHkgewogICAgICBpZiAoYnJvd3NlcikgYXdhaXQgYnJvd3Nlci5jbG9zZSgpLmNhdGNoKCgpID0+IHt9KTsKICAgIH0KICB9CiAgcmV0dXJuIGZldGNoV2l0aFJldHJ5KHVybCk7Cn0KCi8vIOKUgOKUgCBUb2tlbiB0cnVuY2F0aW9uIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAoKY29uc3QgTUFYX1RFWFRfVE9LRU5TID0gMzAwMDsKCi8qKgogKiBUcnVuY2F0ZSB0ZXh0IHRvIHJvdWdobHkgTUFYX1RFWFRfVE9LRU5TIHRva2VucyBieSBjaGFyYWN0ZXIgYXBwcm94aW1hdGlvbi4KICogQHBhcmFtIHtzdHJpbmd9IHRleHQKICogQHJldHVybnMge3N0cmluZ30KICovCmZ1bmN0aW9uIHRydW5jYXRlVG9Ub2tlbkxpbWl0KHRleHQpIHsKICAvLyBSb3VnaCBhcHByb3hpbWF0aW9uOiAxIHRva2VuIOKJiCA0IGNoYXJzCiAgY29uc3QgbWF4Q2hhcnMgPSBNQVhfVEVYVF9UT0tFTlMgKiA0OwogIGlmICh0ZXh0Lmxlbmd0aCA8PSBtYXhDaGFycykgcmV0dXJuIHRleHQ7CiAgcmV0dXJuICgKICAgIHRleHQuc2xpY2UoMCwgbWF4Q2hhcnMpICsKICAgIGBcblxuWy4uLiB0cnVuY2F0ZWQgYXQgfiR7TUFYX1RFWFRfVE9LRU5TfSB0b2tlbnNdYAogICk7Cn0KCi8vIOKUgOKUgCBQbHVnaW4gZGVmaW5pdGlvbiDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKCmNvbnN0IGJyb3dzZXJWaXNpb24gPSB7CiAgbmFtZTogImJyb3dzZXItdmlzaW9uIiwKICBzdGFydHVwQ29uZmlnOiB7CiAgICBwYXJhbXM6IHt9LAogIH0sCiAgcGx1Z2luOiBmdW5jdGlvbiAoKSB7CiAgICByZXR1cm4gewogICAgICBuYW1lOiB0aGlzLm5hbWUsCiAgICAgIHNldHVwKGFpYml0YXQpIHsKICAgICAgICAvLyDilIDilIAgVG9vbCAxOiBmZXRjaC1wYWdlLXRleHQg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgICAgICAgYWliaXRhdC5mdW5jdGlvbih7CiAgICAgICAgICBzdXBlcjogYWliaXRhdCwKICAgICAgICAgIG5hbWU6ICJmZXRjaC1wYWdlLXRleHQiLAogICAgICAgICAgZGVzY3JpcHRpb246CiAgICAgICAgICAgICJGZXRjaCB0aGUgZnVsbCByZWFkYWJsZSB0ZXh0IGNvbnRlbnQgb2YgYSB3ZWIgcGFnZSBieSBVUkwuICIgKwogICAgICAgICAgICAiVXNlIHRoaXMgdG8gcmVhZCBhcnRpY2xlcywgZG9jdW1lbnRhdGlvbiBwYWdlcywgcG9saXRpY2FsIHNwZWVjaGVzLCAiICsKICAgICAgICAgICAgIldpa2lwZWRpYSBlbnRyaWVzLCBCdW5kZXN0YWcgcHJvdG9jb2xzLCBvciBhbnkgcHVibGljIEhUTUwgcGFnZS4gIiArCiAgICAgICAgICAgICJSZXR1cm5zIGNsZWFuZWQgdGV4dCB3aXRoIGhlYWRpbmdzIGFuZCBib2R5IGNvbnRlbnQuICIgKwogICAgICAgICAgICAiRG8gTk9UIHVzZSB0aGlzIGZvciBzZWFyY2gg4oCUIHVzZSB3ZWItYnJvd3NpbmcgZm9yIHNlYXJjaC4iLAogICAgICAgICAgZXhhbXBsZXM6IFsKICAgICAgICAgICAgewogICAgICAgICAgICAgIHByb21wdDogIlJlYWQgdGhlIEJ1bmRlc3RhZyBwcmVzcyByZWxlYXNlIGF0IHRoaXMgVVJMIiwKICAgICAgICAgICAgICBjYWxsOiBKU09OLnN0cmluZ2lmeSh7CiAgICAgICAgICAgICAgICB1cmw6ICJodHRwczovL3d3dy5idW5kZXN0YWcuZGUvcHJlc3NlL3ByZXNzZW1pdHRlaWx1bmdlbi9leGFtcGxlIiwKICAgICAgICAgICAgICB9KSwKICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgIHByb21wdDogIldoYXQgZG9lcyB0aGUgV2lraXBlZGlhIGFydGljbGUgYWJvdXQgQWZEIHNheT8iLAogICAgICAgICAgICAgIGNhbGw6IEpTT04uc3RyaW5naWZ5KHsKICAgICAgICAgICAgICAgIHVybDogImh0dHBzOi8vZGUud2lraXBlZGlhLm9yZy93aWtpL0FsdGVybmF0aXZlX2YlQzMlQkNyX0RldXRzY2hsYW5kIiwKICAgICAgICAgICAgICB9KSwKICAgICAgICAgICAgfSwKICAgICAgICAgIF0sCiAgICAgICAgICBwYXJhbWV0ZXJzOiB7CiAgICAgICAgICAgICRzY2hlbWE6ICJodHRwOi8vanNvbi1zY2hlbWEub3JnL2RyYWZ0LTA3L3NjaGVtYSMiLAogICAgICAgICAgICB0eXBlOiAib2JqZWN0IiwKICAgICAgICAgICAgcmVxdWlyZWQ6IFsidXJsIl0sCiAgICAgICAgICAgIHByb3BlcnRpZXM6IHsKICAgICAgICAgICAgICB1cmw6IHsKICAgICAgICAgICAgICAgIHR5cGU6ICJzdHJpbmciLAogICAgICAgICAgICAgICAgZm9ybWF0OiAidXJpIiwKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uOiAiQSBjb21wbGV0ZSBVUkwgKGluY2x1ZGluZyBodHRwczovLykgdG8gZmV0Y2guIiwKICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgIHNlbGVjdG9yOiB7CiAgICAgICAgICAgICAgICB0eXBlOiAic3RyaW5nIiwKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uOgogICAgICAgICAgICAgICAgICAiT3B0aW9uYWwgQ1NTIHNlbGVjdG9yIHRvIG5hcnJvdyBleHRyYWN0aW9uIHRvIGEgc3BlY2lmaWMgZWxlbWVudC4gIiArCiAgICAgICAgICAgICAgICAgICJPbmx5IGFwcGxpZWQgd2hlbiBQbGF5d3JpZ2h0IGlzIGF2YWlsYWJsZS4iLAogICAgICAgICAgICAgIH0sCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIGFkZGl0aW9uYWxQcm9wZXJ0aWVzOiBmYWxzZSwKICAgICAgICAgIH0sCiAgICAgICAgICBoYW5kbGVyOiBhc3luYyBmdW5jdGlvbiAoeyB1cmwsIHNlbGVjdG9yOiBfc2VsZWN0b3IgfSkgewogICAgICAgICAgICB0cnkgewogICAgICAgICAgICAgIHRoaXMuc3VwZXIuaW50cm9zcGVjdCgKICAgICAgICAgICAgICAgIGAke3RoaXMuY2FsbGVyfTogRmV0Y2hpbmcgcGFnZSB0ZXh0IGZyb20gJHt1cmx9IC4uLmAsCiAgICAgICAgICAgICAgKTsKCiAgICAgICAgICAgICAgY29uc3QgeyBodG1sLCBmaW5hbFVybCB9ID0gYXdhaXQgZmV0Y2hIdG1sKHVybCk7CiAgICAgICAgICAgICAgY29uc3QgdGl0bGUgPSBleHRyYWN0VGl0bGUoaHRtbCk7CiAgICAgICAgICAgICAgY29uc3QgaGVhZGluZ3MgPSBleHRyYWN0SGVhZGluZ3MoaHRtbCk7CgogICAgICAgICAgICAgIC8vIEV4dHJhY3QgYm9keSB0ZXh0IOKAlCBwcmVmZXIgPG1haW4+IG9yIDxhcnRpY2xlPiwgZmFsbCBiYWNrIHRvIDxib2R5PgogICAgICAgICAgICAgIGNvbnN0IGJvZHlNYXRjaCA9CiAgICAgICAgICAgICAgICBodG1sLm1hdGNoKC88bWFpbltePl0qPihbXHNcU10qPyk8XC9tYWluPi9pKSB8fAogICAgICAgICAgICAgICAgaHRtbC5tYXRjaCgvPGFydGljbGVbXj5dKj4oW1xzXFNdKj8pPFwvYXJ0aWNsZT4vaSkgfHwKICAgICAgICAgICAgICAgIGh0bWwubWF0Y2goLzxib2R5W14+XSo+KFtcc1xTXSo/KTxcL2JvZHk+L2kpOwoKICAgICAgICAgICAgICBjb25zdCBib2R5VGV4dCA9IGJvZHlNYXRjaAogICAgICAgICAgICAgICAgPyBzdHJpcEh0bWwoYm9keU1hdGNoWzFdKQogICAgICAgICAgICAgICAgOiBzdHJpcEh0bWwoaHRtbCk7CgogICAgICAgICAgICAgIGNvbnN0IHJlc3VsdCA9IFsKICAgICAgICAgICAgICAgIHRpdGxlID8gYCMgJHt0aXRsZX1gIDogIiIsCiAgICAgICAgICAgICAgICBmaW5hbFVybCAhPT0gdXJsID8gYFVSTDogJHtmaW5hbFVybH1gIDogIiIsCiAgICAgICAgICAgICAgICBoZWFkaW5ncy5sZW5ndGggPiAwCiAgICAgICAgICAgICAgICAgID8gYFxuIyMgSGVhZGluZ3NcbiR7aGVhZGluZ3Muc2xpY2UoMCwgMTApLmpvaW4oIlxuIil9YAogICAgICAgICAgICAgICAgICA6ICIiLAogICAgICAgICAgICAgICAgYFxuIyMgQ29udGVudFxuJHtib2R5VGV4dH1gLAogICAgICAgICAgICAgIF0KICAgICAgICAgICAgICAgIC5maWx0ZXIoQm9vbGVhbikKICAgICAgICAgICAgICAgIC5qb2luKCJcbiIpOwoKICAgICAgICAgICAgICBjb25zdCB0cnVuY2F0ZWQgPSB0cnVuY2F0ZVRvVG9rZW5MaW1pdChyZXN1bHQpOwogICAgICAgICAgICAgIGNvbnN0IHRva2VuQ291bnQgPSB0aWt0b2tlbgogICAgICAgICAgICAgICAgLmNvdW50RnJvbVN0cmluZyh0cnVuY2F0ZWQpCiAgICAgICAgICAgICAgICAudG9TdHJpbmcoKQogICAgICAgICAgICAgICAgLnJlcGxhY2UoL1xCKD89KFxkezN9KSsoPyFcZCkpL2csICIsIik7CgogICAgICAgICAgICAgIHRoaXMuc3VwZXIuaW50cm9zcGVjdCgKICAgICAgICAgICAgICAgIGAke3RoaXMuY2FsbGVyfTogUGFnZSBmZXRjaGVkIOKAlCAke3Rva2VuQ291bnR9IHRva2VucyBvZiBjb250ZW50LmAsCiAgICAgICAgICAgICAgKTsKCiAgICAgICAgICAgICAgdGhpcy5zdXBlci5hZGRDaXRhdGlvbj8uKFsKICAgICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICAgaWQ6IGZpbmFsVXJsLAogICAgICAgICAgICAgICAgICB0aXRsZTogdGl0bGUgfHwgZmluYWxVcmwsCiAgICAgICAgICAgICAgICAgIHRleHQ6IGhlYWRpbmdzLnNsaWNlKDAsIDMpLmpvaW4oIiB8ICIpLAogICAgICAgICAgICAgICAgICBjaHVua1NvdXJjZTogYGxpbms6Ly8ke2ZpbmFsVXJsfWAsCiAgICAgICAgICAgICAgICAgIHNjb3JlOiBudWxsLAogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICBdKTsKCiAgICAgICAgICAgICAgcmV0dXJuIHRydW5jYXRlZDsKICAgICAgICAgICAgfSBjYXRjaCAoZXJyKSB7CiAgICAgICAgICAgICAgdGhpcy5zdXBlci5oYW5kbGVyUHJvcHM/LmxvZygKICAgICAgICAgICAgICAgIGBbYnJvd3Nlci12aXNpb25dIGZldGNoLXBhZ2UtdGV4dCBlcnJvcjogJHtlcnIubWVzc2FnZX1gLAogICAgICAgICAgICAgICk7CiAgICAgICAgICAgICAgcmV0dXJuIGBDb3VsZCBub3QgZmV0Y2ggdGhlIHBhZ2UuIEVycm9yOiAke2Vyci5tZXNzYWdlfWA7CiAgICAgICAgICAgIH0KICAgICAgICAgIH0sCiAgICAgICAgfSk7CgogICAgICAgIC8vIOKUgOKUgCBUb29sIDI6IGZldGNoLXBhZ2UtbWV0YSDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAgICAgICBhaWJpdGF0LmZ1bmN0aW9uKHsKICAgICAgICAgIHN1cGVyOiBhaWJpdGF0LAogICAgICAgICAgbmFtZTogImZldGNoLXBhZ2UtbWV0YSIsCiAgICAgICAgICBkZXNjcmlwdGlvbjoKICAgICAgICAgICAgIkZldGNoIGxpZ2h0d2VpZ2h0IG1ldGFkYXRhIGZvciBhIFVSTDogcGFnZSB0aXRsZSwgZGVzY3JpcHRpb24sICIgKwogICAgICAgICAgICAiT3BlbiBHcmFwaCBkYXRhLCBjYW5vbmljYWwgVVJMLCBhbmQgdG9wIG91dGJvdW5kIGxpbmtzLiAiICsKICAgICAgICAgICAgIk11Y2ggZmFzdGVyIGFuZCBjaGVhcGVyIHRoYW4gZmV0Y2gtcGFnZS10ZXh0LiAiICsKICAgICAgICAgICAgIlVzZSB0aGlzIHRvIHF1aWNrbHkgdW5kZXJzdGFuZCB3aGF0IGEgcGFnZSBpcyBhYm91dCBiZWZvcmUgZGVjaWRpbmcgIiArCiAgICAgICAgICAgICJ3aGV0aGVyIHRvIHJlYWQgdGhlIGZ1bGwgY29udGVudC4iLAogICAgICAgICAgZXhhbXBsZXM6IFsKICAgICAgICAgICAgewogICAgICAgICAgICAgIHByb21wdDogIldoYXQgaXMgdGhpcyBwYWdlIGFib3V0PyBodHRwczovL3d3dy5idW5kZXN0YWcuZGUiLAogICAgICAgICAgICAgIGNhbGw6IEpTT04uc3RyaW5naWZ5KHsgdXJsOiAiaHR0cHM6Ly93d3cuYnVuZGVzdGFnLmRlIiB9KSwKICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgIHByb21wdDogIkNoZWNrIHRoZSBtZXRhIGluZm9ybWF0aW9uIG9mIHNpbmNoYXQuZGVscWhpLmNvbSIsCiAgICAgICAgICAgICAgY2FsbDogSlNPTi5zdHJpbmdpZnkoeyB1cmw6ICJodHRwczovL3NpbmNoYXQuZGVscWhpLmNvbSIgfSksCiAgICAgICAgICAgIH0sCiAgICAgICAgICBdLAogICAgICAgICAgcGFyYW1ldGVyczogewogICAgICAgICAgICAkc2NoZW1hOiAiaHR0cDovL2pzb24tc2NoZW1hLm9yZy9kcmFmdC0wNy9zY2hlbWEjIiwKICAgICAgICAgICAgdHlwZTogIm9iamVjdCIsCiAgICAgICAgICAgIHJlcXVpcmVkOiBbInVybCJdLAogICAgICAgICAgICBwcm9wZXJ0aWVzOiB7CiAgICAgICAgICAgICAgdXJsOiB7CiAgICAgICAgICAgICAgICB0eXBlOiAic3RyaW5nIiwKICAgICAgICAgICAgICAgIGZvcm1hdDogInVyaSIsCiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbjogIkEgY29tcGxldGUgVVJMIHRvIGluc3BlY3QuIiwKICAgICAgICAgICAgICB9LAogICAgICAgICAgICB9LAogICAgICAgICAgICBhZGRpdGlvbmFsUHJvcGVydGllczogZmFsc2UsCiAgICAgICAgICB9LAogICAgICAgICAgaGFuZGxlcjogYXN5bmMgZnVuY3Rpb24gKHsgdXJsIH0pIHsKICAgICAgICAgICAgdHJ5IHsKICAgICAgICAgICAgICB0aGlzLnN1cGVyLmludHJvc3BlY3QoCiAgICAgICAgICAgICAgICBgJHt0aGlzLmNhbGxlcn06IEZldGNoaW5nIHBhZ2UgbWV0YWRhdGEgZnJvbSAke3VybH0gLi4uYCwKICAgICAgICAgICAgICApOwoKICAgICAgICAgICAgICB2YWxpZGF0ZVVybCh1cmwpOwoKICAgICAgICAgICAgICAvLyBPbmx5IGZldGNoIHRoZSBmaXJzdCAzMiBLQiBvZiB0aGUgcGFnZSB0byBnZXQgPGhlYWQ+IHF1aWNrbHkKICAgICAgICAgICAgICBjb25zdCBjb250cm9sbGVyID0gbmV3IEFib3J0Q29udHJvbGxlcigpOwogICAgICAgICAgICAgIGNvbnN0IHRpbWVyID0gc2V0VGltZW91dCgKICAgICAgICAgICAgICAgICgpID0+IGNvbnRyb2xsZXIuYWJvcnQoKSwKICAgICAgICAgICAgICAgIEZFVENIX1RJTUVPVVRfTVMsCiAgICAgICAgICAgICAgKTsKICAgICAgICAgICAgICBsZXQgcmVzOwogICAgICAgICAgICAgIHRyeSB7CiAgICAgICAgICAgICAgICByZXMgPSBhd2FpdCBmZXRjaCh1cmwsIHsKICAgICAgICAgICAgICAgICAgc2lnbmFsOiBjb250cm9sbGVyLnNpZ25hbCwKICAgICAgICAgICAgICAgICAgaGVhZGVyczogewogICAgICAgICAgICAgICAgICAgICJVc2VyLUFnZW50IjoKICAgICAgICAgICAgICAgICAgICAgICJNb3ppbGxhLzUuMCAoY29tcGF0aWJsZTsgT3BlblNJTi1Ccm93c2VyVmlzaW9uLzEuMCkiLAogICAgICAgICAgICAgICAgICAgIEFjY2VwdDogInRleHQvaHRtbCwqLyo7cT0wLjUiLAogICAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgfSk7CiAgICAgICAgICAgICAgfSBmaW5hbGx5IHsKICAgICAgICAgICAgICAgIGNsZWFyVGltZW91dCh0aW1lcik7CiAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAvLyBSZWFkIGZpcnN0IDMyIEtCIG9ubHkKICAgICAgICAgICAgICBjb25zdCByZWFkZXIgPSByZXMuYm9keT8uZ2V0UmVhZGVyKCk7CiAgICAgICAgICAgICAgbGV0IGh0bWwgPSAiIjsKICAgICAgICAgICAgICBpZiAocmVhZGVyKSB7CiAgICAgICAgICAgICAgICBjb25zdCBkZWNvZGVyID0gbmV3IFRleHREZWNvZGVyKCk7CiAgICAgICAgICAgICAgICB0cnkgewogICAgICAgICAgICAgICAgICBsZXQgcmVjZWl2ZWQgPSAwOwogICAgICAgICAgICAgICAgICB3aGlsZSAocmVjZWl2ZWQgPCAzMjc2OCkgewogICAgICAgICAgICAgICAgICAgIGNvbnN0IHsgZG9uZSwgdmFsdWUgfSA9IGF3YWl0IHJlYWRlci5yZWFkKCk7CiAgICAgICAgICAgICAgICAgICAgaWYgKGRvbmUpIGJyZWFrOwogICAgICAgICAgICAgICAgICAgIGh0bWwgKz0gZGVjb2Rlci5kZWNvZGUodmFsdWUsIHsgc3RyZWFtOiB0cnVlIH0pOwogICAgICAgICAgICAgICAgICAgIHJlY2VpdmVkICs9IHZhbHVlPy5sZW5ndGggPz8gMDsKICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgfSBmaW5hbGx5IHsKICAgICAgICAgICAgICAgICAgYXdhaXQgcmVhZGVyLmNhbmNlbCgpLmNhdGNoKCgpID0+IHt9KTsKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICB9IGVsc2UgewogICAgICAgICAgICAgICAgaHRtbCA9IGF3YWl0IHJlcy50ZXh0KCk7CiAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICBjb25zdCBmaW5hbFVybCA9IHJlcy51cmwgfHwgdXJsOwogICAgICAgICAgICAgIGNvbnN0IHRpdGxlID0KICAgICAgICAgICAgICAgIGV4dHJhY3RNZXRhKGh0bWwsICJvZzp0aXRsZSIpIHx8CiAgICAgICAgICAgICAgICBleHRyYWN0VGl0bGUoaHRtbCkgfHwKICAgICAgICAgICAgICAgICIobm8gdGl0bGUpIjsKICAgICAgICAgICAgICBjb25zdCBkZXNjcmlwdGlvbiA9CiAgICAgICAgICAgICAgICBleHRyYWN0TWV0YShodG1sLCAib2c6ZGVzY3JpcHRpb24iKSB8fAogICAgICAgICAgICAgICAgZXh0cmFjdE1ldGEoaHRtbCwgImRlc2NyaXB0aW9uIikgfHwKICAgICAgICAgICAgICAgICIobm8gZGVzY3JpcHRpb24pIjsKICAgICAgICAgICAgICBjb25zdCBjYW5vbmljYWwgPQogICAgICAgICAgICAgICAgaHRtbC5tYXRjaCgKICAgICAgICAgICAgICAgICAgLzxsaW5rW14+XStyZWw9WyInXWNhbm9uaWNhbFsiJ11bXj5dK2hyZWY9WyInXShbXiInXSspWyInXS9pLAogICAgICAgICAgICAgICAgKT8uWzFdIHx8IGZpbmFsVXJsOwogICAgICAgICAgICAgIGNvbnN0IG9nSW1hZ2UgPSBleHRyYWN0TWV0YShodG1sLCAib2c6aW1hZ2UiKTsKICAgICAgICAgICAgICBjb25zdCBvZ1R5cGUgPSBleHRyYWN0TWV0YShodG1sLCAib2c6dHlwZSIpOwogICAgICAgICAgICAgIGNvbnN0IGxpbmtzID0gZXh0cmFjdExpbmtzKGh0bWwsIGZpbmFsVXJsLCAxMCk7CgogICAgICAgICAgICAgIGNvbnN0IG1ldGEgPSB7CiAgICAgICAgICAgICAgICB0aXRsZSwKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uLAogICAgICAgICAgICAgICAgY2Fub25pY2FsLAogICAgICAgICAgICAgICAgb2dUeXBlLAogICAgICAgICAgICAgICAgb2dJbWFnZSwKICAgICAgICAgICAgICAgIGZpbmFsVXJsLAogICAgICAgICAgICAgICAgdG9wTGlua3M6IGxpbmtzLAogICAgICAgICAgICAgIH07CgogICAgICAgICAgICAgIHRoaXMuc3VwZXIuYWRkQ2l0YXRpb24/LihbCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgIGlkOiBmaW5hbFVybCwKICAgICAgICAgICAgICAgICAgdGl0bGUsCiAgICAgICAgICAgICAgICAgIHRleHQ6IGRlc2NyaXB0aW9uLAogICAgICAgICAgICAgICAgICBjaHVua1NvdXJjZTogYGxpbms6Ly8ke2ZpbmFsVXJsfWAsCiAgICAgICAgICAgICAgICAgIHNjb3JlOiBudWxsLAogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICBdKTsKCiAgICAgICAgICAgICAgcmV0dXJuIEpTT04uc3RyaW5naWZ5KG1ldGEsIG51bGwsIDIpOwogICAgICAgICAgICB9IGNhdGNoIChlcnIpIHsKICAgICAgICAgICAgICB0aGlzLnN1cGVyLmhhbmRsZXJQcm9wcz8ubG9nKAogICAgICAgICAgICAgICAgYFticm93c2VyLXZpc2lvbl0gZmV0Y2gtcGFnZS1tZXRhIGVycm9yOiAke2Vyci5tZXNzYWdlfWAsCiAgICAgICAgICAgICAgKTsKICAgICAgICAgICAgICByZXR1cm4gYENvdWxkIG5vdCBmZXRjaCBwYWdlIG1ldGFkYXRhLiBFcnJvcjogJHtlcnIubWVzc2FnZX1gOwogICAgICAgICAgICB9CiAgICAgICAgICB9LAogICAgICAgIH0pOwogICAgICB9LAogICAgfTsKICB9LAp9OwoKbW9kdWxlLmV4cG9ydHMgPSB7IGJyb3dzZXJWaXNpb24gfTsK
+// SPDX-License-Identifier: MIT
+/**
+ * browser-vision agent plugin
+ *
+ * Provides two agent-callable tools that enable structured inspection of
+ * web pages without requiring a running browser process in CI:
+ *
+ *   1. fetch-page-text  — fetches a URL and returns cleaned text content
+ *                         (links, headings, body text, meta description).
+ *                         Suitable for reading articles, documentation, and
+ *                         public data pages.
+ *
+ *   2. fetch-page-meta  — returns lightweight metadata for a URL:
+ *                         title, description, Open Graph tags, canonical URL,
+ *                         and primary outbound links. Does not download the
+ *                         full page body, making it fast and token-efficient.
+ *
+ * When AGENT_BROWSER_VISION_PLAYWRIGHT=true is set in the environment AND
+ * the optional `playwright` package is installed, the plugin upgrades to a
+ * headless Chromium render for JavaScript-rendered pages. Without it the
+ * plugin falls back cleanly to plain HTTP fetch + HTML parsing, which covers
+ * the vast majority of public-facing pages including Bundestag, Wikipedia, and
+ * news sites.
+ *
+ * Docs:   browser-vision.doc.md
+ * Issues: #8 (Browser Agent Integration), #20 (SIN Browser Vision Tools)
+ */
+
+const { TokenManager } = require("../../../helpers/tiktoken");
+const { validateUrl, safeFetch } = require("../../../ssrf");
+const tiktoken = new TokenManager();
+
+// ── HTML parsing helpers ──────────────────────────────────────────────────────
+
+/**
+ * Strip HTML tags, collapse whitespace, and decode common HTML entities.
+ * @param {string} html
+ * @returns {string}
+ */
+function stripHtml(html) {
+  return html
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
+/**
+ * Extract the value of a <meta> tag by name or property.
+ * @param {string} html
+ * @param {string} nameOrProp
+ * @returns {string|null}
+ */
+function extractMeta(html, nameOrProp) {
+  const re = new RegExp(
+    `<meta[^>]+(?:name|property)=["']${nameOrProp}["'][^>]+content=["']([^"']+)["']`,
+    "i",
+  );
+  const m = html.match(re);
+  if (m) return m[1];
+
+  const re2 = new RegExp(
+    `<meta[^>]+content=["']([^"']+)["'][^>]+(?:name|property)=["']${nameOrProp}["']`,
+    "i",
+  );
+  const m2 = html.match(re2);
+  return m2 ? m2[1] : null;
+}
+
+/**
+ * Extract the page <title>.
+ * @param {string} html
+ * @returns {string|null}
+ */
+function extractTitle(html) {
+  const m = html.match(/<title[^>]*>([^<]+)<\/title>/i);
+  return m ? m[1].trim() : null;
+}
+
+/**
+ * Extract all headings (h1–h3) in order.
+ * @param {string} html
+ * @returns {string[]}
+ */
+function extractHeadings(html) {
+  const headings = [];
+  const re = /<h[1-3][^>]*>([\s\S]*?)<\/h[1-3]>/gi;
+  let m;
+  while ((m = re.exec(html)) !== null) {
+    const text = stripHtml(m[1]).trim();
+    if (text) headings.push(text);
+  }
+  return headings;
+}
+
+/**
+ * Extract anchor hrefs that look like absolute URLs.
+ * @param {string} html
+ * @param {string} baseUrl - used to resolve relative links
+ * @param {number} [limit=20]
+ * @returns {string[]}
+ */
+function extractLinks(html, baseUrl, limit = 20) {
+  const links = [];
+  const re = /<a[^>]+href=["']([^"'#]+)["'][^>]*>/gi;
+  let m;
+  const base = new URL(baseUrl);
+
+  while ((m = re.exec(html)) !== null && links.length < limit) {
+    const href = m[1].trim();
+    try {
+      const abs = new URL(href, base).toString();
+      if (!links.includes(abs)) links.push(abs);
+    } catch {
+      // skip malformed hrefs
+    }
+  }
+  return links;
+}
+
+// ── HTTP fetch with retries ───────────────────────────────────────────────────
+
+const FETCH_TIMEOUT_MS = 15_000;
+const MAX_FETCH_RETRIES = 2;
+
+/**
+ * Fetch a URL with a timeout and simple retry logic.
+ * @param {string} url
+ * @returns {Promise<{html: string, finalUrl: string}>}
+ */
+async function fetchWithRetry(url) {
+  validateUrl(url);
+  let lastErr;
+  for (let attempt = 1; attempt <= MAX_FETCH_RETRIES; attempt++) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+    try {
+      // safeFetch follows redirects manually and re-validates every hop, so a
+      // 3xx to a private/internal address (e.g. cloud metadata) cannot bypass
+      // the SSRF guard the way `redirect: "follow"` would.
+      const res = await safeFetch(url, {
+        signal: controller.signal,
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (compatible; OpenSIN-BrowserVision/1.0; +https://sinchat.delqhi.com)",
+          Accept: "text/html,application/xhtml+xml,*/*;q=0.8",
+          "Accept-Language": "de,en;q=0.7",
+        },
+      });
+      clearTimeout(timer);
+
+      if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
+
+      const contentType = res.headers.get("content-type") || "";
+      if (!contentType.includes("html") && !contentType.includes("text")) {
+        throw new Error(
+          `Unsupported content-type: ${contentType}. Only HTML/text pages are supported.`,
+        );
+      }
+
+      const html = await res.text();
+      return { html, finalUrl: res.url || url };
+    } catch (err) {
+      clearTimeout(timer);
+      lastErr = err;
+      if (attempt < MAX_FETCH_RETRIES) {
+        await new Promise((r) => setTimeout(r, 800 * attempt));
+      }
+    }
+  }
+  throw lastErr;
+}
+
+/**
+ * Optionally render with Playwright if available and opted-in.
+ * Falls back silently to plain fetch.
+ * @param {string} url
+ * @returns {Promise<{html: string, finalUrl: string}>}
+ */
+async function fetchHtml(url) {
+  validateUrl(url);
+  if (process.env.AGENT_BROWSER_VISION_PLAYWRIGHT === "true") {
+    let browser;
+    try {
+      const { chromium } = require("playwright");
+      const launchArgs = [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--no-zygote",
+        "--single-process",
+      ];
+      if (process.env.NODE_ENV === "production") {
+        launchArgs.push(
+          "--enable-features=UseOzonePlatform",
+          "--ozone-platform=headless",
+        );
+      }
+      browser = await chromium.launch({ headless: true, args: launchArgs });
+      const page = await browser.newPage();
+      await page.goto(url, { waitUntil: "domcontentloaded", timeout: 20_000 });
+      const html = await page.content();
+      const finalUrl = page.url();
+      return { html, finalUrl };
+    } catch {
+      // Playwright not installed or launch failed — fall through to fetch
+    } finally {
+      if (browser) await browser.close().catch(() => {});
+    }
+  }
+  return fetchWithRetry(url);
+}
+
+// ── Token truncation ──────────────────────────────────────────────────────────
+
+const MAX_TEXT_TOKENS = 3000;
+
+/**
+ * Truncate text to roughly MAX_TEXT_TOKENS tokens by character approximation.
+ * @param {string} text
+ * @returns {string}
+ */
+function truncateToTokenLimit(text) {
+  // Rough approximation: 1 token ≈ 4 chars
+  const maxChars = MAX_TEXT_TOKENS * 4;
+  if (text.length <= maxChars) return text;
+  return (
+    text.slice(0, maxChars) +
+    `\n\n[... truncated at ~${MAX_TEXT_TOKENS} tokens]`
+  );
+}
+
+// ── Plugin definition ─────────────────────────────────────────────────────────
+
+const browserVision = {
+  name: "browser-vision",
+  startupConfig: {
+    params: {},
+  },
+  plugin: function () {
+    return {
+      name: this.name,
+      setup(aibitat) {
+        // ── Tool 1: fetch-page-text ──────────────────────────────────────────
+        aibitat.function({
+          super: aibitat,
+          name: "fetch-page-text",
+          description:
+            "Fetch the full readable text content of a web page by URL. " +
+            "Use this to read articles, documentation pages, political speeches, " +
+            "Wikipedia entries, Bundestag protocols, or any public HTML page. " +
+            "Returns cleaned text with headings and body content. " +
+            "Do NOT use this for search — use web-browsing for search.",
+          examples: [
+            {
+              prompt: "Read the Bundestag press release at this URL",
+              call: JSON.stringify({
+                url: "https://www.bundestag.de/presse/pressemitteilungen/example",
+              }),
+            },
+            {
+              prompt: "What does the Wikipedia article about AfD say?",
+              call: JSON.stringify({
+                url: "https://de.wikipedia.org/wiki/Alternative_f%C3%BCr_Deutschland",
+              }),
+            },
+          ],
+          parameters: {
+            $schema: "http://json-schema.org/draft-07/schema#",
+            type: "object",
+            required: ["url"],
+            properties: {
+              url: {
+                type: "string",
+                format: "uri",
+                description: "A complete URL (including https://) to fetch.",
+              },
+              selector: {
+                type: "string",
+                description:
+                  "Optional CSS selector to narrow extraction to a specific element. " +
+                  "Only applied when Playwright is available.",
+              },
+            },
+            additionalProperties: false,
+          },
+          handler: async function ({ url, selector: _selector }) {
+            try {
+              this.super.introspect(
+                `${this.caller}: Fetching page text from ${url} ...`,
+              );
+
+              const { html, finalUrl } = await fetchHtml(url);
+              const title = extractTitle(html);
+              const headings = extractHeadings(html);
+
+              // Extract body text — prefer <main> or <article>, fall back to <body>
+              const bodyMatch =
+                html.match(/<main[^>]*>([\s\S]*?)<\/main>/i) ||
+                html.match(/<article[^>]*>([\s\S]*?)<\/article>/i) ||
+                html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+
+              const bodyText = bodyMatch
+                ? stripHtml(bodyMatch[1])
+                : stripHtml(html);
+
+              const result = [
+                title ? `# ${title}` : "",
+                finalUrl !== url ? `URL: ${finalUrl}` : "",
+                headings.length > 0
+                  ? `\n## Headings\n${headings.slice(0, 10).join("\n")}`
+                  : "",
+                `\n## Content\n${bodyText}`,
+              ]
+                .filter(Boolean)
+                .join("\n");
+
+              const truncated = truncateToTokenLimit(result);
+              const tokenCount = tiktoken
+                .countFromString(truncated)
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+              this.super.introspect(
+                `${this.caller}: Page fetched — ${tokenCount} tokens of content.`,
+              );
+
+              this.super.addCitation?.([
+                {
+                  id: finalUrl,
+                  title: title || finalUrl,
+                  text: headings.slice(0, 3).join(" | "),
+                  chunkSource: `link://${finalUrl}`,
+                  score: null,
+                },
+              ]);
+
+              return truncated;
+            } catch (err) {
+              this.super.handlerProps?.log(
+                `[browser-vision] fetch-page-text error: ${err.message}`,
+              );
+              return `Could not fetch the page. Error: ${err.message}`;
+            }
+          },
+        });
+
+        // ── Tool 2: fetch-page-meta ──────────────────────────────────────────
+        aibitat.function({
+          super: aibitat,
+          name: "fetch-page-meta",
+          description:
+            "Fetch lightweight metadata for a URL: page title, description, " +
+            "Open Graph data, canonical URL, and top outbound links. " +
+            "Much faster and cheaper than fetch-page-text. " +
+            "Use this to quickly understand what a page is about before deciding " +
+            "whether to read the full content.",
+          examples: [
+            {
+              prompt: "What is this page about? https://www.bundestag.de",
+              call: JSON.stringify({ url: "https://www.bundestag.de" }),
+            },
+            {
+              prompt: "Check the meta information of sinchat.delqhi.com",
+              call: JSON.stringify({ url: "https://sinchat.delqhi.com" }),
+            },
+          ],
+          parameters: {
+            $schema: "http://json-schema.org/draft-07/schema#",
+            type: "object",
+            required: ["url"],
+            properties: {
+              url: {
+                type: "string",
+                format: "uri",
+                description: "A complete URL to inspect.",
+              },
+            },
+            additionalProperties: false,
+          },
+          handler: async function ({ url }) {
+            try {
+              this.super.introspect(
+                `${this.caller}: Fetching page metadata from ${url} ...`,
+              );
+
+              validateUrl(url);
+
+              // Only fetch the first 32 KB of the page to get <head> quickly
+              const controller = new AbortController();
+              const timer = setTimeout(
+                () => controller.abort(),
+                FETCH_TIMEOUT_MS,
+              );
+              let res;
+              try {
+                res = await fetch(url, {
+                  signal: controller.signal,
+                  headers: {
+                    "User-Agent":
+                      "Mozilla/5.0 (compatible; OpenSIN-BrowserVision/1.0)",
+                    Accept: "text/html,*/*;q=0.5",
+                  },
+                });
+              } finally {
+                clearTimeout(timer);
+              }
+
+              // Read first 32 KB only
+              const reader = res.body?.getReader();
+              let html = "";
+              if (reader) {
+                const decoder = new TextDecoder();
+                try {
+                  let received = 0;
+                  while (received < 32768) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    html += decoder.decode(value, { stream: true });
+                    received += value?.length ?? 0;
+                  }
+                } finally {
+                  await reader.cancel().catch(() => {});
+                }
+              } else {
+                html = await res.text();
+              }
+
+              const finalUrl = res.url || url;
+              const title =
+                extractMeta(html, "og:title") ||
+                extractTitle(html) ||
+                "(no title)";
+              const description =
+                extractMeta(html, "og:description") ||
+                extractMeta(html, "description") ||
+                "(no description)";
+              const canonical =
+                html.match(
+                  /<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']+)["']/i,
+                )?.[1] || finalUrl;
+              const ogImage = extractMeta(html, "og:image");
+              const ogType = extractMeta(html, "og:type");
+              const links = extractLinks(html, finalUrl, 10);
+
+              const meta = {
+                title,
+                description,
+                canonical,
+                ogType,
+                ogImage,
+                finalUrl,
+                topLinks: links,
+              };
+
+              this.super.addCitation?.([
+                {
+                  id: finalUrl,
+                  title,
+                  text: description,
+                  chunkSource: `link://${finalUrl}`,
+                  score: null,
+                },
+              ]);
+
+              return JSON.stringify(meta, null, 2);
+            } catch (err) {
+              this.super.handlerProps?.log(
+                `[browser-vision] fetch-page-meta error: ${err.message}`,
+              );
+              return `Could not fetch page metadata. Error: ${err.message}`;
+            }
+          },
+        });
+      },
+    };
+  },
+};
+
+module.exports = { browserVision };
