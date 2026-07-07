@@ -1,1 +1,445 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBQdXJwb3NlOiBSZWFjdCBob29rIGZvciBtYW5hZ2luZyBhZ2VudCBzZXR0aW5ncywgc2tpbGxzLCBmbG93cywgYW5kIE1DUCBzZXJ2ZXJzIG9uIHRoZSBBZG1pbiBBZ2VudHMgcGFnZS4KLy8gRG9jczogdXNlQWdlbnRzLmRvYy5tZAppbXBvcnQgeyB1c2VFZmZlY3QsIHVzZVJlZiwgdXNlU3RhdGUgfSBmcm9tICJyZWFjdCI7CmltcG9ydCB7IHVzZVRyYW5zbGF0aW9uIH0gZnJvbSAicmVhY3QtaTE4bmV4dCI7CmltcG9ydCB7IGlzTW9iaWxlIH0gZnJvbSAicmVhY3QtZGV2aWNlLWRldGVjdCI7CmltcG9ydCBBZG1pbiBmcm9tICJAL21vZGVscy9hZG1pbiI7CmltcG9ydCBTeXN0ZW0gZnJvbSAiQC9tb2RlbHMvc3lzdGVtIjsKaW1wb3J0IE1DUFNlcnZlcnMgZnJvbSAiQC9tb2RlbHMvbWNwU2VydmVycyI7CmltcG9ydCBzaG93VG9hc3QgZnJvbSAiQC91dGlscy90b2FzdCI7CmltcG9ydCB7IGNhc3RUb1R5cGUgfSBmcm9tICJAL3V0aWxzL3R5cGVzIjsKaW1wb3J0IHsKICBnZXREZWZhdWx0U2tpbGxzLAogIGdldENvbmZpZ3VyYWJsZVNraWxscywKICBnZXRBcHBJbnRlZ3JhdGlvblNraWxscywKfSBmcm9tICIuL3NraWxscyI7CmltcG9ydCBBZ2VudEZsb3dzIGZyb20gIkAvbW9kZWxzL2FnZW50Rmxvd3MiOwoKaW50ZXJmYWNlIEFnZW50U2V0dGluZ3MgewogIFtrZXk6IHN0cmluZ106IGFueTsKICBwcmVmZXJlbmNlcz86IHsgW2tleTogc3RyaW5nXTogYW55IH07CiAgTXVsdGlVc2VyTW9kZT86IGJvb2xlYW47Cn0KCmludGVyZmFjZSBBZ2VudEZsb3cgewogIHV1aWQ6IHN0cmluZzsKICBhY3RpdmU6IGJvb2xlYW47CiAgW2tleTogc3RyaW5nXTogYW55Owp9CgppbnRlcmZhY2UgTUNQU2VydmVyIHsKICBuYW1lOiBzdHJpbmc7CiAgcnVubmluZzogYm9vbGVhbjsKICBba2V5OiBzdHJpbmddOiBhbnk7Cn0KCmludGVyZmFjZSBVc2VBZ2VudHNSZXR1cm4gewogIHQ6IChrZXk6IHN0cmluZywgb3B0aW9ucz86IGFueSkgPT4gc3RyaW5nOwogIGZvcm1FbDogUmVhY3QuUmVmT2JqZWN0PEhUTUxGb3JtRWxlbWVudCB8IG51bGw+OwogIGhhc0NoYW5nZXM6IGJvb2xlYW47CiAgc2V0SGFzQ2hhbmdlczogKHZhbHVlOiBib29sZWFuKSA9PiB2b2lkOwogIHNldHRpbmdzOiBBZ2VudFNldHRpbmdzOwogIHNlbGVjdGVkU2tpbGw6IHN0cmluZzsKICBzZXRTZWxlY3RlZFNraWxsOiAoc2tpbGw6IHN0cmluZykgPT4gdm9pZDsKICBsb2FkaW5nOiBib29sZWFuOwogIHNob3dTa2lsbE1vZGFsOiBib29sZWFuOwogIHNldFNob3dTa2lsbE1vZGFsOiAoc2hvdzogYm9vbGVhbikgPT4gdm9pZDsKICBhZ2VudFNraWxsczogc3RyaW5nW107CiAgc2V0QWdlbnRTa2lsbHM6IChza2lsbHM6IHN0cmluZ1tdKSA9PiB2b2lkOwogIGltcG9ydGVkU2tpbGxzOiBhbnlbXTsKICBzZXRJbXBvcnRlZFNraWxsczogKHNraWxsczogYW55W10pID0+IHZvaWQ7CiAgZGlzYWJsZWRBZ2VudFNraWxsczogc3RyaW5nW107CiAgc2V0RGlzYWJsZWRBZ2VudFNraWxsczogKHNraWxsczogc3RyaW5nW10pID0+IHZvaWQ7CiAgYWdlbnRGbG93czogQWdlbnRGbG93W107CiAgc2V0QWdlbnRGbG93czogKGZsb3dzOiBBZ2VudEZsb3dbXSkgPT4gdm9pZDsKICBzZWxlY3RlZEZsb3c6IEFnZW50RmxvdyB8IG51bGw7CiAgc2V0U2VsZWN0ZWRGbG93OiAoZmxvdzogQWdlbnRGbG93IHwgbnVsbCkgPT4gdm9pZDsKICBhY3RpdmVGbG93SWRzOiBzdHJpbmdbXTsKICBzZXRBY3RpdmVGbG93SWRzOiAoaWRzOiBzdHJpbmdbXSkgPT4gdm9pZDsKICBtY3BTZXJ2ZXJzOiBNQ1BTZXJ2ZXJbXTsKICBzZXRNY3BTZXJ2ZXJzOiAoc2VydmVyczogTUNQU2VydmVyW10pID0+IHZvaWQ7CiAgc2VsZWN0ZWRNY3BTZXJ2ZXI6IE1DUFNlcnZlciB8IG51bGw7CiAgc2V0U2VsZWN0ZWRNY3BTZXJ2ZXI6IChzZXJ2ZXI6IE1DUFNlcnZlciB8IG51bGwpID0+IHZvaWQ7CiAgZmlsZVN5c3RlbUFnZW50QXZhaWxhYmxlOiBib29sZWFuOwogIHNldEZpbGVTeXN0ZW1BZ2VudEF2YWlsYWJsZTogKGF2YWlsYWJsZTogYm9vbGVhbikgPT4gdm9pZDsKICBjcmVhdGVGaWxlc0FnZW50QXZhaWxhYmxlOiBib29sZWFuOwogIHNldENyZWF0ZUZpbGVzQWdlbnRBdmFpbGFibGU6IChhdmFpbGFibGU6IGJvb2xlYW4pID0+IHZvaWQ7CiAgZGVmYXVsdFNraWxsczogYW55OwogIGNvbmZpZ3VyYWJsZVNraWxsczogYW55OwogIGFwcEludGVncmF0aW9uU2tpbGxzOiBhbnk7CiAgdG9nZ2xlRGVmYXVsdFNraWxsOiAoc2tpbGxOYW1lOiBzdHJpbmcpID0+IHZvaWQ7CiAgdG9nZ2xlQWdlbnRTa2lsbDogKHNraWxsTmFtZTogc3RyaW5nKSA9PiB2b2lkOwogIHRvZ2dsZUZsb3c6IChmbG93SWQ6IHN0cmluZykgPT4gdm9pZDsKICB0b2dnbGVNQ1A6IChzZXJ2ZXJOYW1lOiBzdHJpbmcpID0+IHZvaWQ7CiAgaGFuZGxlU3VibWl0OiAoZTogUmVhY3QuRm9ybUV2ZW50PEhUTUxGb3JtRWxlbWVudD4pID0+IFByb21pc2U8dm9pZD47CiAgaGFuZGxlRGVmYXVsdFNraWxsQ2xpY2s6IChza2lsbDogYW55KSA9PiB2b2lkOwogIGhhbmRsZVNraWxsQ2xpY2s6IChza2lsbDogYW55KSA9PiB2b2lkOwogIGhhbmRsZUZsb3dDbGljazogKGZsb3c6IGFueSkgPT4gdm9pZDsKICBoYW5kbGVNQ1BDbGljazogKHNlcnZlcjogYW55KSA9PiB2b2lkOwogIGhhbmRsZUZsb3dEZWxldGU6IChmbG93SWQ6IHN0cmluZykgPT4gdm9pZDsKICBoYW5kbGVNQ1BTZXJ2ZXJEZWxldGU6IChzZXJ2ZXJOYW1lOiBzdHJpbmcpID0+IHZvaWQ7CiAgaGFuZGxlTUNQVG9vbFRvZ2dsZTogKAogICAgc2VydmVyTmFtZTogc3RyaW5nLAogICAgdG9vbE5hbWU6IHN0cmluZywKICAgIGVuYWJsZWQ6IGJvb2xlYW4sCiAgKSA9PiBQcm9taXNlPHZvaWQ+OwogIElHTk9SRV9DSEFOR0VfU0VUVElOR1M6IHN0cmluZ1tdOwp9CgpleHBvcnQgY29uc3QgSUdOT1JFX0NIQU5HRV9TRVRUSU5HUyA9IFsKICAiYWdlbnRTa2lsbFJlcmFua2VyRW5hYmxlZCIsCiAgImFnZW50U2tpbGxSZXJhbmtlclRvcE4iLAogICJhZ2VudFNraWxsTWF4VG9vbENhbGxzIiwKICAiYWdlbnRDbGFyaWZ5aW5nUXVlc3Rpb25zRW5hYmxlZCIsCiAgImFnZW50Q2xhcmlmeWluZ1F1ZXN0aW9uc01heFBlclR1cm4iLApdOwoKZXhwb3J0IGZ1bmN0aW9uIHVzZUFnZW50cygpOiBVc2VBZ2VudHNSZXR1cm4gewogIGNvbnN0IHsgdCB9ID0gdXNlVHJhbnNsYXRpb24oKTsKICBjb25zdCBmb3JtRWwgPSB1c2VSZWY8SFRNTEZvcm1FbGVtZW50IHwgbnVsbD4obnVsbCk7CiAgY29uc3QgW2hhc0NoYW5nZXMsIHNldEhhc0NoYW5nZXNdID0gdXNlU3RhdGUoZmFsc2UpOwogIGNvbnN0IFtzZXR0aW5ncywgc2V0U2V0dGluZ3NdID0gdXNlU3RhdGU8QWdlbnRTZXR0aW5ncz4oe30pOwogIGNvbnN0IFtzZWxlY3RlZFNraWxsLCBzZXRTZWxlY3RlZFNraWxsXSA9IHVzZVN0YXRlKCIiKTsKICBjb25zdCBbbG9hZGluZywgc2V0TG9hZGluZ10gPSB1c2VTdGF0ZSh0cnVlKTsKICBjb25zdCBbc2hvd1NraWxsTW9kYWwsIHNldFNob3dTa2lsbE1vZGFsXSA9IHVzZVN0YXRlKGZhbHNlKTsKCiAgY29uc3QgW2FnZW50U2tpbGxzLCBzZXRBZ2VudFNraWxsc10gPSB1c2VTdGF0ZTxzdHJpbmdbXT4oW10pOwogIGNvbnN0IFtpbXBvcnRlZFNraWxscywgc2V0SW1wb3J0ZWRTa2lsbHNdID0gdXNlU3RhdGU8YW55W10+KFtdKTsKICBjb25zdCBbZGlzYWJsZWRBZ2VudFNraWxscywgc2V0RGlzYWJsZWRBZ2VudFNraWxsc10gPSB1c2VTdGF0ZTxzdHJpbmdbXT4oW10pOwoKICBjb25zdCBbYWdlbnRGbG93cywgc2V0QWdlbnRGbG93c10gPSB1c2VTdGF0ZTxBZ2VudEZsb3dbXT4oW10pOwogIGNvbnN0IFtzZWxlY3RlZEZsb3csIHNldFNlbGVjdGVkRmxvd10gPSB1c2VTdGF0ZTxBZ2VudEZsb3cgfCBudWxsPihudWxsKTsKICBjb25zdCBbYWN0aXZlRmxvd0lkcywgc2V0QWN0aXZlRmxvd0lkc10gPSB1c2VTdGF0ZTxzdHJpbmdbXT4oW10pOwoKICBjb25zdCBbbWNwU2VydmVycywgc2V0TWNwU2VydmVyc10gPSB1c2VTdGF0ZTxNQ1BTZXJ2ZXJbXT4oW10pOwogIGNvbnN0IFtzZWxlY3RlZE1jcFNlcnZlciwgc2V0U2VsZWN0ZWRNY3BTZXJ2ZXJdID0gdXNlU3RhdGU8TUNQU2VydmVyIHwgbnVsbD4oCiAgICBudWxsLAogICk7CgogIGNvbnN0IFtmaWxlU3lzdGVtQWdlbnRBdmFpbGFibGUsIHNldEZpbGVTeXN0ZW1BZ2VudEF2YWlsYWJsZV0gPQogICAgdXNlU3RhdGUoZmFsc2UpOwogIGNvbnN0IFtjcmVhdGVGaWxlc0FnZW50QXZhaWxhYmxlLCBzZXRDcmVhdGVGaWxlc0FnZW50QXZhaWxhYmxlXSA9CiAgICB1c2VTdGF0ZShmYWxzZSk7CgogIGNvbnN0IGRlZmF1bHRTa2lsbHMgPSBnZXREZWZhdWx0U2tpbGxzKHQpOwogIGNvbnN0IGFsbENvbmZpZ3VyYWJsZVNraWxscyA9IGdldENvbmZpZ3VyYWJsZVNraWxscyh0LCB7CiAgICBmaWxlU3lzdGVtQWdlbnRBdmFpbGFibGUsCiAgICBjcmVhdGVGaWxlc0FnZW50QXZhaWxhYmxlLAogIH0pOwogIGNvbnN0IGFsbEFwcEludGVncmF0aW9uU2tpbGxzID0gZ2V0QXBwSW50ZWdyYXRpb25Ta2lsbHModCk7CgogIGNvbnN0IGlzTXVsdGlVc2VyTW9kZSA9IHNldHRpbmdzPy5NdWx0aVVzZXJNb2RlID8/IGZhbHNlOwogIGNvbnN0IGZpbHRlclNraWxsc0J5TW9kZSA9IChbXywgc2tpbGxDb25maWddOiBbc3RyaW5nLCBhbnldKSA9PiB7CiAgICBpZiAoIXNraWxsQ29uZmlnLm1vZGUpIHJldHVybiB0cnVlOwogICAgaWYgKHNraWxsQ29uZmlnLm1vZGUuaW5jbHVkZXMoInNpbmdsZVVzZXJPbmx5IikgJiYgaXNNdWx0aVVzZXJNb2RlKQogICAgICByZXR1cm4gZmFsc2U7CiAgICBpZiAoc2tpbGxDb25maWcubW9kZS5pbmNsdWRlcygibXVsdGlVc2VyT25seSIpICYmICFpc011bHRpVXNlck1vZGUpCiAgICAgIHJldHVybiBmYWxzZTsKICAgIHJldHVybiB0cnVlOwogIH07CiAgY29uc3QgY29uZmlndXJhYmxlU2tpbGxzID0gT2JqZWN0LmZyb21FbnRyaWVzKAogICAgT2JqZWN0LmVudHJpZXMoYWxsQ29uZmlndXJhYmxlU2tpbGxzKS5maWx0ZXIoZmlsdGVyU2tpbGxzQnlNb2RlKSwKICApOwogIGNvbnN0IGFwcEludGVncmF0aW9uU2tpbGxzID0gT2JqZWN0LmZyb21FbnRyaWVzKAogICAgT2JqZWN0LmVudHJpZXMoYWxsQXBwSW50ZWdyYXRpb25Ta2lsbHMpLmZpbHRlcihmaWx0ZXJTa2lsbHNCeU1vZGUpLAogICk7CgogIHVzZUVmZmVjdCgoKSA9PiB7CiAgICBjb25zdCBoYW5kbGVCZWZvcmVVbmxvYWQgPSAoZXZlbnQ6IEJlZm9yZVVubG9hZEV2ZW50KSA9PiB7CiAgICAgIGlmIChoYXNDaGFuZ2VzKSB7CiAgICAgICAgZXZlbnQucHJldmVudERlZmF1bHQoKTsKICAgICAgICBldmVudC5yZXR1cm5WYWx1ZSA9ICIiOwogICAgICB9CiAgICB9OwogICAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoImJlZm9yZXVubG9hZCIsIGhhbmRsZUJlZm9yZVVubG9hZCk7CiAgICByZXR1cm4gKCkgPT4gewogICAgICB3aW5kb3cucmVtb3ZlRXZlbnRMaXN0ZW5lcigiYmVmb3JldW5sb2FkIiwgaGFuZGxlQmVmb3JlVW5sb2FkKTsKICAgIH07CiAgfSwgW2hhc0NoYW5nZXNdKTsKCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIGxldCBjYW5jZWxsZWQgPSBmYWxzZTsKICAgIGFzeW5jIGZ1bmN0aW9uIGZldGNoU2V0dGluZ3MoKSB7CiAgICAgIHRyeSB7CiAgICAgICAgY29uc3QgWwogICAgICAgICAgX3NldHRpbmdzLAogICAgICAgICAgX3ByZWZlcmVuY2VzLAogICAgICAgICAgZmxvd3NSZXMsCiAgICAgICAgICBmc0FnZW50QXZhaWxhYmxlLAogICAgICAgICAgY3JlYXRlRmlsZXNBdmFpbGFibGUsCiAgICAgICAgXSA9IGF3YWl0IFByb21pc2UuYWxsKFsKICAgICAgICAgIFN5c3RlbS5rZXlzKCksCiAgICAgICAgICBBZG1pbi5zeXN0ZW1QcmVmZXJlbmNlc0J5RmllbGRzKFsKICAgICAgICAgICAgImRpc2FibGVkX2FnZW50X3NraWxscyIsCiAgICAgICAgICAgICJkZWZhdWx0X2FnZW50X3NraWxscyIsCiAgICAgICAgICAgICJpbXBvcnRlZF9hZ2VudF9za2lsbHMiLAogICAgICAgICAgICAiYWN0aXZlX2FnZW50X2Zsb3dzIiwKICAgICAgICAgIF0pLAogICAgICAgICAgQWdlbnRGbG93cy5saXN0Rmxvd3MoKSwKICAgICAgICAgIFN5c3RlbS5pc0ZpbGVTeXN0ZW1BZ2VudEF2YWlsYWJsZSgpLAogICAgICAgICAgU3lzdGVtLmlzQ3JlYXRlRmlsZXNBZ2VudEF2YWlsYWJsZSgpLAogICAgICAgIF0pOwoKICAgICAgICBpZiAoY2FuY2VsbGVkKSByZXR1cm47CiAgICAgICAgY29uc3QgeyBmbG93cyA9IFtdIH0gPSBmbG93c1JlcyBhcyB7IGZsb3dzPzogQWdlbnRGbG93W10gfTsKICAgICAgICBzZXRTZXR0aW5ncyh7IC4uLl9zZXR0aW5ncywgcHJlZmVyZW5jZXM6IF9wcmVmZXJlbmNlcy5zZXR0aW5ncyB9KTsKICAgICAgICBzZXRBZ2VudFNraWxscyhfcHJlZmVyZW5jZXMuc2V0dGluZ3M/LmRlZmF1bHRfYWdlbnRfc2tpbGxzID8/IFtdKTsKICAgICAgICBzZXREaXNhYmxlZEFnZW50U2tpbGxzKAogICAgICAgICAgX3ByZWZlcmVuY2VzLnNldHRpbmdzPy5kaXNhYmxlZF9hZ2VudF9za2lsbHMgPz8gW10sCiAgICAgICAgKTsKICAgICAgICBzZXRJbXBvcnRlZFNraWxscyhfcHJlZmVyZW5jZXMuc2V0dGluZ3M/LmltcG9ydGVkX2FnZW50X3NraWxscyA/PyBbXSk7CiAgICAgICAgc2V0QWN0aXZlRmxvd0lkcyhmbG93cy5maWx0ZXIoKGYpID0+IGYuYWN0aXZlKS5tYXAoKGYpID0+IGYudXVpZCkpOwogICAgICAgIHNldEFnZW50Rmxvd3MoZmxvd3MpOwogICAgICAgIHNldEZpbGVTeXN0ZW1BZ2VudEF2YWlsYWJsZShmc0FnZW50QXZhaWxhYmxlKTsKICAgICAgICBzZXRDcmVhdGVGaWxlc0FnZW50QXZhaWxhYmxlKGNyZWF0ZUZpbGVzQXZhaWxhYmxlKTsKICAgICAgfSBjYXRjaCAoZSkgewogICAgICAgIGlmIChjYW5jZWxsZWQpIHJldHVybjsKICAgICAgICBjb25zb2xlLmVycm9yKCJGYWlsZWQgdG8gZmV0Y2ggYWdlbnQgc2V0dGluZ3M6IiwgZSk7CiAgICAgIH0gZmluYWxseSB7CiAgICAgICAgaWYgKCFjYW5jZWxsZWQpIHNldExvYWRpbmcoZmFsc2UpOwogICAgICB9CiAgICB9CiAgICBmZXRjaFNldHRpbmdzKCk7CiAgICByZXR1cm4gKCkgPT4gewogICAgICBjYW5jZWxsZWQgPSB0cnVlOwogICAgfTsKICB9LCBbXSk7CgogIGNvbnN0IHRvZ2dsZURlZmF1bHRTa2lsbCA9IChza2lsbE5hbWU6IHN0cmluZykgPT4gewogICAgc2V0RGlzYWJsZWRBZ2VudFNraWxscygocHJldikgPT4gewogICAgICBjb25zdCB1cGRhdGVkU2tpbGxzID0gcHJldi5pbmNsdWRlcyhza2lsbE5hbWUpCiAgICAgICAgPyBwcmV2LmZpbHRlcigobmFtZSkgPT4gbmFtZSAhPT0gc2tpbGxOYW1lKQogICAgICAgIDogWy4uLnByZXYsIHNraWxsTmFtZV07CiAgICAgIHJldHVybiB1cGRhdGVkU2tpbGxzOwogICAgfSk7CiAgICAvLyBTaWRlIGVmZmVjdHMgbXVzdCBydW4gb3V0c2lkZSB0aGUgdXBkYXRlciBmdW5jdGlvbjogUmVhY3QgU3RyaWN0TW9kZQogICAgLy8gaW52b2tlcyB1cGRhdGVycyB0d2ljZSB0byBkZXRlY3QgaW1wdXJlIHVwZGF0ZXJzLgogICAgc2V0SGFzQ2hhbmdlcyh0cnVlKTsKICB9OwoKICBjb25zdCB0b2dnbGVBZ2VudFNraWxsID0gKHNraWxsTmFtZTogc3RyaW5nKSA9PiB7CiAgICBzZXRBZ2VudFNraWxscygocHJldikgPT4gewogICAgICBjb25zdCB1cGRhdGVkU2tpbGxzID0gcHJldi5pbmNsdWRlcyhza2lsbE5hbWUpCiAgICAgICAgPyBwcmV2LmZpbHRlcigobmFtZSkgPT4gbmFtZSAhPT0gc2tpbGxOYW1lKQogICAgICAgIDogWy4uLnByZXYsIHNraWxsTmFtZV07CiAgICAgIHJldHVybiB1cGRhdGVkU2tpbGxzOwogICAgfSk7CiAgICBzZXRIYXNDaGFuZ2VzKHRydWUpOwogIH07CgogIGNvbnN0IHRvZ2dsZUZsb3cgPSAoZmxvd0lkOiBzdHJpbmcpID0+IHsKICAgIHNldEFjdGl2ZUZsb3dJZHMoKHByZXYpID0+IHsKICAgICAgY29uc3QgdXBkYXRlZEZsb3dzID0gcHJldi5pbmNsdWRlcyhmbG93SWQpCiAgICAgICAgPyBwcmV2LmZpbHRlcigoaWQpID0+IGlkICE9PSBmbG93SWQpCiAgICAgICAgOiBbLi4ucHJldiwgZmxvd0lkXTsKICAgICAgcmV0dXJuIHVwZGF0ZWRGbG93czsKICAgIH0pOwogIH07CgogIGNvbnN0IHRvZ2dsZU1DUCA9IChzZXJ2ZXJOYW1lOiBzdHJpbmcpID0+IHsKICAgIHNldE1jcFNlcnZlcnMoKHByZXYpID0+IHsKICAgICAgcmV0dXJuIHByZXYubWFwKChzZXJ2ZXIpID0+IHsKICAgICAgICBpZiAoc2VydmVyLm5hbWUgIT09IHNlcnZlck5hbWUpIHJldHVybiBzZXJ2ZXI7CiAgICAgICAgcmV0dXJuIHsgLi4uc2VydmVyLCBydW5uaW5nOiAhc2VydmVyLnJ1bm5pbmcgfTsKICAgICAgfSk7CiAgICB9KTsKICB9OwoKICBjb25zdCBoYW5kbGVTdWJtaXQgPSBhc3luYyAoZTogUmVhY3QuRm9ybUV2ZW50PEhUTUxGb3JtRWxlbWVudD4pID0+IHsKICAgIGUucHJldmVudERlZmF1bHQoKTsKICAgIGNvbnN0IGRhdGE6IHsKICAgICAgd29ya3NwYWNlOiB7IFtrZXk6IHN0cmluZ106IGFueSB9OwogICAgICBzeXN0ZW06IHsgW2tleTogc3RyaW5nXTogYW55IH07CiAgICAgIGVudjogeyBba2V5OiBzdHJpbmddOiBhbnkgfTsKICAgIH0gPSB7CiAgICAgIHdvcmtzcGFjZToge30sCiAgICAgIHN5c3RlbToge30sCiAgICAgIGVudjoge30sCiAgICB9OwoKICAgIGNvbnN0IGZvcm0gPSBuZXcgRm9ybURhdGEoZm9ybUVsLmN1cnJlbnQgPz8gdW5kZWZpbmVkKTsKICAgIGZvciAoY29uc3QgW2tleSwgdmFsdWVdIG9mIGZvcm0uZW50cmllcygpKSB7CiAgICAgIGlmIChrZXkuc3RhcnRzV2l0aCgic3lzdGVtOjoiKSkgewogICAgICAgIGNvbnN0IFssIGxhYmVsXSA9IGtleS5zcGxpdCgic3lzdGVtOjoiKTsKICAgICAgICBkYXRhLnN5c3RlbVtsYWJlbF0gPSBTdHJpbmcodmFsdWUpOwogICAgICAgIGNvbnRpbnVlOwogICAgICB9CgogICAgICBpZiAoa2V5LnN0YXJ0c1dpdGgoImVudjo6IikpIHsKICAgICAgICBjb25zdCBbLCBsYWJlbF0gPSBrZXkuc3BsaXQoImVudjo6Iik7CiAgICAgICAgZGF0YS5lbnZbbGFiZWxdID0gU3RyaW5nKHZhbHVlKTsKICAgICAgICBjb250aW51ZTsKICAgICAgfQogICAgICBkYXRhLndvcmtzcGFjZVtrZXldID0gY2FzdFRvVHlwZShrZXksIHZhbHVlKTsKICAgIH0KCiAgICBjb25zdCB7IHN1Y2Nlc3MgfSA9IGF3YWl0IEFkbWluLnVwZGF0ZVN5c3RlbVByZWZlcmVuY2VzKGRhdGEuc3lzdGVtKTsKICAgIGF3YWl0IFN5c3RlbS51cGRhdGVTeXN0ZW0oZGF0YS5lbnYpOwoKICAgIGlmIChzdWNjZXNzKSB7CiAgICAgIGNvbnN0IF9zZXR0aW5ncyA9IGF3YWl0IFN5c3RlbS5rZXlzKCk7CiAgICAgIGNvbnN0IF9wcmVmZXJlbmNlcyA9IGF3YWl0IEFkbWluLnN5c3RlbVByZWZlcmVuY2VzQnlGaWVsZHMoWwogICAgICAgICJkaXNhYmxlZF9hZ2VudF9za2lsbHMiLAogICAgICAgICJkZWZhdWx0X2FnZW50X3NraWxscyIsCiAgICAgICAgImltcG9ydGVkX2FnZW50X3NraWxscyIsCiAgICAgIF0pOwogICAgICBzZXRTZXR0aW5ncyh7IC4uLl9zZXR0aW5ncywgcHJlZmVyZW5jZXM6IF9wcmVmZXJlbmNlcy5zZXR0aW5ncyB9KTsKICAgICAgc2V0QWdlbnRTa2lsbHMoX3ByZWZlcmVuY2VzLnNldHRpbmdzPy5kZWZhdWx0X2FnZW50X3NraWxscyA/PyBbXSk7CiAgICAgIHNldERpc2FibGVkQWdlbnRTa2lsbHMoCiAgICAgICAgX3ByZWZlcmVuY2VzLnNldHRpbmdzPy5kaXNhYmxlZF9hZ2VudF9za2lsbHMgPz8gW10sCiAgICAgICk7CiAgICAgIHNldEltcG9ydGVkU2tpbGxzKF9wcmVmZXJlbmNlcy5zZXR0aW5ncz8uaW1wb3J0ZWRfYWdlbnRfc2tpbGxzID8/IFtdKTsKICAgICAgc2hvd1RvYXN0KHQoImFnZW50Q29uZmlnLnByZWZlcmVuY2VzU2F2ZWQiKSwgInN1Y2Nlc3MiLCB7CiAgICAgICAgY2xlYXI6IHRydWUsCiAgICAgIH0pOwogICAgfSBlbHNlIHsKICAgICAgc2hvd1RvYXN0KHQoImFnZW50Q29uZmlnLnByZWZlcmVuY2VzU2F2ZUZhaWxlZCIpLCAiZXJyb3IiLCB7CiAgICAgICAgY2xlYXI6IHRydWUsCiAgICAgIH0pOwogICAgfQoKICAgIHNldEhhc0NoYW5nZXMoZmFsc2UpOwogIH07CgogIGNvbnN0IGhhbmRsZURlZmF1bHRTa2lsbENsaWNrID0gKHNraWxsOiBhbnkpID0+IHsKICAgIHNldFNlbGVjdGVkRmxvdyhudWxsKTsKICAgIHNldFNlbGVjdGVkTWNwU2VydmVyKG51bGwpOwogICAgc2V0U2VsZWN0ZWRTa2lsbChza2lsbCk7CiAgICBpZiAoaXNNb2JpbGUpIHNldFNob3dTa2lsbE1vZGFsKHRydWUpOwogIH07CgogIGNvbnN0IGhhbmRsZVNraWxsQ2xpY2sgPSAoc2tpbGw6IGFueSkgPT4gewogICAgc2V0U2VsZWN0ZWRGbG93KG51bGwpOwogICAgc2V0U2VsZWN0ZWRNY3BTZXJ2ZXIobnVsbCk7CiAgICBzZXRTZWxlY3RlZFNraWxsKHNraWxsKTsKICAgIGlmIChpc01vYmlsZSkgc2V0U2hvd1NraWxsTW9kYWwodHJ1ZSk7CiAgfTsKCiAgY29uc3QgaGFuZGxlRmxvd0NsaWNrID0gKGZsb3c6IGFueSkgPT4gewogICAgc2V0U2VsZWN0ZWRTa2lsbChudWxsKTsKICAgIHNldFNlbGVjdGVkTWNwU2VydmVyKG51bGwpOwogICAgc2V0U2VsZWN0ZWRGbG93KGZsb3cpOwogICAgaWYgKGlzTW9iaWxlKSBzZXRTaG93U2tpbGxNb2RhbCh0cnVlKTsKICB9OwoKICBjb25zdCBoYW5kbGVNQ1BDbGljayA9IChzZXJ2ZXI6IGFueSkgPT4gewogICAgc2V0U2VsZWN0ZWRTa2lsbChudWxsKTsKICAgIHNldFNlbGVjdGVkRmxvdyhudWxsKTsKICAgIHNldFNlbGVjdGVkTWNwU2VydmVyKHNlcnZlcik7CiAgICBpZiAoaXNNb2JpbGUpIHNldFNob3dTa2lsbE1vZGFsKHRydWUpOwogIH07CgogIGNvbnN0IGhhbmRsZUZsb3dEZWxldGUgPSAoZmxvd0lkOiBzdHJpbmcpID0+IHsKICAgIHNldFNlbGVjdGVkRmxvdyhudWxsKTsKICAgIHNldEFjdGl2ZUZsb3dJZHMoKHByZXYpID0+IHByZXYuZmlsdGVyKChpZCkgPT4gaWQgIT09IGZsb3dJZCkpOwogICAgc2V0QWdlbnRGbG93cygocHJldikgPT4gcHJldi5maWx0ZXIoKGZsb3cpID0+IGZsb3cudXVpZCAhPT0gZmxvd0lkKSk7CiAgfTsKCiAgY29uc3QgaGFuZGxlTUNQU2VydmVyRGVsZXRlID0gKHNlcnZlck5hbWU6IHN0cmluZykgPT4gewogICAgc2V0U2VsZWN0ZWRNY3BTZXJ2ZXIobnVsbCk7CiAgICBzZXRNY3BTZXJ2ZXJzKChwcmV2KSA9PgogICAgICBwcmV2LmZpbHRlcigoc2VydmVyKSA9PiBzZXJ2ZXIubmFtZSAhPT0gc2VydmVyTmFtZSksCiAgICApOwogIH07CgogIGNvbnN0IGhhbmRsZU1DUFRvb2xUb2dnbGUgPSBhc3luYyAoCiAgICBzZXJ2ZXJOYW1lOiBzdHJpbmcsCiAgICB0b29sTmFtZTogc3RyaW5nLAogICAgZW5hYmxlZDogYm9vbGVhbiwKICApID0+IHsKICAgIGNvbnN0IHsgc3VjY2VzcywgZXJyb3IsIHN1cHByZXNzZWRUb29scyB9ID0gYXdhaXQgTUNQU2VydmVycy50b2dnbGVUb29sKAogICAgICBzZXJ2ZXJOYW1lLAogICAgICB0b29sTmFtZSwKICAgICAgZW5hYmxlZCwKICAgICk7CgogICAgaWYgKCFzdWNjZXNzKSB7CiAgICAgIHNob3dUb2FzdChlcnJvciB8fCB0KCJhZ2VudENvbmZpZy50b2dnbGVUb29sRmFpbGVkIiksICJlcnJvciIsIHsKICAgICAgICBjbGVhcjogdHJ1ZSwKICAgICAgfSk7CiAgICAgIHJldHVybjsKICAgIH0KCiAgICBzZXRNY3BTZXJ2ZXJzKChwcmV2KSA9PgogICAgICBwcmV2Lm1hcCgoc2VydmVyKSA9PiB7CiAgICAgICAgaWYgKHNlcnZlci5uYW1lICE9PSBzZXJ2ZXJOYW1lKSByZXR1cm4gc2VydmVyOwogICAgICAgIHJldHVybiB7CiAgICAgICAgICAuLi5zZXJ2ZXIsCiAgICAgICAgICBjb25maWc6IHsKICAgICAgICAgICAgLi4uc2VydmVyLmNvbmZpZywKICAgICAgICAgICAgb3BlbnNpbjogewogICAgICAgICAgICAgIC4uLnNlcnZlci5jb25maWc/Lm9wZW5zaW4sCiAgICAgICAgICAgICAgc3VwcHJlc3NlZFRvb2xzLAogICAgICAgICAgICB9LAogICAgICAgICAgfSwKICAgICAgICB9OwogICAgICB9KSwKICAgICk7CgogICAgc2V0U2VsZWN0ZWRNY3BTZXJ2ZXIoKHByZXYpID0+IHsKICAgICAgaWYgKCFwcmV2IHx8IHByZXYubmFtZSAhPT0gc2VydmVyTmFtZSkgcmV0dXJuIHByZXY7CiAgICAgIHJldHVybiB7CiAgICAgICAgLi4ucHJldiwKICAgICAgICBjb25maWc6IHsKICAgICAgICAgIC4uLnByZXYuY29uZmlnLAogICAgICAgICAgb3BlbnNpbjogewogICAgICAgICAgICAuLi5wcmV2LmNvbmZpZz8ub3BlbnNpbiwKICAgICAgICAgICAgc3VwcHJlc3NlZFRvb2xzLAogICAgICAgICAgfSwKICAgICAgICB9LAogICAgICB9OwogICAgfSk7CiAgfTsKCiAgcmV0dXJuIHsKICAgIHQsCiAgICBmb3JtRWwsCiAgICBoYXNDaGFuZ2VzLAogICAgc2V0SGFzQ2hhbmdlcywKICAgIHNldHRpbmdzLAogICAgc2VsZWN0ZWRTa2lsbCwKICAgIHNldFNlbGVjdGVkU2tpbGwsCiAgICBsb2FkaW5nLAogICAgc2hvd1NraWxsTW9kYWwsCiAgICBzZXRTaG93U2tpbGxNb2RhbCwKICAgIGFnZW50U2tpbGxzLAogICAgc2V0QWdlbnRTa2lsbHMsCiAgICBpbXBvcnRlZFNraWxscywKICAgIHNldEltcG9ydGVkU2tpbGxzLAogICAgZGlzYWJsZWRBZ2VudFNraWxscywKICAgIHNldERpc2FibGVkQWdlbnRTa2lsbHMsCiAgICBhZ2VudEZsb3dzLAogICAgc2V0QWdlbnRGbG93cywKICAgIHNlbGVjdGVkRmxvdywKICAgIHNldFNlbGVjdGVkRmxvdywKICAgIGFjdGl2ZUZsb3dJZHMsCiAgICBzZXRBY3RpdmVGbG93SWRzLAogICAgbWNwU2VydmVycywKICAgIHNldE1jcFNlcnZlcnMsCiAgICBzZWxlY3RlZE1jcFNlcnZlciwKICAgIHNldFNlbGVjdGVkTWNwU2VydmVyLAogICAgZmlsZVN5c3RlbUFnZW50QXZhaWxhYmxlLAogICAgc2V0RmlsZVN5c3RlbUFnZW50QXZhaWxhYmxlLAogICAgY3JlYXRlRmlsZXNBZ2VudEF2YWlsYWJsZSwKICAgIHNldENyZWF0ZUZpbGVzQWdlbnRBdmFpbGFibGUsCiAgICBkZWZhdWx0U2tpbGxzLAogICAgY29uZmlndXJhYmxlU2tpbGxzLAogICAgYXBwSW50ZWdyYXRpb25Ta2lsbHMsCiAgICB0b2dnbGVEZWZhdWx0U2tpbGwsCiAgICB0b2dnbGVBZ2VudFNraWxsLAogICAgdG9nZ2xlRmxvdywKICAgIHRvZ2dsZU1DUCwKICAgIGhhbmRsZVN1Ym1pdCwKICAgIGhhbmRsZURlZmF1bHRTa2lsbENsaWNrLAogICAgaGFuZGxlU2tpbGxDbGljaywKICAgIGhhbmRsZUZsb3dDbGljaywKICAgIGhhbmRsZU1DUENsaWNrLAogICAgaGFuZGxlRmxvd0RlbGV0ZSwKICAgIGhhbmRsZU1DUFNlcnZlckRlbGV0ZSwKICAgIGhhbmRsZU1DUFRvb2xUb2dnbGUsCiAgICBJR05PUkVfQ0hBTkdFX1NFVFRJTkdTLAogIH07Cn0KCmV4cG9ydCBkZWZhdWx0IHVzZUFnZW50czsK
+// SPDX-License-Identifier: MIT
+// Purpose: React hook for managing agent settings, skills, flows, and MCP servers on the Admin Agents page.
+// Docs: useAgents.doc.md
+import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { isMobile } from "react-device-detect";
+import Admin from "@/models/admin";
+import System from "@/models/system";
+import MCPServers from "@/models/mcpServers";
+import showToast from "@/utils/toast";
+import { castToType } from "@/utils/types";
+import {
+  getDefaultSkills,
+  getConfigurableSkills,
+  getAppIntegrationSkills,
+} from "./skills";
+import AgentFlows from "@/models/agentFlows";
+
+interface AgentSettings {
+  [key: string]: any;
+  preferences?: { [key: string]: any };
+  MultiUserMode?: boolean;
+}
+
+interface AgentFlow {
+  uuid: string;
+  active: boolean;
+  [key: string]: any;
+}
+
+interface MCPServer {
+  name: string;
+  running: boolean;
+  [key: string]: any;
+}
+
+interface UseAgentsReturn {
+  t: (key: string, options?: any) => string;
+  formEl: React.RefObject<HTMLFormElement | null>;
+  hasChanges: boolean;
+  setHasChanges: (value: boolean) => void;
+  settings: AgentSettings;
+  selectedSkill: string;
+  setSelectedSkill: (skill: string) => void;
+  loading: boolean;
+  showSkillModal: boolean;
+  setShowSkillModal: (show: boolean) => void;
+  agentSkills: string[];
+  setAgentSkills: (skills: string[]) => void;
+  importedSkills: any[];
+  setImportedSkills: (skills: any[]) => void;
+  disabledAgentSkills: string[];
+  setDisabledAgentSkills: (skills: string[]) => void;
+  agentFlows: AgentFlow[];
+  setAgentFlows: (flows: AgentFlow[]) => void;
+  selectedFlow: AgentFlow | null;
+  setSelectedFlow: (flow: AgentFlow | null) => void;
+  activeFlowIds: string[];
+  setActiveFlowIds: (ids: string[]) => void;
+  mcpServers: MCPServer[];
+  setMcpServers: (servers: MCPServer[]) => void;
+  selectedMcpServer: MCPServer | null;
+  setSelectedMcpServer: (server: MCPServer | null) => void;
+  fileSystemAgentAvailable: boolean;
+  setFileSystemAgentAvailable: (available: boolean) => void;
+  createFilesAgentAvailable: boolean;
+  setCreateFilesAgentAvailable: (available: boolean) => void;
+  defaultSkills: any;
+  configurableSkills: any;
+  appIntegrationSkills: any;
+  toggleDefaultSkill: (skillName: string) => void;
+  toggleAgentSkill: (skillName: string) => void;
+  toggleFlow: (flowId: string) => void;
+  toggleMCP: (serverName: string) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  handleDefaultSkillClick: (skill: any) => void;
+  handleSkillClick: (skill: any) => void;
+  handleFlowClick: (flow: any) => void;
+  handleMCPClick: (server: any) => void;
+  handleFlowDelete: (flowId: string) => void;
+  handleMCPServerDelete: (serverName: string) => void;
+  handleMCPToolToggle: (
+    serverName: string,
+    toolName: string,
+    enabled: boolean,
+  ) => Promise<void>;
+  IGNORE_CHANGE_SETTINGS: string[];
+}
+
+export const IGNORE_CHANGE_SETTINGS = [
+  "agentSkillRerankerEnabled",
+  "agentSkillRerankerTopN",
+  "agentSkillMaxToolCalls",
+  "agentClarifyingQuestionsEnabled",
+  "agentClarifyingQuestionsMaxPerTurn",
+];
+
+export function useAgents(): UseAgentsReturn {
+  const { t } = useTranslation();
+  const formEl = useRef<HTMLFormElement | null>(null);
+  const [hasChanges, setHasChanges] = useState(false);
+  const [settings, setSettings] = useState<AgentSettings>({});
+  const [selectedSkill, setSelectedSkill] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [showSkillModal, setShowSkillModal] = useState(false);
+
+  const [agentSkills, setAgentSkills] = useState<string[]>([]);
+  const [importedSkills, setImportedSkills] = useState<any[]>([]);
+  const [disabledAgentSkills, setDisabledAgentSkills] = useState<string[]>([]);
+
+  const [agentFlows, setAgentFlows] = useState<AgentFlow[]>([]);
+  const [selectedFlow, setSelectedFlow] = useState<AgentFlow | null>(null);
+  const [activeFlowIds, setActiveFlowIds] = useState<string[]>([]);
+
+  const [mcpServers, setMcpServers] = useState<MCPServer[]>([]);
+  const [selectedMcpServer, setSelectedMcpServer] = useState<MCPServer | null>(
+    null,
+  );
+
+  const [fileSystemAgentAvailable, setFileSystemAgentAvailable] =
+    useState(false);
+  const [createFilesAgentAvailable, setCreateFilesAgentAvailable] =
+    useState(false);
+
+  const defaultSkills = getDefaultSkills(t);
+  const allConfigurableSkills = getConfigurableSkills(t, {
+    fileSystemAgentAvailable,
+    createFilesAgentAvailable,
+  });
+  const allAppIntegrationSkills = getAppIntegrationSkills(t);
+
+  const isMultiUserMode = settings?.MultiUserMode ?? false;
+  const filterSkillsByMode = ([_, skillConfig]: [string, any]) => {
+    if (!skillConfig.mode) return true;
+    if (skillConfig.mode.includes("singleUserOnly") && isMultiUserMode)
+      return false;
+    if (skillConfig.mode.includes("multiUserOnly") && !isMultiUserMode)
+      return false;
+    return true;
+  };
+  const configurableSkills = Object.fromEntries(
+    Object.entries(allConfigurableSkills).filter(filterSkillsByMode),
+  );
+  const appIntegrationSkills = Object.fromEntries(
+    Object.entries(allAppIntegrationSkills).filter(filterSkillsByMode),
+  );
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      if (hasChanges) {
+        event.preventDefault();
+        event.returnValue = "";
+      }
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [hasChanges]);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function fetchSettings() {
+      try {
+        const [
+          _settings,
+          _preferences,
+          flowsRes,
+          fsAgentAvailable,
+          createFilesAvailable,
+        ] = await Promise.all([
+          System.keys(),
+          Admin.systemPreferencesByFields([
+            "disabled_agent_skills",
+            "default_agent_skills",
+            "imported_agent_skills",
+            "active_agent_flows",
+          ]),
+          AgentFlows.listFlows(),
+          System.isFileSystemAgentAvailable(),
+          System.isCreateFilesAgentAvailable(),
+        ]);
+
+        if (cancelled) return;
+        const { flows = [] } = flowsRes as { flows?: AgentFlow[] };
+        setSettings({ ..._settings, preferences: _preferences.settings });
+        setAgentSkills(_preferences.settings?.default_agent_skills ?? []);
+        setDisabledAgentSkills(
+          _preferences.settings?.disabled_agent_skills ?? [],
+        );
+        setImportedSkills(_preferences.settings?.imported_agent_skills ?? []);
+        setActiveFlowIds(flows.filter((f) => f.active).map((f) => f.uuid));
+        setAgentFlows(flows);
+        setFileSystemAgentAvailable(fsAgentAvailable);
+        setCreateFilesAgentAvailable(createFilesAvailable);
+      } catch (e) {
+        if (cancelled) return;
+        console.error("Failed to fetch agent settings:", e);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+    fetchSettings();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const toggleDefaultSkill = (skillName: string) => {
+    setDisabledAgentSkills((prev) => {
+      const updatedSkills = prev.includes(skillName)
+        ? prev.filter((name) => name !== skillName)
+        : [...prev, skillName];
+      return updatedSkills;
+    });
+    // Side effects must run outside the updater function: React StrictMode
+    // invokes updaters twice to detect impure updaters.
+    setHasChanges(true);
+  };
+
+  const toggleAgentSkill = (skillName: string) => {
+    setAgentSkills((prev) => {
+      const updatedSkills = prev.includes(skillName)
+        ? prev.filter((name) => name !== skillName)
+        : [...prev, skillName];
+      return updatedSkills;
+    });
+    setHasChanges(true);
+  };
+
+  const toggleFlow = (flowId: string) => {
+    setActiveFlowIds((prev) => {
+      const updatedFlows = prev.includes(flowId)
+        ? prev.filter((id) => id !== flowId)
+        : [...prev, flowId];
+      return updatedFlows;
+    });
+  };
+
+  const toggleMCP = (serverName: string) => {
+    setMcpServers((prev) => {
+      return prev.map((server) => {
+        if (server.name !== serverName) return server;
+        return { ...server, running: !server.running };
+      });
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const data: {
+      workspace: { [key: string]: any };
+      system: { [key: string]: any };
+      env: { [key: string]: any };
+    } = {
+      workspace: {},
+      system: {},
+      env: {},
+    };
+
+    const form = new FormData(formEl.current ?? undefined);
+    for (const [key, value] of form.entries()) {
+      if (key.startsWith("system::")) {
+        const [, label] = key.split("system::");
+        data.system[label] = String(value);
+        continue;
+      }
+
+      if (key.startsWith("env::")) {
+        const [, label] = key.split("env::");
+        data.env[label] = String(value);
+        continue;
+      }
+      data.workspace[key] = castToType(key, value);
+    }
+
+    const { success } = await Admin.updateSystemPreferences(data.system);
+    await System.updateSystem(data.env);
+
+    if (success) {
+      const _settings = await System.keys();
+      const _preferences = await Admin.systemPreferencesByFields([
+        "disabled_agent_skills",
+        "default_agent_skills",
+        "imported_agent_skills",
+      ]);
+      setSettings({ ..._settings, preferences: _preferences.settings });
+      setAgentSkills(_preferences.settings?.default_agent_skills ?? []);
+      setDisabledAgentSkills(
+        _preferences.settings?.disabled_agent_skills ?? [],
+      );
+      setImportedSkills(_preferences.settings?.imported_agent_skills ?? []);
+      showToast(t("agentConfig.preferencesSaved"), "success", {
+        clear: true,
+      });
+    } else {
+      showToast(t("agentConfig.preferencesSaveFailed"), "error", {
+        clear: true,
+      });
+    }
+
+    setHasChanges(false);
+  };
+
+  const handleDefaultSkillClick = (skill: any) => {
+    setSelectedFlow(null);
+    setSelectedMcpServer(null);
+    setSelectedSkill(skill);
+    if (isMobile) setShowSkillModal(true);
+  };
+
+  const handleSkillClick = (skill: any) => {
+    setSelectedFlow(null);
+    setSelectedMcpServer(null);
+    setSelectedSkill(skill);
+    if (isMobile) setShowSkillModal(true);
+  };
+
+  const handleFlowClick = (flow: any) => {
+    setSelectedSkill(null);
+    setSelectedMcpServer(null);
+    setSelectedFlow(flow);
+    if (isMobile) setShowSkillModal(true);
+  };
+
+  const handleMCPClick = (server: any) => {
+    setSelectedSkill(null);
+    setSelectedFlow(null);
+    setSelectedMcpServer(server);
+    if (isMobile) setShowSkillModal(true);
+  };
+
+  const handleFlowDelete = (flowId: string) => {
+    setSelectedFlow(null);
+    setActiveFlowIds((prev) => prev.filter((id) => id !== flowId));
+    setAgentFlows((prev) => prev.filter((flow) => flow.uuid !== flowId));
+  };
+
+  const handleMCPServerDelete = (serverName: string) => {
+    setSelectedMcpServer(null);
+    setMcpServers((prev) =>
+      prev.filter((server) => server.name !== serverName),
+    );
+  };
+
+  const handleMCPToolToggle = async (
+    serverName: string,
+    toolName: string,
+    enabled: boolean,
+  ) => {
+    const { success, error, suppressedTools } = await MCPServers.toggleTool(
+      serverName,
+      toolName,
+      enabled,
+    );
+
+    if (!success) {
+      showToast(error || t("agentConfig.toggleToolFailed"), "error", {
+        clear: true,
+      });
+      return;
+    }
+
+    setMcpServers((prev) =>
+      prev.map((server) => {
+        if (server.name !== serverName) return server;
+        return {
+          ...server,
+          config: {
+            ...server.config,
+            opensin: {
+              ...server.config?.opensin,
+              suppressedTools,
+            },
+          },
+        };
+      }),
+    );
+
+    setSelectedMcpServer((prev) => {
+      if (!prev || prev.name !== serverName) return prev;
+      return {
+        ...prev,
+        config: {
+          ...prev.config,
+          opensin: {
+            ...prev.config?.opensin,
+            suppressedTools,
+          },
+        },
+      };
+    });
+  };
+
+  return {
+    t,
+    formEl,
+    hasChanges,
+    setHasChanges,
+    settings,
+    selectedSkill,
+    setSelectedSkill,
+    loading,
+    showSkillModal,
+    setShowSkillModal,
+    agentSkills,
+    setAgentSkills,
+    importedSkills,
+    setImportedSkills,
+    disabledAgentSkills,
+    setDisabledAgentSkills,
+    agentFlows,
+    setAgentFlows,
+    selectedFlow,
+    setSelectedFlow,
+    activeFlowIds,
+    setActiveFlowIds,
+    mcpServers,
+    setMcpServers,
+    selectedMcpServer,
+    setSelectedMcpServer,
+    fileSystemAgentAvailable,
+    setFileSystemAgentAvailable,
+    createFilesAgentAvailable,
+    setCreateFilesAgentAvailable,
+    defaultSkills,
+    configurableSkills,
+    appIntegrationSkills,
+    toggleDefaultSkill,
+    toggleAgentSkill,
+    toggleFlow,
+    toggleMCP,
+    handleSubmit,
+    handleDefaultSkillClick,
+    handleSkillClick,
+    handleFlowClick,
+    handleMCPClick,
+    handleFlowDelete,
+    handleMCPServerDelete,
+    handleMCPToolToggle,
+    IGNORE_CHANGE_SETTINGS,
+  };
+}
+
+export default useAgents;
