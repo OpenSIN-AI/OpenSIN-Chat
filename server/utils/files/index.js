@@ -21,12 +21,11 @@ const MAX_DOC_BYTES = 50 * 1024 * 1024;
 async function fileData(filePath = null) {
   if (!filePath) throw new Error("No docPath provided in request");
   const fullFilePath = path.resolve(documentsPath, normalizePath(filePath));
-  if (!fs.existsSync(fullFilePath) || !isWithin(documentsPath, fullFilePath))
-    return null;
+  if (!isWithin(documentsPath, fullFilePath)) return null;
 
   let stat;
   try {
-    stat = fs.statSync(fullFilePath);
+    stat = await fs.promises.stat(fullFilePath);
   } catch {
     return null;
   }
@@ -136,11 +135,13 @@ async function getDocumentsByFolder(folderName = "") {
   }
 
   const folderPath = path.resolve(documentsPath, normalizePath(folderName));
-  if (
-    !isWithin(documentsPath, folderPath) ||
-    !fs.existsSync(folderPath) ||
-    !fs.lstatSync(folderPath).isDirectory()
-  ) {
+  let folderStat;
+  try {
+    folderStat = await fs.promises.lstat(folderPath);
+  } catch {
+    folderStat = null;
+  }
+  if (!folderStat || !folderStat.isDirectory() || !isWithin(documentsPath, folderPath)) {
     return {
       folder: folderName,
       documents: [],
@@ -151,12 +152,12 @@ async function getDocumentsByFolder(folderName = "") {
 
   const documents = [];
   const filenames = {};
-  const files = fs.readdirSync(folderPath);
+  const files = await fs.promises.readdir(folderPath);
   for (const file of files) {
     if (path.extname(file) !== ".json") continue;
     const filePath = path.join(folderPath, file);
     try {
-      const st = fs.statSync(filePath);
+      const st = await fs.promises.stat(filePath);
       if (st.size > MAX_DOC_BYTES) {
         consoleLogger.warn(
           `[getDocumentsByFolder] Skipping ${file}: ${st.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`,
@@ -215,7 +216,13 @@ async function cachedVectorInformation(filename = null, checkOnly = false) {
 
   const digest = await vectorCacheKey(filename);
   const file = path.resolve(vectorCachePath, `${digest}.json`);
-  const exists = fs.existsSync(file);
+  let exists;
+  try {
+    await fs.promises.access(file);
+    exists = true;
+  } catch {
+    exists = false;
+  }
 
   if (checkOnly) return exists;
   if (!exists) return { exists, chunks: [] };
@@ -223,8 +230,8 @@ async function cachedVectorInformation(filename = null, checkOnly = false) {
   consoleLogger.log(
     `Cached vectorized results of ${filename} found! Using cached data to save on embed costs.`,
   );
-  const rawData = fs.readFileSync(file, "utf8");
   try {
+    const rawData = await fs.promises.readFile(file, "utf8");
     return { exists: true, chunks: JSON.parse(rawData) };
   } catch {
     consoleLogger.error(
@@ -242,7 +249,7 @@ async function storeVectorResult(vectorData = [], filename = null) {
   consoleLogger.log(
     `Caching vectorized results of ${filename} to prevent duplicated embedding.`,
   );
-  if (!fs.existsSync(vectorCachePath)) fs.mkdirSync(vectorCachePath);
+  await fs.promises.mkdir(vectorCachePath, { recursive: true });
 
   const digest = await vectorCacheKey(filename);
   const writeTo = path.resolve(vectorCachePath, `${digest}.json`);
@@ -255,15 +262,16 @@ async function purgeSourceDocument(filename = null) {
   if (!filename) return;
   const filePath = path.resolve(documentsPath, normalizePath(filename));
 
-  if (
-    !fs.existsSync(filePath) ||
-    !isWithin(documentsPath, filePath) ||
-    !fs.lstatSync(filePath).isFile()
-  )
+  let fileStat;
+  try {
+    fileStat = await fs.promises.lstat(filePath);
+  } catch {
     return;
+  }
+  if (!fileStat.isFile() || !isWithin(documentsPath, filePath)) return;
 
   consoleLogger.log(`Purging source document of ${filename}.`);
-  fs.rmSync(filePath);
+  await fs.promises.rm(filePath);
   return;
 }
 
@@ -273,10 +281,16 @@ async function purgeVectorCache(filename = null) {
   const digest = await vectorCacheKey(filename);
   const filePath = path.resolve(vectorCachePath, `${digest}.json`);
 
-  if (!fs.existsSync(filePath) || !fs.lstatSync(filePath).isFile()) return;
+  let cacheStat;
+  try {
+    cacheStat = await fs.promises.lstat(filePath);
+  } catch {
+    return;
+  }
+  if (!cacheStat.isFile()) return;
 
   consoleLogger.log(`Purging vector-cache of ${filename}.`);
-  fs.rmSync(filePath);
+  await fs.promises.rm(filePath);
   return;
 }
 
@@ -284,10 +298,10 @@ async function purgeVectorCache(filename = null) {
 // folder via iteration of all folders and checking if the expected file exists.
 async function findDocumentInDocuments(documentName = null) {
   if (!documentName) return null;
-  for (const folder of fs.readdirSync(documentsPath)) {
+  for (const folder of await fs.promises.readdir(documentsPath)) {
     let isFolder;
     try {
-      isFolder = fs.lstatSync(path.join(documentsPath, folder)).isDirectory();
+      isFolder = (await fs.promises.lstat(path.join(documentsPath, folder))).isDirectory();
     } catch {
       continue;
     }
@@ -296,14 +310,16 @@ async function findDocumentInDocuments(documentName = null) {
     const targetFilename = normalizePath(documentName);
     const targetFileLocation = path.join(documentsPath, folder, targetFilename);
 
-    if (
-      !fs.existsSync(targetFileLocation) ||
-      !isWithin(documentsPath, targetFileLocation)
-    )
-      continue;
+    if (!isWithin(documentsPath, targetFileLocation)) continue;
 
     try {
-      const st = fs.statSync(targetFileLocation);
+      await fs.promises.access(targetFileLocation);
+    } catch {
+      continue;
+    }
+
+    try {
+      const st = await fs.promises.stat(targetFileLocation);
       if (st.size > MAX_DOC_BYTES) {
         consoleLogger.warn(
           `[findDocumentInDocuments] Skipping ${targetFilename}: ${st.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`,
@@ -436,12 +452,10 @@ function sanitizeFileName(fileName) {
 // Check if the vector-cache folder is empty or not
 // useful for it the user is changing embedders as this will
 // break the previous cache.
-function hasVectorCachedFiles() {
+async function hasVectorCachedFiles() {
   try {
-    return (
-      fs.readdirSync(vectorCachePath)?.filter((name) => name.endsWith(".json"))
-        .length !== 0
-    );
+    const entries = await fs.promises.readdir(vectorCachePath);
+    return entries.filter((name) => name.endsWith(".json")).length !== 0;
   } catch (e) {
     if (e.code !== "ENOENT") {
       consoleLogger.error("Error reading vector cache directory:", e.message);
@@ -509,9 +523,9 @@ async function getWatchedDocumentFilenames(filenames = []) {
  * Purges the entire vector-cache folder and recreates it.
  * @returns {void}
  */
-function purgeEntireVectorCache() {
-  fs.rmSync(vectorCachePath, { recursive: true, force: true });
-  fs.mkdirSync(vectorCachePath);
+async function purgeEntireVectorCache() {
+  await fs.promises.rm(vectorCachePath, { recursive: true, force: true });
+  await fs.promises.mkdir(vectorCachePath, { recursive: true });
   return;
 }
 
@@ -537,7 +551,7 @@ async function fileToPickerData({
 }) {
   let metadata = {};
   const filename = path.basename(pathToFile);
-  const fileStats = fs.statSync(pathToFile);
+  const fileStats = await fs.promises.stat(pathToFile);
   const cachedStatus = await cachedVectorInformation(cachefilename, true);
 
   if (fileStats.size < FILE_READ_SIZE_THRESHOLD) {

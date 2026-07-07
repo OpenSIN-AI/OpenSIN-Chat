@@ -159,12 +159,12 @@ const SystemSettings = {
         return JSON.stringify([]);
       }
     },
-    text_splitter_chunk_size: (update) => {
+    text_splitter_chunk_size: async (update) => {
       try {
         if (isNullOrNaN(update)) throw new Error("Value is not a number.");
         if (Number(update) <= 0) throw new Error("Value must be non-zero.");
         const { purgeEntireVectorCache } = require("../utils/files");
-        purgeEntireVectorCache();
+        await purgeEntireVectorCache();
         return Number(update);
       } catch (e) {
         consoleLogger.error(
@@ -174,12 +174,12 @@ const SystemSettings = {
         return 1000;
       }
     },
-    text_splitter_chunk_overlap: (update) => {
+    text_splitter_chunk_overlap: async (update) => {
       try {
         if (isNullOrNaN(update)) throw new Error("Value is not a number");
         if (Number(update) < 0) throw new Error("Value cannot be less than 0.");
         const { purgeEntireVectorCache } = require("../utils/files");
-        purgeEntireVectorCache();
+        await purgeEntireVectorCache();
         return Number(update);
       } catch (e) {
         consoleLogger.error(
@@ -552,7 +552,7 @@ const SystemSettings = {
       // --------------------------------------------------------
       EmbeddingEngine: embeddingEngine,
       HasExistingEmbeddings: await this.hasEmbeddings(), // check if they have any currently embedded documents active in workspaces.
-      HasCachedEmbeddings: hasVectorCachedFiles(), // check if they any currently cached embedded docs.
+      HasCachedEmbeddings: await hasVectorCachedFiles(), // check if they any currently cached embedded docs.
       EmbeddingBasePath: process.env.EMBEDDING_BASE_PATH,
       EmbeddingModelPref:
         embeddingEngine === "native"
