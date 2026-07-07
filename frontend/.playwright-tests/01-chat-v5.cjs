@@ -1,1 +1,93 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVApjb25zdCB7IGNocm9taXVtIH0gPSByZXF1aXJlKCdwbGF5d3JpZ2h0Jyk7CgooYXN5bmMgKCkgPT4gewogIGNvbnN0IGJyb3dzZXIgPSBhd2FpdCBjaHJvbWl1bS5sYXVuY2goeyBoZWFkbGVzczogdHJ1ZSB9KTsKICBjb25zdCBwYWdlID0gYXdhaXQgYnJvd3Nlci5uZXdQYWdlKCk7CiAgY29uc3QgZXJyb3JzID0gW107CiAgY29uc3QgYXBpQ2FsbHMgPSBbXTsKICAKICBwYWdlLm9uKCdjb25zb2xlJywgbXNnID0+IHsgaWYgKG1zZy50eXBlKCkgPT09ICdlcnJvcicpIGVycm9ycy5wdXNoKGBDT05TT0xFOiAke21zZy50ZXh0KCkuc3Vic3RyaW5nKDAsIDUwMCl9YCk7IH0pOwogIHBhZ2Uub24oJ3BhZ2VlcnJvcicsIGVyciA9PiBlcnJvcnMucHVzaChgUEFHRV9FUlJPUjogJHtlcnIubWVzc2FnZS5zdWJzdHJpbmcoMCwgNTAwKX1cbiR7ZXJyLnN0YWNrPy5zdWJzdHJpbmcoMCwgODAwKX1gKSk7CiAgcGFnZS5vbigncmVxdWVzdCcsIHJlcSA9PiB7CiAgICBjb25zdCB1cmwgPSByZXEudXJsKCk7CiAgICBpZiAodXJsLmluY2x1ZGVzKCdzdHJlYW0tY2hhdCcpIHx8IHVybC5pbmNsdWRlcygnL2NoYXRzJykpIHsKICAgICAgYXBpQ2FsbHMucHVzaChgUkVROiAke3JlcS5tZXRob2QoKX0gJHt1cmwuc3Vic3RyaW5nKHVybC5pbmRleE9mKCcvYXBpLycpKX1gKTsKICAgIH0KICB9KTsKICBwYWdlLm9uKCdyZXNwb25zZScsIHJlc3AgPT4gewogICAgY29uc3QgdXJsID0gcmVzcC51cmwoKTsKICAgIGlmICh1cmwuaW5jbHVkZXMoJ3N0cmVhbS1jaGF0JykpIHsKICAgICAgYXBpQ2FsbHMucHVzaChgUkVTUDogJHtyZXNwLnN0YXR1cygpfSAke3VybC5zdWJzdHJpbmcodXJsLmluZGV4T2YoJy9hcGkvJykpfWApOwogICAgfQogIH0pOwoKICBjb25zdCByZXNwID0gYXdhaXQgcGFnZS5yZXF1ZXN0LnBvc3QoJ2h0dHBzOi8vc2luY2hhdC5kZWxxaGkuY29tL2FwaS9yZXF1ZXN0LXRva2VuJywgeyBkYXRhOiB7IHVzZXJuYW1lOiAnYWRtaW4nLCBwYXNzd29yZDogJycgfSB9KTsKICBjb25zdCB7IHRva2VuIH0gPSBhd2FpdCByZXNwLmpzb24oKTsKICBhd2FpdCBwYWdlLmFkZEluaXRTY3JpcHQoKHQpID0+IHsKICAgIGxvY2FsU3RvcmFnZS5zZXRJdGVtKCdvcGVuc2luX2F1dGhUb2tlbicsIHQpOwogICAgbG9jYWxTdG9yYWdlLnNldEl0ZW0oJ29wZW5zaW5fdXNlcicsIEpTT04uc3RyaW5naWZ5KHsgdXNlcm5hbWU6ICdhZG1pbicsIHJvbGU6ICdhZG1pbicgfSkpOwogICAgbG9jYWxTdG9yYWdlLnNldEl0ZW0oJ29wZW5zaW5fdGhlbWUnLCAnZGFyaycpOwogICAgbG9jYWxTdG9yYWdlLnNldEl0ZW0oJ2kxOG5leHRMbmcnLCAnZW4nKTsKICB9LCB0b2tlbik7CgogIGF3YWl0IHBhZ2UuZ290bygnaHR0cHM6Ly9zaW5jaGF0LmRlbHFoaS5jb20vd29ya3NwYWNlL29wZW5zaW4tY2hhdCcsIHsgd2FpdFVudGlsOiAnbmV0d29ya2lkbGUnIH0pOwogIGF3YWl0IHBhZ2Uud2FpdEZvclRpbWVvdXQoNTAwMCk7CgogIC8vIFVzZSB0eXBlKCkgaW5zdGVhZCBvZiBmaWxsKCkgdG8gdHJpZ2dlciBSZWFjdCBvbkNoYW5nZQogIGNvbnN0IHRleHRhcmVhID0gcGFnZS5sb2NhdG9yKCcjcHJpbWFyeS1wcm9tcHQtaW5wdXQnKTsKICBhd2FpdCB0ZXh0YXJlYS5jbGljaygpOwogIGF3YWl0IHRleHRhcmVhLnR5cGUoJ1dhcyBpc3QgMisyPycsIHsgZGVsYXk6IDUwIH0pOwogIGF3YWl0IHBhZ2Uud2FpdEZvclRpbWVvdXQoNTAwKTsKICAKICAvLyBWZXJpZnkgdGhlIHZhbHVlIGlzIHNldAogIGNvbnN0IGlucHV0VmFsdWUgPSBhd2FpdCBwYWdlLmV2YWx1YXRlKCgpID0+IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdwcmltYXJ5LXByb21wdC1pbnB1dCcpPy52YWx1ZSk7CiAgY29uc29sZS5sb2coJ0lucHV0IHZhbHVlIGFmdGVyIHR5cGluZzonLCBKU09OLnN0cmluZ2lmeShpbnB1dFZhbHVlKSk7CiAgCiAgLy8gUHJlc3MgRW50ZXIgdG8gc3VibWl0CiAgYXdhaXQgdGV4dGFyZWEucHJlc3MoJ0VudGVyJyk7CiAgY29uc29sZS5sb2coJ0VudGVyIHByZXNzZWQnKTsKICAKICAvLyBXYWl0IGZvciByZXNwb25zZSAtIGNoZWNrIGV2ZXJ5IHNlY29uZAogIGxldCBmb3VuZFJlc3BvbnNlID0gZmFsc2U7CiAgZm9yIChsZXQgaSA9IDA7IGkgPCA2MDsgaSsrKSB7CiAgICBhd2FpdCBwYWdlLndhaXRGb3JUaW1lb3V0KDEwMDApOwogICAgY29uc3QgY2hhdENvbnRlbnQgPSBhd2FpdCBwYWdlLmV2YWx1YXRlKCgpID0+IHsKICAgICAgY29uc3Qgc2Nyb2xsZXIgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKCdbZGF0YS10ZXN0aWQ9InZpcnR1b3NvLXNjcm9sbGVyIl0nKTsKICAgICAgaWYgKCFzY3JvbGxlcikgcmV0dXJuIHsgaXRlbXM6IDAsIHRleHQ6ICcnIH07CiAgICAgIGNvbnN0IGFsbFRleHQgPSBzY3JvbGxlci5pbm5lclRleHQgfHwgJyc7CiAgICAgIC8vIENoZWNrIGZvciBuZXcgbWVzc2FnZSAiMisyIiBvciByZXNwb25zZSBjb250YWluaW5nICI0IgogICAgICByZXR1cm4gewogICAgICAgIGl0ZW1zOiBzY3JvbGxlci5jaGlsZHJlbi5sZW5ndGgsCiAgICAgICAgdGV4dDogYWxsVGV4dC5zdWJzdHJpbmcoMCwgNTAwKSwKICAgICAgICBoYXNOZXdNc2c6IGFsbFRleHQuaW5jbHVkZXMoJzIrMicpLAogICAgICAgIGhhc1Jlc3BvbnNlOiBhbGxUZXh0LmluY2x1ZGVzKCd2aWVyJykgfHwgKGFsbFRleHQuaW5jbHVkZXMoJzQnKSAmJiAhYWxsVGV4dC5pbmNsdWRlcygnMTc4MScpKQogICAgICB9OwogICAgfSk7CiAgICAKICAgIGlmIChpICUgNSA9PT0gMCB8fCBjaGF0Q29udGVudC5oYXNOZXdNc2cgfHwgY2hhdENvbnRlbnQuaGFzUmVzcG9uc2UpIHsKICAgICAgY29uc29sZS5sb2coYFske2krMX1zXSBpdGVtcz0ke2NoYXRDb250ZW50Lml0ZW1zfSBoYXNOZXdNc2c9JHtjaGF0Q29udGVudC5oYXNOZXdNc2d9IGhhc1Jlc3BvbnNlPSR7Y2hhdENvbnRlbnQuaGFzUmVzcG9uc2V9YCk7CiAgICB9CiAgICBpZiAoY2hhdENvbnRlbnQuaGFzTmV3TXNnICYmIGNoYXRDb250ZW50Lmhhc1Jlc3BvbnNlKSB7CiAgICAgIGZvdW5kUmVzcG9uc2UgPSB0cnVlOwogICAgICBjb25zb2xlLmxvZyhgWyR7aSsxfXNdIFJFU1BPTlNFIEZPVU5EIWApOwogICAgICBjb25zb2xlLmxvZygnQ2hhdCB0ZXh0OicsIGNoYXRDb250ZW50LnRleHQuc3Vic3RyaW5nKDAsIDMwMCkpOwogICAgICBicmVhazsKICAgIH0KICB9CiAgCiAgaWYgKCFmb3VuZFJlc3BvbnNlKSB7CiAgICBjb25zb2xlLmxvZygnTm8gcmVzcG9uc2UgZm91bmQgYWZ0ZXIgNjBzJyk7CiAgICAvLyBHZXQgZnVsbCBjaGF0IHRleHQKICAgIGNvbnN0IGZpbmFsVGV4dCA9IGF3YWl0IHBhZ2UuZXZhbHVhdGUoKCkgPT4gewogICAgICBjb25zdCBzY3JvbGxlciA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJ1tkYXRhLXRlc3RpZD0idmlydHVvc28tc2Nyb2xsZXIiXScpOwogICAgICByZXR1cm4gc2Nyb2xsZXI/LmlubmVyVGV4dD8uc3Vic3RyaW5nKDAsIDEwMDApIHx8ICdOTyBTQ1JPTExFUic7CiAgICB9KTsKICAgIGNvbnNvbGUubG9nKCdGaW5hbCBjaGF0IHRleHQ6JywgZmluYWxUZXh0KTsKICB9CiAgCiAgYXdhaXQgcGFnZS5zY3JlZW5zaG90KHsgcGF0aDogJy90bXAvb3NjaGF0LXRlc3RzLzAxLWNoYXQtZmluYWwucG5nJywgZnVsbFBhZ2U6IHRydWUgfSk7CiAgY29uc29sZS5sb2coJ1xuQVBJIENBTExTOicsIGFwaUNhbGxzKTsKICBjb25zb2xlLmxvZygnXG5FUlJPUlM6JywgZXJyb3JzKTsKICBhd2FpdCBicm93c2VyLmNsb3NlKCk7Cn0pKCk7Cg==
+// SPDX-License-Identifier: MIT
+const { chromium } = require('playwright');
+
+(async () => {
+  const browser = await chromium.launch({ headless: true });
+  const page = await browser.newPage();
+  const errors = [];
+  const apiCalls = [];
+  
+  page.on('console', msg => { if (msg.type() === 'error') errors.push(`CONSOLE: ${msg.text().substring(0, 500)}`); });
+  page.on('pageerror', err => errors.push(`PAGE_ERROR: ${err.message.substring(0, 500)}\n${err.stack?.substring(0, 800)}`));
+  page.on('request', req => {
+    const url = req.url();
+    if (url.includes('stream-chat') || url.includes('/chats')) {
+      apiCalls.push(`REQ: ${req.method()} ${url.substring(url.indexOf('/api/'))}`);
+    }
+  });
+  page.on('response', resp => {
+    const url = resp.url();
+    if (url.includes('stream-chat')) {
+      apiCalls.push(`RESP: ${resp.status()} ${url.substring(url.indexOf('/api/'))}`);
+    }
+  });
+
+  const resp = await page.request.post('https://sinchat.delqhi.com/api/request-token', { data: { username: 'admin', password: '' } });
+  const { token } = await resp.json();
+  await page.addInitScript((t) => {
+    localStorage.setItem('opensin_authToken', t);
+    localStorage.setItem('opensin_user', JSON.stringify({ username: 'admin', role: 'admin' }));
+    localStorage.setItem('opensin_theme', 'dark');
+    localStorage.setItem('i18nextLng', 'en');
+  }, token);
+
+  await page.goto('https://sinchat.delqhi.com/workspace/opensin-chat', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(5000);
+
+  // Use type() instead of fill() to trigger React onChange
+  const textarea = page.locator('#primary-prompt-input');
+  await textarea.click();
+  await textarea.type('Was ist 2+2?', { delay: 50 });
+  await page.waitForTimeout(500);
+  
+  // Verify the value is set
+  const inputValue = await page.evaluate(() => document.getElementById('primary-prompt-input')?.value);
+  console.log('Input value after typing:', JSON.stringify(inputValue));
+  
+  // Press Enter to submit
+  await textarea.press('Enter');
+  console.log('Enter pressed');
+  
+  // Wait for response - check every second
+  let foundResponse = false;
+  for (let i = 0; i < 60; i++) {
+    await page.waitForTimeout(1000);
+    const chatContent = await page.evaluate(() => {
+      const scroller = document.querySelector('[data-testid="virtuoso-scroller"]');
+      if (!scroller) return { items: 0, text: '' };
+      const allText = scroller.innerText || '';
+      // Check for new message "2+2" or response containing "4"
+      return {
+        items: scroller.children.length,
+        text: allText.substring(0, 500),
+        hasNewMsg: allText.includes('2+2'),
+        hasResponse: allText.includes('vier') || (allText.includes('4') && !allText.includes('1781'))
+      };
+    });
+    
+    if (i % 5 === 0 || chatContent.hasNewMsg || chatContent.hasResponse) {
+      console.log(`[${i+1}s] items=${chatContent.items} hasNewMsg=${chatContent.hasNewMsg} hasResponse=${chatContent.hasResponse}`);
+    }
+    if (chatContent.hasNewMsg && chatContent.hasResponse) {
+      foundResponse = true;
+      console.log(`[${i+1}s] RESPONSE FOUND!`);
+      console.log('Chat text:', chatContent.text.substring(0, 300));
+      break;
+    }
+  }
+  
+  if (!foundResponse) {
+    console.log('No response found after 60s');
+    // Get full chat text
+    const finalText = await page.evaluate(() => {
+      const scroller = document.querySelector('[data-testid="virtuoso-scroller"]');
+      return scroller?.innerText?.substring(0, 1000) || 'NO SCROLLER';
+    });
+    console.log('Final chat text:', finalText);
+  }
+  
+  await page.screenshot({ path: '/tmp/oschat-tests/01-chat-final.png', fullPage: true });
+  console.log('\nAPI CALLS:', apiCalls);
+  console.log('\nERRORS:', errors);
+  await browser.close();
+})();

@@ -1,1 +1,190 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVApjb25zdCB7IGNocm9taXVtIH0gPSByZXF1aXJlKCdwbGF5d3JpZ2h0Jyk7Cgphc3luYyBmdW5jdGlvbiBsb2dpbkFuZFNldHVwKCkgewogIGNvbnN0IGJyb3dzZXIgPSBhd2FpdCBjaHJvbWl1bS5sYXVuY2goeyBoZWFkbGVzczogdHJ1ZSB9KTsKICBjb25zdCBwYWdlID0gYXdhaXQgYnJvd3Nlci5uZXdQYWdlKCk7CiAgY29uc3QgZXJyb3JzID0gW107CiAgcGFnZS5vbignY29uc29sZScsIG1zZyA9PiB7IGlmIChtc2cudHlwZSgpID09PSAnZXJyb3InKSBlcnJvcnMucHVzaChgQ09OU09MRTogJHttc2cudGV4dCgpLnN1YnN0cmluZygwLCAzMDApfWApOyB9KTsKICBwYWdlLm9uKCdwYWdlZXJyb3InLCBlcnIgPT4gZXJyb3JzLnB1c2goYFBBR0VfRVJST1I6ICR7ZXJyLm1lc3NhZ2Uuc3Vic3RyaW5nKDAsIDMwMCl9YCkpOwoKICBjb25zdCByZXNwID0gYXdhaXQgcGFnZS5yZXF1ZXN0LnBvc3QoJ2h0dHBzOi8vc2luY2hhdC5kZWxxaGkuY29tL2FwaS9yZXF1ZXN0LXRva2VuJywgeyBkYXRhOiB7IHVzZXJuYW1lOiAnYWRtaW4nLCBwYXNzd29yZDogJycgfSB9KTsKICBjb25zdCB7IHRva2VuIH0gPSBhd2FpdCByZXNwLmpzb24oKTsKICBhd2FpdCBwYWdlLmFkZEluaXRTY3JpcHQoKHQpID0+IHsKICAgIGxvY2FsU3RvcmFnZS5zZXRJdGVtKCdvcGVuc2luX2F1dGhUb2tlbicsIHQpOwogICAgbG9jYWxTdG9yYWdlLnNldEl0ZW0oJ29wZW5zaW5fdXNlcicsIEpTT04uc3RyaW5naWZ5KHsgdXNlcm5hbWU6ICdhZG1pbicsIHJvbGU6ICdhZG1pbicgfSkpOwogICAgbG9jYWxTdG9yYWdlLnNldEl0ZW0oJ29wZW5zaW5fdGhlbWUnLCAnZGFyaycpOwogICAgbG9jYWxTdG9yYWdlLnNldEl0ZW0oJ2kxOG5leHRMbmcnLCAnZW4nKTsKICB9LCB0b2tlbik7CiAgcmV0dXJuIHsgYnJvd3NlciwgcGFnZSwgZXJyb3JzLCB0b2tlbiB9Owp9CgovLyBUZXN0IDItNTogTWVzc2FnZSBhY3Rpb25zIChwaW4sIGRlbGV0ZSwgY29weSwgZmVlZGJhY2spIG9uIGV4aXN0aW5nIG1lc3NhZ2VzCmFzeW5jIGZ1bmN0aW9uIHRlc3RNZXNzYWdlQWN0aW9ucygpIHsKICBjb25zdCB7IGJyb3dzZXIsIHBhZ2UsIGVycm9ycyB9ID0gYXdhaXQgbG9naW5BbmRTZXR1cCgpOwogIHRyeSB7CiAgICBhd2FpdCBwYWdlLmdvdG8oJ2h0dHBzOi8vc2luY2hhdC5kZWxxaGkuY29tL3dvcmtzcGFjZS9vcGVuc2luLWNoYXQnLCB7IHdhaXRVbnRpbDogJ25ldHdvcmtpZGxlJyB9KTsKICAgIGF3YWl0IHBhZ2Uud2FpdEZvclRpbWVvdXQoNTAwMCk7CgogICAgLy8gRmluZCBtZXNzYWdlIGFjdGlvbiBidXR0b25zIGJ5IGhvdmVyaW5nIG92ZXIgbWVzc2FnZXMKICAgIGNvbnN0IG1lc3NhZ2VJbmZvID0gYXdhaXQgcGFnZS5ldmFsdWF0ZSgoKSA9PiB7CiAgICAgIGNvbnN0IHNjcm9sbGVyID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvcignW2RhdGEtdGVzdGlkPSJ2aXJ0dW9zby1zY3JvbGxlciJdJyk7CiAgICAgIGlmICghc2Nyb2xsZXIpIHJldHVybiB7IGVycm9yOiAnbm8gc2Nyb2xsZXInIH07CiAgICAgIAogICAgICAvLyBHZXQgYWxsIG1lc3NhZ2UgY29udGFpbmVycwogICAgICBjb25zdCBhbGxCdXR0b25zID0gc2Nyb2xsZXIucXVlcnlTZWxlY3RvckFsbCgnYnV0dG9uJyk7CiAgICAgIGNvbnN0IGJ1dHRvbnMgPSBbXTsKICAgICAgZm9yIChjb25zdCBidG4gb2YgYWxsQnV0dG9ucykgewogICAgICAgIGNvbnN0IGFyaWEgPSBidG4uZ2V0QXR0cmlidXRlKCdhcmlhLWxhYmVsJykgfHwgJyc7CiAgICAgICAgY29uc3QgdGl0bGUgPSBidG4uZ2V0QXR0cmlidXRlKCd0aXRsZScpIHx8ICcnOwogICAgICAgIGNvbnN0IHRleHQgPSBidG4uaW5uZXJUZXh0Py5zdWJzdHJpbmcoMCwgMzApIHx8ICcnOwogICAgICAgIGNvbnN0IHBhcmVudCA9IGJ0bi5jbG9zZXN0KCdbY2xhc3MqPSJncm91cCJdJyk7CiAgICAgICAgaWYgKGFyaWEgfHwgdGl0bGUgfHwgdGV4dCkgewogICAgICAgICAgYnV0dG9ucy5wdXNoKHsgYXJpYSwgdGl0bGUsIHRleHQ6IHRleHQucmVwbGFjZSgvXG4vZywgJyAnKSwgdmlzaWJsZTogYnRuLm9mZnNldFBhcmVudCAhPT0gbnVsbCB9KTsKICAgICAgICB9CiAgICAgIH0KICAgICAgcmV0dXJuIHsgYnV0dG9uQ291bnQ6IGJ1dHRvbnMubGVuZ3RoLCBidXR0b25zOiBidXR0b25zLnNsaWNlKDAsIDQwKSB9OwogICAgfSk7CiAgICBjb25zb2xlLmxvZygnVEVTVCAyLTUgKE1lc3NhZ2UgQWN0aW9ucyk6Jyk7CiAgICBjb25zb2xlLmxvZygnQnV0dG9ucyBmb3VuZDonLCBtZXNzYWdlSW5mby5idXR0b25Db3VudCk7CiAgICBjb25zb2xlLmxvZygnQnV0dG9uczonLCBKU09OLnN0cmluZ2lmeShtZXNzYWdlSW5mby5idXR0b25zPy5zbGljZSgwLCAyMCksIG51bGwsIDIpKTsKCiAgICAvLyBUcnkgaG92ZXJpbmcgb3ZlciB0aGUgbGFzdCBhc3Npc3RhbnQgbWVzc2FnZSB0byByZXZlYWwgYWN0aW9uIGJ1dHRvbnMKICAgIGNvbnN0IGxhc3RNc2cgPSBwYWdlLmxvY2F0b3IoJ1tkYXRhLXRlc3RpZD0idmlydHVvc28tc2Nyb2xsZXIiXSA+IGRpdiA+IGRpdicpLmxhc3QoKTsKICAgIGlmIChhd2FpdCBsYXN0TXNnLmNvdW50KCkgPiAwKSB7CiAgICAgIGF3YWl0IGxhc3RNc2cuaG92ZXIoKTsKICAgICAgYXdhaXQgcGFnZS53YWl0Rm9yVGltZW91dCgxMDAwKTsKICAgICAgYXdhaXQgcGFnZS5zY3JlZW5zaG90KHsgcGF0aDogJy90bXAvb3NjaGF0LXRlc3RzLzAyLWhvdmVyLW1lc3NhZ2UucG5nJyB9KTsKICAgICAgCiAgICAgIC8vIEdldCBidXR0b25zIGFmdGVyIGhvdmVyCiAgICAgIGNvbnN0IGhvdmVyQnV0dG9ucyA9IGF3YWl0IHBhZ2UuZXZhbHVhdGUoKCkgPT4gewogICAgICAgIGNvbnN0IHNjcm9sbGVyID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvcignW2RhdGEtdGVzdGlkPSJ2aXJ0dW9zby1zY3JvbGxlciJdJyk7CiAgICAgICAgY29uc3QgdmlzaWJsZUJ1dHRvbnMgPSBbXTsKICAgICAgICBjb25zdCBhbGxCdG5zID0gc2Nyb2xsZXI/LnF1ZXJ5U2VsZWN0b3JBbGwoJ2J1dHRvbicpIHx8IFtdOwogICAgICAgIGZvciAoY29uc3QgYnRuIG9mIGFsbEJ0bnMpIHsKICAgICAgICAgIGlmIChidG4ub2Zmc2V0UGFyZW50ICE9PSBudWxsKSB7CiAgICAgICAgICAgIGNvbnN0IGFyaWEgPSBidG4uZ2V0QXR0cmlidXRlKCdhcmlhLWxhYmVsJykgfHwgJyc7CiAgICAgICAgICAgIGNvbnN0IHRpdGxlID0gYnRuLmdldEF0dHJpYnV0ZSgndGl0bGUnKSB8fCAnJzsKICAgICAgICAgICAgY29uc3QgdGV4dCA9IGJ0bi5pbm5lclRleHQ/LnN1YnN0cmluZygwLCAzMCkgfHwgJyc7CiAgICAgICAgICAgIGNvbnN0IHN2ZyA9IGJ0bi5xdWVyeVNlbGVjdG9yKCdzdmcnKT8uZ2V0QXR0cmlidXRlKCdkYXRhLWljb24nKSB8fCAnJzsKICAgICAgICAgICAgaWYgKGFyaWEgfHwgdGl0bGUgfHwgc3ZnKSB7CiAgICAgICAgICAgICAgdmlzaWJsZUJ1dHRvbnMucHVzaCh7IGFyaWEsIHRpdGxlLCB0ZXh0OiB0ZXh0LnJlcGxhY2UoL1xuL2csJyAnKSwgc3ZnIH0pOwogICAgICAgICAgICB9CiAgICAgICAgICB9CiAgICAgICAgfQogICAgICAgIHJldHVybiB2aXNpYmxlQnV0dG9uczsKICAgICAgfSk7CiAgICAgIGNvbnNvbGUubG9nKCdWaXNpYmxlIGJ1dHRvbnMgYWZ0ZXIgaG92ZXI6JywgSlNPTi5zdHJpbmdpZnkoaG92ZXJCdXR0b25zLCBudWxsLCAyKSk7CiAgICB9CiAgICAKICAgIGNvbnNvbGUubG9nKCdFcnJvcnM6JywgZXJyb3JzLmZpbHRlcihlID0+ICFlLmluY2x1ZGVzKCdmb250JykpKTsKICAgIGF3YWl0IGJyb3dzZXIuY2xvc2UoKTsKICB9IGNhdGNoKGUpIHsgY29uc29sZS5sb2coJ0VSUk9SOicsIGUubWVzc2FnZSk7IGF3YWl0IGJyb3dzZXIuY2xvc2UoKTsgfQp9CgovLyBUZXN0IDYtODogV29ya3NwYWNlIHNldHRpbmdzCmFzeW5jIGZ1bmN0aW9uIHRlc3RXb3Jrc3BhY2VTZXR0aW5ncygpIHsKICBjb25zdCB7IGJyb3dzZXIsIHBhZ2UsIGVycm9ycyB9ID0gYXdhaXQgbG9naW5BbmRTZXR1cCgpOwogIHRyeSB7CiAgICAvLyBOYXZpZ2F0ZSB0byB3b3Jrc3BhY2Ugc2V0dGluZ3MKICAgIGF3YWl0IHBhZ2UuZ290bygnaHR0cHM6Ly9zaW5jaGF0LmRlbHFoaS5jb20vd29ya3NwYWNlL29wZW5zaW4tY2hhdC9zZXR0aW5ncy9jaGF0LXNldHRpbmdzJywgeyB3YWl0VW50aWw6ICduZXR3b3JraWRsZScgfSk7CiAgICBhd2FpdCBwYWdlLndhaXRGb3JUaW1lb3V0KDUwMDApOwogICAgYXdhaXQgcGFnZS5zY3JlZW5zaG90KHsgcGF0aDogJy90bXAvb3NjaGF0LXRlc3RzLzA2LWNoYXQtc2V0dGluZ3MucG5nJywgZnVsbFBhZ2U6IHRydWUgfSk7CiAgICAKICAgIGNvbnN0IHNldHRpbmdzVGV4dCA9IGF3YWl0IHBhZ2UuZXZhbHVhdGUoKCkgPT4gZG9jdW1lbnQuYm9keS5pbm5lclRleHQuc3Vic3RyaW5nKDAsIDMwMDApKTsKICAgIGNvbnNvbGUubG9nKCdcblRFU1QgNi04IChXb3Jrc3BhY2UgU2V0dGluZ3MpOicpOwogICAgY29uc29sZS5sb2coJ1NldHRpbmdzIHBhZ2UgdGV4dCAoZmlyc3QgMTAwMCk6Jywgc2V0dGluZ3NUZXh0LnN1YnN0cmluZygwLCAxMDAwKSk7CiAgICAKICAgIC8vIEZpbmQgZm9ybSBpbnB1dHMKICAgIGNvbnN0IGlucHV0cyA9IGF3YWl0IHBhZ2UuZXZhbHVhdGUoKCkgPT4gewogICAgICBjb25zdCB0ZXh0YXJlYXMgPSBBcnJheS5mcm9tKGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3JBbGwoJ3RleHRhcmVhJykpOwogICAgICBjb25zdCBpbnB1dHMgPSBBcnJheS5mcm9tKGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3JBbGwoJ2lucHV0JykpOwogICAgICBjb25zdCBzZWxlY3RzID0gQXJyYXkuZnJvbShkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCdzZWxlY3QnKSk7CiAgICAgIGNvbnN0IGJ1dHRvbnMgPSBBcnJheS5mcm9tKGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3JBbGwoJ2J1dHRvbicpKS5maWx0ZXIoYiA9PiBiLm9mZnNldFBhcmVudCAhPT0gbnVsbCk7CiAgICAgIHJldHVybiB7CiAgICAgICAgdGV4dGFyZWFzOiB0ZXh0YXJlYXMubWFwKHQgPT4gKHsgaWQ6IHQuaWQsIHBsYWNlaG9sZGVyOiB0LnBsYWNlaG9sZGVyLCB2YWx1ZTogdC52YWx1ZT8uc3Vic3RyaW5nKDAsIDUwKSwgdmlzaWJsZTogdC5vZmZzZXRQYXJlbnQgIT09IG51bGwgfSkpLAogICAgICAgIGlucHV0czogaW5wdXRzLm1hcChpID0+ICh7IGlkOiBpLmlkLCB0eXBlOiBpLnR5cGUsIHZhbHVlOiBpLnZhbHVlPy5zdWJzdHJpbmcoMCwgNTApLCBuYW1lOiBpLm5hbWUsIHZpc2libGU6IGkub2Zmc2V0UGFyZW50ICE9PSBudWxsIH0pKSwKICAgICAgICBzZWxlY3RzOiBzZWxlY3RzLm1hcChzID0+ICh7IGlkOiBzLmlkLCB2YWx1ZTogcy52YWx1ZSwgb3B0aW9uczogcy5vcHRpb25zLmxlbmd0aCwgdmlzaWJsZTogcy5vZmZzZXRQYXJlbnQgIT09IG51bGwgfSkpLAogICAgICAgIGJ1dHRvbnM6IGJ1dHRvbnMubWFwKGIgPT4gKHsgdGV4dDogYi5pbm5lclRleHQ/LnN1YnN0cmluZygwLCAzMCksIHR5cGU6IGIudHlwZSB9KSkKICAgICAgfTsKICAgIH0pOwogICAgY29uc29sZS5sb2coJ0Zvcm0gZWxlbWVudHM6JywgSlNPTi5zdHJpbmdpZnkoaW5wdXRzLCBudWxsLCAyKSk7CiAgICAKICAgIGNvbnNvbGUubG9nKCdFcnJvcnM6JywgZXJyb3JzLmZpbHRlcihlID0+ICFlLmluY2x1ZGVzKCdmb250JykpKTsKICAgIGF3YWl0IGJyb3dzZXIuY2xvc2UoKTsKICB9IGNhdGNoKGUpIHsgY29uc29sZS5sb2coJ0VSUk9SOicsIGUubWVzc2FnZSk7IGF3YWl0IGJyb3dzZXIuY2xvc2UoKTsgfQp9CgovLyBUZXN0IDktMTA6IFdvcmtzcGFjZSBjcmVhdGUvZGVsZXRlCmFzeW5jIGZ1bmN0aW9uIHRlc3RXb3Jrc3BhY2VDcmVhdGVEZWxldGUoKSB7CiAgY29uc3QgeyBicm93c2VyLCBwYWdlLCBlcnJvcnMgfSA9IGF3YWl0IGxvZ2luQW5kU2V0dXAoKTsKICB0cnkgewogICAgYXdhaXQgcGFnZS5nb3RvKCdodHRwczovL3NpbmNoYXQuZGVscWhpLmNvbS8nLCB7IHdhaXRVbnRpbDogJ25ldHdvcmtpZGxlJyB9KTsKICAgIGF3YWl0IHBhZ2Uud2FpdEZvclRpbWVvdXQoMzAwMCk7CiAgICAKICAgIC8vIExvb2sgZm9yIG5ldyB3b3Jrc3BhY2UgYnV0dG9uCiAgICBjb25zdCBuZXdXc0luZm8gPSBhd2FpdCBwYWdlLmV2YWx1YXRlKCgpID0+IHsKICAgICAgY29uc3QgYnV0dG9ucyA9IEFycmF5LmZyb20oZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbCgnYnV0dG9uJykpOwogICAgICBjb25zdCBsaW5rcyA9IEFycmF5LmZyb20oZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbCgnYScpKTsKICAgICAgcmV0dXJuIHsKICAgICAgICBidXR0b25zOiBidXR0b25zLmZpbHRlcihiID0+IGIub2Zmc2V0UGFyZW50ICE9PSBudWxsKS5tYXAoYiA9PiAoewogICAgICAgICAgdGV4dDogYi5pbm5lclRleHQ/LnN1YnN0cmluZygwLCA1MCksCiAgICAgICAgICBhcmlhOiBiLmdldEF0dHJpYnV0ZSgnYXJpYS1sYWJlbCcpIHx8ICcnLAogICAgICAgICAgdGl0bGU6IGIuZ2V0QXR0cmlidXRlKCd0aXRsZScpIHx8ICcnCiAgICAgICAgfSkpLmZpbHRlcihiID0+IGIudGV4dCB8fCBiLmFyaWEpLAogICAgICAgIGxpbmtzOiBsaW5rcy5maWx0ZXIobCA9PiBsLm9mZnNldFBhcmVudCAhPT0gbnVsbCkubWFwKGwgPT4gKHsKICAgICAgICAgIHRleHQ6IGwuaW5uZXJUZXh0Py5zdWJzdHJpbmcoMCwgNTApLAogICAgICAgICAgaHJlZjogbC5ocmVmPy5zdWJzdHJpbmcoMCwgODApCiAgICAgICAgfSkpLmZpbHRlcihsID0+IGwudGV4dCB8fCBsLmhyZWYpLnNsaWNlKDAsIDIwKQogICAgICB9OwogICAgfSk7CiAgICBjb25zb2xlLmxvZygnXG5URVNUIDktMTAgKFdvcmtzcGFjZSBDcmVhdGUvRGVsZXRlKTonKTsKICAgIGNvbnNvbGUubG9nKCdCdXR0b25zOicsIEpTT04uc3RyaW5naWZ5KG5ld1dzSW5mby5idXR0b25zLnNsaWNlKDAsIDE1KSwgbnVsbCwgMikpOwogICAgCiAgICBjb25zb2xlLmxvZygnRXJyb3JzOicsIGVycm9ycy5maWx0ZXIoZSA9PiAhZS5pbmNsdWRlcygnZm9udCcpKSk7CiAgICBhd2FpdCBicm93c2VyLmNsb3NlKCk7CiAgfSBjYXRjaChlKSB7IGNvbnNvbGUubG9nKCdFUlJPUjonLCBlLm1lc3NhZ2UpOyBhd2FpdCBicm93c2VyLmNsb3NlKCk7IH0KfQoKLy8gVGVzdCAxMTogQ2hhdCBtb2RlIHN3aXRjaAphc3luYyBmdW5jdGlvbiB0ZXN0Q2hhdE1vZGUoKSB7CiAgY29uc3QgeyBicm93c2VyLCBwYWdlLCBlcnJvcnMgfSA9IGF3YWl0IGxvZ2luQW5kU2V0dXAoKTsKICB0cnkgewogICAgYXdhaXQgcGFnZS5nb3RvKCdodHRwczovL3NpbmNoYXQuZGVscWhpLmNvbS93b3Jrc3BhY2Uvb3BlbnNpbi1jaGF0JywgeyB3YWl0VW50aWw6ICduZXR3b3JraWRsZScgfSk7CiAgICBhd2FpdCBwYWdlLndhaXRGb3JUaW1lb3V0KDUwMDApOwogICAgCiAgICAvLyBMb29rIGZvciBjaGF0IG1vZGUgc2VsZWN0b3IKICAgIGNvbnN0IG1vZGVJbmZvID0gYXdhaXQgcGFnZS5ldmFsdWF0ZSgoKSA9PiB7CiAgICAgIGNvbnN0IGFsbEVsZW1lbnRzID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbCgnKicpOwogICAgICBjb25zdCByZXN1bHRzID0gW107CiAgICAgIGZvciAoY29uc3QgZWwgb2YgYWxsRWxlbWVudHMpIHsKICAgICAgICBjb25zdCB0ZXh0ID0gZWwuaW5uZXJUZXh0IHx8ICcnOwogICAgICAgIGlmICgodGV4dC5pbmNsdWRlcygnY2hhdCcpIHx8IHRleHQuaW5jbHVkZXMoJ0NoYXQnKSB8fCB0ZXh0LmluY2x1ZGVzKCdhdXRvbWF0aWMnKSB8fCB0ZXh0LmluY2x1ZGVzKCdBdXRvbWF0aWMnKSB8fCB0ZXh0LmluY2x1ZGVzKCdtb2RlJykgfHwgdGV4dC5pbmNsdWRlcygnTW9kZScpKSAKICAgICAgICAgICAgJiYgZWwuY2hpbGRyZW4ubGVuZ3RoIDwgNSAmJiBlbC5vZmZzZXRQYXJlbnQgIT09IG51bGwpIHsKICAgICAgICAgIHJlc3VsdHMucHVzaCh7CiAgICAgICAgICAgIHRhZzogZWwudGFnTmFtZSwKICAgICAgICAgICAgdGV4dDogdGV4dC5zdWJzdHJpbmcoMCwgODApLnJlcGxhY2UoL1xuL2csICcgJyksCiAgICAgICAgICAgIGNsYXNzTmFtZTogZWwuY2xhc3NOYW1lPy5zdWJzdHJpbmc/LigwLCA2MCkgfHwgJycKICAgICAgICAgIH0pOwogICAgICAgIH0KICAgICAgfQogICAgICByZXR1cm4gcmVzdWx0cy5zbGljZSgwLCAyMCk7CiAgICB9KTsKICAgIGNvbnNvbGUubG9nKCdcblRFU1QgMTEgKENoYXQgTW9kZSk6Jyk7CiAgICBjb25zb2xlLmxvZygnTW9kZS1yZWxhdGVkIGVsZW1lbnRzOicsIEpTT04uc3RyaW5naWZ5KG1vZGVJbmZvLCBudWxsLCAyKSk7CiAgICAKICAgIGNvbnNvbGUubG9nKCdFcnJvcnM6JywgZXJyb3JzLmZpbHRlcihlID0+ICFlLmluY2x1ZGVzKCdmb250JykpKTsKICAgIGF3YWl0IGJyb3dzZXIuY2xvc2UoKTsKICB9IGNhdGNoKGUpIHsgY29uc29sZS5sb2coJ0VSUk9SOicsIGUubWVzc2FnZSk7IGF3YWl0IGJyb3dzZXIuY2xvc2UoKTsgfQp9CgovLyBSdW4gYWxsIHRlc3RzIGluIHBhcmFsbGVsCihhc3luYyAoKSA9PiB7CiAgYXdhaXQgUHJvbWlzZS5hbGwoWwogICAgdGVzdE1lc3NhZ2VBY3Rpb25zKCksCiAgICB0ZXN0V29ya3NwYWNlU2V0dGluZ3MoKSwKICAgIHRlc3RXb3Jrc3BhY2VDcmVhdGVEZWxldGUoKSwKICAgIHRlc3RDaGF0TW9kZSgpLAogIF0pOwogIGNvbnNvbGUubG9nKCdcbi0tLSBBTEwgVEVTVFMgQ09NUExFVEUgLS0tJyk7Cn0pKCk7Cg==
+// SPDX-License-Identifier: MIT
+const { chromium } = require('playwright');
+
+async function loginAndSetup() {
+  const browser = await chromium.launch({ headless: true });
+  const page = await browser.newPage();
+  const errors = [];
+  page.on('console', msg => { if (msg.type() === 'error') errors.push(`CONSOLE: ${msg.text().substring(0, 300)}`); });
+  page.on('pageerror', err => errors.push(`PAGE_ERROR: ${err.message.substring(0, 300)}`));
+
+  const resp = await page.request.post('https://sinchat.delqhi.com/api/request-token', { data: { username: 'admin', password: '' } });
+  const { token } = await resp.json();
+  await page.addInitScript((t) => {
+    localStorage.setItem('opensin_authToken', t);
+    localStorage.setItem('opensin_user', JSON.stringify({ username: 'admin', role: 'admin' }));
+    localStorage.setItem('opensin_theme', 'dark');
+    localStorage.setItem('i18nextLng', 'en');
+  }, token);
+  return { browser, page, errors, token };
+}
+
+// Test 2-5: Message actions (pin, delete, copy, feedback) on existing messages
+async function testMessageActions() {
+  const { browser, page, errors } = await loginAndSetup();
+  try {
+    await page.goto('https://sinchat.delqhi.com/workspace/opensin-chat', { waitUntil: 'networkidle' });
+    await page.waitForTimeout(5000);
+
+    // Find message action buttons by hovering over messages
+    const messageInfo = await page.evaluate(() => {
+      const scroller = document.querySelector('[data-testid="virtuoso-scroller"]');
+      if (!scroller) return { error: 'no scroller' };
+      
+      // Get all message containers
+      const allButtons = scroller.querySelectorAll('button');
+      const buttons = [];
+      for (const btn of allButtons) {
+        const aria = btn.getAttribute('aria-label') || '';
+        const title = btn.getAttribute('title') || '';
+        const text = btn.innerText?.substring(0, 30) || '';
+        const parent = btn.closest('[class*="group"]');
+        if (aria || title || text) {
+          buttons.push({ aria, title, text: text.replace(/\n/g, ' '), visible: btn.offsetParent !== null });
+        }
+      }
+      return { buttonCount: buttons.length, buttons: buttons.slice(0, 40) };
+    });
+    console.log('TEST 2-5 (Message Actions):');
+    console.log('Buttons found:', messageInfo.buttonCount);
+    console.log('Buttons:', JSON.stringify(messageInfo.buttons?.slice(0, 20), null, 2));
+
+    // Try hovering over the last assistant message to reveal action buttons
+    const lastMsg = page.locator('[data-testid="virtuoso-scroller"] > div > div').last();
+    if (await lastMsg.count() > 0) {
+      await lastMsg.hover();
+      await page.waitForTimeout(1000);
+      await page.screenshot({ path: '/tmp/oschat-tests/02-hover-message.png' });
+      
+      // Get buttons after hover
+      const hoverButtons = await page.evaluate(() => {
+        const scroller = document.querySelector('[data-testid="virtuoso-scroller"]');
+        const visibleButtons = [];
+        const allBtns = scroller?.querySelectorAll('button') || [];
+        for (const btn of allBtns) {
+          if (btn.offsetParent !== null) {
+            const aria = btn.getAttribute('aria-label') || '';
+            const title = btn.getAttribute('title') || '';
+            const text = btn.innerText?.substring(0, 30) || '';
+            const svg = btn.querySelector('svg')?.getAttribute('data-icon') || '';
+            if (aria || title || svg) {
+              visibleButtons.push({ aria, title, text: text.replace(/\n/g,' '), svg });
+            }
+          }
+        }
+        return visibleButtons;
+      });
+      console.log('Visible buttons after hover:', JSON.stringify(hoverButtons, null, 2));
+    }
+    
+    console.log('Errors:', errors.filter(e => !e.includes('font')));
+    await browser.close();
+  } catch(e) { console.log('ERROR:', e.message); await browser.close(); }
+}
+
+// Test 6-8: Workspace settings
+async function testWorkspaceSettings() {
+  const { browser, page, errors } = await loginAndSetup();
+  try {
+    // Navigate to workspace settings
+    await page.goto('https://sinchat.delqhi.com/workspace/opensin-chat/settings/chat-settings', { waitUntil: 'networkidle' });
+    await page.waitForTimeout(5000);
+    await page.screenshot({ path: '/tmp/oschat-tests/06-chat-settings.png', fullPage: true });
+    
+    const settingsText = await page.evaluate(() => document.body.innerText.substring(0, 3000));
+    console.log('\nTEST 6-8 (Workspace Settings):');
+    console.log('Settings page text (first 1000):', settingsText.substring(0, 1000));
+    
+    // Find form inputs
+    const inputs = await page.evaluate(() => {
+      const textareas = Array.from(document.querySelectorAll('textarea'));
+      const inputs = Array.from(document.querySelectorAll('input'));
+      const selects = Array.from(document.querySelectorAll('select'));
+      const buttons = Array.from(document.querySelectorAll('button')).filter(b => b.offsetParent !== null);
+      return {
+        textareas: textareas.map(t => ({ id: t.id, placeholder: t.placeholder, value: t.value?.substring(0, 50), visible: t.offsetParent !== null })),
+        inputs: inputs.map(i => ({ id: i.id, type: i.type, value: i.value?.substring(0, 50), name: i.name, visible: i.offsetParent !== null })),
+        selects: selects.map(s => ({ id: s.id, value: s.value, options: s.options.length, visible: s.offsetParent !== null })),
+        buttons: buttons.map(b => ({ text: b.innerText?.substring(0, 30), type: b.type }))
+      };
+    });
+    console.log('Form elements:', JSON.stringify(inputs, null, 2));
+    
+    console.log('Errors:', errors.filter(e => !e.includes('font')));
+    await browser.close();
+  } catch(e) { console.log('ERROR:', e.message); await browser.close(); }
+}
+
+// Test 9-10: Workspace create/delete
+async function testWorkspaceCreateDelete() {
+  const { browser, page, errors } = await loginAndSetup();
+  try {
+    await page.goto('https://sinchat.delqhi.com/', { waitUntil: 'networkidle' });
+    await page.waitForTimeout(3000);
+    
+    // Look for new workspace button
+    const newWsInfo = await page.evaluate(() => {
+      const buttons = Array.from(document.querySelectorAll('button'));
+      const links = Array.from(document.querySelectorAll('a'));
+      return {
+        buttons: buttons.filter(b => b.offsetParent !== null).map(b => ({
+          text: b.innerText?.substring(0, 50),
+          aria: b.getAttribute('aria-label') || '',
+          title: b.getAttribute('title') || ''
+        })).filter(b => b.text || b.aria),
+        links: links.filter(l => l.offsetParent !== null).map(l => ({
+          text: l.innerText?.substring(0, 50),
+          href: l.href?.substring(0, 80)
+        })).filter(l => l.text || l.href).slice(0, 20)
+      };
+    });
+    console.log('\nTEST 9-10 (Workspace Create/Delete):');
+    console.log('Buttons:', JSON.stringify(newWsInfo.buttons.slice(0, 15), null, 2));
+    
+    console.log('Errors:', errors.filter(e => !e.includes('font')));
+    await browser.close();
+  } catch(e) { console.log('ERROR:', e.message); await browser.close(); }
+}
+
+// Test 11: Chat mode switch
+async function testChatMode() {
+  const { browser, page, errors } = await loginAndSetup();
+  try {
+    await page.goto('https://sinchat.delqhi.com/workspace/opensin-chat', { waitUntil: 'networkidle' });
+    await page.waitForTimeout(5000);
+    
+    // Look for chat mode selector
+    const modeInfo = await page.evaluate(() => {
+      const allElements = document.querySelectorAll('*');
+      const results = [];
+      for (const el of allElements) {
+        const text = el.innerText || '';
+        if ((text.includes('chat') || text.includes('Chat') || text.includes('automatic') || text.includes('Automatic') || text.includes('mode') || text.includes('Mode')) 
+            && el.children.length < 5 && el.offsetParent !== null) {
+          results.push({
+            tag: el.tagName,
+            text: text.substring(0, 80).replace(/\n/g, ' '),
+            className: el.className?.substring?.(0, 60) || ''
+          });
+        }
+      }
+      return results.slice(0, 20);
+    });
+    console.log('\nTEST 11 (Chat Mode):');
+    console.log('Mode-related elements:', JSON.stringify(modeInfo, null, 2));
+    
+    console.log('Errors:', errors.filter(e => !e.includes('font')));
+    await browser.close();
+  } catch(e) { console.log('ERROR:', e.message); await browser.close(); }
+}
+
+// Run all tests in parallel
+(async () => {
+  await Promise.all([
+    testMessageActions(),
+    testWorkspaceSettings(),
+    testWorkspaceCreateDelete(),
+    testChatMode(),
+  ]);
+  console.log('\n--- ALL TESTS COMPLETE ---');
+})();

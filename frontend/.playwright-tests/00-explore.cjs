@@ -1,1 +1,49 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVApjb25zdCB7IGNocm9taXVtIH0gPSByZXF1aXJlKCdwbGF5d3JpZ2h0Jyk7CmNvbnN0IGZzID0gcmVxdWlyZSgnZnMnKTsKCihhc3luYyAoKSA9PiB7CiAgY29uc3QgYnJvd3NlciA9IGF3YWl0IGNocm9taXVtLmxhdW5jaCh7IGhlYWRsZXNzOiB0cnVlIH0pOwogIGNvbnN0IHBhZ2UgPSBhd2FpdCBicm93c2VyLm5ld1BhZ2UoKTsKICBjb25zdCBlcnJvcnMgPSBbXTsKICBwYWdlLm9uKCdjb25zb2xlJywgbXNnID0+IHsgaWYgKG1zZy50eXBlKCkgPT09ICdlcnJvcicpIGVycm9ycy5wdXNoKGBDT05TT0xFOiAke21zZy50ZXh0KCl9YCk7IH0pOwogIHBhZ2Uub24oJ3BhZ2VlcnJvcicsIGVyciA9PiBlcnJvcnMucHVzaChgUEFHRV9FUlJPUjogJHtlcnIubWVzc2FnZX1gKSk7CgogIGNvbnN0IHJlc3AgPSBhd2FpdCBwYWdlLnJlcXVlc3QucG9zdCgnaHR0cHM6Ly9zaW5jaGF0LmRlbHFoaS5jb20vYXBpL3JlcXVlc3QtdG9rZW4nLCB7IGRhdGE6IHsgdXNlcm5hbWU6ICdhZG1pbicsIHBhc3N3b3JkOiAnJyB9IH0pOwogIGNvbnN0IHsgdG9rZW4gfSA9IGF3YWl0IHJlc3AuanNvbigpOwogIGF3YWl0IHBhZ2UuYWRkSW5pdFNjcmlwdCgodCkgPT4gewogICAgbG9jYWxTdG9yYWdlLnNldEl0ZW0oJ29wZW5zaW5fYXV0aFRva2VuJywgdCk7CiAgICBsb2NhbFN0b3JhZ2Uuc2V0SXRlbSgnb3BlbnNpbl91c2VyJywgSlNPTi5zdHJpbmdpZnkoeyB1c2VybmFtZTogJ2FkbWluJywgcm9sZTogJ2FkbWluJyB9KSk7CiAgICBsb2NhbFN0b3JhZ2Uuc2V0SXRlbSgnb3BlbnNpbl90aGVtZScsICdkYXJrJyk7CiAgICBsb2NhbFN0b3JhZ2Uuc2V0SXRlbSgnaTE4bmV4dExuZycsICdlbicpOwogIH0sIHRva2VuKTsKCiAgYXdhaXQgcGFnZS5nb3RvKCdodHRwczovL3NpbmNoYXQuZGVscWhpLmNvbS8nLCB7IHdhaXRVbnRpbDogJ25ldHdvcmtpZGxlJyB9KTsKICBhd2FpdCBwYWdlLndhaXRGb3JUaW1lb3V0KDIwMDApOwogIGF3YWl0IHBhZ2Uuc2NyZWVuc2hvdCh7IHBhdGg6ICcvdG1wL29zY2hhdC10ZXN0cy8wMC1ob21lLnBuZycsIGZ1bGxQYWdlOiB0cnVlIH0pOwoKICAvLyBMaXN0IHdvcmtzcGFjZXMgdmlhIEFQSQogIGNvbnN0IHdzUmVzcCA9IGF3YWl0IHBhZ2UucmVxdWVzdC5nZXQoJ2h0dHBzOi8vc2luY2hhdC5kZWxxaGkuY29tL2FwaS92MS93b3Jrc3BhY2VzJywgewogICAgaGVhZGVyczogeyBBdXRob3JpemF0aW9uOiBgQmVhcmVyICR7dG9rZW59YCB9CiAgfSk7CiAgY29uc3Qgd3NEYXRhID0gYXdhaXQgd3NSZXNwLmpzb24oKTsKICBjb25zb2xlLmxvZygnV09SS1NQQUNFUzonLCBKU09OLnN0cmluZ2lmeSh3c0RhdGEsIG51bGwsIDIpKTsKCiAgLy8gR2V0IHRoZSBwYWdlIHRleHQgdG8gdW5kZXJzdGFuZCB0aGUgbGF5b3V0CiAgY29uc3QgYm9keVRleHQgPSBhd2FpdCBwYWdlLmV2YWx1YXRlKCgpID0+IGRvY3VtZW50LmJvZHkuaW5uZXJUZXh0LnN1YnN0cmluZygwLCAyMDAwKSk7CiAgY29uc29sZS5sb2coJ1BBR0UgVEVYVCAoZmlyc3QgMjAwMCBjaGFycyk6XG4nLCBib2R5VGV4dCk7CgogIC8vIExvb2sgZm9yIHdvcmtzcGFjZSBsaW5rcyAvIHNpZGViYXIgaXRlbXMKICBjb25zdCBsaW5rcyA9IGF3YWl0IHBhZ2UuZXZhbHVhdGUoKCkgPT4gewogICAgcmV0dXJuIEFycmF5LmZyb20oZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbCgnYSwgYnV0dG9uJykpLnNsaWNlKDAsIDQwKS5tYXAoZWwgPT4gKHsKICAgICAgdGFnOiBlbC50YWdOYW1lLAogICAgICB0ZXh0OiAoZWwuaW5uZXJUZXh0IHx8ICcnKS5zdWJzdHJpbmcoMCwgNTApLAogICAgICBocmVmOiBlbC5ocmVmIHx8ICcnLAogICAgICBhcmlhOiBlbC5nZXRBdHRyaWJ1dGUoJ2FyaWEtbGFiZWwnKSB8fCAnJwogICAgfSkpOwogIH0pOwogIGNvbnNvbGUubG9nKCdMSU5LUy9CVVRUT05TOicsIEpTT04uc3RyaW5naWZ5KGxpbmtzLCBudWxsLCAyKSk7CgogIGNvbnNvbGUubG9nKCdcbkVSUk9SUzonLCBlcnJvcnMpOwogIGF3YWl0IGJyb3dzZXIuY2xvc2UoKTsKfSkoKTsK
+// SPDX-License-Identifier: MIT
+const { chromium } = require('playwright');
+const fs = require('fs');
+
+(async () => {
+  const browser = await chromium.launch({ headless: true });
+  const page = await browser.newPage();
+  const errors = [];
+  page.on('console', msg => { if (msg.type() === 'error') errors.push(`CONSOLE: ${msg.text()}`); });
+  page.on('pageerror', err => errors.push(`PAGE_ERROR: ${err.message}`));
+
+  const resp = await page.request.post('https://sinchat.delqhi.com/api/request-token', { data: { username: 'admin', password: '' } });
+  const { token } = await resp.json();
+  await page.addInitScript((t) => {
+    localStorage.setItem('opensin_authToken', t);
+    localStorage.setItem('opensin_user', JSON.stringify({ username: 'admin', role: 'admin' }));
+    localStorage.setItem('opensin_theme', 'dark');
+    localStorage.setItem('i18nextLng', 'en');
+  }, token);
+
+  await page.goto('https://sinchat.delqhi.com/', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(2000);
+  await page.screenshot({ path: '/tmp/oschat-tests/00-home.png', fullPage: true });
+
+  // List workspaces via API
+  const wsResp = await page.request.get('https://sinchat.delqhi.com/api/v1/workspaces', {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  const wsData = await wsResp.json();
+  console.log('WORKSPACES:', JSON.stringify(wsData, null, 2));
+
+  // Get the page text to understand the layout
+  const bodyText = await page.evaluate(() => document.body.innerText.substring(0, 2000));
+  console.log('PAGE TEXT (first 2000 chars):\n', bodyText);
+
+  // Look for workspace links / sidebar items
+  const links = await page.evaluate(() => {
+    return Array.from(document.querySelectorAll('a, button')).slice(0, 40).map(el => ({
+      tag: el.tagName,
+      text: (el.innerText || '').substring(0, 50),
+      href: el.href || '',
+      aria: el.getAttribute('aria-label') || ''
+    }));
+  });
+  console.log('LINKS/BUTTONS:', JSON.stringify(links, null, 2));
+
+  console.log('\nERRORS:', errors);
+  await browser.close();
+})();

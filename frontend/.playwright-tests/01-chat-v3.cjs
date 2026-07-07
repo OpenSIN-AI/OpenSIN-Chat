@@ -1,1 +1,85 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVApjb25zdCB7IGNocm9taXVtIH0gPSByZXF1aXJlKCdwbGF5d3JpZ2h0Jyk7CmNvbnN0IGZzID0gcmVxdWlyZSgnZnMnKTsKCihhc3luYyAoKSA9PiB7CiAgY29uc3QgYnJvd3NlciA9IGF3YWl0IGNocm9taXVtLmxhdW5jaCh7IGhlYWRsZXNzOiB0cnVlIH0pOwogIGNvbnN0IHBhZ2UgPSBhd2FpdCBicm93c2VyLm5ld1BhZ2UoKTsKICBjb25zdCBlcnJvcnMgPSBbXTsKICBjb25zdCBzc2VEYXRhID0gW107CiAgCiAgcGFnZS5vbignY29uc29sZScsIG1zZyA9PiB7IGlmIChtc2cudHlwZSgpID09PSAnZXJyb3InKSBlcnJvcnMucHVzaChgQ09OU09MRTogJHttc2cudGV4dCgpLnN1YnN0cmluZygwLCA1MDApfWApOyB9KTsKICBwYWdlLm9uKCdwYWdlZXJyb3InLCBlcnIgPT4gZXJyb3JzLnB1c2goYFBBR0VfRVJST1I6ICR7ZXJyLm1lc3NhZ2Uuc3Vic3RyaW5nKDAsIDUwMCl9XG4ke2Vyci5zdGFjaz8uc3Vic3RyaW5nKDAsIDUwMCl9YCkpOwoKICBjb25zdCByZXNwID0gYXdhaXQgcGFnZS5yZXF1ZXN0LnBvc3QoJ2h0dHBzOi8vc2luY2hhdC5kZWxxaGkuY29tL2FwaS9yZXF1ZXN0LXRva2VuJywgeyBkYXRhOiB7IHVzZXJuYW1lOiAnYWRtaW4nLCBwYXNzd29yZDogJycgfSB9KTsKICBjb25zdCB7IHRva2VuIH0gPSBhd2FpdCByZXNwLmpzb24oKTsKICBhd2FpdCBwYWdlLmFkZEluaXRTY3JpcHQoKHQpID0+IHsKICAgIGxvY2FsU3RvcmFnZS5zZXRJdGVtKCdvcGVuc2luX2F1dGhUb2tlbicsIHQpOwogICAgbG9jYWxTdG9yYWdlLnNldEl0ZW0oJ29wZW5zaW5fdXNlcicsIEpTT04uc3RyaW5naWZ5KHsgdXNlcm5hbWU6ICdhZG1pbicsIHJvbGU6ICdhZG1pbicgfSkpOwogICAgbG9jYWxTdG9yYWdlLnNldEl0ZW0oJ29wZW5zaW5fdGhlbWUnLCAnZGFyaycpOwogICAgbG9jYWxTdG9yYWdlLnNldEl0ZW0oJ2kxOG5leHRMbmcnLCAnZW4nKTsKICB9LCB0b2tlbik7CgogIC8vIEludGVyY2VwdCB0aGUgc3RyZWFtLWNoYXQgcmVzcG9uc2UgdG8gc2VlIHdoYXQgdGhlIHNlcnZlciByZXR1cm5zCiAgYXdhaXQgcGFnZS5yb3V0ZSgnKiovYXBpL3dvcmtzcGFjZS8qL3N0cmVhbS1jaGF0JywgYXN5bmMgKHJvdXRlKSA9PiB7CiAgICBjb25zdCByZXNwb25zZSA9IGF3YWl0IHJvdXRlLmZldGNoKCk7CiAgICBjb25zdCBib2R5ID0gYXdhaXQgcmVzcG9uc2UudGV4dCgpOwogICAgLy8gUGFyc2UgU1NFIGRhdGEKICAgIGNvbnN0IGxpbmVzID0gYm9keS5zcGxpdCgnXG4nKS5maWx0ZXIobCA9PiBsLnN0YXJ0c1dpdGgoJ2RhdGE6JykpOwogICAgZm9yIChjb25zdCBsaW5lIG9mIGxpbmVzKSB7CiAgICAgIGNvbnN0IGRhdGEgPSBsaW5lLnN1YnN0cmluZyg1KS50cmltKCk7CiAgICAgIGlmIChkYXRhKSB7CiAgICAgICAgdHJ5IHsKICAgICAgICAgIGNvbnN0IHBhcnNlZCA9IEpTT04ucGFyc2UoZGF0YSk7CiAgICAgICAgICBzc2VEYXRhLnB1c2goSlNPTi5zdHJpbmdpZnkocGFyc2VkKS5zdWJzdHJpbmcoMCwgMjAwKSk7CiAgICAgICAgfSBjYXRjaCB7CiAgICAgICAgICBzc2VEYXRhLnB1c2goYFJBVzogJHtkYXRhLnN1YnN0cmluZygwLCAyMDApfWApOwogICAgICAgIH0KICAgICAgfQogICAgfQogICAgYXdhaXQgcm91dGUuZnVsZmlsbCh7IHJlc3BvbnNlIH0pOwogIH0pOwoKICAvLyBOYXZpZ2F0ZSB0byBhIGZyZXNoIHdvcmtzcGFjZSAoY3JlYXRlIG5ldyB0aHJlYWQgdmlhIG5ldyBjaGF0KQogIGF3YWl0IHBhZ2UuZ290bygnaHR0cHM6Ly9zaW5jaGF0LmRlbHFoaS5jb20vd29ya3NwYWNlL29wZW5zaW4tY2hhdCcsIHsgd2FpdFVudGlsOiAnbmV0d29ya2lkbGUnIH0pOwogIGF3YWl0IHBhZ2Uud2FpdEZvclRpbWVvdXQoMzAwMCk7CgogIC8vIENsaWNrICJOZXcgQ2hhdCIgdG8gc3RhcnQgZnJlc2gKICBjb25zdCBuZXdDaGF0QnRuID0gcGFnZS5sb2NhdG9yKCdidXR0b24nLCB7IGhhc1RleHQ6ICdOZXcgQ2hhdCcgfSk7CiAgaWYgKGF3YWl0IG5ld0NoYXRCdG4uY291bnQoKSA+IDApIHsKICAgIGF3YWl0IG5ld0NoYXRCdG4uY2xpY2soKTsKICAgIGF3YWl0IHBhZ2Uud2FpdEZvclRpbWVvdXQoMjAwMCk7CiAgICBjb25zb2xlLmxvZygnQ2xpY2tlZCBOZXcgQ2hhdCwgVVJMOicsIHBhZ2UudXJsKCkpOwogIH0KCiAgLy8gVHlwZSBhbmQgc2VuZAogIGNvbnN0IHRleHRhcmVhID0gcGFnZS5sb2NhdG9yKCcjcHJpbWFyeS1wcm9tcHQtaW5wdXQnKTsKICBhd2FpdCB0ZXh0YXJlYS5maWxsKCdXYXMgaXN0IDIrMj8nKTsKICBhd2FpdCBwYWdlLndhaXRGb3JUaW1lb3V0KDUwMCk7CiAgYXdhaXQgdGV4dGFyZWEucHJlc3MoJ0VudGVyJyk7CiAgY29uc29sZS5sb2coJ1NlbnQgbWVzc2FnZS4uLicpOwogIAogIC8vIFdhaXQgZm9yIHJlc3BvbnNlCiAgYXdhaXQgcGFnZS53YWl0Rm9yVGltZW91dCg0NTAwMCk7CiAgCiAgLy8gVGFrZSBzY3JlZW5zaG90CiAgYXdhaXQgcGFnZS5zY3JlZW5zaG90KHsgcGF0aDogJy90bXAvb3NjaGF0LXRlc3RzLzAxLWNoYXQtbmV3dGhyZWFkLnBuZycsIGZ1bGxQYWdlOiB0cnVlIH0pOwogIAogIC8vIEdldCBwYWdlIHRleHQKICBjb25zdCBwYWdlVGV4dCA9IGF3YWl0IHBhZ2UuZXZhbHVhdGUoKCkgPT4gewogICAgY29uc3QgbWFpbiA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJ1tpZD0iY2hhdC1oaXN0b3J5Il0sIFtkYXRhLXRlc3RpZD0idmlydHVvc28tc2Nyb2xsZXIiXSwgbWFpbiwgW3JvbGU9Im1haW4iXScpOwogICAgcmV0dXJuIChtYWluPy5pbm5lclRleHQgfHwgZG9jdW1lbnQuYm9keS5pbm5lclRleHQpLnN1YnN0cmluZygwLCAyMDAwKTsKICB9KTsKICBjb25zb2xlLmxvZygnQ0hBVCBBUkVBIFRFWFQ6JywgcGFnZVRleHQpOwoKICAvLyBDaGVjayBpZiB0aGVyZSdzIGFuIGVycm9yIGJvdW5kYXJ5CiAgY29uc3QgZXJyb3JCb3VuZGFyeSA9IGF3YWl0IHBhZ2UuZXZhbHVhdGUoKCkgPT4gewogICAgY29uc3QgZWwgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKCdbY2xhc3MqPSJlcnJvciJdLCBbY2xhc3MqPSJFcnJvciJdLCBbY2xhc3MqPSJmYWxsYmFjayJdJyk7CiAgICByZXR1cm4gZWwgPyBlbC5pbm5lclRleHQuc3Vic3RyaW5nKDAsIDIwMCkgOiBudWxsOwogIH0pOwogIGNvbnNvbGUubG9nKCdFUlJPUiBCT1VOREFSWTonLCBlcnJvckJvdW5kYXJ5KTsKCiAgY29uc29sZS5sb2coJ1xuU1NFIERBVEEgKGZpcnN0IDE1KTonLCBzc2VEYXRhLnNsaWNlKDAsIDE1KSk7CiAgY29uc29sZS5sb2coJ1xuRVJST1JTOicsIGVycm9ycyk7CiAgYXdhaXQgYnJvd3Nlci5jbG9zZSgpOwp9KSgpOwo=
+// SPDX-License-Identifier: MIT
+const { chromium } = require('playwright');
+const fs = require('fs');
+
+(async () => {
+  const browser = await chromium.launch({ headless: true });
+  const page = await browser.newPage();
+  const errors = [];
+  const sseData = [];
+  
+  page.on('console', msg => { if (msg.type() === 'error') errors.push(`CONSOLE: ${msg.text().substring(0, 500)}`); });
+  page.on('pageerror', err => errors.push(`PAGE_ERROR: ${err.message.substring(0, 500)}\n${err.stack?.substring(0, 500)}`));
+
+  const resp = await page.request.post('https://sinchat.delqhi.com/api/request-token', { data: { username: 'admin', password: '' } });
+  const { token } = await resp.json();
+  await page.addInitScript((t) => {
+    localStorage.setItem('opensin_authToken', t);
+    localStorage.setItem('opensin_user', JSON.stringify({ username: 'admin', role: 'admin' }));
+    localStorage.setItem('opensin_theme', 'dark');
+    localStorage.setItem('i18nextLng', 'en');
+  }, token);
+
+  // Intercept the stream-chat response to see what the server returns
+  await page.route('**/api/workspace/*/stream-chat', async (route) => {
+    const response = await route.fetch();
+    const body = await response.text();
+    // Parse SSE data
+    const lines = body.split('\n').filter(l => l.startsWith('data:'));
+    for (const line of lines) {
+      const data = line.substring(5).trim();
+      if (data) {
+        try {
+          const parsed = JSON.parse(data);
+          sseData.push(JSON.stringify(parsed).substring(0, 200));
+        } catch {
+          sseData.push(`RAW: ${data.substring(0, 200)}`);
+        }
+      }
+    }
+    await route.fulfill({ response });
+  });
+
+  // Navigate to a fresh workspace (create new thread via new chat)
+  await page.goto('https://sinchat.delqhi.com/workspace/opensin-chat', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(3000);
+
+  // Click "New Chat" to start fresh
+  const newChatBtn = page.locator('button', { hasText: 'New Chat' });
+  if (await newChatBtn.count() > 0) {
+    await newChatBtn.click();
+    await page.waitForTimeout(2000);
+    console.log('Clicked New Chat, URL:', page.url());
+  }
+
+  // Type and send
+  const textarea = page.locator('#primary-prompt-input');
+  await textarea.fill('Was ist 2+2?');
+  await page.waitForTimeout(500);
+  await textarea.press('Enter');
+  console.log('Sent message...');
+  
+  // Wait for response
+  await page.waitForTimeout(45000);
+  
+  // Take screenshot
+  await page.screenshot({ path: '/tmp/oschat-tests/01-chat-newthread.png', fullPage: true });
+  
+  // Get page text
+  const pageText = await page.evaluate(() => {
+    const main = document.querySelector('[id="chat-history"], [data-testid="virtuoso-scroller"], main, [role="main"]');
+    return (main?.innerText || document.body.innerText).substring(0, 2000);
+  });
+  console.log('CHAT AREA TEXT:', pageText);
+
+  // Check if there's an error boundary
+  const errorBoundary = await page.evaluate(() => {
+    const el = document.querySelector('[class*="error"], [class*="Error"], [class*="fallback"]');
+    return el ? el.innerText.substring(0, 200) : null;
+  });
+  console.log('ERROR BOUNDARY:', errorBoundary);
+
+  console.log('\nSSE DATA (first 15):', sseData.slice(0, 15));
+  console.log('\nERRORS:', errors);
+  await browser.close();
+})();

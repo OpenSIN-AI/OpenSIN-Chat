@@ -1,1 +1,93 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVApjb25zdCB7IGNocm9taXVtIH0gPSByZXF1aXJlKCdwbGF5d3JpZ2h0Jyk7CmNvbnN0IGZzID0gcmVxdWlyZSgnZnMnKTsKCihhc3luYyAoKSA9PiB7CiAgY29uc3QgYnJvd3NlciA9IGF3YWl0IGNocm9taXVtLmxhdW5jaCh7IGhlYWRsZXNzOiB0cnVlIH0pOwogIGNvbnN0IHBhZ2UgPSBhd2FpdCBicm93c2VyLm5ld1BhZ2UoKTsKICBjb25zdCBlcnJvcnMgPSBbXTsKICBjb25zdCBzc2VDaHVua3MgPSBbXTsKICAKICBwYWdlLm9uKCdjb25zb2xlJywgbXNnID0+IHsgaWYgKG1zZy50eXBlKCkgPT09ICdlcnJvcicpIGVycm9ycy5wdXNoKGBDT05TT0xFOiAke21zZy50ZXh0KCkuc3Vic3RyaW5nKDAsIDUwMCl9YCk7IH0pOwogIHBhZ2Uub24oJ3BhZ2VlcnJvcicsIGVyciA9PiBlcnJvcnMucHVzaChgUEFHRV9FUlJPUjogJHtlcnIubWVzc2FnZS5zdWJzdHJpbmcoMCwgNTAwKX1cbiR7ZXJyLnN0YWNrPy5zdWJzdHJpbmcoMCwgODAwKX1gKSk7CgogIGNvbnN0IHJlc3AgPSBhd2FpdCBwYWdlLnJlcXVlc3QucG9zdCgnaHR0cHM6Ly9zaW5jaGF0LmRlbHFoaS5jb20vYXBpL3JlcXVlc3QtdG9rZW4nLCB7IGRhdGE6IHsgdXNlcm5hbWU6ICdhZG1pbicsIHBhc3N3b3JkOiAnJyB9IH0pOwogIGNvbnN0IHsgdG9rZW4gfSA9IGF3YWl0IHJlc3AuanNvbigpOwogIGF3YWl0IHBhZ2UuYWRkSW5pdFNjcmlwdCgodCkgPT4gewogICAgbG9jYWxTdG9yYWdlLnNldEl0ZW0oJ29wZW5zaW5fYXV0aFRva2VuJywgdCk7CiAgICBsb2NhbFN0b3JhZ2Uuc2V0SXRlbSgnb3BlbnNpbl91c2VyJywgSlNPTi5zdHJpbmdpZnkoeyB1c2VybmFtZTogJ2FkbWluJywgcm9sZTogJ2FkbWluJyB9KSk7CiAgICBsb2NhbFN0b3JhZ2Uuc2V0SXRlbSgnb3BlbnNpbl90aGVtZScsICdkYXJrJyk7CiAgICBsb2NhbFN0b3JhZ2Uuc2V0SXRlbSgnaTE4bmV4dExuZycsICdlbicpOwogIH0sIHRva2VuKTsKCiAgLy8gTmF2aWdhdGUgdG8gd29ya3NwYWNlIHdpdGggZXhpc3RpbmcgY2hhdHMKICBhd2FpdCBwYWdlLmdvdG8oJ2h0dHBzOi8vc2luY2hhdC5kZWxxaGkuY29tL3dvcmtzcGFjZS9vcGVuc2luLWNoYXQnLCB7IHdhaXRVbnRpbDogJ25ldHdvcmtpZGxlJyB9KTsKICBhd2FpdCBwYWdlLndhaXRGb3JUaW1lb3V0KDUwMDApOwoKICAvLyBHZXQgdGhlIHByb21wdCB0ZXh0YXJlYSBhbmQgdmVyaWZ5IGl0J3MgcmVhZHkKICBjb25zdCB0ZXh0YXJlYSA9IHBhZ2UubG9jYXRvcignI3ByaW1hcnktcHJvbXB0LWlucHV0Jyk7CiAgY29uc29sZS5sb2coJ1RleHRhcmVhIGNvdW50OicsIGF3YWl0IHRleHRhcmVhLmNvdW50KCkpOwogIGNvbnNvbGUubG9nKCdUZXh0YXJlYSB2aXNpYmxlOicsIGF3YWl0IHRleHRhcmVhLmlzVmlzaWJsZSgpKTsKICAKICAvLyBUeXBlIG1lc3NhZ2UKICBhd2FpdCB0ZXh0YXJlYS5jbGljaygpOwogIGF3YWl0IHRleHRhcmVhLmZpbGwoJ1dhcyBpc3QgMisyPycpOwogIGF3YWl0IHBhZ2Uud2FpdEZvclRpbWVvdXQoMTAwMCk7CiAgCiAgLy8gVGFrZSBzY3JlZW5zaG90IGJlZm9yZSBzZW5kaW5nCiAgYXdhaXQgcGFnZS5zY3JlZW5zaG90KHsgcGF0aDogJy90bXAvb3NjaGF0LXRlc3RzLzAxLWJlZm9yZS1zZW5kLnBuZycgfSk7CiAgCiAgLy8gU3VibWl0IGJ5IHByZXNzaW5nIEVudGVyCiAgYXdhaXQgdGV4dGFyZWEucHJlc3MoJ0VudGVyJyk7CiAgY29uc29sZS5sb2coJ0VudGVyIHByZXNzZWQgYXQ6JywgbmV3IERhdGUoKS50b0lTT1N0cmluZygpKTsKICAKICAvLyBXYWl0IGFuZCBtb25pdG9yIGZvciByZXNwb25zZQogIGZvciAobGV0IGkgPSAwOyBpIDwgNjA7IGkrKykgewogICAgYXdhaXQgcGFnZS53YWl0Rm9yVGltZW91dCgxMDAwKTsKICAgIAogICAgLy8gQ2hlY2sgZm9yIG5ldyBtZXNzYWdlcyBpbiBjaGF0IGFyZWEKICAgIGNvbnN0IGNoYXRUZXh0ID0gYXdhaXQgcGFnZS5ldmFsdWF0ZSgoKSA9PiB7CiAgICAgIGNvbnN0IHNjcm9sbGVyID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvcignW2RhdGEtdGVzdGlkPSJ2aXJ0dW9zby1zY3JvbGxlciJdJyk7CiAgICAgIGlmICghc2Nyb2xsZXIpIHJldHVybiAnTk9fU0NST0xMRVInOwogICAgICBjb25zdCBpdGVtcyA9IHNjcm9sbGVyLnF1ZXJ5U2VsZWN0b3JBbGwoJ1tkYXRhLXRlc3RpZD0idmlydHVvc28taXRlbSJdJyk7CiAgICAgIHJldHVybiBgSVRFTVM6JHtpdGVtcy5sZW5ndGh9IHwgTEFTVDoke2l0ZW1zW2l0ZW1zLmxlbmd0aC0xXT8uaW5uZXJUZXh0Py5zdWJzdHJpbmcoMCwgMjAwKSB8fCAnZW1wdHknfWA7CiAgICB9KTsKICAgIAogICAgaWYgKGkgJSA1ID09PSAwKSB7CiAgICAgIGNvbnNvbGUubG9nKGBbJHtpKzF9c10gJHtjaGF0VGV4dH1gKTsKICAgIH0KICAgIAogICAgLy8gQ2hlY2sgaWYgIjIrMiIgb3IgIjQiIGFwcGVhcnMgaW4gY2hhdAogICAgaWYgKGNoYXRUZXh0LmluY2x1ZGVzKCcyKzInKSB8fCBjaGF0VGV4dC5pbmNsdWRlcygnNCcpICYmICFjaGF0VGV4dC5pbmNsdWRlcygnTk9fU0NST0xMRVInKSkgewogICAgICBjb25zb2xlLmxvZyhgWyR7aSsxfXNdIEZPVU5EIFJFU1BPTlNFIWApOwogICAgICBicmVhazsKICAgIH0KICB9CiAgCiAgYXdhaXQgcGFnZS53YWl0Rm9yVGltZW91dCgzMDAwKTsKICBhd2FpdCBwYWdlLnNjcmVlbnNob3QoeyBwYXRoOiAnL3RtcC9vc2NoYXQtdGVzdHMvMDEtYWZ0ZXItc2VuZC5wbmcnLCBmdWxsUGFnZTogdHJ1ZSB9KTsKICAKICAvLyBHZXQgZmluYWwgY2hhdCBjb250ZW50CiAgY29uc3QgZmluYWxUZXh0ID0gYXdhaXQgcGFnZS5ldmFsdWF0ZSgoKSA9PiB7CiAgICBjb25zdCBzY3JvbGxlciA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJ1tkYXRhLXRlc3RpZD0idmlydHVvc28tc2Nyb2xsZXIiXScpOwogICAgcmV0dXJuIHNjcm9sbGVyPy5pbm5lclRleHQ/LnN1YnN0cmluZygwLCAyMDAwKSB8fCAnTk8gU0NST0xMRVInOwogIH0pOwogIGNvbnNvbGUubG9nKCdcbkZJTkFMIENIQVQgVEVYVDonLCBmaW5hbFRleHQpOwoKICAvLyBDaGVjayBhbGwgbmV0d29yayByZXF1ZXN0cyBmb3Igc3RyZWFtLWNoYXQKICBjb25zdCBhbGxSZXF1ZXN0cyA9IFtdOwogIHBhZ2Uub24oJ3JlcXVlc3QnLCByZXEgPT4gewogICAgaWYgKHJlcS51cmwoKS5pbmNsdWRlcygnc3RyZWFtLWNoYXQnKSkgewogICAgICBhbGxSZXF1ZXN0cy5wdXNoKGBTVFJFQU1fUkVROiAke3JlcS51cmwoKX1gKTsKICAgIH0KICB9KTsKICBwYWdlLm9uKCdyZXNwb25zZScsIHJlc3AgPT4gewogICAgaWYgKHJlc3AudXJsKCkuaW5jbHVkZXMoJ3N0cmVhbS1jaGF0JykpIHsKICAgICAgYWxsUmVxdWVzdHMucHVzaChgU1RSRUFNX1JFU1A6ICR7cmVzcC5zdGF0dXMoKX0gJHtyZXNwLnVybCgpfWApOwogICAgfQogIH0pOwoKICBjb25zb2xlLmxvZygnXG5TVFJFQU0gUkVRVUVTVFM6JywgYWxsUmVxdWVzdHMpOwogIGNvbnNvbGUubG9nKCdcbkVSUk9SUzonLCBlcnJvcnMpOwogIGF3YWl0IGJyb3dzZXIuY2xvc2UoKTsKfSkoKTsK
+// SPDX-License-Identifier: MIT
+const { chromium } = require('playwright');
+const fs = require('fs');
+
+(async () => {
+  const browser = await chromium.launch({ headless: true });
+  const page = await browser.newPage();
+  const errors = [];
+  const sseChunks = [];
+  
+  page.on('console', msg => { if (msg.type() === 'error') errors.push(`CONSOLE: ${msg.text().substring(0, 500)}`); });
+  page.on('pageerror', err => errors.push(`PAGE_ERROR: ${err.message.substring(0, 500)}\n${err.stack?.substring(0, 800)}`));
+
+  const resp = await page.request.post('https://sinchat.delqhi.com/api/request-token', { data: { username: 'admin', password: '' } });
+  const { token } = await resp.json();
+  await page.addInitScript((t) => {
+    localStorage.setItem('opensin_authToken', t);
+    localStorage.setItem('opensin_user', JSON.stringify({ username: 'admin', role: 'admin' }));
+    localStorage.setItem('opensin_theme', 'dark');
+    localStorage.setItem('i18nextLng', 'en');
+  }, token);
+
+  // Navigate to workspace with existing chats
+  await page.goto('https://sinchat.delqhi.com/workspace/opensin-chat', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(5000);
+
+  // Get the prompt textarea and verify it's ready
+  const textarea = page.locator('#primary-prompt-input');
+  console.log('Textarea count:', await textarea.count());
+  console.log('Textarea visible:', await textarea.isVisible());
+  
+  // Type message
+  await textarea.click();
+  await textarea.fill('Was ist 2+2?');
+  await page.waitForTimeout(1000);
+  
+  // Take screenshot before sending
+  await page.screenshot({ path: '/tmp/oschat-tests/01-before-send.png' });
+  
+  // Submit by pressing Enter
+  await textarea.press('Enter');
+  console.log('Enter pressed at:', new Date().toISOString());
+  
+  // Wait and monitor for response
+  for (let i = 0; i < 60; i++) {
+    await page.waitForTimeout(1000);
+    
+    // Check for new messages in chat area
+    const chatText = await page.evaluate(() => {
+      const scroller = document.querySelector('[data-testid="virtuoso-scroller"]');
+      if (!scroller) return 'NO_SCROLLER';
+      const items = scroller.querySelectorAll('[data-testid="virtuoso-item"]');
+      return `ITEMS:${items.length} | LAST:${items[items.length-1]?.innerText?.substring(0, 200) || 'empty'}`;
+    });
+    
+    if (i % 5 === 0) {
+      console.log(`[${i+1}s] ${chatText}`);
+    }
+    
+    // Check if "2+2" or "4" appears in chat
+    if (chatText.includes('2+2') || chatText.includes('4') && !chatText.includes('NO_SCROLLER')) {
+      console.log(`[${i+1}s] FOUND RESPONSE!`);
+      break;
+    }
+  }
+  
+  await page.waitForTimeout(3000);
+  await page.screenshot({ path: '/tmp/oschat-tests/01-after-send.png', fullPage: true });
+  
+  // Get final chat content
+  const finalText = await page.evaluate(() => {
+    const scroller = document.querySelector('[data-testid="virtuoso-scroller"]');
+    return scroller?.innerText?.substring(0, 2000) || 'NO SCROLLER';
+  });
+  console.log('\nFINAL CHAT TEXT:', finalText);
+
+  // Check all network requests for stream-chat
+  const allRequests = [];
+  page.on('request', req => {
+    if (req.url().includes('stream-chat')) {
+      allRequests.push(`STREAM_REQ: ${req.url()}`);
+    }
+  });
+  page.on('response', resp => {
+    if (resp.url().includes('stream-chat')) {
+      allRequests.push(`STREAM_RESP: ${resp.status()} ${resp.url()}`);
+    }
+  });
+
+  console.log('\nSTREAM REQUESTS:', allRequests);
+  console.log('\nERRORS:', errors);
+  await browser.close();
+})();
