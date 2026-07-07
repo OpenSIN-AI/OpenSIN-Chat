@@ -4,7 +4,7 @@ generator client {
 
 // SQLite is the active datasource for OpenSIN-Chat (matches
 // `server/prisma/migrations/migration_lock.toml` and the runtime
-// `server/storage/openafd.db`). The PostgreSQL block is preserved
+// `server/storage/opensin.db`). The PostgreSQL block is preserved
 // upstream-style for optional future migration.
 // In Prisma 7 the connection URL lives in prisma.config.ts (or the
 // PrismaClient constructor adapter), not in the schema datasource block.
