@@ -10,7 +10,7 @@
 // Docs: server/utils/helpers/updateENV.doc.md
 const consoleLogger = require("../../logger/console.js");
 
-async function dumpENV() {
+function dumpENV() {
   const fs = require("fs");
   const path = require("path");
 
@@ -114,9 +114,9 @@ async function dumpENV() {
 
   const envPath = path.join(__dirname, "../../../.env");
   try {
-    await fs.promises.writeFile(envPath, envResult, { encoding: "utf8", flag: "w" });
+    fs.writeFileSync(envPath, envResult, { encoding: "utf8", flag: "w" });
     try {
-      await fs.promises.chmod(envPath, 0o600);
+      fs.chmodSync(envPath, 0o600);
     } catch (e) {
       consoleLogger.error(`Failed to chmod ${envPath} to 0o600: ${e.message}`);
     }
