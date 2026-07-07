@@ -4,6 +4,7 @@ import paths from "@/utils/paths";
 import useLogo from "@/hooks/useLogo";
 import { House } from "@phosphor-icons/react/dist/csr/House";
 import { List } from "@phosphor-icons/react/dist/csr/List";
+import { CaretLeft } from "@phosphor-icons/react/dist/csr/CaretLeft";
 import { Flask } from "@phosphor-icons/react/dist/csr/Flask";
 import { Gear } from "@phosphor-icons/react/dist/csr/Gear";
 import { UserCircleGear } from "@phosphor-icons/react/dist/csr/UserCircleGear";
@@ -24,6 +25,25 @@ import Option from "./MenuOption";
 import { CanViewChatHistoryProvider } from "../CanViewChatHistory";
 import useAppVersion from "@/hooks/useAppVersion";
 import useSupportEmail from "@/hooks/useSupportEmail";
+
+/**
+ * Prominent "Back to Chat" link shown at the top of the settings sidebar
+ * options list. Gives users a clear, labeled way back to the workspace chat
+ * (previously only the logo/house icon linked home, which was not discoverable).
+ * Visible to every role since anyone in settings may need to return.
+ */
+function BackToChatButton({ t, onClick }: any) {
+  return (
+    <Link
+      to={paths.home()}
+      onClick={onClick}
+      className="flex items-center gap-x-2 mx-3 mb-1 px-3 py-2 rounded-[6px] bg-theme-action-menu-bg hover:bg-theme-action-menu-item-hover text-white text-sm font-medium transition-all duration-300 border border-transparent hover:border-slate-100 hover:border-opacity-50"
+    >
+      <CaretLeft className="h-4 w-4 shrink-0" />
+      {t("settings.backToChat")}
+    </Link>
+  );
+}
 
 export default function SettingsSidebar() {
   const { t } = useTranslation();
@@ -108,6 +128,7 @@ export default function SettingsSidebar() {
               <div className="h-full flex flex-col w-full justify-between pt-4 overflow-y-scroll no-scroll">
                 <div className="h-auto md:sidebar-items">
                   <div className="flex flex-col gap-y-4 pb-[60px] overflow-y-scroll no-scroll">
+                    <BackToChatButton t={t} onClick={() => setShowSidebar(false)} />
                     <SidebarOptions user={user} t={t} />
                     <div className="h-[1.5px] bg-[#3D4147] mx-3 mt-[14px]" />
                     <SupportEmail />

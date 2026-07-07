@@ -772,6 +772,7 @@ const TRANSLATIONS = {
   },
   settings: {
     title: "Instanzeinstellungen",
+    backToChat: "Zurück zum Chat",
     invites: "Einladungen",
     users: "Benutzer",
     workspaces: "Workspaces",

@@ -1208,6 +1208,7 @@ const TRANSLATIONS = {
   },
   settings: {
     title: "Instance Settings",
+    backToChat: "Back to Chat",
     invites: "Invites",
     users: "Users",
     workspaces: "Workspaces",
