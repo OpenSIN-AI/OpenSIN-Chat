@@ -1,1 +1,185 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgewogIGNyZWF0ZUNvbnRleHQsCiAgdXNlQ29udGV4dCwKICB1c2VTdGF0ZSwKICB1c2VFZmZlY3QsCiAgdXNlTWVtbywKICB1c2VDYWxsYmFjaywKfSBmcm9tICJyZWFjdCI7CmltcG9ydCB7IHVzZU1lbW9yaWVzU2lkZWJhciB9IGZyb20gIi4uL0NoYXRTaWRlYmFyIjsKaW1wb3J0IHVzZVVzZXIgZnJvbSAiQC9ob29rcy91c2VVc2VyIjsKaW1wb3J0IHVzZVN5c3RlbVNldHRpbmdzIGZyb20gIkAvaG9va3MvdXNlU3lzdGVtU2V0dGluZ3MiOwppbXBvcnQgdXNlTWVtb3JpZXMgZnJvbSAiQC9ob29rcy91c2VNZW1vcmllcyI7CmltcG9ydCBNZW1vcnkgZnJvbSAiQC9tb2RlbHMvbWVtb3J5IjsKCmV4cG9ydCBjb25zdCBMSU1JVFMgPSB7CiAgd29ya3NwYWNlOiAyMCwKICBnbG9iYWw6IDUsCn07Cgpjb25zdCBNZW1vcmllc0NvbnRleHQgPSBjcmVhdGVDb250ZXh0KG51bGwpOwoKZXhwb3J0IGZ1bmN0aW9uIHVzZU1lbW9yaWVzQ29udGV4dCgpIHsKICBjb25zdCBjdHggPSB1c2VDb250ZXh0KE1lbW9yaWVzQ29udGV4dCk7CiAgaWYgKCFjdHgpIHsKICAgIHRocm93IG5ldyBFcnJvcigidXNlTWVtb3JpZXNDb250ZXh0IG11c3QgYmUgdXNlZCB3aXRoaW4gTWVtb3JpZXNQcm92aWRlciIpOwogIH0KICByZXR1cm4gY3R4Owp9CgpleHBvcnQgZnVuY3Rpb24gTWVtb3JpZXNQcm92aWRlcih7IHdvcmtzcGFjZSwgY2hpbGRyZW4gfSkgewogIGNvbnN0IHsgc2lkZWJhck9wZW4sIGNsb3NlU2lkZWJhciB9ID0gdXNlTWVtb3JpZXNTaWRlYmFyKCk7CiAgY29uc3QgeyB1c2VyIH0gPSB1c2VVc2VyKCk7CiAgY29uc3QgY2FuVG9nZ2xlID0gIXVzZXIgfHwgdXNlcj8ucm9sZSA9PT0gImFkbWluIjsKCiAgY29uc3QgW2FjdGl2ZVRhYiwgc2V0QWN0aXZlVGFiXSA9IHVzZVN0YXRlKCJ3b3Jrc3BhY2UiKTsKICBjb25zdCBbbW9kYWxTdGF0ZSwgc2V0TW9kYWxTdGF0ZV0gPSB1c2VTdGF0ZSh7IG9wZW46IGZhbHNlLCBtb2RlOiAiY3JlYXRlIiB9KTsKICBjb25zdCBbZWRpdGluZ01lbW9yeSwgc2V0RWRpdGluZ01lbW9yeV0gPSB1c2VTdGF0ZShudWxsKTsKICBjb25zdCB7IHNldHRpbmdzLCBsb2FkaW5nOiBzZXR0aW5nc0xvYWRpbmcgfSA9IHVzZVN5c3RlbVNldHRpbmdzKCk7CiAgY29uc3QgW2VuYWJsZWQsIHNldEVuYWJsZWRdID0gdXNlU3RhdGUoZmFsc2UpOwogIGNvbnN0IFthdXRvRXh0cmFjdGlvbiwgc2V0QXV0b0V4dHJhY3Rpb25dID0gdXNlU3RhdGUodHJ1ZSk7CgogIGNvbnN0IHsKICAgIG1lbW9yaWVzLAogICAgaXNMb2FkaW5nOiBtZW1vcmllc0xvYWRpbmcsCiAgICBlcnJvcjogbWVtb3JpZXNFcnJvciwKICAgIHJlZnJlc2g6IHJlZnJlc2hNZW1vcmllcywKICB9ID0gdXNlTWVtb3JpZXMoc2lkZWJhck9wZW4gJiYgZW5hYmxlZCA/IHdvcmtzcGFjZT8uc2x1ZyA6IG51bGwpOwoKICB1c2VFZmZlY3QoKCkgPT4gewogICAgaWYgKHNldHRpbmdzTG9hZGluZykgcmV0dXJuOwogICAgc2V0RW5hYmxlZCghIXNldHRpbmdzPy5NZW1vcnlFbmFibGVkKTsKICAgIHNldEF1dG9FeHRyYWN0aW9uKHNldHRpbmdzPy5NZW1vcnlBdXRvRXh0cmFjdGlvbiAhPT0gZmFsc2UpOwogIH0sIFtzZXR0aW5ncywgc2V0dGluZ3NMb2FkaW5nXSk7CgogIGNvbnN0IGhhbmRsZUNyZWF0ZSA9IHVzZUNhbGxiYWNrKAogICAgYXN5bmMgKGNvbnRlbnQpID0+IHsKICAgICAgY29uc3QgeyBtZW1vcnkgfSA9IGF3YWl0IE1lbW9yeS5jcmVhdGUod29ya3NwYWNlLnNsdWcsIHsKICAgICAgICBjb250ZW50LAogICAgICAgIHNjb3BlOiBhY3RpdmVUYWIsCiAgICAgIH0pOwogICAgICBpZiAobWVtb3J5KSByZWZyZXNoTWVtb3JpZXMoKTsKICAgICAgcmV0dXJuICEhbWVtb3J5OwogICAgfSwKICAgIFt3b3Jrc3BhY2U/LnNsdWcsIGFjdGl2ZVRhYiwgcmVmcmVzaE1lbW9yaWVzXSwKICApOwoKICBjb25zdCBoYW5kbGVEZWxldGUgPSB1c2VDYWxsYmFjaygKICAgIGFzeW5jIChtZW1vcnlJZCkgPT4gewogICAgICBjb25zdCB7IHN1Y2Nlc3MgfSA9IGF3YWl0IE1lbW9yeS5kZWxldGUobWVtb3J5SWQpOwogICAgICBpZiAoc3VjY2VzcykgcmVmcmVzaE1lbW9yaWVzKCk7CiAgICAgIHJldHVybiAhIXN1Y2Nlc3M7CiAgICB9LAogICAgW3JlZnJlc2hNZW1vcmllc10sCiAgKTsKCiAgY29uc3QgaGFuZGxlVXBkYXRlID0gdXNlQ2FsbGJhY2soCiAgICBhc3luYyAobWVtb3J5SWQsIGNvbnRlbnQpID0+IHsKICAgICAgY29uc3QgeyBtZW1vcnkgfSA9IGF3YWl0IE1lbW9yeS51cGRhdGUobWVtb3J5SWQsIHsgY29udGVudCB9KTsKICAgICAgaWYgKG1lbW9yeSkgcmVmcmVzaE1lbW9yaWVzKCk7CiAgICAgIHJldHVybiAhIW1lbW9yeTsKICAgIH0sCiAgICBbcmVmcmVzaE1lbW9yaWVzXSwKICApOwoKICBjb25zdCBoYW5kbGVQcm9tb3RlID0gdXNlQ2FsbGJhY2soCiAgICBhc3luYyAobWVtb3J5SWQpID0+IHsKICAgICAgY29uc3QgeyBtZW1vcnkgfSA9IGF3YWl0IE1lbW9yeS5wcm9tb3RlVG9HbG9iYWwobWVtb3J5SWQpOwogICAgICBpZiAobWVtb3J5KSByZWZyZXNoTWVtb3JpZXMoKTsKICAgICAgcmV0dXJuICEhbWVtb3J5OwogICAgfSwKICAgIFtyZWZyZXNoTWVtb3JpZXNdLAogICk7CgogIGNvbnN0IGhhbmRsZURlbW90ZSA9IHVzZUNhbGxiYWNrKAogICAgYXN5bmMgKG1lbW9yeUlkKSA9PiB7CiAgICAgIGlmICghd29ya3NwYWNlPy5zbHVnKSByZXR1cm4gZmFsc2U7CiAgICAgIGNvbnN0IHsgbWVtb3J5IH0gPSBhd2FpdCBNZW1vcnkuZGVtb3RlVG9Xb3Jrc3BhY2UoCiAgICAgICAgbWVtb3J5SWQsCiAgICAgICAgd29ya3NwYWNlLnNsdWcsCiAgICAgICk7CiAgICAgIGlmIChtZW1vcnkpIHJlZnJlc2hNZW1vcmllcygpOwogICAgICByZXR1cm4gISFtZW1vcnk7CiAgICB9LAogICAgW3dvcmtzcGFjZT8uc2x1ZywgcmVmcmVzaE1lbW9yaWVzXSwKICApOwoKICBjb25zdCBvcGVuQ3JlYXRlTW9kYWwgPSB1c2VDYWxsYmFjaygoKSA9PiB7CiAgICBzZXRFZGl0aW5nTWVtb3J5KG51bGwpOwogICAgc2V0TW9kYWxTdGF0ZSh7IG9wZW46IHRydWUsIG1vZGU6ICJjcmVhdGUiIH0pOwogIH0sIFtdKTsKCiAgY29uc3Qgb3BlbkVkaXRNb2RhbCA9IHVzZUNhbGxiYWNrKChtZW1vcnkpID0+IHsKICAgIHNldEVkaXRpbmdNZW1vcnkobWVtb3J5KTsKICAgIHNldE1vZGFsU3RhdGUoeyBvcGVuOiB0cnVlLCBtb2RlOiAiZWRpdCIgfSk7CiAgfSwgW10pOwoKICBjb25zdCBjbG9zZU1vZGFsID0gdXNlQ2FsbGJhY2soKCkgPT4gewogICAgc2V0TW9kYWxTdGF0ZSh7IG9wZW46IGZhbHNlLCBtb2RlOiAiY3JlYXRlIiB9KTsKICAgIHNldEVkaXRpbmdNZW1vcnkobnVsbCk7CiAgfSwgW10pOwoKICBjb25zdCBhY3RpdmVNZW1vcmllcyA9CiAgICBhY3RpdmVUYWIgPT09ICJ3b3Jrc3BhY2UiID8gbWVtb3JpZXMud29ya3NwYWNlIDogbWVtb3JpZXMuZ2xvYmFsOwoKICBjb25zdCB2YWx1ZSA9IHVzZU1lbW8oCiAgICAoKSA9PiAoewogICAgICB3b3Jrc3BhY2UsCiAgICAgIHNpZGViYXJPcGVuLAogICAgICBjbG9zZVNpZGViYXIsCiAgICAgIGNhblRvZ2dsZSwKICAgICAgbWVtb3JpZXMsCiAgICAgIGFjdGl2ZVRhYiwKICAgICAgc2V0QWN0aXZlVGFiLAogICAgICBhY3RpdmVNZW1vcmllcywKICAgICAgZW5hYmxlZCwKICAgICAgc2V0RW5hYmxlZCwKICAgICAgYXV0b0V4dHJhY3Rpb24sCiAgICAgIHNldEF1dG9FeHRyYWN0aW9uLAogICAgICBsb2FkaW5nRW5hYmxlZDogc2V0dGluZ3NMb2FkaW5nLAogICAgICBtZW1vcmllc0xvYWRpbmcsCiAgICAgIG1lbW9yaWVzRXJyb3IsCiAgICAgIG1vZGFsU3RhdGUsCiAgICAgIGVkaXRpbmdNZW1vcnksCiAgICAgIG9wZW5DcmVhdGVNb2RhbCwKICAgICAgb3BlbkVkaXRNb2RhbCwKICAgICAgY2xvc2VNb2RhbCwKICAgICAgaGFuZGxlQ3JlYXRlLAogICAgICBoYW5kbGVEZWxldGUsCiAgICAgIGhhbmRsZVVwZGF0ZSwKICAgICAgaGFuZGxlUHJvbW90ZSwKICAgICAgaGFuZGxlRGVtb3RlLAogICAgfSksCiAgICBbCiAgICAgIHdvcmtzcGFjZSwKICAgICAgc2lkZWJhck9wZW4sCiAgICAgIGNsb3NlU2lkZWJhciwKICAgICAgY2FuVG9nZ2xlLAogICAgICBtZW1vcmllcywKICAgICAgYWN0aXZlVGFiLAogICAgICBhY3RpdmVNZW1vcmllcywKICAgICAgZW5hYmxlZCwKICAgICAgYXV0b0V4dHJhY3Rpb24sCiAgICAgIHNldHRpbmdzTG9hZGluZywKICAgICAgbWVtb3JpZXNMb2FkaW5nLAogICAgICBtZW1vcmllc0Vycm9yLAogICAgICBtb2RhbFN0YXRlLAogICAgICBlZGl0aW5nTWVtb3J5LAogICAgICBvcGVuQ3JlYXRlTW9kYWwsCiAgICAgIG9wZW5FZGl0TW9kYWwsCiAgICAgIGNsb3NlTW9kYWwsCiAgICAgIGhhbmRsZUNyZWF0ZSwKICAgICAgaGFuZGxlRGVsZXRlLAogICAgICBoYW5kbGVVcGRhdGUsCiAgICAgIGhhbmRsZVByb21vdGUsCiAgICAgIGhhbmRsZURlbW90ZSwKICAgIF0sCiAgKTsKCiAgcmV0dXJuICgKICAgIDxNZW1vcmllc0NvbnRleHQuUHJvdmlkZXIgdmFsdWU9e3ZhbHVlfT4KICAgICAge2NoaWxkcmVufQogICAgPC9NZW1vcmllc0NvbnRleHQuUHJvdmlkZXI+CiAgKTsKfQo=
+// SPDX-License-Identifier: MIT
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+} from "react";
+import { useMemoriesSidebar } from "../ChatSidebar";
+import useUser from "@/hooks/useUser";
+import useSystemSettings from "@/hooks/useSystemSettings";
+import useMemories from "@/hooks/useMemories";
+import Memory from "@/models/memory";
+
+export const LIMITS = {
+  workspace: 20,
+  global: 5,
+};
+
+const MemoriesContext = createContext(null);
+
+export function useMemoriesContext() {
+  const ctx = useContext(MemoriesContext);
+  if (!ctx) {
+    throw new Error("useMemoriesContext must be used within MemoriesProvider");
+  }
+  return ctx;
+}
+
+export function MemoriesProvider({ workspace, children }) {
+  const { sidebarOpen, closeSidebar } = useMemoriesSidebar();
+  const { user } = useUser();
+  const canToggle = !user || user?.role === "admin";
+
+  const [activeTab, setActiveTab] = useState("workspace");
+  const [modalState, setModalState] = useState({ open: false, mode: "create" });
+  const [editingMemory, setEditingMemory] = useState(null);
+  const { settings, loading: settingsLoading } = useSystemSettings();
+  const [enabled, setEnabled] = useState(false);
+  const [autoExtraction, setAutoExtraction] = useState(true);
+
+  const {
+    memories,
+    isLoading: memoriesLoading,
+    error: memoriesError,
+    refresh: refreshMemories,
+  } = useMemories(sidebarOpen && enabled ? workspace?.slug : null);
+
+  useEffect(() => {
+    if (settingsLoading) return;
+    setEnabled(!!settings?.MemoryEnabled);
+    setAutoExtraction(settings?.MemoryAutoExtraction !== false);
+  }, [settings, settingsLoading]);
+
+  const handleCreate = useCallback(
+    async (content) => {
+      const { memory } = await Memory.create(workspace.slug, {
+        content,
+        scope: activeTab,
+      });
+      if (memory) refreshMemories();
+      return !!memory;
+    },
+    [workspace?.slug, activeTab, refreshMemories],
+  );
+
+  const handleDelete = useCallback(
+    async (memoryId) => {
+      const { success } = await Memory.delete(memoryId);
+      if (success) refreshMemories();
+      return !!success;
+    },
+    [refreshMemories],
+  );
+
+  const handleUpdate = useCallback(
+    async (memoryId, content) => {
+      const { memory } = await Memory.update(memoryId, { content });
+      if (memory) refreshMemories();
+      return !!memory;
+    },
+    [refreshMemories],
+  );
+
+  const handlePromote = useCallback(
+    async (memoryId) => {
+      const { memory } = await Memory.promoteToGlobal(memoryId);
+      if (memory) refreshMemories();
+      return !!memory;
+    },
+    [refreshMemories],
+  );
+
+  const handleDemote = useCallback(
+    async (memoryId) => {
+      if (!workspace?.slug) return false;
+      const { memory } = await Memory.demoteToWorkspace(
+        memoryId,
+        workspace.slug,
+      );
+      if (memory) refreshMemories();
+      return !!memory;
+    },
+    [workspace?.slug, refreshMemories],
+  );
+
+  const openCreateModal = useCallback(() => {
+    setEditingMemory(null);
+    setModalState({ open: true, mode: "create" });
+  }, []);
+
+  const openEditModal = useCallback((memory) => {
+    setEditingMemory(memory);
+    setModalState({ open: true, mode: "edit" });
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setModalState({ open: false, mode: "create" });
+    setEditingMemory(null);
+  }, []);
+
+  const activeMemories =
+    activeTab === "workspace" ? memories.workspace : memories.global;
+
+  const value = useMemo(
+    () => ({
+      workspace,
+      sidebarOpen,
+      closeSidebar,
+      canToggle,
+      memories,
+      activeTab,
+      setActiveTab,
+      activeMemories,
+      enabled,
+      setEnabled,
+      autoExtraction,
+      setAutoExtraction,
+      loadingEnabled: settingsLoading,
+      memoriesLoading,
+      memoriesError,
+      modalState,
+      editingMemory,
+      openCreateModal,
+      openEditModal,
+      closeModal,
+      handleCreate,
+      handleDelete,
+      handleUpdate,
+      handlePromote,
+      handleDemote,
+    }),
+    [
+      workspace,
+      sidebarOpen,
+      closeSidebar,
+      canToggle,
+      memories,
+      activeTab,
+      activeMemories,
+      enabled,
+      autoExtraction,
+      settingsLoading,
+      memoriesLoading,
+      memoriesError,
+      modalState,
+      editingMemory,
+      openCreateModal,
+      openEditModal,
+      closeModal,
+      handleCreate,
+      handleDelete,
+      handleUpdate,
+      handlePromote,
+      handleDemote,
+    ],
+  );
+
+  return (
+    <MemoriesContext.Provider value={value}>
+      {children}
+    </MemoriesContext.Provider>
+  );
+}

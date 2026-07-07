@@ -1,1 +1,482 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyB1c2VTdGF0ZSwgdXNlRWZmZWN0LCB1c2VDYWxsYmFjaywgdXNlUmVmIH0gZnJvbSAicmVhY3QiOwppbXBvcnQgeyB1c2VUcmFuc2xhdGlvbiB9IGZyb20gInJlYWN0LWkxOG5leHQiOwppbXBvcnQgeyBYIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL1giOwppbXBvcnQgeyBQbHVzIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL1BsdXMiOwppbXBvcnQgeyBUcmFzaCB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9UcmFzaCI7CmltcG9ydCB7IFB1c2hQaW4gfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvUHVzaFBpbiI7CmltcG9ydCB7IFNoYXJlTmV0d29yayB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9TaGFyZU5ldHdvcmsiOwppbXBvcnQgeyBXYXJuaW5nIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL1dhcm5pbmciOwppbXBvcnQgTm90ZSBmcm9tICJAL21vZGVscy9ub3RlIjsKaW1wb3J0IENoYXRTaWRlYmFyLCB7IHVzZUNoYXRTaWRlYmFyIH0gZnJvbSAiLi4vQ2hhdFNpZGViYXIiOwoKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gTm90ZXBhZFNpZGViYXIoeyB3b3Jrc3BhY2UgfTogYW55KSB7CiAgY29uc3QgeyB0IH0gPSB1c2VUcmFuc2xhdGlvbigpOwogIGNvbnN0IHsgY2xvc2VTaWRlYmFyIH0gPSB1c2VDaGF0U2lkZWJhcigpOwogIGNvbnN0IFtub3Rlcywgc2V0Tm90ZXNdID0gdXNlU3RhdGU8YW55W10+KFtdKTsKICBjb25zdCBbYWN0aXZlTm90ZSwgc2V0QWN0aXZlTm90ZV0gPSB1c2VTdGF0ZTxhbnk+KG51bGwpOwogIGNvbnN0IFtjb250ZW50LCBzZXRDb250ZW50XSA9IHVzZVN0YXRlKCIiKTsKICBjb25zdCBbaXNMb2FkaW5nLCBzZXRJc0xvYWRpbmddID0gdXNlU3RhdGUodHJ1ZSk7CiAgY29uc3QgW2lzU2F2aW5nLCBzZXRJc1NhdmluZ10gPSB1c2VTdGF0ZShmYWxzZSk7CiAgY29uc3QgW2xvYWRFcnJvciwgc2V0TG9hZEVycm9yXSA9IHVzZVN0YXRlPHN0cmluZyB8IG51bGw+KG51bGwpOwogIGNvbnN0IHNhdmVUaW1lclJlZiA9IHVzZVJlZjxhbnk+KG51bGwpOwogIGNvbnN0IHNsdWcgPSB3b3Jrc3BhY2U/LnNsdWc7CgogIGNvbnN0IFtzaGFyZWROb3Rlcywgc2V0U2hhcmVkTm90ZXNdID0gdXNlU3RhdGU8YW55W10+KFtdKTsKICBjb25zdCBbc2hhcmVhYmxlV29ya3NwYWNlcywgc2V0U2hhcmVhYmxlV29ya3NwYWNlc10gPSB1c2VTdGF0ZTxhbnlbXT4oW10pOwogIGNvbnN0IFtzaGFyaW5nTm90ZUlkLCBzZXRTaGFyaW5nTm90ZUlkXSA9IHVzZVN0YXRlPGFueT4obnVsbCk7CiAgY29uc3QgW2FjdGl2ZVNoYXJlZE5vdGUsIHNldEFjdGl2ZVNoYXJlZE5vdGVdID0gdXNlU3RhdGU8YW55PihudWxsKTsKICBjb25zdCBzaGFyZURyb3Bkb3duUmVmID0gdXNlUmVmPGFueT4obnVsbCk7CgogIGNvbnN0IGxvYWROb3RlcyA9IHVzZUNhbGxiYWNrKGFzeW5jICgpID0+IHsKICAgIGlmICghc2x1ZykgcmV0dXJuOwogICAgc2V0TG9hZEVycm9yKG51bGwpOwogICAgdHJ5IHsKICAgICAgY29uc3QgW3Jlc3VsdCwgc2hhcmVkLCB3b3Jrc3BhY2VzXSA9IGF3YWl0IFByb21pc2UuYWxsKFsKICAgICAgICBOb3RlLmZvcldvcmtzcGFjZShzbHVnKSwKICAgICAgICBOb3RlLmdldFNoYXJlZE5vdGVzKHNsdWcpLAogICAgICAgIE5vdGUuZ2V0U2hhcmVhYmxlV29ya3NwYWNlcyhzbHVnKSwKICAgICAgXSk7CiAgICAgIHNldE5vdGVzKHJlc3VsdCk7CiAgICAgIHNldFNoYXJlZE5vdGVzKHNoYXJlZCk7CiAgICAgIHNldFNoYXJlYWJsZVdvcmtzcGFjZXMod29ya3NwYWNlcyk7CiAgICAgIGlmIChyZXN1bHQubGVuZ3RoID4gMCAmJiAhYWN0aXZlTm90ZSkgewogICAgICAgIHNldEFjdGl2ZU5vdGUocmVzdWx0WzBdKTsKICAgICAgICBzZXRDb250ZW50KHJlc3VsdFswXS5jb250ZW50IHx8ICIiKTsKICAgICAgfQogICAgfSBjYXRjaCAoZSkgewogICAgICBzZXRMb2FkRXJyb3IoZSBpbnN0YW5jZW9mIEVycm9yID8gZS5tZXNzYWdlIDogdCgiY29tbW9uLmxvYWRFcnJvciIsICJGZWhsZXIgYmVpbSBMYWRlbiIpKTsKICAgIH0gZmluYWxseSB7CiAgICAgIHNldElzTG9hZGluZyhmYWxzZSk7CiAgICB9CiAgfSwgW3NsdWcsIGFjdGl2ZU5vdGUsIHRdKTsKCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIGxvYWROb3RlcygpOwogIH0sIFtsb2FkTm90ZXNdKTsKCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIHJldHVybiAoKSA9PiB7CiAgICAgIGlmIChzYXZlVGltZXJSZWYuY3VycmVudCkgY2xlYXJUaW1lb3V0KHNhdmVUaW1lclJlZi5jdXJyZW50KTsKICAgIH07CiAgfSwgW10pOwoKICB1c2VFZmZlY3QoKCkgPT4gewogICAgY29uc3QgaGFuZGxlciA9IChlOiBhbnkpID0+IHsKICAgICAgaWYgKAogICAgICAgIHNoYXJlRHJvcGRvd25SZWYuY3VycmVudCAmJgogICAgICAgICFzaGFyZURyb3Bkb3duUmVmLmN1cnJlbnQuY29udGFpbnMoZS50YXJnZXQpCiAgICAgICkgewogICAgICAgIHNldFNoYXJpbmdOb3RlSWQobnVsbCk7CiAgICAgIH0KICAgIH07CiAgICBpZiAoc2hhcmluZ05vdGVJZCAhPT0gbnVsbCkgewogICAgICBkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCJtb3VzZWRvd24iLCBoYW5kbGVyKTsKICAgICAgcmV0dXJuICgpID0+IGRvY3VtZW50LnJlbW92ZUV2ZW50TGlzdGVuZXIoIm1vdXNlZG93biIsIGhhbmRsZXIpOwogICAgfQogIH0sIFtzaGFyaW5nTm90ZUlkXSk7CgogIGNvbnN0IGhhbmRsZU5ld05vdGUgPSBhc3luYyAoKSA9PiB7CiAgICBpZiAoIXNsdWcpIHJldHVybjsKICAgIGNvbnN0IG5vdGUgPSBhd2FpdCBOb3RlLmNyZWF0ZShzbHVnLCB7IGNvbnRlbnQ6ICIiIH0pOwogICAgaWYgKG5vdGUpIHsKICAgICAgc2V0Tm90ZXMoKHByZXYpID0+IFtub3RlLCAuLi5wcmV2XSk7CiAgICAgIHNldEFjdGl2ZU5vdGUobm90ZSk7CiAgICAgIHNldENvbnRlbnQoIiIpOwogICAgfQogIH07CgogIGNvbnN0IGhhbmRsZVNlbGVjdE5vdGUgPSAobm90ZTogYW55KSA9PiB7CiAgICBpZiAoc2F2ZVRpbWVyUmVmLmN1cnJlbnQpIHsKICAgICAgY2xlYXJUaW1lb3V0KHNhdmVUaW1lclJlZi5jdXJyZW50KTsKICAgICAgc2F2ZVRpbWVyUmVmLmN1cnJlbnQgPSBudWxsOwogICAgfQogICAgaWYgKGFjdGl2ZU5vdGUgJiYgYWN0aXZlTm90ZS5pZCAhPT0gbm90ZS5pZCkgewogICAgICBzYXZlTm90ZShhY3RpdmVOb3RlLmlkLCBjb250ZW50KTsKICAgIH0KICAgIHNldEFjdGl2ZVNoYXJlZE5vdGUobnVsbCk7CiAgICBzZXRBY3RpdmVOb3RlKG5vdGUpOwogICAgc2V0Q29udGVudChub3RlLmNvbnRlbnQgfHwgIiIpOwogIH07CgogIGNvbnN0IHNhdmVOb3RlID0gdXNlQ2FsbGJhY2soCiAgICBhc3luYyAoaWQ6IGFueSwgdGV4dDogc3RyaW5nKSA9PiB7CiAgICAgIGlmICghc2x1ZykgcmV0dXJuOwogICAgICBzZXRJc1NhdmluZyh0cnVlKTsKICAgICAgY29uc3QgdXBkYXRlZCA9IGF3YWl0IE5vdGUudXBkYXRlKHNsdWcsIGlkLCB7IGNvbnRlbnQ6IHRleHQgfSk7CiAgICAgIGlmICh1cGRhdGVkKSB7CiAgICAgICAgc2V0Tm90ZXMoKHByZXYpID0+CiAgICAgICAgICBwcmV2Lm1hcCgobikgPT4KICAgICAgICAgICAgbi5pZCA9PT0gaWQKICAgICAgICAgICAgICA/IHsgLi4ubiwgY29udGVudDogdGV4dCwgdXBkYXRlZEF0OiB1cGRhdGVkLnVwZGF0ZWRBdCB9CiAgICAgICAgICAgICAgOiBuLAogICAgICAgICAgKSwKICAgICAgICApOwogICAgICB9CiAgICAgIHNldElzU2F2aW5nKGZhbHNlKTsKICAgIH0sCiAgICBbc2x1Z10sCiAgKTsKCiAgY29uc3QgaGFuZGxlQ29udGVudENoYW5nZSA9IChlOiBhbnkpID0+IHsKICAgIGNvbnN0IHRleHQgPSBlLnRhcmdldC52YWx1ZTsKICAgIHNldENvbnRlbnQodGV4dCk7CiAgICBpZiAoc2F2ZVRpbWVyUmVmLmN1cnJlbnQpIGNsZWFyVGltZW91dChzYXZlVGltZXJSZWYuY3VycmVudCk7CiAgICBzYXZlVGltZXJSZWYuY3VycmVudCA9IHNldFRpbWVvdXQoKCkgPT4gewogICAgICBpZiAoYWN0aXZlTm90ZSkgc2F2ZU5vdGUoYWN0aXZlTm90ZS5pZCwgdGV4dCk7CiAgICB9LCAxNTAwKTsKICB9OwoKICBjb25zdCBoYW5kbGVEZWxldGVOb3RlID0gYXN5bmMgKG5vdGVJZDogYW55KSA9PiB7CiAgICBpZiAoIXNsdWcpIHJldHVybjsKICAgIGNvbnN0IHN1Y2Nlc3MgPSBhd2FpdCBOb3RlLmRlbGV0ZShzbHVnLCBub3RlSWQpOwogICAgaWYgKHN1Y2Nlc3MpIHsKICAgICAgc2V0Tm90ZXMoKHByZXYpID0+IHByZXYuZmlsdGVyKChuKSA9PiBuLmlkICE9PSBub3RlSWQpKTsKICAgICAgaWYgKGFjdGl2ZU5vdGU/LmlkID09PSBub3RlSWQpIHsKICAgICAgICBjb25zdCByZW1haW5pbmcgPSBub3Rlcy5maWx0ZXIoKG4pID0+IG4uaWQgIT09IG5vdGVJZCk7CiAgICAgICAgc2V0QWN0aXZlTm90ZShyZW1haW5pbmdbMF0gfHwgbnVsbCk7CiAgICAgICAgc2V0Q29udGVudChyZW1haW5pbmdbMF0/LmNvbnRlbnQgfHwgIiIpOwogICAgICB9CiAgICB9CiAgfTsKCiAgY29uc3QgaGFuZGxlVG9nZ2xlUGluID0gYXN5bmMgKG5vdGVJZDogYW55LCBjdXJyZW50UGlubmVkOiBhbnkpID0+IHsKICAgIGlmICghc2x1ZykgcmV0dXJuOwogICAgY29uc3QgdXBkYXRlZCA9IGF3YWl0IE5vdGUudXBkYXRlKHNsdWcsIG5vdGVJZCwgeyBwaW5uZWQ6ICFjdXJyZW50UGlubmVkIH0pOwogICAgaWYgKHVwZGF0ZWQpIHsKICAgICAgc2V0Tm90ZXMoKHByZXYpID0+IHsKICAgICAgICBjb25zdCB1cGRhdGVkTm90ZXMgPSBwcmV2Lm1hcCgobikgPT4KICAgICAgICAgIG4uaWQgPT09IG5vdGVJZCA/IHsgLi4ubiwgcGlubmVkOiAhY3VycmVudFBpbm5lZCB9IDogbiwKICAgICAgICApOwogICAgICAgIHJldHVybiB1cGRhdGVkTm90ZXMuc29ydCgKICAgICAgICAgIChhLCBiKSA9PiAoYi5waW5uZWQgPyAxIDogMCkgLSAoYS5waW5uZWQgPyAxIDogMCksCiAgICAgICAgKTsKICAgICAgfSk7CiAgICB9CiAgfTsKCiAgY29uc3QgaGFuZGxlU2hhcmVDbGljayA9IChlOiBhbnksIG5vdGVJZDogYW55KSA9PiB7CiAgICBlLnN0b3BQcm9wYWdhdGlvbigpOwogICAgc2V0U2hhcmluZ05vdGVJZChzaGFyaW5nTm90ZUlkID09PSBub3RlSWQgPyBudWxsIDogbm90ZUlkKTsKICB9OwoKICBjb25zdCBoYW5kbGVTaGFyZVRvV29ya3NwYWNlID0gYXN5bmMgKG5vdGVJZDogYW55LCB0YXJnZXRTbHVnOiBzdHJpbmcpID0+IHsKICAgIGlmICghc2x1ZykgcmV0dXJuOwogICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgTm90ZS5zaGFyZU5vdGUoc2x1Zywgbm90ZUlkLCB0YXJnZXRTbHVnKTsKICAgIGlmIChyZXN1bHQpIHsKICAgICAgc2V0U2hhcmluZ05vdGVJZChudWxsKTsKICAgIH0KICB9OwoKICBjb25zdCBoYW5kbGVTZWxlY3RTaGFyZWROb3RlID0gKG5vdGU6IGFueSkgPT4gewogICAgaWYgKHNhdmVUaW1lclJlZi5jdXJyZW50KSB7CiAgICAgIGNsZWFyVGltZW91dChzYXZlVGltZXJSZWYuY3VycmVudCk7CiAgICAgIHNhdmVUaW1lclJlZi5jdXJyZW50ID0gbnVsbDsKICAgIH0KICAgIGlmIChhY3RpdmVOb3RlKSB7CiAgICAgIHNhdmVOb3RlKGFjdGl2ZU5vdGUuaWQsIGNvbnRlbnQpOwogICAgfQogICAgc2V0QWN0aXZlTm90ZShudWxsKTsKICAgIHNldEFjdGl2ZVNoYXJlZE5vdGUobm90ZSk7CiAgICBzZXRDb250ZW50KG5vdGUuY29udGVudCB8fCAiIik7CiAgfTsKCiAgY29uc3QgaGFuZGxlVW5zaGFyZU5vdGUgPSBhc3luYyAoZTogYW55LCBub3RlSWQ6IGFueSwgc291cmNlU2x1Zzogc3RyaW5nKSA9PiB7CiAgICBlLnN0b3BQcm9wYWdhdGlvbigpOwogICAgaWYgKCFzbHVnKSByZXR1cm47CiAgICBjb25zdCBzdWNjZXNzID0gYXdhaXQgTm90ZS51bnNoYXJlTm90ZShzbHVnLCBub3RlSWQsIHNvdXJjZVNsdWcpOwogICAgaWYgKHN1Y2Nlc3MpIHsKICAgICAgc2V0U2hhcmVkTm90ZXMoKHByZXYpID0+IHByZXYuZmlsdGVyKChuKSA9PiBuLmlkICE9PSBub3RlSWQpKTsKICAgICAgaWYgKGFjdGl2ZVNoYXJlZE5vdGU/LmlkID09PSBub3RlSWQpIHsKICAgICAgICBzZXRBY3RpdmVTaGFyZWROb3RlKG51bGwpOwogICAgICAgIHNldENvbnRlbnQoIiIpOwogICAgICB9CiAgICB9CiAgfTsKCiAgY29uc3QgZm9ybWF0RGF0ZSA9IChkYXRlU3RyOiBhbnkpID0+IHsKICAgIGlmICghZGF0ZVN0cikgcmV0dXJuICIiOwogICAgY29uc3QgZCA9IG5ldyBEYXRlKGRhdGVTdHIpOwogICAgcmV0dXJuIGQudG9Mb2NhbGVEYXRlU3RyaW5nKCJkZS1ERSIsIHsKICAgICAgZGF5OiAiMi1kaWdpdCIsCiAgICAgIG1vbnRoOiAiMi1kaWdpdCIsCiAgICAgIHllYXI6ICJudW1lcmljIiwKICAgIH0pOwogIH07CgogIGNvbnN0IHdvcmRDb3VudCA9IGNvbnRlbnQudHJpbSgpID8gY29udGVudC50cmltKCkuc3BsaXQoL1xzKy8pLmxlbmd0aCA6IDA7CgogIHJldHVybiAoCiAgICA8Q2hhdFNpZGViYXIgaXNPcGVuPXt0cnVlfT4KICAgICAgPGRpdiBjbGFzc05hbWU9InctZnVsbCBoLWZ1bGwgYmctemluYy05MDAgbGlnaHQ6Ymctd2hpdGUgZmxleCBmbGV4LWNvbCBvdmVyZmxvdy1oaWRkZW4iPgogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIHNocmluay0wIGdhcC0yIHAtNCBwYi0yIj4KICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLXN0YXJ0IGp1c3RpZnktYmV0d2VlbiI+CiAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0iZm9udC1tZWRpdW0gdGV4dC1iYXNlIGxlYWRpbmctNiB0ZXh0LXdoaXRlIGxpZ2h0OnRleHQtc2xhdGUtOTAwIj4KICAgICAgICAgICAgICB7dCgiY2hhdF93aW5kb3cubm90ZXBhZCIsICJOb3RpemJsb2NrIil9CiAgICAgICAgICAgIDwvcD4KICAgICAgICAgICAgPGJ1dHRvbgogICAgICAgICAgICAgIG9uQ2xpY2s9e2Nsb3NlU2lkZWJhcn0KICAgICAgICAgICAgICB0eXBlPSJidXR0b24iCiAgICAgICAgICAgICAgY2xhc3NOYW1lPSJ0ZXh0LXdoaXRlLzYwIGxpZ2h0OnRleHQtc2xhdGUtNDAwIGhvdmVyOnRleHQtd2hpdGUgbGlnaHQ6aG92ZXI6dGV4dC1zbGF0ZS05MDAgdHJhbnNpdGlvbi1jb2xvcnMgYm9yZGVyLW5vbmUgYmctdHJhbnNwYXJlbnQgY3Vyc29yLXBvaW50ZXIiCiAgICAgICAgICAgID4KICAgICAgICAgICAgICA8WCBzaXplPXsxNn0gd2VpZ2h0PSJib2xkIiAvPgogICAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICAgIDwvZGl2PgogICAgICAgICAgPGJ1dHRvbgogICAgICAgICAgICBvbkNsaWNrPXtoYW5kbGVOZXdOb3RlfQogICAgICAgICAgICBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIGdhcC14LTEuNSBweC0zIHB5LTEuNSByb3VuZGVkLWxnIGJnLXRoZW1lLWJnLXNlY29uZGFyeSB0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5IGhvdmVyOm9wYWNpdHktODAgdHJhbnNpdGlvbi1vcGFjaXR5IHRleHQtc20gYm9yZGVyIGJvcmRlci10aGVtZS1ib3JkZXIiCiAgICAgICAgICA+CiAgICAgICAgICAgIDxQbHVzIHNpemU9ezE0fSAvPgogICAgICAgICAgICB7dCgiY2hhdF93aW5kb3cubmV3X25vdGUiLCAiTmV1ZSBOb3RpeiIpfQogICAgICAgICAgPC9idXR0b24+CiAgICAgICAgPC9kaXY+CgogICAgICAgIHtpc0xvYWRpbmcgPyAoCiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleC0xIGZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIj4KICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImRvdC1mYWxsaW5nIGxpZ2h0OmludmVydCIgLz4KICAgICAgICAgIDwvZGl2PgogICAgICAgICkgOiBsb2FkRXJyb3IgPyAoCiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleC0xIGZsZXggZmxleC1jb2wgaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIGdhcC0zIHAtNCI+CiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJwLTMgcm91bmRlZC1sZyBiZy1yZWQtOTUwLzQwIGJvcmRlciBib3JkZXItcmVkLTgwMC81MCB0ZXh0LXhzIHRleHQtcmVkLTQwMCBmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMiBtYXgtdy14cyI+CiAgICAgICAgICAgICAgPFdhcm5pbmcgc2l6ZT17MTZ9IHdlaWdodD0iZmlsbCIgY2xhc3NOYW1lPSJmbGV4LXNocmluay0wIiAvPgogICAgICAgICAgICAgIDxzcGFuPnt0KCJjb21tb24ubG9hZEVycm9yIiwgIkZlaGxlciBiZWltIExhZGVuIil9OiB7bG9hZEVycm9yfTwvc3Bhbj4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgIDxidXR0b24KICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiB7CiAgICAgICAgICAgICAgICBzZXRJc0xvYWRpbmcodHJ1ZSk7CiAgICAgICAgICAgICAgICBsb2FkTm90ZXMoKTsKICAgICAgICAgICAgICB9fQogICAgICAgICAgICAgIGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIgZ2FwLXgtMS41IHB4LTMgcHktMS41IHJvdW5kZWQtbGcgYmctdGhlbWUtYmctc2Vjb25kYXJ5IHRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkgaG92ZXI6b3BhY2l0eS04MCB0cmFuc2l0aW9uLW9wYWNpdHkgdGV4dC1zbSBib3JkZXIgYm9yZGVyLXRoZW1lLWJvcmRlciIKICAgICAgICAgICAgPgogICAgICAgICAgICAgIHt0KCJzaWRlYmFyLnJldHJ5IiwgIkVybmV1dCB2ZXJzdWNoZW4iKX0KICAgICAgICAgICAgPC9idXR0b24+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICApIDogbm90ZXMubGVuZ3RoID09PSAwID8gKAogICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXgtMSBmbGV4IGZsZXgtY29sIGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciBnYXAtMiBwLTQiPgogICAgICAgICAgICA8cCBjbGFzc05hbWU9InRleHQtc20gdGV4dC16aW5jLTQwMCBsaWdodDp0ZXh0LXNsYXRlLTUwMCB0ZXh0LWNlbnRlciI+CiAgICAgICAgICAgICAge3QoImNoYXRfd2luZG93Lm5vX25vdGVzIiwgIk5vY2gga2VpbmUgTm90aXplbiB2b3JoYW5kZW4uIil9CiAgICAgICAgICAgIDwvcD4KICAgICAgICAgICAgPGJ1dHRvbgogICAgICAgICAgICAgIG9uQ2xpY2s9e2hhbmRsZU5ld05vdGV9CiAgICAgICAgICAgICAgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBnYXAteC0xLjUgcHgtMyBweS0xLjUgcm91bmRlZC1sZyBiZy10aGVtZS1iZy1zZWNvbmRhcnkgdGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSBob3ZlcjpvcGFjaXR5LTgwIHRyYW5zaXRpb24tb3BhY2l0eSB0ZXh0LXNtIGJvcmRlciBib3JkZXItdGhlbWUtYm9yZGVyIgogICAgICAgICAgICA+CiAgICAgICAgICAgICAgPFBsdXMgc2l6ZT17MTR9IC8+CiAgICAgICAgICAgICAge3QoImNoYXRfd2luZG93LmNyZWF0ZV9maXJzdF9ub3RlIiwgIkVyc3RlIE5vdGl6IGVyc3RlbGxlbiIpfQogICAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICAgIDwvZGl2PgogICAgICAgICkgOiAoCiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LTEgb3ZlcmZsb3ctaGlkZGVuIj4KICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9InctNDggZmxleC1zaHJpbmstMCBib3JkZXItciBib3JkZXItdGhlbWUtYm9yZGVyIG92ZXJmbG93LXktYXV0byBuby1zY3JvbGwiPgogICAgICAgICAgICAgIHtub3Rlcy5tYXAoKG5vdGUpID0+ICgKICAgICAgICAgICAgICAgIDxkaXYKICAgICAgICAgICAgICAgICAga2V5PXtub3RlLmlkfQogICAgICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBoYW5kbGVTZWxlY3ROb3RlKG5vdGUpfQogICAgICAgICAgICAgICAgICBjbGFzc05hbWU9e2Bncm91cCByZWxhdGl2ZSBweC0zIHB5LTIgY3Vyc29yLXBvaW50ZXIgYm9yZGVyLWIgYm9yZGVyLXRoZW1lLWJvcmRlciB0cmFuc2l0aW9uLWNvbG9ycyAkewogICAgICAgICAgICAgICAgICAgIGFjdGl2ZU5vdGU/LmlkID09PSBub3RlLmlkCiAgICAgICAgICAgICAgICAgICAgICA/ICJiZy16aW5jLTcwMCBsaWdodDpiZy1zbGF0ZS0yMDAiCiAgICAgICAgICAgICAgICAgICAgICA6ICJob3ZlcjpiZy16aW5jLTgwMCBsaWdodDpob3ZlcjpiZy1zbGF0ZS0xMDAiCiAgICAgICAgICAgICAgICAgIH1gfQogICAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTEuNSI+CiAgICAgICAgICAgICAgICAgICAge25vdGUucGlubmVkICYmICgKICAgICAgICAgICAgICAgICAgICAgIDxQdXNoUGluCiAgICAgICAgICAgICAgICAgICAgICAgIHNpemU9ezEwfQogICAgICAgICAgICAgICAgICAgICAgICB3ZWlnaHQ9ImZpbGwiCiAgICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSBmbGV4LXNocmluay0wIgogICAgICAgICAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgICAgICAgICApfQogICAgICAgICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0iZmxleC0xIHRleHQteHMgdGV4dC13aGl0ZSBsaWdodDp0ZXh0LXNsYXRlLTkwMCB0cnVuY2F0ZSI+CiAgICAgICAgICAgICAgICAgICAgICB7KG5vdGUuY29udGVudCB8fCAiIikuc2xpY2UoMCwgNDApIHx8CiAgICAgICAgICAgICAgICAgICAgICAgIHQoImNoYXRfd2luZG93LmVtcHR5X25vdGUiLCAiTGVlcmUgTm90aXoiKX0KICAgICAgICAgICAgICAgICAgICA8L3A+CiAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9InRleHQtWzEwcHhdIHRleHQtemluYy00MDAgbGlnaHQ6dGV4dC1zbGF0ZS01MDAgbXQtMC41Ij4KICAgICAgICAgICAgICAgICAgICB7Zm9ybWF0RGF0ZShub3RlLnVwZGF0ZWRBdCl9CiAgICAgICAgICAgICAgICAgIDwvcD4KICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImFic29sdXRlIHRvcC0xIHJpZ2h0LTEgZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTAuNSBvcGFjaXR5LTAgZ3JvdXAtaG92ZXI6b3BhY2l0eS0xMDAgdHJhbnNpdGlvbi1hbGwiPgogICAgICAgICAgICAgICAgICAgIDxidXR0b24KICAgICAgICAgICAgICAgICAgICAgIG9uQ2xpY2s9eyhlKSA9PiBoYW5kbGVTaGFyZUNsaWNrKGUsIG5vdGUuaWQpfQogICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJ0ZXh0LXppbmMtNDAwIGhvdmVyOnRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkgdHJhbnNpdGlvbi1hbGwgYmctdHJhbnNwYXJlbnQgYm9yZGVyLW5vbmUgY3Vyc29yLXBvaW50ZXIgcC0xIgogICAgICAgICAgICAgICAgICAgICAgdGl0bGU9e3QoImNoYXRfd2luZG93LnNoYXJlX25vdGUiLCAiVGVpbGVuIil9CiAgICAgICAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgICAgICAgPFNoYXJlTmV0d29yayBzaXplPXsxMn0gLz4KICAgICAgICAgICAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICAgICAgICAgICAgICA8YnV0dG9uCiAgICAgICAgICAgICAgICAgICAgICBvbkNsaWNrPXsoZSkgPT4gewogICAgICAgICAgICAgICAgICAgICAgICBlLnN0b3BQcm9wYWdhdGlvbigpOwogICAgICAgICAgICAgICAgICAgICAgICBoYW5kbGVEZWxldGVOb3RlKG5vdGUuaWQpOwogICAgICAgICAgICAgICAgICAgICAgfX0KICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0idGV4dC16aW5jLTQwMCBob3Zlcjp0ZXh0LXJlZC00MDAgdHJhbnNpdGlvbi1hbGwgYmctdHJhbnNwYXJlbnQgYm9yZGVyLW5vbmUgY3Vyc29yLXBvaW50ZXIgcC0xIgogICAgICAgICAgICAgICAgICAgID4KICAgICAgICAgICAgICAgICAgICAgIDxUcmFzaCBzaXplPXsxMn0gLz4KICAgICAgICAgICAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICAgIHtzaGFyaW5nTm90ZUlkID09PSBub3RlLmlkICYmICgKICAgICAgICAgICAgICAgICAgICA8ZGl2CiAgICAgICAgICAgICAgICAgICAgICByZWY9e3NoYXJlRHJvcGRvd25SZWZ9CiAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9ImFic29sdXRlIGxlZnQtZnVsbCB0b3AtMCBtbC0xIHotNTAgbWluLXctWzE2MHB4XSBiZy16aW5jLTgwMCBsaWdodDpiZy13aGl0ZSBib3JkZXIgYm9yZGVyLXRoZW1lLWJvcmRlciByb3VuZGVkLWxnIHNoYWRvdy14bCBweS0xIgogICAgICAgICAgICAgICAgICAgICAgb25DbGljaz17KGUpID0+IGUuc3RvcFByb3BhZ2F0aW9uKCl9CiAgICAgICAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJweC0zIHB5LTEgdGV4dC1bMTBweF0gdGV4dC16aW5jLTQwMCBsaWdodDp0ZXh0LXNsYXRlLTUwMCB1cHBlcmNhc2UgdHJhY2tpbmctd2lkZSI+CiAgICAgICAgICAgICAgICAgICAgICAgIHt0KCJjaGF0X3dpbmRvdy5zaGFyZV90byIsICJUZWlsZW4gYW4iKX0KICAgICAgICAgICAgICAgICAgICAgIDwvcD4KICAgICAgICAgICAgICAgICAgICAgIHtzaGFyZWFibGVXb3Jrc3BhY2VzLmxlbmd0aCA9PT0gMCA/ICgKICAgICAgICAgICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJweC0zIHB5LTIgdGV4dC14cyB0ZXh0LXppbmMtNDAwIGxpZ2h0OnRleHQtc2xhdGUtNTAwIj4KICAgICAgICAgICAgICAgICAgICAgICAgICB7dCgKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJjaGF0X3dpbmRvdy5ub19vdGhlcl93b3Jrc3BhY2VzIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJLZWluZSB3ZWl0ZXJlbiBXb3Jrc3BhY2VzIiwKICAgICAgICAgICAgICAgICAgICAgICAgICApfQogICAgICAgICAgICAgICAgICAgICAgICA8L3A+CiAgICAgICAgICAgICAgICAgICAgICApIDogKAogICAgICAgICAgICAgICAgICAgICAgICBzaGFyZWFibGVXb3Jrc3BhY2VzLm1hcCgod3MpID0+ICgKICAgICAgICAgICAgICAgICAgICAgICAgICA8YnV0dG9uCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBrZXk9e3dzLmlkfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaGFuZGxlU2hhcmVUb1dvcmtzcGFjZShub3RlLmlkLCB3cy5zbHVnKQogICAgICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJ3LWZ1bGwgdGV4dC1sZWZ0IHB4LTMgcHktMS41IHRleHQteHMgdGV4dC13aGl0ZSBsaWdodDp0ZXh0LXNsYXRlLTkwMCBob3ZlcjpiZy16aW5jLTcwMCBsaWdodDpob3ZlcjpiZy1zbGF0ZS0xMDAgdHJhbnNpdGlvbi1jb2xvcnMgYmctdHJhbnNwYXJlbnQgYm9yZGVyLW5vbmUgY3Vyc29yLXBvaW50ZXIgdHJ1bmNhdGUiCiAgICAgICAgICAgICAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgICAgICAgICAgICAge3dzLm5hbWV9CiAgICAgICAgICAgICAgICAgICAgICAgICAgPC9idXR0b24+CiAgICAgICAgICAgICAgICAgICAgICAgICkpCiAgICAgICAgICAgICAgICAgICAgICApfQogICAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgICApfQogICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgKSl9CgogICAgICAgICAgICAgIHtzaGFyZWROb3Rlcy5sZW5ndGggPiAwICYmICgKICAgICAgICAgICAgICAgIDw+CiAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJweC0zIHB5LTEuNSBib3JkZXItYiBib3JkZXItdGhlbWUtYm9yZGVyIGJnLXRoZW1lLWJnLXNlY29uZGFyeSI+CiAgICAgICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LVsxMHB4XSB0ZXh0LXppbmMtNDAwIGxpZ2h0OnRleHQtc2xhdGUtNTAwIHVwcGVyY2FzZSB0cmFja2luZy13aWRlIGZvbnQtbWVkaXVtIj4KICAgICAgICAgICAgICAgICAgICAgIHt0KCJjaGF0X3dpbmRvdy5zaGFyZWRfbm90ZXMiLCAiR2V0ZWlsdGUgTm90aXplbiIpfQogICAgICAgICAgICAgICAgICAgIDwvcD4KICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICAgIHtzaGFyZWROb3Rlcy5tYXAoKG5vdGUpID0+ICgKICAgICAgICAgICAgICAgICAgICA8ZGl2CiAgICAgICAgICAgICAgICAgICAgICBrZXk9e2BzaGFyZWQtJHtub3RlLmlkfWB9CiAgICAgICAgICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBoYW5kbGVTZWxlY3RTaGFyZWROb3RlKG5vdGUpfQogICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPXtgZ3JvdXAgcmVsYXRpdmUgcHgtMyBweS0yIGN1cnNvci1wb2ludGVyIGJvcmRlci1iIGJvcmRlci10aGVtZS1ib3JkZXIgdHJhbnNpdGlvbi1jb2xvcnMgJHsKICAgICAgICAgICAgICAgICAgICAgICAgYWN0aXZlU2hhcmVkTm90ZT8uaWQgPT09IG5vdGUuaWQKICAgICAgICAgICAgICAgICAgICAgICAgICA/ICJiZy16aW5jLTcwMCBsaWdodDpiZy1zbGF0ZS0yMDAiCiAgICAgICAgICAgICAgICAgICAgICAgICAgOiAiaG92ZXI6YmctemluYy04MDAgbGlnaHQ6aG92ZXI6Ymctc2xhdGUtMTAwIgogICAgICAgICAgICAgICAgICAgICAgfWB9CiAgICAgICAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIGdhcC0xLjUiPgogICAgICAgICAgICAgICAgICAgICAgICA8U2hhcmVOZXR3b3JrCiAgICAgICAgICAgICAgICAgICAgICAgICAgc2l6ZT17MTB9CiAgICAgICAgICAgICAgICAgICAgICAgICAgd2VpZ2h0PSJmaWxsIgogICAgICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0idGV4dC1wcmltYXJ5LWJ1dHRvbiBmbGV4LXNocmluay0wIgogICAgICAgICAgICAgICAgICAgICAgICAvPgogICAgICAgICAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9ImZsZXgtMSB0ZXh0LXhzIHRleHQtd2hpdGUgbGlnaHQ6dGV4dC1zbGF0ZS05MDAgdHJ1bmNhdGUiPgogICAgICAgICAgICAgICAgICAgICAgICAgIHsobm90ZS5jb250ZW50IHx8ICIiKS5zbGljZSgwLCAzNSkgfHwKICAgICAgICAgICAgICAgICAgICAgICAgICAgIHQoImNoYXRfd2luZG93LmVtcHR5X25vdGUiLCAiTGVlcmUgTm90aXoiKX0KICAgICAgICAgICAgICAgICAgICAgICAgPC9wPgogICAgICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9InRleHQtWzEwcHhdIHRleHQtemluYy00MDAgbGlnaHQ6dGV4dC1zbGF0ZS01MDAgbXQtMC41Ij4KICAgICAgICAgICAgICAgICAgICAgICAge3QoImNoYXRfd2luZG93LmZyb20iLCAidm9uIil9eyIgIn0KICAgICAgICAgICAgICAgICAgICAgICAge25vdGUuc291cmNlX3dvcmtzcGFjZV9uYW1lfQogICAgICAgICAgICAgICAgICAgICAgPC9wPgogICAgICAgICAgICAgICAgICAgICAgPGJ1dHRvbgogICAgICAgICAgICAgICAgICAgICAgICBvbkNsaWNrPXsoZSkgPT4KICAgICAgICAgICAgICAgICAgICAgICAgICBoYW5kbGVVbnNoYXJlTm90ZSgKICAgICAgICAgICAgICAgICAgICAgICAgICAgIGUsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICBub3RlLmlkLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgbm90ZS5zb3VyY2Vfd29ya3NwYWNlX3NsdWcsCiAgICAgICAgICAgICAgICAgICAgICAgICAgKQogICAgICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0iYWJzb2x1dGUgdG9wLTEgcmlnaHQtMSBvcGFjaXR5LTAgZ3JvdXAtaG92ZXI6b3BhY2l0eS0xMDAgdGV4dC16aW5jLTQwMCBob3Zlcjp0ZXh0LXJlZC00MDAgdHJhbnNpdGlvbi1hbGwgYmctdHJhbnNwYXJlbnQgYm9yZGVyLW5vbmUgY3Vyc29yLXBvaW50ZXIgcC0xIgogICAgICAgICAgICAgICAgICAgICAgICB0aXRsZT17dCgiY2hhdF93aW5kb3cudW5zaGFyZSIsICJUZWlsZW4gYXVmaGViZW4iKX0KICAgICAgICAgICAgICAgICAgICAgID4KICAgICAgICAgICAgICAgICAgICAgICAgPFRyYXNoIHNpemU9ezEyfSAvPgogICAgICAgICAgICAgICAgICAgICAgPC9idXR0b24+CiAgICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICAgICkpfQogICAgICAgICAgICAgICAgPC8+CiAgICAgICAgICAgICAgKX0KICAgICAgICAgICAgPC9kaXY+CgogICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleC0xIGZsZXggZmxleC1jb2wgb3ZlcmZsb3ctaGlkZGVuIj4KICAgICAgICAgICAgICB7YWN0aXZlTm90ZSA/ICgKICAgICAgICAgICAgICAgIDw+CiAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWJldHdlZW4gcHgtMyBweS0xLjUgYm9yZGVyLWIgYm9yZGVyLXRoZW1lLWJvcmRlciI+CiAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIGdhcC0yIj4KICAgICAgICAgICAgICAgICAgICAgIDxidXR0b24KICAgICAgICAgICAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4KICAgICAgICAgICAgICAgICAgICAgICAgICBoYW5kbGVUb2dnbGVQaW4oYWN0aXZlTm90ZS5pZCwgYWN0aXZlTm90ZS5waW5uZWQpCiAgICAgICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPXtgYmctdHJhbnNwYXJlbnQgYm9yZGVyLW5vbmUgY3Vyc29yLXBvaW50ZXIgcC0xIHRyYW5zaXRpb24tY29sb3JzICR7CiAgICAgICAgICAgICAgICAgICAgICAgICAgYWN0aXZlTm90ZS5waW5uZWQKICAgICAgICAgICAgICAgICAgICAgICAgICAgID8gInRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkiCiAgICAgICAgICAgICAgICAgICAgICAgICAgICA6ICJ0ZXh0LXppbmMtNTAwIGhvdmVyOnRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkiCiAgICAgICAgICAgICAgICAgICAgICAgIH1gfQogICAgICAgICAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgICAgICAgICA8UHVzaFBpbgogICAgICAgICAgICAgICAgICAgICAgICAgIHNpemU9ezEyfQogICAgICAgICAgICAgICAgICAgICAgICAgIHdlaWdodD17YWN0aXZlTm90ZS5waW5uZWQgPyAiZmlsbCIgOiAicmVndWxhciJ9CiAgICAgICAgICAgICAgICAgICAgICAgIC8+CiAgICAgICAgICAgICAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICAgICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0idGV4dC1bMTBweF0gdGV4dC16aW5jLTQwMCBsaWdodDp0ZXh0LXNsYXRlLTUwMCI+CiAgICAgICAgICAgICAgICAgICAgICAgIHtpc1NhdmluZwogICAgICAgICAgICAgICAgICAgICAgICAgID8gdCgiY2hhdF93aW5kb3cuc2F2aW5nIiwgIlNwZWljaGVybi4uLiIpCiAgICAgICAgICAgICAgICAgICAgICAgICAgOiBgJHt3b3JkQ291bnR9ICR7dCgiY2hhdF93aW5kb3cud29yZHMiLCAiV8O2cnRlciIpfWB9CiAgICAgICAgICAgICAgICAgICAgICA8L3NwYW4+CiAgICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgICA8dGV4dGFyZWEKICAgICAgICAgICAgICAgICAgICB2YWx1ZT17Y29udGVudH0KICAgICAgICAgICAgICAgICAgICBvbkNoYW5nZT17aGFuZGxlQ29udGVudENoYW5nZX0KICAgICAgICAgICAgICAgICAgICBvbkJsdXI9eygpID0+IHsKICAgICAgICAgICAgICAgICAgICAgIGlmIChzYXZlVGltZXJSZWYuY3VycmVudCkgewogICAgICAgICAgICAgICAgICAgICAgICBjbGVhclRpbWVvdXQoc2F2ZVRpbWVyUmVmLmN1cnJlbnQpOwogICAgICAgICAgICAgICAgICAgICAgICBzYXZlVGltZXJSZWYuY3VycmVudCA9IG51bGw7CiAgICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgICBpZiAoYWN0aXZlTm90ZSkgc2F2ZU5vdGUoYWN0aXZlTm90ZS5pZCwgY29udGVudCk7CiAgICAgICAgICAgICAgICAgICAgfX0KICAgICAgICAgICAgICAgICAgICBwbGFjZWhvbGRlcj17dCgKICAgICAgICAgICAgICAgICAgICAgICJjaGF0X3dpbmRvdy5ub3RlX3BsYWNlaG9sZGVyIiwKICAgICAgICAgICAgICAgICAgICAgICJIaWVyIE5vdGl6IHNjaHJlaWJlbi4uLiIsCiAgICAgICAgICAgICAgICAgICAgKX0KICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9ImZsZXgtMSB3LWZ1bGwgYmctdHJhbnNwYXJlbnQgdGV4dC1zbSB0ZXh0LXdoaXRlIGxpZ2h0OnRleHQtc2xhdGUtOTAwIHAtMyBvdXRsaW5lLW5vbmUgcmVzaXplLW5vbmUgcGxhY2Vob2xkZXI6dGV4dC16aW5jLTUwMCIKICAgICAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgICAgIDwvPgogICAgICAgICAgICAgICkgOiBhY3RpdmVTaGFyZWROb3RlID8gKAogICAgICAgICAgICAgICAgPD4KICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktYmV0d2VlbiBweC0zIHB5LTEuNSBib3JkZXItYiBib3JkZXItdGhlbWUtYm9yZGVyIj4KICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTEuNSI+CiAgICAgICAgICAgICAgICAgICAgICA8U2hhcmVOZXR3b3JrIHNpemU9ezEyfSBjbGFzc05hbWU9InRleHQtcHJpbWFyeS1idXR0b24iIC8+CiAgICAgICAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9InRleHQtWzEwcHhdIHRleHQtemluYy00MDAgbGlnaHQ6dGV4dC1zbGF0ZS01MDAiPgogICAgICAgICAgICAgICAgICAgICAgICB7dCgiY2hhdF93aW5kb3cuZnJvbSIsICJ2b24iKX17IiAifQogICAgICAgICAgICAgICAgICAgICAgICB7YWN0aXZlU2hhcmVkTm90ZS5zb3VyY2Vfd29ya3NwYWNlX25hbWV9CiAgICAgICAgICAgICAgICAgICAgICAgIHsiIMK3ICJ9CiAgICAgICAgICAgICAgICAgICAgICAgIHt0KCJjaGF0X3dpbmRvdy5yZWFkX29ubHkiLCAiU2NocmVpYmdlc2Now7x0enQiKX0KICAgICAgICAgICAgICAgICAgICAgIDwvc3Bhbj4KICAgICAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICAgIDx0ZXh0YXJlYQogICAgICAgICAgICAgICAgICAgIHZhbHVlPXtjb250ZW50fQogICAgICAgICAgICAgICAgICAgIHJlYWRPbmx5CiAgICAgICAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9e3QoCiAgICAgICAgICAgICAgICAgICAgICAiY2hhdF93aW5kb3cubm90ZV9wbGFjZWhvbGRlciIsCiAgICAgICAgICAgICAgICAgICAgICAiSGllciBOb3RpeiBzY2hyZWliZW4uLi4iLAogICAgICAgICAgICAgICAgICAgICl9CiAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJmbGV4LTEgdy1mdWxsIGJnLXRyYW5zcGFyZW50IHRleHQtc20gdGV4dC13aGl0ZSBsaWdodDp0ZXh0LXNsYXRlLTkwMCBwLTMgb3V0bGluZS1ub25lIHJlc2l6ZS1ub25lIHBsYWNlaG9sZGVyOnRleHQtemluYy01MDAgY3Vyc29yLWRlZmF1bHQgb3BhY2l0eS03MCIKICAgICAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgICAgIDwvPgogICAgICAgICAgICAgICkgOiAoCiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleC0xIGZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIj4KICAgICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXNtIHRleHQtemluYy00MDAgbGlnaHQ6dGV4dC1zbGF0ZS01MDAiPgogICAgICAgICAgICAgICAgICAgIHt0KAogICAgICAgICAgICAgICAgICAgICAgImNoYXRfd2luZG93LnNlbGVjdF9vcl9jcmVhdGVfbm90ZSIsCiAgICAgICAgICAgICAgICAgICAgICAiTm90aXogYXVzd8OkaGxlbiBvZGVyIGVyc3RlbGxlbiIsCiAgICAgICAgICAgICAgICAgICAgKX0KICAgICAgICAgICAgICAgICAgPC9wPgogICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgKX0KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICApfQogICAgICA8L2Rpdj4KICAgIDwvQ2hhdFNpZGViYXI+CiAgKTsKfQo=
+// SPDX-License-Identifier: MIT
+import { useState, useEffect, useCallback, useRef } from "react";
+import { useTranslation } from "react-i18next";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
+import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
+import { PushPin } from "@phosphor-icons/react/dist/csr/PushPin";
+import { ShareNetwork } from "@phosphor-icons/react/dist/csr/ShareNetwork";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
+import Note from "@/models/note";
+import ChatSidebar, { useChatSidebar } from "../ChatSidebar";
+
+export default function NotepadSidebar({ workspace }: any) {
+  const { t } = useTranslation();
+  const { closeSidebar } = useChatSidebar();
+  const [notes, setNotes] = useState<any[]>([]);
+  const [activeNote, setActiveNote] = useState<any>(null);
+  const [content, setContent] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const saveTimerRef = useRef<any>(null);
+  const slug = workspace?.slug;
+
+  const [sharedNotes, setSharedNotes] = useState<any[]>([]);
+  const [shareableWorkspaces, setShareableWorkspaces] = useState<any[]>([]);
+  const [sharingNoteId, setSharingNoteId] = useState<any>(null);
+  const [activeSharedNote, setActiveSharedNote] = useState<any>(null);
+  const shareDropdownRef = useRef<any>(null);
+
+  const loadNotes = useCallback(async () => {
+    if (!slug) return;
+    setLoadError(null);
+    try {
+      const [result, shared, workspaces] = await Promise.all([
+        Note.forWorkspace(slug),
+        Note.getSharedNotes(slug),
+        Note.getShareableWorkspaces(slug),
+      ]);
+      setNotes(result);
+      setSharedNotes(shared);
+      setShareableWorkspaces(workspaces);
+      if (result.length > 0 && !activeNote) {
+        setActiveNote(result[0]);
+        setContent(result[0].content || "");
+      }
+    } catch (e) {
+      setLoadError(e instanceof Error ? e.message : t("common.loadError", "Fehler beim Laden"));
+    } finally {
+      setIsLoading(false);
+    }
+  }, [slug, activeNote, t]);
+
+  useEffect(() => {
+    loadNotes();
+  }, [loadNotes]);
+
+  useEffect(() => {
+    return () => {
+      if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handler = (e: any) => {
+      if (
+        shareDropdownRef.current &&
+        !shareDropdownRef.current.contains(e.target)
+      ) {
+        setSharingNoteId(null);
+      }
+    };
+    if (sharingNoteId !== null) {
+      document.addEventListener("mousedown", handler);
+      return () => document.removeEventListener("mousedown", handler);
+    }
+  }, [sharingNoteId]);
+
+  const handleNewNote = async () => {
+    if (!slug) return;
+    const note = await Note.create(slug, { content: "" });
+    if (note) {
+      setNotes((prev) => [note, ...prev]);
+      setActiveNote(note);
+      setContent("");
+    }
+  };
+
+  const handleSelectNote = (note: any) => {
+    if (saveTimerRef.current) {
+      clearTimeout(saveTimerRef.current);
+      saveTimerRef.current = null;
+    }
+    if (activeNote && activeNote.id !== note.id) {
+      saveNote(activeNote.id, content);
+    }
+    setActiveSharedNote(null);
+    setActiveNote(note);
+    setContent(note.content || "");
+  };
+
+  const saveNote = useCallback(
+    async (id: any, text: string) => {
+      if (!slug) return;
+      setIsSaving(true);
+      const updated = await Note.update(slug, id, { content: text });
+      if (updated) {
+        setNotes((prev) =>
+          prev.map((n) =>
+            n.id === id
+              ? { ...n, content: text, updatedAt: updated.updatedAt }
+              : n,
+          ),
+        );
+      }
+      setIsSaving(false);
+    },
+    [slug],
+  );
+
+  const handleContentChange = (e: any) => {
+    const text = e.target.value;
+    setContent(text);
+    if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    saveTimerRef.current = setTimeout(() => {
+      if (activeNote) saveNote(activeNote.id, text);
+    }, 1500);
+  };
+
+  const handleDeleteNote = async (noteId: any) => {
+    if (!slug) return;
+    const success = await Note.delete(slug, noteId);
+    if (success) {
+      setNotes((prev) => prev.filter((n) => n.id !== noteId));
+      if (activeNote?.id === noteId) {
+        const remaining = notes.filter((n) => n.id !== noteId);
+        setActiveNote(remaining[0] || null);
+        setContent(remaining[0]?.content || "");
+      }
+    }
+  };
+
+  const handleTogglePin = async (noteId: any, currentPinned: any) => {
+    if (!slug) return;
+    const updated = await Note.update(slug, noteId, { pinned: !currentPinned });
+    if (updated) {
+      setNotes((prev) => {
+        const updatedNotes = prev.map((n) =>
+          n.id === noteId ? { ...n, pinned: !currentPinned } : n,
+        );
+        return updatedNotes.sort(
+          (a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0),
+        );
+      });
+    }
+  };
+
+  const handleShareClick = (e: any, noteId: any) => {
+    e.stopPropagation();
+    setSharingNoteId(sharingNoteId === noteId ? null : noteId);
+  };
+
+  const handleShareToWorkspace = async (noteId: any, targetSlug: string) => {
+    if (!slug) return;
+    const result = await Note.shareNote(slug, noteId, targetSlug);
+    if (result) {
+      setSharingNoteId(null);
+    }
+  };
+
+  const handleSelectSharedNote = (note: any) => {
+    if (saveTimerRef.current) {
+      clearTimeout(saveTimerRef.current);
+      saveTimerRef.current = null;
+    }
+    if (activeNote) {
+      saveNote(activeNote.id, content);
+    }
+    setActiveNote(null);
+    setActiveSharedNote(note);
+    setContent(note.content || "");
+  };
+
+  const handleUnshareNote = async (e: any, noteId: any, sourceSlug: string) => {
+    e.stopPropagation();
+    if (!slug) return;
+    const success = await Note.unshareNote(slug, noteId, sourceSlug);
+    if (success) {
+      setSharedNotes((prev) => prev.filter((n) => n.id !== noteId));
+      if (activeSharedNote?.id === noteId) {
+        setActiveSharedNote(null);
+        setContent("");
+      }
+    }
+  };
+
+  const formatDate = (dateStr: any) => {
+    if (!dateStr) return "";
+    const d = new Date(dateStr);
+    return d.toLocaleDateString("de-DE", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+  };
+
+  const wordCount = content.trim() ? content.trim().split(/\s+/).length : 0;
+
+  return (
+    <ChatSidebar isOpen={true}>
+      <div className="w-full h-full bg-zinc-900 light:bg-white flex flex-col overflow-hidden">
+        <div className="flex flex-col shrink-0 gap-2 p-4 pb-2">
+          <div className="flex items-start justify-between">
+            <p className="font-medium text-base leading-6 text-white light:text-slate-900">
+              {t("chat_window.notepad", "Notizblock")}
+            </p>
+            <button
+              onClick={closeSidebar}
+              type="button"
+              className="text-white/60 light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer"
+            >
+              <X size={16} weight="bold" />
+            </button>
+          </div>
+          <button
+            onClick={handleNewNote}
+            className="flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg bg-theme-bg-secondary text-theme-text-secondary hover:opacity-80 transition-opacity text-sm border border-theme-border"
+          >
+            <Plus size={14} />
+            {t("chat_window.new_note", "Neue Notiz")}
+          </button>
+        </div>
+
+        {isLoading ? (
+          <div className="flex-1 flex items-center justify-center">
+            <div className="dot-falling light:invert" />
+          </div>
+        ) : loadError ? (
+          <div className="flex-1 flex flex-col items-center justify-center gap-3 p-4">
+            <div className="p-3 rounded-lg bg-red-950/40 border border-red-800/50 text-xs text-red-400 flex items-center gap-2 max-w-xs">
+              <Warning size={16} weight="fill" className="flex-shrink-0" />
+              <span>{t("common.loadError", "Fehler beim Laden")}: {loadError}</span>
+            </div>
+            <button
+              onClick={() => {
+                setIsLoading(true);
+                loadNotes();
+              }}
+              className="flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg bg-theme-bg-secondary text-theme-text-secondary hover:opacity-80 transition-opacity text-sm border border-theme-border"
+            >
+              {t("sidebar.retry", "Erneut versuchen")}
+            </button>
+          </div>
+        ) : notes.length === 0 ? (
+          <div className="flex-1 flex flex-col items-center justify-center gap-2 p-4">
+            <p className="text-sm text-zinc-400 light:text-slate-500 text-center">
+              {t("chat_window.no_notes", "Noch keine Notizen vorhanden.")}
+            </p>
+            <button
+              onClick={handleNewNote}
+              className="flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg bg-theme-bg-secondary text-theme-text-secondary hover:opacity-80 transition-opacity text-sm border border-theme-border"
+            >
+              <Plus size={14} />
+              {t("chat_window.create_first_note", "Erste Notiz erstellen")}
+            </button>
+          </div>
+        ) : (
+          <div className="flex flex-1 overflow-hidden">
+            <div className="w-48 flex-shrink-0 border-r border-theme-border overflow-y-auto no-scroll">
+              {notes.map((note) => (
+                <div
+                  key={note.id}
+                  onClick={() => handleSelectNote(note)}
+                  className={`group relative px-3 py-2 cursor-pointer border-b border-theme-border transition-colors ${
+                    activeNote?.id === note.id
+                      ? "bg-zinc-700 light:bg-slate-200"
+                      : "hover:bg-zinc-800 light:hover:bg-slate-100"
+                  }`}
+                >
+                  <div className="flex items-center gap-1.5">
+                    {note.pinned && (
+                      <PushPin
+                        size={10}
+                        weight="fill"
+                        className="text-theme-text-secondary flex-shrink-0"
+                      />
+                    )}
+                    <p className="flex-1 text-xs text-white light:text-slate-900 truncate">
+                      {(note.content || "").slice(0, 40) ||
+                        t("chat_window.empty_note", "Leere Notiz")}
+                    </p>
+                  </div>
+                  <p className="text-[10px] text-zinc-400 light:text-slate-500 mt-0.5">
+                    {formatDate(note.updatedAt)}
+                  </p>
+                  <div className="absolute top-1 right-1 flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-all">
+                    <button
+                      onClick={(e) => handleShareClick(e, note.id)}
+                      className="text-zinc-400 hover:text-theme-text-secondary transition-all bg-transparent border-none cursor-pointer p-1"
+                      title={t("chat_window.share_note", "Teilen")}
+                    >
+                      <ShareNetwork size={12} />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteNote(note.id);
+                      }}
+                      className="text-zinc-400 hover:text-red-400 transition-all bg-transparent border-none cursor-pointer p-1"
+                    >
+                      <Trash size={12} />
+                    </button>
+                  </div>
+                  {sharingNoteId === note.id && (
+                    <div
+                      ref={shareDropdownRef}
+                      className="absolute left-full top-0 ml-1 z-50 min-w-[160px] bg-zinc-800 light:bg-white border border-theme-border rounded-lg shadow-xl py-1"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <p className="px-3 py-1 text-[10px] text-zinc-400 light:text-slate-500 uppercase tracking-wide">
+                        {t("chat_window.share_to", "Teilen an")}
+                      </p>
+                      {shareableWorkspaces.length === 0 ? (
+                        <p className="px-3 py-2 text-xs text-zinc-400 light:text-slate-500">
+                          {t(
+                            "chat_window.no_other_workspaces",
+                            "Keine weiteren Workspaces",
+                          )}
+                        </p>
+                      ) : (
+                        shareableWorkspaces.map((ws) => (
+                          <button
+                            key={ws.id}
+                            onClick={() =>
+                              handleShareToWorkspace(note.id, ws.slug)
+                            }
+                            className="w-full text-left px-3 py-1.5 text-xs text-white light:text-slate-900 hover:bg-zinc-700 light:hover:bg-slate-100 transition-colors bg-transparent border-none cursor-pointer truncate"
+                          >
+                            {ws.name}
+                          </button>
+                        ))
+                      )}
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              {sharedNotes.length > 0 && (
+                <>
+                  <div className="px-3 py-1.5 border-b border-theme-border bg-theme-bg-secondary">
+                    <p className="text-[10px] text-zinc-400 light:text-slate-500 uppercase tracking-wide font-medium">
+                      {t("chat_window.shared_notes", "Geteilte Notizen")}
+                    </p>
+                  </div>
+                  {sharedNotes.map((note) => (
+                    <div
+                      key={`shared-${note.id}`}
+                      onClick={() => handleSelectSharedNote(note)}
+                      className={`group relative px-3 py-2 cursor-pointer border-b border-theme-border transition-colors ${
+                        activeSharedNote?.id === note.id
+                          ? "bg-zinc-700 light:bg-slate-200"
+                          : "hover:bg-zinc-800 light:hover:bg-slate-100"
+                      }`}
+                    >
+                      <div className="flex items-center gap-1.5">
+                        <ShareNetwork
+                          size={10}
+                          weight="fill"
+                          className="text-primary-button flex-shrink-0"
+                        />
+                        <p className="flex-1 text-xs text-white light:text-slate-900 truncate">
+                          {(note.content || "").slice(0, 35) ||
+                            t("chat_window.empty_note", "Leere Notiz")}
+                        </p>
+                      </div>
+                      <p className="text-[10px] text-zinc-400 light:text-slate-500 mt-0.5">
+                        {t("chat_window.from", "von")}{" "}
+                        {note.source_workspace_name}
+                      </p>
+                      <button
+                        onClick={(e) =>
+                          handleUnshareNote(
+                            e,
+                            note.id,
+                            note.source_workspace_slug,
+                          )
+                        }
+                        className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 text-zinc-400 hover:text-red-400 transition-all bg-transparent border-none cursor-pointer p-1"
+                        title={t("chat_window.unshare", "Teilen aufheben")}
+                      >
+                        <Trash size={12} />
+                      </button>
+                    </div>
+                  ))}
+                </>
+              )}
+            </div>
+
+            <div className="flex-1 flex flex-col overflow-hidden">
+              {activeNote ? (
+                <>
+                  <div className="flex items-center justify-between px-3 py-1.5 border-b border-theme-border">
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() =>
+                          handleTogglePin(activeNote.id, activeNote.pinned)
+                        }
+                        className={`bg-transparent border-none cursor-pointer p-1 transition-colors ${
+                          activeNote.pinned
+                            ? "text-theme-text-secondary"
+                            : "text-zinc-500 hover:text-theme-text-secondary"
+                        }`}
+                      >
+                        <PushPin
+                          size={12}
+                          weight={activeNote.pinned ? "fill" : "regular"}
+                        />
+                      </button>
+                      <span className="text-[10px] text-zinc-400 light:text-slate-500">
+                        {isSaving
+                          ? t("chat_window.saving", "Speichern...")
+                          : `${wordCount} ${t("chat_window.words", "Wörter")}`}
+                      </span>
+                    </div>
+                  </div>
+                  <textarea
+                    value={content}
+                    onChange={handleContentChange}
+                    onBlur={() => {
+                      if (saveTimerRef.current) {
+                        clearTimeout(saveTimerRef.current);
+                        saveTimerRef.current = null;
+                      }
+                      if (activeNote) saveNote(activeNote.id, content);
+                    }}
+                    placeholder={t(
+                      "chat_window.note_placeholder",
+                      "Hier Notiz schreiben...",
+                    )}
+                    className="flex-1 w-full bg-transparent text-sm text-white light:text-slate-900 p-3 outline-none resize-none placeholder:text-zinc-500"
+                  />
+                </>
+              ) : activeSharedNote ? (
+                <>
+                  <div className="flex items-center justify-between px-3 py-1.5 border-b border-theme-border">
+                    <div className="flex items-center gap-1.5">
+                      <ShareNetwork size={12} className="text-primary-button" />
+                      <span className="text-[10px] text-zinc-400 light:text-slate-500">
+                        {t("chat_window.from", "von")}{" "}
+                        {activeSharedNote.source_workspace_name}
+                        {" · "}
+                        {t("chat_window.read_only", "Schreibgeschützt")}
+                      </span>
+                    </div>
+                  </div>
+                  <textarea
+                    value={content}
+                    readOnly
+                    placeholder={t(
+                      "chat_window.note_placeholder",
+                      "Hier Notiz schreiben...",
+                    )}
+                    className="flex-1 w-full bg-transparent text-sm text-white light:text-slate-900 p-3 outline-none resize-none placeholder:text-zinc-500 cursor-default opacity-70"
+                  />
+                </>
+              ) : (
+                <div className="flex-1 flex items-center justify-center">
+                  <p className="text-sm text-zinc-400 light:text-slate-500">
+                    {t(
+                      "chat_window.select_or_create_note",
+                      "Notiz auswählen oder erstellen",
+                    )}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </ChatSidebar>
+  );
+}
