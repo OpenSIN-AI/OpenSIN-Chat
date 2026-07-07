@@ -34,6 +34,8 @@ describe("SettingsManager", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     SettingsManager.clearCache();
+    SettingsManager.__db = undefined; // force lazy re-require of the mock
+    SettingsManager.__encryptor = undefined;
   });
 
   describe("isSensitive", () => {

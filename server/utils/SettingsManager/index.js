@@ -18,7 +18,6 @@
 // `.env` file — they are required *before* the DB/decryption layer is
 // available (chicken-and-egg), so they cannot be stored encrypted in the DB.
 const consoleLogger = require("../logger/console.js");
-const prisma = require("../prisma");
 
 // Keys whose values must be encrypted at rest. Matches secrets, tokens, keys,
 // passwords and DB connection strings regardless of provider.
@@ -41,6 +40,12 @@ class SettingsManager {
   /** Whether an env key holds a sensitive value that must be encrypted. */
   static isSensitive(envKey = "") {
     return SENSITIVE_KEY_PATTERN.test(String(envKey));
+  }
+
+  /** Lazily required prisma client (avoids loading it at module import time). */
+  static _db() {
+    if (!this.__db) this.__db = require("../prisma");
+    return this.__db;
   }
 
   /** Lazily constructed EncryptionManager (avoids circular boot deps). */
@@ -100,7 +105,7 @@ class SettingsManager {
     if (cached !== undefined) return cached;
 
     try {
-      const row = await prisma.managed_env_settings.findUnique({
+      const row = await this._db().managed_env_settings.findUnique({
         where: { envKey },
       });
       if (row) {
@@ -140,7 +145,7 @@ class SettingsManager {
           : String(value);
 
     try {
-      await prisma.managed_env_settings.upsert({
+      await this._db().managed_env_settings.upsert({
         where: { envKey },
         update: {
           value: storedValue,
@@ -192,7 +197,7 @@ class SettingsManager {
   static async _audit({ envKey, action, previousRuntime, value, sensitive, userId }) {
     try {
       const redacted = !!sensitive;
-      await prisma.settings_audit_log.create({
+      await this._db().settings_audit_log.create({
         data: {
           envKey,
           action: action || "update",
@@ -225,7 +230,7 @@ class SettingsManager {
    */
   static async hydrate() {
     try {
-      const rows = await prisma.managed_env_settings.findMany();
+      const rows = await this._db().managed_env_settings.findMany();
       let loaded = 0;
       for (const row of rows) {
         const value = this._decodeRow(row);
@@ -250,7 +255,7 @@ class SettingsManager {
    */
   static async auditLog({ envKey = null, limit = 100 } = {}) {
     try {
-      return await prisma.settings_audit_log.findMany({
+      return await this._db().settings_audit_log.findMany({
         where: envKey ? { envKey } : undefined,
         orderBy: { createdAt: "desc" },
         take: Math.min(Number(limit) || 100, 500),
