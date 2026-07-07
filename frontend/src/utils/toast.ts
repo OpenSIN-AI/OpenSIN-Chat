@@ -1,1 +1,67 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyB0b2FzdCwgdHlwZSBUb2FzdE9wdGlvbnMgfSBmcm9tICJyZWFjdC10b2FzdGlmeSI7CmltcG9ydCB7IGdldFN0b3JlZFRoZW1lLCByZXNvbHZlRGFya01vZGUgfSBmcm9tICJAL2hvb2tzL3VzZVRoZW1lIjsKCi8vIENhY2hlIHRoZW1lIGF0IG1vZHVsZSBsZXZlbCB0byBhdm9pZCBzeW5jaHJvbm91cyBsb29rdXBzIG9uIGV2ZXJ5IHNob3dUb2FzdCgpIGNhbGwuCi8vIFVwZGF0ZWQgdmlhIHN0b3JhZ2UgZXZlbnQgbGlzdGVuZXIgYW5kIGEgY3VzdG9tICJ0aGVtZS1jaGFuZ2UiIGV2ZW50LgpsZXQgX2NhY2hlZFRoZW1lOiBzdHJpbmcgfCBudWxsID0gZ2V0U3RvcmVkVGhlbWUoKTsKbGV0IF9jYWNoZWREYXJrTW9kZTogYm9vbGVhbiA9IHJlc29sdmVEYXJrTW9kZSgpOwoKZnVuY3Rpb24gcmVmcmVzaFRoZW1lQ2FjaGUoKSB7CiAgX2NhY2hlZFRoZW1lID0gZ2V0U3RvcmVkVGhlbWUoKTsKICBfY2FjaGVkRGFya01vZGUgPSByZXNvbHZlRGFya01vZGUoKTsKfQoKaWYgKHR5cGVvZiB3aW5kb3cgIT09ICJ1bmRlZmluZWQiKSB7CiAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoInN0b3JhZ2UiLCByZWZyZXNoVGhlbWVDYWNoZSk7CiAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoInRoZW1lLWNoYW5nZSIsIHJlZnJlc2hUaGVtZUNhY2hlKTsKfQoKLy8gQWRkaXRpb25hbCBDb25maWdzIChvcHRzKQovLyBZb3UgY2FuIGFsc28gcGFzcyB2YWxpZCBSZWFjdFRvYXN0IHBhcmFtcyB0byBvdmVycmlkZSB0aGUgZGVmYXVsdHMuCi8vIGNsZWFyOiBmYWxzZSwgLy8gV2lsbCBkaXNtaXNzIGFsbCB2aXNpYmxlIHRvYXN0cyBiZWZvcmUgcmVuZGVyaW5nIG5leHQgdG9hc3QKY29uc3Qgc2hvd1RvYXN0OiBhbnkgPSAoCiAgbWVzc2FnZSwKICB0eXBlOiBhbnkgPSAiZGVmYXVsdCIsCiAgb3B0czogeyBjbGVhcj86IGJvb2xlYW47IFtrZXk6IHN0cmluZ106IGFueSB9ID0ge30sCikgPT4gewogIGNvbnN0IHN0b3JlZCA9IF9jYWNoZWRUaGVtZTsKICBjb25zdCB7IGNsZWFyLCAuLi5yZXN0T3B0cyB9ID0gb3B0czsKICBjb25zdCBvcHRpb25zOiBUb2FzdE9wdGlvbnMgPSB7CiAgICBwb3NpdGlvbjogImJvdHRvbS1jZW50ZXIiLAogICAgYXV0b0Nsb3NlOiA1MDAwLAogICAgaGlkZVByb2dyZXNzQmFyOiBmYWxzZSwKICAgIGNsb3NlT25DbGljazogdHJ1ZSwKICAgIHBhdXNlT25Ib3ZlcjogdHJ1ZSwKICAgIGRyYWdnYWJsZTogdHJ1ZSwKICAgIGxpbWl0OiAzLAogICAgdGhlbWU6CiAgICAgIHN0b3JlZCA9PT0gImRlZmF1bHQiIHx8IHN0b3JlZCA9PT0gbnVsbAogICAgICAgID8gImRhcmsiCiAgICAgICAgOiBfY2FjaGVkRGFya01vZGUKICAgICAgICAgID8gImRhcmsiCiAgICAgICAgICA6ICJsaWdodCIsCiAgICAuLi5yZXN0T3B0cywKICB9OwoKICBpZiAoY2xlYXIgPT09IHRydWUpIHRvYXN0LmRpc21pc3MoKTsKCiAgc3dpdGNoICh0eXBlKSB7CiAgICBjYXNlICJzdWNjZXNzIjoKICAgICAgdG9hc3Quc3VjY2VzcyhtZXNzYWdlLCBvcHRpb25zKTsKICAgICAgYnJlYWs7CiAgICBjYXNlICJlcnJvciI6CiAgICAgIHRvYXN0LmVycm9yKG1lc3NhZ2UsIG9wdGlvbnMpOwogICAgICBicmVhazsKICAgIGNhc2UgImluZm8iOgogICAgICB0b2FzdC5pbmZvKG1lc3NhZ2UsIG9wdGlvbnMpOwogICAgICBicmVhazsKICAgIGNhc2UgIndhcm5pbmciOgogICAgICB0b2FzdC53YXJuKG1lc3NhZ2UsIG9wdGlvbnMpOwogICAgICBicmVhazsKICAgIGRlZmF1bHQ6CiAgICAgIHRvYXN0KG1lc3NhZ2UsIG9wdGlvbnMpOwogIH0KfTsKCmV4cG9ydCBkZWZhdWx0IHNob3dUb2FzdDsK
+// SPDX-License-Identifier: MIT
+import { toast, type ToastOptions } from "react-toastify";
+import { getStoredTheme, resolveDarkMode } from "@/hooks/useTheme";
+
+// Cache theme at module level to avoid synchronous lookups on every showToast() call.
+// Updated via storage event listener and a custom "theme-change" event.
+let _cachedTheme: string | null = getStoredTheme();
+let _cachedDarkMode: boolean = resolveDarkMode();
+
+function refreshThemeCache() {
+  _cachedTheme = getStoredTheme();
+  _cachedDarkMode = resolveDarkMode();
+}
+
+if (typeof window !== "undefined") {
+  window.addEventListener("storage", refreshThemeCache);
+  window.addEventListener("theme-change", refreshThemeCache);
+}
+
+// Additional Configs (opts)
+// You can also pass valid ReactToast params to override the defaults.
+// clear: false, // Will dismiss all visible toasts before rendering next toast
+const showToast: any = (
+  message,
+  type: any = "default",
+  opts: { clear?: boolean; [key: string]: any } = {},
+) => {
+  const stored = _cachedTheme;
+  const { clear, ...restOpts } = opts;
+  const options: ToastOptions = {
+    position: "bottom-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    limit: 3,
+    theme:
+      stored === "default" || stored === null
+        ? "dark"
+        : _cachedDarkMode
+          ? "dark"
+          : "light",
+    ...restOpts,
+  };
+
+  if (clear === true) toast.dismiss();
+
+  switch (type) {
+    case "success":
+      toast.success(message, options);
+      break;
+    case "error":
+      toast.error(message, options);
+      break;
+    case "info":
+      toast.info(message, options);
+      break;
+    case "warning":
+      toast.warn(message, options);
+      break;
+    default:
+      toast(message, options);
+  }
+};
+
+export default showToast;

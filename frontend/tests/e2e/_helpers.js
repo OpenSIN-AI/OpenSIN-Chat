@@ -1,1 +1,225 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBQdXJwb3NlOiBTaGFyZWQgaGVscGVycyBmb3IgT3BlblNJTi1DaGF0IFBsYXl3cmlnaHQgRTJFIHRlc3RzLgovLyBEb2NzOiBmcm9udGVuZC90ZXN0cy9lMmUvUkVBRE1FLmRvYy5tZAovLwovLyBDZW50cmFsaXNlcyB0aGUgbG9naW4g4oaSIGNyZWF0ZS13b3Jrc3BhY2Ug4oaSIHNlZWQtc2Vzc2lvbiDihpIgbW9jay1vbmJvYXJkaW5nCi8vIGJvb3RzdHJhcCBzbyBldmVyeSBzcGVjIHN0YXJ0cyBmcm9tIHRoZSBzYW1lIGtub3duIHN0YXRlLCBhbmQgYWRkcyBhbgovLyBgYXNzZXJ0QXBwTG9hZGVkYCBndWFyZCB0aGF0IHR1cm5zIGEgYmxhbmsgImVsZW1lbnQgbm90IGZvdW5kIiB0aW1lb3V0IGludG8KLy8gYSBwcmVjaXNlIGRpYWdub3NpcyB3aGVuIGEgcHJvZHVjdGlvbiBidWlsZCBjcmFzaGVzIG9uIGxvYWQgKGUuZy4gdGhlCi8vIGByZWdlbmVyYXRvclJ1bnRpbWUgaXMgbm90IGRlZmluZWRgIHJlZ3Jlc3Npb24gdGhhdCB0b29rIGRvd24gdGhlIHdob2xlCi8vIFJlYWN0IHRyZWUgYmVmb3JlIHRoZSBgcmVnZW5lcmF0b3ItcnVudGltZWAgcG9seWZpbGwgd2FzIGFkZGVkIHRvIG1haW4udHN4KS4KaW1wb3J0IHsgZXhwZWN0IH0gZnJvbSAiQHBsYXl3cmlnaHQvdGVzdCI7CmltcG9ydCBmcyBmcm9tICJmcyI7CmltcG9ydCBwYXRoIGZyb20gInBhdGgiOwppbXBvcnQgb3MgZnJvbSAib3MiOwoKY29uc3QgVE9LRU5fQ0FDSEVfRklMRSA9IHBhdGguam9pbihvcy50bXBkaXIoKSwgIm9wZW5zaW4tY2hhdC1lMmUtdG9rZW4udHh0Iik7CgovKioKICogQXV0aGVudGljYXRlIGFnYWluc3QgdGhlIHJ1bm5pbmcgYmFja2VuZCAoc2luZ2xlLXVzZXIgbW9kZSkgYW5kIHJldHVybiB0aGUKICogSldULiBVc2VybmFtZSAiYWRtaW4iIHdpdGggYW4gZW1wdHkgcGFzc3dvcmQgbWF0Y2hlcyB0aGUgZGVmYXVsdCBkZXYvcHJvZAogKiBzaW5nbGUtdXNlciBjb25maWd1cmF0aW9uLgogKgogKiBJbiBwcm9kdWN0aW9uIHRoZSBBVVRIX1RPS0VOIGlzIHNldCwgc28gdGhlIGNhbGxlciBtdXN0IHBhc3MgdGhlIGxpdmUKICogcGFzc3dvcmQgdmlhIHRoZSBPUEVOU0lOX1BBU1NXT1JEIGVudiB2YXIuIFdpdGhvdXQgdGhhdCBlbnYsIHRoaXMgaGVscGVyCiAqIGZhbGxzIGJhY2sgdG8gYW4gZW1wdHkgcGFzc3dvcmQgKG1hdGNoaW5nIHRoZSBuby1hdXRoIGRldiBjb25maWcpLgogKgogKiBDaGVja3MgYSB0ZW1wLWZpbGUgdG9rZW4gY2FjaGUgZmlyc3QgdG8gYXZvaWQgaGl0dGluZyB0aGUgcHJvZHVjdGlvbiByYXRlCiAqIGxpbWl0ZXIgd2hlbiBtdWx0aXBsZSB0ZXN0IGZpbGVzIGNhbGwgbG9naW4oKSBpbiBxdWljayBzdWNjZXNzaW9uLiBUaGUKICogY2FjaGUgaXMgd3JpdHRlbiBieSBfdG9rZW4tY2FjaGUuanM6OnNoYXJlZExvZ2luIG9uIHRoZSBmaXJzdCBzdWNjZXNzZnVsCiAqIGxvZ2luIGFuZCBpcyB2YWxpZCBmb3IgfjMwIGRheXMgKEpXVCBleHApLgogKi8KZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIGxvZ2luKHJlcXVlc3QpIHsKICBjb25zdCBwYXNzd29yZCA9IHByb2Nlc3MuZW52Lk9QRU5TSU5fUEFTU1dPUkQgfHwgIiI7CgogIC8vIERldGVybWluZSB0aGUgYWJzb2x1dGUgYmFzZSBVUkwg4oCUIFBsYXl3cmlnaHQncyByZXF1ZXN0IGZpeHR1cmUgdXNlcwogIC8vIHBsYXl3cmlnaHQuY29uZmlnJ3MgYmFzZVVSTCAoZGVmYXVsdGluZyB0byBsb2NhbGhvc3Q6Mzg0NzEpLCB3aGljaCBpcwogIC8vIE5PVCB0aGUgcHJvZHVjdGlvbiBzZXJ2ZXIgd2hlbiB3ZSBydW4gYWdhaW5zdCBzaW5jaGF0LmRlbHFoaS5jb20uIEhvbm9yCiAgLy8gQVBQX1VSTCB3aGVuIHNldC4KICBjb25zdCBiYXNlID0KICAgIHByb2Nlc3MuZW52LkFQUF9VUkwgfHwKICAgICh0eXBlb2YgcmVxdWVzdCAhPT0gInVuZGVmaW5lZCIgJiYgcmVxdWVzdC5jb250ZXh0CiAgICAgID8gcmVxdWVzdC5jb250ZXh0KCkuYmFzZVVSTD8uKCkKICAgICAgOiBudWxsKSB8fAogICAgImh0dHA6Ly9sb2NhbGhvc3Q6Mzg0NzEiOwogIGNvbnN0IHVybCA9IGAke2Jhc2UucmVwbGFjZSgvXC8kLywgIiIpfS9hcGkvcmVxdWVzdC10b2tlbmA7CgogIC8vIFRyeSBjYWNoZWQgdG9rZW4gZmlyc3QgKHNoYXJlZCBhY3Jvc3MgdGVzdCBmaWxlcyB2aWEgdGVtcCBmaWxlKQogIHRyeSB7CiAgICBpZiAoZnMuZXhpc3RzU3luYyhUT0tFTl9DQUNIRV9GSUxFKSkgewogICAgICBjb25zdCBjYWNoZWQgPSBmcy5yZWFkRmlsZVN5bmMoVE9LRU5fQ0FDSEVfRklMRSwgInV0Zi04IikudHJpbSgpOwogICAgICBpZiAoY2FjaGVkICYmIGNhY2hlZC5sZW5ndGggPiAyMCkgcmV0dXJuIGNhY2hlZDsKICAgIH0KICB9IGNhdGNoIHsKICAgIC8vIGlnbm9yZSByZWFkIGVycm9ycwogIH0KCiAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCByZXF1ZXN0LnBvc3QodXJsLCB7CiAgICBoZWFkZXJzOiB7ICJDb250ZW50LVR5cGUiOiAiYXBwbGljYXRpb24vanNvbiIgfSwKICAgIGRhdGE6IGB7ICJ1c2VybmFtZSI6ICJhZG1pbiIsICJwYXNzd29yZCI6ICR7SlNPTi5zdHJpbmdpZnkocGFzc3dvcmQpfSB9YCwKICB9KTsKICBleHBlY3QocmVzcG9uc2Uub2soKSkudG9CZVRydXRoeSgpOwogIGNvbnN0IGJvZHkgPSBhd2FpdCByZXNwb25zZS5qc29uKCk7CiAgZXhwZWN0KGJvZHkudmFsaWQpLnRvQmUodHJ1ZSk7CiAgZXhwZWN0KGJvZHkudG9rZW4pLnRvQmVUcnV0aHkoKTsKICBjb25zdCB0b2tlbiA9IGJvZHkudG9rZW47CiAgLy8gU2FuaXR5LWNoZWNrOiB0b2tlbiBtdXN0IGxvb2sgbGlrZSBhIEpXVCB3aXRoIHRoZSBlbmNyeXB0ZWQgcGFzc3dvcmQgb3IKICAvLyBhIG5vbi1lbXB0eSB1c2VyIGlkLiBJZiB3ZSBzZWUgYHA6bnVsbGAgd2UgaGl0IHRoZSBkZXYgZmFsbGJhY2sgYnJhbmNoCiAgLy8gdGhhdCByZXR1cm5zIGEgSldUIHRoZSBzZXJ2ZXIgdHJlYXRzIGFzIHVuYXV0aGVudGljYXRlZC4KICB0cnkgewogICAgY29uc3QgZGVjb2RlZCA9IEpTT04ucGFyc2UoCiAgICAgIEJ1ZmZlci5mcm9tKHRva2VuLnNwbGl0KCIuIilbMV0sICJiYXNlNjQiKS50b1N0cmluZygpLAogICAgKTsKICAgIGlmIChkZWNvZGVkLnAgPT09IG51bGwgJiYgIWRlY29kZWQuaWQpIHsKICAgICAgdGhyb3cgbmV3IEVycm9yKAogICAgICAgIGBMb2dpbiByZXNwb25zZSBpcyBhIGRldi1icmFuY2ggSldUIChubyBwYXNzd29yZCAvIG5vIHVzZXIgaWQpLiBgICsKICAgICAgICAgIGBQT1NUICR7dXJsfSByZXR1cm5lZCB7dmFsaWQ6dHJ1ZSx0b2tlbjo8cDpudWxsPn0uIGAgKwogICAgICAgICAgYFRoZSBzZXJ2ZXIgbGlrZWx5IGhpdCB0aGUgbm8tQVVUSF9UT0tFTiBmYWxsYmFjayBicmFuY2guIGAgKwogICAgICAgICAgYFNldCBPUEVOU0lOX1BBU1NXT1JEIGFuZCBlbnN1cmUgcmVxdWVzdCBDb250ZW50LVR5cGUgaXMgSlNPTi5gLAogICAgICApOwogICAgfQogIH0gY2F0Y2ggKGVycikgewogICAgaWYgKGVyciBpbnN0YW5jZW9mIEVycm9yICYmIGVyci5uYW1lID09PSAiU3ludGF4RXJyb3IiKSB7CiAgICAgIC8vIG5vdCBhIEpXVCDigJQgbGV0IGRvd25zdHJlYW0gZmFpbAogICAgfSBlbHNlIHsKICAgICAgdGhyb3cgZXJyOwogICAgfQogIH0KCiAgLy8gQ2FjaGUgdGhlIHRva2VuIGZvciBzdWJzZXF1ZW50IGNhbGxzCiAgdHJ5IHsKICAgIGZzLndyaXRlRmlsZVN5bmMoVE9LRU5fQ0FDSEVfRklMRSwgdG9rZW4pOwogIH0gY2F0Y2ggewogICAgLy8gaWdub3JlIHdyaXRlIGVycm9ycwogIH0KCiAgcmV0dXJuIHRva2VuOwp9CgovKioKICogR2V0IGFuIGV4aXN0aW5nIHdvcmtzcGFjZSBzbHVnIHZpYSB0aGUgQVBJLCBvciBjcmVhdGUgb25lIGlmIG5vbmUgZXhpc3QuCiAqIFJldXNlcyB0aGUgZmlyc3Qgd29ya3NwYWNlIHRvIGF2b2lkIGhpdHRpbmcgcmF0ZSBsaW1pdHMgZHVyaW5nIEUyRSBydW5zLgogKi8KZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIGdldE9yQ3JlYXRlV29ya3NwYWNlKHJlcXVlc3QsIHRva2VuKSB7CiAgLy8gVHJ5IHRvIGdldCBhbiBleGlzdGluZyB3b3Jrc3BhY2UgZmlyc3QKICBjb25zdCBsaXN0UmVzcCA9IGF3YWl0IHJlcXVlc3QuZ2V0KCIvYXBpL3dvcmtzcGFjZXMiLCB7CiAgICBoZWFkZXJzOiB7IEF1dGhvcml6YXRpb246IGBCZWFyZXIgJHt0b2tlbn1gIH0sCiAgfSk7CiAgaWYgKGxpc3RSZXNwLm9rKCkpIHsKICAgIHRyeSB7CiAgICAgIGNvbnN0IHsgd29ya3NwYWNlcyB9ID0gYXdhaXQgbGlzdFJlc3AuanNvbigpOwogICAgICBpZiAod29ya3NwYWNlcyAmJiB3b3Jrc3BhY2VzLmxlbmd0aCA+IDApIHsKICAgICAgICByZXR1cm4gd29ya3NwYWNlc1swXS5zbHVnOwogICAgICB9CiAgICB9IGNhdGNoIHt9CiAgfQogIC8vIEZhbGwgYmFjayB0byBjcmVhdGluZyBvbmUKICByZXR1cm4gY3JlYXRlV29ya3NwYWNlKHJlcXVlc3QsIHRva2VuKTsKfQoKLyoqCiAqIENyZWF0ZSBhIHRocm93YXdheSB3b3Jrc3BhY2UgdmlhIHRoZSBBUEkgc28gdGhlIHRlc3QgaGFzIGEgcmVhbCBzbHVnIHRvCiAqIG5hdmlnYXRlIHRvLiBUaGUgaG9tZSBwYWdlIGRvZXMgbm90IGF1dG8tY3JlYXRlIG9uZSBvbiBmaXJzdCBsb2FkLgogKi8KZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIGNyZWF0ZVdvcmtzcGFjZShyZXF1ZXN0LCB0b2tlbikgewogIGNvbnN0IHJlc3BvbnNlID0gYXdhaXQgcmVxdWVzdC5wb3N0KCIvYXBpL3dvcmtzcGFjZS9uZXciLCB7CiAgICBoZWFkZXJzOiB7IEF1dGhvcml6YXRpb246IGBCZWFyZXIgJHt0b2tlbn1gIH0sCiAgICBkYXRhOiB7IG5hbWU6IGBlMmUtJHtEYXRlLm5vdygpfS0ke01hdGgucmFuZG9tKCkudG9TdHJpbmcoMzYpLnNsaWNlKDIsIDgpfWAgfSwKICB9KTsKICBleHBlY3QocmVzcG9uc2Uub2soKSkudG9CZVRydXRoeSgpOwogIGNvbnN0IHsgd29ya3NwYWNlIH0gPSBhd2FpdCByZXNwb25zZS5qc29uKCk7CiAgZXhwZWN0KHdvcmtzcGFjZT8uc2x1ZykudG9CZVRydXRoeSgpOwogIHJldHVybiB3b3Jrc3BhY2Uuc2x1ZzsKfQoKLyoqCiAqIFNlZWQgdGhlIGJyb3dzZXIgc2Vzc2lvbiB3aXRoIHRoZSBhdXRoIHRva2VuLCB1c2VyLCBhbmQgRW5nbGlzaCBsb2NhbGUKICogYmVmb3JlIGFueSBhcHBsaWNhdGlvbiBjb2RlIHJlYWRzIGxvY2FsU3RvcmFnZSwgc28gUHJpdmF0ZVJvdXRlIGxldHMgdXMKICogdGhyb3VnaCB3aXRob3V0IGFuIHVuYXV0aGVudGljYXRlZCBmbGFzaC4KICovCmV4cG9ydCBhc3luYyBmdW5jdGlvbiBzZWVkU2Vzc2lvbihwYWdlLCB0b2tlbikgewogIGF3YWl0IHBhZ2UuYWRkSW5pdFNjcmlwdCgodCkgPT4gewogICAgd2luZG93LmxvY2FsU3RvcmFnZS5zZXRJdGVtKCJvcGVuc2luX2F1dGhUb2tlbiIsIHQpOwogICAgd2luZG93LmxvY2FsU3RvcmFnZS5zZXRJdGVtKAogICAgICAib3BlbnNpbl91c2VyIiwKICAgICAgLy8gSW5jbHVkZSByb2xlOiAiYWRtaW4iIHNvIFNldHRpbmdzU2lkZWJhciBzaG93cyBhbGwgb3B0aW9ucwogICAgICAvLyAoTWVudU9wdGlvbiBoaWRlcyBncm91cHMgd2hlbiB1c2VyPy5yb2xlIGlzIHVuZGVmaW5lZCkuCiAgICAgIEpTT04uc3RyaW5naWZ5KHsgdXNlcm5hbWU6ICJhZG1pbiIsIHJvbGU6ICJhZG1pbiIgfSksCiAgICApOwogICAgd2luZG93LmxvY2FsU3RvcmFnZS5zZXRJdGVtKCJvcGVuc2luLWRlbW8tdW5sb2NrZWQiLCAiMSIpOwogICAgd2luZG93LmxvY2FsU3RvcmFnZS5zZXRJdGVtKCJpMThuZXh0TG5nIiwgImVuIik7CiAgfSwgdG9rZW4pOwp9CgovKioKICogSW50ZXJjZXB0IHRoZSBvbmJvYXJkaW5nIGNoZWNrIHNvIFByaXZhdGVSb3V0ZSBkb2VzIG5vdCByZWRpcmVjdCB0byB0aGUKICogb25ib2FyZGluZyBmbG93LiBXb3JrcyBhcm91bmQgYSBiYWNrZW5kIGlzc3VlIHdoZXJlIGBQT1NUIC9hcGkvb25ib2FyZGluZ2AKICogcmV0dXJucyAyMDAgYnV0IGRvZXMgbm90IHBlcnNpc3QgdGhlIG9uYm9hcmRpbmctY29tcGxldGUgZmxhZy4KICovCmV4cG9ydCBhc3luYyBmdW5jdGlvbiBtb2NrT25ib2FyZGluZ0NoZWNrKHBhZ2UpIHsKICBhd2FpdCBwYWdlLnJvdXRlKCIqKi9hcGkvb25ib2FyZGluZyIsIGFzeW5jIChyb3V0ZSkgPT4gewogICAgYXdhaXQgcm91dGUuZnVsZmlsbCh7CiAgICAgIHN0YXR1czogMjAwLAogICAgICBjb250ZW50VHlwZTogImFwcGxpY2F0aW9uL2pzb24iLAogICAgICBib2R5OiBKU09OLnN0cmluZ2lmeSh7IG9uYm9hcmRpbmdDb21wbGV0ZTogdHJ1ZSB9KSwKICAgIH0pOwogIH0pOwp9CgovKioKICogRnVsbCBib290c3RyYXA6IGxvZyBpbiwgY3JlYXRlIGEgd29ya3NwYWNlLCBzZWVkIHRoZSBzZXNzaW9uLCBtb2NrCiAqIG9uYm9hcmRpbmcsIGFuZCBuYXZpZ2F0ZSB0byB0aGUgd29ya3NwYWNlIGNoYXQgcGFnZS4gUmV0dXJucyB0aGUgc2x1Zy4KICoKICogUGFzcyBgd2FpdEZvcmAgdG8gY2hvb3NlIHdoYXQgdG8gYXdhaXQgYWZ0ZXIgbmF2aWdhdGlvbjoKICogICAtICJhdHRhY2giICAoZGVmYXVsdCkg4oCUIHdhaXQgZm9yIHRoZSBhdHRhY2ggYnV0dG9uIChjaGF0IGNvbXBvc2VyIHJlYWR5KQogKiAgIC0gInRleHRhcmVhIiAgICAgICAgICAg4oCUIHdhaXQgZm9yIHRoZSBwcm9tcHQgdGV4dGFyZWEgKGNoYXQgaW5wdXQgcmVhZHkpCiAqLwpleHBvcnQgYXN5bmMgZnVuY3Rpb24gYm9vdHN0cmFwV29ya3NwYWNlQ2hhdCgKICBwYWdlLAogIHJlcXVlc3QsCiAgeyB3YWl0Rm9yID0gImF0dGFjaCIgfSA9IHt9LAopIHsKICBjb25zdCB0b2tlbiA9IGF3YWl0IGxvZ2luKHJlcXVlc3QpOwogIGNvbnN0IHNsdWcgPSBhd2FpdCBnZXRPckNyZWF0ZVdvcmtzcGFjZShyZXF1ZXN0LCB0b2tlbik7CiAgYXdhaXQgc2VlZFNlc3Npb24ocGFnZSwgdG9rZW4pOwogIGF3YWl0IG1vY2tPbmJvYXJkaW5nQ2hlY2socGFnZSk7CgogIGF3YWl0IHBhZ2UuZ290byhgL3dvcmtzcGFjZS8ke3NsdWd9YCwgeyB3YWl0VW50aWw6ICJuZXR3b3JraWRsZSIgfSk7CiAgYXdhaXQgYXNzZXJ0QXBwTG9hZGVkKHBhZ2UpOwoKICBjb25zdCBzZWxlY3RvciA9CiAgICB3YWl0Rm9yID09PSAidGV4dGFyZWEiCiAgICAgID8gIiNwcmltYXJ5LXByb21wdC1pbnB1dCIKICAgICAgOiAnW2RhdGEtdGVzdGlkPSJhdHRhY2gtaXRlbS10cmlnZ2VyIl0nOwogIGF3YWl0IHBhZ2UubG9jYXRvcihzZWxlY3RvcikuZmlyc3QoKS53YWl0Rm9yKHsgc3RhdGU6ICJ2aXNpYmxlIiwgdGltZW91dDogMzAwMDAgfSk7CiAgcmV0dXJuIHNsdWc7Cn0KCi8qKgogKiBHdWFyZCBhZ2FpbnN0IGEgcHJvZHVjdGlvbiBidWlsZCB0aGF0IGNyYXNoZXMgb24gbG9hZC4KICoKICogV2hlbiB0aGUgUmVhY3QgdHJlZSB0aHJvd3MgZHVyaW5nIGluaXRpYWwgcmVuZGVyIChlLmcuIGEgbWlzc2luZyBwb2x5ZmlsbAogKiBzdWNoIGFzIGByZWdlbmVyYXRvclJ1bnRpbWVgKSwgcmVhY3Qtcm91dGVyIHJlbmRlcnMgaXRzIGRlZmF1bHQgZXJyb3IKICogYm91bmRhcnkgd2l0aCB0aGUgaGVhZGluZyAiVW5leHBlY3RlZCBBcHBsaWNhdGlvbiBFcnJvciEiIGFuZCB0aGUgcmF3CiAqIGV4Y2VwdGlvbiB0ZXh0LiBXaXRob3V0IHRoaXMgZ3VhcmQgZXZlcnkgZG93bnN0cmVhbSBsb2NhdG9yIHRpbWVzIG91dCB3aXRoCiAqIGEgZ2VuZXJpYyAiZWxlbWVudCBub3QgZm91bmQiLCBoaWRpbmcgdGhlIHJlYWwgcm9vdCBjYXVzZS4gVGhpcyBoZWxwZXIgZmFpbHMKICogZmFzdCB3aXRoIHRoZSBhY3R1YWwgZXhjZXB0aW9uIHNvIHRoZSBmYWlsdXJlIGlzIHNlbGYtZGlhZ25vc2luZy4KICovCmV4cG9ydCBhc3luYyBmdW5jdGlvbiBhc3NlcnRBcHBMb2FkZWQocGFnZSkgewogIGNvbnN0IGVycm9ySGVhZGluZyA9IHBhZ2UuZ2V0QnlSb2xlKCJoZWFkaW5nIiwgewogICAgbGV2ZWw6IDIsCiAgICBuYW1lOiAvVW5leHBlY3RlZCBBcHBsaWNhdGlvbiBFcnJvci9pLAogIH0pOwogIGlmIChhd2FpdCBlcnJvckhlYWRpbmcuaXNWaXNpYmxlKCkuY2F0Y2goKCkgPT4gZmFsc2UpKSB7CiAgICBjb25zdCBkZXRhaWwgPSBhd2FpdCBwYWdlCiAgICAgIC5nZXRCeVJvbGUoImhlYWRpbmciLCB7IGxldmVsOiAzIH0pCiAgICAgIC5maXJzdCgpCiAgICAgIC50ZXh0Q29udGVudCgpCiAgICAgIC5jYXRjaCgoKSA9PiAiKG5vIGRldGFpbCkiKTsKICAgIHRocm93IG5ldyBFcnJvcigKICAgICAgYEFwcGxpY2F0aW9uIGNyYXNoZWQgb24gbG9hZCDigJQgUmVhY3QgZXJyb3IgYm91bmRhcnkgcmVuZGVyZWQuXG5gICsKICAgICAgICBgUm9vdCBjYXVzZTogJHtkZXRhaWx9XG5gICsKICAgICAgICBgVGhpcyBpcyBhIHByb2R1Y3Rpb24gYnVpbGQgYnVnIChub3QgYSB0ZXN0IGJ1Zyk7IHRoZSBjaGF0IFVJIG5ldmVyIG1vdW50ZWQuYCwKICAgICk7CiAgfQp9Cg==
+// SPDX-License-Identifier: MIT
+// Purpose: Shared helpers for OpenSIN-Chat Playwright E2E tests.
+// Docs: frontend/tests/e2e/README.doc.md
+//
+// Centralises the login → create-workspace → seed-session → mock-onboarding
+// bootstrap so every spec starts from the same known state, and adds an
+// `assertAppLoaded` guard that turns a blank "element not found" timeout into
+// a precise diagnosis when a production build crashes on load (e.g. the
+// `regeneratorRuntime is not defined` regression that took down the whole
+// React tree before the `regenerator-runtime` polyfill was added to main.tsx).
+import { expect } from "@playwright/test";
+import fs from "fs";
+import path from "path";
+import os from "os";
+
+const TOKEN_CACHE_FILE = path.join(os.tmpdir(), "opensin-chat-e2e-token.txt");
+
+/**
+ * Authenticate against the running backend (single-user mode) and return the
+ * JWT. Username "admin" with an empty password matches the default dev/prod
+ * single-user configuration.
+ *
+ * In production the AUTH_TOKEN is set, so the caller must pass the live
+ * password via the OPENSIN_PASSWORD env var. Without that env, this helper
+ * falls back to an empty password (matching the no-auth dev config).
+ *
+ * Checks a temp-file token cache first to avoid hitting the production rate
+ * limiter when multiple test files call login() in quick succession. The
+ * cache is written by _token-cache.js::sharedLogin on the first successful
+ * login and is valid for ~30 days (JWT exp).
+ */
+export async function login(request) {
+  const password = process.env.OPENSIN_PASSWORD || "";
+
+  // Determine the absolute base URL — Playwright's request fixture uses
+  // playwright.config's baseURL (defaulting to localhost:38471), which is
+  // NOT the production server when we run against sinchat.delqhi.com. Honor
+  // APP_URL when set.
+  const base =
+    process.env.APP_URL ||
+    (typeof request !== "undefined" && request.context
+      ? request.context().baseURL?.()
+      : null) ||
+    "http://localhost:38471";
+  const url = `${base.replace(/\/$/, "")}/api/request-token`;
+
+  // Try cached token first (shared across test files via temp file)
+  try {
+    if (fs.existsSync(TOKEN_CACHE_FILE)) {
+      const cached = fs.readFileSync(TOKEN_CACHE_FILE, "utf-8").trim();
+      if (cached && cached.length > 20) return cached;
+    }
+  } catch {
+    // ignore read errors
+  }
+
+  const response = await request.post(url, {
+    headers: { "Content-Type": "application/json" },
+    data: `{ "username": "admin", "password": ${JSON.stringify(password)} }`,
+  });
+  expect(response.ok()).toBeTruthy();
+  const body = await response.json();
+  expect(body.valid).toBe(true);
+  expect(body.token).toBeTruthy();
+  const token = body.token;
+  // Sanity-check: token must look like a JWT with the encrypted password or
+  // a non-empty user id. If we see `p:null` we hit the dev fallback branch
+  // that returns a JWT the server treats as unauthenticated.
+  try {
+    const decoded = JSON.parse(
+      Buffer.from(token.split(".")[1], "base64").toString(),
+    );
+    if (decoded.p === null && !decoded.id) {
+      throw new Error(
+        `Login response is a dev-branch JWT (no password / no user id). ` +
+          `POST ${url} returned {valid:true,token:<p:null>}. ` +
+          `The server likely hit the no-AUTH_TOKEN fallback branch. ` +
+          `Set OPENSIN_PASSWORD and ensure request Content-Type is JSON.`,
+      );
+    }
+  } catch (err) {
+    if (err instanceof Error && err.name === "SyntaxError") {
+      // not a JWT — let downstream fail
+    } else {
+      throw err;
+    }
+  }
+
+  // Cache the token for subsequent calls
+  try {
+    fs.writeFileSync(TOKEN_CACHE_FILE, token);
+  } catch {
+    // ignore write errors
+  }
+
+  return token;
+}
+
+/**
+ * Get an existing workspace slug via the API, or create one if none exist.
+ * Reuses the first workspace to avoid hitting rate limits during E2E runs.
+ */
+export async function getOrCreateWorkspace(request, token) {
+  // Try to get an existing workspace first
+  const listResp = await request.get("/api/workspaces", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (listResp.ok()) {
+    try {
+      const { workspaces } = await listResp.json();
+      if (workspaces && workspaces.length > 0) {
+        return workspaces[0].slug;
+      }
+    } catch {}
+  }
+  // Fall back to creating one
+  return createWorkspace(request, token);
+}
+
+/**
+ * Create a throwaway workspace via the API so the test has a real slug to
+ * navigate to. The home page does not auto-create one on first load.
+ */
+export async function createWorkspace(request, token) {
+  const response = await request.post("/api/workspace/new", {
+    headers: { Authorization: `Bearer ${token}` },
+    data: { name: `e2e-${Date.now()}-${Math.random().toString(36).slice(2, 8)}` },
+  });
+  expect(response.ok()).toBeTruthy();
+  const { workspace } = await response.json();
+  expect(workspace?.slug).toBeTruthy();
+  return workspace.slug;
+}
+
+/**
+ * Seed the browser session with the auth token, user, and English locale
+ * before any application code reads localStorage, so PrivateRoute lets us
+ * through without an unauthenticated flash.
+ */
+export async function seedSession(page, token) {
+  await page.addInitScript((t) => {
+    window.localStorage.setItem("opensin_authToken", t);
+    window.localStorage.setItem(
+      "opensin_user",
+      // Include role: "admin" so SettingsSidebar shows all options
+      // (MenuOption hides groups when user?.role is undefined).
+      JSON.stringify({ username: "admin", role: "admin" }),
+    );
+    window.localStorage.setItem("opensin-demo-unlocked", "1");
+    window.localStorage.setItem("i18nextLng", "en");
+  }, token);
+}
+
+/**
+ * Intercept the onboarding check so PrivateRoute does not redirect to the
+ * onboarding flow. Works around a backend issue where `POST /api/onboarding`
+ * returns 200 but does not persist the onboarding-complete flag.
+ */
+export async function mockOnboardingCheck(page) {
+  await page.route("**/api/onboarding", async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({ onboardingComplete: true }),
+    });
+  });
+}
+
+/**
+ * Full bootstrap: log in, create a workspace, seed the session, mock
+ * onboarding, and navigate to the workspace chat page. Returns the slug.
+ *
+ * Pass `waitFor` to choose what to await after navigation:
+ *   - "attach"  (default) — wait for the attach button (chat composer ready)
+ *   - "textarea"           — wait for the prompt textarea (chat input ready)
+ */
+export async function bootstrapWorkspaceChat(
+  page,
+  request,
+  { waitFor = "attach" } = {},
+) {
+  const token = await login(request);
+  const slug = await getOrCreateWorkspace(request, token);
+  await seedSession(page, token);
+  await mockOnboardingCheck(page);
+
+  await page.goto(`/workspace/${slug}`, { waitUntil: "networkidle" });
+  await assertAppLoaded(page);
+
+  const selector =
+    waitFor === "textarea"
+      ? "#primary-prompt-input"
+      : '[data-testid="attach-item-trigger"]';
+  await page.locator(selector).first().waitFor({ state: "visible", timeout: 30000 });
+  return slug;
+}
+
+/**
+ * Guard against a production build that crashes on load.
+ *
+ * When the React tree throws during initial render (e.g. a missing polyfill
+ * such as `regeneratorRuntime`), react-router renders its default error
+ * boundary with the heading "Unexpected Application Error!" and the raw
+ * exception text. Without this guard every downstream locator times out with
+ * a generic "element not found", hiding the real root cause. This helper fails
+ * fast with the actual exception so the failure is self-diagnosing.
+ */
+export async function assertAppLoaded(page) {
+  const errorHeading = page.getByRole("heading", {
+    level: 2,
+    name: /Unexpected Application Error/i,
+  });
+  if (await errorHeading.isVisible().catch(() => false)) {
+    const detail = await page
+      .getByRole("heading", { level: 3 })
+      .first()
+      .textContent()
+      .catch(() => "(no detail)");
+    throw new Error(
+      `Application crashed on load — React error boundary rendered.\n` +
+        `Root cause: ${detail}\n` +
+        `This is a production build bug (not a test bug); the chat UI never mounted.`,
+    );
+  }
+}
