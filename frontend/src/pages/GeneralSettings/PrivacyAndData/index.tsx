@@ -45,7 +45,7 @@ export default function PrivacyAndDataHandling(): JSX.Element {
             </div>
           )}
         </div>
-      </div>
+      </AdminContentPanel>
     </div>
   );
 }
