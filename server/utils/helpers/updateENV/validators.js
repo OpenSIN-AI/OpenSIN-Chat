@@ -1,1 +1,284 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBQdXJwb3NlOiBWYWxpZGF0aW9uIGZ1bmN0aW9ucyBmb3IgRU5WIHZhcmlhYmxlIGNoZWNrcyBpbiB1cGRhdGVFTlYuCi8vIERvY3M6IHNlcnZlci91dGlscy9oZWxwZXJzL3VwZGF0ZUVOVi5kb2MubWQKCmNvbnN0IGNvbnNvbGVMb2dnZXIgPSByZXF1aXJlKCIuLi8uLi9sb2dnZXIvY29uc29sZS5qcyIpOwoKZnVuY3Rpb24gaXNOb3RFbXB0eShpbnB1dCA9ICIiKSB7CiAgcmV0dXJuICFpbnB1dCB8fCBpbnB1dC5sZW5ndGggPT09IDAgPyAiVmFsdWUgY2Fubm90IGJlIGVtcHR5IiA6IG51bGw7Cn0KCmZ1bmN0aW9uIG5vblplcm8oaW5wdXQgPSAiIikgewogIGlmIChpc05hTihOdW1iZXIoaW5wdXQpKSkgcmV0dXJuICJWYWx1ZSBtdXN0IGJlIGEgbnVtYmVyIjsKICByZXR1cm4gTnVtYmVyKGlucHV0KSA8PSAwID8gIlZhbHVlIG11c3QgYmUgZ3JlYXRlciB0aGFuIHplcm8iIDogbnVsbDsKfQoKZnVuY3Rpb24gaXNJbnRlZ2VyKGlucHV0ID0gIiIpIHsKICBpZiAoaXNOYU4oTnVtYmVyKGlucHV0KSkpIHJldHVybiAiVmFsdWUgbXVzdCBiZSBhIG51bWJlciI7CiAgcmV0dXJuIE51bWJlcihpbnB1dCk7Cn0KCmNvbnN0IEFMTE9XRURfVVJMX1NDSEVNRVMgPSBbImh0dHA6IiwgImh0dHBzOiJdOwoKZnVuY3Rpb24gdmFsaWRhdGVVcmwodXJsKSB7CiAgdHJ5IHsKICAgIGNvbnN0IHBhcnNlZCA9IG5ldyBVUkwodXJsKTsKICAgIGlmICghQUxMT1dFRF9VUkxfU0NIRU1FUy5pbmNsdWRlcyhwYXJzZWQucHJvdG9jb2wpKSB7CiAgICAgIHRocm93IG5ldyBFcnJvcihgVVJMIHNjaGVtZSAke3BhcnNlZC5wcm90b2NvbH0gbm90IGFsbG93ZWRgKTsKICAgIH0KICAgIHJldHVybiB1cmw7CiAgfSBjYXRjaCAoZSkgewogICAgdGhyb3cgbmV3IEVycm9yKGBJbnZhbGlkIFVSTDogJHtlLm1lc3NhZ2V9YCwgeyBjYXVzZTogZSB9KTsKICB9Cn0KCmZ1bmN0aW9uIGlzVmFsaWRVUkwoaW5wdXQgPSAiIikgewogIHRyeSB7CiAgICBjb25zdCBwYXJzZWQgPSBuZXcgVVJMKGlucHV0KTsKICAgIGlmICghQUxMT1dFRF9VUkxfU0NIRU1FUy5pbmNsdWRlcyhwYXJzZWQucHJvdG9jb2wpKSB7CiAgICAgIHJldHVybiBgVVJMIHNjaGVtZSAke3BhcnNlZC5wcm90b2NvbH0gaXMgbm90IGFsbG93ZWQuIE9ubHkgaHR0cDogYW5kIGh0dHBzOiBhcmUgcGVybWl0dGVkLmA7CiAgICB9CiAgICByZXR1cm4gbnVsbDsKICB9IGNhdGNoIHsKICAgIHJldHVybiAiVVJMIGlzIG5vdCBhIHZhbGlkIFVSTC4iOwogIH0KfQoKZnVuY3Rpb24gdmFsaWRPcGVuQUlLZXkoaW5wdXQgPSAiIikgewogIHJldHVybiBpbnB1dC5zdGFydHNXaXRoKCJzay0iKSA/IG51bGwgOiAiT3BlbkFJIEtleSBtdXN0IHN0YXJ0IHdpdGggc2stIjsKfQoKZnVuY3Rpb24gdmFsaWRBbnRocm9waWNBcGlLZXkoaW5wdXQgPSAiIikgewogIHJldHVybiBpbnB1dC5zdGFydHNXaXRoKCJzay1hbnQtIikKICAgID8gbnVsbAogICAgOiAiQW50aHJvcGljIEtleSBtdXN0IHN0YXJ0IHdpdGggc2stYW50LSI7Cn0KCmZ1bmN0aW9uIHZhbGlkTExNRXh0ZXJuYWxCYXNlUGF0aChpbnB1dCA9ICIiKSB7CiAgdHJ5IHsKICAgIG5ldyBVUkwoaW5wdXQpOwogICAgaWYgKCFpbnB1dC5pbmNsdWRlcygidjEiKSkgcmV0dXJuICJVUkwgbXVzdCBpbmNsdWRlIC92MSI7CiAgICBpZiAoaW5wdXQuc3BsaXQoIiIpLnNsaWNlKC0xKT8uWzBdID09PSAiLyIpCiAgICAgIHJldHVybiAiVVJMIGNhbm5vdCBlbmQgd2l0aCBhIHNsYXNoIjsKICAgIHJldHVybiBudWxsOwogIH0gY2F0Y2ggewogICAgcmV0dXJuICJOb3QgYSB2YWxpZCBVUkwiOwogIH0KfQoKZnVuY3Rpb24gdmFsaWRPbGxhbWFMTE1CYXNlUGF0aChpbnB1dCA9ICIiKSB7CiAgdHJ5IHsKICAgIG5ldyBVUkwoaW5wdXQpOwogICAgaWYgKGlucHV0LnNwbGl0KCIiKS5zbGljZSgtMSk/LlswXSA9PT0gIi8iKQogICAgICByZXR1cm4gIlVSTCBjYW5ub3QgZW5kIHdpdGggYSBzbGFzaCI7CiAgICByZXR1cm4gbnVsbDsKICB9IGNhdGNoIHsKICAgIHJldHVybiAiTm90IGEgdmFsaWQgVVJMIjsKICB9Cn0KCmZ1bmN0aW9uIHN1cHBvcnRlZFRUU1Byb3ZpZGVyKGlucHV0ID0gIiIpIHsKICBjb25zdCB2YWxpZFNlbGVjdGlvbiA9IFsKICAgICJuYXRpdmUiLAogICAgIm9wZW5haSIsCiAgICAiZWxldmVubGFicyIsCiAgICAicGlwZXJfbG9jYWwiLAogICAgImdlbmVyaWMtb3BlbmFpIiwKICAgICJrb2tvcm8iLAogICAgIm52aWRpYS1uaW0iLAogIF0uaW5jbHVkZXMoaW5wdXQpOwogIHJldHVybiB2YWxpZFNlbGVjdGlvbiA/IG51bGwgOiBgJHtpbnB1dH0gaXMgbm90IGEgdmFsaWQgVFRTIHByb3ZpZGVyLmA7Cn0KCmZ1bmN0aW9uIHN1cHBvcnRlZFNUVFByb3ZpZGVyKGlucHV0ID0gIiIpIHsKICBjb25zdCB2YWxpZFNlbGVjdGlvbiA9IFsKICAgICJuYXRpdmUiLAogICAgIm9wZW5haSIsCiAgICAiZGVlcGdyYW0iLAogICAgImdlbmVyaWMtb3BlbmFpIiwKICBdLmluY2x1ZGVzKGlucHV0KTsKICByZXR1cm4gdmFsaWRTZWxlY3Rpb24gPyBudWxsIDogYCR7aW5wdXR9IGlzIG5vdCBhIHZhbGlkIFNUVCBwcm92aWRlci5gOwp9CgpmdW5jdGlvbiB2YWxpZExvY2FsV2hpc3BlcihpbnB1dCA9ICIiKSB7CiAgY29uc3QgdmFsaWRTZWxlY3Rpb24gPSBbCiAgICAiWGVub3ZhL3doaXNwZXItc21hbGwiLAogICAgIlhlbm92YS93aGlzcGVyLWxhcmdlIiwKICBdLmluY2x1ZGVzKGlucHV0KTsKICByZXR1cm4gdmFsaWRTZWxlY3Rpb24KICAgID8gbnVsbAogICAgOiBgJHtpbnB1dH0gaXMgbm90IGEgdmFsaWQgV2hpc3BlciBtb2RlbCBzZWxlY3Rpb24uYDsKfQoKZnVuY3Rpb24gc3VwcG9ydGVkTExNKGlucHV0ID0gIiIpIHsKICBjb25zdCB2YWxpZFNlbGVjdGlvbiA9IFsKICAgICJvcGVuYWkiLAogICAgImFudGhyb3BpYyIsCiAgICAiZ2VtaW5pIiwKICAgICJsbXN0dWRpbyIsCiAgICAibG9jYWxhaSIsCiAgICAib2xsYW1hIiwKICAgICJmaXJld29ya3NhaSIsCiAgICAibWlzdHJhbCIsCiAgICAiaHVnZ2luZ2ZhY2UiLAogICAgImdyb3EiLAogICAgImxpdGVsbG0iLAogICAgImdlbmVyaWMtb3BlbmFpIiwKICAgICJ4YWkiLAogICAgIm9wZW5jb2RlLXplbiIsCiAgICAibnZpZGlhLW5pbSIsCiAgICAiZG9ja2VyLW1vZGVsLXJ1bm5lciIsCiAgICAib3BlbnNpbi1yb3V0ZXIiLAogIF0uaW5jbHVkZXMoaW5wdXQpOwogIHJldHVybiB2YWxpZFNlbGVjdGlvbiA/IG51bGwgOiBgJHtpbnB1dH0gaXMgbm90IGEgdmFsaWQgTExNIHByb3ZpZGVyLmA7Cn0KCmZ1bmN0aW9uIHN1cHBvcnRlZFRyYW5zY3JpcHRpb25Qcm92aWRlcihpbnB1dCA9ICIiKSB7CiAgY29uc3QgdmFsaWRTZWxlY3Rpb24gPSBbIm9wZW5haSIsICJsb2NhbCJdLmluY2x1ZGVzKGlucHV0KTsKICByZXR1cm4gdmFsaWRTZWxlY3Rpb24KICAgID8gbnVsbAogICAgOiBgJHtpbnB1dH0gaXMgbm90IGEgdmFsaWQgdHJhbnNjcmlwdGlvbiBtb2RlbCBwcm92aWRlci5gOwp9CgpmdW5jdGlvbiB2YWxpZEdlbWluaVNhZmV0eVNldHRpbmcoaW5wdXQgPSAiIikgewogIGNvbnN0IHZhbGlkTW9kZXMgPSBbCiAgICAiQkxPQ0tfTk9ORSIsCiAgICAiQkxPQ0tfT05MWV9ISUdIIiwKICAgICJCTE9DS19NRURJVU1fQU5EX0FCT1ZFIiwKICAgICJCTE9DS19MT1dfQU5EX0FCT1ZFIiwKICBdOwogIHJldHVybiB2YWxpZE1vZGVzLmluY2x1ZGVzKGlucHV0KQogICAgPyBudWxsCiAgICA6IGBJbnZhbGlkIFNhZmV0eSBzZXR0aW5nLiBNdXN0IGJlIG9uZSBvZiAke3ZhbGlkTW9kZXMuam9pbigiLCAiKX0uYDsKfQoKZnVuY3Rpb24gc3VwcG9ydGVkRW1iZWRkaW5nTW9kZWwoaW5wdXQgPSAiIikgewogIGNvbnN0IHN1cHBvcnRlZCA9IFsKICAgICJvcGVuYWkiLAogICAgImdlbWluaSIsCiAgICAibG9jYWxhaSIsCiAgICAibmF0aXZlIiwKICAgICJvbGxhbWEiLAogICAgImxtc3R1ZGlvIiwKICAgICJ2b3lhZ2VhaSIsCiAgICAibGl0ZWxsbSIsCiAgICAiZ2VuZXJpYy1vcGVuYWkiLAogICAgIm1pc3RyYWwiLAogIF07CiAgcmV0dXJuIHN1cHBvcnRlZC5pbmNsdWRlcyhpbnB1dCkKICAgID8gbnVsbAogICAgOiBgSW52YWxpZCBFbWJlZGRpbmcgbW9kZWwgdHlwZS4gTXVzdCBiZSBvbmUgb2YgJHtzdXBwb3J0ZWQuam9pbigiLCAiKX0uYDsKfQoKZnVuY3Rpb24gc3VwcG9ydGVkVmVjdG9yREIoaW5wdXQgPSAiIikgewogIGNvbnN0IHN1cHBvcnRlZCA9IFsKICAgICJjaHJvbWEiLAogICAgImNocm9tYWNsb3VkIiwKICAgICJwaW5lY29uZSIsCiAgICAibGFuY2VkYiIsCiAgICAid2VhdmlhdGUiLAogICAgInFkcmFudCIsCiAgICAibWlsdnVzIiwKICAgICJ6aWxsaXoiLAogICAgImFzdHJhIiwKICAgICJwZ3ZlY3RvciIsCiAgXTsKICByZXR1cm4gc3VwcG9ydGVkLmluY2x1ZGVzKGlucHV0KQogICAgPyBudWxsCiAgICA6IGBJbnZhbGlkIFZlY3RvckRCIHR5cGUuIE11c3QgYmUgb25lIG9mICR7c3VwcG9ydGVkLmpvaW4oIiwgIil9LmA7Cn0KCmZ1bmN0aW9uIHZhbGlkQ2hyb21hVVJMKGlucHV0ID0gIiIpIHsKICByZXR1cm4gaW5wdXQuc2xpY2UoLTEpID09PSAiLyIKICAgID8gYENocm9tYSBJbnN0YW5jZSBVUkwgc2hvdWxkIG5vdCBlbmQgaW4gYSB0cmFpbGluZyBzbGFzaC5gCiAgICA6IG51bGw7Cn0KCmZ1bmN0aW9uIHJlcXVpcmVzRm9yY2VNb2RlKF8sIGZvcmNlTW9kZUVuYWJsZWQgPSBmYWxzZSkgewogIHJldHVybiBmb3JjZU1vZGVFbmFibGVkID09PSB0cnVlID8gbnVsbCA6ICJDYW5ub3Qgc2V0IHRoaXMgc2V0dGluZy4iOwp9Cgphc3luYyBmdW5jdGlvbiB2YWxpZERvY2tlcml6ZWRVcmwoaW5wdXQgPSAiIikgewogIGlmICgKICAgIChwcm9jZXNzLmVudi5PUEVOU0lOX0NIQVRfUlVOVElNRSB8fCBwcm9jZXNzLmVudi5BTllUSElOR19MTE1fUlVOVElNRSkgIT09CiAgICAiZG9ja2VyIgogICkKICAgIHJldHVybiBudWxsOwoKICB0cnkgewogICAgY29uc3QgewogICAgICBpc1BvcnRJblVzZSwKICAgICAgZ2V0TG9jYWxIb3N0cywKICAgIH0gPSByZXF1aXJlKCIuLi9wb3J0QXZhaWxhYmlsaXR5Q2hlY2tlciIpOwogICAgY29uc3QgbG9jYWxJbnRlcmZhY2VzID0gZ2V0TG9jYWxIb3N0cygpOwogICAgY29uc3QgdXJsID0gbmV3IFVSTChpbnB1dCk7CiAgICBjb25zdCBob3N0bmFtZSA9IHVybC5ob3N0bmFtZS50b0xvd2VyQ2FzZSgpOwogICAgY29uc3QgcG9ydCA9IHBhcnNlSW50KHVybC5wb3J0LCAxMCk7CgogICAgLy8gSWYgbm90IGEgbG9vcGJhY2ssIHNraXAgdGhpcyBjaGVjay4KICAgIGlmICghbG9jYWxJbnRlcmZhY2VzLmluY2x1ZGVzKGhvc3RuYW1lKSkgcmV0dXJuIG51bGw7CiAgICBpZiAoaXNOYU4ocG9ydCkpIHJldHVybiAiSW52YWxpZCBVUkw6IFBvcnQgaXMgbm90IHNwZWNpZmllZCBvciBpbnZhbGlkIjsKCiAgICBjb25zdCBpc1BvcnRJblVzZUZyb21Eb2NrZXIgPSBhd2FpdCBpc1BvcnRJblVzZShwb3J0LCBob3N0bmFtZSk7CiAgICBpZiAoIWlzUG9ydEluVXNlRnJvbURvY2tlcikKICAgICAgcmV0dXJuICJQb3J0IGlzIG5vdCBydW5uaW5nIGEgcmVhY2hhYmxlIHNlcnZpY2Ugb24gbG9vcGJhY2sgYWRkcmVzcyBmcm9tIGluc2lkZSB0aGUgT3BlblNJTiBDaGF0IGNvbnRhaW5lci4gUGxlYXNlIHVzZSBob3N0LmRvY2tlci5pbnRlcm5hbCAoZm9yIGxpbnV4IHVzZSAxNzIuMTcuMC4xKSwgYSByZWFsIG1hY2hpbmUgaXAsIG9yIGRvbWFpbiB0byBjb25uZWN0IHRvIHlvdXIgc2VydmljZS4iOwogIH0gY2F0Y2ggKGVycm9yKSB7CiAgICBjb25zb2xlTG9nZ2VyLmVycm9yKGVycm9yLm1lc3NhZ2UpOwogICAgcmV0dXJuICJBbiBlcnJvciBvY2N1cnJlZCB3aGlsZSB2YWxpZGF0aW5nIHRoZSBVUkwiOwogIH0KCiAgcmV0dXJuIG51bGw7Cn0KCmZ1bmN0aW9uIHZhbGlkSHVnZ2luZ0ZhY2VFbmRwb2ludChpbnB1dCA9ICIiKSB7CiAgcmV0dXJuIGlucHV0LnNsaWNlKC02KSAhPT0gIi5jbG91ZCIKICAgID8gYFlvdXIgSEYgRW5kcG9pbnQgc2hvdWxkIGVuZCBpbiAiLmNsb3VkImAKICAgIDogbnVsbDsKfQoKZnVuY3Rpb24gbm9SZXN0cmljdGVkQ2hhcnMoaW5wdXQgPSAiIikgewogIGNvbnN0IHJlZ0V4cCA9IG5ldyBSZWdFeHAoL15bYS16QS1aMC05X1wtIUAkJV4mKigpO10rJC8pOwogIHJldHVybiAhcmVnRXhwLnRlc3QoaW5wdXQpCiAgICA/IGBZb3VyIHBhc3N3b3JkIGhhcyByZXN0cmljdGVkIGNoYXJhY3RlcnMgaW4gaXQuIEFsbG93ZWQgc3ltYm9scyBhcmUgXywtLCEsQCwkLCUsXiwmLCosKCwpLDtgCiAgICA6IG51bGw7Cn0KCi8qKgogKiBWYWxpZGF0ZXMgdGhlIFBvc3RncmVzIGNvbm5lY3Rpb24gc3RyaW5nIGZvciB0aGUgUEdWZWN0b3Igb3B0aW9ucy4KICogQHBhcmFtIHtzdHJpbmd9IGlucHV0IC0gVGhlIFBvc3RncmVzIGNvbm5lY3Rpb24gc3RyaW5nIHRvIHZhbGlkYXRlLgogKiBAcmV0dXJucyB7c3RyaW5nfSAtIEFuIGVycm9yIG1lc3NhZ2UgaWYgdGhlIGNvbm5lY3Rpb24gc3RyaW5nIGlzIGludmFsaWQsIG90aGVyd2lzZSBudWxsLgogKi8KYXN5bmMgZnVuY3Rpb24gbG9va3NMaWtlUG9zdGdyZXNDb25uZWN0aW9uU3RyaW5nKGNvbm5lY3Rpb25TdHJpbmcgPSBudWxsKSB7CiAgaWYgKCFjb25uZWN0aW9uU3RyaW5nIHx8ICFjb25uZWN0aW9uU3RyaW5nLnN0YXJ0c1dpdGgoInBvc3RncmVzcWw6Ly8iKSkKICAgIHJldHVybiAiSW52YWxpZCBQb3N0Z3JlcyBjb25uZWN0aW9uIHN0cmluZy4gTXVzdCBzdGFydCB3aXRoIHBvc3RncmVzcWw6Ly8iOwogIGlmIChjb25uZWN0aW9uU3RyaW5nLmluY2x1ZGVzKCIgIikpCiAgICByZXR1cm4gIkludmFsaWQgUG9zdGdyZXMgY29ubmVjdGlvbiBzdHJpbmcuIE11c3Qgbm90IGNvbnRhaW4gc3BhY2VzLiI7CiAgcmV0dXJuIG51bGw7Cn0KCm1vZHVsZS5leHBvcnRzID0gewogIGlzTm90RW1wdHksCiAgbm9uWmVybywKICBpc0ludGVnZXIsCiAgQUxMT1dFRF9VUkxfU0NIRU1FUywKICB2YWxpZGF0ZVVybCwKICBpc1ZhbGlkVVJMLAogIHZhbGlkT3BlbkFJS2V5LAogIHZhbGlkQW50aHJvcGljQXBpS2V5LAogIHZhbGlkTExNRXh0ZXJuYWxCYXNlUGF0aCwKICB2YWxpZE9sbGFtYUxMTUJhc2VQYXRoLAogIHN1cHBvcnRlZFRUU1Byb3ZpZGVyLAogIHN1cHBvcnRlZFNUVFByb3ZpZGVyLAogIHZhbGlkTG9jYWxXaGlzcGVyLAogIHN1cHBvcnRlZExMTSwKICBzdXBwb3J0ZWRUcmFuc2NyaXB0aW9uUHJvdmlkZXIsCiAgdmFsaWRHZW1pbmlTYWZldHlTZXR0aW5nLAogIHN1cHBvcnRlZEVtYmVkZGluZ01vZGVsLAogIHN1cHBvcnRlZFZlY3RvckRCLAogIHZhbGlkQ2hyb21hVVJMLAogIHJlcXVpcmVzRm9yY2VNb2RlLAogIHZhbGlkRG9ja2VyaXplZFVybCwKICB2YWxpZEh1Z2dpbmdGYWNlRW5kcG9pbnQsCiAgbm9SZXN0cmljdGVkQ2hhcnMsCiAgbG9va3NMaWtlUG9zdGdyZXNDb25uZWN0aW9uU3RyaW5nLAp9Owo=
+// SPDX-License-Identifier: MIT
+// Purpose: Validation functions for ENV variable checks in updateENV.
+// Docs: server/utils/helpers/updateENV.doc.md
+
+const consoleLogger = require("../../logger/console.js");
+
+function isNotEmpty(input = "") {
+  return !input || input.length === 0 ? "Value cannot be empty" : null;
+}
+
+function nonZero(input = "") {
+  if (isNaN(Number(input))) return "Value must be a number";
+  return Number(input) <= 0 ? "Value must be greater than zero" : null;
+}
+
+function isInteger(input = "") {
+  if (isNaN(Number(input))) return "Value must be a number";
+  return Number(input);
+}
+
+const ALLOWED_URL_SCHEMES = ["http:", "https:"];
+
+function validateUrl(url) {
+  try {
+    const parsed = new URL(url);
+    if (!ALLOWED_URL_SCHEMES.includes(parsed.protocol)) {
+      throw new Error(`URL scheme ${parsed.protocol} not allowed`);
+    }
+    return url;
+  } catch (e) {
+    throw new Error(`Invalid URL: ${e.message}`, { cause: e });
+  }
+}
+
+function isValidURL(input = "") {
+  try {
+    const parsed = new URL(input);
+    if (!ALLOWED_URL_SCHEMES.includes(parsed.protocol)) {
+      return `URL scheme ${parsed.protocol} is not allowed. Only http: and https: are permitted.`;
+    }
+    return null;
+  } catch {
+    return "URL is not a valid URL.";
+  }
+}
+
+function validOpenAIKey(input = "") {
+  return input.startsWith("sk-") ? null : "OpenAI Key must start with sk-";
+}
+
+function validAnthropicApiKey(input = "") {
+  return input.startsWith("sk-ant-")
+    ? null
+    : "Anthropic Key must start with sk-ant-";
+}
+
+function validLLMExternalBasePath(input = "") {
+  try {
+    new URL(input);
+    if (!input.includes("v1")) return "URL must include /v1";
+    if (input.split("").slice(-1)?.[0] === "/")
+      return "URL cannot end with a slash";
+    return null;
+  } catch {
+    return "Not a valid URL";
+  }
+}
+
+function validOllamaLLMBasePath(input = "") {
+  try {
+    new URL(input);
+    if (input.split("").slice(-1)?.[0] === "/")
+      return "URL cannot end with a slash";
+    return null;
+  } catch {
+    return "Not a valid URL";
+  }
+}
+
+function supportedTTSProvider(input = "") {
+  const validSelection = [
+    "native",
+    "openai",
+    "elevenlabs",
+    "piper_local",
+    "generic-openai",
+    "kokoro",
+    "nvidia-nim",
+  ].includes(input);
+  return validSelection ? null : `${input} is not a valid TTS provider.`;
+}
+
+function supportedSTTProvider(input = "") {
+  const validSelection = [
+    "native",
+    "openai",
+    "deepgram",
+    "generic-openai",
+  ].includes(input);
+  return validSelection ? null : `${input} is not a valid STT provider.`;
+}
+
+function validLocalWhisper(input = "") {
+  const validSelection = [
+    "Xenova/whisper-small",
+    "Xenova/whisper-large",
+  ].includes(input);
+  return validSelection
+    ? null
+    : `${input} is not a valid Whisper model selection.`;
+}
+
+function supportedLLM(input = "") {
+  const validSelection = [
+    "openai",
+    "anthropic",
+    "gemini",
+    "lmstudio",
+    "localai",
+    "ollama",
+    "fireworksai",
+    "mistral",
+    "huggingface",
+    "groq",
+    "litellm",
+    "generic-openai",
+    "xai",
+    "opencode-zen",
+    "nvidia-nim",
+    "docker-model-runner",
+    "opensin-router",
+  ].includes(input);
+  return validSelection ? null : `${input} is not a valid LLM provider.`;
+}
+
+function supportedTranscriptionProvider(input = "") {
+  const validSelection = ["openai", "local"].includes(input);
+  return validSelection
+    ? null
+    : `${input} is not a valid transcription model provider.`;
+}
+
+function validGeminiSafetySetting(input = "") {
+  const validModes = [
+    "BLOCK_NONE",
+    "BLOCK_ONLY_HIGH",
+    "BLOCK_MEDIUM_AND_ABOVE",
+    "BLOCK_LOW_AND_ABOVE",
+  ];
+  return validModes.includes(input)
+    ? null
+    : `Invalid Safety setting. Must be one of ${validModes.join(", ")}.`;
+}
+
+function supportedEmbeddingModel(input = "") {
+  const supported = [
+    "openai",
+    "gemini",
+    "localai",
+    "native",
+    "ollama",
+    "lmstudio",
+    "voyageai",
+    "litellm",
+    "generic-openai",
+    "mistral",
+  ];
+  return supported.includes(input)
+    ? null
+    : `Invalid Embedding model type. Must be one of ${supported.join(", ")}.`;
+}
+
+function supportedVectorDB(input = "") {
+  const supported = [
+    "chroma",
+    "chromacloud",
+    "pinecone",
+    "lancedb",
+    "weaviate",
+    "qdrant",
+    "milvus",
+    "zilliz",
+    "astra",
+    "pgvector",
+  ];
+  return supported.includes(input)
+    ? null
+    : `Invalid VectorDB type. Must be one of ${supported.join(", ")}.`;
+}
+
+function validChromaURL(input = "") {
+  return input.slice(-1) === "/"
+    ? `Chroma Instance URL should not end in a trailing slash.`
+    : null;
+}
+
+function requiresForceMode(_, forceModeEnabled = false) {
+  return forceModeEnabled === true ? null : "Cannot set this setting.";
+}
+
+async function validDockerizedUrl(input = "") {
+  if (
+    (process.env.OPENSIN_CHAT_RUNTIME || process.env.ANYTHING_LLM_RUNTIME) !==
+    "docker"
+  )
+    return null;
+
+  try {
+    const {
+      isPortInUse,
+      getLocalHosts,
+    } = require("../portAvailabilityChecker");
+    const localInterfaces = getLocalHosts();
+    const url = new URL(input);
+    const hostname = url.hostname.toLowerCase();
+    const port = parseInt(url.port, 10);
+
+    // If not a loopback, skip this check.
+    if (!localInterfaces.includes(hostname)) return null;
+    if (isNaN(port)) return "Invalid URL: Port is not specified or invalid";
+
+    const isPortInUseFromDocker = await isPortInUse(port, hostname);
+    if (!isPortInUseFromDocker)
+      return "Port is not running a reachable service on loopback address from inside the OpenSIN Chat container. Please use host.docker.internal (for linux use 172.17.0.1), a real machine ip, or domain to connect to your service.";
+  } catch (error) {
+    consoleLogger.error(error.message);
+    return "An error occurred while validating the URL";
+  }
+
+  return null;
+}
+
+function validHuggingFaceEndpoint(input = "") {
+  return input.slice(-6) !== ".cloud"
+    ? `Your HF Endpoint should end in ".cloud"`
+    : null;
+}
+
+function noRestrictedChars(input = "") {
+  const regExp = new RegExp(/^[a-zA-Z0-9_\-!@$%^&*();]+$/);
+  return !regExp.test(input)
+    ? `Your password has restricted characters in it. Allowed symbols are _,-,!,@,$,%,^,&,*,(,),;`
+    : null;
+}
+
+/**
+ * Validates the Postgres connection string for the PGVector options.
+ * @param {string} input - The Postgres connection string to validate.
+ * @returns {string} - An error message if the connection string is invalid, otherwise null.
+ */
+async function looksLikePostgresConnectionString(connectionString = null) {
+  if (!connectionString || !connectionString.startsWith("postgresql://"))
+    return "Invalid Postgres connection string. Must start with postgresql://";
+  if (connectionString.includes(" "))
+    return "Invalid Postgres connection string. Must not contain spaces.";
+  return null;
+}
+
+module.exports = {
+  isNotEmpty,
+  nonZero,
+  isInteger,
+  ALLOWED_URL_SCHEMES,
+  validateUrl,
+  isValidURL,
+  validOpenAIKey,
+  validAnthropicApiKey,
+  validLLMExternalBasePath,
+  validOllamaLLMBasePath,
+  supportedTTSProvider,
+  supportedSTTProvider,
+  validLocalWhisper,
+  supportedLLM,
+  supportedTranscriptionProvider,
+  validGeminiSafetySetting,
+  supportedEmbeddingModel,
+  supportedVectorDB,
+  validChromaURL,
+  requiresForceMode,
+  validDockerizedUrl,
+  validHuggingFaceEndpoint,
+  noRestrictedChars,
+  looksLikePostgresConnectionString,
+};
