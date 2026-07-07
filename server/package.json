@@ -76,7 +76,7 @@
     "jsonwebtoken": "9.0.3",
     "langchain": "1.5.2",
     "marked": "15.0.12",
-    "mime": "^3.0.0",
+    "mime": "^4.1.0",
     "moment": "^2.29.4",
     "mssql": "^12.7.0",
     "multer": "2.2.0",
