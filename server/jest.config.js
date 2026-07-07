@@ -41,4 +41,11 @@ module.exports = {
     // modules) — map to a tiny crypto.randomUUID-backed shim in tests.
     "^uuid$": "<rootDir>/__tests__/helpers/uuidShim.js",
   },
+  // Issue #373: forceExit ensures Jest terminates even if a stray timer
+  // or DB handle keeps the event loop alive. --detectOpenHandles is added
+  // to the test script in package.json so leaks are surfaced in CI output.
+  forceExit: true,
+  // Detect open handles so the "worker failed to exit gracefully" warning
+  // includes a stack trace pointing at the offending resource.
+  detectOpenHandles: true,
 };

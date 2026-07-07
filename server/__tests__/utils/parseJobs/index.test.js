@@ -14,24 +14,20 @@
 //
 // Lifecycle covered: create → processing → completed / failed → sweep (TTL) →
 // recovery (stalled-on-boot). Plus workspace/user scoping.
+//
+// Refactored in #374 to use the shared in-memory SQLite test helper instead
+// of a bespoke jest.mock("../../../utils/prisma") block.
 
-const Database = require("better-sqlite3");
+const {
+  createInMemoryDb,
+  closeInMemoryDb,
+  clearTables,
+} = require("../../helpers/inMemoryDb");
 
-// Back the prisma raw-SQL surface with a real in-memory SQLite DB. Prisma's
-// $executeRawUnsafe / $queryRawUnsafe both take (sql, ...positionalParams)
-// with `?` placeholders — exactly what better-sqlite3 accepts positionally.
-jest.mock("../../../utils/prisma", () => {
-  const BetterSqlite3 = require("better-sqlite3");
-  const db = new BetterSqlite3(":memory:");
-  return {
-    __db: db,
-    $executeRawUnsafe: async (sql, ...params) =>
-      db.prepare(sql).run(...params).changes,
-    $queryRawUnsafe: async (sql, ...params) => db.prepare(sql).all(...params),
-  };
-});
+// Create the in-memory DB and install the prisma mock. The helper handles
+// the jest.doMock call so the code-under-test picks up this instance.
+const { prisma, __db } = createInMemoryDb("../../../utils/prisma");
 
-const prisma = require("../../../utils/prisma");
 const { ParseJobs, JOB_STATUS, recoverStalledJobs } = require("../../../utils/parseJobs");
 
 const WS = 1;
@@ -40,12 +36,12 @@ const USER = 10;
 
 /** Read a raw row straight from the underlying DB (bypasses scoping). */
 function rawRow(id) {
-  return prisma.__db.prepare("SELECT * FROM parse_jobs WHERE id = ?").get(id);
+  return __db.prepare("SELECT * FROM parse_jobs WHERE id = ?").get(id);
 }
 
 /** Force a job's finishedAt to N minutes in the past (SQLite UTC format). */
 function backdateFinishedAt(id, minutesAgo) {
-  prisma.__db
+  __db
     .prepare(`UPDATE parse_jobs SET finishedAt = datetime('now', ?) WHERE id = ?`)
     .run(`-${minutesAgo} minutes`, id);
 }
@@ -53,12 +49,11 @@ function backdateFinishedAt(id, minutesAgo) {
 afterEach(() => {
   // Wipe rows between tests so each starts from a clean table. The table
   // itself is created lazily by ensureTable() on the first create()/get().
-  try {
-    prisma.__db.prepare("DELETE FROM parse_jobs").run();
-  } catch {
-    // table not created yet — nothing to clean.
-  }
+  clearTables(__db, ["parse_jobs"]);
 });
+
+// Issue #373: close the native SQLite handle to prevent open-handle leaks.
+afterAll(() => closeInMemoryDb({ prisma, __db }));
 
 describe("ParseJobs store — lifecycle", () => {
   it("creates a pending job with the expected shape", async () => {
@@ -226,7 +221,7 @@ describe("ParseJobs store — TTL sweep", () => {
 
     // Backdate createdAt far into the past — sweep only looks at finishedAt,
     // which is NULL here, so these must survive.
-    prisma.__db
+    __db
       .prepare(`UPDATE parse_jobs SET createdAt = datetime('now','-2 days')`)
       .run();
 
@@ -262,7 +257,7 @@ describe("ParseJobs store — stalled-job recovery on boot", () => {
     // Server crashed between ParseJobs.create() and markProcessing() — the
     // row is stuck in "pending" forever without this recovery.
     const orphan = await ParseJobs.create({ workspaceId: WS, originalname: "orphan.pdf" });
-    prisma.__db
+    __db
       .prepare(`UPDATE parse_jobs SET createdAt = datetime('now','-5 minutes') WHERE id = ?`)
       .run(orphan.id);
 
@@ -353,7 +348,7 @@ describe("ParseJobs store — corrupted data resilience", () => {
     const { id } = await ParseJobs.create({ workspaceId: WS, originalname: "corrupt.pdf" });
     await ParseJobs.markCompleted(id, [{ id: 1 }]);
     // Simulate on-disk corruption / partial write of the files column.
-    prisma.__db
+    __db
       .prepare(`UPDATE parse_jobs SET files = '{"broken' WHERE id = ?`)
       .run(id);
 
