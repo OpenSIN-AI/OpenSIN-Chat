@@ -1,1 +1,458 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLwovLyBJbi1hcHAgZGV2ZWxvcGVyIGRvY3VtZW50YXRpb24gcmVuZGVyZWQgYXQgL2RvY3MgYW5kIC9kb2NzLzpzbHVnLgovLyBDb250ZW50IGlzIGN1cmF0ZWQgZnJvbSB0aGUgcmVwb3NpdG9yeSdzIGRvY3MvIGZvbGRlciAoc2VlIGRvY3NNYW5pZmVzdC50cykuCmltcG9ydCB7IHVzZUNhbGxiYWNrLCB1c2VFZmZlY3QsIHVzZU1lbW8sIHVzZVJlZiwgdXNlU3RhdGUgfSBmcm9tICJyZWFjdCI7CmltcG9ydCB7IHVzZVRyYW5zbGF0aW9uIH0gZnJvbSAicmVhY3QtaTE4bmV4dCI7CmltcG9ydCB7IExpbmssIHVzZVBhcmFtcyB9IGZyb20gInJlYWN0LXJvdXRlci1kb20iOwppbXBvcnQgeyBBcnJvd0xlZnQgfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvQXJyb3dMZWZ0IjsKaW1wb3J0IHsgQXJyb3dSaWdodCB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9BcnJvd1JpZ2h0IjsKaW1wb3J0IHsgTWFnbmlmeWluZ0dsYXNzIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL01hZ25pZnlpbmdHbGFzcyI7CmltcG9ydCB7IEJvb2tPcGVuIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL0Jvb2tPcGVuIjsKaW1wb3J0IHsgTGlzdCB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9MaXN0IjsKaW1wb3J0IHsgVGV4dEFsaWduTGVmdCB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9UZXh0QWxpZ25MZWZ0IjsKaW1wb3J0IHsgWCB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9YIjsKaW1wb3J0IHsgR2l0aHViTG9nbyB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9HaXRodWJMb2dvIjsKaW1wb3J0IHBhdGhzIGZyb20gIkAvdXRpbHMvcGF0aHMiOwppbXBvcnQgVGhlbWVUb2dnbGUgZnJvbSAiQC9jb21wb25lbnRzL1RoZW1lVG9nZ2xlIjsKaW1wb3J0IERvY3NNYXJrZG93biwgeyB0eXBlIERvY0hlYWRpbmcgfSBmcm9tICIuL0RvY3NNYXJrZG93biI7CmltcG9ydCBEb2NzVG9jIGZyb20gIi4vRG9jc1RvYyI7CmltcG9ydCBEb2NzTGFuZGluZyBmcm9tICIuL0RvY3NMYW5kaW5nIjsKaW1wb3J0IHsKICBnZXRDYXRlZ29yeUxhYmVsLAogIGdldERvY0J5U2x1ZywKICBnZXREb2NDb250ZW50LAogIGdldEdyb3VwZWREb2NzLAogIGdldEFkamFjZW50RG9jcywKICBnZXRFZGl0VXJsLAogIERPQ19FTlRSSUVTLAp9IGZyb20gIi4vZG9jc01hbmlmZXN0IjsKaW1wb3J0ICIuL2RvY3MuY3NzIjsKCmZ1bmN0aW9uIERvY3NTaWRlYmFyKHsKICBhY3RpdmVTbHVnLAogIHF1ZXJ5LAogIHNldFF1ZXJ5LAogIG9uTmF2aWdhdGUsCn06IHsKICBhY3RpdmVTbHVnOiBzdHJpbmc7CiAgcXVlcnk6IHN0cmluZzsKICBzZXRRdWVyeTogKHY6IHN0cmluZykgPT4gdm9pZDsKICBvbk5hdmlnYXRlOiAoKSA9PiB2b2lkOwp9KSB7CiAgY29uc3QgeyB0IH0gPSB1c2VUcmFuc2xhdGlvbigpOwogIGNvbnN0IG5vcm1hbGl6ZWRRdWVyeSA9IHF1ZXJ5LnRyaW0oKS50b0xvd2VyQ2FzZSgpOwoKICBjb25zdCBncm91cGVkID0gdXNlTWVtbygoKSA9PiB7CiAgICBjb25zdCBncm91cHMgPSBnZXRHcm91cGVkRG9jcygpOwogICAgaWYgKCFub3JtYWxpemVkUXVlcnkpIHJldHVybiBncm91cHM7CiAgICByZXR1cm4gZ3JvdXBzCiAgICAgIC5tYXAoKGdyb3VwKSA9PiAoewogICAgICAgIGNhdGVnb3J5OiBncm91cC5jYXRlZ29yeSwKICAgICAgICBlbnRyaWVzOiBncm91cC5lbnRyaWVzLmZpbHRlcigKICAgICAgICAgIChlbnRyeSkgPT4KICAgICAgICAgICAgZW50cnkudGl0bGUudG9Mb3dlckNhc2UoKS5pbmNsdWRlcyhub3JtYWxpemVkUXVlcnkpIHx8CiAgICAgICAgICAgIGVudHJ5LmRlc2NyaXB0aW9uLnRvTG93ZXJDYXNlKCkuaW5jbHVkZXMobm9ybWFsaXplZFF1ZXJ5KSwKICAgICAgICApLAogICAgICB9KSkKICAgICAgLmZpbHRlcigoZ3JvdXApID0+IGdyb3VwLmVudHJpZXMubGVuZ3RoID4gMCk7CiAgfSwgW25vcm1hbGl6ZWRRdWVyeV0pOwoKICByZXR1cm4gKAogICAgPG5hdgogICAgICBhcmlhLWxhYmVsPXt0KCJjb21tb24uZG9jc05hdkxhYmVsIil9CiAgICAgIGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCBnYXAtNCBoLWZ1bGwiCiAgICA+CiAgICAgIDxkaXYgY2xhc3NOYW1lPSJyZWxhdGl2ZSI+CiAgICAgICAgPE1hZ25pZnlpbmdHbGFzcwogICAgICAgICAgY2xhc3NOYW1lPSJhYnNvbHV0ZSBsZWZ0LTMgdG9wLTEvMiAtdHJhbnNsYXRlLXktMS8yIHctNCBoLTQgdGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSIKICAgICAgICAgIGFyaWEtaGlkZGVuPSJ0cnVlIgogICAgICAgIC8+CiAgICAgICAgPGlucHV0CiAgICAgICAgICB0eXBlPSJzZWFyY2giCiAgICAgICAgICB2YWx1ZT17cXVlcnl9CiAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IHNldFF1ZXJ5KGUudGFyZ2V0LnZhbHVlKX0KICAgICAgICAgIHBsYWNlaG9sZGVyPXt0KCJjb21tb24uZG9jc1NlYXJjaFBsYWNlaG9sZGVyIil9CiAgICAgICAgICBhcmlhLWxhYmVsPXt0KCJjb21tb24uZG9jc1NlYXJjaExhYmVsIil9CiAgICAgICAgICBjbGFzc05hbWU9InctZnVsbCBwbC05IHByLTMgcHktMiByb3VuZGVkLWxnIGJnLXRoZW1lLWJnLXNlY29uZGFyeSB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBwbGFjZWhvbGRlcjp0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5IGJvcmRlciBib3JkZXItdGhlbWUtc2lkZWJhci1ib3JkZXIgZm9jdXM6b3V0bGluZS1ub25lIGZvY3VzLXZpc2libGU6cmluZy0yIGZvY3VzLXZpc2libGU6cmluZy1wcmltYXJ5LWJ1dHRvbiB0ZXh0LXNtIgogICAgICAgIC8+CiAgICAgIDwvZGl2PgoKICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgZ2FwLTUgb3ZlcmZsb3cteS1hdXRvIHByLTEiPgogICAgICAgIHtncm91cGVkLmxlbmd0aCA9PT0gMCA/ICgKICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSB0ZXh0LXNtIHB4LTEiPgogICAgICAgICAgICB7dCgiY29tbW9uLm5vUmVzdWx0c0ZvclF1ZXJ5IiwgeyBxdWVyeSB9KX0KICAgICAgICAgIDwvcD4KICAgICAgICApIDogKAogICAgICAgICAgZ3JvdXBlZC5tYXAoKGdyb3VwKSA9PiAoCiAgICAgICAgICAgIDxkaXYga2V5PXtncm91cC5jYXRlZ29yeX0gY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIGdhcC0xIj4KICAgICAgICAgICAgICA8aDIgY2xhc3NOYW1lPSJ0ZXh0LXhzIGZvbnQtc2VtaWJvbGQgdXBwZXJjYXNlIHRyYWNraW5nLXdpZGUgdGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSBweC0yIG1iLTEiPgogICAgICAgICAgICAgICAge2dldENhdGVnb3J5TGFiZWwoZ3JvdXAuY2F0ZWdvcnksIHQpfQogICAgICAgICAgICAgIDwvaDI+CiAgICAgICAgICAgICAge2dyb3VwLmVudHJpZXMubWFwKChlbnRyeSkgPT4gewogICAgICAgICAgICAgICAgY29uc3QgaXNBY3RpdmUgPSBlbnRyeS5zbHVnID09PSBhY3RpdmVTbHVnOwogICAgICAgICAgICAgICAgcmV0dXJuICgKICAgICAgICAgICAgICAgICAgPExpbmsKICAgICAgICAgICAgICAgICAgICBrZXk9e2VudHJ5LnNsdWd9CiAgICAgICAgICAgICAgICAgICAgdG89e3BhdGhzLmFwcERvY3MoYC8ke2VudHJ5LnNsdWd9YCl9CiAgICAgICAgICAgICAgICAgICAgb25DbGljaz17b25OYXZpZ2F0ZX0KICAgICAgICAgICAgICAgICAgICBhcmlhLWN1cnJlbnQ9e2lzQWN0aXZlID8gInBhZ2UiIDogdW5kZWZpbmVkfQogICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT17YHRleHQtc20gcHgtMiBweS0xLjUgcm91bmRlZC1tZCB0cmFuc2l0aW9uLWNvbG9ycyAkewogICAgICAgICAgICAgICAgICAgICAgaXNBY3RpdmUKICAgICAgICAgICAgICAgICAgICAgICAgPyAiYmctdGhlbWUtc2lkZWJhci1pdGVtLWhvdmVyIHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IGZvbnQtbWVkaXVtIgogICAgICAgICAgICAgICAgICAgICAgICA6ICJ0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5IGhvdmVyOmJnLXRoZW1lLXNpZGViYXItaXRlbS1ob3ZlciBob3Zlcjp0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSIKICAgICAgICAgICAgICAgICAgICB9YH0KICAgICAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgICAgIHtlbnRyeS50aXRsZX0KICAgICAgICAgICAgICAgICAgPC9MaW5rPgogICAgICAgICAgICAgICAgKTsKICAgICAgICAgICAgICB9KX0KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICApKQogICAgICAgICl9CiAgICAgIDwvZGl2PgogICAgPC9uYXY+CiAgKTsKfQoKZnVuY3Rpb24gRG9jc1BhZ2luYXRpb24oeyBzbHVnIH06IHsgc2x1Zzogc3RyaW5nIH0pIHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgY29uc3QgeyBwcmV2LCBuZXh0IH0gPSBnZXRBZGphY2VudERvY3Moc2x1Zyk7CiAgaWYgKCFwcmV2ICYmICFuZXh0KSByZXR1cm4gbnVsbDsKCiAgcmV0dXJuICgKICAgIDxuYXYKICAgICAgYXJpYS1sYWJlbD17dCgiY29tbW9uLmRvY3NOYXZMYWJlbCIpfQogICAgICBjbGFzc05hbWU9Im10LTEyIHB0LTYgYm9yZGVyLXQgYm9yZGVyLXRoZW1lLXNpZGViYXItYm9yZGVyIGdyaWQgZ3JpZC1jb2xzLTEgc206Z3JpZC1jb2xzLTIgZ2FwLTQiCiAgICA+CiAgICAgIHtwcmV2ID8gKAogICAgICAgIDxMaW5rCiAgICAgICAgICB0bz17cGF0aHMuYXBwRG9jcyhgLyR7cHJldi5zbHVnfWApfQogICAgICAgICAgY2xhc3NOYW1lPSJncm91cCBmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMyByb3VuZGVkLWxnIGJvcmRlciBib3JkZXItdGhlbWUtc2lkZWJhci1ib3JkZXIgcC00IHRyYW5zaXRpb24tY29sb3JzIGhvdmVyOmJvcmRlci1wcmltYXJ5LWJ1dHRvbiIKICAgICAgICA+CiAgICAgICAgICA8QXJyb3dMZWZ0CiAgICAgICAgICAgIGNsYXNzTmFtZT0idy00IGgtNCBzaHJpbmstMCB0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5IGdyb3VwLWhvdmVyOnRleHQtcHJpbWFyeS1idXR0b24iCiAgICAgICAgICAgIGFyaWEtaGlkZGVuPSJ0cnVlIgogICAgICAgICAgLz4KICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCBtaW4tdy0wIj4KICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJ0ZXh0LXhzIHRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkiPgogICAgICAgICAgICAgIHt0KCJjb21tb24uZG9jc1ByZXZpb3VzIil9CiAgICAgICAgICAgIDwvc3Bhbj4KICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJ0ZXh0LXNtIGZvbnQtbWVkaXVtIHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IHRydW5jYXRlIj4KICAgICAgICAgICAgICB7cHJldi50aXRsZX0KICAgICAgICAgICAgPC9zcGFuPgogICAgICAgICAgPC9zcGFuPgogICAgICAgIDwvTGluaz4KICAgICAgKSA6ICgKICAgICAgICA8c3BhbiAvPgogICAgICApfQogICAgICB7bmV4dCA/ICgKICAgICAgICA8TGluawogICAgICAgICAgdG89e3BhdGhzLmFwcERvY3MoYC8ke25leHQuc2x1Z31gKX0KICAgICAgICAgIGNsYXNzTmFtZT0iZ3JvdXAgZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1lbmQgZ2FwLTMgcm91bmRlZC1sZyBib3JkZXIgYm9yZGVyLXRoZW1lLXNpZGViYXItYm9yZGVyIHAtNCB0ZXh0LXJpZ2h0IHRyYW5zaXRpb24tY29sb3JzIGhvdmVyOmJvcmRlci1wcmltYXJ5LWJ1dHRvbiIKICAgICAgICA+CiAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgbWluLXctMCI+CiAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0idGV4dC14cyB0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5Ij4KICAgICAgICAgICAgICB7dCgiY29tbW9uLmRvY3NOZXh0Iil9CiAgICAgICAgICAgIDwvc3Bhbj4KICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJ0ZXh0LXNtIGZvbnQtbWVkaXVtIHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IHRydW5jYXRlIj4KICAgICAgICAgICAgICB7bmV4dC50aXRsZX0KICAgICAgICAgICAgPC9zcGFuPgogICAgICAgICAgPC9zcGFuPgogICAgICAgICAgPEFycm93UmlnaHQKICAgICAgICAgICAgY2xhc3NOYW1lPSJ3LTQgaC00IHNocmluay0wIHRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkgZ3JvdXAtaG92ZXI6dGV4dC1wcmltYXJ5LWJ1dHRvbiIKICAgICAgICAgICAgYXJpYS1oaWRkZW49InRydWUiCiAgICAgICAgICAvPgogICAgICAgIDwvTGluaz4KICAgICAgKSA6ICgKICAgICAgICA8c3BhbiAvPgogICAgICApfQogICAgPC9uYXY+CiAgKTsKfQoKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gRG9jcygpIHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgY29uc3QgeyBzbHVnIH0gPSB1c2VQYXJhbXMoKTsKICBjb25zdCBbcXVlcnksIHNldFF1ZXJ5XSA9IHVzZVN0YXRlKCIiKTsKICBjb25zdCBbbW9iaWxlTmF2T3Blbiwgc2V0TW9iaWxlTmF2T3Blbl0gPSB1c2VTdGF0ZShmYWxzZSk7CiAgY29uc3QgW21vYmlsZVRvY09wZW4sIHNldE1vYmlsZVRvY09wZW5dID0gdXNlU3RhdGUoZmFsc2UpOwogIGNvbnN0IFtoZWFkaW5ncywgc2V0SGVhZGluZ3NdID0gdXNlU3RhdGU8RG9jSGVhZGluZ1tdPihbXSk7CiAgY29uc3QgW21haW5FbCwgc2V0TWFpbkVsXSA9IHVzZVN0YXRlPEhUTUxFbGVtZW50IHwgbnVsbD4obnVsbCk7CiAgY29uc3QgbW9iaWxlTmF2UmVmID0gdXNlUmVmPEhUTUxEaXZFbGVtZW50PihudWxsKTsKICBjb25zdCBtb2JpbGVUb2NSZWYgPSB1c2VSZWY8SFRNTERpdkVsZW1lbnQ+KG51bGwpOwogIGNvbnN0IGVudHJ5ID0gdXNlTWVtbygoKSA9PiAoc2x1ZyA/IGdldERvY0J5U2x1ZyhzbHVnKSA6IG51bGwpLCBbc2x1Z10pOwogIGNvbnN0IGNvbnRlbnQgPSB1c2VNZW1vKAogICAgKCkgPT4gKGVudHJ5ID8gZ2V0RG9jQ29udGVudChlbnRyeS5maWxlKSA6IG51bGwpLAogICAgW3NsdWddLAogICk7CgogIGNvbnN0IGhhbmRsZUhlYWRpbmdzID0gdXNlQ2FsbGJhY2soKG5leHQ6IERvY0hlYWRpbmdbXSkgPT4gewogICAgc2V0SGVhZGluZ3MobmV4dCk7CiAgfSwgW10pOwoKICAvLyBLZXlib2FyZCBzaG9ydGN1dDogIi8iIGZvY3VzZXMgdGhlIHNlYXJjaCBpbnB1dC4KICB1c2VFZmZlY3QoKCkgPT4gewogICAgY29uc3QgaGFuZGxlS2V5RG93biA9IChlOiBLZXlib2FyZEV2ZW50KSA9PiB7CiAgICAgIGlmIChlLmtleSA9PT0gIi8iICYmICFtb2JpbGVOYXZPcGVuKSB7CiAgICAgICAgY29uc3QgdGFyZ2V0ID0gZS50YXJnZXQgYXMgSFRNTEVsZW1lbnQ7CiAgICAgICAgaWYgKHRhcmdldC50YWdOYW1lID09PSAiSU5QVVQiIHx8IHRhcmdldC50YWdOYW1lID09PSAiVEVYVEFSRUEiIHx8IHRhcmdldC5pc0NvbnRlbnRFZGl0YWJsZSkgcmV0dXJuOwogICAgICAgIGUucHJldmVudERlZmF1bHQoKTsKICAgICAgICBjb25zdCBzZWFyY2hJbnB1dCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3I8SFRNTElucHV0RWxlbWVudD4oCiAgICAgICAgICAnYXNpZGUgaW5wdXRbdHlwZT0ic2VhcmNoIl0nCiAgICAgICAgKTsKICAgICAgICBzZWFyY2hJbnB1dD8uZm9jdXMoKTsKICAgICAgfQogICAgfTsKICAgIHdpbmRvdy5hZGRFdmVudExpc3RlbmVyKCJrZXlkb3duIiwgaGFuZGxlS2V5RG93bik7CiAgICByZXR1cm4gKCkgPT4gd2luZG93LnJlbW92ZUV2ZW50TGlzdGVuZXIoImtleWRvd24iLCBoYW5kbGVLZXlEb3duKTsKICB9LCBbbW9iaWxlTmF2T3Blbl0pOwoKICAvLyBTY3JvbGwgdGhlIG1haW4gY29udGVudCBhcmVhIHRvIHRoZSB0b3Agd2hlbiBuYXZpZ2F0aW5nIGJldHdlZW4gZG9jcy4KICB1c2VFZmZlY3QoKCkgPT4gewogICAgbWFpbkVsPy5zY3JvbGxUbyh7IHRvcDogMCB9KTsKICB9LCBbc2x1ZywgbWFpbkVsXSk7CgogIC8vIE9uY2UgdGhlIGhlYWRpbmcgb3V0bGluZSBpcyBhdmFpbGFibGUsIGhvbm9yIGFueSAjaGFzaCBpbiB0aGUgVVJMIGJ5CiAgLy8gc2Nyb2xsaW5nIHRoZSBtYXRjaGluZyBoZWFkaW5nIGludG8gdmlldyAoZGVlcC1saW5raW5nIHN1cHBvcnQpLgogIHVzZUVmZmVjdCgoKSA9PiB7CiAgICBpZiAoaGVhZGluZ3MubGVuZ3RoID09PSAwKSByZXR1cm47CiAgICBjb25zdCBoYXNoID0gZGVjb2RlVVJJQ29tcG9uZW50KHdpbmRvdy5sb2NhdGlvbi5oYXNoLnJlcGxhY2UoL14jLywgIiIpKTsKICAgIGlmICghaGFzaCkgcmV0dXJuOwogICAgY29uc3QgZWwgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChoYXNoKTsKICAgIGlmIChlbCkgZWwuc2Nyb2xsSW50b1ZpZXcoeyBibG9jazogInN0YXJ0IiB9KTsKICB9LCBbaGVhZGluZ3NdKTsKCiAgLy8gVXBkYXRlIHBhZ2UgdGl0bGUgYW5kIG1ldGEgZGVzY3JpcHRpb24gYmFzZWQgb24gdGhlIHNlbGVjdGVkIGRvYy4KICB1c2VFZmZlY3QoKCkgPT4gewogICAgZG9jdW1lbnQudGl0bGUgPSBlbnRyeSA/IGAke2VudHJ5LnRpdGxlfSDigJQgT3BlblNJTiBDaGF0YCA6ICJPcGVuU0lOIENoYXQiOwogICAgaWYgKCFzbHVnIHx8ICFlbnRyeSkgcmV0dXJuOwogICAgY29uc3QgbWV0YURlc2NyaXB0aW9uID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvcignbWV0YVtuYW1lPSJkZXNjcmlwdGlvbiJdJyk7CiAgICBpZiAobWV0YURlc2NyaXB0aW9uKSB7CiAgICAgIG1ldGFEZXNjcmlwdGlvbi5zZXRBdHRyaWJ1dGUoImNvbnRlbnQiLCBlbnRyeS5kZXNjcmlwdGlvbik7CiAgICB9CiAgfSwgW2VudHJ5LCBzbHVnXSk7CgogIC8vIENsb3NlIG1vYmlsZSBuYXZpZ2F0aW9uIHdpdGggRXNjYXBlIGFuZCBsb2NrIGJvZHkgc2Nyb2xsIHdoaWxlIG9wZW4uCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIGlmICghbW9iaWxlTmF2T3BlbikgcmV0dXJuOwogICAgY29uc3Qgb3JpZ2luYWxPdmVyZmxvdyA9IGRvY3VtZW50LmJvZHkuc3R5bGUub3ZlcmZsb3c7CiAgICBkb2N1bWVudC5ib2R5LnN0eWxlLm92ZXJmbG93ID0gImhpZGRlbiI7CiAgICBjb25zdCBoYW5kbGVLZXlEb3duID0gKGU6IEtleWJvYXJkRXZlbnQpID0+IHsKICAgICAgaWYgKGUua2V5ID09PSAiRXNjYXBlIikgc2V0TW9iaWxlTmF2T3BlbihmYWxzZSk7CiAgICB9OwogICAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoImtleWRvd24iLCBoYW5kbGVLZXlEb3duKTsKICAgIC8vIEZvY3VzIHRoZSBzaWRlYmFyIGNvbnRhaW5lciBzbyBzY3JlZW4gcmVhZGVycyBhbm5vdW5jZSB0aGUgcGFuZWwuCiAgICBtb2JpbGVOYXZSZWYuY3VycmVudD8uZm9jdXMoKTsKICAgIHJldHVybiAoKSA9PiB7CiAgICAgIGRvY3VtZW50LmJvZHkuc3R5bGUub3ZlcmZsb3cgPSBvcmlnaW5hbE92ZXJmbG93OwogICAgICB3aW5kb3cucmVtb3ZlRXZlbnRMaXN0ZW5lcigia2V5ZG93biIsIGhhbmRsZUtleURvd24pOwogICAgfTsKICB9LCBbbW9iaWxlTmF2T3Blbl0pOwoKICAvLyBDbG9zZSBtb2JpbGUgVE9DIHdpdGggRXNjYXBlIGFuZCBsb2NrIGJvZHkgc2Nyb2xsIHdoaWxlIG9wZW4uCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIGlmICghbW9iaWxlVG9jT3BlbikgcmV0dXJuOwogICAgY29uc3Qgb3JpZ2luYWxPdmVyZmxvdyA9IGRvY3VtZW50LmJvZHkuc3R5bGUub3ZlcmZsb3c7CiAgICBkb2N1bWVudC5ib2R5LnN0eWxlLm92ZXJmbG93ID0gImhpZGRlbiI7CiAgICBjb25zdCBoYW5kbGVLZXlEb3duID0gKGU6IEtleWJvYXJkRXZlbnQpID0+IHsKICAgICAgaWYgKGUua2V5ID09PSAiRXNjYXBlIikgc2V0TW9iaWxlVG9jT3BlbihmYWxzZSk7CiAgICB9OwogICAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoImtleWRvd24iLCBoYW5kbGVLZXlEb3duKTsKICAgIG1vYmlsZVRvY1JlZi5jdXJyZW50Py5mb2N1cygpOwogICAgcmV0dXJuICgpID0+IHsKICAgICAgZG9jdW1lbnQuYm9keS5zdHlsZS5vdmVyZmxvdyA9IG9yaWdpbmFsT3ZlcmZsb3c7CiAgICAgIHdpbmRvdy5yZW1vdmVFdmVudExpc3RlbmVyKCJrZXlkb3duIiwgaGFuZGxlS2V5RG93bik7CiAgICB9OwogIH0sIFttb2JpbGVUb2NPcGVuXSk7CgogIGNvbnN0IHNob3dUb2MgPSBCb29sZWFuKHNsdWcgJiYgZW50cnkgJiYgY29udGVudCk7CgogIHJldHVybiAoCiAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCBoLXNjcmVlbiB3LXNjcmVlbiBiZy10aGVtZS1iZy1wcmltYXJ5IHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IG92ZXJmbG93LWhpZGRlbiI+CiAgICAgIHsvKiBUb3AgYmFyICovfQogICAgICA8aGVhZGVyIGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1iZXR3ZWVuIGdhcC00IHB4LTQgbWQ6cHgtNiBoLTE0IGJvcmRlci1iIGJvcmRlci10aGVtZS1zaWRlYmFyLWJvcmRlciBzaHJpbmstMCI+CiAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIGdhcC0zIj4KICAgICAgICAgIDxidXR0b24KICAgICAgICAgICAgdHlwZT0iYnV0dG9uIgogICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBzZXRNb2JpbGVOYXZPcGVuKCh2KSA9PiAhdil9CiAgICAgICAgICAgIGNsYXNzTmFtZT0ibGc6aGlkZGVuIHAtMiByb3VuZGVkLW1kIGhvdmVyOmJnLXRoZW1lLXNpZGViYXItaXRlbS1ob3ZlciIKICAgICAgICAgICAgYXJpYS1sYWJlbD17dCgiY29tbW9uLnRvZ2dsZU5hdmlnYXRpb24iKX0KICAgICAgICAgICAgYXJpYS1leHBhbmRlZD17bW9iaWxlTmF2T3Blbn0KICAgICAgICAgID4KICAgICAgICAgICAge21vYmlsZU5hdk9wZW4gPyAoCiAgICAgICAgICAgICAgPFggY2xhc3NOYW1lPSJ3LTUgaC01IiBhcmlhLWhpZGRlbj0idHJ1ZSIgLz4KICAgICAgICAgICAgKSA6ICgKICAgICAgICAgICAgICA8TGlzdCBjbGFzc05hbWU9InctNSBoLTUiIGFyaWEtaGlkZGVuPSJ0cnVlIiAvPgogICAgICAgICAgICApfQogICAgICAgICAgPC9idXR0b24+CiAgICAgICAgICA8TGluayB0bz17cGF0aHMuYXBwRG9jcygpfSBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIGdhcC0yIj4KICAgICAgICAgICAgPEJvb2tPcGVuCiAgICAgICAgICAgICAgY2xhc3NOYW1lPSJ3LTUgaC01IHRleHQtcHJpbWFyeS1idXR0b24iCiAgICAgICAgICAgICAgYXJpYS1oaWRkZW49InRydWUiCiAgICAgICAgICAgIC8+CiAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0iZm9udC1zZW1pYm9sZCI+e3QoImNvbW1vbi5kZXZlbG9wZXJEb2NzIil9PC9zcGFuPgogICAgICAgICAgPC9MaW5rPgogICAgICAgIDwvZGl2PgogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMyI+CiAgICAgICAgICA8VGhlbWVUb2dnbGUgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciB3LTggaC04IHJvdW5kZWQtbGcgYm9yZGVyLW5vbmUgY3Vyc29yLXBvaW50ZXIgdHJhbnNpdGlvbi1hbGwgYmctdHJhbnNwYXJlbnQgaG92ZXI6YmctdGhlbWUtc2lkZWJhci1pdGVtLWhvdmVyIHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IGZsZXgtc2hyaW5rLTAiIC8+CiAgICAgICAgICA8TGluawogICAgICAgICAgICB0bz17cGF0aHMuaG9tZSgpfQogICAgICAgICAgICBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIGdhcC0yIHRleHQtc20gdGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSBob3Zlcjp0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSB0cmFuc2l0aW9uLWNvbG9ycyIKICAgICAgICAgID4KICAgICAgICAgICAgPEFycm93TGVmdCBjbGFzc05hbWU9InctNCBoLTQiIGFyaWEtaGlkZGVuPSJ0cnVlIiAvPgogICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9ImhpZGRlbiBzbTppbmxpbmUiPnt0KCJjb21tb24uYmFja1RvQXBwIil9PC9zcGFuPgogICAgICAgICAgPC9MaW5rPgogICAgICAgIDwvZGl2PgogICAgICA8L2hlYWRlcj4KCiAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtMSBtaW4taC0wIj4KICAgICAgICB7LyogRGVza3RvcCBzaWRlYmFyICovfQogICAgICAgIDxhc2lkZSBjbGFzc05hbWU9ImhpZGRlbiBsZzpmbGV4IGZsZXgtY29sIHctNzIgc2hyaW5rLTAgYm9yZGVyLXIgYm9yZGVyLXRoZW1lLXNpZGViYXItYm9yZGVyIHAtNCBvdmVyZmxvdy15LWF1dG8iPgogICAgICAgICAgPERvY3NTaWRlYmFyCiAgICAgICAgICAgIGFjdGl2ZVNsdWc9e3NsdWcgPz8gIiJ9CiAgICAgICAgICAgIHF1ZXJ5PXtxdWVyeX0KICAgICAgICAgICAgc2V0UXVlcnk9e3NldFF1ZXJ5fQogICAgICAgICAgICBvbk5hdmlnYXRlPXsoKSA9PiB7fX0KICAgICAgICAgIC8+CiAgICAgICAgPC9hc2lkZT4KCiAgICAgICAgey8qIE1vYmlsZSBzaWRlYmFyIG92ZXJsYXkgKi99CiAgICAgICAge21vYmlsZU5hdk9wZW4gJiYgKAogICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImxnOmhpZGRlbiBmaXhlZCBpbnNldC0wIHotNDAgZmxleCI+CiAgICAgICAgICAgIDxkaXYKICAgICAgICAgICAgICBjbGFzc05hbWU9ImFic29sdXRlIGluc2V0LTAgYmctYmxhY2svNTAiCiAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4gc2V0TW9iaWxlTmF2T3BlbihmYWxzZSl9CiAgICAgICAgICAgICAgYXJpYS1oaWRkZW49InRydWUiCiAgICAgICAgICAgIC8+CiAgICAgICAgICAgIDxhc2lkZQogICAgICAgICAgICAgIHJlZj17bW9iaWxlTmF2UmVmfQogICAgICAgICAgICAgIHRhYkluZGV4PXstMX0KICAgICAgICAgICAgICBhcmlhLW1vZGFsPSJ0cnVlIgogICAgICAgICAgICAgIHJvbGU9ImRpYWxvZyIKICAgICAgICAgICAgICBjbGFzc05hbWU9InJlbGF0aXZlIHotNTAgdy03MiBtYXgtdy1bODB2d10gaC1mdWxsIGJnLXRoZW1lLWJnLXByaW1hcnkgYm9yZGVyLXIgYm9yZGVyLXRoZW1lLXNpZGViYXItYm9yZGVyIHAtNCBvdmVyZmxvdy15LWF1dG8gb3V0bGluZS1ub25lIgogICAgICAgICAgICA+CiAgICAgICAgICAgICAgPERvY3NTaWRlYmFyCiAgICAgICAgICAgICAgICBhY3RpdmVTbHVnPXtzbHVnID8/ICIifQogICAgICAgICAgICAgICAgcXVlcnk9e3F1ZXJ5fQogICAgICAgICAgICAgICAgc2V0UXVlcnk9e3NldFF1ZXJ5fQogICAgICAgICAgICAgICAgb25OYXZpZ2F0ZT17KCkgPT4gc2V0TW9iaWxlTmF2T3BlbihmYWxzZSl9CiAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgPC9hc2lkZT4KICAgICAgICAgIDwvZGl2PgogICAgICAgICl9CgogICAgICAgIHsvKiBNYWluIGNvbnRlbnQgKi99CiAgICAgICAgPG1haW4KICAgICAgICAgIHJlZj17c2V0TWFpbkVsfQogICAgICAgICAgY2xhc3NOYW1lPSJmbGV4LTEgbWluLXctMCBvdmVyZmxvdy15LWF1dG8gcHgtNCBtZDpweC0xMCBweS04IgogICAgICAgID4KICAgICAgICAgIHshc2x1ZyA/ICgKICAgICAgICAgICAgPERvY3NMYW5kaW5nIC8+CiAgICAgICAgICApIDogIWVudHJ5IHx8ICFjb250ZW50ID8gKAogICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0ibWF4LXctM3hsIj4KICAgICAgICAgICAgICA8aDEgY2xhc3NOYW1lPSJ0ZXh0LTJ4bCBmb250LWJvbGQgbWItMyI+CiAgICAgICAgICAgICAgICB7dCgiY29tbW9uLmRvY3NOb3RGb3VuZCIpfQogICAgICAgICAgICAgIDwvaDE+CiAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5IG1iLTYiPgogICAgICAgICAgICAgICAge3QoImNvbW1vbi5kb2NzTm90Rm91bmREZXNjIil9CiAgICAgICAgICAgICAgPC9wPgogICAgICAgICAgICAgIDxMaW5rCiAgICAgICAgICAgICAgICB0bz17cGF0aHMuYXBwRG9jcygpfQogICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJpbmxpbmUtZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTIgcHgtNCBweS0yIHJvdW5kZWQtbGcgYmctcHJpbWFyeS1idXR0b24gdGV4dC13aGl0ZSBob3ZlcjpvcGFjaXR5LTkwIHRyYW5zaXRpb24tb3BhY2l0eSIKICAgICAgICAgICAgICA+CiAgICAgICAgICAgICAgICB7dCgiY29tbW9uLmRvY3NIb21lcGFnZSIpfQogICAgICAgICAgICAgIDwvTGluaz4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICApIDogKAogICAgICAgICAgICA8YXJ0aWNsZSBjbGFzc05hbWU9Im14LWF1dG8gbWF4LXctM3hsIGxnOm14LTAiPgogICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWJldHdlZW4gZ2FwLTQgbWItMiI+CiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTMiPgogICAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9InRleHQteHMgZm9udC1zZW1pYm9sZCB1cHBlcmNhc2UgdHJhY2tpbmctd2lkZSB0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5Ij4KICAgICAgICAgICAgICAgICAgICB7Z2V0Q2F0ZWdvcnlMYWJlbChlbnRyeS5jYXRlZ29yeSwgdCl9CiAgICAgICAgICAgICAgICAgIDwvcD4KICAgICAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJ0ZXh0LXhzIHRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkiPgogICAgICAgICAgICAgICAgICAgIHtNYXRoLm1heCgxLCBNYXRoLmNlaWwoY29udGVudC5sZW5ndGggLyAxMDAwKSl9IG1pbiBMZXNlemVpdAogICAgICAgICAgICAgICAgICA8L3NwYW4+CiAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgIDxhCiAgICAgICAgICAgICAgICAgIGhyZWY9e2dldEVkaXRVcmwoZW50cnkpfQogICAgICAgICAgICAgICAgICB0YXJnZXQ9Il9ibGFuayIKICAgICAgICAgICAgICAgICAgcmVsPSJub3JlZmVycmVyIgogICAgICAgICAgICAgICAgICBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIGdhcC0xLjUgdGV4dC14cyB0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5IGhvdmVyOnRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IHRyYW5zaXRpb24tY29sb3JzIgogICAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgICA8R2l0aHViTG9nbyBjbGFzc05hbWU9InctNCBoLTQiIGFyaWEtaGlkZGVuPSJ0cnVlIiAvPgogICAgICAgICAgICAgICAgICA8c3Bhbj57dCgiY29tbW9uLmRvY3NFZGl0T25HaXRodWIiKX08L3NwYW4+CiAgICAgICAgICAgICAgICA8L2E+CiAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgPERvY3NNYXJrZG93biBjb250ZW50PXtjb250ZW50fSBvbkhlYWRpbmdzPXtoYW5kbGVIZWFkaW5nc30gLz4KICAgICAgICAgICAgICA8RG9jc1BhZ2luYXRpb24gc2x1Zz17c2x1Z30gLz4KICAgICAgICAgICAgPC9hcnRpY2xlPgogICAgICAgICAgKX0KICAgICAgICA8L21haW4+CgogICAgICAgIHsvKiBSaWdodC1oYW5kIHRhYmxlIG9mIGNvbnRlbnRzICovfQogICAgICAgIHtzaG93VG9jICYmICgKICAgICAgICAgIDxhc2lkZSBjbGFzc05hbWU9ImhpZGRlbiBsZzpibG9jayB3LTYwIHhsOnctNjQgc2hyaW5rLTAgYm9yZGVyLWwgYm9yZGVyLXRoZW1lLXNpZGViYXItYm9yZGVyIHAtNiBvdmVyZmxvdy15LWF1dG8iPgogICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0ic3RpY2t5IHRvcC0wIj4KICAgICAgICAgICAgICA8RG9jc1RvYyBoZWFkaW5ncz17aGVhZGluZ3N9IHNjcm9sbFJvb3Q9e21haW5FbH0gLz4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICA8L2FzaWRlPgogICAgICAgICl9CgogICAgICAgIHsvKiBNb2JpbGUgVE9DIGZsb2F0aW5nIGJ1dHRvbiAqL30KICAgICAgICB7c2hvd1RvYyAmJiAoCiAgICAgICAgICA8YnV0dG9uCiAgICAgICAgICAgIHR5cGU9ImJ1dHRvbiIKICAgICAgICAgICAgb25DbGljaz17KCkgPT4gc2V0TW9iaWxlVG9jT3BlbigodikgPT4gIXYpfQogICAgICAgICAgICBjbGFzc05hbWU9ImxnOmhpZGRlbiBmaXhlZCBib3R0b20tNiByaWdodC02IHotMzAgcC0zIHJvdW5kZWQtZnVsbCBiZy1wcmltYXJ5LWJ1dHRvbiB0ZXh0LXdoaXRlIHNoYWRvdy1sZyBob3ZlcjpvcGFjaXR5LTkwIHRyYW5zaXRpb24tb3BhY2l0eSIKICAgICAgICAgICAgYXJpYS1sYWJlbD17dCgiY29tbW9uLmRvY3NPblRoaXNQYWdlIil9CiAgICAgICAgICAgIGFyaWEtZXhwYW5kZWQ9e21vYmlsZVRvY09wZW59CiAgICAgICAgICA+CiAgICAgICAgICAgIHttb2JpbGVUb2NPcGVuID8gKAogICAgICAgICAgICAgIDxYIGNsYXNzTmFtZT0idy01IGgtNSIgYXJpYS1oaWRkZW49InRydWUiIC8+CiAgICAgICAgICAgICkgOiAoCiAgICAgICAgICAgICAgPFRleHRBbGlnbkxlZnQgY2xhc3NOYW1lPSJ3LTUgaC01IiBhcmlhLWhpZGRlbj0idHJ1ZSIgLz4KICAgICAgICAgICAgKX0KICAgICAgICAgIDwvYnV0dG9uPgogICAgICAgICl9CgogICAgICAgIHsvKiBNb2JpbGUgVE9DIGRyYXdlciAqL30KICAgICAgICB7bW9iaWxlVG9jT3BlbiAmJiAoCiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0ibGc6aGlkZGVuIGZpeGVkIGluc2V0LTAgei01MCBmbGV4IGl0ZW1zLWVuZCBqdXN0aWZ5LWNlbnRlciBzbTppdGVtcy1jZW50ZXIiPgogICAgICAgICAgICA8ZGl2CiAgICAgICAgICAgICAgY2xhc3NOYW1lPSJhYnNvbHV0ZSBpbnNldC0wIGJnLWJsYWNrLzUwIgogICAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IHNldE1vYmlsZVRvY09wZW4oZmFsc2UpfQogICAgICAgICAgICAgIGFyaWEtaGlkZGVuPSJ0cnVlIgogICAgICAgICAgICAvPgogICAgICAgICAgICA8YXNpZGUKICAgICAgICAgICAgICByZWY9e21vYmlsZVRvY1JlZn0KICAgICAgICAgICAgICB0YWJJbmRleD17LTF9CiAgICAgICAgICAgICAgYXJpYS1tb2RhbD0idHJ1ZSIKICAgICAgICAgICAgICByb2xlPSJkaWFsb2ciCiAgICAgICAgICAgICAgYXJpYS1sYWJlbD17dCgiY29tbW9uLmRvY3NPblRoaXNQYWdlIil9CiAgICAgICAgICAgICAgY2xhc3NOYW1lPSJyZWxhdGl2ZSB6LTUwIHctZnVsbCBtYXgtdy1zbSBtYXgtaC1bNzB2aF0gc206bWF4LWgtWzYwdmhdIGJnLXRoZW1lLWJnLXByaW1hcnkgYm9yZGVyLXQgc206Ym9yZGVyIGJvcmRlci10aGVtZS1zaWRlYmFyLWJvcmRlciBzbTpyb3VuZGVkLWxnIHAtNCBwdC0xMSBvdmVyZmxvdy15LWF1dG8gb3V0bGluZS1ub25lIgogICAgICAgICAgICA+CiAgICAgICAgICAgICAgPGJ1dHRvbgogICAgICAgICAgICAgICAgdHlwZT0iYnV0dG9uIgogICAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4gc2V0TW9iaWxlVG9jT3BlbihmYWxzZSl9CiAgICAgICAgICAgICAgICBjbGFzc05hbWU9ImFic29sdXRlIHRvcC0zIHJpZ2h0LTQgcC0xIHJvdW5kZWQtbWQgaG92ZXI6YmctdGhlbWUtc2lkZWJhci1pdGVtLWhvdmVyIgogICAgICAgICAgICAgICAgYXJpYS1sYWJlbD17dCgiY29tbW9uLmNsb3NlIil9CiAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgPFggY2xhc3NOYW1lPSJ3LTQgaC00IiBhcmlhLWhpZGRlbj0idHJ1ZSIgLz4KICAgICAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICAgICAgICA8RG9jc1RvYwogICAgICAgICAgICAgICAgaGVhZGluZ3M9e2hlYWRpbmdzfQogICAgICAgICAgICAgICAgc2Nyb2xsUm9vdD17bWFpbkVsfQogICAgICAgICAgICAgICAgb25OYXZpZ2F0ZT17KCkgPT4gc2V0TW9iaWxlVG9jT3BlbihmYWxzZSl9CiAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgPC9hc2lkZT4KICAgICAgICAgIDwvZGl2PgogICAgICAgICl9CiAgICAgIDwvZGl2PgogICAgPC9kaXY+CiAgKTsKfQoKLy8gUmUtZXhwb3J0IHNvIHRoZSBtYW5pZmVzdCdzIGZ1bGwgbGlzdCBpcyByZWFjaGFibGUgZm9yIHBvdGVudGlhbCBmdXR1cmUgdXNlLgpleHBvcnQgeyBET0NfRU5UUklFUyB9Owo=
+// SPDX-License-Identifier: MIT
+//
+// In-app developer documentation rendered at /docs and /docs/:slug.
+// Content is curated from the repository's docs/ folder (see docsManifest.ts).
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Link, useParams } from "react-router-dom";
+import { ArrowLeft } from "@phosphor-icons/react/dist/csr/ArrowLeft";
+import { ArrowRight } from "@phosphor-icons/react/dist/csr/ArrowRight";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
+import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
+import { List } from "@phosphor-icons/react/dist/csr/List";
+import { TextAlignLeft } from "@phosphor-icons/react/dist/csr/TextAlignLeft";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { GithubLogo } from "@phosphor-icons/react/dist/csr/GithubLogo";
+import paths from "@/utils/paths";
+import ThemeToggle from "@/components/ThemeToggle";
+import DocsMarkdown, { type DocHeading } from "./DocsMarkdown";
+import DocsToc from "./DocsToc";
+import DocsLanding from "./DocsLanding";
+import {
+  getCategoryLabel,
+  getDocBySlug,
+  getDocContent,
+  getGroupedDocs,
+  getAdjacentDocs,
+  getEditUrl,
+  DOC_ENTRIES,
+} from "./docsManifest";
+import "./docs.css";
+
+function DocsSidebar({
+  activeSlug,
+  query,
+  setQuery,
+  onNavigate,
+}: {
+  activeSlug: string;
+  query: string;
+  setQuery: (v: string) => void;
+  onNavigate: () => void;
+}) {
+  const { t } = useTranslation();
+  const normalizedQuery = query.trim().toLowerCase();
+
+  const grouped = useMemo(() => {
+    const groups = getGroupedDocs();
+    if (!normalizedQuery) return groups;
+    return groups
+      .map((group) => ({
+        category: group.category,
+        entries: group.entries.filter(
+          (entry) =>
+            entry.title.toLowerCase().includes(normalizedQuery) ||
+            entry.description.toLowerCase().includes(normalizedQuery),
+        ),
+      }))
+      .filter((group) => group.entries.length > 0);
+  }, [normalizedQuery]);
+
+  return (
+    <nav
+      aria-label={t("common.docsNavLabel")}
+      className="flex flex-col gap-4 h-full"
+    >
+      <div className="relative">
+        <MagnifyingGlass
+          className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-theme-text-secondary"
+          aria-hidden="true"
+        />
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder={t("common.docsSearchPlaceholder")}
+          aria-label={t("common.docsSearchLabel")}
+          className="w-full pl-9 pr-3 py-2 rounded-lg bg-theme-bg-secondary text-theme-text-primary placeholder:text-theme-text-secondary border border-theme-sidebar-border focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-button text-sm"
+        />
+      </div>
+
+      <div className="flex flex-col gap-5 overflow-y-auto pr-1">
+        {grouped.length === 0 ? (
+          <p className="text-theme-text-secondary text-sm px-1">
+            {t("common.noResultsForQuery", { query })}
+          </p>
+        ) : (
+          grouped.map((group) => (
+            <div key={group.category} className="flex flex-col gap-1">
+              <h2 className="text-xs font-semibold uppercase tracking-wide text-theme-text-secondary px-2 mb-1">
+                {getCategoryLabel(group.category, t)}
+              </h2>
+              {group.entries.map((entry) => {
+                const isActive = entry.slug === activeSlug;
+                return (
+                  <Link
+                    key={entry.slug}
+                    to={paths.appDocs(`/${entry.slug}`)}
+                    onClick={onNavigate}
+                    aria-current={isActive ? "page" : undefined}
+                    className={`text-sm px-2 py-1.5 rounded-md transition-colors ${
+                      isActive
+                        ? "bg-theme-sidebar-item-hover text-theme-text-primary font-medium"
+                        : "text-theme-text-secondary hover:bg-theme-sidebar-item-hover hover:text-theme-text-primary"
+                    }`}
+                  >
+                    {entry.title}
+                  </Link>
+                );
+              })}
+            </div>
+          ))
+        )}
+      </div>
+    </nav>
+  );
+}
+
+function DocsPagination({ slug }: { slug: string }) {
+  const { t } = useTranslation();
+  const { prev, next } = getAdjacentDocs(slug);
+  if (!prev && !next) return null;
+
+  return (
+    <nav
+      aria-label={t("common.docsNavLabel")}
+      className="mt-12 pt-6 border-t border-theme-sidebar-border grid grid-cols-1 sm:grid-cols-2 gap-4"
+    >
+      {prev ? (
+        <Link
+          to={paths.appDocs(`/${prev.slug}`)}
+          className="group flex items-center gap-3 rounded-lg border border-theme-sidebar-border p-4 transition-colors hover:border-primary-button"
+        >
+          <ArrowLeft
+            className="w-4 h-4 shrink-0 text-theme-text-secondary group-hover:text-primary-button"
+            aria-hidden="true"
+          />
+          <span className="flex flex-col min-w-0">
+            <span className="text-xs text-theme-text-secondary">
+              {t("common.docsPrevious")}
+            </span>
+            <span className="text-sm font-medium text-theme-text-primary truncate">
+              {prev.title}
+            </span>
+          </span>
+        </Link>
+      ) : (
+        <span />
+      )}
+      {next ? (
+        <Link
+          to={paths.appDocs(`/${next.slug}`)}
+          className="group flex items-center justify-end gap-3 rounded-lg border border-theme-sidebar-border p-4 text-right transition-colors hover:border-primary-button"
+        >
+          <span className="flex flex-col min-w-0">
+            <span className="text-xs text-theme-text-secondary">
+              {t("common.docsNext")}
+            </span>
+            <span className="text-sm font-medium text-theme-text-primary truncate">
+              {next.title}
+            </span>
+          </span>
+          <ArrowRight
+            className="w-4 h-4 shrink-0 text-theme-text-secondary group-hover:text-primary-button"
+            aria-hidden="true"
+          />
+        </Link>
+      ) : (
+        <span />
+      )}
+    </nav>
+  );
+}
+
+export default function Docs() {
+  const { t } = useTranslation();
+  const { slug } = useParams();
+  const [query, setQuery] = useState("");
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [mobileTocOpen, setMobileTocOpen] = useState(false);
+  const [headings, setHeadings] = useState<DocHeading[]>([]);
+  const [mainEl, setMainEl] = useState<HTMLElement | null>(null);
+  const mobileNavRef = useRef<HTMLDivElement>(null);
+  const mobileTocRef = useRef<HTMLDivElement>(null);
+  const entry = useMemo(() => (slug ? getDocBySlug(slug) : null), [slug]);
+  const content = useMemo(
+    () => (entry ? getDocContent(entry.file) : null),
+    [slug],
+  );
+
+  const handleHeadings = useCallback((next: DocHeading[]) => {
+    setHeadings(next);
+  }, []);
+
+  // Keyboard shortcut: "/" focuses the search input.
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "/" && !mobileNavOpen) {
+        const target = e.target as HTMLElement;
+        if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable) return;
+        e.preventDefault();
+        const searchInput = document.querySelector<HTMLInputElement>(
+          'aside input[type="search"]'
+        );
+        searchInput?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [mobileNavOpen]);
+
+  // Scroll the main content area to the top when navigating between docs.
+  useEffect(() => {
+    mainEl?.scrollTo({ top: 0 });
+  }, [slug, mainEl]);
+
+  // Once the heading outline is available, honor any #hash in the URL by
+  // scrolling the matching heading into view (deep-linking support).
+  useEffect(() => {
+    if (headings.length === 0) return;
+    const hash = decodeURIComponent(window.location.hash.replace(/^#/, ""));
+    if (!hash) return;
+    const el = document.getElementById(hash);
+    if (el) el.scrollIntoView({ block: "start" });
+  }, [headings]);
+
+  // Update page title and meta description based on the selected doc.
+  useEffect(() => {
+    document.title = entry ? `${entry.title} — OpenSIN Chat` : "OpenSIN Chat";
+    if (!slug || !entry) return;
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute("content", entry.description);
+    }
+  }, [entry, slug]);
+
+  // Close mobile navigation with Escape and lock body scroll while open.
+  useEffect(() => {
+    if (!mobileNavOpen) return;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileNavOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    // Focus the sidebar container so screen readers announce the panel.
+    mobileNavRef.current?.focus();
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [mobileNavOpen]);
+
+  // Close mobile TOC with Escape and lock body scroll while open.
+  useEffect(() => {
+    if (!mobileTocOpen) return;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileTocOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    mobileTocRef.current?.focus();
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [mobileTocOpen]);
+
+  const showToc = Boolean(slug && entry && content);
+
+  return (
+    <div className="flex flex-col h-screen w-screen bg-theme-bg-primary text-theme-text-primary overflow-hidden">
+      {/* Top bar */}
+      <header className="flex items-center justify-between gap-4 px-4 md:px-6 h-14 border-b border-theme-sidebar-border shrink-0">
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setMobileNavOpen((v) => !v)}
+            className="lg:hidden p-2 rounded-md hover:bg-theme-sidebar-item-hover"
+            aria-label={t("common.toggleNavigation")}
+            aria-expanded={mobileNavOpen}
+          >
+            {mobileNavOpen ? (
+              <X className="w-5 h-5" aria-hidden="true" />
+            ) : (
+              <List className="w-5 h-5" aria-hidden="true" />
+            )}
+          </button>
+          <Link to={paths.appDocs()} className="flex items-center gap-2">
+            <BookOpen
+              className="w-5 h-5 text-primary-button"
+              aria-hidden="true"
+            />
+            <span className="font-semibold">{t("common.developerDocs")}</span>
+          </Link>
+        </div>
+        <div className="flex items-center gap-3">
+          <ThemeToggle className="flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all bg-transparent hover:bg-theme-sidebar-item-hover text-theme-text-primary flex-shrink-0" />
+          <Link
+            to={paths.home()}
+            className="flex items-center gap-2 text-sm text-theme-text-secondary hover:text-theme-text-primary transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+            <span className="hidden sm:inline">{t("common.backToApp")}</span>
+          </Link>
+        </div>
+      </header>
+
+      <div className="flex flex-1 min-h-0">
+        {/* Desktop sidebar */}
+        <aside className="hidden lg:flex flex-col w-72 shrink-0 border-r border-theme-sidebar-border p-4 overflow-y-auto">
+          <DocsSidebar
+            activeSlug={slug ?? ""}
+            query={query}
+            setQuery={setQuery}
+            onNavigate={() => {}}
+          />
+        </aside>
+
+        {/* Mobile sidebar overlay */}
+        {mobileNavOpen && (
+          <div className="lg:hidden fixed inset-0 z-40 flex">
+            <div
+              className="absolute inset-0 bg-black/50"
+              onClick={() => setMobileNavOpen(false)}
+              aria-hidden="true"
+            />
+            <aside
+              ref={mobileNavRef}
+              tabIndex={-1}
+              aria-modal="true"
+              role="dialog"
+              className="relative z-50 w-72 max-w-[80vw] h-full bg-theme-bg-primary border-r border-theme-sidebar-border p-4 overflow-y-auto outline-none"
+            >
+              <DocsSidebar
+                activeSlug={slug ?? ""}
+                query={query}
+                setQuery={setQuery}
+                onNavigate={() => setMobileNavOpen(false)}
+              />
+            </aside>
+          </div>
+        )}
+
+        {/* Main content */}
+        <main
+          ref={setMainEl}
+          className="flex-1 min-w-0 overflow-y-auto px-4 md:px-10 py-8"
+        >
+          {!slug ? (
+            <DocsLanding />
+          ) : !entry || !content ? (
+            <div className="max-w-3xl">
+              <h1 className="text-2xl font-bold mb-3">
+                {t("common.docsNotFound")}
+              </h1>
+              <p className="text-theme-text-secondary mb-6">
+                {t("common.docsNotFoundDesc")}
+              </p>
+              <Link
+                to={paths.appDocs()}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-button text-white hover:opacity-90 transition-opacity"
+              >
+                {t("common.docsHomepage")}
+              </Link>
+            </div>
+          ) : (
+            <article className="mx-auto max-w-3xl lg:mx-0">
+              <div className="flex items-center justify-between gap-4 mb-2">
+                <div className="flex items-center gap-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-theme-text-secondary">
+                    {getCategoryLabel(entry.category, t)}
+                  </p>
+                  <span className="text-xs text-theme-text-secondary">
+                    {Math.max(1, Math.ceil(content.length / 1000))} min Lesezeit
+                  </span>
+                </div>
+                <a
+                  href={getEditUrl(entry)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-1.5 text-xs text-theme-text-secondary hover:text-theme-text-primary transition-colors"
+                >
+                  <GithubLogo className="w-4 h-4" aria-hidden="true" />
+                  <span>{t("common.docsEditOnGithub")}</span>
+                </a>
+              </div>
+              <DocsMarkdown content={content} onHeadings={handleHeadings} />
+              <DocsPagination slug={slug} />
+            </article>
+          )}
+        </main>
+
+        {/* Right-hand table of contents */}
+        {showToc && (
+          <aside className="hidden lg:block w-60 xl:w-64 shrink-0 border-l border-theme-sidebar-border p-6 overflow-y-auto">
+            <div className="sticky top-0">
+              <DocsToc headings={headings} scrollRoot={mainEl} />
+            </div>
+          </aside>
+        )}
+
+        {/* Mobile TOC floating button */}
+        {showToc && (
+          <button
+            type="button"
+            onClick={() => setMobileTocOpen((v) => !v)}
+            className="lg:hidden fixed bottom-6 right-6 z-30 p-3 rounded-full bg-primary-button text-white shadow-lg hover:opacity-90 transition-opacity"
+            aria-label={t("common.docsOnThisPage")}
+            aria-expanded={mobileTocOpen}
+          >
+            {mobileTocOpen ? (
+              <X className="w-5 h-5" aria-hidden="true" />
+            ) : (
+              <TextAlignLeft className="w-5 h-5" aria-hidden="true" />
+            )}
+          </button>
+        )}
+
+        {/* Mobile TOC drawer */}
+        {mobileTocOpen && (
+          <div className="lg:hidden fixed inset-0 z-50 flex items-end justify-center sm:items-center">
+            <div
+              className="absolute inset-0 bg-black/50"
+              onClick={() => setMobileTocOpen(false)}
+              aria-hidden="true"
+            />
+            <aside
+              ref={mobileTocRef}
+              tabIndex={-1}
+              aria-modal="true"
+              role="dialog"
+              aria-label={t("common.docsOnThisPage")}
+              className="relative z-50 w-full max-w-sm max-h-[70vh] sm:max-h-[60vh] bg-theme-bg-primary border-t sm:border border-theme-sidebar-border sm:rounded-lg p-4 pt-11 overflow-y-auto outline-none"
+            >
+              <button
+                type="button"
+                onClick={() => setMobileTocOpen(false)}
+                className="absolute top-3 right-4 p-1 rounded-md hover:bg-theme-sidebar-item-hover"
+                aria-label={t("common.close")}
+              >
+                <X className="w-4 h-4" aria-hidden="true" />
+              </button>
+              <DocsToc
+                headings={headings}
+                scrollRoot={mainEl}
+                onNavigate={() => setMobileTocOpen(false)}
+              />
+            </aside>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Re-export so the manifest's full list is reachable for potential future use.
+export { DOC_ENTRIES };

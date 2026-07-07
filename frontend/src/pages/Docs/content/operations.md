@@ -1,1 +1,195 @@
-PCEtLSBTUERYLUxpY2Vuc2UtSWRlbnRpZmllcjogTUlUIC0tPgoKIyBPcGVuU0lOIENoYXQg4oCUIE9wZXJhdGlvbnMtUnVuYm9vawoKPiAqKlppZWxncnVwcGU6KiogQmV0cmVpYmVyLCBBZG1pbiwgRGV2T3BzICAKPiAqKlNjb3BlOioqIFTDpGdsaWNoZXIgQmV0cmllYiwgVXBkYXRlcywgQmFja3VwcywgVHJvdWJsZXNob290aW5nICAKPiAqKlN0YW5kOioqIDIwMjYtMDYtMjIgIAo+ICoqS3VyemZvcm06KiogQ29udGFpbmVyIGxhdWZlbiBhdWYgYHNpbi1zdXBhYmFzZWA7IERlcGxveSB2aWEgYHNjcmlwdHMvZGVwbG95LXByb2R1Y3Rpb24uc2hgOyBIZWFsdGgtQ2hlY2sgYWxsZSAzMCBTZWt1bmRlbi4KCi0tLQoKIyMgMS4gR2VzdW5kaGVpdHMtQ2hlY2tsaXN0ZSAoYWxsZSAyNGgpCgpFaW4gZ2VzdW5kZXIgT3BlblNJTi1DaGF0IGhhdCBhbGxlIGZvbGdlbmRlbiBQdW5rdGUgZ3LDvG46Cgp8IENoZWNrIHwgQmVmZWhsIChPQ0ktVk0pIHwgRXJ3YXJ0ZXQgfAp8LS0tfC0tLXwtLS18CnwgQ29udGFpbmVyIGzDpHVmdCB8IGBzc2ggc2luLXN1cGFiYXNlICdkb2NrZXIgcHMgLS1maWx0ZXIgbmFtZT1vcGVuc2luLWNoYXQnYCB8IFN0YXR1cyBgVXBgIHwKfCBUdW5uZWwgYWt0aXYgfCBgc3NoIHNpbi1zdXBhYmFzZSAnc3lzdGVtY3RsIGlzLWFjdGl2ZSBjbG91ZGZsYXJlZCdgIHwgYGFjdGl2ZWAgfAp8IFdlYiBlcnJlaWNoYmFyIHwgYGN1cmwgLUkgaHR0cHM6Ly9zaW5jaGF0LmRlbHFoaS5jb20vYCB8IEhUVFAgMnh4LzN4eCB8CnwgRE5TIGtvcnJla3QgfCBgZGlnIHNpbmNoYXQuZGVscWhpLmNvbSBDTkFNRWAgfCBgc2luY2hhdC5kZWxxaGkuY29tLmNkbi5jbG91ZGZsYXJlLm5ldC5gIHwKfCBMb2dzIHNhdWJlciB8IGBzc2ggc2luLXN1cGFiYXNlICdqb3VybmFsY3RsIC11IGNsb3VkZmxhcmVkIC0tc2luY2U9Ii01IG1pbiInYCB8IEtlaW5lIEVycm9ycyB8CnwgU3BlaWNoZXJwbGF0eiB8IGBzc2ggc2luLXN1cGFiYXNlICdkZiAtaCAvJ2AgfCA8IDgwICUgfAoKLS0tCgojIyAyLiBTdGFuZGFyZC1EZXBsb3kKCiMjIyAyLjEgUHJvZHVrdGlvbnMtRGVwbG95IChlbXBmb2hsZW4pCgpWb20gRW50d2lja2xlci1MYXB0b3A6CgpgYGBiYXNoCmNkIC9Vc2Vycy9qZXJlbXkvZGV2L09wZW5TSU4tQ2hhdApzc2ggc2luLXN1cGFiYXNlICdiYXNoIC1zJyA8IHNjcmlwdHMvZGVwbG95LXByb2R1Y3Rpb24uc2gKYGBgCgpEYXMgU2tyaXB0OgoKMS4gUHVsbHQgYG1haW5gIGF1ZiBkZXIgT0NJLVZNLgoyLiBCYXV0IGRhcyBEb2NrZXItSW1hZ2UgbmV1IChgLS1uby1jYWNoZWApLgozLiBTdGFydGV0IENvbnRhaW5lciB1bmQgQWJow6RuZ2lna2VpdGVuIG5ldS4KNC4gRsO8aHJ0IGVpbmVuIEhlYWx0aC1DaGVjayBkdXJjaC4KCiMjIyAyLjIgU2NobmVsbGVzIEZyb250ZW5kLVVwZGF0ZSAob2huZSBJbWFnZS1SZWJ1aWxkKQoKTnVyIGJlaSByZWluZW4gRnJvbnRlbmQtw4RuZGVydW5nZW46CgpgYGBiYXNoCmNkIGZyb250ZW5kCm5weCB2aXRlIGJ1aWxkCnNzaCBzaW4tc3VwYWJhc2UgJ2RvY2tlciBjcCAtTCBmcm9udGVuZC9kaXN0Ly4gb3BlbnNpbi1jaGF0Oi9hcHAvc2VydmVyL3B1YmxpYy8nCmBgYAoKPiBBY2h0dW5nOiBCZWkgRG9ja2VyZmlsZS0gb2RlciBEZXBlbmRlbmN5LcOEbmRlcnVuZ2VuIGltbWVyIGRlbiB2b2xsc3TDpG5kaWdlbiBEZXBsb3kgYXVzZsO8aHJlbi4KCi0tLQoKIyMgMy4gQmFja3VwLVN0cmF0ZWdpZQoKIyMjIDMuMSBXYXMgbXVzcyBnZXNpY2hlcnQgd2VyZGVuPwoKfCBQZmFkIHwgSW5oYWx0IHwgQmFja3VwLUjDpHVmaWdrZWl0IHwKfC0tLXwtLS18LS0tfAp8IGBkb2NrZXIvLmVudmAgfCBTZWNyZXRzLCBMTE0tQ29uZmlnIHwgQmVpIGplZGVyIMOEbmRlcnVuZyB8CnwgYHNlcnZlci9zdG9yYWdlL29wZW5zaW4uZGJgIHwgU1FMaXRlLURCIHwgVMOkZ2xpY2ggfAp8IGBzZXJ2ZXIvc3RvcmFnZS91cGxvYWRzL2AgfCBIb2NoZ2VsYWRlbmUgRG9rdW1lbnRlIHwgVMOkZ2xpY2ggfAp8IGBzZXJ2ZXIvc3RvcmFnZS92ZWN0b3JzL2AgfCBWZWt0b3ItSW5kaXplcyB8IFTDpGdsaWNoIHwKfCBgfi8uY2xvdWRmbGFyZWQvYCB8IFR1bm5lbC1DcmVkZW50aWFscyB8IEVpbm1hbGlnLCBzaWNoZXIgYXVmYmV3YWhyZW4gfAp8IGB+Ly5hdXRoLXRva2VuLXByb2R1Y3Rpb25gIHwgQXV0aC1Ub2tlbiB8IEVpbm1hbGlnLCBzaWNoZXIgYXVmYmV3YWhyZW4gfAoKIyMjIDMuMiBBdXRvbWF0aXNpZXJ0ZXMgQmFja3VwLUJlaXNwaWVsCgpgYGBiYXNoCiMgQXVmIGRlciBPQ0ktVk0gYXVzZsO8aHJlbgpCQUNLVVBfRElSPSIvdmFyL2JhY2t1cHMvb3BlbnNpbi1jaGF0LyQoZGF0ZSArJVklbSVkKSIKbWtkaXIgLXAgIiRCQUNLVVBfRElSIgoKZG9ja2VyIGNwIG9wZW5zaW4tY2hhdDovYXBwL3NlcnZlci9zdG9yYWdlL29wZW5zaW4uZGIgIiRCQUNLVVBfRElSLyIKZG9ja2VyIGNwIG9wZW5zaW4tY2hhdDovYXBwL3NlcnZlci9zdG9yYWdlL3VwbG9hZHMgIiRCQUNLVVBfRElSLyIKZG9ja2VyIGNwIG9wZW5zaW4tY2hhdDovYXBwL3NlcnZlci9zdG9yYWdlL3ZlY3RvcnMgIiRCQUNLVVBfRElSLyIKCiMgT3B0aW9uYWw6IEJhY2t1cCB2ZXJzY2hsw7xzc2VsdCBhbiBSZW1vdGUtWmllbCBzZW5kZW4KIyByc3luYyAtYXZ6ICIkQkFDS1VQX0RJUiIgYmFja3VwLWhvc3Q6L2JhY2t1cHMvCmBgYAoKLS0tCgojIyA0LiBXYXJ0dW5nICYgTmV1c3RhcnQKCiMjIyA0LjEgQ29udGFpbmVyIG1hbnVlbGwgbmV1c3RhcnRlbgoKYGBgYmFzaApzc2ggc2luLXN1cGFiYXNlICdkb2NrZXIgY29tcG9zZSAtZiAvaG9tZS91YnVudHUvT3BlblNJTi1DaGF0L2RvY2tlci1vcGVuc2luL2RvY2tlci1jb21wb3NlLnltbCByZXN0YXJ0IG9wZW5zaW4tY2hhdCcKYGBgCgojIyMgNC4yIEFsbGVzIG5ldSBhdWZiYXVlbgoKYGBgYmFzaApzc2ggc2luLXN1cGFiYXNlIDw8ICdFT0YnCmNkIC9ob21lL3VidW50dS9PcGVuU0lOLUNoYXQvZG9ja2VyLW9wZW5zaW4KZG9ja2VyIGNvbXBvc2UgZG93bgpkb2NrZXIgY29tcG9zZSBidWlsZCAtLW5vLWNhY2hlCmRvY2tlciBjb21wb3NlIHVwIC1kCkVPRgpgYGAKCiMjIyA0LjMgTG9ncyBlaW5lcyBDb250YWluZXJzIGFuc2VoZW4KCmBgYGJhc2gKIyBPcGVuU0lOLUNoYXQgU2VydmVyCnNzaCBzaW4tc3VwYWJhc2UgJ2RvY2tlciBsb2dzIC1mIC0tdGFpbCAxMDAgb3BlbnNpbi1jaGF0JwoKIyBTdXBhYmFzZS1EaWVuc3RlCnNzaCBzaW4tc3VwYWJhc2UgJ2RvY2tlciBsb2dzIC1mIC0tdGFpbCA1MCBzdXBhYmFzZS1kYicKYGBgCgotLS0KCiMjIDUuIEjDpHVmaWdlIFByb2JsZW1lCgojIyMgNS4xIENsb3VkZmxhcmUgRXJyb3IgMTAzMyAvIDUyMSAvIDUyMiAvIDUyMwoKU2llaGUgW2Bkb2NzL0lOQ0lERU5ULVJFU1BPTlNFLm1kYF0oLi9JTkNJREVOVC1SRVNQT05TRS5tZCkgZsO8ciBkaWUgdm9sbHN0w6RuZGlnZSBSZWNvdmVyeS1Qcm96ZWR1ci4KCiMjIyA1LjIgRnJvbnRlbmQtw4RuZGVydW5nZW4gd2VyZGVuIG5pY2h0IGFuZ2V6ZWlndAoKLSBCcm93c2VyLUNhY2hlIGzDtnNjaGVuIChvZGVyIGBDdHJsK1NoaWZ0K1JgKS4KLSBQcsO8ZmVuLCBvYiBgc2VydmVyL3B1YmxpYy9gIGFrdHVlbGwgaXN0OiBgZG9ja2VyIGV4ZWMgb3BlbnNpbi1jaGF0IGxzIC1sYSAvYXBwL3NlcnZlci9wdWJsaWMvYAotIEZhbGxzIHZlcmFsdGV0OiBTY2huZWxsZXMgRnJvbnRlbmQtVXBkYXRlIGF1c2bDvGhyZW4gKMKnIDIuMikuCgojIyMgNS4zIFBvbGl0aWtlci1EQiBpc3QgbGVlcgoKYGBgYmFzaAojIFN5bmMgbWFudWVsbCB0cmlnZ2VybgpjdXJsIC1YIFBPU1QgImh0dHBzOi8vc2luY2hhdC5kZWxxaGkuY29tL2FwaS9wb2xpdGljaWFuL3N5bmMvdHJpZ2dlciIgXAogIC1IICJBdXRob3JpemF0aW9uOiBCZWFyZXIgJChjYXQgfi8uYXV0aC10b2tlbi1wcm9kdWN0aW9uIHwgZ3JlcCBBVVRIX1RPS0VOIHwgY3V0IC1kPSAtZjIpIgpgYGAKCiMjIyA1LjQgTExNLVByb3ZpZGVyIGFudHdvcnRldCBuaWNodAoKLSBQcsO8ZmUgYExMTV9QUk9WSURFUmAgdW5kIGBMTE1fQVBJX0tFWWAgaW4gYGRvY2tlci8uZW52YC4KLSBQcsO8ZmUgTmV0endlcmsgdm9tIENvbnRhaW5lcjogYGRvY2tlciBleGVjIG9wZW5zaW4tY2hhdCBjdXJsIC1JIGh0dHBzOi8vYXBpLm9wZW5haS5jb21gCi0gTG9nczogYGRvY2tlciBsb2dzIG9wZW5zaW4tY2hhdCB8IGdyZXAgLWkgInByb3ZpZGVyXHxsbG0iYAoKIyMjIDUuNSBDb2xsZWN0b3ItU2VydmljZSBvZmZsaW5lCgpJbSBTaW5nbGUtVXNlci1Nb2R1cyBpc3QgZGVyIFB5dGhvbi1Db2xsZWN0b3ItU2VydmljZSBhYnNpY2h0bGljaCBuaWNodCBnZXN0YXJ0ZXQsIHdlbm4ga2VpbmUgRG9rdW1lbnRlbnZlcmFyYmVpdHVuZyBiZW7DtnRpZ3Qgd2lyZC4gRG9rdW1lbnRlIGvDtm5uZW4gdHJvdHpkZW0gaG9jaGdlbGFkZW4gd2VyZGVuLCBkaWUgVmVyYXJiZWl0dW5nIGVyZm9sZ3QgZGFubiBpbSBIYXVwdHByb3plc3MuCgotLS0KCiMjIDYuIE1vbml0b3JpbmctQ2hlY2twb2ludHMKCnwgTWV0cmlrIHwgV2llIHByw7xmZW4gfCBXYXJuc2Nod2VsbGUgfAp8LS0tfC0tLXwtLS18CnwgQ1BVIHwgYHNzaCBzaW4tc3VwYWJhc2UgJ3RvcCAtYm4xJ2AgfCA+IDgwICUgw7xiZXIgNSBNaW4gfAp8IFJBTSB8IGBzc2ggc2luLXN1cGFiYXNlICdmcmVlIC1oJ2AgfCA+IDg1ICUgfAp8IERpc2sgfCBgc3NoIHNpbi1zdXBhYmFzZSAnZGYgLWggLydgIHwgPiA4MCAlIHwKfCBDb250YWluZXItVXB0aW1lIHwgYGRvY2tlciBwcyAtLWZvcm1hdCAie3suTmFtZXN9fSB7ey5TdGF0dXN9fSJgIHwgPCAyNGggdW5lcndhcnRldCB8CnwgQVBJLUxhdGVueiB8IGBjdXJsIC13ICIle3RpbWVfdG90YWx9IiBodHRwczovL3NpbmNoYXQuZGVscWhpLmNvbS9hcGkvaGVhbHRoYCB8ID4gMnMgfAoKLS0tCgojIyA3LiBVcGRhdGUtV29ya2Zsb3cgZsO8ciBVcHN0cmVhbS1TaWNoZXJoZWl0c3BhdGNoZXMKCjEuIFVwc3RyZWFtLUZldGNoOiBgZ2l0IGZldGNoIHVwc3RyZWFtYAoyLiBQYXRjaC1HcnVwcGVuIHByw7xmZW46IGBzY3JpcHRzL3Vwc3RyZWFtLXN5bmMvYXBwbHktcGF0Y2hlcy5zaCAtLWRyeS1ydW5gCjMuIFNpY2hlcmhlaXRzLVBhdGNoZXMgenVlcnN0IGFud2VuZGVuIChHcm91cCAwMSkuCjQuIExva2FsIHRlc3RlbjogYGNkIGZyb250ZW5kICYmIHlhcm4gYnVpbGQgJiYgeWFybiB0ZXN0YAo1LiBEZXBsb3kgdmlhIGBzY3JpcHRzL2RlcGxveS1wcm9kdWN0aW9uLnNoYC4KNi4gSGVhbHRoLUNoZWNrIHVuZCBTbW9rZS1UZXN0IGR1cmNoZsO8aHJlbi4KCi0tLQoKIyMgOC4gSW5jaWRlbnQtRXNrYWxhdGlvbgoKfCBTeW1wdG9tIHwgRXJzdGUgTWHDn25haG1lIHwgRXNrYWxhdGlvbiB8CnwtLS18LS0tfC0tLXwKfCBEaWVuc3Qga29tcGxldHQgb2ZmbGluZSB8IGBlbWVyZ2VuY3ktcmVjb3Zlci5zaGAgYXVzZsO8aHJlbiB8IENsb3VkZmxhcmUtICsgT0NJLUNvbnNvbGUgcHLDvGZlbiB8CnwgRGF0ZW52ZXJsdXN0IHwgTGV0enRlcyBCYWNrdXAgZWluc3BpZWxlbiB8IEluY2lkZW50LVJlc3BvbnNlLURva3VtZW50IGZvbGdlbiB8CnwgU2VjdXJpdHktQnJlYWNoIHwgU2VjcmV0cyByb3RpZXJlbiwgQ29udGFpbmVyIG5ldSBhdWZiYXVlbiB8IFNjaHdhY2hzdGVsbGUgcGVyIHByaXZhdGVtIENoYW5uZWwgbWVsZGVuIHwKfCBQZXJmb3JtYW5jZS1EZWdyYWRhdGlvbiB8IExvZ3MgKyBSZXNzb3VyY2VuIHByw7xmZW4gfCBTY2FsZS1PdXQtUGxhbiBha3RpdmllcmVuIHwKCi0tLQoKIyMgOS4gTsO8dHpsaWNoZSBMaW5rcwoKLSBbYGRvY3MvSU5DSURFTlQtUkVTUE9OU0UubWRgXSguL0lOQ0lERU5ULVJFU1BPTlNFLm1kKSDigJQgVm9sbHN0w6RuZGlnZXMgSW5jaWRlbnQtUmVzcG9uc2UtUGxheWJvb2sKLSBbYGRvY3MvT1BFTlNJTi1DSEFULURFUExPWU1FTlQubWRgXSguL09QRU5TSU4tQ0hBVC1ERVBMT1lNRU5ULm1kKSDigJQgRGVwbG95bWVudHMtQW5sZWl0dW5nCi0gW2Bkb2NzL3NlY3VyaXR5Lm1kYF0oLi9zZWN1cml0eS5tZCkg4oCUIFNpY2hlcmhlaXRzLUhhbmRidWNoCi0gW2BzY3JpcHRzL2RlcGxveS1wcm9kdWN0aW9uLnNoYF0oaHR0cHM6Ly9naXRodWIuY29tL09wZW5TSU4tQUkvT3BlblNJTi1DaGF0L2Jsb2IvbWFpbi9zY3JpcHRzL2RlcGxveS1wcm9kdWN0aW9uLnNoKSDigJQgRGVwbG95LVNrcmlwdAoKLS0tCgoqR2VuZXJhdGVkOiAyMDI2LTA2LTIyIHwgT3BlblNJTiBDaGF0IE9wZXJhdGlvbnMgUnVuYm9vayB8IFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBNSVQqCg==
+<!-- SPDX-License-Identifier: MIT -->
+
+# OpenSIN Chat — Operations-Runbook
+
+> **Zielgruppe:** Betreiber, Admin, DevOps  
+> **Scope:** Täglicher Betrieb, Updates, Backups, Troubleshooting  
+> **Stand:** 2026-06-22  
+> **Kurzform:** Container laufen auf `sin-supabase`; Deploy via `scripts/deploy-production.sh`; Health-Check alle 30 Sekunden.
+
+---
+
+## 1. Gesundheits-Checkliste (alle 24h)
+
+Ein gesunder OpenSIN-Chat hat alle folgenden Punkte grün:
+
+| Check | Befehl (OCI-VM) | Erwartet |
+|---|---|---|
+| Container läuft | `ssh sin-supabase 'docker ps --filter name=opensin-chat'` | Status `Up` |
+| Tunnel aktiv | `ssh sin-supabase 'systemctl is-active cloudflared'` | `active` |
+| Web erreichbar | `curl -I https://sinchat.delqhi.com/` | HTTP 2xx/3xx |
+| DNS korrekt | `dig sinchat.delqhi.com CNAME` | `sinchat.delqhi.com.cdn.cloudflare.net.` |
+| Logs sauber | `ssh sin-supabase 'journalctl -u cloudflared --since="-5 min"'` | Keine Errors |
+| Speicherplatz | `ssh sin-supabase 'df -h /'` | < 80 % |
+
+---
+
+## 2. Standard-Deploy
+
+### 2.1 Produktions-Deploy (empfohlen)
+
+Vom Entwickler-Laptop:
+
+```bash
+cd /Users/jeremy/dev/OpenSIN-Chat
+ssh sin-supabase 'bash -s' < scripts/deploy-production.sh
+```
+
+Das Skript:
+
+1. Pullt `main` auf der OCI-VM.
+2. Baut das Docker-Image neu (`--no-cache`).
+3. Startet Container und Abhängigkeiten neu.
+4. Führt einen Health-Check durch.
+
+### 2.2 Schnelles Frontend-Update (ohne Image-Rebuild)
+
+Nur bei reinen Frontend-Änderungen:
+
+```bash
+cd frontend
+npx vite build
+ssh sin-supabase 'docker cp -L frontend/dist/. opensin-chat:/app/server/public/'
+```
+
+> Achtung: Bei Dockerfile- oder Dependency-Änderungen immer den vollständigen Deploy ausführen.
+
+---
+
+## 3. Backup-Strategie
+
+### 3.1 Was muss gesichert werden?
+
+| Pfad | Inhalt | Backup-Häufigkeit |
+|---|---|---|
+| `docker/.env` | Secrets, LLM-Config | Bei jeder Änderung |
+| `server/storage/opensin.db` | SQLite-DB | Täglich |
+| `server/storage/uploads/` | Hochgeladene Dokumente | Täglich |
+| `server/storage/vectors/` | Vektor-Indizes | Täglich |
+| `~/.cloudflared/` | Tunnel-Credentials | Einmalig, sicher aufbewahren |
+| `~/.auth-token-production` | Auth-Token | Einmalig, sicher aufbewahren |
+
+### 3.2 Automatisiertes Backup-Beispiel
+
+```bash
+# Auf der OCI-VM ausführen
+BACKUP_DIR="/var/backups/opensin-chat/$(date +%Y%m%d)"
+mkdir -p "$BACKUP_DIR"
+
+docker cp opensin-chat:/app/server/storage/opensin.db "$BACKUP_DIR/"
+docker cp opensin-chat:/app/server/storage/uploads "$BACKUP_DIR/"
+docker cp opensin-chat:/app/server/storage/vectors "$BACKUP_DIR/"
+
+# Optional: Backup verschlüsselt an Remote-Ziel senden
+# rsync -avz "$BACKUP_DIR" backup-host:/backups/
+```
+
+---
+
+## 4. Wartung & Neustart
+
+### 4.1 Container manuell neustarten
+
+```bash
+ssh sin-supabase 'docker compose -f /home/ubuntu/OpenSIN-Chat/docker-opensin/docker-compose.yml restart opensin-chat'
+```
+
+### 4.2 Alles neu aufbauen
+
+```bash
+ssh sin-supabase << 'EOF'
+cd /home/ubuntu/OpenSIN-Chat/docker-opensin
+docker compose down
+docker compose build --no-cache
+docker compose up -d
+EOF
+```
+
+### 4.3 Logs eines Containers ansehen
+
+```bash
+# OpenSIN-Chat Server
+ssh sin-supabase 'docker logs -f --tail 100 opensin-chat'
+
+# Supabase-Dienste
+ssh sin-supabase 'docker logs -f --tail 50 supabase-db'
+```
+
+---
+
+## 5. Häufige Probleme
+
+### 5.1 Cloudflare Error 1033 / 521 / 522 / 523
+
+Siehe [`docs/INCIDENT-RESPONSE.md`](./INCIDENT-RESPONSE.md) für die vollständige Recovery-Prozedur.
+
+### 5.2 Frontend-Änderungen werden nicht angezeigt
+
+- Browser-Cache löschen (oder `Ctrl+Shift+R`).
+- Prüfen, ob `server/public/` aktuell ist: `docker exec opensin-chat ls -la /app/server/public/`
+- Falls veraltet: Schnelles Frontend-Update ausführen (§ 2.2).
+
+### 5.3 Politiker-DB ist leer
+
+```bash
+# Sync manuell triggern
+curl -X POST "https://sinchat.delqhi.com/api/politician/sync/trigger" \
+  -H "Authorization: Bearer $(cat ~/.auth-token-production | grep AUTH_TOKEN | cut -d= -f2)"
+```
+
+### 5.4 LLM-Provider antwortet nicht
+
+- Prüfe `LLM_PROVIDER` und `LLM_API_KEY` in `docker/.env`.
+- Prüfe Netzwerk vom Container: `docker exec opensin-chat curl -I https://api.openai.com`
+- Logs: `docker logs opensin-chat | grep -i "provider\|llm"`
+
+### 5.5 Collector-Service offline
+
+Im Single-User-Modus ist der Python-Collector-Service absichtlich nicht gestartet, wenn keine Dokumentenverarbeitung benötigt wird. Dokumente können trotzdem hochgeladen werden, die Verarbeitung erfolgt dann im Hauptprozess.
+
+---
+
+## 6. Monitoring-Checkpoints
+
+| Metrik | Wie prüfen | Warnschwelle |
+|---|---|---|
+| CPU | `ssh sin-supabase 'top -bn1'` | > 80 % über 5 Min |
+| RAM | `ssh sin-supabase 'free -h'` | > 85 % |
+| Disk | `ssh sin-supabase 'df -h /'` | > 80 % |
+| Container-Uptime | `docker ps --format "{{.Names}} {{.Status}}"` | < 24h unerwartet |
+| API-Latenz | `curl -w "%{time_total}" https://sinchat.delqhi.com/api/health` | > 2s |
+
+---
+
+## 7. Update-Workflow für Upstream-Sicherheitspatches
+
+1. Upstream-Fetch: `git fetch upstream`
+2. Patch-Gruppen prüfen: `scripts/upstream-sync/apply-patches.sh --dry-run`
+3. Sicherheits-Patches zuerst anwenden (Group 01).
+4. Lokal testen: `cd frontend && yarn build && yarn test`
+5. Deploy via `scripts/deploy-production.sh`.
+6. Health-Check und Smoke-Test durchführen.
+
+---
+
+## 8. Incident-Eskalation
+
+| Symptom | Erste Maßnahme | Eskalation |
+|---|---|---|
+| Dienst komplett offline | `emergency-recover.sh` ausführen | Cloudflare- + OCI-Console prüfen |
+| Datenverlust | Letztes Backup einspielen | Incident-Response-Dokument folgen |
+| Security-Breach | Secrets rotieren, Container neu aufbauen | Schwachstelle per privatem Channel melden |
+| Performance-Degradation | Logs + Ressourcen prüfen | Scale-Out-Plan aktivieren |
+
+---
+
+## 9. Nützliche Links
+
+- [`docs/INCIDENT-RESPONSE.md`](./INCIDENT-RESPONSE.md) — Vollständiges Incident-Response-Playbook
+- [`docs/OPENSIN-CHAT-DEPLOYMENT.md`](./OPENSIN-CHAT-DEPLOYMENT.md) — Deployments-Anleitung
+- [`docs/security.md`](./security.md) — Sicherheits-Handbuch
+- [`scripts/deploy-production.sh`](https://github.com/OpenSIN-AI/OpenSIN-Chat/blob/main/scripts/deploy-production.sh) — Deploy-Skript
+
+---
+
+*Generated: 2026-06-22 | OpenSIN Chat Operations Runbook | SPDX-License-Identifier: MIT*

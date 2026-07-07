@@ -1,1 +1,123 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBEb2NzOiBpbmRleC5kb2MubWQKaW1wb3J0IFNpZGViYXIgZnJvbSAiQC9jb21wb25lbnRzL1NldHRpbmdzU2lkZWJhciI7CmltcG9ydCB7IGlzTW9iaWxlIH0gZnJvbSAicmVhY3QtZGV2aWNlLWRldGVjdCI7CmltcG9ydCBTa2VsZXRvbiBmcm9tICJyZWFjdC1sb2FkaW5nLXNrZWxldG9uIjsKaW1wb3J0ICJyZWFjdC1sb2FkaW5nLXNrZWxldG9uL2Rpc3Qvc2tlbGV0b24uY3NzIjsKaW1wb3J0IHsgQm9va09wZW4gfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvQm9va09wZW4iOwppbXBvcnQgeyBXYXJuaW5nIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL1dhcm5pbmciOwppbXBvcnQgV29ya3NwYWNlUm93IGZyb20gIi4vV29ya3NwYWNlUm93IjsKaW1wb3J0IE5ld1dvcmtzcGFjZU1vZGFsIGZyb20gIi4vTmV3V29ya3NwYWNlTW9kYWwiOwppbXBvcnQgeyB1c2VNb2RhbCB9IGZyb20gIkAvaG9va3MvdXNlTW9kYWwiOwppbXBvcnQgTW9kYWxXcmFwcGVyIGZyb20gIkAvY29tcG9uZW50cy9Nb2RhbFdyYXBwZXIiOwppbXBvcnQgQ1RBQnV0dG9uIGZyb20gIkAvY29tcG9uZW50cy9saWIvQ1RBQnV0dG9uIjsKaW1wb3J0IHVzZUFkbWluV29ya3NwYWNlcyBmcm9tICJAL2hvb2tzL3VzZUFkbWluV29ya3NwYWNlcyI7CmltcG9ydCB7IHVzZVRyYW5zbGF0aW9uIH0gZnJvbSAicmVhY3QtaTE4bmV4dCI7CgpleHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBBZG1pbldvcmtzcGFjZXMoKTogSlNYLkVsZW1lbnQgewogIGNvbnN0IHsgdCB9ID0gdXNlVHJhbnNsYXRpb24oKTsKICBjb25zdCB7IGlzT3Blbiwgb3Blbk1vZGFsLCBjbG9zZU1vZGFsIH0gPSB1c2VNb2RhbCgpOwoKICByZXR1cm4gKAogICAgPGRpdiBjbGFzc05hbWU9Inctc2NyZWVuIGgtc2NyZWVuIG92ZXJmbG93LWhpZGRlbiBiZy10aGVtZS1iZy1jb250YWluZXIgZmxleCI+CiAgICAgIDxTaWRlYmFyIC8+CiAgICAgIDxkaXYKICAgICAgICBzdHlsZT17eyAiLS1jb250ZW50LWhlaWdodCI6IGlzTW9iaWxlID8gIjEwMCUiIDogImNhbGMoMTAwJSAtIDMycHgpIiB9fQogICAgICAgIGNsYXNzTmFtZT0iaC1bdmFyKC0tY29udGVudC1oZWlnaHQpXSByZWxhdGl2ZSBtZDptbC1bMnB4XSBtZDptci1bMTZweF0gbWQ6bXktWzE2cHhdIG1kOnJvdW5kZWQtWzE2cHhdIGJnLXRoZW1lLWJnLXNlY29uZGFyeSB3LWZ1bGwgb3ZlcmZsb3cteS1zY3JvbGwgcC00IG1kOnAtMCIKICAgICAgPgogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIHctZnVsbCBweC0xIG1kOnBsLTYgbWQ6cHItWzUwcHhdIG1kOnB5LTYgcHktMTYiPgogICAgICAgICAgPGRpdiBjbGFzc05hbWU9InctZnVsbCBmbGV4IGZsZXgtY29sIGdhcC15LTEgcGItNiBib3JkZXItd2hpdGUvMTAgYm9yZGVyLWItMiI+CiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJpdGVtcy1jZW50ZXIgZmxleCBnYXAteC00Ij4KICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9InRleHQtbGcgbGVhZGluZy02IGZvbnQtYm9sZCB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSI+CiAgICAgICAgICAgICAgICB7dCgiYWRtaW4ud29ya3NwYWNlc1BhZ2UuaW5zdGFuY2VXb3Jrc3BhY2VzIil9CiAgICAgICAgICAgICAgPC9wPgogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXhzIGxlYWRpbmctWzE4cHhdIGZvbnQtYmFzZSB0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5Ij4KICAgICAgICAgICAgICB7dCgiYWRtaW4ud29ya3NwYWNlc1BhZ2UuZGVzY3JpcHRpb24iKX0KICAgICAgICAgICAgPC9wPgogICAgICAgICAgPC9kaXY+CiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0idy1mdWxsIGp1c3RpZnktZW5kIGZsZXgiPgogICAgICAgICAgICA8Q1RBQnV0dG9uCiAgICAgICAgICAgICAgb25DbGljaz17b3Blbk1vZGFsfQogICAgICAgICAgICAgIGNsYXNzTmFtZT0ibXQtMyBtci0wIG1iLTQgbWQ6LW1iLTE0IHotMTAiCiAgICAgICAgICAgID4KICAgICAgICAgICAgICA8Qm9va09wZW4gY2xhc3NOYW1lPSJoLTQgdy00IiB3ZWlnaHQ9ImJvbGQiIC8+eyIgIn0KICAgICAgICAgICAgICB7dCgiYWRtaW4ud29ya3NwYWNlc1BhZ2UubmV3V29ya3NwYWNlIil9CiAgICAgICAgICAgIDwvQ1RBQnV0dG9uPgogICAgICAgICAgPC9kaXY+CiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0ib3ZlcmZsb3cteC1hdXRvIj4KICAgICAgICAgICAgPFdvcmtzcGFjZXNDb250YWluZXIgLz4KICAgICAgICAgIDwvZGl2PgogICAgICAgIDwvZGl2PgogICAgICAgIDxNb2RhbFdyYXBwZXIgaXNPcGVuPXtpc09wZW59IGNsb3NlTW9kYWw9e2Nsb3NlTW9kYWx9PgogICAgICAgICAgPE5ld1dvcmtzcGFjZU1vZGFsIGNsb3NlTW9kYWw9e2Nsb3NlTW9kYWx9IC8+CiAgICAgICAgPC9Nb2RhbFdyYXBwZXI+CiAgICAgIDwvZGl2PgogICAgPC9kaXY+CiAgKTsKfQoKZnVuY3Rpb24gV29ya3NwYWNlc0NvbnRhaW5lcigpOiBKU1guRWxlbWVudCB7CiAgY29uc3QgeyB0IH0gPSB1c2VUcmFuc2xhdGlvbigpOwogIGNvbnN0IHsgdXNlcnMsIHdvcmtzcGFjZXMsIGRlbGV0aW9uUHJvdGVjdGVkLCBpc0xvYWRpbmcsIGVycm9yIH0gPQogICAgdXNlQWRtaW5Xb3Jrc3BhY2VzKCk7CgogIGlmIChpc0xvYWRpbmcpIHsKICAgIHJldHVybiAoCiAgICAgIDxTa2VsZXRvbgogICAgICAgIGhlaWdodD0iODB2aCIKICAgICAgICB3aWR0aD0iMTAwJSIKICAgICAgICBoaWdobGlnaHRDb2xvcj0idmFyKC0tdGhlbWUtYmctcHJpbWFyeSkiCiAgICAgICAgYmFzZUNvbG9yPSJ2YXIoLS10aGVtZS1iZy1zZWNvbmRhcnkpIgogICAgICAgIGNvdW50PXsxfQogICAgICAgIGNsYXNzTmFtZT0idy1mdWxsIHAtNCByb3VuZGVkLWItMnhsIHJvdW5kZWQtdHItMnhsIHJvdW5kZWQtdGwtc20gbXQtNiIKICAgICAgICBjb250YWluZXJDbGFzc05hbWU9ImZsZXggdy1mdWxsIgogICAgICAvPgogICAgKTsKICB9CgogIGlmIChlcnJvcikgewogICAgcmV0dXJuICgKICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIHB5LTEyIGdhcC0yIj4KICAgICAgICA8V2FybmluZyBjbGFzc05hbWU9ImgtOCB3LTggdGV4dC1yZWQtNTAwIiAvPgogICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXByaW1hcnkgdGV4dC1zbSI+CiAgICAgICAgICB7dCgiY29tbW9uLmxvYWRFcnJvciIpfQogICAgICAgIDwvcD4KICAgICAgPC9kaXY+CiAgICApOwogIH0KCiAgcmV0dXJuICgKICAgIDx0YWJsZSBjbGFzc05hbWU9InctZnVsbCB0ZXh0LXhzIHRleHQtbGVmdCByb3VuZGVkLWxnIG10LTYgbWluLXctWzY0MHB4XSBib3JkZXItc3BhY2luZy0wIj4KICAgICAgPHRoZWFkIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSB0ZXh0LXhzIGxlYWRpbmctWzE4cHhdIGZvbnQtYm9sZCB1cHBlcmNhc2UgYm9yZGVyLXdoaXRlLzEwIGJvcmRlci1iIj4KICAgICAgICA8dHI+CiAgICAgICAgICA8dGggc2NvcGU9ImNvbCIgY2xhc3NOYW1lPSJweC02IHB5LTMgcm91bmRlZC10bC1sZyI+CiAgICAgICAgICAgIHt0KCJhZG1pbi53b3Jrc3BhY2VzUGFnZS5uYW1lIil9CiAgICAgICAgICA8L3RoPgogICAgICAgICAgPHRoIHNjb3BlPSJjb2wiIGNsYXNzTmFtZT0icHgtNiBweS0zIj4KICAgICAgICAgICAge3QoImFkbWluLndvcmtzcGFjZXNQYWdlLmxpbmsiKX0KICAgICAgICAgIDwvdGg+CiAgICAgICAgICA8dGggc2NvcGU9ImNvbCIgY2xhc3NOYW1lPSJweC02IHB5LTMiPgogICAgICAgICAgICB7dCgiYWRtaW4ud29ya3NwYWNlc1BhZ2UudXNlcnMiKX0KICAgICAgICAgIDwvdGg+CiAgICAgICAgICA8dGggc2NvcGU9ImNvbCIgY2xhc3NOYW1lPSJweC02IHB5LTMiPgogICAgICAgICAgICB7dCgiYWRtaW4ud29ya3NwYWNlc1BhZ2UuY3JlYXRlZE9uIil9CiAgICAgICAgICA8L3RoPgogICAgICAgICAgPHRoIHNjb3BlPSJjb2wiIGNsYXNzTmFtZT0icHgtNiBweS0zIHJvdW5kZWQtdHItbGciPgogICAgICAgICAgICB7IiAifQogICAgICAgICAgPC90aD4KICAgICAgICA8L3RyPgogICAgICA8L3RoZWFkPgogICAgICA8dGJvZHk+CiAgICAgICAge3dvcmtzcGFjZXMubWFwKCh3b3Jrc3BhY2U6IGFueSkgPT4gKAogICAgICAgICAgPFdvcmtzcGFjZVJvdwogICAgICAgICAgICBrZXk9e3dvcmtzcGFjZS5pZH0KICAgICAgICAgICAgd29ya3NwYWNlPXt3b3Jrc3BhY2V9CiAgICAgICAgICAgIHVzZXJzPXt1c2Vyc30KICAgICAgICAgICAgZGVsZXRpb25Qcm90ZWN0ZWQ9e2RlbGV0aW9uUHJvdGVjdGVkfQogICAgICAgICAgLz4KICAgICAgICApKX0KICAgICAgPC90Ym9keT4KICAgIDwvdGFibGU+CiAgKTsKfQo=
+// SPDX-License-Identifier: MIT
+// Docs: index.doc.md
+import Sidebar from "@/components/SettingsSidebar";
+import { isMobile } from "react-device-detect";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
+import WorkspaceRow from "./WorkspaceRow";
+import NewWorkspaceModal from "./NewWorkspaceModal";
+import { useModal } from "@/hooks/useModal";
+import ModalWrapper from "@/components/ModalWrapper";
+import CTAButton from "@/components/lib/CTAButton";
+import useAdminWorkspaces from "@/hooks/useAdminWorkspaces";
+import { useTranslation } from "react-i18next";
+
+export default function AdminWorkspaces(): JSX.Element {
+  const { t } = useTranslation();
+  const { isOpen, openModal, closeModal } = useModal();
+
+  return (
+    <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
+      <Sidebar />
+      <div
+        style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
+        className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
+      >
+        <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
+          <div className="w-full flex flex-col gap-y-1 pb-6 border-white/10 border-b-2">
+            <div className="items-center flex gap-x-4">
+              <p className="text-lg leading-6 font-bold text-theme-text-primary">
+                {t("admin.workspacesPage.instanceWorkspaces")}
+              </p>
+            </div>
+            <p className="text-xs leading-[18px] font-base text-theme-text-secondary">
+              {t("admin.workspacesPage.description")}
+            </p>
+          </div>
+          <div className="w-full justify-end flex">
+            <CTAButton
+              onClick={openModal}
+              className="mt-3 mr-0 mb-4 md:-mb-14 z-10"
+            >
+              <BookOpen className="h-4 w-4" weight="bold" />{" "}
+              {t("admin.workspacesPage.newWorkspace")}
+            </CTAButton>
+          </div>
+          <div className="overflow-x-auto">
+            <WorkspacesContainer />
+          </div>
+        </div>
+        <ModalWrapper isOpen={isOpen} closeModal={closeModal}>
+          <NewWorkspaceModal closeModal={closeModal} />
+        </ModalWrapper>
+      </div>
+    </div>
+  );
+}
+
+function WorkspacesContainer(): JSX.Element {
+  const { t } = useTranslation();
+  const { users, workspaces, deletionProtected, isLoading, error } =
+    useAdminWorkspaces();
+
+  if (isLoading) {
+    return (
+      <Skeleton
+        height="80vh"
+        width="100%"
+        highlightColor="var(--theme-bg-primary)"
+        baseColor="var(--theme-bg-secondary)"
+        count={1}
+        className="w-full p-4 rounded-b-2xl rounded-tr-2xl rounded-tl-sm mt-6"
+        containerClassName="flex w-full"
+      />
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center py-12 gap-2">
+        <Warning className="h-8 w-8 text-red-500" />
+        <p className="text-theme-text-primary text-sm">
+          {t("common.loadError")}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <table className="w-full text-xs text-left rounded-lg mt-6 min-w-[640px] border-spacing-0">
+      <thead className="text-theme-text-secondary text-xs leading-[18px] font-bold uppercase border-white/10 border-b">
+        <tr>
+          <th scope="col" className="px-6 py-3 rounded-tl-lg">
+            {t("admin.workspacesPage.name")}
+          </th>
+          <th scope="col" className="px-6 py-3">
+            {t("admin.workspacesPage.link")}
+          </th>
+          <th scope="col" className="px-6 py-3">
+            {t("admin.workspacesPage.users")}
+          </th>
+          <th scope="col" className="px-6 py-3">
+            {t("admin.workspacesPage.createdOn")}
+          </th>
+          <th scope="col" className="px-6 py-3 rounded-tr-lg">
+            {" "}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {workspaces.map((workspace: any) => (
+          <WorkspaceRow
+            key={workspace.id}
+            workspace={workspace}
+            users={users}
+            deletionProtected={deletionProtected}
+          />
+        ))}
+      </tbody>
+    </table>
+  );
+}

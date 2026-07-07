@@ -1,1 +1,155 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBQdXJwb3NlOiBBZG1pbi1vbmx5IHRlcm1pbmFsIGV4ZWN1dGlvbiBwYWdlIGZvciBzZXJ2ZXItc2lkZSBjb21tYW5kcy4KLy8gRG9jczogZnJvbnRlbmQvc3JjL3BhZ2VzL0FkbWluL1Rlcm1pbmFsL2luZGV4LmRvYy5tZAppbXBvcnQgU2lkZWJhciBmcm9tICJAL2NvbXBvbmVudHMvU2V0dGluZ3NTaWRlYmFyIjsKaW1wb3J0IFN5c3RlbSBmcm9tICJAL21vZGVscy9zeXN0ZW0iOwppbXBvcnQgeyB1c2VTdGF0ZSB9IGZyb20gInJlYWN0IjsKaW1wb3J0IHsgaXNNb2JpbGUgfSBmcm9tICJyZWFjdC1kZXZpY2UtZGV0ZWN0IjsKaW1wb3J0IHsgdXNlVHJhbnNsYXRpb24gfSBmcm9tICJyZWFjdC1pMThuZXh0IjsKaW1wb3J0IHNob3dUb2FzdCBmcm9tICJAL3V0aWxzL3RvYXN0IjsKaW1wb3J0IENUQUJ1dHRvbiBmcm9tICJAL2NvbXBvbmVudHMvbGliL0NUQUJ1dHRvbiI7CgpleHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBBZG1pblRlcm1pbmFsKCk6IEpTWC5FbGVtZW50IHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgY29uc3QgW2NvbW1hbmQsIHNldENvbW1hbmRdID0gdXNlU3RhdGUoIiIpOwogIGNvbnN0IFtjd2QsIHNldEN3ZF0gPSB1c2VTdGF0ZSgiL2FwcCIpOwogIGNvbnN0IFtsb2FkaW5nLCBzZXRMb2FkaW5nXSA9IHVzZVN0YXRlKGZhbHNlKTsKICBjb25zdCBbcmVzdWx0LCBzZXRSZXN1bHRdID0gdXNlU3RhdGU8ewogICAgc3Rkb3V0OiBzdHJpbmc7CiAgICBzdGRlcnI6IHN0cmluZzsKICAgIGV4aXRDb2RlOiBudW1iZXI7CiAgICBlcnJvcj86IHN0cmluZzsKICB9IHwgbnVsbD4obnVsbCk7CgogIGNvbnN0IGhhbmRsZUV4ZWN1dGUgPSBhc3luYyAoKSA9PiB7CiAgICBpZiAoIWNvbW1hbmQudHJpbSgpKSB7CiAgICAgIHNob3dUb2FzdCh0KCJ0ZXJtaW5hbC5taXNzaW5nQ29tbWFuZCIpLCAiZXJyb3IiKTsKICAgICAgcmV0dXJuOwogICAgfQogICAgc2V0TG9hZGluZyh0cnVlKTsKICAgIHNldFJlc3VsdChudWxsKTsKICAgIGxldCByZXNwb25zZTogYW55OwogICAgdHJ5IHsKICAgICAgcmVzcG9uc2UgPSBhd2FpdCBTeXN0ZW0uZXhlY1Rlcm1pbmFsQ29tbWFuZCh7CiAgICAgICAgY29tbWFuZDogY29tbWFuZC50cmltKCksCiAgICAgICAgY3dkOiBjd2QudHJpbSgpIHx8ICIvYXBwIiwKICAgICAgfSk7CiAgICB9IGNhdGNoIChlOiBhbnkpIHsKICAgICAgc2hvd1RvYXN0KFN0cmluZyhlPy5tZXNzYWdlIHx8IGUpLCAiZXJyb3IiKTsKICAgICAgc2V0TG9hZGluZyhmYWxzZSk7CiAgICAgIHJldHVybjsKICAgIH0KICAgIHNldExvYWRpbmcoZmFsc2UpOwogICAgaWYgKHJlc3BvbnNlLmVycm9yKSB7CiAgICAgIGlmIChyZXNwb25zZS5lcnJvci5pbmNsdWRlcygiZGlzYWJsZWQiKSB8fCByZXNwb25zZS5zdGF0dXMgPT09IDQwMykgewogICAgICAgIHNob3dUb2FzdCh0KCJ0ZXJtaW5hbC5kaXNhYmxlZCIpLCAiZXJyb3IiKTsKICAgICAgfSBlbHNlIHsKICAgICAgICBzaG93VG9hc3QocmVzcG9uc2UuZXJyb3IsICJlcnJvciIpOwogICAgICB9CiAgICB9CiAgICBzZXRSZXN1bHQocmVzcG9uc2UpOwogIH07CgogIHJldHVybiAoCiAgICA8ZGl2IGNsYXNzTmFtZT0idy1zY3JlZW4gaC1zY3JlZW4gb3ZlcmZsb3ctaGlkZGVuIGJnLXRoZW1lLWJnLWNvbnRhaW5lciBmbGV4Ij4KICAgICAgPFNpZGViYXIgLz4KICAgICAgPGRpdgogICAgICAgIHN0eWxlPXt7ICItLWNvbnRlbnQtaGVpZ2h0IjogaXNNb2JpbGUgPyAiMTAwJSIgOiAiY2FsYygxMDAlIC0gMzJweCkiIH19CiAgICAgICAgY2xhc3NOYW1lPSJoLVt2YXIoLS1jb250ZW50LWhlaWdodCldIHJlbGF0aXZlIG1kOm1sLVsycHhdIG1kOm1yLVsxNnB4XSBtZDpteS1bMTZweF0gbWQ6cm91bmRlZC1bMTZweF0gYmctdGhlbWUtYmctc2Vjb25kYXJ5IHctZnVsbCBvdmVyZmxvdy15LXNjcm9sbCBwLTQgbWQ6cC0wIgogICAgICA+CiAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgdy1mdWxsIHB4LTEgbWQ6cGwtNiBtZDpwci1bNTBweF0gbWQ6cHktNiBweS0xNiI+CiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0idy1mdWxsIGZsZXggZmxleC1jb2wgZ2FwLXktMSBwYi02IGJvcmRlci13aGl0ZS8xMCBib3JkZXItYi0yIj4KICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZ2FwLXgtNCBpdGVtcy1jZW50ZXIiPgogICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC1sZyBsZWFkaW5nLTYgZm9udC1ib2xkIHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5Ij4KICAgICAgICAgICAgICAgIHt0KCJ0ZXJtaW5hbC50aXRsZSIpfQogICAgICAgICAgICAgIDwvcD4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC14cyBsZWFkaW5nLVsxOHB4XSBmb250LWJhc2UgdGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSBtdC0yIj4KICAgICAgICAgICAgICB7dCgidGVybWluYWwuZGVzY3JpcHRpb24iKX0KICAgICAgICAgICAgPC9wPgogICAgICAgICAgICA8cCBjbGFzc05hbWU9InRleHQteHMgbGVhZGluZy1bMThweF0gZm9udC1iYXNlIHRleHQtcmVkLTQwMCBtdC0yIj4KICAgICAgICAgICAgICB7dCgidGVybWluYWwud2FybmluZyIpfQogICAgICAgICAgICA8L3A+CiAgICAgICAgICA8L2Rpdj4KCiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCBnYXAteS00IG10LTYiPgogICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCBnYXAteS0yIj4KICAgICAgICAgICAgICA8bGFiZWwgY2xhc3NOYW1lPSJ0ZXh0LXNtIGZvbnQtbWVkaXVtIHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5Ij4KICAgICAgICAgICAgICAgIHt0KCJ0ZXJtaW5hbC5jb21tYW5kTGFiZWwiKX0KICAgICAgICAgICAgICA8L2xhYmVsPgogICAgICAgICAgICAgIDx0ZXh0YXJlYQogICAgICAgICAgICAgICAgdmFsdWU9e2NvbW1hbmR9CiAgICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IHNldENvbW1hbmQoZS50YXJnZXQudmFsdWUpfQogICAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9e3QoInRlcm1pbmFsLmNvbW1hbmRQbGFjZWhvbGRlciIpfQogICAgICAgICAgICAgICAgbWF4TGVuZ3RoPXsxMDAwMH0KICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0idy1mdWxsIGgtMzIgYmctdGhlbWUtYmctcHJpbWFyeSBib3JkZXIgYm9yZGVyLXRoZW1lLWJvcmRlciB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSByb3VuZGVkLWxnIHAtMyBmb250LW1vbm8gdGV4dC1zbSBmb2N1czpvdXRsaW5lLW5vbmUgZm9jdXM6cmluZy0yIGZvY3VzOnJpbmctdGhlbWUtYWN0aW9uLW1lbnUtaXRlbS1ob3ZlciIKICAgICAgICAgICAgICAvPgogICAgICAgICAgICA8L2Rpdj4KCiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIGdhcC15LTIiPgogICAgICAgICAgICAgIDxsYWJlbCBjbGFzc05hbWU9InRleHQtc20gZm9udC1tZWRpdW0gdGV4dC10aGVtZS10ZXh0LXByaW1hcnkiPgogICAgICAgICAgICAgICAge3QoInRlcm1pbmFsLmN3ZExhYmVsIil9CiAgICAgICAgICAgICAgPC9sYWJlbD4KICAgICAgICAgICAgICA8aW5wdXQKICAgICAgICAgICAgICAgIHR5cGU9InRleHQiCiAgICAgICAgICAgICAgICB2YWx1ZT17Y3dkfQogICAgICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBzZXRDd2QoZS50YXJnZXQudmFsdWUpfQogICAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9Ii9hcHAiCiAgICAgICAgICAgICAgICBjbGFzc05hbWU9InctZnVsbCBiZy10aGVtZS1iZy1wcmltYXJ5IGJvcmRlciBib3JkZXItdGhlbWUtYm9yZGVyIHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IHJvdW5kZWQtbGcgcC0zIGZvbnQtbW9ubyB0ZXh0LXNtIGZvY3VzOm91dGxpbmUtbm9uZSBmb2N1czpyaW5nLTIgZm9jdXM6cmluZy10aGVtZS1hY3Rpb24tbWVudS1pdGVtLWhvdmVyIgogICAgICAgICAgICAgIC8+CiAgICAgICAgICAgIDwvZGl2PgoKICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXgganVzdGlmeS1zdGFydCI+CiAgICAgICAgICAgICAgPENUQUJ1dHRvbgogICAgICAgICAgICAgICAgb25DbGljaz17aGFuZGxlRXhlY3V0ZX0KICAgICAgICAgICAgICAgIGRpc2FibGVkPXtsb2FkaW5nIHx8ICFjb21tYW5kLnRyaW0oKX0KICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0ibXQtMiIKICAgICAgICAgICAgICA+CiAgICAgICAgICAgICAgICB7bG9hZGluZyA/IHQoInRlcm1pbmFsLmV4ZWN1dGluZyIpIDogdCgidGVybWluYWwuZXhlY3V0ZSIpfQogICAgICAgICAgICAgIDwvQ1RBQnV0dG9uPgogICAgICAgICAgICA8L2Rpdj4KCiAgICAgICAgICAgIHtyZXN1bHQgJiYgKAogICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIGdhcC15LTIgbXQtNCI+CiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1iZXR3ZWVuIj4KICAgICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXNtIGZvbnQtbWVkaXVtIHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5Ij4KICAgICAgICAgICAgICAgICAgICB7dCgidGVybWluYWwub3V0cHV0Iil9CiAgICAgICAgICAgICAgICAgIDwvcD4KICAgICAgICAgICAgICAgICAgPHNwYW4KICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9e2B0ZXh0LXhzIGZvbnQtbWVkaXVtIHB4LTIgcHktMSByb3VuZGVkICR7CiAgICAgICAgICAgICAgICAgICAgICByZXN1bHQuZXhpdENvZGUgPT09IDAgJiYgIXJlc3VsdC5lcnJvcgogICAgICAgICAgICAgICAgICAgICAgICA/ICJiZy1ncmVlbi01MDAvMjAgdGV4dC1ncmVlbi00MDAiCiAgICAgICAgICAgICAgICAgICAgICAgIDogImJnLXJlZC01MDAvMjAgdGV4dC1yZWQtNDAwIgogICAgICAgICAgICAgICAgICAgIH1gfQogICAgICAgICAgICAgICAgICA+CiAgICAgICAgICAgICAgICAgICAge3QoInRlcm1pbmFsLmV4aXRDb2RlIil9OiB7cmVzdWx0LmV4aXRDb2RlfQogICAgICAgICAgICAgICAgICA8L3NwYW4+CiAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgIHtyZXN1bHQuZXJyb3IgJiYgKAogICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0icC0zIGJnLXJlZC01MDAvMTAgYm9yZGVyIGJvcmRlci1yZWQtNTAwLzMwIHJvdW5kZWQtbGcgdGV4dC1yZWQtNDAwIHRleHQtc20gZm9udC1tb25vIHdoaXRlc3BhY2UtcHJlLXdyYXAiPgogICAgICAgICAgICAgICAgICAgIHtyZXN1bHQuZXJyb3J9CiAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgKX0KICAgICAgICAgICAgICAgIHtyZXN1bHQuc3Rkb3V0ICYmICgKICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9InAtMyBiZy1ibGFjay81MCBib3JkZXIgYm9yZGVyLXRoZW1lLWJvcmRlciByb3VuZGVkLWxnIHRleHQtZ3JlZW4tNDAwIHRleHQtc20gZm9udC1tb25vIHdoaXRlc3BhY2UtcHJlLXdyYXAgbWluLWgtWzYwcHhdIj4KICAgICAgICAgICAgICAgICAgICB7cmVzdWx0LnN0ZG91dH0KICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICApfQogICAgICAgICAgICAgICAge3Jlc3VsdC5zdGRlcnIgJiYgKAogICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0icC0zIGJnLWJsYWNrLzUwIGJvcmRlciBib3JkZXItdGhlbWUtYm9yZGVyIHJvdW5kZWQtbGcgdGV4dC15ZWxsb3ctNDAwIHRleHQtc20gZm9udC1tb25vIHdoaXRlc3BhY2UtcHJlLXdyYXAgbWluLWgtWzYwcHhdIj4KICAgICAgICAgICAgICAgICAgICB7cmVzdWx0LnN0ZGVycn0KICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICApfQogICAgICAgICAgICAgICAgeyFyZXN1bHQuc3Rkb3V0ICYmICFyZXN1bHQuc3RkZXJyICYmICFyZXN1bHQuZXJyb3IgJiYgKAogICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0icC0zIGJnLWJsYWNrLzUwIGJvcmRlciBib3JkZXItdGhlbWUtYm9yZGVyIHJvdW5kZWQtbGcgdGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSB0ZXh0LXNtIGZvbnQtbW9ubyI+CiAgICAgICAgICAgICAgICAgICAge3QoInRlcm1pbmFsLm5vT3V0cHV0Iil9CiAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgKX0KICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgKX0KICAgICAgICAgIDwvZGl2PgogICAgICAgIDwvZGl2PgogICAgICA8L2Rpdj4KICAgIDwvZGl2PgogICk7Cn0K
+// SPDX-License-Identifier: MIT
+// Purpose: Admin-only terminal execution page for server-side commands.
+// Docs: frontend/src/pages/Admin/Terminal/index.doc.md
+import Sidebar from "@/components/SettingsSidebar";
+import System from "@/models/system";
+import { useState } from "react";
+import { isMobile } from "react-device-detect";
+import { useTranslation } from "react-i18next";
+import showToast from "@/utils/toast";
+import CTAButton from "@/components/lib/CTAButton";
+
+export default function AdminTerminal(): JSX.Element {
+  const { t } = useTranslation();
+  const [command, setCommand] = useState("");
+  const [cwd, setCwd] = useState("/app");
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState<{
+    stdout: string;
+    stderr: string;
+    exitCode: number;
+    error?: string;
+  } | null>(null);
+
+  const handleExecute = async () => {
+    if (!command.trim()) {
+      showToast(t("terminal.missingCommand"), "error");
+      return;
+    }
+    setLoading(true);
+    setResult(null);
+    let response: any;
+    try {
+      response = await System.execTerminalCommand({
+        command: command.trim(),
+        cwd: cwd.trim() || "/app",
+      });
+    } catch (e: any) {
+      showToast(String(e?.message || e), "error");
+      setLoading(false);
+      return;
+    }
+    setLoading(false);
+    if (response.error) {
+      if (response.error.includes("disabled") || response.status === 403) {
+        showToast(t("terminal.disabled"), "error");
+      } else {
+        showToast(response.error, "error");
+      }
+    }
+    setResult(response);
+  };
+
+  return (
+    <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
+      <Sidebar />
+      <div
+        style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
+        className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
+      >
+        <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
+          <div className="w-full flex flex-col gap-y-1 pb-6 border-white/10 border-b-2">
+            <div className="flex gap-x-4 items-center">
+              <p className="text-lg leading-6 font-bold text-theme-text-primary">
+                {t("terminal.title")}
+              </p>
+            </div>
+            <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
+              {t("terminal.description")}
+            </p>
+            <p className="text-xs leading-[18px] font-base text-red-400 mt-2">
+              {t("terminal.warning")}
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-y-4 mt-6">
+            <div className="flex flex-col gap-y-2">
+              <label className="text-sm font-medium text-theme-text-primary">
+                {t("terminal.commandLabel")}
+              </label>
+              <textarea
+                value={command}
+                onChange={(e) => setCommand(e.target.value)}
+                placeholder={t("terminal.commandPlaceholder")}
+                maxLength={10000}
+                className="w-full h-32 bg-theme-bg-primary border border-theme-border text-theme-text-primary rounded-lg p-3 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-theme-action-menu-item-hover"
+              />
+            </div>
+
+            <div className="flex flex-col gap-y-2">
+              <label className="text-sm font-medium text-theme-text-primary">
+                {t("terminal.cwdLabel")}
+              </label>
+              <input
+                type="text"
+                value={cwd}
+                onChange={(e) => setCwd(e.target.value)}
+                placeholder="/app"
+                className="w-full bg-theme-bg-primary border border-theme-border text-theme-text-primary rounded-lg p-3 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-theme-action-menu-item-hover"
+              />
+            </div>
+
+            <div className="flex justify-start">
+              <CTAButton
+                onClick={handleExecute}
+                disabled={loading || !command.trim()}
+                className="mt-2"
+              >
+                {loading ? t("terminal.executing") : t("terminal.execute")}
+              </CTAButton>
+            </div>
+
+            {result && (
+              <div className="flex flex-col gap-y-2 mt-4">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-medium text-theme-text-primary">
+                    {t("terminal.output")}
+                  </p>
+                  <span
+                    className={`text-xs font-medium px-2 py-1 rounded ${
+                      result.exitCode === 0 && !result.error
+                        ? "bg-green-500/20 text-green-400"
+                        : "bg-red-500/20 text-red-400"
+                    }`}
+                  >
+                    {t("terminal.exitCode")}: {result.exitCode}
+                  </span>
+                </div>
+                {result.error && (
+                  <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-sm font-mono whitespace-pre-wrap">
+                    {result.error}
+                  </div>
+                )}
+                {result.stdout && (
+                  <div className="p-3 bg-black/50 border border-theme-border rounded-lg text-green-400 text-sm font-mono whitespace-pre-wrap min-h-[60px]">
+                    {result.stdout}
+                  </div>
+                )}
+                {result.stderr && (
+                  <div className="p-3 bg-black/50 border border-theme-border rounded-lg text-yellow-400 text-sm font-mono whitespace-pre-wrap min-h-[60px]">
+                    {result.stderr}
+                  </div>
+                )}
+                {!result.stdout && !result.stderr && !result.error && (
+                  <div className="p-3 bg-black/50 border border-theme-border rounded-lg text-theme-text-secondary text-sm font-mono">
+                    {t("terminal.noOutput")}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -103,11 +103,11 @@ Das Skript funktioniert ohne Anpassung, lässt sich aber über Env-Vars steuern:
 
 | Variable | Standard | Bedeutung |
 |---|---|---|
-| `OPENAFD_REPO_DIR` | Auto (Skript-Pfad) | Repo-Wurzel |
-| `OPENAFD_BRANCH` | `main` | Branch, der deployt wird |
-| `OPENAFD_COMPOSE_FILE` | `docker-opensin/docker-compose.yml` | compose-Datei |
-| `OPENAFD_HEALTH_URL` | `http://localhost:43939/api/ping` | Healthcheck-URL |
-| `OPENAFD_LOG_FILE` | `<repo>/logs/auto-deploy.log` | Logdatei |
+| `OPENSIN_REPO_DIR` | Auto (Skript-Pfad) | Repo-Wurzel |
+| `OPENSIN_BRANCH` | `main` | Branch, der deployt wird |
+| `OPENSIN_COMPOSE_FILE` | `docker-opensin/docker-compose.yml` | compose-Datei |
+| `OPENSIN_HEALTH_URL` | `http://localhost:43939/api/ping` | Healthcheck-URL |
+| `OPENSIN_LOG_FILE` | `<repo>/logs/auto-deploy.log` | Logdatei |
 
 ## Troubleshooting
 
