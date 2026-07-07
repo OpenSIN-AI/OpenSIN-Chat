@@ -1,1 +1,102 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyBkZXNjcmliZSwgaXQsIGV4cGVjdCwgdmksIGJlZm9yZUVhY2gsIGFmdGVyRWFjaCB9IGZyb20gInZpdGVzdCI7CmltcG9ydCBXb3Jrc3BhY2UgZnJvbSAiQC9tb2RlbHMvd29ya3NwYWNlIjsKCmZ1bmN0aW9uIGpzb25SZXNwb25zZShib2R5LCBzdGF0dXMgPSAyMDApIHsKICByZXR1cm4gbmV3IFJlc3BvbnNlKEpTT04uc3RyaW5naWZ5KGJvZHkpLCB7CiAgICBzdGF0dXMsCiAgICBoZWFkZXJzOiB7ICJDb250ZW50LVR5cGUiOiAiYXBwbGljYXRpb24vanNvbiIgfSwKICB9KTsKfQoKZGVzY3JpYmUoIldvcmtzcGFjZSIsICgpID0+IHsKICBsZXQgb3JpZ2luYWxGZXRjaDsKCiAgYmVmb3JlRWFjaCgoKSA9PiB7CiAgICBvcmlnaW5hbEZldGNoID0gZ2xvYmFsLmZldGNoOwogIH0pOwoKICBhZnRlckVhY2goKCkgPT4gewogICAgZ2xvYmFsLmZldGNoID0gb3JpZ2luYWxGZXRjaDsKICAgIHZpLmNsZWFyQWxsTW9ja3MoKTsKICB9KTsKCiAgZGVzY3JpYmUoInN0YXRpYyBwcm9wZXJ0aWVzIiwgKCkgPT4gewogICAgaXQoIndvcmtzcGFjZU9yZGVyU3RvcmFnZUtleSBpcyBhIHN0cmluZyIsICgpID0+IHsKICAgICAgZXhwZWN0KHR5cGVvZiBXb3Jrc3BhY2Uud29ya3NwYWNlT3JkZXJTdG9yYWdlS2V5KS50b0JlKCJzdHJpbmciKTsKICAgICAgZXhwZWN0KFdvcmtzcGFjZS53b3Jrc3BhY2VPcmRlclN0b3JhZ2VLZXkpLnRvQmUoCiAgICAgICAgIm9wZW5zaW4td29ya3NwYWNlLW9yZGVyIiwKICAgICAgKTsKICAgIH0pOwoKICAgIGl0KCJtYXhDb250ZXh0V2luZG93TGltaXQgaXMgMC44IiwgKCkgPT4gewogICAgICBleHBlY3QoV29ya3NwYWNlLm1heENvbnRleHRXaW5kb3dMaW1pdCkudG9CZSgwLjgpOwogICAgfSk7CiAgfSk7CgogIGRlc2NyaWJlKCJuZXciLCAoKSA9PiB7CiAgICBpdCgic2VuZHMgUE9TVCB0byAvd29ya3NwYWNlL25ldyIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3Qgd3MgPSB7IHNsdWc6ICJ0ZXN0LXdzIiwgbmFtZTogIlRlc3QiIH07CiAgICAgIGdsb2JhbC5mZXRjaCA9IHZpCiAgICAgICAgLmZuKCkKICAgICAgICAubW9ja1Jlc29sdmVkVmFsdWUoanNvblJlc3BvbnNlKHsgd29ya3NwYWNlOiB3cywgbWVzc2FnZTogImNyZWF0ZWQiIH0pKTsKCiAgICAgIGF3YWl0IFdvcmtzcGFjZS5uZXcoeyBuYW1lOiAiVGVzdCIgfSk7CiAgICAgIGV4cGVjdChnbG9iYWwuZmV0Y2gpLnRvSGF2ZUJlZW5DYWxsZWRXaXRoKAogICAgICAgIGV4cGVjdC5zdHJpbmdDb250YWluaW5nKCIvd29ya3NwYWNlL25ldyIpLAogICAgICAgIGV4cGVjdC5vYmplY3RDb250YWluaW5nKHsgbWV0aG9kOiAiUE9TVCIgfSksCiAgICAgICk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyB7IHdvcmtzcGFjZSwgbWVzc2FnZSB9IG9uIHN1Y2Nlc3MiLCBhc3luYyAoKSA9PiB7CiAgICAgIGNvbnN0IHdzID0geyBzbHVnOiAidGVzdC13cyIsIG5hbWU6ICJUZXN0IiB9OwogICAgICBnbG9iYWwuZmV0Y2ggPSB2aQogICAgICAgIC5mbigpCiAgICAgICAgLm1vY2tSZXNvbHZlZFZhbHVlKGpzb25SZXNwb25zZSh7IHdvcmtzcGFjZTogd3MsIG1lc3NhZ2U6ICJjcmVhdGVkIiB9KSk7CgogICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBXb3Jrc3BhY2UubmV3KHsgbmFtZTogIlRlc3QiIH0pOwogICAgICBleHBlY3QocmVzdWx0KS50b0VxdWFsKHsgd29ya3NwYWNlOiB3cywgbWVzc2FnZTogImNyZWF0ZWQiIH0pOwogICAgfSk7CgogICAgaXQoInJldHVybnMgeyB3b3Jrc3BhY2U6IG51bGwsIG1lc3NhZ2UgfSBvbiBlcnJvciIsIGFzeW5jICgpID0+IHsKICAgICAgZ2xvYmFsLmZldGNoID0gdmkuZm4oKS5tb2NrUmVqZWN0ZWRWYWx1ZShuZXcgRXJyb3IoIk5ldHdvcmsgZXJyb3IiKSk7CgogICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBXb3Jrc3BhY2UubmV3KHsgbmFtZTogIlRlc3QiIH0pOwogICAgICBleHBlY3QocmVzdWx0LndvcmtzcGFjZSkudG9CZU51bGwoKTsKICAgICAgZXhwZWN0KHJlc3VsdC5tZXNzYWdlKS50b0JlKCJOZXR3b3JrIGVycm9yIik7CiAgICB9KTsKICB9KTsKCiAgZGVzY3JpYmUoInVwZGF0ZSIsICgpID0+IHsKICAgIGl0KCJzZW5kcyBQT1NUIHRvIC93b3Jrc3BhY2Uve3NsdWd9L3VwZGF0ZSIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3Qgd3MgPSB7IHNsdWc6ICJteS13cyIsIG5hbWU6ICJVcGRhdGVkIiB9OwogICAgICBnbG9iYWwuZmV0Y2ggPSB2aQogICAgICAgIC5mbigpCiAgICAgICAgLm1vY2tSZXNvbHZlZFZhbHVlKGpzb25SZXNwb25zZSh7IHdvcmtzcGFjZTogd3MsIG1lc3NhZ2U6ICJ1cGRhdGVkIiB9KSk7CgogICAgICBhd2FpdCBXb3Jrc3BhY2UudXBkYXRlKCJteS13cyIsIHsgbmFtZTogIlVwZGF0ZWQiIH0pOwogICAgICBleHBlY3QoZ2xvYmFsLmZldGNoKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgKICAgICAgICBleHBlY3Quc3RyaW5nQ29udGFpbmluZygiL3dvcmtzcGFjZS9teS13cy91cGRhdGUiKSwKICAgICAgICBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7IG1ldGhvZDogIlBPU1QiIH0pLAogICAgICApOwogICAgfSk7CgogICAgaXQoInJldHVybnMgeyB3b3Jrc3BhY2UsIG1lc3NhZ2UgfSBvbiBzdWNjZXNzIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCB3cyA9IHsgc2x1ZzogIm15LXdzIiwgbmFtZTogIlVwZGF0ZWQiIH07CiAgICAgIGdsb2JhbC5mZXRjaCA9IHZpCiAgICAgICAgLmZuKCkKICAgICAgICAubW9ja1Jlc29sdmVkVmFsdWUoanNvblJlc3BvbnNlKHsgd29ya3NwYWNlOiB3cywgbWVzc2FnZTogInVwZGF0ZWQiIH0pKTsKCiAgICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IFdvcmtzcGFjZS51cGRhdGUoIm15LXdzIiwgeyBuYW1lOiAiVXBkYXRlZCIgfSk7CiAgICAgIGV4cGVjdChyZXN1bHQpLnRvRXF1YWwoeyB3b3Jrc3BhY2U6IHdzLCBtZXNzYWdlOiAidXBkYXRlZCIgfSk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyB7IHdvcmtzcGFjZTogbnVsbCwgbWVzc2FnZSB9IG9uIGVycm9yIiwgYXN5bmMgKCkgPT4gewogICAgICBnbG9iYWwuZmV0Y2ggPSB2aS5mbigpLm1vY2tSZWplY3RlZFZhbHVlKG5ldyBFcnJvcigiTmV0d29yayBlcnJvciIpKTsKCiAgICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IFdvcmtzcGFjZS51cGRhdGUoIm15LXdzIiwgeyBuYW1lOiAiVXBkYXRlZCIgfSk7CiAgICAgIGV4cGVjdChyZXN1bHQud29ya3NwYWNlKS50b0JlTnVsbCgpOwogICAgICBleHBlY3QocmVzdWx0Lm1lc3NhZ2UpLnRvQmUoIk5ldHdvcmsgZXJyb3IiKTsKICAgIH0pOwogIH0pOwp9KTsK
+// SPDX-License-Identifier: MIT
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import Workspace from "@/models/workspace";
+
+function jsonResponse(body, status = 200) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
+describe("Workspace", () => {
+  let originalFetch;
+
+  beforeEach(() => {
+    originalFetch = global.fetch;
+  });
+
+  afterEach(() => {
+    global.fetch = originalFetch;
+    vi.clearAllMocks();
+  });
+
+  describe("static properties", () => {
+    it("workspaceOrderStorageKey is a string", () => {
+      expect(typeof Workspace.workspaceOrderStorageKey).toBe("string");
+      expect(Workspace.workspaceOrderStorageKey).toBe(
+        "opensin-workspace-order",
+      );
+    });
+
+    it("maxContextWindowLimit is 0.8", () => {
+      expect(Workspace.maxContextWindowLimit).toBe(0.8);
+    });
+  });
+
+  describe("new", () => {
+    it("sends POST to /workspace/new", async () => {
+      const ws = { slug: "test-ws", name: "Test" };
+      global.fetch = vi
+        .fn()
+        .mockResolvedValue(jsonResponse({ workspace: ws, message: "created" }));
+
+      await Workspace.new({ name: "Test" });
+      expect(global.fetch).toHaveBeenCalledWith(
+        expect.stringContaining("/workspace/new"),
+        expect.objectContaining({ method: "POST" }),
+      );
+    });
+
+    it("returns { workspace, message } on success", async () => {
+      const ws = { slug: "test-ws", name: "Test" };
+      global.fetch = vi
+        .fn()
+        .mockResolvedValue(jsonResponse({ workspace: ws, message: "created" }));
+
+      const result = await Workspace.new({ name: "Test" });
+      expect(result).toEqual({ workspace: ws, message: "created" });
+    });
+
+    it("returns { workspace: null, message } on error", async () => {
+      global.fetch = vi.fn().mockRejectedValue(new Error("Network error"));
+
+      const result = await Workspace.new({ name: "Test" });
+      expect(result.workspace).toBeNull();
+      expect(result.message).toBe("Network error");
+    });
+  });
+
+  describe("update", () => {
+    it("sends POST to /workspace/{slug}/update", async () => {
+      const ws = { slug: "my-ws", name: "Updated" };
+      global.fetch = vi
+        .fn()
+        .mockResolvedValue(jsonResponse({ workspace: ws, message: "updated" }));
+
+      await Workspace.update("my-ws", { name: "Updated" });
+      expect(global.fetch).toHaveBeenCalledWith(
+        expect.stringContaining("/workspace/my-ws/update"),
+        expect.objectContaining({ method: "POST" }),
+      );
+    });
+
+    it("returns { workspace, message } on success", async () => {
+      const ws = { slug: "my-ws", name: "Updated" };
+      global.fetch = vi
+        .fn()
+        .mockResolvedValue(jsonResponse({ workspace: ws, message: "updated" }));
+
+      const result = await Workspace.update("my-ws", { name: "Updated" });
+      expect(result).toEqual({ workspace: ws, message: "updated" });
+    });
+
+    it("returns { workspace: null, message } on error", async () => {
+      global.fetch = vi.fn().mockRejectedValue(new Error("Network error"));
+
+      const result = await Workspace.update("my-ws", { name: "Updated" });
+      expect(result.workspace).toBeNull();
+      expect(result.message).toBe("Network error");
+    });
+  });
+});

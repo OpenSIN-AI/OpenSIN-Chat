@@ -1,1 +1,163 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyBBUElfQkFTRSB9IGZyb20gIkAvdXRpbHMvY29uc3RhbnRzIjsKaW1wb3J0IHsgYmFzZUhlYWRlcnMgfSBmcm9tICJAL3V0aWxzL3JlcXVlc3QiOwoKY29uc3QgUG9saXRpY2lhbiA9IHsKICAvKioKICAgKiBBZGQgYSBwb2xpdGljaWFuIHJlY29yZCAocHJvZmlsZSArIHNwZWVjaGVzKSBhcyBhbiBlbWJlZGRlZCBkb2N1bWVudCB0byB0aGUKICAgKiBjdXJyZW50IHdvcmtzcGFjZS4gVGhlIHNlcnZlciBidWlsZHMgYSB0ZXh0IGRvY3VtZW50LCBwcm9jZXNzZXMgaXQgdGhyb3VnaAogICAqIHRoZSBjb2xsZWN0b3IsIGFuZCBlbWJlZHMgaXQgaW50byB0aGUgd29ya3NwYWNlIHZlY3RvciBzdG9yZS4KICAgKiBAcGFyYW0ge3N0cmluZ30gcG9saXRpY2lhbklkCiAgICogQHBhcmFtIHtzdHJpbmd9IHdvcmtzcGFjZVNsdWcKICAgKiBAcmV0dXJucyB7UHJvbWlzZTx7c3VjY2VzczogYm9vbGVhbiwgbWVzc2FnZT86IHN0cmluZywgZXJyb3I/OiBzdHJpbmd9Pn0KICAgKi8KICBhZGRUb1dvcmtzcGFjZTogYXN5bmMgZnVuY3Rpb24gKHBvbGl0aWNpYW5JZCwgd29ya3NwYWNlU2x1ZykgewogICAgdHJ5IHsKICAgICAgY29uc3QgcmVzID0gYXdhaXQgZmV0Y2goCiAgICAgICAgYCR7QVBJX0JBU0V9L3BvbGl0aWNpYW4vJHtwb2xpdGljaWFuSWR9L2FkZC10by13b3Jrc3BhY2VgLAogICAgICAgIHsKICAgICAgICAgIG1ldGhvZDogIlBPU1QiLAogICAgICAgICAgaGVhZGVyczogeyAuLi5iYXNlSGVhZGVycygpLCAiQ29udGVudC1UeXBlIjogImFwcGxpY2F0aW9uL2pzb24iIH0sCiAgICAgICAgICBib2R5OiBKU09OLnN0cmluZ2lmeSh7IHdvcmtzcGFjZVNsdWcgfSksCiAgICAgICAgfSwKICAgICAgKTsKICAgICAgY29uc3QgZGF0YSA9IGF3YWl0IHJlcy5qc29uKCkuY2F0Y2goKGUpID0+IHsgY29uc29sZS5lcnJvcigncG9saXRpY2lhbiBBUEkganNvbiBwYXJzZSBmYWlsZWQ6JywgZSk7IHJldHVybiB7fTsgfSk7CiAgICAgIGlmICghcmVzLm9rIHx8ICFkYXRhLnN1Y2Nlc3MpIHsKICAgICAgICByZXR1cm4gewogICAgICAgICAgc3VjY2VzczogZmFsc2UsCiAgICAgICAgICBlcnJvcjogZGF0YS5lcnJvciB8fCBgSFRUUCAke3Jlcy5zdGF0dXN9YCwKICAgICAgICB9OwogICAgICB9CiAgICAgIHJldHVybiB7IHN1Y2Nlc3M6IHRydWUsIGRhdGEgfTsKICAgIH0gY2F0Y2ggKGUpIHsKICAgICAgcmV0dXJuIHsgc3VjY2VzczogZmFsc2UsIGVycm9yOiBlLm1lc3NhZ2UgfTsKICAgIH0KICB9LAoKICAvKioKICAgKiBHZXQgYSBzaW5nbGUgcG9saXRpY2lhbidzIGZ1bGwgcHJvZmlsZSAobWFuZGF0ZXMsIGNvbW1pdHRlZXMsIHN0YXRzKS4KICAgKiBAcGFyYW0ge3N0cmluZ30gcG9saXRpY2lhbklkCiAgICogQHJldHVybnMge1Byb21pc2U8b2JqZWN0fG51bGw+fQogICAqLwogIGdldEJ5SWQ6IGFzeW5jIGZ1bmN0aW9uIChwb2xpdGljaWFuSWQpIHsKICAgIHRyeSB7CiAgICAgIGNvbnN0IHJlcyA9IGF3YWl0IGZldGNoKGAke0FQSV9CQVNFfS9wb2xpdGljaWFuLyR7cG9saXRpY2lhbklkfWAsIHsKICAgICAgICBoZWFkZXJzOiBiYXNlSGVhZGVycygpLAogICAgICB9KTsKICAgICAgaWYgKCFyZXMub2spIHJldHVybiBudWxsOwogICAgICByZXR1cm4gYXdhaXQgcmVzLmpzb24oKTsKICAgIH0gY2F0Y2ggewogICAgICByZXR1cm4gbnVsbDsKICAgIH0KICB9LAoKICAvKioKICAgKiBHZXQgYSBwb2xpdGljaWFuJ3Mgdm90aW5nIHJlY29yZC4KICAgKiBAcGFyYW0ge3N0cmluZ30gcG9saXRpY2lhbklkCiAgICogQHBhcmFtIHtvYmplY3R9IFtvcHRzXSDigJQgeyBsaW1pdCwgb2Zmc2V0IH0KICAgKiBAcmV0dXJucyB7UHJvbWlzZTxvYmplY3R8bnVsbD59CiAgICovCiAgZ2V0Vm90ZXM6IGFzeW5jIGZ1bmN0aW9uIChwb2xpdGljaWFuSWQsIG9wdHMgPSB7fSkgewogICAgdHJ5IHsKICAgICAgY29uc3QgcGFyYW1zID0gbmV3IFVSTFNlYXJjaFBhcmFtcygpOwogICAgICBpZiAob3B0cy5saW1pdCkgcGFyYW1zLnNldCgibGltaXQiLCBTdHJpbmcob3B0cy5saW1pdCkpOwogICAgICBpZiAob3B0cy5vZmZzZXQpIHBhcmFtcy5zZXQoIm9mZnNldCIsIFN0cmluZyhvcHRzLm9mZnNldCkpOwogICAgICBjb25zdCBxcyA9IHBhcmFtcy50b1N0cmluZygpOwogICAgICBjb25zdCByZXMgPSBhd2FpdCBmZXRjaCgKICAgICAgICBgJHtBUElfQkFTRX0vcG9saXRpY2lhbi8ke3BvbGl0aWNpYW5JZH0vdm90ZXMke3FzID8gYD8ke3FzfWAgOiAiIn1gLAogICAgICAgIHsgaGVhZGVyczogYmFzZUhlYWRlcnMoKSB9LAogICAgICApOwogICAgICBpZiAoIXJlcy5vaykgcmV0dXJuIG51bGw7CiAgICAgIHJldHVybiBhd2FpdCByZXMuanNvbigpOwogICAgfSBjYXRjaCB7CiAgICAgIHJldHVybiBudWxsOwogICAgfQogIH0sCgogIC8qKgogICAqIEdldCBhIHBvbGl0aWNpYW4ncyBzcGVlY2hlcy4KICAgKiBAcGFyYW0ge3N0cmluZ30gcG9saXRpY2lhbklkCiAgICogQHBhcmFtIHtvYmplY3R9IFtvcHRzXSDigJQgeyBsaW1pdCwgb2Zmc2V0IH0KICAgKiBAcmV0dXJucyB7UHJvbWlzZTxvYmplY3R8bnVsbD59CiAgICovCiAgZ2V0U3BlZWNoZXM6IGFzeW5jIGZ1bmN0aW9uIChwb2xpdGljaWFuSWQsIG9wdHMgPSB7fSkgewogICAgdHJ5IHsKICAgICAgY29uc3QgcGFyYW1zID0gbmV3IFVSTFNlYXJjaFBhcmFtcygpOwogICAgICBpZiAob3B0cy5saW1pdCkgcGFyYW1zLnNldCgibGltaXQiLCBTdHJpbmcob3B0cy5saW1pdCkpOwogICAgICBpZiAob3B0cy5vZmZzZXQpIHBhcmFtcy5zZXQoIm9mZnNldCIsIFN0cmluZyhvcHRzLm9mZnNldCkpOwogICAgICBjb25zdCBxcyA9IHBhcmFtcy50b1N0cmluZygpOwogICAgICBjb25zdCByZXMgPSBhd2FpdCBmZXRjaCgKICAgICAgICBgJHtBUElfQkFTRX0vcG9saXRpY2lhbi8ke3BvbGl0aWNpYW5JZH0vc3BlZWNoZXMke3FzID8gYD8ke3FzfWAgOiAiIn1gLAogICAgICAgIHsgaGVhZGVyczogYmFzZUhlYWRlcnMoKSB9LAogICAgICApOwogICAgICBpZiAoIXJlcy5vaykgcmV0dXJuIG51bGw7CiAgICAgIHJldHVybiBhd2FpdCByZXMuanNvbigpOwogICAgfSBjYXRjaCB7CiAgICAgIHJldHVybiBudWxsOwogICAgfQogIH0sCgogIC8qKgogICAqIFNlbWFudGljIHNlYXJjaCBvdmVyIHBvbGl0aWNpYW4gc3BlZWNoZXMgKHZlY3RvciBzZWFyY2ggdmlhIFBHVmVjdG9yKS4KICAgKiBAcGFyYW0ge3N0cmluZ30gcXVlcnkg4oCUIHNlYXJjaCB0ZXh0IChlLmcuICJLbGltYXBvbGl0aWsiKQogICAqIEBwYXJhbSB7b2JqZWN0fSBbb3B0c10g4oCUIHsgcGFydHksIHNvdXJjZSwgbGltaXQgfQogICAqIEByZXR1cm5zIHtQcm9taXNlPHtyZXN1bHRzOiBvYmplY3RbXSwgZXJyb3I/OiBzdHJpbmd9Pn0KICAgKi8KICBzZWFyY2hTcGVlY2hlczogYXN5bmMgZnVuY3Rpb24gKHF1ZXJ5LCBvcHRzID0ge30pIHsKICAgIHRyeSB7CiAgICAgIGNvbnN0IHBhcmFtcyA9IG5ldyBVUkxTZWFyY2hQYXJhbXMoeyBxOiBxdWVyeSB9KTsKICAgICAgaWYgKG9wdHMucGFydHkpIHBhcmFtcy5zZXQoInBhcnR5Iiwgb3B0cy5wYXJ0eSk7CiAgICAgIGlmIChvcHRzLnNvdXJjZSkgcGFyYW1zLnNldCgic291cmNlIiwgb3B0cy5zb3VyY2UpOwogICAgICBpZiAob3B0cy5saW1pdCkgcGFyYW1zLnNldCgidG9wTiIsIFN0cmluZyhvcHRzLmxpbWl0KSk7CiAgICAgIGNvbnN0IHJlcyA9IGF3YWl0IGZldGNoKAogICAgICAgIGAke0FQSV9CQVNFfS9wb2xpdGljaWFuL3NwZWVjaC1zZWFyY2g/JHtwYXJhbXN9YCwKICAgICAgICB7IGhlYWRlcnM6IGJhc2VIZWFkZXJzKCkgfSwKICAgICAgKTsKICAgICAgY29uc3QgZGF0YSA9IGF3YWl0IHJlcy5qc29uKCkuY2F0Y2goKGUpID0+IHsgY29uc29sZS5lcnJvcigncG9saXRpY2lhbiBBUEkganNvbiBwYXJzZSBmYWlsZWQ6JywgZSk7IHJldHVybiB7fTsgfSk7CiAgICAgIGlmICghcmVzLm9rKQogICAgICAgIHJldHVybiB7IHJlc3VsdHM6IFtdLCBlcnJvcjogZGF0YS5lcnJvciB8fCBgSFRUUCAke3Jlcy5zdGF0dXN9YCB9OwogICAgICByZXR1cm4gewogICAgICAgIHJlc3VsdHM6IGRhdGEucmVzdWx0cyB8fCBkYXRhLnNwZWVjaGVzIHx8IFtdLAogICAgICAgIGVycm9yOiBkYXRhLmVycm9yLAogICAgICB9OwogICAgfSBjYXRjaCAoZSkgewogICAgICByZXR1cm4geyByZXN1bHRzOiBbXSwgZXJyb3I6IGUubWVzc2FnZSB9OwogICAgfQogIH0sCgogIHNlYXJjaERydWNrc2FjaGVuOiBhc3luYyBmdW5jdGlvbiAocXVlcnksIG9wdHMgPSB7fSkgewogICAgdHJ5IHsKICAgICAgY29uc3QgcGFyYW1zID0gbmV3IFVSTFNlYXJjaFBhcmFtcygpOwogICAgICBpZiAocXVlcnkpIHBhcmFtcy5zZXQoInEiLCBxdWVyeSk7CiAgICAgIGlmIChvcHRzLmZhY3Rpb24pIHBhcmFtcy5zZXQoImZfZnJha3Rpb24iLCBvcHRzLmZhY3Rpb24pOwogICAgICBwYXJhbXMuc2V0KCJyb3dzIiwgU3RyaW5nKG9wdHMubGltaXQgfHwgMTApKTsKICAgICAgcGFyYW1zLnNldCgiZm9ybWF0IiwgImpzb24iKTsKICAgICAgY29uc3QgcmVzID0gYXdhaXQgZmV0Y2goCiAgICAgICAgYCR7QVBJX0JBU0V9L3V0aWxzL2J1bmRlc3RhZy9kcnVja3NhY2hlbj8ke3BhcmFtc31gLAogICAgICAgIHsgaGVhZGVyczogYmFzZUhlYWRlcnMoKSB9LAogICAgICApOwogICAgICBjb25zdCBkYXRhID0gYXdhaXQgcmVzLmpzb24oKS5jYXRjaCgoZSkgPT4geyBjb25zb2xlLmVycm9yKCdwb2xpdGljaWFuIEFQSSBqc29uIHBhcnNlIGZhaWxlZDonLCBlKTsgcmV0dXJuIHt9OyB9KTsKICAgICAgaWYgKGRhdGEuZXJyb3IpIHJldHVybiB7IHJlc3VsdHM6IFtdLCBlcnJvcjogZGF0YS5lcnJvciB9OwogICAgICByZXR1cm4gewogICAgICAgIHJlc3VsdHM6IGRhdGEuZG9jdW1lbnRzIHx8IFtdLAogICAgICAgIGVycm9yOiBudWxsLAogICAgICB9OwogICAgfSBjYXRjaCAoZSkgewogICAgICByZXR1cm4geyByZXN1bHRzOiBbXSwgZXJyb3I6IGUubWVzc2FnZSB9OwogICAgfQogIH0sCgogIGdldFByb2ZpbGU6IGFzeW5jIGZ1bmN0aW9uIChwb2xpdGljaWFuSWQpIHsKICAgIHRyeSB7CiAgICAgIGNvbnN0IHJlcyA9IGF3YWl0IGZldGNoKGAke0FQSV9CQVNFfS9wb2xpdGljaWFuLyR7cG9saXRpY2lhbklkfWAsIHsKICAgICAgICBoZWFkZXJzOiBiYXNlSGVhZGVycygpLAogICAgICB9KTsKICAgICAgaWYgKCFyZXMub2spIHJldHVybiBudWxsOwogICAgICByZXR1cm4gYXdhaXQgcmVzLmpzb24oKTsKICAgIH0gY2F0Y2ggewogICAgICByZXR1cm4gbnVsbDsKICAgIH0KICB9LAp9OwoKZXhwb3J0IGRlZmF1bHQgUG9saXRpY2lhbjsK
+// SPDX-License-Identifier: MIT
+import { API_BASE } from "@/utils/constants";
+import { baseHeaders } from "@/utils/request";
+
+const Politician = {
+  /**
+   * Add a politician record (profile + speeches) as an embedded document to the
+   * current workspace. The server builds a text document, processes it through
+   * the collector, and embeds it into the workspace vector store.
+   * @param {string} politicianId
+   * @param {string} workspaceSlug
+   * @returns {Promise<{success: boolean, message?: string, error?: string}>}
+   */
+  addToWorkspace: async function (politicianId, workspaceSlug) {
+    try {
+      const res = await fetch(
+        `${API_BASE}/politician/${politicianId}/add-to-workspace`,
+        {
+          method: "POST",
+          headers: { ...baseHeaders(), "Content-Type": "application/json" },
+          body: JSON.stringify({ workspaceSlug }),
+        },
+      );
+      const data = await res.json().catch((e) => { console.error('politician API json parse failed:', e); return {}; });
+      if (!res.ok || !data.success) {
+        return {
+          success: false,
+          error: data.error || `HTTP ${res.status}`,
+        };
+      }
+      return { success: true, data };
+    } catch (e) {
+      return { success: false, error: e.message };
+    }
+  },
+
+  /**
+   * Get a single politician's full profile (mandates, committees, stats).
+   * @param {string} politicianId
+   * @returns {Promise<object|null>}
+   */
+  getById: async function (politicianId) {
+    try {
+      const res = await fetch(`${API_BASE}/politician/${politicianId}`, {
+        headers: baseHeaders(),
+      });
+      if (!res.ok) return null;
+      return await res.json();
+    } catch {
+      return null;
+    }
+  },
+
+  /**
+   * Get a politician's voting record.
+   * @param {string} politicianId
+   * @param {object} [opts] — { limit, offset }
+   * @returns {Promise<object|null>}
+   */
+  getVotes: async function (politicianId, opts = {}) {
+    try {
+      const params = new URLSearchParams();
+      if (opts.limit) params.set("limit", String(opts.limit));
+      if (opts.offset) params.set("offset", String(opts.offset));
+      const qs = params.toString();
+      const res = await fetch(
+        `${API_BASE}/politician/${politicianId}/votes${qs ? `?${qs}` : ""}`,
+        { headers: baseHeaders() },
+      );
+      if (!res.ok) return null;
+      return await res.json();
+    } catch {
+      return null;
+    }
+  },
+
+  /**
+   * Get a politician's speeches.
+   * @param {string} politicianId
+   * @param {object} [opts] — { limit, offset }
+   * @returns {Promise<object|null>}
+   */
+  getSpeeches: async function (politicianId, opts = {}) {
+    try {
+      const params = new URLSearchParams();
+      if (opts.limit) params.set("limit", String(opts.limit));
+      if (opts.offset) params.set("offset", String(opts.offset));
+      const qs = params.toString();
+      const res = await fetch(
+        `${API_BASE}/politician/${politicianId}/speeches${qs ? `?${qs}` : ""}`,
+        { headers: baseHeaders() },
+      );
+      if (!res.ok) return null;
+      return await res.json();
+    } catch {
+      return null;
+    }
+  },
+
+  /**
+   * Semantic search over politician speeches (vector search via PGVector).
+   * @param {string} query — search text (e.g. "Klimapolitik")
+   * @param {object} [opts] — { party, source, limit }
+   * @returns {Promise<{results: object[], error?: string}>}
+   */
+  searchSpeeches: async function (query, opts = {}) {
+    try {
+      const params = new URLSearchParams({ q: query });
+      if (opts.party) params.set("party", opts.party);
+      if (opts.source) params.set("source", opts.source);
+      if (opts.limit) params.set("topN", String(opts.limit));
+      const res = await fetch(
+        `${API_BASE}/politician/speech-search?${params}`,
+        { headers: baseHeaders() },
+      );
+      const data = await res.json().catch((e) => { console.error('politician API json parse failed:', e); return {}; });
+      if (!res.ok)
+        return { results: [], error: data.error || `HTTP ${res.status}` };
+      return {
+        results: data.results || data.speeches || [],
+        error: data.error,
+      };
+    } catch (e) {
+      return { results: [], error: e.message };
+    }
+  },
+
+  searchDrucksachen: async function (query, opts = {}) {
+    try {
+      const params = new URLSearchParams();
+      if (query) params.set("q", query);
+      if (opts.faction) params.set("f_fraktion", opts.faction);
+      params.set("rows", String(opts.limit || 10));
+      params.set("format", "json");
+      const res = await fetch(
+        `${API_BASE}/utils/bundestag/drucksachen?${params}`,
+        { headers: baseHeaders() },
+      );
+      const data = await res.json().catch((e) => { console.error('politician API json parse failed:', e); return {}; });
+      if (data.error) return { results: [], error: data.error };
+      return {
+        results: data.documents || [],
+        error: null,
+      };
+    } catch (e) {
+      return { results: [], error: e.message };
+    }
+  },
+
+  getProfile: async function (politicianId) {
+    try {
+      const res = await fetch(`${API_BASE}/politician/${politicianId}`, {
+        headers: baseHeaders(),
+      });
+      if (!res.ok) return null;
+      return await res.json();
+    } catch {
+      return null;
+    }
+  },
+};
+
+export default Politician;

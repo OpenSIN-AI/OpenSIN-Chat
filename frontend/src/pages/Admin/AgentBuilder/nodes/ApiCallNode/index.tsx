@@ -1,1 +1,339 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBQdXJwb3NlOiBDb25maWd1cmF0aW9uIG5vZGUgZm9yIG1ha2luZyBhbiBIVFRQIEFQSSBjYWxsIHdpdGhpbiBhbiBhZ2VudCBmbG93LgovLyBEb2NzOiBBcGlDYWxsTm9kZS5kb2MubWQKLyogZXNsaW50LWRpc2FibGUgcmVhY3QtaG9va3MvcmVmcyAqLwppbXBvcnQgUmVhY3QsIHsgdXNlUmVmLCB1c2VTdGF0ZSB9IGZyb20gInJlYWN0IjsKaW1wb3J0IHsgUGx1cyB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9QbHVzIjsKaW1wb3J0IHsgWCB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9YIjsKaW1wb3J0IHsgQ2FyZXREb3duIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL0NhcmV0RG93biI7CmltcG9ydCB7IHVzZVRyYW5zbGF0aW9uIH0gZnJvbSAicmVhY3QtaTE4bmV4dCI7CmltcG9ydCB0eXBlIHsgQmxvY2tDb25maWcgfSBmcm9tICIuLi8uLi9CbG9ja0xpc3QiOwoKaW50ZXJmYWNlIEhlYWRlckl0ZW0gewogIGtleTogc3RyaW5nOwogIHZhbHVlOiBzdHJpbmc7Cn0KCmludGVyZmFjZSBGb3JtRGF0YUl0ZW0gewogIGtleTogc3RyaW5nOwogIHZhbHVlOiBzdHJpbmc7Cn0KCmludGVyZmFjZSBBcGlDYWxsTm9kZVByb3BzIHsKICBjb25maWc6IEJsb2NrQ29uZmlnOwogIG9uQ29uZmlnQ2hhbmdlOiAoY29uZmlnOiBQYXJ0aWFsPEJsb2NrQ29uZmlnPikgPT4gdm9pZDsKICByZW5kZXJWYXJpYWJsZVNlbGVjdDogKAogICAgdmFsdWU6IGFueSwKICAgIG9uQ2hhbmdlOiAodmFsdWU6IHN0cmluZykgPT4gdm9pZCwKICAgIHBsYWNlaG9sZGVyPzogc3RyaW5nLAogICAgaXNNZW51PzogYm9vbGVhbiwKICApID0+IFJlYWN0LlJlYWN0Tm9kZTsKfQoKY29uc3QgQVBJX01FVEhPRFMgPSBbIkdFVCIsICJQT1NUIiwgIkRFTEVURSIsICJQVVQiLCAiUEFUQ0giXTsKCmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIEFwaUNhbGxOb2RlKHsKICBjb25maWcsCiAgb25Db25maWdDaGFuZ2UsCiAgcmVuZGVyVmFyaWFibGVTZWxlY3QsCn06IEFwaUNhbGxOb2RlUHJvcHMpOiBKU1guRWxlbWVudCB7CiAgY29uc3QgeyB0IH0gPSB1c2VUcmFuc2xhdGlvbigpOwogIGNvbnN0IHVybElucHV0UmVmID0gdXNlUmVmPEhUTUxJbnB1dEVsZW1lbnQgfCBudWxsPihudWxsKTsKICBjb25zdCBbc2hvd1Zhck1lbnUsIHNldFNob3dWYXJNZW51XSA9IHVzZVN0YXRlKGZhbHNlKTsKICBjb25zdCB2YXJCdXR0b25SZWYgPSB1c2VSZWY8SFRNTEJ1dHRvbkVsZW1lbnQgfCBudWxsPihudWxsKTsKCiAgY29uc3QgaGFuZGxlSGVhZGVyQ2hhbmdlID0gKAogICAgaW5kZXg6IG51bWJlciwKICAgIGZpZWxkOiBrZXlvZiBIZWFkZXJJdGVtLAogICAgdmFsdWU6IHN0cmluZywKICApID0+IHsKICAgIGNvbnN0IG5ld0hlYWRlcnMgPSBbLi4uKGNvbmZpZy5oZWFkZXJzIHx8IFtdKV07CiAgICBuZXdIZWFkZXJzW2luZGV4XSA9IHsgLi4ubmV3SGVhZGVyc1tpbmRleF0sIFtmaWVsZF06IHZhbHVlIH07CiAgICBvbkNvbmZpZ0NoYW5nZSh7IGhlYWRlcnM6IG5ld0hlYWRlcnMgfSk7CiAgfTsKCiAgY29uc3QgYWRkSGVhZGVyID0gKCkgPT4gewogICAgY29uc3QgbmV3SGVhZGVycyA9IFsuLi4oY29uZmlnLmhlYWRlcnMgfHwgW10pLCB7IGtleTogIiIsIHZhbHVlOiAiIiB9XTsKICAgIG9uQ29uZmlnQ2hhbmdlKHsgaGVhZGVyczogbmV3SGVhZGVycyB9KTsKICB9OwoKICBjb25zdCByZW1vdmVIZWFkZXIgPSAoaW5kZXg6IG51bWJlcikgPT4gewogICAgY29uc3QgbmV3SGVhZGVycyA9IFsuLi4oY29uZmlnLmhlYWRlcnMgfHwgW10pXS5maWx0ZXIoCiAgICAgIChfLCBpKSA9PiBpICE9PSBpbmRleCwKICAgICk7CiAgICBvbkNvbmZpZ0NoYW5nZSh7IGhlYWRlcnM6IG5ld0hlYWRlcnMgfSk7CiAgfTsKCiAgY29uc3QgaW5zZXJ0VmFyaWFibGVBdEN1cnNvciA9ICh2YXJpYWJsZU5hbWU6IHN0cmluZykgPT4gewogICAgaWYgKCF1cmxJbnB1dFJlZi5jdXJyZW50KSByZXR1cm47CgogICAgY29uc3QgaW5wdXQgPSB1cmxJbnB1dFJlZi5jdXJyZW50OwogICAgY29uc3Qgc3RhcnQgPSBpbnB1dC5zZWxlY3Rpb25TdGFydCA/PyAwOwogICAgY29uc3QgZW5kID0gaW5wdXQuc2VsZWN0aW9uRW5kID8/IDA7CiAgICBjb25zdCBjdXJyZW50VmFsdWUgPSBjb25maWcudXJsIGFzIHN0cmluZzsKCiAgICBjb25zdCBuZXdWYWx1ZSA9CiAgICAgIGN1cnJlbnRWYWx1ZS5zdWJzdHJpbmcoMCwgc3RhcnQpICsKICAgICAgIiR7IiArCiAgICAgIHZhcmlhYmxlTmFtZSArCiAgICAgICJ9IiArCiAgICAgIGN1cnJlbnRWYWx1ZS5zdWJzdHJpbmcoZW5kKTsKCiAgICBvbkNvbmZpZ0NoYW5nZSh7IHVybDogbmV3VmFsdWUgfSk7CiAgICBzZXRTaG93VmFyTWVudShmYWxzZSk7CgogICAgLy8gU2V0IGN1cnNvciBwb3NpdGlvbiBhZnRlciB0aGUgaW5zZXJ0ZWQgdmFyaWFibGUKICAgIHNldFRpbWVvdXQoKCkgPT4gewogICAgICBjb25zdCBuZXdQb3NpdGlvbiA9IHN0YXJ0ICsgdmFyaWFibGVOYW1lLmxlbmd0aCArIDM7IC8vICszIGZvciAke30KICAgICAgaW5wdXQuc2V0U2VsZWN0aW9uUmFuZ2UobmV3UG9zaXRpb24sIG5ld1Bvc2l0aW9uKTsKICAgICAgaW5wdXQuZm9jdXMoKTsKICAgIH0sIDApOwogIH07CgogIHJldHVybiAoCiAgICA8ZGl2IGNsYXNzTmFtZT0ic3BhY2UteS00Ij4KICAgICAgPGRpdj4KICAgICAgICA8bGFiZWwgY2xhc3NOYW1lPSJibG9jayB0ZXh0LXNtIGZvbnQtbWVkaXVtIHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IG1iLTIiPgogICAgICAgICAge3QoImFwaUNhbGxOb2RlLnVybCIpfQogICAgICAgIDwvbGFiZWw+CiAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZ2FwLTIiPgogICAgICAgICAgPGlucHV0CiAgICAgICAgICAgIHJlZj17dXJsSW5wdXRSZWZ9CiAgICAgICAgICAgIHR5cGU9InRleHQiCiAgICAgICAgICAgIHBsYWNlaG9sZGVyPXt0KCJhcGlDYWxsTm9kZS51cmxQbGFjZWhvbGRlciIpfQogICAgICAgICAgICB2YWx1ZT17Y29uZmlnLnVybCBhcyBzdHJpbmd9CiAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gb25Db25maWdDaGFuZ2UoeyB1cmw6IGUudGFyZ2V0LnZhbHVlIH0pfQogICAgICAgICAgICBjbGFzc05hbWU9ImZsZXgtMSBib3JkZXItbm9uZSBiZy10aGVtZS1zZXR0aW5ncy1pbnB1dC1iZyB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBwbGFjZWhvbGRlcjp0ZXh0LXRoZW1lLXNldHRpbmdzLWlucHV0LXBsYWNlaG9sZGVyIHRleHQtc20gcm91bmRlZC1sZyBmb2N1czpvdXRsaW5lLXByaW1hcnktYnV0dG9uIGFjdGl2ZTpvdXRsaW5lLXByaW1hcnktYnV0dG9uIG91dGxpbmUtbm9uZSBwLTIuNSIKICAgICAgICAgICAgYXV0b0NvbXBsZXRlPSJvZmYiCiAgICAgICAgICAgIHNwZWxsQ2hlY2s9e2ZhbHNlfQogICAgICAgICAgLz4KICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJyZWxhdGl2ZSI+CiAgICAgICAgICAgIDxidXR0b24KICAgICAgICAgICAgICB0eXBlPSJidXR0b24iCiAgICAgICAgICAgICAgcmVmPXt2YXJCdXR0b25SZWZ9CiAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4gc2V0U2hvd1Zhck1lbnUoIXNob3dWYXJNZW51KX0KICAgICAgICAgICAgICBjbGFzc05hbWU9ImgtZnVsbCBweC0zIHJvdW5kZWQtbGcgYm9yZGVyLW5vbmUgYmctdGhlbWUtc2V0dGluZ3MtaW5wdXQtYmcgdGV4dC10aGVtZS10ZXh0LXByaW1hcnkgaG92ZXI6YmctdGhlbWUtYWN0aW9uLW1lbnUtaXRlbS1ob3ZlciB0cmFuc2l0aW9uLWNvbG9ycyBkdXJhdGlvbi0zMDAgZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTEiCiAgICAgICAgICAgICAgdGl0bGU9e3QoImFwaUNhbGxOb2RlLmluc2VydFZhcmlhYmxlIil9CiAgICAgICAgICAgID4KICAgICAgICAgICAgICA8UGx1cyBjbGFzc05hbWU9InctNCBoLTQiIC8+CiAgICAgICAgICAgICAgPENhcmV0RG93biBjbGFzc05hbWU9InctMyBoLTMiIC8+CiAgICAgICAgICAgIDwvYnV0dG9uPgogICAgICAgICAgICB7c2hvd1Zhck1lbnUgJiYgKAogICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJhYnNvbHV0ZSByaWdodC0wIHRvcC1bY2FsYygxMDAlKzRweCldIHctNDggYmctdGhlbWUtc2V0dGluZ3MtaW5wdXQtYmcgYm9yZGVyLW5vbmUgcm91bmRlZC1sZyBzaGFkb3ctbGcgei0xMCI+CiAgICAgICAgICAgICAgICB7cmVuZGVyVmFyaWFibGVTZWxlY3QoCiAgICAgICAgICAgICAgICAgICIiLAogICAgICAgICAgICAgICAgICBpbnNlcnRWYXJpYWJsZUF0Q3Vyc29yLAogICAgICAgICAgICAgICAgICB0KCJhcGlDYWxsTm9kZS5zZWxlY3RWYXJpYWJsZVRvSW5zZXJ0IiksCiAgICAgICAgICAgICAgICAgIHRydWUsCiAgICAgICAgICAgICAgICApfQogICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICApfQogICAgICAgICAgPC9kaXY+CiAgICAgICAgPC9kaXY+CiAgICAgIDwvZGl2PgoKICAgICAgPGRpdj4KICAgICAgICA8bGFiZWwgY2xhc3NOYW1lPSJibG9jayB0ZXh0LXNtIGZvbnQtbWVkaXVtIHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IG1iLTIiPgogICAgICAgICAge3QoImFwaUNhbGxOb2RlLm1ldGhvZCIpfQogICAgICAgIDwvbGFiZWw+CiAgICAgICAgPHNlbGVjdAogICAgICAgICAgdmFsdWU9e2NvbmZpZy5tZXRob2QgYXMgc3RyaW5nfQogICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBvbkNvbmZpZ0NoYW5nZSh7IG1ldGhvZDogZS50YXJnZXQudmFsdWUgfSl9CiAgICAgICAgICBjbGFzc05hbWU9InctZnVsbCBib3JkZXItbm9uZSBiZy10aGVtZS1zZXR0aW5ncy1pbnB1dC1iZyB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSB0ZXh0LXNtIHJvdW5kZWQtbGcgZm9jdXM6b3V0bGluZS1wcmltYXJ5LWJ1dHRvbiBhY3RpdmU6b3V0bGluZS1wcmltYXJ5LWJ1dHRvbiBvdXRsaW5lLW5vbmUgcC0yLjUiCiAgICAgICAgPgogICAgICAgICAge0FQSV9NRVRIT0RTLm1hcCgobWV0aG9kKSA9PiAoCiAgICAgICAgICAgIDxvcHRpb24KICAgICAgICAgICAgICBrZXk9e21ldGhvZH0KICAgICAgICAgICAgICB2YWx1ZT17bWV0aG9kfQogICAgICAgICAgICAgIGNsYXNzTmFtZT0iYmctdGhlbWUtc2V0dGluZ3MtaW5wdXQtYmciCiAgICAgICAgICAgID4KICAgICAgICAgICAgICB7bWV0aG9kfQogICAgICAgICAgICA8L29wdGlvbj4KICAgICAgICAgICkpfQogICAgICAgIDwvc2VsZWN0PgogICAgICA8L2Rpdj4KCiAgICAgIDxkaXY+CiAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktYmV0d2VlbiBtYi0yIj4KICAgICAgICAgIDxsYWJlbCBjbGFzc05hbWU9InRleHQtc20gZm9udC1tZWRpdW0gdGV4dC10aGVtZS10ZXh0LXByaW1hcnkiPgogICAgICAgICAgICB7dCgiYXBpQ2FsbE5vZGUuaGVhZGVycyIpfQogICAgICAgICAgPC9sYWJlbD4KICAgICAgICAgIDxidXR0b24KICAgICAgICAgICAgdHlwZT0iYnV0dG9uIgogICAgICAgICAgICBvbkNsaWNrPXthZGRIZWFkZXJ9CiAgICAgICAgICAgIGNsYXNzTmFtZT0icC0xLjUgcm91bmRlZC1sZyBib3JkZXItbm9uZSBiZy10aGVtZS1zZXR0aW5ncy1pbnB1dC1iZyB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBob3ZlcjpiZy10aGVtZS1hY3Rpb24tbWVudS1pdGVtLWhvdmVyIHRyYW5zaXRpb24tY29sb3JzIGR1cmF0aW9uLTMwMCIKICAgICAgICAgICAgdGl0bGU9e3QoImFwaUNhbGxOb2RlLmFkZEhlYWRlciIpfQogICAgICAgICAgPgogICAgICAgICAgICA8UGx1cyBjbGFzc05hbWU9InctMy41IGgtMy41IiAvPgogICAgICAgICAgPC9idXR0b24+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPGRpdiBjbGFzc05hbWU9InNwYWNlLXktMiI+CiAgICAgICAgICB7KGNvbmZpZy5oZWFkZXJzIHx8IFtdKS5tYXAoKGhlYWRlcjogSGVhZGVySXRlbSwgaW5kZXg6IG51bWJlcikgPT4gKAogICAgICAgICAgICA8ZGl2IGtleT17YGhlYWRlci0ke2hlYWRlci5rZXl9LSR7aW5kZXh9YH0gY2xhc3NOYW1lPSJmbGV4IGdhcC0yIj4KICAgICAgICAgICAgICA8aW5wdXQKICAgICAgICAgICAgICAgIHR5cGU9InRleHQiCiAgICAgICAgICAgICAgICBwbGFjZWhvbGRlcj17dCgiYXBpQ2FsbE5vZGUuaGVhZGVyTmFtZSIpfQogICAgICAgICAgICAgICAgdmFsdWU9e2hlYWRlci5rZXl9CiAgICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+CiAgICAgICAgICAgICAgICAgIGhhbmRsZUhlYWRlckNoYW5nZShpbmRleCwgImtleSIsIGUudGFyZ2V0LnZhbHVlKQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJmbGV4LTEgYm9yZGVyLW5vbmUgYmctdGhlbWUtc2V0dGluZ3MtaW5wdXQtYmcgdGV4dC10aGVtZS10ZXh0LXByaW1hcnkgcGxhY2Vob2xkZXI6dGV4dC10aGVtZS1zZXR0aW5ncy1pbnB1dC1wbGFjZWhvbGRlciB0ZXh0LXNtIHJvdW5kZWQtbGcgZm9jdXM6b3V0bGluZS1wcmltYXJ5LWJ1dHRvbiBhY3RpdmU6b3V0bGluZS1wcmltYXJ5LWJ1dHRvbiBvdXRsaW5lLW5vbmUgcC0yLjUiCiAgICAgICAgICAgICAgICBhdXRvQ29tcGxldGU9Im9mZiIKICAgICAgICAgICAgICAgIHNwZWxsQ2hlY2s9e2ZhbHNlfQogICAgICAgICAgICAgIC8+CiAgICAgICAgICAgICAgPGlucHV0CiAgICAgICAgICAgICAgICB0eXBlPSJ0ZXh0IgogICAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9e3QoImFwaUNhbGxOb2RlLmhlYWRlclZhbHVlIil9CiAgICAgICAgICAgICAgICB2YWx1ZT17aGVhZGVyLnZhbHVlfQogICAgICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PgogICAgICAgICAgICAgICAgICBoYW5kbGVIZWFkZXJDaGFuZ2UoaW5kZXgsICJ2YWx1ZSIsIGUudGFyZ2V0LnZhbHVlKQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJmbGV4LTEgYm9yZGVyLW5vbmUgYmctdGhlbWUtc2V0dGluZ3MtaW5wdXQtYmcgdGV4dC10aGVtZS10ZXh0LXByaW1hcnkgcGxhY2Vob2xkZXI6dGV4dC10aGVtZS1zZXR0aW5ncy1pbnB1dC1wbGFjZWhvbGRlciB0ZXh0LXNtIHJvdW5kZWQtbGcgZm9jdXM6b3V0bGluZS1wcmltYXJ5LWJ1dHRvbiBhY3RpdmU6b3V0bGluZS1wcmltYXJ5LWJ1dHRvbiBvdXRsaW5lLW5vbmUgcC0yLjUiCiAgICAgICAgICAgICAgICBhdXRvQ29tcGxldGU9Im9mZiIKICAgICAgICAgICAgICAgIHNwZWxsQ2hlY2s9e2ZhbHNlfQogICAgICAgICAgICAgIC8+CiAgICAgICAgICAgICAgPGJ1dHRvbgogICAgICAgICAgICAgICAgdHlwZT0iYnV0dG9uIgogICAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4gcmVtb3ZlSGVhZGVyKGluZGV4KX0KICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0icC0yLjUgcm91bmRlZC1sZyBib3JkZXItbm9uZSBiZy10aGVtZS1zZXR0aW5ncy1pbnB1dC1iZyB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBob3Zlcjp0ZXh0LXJlZC01MDAgaG92ZXI6Ym9yZGVyLXJlZC01MDAvMjAgaG92ZXI6YmctcmVkLTUwMC8xMCB0cmFuc2l0aW9uLWNvbG9ycyBkdXJhdGlvbi0zMDAiCiAgICAgICAgICAgICAgICB0aXRsZT17dCgiYXBpQ2FsbE5vZGUucmVtb3ZlSGVhZGVyIil9CiAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgPFggY2xhc3NOYW1lPSJ3LTQgaC00IiAvPgogICAgICAgICAgICAgIDwvYnV0dG9uPgogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICkpfQogICAgICAgIDwvZGl2PgogICAgICA8L2Rpdj4KCiAgICAgIHtbIlBPU1QiLCAiUFVUIiwgIlBBVENIIl0uaW5jbHVkZXMoY29uZmlnLm1ldGhvZCBhcyBzdHJpbmcpICYmICgKICAgICAgICA8ZGl2PgogICAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT0iYmxvY2sgdGV4dC1zbSBmb250LW1lZGl1bSB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBtYi0yIj4KICAgICAgICAgICAge3QoImFwaUNhbGxOb2RlLnJlcXVlc3RCb2R5Iil9CiAgICAgICAgICA8L2xhYmVsPgogICAgICAgICAgPGRpdiBjbGFzc05hbWU9InNwYWNlLXktMiI+CiAgICAgICAgICAgIDxzZWxlY3QKICAgICAgICAgICAgICB2YWx1ZT17Y29uZmlnLmJvZHlUeXBlIHx8ICJqc29uIn0KICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IG9uQ29uZmlnQ2hhbmdlKHsgYm9keVR5cGU6IGUudGFyZ2V0LnZhbHVlIH0pfQogICAgICAgICAgICAgIGNsYXNzTmFtZT0idy1mdWxsIHAtMi41IHRleHQtc20gcm91bmRlZC1sZyBiZy10aGVtZS1iZy1wcmltYXJ5IGJvcmRlciBib3JkZXItd2hpdGUvNSB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBmb2N1czpib3JkZXItcHJpbWFyeS1idXR0b24gZm9jdXM6cmluZy0xIGZvY3VzOnJpbmctcHJpbWFyeS1idXR0b24gb3V0bGluZS1ub25lIGxpZ2h0OmJnLXRoZW1lLXNldHRpbmdzLWlucHV0LWJnIGxpZ2h0OmJvcmRlci1ibGFjay8xMCIKICAgICAgICAgICAgPgogICAgICAgICAgICAgIDxvcHRpb24KICAgICAgICAgICAgICAgIHZhbHVlPSJqc29uIgogICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJiZy10aGVtZS1iZy1wcmltYXJ5IGxpZ2h0OmJnLXRoZW1lLXNldHRpbmdzLWlucHV0LWJnIgogICAgICAgICAgICAgID4KICAgICAgICAgICAgICAgIHt0KCJhcGlDYWxsTm9kZS5qc29uIil9CiAgICAgICAgICAgICAgPC9vcHRpb24+CiAgICAgICAgICAgICAgPG9wdGlvbgogICAgICAgICAgICAgICAgdmFsdWU9InRleHQiCiAgICAgICAgICAgICAgICBjbGFzc05hbWU9ImJnLXRoZW1lLWJnLXByaW1hcnkgbGlnaHQ6YmctdGhlbWUtc2V0dGluZ3MtaW5wdXQtYmciCiAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAge3QoImFwaUNhbGxOb2RlLnJhd1RleHQiKX0KICAgICAgICAgICAgICA8L29wdGlvbj4KICAgICAgICAgICAgICA8b3B0aW9uCiAgICAgICAgICAgICAgICB2YWx1ZT0iZm9ybSIKICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0iYmctdGhlbWUtYmctcHJpbWFyeSBsaWdodDpiZy10aGVtZS1zZXR0aW5ncy1pbnB1dC1iZyIKICAgICAgICAgICAgICA+CiAgICAgICAgICAgICAgICB7dCgiYXBpQ2FsbE5vZGUuZm9ybURhdGEiKX0KICAgICAgICAgICAgICA8L29wdGlvbj4KICAgICAgICAgICAgPC9zZWxlY3Q+CiAgICAgICAgICAgIHtjb25maWcuYm9keVR5cGUgPT09ICJqc29uIiA/ICgKICAgICAgICAgICAgICA8dGV4dGFyZWEKICAgICAgICAgICAgICAgIHBsYWNlaG9sZGVyPXt0KCJhcGlDYWxsTm9kZS5qc29uUGxhY2Vob2xkZXIiKX0KICAgICAgICAgICAgICAgIHZhbHVlPXtjb25maWcuYm9keSBhcyBzdHJpbmd9CiAgICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IG9uQ29uZmlnQ2hhbmdlKHsgYm9keTogZS50YXJnZXQudmFsdWUgfSl9CiAgICAgICAgICAgICAgICBjbGFzc05hbWU9InctZnVsbCBwLTIuNSB0ZXh0LXNtIHJvdW5kZWQtbGcgYmctdGhlbWUtYmctcHJpbWFyeSBib3JkZXIgYm9yZGVyLXdoaXRlLzUgdGV4dC10aGVtZS10ZXh0LXByaW1hcnkgcGxhY2Vob2xkZXI6dGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeS8yMCBmb2N1czpib3JkZXItcHJpbWFyeS1idXR0b24gZm9jdXM6cmluZy0xIGZvY3VzOnJpbmctcHJpbWFyeS1idXR0b24gb3V0bGluZS1ub25lIGxpZ2h0OmJnLXRoZW1lLXNldHRpbmdzLWlucHV0LWJnIGxpZ2h0OmJvcmRlci1ibGFjay8xMCBmb250LW1vbm8iCiAgICAgICAgICAgICAgICByb3dzPXs0fQogICAgICAgICAgICAgICAgYXV0b0NvbXBsZXRlPSJvZmYiCiAgICAgICAgICAgICAgICBzcGVsbENoZWNrPXtmYWxzZX0KICAgICAgICAgICAgICAvPgogICAgICAgICAgICApIDogY29uZmlnLmJvZHlUeXBlID09PSAiZm9ybSIgPyAoCiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9InNwYWNlLXktMiI+CiAgICAgICAgICAgICAgICB7KGNvbmZpZy5mb3JtRGF0YSB8fCBbXSkubWFwKAogICAgICAgICAgICAgICAgICAoaXRlbTogRm9ybURhdGFJdGVtLCBpbmRleDogbnVtYmVyKSA9PiAoCiAgICAgICAgICAgICAgICAgICAgPGRpdiBrZXk9e2Bmb3JtLSR7aXRlbS5rZXl9LSR7aW5kZXh9YH0gY2xhc3NOYW1lPSJmbGV4IGdhcC0yIj4KICAgICAgICAgICAgICAgICAgICAgIDxpbnB1dAogICAgICAgICAgICAgICAgICAgICAgICB0eXBlPSJ0ZXh0IgogICAgICAgICAgICAgICAgICAgICAgICBwbGFjZWhvbGRlcj17dCgiYXBpQ2FsbE5vZGUuZm9ybUtleSIpfQogICAgICAgICAgICAgICAgICAgICAgICB2YWx1ZT17aXRlbS5rZXl9CiAgICAgICAgICAgICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gewogICAgICAgICAgICAgICAgICAgICAgICAgIGNvbnN0IG5ld0Zvcm1EYXRhID0gWy4uLihjb25maWcuZm9ybURhdGEgfHwgW10pXTsKICAgICAgICAgICAgICAgICAgICAgICAgICBuZXdGb3JtRGF0YVtpbmRleF0gPSB7IC4uLml0ZW0sIGtleTogZS50YXJnZXQudmFsdWUgfTsKICAgICAgICAgICAgICAgICAgICAgICAgICBvbkNvbmZpZ0NoYW5nZSh7IGZvcm1EYXRhOiBuZXdGb3JtRGF0YSB9KTsKICAgICAgICAgICAgICAgICAgICAgICAgfX0KICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJmbGV4LTEgcC0yLjUgdGV4dC1zbSByb3VuZGVkLWxnIGJnLXRoZW1lLWJnLXByaW1hcnkgYm9yZGVyIGJvcmRlci13aGl0ZS81IHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IHBsYWNlaG9sZGVyOnRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkvMjAgZm9jdXM6Ym9yZGVyLXByaW1hcnktYnV0dG9uIGZvY3VzOnJpbmctMSBmb2N1czpyaW5nLXByaW1hcnktYnV0dG9uIG91dGxpbmUtbm9uZSBsaWdodDpiZy10aGVtZS1zZXR0aW5ncy1pbnB1dC1iZyBsaWdodDpib3JkZXItYmxhY2svMTAiCiAgICAgICAgICAgICAgICAgICAgICAgIGF1dG9Db21wbGV0ZT0ib2ZmIgogICAgICAgICAgICAgICAgICAgICAgICBzcGVsbENoZWNrPXtmYWxzZX0KICAgICAgICAgICAgICAgICAgICAgIC8+CiAgICAgICAgICAgICAgICAgICAgICA8aW5wdXQKICAgICAgICAgICAgICAgICAgICAgICAgdHlwZT0idGV4dCIKICAgICAgICAgICAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9e3QoImFwaUNhbGxOb2RlLmZvcm1WYWx1ZSIpfQogICAgICAgICAgICAgICAgICAgICAgICB2YWx1ZT17aXRlbS52YWx1ZX0KICAgICAgICAgICAgICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgY29uc3QgbmV3Rm9ybURhdGEgPSBbLi4uKGNvbmZpZy5mb3JtRGF0YSB8fCBbXSldOwogICAgICAgICAgICAgICAgICAgICAgICAgIG5ld0Zvcm1EYXRhW2luZGV4XSA9IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgIC4uLml0ZW0sCiAgICAgICAgICAgICAgICAgICAgICAgICAgICB2YWx1ZTogZS50YXJnZXQudmFsdWUsCiAgICAgICAgICAgICAgICAgICAgICAgICAgfTsKICAgICAgICAgICAgICAgICAgICAgICAgICBvbkNvbmZpZ0NoYW5nZSh7IGZvcm1EYXRhOiBuZXdGb3JtRGF0YSB9KTsKICAgICAgICAgICAgICAgICAgICAgICAgfX0KICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJmbGV4LTEgcC0yLjUgdGV4dC1zbSByb3VuZGVkLWxnIGJnLXRoZW1lLWJnLXByaW1hcnkgYm9yZGVyIGJvcmRlci13aGl0ZS81IHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IHBsYWNlaG9sZGVyOnRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkvMjAgZm9jdXM6Ym9yZGVyLXByaW1hcnktYnV0dG9uIGZvY3VzOnJpbmctMSBmb2N1czpyaW5nLXByaW1hcnktYnV0dG9uIG91dGxpbmUtbm9uZSBsaWdodDpiZy10aGVtZS1zZXR0aW5ncy1pbnB1dC1iZyBsaWdodDpib3JkZXItYmxhY2svMTAiCiAgICAgICAgICAgICAgICAgICAgICAgIGF1dG9Db21wbGV0ZT0ib2ZmIgogICAgICAgICAgICAgICAgICAgICAgICBzcGVsbENoZWNrPXtmYWxzZX0KICAgICAgICAgICAgICAgICAgICAgIC8+CiAgICAgICAgICAgICAgICAgICAgICA8YnV0dG9uCiAgICAgICAgICAgICAgICAgICAgICAgIHR5cGU9ImJ1dHRvbiIKICAgICAgICAgICAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4gewogICAgICAgICAgICAgICAgICAgICAgICAgIGNvbnN0IG5ld0Zvcm1EYXRhID0gWwogICAgICAgICAgICAgICAgICAgICAgICAgICAgLi4uKGNvbmZpZy5mb3JtRGF0YSB8fCBbXSksCiAgICAgICAgICAgICAgICAgICAgICAgICAgXS5maWx0ZXIoKF8sIGkpID0+IGkgIT09IGluZGV4KTsKICAgICAgICAgICAgICAgICAgICAgICAgICBvbkNvbmZpZ0NoYW5nZSh7IGZvcm1EYXRhOiBuZXdGb3JtRGF0YSB9KTsKICAgICAgICAgICAgICAgICAgICAgICAgfX0KICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJwLTIuNSByb3VuZGVkLWxnIGJnLXRoZW1lLWJnLXByaW1hcnkgYm9yZGVyIGJvcmRlci13aGl0ZS81IHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IGhvdmVyOnRleHQtcmVkLTUwMCBob3Zlcjpib3JkZXItcmVkLTUwMC8yMCBob3ZlcjpiZy1yZWQtNTAwLzEwIHRyYW5zaXRpb24tY29sb3JzIGR1cmF0aW9uLTMwMCBsaWdodDpiZy10aGVtZS1zZXR0aW5ncy1pbnB1dC1iZyBsaWdodDpib3JkZXItYmxhY2svMTAiCiAgICAgICAgICAgICAgICAgICAgICAgIHRpdGxlPXt0KCJhcGlDYWxsTm9kZS5yZW1vdmVGaWVsZCIpfQogICAgICAgICAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgICAgICAgICA8WCBjbGFzc05hbWU9InctNCBoLTQiIC8+CiAgICAgICAgICAgICAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgICAgKSwKICAgICAgICAgICAgICAgICl9CiAgICAgICAgICAgICAgICA8YnV0dG9uCiAgICAgICAgICAgICAgICAgIHR5cGU9ImJ1dHRvbiIKICAgICAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4gewogICAgICAgICAgICAgICAgICAgIGNvbnN0IG5ld0Zvcm1EYXRhID0gWwogICAgICAgICAgICAgICAgICAgICAgLi4uKGNvbmZpZy5mb3JtRGF0YSB8fCBbXSksCiAgICAgICAgICAgICAgICAgICAgICB7IGtleTogIiIsIHZhbHVlOiAiIiB9LAogICAgICAgICAgICAgICAgICAgIF07CiAgICAgICAgICAgICAgICAgICAgb25Db25maWdDaGFuZ2UoeyBmb3JtRGF0YTogbmV3Rm9ybURhdGEgfSk7CiAgICAgICAgICAgICAgICAgIH19CiAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0idy1mdWxsIHAtMi41IHJvdW5kZWQtbGcgYm9yZGVyLW5vbmUgYmctdGhlbWUtc2V0dGluZ3MtaW5wdXQtYmcgdGV4dC10aGVtZS10ZXh0LXByaW1hcnkgaG92ZXI6YmctdGhlbWUtYWN0aW9uLW1lbnUtaXRlbS1ob3ZlciB0cmFuc2l0aW9uLWNvbG9ycyBkdXJhdGlvbi0zMDAgdGV4dC1zbSIKICAgICAgICAgICAgICAgID4KICAgICAgICAgICAgICAgICAge3QoImFwaUNhbGxOb2RlLmFkZEZvcm1GaWVsZCIpfQogICAgICAgICAgICAgICAgPC9idXR0b24+CiAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICkgOiAoCiAgICAgICAgICAgICAgPHRleHRhcmVhCiAgICAgICAgICAgICAgICBwbGFjZWhvbGRlcj17dCgiYXBpQ2FsbE5vZGUucmF3UmVxdWVzdEJvZHkiKX0KICAgICAgICAgICAgICAgIHZhbHVlPXtjb25maWcuYm9keSBhcyBzdHJpbmd9CiAgICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IG9uQ29uZmlnQ2hhbmdlKHsgYm9keTogZS50YXJnZXQudmFsdWUgfSl9CiAgICAgICAgICAgICAgICBjbGFzc05hbWU9InctZnVsbCBib3JkZXItbm9uZSBiZy10aGVtZS1zZXR0aW5ncy1pbnB1dC1iZyB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBwbGFjZWhvbGRlcjp0ZXh0LXRoZW1lLXNldHRpbmdzLWlucHV0LXBsYWNlaG9sZGVyIHRleHQtc20gcm91bmRlZC1sZyBmb2N1czpvdXRsaW5lLXByaW1hcnktYnV0dG9uIGFjdGl2ZTpvdXRsaW5lLXByaW1hcnktYnV0dG9uIG91dGxpbmUtbm9uZSBwLTIuNSIKICAgICAgICAgICAgICAgIHJvd3M9ezR9CiAgICAgICAgICAgICAgICBhdXRvQ29tcGxldGU9Im9mZiIKICAgICAgICAgICAgICAgIHNwZWxsQ2hlY2s9e2ZhbHNlfQogICAgICAgICAgICAgIC8+CiAgICAgICAgICAgICl9CiAgICAgICAgICA8L2Rpdj4KICAgICAgICA8L2Rpdj4KICAgICAgKX0KCiAgICAgIDxkaXY+CiAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT0iYmxvY2sgdGV4dC1zbSBmb250LW1lZGl1bSB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBtYi0yIj4KICAgICAgICAgIHt0KCJhcGlDYWxsTm9kZS5zdG9yZVJlc3BvbnNlSW4iKX0KICAgICAgICA8L2xhYmVsPgogICAgICAgIHtyZW5kZXJWYXJpYWJsZVNlbGVjdCgKICAgICAgICAgIGNvbmZpZy5yZXNwb25zZVZhcmlhYmxlLAogICAgICAgICAgKHZhbHVlKSA9PiBvbkNvbmZpZ0NoYW5nZSh7IHJlc3BvbnNlVmFyaWFibGU6IHZhbHVlIH0pLAogICAgICAgICAgdCgiYXBpQ2FsbE5vZGUuc2VsZWN0T3JDcmVhdGVWYXJpYWJsZSIpLAogICAgICAgICl9CiAgICAgIDwvZGl2PgogICAgPC9kaXY+CiAgKTsKfQo=
+// SPDX-License-Identifier: MIT
+// Purpose: Configuration node for making an HTTP API call within an agent flow.
+// Docs: ApiCallNode.doc.md
+/* eslint-disable react-hooks/refs */
+import React, { useRef, useState } from "react";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
+import { useTranslation } from "react-i18next";
+import type { BlockConfig } from "../../BlockList";
+
+interface HeaderItem {
+  key: string;
+  value: string;
+}
+
+interface FormDataItem {
+  key: string;
+  value: string;
+}
+
+interface ApiCallNodeProps {
+  config: BlockConfig;
+  onConfigChange: (config: Partial<BlockConfig>) => void;
+  renderVariableSelect: (
+    value: any,
+    onChange: (value: string) => void,
+    placeholder?: string,
+    isMenu?: boolean,
+  ) => React.ReactNode;
+}
+
+const API_METHODS = ["GET", "POST", "DELETE", "PUT", "PATCH"];
+
+export default function ApiCallNode({
+  config,
+  onConfigChange,
+  renderVariableSelect,
+}: ApiCallNodeProps): JSX.Element {
+  const { t } = useTranslation();
+  const urlInputRef = useRef<HTMLInputElement | null>(null);
+  const [showVarMenu, setShowVarMenu] = useState(false);
+  const varButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  const handleHeaderChange = (
+    index: number,
+    field: keyof HeaderItem,
+    value: string,
+  ) => {
+    const newHeaders = [...(config.headers || [])];
+    newHeaders[index] = { ...newHeaders[index], [field]: value };
+    onConfigChange({ headers: newHeaders });
+  };
+
+  const addHeader = () => {
+    const newHeaders = [...(config.headers || []), { key: "", value: "" }];
+    onConfigChange({ headers: newHeaders });
+  };
+
+  const removeHeader = (index: number) => {
+    const newHeaders = [...(config.headers || [])].filter(
+      (_, i) => i !== index,
+    );
+    onConfigChange({ headers: newHeaders });
+  };
+
+  const insertVariableAtCursor = (variableName: string) => {
+    if (!urlInputRef.current) return;
+
+    const input = urlInputRef.current;
+    const start = input.selectionStart ?? 0;
+    const end = input.selectionEnd ?? 0;
+    const currentValue = config.url as string;
+
+    const newValue =
+      currentValue.substring(0, start) +
+      "${" +
+      variableName +
+      "}" +
+      currentValue.substring(end);
+
+    onConfigChange({ url: newValue });
+    setShowVarMenu(false);
+
+    // Set cursor position after the inserted variable
+    setTimeout(() => {
+      const newPosition = start + variableName.length + 3; // +3 for ${}
+      input.setSelectionRange(newPosition, newPosition);
+      input.focus();
+    }, 0);
+  };
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">
+          {t("apiCallNode.url")}
+        </label>
+        <div className="flex gap-2">
+          <input
+            ref={urlInputRef}
+            type="text"
+            placeholder={t("apiCallNode.urlPlaceholder")}
+            value={config.url as string}
+            onChange={(e) => onConfigChange({ url: e.target.value })}
+            className="flex-1 border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none p-2.5"
+            autoComplete="off"
+            spellCheck={false}
+          />
+          <div className="relative">
+            <button
+              type="button"
+              ref={varButtonRef}
+              onClick={() => setShowVarMenu(!showVarMenu)}
+              className="h-full px-3 rounded-lg border-none bg-theme-settings-input-bg text-theme-text-primary hover:bg-theme-action-menu-item-hover transition-colors duration-300 flex items-center gap-1"
+              title={t("apiCallNode.insertVariable")}
+            >
+              <Plus className="w-4 h-4" />
+              <CaretDown className="w-3 h-3" />
+            </button>
+            {showVarMenu && (
+              <div className="absolute right-0 top-[calc(100%+4px)] w-48 bg-theme-settings-input-bg border-none rounded-lg shadow-lg z-10">
+                {renderVariableSelect(
+                  "",
+                  insertVariableAtCursor,
+                  t("apiCallNode.selectVariableToInsert"),
+                  true,
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">
+          {t("apiCallNode.method")}
+        </label>
+        <select
+          value={config.method as string}
+          onChange={(e) => onConfigChange({ method: e.target.value })}
+          className="w-full border-none bg-theme-settings-input-bg text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none p-2.5"
+        >
+          {API_METHODS.map((method) => (
+            <option
+              key={method}
+              value={method}
+              className="bg-theme-settings-input-bg"
+            >
+              {method}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <div className="flex items-center justify-between mb-2">
+          <label className="text-sm font-medium text-theme-text-primary">
+            {t("apiCallNode.headers")}
+          </label>
+          <button
+            type="button"
+            onClick={addHeader}
+            className="p-1.5 rounded-lg border-none bg-theme-settings-input-bg text-theme-text-primary hover:bg-theme-action-menu-item-hover transition-colors duration-300"
+            title={t("apiCallNode.addHeader")}
+          >
+            <Plus className="w-3.5 h-3.5" />
+          </button>
+        </div>
+        <div className="space-y-2">
+          {(config.headers || []).map((header: HeaderItem, index: number) => (
+            <div key={`header-${header.key}-${index}`} className="flex gap-2">
+              <input
+                type="text"
+                placeholder={t("apiCallNode.headerName")}
+                value={header.key}
+                onChange={(e) =>
+                  handleHeaderChange(index, "key", e.target.value)
+                }
+                className="flex-1 border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none p-2.5"
+                autoComplete="off"
+                spellCheck={false}
+              />
+              <input
+                type="text"
+                placeholder={t("apiCallNode.headerValue")}
+                value={header.value}
+                onChange={(e) =>
+                  handleHeaderChange(index, "value", e.target.value)
+                }
+                className="flex-1 border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none p-2.5"
+                autoComplete="off"
+                spellCheck={false}
+              />
+              <button
+                type="button"
+                onClick={() => removeHeader(index)}
+                className="p-2.5 rounded-lg border-none bg-theme-settings-input-bg text-theme-text-primary hover:text-red-500 hover:border-red-500/20 hover:bg-red-500/10 transition-colors duration-300"
+                title={t("apiCallNode.removeHeader")}
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {["POST", "PUT", "PATCH"].includes(config.method as string) && (
+        <div>
+          <label className="block text-sm font-medium text-theme-text-primary mb-2">
+            {t("apiCallNode.requestBody")}
+          </label>
+          <div className="space-y-2">
+            <select
+              value={config.bodyType || "json"}
+              onChange={(e) => onConfigChange({ bodyType: e.target.value })}
+              className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-theme-text-primary focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none light:bg-theme-settings-input-bg light:border-black/10"
+            >
+              <option
+                value="json"
+                className="bg-theme-bg-primary light:bg-theme-settings-input-bg"
+              >
+                {t("apiCallNode.json")}
+              </option>
+              <option
+                value="text"
+                className="bg-theme-bg-primary light:bg-theme-settings-input-bg"
+              >
+                {t("apiCallNode.rawText")}
+              </option>
+              <option
+                value="form"
+                className="bg-theme-bg-primary light:bg-theme-settings-input-bg"
+              >
+                {t("apiCallNode.formData")}
+              </option>
+            </select>
+            {config.bodyType === "json" ? (
+              <textarea
+                placeholder={t("apiCallNode.jsonPlaceholder")}
+                value={config.body as string}
+                onChange={(e) => onConfigChange({ body: e.target.value })}
+                className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-theme-text-primary placeholder:text-theme-text-secondary/20 focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none light:bg-theme-settings-input-bg light:border-black/10 font-mono"
+                rows={4}
+                autoComplete="off"
+                spellCheck={false}
+              />
+            ) : config.bodyType === "form" ? (
+              <div className="space-y-2">
+                {(config.formData || []).map(
+                  (item: FormDataItem, index: number) => (
+                    <div key={`form-${item.key}-${index}`} className="flex gap-2">
+                      <input
+                        type="text"
+                        placeholder={t("apiCallNode.formKey")}
+                        value={item.key}
+                        onChange={(e) => {
+                          const newFormData = [...(config.formData || [])];
+                          newFormData[index] = { ...item, key: e.target.value };
+                          onConfigChange({ formData: newFormData });
+                        }}
+                        className="flex-1 p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-theme-text-primary placeholder:text-theme-text-secondary/20 focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none light:bg-theme-settings-input-bg light:border-black/10"
+                        autoComplete="off"
+                        spellCheck={false}
+                      />
+                      <input
+                        type="text"
+                        placeholder={t("apiCallNode.formValue")}
+                        value={item.value}
+                        onChange={(e) => {
+                          const newFormData = [...(config.formData || [])];
+                          newFormData[index] = {
+                            ...item,
+                            value: e.target.value,
+                          };
+                          onConfigChange({ formData: newFormData });
+                        }}
+                        className="flex-1 p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-theme-text-primary placeholder:text-theme-text-secondary/20 focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none light:bg-theme-settings-input-bg light:border-black/10"
+                        autoComplete="off"
+                        spellCheck={false}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const newFormData = [
+                            ...(config.formData || []),
+                          ].filter((_, i) => i !== index);
+                          onConfigChange({ formData: newFormData });
+                        }}
+                        className="p-2.5 rounded-lg bg-theme-bg-primary border border-white/5 text-theme-text-primary hover:text-red-500 hover:border-red-500/20 hover:bg-red-500/10 transition-colors duration-300 light:bg-theme-settings-input-bg light:border-black/10"
+                        title={t("apiCallNode.removeField")}
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ),
+                )}
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newFormData = [
+                      ...(config.formData || []),
+                      { key: "", value: "" },
+                    ];
+                    onConfigChange({ formData: newFormData });
+                  }}
+                  className="w-full p-2.5 rounded-lg border-none bg-theme-settings-input-bg text-theme-text-primary hover:bg-theme-action-menu-item-hover transition-colors duration-300 text-sm"
+                >
+                  {t("apiCallNode.addFormField")}
+                </button>
+              </div>
+            ) : (
+              <textarea
+                placeholder={t("apiCallNode.rawRequestBody")}
+                value={config.body as string}
+                onChange={(e) => onConfigChange({ body: e.target.value })}
+                className="w-full border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none p-2.5"
+                rows={4}
+                autoComplete="off"
+                spellCheck={false}
+              />
+            )}
+          </div>
+        </div>
+      )}
+
+      <div>
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">
+          {t("apiCallNode.storeResponseIn")}
+        </label>
+        {renderVariableSelect(
+          config.responseVariable,
+          (value) => onConfigChange({ responseVariable: value }),
+          t("apiCallNode.selectOrCreateVariable"),
+        )}
+      </div>
+    </div>
+  );
+}
