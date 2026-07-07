@@ -9,10 +9,23 @@ networks:
     external: true
 
 services:
+  fix-permissions:
+    image: busybox
+    container_name: opensin-fix-perms
+    volumes:
+      - "../server/storage:/storage"
+    user: root
+    command: >
+      sh -c "chown -R 1000:1000 /storage && mkdir -p /storage/tmp /storage/models /storage/vector-cache /storage/lancedb && echo 'Permissions fixed'"
+    restart: "no"
+
   opensin-chat:
     image: opensin-app:v1.14.0
     container_name: opensin-app
     restart: always
+    depends_on:
+      fix-permissions:
+        condition: service_completed_successfully
     build:
       context: ../.
       dockerfile: ./docker/Dockerfile
