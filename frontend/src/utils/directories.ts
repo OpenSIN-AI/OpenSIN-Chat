@@ -1,1 +1,52 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgZGF5anMgZnJvbSAiZGF5anMiOwppbXBvcnQgbG9jYWxpemVkRm9ybWF0IGZyb20gImRheWpzL3BsdWdpbi9sb2NhbGl6ZWRGb3JtYXQiOwoKZGF5anMuZXh0ZW5kKGxvY2FsaXplZEZvcm1hdCk7CgpleHBvcnQgZnVuY3Rpb24gZm9ybWF0RGF0ZShkYXRlU3RyaW5nKSB7CiAgaWYgKCFkYXRlU3RyaW5nKSByZXR1cm4gIuKAlCI7CiAgY29uc3QgcGFyc2VkID0gbmV3IERhdGUoZGF0ZVN0cmluZyk7CiAgaWYgKGlzTmFOKHBhcnNlZC5nZXRUaW1lKCkpKSByZXR1cm4gIuKAlCI7CiAgY29uc3Qgb3B0aW9ucyA9IHsgeWVhcjogIm51bWVyaWMiLCBtb250aDogInNob3J0IiwgZGF5OiAibnVtZXJpYyIgfSBhcyBjb25zdDsKICByZXR1cm4gcGFyc2VkLnRvTG9jYWxlRGF0ZVN0cmluZyh1bmRlZmluZWQsIG9wdGlvbnMpOwp9CgpleHBvcnQgZnVuY3Rpb24gZm9ybWF0RGF0ZVRpbWVBc01vbWVudChkYXRlU3RyaW5nLCBmb3JtYXQgPSAiTExMIikgewogIGlmICghZGF0ZVN0cmluZykgcmV0dXJuICLigJQiOwogIHRyeSB7CiAgICBjb25zdCBkID0gZGF5anMoZGF0ZVN0cmluZyk7CiAgICBpZiAoIWQuaXNWYWxpZCgpKSByZXR1cm4gIuKAlCI7CiAgICByZXR1cm4gZC5mb3JtYXQoZm9ybWF0KTsKICB9IGNhdGNoIHsKICAgIHJldHVybiAi4oCUIjsKICB9Cn0KCmV4cG9ydCBmdW5jdGlvbiBnZXRGaWxlRXh0ZW5zaW9uKHBhdGgpIHsKICBjb25zdCBoYXNFeHRlbnNpb24gPSBwYXRoPy5pbmNsdWRlcygiLiIpOwogIGlmICghaGFzRXh0ZW5zaW9uKSByZXR1cm4gIkZJTEUiOwogIGNvbnN0IGV4dGVuc2lvbiA9IHBhdGg/LnNwbGl0KCIuIik/LnNsaWNlKC0xKT8uWzBdOwogIHJldHVybiBleHRlbnNpb24/LnRvVXBwZXJDYXNlKCkgfHwgIkZJTEUiOwp9CgpleHBvcnQgZnVuY3Rpb24gbWlkZGxlVHJ1bmNhdGUoc3RyLCBuKSB7CiAgY29uc3QgZmlsZUV4dGVuc2lvblBhdHRlcm4gPSAvKFteLl0qKSQvOwogIGNvbnN0IGV4dGVuc2lvbk1hdGNoID0gc3RyLmluY2x1ZGVzKCIuIikgJiYgc3RyLm1hdGNoKGZpbGVFeHRlbnNpb25QYXR0ZXJuKTsKCiAgaWYgKHN0ci5sZW5ndGggPD0gbikgcmV0dXJuIHN0cjsKCiAgaWYgKGV4dGVuc2lvbk1hdGNoICYmIGV4dGVuc2lvbk1hdGNoWzFdKSB7CiAgICBjb25zdCBleHRlbnNpb24gPSBleHRlbnNpb25NYXRjaFsxXTsKICAgIGNvbnN0IG5hbWVXaXRob3V0RXh0ZW5zaW9uID0gc3RyLnJlcGxhY2UoZmlsZUV4dGVuc2lvblBhdHRlcm4sICIiKTsKICAgIGNvbnN0IHRydW5jYXRpb25Qb2ludCA9IE1hdGgubWF4KDMsIG4gLSBleHRlbnNpb24ubGVuZ3RoIC0gNCk7CiAgICBjb25zdCB0cnVuY2F0ZWROYW1lID0KICAgICAgbmFtZVdpdGhvdXRFeHRlbnNpb24uc2xpY2UoMCwgdHJ1bmNhdGlvblBvaW50KSArCiAgICAgICIuLi4iICsKICAgICAgbmFtZVdpdGhvdXRFeHRlbnNpb24uc2xpY2UoLTQpOwoKICAgIHJldHVybiB0cnVuY2F0ZWROYW1lICsgZXh0ZW5zaW9uOwogIH0gZWxzZSB7CiAgICByZXR1cm4gc3RyLmxlbmd0aCA+IG4gPyBzdHIuc3Vic3RyKDAsIG4gLSA4KSArICIuLi4iICsgc3RyLnNsaWNlKC00KSA6IHN0cjsKICB9Cn0K
+// SPDX-License-Identifier: MIT
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+
+dayjs.extend(localizedFormat);
+
+export function formatDate(dateString) {
+  if (!dateString) return "—";
+  const parsed = new Date(dateString);
+  if (isNaN(parsed.getTime())) return "—";
+  const options = { year: "numeric", month: "short", day: "numeric" } as const;
+  return parsed.toLocaleDateString(undefined, options);
+}
+
+export function formatDateTimeAsMoment(dateString, format = "LLL") {
+  if (!dateString) return "—";
+  try {
+    const d = dayjs(dateString);
+    if (!d.isValid()) return "—";
+    return d.format(format);
+  } catch {
+    return "—";
+  }
+}
+
+export function getFileExtension(path) {
+  const hasExtension = path?.includes(".");
+  if (!hasExtension) return "FILE";
+  const extension = path?.split(".")?.slice(-1)?.[0];
+  return extension?.toUpperCase() || "FILE";
+}
+
+export function middleTruncate(str, n) {
+  const fileExtensionPattern = /([^.]*)$/;
+  const extensionMatch = str.includes(".") && str.match(fileExtensionPattern);
+
+  if (str.length <= n) return str;
+
+  if (extensionMatch && extensionMatch[1]) {
+    const extension = extensionMatch[1];
+    const nameWithoutExtension = str.replace(fileExtensionPattern, "");
+    const truncationPoint = Math.max(3, n - extension.length - 4);
+    const truncatedName =
+      nameWithoutExtension.slice(0, truncationPoint) +
+      "..." +
+      nameWithoutExtension.slice(-4);
+
+    return truncatedName + extension;
+  } else {
+    return str.length > n ? str.substr(0, n - 8) + "..." + str.slice(-4) : str;
+  }
+}

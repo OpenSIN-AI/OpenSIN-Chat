@@ -1,1 +1,92 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBUZXN0cyBmb3IgbWlkZGxlVHJ1bmNhdGUg4oCUIHN0cmluZyB0cnVuY2F0aW9uIHdpdGggZXh0ZW5zaW9uIHByZXNlcnZhdGlvbi4KLy8gSXNzdWUgIzM5MQppbXBvcnQgeyBkZXNjcmliZSwgaXQsIGV4cGVjdCB9IGZyb20gInZpdGVzdCI7CmltcG9ydCB7IG1pZGRsZVRydW5jYXRlIH0gZnJvbSAiLi9kaXJlY3RvcmllcyI7CgpkZXNjcmliZSgibWlkZGxlVHJ1bmNhdGUg4oCTIHZhcmlvdXMgaW5wdXRzIiwgKCkgPT4gewogIGl0KCJyZXR1cm5zIHNob3J0IHN0cmluZ3MgdW5jaGFuZ2VkIiwgKCkgPT4gewogICAgZXhwZWN0KG1pZGRsZVRydW5jYXRlKCJoZWxsbyIsIDEwKSkudG9CZSgiaGVsbG8iKTsKICB9KTsKCiAgaXQoInJldHVybnMgc3RyaW5ncyBleGFjdGx5IGF0IHRoZSB0aHJlc2hvbGQgdW5jaGFuZ2VkIiwgKCkgPT4gewogICAgZXhwZWN0KG1pZGRsZVRydW5jYXRlKCIxMjM0NTY3OCIsIDgpKS50b0JlKCIxMjM0NTY3OCIpOwogIH0pOwoKICBpdCgidHJ1bmNhdGVzIGxvbmcgc3RyaW5ncyB3aXRoIGZpbGUgZXh0ZW5zaW9uIHByZXNlcnZlZCIsICgpID0+IHsKICAgIGNvbnN0IHJlc3VsdCA9IG1pZGRsZVRydW5jYXRlKCJ2ZXJ5bG9uZ2ZpbGVuYW1lLnR4dCIsIDEwKTsKICAgIGV4cGVjdChyZXN1bHQpLnRvQ29udGFpbigiLi4uIik7CiAgICBleHBlY3QocmVzdWx0KS50b0NvbnRhaW4oInR4dCIpOwogICAgZXhwZWN0KHJlc3VsdC5sZW5ndGgpLnRvQmVMZXNzVGhhbigidmVyeWxvbmdmaWxlbmFtZS50eHQiLmxlbmd0aCk7CiAgfSk7CgogIGl0KCJ0cnVuY2F0ZXMgbG9uZyBzdHJpbmdzIHdpdGhvdXQgZXh0ZW5zaW9uIiwgKCkgPT4gewogICAgY29uc3QgcmVzdWx0ID0gbWlkZGxlVHJ1bmNhdGUoInZlcnlsb25nZmlsZW5hbWUiLCA4KTsKICAgIGV4cGVjdChyZXN1bHQpLnRvQ29udGFpbigiLi4uIik7CiAgICBleHBlY3QocmVzdWx0Lmxlbmd0aCkudG9CZUxlc3NUaGFuT3JFcXVhbCgxMik7CiAgfSk7CgogIGl0KCJwcmVzZXJ2ZXMgdGhlIGV4dGVuc2lvbiBhdCB0aGUgZW5kIG9mIHRydW5jYXRlZCBvdXRwdXQiLCAoKSA9PiB7CiAgICBjb25zdCByZXN1bHQgPSBtaWRkbGVUcnVuY2F0ZSgic3VwZXJsb25nZG9jdW1lbnRuYW1lLnBkZiIsIDEyKTsKICAgIGV4cGVjdChyZXN1bHQuZW5kc1dpdGgoInBkZiIpKS50b0JlKHRydWUpOwogIH0pOwoKICBpdCgicHJlc2VydmVzIG11bHRpLXBhcnQgZXh0ZW5zaW9ucyAobGFzdCBzZWdtZW50IG9ubHkpIiwgKCkgPT4gewogICAgY29uc3QgcmVzdWx0ID0gbWlkZGxlVHJ1bmNhdGUoImFyY2hpdmUudGFyLmd6IiwgMTApOwogICAgZXhwZWN0KHJlc3VsdCkudG9Db250YWluKCIuLi4iKTsKICAgIGV4cGVjdChyZXN1bHQuZW5kc1dpdGgoImd6IikpLnRvQmUodHJ1ZSk7CiAgfSk7CgogIGl0KCJoYW5kbGVzIHZlcnkgc2hvcnQgdHJ1bmNhdGlvbiB0aHJlc2hvbGRzIiwgKCkgPT4gewogICAgY29uc3QgcmVzdWx0ID0gbWlkZGxlVHJ1bmNhdGUoInZlcnlsb25nZmlsZW5hbWUudHh0IiwgNSk7CiAgICBleHBlY3QocmVzdWx0KS50b0NvbnRhaW4oIi4uLiIpOwogIH0pOwoKICBpdCgiaGFuZGxlcyBzdHJpbmdzIHdpdGggbm8gZG90cyBhcyBuby1leHRlbnNpb24iLCAoKSA9PiB7CiAgICBjb25zdCByZXN1bHQgPSBtaWRkbGVUcnVuY2F0ZSgiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoiLCAxMCk7CiAgICBleHBlY3QocmVzdWx0KS50b0NvbnRhaW4oIi4uLiIpOwogICAgZXhwZWN0KHJlc3VsdC5sZW5ndGgpLnRvQmVMZXNzVGhhbigyNik7CiAgfSk7CgogIGl0KCJwcmVzZXJ2ZXMgdGhlIGxhc3QgNCBjaGFyYWN0ZXJzIG9mIHRoZSBuYW1lIHBhcnQiLCAoKSA9PiB7CiAgICBjb25zdCByZXN1bHQgPSBtaWRkbGVUcnVuY2F0ZSgidmVyeWxvbmdmaWxlbmFtZSIsIDEyKTsKICAgIC8vIFRoZSBub24tZXh0ZW5zaW9uIHBhdGgga2VlcHMgdGhlIGxhc3QgNCBjaGFycwogICAgZXhwZWN0KHJlc3VsdCkudG9Db250YWluKCIuLi4iKTsKICB9KTsKCiAgaXQoImhhbmRsZXMgc2luZ2xlIGNoYXJhY3RlciBzdHJpbmdzIiwgKCkgPT4gewogICAgZXhwZWN0KG1pZGRsZVRydW5jYXRlKCJhIiwgMTApKS50b0JlKCJhIik7CiAgfSk7CgogIGl0KCJoYW5kbGVzIGVtcHR5IHN0cmluZyIsICgpID0+IHsKICAgIGV4cGVjdChtaWRkbGVUcnVuY2F0ZSgiIiwgMTApKS50b0JlKCIiKTsKICB9KTsKCiAgaXQoImhhbmRsZXMgc3RyaW5ncyB3aXRoIGRvdHMgaW4gdGhlIG1pZGRsZSAobm90IGV4dGVuc2lvbikiLCAoKSA9PiB7CiAgICBjb25zdCByZXN1bHQgPSBtaWRkbGVUcnVuY2F0ZSgiZmlsZS5uYW1lLndpdGguZG90cy50eHQiLCAxMik7CiAgICBleHBlY3QocmVzdWx0KS50b0NvbnRhaW4oIi4uLiIpOwogICAgZXhwZWN0KHJlc3VsdC5lbmRzV2l0aCgidHh0IikpLnRvQmUodHJ1ZSk7CiAgfSk7CgogIGl0KCJ0cnVuY2F0ZXMgYSB2ZXJ5IGxvbmcgZmlsZW5hbWUgd2l0aCBleHRlbnNpb24iLCAoKSA9PiB7CiAgICBjb25zdCBsb25nTmFtZSA9ICJhIi5yZXBlYXQoMTAwKSArICIuanNvbiI7CiAgICBjb25zdCByZXN1bHQgPSBtaWRkbGVUcnVuY2F0ZShsb25nTmFtZSwgMjApOwogICAgZXhwZWN0KHJlc3VsdCkudG9Db250YWluKCIuLi4iKTsKICAgIGV4cGVjdChyZXN1bHQuZW5kc1dpdGgoImpzb24iKSkudG9CZSh0cnVlKTsKICAgIGV4cGVjdChyZXN1bHQubGVuZ3RoKS50b0JlTGVzc1RoYW4oMTAwKTsKICB9KTsKCiAgaXQoImhhbmRsZXMgZXh0ZW5zaW9uLW9ubHkgZmlsZW5hbWVzIiwgKCkgPT4gewogICAgLy8gIi5naXRpZ25vcmUiIOKAlCB0aGUgZXh0ZW5zaW9uIHJlZ2V4IGNhcHR1cmVzICJnaXRpZ25vcmUiCiAgICBjb25zdCByZXN1bHQgPSBtaWRkbGVUcnVuY2F0ZSgiLmdpdGlnbm9yZSIsIDUpOwogICAgZXhwZWN0KHJlc3VsdCkudG9Db250YWluKCIuLi4iKTsKICB9KTsKCiAgaXQoImRvZXMgbm90IHRydW5jYXRlIHdoZW4gc3RyaW5nIGxlbmd0aCBlcXVhbHMgdGhyZXNob2xkIiwgKCkgPT4gewogICAgZXhwZWN0KG1pZGRsZVRydW5jYXRlKCJleGFjdCIsIDUpKS50b0JlKCJleGFjdCIpOwogIH0pOwoKICBpdCgiaGFuZGxlcyBsYXJnZSB0aHJlc2hvbGQgdmFsdWVzIChubyB0cnVuY2F0aW9uIG5lZWRlZCkiLCAoKSA9PiB7CiAgICBleHBlY3QobWlkZGxlVHJ1bmNhdGUoInNob3J0LnR4dCIsIDEwMCkpLnRvQmUoInNob3J0LnR4dCIpOwogIH0pOwp9KTsK
+// SPDX-License-Identifier: MIT
+// Tests for middleTruncate — string truncation with extension preservation.
+// Issue #391
+import { describe, it, expect } from "vitest";
+import { middleTruncate } from "./directories";
+
+describe("middleTruncate – various inputs", () => {
+  it("returns short strings unchanged", () => {
+    expect(middleTruncate("hello", 10)).toBe("hello");
+  });
+
+  it("returns strings exactly at the threshold unchanged", () => {
+    expect(middleTruncate("12345678", 8)).toBe("12345678");
+  });
+
+  it("truncates long strings with file extension preserved", () => {
+    const result = middleTruncate("verylongfilename.txt", 10);
+    expect(result).toContain("...");
+    expect(result).toContain("txt");
+    expect(result.length).toBeLessThan("verylongfilename.txt".length);
+  });
+
+  it("truncates long strings without extension", () => {
+    const result = middleTruncate("verylongfilename", 8);
+    expect(result).toContain("...");
+    expect(result.length).toBeLessThanOrEqual(12);
+  });
+
+  it("preserves the extension at the end of truncated output", () => {
+    const result = middleTruncate("superlongdocumentname.pdf", 12);
+    expect(result.endsWith("pdf")).toBe(true);
+  });
+
+  it("preserves multi-part extensions (last segment only)", () => {
+    const result = middleTruncate("archive.tar.gz", 10);
+    expect(result).toContain("...");
+    expect(result.endsWith("gz")).toBe(true);
+  });
+
+  it("handles very short truncation thresholds", () => {
+    const result = middleTruncate("verylongfilename.txt", 5);
+    expect(result).toContain("...");
+  });
+
+  it("handles strings with no dots as no-extension", () => {
+    const result = middleTruncate("abcdefghijklmnopqrstuvwxyz", 10);
+    expect(result).toContain("...");
+    expect(result.length).toBeLessThan(26);
+  });
+
+  it("preserves the last 4 characters of the name part", () => {
+    const result = middleTruncate("verylongfilename", 12);
+    // The non-extension path keeps the last 4 chars
+    expect(result).toContain("...");
+  });
+
+  it("handles single character strings", () => {
+    expect(middleTruncate("a", 10)).toBe("a");
+  });
+
+  it("handles empty string", () => {
+    expect(middleTruncate("", 10)).toBe("");
+  });
+
+  it("handles strings with dots in the middle (not extension)", () => {
+    const result = middleTruncate("file.name.with.dots.txt", 12);
+    expect(result).toContain("...");
+    expect(result.endsWith("txt")).toBe(true);
+  });
+
+  it("truncates a very long filename with extension", () => {
+    const longName = "a".repeat(100) + ".json";
+    const result = middleTruncate(longName, 20);
+    expect(result).toContain("...");
+    expect(result.endsWith("json")).toBe(true);
+    expect(result.length).toBeLessThan(100);
+  });
+
+  it("handles extension-only filenames", () => {
+    // ".gitignore" — the extension regex captures "gitignore"
+    const result = middleTruncate(".gitignore", 5);
+    expect(result).toContain("...");
+  });
+
+  it("does not truncate when string length equals threshold", () => {
+    expect(middleTruncate("exact", 5)).toBe("exact");
+  });
+
+  it("handles large threshold values (no truncation needed)", () => {
+    expect(middleTruncate("short.txt", 100)).toBe("short.txt");
+  });
+});

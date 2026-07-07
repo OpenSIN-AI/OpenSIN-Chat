@@ -1,1 +1,142 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBUZXN0cyBmb3IgY29weVRleHQg4oCUIGNsaXBib2FyZCBjb3B5IHdpdGggZmFsbGJhY2suCi8vIElzc3VlICMzOTEKaW1wb3J0IHsgZGVzY3JpYmUsIGl0LCBleHBlY3QsIHZpLCBiZWZvcmVFYWNoLCBhZnRlckVhY2ggfSBmcm9tICJ2aXRlc3QiOwppbXBvcnQgeyBjb3B5VGV4dCB9IGZyb20gIi4vY2xpcGJvYXJkIjsKCi8vIE1vY2sgY2hhdC9tYXJrZG93biB0byBhdm9pZCBjaXJjdWxhciBkZXBlbmRlbmN5IGNoYWluICh1c2VUaGVtZSBldGMuKQp2aS5tb2NrKCIuL2NoYXQvbWFya2Rvd24iLCAoKSA9PiAoewogIGRlZmF1bHQ6ICh0ZXh0OiBzdHJpbmcpID0+IGA8cD4ke3RleHR9PC9wPmAsCn0pKTsKCmRlc2NyaWJlKCJjb3B5VGV4dCDigJMgY2xpcGJvYXJkIGNvcHkgZnVuY3Rpb24iLCAoKSA9PiB7CiAgbGV0IG9yaWdpbmFsQ2xpcGJvYXJkOiBhbnk7CiAgbGV0IG9yaWdpbmFsRXhlY0NvbW1hbmQ6IGFueTsKCiAgYmVmb3JlRWFjaCgoKSA9PiB7CiAgICBvcmlnaW5hbENsaXBib2FyZCA9IG5hdmlnYXRvci5jbGlwYm9hcmQ7CiAgICBvcmlnaW5hbEV4ZWNDb21tYW5kID0gZG9jdW1lbnQuZXhlY0NvbW1hbmQ7CiAgfSk7CgogIGFmdGVyRWFjaCgoKSA9PiB7CiAgICBPYmplY3QuZGVmaW5lUHJvcGVydHkobmF2aWdhdG9yLCAiY2xpcGJvYXJkIiwgewogICAgICB2YWx1ZTogb3JpZ2luYWxDbGlwYm9hcmQsCiAgICAgIHdyaXRhYmxlOiB0cnVlLAogICAgICBjb25maWd1cmFibGU6IHRydWUsCiAgICB9KTsKICAgIGRvY3VtZW50LmV4ZWNDb21tYW5kID0gb3JpZ2luYWxFeGVjQ29tbWFuZDsKICB9KTsKCiAgZnVuY3Rpb24gc2V0Q2xpcGJvYXJkKG1vY2s6IGFueSkgewogICAgT2JqZWN0LmRlZmluZVByb3BlcnR5KG5hdmlnYXRvciwgImNsaXBib2FyZCIsIHsKICAgICAgdmFsdWU6IG1vY2ssCiAgICAgIHdyaXRhYmxlOiB0cnVlLAogICAgICBjb25maWd1cmFibGU6IHRydWUsCiAgICB9KTsKICB9CgogIGl0KCJyZXR1cm5zIGZhbHNlIGZvciBlbXB0eSBzdHJpbmciLCBhc3luYyAoKSA9PiB7CiAgICBzZXRDbGlwYm9hcmQoeyB3cml0ZVRleHQ6IHZpLmZuKCkgfSk7CiAgICBleHBlY3QoYXdhaXQgY29weVRleHQoIiIpKS50b0JlKGZhbHNlKTsKICB9KTsKCiAgaXQoInJldHVybnMgZmFsc2UgZm9yIG5vbi1zdHJpbmcgaW5wdXQiLCBhc3luYyAoKSA9PiB7CiAgICBzZXRDbGlwYm9hcmQoeyB3cml0ZVRleHQ6IHZpLmZuKCkgfSk7CiAgICBleHBlY3QoYXdhaXQgY29weVRleHQobnVsbCBhcyBhbnkpKS50b0JlKGZhbHNlKTsKICAgIGV4cGVjdChhd2FpdCBjb3B5VGV4dCh1bmRlZmluZWQgYXMgYW55KSkudG9CZShmYWxzZSk7CiAgICBleHBlY3QoYXdhaXQgY29weVRleHQoMTIzIGFzIGFueSkpLnRvQmUoZmFsc2UpOwogIH0pOwoKICBpdCgiY29waWVzIHRleHQgdmlhIG5hdmlnYXRvci5jbGlwYm9hcmQud3JpdGVUZXh0IHdoZW4gYXZhaWxhYmxlIiwgYXN5bmMgKCkgPT4gewogICAgY29uc3Qgd3JpdGVUZXh0ID0gdmkuZm4oKS5tb2NrUmVzb2x2ZWRWYWx1ZSh1bmRlZmluZWQpOwogICAgc2V0Q2xpcGJvYXJkKHsgd3JpdGVUZXh0IH0pOwogICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgY29weVRleHQoIkhlbGxvLCB3b3JsZCEiKTsKICAgIGV4cGVjdChyZXN1bHQpLnRvQmUodHJ1ZSk7CiAgICBleHBlY3Qod3JpdGVUZXh0KS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgiSGVsbG8sIHdvcmxkISIpOwogIH0pOwoKICBpdCgicmV0dXJucyB0cnVlIG9uIHN1Y2Nlc3NmdWwgY2xpcGJvYXJkIHdyaXRlIiwgYXN5bmMgKCkgPT4gewogICAgY29uc3Qgd3JpdGVUZXh0ID0gdmkuZm4oKS5tb2NrUmVzb2x2ZWRWYWx1ZSh1bmRlZmluZWQpOwogICAgc2V0Q2xpcGJvYXJkKHsgd3JpdGVUZXh0IH0pOwogICAgZXhwZWN0KGF3YWl0IGNvcHlUZXh0KCJ0ZXN0IHRleHQiKSkudG9CZSh0cnVlKTsKICB9KTsKCiAgaXQoImZhbGxzIGJhY2sgdG8gZXhlY0NvbW1hbmQgd2hlbiBuYXZpZ2F0b3IuY2xpcGJvYXJkIGlzIHVuZGVmaW5lZCIsIGFzeW5jICgpID0+IHsKICAgIHNldENsaXBib2FyZCh1bmRlZmluZWQpOwogICAgZG9jdW1lbnQuZXhlY0NvbW1hbmQgPSB2aS5mbigpLm1vY2tSZXR1cm5WYWx1ZSh0cnVlKTsKICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IGNvcHlUZXh0KCJmYWxsYmFjayB0ZXh0Iik7CiAgICBleHBlY3QocmVzdWx0KS50b0JlKHRydWUpOwogICAgZXhwZWN0KGRvY3VtZW50LmV4ZWNDb21tYW5kKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgiY29weSIpOwogIH0pOwoKICBpdCgiZmFsbHMgYmFjayB0byBleGVjQ29tbWFuZCB3aGVuIG5hdmlnYXRvci5jbGlwYm9hcmQud3JpdGVUZXh0IHRocm93cyIsIGFzeW5jICgpID0+IHsKICAgIGNvbnN0IHdyaXRlVGV4dCA9IHZpLmZuKCkubW9ja1JlamVjdGVkVmFsdWUobmV3IEVycm9yKCJQZXJtaXNzaW9uIGRlbmllZCIpKTsKICAgIHNldENsaXBib2FyZCh7IHdyaXRlVGV4dCB9KTsKICAgIGRvY3VtZW50LmV4ZWNDb21tYW5kID0gdmkuZm4oKS5tb2NrUmV0dXJuVmFsdWUodHJ1ZSk7CiAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBjb3B5VGV4dCgidGVzdCB0ZXh0Iik7CiAgICBleHBlY3QocmVzdWx0KS50b0JlKHRydWUpOwogICAgZXhwZWN0KGRvY3VtZW50LmV4ZWNDb21tYW5kKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgiY29weSIpOwogIH0pOwoKICBpdCgicmV0dXJucyBmYWxzZSB3aGVuIGJvdGggY2xpcGJvYXJkIGFuZCBleGVjQ29tbWFuZCBmYWlsIiwgYXN5bmMgKCkgPT4gewogICAgY29uc3Qgd3JpdGVUZXh0ID0gdmkuZm4oKS5tb2NrUmVqZWN0ZWRWYWx1ZShuZXcgRXJyb3IoIkRlbmllZCIpKTsKICAgIHNldENsaXBib2FyZCh7IHdyaXRlVGV4dCB9KTsKICAgIGRvY3VtZW50LmV4ZWNDb21tYW5kID0gdmkuZm4oKS5tb2NrUmV0dXJuVmFsdWUoZmFsc2UpOwogICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgY29weVRleHQoInRlc3QgdGV4dCIpOwogICAgZXhwZWN0KHJlc3VsdCkudG9CZShmYWxzZSk7CiAgfSk7CgogIGl0KCJyZXR1cm5zIGZhbHNlIHdoZW4gZXhlY0NvbW1hbmQgdGhyb3dzIiwgYXN5bmMgKCkgPT4gewogICAgc2V0Q2xpcGJvYXJkKHVuZGVmaW5lZCk7CiAgICBkb2N1bWVudC5leGVjQ29tbWFuZCA9IHZpLmZuKCkubW9ja0ltcGxlbWVudGF0aW9uKCgpID0+IHsKICAgICAgdGhyb3cgbmV3IEVycm9yKCJleGVjQ29tbWFuZCBlcnJvciIpOwogICAgfSk7CiAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBjb3B5VGV4dCgidGVzdCB0ZXh0Iik7CiAgICBleHBlY3QocmVzdWx0KS50b0JlKGZhbHNlKTsKICB9KTsKCiAgaXQoImhhbmRsZXMgbXVsdGlsaW5lIHRleHQiLCBhc3luYyAoKSA9PiB7CiAgICBjb25zdCB3cml0ZVRleHQgPSB2aS5mbigpLm1vY2tSZXNvbHZlZFZhbHVlKHVuZGVmaW5lZCk7CiAgICBzZXRDbGlwYm9hcmQoeyB3cml0ZVRleHQgfSk7CiAgICBjb25zdCBtdWx0aWxpbmUgPSAiTGluZSAxXG5MaW5lIDJcbkxpbmUgMyI7CiAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBjb3B5VGV4dChtdWx0aWxpbmUpOwogICAgZXhwZWN0KHJlc3VsdCkudG9CZSh0cnVlKTsKICAgIGV4cGVjdCh3cml0ZVRleHQpLnRvSGF2ZUJlZW5DYWxsZWRXaXRoKG11bHRpbGluZSk7CiAgfSk7CgogIGl0KCJoYW5kbGVzIHNwZWNpYWwgY2hhcmFjdGVycyBpbiB0ZXh0IiwgYXN5bmMgKCkgPT4gewogICAgY29uc3Qgd3JpdGVUZXh0ID0gdmkuZm4oKS5tb2NrUmVzb2x2ZWRWYWx1ZSh1bmRlZmluZWQpOwogICAgc2V0Q2xpcGJvYXJkKHsgd3JpdGVUZXh0IH0pOwogICAgY29uc3Qgc3BlY2lhbCA9ICJIZWxsbyA8d29ybGQ+ICYgJ2ZyaWVuZHMnIFwiIVwiIjsKICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IGNvcHlUZXh0KHNwZWNpYWwpOwogICAgZXhwZWN0KHJlc3VsdCkudG9CZSh0cnVlKTsKICAgIGV4cGVjdCh3cml0ZVRleHQpLnRvSGF2ZUJlZW5DYWxsZWRXaXRoKHNwZWNpYWwpOwogIH0pOwoKICBpdCgiaGFuZGxlcyB2ZXJ5IGxvbmcgdGV4dCBzdHJpbmdzIiwgYXN5bmMgKCkgPT4gewogICAgY29uc3Qgd3JpdGVUZXh0ID0gdmkuZm4oKS5tb2NrUmVzb2x2ZWRWYWx1ZSh1bmRlZmluZWQpOwogICAgc2V0Q2xpcGJvYXJkKHsgd3JpdGVUZXh0IH0pOwogICAgY29uc3QgbG9uZ1RleHQgPSAiQSIucmVwZWF0KDEwMDAwKTsKICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IGNvcHlUZXh0KGxvbmdUZXh0KTsKICAgIGV4cGVjdChyZXN1bHQpLnRvQmUodHJ1ZSk7CiAgICBleHBlY3Qod3JpdGVUZXh0KS50b0hhdmVCZWVuQ2FsbGVkV2l0aChsb25nVGV4dCk7CiAgfSk7CgogIGl0KCJoYW5kbGVzIFVuaWNvZGUgdGV4dCBjb3JyZWN0bHkiLCBhc3luYyAoKSA9PiB7CiAgICBjb25zdCB3cml0ZVRleHQgPSB2aS5mbigpLm1vY2tSZXNvbHZlZFZhbHVlKHVuZGVmaW5lZCk7CiAgICBzZXRDbGlwYm9hcmQoeyB3cml0ZVRleHQgfSk7CiAgICBjb25zdCB1bmljb2RlID0gIkhlbGxvIOS4lueVjCDwn4yNIGNhZsOpIjsKICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IGNvcHlUZXh0KHVuaWNvZGUpOwogICAgZXhwZWN0KHJlc3VsdCkudG9CZSh0cnVlKTsKICAgIGV4cGVjdCh3cml0ZVRleHQpLnRvSGF2ZUJlZW5DYWxsZWRXaXRoKHVuaWNvZGUpOwogIH0pOwoKICBpdCgiY3JlYXRlcyBhbmQgcmVtb3ZlcyBhIHRleHRhcmVhIGVsZW1lbnQgd2hlbiB1c2luZyBmYWxsYmFjayIsIGFzeW5jICgpID0+IHsKICAgIHNldENsaXBib2FyZCh1bmRlZmluZWQpOwogICAgZG9jdW1lbnQuZXhlY0NvbW1hbmQgPSB2aS5mbigpLm1vY2tSZXR1cm5WYWx1ZSh0cnVlKTsKICAgIGNvbnN0IHNweSA9IHZpLnNweU9uKGRvY3VtZW50LCAiY3JlYXRlRWxlbWVudCIpOwogICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgY29weVRleHQoImZhbGxiYWNrIHRlc3QiKTsKICAgIGV4cGVjdChyZXN1bHQpLnRvQmUodHJ1ZSk7CiAgICBleHBlY3Qoc3B5KS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgidGV4dGFyZWEiKTsKICB9KTsKfSk7Cg==
+// SPDX-License-Identifier: MIT
+// Tests for copyText — clipboard copy with fallback.
+// Issue #391
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { copyText } from "./clipboard";
+
+// Mock chat/markdown to avoid circular dependency chain (useTheme etc.)
+vi.mock("./chat/markdown", () => ({
+  default: (text: string) => `<p>${text}</p>`,
+}));
+
+describe("copyText – clipboard copy function", () => {
+  let originalClipboard: any;
+  let originalExecCommand: any;
+
+  beforeEach(() => {
+    originalClipboard = navigator.clipboard;
+    originalExecCommand = document.execCommand;
+  });
+
+  afterEach(() => {
+    Object.defineProperty(navigator, "clipboard", {
+      value: originalClipboard,
+      writable: true,
+      configurable: true,
+    });
+    document.execCommand = originalExecCommand;
+  });
+
+  function setClipboard(mock: any) {
+    Object.defineProperty(navigator, "clipboard", {
+      value: mock,
+      writable: true,
+      configurable: true,
+    });
+  }
+
+  it("returns false for empty string", async () => {
+    setClipboard({ writeText: vi.fn() });
+    expect(await copyText("")).toBe(false);
+  });
+
+  it("returns false for non-string input", async () => {
+    setClipboard({ writeText: vi.fn() });
+    expect(await copyText(null as any)).toBe(false);
+    expect(await copyText(undefined as any)).toBe(false);
+    expect(await copyText(123 as any)).toBe(false);
+  });
+
+  it("copies text via navigator.clipboard.writeText when available", async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    setClipboard({ writeText });
+    const result = await copyText("Hello, world!");
+    expect(result).toBe(true);
+    expect(writeText).toHaveBeenCalledWith("Hello, world!");
+  });
+
+  it("returns true on successful clipboard write", async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    setClipboard({ writeText });
+    expect(await copyText("test text")).toBe(true);
+  });
+
+  it("falls back to execCommand when navigator.clipboard is undefined", async () => {
+    setClipboard(undefined);
+    document.execCommand = vi.fn().mockReturnValue(true);
+    const result = await copyText("fallback text");
+    expect(result).toBe(true);
+    expect(document.execCommand).toHaveBeenCalledWith("copy");
+  });
+
+  it("falls back to execCommand when navigator.clipboard.writeText throws", async () => {
+    const writeText = vi.fn().mockRejectedValue(new Error("Permission denied"));
+    setClipboard({ writeText });
+    document.execCommand = vi.fn().mockReturnValue(true);
+    const result = await copyText("test text");
+    expect(result).toBe(true);
+    expect(document.execCommand).toHaveBeenCalledWith("copy");
+  });
+
+  it("returns false when both clipboard and execCommand fail", async () => {
+    const writeText = vi.fn().mockRejectedValue(new Error("Denied"));
+    setClipboard({ writeText });
+    document.execCommand = vi.fn().mockReturnValue(false);
+    const result = await copyText("test text");
+    expect(result).toBe(false);
+  });
+
+  it("returns false when execCommand throws", async () => {
+    setClipboard(undefined);
+    document.execCommand = vi.fn().mockImplementation(() => {
+      throw new Error("execCommand error");
+    });
+    const result = await copyText("test text");
+    expect(result).toBe(false);
+  });
+
+  it("handles multiline text", async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    setClipboard({ writeText });
+    const multiline = "Line 1\nLine 2\nLine 3";
+    const result = await copyText(multiline);
+    expect(result).toBe(true);
+    expect(writeText).toHaveBeenCalledWith(multiline);
+  });
+
+  it("handles special characters in text", async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    setClipboard({ writeText });
+    const special = "Hello <world> & 'friends' \"!\"";
+    const result = await copyText(special);
+    expect(result).toBe(true);
+    expect(writeText).toHaveBeenCalledWith(special);
+  });
+
+  it("handles very long text strings", async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    setClipboard({ writeText });
+    const longText = "A".repeat(10000);
+    const result = await copyText(longText);
+    expect(result).toBe(true);
+    expect(writeText).toHaveBeenCalledWith(longText);
+  });
+
+  it("handles Unicode text correctly", async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    setClipboard({ writeText });
+    const unicode = "Hello 世界 🌍 café";
+    const result = await copyText(unicode);
+    expect(result).toBe(true);
+    expect(writeText).toHaveBeenCalledWith(unicode);
+  });
+
+  it("creates and removes a textarea element when using fallback", async () => {
+    setClipboard(undefined);
+    document.execCommand = vi.fn().mockReturnValue(true);
+    const spy = vi.spyOn(document, "createElement");
+    const result = await copyText("fallback test");
+    expect(result).toBe(true);
+    expect(spy).toHaveBeenCalledWith("textarea");
+  });
+});

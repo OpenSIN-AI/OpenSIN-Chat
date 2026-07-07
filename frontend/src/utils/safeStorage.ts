@@ -1,1 +1,64 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyBMRUdBQ1lfS0VZX01BUCB9IGZyb20gIi4vY29uc3RhbnRzIjsKCi8qKgogKiBTYWZlIGxvY2FsU3RvcmFnZSB3cmFwcGVycyB0aGF0IG5ldmVyIHRocm93LgogKgogKiBJbiBwcml2YXRlIGJyb3dzaW5nIG1vZGUgKFNhZmFyaSkgb3Igd2hlbiBzdG9yYWdlIHF1b3RhIGlzIGV4Y2VlZGVkLAogKiByYXcgbG9jYWxTdG9yYWdlLmdldEl0ZW0vc2V0SXRlbSBjYW4gdGhyb3cgYSBTZWN1cml0eUVycm9yIG9yCiAqIFF1b3RhRXhjZWVkZWRFcnJvci4gVGhlc2Ugd3JhcHBlcnMgY2F0Y2ggdGhvc2UgZXhjZXB0aW9ucyBzbyBjYWxsZXJzCiAqIGRvbid0IG5lZWQgcmVwZXRpdGl2ZSB0cnktY2F0Y2ggYmxvY2tzLgogKgogKiBJbmNsdWRlcyB0cmFuc3BhcmVudCBtaWdyYXRpb24gZnJvbSBsZWdhY3kgYG9wZW5hZmRfYCBrZXlzIHRvIGBvcGVuc2luX2AKICoga2V5cy4gV2hlbiBhIGxlZ2FjeSBrZXkgaXMgZm91bmQsIGl0cyB2YWx1ZSBpcyBjb3BpZWQgdG8gdGhlIG5ldyBrZXkgYW5kCiAqIHRoZSBvbGQga2V5IGlzIHJlbW92ZWQuCiAqLwoKLy8gQnVpbGQgYSByZXZlcnNlIGxvb2t1cDogbmV3IGtleSDihpIgbGVnYWN5IGtleQpjb25zdCBSRVZFUlNFX0xFR0FDWV9NQVA6IFJlY29yZDxzdHJpbmcsIHN0cmluZz4gPSB7fTsKZm9yIChjb25zdCBbb2xkS2V5LCBuZXdLZXldIG9mIE9iamVjdC5lbnRyaWVzKExFR0FDWV9LRVlfTUFQKSkgewogIFJFVkVSU0VfTEVHQUNZX01BUFtuZXdLZXldID0gb2xkS2V5Owp9CgpmdW5jdGlvbiBtaWdyYXRlTGVnYWN5S2V5KGtleTogc3RyaW5nKTogc3RyaW5nIHwgbnVsbCB7CiAgY29uc3QgbGVnYWN5S2V5ID0gUkVWRVJTRV9MRUdBQ1lfTUFQW2tleV07CiAgaWYgKCFsZWdhY3lLZXkpIHJldHVybiBudWxsOwogIHRyeSB7CiAgICBjb25zdCB2YWx1ZSA9IHdpbmRvdy5sb2NhbFN0b3JhZ2UuZ2V0SXRlbShsZWdhY3lLZXkpOwogICAgaWYgKHZhbHVlICE9PSBudWxsKSB7CiAgICAgIHdpbmRvdy5sb2NhbFN0b3JhZ2Uuc2V0SXRlbShrZXksIHZhbHVlKTsKICAgICAgd2luZG93LmxvY2FsU3RvcmFnZS5yZW1vdmVJdGVtKGxlZ2FjeUtleSk7CiAgICB9CiAgICByZXR1cm4gdmFsdWU7CiAgfSBjYXRjaCB7CiAgICByZXR1cm4gbnVsbDsKICB9Cn0KCmV4cG9ydCBmdW5jdGlvbiBzYWZlR2V0SXRlbShrZXk6IHN0cmluZyk6IHN0cmluZyB8IG51bGwgewogIHRyeSB7CiAgICBjb25zdCB2YWx1ZSA9IHdpbmRvdy5sb2NhbFN0b3JhZ2UuZ2V0SXRlbShrZXkpOwogICAgaWYgKHZhbHVlICE9PSBudWxsKSByZXR1cm4gdmFsdWU7CiAgICAvLyBUcnkgbWlncmF0aW5nIGZyb20gbGVnYWN5IGtleQogICAgcmV0dXJuIG1pZ3JhdGVMZWdhY3lLZXkoa2V5KTsKICB9IGNhdGNoIHsKICAgIHJldHVybiBudWxsOwogIH0KfQoKZXhwb3J0IGZ1bmN0aW9uIHNhZmVTZXRJdGVtKGtleTogc3RyaW5nLCB2YWx1ZTogc3RyaW5nKTogYm9vbGVhbiB7CiAgdHJ5IHsKICAgIHdpbmRvdy5sb2NhbFN0b3JhZ2Uuc2V0SXRlbShrZXksIHZhbHVlKTsKICAgIHJldHVybiB0cnVlOwogIH0gY2F0Y2ggewogICAgcmV0dXJuIGZhbHNlOwogIH0KfQoKZXhwb3J0IGZ1bmN0aW9uIHNhZmVSZW1vdmVJdGVtKGtleTogc3RyaW5nKTogdm9pZCB7CiAgdHJ5IHsKICAgIHdpbmRvdy5sb2NhbFN0b3JhZ2UucmVtb3ZlSXRlbShrZXkpOwogIH0gY2F0Y2ggewogICAgLy8gbm8tb3AKICB9Cn0K
+// SPDX-License-Identifier: MIT
+import { LEGACY_KEY_MAP } from "./constants";
+
+/**
+ * Safe localStorage wrappers that never throw.
+ *
+ * In private browsing mode (Safari) or when storage quota is exceeded,
+ * raw localStorage.getItem/setItem can throw a SecurityError or
+ * QuotaExceededError. These wrappers catch those exceptions so callers
+ * don't need repetitive try-catch blocks.
+ *
+ * Includes transparent migration from legacy `openafd_` keys to `opensin_`
+ * keys. When a legacy key is found, its value is copied to the new key and
+ * the old key is removed.
+ */
+
+// Build a reverse lookup: new key → legacy key
+const REVERSE_LEGACY_MAP: Record<string, string> = {};
+for (const [oldKey, newKey] of Object.entries(LEGACY_KEY_MAP)) {
+  REVERSE_LEGACY_MAP[newKey] = oldKey;
+}
+
+function migrateLegacyKey(key: string): string | null {
+  const legacyKey = REVERSE_LEGACY_MAP[key];
+  if (!legacyKey) return null;
+  try {
+    const value = window.localStorage.getItem(legacyKey);
+    if (value !== null) {
+      window.localStorage.setItem(key, value);
+      window.localStorage.removeItem(legacyKey);
+    }
+    return value;
+  } catch {
+    return null;
+  }
+}
+
+export function safeGetItem(key: string): string | null {
+  try {
+    const value = window.localStorage.getItem(key);
+    if (value !== null) return value;
+    // Try migrating from legacy key
+    return migrateLegacyKey(key);
+  } catch {
+    return null;
+  }
+}
+
+export function safeSetItem(key: string, value: string): boolean {
+  try {
+    window.localStorage.setItem(key, value);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function safeRemoveItem(key: string): void {
+  try {
+    window.localStorage.removeItem(key);
+  } catch {
+    // no-op
+  }
+}

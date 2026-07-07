@@ -1,1 +1,91 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyBBUElfQkFTRSB9IGZyb20gIkAvdXRpbHMvY29uc3RhbnRzIjsKaW1wb3J0IHsgQVVUSF9UT0tFTiwgQVVUSF9VU0VSLCBBVVRIX1RJTUVTVEFNUCB9IGZyb20gIkAvdXRpbHMvY29uc3RhbnRzIjsKaW1wb3J0IHsgYmFzZUhlYWRlcnMgfSBmcm9tICJAL3V0aWxzL3JlcXVlc3QiOwppbXBvcnQgeyBmZXRjaFdpdGhUaW1lb3V0IH0gZnJvbSAiQC91dGlscy9mZXRjaFdpdGhUaW1lb3V0IjsKaW1wb3J0IHsgc2FmZVJlbW92ZUl0ZW0gfSBmcm9tICJAL3V0aWxzL3NhZmVTdG9yYWdlIjsKaW1wb3J0IHBhdGhzIGZyb20gIkAvdXRpbHMvcGF0aHMiOwoKbGV0IHJlZGlyZWN0aW5nVG9Mb2dpbiA9IGZhbHNlOwoKLyoqCiAqIENsZWFycyBhdXRoLXJlbGF0ZWQgbG9jYWxTdG9yYWdlIGtleXMgYW5kIHJlZGlyZWN0cyB0byB0aGUgbG9naW4gcGFnZS4KICogR3VhcmRlZCBieSBhIG1vZHVsZS1sZXZlbCBmbGFnIHNvIHRoYXQgbXVsdGlwbGUgc2ltdWx0YW5lb3VzIDQwMXMKICogb25seSB0cmlnZ2VyIG9uZSByZWRpcmVjdC4KICovCmV4cG9ydCBmdW5jdGlvbiBoYW5kbGVBdXRoRmFpbHVyZSgpIHsKICBpZiAocmVkaXJlY3RpbmdUb0xvZ2luKSByZXR1cm47CiAgcmVkaXJlY3RpbmdUb0xvZ2luID0gdHJ1ZTsKICBzYWZlUmVtb3ZlSXRlbShBVVRIX1VTRVIpOwogIHNhZmVSZW1vdmVJdGVtKEFVVEhfVE9LRU4pOwogIHNhZmVSZW1vdmVJdGVtKEFVVEhfVElNRVNUQU1QKTsKICB3aW5kb3cubG9jYXRpb24ucmVwbGFjZShwYXRocy5sb2dpbigpKTsKICAvLyBSZXNldCB0aGUgZmxhZyBhZnRlciBhIHNob3J0IGRlbGF5IHNvIHRoYXQgaWYgdGhlIHJlZGlyZWN0IGZhaWxzCiAgLy8gKGUuZy4gYmxvY2tlZCBieSBicm93c2VyIHBvbGljeSkgZnV0dXJlIDQwMXMgY2FuIHN0aWxsIHRyaWdnZXIuCiAgc2V0VGltZW91dCgoKSA9PiB7CiAgICByZWRpcmVjdGluZ1RvTG9naW4gPSBmYWxzZTsKICB9LCA1MDAwKTsKfQoKLyoqCiAqIEdsb2JhbCBTV1IgZmV0Y2hlciB1c2VkIGFzIHRoZSBkZWZhdWx0IGBmZXRjaGVyYCBpbiBgPFNXUkNvbmZpZz5gLgogKgogKiBJdCBpcyBpbnRlbmRlZCBmb3Igc3RyaW5nIGtleXMgdGhhdCByZXByZXNlbnQgYW4gQVBJIHBhdGggKG9yIGFic29sdXRlIFVSTCkuCiAqIEF1dGhlbnRpY2F0ZWQgcmVxdWVzdHMgcmV1c2UgdGhlIHNhbWUgYGJhc2VIZWFkZXJzKClgIChCZWFyZXIgdG9rZW4pIGFzIHRoZQogKiByZXN0IG9mIHRoZSBhcHAsIHNvIFNXUi1kcml2ZW4gcmVxdWVzdHMgYmVoYXZlIGlkZW50aWNhbGx5IHRvIHRoZSBleGlzdGluZwogKiBtb2RlbC1sYXllciBmZXRjaGVzLgogKgogKiBGb3IgcmljaGVyL3BhcmFtZXRlcml6ZWQgcmVhZHMsIHByZWZlciBwYXNzaW5nIGEgZGVkaWNhdGVkIGZldGNoZXIgZnVuY3Rpb24gdG8KICogYHVzZVNXUmAgKGUuZy4gYHVzZVNXUihbIndvcmtzcGFjZSIsIHNsdWddLCAoKSA9PiBXb3Jrc3BhY2UuYnlTbHVnKHNsdWcpKWApLgogKiBUaG9zZSBob29rcyBsaXZlIGluIGBzcmMvaG9va3MvYCBhbmQgd3JhcCB0aGUgZXhpc3RpbmcgYHNyYy9tb2RlbHMvYCBtZXRob2RzLgogKgogKiBAcGFyYW0ge3N0cmluZ30ga2V5IC0gQW4gQVBJIHBhdGggKGUuZy4gIi93b3Jrc3BhY2VzIikgb3IgYW4gYWJzb2x1dGUgVVJMLgogKiBAcmV0dXJucyB7UHJvbWlzZTxhbnk+fSBQYXJzZWQgSlNPTiByZXNwb25zZS4KICogQHRocm93cyB7RXJyb3IgJiB7IHN0YXR1cz86IG51bWJlciwgaW5mbz86IGFueSB9fSBPbiBub24tMnh4IHJlc3BvbnNlcy4KICovCmV4cG9ydCBhc3luYyBmdW5jdGlvbiBzd3JGZXRjaGVyKGtleSkgewogIGxldCB1cmw7CiAgaWYgKHR5cGVvZiBrZXkgPT09ICJzdHJpbmciICYmIC9eaHR0cHM/OlwvXC8vLnRlc3Qoa2V5KSkgewogICAgdXJsID0ga2V5OwogIH0gZWxzZSBpZiAodHlwZW9mIGtleSA9PT0gInN0cmluZyIgJiYga2V5LnN0YXJ0c1dpdGgoQVBJX0JBU0UpKSB7CiAgICB1cmwgPSBrZXk7CiAgfSBlbHNlIHsKICAgIHVybCA9IGAke0FQSV9CQVNFfSR7a2V5fWA7CiAgfQoKICBjb25zdCByZXMgPSBhd2FpdCBmZXRjaFdpdGhUaW1lb3V0KHVybCwgeyBoZWFkZXJzOiBiYXNlSGVhZGVycygpIH0pOwogIGlmICghcmVzLm9rKSB7CiAgICBpZiAocmVzLnN0YXR1cyA9PT0gNDAxKSBoYW5kbGVBdXRoRmFpbHVyZSgpOwogICAgY29uc3QgZXJyb3IgPSBuZXcgRXJyb3IoCiAgICAgIGBSZXF1ZXN0IGZhaWxlZCB3aXRoIEhUVFAgJHtyZXMuc3RhdHVzfWAsCiAgICApIGFzIEVycm9yICYgeyBzdGF0dXM6IG51bWJlcjsgaW5mbzogYW55IH07CiAgICBlcnJvci5zdGF0dXMgPSByZXMuc3RhdHVzOwogICAgZXJyb3IuaW5mbyA9IGF3YWl0IHJlcy5qc29uKCkuY2F0Y2goKCkgPT4gbnVsbCk7CiAgICB0aHJvdyBlcnJvcjsKICB9CiAgcmV0dXJuIHJlcy5qc29uKCk7Cn0KCi8qKgogKiBTaGFyZWQgZGVmYXVsdCBTV1IgY29uZmlndXJhdGlvbi4KICoKICogLSBgZGVkdXBpbmdJbnRlcnZhbGAgY29sbGFwc2VzIGlkZW50aWNhbCByZXF1ZXN0cyBmaXJlZCB3aXRoaW4gNXMgaW50byBvbmUuCiAqIC0gYHJldmFsaWRhdGVPbkZvY3VzYCAvIGByZXZhbGlkYXRlT25SZWNvbm5lY3RgIGVuYWJsZSBzdGFsZS13aGlsZS1yZXZhbGlkYXRlCiAqICAgc28gdGhlIHVzZXIgbmV2ZXIgc3RhcmVzIGF0IHN0YWxlIGRhdGEgYWZ0ZXIgc3dpdGNoaW5nIHRhYnMuCiAqIC0gYGVycm9yUmV0cnlDb3VudGAgYm91bmRzIHJldHJpZXMgdG8gYXZvaWQgaGFtbWVyaW5nIHRoZSBiYWNrZW5kLgogKiAtIGBvbkVycm9yYCBpbnRlcmNlcHRzIDQwMSByZXNwb25zZXMgYW5kIHJlZGlyZWN0cyB0byB0aGUgbG9naW4gcGFnZSwKICogICBjbGVhcmluZyBzdGFsZSBhdXRoIHRva2VucyBzbyB0aGUgdXNlciBpcyBub3Qgc3R1Y2sgb24gYSBicm9rZW4gc2Vzc2lvbi4KICovCmV4cG9ydCBjb25zdCBzd3JDb25maWcgPSB7CiAgZmV0Y2hlcjogc3dyRmV0Y2hlciwKICByZXZhbGlkYXRlT25Gb2N1czogdHJ1ZSwKICByZXZhbGlkYXRlT25SZWNvbm5lY3Q6IHRydWUsCiAgc2hvdWxkUmV0cnlPbkVycm9yOiAoZXJyKSA9PiBlcnI/LnN0YXR1cyAhPT0gNDAxLAogIGVycm9yUmV0cnlDb3VudDogMywKICBkZWR1cGluZ0ludGVydmFsOiA1MDAwLAogIG9uRXJyb3I6IChlcnIpID0+IHsKICAgIGlmIChlcnI/LnN0YXR1cyA9PT0gNDAxKSBoYW5kbGVBdXRoRmFpbHVyZSgpOwogIH0sCn07CgpleHBvcnQgZGVmYXVsdCBzd3JGZXRjaGVyOwo=
+// SPDX-License-Identifier: MIT
+import { API_BASE } from "@/utils/constants";
+import { AUTH_TOKEN, AUTH_USER, AUTH_TIMESTAMP } from "@/utils/constants";
+import { baseHeaders } from "@/utils/request";
+import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
+import { safeRemoveItem } from "@/utils/safeStorage";
+import paths from "@/utils/paths";
+
+let redirectingToLogin = false;
+
+/**
+ * Clears auth-related localStorage keys and redirects to the login page.
+ * Guarded by a module-level flag so that multiple simultaneous 401s
+ * only trigger one redirect.
+ */
+export function handleAuthFailure() {
+  if (redirectingToLogin) return;
+  redirectingToLogin = true;
+  safeRemoveItem(AUTH_USER);
+  safeRemoveItem(AUTH_TOKEN);
+  safeRemoveItem(AUTH_TIMESTAMP);
+  window.location.replace(paths.login());
+  // Reset the flag after a short delay so that if the redirect fails
+  // (e.g. blocked by browser policy) future 401s can still trigger.
+  setTimeout(() => {
+    redirectingToLogin = false;
+  }, 5000);
+}
+
+/**
+ * Global SWR fetcher used as the default `fetcher` in `<SWRConfig>`.
+ *
+ * It is intended for string keys that represent an API path (or absolute URL).
+ * Authenticated requests reuse the same `baseHeaders()` (Bearer token) as the
+ * rest of the app, so SWR-driven requests behave identically to the existing
+ * model-layer fetches.
+ *
+ * For richer/parameterized reads, prefer passing a dedicated fetcher function to
+ * `useSWR` (e.g. `useSWR(["workspace", slug], () => Workspace.bySlug(slug))`).
+ * Those hooks live in `src/hooks/` and wrap the existing `src/models/` methods.
+ *
+ * @param {string} key - An API path (e.g. "/workspaces") or an absolute URL.
+ * @returns {Promise<any>} Parsed JSON response.
+ * @throws {Error & { status?: number, info?: any }} On non-2xx responses.
+ */
+export async function swrFetcher(key) {
+  let url;
+  if (typeof key === "string" && /^https?:\/\//.test(key)) {
+    url = key;
+  } else if (typeof key === "string" && key.startsWith(API_BASE)) {
+    url = key;
+  } else {
+    url = `${API_BASE}${key}`;
+  }
+
+  const res = await fetchWithTimeout(url, { headers: baseHeaders() });
+  if (!res.ok) {
+    if (res.status === 401) handleAuthFailure();
+    const error = new Error(
+      `Request failed with HTTP ${res.status}`,
+    ) as Error & { status: number; info: any };
+    error.status = res.status;
+    error.info = await res.json().catch(() => null);
+    throw error;
+  }
+  return res.json();
+}
+
+/**
+ * Shared default SWR configuration.
+ *
+ * - `dedupingInterval` collapses identical requests fired within 5s into one.
+ * - `revalidateOnFocus` / `revalidateOnReconnect` enable stale-while-revalidate
+ *   so the user never stares at stale data after switching tabs.
+ * - `errorRetryCount` bounds retries to avoid hammering the backend.
+ * - `onError` intercepts 401 responses and redirects to the login page,
+ *   clearing stale auth tokens so the user is not stuck on a broken session.
+ */
+export const swrConfig = {
+  fetcher: swrFetcher,
+  revalidateOnFocus: true,
+  revalidateOnReconnect: true,
+  shouldRetryOnError: (err) => err?.status !== 401,
+  errorRetryCount: 3,
+  dedupingInterval: 5000,
+  onError: (err) => {
+    if (err?.status === 401) handleAuthFailure();
+  },
+};
+
+export default swrFetcher;

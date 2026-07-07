@@ -1,1 +1,104 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBUZXN0cyBmb3IgbWlsbGlUb0htcyDigJQgbWlsbGlzZWNvbmQgdG8gaC9tL3MgZm9ybWF0dGluZy4KLy8gSXNzdWUgIzM5MQppbXBvcnQgeyBkZXNjcmliZSwgaXQsIGV4cGVjdCB9IGZyb20gInZpdGVzdCI7CmltcG9ydCB7IG1pbGxpVG9IbXMgfSBmcm9tICIuL251bWJlcnMiOwoKZGVzY3JpYmUoIm1pbGxpVG9IbXMg4oCTIHZhcmlvdXMgaW5wdXRzIiwgKCkgPT4gewogIGl0KCJyZXR1cm5zICcwLjAwcycgZm9yIDAgbWlsbGlzZWNvbmRzIiwgKCkgPT4gewogICAgLy8gcz0wLCBzPj0wIGlzIHRydWUsIHNvIHNEaXNwbGF5PSIwLjAwcyIKICAgIGV4cGVjdChtaWxsaVRvSG1zKDApKS50b0JlKCIwLjAwcyIpOwogIH0pOwoKICBpdCgicmV0dXJucyAnMC4wMHMnIGZvciBkZWZhdWx0IHBhcmFtZXRlciAobm8gYXJndW1lbnQpIiwgKCkgPT4gewogICAgZXhwZWN0KG1pbGxpVG9IbXMoKSkudG9CZSgiMC4wMHMiKTsKICB9KTsKCiAgaXQoImZvcm1hdHMgMSBzZWNvbmQgKDEwMDBtcykiLCAoKSA9PiB7CiAgICBleHBlY3QobWlsbGlUb0htcygxMDAwKSkudG9CZSgiMS4wMHMiKTsKICB9KTsKCiAgaXQoImZvcm1hdHMgc3ViLXNlY29uZCB2YWx1ZXMgd2l0aCAyIGRlY2ltYWwgcGxhY2VzIiwgKCkgPT4gewogICAgZXhwZWN0KG1pbGxpVG9IbXMoNTAwKSkudG9CZSgiMC41MHMiKTsKICB9KTsKCiAgaXQoImZvcm1hdHMgNS41IHNlY29uZHMiLCAoKSA9PiB7CiAgICBleHBlY3QobWlsbGlUb0htcyg1NTAwKSkudG9CZSgiNS41MHMiKTsKICB9KTsKCiAgaXQoImZvcm1hdHMgZXhhY3RseSAxIG1pbnV0ZSAoNjBzKSB3aXRoIHplcm8gc2Vjb25kcyBzaG93biIsICgpID0+IHsKICAgIC8vIDYwXzAwMG1zID0gNjBzID0gMW0gMC4wMHMuIFRoZSBzID49IDAgY2hlY2sgYWx3YXlzIGluY2x1ZGVzIHNlY29uZHMuCiAgICBleHBlY3QobWlsbGlUb0htcyg2MF8wMDApKS50b0JlKCIxbSAwLjAwcyIpOwogIH0pOwoKICBpdCgiZm9ybWF0cyAxIG1pbnV0ZSAzMCBzZWNvbmRzIiwgKCkgPT4gewogICAgZXhwZWN0KG1pbGxpVG9IbXMoOTBfMDAwKSkudG9CZSgiMW0gMzAuMDBzIik7CiAgfSk7CgogIGl0KCJmb3JtYXRzIDIgbWludXRlcyA1IHNlY29uZHMiLCAoKSA9PiB7CiAgICBleHBlY3QobWlsbGlUb0htcygxMjVfMDAwKSkudG9CZSgiMm0gNS4wMHMiKTsKICB9KTsKCiAgaXQoImZvcm1hdHMgZXhhY3RseSAxIGhvdXIgKDM2MDBzKSB3aXRoIHplcm8gc2Vjb25kcyBzaG93biIsICgpID0+IHsKICAgIC8vIDNfNjAwXzAwMG1zID0gMWguIG09MCBzbyBtRGlzcGxheSBvbWl0dGVkLCBzPTAgc28gc0Rpc3BsYXk9IjAuMDBzIi4KICAgIGV4cGVjdChtaWxsaVRvSG1zKDNfNjAwXzAwMCkpLnRvQmUoIjFoIDAuMDBzIik7CiAgfSk7CgogIGl0KCJmb3JtYXRzIDEgaG91ciAzMCBtaW51dGVzIDUgc2Vjb25kcyIsICgpID0+IHsKICAgIGV4cGVjdChtaWxsaVRvSG1zKDVfNDA1XzAwMCkpLnRvQmUoIjFoIDMwbSA1LjAwcyIpOwogIH0pOwoKICBpdCgiZm9ybWF0cyAyIGhvdXJzIDAgbWludXRlcyAwIHNlY29uZHMiLCAoKSA9PiB7CiAgICAvLyBtPTAgc28gbURpc3BsYXkgb21pdHRlZCwgcz0wIHNvIHNEaXNwbGF5PSIwLjAwcyIKICAgIGV4cGVjdChtaWxsaVRvSG1zKDdfMjAwXzAwMCkpLnRvQmUoIjJoIDAuMDBzIik7CiAgfSk7CgogIGl0KCJmb3JtYXRzIDIgaG91cnMgMTUgbWludXRlcyAzMCBzZWNvbmRzIiwgKCkgPT4gewogICAgLy8gMiozNjAwICsgMTUqNjAgKyAzMCA9IDcyMDAgKyA5MDAgKyAzMCA9IDgxMzAgc2Vjb25kcyA9IDhfMTMwXzAwMCBtcwogICAgZXhwZWN0KG1pbGxpVG9IbXMoOF8xMzBfMDAwKSkudG9CZSgiMmggMTVtIDMwLjAwcyIpOwogIH0pOwoKICBpdCgib21pdHMgaG91cnMgbGFiZWwgd2hlbiAwIGhvdXJzIiwgKCkgPT4gewogICAgZXhwZWN0KG1pbGxpVG9IbXMoMTI1XzAwMCkpLnRvQmUoIjJtIDUuMDBzIik7CiAgICBleHBlY3QobWlsbGlUb0htcygxMjVfMDAwKSkubm90LnRvQ29udGFpbigiaCIpOwogIH0pOwoKICBpdCgib21pdHMgbWludXRlcyBsYWJlbCB3aGVuIDAgbWludXRlcyAoYnV0IGhhcyBob3VycykiLCAoKSA9PiB7CiAgICAvLyAxaCAwbSA1cyA9IDM2MDUgc2Vjb25kcyA9IDNfNjA1XzAwMCBtcy4gbT0wIHNvIG1EaXNwbGF5PSIiLgogICAgZXhwZWN0KG1pbGxpVG9IbXMoM182MDVfMDAwKSkudG9CZSgiMWggNS4wMHMiKTsKICB9KTsKCiAgaXQoImhhbmRsZXMgdmVyeSBzbWFsbCBtaWxsaXNlY29uZCB2YWx1ZXMiLCAoKSA9PiB7CiAgICBleHBlY3QobWlsbGlUb0htcygxKSkudG9CZSgiMC4wMHMiKTsKICB9KTsKCiAgaXQoImhhbmRsZXMgZnJhY3Rpb25hbCBzZWNvbmRzIGNvcnJlY3RseSIsICgpID0+IHsKICAgIC8vIDE1MDBtcyA9IDEuNXMKICAgIGV4cGVjdChtaWxsaVRvSG1zKDE1MDApKS50b0JlKCIxLjUwcyIpOwogIH0pOwoKICBpdCgiaGFuZGxlcyBsYXJnZSB2YWx1ZXMgKDI0IGhvdXJzKSIsICgpID0+IHsKICAgIC8vIDI0ICogM182MDBfMDAwID0gODZfNDAwXzAwMCBtcy4gbT0wLCBzPTAuCiAgICBleHBlY3QobWlsbGlUb0htcyg4Nl80MDBfMDAwKSkudG9CZSgiMjRoIDAuMDBzIik7CiAgfSk7CgogIGl0KCJoYW5kbGVzIHN0cmluZyBudW1lcmljIGlucHV0IiwgKCkgPT4gewogICAgZXhwZWN0KG1pbGxpVG9IbXMoIjEwMDAiKSkudG9CZSgiMS4wMHMiKTsKICB9KTsKCiAgaXQoInRyaW1zIHRyYWlsaW5nIHdoaXRlc3BhY2UgZnJvbSBvdXRwdXQiLCAoKSA9PiB7CiAgICBjb25zdCByZXN1bHQgPSBtaWxsaVRvSG1zKDYwXzAwMCk7CiAgICAvLyBUaGUgZnVuY3Rpb24gdHJpbXMgdGhlIGZpbmFsIHJlc3VsdCDigJQgbm8gdHJhaWxpbmcgd2hpdGVzcGFjZQogICAgZXhwZWN0KHJlc3VsdCkudG9CZShyZXN1bHQudHJpbSgpKTsKICB9KTsKCiAgaXQoImZvcm1hdHMgMTAgbWludXRlcyBjb3JyZWN0bHkiLCAoKSA9PiB7CiAgICAvLyAxMCAqIDYwICogMTAwMCA9IDYwMF8wMDAgbXMgPSA2MDBzID0gMTBtIDAuMDBzCiAgICBleHBlY3QobWlsbGlUb0htcyg2MDBfMDAwKSkudG9CZSgiMTBtIDAuMDBzIik7CiAgfSk7CgogIGl0KCJmb3JtYXRzIDU5IG1pbnV0ZXMgNTkgc2Vjb25kcyIsICgpID0+IHsKICAgIC8vIDU5KjYwICsgNTkgPSAzNTk5IHNlY29uZHMgPSAzXzU5OV8wMDAgbXMKICAgIGV4cGVjdChtaWxsaVRvSG1zKDNfNTk5XzAwMCkpLnRvQmUoIjU5bSA1OS4wMHMiKTsKICB9KTsKfSk7Cg==
+// SPDX-License-Identifier: MIT
+// Tests for milliToHms — millisecond to h/m/s formatting.
+// Issue #391
+import { describe, it, expect } from "vitest";
+import { milliToHms } from "./numbers";
+
+describe("milliToHms – various inputs", () => {
+  it("returns '0.00s' for 0 milliseconds", () => {
+    // s=0, s>=0 is true, so sDisplay="0.00s"
+    expect(milliToHms(0)).toBe("0.00s");
+  });
+
+  it("returns '0.00s' for default parameter (no argument)", () => {
+    expect(milliToHms()).toBe("0.00s");
+  });
+
+  it("formats 1 second (1000ms)", () => {
+    expect(milliToHms(1000)).toBe("1.00s");
+  });
+
+  it("formats sub-second values with 2 decimal places", () => {
+    expect(milliToHms(500)).toBe("0.50s");
+  });
+
+  it("formats 5.5 seconds", () => {
+    expect(milliToHms(5500)).toBe("5.50s");
+  });
+
+  it("formats exactly 1 minute (60s) with zero seconds shown", () => {
+    // 60_000ms = 60s = 1m 0.00s. The s >= 0 check always includes seconds.
+    expect(milliToHms(60_000)).toBe("1m 0.00s");
+  });
+
+  it("formats 1 minute 30 seconds", () => {
+    expect(milliToHms(90_000)).toBe("1m 30.00s");
+  });
+
+  it("formats 2 minutes 5 seconds", () => {
+    expect(milliToHms(125_000)).toBe("2m 5.00s");
+  });
+
+  it("formats exactly 1 hour (3600s) with zero seconds shown", () => {
+    // 3_600_000ms = 1h. m=0 so mDisplay omitted, s=0 so sDisplay="0.00s".
+    expect(milliToHms(3_600_000)).toBe("1h 0.00s");
+  });
+
+  it("formats 1 hour 30 minutes 5 seconds", () => {
+    expect(milliToHms(5_405_000)).toBe("1h 30m 5.00s");
+  });
+
+  it("formats 2 hours 0 minutes 0 seconds", () => {
+    // m=0 so mDisplay omitted, s=0 so sDisplay="0.00s"
+    expect(milliToHms(7_200_000)).toBe("2h 0.00s");
+  });
+
+  it("formats 2 hours 15 minutes 30 seconds", () => {
+    // 2*3600 + 15*60 + 30 = 7200 + 900 + 30 = 8130 seconds = 8_130_000 ms
+    expect(milliToHms(8_130_000)).toBe("2h 15m 30.00s");
+  });
+
+  it("omits hours label when 0 hours", () => {
+    expect(milliToHms(125_000)).toBe("2m 5.00s");
+    expect(milliToHms(125_000)).not.toContain("h");
+  });
+
+  it("omits minutes label when 0 minutes (but has hours)", () => {
+    // 1h 0m 5s = 3605 seconds = 3_605_000 ms. m=0 so mDisplay="".
+    expect(milliToHms(3_605_000)).toBe("1h 5.00s");
+  });
+
+  it("handles very small millisecond values", () => {
+    expect(milliToHms(1)).toBe("0.00s");
+  });
+
+  it("handles fractional seconds correctly", () => {
+    // 1500ms = 1.5s
+    expect(milliToHms(1500)).toBe("1.50s");
+  });
+
+  it("handles large values (24 hours)", () => {
+    // 24 * 3_600_000 = 86_400_000 ms. m=0, s=0.
+    expect(milliToHms(86_400_000)).toBe("24h 0.00s");
+  });
+
+  it("handles string numeric input", () => {
+    expect(milliToHms("1000")).toBe("1.00s");
+  });
+
+  it("trims trailing whitespace from output", () => {
+    const result = milliToHms(60_000);
+    // The function trims the final result — no trailing whitespace
+    expect(result).toBe(result.trim());
+  });
+
+  it("formats 10 minutes correctly", () => {
+    // 10 * 60 * 1000 = 600_000 ms = 600s = 10m 0.00s
+    expect(milliToHms(600_000)).toBe("10m 0.00s");
+  });
+
+  it("formats 59 minutes 59 seconds", () => {
+    // 59*60 + 59 = 3599 seconds = 3_599_000 ms
+    expect(milliToHms(3_599_000)).toBe("59m 59.00s");
+  });
+});

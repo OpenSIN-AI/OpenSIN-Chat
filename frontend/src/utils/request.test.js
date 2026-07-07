@@ -1,1 +1,80 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyBkZXNjcmliZSwgaXQsIGV4cGVjdCwgdmksIGJlZm9yZUVhY2ggfSBmcm9tICJ2aXRlc3QiOwppbXBvcnQgeyBzYWZlSnNvblBhcnNlLCBiYXNlSGVhZGVycywgdXNlckZyb21TdG9yYWdlIH0gZnJvbSAiLi9yZXF1ZXN0IjsKCmRlc2NyaWJlKCJzYWZlSnNvblBhcnNlIiwgKCkgPT4gewogIGl0KCJwYXJzZXMgdmFsaWQgSlNPTiIsICgpID0+IHsKICAgIGV4cGVjdChzYWZlSnNvblBhcnNlKCd7Im5hbWUiOiJ0ZXN0In0nKSkudG9FcXVhbCh7IG5hbWU6ICJ0ZXN0IiB9KTsKICB9KTsKCiAgaXQoInJldHVybnMgZmFsbGJhY2sgZm9yIGludmFsaWQgSlNPTiIsICgpID0+IHsKICAgIGV4cGVjdChzYWZlSnNvblBhcnNlKCJ7YmFkIGpzb259IiwgImZhbGxiYWNrIikpLnRvQmUoImZhbGxiYWNrIik7CiAgfSk7CgogIGl0KCJyZXR1cm5zIGZhbGxiYWNrIGZvciBudWxsIGlucHV0IiwgKCkgPT4gewogICAgZXhwZWN0KHNhZmVKc29uUGFyc2UobnVsbCwgImZhbGxiYWNrIikpLnRvQmUoImZhbGxiYWNrIik7CiAgfSk7CgogIGl0KCJyZXR1cm5zIGZhbGxiYWNrIGZvciB1bmRlZmluZWQgaW5wdXQiLCAoKSA9PiB7CiAgICBleHBlY3Qoc2FmZUpzb25QYXJzZSh1bmRlZmluZWQsICJmYWxsYmFjayIpKS50b0JlKCJmYWxsYmFjayIpOwogIH0pOwoKICBpdCgiZGVmYXVsdHMgZmFsbGJhY2sgdG8gbnVsbCIsICgpID0+IHsKICAgIGV4cGVjdChzYWZlSnNvblBhcnNlKCJub3QganNvbiIpKS50b0JlKG51bGwpOwogIH0pOwp9KTsKCmRlc2NyaWJlKCJiYXNlSGVhZGVycyIsICgpID0+IHsKICBiZWZvcmVFYWNoKCgpID0+IHsKICAgIHZpLmNsZWFyQWxsTW9ja3MoKTsKICB9KTsKCiAgaXQoInJldHVybnMgQmVhcmVyIHRva2VuIHdoZW4gcHJvdmlkZWQiLCAoKSA9PiB7CiAgICBleHBlY3QoYmFzZUhlYWRlcnMoIm15LXRva2VuIikpLnRvRXF1YWwoewogICAgICBBdXRob3JpemF0aW9uOiAiQmVhcmVyIG15LXRva2VuIiwKICAgIH0pOwogIH0pOwoKICBpdCgiZmFsbHMgYmFjayB0byBzdG9yZWQgdG9rZW4iLCAoKSA9PiB7CiAgICB3aW5kb3cubG9jYWxTdG9yYWdlLmdldEl0ZW0gPSB2aS5mbigoa2V5KSA9PiB7CiAgICAgIGlmIChrZXkgPT09ICJvcGVuc2luX2F1dGhUb2tlbiIpIHJldHVybiAic3RvcmVkLXRva2VuIjsKICAgICAgcmV0dXJuIG51bGw7CiAgICB9KTsKICAgIGV4cGVjdChiYXNlSGVhZGVycygpKS50b0VxdWFsKHsKICAgICAgQXV0aG9yaXphdGlvbjogIkJlYXJlciBzdG9yZWQtdG9rZW4iLAogICAgfSk7CiAgfSk7CgogIGl0KCJyZXR1cm5zIG51bGwgQXV0aG9yaXphdGlvbiB3aGVuIG5vIHRva2VuIGF2YWlsYWJsZSIsICgpID0+IHsKICAgIHdpbmRvdy5sb2NhbFN0b3JhZ2UuZ2V0SXRlbSA9IHZpLmZuKCgpID0+IG51bGwpOwogICAgZXhwZWN0KGJhc2VIZWFkZXJzKCkpLnRvRXF1YWwoeyBBdXRob3JpemF0aW9uOiBudWxsIH0pOwogIH0pOwp9KTsKCmRlc2NyaWJlKCJ1c2VyRnJvbVN0b3JhZ2UiLCAoKSA9PiB7CiAgYmVmb3JlRWFjaCgoKSA9PiB7CiAgICB2aS5jbGVhckFsbE1vY2tzKCk7CiAgfSk7CgogIGl0KCJyZXR1cm5zIHBhcnNlZCB1c2VyIGZyb20gbG9jYWxTdG9yYWdlIiwgKCkgPT4gewogICAgY29uc3QgdXNlciA9IHsgaWQ6IDEsIHVzZXJuYW1lOiAiYWRtaW4iIH07CiAgICB3aW5kb3cubG9jYWxTdG9yYWdlLmdldEl0ZW0gPSB2aS5mbigoa2V5KSA9PiB7CiAgICAgIGlmIChrZXkgPT09ICJvcGVuc2luX3VzZXIiKSByZXR1cm4gSlNPTi5zdHJpbmdpZnkodXNlcik7CiAgICAgIHJldHVybiBudWxsOwogICAgfSk7CiAgICBleHBlY3QodXNlckZyb21TdG9yYWdlKCkpLnRvRXF1YWwodXNlcik7CiAgfSk7CgogIGl0KCJyZXR1cm5zIG51bGwgd2hlbiBubyB1c2VyIHN0b3JlZCIsICgpID0+IHsKICAgIHdpbmRvdy5sb2NhbFN0b3JhZ2UuZ2V0SXRlbSA9IHZpLmZuKCgpID0+IG51bGwpOwogICAgZXhwZWN0KHVzZXJGcm9tU3RvcmFnZSgpKS50b0JlKG51bGwpOwogIH0pOwoKICBpdCgicmV0dXJucyBudWxsIGZvciBpbnZhbGlkIEpTT04gaW4gc3RvcmFnZSIsICgpID0+IHsKICAgIHdpbmRvdy5sb2NhbFN0b3JhZ2UuZ2V0SXRlbSA9IHZpLmZuKChrZXkpID0+IHsKICAgICAgaWYgKGtleSA9PT0gIm9wZW5zaW5fdXNlciIpIHJldHVybiAie2ludmFsaWR9IjsKICAgICAgcmV0dXJuIG51bGw7CiAgICB9KTsKICAgIGV4cGVjdCh1c2VyRnJvbVN0b3JhZ2UoKSkudG9CZShudWxsKTsKICB9KTsKfSk7Cg==
+// SPDX-License-Identifier: MIT
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { safeJsonParse, baseHeaders, userFromStorage } from "./request";
+
+describe("safeJsonParse", () => {
+  it("parses valid JSON", () => {
+    expect(safeJsonParse('{"name":"test"}')).toEqual({ name: "test" });
+  });
+
+  it("returns fallback for invalid JSON", () => {
+    expect(safeJsonParse("{bad json}", "fallback")).toBe("fallback");
+  });
+
+  it("returns fallback for null input", () => {
+    expect(safeJsonParse(null, "fallback")).toBe("fallback");
+  });
+
+  it("returns fallback for undefined input", () => {
+    expect(safeJsonParse(undefined, "fallback")).toBe("fallback");
+  });
+
+  it("defaults fallback to null", () => {
+    expect(safeJsonParse("not json")).toBe(null);
+  });
+});
+
+describe("baseHeaders", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("returns Bearer token when provided", () => {
+    expect(baseHeaders("my-token")).toEqual({
+      Authorization: "Bearer my-token",
+    });
+  });
+
+  it("falls back to stored token", () => {
+    window.localStorage.getItem = vi.fn((key) => {
+      if (key === "opensin_authToken") return "stored-token";
+      return null;
+    });
+    expect(baseHeaders()).toEqual({
+      Authorization: "Bearer stored-token",
+    });
+  });
+
+  it("returns null Authorization when no token available", () => {
+    window.localStorage.getItem = vi.fn(() => null);
+    expect(baseHeaders()).toEqual({ Authorization: null });
+  });
+});
+
+describe("userFromStorage", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("returns parsed user from localStorage", () => {
+    const user = { id: 1, username: "admin" };
+    window.localStorage.getItem = vi.fn((key) => {
+      if (key === "opensin_user") return JSON.stringify(user);
+      return null;
+    });
+    expect(userFromStorage()).toEqual(user);
+  });
+
+  it("returns null when no user stored", () => {
+    window.localStorage.getItem = vi.fn(() => null);
+    expect(userFromStorage()).toBe(null);
+  });
+
+  it("returns null for invalid JSON in storage", () => {
+    window.localStorage.getItem = vi.fn((key) => {
+      if (key === "opensin_user") return "{invalid}";
+      return null;
+    });
+    expect(userFromStorage()).toBe(null);
+  });
+});

@@ -1,1 +1,177 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgcGF0aHMgZnJvbSAiLi9wYXRocyI7CmltcG9ydCB7IHVzZUVmZmVjdCB9IGZyb20gInJlYWN0IjsKaW1wb3J0IHsgdXNlckZyb21TdG9yYWdlIH0gZnJvbSAiLi9yZXF1ZXN0IjsKaW1wb3J0IHsgVE9HR0xFX0xMTV9TRUxFQ1RPUl9FVkVOVCB9IGZyb20gIkAvY29tcG9uZW50cy9Xb3Jrc3BhY2VDaGF0L0NoYXRDb250YWluZXIvUHJvbXB0SW5wdXQvTExNU2VsZWN0b3IvYWN0aW9uIjsKCmV4cG9ydCBjb25zdCBLRVlCT0FSRF9TSE9SVENVVFNfSEVMUF9FVkVOVCA9ICJrZXlib2FyZC1zaG9ydGN1dHMtaGVscCI7CmV4cG9ydCBjb25zdCBpc01hYyA9CiAgKG5hdmlnYXRvci51c2VyQWdlbnREYXRhPy5wbGF0Zm9ybSA/PyBuYXZpZ2F0b3IucGxhdGZvcm0pCiAgICAudG9VcHBlckNhc2UoKQogICAgLmluZGV4T2YoIk1BQyIpID49IDA7CmV4cG9ydCBjb25zdCBTSE9SVENVVFMgPSB7CiAgIuKMmCArICwiOiB7CiAgICB0cmFuc2xhdGlvbktleTogInNldHRpbmdzIiwKICAgIGFjdGlvbjogKCkgPT4gewogICAgICB3aW5kb3cubG9jYXRpb24uaHJlZiA9IHBhdGhzLnNldHRpbmdzLmludGVyZmFjZSgpOwogICAgfSwKICB9LAogICLijJggKyBIIjogewogICAgdHJhbnNsYXRpb25LZXk6ICJob21lIiwKICAgIGFjdGlvbjogKCkgPT4gewogICAgICB3aW5kb3cubG9jYXRpb24uaHJlZiA9IHBhdGhzLmhvbWUoKTsKICAgIH0sCiAgfSwKICAi4oyYICsgSSI6IHsKICAgIHRyYW5zbGF0aW9uS2V5OiAid29ya3NwYWNlcyIsCiAgICBhY3Rpb246ICgpID0+IHsKICAgICAgd2luZG93LmxvY2F0aW9uLmhyZWYgPSBwYXRocy5zZXR0aW5ncy53b3Jrc3BhY2VzKCk7CiAgICB9LAogIH0sCiAgIuKMmCArIEsiOiB7CiAgICB0cmFuc2xhdGlvbktleTogImFwaUtleXMiLAogICAgYWN0aW9uOiAoKSA9PiB7CiAgICAgIHdpbmRvdy5sb2NhdGlvbi5ocmVmID0gcGF0aHMuc2V0dGluZ3MuYXBpS2V5cygpOwogICAgfSwKICB9LAogICLijJggKyBMIjogewogICAgdHJhbnNsYXRpb25LZXk6ICJsbG1QcmVmZXJlbmNlcyIsCiAgICBhY3Rpb246ICgpID0+IHsKICAgICAgd2luZG93LmxvY2F0aW9uLmhyZWYgPSBwYXRocy5zZXR0aW5ncy5sbG1QcmVmZXJlbmNlKCk7CiAgICB9LAogIH0sCiAgIuKMmCArIFNoaWZ0ICsgQyI6IHsKICAgIHRyYW5zbGF0aW9uS2V5OiAiY2hhdFNldHRpbmdzIiwKICAgIGFjdGlvbjogKCkgPT4gewogICAgICB3aW5kb3cubG9jYXRpb24uaHJlZiA9IHBhdGhzLnNldHRpbmdzLmNoYXQoKTsKICAgIH0sCiAgfSwKICAi4oyYICsgU2hpZnQgKyA/IjogewogICAgdHJhbnNsYXRpb25LZXk6ICJoZWxwIiwKICAgIGFjdGlvbjogKCkgPT4gewogICAgICB3aW5kb3cuZGlzcGF0Y2hFdmVudCgKICAgICAgICBuZXcgQ3VzdG9tRXZlbnQoS0VZQk9BUkRfU0hPUlRDVVRTX0hFTFBfRVZFTlQsIHsKICAgICAgICAgIGRldGFpbDogeyBzaG93OiB0cnVlIH0sCiAgICAgICAgfSksCiAgICAgICk7CiAgICB9LAogIH0sCiAgRjE6IHsKICAgIHRyYW5zbGF0aW9uS2V5OiAiaGVscCIsCiAgICBhY3Rpb246ICgpID0+IHsKICAgICAgd2luZG93LmRpc3BhdGNoRXZlbnQoCiAgICAgICAgbmV3IEN1c3RvbUV2ZW50KEtFWUJPQVJEX1NIT1JUQ1VUU19IRUxQX0VWRU5ULCB7CiAgICAgICAgICBkZXRhaWw6IHsgc2hvdzogdHJ1ZSB9LAogICAgICAgIH0pLAogICAgICApOwogICAgfSwKICB9LAogICLijJggKyBTaGlmdCArIEwiOiB7CiAgICB0cmFuc2xhdGlvbktleTogInNob3dMTE1TZWxlY3RvciIsCiAgICBhY3Rpb246ICgpID0+IHsKICAgICAgd2luZG93LmRpc3BhdGNoRXZlbnQobmV3IEV2ZW50KFRPR0dMRV9MTE1fU0VMRUNUT1JfRVZFTlQpKTsKICAgIH0sCiAgfSwKfTsKCmNvbnN0IExJU1RFTkVSUyA9IHt9Owpjb25zdCBtb2RpZmllciA9IGlzTWFjID8gIm1ldGEiIDogImN0cmwiOwpmb3IgKGNvbnN0IGtleSBpbiBTSE9SVENVVFMpIHsKICBjb25zdCBsaXN0ZW5lcktleSA9IGtleQogICAgLnJlcGxhY2UoIuKMmCIsIG1vZGlmaWVyKQogICAgLnJlcGxhY2VBbGwoIiAiLCAiIikKICAgIC50b0xvd2VyQ2FzZSgpOwogIExJU1RFTkVSU1tsaXN0ZW5lcktleV0gPSBTSE9SVENVVFNba2V5XS5hY3Rpb247Cn0KCi8vIENvbnZlcnQga2V5Ym9hcmQgZXZlbnQgdG8gc2hvcnRjdXQga2V5CmZ1bmN0aW9uIGdldFNob3J0Y3V0S2V5KGV2ZW50KSB7CiAgbGV0IGtleSA9ICIiOwogIGlmIChldmVudC5tZXRhS2V5IHx8IGV2ZW50LmN0cmxLZXkpIGtleSArPSBtb2RpZmllciArICIrIjsKICBpZiAoZXZlbnQuc2hpZnRLZXkpIGtleSArPSAic2hpZnQrIjsKICBpZiAoZXZlbnQuYWx0S2V5KSBrZXkgKz0gImFsdCsiOwoKICAvLyBIYW5kbGUgc3BlY2lhbCBrZXlzCiAgaWYgKGV2ZW50LmtleSA9PT0gIiwiKSBrZXkgKz0gIiwiOwogIC8vIEhhbmRsZSBxdWVzdGlvbiBtYXJrIGZvciBoZWxwIHNob3J0Y3V0CiAgZWxzZSBpZiAoZXZlbnQua2V5ID09PSAiPyIpIGtleSArPSAiPyI7CiAgZWxzZSBpZiAoZXZlbnQua2V5ID09PSAiQ29udHJvbCIpCiAgICByZXR1cm4gIiI7IC8vIElnbm9yZSBDb250cm9sIGtleSBieSBpdHNlbGYKICBlbHNlIGlmIChldmVudC5rZXkgPT09ICJTaGlmdCIpCiAgICByZXR1cm4gIiI7IC8vIElnbm9yZSBTaGlmdCBrZXkgYnkgaXRzZWxmCiAgZWxzZSBrZXkgKz0gZXZlbnQua2V5LnRvTG93ZXJDYXNlKCk7CiAgcmV0dXJuIGtleTsKfQoKLy8gSW5pdGlhbGl6ZSBrZXlib2FyZCBzaG9ydGN1dHMKZXhwb3J0IGZ1bmN0aW9uIGluaXRLZXlib2FyZFNob3J0Y3V0cygpIHsKICBmdW5jdGlvbiBoYW5kbGVLZXlEb3duKGV2ZW50KSB7CiAgICBjb25zdCBzaG9ydGN1dEtleSA9IGdldFNob3J0Y3V0S2V5KGV2ZW50KTsKICAgIGlmICghc2hvcnRjdXRLZXkpIHJldHVybjsKCiAgICBjb25zdCBhY3Rpb24gPSBMSVNURU5FUlNbc2hvcnRjdXRLZXldOwogICAgaWYgKGFjdGlvbikgewogICAgICBjb25zdCB0YXJnZXQgPSBldmVudC50YXJnZXQgYXMgSFRNTEVsZW1lbnQ7CiAgICAgIGNvbnN0IGlzVHlwaW5nID0KICAgICAgICB0YXJnZXQgJiYKICAgICAgICAodGFyZ2V0LnRhZ05hbWUgPT09ICJJTlBVVCIgfHwKICAgICAgICAgIHRhcmdldC50YWdOYW1lID09PSAiVEVYVEFSRUEiIHx8CiAgICAgICAgICB0YXJnZXQudGFnTmFtZSA9PT0gIlNFTEVDVCIgfHwKICAgICAgICAgIHRhcmdldC5pc0NvbnRlbnRFZGl0YWJsZSk7CgogICAgICBpZiAoaXNUeXBpbmcpIHsKICAgICAgICBjb25zdCBhbGxvd1doaWxlVHlwaW5nID0KICAgICAgICAgIHNob3J0Y3V0S2V5ID09PSAibWV0YStzaGlmdCs/IiB8fCBzaG9ydGN1dEtleSA9PT0gImYxIjsKICAgICAgICBpZiAoIWFsbG93V2hpbGVUeXBpbmcpIHJldHVybjsKICAgICAgfQoKICAgICAgZXZlbnQucHJldmVudERlZmF1bHQoKTsKICAgICAgYWN0aW9uKCk7CiAgICB9CiAgfQoKICB3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcigia2V5ZG93biIsIGhhbmRsZUtleURvd24pOwogIHJldHVybiAoKSA9PiB3aW5kb3cucmVtb3ZlRXZlbnRMaXN0ZW5lcigia2V5ZG93biIsIGhhbmRsZUtleURvd24pOwp9CgpmdW5jdGlvbiB1c2VLZXlib2FyZFNob3J0Y3V0cygpIHsKICB1c2VFZmZlY3QoKCkgPT4gewogICAgbGV0IGNsZWFudXA6ICgoKSA9PiB2b2lkKSB8IG51bGwgPSBudWxsOwoKICAgIGZ1bmN0aW9uIHN5bmNTaG9ydGN1dHMoKSB7CiAgICAgIGNvbnN0IHVzZXIgPSB1c2VyRnJvbVN0b3JhZ2UoKTsKICAgICAgLy8gSWYgdGhlcmUgaXMgYSB1c2VyIGFuZCB0aGUgdXNlciBpcyBub3QgYW4gYWRtaW4gZG8gbm90IHJlZ2lzdGVyIHRoZSBldmVudCBsaXN0ZW5lcgogICAgICAvLyBzaW5jZSBzb21lIG9mIHRoZSBzaG9ydGN1dHMgYXJlIG9ubHkgYXZhaWxhYmxlIGluIG11bHRpLXVzZXIgbW9kZSBhcyBhZG1pbgogICAgICBpZiAoISF1c2VyICYmIHVzZXI/LnJvbGUgIT09ICJhZG1pbiIpIHsKICAgICAgICBpZiAoY2xlYW51cCkgewogICAgICAgICAgY2xlYW51cCgpOwogICAgICAgICAgY2xlYW51cCA9IG51bGw7CiAgICAgICAgfQogICAgICAgIHJldHVybjsKICAgICAgfQogICAgICBpZiAoIWNsZWFudXApIHsKICAgICAgICBjbGVhbnVwID0gaW5pdEtleWJvYXJkU2hvcnRjdXRzKCk7CiAgICAgIH0KICAgIH0KCiAgICBzeW5jU2hvcnRjdXRzKCk7CgogICAgLy8gUmUtY2hlY2sgdXNlciBzdGF0dXMgZXZlcnkgMzAgc2Vjb25kcyB0byBoYW5kbGUgbG9naW4vbG9nb3V0IHdpdGhvdXQgcGFnZSByZWxvYWQKICAgIGNvbnN0IGludGVydmFsID0gc2V0SW50ZXJ2YWwoc3luY1Nob3J0Y3V0cywgMzBfMDAwKTsKCiAgICAvLyBBbHNvIGxpc3RlbiBmb3Igc3RvcmFnZSBldmVudHMgKGNyb3NzLXRhYiBsb2dpbi9sb2dvdXQpCiAgICB3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcigic3RvcmFnZSIsIHN5bmNTaG9ydGN1dHMpOwoKICAgIHJldHVybiAoKSA9PiB7CiAgICAgIGlmIChjbGVhbnVwKSBjbGVhbnVwKCk7CiAgICAgIGNsZWFySW50ZXJ2YWwoaW50ZXJ2YWwpOwogICAgICB3aW5kb3cucmVtb3ZlRXZlbnRMaXN0ZW5lcigic3RvcmFnZSIsIHN5bmNTaG9ydGN1dHMpOwogICAgfTsKICB9LCBbXSk7CiAgcmV0dXJuOwp9CgpleHBvcnQgZnVuY3Rpb24gS2V5Ym9hcmRTaG9ydGN1dFdyYXBwZXIoeyBjaGlsZHJlbiB9KSB7CiAgdXNlS2V5Ym9hcmRTaG9ydGN1dHMoKTsKICByZXR1cm4gY2hpbGRyZW47Cn0K
+// SPDX-License-Identifier: MIT
+import paths from "./paths";
+import { useEffect } from "react";
+import { userFromStorage } from "./request";
+import { TOGGLE_LLM_SELECTOR_EVENT } from "@/components/WorkspaceChat/ChatContainer/PromptInput/LLMSelector/action";
+
+export const KEYBOARD_SHORTCUTS_HELP_EVENT = "keyboard-shortcuts-help";
+export const isMac =
+  (navigator.userAgentData?.platform ?? navigator.platform)
+    .toUpperCase()
+    .indexOf("MAC") >= 0;
+export const SHORTCUTS = {
+  "⌘ + ,": {
+    translationKey: "settings",
+    action: () => {
+      window.location.href = paths.settings.interface();
+    },
+  },
+  "⌘ + H": {
+    translationKey: "home",
+    action: () => {
+      window.location.href = paths.home();
+    },
+  },
+  "⌘ + I": {
+    translationKey: "workspaces",
+    action: () => {
+      window.location.href = paths.settings.workspaces();
+    },
+  },
+  "⌘ + K": {
+    translationKey: "apiKeys",
+    action: () => {
+      window.location.href = paths.settings.apiKeys();
+    },
+  },
+  "⌘ + L": {
+    translationKey: "llmPreferences",
+    action: () => {
+      window.location.href = paths.settings.llmPreference();
+    },
+  },
+  "⌘ + Shift + C": {
+    translationKey: "chatSettings",
+    action: () => {
+      window.location.href = paths.settings.chat();
+    },
+  },
+  "⌘ + Shift + ?": {
+    translationKey: "help",
+    action: () => {
+      window.dispatchEvent(
+        new CustomEvent(KEYBOARD_SHORTCUTS_HELP_EVENT, {
+          detail: { show: true },
+        }),
+      );
+    },
+  },
+  F1: {
+    translationKey: "help",
+    action: () => {
+      window.dispatchEvent(
+        new CustomEvent(KEYBOARD_SHORTCUTS_HELP_EVENT, {
+          detail: { show: true },
+        }),
+      );
+    },
+  },
+  "⌘ + Shift + L": {
+    translationKey: "showLLMSelector",
+    action: () => {
+      window.dispatchEvent(new Event(TOGGLE_LLM_SELECTOR_EVENT));
+    },
+  },
+};
+
+const LISTENERS = {};
+const modifier = isMac ? "meta" : "ctrl";
+for (const key in SHORTCUTS) {
+  const listenerKey = key
+    .replace("⌘", modifier)
+    .replaceAll(" ", "")
+    .toLowerCase();
+  LISTENERS[listenerKey] = SHORTCUTS[key].action;
+}
+
+// Convert keyboard event to shortcut key
+function getShortcutKey(event) {
+  let key = "";
+  if (event.metaKey || event.ctrlKey) key += modifier + "+";
+  if (event.shiftKey) key += "shift+";
+  if (event.altKey) key += "alt+";
+
+  // Handle special keys
+  if (event.key === ",") key += ",";
+  // Handle question mark for help shortcut
+  else if (event.key === "?") key += "?";
+  else if (event.key === "Control")
+    return ""; // Ignore Control key by itself
+  else if (event.key === "Shift")
+    return ""; // Ignore Shift key by itself
+  else key += event.key.toLowerCase();
+  return key;
+}
+
+// Initialize keyboard shortcuts
+export function initKeyboardShortcuts() {
+  function handleKeyDown(event) {
+    const shortcutKey = getShortcutKey(event);
+    if (!shortcutKey) return;
+
+    const action = LISTENERS[shortcutKey];
+    if (action) {
+      const target = event.target as HTMLElement;
+      const isTyping =
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.tagName === "SELECT" ||
+          target.isContentEditable);
+
+      if (isTyping) {
+        const allowWhileTyping =
+          shortcutKey === "meta+shift+?" || shortcutKey === "f1";
+        if (!allowWhileTyping) return;
+      }
+
+      event.preventDefault();
+      action();
+    }
+  }
+
+  window.addEventListener("keydown", handleKeyDown);
+  return () => window.removeEventListener("keydown", handleKeyDown);
+}
+
+function useKeyboardShortcuts() {
+  useEffect(() => {
+    let cleanup: (() => void) | null = null;
+
+    function syncShortcuts() {
+      const user = userFromStorage();
+      // If there is a user and the user is not an admin do not register the event listener
+      // since some of the shortcuts are only available in multi-user mode as admin
+      if (!!user && user?.role !== "admin") {
+        if (cleanup) {
+          cleanup();
+          cleanup = null;
+        }
+        return;
+      }
+      if (!cleanup) {
+        cleanup = initKeyboardShortcuts();
+      }
+    }
+
+    syncShortcuts();
+
+    // Re-check user status every 30 seconds to handle login/logout without page reload
+    const interval = setInterval(syncShortcuts, 30_000);
+
+    // Also listen for storage events (cross-tab login/logout)
+    window.addEventListener("storage", syncShortcuts);
+
+    return () => {
+      if (cleanup) cleanup();
+      clearInterval(interval);
+      window.removeEventListener("storage", syncShortcuts);
+    };
+  }, []);
+  return;
+}
+
+export function KeyboardShortcutWrapper({ children }) {
+  useKeyboardShortcuts();
+  return children;
+}

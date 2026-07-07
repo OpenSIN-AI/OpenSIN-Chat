@@ -1,1 +1,67 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAoKLyoqCiAqIGZldGNoKCkgd3JhcHBlciB0aGF0IGFib3J0cyBhZnRlciBgdGltZW91dE1zYC4gVXNlZCBieSB0aGUgc2lkZWJhcnMgc28gYSBzbG93CiAqIG9yIGh1bmcgYmFja2VuZC91cHN0cmVhbSBBUEkgY2FuIG5ldmVyIGxlYXZlIHRoZSBwYW5lbCBzcGlubmluZyBmb3JldmVyLgogKgogKiBQYXNzIGFuIGV4dGVybmFsIGBzaWduYWxgIChlLmcuIGZyb20gYSBjb21wb25lbnQtc2NvcGVkIEFib3J0Q29udHJvbGxlcikgdG8KICogYWxzbyBjYW5jZWwgdGhlIHJlcXVlc3Qgd2hlbiB0aGUgc2lkZWJhciBjbG9zZXMgb3IgdGhlIGNvbXBvbmVudCB1bm1vdW50cy4KICogVGhlIHJldHVybmVkIHByb21pc2UgcmVqZWN0cyB3aXRoIGEgZnJpZW5kbHksIGxvY2FsaXplZCBtZXNzYWdlIG9uIHRpbWVvdXQuCiAqCiAqIEBwYXJhbSB7c3RyaW5nfSB1cmwKICogQHBhcmFtIHtSZXF1ZXN0SW5pdCAmIHsgdGltZW91dE1zPzogbnVtYmVyLCBzaWduYWw/OiBBYm9ydFNpZ25hbCB9fSBbb3B0aW9uc10KICogQHJldHVybnMge1Byb21pc2U8UmVzcG9uc2U+fQogKi8KZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIGZldGNoV2l0aFRpbWVvdXQoCiAgdXJsOiBzdHJpbmcsCiAgb3B0aW9uczogUmVxdWVzdEluaXQgJiB7IHRpbWVvdXRNcz86IG51bWJlcjsgc2lnbmFsPzogQWJvcnRTaWduYWwgfSA9IHt9LAopIHsKICBjb25zdCB7IHRpbWVvdXRNcyA9IDgwMDAsIHNpZ25hbDogZXh0ZXJuYWxTaWduYWwsIC4uLnJlc3QgfSA9IG9wdGlvbnM7CiAgY29uc3QgY29udHJvbGxlciA9IG5ldyBBYm9ydENvbnRyb2xsZXIoKTsKICBjb25zdCB0aW1lciA9IHNldFRpbWVvdXQoKCkgPT4gY29udHJvbGxlcj8uYWJvcnQoKSwgdGltZW91dE1zKTsKCiAgLy8gRm9yd2FyZCBhbiBleHRlcm5hbCBhYm9ydCAodW5tb3VudC9jbG9zZSkgdG8gb3VyIGludGVybmFsIGNvbnRyb2xsZXIuCiAgaWYgKGV4dGVybmFsU2lnbmFsKSB7CiAgICBpZiAoZXh0ZXJuYWxTaWduYWwuYWJvcnRlZCkgY29udHJvbGxlcj8uYWJvcnQoKTsKICAgIGVsc2UgewogICAgICBjb25zdCBvbkV4dGVybmFsQWJvcnQgPSAoKSA9PiBjb250cm9sbGVyPy5hYm9ydCgpOwogICAgICBleHRlcm5hbFNpZ25hbC5hZGRFdmVudExpc3RlbmVyKCJhYm9ydCIsIG9uRXh0ZXJuYWxBYm9ydCwgewogICAgICAgIG9uY2U6IHRydWUsCiAgICAgIH0pOwogICAgICAvLyBDbGVhbiB1cCB0aGUgbGlzdGVuZXIgaWYgdGhlIGZldGNoIGNvbXBsZXRlcyBiZWZvcmUgdGhlIGV4dGVybmFsCiAgICAgIC8vIHNpZ25hbCBhYm9ydHMsIHByZXZlbnRpbmcgbGlzdGVuZXIgYWNjdW11bGF0aW9uIG9uIHJldXNlZCBzaWduYWxzLgogICAgICAvLyBUaGUgY2xlYW51cCBpcyBzYWZlIGJlY2F1c2UgeyBvbmNlOiB0cnVlIH0gbWVhbnMgYWRkRXZlbnRMaXN0ZW5lcgogICAgICAvLyB3b24ndCBkb3VibGUtcmVnaXN0ZXIuCiAgICAgIHRyeSB7CiAgICAgICAgcmV0dXJuIGF3YWl0IGZldGNoKHVybCwgeyAuLi5yZXN0LCBzaWduYWw6IGNvbnRyb2xsZXIuc2lnbmFsIH0pLmZpbmFsbHkoKCkgPT4gewogICAgICAgICAgY2xlYXJUaW1lb3V0KHRpbWVyKTsKICAgICAgICAgIGV4dGVybmFsU2lnbmFsLnJlbW92ZUV2ZW50TGlzdGVuZXIoImFib3J0Iiwgb25FeHRlcm5hbEFib3J0KTsKICAgICAgICB9KTsKICAgICAgfSBjYXRjaCAoZSkgewogICAgICAgIGlmIChlLm5hbWUgPT09ICJBYm9ydEVycm9yIikgewogICAgICAgICAgaWYgKGV4dGVybmFsU2lnbmFsPy5hYm9ydGVkKSB0aHJvdyBlOwogICAgICAgICAgdGhyb3cgbmV3IEVycm9yKCJSZXF1ZXN0IHRpbWVvdXQg4oCUIHNlcnZlciBkaWQgbm90IHJlc3BvbmQuIik7CiAgICAgICAgfQogICAgICAgIHRocm93IGU7CiAgICAgIH0gZmluYWxseSB7CiAgICAgICAgY2xlYXJUaW1lb3V0KHRpbWVyKTsKICAgICAgICBleHRlcm5hbFNpZ25hbC5yZW1vdmVFdmVudExpc3RlbmVyKCJhYm9ydCIsIG9uRXh0ZXJuYWxBYm9ydCk7CiAgICAgIH0KICAgIH0KICB9CgogIHRyeSB7CiAgICByZXR1cm4gYXdhaXQgZmV0Y2godXJsLCB7IC4uLnJlc3QsIHNpZ25hbDogY29udHJvbGxlci5zaWduYWwgfSk7CiAgfSBjYXRjaCAoZSkgewogICAgLy8gRGlzdGluZ3Vpc2ggYSByZWFsIHRpbWVvdXQvY2FuY2VsIGZyb20gYSBuZXR3b3JrIGVycm9yLgogICAgaWYgKGUubmFtZSA9PT0gIkFib3J0RXJyb3IiKSB7CiAgICAgIGlmIChleHRlcm5hbFNpZ25hbD8uYWJvcnRlZCkgdGhyb3cgZTsgLy8gaW50ZW50aW9uYWwgY2FuY2VsIOKAlCBsZXQgY2FsbGVyIGlnbm9yZQogICAgICB0aHJvdyBuZXcgRXJyb3IoIlJlcXVlc3QgdGltZW91dCDigJQgc2VydmVyIGRpZCBub3QgcmVzcG9uZC4iKTsKICAgIH0KICAgIHRocm93IGU7CiAgfSBmaW5hbGx5IHsKICAgIGNsZWFyVGltZW91dCh0aW1lcik7CiAgfQp9CgpleHBvcnQgZGVmYXVsdCBmZXRjaFdpdGhUaW1lb3V0Owo=
+// SPDX-License-Identifier: MIT
+
+/**
+ * fetch() wrapper that aborts after `timeoutMs`. Used by the sidebars so a slow
+ * or hung backend/upstream API can never leave the panel spinning forever.
+ *
+ * Pass an external `signal` (e.g. from a component-scoped AbortController) to
+ * also cancel the request when the sidebar closes or the component unmounts.
+ * The returned promise rejects with a friendly, localized message on timeout.
+ *
+ * @param {string} url
+ * @param {RequestInit & { timeoutMs?: number, signal?: AbortSignal }} [options]
+ * @returns {Promise<Response>}
+ */
+export async function fetchWithTimeout(
+  url: string,
+  options: RequestInit & { timeoutMs?: number; signal?: AbortSignal } = {},
+) {
+  const { timeoutMs = 8000, signal: externalSignal, ...rest } = options;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller?.abort(), timeoutMs);
+
+  // Forward an external abort (unmount/close) to our internal controller.
+  if (externalSignal) {
+    if (externalSignal.aborted) controller?.abort();
+    else {
+      const onExternalAbort = () => controller?.abort();
+      externalSignal.addEventListener("abort", onExternalAbort, {
+        once: true,
+      });
+      // Clean up the listener if the fetch completes before the external
+      // signal aborts, preventing listener accumulation on reused signals.
+      // The cleanup is safe because { once: true } means addEventListener
+      // won't double-register.
+      try {
+        return await fetch(url, { ...rest, signal: controller.signal }).finally(() => {
+          clearTimeout(timer);
+          externalSignal.removeEventListener("abort", onExternalAbort);
+        });
+      } catch (e) {
+        if (e.name === "AbortError") {
+          if (externalSignal?.aborted) throw e;
+          throw new Error("Request timeout — server did not respond.");
+        }
+        throw e;
+      } finally {
+        clearTimeout(timer);
+        externalSignal.removeEventListener("abort", onExternalAbort);
+      }
+    }
+  }
+
+  try {
+    return await fetch(url, { ...rest, signal: controller.signal });
+  } catch (e) {
+    // Distinguish a real timeout/cancel from a network error.
+    if (e.name === "AbortError") {
+      if (externalSignal?.aborted) throw e; // intentional cancel — let caller ignore
+      throw new Error("Request timeout — server did not respond.");
+    }
+    throw e;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+export default fetchWithTimeout;

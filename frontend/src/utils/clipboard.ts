@@ -1,1 +1,71 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgcmVuZGVyTWFya2Rvd24gZnJvbSAiLi9jaGF0L21hcmtkb3duIjsKCi8qKgogKiBDb3BpZXMgdGhlIGdpdmVuIG1hcmtkb3duIHN0cmluZyBhcyByaWNoIHRleHQgdG8gdGhlIGNsaXBib2FyZC4KICogQHBhcmFtIHtzdHJpbmd9IG1hcmtkb3duU3RyaW5nIC0gVGhlIG1hcmtkb3duIHN0cmluZyB0byBjb3B5LgogKiBAcmV0dXJucyB7UHJvbWlzZTx2b2lkPn0KICovCmV4cG9ydCBhc3luYyBmdW5jdGlvbiBjb3B5TWFya2Rvd25Bc1JpY2hUZXh0KG1hcmtkb3duU3RyaW5nOiBzdHJpbmcpOiBQcm9taXNlPGJvb2xlYW4+IHsKICB0cnkgewogICAgY29uc3QgaHRtbENvbnRlbnQgPSByZW5kZXJNYXJrZG93bihtYXJrZG93blN0cmluZyk7CiAgICBjb25zdCBibG9iSFRNTCA9IG5ldyBCbG9iKFtodG1sQ29udGVudF0sIHsgdHlwZTogInRleHQvaHRtbCIgfSk7CiAgICBjb25zdCBibG9iVGV4dCA9IG5ldyBCbG9iKFttYXJrZG93blN0cmluZ10sIHsgdHlwZTogInRleHQvcGxhaW4iIH0pOwoKICAgIGNvbnN0IGRhdGEgPSBbCiAgICAgIG5ldyBDbGlwYm9hcmRJdGVtKHsKICAgICAgICAidGV4dC9odG1sIjogYmxvYkhUTUwsCiAgICAgICAgInRleHQvcGxhaW4iOiBibG9iVGV4dCwKICAgICAgfSksCiAgICBdOwoKICAgIGF3YWl0IG5hdmlnYXRvci5jbGlwYm9hcmQud3JpdGUoZGF0YSk7CiAgICByZXR1cm4gdHJ1ZTsKICB9IGNhdGNoIChlcnJvcikgewogICAgY29uc29sZS5lcnJvcigiRmFpbGVkIHRvIGNvcHkgbWFya2Rvd24gYXMgcmljaCB0ZXh0OiAiLCBlcnJvcik7CiAgICByZXR1cm4gZmFsc2U7CiAgfQp9CgovKioKICogU2FmZWx5IGNvcGllcyBwbGFpbiB0ZXh0IHRvIHRoZSBjbGlwYm9hcmQsIHdvcmtpbmcgaW4gYm90aCBzZWN1cmUgYW5kCiAqIG5vbi1zZWN1cmUgY29udGV4dHMuIFRoZSBhc3luYyBDbGlwYm9hcmQgQVBJIChgbmF2aWdhdG9yLmNsaXBib2FyZGApIGlzCiAqIG9ubHkgYXZhaWxhYmxlIGluIHNlY3VyZSBjb250ZXh0cyAoSFRUUFMgb3IgbG9jYWxob3N0KTsgaW4gSFRUUCBvciBvbGRlcgogKiBicm93c2VycyBgbmF2aWdhdG9yLmNsaXBib2FyZGAgaXMgdW5kZWZpbmVkIGFuZCBhY2Nlc3NpbmcgYC53cml0ZVRleHRgCiAqIHRocm93cyBhIHN5bmNocm9ub3VzIFR5cGVFcnJvciB0aGF0IGVzY2FwZXMgYW55IGNoYWluZWQgYC5jYXRjaCgpYC4KICoKICogVGhpcyBoZWxwZXIgcHJlZmVycyB0aGUgYXN5bmMgQVBJIHdoZW4gYXZhaWxhYmxlIGFuZCBmYWxscyBiYWNrIHRvIHRoZQogKiBkZXByZWNhdGVkIGBkb2N1bWVudC5leGVjQ29tbWFuZCgiY29weSIpYCBmbG93IHdpdGggYSBoaWRkZW4gdGV4dGFyZWEKICogb3RoZXJ3aXNlLiBDYWxsZXJzIHJlY2VpdmUgYSBib29sZWFuIHNvIHRoZXkgY2FuIHVwZGF0ZSBVSSBzdGF0ZSBvbmx5CiAqIHdoZW4gdGhlIGNvcHkgYWN0dWFsbHkgc3VjY2VlZGVkLgogKiBAcGFyYW0ge3N0cmluZ30gdGV4dCAtIFRoZSB0ZXh0IHRvIGNvcHkuCiAqIEByZXR1cm5zIHtQcm9taXNlPGJvb2xlYW4+fSB0cnVlIGlmIHRoZSBjb3B5IHN1Y2NlZWRlZCwgZmFsc2Ugb3RoZXJ3aXNlLgogKi8KZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIGNvcHlUZXh0KHRleHQ6IHN0cmluZyk6IFByb21pc2U8Ym9vbGVhbj4gewogIGlmICh0eXBlb2YgdGV4dCAhPT0gInN0cmluZyIgfHwgdGV4dC5sZW5ndGggPT09IDApIHJldHVybiBmYWxzZTsKCiAgaWYgKHR5cGVvZiBuYXZpZ2F0b3IgIT09ICJ1bmRlZmluZWQiICYmIG5hdmlnYXRvci5jbGlwYm9hcmQ/LndyaXRlVGV4dCkgewogICAgdHJ5IHsKICAgICAgYXdhaXQgbmF2aWdhdG9yLmNsaXBib2FyZC53cml0ZVRleHQodGV4dCk7CiAgICAgIHJldHVybiB0cnVlOwogICAgfSBjYXRjaCB7CiAgICAgIC8vIEZhbGwgdGhyb3VnaCB0byB0aGUgbGVnYWN5IHBhdGggKHBlcm1pc3Npb24gZGVuaWVkLCBsb3N0IGZvY3VzLCDigKYpLgogICAgfQogIH0KCiAgdHJ5IHsKICAgIGNvbnN0IHRleHRhcmVhID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgidGV4dGFyZWEiKTsKICAgIHRleHRhcmVhLnZhbHVlID0gdGV4dDsKICAgIHRleHRhcmVhLnNldEF0dHJpYnV0ZSgicmVhZG9ubHkiLCAiIik7CiAgICB0ZXh0YXJlYS5zdHlsZS5wb3NpdGlvbiA9ICJmaXhlZCI7CiAgICB0ZXh0YXJlYS5zdHlsZS50b3AgPSAiLTEwMDBweCI7CiAgICB0ZXh0YXJlYS5zdHlsZS5vcGFjaXR5ID0gIjAiOwogICAgZG9jdW1lbnQuYm9keS5hcHBlbmRDaGlsZCh0ZXh0YXJlYSk7CiAgICB0ZXh0YXJlYS5zZWxlY3QoKTsKICAgIGNvbnN0IG9rID0gZG9jdW1lbnQuZXhlY0NvbW1hbmQoImNvcHkiKTsKICAgIGRvY3VtZW50LmJvZHkucmVtb3ZlQ2hpbGQodGV4dGFyZWEpOwogICAgcmV0dXJuIG9rOwogIH0gY2F0Y2ggewogICAgcmV0dXJuIGZhbHNlOwogIH0KfQo=
+// SPDX-License-Identifier: MIT
+import renderMarkdown from "./chat/markdown";
+
+/**
+ * Copies the given markdown string as rich text to the clipboard.
+ * @param {string} markdownString - The markdown string to copy.
+ * @returns {Promise<void>}
+ */
+export async function copyMarkdownAsRichText(markdownString: string): Promise<boolean> {
+  try {
+    const htmlContent = renderMarkdown(markdownString);
+    const blobHTML = new Blob([htmlContent], { type: "text/html" });
+    const blobText = new Blob([markdownString], { type: "text/plain" });
+
+    const data = [
+      new ClipboardItem({
+        "text/html": blobHTML,
+        "text/plain": blobText,
+      }),
+    ];
+
+    await navigator.clipboard.write(data);
+    return true;
+  } catch (error) {
+    console.error("Failed to copy markdown as rich text: ", error);
+    return false;
+  }
+}
+
+/**
+ * Safely copies plain text to the clipboard, working in both secure and
+ * non-secure contexts. The async Clipboard API (`navigator.clipboard`) is
+ * only available in secure contexts (HTTPS or localhost); in HTTP or older
+ * browsers `navigator.clipboard` is undefined and accessing `.writeText`
+ * throws a synchronous TypeError that escapes any chained `.catch()`.
+ *
+ * This helper prefers the async API when available and falls back to the
+ * deprecated `document.execCommand("copy")` flow with a hidden textarea
+ * otherwise. Callers receive a boolean so they can update UI state only
+ * when the copy actually succeeded.
+ * @param {string} text - The text to copy.
+ * @returns {Promise<boolean>} true if the copy succeeded, false otherwise.
+ */
+export async function copyText(text: string): Promise<boolean> {
+  if (typeof text !== "string" || text.length === 0) return false;
+
+  if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      // Fall through to the legacy path (permission denied, lost focus, …).
+    }
+  }
+
+  try {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.top = "-1000px";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(textarea);
+    return ok;
+  } catch {
+    return false;
+  }
+}
