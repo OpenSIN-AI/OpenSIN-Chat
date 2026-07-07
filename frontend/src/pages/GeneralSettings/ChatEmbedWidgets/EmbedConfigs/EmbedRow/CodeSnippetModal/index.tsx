@@ -1,1 +1,159 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBEb2NzOiBpbmRleC5kb2MubWQKaW1wb3J0IFJlYWN0LCB7IHVzZVN0YXRlIH0gZnJvbSAicmVhY3QiOwppbXBvcnQgeyBDaGVja0NpcmNsZSB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9DaGVja0NpcmNsZSI7CmltcG9ydCB7IENvcHlTaW1wbGUgfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvQ29weVNpbXBsZSI7CmltcG9ydCB7IFggfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvWCI7CmltcG9ydCBzaG93VG9hc3QgZnJvbSAiQC91dGlscy90b2FzdCI7CmltcG9ydCB7IHJlc29sdmVEYXJrTW9kZSB9IGZyb20gIkAvaG9va3MvdXNlVGhlbWUiOwppbXBvcnQgaGxqcyBmcm9tICJAL3V0aWxzL2NoYXQvaGxqcyI7CmltcG9ydCBET01QdXJpZnkgZnJvbSAiQC91dGlscy9jaGF0L3B1cmlmeSI7CmltcG9ydCAiQC91dGlscy9jaGF0L3RoZW1lcy9naXRodWItZGFyay5jc3MiOwppbXBvcnQgIkAvdXRpbHMvY2hhdC90aGVtZXMvZ2l0aHViLmNzcyI7CmltcG9ydCB7IHVzZVRyYW5zbGF0aW9uIH0gZnJvbSAicmVhY3QtaTE4bmV4dCI7CmltcG9ydCB7IGNvcHlUZXh0IH0gZnJvbSAiQC91dGlscy9jbGlwYm9hcmQiOwoKdHlwZSBFbWJlZCA9IHsKICB1dWlkOiBzdHJpbmc7Cn07Cgp0eXBlIENvZGVTbmlwcGV0TW9kYWxQcm9wcyA9IHsKICBlbWJlZDogRW1iZWQ7CiAgY2xvc2VNb2RhbDogKCkgPT4gdm9pZDsKfTsKCmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIENvZGVTbmlwcGV0TW9kYWwoewogIGVtYmVkLAogIGNsb3NlTW9kYWwsCn06IENvZGVTbmlwcGV0TW9kYWxQcm9wcyk6IEpTWC5FbGVtZW50IHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgcmV0dXJuICgKICAgIDxkaXYgY2xhc3NOYW1lPSJyZWxhdGl2ZSB3LWZ1bGwgbWF4LXctMnhsIGJnLXRoZW1lLWJnLXNlY29uZGFyeSByb3VuZGVkLWxnIHNoYWRvdyBib3JkZXItMiBib3JkZXItdGhlbWUtbW9kYWwtYm9yZGVyIj4KICAgICAgPGRpdiBjbGFzc05hbWU9InJlbGF0aXZlIHAtNiBib3JkZXItYiByb3VuZGVkLXQgYm9yZGVyLXRoZW1lLW1vZGFsLWJvcmRlciI+CiAgICAgICAgPGRpdiBjbGFzc05hbWU9InctZnVsbCBmbGV4IGdhcC14LTIgaXRlbXMtY2VudGVyIj4KICAgICAgICAgIDxoMyBjbGFzc05hbWU9InRleHQteGwgZm9udC1zZW1pYm9sZCB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBvdmVyZmxvdy1oaWRkZW4gb3ZlcmZsb3ctZWxsaXBzaXMgd2hpdGVzcGFjZS1ub3dyYXAiPgogICAgICAgICAgICB7dCgiY29kZVNuaXBwZXRNb2RhbC50aXRsZSIpfQogICAgICAgICAgPC9oMz4KICAgICAgICA8L2Rpdj4KICAgICAgICA8YnV0dG9uCiAgICAgICAgICBvbkNsaWNrPXtjbG9zZU1vZGFsfQogICAgICAgICAgdHlwZT0iYnV0dG9uIgogICAgICAgICAgY2xhc3NOYW1lPSJhYnNvbHV0ZSB0b3AtNCByaWdodC00IHRyYW5zaXRpb24tYWxsIGR1cmF0aW9uLTMwMCBiZy10cmFuc3BhcmVudCByb3VuZGVkLWxnIHRleHQtc20gcC0xIGlubGluZS1mbGV4IGl0ZW1zLWNlbnRlciBob3ZlcjpiZy10aGVtZS1tb2RhbC1ib3JkZXIgaG92ZXI6Ym9yZGVyLXRoZW1lLW1vZGFsLWJvcmRlciBob3Zlcjpib3JkZXItb3BhY2l0eS01MCBib3JkZXItdHJhbnNwYXJlbnQgYm9yZGVyIgogICAgICAgID4KICAgICAgICAgIDxYIHNpemU9ezI0fSB3ZWlnaHQ9ImJvbGQiIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXByaW1hcnkiIC8+CiAgICAgICAgPC9idXR0b24+CiAgICAgIDwvZGl2PgogICAgICA8ZGl2IGNsYXNzTmFtZT0icHgtNyBweS02Ij4KICAgICAgICA8ZGl2IGNsYXNzTmFtZT0ic3BhY2UteS02IG1heC1oLVs2MHZoXSBvdmVyZmxvdy15LWF1dG8gcHItMiI+CiAgICAgICAgICA8U2NyaXB0VGFnIGVtYmVkPXtlbWJlZH0gLz4KICAgICAgICA8L2Rpdj4KICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBqdXN0aWZ5LWJldHdlZW4gaXRlbXMtY2VudGVyIG10LTYgcHQtNiBib3JkZXItdCBib3JkZXItdGhlbWUtbW9kYWwtYm9yZGVyIj4KICAgICAgICAgIDxidXR0b24KICAgICAgICAgICAgb25DbGljaz17Y2xvc2VNb2RhbH0KICAgICAgICAgICAgdHlwZT0iYnV0dG9uIgogICAgICAgICAgICBjbGFzc05hbWU9InRyYW5zaXRpb24tYWxsIGR1cmF0aW9uLTMwMCB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBob3ZlcjpiZy10aGVtZS1tb2RhbC1ib3JkZXIgcHgtNCBweS0yIHJvdW5kZWQtbGcgdGV4dC1zbSIKICAgICAgICAgID4KICAgICAgICAgICAge3QoImNvZGVTbmlwcGV0TW9kYWwuY2xvc2UiKX0KICAgICAgICAgIDwvYnV0dG9uPgogICAgICAgICAgPGRpdiBoaWRkZW49e3RydWV9IC8+CiAgICAgICAgPC9kaXY+CiAgICAgIDwvZGl2PgogICAgPC9kaXY+CiAgKTsKfQoKZnVuY3Rpb24gY3JlYXRlU2NyaXB0VGFnU25pcHBldCgKICBlbWJlZDogRW1iZWQsCiAgc2NyaXB0SG9zdDogc3RyaW5nLAogIHNlcnZlckhvc3Q6IHN0cmluZywKKTogc3RyaW5nIHsKICByZXR1cm4gYDwhLS0KUGFzdGUgdGhpcyBzY3JpcHQgYXQgdGhlIGJvdHRvbSBvZiB5b3VyIEhUTUwgYmVmb3JlIHRoZSA8L2JvZHk+IHRhZy4KU2VlIG1vcmUgc3R5bGUgYW5kIGNvbmZpZyBvcHRpb25zIG9uIG91ciBkb2NzCmh0dHBzOi8vZ2l0aHViLmNvbS9PcGVuU0lOLUFJL09wZW5TSU4tQ2hhdC9ibG9iL21haW4vUkVBRE1FLm1kCi0tPgo8c2NyaXB0CiAgZGF0YS1lbWJlZC1pZD0iJHtlbWJlZC51dWlkfSIKICBkYXRhLWJhc2UtYXBpLXVybD0iJHtzZXJ2ZXJIb3N0fS9hcGkvZW1iZWQiCiAgc3JjPSIke3NjcmlwdEhvc3R9L2VtYmVkL29wZW5zaW4tY2hhdC13aWRnZXQubWluLmpzIj4KPC9zY3JpcHQ+CjwhLS0gT3BlblNJTiBDaGF0IChodHRwczovL3NpbmNoYXQuZGVscWhpLmNvbSkgLS0+CmA7Cn0KCnR5cGUgU2NyaXB0VGFnUHJvcHMgPSB7CiAgZW1iZWQ6IEVtYmVkOwp9OwoKY29uc3QgU2NyaXB0VGFnID0gKHsgZW1iZWQgfTogU2NyaXB0VGFnUHJvcHMpOiBKU1guRWxlbWVudCA9PiB7CiAgY29uc3QgeyB0IH0gPSB1c2VUcmFuc2xhdGlvbigpOwogIGNvbnN0IFtjb3BpZWQsIHNldENvcGllZF0gPSB1c2VTdGF0ZShmYWxzZSk7CiAgY29uc3Qgc2NyaXB0SG9zdCA9IGltcG9ydC5tZXRhLmVudi5ERVYKICAgID8gImh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCIKICAgIDogd2luZG93LmxvY2F0aW9uLm9yaWdpbjsKICBjb25zdCBzZXJ2ZXJIb3N0ID0gaW1wb3J0Lm1ldGEuZW52LkRFVgogICAgPyAiaHR0cDovL2xvY2FsaG9zdDozMDAxIgogICAgOiB3aW5kb3cubG9jYXRpb24ub3JpZ2luOwogIGNvbnN0IHNuaXBwZXQgPSBjcmVhdGVTY3JpcHRUYWdTbmlwcGV0KGVtYmVkLCBzY3JpcHRIb3N0LCBzZXJ2ZXJIb3N0KTsKICBjb25zdCB0aGVtZSA9IHJlc29sdmVEYXJrTW9kZSgpID8gImdpdGh1Yi1kYXJrIiA6ICJnaXRodWIiOwoKICBjb25zdCBoYW5kbGVDbGljayA9ICgpID0+IHsKICAgIGNvcHlUZXh0KHNuaXBwZXQpLnRoZW4oKG9rKSA9PiB7CiAgICAgIGlmICghb2spIHJldHVybjsKICAgICAgc2V0Q29waWVkKHRydWUpOwogICAgICBzZXRUaW1lb3V0KCgpID0+IHsKICAgICAgICBzZXRDb3BpZWQoZmFsc2UpOwogICAgICB9LCAyNTAwKTsKICAgICAgc2hvd1RvYXN0KHQoImNvZGVTbmlwcGV0TW9kYWwuY29waWVkVG9DbGlwYm9hcmQiKSwgInN1Y2Nlc3MiLCB7CiAgICAgICAgY2xlYXI6IHRydWUsCiAgICAgIH0pOwogICAgfSk7CiAgfTsKCiAgcmV0dXJuICgKICAgIDxkaXY+CiAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIG1iLTIiPgogICAgICAgIDxsYWJlbCBjbGFzc05hbWU9ImJsb2NrIHRleHQtc20gZm9udC1tZWRpdW0gdGV4dC10aGVtZS10ZXh0LXByaW1hcnkiPgogICAgICAgICAge3QoImNvZGVTbmlwcGV0TW9kYWwuc2NyaXB0VGFnTGFiZWwiKX0KICAgICAgICA8L2xhYmVsPgogICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSB0ZXh0LXhzIj4KICAgICAgICAgIHt0KCJjb2RlU25pcHBldE1vZGFsLnNjcmlwdFRhZ0Rlc2NyaXB0aW9uIil9CiAgICAgICAgPC9wPgogICAgICAgIDxhCiAgICAgICAgICBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vT3BlblNJTi1BSS9PcGVuU0lOLUNoYXQvYmxvYi9tYWluL1JFQURNRS5tZCIKICAgICAgICAgIHRhcmdldD0iX2JsYW5rIgogICAgICAgICAgcmVsPSJub3JlZmVycmVyIgogICAgICAgICAgY2xhc3NOYW1lPSJ0ZXh0LWJsdWUtMzAwIGxpZ2h0OnRleHQtYmx1ZS01MDAgaG92ZXI6dW5kZXJsaW5lIgogICAgICAgID4KICAgICAgICAgIHt0KCJjb2RlU25pcHBldE1vZGFsLnZpZXdPcHRpb25zIil9CiAgICAgICAgPC9hPgogICAgICA8L2Rpdj4KICAgICAgPGJ1dHRvbgogICAgICAgIHR5cGU9ImJ1dHRvbiIKICAgICAgICBkaXNhYmxlZD17Y29waWVkfQogICAgICAgIG9uQ2xpY2s9e2hhbmRsZUNsaWNrfQogICAgICAgIGNsYXNzTmFtZT17YGRpc2FibGVkOmJvcmRlciBkaXNhYmxlZDpib3JkZXItZ3JlZW4tMzAwIGRpc2FibGVkOmxpZ2h0OmJvcmRlci1ncmVlbi02MDAgYm9yZGVyIGJvcmRlci10cmFuc3BhcmVudCByZWxhdGl2ZSB3LWZ1bGwgZm9udC1tb25vIGZsZXggaGxqcyAke3RoZW1lfSBsaWdodDpib3JkZXIgbGlnaHQ6Ym9yZGVyLWdyYXktNzAwIHRleHQtd2hpdGUgcGxhY2Vob2xkZXI6dGV4dC10aGVtZS1zZXR0aW5ncy1pbnB1dC1wbGFjZWhvbGRlciB0ZXh0LXNtIHJvdW5kZWQtbGcgZm9jdXM6b3V0bGluZS1wcmltYXJ5LWJ1dHRvbiBhY3RpdmU6b3V0bGluZS1wcmltYXJ5LWJ1dHRvbiBvdXRsaW5lLW5vbmUgcC0yLjUgbS0xYH0KICAgICAgPgogICAgICAgIDxkaXYKICAgICAgICAgIGNsYXNzTmFtZT0iZmxleCB3LWZ1bGwgdGV4dC1sZWZ0IGZsZXgtY29sIGdhcC15LTEgcHItNiBwbC00IHdoaXRlc3BhY2UtcHJlLWxpbmUiCiAgICAgICAgICBkYW5nZXJvdXNseVNldElubmVySFRNTD17ewogICAgICAgICAgICBfX2h0bWw6IERPTVB1cmlmeS5zYW5pdGl6ZSgKICAgICAgICAgICAgICBobGpzLmhpZ2hsaWdodChzbmlwcGV0LCB7CiAgICAgICAgICAgICAgICBsYW5ndWFnZTogImh0bWwiLAogICAgICAgICAgICAgICAgaWdub3JlSWxsZWdhbHM6IHRydWUsCiAgICAgICAgICAgICAgfSkudmFsdWUsCiAgICAgICAgICAgICksCiAgICAgICAgICB9fQogICAgICAgIC8+CiAgICAgICAge2NvcGllZCA/ICgKICAgICAgICAgIDxDaGVja0NpcmNsZQogICAgICAgICAgICBzaXplPXsxNH0KICAgICAgICAgICAgY2xhc3NOYW1lPSJ0ZXh0LWdyZWVuLTMwMCBsaWdodDp0ZXh0LWdyZWVuLTYwMCBhYnNvbHV0ZSB0b3AtMiByaWdodC0yIgogICAgICAgICAgLz4KICAgICAgICApIDogKAogICAgICAgICAgPENvcHlTaW1wbGUgc2l6ZT17MTR9IGNsYXNzTmFtZT0iYWJzb2x1dGUgdG9wLTIgcmlnaHQtMiIgLz4KICAgICAgICApfQogICAgICA8L2J1dHRvbj4KICAgIDwvZGl2PgogICk7Cn07Cg==
+// SPDX-License-Identifier: MIT
+// Docs: index.doc.md
+import React, { useState } from "react";
+import { CheckCircle } from "@phosphor-icons/react/dist/csr/CheckCircle";
+import { CopySimple } from "@phosphor-icons/react/dist/csr/CopySimple";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import showToast from "@/utils/toast";
+import { resolveDarkMode } from "@/hooks/useTheme";
+import hljs from "@/utils/chat/hljs";
+import DOMPurify from "@/utils/chat/purify";
+import "@/utils/chat/themes/github-dark.css";
+import "@/utils/chat/themes/github.css";
+import { useTranslation } from "react-i18next";
+import { copyText } from "@/utils/clipboard";
+
+type Embed = {
+  uuid: string;
+};
+
+type CodeSnippetModalProps = {
+  embed: Embed;
+  closeModal: () => void;
+};
+
+export default function CodeSnippetModal({
+  embed,
+  closeModal,
+}: CodeSnippetModalProps): JSX.Element {
+  const { t } = useTranslation();
+  return (
+    <div className="relative w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border">
+      <div className="relative p-6 border-b rounded-t border-theme-modal-border">
+        <div className="w-full flex gap-x-2 items-center">
+          <h3 className="text-xl font-semibold text-theme-text-primary overflow-hidden overflow-ellipsis whitespace-nowrap">
+            {t("codeSnippetModal.title")}
+          </h3>
+        </div>
+        <button
+          onClick={closeModal}
+          type="button"
+          className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
+        >
+          <X size={24} weight="bold" className="text-theme-text-primary" />
+        </button>
+      </div>
+      <div className="px-7 py-6">
+        <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-2">
+          <ScriptTag embed={embed} />
+        </div>
+        <div className="flex justify-between items-center mt-6 pt-6 border-t border-theme-modal-border">
+          <button
+            onClick={closeModal}
+            type="button"
+            className="transition-all duration-300 text-theme-text-primary hover:bg-theme-modal-border px-4 py-2 rounded-lg text-sm"
+          >
+            {t("codeSnippetModal.close")}
+          </button>
+          <div hidden={true} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function createScriptTagSnippet(
+  embed: Embed,
+  scriptHost: string,
+  serverHost: string,
+): string {
+  return `<!--
+Paste this script at the bottom of your HTML before the </body> tag.
+See more style and config options on our docs
+https://github.com/OpenSIN-AI/OpenSIN-Chat/blob/main/README.md
+-->
+<script
+  data-embed-id="${embed.uuid}"
+  data-base-api-url="${serverHost}/api/embed"
+  src="${scriptHost}/embed/opensin-chat-widget.min.js">
+</script>
+<!-- OpenSIN Chat (https://sinchat.delqhi.com) -->
+`;
+}
+
+type ScriptTagProps = {
+  embed: Embed;
+};
+
+const ScriptTag = ({ embed }: ScriptTagProps): JSX.Element => {
+  const { t } = useTranslation();
+  const [copied, setCopied] = useState(false);
+  const scriptHost = import.meta.env.DEV
+    ? "http://localhost:3000"
+    : window.location.origin;
+  const serverHost = import.meta.env.DEV
+    ? "http://localhost:3001"
+    : window.location.origin;
+  const snippet = createScriptTagSnippet(embed, scriptHost, serverHost);
+  const theme = resolveDarkMode() ? "github-dark" : "github";
+
+  const handleClick = () => {
+    copyText(snippet).then((ok) => {
+      if (!ok) return;
+      setCopied(true);
+      setTimeout(() => {
+        setCopied(false);
+      }, 2500);
+      showToast(t("codeSnippetModal.copiedToClipboard"), "success", {
+        clear: true,
+      });
+    });
+  };
+
+  return (
+    <div>
+      <div className="flex flex-col mb-2">
+        <label className="block text-sm font-medium text-theme-text-primary">
+          {t("codeSnippetModal.scriptTagLabel")}
+        </label>
+        <p className="text-theme-text-secondary text-xs">
+          {t("codeSnippetModal.scriptTagDescription")}
+        </p>
+        <a
+          href="https://github.com/OpenSIN-AI/OpenSIN-Chat/blob/main/README.md"
+          target="_blank"
+          rel="noreferrer"
+          className="text-blue-300 light:text-blue-500 hover:underline"
+        >
+          {t("codeSnippetModal.viewOptions")}
+        </a>
+      </div>
+      <button
+        type="button"
+        disabled={copied}
+        onClick={handleClick}
+        className={`disabled:border disabled:border-green-300 disabled:light:border-green-600 border border-transparent relative w-full font-mono flex hljs ${theme} light:border light:border-gray-700 text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none p-2.5 m-1`}
+      >
+        <div
+          className="flex w-full text-left flex-col gap-y-1 pr-6 pl-4 whitespace-pre-line"
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(
+              hljs.highlight(snippet, {
+                language: "html",
+                ignoreIllegals: true,
+              }).value,
+            ),
+          }}
+        />
+        {copied ? (
+          <CheckCircle
+            size={14}
+            className="text-green-300 light:text-green-600 absolute top-2 right-2"
+          />
+        ) : (
+          <CopySimple size={14} className="absolute top-2 right-2" />
+        )}
+      </button>
+    </div>
+  );
+};

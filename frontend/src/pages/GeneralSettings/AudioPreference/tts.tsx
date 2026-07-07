@@ -1,1 +1,273 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgUmVhY3QsIHsgdXNlRWZmZWN0LCB1c2VTdGF0ZSwgdXNlUmVmLCBGb3JtRXZlbnQgfSBmcm9tICJyZWFjdCI7CmltcG9ydCBTeXN0ZW0gZnJvbSAiQC9tb2RlbHMvc3lzdGVtIjsKaW1wb3J0IHNob3dUb2FzdCBmcm9tICJAL3V0aWxzL3RvYXN0IjsKaW1wb3J0IExMTUl0ZW0gZnJvbSAiQC9jb21wb25lbnRzL0xMTVNlbGVjdGlvbi9MTE1JdGVtIjsKaW1wb3J0IHsgQ2FyZXRVcERvd24gfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvQ2FyZXRVcERvd24iOwppbXBvcnQgeyBNYWduaWZ5aW5nR2xhc3MgfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvTWFnbmlmeWluZ0dsYXNzIjsKaW1wb3J0IHsgWCB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9YIjsKaW1wb3J0IENUQUJ1dHRvbiBmcm9tICJAL2NvbXBvbmVudHMvbGliL0NUQUJ1dHRvbiI7CmltcG9ydCBPcGVuQWlMb2dvIGZyb20gIkAvbWVkaWEvbGxtcHJvdmlkZXIvb3BlbmFpLnBuZyI7CmltcG9ydCBPcGVuU0lOQ2hhdEljb24gZnJvbSAiQC9tZWRpYS9sb2dvL29wZW5zaW4taWNvbi5zdmciOwppbXBvcnQgRWxldmVuTGFic0ljb24gZnJvbSAiQC9tZWRpYS90dHNwcm92aWRlcnMvZWxldmVubGFicy5wbmciOwppbXBvcnQgUGlwZXJUVFNJY29uIGZyb20gIkAvbWVkaWEvdHRzcHJvdmlkZXJzL3BpcGVyLnBuZyI7CmltcG9ydCBHZW5lcmljT3BlbkFpTG9nbyBmcm9tICJAL21lZGlhL3R0c3Byb3ZpZGVycy9nZW5lcmljLW9wZW5haS5wbmciOwppbXBvcnQgeyB1c2VVbnNhdmVkQ2hhbmdlcyB9IGZyb20gIkAvaG9va3MvdXNlVW5zYXZlZENoYW5nZXMiOwppbXBvcnQgVW5zYXZlZENoYW5nZXNEaWFsb2cgZnJvbSAiQC9jb21wb25lbnRzL1Vuc2F2ZWRDaGFuZ2VzRGlhbG9nIjsKaW1wb3J0IEtva29yb0ljb24gZnJvbSAiQC9tZWRpYS90dHNwcm92aWRlcnMva29rb3JvLnBuZyI7CmltcG9ydCBOdmlkaWFOaW1Mb2dvIGZyb20gIkAvbWVkaWEvbGxtcHJvdmlkZXIvbnZpZGlhLW5pbS5wbmciOwppbXBvcnQgeyB1c2VUcmFuc2xhdGlvbiB9IGZyb20gInJlYWN0LWkxOG5leHQiOwoKaW1wb3J0IEJyb3dzZXJOYXRpdmUgZnJvbSAiQC9jb21wb25lbnRzL1RleHRUb1NwZWVjaC9Ccm93c2VyTmF0aXZlIjsKaW1wb3J0IE9wZW5BaVRUU09wdGlvbnMgZnJvbSAiQC9jb21wb25lbnRzL1RleHRUb1NwZWVjaC9PcGVuQWlPcHRpb25zIjsKaW1wb3J0IEVsZXZlbkxhYnNUVFNPcHRpb25zIGZyb20gIkAvY29tcG9uZW50cy9UZXh0VG9TcGVlY2gvRWxldmVuTGFic09wdGlvbnMiOwppbXBvcnQgUGlwZXJUVFNPcHRpb25zIGZyb20gIkAvY29tcG9uZW50cy9UZXh0VG9TcGVlY2gvUGlwZXJUVFNPcHRpb25zIjsKaW1wb3J0IE9wZW5BaUdlbmVyaWNUVFNPcHRpb25zIGZyb20gIkAvY29tcG9uZW50cy9UZXh0VG9TcGVlY2gvT3BlbkFpR2VuZXJpY09wdGlvbnMiOwppbXBvcnQgS29rb3JvVFRTT3B0aW9ucyBmcm9tICJAL2NvbXBvbmVudHMvVGV4dFRvU3BlZWNoL0tva29yb09wdGlvbnMiOwppbXBvcnQgTnZpZGlhTmltVFRTT3B0aW9ucyBmcm9tICJAL2NvbXBvbmVudHMvVGV4dFRvU3BlZWNoL052aWRpYU5pbU9wdGlvbnMiOwoKaW50ZXJmYWNlIFRUU1Byb3ZpZGVyIHsKICBuYW1lOiBzdHJpbmc7CiAgdmFsdWU6IHN0cmluZzsKICBsb2dvOiBzdHJpbmc7CiAgb3B0aW9uczogKHNldHRpbmdzOiBhbnkpID0+IFJlYWN0LlJlYWN0Tm9kZTsKICBkZXNjcmlwdGlvbjogc3RyaW5nOwp9Cgpjb25zdCBQUk9WSURFUlMgPSAodDogYW55KTogVFRTUHJvdmlkZXJbXSA9PiBbCiAgewogICAgbmFtZTogdCgiYXVkaW9QcmVmZXJlbmNlLnR0cy5zeXN0ZW1OYXRpdmUiKSwKICAgIHZhbHVlOiAibmF0aXZlIiwKICAgIGxvZ286IE9wZW5TSU5DaGF0SWNvbiwKICAgIG9wdGlvbnM6IChzZXR0aW5nczogYW55KSA9PiA8QnJvd3Nlck5hdGl2ZSB7Li4uKHsgc2V0dGluZ3MgfSBhcyBhbnkpfSAvPiwKICAgIGRlc2NyaXB0aW9uOiB0KCJhdWRpb1ByZWZlcmVuY2UudHRzLnN5c3RlbU5hdGl2ZURlc2MiKSwKICB9LAogIHsKICAgIG5hbWU6IHQoImF1ZGlvUHJlZmVyZW5jZS50dHMub3BlbmFpIiksCiAgICB2YWx1ZTogIm9wZW5haSIsCiAgICBsb2dvOiBPcGVuQWlMb2dvLAogICAgb3B0aW9uczogKHNldHRpbmdzOiBhbnkpID0+IDxPcGVuQWlUVFNPcHRpb25zIHNldHRpbmdzPXtzZXR0aW5nc30gLz4sCiAgICBkZXNjcmlwdGlvbjogdCgiYXVkaW9QcmVmZXJlbmNlLnR0cy5vcGVuYWlEZXNjIiksCiAgfSwKICB7CiAgICBuYW1lOiB0KCJhdWRpb1ByZWZlcmVuY2UudHRzLmVsZXZlbmxhYnMiKSwKICAgIHZhbHVlOiAiZWxldmVubGFicyIsCiAgICBsb2dvOiBFbGV2ZW5MYWJzSWNvbiwKICAgIG9wdGlvbnM6IChzZXR0aW5nczogYW55KSA9PiA8RWxldmVuTGFic1RUU09wdGlvbnMgc2V0dGluZ3M9e3NldHRpbmdzfSAvPiwKICAgIGRlc2NyaXB0aW9uOiB0KCJhdWRpb1ByZWZlcmVuY2UudHRzLmVsZXZlbmxhYnNEZXNjIiksCiAgfSwKICB7CiAgICBuYW1lOiB0KCJhdWRpb1ByZWZlcmVuY2UudHRzLnBpcGVyIiksCiAgICB2YWx1ZTogInBpcGVyX2xvY2FsIiwKICAgIGxvZ286IFBpcGVyVFRTSWNvbiwKICAgIG9wdGlvbnM6IChzZXR0aW5nczogYW55KSA9PiA8UGlwZXJUVFNPcHRpb25zIHNldHRpbmdzPXtzZXR0aW5nc30gLz4sCiAgICBkZXNjcmlwdGlvbjogdCgiYXVkaW9QcmVmZXJlbmNlLnR0cy5waXBlckRlc2MiKSwKICB9LAogIHsKICAgIG5hbWU6IHQoImF1ZGlvUHJlZmVyZW5jZS50dHMua29rb3JvIiksCiAgICB2YWx1ZTogImtva29ybyIsCiAgICBsb2dvOiBLb2tvcm9JY29uLAogICAgb3B0aW9uczogKHNldHRpbmdzOiBhbnkpID0+IDxLb2tvcm9UVFNPcHRpb25zIHNldHRpbmdzPXtzZXR0aW5nc30gLz4sCiAgICBkZXNjcmlwdGlvbjogdCgiYXVkaW9QcmVmZXJlbmNlLnR0cy5rb2tvcm9EZXNjIiksCiAgfSwKICB7CiAgICBuYW1lOiB0KCJhdWRpb1ByZWZlcmVuY2UudHRzLm9wZW5haUNvbXBhdGlibGUiKSwKICAgIHZhbHVlOiAiZ2VuZXJpYy1vcGVuYWkiLAogICAgbG9nbzogR2VuZXJpY09wZW5BaUxvZ28sCiAgICBvcHRpb25zOiAoc2V0dGluZ3M6IGFueSkgPT4gPE9wZW5BaUdlbmVyaWNUVFNPcHRpb25zIHNldHRpbmdzPXtzZXR0aW5nc30gLz4sCiAgICBkZXNjcmlwdGlvbjogdCgiYXVkaW9QcmVmZXJlbmNlLnR0cy5vcGVuYWlDb21wYXRpYmxlRGVzYyIpLAogIH0sCiAgewogICAgbmFtZTogdCgiYXVkaW9QcmVmZXJlbmNlLnR0cy5udmlkaWFOaW0iKSwKICAgIHZhbHVlOiAibnZpZGlhLW5pbSIsCiAgICBsb2dvOiBOdmlkaWFOaW1Mb2dvLAogICAgb3B0aW9uczogKHNldHRpbmdzOiBhbnkpID0+IDxOdmlkaWFOaW1UVFNPcHRpb25zIHNldHRpbmdzPXtzZXR0aW5nc30gLz4sCiAgICBkZXNjcmlwdGlvbjogdCgiYXVkaW9QcmVmZXJlbmNlLnR0cy5udmlkaWFOaW1EZXNjIiksCiAgfSwKXTsKCmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIFRleHRUb1NwZWVjaFByb3ZpZGVyKHsgc2V0dGluZ3MgfTogeyBzZXR0aW5nczogYW55IH0pIHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgY29uc3QgW3NhdmluZywgc2V0U2F2aW5nXSA9IHVzZVN0YXRlKGZhbHNlKTsKICBjb25zdCBbaGFzQ2hhbmdlcywgc2V0SGFzQ2hhbmdlc10gPSB1c2VTdGF0ZShmYWxzZSk7CiAgY29uc3QgYmxvY2tlciA9IHVzZVVuc2F2ZWRDaGFuZ2VzKGhhc0NoYW5nZXMpOwogIGNvbnN0IFtzZWFyY2hRdWVyeSwgc2V0U2VhcmNoUXVlcnldID0gdXNlU3RhdGUoIiIpOwogIGNvbnN0IFtmaWx0ZXJlZFByb3ZpZGVycywgc2V0RmlsdGVyZWRQcm92aWRlcnNdID0gdXNlU3RhdGU8VFRTUHJvdmlkZXJbXT4oW10pOwogIGNvbnN0IFtzZWxlY3RlZFByb3ZpZGVyLCBzZXRTZWxlY3RlZFByb3ZpZGVyXSA9IHVzZVN0YXRlKAogICAgc2V0dGluZ3M/LlRleHRUb1NwZWVjaFByb3ZpZGVyIHx8ICJuYXRpdmUiLAogICk7CiAgY29uc3QgW3NlYXJjaE1lbnVPcGVuLCBzZXRTZWFyY2hNZW51T3Blbl0gPSB1c2VTdGF0ZShmYWxzZSk7CiAgY29uc3Qgc2VhcmNoSW5wdXRSZWYgPSB1c2VSZWY8SFRNTElucHV0RWxlbWVudD4obnVsbCk7CgogIGNvbnN0IGhhbmRsZVN1Ym1pdCA9IGFzeW5jIChlOiBGb3JtRXZlbnQ8SFRNTEZvcm1FbGVtZW50PikgPT4gewogICAgZT8ucHJldmVudERlZmF1bHQoKTsKICAgIHNldFNhdmluZyh0cnVlKTsKICAgIHRyeSB7CiAgICAgIGNvbnN0IGZvcm0gPSBlLnRhcmdldCBhcyBIVE1MRm9ybUVsZW1lbnQ7CiAgICAgIGNvbnN0IGRhdGE6IGFueSA9IHsgVGV4dFRvU3BlZWNoUHJvdmlkZXI6IHNlbGVjdGVkUHJvdmlkZXIgfTsKICAgICAgY29uc3QgZm9ybURhdGEgPSBuZXcgRm9ybURhdGEoZm9ybSk7CgogICAgICBmb3IgKGNvbnN0IFtrZXksIHZhbHVlXSBvZiBmb3JtRGF0YS5lbnRyaWVzKCkpIGRhdGFba2V5XSA9IHZhbHVlOwogICAgICBjb25zdCB7IGVycm9yIH0gPSBhd2FpdCBTeXN0ZW0udXBkYXRlU3lzdGVtKGRhdGEpOwoKICAgICAgaWYgKGVycm9yKSB7CiAgICAgICAgc2hvd1RvYXN0KHQoImF1ZGlvUHJlZmVyZW5jZS50dHMuc2F2ZUZhaWxlZCIsIHsgZXJyb3IgfSksICJlcnJvciIpOwogICAgICB9IGVsc2UgewogICAgICAgIHNob3dUb2FzdCh0KCJhdWRpb1ByZWZlcmVuY2UudHRzLnNhdmVTdWNjZXNzIiksICJzdWNjZXNzIik7CiAgICAgIH0KICAgICAgc2V0SGFzQ2hhbmdlcyghIWVycm9yKTsKICAgIH0gY2F0Y2ggKGVycikgewogICAgICBjb25zb2xlLmVycm9yKGVycik7CiAgICB9IGZpbmFsbHkgewogICAgICBzZXRTYXZpbmcoZmFsc2UpOwogICAgfQogIH07CgogIGNvbnN0IHVwZGF0ZVByb3ZpZGVyQ2hvaWNlID0gKHNlbGVjdGlvbjogc3RyaW5nKSA9PiB7CiAgICBzZXRTZWFyY2hRdWVyeSgiIik7CiAgICBzZXRTZWxlY3RlZFByb3ZpZGVyKHNlbGVjdGlvbik7CiAgICBzZXRTZWFyY2hNZW51T3BlbihmYWxzZSk7CiAgICBzZXRIYXNDaGFuZ2VzKHRydWUpOwogIH07CgogIGNvbnN0IGhhbmRsZVhCdXR0b24gPSAoKSA9PiB7CiAgICBpZiAoc2VhcmNoUXVlcnkubGVuZ3RoID4gMCkgewogICAgICBzZXRTZWFyY2hRdWVyeSgiIik7CiAgICAgIGlmIChzZWFyY2hJbnB1dFJlZi5jdXJyZW50KSBzZWFyY2hJbnB1dFJlZi5jdXJyZW50LnZhbHVlID0gIiI7CiAgICB9IGVsc2UgewogICAgICBzZXRTZWFyY2hNZW51T3Blbighc2VhcmNoTWVudU9wZW4pOwogICAgfQogIH07CgogIHVzZUVmZmVjdCgoKSA9PiB7CiAgICBjb25zdCBmaWx0ZXJlZCA9IFBST1ZJREVSUyh0KS5maWx0ZXIoKHByb3ZpZGVyKSA9PgogICAgICBwcm92aWRlci5uYW1lLnRvTG93ZXJDYXNlKCkuaW5jbHVkZXMoc2VhcmNoUXVlcnkudG9Mb3dlckNhc2UoKSksCiAgICApOwogICAgc2V0RmlsdGVyZWRQcm92aWRlcnMoZmlsdGVyZWQpOwogIH0sIFtzZWFyY2hRdWVyeSwgc2VsZWN0ZWRQcm92aWRlcl0pOwoKICB1c2VFZmZlY3QoKCkgPT4gewogICAgaWYgKCFzZWFyY2hNZW51T3BlbikgcmV0dXJuOwogICAgZnVuY3Rpb24gaGFuZGxlRXNjYXBlKGU6IEtleWJvYXJkRXZlbnQpIHsKICAgICAgaWYgKGUua2V5ID09PSAiRXNjYXBlIikgc2V0U2VhcmNoTWVudU9wZW4oZmFsc2UpOwogICAgfQogICAgZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcigia2V5ZG93biIsIGhhbmRsZUVzY2FwZSk7CiAgICByZXR1cm4gKCkgPT4gZG9jdW1lbnQucmVtb3ZlRXZlbnRMaXN0ZW5lcigia2V5ZG93biIsIGhhbmRsZUVzY2FwZSk7CiAgfSwgW3NlYXJjaE1lbnVPcGVuXSk7CgogIGNvbnN0IHNlbGVjdGVkUHJvdmlkZXJPYmplY3QgPSBQUk9WSURFUlModCkuZmluZCgKICAgIChwcm92aWRlcikgPT4gcHJvdmlkZXIudmFsdWUgPT09IHNlbGVjdGVkUHJvdmlkZXIsCiAgKTsKCiAgcmV0dXJuICgKICAgIDxmb3JtIG9uU3VibWl0PXtoYW5kbGVTdWJtaXR9IGNsYXNzTmFtZT0iZmxleCB3LWZ1bGwiPgogICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCB3LWZ1bGwgcHgtMSBtZDpwbC02IG1kOnByLVs1MHB4XSBtZDpweS02IHB5LTE2Ij4KICAgICAgICA8ZGl2IGNsYXNzTmFtZT0idy1mdWxsIGZsZXggZmxleC1jb2wgZ2FwLXktMSBwYi02IGJvcmRlci13aGl0ZSBsaWdodDpib3JkZXItdGhlbWUtc2lkZWJhci1ib3JkZXIgYm9yZGVyLWItMiBib3JkZXItb3BhY2l0eS0xMCI+CiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBnYXAteC00IGl0ZW1zLWNlbnRlciI+CiAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC1sZyBsZWFkaW5nLTYgZm9udC1ib2xkIHRleHQtd2hpdGUiPgogICAgICAgICAgICAgIHt0KCJhdWRpb1ByZWZlcmVuY2UudHRzLnRpdGxlIil9CiAgICAgICAgICAgIDwvcD4KICAgICAgICAgIDwvZGl2PgogICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXhzIGxlYWRpbmctWzE4cHhdIGZvbnQtYmFzZSB0ZXh0LXdoaXRlIHRleHQtb3BhY2l0eS02MCI+CiAgICAgICAgICAgIHt0KCJhdWRpb1ByZWZlcmVuY2UudHRzLmRlc2NyaXB0aW9uIil9CiAgICAgICAgICA8L3A+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPGRpdiBjbGFzc05hbWU9InctZnVsbCBqdXN0aWZ5LWVuZCBmbGV4Ij4KICAgICAgICAgIHtoYXNDaGFuZ2VzICYmICgKICAgICAgICAgICAgPENUQUJ1dHRvbiB0eXBlPSJzdWJtaXQiIGNsYXNzTmFtZT0ibXQtMyBtci0wIC1tYi0xNCB6LTEwIj4KICAgICAgICAgICAgICB7c2F2aW5nID8gdCgiY29tbW9uLnNhdmluZyIpIDogdCgiY29tbW9uLnNhdmVDaGFuZ2VzIil9CiAgICAgICAgICAgIDwvQ1RBQnV0dG9uPgogICAgICAgICAgKX0KICAgICAgICA8L2Rpdj4KICAgICAgICA8ZGl2IGNsYXNzTmFtZT0idGV4dC1iYXNlIGZvbnQtYm9sZCB0ZXh0LXdoaXRlIG10LTYgbWItNCI+CiAgICAgICAgICB7dCgiY29tbW9uLnByb3ZpZGVyIil9CiAgICAgICAgPC9kaXY+CiAgICAgICAgPGRpdiBjbGFzc05hbWU9InJlbGF0aXZlIj4KICAgICAgICAgIHtzZWFyY2hNZW51T3BlbiAmJiAoCiAgICAgICAgICAgIDxkaXYKICAgICAgICAgICAgICBjbGFzc05hbWU9ImZpeGVkIHRvcC0wIGxlZnQtMCB3LWZ1bGwgaC1mdWxsIGJnLWJsYWNrIGJnLW9wYWNpdHktNzAgYmFja2Ryb3AtYmx1ci1zbSB6LTEwIgogICAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IHNldFNlYXJjaE1lbnVPcGVuKGZhbHNlKX0KICAgICAgICAgICAgLz4KICAgICAgICAgICl9CiAgICAgICAgICB7c2VhcmNoTWVudU9wZW4gPyAoCiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJhYnNvbHV0ZSB0b3AtMCBsZWZ0LTAgdy1mdWxsIG1heC13LVs2NDBweF0gbWF4LWgtWzMxMHB4XSBtaW4taC1bNjRweF0gYmctdGhlbWUtc2V0dGluZ3MtaW5wdXQtYmcgcm91bmRlZC1sZyBmbGV4IGZsZXgtY29sIGp1c3RpZnktYmV0d2VlbiBjdXJzb3ItcG9pbnRlciBib3JkZXItMiBib3JkZXItcHJpbWFyeS1idXR0b24gei0yMCI+CiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9InctZnVsbCBmbGV4IGZsZXgtY29sIGdhcC15LTEiPgogICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIHN0aWNreSB0b3AtMCB6LTEwIGJvcmRlci1iIGJvcmRlci1bIzlDQTNBRl0gbXgtNCBiZy10aGVtZS1zZXR0aW5ncy1pbnB1dC1iZyI+CiAgICAgICAgICAgICAgICAgIDxNYWduaWZ5aW5nR2xhc3MKICAgICAgICAgICAgICAgICAgICBzaXplPXsyMH0KICAgICAgICAgICAgICAgICAgICB3ZWlnaHQ9ImJvbGQiCiAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJhYnNvbHV0ZSBsZWZ0LTQgei0zMCB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSAtbWwtNCBteS0yIgogICAgICAgICAgICAgICAgICAvPgogICAgICAgICAgICAgICAgICA8aW5wdXQKICAgICAgICAgICAgICAgICAgICB0eXBlPSJ0ZXh0IgogICAgICAgICAgICAgICAgICAgIG5hbWU9InR0cy1wcm92aWRlci1zZWFyY2giCiAgICAgICAgICAgICAgICAgICAgYXV0b0NvbXBsZXRlPSJvZmYiCiAgICAgICAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9e3QoImF1ZGlvUHJlZmVyZW5jZS50dHMuc2VhcmNoUGxhY2Vob2xkZXIiKX0KICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9ImJvcmRlci1ub25lIC1tbC00IG15LTIgYmctdHJhbnNwYXJlbnQgei0yMCBwbC0xMiBoLVszOHB4XSB3LWZ1bGwgcHgtNCBweS0xIHRleHQtc20gb3V0bGluZS1ub25lIHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IHBsYWNlaG9sZGVyOnRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IHBsYWNlaG9sZGVyOmZvbnQtbWVkaXVtIgogICAgICAgICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gc2V0U2VhcmNoUXVlcnkoZS50YXJnZXQudmFsdWUpfQogICAgICAgICAgICAgICAgICAgIHJlZj17c2VhcmNoSW5wdXRSZWZ9CiAgICAgICAgICAgICAgICAgICAgb25LZXlEb3duPXsoZSkgPT4gewogICAgICAgICAgICAgICAgICAgICAgaWYgKGUua2V5ID09PSAiRW50ZXIiKSBlLnByZXZlbnREZWZhdWx0KCk7CiAgICAgICAgICAgICAgICAgICAgfX0KICAgICAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgICAgICAgPFgKICAgICAgICAgICAgICAgICAgICBzaXplPXsyMH0KICAgICAgICAgICAgICAgICAgICB3ZWlnaHQ9ImJvbGQiCiAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJjdXJzb3ItcG9pbnRlciB0ZXh0LXdoaXRlIGhvdmVyOnRleHQteC1idXR0b24iCiAgICAgICAgICAgICAgICAgICAgb25DbGljaz17aGFuZGxlWEJ1dHRvbn0KICAgICAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXgtMSBwbC00IHByLTIgZmxleCBmbGV4LWNvbCBnYXAteS0xIG92ZXJmbG93LXktYXV0byB3aGl0ZS1zY3JvbGxiYXIgcGItNCBtYXgtaC1bMjQ1cHhdIj4KICAgICAgICAgICAgICAgICAge2ZpbHRlcmVkUHJvdmlkZXJzLm1hcCgocHJvdmlkZXIpID0+ICgKICAgICAgICAgICAgICAgICAgICA8TExNSXRlbQogICAgICAgICAgICAgICAgICAgICAga2V5PXtwcm92aWRlci5uYW1lfQogICAgICAgICAgICAgICAgICAgICAgbmFtZT17cHJvdmlkZXIubmFtZX0KICAgICAgICAgICAgICAgICAgICAgIHZhbHVlPXtwcm92aWRlci52YWx1ZX0KICAgICAgICAgICAgICAgICAgICAgIGltYWdlPXtwcm92aWRlci5sb2dvfQogICAgICAgICAgICAgICAgICAgICAgZGVzY3JpcHRpb249e3Byb3ZpZGVyLmRlc2NyaXB0aW9ufQogICAgICAgICAgICAgICAgICAgICAgY2hlY2tlZD17c2VsZWN0ZWRQcm92aWRlciA9PT0gcHJvdmlkZXIudmFsdWV9CiAgICAgICAgICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiB1cGRhdGVQcm92aWRlckNob2ljZShwcm92aWRlci52YWx1ZSl9CiAgICAgICAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgICAgICAgKSl9CiAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICApIDogKAogICAgICAgICAgICA8YnV0dG9uCiAgICAgICAgICAgICAgY2xhc3NOYW1lPSJ3LWZ1bGwgbWF4LXctWzY0MHB4XSBoLVs2NHB4XSBiZy10aGVtZS1zZXR0aW5ncy1pbnB1dC1iZyByb3VuZGVkLWxnIGZsZXggaXRlbXMtY2VudGVyIHAtWzE0cHhdIGp1c3RpZnktYmV0d2VlbiBjdXJzb3ItcG9pbnRlciBib3JkZXItMiBib3JkZXItdHJhbnNwYXJlbnQgaG92ZXI6Ym9yZGVyLXByaW1hcnktYnV0dG9uIHRyYW5zaXRpb24tYWxsIGR1cmF0aW9uLTMwMCIKICAgICAgICAgICAgICB0eXBlPSJidXR0b24iCiAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4gc2V0U2VhcmNoTWVudU9wZW4odHJ1ZSl9CiAgICAgICAgICAgID4KICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBnYXAteC00IGl0ZW1zLWNlbnRlciI+CiAgICAgICAgICAgICAgICA8aW1nCiAgICAgICAgICAgICAgICAgIHNyYz17c2VsZWN0ZWRQcm92aWRlck9iamVjdD8ubG9nb30KICAgICAgICAgICAgICAgICAgYWx0PXtgJHtzZWxlY3RlZFByb3ZpZGVyT2JqZWN0Py5uYW1lfSBsb2dvYH0KICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJ3LTEwIGgtMTAgcm91bmRlZC1tZCIKICAgICAgICAgICAgICAgIC8+CiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCB0ZXh0LWxlZnQiPgogICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0idGV4dC1zbSBmb250LXNlbWlib2xkIHRleHQtd2hpdGUiPgogICAgICAgICAgICAgICAgICAgIHtzZWxlY3RlZFByb3ZpZGVyT2JqZWN0Py5uYW1lfQogICAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9Im10LTEgdGV4dC14cyB0ZXh0LWRlc2NyaXB0aW9uIj4KICAgICAgICAgICAgICAgICAgICB7c2VsZWN0ZWRQcm92aWRlck9iamVjdD8uZGVzY3JpcHRpb259CiAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgPENhcmV0VXBEb3duIHNpemU9ezI0fSB3ZWlnaHQ9ImJvbGQiIGNsYXNzTmFtZT0idGV4dC13aGl0ZSIgLz4KICAgICAgICAgICAgPC9idXR0b24+CiAgICAgICAgICApfQogICAgICAgIDwvZGl2PgogICAgICAgIDxkaXYKICAgICAgICAgIG9uQ2hhbmdlPXsoKSA9PiBzZXRIYXNDaGFuZ2VzKHRydWUpfQogICAgICAgICAgY2xhc3NOYW1lPSJtdC00IGZsZXggZmxleC1jb2wgZ2FwLXktMSIKICAgICAgICA+CiAgICAgICAgICB7c2VsZWN0ZWRQcm92aWRlciAmJgogICAgICAgICAgICBQUk9WSURFUlModCkKICAgICAgICAgICAgICAuZmluZCgocHJvdmlkZXIpID0+IHByb3ZpZGVyLnZhbHVlID09PSBzZWxlY3RlZFByb3ZpZGVyKQogICAgICAgICAgICAgID8ub3B0aW9ucyhzZXR0aW5ncyl9CiAgICAgICAgPC9kaXY+CiAgICAgIDwvZGl2PgogICAgICA8VW5zYXZlZENoYW5nZXNEaWFsb2cgYmxvY2tlcj17YmxvY2tlcn0gLz4KICAgIDwvZm9ybT4KICApOwp9Cg==
+// SPDX-License-Identifier: MIT
+import React, { useEffect, useState, useRef, FormEvent } from "react";
+import System from "@/models/system";
+import showToast from "@/utils/toast";
+import LLMItem from "@/components/LLMSelection/LLMItem";
+import { CaretUpDown } from "@phosphor-icons/react/dist/csr/CaretUpDown";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import CTAButton from "@/components/lib/CTAButton";
+import OpenAiLogo from "@/media/llmprovider/openai.png";
+import OpenSINChatIcon from "@/media/logo/opensin-icon.svg";
+import ElevenLabsIcon from "@/media/ttsproviders/elevenlabs.png";
+import PiperTTSIcon from "@/media/ttsproviders/piper.png";
+import GenericOpenAiLogo from "@/media/ttsproviders/generic-openai.png";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import UnsavedChangesDialog from "@/components/UnsavedChangesDialog";
+import KokoroIcon from "@/media/ttsproviders/kokoro.png";
+import NvidiaNimLogo from "@/media/llmprovider/nvidia-nim.png";
+import { useTranslation } from "react-i18next";
+
+import BrowserNative from "@/components/TextToSpeech/BrowserNative";
+import OpenAiTTSOptions from "@/components/TextToSpeech/OpenAiOptions";
+import ElevenLabsTTSOptions from "@/components/TextToSpeech/ElevenLabsOptions";
+import PiperTTSOptions from "@/components/TextToSpeech/PiperTTSOptions";
+import OpenAiGenericTTSOptions from "@/components/TextToSpeech/OpenAiGenericOptions";
+import KokoroTTSOptions from "@/components/TextToSpeech/KokoroOptions";
+import NvidiaNimTTSOptions from "@/components/TextToSpeech/NvidiaNimOptions";
+
+interface TTSProvider {
+  name: string;
+  value: string;
+  logo: string;
+  options: (settings: any) => React.ReactNode;
+  description: string;
+}
+
+const PROVIDERS = (t: any): TTSProvider[] => [
+  {
+    name: t("audioPreference.tts.systemNative"),
+    value: "native",
+    logo: OpenSINChatIcon,
+    options: (settings: any) => <BrowserNative {...({ settings } as any)} />,
+    description: t("audioPreference.tts.systemNativeDesc"),
+  },
+  {
+    name: t("audioPreference.tts.openai"),
+    value: "openai",
+    logo: OpenAiLogo,
+    options: (settings: any) => <OpenAiTTSOptions settings={settings} />,
+    description: t("audioPreference.tts.openaiDesc"),
+  },
+  {
+    name: t("audioPreference.tts.elevenlabs"),
+    value: "elevenlabs",
+    logo: ElevenLabsIcon,
+    options: (settings: any) => <ElevenLabsTTSOptions settings={settings} />,
+    description: t("audioPreference.tts.elevenlabsDesc"),
+  },
+  {
+    name: t("audioPreference.tts.piper"),
+    value: "piper_local",
+    logo: PiperTTSIcon,
+    options: (settings: any) => <PiperTTSOptions settings={settings} />,
+    description: t("audioPreference.tts.piperDesc"),
+  },
+  {
+    name: t("audioPreference.tts.kokoro"),
+    value: "kokoro",
+    logo: KokoroIcon,
+    options: (settings: any) => <KokoroTTSOptions settings={settings} />,
+    description: t("audioPreference.tts.kokoroDesc"),
+  },
+  {
+    name: t("audioPreference.tts.openaiCompatible"),
+    value: "generic-openai",
+    logo: GenericOpenAiLogo,
+    options: (settings: any) => <OpenAiGenericTTSOptions settings={settings} />,
+    description: t("audioPreference.tts.openaiCompatibleDesc"),
+  },
+  {
+    name: t("audioPreference.tts.nvidiaNim"),
+    value: "nvidia-nim",
+    logo: NvidiaNimLogo,
+    options: (settings: any) => <NvidiaNimTTSOptions settings={settings} />,
+    description: t("audioPreference.tts.nvidiaNimDesc"),
+  },
+];
+
+export default function TextToSpeechProvider({ settings }: { settings: any }) {
+  const { t } = useTranslation();
+  const [saving, setSaving] = useState(false);
+  const [hasChanges, setHasChanges] = useState(false);
+  const blocker = useUnsavedChanges(hasChanges);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredProviders, setFilteredProviders] = useState<TTSProvider[]>([]);
+  const [selectedProvider, setSelectedProvider] = useState(
+    settings?.TextToSpeechProvider || "native",
+  );
+  const [searchMenuOpen, setSearchMenuOpen] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e?.preventDefault();
+    setSaving(true);
+    try {
+      const form = e.target as HTMLFormElement;
+      const data: any = { TextToSpeechProvider: selectedProvider };
+      const formData = new FormData(form);
+
+      for (const [key, value] of formData.entries()) data[key] = value;
+      const { error } = await System.updateSystem(data);
+
+      if (error) {
+        showToast(t("audioPreference.tts.saveFailed", { error }), "error");
+      } else {
+        showToast(t("audioPreference.tts.saveSuccess"), "success");
+      }
+      setHasChanges(!!error);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const updateProviderChoice = (selection: string) => {
+    setSearchQuery("");
+    setSelectedProvider(selection);
+    setSearchMenuOpen(false);
+    setHasChanges(true);
+  };
+
+  const handleXButton = () => {
+    if (searchQuery.length > 0) {
+      setSearchQuery("");
+      if (searchInputRef.current) searchInputRef.current.value = "";
+    } else {
+      setSearchMenuOpen(!searchMenuOpen);
+    }
+  };
+
+  useEffect(() => {
+    const filtered = PROVIDERS(t).filter((provider) =>
+      provider.name.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
+    setFilteredProviders(filtered);
+  }, [searchQuery, selectedProvider]);
+
+  useEffect(() => {
+    if (!searchMenuOpen) return;
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === "Escape") setSearchMenuOpen(false);
+    }
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [searchMenuOpen]);
+
+  const selectedProviderObject = PROVIDERS(t).find(
+    (provider) => provider.value === selectedProvider,
+  );
+
+  return (
+    <form onSubmit={handleSubmit} className="flex w-full">
+      <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
+        <div className="w-full flex flex-col gap-y-1 pb-6 border-white light:border-theme-sidebar-border border-b-2 border-opacity-10">
+          <div className="flex gap-x-4 items-center">
+            <p className="text-lg leading-6 font-bold text-white">
+              {t("audioPreference.tts.title")}
+            </p>
+          </div>
+          <p className="text-xs leading-[18px] font-base text-white text-opacity-60">
+            {t("audioPreference.tts.description")}
+          </p>
+        </div>
+        <div className="w-full justify-end flex">
+          {hasChanges && (
+            <CTAButton type="submit" className="mt-3 mr-0 -mb-14 z-10">
+              {saving ? t("common.saving") : t("common.saveChanges")}
+            </CTAButton>
+          )}
+        </div>
+        <div className="text-base font-bold text-white mt-6 mb-4">
+          {t("common.provider")}
+        </div>
+        <div className="relative">
+          {searchMenuOpen && (
+            <div
+              className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-70 backdrop-blur-sm z-10"
+              onClick={() => setSearchMenuOpen(false)}
+            />
+          )}
+          {searchMenuOpen ? (
+            <div className="absolute top-0 left-0 w-full max-w-[640px] max-h-[310px] min-h-[64px] bg-theme-settings-input-bg rounded-lg flex flex-col justify-between cursor-pointer border-2 border-primary-button z-20">
+              <div className="w-full flex flex-col gap-y-1">
+                <div className="flex items-center sticky top-0 z-10 border-b border-[#9CA3AF] mx-4 bg-theme-settings-input-bg">
+                  <MagnifyingGlass
+                    size={20}
+                    weight="bold"
+                    className="absolute left-4 z-30 text-theme-text-primary -ml-4 my-2"
+                  />
+                  <input
+                    type="text"
+                    name="tts-provider-search"
+                    autoComplete="off"
+                    placeholder={t("audioPreference.tts.searchPlaceholder")}
+                    className="border-none -ml-4 my-2 bg-transparent z-20 pl-12 h-[38px] w-full px-4 py-1 text-sm outline-none text-theme-text-primary placeholder:text-theme-text-primary placeholder:font-medium"
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    ref={searchInputRef}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") e.preventDefault();
+                    }}
+                  />
+                  <X
+                    size={20}
+                    weight="bold"
+                    className="cursor-pointer text-white hover:text-x-button"
+                    onClick={handleXButton}
+                  />
+                </div>
+                <div className="flex-1 pl-4 pr-2 flex flex-col gap-y-1 overflow-y-auto white-scrollbar pb-4 max-h-[245px]">
+                  {filteredProviders.map((provider) => (
+                    <LLMItem
+                      key={provider.name}
+                      name={provider.name}
+                      value={provider.value}
+                      image={provider.logo}
+                      description={provider.description}
+                      checked={selectedProvider === provider.value}
+                      onClick={() => updateProviderChoice(provider.value)}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <button
+              className="w-full max-w-[640px] h-[64px] bg-theme-settings-input-bg rounded-lg flex items-center p-[14px] justify-between cursor-pointer border-2 border-transparent hover:border-primary-button transition-all duration-300"
+              type="button"
+              onClick={() => setSearchMenuOpen(true)}
+            >
+              <div className="flex gap-x-4 items-center">
+                <img
+                  src={selectedProviderObject?.logo}
+                  alt={`${selectedProviderObject?.name} logo`}
+                  className="w-10 h-10 rounded-md"
+                />
+                <div className="flex flex-col text-left">
+                  <div className="text-sm font-semibold text-white">
+                    {selectedProviderObject?.name}
+                  </div>
+                  <div className="mt-1 text-xs text-description">
+                    {selectedProviderObject?.description}
+                  </div>
+                </div>
+              </div>
+              <CaretUpDown size={24} weight="bold" className="text-white" />
+            </button>
+          )}
+        </div>
+        <div
+          onChange={() => setHasChanges(true)}
+          className="mt-4 flex flex-col gap-y-1"
+        >
+          {selectedProvider &&
+            PROVIDERS(t)
+              .find((provider) => provider.value === selectedProvider)
+              ?.options(settings)}
+        </div>
+      </div>
+      <UnsavedChangesDialog blocker={blocker} />
+    </form>
+  );
+}

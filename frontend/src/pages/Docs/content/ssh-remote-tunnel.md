@@ -1,1 +1,218 @@
-IyBTU0ggUmVtb3RlIFR1bm5lbCDigJQgTWFjIHZpYSBDbG91ZGZsYXJlCgpFcm3DtmdsaWNodCBleHRlcm5lbiBBZ2VudGVuICh6LkIuIHYwIFdlYiBVSSkgU2hlbGwtWnVncmlmZiBhdWYgZGVuIGxva2FsZW4gTWFjIMO8YmVyIGVpbmVuIENsb3VkZmxhcmUgVHVubmVsIOKAlCAqKm9obmUgc3VkbyoqLCBvaG5lIG9mZmVuZSBQb3J0cywgb2huZSBkeW5hbWlzY2hlIEROUy4KCj4gKipVc2UgY2FzZToqKiBBZ2VudCBpbiB2MCBXZWItVUkgYnJhdWNodCBTaGVsbC1adWdyaWZmIGF1ZiBkZW4gbG9rYWxlbiBNYWMsIHVtIHouQi4gRG9ja2VyLUNvbnRhaW5lciwgT3JiU3RhY2ssIG9kZXIgbG9rYWxlIFNjcmlwdHMgenUgc3RldWVybi4KCi0tLQoKIyMgQXJjaGl0ZWt0dXIKCmBgYArilIzilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilJAgICAgICAgICDilIzilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilJAgICAgICAgICDilIzilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilJAK4pSCICB2MCBXZWIgVUkgQWdlbnQgICDilIIg4pSA4pSAU1NI4pSA4pSA4pa24pSCICBDbG91ZGZsYXJlIEVkZ2UgICAgIOKUgiDilIDilIB0dW5uZWzilIDilrbilIIgIE1hYyAobG9rYWwpICAgIOKUggrilIIgIChzZWluZW4gS2V5IG1pdCkgIOKUgiAgICAgICAgIOKUgiAgc3NoLW1hYy5kZWxxaGkuY29tIOKUgiAgICAgICAgICAg4pSCICA6MjIyMiDihpIgc3NoZCAgIOKUggrilJTilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilJggICAgICAgICDilJTilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilJggICAgICAgICDilJTilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilJgKYGBgCgotICoqw5ZmZmVudGxpY2g6KiogYHNzaC1tYWMuZGVscWhpLmNvbWAgKEROUyB2aWEgQ2xvdWRmbGFyZSkKLSAqKlR1bm5lbDoqKiBDbG91ZGZsYXJlIFR1bm5lbCBgbWFjLXNzaGAgKElEOiBgZTJjMmI5Y2QtZWI5MC00MWEwLWI0Y2EtNjdmNTJlMzA5Njc1YCkKLSAqKkxva2FsOioqIHNzaGQgaMO2cnQgYXVmIGBsb2NhbGhvc3Q6MjIyMmAgKG5pY2h0LXByaXZpbGVnaWVydGVyIFBvcnQsIGtlaW4gc3VkbyBuw7Z0aWcpCi0gKipBdXRoOioqIFB1YmxpYy1LZXktT25seSAoc2llaGUgdW50ZW4pCgotLS0KCiMjIEFrdHVlbGxlIEtvbXBvbmVudGVuCgp8IEtvbXBvbmVudGUgfCBQZmFkIHwgU3RhdHVzIHwKfC0tLS0tLS0tLS0tLXwtLS0tLS18LS0tLS0tLS18CnwgVHVubmVsLUNyZWRlbnRpYWxzIHwgYH4vLmNsb3VkZmxhcmVkL2UyYzJiOWNkLWViOTAtNDFhMC1iNGNhLTY3ZjUyZTMwOTY3NS5qc29uYCB8IOKchSB8CnwgVHVubmVsLUNvbmZpZyB8IGB+Ly5jbG91ZGZsYXJlZC9jb25maWctbWFjLXNzaC55bWxgIHwg4pyFIHwKfCBETlMtUm91dGUgKENOQU1FKSB8IGBzc2gtbWFjLmRlbHFoaS5jb20g4oaSIGUyYzJiOWNkLWViOTAtNDFhMC1iNGNhLTY3ZjUyZTMwOTY3NS5jZmFyZ290dW5uZWwuY29tYCB8IOKchSBhdXRvbWF0aXNjaCBlcnN0ZWxsdCB8Cnwgc3NoZC1CaW5hcnkgfCBgL3Vzci9zYmluL3NzaGRgIChtYWNPUyBidWlsdC1pbikgfCDinIUgfAp8IEhvc3QtS2V5IChSU0EpIHwgYH4vLnNzaC9ob3N0X3JzYV9rZXlgIHwg4pyFIHwKfCBIb3N0LUtleSAoRUQyNTUxOSkgfCBgfi8uc3NoL2hvc3RfZWQyNTUxOV9rZXlgIHwg4pyFIHwKfCBUdW5uZWwtUHJvemVzcyB8IGBjbG91ZGZsYXJlZCB0dW5uZWwgLS1jb25maWcgfi8uY2xvdWRmbGFyZWQvY29uZmlnLW1hYy1zc2gueW1sIHJ1biBtYWMtc3NoYCB8IG11c3MgZ2VzdGFydGV0IHdlcmRlbiAoc2llaGUgdW50ZW4pIHwKfCBzc2hkLVByb3plc3MgfCBgL3Vzci9zYmluL3NzaGQgLXAgMjIyMiAtaCB+Ly5zc2gvaG9zdF9yc2Ffa2V5IC1oIH4vLnNzaC9ob3N0X2VkMjU1MTlfa2V5YCB8IG11c3MgZ2VzdGFydGV0IHdlcmRlbiAoc2llaGUgdW50ZW4pIHwKCi0tLQoKIyMgU2V0dXAgZWlubWFsaWcKCiMjIyAxLiBUdW5uZWwgKyBETlMgZXhpc3RpZXJlbiBiZXJlaXRzCgpgYGAKY2xvdWRmbGFyZWQgdHVubmVsIGluZm8gbWFjLXNzaAojIOKGkiBJRDogZTJjMmI5Y2QtZWI5MC00MWEwLWI0Y2EtNjdmNTJlMzA5Njc1CmBgYAoKIyMjIDIuIHYwLUFnZW50LVB1YmxpYy1LZXkgaGluenVmw7xnZW4KClNvYmFsZCBkZXIgdjAtQWdlbnQgc2VpbmVuIFNTSC1QdWJsaWMtS2V5IGxpZWZlcnQgKEZvcm1hdCBgc3NoLWVkMjU1MTkgQUFBQS4uLmAgb2RlciBgc3NoLXJzYSBBQUFBLi4uYCk6CgpgYGBiYXNoCmVjaG8gInNzaC1lZDI1NTE5IEFBQUEuLi52MGFnZW50IiA+PiB+Ly5zc2gvYXV0aG9yaXplZF9rZXlzCmNobW9kIDYwMCB+Ly5zc2gvYXV0aG9yaXplZF9rZXlzCmBgYAoKIyMjIDMuIFR1bm5lbCArIHNzaGQgc3RhcnRlbiAoYWxzIGxhdW5jaGQtU2VydmljZSwgw7xiZXJsZWJ0IFJlYm9vdCkKCmBgYGJhc2gKIyBDbG91ZGZsYXJlIFR1bm5lbApjYXQgPiB+L0xpYnJhcnkvTGF1bmNoQWdlbnRzL2NvbS5jbG91ZGZsYXJlLmNsb3VkZmxhcmVkLm1hYy1zc2gucGxpc3QgPDwnRU9GJwo8P3htbCB2ZXJzaW9uPSIxLjAiIGVuY29kaW5nPSJVVEYtOCI/Pgo8IURPQ1RZUEUgcGxpc3QgUFVCTElDICItLy9BcHBsZS8vRFREIFBMSVNUIDEuMC8vRU4iICJodHRwOi8vd3d3LmFwcGxlLmNvbS9EVERzL1Byb3BlcnR5TGlzdC0xLjAuZHRkIj4KPHBsaXN0IHZlcnNpb249IjEuMCI+CjxkaWN0PgogIDxrZXk+TGFiZWw8L2tleT48c3RyaW5nPmNvbS5jbG91ZGZsYXJlLmNsb3VkZmxhcmVkLm1hYy1zc2g8L3N0cmluZz4KICA8a2V5PlByb2dyYW1Bcmd1bWVudHM8L2tleT4KICA8YXJyYXk+CiAgICA8c3RyaW5nPi91c3IvbG9jYWwvYmluL2Nsb3VkZmxhcmVkPC9zdHJpbmc+CiAgICA8c3RyaW5nPnR1bm5lbDwvc3RyaW5nPgogICAgPHN0cmluZz4tLWNvbmZpZzwvc3RyaW5nPgogICAgPHN0cmluZz4vVXNlcnMvc2ltb25lc2NodWx6ZS8uY2xvdWRmbGFyZWQvY29uZmlnLW1hYy1zc2gueW1sPC9zdHJpbmc+CiAgICA8c3RyaW5nPnJ1bjwvc3RyaW5nPgogICAgPHN0cmluZz5tYWMtc3NoPC9zdHJpbmc+CiAgPC9hcnJheT4KICA8a2V5PlJ1bkF0TG9hZDwva2V5Pjx0cnVlLz4KICA8a2V5PktlZXBBbGl2ZTwva2V5Pjx0cnVlLz4KICA8a2V5PlN0YW5kYXJkT3V0UGF0aDwva2V5PjxzdHJpbmc+L3RtcC9jbG91ZGZsYXJlZC1tYWMtc3NoLmxvZzwvc3RyaW5nPgogIDxrZXk+U3RhbmRhcmRFcnJvclBhdGg8L2tleT48c3RyaW5nPi90bXAvY2xvdWRmbGFyZWQtbWFjLXNzaC5sb2c8L3N0cmluZz4KPC9kaWN0Pgo8L3BsaXN0PgpFT0YKCiMgc3NoZCBhdWYgMjIyMgpta2RpciAtcCB+L0xpYnJhcnkvTGF1bmNoQWdlbnRzL3NzaGQtdXNlcgpjYXQgPiB+L0xpYnJhcnkvTGF1bmNoQWdlbnRzL3NzaGQtdXNlci5wbGlzdCA8PCdFT0YnCjw/eG1sIHZlcnNpb249IjEuMCIgZW5jb2Rpbmc9IlVURi04Ij8+CjwhRE9DVFlQRSBwbGlzdCBQVUJMSUMgIi0vL0FwcGxlLy9EVEQgUExJU1QgMS4wLy9FTiIgImh0dHA6Ly93d3cuYXBwbGUuY29tL0RURHMvUHJvcGVydHlMaXN0LTEuMC5kdGQiPgo8cGxpc3QgdmVyc2lvbj0iMS4wIj4KPGRpY3Q+CiAgPGtleT5MYWJlbDwva2V5PjxzdHJpbmc+bG9jYWwuc3NoZDwvc3RyaW5nPgogIDxrZXk+UHJvZ3JhbUFyZ3VtZW50czwva2V5PgogIDxhcnJheT4KICAgIDxzdHJpbmc+L3Vzci9zYmluL3NzaGQ8L3N0cmluZz4KICAgIDxzdHJpbmc+LUQ8L3N0cmluZz4KICAgIDxzdHJpbmc+LXA8L3N0cmluZz48c3RyaW5nPjIyMjI8L3N0cmluZz4KICAgIDxzdHJpbmc+LWg8L3N0cmluZz48c3RyaW5nPi9Vc2Vycy9zaW1vbmVzY2h1bHplLy5zc2gvaG9zdF9yc2Ffa2V5PC9zdHJpbmc+CiAgICA8c3RyaW5nPi1oPC9zdHJpbmc+PHN0cmluZz4vVXNlcnMvc2ltb25lc2NodWx6ZS8uc3NoL2hvc3RfZWQyNTUxOV9rZXk8L3N0cmluZz4KICAgIDxzdHJpbmc+LW88L3N0cmluZz48c3RyaW5nPkxpc3RlbkFkZHJlc3M9MTI3LjAuMC4xPC9zdHJpbmc+CiAgPC9hcnJheT4KICA8a2V5PlJ1bkF0TG9hZDwva2V5Pjx0cnVlLz4KICA8a2V5PktlZXBBbGl2ZTwva2V5Pjx0cnVlLz4KICA8a2V5PlN0YW5kYXJkT3V0UGF0aDwva2V5PjxzdHJpbmc+L3RtcC9zc2hkLXVzZXIubG9nPC9zdHJpbmc+CiAgPGtleT5TdGFuZGFyZEVycm9yUGF0aDwva2V5PjxzdHJpbmc+L3RtcC9zc2hkLXVzZXIubG9nPC9zdHJpbmc+CjwvZGljdD4KPC9wbGlzdD4KRU9GCgojIEJlaWRlIGxhZGVuCmxhdW5jaGN0bCBsb2FkIH4vTGlicmFyeS9MYXVuY2hBZ2VudHMvY29tLmNsb3VkZmxhcmUuY2xvdWRmbGFyZWQubWFjLXNzaC5wbGlzdApsYXVuY2hjdGwgbG9hZCB+L0xpYnJhcnkvTGF1bmNoQWdlbnRzL3NzaGQtdXNlci5wbGlzdApgYGAKCj4gKipIaW53ZWlzOioqIFVzZXItbGV2ZWwgYGxhdW5jaGRgIGzDpHVmdCBiZWltIExvZ2luIGF1dG9tYXRpc2NoLCBhdWNoIMO8YmVyIFJlYm9vdHMuIEZ1bmt0aW9uaWVydCBudXIsIHdlbm4gYHNpbW9uZXNjaHVsemVgIGVpbmdlbG9nZ3QgaXN0LiBGw7xyIDI0LzctQmV0cmllYjogU3lzdGVtLUxldmVsIGBsYXVuY2hkYCBicmF1Y2h0IHN1ZG8sIG9kZXIgZWluIGFsd2F5cy1vbiBNYWMuCgotLS0KCiMjIFZlcmJpbmR1bmcgdGVzdGVuICh2b24gZWluZW0gYW5kZXJlbiBNYWMgb2RlciB2aWEgY3VybCkKCiMjIyBUZXN0IG1pdCBgY2xvdWRmbGFyZWRgIChrZWluIGVpZ2VuZXIgU1NILUtleSBuw7Z0aWcpCgpgYGBiYXNoCmNsb3VkZmxhcmVkIGFjY2VzcyBzc2ggLS1ob3N0bmFtZSBzc2gtbWFjLmRlbHFoaS5jb20gLS1saXN0ZW5lciBsb2NhbGhvc3Q6MjIyMgojIOKGkiDDlmZmbmV0IFNTSC1TZXNzaW9uIHZpYSBDbG91ZGZsYXJlIEFjY2VzcyAoQnJvd3Nlci1Mb2dpbikKYGBgCgojIyMgVGVzdCBtaXQgZWNodGVtIFNTSCAoUHVibGljLUtleSB2b3JhdXNnZXNldHp0KQoKYGBgYmFzaApzc2ggLWkgfi8uc3NoL3YwYWdlbnRfa2V5IC1vIFN0cmljdEhvc3RLZXlDaGVja2luZz1ubyBcCiAgICAtbyBVc2VyS25vd25Ib3N0c0ZpbGU9fi8uc3NoL2tub3duX2hvc3RzX21hYyBcCiAgICBzaW1vbmVzY2h1bHplQHNzaC1tYWMuZGVscWhpLmNvbSAtcCAyMgojIENsb3VkZmxhcmUgbGVpdGV0IGF1ZiBNYWM6MjIyMiB3ZWl0ZXIKYGBgCgpFcndhcnRldGUgQXVzZ2FiZToKYGBgCldlbGNvbWUgdG8gRGFyd2luCnNpbW9uZXNjaHVsemVATWFjQm9vay1Qcm8tdm9uLUplcmVteSB+ICUKYGBgCgotLS0KCiMjIEJlZmVobGUgZGllIGRlciB2MC1BZ2VudCBkYW1pdCBhdXNmw7xocmVuIGthbm4KCnwgQXVmZ2FiZSB8IEJlZmVobCB8CnwtLS0tLS0tLS18LS0tLS0tLS18CnwgRG9ja2VyIENvbnRhaW5lciBzZWhlbiB8IGBkb2NrZXIgcHNgIHwKfCBDb250YWluZXIgKG9wZW5zaW4tY2hhdDpkZW1vLXY1KSB8IGBkb2NrZXIgbG9ncyBvcGVuYWZkIC0tdGFpbCA1MGAgfAp8IENvbnRhaW5lciBuZXUgc3RhcnRlbiB8IGBkb2NrZXIgcmVzdGFydCBvcGVuYWZkYCB8CnwgQ2xvdWRmbGFyZSBDYWNoZSBsZWVyZW4gfCBzaWVoZSBgY2xvdWRmbGFyZS13cmFuZ2xlci1za2lsbGAgfAp8IEZyb250ZW5kIG5ldSBiYXVlbiB8IGBjZCAvVXNlcnMvamVyZW15L2Rldi9PcGVuU0lOLUNoYXQvZnJvbnRlbmQgJiYgcG5wbSBidWlsZGAgfAp8IEdpdCBTdGF0dXMgfCBgY2QgL1VzZXJzL2plcmVteS9kZXYvT3BlblNJTi1DaGF0ICYmIGdpdCBzdGF0dXNgIHwKfCBEQiBTdGF0dXMgKHNxbGl0ZSkgfCBgZG9ja2VyIGNwIG9wZW5hZmQ6L2FwcC9zZXJ2ZXIvc3RvcmFnZS9vcGVuc2luLmRiIC90bXAvY2hlY2suZGIgJiYgc3FsaXRlMyAvdG1wL2NoZWNrLmRiICJTRUxFQ1QgQ09VTlQoKikgRlJPTSB3b3Jrc3BhY2VzOyJgIHwKCi0tLQoKIyMgVHJvdWJsZXNob290aW5nCgojIyMgVHVubmVsIGNvbm5lY3RldCBuaWNodAoKYGBgYmFzaAojIENoZWNrIG9iIGNsb3VkZmxhcmVkIGzDpHVmdApwcyBhdXggfCBncmVwICJjb25maWctbWFjLXNzaCIgfCBncmVwIC12IGdyZXAKCiMgQ2hlY2sgRE5TCmRpZyBzc2gtbWFjLmRlbHFoaS5jb20gK3Nob3J0CiMg4oaSIHNvbGx0ZSBDTkFNRSBhdWYgKi5jZmFyZ290dW5uZWwuY29tIHplaWdlbgpgYGAKCiMjIyBzc2hkIG5pY2h0IGVycmVpY2hiYXIKCmBgYGJhc2gKbHNvZiAtblAgLWlUQ1A6MjIyMiAtc1RDUDpMSVNURU4KIyDihpIgV2VubiBsZWVyOiBzc2hkIHN0YXJ0ZW4KL3Vzci9zYmluL3NzaGQgLXAgMjIyMiAtaCB+Ly5zc2gvaG9zdF9yc2Ffa2V5IC1oIH4vLnNzaC9ob3N0X2VkMjU1MTlfa2V5IC1EICYKYGBgCgojIyMgUHVibGljLUtleSBuaWNodCBha3plcHRpZXJ0CgpgYGBiYXNoCiMgTWFjOiBjaGVjayBhdXRob3JpemVkX2tleXMKY2F0IH4vLnNzaC9hdXRob3JpemVkX2tleXMKIyBzb2xsdGUgZGVuIHYwLWFnZW50IFB1YmxpYy1LZXkgZW50aGFsdGVuCgojIHNzaGQtTG9nIGNoZWNrZW4KdGFpbCAtZiAvdG1wL3NzaGQtdXNlci5sb2cKYGBgCgojIyMgUmF0ZS1MaW1pdCAvIHp1IHZpZWxlIEF1dGgtVmVyc3VjaGUKCmBgYGJhc2gKIyBJbiB+Ly5zc2gvc3NoZF9jb25maWcgKG9kZXIgbGF1bmNoZC1hcmdzKSBzZXR6ZW46Ck1heEF1dGhUcmllcyAzCk1heFN0YXJ0dXBzIDM6NTA6MTAKTG9naW5HcmFjZVRpbWUgMzAKYGBgCgotLS0KCiMjIFNpY2hlcmhlaXRzLU5vdGVzCgotIOKchSBQdWJsaWMtS2V5LUF1dGggb25seSAoa2VpbiBQYXNzd29yZC1Mb2dpbikKLSDinIUgTnVyIG5vbi1wcml2aWxlZ2VkIFBvcnQgKGtlaW4gc3Vkbywga2VpbiByb290LXNzaGQpCi0g4pyFIFR1bm5lbCB6dSBDbG91ZGZsYXJlIGzDpHVmdCAqKm91dGJvdW5kKiogKGtlaW4gb2ZmZW5lciBQb3J0IGF1ZiBNYWMtRmlyZXdhbGwpCi0g4pyFIEhvc3QtS2V5cyBzaW5kIHVzZXItZ2VuZXJhdGVkIChuaWNodCBkaWUgbWFjT1MtZGVmYXVsdCwgZGllIG1hbiBuaWNodCBvaG5lIHN1ZG8gbnV0emVuIGthbm4pCi0g4pqgICoqV2VubiBqZW1hbmQgYGF1dGhvcml6ZWRfa2V5c2Aga29udHJvbGxpZXJ0IOKGkiBTaGVsbCBhdWYgTWFjIGFscyBgc2ltb25lc2NodWx6ZWAqKgotIOKaoCBgc2ltb25lc2NodWx6ZWAgaXN0IGVpbiBTdGFuZGFyZC1NYWMtVXNlciBtaXQgVXNlci1Td2l0Y2gtUmVjaHRlbiAoa2FubiB2aWEgYHN1IGFkbWluYCB6dSByb290IHdlY2hzZWxuIHdlbm4gUGFzc3dvcmQgYmVrYW5udCkKLSDwn5SSIEVtcGZlaGx1bmc6IHNlcGFyYXRlciBVc2VyIGB2MGFnZW50YCBvaG5lIHN1ZG8sIHN0YXR0IGBzaW1vbmVzY2h1bHplYCAoVE9ETykKCi0tLQoKIyMgVmVyd2FuZHRlIFNraWxscwoKLSAqKmBjbG91ZGZsYXJlLXdyYW5nbGVyLXNraWxsYCoqIOKAlCBmw7xyIENsb3VkZmxhcmUgQVBJICsgV29ya2VyIGRlcGxveXMgKyBETlMKLSAqKmB1c2Utb3Jic3RhY2tgKiog4oCUIGbDvHIgQ29udGFpbmVyLU9wZXJhdGlvbmVuIChuaWNodCBgZG9ja2VyYCBkaXJla3QgYXVmIG1hY09TKQotICoqYHNpbi1jb2RvY3NgKiog4oCUIENvZGUtRG9jdW1lbnRhdGlvbi1TdGFuZGFyZCBmw7xyIG5ldWUgRmlsZXMgd2llIGRpZXNlcyBoaWVyCg==
+# SSH Remote Tunnel — Mac via Cloudflare
+
+Ermöglicht externen Agenten (z.B. v0 Web UI) Shell-Zugriff auf den lokalen Mac über einen Cloudflare Tunnel — **ohne sudo**, ohne offene Ports, ohne dynamische DNS.
+
+> **Use case:** Agent in v0 Web-UI braucht Shell-Zugriff auf den lokalen Mac, um z.B. Docker-Container, OrbStack, oder lokale Scripts zu steuern.
+
+---
+
+## Architektur
+
+```
+┌────────────────────┐         ┌──────────────────────┐         ┌─────────────────┐
+│  v0 Web UI Agent   │ ──SSH──▶│  Cloudflare Edge     │ ──tunnel─▶│  Mac (lokal)    │
+│  (seinen Key mit)  │         │  ssh-mac.delqhi.com │           │  :2222 → sshd   │
+└────────────────────┘         └──────────────────────┘         └─────────────────┘
+```
+
+- **Öffentlich:** `ssh-mac.delqhi.com` (DNS via Cloudflare)
+- **Tunnel:** Cloudflare Tunnel `mac-ssh` (ID: `e2c2b9cd-eb90-41a0-b4ca-67f52e309675`)
+- **Lokal:** sshd hört auf `localhost:2222` (nicht-privilegierter Port, kein sudo nötig)
+- **Auth:** Public-Key-Only (siehe unten)
+
+---
+
+## Aktuelle Komponenten
+
+| Komponente | Pfad | Status |
+|------------|------|--------|
+| Tunnel-Credentials | `~/.cloudflared/e2c2b9cd-eb90-41a0-b4ca-67f52e309675.json` | ✅ |
+| Tunnel-Config | `~/.cloudflared/config-mac-ssh.yml` | ✅ |
+| DNS-Route (CNAME) | `ssh-mac.delqhi.com → e2c2b9cd-eb90-41a0-b4ca-67f52e309675.cfargotunnel.com` | ✅ automatisch erstellt |
+| sshd-Binary | `/usr/sbin/sshd` (macOS built-in) | ✅ |
+| Host-Key (RSA) | `~/.ssh/host_rsa_key` | ✅ |
+| Host-Key (ED25519) | `~/.ssh/host_ed25519_key` | ✅ |
+| Tunnel-Prozess | `cloudflared tunnel --config ~/.cloudflared/config-mac-ssh.yml run mac-ssh` | muss gestartet werden (siehe unten) |
+| sshd-Prozess | `/usr/sbin/sshd -p 2222 -h ~/.ssh/host_rsa_key -h ~/.ssh/host_ed25519_key` | muss gestartet werden (siehe unten) |
+
+---
+
+## Setup einmalig
+
+### 1. Tunnel + DNS existieren bereits
+
+```
+cloudflared tunnel info mac-ssh
+# → ID: e2c2b9cd-eb90-41a0-b4ca-67f52e309675
+```
+
+### 2. v0-Agent-Public-Key hinzufügen
+
+Sobald der v0-Agent seinen SSH-Public-Key liefert (Format `ssh-ed25519 AAAA...` oder `ssh-rsa AAAA...`):
+
+```bash
+echo "ssh-ed25519 AAAA...v0agent" >> ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
+```
+
+### 3. Tunnel + sshd starten (als launchd-Service, überlebt Reboot)
+
+```bash
+# Cloudflare Tunnel
+cat > ~/Library/LaunchAgents/com.cloudflare.cloudflared.mac-ssh.plist <<'EOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.cloudflare.cloudflared.mac-ssh</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/local/bin/cloudflared</string>
+    <string>tunnel</string>
+    <string>--config</string>
+    <string>/Users/simoneschulze/.cloudflared/config-mac-ssh.yml</string>
+    <string>run</string>
+    <string>mac-ssh</string>
+  </array>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <key>StandardOutPath</key><string>/tmp/cloudflared-mac-ssh.log</string>
+  <key>StandardErrorPath</key><string>/tmp/cloudflared-mac-ssh.log</string>
+</dict>
+</plist>
+EOF
+
+# sshd auf 2222
+mkdir -p ~/Library/LaunchAgents/sshd-user
+cat > ~/Library/LaunchAgents/sshd-user.plist <<'EOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>local.sshd</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/sbin/sshd</string>
+    <string>-D</string>
+    <string>-p</string><string>2222</string>
+    <string>-h</string><string>/Users/simoneschulze/.ssh/host_rsa_key</string>
+    <string>-h</string><string>/Users/simoneschulze/.ssh/host_ed25519_key</string>
+    <string>-o</string><string>ListenAddress=127.0.0.1</string>
+  </array>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <key>StandardOutPath</key><string>/tmp/sshd-user.log</string>
+  <key>StandardErrorPath</key><string>/tmp/sshd-user.log</string>
+</dict>
+</plist>
+EOF
+
+# Beide laden
+launchctl load ~/Library/LaunchAgents/com.cloudflare.cloudflared.mac-ssh.plist
+launchctl load ~/Library/LaunchAgents/sshd-user.plist
+```
+
+> **Hinweis:** User-level `launchd` läuft beim Login automatisch, auch über Reboots. Funktioniert nur, wenn `simoneschulze` eingeloggt ist. Für 24/7-Betrieb: System-Level `launchd` braucht sudo, oder ein always-on Mac.
+
+---
+
+## Verbindung testen (von einem anderen Mac oder via curl)
+
+### Test mit `cloudflared` (kein eigener SSH-Key nötig)
+
+```bash
+cloudflared access ssh --hostname ssh-mac.delqhi.com --listener localhost:2222
+# → Öffnet SSH-Session via Cloudflare Access (Browser-Login)
+```
+
+### Test mit echtem SSH (Public-Key vorausgesetzt)
+
+```bash
+ssh -i ~/.ssh/v0agent_key -o StrictHostKeyChecking=no \
+    -o UserKnownHostsFile=~/.ssh/known_hosts_mac \
+    simoneschulze@ssh-mac.delqhi.com -p 22
+# Cloudflare leitet auf Mac:2222 weiter
+```
+
+Erwartete Ausgabe:
+```
+Welcome to Darwin
+simoneschulze@MacBook-Pro-von-Jeremy ~ %
+```
+
+---
+
+## Befehle die der v0-Agent damit ausführen kann
+
+| Aufgabe | Befehl |
+|---------|--------|
+| Docker Container sehen | `docker ps` |
+| Container (opensin-chat:demo-v5) | `docker logs openafd --tail 50` |
+| Container neu starten | `docker restart openafd` |
+| Cloudflare Cache leeren | siehe `cloudflare-wrangler-skill` |
+| Frontend neu bauen | `cd /Users/jeremy/dev/OpenSIN-Chat/frontend && pnpm build` |
+| Git Status | `cd /Users/jeremy/dev/OpenSIN-Chat && git status` |
+| DB Status (sqlite) | `docker cp openafd:/app/server/storage/opensin.db /tmp/check.db && sqlite3 /tmp/check.db "SELECT COUNT(*) FROM workspaces;"` |
+
+---
+
+## Troubleshooting
+
+### Tunnel connectet nicht
+
+```bash
+# Check ob cloudflared läuft
+ps aux | grep "config-mac-ssh" | grep -v grep
+
+# Check DNS
+dig ssh-mac.delqhi.com +short
+# → sollte CNAME auf *.cfargotunnel.com zeigen
+```
+
+### sshd nicht erreichbar
+
+```bash
+lsof -nP -iTCP:2222 -sTCP:LISTEN
+# → Wenn leer: sshd starten
+/usr/sbin/sshd -p 2222 -h ~/.ssh/host_rsa_key -h ~/.ssh/host_ed25519_key -D &
+```
+
+### Public-Key nicht akzeptiert
+
+```bash
+# Mac: check authorized_keys
+cat ~/.ssh/authorized_keys
+# sollte den v0-agent Public-Key enthalten
+
+# sshd-Log checken
+tail -f /tmp/sshd-user.log
+```
+
+### Rate-Limit / zu viele Auth-Versuche
+
+```bash
+# In ~/.ssh/sshd_config (oder launchd-args) setzen:
+MaxAuthTries 3
+MaxStartups 3:50:10
+LoginGraceTime 30
+```
+
+---
+
+## Sicherheits-Notes
+
+- ✅ Public-Key-Auth only (kein Password-Login)
+- ✅ Nur non-privileged Port (kein sudo, kein root-sshd)
+- ✅ Tunnel zu Cloudflare läuft **outbound** (kein offener Port auf Mac-Firewall)
+- ✅ Host-Keys sind user-generated (nicht die macOS-default, die man nicht ohne sudo nutzen kann)
+- ⚠ **Wenn jemand `authorized_keys` kontrolliert → Shell auf Mac als `simoneschulze`**
+- ⚠ `simoneschulze` ist ein Standard-Mac-User mit User-Switch-Rechten (kann via `su admin` zu root wechseln wenn Password bekannt)
+- 🔒 Empfehlung: separater User `v0agent` ohne sudo, statt `simoneschulze` (TODO)
+
+---
+
+## Verwandte Skills
+
+- **`cloudflare-wrangler-skill`** — für Cloudflare API + Worker deploys + DNS
+- **`use-orbstack`** — für Container-Operationen (nicht `docker` direkt auf macOS)
+- **`sin-codocs`** — Code-Documentation-Standard für neue Files wie dieses hier
