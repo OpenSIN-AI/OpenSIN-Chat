@@ -1,1 +1,668 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBQdXJwb3NlOiBTT1RBIEVDaGFydHMgcmVuZGVyZXIg4oCUIG1hcHMgbGVnYWN5IHJlY2hhcnQuanMge3R5cGUsIGRhdGFzZXQsIHRpdGxlfQovLyBmb3JtYXQgdG8gQXBhY2hlIEVDaGFydHMgb3B0aW9ucyB3aXRoIGdyYWRpZW50cywgZ2xvdywgc3RhZ2dlcmVkIGFuaW1hdGlvbnMuCi8vIERvY3M6IE1pcnJvcnMgc2luLWNvZGUgaW1hZ2UtZ3JhcGggdmlzdWFsIHF1YWxpdHkuIERhcmsvbGlnaHQgdGhlbWUgYWRhcHRpdmUuCgppbXBvcnQgeyBtZW1vLCB1c2VNZW1vLCB1c2VSZWYsIHVzZUNhbGxiYWNrLCB1c2VTdGF0ZSB9IGZyb20gInJlYWN0IjsKaW1wb3J0IFJlYWN0RUNoYXJ0cyBmcm9tICJlY2hhcnRzLWZvci1yZWFjdCI7CmltcG9ydCB7IHJlc29sdmVEYXJrTW9kZSB9IGZyb20gIkAvaG9va3MvdXNlVGhlbWUiOwppbXBvcnQgeyB2NCB9IGZyb20gInV1aWQiOwovLyBAdHMtZXhwZWN0LWVycm9yIC0gZmlsZS1zYXZlciBoYXMgbm8gYnVuZGxlZCB0eXBlcwppbXBvcnQgeyBzYXZlQXMgfSBmcm9tICJmaWxlLXNhdmVyIjsKaW1wb3J0IHsgRG93bmxvYWRTaW1wbGUgfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvRG93bmxvYWRTaW1wbGUiOwppbXBvcnQgeyBDaXJjbGVOb3RjaCB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9DaXJjbGVOb3RjaCI7CmltcG9ydCB7IHVzZVRyYW5zbGF0aW9uIH0gZnJvbSAicmVhY3QtaTE4bmV4dCI7CmltcG9ydCB7CiAgU09UQV9DT0xPUlMsCiAgRk9OVF9GQU1JTFksCiAgZ2V0VGhlbWVDb2xvcnMsCiAgYmFyR3JhZGllbnQsCiAgYXJlYUdyYWRpZW50LAogIEdMT1dfU0hBRE9XLAogIEJBUl9CT1JERVJfUkFESVVTLAogIEFOSU1BVElPTl9FTEFTVElDLAogIEFOSU1BVElPTl9DVUJJQywKICBUT09MVElQX1NUWUxFLAogIFRPT0xCT1hfRkVBVFVSRSwKICBUT09MQk9YX1NUWUxFLAogIExFR0VORF9TVFlMRSwKICBUSVRMRV9TVFlMRSwKICBEQVJLX0JHLAogIExJR0hUX0JHLAp9IGZyb20gIi4vZWNoYXJ0c1RoZW1lIjsKCmludGVyZmFjZSBDaGFydERhdGEgewogIHR5cGU6IHN0cmluZzsKICBkYXRhc2V0OiBhbnlbXTsKICB0aXRsZTogc3RyaW5nOwogIGNhcHRpb24/OiBzdHJpbmc7CiAgZWNoYXJ0c09wdGlvbnM/OiBSZWNvcmQ8c3RyaW5nLCBhbnk+Owp9CgpmdW5jdGlvbiBidWlsZEJhck9wdGlvbigKICBkYXRhOiBhbnlbXSwKICB0aXRsZTogc3RyaW5nLAogIGlzRGFyazogYm9vbGVhbiwKICBzZXJpZXNOYW1lcz86IHN0cmluZ1tdLAopIHsKICBjb25zdCB0YyA9IGdldFRoZW1lQ29sb3JzKGlzRGFyayk7CiAgY29uc3QgaGFzTXVsdGlwbGVTZXJpZXMgPSBzZXJpZXNOYW1lcyAmJiBzZXJpZXNOYW1lcy5sZW5ndGggPiAwOwogIGNvbnN0IGNhdGVnb3JpZXMgPSBkYXRhLm1hcCgoZCkgPT4gZC5uYW1lKTsKCiAgaWYgKGhhc011bHRpcGxlU2VyaWVzKSB7CiAgICByZXR1cm4gewogICAgICB0aXRsZTogVElUTEVfU1RZTEUoaXNEYXJrLCB0aXRsZSksCiAgICAgIGxlZ2VuZDogTEVHRU5EX1NUWUxFKGlzRGFyayksCiAgICAgIHRvb2x0aXA6IHsKICAgICAgICB0cmlnZ2VyOiAiYXhpcyIsCiAgICAgICAgYXhpc1BvaW50ZXI6IHsgdHlwZTogInNoYWRvdyIgfSwKICAgICAgICAuLi5UT09MVElQX1NUWUxFKGlzRGFyayksCiAgICAgIH0sCiAgICAgIHRvb2xib3g6IHsgZmVhdHVyZTogVE9PTEJPWF9GRUFUVVJFLCAuLi5UT09MQk9YX1NUWUxFKGlzRGFyaykgfSwKICAgICAgZ3JpZDogewogICAgICAgIGxlZnQ6ICIzJSIsCiAgICAgICAgcmlnaHQ6ICI0JSIsCiAgICAgICAgYm90dG9tOiAiMyUiLAogICAgICAgIHRvcDogOTAsCiAgICAgICAgY29udGFpbkxhYmVsOiB0cnVlLAogICAgICB9LAogICAgICB4QXhpczogewogICAgICAgIHR5cGU6ICJjYXRlZ29yeSIsCiAgICAgICAgZGF0YTogY2F0ZWdvcmllcywKICAgICAgICBheGlzTGluZTogeyBsaW5lU3R5bGU6IHsgY29sb3I6IHRjLmF4aXNMaW5lIH0gfSwKICAgICAgICBheGlzTGFiZWw6IHsKICAgICAgICAgIGNvbG9yOiB0Yy5heGlzTGFiZWwsCiAgICAgICAgICBmb250RmFtaWx5OiBGT05UX0ZBTUlMWSwKICAgICAgICAgIGZvbnRTaXplOiAxMSwKICAgICAgICAgIHJvdGF0ZTogY2F0ZWdvcmllcy5sZW5ndGggPiA4ID8gMjUgOiAwLAogICAgICAgIH0sCiAgICAgIH0sCiAgICAgIHlBeGlzOiB7CiAgICAgICAgdHlwZTogInZhbHVlIiwKICAgICAgICBheGlzTGluZTogeyBsaW5lU3R5bGU6IHsgY29sb3I6IHRjLmF4aXNMaW5lIH0gfSwKICAgICAgICBheGlzTGFiZWw6IHsKICAgICAgICAgIGNvbG9yOiB0Yy5heGlzTGFiZWwsCiAgICAgICAgICBmb250RmFtaWx5OiBGT05UX0ZBTUlMWSwKICAgICAgICAgIGZvbnRTaXplOiAxMSwKICAgICAgICB9LAogICAgICAgIHNwbGl0TGluZTogewogICAgICAgICAgbGluZVN0eWxlOiB7IGNvbG9yOiB0Yy5zcGxpdExpbmUsIHR5cGU6ICJkYXNoZWQiIGFzIGNvbnN0IH0sCiAgICAgICAgfSwKICAgICAgfSwKICAgICAgc2VyaWVzOiBzZXJpZXNOYW1lcyEubWFwKChuYW1lLCBzaSkgPT4gKHsKICAgICAgICBuYW1lLAogICAgICAgIHR5cGU6ICJiYXIiLAogICAgICAgIGRhdGE6IGRhdGEubWFwKChkKSA9PiBkW25hbWVdID8/IGQudmFsdWUgPz8gMCksCiAgICAgICAgaXRlbVN0eWxlOiB7CiAgICAgICAgICBjb2xvcjogYmFyR3JhZGllbnQoU09UQV9DT0xPUlNbc2kgJSBTT1RBX0NPTE9SUy5sZW5ndGhdLCBpc0RhcmspLAogICAgICAgICAgYm9yZGVyUmFkaXVzOiBCQVJfQk9SREVSX1JBRElVUywKICAgICAgICAgIC4uLkdMT1dfU0hBRE9XLAogICAgICAgIH0sCiAgICAgICAgZW1waGFzaXM6IHsgZm9jdXM6ICJzZXJpZXMiIGFzIGNvbnN0IH0sCiAgICAgICAgLi4uQU5JTUFUSU9OX0VMQVNUSUMsCiAgICAgIH0pKSwKICAgIH07CiAgfQoKICBjb25zdCB2YWx1ZUtleSA9IGRhdGFbMF0KICAgID8gT2JqZWN0LmtleXMoZGF0YVswXSkuZmluZCgoaykgPT4gayAhPT0gIm5hbWUiKSB8fCAidmFsdWUiCiAgICA6ICJ2YWx1ZSI7CiAgcmV0dXJuIHsKICAgIHRpdGxlOiBUSVRMRV9TVFlMRShpc0RhcmssIHRpdGxlKSwKICAgIHRvb2x0aXA6IHsKICAgICAgdHJpZ2dlcjogImF4aXMiLAogICAgICBheGlzUG9pbnRlcjogeyB0eXBlOiAic2hhZG93IiB9LAogICAgICAuLi5UT09MVElQX1NUWUxFKGlzRGFyayksCiAgICB9LAogICAgdG9vbGJveDogeyBmZWF0dXJlOiBUT09MQk9YX0ZFQVRVUkUsIC4uLlRPT0xCT1hfU1RZTEUoaXNEYXJrKSB9LAogICAgZ3JpZDogewogICAgICBsZWZ0OiAiMyUiLAogICAgICByaWdodDogIjQlIiwKICAgICAgYm90dG9tOiAiMyUiLAogICAgICB0b3A6IDgwLAogICAgICBjb250YWluTGFiZWw6IHRydWUsCiAgICB9LAogICAgeEF4aXM6IHsKICAgICAgdHlwZTogImNhdGVnb3J5IiwKICAgICAgZGF0YTogY2F0ZWdvcmllcywKICAgICAgYXhpc0xpbmU6IHsgbGluZVN0eWxlOiB7IGNvbG9yOiB0Yy5heGlzTGluZSB9IH0sCiAgICAgIGF4aXNMYWJlbDogewogICAgICAgIGNvbG9yOiB0Yy5heGlzTGFiZWwsCiAgICAgICAgZm9udEZhbWlseTogRk9OVF9GQU1JTFksCiAgICAgICAgZm9udFNpemU6IDExLAogICAgICAgIHJvdGF0ZTogY2F0ZWdvcmllcy5sZW5ndGggPiA4ID8gMjUgOiAwLAogICAgICB9LAogICAgfSwKICAgIHlBeGlzOiB7CiAgICAgIHR5cGU6ICJ2YWx1ZSIsCiAgICAgIGF4aXNMaW5lOiB7IGxpbmVTdHlsZTogeyBjb2xvcjogdGMuYXhpc0xpbmUgfSB9LAogICAgICBheGlzTGFiZWw6IHsgY29sb3I6IHRjLmF4aXNMYWJlbCwgZm9udEZhbWlseTogRk9OVF9GQU1JTFksIGZvbnRTaXplOiAxMSB9LAogICAgICBzcGxpdExpbmU6IHsKICAgICAgICBsaW5lU3R5bGU6IHsgY29sb3I6IHRjLnNwbGl0TGluZSwgdHlwZTogImRhc2hlZCIgYXMgY29uc3QgfSwKICAgICAgfSwKICAgIH0sCiAgICBzZXJpZXM6IFsKICAgICAgewogICAgICAgIHR5cGU6ICJiYXIiLAogICAgICAgIGRhdGE6IGRhdGEubWFwKChkKSA9PiBkW3ZhbHVlS2V5XSksCiAgICAgICAgaXRlbVN0eWxlOiB7CiAgICAgICAgICBjb2xvcjogYmFyR3JhZGllbnQoU09UQV9DT0xPUlNbMF0sIGlzRGFyayksCiAgICAgICAgICBib3JkZXJSYWRpdXM6IEJBUl9CT1JERVJfUkFESVVTLAogICAgICAgICAgLi4uR0xPV19TSEFET1csCiAgICAgICAgfSwKICAgICAgICBlbXBoYXNpczogeyBmb2N1czogInNlcmllcyIgYXMgY29uc3QgfSwKICAgICAgICAuLi5BTklNQVRJT05fRUxBU1RJQywKICAgICAgfSwKICAgIF0sCiAgfTsKfQoKZnVuY3Rpb24gYnVpbGRMaW5lT3B0aW9uKAogIGRhdGE6IGFueVtdLAogIHRpdGxlOiBzdHJpbmcsCiAgaXNEYXJrOiBib29sZWFuLAogIHNlcmllc05hbWVzPzogc3RyaW5nW10sCikgewogIGNvbnN0IHRjID0gZ2V0VGhlbWVDb2xvcnMoaXNEYXJrKTsKICBjb25zdCBjYXRlZ29yaWVzID0gZGF0YS5tYXAoKGQpID0+IGQubmFtZSk7CgogIGlmIChzZXJpZXNOYW1lcyAmJiBzZXJpZXNOYW1lcy5sZW5ndGggPiAwKSB7CiAgICByZXR1cm4gewogICAgICB0aXRsZTogVElUTEVfU1RZTEUoaXNEYXJrLCB0aXRsZSksCiAgICAgIGxlZ2VuZDogTEVHRU5EX1NUWUxFKGlzRGFyayksCiAgICAgIHRvb2x0aXA6IHsKICAgICAgICB0cmlnZ2VyOiAiYXhpcyIsCiAgICAgICAgYXhpc1BvaW50ZXI6IHsgdHlwZTogImNyb3NzIiB9LAogICAgICAgIC4uLlRPT0xUSVBfU1RZTEUoaXNEYXJrKSwKICAgICAgfSwKICAgICAgdG9vbGJveDogeyBmZWF0dXJlOiBUT09MQk9YX0ZFQVRVUkUsIC4uLlRPT0xCT1hfU1RZTEUoaXNEYXJrKSB9LAogICAgICBncmlkOiB7CiAgICAgICAgbGVmdDogIjMlIiwKICAgICAgICByaWdodDogIjQlIiwKICAgICAgICBib3R0b206ICIzJSIsCiAgICAgICAgdG9wOiA5MCwKICAgICAgICBjb250YWluTGFiZWw6IHRydWUsCiAgICAgIH0sCiAgICAgIHhBeGlzOiB7CiAgICAgICAgdHlwZTogImNhdGVnb3J5IiwKICAgICAgICBib3VuZGFyeUdhcDogZmFsc2UsCiAgICAgICAgZGF0YTogY2F0ZWdvcmllcywKICAgICAgICBheGlzTGluZTogeyBsaW5lU3R5bGU6IHsgY29sb3I6IHRjLmF4aXNMaW5lIH0gfSwKICAgICAgICBheGlzTGFiZWw6IHsKICAgICAgICAgIGNvbG9yOiB0Yy5heGlzTGFiZWwsCiAgICAgICAgICBmb250RmFtaWx5OiBGT05UX0ZBTUlMWSwKICAgICAgICAgIGZvbnRTaXplOiAxMSwKICAgICAgICB9LAogICAgICB9LAogICAgICB5QXhpczogewogICAgICAgIHR5cGU6ICJ2YWx1ZSIsCiAgICAgICAgYXhpc0xpbmU6IHsgbGluZVN0eWxlOiB7IGNvbG9yOiB0Yy5heGlzTGluZSB9IH0sCiAgICAgICAgYXhpc0xhYmVsOiB7CiAgICAgICAgICBjb2xvcjogdGMuYXhpc0xhYmVsLAogICAgICAgICAgZm9udEZhbWlseTogRk9OVF9GQU1JTFksCiAgICAgICAgICBmb250U2l6ZTogMTEsCiAgICAgICAgfSwKICAgICAgICBzcGxpdExpbmU6IHsKICAgICAgICAgIGxpbmVTdHlsZTogeyBjb2xvcjogdGMuc3BsaXRMaW5lLCB0eXBlOiAiZGFzaGVkIiBhcyBjb25zdCB9LAogICAgICAgIH0sCiAgICAgIH0sCiAgICAgIHNlcmllczogc2VyaWVzTmFtZXMubWFwKChuYW1lLCBzaSkgPT4gewogICAgICAgIGNvbnN0IGNvbG9yID0gU09UQV9DT0xPUlNbc2kgJSBTT1RBX0NPTE9SUy5sZW5ndGhdOwogICAgICAgIHJldHVybiB7CiAgICAgICAgICBuYW1lLAogICAgICAgICAgdHlwZTogImxpbmUiLAogICAgICAgICAgc21vb3RoOiB0cnVlLAogICAgICAgICAgZGF0YTogZGF0YS5tYXAoKGQpID0+IGRbbmFtZV0gPz8gZC52YWx1ZSA/PyAwKSwKICAgICAgICAgIGxpbmVTdHlsZTogewogICAgICAgICAgICB3aWR0aDogMywKICAgICAgICAgICAgY29sb3IsCiAgICAgICAgICAgIHNoYWRvd0JsdXI6IDEyLAogICAgICAgICAgICBzaGFkb3dDb2xvcjogY29sb3IgKyAiNDAiLAogICAgICAgICAgfSwKICAgICAgICAgIHN5bWJvbDogImNpcmNsZSIsCiAgICAgICAgICBzeW1ib2xTaXplOiA3LAogICAgICAgICAgaXRlbVN0eWxlOiB7IGNvbG9yIH0sCiAgICAgICAgICBlbXBoYXNpczogeyBmb2N1czogInNlcmllcyIgYXMgY29uc3QgfSwKICAgICAgICAgIC4uLkFOSU1BVElPTl9DVUJJQywKICAgICAgICB9OwogICAgICB9KSwKICAgIH07CiAgfQoKICBjb25zdCB2YWx1ZUtleSA9IGRhdGFbMF0KICAgID8gT2JqZWN0LmtleXMoZGF0YVswXSkuZmluZCgoaykgPT4gayAhPT0gIm5hbWUiKSB8fCAidmFsdWUiCiAgICA6ICJ2YWx1ZSI7CiAgY29uc3QgY29sb3IgPSBTT1RBX0NPTE9SU1swXTsKICByZXR1cm4gewogICAgdGl0bGU6IFRJVExFX1NUWUxFKGlzRGFyaywgdGl0bGUpLAogICAgdG9vbHRpcDogewogICAgICB0cmlnZ2VyOiAiYXhpcyIsCiAgICAgIGF4aXNQb2ludGVyOiB7IHR5cGU6ICJjcm9zcyIgfSwKICAgICAgLi4uVE9PTFRJUF9TVFlMRShpc0RhcmspLAogICAgfSwKICAgIHRvb2xib3g6IHsgZmVhdHVyZTogVE9PTEJPWF9GRUFUVVJFLCAuLi5UT09MQk9YX1NUWUxFKGlzRGFyaykgfSwKICAgIGdyaWQ6IHsKICAgICAgbGVmdDogIjMlIiwKICAgICAgcmlnaHQ6ICI0JSIsCiAgICAgIGJvdHRvbTogIjMlIiwKICAgICAgdG9wOiA4MCwKICAgICAgY29udGFpbkxhYmVsOiB0cnVlLAogICAgfSwKICAgIHhBeGlzOiB7CiAgICAgIHR5cGU6ICJjYXRlZ29yeSIsCiAgICAgIGJvdW5kYXJ5R2FwOiBmYWxzZSwKICAgICAgZGF0YTogY2F0ZWdvcmllcywKICAgICAgYXhpc0xpbmU6IHsgbGluZVN0eWxlOiB7IGNvbG9yOiB0Yy5heGlzTGluZSB9IH0sCiAgICAgIGF4aXNMYWJlbDogeyBjb2xvcjogdGMuYXhpc0xhYmVsLCBmb250RmFtaWx5OiBGT05UX0ZBTUlMWSwgZm9udFNpemU6IDExIH0sCiAgICB9LAogICAgeUF4aXM6IHsKICAgICAgdHlwZTogInZhbHVlIiwKICAgICAgYXhpc0xpbmU6IHsgbGluZVN0eWxlOiB7IGNvbG9yOiB0Yy5heGlzTGluZSB9IH0sCiAgICAgIGF4aXNMYWJlbDogeyBjb2xvcjogdGMuYXhpc0xhYmVsLCBmb250RmFtaWx5OiBGT05UX0ZBTUlMWSwgZm9udFNpemU6IDExIH0sCiAgICAgIHNwbGl0TGluZTogewogICAgICAgIGxpbmVTdHlsZTogeyBjb2xvcjogdGMuc3BsaXRMaW5lLCB0eXBlOiAiZGFzaGVkIiBhcyBjb25zdCB9LAogICAgICB9LAogICAgfSwKICAgIHNlcmllczogWwogICAgICB7CiAgICAgICAgdHlwZTogImxpbmUiLAogICAgICAgIHNtb290aDogdHJ1ZSwKICAgICAgICBkYXRhOiBkYXRhLm1hcCgoZCkgPT4gZFt2YWx1ZUtleV0pLAogICAgICAgIGxpbmVTdHlsZTogewogICAgICAgICAgd2lkdGg6IDMsCiAgICAgICAgICBjb2xvciwKICAgICAgICAgIHNoYWRvd0JsdXI6IDEyLAogICAgICAgICAgc2hhZG93Q29sb3I6IGNvbG9yICsgIjQwIiwKICAgICAgICB9LAogICAgICAgIHN5bWJvbDogImNpcmNsZSIsCiAgICAgICAgc3ltYm9sU2l6ZTogNywKICAgICAgICBpdGVtU3R5bGU6IHsgY29sb3IgfSwKICAgICAgICAuLi5BTklNQVRJT05fQ1VCSUMsCiAgICAgIH0sCiAgICBdLAogIH07Cn0KCmZ1bmN0aW9uIGJ1aWxkQXJlYU9wdGlvbigKICBkYXRhOiBhbnlbXSwKICB0aXRsZTogc3RyaW5nLAogIGlzRGFyazogYm9vbGVhbiwKICBzZXJpZXNOYW1lcz86IHN0cmluZ1tdLAopIHsKICBjb25zdCBsaW5lT3B0OiBhbnkgPSBidWlsZExpbmVPcHRpb24oZGF0YSwgdGl0bGUsIGlzRGFyaywgc2VyaWVzTmFtZXMpOwogIGlmIChzZXJpZXNOYW1lcyAmJiBzZXJpZXNOYW1lcy5sZW5ndGggPiAwKSB7CiAgICBsaW5lT3B0LnNlcmllcyA9IGxpbmVPcHQuc2VyaWVzLm1hcCgoczogYW55LCBzaTogbnVtYmVyKSA9PiAoewogICAgICAuLi5zLAogICAgICBhcmVhU3R5bGU6IHsgY29sb3I6IGFyZWFHcmFkaWVudChTT1RBX0NPTE9SU1tzaSAlIFNPVEFfQ09MT1JTLmxlbmd0aF0pIH0sCiAgICB9KSk7CiAgfSBlbHNlIHsKICAgIGxpbmVPcHQuc2VyaWVzWzBdLmFyZWFTdHlsZSA9IHsgY29sb3I6IGFyZWFHcmFkaWVudChTT1RBX0NPTE9SU1swXSkgfTsKICB9CiAgcmV0dXJuIGxpbmVPcHQ7Cn0KCmZ1bmN0aW9uIGJ1aWxkUGllT3B0aW9uKGRhdGE6IGFueVtdLCB0aXRsZTogc3RyaW5nLCBpc0Rhcms6IGJvb2xlYW4pIHsKICBjb25zdCB0YyA9IGdldFRoZW1lQ29sb3JzKGlzRGFyayk7CiAgcmV0dXJuIHsKICAgIHRpdGxlOiBUSVRMRV9TVFlMRShpc0RhcmssIHRpdGxlKSwKICAgIHRvb2x0aXA6IHsgdHJpZ2dlcjogIml0ZW0iLCAuLi5UT09MVElQX1NUWUxFKGlzRGFyaykgfSwKICAgIHRvb2xib3g6IHsgZmVhdHVyZTogVE9PTEJPWF9GRUFUVVJFLCAuLi5UT09MQk9YX1NUWUxFKGlzRGFyaykgfSwKICAgIGxlZ2VuZDogeyAuLi5MRUdFTkRfU1RZTEUoaXNEYXJrKSwgb3JpZW50OiAiaG9yaXpvbnRhbCIsIGJvdHRvbTogMTAgfSwKICAgIHNlcmllczogWwogICAgICB7CiAgICAgICAgdHlwZTogInBpZSIsCiAgICAgICAgcmFkaXVzOiBbIjM1JSIsICI3MCUiXSwKICAgICAgICBjZW50ZXI6IFsiNTAlIiwgIjUyJSJdLAogICAgICAgIHJvc2VUeXBlOiAicmFkaXVzIiwKICAgICAgICBpdGVtU3R5bGU6IHsKICAgICAgICAgIGJvcmRlclJhZGl1czogNiwKICAgICAgICAgIGJvcmRlckNvbG9yOiBpc0RhcmsgPyBEQVJLX0JHX0JPUkRFUiA6IExJR0hUX0JHX0JPUkRFUiwKICAgICAgICAgIGJvcmRlcldpZHRoOiAzLAogICAgICAgICAgc2hhZG93Qmx1cjogMjAsCiAgICAgICAgICBzaGFkb3dDb2xvcjogInJnYmEoOTksMTAyLDI0MSwwLjI1KSIsCiAgICAgICAgfSwKICAgICAgICBsYWJlbDogewogICAgICAgICAgY29sb3I6IHRjLnRleHRDb2xvciwKICAgICAgICAgIGZvbnRGYW1pbHk6IEZPTlRfRkFNSUxZLAogICAgICAgICAgZm9udFNpemU6IDEyLAogICAgICAgICAgZm9ybWF0dGVyOiAie2J9OiB7Y30gKHtkfSUpIiwKICAgICAgICB9LAogICAgICAgIGxhYmVsTGluZTogeyBsaW5lU3R5bGU6IHsgY29sb3I6IHRjLmF4aXNMaW5lIH0gfSwKICAgICAgICBlbXBoYXNpczogewogICAgICAgICAgaXRlbVN0eWxlOiB7IHNoYWRvd0JsdXI6IDMwLCBzaGFkb3dDb2xvcjogInJnYmEoOTksMTAyLDI0MSwwLjUpIiB9LAogICAgICAgICAgbGFiZWw6IHsgZm9udFNpemU6IDE0LCBmb250V2VpZ2h0OiAiYm9sZCIgYXMgY29uc3QgfSwKICAgICAgICB9LAogICAgICAgIGRhdGE6IGRhdGEubWFwKChkLCBpKSA9PiAoewogICAgICAgICAgbmFtZTogZC5uYW1lLAogICAgICAgICAgdmFsdWU6CiAgICAgICAgICAgIGQudmFsdWUgPz8gT2JqZWN0LnZhbHVlcyhkKS5maW5kKCh2OiBhbnkpID0+IHR5cGVvZiB2ID09PSAibnVtYmVyIiksCiAgICAgICAgICBpdGVtU3R5bGU6IHsgY29sb3I6IFNPVEFfQ09MT1JTW2kgJSBTT1RBX0NPTE9SUy5sZW5ndGhdIH0sCiAgICAgICAgfSkpLAogICAgICAgIC4uLkFOSU1BVElPTl9FTEFTVElDLAogICAgICB9LAogICAgXSwKICB9Owp9CgpmdW5jdGlvbiBidWlsZFJhZGFyT3B0aW9uKGRhdGE6IGFueVtdLCB0aXRsZTogc3RyaW5nLCBpc0Rhcms6IGJvb2xlYW4pIHsKICBjb25zdCB0YyA9IGdldFRoZW1lQ29sb3JzKGlzRGFyayk7CiAgY29uc3QgdmFsdWVLZXkgPSBkYXRhWzBdCiAgICA/IE9iamVjdC5rZXlzKGRhdGFbMF0pLmZpbmQoKGspID0+IGsgIT09ICJuYW1lIikgfHwgInZhbHVlIgogICAgOiAidmFsdWUiOwogIHJldHVybiB7CiAgICB0aXRsZTogVElUTEVfU1RZTEUoaXNEYXJrLCB0aXRsZSksCiAgICB0b29sdGlwOiB7IC4uLlRPT0xUSVBfU1RZTEUoaXNEYXJrKSB9LAogICAgdG9vbGJveDogeyBmZWF0dXJlOiBUT09MQk9YX0ZFQVRVUkUsIC4uLlRPT0xCT1hfU1RZTEUoaXNEYXJrKSB9LAogICAgcmFkYXI6IHsKICAgICAgaW5kaWNhdG9yOiBkYXRhLm1hcCgoZCkgPT4gKHsKICAgICAgICBuYW1lOiBkLm5hbWUsCiAgICAgICAgbWF4OiBNYXRoLm1heCguLi5kYXRhLm1hcCgoeCkgPT4geFt2YWx1ZUtleV0pKSAqIDEuMiwKICAgICAgfSkpLAogICAgICBheGlzTmFtZTogeyBjb2xvcjogdGMuYXhpc0xhYmVsLCBmb250RmFtaWx5OiBGT05UX0ZBTUlMWSwgZm9udFNpemU6IDExIH0sCiAgICAgIHNwbGl0TGluZTogeyBsaW5lU3R5bGU6IHsgY29sb3I6IHRjLnNwbGl0TGluZSB9IH0sCiAgICAgIHNwbGl0QXJlYTogewogICAgICAgIGFyZWFTdHlsZTogeyBjb2xvcjogW2lzRGFyayA/ICJ0cmFuc3BhcmVudCIgOiAidHJhbnNwYXJlbnQiXSB9LAogICAgICB9LAogICAgICBheGlzTGluZTogeyBsaW5lU3R5bGU6IHsgY29sb3I6IHRjLmF4aXNMaW5lIH0gfSwKICAgIH0sCiAgICBzZXJpZXM6IFsKICAgICAgewogICAgICAgIHR5cGU6ICJyYWRhciIsCiAgICAgICAgZGF0YTogWwogICAgICAgICAgewogICAgICAgICAgICB2YWx1ZTogZGF0YS5tYXAoKGQpID0+IGRbdmFsdWVLZXldKSwKICAgICAgICAgICAgbmFtZTogdGl0bGUsCiAgICAgICAgICAgIGFyZWFTdHlsZTogeyBjb2xvcjogU09UQV9DT0xPUlNbMF0gKyAiNDAiIH0sCiAgICAgICAgICAgIGxpbmVTdHlsZTogeyBjb2xvcjogU09UQV9DT0xPUlNbMF0sIHdpZHRoOiAyIH0sCiAgICAgICAgICAgIGl0ZW1TdHlsZTogeyBjb2xvcjogU09UQV9DT0xPUlNbMF0gfSwKICAgICAgICAgIH0sCiAgICAgICAgXSwKICAgICAgICAuLi5BTklNQVRJT05fRUxBU1RJQywKICAgICAgfSwKICAgIF0sCiAgfTsKfQoKZnVuY3Rpb24gYnVpbGRTY2F0dGVyT3B0aW9uKGRhdGE6IGFueVtdLCB0aXRsZTogc3RyaW5nLCBpc0Rhcms6IGJvb2xlYW4pIHsKICBjb25zdCB0YyA9IGdldFRoZW1lQ29sb3JzKGlzRGFyayk7CiAgY29uc3QgdmFsdWVLZXkgPSBkYXRhWzBdCiAgICA/IE9iamVjdC5rZXlzKGRhdGFbMF0pLmZpbmQoKGspID0+IGsgIT09ICJuYW1lIikgfHwgInZhbHVlIgogICAgOiAidmFsdWUiOwogIHJldHVybiB7CiAgICB0aXRsZTogVElUTEVfU1RZTEUoaXNEYXJrLCB0aXRsZSksCiAgICB0b29sdGlwOiB7IC4uLlRPT0xUSVBfU1RZTEUoaXNEYXJrKSB9LAogICAgdG9vbGJveDogeyBmZWF0dXJlOiBUT09MQk9YX0ZFQVRVUkUsIC4uLlRPT0xCT1hfU1RZTEUoaXNEYXJrKSB9LAogICAgZ3JpZDogewogICAgICBsZWZ0OiAiMyUiLAogICAgICByaWdodDogIjQlIiwKICAgICAgYm90dG9tOiAiMyUiLAogICAgICB0b3A6IDgwLAogICAgICBjb250YWluTGFiZWw6IHRydWUsCiAgICB9LAogICAgeEF4aXM6IHsKICAgICAgdHlwZTogInZhbHVlIiwKICAgICAgYXhpc0xpbmU6IHsgbGluZVN0eWxlOiB7IGNvbG9yOiB0Yy5heGlzTGluZSB9IH0sCiAgICAgIGF4aXNMYWJlbDogeyBjb2xvcjogdGMuYXhpc0xhYmVsLCBmb250RmFtaWx5OiBGT05UX0ZBTUlMWSwgZm9udFNpemU6IDExIH0sCiAgICB9LAogICAgeUF4aXM6IHsKICAgICAgdHlwZTogInZhbHVlIiwKICAgICAgYXhpc0xpbmU6IHsgbGluZVN0eWxlOiB7IGNvbG9yOiB0Yy5heGlzTGluZSB9IH0sCiAgICAgIGF4aXNMYWJlbDogeyBjb2xvcjogdGMuYXhpc0xhYmVsLCBmb250RmFtaWx5OiBGT05UX0ZBTUlMWSwgZm9udFNpemU6IDExIH0sCiAgICAgIHNwbGl0TGluZTogewogICAgICAgIGxpbmVTdHlsZTogeyBjb2xvcjogdGMuc3BsaXRMaW5lLCB0eXBlOiAiZGFzaGVkIiBhcyBjb25zdCB9LAogICAgICB9LAogICAgfSwKICAgIHNlcmllczogWwogICAgICB7CiAgICAgICAgdHlwZTogInNjYXR0ZXIiLAogICAgICAgIGRhdGE6IGRhdGEubWFwKChkKSA9PiBbZC5uYW1lLCBkW3ZhbHVlS2V5XV0pLAogICAgICAgIHN5bWJvbFNpemU6IDE2LAogICAgICAgIGl0ZW1TdHlsZTogewogICAgICAgICAgY29sb3I6IFNPVEFfQ09MT1JTWzBdLAogICAgICAgICAgc2hhZG93Qmx1cjogMTUsCiAgICAgICAgICBzaGFkb3dDb2xvcjogU09UQV9DT0xPUlNbMF0gKyAiNTAiLAogICAgICAgIH0sCiAgICAgICAgZW1waGFzaXM6IHsgaXRlbVN0eWxlOiB7IHNoYWRvd0JsdXI6IDI1IH0gfSwKICAgICAgICAuLi5BTklNQVRJT05fQ1VCSUMsCiAgICAgIH0sCiAgICBdLAogIH07Cn0KCmZ1bmN0aW9uIGJ1aWxkVHJlZW1hcE9wdGlvbihkYXRhOiBhbnlbXSwgdGl0bGU6IHN0cmluZywgaXNEYXJrOiBib29sZWFuKSB7CiAgY29uc3QgdGMgPSBnZXRUaGVtZUNvbG9ycyhpc0RhcmspOwogIGNvbnN0IHZhbHVlS2V5ID0gZGF0YVswXQogICAgPyBPYmplY3Qua2V5cyhkYXRhWzBdKS5maW5kKChrKSA9PiBrICE9PSAibmFtZSIpIHx8ICJ2YWx1ZSIKICAgIDogInZhbHVlIjsKICByZXR1cm4gewogICAgdGl0bGU6IFRJVExFX1NUWUxFKGlzRGFyaywgdGl0bGUpLAogICAgdG9vbHRpcDogeyAuLi5UT09MVElQX1NUWUxFKGlzRGFyaykgfSwKICAgIHRvb2xib3g6IHsgZmVhdHVyZTogVE9PTEJPWF9GRUFUVVJFLCAuLi5UT09MQk9YX1NUWUxFKGlzRGFyaykgfSwKICAgIHNlcmllczogWwogICAgICB7CiAgICAgICAgdHlwZTogInRyZWVtYXAiLAogICAgICAgIGRhdGE6IGRhdGEubWFwKChkLCBpKSA9PiAoewogICAgICAgICAgbmFtZTogZC5uYW1lLAogICAgICAgICAgdmFsdWU6IGRbdmFsdWVLZXldLAogICAgICAgICAgaXRlbVN0eWxlOiB7IGNvbG9yOiBTT1RBX0NPTE9SU1tpICUgU09UQV9DT0xPUlMubGVuZ3RoXSB9LAogICAgICAgIH0pKSwKICAgICAgICBsYWJlbDogeyBjb2xvcjogdGMudGV4dENvbG9yLCBmb250RmFtaWx5OiBGT05UX0ZBTUlMWSwgZm9udFNpemU6IDEyIH0sCiAgICAgICAgdXBwZXJMYWJlbDogeyBjb2xvcjogdGMudGV4dENvbG9yLCBmb250RmFtaWx5OiBGT05UX0ZBTUlMWSB9LAogICAgICAgIC4uLkFOSU1BVElPTl9DVUJJQywKICAgICAgfSwKICAgIF0sCiAgfTsKfQoKZnVuY3Rpb24gYnVpbGRGdW5uZWxPcHRpb24oZGF0YTogYW55W10sIHRpdGxlOiBzdHJpbmcsIGlzRGFyazogYm9vbGVhbikgewogIGNvbnN0IHRjID0gZ2V0VGhlbWVDb2xvcnMoaXNEYXJrKTsKICBjb25zdCB2YWx1ZUtleSA9IGRhdGFbMF0KICAgID8gT2JqZWN0LmtleXMoZGF0YVswXSkuZmluZCgoaykgPT4gayAhPT0gIm5hbWUiKSB8fCAidmFsdWUiCiAgICA6ICJ2YWx1ZSI7CiAgcmV0dXJuIHsKICAgIHRpdGxlOiBUSVRMRV9TVFlMRShpc0RhcmssIHRpdGxlKSwKICAgIHRvb2x0aXA6IHsgLi4uVE9PTFRJUF9TVFlMRShpc0RhcmspIH0sCiAgICB0b29sYm94OiB7IGZlYXR1cmU6IFRPT0xCT1hfRkVBVFVSRSwgLi4uVE9PTEJPWF9TVFlMRShpc0RhcmspIH0sCiAgICBsZWdlbmQ6IHsgLi4uTEVHRU5EX1NUWUxFKGlzRGFyayksIGJvdHRvbTogMTAgfSwKICAgIHNlcmllczogWwogICAgICB7CiAgICAgICAgdHlwZTogImZ1bm5lbCIsCiAgICAgICAgbGVmdDogIjEwJSIsCiAgICAgICAgcmlnaHQ6ICIxMCUiLAogICAgICAgIHRvcDogODAsCiAgICAgICAgYm90dG9tOiA2MCwKICAgICAgICBsYWJlbDogewogICAgICAgICAgY29sb3I6IHRjLnRleHRDb2xvciwKICAgICAgICAgIGZvbnRGYW1pbHk6IEZPTlRfRkFNSUxZLAogICAgICAgICAgZm9udFNpemU6IDEyLAogICAgICAgICAgZm9ybWF0dGVyOiAie2J9OiB7Y30iLAogICAgICAgIH0sCiAgICAgICAgbGFiZWxMaW5lOiB7IGxpbmVTdHlsZTogeyBjb2xvcjogdGMuYXhpc0xpbmUgfSB9LAogICAgICAgIGRhdGE6IGRhdGEubWFwKChkLCBpKSA9PiAoewogICAgICAgICAgbmFtZTogZC5uYW1lLAogICAgICAgICAgdmFsdWU6IGRbdmFsdWVLZXldLAogICAgICAgICAgaXRlbVN0eWxlOiB7IGNvbG9yOiBTT1RBX0NPTE9SU1tpICUgU09UQV9DT0xPUlMubGVuZ3RoXSB9LAogICAgICAgIH0pKSwKICAgICAgICAuLi5BTklNQVRJT05fQ1VCSUMsCiAgICAgIH0sCiAgICBdLAogIH07Cn0KCmZ1bmN0aW9uIGJ1aWxkUmFkaWFsQmFyT3B0aW9uKGRhdGE6IGFueVtdLCB0aXRsZTogc3RyaW5nLCBpc0Rhcms6IGJvb2xlYW4pIHsKICBjb25zdCB0YyA9IGdldFRoZW1lQ29sb3JzKGlzRGFyayk7CiAgY29uc3QgdmFsdWVLZXkgPSBkYXRhWzBdCiAgICA/IE9iamVjdC5rZXlzKGRhdGFbMF0pLmZpbmQoKGspID0+IGsgIT09ICJuYW1lIikgfHwgInZhbHVlIgogICAgOiAidmFsdWUiOwogIHJldHVybiB7CiAgICB0aXRsZTogVElUTEVfU1RZTEUoaXNEYXJrLCB0aXRsZSksCiAgICB0b29sdGlwOiB7IC4uLlRPT0xUSVBfU1RZTEUoaXNEYXJrKSB9LAogICAgdG9vbGJveDogeyBmZWF0dXJlOiBUT09MQk9YX0ZFQVRVUkUsIC4uLlRPT0xCT1hfU1RZTEUoaXNEYXJrKSB9LAogICAgbGVnZW5kOiB7IC4uLkxFR0VORF9TVFlMRShpc0RhcmspLCBib3R0b206IDEwIH0sCiAgICBzZXJpZXM6IFsKICAgICAgewogICAgICAgIHR5cGU6ICJiYXIiLAogICAgICAgIGNvb3JkaW5hdGVTeXN0ZW06ICJwb2xhciIsCiAgICAgICAgZGF0YTogZGF0YS5tYXAoKGQsIGkpID0+ICh7CiAgICAgICAgICBuYW1lOiBkLm5hbWUsCiAgICAgICAgICB2YWx1ZTogZFt2YWx1ZUtleV0sCiAgICAgICAgICBpdGVtU3R5bGU6IHsgY29sb3I6IFNPVEFfQ09MT1JTW2kgJSBTT1RBX0NPTE9SUy5sZW5ndGhdIH0sCiAgICAgICAgfSkpLAogICAgICAgIC4uLkFOSU1BVElPTl9FTEFTVElDLAogICAgICB9LAogICAgXSwKICAgIHBvbGFyOiB7fSwKICAgIGFuZ2xlQXhpczogeyBheGlzTGluZTogeyBsaW5lU3R5bGU6IHsgY29sb3I6IHRjLmF4aXNMaW5lIH0gfSB9LAogICAgcmFkaXVzQXhpczogewogICAgICB0eXBlOiAiY2F0ZWdvcnkiLAogICAgICBkYXRhOiBkYXRhLm1hcCgoZCkgPT4gZC5uYW1lKSwKICAgICAgYXhpc0xhYmVsOiB7IGNvbG9yOiB0Yy5heGlzTGFiZWwsIGZvbnRGYW1pbHk6IEZPTlRfRkFNSUxZLCBmb250U2l6ZTogMTEgfSwKICAgIH0sCiAgfTsKfQoKY29uc3QgREFSS19CR19CT1JERVIgPSBEQVJLX0JHOwpjb25zdCBMSUdIVF9CR19CT1JERVIgPSBMSUdIVF9CRzsKCmZ1bmN0aW9uIGJ1aWxkT3B0aW9uKAogIGNoYXJ0OiBDaGFydERhdGEsCiAgaXNEYXJrOiBib29sZWFuLAopOiBSZWNvcmQ8c3RyaW5nLCBhbnk+IHwgbnVsbCB7CiAgY29uc3QgeyB0eXBlLCBkYXRhc2V0LCB0aXRsZSwgZWNoYXJ0c09wdGlvbnMgfSA9IGNoYXJ0OwogIGlmICghZGF0YXNldCB8fCBkYXRhc2V0Lmxlbmd0aCA9PT0gMCkgcmV0dXJuIG51bGw7CgogIGNvbnN0IGxvd2VyVHlwZSA9IHR5cGUudG9Mb3dlckNhc2UoKTsKICBsZXQgb3B0aW9uOiBSZWNvcmQ8c3RyaW5nLCBhbnk+IHwgbnVsbCA9IG51bGw7CgogIGNvbnN0IHNlcmllc0tleXMgPSBkYXRhc2V0WzBdCiAgICA/IE9iamVjdC5rZXlzKGRhdGFzZXRbMF0pLmZpbHRlcigoaykgPT4gayAhPT0gIm5hbWUiKQogICAgOiBbXTsKCiAgc3dpdGNoIChsb3dlclR5cGUpIHsKICAgIGNhc2UgImJhciI6CiAgICAgIG9wdGlvbiA9IGJ1aWxkQmFyT3B0aW9uKAogICAgICAgIGRhdGFzZXQsCiAgICAgICAgdGl0bGUsCiAgICAgICAgaXNEYXJrLAogICAgICAgIHNlcmllc0tleXMubGVuZ3RoID4gMSA/IHNlcmllc0tleXMgOiB1bmRlZmluZWQsCiAgICAgICk7CiAgICAgIGJyZWFrOwogICAgY2FzZSAibGluZSI6CiAgICAgIG9wdGlvbiA9IGJ1aWxkTGluZU9wdGlvbigKICAgICAgICBkYXRhc2V0LAogICAgICAgIHRpdGxlLAogICAgICAgIGlzRGFyaywKICAgICAgICBzZXJpZXNLZXlzLmxlbmd0aCA+IDEgPyBzZXJpZXNLZXlzIDogdW5kZWZpbmVkLAogICAgICApOwogICAgICBicmVhazsKICAgIGNhc2UgImFyZWEiOgogICAgICBvcHRpb24gPSBidWlsZEFyZWFPcHRpb24oCiAgICAgICAgZGF0YXNldCwKICAgICAgICB0aXRsZSwKICAgICAgICBpc0RhcmssCiAgICAgICAgc2VyaWVzS2V5cy5sZW5ndGggPiAxID8gc2VyaWVzS2V5cyA6IHVuZGVmaW5lZCwKICAgICAgKTsKICAgICAgYnJlYWs7CiAgICBjYXNlICJwaWUiOgogICAgY2FzZSAiZG9udXQiOgogICAgICBvcHRpb24gPSBidWlsZFBpZU9wdGlvbihkYXRhc2V0LCB0aXRsZSwgaXNEYXJrKTsKICAgICAgYnJlYWs7CiAgICBjYXNlICJyYWRhciI6CiAgICAgIG9wdGlvbiA9IGJ1aWxkUmFkYXJPcHRpb24oZGF0YXNldCwgdGl0bGUsIGlzRGFyayk7CiAgICAgIGJyZWFrOwogICAgY2FzZSAic2NhdHRlciI6CiAgICAgIG9wdGlvbiA9IGJ1aWxkU2NhdHRlck9wdGlvbihkYXRhc2V0LCB0aXRsZSwgaXNEYXJrKTsKICAgICAgYnJlYWs7CiAgICBjYXNlICJ0cmVlbWFwIjoKICAgICAgb3B0aW9uID0gYnVpbGRUcmVlbWFwT3B0aW9uKGRhdGFzZXQsIHRpdGxlLCBpc0RhcmspOwogICAgICBicmVhazsKICAgIGNhc2UgImZ1bm5lbCI6CiAgICAgIG9wdGlvbiA9IGJ1aWxkRnVubmVsT3B0aW9uKGRhdGFzZXQsIHRpdGxlLCBpc0RhcmspOwogICAgICBicmVhazsKICAgIGNhc2UgInJhZGlhbGJhciI6CiAgICAgIG9wdGlvbiA9IGJ1aWxkUmFkaWFsQmFyT3B0aW9uKGRhdGFzZXQsIHRpdGxlLCBpc0RhcmspOwogICAgICBicmVhazsKICAgIGNhc2UgImNvbXBvc2VkIjoKICAgICAgb3B0aW9uID0gYnVpbGRCYXJPcHRpb24oCiAgICAgICAgZGF0YXNldCwKICAgICAgICB0aXRsZSwKICAgICAgICBpc0RhcmssCiAgICAgICAgc2VyaWVzS2V5cy5sZW5ndGggPiAxID8gc2VyaWVzS2V5cyA6IHVuZGVmaW5lZCwKICAgICAgKTsKICAgICAgYnJlYWs7CiAgICBkZWZhdWx0OgogICAgICByZXR1cm4gbnVsbDsKICB9CgogIGlmIChlY2hhcnRzT3B0aW9ucyAmJiB0eXBlb2YgZWNoYXJ0c09wdGlvbnMgPT09ICJvYmplY3QiKSB7CiAgICBvcHRpb24gPSB7IC4uLm9wdGlvbiwgLi4uZWNoYXJ0c09wdGlvbnMgfTsKICB9CgogIHJldHVybiBvcHRpb247Cn0KCmV4cG9ydCBmdW5jdGlvbiBFQ2hhcnRSZW5kZXJlcih7IGNoYXJ0IH06IHsgY2hhcnQ6IENoYXJ0RGF0YSB9KSB7CiAgY29uc3QgeyB0IH0gPSB1c2VUcmFuc2xhdGlvbigpOwogIGNvbnN0IGNoYXJ0UmVmID0gdXNlUmVmPGFueT4obnVsbCk7CiAgY29uc3QgW2Rvd25sb2FkaW5nLCBzZXREb3dubG9hZGluZ10gPSB1c2VTdGF0ZShmYWxzZSk7CiAgY29uc3QgaXNEYXJrID0gcmVzb2x2ZURhcmtNb2RlKCk7CgogIGNvbnN0IG9wdGlvbiA9IHVzZU1lbW8oKCkgPT4gYnVpbGRPcHRpb24oY2hhcnQsIGlzRGFyayksIFtjaGFydCwgaXNEYXJrXSk7CgogIGNvbnN0IGhhbmRsZURvd25sb2FkID0gdXNlQ2FsbGJhY2soYXN5bmMgKCkgPT4gewogICAgc2V0RG93bmxvYWRpbmcodHJ1ZSk7CiAgICB0cnkgewogICAgICBjb25zdCBpbnN0YW5jZSA9IGNoYXJ0UmVmLmN1cnJlbnQ/LmdldEVjaGFydHNJbnN0YW5jZSgpOwogICAgICBpZiAoaW5zdGFuY2UpIHsKICAgICAgICBjb25zdCB1cmwgPSBpbnN0YW5jZS5nZXREYXRhVVJMKHsKICAgICAgICAgIHR5cGU6ICJwbmciLAogICAgICAgICAgcGl4ZWxSYXRpbzogMiwKICAgICAgICAgIGJhY2tncm91bmRDb2xvcjogaXNEYXJrID8gREFSS19CRyA6IExJR0hUX0JHLAogICAgICAgIH0pOwogICAgICAgIGNvbnN0IGJsb2IgPSBhd2FpdCAoYXdhaXQgZmV0Y2godXJsKSkuYmxvYigpOwogICAgICAgIHNhdmVBcyhibG9iLCBgY2hhcnQtJHt2NCgpLnNwbGl0KCItIilbMF19LnBuZ2ApOwogICAgICB9CiAgICB9IGZpbmFsbHkgewogICAgICBzZXREb3dubG9hZGluZyhmYWxzZSk7CiAgICB9CiAgfSwgW2lzRGFya10pOwoKICBpZiAoIW9wdGlvbikgcmV0dXJuIG51bGw7CgogIHJldHVybiAoCiAgICA8ZGl2IGNsYXNzTmFtZT0icmVsYXRpdmUgdy1mdWxsIj4KICAgICAgPGRpdiBjbGFzc05hbWU9ImFic29sdXRlIHRvcC0zIHJpZ2h0LTMgei01MCI+CiAgICAgICAgPGJ1dHRvbgogICAgICAgICAgdHlwZT0iYnV0dG9uIgogICAgICAgICAgb25DbGljaz17aGFuZGxlRG93bmxvYWR9CiAgICAgICAgICBkaXNhYmxlZD17ZG93bmxvYWRpbmd9CiAgICAgICAgICBhcmlhLWxhYmVsPXsKICAgICAgICAgICAgZG93bmxvYWRpbmcKICAgICAgICAgICAgICA/IHQoImNoYXJ0YWJsZS5kb3dubG9hZGluZyIpCiAgICAgICAgICAgICAgOiB0KCJjaGFydGFibGUuZG93bmxvYWRHcmFwaCIpCiAgICAgICAgICB9CiAgICAgICAgICBjbGFzc05hbWU9InAtMS41IHJvdW5kZWQtbGcgYm9yZGVyIGJvcmRlci13aGl0ZS8xMCBiZy16aW5jLTgwMC84MCBob3ZlcjpiZy16aW5jLTcwMC84MCB0cmFuc2l0aW9uLWFsbCBjdXJzb3ItcG9pbnRlciBkaXNhYmxlZDpjdXJzb3ItZGVmYXVsdCIKICAgICAgICA+CiAgICAgICAgICB7ZG93bmxvYWRpbmcgPyAoCiAgICAgICAgICAgIDxDaXJjbGVOb3RjaCBjbGFzc05hbWU9InRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IHctNSBoLTUgYW5pbWF0ZS1zcGluIiAvPgogICAgICAgICAgKSA6ICgKICAgICAgICAgICAgPERvd25sb2FkU2ltcGxlCiAgICAgICAgICAgICAgd2VpZ2h0PSJib2xkIgogICAgICAgICAgICAgIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXByaW1hcnkgdy01IGgtNSBwb2ludGVyLWV2ZW50cy1ub25lIgogICAgICAgICAgICAvPgogICAgICAgICAgKX0KICAgICAgICA8L2J1dHRvbj4KICAgICAgPC9kaXY+CiAgICAgIDxSZWFjdEVDaGFydHMKICAgICAgICByZWY9e2NoYXJ0UmVmfQogICAgICAgIG9wdGlvbj17b3B0aW9ufQogICAgICAgIHN0eWxlPXt7IGhlaWdodDogNDAwLCB3aWR0aDogIjEwMCUiIH19CiAgICAgICAgb3B0cz17eyByZW5kZXJlcjogImNhbnZhcyIgfX0KICAgICAgICBub3RNZXJnZT17dHJ1ZX0KICAgICAgICBsYXp5VXBkYXRlPXt0cnVlfQogICAgICAvPgogICAgPC9kaXY+CiAgKTsKfQoKZXhwb3J0IGRlZmF1bHQgbWVtbyhFQ2hhcnRSZW5kZXJlcik7Cg==
+// SPDX-License-Identifier: MIT
+// Purpose: SOTA ECharts renderer — maps legacy rechart.js {type, dataset, title}
+// format to Apache ECharts options with gradients, glow, staggered animations.
+// Docs: Mirrors sin-code image-graph visual quality. Dark/light theme adaptive.
+
+import { memo, useMemo, useRef, useCallback, useState } from "react";
+import ReactECharts from "echarts-for-react";
+import { resolveDarkMode } from "@/hooks/useTheme";
+import { v4 } from "uuid";
+// @ts-expect-error - file-saver has no bundled types
+import { saveAs } from "file-saver";
+import { DownloadSimple } from "@phosphor-icons/react/dist/csr/DownloadSimple";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
+import { useTranslation } from "react-i18next";
+import {
+  SOTA_COLORS,
+  FONT_FAMILY,
+  getThemeColors,
+  barGradient,
+  areaGradient,
+  GLOW_SHADOW,
+  BAR_BORDER_RADIUS,
+  ANIMATION_ELASTIC,
+  ANIMATION_CUBIC,
+  TOOLTIP_STYLE,
+  TOOLBOX_FEATURE,
+  TOOLBOX_STYLE,
+  LEGEND_STYLE,
+  TITLE_STYLE,
+  DARK_BG,
+  LIGHT_BG,
+} from "./echartsTheme";
+
+interface ChartData {
+  type: string;
+  dataset: any[];
+  title: string;
+  caption?: string;
+  echartsOptions?: Record<string, any>;
+}
+
+function buildBarOption(
+  data: any[],
+  title: string,
+  isDark: boolean,
+  seriesNames?: string[],
+) {
+  const tc = getThemeColors(isDark);
+  const hasMultipleSeries = seriesNames && seriesNames.length > 0;
+  const categories = data.map((d) => d.name);
+
+  if (hasMultipleSeries) {
+    return {
+      title: TITLE_STYLE(isDark, title),
+      legend: LEGEND_STYLE(isDark),
+      tooltip: {
+        trigger: "axis",
+        axisPointer: { type: "shadow" },
+        ...TOOLTIP_STYLE(isDark),
+      },
+      toolbox: { feature: TOOLBOX_FEATURE, ...TOOLBOX_STYLE(isDark) },
+      grid: {
+        left: "3%",
+        right: "4%",
+        bottom: "3%",
+        top: 90,
+        containLabel: true,
+      },
+      xAxis: {
+        type: "category",
+        data: categories,
+        axisLine: { lineStyle: { color: tc.axisLine } },
+        axisLabel: {
+          color: tc.axisLabel,
+          fontFamily: FONT_FAMILY,
+          fontSize: 11,
+          rotate: categories.length > 8 ? 25 : 0,
+        },
+      },
+      yAxis: {
+        type: "value",
+        axisLine: { lineStyle: { color: tc.axisLine } },
+        axisLabel: {
+          color: tc.axisLabel,
+          fontFamily: FONT_FAMILY,
+          fontSize: 11,
+        },
+        splitLine: {
+          lineStyle: { color: tc.splitLine, type: "dashed" as const },
+        },
+      },
+      series: seriesNames!.map((name, si) => ({
+        name,
+        type: "bar",
+        data: data.map((d) => d[name] ?? d.value ?? 0),
+        itemStyle: {
+          color: barGradient(SOTA_COLORS[si % SOTA_COLORS.length], isDark),
+          borderRadius: BAR_BORDER_RADIUS,
+          ...GLOW_SHADOW,
+        },
+        emphasis: { focus: "series" as const },
+        ...ANIMATION_ELASTIC,
+      })),
+    };
+  }
+
+  const valueKey = data[0]
+    ? Object.keys(data[0]).find((k) => k !== "name") || "value"
+    : "value";
+  return {
+    title: TITLE_STYLE(isDark, title),
+    tooltip: {
+      trigger: "axis",
+      axisPointer: { type: "shadow" },
+      ...TOOLTIP_STYLE(isDark),
+    },
+    toolbox: { feature: TOOLBOX_FEATURE, ...TOOLBOX_STYLE(isDark) },
+    grid: {
+      left: "3%",
+      right: "4%",
+      bottom: "3%",
+      top: 80,
+      containLabel: true,
+    },
+    xAxis: {
+      type: "category",
+      data: categories,
+      axisLine: { lineStyle: { color: tc.axisLine } },
+      axisLabel: {
+        color: tc.axisLabel,
+        fontFamily: FONT_FAMILY,
+        fontSize: 11,
+        rotate: categories.length > 8 ? 25 : 0,
+      },
+    },
+    yAxis: {
+      type: "value",
+      axisLine: { lineStyle: { color: tc.axisLine } },
+      axisLabel: { color: tc.axisLabel, fontFamily: FONT_FAMILY, fontSize: 11 },
+      splitLine: {
+        lineStyle: { color: tc.splitLine, type: "dashed" as const },
+      },
+    },
+    series: [
+      {
+        type: "bar",
+        data: data.map((d) => d[valueKey]),
+        itemStyle: {
+          color: barGradient(SOTA_COLORS[0], isDark),
+          borderRadius: BAR_BORDER_RADIUS,
+          ...GLOW_SHADOW,
+        },
+        emphasis: { focus: "series" as const },
+        ...ANIMATION_ELASTIC,
+      },
+    ],
+  };
+}
+
+function buildLineOption(
+  data: any[],
+  title: string,
+  isDark: boolean,
+  seriesNames?: string[],
+) {
+  const tc = getThemeColors(isDark);
+  const categories = data.map((d) => d.name);
+
+  if (seriesNames && seriesNames.length > 0) {
+    return {
+      title: TITLE_STYLE(isDark, title),
+      legend: LEGEND_STYLE(isDark),
+      tooltip: {
+        trigger: "axis",
+        axisPointer: { type: "cross" },
+        ...TOOLTIP_STYLE(isDark),
+      },
+      toolbox: { feature: TOOLBOX_FEATURE, ...TOOLBOX_STYLE(isDark) },
+      grid: {
+        left: "3%",
+        right: "4%",
+        bottom: "3%",
+        top: 90,
+        containLabel: true,
+      },
+      xAxis: {
+        type: "category",
+        boundaryGap: false,
+        data: categories,
+        axisLine: { lineStyle: { color: tc.axisLine } },
+        axisLabel: {
+          color: tc.axisLabel,
+          fontFamily: FONT_FAMILY,
+          fontSize: 11,
+        },
+      },
+      yAxis: {
+        type: "value",
+        axisLine: { lineStyle: { color: tc.axisLine } },
+        axisLabel: {
+          color: tc.axisLabel,
+          fontFamily: FONT_FAMILY,
+          fontSize: 11,
+        },
+        splitLine: {
+          lineStyle: { color: tc.splitLine, type: "dashed" as const },
+        },
+      },
+      series: seriesNames.map((name, si) => {
+        const color = SOTA_COLORS[si % SOTA_COLORS.length];
+        return {
+          name,
+          type: "line",
+          smooth: true,
+          data: data.map((d) => d[name] ?? d.value ?? 0),
+          lineStyle: {
+            width: 3,
+            color,
+            shadowBlur: 12,
+            shadowColor: color + "40",
+          },
+          symbol: "circle",
+          symbolSize: 7,
+          itemStyle: { color },
+          emphasis: { focus: "series" as const },
+          ...ANIMATION_CUBIC,
+        };
+      }),
+    };
+  }
+
+  const valueKey = data[0]
+    ? Object.keys(data[0]).find((k) => k !== "name") || "value"
+    : "value";
+  const color = SOTA_COLORS[0];
+  return {
+    title: TITLE_STYLE(isDark, title),
+    tooltip: {
+      trigger: "axis",
+      axisPointer: { type: "cross" },
+      ...TOOLTIP_STYLE(isDark),
+    },
+    toolbox: { feature: TOOLBOX_FEATURE, ...TOOLBOX_STYLE(isDark) },
+    grid: {
+      left: "3%",
+      right: "4%",
+      bottom: "3%",
+      top: 80,
+      containLabel: true,
+    },
+    xAxis: {
+      type: "category",
+      boundaryGap: false,
+      data: categories,
+      axisLine: { lineStyle: { color: tc.axisLine } },
+      axisLabel: { color: tc.axisLabel, fontFamily: FONT_FAMILY, fontSize: 11 },
+    },
+    yAxis: {
+      type: "value",
+      axisLine: { lineStyle: { color: tc.axisLine } },
+      axisLabel: { color: tc.axisLabel, fontFamily: FONT_FAMILY, fontSize: 11 },
+      splitLine: {
+        lineStyle: { color: tc.splitLine, type: "dashed" as const },
+      },
+    },
+    series: [
+      {
+        type: "line",
+        smooth: true,
+        data: data.map((d) => d[valueKey]),
+        lineStyle: {
+          width: 3,
+          color,
+          shadowBlur: 12,
+          shadowColor: color + "40",
+        },
+        symbol: "circle",
+        symbolSize: 7,
+        itemStyle: { color },
+        ...ANIMATION_CUBIC,
+      },
+    ],
+  };
+}
+
+function buildAreaOption(
+  data: any[],
+  title: string,
+  isDark: boolean,
+  seriesNames?: string[],
+) {
+  const lineOpt: any = buildLineOption(data, title, isDark, seriesNames);
+  if (seriesNames && seriesNames.length > 0) {
+    lineOpt.series = lineOpt.series.map((s: any, si: number) => ({
+      ...s,
+      areaStyle: { color: areaGradient(SOTA_COLORS[si % SOTA_COLORS.length]) },
+    }));
+  } else {
+    lineOpt.series[0].areaStyle = { color: areaGradient(SOTA_COLORS[0]) };
+  }
+  return lineOpt;
+}
+
+function buildPieOption(data: any[], title: string, isDark: boolean) {
+  const tc = getThemeColors(isDark);
+  return {
+    title: TITLE_STYLE(isDark, title),
+    tooltip: { trigger: "item", ...TOOLTIP_STYLE(isDark) },
+    toolbox: { feature: TOOLBOX_FEATURE, ...TOOLBOX_STYLE(isDark) },
+    legend: { ...LEGEND_STYLE(isDark), orient: "horizontal", bottom: 10 },
+    series: [
+      {
+        type: "pie",
+        radius: ["35%", "70%"],
+        center: ["50%", "52%"],
+        roseType: "radius",
+        itemStyle: {
+          borderRadius: 6,
+          borderColor: isDark ? DARK_BG_BORDER : LIGHT_BG_BORDER,
+          borderWidth: 3,
+          shadowBlur: 20,
+          shadowColor: "rgba(99,102,241,0.25)",
+        },
+        label: {
+          color: tc.textColor,
+          fontFamily: FONT_FAMILY,
+          fontSize: 12,
+          formatter: "{b}: {c} ({d}%)",
+        },
+        labelLine: { lineStyle: { color: tc.axisLine } },
+        emphasis: {
+          itemStyle: { shadowBlur: 30, shadowColor: "rgba(99,102,241,0.5)" },
+          label: { fontSize: 14, fontWeight: "bold" as const },
+        },
+        data: data.map((d, i) => ({
+          name: d.name,
+          value:
+            d.value ?? Object.values(d).find((v: any) => typeof v === "number"),
+          itemStyle: { color: SOTA_COLORS[i % SOTA_COLORS.length] },
+        })),
+        ...ANIMATION_ELASTIC,
+      },
+    ],
+  };
+}
+
+function buildRadarOption(data: any[], title: string, isDark: boolean) {
+  const tc = getThemeColors(isDark);
+  const valueKey = data[0]
+    ? Object.keys(data[0]).find((k) => k !== "name") || "value"
+    : "value";
+  return {
+    title: TITLE_STYLE(isDark, title),
+    tooltip: { ...TOOLTIP_STYLE(isDark) },
+    toolbox: { feature: TOOLBOX_FEATURE, ...TOOLBOX_STYLE(isDark) },
+    radar: {
+      indicator: data.map((d) => ({
+        name: d.name,
+        max: Math.max(...data.map((x) => x[valueKey])) * 1.2,
+      })),
+      axisName: { color: tc.axisLabel, fontFamily: FONT_FAMILY, fontSize: 11 },
+      splitLine: { lineStyle: { color: tc.splitLine } },
+      splitArea: {
+        areaStyle: { color: [isDark ? "transparent" : "transparent"] },
+      },
+      axisLine: { lineStyle: { color: tc.axisLine } },
+    },
+    series: [
+      {
+        type: "radar",
+        data: [
+          {
+            value: data.map((d) => d[valueKey]),
+            name: title,
+            areaStyle: { color: SOTA_COLORS[0] + "40" },
+            lineStyle: { color: SOTA_COLORS[0], width: 2 },
+            itemStyle: { color: SOTA_COLORS[0] },
+          },
+        ],
+        ...ANIMATION_ELASTIC,
+      },
+    ],
+  };
+}
+
+function buildScatterOption(data: any[], title: string, isDark: boolean) {
+  const tc = getThemeColors(isDark);
+  const valueKey = data[0]
+    ? Object.keys(data[0]).find((k) => k !== "name") || "value"
+    : "value";
+  return {
+    title: TITLE_STYLE(isDark, title),
+    tooltip: { ...TOOLTIP_STYLE(isDark) },
+    toolbox: { feature: TOOLBOX_FEATURE, ...TOOLBOX_STYLE(isDark) },
+    grid: {
+      left: "3%",
+      right: "4%",
+      bottom: "3%",
+      top: 80,
+      containLabel: true,
+    },
+    xAxis: {
+      type: "value",
+      axisLine: { lineStyle: { color: tc.axisLine } },
+      axisLabel: { color: tc.axisLabel, fontFamily: FONT_FAMILY, fontSize: 11 },
+    },
+    yAxis: {
+      type: "value",
+      axisLine: { lineStyle: { color: tc.axisLine } },
+      axisLabel: { color: tc.axisLabel, fontFamily: FONT_FAMILY, fontSize: 11 },
+      splitLine: {
+        lineStyle: { color: tc.splitLine, type: "dashed" as const },
+      },
+    },
+    series: [
+      {
+        type: "scatter",
+        data: data.map((d) => [d.name, d[valueKey]]),
+        symbolSize: 16,
+        itemStyle: {
+          color: SOTA_COLORS[0],
+          shadowBlur: 15,
+          shadowColor: SOTA_COLORS[0] + "50",
+        },
+        emphasis: { itemStyle: { shadowBlur: 25 } },
+        ...ANIMATION_CUBIC,
+      },
+    ],
+  };
+}
+
+function buildTreemapOption(data: any[], title: string, isDark: boolean) {
+  const tc = getThemeColors(isDark);
+  const valueKey = data[0]
+    ? Object.keys(data[0]).find((k) => k !== "name") || "value"
+    : "value";
+  return {
+    title: TITLE_STYLE(isDark, title),
+    tooltip: { ...TOOLTIP_STYLE(isDark) },
+    toolbox: { feature: TOOLBOX_FEATURE, ...TOOLBOX_STYLE(isDark) },
+    series: [
+      {
+        type: "treemap",
+        data: data.map((d, i) => ({
+          name: d.name,
+          value: d[valueKey],
+          itemStyle: { color: SOTA_COLORS[i % SOTA_COLORS.length] },
+        })),
+        label: { color: tc.textColor, fontFamily: FONT_FAMILY, fontSize: 12 },
+        upperLabel: { color: tc.textColor, fontFamily: FONT_FAMILY },
+        ...ANIMATION_CUBIC,
+      },
+    ],
+  };
+}
+
+function buildFunnelOption(data: any[], title: string, isDark: boolean) {
+  const tc = getThemeColors(isDark);
+  const valueKey = data[0]
+    ? Object.keys(data[0]).find((k) => k !== "name") || "value"
+    : "value";
+  return {
+    title: TITLE_STYLE(isDark, title),
+    tooltip: { ...TOOLTIP_STYLE(isDark) },
+    toolbox: { feature: TOOLBOX_FEATURE, ...TOOLBOX_STYLE(isDark) },
+    legend: { ...LEGEND_STYLE(isDark), bottom: 10 },
+    series: [
+      {
+        type: "funnel",
+        left: "10%",
+        right: "10%",
+        top: 80,
+        bottom: 60,
+        label: {
+          color: tc.textColor,
+          fontFamily: FONT_FAMILY,
+          fontSize: 12,
+          formatter: "{b}: {c}",
+        },
+        labelLine: { lineStyle: { color: tc.axisLine } },
+        data: data.map((d, i) => ({
+          name: d.name,
+          value: d[valueKey],
+          itemStyle: { color: SOTA_COLORS[i % SOTA_COLORS.length] },
+        })),
+        ...ANIMATION_CUBIC,
+      },
+    ],
+  };
+}
+
+function buildRadialBarOption(data: any[], title: string, isDark: boolean) {
+  const tc = getThemeColors(isDark);
+  const valueKey = data[0]
+    ? Object.keys(data[0]).find((k) => k !== "name") || "value"
+    : "value";
+  return {
+    title: TITLE_STYLE(isDark, title),
+    tooltip: { ...TOOLTIP_STYLE(isDark) },
+    toolbox: { feature: TOOLBOX_FEATURE, ...TOOLBOX_STYLE(isDark) },
+    legend: { ...LEGEND_STYLE(isDark), bottom: 10 },
+    series: [
+      {
+        type: "bar",
+        coordinateSystem: "polar",
+        data: data.map((d, i) => ({
+          name: d.name,
+          value: d[valueKey],
+          itemStyle: { color: SOTA_COLORS[i % SOTA_COLORS.length] },
+        })),
+        ...ANIMATION_ELASTIC,
+      },
+    ],
+    polar: {},
+    angleAxis: { axisLine: { lineStyle: { color: tc.axisLine } } },
+    radiusAxis: {
+      type: "category",
+      data: data.map((d) => d.name),
+      axisLabel: { color: tc.axisLabel, fontFamily: FONT_FAMILY, fontSize: 11 },
+    },
+  };
+}
+
+const DARK_BG_BORDER = DARK_BG;
+const LIGHT_BG_BORDER = LIGHT_BG;
+
+function buildOption(
+  chart: ChartData,
+  isDark: boolean,
+): Record<string, any> | null {
+  const { type, dataset, title, echartsOptions } = chart;
+  if (!dataset || dataset.length === 0) return null;
+
+  const lowerType = type.toLowerCase();
+  let option: Record<string, any> | null = null;
+
+  const seriesKeys = dataset[0]
+    ? Object.keys(dataset[0]).filter((k) => k !== "name")
+    : [];
+
+  switch (lowerType) {
+    case "bar":
+      option = buildBarOption(
+        dataset,
+        title,
+        isDark,
+        seriesKeys.length > 1 ? seriesKeys : undefined,
+      );
+      break;
+    case "line":
+      option = buildLineOption(
+        dataset,
+        title,
+        isDark,
+        seriesKeys.length > 1 ? seriesKeys : undefined,
+      );
+      break;
+    case "area":
+      option = buildAreaOption(
+        dataset,
+        title,
+        isDark,
+        seriesKeys.length > 1 ? seriesKeys : undefined,
+      );
+      break;
+    case "pie":
+    case "donut":
+      option = buildPieOption(dataset, title, isDark);
+      break;
+    case "radar":
+      option = buildRadarOption(dataset, title, isDark);
+      break;
+    case "scatter":
+      option = buildScatterOption(dataset, title, isDark);
+      break;
+    case "treemap":
+      option = buildTreemapOption(dataset, title, isDark);
+      break;
+    case "funnel":
+      option = buildFunnelOption(dataset, title, isDark);
+      break;
+    case "radialbar":
+      option = buildRadialBarOption(dataset, title, isDark);
+      break;
+    case "composed":
+      option = buildBarOption(
+        dataset,
+        title,
+        isDark,
+        seriesKeys.length > 1 ? seriesKeys : undefined,
+      );
+      break;
+    default:
+      return null;
+  }
+
+  if (echartsOptions && typeof echartsOptions === "object") {
+    option = { ...option, ...echartsOptions };
+  }
+
+  return option;
+}
+
+export function EChartRenderer({ chart }: { chart: ChartData }) {
+  const { t } = useTranslation();
+  const chartRef = useRef<any>(null);
+  const [downloading, setDownloading] = useState(false);
+  const isDark = resolveDarkMode();
+
+  const option = useMemo(() => buildOption(chart, isDark), [chart, isDark]);
+
+  const handleDownload = useCallback(async () => {
+    setDownloading(true);
+    try {
+      const instance = chartRef.current?.getEchartsInstance();
+      if (instance) {
+        const url = instance.getDataURL({
+          type: "png",
+          pixelRatio: 2,
+          backgroundColor: isDark ? DARK_BG : LIGHT_BG,
+        });
+        const blob = await (await fetch(url)).blob();
+        saveAs(blob, `chart-${v4().split("-")[0]}.png`);
+      }
+    } finally {
+      setDownloading(false);
+    }
+  }, [isDark]);
+
+  if (!option) return null;
+
+  return (
+    <div className="relative w-full">
+      <div className="absolute top-3 right-3 z-50">
+        <button
+          type="button"
+          onClick={handleDownload}
+          disabled={downloading}
+          aria-label={
+            downloading
+              ? t("chartable.downloading")
+              : t("chartable.downloadGraph")
+          }
+          className="p-1.5 rounded-lg border border-white/10 bg-zinc-800/80 hover:bg-zinc-700/80 transition-all cursor-pointer disabled:cursor-default"
+        >
+          {downloading ? (
+            <CircleNotch className="text-theme-text-primary w-5 h-5 animate-spin" />
+          ) : (
+            <DownloadSimple
+              weight="bold"
+              className="text-theme-text-primary w-5 h-5 pointer-events-none"
+            />
+          )}
+        </button>
+      </div>
+      <ReactECharts
+        ref={chartRef}
+        option={option}
+        style={{ height: 400, width: "100%" }}
+        opts={{ renderer: "canvas" }}
+        notMerge={true}
+        lazyUpdate={true}
+      />
+    </div>
+  );
+}
+
+export default memo(EChartRenderer);

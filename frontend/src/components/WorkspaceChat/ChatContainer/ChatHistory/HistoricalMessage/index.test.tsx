@@ -1,1 +1,216 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBUZXN0cyBmb3IgSGlzdG9yaWNhbE1lc3NhZ2UgY29tcG9uZW50IOKAlCB1c2VyIGFuZCBhc3Npc3RhbnQgbWVzc2FnZSByZW5kZXJpbmcuCi8vIElzc3VlICMzOTEKaW1wb3J0IHsgZGVzY3JpYmUsIGl0LCBleHBlY3QsIHZpLCBiZWZvcmVFYWNoIH0gZnJvbSAidml0ZXN0IjsKaW1wb3J0IHsgcmVuZGVyLCBzY3JlZW4gfSBmcm9tICJAdGVzdGluZy1saWJyYXJ5L3JlYWN0IjsKaW1wb3J0IHsgTWVtb3J5Um91dGVyIH0gZnJvbSAicmVhY3Qtcm91dGVyLWRvbSI7CmltcG9ydCBIaXN0b3JpY2FsTWVzc2FnZSBmcm9tICIuL2luZGV4IjsKCnZpLm1vY2soInJlYWN0LWkxOG5leHQiLCBhc3luYyAoKSA9PiB7CiAgY29uc3QgeyBjcmVhdGVJMThuTW9jayB9ID0gYXdhaXQgaW1wb3J0KCJAL3Rlc3QvaTE4bk1vY2siKTsKICByZXR1cm4gY3JlYXRlSTE4bk1vY2soKTsKfSk7CgovLyAtLS0tIG1vZHVsZSBtb2NrcyAtLS0tCnZpLm1vY2soIkAvdXRpbHMvY2hhdC9wdXJpZnkiLCAoKSA9PiAoewogIGRlZmF1bHQ6IHsgc2FuaXRpemU6IChzOiBzdHJpbmcpID0+IHMgPz8gIiIgfSwKfSkpOwoKdmkubW9jaygiQC91dGlscy9jaGF0L21hcmtkb3duLnRzIiwgKCkgPT4gKHsKICBkZWZhdWx0OiAodGV4dDogc3RyaW5nKSA9PiB0ZXh0ID8/ICIiLAp9KSk7CgovLyAtLS0tIHBlci10ZXN0IG1vY2sgb3ZlcnJpZGVzIHVzaW5nIHZpLmhvaXN0ZWQgLS0tLQpjb25zdCB7IGVkaXRNZXNzYWdlTW9jaywgZGVsZXRlTWVzc2FnZU1vY2sgfSA9IHZpLmhvaXN0ZWQoKCkgPT4gKHsKICBlZGl0TWVzc2FnZU1vY2s6IHsgaXNFZGl0aW5nOiBmYWxzZSB9LAogIGRlbGV0ZU1lc3NhZ2VNb2NrOiB7CiAgICBpc0RlbGV0ZWQ6IGZhbHNlLAogICAgY29tcGxldGVEZWxldGU6IGZhbHNlLAogICAgb25FbmRBbmltYXRpb246IHZpLmZuKCksCiAgfSwKfSkpOwoKdmkubW9jaygiLi9BY3Rpb25zL0VkaXRNZXNzYWdlIiwgKCkgPT4gKHsKICBFZGl0TWVzc2FnZUZvcm06ICgpID0+IDxkaXYgZGF0YS10ZXN0aWQ9ImVkaXQtZm9ybSIgLz4sCiAgdXNlRWRpdE1lc3NhZ2U6ICgpID0+IGVkaXRNZXNzYWdlTW9jaywKfSkpOwoKdmkubW9jaygiLi9BY3Rpb25zL0RlbGV0ZU1lc3NhZ2UiLCAoKSA9PiAoewogIHVzZVdhdGNoRGVsZXRlTWVzc2FnZTogKCkgPT4gZGVsZXRlTWVzc2FnZU1vY2ssCn0pKTsKCnZpLm1vY2soIi4vQWN0aW9ucy9UVFNCdXR0b24iLCAoKSA9PiAoeyBkZWZhdWx0OiAoKSA9PiBudWxsIH0pKTsKdmkubW9jaygiLi9BY3Rpb25zL0FjdGlvbk1lbnUiLCAoKSA9PiAoeyBkZWZhdWx0OiAoKSA9PiBudWxsIH0pKTsKdmkubW9jaygiLi9BY3Rpb25zL1JlbmRlck1ldHJpY3MiLCAoKSA9PiAoeyBkZWZhdWx0OiAoKSA9PiBudWxsIH0pKTsKCnZpLm1vY2soIi4vQWN0aW9ucyIsICgpID0+ICh7CiAgZGVmYXVsdDogKCkgPT4gPGRpdiBkYXRhLXRlc3RpZD0iYWN0aW9ucy1iYXIiIC8+LAp9KSk7Cgp2aS5tb2NrKCIuLi9DaXRhdGlvbiIsICgpID0+ICh7CiAgZGVmYXVsdDogKCkgPT4gPGRpdiBkYXRhLXRlc3RpZD0iY2l0YXRpb25zIiAvPiwKfSkpOwoKdmkubW9jaygiLi4vVGhvdWdodENvbnRhaW5lciIsICgpID0+ICh7CiAgVGhvdWdodENoYWluQ29tcG9uZW50OiAoKSA9PiBudWxsLAogIFRob3VnaHRCcmFpbkJ1dHRvbjogKCkgPT4gbnVsbCwKICBUSE9VR0hUX1JFR0VYX0NMT1NFOiAvPFwvdGhpbms+LywKICBUSE9VR0hUX1JFR0VYX0NPTVBMRVRFOiAvPHRoaW5rPltcc1xTXSo/PFwvdGhpbms+LywKICBUSE9VR0hUX1JFR0VYX09QRU46IC88dGhpbms+LywKfSkpOwoKdmkubW9jaygiLi9IaXN0b3JpY2FsT3V0cHV0cyIsICgpID0+ICh7IGRlZmF1bHQ6ICgpID0+IG51bGwgfSkpOwp2aS5tb2NrKCIuL0hpc3RvcmljYWxDbGFyaWZ5aW5nUXVlc3Rpb25zIiwgKCkgPT4gKHsgZGVmYXVsdDogKCkgPT4gbnVsbCB9KSk7Cgp2aS5tb2NrKCJAL2NvbXBvbmVudHMvSW1hZ2VMaWdodGJveCIsICgpID0+ICh7CiAgb3BlbkltYWdlTGlnaHRib3g6IHZpLmZuKCksCn0pKTsKCnZpLm1vY2soCiAgIkAvY29tcG9uZW50cy9Xb3Jrc3BhY2VDaGF0L0NoYXRDb250YWluZXIvQ2hhdEhpc3RvcnkvTWVzc2FnZUFjdGlvbnNDb250ZXh0IiwKICAoKSA9PiAoewogICAgdXNlTWVzc2FnZUFjdGlvbnNDb250ZXh0OiAoKSA9PiAoewogICAgICBpc0RlbGV0ZWQ6ICgpID0+IGZhbHNlLAogICAgfSksCiAgfSksCik7Cgp2aS5tb2NrKCJAL3V0aWxzL3BhdGhzIiwgKCkgPT4gKHsKICBkZWZhdWx0OiB7CiAgICB3b3Jrc3BhY2U6IHsgY2hhdDogKHNsdWc6IHN0cmluZykgPT4gYC93b3Jrc3BhY2UvJHtzbHVnfS9jaGF0YCB9LAogICAgdGhyZWFkOiB7IGNoYXQ6ICh3czogc3RyaW5nLCB0OiBzdHJpbmcpID0+IGAvd29ya3NwYWNlLyR7d3N9L3QvJHt0fS9jaGF0YCB9LAogIH0sCn0pKTsKCnZpLm1vY2soIi4vUmVuZGVyQ2hhdENvbnRlbnQiLCAoKSA9PiAoewogIGRlZmF1bHQ6ICh7IG1lc3NhZ2UgfTogeyBtZXNzYWdlOiBzdHJpbmcgfSkgPT4gPHNwYW4+e21lc3NhZ2V9PC9zcGFuPiwKfSkpOwoKdmkubW9jaygiQC91dGlscy9jaGF0IiwgKCkgPT4gKHsKICBjaGF0UXVlcnlSZWZ1c2FsUmVzcG9uc2U6ICgpID0+IGZhbHNlLAogIEFCT1JUX1NUUkVBTV9FVkVOVDogImFib3J0LWNoYXQtc3RyZWFtIiwKICBkZWZhdWx0OiB2aS5mbigpLAp9KSk7Cgp2aS5tb2NrKCJAL2NvbXBvbmVudHMvU2lkZWJhci9BY3RpdmVXb3Jrc3BhY2VzL1RocmVhZENvbnRhaW5lciIsICgpID0+ICh7CiAgVEhSRUFEX1JFTkFNRV9FVkVOVDogInRocmVhZC1yZW5hbWUiLAp9KSk7Cgp2aS5tb2NrKCJAL2NvbXBvbmVudHMvY29udGV4dHMvVFRTUHJvdmlkZXIiLCAoKSA9PiAoewogIGVtaXRBc3Npc3RhbnRNZXNzYWdlQ29tcGxldGVFdmVudDogdmkuZm4oKSwKfSkpOwoKLy8gLS0tLSBoZWxwZXJzIC0tLS0KY29uc3Qgd29ya3NwYWNlID0geyBzbHVnOiAibXktd3MiLCBuYW1lOiAiTXkgV29ya3NwYWNlIiB9OwoKY29uc3QgYmFzZUFzc2lzdGFudFByb3BzID0gewogIHV1aWQ6ICJtc2ctMDAxIiwKICBtZXNzYWdlOiAiSGVsbG8gZnJvbSBhc3Npc3RhbnQiLAogIHJvbGU6ICJhc3Npc3RhbnQiLAogIHdvcmtzcGFjZSwKICBzb3VyY2VzOiBbXSwKICBhdHRhY2htZW50czogW10sCiAgZXJyb3I6IGZhbHNlLAogIGZlZWRiYWNrU2NvcmU6IG51bGwsCiAgY2hhdElkOiA0MiwKICBpc0xhc3RNZXNzYWdlOiBmYWxzZSwKICByZWdlbmVyYXRlTWVzc2FnZTogdmkuZm4oKSwKICBzYXZlRWRpdGVkTWVzc2FnZTogdmkuZm4oKSwKICBmb3JrVGhyZWFkOiB2aS5mbigpLAogIG1ldHJpY3M6IHt9LAogIG91dHB1dHM6IFtdLAogIGNsYXJpZnlpbmdRdWVzdGlvbnM6IFtdLAp9OwoKY29uc3QgYmFzZVVzZXJQcm9wcyA9IHsKICAuLi5iYXNlQXNzaXN0YW50UHJvcHMsCiAgdXVpZDogIm1zZy0wMDIiLAogIG1lc3NhZ2U6ICJIZWxsbyBmcm9tIHVzZXIiLAogIHJvbGU6ICJ1c2VyIiwKfTsKCmNvbnN0IFdyYXBwZXIgPSAoeyBjaGlsZHJlbiB9OiB7IGNoaWxkcmVuOiBSZWFjdC5SZWFjdE5vZGUgfSkgPT4gKAogIDxNZW1vcnlSb3V0ZXI+e2NoaWxkcmVufTwvTWVtb3J5Um91dGVyPgopOwoKZGVzY3JpYmUoIkhpc3RvcmljYWxNZXNzYWdlIOKAkyBtZXNzYWdlIHJlbmRlcmluZyIsICgpID0+IHsKICBiZWZvcmVFYWNoKCgpID0+IHsKICAgIHZpLmNsZWFyQWxsTW9ja3MoKTsKICB9KTsKCiAgaXQoInJlbmRlcnMgYW4gYXNzaXN0YW50IG1lc3NhZ2Ugd2l0aCBpdHMgY29udGVudCIsICgpID0+IHsKICAgIHJlbmRlcig8SGlzdG9yaWNhbE1lc3NhZ2Ugey4uLmJhc2VBc3Npc3RhbnRQcm9wc30gLz4sIHsgd3JhcHBlcjogV3JhcHBlciB9KTsKICAgIGV4cGVjdChzY3JlZW4uZ2V0QnlUZXh0KCJIZWxsbyBmcm9tIGFzc2lzdGFudCIpKS50b0JlSW5UaGVEb2N1bWVudCgpOwogIH0pOwoKICBpdCgicmVuZGVycyBhIHVzZXIgbWVzc2FnZSB3aXRoIGl0cyBjb250ZW50IiwgKCkgPT4gewogICAgcmVuZGVyKDxIaXN0b3JpY2FsTWVzc2FnZSB7Li4uYmFzZVVzZXJQcm9wc30gLz4sIHsgd3JhcHBlcjogV3JhcHBlciB9KTsKICAgIGV4cGVjdChzY3JlZW4uZ2V0QnlUZXh0KCJIZWxsbyBmcm9tIHVzZXIiKSkudG9CZUluVGhlRG9jdW1lbnQoKTsKICB9KTsKCiAgaXQoInJlbmRlcnMgZGlmZmVyZW50IGNvbnRlbnQgZm9yIHVzZXIgdnMgYXNzaXN0YW50IG1lc3NhZ2VzIiwgKCkgPT4gewogICAgY29uc3QgeyB1bm1vdW50OiB1bm1vdW50QXNzaXN0YW50IH0gPSByZW5kZXIoCiAgICAgIDxIaXN0b3JpY2FsTWVzc2FnZSB7Li4uYmFzZUFzc2lzdGFudFByb3BzfSAvPiwKICAgICAgeyB3cmFwcGVyOiBXcmFwcGVyIH0sCiAgICApOwogICAgZXhwZWN0KHNjcmVlbi5nZXRCeVRleHQoIkhlbGxvIGZyb20gYXNzaXN0YW50IikpLnRvQmVJblRoZURvY3VtZW50KCk7CiAgICBleHBlY3Qoc2NyZWVuLnF1ZXJ5QnlUZXh0KCJIZWxsbyBmcm9tIHVzZXIiKSkubm90LnRvQmVJblRoZURvY3VtZW50KCk7CiAgICB1bm1vdW50QXNzaXN0YW50KCk7CgogICAgcmVuZGVyKDxIaXN0b3JpY2FsTWVzc2FnZSB7Li4uYmFzZVVzZXJQcm9wc30gLz4sIHsgd3JhcHBlcjogV3JhcHBlciB9KTsKICAgIGV4cGVjdChzY3JlZW4uZ2V0QnlUZXh0KCJIZWxsbyBmcm9tIHVzZXIiKSkudG9CZUluVGhlRG9jdW1lbnQoKTsKICAgIGV4cGVjdChzY3JlZW4ucXVlcnlCeVRleHQoIkhlbGxvIGZyb20gYXNzaXN0YW50IikpLm5vdC50b0JlSW5UaGVEb2N1bWVudCgpOwogIH0pOwoKICBpdCgicmVuZGVycyB1c2VyIG1lc3NhZ2UgYnViYmxlIHdpdGggY29ycmVjdCBzdHlsaW5nIGNsYXNzZXMiLCAoKSA9PiB7CiAgICBjb25zdCB7IGNvbnRhaW5lciB9ID0gcmVuZGVyKDxIaXN0b3JpY2FsTWVzc2FnZSB7Li4uYmFzZVVzZXJQcm9wc30gLz4sIHsKICAgICAgd3JhcHBlcjogV3JhcHBlciwKICAgIH0pOwogICAgY29uc3QgYnViYmxlID0gY29udGFpbmVyLnF1ZXJ5U2VsZWN0b3IoIi5iZy16aW5jLTcwMCIpOwogICAgZXhwZWN0KGJ1YmJsZSkudG9CZUluVGhlRG9jdW1lbnQoKTsKICAgIGV4cGVjdChidWJibGU/LmNsYXNzTmFtZSkudG9Db250YWluKCJ0ZXh0LXppbmMtNTAiKTsKICB9KTsKCiAgaXQoInJlbmRlcnMgYXNzaXN0YW50IG1lc3NhZ2Ugd2l0aG91dCB1c2VyIGJ1YmJsZSBzdHlsaW5nIiwgKCkgPT4gewogICAgY29uc3QgeyBjb250YWluZXIgfSA9IHJlbmRlcig8SGlzdG9yaWNhbE1lc3NhZ2Ugey4uLmJhc2VBc3Npc3RhbnRQcm9wc30gLz4sIHsKICAgICAgd3JhcHBlcjogV3JhcHBlciwKICAgIH0pOwogICAgLy8gQXNzaXN0YW50IG1lc3NhZ2VzIHNob3VsZCBub3QgaGF2ZSB0aGUgdXNlciBidWJibGUgYmctemluYy03MDAgY2xhc3MKICAgIGNvbnN0IHVzZXJCdWJibGUgPSBjb250YWluZXIucXVlcnlTZWxlY3RvcigiLmJnLXppbmMtNzAwIik7CiAgICBleHBlY3QodXNlckJ1YmJsZSkudG9CZU51bGwoKTsKICB9KTsKCiAgaXQoInJlbmRlcnMgYm90aCB1c2VyIGFuZCBhc3Npc3RhbnQgbWVzc2FnZXMgd2l0aCBhY3Rpb25zIGJhciIsICgpID0+IHsKICAgIHJlbmRlcig8SGlzdG9yaWNhbE1lc3NhZ2Ugey4uLmJhc2VBc3Npc3RhbnRQcm9wc30gLz4sIHsgd3JhcHBlcjogV3JhcHBlciB9KTsKICAgIGV4cGVjdChzY3JlZW4uZ2V0QnlUZXN0SWQoImFjdGlvbnMtYmFyIikpLnRvQmVJblRoZURvY3VtZW50KCk7CiAgfSk7CgogIGl0KCJyZW5kZXJzIG1hcmtkb3duIGNvbnRlbnQgZm9yIGFzc2lzdGFudCBtZXNzYWdlcyIsICgpID0+IHsKICAgIHJlbmRlcigKICAgICAgPEhpc3RvcmljYWxNZXNzYWdlCiAgICAgICAgey4uLmJhc2VBc3Npc3RhbnRQcm9wc30KICAgICAgICBtZXNzYWdlPSIqKkJvbGQgdGV4dCoqIGFuZCAqaXRhbGljKiIKICAgICAgLz4sCiAgICAgIHsgd3JhcHBlcjogV3JhcHBlciB9LAogICAgKTsKICAgIC8vIFRoZSBSZW5kZXJDaGF0Q29udGVudCBtb2NrIHJlbmRlcnMgdGhlIHJhdyBtZXNzYWdlCiAgICBleHBlY3Qoc2NyZWVuLmdldEJ5VGV4dCgiKipCb2xkIHRleHQqKiBhbmQgKml0YWxpYyoiKSkudG9CZUluVGhlRG9jdW1lbnQoKTsKICB9KTsKCiAgaXQoInJlbmRlcnMgbG9uZyB1c2VyIG1lc3NhZ2VzIHdpdGhvdXQgdHJ1bmNhdGlvbiIsICgpID0+IHsKICAgIGNvbnN0IGxvbmdNZXNzYWdlID0gIkEiLnJlcGVhdCg1MDApOwogICAgcmVuZGVyKAogICAgICA8SGlzdG9yaWNhbE1lc3NhZ2Ugey4uLmJhc2VVc2VyUHJvcHN9IG1lc3NhZ2U9e2xvbmdNZXNzYWdlfSAvPiwKICAgICAgeyB3cmFwcGVyOiBXcmFwcGVyIH0sCiAgICApOwogICAgZXhwZWN0KHNjcmVlbi5nZXRCeVRleHQobG9uZ01lc3NhZ2UpKS50b0JlSW5UaGVEb2N1bWVudCgpOwogIH0pOwoKICBpdCgiZG9lcyBub3QgY3Jhc2ggd2hlbiBtZXNzYWdlIGlzIGVtcHR5IHN0cmluZyIsICgpID0+IHsKICAgIGNvbnN0IHsgY29udGFpbmVyIH0gPSByZW5kZXIoCiAgICAgIDxIaXN0b3JpY2FsTWVzc2FnZSB7Li4uYmFzZUFzc2lzdGFudFByb3BzfSBtZXNzYWdlPSIiIC8+LAogICAgICB7IHdyYXBwZXI6IFdyYXBwZXIgfSwKICAgICk7CiAgICBleHBlY3QoY29udGFpbmVyKS50b0JlSW5UaGVEb2N1bWVudCgpOwogIH0pOwp9KTsK
+// SPDX-License-Identifier: MIT
+// Tests for HistoricalMessage component — user and assistant message rendering.
+// Issue #391
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
+import HistoricalMessage from "./index";
+
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
+
+// ---- module mocks ----
+vi.mock("@/utils/chat/purify", () => ({
+  default: { sanitize: (s: string) => s ?? "" },
+}));
+
+vi.mock("@/utils/chat/markdown.ts", () => ({
+  default: (text: string) => text ?? "",
+}));
+
+// ---- per-test mock overrides using vi.hoisted ----
+const { editMessageMock, deleteMessageMock } = vi.hoisted(() => ({
+  editMessageMock: { isEditing: false },
+  deleteMessageMock: {
+    isDeleted: false,
+    completeDelete: false,
+    onEndAnimation: vi.fn(),
+  },
+}));
+
+vi.mock("./Actions/EditMessage", () => ({
+  EditMessageForm: () => <div data-testid="edit-form" />,
+  useEditMessage: () => editMessageMock,
+}));
+
+vi.mock("./Actions/DeleteMessage", () => ({
+  useWatchDeleteMessage: () => deleteMessageMock,
+}));
+
+vi.mock("./Actions/TTSButton", () => ({ default: () => null }));
+vi.mock("./Actions/ActionMenu", () => ({ default: () => null }));
+vi.mock("./Actions/RenderMetrics", () => ({ default: () => null }));
+
+vi.mock("./Actions", () => ({
+  default: () => <div data-testid="actions-bar" />,
+}));
+
+vi.mock("../Citation", () => ({
+  default: () => <div data-testid="citations" />,
+}));
+
+vi.mock("../ThoughtContainer", () => ({
+  ThoughtChainComponent: () => null,
+  ThoughtBrainButton: () => null,
+  THOUGHT_REGEX_CLOSE: /<\/think>/,
+  THOUGHT_REGEX_COMPLETE: /<think>[\s\S]*?<\/think>/,
+  THOUGHT_REGEX_OPEN: /<think>/,
+}));
+
+vi.mock("./HistoricalOutputs", () => ({ default: () => null }));
+vi.mock("./HistoricalClarifyingQuestions", () => ({ default: () => null }));
+
+vi.mock("@/components/ImageLightbox", () => ({
+  openImageLightbox: vi.fn(),
+}));
+
+vi.mock(
+  "@/components/WorkspaceChat/ChatContainer/ChatHistory/MessageActionsContext",
+  () => ({
+    useMessageActionsContext: () => ({
+      isDeleted: () => false,
+    }),
+  }),
+);
+
+vi.mock("@/utils/paths", () => ({
+  default: {
+    workspace: { chat: (slug: string) => `/workspace/${slug}/chat` },
+    thread: { chat: (ws: string, t: string) => `/workspace/${ws}/t/${t}/chat` },
+  },
+}));
+
+vi.mock("./RenderChatContent", () => ({
+  default: ({ message }: { message: string }) => <span>{message}</span>,
+}));
+
+vi.mock("@/utils/chat", () => ({
+  chatQueryRefusalResponse: () => false,
+  ABORT_STREAM_EVENT: "abort-chat-stream",
+  default: vi.fn(),
+}));
+
+vi.mock("@/components/Sidebar/ActiveWorkspaces/ThreadContainer", () => ({
+  THREAD_RENAME_EVENT: "thread-rename",
+}));
+
+vi.mock("@/components/contexts/TTSProvider", () => ({
+  emitAssistantMessageCompleteEvent: vi.fn(),
+}));
+
+// ---- helpers ----
+const workspace = { slug: "my-ws", name: "My Workspace" };
+
+const baseAssistantProps = {
+  uuid: "msg-001",
+  message: "Hello from assistant",
+  role: "assistant",
+  workspace,
+  sources: [],
+  attachments: [],
+  error: false,
+  feedbackScore: null,
+  chatId: 42,
+  isLastMessage: false,
+  regenerateMessage: vi.fn(),
+  saveEditedMessage: vi.fn(),
+  forkThread: vi.fn(),
+  metrics: {},
+  outputs: [],
+  clarifyingQuestions: [],
+};
+
+const baseUserProps = {
+  ...baseAssistantProps,
+  uuid: "msg-002",
+  message: "Hello from user",
+  role: "user",
+};
+
+const Wrapper = ({ children }: { children: React.ReactNode }) => (
+  <MemoryRouter>{children}</MemoryRouter>
+);
+
+describe("HistoricalMessage – message rendering", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("renders an assistant message with its content", () => {
+    render(<HistoricalMessage {...baseAssistantProps} />, { wrapper: Wrapper });
+    expect(screen.getByText("Hello from assistant")).toBeInTheDocument();
+  });
+
+  it("renders a user message with its content", () => {
+    render(<HistoricalMessage {...baseUserProps} />, { wrapper: Wrapper });
+    expect(screen.getByText("Hello from user")).toBeInTheDocument();
+  });
+
+  it("renders different content for user vs assistant messages", () => {
+    const { unmount: unmountAssistant } = render(
+      <HistoricalMessage {...baseAssistantProps} />,
+      { wrapper: Wrapper },
+    );
+    expect(screen.getByText("Hello from assistant")).toBeInTheDocument();
+    expect(screen.queryByText("Hello from user")).not.toBeInTheDocument();
+    unmountAssistant();
+
+    render(<HistoricalMessage {...baseUserProps} />, { wrapper: Wrapper });
+    expect(screen.getByText("Hello from user")).toBeInTheDocument();
+    expect(screen.queryByText("Hello from assistant")).not.toBeInTheDocument();
+  });
+
+  it("renders user message bubble with correct styling classes", () => {
+    const { container } = render(<HistoricalMessage {...baseUserProps} />, {
+      wrapper: Wrapper,
+    });
+    const bubble = container.querySelector(".bg-zinc-700");
+    expect(bubble).toBeInTheDocument();
+    expect(bubble?.className).toContain("text-zinc-50");
+  });
+
+  it("renders assistant message without user bubble styling", () => {
+    const { container } = render(<HistoricalMessage {...baseAssistantProps} />, {
+      wrapper: Wrapper,
+    });
+    // Assistant messages should not have the user bubble bg-zinc-700 class
+    const userBubble = container.querySelector(".bg-zinc-700");
+    expect(userBubble).toBeNull();
+  });
+
+  it("renders both user and assistant messages with actions bar", () => {
+    render(<HistoricalMessage {...baseAssistantProps} />, { wrapper: Wrapper });
+    expect(screen.getByTestId("actions-bar")).toBeInTheDocument();
+  });
+
+  it("renders markdown content for assistant messages", () => {
+    render(
+      <HistoricalMessage
+        {...baseAssistantProps}
+        message="**Bold text** and *italic*"
+      />,
+      { wrapper: Wrapper },
+    );
+    // The RenderChatContent mock renders the raw message
+    expect(screen.getByText("**Bold text** and *italic*")).toBeInTheDocument();
+  });
+
+  it("renders long user messages without truncation", () => {
+    const longMessage = "A".repeat(500);
+    render(
+      <HistoricalMessage {...baseUserProps} message={longMessage} />,
+      { wrapper: Wrapper },
+    );
+    expect(screen.getByText(longMessage)).toBeInTheDocument();
+  });
+
+  it("does not crash when message is empty string", () => {
+    const { container } = render(
+      <HistoricalMessage {...baseAssistantProps} message="" />,
+      { wrapper: Wrapper },
+    );
+    expect(container).toBeInTheDocument();
+  });
+});

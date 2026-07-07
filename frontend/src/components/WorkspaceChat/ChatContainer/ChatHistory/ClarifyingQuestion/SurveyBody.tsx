@@ -1,1 +1,84 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyB1c2VUcmFuc2xhdGlvbiB9IGZyb20gInJlYWN0LWkxOG5leHQiOwppbXBvcnQgeyBmb3JtYXRBbnN3ZXJEaXNwbGF5IH0gZnJvbSAiLi91dGlscyI7CgpmdW5jdGlvbiBTdGF0dXNNZXNzYWdlKHsgbWVzc2FnZSB9OiBhbnkpIHsKICByZXR1cm4gKAogICAgPGRpdiBjbGFzc05hbWU9InRleHQteHMgdGV4dC13aGl0ZS82MCBsaWdodDp0ZXh0LXNsYXRlLTYwMCI+e21lc3NhZ2V9PC9kaXY+CiAgKTsKfQoKZnVuY3Rpb24gQW5zd2VyUm93KHsgcXVlc3Rpb24sIGFuc3dlciwgaW5kZXgsIHNob3dOdW1iZXIsIHNraXBwZWRMYWJlbCB9OiBhbnkpIHsKICByZXR1cm4gKAogICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZ2FwLTIiPgogICAgICB7c2hvd051bWJlciAmJiAoCiAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJ0ZXh0LXdoaXRlLzUwIGxpZ2h0OnRleHQtc2xhdGUtNTAwIHNocmluay0wIj4KICAgICAgICAgIHtgJHtpbmRleCArIDF9LmB9CiAgICAgICAgPC9zcGFuPgogICAgICApfQogICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCI+CiAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJ0ZXh0LXdoaXRlLzYwIGxpZ2h0OnRleHQtc2xhdGUtNjAwIj4KICAgICAgICAgIHtxdWVzdGlvbi5xdWVzdGlvbn0KICAgICAgICA8L3NwYW4+CiAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJmb250LW1lZGl1bSB0ZXh0LXdoaXRlIGxpZ2h0OnRleHQtc2xhdGUtOTAwIj4KICAgICAgICAgIHtmb3JtYXRBbnN3ZXJEaXNwbGF5KGFuc3dlciwgc2tpcHBlZExhYmVsKX0KICAgICAgICA8L3NwYW4+CiAgICAgIDwvZGl2PgogICAgPC9kaXY+CiAgKTsKfQoKZnVuY3Rpb24gQW5zd2Vyc0xpc3QoeyBxdWVzdGlvbnMsIGFuc3dlcnMgfTogYW55KSB7CiAgY29uc3QgeyB0IH0gPSB1c2VUcmFuc2xhdGlvbigpOwogIGNvbnN0IHNob3dOdW1iZXJzID0gcXVlc3Rpb25zLmxlbmd0aCA+IDE7CiAgY29uc3Qgc2tpcHBlZExhYmVsID0gdCgiY2hhdF93aW5kb3cuYWdlbnRfaW52b2NhdGlvbi5hbnN3ZXJfc2tpcHBlZCIpOwoKICByZXR1cm4gKAogICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgZ2FwLXktMS41IHRleHQteHMgdGV4dC13aGl0ZS83MCBsaWdodDp0ZXh0LXNsYXRlLTcwMCI+CiAgICAgIHsvKiBpbmRleCBrZXkgT0s6IHN0YXRpYyBsaXN0ICovfQogICAgICB7KHF1ZXN0aW9ucyBhcyBhbnkpLm1hcCgocSwgaSkgPT4gKAogICAgICAgIDxBbnN3ZXJSb3cKICAgICAgICAgIGtleT17aX0KICAgICAgICAgIHF1ZXN0aW9uPXtxfQogICAgICAgICAgYW5zd2VyPXthbnN3ZXJzW2ldIHx8IHsgc2tpcHBlZDogdHJ1ZSB9fQogICAgICAgICAgaW5kZXg9e2l9CiAgICAgICAgICBzaG93TnVtYmVyPXtzaG93TnVtYmVyc30KICAgICAgICAgIHNraXBwZWRMYWJlbD17c2tpcHBlZExhYmVsfQogICAgICAgIC8+CiAgICAgICkpfQogICAgPC9kaXY+CiAgKTsKfQoKLyoqCiAqIFJlYWQtb25seSByZW5kZXIgb2YgYSBjb21wbGV0ZWQgY2xhcmlmeWluZy1xdWVzdGlvbiBzdXJ2ZXkuIFVzZWQgYnkgdGhlCiAqIGxpdmUgQ2xhcmlmeWluZ1F1ZXN0aW9uQ2FyZCBvbmNlIHRoZSB1c2VyIHN1Ym1pdHMgYW5kIGJ5IEhpc3RvcmljYWxDbGFyaWZ5aW5nUXVlc3Rpb25zCiAqIHdoZW4gcmVwbGF5aW5nIHBhc3QgY2hhdHMuIEFueSBVSSBjaGFuZ2UgZm9yIGZpbGxlZC1pbiBzdXJ2ZXlzIGxpdmVzIGhlcmUuCiAqCiAqIEBwYXJhbSB7T2JqZWN0fSBwcm9wcwogKiBAcGFyYW0ge0FycmF5PE9iamVjdD59IHByb3BzLnF1ZXN0aW9ucyAtIFF1ZXN0aW9uIG9iamVjdHMgKGtpbmQsIHF1ZXN0aW9uLCAuLi4pLgogKiBAcGFyYW0ge3sgdGltZWRPdXQ/OiBib29sZWFuLCBza2lwcGVkPzogYm9vbGVhbiwgYW5zd2Vycz86IEFycmF5PHsgc2tpcHBlZDogYm9vbGVhbiwgYW5zd2VyOiBhbnkgfT4gfX0gcHJvcHMucmVzdWx0CiAqICAgVGhlIHN1cnZleSdzIHJlc29sdXRpb24gcGF5bG9hZCDigJQgc2FtZSBzaGFwZSByZXR1cm5lZCBieSB0aGUgd2Vic29ja2V0LgogKi8KZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gU3VydmV5Qm9keSh7IHF1ZXN0aW9ucyA9IFtdLCByZXN1bHQgPSB7fSB9OiBhbnkpIHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CgogIGlmIChyZXN1bHQudGltZWRPdXQpIHsKICAgIHJldHVybiAoCiAgICAgIDxTdGF0dXNNZXNzYWdlCiAgICAgICAgbWVzc2FnZT17dCgiY2hhdF93aW5kb3cuYWdlbnRfaW52b2NhdGlvbi5jbGFyaWZ5aW5nX3RpbWVvdXQiKX0KICAgICAgLz4KICAgICk7CiAgfQoKICBpZiAocmVzdWx0LnNraXBwZWQpIHsKICAgIHJldHVybiAoCiAgICAgIDxTdGF0dXNNZXNzYWdlCiAgICAgICAgbWVzc2FnZT17dCgiY2hhdF93aW5kb3cuYWdlbnRfaW52b2NhdGlvbi5jbGFyaWZ5aW5nX3NraXBwZWQiKX0KICAgICAgLz4KICAgICk7CiAgfQoKICBjb25zdCBhbnN3ZXJzID0gQXJyYXkuaXNBcnJheShyZXN1bHQuYW5zd2VycykgPyByZXN1bHQuYW5zd2VycyA6IFtdOwogIHJldHVybiA8QW5zd2Vyc0xpc3QgcXVlc3Rpb25zPXtxdWVzdGlvbnN9IGFuc3dlcnM9e2Fuc3dlcnN9IC8+Owp9Cg==
+// SPDX-License-Identifier: MIT
+import { useTranslation } from "react-i18next";
+import { formatAnswerDisplay } from "./utils";
+
+function StatusMessage({ message }: any) {
+  return (
+    <div className="text-xs text-white/60 light:text-slate-600">{message}</div>
+  );
+}
+
+function AnswerRow({ question, answer, index, showNumber, skippedLabel }: any) {
+  return (
+    <div className="flex gap-2">
+      {showNumber && (
+        <span className="text-white/50 light:text-slate-500 shrink-0">
+          {`${index + 1}.`}
+        </span>
+      )}
+      <div className="flex flex-col">
+        <span className="text-white/60 light:text-slate-600">
+          {question.question}
+        </span>
+        <span className="font-medium text-white light:text-slate-900">
+          {formatAnswerDisplay(answer, skippedLabel)}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function AnswersList({ questions, answers }: any) {
+  const { t } = useTranslation();
+  const showNumbers = questions.length > 1;
+  const skippedLabel = t("chat_window.agent_invocation.answer_skipped");
+
+  return (
+    <div className="flex flex-col gap-y-1.5 text-xs text-white/70 light:text-slate-700">
+      {/* index key OK: static list */}
+      {(questions as any).map((q, i) => (
+        <AnswerRow
+          key={i}
+          question={q}
+          answer={answers[i] || { skipped: true }}
+          index={i}
+          showNumber={showNumbers}
+          skippedLabel={skippedLabel}
+        />
+      ))}
+    </div>
+  );
+}
+
+/**
+ * Read-only render of a completed clarifying-question survey. Used by the
+ * live ClarifyingQuestionCard once the user submits and by HistoricalClarifyingQuestions
+ * when replaying past chats. Any UI change for filled-in surveys lives here.
+ *
+ * @param {Object} props
+ * @param {Array<Object>} props.questions - Question objects (kind, question, ...).
+ * @param {{ timedOut?: boolean, skipped?: boolean, answers?: Array<{ skipped: boolean, answer: any }> }} props.result
+ *   The survey's resolution payload — same shape returned by the websocket.
+ */
+export default function SurveyBody({ questions = [], result = {} }: any) {
+  const { t } = useTranslation();
+
+  if (result.timedOut) {
+    return (
+      <StatusMessage
+        message={t("chat_window.agent_invocation.clarifying_timeout")}
+      />
+    );
+  }
+
+  if (result.skipped) {
+    return (
+      <StatusMessage
+        message={t("chat_window.agent_invocation.clarifying_skipped")}
+      />
+    );
+  }
+
+  const answers = Array.isArray(result.answers) ? result.answers : [];
+  return <AnswersList questions={questions} answers={answers} />;
+}

@@ -1,1 +1,238 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAoKaW1wb3J0IHsgbWVtbywgdXNlUmVmLCB1c2VFZmZlY3QsIHVzZVN0YXRlIH0gZnJvbSAicmVhY3QiOwppbXBvcnQgeyBXYXJuaW5nIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL1dhcm5pbmciOwppbXBvcnQgeyB1c2VUcmFuc2xhdGlvbiB9IGZyb20gInJlYWN0LWkxOG5leHQiOwppbXBvcnQgcmVuZGVyTWFya2Rvd24gZnJvbSAiQC91dGlscy9jaGF0L21hcmtkb3duIjsKaW1wb3J0IERPTVB1cmlmeSBmcm9tICJAL3V0aWxzL2NoYXQvcHVyaWZ5IjsKaW1wb3J0IENpdGF0aW9ucyBmcm9tICIuLi9DaXRhdGlvbiI7CmltcG9ydCBHcm91bmRpbmdCYWRnZSBmcm9tICIuLi9Hcm91bmRpbmdCYWRnZSI7CmltcG9ydCB7CiAgVEhPVUdIVF9SRUdFWF9DTE9TRSwKICBUSE9VR0hUX1JFR0VYX0NPTVBMRVRFLAogIFRIT1VHSFRfUkVHRVhfT1BFTiwKICBUaG91Z2h0Q2hhaW5Db21wb25lbnQsCiAgVGhvdWdodEJyYWluQnV0dG9uLAp9IGZyb20gIi4uL1Rob3VnaHRDb250YWluZXIiOwoKY29uc3QgTUFSS0RPV05fU0FOSVRJWkVfT1BUUyA9IHsKICBBTExPV0VEX1RBR1M6IFsKICAgICJhIiwKICAgICJiIiwKICAgICJpIiwKICAgICJ1IiwKICAgICJzdHJvbmciLAogICAgImVtIiwKICAgICJiciIsCiAgICAicCIsCiAgICAic3BhbiIsCiAgICAiZGl2IiwKICAgICJ1bCIsCiAgICAib2wiLAogICAgImxpIiwKICAgICJibG9ja3F1b3RlIiwKICAgICJwcmUiLAogICAgImNvZGUiLAogICAgImgxIiwKICAgICJoMiIsCiAgICAiaDMiLAogICAgImg0IiwKICAgICJoNSIsCiAgICAiaDYiLAogICAgInRhYmxlIiwKICAgICJ0aGVhZCIsCiAgICAidGJvZHkiLAogICAgInRyIiwKICAgICJ0aCIsCiAgICAidGQiLAogICAgImltZyIsCiAgICAiaHIiLAogICAgInN2ZyIsCiAgICAicGF0aCIsCiAgICAicmVjdCIsCiAgICAicG9seWxpbmUiLAogICAgInRoaW5rIiwKICAgICJ0aGlua2luZyIsCiAgICAidGhvdWdodCIsCiAgICAidGhvdWdodF9jaGFpbiIsCiAgICAidGhpbmtfY2hhaW4iLAogICAgInJlc3BvbnNlIiwKICAgICJhbnN3ZXIiLAogIF0sCn07CmNvbnN0IHNhZmVNYXJrZG93biA9IChodG1sKSA9PiBET01QdXJpZnkuc2FuaXRpemUoaHRtbCwgTUFSS0RPV05fU0FOSVRJWkVfT1BUUyk7Cgpjb25zdCBQcm9tcHRSZXBseTogYW55ID0gKHsKICB1dWlkLAogIHJlcGx5LAogIHBlbmRpbmcsCiAgZXJyb3IsCiAgZXJyb3JJZCA9IG51bGwsCiAgc291cmNlcyA9IFtdLAp9OiBhbnkpID0+IHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgaWYgKCFyZXBseSAmJiBzb3VyY2VzLmxlbmd0aCA9PT0gMCAmJiAhcGVuZGluZyAmJiAhZXJyb3IpIHJldHVybiBudWxsOwoKICBpZiAocGVuZGluZykgewogICAgcmV0dXJuICgKICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXgganVzdGlmeS1zdGFydCB3LWZ1bGwgcHktMi41Ij4KICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIgdy1mdWxsIj4KICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMS41IHB4LTEiPgogICAgICAgICAgICA8c3BhbgogICAgICAgICAgICAgIGNsYXNzTmFtZT0idy0yLjUgaC0yLjUgcm91bmRlZC1mdWxsIGJnLXppbmMtNTAwIGxpZ2h0OmJnLXNsYXRlLTQwMCBhbmltYXRlLXB1bHNlIgogICAgICAgICAgICAgIHN0eWxlPXt7IGFuaW1hdGlvbkRlbGF5OiAiMG1zIiB9fQogICAgICAgICAgICAvPgogICAgICAgICAgICA8c3BhbgogICAgICAgICAgICAgIGNsYXNzTmFtZT0idy0yLjUgaC0yLjUgcm91bmRlZC1mdWxsIGJnLXppbmMtNTAwIGxpZ2h0OmJnLXNsYXRlLTQwMCBhbmltYXRlLXB1bHNlIgogICAgICAgICAgICAgIHN0eWxlPXt7IGFuaW1hdGlvbkRlbGF5OiAiMjAwbXMiIH19CiAgICAgICAgICAgIC8+CiAgICAgICAgICAgIDxzcGFuCiAgICAgICAgICAgICAgY2xhc3NOYW1lPSJ3LTIuNSBoLTIuNSByb3VuZGVkLWZ1bGwgYmctemluYy01MDAgbGlnaHQ6Ymctc2xhdGUtNDAwIGFuaW1hdGUtcHVsc2UiCiAgICAgICAgICAgICAgc3R5bGU9e3sgYW5pbWF0aW9uRGVsYXk6ICI0MDBtcyIgfX0KICAgICAgICAgICAgLz4KICAgICAgICAgIDwvZGl2PgogICAgICAgIDwvZGl2PgogICAgICA8L2Rpdj4KICAgICk7CiAgfQoKICBpZiAoZXJyb3IpIHsKICAgIHJldHVybiAoCiAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGp1c3RpZnktc3RhcnQgdy1mdWxsIHB5LTIuNSI+CiAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgbWQ6bWF4LXctWzg1JV0gdy1mdWxsIj4KICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0iaW5saW5lLWJsb2NrIHAtMiByb3VuZGVkLWxnIGJnLXJlZC01MCB0ZXh0LXJlZC01MDAiPgogICAgICAgICAgICA8V2FybmluZyBjbGFzc05hbWU9ImgtNCB3LTQgbWItMSBpbmxpbmUtYmxvY2siIC8+eyIgIn0KICAgICAgICAgICAge3QoInByb21wdFJlcGx5LmNvdWxkTm90UmVzcG9uZCIpfQogICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9InRleHQteHMiPgogICAgICAgICAgICAgIHt0KCJwcm9tcHRSZXBseS5yZWFzb24iLCB7CiAgICAgICAgICAgICAgICByZWFzb246IGVycm9yIHx8IHQoInByb21wdFJlcGx5LnVua25vd24iKSwKICAgICAgICAgICAgICB9KX0KICAgICAgICAgICAgPC9zcGFuPgogICAgICAgICAgICB7ZXJyb3JJZCA/ICgKICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9ImJsb2NrIG10LTEgdGV4dC14cyBvcGFjaXR5LTc1IHNlbGVjdC1hbGwgZm9udC1tb25vIj4KICAgICAgICAgICAgICAgIHt0KCJwcm9tcHRSZXBseS5lcnJvcklkIiwgeyBpZDogZXJyb3JJZCB9KX0KICAgICAgICAgICAgICA8L3NwYW4+CiAgICAgICAgICAgICkgOiBudWxsfQogICAgICAgICAgPC9zcGFuPgogICAgICAgIDwvZGl2PgogICAgICA8L2Rpdj4KICAgICk7CiAgfQoKICByZXR1cm4gKAogICAgPGRpdiBrZXk9e3V1aWR9IGNsYXNzTmFtZT0iZmxleCBqdXN0aWZ5LXN0YXJ0IHctZnVsbCBweS0yLjUiPgogICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCB3LWZ1bGwgbWQ6bWF4LXctWzg1JV0iPgogICAgICAgIDxSZW5kZXJBc3Npc3RhbnRDaGF0Q29udGVudAogICAgICAgICAga2V5PXtgJHt1dWlkfS1wcm9tcHQtcmVwbHktY29udGVudGB9CiAgICAgICAgICBtZXNzYWdlPXtyZXBseX0KICAgICAgICAgIG1lc3NhZ2VJZD17dXVpZH0KICAgICAgICAvPgogICAgICAgIDxHcm91bmRpbmdCYWRnZSBzb3VyY2VzPXtzb3VyY2VzfSAvPgogICAgICAgIDxDaXRhdGlvbnMgc291cmNlcz17c291cmNlc30gLz4KICAgICAgPC9kaXY+CiAgICA8L2Rpdj4KICApOwp9OwoKZnVuY3Rpb24gUmVuZGVyQXNzaXN0YW50Q2hhdENvbnRlbnQoeyBtZXNzYWdlLCBtZXNzYWdlSWQgfTogYW55KSB7CiAgY29uc3QgdGhvdWdodENoYWluUmVmID0gdXNlUmVmKG51bGwpOwogIGNvbnN0IFtwZW5kaW5nVGhvdWdodENvbnRlbnQsIHNldFBlbmRpbmdUaG91Z2h0Q29udGVudF0gPSB1c2VTdGF0ZTxzdHJpbmcgfCBudWxsPihudWxsKTsKCiAgLy8gVXBkYXRlIHRoZSBUaG91Z2h0Q2hhaW5Db21wb25lbnQgaW1wZXJhdGl2ZWx5IHdoZW4gdGhlIG1lc3NhZ2UgY2hhbmdlcy4KICAvLyBUaGUgcmVuZGVyZWQgbWFya2Rvd24gY29udGVudCBpcyBjb21wdXRlZCBkdXJpbmcgcmVuZGVyIChub3QgdmlhIHJlZikKICAvLyBzbyBzdHJlYW1pbmcgY2h1bmtzIGFwcGVhciBpbW1lZGlhdGVseSB3aXRob3V0IGEgb25lLXJlbmRlciBsYWcuCiAgLy8gSWYgdGhlIHJlZiBpcyBudWxsIChjb21wb25lbnQgYmV0d2VlbiByZW5kZXIgc3RhdGVzKSwgc3Rhc2ggdGhlIGNvbnRlbnQKICAvLyBpbiBzdGF0ZSBzbyBpdCBjYW4gYmUgYXBwbGllZCBvbmNlIHRoZSByZWYgYmVjb21lcyBhdmFpbGFibGUuCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIGlmICghbWVzc2FnZSkgcmV0dXJuOwogICAgY29uc3QgdGhpbmtpbmcgPQogICAgICBtZXNzYWdlLm1hdGNoKFRIT1VHSFRfUkVHRVhfT1BFTikgJiYgIW1lc3NhZ2UubWF0Y2goVEhPVUdIVF9SRUdFWF9DTE9TRSk7CgogICAgY29uc3QgY29udGVudFRvVXBkYXRlID0gdGhpbmtpbmcKICAgICAgPyBtZXNzYWdlCiAgICAgIDogKG1lc3NhZ2UubWF0Y2goVEhPVUdIVF9SRUdFWF9DT01QTEVURSk/LlswXSA/PyBudWxsKTsKCiAgICBpZiAoY29udGVudFRvVXBkYXRlICYmIHRob3VnaHRDaGFpblJlZi5jdXJyZW50KSB7CiAgICAgIHRob3VnaHRDaGFpblJlZi5jdXJyZW50LnVwZGF0ZUNvbnRlbnQoY29udGVudFRvVXBkYXRlKTsKICAgICAgc2V0UGVuZGluZ1Rob3VnaHRDb250ZW50KG51bGwpOwogICAgICByZXR1cm47CiAgICB9CgogICAgLy8gUmVmIG5vdCByZWFkeSB5ZXQg4oCUIHByZXNlcnZlIGNvbnRlbnQgZm9yIHdoZW4gaXQgbW91bnRzCiAgICBpZiAoY29udGVudFRvVXBkYXRlKSB7CiAgICAgIHNldFBlbmRpbmdUaG91Z2h0Q29udGVudChjb250ZW50VG9VcGRhdGUpOwogICAgfQogIH0sIFttZXNzYWdlXSk7CgogIC8vIEFwcGx5IHBlbmRpbmcgdGhvdWdodCBjb250ZW50IG9uY2UgdGhlIHJlZiBiZWNvbWVzIGF2YWlsYWJsZQogIHVzZUVmZmVjdCgoKSA9PiB7CiAgICBpZiAocGVuZGluZ1Rob3VnaHRDb250ZW50ICYmIHRob3VnaHRDaGFpblJlZi5jdXJyZW50KSB7CiAgICAgIHRob3VnaHRDaGFpblJlZi5jdXJyZW50LnVwZGF0ZUNvbnRlbnQocGVuZGluZ1Rob3VnaHRDb250ZW50KTsKICAgICAgc2V0UGVuZGluZ1Rob3VnaHRDb250ZW50KG51bGwpOwogICAgfQogIH0sIFtwZW5kaW5nVGhvdWdodENvbnRlbnRdKTsKCiAgLy8gR3VhcmQ6IHdoZW4gcmVwbHkgaXMgdW5kZWZpbmVkIGJ1dCBzb3VyY2VzIGV4aXN0LCBwYXJlbnQgZmFsbHMgdGhyb3VnaAogIC8vIHRvIHRoaXMgY29tcG9uZW50IOKAlCB3aXRob3V0IGEgZ3VhcmQsIG1lc3NhZ2UubWF0Y2goKSBiZWxvdyB0aHJvd3MuCiAgaWYgKCFtZXNzYWdlKSByZXR1cm4gbnVsbDsKCiAgY29uc3QgdGhpbmtpbmcgPQogICAgbWVzc2FnZS5tYXRjaChUSE9VR0hUX1JFR0VYX09QRU4pICYmICFtZXNzYWdlLm1hdGNoKFRIT1VHSFRfUkVHRVhfQ0xPU0UpOwoKICAvLyBDb21wdXRlIHJlbmRlcmVkIGNvbnRlbnQgZHVyaW5nIHJlbmRlciBzbyBzdHJlYW1pbmcgaXMgcmVhbC10aW1lCiAgY29uc3QgY29tcGxldGVUaG91Z2h0Q2hhaW4gPSBtZXNzYWdlLm1hdGNoKFRIT1VHSFRfUkVHRVhfQ09NUExFVEUpPy5bMF07CiAgY29uc3QgbXNnVG9SZW5kZXIgPSBtZXNzYWdlLnJlcGxhY2UoVEhPVUdIVF9SRUdFWF9DT01QTEVURSwgIiIpOwoKICAvLyBEZXRlcm1pbmUgdGhvdWdodCBjaGFpbiBjb250ZW50IGZvciB0aGUgYnJhaW4gYnV0dG9uCiAgY29uc3QgdGhvdWdodENoYWluQ29udGVudCA9IHRoaW5raW5nCiAgICA/IG1lc3NhZ2UKICAgIDogKGNvbXBsZXRlVGhvdWdodENoYWluID8/IG51bGwpOwoKICBpZiAodGhpbmtpbmcpCiAgICByZXR1cm4gKAogICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCBnYXAteS0wLjUiPgogICAgICAgIDxUaG91Z2h0Q2hhaW5Db21wb25lbnQKICAgICAgICAgIHJlZj17dGhvdWdodENoYWluUmVmfQogICAgICAgICAgY29udGVudD0iIgogICAgICAgICAgbWVzc2FnZUlkPXttZXNzYWdlSWR9CiAgICAgICAgICBkZWZhdWx0RXhwYW5kZWQ9e3RydWV9CiAgICAgICAgLz4KICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIgZ2FwLXgtMS41Ij4KICAgICAgICAgIDxUaG91Z2h0QnJhaW5CdXR0b24KICAgICAgICAgICAgbWVzc2FnZUlkPXttZXNzYWdlSWR9CiAgICAgICAgICAgIGNvbnRlbnQ9e21lc3NhZ2V9CiAgICAgICAgICAgIGNsYXNzTmFtZT0ibXQtMCIKICAgICAgICAgIC8+CiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZG90LWZhbGxpbmcgbGlnaHQ6aW52ZXJ0IiAvPgogICAgICAgIDwvZGl2PgogICAgICA8L2Rpdj4KICAgICk7CgogIHJldHVybiAoCiAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCBnYXAteS0wLjUiPgogICAgICB7dGhvdWdodENoYWluQ29udGVudCAmJiAoCiAgICAgICAgPFRob3VnaHRDaGFpbkNvbXBvbmVudAogICAgICAgICAgcmVmPXt0aG91Z2h0Q2hhaW5SZWZ9CiAgICAgICAgICBjb250ZW50PSIiCiAgICAgICAgICBtZXNzYWdlSWQ9e21lc3NhZ2VJZH0KICAgICAgICAvPgogICAgICApfQogICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBpdGVtcy1zdGFydCBnYXAteC0xLjUiPgogICAgICAgIHt0aG91Z2h0Q2hhaW5Db250ZW50ICYmICgKICAgICAgICAgIDxUaG91Z2h0QnJhaW5CdXR0b24KICAgICAgICAgICAgbWVzc2FnZUlkPXttZXNzYWdlSWR9CiAgICAgICAgICAgIGNvbnRlbnQ9e3Rob3VnaHRDaGFpbkNvbnRlbnR9CiAgICAgICAgICAvPgogICAgICAgICl9CiAgICAgICAgPHNwYW4KICAgICAgICAgIGNsYXNzTmFtZT0iZmxleC0xIG1pbi13LTAgYnJlYWstd29yZHMiCiAgICAgICAgICBkYW5nZXJvdXNseVNldElubmVySFRNTD17ewogICAgICAgICAgICBfX2h0bWw6IHNhZmVNYXJrZG93bihyZW5kZXJNYXJrZG93bihtc2dUb1JlbmRlcikpLAogICAgICAgICAgfX0KICAgICAgICAvPgogICAgICA8L2Rpdj4KICAgIDwvZGl2PgogICk7Cn0KCmV4cG9ydCBkZWZhdWx0IG1lbW8oUHJvbXB0UmVwbHkpIGFzIGFueTsK
+// SPDX-License-Identifier: MIT
+
+import { memo, useRef, useEffect, useState } from "react";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
+import { useTranslation } from "react-i18next";
+import renderMarkdown from "@/utils/chat/markdown";
+import DOMPurify from "@/utils/chat/purify";
+import Citations from "../Citation";
+import GroundingBadge from "../GroundingBadge";
+import {
+  THOUGHT_REGEX_CLOSE,
+  THOUGHT_REGEX_COMPLETE,
+  THOUGHT_REGEX_OPEN,
+  ThoughtChainComponent,
+  ThoughtBrainButton,
+} from "../ThoughtContainer";
+
+const MARKDOWN_SANITIZE_OPTS = {
+  ALLOWED_TAGS: [
+    "a",
+    "b",
+    "i",
+    "u",
+    "strong",
+    "em",
+    "br",
+    "p",
+    "span",
+    "div",
+    "ul",
+    "ol",
+    "li",
+    "blockquote",
+    "pre",
+    "code",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "table",
+    "thead",
+    "tbody",
+    "tr",
+    "th",
+    "td",
+    "img",
+    "hr",
+    "svg",
+    "path",
+    "rect",
+    "polyline",
+    "think",
+    "thinking",
+    "thought",
+    "thought_chain",
+    "think_chain",
+    "response",
+    "answer",
+  ],
+};
+const safeMarkdown = (html) => DOMPurify.sanitize(html, MARKDOWN_SANITIZE_OPTS);
+
+const PromptReply: any = ({
+  uuid,
+  reply,
+  pending,
+  error,
+  errorId = null,
+  sources = [],
+}: any) => {
+  const { t } = useTranslation();
+  if (!reply && sources.length === 0 && !pending && !error) return null;
+
+  if (pending) {
+    return (
+      <div className="flex justify-start w-full py-2.5">
+        <div className="flex items-center w-full">
+          <div className="flex items-center gap-1.5 px-1">
+            <span
+              className="w-2.5 h-2.5 rounded-full bg-zinc-500 light:bg-slate-400 animate-pulse"
+              style={{ animationDelay: "0ms" }}
+            />
+            <span
+              className="w-2.5 h-2.5 rounded-full bg-zinc-500 light:bg-slate-400 animate-pulse"
+              style={{ animationDelay: "200ms" }}
+            />
+            <span
+              className="w-2.5 h-2.5 rounded-full bg-zinc-500 light:bg-slate-400 animate-pulse"
+              style={{ animationDelay: "400ms" }}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-start w-full py-2.5">
+        <div className="flex flex-col md:max-w-[85%] w-full">
+          <span className="inline-block p-2 rounded-lg bg-red-50 text-red-500">
+            <Warning className="h-4 w-4 mb-1 inline-block" />{" "}
+            {t("promptReply.couldNotRespond")}
+            <span className="text-xs">
+              {t("promptReply.reason", {
+                reason: error || t("promptReply.unknown"),
+              })}
+            </span>
+            {errorId ? (
+              <span className="block mt-1 text-xs opacity-75 select-all font-mono">
+                {t("promptReply.errorId", { id: errorId })}
+              </span>
+            ) : null}
+          </span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div key={uuid} className="flex justify-start w-full py-2.5">
+      <div className="flex flex-col w-full md:max-w-[85%]">
+        <RenderAssistantChatContent
+          key={`${uuid}-prompt-reply-content`}
+          message={reply}
+          messageId={uuid}
+        />
+        <GroundingBadge sources={sources} />
+        <Citations sources={sources} />
+      </div>
+    </div>
+  );
+};
+
+function RenderAssistantChatContent({ message, messageId }: any) {
+  const thoughtChainRef = useRef(null);
+  const [pendingThoughtContent, setPendingThoughtContent] = useState<string | null>(null);
+
+  // Update the ThoughtChainComponent imperatively when the message changes.
+  // The rendered markdown content is computed during render (not via ref)
+  // so streaming chunks appear immediately without a one-render lag.
+  // If the ref is null (component between render states), stash the content
+  // in state so it can be applied once the ref becomes available.
+  useEffect(() => {
+    if (!message) return;
+    const thinking =
+      message.match(THOUGHT_REGEX_OPEN) && !message.match(THOUGHT_REGEX_CLOSE);
+
+    const contentToUpdate = thinking
+      ? message
+      : (message.match(THOUGHT_REGEX_COMPLETE)?.[0] ?? null);
+
+    if (contentToUpdate && thoughtChainRef.current) {
+      thoughtChainRef.current.updateContent(contentToUpdate);
+      setPendingThoughtContent(null);
+      return;
+    }
+
+    // Ref not ready yet — preserve content for when it mounts
+    if (contentToUpdate) {
+      setPendingThoughtContent(contentToUpdate);
+    }
+  }, [message]);
+
+  // Apply pending thought content once the ref becomes available
+  useEffect(() => {
+    if (pendingThoughtContent && thoughtChainRef.current) {
+      thoughtChainRef.current.updateContent(pendingThoughtContent);
+      setPendingThoughtContent(null);
+    }
+  }, [pendingThoughtContent]);
+
+  // Guard: when reply is undefined but sources exist, parent falls through
+  // to this component — without a guard, message.match() below throws.
+  if (!message) return null;
+
+  const thinking =
+    message.match(THOUGHT_REGEX_OPEN) && !message.match(THOUGHT_REGEX_CLOSE);
+
+  // Compute rendered content during render so streaming is real-time
+  const completeThoughtChain = message.match(THOUGHT_REGEX_COMPLETE)?.[0];
+  const msgToRender = message.replace(THOUGHT_REGEX_COMPLETE, "");
+
+  // Determine thought chain content for the brain button
+  const thoughtChainContent = thinking
+    ? message
+    : (completeThoughtChain ?? null);
+
+  if (thinking)
+    return (
+      <div className="flex flex-col gap-y-0.5">
+        <ThoughtChainComponent
+          ref={thoughtChainRef}
+          content=""
+          messageId={messageId}
+          defaultExpanded={true}
+        />
+        <div className="flex items-center gap-x-1.5">
+          <ThoughtBrainButton
+            messageId={messageId}
+            content={message}
+            className="mt-0"
+          />
+          <div className="dot-falling light:invert" />
+        </div>
+      </div>
+    );
+
+  return (
+    <div className="flex flex-col gap-y-0.5">
+      {thoughtChainContent && (
+        <ThoughtChainComponent
+          ref={thoughtChainRef}
+          content=""
+          messageId={messageId}
+        />
+      )}
+      <div className="flex items-start gap-x-1.5">
+        {thoughtChainContent && (
+          <ThoughtBrainButton
+            messageId={messageId}
+            content={thoughtChainContent}
+          />
+        )}
+        <span
+          className="flex-1 min-w-0 break-words"
+          dangerouslySetInnerHTML={{
+            __html: safeMarkdown(renderMarkdown(msgToRender)),
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+export default memo(PromptReply) as any;
