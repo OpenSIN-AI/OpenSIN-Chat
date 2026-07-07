@@ -8,6 +8,23 @@
 }
 
 :root {
+  /* ==========================================================================
+     Phase 5 — Semantic Design System Layer (5-token palette)
+     These are the canonical brand tokens. All other --theme-* variables below
+     are derived from or consistent with this palette.
+
+     1. --color-brand        : primary brand color (CTA, links, accents)
+     2. --color-surface      : main page / chat background
+     3. --color-surface-raised: elevated surfaces (cards, modals, sidebar)
+     4. --color-text         : primary readable text
+     5. --color-muted        : secondary / placeholder / disabled text
+     ========================================================================== */
+  --color-brand:         #009ee0;
+  --color-surface:       #0e0f0f;
+  --color-surface-raised:#1b1b1e;
+  --color-text:          #ffffff;
+  --color-muted:         rgba(255, 255, 255, 0.5);
+
   /* OpenSIN Chat — Brand: AfD-Blau #009ee0 */
   --brand-primary: #009ee0;
   --brand-primary-dark: #0079b0;
@@ -142,6 +159,13 @@
 }
 
 [data-theme="light"] {
+  /* Phase 5 — light-theme semantic token overrides */
+  --color-brand:         #009ee0;
+  --color-surface:       #ffffff;
+  --color-surface-raised:#edf2fa;
+  --color-text:          #0e0f0f;
+  --color-muted:         rgba(0, 0, 0, 0.5);
+
   --brand-primary: #009ee0;
   --brand-primary-dark: #0079b0;
   --brand-accent: #ffd700;
@@ -270,15 +294,37 @@
   /* File row borders */
   --theme-file-row-border: rgba(0, 0, 0, 0.08);
   --theme-file-row-border-selected: rgba(222, 222, 222, 0.5);
+
+  /* Tool-call scrollbar (light surfaces) */
+  --theme-tool-scrollbar-thumb: #cbd5e1;
+  --theme-tool-scrollbar-thumb-hover: #94a3b8;
+  --theme-tool-scrollbar-track: transparent;
 }
 
+/*
+ * Phase 5 — Text color overrides for the light theme.
+ *
+ * These rules exist because many components use Tailwind's white opacity
+ * shorthand classes (text-white/50, text-white/60, etc.) which are semantically
+ * incorrect: "white text at 50% opacity" only makes visual sense on a dark
+ * background. On a light background the result would be near-invisible grey.
+ *
+ * The canonical fix is to replace those classes with `text-theme-text-primary`
+ * / `text-theme-text-secondary` in each component. Until that migration is
+ * complete, the overrides below remap the opacity variants to the semantic
+ * CSS-variable tokens so both themes remain readable.
+ *
+ * New code MUST use text-theme-text-primary / text-theme-text-secondary
+ * (or the var(--color-text) / var(--color-muted) semantic layer tokens).
+ * DO NOT add new text-white/* usage in components.
+ */
 [data-theme="light"] .text-white {
-  color: var(--theme-text-primary);
+  color: var(--color-text);
 }
 
 [data-theme="light"] .text-white\/80,
 [data-theme="light"] .text-white\/70 {
-  color: var(--theme-text-primary);
+  color: var(--color-text);
 }
 
 [data-theme="light"] .text-description,
@@ -292,7 +338,7 @@
 [data-theme="light"] .text-white\/40,
 [data-theme="light"] .text-white\/30,
 [data-theme="light"] .text-white\/20 {
-  color: var(--theme-placeholder);
+  color: var(--color-muted);
 }
 
 [data-theme="light"] .bg-theme-bg-secondary {
@@ -1076,27 +1122,27 @@ does not extend the close button beyond the viewport. */
 }
 
 [data-theme="light"] .tool-call-scrollbar {
-  scrollbar-color: #cbd5e1 transparent;
+  scrollbar-color: var(--theme-tool-scrollbar-thumb) var(--theme-tool-scrollbar-track);
 }
 
 [data-theme="light"] .tool-call-scrollbar::-webkit-scrollbar {
   width: 3px;
   height: 3px;
-  background-color: transparent;
+  background-color: var(--theme-tool-scrollbar-track);
 }
 
 [data-theme="light"] .tool-call-scrollbar::-webkit-scrollbar-track {
-  background-color: transparent;
+  background-color: var(--theme-tool-scrollbar-track);
 }
 
 [data-theme="light"] .tool-call-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #cbd5e1;
+  background-color: var(--theme-tool-scrollbar-thumb);
   border-radius: 4px;
-  border: 2px solid transparent;
+  border: 2px solid var(--theme-tool-scrollbar-track);
 }
 
 [data-theme="light"] .tool-call-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: #94a3b8;
+  background-color: var(--theme-tool-scrollbar-thumb-hover);
 }
 
 /* Recharts rendering styles */

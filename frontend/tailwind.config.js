@@ -21,31 +21,21 @@ export default {
         99: "99",
       },
       colors: {
-        "black-900": "#141414",
-        accent: "#3D4147",
-        "sidebar-button": "#31353A",
-        sidebar: "#25272C",
-        "historical-msg-system": "rgba(255, 255, 255, 0.05)",
-        "historical-msg-user": "#2C2F35",
-        outline: "#4E5153",
-        "primary-button": "var(--theme-button-primary)",
-        "cta-button": "var(--theme-button-cta)",
-        secondary: "#2C2F36",
-        "dark-input": "#18181B",
-        "mobile-onboarding": "#2C2F35",
-        "dark-highlight": "#1C1E21",
-        "dark-text": "#222628",
-        description: "#D2D5DB",
-        "x-button": "#9CA3AF",
-        royalblue: "#065986",
-        purple: "#4A1FB8",
-        magenta: "#9E165F",
+        // Semantic status colors — used directly as utility classes throughout
+        // the app (e.g. text-danger, bg-error). Keep hardcoded so they remain
+        // stable regardless of theme; they are not part of the light/dark
+        // switching system.
         danger: "#F04438",
         error: "#B42318",
         warn: "#854708",
         success: "#05603A",
-        darker: "#F4F4F4",
-        teal: "#0BA5EC",
+
+        // Brand accent — referenced in a small number of SVG / loader contexts.
+        teal: "var(--brand-primary)",
+
+        // Buttons wired to CSS-variable theme tokens.
+        "primary-button": "var(--theme-button-primary)",
+        "cta-button": "var(--theme-button-cta)",
 
         // Generic theme colors
         theme: {
@@ -157,25 +147,32 @@ export default {
         },
       },
       backgroundImage: {
+        // All gradients reference CSS variables so dark/light themes work
+        // automatically without any class overrides.
         "preference-gradient":
-          "linear-gradient(180deg, #5A5C63 0%, rgba(90, 92, 99, 0.28) 100%);",
+          "linear-gradient(180deg, var(--theme-bg-secondary) 0%, rgba(var(--theme-gradient-stop-rgb,90,92,99), 0.28) 100%)",
         "chat-msg-user-gradient":
-          "linear-gradient(180deg, #3D4147 0%, #2C2F35 100%);",
+          "linear-gradient(180deg, var(--theme-bg-container) 0%, var(--theme-bg-chat) 100%)",
         "selected-preference-gradient":
-          "linear-gradient(180deg, #313236 0%, rgba(63.40, 64.90, 70.13, 0) 100%);",
-        "main-gradient": "linear-gradient(180deg, #3D4147 0%, #2C2F35 100%)",
-        "modal-gradient": "linear-gradient(180deg, #3D4147 0%, #2C2F35 100%)",
-        "sidebar-gradient": "linear-gradient(90deg, #5B616A 0%, #3F434B 100%)",
-        "login-gradient": "linear-gradient(180deg, #3D4147 0%, #2C2F35 100%)",
+          "linear-gradient(180deg, var(--theme-bg-chat-input) 0%, rgba(var(--theme-gradient-stop-rgb,63,64,70), 0) 100%)",
+        "main-gradient":
+          "linear-gradient(180deg, var(--theme-bg-container) 0%, var(--theme-bg-chat) 100%)",
+        "modal-gradient":
+          "linear-gradient(180deg, var(--theme-bg-container) 0%, var(--theme-bg-chat) 100%)",
+        "sidebar-gradient":
+          "linear-gradient(90deg, var(--theme-bg-sidebar) 0%, var(--theme-bg-secondary) 100%)",
+        "login-gradient":
+          "linear-gradient(180deg, var(--theme-bg-container) 0%, var(--theme-bg-chat) 100%)",
         "menu-item-gradient":
-          "linear-gradient(90deg, #3D4147 0%, #2C2F35 100%)",
+          "linear-gradient(90deg, var(--theme-bg-container) 0%, var(--theme-bg-chat) 100%)",
         "menu-item-selected-gradient":
-          "linear-gradient(90deg, #5B616A 0%, #3F434B 100%)",
+          "linear-gradient(90deg, var(--theme-bg-sidebar) 0%, var(--theme-bg-secondary) 100%)",
         "workspace-item-gradient":
-          "linear-gradient(90deg, #3D4147 0%, #2C2F35 100%)",
+          "linear-gradient(90deg, var(--theme-bg-container) 0%, var(--theme-bg-chat) 100%)",
         "workspace-item-selected-gradient":
-          "linear-gradient(90deg, #5B616A 0%, #3F434B 100%)",
-        "switch-selected": "linear-gradient(146deg, #5B616A 0%, #3F434B 100%)"
+          "linear-gradient(90deg, var(--theme-bg-sidebar) 0%, var(--theme-bg-secondary) 100%)",
+        "switch-selected":
+          "linear-gradient(146deg, var(--theme-bg-sidebar) 0%, var(--theme-bg-secondary) 100%)"
       },
       fontFamily: {
         sans: [
