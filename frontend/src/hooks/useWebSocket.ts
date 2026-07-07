@@ -1,1 +1,352 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyB1c2VFZmZlY3QsIHVzZVJlZiB9IGZyb20gInJlYWN0IjsKaW1wb3J0IHsgdjQgfSBmcm9tICJ1dWlkIjsKaW1wb3J0IHsgQUJPUlRfU1RSRUFNX0VWRU5UIH0gZnJvbSAiQC91dGlscy9jaGF0IjsKaW1wb3J0IHsKICB3ZWJzb2NrZXRVUkksCiAgQUdFTlRfU0VTU0lPTl9FTkQsCiAgQUdFTlRfU0VTU0lPTl9TVEFSVCwKfSBmcm9tICJAL3V0aWxzL2NoYXQvYWdlbnQiOwppbXBvcnQgU1NFU29ja2V0IGZyb20gIkAvdXRpbHMvY2hhdC9TU0VTb2NrZXQiOwppbXBvcnQgeyBDTEVBUl9BVFRBQ0hNRU5UU19FVkVOVCB9IGZyb20gIkAvY29tcG9uZW50cy9Xb3Jrc3BhY2VDaGF0L0NoYXRDb250YWluZXIvRG5EV3JhcHBlciI7CmltcG9ydCB7IEFVVEhfVE9LRU4gfSBmcm9tICJAL3V0aWxzL2NvbnN0YW50cyI7CmltcG9ydCB7IHNhZmVHZXRJdGVtIH0gZnJvbSAiQC91dGlscy9zYWZlU3RvcmFnZSI7CgovKioKICogQnVpbGQgdGhlIFdlYlNvY2tldCBVUkwgZm9yIGFuIGFnZW50IGludm9jYXRpb24sIGluY2x1ZGluZyB0aGUgdXNlcidzCiAqIGF1dGggdG9rZW4gYXMgYSBxdWVyeSBwYXJhbWV0ZXIgc28gdGhlIGJhY2tlbmQgY2FuIHZhbGlkYXRlIHRoZSB1cGdyYWRlLgogKiBCcm93c2VyIFdlYlNvY2tldCBjbGllbnRzIGNhbm5vdCBzZW5kIGN1c3RvbSBoZWFkZXJzLCBzbyB0aGUgdG9rZW4gaXMgdGhlCiAqIG9ubHkgd2F5IHRvIGF1dGhlbnRpY2F0ZSB0aGUgV2ViU29ja2V0IGNvbm5lY3Rpb24uCiAqLwpmdW5jdGlvbiBhZ2VudFdlYnNvY2tldFVybChzb2NrZXRJZDogc3RyaW5nIHwgbnVsbCkgewogIGlmICghc29ja2V0SWQpIHJldHVybiBudWxsOwogIGNvbnN0IGJhc2UgPSBgJHt3ZWJzb2NrZXRVUkkoKX0vYXBpL2FnZW50LWludm9jYXRpb24vJHtzb2NrZXRJZH1gOwogIGNvbnN0IHRva2VuID0gc2FmZUdldEl0ZW0oQVVUSF9UT0tFTik7CiAgaWYgKCF0b2tlbikgcmV0dXJuIGJhc2U7CiAgY29uc3QgdXJsID0gbmV3IFVSTChiYXNlKTsKICB1cmwuc2VhcmNoUGFyYW1zLnNldCgidG9rZW4iLCB0b2tlbik7CiAgcmV0dXJuIHVybC50b1N0cmluZygpOwp9CgovLyDilIDilIAgUmVjb25uZWN0aW9uIHBhcmFtZXRlcnMg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACmNvbnN0IE1BWF9SRUNPTk5FQ1RfQVRURU1QVFMgPSAzOwpjb25zdCBJTklUSUFMX0JBQ0tPRkZfTVMgPSAxXzAwMDsKY29uc3QgTUFYX0JBQ0tPRkZfTVMgPSAxMF8wMDA7CgovLyDilIDilIAgSGVhcnRiZWF0IHBhcmFtZXRlcnMg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACmNvbnN0IEhFQVJUQkVBVF9JTlRFUlZBTF9NUyA9IDMwXzAwMDsKY29uc3QgSEVBUlRCRUFUX1RJTUVPVVRfTVMgPSBIRUFSVEJFQVRfSU5URVJWQUxfTVMgKiAyOwoKY29uc3QgV1NfRkFMTEJBQ0tfVElNRU9VVF9NUyA9IDNfMDAwOwoKLyoqCiAqIEN1c3RvbSBob29rIHRvIG1hbmFnZSBXZWJTb2NrZXQgY29ubmVjdGlvbiBmb3IgYWdlbnQgaW52b2NhdGlvbi4KICogRW5jYXBzdWxhdGVzIHNvY2tldCBsaWZlY3ljbGUsIGV2ZW50IGxpc3RlbmVycywgYW5kIGNsZWFudXAuCiAqCiAqIEBwYXJhbSB7T2JqZWN0fSBwYXJhbXMKICogQHBhcmFtIHtzdHJpbmd8bnVsbH0gcGFyYW1zLnNvY2tldElkIC0gVGhlIHNvY2tldCBJRCB0byBjb25uZWN0IHRvLgogKiBAcGFyYW0ge1dlYlNvY2tldHxudWxsfSBwYXJhbXMud2Vic29ja2V0IC0gVGhlIGN1cnJlbnQgV2ViU29ja2V0IGluc3RhbmNlICh0byBwcmV2ZW50IGR1cGxpY2F0ZSBjb25uZWN0aW9ucykuCiAqIEBwYXJhbSB7RnVuY3Rpb259IHBhcmFtcy5zZXRXZWJzb2NrZXQgLSBTZXR0ZXIgZm9yIHRoZSB3ZWJzb2NrZXQgc3RhdGUuCiAqIEBwYXJhbSB7RnVuY3Rpb259IHBhcmFtcy5zZXRTb2NrZXRJZCAtIFNldHRlciBmb3IgdGhlIHNvY2tldCBJRCBzdGF0ZS4KICogQHBhcmFtIHtGdW5jdGlvbn0gcGFyYW1zLnNldEFnZW50U2Vzc2lvbkFjdGl2ZSAtIFNldHRlciBmb3IgYWdlbnQgc2Vzc2lvbiBhY3RpdmUgc3RhdGUuCiAqIEBwYXJhbSB7RnVuY3Rpb259IHBhcmFtcy5zZXRMb2FkaW5nUmVzcG9uc2UgLSBTZXR0ZXIgZm9yIGxvYWRpbmcgcmVzcG9uc2Ugc3RhdGUuCiAqIEBwYXJhbSB7RnVuY3Rpb259IHBhcmFtcy5oYW5kbGVTb2NrZXRSZXNwb25zZSAtIEhhbmRsZXIgZm9yIGluY29taW5nIHNvY2tldCBtZXNzYWdlcy4KICogQHBhcmFtIHtGdW5jdGlvbn0gcGFyYW1zLnNldENoYXRIaXN0b3J5IC0gU2V0dGVyIGZvciBjaGF0IGhpc3Rvcnkgc3RhdGUuCiAqIEBwYXJhbSB7UmVhY3QuTXV0YWJsZVJlZk9iamVjdH0gcGFyYW1zLnBlbmRpbmdSZXNldFJlZiAtIFJlZiB0cmFja2luZyBwZW5kaW5nIHJlc2V0IGR1cmluZyBhZ2VudCBzZXNzaW9uLgogKi8KZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gdXNlV2ViU29ja2V0KHsKICBzb2NrZXRJZCwKICB3ZWJzb2NrZXQsCiAgc2V0V2Vic29ja2V0LAogIHNldFNvY2tldElkLAogIHNldEFnZW50U2Vzc2lvbkFjdGl2ZSwKICBzZXRMb2FkaW5nUmVzcG9uc2UsCiAgaGFuZGxlU29ja2V0UmVzcG9uc2UsCiAgc2V0Q2hhdEhpc3RvcnksCiAgcGVuZGluZ1Jlc2V0UmVmLAogIHdvcmtzcGFjZVNsdWcgPSBudWxsLAogIHRocmVhZFNsdWcgPSBudWxsLAp9KSB7CiAgLy8gVHJhY2sgd2hldGhlciB0aGUgY2xvc2Ugd2FzIGludGVudGlvbmFsICh1c2VyIGFib3J0LCAvcmVzZXQsIGV0Yy4pCiAgLy8gc28gd2UgZG9uJ3QgYXR0ZW1wdCByZWNvbm5lY3Rpb24gb24gaW50ZW50aW9uYWwgZGlzY29ubmVjdHMuCiAgY29uc3QgaW50ZW50aW9uYWxDbG9zZVJlZiA9IHVzZVJlZihmYWxzZSk7CiAgLy8gVHJhY2sgcmVjb25uZWN0aW9uIGF0dGVtcHQgY291bnQgZm9yIGV4cG9uZW50aWFsIGJhY2tvZmYuCiAgY29uc3QgcmVjb25uZWN0QXR0ZW1wdHNSZWYgPSB1c2VSZWYoMCk7CiAgY29uc3QgdXNlU1NFRmFsbGJhY2tSZWYgPSB1c2VSZWYoZmFsc2UpOwoKICB1c2VFZmZlY3QoKCkgPT4gewogICAgbGV0IHNvY2tldCA9IG51bGw7CiAgICBsZXQgaGVhcnRiZWF0SW50ZXJ2YWwgPSBudWxsOwogICAgbGV0IGhlYXJ0YmVhdFRpbWVvdXQgPSBudWxsOwogICAgbGV0IHJlY29ubmVjdFRpbWVyID0gbnVsbDsKICAgIGxldCBpc01vdW50ZWQgPSB0cnVlOwoKICAgIGZ1bmN0aW9uIGNsZWFyVGltZXJzKCkgewogICAgICBpZiAoaGVhcnRiZWF0SW50ZXJ2YWwpIHsKICAgICAgICBjbGVhckludGVydmFsKGhlYXJ0YmVhdEludGVydmFsKTsKICAgICAgICBoZWFydGJlYXRJbnRlcnZhbCA9IG51bGw7CiAgICAgIH0KICAgICAgaWYgKGhlYXJ0YmVhdFRpbWVvdXQpIHsKICAgICAgICBjbGVhclRpbWVvdXQoaGVhcnRiZWF0VGltZW91dCk7CiAgICAgICAgaGVhcnRiZWF0VGltZW91dCA9IG51bGw7CiAgICAgIH0KICAgICAgaWYgKHJlY29ubmVjdFRpbWVyKSB7CiAgICAgICAgY2xlYXJUaW1lb3V0KHJlY29ubmVjdFRpbWVyKTsKICAgICAgICByZWNvbm5lY3RUaW1lciA9IG51bGw7CiAgICAgIH0KICAgIH0KCiAgICBmdW5jdGlvbiBoYW5kbGVBYm9ydFN0cmVhbShldmVudDogYW55KSB7CiAgICAgIGNvbnN0IGRldGFpbCA9IGV2ZW50ICYmIGV2ZW50LmRldGFpbDsKICAgICAgaWYgKGRldGFpbCkgewogICAgICAgIGlmIChkZXRhaWwuc29ja2V0SWQgJiYgZGV0YWlsLnNvY2tldElkICE9PSBzb2NrZXRJZCkgewogICAgICAgICAgcmV0dXJuOwogICAgICAgIH0KICAgICAgICBpZiAoCiAgICAgICAgICB3b3Jrc3BhY2VTbHVnICYmCiAgICAgICAgICBkZXRhaWwud29ya3NwYWNlU2x1ZyAmJgogICAgICAgICAgZGV0YWlsLndvcmtzcGFjZVNsdWcgIT09IHdvcmtzcGFjZVNsdWcKICAgICAgICApIHsKICAgICAgICAgIHJldHVybjsKICAgICAgICB9CiAgICAgICAgaWYgKAogICAgICAgICAgdGhyZWFkU2x1ZyAmJgogICAgICAgICAgZGV0YWlsLnRocmVhZFNsdWcgJiYKICAgICAgICAgIGRldGFpbC50aHJlYWRTbHVnICE9PSB0aHJlYWRTbHVnCiAgICAgICAgKSB7CiAgICAgICAgICByZXR1cm47CiAgICAgICAgfQogICAgICAgIGlmICgKICAgICAgICAgICFkZXRhaWwuc29ja2V0SWQgJiYKICAgICAgICAgIHdvcmtzcGFjZVNsdWcgJiYKICAgICAgICAgICFkZXRhaWwud29ya3NwYWNlU2x1ZyAmJgogICAgICAgICAgIWRldGFpbC50aHJlYWRTbHVnCiAgICAgICAgKSB7CiAgICAgICAgICByZXR1cm47CiAgICAgICAgfQogICAgICB9CiAgICAgIGludGVudGlvbmFsQ2xvc2VSZWYuY3VycmVudCA9IHRydWU7CiAgICAgIHNldEFnZW50U2Vzc2lvbkFjdGl2ZShmYWxzZSk7CiAgICAgIHdpbmRvdy5kaXNwYXRjaEV2ZW50KG5ldyBDdXN0b21FdmVudChBR0VOVF9TRVNTSU9OX0VORCkpOwogICAgICBzb2NrZXQ/LmNsb3NlKCk7CiAgICB9CgogICAgZnVuY3Rpb24gc3RhcnRIZWFydGJlYXQod3MpIHsKICAgICAgaGVhcnRiZWF0SW50ZXJ2YWwgPSBzZXRJbnRlcnZhbCgoKSA9PiB7CiAgICAgICAgaWYgKCF3cyB8fCB3cy5yZWFkeVN0YXRlICE9PSBXZWJTb2NrZXQuT1BFTikgcmV0dXJuOwogICAgICAgIC8vIENsZWFyIHByZXZpb3VzIHBvbmcgdGltZW91dDsgaWYgcG9uZyBkb2Vzbid0IGFycml2ZSBpbiB0aW1lLAogICAgICAgIC8vIHRoZSBjb25uZWN0aW9uIGlzIHN0YWxlIGFuZCB3ZSBmb3JjZS1jbG9zZSBpdC4KICAgICAgICBjbGVhclRpbWVvdXQoaGVhcnRiZWF0VGltZW91dCk7CiAgICAgICAgaGVhcnRiZWF0VGltZW91dCA9IHNldFRpbWVvdXQoKCkgPT4gewogICAgICAgICAgY29uc29sZS53YXJuKAogICAgICAgICAgICAiW3VzZVdlYlNvY2tldF0gSGVhcnRiZWF0IHRpbWVvdXQg4oCUIGNvbm5lY3Rpb24gYXBwZWFycyBzdGFsZS4iLAogICAgICAgICAgKTsKICAgICAgICAgIC8vIE1hcmsgYXMgdW5pbnRlbnRpb25hbCBzbyB3ZSBhdHRlbXB0IHJlY29ubmVjdGlvbgogICAgICAgICAgaW50ZW50aW9uYWxDbG9zZVJlZi5jdXJyZW50ID0gZmFsc2U7CiAgICAgICAgICB3cy5jbG9zZSgpOwogICAgICAgIH0sIEhFQVJUQkVBVF9USU1FT1VUX01TKTsKCiAgICAgICAgLy8gU2VuZCBhIHBpbmc7IHRoZSBicm93c2VyIFdlYlNvY2tldCBBUEkgZG9lc24ndCBleHBvc2UgcGluZy9wb25nCiAgICAgICAgLy8gZGlyZWN0bHksIHNvIHdlIHVzZSBhbiBhcHBsaWNhdGlvbi1sZXZlbCBoZWFydGJlYXQgbWVzc2FnZS4KICAgICAgICAvLyBUaGUgc2VydmVyJ3MgcmVsYXlUb1NvY2tldCB3aWxsIHNhZmVseSBpZ25vcmUgdW5rbm93biBtZXNzYWdlcy4KICAgICAgICB0cnkgewogICAgICAgICAgd3Muc2VuZChKU09OLnN0cmluZ2lmeSh7IHR5cGU6ICJfX2hlYXJ0YmVhdCIgfSkpOwogICAgICAgIH0gY2F0Y2ggewogICAgICAgICAgLy8gU29ja2V0IGFscmVhZHkgZ29uZSDigJQgbGV0IHRoZSBjbG9zZSBoYW5kbGVyIGRlYWwgd2l0aCBpdC4KICAgICAgICB9CiAgICAgIH0sIEhFQVJUQkVBVF9JTlRFUlZBTF9NUyk7CiAgICB9CgogICAgZnVuY3Rpb24gYXR0YWNoTGlzdGVuZXJzKHdzKSB7CiAgICAgIC8vIFJlc2V0IHRoZSBwb25nLXRpbWVvdXQgd2hlbmV2ZXIgYW55IG1lc3NhZ2UgYXJyaXZlcyAoaW5jbHVkaW5nIHBvbmcpLgogICAgICB3cy5hZGRFdmVudExpc3RlbmVyKCJtZXNzYWdlIiwgKGV2ZW50KSA9PiB7CiAgICAgICAgLy8gQW55IGluY29taW5nIG1lc3NhZ2UgbWVhbnMgdGhlIGNvbm5lY3Rpb24gaXMgYWxpdmUuCiAgICAgICAgY2xlYXJUaW1lb3V0KGhlYXJ0YmVhdFRpbWVvdXQpOwoKICAgICAgICB0cnkgewogICAgICAgICAgaGFuZGxlU29ja2V0UmVzcG9uc2Uod3MsIGV2ZW50LCBzZXRDaGF0SGlzdG9yeSk7CiAgICAgICAgfSBjYXRjaCB7CiAgICAgICAgICBjb25zb2xlLmVycm9yKCJGYWlsZWQgdG8gcGFyc2UgZGF0YSIpOwogICAgICAgICAgaW50ZW50aW9uYWxDbG9zZVJlZi5jdXJyZW50ID0gdHJ1ZTsKICAgICAgICAgIHNldEFnZW50U2Vzc2lvbkFjdGl2ZShmYWxzZSk7CiAgICAgICAgICB3aW5kb3cuZGlzcGF0Y2hFdmVudChuZXcgQ3VzdG9tRXZlbnQoQUdFTlRfU0VTU0lPTl9FTkQpKTsKICAgICAgICAgIHdzLmNsb3NlKCk7CiAgICAgICAgfQogICAgICAgIC8vIE5PVEU6IHNldExvYWRpbmdSZXNwb25zZShmYWxzZSkgaXMgTk9UIGNhbGxlZCBoZXJlLgogICAgICAgIC8vIEl0IGlzIG9ubHkgY2FsbGVkIHdoZW4gdGhlIFdlYlNvY2tldCBjbG9zZXMgKHNlZSAnY2xvc2UnIGhhbmRsZXIKICAgICAgICAvLyBiZWxvdykgb3Igd2hlbiBoYW5kbGVTb2NrZXRSZXNwb25zZSBkaXNwYXRjaGVzIEFHRU5UX1NFU1NJT05fRU5ELgogICAgICAgIC8vIENhbGxpbmcgaXQgb24gZXZlcnkgbWVzc2FnZSBjYXVzZWQgYSBwcmVtYXR1cmUgU1dSIHJlZmV0Y2ggdGhhdAogICAgICAgIC8vIG92ZXJ3cm90ZSBsb2NhbCBzdGF0ZSB3aXRoIHNlcnZlciBkYXRhIG1pc3NpbmcgdGhlIGN1cnJlbnQgdHVybi4KICAgICAgfSk7CgogICAgICB3cy5hZGRFdmVudExpc3RlbmVyKCJjbG9zZSIsIChldmVudCkgPT4gewogICAgICAgIGNsZWFyVGltZXJzKCk7CgogICAgICAgIC8vIElmIHRoZSBzZXJ2ZXIgY2xvc2VkIHdpdGggMTAwOCAoUG9saWN5IFZpb2xhdGlvbiksIHRoZSBzZXNzaW9uCiAgICAgICAgLy8gaXMgcGVybWFuZW50bHkgZW5kZWQgKGUuZy4gaW52b2NhdGlvbiBhbHJlYWR5IGNsb3NlZCkuIERvbid0CiAgICAgICAgLy8gYXR0ZW1wdCByZWNvbm5lY3Rpb24g4oCUIGl0IGNhbiBuZXZlciBzdWNjZWVkLgogICAgICAgIGlmIChldmVudD8uY29kZSA9PT0gMTAwOCkgewogICAgICAgICAgaW50ZW50aW9uYWxDbG9zZVJlZi5jdXJyZW50ID0gdHJ1ZTsKICAgICAgICB9CgogICAgICAgIC8vIEF0dGVtcHQgcmVjb25uZWN0aW9uIGlmIHRoZSBjbG9zZSB3YXMgdW5pbnRlbnRpb25hbCBhbmQgd2UKICAgICAgICAvLyBoYXZlbid0IGV4aGF1c3RlZCBvdXIgcmV0cnkgYnVkZ2V0LgogICAgICAgIGlmICgKICAgICAgICAgICFpbnRlbnRpb25hbENsb3NlUmVmLmN1cnJlbnQgJiYKICAgICAgICAgIHJlY29ubmVjdEF0dGVtcHRzUmVmLmN1cnJlbnQgPCBNQVhfUkVDT05ORUNUX0FUVEVNUFRTICYmCiAgICAgICAgICBpc01vdW50ZWQKICAgICAgICApIHsKICAgICAgICAgIGNvbnN0IGF0dGVtcHQgPSByZWNvbm5lY3RBdHRlbXB0c1JlZi5jdXJyZW50OwogICAgICAgICAgcmVjb25uZWN0QXR0ZW1wdHNSZWYuY3VycmVudCsrOwogICAgICAgICAgY29uc3QgYmFja29mZiA9IE1hdGgubWluKAogICAgICAgICAgICBJTklUSUFMX0JBQ0tPRkZfTVMgKiBNYXRoLnBvdygyLCBhdHRlbXB0KSwKICAgICAgICAgICAgTUFYX0JBQ0tPRkZfTVMsCiAgICAgICAgICApOwogICAgICAgICAgY29uc29sZS53YXJuKAogICAgICAgICAgICBgW3VzZVdlYlNvY2tldF0gQ29ubmVjdGlvbiBsb3N0IOKAlCBhdHRlbXB0aW5nIHJlY29ubmVjdCAke2F0dGVtcHQgKyAxfS8ke01BWF9SRUNPTk5FQ1RfQVRURU1QVFN9IGluICR7YmFja29mZn1tc2AsCiAgICAgICAgICApOwoKICAgICAgICAgIHNldENoYXRIaXN0b3J5KChwcmV2KSA9PiBbCiAgICAgICAgICAgIC4uLihwcmV2IGFzIGFueSkuZmlsdGVyKChtc2cpID0+ICEhbXNnLmNvbnRlbnQpLAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgdXVpZDogdjQoKSwKICAgICAgICAgICAgICB0eXBlOiAic3RhdHVzUmVzcG9uc2UiLAogICAgICAgICAgICAgIGNvbnRlbnQ6IGBDb25uZWN0aW9uIGxvc3QuIFJlY29ubmVjdGluZyAoJHthdHRlbXB0ICsgMX0vJHtNQVhfUkVDT05ORUNUX0FUVEVNUFRTfSnigKZgLAogICAgICAgICAgICAgIHJvbGU6ICJhc3Npc3RhbnQiLAogICAgICAgICAgICAgIHNvdXJjZXM6IFtdLAogICAgICAgICAgICAgIGNsb3NlZDogdHJ1ZSwKICAgICAgICAgICAgICBlcnJvcjogbnVsbCwKICAgICAgICAgICAgICBhbmltYXRlOiBmYWxzZSwKICAgICAgICAgICAgICBwZW5kaW5nOiBmYWxzZSwKICAgICAgICAgICAgfSwKICAgICAgICAgIF0pOwoKICAgICAgICAgIHJlY29ubmVjdFRpbWVyID0gc2V0VGltZW91dCgoKSA9PiB7CiAgICAgICAgICAgIGlmICghaXNNb3VudGVkKSByZXR1cm47CiAgICAgICAgICAgIGlmICh1c2VTU0VGYWxsYmFja1JlZi5jdXJyZW50KSB7CiAgICAgICAgICAgICAgY29uc3Qgc3NlU29ja2V0ID0gbmV3IFNTRVNvY2tldChzb2NrZXRJZCEpOwogICAgICAgICAgICAgIChzc2VTb2NrZXQgYXMgYW55KS5zdXBwb3J0c0FnZW50U3RyZWFtaW5nID0gZmFsc2U7CiAgICAgICAgICAgICAgc29ja2V0ID0gc3NlU29ja2V0IGFzIGFueTsKICAgICAgICAgICAgICBzZXRXZWJzb2NrZXQoc3NlU29ja2V0IGFzIGFueSk7CiAgICAgICAgICAgICAgYXR0YWNoTGlzdGVuZXJzKHNzZVNvY2tldCBhcyBhbnkpOwogICAgICAgICAgICB9IGVsc2UgewogICAgICAgICAgICAgIHNvY2tldCA9IG5ldyBXZWJTb2NrZXQoYWdlbnRXZWJzb2NrZXRVcmwoc29ja2V0SWQpISk7CiAgICAgICAgICAgICAgKHNvY2tldCBhcyBhbnkpLnN1cHBvcnRzQWdlbnRTdHJlYW1pbmcgPSBmYWxzZTsKICAgICAgICAgICAgICBzZXRXZWJzb2NrZXQoc29ja2V0KTsKICAgICAgICAgICAgICBhdHRhY2hMaXN0ZW5lcnMoc29ja2V0KTsKICAgICAgICAgICAgICBzdGFydEhlYXJ0YmVhdChzb2NrZXQpOwogICAgICAgICAgICB9CiAgICAgICAgICB9LCBiYWNrb2ZmKTsKICAgICAgICAgIHJldHVybjsKICAgICAgICB9CgogICAgICAgIC8vIEVpdGhlciBpbnRlbnRpb25hbCBjbG9zZSBvciByZWNvbm5lY3Rpb24gZXhoYXVzdGVkLgogICAgICAgIHNldEFnZW50U2Vzc2lvbkFjdGl2ZShmYWxzZSk7CiAgICAgICAgd2luZG93LmRpc3BhdGNoRXZlbnQobmV3IEN1c3RvbUV2ZW50KEFHRU5UX1NFU1NJT05fRU5EKSk7CgogICAgICAgIC8vIFdoZW4gdGhlIGNsb3NlIHdhcyB0cmlnZ2VyZWQgYnkgL3Jlc2V0LCBza2lwIHRoZSAiQWdlbnQgc2Vzc2lvbgogICAgICAgIC8vIGNvbXBsZXRlLiIgc3RhdHVzIC0gdGhlIHBlbmRpbmcgL3Jlc2V0IGZsb3cgd2lsbCBjbGVhciBoaXN0b3J5LgogICAgICAgIGlmIChwZW5kaW5nUmVzZXRSZWYuY3VycmVudCkgewogICAgICAgICAgcGVuZGluZ1Jlc2V0UmVmLmN1cnJlbnQgPSBmYWxzZTsKICAgICAgICB9IGVsc2UgaWYgKAogICAgICAgICAgaW50ZW50aW9uYWxDbG9zZVJlZi5jdXJyZW50IHx8CiAgICAgICAgICByZWNvbm5lY3RBdHRlbXB0c1JlZi5jdXJyZW50ID49IE1BWF9SRUNPTk5FQ1RfQVRURU1QVFMKICAgICAgICApIHsKICAgICAgICAgIGNvbnN0IGlzUmVjb25uZWN0RmFpbHVyZSA9CiAgICAgICAgICAgIHJlY29ubmVjdEF0dGVtcHRzUmVmLmN1cnJlbnQgPj0gTUFYX1JFQ09OTkVDVF9BVFRFTVBUUyAmJgogICAgICAgICAgICAhaW50ZW50aW9uYWxDbG9zZVJlZi5jdXJyZW50OwogICAgICAgICAgc2V0Q2hhdEhpc3RvcnkoKHByZXYpID0+IFsKICAgICAgICAgICAgLi4uKHByZXYgYXMgYW55KS5maWx0ZXIoKG1zZykgPT4gISFtc2cuY29udGVudCksCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICB1dWlkOiB2NCgpLAogICAgICAgICAgICAgIHR5cGU6ICJzdGF0dXNSZXNwb25zZSIsCiAgICAgICAgICAgICAgY29udGVudDogaXNSZWNvbm5lY3RGYWlsdXJlCiAgICAgICAgICAgICAgICA/ICJBZ2VudCBzZXNzaW9uIGxvc3Qg4oCUIGNvbm5lY3Rpb24gY291bGQgbm90IGJlIHJlc3RvcmVkLiIKICAgICAgICAgICAgICAgIDogIkFnZW50IHNlc3Npb24gY29tcGxldGUuIiwKICAgICAgICAgICAgICByb2xlOiAiYXNzaXN0YW50IiwKICAgICAgICAgICAgICBzb3VyY2VzOiBbXSwKICAgICAgICAgICAgICBjbG9zZWQ6IHRydWUsCiAgICAgICAgICAgICAgZXJyb3I6IGlzUmVjb25uZWN0RmFpbHVyZQogICAgICAgICAgICAgICAgPyAiQ29ubmVjdGlvbiBsb3N0IGFmdGVyIG11bHRpcGxlIHJldHJ5IGF0dGVtcHRzLiIKICAgICAgICAgICAgICAgIDogbnVsbCwKICAgICAgICAgICAgICBhbmltYXRlOiBmYWxzZSwKICAgICAgICAgICAgICBwZW5kaW5nOiBmYWxzZSwKICAgICAgICAgICAgfSwKICAgICAgICAgIF0pOwogICAgICAgIH0KICAgICAgICBzZXRMb2FkaW5nUmVzcG9uc2UoZmFsc2UpOwogICAgICAgIHNldFdlYnNvY2tldChudWxsKTsKICAgICAgICBzZXRTb2NrZXRJZChudWxsKTsKICAgICAgICAvLyBSZXNldCByZWNvbm5lY3Rpb24gc3RhdGUgZm9yIHRoZSBuZXh0IHNlc3Npb24uCiAgICAgICAgcmVjb25uZWN0QXR0ZW1wdHNSZWYuY3VycmVudCA9IDA7CiAgICAgIH0pOwoKICAgICAgd3MuYWRkRXZlbnRMaXN0ZW5lcigiZXJyb3IiLCAoKSA9PiB7CiAgICAgICAgLy8gRG9uJ3Qgc2V0IGFnZW50U2Vzc2lvbkFjdGl2ZSBmYWxzZSBoZXJlIOKAlCBsZXQgdGhlIGNsb3NlIGhhbmRsZXIKICAgICAgICAvLyBkZWFsIHdpdGggcmVjb25uZWN0aW9uIGxvZ2ljLiBUaGUgZXJyb3IgZXZlbnQgaXMgYWx3YXlzIGZvbGxvd2VkCiAgICAgICAgLy8gYnkgYSBjbG9zZSBldmVudC4KICAgICAgICBjb25zb2xlLmVycm9yKCJbdXNlV2ViU29ja2V0XSBTb2NrZXQgZXJyb3IgZXZlbnQgcmVjZWl2ZWQuIik7CiAgICAgIH0pOwoKICAgICAgd3MuYWRkRXZlbnRMaXN0ZW5lcigib3BlbiIsICgpID0+IHsKICAgICAgICAvLyBSZXNldCByZWNvbm5lY3Rpb24gY291bnRlciBvbiBzdWNjZXNzZnVsIChyZSljb25uZWN0aW9uLgogICAgICAgIHJlY29ubmVjdEF0dGVtcHRzUmVmLmN1cnJlbnQgPSAwOwogICAgICB9KTsKICAgIH0KCiAgICBmdW5jdGlvbiBoYW5kbGVXU1MoKSB7CiAgICAgIHRyeSB7CiAgICAgICAgaWYgKCFzb2NrZXRJZCB8fCAhIXdlYnNvY2tldCkgcmV0dXJuOwoKICAgICAgICBpbnRlbnRpb25hbENsb3NlUmVmLmN1cnJlbnQgPSBmYWxzZTsKICAgICAgICByZWNvbm5lY3RBdHRlbXB0c1JlZi5jdXJyZW50ID0gMDsKCiAgICAgICAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoQUJPUlRfU1RSRUFNX0VWRU5ULCBoYW5kbGVBYm9ydFN0cmVhbSk7CiAgICAgICAgc2V0QWdlbnRTZXNzaW9uQWN0aXZlKHRydWUpOwogICAgICAgIHdpbmRvdy5kaXNwYXRjaEV2ZW50KG5ldyBDdXN0b21FdmVudChBR0VOVF9TRVNTSU9OX1NUQVJUKSk7CiAgICAgICAgd2luZG93LmRpc3BhdGNoRXZlbnQobmV3IEN1c3RvbUV2ZW50KENMRUFSX0FUVEFDSE1FTlRTX0VWRU5UKSk7CgogICAgICAgIC8vIENsb3VkZmxhcmUgVHVubmVsIGRlcGxveW1lbnRzIGNhbm5vdCBwcm94eSBXZWJTb2NrZXQgdXBncmFkZXMuCiAgICAgICAgLy8gQWx3YXlzIHVzZSBTU0UgZmFsbGJhY2sgZm9yIGFnZW50IGNvbm5lY3Rpb25zLgogICAgICAgIHVzZVNTRUZhbGxiYWNrUmVmLmN1cnJlbnQgPSB0cnVlOwoKICAgICAgICBjb25zdCBzc2VTb2NrZXQgPSBuZXcgU1NFU29ja2V0KHNvY2tldElkKTsKICAgICAgICAoc3NlU29ja2V0IGFzIGFueSkuc3VwcG9ydHNBZ2VudFN0cmVhbWluZyA9IGZhbHNlOwogICAgICAgIHNvY2tldCA9IHNzZVNvY2tldCBhcyBhbnk7CiAgICAgICAgc2V0V2Vic29ja2V0KHNzZVNvY2tldCBhcyBhbnkpOwogICAgICAgIGF0dGFjaExpc3RlbmVycyhzc2VTb2NrZXQgYXMgYW55KTsKICAgICAgfSBjYXRjaCAoZSkgewogICAgICAgIHNldENoYXRIaXN0b3J5KChwcmV2KSA9PiBbCiAgICAgICAgICAuLi4ocHJldiBhcyBhbnkpLmZpbHRlcigobXNnKSA9PiAhIW1zZy5jb250ZW50KSwKICAgICAgICAgIHsKICAgICAgICAgICAgdXVpZDogdjQoKSwKICAgICAgICAgICAgdHlwZTogImFib3J0IiwKICAgICAgICAgICAgY29udGVudDogZS5tZXNzYWdlLAogICAgICAgICAgICByb2xlOiAiYXNzaXN0YW50IiwKICAgICAgICAgICAgc291cmNlczogW10sCiAgICAgICAgICAgIGNsb3NlZDogdHJ1ZSwKICAgICAgICAgICAgZXJyb3I6IGUubWVzc2FnZSwKICAgICAgICAgICAgYW5pbWF0ZTogZmFsc2UsCiAgICAgICAgICAgIHBlbmRpbmc6IGZhbHNlLAogICAgICAgICAgfSwKICAgICAgICBdKTsKICAgICAgICBzZXRMb2FkaW5nUmVzcG9uc2UoZmFsc2UpOwogICAgICAgIHNldFdlYnNvY2tldChudWxsKTsKICAgICAgICBzZXRTb2NrZXRJZChudWxsKTsKICAgICAgfQogICAgfQogICAgaGFuZGxlV1NTKCk7CgogICAgcmV0dXJuICgpID0+IHsKICAgICAgaXNNb3VudGVkID0gZmFsc2U7CiAgICAgIGNsZWFyVGltZXJzKCk7CiAgICAgIHdpbmRvdy5yZW1vdmVFdmVudExpc3RlbmVyKEFCT1JUX1NUUkVBTV9FVkVOVCwgaGFuZGxlQWJvcnRTdHJlYW0pOwogICAgICBpZiAoc29ja2V0KSB7CiAgICAgICAgaW50ZW50aW9uYWxDbG9zZVJlZi5jdXJyZW50ID0gdHJ1ZTsKICAgICAgICBzZXRBZ2VudFNlc3Npb25BY3RpdmUoZmFsc2UpOwogICAgICAgIHdpbmRvdy5kaXNwYXRjaEV2ZW50KG5ldyBDdXN0b21FdmVudChBR0VOVF9TRVNTSU9OX0VORCkpOwogICAgICAgIHNvY2tldC5jbG9zZSgpOwogICAgICB9CiAgICB9OwogIH0sIFtzb2NrZXRJZCwgd29ya3NwYWNlU2x1ZywgdGhyZWFkU2x1Z10pOwp9Cg==
+// SPDX-License-Identifier: MIT
+import { useEffect, useRef } from "react";
+import { v4 } from "uuid";
+import { ABORT_STREAM_EVENT } from "@/utils/chat";
+import {
+  websocketURI,
+  AGENT_SESSION_END,
+  AGENT_SESSION_START,
+} from "@/utils/chat/agent";
+import SSESocket from "@/utils/chat/SSESocket";
+import { CLEAR_ATTACHMENTS_EVENT } from "@/components/WorkspaceChat/ChatContainer/DnDWrapper";
+import { AUTH_TOKEN } from "@/utils/constants";
+import { safeGetItem } from "@/utils/safeStorage";
+
+/**
+ * Build the WebSocket URL for an agent invocation, including the user's
+ * auth token as a query parameter so the backend can validate the upgrade.
+ * Browser WebSocket clients cannot send custom headers, so the token is the
+ * only way to authenticate the WebSocket connection.
+ */
+function agentWebsocketUrl(socketId: string | null) {
+  if (!socketId) return null;
+  const base = `${websocketURI()}/api/agent-invocation/${socketId}`;
+  const token = safeGetItem(AUTH_TOKEN);
+  if (!token) return base;
+  const url = new URL(base);
+  url.searchParams.set("token", token);
+  return url.toString();
+}
+
+// ── Reconnection parameters ─────────────────────────────────────────────────
+const MAX_RECONNECT_ATTEMPTS = 3;
+const INITIAL_BACKOFF_MS = 1_000;
+const MAX_BACKOFF_MS = 10_000;
+
+// ── Heartbeat parameters ────────────────────────────────────────────────────
+const HEARTBEAT_INTERVAL_MS = 30_000;
+const HEARTBEAT_TIMEOUT_MS = HEARTBEAT_INTERVAL_MS * 2;
+
+const WS_FALLBACK_TIMEOUT_MS = 3_000;
+
+/**
+ * Custom hook to manage WebSocket connection for agent invocation.
+ * Encapsulates socket lifecycle, event listeners, and cleanup.
+ *
+ * @param {Object} params
+ * @param {string|null} params.socketId - The socket ID to connect to.
+ * @param {WebSocket|null} params.websocket - The current WebSocket instance (to prevent duplicate connections).
+ * @param {Function} params.setWebsocket - Setter for the websocket state.
+ * @param {Function} params.setSocketId - Setter for the socket ID state.
+ * @param {Function} params.setAgentSessionActive - Setter for agent session active state.
+ * @param {Function} params.setLoadingResponse - Setter for loading response state.
+ * @param {Function} params.handleSocketResponse - Handler for incoming socket messages.
+ * @param {Function} params.setChatHistory - Setter for chat history state.
+ * @param {React.MutableRefObject} params.pendingResetRef - Ref tracking pending reset during agent session.
+ */
+export default function useWebSocket({
+  socketId,
+  websocket,
+  setWebsocket,
+  setSocketId,
+  setAgentSessionActive,
+  setLoadingResponse,
+  handleSocketResponse,
+  setChatHistory,
+  pendingResetRef,
+  workspaceSlug = null,
+  threadSlug = null,
+}) {
+  // Track whether the close was intentional (user abort, /reset, etc.)
+  // so we don't attempt reconnection on intentional disconnects.
+  const intentionalCloseRef = useRef(false);
+  // Track reconnection attempt count for exponential backoff.
+  const reconnectAttemptsRef = useRef(0);
+  const useSSEFallbackRef = useRef(false);
+
+  useEffect(() => {
+    let socket = null;
+    let heartbeatInterval = null;
+    let heartbeatTimeout = null;
+    let reconnectTimer = null;
+    let isMounted = true;
+
+    function clearTimers() {
+      if (heartbeatInterval) {
+        clearInterval(heartbeatInterval);
+        heartbeatInterval = null;
+      }
+      if (heartbeatTimeout) {
+        clearTimeout(heartbeatTimeout);
+        heartbeatTimeout = null;
+      }
+      if (reconnectTimer) {
+        clearTimeout(reconnectTimer);
+        reconnectTimer = null;
+      }
+    }
+
+    function handleAbortStream(event: any) {
+      const detail = event && event.detail;
+      if (detail) {
+        if (detail.socketId && detail.socketId !== socketId) {
+          return;
+        }
+        if (
+          workspaceSlug &&
+          detail.workspaceSlug &&
+          detail.workspaceSlug !== workspaceSlug
+        ) {
+          return;
+        }
+        if (
+          threadSlug &&
+          detail.threadSlug &&
+          detail.threadSlug !== threadSlug
+        ) {
+          return;
+        }
+        if (
+          !detail.socketId &&
+          workspaceSlug &&
+          !detail.workspaceSlug &&
+          !detail.threadSlug
+        ) {
+          return;
+        }
+      }
+      intentionalCloseRef.current = true;
+      setAgentSessionActive(false);
+      window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));
+      socket?.close();
+    }
+
+    function startHeartbeat(ws) {
+      heartbeatInterval = setInterval(() => {
+        if (!ws || ws.readyState !== WebSocket.OPEN) return;
+        // Clear previous pong timeout; if pong doesn't arrive in time,
+        // the connection is stale and we force-close it.
+        clearTimeout(heartbeatTimeout);
+        heartbeatTimeout = setTimeout(() => {
+          console.warn(
+            "[useWebSocket] Heartbeat timeout — connection appears stale.",
+          );
+          // Mark as unintentional so we attempt reconnection
+          intentionalCloseRef.current = false;
+          ws.close();
+        }, HEARTBEAT_TIMEOUT_MS);
+
+        // Send a ping; the browser WebSocket API doesn't expose ping/pong
+        // directly, so we use an application-level heartbeat message.
+        // The server's relayToSocket will safely ignore unknown messages.
+        try {
+          ws.send(JSON.stringify({ type: "__heartbeat" }));
+        } catch {
+          // Socket already gone — let the close handler deal with it.
+        }
+      }, HEARTBEAT_INTERVAL_MS);
+    }
+
+    function attachListeners(ws) {
+      // Reset the pong-timeout whenever any message arrives (including pong).
+      ws.addEventListener("message", (event) => {
+        // Any incoming message means the connection is alive.
+        clearTimeout(heartbeatTimeout);
+
+        try {
+          handleSocketResponse(ws, event, setChatHistory);
+        } catch {
+          console.error("Failed to parse data");
+          intentionalCloseRef.current = true;
+          setAgentSessionActive(false);
+          window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));
+          ws.close();
+        }
+        // NOTE: setLoadingResponse(false) is NOT called here.
+        // It is only called when the WebSocket closes (see 'close' handler
+        // below) or when handleSocketResponse dispatches AGENT_SESSION_END.
+        // Calling it on every message caused a premature SWR refetch that
+        // overwrote local state with server data missing the current turn.
+      });
+
+      ws.addEventListener("close", (event) => {
+        clearTimers();
+
+        // If the server closed with 1008 (Policy Violation), the session
+        // is permanently ended (e.g. invocation already closed). Don't
+        // attempt reconnection — it can never succeed.
+        if (event?.code === 1008) {
+          intentionalCloseRef.current = true;
+        }
+
+        // Attempt reconnection if the close was unintentional and we
+        // haven't exhausted our retry budget.
+        if (
+          !intentionalCloseRef.current &&
+          reconnectAttemptsRef.current < MAX_RECONNECT_ATTEMPTS &&
+          isMounted
+        ) {
+          const attempt = reconnectAttemptsRef.current;
+          reconnectAttemptsRef.current++;
+          const backoff = Math.min(
+            INITIAL_BACKOFF_MS * Math.pow(2, attempt),
+            MAX_BACKOFF_MS,
+          );
+          console.warn(
+            `[useWebSocket] Connection lost — attempting reconnect ${attempt + 1}/${MAX_RECONNECT_ATTEMPTS} in ${backoff}ms`,
+          );
+
+          setChatHistory((prev) => [
+            ...(prev as any).filter((msg) => !!msg.content),
+            {
+              uuid: v4(),
+              type: "statusResponse",
+              content: `Connection lost. Reconnecting (${attempt + 1}/${MAX_RECONNECT_ATTEMPTS})…`,
+              role: "assistant",
+              sources: [],
+              closed: true,
+              error: null,
+              animate: false,
+              pending: false,
+            },
+          ]);
+
+          reconnectTimer = setTimeout(() => {
+            if (!isMounted) return;
+            if (useSSEFallbackRef.current) {
+              const sseSocket = new SSESocket(socketId!);
+              (sseSocket as any).supportsAgentStreaming = false;
+              socket = sseSocket as any;
+              setWebsocket(sseSocket as any);
+              attachListeners(sseSocket as any);
+            } else {
+              socket = new WebSocket(agentWebsocketUrl(socketId)!);
+              (socket as any).supportsAgentStreaming = false;
+              setWebsocket(socket);
+              attachListeners(socket);
+              startHeartbeat(socket);
+            }
+          }, backoff);
+          return;
+        }
+
+        // Either intentional close or reconnection exhausted.
+        setAgentSessionActive(false);
+        window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));
+
+        // When the close was triggered by /reset, skip the "Agent session
+        // complete." status - the pending /reset flow will clear history.
+        if (pendingResetRef.current) {
+          pendingResetRef.current = false;
+        } else if (
+          intentionalCloseRef.current ||
+          reconnectAttemptsRef.current >= MAX_RECONNECT_ATTEMPTS
+        ) {
+          const isReconnectFailure =
+            reconnectAttemptsRef.current >= MAX_RECONNECT_ATTEMPTS &&
+            !intentionalCloseRef.current;
+          setChatHistory((prev) => [
+            ...(prev as any).filter((msg) => !!msg.content),
+            {
+              uuid: v4(),
+              type: "statusResponse",
+              content: isReconnectFailure
+                ? "Agent session lost — connection could not be restored."
+                : "Agent session complete.",
+              role: "assistant",
+              sources: [],
+              closed: true,
+              error: isReconnectFailure
+                ? "Connection lost after multiple retry attempts."
+                : null,
+              animate: false,
+              pending: false,
+            },
+          ]);
+        }
+        setLoadingResponse(false);
+        setWebsocket(null);
+        setSocketId(null);
+        // Reset reconnection state for the next session.
+        reconnectAttemptsRef.current = 0;
+      });
+
+      ws.addEventListener("error", () => {
+        // Don't set agentSessionActive false here — let the close handler
+        // deal with reconnection logic. The error event is always followed
+        // by a close event.
+        console.error("[useWebSocket] Socket error event received.");
+      });
+
+      ws.addEventListener("open", () => {
+        // Reset reconnection counter on successful (re)connection.
+        reconnectAttemptsRef.current = 0;
+      });
+    }
+
+    function handleWSS() {
+      try {
+        if (!socketId || !!websocket) return;
+
+        intentionalCloseRef.current = false;
+        reconnectAttemptsRef.current = 0;
+
+        window.addEventListener(ABORT_STREAM_EVENT, handleAbortStream);
+        setAgentSessionActive(true);
+        window.dispatchEvent(new CustomEvent(AGENT_SESSION_START));
+        window.dispatchEvent(new CustomEvent(CLEAR_ATTACHMENTS_EVENT));
+
+        // Cloudflare Tunnel deployments cannot proxy WebSocket upgrades.
+        // Always use SSE fallback for agent connections.
+        useSSEFallbackRef.current = true;
+
+        const sseSocket = new SSESocket(socketId);
+        (sseSocket as any).supportsAgentStreaming = false;
+        socket = sseSocket as any;
+        setWebsocket(sseSocket as any);
+        attachListeners(sseSocket as any);
+      } catch (e) {
+        setChatHistory((prev) => [
+          ...(prev as any).filter((msg) => !!msg.content),
+          {
+            uuid: v4(),
+            type: "abort",
+            content: e.message,
+            role: "assistant",
+            sources: [],
+            closed: true,
+            error: e.message,
+            animate: false,
+            pending: false,
+          },
+        ]);
+        setLoadingResponse(false);
+        setWebsocket(null);
+        setSocketId(null);
+      }
+    }
+    handleWSS();
+
+    return () => {
+      isMounted = false;
+      clearTimers();
+      window.removeEventListener(ABORT_STREAM_EVENT, handleAbortStream);
+      if (socket) {
+        intentionalCloseRef.current = true;
+        setAgentSessionActive(false);
+        window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));
+        socket.close();
+      }
+    };
+  }, [socketId, workspaceSlug, threadSlug]);
+}

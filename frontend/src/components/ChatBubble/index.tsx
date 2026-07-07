@@ -1,1 +1,82 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgUmVhY3QgZnJvbSAicmVhY3QiOwppbXBvcnQgVXNlckljb24gZnJvbSAiLi4vVXNlckljb24iOwppbXBvcnQgeyB1c2VyRnJvbVN0b3JhZ2UgfSBmcm9tICJAL3V0aWxzL3JlcXVlc3QiOwppbXBvcnQgcmVuZGVyTWFya2Rvd24gZnJvbSAiQC91dGlscy9jaGF0L21hcmtkb3duIjsKaW1wb3J0IERPTVB1cmlmeSBmcm9tICJAL3V0aWxzL2NoYXQvcHVyaWZ5IjsKaW1wb3J0IHR5cGUgeyBDb25maWcgYXMgRE9NUHVyaWZ5Q29uZmlnIH0gZnJvbSAiZG9tcHVyaWZ5IjsKCmNvbnN0IE1BUktET1dOX1NBTklUSVpFX09QVFM6IERPTVB1cmlmeUNvbmZpZyA9IHsKICBBTExPV0VEX1RBR1M6IFsKICAgICJhIiwKICAgICJiIiwKICAgICJpIiwKICAgICJ1IiwKICAgICJzdHJvbmciLAogICAgImVtIiwKICAgICJiciIsCiAgICAicCIsCiAgICAic3BhbiIsCiAgICAiZGl2IiwKICAgICJ1bCIsCiAgICAib2wiLAogICAgImxpIiwKICAgICJibG9ja3F1b3RlIiwKICAgICJwcmUiLAogICAgImNvZGUiLAogICAgImgxIiwKICAgICJoMiIsCiAgICAiaDMiLAogICAgImg0IiwKICAgICJoNSIsCiAgICAiaDYiLAogICAgInRhYmxlIiwKICAgICJ0aGVhZCIsCiAgICAidGJvZHkiLAogICAgInRyIiwKICAgICJ0aCIsCiAgICAidGQiLAogICAgImltZyIsCiAgICAiaHIiLAogICAgInN2ZyIsCiAgICAicGF0aCIsCiAgICAicmVjdCIsCiAgICAicG9seWxpbmUiLAogICAgInRoaW5rIiwKICAgICJ0aGlua2luZyIsCiAgICAidGhvdWdodCIsCiAgICAidGhvdWdodF9jaGFpbiIsCiAgICAidGhpbmtfY2hhaW4iLAogICAgInJlc3BvbnNlIiwKICAgICJhbnN3ZXIiLAogIF0sCn07CmNvbnN0IHNhZmVNYXJrZG93biA9IChodG1sOiBzdHJpbmcpOiBzdHJpbmcgPT4gRE9NUHVyaWZ5LnNhbml0aXplKGh0bWwsIE1BUktET1dOX1NBTklUSVpFX09QVFMpOwoKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gQ2hhdEJ1YmJsZSh7IG1lc3NhZ2UsIHR5cGUgfTogeyBtZXNzYWdlOiBzdHJpbmc7IHR5cGU6IHN0cmluZyB9KSB7CiAgY29uc3QgaXNVc2VyID0gdHlwZSA9PT0gInVzZXIiOwoKICByZXR1cm4gKAogICAgPGRpdgogICAgICBjbGFzc05hbWU9e2BmbGV4IGp1c3RpZnktY2VudGVyIGl0ZW1zLWVuZCB3LWZ1bGwgYmctdGhlbWUtYmctc2Vjb25kYXJ5YH0KICAgID4KICAgICAgPGRpdiBjbGFzc05hbWU9e2BweS04IHB4LTQgdy1mdWxsIGZsZXggZ2FwLXgtNSBtZDptYXgtdy1bODAlXSBmbGV4LWNvbGB9PgogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGdhcC14LTUiPgogICAgICAgICAgPFVzZXJJY29uCiAgICAgICAgICAgIHVzZXI9e3sgdWlkOiBpc1VzZXIgPyB1c2VyRnJvbVN0b3JhZ2UoKT8udXNlcm5hbWUgOiAic3lzdGVtIiB9fQogICAgICAgICAgICByb2xlPXt0eXBlfQogICAgICAgICAgLz4KCiAgICAgICAgICA8ZGl2CiAgICAgICAgICAgIHJvbGU9ImFydGljbGUiCiAgICAgICAgICAgIGFyaWEtbGFiZWw9e2lzVXNlciA/ICJVc2VyIG1lc3NhZ2UiIDogIkFzc2lzdGFudCBtZXNzYWdlIn0KICAgICAgICAgICAgY2xhc3NOYW1lPXtgbWFya2Rvd24gd2hpdGVzcGFjZS1wcmUtbGluZSB0ZXh0LXdoaXRlIGxpZ2h0OnRleHQtc2xhdGUtOTUwIGZvbnQtbm9ybWFsIHRleHQtc20gbWQ6dGV4dC1zbSBmbGV4IGZsZXgtY29sIGdhcC15LTEgbXQtMmB9CiAgICAgICAgICAgIGRhbmdlcm91c2x5U2V0SW5uZXJIVE1MPXt7CiAgICAgICAgICAgICAgX19odG1sOiBzYWZlTWFya2Rvd24ocmVuZGVyTWFya2Rvd24obWVzc2FnZSkpLAogICAgICAgICAgICB9fQogICAgICAgICAgLz4KICAgICAgICA8L2Rpdj4KICAgICAgPC9kaXY+CiAgICA8L2Rpdj4KICApOwp9Cg==
+// SPDX-License-Identifier: MIT
+import React from "react";
+import UserIcon from "../UserIcon";
+import { userFromStorage } from "@/utils/request";
+import renderMarkdown from "@/utils/chat/markdown";
+import DOMPurify from "@/utils/chat/purify";
+import type { Config as DOMPurifyConfig } from "dompurify";
+
+const MARKDOWN_SANITIZE_OPTS: DOMPurifyConfig = {
+  ALLOWED_TAGS: [
+    "a",
+    "b",
+    "i",
+    "u",
+    "strong",
+    "em",
+    "br",
+    "p",
+    "span",
+    "div",
+    "ul",
+    "ol",
+    "li",
+    "blockquote",
+    "pre",
+    "code",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "table",
+    "thead",
+    "tbody",
+    "tr",
+    "th",
+    "td",
+    "img",
+    "hr",
+    "svg",
+    "path",
+    "rect",
+    "polyline",
+    "think",
+    "thinking",
+    "thought",
+    "thought_chain",
+    "think_chain",
+    "response",
+    "answer",
+  ],
+};
+const safeMarkdown = (html: string): string => DOMPurify.sanitize(html, MARKDOWN_SANITIZE_OPTS);
+
+export default function ChatBubble({ message, type }: { message: string; type: string }) {
+  const isUser = type === "user";
+
+  return (
+    <div
+      className={`flex justify-center items-end w-full bg-theme-bg-secondary`}
+    >
+      <div className={`py-8 px-4 w-full flex gap-x-5 md:max-w-[80%] flex-col`}>
+        <div className="flex gap-x-5">
+          <UserIcon
+            user={{ uid: isUser ? userFromStorage()?.username : "system" }}
+            role={type}
+          />
+
+          <div
+            role="article"
+            aria-label={isUser ? "User message" : "Assistant message"}
+            className={`markdown whitespace-pre-line text-white light:text-slate-950 font-normal text-sm md:text-sm flex flex-col gap-y-1 mt-2`}
+            dangerouslySetInnerHTML={{
+              __html: safeMarkdown(renderMarkdown(message)),
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
