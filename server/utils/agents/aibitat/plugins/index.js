@@ -20,6 +20,7 @@ const { orchestratorAgent } = require("./orchestrator.js");
 const { browserVision } = require("./browser-vision.js");
 const { imageGeneration } = require("./image-generation.js");
 const { pdfAnalyze } = require("./pdf-analyze.js");
+const { subagentPlugin } = require("./subagentPlugin.js");
 
 module.exports = {
   webScraping,
@@ -43,6 +44,7 @@ module.exports = {
   browserVision,
   imageGeneration,
   pdfAnalyze,
+  subagentPlugin,
 
   // Plugin name aliases so they can be pulled by slug as well.
   [webScraping.name]: webScraping,
@@ -66,4 +68,5 @@ module.exports = {
   [browserVision.name]: browserVision,
   [imageGeneration.name]: imageGeneration,
   [pdfAnalyze.name]: pdfAnalyze,
+  [subagentPlugin.name]: subagentPlugin,
 };

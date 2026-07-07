@@ -48,6 +48,8 @@ const { browserExtensionEndpoints } = require("./endpoints/browserExtension");
 const { communityHubEndpoints } = require("./endpoints/communityHub");
 const { agentFlowEndpoints } = require("./endpoints/agentFlows");
 const { mcpServersEndpoints } = require("./endpoints/mcpServers");
+const { agentRunsStream } = require("./endpoints/agentRunsStream");
+const { subagentEndpoints } = require("./endpoints/subagents");
 const { mobileEndpoints } = require("./endpoints/mobile");
 const { scheduledJobEndpoints } = require("./endpoints/scheduledJobs");
 const {
@@ -212,6 +214,8 @@ function buildApp() {
   communityHubEndpoints(apiRouter);
   agentFlowEndpoints(apiRouter);
   mcpServersEndpoints(apiRouter);
+  agentRunsStream(apiRouter);
+  subagentEndpoints(apiRouter);
   mobileEndpoints(apiRouter);
   scheduledJobEndpoints(apiRouter);
   outlookAgentEndpoints(apiRouter);
