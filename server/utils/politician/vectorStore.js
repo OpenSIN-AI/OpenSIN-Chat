@@ -1,1 +1,255 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVApjb25zdCBjb25zb2xlTG9nZ2VyID0gcmVxdWlyZSgiLi4vbG9nZ2VyL2NvbnNvbGUuanMiKTsKCi8qKgogKiBWZWN0b3Igc3RvcmUgb3BlcmF0aW9ucyBmb3IgcG9saXRpY2lhbiBzcGVlY2hlcyDigJQgdXNlcyBleGlzdGluZyBQR1ZlY3RvcgogKiBwcm92aWRlciBmb3Igc2VtYW50aWMgc2VhcmNoIG92ZXIgc3BlZWNoIGNvbnRlbnRzLgogKgogKiBEb2NzOiB2ZWN0b3JTdG9yZS5kb2MubWQKICogUHVycG9zZTogU3RvcmUgYW5kIHNlYXJjaCBwb2xpdGljaWFuIHNwZWVjaCBlbWJlZGRpbmdzIHVzaW5nIHRoZSBPcGVuU0lOCiAqIFBHVmVjdG9yIHByb3ZpZGVyLiBSZXVzZXMgdGhlIHNhbWUgcGd2ZWN0b3IgaW5zdGFuY2UgYXMgZG9jdW1lbnQgZW1iZWRkaW5ncy4KICovCgpjb25zdCB7IFBHVmVjdG9yIH0gPSByZXF1aXJlKCIuLi92ZWN0b3JEYlByb3ZpZGVycy9wZ3ZlY3RvciIpOwpjb25zdCB7IFBvbGl0aWNpYW5FbWJlZGRlciB9ID0gcmVxdWlyZSgiLi9lbWJlZGRlciIpOwpjb25zdCB7IHY0OiB1dWlkdjQgfSA9IHJlcXVpcmUoInV1aWQiKTsKCmNvbnN0IFBPTElUSUNJQU5fTkFNRVNQQUNFID0gIm9wZW5zaW5fcG9saXRpY2lhbl9zcGVlY2hlcyI7CgpjbGFzcyBQb2xpdGljaWFuVmVjdG9yU3RvcmUgewogIGNvbnN0cnVjdG9yKCkgewogICAgdGhpcy52ZWN0b3JEYiA9IG5ldyBQR1ZlY3RvcigpOwogICAgdGhpcy5lbWJlZGRlciA9IG5ldyBQb2xpdGljaWFuRW1iZWRkZXIoKTsKICAgIHRoaXMubmFtZXNwYWNlID0gUE9MSVRJQ0lBTl9OQU1FU1BBQ0U7CiAgICB0aGlzLmVuYWJsZWQgPSAhIVBHVmVjdG9yLmNvbm5lY3Rpb25TdHJpbmcoKTsKICAgIGlmICghdGhpcy5lbmFibGVkKSB7CiAgICAgIGNvbnNvbGVMb2dnZXIubG9nKAogICAgICAgIGBceDFiWzM0bVtQb2xpdGljaWFuVmVjdG9yU3RvcmVdXHgxYlswbSBwZ3ZlY3RvciBub3QgY29uZmlndXJlZCwgdmVjdG9yIGluZGV4aW5nIGRpc2FibGVkYCwKICAgICAgKTsKICAgIH0KICB9CgogIGxvZyh0ZXh0LCAuLi5hcmdzKSB7CiAgICBjb25zb2xlTG9nZ2VyLmxvZygKICAgICAgYFx4MWJbMzRtW1BvbGl0aWNpYW5WZWN0b3JTdG9yZV1ceDFiWzBtICR7dGV4dH1gLAogICAgICAuLi5hcmdzLAogICAgKTsKICB9CgogIC8qKgogICAqIEluZGV4IGEgc2luZ2xlIHNwZWVjaCBpbnRvIHRoZSB2ZWN0b3Igc3RvcmUuCiAgICogQHBhcmFtIHtPYmplY3R9IHBhcmFtcwogICAqIEBwYXJhbSB7c3RyaW5nfSBwYXJhbXMuc3BlZWNoSWQgLSB1bmlxdWUgSUQgb2YgdGhlIHNwZWVjaCByZWNvcmQKICAgKiBAcGFyYW0ge3N0cmluZ30gcGFyYW1zLnBvbGl0aWNpYW5JZCAtIHBvbGl0aWNpYW4gVVVJRAogICAqIEBwYXJhbSB7c3RyaW5nfSBwYXJhbXMucG9saXRpY2lhbk5hbWUgLSBmdWxsIG5hbWUKICAgKiBAcGFyYW0ge3N0cmluZ30gcGFyYW1zLnBhcnR5CiAgICogQHBhcmFtIHtzdHJpbmd9IHBhcmFtcy50ZXh0IC0gc3BlZWNoIHRleHQgY29udGVudAogICAqIEBwYXJhbSB7c3RyaW5nfSBwYXJhbXMuZGF0ZSAtIHNwZWVjaCBkYXRlCiAgICogQHBhcmFtIHtzdHJpbmd9IHBhcmFtcy50aXRsZSAtIFRPUCAvIGFnZW5kYSBpdGVtIHRpdGxlCiAgICogQHJldHVybnMge1Byb21pc2U8e3N1Y2Nlc3M6IGJvb2xlYW4sIGNodW5rc0luZGV4ZWQ6IG51bWJlciwgZXJyb3I6IHN0cmluZ3xudWxsfT59CiAgICovCiAgYXN5bmMgaW5kZXhTcGVlY2goewogICAgc3BlZWNoSWQsCiAgICBwb2xpdGljaWFuSWQsCiAgICBwb2xpdGljaWFuTmFtZSwKICAgIHBhcnR5LAogICAgdGV4dCwKICAgIGRhdGUsCiAgICB0aXRsZSwKICB9KSB7CiAgICBpZiAoIXRoaXMuZW5hYmxlZCkgewogICAgICByZXR1cm4gewogICAgICAgIHN1Y2Nlc3M6IGZhbHNlLAogICAgICAgIGNodW5rc0luZGV4ZWQ6IDAsCiAgICAgICAgZXJyb3I6ICJwZ3ZlY3RvciBub3QgY29uZmlndXJlZCIsCiAgICAgIH07CiAgICB9CiAgICBpZiAoIXRleHQgfHwgdGV4dC50cmltKCkubGVuZ3RoID09PSAwKSB7CiAgICAgIHJldHVybiB7IHN1Y2Nlc3M6IGZhbHNlLCBjaHVua3NJbmRleGVkOiAwLCBlcnJvcjogIkVtcHR5IHRleHQiIH07CiAgICB9CgogICAgbGV0IGNvbm5lY3Rpb24gPSBudWxsOwogICAgdHJ5IHsKICAgICAgLy8gRGVsZXRlIGFueSBleGlzdGluZyB2ZWN0b3JzIGZvciB0aGlzIHNwZWVjaCBiZWZvcmUgcmUtaW5kZXhpbmcuCiAgICAgIC8vIFdpdGhvdXQgdGhpcywgcmUtaW5kZXhpbmcgYSBzcGVlY2ggd2hvc2UgdGV4dCB3YXMgdXBkYXRlZCBsZWF2ZXMKICAgICAgLy8gc3RhbGUvZHVwbGljYXRlIHZlY3RvcnMgaW4gdGhlIHN0b3JlLCBjYXVzaW5nIGR1cGxpY2F0ZSBzZWFyY2gKICAgICAgLy8gcmVzdWx0cyBhbmQgd2FzdGVkIHN0b3JhZ2UuCiAgICAgIGF3YWl0IHRoaXMuZGVsZXRlU3BlZWNoKHNwZWVjaElkKTsKCiAgICAgIGNvbnN0IG1ldGFkYXRhID0gewogICAgICAgIHNwZWVjaElkLAogICAgICAgIHBvbGl0aWNpYW5JZCwKICAgICAgICBwb2xpdGljaWFuTmFtZSwKICAgICAgICBwYXJ0eSwKICAgICAgICBkYXRlLAogICAgICAgIHRpdGxlLAogICAgICB9OwogICAgICBjb25zdCBjaHVua3MgPSBhd2FpdCB0aGlzLmVtYmVkZGVyLmNodW5rVGV4dCh0ZXh0LCBtZXRhZGF0YSk7CiAgICAgIGlmIChjaHVua3MubGVuZ3RoID09PSAwKSB7CiAgICAgICAgcmV0dXJuIHsKICAgICAgICAgIHN1Y2Nlc3M6IGZhbHNlLAogICAgICAgICAgY2h1bmtzSW5kZXhlZDogMCwKICAgICAgICAgIGVycm9yOiAiTm8gY2h1bmtzIHByb2R1Y2VkIiwKICAgICAgICB9OwogICAgICB9CgogICAgICBjb25zdCBjaHVua1RleHRzID0gY2h1bmtzLm1hcCgoYykgPT4gYy50ZXh0KTsKICAgICAgY29uc3QgdmVjdG9ycyA9IGF3YWl0IHRoaXMuZW1iZWRkZXIuZW1iZWRDaHVua3MoY2h1bmtUZXh0cyk7CiAgICAgIGlmICghdmVjdG9ycyB8fCB2ZWN0b3JzLmxlbmd0aCA9PT0gMCkgewogICAgICAgIHJldHVybiB7IHN1Y2Nlc3M6IGZhbHNlLCBjaHVua3NJbmRleGVkOiAwLCBlcnJvcjogIkVtYmVkZGluZyBmYWlsZWQiIH07CiAgICAgIH0KCiAgICAgIC8vIEd1YXJkOiB2ZWN0b3JzIG11c3QgYWxpZ24gd2l0aCBjaHVua3Mg4oCUIGNsYW1wIHRvIHRoZSBzaG9ydGVyIGxlbmd0aAogICAgICBjb25zdCBudW1WZWN0b3JzID0gTWF0aC5taW4odmVjdG9ycy5sZW5ndGgsIGNodW5rcy5sZW5ndGgpOwogICAgICBpZiAobnVtVmVjdG9ycyA9PT0gMCkgewogICAgICAgIHJldHVybiB7CiAgICAgICAgICBzdWNjZXNzOiBmYWxzZSwKICAgICAgICAgIGNodW5rc0luZGV4ZWQ6IDAsCiAgICAgICAgICBlcnJvcjogIlZlY3RvcnMvY2h1bmtzIGxlbmd0aCBtaXNtYXRjaCIsCiAgICAgICAgfTsKICAgICAgfQoKICAgICAgY29ubmVjdGlvbiA9IGF3YWl0IHRoaXMudmVjdG9yRGIuY29ubmVjdCgpOwogICAgICBjb25zdCBzdWJtaXNzaW9ucyA9IFtdOwogICAgICBmb3IgKGxldCBpID0gMDsgaSA8IG51bVZlY3RvcnM7IGkrKykgewogICAgICAgIGNvbnN0IHZlYyA9IHZlY3RvcnNbaV07CiAgICAgICAgaWYgKCF2ZWMpIGNvbnRpbnVlOwogICAgICAgIHN1Ym1pc3Npb25zLnB1c2goewogICAgICAgICAgaWQ6IHV1aWR2NCgpLAogICAgICAgICAgdmVjdG9yOiB2ZWMsCiAgICAgICAgICBtZXRhZGF0YTogeyB0ZXh0OiBjaHVua3NbaV0udGV4dCwgLi4uY2h1bmtzW2ldLm1ldGFkYXRhIH0sCiAgICAgICAgfSk7CiAgICAgIH0KCiAgICAgIGF3YWl0IHRoaXMudmVjdG9yRGIudXBkYXRlT3JDcmVhdGVDb2xsZWN0aW9uKHsKICAgICAgICBjb25uZWN0aW9uLAogICAgICAgIHN1Ym1pc3Npb25zLAogICAgICAgIG5hbWVzcGFjZTogdGhpcy5uYW1lc3BhY2UsCiAgICAgICAgZGltZW5zaW9uczogKAogICAgICAgICAgdmVjdG9ycy5maW5kKCh2KSA9PiB2ICYmIEFycmF5LmlzQXJyYXkodikpIHx8CiAgICAgICAgICB2ZWN0b3JzWzBdIHx8CiAgICAgICAgICBbXQogICAgICAgICkubGVuZ3RoLAogICAgICB9KTsKCiAgICAgIHRoaXMubG9nKGBJbmRleGVkICR7c3VibWlzc2lvbnMubGVuZ3RofSBjaHVua3MgZm9yIHNwZWVjaCAke3NwZWVjaElkfWApOwogICAgICByZXR1cm4geyBzdWNjZXNzOiB0cnVlLCBjaHVua3NJbmRleGVkOiBzdWJtaXNzaW9ucy5sZW5ndGgsIGVycm9yOiBudWxsIH07CiAgICB9IGNhdGNoIChlcnIpIHsKICAgICAgdGhpcy5sb2coYEVycm9yIGluZGV4aW5nIHNwZWVjaCAke3NwZWVjaElkfTogJHtlcnIubWVzc2FnZX1gKTsKICAgICAgcmV0dXJuIHsgc3VjY2VzczogZmFsc2UsIGNodW5rc0luZGV4ZWQ6IDAsIGVycm9yOiBlcnIubWVzc2FnZSB9OwogICAgfSBmaW5hbGx5IHsKICAgICAgaWYgKGNvbm5lY3Rpb24pIGF3YWl0IGNvbm5lY3Rpb24uZW5kKCk7CiAgICB9CiAgfQoKICAvKioKICAgKiBTZWFyY2ggc3BlZWNoZXMgc2VtYW50aWNhbGx5LgogICAqIEBwYXJhbSB7T2JqZWN0fSBwYXJhbXMKICAgKiBAcGFyYW0ge3N0cmluZ30gcGFyYW1zLnF1ZXJ5IC0gbmF0dXJhbCBsYW5ndWFnZSBxdWVyeQogICAqIEBwYXJhbSB7bnVtYmVyfSBbcGFyYW1zLnRvcE49MTBdIC0gbWF4IHJlc3VsdHMKICAgKiBAcGFyYW0ge251bWJlcn0gW3BhcmFtcy5zaW1pbGFyaXR5VGhyZXNob2xkPTAuMjVdCiAgICogQHBhcmFtIHtzdHJpbmd9IFtwYXJhbXMucG9saXRpY2lhbklkXSAtIG9wdGlvbmFsbHkgZmlsdGVyIHRvIGEgc3BlY2lmaWMgcG9saXRpY2lhbgogICAqIEBwYXJhbSB7c3RyaW5nfSBbcGFyYW1zLnBhcnR5XSAtIG9wdGlvbmFsbHkgZmlsdGVyIGJ5IHBhcnR5CiAgICogQHJldHVybnMge1Byb21pc2U8e3Jlc3VsdHM6IEFycmF5PHt0ZXh0OiBzdHJpbmcsIG1ldGFkYXRhOiBPYmplY3QsIHNjb3JlOiBudW1iZXJ9PiwgZXJyb3I6IHN0cmluZ3xudWxsfT59CiAgICovCiAgYXN5bmMgc2VhcmNoU3BlZWNoZXMoewogICAgcXVlcnksCiAgICB0b3BOID0gMTAsCiAgICBzaW1pbGFyaXR5VGhyZXNob2xkID0gMC4yNSwKICAgIHBvbGl0aWNpYW5JZCA9IG51bGwsCiAgICBwYXJ0eSA9IG51bGwsCiAgfSkgewogICAgaWYgKCF0aGlzLmVuYWJsZWQpIHsKICAgICAgcmV0dXJuIHsgcmVzdWx0czogW10sIGVycm9yOiAicGd2ZWN0b3Igbm90IGNvbmZpZ3VyZWQiIH07CiAgICB9CiAgICBsZXQgY29ubmVjdGlvbiA9IG51bGw7CiAgICB0cnkgewogICAgICBjb25uZWN0aW9uID0gYXdhaXQgdGhpcy52ZWN0b3JEYi5jb25uZWN0KCk7CiAgICAgIGNvbnN0IHF1ZXJ5VmVjdG9yID0gYXdhaXQgdGhpcy5lbWJlZGRlci5lbWJlZFRleHQocXVlcnkpOwoKICAgICAgLy8gV2hlbiBwb3N0LXNlYXJjaCBtZXRhZGF0YSBmaWx0ZXJzIGFyZSBhY3RpdmUsIG92ZXItZmV0Y2ggZnJvbSB0aGUgREIKICAgICAgLy8gc28gdGhhdCBhZnRlciBmaWx0ZXJpbmcgd2Ugc3RpbGwgaGF2ZSB1cCB0byB0b3BOIHJlc3VsdHMuIFdpdGhvdXQgdGhpcywKICAgICAgLy8gYSBwb2xpdGljaWFuLXNwZWNpZmljIHNlYXJjaCBjb3VsZCByZXR1cm4gMC0yIHJlc3VsdHMgd2hlbiB0b3BOPTEwCiAgICAgIC8vIGJlY2F1c2UgOCBvZiB0aGUgMTAgREIgaGl0cyBiZWxvbmdlZCB0byBvdGhlciBwb2xpdGljaWFucy4KICAgICAgY29uc3QgaGFzRmlsdGVyID0gISFwb2xpdGljaWFuSWQgfHwgISFwYXJ0eTsKICAgICAgY29uc3QgZmV0Y2hOID0gaGFzRmlsdGVyID8gTWF0aC5tYXgodG9wTiAqIDUsIDUwKSA6IHRvcE47CgogICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCB0aGlzLnZlY3RvckRiLnNpbWlsYXJpdHlSZXNwb25zZSh7CiAgICAgICAgY2xpZW50OiBjb25uZWN0aW9uLAogICAgICAgIG5hbWVzcGFjZTogdGhpcy5uYW1lc3BhY2UsCiAgICAgICAgcXVlcnlWZWN0b3IsCiAgICAgICAgc2ltaWxhcml0eVRocmVzaG9sZCwKICAgICAgICB0b3BOOiBmZXRjaE4sCiAgICAgIH0pOwoKICAgICAgLy8gQXBwbHkgb3B0aW9uYWwgZmlsdGVycyBwb3N0LXNlYXJjaCAoUEdWZWN0b3IgbmFtZXNwYWNlLWxldmVsIHNlYXJjaCBvbmx5KQogICAgICBsZXQgcmVzdWx0cyA9IChyZXN1bHQuc291cmNlRG9jdW1lbnRzIHx8IFtdKS5tYXAoKGRvYywgaSkgPT4gKHsKICAgICAgICB0ZXh0OiAocmVzdWx0LmNvbnRleHRUZXh0cyB8fCBbXSlbaV0sCiAgICAgICAgbWV0YWRhdGE6IGRvYywKICAgICAgICBzY29yZTogKHJlc3VsdC5zY29yZXMgfHwgW10pW2ldID8/IDAsCiAgICAgIH0pKTsKCiAgICAgIGlmIChwb2xpdGljaWFuSWQpIHsKICAgICAgICByZXN1bHRzID0gcmVzdWx0cy5maWx0ZXIoCiAgICAgICAgICAocikgPT4gci5tZXRhZGF0YS5wb2xpdGljaWFuSWQgPT09IHBvbGl0aWNpYW5JZCwKICAgICAgICApOwogICAgICB9CiAgICAgIGlmIChwYXJ0eSkgewogICAgICAgIHJlc3VsdHMgPSByZXN1bHRzLmZpbHRlcigocikgPT4gci5tZXRhZGF0YS5wYXJ0eSA9PT0gcGFydHkpOwogICAgICB9CgogICAgICAvLyBUcmltIGJhY2sgdG8gdGhlIG9yaWdpbmFsbHkgcmVxdWVzdGVkIHRvcE4gYWZ0ZXIgZmlsdGVyaW5nCiAgICAgIHJlc3VsdHMgPSByZXN1bHRzLnNsaWNlKDAsIHRvcE4pOwoKICAgICAgcmV0dXJuIHsgcmVzdWx0cywgZXJyb3I6IG51bGwgfTsKICAgIH0gY2F0Y2ggKGVycikgewogICAgICB0aGlzLmxvZyhgRXJyb3Igc2VhcmNoaW5nIHNwZWVjaGVzOiAke2Vyci5tZXNzYWdlfWApOwogICAgICByZXR1cm4geyByZXN1bHRzOiBbXSwgZXJyb3I6IGVyci5tZXNzYWdlIH07CiAgICB9IGZpbmFsbHkgewogICAgICBpZiAoY29ubmVjdGlvbikgYXdhaXQgY29ubmVjdGlvbi5lbmQoKTsKICAgIH0KICB9CgogIC8qKgogICAqIERlbGV0ZSBhbGwgdmVjdG9ycyBmb3IgYSBzcGVjaWZpYyBzcGVlY2guCiAgICogQHBhcmFtIHtzdHJpbmd9IHNwZWVjaElkCiAgICogQHJldHVybnMge1Byb21pc2U8Ym9vbGVhbj59CiAgICovCiAgYXN5bmMgZGVsZXRlU3BlZWNoKHNwZWVjaElkKSB7CiAgICBpZiAoIXRoaXMuZW5hYmxlZCkgcmV0dXJuIGZhbHNlOwogICAgbGV0IGNvbm5lY3Rpb24gPSBudWxsOwogICAgdHJ5IHsKICAgICAgY29ubmVjdGlvbiA9IGF3YWl0IHRoaXMudmVjdG9yRGIuY29ubmVjdCgpOwogICAgICAvLyBQR1ZlY3RvciBkb2Vzbid0IGhhdmUgYSBkaXJlY3QgbWV0YWRhdGEgZmlsdGVyIGRlbGV0ZSwgYnV0IHdlIGNhbiBkZWxldGUgYnkgSURzCiAgICAgIC8vIEZvciBub3csIHdlJ2QgbmVlZCB0byBxdWVyeSBmaXJzdCB0byBmaW5kIHZlY3RvciBJRHMgYnkgbWV0YWRhdGEgbWF0Y2guCiAgICAgIGNvbnN0IHJlcyA9IGF3YWl0IGNvbm5lY3Rpb24ucXVlcnkoCiAgICAgICAgYERFTEVURSBGUk9NICIke1BHVmVjdG9yLnRhYmxlTmFtZSgpfSIgV0hFUkUgbmFtZXNwYWNlID0gJDEgQU5EIG1ldGFkYXRhLT4+J3NwZWVjaElkJyA9ICQyYCwKICAgICAgICBbdGhpcy5uYW1lc3BhY2UsIHNwZWVjaElkXSwKICAgICAgKTsKICAgICAgdGhpcy5sb2coYERlbGV0ZWQgJHtyZXMucm93Q291bnR9IHZlY3RvcnMgZm9yIHNwZWVjaCAke3NwZWVjaElkfWApOwogICAgICByZXR1cm4gdHJ1ZTsKICAgIH0gY2F0Y2ggKGVycikgewogICAgICB0aGlzLmxvZyhgRXJyb3IgZGVsZXRpbmcgc3BlZWNoIHZlY3RvcnM6ICR7ZXJyLm1lc3NhZ2V9YCk7CiAgICAgIHJldHVybiBmYWxzZTsKICAgIH0gZmluYWxseSB7CiAgICAgIGlmIChjb25uZWN0aW9uKSBhd2FpdCBjb25uZWN0aW9uLmVuZCgpOwogICAgfQogIH0KCiAgLyoqCiAgICogQ2hlY2sgaWYgdGhlIHBvbGl0aWNpYW4gbmFtZXNwYWNlIGV4aXN0cyBhbmQgaGFzIHZlY3RvcnMuCiAgICogQHJldHVybnMge1Byb21pc2U8e2V4aXN0czogYm9vbGVhbiwgY291bnQ6IG51bWJlcn0+fQogICAqLwogIGFzeW5jIHN0YXRzKCkgewogICAgaWYgKCF0aGlzLmVuYWJsZWQpIHJldHVybiB7IGV4aXN0czogZmFsc2UsIGNvdW50OiAwIH07CiAgICB0cnkgewogICAgICBjb25zdCBleGlzdHMgPSBhd2FpdCB0aGlzLnZlY3RvckRiLmhhc05hbWVzcGFjZSh0aGlzLm5hbWVzcGFjZSk7CiAgICAgIGNvbnN0IGNvdW50ID0gYXdhaXQgdGhpcy52ZWN0b3JEYi5uYW1lc3BhY2VDb3VudCh0aGlzLm5hbWVzcGFjZSk7CiAgICAgIHJldHVybiB7IGV4aXN0cywgY291bnQgfTsKICAgIH0gY2F0Y2ggewogICAgICByZXR1cm4geyBleGlzdHM6IGZhbHNlLCBjb3VudDogMCB9OwogICAgfQogIH0KfQoKbW9kdWxlLmV4cG9ydHMgPSB7IFBvbGl0aWNpYW5WZWN0b3JTdG9yZSwgUE9MSVRJQ0lBTl9OQU1FU1BBQ0UgfTsK
+// SPDX-License-Identifier: MIT
+const consoleLogger = require("../logger/console.js");
+
+/**
+ * Vector store operations for politician speeches — uses existing PGVector
+ * provider for semantic search over speech contents.
+ *
+ * Docs: vectorStore.doc.md
+ * Purpose: Store and search politician speech embeddings using the OpenSIN
+ * PGVector provider. Reuses the same pgvector instance as document embeddings.
+ */
+
+const { PGVector } = require("../vectorDbProviders/pgvector");
+const { PoliticianEmbedder } = require("./embedder");
+const { v4: uuidv4 } = require("uuid");
+
+const POLITICIAN_NAMESPACE = "opensin_politician_speeches";
+
+class PoliticianVectorStore {
+  constructor() {
+    this.vectorDb = new PGVector();
+    this.embedder = new PoliticianEmbedder();
+    this.namespace = POLITICIAN_NAMESPACE;
+    this.enabled = !!PGVector.connectionString();
+    if (!this.enabled) {
+      consoleLogger.log(
+        `\x1b[34m[PoliticianVectorStore]\x1b[0m pgvector not configured, vector indexing disabled`,
+      );
+    }
+  }
+
+  log(text, ...args) {
+    consoleLogger.log(
+      `\x1b[34m[PoliticianVectorStore]\x1b[0m ${text}`,
+      ...args,
+    );
+  }
+
+  /**
+   * Index a single speech into the vector store.
+   * @param {Object} params
+   * @param {string} params.speechId - unique ID of the speech record
+   * @param {string} params.politicianId - politician UUID
+   * @param {string} params.politicianName - full name
+   * @param {string} params.party
+   * @param {string} params.text - speech text content
+   * @param {string} params.date - speech date
+   * @param {string} params.title - TOP / agenda item title
+   * @returns {Promise<{success: boolean, chunksIndexed: number, error: string|null}>}
+   */
+  async indexSpeech({
+    speechId,
+    politicianId,
+    politicianName,
+    party,
+    text,
+    date,
+    title,
+  }) {
+    if (!this.enabled) {
+      return {
+        success: false,
+        chunksIndexed: 0,
+        error: "pgvector not configured",
+      };
+    }
+    if (!text || text.trim().length === 0) {
+      return { success: false, chunksIndexed: 0, error: "Empty text" };
+    }
+
+    let connection = null;
+    try {
+      // Delete any existing vectors for this speech before re-indexing.
+      // Without this, re-indexing a speech whose text was updated leaves
+      // stale/duplicate vectors in the store, causing duplicate search
+      // results and wasted storage.
+      await this.deleteSpeech(speechId);
+
+      const metadata = {
+        speechId,
+        politicianId,
+        politicianName,
+        party,
+        date,
+        title,
+      };
+      const chunks = await this.embedder.chunkText(text, metadata);
+      if (chunks.length === 0) {
+        return {
+          success: false,
+          chunksIndexed: 0,
+          error: "No chunks produced",
+        };
+      }
+
+      const chunkTexts = chunks.map((c) => c.text);
+      const vectors = await this.embedder.embedChunks(chunkTexts);
+      if (!vectors || vectors.length === 0) {
+        return { success: false, chunksIndexed: 0, error: "Embedding failed" };
+      }
+
+      // Guard: vectors must align with chunks — clamp to the shorter length
+      const numVectors = Math.min(vectors.length, chunks.length);
+      if (numVectors === 0) {
+        return {
+          success: false,
+          chunksIndexed: 0,
+          error: "Vectors/chunks length mismatch",
+        };
+      }
+
+      connection = await this.vectorDb.connect();
+      const submissions = [];
+      for (let i = 0; i < numVectors; i++) {
+        const vec = vectors[i];
+        if (!vec) continue;
+        submissions.push({
+          id: uuidv4(),
+          vector: vec,
+          metadata: { text: chunks[i].text, ...chunks[i].metadata },
+        });
+      }
+
+      await this.vectorDb.updateOrCreateCollection({
+        connection,
+        submissions,
+        namespace: this.namespace,
+        dimensions: (
+          vectors.find((v) => v && Array.isArray(v)) ||
+          vectors[0] ||
+          []
+        ).length,
+      });
+
+      this.log(`Indexed ${submissions.length} chunks for speech ${speechId}`);
+      return { success: true, chunksIndexed: submissions.length, error: null };
+    } catch (err) {
+      this.log(`Error indexing speech ${speechId}: ${err.message}`);
+      return { success: false, chunksIndexed: 0, error: err.message };
+    } finally {
+      if (connection) await connection.end();
+    }
+  }
+
+  /**
+   * Search speeches semantically.
+   * @param {Object} params
+   * @param {string} params.query - natural language query
+   * @param {number} [params.topN=10] - max results
+   * @param {number} [params.similarityThreshold=0.25]
+   * @param {string} [params.politicianId] - optionally filter to a specific politician
+   * @param {string} [params.party] - optionally filter by party
+   * @returns {Promise<{results: Array<{text: string, metadata: Object, score: number}>, error: string|null}>}
+   */
+  async searchSpeeches({
+    query,
+    topN = 10,
+    similarityThreshold = 0.25,
+    politicianId = null,
+    party = null,
+  }) {
+    if (!this.enabled) {
+      return { results: [], error: "pgvector not configured" };
+    }
+    let connection = null;
+    try {
+      connection = await this.vectorDb.connect();
+      const queryVector = await this.embedder.embedText(query);
+
+      // When post-search metadata filters are active, over-fetch from the DB
+      // so that after filtering we still have up to topN results. Without this,
+      // a politician-specific search could return 0-2 results when topN=10
+      // because 8 of the 10 DB hits belonged to other politicians.
+      const hasFilter = !!politicianId || !!party;
+      const fetchN = hasFilter ? Math.max(topN * 5, 50) : topN;
+
+      const result = await this.vectorDb.similarityResponse({
+        client: connection,
+        namespace: this.namespace,
+        queryVector,
+        similarityThreshold,
+        topN: fetchN,
+      });
+
+      // Apply optional filters post-search (PGVector namespace-level search only)
+      let results = (result.sourceDocuments || []).map((doc, i) => ({
+        text: (result.contextTexts || [])[i],
+        metadata: doc,
+        score: (result.scores || [])[i] ?? 0,
+      }));
+
+      if (politicianId) {
+        results = results.filter(
+          (r) => r.metadata.politicianId === politicianId,
+        );
+      }
+      if (party) {
+        results = results.filter((r) => r.metadata.party === party);
+      }
+
+      // Trim back to the originally requested topN after filtering
+      results = results.slice(0, topN);
+
+      return { results, error: null };
+    } catch (err) {
+      this.log(`Error searching speeches: ${err.message}`);
+      return { results: [], error: err.message };
+    } finally {
+      if (connection) await connection.end();
+    }
+  }
+
+  /**
+   * Delete all vectors for a specific speech.
+   * @param {string} speechId
+   * @returns {Promise<boolean>}
+   */
+  async deleteSpeech(speechId) {
+    if (!this.enabled) return false;
+    let connection = null;
+    try {
+      connection = await this.vectorDb.connect();
+      // PGVector doesn't have a direct metadata filter delete, but we can delete by IDs
+      // For now, we'd need to query first to find vector IDs by metadata match.
+      const res = await connection.query(
+        `DELETE FROM "${PGVector.tableName()}" WHERE namespace = $1 AND metadata->>'speechId' = $2`,
+        [this.namespace, speechId],
+      );
+      this.log(`Deleted ${res.rowCount} vectors for speech ${speechId}`);
+      return true;
+    } catch (err) {
+      this.log(`Error deleting speech vectors: ${err.message}`);
+      return false;
+    } finally {
+      if (connection) await connection.end();
+    }
+  }
+
+  /**
+   * Check if the politician namespace exists and has vectors.
+   * @returns {Promise<{exists: boolean, count: number}>}
+   */
+  async stats() {
+    if (!this.enabled) return { exists: false, count: 0 };
+    try {
+      const exists = await this.vectorDb.hasNamespace(this.namespace);
+      const count = await this.vectorDb.namespaceCount(this.namespace);
+      return { exists, count };
+    } catch {
+      return { exists: false, count: 0 };
+    }
+  }
+}
+
+module.exports = { PoliticianVectorStore, POLITICIAN_NAMESPACE };
