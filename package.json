@@ -1,7 +1,7 @@
 {
   "name": "opensin-chat",
   "version": "1.14.0",
-  "description": "OpenSIN Chat \u2014 sovereign, self-hosted AI workspace for political research, knowledge management, and document analysis. Zero telemetry, German-optimized.",
+  "description": "OpenSIN Chat — sovereign, self-hosted AI workspace for political research, knowledge management, and document analysis. Zero telemetry, German-optimized.",
   "main": "index.js",
   "type": "module",
   "author": "OpenSIN-AI",
@@ -61,7 +61,8 @@
     "translations:verify": "cd frontend/src/locales && node verifyTranslations.mjs",
     "translations:normalize": "cd frontend/src/locales && node normalizeEn.mjs && cd ../../.. && cd frontend && yarn lint && cd .. && yarn translations:verify",
     "translations:prune": "cd frontend/src/locales && node findUnusedTranslations.mjs --delete && cd ../../../ && yarn translations:normalize",
-    "translations:create": "cd extras/translator && node index.mjs --all && cd ../../frontend && yarn lint && cd ../.."
+    "translations:create": "cd extras/translator && node index.mjs --all && cd ../../frontend && yarn lint && cd ../..",
+    "smoke": "node scripts/smoke.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
