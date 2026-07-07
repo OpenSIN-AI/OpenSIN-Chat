@@ -1,1 +1,125 @@
-IyBTZXR0aW5nIHVwIGBQR1ZlY3RvcmAgZm9yIE9wZW5TSU4gQ2hhdAoKU2V0dGluZyB1cCBQR1ZlY3RvciBmb3Igb3BlbmFmZCB0byB1c2UgYXMgeW91ciB2ZWN0b3IgZGF0YWJhc2UgaXMgcXVpdGUgZWFzeS4gQXQgYSBtaW5pbXVtLCB5b3Ugd2lsbCBuZWVkIHRoZSBmb2xsb3dpbmc6CgotIFBvc3RncmVTUUwgdjEyKwotIFtgcGd2ZWN0b3JgXShodHRwczovL2dpdGh1Yi5jb20vcGd2ZWN0b3IvcGd2ZWN0b3IpIGV4dGVuc2lvbiBpbnN0YWxsZWQgb24gREIKLSBVc2VyIHdpdGggREIgdGFibGUgY3JlYXRpb24gcGVybXMgYW5kIFJFQUQgYWNjZXNzCgojIyBTZXR1cCBvbiBNYWMgKGV4YW1wbGUpCgojIyMgSW5zdGFsbCBwZ3ZlY3RvciBleHRlbnNpb24gb24gUG9zdGdyZVNRTCBEQgoKYGBgYmFzaApicmV3IGluc3RhbGwgcG9zdGdyZXNxbApicmV3IHNlcnZpY2VzIHN0YXJ0IHBvc3RncmVzcWwKYnJldyBpbnN0YWxsIHBndmVjdG9yCgojIGFzc3VtaW5nIHlvdSBoYXZlIGEgZGF0YWJhc2UgYWxyZWFkeSBzZXQgdXAgKyBhIHVzZXIKcHNxbCA8ZGF0YWJhc2UtbmFtZT4KQ1JFQVRFIEVYVEVOU0lPTiB2ZWN0b3I7CmBgYAoKIyMjIFNldCBQRyBhcyB5b3VyIHZlY3RvciBkYgoKX3RoaXMgY2FuIGJlIGRvbmUgdmlhIHRoZSBVSSBvciBieSBkaXJlY3RseSBlZGl0aW5nIHRoZSBgLmVudmAgZmlsZV8KCkZpcnN0LCBvYnRhaW4gYSB2YWxpZCBjb25uZWN0aW9uIHN0cmluZyBmb3IgdGhlIHVzZXIsIGNyZWRlbnRpYWxzLCBhbmQgZGIgeW91IHdhbnQgdG8gdGFyZ2V0LgplZzogYHBvc3RncmVzcWw6Ly9kYnVzZXI6ZGJ1c2VycGFzc0Bsb2NhbGhvc3Q6NTQzMi95b3VyZGJgCgo+IFshSU1QT1JUQU5UXQo+IElmIHlvdSBoYXZlIGFuIGV4aXN0aW5nIHRhYmxlIHRoYXQgeW91IHdhbnQgdG8gdXNlIGFzIGEgdmVjdG9yIGRhdGFiYXNlLCBPcGVuU0lOIENoYXQgKipyZXF1aXJlcyoqIHRoYXQgdGhlIHRhYmxlIGJlCj4gYXQgbGVhc3QgbWluaW1hbGx5IGNvbmZvcm0gdG8gdGhlIGV4cGVjdGVkIHNjaGVtYSAtIHRoaXMgY2FuIGJlIHNlZW4gaW4gdGhlIFtpbmRleC5qc10oLi9pbmRleC5qcykgZmlsZS4KCl9vcHRpb25hbF8gLSBzZXQgYSB0YWJsZSBuYW1lIHlvdSB3aXNoIHRvIGhhdmUgT3BlblNJTiBDaGF0IHN0b3JlIHZlY3RvcnMgdG8uIEJ5IGRlZmF1bHQgdGhpcyBpcyBgb3BlbnNpbl92ZWN0b3JzYAoKIyMgQ29tbW9uIFF1ZXN0aW9ucwoKIyMjIEkgY2Fubm90IGNvbm5lY3QgdG8gdGhlIERCIChSdW5uaW5nIE9wZW5TSU4gQ2hhdCBpbiBEb2NrZXIpCgpJZiB5b3UgYXJlIHJ1bm5pbmcgT3BlblNJTiBDaGF0IGluIERvY2tlciwgeW91IHdpbGwgbmVlZCB0byBlbnN1cmUgdGhhdCB0aGUgREIgaXMgYWNjZXNzaWJsZSBmcm9tIHRoZSBjb250YWluZXIuCklmIHlvdSBhcmUgcnVubmluZyB5b3VyIERCIGluIGFub3RoZXIgRG9ja2VyIGNvbnRhaW5lciAqKm9yKiogb24gdGhlIGhvc3QgbWFjaGluZSwgeW91IHdpbGwgbmVlZCB0byBlbnN1cmUgdGhhdCB0aGUgY29udGFpbmVyIGNhbiBhY2Nlc3MgdGhlIERCLgoKYGxvY2FsaG9zdGAgd2lsbCBub3Qgd29yayBpbiB0aGlzIGNhc2UgYXMgaXQgd2lsbCBhdHRlbXB0IHRvIGNvbm5lY3QgdG8gdGhlIERCIF9pbnNpZGUgdGhlIE9wZW5TSU4gQ2hhdCBjb250YWluZXJfIGluc3RlYWQgb2YgdGhlIGhvc3QgbWFjaGluZSBvciBhbm90aGVyIGNvbnRhaW5lci4KCllvdSB3aWxsIG5lZWQgdG8gdXNlIHRoZSBgaG9zdC5kb2NrZXIuaW50ZXJuYWxgIChvciBgMTcyLjE3LjAuMWAgb24gTGludXgvVWJ1bnR1KSBhZGRyZXNzLgoKYGBgCm9uIE1hYyBvciBXaW5kb3dzOgpwb3N0Z3Jlc3FsOi8vZGJ1c2VyOmRidXNlcnBhc3NAbG9jYWxob3N0OjU0MzIveW91cmRiID0+IHBvc3RncmVzcWw6Ly9kYnVzZXI6ZGJ1c2VycGFzc0Bob3N0LmRvY2tlci5pbnRlcm5hbDo1NDMyL3lvdXJkYgoKb24gTGludXg6CnBvc3RncmVzcWw6Ly9kYnVzZXI6ZGJ1c2VycGFzc0Bsb2NhbGhvc3Q6NTQzMi95b3VyZGIgPT4gcG9zdGdyZXNxbDovL2RidXNlcjpkYnVzZXJwYXNzQDE3Mi4xNy4wLjE6NTQzMi95b3VyZGIKYGBgCgojIyMgQ2FuIEkgdXNlIGFuIGV4aXN0aW5nIHRhYmxlIGFzIGEgdmVjdG9yIGRhdGFiYXNlPwoKWWVzLCB5b3UgY2FuIHVzZSBhbiBleGlzdGluZyB0YWJsZSBhcyBhIHZlY3RvciBkYXRhYmFzZS4gSG93ZXZlciwgT3BlblNJTiBDaGF0ICoqcmVxdWlyZXMqKiB0aGF0IHRoZSB0YWJsZSBiZSBhdCBsZWFzdCBtaW5pbWFsbHkgY29uZm9ybSB0byB0aGUgZXhwZWN0ZWQgc2NoZW1hIC0gdGhpcyBjYW4gYmUgc2VlbiBpbiB0aGUgW2luZGV4LmpzXSguL2luZGV4LmpzKSBmaWxlLgoKSXQgaXMgKiphYnNvbHV0ZWx5IGNyaXRpY2FsKiogdGhhdCB0aGUgYGVtYmVkZGluZ2AgY29sdW1uJ3MgYFZFQ1RPUihYWFhYKWAgZGltZW5zaW9ucyBtYXRjaCB0aGUgZGltZW5zaW9uIG9mIHRoZSBlbWJlZGRlciBpbiBPcGVuU0lOIENoYXQuIFRoZSBkZWZhdWx0IGVtYmVkZGluZyBtb2RlbCBpcyAzODQgZGltZW5zaW9ucy4gSG93ZXZlciwgaWYgeW91IGFyZSB1c2luZyBhIGN1c3RvbSBlbWJlZGRlciwgeW91IHdpbGwgbmVlZCB0byBlbnN1cmUgdGhhdCB0aGUgZGltZW5zaW9uIHZhbHVlIGlzIHNldCBjb3JyZWN0bHkuCgojIyMgVmFsaWRhdGUgdGhlIGNvbm5lY3Rpb24gdG8gdGhlIGRhdGFiYXNlCgpXaGVuIHNldHRpbmcgdGhlIGNvbm5lY3Rpb24gc3RyaW5nIGluIG9yIHRhYmxlIG5hbWUgdmlhIHRoZSBPcGVuU0lOIENoYXQgVUksIHRoZSBmb2xsb3dpbmcgdmFsaWRhdGlvbnMgd2lsbCBiZSBhdHRlbXB0ZWQ6CgotIFZhbGlkYXRlIHRoZSBjb25uZWN0aW9uIHN0cmluZwotIFZhbGlkYXRlIHRoZSB0YWJsZSBuYW1lCi0gUnVuIHRlc3QgY29ubmVjdGlvbiB0byBlbnN1cmUgdGhlIHRhYmxlIGV4aXN0cyBhbmQgaXMgYWNjZXNzaWJsZSBieSB0aGUgY29ubmVjdGlvbiBzdHJpbmcgdXNlZAotIENoZWNrIGlmIHRoZSB0YWJsZSBuYW1lIGFscmVhZHkgZXhpc3RzIGFuZCBpZiBzbywgdmFsaWRhdGUgdGhhdCBpdCBpcyBhbiBlbWJlZGRpbmcgdGFibGUgd2l0aCB0aGUgY29ycmVjdCBzY2hlbWEKCiMjIyBNeSBlbWJlZGRpbmcgdGFibGUgaXMgbm90IHByZXNlbnQgaW4gdGhlIERCCgpUaGUgZW1iZWRkaW5nIHN0b3JhZ2UgdGFibGUgaXMgY3JlYXRlZCBieSBPcGVuU0lOIENoYXQgKipvbiB0aGUgZmlyc3QgdXBzZXJ0Kiogb2YgYSB2ZWN0b3IuIElmIHlvdSBoYXZlIG5vdCB5ZXQgZW1iZWRkaW5nIGFueSBkb2N1bWVudHMsIHRoZSB0YWJsZSB3aWxsIG5vdCBiZSBwcmVzZW50IGluIHRoZSBEQi4KCiMjIyBIb3cgZG8gSSByZXNldCBteSB2ZWN0b3IgZGF0YWJhc2U/CgpfYXQgdGhlIHdvcmtzcGFjZSBsZXZlbCBpbiBTZXR0aW5ncyA+IFZlY3RvciBEYXRhYmFzZV8KCllvdSBjYW4gdXNlIHRoZSAiUmVzZXQgVmVjdG9yIERhdGFiYXNlIiBidXR0b24gaW4gdGhlIE9wZW5TSU4gQ2hhdCBVSSB0byByZXNldCB5b3VyIHZlY3RvciBkYXRhYmFzZS4gVGhpcyB3aWxsIGRyb3AgYWxsIHZlY3RvcnMgd2l0aGluIHRoYXQgd29ya3NwYWNlLCBidXQgdGhlIHRhYmxlIHdpbGwgcmVtYWluIGluIHRoZSBEQi4KCl9yZXNldCB0aGUgdmVjdG9yIGRhdGFiYXNlIGF0IHRoZSBkYiBsZXZlbF8KCkZvciB0aGlzLCB5b3Ugd2lsbCBuZWVkIHRvIGBEUk9QIFRBQkxFYCBmcm9tIHRoZSBjb21tYW5kIGxpbmUgb3IgaG93ZXZlciB5b3UgbWFuYWdlIHlvdXIgREIuIE9uY2UgdGhlIHRhYmxlIGlzIGRyb3BwZWQsIGl0IHdpbGwgYmUgcmVjcmVhdGVkIGJ5IE9wZW5TSU4gQ2hhdCBvbiB0aGUgbmV4dCB1cHNlcnQuCgojIyBUcm91Ymxlc2hvb3RpbmcKCiMjIyBDYW5ub3QgY29ubmVjdCB0byBEQgoKLSBFbnN1cmUgdGhlIGNvbm5lY3Rpb24gc3RyaW5nIGlzIHZhbGlkCi0gRW5zdXJlIHRoZSB1c2VyIGhhcyBhY2Nlc3MgdG8gdGhlIGRhdGFiYXNlCi0gRW5zdXJlIHRoZSBwZ3ZlY3RvciBleHRlbnNpb24gaXMgaW5zdGFsbGVkCgojIyMgQ2Fubm90IGNyZWF0ZSB0YWJsZQoKLSBFbnN1cmUgdGhlIHVzZXIgaGFzIGBDUkVBVEUgVEFCTEVgIHBlcm1pc3Npb25zCgojIyMgQ2Fubm90IGluc2VydCB2ZWN0b3IKCi0gRW5zdXJlIHRoZSB1c2VyIGhhcyBgSU5TRVJUYCBwZXJtaXNzaW9ucyBpbiB0aGUgZGF0YWJhc2UKLSBFbnN1cmUgdGhlIHRhYmxlIGhhcyBhIGRpbWVuc2lvbiB2YWx1ZSBzZXQgYW5kIHRoaXMgbWF0Y2hlcyB0aGUgZGltZW5zaW9uIG9mIHRoZSBlbWJlZGRlciBpbiBPcGVuU0lOIENoYXQKLSBFbnN1cmUgdGhlIHRhYmxlIGhhcyBhIHZlY3RvciBjb2x1bW4gc2V0CgojIyMgQ2Fubm90IHF1ZXJ5IHZlY3RvcgoKLSBFbnN1cmUgdGhlIHVzZXIgaGFzIGBTRUxFQ1RgIHBlcm1pc3Npb25zIGluIHRoZSBkYXRhYmFzZQotIEVuc3VyZSB0aGUgdGFibGUgaGFzIGEgdmVjdG9yIGNvbHVtbiBzZXQKLSBFbnN1cmUgdGhlIHRhYmxlIGhhcyBhIGRpbWVuc2lvbiB2YWx1ZSBzZXQgYW5kIHRoaXMgbWF0Y2hlcyB0aGUgZGltZW5zaW9uIG9mIHRoZSBlbWJlZGRlciBpbiBPcGVuU0lOIENoYXQKCiMjIyAidHlwZSAndmVjdG9yJyBkb2VzIG5vdCBleGlzdCIgaXNzdWVzIHdpdGggUEdWZWN0b3IKCklmIHlvdSBhcmUgdXNpbmcgdGhlIFBHVmVjdG9yIGFzIHlvdXIgdmVjdG9yIGRhdGFiYXNlLCB5b3UgbWF5IGVuY291bnRlciBhbiBlcnJvciBzaW1pbGFyIHRvIHRoZSBmb2xsb3dpbmcgd2hlbiBlbWJlZGRpbmcgZG9jdW1lbnRzOgoKYGBgCnR5cGUgJ3ZlY3RvcicgZG9lcyBub3QgZXhpc3QKYGBgCgpUaGlzIGlzIGR1ZSB0byB0aGUgZmFjdCB0aGF0IHRoZSBgdmVjdG9yYCB0eXBlIGlzIG5vdCBpbnN0YWxsZWQgb24gdGhlIFBHIGRhdGFiYXNlLgoKRmlyc3QsIGZvbGxvdyB0aGUgaW5zdHJ1Y3Rpb25zIGluIHRoZSBbUEdWZWN0b3IgUkVBRE1FXShodHRwczovL2dpdGh1Yi5jb20vcGd2ZWN0b3IvcGd2ZWN0b3IjaW5zdGFsbGF0aW9uKSB0byBpbnN0YWxsIHRoZSBgdmVjdG9yYCB0eXBlIG9uIHlvdXIgZGF0YWJhc2UuCgpUaGVuLCB5b3Ugd2lsbCBuZWVkIHRvIGNyZWF0ZSB0aGUgZXh0ZW5zaW9uIG9uIHRoZSBkYXRhYmFzZS4gVGhpcyBjYW4gYmUgZG9uZSBieSBydW5uaW5nIHRoZSBmb2xsb3dpbmcgY29tbWFuZDoKCmBgYGJhc2gKcHNxbCA8ZGF0YWJhc2UtbmFtZT4KQ1JFQVRFIEVYVEVOU0lPTiB2ZWN0b3I7CmBgYAo=
+# Setting up `PGVector` for OpenSIN Chat
+
+Setting up PGVector for openafd to use as your vector database is quite easy. At a minimum, you will need the following:
+
+- PostgreSQL v12+
+- [`pgvector`](https://github.com/pgvector/pgvector) extension installed on DB
+- User with DB table creation perms and READ access
+
+## Setup on Mac (example)
+
+### Install pgvector extension on PostgreSQL DB
+
+```bash
+brew install postgresql
+brew services start postgresql
+brew install pgvector
+
+# assuming you have a database already set up + a user
+psql <database-name>
+CREATE EXTENSION vector;
+```
+
+### Set PG as your vector db
+
+_this can be done via the UI or by directly editing the `.env` file_
+
+First, obtain a valid connection string for the user, credentials, and db you want to target.
+eg: `postgresql://dbuser:dbuserpass@localhost:5432/yourdb`
+
+> [!IMPORTANT]
+> If you have an existing table that you want to use as a vector database, OpenSIN Chat **requires** that the table be
+> at least minimally conform to the expected schema - this can be seen in the [index.js](./index.js) file.
+
+_optional_ - set a table name you wish to have OpenSIN Chat store vectors to. By default this is `opensin_vectors`
+
+## Common Questions
+
+### I cannot connect to the DB (Running OpenSIN Chat in Docker)
+
+If you are running OpenSIN Chat in Docker, you will need to ensure that the DB is accessible from the container.
+If you are running your DB in another Docker container **or** on the host machine, you will need to ensure that the container can access the DB.
+
+`localhost` will not work in this case as it will attempt to connect to the DB _inside the OpenSIN Chat container_ instead of the host machine or another container.
+
+You will need to use the `host.docker.internal` (or `172.17.0.1` on Linux/Ubuntu) address.
+
+```
+on Mac or Windows:
+postgresql://dbuser:dbuserpass@localhost:5432/yourdb => postgresql://dbuser:dbuserpass@host.docker.internal:5432/yourdb
+
+on Linux:
+postgresql://dbuser:dbuserpass@localhost:5432/yourdb => postgresql://dbuser:dbuserpass@172.17.0.1:5432/yourdb
+```
+
+### Can I use an existing table as a vector database?
+
+Yes, you can use an existing table as a vector database. However, OpenSIN Chat **requires** that the table be at least minimally conform to the expected schema - this can be seen in the [index.js](./index.js) file.
+
+It is **absolutely critical** that the `embedding` column's `VECTOR(XXXX)` dimensions match the dimension of the embedder in OpenSIN Chat. The default embedding model is 384 dimensions. However, if you are using a custom embedder, you will need to ensure that the dimension value is set correctly.
+
+### Validate the connection to the database
+
+When setting the connection string in or table name via the OpenSIN Chat UI, the following validations will be attempted:
+
+- Validate the connection string
+- Validate the table name
+- Run test connection to ensure the table exists and is accessible by the connection string used
+- Check if the table name already exists and if so, validate that it is an embedding table with the correct schema
+
+### My embedding table is not present in the DB
+
+The embedding storage table is created by OpenSIN Chat **on the first upsert** of a vector. If you have not yet embedding any documents, the table will not be present in the DB.
+
+### How do I reset my vector database?
+
+_at the workspace level in Settings > Vector Database_
+
+You can use the "Reset Vector Database" button in the OpenSIN Chat UI to reset your vector database. This will drop all vectors within that workspace, but the table will remain in the DB.
+
+_reset the vector database at the db level_
+
+For this, you will need to `DROP TABLE` from the command line or however you manage your DB. Once the table is dropped, it will be recreated by OpenSIN Chat on the next upsert.
+
+## Troubleshooting
+
+### Cannot connect to DB
+
+- Ensure the connection string is valid
+- Ensure the user has access to the database
+- Ensure the pgvector extension is installed
+
+### Cannot create table
+
+- Ensure the user has `CREATE TABLE` permissions
+
+### Cannot insert vector
+
+- Ensure the user has `INSERT` permissions in the database
+- Ensure the table has a dimension value set and this matches the dimension of the embedder in OpenSIN Chat
+- Ensure the table has a vector column set
+
+### Cannot query vector
+
+- Ensure the user has `SELECT` permissions in the database
+- Ensure the table has a vector column set
+- Ensure the table has a dimension value set and this matches the dimension of the embedder in OpenSIN Chat
+
+### "type 'vector' does not exist" issues with PGVector
+
+If you are using the PGVector as your vector database, you may encounter an error similar to the following when embedding documents:
+
+```
+type 'vector' does not exist
+```
+
+This is due to the fact that the `vector` type is not installed on the PG database.
+
+First, follow the instructions in the [PGVector README](https://github.com/pgvector/pgvector#installation) to install the `vector` type on your database.
+
+Then, you will need to create the extension on the database. This can be done by running the following command:
+
+```bash
+psql <database-name>
+CREATE EXTENSION vector;
+```
