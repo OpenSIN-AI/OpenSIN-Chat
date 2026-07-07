@@ -3,6 +3,7 @@
 // Docs: server/utils/helpers/updateENV.doc.md
 const { KEY_MAPPING } = require("./keyMapping");
 const { dumpENV } = require("./dumpENV");
+const { SettingsManager } = require("../../SettingsManager");
 
 // This will force update .env variables which for any which reason were not able to be parsed or
 // read from an ENV file as this seems to be a complicating step for many so allowing people to write
@@ -19,6 +20,7 @@ async function updateENV(newENVs = {}, force = false, userId = null) {
     return !String(value).includes("******"); // strip out answers where the value is all asterisks
   });
   const newValues = {};
+  const managedEnvUpdates = {}; // envKey -> value, persisted to DB after apply
 
   for (const key of ENV_KEYS) {
     const {
@@ -55,7 +57,10 @@ async function updateENV(newENVs = {}, force = false, userId = null) {
     }
 
     newValues[key] = nextValue;
+    // Runtime read cache — the rest of the app reads process.env directly.
     process.env[envKey] = nextValue;
+    // Track the env key so we can persist it to the DB (source of truth) below.
+    managedEnvUpdates[envKey] = nextValue;
 
     for (const postUpdateFunc of postUpdate)
       await postUpdateFunc(key, prevValue, nextValue);
@@ -65,6 +70,16 @@ async function updateENV(newENVs = {}, force = false, userId = null) {
     await runAfterAllFunc(newValues, userId);
 
   await logChangesToEventLog(newValues, userId);
+
+  // Phase 4: persist managed settings to the DB (encrypted at rest for
+  // sensitive keys) with an audit trail — instead of dumping them to .env.
+  try {
+    await SettingsManager.persist(managedEnvUpdates, { userId });
+  } catch (e) {
+    console.error(`[updateENV] Failed to persist settings to DB: ${e.message}`);
+  }
+
+  // Bootstrap/infra secrets (SIG_KEY, JWT_SECRET, etc.) still live in .env.
   if (process.env.NODE_ENV === "production") dumpENV();
   return { newValues, error: error?.length > 0 ? error : false };
 }

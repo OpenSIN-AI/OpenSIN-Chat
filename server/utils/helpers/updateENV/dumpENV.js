@@ -1,9 +1,14 @@
 // SPDX-License-Identifier: MIT
-// Purpose: dumpENV — writes the current process.env to the .env file with sanitization.
+// Purpose: dumpENV — persists ONLY bootstrap/infrastructure secrets to the .env
+//          file. As of Phase 4, managed application/provider settings (the
+//          KEY_MAPPING keys: LLM/embedding/vector-db credentials, etc.) are no
+//          longer written to disk — they are persisted to the database via
+//          SettingsManager. The keys listed below are intentionally kept in the
+//          .env file because they are required *before* the DB/decryption layer
+//          is available on boot (chicken-and-egg), so they cannot be stored
+//          encrypted in the DB.
 // Docs: server/utils/helpers/updateENV.doc.md
 const consoleLogger = require("../../logger/console.js");
-
-const { KEY_MAPPING } = require("./keyMapping");
 
 async function dumpENV() {
   const fs = require("fs");
@@ -11,7 +16,11 @@ async function dumpENV() {
 
   const frozenEnvs = {};
   const protectedKeys = [
-    ...Object.values(KEY_MAPPING).map((values) => values.envKey),
+    // Security bootstrap secrets (needed before DB decryption is possible).
+    "SIG_KEY",
+    "SIG_SALT",
+    "JWT_SECRET",
+    "AUTH_TOKEN",
     // Manually Add Keys here which are not already defined in KEY_MAPPING
     // and are either managed or manually set ENV key:values.
     "JWT_EXPIRY",

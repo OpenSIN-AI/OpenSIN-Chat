@@ -63,6 +63,36 @@ model system_settings {
   lastUpdatedAt DateTime @default(now())
 }
 
+// Phase 4: DB-backed replacement for the runtime-mutated `process.env` +
+// `.env` dump anti-pattern. Persistent provider/application settings live here
+// (encrypted at rest for sensitive keys) instead of being written back to disk.
+model managed_env_settings {
+  id            Int      @id @default(autoincrement())
+  envKey        String   @unique
+  value         String?
+  encrypted     Boolean  @default(false)
+  category      String?
+  createdAt     DateTime @default(now())
+  lastUpdatedAt DateTime @default(now())
+}
+
+// Phase 4: Audit trail for every setting mutation. Values for sensitive keys
+// are redacted so secrets are never persisted in plaintext to the log.
+model settings_audit_log {
+  id            Int      @id @default(autoincrement())
+  envKey        String
+  action        String   @default("update")
+  previousValue String?
+  newValue      String?
+  redacted      Boolean  @default(false)
+  userId        Int?
+  createdAt     DateTime @default(now())
+
+  @@index([envKey])
+  @@index([userId])
+  @@index([createdAt])
+}
+
 model users {
   id                           Int                           @id @default(autoincrement())
   username                     String?                       @unique

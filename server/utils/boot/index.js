@@ -4,6 +4,7 @@ const consoleLogger = require("../logger/console.js");
 const { Telemetry } = require("../../models/telemetry");
 const { BackgroundService } = require("../BackgroundWorkers");
 const { EncryptionManager } = require("../EncryptionManager");
+const { SettingsManager } = require("../SettingsManager");
 const { CommunicationKey } = require("../comKey");
 const setupTelemetry = require("../telemetry");
 const eagerLoadContextWindows = require("./eagerLoadContextWindows");
@@ -45,6 +46,9 @@ function bootSSL(app, port = 3001, onReady) {
             await setupTelemetry();
             new CommunicationKey(true);
             new EncryptionManager();
+            // Phase 4: load DB-persisted settings into runtime env (source of
+            // truth) now that the encryption layer is available.
+            await SettingsManager.hydrate();
             new BackgroundService().boot();
             await eagerLoadContextWindows();
             if (onReady) await onReady();
