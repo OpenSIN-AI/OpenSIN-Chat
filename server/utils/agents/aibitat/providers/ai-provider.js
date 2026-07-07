@@ -1,1 +1,549 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVApjb25zdCBjb25zb2xlTG9nZ2VyID0gcmVxdWlyZSgiLi4vLi4vLi4vbG9nZ2VyL2NvbnNvbGUuanMiKTsKCi8qKgogKiBBIHNlcnZpY2UgdGhhdCBwcm92aWRlcyBhbiBBSSBjbGllbnQgdG8gY3JlYXRlIGEgY29tcGxldGlvbi4KICovCgovKioKICogQHR5cGVkZWYge09iamVjdH0gTGFuZ0NoYWluTW9kZWxDb25maWcKICogQHByb3BlcnR5IHsoc3RyaW5nfG51bGwpfSBiYXNlVVJMIC0gT3ZlcnJpZGUgdGhlIGRlZmF1bHQgYmFzZSBVUkwgcHJvY2Vzcy5lbnYgZm9yIHRoaXMgcHJvdmlkZXIKICogQHByb3BlcnR5IHsoc3RyaW5nfG51bGwpfSBhcGlLZXkgLSBPdmVycmlkZSB0aGUgZGVmYXVsdCBwcm9jZXNzLmVudiBmb3IgdGhpcyBwcm92aWRlcgogKiBAcHJvcGVydHkgeyhudW1iZXJ8bnVsbCl9IHRlbXBlcmF0dXJlIC0gT3ZlcnJpZGUgdGhlIGRlZmF1bHQgdGVtcGVyYXR1cmUKICogQHByb3BlcnR5IHsoc3RyaW5nfG51bGwpfSBtb2RlbCAtICBPdmVycmlkZXMgbW9kZWwgdXNlZCBmb3IgcHJvdmlkZXIuCiAqLwoKY29uc3QgeyB2NCB9ID0gcmVxdWlyZSgidXVpZCIpOwpjb25zdCB7IENoYXRPcGVuQUkgfSA9IHJlcXVpcmUoIkBsYW5nY2hhaW4vb3BlbmFpIik7CmNvbnN0IHsgQ2hhdEFudGhyb3BpYyB9ID0gcmVxdWlyZSgiQGxhbmdjaGFpbi9hbnRocm9waWMiKTsKY29uc3QgeyBDaGF0T2xsYW1hIH0gPSByZXF1aXJlKCJAbGFuZ2NoYWluL29sbGFtYSIpOwpjb25zdCB7IHRvVmFsaWROdW1iZXIsIHNhZmVKc29uUGFyc2UgfSA9IHJlcXVpcmUoIi4uLy4uLy4uL2h0dHAiKTsKY29uc3QgeyBnZXRMTE1Qcm92aWRlckNsYXNzIH0gPSByZXF1aXJlKCIuLi8uLi8uLi9oZWxwZXJzIik7CmNvbnN0IHsgcGFyc2VMTVN0dWRpb0Jhc2VQYXRoIH0gPSByZXF1aXJlKCIuLi8uLi8uLi9BaVByb3ZpZGVycy9sbVN0dWRpbyIpOwpjb25zdCB7CiAgcGFyc2VEb2NrZXJNb2RlbFJ1bm5lckVuZHBvaW50LAp9ID0gcmVxdWlyZSgiLi4vLi4vLi4vQWlQcm92aWRlcnMvZG9ja2VyTW9kZWxSdW5uZXIiKTsKY29uc3QgewogIFN5c3RlbVByb21wdFZhcmlhYmxlcywKfSA9IHJlcXVpcmUoIi4uLy4uLy4uLy4uL21vZGVscy9zeXN0ZW1Qcm9tcHRWYXJpYWJsZXMiKTsKY29uc3QgeyBPbGxhbWFBSUxMTSB9ID0gcmVxdWlyZSgiLi4vLi4vLi4vQWlQcm92aWRlcnMvb2xsYW1hIik7Cgpjb25zdCBERUZBVUxUX1dPUktTUEFDRV9QUk9NUFQgPQogICJZb3UgYXJlIGEgaGVscGZ1bCBhaSBhc3Npc3RhbnQgd2hvIGNhbiBhc3Npc3QgdGhlIHVzZXIgYW5kIHVzZSB0b29scyBhdmFpbGFibGUgdG8gaGVscCBhbnN3ZXIgdGhlIHVzZXJzIHByb21wdHMgYW5kIHF1ZXN0aW9ucy4iOwoKLyoqCiAqIEB0eXBlZGVmIHtPYmplY3R9IFByb3ZpZGVyVXNhZ2VNZXRyaWNzCiAqIEBwcm9wZXJ0eSB7bnVtYmVyfSBwcm9tcHRfdG9rZW5zIC0gTnVtYmVyIG9mIHRva2VucyBpbiB0aGUgcHJvbXB0L2lucHV0CiAqIEBwcm9wZXJ0eSB7bnVtYmVyfSBjb21wbGV0aW9uX3Rva2VucyAtIE51bWJlciBvZiB0b2tlbnMgaW4gdGhlIGNvbXBsZXRpb24vb3V0cHV0CiAqIEBwcm9wZXJ0eSB7bnVtYmVyfSB0b3RhbF90b2tlbnMgLSBUb3RhbCB0b2tlbnMgdXNlZAogKiBAcHJvcGVydHkge251bWJlcn0gZHVyYXRpb24gLSBEdXJhdGlvbiBpbiBzZWNvbmRzCiAqIEBwcm9wZXJ0eSB7bnVtYmVyfSBvdXRwdXRUcHMgLSBPdXRwdXQgdG9rZW5zIHBlciBzZWNvbmQKICogQHByb3BlcnR5IHtzdHJpbmd8bnVsbH0gbW9kZWwgLSBNb2RlbCBuYW1lCiAqIEBwcm9wZXJ0eSB7c3RyaW5nfG51bGx9IHByb3ZpZGVyIC0gUHJvdmlkZXIgY2xhc3MgbmFtZQogKiBAcHJvcGVydHkge0RhdGV8bnVsbH0gdGltZXN0YW1wIC0gVGltZXN0YW1wIG9mIHRoZSBjb21wbGV0aW9uCiAqLwoKLyoqCiAqIEB0eXBlZGVmIHtPYmplY3R9IEFnZW50UHJvdmlkZXJJbnN0YW5jZQogKiBAcHJvcGVydHkge3N0cmluZ30gbW9kZWwgLSBUaGUgbW9kZWwgaWRlbnRpZmllciBzdHJpbmcuCiAqIEBwcm9wZXJ0eSB7Ym9vbGVhbn0gW3ZlcmJvc2VdIC0gV2hldGhlciB0byBsb2cgdmVyYm9zZSBpbnRyb3NwZWN0aW9uIG1lc3NhZ2VzLgogKiBAcHJvcGVydHkge2Jvb2xlYW59IHN1cHBvcnRzQWdlbnRTdHJlYW1pbmcgLSBXaGV0aGVyIHRoZSBwcm92aWRlciBzdXBwb3J0cyBzdHJlYW1pbmcgdG9vbC1jYWxsIGV4ZWN1dGlvbi4KICogQHByb3BlcnR5IHsoaGFuZGxlclByb3BzOiBPYmplY3QpID0+IHZvaWR9IGF0dGFjaEhhbmRsZXJQcm9wcyAtIEF0dGFjaCBpbnZvY2F0aW9uL2hhbmRsZXIgY29udGV4dCB0byB0aGUgcHJvdmlkZXIuCiAqIEBwcm9wZXJ0eSB7KG1lc3NhZ2VzOiBBcnJheSwgZnVuY3Rpb25zPzogQXJyYXksIGV2ZW50SGFuZGxlcj86IEZ1bmN0aW9uKSA9PiBQcm9taXNlPHtmdW5jdGlvbkNhbGw6IGFueSwgdGV4dFJlc3BvbnNlOiBzdHJpbmd9Pn0gc3RyZWFtIC0gU3RyZWFtIGEgY2hhdCBjb21wbGV0aW9uIHdpdGggdG9vbCBjYWxsaW5nLgogKiBAcHJvcGVydHkgeyhtZXNzYWdlczogQXJyYXksIGZ1bmN0aW9ucz86IEFycmF5KSA9PiBQcm9taXNlPHtmdW5jdGlvbkNhbGw6IGFueSwgdGV4dFJlc3BvbnNlOiBzdHJpbmcsIHJlc3VsdD86IHN0cmluZ30+fSBjb21wbGV0ZSAtIE5vbi1zdHJlYW1pbmcgY2hhdCBjb21wbGV0aW9uIHdpdGggdG9vbCBjYWxsaW5nLgogKiBAcHJvcGVydHkgeygpID0+IFByb3ZpZGVyVXNhZ2VNZXRyaWNzfSBnZXRVc2FnZSAtIEdldCB1c2FnZSBtZXRyaWNzIGZyb20gdGhlIGxhc3QgY29tcGxldGlvbi4KICovCgpjbGFzcyBQcm92aWRlciB7CiAgX2NsaWVudDsKCiAgLyoqCiAgICogVGhlIGludm9jYXRpb24gb2JqZWN0IGNvbnRhaW5pbmcgdGhlIHVzZXIgSUQgYW5kIG90aGVyIGludm9jYXRpb24gZGV0YWlscy4KICAgKiBAdHlwZSB7aW1wb3J0KCJAcHJpc21hL2NsaWVudCIpLndvcmtzcGFjZV9hZ2VudF9pbnZvY2F0aW9uc30KICAgKi8KICBpbnZvY2F0aW9uID0ge307CgogIC8qKgogICAqIFRoZSB1c2VyIElEIGZvciB0aGUgY2hhdCBjb21wbGV0aW9uIHRvIHNlbmQgdG8gdGhlIExMTSBwcm92aWRlciBmb3IgdXNlciB0cmFja2luZy4KICAgKiBJbiBvcmRlciBmb3IgdGhpcyB0byBiZSBzZXQsIHRoZSBoYW5kbGVyIHByb3BzIG11c3QgYmUgYXR0YWNoZWQgdG8gdGhlIHByb3ZpZGVyIGFmdGVyIGluc3RhbnRpYXRpb24uCiAgICogZXg6IHRoaXMuYXR0YWNoSGFuZGxlclByb3BzKHsgLi4uLCBpbnZvY2F0aW9uOiB7IC4uLiwgdXNlcl9pZDogMTIzIH0gfSk7CiAgICogZWc6IGB1c2VyXzEyM2AKICAgKiBAdHlwZSB7c3RyaW5nfQogICAqLwogIGV4ZWN1dGluZ1VzZXJJZCA9ICIiOwoKICAvKioKICAgKiBTdG9yZXMgdGhlIHVzYWdlIG1ldHJpY3MgZnJvbSB0aGUgbGFzdCBjb21wbGV0aW9uIGNhbGwuCiAgICogQHR5cGUge1Byb3ZpZGVyVXNhZ2VNZXRyaWNzfQogICAqLwogIGxhc3RVc2FnZSA9IHsKICAgIHByb21wdF90b2tlbnM6IDAsCiAgICBjb21wbGV0aW9uX3Rva2VuczogMCwKICAgIHRvdGFsX3Rva2VuczogMCwKICAgIGR1cmF0aW9uOiAwLAogICAgb3V0cHV0VHBzOiAwLAogICAgbW9kZWw6IG51bGwsCiAgICBwcm92aWRlcjogbnVsbCwKICAgIHRpbWVzdGFtcDogbnVsbCwKICB9OwoKICAvKioKICAgKiBUaW1lc3RhbXAgd2hlbiB0aGUgY3VycmVudCByZXF1ZXN0IHN0YXJ0ZWQgKGZvciBkdXJhdGlvbiBjYWxjdWxhdGlvbikuCiAgICogQHR5cGUge251bWJlcn0KICAgKi8KICBfcmVxdWVzdFN0YXJ0VGltZSA9IDA7CgogIGNvbnN0cnVjdG9yKGNsaWVudCkgewogICAgaWYgKHRoaXMuY29uc3RydWN0b3IgPT0gUHJvdmlkZXIpIHsKICAgICAgcmV0dXJuOwogICAgfQogICAgdGhpcy5fY2xpZW50ID0gY2xpZW50OwogIH0KCiAgcHJvdmlkZXJMb2codGV4dCwgLi4uYXJncykgewogICAgY29uc29sZUxvZ2dlci5sb2coCiAgICAgIGBceDFiWzM2bVtBZ2VudExMTSR7dGhpcz8ubW9kZWwgPyBgIC0gJHt0aGlzLm1vZGVsfWAgOiAiIn1dXHgxYlswbSAke3RleHR9YCwKICAgICAgLi4uYXJncywKICAgICk7CiAgfQoKICAvKioKICAgKiBBdHRhY2hlcyBoYW5kbGVyIHByb3BzIHRvIHRoZSBwcm92aWRlciBmb3IgcmV1c2UgaW4gdGhlIHByb3ZpZGVyLgogICAqIC0gRXhwbGljaXRseSBzZXRzIHRoZSBpbnZvY2F0aW9uIG9iamVjdC4KICAgKiAtIEV4cGxpY2l0bHkgc2V0cyB0aGUgZXhlY3V0aW5nIHVzZXIgSUQgZnJvbSB0aGUgaW52b2NhdGlvbiBvYmplY3QuCiAgICogQHBhcmFtIHtPYmplY3R9IGhhbmRsZXJQcm9wcyAtIFRoZSBoYW5kbGVyIHByb3BzIHRvIGF0dGFjaCB0byB0aGUgcHJvdmlkZXIuCiAgICovCiAgYXR0YWNoSGFuZGxlclByb3BzKGhhbmRsZXJQcm9wcyA9IHt9KSB7CiAgICB0aGlzLmludm9jYXRpb24gPSBoYW5kbGVyUHJvcHM/Lmludm9jYXRpb24gfHwge307CiAgICB0aGlzLmV4ZWN1dGluZ1VzZXJJZCA9IHRoaXMuaW52b2NhdGlvbj8udXNlcl9pZAogICAgICA/IGB1c2VyXyR7dGhpcy5pbnZvY2F0aW9uLnVzZXJfaWR9YAogICAgICA6ICIiOwogIH0KCiAgZ2V0IGNsaWVudCgpIHsKICAgIHJldHVybiB0aGlzLl9jbGllbnQ7CiAgfQoKICAvKioKICAgKiBXaGV0aGVyIHRoaXMgcHJvdmlkZXIgc3VwcG9ydHMgbmF0aXZlIHRvb2wgY2FsbGluZyB2aWEgdGhlIEVOViBmbGFnLgogICAqIEBwYXJhbSB7c3RyaW5nfSBwcm92aWRlclRhZyAtIFRoZSB0YWcgb2YgdGhlIHByb3ZpZGVyIHRvIGNoZWNrIChlLmcuICJiZWRyb2NrIiwgIm9wZW5yb3V0ZXIiLCAiZ3JvcSIsIGV0Yy4pLgogICAqIEByZXR1cm5zIHtib29sZWFufQogICAqLwogIHN1cHBvcnRzTmF0aXZlVG9vbENhbGxpbmdWaWFFbnYocHJvdmlkZXJUYWcgPSAiIikgewogICAgaWYgKCEoIlBST1ZJREVSX1NVUFBPUlRTX05BVElWRV9UT09MX0NBTExJTkciIGluIHByb2Nlc3MuZW52KSkgcmV0dXJuIGZhbHNlOwogICAgaWYgKCFwcm92aWRlclRhZykgcmV0dXJuIGZhbHNlOwogICAgcmV0dXJuICgKICAgICAgcHJvY2Vzcy5lbnYuUFJPVklERVJfU1VQUE9SVFNfTkFUSVZFX1RPT0xfQ0FMTElORz8uaW5jbHVkZXMoCiAgICAgICAgcHJvdmlkZXJUYWcsCiAgICAgICkgfHwgZmFsc2UKICAgICk7CiAgfQoKICAvKioKICAgKiBXaGV0aGVyIHRoaXMgcHJvdmlkZXIgc3VwcG9ydHMgbmF0aXZlIE9wZW5BSS1jb21wYXRpYmxlIHRvb2wgY2FsbGluZy4KICAgKiBAcmV0dXJucyB7Ym9vbGVhbnxQcm9taXNlPGJvb2xlYW4+fQogICAqLwogIHN1cHBvcnRzTmF0aXZlVG9vbENhbGxpbmcoKSB7CiAgICByZXR1cm4gZmFsc2U7CiAgfQoKICAvKioKICAgKgogICAqIEBwYXJhbSB7c3RyaW5nfSBwcm92aWRlciAtIHRoZSBzdHJpbmcga2V5IG9mIHRoZSBwcm92aWRlciBMTE0gYmVpbmcgbG9hZGVkLgogICAqIEBwYXJhbSB7TGFuZ0NoYWluTW9kZWxDb25maWd9IGNvbmZpZyAtIENvbmZpZyB0byBiZSB1c2VkIHRvIG92ZXJyaWRlIGRlZmF1bHQgY29ubmVjdGlvbiBvYmplY3QuCiAgICogQHJldHVybnMKICAgKi8KICBzdGF0aWMgTGFuZ0NoYWluQ2hhdE1vZGVsKHByb3ZpZGVyID0gIm9wZW5haSIsIGNvbmZpZyA9IHt9KSB7CiAgICBzd2l0Y2ggKHByb3ZpZGVyKSB7CiAgICAgIC8vIENsb3VkIG1vZGVscwogICAgICBjYXNlICJvcGVuYWkiOgogICAgICAgIHJldHVybiBuZXcgQ2hhdE9wZW5BSSh7CiAgICAgICAgICBhcGlLZXk6IHByb2Nlc3MuZW52Lk9QRU5fQUlfS0VZLAogICAgICAgICAgLi4uY29uZmlnLAogICAgICAgIH0pOwogICAgICBjYXNlICJhbnRocm9waWMiOgogICAgICAgIHJldHVybiBuZXcgQ2hhdEFudGhyb3BpYyh7CiAgICAgICAgICBhcGlLZXk6IHByb2Nlc3MuZW52LkFOVEhST1BJQ19BUElfS0VZLAogICAgICAgICAgLi4uY29uZmlnLAogICAgICAgIH0pOwogICAgICBjYXNlICJncm9xIjoKICAgICAgICByZXR1cm4gbmV3IENoYXRPcGVuQUkoewogICAgICAgICAgY29uZmlndXJhdGlvbjogewogICAgICAgICAgICBiYXNlVVJMOiAiaHR0cHM6Ly9hcGkuZ3JvcS5jb20vb3BlbmFpL3YxIiwKICAgICAgICAgIH0sCiAgICAgICAgICBhcGlLZXk6IHByb2Nlc3MuZW52LkdST1FfQVBJX0tFWSwKICAgICAgICAgIC4uLmNvbmZpZywKICAgICAgICB9KTsKICAgICAgY2FzZSAibWlzdHJhbCI6CiAgICAgICAgcmV0dXJuIG5ldyBDaGF0T3BlbkFJKHsKICAgICAgICAgIGNvbmZpZ3VyYXRpb246IHsKICAgICAgICAgICAgYmFzZVVSTDogImh0dHBzOi8vYXBpLm1pc3RyYWwuYWkvdjEiLAogICAgICAgICAgfSwKICAgICAgICAgIGFwaUtleTogcHJvY2Vzcy5lbnYuTUlTVFJBTF9BUElfS0VZID8/IG51bGwsCiAgICAgICAgICAuLi5jb25maWcsCiAgICAgICAgfSk7CiAgICAgIGNhc2UgImdlbmVyaWMtb3BlbmFpIjoKICAgICAgICByZXR1cm4gbmV3IENoYXRPcGVuQUkoewogICAgICAgICAgY29uZmlndXJhdGlvbjogewogICAgICAgICAgICBiYXNlVVJMOiBwcm9jZXNzLmVudi5HRU5FUklDX09QRU5fQUlfQkFTRV9QQVRILAogICAgICAgICAgfSwKICAgICAgICAgIGFwaUtleTogcHJvY2Vzcy5lbnYuR0VORVJJQ19PUEVOX0FJX0FQSV9LRVkgfHwgIm5vdC11c2VkIiwKICAgICAgICAgIG1heFRva2VuczogdG9WYWxpZE51bWJlcigKICAgICAgICAgICAgcHJvY2Vzcy5lbnYuR0VORVJJQ19PUEVOX0FJX01BWF9UT0tFTlMsCiAgICAgICAgICAgIDEwMjQsCiAgICAgICAgICApLAogICAgICAgICAgLi4uY29uZmlnLAogICAgICAgIH0pOwogICAgICBjYXNlICJmaXJld29ya3NhaSI6CiAgICAgICAgcmV0dXJuIG5ldyBDaGF0T3BlbkFJKHsKICAgICAgICAgIGFwaUtleTogcHJvY2Vzcy5lbnYuRklSRVdPUktTX0FJX0xMTV9BUElfS0VZLAogICAgICAgICAgLi4uY29uZmlnLAogICAgICAgIH0pOwogICAgICBjYXNlICJ4YWkiOgogICAgICAgIHJldHVybiBuZXcgQ2hhdE9wZW5BSSh7CiAgICAgICAgICBjb25maWd1cmF0aW9uOiB7CiAgICAgICAgICAgIGJhc2VVUkw6ICJodHRwczovL2FwaS54LmFpL3YxIiwKICAgICAgICAgIH0sCiAgICAgICAgICBhcGlLZXk6IHByb2Nlc3MuZW52LlhBSV9MTE1fQVBJX0tFWSA/PyBudWxsLAogICAgICAgICAgLi4uY29uZmlnLAogICAgICAgIH0pOwogICAgICBjYXNlICJnZW1pbmkiOgogICAgICAgIHJldHVybiBuZXcgQ2hhdE9wZW5BSSh7CiAgICAgICAgICBjb25maWd1cmF0aW9uOiB7CiAgICAgICAgICAgIGJhc2VVUkw6ICJodHRwczovL2dlbmVyYXRpdmVsYW5ndWFnZS5nb29nbGVhcGlzLmNvbS92MWJldGEvb3BlbmFpLyIsCiAgICAgICAgICB9LAogICAgICAgICAgYXBpS2V5OiBwcm9jZXNzLmVudi5HRU1JTklfQVBJX0tFWSA/PyBudWxsLAogICAgICAgICAgLi4uY29uZmlnLAogICAgICAgIH0pOwogICAgICAvLyBPU1MgTW9kZWwgUnVubmVycwogICAgICAvLyBjYXNlICJvcGVuc2luX29sbGFtYSI6CiAgICAgIC8vICAgcmV0dXJuIG5ldyBDaGF0T2xsYW1hKHsKICAgICAgLy8gICAgIGJhc2VVcmw6IHByb2Nlc3MuZW52LlBMQUNFSE9MREVSLAogICAgICAvLyAgICAgLi4uY29uZmlnLAogICAgICAvLyAgIH0pOwogICAgICBjYXNlICJvbGxhbWEiOgogICAgICAgIHJldHVybiBPbGxhbWFMYW5nY2hhaW5DaGF0TW9kZWwuY3JlYXRlKGNvbmZpZyk7CiAgICAgIGNhc2UgImxtc3R1ZGlvIjogewogICAgICAgIGNvbnN0IGFwaUtleSA9IHByb2Nlc3MuZW52LkxNU1RVRElPX0FVVEhfVE9LRU4gPz8gbnVsbDsKICAgICAgICByZXR1cm4gbmV3IENoYXRPcGVuQUkoewogICAgICAgICAgY29uZmlndXJhdGlvbjogewogICAgICAgICAgICBiYXNlVVJMOiBwYXJzZUxNU3R1ZGlvQmFzZVBhdGgocHJvY2Vzcy5lbnYuTE1TVFVESU9fQkFTRV9QQVRIKSwKICAgICAgICAgIH0sCiAgICAgICAgICBhcGlLZXk6IGFwaUtleSB8fCAibm90LXVzZWQiLAogICAgICAgICAgLi4uY29uZmlnLAogICAgICAgIH0pOwogICAgICB9CiAgICAgIGNhc2UgImxvY2FsYWkiOgogICAgICAgIHJldHVybiBuZXcgQ2hhdE9wZW5BSSh7CiAgICAgICAgICBjb25maWd1cmF0aW9uOiB7CiAgICAgICAgICAgIGJhc2VVUkw6IHByb2Nlc3MuZW52LkxPQ0FMX0FJX0JBU0VfUEFUSCwKICAgICAgICAgIH0sCiAgICAgICAgICBhcGlLZXk6IHByb2Nlc3MuZW52LkxPQ0FMX0FJX0FQSV9LRVkgPz8gIm5vdC11c2VkIiwKICAgICAgICAgIC4uLmNvbmZpZywKICAgICAgICB9KTsKICAgICAgY2FzZSAibGl0ZWxsbSI6CiAgICAgICAgcmV0dXJuIG5ldyBDaGF0T3BlbkFJKHsKICAgICAgICAgIGNvbmZpZ3VyYXRpb246IHsKICAgICAgICAgICAgYmFzZVVSTDogcHJvY2Vzcy5lbnYuTElURV9MTE1fQkFTRV9QQVRILAogICAgICAgICAgfSwKICAgICAgICAgIGFwaUtleTogcHJvY2Vzcy5lbnYuTElURV9MTE1fQVBJX0tFWSB8fCAibm90LXVzZWQiLAogICAgICAgICAgLi4uY29uZmlnLAogICAgICAgIH0pOwogICAgICBjYXNlICJudmlkaWEtbmltIjoKICAgICAgICByZXR1cm4gbmV3IENoYXRPcGVuQUkoewogICAgICAgICAgY29uZmlndXJhdGlvbjogewogICAgICAgICAgICBiYXNlVVJMOiBwcm9jZXNzLmVudi5OVklESUFfTklNX0xMTV9CQVNFX1BBVEgsCiAgICAgICAgICB9LAogICAgICAgICAgYXBpS2V5OiBwcm9jZXNzLmVudi5OVklESUFfTklNX0xMTV9BUElfS0VZIHx8ICJudmlkaWEtbmltIiwKICAgICAgICAgIC4uLmNvbmZpZywKICAgICAgICB9KTsKICAgICAgY2FzZSAib3BlbmNvZGUtemVuIjoKICAgICAgICByZXR1cm4gbmV3IENoYXRPcGVuQUkoewogICAgICAgICAgY29uZmlndXJhdGlvbjogewogICAgICAgICAgICBiYXNlVVJMOiBwcm9jZXNzLmVudi5PUEVOQ09ERV9aRU5fQkFTRV9QQVRILAogICAgICAgICAgfSwKICAgICAgICAgIGFwaUtleTogcHJvY2Vzcy5lbnYuT1BFTkNPREVfWkVOX0FQSV9LRVkgfHwgIm9wZW5jb2RlLXplbiIsCiAgICAgICAgICAuLi5jb25maWcsCiAgICAgICAgfSk7CiAgICAgIGNhc2UgImRvY2tlci1tb2RlbC1ydW5uZXIiOgogICAgICAgIHJldHVybiBuZXcgQ2hhdE9wZW5BSSh7CiAgICAgICAgICBjb25maWd1cmF0aW9uOiB7CiAgICAgICAgICAgIGJhc2VVUkw6IHBhcnNlRG9ja2VyTW9kZWxSdW5uZXJFbmRwb2ludCgKICAgICAgICAgICAgICBwcm9jZXNzLmVudi5ET0NLRVJfTU9ERUxfUlVOTkVSX0JBU0VfUEFUSCwKICAgICAgICAgICAgKSwKICAgICAgICAgIH0sCiAgICAgICAgICBhcGlLZXk6CiAgICAgICAgICAgIHByb2Nlc3MuZW52LkRPQ0tFUl9NT0RFTF9SVU5ORVJfQVBJX0tFWSB8fCAiZG9ja2VyLW1vZGVsLXJ1bm5lciIsCiAgICAgICAgICAuLi5jb25maWcsCiAgICAgICAgfSk7CiAgICAgIGRlZmF1bHQ6CiAgICAgICAgdGhyb3cgbmV3IEVycm9yKAogICAgICAgICAgYFVuc3VwcG9ydGVkIHByb3ZpZGVyICR7SlNPTi5zdHJpbmdpZnkocHJvdmlkZXIpfSBmb3IgdGhpcyB0YXNrLmAsCiAgICAgICAgKTsKICAgIH0KICB9CgogIC8qKgogICAqIEdldCB0aGUgY29udGV4dCBsaW1pdCBmb3IgYSBwcm92aWRlci9tb2RlbCBjb21iaW5hdGlvbiB1c2luZyBzdGF0aWMgbWV0aG9kIGluIEFJUHJvdmlkZXIgY2xhc3MuCiAgICogQHBhcmFtIHtzdHJpbmd9IHByb3ZpZGVyCiAgICogQHBhcmFtIHtzdHJpbmd9IG1vZGVsTmFtZQogICAqIEByZXR1cm5zIHtudW1iZXJ9CiAgICovCiAgc3RhdGljIGNvbnRleHRMaW1pdChwcm92aWRlciA9ICJvcGVuYWkiLCBtb2RlbE5hbWUpIHsKICAgIGlmICh0eXBlb2YgcHJvdmlkZXIgIT09ICJzdHJpbmciKSB7CiAgICAgIGNvbnNvbGVMb2dnZXIubG9nKAogICAgICAgIGBceDFiWzQzbVx4MWJbMzBtWy5jb250ZXh0TGltaXQgd2FybmluZ10gQSBub24tc3RyaW5nIHByb3ZpZGVyIGZvciAuY29udGV4dExpbWl0IHdhcyBnaXZlbiDigJQgUmV0dXJuaW5nIGZhbGxiYWNrIGNvbnRleHQgbGltaXQgb2YgODAwMC5ceDFiWzBtXG5ceDFiWzQzbVx4MWJbMzBtVGhpcyBpcyBhIGJ1ZyBhbmQgc2hvdWxkIGJlIHJlcG9ydGVkIHNvIHRoYXQgY29udGV4dCB3aW5kb3dzIGFyZSBwcm9wZXJseSBtYW5hZ2VkIGJ5IE9wZW5TSU4gQ2hhdC5ceDFiWzBtYCwKICAgICAgKTsKICAgICAgY29uc29sZS50cmFjZSgpOwogICAgICByZXR1cm4gOF8wMDA7CiAgICB9CgogICAgY29uc3QgbGxtID0gZ2V0TExNUHJvdmlkZXJDbGFzcyh7IHByb3ZpZGVyIH0pOwogICAgaWYgKCFsbG0gfHwgIWxsbS5oYXNPd25Qcm9wZXJ0eSgicHJvbXB0V2luZG93TGltaXQiKSkgewogICAgICBjb25zb2xlTG9nZ2VyLndhcm4oCiAgICAgICAgYFx4MWJbMzNtWy5jb250ZXh0TGltaXQgd2FybmluZ11ceDFiWzBtIENvdWxkIG5vdCBkZXRlcm1pbmUgLnByb21wdFdpbmRvd0xpbWl0IGZvciBwcm92aWRlciAke3Byb3ZpZGVyfS4gVGhpcyBjb3VsZCBsZWFkIHRvIGluY29ycmVjdCBjb250ZXh0IHdpbmRvdyBtYW5hZ2VtZW50IGJ5IE9wZW5TSU4gQ2hhdCBzaW5jZSB3ZSBjYW5ub3QgZGV0ZXJtaW5lIHRoZSBjb250ZXh0IHdpbmRvdyBsaW1pdCBmb3IgdGhpcyBwcm92aWRlci9tb2RlbCBjb21iaW5hdGlvbi5gLAogICAgICApOwogICAgICByZXR1cm4gOF8wMDA7CiAgICB9CiAgICByZXR1cm4gbGxtLnByb21wdFdpbmRvd0xpbWl0KG1vZGVsTmFtZSk7CiAgfQoKICBzdGF0aWMgZGVmYXVsdFN5c3RlbVByb21wdEZvclByb3ZpZGVyKHByb3ZpZGVyID0gbnVsbCkgewogICAgc3dpdGNoIChwcm92aWRlcikgewogICAgICBjYXNlICJsbXN0dWRpbyI6CiAgICAgICAgcmV0dXJuICJZb3UgYXJlIGEgaGVscGZ1bCBhaSBhc3Npc3RhbnQgd2hvIGNhbiBhc3Npc3QgdGhlIHVzZXIgYW5kIHVzZSB0b29scyBhdmFpbGFibGUgdG8gaGVscCBhbnN3ZXIgdGhlIHVzZXJzIHByb21wdHMgYW5kIHF1ZXN0aW9ucy4gVG9vbHMgd2lsbCBiZSBoYW5kbGVkIGJ5IGFub3RoZXIgYXNzaXN0YW50IGFuZCB5b3Ugd2lsbCBzaW1wbHkgcmVjZWl2ZSB0aGVpciByZXNwb25zZXMgdG8gaGVscCBhbnN3ZXIgdGhlIHVzZXIgcHJvbXB0IC0gYWx3YXlzIHRyeSB0byBhbnN3ZXIgdGhlIHVzZXIncyBwcm9tcHQgdGhlIGJlc3QgeW91IGNhbiB3aXRoIHRoZSBjb250ZXh0IGF2YWlsYWJsZSB0byB5b3UgYW5kIHlvdXIgZ2VuZXJhbCBrbm93bGVkZ2UuIjsKICAgICAgZGVmYXVsdDoKICAgICAgICByZXR1cm4gREVGQVVMVF9XT1JLU1BBQ0VfUFJPTVBUOwogICAgfQogIH0KCiAgLyoqCiAgICogR2V0IHRoZSBzeXN0ZW0gcHJvbXB0IGZvciBhIHByb3ZpZGVyLCB3aXRoIG1lbW9yaWVzIGFwcGVuZGVkICh3aGVuIGVuYWJsZWQpLgogICAqIEBwYXJhbSB7b2JqZWN0fSBvcHRzCiAgICogQHBhcmFtIHtzdHJpbmd9IG9wdHMucHJvdmlkZXIKICAgKiBAcGFyYW0ge2ltcG9ydCgiQHByaXNtYS9jbGllbnQiKS53b3Jrc3BhY2VzIHwgbnVsbH0gb3B0cy53b3Jrc3BhY2UKICAgKiBAcGFyYW0ge2ltcG9ydCgiQHByaXNtYS9jbGllbnQiKS51c2VycyB8IG51bGx9IG9wdHMudXNlcgogICAqIEBwYXJhbSB7c3RyaW5nfSBbb3B0cy5wcm9tcHRdIC0gY3VycmVudCB1c2VyIG1lc3NhZ2UsIHVzZWQgZm9yIHJlcmFua2luZyBpbmplY3RlZCBtZW1vcmllcwogICAqIEByZXR1cm5zIHtQcm9taXNlPHN0cmluZz59CiAgICovCiAgc3RhdGljIGFzeW5jIHN5c3RlbVByb21wdCh7CiAgICBwcm92aWRlciA9IG51bGwsCiAgICB3b3Jrc3BhY2UgPSBudWxsLAogICAgdXNlciA9IG51bGwsCiAgICBwcm9tcHQgPSAiIiwKICB9KSB7CiAgICBjb25zdCB7IHByb21wdFdpdGhNZW1vcmllcyB9ID0gcmVxdWlyZSgiLi4vLi4vLi4vbWVtb3JpZXMiKTsKICAgIGNvbnN0IGJhc2VQcm9tcHQgPSAhd29ya3NwYWNlPy5vcGVuQWlQcm9tcHQKICAgICAgPyBQcm92aWRlci5kZWZhdWx0U3lzdGVtUHJvbXB0Rm9yUHJvdmlkZXIocHJvdmlkZXIpCiAgICAgIDogYXdhaXQgU3lzdGVtUHJvbXB0VmFyaWFibGVzLmV4cGFuZFN5c3RlbVByb21wdFZhcmlhYmxlcygKICAgICAgICAgIHdvcmtzcGFjZS5vcGVuQWlQcm9tcHQsCiAgICAgICAgICB1c2VyPy5pZCB8fCBudWxsLAogICAgICAgICAgd29ya3NwYWNlLmlkLAogICAgICAgICk7CiAgICByZXR1cm4gcHJvbXB0V2l0aE1lbW9yaWVzKHsKICAgICAgc3lzdGVtUHJvbXB0OiBiYXNlUHJvbXB0LAogICAgICB1c2VySWQ6IHVzZXI/LmlkID8/IG51bGwsCiAgICAgIHdvcmtzcGFjZUlkOiB3b3Jrc3BhY2U/LmlkLAogICAgICBwcm9tcHQsCiAgICB9KTsKICB9CgogIC8qKgogICAqIFdoZXRoZXIgdGhlIHByb3ZpZGVyIHN1cHBvcnRzIGFnZW50IHN0cmVhbWluZy4KICAgKiBEaXNhYmxlZCBieSBkZWZhdWx0IGFuZCBuZWVkcyB0byBiZSBleHBsaWNpdGx5IGVuYWJsZWQgaW4gdGhlIHByb3ZpZGVyCiAgICogVGhpcyBpcyB0ZW1wb3Jhcnkgd2hpbGUgd2UgbWlncmF0ZSBhbGwgcHJvdmlkZXJzIHRvIHN1cHBvcnQgYWdlbnQgc3RyZWFtaW5nCiAgICogQHJldHVybnMge2Jvb2xlYW59CiAgICovCiAgZ2V0IHN1cHBvcnRzQWdlbnRTdHJlYW1pbmcoKSB7CiAgICByZXR1cm4gZmFsc2U7CiAgfQoKICAvKioKICAgKiBGb3JtYXQgYSBzaW5nbGUgbWVzc2FnZSB3aXRoIGF0dGFjaG1lbnRzIChpbWFnZXMpIGZvciBtdWx0aW1vZGFsIGNvbnRlbnQuCiAgICogVHJhbnNmb3JtcyBhIG1lc3NhZ2Ugd2l0aCBhdHRhY2htZW50cyBpbnRvIHRoZSBPcGVuQUktY29tcGF0aWJsZSBtdWx0aW1vZGFsIGZvcm1hdC4KICAgKiBDYW4gYmUgb3ZlcnJpZGRlbiBieSBwcm92aWRlciBzdWJjbGFzc2VzIGZvciBwcm92aWRlci1zcGVjaWZpYyBmb3JtYXRzLgogICAqIEBwYXJhbSB7T2JqZWN0fSBtZXNzYWdlIC0gVGhlIG1lc3NhZ2UgdG8gZm9ybWF0CiAgICogQHJldHVybnMge09iamVjdH0gLSBNZXNzYWdlIGZvcm1hdHRlZCBmb3IgdGhlIEFQSQogICAqLwogIGZvcm1hdE1lc3NhZ2VXaXRoQXR0YWNobWVudHMobWVzc2FnZSkgewogICAgaWYgKCFtZXNzYWdlLmF0dGFjaG1lbnRzIHx8IG1lc3NhZ2UuYXR0YWNobWVudHMubGVuZ3RoID09PSAwKSB7CiAgICAgIHJldHVybiBtZXNzYWdlOwogICAgfQoKICAgIC8vIFRyYW5zZm9ybSBtZXNzYWdlIHdpdGggYXR0YWNobWVudHMgaW50byBtdWx0aW1vZGFsIGZvcm1hdAogICAgY29uc3QgY29udGVudCA9IFt7IHR5cGU6ICJ0ZXh0IiwgdGV4dDogbWVzc2FnZS5jb250ZW50IH1dOwogICAgZm9yIChjb25zdCBhdHRhY2htZW50IG9mIG1lc3NhZ2UuYXR0YWNobWVudHMpIHsKICAgICAgY29udGVudC5wdXNoKHsKICAgICAgICB0eXBlOiAiaW1hZ2VfdXJsIiwKICAgICAgICBpbWFnZV91cmw6IHsKICAgICAgICAgIHVybDogYXR0YWNobWVudC5jb250ZW50U3RyaW5nLAogICAgICAgIH0sCiAgICAgIH0pOwogICAgfQoKICAgIC8vIFJldHVybiBtZXNzYWdlIHdpdGhvdXQgYXR0YWNobWVudHMgcHJvcGVydHksIHdpdGggY29udGVudCBhcyBhcnJheQogICAgY29uc3QgeyBhdHRhY2htZW50czogXywgLi4ucmVzdCB9ID0gbWVzc2FnZTsKICAgIHJldHVybiB7CiAgICAgIC4uLnJlc3QsCiAgICAgIGNvbnRlbnQsCiAgICB9OwogIH0KCiAgLyoqCiAgICogUmVzZXRzIHRoZSB1c2FnZSBtZXRyaWNzIHRvIHplcm8gYW5kIHN0YXJ0cyB0aGUgcmVxdWVzdCB0aW1lci4KICAgKiBDYWxsIHRoaXMgYmVmb3JlIGVhY2ggY29tcGxldGlvbiB0byBlbnN1cmUgYWNjdXJhdGUgcGVyLWNhbGwgbWV0cmljcy4KICAgKi8KICByZXNldFVzYWdlKCkgewogICAgdGhpcy5fcmVxdWVzdFN0YXJ0VGltZSA9IERhdGUubm93KCk7CiAgICB0aGlzLmxhc3RVc2FnZSA9IHsKICAgICAgcHJvbXB0X3Rva2VuczogMCwKICAgICAgY29tcGxldGlvbl90b2tlbnM6IDAsCiAgICAgIHRvdGFsX3Rva2VuczogMCwKICAgICAgb3V0cHV0VHBzOiAwLAogICAgICBkdXJhdGlvbjogMCwKICAgICAgbW9kZWw6IG51bGwsCiAgICAgIHByb3ZpZGVyOiBudWxsLAogICAgICB0aW1lc3RhbXA6IG51bGwsCiAgICB9OwogIH0KCiAgLyoqCiAgICogRm9ybWF0cyBhbiBhcnJheSBvZiBtZXNzYWdlcyB0byBoYW5kbGUgYXR0YWNobWVudHMgKGltYWdlcykgZm9yIG11bHRpbW9kYWwgY29udGVudC4KICAgKiBAcGFyYW0ge0FycmF5PHtyb2xlOiBzdHJpbmcsIGNvbnRlbnQ6IHN0cmluZywgYXR0YWNobWVudHM/OiBBcnJheX0+fSBtZXNzYWdlcwogICAqIEByZXR1cm5zIHtBcnJheX0gLSBNZXNzYWdlcyBmb3JtYXR0ZWQgZm9yIHRoZSBBUEkKICAgKi8KICBmb3JtYXRNZXNzYWdlc1dpdGhBdHRhY2htZW50cyhtZXNzYWdlcyA9IFtdKSB7CiAgICByZXR1cm4gbWVzc2FnZXMubWFwKChtZXNzYWdlKSA9PgogICAgICB0aGlzLmZvcm1hdE1lc3NhZ2VXaXRoQXR0YWNobWVudHMobWVzc2FnZSksCiAgICApOwogIH0KCiAgLyoqCiAgICogVXBkYXRlcyB0aGUgc3RvcmVkIHVzYWdlIG1ldHJpY3MgZnJvbSBhIHByb3ZpZGVyIHJlc3BvbnNlLgogICAqIE92ZXJyaWRlIGluIHN1YmNsYXNzZXMgdG8gaGFuZGxlIHByb3ZpZGVyLXNwZWNpZmljIHVzYWdlIGZvcm1hdHMuCiAgICogQHBhcmFtIHtPYmplY3R9IHVzYWdlIC0gVGhlIHVzYWdlIG9iamVjdCBmcm9tIHRoZSBwcm92aWRlciByZXNwb25zZQogICAqLwogIHJlY29yZFVzYWdlKHVzYWdlID0ge30pIHsKICAgIGxldCBkdXJhdGlvbiA9IDA7CiAgICBpZiAodGhpcy5fcmVxdWVzdFN0YXJ0VGltZSA+IDApIHsKICAgICAgZHVyYXRpb24gPSAoRGF0ZS5ub3coKSAtIHRoaXMuX3JlcXVlc3RTdGFydFRpbWUpIC8gMTAwMDsKICAgIH0KCiAgICBjb25zdCBwcm9tcHRUb2tlbnMgPSB1c2FnZS5wcm9tcHRfdG9rZW5zIHx8IHVzYWdlLmlucHV0X3Rva2VucyB8fCAwOwogICAgY29uc3QgY29tcGxldGlvblRva2VucyA9CiAgICAgIHVzYWdlLmNvbXBsZXRpb25fdG9rZW5zIHx8IHVzYWdlLm91dHB1dF90b2tlbnMgfHwgMDsKCiAgICB0aGlzLmxhc3RVc2FnZSA9IHsKICAgICAgcHJvbXB0X3Rva2VuczogcHJvbXB0VG9rZW5zLAogICAgICBjb21wbGV0aW9uX3Rva2VuczogY29tcGxldGlvblRva2VucywKICAgICAgdG90YWxfdG9rZW5zOiB1c2FnZS50b3RhbF90b2tlbnMgfHwgcHJvbXB0VG9rZW5zICsgY29tcGxldGlvblRva2VucywKICAgICAgb3V0cHV0VHBzOgogICAgICAgIGNvbXBsZXRpb25Ub2tlbnMgJiYgZHVyYXRpb24gPiAwID8gY29tcGxldGlvblRva2VucyAvIGR1cmF0aW9uIDogMCwKICAgICAgZHVyYXRpb24sCiAgICAgIG1vZGVsOiB0aGlzLm1vZGVsLAogICAgICBwcm92aWRlcjogdGhpcy5jb25zdHJ1Y3Rvci5uYW1lLAogICAgICB0aW1lc3RhbXA6IG5ldyBEYXRlKCksCiAgICB9OwogIH0KCiAgLyoqCiAgICogR2V0IHRoZSB1c2FnZSBtZXRyaWNzIGZyb20gdGhlIGxhc3QgY29tcGxldGlvbi4KICAgKiBAcmV0dXJucyB7UHJvdmlkZXJVc2FnZU1ldHJpY3N9IFRoZSB1c2FnZSBtZXRyaWNzCiAgICovCiAgZ2V0VXNhZ2UoKSB7CiAgICByZXR1cm4geyAuLi50aGlzLmxhc3RVc2FnZSB9OwogIH0KCiAgLyoqCiAgICogU3RyZWFtIGEgY2hhdCBjb21wbGV0aW9uIGZyb20gdGhlIExMTSB3aXRoIHRvb2wgY2FsbGluZwogICAqIE5vdGU6IFRoaXMgdXNpbmcgdGhlIE9wZW5BSSBBUEkgZm9ybWF0IGFuZCBtYXkgbmVlZCB0byBiZSBhZGFwdGVkIGZvciBvdGhlciBwcm92aWRlcnMuCiAgICoKICAgKiBAcGFyYW0ge2FueVtdfSBtZXNzYWdlcyAtIFRoZSBtZXNzYWdlcyB0byBzZW5kIHRvIHRoZSBMTE0uCiAgICogQHBhcmFtIHthbnlbXX0gZnVuY3Rpb25zIC0gVGhlIGZ1bmN0aW9ucyB0byB1c2UgaW4gdGhlIExMTS4KICAgKiBAcGFyYW0ge2Z1bmN0aW9ufSBldmVudEhhbmRsZXIgLSBUaGUgZXZlbnQgaGFuZGxlciB0byB1c2UgdG8gcmVwb3J0IHN0cmVhbSBldmVudHMuCiAgICogQHJldHVybnMge1Byb21pc2U8eyBmdW5jdGlvbkNhbGw6IGFueSwgdGV4dFJlc3BvbnNlOiBzdHJpbmcgfT59IC0gVGhlIHJlc3VsdCBvZiB0aGUgY2hhdCBjb21wbGV0aW9uLgogICAqLwogIGFzeW5jIHN0cmVhbShtZXNzYWdlcywgZnVuY3Rpb25zID0gW10sIGV2ZW50SGFuZGxlciA9IG51bGwpIHsKICAgIHRoaXMucHJvdmlkZXJMb2coIlByb3ZpZGVyLnN0cmVhbSAtIHdpbGwgcHJvY2VzcyB0aGlzIGNoYXQgY29tcGxldGlvbi4iKTsKICAgIGNvbnN0IG1zZ1VVSUQgPSB2NCgpOwogICAgY29uc3QgZm9ybWF0dGVkTWVzc2FnZXMgPSB0aGlzLmZvcm1hdE1lc3NhZ2VzV2l0aEF0dGFjaG1lbnRzKG1lc3NhZ2VzKTsKICAgIGNvbnN0IHN0cmVhbSA9IGF3YWl0IHRoaXMuY2xpZW50LmNoYXQuY29tcGxldGlvbnMuY3JlYXRlKHsKICAgICAgbW9kZWw6IHRoaXMubW9kZWwsCiAgICAgIHN0cmVhbTogdHJ1ZSwKICAgICAgbWVzc2FnZXM6IGZvcm1hdHRlZE1lc3NhZ2VzLAogICAgICAuLi4oQXJyYXkuaXNBcnJheShmdW5jdGlvbnMpICYmIGZ1bmN0aW9ucz8ubGVuZ3RoID4gMAogICAgICAgID8geyBmdW5jdGlvbnMgfQogICAgICAgIDoge30pLAogICAgfSk7CgogICAgY29uc3QgcmVzdWx0ID0gewogICAgICBmdW5jdGlvbkNhbGw6IG51bGwsCiAgICAgIHRleHRSZXNwb25zZTogIiIsCiAgICB9OwoKICAgIGZvciBhd2FpdCAoY29uc3QgY2h1bmsgb2Ygc3RyZWFtKSB7CiAgICAgIGlmICghY2h1bms/LmNob2ljZXM/LlswXSkgY29udGludWU7IC8vIFNraXAgaWYgbm8gY2hvaWNlcwogICAgICBjb25zdCBjaG9pY2UgPSBjaHVuay5jaG9pY2VzWzBdOwoKICAgICAgaWYgKGNob2ljZS5kZWx0YT8uY29udGVudCkgewogICAgICAgIHJlc3VsdC50ZXh0UmVzcG9uc2UgKz0gY2hvaWNlLmRlbHRhLmNvbnRlbnQ7CiAgICAgICAgZXZlbnRIYW5kbGVyPy4oInJlcG9ydFN0cmVhbUV2ZW50IiwgewogICAgICAgICAgdHlwZTogInRleHRSZXNwb25zZUNodW5rIiwKICAgICAgICAgIHV1aWQ6IG1zZ1VVSUQsCiAgICAgICAgICBjb250ZW50OiBjaG9pY2UuZGVsdGEuY29udGVudCwKICAgICAgICB9KTsKICAgICAgfQoKICAgICAgaWYgKGNob2ljZS5kZWx0YT8uZnVuY3Rpb25fY2FsbCkgewogICAgICAgIC8vIGFjY3VtdWxhdGUgdGhlIGZ1bmN0aW9uIGNhbGwKICAgICAgICBpZiAocmVzdWx0LmZ1bmN0aW9uQ2FsbCkKICAgICAgICAgIHJlc3VsdC5mdW5jdGlvbkNhbGwuYXJndW1lbnRzICs9IGNob2ljZS5kZWx0YS5mdW5jdGlvbl9jYWxsLmFyZ3VtZW50czsKICAgICAgICBlbHNlIHJlc3VsdC5mdW5jdGlvbkNhbGwgPSBjaG9pY2UuZGVsdGEuZnVuY3Rpb25fY2FsbDsKCiAgICAgICAgZXZlbnRIYW5kbGVyPy4oInJlcG9ydFN0cmVhbUV2ZW50IiwgewogICAgICAgICAgdXVpZDogYCR7bXNnVVVJRH06dG9vbF9jYWxsX2ludm9jYXRpb25gLAogICAgICAgICAgdHlwZTogInRvb2xDYWxsSW52b2NhdGlvbiIsCiAgICAgICAgICBjb250ZW50OiBgQXNzZW1ibGluZyBUb29sIENhbGw6ICR7cmVzdWx0LmZ1bmN0aW9uQ2FsbC5uYW1lfSgke3Jlc3VsdC5mdW5jdGlvbkNhbGwuYXJndW1lbnRzfSlgLAogICAgICAgIH0pOwogICAgICB9CiAgICB9CgogICAgLy8gSWYgdGhlcmUgYXJlIGFyZ3VtZW50cywgcGFyc2UgdGhlbSBhcyBqc29uIHNvIHRoYXQgdGhlIHRvb2xzIGNhbiB1c2UgdGhlbQogICAgaWYgKCEhcmVzdWx0LmZ1bmN0aW9uQ2FsbD8uYXJndW1lbnRzKQogICAgICByZXN1bHQuZnVuY3Rpb25DYWxsLmFyZ3VtZW50cyA9IHNhZmVKc29uUGFyc2UoCiAgICAgICAgcmVzdWx0LmZ1bmN0aW9uQ2FsbC5hcmd1bWVudHMsCiAgICAgICAge30sCiAgICAgICk7CgogICAgcmV0dXJuIHsKICAgICAgdGV4dFJlc3BvbnNlOiByZXN1bHQudGV4dFJlc3BvbnNlLAogICAgICBmdW5jdGlvbkNhbGw6IHJlc3VsdC5mdW5jdGlvbkNhbGwsCiAgICB9OwogIH0KfQoKLy8gTGFuZ2NoYWluIFdyYXBwZXJzCgovKioKICogT2xsYW1hIExhbmdjaGFpbiBDaGF0IE1vZGVsIHRoYXQgc3VwcG9ydHMgcGFzc2luZyBpbiBjb250ZXh0IHdpbmRvdyBvcHRpb25zCiAqIHNvIHRoYXQgY29udGV4dCB3aW5kb3cgcHJlZmVyZW5jZXMgYXJlIHJlc3BlY3RlZCBiZXR3ZWVuIE9sbGFtYSBjaGF0L2FnZW50IGFuZCBpbgogKiBMYW5nY2hhaW4gdG9vbGluZy4KICovCmNsYXNzIE9sbGFtYUxhbmdjaGFpbkNoYXRNb2RlbCB7CiAgc3RhdGljIGNyZWF0ZShjb25maWcgPSB7fSkgewogICAgcmV0dXJuIG5ldyBDaGF0T2xsYW1hKHsKICAgICAgYmFzZVVybDogcHJvY2Vzcy5lbnYuT0xMQU1BX0JBU0VfUEFUSCwKICAgICAgLi4udGhpcy5xdWVyeU9wdGlvbnMoY29uZmlnKSwKICAgICAgLi4uY29uZmlnLAogICAgfSk7CiAgfQoKICBzdGF0aWMgcXVlcnlPcHRpb25zKGNvbmZpZyA9IHt9KSB7CiAgICBjb25zdCBtb2RlbCA9IGNvbmZpZz8ubW9kZWwgfHwgcHJvY2Vzcy5lbnYuT0xMQU1BX01PREVMX1BSRUY7CiAgICByZXR1cm4gewogICAgICBudW1fY3R4OiBPbGxhbWFBSUxMTS5wcm9tcHRXaW5kb3dMaW1pdChtb2RlbCksCiAgICB9OwogIH0KfQoKbW9kdWxlLmV4cG9ydHMgPSBQcm92aWRlcjsK
+// SPDX-License-Identifier: MIT
+const consoleLogger = require("../../../logger/console.js");
+
+/**
+ * A service that provides an AI client to create a completion.
+ */
+
+/**
+ * @typedef {Object} LangChainModelConfig
+ * @property {(string|null)} baseURL - Override the default base URL process.env for this provider
+ * @property {(string|null)} apiKey - Override the default process.env for this provider
+ * @property {(number|null)} temperature - Override the default temperature
+ * @property {(string|null)} model -  Overrides model used for provider.
+ */
+
+const { v4 } = require("uuid");
+const { ChatOpenAI } = require("@langchain/openai");
+const { ChatAnthropic } = require("@langchain/anthropic");
+const { ChatOllama } = require("@langchain/ollama");
+const { toValidNumber, safeJsonParse } = require("../../../http");
+const { getLLMProviderClass } = require("../../../helpers");
+const { parseLMStudioBasePath } = require("../../../AiProviders/lmStudio");
+const {
+  parseDockerModelRunnerEndpoint,
+} = require("../../../AiProviders/dockerModelRunner");
+const {
+  SystemPromptVariables,
+} = require("../../../../models/systemPromptVariables");
+const { OllamaAILLM } = require("../../../AiProviders/ollama");
+
+const DEFAULT_WORKSPACE_PROMPT =
+  "You are a helpful ai assistant who can assist the user and use tools available to help answer the users prompts and questions.";
+
+/**
+ * @typedef {Object} ProviderUsageMetrics
+ * @property {number} prompt_tokens - Number of tokens in the prompt/input
+ * @property {number} completion_tokens - Number of tokens in the completion/output
+ * @property {number} total_tokens - Total tokens used
+ * @property {number} duration - Duration in seconds
+ * @property {number} outputTps - Output tokens per second
+ * @property {string|null} model - Model name
+ * @property {string|null} provider - Provider class name
+ * @property {Date|null} timestamp - Timestamp of the completion
+ */
+
+/**
+ * @typedef {Object} AgentProviderInstance
+ * @property {string} model - The model identifier string.
+ * @property {boolean} [verbose] - Whether to log verbose introspection messages.
+ * @property {boolean} supportsAgentStreaming - Whether the provider supports streaming tool-call execution.
+ * @property {(handlerProps: Object) => void} attachHandlerProps - Attach invocation/handler context to the provider.
+ * @property {(messages: Array, functions?: Array, eventHandler?: Function) => Promise<{functionCall: any, textResponse: string}>} stream - Stream a chat completion with tool calling.
+ * @property {(messages: Array, functions?: Array) => Promise<{functionCall: any, textResponse: string, result?: string}>} complete - Non-streaming chat completion with tool calling.
+ * @property {() => ProviderUsageMetrics} getUsage - Get usage metrics from the last completion.
+ */
+
+class Provider {
+  _client;
+
+  /**
+   * The invocation object containing the user ID and other invocation details.
+   * @type {import("@prisma/client").workspace_agent_invocations}
+   */
+  invocation = {};
+
+  /**
+   * The user ID for the chat completion to send to the LLM provider for user tracking.
+   * In order for this to be set, the handler props must be attached to the provider after instantiation.
+   * ex: this.attachHandlerProps({ ..., invocation: { ..., user_id: 123 } });
+   * eg: `user_123`
+   * @type {string}
+   */
+  executingUserId = "";
+
+  /**
+   * Stores the usage metrics from the last completion call.
+   * @type {ProviderUsageMetrics}
+   */
+  lastUsage = {
+    prompt_tokens: 0,
+    completion_tokens: 0,
+    total_tokens: 0,
+    duration: 0,
+    outputTps: 0,
+    model: null,
+    provider: null,
+    timestamp: null,
+  };
+
+  /**
+   * Timestamp when the current request started (for duration calculation).
+   * @type {number}
+   */
+  _requestStartTime = 0;
+
+  constructor(client) {
+    if (this.constructor == Provider) {
+      return;
+    }
+    this._client = client;
+  }
+
+  providerLog(text, ...args) {
+    consoleLogger.log(
+      `\x1b[36m[AgentLLM${this?.model ? ` - ${this.model}` : ""}]\x1b[0m ${text}`,
+      ...args,
+    );
+  }
+
+  /**
+   * Attaches handler props to the provider for reuse in the provider.
+   * - Explicitly sets the invocation object.
+   * - Explicitly sets the executing user ID from the invocation object.
+   * @param {Object} handlerProps - The handler props to attach to the provider.
+   */
+  attachHandlerProps(handlerProps = {}) {
+    this.invocation = handlerProps?.invocation || {};
+    this.executingUserId = this.invocation?.user_id
+      ? `user_${this.invocation.user_id}`
+      : "";
+  }
+
+  get client() {
+    return this._client;
+  }
+
+  /**
+   * Whether this provider supports native tool calling via the ENV flag.
+   * @param {string} providerTag - The tag of the provider to check (e.g. "bedrock", "openrouter", "groq", etc.).
+   * @returns {boolean}
+   */
+  supportsNativeToolCallingViaEnv(providerTag = "") {
+    if (!("PROVIDER_SUPPORTS_NATIVE_TOOL_CALLING" in process.env)) return false;
+    if (!providerTag) return false;
+    return (
+      process.env.PROVIDER_SUPPORTS_NATIVE_TOOL_CALLING?.includes(
+        providerTag,
+      ) || false
+    );
+  }
+
+  /**
+   * Whether this provider supports native OpenAI-compatible tool calling.
+   * @returns {boolean|Promise<boolean>}
+   */
+  supportsNativeToolCalling() {
+    return false;
+  }
+
+  /**
+   *
+   * @param {string} provider - the string key of the provider LLM being loaded.
+   * @param {LangChainModelConfig} config - Config to be used to override default connection object.
+   * @returns
+   */
+  static LangChainChatModel(provider = "openai", config = {}) {
+    switch (provider) {
+      // Cloud models
+      case "openai":
+        return new ChatOpenAI({
+          apiKey: process.env.OPEN_AI_KEY,
+          ...config,
+        });
+      case "anthropic":
+        return new ChatAnthropic({
+          apiKey: process.env.ANTHROPIC_API_KEY,
+          ...config,
+        });
+      case "groq":
+        return new ChatOpenAI({
+          configuration: {
+            baseURL: "https://api.groq.com/openai/v1",
+          },
+          apiKey: process.env.GROQ_API_KEY,
+          ...config,
+        });
+      case "mistral":
+        return new ChatOpenAI({
+          configuration: {
+            baseURL: "https://api.mistral.ai/v1",
+          },
+          apiKey: process.env.MISTRAL_API_KEY ?? null,
+          ...config,
+        });
+      case "generic-openai":
+        return new ChatOpenAI({
+          configuration: {
+            baseURL: process.env.GENERIC_OPEN_AI_BASE_PATH,
+          },
+          apiKey: process.env.GENERIC_OPEN_AI_API_KEY || "not-used",
+          maxTokens: toValidNumber(
+            process.env.GENERIC_OPEN_AI_MAX_TOKENS,
+            1024,
+          ),
+          ...config,
+        });
+      case "fireworksai":
+        return new ChatOpenAI({
+          apiKey: process.env.FIREWORKS_AI_LLM_API_KEY,
+          ...config,
+        });
+      case "xai":
+        return new ChatOpenAI({
+          configuration: {
+            baseURL: "https://api.x.ai/v1",
+          },
+          apiKey: process.env.XAI_LLM_API_KEY ?? null,
+          ...config,
+        });
+      case "gemini":
+        return new ChatOpenAI({
+          configuration: {
+            baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
+          },
+          apiKey: process.env.GEMINI_API_KEY ?? null,
+          ...config,
+        });
+      // OSS Model Runners
+      // case "opensin_ollama":
+      //   return new ChatOllama({
+      //     baseUrl: process.env.PLACEHOLDER,
+      //     ...config,
+      //   });
+      case "ollama":
+        return OllamaLangchainChatModel.create(config);
+      case "lmstudio": {
+        const apiKey = process.env.LMSTUDIO_AUTH_TOKEN ?? null;
+        return new ChatOpenAI({
+          configuration: {
+            baseURL: parseLMStudioBasePath(process.env.LMSTUDIO_BASE_PATH),
+          },
+          apiKey: apiKey || "not-used",
+          ...config,
+        });
+      }
+      case "localai":
+        return new ChatOpenAI({
+          configuration: {
+            baseURL: process.env.LOCAL_AI_BASE_PATH,
+          },
+          apiKey: process.env.LOCAL_AI_API_KEY ?? "not-used",
+          ...config,
+        });
+      case "litellm":
+        return new ChatOpenAI({
+          configuration: {
+            baseURL: process.env.LITE_LLM_BASE_PATH,
+          },
+          apiKey: process.env.LITE_LLM_API_KEY || "not-used",
+          ...config,
+        });
+      case "nvidia-nim":
+        return new ChatOpenAI({
+          configuration: {
+            baseURL: process.env.NVIDIA_NIM_LLM_BASE_PATH,
+          },
+          apiKey: process.env.NVIDIA_NIM_LLM_API_KEY || "nvidia-nim",
+          ...config,
+        });
+      case "opencode-zen":
+        return new ChatOpenAI({
+          configuration: {
+            baseURL: process.env.OPENCODE_ZEN_BASE_PATH,
+          },
+          apiKey: process.env.OPENCODE_ZEN_API_KEY || "opencode-zen",
+          ...config,
+        });
+      case "docker-model-runner":
+        return new ChatOpenAI({
+          configuration: {
+            baseURL: parseDockerModelRunnerEndpoint(
+              process.env.DOCKER_MODEL_RUNNER_BASE_PATH,
+            ),
+          },
+          apiKey:
+            process.env.DOCKER_MODEL_RUNNER_API_KEY || "docker-model-runner",
+          ...config,
+        });
+      default:
+        throw new Error(
+          `Unsupported provider ${JSON.stringify(provider)} for this task.`,
+        );
+    }
+  }
+
+  /**
+   * Get the context limit for a provider/model combination using static method in AIProvider class.
+   * @param {string} provider
+   * @param {string} modelName
+   * @returns {number}
+   */
+  static contextLimit(provider = "openai", modelName) {
+    if (typeof provider !== "string") {
+      consoleLogger.log(
+        `\x1b[43m\x1b[30m[.contextLimit warning] A non-string provider for .contextLimit was given — Returning fallback context limit of 8000.\x1b[0m\n\x1b[43m\x1b[30mThis is a bug and should be reported so that context windows are properly managed by OpenSIN Chat.\x1b[0m`,
+      );
+      console.trace();
+      return 8_000;
+    }
+
+    const llm = getLLMProviderClass({ provider });
+    if (!llm || !llm.hasOwnProperty("promptWindowLimit")) {
+      consoleLogger.warn(
+        `\x1b[33m[.contextLimit warning]\x1b[0m Could not determine .promptWindowLimit for provider ${provider}. This could lead to incorrect context window management by OpenSIN Chat since we cannot determine the context window limit for this provider/model combination.`,
+      );
+      return 8_000;
+    }
+    return llm.promptWindowLimit(modelName);
+  }
+
+  static defaultSystemPromptForProvider(provider = null) {
+    switch (provider) {
+      case "lmstudio":
+        return "You are a helpful ai assistant who can assist the user and use tools available to help answer the users prompts and questions. Tools will be handled by another assistant and you will simply receive their responses to help answer the user prompt - always try to answer the user's prompt the best you can with the context available to you and your general knowledge.";
+      default:
+        return DEFAULT_WORKSPACE_PROMPT;
+    }
+  }
+
+  /**
+   * Get the system prompt for a provider, with memories appended (when enabled).
+   * @param {object} opts
+   * @param {string} opts.provider
+   * @param {import("@prisma/client").workspaces | null} opts.workspace
+   * @param {import("@prisma/client").users | null} opts.user
+   * @param {string} [opts.prompt] - current user message, used for reranking injected memories
+   * @returns {Promise<string>}
+   */
+  static async systemPrompt({
+    provider = null,
+    workspace = null,
+    user = null,
+    prompt = "",
+  }) {
+    const { promptWithMemories } = require("../../../memories");
+    const basePrompt = !workspace?.openAiPrompt
+      ? Provider.defaultSystemPromptForProvider(provider)
+      : await SystemPromptVariables.expandSystemPromptVariables(
+          workspace.openAiPrompt,
+          user?.id || null,
+          workspace.id,
+        );
+    return promptWithMemories({
+      systemPrompt: basePrompt,
+      userId: user?.id ?? null,
+      workspaceId: workspace?.id,
+      prompt,
+    });
+  }
+
+  /**
+   * Whether the provider supports agent streaming.
+   * Disabled by default and needs to be explicitly enabled in the provider
+   * This is temporary while we migrate all providers to support agent streaming
+   * @returns {boolean}
+   */
+  get supportsAgentStreaming() {
+    return false;
+  }
+
+  /**
+   * Format a single message with attachments (images) for multimodal content.
+   * Transforms a message with attachments into the OpenAI-compatible multimodal format.
+   * Can be overridden by provider subclasses for provider-specific formats.
+   * @param {Object} message - The message to format
+   * @returns {Object} - Message formatted for the API
+   */
+  formatMessageWithAttachments(message) {
+    if (!message.attachments || message.attachments.length === 0) {
+      return message;
+    }
+
+    // Transform message with attachments into multimodal format
+    const content = [{ type: "text", text: message.content }];
+    for (const attachment of message.attachments) {
+      content.push({
+        type: "image_url",
+        image_url: {
+          url: attachment.contentString,
+        },
+      });
+    }
+
+    // Return message without attachments property, with content as array
+    const { attachments: _, ...rest } = message;
+    return {
+      ...rest,
+      content,
+    };
+  }
+
+  /**
+   * Resets the usage metrics to zero and starts the request timer.
+   * Call this before each completion to ensure accurate per-call metrics.
+   */
+  resetUsage() {
+    this._requestStartTime = Date.now();
+    this.lastUsage = {
+      prompt_tokens: 0,
+      completion_tokens: 0,
+      total_tokens: 0,
+      outputTps: 0,
+      duration: 0,
+      model: null,
+      provider: null,
+      timestamp: null,
+    };
+  }
+
+  /**
+   * Formats an array of messages to handle attachments (images) for multimodal content.
+   * @param {Array<{role: string, content: string, attachments?: Array}>} messages
+   * @returns {Array} - Messages formatted for the API
+   */
+  formatMessagesWithAttachments(messages = []) {
+    return messages.map((message) =>
+      this.formatMessageWithAttachments(message),
+    );
+  }
+
+  /**
+   * Updates the stored usage metrics from a provider response.
+   * Override in subclasses to handle provider-specific usage formats.
+   * @param {Object} usage - The usage object from the provider response
+   */
+  recordUsage(usage = {}) {
+    let duration = 0;
+    if (this._requestStartTime > 0) {
+      duration = (Date.now() - this._requestStartTime) / 1000;
+    }
+
+    const promptTokens = usage.prompt_tokens || usage.input_tokens || 0;
+    const completionTokens =
+      usage.completion_tokens || usage.output_tokens || 0;
+
+    this.lastUsage = {
+      prompt_tokens: promptTokens,
+      completion_tokens: completionTokens,
+      total_tokens: usage.total_tokens || promptTokens + completionTokens,
+      outputTps:
+        completionTokens && duration > 0 ? completionTokens / duration : 0,
+      duration,
+      model: this.model,
+      provider: this.constructor.name,
+      timestamp: new Date(),
+    };
+  }
+
+  /**
+   * Get the usage metrics from the last completion.
+   * @returns {ProviderUsageMetrics} The usage metrics
+   */
+  getUsage() {
+    return { ...this.lastUsage };
+  }
+
+  /**
+   * Stream a chat completion from the LLM with tool calling
+   * Note: This using the OpenAI API format and may need to be adapted for other providers.
+   *
+   * @param {any[]} messages - The messages to send to the LLM.
+   * @param {any[]} functions - The functions to use in the LLM.
+   * @param {function} eventHandler - The event handler to use to report stream events.
+   * @returns {Promise<{ functionCall: any, textResponse: string }>} - The result of the chat completion.
+   */
+  async stream(messages, functions = [], eventHandler = null) {
+    this.providerLog("Provider.stream - will process this chat completion.");
+    const msgUUID = v4();
+    const formattedMessages = this.formatMessagesWithAttachments(messages);
+    const stream = await this.client.chat.completions.create({
+      model: this.model,
+      stream: true,
+      messages: formattedMessages,
+      ...(Array.isArray(functions) && functions?.length > 0
+        ? { functions }
+        : {}),
+    });
+
+    const result = {
+      functionCall: null,
+      textResponse: "",
+    };
+
+    for await (const chunk of stream) {
+      if (!chunk?.choices?.[0]) continue; // Skip if no choices
+      const choice = chunk.choices[0];
+
+      if (choice.delta?.content) {
+        result.textResponse += choice.delta.content;
+        eventHandler?.("reportStreamEvent", {
+          type: "textResponseChunk",
+          uuid: msgUUID,
+          content: choice.delta.content,
+        });
+      }
+
+      if (choice.delta?.function_call) {
+        // accumulate the function call
+        if (result.functionCall)
+          result.functionCall.arguments += choice.delta.function_call.arguments;
+        else result.functionCall = choice.delta.function_call;
+
+        eventHandler?.("reportStreamEvent", {
+          uuid: `${msgUUID}:tool_call_invocation`,
+          type: "toolCallInvocation",
+          content: `Assembling Tool Call: ${result.functionCall.name}(${result.functionCall.arguments})`,
+        });
+      }
+    }
+
+    // If there are arguments, parse them as json so that the tools can use them
+    if (!!result.functionCall?.arguments)
+      result.functionCall.arguments = safeJsonParse(
+        result.functionCall.arguments,
+        {},
+      );
+
+    return {
+      textResponse: result.textResponse,
+      functionCall: result.functionCall,
+    };
+  }
+}
+
+// Langchain Wrappers
+
+/**
+ * Ollama Langchain Chat Model that supports passing in context window options
+ * so that context window preferences are respected between Ollama chat/agent and in
+ * Langchain tooling.
+ */
+class OllamaLangchainChatModel {
+  static create(config = {}) {
+    return new ChatOllama({
+      baseUrl: process.env.OLLAMA_BASE_PATH,
+      ...this.queryOptions(config),
+      ...config,
+    });
+  }
+
+  static queryOptions(config = {}) {
+    const model = config?.model || process.env.OLLAMA_MODEL_PREF;
+    return {
+      num_ctx: OllamaAILLM.promptWindowLimit(model),
+    };
+  }
+}
+
+module.exports = Provider;
