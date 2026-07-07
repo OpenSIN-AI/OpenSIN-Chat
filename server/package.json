@@ -17,7 +17,8 @@
     "test": "cross-env NODE_OPTIONS=\"--experimental-vm-modules\" jest --ci --passWithNoTests",
     "test:coverage": "cross-env NODE_OPTIONS=\"--experimental-vm-modules\" jest --ci --passWithNoTests --coverage",
     "test:watch": "jest --watch",
-    "swagger": "node ./swagger/init.js"
+    "swagger": "node ./swagger/init.js",
+    "smoke": "node scripts/smoke.mjs"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
