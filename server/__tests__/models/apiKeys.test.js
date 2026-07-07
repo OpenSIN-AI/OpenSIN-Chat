@@ -1,1 +1,305 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBTZWN1cml0eS1jcml0aWNhbCB0ZXN0cyBmb3IgdGhlIEFwaUtleSBtb2RlbCAoSXNzdWUgIzM4MCkuCi8vCi8vIENvdmVyczogY3JlYXRlIChrZXkgZ2VuZXJhdGlvbiksIGdldCB3aXRoIHZhbGlkL2ludmFsaWQga2V5LAovLyBkZWxldGUgKyB2ZXJpZnksIGFuZCBsaXN0ICh3aGVyZSkgZm9yIGEgdXNlci4KLy8KLy8gVGhlIEFwaUtleSBtb2RlbCBkb2VzIG5vdCBleHBvc2UgYSBzdGFuZGFsb25lIGBsaXN0YCBtZXRob2QuCi8vIFRoZSBlcXVpdmFsZW50IGlzIGBBcGlLZXkud2hlcmUoeyBjcmVhdGVkQnk6IHVzZXJJZCB9KWAuCgpqZXN0Lm1vY2soIi4uLy4uL3V0aWxzL3ByaXNtYSIsICgpID0+IHsKICBjb25zdCBtb2NrQXBpS2V5cyA9IHsKICAgIGNyZWF0ZTogamVzdC5mbigpLAogICAgZmluZEZpcnN0OiBqZXN0LmZuKCksCiAgICBmaW5kTWFueTogamVzdC5mbigpLAogICAgY291bnQ6IGplc3QuZm4oKSwKICAgIGRlbGV0ZU1hbnk6IGplc3QuZm4oKSwKICB9OwogIHJldHVybiB7CiAgICBhcGlfa2V5czogbW9ja0FwaUtleXMsCiAgfTsKfSk7Cgpjb25zdCB7IEFwaUtleSB9ID0gcmVxdWlyZSgiLi4vLi4vbW9kZWxzL2FwaUtleXMiKTsKY29uc3QgcHJpc21hID0gcmVxdWlyZSgiLi4vLi4vdXRpbHMvcHJpc21hIik7CgpkZXNjcmliZSgiQXBpS2V5IG1vZGVsIChzZWN1cml0eS1jcml0aWNhbCkiLCAoKSA9PiB7CiAgYWZ0ZXJFYWNoKCgpID0+IGplc3QuY2xlYXJBbGxNb2NrcygpKTsKCiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgLy8gQXBpS2V5LmNyZWF0ZQogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIGRlc2NyaWJlKCJBcGlLZXkuY3JlYXRlIiwgKCkgPT4gewogICAgaXQoImdlbmVyYXRlcyBhIGtleSBhbmQgcmV0dXJucyBpdCB3aXRoIG5vIGVycm9yIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCBmYWtlS2V5ID0gImFrX2dlbmVyYXRlZF9zZWNyZXRfa2V5XzEyMzQ1IjsKICAgICAgcHJpc21hLmFwaV9rZXlzLmNyZWF0ZS5tb2NrUmVzb2x2ZWRWYWx1ZSh7CiAgICAgICAgaWQ6IDEsCiAgICAgICAgbmFtZTogInRlc3Qta2V5IiwKICAgICAgICBzZWNyZXQ6IGZha2VLZXksCiAgICAgICAgY3JlYXRlZEJ5OiA1LAogICAgICAgIGNyZWF0ZWRBdDogbmV3IERhdGUoKSwKICAgICAgICBsYXN0VXBkYXRlZEF0OiBuZXcgRGF0ZSgpLAogICAgICB9KTsKCiAgICAgIGNvbnN0IHsgYXBpS2V5LCBlcnJvciB9ID0gYXdhaXQgQXBpS2V5LmNyZWF0ZSg1LCAidGVzdC1rZXkiKTsKCiAgICAgIGV4cGVjdChlcnJvcikudG9CZU51bGwoKTsKICAgICAgZXhwZWN0KGFwaUtleSkudG9CZURlZmluZWQoKTsKICAgICAgZXhwZWN0KGFwaUtleS5pZCkudG9CZSgxKTsKICAgICAgZXhwZWN0KGFwaUtleS5uYW1lKS50b0JlKCJ0ZXN0LWtleSIpOwogICAgICBleHBlY3QoYXBpS2V5LmNyZWF0ZWRCeSkudG9CZSg1KTsKICAgICAgLy8gVGhlIHNlY3JldCBtdXN0IGJlIHByZXNlbnQgb24gdGhlIGNyZWF0ZWQgcmVjb3JkCiAgICAgIGV4cGVjdChhcGlLZXkuc2VjcmV0KS50b0JlKGZha2VLZXkpOwogICAgICBleHBlY3QocHJpc21hLmFwaV9rZXlzLmNyZWF0ZSkudG9IYXZlQmVlbkNhbGxlZFRpbWVzKDEpOwogICAgICBleHBlY3QocHJpc21hLmFwaV9rZXlzLmNyZWF0ZSkudG9IYXZlQmVlbkNhbGxlZFdpdGgoewogICAgICAgIGRhdGE6IGV4cGVjdC5vYmplY3RDb250YWluaW5nKHsKICAgICAgICAgIG5hbWU6ICJ0ZXN0LWtleSIsCiAgICAgICAgICBjcmVhdGVkQnk6IDUsCiAgICAgICAgICBzZWNyZXQ6IGV4cGVjdC5hbnkoU3RyaW5nKSwKICAgICAgICB9KSwKICAgICAgfSk7CiAgICB9KTsKCiAgICBpdCgiZ2VuZXJhdGVzIGEgbm9uLWVtcHR5IHNlY3JldCBzdHJpbmciLCAoKSA9PiB7CiAgICAgIGNvbnN0IHNlY3JldCA9IEFwaUtleS5tYWtlU2VjcmV0KCk7CiAgICAgIGV4cGVjdCh0eXBlb2Ygc2VjcmV0KS50b0JlKCJzdHJpbmciKTsKICAgICAgZXhwZWN0KHNlY3JldC5sZW5ndGgpLnRvQmVHcmVhdGVyVGhhbigxMCk7CiAgICB9KTsKCiAgICBpdCgiZ2VuZXJhdGVzIHVuaXF1ZSBzZWNyZXRzIG9uIHN1Y2Nlc3NpdmUgY2FsbHMiLCAoKSA9PiB7CiAgICAgIGNvbnN0IHMxID0gQXBpS2V5Lm1ha2VTZWNyZXQoKTsKICAgICAgY29uc3QgczIgPSBBcGlLZXkubWFrZVNlY3JldCgpOwogICAgICBleHBlY3QoczEpLm5vdC50b0JlKHMyKTsKICAgIH0pOwoKICAgIGl0KCJub3JtYWxpemVzIGEgd2hpdGVzcGFjZS1vbmx5IG5hbWUgdG8gbnVsbCIsIGFzeW5jICgpID0+IHsKICAgICAgcHJpc21hLmFwaV9rZXlzLmNyZWF0ZS5tb2NrUmVzb2x2ZWRWYWx1ZSh7CiAgICAgICAgaWQ6IDIsCiAgICAgICAgbmFtZTogbnVsbCwKICAgICAgICBzZWNyZXQ6ICJha19rZXkiLAogICAgICAgIGNyZWF0ZWRCeTogMSwKICAgICAgfSk7CgogICAgICBjb25zdCB7IGFwaUtleSB9ID0gYXdhaXQgQXBpS2V5LmNyZWF0ZSgxLCAiICAgIik7CiAgICAgIGV4cGVjdChhcGlLZXkubmFtZSkudG9CZU51bGwoKTsKICAgICAgZXhwZWN0KHByaXNtYS5hcGlfa2V5cy5jcmVhdGUpLnRvSGF2ZUJlZW5DYWxsZWRXaXRoKHsKICAgICAgICBkYXRhOiBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7IG5hbWU6IG51bGwgfSksCiAgICAgIH0pOwogICAgfSk7CgogICAgaXQoImRlZmF1bHRzIG5hbWUgdG8gbnVsbCB3aGVuIG5vdCBwcm92aWRlZCIsIGFzeW5jICgpID0+IHsKICAgICAgcHJpc21hLmFwaV9rZXlzLmNyZWF0ZS5tb2NrUmVzb2x2ZWRWYWx1ZSh7CiAgICAgICAgaWQ6IDMsCiAgICAgICAgbmFtZTogbnVsbCwKICAgICAgICBzZWNyZXQ6ICJha19rZXkiLAogICAgICAgIGNyZWF0ZWRCeTogMSwKICAgICAgfSk7CgogICAgICBjb25zdCB7IGFwaUtleSB9ID0gYXdhaXQgQXBpS2V5LmNyZWF0ZSgxKTsKICAgICAgZXhwZWN0KGFwaUtleS5uYW1lKS50b0JlTnVsbCgpOwogICAgfSk7CgogICAgaXQoInJldHVybnMgYW4gZXJyb3Igd2hlbiBwcmlzbWEgZmFpbHMiLCBhc3luYyAoKSA9PiB7CiAgICAgIHByaXNtYS5hcGlfa2V5cy5jcmVhdGUubW9ja1JlamVjdGVkVmFsdWUobmV3IEVycm9yKCJEQiBmYWlsdXJlIikpOwogICAgICBjb25zdCB7IGFwaUtleSwgZXJyb3IgfSA9IGF3YWl0IEFwaUtleS5jcmVhdGUoMSwgImZhaWwta2V5Iik7CiAgICAgIGV4cGVjdChhcGlLZXkpLnRvQmVOdWxsKCk7CiAgICAgIGV4cGVjdChlcnJvcikudG9CZSgiREIgZmFpbHVyZSIpOwogICAgfSk7CiAgfSk7CgogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIC8vIEFwaUtleS5nZXQKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICBkZXNjcmliZSgiQXBpS2V5LmdldCIsICgpID0+IHsKICAgIGl0KCJyZXR1cm5zIHRoZSBrZXkgKHdpdGhvdXQgc2VjcmV0KSB3aGVuIGZvdW5kIHdpdGggYSB2YWxpZCBjbGF1c2UiLCBhc3luYyAoKSA9PiB7CiAgICAgIHByaXNtYS5hcGlfa2V5cy5maW5kRmlyc3QubW9ja1Jlc29sdmVkVmFsdWUoewogICAgICAgIGlkOiAxMCwKICAgICAgICBuYW1lOiAicHJvZC1rZXkiLAogICAgICAgIHNlY3JldDogInN1cGVyX3NlY3JldF92YWx1ZSIsCiAgICAgICAgY3JlYXRlZEJ5OiA3LAogICAgICAgIGNyZWF0ZWRBdDogbmV3IERhdGUoKSwKICAgICAgICBsYXN0VXBkYXRlZEF0OiBuZXcgRGF0ZSgpLAogICAgICB9KTsKCiAgICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IEFwaUtleS5nZXQoeyBpZDogMTAgfSk7CgogICAgICBleHBlY3QocmVzdWx0KS50b0JlRGVmaW5lZCgpOwogICAgICBleHBlY3QocmVzdWx0LmlkKS50b0JlKDEwKTsKICAgICAgZXhwZWN0KHJlc3VsdC5uYW1lKS50b0JlKCJwcm9kLWtleSIpOwogICAgICAvLyBfc3RyaXBTZWNyZXQgbXVzdCByZW1vdmUgdGhlIHNlY3JldCBmaWVsZAogICAgICBleHBlY3QocmVzdWx0LnNlY3JldCkudG9CZVVuZGVmaW5lZCgpOwogICAgICBleHBlY3QocHJpc21hLmFwaV9rZXlzLmZpbmRGaXJzdCkudG9IYXZlQmVlbkNhbGxlZFdpdGgoeyB3aGVyZTogeyBpZDogMTAgfSB9KTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIG51bGwgd2hlbiB0aGUga2V5IGRvZXMgbm90IGV4aXN0IChpbnZhbGlkIGtleSkiLCBhc3luYyAoKSA9PiB7CiAgICAgIHByaXNtYS5hcGlfa2V5cy5maW5kRmlyc3QubW9ja1Jlc29sdmVkVmFsdWUobnVsbCk7CgogICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBBcGlLZXkuZ2V0KHsgaWQ6IDk5OTk5IH0pOwoKICAgICAgZXhwZWN0KHJlc3VsdCkudG9CZU51bGwoKTsKICAgICAgZXhwZWN0KHByaXNtYS5hcGlfa2V5cy5maW5kRmlyc3QpLnRvSGF2ZUJlZW5DYWxsZWRXaXRoKHsKICAgICAgICB3aGVyZTogeyBpZDogOTk5OTkgfSwKICAgICAgfSk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyBudWxsIHdoZW4gbG9va2luZyB1cCBieSBhIG5vbi1leGlzdGVudCBzZWNyZXQiLCBhc3luYyAoKSA9PiB7CiAgICAgIHByaXNtYS5hcGlfa2V5cy5maW5kRmlyc3QubW9ja1Jlc29sdmVkVmFsdWUobnVsbCk7CgogICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBBcGlLZXkuZ2V0KHsgc2VjcmV0OiAiaW52YWxpZF9zZWNyZXRfeHl6IiB9KTsKCiAgICAgIGV4cGVjdChyZXN1bHQpLnRvQmVOdWxsKCk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyBudWxsIG9uIGRhdGFiYXNlIGVycm9yIiwgYXN5bmMgKCkgPT4gewogICAgICBwcmlzbWEuYXBpX2tleXMuZmluZEZpcnN0Lm1vY2tSZWplY3RlZFZhbHVlKG5ldyBFcnJvcigiREIgZXJyb3IiKSk7CgogICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBBcGlLZXkuZ2V0KHsgaWQ6IDEgfSk7CiAgICAgIGV4cGVjdChyZXN1bHQpLnRvQmVOdWxsKCk7CiAgICB9KTsKICB9KTsKCiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgLy8gQXBpS2V5LmRlbGV0ZQogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIGRlc2NyaWJlKCJBcGlLZXkuZGVsZXRlIiwgKCkgPT4gewogICAgaXQoImRlbGV0ZXMgYSBrZXkgYnkgaWQgYW5kIHJldHVybnMgdHJ1ZSIsIGFzeW5jICgpID0+IHsKICAgICAgcHJpc21hLmFwaV9rZXlzLmRlbGV0ZU1hbnkubW9ja1Jlc29sdmVkVmFsdWUoeyBjb3VudDogMSB9KTsKCiAgICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IEFwaUtleS5kZWxldGUoeyBpZDogNSB9KTsKICAgICAgZXhwZWN0KHJlc3VsdCkudG9CZSh0cnVlKTsKICAgICAgZXhwZWN0KHByaXNtYS5hcGlfa2V5cy5kZWxldGVNYW55KS50b0hhdmVCZWVuQ2FsbGVkV2l0aCh7CiAgICAgICAgd2hlcmU6IHsgaWQ6IDUgfSwKICAgICAgfSk7CiAgICB9KTsKCiAgICBpdCgidmVyaWZpZXMgdGhlIGtleSBpcyBnb25lIGFmdGVyIGRlbGV0aW9uIiwgYXN5bmMgKCkgPT4gewogICAgICAvLyBLZXkgZXhpc3RzIGJlZm9yZSBkZWxldGlvbgogICAgICBwcmlzbWEuYXBpX2tleXMuZmluZEZpcnN0Lm1vY2tSZXNvbHZlZFZhbHVlT25jZSh7CiAgICAgICAgaWQ6IDgsCiAgICAgICAgbmFtZTogInRvLWRlbGV0ZSIsCiAgICAgICAgc2VjcmV0OiAic2VjcmV0MTIzIiwKICAgICAgICBjcmVhdGVkQnk6IDEsCiAgICAgIH0pOwogICAgICBjb25zdCBiZWZvcmUgPSBhd2FpdCBBcGlLZXkuZ2V0KHsgaWQ6IDggfSk7CiAgICAgIGV4cGVjdChiZWZvcmUpLnRvQmVEZWZpbmVkKCk7CiAgICAgIGV4cGVjdChiZWZvcmUuaWQpLnRvQmUoOCk7CgogICAgICAvLyBEZWxldGUKICAgICAgcHJpc21hLmFwaV9rZXlzLmRlbGV0ZU1hbnkubW9ja1Jlc29sdmVkVmFsdWUoeyBjb3VudDogMSB9KTsKICAgICAgY29uc3QgZGVsZXRlZCA9IGF3YWl0IEFwaUtleS5kZWxldGUoeyBpZDogOCB9KTsKICAgICAgZXhwZWN0KGRlbGV0ZWQpLnRvQmUodHJ1ZSk7CgogICAgICAvLyBLZXkgaXMgZ29uZSBhZnRlciBkZWxldGlvbgogICAgICBwcmlzbWEuYXBpX2tleXMuZmluZEZpcnN0Lm1vY2tSZXNvbHZlZFZhbHVlT25jZShudWxsKTsKICAgICAgY29uc3QgYWZ0ZXIgPSBhd2FpdCBBcGlLZXkuZ2V0KHsgaWQ6IDggfSk7CiAgICAgIGV4cGVjdChhZnRlcikudG9CZU51bGwoKTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIGZhbHNlIG9uIGRhdGFiYXNlIGVycm9yIiwgYXN5bmMgKCkgPT4gewogICAgICBwcmlzbWEuYXBpX2tleXMuZGVsZXRlTWFueS5tb2NrUmVqZWN0ZWRWYWx1ZShuZXcgRXJyb3IoIkRCIGVycm9yIikpOwogICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBBcGlLZXkuZGVsZXRlKHsgaWQ6IDk5OSB9KTsKICAgICAgZXhwZWN0KHJlc3VsdCkudG9CZShmYWxzZSk7CiAgICB9KTsKICB9KTsKCiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgLy8gQXBpS2V5Lmxpc3QgICh2aWEgQXBpS2V5LndoZXJlKQogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIGRlc2NyaWJlKCJBcGlLZXkud2hlcmUgKGxpc3QgZm9yIGEgdXNlcikiLCAoKSA9PiB7CiAgICBpdCgicmV0dXJucyBhbGwga2V5cyBmb3IgYSB1c2VyIHdpdGggc2VjcmV0cyBzdHJpcHBlZCIsIGFzeW5jICgpID0+IHsKICAgICAgcHJpc21hLmFwaV9rZXlzLmZpbmRNYW55Lm1vY2tSZXNvbHZlZFZhbHVlKFsKICAgICAgICB7CiAgICAgICAgICBpZDogMSwKICAgICAgICAgIG5hbWU6ICJrZXktb25lIiwKICAgICAgICAgIHNlY3JldDogInNlY3JldF9hIiwKICAgICAgICAgIGNyZWF0ZWRCeTogNSwKICAgICAgICAgIGNyZWF0ZWRBdDogbmV3IERhdGUoKSwKICAgICAgICAgIGxhc3RVcGRhdGVkQXQ6IG5ldyBEYXRlKCksCiAgICAgICAgfSwKICAgICAgICB7CiAgICAgICAgICBpZDogMiwKICAgICAgICAgIG5hbWU6ICJrZXktdHdvIiwKICAgICAgICAgIHNlY3JldDogInNlY3JldF9iIiwKICAgICAgICAgIGNyZWF0ZWRCeTogNSwKICAgICAgICAgIGNyZWF0ZWRBdDogbmV3IERhdGUoKSwKICAgICAgICAgIGxhc3RVcGRhdGVkQXQ6IG5ldyBEYXRlKCksCiAgICAgICAgfSwKICAgICAgXSk7CgogICAgICBjb25zdCBrZXlzID0gYXdhaXQgQXBpS2V5LndoZXJlKHsgY3JlYXRlZEJ5OiA1IH0pOwoKICAgICAgZXhwZWN0KGtleXMpLnRvSGF2ZUxlbmd0aCgyKTsKICAgICAgZXhwZWN0KGtleXNbMF0uaWQpLnRvQmUoMSk7CiAgICAgIGV4cGVjdChrZXlzWzBdLm5hbWUpLnRvQmUoImtleS1vbmUiKTsKICAgICAgZXhwZWN0KGtleXNbMF0uc2VjcmV0KS50b0JlVW5kZWZpbmVkKCk7CiAgICAgIGV4cGVjdChrZXlzWzFdLmlkKS50b0JlKDIpOwogICAgICBleHBlY3Qoa2V5c1sxXS5zZWNyZXQpLnRvQmVVbmRlZmluZWQoKTsKICAgICAgZXhwZWN0KHByaXNtYS5hcGlfa2V5cy5maW5kTWFueSkudG9IYXZlQmVlbkNhbGxlZFdpdGgoewogICAgICAgIHdoZXJlOiB7IGNyZWF0ZWRCeTogNSB9LAogICAgICAgIHRha2U6IHVuZGVmaW5lZCwKICAgICAgfSk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyBhbiBlbXB0eSBhcnJheSB3aGVuIHRoZSB1c2VyIGhhcyBubyBrZXlzIiwgYXN5bmMgKCkgPT4gewogICAgICBwcmlzbWEuYXBpX2tleXMuZmluZE1hbnkubW9ja1Jlc29sdmVkVmFsdWUoW10pOwoKICAgICAgY29uc3Qga2V5cyA9IGF3YWl0IEFwaUtleS53aGVyZSh7IGNyZWF0ZWRCeTogOTk5IH0pOwogICAgICBleHBlY3Qoa2V5cykudG9FcXVhbChbXSk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyBhbiBlbXB0eSBhcnJheSBvbiBkYXRhYmFzZSBlcnJvciIsIGFzeW5jICgpID0+IHsKICAgICAgcHJpc21hLmFwaV9rZXlzLmZpbmRNYW55Lm1vY2tSZWplY3RlZFZhbHVlKG5ldyBFcnJvcigiREIgZXJyb3IiKSk7CgogICAgICBjb25zdCBrZXlzID0gYXdhaXQgQXBpS2V5LndoZXJlKHsgY3JlYXRlZEJ5OiAxIH0pOwogICAgICBleHBlY3Qoa2V5cykudG9FcXVhbChbXSk7CiAgICB9KTsKCiAgICBpdCgicmVzcGVjdHMgdGhlIGxpbWl0IHBhcmFtZXRlciIsIGFzeW5jICgpID0+IHsKICAgICAgcHJpc21hLmFwaV9rZXlzLmZpbmRNYW55Lm1vY2tSZXNvbHZlZFZhbHVlKFtdKTsKCiAgICAgIGF3YWl0IEFwaUtleS53aGVyZSh7IGNyZWF0ZWRCeTogMSB9LCAxMCk7CiAgICAgIGV4cGVjdChwcmlzbWEuYXBpX2tleXMuZmluZE1hbnkpLnRvSGF2ZUJlZW5DYWxsZWRXaXRoKHsKICAgICAgICB3aGVyZTogeyBjcmVhdGVkQnk6IDEgfSwKICAgICAgICB0YWtlOiAxMCwKICAgICAgfSk7CiAgICB9KTsKICB9KTsKCiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgLy8gQXBpS2V5LmNvdW50CiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgZGVzY3JpYmUoIkFwaUtleS5jb3VudCIsICgpID0+IHsKICAgIGl0KCJyZXR1cm5zIHRoZSBjb3VudCBvZiBrZXlzIG1hdGNoaW5nIHRoZSBjbGF1c2UiLCBhc3luYyAoKSA9PiB7CiAgICAgIHByaXNtYS5hcGlfa2V5cy5jb3VudC5tb2NrUmVzb2x2ZWRWYWx1ZSgzKTsKICAgICAgY29uc3QgY291bnQgPSBhd2FpdCBBcGlLZXkuY291bnQoeyBjcmVhdGVkQnk6IDUgfSk7CiAgICAgIGV4cGVjdChjb3VudCkudG9CZSgzKTsKICAgICAgZXhwZWN0KHByaXNtYS5hcGlfa2V5cy5jb3VudCkudG9IYXZlQmVlbkNhbGxlZFdpdGgoeyB3aGVyZTogeyBjcmVhdGVkQnk6IDUgfSB9KTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIDAgb24gZGF0YWJhc2UgZXJyb3IiLCBhc3luYyAoKSA9PiB7CiAgICAgIHByaXNtYS5hcGlfa2V5cy5jb3VudC5tb2NrUmVqZWN0ZWRWYWx1ZShuZXcgRXJyb3IoIkRCIGVycm9yIikpOwogICAgICBjb25zdCBjb3VudCA9IGF3YWl0IEFwaUtleS5jb3VudCh7IGNyZWF0ZWRCeTogNSB9KTsKICAgICAgZXhwZWN0KGNvdW50KS50b0JlKDApOwogICAgfSk7CiAgfSk7CgogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIC8vIEFwaUtleS5fc3RyaXBTZWNyZXQKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICBkZXNjcmliZSgiQXBpS2V5Ll9zdHJpcFNlY3JldCIsICgpID0+IHsKICAgIGl0KCJyZW1vdmVzIHRoZSBzZWNyZXQgZmllbGQgZnJvbSBhbiBhcGkga2V5IG9iamVjdCIsICgpID0+IHsKICAgICAgY29uc3QgaW5wdXQgPSB7IGlkOiAxLCBuYW1lOiAidGVzdCIsIHNlY3JldDogImFiYyIsIGNyZWF0ZWRCeTogMiB9OwogICAgICBjb25zdCByZXN1bHQgPSBBcGlLZXkuX3N0cmlwU2VjcmV0KGlucHV0KTsKICAgICAgZXhwZWN0KHJlc3VsdC5pZCkudG9CZSgxKTsKICAgICAgZXhwZWN0KHJlc3VsdC5uYW1lKS50b0JlKCJ0ZXN0Iik7CiAgICAgIGV4cGVjdChyZXN1bHQuY3JlYXRlZEJ5KS50b0JlKDIpOwogICAgICBleHBlY3QocmVzdWx0LnNlY3JldCkudG9CZVVuZGVmaW5lZCgpOwogICAgfSk7CgogICAgaXQoInJldHVybnMgbnVsbCBmb3IgZmFsc3kgaW5wdXQiLCAoKSA9PiB7CiAgICAgIGV4cGVjdChBcGlLZXkuX3N0cmlwU2VjcmV0KG51bGwpKS50b0JlTnVsbCgpOwogICAgICBleHBlY3QoQXBpS2V5Ll9zdHJpcFNlY3JldCh1bmRlZmluZWQpKS50b0JlTnVsbCgpOwogICAgICBleHBlY3QoQXBpS2V5Ll9zdHJpcFNlY3JldCgwKSkudG9CZU51bGwoKTsKICAgIH0pOwogIH0pOwp9KTsK
+// SPDX-License-Identifier: MIT
+// Security-critical tests for the ApiKey model (Issue #380).
+//
+// Covers: create (key generation), get with valid/invalid key,
+// delete + verify, and list (where) for a user.
+//
+// The ApiKey model does not expose a standalone `list` method.
+// The equivalent is `ApiKey.where({ createdBy: userId })`.
+
+jest.mock("../../utils/prisma", () => {
+  const mockApiKeys = {
+    create: jest.fn(),
+    findFirst: jest.fn(),
+    findMany: jest.fn(),
+    count: jest.fn(),
+    deleteMany: jest.fn(),
+  };
+  return {
+    api_keys: mockApiKeys,
+  };
+});
+
+const { ApiKey } = require("../../models/apiKeys");
+const prisma = require("../../utils/prisma");
+
+describe("ApiKey model (security-critical)", () => {
+  afterEach(() => jest.clearAllMocks());
+
+  // ──────────────────────────────────────────────
+  // ApiKey.create
+  // ──────────────────────────────────────────────
+  describe("ApiKey.create", () => {
+    it("generates a key and returns it with no error", async () => {
+      const fakeKey = "ak_generated_secret_key_12345";
+      prisma.api_keys.create.mockResolvedValue({
+        id: 1,
+        name: "test-key",
+        secret: fakeKey,
+        createdBy: 5,
+        createdAt: new Date(),
+        lastUpdatedAt: new Date(),
+      });
+
+      const { apiKey, error } = await ApiKey.create(5, "test-key");
+
+      expect(error).toBeNull();
+      expect(apiKey).toBeDefined();
+      expect(apiKey.id).toBe(1);
+      expect(apiKey.name).toBe("test-key");
+      expect(apiKey.createdBy).toBe(5);
+      // The secret must be present on the created record
+      expect(apiKey.secret).toBe(fakeKey);
+      expect(prisma.api_keys.create).toHaveBeenCalledTimes(1);
+      expect(prisma.api_keys.create).toHaveBeenCalledWith({
+        data: expect.objectContaining({
+          name: "test-key",
+          createdBy: 5,
+          secret: expect.any(String),
+        }),
+      });
+    });
+
+    it("generates a non-empty secret string", () => {
+      const secret = ApiKey.makeSecret();
+      expect(typeof secret).toBe("string");
+      expect(secret.length).toBeGreaterThan(10);
+    });
+
+    it("generates unique secrets on successive calls", () => {
+      const s1 = ApiKey.makeSecret();
+      const s2 = ApiKey.makeSecret();
+      expect(s1).not.toBe(s2);
+    });
+
+    it("normalizes a whitespace-only name to null", async () => {
+      prisma.api_keys.create.mockResolvedValue({
+        id: 2,
+        name: null,
+        secret: "ak_key",
+        createdBy: 1,
+      });
+
+      const { apiKey } = await ApiKey.create(1, "   ");
+      expect(apiKey.name).toBeNull();
+      expect(prisma.api_keys.create).toHaveBeenCalledWith({
+        data: expect.objectContaining({ name: null }),
+      });
+    });
+
+    it("defaults name to null when not provided", async () => {
+      prisma.api_keys.create.mockResolvedValue({
+        id: 3,
+        name: null,
+        secret: "ak_key",
+        createdBy: 1,
+      });
+
+      const { apiKey } = await ApiKey.create(1);
+      expect(apiKey.name).toBeNull();
+    });
+
+    it("returns an error when prisma fails", async () => {
+      prisma.api_keys.create.mockRejectedValue(new Error("DB failure"));
+      const { apiKey, error } = await ApiKey.create(1, "fail-key");
+      expect(apiKey).toBeNull();
+      expect(error).toBe("DB failure");
+    });
+  });
+
+  // ──────────────────────────────────────────────
+  // ApiKey.get
+  // ──────────────────────────────────────────────
+  describe("ApiKey.get", () => {
+    it("returns the key (without secret) when found with a valid clause", async () => {
+      prisma.api_keys.findFirst.mockResolvedValue({
+        id: 10,
+        name: "prod-key",
+        secret: "super_secret_value",
+        createdBy: 7,
+        createdAt: new Date(),
+        lastUpdatedAt: new Date(),
+      });
+
+      const result = await ApiKey.get({ id: 10 });
+
+      expect(result).toBeDefined();
+      expect(result.id).toBe(10);
+      expect(result.name).toBe("prod-key");
+      // _stripSecret must remove the secret field
+      expect(result.secret).toBeUndefined();
+      expect(prisma.api_keys.findFirst).toHaveBeenCalledWith({ where: { id: 10 } });
+    });
+
+    it("returns null when the key does not exist (invalid key)", async () => {
+      prisma.api_keys.findFirst.mockResolvedValue(null);
+
+      const result = await ApiKey.get({ id: 99999 });
+
+      expect(result).toBeNull();
+      expect(prisma.api_keys.findFirst).toHaveBeenCalledWith({
+        where: { id: 99999 },
+      });
+    });
+
+    it("returns null when looking up by a non-existent secret", async () => {
+      prisma.api_keys.findFirst.mockResolvedValue(null);
+
+      const result = await ApiKey.get({ secret: "invalid_secret_xyz" });
+
+      expect(result).toBeNull();
+    });
+
+    it("returns null on database error", async () => {
+      prisma.api_keys.findFirst.mockRejectedValue(new Error("DB error"));
+
+      const result = await ApiKey.get({ id: 1 });
+      expect(result).toBeNull();
+    });
+  });
+
+  // ──────────────────────────────────────────────
+  // ApiKey.delete
+  // ──────────────────────────────────────────────
+  describe("ApiKey.delete", () => {
+    it("deletes a key by id and returns true", async () => {
+      prisma.api_keys.deleteMany.mockResolvedValue({ count: 1 });
+
+      const result = await ApiKey.delete({ id: 5 });
+      expect(result).toBe(true);
+      expect(prisma.api_keys.deleteMany).toHaveBeenCalledWith({
+        where: { id: 5 },
+      });
+    });
+
+    it("verifies the key is gone after deletion", async () => {
+      // Key exists before deletion
+      prisma.api_keys.findFirst.mockResolvedValueOnce({
+        id: 8,
+        name: "to-delete",
+        secret: "secret123",
+        createdBy: 1,
+      });
+      const before = await ApiKey.get({ id: 8 });
+      expect(before).toBeDefined();
+      expect(before.id).toBe(8);
+
+      // Delete
+      prisma.api_keys.deleteMany.mockResolvedValue({ count: 1 });
+      const deleted = await ApiKey.delete({ id: 8 });
+      expect(deleted).toBe(true);
+
+      // Key is gone after deletion
+      prisma.api_keys.findFirst.mockResolvedValueOnce(null);
+      const after = await ApiKey.get({ id: 8 });
+      expect(after).toBeNull();
+    });
+
+    it("returns false on database error", async () => {
+      prisma.api_keys.deleteMany.mockRejectedValue(new Error("DB error"));
+      const result = await ApiKey.delete({ id: 999 });
+      expect(result).toBe(false);
+    });
+  });
+
+  // ──────────────────────────────────────────────
+  // ApiKey.list  (via ApiKey.where)
+  // ──────────────────────────────────────────────
+  describe("ApiKey.where (list for a user)", () => {
+    it("returns all keys for a user with secrets stripped", async () => {
+      prisma.api_keys.findMany.mockResolvedValue([
+        {
+          id: 1,
+          name: "key-one",
+          secret: "secret_a",
+          createdBy: 5,
+          createdAt: new Date(),
+          lastUpdatedAt: new Date(),
+        },
+        {
+          id: 2,
+          name: "key-two",
+          secret: "secret_b",
+          createdBy: 5,
+          createdAt: new Date(),
+          lastUpdatedAt: new Date(),
+        },
+      ]);
+
+      const keys = await ApiKey.where({ createdBy: 5 });
+
+      expect(keys).toHaveLength(2);
+      expect(keys[0].id).toBe(1);
+      expect(keys[0].name).toBe("key-one");
+      expect(keys[0].secret).toBeUndefined();
+      expect(keys[1].id).toBe(2);
+      expect(keys[1].secret).toBeUndefined();
+      expect(prisma.api_keys.findMany).toHaveBeenCalledWith({
+        where: { createdBy: 5 },
+        take: undefined,
+      });
+    });
+
+    it("returns an empty array when the user has no keys", async () => {
+      prisma.api_keys.findMany.mockResolvedValue([]);
+
+      const keys = await ApiKey.where({ createdBy: 999 });
+      expect(keys).toEqual([]);
+    });
+
+    it("returns an empty array on database error", async () => {
+      prisma.api_keys.findMany.mockRejectedValue(new Error("DB error"));
+
+      const keys = await ApiKey.where({ createdBy: 1 });
+      expect(keys).toEqual([]);
+    });
+
+    it("respects the limit parameter", async () => {
+      prisma.api_keys.findMany.mockResolvedValue([]);
+
+      await ApiKey.where({ createdBy: 1 }, 10);
+      expect(prisma.api_keys.findMany).toHaveBeenCalledWith({
+        where: { createdBy: 1 },
+        take: 10,
+      });
+    });
+  });
+
+  // ──────────────────────────────────────────────
+  // ApiKey.count
+  // ──────────────────────────────────────────────
+  describe("ApiKey.count", () => {
+    it("returns the count of keys matching the clause", async () => {
+      prisma.api_keys.count.mockResolvedValue(3);
+      const count = await ApiKey.count({ createdBy: 5 });
+      expect(count).toBe(3);
+      expect(prisma.api_keys.count).toHaveBeenCalledWith({ where: { createdBy: 5 } });
+    });
+
+    it("returns 0 on database error", async () => {
+      prisma.api_keys.count.mockRejectedValue(new Error("DB error"));
+      const count = await ApiKey.count({ createdBy: 5 });
+      expect(count).toBe(0);
+    });
+  });
+
+  // ──────────────────────────────────────────────
+  // ApiKey._stripSecret
+  // ──────────────────────────────────────────────
+  describe("ApiKey._stripSecret", () => {
+    it("removes the secret field from an api key object", () => {
+      const input = { id: 1, name: "test", secret: "abc", createdBy: 2 };
+      const result = ApiKey._stripSecret(input);
+      expect(result.id).toBe(1);
+      expect(result.name).toBe("test");
+      expect(result.createdBy).toBe(2);
+      expect(result.secret).toBeUndefined();
+    });
+
+    it("returns null for falsy input", () => {
+      expect(ApiKey._stripSecret(null)).toBeNull();
+      expect(ApiKey._stripSecret(undefined)).toBeNull();
+      expect(ApiKey._stripSecret(0)).toBeNull();
+    });
+  });
+});

@@ -1,1 +1,205 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVApjb25zdCB7IERvY3VtZW50U3luY1F1ZXVlIH0gPSByZXF1aXJlKCIuLi8uLi9tb2RlbHMvZG9jdW1lbnRTeW5jUXVldWUiKTsKY29uc3QgeyBTeXN0ZW1TZXR0aW5ncyB9ID0gcmVxdWlyZSgiLi4vLi4vbW9kZWxzL3N5c3RlbVNldHRpbmdzIik7CmNvbnN0IHByaXNtYSA9IHJlcXVpcmUoIi4uLy4uL3V0aWxzL3ByaXNtYSIpOwoKZGVzY3JpYmUoIkRvY3VtZW50U3luY1F1ZXVlIChhZGRpdGlvbmFsKSIsICgpID0+IHsKICBhZnRlckVhY2goKCkgPT4gamVzdC5yZXN0b3JlQWxsTW9ja3MoKSk7CgogIGRlc2NyaWJlKCJ2YWxpZEZpbGVUeXBlcyIsICgpID0+IHsKICAgIGl0KCJjb250YWlucyBleHBlY3RlZCBmaWxlIHR5cGVzIiwgKCkgPT4gewogICAgICBleHBlY3QoRG9jdW1lbnRTeW5jUXVldWUudmFsaWRGaWxlVHlwZXMpLnRvRXF1YWwoCiAgICAgICAgZXhwZWN0LmFycmF5Q29udGFpbmluZyhbImxpbmsiLCAieW91dHViZSIsICJjb25mbHVlbmNlIiwgImdpdGh1YiIsICJnaXRsYWIiLCAiZHJ1cGFsd2lraSJdKQogICAgICApOwogICAgfSk7CiAgfSk7CgogIGRlc2NyaWJlKCJtYXhSZXBlYXRGYWlsdXJlcyIsICgpID0+IHsKICAgIGl0KCJkZWZhdWx0cyB0byA1IiwgKCkgPT4gewogICAgICBleHBlY3QoRG9jdW1lbnRTeW5jUXVldWUubWF4UmVwZWF0RmFpbHVyZXMpLnRvQmUoNSk7CiAgICB9KTsKICB9KTsKCiAgZGVzY3JpYmUoImVuYWJsZWQiLCAoKSA9PiB7CiAgICBpdCgicmV0dXJucyB0cnVlIHdoZW4gc3lzdGVtIHNldHRpbmcgaXMgZW5hYmxlZCIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3Qgc3B5ID0gamVzdC5zcHlPbihTeXN0ZW1TZXR0aW5ncywgImdldCIpLm1vY2tSZXNvbHZlZFZhbHVlKHsgdmFsdWU6ICJlbmFibGVkIiB9KTsKICAgICAgZXhwZWN0KGF3YWl0IERvY3VtZW50U3luY1F1ZXVlLmVuYWJsZWQoKSkudG9CZSh0cnVlKTsKICAgICAgZXhwZWN0KHNweSkudG9IYXZlQmVlbkNhbGxlZFdpdGgoeyBsYWJlbDogRG9jdW1lbnRTeW5jUXVldWUuZmVhdHVyZUtleSB9KTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIGZhbHNlIHdoZW4gc3lzdGVtIHNldHRpbmcgaXMgZGlzYWJsZWQiLCBhc3luYyAoKSA9PiB7CiAgICAgIGplc3Quc3B5T24oU3lzdGVtU2V0dGluZ3MsICJnZXQiKS5tb2NrUmVzb2x2ZWRWYWx1ZSh7IHZhbHVlOiAiZGlzYWJsZWQiIH0pOwogICAgICBleHBlY3QoYXdhaXQgRG9jdW1lbnRTeW5jUXVldWUuZW5hYmxlZCgpKS50b0JlKGZhbHNlKTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIGZhbHNlIHdoZW4gc3lzdGVtIHNldHRpbmcgaXMgbWlzc2luZyIsIGFzeW5jICgpID0+IHsKICAgICAgamVzdC5zcHlPbihTeXN0ZW1TZXR0aW5ncywgImdldCIpLm1vY2tSZXNvbHZlZFZhbHVlKG51bGwpOwogICAgICBleHBlY3QoYXdhaXQgRG9jdW1lbnRTeW5jUXVldWUuZW5hYmxlZCgpKS50b0JlKGZhbHNlKTsKICAgIH0pOwogIH0pOwoKICBkZXNjcmliZSgiY2FsY05leHRTeW5jIiwgKCkgPT4gewogICAgaXQoInJldHVybnMgYSBmdXR1cmUgZGF0ZSBiYXNlZCBvbiBzdGFsZUFmdGVyTXMiLCAoKSA9PiB7CiAgICAgIGNvbnN0IGJlZm9yZSA9IERhdGUubm93KCk7CiAgICAgIGNvbnN0IHJlc3VsdCA9IERvY3VtZW50U3luY1F1ZXVlLmNhbGNOZXh0U3luYyh7IHN0YWxlQWZ0ZXJNczogODY0MDAwMDAgfSk7CiAgICAgIGNvbnN0IGFmdGVyID0gRGF0ZS5ub3coKTsKICAgICAgZXhwZWN0KHJlc3VsdC5nZXRUaW1lKCkpLnRvQmVHcmVhdGVyVGhhbk9yRXF1YWwobmV3IERhdGUoYmVmb3JlICsgODY0MDAwMDApLmdldFRpbWUoKSk7CiAgICAgIGV4cGVjdChyZXN1bHQuZ2V0VGltZSgpKS50b0JlTGVzc1RoYW5PckVxdWFsKG5ldyBEYXRlKGFmdGVyICsgODY0MDAwMDApLmdldFRpbWUoKSk7CiAgICB9KTsKCiAgICBpdCgiYWRkcyBzdGFsZUFmdGVyTXMgbWlsbGlzZWNvbmRzIHRvIGN1cnJlbnQgdGltZSIsICgpID0+IHsKICAgICAgY29uc3Qgc3RhbGVNcyA9IDM2MDAwMDA7CiAgICAgIGNvbnN0IGJlZm9yZSA9IERhdGUubm93KCk7CiAgICAgIGNvbnN0IHJlc3VsdCA9IERvY3VtZW50U3luY1F1ZXVlLmNhbGNOZXh0U3luYyh7IHN0YWxlQWZ0ZXJNczogc3RhbGVNcyB9KTsKICAgICAgZXhwZWN0KHJlc3VsdC5nZXRUaW1lKCkgLSBiZWZvcmUpLnRvQmVHcmVhdGVyVGhhbk9yRXF1YWwoc3RhbGVNcyk7CiAgICAgIGV4cGVjdChyZXN1bHQuZ2V0VGltZSgpIC0gYmVmb3JlKS50b0JlTGVzc1RoYW4oc3RhbGVNcyArIDEwMCk7CiAgICB9KTsKICB9KTsKCiAgZGVzY3JpYmUoImNhbldhdGNoIiwgKCkgPT4gewogICAgaXQoInJldHVybnMgZmFsc2Ugd2hlbiBjaHVua1NvdXJjZSBpcyBudWxsIiwgKCkgPT4gewogICAgICBleHBlY3QoRG9jdW1lbnRTeW5jUXVldWUuY2FuV2F0Y2goeyB0aXRsZTogInRlc3QiLCBjaHVua1NvdXJjZTogbnVsbCB9KSkudG9CZShmYWxzZSk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyBmYWxzZSB3aGVuIGNodW5rU291cmNlIGlzIHVuZGVmaW5lZCIsICgpID0+IHsKICAgICAgZXhwZWN0KERvY3VtZW50U3luY1F1ZXVlLmNhbldhdGNoKHsgdGl0bGU6ICJ0ZXN0IiB9KSkudG9CZShmYWxzZSk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyBmYWxzZSBmb3IgdW5rbm93biBjaHVua1NvdXJjZSBwcmVmaXgiLCAoKSA9PiB7CiAgICAgIGV4cGVjdChEb2N1bWVudFN5bmNRdWV1ZS5jYW5XYXRjaCh7IHRpdGxlOiAidGVzdCIsIGNodW5rU291cmNlOiAidW5rbm93bjovL2ZpbGUiIH0pKS50b0JlKGZhbHNlKTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIHRydWUgZm9yIGxpbms6Ly8gd2l0aCAuaHRtbCB0aXRsZSIsICgpID0+IHsKICAgICAgZXhwZWN0KERvY3VtZW50U3luY1F1ZXVlLmNhbldhdGNoKHsgdGl0bGU6ICJwYWdlLmh0bWwiLCBjaHVua1NvdXJjZTogImxpbms6Ly9odHRwOi8vZXhhbXBsZS5jb20iIH0pKS50b0JlKHRydWUpOwogICAgfSk7CgogICAgaXQoInJldHVybnMgZmFsc2UgZm9yIGxpbms6Ly8gd2l0aCBub24taHRtbCB0aXRsZSIsICgpID0+IHsKICAgICAgZXhwZWN0KERvY3VtZW50U3luY1F1ZXVlLmNhbldhdGNoKHsgdGl0bGU6ICJwYWdlLnBkZiIsIGNodW5rU291cmNlOiAibGluazovL2h0dHA6Ly9leGFtcGxlLmNvbSIgfSkpLnRvQmUoZmFsc2UpOwogICAgfSk7CgogICAgaXQoInJldHVybnMgdHJ1ZSBmb3IgeW91dHViZTovLyBwcmVmaXgiLCAoKSA9PiB7CiAgICAgIGV4cGVjdChEb2N1bWVudFN5bmNRdWV1ZS5jYW5XYXRjaCh7IHRpdGxlOiAidmlkZW8iLCBjaHVua1NvdXJjZTogInlvdXR1YmU6Ly9hYmMxMjMiIH0pKS50b0JlKHRydWUpOwogICAgfSk7CgogICAgaXQoInJldHVybnMgdHJ1ZSBmb3IgY29uZmx1ZW5jZTovLyBwcmVmaXgiLCAoKSA9PiB7CiAgICAgIGV4cGVjdChEb2N1bWVudFN5bmNRdWV1ZS5jYW5XYXRjaCh7IHRpdGxlOiAiZG9jIiwgY2h1bmtTb3VyY2U6ICJjb25mbHVlbmNlOi8vc3BhY2UvcGFnZSIgfSkpLnRvQmUodHJ1ZSk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyB0cnVlIGZvciBnaXRodWI6Ly8gcHJlZml4IiwgKCkgPT4gewogICAgICBleHBlY3QoRG9jdW1lbnRTeW5jUXVldWUuY2FuV2F0Y2goeyB0aXRsZTogInJlYWRtZSIsIGNodW5rU291cmNlOiAiZ2l0aHViOi8vb3JnL3JlcG8vZmlsZSIgfSkpLnRvQmUodHJ1ZSk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyB0cnVlIGZvciBnaXRsYWI6Ly8gcHJlZml4IiwgKCkgPT4gewogICAgICBleHBlY3QoRG9jdW1lbnRTeW5jUXVldWUuY2FuV2F0Y2goeyB0aXRsZTogImZpbGUiLCBjaHVua1NvdXJjZTogImdpdGxhYjovL29yZy9yZXBvL2ZpbGUiIH0pKS50b0JlKHRydWUpOwogICAgfSk7CgogICAgaXQoInJldHVybnMgdHJ1ZSBmb3IgZHJ1cGFsd2lraTovLyBwcmVmaXgiLCAoKSA9PiB7CiAgICAgIGV4cGVjdChEb2N1bWVudFN5bmNRdWV1ZS5jYW5XYXRjaCh7IHRpdGxlOiAid2lraSIsIGNodW5rU291cmNlOiAiZHJ1cGFsd2lraTovL25vZGUvMSIgfSkpLnRvQmUodHJ1ZSk7CiAgICB9KTsKICB9KTsKCiAgZGVzY3JpYmUoImdldCIsICgpID0+IHsKICAgIGl0KCJyZXR1cm5zIHF1ZXVlIHJlY29yZCB3aGVuIGZvdW5kIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCBxdWV1ZSA9IHsgaWQ6IDEsIHdvcmtzcGFjZURvY0lkOiAxMCB9OwogICAgICBqZXN0LnNweU9uKHByaXNtYS5kb2N1bWVudF9zeW5jX3F1ZXVlcywgImZpbmRGaXJzdCIpLm1vY2tSZXNvbHZlZFZhbHVlKHF1ZXVlKTsKICAgICAgZXhwZWN0KGF3YWl0IERvY3VtZW50U3luY1F1ZXVlLmdldCh7IGlkOiAxIH0pKS50b0VxdWFsKHF1ZXVlKTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIG51bGwgd2hlbiBub3QgZm91bmQiLCBhc3luYyAoKSA9PiB7CiAgICAgIGplc3Quc3B5T24ocHJpc21hLmRvY3VtZW50X3N5bmNfcXVldWVzLCAiZmluZEZpcnN0IikubW9ja1Jlc29sdmVkVmFsdWUobnVsbCk7CiAgICAgIGV4cGVjdChhd2FpdCBEb2N1bWVudFN5bmNRdWV1ZS5nZXQoeyBpZDogOTk5IH0pKS50b0JlTnVsbCgpOwogICAgfSk7CgogICAgaXQoInJldHVybnMgbnVsbCBhbmQgbG9ncyBvbiBlcnJvciIsIGFzeW5jICgpID0+IHsKICAgICAgamVzdC5zcHlPbihwcmlzbWEuZG9jdW1lbnRfc3luY19xdWV1ZXMsICJmaW5kRmlyc3QiKS5tb2NrUmVqZWN0ZWRWYWx1ZShuZXcgRXJyb3IoImRiIGZhaWwiKSk7CiAgICAgIGV4cGVjdChhd2FpdCBEb2N1bWVudFN5bmNRdWV1ZS5nZXQoeyBpZDogMSB9KSkudG9CZU51bGwoKTsKICAgIH0pOwogIH0pOwoKICBkZXNjcmliZSgid2hlcmUiLCAoKSA9PiB7CiAgICBpdCgicmV0dXJucyBtYXRjaGluZyByZWNvcmRzIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCByZWNvcmRzID0gW3sgaWQ6IDEgfSwgeyBpZDogMiB9XTsKICAgICAgamVzdC5zcHlPbihwcmlzbWEuZG9jdW1lbnRfc3luY19xdWV1ZXMsICJmaW5kTWFueSIpLm1vY2tSZXNvbHZlZFZhbHVlKHJlY29yZHMpOwogICAgICBleHBlY3QoYXdhaXQgRG9jdW1lbnRTeW5jUXVldWUud2hlcmUoeyB3b3Jrc3BhY2VEb2NJZDogMTAgfSkpLnRvRXF1YWwocmVjb3Jkcyk7CiAgICB9KTsKCiAgICBpdCgicGFzc2VzIGxpbWl0IGFuZCBvcmRlckJ5IHRvIHByaXNtYSIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3Qgc3B5ID0gamVzdC5zcHlPbihwcmlzbWEuZG9jdW1lbnRfc3luY19xdWV1ZXMsICJmaW5kTWFueSIpLm1vY2tSZXNvbHZlZFZhbHVlKFtdKTsKICAgICAgYXdhaXQgRG9jdW1lbnRTeW5jUXVldWUud2hlcmUoe30sIDUsIHsgaWQ6ICJkZXNjIiB9KTsKICAgICAgZXhwZWN0KHNweSkudG9IYXZlQmVlbkNhbGxlZFdpdGgoZXhwZWN0Lm9iamVjdENvbnRhaW5pbmcoeyB0YWtlOiA1LCBvcmRlckJ5OiB7IGlkOiAiZGVzYyIgfSB9KSk7CiAgICB9KTsKCiAgICBpdCgicGFzc2VzIGluY2x1ZGUgdG8gcHJpc21hIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCBzcHkgPSBqZXN0LnNweU9uKHByaXNtYS5kb2N1bWVudF9zeW5jX3F1ZXVlcywgImZpbmRNYW55IikubW9ja1Jlc29sdmVkVmFsdWUoW10pOwogICAgICBjb25zdCBpbmNsdWRlID0geyB3b3Jrc3BhY2VEb2M6IHRydWUgfTsKICAgICAgYXdhaXQgRG9jdW1lbnRTeW5jUXVldWUud2hlcmUoe30sIG51bGwsIG51bGwsIGluY2x1ZGUpOwogICAgICBleHBlY3Qoc3B5KS50b0hhdmVCZWVuQ2FsbGVkV2l0aChleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7IGluY2x1ZGUgfSkpOwogICAgfSk7CgogICAgaXQoInJldHVybnMgZW1wdHkgYXJyYXkgb24gZXJyb3IiLCBhc3luYyAoKSA9PiB7CiAgICAgIGplc3Quc3B5T24ocHJpc21hLmRvY3VtZW50X3N5bmNfcXVldWVzLCAiZmluZE1hbnkiKS5tb2NrUmVqZWN0ZWRWYWx1ZShuZXcgRXJyb3IoImZhaWwiKSk7CiAgICAgIGV4cGVjdChhd2FpdCBEb2N1bWVudFN5bmNRdWV1ZS53aGVyZSh7fSkpLnRvRXF1YWwoW10pOwogICAgfSk7CiAgfSk7CgogIGRlc2NyaWJlKCJjb3VudCIsICgpID0+IHsKICAgIGl0KCJyZXR1cm5zIGNvdW50IGZyb20gcHJpc21hIiwgYXN5bmMgKCkgPT4gewogICAgICBqZXN0LnNweU9uKHByaXNtYS5kb2N1bWVudF9zeW5jX3F1ZXVlcywgImNvdW50IikubW9ja1Jlc29sdmVkVmFsdWUoMyk7CiAgICAgIGV4cGVjdChhd2FpdCBEb2N1bWVudFN5bmNRdWV1ZS5jb3VudCh7IHdvcmtzcGFjZURvY0lkOiAxMCB9KSkudG9CZSgzKTsKICAgIH0pOwoKICAgIGl0KCJwYXNzZXMgbGltaXQgd2hlbiBwcm92aWRlZCIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3Qgc3B5ID0gamVzdC5zcHlPbihwcmlzbWEuZG9jdW1lbnRfc3luY19xdWV1ZXMsICJjb3VudCIpLm1vY2tSZXNvbHZlZFZhbHVlKDUpOwogICAgICBhd2FpdCBEb2N1bWVudFN5bmNRdWV1ZS5jb3VudCh7fSwgNSk7CiAgICAgIGV4cGVjdChzcHkpLnRvSGF2ZUJlZW5DYWxsZWRXaXRoKGV4cGVjdC5vYmplY3RDb250YWluaW5nKHsgdGFrZTogNSB9KSk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyAwIG9uIGVycm9yIiwgYXN5bmMgKCkgPT4gewogICAgICBqZXN0LnNweU9uKHByaXNtYS5kb2N1bWVudF9zeW5jX3F1ZXVlcywgImNvdW50IikubW9ja1JlamVjdGVkVmFsdWUobmV3IEVycm9yKCJmYWlsIikpOwogICAgICBleHBlY3QoYXdhaXQgRG9jdW1lbnRTeW5jUXVldWUuY291bnQoe30pKS50b0JlKDApOwogICAgfSk7CiAgfSk7CgogIGRlc2NyaWJlKCJkZWxldGUiLCAoKSA9PiB7CiAgICBpdCgicmV0dXJucyB0cnVlIG9uIHN1Y2Nlc3MiLCBhc3luYyAoKSA9PiB7CiAgICAgIGplc3Quc3B5T24ocHJpc21hLmRvY3VtZW50X3N5bmNfcXVldWVzLCAiZGVsZXRlTWFueSIpLm1vY2tSZXNvbHZlZFZhbHVlKHsgY291bnQ6IDEgfSk7CiAgICAgIGV4cGVjdChhd2FpdCBEb2N1bWVudFN5bmNRdWV1ZS5kZWxldGUoeyBpZDogMSB9KSkudG9CZSh0cnVlKTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIGZhbHNlIG9uIGVycm9yIiwgYXN5bmMgKCkgPT4gewogICAgICBqZXN0LnNweU9uKHByaXNtYS5kb2N1bWVudF9zeW5jX3F1ZXVlcywgImRlbGV0ZU1hbnkiKS5tb2NrUmVqZWN0ZWRWYWx1ZShuZXcgRXJyb3IoImZhaWwiKSk7CiAgICAgIGV4cGVjdChhd2FpdCBEb2N1bWVudFN5bmNRdWV1ZS5kZWxldGUoeyBpZDogMSB9KSkudG9CZShmYWxzZSk7CiAgICB9KTsKICB9KTsKCiAgZGVzY3JpYmUoIl91cGRhdGUiLCAoKSA9PiB7CiAgICBpdCgidGhyb3dzIHdoZW4gaWQgaXMgbnVsbCIsIGFzeW5jICgpID0+IHsKICAgICAgYXdhaXQgZXhwZWN0KERvY3VtZW50U3luY1F1ZXVlLl91cGRhdGUobnVsbCwge30pKS5yZWplY3RzLnRvVGhyb3coKTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIHRydWUgb24gc3VjY2VzcyIsIGFzeW5jICgpID0+IHsKICAgICAgamVzdC5zcHlPbihwcmlzbWEuZG9jdW1lbnRfc3luY19xdWV1ZXMsICJ1cGRhdGUiKS5tb2NrUmVzb2x2ZWRWYWx1ZSh7IGlkOiAxIH0pOwogICAgICBleHBlY3QoYXdhaXQgRG9jdW1lbnRTeW5jUXVldWUuX3VwZGF0ZSgxLCB7IHN0YWxlQWZ0ZXJNczogMTAwMCB9KSkudG9CZSh0cnVlKTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIGZhbHNlIG9uIGVycm9yIiwgYXN5bmMgKCkgPT4gewogICAgICBqZXN0LnNweU9uKHByaXNtYS5kb2N1bWVudF9zeW5jX3F1ZXVlcywgInVwZGF0ZSIpLm1vY2tSZWplY3RlZFZhbHVlKG5ldyBFcnJvcigiZmFpbCIpKTsKICAgICAgZXhwZWN0KGF3YWl0IERvY3VtZW50U3luY1F1ZXVlLl91cGRhdGUoMSwgeyBzdGFsZUFmdGVyTXM6IDEwMDAgfSkpLnRvQmUoZmFsc2UpOwogICAgfSk7CiAgfSk7CgogIGRlc2NyaWJlKCJzdGFsZURvY3VtZW50UXVldWVzIiwgKCkgPT4gewogICAgaXQoImNhbGxzIGZpbmRNYW55IHdpdGggbmV4dFN5bmNBdCBsdGUgbm93IiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCBxdWV1ZXMgPSBbeyBpZDogMSwgd29ya3NwYWNlRG9jOiB7IHdvcmtzcGFjZTogeyBpZDogMSB9IH0gfV07CiAgICAgIGNvbnN0IHNweSA9IGplc3Quc3B5T24ocHJpc21hLmRvY3VtZW50X3N5bmNfcXVldWVzLCAiZmluZE1hbnkiKS5tb2NrUmVzb2x2ZWRWYWx1ZShxdWV1ZXMpOwogICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBEb2N1bWVudFN5bmNRdWV1ZS5zdGFsZURvY3VtZW50UXVldWVzKCk7CiAgICAgIGV4cGVjdChyZXN1bHQpLnRvRXF1YWwocXVldWVzKTsKICAgICAgZXhwZWN0KHNweSkudG9IYXZlQmVlbkNhbGxlZFdpdGgoCiAgICAgICAgZXhwZWN0Lm9iamVjdENvbnRhaW5pbmcoewogICAgICAgICAgd2hlcmU6IHsgbmV4dFN5bmNBdDogeyBsdGU6IGV4cGVjdC5hbnkoU3RyaW5nKSB9IH0sCiAgICAgICAgICBpbmNsdWRlOiB7IHdvcmtzcGFjZURvYzogeyBpbmNsdWRlOiB7IHdvcmtzcGFjZTogdHJ1ZSB9IH0gfSwKICAgICAgICB9KQogICAgICApOwogICAgfSk7CiAgfSk7Cn0pOwo=
+// SPDX-License-Identifier: MIT
+const { DocumentSyncQueue } = require("../../models/documentSyncQueue");
+const { SystemSettings } = require("../../models/systemSettings");
+const prisma = require("../../utils/prisma");
+
+describe("DocumentSyncQueue (additional)", () => {
+  afterEach(() => jest.restoreAllMocks());
+
+  describe("validFileTypes", () => {
+    it("contains expected file types", () => {
+      expect(DocumentSyncQueue.validFileTypes).toEqual(
+        expect.arrayContaining(["link", "youtube", "confluence", "github", "gitlab", "drupalwiki"])
+      );
+    });
+  });
+
+  describe("maxRepeatFailures", () => {
+    it("defaults to 5", () => {
+      expect(DocumentSyncQueue.maxRepeatFailures).toBe(5);
+    });
+  });
+
+  describe("enabled", () => {
+    it("returns true when system setting is enabled", async () => {
+      const spy = jest.spyOn(SystemSettings, "get").mockResolvedValue({ value: "enabled" });
+      expect(await DocumentSyncQueue.enabled()).toBe(true);
+      expect(spy).toHaveBeenCalledWith({ label: DocumentSyncQueue.featureKey });
+    });
+
+    it("returns false when system setting is disabled", async () => {
+      jest.spyOn(SystemSettings, "get").mockResolvedValue({ value: "disabled" });
+      expect(await DocumentSyncQueue.enabled()).toBe(false);
+    });
+
+    it("returns false when system setting is missing", async () => {
+      jest.spyOn(SystemSettings, "get").mockResolvedValue(null);
+      expect(await DocumentSyncQueue.enabled()).toBe(false);
+    });
+  });
+
+  describe("calcNextSync", () => {
+    it("returns a future date based on staleAfterMs", () => {
+      const before = Date.now();
+      const result = DocumentSyncQueue.calcNextSync({ staleAfterMs: 86400000 });
+      const after = Date.now();
+      expect(result.getTime()).toBeGreaterThanOrEqual(new Date(before + 86400000).getTime());
+      expect(result.getTime()).toBeLessThanOrEqual(new Date(after + 86400000).getTime());
+    });
+
+    it("adds staleAfterMs milliseconds to current time", () => {
+      const staleMs = 3600000;
+      const before = Date.now();
+      const result = DocumentSyncQueue.calcNextSync({ staleAfterMs: staleMs });
+      expect(result.getTime() - before).toBeGreaterThanOrEqual(staleMs);
+      expect(result.getTime() - before).toBeLessThan(staleMs + 100);
+    });
+  });
+
+  describe("canWatch", () => {
+    it("returns false when chunkSource is null", () => {
+      expect(DocumentSyncQueue.canWatch({ title: "test", chunkSource: null })).toBe(false);
+    });
+
+    it("returns false when chunkSource is undefined", () => {
+      expect(DocumentSyncQueue.canWatch({ title: "test" })).toBe(false);
+    });
+
+    it("returns false for unknown chunkSource prefix", () => {
+      expect(DocumentSyncQueue.canWatch({ title: "test", chunkSource: "unknown://file" })).toBe(false);
+    });
+
+    it("returns true for link:// with .html title", () => {
+      expect(DocumentSyncQueue.canWatch({ title: "page.html", chunkSource: "link://http://example.com" })).toBe(true);
+    });
+
+    it("returns false for link:// with non-html title", () => {
+      expect(DocumentSyncQueue.canWatch({ title: "page.pdf", chunkSource: "link://http://example.com" })).toBe(false);
+    });
+
+    it("returns true for youtube:// prefix", () => {
+      expect(DocumentSyncQueue.canWatch({ title: "video", chunkSource: "youtube://abc123" })).toBe(true);
+    });
+
+    it("returns true for confluence:// prefix", () => {
+      expect(DocumentSyncQueue.canWatch({ title: "doc", chunkSource: "confluence://space/page" })).toBe(true);
+    });
+
+    it("returns true for github:// prefix", () => {
+      expect(DocumentSyncQueue.canWatch({ title: "readme", chunkSource: "github://org/repo/file" })).toBe(true);
+    });
+
+    it("returns true for gitlab:// prefix", () => {
+      expect(DocumentSyncQueue.canWatch({ title: "file", chunkSource: "gitlab://org/repo/file" })).toBe(true);
+    });
+
+    it("returns true for drupalwiki:// prefix", () => {
+      expect(DocumentSyncQueue.canWatch({ title: "wiki", chunkSource: "drupalwiki://node/1" })).toBe(true);
+    });
+  });
+
+  describe("get", () => {
+    it("returns queue record when found", async () => {
+      const queue = { id: 1, workspaceDocId: 10 };
+      jest.spyOn(prisma.document_sync_queues, "findFirst").mockResolvedValue(queue);
+      expect(await DocumentSyncQueue.get({ id: 1 })).toEqual(queue);
+    });
+
+    it("returns null when not found", async () => {
+      jest.spyOn(prisma.document_sync_queues, "findFirst").mockResolvedValue(null);
+      expect(await DocumentSyncQueue.get({ id: 999 })).toBeNull();
+    });
+
+    it("returns null and logs on error", async () => {
+      jest.spyOn(prisma.document_sync_queues, "findFirst").mockRejectedValue(new Error("db fail"));
+      expect(await DocumentSyncQueue.get({ id: 1 })).toBeNull();
+    });
+  });
+
+  describe("where", () => {
+    it("returns matching records", async () => {
+      const records = [{ id: 1 }, { id: 2 }];
+      jest.spyOn(prisma.document_sync_queues, "findMany").mockResolvedValue(records);
+      expect(await DocumentSyncQueue.where({ workspaceDocId: 10 })).toEqual(records);
+    });
+
+    it("passes limit and orderBy to prisma", async () => {
+      const spy = jest.spyOn(prisma.document_sync_queues, "findMany").mockResolvedValue([]);
+      await DocumentSyncQueue.where({}, 5, { id: "desc" });
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ take: 5, orderBy: { id: "desc" } }));
+    });
+
+    it("passes include to prisma", async () => {
+      const spy = jest.spyOn(prisma.document_sync_queues, "findMany").mockResolvedValue([]);
+      const include = { workspaceDoc: true };
+      await DocumentSyncQueue.where({}, null, null, include);
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ include }));
+    });
+
+    it("returns empty array on error", async () => {
+      jest.spyOn(prisma.document_sync_queues, "findMany").mockRejectedValue(new Error("fail"));
+      expect(await DocumentSyncQueue.where({})).toEqual([]);
+    });
+  });
+
+  describe("count", () => {
+    it("returns count from prisma", async () => {
+      jest.spyOn(prisma.document_sync_queues, "count").mockResolvedValue(3);
+      expect(await DocumentSyncQueue.count({ workspaceDocId: 10 })).toBe(3);
+    });
+
+    it("passes limit when provided", async () => {
+      const spy = jest.spyOn(prisma.document_sync_queues, "count").mockResolvedValue(5);
+      await DocumentSyncQueue.count({}, 5);
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ take: 5 }));
+    });
+
+    it("returns 0 on error", async () => {
+      jest.spyOn(prisma.document_sync_queues, "count").mockRejectedValue(new Error("fail"));
+      expect(await DocumentSyncQueue.count({})).toBe(0);
+    });
+  });
+
+  describe("delete", () => {
+    it("returns true on success", async () => {
+      jest.spyOn(prisma.document_sync_queues, "deleteMany").mockResolvedValue({ count: 1 });
+      expect(await DocumentSyncQueue.delete({ id: 1 })).toBe(true);
+    });
+
+    it("returns false on error", async () => {
+      jest.spyOn(prisma.document_sync_queues, "deleteMany").mockRejectedValue(new Error("fail"));
+      expect(await DocumentSyncQueue.delete({ id: 1 })).toBe(false);
+    });
+  });
+
+  describe("_update", () => {
+    it("throws when id is null", async () => {
+      await expect(DocumentSyncQueue._update(null, {})).rejects.toThrow();
+    });
+
+    it("returns true on success", async () => {
+      jest.spyOn(prisma.document_sync_queues, "update").mockResolvedValue({ id: 1 });
+      expect(await DocumentSyncQueue._update(1, { staleAfterMs: 1000 })).toBe(true);
+    });
+
+    it("returns false on error", async () => {
+      jest.spyOn(prisma.document_sync_queues, "update").mockRejectedValue(new Error("fail"));
+      expect(await DocumentSyncQueue._update(1, { staleAfterMs: 1000 })).toBe(false);
+    });
+  });
+
+  describe("staleDocumentQueues", () => {
+    it("calls findMany with nextSyncAt lte now", async () => {
+      const queues = [{ id: 1, workspaceDoc: { workspace: { id: 1 } } }];
+      const spy = jest.spyOn(prisma.document_sync_queues, "findMany").mockResolvedValue(queues);
+      const result = await DocumentSyncQueue.staleDocumentQueues();
+      expect(result).toEqual(queues);
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: { nextSyncAt: { lte: expect.any(String) } },
+          include: { workspaceDoc: { include: { workspace: true } } },
+        })
+      );
+    });
+  });
+});

@@ -1,1 +1,265 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBUZXN0cyBmb3IgY29yZSBEb2N1bWVudCBtb2RlbCAoSXNzdWUgIzM4MSkKLy8gTm90ZTogVGhlIERvY3VtZW50IG1vZGVsIGRvZXMgbm90IGV4cG9zZSBhIGBjcmVhdGVgIG1ldGhvZCBkaXJlY3RseS4KLy8gRG9jdW1lbnRzIGFyZSBjcmVhdGVkIHZpYSBgYWRkRG9jdW1lbnRzYCAod2hpY2ggaGFuZGxlcyBlbWJlZGRpbmcpIG9yCi8vIGRpcmVjdGx5IHRocm91Z2ggYHByaXNtYS53b3Jrc3BhY2VfZG9jdW1lbnRzLmNyZWF0ZWAuIFdlIHRlc3QgYGdldGAsCi8vIGBmb3JXb3Jrc3BhY2VgLCBhbmQgYGRlbGV0ZWAgaGVyZSwgcGx1cyBhIHByaXNtYS1sZXZlbCBjcmVhdGUgdGVzdC4KCmplc3QubW9jaygiLi4vLi4vdXRpbHMvcHJpc21hIiwgKCkgPT4gewogIGNvbnN0IG1vY2tXb3Jrc3BhY2VEb2N1bWVudHMgPSB7CiAgICBjcmVhdGU6IGplc3QuZm4oKSwKICAgIGZpbmRGaXJzdDogamVzdC5mbigpLAogICAgZmluZE1hbnk6IGplc3QuZm4oKSwKICAgIHVwZGF0ZTogamVzdC5mbigpLAogICAgdXBkYXRlTWFueTogamVzdC5mbigpLAogICAgZGVsZXRlOiBqZXN0LmZuKCksCiAgICBkZWxldGVNYW55OiBqZXN0LmZuKCksCiAgICBjb3VudDogamVzdC5mbigpLAogIH07CiAgY29uc3QgbW9ja0RvY3VtZW50VmVjdG9ycyA9IHsKICAgIGRlbGV0ZU1hbnk6IGplc3QuZm4oKSwKICB9OwogIHJldHVybiB7CiAgICB3b3Jrc3BhY2VfZG9jdW1lbnRzOiBtb2NrV29ya3NwYWNlRG9jdW1lbnRzLAogICAgZG9jdW1lbnRfdmVjdG9yczogbW9ja0RvY3VtZW50VmVjdG9ycywKICAgICR0cmFuc2FjdGlvbjogamVzdC5mbihhc3luYyAob3BlcmF0aW9ucykgPT4gewogICAgICBpZiAodHlwZW9mIG9wZXJhdGlvbnMgPT09ICJmdW5jdGlvbiIpIHsKICAgICAgICByZXR1cm4gb3BlcmF0aW9ucyh7CiAgICAgICAgICB3b3Jrc3BhY2VfZG9jdW1lbnRzOiBtb2NrV29ya3NwYWNlRG9jdW1lbnRzLAogICAgICAgICAgZG9jdW1lbnRfdmVjdG9yczogbW9ja0RvY3VtZW50VmVjdG9ycywKICAgICAgICB9KTsKICAgICAgfQogICAgICByZXR1cm4gUHJvbWlzZS5hbGwob3BlcmF0aW9ucyk7CiAgICB9KSwKICB9Owp9KTsKCmplc3QubW9jaygiLi4vLi4vdXRpbHMvbG9nZ2VyL2NvbnNvbGUuanMiLCAoKSA9PiAoewogIGVycm9yOiBqZXN0LmZuKCksCiAgaW5mbzogamVzdC5mbigpLAogIHdhcm46IGplc3QuZm4oKSwKfSkpOwoKamVzdC5tb2NrKCIuLi8uLi91dGlscy9odHRwIiwgKCkgPT4gKHsKICBzYWZlSnNvblBhcnNlOiBqZXN0LmZuKChzdHIsIGZhbGxiYWNrKSA9PiB7CiAgICB0cnkgewogICAgICByZXR1cm4gSlNPTi5wYXJzZShzdHIpOwogICAgfSBjYXRjaCB7CiAgICAgIHJldHVybiBmYWxsYmFjazsKICAgIH0KICB9KSwKfSkpOwoKY29uc3QgeyBEb2N1bWVudCB9ID0gcmVxdWlyZSgiLi4vLi4vbW9kZWxzL2RvY3VtZW50cyIpOwpjb25zdCBwcmlzbWEgPSByZXF1aXJlKCIuLi8uLi91dGlscy9wcmlzbWEiKTsKCmRlc2NyaWJlKCJEb2N1bWVudCBtb2RlbCIsICgpID0+IHsKICBhZnRlckVhY2goKCkgPT4gamVzdC5jbGVhckFsbE1vY2tzKCkpOwoKICAvLyDilIDilIAgRG9jdW1lbnQgY3JlYXRlICh2aWEgcHJpc21hLndvcmtzcGFjZV9kb2N1bWVudHMuY3JlYXRlKSDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICBkZXNjcmliZSgiRG9jdW1lbnQgY3JlYXRlIChwcmlzbWEud29ya3NwYWNlX2RvY3VtZW50cy5jcmVhdGUpIiwgKCkgPT4gewogICAgaXQoImNyZWF0ZXMgYSBkb2N1bWVudCByZWNvcmQgd2l0aCB2YWxpZCBkYXRhIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCBtb2NrRG9jID0gewogICAgICAgIGlkOiAxLAogICAgICAgIGRvY0lkOiAiYWJjLTEyMy11dWlkIiwKICAgICAgICBmaWxlbmFtZTogInRlc3QucGRmIiwKICAgICAgICBkb2NwYXRoOiAiY3VzdG9tLWRvY3VtZW50cy90ZXN0LnBkZiIsCiAgICAgICAgd29ya3NwYWNlSWQ6IDEwLAogICAgICAgIG1ldGFkYXRhOiAneyJ0aXRsZSI6IlRlc3QgUERGIn0nLAogICAgICAgIHBpbm5lZDogZmFsc2UsCiAgICAgICAgd2F0Y2hlZDogZmFsc2UsCiAgICAgIH07CiAgICAgIHByaXNtYS53b3Jrc3BhY2VfZG9jdW1lbnRzLmNyZWF0ZS5tb2NrUmVzb2x2ZWRWYWx1ZShtb2NrRG9jKTsKCiAgICAgIGNvbnN0IGRvYyA9IGF3YWl0IHByaXNtYS53b3Jrc3BhY2VfZG9jdW1lbnRzLmNyZWF0ZSh7CiAgICAgICAgZGF0YTogewogICAgICAgICAgZG9jSWQ6ICJhYmMtMTIzLXV1aWQiLAogICAgICAgICAgZmlsZW5hbWU6ICJ0ZXN0LnBkZiIsCiAgICAgICAgICBkb2NwYXRoOiAiY3VzdG9tLWRvY3VtZW50cy90ZXN0LnBkZiIsCiAgICAgICAgICB3b3Jrc3BhY2VJZDogMTAsCiAgICAgICAgICBtZXRhZGF0YTogJ3sidGl0bGUiOiJUZXN0IFBERiJ9JywKICAgICAgICB9LAogICAgICB9KTsKCiAgICAgIGV4cGVjdChkb2MpLnRvRXF1YWwobW9ja0RvYyk7CiAgICAgIGV4cGVjdChkb2MuZG9jSWQpLnRvQmUoImFiYy0xMjMtdXVpZCIpOwogICAgICBleHBlY3QoZG9jLmZpbGVuYW1lKS50b0JlKCJ0ZXN0LnBkZiIpOwogICAgICBleHBlY3QocHJpc21hLndvcmtzcGFjZV9kb2N1bWVudHMuY3JlYXRlKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCh7CiAgICAgICAgZGF0YTogZXhwZWN0Lm9iamVjdENvbnRhaW5pbmcoewogICAgICAgICAgZG9jSWQ6ICJhYmMtMTIzLXV1aWQiLAogICAgICAgICAgZmlsZW5hbWU6ICJ0ZXN0LnBkZiIsCiAgICAgICAgICB3b3Jrc3BhY2VJZDogMTAsCiAgICAgICAgfSksCiAgICAgIH0pOwogICAgfSk7CiAgfSk7CgogIC8vIOKUgOKUgCBEb2N1bWVudC5nZXQg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgZGVzY3JpYmUoIkRvY3VtZW50LmdldCIsICgpID0+IHsKICAgIGl0KCJyZXR1cm5zIHRoZSBkb2N1bWVudCB3aGVuIGZvdW5kIGJ5IGlkIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCBtb2NrRG9jID0gewogICAgICAgIGlkOiAxLAogICAgICAgIGRvY0lkOiAiZG9jLXV1aWQtMSIsCiAgICAgICAgZmlsZW5hbWU6ICJyZXBvcnQucGRmIiwKICAgICAgICBkb2NwYXRoOiAiY3VzdG9tLWRvY3VtZW50cy9yZXBvcnQucGRmIiwKICAgICAgICB3b3Jrc3BhY2VJZDogMTAsCiAgICAgICAgbWV0YWRhdGE6ICd7InRpdGxlIjoiUmVwb3J0In0nLAogICAgICB9OwogICAgICBwcmlzbWEud29ya3NwYWNlX2RvY3VtZW50cy5maW5kRmlyc3QubW9ja1Jlc29sdmVkVmFsdWUobW9ja0RvYyk7CgogICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBEb2N1bWVudC5nZXQoeyBpZDogMSB9KTsKCiAgICAgIGV4cGVjdChyZXN1bHQpLm5vdC50b0JlTnVsbCgpOwogICAgICBleHBlY3QocmVzdWx0LmlkKS50b0JlKDEpOwogICAgICBleHBlY3QocmVzdWx0LmZpbGVuYW1lKS50b0JlKCJyZXBvcnQucGRmIik7CiAgICAgIGV4cGVjdChwcmlzbWEud29ya3NwYWNlX2RvY3VtZW50cy5maW5kRmlyc3QpLnRvSGF2ZUJlZW5DYWxsZWRXaXRoKHsKICAgICAgICB3aGVyZTogeyBpZDogMSB9LAogICAgICB9KTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIHRoZSBkb2N1bWVudCB3aGVuIGZvdW5kIGJ5IGRvY0lkIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCBtb2NrRG9jID0gewogICAgICAgIGlkOiAyLAogICAgICAgIGRvY0lkOiAidW5pcXVlLWRvYy11dWlkIiwKICAgICAgICBmaWxlbmFtZTogIm5vdGVzLnR4dCIsCiAgICAgICAgd29ya3NwYWNlSWQ6IDUsCiAgICAgIH07CiAgICAgIHByaXNtYS53b3Jrc3BhY2VfZG9jdW1lbnRzLmZpbmRGaXJzdC5tb2NrUmVzb2x2ZWRWYWx1ZShtb2NrRG9jKTsKCiAgICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IERvY3VtZW50LmdldCh7IGRvY0lkOiAidW5pcXVlLWRvYy11dWlkIiB9KTsKCiAgICAgIGV4cGVjdChyZXN1bHQpLm5vdC50b0JlTnVsbCgpOwogICAgICBleHBlY3QocmVzdWx0LmRvY0lkKS50b0JlKCJ1bmlxdWUtZG9jLXV1aWQiKTsKICAgICAgZXhwZWN0KHByaXNtYS53b3Jrc3BhY2VfZG9jdW1lbnRzLmZpbmRGaXJzdCkudG9IYXZlQmVlbkNhbGxlZFdpdGgoewogICAgICAgIHdoZXJlOiB7IGRvY0lkOiAidW5pcXVlLWRvYy11dWlkIiB9LAogICAgICB9KTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIG51bGwgd2hlbiB0aGUgZG9jdW1lbnQgZG9lcyBub3QgZXhpc3QiLCBhc3luYyAoKSA9PiB7CiAgICAgIHByaXNtYS53b3Jrc3BhY2VfZG9jdW1lbnRzLmZpbmRGaXJzdC5tb2NrUmVzb2x2ZWRWYWx1ZShudWxsKTsKCiAgICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IERvY3VtZW50LmdldCh7IGlkOiA5OTk5OSB9KTsKCiAgICAgIGV4cGVjdChyZXN1bHQpLnRvQmVOdWxsKCk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyBudWxsIG9uIHByaXNtYSBlcnJvciIsIGFzeW5jICgpID0+IHsKICAgICAgcHJpc21hLndvcmtzcGFjZV9kb2N1bWVudHMuZmluZEZpcnN0Lm1vY2tSZWplY3RlZFZhbHVlKAogICAgICAgIG5ldyBFcnJvcigiREIgZXJyb3IiKSwKICAgICAgKTsKCiAgICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IERvY3VtZW50LmdldCh7IGlkOiAxIH0pOwoKICAgICAgZXhwZWN0KHJlc3VsdCkudG9CZU51bGwoKTsKICAgIH0pOwogIH0pOwoKICAvLyDilIDilIAgRG9jdW1lbnQuZm9yV29ya3NwYWNlIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIGRlc2NyaWJlKCJEb2N1bWVudC5mb3JXb3Jrc3BhY2UiLCAoKSA9PiB7CiAgICBpdCgibGlzdHMgZG9jdW1lbnRzIGZvciBhIHdvcmtzcGFjZSIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3QgbW9ja0RvY3MgPSBbCiAgICAgICAgewogICAgICAgICAgaWQ6IDEsCiAgICAgICAgICBkb2NJZDogImRvYy0xIiwKICAgICAgICAgIGZpbGVuYW1lOiAiZmlsZTEucGRmIiwKICAgICAgICAgIGRvY3BhdGg6ICJjdXN0b20tZG9jdW1lbnRzL2ZpbGUxLnBkZiIsCiAgICAgICAgICB3b3Jrc3BhY2VJZDogMTAsCiAgICAgICAgICBtZXRhZGF0YTogbnVsbCwKICAgICAgICAgIHBpbm5lZDogZmFsc2UsCiAgICAgICAgICB3YXRjaGVkOiBmYWxzZSwKICAgICAgICB9LAogICAgICAgIHsKICAgICAgICAgIGlkOiAyLAogICAgICAgICAgZG9jSWQ6ICJkb2MtMiIsCiAgICAgICAgICBmaWxlbmFtZTogImZpbGUyLnR4dCIsCiAgICAgICAgICBkb2NwYXRoOiAiY3VzdG9tLWRvY3VtZW50cy9maWxlMi50eHQiLAogICAgICAgICAgd29ya3NwYWNlSWQ6IDEwLAogICAgICAgICAgbWV0YWRhdGE6IG51bGwsCiAgICAgICAgICBwaW5uZWQ6IHRydWUsCiAgICAgICAgICB3YXRjaGVkOiBmYWxzZSwKICAgICAgICB9LAogICAgICBdOwogICAgICBwcmlzbWEud29ya3NwYWNlX2RvY3VtZW50cy5maW5kTWFueS5tb2NrUmVzb2x2ZWRWYWx1ZShtb2NrRG9jcyk7CgogICAgICBjb25zdCBkb2NzID0gYXdhaXQgRG9jdW1lbnQuZm9yV29ya3NwYWNlKDEwKTsKCiAgICAgIGV4cGVjdChkb2NzKS50b0hhdmVMZW5ndGgoMik7CiAgICAgIGV4cGVjdChkb2NzWzBdLmZpbGVuYW1lKS50b0JlKCJmaWxlMS5wZGYiKTsKICAgICAgZXhwZWN0KGRvY3NbMV0uZmlsZW5hbWUpLnRvQmUoImZpbGUyLnR4dCIpOwogICAgICBleHBlY3QocHJpc21hLndvcmtzcGFjZV9kb2N1bWVudHMuZmluZE1hbnkpLnRvSGF2ZUJlZW5DYWxsZWRXaXRoKHsKICAgICAgICB3aGVyZTogeyB3b3Jrc3BhY2VJZDogMTAgfSwKICAgICAgICB0YWtlOiAxMDAwLAogICAgICAgIHNlbGVjdDogZXhwZWN0Lm9iamVjdENvbnRhaW5pbmcoewogICAgICAgICAgaWQ6IHRydWUsCiAgICAgICAgICBkb2NJZDogdHJ1ZSwKICAgICAgICAgIGZpbGVuYW1lOiB0cnVlLAogICAgICAgICAgZG9jcGF0aDogdHJ1ZSwKICAgICAgICAgIHdvcmtzcGFjZUlkOiB0cnVlLAogICAgICAgIH0pLAogICAgICB9KTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIGFuIGVtcHR5IGFycmF5IHdoZW4gd29ya3NwYWNlSWQgaXMgbnVsbCIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3QgZG9jcyA9IGF3YWl0IERvY3VtZW50LmZvcldvcmtzcGFjZShudWxsKTsKCiAgICAgIGV4cGVjdChkb2NzKS50b0VxdWFsKFtdKTsKICAgICAgZXhwZWN0KHByaXNtYS53b3Jrc3BhY2VfZG9jdW1lbnRzLmZpbmRNYW55KS5ub3QudG9IYXZlQmVlbkNhbGxlZCgpOwogICAgfSk7CiAgfSk7CgogIC8vIOKUgOKUgCBEb2N1bWVudC5kZWxldGUg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgZGVzY3JpYmUoIkRvY3VtZW50LmRlbGV0ZSIsICgpID0+IHsKICAgIGl0KCJkZWxldGVzIGRvY3VtZW50cyBtYXRjaGluZyB0aGUgY2xhdXNlIGFuZCByZXR1cm5zIHRydWUiLCBhc3luYyAoKSA9PiB7CiAgICAgIC8vIGRlbGV0ZSBmaXJzdCBsb29rcyB1cCBkb2NJZHMgZm9yIHZlY3RvciBjbGVhbnVwCiAgICAgIHByaXNtYS53b3Jrc3BhY2VfZG9jdW1lbnRzLmZpbmRNYW55Lm1vY2tSZXNvbHZlZFZhbHVlKFsKICAgICAgICB7IGRvY0lkOiAiZG9jLXV1aWQtMSIgfSwKICAgICAgICB7IGRvY0lkOiAiZG9jLXV1aWQtMiIgfSwKICAgICAgXSk7CiAgICAgIHByaXNtYS5kb2N1bWVudF92ZWN0b3JzLmRlbGV0ZU1hbnkubW9ja1Jlc29sdmVkVmFsdWUoeyBjb3VudDogMiB9KTsKICAgICAgcHJpc21hLndvcmtzcGFjZV9kb2N1bWVudHMuZGVsZXRlTWFueS5tb2NrUmVzb2x2ZWRWYWx1ZSh7IGNvdW50OiAyIH0pOwoKICAgICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgRG9jdW1lbnQuZGVsZXRlKHsgd29ya3NwYWNlSWQ6IDEwIH0pOwoKICAgICAgZXhwZWN0KHJlc3VsdCkudG9CZSh0cnVlKTsKICAgICAgLy8gU2hvdWxkIGNsZWFuIHVwIGRvY3VtZW50X3ZlY3RvcnMgZm9yIHRoZSBtYXRjaGVkIGRvY0lkcwogICAgICBleHBlY3QocHJpc21hLmRvY3VtZW50X3ZlY3RvcnMuZGVsZXRlTWFueSkudG9IYXZlQmVlbkNhbGxlZFdpdGgoewogICAgICAgIHdoZXJlOiB7IGRvY0lkOiB7IGluOiBbImRvYy11dWlkLTEiLCAiZG9jLXV1aWQtMiJdIH0gfSwKICAgICAgfSk7CiAgICAgIGV4cGVjdChwcmlzbWEud29ya3NwYWNlX2RvY3VtZW50cy5kZWxldGVNYW55KS50b0hhdmVCZWVuQ2FsbGVkV2l0aCh7CiAgICAgICAgd2hlcmU6IHsgd29ya3NwYWNlSWQ6IDEwIH0sCiAgICAgIH0pOwogICAgfSk7CgogICAgaXQoInJldHVybnMgdHJ1ZSB3aGVuIG5vIGRvY3VtZW50cyBtYXRjaCAobm90aGluZyB0byBkZWxldGUpIiwgYXN5bmMgKCkgPT4gewogICAgICBwcmlzbWEud29ya3NwYWNlX2RvY3VtZW50cy5maW5kTWFueS5tb2NrUmVzb2x2ZWRWYWx1ZShbXSk7CgogICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBEb2N1bWVudC5kZWxldGUoeyB3b3Jrc3BhY2VJZDogOTk5IH0pOwoKICAgICAgZXhwZWN0KHJlc3VsdCkudG9CZSh0cnVlKTsKICAgICAgZXhwZWN0KHByaXNtYS53b3Jrc3BhY2VfZG9jdW1lbnRzLmRlbGV0ZU1hbnkpLm5vdC50b0hhdmVCZWVuQ2FsbGVkKCk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyBmYWxzZSBvbiBwcmlzbWEgZXJyb3IiLCBhc3luYyAoKSA9PiB7CiAgICAgIHByaXNtYS53b3Jrc3BhY2VfZG9jdW1lbnRzLmZpbmRNYW55Lm1vY2tSZWplY3RlZFZhbHVlKAogICAgICAgIG5ldyBFcnJvcigiREIgZXJyb3IiKSwKICAgICAgKTsKCiAgICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IERvY3VtZW50LmRlbGV0ZSh7IHdvcmtzcGFjZUlkOiAxMCB9KTsKCiAgICAgIGV4cGVjdChyZXN1bHQpLnRvQmUoZmFsc2UpOwogICAgfSk7CgogICAgaXQoInZlcmlmaWVzIGRvY3VtZW50cyBhcmUgZ29uZSBhZnRlciBkZWxldGlvbiIsIGFzeW5jICgpID0+IHsKICAgICAgcHJpc21hLndvcmtzcGFjZV9kb2N1bWVudHMuZmluZE1hbnkKICAgICAgICAubW9ja1Jlc29sdmVkVmFsdWVPbmNlKFt7IGRvY0lkOiAiZG9jLXRvLWRlbGV0ZSIgfV0pIC8vIGRlbGV0ZSBsb29rdXAKICAgICAgICAubW9ja1Jlc29sdmVkVmFsdWVPbmNlKFtdKTsgLy8gZm9yV29ya3NwYWNlIGFmdGVyIGRlbGV0aW9uCiAgICAgIHByaXNtYS5kb2N1bWVudF92ZWN0b3JzLmRlbGV0ZU1hbnkubW9ja1Jlc29sdmVkVmFsdWUoeyBjb3VudDogMSB9KTsKICAgICAgcHJpc21hLndvcmtzcGFjZV9kb2N1bWVudHMuZGVsZXRlTWFueS5tb2NrUmVzb2x2ZWRWYWx1ZSh7IGNvdW50OiAxIH0pOwoKICAgICAgYXdhaXQgRG9jdW1lbnQuZGVsZXRlKHsgd29ya3NwYWNlSWQ6IDEwIH0pOwogICAgICBjb25zdCByZW1haW5pbmcgPSBhd2FpdCBEb2N1bWVudC5mb3JXb3Jrc3BhY2UoMTApOwoKICAgICAgZXhwZWN0KHJlbWFpbmluZykudG9FcXVhbChbXSk7CiAgICB9KTsKICB9KTsKfSk7Cg==
+// SPDX-License-Identifier: MIT
+// Tests for core Document model (Issue #381)
+// Note: The Document model does not expose a `create` method directly.
+// Documents are created via `addDocuments` (which handles embedding) or
+// directly through `prisma.workspace_documents.create`. We test `get`,
+// `forWorkspace`, and `delete` here, plus a prisma-level create test.
+
+jest.mock("../../utils/prisma", () => {
+  const mockWorkspaceDocuments = {
+    create: jest.fn(),
+    findFirst: jest.fn(),
+    findMany: jest.fn(),
+    update: jest.fn(),
+    updateMany: jest.fn(),
+    delete: jest.fn(),
+    deleteMany: jest.fn(),
+    count: jest.fn(),
+  };
+  const mockDocumentVectors = {
+    deleteMany: jest.fn(),
+  };
+  return {
+    workspace_documents: mockWorkspaceDocuments,
+    document_vectors: mockDocumentVectors,
+    $transaction: jest.fn(async (operations) => {
+      if (typeof operations === "function") {
+        return operations({
+          workspace_documents: mockWorkspaceDocuments,
+          document_vectors: mockDocumentVectors,
+        });
+      }
+      return Promise.all(operations);
+    }),
+  };
+});
+
+jest.mock("../../utils/logger/console.js", () => ({
+  error: jest.fn(),
+  info: jest.fn(),
+  warn: jest.fn(),
+}));
+
+jest.mock("../../utils/http", () => ({
+  safeJsonParse: jest.fn((str, fallback) => {
+    try {
+      return JSON.parse(str);
+    } catch {
+      return fallback;
+    }
+  }),
+}));
+
+const { Document } = require("../../models/documents");
+const prisma = require("../../utils/prisma");
+
+describe("Document model", () => {
+  afterEach(() => jest.clearAllMocks());
+
+  // ── Document create (via prisma.workspace_documents.create) ─────────
+  describe("Document create (prisma.workspace_documents.create)", () => {
+    it("creates a document record with valid data", async () => {
+      const mockDoc = {
+        id: 1,
+        docId: "abc-123-uuid",
+        filename: "test.pdf",
+        docpath: "custom-documents/test.pdf",
+        workspaceId: 10,
+        metadata: '{"title":"Test PDF"}',
+        pinned: false,
+        watched: false,
+      };
+      prisma.workspace_documents.create.mockResolvedValue(mockDoc);
+
+      const doc = await prisma.workspace_documents.create({
+        data: {
+          docId: "abc-123-uuid",
+          filename: "test.pdf",
+          docpath: "custom-documents/test.pdf",
+          workspaceId: 10,
+          metadata: '{"title":"Test PDF"}',
+        },
+      });
+
+      expect(doc).toEqual(mockDoc);
+      expect(doc.docId).toBe("abc-123-uuid");
+      expect(doc.filename).toBe("test.pdf");
+      expect(prisma.workspace_documents.create).toHaveBeenCalledWith({
+        data: expect.objectContaining({
+          docId: "abc-123-uuid",
+          filename: "test.pdf",
+          workspaceId: 10,
+        }),
+      });
+    });
+  });
+
+  // ── Document.get ────────────────────────────────────────────────────
+  describe("Document.get", () => {
+    it("returns the document when found by id", async () => {
+      const mockDoc = {
+        id: 1,
+        docId: "doc-uuid-1",
+        filename: "report.pdf",
+        docpath: "custom-documents/report.pdf",
+        workspaceId: 10,
+        metadata: '{"title":"Report"}',
+      };
+      prisma.workspace_documents.findFirst.mockResolvedValue(mockDoc);
+
+      const result = await Document.get({ id: 1 });
+
+      expect(result).not.toBeNull();
+      expect(result.id).toBe(1);
+      expect(result.filename).toBe("report.pdf");
+      expect(prisma.workspace_documents.findFirst).toHaveBeenCalledWith({
+        where: { id: 1 },
+      });
+    });
+
+    it("returns the document when found by docId", async () => {
+      const mockDoc = {
+        id: 2,
+        docId: "unique-doc-uuid",
+        filename: "notes.txt",
+        workspaceId: 5,
+      };
+      prisma.workspace_documents.findFirst.mockResolvedValue(mockDoc);
+
+      const result = await Document.get({ docId: "unique-doc-uuid" });
+
+      expect(result).not.toBeNull();
+      expect(result.docId).toBe("unique-doc-uuid");
+      expect(prisma.workspace_documents.findFirst).toHaveBeenCalledWith({
+        where: { docId: "unique-doc-uuid" },
+      });
+    });
+
+    it("returns null when the document does not exist", async () => {
+      prisma.workspace_documents.findFirst.mockResolvedValue(null);
+
+      const result = await Document.get({ id: 99999 });
+
+      expect(result).toBeNull();
+    });
+
+    it("returns null on prisma error", async () => {
+      prisma.workspace_documents.findFirst.mockRejectedValue(
+        new Error("DB error"),
+      );
+
+      const result = await Document.get({ id: 1 });
+
+      expect(result).toBeNull();
+    });
+  });
+
+  // ── Document.forWorkspace ───────────────────────────────────────────
+  describe("Document.forWorkspace", () => {
+    it("lists documents for a workspace", async () => {
+      const mockDocs = [
+        {
+          id: 1,
+          docId: "doc-1",
+          filename: "file1.pdf",
+          docpath: "custom-documents/file1.pdf",
+          workspaceId: 10,
+          metadata: null,
+          pinned: false,
+          watched: false,
+        },
+        {
+          id: 2,
+          docId: "doc-2",
+          filename: "file2.txt",
+          docpath: "custom-documents/file2.txt",
+          workspaceId: 10,
+          metadata: null,
+          pinned: true,
+          watched: false,
+        },
+      ];
+      prisma.workspace_documents.findMany.mockResolvedValue(mockDocs);
+
+      const docs = await Document.forWorkspace(10);
+
+      expect(docs).toHaveLength(2);
+      expect(docs[0].filename).toBe("file1.pdf");
+      expect(docs[1].filename).toBe("file2.txt");
+      expect(prisma.workspace_documents.findMany).toHaveBeenCalledWith({
+        where: { workspaceId: 10 },
+        take: 1000,
+        select: expect.objectContaining({
+          id: true,
+          docId: true,
+          filename: true,
+          docpath: true,
+          workspaceId: true,
+        }),
+      });
+    });
+
+    it("returns an empty array when workspaceId is null", async () => {
+      const docs = await Document.forWorkspace(null);
+
+      expect(docs).toEqual([]);
+      expect(prisma.workspace_documents.findMany).not.toHaveBeenCalled();
+    });
+  });
+
+  // ── Document.delete ─────────────────────────────────────────────────
+  describe("Document.delete", () => {
+    it("deletes documents matching the clause and returns true", async () => {
+      // delete first looks up docIds for vector cleanup
+      prisma.workspace_documents.findMany.mockResolvedValue([
+        { docId: "doc-uuid-1" },
+        { docId: "doc-uuid-2" },
+      ]);
+      prisma.document_vectors.deleteMany.mockResolvedValue({ count: 2 });
+      prisma.workspace_documents.deleteMany.mockResolvedValue({ count: 2 });
+
+      const result = await Document.delete({ workspaceId: 10 });
+
+      expect(result).toBe(true);
+      // Should clean up document_vectors for the matched docIds
+      expect(prisma.document_vectors.deleteMany).toHaveBeenCalledWith({
+        where: { docId: { in: ["doc-uuid-1", "doc-uuid-2"] } },
+      });
+      expect(prisma.workspace_documents.deleteMany).toHaveBeenCalledWith({
+        where: { workspaceId: 10 },
+      });
+    });
+
+    it("returns true when no documents match (nothing to delete)", async () => {
+      prisma.workspace_documents.findMany.mockResolvedValue([]);
+
+      const result = await Document.delete({ workspaceId: 999 });
+
+      expect(result).toBe(true);
+      expect(prisma.workspace_documents.deleteMany).not.toHaveBeenCalled();
+    });
+
+    it("returns false on prisma error", async () => {
+      prisma.workspace_documents.findMany.mockRejectedValue(
+        new Error("DB error"),
+      );
+
+      const result = await Document.delete({ workspaceId: 10 });
+
+      expect(result).toBe(false);
+    });
+
+    it("verifies documents are gone after deletion", async () => {
+      prisma.workspace_documents.findMany
+        .mockResolvedValueOnce([{ docId: "doc-to-delete" }]) // delete lookup
+        .mockResolvedValueOnce([]); // forWorkspace after deletion
+      prisma.document_vectors.deleteMany.mockResolvedValue({ count: 1 });
+      prisma.workspace_documents.deleteMany.mockResolvedValue({ count: 1 });
+
+      await Document.delete({ workspaceId: 10 });
+      const remaining = await Document.forWorkspace(10);
+
+      expect(remaining).toEqual([]);
+    });
+  });
+});

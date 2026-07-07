@@ -1,1 +1,142 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBUZXN0cyBmb3IgcHJvdmlkZXJTdGF0dXMgZW5kcG9pbnRzIChJc3N1ZSAjMzgyKS4KLy8KLy8gQ292ZXJzOiBHRVQgL3N5c3RlbS9wcm92aWRlci1rZXktc3RhdHVzIGFuZAovLyBHRVQgL3N5c3RlbS9wcm92aWRlci1jb25uZWN0aXZpdHkgKHdpdGggYW5kIHdpdGhvdXQgP3Byb3ZpZGVyPSBxdWVyeSkuCi8vCi8vIFVzZXMgdGhlIG1vY2tFeHByZXNzQXBwIGhhcm5lc3MgdG8gcmVnaXN0ZXIgcm91dGVzIGFuZCBpbnZva2UgaGFuZGxlcnMKLy8gd2l0aG91dCBib290aW5nIGEgcmVhbCBIVFRQIHNlcnZlci4KCmplc3QubW9jaygiLi4vLi4vdXRpbHMvbWlkZGxld2FyZS92YWxpZGF0ZWRSZXF1ZXN0IiwgKCkgPT4gKHsKICB2YWxpZGF0ZWRSZXF1ZXN0OiAoX3JlcSwgX3JlcywgbmV4dCkgPT4gbmV4dCgpLAp9KSk7Cmplc3QubW9jaygiLi4vLi4vdXRpbHMvbWlkZGxld2FyZS9tdWx0aVVzZXJQcm90ZWN0ZWQiLCAoKSA9PiAoewogIGZsZXhVc2VyUm9sZVZhbGlkOiAoKSA9PiAoX3JlcSwgX3JlcywgbmV4dCkgPT4gbmV4dCgpLAogIFJPTEVTOiB7IGFkbWluOiAiYWRtaW4iLCBtYW5hZ2VyOiAibWFuYWdlciIgfSwKfSkpOwpqZXN0Lm1vY2soIi4uLy4uL3V0aWxzL21pZGRsZXdhcmUvc2ltcGxlUmF0ZUxpbWl0IiwgKCkgPT4gKHsKICBzaW1wbGVSYXRlTGltaXQ6ICgpID0+IChfcmVxLCBfcmVzLCBuZXh0KSA9PiBuZXh0KCksCn0pKTsKamVzdC5tb2NrKCIuLi8uLi91dGlscy9wcm92aWRlcktleVN0YXR1cyIsICgpID0+ICh7CiAgZ2V0UHJvdmlkZXJLZXlTdGF0dXNlczogamVzdC5mbigpLAp9KSk7Cmplc3QubW9jaygiLi4vLi4vdXRpbHMvcHJvdmlkZXJDb25uZWN0aXZpdHkiLCAoKSA9PiAoewogIHByb2JlUHJvdmlkZXI6IGplc3QuZm4oKSwKICBwcm9iZUFsbFByb3ZpZGVyczogamVzdC5mbigpLAp9KSk7Cmplc3QubW9jaygiLi4vLi4vdXRpbHMvcGF0aHMiLCAoKSA9PiAoewogIHBhdGhzSGVhbHRoOiBqZXN0LmZuKCksCn0pKTsKCmNvbnN0IHsgcHJvdmlkZXJTdGF0dXNFbmRwb2ludHMgfSA9IHJlcXVpcmUoIi4uLy4uL2VuZHBvaW50cy9wcm92aWRlclN0YXR1cyIpOwpjb25zdCB7IGdldFByb3ZpZGVyS2V5U3RhdHVzZXMgfSA9IHJlcXVpcmUoIi4uLy4uL3V0aWxzL3Byb3ZpZGVyS2V5U3RhdHVzIik7CmNvbnN0IHsgcHJvYmVQcm92aWRlciwgcHJvYmVBbGxQcm92aWRlcnMgfSA9IHJlcXVpcmUoIi4uLy4uL3V0aWxzL3Byb3ZpZGVyQ29ubmVjdGl2aXR5Iik7CmNvbnN0IHsgcGF0aHNIZWFsdGggfSA9IHJlcXVpcmUoIi4uLy4uL3V0aWxzL3BhdGhzIik7CmNvbnN0IHsgY3JlYXRlTW9ja0FwcCB9ID0gcmVxdWlyZSgiLi4vaGVscGVycy9tb2NrRXhwcmVzc0FwcCIpOwoKZnVuY3Rpb24gYnVpbGRBcHAoKSB7CiAgY29uc3QgaGFybmVzcyA9IGNyZWF0ZU1vY2tBcHAoKTsKICBwcm92aWRlclN0YXR1c0VuZHBvaW50cyhoYXJuZXNzLmFwcCk7CiAgcmV0dXJuIGhhcm5lc3M7Cn0KCmRlc2NyaWJlKCJwcm92aWRlclN0YXR1c0VuZHBvaW50cyIsICgpID0+IHsKICBsZXQgYXBwOwogIGJlZm9yZUVhY2goKCkgPT4gewogICAgYXBwID0gYnVpbGRBcHAoKTsKICB9KTsKICBhZnRlckVhY2goKCkgPT4gamVzdC5jbGVhckFsbE1vY2tzKCkpOwoKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAvLyBHRVQgL3N5c3RlbS9wcm92aWRlci1rZXktc3RhdHVzCiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgZGVzY3JpYmUoIkdFVCAvc3lzdGVtL3Byb3ZpZGVyLWtleS1zdGF0dXMiLCAoKSA9PiB7CiAgICBpdCgicmV0dXJucyBwcm92aWRlciBrZXkgc3RhdHVzZXMgYW5kIHBhdGggaGVhbHRoIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCBmYWtlUHJvdmlkZXJzID0gWwogICAgICAgIHsgaWQ6ICJvcGVuYWkiLCBoYXNLZXk6IHRydWUsIGhhc0ZhbGxiYWNrOiBmYWxzZSB9LAogICAgICAgIHsgaWQ6ICJhbnRocm9waWMiLCBoYXNLZXk6IGZhbHNlLCBoYXNGYWxsYmFjazogdHJ1ZSB9LAogICAgICBdOwogICAgICBjb25zdCBmYWtlUGF0aHMgPSB7IHN0b3JhZ2U6ICIvdG1wIiwgZG9jdW1lbnRzOiAiL2RvY3MiIH07CiAgICAgIGdldFByb3ZpZGVyS2V5U3RhdHVzZXMubW9ja1JldHVyblZhbHVlKGZha2VQcm92aWRlcnMpOwogICAgICBwYXRoc0hlYWx0aC5tb2NrUmV0dXJuVmFsdWUoZmFrZVBhdGhzKTsKCiAgICAgIGNvbnN0IHJlcyA9IGF3YWl0IGFwcC5jYWxsKCJnZXQiLCAiL3N5c3RlbS9wcm92aWRlci1rZXktc3RhdHVzIik7CgogICAgICBleHBlY3QocmVzLnN0YXR1c0NvZGUpLnRvQmUoMjAwKTsKICAgICAgZXhwZWN0KHJlcy5ib2R5LnByb3ZpZGVycykudG9FcXVhbChmYWtlUHJvdmlkZXJzKTsKICAgICAgZXhwZWN0KHJlcy5ib2R5LnBhdGhzKS50b0VxdWFsKGZha2VQYXRocyk7CiAgICAgIGV4cGVjdChyZXMuYm9keS5jaGVja2VkQXQpLnRvQmVEZWZpbmVkKCk7CiAgICAgIGV4cGVjdChnZXRQcm92aWRlcktleVN0YXR1c2VzKS50b0hhdmVCZWVuQ2FsbGVkVGltZXMoMSk7CiAgICAgIGV4cGVjdChwYXRoc0hlYWx0aCkudG9IYXZlQmVlbkNhbGxlZFRpbWVzKDEpOwogICAgfSk7CgogICAgaXQoInJldHVybnMgNTAwIHdpdGggZXJyb3Igb24gZXhjZXB0aW9uIiwgYXN5bmMgKCkgPT4gewogICAgICBnZXRQcm92aWRlcktleVN0YXR1c2VzLm1vY2tJbXBsZW1lbnRhdGlvbigoKSA9PiB7CiAgICAgICAgdGhyb3cgbmV3IEVycm9yKCJTdGF0dXMgY2hlY2sgZmFpbGVkIik7CiAgICAgIH0pOwoKICAgICAgY29uc3QgcmVzID0gYXdhaXQgYXBwLmNhbGwoImdldCIsICIvc3lzdGVtL3Byb3ZpZGVyLWtleS1zdGF0dXMiKTsKCiAgICAgIGV4cGVjdChyZXMuc3RhdHVzQ29kZSkudG9CZSg1MDApOwogICAgICBleHBlY3QocmVzLmJvZHkuZXJyb3IpLnRvQmUoIkludGVybmFsIHNlcnZlciBlcnJvciIpOwogICAgICBleHBlY3QocmVzLmJvZHkucHJvdmlkZXJzKS50b0VxdWFsKFtdKTsKICAgIH0pOwogIH0pOwoKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAvLyBHRVQgL3N5c3RlbS9wcm92aWRlci1jb25uZWN0aXZpdHkKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICBkZXNjcmliZSgiR0VUIC9zeXN0ZW0vcHJvdmlkZXItY29ubmVjdGl2aXR5IiwgKCkgPT4gewogICAgaXQoInByb2JlcyBhbGwgcHJvdmlkZXJzIHdoZW4gbm8gP3Byb3ZpZGVyPSBxdWVyeSBpcyBnaXZlbiIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3QgZmFrZVJlc3VsdHMgPSBbCiAgICAgICAgeyBwcm92aWRlcjogIm9wZW5haSIsIHJlYWNoYWJsZTogdHJ1ZSwgbGF0ZW5jeU1zOiAxMjAgfSwKICAgICAgICB7IHByb3ZpZGVyOiAiYW50aHJvcGljIiwgcmVhY2hhYmxlOiB0cnVlLCBsYXRlbmN5TXM6IDIwMCB9LAogICAgICBdOwogICAgICBwcm9iZUFsbFByb3ZpZGVycy5tb2NrUmVzb2x2ZWRWYWx1ZShmYWtlUmVzdWx0cyk7CgogICAgICBjb25zdCByZXMgPSBhd2FpdCBhcHAuY2FsbCgiZ2V0IiwgIi9zeXN0ZW0vcHJvdmlkZXItY29ubmVjdGl2aXR5Iik7CgogICAgICBleHBlY3QocmVzLnN0YXR1c0NvZGUpLnRvQmUoMjAwKTsKICAgICAgZXhwZWN0KHJlcy5ib2R5LnJlc3VsdHMpLnRvRXF1YWwoZmFrZVJlc3VsdHMpOwogICAgICBleHBlY3QocmVzLmJvZHkuY2hlY2tlZEF0KS50b0JlRGVmaW5lZCgpOwogICAgICBleHBlY3QocHJvYmVBbGxQcm92aWRlcnMpLnRvSGF2ZUJlZW5DYWxsZWRUaW1lcygxKTsKICAgICAgZXhwZWN0KHByb2JlUHJvdmlkZXIpLm5vdC50b0hhdmVCZWVuQ2FsbGVkKCk7CiAgICB9KTsKCiAgICBpdCgicHJvYmVzIGEgc2luZ2xlIHByb3ZpZGVyIHdoZW4gP3Byb3ZpZGVyPSBxdWVyeSBpcyBnaXZlbiIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3QgZmFrZVJlc3VsdCA9IHsgcHJvdmlkZXI6ICJvcGVuYWkiLCByZWFjaGFibGU6IHRydWUsIGxhdGVuY3lNczogNTAgfTsKICAgICAgcHJvYmVQcm92aWRlci5tb2NrUmVzb2x2ZWRWYWx1ZShmYWtlUmVzdWx0KTsKCiAgICAgIGNvbnN0IHJlcyA9IGF3YWl0IGFwcC5jYWxsKCJnZXQiLCAiL3N5c3RlbS9wcm92aWRlci1jb25uZWN0aXZpdHkiLCB7CiAgICAgICAgcXVlcnk6IHsgcHJvdmlkZXI6ICJvcGVuYWkiIH0sCiAgICAgIH0pOwoKICAgICAgZXhwZWN0KHJlcy5zdGF0dXNDb2RlKS50b0JlKDIwMCk7CiAgICAgIGV4cGVjdChyZXMuYm9keS5yZXN1bHRzKS50b0VxdWFsKFtmYWtlUmVzdWx0XSk7CiAgICAgIGV4cGVjdChyZXMuYm9keS5jaGVja2VkQXQpLnRvQmVEZWZpbmVkKCk7CiAgICAgIGV4cGVjdChwcm9iZVByb3ZpZGVyKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgib3BlbmFpIik7CiAgICAgIGV4cGVjdChwcm9iZUFsbFByb3ZpZGVycykubm90LnRvSGF2ZUJlZW5DYWxsZWQoKTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIDUwMCB3aXRoIGVycm9yIG9uIGV4Y2VwdGlvbiIsIGFzeW5jICgpID0+IHsKICAgICAgcHJvYmVBbGxQcm92aWRlcnMubW9ja1JlamVjdGVkVmFsdWUobmV3IEVycm9yKCJOZXR3b3JrIGVycm9yIikpOwoKICAgICAgY29uc3QgcmVzID0gYXdhaXQgYXBwLmNhbGwoImdldCIsICIvc3lzdGVtL3Byb3ZpZGVyLWNvbm5lY3Rpdml0eSIpOwoKICAgICAgZXhwZWN0KHJlcy5zdGF0dXNDb2RlKS50b0JlKDUwMCk7CiAgICAgIGV4cGVjdChyZXMuYm9keS5lcnJvcikudG9CZSgiSW50ZXJuYWwgc2VydmVyIGVycm9yIik7CiAgICAgIGV4cGVjdChyZXMuYm9keS5yZXN1bHRzKS50b0VxdWFsKFtdKTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIDUwMCB3aGVuIHNpbmdsZSBwcm92aWRlciBwcm9iZSB0aHJvd3MiLCBhc3luYyAoKSA9PiB7CiAgICAgIHByb2JlUHJvdmlkZXIubW9ja1JlamVjdGVkVmFsdWUobmV3IEVycm9yKCJQcm9iZSBmYWlsZWQiKSk7CgogICAgICBjb25zdCByZXMgPSBhd2FpdCBhcHAuY2FsbCgiZ2V0IiwgIi9zeXN0ZW0vcHJvdmlkZXItY29ubmVjdGl2aXR5IiwgewogICAgICAgIHF1ZXJ5OiB7IHByb3ZpZGVyOiAiYmFkcHJvdmlkZXIiIH0sCiAgICAgIH0pOwoKICAgICAgZXhwZWN0KHJlcy5zdGF0dXNDb2RlKS50b0JlKDUwMCk7CiAgICAgIGV4cGVjdChyZXMuYm9keS5lcnJvcikudG9CZSgiSW50ZXJuYWwgc2VydmVyIGVycm9yIik7CiAgICB9KTsKICB9KTsKfSk7Cg==
+// SPDX-License-Identifier: MIT
+// Tests for providerStatus endpoints (Issue #382).
+//
+// Covers: GET /system/provider-key-status and
+// GET /system/provider-connectivity (with and without ?provider= query).
+//
+// Uses the mockExpressApp harness to register routes and invoke handlers
+// without booting a real HTTP server.
+
+jest.mock("../../utils/middleware/validatedRequest", () => ({
+  validatedRequest: (_req, _res, next) => next(),
+}));
+jest.mock("../../utils/middleware/multiUserProtected", () => ({
+  flexUserRoleValid: () => (_req, _res, next) => next(),
+  ROLES: { admin: "admin", manager: "manager" },
+}));
+jest.mock("../../utils/middleware/simpleRateLimit", () => ({
+  simpleRateLimit: () => (_req, _res, next) => next(),
+}));
+jest.mock("../../utils/providerKeyStatus", () => ({
+  getProviderKeyStatuses: jest.fn(),
+}));
+jest.mock("../../utils/providerConnectivity", () => ({
+  probeProvider: jest.fn(),
+  probeAllProviders: jest.fn(),
+}));
+jest.mock("../../utils/paths", () => ({
+  pathsHealth: jest.fn(),
+}));
+
+const { providerStatusEndpoints } = require("../../endpoints/providerStatus");
+const { getProviderKeyStatuses } = require("../../utils/providerKeyStatus");
+const { probeProvider, probeAllProviders } = require("../../utils/providerConnectivity");
+const { pathsHealth } = require("../../utils/paths");
+const { createMockApp } = require("../helpers/mockExpressApp");
+
+function buildApp() {
+  const harness = createMockApp();
+  providerStatusEndpoints(harness.app);
+  return harness;
+}
+
+describe("providerStatusEndpoints", () => {
+  let app;
+  beforeEach(() => {
+    app = buildApp();
+  });
+  afterEach(() => jest.clearAllMocks());
+
+  // ───────────────────────────────────────────────────────────
+  // GET /system/provider-key-status
+  // ───────────────────────────────────────────────────────────
+  describe("GET /system/provider-key-status", () => {
+    it("returns provider key statuses and path health", async () => {
+      const fakeProviders = [
+        { id: "openai", hasKey: true, hasFallback: false },
+        { id: "anthropic", hasKey: false, hasFallback: true },
+      ];
+      const fakePaths = { storage: "/tmp", documents: "/docs" };
+      getProviderKeyStatuses.mockReturnValue(fakeProviders);
+      pathsHealth.mockReturnValue(fakePaths);
+
+      const res = await app.call("get", "/system/provider-key-status");
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body.providers).toEqual(fakeProviders);
+      expect(res.body.paths).toEqual(fakePaths);
+      expect(res.body.checkedAt).toBeDefined();
+      expect(getProviderKeyStatuses).toHaveBeenCalledTimes(1);
+      expect(pathsHealth).toHaveBeenCalledTimes(1);
+    });
+
+    it("returns 500 with error on exception", async () => {
+      getProviderKeyStatuses.mockImplementation(() => {
+        throw new Error("Status check failed");
+      });
+
+      const res = await app.call("get", "/system/provider-key-status");
+
+      expect(res.statusCode).toBe(500);
+      expect(res.body.error).toBe("Internal server error");
+      expect(res.body.providers).toEqual([]);
+    });
+  });
+
+  // ───────────────────────────────────────────────────────────
+  // GET /system/provider-connectivity
+  // ───────────────────────────────────────────────────────────
+  describe("GET /system/provider-connectivity", () => {
+    it("probes all providers when no ?provider= query is given", async () => {
+      const fakeResults = [
+        { provider: "openai", reachable: true, latencyMs: 120 },
+        { provider: "anthropic", reachable: true, latencyMs: 200 },
+      ];
+      probeAllProviders.mockResolvedValue(fakeResults);
+
+      const res = await app.call("get", "/system/provider-connectivity");
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body.results).toEqual(fakeResults);
+      expect(res.body.checkedAt).toBeDefined();
+      expect(probeAllProviders).toHaveBeenCalledTimes(1);
+      expect(probeProvider).not.toHaveBeenCalled();
+    });
+
+    it("probes a single provider when ?provider= query is given", async () => {
+      const fakeResult = { provider: "openai", reachable: true, latencyMs: 50 };
+      probeProvider.mockResolvedValue(fakeResult);
+
+      const res = await app.call("get", "/system/provider-connectivity", {
+        query: { provider: "openai" },
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body.results).toEqual([fakeResult]);
+      expect(res.body.checkedAt).toBeDefined();
+      expect(probeProvider).toHaveBeenCalledWith("openai");
+      expect(probeAllProviders).not.toHaveBeenCalled();
+    });
+
+    it("returns 500 with error on exception", async () => {
+      probeAllProviders.mockRejectedValue(new Error("Network error"));
+
+      const res = await app.call("get", "/system/provider-connectivity");
+
+      expect(res.statusCode).toBe(500);
+      expect(res.body.error).toBe("Internal server error");
+      expect(res.body.results).toEqual([]);
+    });
+
+    it("returns 500 when single provider probe throws", async () => {
+      probeProvider.mockRejectedValue(new Error("Probe failed"));
+
+      const res = await app.call("get", "/system/provider-connectivity", {
+        query: { provider: "badprovider" },
+      });
+
+      expect(res.statusCode).toBe(500);
+      expect(res.body.error).toBe("Internal server error");
+    });
+  });
+});
