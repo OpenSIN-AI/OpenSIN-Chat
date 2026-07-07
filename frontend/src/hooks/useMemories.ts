@@ -1,1 +1,37 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgdXNlU1dSIGZyb20gInN3ciI7CmltcG9ydCBNZW1vcnkgZnJvbSAiQC9tb2RlbHMvbWVtb3J5IjsKCmV4cG9ydCBjb25zdCBNRU1PUklFU19LRVkgPSAibWVtb3JpZXMvd29ya3NwYWNlIjsKCmV4cG9ydCBpbnRlcmZhY2UgTWVtb3J5IHsKICBpZDogc3RyaW5nOwogIGNvbnRlbnQ6IHN0cmluZzsKICBjcmVhdGVkQXQ6IHN0cmluZzsKICB3b3Jrc3BhY2VJZD86IHN0cmluZzsKfQoKaW50ZXJmYWNlIE1lbW9yaWVzRGF0YSB7CiAgZ2xvYmFsOiBNZW1vcnlbXTsKICB3b3Jrc3BhY2U6IE1lbW9yeVtdOwp9Cgpjb25zdCBFTVBUWV9NRU1PUklFUzogTWVtb3JpZXNEYXRhID0geyBnbG9iYWw6IFtdLCB3b3Jrc3BhY2U6IFtdIH07CgpleHBvcnQgZGVmYXVsdCBmdW5jdGlvbiB1c2VNZW1vcmllcyhzbHVnOiBzdHJpbmcgfCBudWxsIHwgdW5kZWZpbmVkKSB7CiAgY29uc3QgeyBkYXRhLCBlcnJvciwgaXNMb2FkaW5nLCBtdXRhdGUgfSA9IHVzZVNXUigKICAgIHNsdWcgPyBbTUVNT1JJRVNfS0VZLCBzbHVnXSA6IG51bGwsCiAgICAoKSA9PiBNZW1vcnkuZm9yV29ya3NwYWNlKHNsdWcpLAogICAgewogICAgICByZXZhbGlkYXRlT25Gb2N1czogZmFsc2UsCiAgICB9LAogICk7CgogIHJldHVybiB7CiAgICBtZW1vcmllczogZGF0YSA/PyBFTVBUWV9NRU1PUklFUywKICAgIGlzTG9hZGluZywKICAgIGVycm9yLAogICAgcmVmcmVzaDogbXV0YXRlLAogICAgbXV0YXRlLAogIH07Cn0K
+// SPDX-License-Identifier: MIT
+import useSWR from "swr";
+import Memory from "@/models/memory";
+
+export const MEMORIES_KEY = "memories/workspace";
+
+export interface Memory {
+  id: string;
+  content: string;
+  createdAt: string;
+  workspaceId?: string;
+}
+
+interface MemoriesData {
+  global: Memory[];
+  workspace: Memory[];
+}
+
+const EMPTY_MEMORIES: MemoriesData = { global: [], workspace: [] };
+
+export default function useMemories(slug: string | null | undefined) {
+  const { data, error, isLoading, mutate } = useSWR(
+    slug ? [MEMORIES_KEY, slug] : null,
+    () => Memory.forWorkspace(slug),
+    {
+      revalidateOnFocus: false,
+    },
+  );
+
+  return {
+    memories: data ?? EMPTY_MEMORIES,
+    isLoading,
+    error,
+    refresh: mutate,
+    mutate,
+  };
+}
