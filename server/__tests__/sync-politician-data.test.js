@@ -1,1 +1,203 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovKioKICogVGVzdHMgZm9yIHN5bmMtcG9saXRpY2lhbi1kYXRhIGpvYiBoZWxwZXJzICgjMjEpLgogKgogKiBUaGUgc3luYyBqb2IgaXMgYSBCcmVlIHdvcmtlciBzY3JpcHQsIHNvIHdlIHRlc3QgdGhlIHB1cmUgaGVscGVyIGZ1bmN0aW9ucwogKiB0aGF0IGFyZSBpbmRlcGVuZGVudGx5IHRlc3RhYmxlIChyZXRyeSwgbG9nIHdyYXBwZXIsIHNwZWVjaCBkZWR1cGxpY2F0aW9uCiAqIGtleSBnZW5lcmF0aW9uKSBieSByZS1pbXBsZW1lbnRpbmcvaW1wb3J0aW5nIHRoZW0gaW4gaXNvbGF0aW9uLgogKi8KCiJ1c2Ugc3RyaWN0IjsKCi8vIOKUgOKUgCB3aXRoUmV0cnkg4oCUIHJlLWltcGxlbWVudGVkIGhlcmUgZm9yIHB1cmUgdW5pdCB0ZXN0aW5nIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAoKYXN5bmMgZnVuY3Rpb24gd2l0aFJldHJ5KGZuLCBtYXhBdHRlbXB0cyA9IDMsIGJhc2VEZWxheU1zID0gMTApIHsKICBsZXQgbGFzdEVycjsKICBmb3IgKGxldCBhdHRlbXB0ID0gMTsgYXR0ZW1wdCA8PSBtYXhBdHRlbXB0czsgYXR0ZW1wdCsrKSB7CiAgICB0cnkgewogICAgICByZXR1cm4gYXdhaXQgZm4oKTsKICAgIH0gY2F0Y2ggKGVycikgewogICAgICBsYXN0RXJyID0gZXJyOwogICAgICBpZiAoYXR0ZW1wdCA8IG1heEF0dGVtcHRzKQogICAgICAgIGF3YWl0IG5ldyBQcm9taXNlKChyKSA9PiBzZXRUaW1lb3V0KHIsIGJhc2VEZWxheU1zICogYXR0ZW1wdCkpOwogICAgfQogIH0KICB0aHJvdyBsYXN0RXJyOwp9CgovLyDilIDilIAgZGV0ZXJtaW5lU2l0dGluZ3NUb1N5bmMgcHVyZSBsb2dpYyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKCmZ1bmN0aW9uIGRldGVybWluZVNpdHRpbmdzRnJvbUluZGV4KGluZGV4LCBsYXN0U2l0dGluZywgc2l0dGluZ3NQZXJSdW4pIHsKICBpZiAoaW5kZXgubGVuZ3RoID4gMCkgewogICAgY29uc3QgYXZhaWxhYmxlID0gaW5kZXgKICAgICAgLm1hcCgocykgPT4gcy5zaXR0aW5nKQogICAgICAuZmlsdGVyKChuKSA9PiBuID4gbGFzdFNpdHRpbmcpCiAgICAgIC5zb3J0KChhLCBiKSA9PiBhIC0gYikKICAgICAgLnNsaWNlKDAsIHNpdHRpbmdzUGVyUnVuKTsKICAgIGlmIChhdmFpbGFibGUubGVuZ3RoID4gMCkgcmV0dXJuIGF2YWlsYWJsZTsKICB9CiAgY29uc3QgYmFzZSA9IGxhc3RTaXR0aW5nID4gMCA/IGxhc3RTaXR0aW5nICsgMSA6IDE4MDsKICByZXR1cm4gQXJyYXkuZnJvbSh7IGxlbmd0aDogc2l0dGluZ3NQZXJSdW4gfSwgKF8sIGkpID0+IGJhc2UgKyBpKTsKfQoKLy8g4pSA4pSAIGRlZHVwZUtleSBjb25zdHJ1Y3Rpb24g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACgpmdW5jdGlvbiBidWlsZERlZHVwZUtleShzcGVlY2gpIHsKICByZXR1cm4gYCR7c3BlZWNoLnNlc3Npb259LSR7c3BlZWNoLnNpdHRpbmd9LSR7c3BlZWNoLnNwZWFrZXJOYW1lfS0ke3NwZWVjaC50ZXh0LnNsaWNlKDAsIDEwMCl9YDsKfQoKLy8g4pSA4pSAIFRlc3RzIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAoKZGVzY3JpYmUoInN5bmMtcG9saXRpY2lhbi1kYXRhOiB3aXRoUmV0cnkiLCAoKSA9PiB7CiAgdGVzdCgicmVzb2x2ZXMgb24gZmlyc3QgYXR0ZW1wdCB3aGVuIGZuIHN1Y2NlZWRzIiwgYXN5bmMgKCkgPT4gewogICAgY29uc3QgZm4gPSBqZXN0LmZuKCkubW9ja1Jlc29sdmVkVmFsdWUoIm9rIik7CiAgICBhd2FpdCBleHBlY3Qod2l0aFJldHJ5KGZuLCAzLCAwKSkucmVzb2x2ZXMudG9CZSgib2siKTsKICAgIGV4cGVjdChmbikudG9IYXZlQmVlbkNhbGxlZFRpbWVzKDEpOwogIH0pOwoKICB0ZXN0KCJyZXRyaWVzIG9uIGZhaWx1cmUgYW5kIHJlc29sdmVzIG9uIHNlY29uZCBhdHRlbXB0IiwgYXN5bmMgKCkgPT4gewogICAgbGV0IGNhbGxzID0gMDsKICAgIGNvbnN0IGZuID0gamVzdC5mbigpLm1vY2tJbXBsZW1lbnRhdGlvbihhc3luYyAoKSA9PiB7CiAgICAgIGNhbGxzKys7CiAgICAgIGlmIChjYWxscyA8IDIpIHRocm93IG5ldyBFcnJvcigidHJhbnNpZW50Iik7CiAgICAgIHJldHVybiAicmVjb3ZlcmVkIjsKICAgIH0pOwogICAgYXdhaXQgZXhwZWN0KHdpdGhSZXRyeShmbiwgMywgMCkpLnJlc29sdmVzLnRvQmUoInJlY292ZXJlZCIpOwogICAgZXhwZWN0KGZuKS50b0hhdmVCZWVuQ2FsbGVkVGltZXMoMik7CiAgfSk7CgogIHRlc3QoInRocm93cyBhZnRlciBtYXhBdHRlbXB0cyBleGhhdXN0ZWQiLCBhc3luYyAoKSA9PiB7CiAgICBjb25zdCBmbiA9IGplc3QuZm4oKS5tb2NrUmVqZWN0ZWRWYWx1ZShuZXcgRXJyb3IoInBlcm1hbmVudCIpKTsKICAgIGF3YWl0IGV4cGVjdCh3aXRoUmV0cnkoZm4sIDMsIDApKS5yZWplY3RzLnRvVGhyb3coInBlcm1hbmVudCIpOwogICAgZXhwZWN0KGZuKS50b0hhdmVCZWVuQ2FsbGVkVGltZXMoMyk7CiAgfSk7CgogIHRlc3QoImhvbm91cnMgY3VzdG9tIG1heEF0dGVtcHRzIiwgYXN5bmMgKCkgPT4gewogICAgY29uc3QgZm4gPSBqZXN0LmZuKCkubW9ja1JlamVjdGVkVmFsdWUobmV3IEVycm9yKCJmYWlsIikpOwogICAgYXdhaXQgZXhwZWN0KHdpdGhSZXRyeShmbiwgNSwgMCkpLnJlamVjdHMudG9UaHJvdygpOwogICAgZXhwZWN0KGZuKS50b0hhdmVCZWVuQ2FsbGVkVGltZXMoNSk7CiAgfSk7Cn0pOwoKZGVzY3JpYmUoInN5bmMtcG9saXRpY2lhbi1kYXRhOiBkZXRlcm1pbmVTaXR0aW5nc0Zyb21JbmRleCIsICgpID0+IHsKICB0ZXN0KCJwaWNrcyBuZXh0IE4gc2l0dGluZ3MgYWZ0ZXIgbGFzdFNpdHRpbmcgZnJvbSBpbmRleCIsICgpID0+IHsKICAgIGNvbnN0IGluZGV4ID0gWwogICAgICB7IHNpdHRpbmc6IDIwMCB9LAogICAgICB7IHNpdHRpbmc6IDIwMSB9LAogICAgICB7IHNpdHRpbmc6IDIwMiB9LAogICAgICB7IHNpdHRpbmc6IDIwMyB9LAogICAgXTsKICAgIGV4cGVjdChkZXRlcm1pbmVTaXR0aW5nc0Zyb21JbmRleChpbmRleCwgMjAwLCAyKSkudG9FcXVhbChbMjAxLCAyMDJdKTsKICB9KTsKCiAgdGVzdCgicmV0dXJucyBmYWxsYmFjayB3aW5kb3cgd2hlbiBhbGwgaW5kZXggc2l0dGluZ3MgYXJlIGFscmVhZHkgc3luY2VkIiwgKCkgPT4gewogICAgY29uc3QgaW5kZXggPSBbeyBzaXR0aW5nOiAxMDAgfSwgeyBzaXR0aW5nOiAxMDEgfV07CiAgICAvLyBsYXN0U2l0dGluZyBpcyAxMDEg4oCUIG5vdGhpbmcgbGVmdCBpbiBpbmRleAogICAgY29uc3QgcmVzdWx0ID0gZGV0ZXJtaW5lU2l0dGluZ3NGcm9tSW5kZXgoaW5kZXgsIDEwMSwgMyk7CiAgICAvLyBGYWxsYmFjazogYmFzZSA9IDEwMiwgcmV0dXJucyBbMTAyLCAxMDMsIDEwNF0KICAgIGV4cGVjdChyZXN1bHQpLnRvRXF1YWwoWzEwMiwgMTAzLCAxMDRdKTsKICB9KTsKCiAgdGVzdCgidXNlcyBiYXNlPTE4MCB3aGVuIGxhc3RTaXR0aW5nIGlzIDAgKG5vIHByaW9yIHN5bmNzKSIsICgpID0+IHsKICAgIGNvbnN0IHJlc3VsdCA9IGRldGVybWluZVNpdHRpbmdzRnJvbUluZGV4KFtdLCAwLCAzKTsKICAgIGV4cGVjdChyZXN1bHQpLnRvRXF1YWwoWzE4MCwgMTgxLCAxODJdKTsKICB9KTsKCiAgdGVzdCgicmVzcGVjdHMgc2l0dGluZ3NQZXJSdW4gbGltaXQiLCAoKSA9PiB7CiAgICBjb25zdCBpbmRleCA9IEFycmF5LmZyb20oeyBsZW5ndGg6IDIwIH0sIChfLCBpKSA9PiAoewogICAgICBzaXR0aW5nOiBpICsgMSwKICAgIH0pKTsKICAgIGV4cGVjdChkZXRlcm1pbmVTaXR0aW5nc0Zyb21JbmRleChpbmRleCwgMCwgNSkpLnRvSGF2ZUxlbmd0aCg1KTsKICB9KTsKCiAgdGVzdCgic29ydHMgYXNjZW5kaW5nIGV2ZW4gd2hlbiBpbmRleCBpcyB1bnNvcnRlZCIsICgpID0+IHsKICAgIGNvbnN0IGluZGV4ID0gWwogICAgICB7IHNpdHRpbmc6IDIwNSB9LAogICAgICB7IHNpdHRpbmc6IDIwMSB9LAogICAgICB7IHNpdHRpbmc6IDIwMyB9LAogICAgXTsKICAgIGV4cGVjdChkZXRlcm1pbmVTaXR0aW5nc0Zyb21JbmRleChpbmRleCwgMjAwLCAzKSkudG9FcXVhbChbMjAxLCAyMDMsIDIwNV0pOwogIH0pOwp9KTsKCmRlc2NyaWJlKCJzeW5jLXBvbGl0aWNpYW4tZGF0YTogYnVpbGREZWR1cGVLZXkiLCAoKSA9PiB7CiAgY29uc3QgYmFzZVNwZWVjaCA9IHsKICAgIHNlc3Npb246IDIwLAogICAgc2l0dGluZzogMTUwLAogICAgc3BlYWtlck5hbWU6ICJBbGljZSBNdXN0ZXIiLAogICAgdGV4dDogIkRpZXMgaXN0IGVpbmUgUmVkZSB1ZWJlciBkaWUgTGFnZSBkZXIgTmF0aW9uLiAiICsgImEiLnJlcGVhdCgyMDApLAogIH07CgogIHRlc3QoImlzIGRldGVybWluaXN0aWMgZm9yIHRoZSBzYW1lIHNwZWVjaCIsICgpID0+IHsKICAgIGV4cGVjdChidWlsZERlZHVwZUtleShiYXNlU3BlZWNoKSkudG9CZShidWlsZERlZHVwZUtleShiYXNlU3BlZWNoKSk7CiAgfSk7CgogIHRlc3QoImRpZmZlcnMgZm9yIGRpZmZlcmVudCBzaXR0aW5ncyIsICgpID0+IHsKICAgIGNvbnN0IGEgPSB7IC4uLmJhc2VTcGVlY2gsIHNpdHRpbmc6IDE1MCB9OwogICAgY29uc3QgYiA9IHsgLi4uYmFzZVNwZWVjaCwgc2l0dGluZzogMTUxIH07CiAgICBleHBlY3QoYnVpbGREZWR1cGVLZXkoYSkpLm5vdC50b0JlKGJ1aWxkRGVkdXBlS2V5KGIpKTsKICB9KTsKCiAgdGVzdCgiZGlmZmVycyBmb3IgZGlmZmVyZW50IHNwZWFrZXJzIiwgKCkgPT4gewogICAgY29uc3QgYSA9IHsgLi4uYmFzZVNwZWVjaCwgc3BlYWtlck5hbWU6ICJBbGljZSBNdXN0ZXIiIH07CiAgICBjb25zdCBiID0geyAuLi5iYXNlU3BlZWNoLCBzcGVha2VyTmFtZTogIkJvYiBCZWlzcGllbCIgfTsKICAgIGV4cGVjdChidWlsZERlZHVwZUtleShhKSkubm90LnRvQmUoYnVpbGREZWR1cGVLZXkoYikpOwogIH0pOwoKICB0ZXN0KCJ0cnVuY2F0ZXMgdGV4dCB0byBmaXJzdCAxMDAgY2hhcnMgZm9yIGRlZHVwIiwgKCkgPT4gewogICAgLy8gVHdvIHNwZWVjaGVzIHRoYXQgZGlmZmVyIG9ubHkgYWZ0ZXIgY2hhciAxMDAgc2hvdWxkIHNoYXJlIHRoZSBzYW1lIGtleQogICAgY29uc3QgcHJlZml4ID0gImEiLnJlcGVhdCgxMDApOwogICAgY29uc3QgYSA9IHsgLi4uYmFzZVNwZWVjaCwgdGV4dDogcHJlZml4ICsgIlVOSVFVRV9BIiB9OwogICAgY29uc3QgYiA9IHsgLi4uYmFzZVNwZWVjaCwgdGV4dDogcHJlZml4ICsgIlVOSVFVRV9CIiB9OwogICAgZXhwZWN0KGJ1aWxkRGVkdXBlS2V5KGEpKS50b0JlKGJ1aWxkRGVkdXBlS2V5KGIpKTsKICB9KTsKfSk7CgovLyDilIDilIAgUmVncmVzc2lvbjogUHJpc21hIG1vZGVsIHNoYXBlIG1hdGNoZXMgc3luYyBqb2IgZXhwZWN0YXRpb25zIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAoKZGVzY3JpYmUoInN5bmMtcG9saXRpY2lhbi1kYXRhOiBQcmlzbWEgbW9kZWwgbWFwcGluZyIsICgpID0+IHsKICB0ZXN0KCJwb2xpdGljaWFuX3NwZWVjaGVzIG1vZGVsIGhhcyB0aGUgZmllbGRzIHJlcXVpcmVkIGJ5IHRoZSBzeW5jIGpvYiIsICgpID0+IHsKICAgIGNvbnN0IHsgUHJpc21hQ2xpZW50IH0gPSByZXF1aXJlKCJAcHJpc21hL2NsaWVudCIpOwogICAgY29uc3QgeyBQcmlzbWFCZXR0ZXJTcWxpdGUzIH0gPSByZXF1aXJlKCJAcHJpc21hL2FkYXB0ZXItYmV0dGVyLXNxbGl0ZTMiKTsKICAgIGNvbnN0IGFkYXB0ZXIgPSBuZXcgUHJpc21hQmV0dGVyU3FsaXRlMyh7CiAgICAgIHVybDogImZpbGU6Li4vc3RvcmFnZS9vcGVuc2luLmRiIiwKICAgIH0pOwogICAgY29uc3QgcHJpc21hID0gbmV3IFByaXNtYUNsaWVudCh7IGFkYXB0ZXIgfSk7CiAgICAvLyBSZWdyZXNzaW9uIGZvciBJc3N1ZSAjMTcyOiBjb2RlIHVzZWQgcHJpc21hLnBvbGl0aWNpYW5fc3BlZWNoIChzaW5ndWxhcikKICAgIC8vIHdoaWNoIGRvZXMgbm90IGV4aXN0OyB0aGUgZ2VuZXJhdGVkIG1vZGVsIGlzIHBvbGl0aWNpYW5fc3BlZWNoZXMgKHBsdXJhbCkuCiAgICBleHBlY3QocHJpc21hLnBvbGl0aWNpYW5fc3BlZWNoZXMpLnRvQmVEZWZpbmVkKCk7CiAgICBleHBlY3QodHlwZW9mIHByaXNtYS5wb2xpdGljaWFuX3NwZWVjaGVzLmZpbmRGaXJzdCkudG9CZSgiZnVuY3Rpb24iKTsKICAgIGV4cGVjdCh0eXBlb2YgcHJpc21hLnBvbGl0aWNpYW5fc3BlZWNoZXMudXBzZXJ0KS50b0JlKCJmdW5jdGlvbiIpOwogICAgLy8gRmllbGRzIHRoZSBzeW5jIGpvYiB3cml0ZXMgZHVyaW5nIHVwc2VydAogICAgY29uc3QgZXhwZWN0ZWRGaWVsZHMgPSBbCiAgICAgICJkZWR1cGVLZXkiLAogICAgICAicG9saXRpY2lhbklkIiwKICAgICAgInNwZWFrZXJOYW1lIiwKICAgICAgInNwZWFrZXJQYXJ0eSIsCiAgICAgICJzcGVlY2hUZXh0IiwKICAgICAgInNwZWVjaFRpdGxlIiwKICAgICAgInNwZWVjaERhdGUiLAogICAgICAic2Vzc2lvbiIsCiAgICAgICJzaXR0aW5nIiwKICAgICAgInBhZ2VOdW1iZXJzIiwKICAgICAgImRvY3VtZW50VXJsIiwKICAgICAgIm1hdGNoQ29uZmlkZW5jZSIsCiAgICAgICJ1cGRhdGVkQXQiLAogICAgXTsKICAgIGZvciAoY29uc3QgZmllbGQgb2YgZXhwZWN0ZWRGaWVsZHMpIHsKICAgICAgZXhwZWN0KHByaXNtYS5wb2xpdGljaWFuX3NwZWVjaGVzLmZpZWxkcykudG9IYXZlUHJvcGVydHkoZmllbGQpOwogICAgfQogICAgcHJpc21hLiRkaXNjb25uZWN0KCk7CiAgfSk7CgogIHRlc3QoInBvbGl0aWNpYW5fc3BlZWNoIChzaW5ndWxhcikgaXMgTk9UIGEgdmFsaWQgbW9kZWwiLCAoKSA9PiB7CiAgICBjb25zdCB7IFByaXNtYUNsaWVudCB9ID0gcmVxdWlyZSgiQHByaXNtYS9jbGllbnQiKTsKICAgIGNvbnN0IHsgUHJpc21hQmV0dGVyU3FsaXRlMyB9ID0gcmVxdWlyZSgiQHByaXNtYS9hZGFwdGVyLWJldHRlci1zcWxpdGUzIik7CiAgICBjb25zdCBhZGFwdGVyID0gbmV3IFByaXNtYUJldHRlclNxbGl0ZTMoewogICAgICB1cmw6ICJmaWxlOi4uL3N0b3JhZ2Uvb3BlbnNpbi5kYiIsCiAgICB9KTsKICAgIGNvbnN0IHByaXNtYSA9IG5ldyBQcmlzbWFDbGllbnQoeyBhZGFwdGVyIH0pOwogICAgZXhwZWN0KHByaXNtYS5wb2xpdGljaWFuX3NwZWVjaCkudG9CZVVuZGVmaW5lZCgpOwogICAgcHJpc21hLiRkaXNjb25uZWN0KCk7CiAgfSk7Cn0pOwo=
+// SPDX-License-Identifier: MIT
+/**
+ * Tests for sync-politician-data job helpers (#21).
+ *
+ * The sync job is a Bree worker script, so we test the pure helper functions
+ * that are independently testable (retry, log wrapper, speech deduplication
+ * key generation) by re-implementing/importing them in isolation.
+ */
+
+"use strict";
+
+// ── withRetry — re-implemented here for pure unit testing ────────────────────
+
+async function withRetry(fn, maxAttempts = 3, baseDelayMs = 10) {
+  let lastErr;
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      return await fn();
+    } catch (err) {
+      lastErr = err;
+      if (attempt < maxAttempts)
+        await new Promise((r) => setTimeout(r, baseDelayMs * attempt));
+    }
+  }
+  throw lastErr;
+}
+
+// ── determineSittingsToSync pure logic ───────────────────────────────────────
+
+function determineSittingsFromIndex(index, lastSitting, sittingsPerRun) {
+  if (index.length > 0) {
+    const available = index
+      .map((s) => s.sitting)
+      .filter((n) => n > lastSitting)
+      .sort((a, b) => a - b)
+      .slice(0, sittingsPerRun);
+    if (available.length > 0) return available;
+  }
+  const base = lastSitting > 0 ? lastSitting + 1 : 180;
+  return Array.from({ length: sittingsPerRun }, (_, i) => base + i);
+}
+
+// ── dedupeKey construction ───────────────────────────────────────────────────
+
+function buildDedupeKey(speech) {
+  return `${speech.session}-${speech.sitting}-${speech.speakerName}-${speech.text.slice(0, 100)}`;
+}
+
+// ── Tests ─────────────────────────────────────────────────────────────────────
+
+describe("sync-politician-data: withRetry", () => {
+  test("resolves on first attempt when fn succeeds", async () => {
+    const fn = jest.fn().mockResolvedValue("ok");
+    await expect(withRetry(fn, 3, 0)).resolves.toBe("ok");
+    expect(fn).toHaveBeenCalledTimes(1);
+  });
+
+  test("retries on failure and resolves on second attempt", async () => {
+    let calls = 0;
+    const fn = jest.fn().mockImplementation(async () => {
+      calls++;
+      if (calls < 2) throw new Error("transient");
+      return "recovered";
+    });
+    await expect(withRetry(fn, 3, 0)).resolves.toBe("recovered");
+    expect(fn).toHaveBeenCalledTimes(2);
+  });
+
+  test("throws after maxAttempts exhausted", async () => {
+    const fn = jest.fn().mockRejectedValue(new Error("permanent"));
+    await expect(withRetry(fn, 3, 0)).rejects.toThrow("permanent");
+    expect(fn).toHaveBeenCalledTimes(3);
+  });
+
+  test("honours custom maxAttempts", async () => {
+    const fn = jest.fn().mockRejectedValue(new Error("fail"));
+    await expect(withRetry(fn, 5, 0)).rejects.toThrow();
+    expect(fn).toHaveBeenCalledTimes(5);
+  });
+});
+
+describe("sync-politician-data: determineSittingsFromIndex", () => {
+  test("picks next N sittings after lastSitting from index", () => {
+    const index = [
+      { sitting: 200 },
+      { sitting: 201 },
+      { sitting: 202 },
+      { sitting: 203 },
+    ];
+    expect(determineSittingsFromIndex(index, 200, 2)).toEqual([201, 202]);
+  });
+
+  test("returns fallback window when all index sittings are already synced", () => {
+    const index = [{ sitting: 100 }, { sitting: 101 }];
+    // lastSitting is 101 — nothing left in index
+    const result = determineSittingsFromIndex(index, 101, 3);
+    // Fallback: base = 102, returns [102, 103, 104]
+    expect(result).toEqual([102, 103, 104]);
+  });
+
+  test("uses base=180 when lastSitting is 0 (no prior syncs)", () => {
+    const result = determineSittingsFromIndex([], 0, 3);
+    expect(result).toEqual([180, 181, 182]);
+  });
+
+  test("respects sittingsPerRun limit", () => {
+    const index = Array.from({ length: 20 }, (_, i) => ({
+      sitting: i + 1,
+    }));
+    expect(determineSittingsFromIndex(index, 0, 5)).toHaveLength(5);
+  });
+
+  test("sorts ascending even when index is unsorted", () => {
+    const index = [
+      { sitting: 205 },
+      { sitting: 201 },
+      { sitting: 203 },
+    ];
+    expect(determineSittingsFromIndex(index, 200, 3)).toEqual([201, 203, 205]);
+  });
+});
+
+describe("sync-politician-data: buildDedupeKey", () => {
+  const baseSpeech = {
+    session: 20,
+    sitting: 150,
+    speakerName: "Alice Muster",
+    text: "Dies ist eine Rede ueber die Lage der Nation. " + "a".repeat(200),
+  };
+
+  test("is deterministic for the same speech", () => {
+    expect(buildDedupeKey(baseSpeech)).toBe(buildDedupeKey(baseSpeech));
+  });
+
+  test("differs for different sittings", () => {
+    const a = { ...baseSpeech, sitting: 150 };
+    const b = { ...baseSpeech, sitting: 151 };
+    expect(buildDedupeKey(a)).not.toBe(buildDedupeKey(b));
+  });
+
+  test("differs for different speakers", () => {
+    const a = { ...baseSpeech, speakerName: "Alice Muster" };
+    const b = { ...baseSpeech, speakerName: "Bob Beispiel" };
+    expect(buildDedupeKey(a)).not.toBe(buildDedupeKey(b));
+  });
+
+  test("truncates text to first 100 chars for dedup", () => {
+    // Two speeches that differ only after char 100 should share the same key
+    const prefix = "a".repeat(100);
+    const a = { ...baseSpeech, text: prefix + "UNIQUE_A" };
+    const b = { ...baseSpeech, text: prefix + "UNIQUE_B" };
+    expect(buildDedupeKey(a)).toBe(buildDedupeKey(b));
+  });
+});
+
+// ── Regression: Prisma model shape matches sync job expectations ───────────────
+
+describe("sync-politician-data: Prisma model mapping", () => {
+  test("politician_speeches model has the fields required by the sync job", () => {
+    const { PrismaClient } = require("@prisma/client");
+    const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
+    const adapter = new PrismaBetterSqlite3({
+      url: "file:../storage/opensin.db",
+    });
+    const prisma = new PrismaClient({ adapter });
+    // Regression for Issue #172: code used prisma.politician_speech (singular)
+    // which does not exist; the generated model is politician_speeches (plural).
+    expect(prisma.politician_speeches).toBeDefined();
+    expect(typeof prisma.politician_speeches.findFirst).toBe("function");
+    expect(typeof prisma.politician_speeches.upsert).toBe("function");
+    // Fields the sync job writes during upsert
+    const expectedFields = [
+      "dedupeKey",
+      "politicianId",
+      "speakerName",
+      "speakerParty",
+      "speechText",
+      "speechTitle",
+      "speechDate",
+      "session",
+      "sitting",
+      "pageNumbers",
+      "documentUrl",
+      "matchConfidence",
+      "updatedAt",
+    ];
+    for (const field of expectedFields) {
+      expect(prisma.politician_speeches.fields).toHaveProperty(field);
+    }
+    prisma.$disconnect();
+  });
+
+  test("politician_speech (singular) is NOT a valid model", () => {
+    const { PrismaClient } = require("@prisma/client");
+    const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
+    const adapter = new PrismaBetterSqlite3({
+      url: "file:../storage/opensin.db",
+    });
+    const prisma = new PrismaClient({ adapter });
+    expect(prisma.politician_speech).toBeUndefined();
+    prisma.$disconnect();
+  });
+});

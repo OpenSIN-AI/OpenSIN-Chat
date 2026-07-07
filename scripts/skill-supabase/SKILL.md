@@ -430,7 +430,7 @@ OpenSIN-Chat (running on the same VM, port `38471`) can optionally use Supabase 
 
 ### 8.1 Current state
 
-- OpenSIN-Chat currently uses **SQLite** (`file:../storage/openafd.db`) — NOT Supabase Postgres.
+- OpenSIN-Chat currently uses **SQLite** (`file:../storage/opensin.db`) — NOT Supabase Postgres.
 - To migrate to Supabase Postgres, update `OpenSIN-Chat/docker/.env`:
   ```env
   DATABASE_URL=postgresql://postgres:<POSTGRES_PASSWORD>@172.20.0.71:5432/opensin_chat

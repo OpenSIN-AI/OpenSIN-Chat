@@ -1,1 +1,16 @@
-aW1wb3J0IHsgZGVmaW5lQ29uZmlnIH0gZnJvbSAicHJpc21hL2NvbmZpZyI7CgovLyBQcmlzbWEgNzogdGhlIGRhdGFzb3VyY2UgVVJMIGlzIGNvbmZpZ3VyZWQgaGVyZSBpbnN0ZWFkIG9mIGluIHNjaGVtYS5wcmlzbWEuCi8vIFNRTGl0ZSBpcyB0aGUgYWN0aXZlIHByb3ZpZGVyLiBUaGUgREFUQUJBU0VfVVJMIGVudiB2YXIgZGVmYXVsdHMgdG8KLy8gZmlsZTouLi9zdG9yYWdlL29wZW5zaW4uZGIgcmVsYXRpdmUgdG8gdGhpcyBjb25maWcgZmlsZSAoc2VydmVyLykuCmNvbnN0IGRhdGFiYXNlVXJsID0gcHJvY2Vzcy5lbnYuREFUQUJBU0VfVVJMIHx8ICJmaWxlOi4uL3N0b3JhZ2Uvb3BlbnNpbi5kYiI7CgpleHBvcnQgZGVmYXVsdCBkZWZpbmVDb25maWcoewogIHNjaGVtYTogInByaXNtYS9zY2hlbWEucHJpc21hIiwKICBtaWdyYXRpb25zOiB7CiAgICBwYXRoOiAicHJpc21hL21pZ3JhdGlvbnMiLAogIH0sCiAgZGF0YXNvdXJjZTogewogICAgdXJsOiBkYXRhYmFzZVVybCwKICB9LAp9KTsK
+import { defineConfig } from "prisma/config";
+
+// Prisma 7: the datasource URL is configured here instead of in schema.prisma.
+// SQLite is the active provider. The DATABASE_URL env var defaults to
+// file:../storage/opensin.db relative to this config file (server/).
+const databaseUrl = process.env.DATABASE_URL || "file:../storage/opensin.db";
+
+export default defineConfig({
+  schema: "prisma/schema.prisma",
+  migrations: {
+    path: "prisma/migrations",
+  },
+  datasource: {
+    url: databaseUrl,
+  },
+});

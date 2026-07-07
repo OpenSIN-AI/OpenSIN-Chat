@@ -1,1 +1,155 @@
-IyEvdXNyL2Jpbi9lbnYgYmFzaAojIFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBNSVQKCiMgT3BlblNJTi1DaGF0IOKAlCBVcHN0cmVhbSBTeW5jIFBhdGNoIEdlbmVyYXRvciAoT3B0aW9uIEE6IFNxdWFzaC1QYXRjaC1TZXJpZSkKIyAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCiMgR2VuZXJhdGVzIDYgYXRvbWljIHBhdGNoIGdyb3VwcyBmcm9tIHVwc3RyZWFtIE1pbnRwbGV4LUxhYnMvYW55dGhpbmctbGxtCiMgY292ZXJpbmcgdGhlIDI3IGNvbW1pdHMgcmVsZWFzZWQgYmV0d2VlbiB2MS4xMy4wIGFuZCBjdXJyZW50IHVwc3RyZWFtIG1hc3Rlci4KIwojIFN0cmF0ZWd5OiBlbWl0IG9uZSB1bmlmaWVkLWRpZmYgcGVyIGNvbW1pdCB2aWEgYGdpdCBmb3JtYXQtcGF0Y2hgLCB0aGVuCiMgc29ydCB0aGUgcmVzdWx0aW5nIC5wYXRjaCBmaWxlcyBpbnRvIDYgc3ViLWRpcmVjdG9yaWVzIChvbmUgcGVyIGxvZ2ljYWwKIyBncm91cCkuIEVhY2ggcGVyLWNvbW1pdCBwYXRjaCBpcyByZWxhdGl2ZSB0byBpdHMgcGFyZW50IGNvbW1pdCwgc28gdGhlCiMgcGF0Y2hlcyBjb21wb3NlIGxpbmVhcmx5IHdoZW4gYXBwbGllZCB3aXRoIGBnaXQgYW1gLgojCiMgQXBwbHkgd2l0aCBgYXBwbHktcGF0Y2hlcy5zaGAgd2hpY2ggdXNlcyBgZ2l0IGFtIC0tM3dheWAgc28gdGhlIG1haW50YWluZXIKIyByZXNvbHZlcyBhbnkgY29uZmxpY3QgYWdhaW5zdCB0aGUgT3BlblNJTi1DaGF0IHJlYnJhbmQgaW50ZXJhY3RpdmVseS4KIwojIERvY3M6IHNjcmlwdHMvdXBzdHJlYW0tc3luYy91cHN0cmVhbS1zeW5jLmRvYy5tZAojIFN0cmF0ZWd5OiBkb2NzL1VQU1RSRUFNLVNZTkMubWQKc2V0IC1ldW8gcGlwZWZhaWwKClJFUE9fUk9PVD0iJChjZCAiJChkaXJuYW1lICIkMCIpLy4uLy4uIiAmJiBwd2QpIgpjZCAiJFJFUE9fUk9PVCIKClVQU1RSRUFNPSIke1VQU1RSRUFNX1JFTU9URTotdXBzdHJlYW19IgpWMV8xMz0idjEuMTMuMCIKTUFTVEVSX1JFRj0iJHtVUFNUUkVBTX0vbWFzdGVyIgoKIyDilIDilIAgVmVyaWZ5IHJlbW90ZXMg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACmlmICEgZ2l0IHJlbW90ZSBnZXQtdXJsICIkVVBTVFJFQU0iID4vZGV2L251bGwgMj4mMTsgdGhlbgogIGVjaG8gIuKdjCBSZW1vdGUgJyRVUFNUUkVBTScgbm90IGNvbmZpZ3VyZWQuIgogIGVjaG8gIiAgIEFkZCBpdCB3aXRoOiAgZ2l0IHJlbW90ZSBhZGQgdXBzdHJlYW0gaHR0cHM6Ly9naXRodWIuY29tL01pbnRwbGV4LUxhYnMvYW55dGhpbmctbGxtLmdpdCIKICBleGl0IDEKZmkKCmVjaG8gIuKGkiBGZXRjaGluZyB1cHN0cmVhbSB0YWdzICsgbWFzdGVyIC4uLiIKZ2l0IGZldGNoIC0tdGFncyAiJFVQU1RSRUFNIiBtYXN0ZXIgMj4mMSB8IHRhaWwgLTMKCmlmICEgZ2l0IHJldi1wYXJzZSAiJFYxXzEzIiA+L2Rldi9udWxsIDI+JjE7IHRoZW4KICBlY2hvICLinYwgVGFnICRWMV8xMyBub3QgZm91bmQgYWZ0ZXIgZmV0Y2guIgogIGV4aXQgMQpmaQoKVVBTVFJFQU1fSEVBRD0iJChnaXQgcmV2LXBhcnNlICIkTUFTVEVSX1JFRiIpIgplY2hvICLihpIgVXBzdHJlYW0gbWFzdGVyIEhFQUQ6ICAkVVBTVFJFQU1fSEVBRCIKZWNobyAi4oaSIHYxLjEzLjAgYmFzZTogICAgICAgICAgJChnaXQgcmV2LXBhcnNlICIkVjFfMTMiKSIKCiMg4pSA4pSAIENvbW1pdCBncm91cCBjbGFzc2lmaWNhdGlvbiDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKIyBFYWNoIHVwc3RyZWFtIGNvbW1pdCBTSEEgaXMgbWFwcGVkIHRvIGV4YWN0bHkgb25lIGdyb3VwIGJlbG93LgojIEdyb3VwcyBhcmUgYXBwbGllZCBpbiBudW1lcmljYWwgb3JkZXIgKDAxIOKGkiAwNikgYnkgYXBwbHktcGF0Y2hlcy5zaC4KIwojIEZvcm1hdDogImdyb3VwLW5hbWUiIGZvbGxvd2VkIGJ5IFNIQXMuCkdST1VQXzAxX1NFQ1VSSVRZPSJjMzA1OGQ0NCAwMDAyZDIyOSBkZTUzMTA0MiBkMDFjMmEyMCIKR1JPVVBfMDJfQlVHRklYPSI3ZGI2ZDIzMyBkODFhNzg0NyBjMGU5NDE0OCBjYzUxODA1NiBjYmE1OThlZCIKR1JPVVBfMDNfVk9JQ0U9IjljNmFiN2NhIDE1Yjc5NjYzIgpHUk9VUF8wNF9ET0NTPSJjYzI4MDI0YyA0M2UwZDlhNCIKR1JPVVBfMDVfTExNPSJiZWUyMjQxNyA2NTA4Njk4NCAzNWI0MTMyZiAyNzJiZjIwMSA1NGI1MzA5NCIKR1JPVVBfMDZfVUlfRE9DUz0iNjNlZTY1NjkgNjY4YjI3MzQgN2MxZTU1YzEgN2EwNGVjZWIgMmMyMmU5ZGMiCgojIOKUgOKUgCBHZW5lcmF0ZSBwZXItY29tbWl0IHBhdGNoZXMgaW4gL3RtcCDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKVE1QX0RJUj0iJChta3RlbXAgLWQgLXQgb3BlbnNpbi1zeW5jLVhYWFhYWCkiCnRyYXAgJ3JtIC1yZiAiJFRNUF9ESVIiJyBFWElUCgplY2hvICIiCmVjaG8gIuKGkiBHZW5lcmF0aW5nIHBlci1jb21taXQgcGF0Y2hlcyB3aXRoIGdpdCBmb3JtYXQtcGF0Y2ggLi4uIgplY2hvICIiCgojIFdlIG5lZWQgdG8gZm9ybWF0LXBhdGNoIGFnYWluc3QgdGhlIHVwc3RyZWFtIHJlbW90ZSByZWYuIEVhc2llc3Q6IGNkIHRvCiMgYSB3b3JrdHJlZS1sZXNzIGFwcHJvYWNoIGJ5IHVzaW5nIGBnaXQgLS1naXQtZGlyPTxyZXBvPi8uZ2l0IGZvcm1hdC1wYXRjaAojIC1vIDx0bXA+IDxiYXNlPi4uPGhlYWQ+YCDigJQgYnV0IHBsYWluIGZvcm1hdC1wYXRjaCB3b3JrcyBpbiB0aGUgbWFpbiByZXBvCiMgaWYgdGhlIHJhbmdlIGlzIHJlYWQtb25seSBmZXRjaCByZWZzIChubyBjaGVja291dCBuZWVkZWQpLgpjZCAiJFJFUE9fUk9PVCIKIyBgZ2l0IGZvcm1hdC1wYXRjaGAgd3JpdGVzIHRoZSBwYXRjaGVzIGFuZCBtYXkgYWxzbyBhZHZhbmNlIEhFQUQ/IE5vLAojIGZvcm1hdC1wYXRjaCBpcyByZWFkLW9ubHkg4oCUIGl0IGp1c3QgZGlmZnMgYW5kIHdyaXRlcyBmaWxlcy4KZ2l0IGZvcm1hdC1wYXRjaCAtbyAiJFRNUF9ESVIiICIkVjFfMTMuLiRNQVNURVJfUkVGIiAyPiYxIHwgdGFpbCAtNQplY2hvICIiCgojIOKUgOKUgCBEaXN0cmlidXRlIGludG8gZ3JvdXAgZGlyZWN0b3JpZXMg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSAClBBVENIX0RJUj0iJChjZCAiJChkaXJuYW1lICIkMCIpIiAmJiBwd2QpL3BhdGNoZXMiCnJtIC1yZiAiJFBBVENIX0RJUiIKbWtkaXIgLXAgIiRQQVRDSF9ESVIiCgpta2RpciAtcCAiJFBBVENIX0RJUi8wMS1zZWN1cml0eS1oYXJkZW5pbmciCm1rZGlyIC1wICIkUEFUQ0hfRElSLzAyLWNyaXRpY2FsLWJ1Z2ZpeGVzIgpta2RpciAtcCAiJFBBVENIX0RJUi8wMy12b2ljZS1mZWF0dXJlcyIKbWtkaXIgLXAgIiRQQVRDSF9ESVIvMDQtZG9jdW1lbnQtaGFuZGxpbmciCm1rZGlyIC1wICIkUEFUQ0hfRElSLzA1LWxsbS1wcm92aWRlcnMiCm1rZGlyIC1wICIkUEFUQ0hfRElSLzA2LXVpLWRvY3MiCgojIEhlbHBlcjogZGlzdHJpYnV0ZSBhIGxpc3Qgb2YgU0hBcyB0byB0aGVpciBkZXN0aW5hdGlvbiBkaXJlY3RvcnkuCmRpc3RyaWJ1dGUoKSB7CiAgbG9jYWwgZ3JvdXBfZGlyPSIkMSIKICBzaGlmdAogIGZvciBzaGEgaW4gIiRAIjsgZG8KICAgICMgRmluZCB0aGUgcGF0Y2ggZmlsZS4gYGdpdCBmb3JtYXQtcGF0Y2hgIG5hbWVzIGZpbGVzIGAwMDAxLVNVQkpFQ1QucGF0Y2hgCiAgICAjIGFuZCB0aGUgc3ViamVjdCBsaW5lIGNvbnRhaW5zIHRoZSBzaG9ydCBTSEEuIFdlIGNhbiBncmVwIGZvciBpdC4KICAgIHBhdGNoPSQoZ3JlcCAtbEUgIl5Gcm9tIFswLTlhLWZdezQwfSAke3NoYX0gIiAiJFRNUF9ESVIiLyoucGF0Y2ggMj4vZGV2L251bGwgfCBoZWFkIC0xIHx8IHRydWUpCiAgICAjIEZhbGxiYWNrOiBtYXRjaCBieSBzaG9ydCBTSEEgYXQgdGhlIHN0YXJ0IG9mIHRoZSBzdWJqZWN0IGluIHRoZSBGcm9tIGxpbmUKICAgIGlmIFsgLXogIiRwYXRjaCIgXTsgdGhlbgogICAgICBwYXRjaD0kKGdyZXAgLWxFICIke3NoYX0iICIkVE1QX0RJUiIvKi5wYXRjaCAyPi9kZXYvbnVsbCB8IGhlYWQgLTEgfHwgdHJ1ZSkKICAgIGZpCiAgICBpZiBbIC1uICIkcGF0Y2giIF0gJiYgWyAtZiAiJHBhdGNoIiBdOyB0aGVuCiAgICAgIGNwICIkcGF0Y2giICIkZ3JvdXBfZGlyLyIKICAgIGVsc2UKICAgICAgZWNobyAiICDimqAgICRzaGEgIOKAlCBubyBwYXRjaCBmb3VuZCBpbiAkVE1QX0RJUiAobWlnaHQgYmUgYSBtZXJnZSBjb21taXQsIHNraXBwaW5nKSIKICAgIGZpCiAgZG9uZQp9CgplY2hvICLihpIgRGlzdHJpYnV0aW5nIHBhdGNoZXMgaW50byA2IGdyb3VwcyAuLi4iCmRpc3RyaWJ1dGUgIiRQQVRDSF9ESVIvMDEtc2VjdXJpdHktaGFyZGVuaW5nIiAkR1JPVVBfMDFfU0VDVVJJVFkKZGlzdHJpYnV0ZSAiJFBBVENIX0RJUi8wMi1jcml0aWNhbC1idWdmaXhlcyIgICAkR1JPVVBfMDJfQlVHRklYCmRpc3RyaWJ1dGUgIiRQQVRDSF9ESVIvMDMtdm9pY2UtZmVhdHVyZXMiICAgICAgJEdST1VQXzAzX1ZPSUNFCmRpc3RyaWJ1dGUgIiRQQVRDSF9ESVIvMDQtZG9jdW1lbnQtaGFuZGxpbmciICAgJEdST1VQXzA0X0RPQ1MKZGlzdHJpYnV0ZSAiJFBBVENIX0RJUi8wNS1sbG0tcHJvdmlkZXJzIiAgICAgICAkR1JPVVBfMDVfTExNCmRpc3RyaWJ1dGUgIiRQQVRDSF9ESVIvMDYtdWktZG9jcyIgICAgICAgICAgICAgJEdST1VQXzA2X1VJX0RPQ1MKCiMg4pSA4pSAIE1hbmlmZXN0IOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgApNQU5JRkVTVD0iJFBBVENIX0RJUi9NQU5JRkVTVC5tZCIKewogIGVjaG8gIiMgVXBzdHJlYW0gU3luYyBQYXRjaGVzIOKAlCBNYW5pZmVzdCIKICBlY2hvICIiCiAgZWNobyAiR2VuZXJhdGVkOiAkKGRhdGUgLXUgKyclWS0lbS0lZFQlSDolTTolU1onKSIKICBlY2hvICJVcHN0cmVhbSBIRUFEOiBcYCRVUFNUUkVBTV9IRUFEXGAiCiAgZWNobyAidjEuMTMuMCBiYXNlOiAgXGAkKGdpdCByZXYtcGFyc2UgIiRWMV8xMyIpXGAiCiAgZWNobyAiIgogIGVjaG8gIlN0cmF0ZWd5OiBvbmUgXGAucGF0Y2hcYCBwZXIgdXBzdHJlYW0gY29tbWl0IChwZXItY29tbWl0IGZvcm1hdC1wYXRjaCkuIgogIGVjaG8gIkVhY2ggcGF0Y2ggaXMgcmVsYXRpdmUgdG8gaXRzIHBhcmVudCBjb21taXQsIHNvIHRoZXkgY29tcG9zZSBsaW5lYXJseS4iCiAgZWNobyAiQXBwbHkgd2l0aCBcYC4vYXBwbHktcGF0Y2hlcy5zaFxgIHdoaWNoIHVzZXMgXGBnaXQgYW0gLS0zd2F5XGAuIgogIGVjaG8gIiIKICBmb3IgZ3JwIGluIDAxLXNlY3VyaXR5LWhhcmRlbmluZyAwMi1jcml0aWNhbC1idWdmaXhlcyAwMy12b2ljZS1mZWF0dXJlcyBcCiAgICAgICAgICAgICAwNC1kb2N1bWVudC1oYW5kbGluZyAwNS1sbG0tcHJvdmlkZXJzIDA2LXVpLWRvY3M7IGRvCiAgICBuPSQobHMgIiRQQVRDSF9ESVIvJGdycCIvKi5wYXRjaCAyPi9kZXYvbnVsbCB8IHdjIC1sIHwgdHIgLWQgJyAnKQogICAgZWNobyAiIyMgJGdycCAgKCRuIHBhdGNoJCggWyAiJG4iICE9ICIxIiBdICYmIGVjaG8gImVzIiApKSIKICAgIGVjaG8gIiIKICAgIGZvciBmIGluICIkUEFUQ0hfRElSLyRncnAiLyoucGF0Y2g7IGRvCiAgICAgIFsgLWYgIiRmIiBdIHx8IGNvbnRpbnVlCiAgICAgIHN1YmplY3Q9JChncmVwIC1tMSAnXlN1YmplY3Q6ICcgIiRmIiB8IHNlZCAncy9eU3ViamVjdDogLy8nKQogICAgICBzaGFfbGluZT0kKGdyZXAgLW0xICdeRnJvbSBbMC05YS1mXScgIiRmIiB8IGF3ayAne3ByaW50ICQyfScpCiAgICAgIHNob3J0PSQoZ2l0IGxvZyAtMSAtLWZvcm1hdD0iJWgiICIkc2hhX2xpbmUiIDI+L2Rldi9udWxsIHx8IGVjaG8gIiR7c2hhX2xpbmU6MDo4fSIpCiAgICAgIGVjaG8gIi0gXGAkc2hvcnRcYCDigJQgJHN1YmplY3QiCiAgICBkb25lCiAgICBlY2hvICIiCiAgZG9uZQogIGVjaG8gIiMjIEFwcGx5IG9yZGVyIgogIGVjaG8gIiIKICBlY2hvICIwMSDihpIgMDIg4oaSIDAzIOKGkiAwNCDihpIgMDUg4oaSIDA2IChjdW11bGF0aXZlLCBpbiBjaHJvbm9sb2dpY2FsIG9yZGVyKS4iCn0gPiAiJE1BTklGRVNUIgoKZWNobyAiIgplY2hvICLihpIgV3JvdGUgbWFuaWZlc3Q6ICAkTUFOSUZFU1QiCmVjaG8gIiIKZWNobyAiUGF0Y2hlczoiCmxzIC1sYSAiJFBBVENIX0RJUiIvKi8gMj4vZGV2L251bGwKZWNobyAiIgplY2hvICJEb25lLiBOZXh0OiAgLi9hcHBseS1wYXRjaGVzLnNoIgo=
+#!/usr/bin/env bash
+# SPDX-License-Identifier: MIT
+
+# OpenSIN-Chat — Upstream Sync Patch Generator (Option A: Squash-Patch-Serie)
+# ----------------------------------------------------------------------------
+# Generates 6 atomic patch groups from upstream Mintplex-Labs/anything-llm
+# covering the 27 commits released between v1.13.0 and current upstream master.
+#
+# Strategy: emit one unified-diff per commit via `git format-patch`, then
+# sort the resulting .patch files into 6 sub-directories (one per logical
+# group). Each per-commit patch is relative to its parent commit, so the
+# patches compose linearly when applied with `git am`.
+#
+# Apply with `apply-patches.sh` which uses `git am --3way` so the maintainer
+# resolves any conflict against the OpenSIN-Chat rebrand interactively.
+#
+# Docs: scripts/upstream-sync/upstream-sync.doc.md
+# Strategy: docs/UPSTREAM-SYNC.md
+set -euo pipefail
+
+REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+cd "$REPO_ROOT"
+
+UPSTREAM="${UPSTREAM_REMOTE:-upstream}"
+V1_13="v1.13.0"
+MASTER_REF="${UPSTREAM}/master"
+
+# ── Verify remotes ───────────────────────────────────────────────────
+if ! git remote get-url "$UPSTREAM" >/dev/null 2>&1; then
+  echo "❌ Remote '$UPSTREAM' not configured."
+  echo "   Add it with:  git remote add upstream https://github.com/Mintplex-Labs/anything-llm.git"
+  exit 1
+fi
+
+echo "→ Fetching upstream tags + master ..."
+git fetch --tags "$UPSTREAM" master 2>&1 | tail -3
+
+if ! git rev-parse "$V1_13" >/dev/null 2>&1; then
+  echo "❌ Tag $V1_13 not found after fetch."
+  exit 1
+fi
+
+UPSTREAM_HEAD="$(git rev-parse "$MASTER_REF")"
+echo "→ Upstream master HEAD:  $UPSTREAM_HEAD"
+echo "→ v1.13.0 base:          $(git rev-parse "$V1_13")"
+
+# ── Commit group classification ──────────────────────────────────────
+# Each upstream commit SHA is mapped to exactly one group below.
+# Groups are applied in numerical order (01 → 06) by apply-patches.sh.
+#
+# Format: "group-name" followed by SHAs.
+GROUP_01_SECURITY="c3058d44 0002d229 de531042 d01c2a20"
+GROUP_02_BUGFIX="7db6d233 d81a7847 c0e94148 cc518056 cba598ed"
+GROUP_03_VOICE="9c6ab7ca 15b79663"
+GROUP_04_DOCS="cc28024c 43e0d9a4"
+GROUP_05_LLM="bee22417 65086984 35b4132f 272bf201 54b53094"
+GROUP_06_UI_DOCS="63ee6569 668b2734 7c1e55c1 7a04eceb 2c22e9dc"
+
+# ── Generate per-commit patches in /tmp ─────────────────────────────
+TMP_DIR="$(mktemp -d -t opensin-sync-XXXXXX)"
+trap 'rm -rf "$TMP_DIR"' EXIT
+
+echo ""
+echo "→ Generating per-commit patches with git format-patch ..."
+echo ""
+
+# We need to format-patch against the upstream remote ref. Easiest: cd to
+# a worktree-less approach by using `git --git-dir=<repo>/.git format-patch
+# -o <tmp> <base>..<head>` — but plain format-patch works in the main repo
+# if the range is read-only fetch refs (no checkout needed).
+cd "$REPO_ROOT"
+# `git format-patch` writes the patches and may also advance HEAD? No,
+# format-patch is read-only — it just diffs and writes files.
+git format-patch -o "$TMP_DIR" "$V1_13..$MASTER_REF" 2>&1 | tail -5
+echo ""
+
+# ── Distribute into group directories ───────────────────────────────
+PATCH_DIR="$(cd "$(dirname "$0")" && pwd)/patches"
+rm -rf "$PATCH_DIR"
+mkdir -p "$PATCH_DIR"
+
+mkdir -p "$PATCH_DIR/01-security-hardening"
+mkdir -p "$PATCH_DIR/02-critical-bugfixes"
+mkdir -p "$PATCH_DIR/03-voice-features"
+mkdir -p "$PATCH_DIR/04-document-handling"
+mkdir -p "$PATCH_DIR/05-llm-providers"
+mkdir -p "$PATCH_DIR/06-ui-docs"
+
+# Helper: distribute a list of SHAs to their destination directory.
+distribute() {
+  local group_dir="$1"
+  shift
+  for sha in "$@"; do
+    # Find the patch file. `git format-patch` names files `0001-SUBJECT.patch`
+    # and the subject line contains the short SHA. We can grep for it.
+    patch=$(grep -lE "^From [0-9a-f]{40} ${sha} " "$TMP_DIR"/*.patch 2>/dev/null | head -1 || true)
+    # Fallback: match by short SHA at the start of the subject in the From line
+    if [ -z "$patch" ]; then
+      patch=$(grep -lE "${sha}" "$TMP_DIR"/*.patch 2>/dev/null | head -1 || true)
+    fi
+    if [ -n "$patch" ] && [ -f "$patch" ]; then
+      cp "$patch" "$group_dir/"
+    else
+      echo "  ⚠  $sha  — no patch found in $TMP_DIR (might be a merge commit, skipping)"
+    fi
+  done
+}
+
+echo "→ Distributing patches into 6 groups ..."
+distribute "$PATCH_DIR/01-security-hardening" $GROUP_01_SECURITY
+distribute "$PATCH_DIR/02-critical-bugfixes"   $GROUP_02_BUGFIX
+distribute "$PATCH_DIR/03-voice-features"      $GROUP_03_VOICE
+distribute "$PATCH_DIR/04-document-handling"   $GROUP_04_DOCS
+distribute "$PATCH_DIR/05-llm-providers"       $GROUP_05_LLM
+distribute "$PATCH_DIR/06-ui-docs"             $GROUP_06_UI_DOCS
+
+# ── Manifest ────────────────────────────────────────────────────────
+MANIFEST="$PATCH_DIR/MANIFEST.md"
+{
+  echo "# Upstream Sync Patches — Manifest"
+  echo ""
+  echo "Generated: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+  echo "Upstream HEAD: \`$UPSTREAM_HEAD\`"
+  echo "v1.13.0 base:  \`$(git rev-parse "$V1_13")\`"
+  echo ""
+  echo "Strategy: one \`.patch\` per upstream commit (per-commit format-patch)."
+  echo "Each patch is relative to its parent commit, so they compose linearly."
+  echo "Apply with \`./apply-patches.sh\` which uses \`git am --3way\`."
+  echo ""
+  for grp in 01-security-hardening 02-critical-bugfixes 03-voice-features \
+             04-document-handling 05-llm-providers 06-ui-docs; do
+    n=$(ls "$PATCH_DIR/$grp"/*.patch 2>/dev/null | wc -l | tr -d ' ')
+    echo "## $grp  ($n patch$( [ "$n" != "1" ] && echo "es" ))"
+    echo ""
+    for f in "$PATCH_DIR/$grp"/*.patch; do
+      [ -f "$f" ] || continue
+      subject=$(grep -m1 '^Subject: ' "$f" | sed 's/^Subject: //')
+      sha_line=$(grep -m1 '^From [0-9a-f]' "$f" | awk '{print $2}')
+      short=$(git log -1 --format="%h" "$sha_line" 2>/dev/null || echo "${sha_line:0:8}")
+      echo "- \`$short\` — $subject"
+    done
+    echo ""
+  done
+  echo "## Apply order"
+  echo ""
+  echo "01 → 02 → 03 → 04 → 05 → 06 (cumulative, in chronological order)."
+} > "$MANIFEST"
+
+echo ""
+echo "→ Wrote manifest:  $MANIFEST"
+echo ""
+echo "Patches:"
+ls -la "$PATCH_DIR"/*/ 2>/dev/null
+echo ""
+echo "Done. Next:  ./apply-patches.sh"
