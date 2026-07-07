@@ -1,1 +1,53 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBQdXJwb3NlOiBTZW5kIDUgY2hhdCBtZXNzYWdlcyBhZ2FpbnN0IHRoZSBjb25maWd1cmVkIEFQUF9VUkwgYW5kIHZlcmlmeSB0aGUKLy8gY2hhdCBsb29wIGFjY2VwdHMgZWFjaCBwcm9tcHQgYW5kIGF0IGxlYXN0IG9uZSByZXNwb25zZSBpbmRpY2F0b3IgYXBwZWFycy4KLy8gRG9jczogZnJvbnRlbmQvdGVzdHMvZTJlL1JFQURNRS5kb2MubWQKaW1wb3J0IHsgdGVzdCwgZXhwZWN0IH0gZnJvbSAiQHBsYXl3cmlnaHQvdGVzdCI7CmltcG9ydCB7IGJvb3RzdHJhcFdvcmtzcGFjZUNoYXQgfSBmcm9tICIuL19oZWxwZXJzLmpzIjsKCnRlc3QuZGVzY3JpYmUoImNoYXQgZmxvdyDigJQgNSBtZXNzYWdlcyIsICgpID0+IHsKICB0ZXN0LmRlc2NyaWJlLmNvbmZpZ3VyZSh7IG1vZGU6ICJzZXJpYWwiIH0pOwoKICB0ZXN0KCJzZW5kcyA1IG1lc3NhZ2VzIGFuZCByZWNlaXZlcyB2aXNpYmxlIHJlc3BvbnNlIGluZGljYXRvcnMiLCBhc3luYyAoeyBwYWdlLCByZXF1ZXN0IH0pID0+IHsKICAgIGNvbnN0IHRlc3RMb2cgPSBbXTsKICAgIGF3YWl0IGJvb3RzdHJhcFdvcmtzcGFjZUNoYXQocGFnZSwgcmVxdWVzdCwgeyB3YWl0Rm9yOiAidGV4dGFyZWEiIH0pOwoKICAgIGNvbnN0IHByb21wdElucHV0ID0gcGFnZS5sb2NhdG9yKCIjcHJpbWFyeS1wcm9tcHQtaW5wdXQiKTsKICAgIGF3YWl0IGV4cGVjdChwcm9tcHRJbnB1dCkudG9CZVZpc2libGUoKTsKICAgIGNvbnN0IG1hcmtlcnMgPSBbXTsKCiAgICAvLyBTZW5kIGVhY2ggbWVzc2FnZSBhbmQgd2FpdCBmb3IgdGhlIGNoYXQgbG9vcCB0byByZXNwb25kIGJlZm9yZSBzZW5kaW5nIHRoZSBuZXh0LgogICAgLy8gVGhlIGNoYXQgaGlzdG9yeSBpcyB2aXJ0dWFsaXplZDsgZWFybGllciBtZXNzYWdlcyBtYXkgYmUgaGlkZGVuIGZyb20gdGhlIHZpZXdwb3J0LAogICAgLy8gc28gd2Ugb25seSByZXF1aXJlIHRoZW0gdG8gYmUgYXR0YWNoZWQgdG8gdGhlIERPTS4KICAgIGZvciAobGV0IGkgPSAxOyBpIDw9IDU7IGkrKykgewogICAgICBjb25zdCBtYXJrZXIgPSBgZTJlLTVtc2ctJHtpfS0ke0RhdGUubm93KCl9YDsKICAgICAgbWFya2Vycy5wdXNoKG1hcmtlcik7CiAgICAgIGNvbnN0IG1lc3NhZ2UgPSBgTWVzc2FnZSAke2l9OiAke21hcmtlcn0uIFBsZWFzZSByZXBseSB3aXRoIE9LLmA7CiAgICAgIGF3YWl0IHByb21wdElucHV0LmZpbGwobWVzc2FnZSk7CiAgICAgIGF3YWl0IHByb21wdElucHV0LnByZXNzKCJFbnRlciIpOwogICAgICBhd2FpdCBleHBlY3QocGFnZS5nZXRCeVRleHQobWFya2VyLCB7IGV4YWN0OiBmYWxzZSB9KSkudG9CZUF0dGFjaGVkKHsgdGltZW91dDogMTUwMDAgfSk7CgogICAgICBjb25zdCByZXNwb25zZUluZGljYXRvciA9IHBhZ2UubG9jYXRvcigiLmRvdC1mYWxsaW5nLCAuYmctcmVkLTUwIikuZmlyc3QoKTsKICAgICAgYXdhaXQgcmVzcG9uc2VJbmRpY2F0b3Iud2FpdEZvcih7IHN0YXRlOiAidmlzaWJsZSIsIHRpbWVvdXQ6IDQ1MDAwIH0pOwogICAgICAvLyBXYWl0IGZvciB0aGUgcmVzcG9uc2UgdG8gZmluaXNoIHN0cmVhbWluZyAob3IgZm9yIHRoZSBlcnJvciBidWJibGUgdG8gc3RhYmlsaXNlKS4KICAgICAgYXdhaXQgcmVzcG9uc2VJbmRpY2F0b3Iud2FpdEZvcih7IHN0YXRlOiAiaGlkZGVuIiwgdGltZW91dDogNDUwMDAgfSkuY2F0Y2goKCkgPT4ge30pOwoKICAgICAgdGVzdExvZy5wdXNoKHsgc3RlcDogYGNoYXQtbWVzc2FnZS0ke2l9YCwgbWFya2VyLCByZXNwb25zZUhhbmRsZWQ6IHRydWUgfSk7CiAgICB9CgogICAgLy8gU2Nyb2xsIHRvIHRoZSBib3R0b20gYW5kIGNvbmZpcm0gYWxsIDUgdXNlciBtZXNzYWdlcyBhcmUgc3RpbGwgYXR0YWNoZWQKICAgIC8vIHRvIHRoZSBET00uIFRoZSBjaGF0IGhpc3RvcnkgaXMgdmlydHVhbGl6ZWQ7IGVhcmxpZXIgbWVzc2FnZXMgbWF5IGJlIGhpZGRlbgogICAgLy8gZnJvbSB0aGUgdmlld3BvcnQsIGJ1dCBwZXJzaXN0ZW5jZSBpcyB0aGUgZnVuY3Rpb25hbCByZXF1aXJlbWVudC4KICAgIGF3YWl0IHBhZ2UuZXZhbHVhdGUoKCkgPT4gd2luZG93LnNjcm9sbFRvKDAsIGRvY3VtZW50LmJvZHkuc2Nyb2xsSGVpZ2h0KSk7CiAgICBhd2FpdCBwYWdlLndhaXRGb3JUaW1lb3V0KDEwMDApOwogICAgZm9yIChjb25zdCBtYXJrZXIgb2YgbWFya2VycykgewogICAgICBhd2FpdCBleHBlY3QocGFnZS5nZXRCeVRleHQobWFya2VyLCB7IGV4YWN0OiBmYWxzZSB9KSkudG9CZUF0dGFjaGVkKHsgdGltZW91dDogMTAwMDAgfSk7CiAgICB9CgogICAgLy8gU2F2ZSBhIHNjcmVlbnNob3Qgb2YgdGhlIGZpbmFsIGNoYXQgc3RhdGUuCiAgICBjb25zdCBzaXRlTmFtZSA9ICJPcGVuU0lOLUNoYXQiOwogICAgY29uc3QgZmlsZU5hbWUgPSBgJHtzaXRlTmFtZS5yZXBsYWNlKC9ccysvZywgIi0iKX1fY2hhdC01LW1lc3NhZ2VzXyR7RGF0ZS5ub3coKX0ucG5nYDsKICAgIGNvbnN0IGZpbGVQYXRoID0gYC9Vc2Vycy9qZXJlbXkvZGV2L09wZW5TSU4tQ2hhdC9zY3JlZW5zaG90cy8ke2ZpbGVOYW1lfWA7CiAgICBhd2FpdCBwYWdlLnNjcmVlbnNob3QoeyBwYXRoOiBmaWxlUGF0aCwgZnVsbFBhZ2U6IHRydWUgfSk7CiAgfSk7Cn0pOwo=
+// SPDX-License-Identifier: MIT
+// Purpose: Send 5 chat messages against the configured APP_URL and verify the
+// chat loop accepts each prompt and at least one response indicator appears.
+// Docs: frontend/tests/e2e/README.doc.md
+import { test, expect } from "@playwright/test";
+import { bootstrapWorkspaceChat } from "./_helpers.js";
+
+test.describe("chat flow — 5 messages", () => {
+  test.describe.configure({ mode: "serial" });
+
+  test("sends 5 messages and receives visible response indicators", async ({ page, request }) => {
+    const testLog = [];
+    await bootstrapWorkspaceChat(page, request, { waitFor: "textarea" });
+
+    const promptInput = page.locator("#primary-prompt-input");
+    await expect(promptInput).toBeVisible();
+    const markers = [];
+
+    // Send each message and wait for the chat loop to respond before sending the next.
+    // The chat history is virtualized; earlier messages may be hidden from the viewport,
+    // so we only require them to be attached to the DOM.
+    for (let i = 1; i <= 5; i++) {
+      const marker = `e2e-5msg-${i}-${Date.now()}`;
+      markers.push(marker);
+      const message = `Message ${i}: ${marker}. Please reply with OK.`;
+      await promptInput.fill(message);
+      await promptInput.press("Enter");
+      await expect(page.getByText(marker, { exact: false })).toBeAttached({ timeout: 15000 });
+
+      const responseIndicator = page.locator(".dot-falling, .bg-red-50").first();
+      await responseIndicator.waitFor({ state: "visible", timeout: 45000 });
+      // Wait for the response to finish streaming (or for the error bubble to stabilise).
+      await responseIndicator.waitFor({ state: "hidden", timeout: 45000 }).catch(() => {});
+
+      testLog.push({ step: `chat-message-${i}`, marker, responseHandled: true });
+    }
+
+    // Scroll to the bottom and confirm all 5 user messages are still attached
+    // to the DOM. The chat history is virtualized; earlier messages may be hidden
+    // from the viewport, but persistence is the functional requirement.
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await page.waitForTimeout(1000);
+    for (const marker of markers) {
+      await expect(page.getByText(marker, { exact: false })).toBeAttached({ timeout: 10000 });
+    }
+
+    // Save a screenshot of the final chat state.
+    const siteName = "OpenSIN-Chat";
+    const fileName = `${siteName.replace(/\s+/g, "-")}_chat-5-messages_${Date.now()}.png`;
+    const filePath = `/Users/jeremy/dev/OpenSIN-Chat/screenshots/${fileName}`;
+    await page.screenshot({ path: filePath, fullPage: true });
+  });
+});

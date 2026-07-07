@@ -1,1 +1,167 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBQdXJwb3NlOiBDb21iaW5lZCBhdXRoZW50aWNhdGVkIHByb2R1Y3Rpb24gc21va2UgZm9yIG9uZSBBUFBfVVJMLiBSdW5zIHRoZQovLyByZXF1ZXN0ZWQgdmVyaWZpY2F0aW9uIHN0ZXBzIGFuZCB3cml0ZXMgYSBKU09OIGxvZyBvZiBjb25zb2xlIGVycm9ycywgbmV0d29yawovLyBmYWlsdXJlcywgYW5kIG5vbi0yeHggQVBJIHJlc3BvbnNlcy4KLy8gRG9jczogZnJvbnRlbmQvdGVzdHMvZTJlL1JFQURNRS5kb2MubWQKaW1wb3J0IHsgdGVzdCwgZXhwZWN0IH0gZnJvbSAiQHBsYXl3cmlnaHQvdGVzdCI7CmltcG9ydCBwYXRoIGZyb20gInBhdGgiOwppbXBvcnQgZnMgZnJvbSAiZnMiOwppbXBvcnQgeyBzaGFyZWRMb2dpbiBhcyBsb2dpbiB9IGZyb20gIi4vX3Rva2VuLWNhY2hlLmpzIjsKaW1wb3J0IHsKICBzZWVkU2Vzc2lvbiwKICBtb2NrT25ib2FyZGluZ0NoZWNrLAogIGFzc2VydEFwcExvYWRlZCwKfSBmcm9tICIuL19oZWxwZXJzLmpzIjsKCmNvbnN0IFNDUkVFTlNIT1RfRElSID0gIi9Vc2Vycy9qZXJlbXkvZGV2L09wZW5TSU4tQ2hhdC9zY3JlZW5zaG90cyI7Cgp0ZXN0LmRlc2NyaWJlKCJhdXRoZW50aWNhdGVkIHByb2R1Y3Rpb24gc21va2UiLCAoKSA9PiB7CiAgY29uc3QgY29uc29sZUVycm9ycyA9IFtdOwogIGNvbnN0IG5ldHdvcmtGYWlsdXJlcyA9IFtdOwogIGNvbnN0IG5ldHdvcmtSZXNwb25zZXMgPSBbXTsKICBjb25zdCB0ZXN0TG9nID0gW107CiAgbGV0IHRva2VuOwogIGxldCBjcmVhdGVkU2x1ZyA9IG51bGw7CiAgbGV0IHNpdGVOYW1lOwogIGxldCBzaXRlVXJsOwoKICB0ZXN0LmJlZm9yZUFsbChhc3luYyAoeyByZXF1ZXN0IH0pID0+IHsKICAgIHNpdGVVcmwgPSBwcm9jZXNzLmVudi5BUFBfVVJMIHx8ICJodHRwOi8vbG9jYWxob3N0OjM4NDcxIjsKICAgIHNpdGVOYW1lID0gIk9wZW5TSU4tQ2hhdCI7CiAgICB0b2tlbiA9IGF3YWl0IGxvZ2luKHJlcXVlc3QpOwogICAgdGVzdExvZy5wdXNoKHsgc3RlcDogImxvZ2luIiwgb2s6IHRydWUsIHVybDogc2l0ZVVybCB9KTsKICB9KTsKCiAgdGVzdC5iZWZvcmVFYWNoKGFzeW5jICh7IHBhZ2UgfSkgPT4gewogICAgY29uc29sZUVycm9ycy5sZW5ndGggPSAwOwogICAgbmV0d29ya0ZhaWx1cmVzLmxlbmd0aCA9IDA7CiAgICBuZXR3b3JrUmVzcG9uc2VzLmxlbmd0aCA9IDA7CgogICAgcGFnZS5vbigiY29uc29sZSIsIChtc2cpID0+IHsKICAgICAgaWYgKG1zZy50eXBlKCkgPT09ICJlcnJvciIpIHsKICAgICAgICBjb25zb2xlRXJyb3JzLnB1c2goeyB0eXBlOiBtc2cudHlwZSgpLCB0ZXh0OiBtc2cudGV4dCgpLCBsb2NhdGlvbjogbXNnLmxvY2F0aW9uKCkgfSk7CiAgICAgIH0KICAgIH0pOwogICAgcGFnZS5vbigicGFnZWVycm9yIiwgKGVycikgPT4gewogICAgICBjb25zb2xlRXJyb3JzLnB1c2goeyB0eXBlOiAicGFnZWVycm9yIiwgdGV4dDogZXJyLm1lc3NhZ2UgfSk7CiAgICB9KTsKICAgIHBhZ2Uub24oInJlcXVlc3RmYWlsZWQiLCAocmVxKSA9PiB7CiAgICAgIG5ldHdvcmtGYWlsdXJlcy5wdXNoKHsgdXJsOiByZXEudXJsKCksIG1ldGhvZDogcmVxLm1ldGhvZCgpLCBmYWlsdXJlOiByZXEuZmFpbHVyZSgpPy5lcnJvclRleHQgfHwgInVua25vd24iIH0pOwogICAgfSk7CiAgICBwYWdlLm9uKCJyZXNwb25zZSIsIChyZXMpID0+IHsKICAgICAgbmV0d29ya1Jlc3BvbnNlcy5wdXNoKHsgdXJsOiByZXMudXJsKCksIG1ldGhvZDogcmVzLnJlcXVlc3QoKS5tZXRob2QoKSwgc3RhdHVzOiByZXMuc3RhdHVzKCkgfSk7CiAgICB9KTsKCiAgICBhd2FpdCBzZWVkU2Vzc2lvbihwYWdlLCB0b2tlbik7CiAgICBhd2FpdCBtb2NrT25ib2FyZGluZ0NoZWNrKHBhZ2UpOwogIH0pOwoKICB0ZXN0LmFmdGVyRWFjaChhc3luYyAoeyByZXF1ZXN0IH0pID0+IHsKICAgIGlmIChjcmVhdGVkU2x1ZykgewogICAgICBhd2FpdCByZXF1ZXN0CiAgICAgICAgLmRlbGV0ZShgJHtzaXRlVXJsfS9hcGkvd29ya3NwYWNlLyR7Y3JlYXRlZFNsdWd9YCwgewogICAgICAgICAgaGVhZGVyczogeyBBdXRob3JpemF0aW9uOiBgQmVhcmVyICR7dG9rZW59YCB9LAogICAgICAgIH0pCiAgICAgICAgLmNhdGNoKCgpID0+IHt9KTsKICAgICAgY3JlYXRlZFNsdWcgPSBudWxsOwogICAgfQogIH0pOwoKICBjb25zdCBzY3JlZW5zaG90ID0gYXN5bmMgKHBhZ2UsIGxhYmVsKSA9PiB7CiAgICBjb25zdCBmaWxlTmFtZSA9IGAke3NpdGVOYW1lLnJlcGxhY2UoL1xzKy9nLCAiLSIpfV9hdXRoXyR7bGFiZWx9XyR7RGF0ZS5ub3coKX0ucG5nYDsKICAgIGNvbnN0IGZpbGVQYXRoID0gcGF0aC5qb2luKFNDUkVFTlNIT1RfRElSLCBmaWxlTmFtZSk7CiAgICBhd2FpdCBwYWdlLnNjcmVlbnNob3QoeyBwYXRoOiBmaWxlUGF0aCwgZnVsbFBhZ2U6IHRydWUgfSk7CiAgICB0ZXN0TG9nLnB1c2goeyBzdGVwOiBsYWJlbCwgc2NyZWVuc2hvdDogZmlsZVBhdGggfSk7CiAgICByZXR1cm4gZmlsZVBhdGg7CiAgfTsKCiAgdGVzdCgiMS4gY2hhdCDigJQgNSBtZXNzYWdlcyBhbmQgcmVzcG9uc2VzIiwgYXN5bmMgKHsgcGFnZSwgcmVxdWVzdCB9KSA9PiB7CiAgICBjb25zdCBsaXN0UmVzcCA9IGF3YWl0IHJlcXVlc3QuZ2V0KGAke3NpdGVVcmx9L2FwaS93b3Jrc3BhY2VzYCwgewogICAgICBoZWFkZXJzOiB7IEF1dGhvcml6YXRpb246IGBCZWFyZXIgJHt0b2tlbn1gIH0sCiAgICB9KTsKICAgIGV4cGVjdChsaXN0UmVzcC5vaygpKS50b0JlVHJ1dGh5KCk7CiAgICBjb25zdCB7IHdvcmtzcGFjZXMgfSA9IGF3YWl0IGxpc3RSZXNwLmpzb24oKTsKICAgIGV4cGVjdCh3b3Jrc3BhY2VzPy5sZW5ndGgpLnRvQmVHcmVhdGVyVGhhbigwKTsKICAgIGNvbnN0IHNsdWcgPSB3b3Jrc3BhY2VzWzBdLnNsdWc7CgogICAgYXdhaXQgcGFnZS5nb3RvKGAke3NpdGVVcmx9L3dvcmtzcGFjZS8ke3NsdWd9YCwgeyB3YWl0VW50aWw6ICJuZXR3b3JraWRsZSIgfSk7CiAgICBhd2FpdCBhc3NlcnRBcHBMb2FkZWQocGFnZSk7CiAgICBjb25zdCBwcm9tcHRJbnB1dCA9IHBhZ2UubG9jYXRvcigiI3ByaW1hcnktcHJvbXB0LWlucHV0Iik7CiAgICBhd2FpdCBleHBlY3QocHJvbXB0SW5wdXQpLnRvQmVWaXNpYmxlKHsgdGltZW91dDogMzAwMDAgfSk7CiAgICBhd2FpdCBzY3JlZW5zaG90KHBhZ2UsICIwMS1jaGF0LXN0YXJ0Iik7CgogICAgY29uc3QgbWFya2VycyA9IFtdOwogICAgZm9yIChsZXQgaSA9IDE7IGkgPD0gNTsgaSsrKSB7CiAgICAgIGNvbnN0IG1hcmtlciA9IGBhdXRoLWUyZS0ke2l9LSR7RGF0ZS5ub3coKX1gOwogICAgICBtYXJrZXJzLnB1c2gobWFya2VyKTsKICAgICAgYXdhaXQgcHJvbXB0SW5wdXQuZmlsbChgTWVzc2FnZSAke2l9OiAke21hcmtlcn0uIFBsZWFzZSByZXBseSB3aXRoIE9LLmApOwogICAgICBhd2FpdCBwcm9tcHRJbnB1dC5wcmVzcygiRW50ZXIiKTsKICAgICAgYXdhaXQgZXhwZWN0KHBhZ2UuZ2V0QnlUZXh0KG1hcmtlciwgeyBleGFjdDogZmFsc2UgfSkpLnRvQmVBdHRhY2hlZCh7IHRpbWVvdXQ6IDE1MDAwIH0pOwogICAgICBjb25zdCBpbmRpY2F0b3IgPSBwYWdlLmxvY2F0b3IoIi5kb3QtZmFsbGluZywgLmJnLXJlZC01MCIpLmZpcnN0KCk7CiAgICAgIGF3YWl0IGluZGljYXRvci53YWl0Rm9yKHsgc3RhdGU6ICJ2aXNpYmxlIiwgdGltZW91dDogNDUwMDAgfSk7CiAgICAgIGF3YWl0IGluZGljYXRvci53YWl0Rm9yKHsgc3RhdGU6ICJoaWRkZW4iLCB0aW1lb3V0OiA0NTAwMCB9KS5jYXRjaCgoKSA9PiB7fSk7CiAgICAgIHRlc3RMb2cucHVzaCh7IHN0ZXA6IGBjaGF0LW1lc3NhZ2UtJHtpfWAsIG1hcmtlciB9KTsKICAgIH0KICAgIGF3YWl0IHNjcmVlbnNob3QocGFnZSwgIjAyLWNoYXQtYWZ0ZXItNSIpOwogIH0pOwoKICB0ZXN0KCIyLiBjcmVhdGUgYSBuZXcgd29ya3NwYWNlIiwgYXN5bmMgKHsgcGFnZSwgcmVxdWVzdCB9KSA9PiB7CiAgICBjb25zdCByZXMgPSBhd2FpdCByZXF1ZXN0LnBvc3QoYCR7c2l0ZVVybH0vYXBpL3dvcmtzcGFjZS9uZXdgLCB7CiAgICAgIGhlYWRlcnM6IHsgQXV0aG9yaXphdGlvbjogYEJlYXJlciAke3Rva2VufWAgfSwKICAgICAgZGF0YTogeyBuYW1lOiBgYXV0aC1lMmUtd29ya3NwYWNlLSR7RGF0ZS5ub3coKX1gIH0sCiAgICB9KTsKICAgIGlmIChyZXMuc3RhdHVzKCkgPT09IDQyOSkgewogICAgICB0ZXN0LnNraXAodHJ1ZSwgIldvcmtzcGFjZSBjcmVhdGlvbiByYXRlLWxpbWl0ZWQgKDUvaG91cikiKTsKICAgIH0KICAgIGV4cGVjdChyZXMub2soKSkudG9CZVRydXRoeSgpOwogICAgY29uc3QgeyB3b3Jrc3BhY2UgfSA9IGF3YWl0IHJlcy5qc29uKCk7CiAgICBjcmVhdGVkU2x1ZyA9IHdvcmtzcGFjZS5zbHVnOwogICAgdGVzdExvZy5wdXNoKHsgc3RlcDogImNyZWF0ZS13b3Jrc3BhY2UiLCBzbHVnOiBjcmVhdGVkU2x1ZywgbmFtZTogd29ya3NwYWNlLm5hbWUgfSk7CgogICAgYXdhaXQgcGFnZS5nb3RvKGAke3NpdGVVcmx9L3dvcmtzcGFjZS8ke2NyZWF0ZWRTbHVnfWAsIHsgd2FpdFVudGlsOiAibmV0d29ya2lkbGUiIH0pOwogICAgYXdhaXQgYXNzZXJ0QXBwTG9hZGVkKHBhZ2UpOwogICAgYXdhaXQgZXhwZWN0KHBhZ2UubG9jYXRvcigiI3ByaW1hcnktcHJvbXB0LWlucHV0IikuZmlyc3QoKSkudG9CZVZpc2libGUoeyB0aW1lb3V0OiAzMDAwMCB9KTsKICAgIGF3YWl0IHNjcmVlbnNob3QocGFnZSwgIjAzLWNyZWF0ZWQtd29ya3NwYWNlIik7CiAgfSk7CgogIHRlc3QoIjMuIHNldHRpbmdzIHBhZ2UgbG9hZHMiLCBhc3luYyAoeyBwYWdlIH0pID0+IHsKICAgIGF3YWl0IHBhZ2UuZ290byhgJHtzaXRlVXJsfS9zZXR0aW5ncy9sbG0tcHJlZmVyZW5jZWAsIHsgd2FpdFVudGlsOiAibmV0d29ya2lkbGUiIH0pOwogICAgYXdhaXQgYXNzZXJ0QXBwTG9hZGVkKHBhZ2UpOwogICAgYXdhaXQgZXhwZWN0KHBhZ2UuZ2V0QnlUZXh0KC9JbnN0YW5jZSBTZXR0aW5ncy9pKS5maXJzdCgpKS50b0JlVmlzaWJsZSh7IHRpbWVvdXQ6IDEwMDAwIH0pOwogICAgYXdhaXQgc2NyZWVuc2hvdChwYWdlLCAiMDQtc2V0dGluZ3MiKTsKICAgIHRlc3RMb2cucHVzaCh7IHN0ZXA6ICJzZXR0aW5ncy1sb2FkIiwgb2s6IHRydWUgfSk7CiAgfSk7CgogIHRlc3QoIjQuIGRvY3VtZW50IG1hbmFnZXIgbG9hZHMiLCBhc3luYyAoeyBwYWdlIH0pID0+IHsKICAgIGF3YWl0IHBhZ2UuZ290byhgJHtzaXRlVXJsfS93b3Jrc3BhY2UvJHtjcmVhdGVkU2x1ZyB8fCAiZGVmYXVsdCJ9YCwgeyB3YWl0VW50aWw6ICJuZXR3b3JraWRsZSIgfSk7CiAgICBhd2FpdCBhc3NlcnRBcHBMb2FkZWQocGFnZSk7CiAgICBhd2FpdCBleHBlY3QocGFnZS5sb2NhdG9yKCIjcHJpbWFyeS1wcm9tcHQtaW5wdXQiKS5maXJzdCgpKS50b0JlVmlzaWJsZSh7IHRpbWVvdXQ6IDMwMDAwIH0pOwogICAgY29uc3QgdXBsb2FkQnRuID0gcGFnZS5sb2NhdG9yKCdbZGF0YS10b29sdGlwLWlkPSJ1cGxvYWQtd29ya3NwYWNlIl0nKS5maXJzdCgpOwogICAgYXdhaXQgZXhwZWN0KHVwbG9hZEJ0bikudG9CZVZpc2libGUoeyB0aW1lb3V0OiAxMDAwMCB9KTsKICAgIGF3YWl0IHVwbG9hZEJ0bi5jbGljaygpOwogICAgYXdhaXQgZXhwZWN0KHBhZ2UubG9jYXRvcignaW5wdXRbdHlwZT0iZmlsZSJdJykuZmlyc3QoKSkudG9CZUF0dGFjaGVkKHsgdGltZW91dDogMTUwMDAgfSk7CiAgICBhd2FpdCBzY3JlZW5zaG90KHBhZ2UsICIwNS1kb2N1bWVudHMtbW9kYWwiKTsKICAgIHRlc3RMb2cucHVzaCh7IHN0ZXA6ICJkb2N1bWVudHMtbW9kYWwiLCBvazogdHJ1ZSB9KTsKICB9KTsKCiAgdGVzdCgiNS4gY29uc29sZSBhbmQgbmV0d29yayBlcnJvciBzdW1tYXJ5IiwgYXN5bmMgKCkgPT4gewogICAgY29uc3QgYXJ0aWZhY3QgPSBwYXRoLmpvaW4oU0NSRUVOU0hPVF9ESVIsIGAke3NpdGVOYW1lLnJlcGxhY2UoL1xzKy9nLCAiLSIpfV9hdXRoLXN1bW1hcnkuanNvbmApOwogICAgY29uc3Qgc3VtbWFyeSA9IHsKICAgICAgc2l0ZTogc2l0ZU5hbWUsCiAgICAgIHVybDogc2l0ZVVybCwKICAgICAgY29uc29sZUVycm9ycywKICAgICAgbmV0d29ya0ZhaWx1cmVzOiBuZXR3b3JrRmFpbHVyZXMuZmlsdGVyKChuKSA9PiAhbi51cmwuaW5jbHVkZXMoImZhdmljb24iKSksCiAgICAgIG5vbjJ4eE5ldHdvcmtSZXNwb25zZXM6IG5ldHdvcmtSZXNwb25zZXMuZmlsdGVyKChuKSA9PiB7CiAgICAgICAgY29uc3Qgc3RhdHVzID0gbi5zdGF0dXM7CiAgICAgICAgcmV0dXJuIHN0YXR1cyA+PSA0MDAgJiYgIVs0MDEsIDQwMywgNDA0LCA0MjldLmluY2x1ZGVzKHN0YXR1cyk7CiAgICAgIH0pLAogICAgICB0ZXN0TG9nLAogICAgICB0aW1lc3RhbXA6IG5ldyBEYXRlKCkudG9JU09TdHJpbmcoKSwKICAgIH07CiAgICBmcy53cml0ZUZpbGVTeW5jKGFydGlmYWN0LCBKU09OLnN0cmluZ2lmeShzdW1tYXJ5LCBudWxsLCAyKSk7CgogICAgZXhwZWN0KHN1bW1hcnkuY29uc29sZUVycm9ycy5sZW5ndGgpLnRvQmUoMCk7CiAgICBleHBlY3Qoc3VtbWFyeS5uZXR3b3JrRmFpbHVyZXMubGVuZ3RoKS50b0JlKDApOwogICAgZXhwZWN0KHN1bW1hcnkubm9uMnh4TmV0d29ya1Jlc3BvbnNlcy5sZW5ndGgpLnRvQmUoMCk7CiAgfSk7Cn0pOwo=
+// SPDX-License-Identifier: MIT
+// Purpose: Combined authenticated production smoke for one APP_URL. Runs the
+// requested verification steps and writes a JSON log of console errors, network
+// failures, and non-2xx API responses.
+// Docs: frontend/tests/e2e/README.doc.md
+import { test, expect } from "@playwright/test";
+import path from "path";
+import fs from "fs";
+import { sharedLogin as login } from "./_token-cache.js";
+import {
+  seedSession,
+  mockOnboardingCheck,
+  assertAppLoaded,
+} from "./_helpers.js";
+
+const SCREENSHOT_DIR = "/Users/jeremy/dev/OpenSIN-Chat/screenshots";
+
+test.describe("authenticated production smoke", () => {
+  const consoleErrors = [];
+  const networkFailures = [];
+  const networkResponses = [];
+  const testLog = [];
+  let token;
+  let createdSlug = null;
+  let siteName;
+  let siteUrl;
+
+  test.beforeAll(async ({ request }) => {
+    siteUrl = process.env.APP_URL || "http://localhost:38471";
+    siteName = "OpenSIN-Chat";
+    token = await login(request);
+    testLog.push({ step: "login", ok: true, url: siteUrl });
+  });
+
+  test.beforeEach(async ({ page }) => {
+    consoleErrors.length = 0;
+    networkFailures.length = 0;
+    networkResponses.length = 0;
+
+    page.on("console", (msg) => {
+      if (msg.type() === "error") {
+        consoleErrors.push({ type: msg.type(), text: msg.text(), location: msg.location() });
+      }
+    });
+    page.on("pageerror", (err) => {
+      consoleErrors.push({ type: "pageerror", text: err.message });
+    });
+    page.on("requestfailed", (req) => {
+      networkFailures.push({ url: req.url(), method: req.method(), failure: req.failure()?.errorText || "unknown" });
+    });
+    page.on("response", (res) => {
+      networkResponses.push({ url: res.url(), method: res.request().method(), status: res.status() });
+    });
+
+    await seedSession(page, token);
+    await mockOnboardingCheck(page);
+  });
+
+  test.afterEach(async ({ request }) => {
+    if (createdSlug) {
+      await request
+        .delete(`${siteUrl}/api/workspace/${createdSlug}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .catch(() => {});
+      createdSlug = null;
+    }
+  });
+
+  const screenshot = async (page, label) => {
+    const fileName = `${siteName.replace(/\s+/g, "-")}_auth_${label}_${Date.now()}.png`;
+    const filePath = path.join(SCREENSHOT_DIR, fileName);
+    await page.screenshot({ path: filePath, fullPage: true });
+    testLog.push({ step: label, screenshot: filePath });
+    return filePath;
+  };
+
+  test("1. chat — 5 messages and responses", async ({ page, request }) => {
+    const listResp = await request.get(`${siteUrl}/api/workspaces`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    expect(listResp.ok()).toBeTruthy();
+    const { workspaces } = await listResp.json();
+    expect(workspaces?.length).toBeGreaterThan(0);
+    const slug = workspaces[0].slug;
+
+    await page.goto(`${siteUrl}/workspace/${slug}`, { waitUntil: "networkidle" });
+    await assertAppLoaded(page);
+    const promptInput = page.locator("#primary-prompt-input");
+    await expect(promptInput).toBeVisible({ timeout: 30000 });
+    await screenshot(page, "01-chat-start");
+
+    const markers = [];
+    for (let i = 1; i <= 5; i++) {
+      const marker = `auth-e2e-${i}-${Date.now()}`;
+      markers.push(marker);
+      await promptInput.fill(`Message ${i}: ${marker}. Please reply with OK.`);
+      await promptInput.press("Enter");
+      await expect(page.getByText(marker, { exact: false })).toBeAttached({ timeout: 15000 });
+      const indicator = page.locator(".dot-falling, .bg-red-50").first();
+      await indicator.waitFor({ state: "visible", timeout: 45000 });
+      await indicator.waitFor({ state: "hidden", timeout: 45000 }).catch(() => {});
+      testLog.push({ step: `chat-message-${i}`, marker });
+    }
+    await screenshot(page, "02-chat-after-5");
+  });
+
+  test("2. create a new workspace", async ({ page, request }) => {
+    const res = await request.post(`${siteUrl}/api/workspace/new`, {
+      headers: { Authorization: `Bearer ${token}` },
+      data: { name: `auth-e2e-workspace-${Date.now()}` },
+    });
+    if (res.status() === 429) {
+      test.skip(true, "Workspace creation rate-limited (5/hour)");
+    }
+    expect(res.ok()).toBeTruthy();
+    const { workspace } = await res.json();
+    createdSlug = workspace.slug;
+    testLog.push({ step: "create-workspace", slug: createdSlug, name: workspace.name });
+
+    await page.goto(`${siteUrl}/workspace/${createdSlug}`, { waitUntil: "networkidle" });
+    await assertAppLoaded(page);
+    await expect(page.locator("#primary-prompt-input").first()).toBeVisible({ timeout: 30000 });
+    await screenshot(page, "03-created-workspace");
+  });
+
+  test("3. settings page loads", async ({ page }) => {
+    await page.goto(`${siteUrl}/settings/llm-preference`, { waitUntil: "networkidle" });
+    await assertAppLoaded(page);
+    await expect(page.getByText(/Instance Settings/i).first()).toBeVisible({ timeout: 10000 });
+    await screenshot(page, "04-settings");
+    testLog.push({ step: "settings-load", ok: true });
+  });
+
+  test("4. document manager loads", async ({ page }) => {
+    await page.goto(`${siteUrl}/workspace/${createdSlug || "default"}`, { waitUntil: "networkidle" });
+    await assertAppLoaded(page);
+    await expect(page.locator("#primary-prompt-input").first()).toBeVisible({ timeout: 30000 });
+    const uploadBtn = page.locator('[data-tooltip-id="upload-workspace"]').first();
+    await expect(uploadBtn).toBeVisible({ timeout: 10000 });
+    await uploadBtn.click();
+    await expect(page.locator('input[type="file"]').first()).toBeAttached({ timeout: 15000 });
+    await screenshot(page, "05-documents-modal");
+    testLog.push({ step: "documents-modal", ok: true });
+  });
+
+  test("5. console and network error summary", async () => {
+    const artifact = path.join(SCREENSHOT_DIR, `${siteName.replace(/\s+/g, "-")}_auth-summary.json`);
+    const summary = {
+      site: siteName,
+      url: siteUrl,
+      consoleErrors,
+      networkFailures: networkFailures.filter((n) => !n.url.includes("favicon")),
+      non2xxNetworkResponses: networkResponses.filter((n) => {
+        const status = n.status;
+        return status >= 400 && ![401, 403, 404, 429].includes(status);
+      }),
+      testLog,
+      timestamp: new Date().toISOString(),
+    };
+    fs.writeFileSync(artifact, JSON.stringify(summary, null, 2));
+
+    expect(summary.consoleErrors.length).toBe(0);
+    expect(summary.networkFailures.length).toBe(0);
+    expect(summary.non2xxNetworkResponses.length).toBe(0);
+  });
+});

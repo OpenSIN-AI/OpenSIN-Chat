@@ -28,8 +28,8 @@ async function unlock(page) {
   const { token } = await resp.json();
   await page.goto(APP_URL + "/", { waitUntil: "domcontentloaded" });
   await page.evaluate((t) => {
-    window.localStorage.setItem("openafd-demo-unlocked", "1");
-    window.localStorage.setItem("openafd_authToken", t);
+    window.localStorage.setItem("opensin-demo-unlocked", "1");
+    window.localStorage.setItem("opensin_authToken", t);
   }, token);
 }
 

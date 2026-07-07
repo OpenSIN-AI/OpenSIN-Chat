@@ -1,1 +1,114 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBQdXJwb3NlOiBFMkUgdGVzdCBmb3IgdGhlIHRoZW1lIHRvZ2dsZSDigJQgY2xpY2sgdGhlIHRoZW1lIHNlZ21lbnQgaW4gdGhlCi8vIGFjY291bnQgbWVudSBhbmQgdmVyaWZ5IGRhdGEtdGhlbWUgY2hhbmdlcyBvbiA8aHRtbD4gYW5kIHBlcnNpc3RzIGluCi8vIGxvY2FsU3RvcmFnZSB1bmRlciAib3BlbnNpbl90aGVtZSIuCi8vIERvY3M6IGZyb250ZW5kL3Rlc3RzL2UyZS9SRUFETUUuZG9jLm1kCmltcG9ydCB7IHRlc3QsIGV4cGVjdCB9IGZyb20gIkBwbGF5d3JpZ2h0L3Rlc3QiOwppbXBvcnQgewogIHNlZWRTZXNzaW9uLAogIG1vY2tPbmJvYXJkaW5nQ2hlY2ssCiAgYXNzZXJ0QXBwTG9hZGVkLAp9IGZyb20gIi4vX2hlbHBlcnMuanMiOwppbXBvcnQgeyBzaGFyZWRMb2dpbiBhcyBsb2dpbiB9IGZyb20gIi4vX3Rva2VuLWNhY2hlLmpzIjsKCnRlc3QuZGVzY3JpYmUoInRoZW1lIHRvZ2dsZSIsICgpID0+IHsKICB0ZXN0LmRlc2NyaWJlLmNvbmZpZ3VyZSh7IG1vZGU6ICJzZXJpYWwiIH0pOwoKICBsZXQgdG9rZW47CgogIHRlc3QuYmVmb3JlQWxsKGFzeW5jICh7IHJlcXVlc3QgfSkgPT4gewogICAgdG9rZW4gPSBhd2FpdCBsb2dpbihyZXF1ZXN0KTsKICB9KTsKCiAgdGVzdC5iZWZvcmVFYWNoKGFzeW5jICh7IHBhZ2UgfSkgPT4gewogICAgYXdhaXQgc2VlZFNlc3Npb24ocGFnZSwgdG9rZW4pOwogICAgYXdhaXQgbW9ja09uYm9hcmRpbmdDaGVjayhwYWdlKTsKICB9KTsKCiAgdGVzdCgic3dpdGNoaW5nIHRvIGRhcmsgdGhlbWUgdXBkYXRlcyBkYXRhLXRoZW1lIGFuZCBsb2NhbFN0b3JhZ2UiLCBhc3luYyAoewogICAgcGFnZSwKICB9KSA9PiB7CiAgICBhd2FpdCBwYWdlLmdvdG8oIi8iLCB7IHdhaXRVbnRpbDogIm5ldHdvcmtpZGxlIiB9KTsKICAgIGF3YWl0IGFzc2VydEFwcExvYWRlZChwYWdlKTsKCiAgICAvLyBPcGVuIHRoZSBhY2NvdW50IG1lbnUg4oCUIHRhcmdldCB0aGUgbm9uLWNvbXBhY3QgdHJpZ2dlciBpbiB0aGUgc2lkZWJhcgogICAgLy8gZm9vdGVyIChjb250YWlucyAiYWRtaW4iIHRleHQpLCBub3QgdGhlIGNvbXBhY3Qgb25lIGluIExlZnRTaWRlYmFySWNvbkJhcgogICAgLy8gKHdoaWNoIGhhcyBhcmlhLWxhYmVsPSJQcm9maWxlIiBhbmQgaXMgaW50ZXJjZXB0ZWQgYnkgdGhlIG5hdikuCiAgICBjb25zdCBtZW51VHJpZ2dlciA9IHBhZ2UKICAgICAgLmxvY2F0b3IoJ2J1dHRvblthcmlhLWhhc3BvcHVwPSJtZW51Il0nKQogICAgICAuZmlsdGVyKHsgaGFzVGV4dDogL2FkbWluL2kgfSk7CiAgICBhd2FpdCBtZW51VHJpZ2dlci53YWl0Rm9yKHsgc3RhdGU6ICJ2aXNpYmxlIiwgdGltZW91dDogMTAwMDAgfSk7CiAgICBhd2FpdCBtZW51VHJpZ2dlci5jbGljaygpOwoKICAgIGNvbnN0IHBvcHVwTWVudSA9IHBhZ2UubG9jYXRvcignW3JvbGU9Im1lbnUiXScpLmZpcnN0KCk7CiAgICBhd2FpdCBleHBlY3QocG9wdXBNZW51KS50b0JlVmlzaWJsZSh7IHRpbWVvdXQ6IDUwMDAgfSk7CgogICAgLy8gQ2xpY2sgdGhlICJEYXJrIiB0aGVtZSBidXR0b24gKGFyaWEtbGFiZWw9IkRhcmsiKQogICAgY29uc3QgZGFya0J0biA9IHBhZ2UuZ2V0QnlSb2xlKCJidXR0b24iLCB7IG5hbWU6ICJEYXJrIiwgZXhhY3Q6IHRydWUgfSk7CiAgICBhd2FpdCBleHBlY3QoZGFya0J0bikudG9CZVZpc2libGUoeyB0aW1lb3V0OiA1MDAwIH0pOwogICAgYXdhaXQgZGFya0J0bi5jbGljaygpOwoKICAgIGF3YWl0IGV4cGVjdChwYWdlLmxvY2F0b3IoImh0bWwiKSkudG9IYXZlQXR0cmlidXRlKCJkYXRhLXRoZW1lIiwgImRhcmsiLCB7CiAgICAgIHRpbWVvdXQ6IDUwMDAsCiAgICB9KTsKCiAgICBjb25zdCBzdG9yZWRUaGVtZSA9IGF3YWl0IHBhZ2UuZXZhbHVhdGUoKCkgPT4KICAgICAgd2luZG93LmxvY2FsU3RvcmFnZS5nZXRJdGVtKCJvcGVuc2luX3RoZW1lIiksCiAgICApOwogICAgZXhwZWN0KHN0b3JlZFRoZW1lKS50b0JlKCJkYXJrIik7CiAgfSk7CgogIHRlc3QoInN3aXRjaGluZyB0byBsaWdodCB0aGVtZSB1cGRhdGVzIGRhdGEtdGhlbWUgYW5kIGxvY2FsU3RvcmFnZSIsIGFzeW5jICh7CiAgICBwYWdlLAogIH0pID0+IHsKICAgIGF3YWl0IHBhZ2UuZ290bygiLyIsIHsgd2FpdFVudGlsOiAibmV0d29ya2lkbGUiIH0pOwogICAgYXdhaXQgYXNzZXJ0QXBwTG9hZGVkKHBhZ2UpOwoKICAgIGNvbnN0IG1lbnVUcmlnZ2VyID0gcGFnZQogICAgICAubG9jYXRvcignYnV0dG9uW2FyaWEtaGFzcG9wdXA9Im1lbnUiXScpCiAgICAgIC5maWx0ZXIoeyBoYXNUZXh0OiAvYWRtaW4vaSB9KTsKICAgIGF3YWl0IG1lbnVUcmlnZ2VyLndhaXRGb3IoeyBzdGF0ZTogInZpc2libGUiLCB0aW1lb3V0OiAxMDAwMCB9KTsKICAgIGF3YWl0IG1lbnVUcmlnZ2VyLmNsaWNrKCk7CgogICAgY29uc3QgcG9wdXBNZW51ID0gcGFnZS5sb2NhdG9yKCdbcm9sZT0ibWVudSJdJykuZmlyc3QoKTsKICAgIGF3YWl0IGV4cGVjdChwb3B1cE1lbnUpLnRvQmVWaXNpYmxlKHsgdGltZW91dDogNTAwMCB9KTsKCiAgICBjb25zdCBsaWdodEJ0biA9IHBhZ2UuZ2V0QnlSb2xlKCJidXR0b24iLCB7IG5hbWU6ICJMaWdodCIsIGV4YWN0OiB0cnVlIH0pOwogICAgYXdhaXQgZXhwZWN0KGxpZ2h0QnRuKS50b0JlVmlzaWJsZSh7IHRpbWVvdXQ6IDUwMDAgfSk7CiAgICBhd2FpdCBsaWdodEJ0bi5jbGljaygpOwoKICAgIGF3YWl0IGV4cGVjdChwYWdlLmxvY2F0b3IoImh0bWwiKSkudG9IYXZlQXR0cmlidXRlKAogICAgICAiZGF0YS10aGVtZSIsCiAgICAgICJsaWdodCIsCiAgICAgIHsgdGltZW91dDogNTAwMCB9LAogICAgKTsKCiAgICBjb25zdCBzdG9yZWRUaGVtZSA9IGF3YWl0IHBhZ2UuZXZhbHVhdGUoKCkgPT4KICAgICAgd2luZG93LmxvY2FsU3RvcmFnZS5nZXRJdGVtKCJvcGVuc2luX3RoZW1lIiksCiAgICApOwogICAgZXhwZWN0KHN0b3JlZFRoZW1lKS50b0JlKCJsaWdodCIpOwogIH0pOwoKICB0ZXN0KCJ0aGVtZSBwZXJzaXN0cyBhY3Jvc3MgcGFnZSByZWxvYWQiLCBhc3luYyAoeyBwYWdlIH0pID0+IHsKICAgIGF3YWl0IHBhZ2UuZ290bygiLyIsIHsgd2FpdFVudGlsOiAibmV0d29ya2lkbGUiIH0pOwogICAgYXdhaXQgYXNzZXJ0QXBwTG9hZGVkKHBhZ2UpOwoKICAgIGF3YWl0IHBhZ2UuZXZhbHVhdGUoKCkgPT4gewogICAgICB3aW5kb3cubG9jYWxTdG9yYWdlLnNldEl0ZW0oIm9wZW5zaW5fdGhlbWUiLCAibGlnaHQiKTsKICAgIH0pOwoKICAgIGF3YWl0IHBhZ2UucmVsb2FkKHsgd2FpdFVudGlsOiAibmV0d29ya2lkbGUiIH0pOwogICAgYXdhaXQgYXNzZXJ0QXBwTG9hZGVkKHBhZ2UpOwoKICAgIGF3YWl0IGV4cGVjdChwYWdlLmxvY2F0b3IoImh0bWwiKSkudG9IYXZlQXR0cmlidXRlKAogICAgICAiZGF0YS10aGVtZSIsCiAgICAgICJsaWdodCIsCiAgICAgIHsgdGltZW91dDogMTAwMDAgfSwKICAgICk7CgogICAgY29uc3Qgc3RvcmVkVGhlbWUgPSBhd2FpdCBwYWdlLmV2YWx1YXRlKCgpID0+CiAgICAgIHdpbmRvdy5sb2NhbFN0b3JhZ2UuZ2V0SXRlbSgib3BlbnNpbl90aGVtZSIpLAogICAgKTsKICAgIGV4cGVjdChzdG9yZWRUaGVtZSkudG9CZSgibGlnaHQiKTsKICB9KTsKfSk7Cg==
+// SPDX-License-Identifier: MIT
+// Purpose: E2E test for the theme toggle — click the theme segment in the
+// account menu and verify data-theme changes on <html> and persists in
+// localStorage under "opensin_theme".
+// Docs: frontend/tests/e2e/README.doc.md
+import { test, expect } from "@playwright/test";
+import {
+  seedSession,
+  mockOnboardingCheck,
+  assertAppLoaded,
+} from "./_helpers.js";
+import { sharedLogin as login } from "./_token-cache.js";
+
+test.describe("theme toggle", () => {
+  test.describe.configure({ mode: "serial" });
+
+  let token;
+
+  test.beforeAll(async ({ request }) => {
+    token = await login(request);
+  });
+
+  test.beforeEach(async ({ page }) => {
+    await seedSession(page, token);
+    await mockOnboardingCheck(page);
+  });
+
+  test("switching to dark theme updates data-theme and localStorage", async ({
+    page,
+  }) => {
+    await page.goto("/", { waitUntil: "networkidle" });
+    await assertAppLoaded(page);
+
+    // Open the account menu — target the non-compact trigger in the sidebar
+    // footer (contains "admin" text), not the compact one in LeftSidebarIconBar
+    // (which has aria-label="Profile" and is intercepted by the nav).
+    const menuTrigger = page
+      .locator('button[aria-haspopup="menu"]')
+      .filter({ hasText: /admin/i });
+    await menuTrigger.waitFor({ state: "visible", timeout: 10000 });
+    await menuTrigger.click();
+
+    const popupMenu = page.locator('[role="menu"]').first();
+    await expect(popupMenu).toBeVisible({ timeout: 5000 });
+
+    // Click the "Dark" theme button (aria-label="Dark")
+    const darkBtn = page.getByRole("button", { name: "Dark", exact: true });
+    await expect(darkBtn).toBeVisible({ timeout: 5000 });
+    await darkBtn.click();
+
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark", {
+      timeout: 5000,
+    });
+
+    const storedTheme = await page.evaluate(() =>
+      window.localStorage.getItem("opensin_theme"),
+    );
+    expect(storedTheme).toBe("dark");
+  });
+
+  test("switching to light theme updates data-theme and localStorage", async ({
+    page,
+  }) => {
+    await page.goto("/", { waitUntil: "networkidle" });
+    await assertAppLoaded(page);
+
+    const menuTrigger = page
+      .locator('button[aria-haspopup="menu"]')
+      .filter({ hasText: /admin/i });
+    await menuTrigger.waitFor({ state: "visible", timeout: 10000 });
+    await menuTrigger.click();
+
+    const popupMenu = page.locator('[role="menu"]').first();
+    await expect(popupMenu).toBeVisible({ timeout: 5000 });
+
+    const lightBtn = page.getByRole("button", { name: "Light", exact: true });
+    await expect(lightBtn).toBeVisible({ timeout: 5000 });
+    await lightBtn.click();
+
+    await expect(page.locator("html")).toHaveAttribute(
+      "data-theme",
+      "light",
+      { timeout: 5000 },
+    );
+
+    const storedTheme = await page.evaluate(() =>
+      window.localStorage.getItem("opensin_theme"),
+    );
+    expect(storedTheme).toBe("light");
+  });
+
+  test("theme persists across page reload", async ({ page }) => {
+    await page.goto("/", { waitUntil: "networkidle" });
+    await assertAppLoaded(page);
+
+    await page.evaluate(() => {
+      window.localStorage.setItem("opensin_theme", "light");
+    });
+
+    await page.reload({ waitUntil: "networkidle" });
+    await assertAppLoaded(page);
+
+    await expect(page.locator("html")).toHaveAttribute(
+      "data-theme",
+      "light",
+      { timeout: 10000 },
+    );
+
+    const storedTheme = await page.evaluate(() =>
+      window.localStorage.getItem("opensin_theme"),
+    );
+    expect(storedTheme).toBe("light");
+  });
+});

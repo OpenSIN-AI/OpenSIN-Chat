@@ -1,1 +1,246 @@
-PGEgbmFtZT0icmVhZG1lLXRvcCI+PC9hPgoKPHAgYWxpZ249ImNlbnRlciI+CiAgPGEgaHJlZj0iaHR0cHM6Ly9vcGVuc2luLmNvbSI+PGltZyBzcmM9Imh0dHBzOi8vZ2l0aHViLmNvbS9GYW1pbHktVGVhbS1Qcm9qZWN0cy9vcGVuc2luLWNoYXQvYmxvYi9tYXN0ZXIvaW1hZ2VzL3dvcmRtYXJrLnBuZz9yYXc9dHJ1ZSIgYWx0PSJPcGVuU0lOIENoYXQgbG9nbyI+PC9hPgo8L3A+Cgo8ZGl2IGFsaWduPSdjZW50ZXInPgo8YSBocmVmPSJodHRwczovL3RyZW5kc2hpZnQuaW8vcmVwb3NpdG9yaWVzLzI0MTUiIHRhcmdldD0iX2JsYW5rIj48aW1nIHNyYz0iaHR0cHM6Ly90cmVuZHNoaWZ0LmlvL2FwaS9iYWRnZS9yZXBvc2l0b3JpZXMvMjQxNSIgYWx0PSJGYW1pbHktVGVhbS1Qcm9qZWN0cyUyRm9wZW5zaW4tY2hhdCB8IFRyZW5kc2hpZnQiIHN0eWxlPSJ3aWR0aDogMjUwcHg7IGhlaWdodDogNTVweDsiIHdpZHRoPSIyNTAiIGhlaWdodD0iNTUiLz48L2E+CjwvZGl2PgoKPHAgYWxpZ249ImNlbnRlciI+CiAgICA8Yj5PcGVuU0lOIENoYXQ6PC9iPiDjgYLjgarjgZ/jgYzmjqLjgZfjgabjgYTjgZ/jgqrjg7zjg6vjgqTjg7Pjg6/jg7NBSeOCouODl+ODquOAgjxiciAvPgogICAg44OJ44Kt44Ol44Oh44Oz44OI44Go44OB44Oj44OD44OI44GX44CBQUnjgqjjg7zjgrjjgqfjg7Pjg4jjgpLkvb/nlKjjgZfjgIHpq5jluqbjgavjgqvjgrnjgr/jg57jgqTjgrrlj6/og73jgafjgIHopIfmlbDjg6bjg7zjgrbjg7zlr77lv5zjgIHpnaLlgJLjgaroqK3lrprjga/kuI3opoHjgafjgZnjgIIKPC9wPgoKPHAgYWxpZ249ImNlbnRlciI+CiAgPGEgaHJlZj0iaHR0cHM6Ly9kaXNjb3JkLmdnLzZVeUhQZUdaQUMiIHRhcmdldD0iX2JsYW5rIj4KICAgICAgPGltZyBzcmM9Imh0dHBzOi8vaW1nLnNoaWVsZHMuaW8vYmFkZ2UvY2hhdC1vcGVuc2luLWNoYXQtYmx1ZS5zdmc/c3R5bGU9ZmxhdCZsb2dvPWRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBQ0FBQUFBZ0NBTUFBQUJFcElyR0FBQUFJR05JVWswQUFIb21BQUNBaEFBQStnQUFBSURvQUFCMU1BQUE2bUFBQURxWUFBQVhjSnk2VVR3QUFBSDFVRXhVUlFBQUFQLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vLy8vL3I2K3VibjUrN3U3LzMrL3YzOS9lbnE2dXJxNi92Nys5N2YzOXJiMjZlb3FUMUJRMHBPVDQrUmt1enM3Y25LeWtaS1MwTkhTSGw4ZmR6ZDNlam82VXhQVVVCRFJkemMzUndnSWg4akpTQWtKbTV4Y3ZIeDhhYW5xQjRpSkZCVFZlenQ3VjVoWWxKVlZ1TGo0M3A5ZmlJbUtDTW5LWktVbGFhb3FTRWxKMjF3Y2ZUMDlPM3U3dXZyNnpFME5yNi93Q1VwSzVxY25mNysvbmg3ZkVkS1RIeCtmMHRQVU9UbDVhaXBxaW91TUd0dWJ6NUNSRFE0T3NUR3h1Zm41MTVoWTdhM3VIMS9nWEJ5ZElPRmhsVllXdlgyOXFhb3FDUW9LczdQei9Qejg3L0F3VXRPVU5mWTJkSFIwbWhyYk92cjdFNVJVeTh6TlhSMmQvZjM5K1hsNVVaSlN4MGhJelEzT2RyYTIvejgvR2xzYmFHanBFUkhTZXpzN0wvQndTY3JMVFE0T2RuYTJ6TTNPYm03dTN4L2dLU21wOWpaMlQxQVF1L3Y3MXBkWGtWSVNyMit2eWdzTGlJbktUZzdQYU9scGlzdk1jWEd4ems4UGxkYVhQTHk4dTd1N3JtNnU3UzF0c0RCd3ZqNCtNUEV4YmU0dWVYbTVzL1EwS3lmN2V3QUFBQW9kRkpPVXdBQUJDbHNyTmp4L1FNMmw5LzdsaG1JNmpUQi9rQTFHZ0tKTituZWE2dnkvTUxaUVllVktLM3JWQTV0QUFBQUFXSkxSMFFCL3dJdDNnQUFBQWQwU1UxRkIrY0tCQUFtTVpCSGpYSUFBQUlTU1VSQlZEakxZMkNBQWtZbVpoWldObllPRG5ZMlZoWm1Ka1lHVk1ESXljWE53NnNCQmJ3OGZGeWN5RW9ZR2ZrRkJEVlFnS0FBUHlNalFsNUlXRVFERFlnSUM4RlVNREtLc21sZ0FXeWlFQldNakdKWTVZRXF4TUFxR01XRk5YQUFZWEdnQWtZSlNRMmNRRktDa1lGUlNocTNBbWtwUmdZSmJnaGJVMHRiQjBUcjZ1a2JnR2hESTEwZ3lTZkJ3Q3dEVVdCc1ltcG1EcVF0TEsyc2JUUTBiTzNzSFlBOEdXWUdXV2o0V1RzNk9idTRhbWk0T1RtN2V4aHFlSHA1KzREQ1ZKWkJEbXFkcjd1Zm4zK0Fya1pna0orZlUzQ0lSbWdZV0ZpT0FSWUd2bzVPUVVIaEVVQUZUa0Yra1ZIUnNMQmdrSWV5WW1MandvT2M0aE1TazVKVG5JTlMwNkRDOGd3Y0VFWjZScVpHbHBPZmMzWk9ibDUrZ1orVFIyRVJXRnlCUVFGTUY1ZWtsbXFVcFFiNStSZVU2MVpVT3ZrRlZWWFhRQlNBcmFpdHEyOW8xR2lLY2ZMemMyOXUwbWp4QnpxMHRRMGt3dzV4Wkh0SFVHZVhoa1poZHhCWWdaNGQwTEk2YzRnandkN3NpUVFyYU9wMUFpdlE2Q3VBS1pDREJCUlFRUU5RZ1ViL0JHZjNjcUNDaVpPY25DZTNRUUlLSE5SVHBrNmJEZ3BaalJremczcEJRVEJyZHRDY3VaQ2dsdUFEMHZQbUwxZ0lkdlNpeFV1V2dxTnMyWUorRFVoa0VZeHVnZ2tHbU9RVWNja3Jpb1BUSkNPWEVuWjVKUzVZc2xiR251eVZFUmxEREZ2R0VVUE9XdndxYUg2UlZrSEtldURNSzZTS25IbFZoVGd4OGplVG1xeTZFaWo3SzZuTHFpR3lQd0Noc2ExTVVybnExd0FBQUNWMFJWaDBaR0YwWlRwamNtVmhkR1VBTWpBeU15MHhNQzB3TkZRd01Eb3pPRG8wT1Nzd01Eb3dNQjlWMGE4QUFBQWxkRVZZZEdSaGRHVTZiVzlrYVdaNUFESXdNak10TVRBdE1EUlVNREE2TXpnNk5Ea3JNREE2TURCdUNHa1RBQUFBS0hSRldIUmtZWFJsT25ScGJXVnpkR0Z0Y0FBeU1ESXpMVEV3TFRBMFZEQXdPak00T2pRNUt6QXdPakF3T1IxSXpBQUFBQUJKUlU1RXJrSmdnZz09IiBhbHQ9IkRpc2NvcmQiPgogIDwvYT4gfAogIDxhIGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9GYW1pbHktVGVhbS1Qcm9qZWN0cy9vcGVuc2luLWNoYXQvYmxvYi9tYXN0ZXIvTElDRU5TRSIgdGFyZ2V0PSJfYmxhbmsiPgogICAgICA8aW1nIHNyYz0iaHR0cHM6Ly9pbWcuc2hpZWxkcy5pby9zdGF0aWMvdjE/bGFiZWw9bGljZW5zZSZtZXNzYWdlPU1JVCZjb2xvcj13aGl0ZSIgYWx0PSLjg6njgqTjgrvjg7PjgrkiPgogIDwvYT4gfAogIDxhIGhyZWY9Imh0dHBzOi8vZG9jcy5zaW5jaGF0LmRlbHFoaS5jb20iIHRhcmdldD0iX2JsYW5rIj4KICAgIOODieOCreODpeODoeODs+ODiAogIDwvYT4gfAogICA8YSBocmVmPSJodHRwczovL215Lm9wZW5zaW4uY29tL2Fpby1jaGVja291dD9wcm9kdWN0PW9wZW5zaW4iIHRhcmdldD0iX2JsYW5rIj4KICAgIOODm+OCueODiOOBleOCjOOBn+OCpOODs+OCueOCv+ODs+OCuQogIDwvYT4KPC9wPgoKPHAgYWxpZ249ImNlbnRlciI+CiAgPGEgaHJlZj0nLi4vUkVBRE1FLm1kJz5FbmdsaXNoPC9hPiDCtyA8YSBocmVmPScuL1JFQURNRS56aC1DTi5tZCc+566A5L2T5Lit5paHPC9hPiDCtyA8Yj7ml6XmnKzoqp48L2I+CjwvcD4KCjxwIGFsaWduPSJjZW50ZXIiPgrwn5GJIOODh+OCueOCr+ODiOODg+ODl+eUqE9wZW5TSU4gQ2hhdO+8iE1hY+OAgVdpbmRvd3PjgIFMaW51eOWvvuW/nO+8ie+8gTxhIGhyZWY9Imh0dHBzOi8vb3BlbnNpbi5jb20vZG93bmxvYWQiIHRhcmdldD0iX2JsYW5rIj7ku4rjgZnjgZDjg4Djgqbjg7Pjg63jg7zjg4k8L2E+CjwvcD4KCuOBk+OCjOOBr+OAgeS7u+aEj+OBruODieOCreODpeODoeODs+ODiOOAgeODquOCveODvOOCueOAgeOBvuOBn+OBr+OCs+ODs+ODhuODs+ODhOOBruaWreeJh+OCkuOAgeODgeODo+ODg+ODiOS4reOBq0xMTeOBjOWPgueFp+OBqOOBl+OBpuS9v+eUqOOBp+OBjeOCi+OCs+ODs+ODhuOCreOCueODiOOBq+WkieaPm+OBp+OBjeOCi+ODleODq+OCueOCv+ODg+OCr+OCouODl+ODquOCseODvOOCt+ODp+ODs+OBp+OBmeOAguOBk+OBruOCouODl+ODquOCseODvOOCt+ODp+ODs+OCkuS9v+eUqOOBmeOCi+OBqOOAgeS9v+eUqOOBmeOCi0xMTeOBvuOBn+OBr+ODmeOCr+ODiOODq+ODh+ODvOOCv+ODmeODvOOCueOCkumBuOaKnuOBl+OAgeODnuODq+ODgeODpuODvOOCtuODvOeuoeeQhuOBqOaoqemZkOOCkuOCteODneODvOODiOOBp+OBjeOBvuOBmeOAggoKIVtDaGF0dGluZ10oaHR0cHM6Ly9naXRodWIuY29tL0ZhbWlseS1UZWFtLVByb2plY3RzL29wZW5zaW4tY2hhdC9yZWxlYXNlcy9kb3dubG9hZC92MS4xMS4yL09wZW5TSU4gQ2hhdDcyMHAuZ2lmKQoKPGRldGFpbHM+CjxzdW1tYXJ5PjxrYmQ+44OH44Oi44KS6KaL44KL77yBPC9rYmQ+PC9zdW1tYXJ5PgoKWyFb44OT44OH44Kq44KS6KaL44KLXSgvaW1hZ2VzL3lvdXR1YmUucG5nKV0oaHR0cHM6Ly95b3V0dS5iZS9mOTVyR0Q5dHJMMCkKCjwvZGV0YWlscz4KCiMjIyDoo73lk4HmpoLopoEKCk9wZW5TSU4gQ2hhdOOBr+OAgeOBguOBquOBn+OBjOaOouOBl+OBpuOBhOOBn+OCquODvOODq+OCpOODs+ODr+ODs0FJ44Ki44OX44Oq44Gn44GZ44CCT3BlblNJTiBDaGF044Gr44Gv44CB44GK5rCX44Gr5YWl44KK44Gu44Ot44O844Kr44Or44G+44Gf44Gv44Kv44Op44Km44OJTExN44OX44Ot44OQ44Kk44OA44O844KS5L2/55So44GX44Gm44CB5aal5Y2U44Gu44Gq44GE44OX44Op44Kk44OZ44O844OIQ2hhdEdQVOOCkuani+evieOBmeOCi+OBn+OCgeOBq+W/heimgeOBquOBmeOBueOBpuOBjOWQq+OBvuOCjOOBpuOBhOOBvuOBmeOAgk9wZW5TSU4gQ2hhdOOBr+mrmOW6puOBq+OCq+OCueOCv+ODnuOCpOOCuuWPr+iDveOBp+OBguOCiuOBquOBjOOCieOAgeODk+ODq+ODiOOCpOODs+OCqOODvOOCuOOCp+ODs+ODiOOAgeODnuODq+ODgeODpuODvOOCtuODvOOCteODneODvOODiOOAgeODmeOCr+ODiOODq+ODh+ODvOOCv+ODmeODvOOCueOAgeODieOCreODpeODoeODs+ODiOWPluOCiui+vOOBv+ODkeOCpOODl+ODqeOCpOODs+OBquOBqeOAgeOBmeOBkOOBq+S9v+OBhOWni+OCgeOCi+OBn+OCgeOBq+W/heimgeOBquOBmeOBueOBpuOBjOaPg+OBo+OBpuOBhOOBvuOBmeOAggoKT3BlblNJTiBDaGF044Gv6KSH5pWw44Om44O844K244O844KC44K144Od44O844OI44GX44Gm44GK44KK44CB44Kk44Oz44K544K/44Oz44K544Gu44K744Kt44Ol44Oq44OG44Kj44KE44OX44Op44Kk44OQ44K344O844CB55+l55qE6LKh55Sj44KS5pCN44Gq44GG44GT44Go44Gq44GP44CB44Om44O844K244O844GU44Go44Gr44Ki44Kv44K744K544Go5L2T6aiT44KS5Yi25b6h44Gn44GN44G+44GZ44CCCgojIyBPcGVuU0lOIENoYXTjga7jgYTjgY/jgaTjgYvjga7jgq/jg7zjg6vjgarmqZ/og70KCi0gKirjg57jg6vjg4Hjg6bjg7zjgrbjg7zjgqTjg7Pjgrnjgr/jg7Pjgrnjga7jgrXjg53jg7zjg4jjgajmqKnpmZDku5jkuI4qKgotIOODr+ODvOOCr+OCueODmuODvOOCueWGheOBruOCqOODvOOCuOOCp+ODs+ODiO+8iOOCpuOCp+ODluOCkumWsuimp+OAgeOCs+ODvOODieOCkuWun+ihjOOBquOBqe+8iQotIFvjgqbjgqfjg5bjgrXjgqTjg4jnlKjjga7jgqvjgrnjgr/jg6Dln4vjgoHovrzjgb/lj6/og73jgarjg4Hjg6Pjg4Pjg4jjgqbjgqPjgrjjgqfjg4Pjg4hdKGh0dHBzOi8vZ2l0aHViLmNvbS9GYW1pbHktVGVhbS1Qcm9qZWN0cy9vcGVuc2luLWVtYmVkL2Jsb2IvbWFpbi9SRUFETUUubWQpCi0g6KSH5pWw44Gu44OJ44Kt44Ol44Oh44Oz44OI44K/44Kk44OX44Gu44K144Od44O844OI77yIUERG44CBVFhU44CBRE9DWOOBquOBqe+8iQotIOOCt+ODs+ODl+ODq+OBqlVJ44GL44KJ44OZ44Kv44OI44Or44OH44O844K/44OZ44O844K55YaF44Gu44OJ44Kt44Ol44Oh44Oz44OI44KS566h55CGCi0gMuOBpOOBruODgeODo+ODg+ODiOODouODvOODiWDkvJroqbFg44GoYOOCr+OCqOODqmDjgILkvJroqbHjga/ku6XliY3jga7os6rllY/jgajkv67mraPjgpLkv53mjIHjgZfjgb7jgZnjgILjgq/jgqjjg6rjga/jg4njgq3jg6Xjg6Hjg7Pjg4jjgavlr77jgZnjgovjgrfjg7Pjg5fjg6vjgapRQeOBp+OBmQotIOODgeODo+ODg+ODiOS4reOBruW8leeUqAotIDEwMCXjgq/jg6njgqbjg4njg4fjg5fjg63jgqTjg6Hjg7Pjg4jlr77lv5zjgIIKLSDjgIzni6zoh6rjga5MTE3jgpLmjIHlj4LjgI3jg6Ljg4fjg6vjgIIKLSDlpKfopo/mqKHjgarjg4njgq3jg6Xjg6Hjg7Pjg4jjgpLnrqHnkIbjgZnjgovjgZ/jgoHjga7pnZ7luLjjgavlirnnjofnmoTjgarjgrPjgrnjg4jliYrmuJvnrZbjgILlt6jlpKfjgarjg4njgq3jg6Xjg6Hjg7Pjg4jjgoTjg4jjg6njg7Pjgrnjgq/jg6rjg5fjg4jjgpLln4vjgoHovrzjgoDjgZ/jgoHjgavkuIDluqbku6XkuIrmlK/miZXjgYbjgZPjgajjga/jgYLjgorjgb7jgZvjgpPjgILku5bjga7jg4njgq3jg6Xjg6Hjg7Pjg4jjg4Hjg6Pjg4Pjg4jjg5zjg4Pjg4jjgr3jg6rjg6Xjg7zjgrfjg6fjg7PjgojjgorjgoI5MCXjgrPjgrnjg4jlirnnjofjgYzoia/jgYTjgafjgZnjgIIKLSDjgqvjgrnjgr/jg6DntbHlkIjjga7jgZ/jgoHjga7lrozlhajjgarplovnmbrogIVBUEnvvIEKCiMjIyDjgrXjg53jg7zjg4jjgZXjgozjgabjgYTjgotMTE3jgIHln4vjgoHovrzjgb/jg6Ljg4fjg6vjgIHpn7Plo7Djg6Ljg4fjg6vjgIHjgYrjgojjgbPjg5njgq/jg4jjg6vjg4fjg7zjgr/jg5njg7zjgrkKCioq6KiA6Kqe5a2m57+S44Oi44OH44Or77yaKioKCi0gW2xsYW1hLmNwcOS6kuaPm+OBruS7u+aEj+OBruOCquODvOODl+ODs+OCveODvOOCueODouODh+ODq10oL3NlcnZlci9zdG9yYWdlL21vZGVscy9SRUFETUUubWQjdGV4dC1nZW5lcmF0aW9uLWxsbS1zZWxlY3Rpb24pCi0gW09wZW5BSV0oaHR0cHM6Ly9vcGVuYWkuY29tKQotIFtPcGVuQUkgKOaxjueUqCldKGh0dHBzOi8vb3BlbmFpLmNvbSkKLSBbQXp1cmUgT3BlbkFJXShodHRwczovL2F6dXJlLm1pY3Jvc29mdC5jb20vZW4tdXMvcHJvZHVjdHMvYWktc2VydmljZXMvb3BlbmFpLXNlcnZpY2UpCi0gW0FudGhyb3BpY10oaHR0cHM6Ly93d3cuYW50aHJvcGljLmNvbS8pCi0gW0dvb2dsZSBHZW1pbmkgUHJvXShodHRwczovL2FpLmdvb2dsZS5kZXYvKQotIFtIdWdnaW5nIEZhY2UgKOODgeODo+ODg+ODiOODouODh+ODqyldKGh0dHBzOi8vaHVnZ2luZ2ZhY2UuY28vKQotIFtPbGxhbWEgKOODgeODo+ODg+ODiOODouODh+ODqyldKGh0dHBzOi8vb2xsYW1hLmFpLykKLSBbTE0gU3R1ZGlvICjjgZnjgbnjgabjga7jg6Ljg4fjg6spXShodHRwczovL2xtc3R1ZGlvLmFpKQotIFtMb2NhbEFpICjjgZnjgbnjgabjga7jg6Ljg4fjg6spXShodHRwczovL2xvY2FsYWkuaW8vKQotIFtUb2dldGhlciBBSSAo44OB44Oj44OD44OI44Oi44OH44OrKV0oaHR0cHM6Ly93d3cudG9nZXRoZXIuYWkvKQotIFtGaXJld29ya3MgQUkgKOODgeODo+ODg+ODiOODouODh+ODqyldKGh0dHBzOi8vZmlyZXdvcmtzLmFpLykKLSBbUGVycGxleGl0eSAo44OB44Oj44OD44OI44Oi44OH44OrKV0oaHR0cHM6Ly93d3cucGVycGxleGl0eS5haS8pCi0gW09wZW5Sb3V0ZXIgKOODgeODo+ODg+ODiOODouODh+ODqyldKGh0dHBzOi8vb3BlbnJvdXRlci5haS8pCi0gW05vdml0YSBBSSAo44OB44Oj44OD44OI44Oi44OH44OrKV0oaHR0cHM6Ly9ub3ZpdGEuYWkvbW9kZWwtYXBpL3Byb2R1Y3QvbGxtLWFwaT91dG1fc291cmNlPWdpdGh1Yl9vcGVuc2luLWNoYXQmdXRtX21lZGl1bT1naXRodWJfcmVhZG1lJnV0bV9jYW1wYWlnbj1saW5rKQotIFtNaXN0cmFsXShodHRwczovL21pc3RyYWwuYWkvKQotIFtHcm9xXShodHRwczovL2dyb3EuY29tLykKLSBbQ29oZXJlXShodHRwczovL2NvaGVyZS5jb20vKQotIFtLb2JvbGRDUFBdKGh0dHBzOi8vZ2l0aHViLmNvbS9Mb3N0UnVpbnMva29ib2xkY3BwKQotIFt4QUldKGh0dHBzOi8veC5haS8pCi0gW1ouQUkgKOODgeODo+ODg+ODiOODouODh+ODqyldKGh0dHBzOi8vei5haS9tb2RlbC1hcGkpCi0gW1BQSU9dKGh0dHBzOi8vcHBpbmZyYS5jb20/dXRtX3NvdXJjZT1naXRodWJfb3BlbnNpbi1jaGF0KQotIFtDb21ldEFQSSAo44OB44Oj44OD44OI44Oi44OH44OrKV0oaHR0cHM6Ly9hcGkuY29tZXRhcGkuY29tLykKLSBbRG9ja2VyIE1vZGVsIFJ1bm5lcl0oaHR0cHM6Ly9kb2NzLmRvY2tlci5jb20vYWkvbW9kZWwtcnVubmVyLykKLSBbUHJpdmF0ZU1vZGVBSSAoY2hhdCBtb2RlbHMpXShodHRwczovL3ByaXZhdGVtb2RlLmFpLykKLSBbU2FtYmFOb3ZhIENsb3VkIChjaGF0IG1vZGVscyldKGh0dHBzOi8vY2xvdWQuc2FtYmFub3ZhLmFpLykKLSBbTGVtb25hZGUgYnkgQU1EXShodHRwczovL2xlbW9uYWRlLXNlcnZlci5haSkKLSBbTWluaW1heF0oaHR0cHM6Ly9wbGF0Zm9ybS5taW5pbWF4LmlvKQotIFtDZXJlYnJhcyAoY2hhdCBtb2RlbHMpXShodHRwczovL3d3dy5jZXJlYnJhcy5haS8pCgoqKuWfi+OCgei+vOOBv+ODouODh+ODq++8mioqCgotIFtPcGVuU0lOIENoYXTjg43jgqTjg4bjgqPjg5bln4vjgoHovrzjgb9dKC9zZXJ2ZXIvc3RvcmFnZS9tb2RlbHMvUkVBRE1FLm1kKe+8iOODh+ODleOCqeODq+ODiO+8iQotIFtPcGVuQUldKGh0dHBzOi8vb3BlbmFpLmNvbSkKLSBbQXp1cmUgT3BlbkFJXShodHRwczovL2F6dXJlLm1pY3Jvc29mdC5jb20vZW4tdXMvcHJvZHVjdHMvYWktc2VydmljZXMvb3BlbmFpLXNlcnZpY2UpCi0gW0xvY2FsQWkgKOOBmeOBueOBpildKGh0dHBzOi8vbG9jYWxhaS5pby8pCi0gW09sbGFtYSAo44GZ44G544GmKV0oaHR0cHM6Ly9vbGxhbWEuYWkvKQotIFtMTSBTdHVkaW8gKOOBmeOBueOBpildKGh0dHBzOi8vbG1zdHVkaW8uYWkpCi0gW0NvaGVyZV0oaHR0cHM6Ly9jb2hlcmUuY29tLykKCioq6Z+z5aOw5aSJ5o+b44Oi44OH44Or77yaKioKCi0gW09wZW5TSU4gQ2hhdOWGheiUtV0oaHR0cHM6Ly9naXRodWIuY29tL0ZhbWlseS1UZWFtLVByb2plY3RzL29wZW5zaW4tY2hhdC90cmVlL21hc3Rlci9zZXJ2ZXIvc3RvcmFnZS9tb2RlbHMjYXVkaW92aWRlby10cmFuc2NyaXB0aW9uKe+8iOODh+ODleOCqeODq+ODiO+8iQotIFtPcGVuQUldKGh0dHBzOi8vb3BlbmFpLmNvbS8pCgoqKlRUU++8iOODhuOCreOCueODiOOBi+OCiemfs+WjsOOBuO+8ieOCteODneODvOODiO+8mioqCgotIOODjeOCpOODhuOCo+ODluODluODqeOCpuOCtuWGheiUte+8iOODh+ODleOCqeODq+ODiO+8iQotIFtPcGVuQUkgVFRTXShodHRwczovL3BsYXRmb3JtLm9wZW5haS5jb20vZG9jcy9ndWlkZXMvdGV4dC10by1zcGVlY2gvdm9pY2Utb3B0aW9ucykKLSBbRWxldmVuTGFic10oaHR0cHM6Ly9lbGV2ZW5sYWJzLmlvLykKCioqU1RU77yI6Z+z5aOw44GL44KJ44OG44Kt44K544OI44G477yJ44K144Od44O844OI77yaKioKCi0g44ON44Kk44OG44Kj44OW44OW44Op44Km44K25YaF6JS177yI44OH44OV44Kp44Or44OI77yJCgoqKuODmeOCr+ODiOODq+ODh+ODvOOCv+ODmeODvOOCue+8mioqCgotIFtMYW5jZURCXShodHRwczovL2dpdGh1Yi5jb20vbGFuY2VkYi9sYW5jZWRiKe+8iOODh+ODleOCqeODq+ODiO+8iQotIFtQR1ZlY3Rvcl0oaHR0cHM6Ly9naXRodWIuY29tL3BndmVjdG9yL3BndmVjdG9yKQotIFtBc3RyYSBEQl0oaHR0cHM6Ly93d3cuZGF0YXN0YXguY29tL3Byb2R1Y3RzL2RhdGFzdGF4LWFzdHJhKQotIFtQaW5lY29uZV0oaHR0cHM6Ly9waW5lY29uZS5pbykKLSBbQ2hyb21hXShodHRwczovL3RyeWNocm9tYS5jb20pCi0gW1dlYXZpYXRlXShodHRwczovL3dlYXZpYXRlLmlvKQotIFtRRHJhbnRdKGh0dHBzOi8vcWRyYW50LnRlY2gpCi0gW01pbHZ1c10oaHR0cHM6Ly9taWx2dXMuaW8pCi0gW1ppbGxpel0oaHR0cHM6Ly96aWxsaXouY29tKQoKIyMjIOaKgOihk+amguimgQoK44GT44Gu44Oi44OO44Os44Od44Gv44CB5Li744GrM+OBpOOBruOCu+OCr+OCt+ODp+ODs+OBp+ani+aIkOOBleOCjOOBpuOBhOOBvuOBme+8mgoKLSBgZnJvbnRlbmRgOiBMTE3jgYzkvb/nlKjjgafjgY3jgovjgZnjgbnjgabjga7jgrPjg7Pjg4bjg7Pjg4TjgpLnsKHljZjjgavkvZzmiJDjgYrjgojjgbPnrqHnkIbjgafjgY3jgot2aXRlSlMgKyBSZWFjdOODleODreODs+ODiOOCqOODs+ODieOAggotIGBzZXJ2ZXJgOiDjgZnjgbnjgabjga7jgqTjg7Pjgr/jg6njgq/jgrfjg6fjg7PjgpLlh6bnkIbjgZfjgIHjgZnjgbnjgabjga7jg5njgq/jg4jjg6tEQueuoeeQhuOBiuOCiOOBs0xMTeOCpOODs+OCv+ODqeOCr+OCt+ODp+ODs+OCkuihjOOBhk5vZGVKUyBleHByZXNz44K144O844OQ44O844CCCi0gYGNvbGxlY3RvcmA6IFVJ44GL44KJ44OJ44Kt44Ol44Oh44Oz44OI44KS5Yem55CG44GK44KI44Gz6Kej5p6Q44GZ44KLTm9kZUpTIGV4cHJlc3PjgrXjg7zjg5Djg7zjgIIKLSBgZG9ja2VyYDogRG9ja2Vy44Gu5oyH56S644GK44KI44Gz44OT44Or44OJ44OX44Ot44K744K5ICsg44K944O844K544GL44KJ44Gu44OT44Or44OJ5oOF5aCx44CCCi0gYGVtYmVkYDogW+Wfi+OCgei+vOOBv+OCpuOCo+OCuOOCp+ODg+ODiF0oLi4vZW1iZWQvUkVBRE1FLm1kKeOBrueUn+aIkOOBq+eJueWMluOBl+OBn+OCs+ODvOODieOAggoKIyMg8J+bsyDjgrvjg6vjg5Xjg5vjgrnjg4bjgqPjg7PjgrAKCk9wZW5TSU4tQUnjgYrjgojjgbPjgrPjg5/jg6Xjg4vjg4bjgqPjga/jgIFPcGVuU0lOIENoYXTjgpLjg63jg7zjgqvjg6vjgaflrp/ooYzjgafjgY3jgovlpJrmlbDjga7jg4fjg5fjg63jgqTjg6Hjg7Pjg4jmlrnms5XjgIHjgrnjgq/jg6rjg5fjg4jjgIHjg4bjg7Pjg5fjg6zjg7zjg4jjgpLntq3mjIHjgZfjgabjgYTjgb7jgZnjgILku6XkuIvjga7ooajjgpLlj4LnhafjgZfjgabjgIHjgYrlpb3jgb/jga7nkrDlooPjgafjga7jg4fjg5fjg63jgqTmlrnms5XjgpLoqq3jgoDjgYvjgIHoh6rli5Xjg4fjg5fjg63jgqTjgpLooYzjgaPjgabjgY/jgaDjgZXjgYTjgIIKfCBEb2NrZXIgfCBBV1MgfCBHQ1AgfCBEaWdpdGFsIE9jZWFuIHwgUmVuZGVyLmNvbSB8CnwtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tfC0tLS18LS0tLS18LS0tLS0tLS0tLS0tLS0tfC0tLS0tLS0tLS0tLXwKfCBbIVtEb2NrZXLkuIrjgafjg4fjg5fjg63jgqRdW2RvY2tlci1idG5dXVtkb2NrZXItZGVwbG95XSB8IFshW0FXU+S4iuOBp+ODh+ODl+ODreOCpF1bYXdzLWJ0bl1dW2F3cy1kZXBsb3ldIHwgWyFbR0NQ5LiK44Gn44OH44OX44Ot44KkXVtnY3AtYnRuXV1bZ2NwLWRlcGxveV0gfCBbIVtEaWdpdGFsT2NlYW7kuIrjgafjg4fjg5fjg63jgqRdW2RvLWJ0bl1dW2RvLWRlcGxveV0gfCBbIVtSZW5kZXIuY29t5LiK44Gn44OH44OX44Ot44KkXVtyZW5kZXItYnRuXV1bcmVuZGVyLWRlcGxveV0gfAoKfCBSYWlsd2F5ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8CnwgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0gfAp8IFshW1JhaWx3YXnkuIrjgafjg4fjg5fjg63jgqRdW3JhaWx3YXktYnRuXV1bcmFpbHdheS1kZXBsb3ldIHwKCltEb2NrZXLjgpLkvb/nlKjjgZvjgZrjgavmnKznlarnkrDlooPjga5PcGVuU0lOIENoYXTjgqTjg7Pjgrnjgr/jg7PjgrnjgpLoqK3lrprjgZnjgosg4oaSXSguLi9CQVJFX01FVEFMLm1kKQoKIyMg6ZaL55m655Kw5aKD44Gu44K744OD44OI44Ki44OD44OX5pa55rOVCgotIGB5YXJuIHNldHVwYCDlkITjgqLjg5fjg6rjgrHjg7zjgrfjg6fjg7Pjgrvjgq/jgrfjg6fjg7Pjgavlv4XopoHjgapgLmVudmDjg5XjgqHjgqTjg6vjgpLlhaXlipvjgZfjgb7jgZnvvIjjg6rjg53jgrjjg4jjg6rjga7jg6vjg7zjg4jjgYvjgonvvInjgIIKICAtIOasoeOBq+mAsuOCgOWJjeOBq+OBk+OCjOOCieOCkuWFpeWKm+OBl+OBpuOBj+OBoOOBleOBhOOAgmBzZXJ2ZXIvLmVudi5kZXZlbG9wbWVudGDjgYzlhaXlipvjgZXjgozjgabjgYTjgarjgYTjgajmraPjgZfjgY/li5XkvZzjgZfjgb7jgZvjgpPjgIIKLSBgeWFybiBkZXY6c2VydmVyYCDjg63jg7zjgqvjg6vjgafjgrXjg7zjg5Djg7zjgpLotbfli5XjgZfjgb7jgZnvvIjjg6rjg53jgrjjg4jjg6rjga7jg6vjg7zjg4jjgYvjgonvvInjgIIKLSBgeWFybiBkZXY6ZnJvbnRlbmRgIOODreODvOOCq+ODq+OBp+ODleODreODs+ODiOOCqOODs+ODieOCkui1t+WLleOBl+OBvuOBme+8iOODquODneOCuOODiOODquOBruODq+ODvOODiOOBi+OCie+8ieOAggotIGB5YXJuIGRldjpjb2xsZWN0b3JgIOODieOCreODpeODoeODs+ODiOOCs+ODrOOCr+OCv+ODvOOCkuWun+ihjOOBl+OBvuOBme+8iOODquODneOCuOODiOODquOBruODq+ODvOODiOOBi+OCie+8ieOAggoKW+ODieOCreODpeODoeODs+ODiOOBq+OBpOOBhOOBpuWtpuOBtl0oLi4vc2VydmVyL3N0b3JhZ2UvZG9jdW1lbnRzL0RPQ1VNRU5UUy5tZCkKCiMjIOiyoueMruOBmeOCi+aWueazlQoKLSBpc3N1ZeOCkuS9nOaIkOOBmeOCiwotIGA8aXNzdWUgbnVtYmVyPi08c2hvcnQgbmFtZT5g44Gu5b2i5byP44Gu44OW44Op44Oz44OB5ZCN44GnUFLjgpLkvZzmiJDjgZnjgosKLSDjg57jg7zjgrjjgZfjgb7jgZfjgofjgYYKCiMjIOODhuODrOODoeODiOODquODvOOBqOODl+ODqeOCpOODkOOCt+ODvAoKT3BlblNJTi1BSeOBq+OCiOOBo+OBpumWi+eZuuOBleOCjOOBn09wZW5TSU4gQ2hhdOOBq+OBr+OAgeWMv+WQjeOBruS9v+eUqOaDheWgseOCkuWPjumbhuOBmeOCi+ODhuODrOODoeODiOODquODvOapn+iDveOBjOWQq+OBvuOCjOOBpuOBhOOBvuOBmeOAggoKPGRldGFpbHM+CjxzdW1tYXJ5PjxrYmQ+T3BlblNJTiBDaGF044Gu44OG44Os44Oh44OI44Oq44O844Go44OX44Op44Kk44OQ44K344O844Gr44Gk44GE44Gm44Gu6Kmz57SwPC9rYmQ+PC9zdW1tYXJ5PgoKIyMjIOOBquOBnO+8nwoK44GT44Gu5oOF5aCx44KS5L2/55So44GX44Gm44CBT3BlblNJTiBDaGF044Gu5L2/55So5pa55rOV44KS55CG6Kej44GX44CB5paw5qmf6IO944Go44OQ44Kw5L+u5q2j44Gu5YSq5YWI6aCG5L2N44KS5rG65a6a44GX44CBT3BlblNJTiBDaGF044Gu44OR44OV44Kp44O844Oe44Oz44K544Go5a6J5a6a5oCn44KS5ZCR5LiK44GV44Gb44KL44Gu44Gr5b2556uL44Gm44G+44GZ44CCCgojIyMg44Kq44OX44OI44Ki44Km44OICgrjgrXjg7zjg5Djg7zjgb7jgZ/jga9kb2NrZXLjga4uZW526Kit5a6a44GnYERJU0FCTEVfVEVMRU1FVFJZYOOCkuOAjHRydWXjgI3jgavoqK3lrprjgZfjgabjgIHjg4bjg6zjg6Hjg4jjg6rjg7zjgYvjgonjgqrjg5fjg4jjgqLjgqbjg4jjgZfjgb7jgZnjgILjgqLjg5fjg6rlhoXjgafjgoLjgIHjgrXjgqTjg4njg5Djg7wgPiBg44OX44Op44Kk44OQ44K344O8YOOBq+enu+WLleOBl+OBpuODhuODrOODoeODiOODquODvOOCkueEoeWKueOBq+OBmeOCi+OBk+OBqOOBjOOBp+OBjeOBvuOBmeOAggoKIyMjIOaYjuekuueahOOBq+i/vei3oeOBmeOCi+OCguOBrgoK6KO95ZOB44GK44KI44Gz44Ot44O844OJ44Oe44OD44OX44Gu5oSP5oCd5rG65a6a44Gr5b2556uL44Gk5L2/55So6Kmz57Sw44Gu44G/44KS6L+96Leh44GX44G+44GZ44CC5YW35L2T55qE44Gr44Gv77yaCgotIOOCpOODs+OCueODiOODvOODq+OBruOCv+OCpOODl++8iERvY2tlcuOBvuOBn+OBr+ODh+OCueOCr+ODiOODg+ODl++8iQotIOODieOCreODpeODoeODs+ODiOOBjOi/veWKoOOBvuOBn+OBr+WJiumZpOOBleOCjOOBn+OBqOOBjeOAguODieOCreODpeODoeODs+ODiOOBq+OBpOOBhOOBpuOBruaDheWgseOBr+OBguOCiuOBvuOBm+OCk+OAguOCpOODmeODs+ODiOOBjOeZuueUn+OBl+OBn+OBk+OBqOOBruOBv+OCkuefpeOCiuOBvuOBmeOAguOBk+OCjOOBq+OCiOOCiuOAgeS9v+eUqOeKtuazgeOCkuaKiuaPoeOBp+OBjeOBvuOBmeOAggotIOS9v+eUqOS4reOBruODmeOCr+ODiOODq+ODh+ODvOOCv+ODmeODvOOCueOBruOCv+OCpOODl+OAguOBqeOBruODmeOCr+ODiOODq+ODh+ODvOOCv+ODmeODvOOCueODl+ODreODkOOCpOODgOODvOOBjOacgOOCguS9v+eUqOOBleOCjOOBpuOBhOOCi+OBi+OCkuefpeOCiuOAgeabtOaWsOOBjOOBguOBo+OBn+OBqOOBjeOBq+WEquWFiOOBl+OBpuWkieabtOOCkuihjOOBhOOBvuOBmeOAggotIOS9v+eUqOS4reOBrkxMTeOBruOCv+OCpOODl+OAguacgOOCguS6uuawl+OBruOBguOCi+mBuOaKnuiCouOCkuefpeOCiuOAgeabtOaWsOOBjOOBguOBo+OBn+OBqOOBjeOBq+WEquWFiOOBl+OBpuWkieabtOOCkuihjOOBhOOBvuOBmeOAggotIOODgeODo+ODg+ODiOOBjOmAgeS/oeOBleOCjOOBn+OAguOBk+OCjOOBr+acgOOCguS4gOiIrOeahOOBquOAjOOCpOODmeODs+ODiOOAjeOBp+OBguOCiuOAgeOBmeOBueOBpuOBruOCpOODs+OCueODiOODvOODq+OBp+OBruOBk+OBruODl+ODreOCuOOCp+OCr+ODiOOBruaXpeW4uOeahOOBquOAjOOCouOCr+ODhuOCo+ODk+ODhuOCo+OAjeOBq+OBpOOBhOOBpuOBruOCouOCpOODh+OCouOCkuaPkOS+m+OBl+OBvuOBmeOAguWGjeOBs+OAgeOCpOODmeODs+ODiOOBruOBv+OBjOmAgeS/oeOBleOCjOOAgeODgeODo+ODg+ODiOiHquS9k+OBruaAp+izquOChOWGheWuueOBq+mWouOBmeOCi+aDheWgseOBr+OBguOCiuOBvuOBm+OCk+OAggoK44GT44KM44KJ44Gu5Li75by144KS5qSc6Ki844GZ44KL44Gr44Gv44CBYFRlbGVtZXRyeS5zZW5kVGVsZW1ldHJ5YOOBjOWRvOOBs+WHuuOBleOCjOOCi+OBmeOBueOBpuOBruWgtOaJgOOCkuimi+OBpOOBkeOBpuOBj+OBoOOBleOBhOOAguOBvuOBn+OAgeOBk+OCjOOCieOBruOCpOODmeODs+ODiOOBr+WHuuWKm+ODreOCsOOBq+abuOOBjei+vOOBvuOCjOOCi+OBn+OCgeOAgemAgeS/oeOBleOCjOOBn+WFt+S9k+eahOOBquODh+ODvOOCv+OCgueiuuiqjeOBp+OBjeOBvuOBmeOAgklQ44Ki44OJ44Os44K544KE44Gd44Gu5LuW44Gu6K2Y5Yil5oOF5aCx44Gv5Y+O6ZuG44GV44KM44G+44Gb44KT44CC44OG44Os44Oh44OI44Oq44O844OX44Ot44OQ44Kk44OA44O844GvW1Bvc3RIb2ddKGh0dHBzOi8vcG9zdGhvZy5jb20vKeOBp+OBmeOAggoKW+OCveODvOOCueOCs+ODvOODieWGheOBruOBmeOBueOBpuOBruODhuODrOODoeODiOODquODvOOCpOODmeODs+ODiOOCkuihqOekul0oaHR0cHM6Ly9naXRodWIuY29tL3NlYXJjaD9xPXJlcG8lM0FGYW1pbHktVGVhbS1Qcm9qZWN0cyUyRm9wZW5zaW4tY2hhdCUyMC5zZW5kVGVsZW1ldHJ5KCZ0eXBlPWNvZGUpCgo8L2RldGFpbHM+CgojIyDwn5SXIOOBneOBruS7luOBruijveWTgQoKLSAqKltWZWN0b3JBZG1pbl1bdmVjdG9yLWFkbWluXSoq77ya44OZ44Kv44OI44Or44OH44O844K/44OZ44O844K544KS566h55CG44GZ44KL44Gf44KB44Gu44Kq44O844Or44Kk44Oz44Ov44OzR1VJ44GK44KI44Gz44OE44O844Or44K544Kk44O844OI44CCCi0gKipbT3BlbkFJIEFzc2lzdGFudCBTd2FybV1bYXNzaXN0YW50LXN3YXJtXSoq77ya5Y2Y5LiA44Gu44Ko44O844K444Kn44Oz44OI44GL44KJ5oyH5o+u44Gn44GN44KLT3BlbkFJ44Ki44K344K544K/44Oz44OI44Gu6LuN6ZqK44Gr44CB44Op44Kk44OW44Op44Oq5YWo5L2T44KS5aSJ5o+b44GX44G+44GZ44CCCgo8ZGl2IGFsaWduPSJyaWdodCI+CgpbIVtdW2JhY2stdG8tdG9wXV0oI3JlYWRtZS10b3ApCgo8L2Rpdj4KCi0tLQoKQ29weXJpZ2h0IMKpIDIwMjYgW09wZW5TSU4tQUldW3Byb2ZpbGUtbGlua13jgII8YnIgLz4K44GT44Gu44OX44Ot44K444Kn44Kv44OI44GvW01JVF0oaHR0cHM6Ly9naXRodWIuY29tL0ZhbWlseS1UZWFtLVByb2plY3RzL29wZW5zaW4tY2hhdC9ibG9iL21hc3Rlci9MSUNFTlNFKeODqeOCpOOCu+ODs+OCueOBruS4i+OBp+ODqeOCpOOCu+ODs+OCueOBleOCjOOBpuOBhOOBvuOBmeOAggoKPCEtLSBMSU5LIEdST1VQIC0tPgoKW2JhY2stdG8tdG9wXTogaHR0cHM6Ly9pbWcuc2hpZWxkcy5pby9iYWRnZS8tQkFDS19UT19UT1AtMjIyNjI4P3N0eWxlPWZsYXQtc3F1YXJlCltwcm9maWxlLWxpbmtdOiBodHRwczovL2dpdGh1Yi5jb20vRmFtaWx5LVRlYW0tUHJvamVjdHMKW3ZlY3Rvci1hZG1pbl06IGh0dHBzOi8vZ2l0aHViLmNvbS9GYW1pbHktVGVhbS1Qcm9qZWN0cy92ZWN0b3ItYWRtaW4KW2Fzc2lzdGFudC1zd2FybV06IGh0dHBzOi8vZ2l0aHViLmNvbS9GYW1pbHktVGVhbS1Qcm9qZWN0cy9vcGVuYWktYXNzaXN0YW50LXN3YXJtCltkb2NrZXItYnRuXTogLi9pbWFnZXMvZGVwbG95QnRucy9kb2NrZXIucG5nCltkb2NrZXItZGVwbG95XTogLi9kb2NrZXIvSE9XX1RPX1VTRV9ET0NLRVIubWQKW2F3cy1idG5dOiAuL2ltYWdlcy9kZXBsb3lCdG5zL2F3cy5wbmcKW2F3cy1kZXBsb3ldOiAuL2Nsb3VkLWRlcGxveW1lbnRzL2F3cy9jbG91ZGZvcm1hdGlvbi9ERVBMT1kubWQKW2djcC1idG5dOiBodHRwczovL2RlcGxveS5jbG91ZC5ydW4vYnV0dG9uLnN2ZwpbZ2NwLWRlcGxveV06IC4vY2xvdWQtZGVwbG95bWVudHMvZ2NwL2RlcGxveW1lbnQvREVQTE9ZLm1kCltkby1idG5dOiBodHRwczovL3d3dy5kZXBsb3l0b2RvLmNvbS9kby1idG4tYmx1ZS5zdmcKW2RvLWRlcGxveV06IC4vY2xvdWQtZGVwbG95bWVudHMvZGlnaXRhbG9jZWFuL3RlcnJhZm9ybS9ERVBMT1kubWQKW3JlbmRlci1idG5dOiBodHRwczovL3JlbmRlci5jb20vaW1hZ2VzL2RlcGxveS10by1yZW5kZXItYnV0dG9uLnN2ZwpbcmVuZGVyLWRlcGxveV06IGh0dHBzOi8vcmVuZGVyLmNvbS9kZXBsb3k/cmVwbz1odHRwczovL2dpdGh1Yi5jb20vRmFtaWx5LVRlYW0tUHJvamVjdHMvb3BlbnNpbi1jaGF0JmJyYW5jaD1yZW5kZXIKW3JlbmRlci1idG5dOiBodHRwczovL3JlbmRlci5jb20vaW1hZ2VzL2RlcGxveS10by1yZW5kZXItYnV0dG9uLnN2ZwpbcmVuZGVyLWRlcGxveV06IGh0dHBzOi8vcmVuZGVyLmNvbS9kZXBsb3k/cmVwbz1odHRwczovL2dpdGh1Yi5jb20vRmFtaWx5LVRlYW0tUHJvamVjdHMvb3BlbnNpbi1jaGF0JmJyYW5jaD1yZW5kZXIKW3JhaWx3YXktYnRuXTogaHR0cHM6Ly9yYWlsd2F5LmFwcC9idXR0b24uc3ZnCltyYWlsd2F5LWRlcGxveV06IGh0dHBzOi8vcmFpbHdheS5hcHAvdGVtcGxhdGUvSE5TQ1MxP3JlZmVycmFsQ29kZT1XRmdKa24K
+<a name="readme-top"></a>
+
+<p align="center">
+  <a href="https://opensin.com"><img src="https://github.com/Family-Team-Projects/opensin-chat/blob/master/images/wordmark.png?raw=true" alt="OpenSIN Chat logo"></a>
+</p>
+
+<div align='center'>
+<a href="https://trendshift.io/repositories/2415" target="_blank"><img src="https://trendshift.io/api/badge/repositories/2415" alt="Family-Team-Projects%2Fopensin-chat | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+</div>
+
+<p align="center">
+    <b>OpenSIN Chat:</b> あなたが探していたオールインワンAIアプリ。<br />
+    ドキュメントとチャットし、AIエージェントを使用し、高度にカスタマイズ可能で、複数ユーザー対応、面倒な設定は不要です。
+</p>
+
+<p align="center">
+  <a href="https://discord.gg/6UyHPeGZAC" target="_blank">
+      <img src="https://img.shields.io/badge/chat-opensin-chat-blue.svg?style=flat&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAH1UExURQAAAP////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////r6+ubn5+7u7/3+/v39/enq6urq6/v7+97f39rb26eoqT1BQ0pOT4+Rkuzs7cnKykZKS0NHSHl8fdzd3ejo6UxPUUBDRdzc3RwgIh8jJSAkJm5xcvHx8aanqB4iJFBTVezt7V5hYlJVVuLj43p9fiImKCMnKZKUlaaoqSElJ21wcfT09O3u7uvr6zE0Nr6/wCUpK5qcnf7+/nh7fEdKTHx+f0tPUOTl5aipqiouMGtubz5CRDQ4OsTGxufn515hY7a3uH1/gXBydIOFhlVYWvX29qaoqCQoKs7Pz/Pz87/AwUtOUNfY2dHR0mhrbOvr7E5RUy8zNXR2d/f39+Xl5UZJSx0hIzQ3Odra2/z8/GlsbaGjpERHSezs7L/BwScrLTQ4Odna2zM3Obm7u3x/gKSmp9jZ2T1AQu/v71pdXkVISr2+vygsLiInKTg7PaOlpisvMcXGxzk8PldaXPLy8u7u7rm6u7S1tsDBwvj4+MPExbe4ueXm5s/Q0Kyf7ewAAAAodFJOUwAABClsrNjx/QM2l9/7lhmI6jTB/kA1GgKJN+nea6vy/MLZQYeVKK3rVA5tAAAAAWJLR0QB/wIt3gAAAAd0SU1FB+cKBAAmMZBHjXIAAAISSURBVDjLY2CAAkYmZhZWNnYODnY2VhZmJkYGVMDIycXNw6sBBbw8fFycyEoYGfkFBDVQgKAAPyMjQl5IWEQDDYgIC8FUMDKKsmlgAWyiEBWMjGJY5YEqxMAqGMWFNXAAYXGgAkYJSQ2cQFKCkYFRShq3AmkpRgYJbghbU0tbB0Tr6ukbgGhDI10gySfBwCwDUWBsYmpmDqQtLK2sbTQ0bO3sHYA8GWYGWWj4WTs6Obu4ami4OTm7exhqeHp5+4DCVJZBDmqdr7ufn3+ArkZgkJ+fU3CIRmgYWFiOARYGvo5OQUHhEUAFTkF+kVHRsLBgkIeyYmLjwoOc4hMSk5JTnINS06DC8gwcEEZ6RqZGlpOfc3ZObl5+gZ+TR2ERWFyBQQFMF5eklmqUpQb5+ReU61ZUOvkFVVXXQBSAraitq29o1GiKcfLzc29u0mjxBzq0tQ0kww5xZHtHUGeXhkZhdxBYgZ4d0LI6c4gjwd7siQQraOp1AivQ6CuAKZCDBBRQQQNQgUb/BGf3cqCCiZOcnCe3QQIKHNRTpk6bDgpZjRkzg3pBQTBrdtCcuZCgluAD0vPmL1gIdvSixUuWgqNs2YJ+DUhkEYxuggkGmOQUcckrioPTJCOXEnZ5JS5YslbGnuyVERlDDFvGEUPOWvwqaH6RVkHKeuDMK6SKnHlVhTgx8jeTmqy6Eij7K6nLqiGyPwChsa1MUrnq1wAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMy0xMC0wNFQwMDozODo0OSswMDowMB9V0a8AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjMtMTAtMDRUMDA6Mzg6NDkrMDA6MDBuCGkTAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDIzLTEwLTA0VDAwOjM4OjQ5KzAwOjAwOR1IzAAAAABJRU5ErkJggg==" alt="Discord">
+  </a> |
+  <a href="https://github.com/Family-Team-Projects/opensin-chat/blob/master/LICENSE" target="_blank">
+      <img src="https://img.shields.io/static/v1?label=license&message=MIT&color=white" alt="ライセンス">
+  </a> |
+  <a href="https://docs.sinchat.delqhi.com" target="_blank">
+    ドキュメント
+  </a> |
+   <a href="https://my.opensin.com/aio-checkout?product=opensin" target="_blank">
+    ホストされたインスタンス
+  </a>
+</p>
+
+<p align="center">
+  <a href='../README.md'>English</a> · <a href='./README.zh-CN.md'>简体中文</a> · <b>日本語</b>
+</p>
+
+<p align="center">
+👉 デスクトップ用OpenSIN Chat（Mac、Windows、Linux対応）！<a href="https://opensin.com/download" target="_blank">今すぐダウンロード</a>
+</p>
+
+これは、任意のドキュメント、リソース、またはコンテンツの断片を、チャット中にLLMが参照として使用できるコンテキストに変換できるフルスタックアプリケーションです。このアプリケーションを使用すると、使用するLLMまたはベクトルデータベースを選択し、マルチユーザー管理と権限をサポートできます。
+
+![Chatting](https://github.com/Family-Team-Projects/opensin-chat/releases/download/v1.11.2/OpenSIN Chat720p.gif)
+
+<details>
+<summary><kbd>デモを見る！</kbd></summary>
+
+[![ビデオを見る](/images/youtube.png)](https://youtu.be/f95rGD9trL0)
+
+</details>
+
+### 製品概要
+
+OpenSIN Chatは、あなたが探していたオールインワンAIアプリです。OpenSIN Chatには、お気に入りのローカルまたはクラウドLLMプロバイダーを使用して、妥協のないプライベートChatGPTを構築するために必要なすべてが含まれています。OpenSIN Chatは高度にカスタマイズ可能でありながら、ビルトインエージェント、マルチユーザーサポート、ベクトルデータベース、ドキュメント取り込みパイプラインなど、すぐに使い始めるために必要なすべてが揃っています。
+
+OpenSIN Chatは複数ユーザーもサポートしており、インスタンスのセキュリティやプライバシー、知的財産を損なうことなく、ユーザーごとにアクセスと体験を制御できます。
+
+## OpenSIN Chatのいくつかのクールな機能
+
+- **マルチユーザーインスタンスのサポートと権限付与**
+- ワークスペース内のエージェント（ウェブを閲覧、コードを実行など）
+- [ウェブサイト用のカスタム埋め込み可能なチャットウィジェット](https://github.com/Family-Team-Projects/opensin-embed/blob/main/README.md)
+- 複数のドキュメントタイプのサポート（PDF、TXT、DOCXなど）
+- シンプルなUIからベクトルデータベース内のドキュメントを管理
+- 2つのチャットモード`会話`と`クエリ`。会話は以前の質問と修正を保持します。クエリはドキュメントに対するシンプルなQAです
+- チャット中の引用
+- 100%クラウドデプロイメント対応。
+- 「独自のLLMを持参」モデル。
+- 大規模なドキュメントを管理するための非常に効率的なコスト削減策。巨大なドキュメントやトランスクリプトを埋め込むために一度以上支払うことはありません。他のドキュメントチャットボットソリューションよりも90%コスト効率が良いです。
+- カスタム統合のための完全な開発者API！
+
+### サポートされているLLM、埋め込みモデル、音声モデル、およびベクトルデータベース
+
+**言語学習モデル：**
+
+- [llama.cpp互換の任意のオープンソースモデル](/server/storage/models/README.md#text-generation-llm-selection)
+- [OpenAI](https://openai.com)
+- [OpenAI (汎用)](https://openai.com)
+- [Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service)
+- [Anthropic](https://www.anthropic.com/)
+- [Google Gemini Pro](https://ai.google.dev/)
+- [Hugging Face (チャットモデル)](https://huggingface.co/)
+- [Ollama (チャットモデル)](https://ollama.ai/)
+- [LM Studio (すべてのモデル)](https://lmstudio.ai)
+- [LocalAi (すべてのモデル)](https://localai.io/)
+- [Together AI (チャットモデル)](https://www.together.ai/)
+- [Fireworks AI (チャットモデル)](https://fireworks.ai/)
+- [Perplexity (チャットモデル)](https://www.perplexity.ai/)
+- [OpenRouter (チャットモデル)](https://openrouter.ai/)
+- [Novita AI (チャットモデル)](https://novita.ai/model-api/product/llm-api?utm_source=github_opensin-chat&utm_medium=github_readme&utm_campaign=link)
+- [Mistral](https://mistral.ai/)
+- [Groq](https://groq.com/)
+- [Cohere](https://cohere.com/)
+- [KoboldCPP](https://github.com/LostRuins/koboldcpp)
+- [xAI](https://x.ai/)
+- [Z.AI (チャットモデル)](https://z.ai/model-api)
+- [PPIO](https://ppinfra.com?utm_source=github_opensin-chat)
+- [CometAPI (チャットモデル)](https://api.cometapi.com/)
+- [Docker Model Runner](https://docs.docker.com/ai/model-runner/)
+- [PrivateModeAI (chat models)](https://privatemode.ai/)
+- [SambaNova Cloud (chat models)](https://cloud.sambanova.ai/)
+- [Lemonade by AMD](https://lemonade-server.ai)
+- [Minimax](https://platform.minimax.io)
+- [Cerebras (chat models)](https://www.cerebras.ai/)
+
+**埋め込みモデル：**
+
+- [OpenSIN Chatネイティブ埋め込み](/server/storage/models/README.md)（デフォルト）
+- [OpenAI](https://openai.com)
+- [Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service)
+- [LocalAi (すべて)](https://localai.io/)
+- [Ollama (すべて)](https://ollama.ai/)
+- [LM Studio (すべて)](https://lmstudio.ai)
+- [Cohere](https://cohere.com/)
+
+**音声変換モデル：**
+
+- [OpenSIN Chat内蔵](https://github.com/Family-Team-Projects/opensin-chat/tree/master/server/storage/models#audiovideo-transcription)（デフォルト）
+- [OpenAI](https://openai.com/)
+
+**TTS（テキストから音声へ）サポート：**
+
+- ネイティブブラウザ内蔵（デフォルト）
+- [OpenAI TTS](https://platform.openai.com/docs/guides/text-to-speech/voice-options)
+- [ElevenLabs](https://elevenlabs.io/)
+
+**STT（音声からテキストへ）サポート：**
+
+- ネイティブブラウザ内蔵（デフォルト）
+
+**ベクトルデータベース：**
+
+- [LanceDB](https://github.com/lancedb/lancedb)（デフォルト）
+- [PGVector](https://github.com/pgvector/pgvector)
+- [Astra DB](https://www.datastax.com/products/datastax-astra)
+- [Pinecone](https://pinecone.io)
+- [Chroma](https://trychroma.com)
+- [Weaviate](https://weaviate.io)
+- [QDrant](https://qdrant.tech)
+- [Milvus](https://milvus.io)
+- [Zilliz](https://zilliz.com)
+
+### 技術概要
+
+このモノレポは、主に3つのセクションで構成されています：
+
+- `frontend`: LLMが使用できるすべてのコンテンツを簡単に作成および管理できるviteJS + Reactフロントエンド。
+- `server`: すべてのインタラクションを処理し、すべてのベクトルDB管理およびLLMインタラクションを行うNodeJS expressサーバー。
+- `collector`: UIからドキュメントを処理および解析するNodeJS expressサーバー。
+- `docker`: Dockerの指示およびビルドプロセス + ソースからのビルド情報。
+- `embed`: [埋め込みウィジェット](../embed/README.md)の生成に特化したコード。
+
+## 🛳 セルフホスティング
+
+OpenSIN-AIおよびコミュニティは、OpenSIN Chatをローカルで実行できる多数のデプロイメント方法、スクリプト、テンプレートを維持しています。以下の表を参照して、お好みの環境でのデプロイ方法を読むか、自動デプロイを行ってください。
+| Docker | AWS | GCP | Digital Ocean | Render.com |
+|----------------------------------------|----|-----|---------------|------------|
+| [![Docker上でデプロイ][docker-btn]][docker-deploy] | [![AWS上でデプロイ][aws-btn]][aws-deploy] | [![GCP上でデプロイ][gcp-btn]][gcp-deploy] | [![DigitalOcean上でデプロイ][do-btn]][do-deploy] | [![Render.com上でデプロイ][render-btn]][render-deploy] |
+
+| Railway                                               |
+| ----------------------------------------------------- |
+| [![Railway上でデプロイ][railway-btn]][railway-deploy] |
+
+[Dockerを使用せずに本番環境のOpenSIN Chatインスタンスを設定する →](../BARE_METAL.md)
+
+## 開発環境のセットアップ方法
+
+- `yarn setup` 各アプリケーションセクションに必要な`.env`ファイルを入力します（リポジトリのルートから）。
+  - 次に進む前にこれらを入力してください。`server/.env.development`が入力されていないと正しく動作しません。
+- `yarn dev:server` ローカルでサーバーを起動します（リポジトリのルートから）。
+- `yarn dev:frontend` ローカルでフロントエンドを起動します（リポジトリのルートから）。
+- `yarn dev:collector` ドキュメントコレクターを実行します（リポジトリのルートから）。
+
+[ドキュメントについて学ぶ](../server/storage/documents/DOCUMENTS.md)
+
+## 貢献する方法
+
+- issueを作成する
+- `<issue number>-<short name>`の形式のブランチ名でPRを作成する
+- マージしましょう
+
+## テレメトリーとプライバシー
+
+OpenSIN-AIによって開発されたOpenSIN Chatには、匿名の使用情報を収集するテレメトリー機能が含まれています。
+
+<details>
+<summary><kbd>OpenSIN Chatのテレメトリーとプライバシーについての詳細</kbd></summary>
+
+### なぜ？
+
+この情報を使用して、OpenSIN Chatの使用方法を理解し、新機能とバグ修正の優先順位を決定し、OpenSIN Chatのパフォーマンスと安定性を向上させるのに役立てます。
+
+### オプトアウト
+
+サーバーまたはdockerの.env設定で`DISABLE_TELEMETRY`を「true」に設定して、テレメトリーからオプトアウトします。アプリ内でも、サイドバー > `プライバシー`に移動してテレメトリーを無効にすることができます。
+
+### 明示的に追跡するもの
+
+製品およびロードマップの意思決定に役立つ使用詳細のみを追跡します。具体的には：
+
+- インストールのタイプ（Dockerまたはデスクトップ）
+- ドキュメントが追加または削除されたとき。ドキュメントについての情報はありません。イベントが発生したことのみを知ります。これにより、使用状況を把握できます。
+- 使用中のベクトルデータベースのタイプ。どのベクトルデータベースプロバイダーが最も使用されているかを知り、更新があったときに優先して変更を行います。
+- 使用中のLLMのタイプ。最も人気のある選択肢を知り、更新があったときに優先して変更を行います。
+- チャットが送信された。これは最も一般的な「イベント」であり、すべてのインストールでのこのプロジェクトの日常的な「アクティビティ」についてのアイデアを提供します。再び、イベントのみが送信され、チャット自体の性質や内容に関する情報はありません。
+
+これらの主張を検証するには、`Telemetry.sendTelemetry`が呼び出されるすべての場所を見つけてください。また、これらのイベントは出力ログに書き込まれるため、送信された具体的なデータも確認できます。IPアドレスやその他の識別情報は収集されません。テレメトリープロバイダーは[PostHog](https://posthog.com/)です。
+
+[ソースコード内のすべてのテレメトリーイベントを表示](https://github.com/search?q=repo%3AFamily-Team-Projects%2Fopensin-chat%20.sendTelemetry(&type=code)
+
+</details>
+
+## 🔗 その他の製品
+
+- **[VectorAdmin][vector-admin]**：ベクトルデータベースを管理するためのオールインワンGUIおよびツールスイート。
+- **[OpenAI Assistant Swarm][assistant-swarm]**：単一のエージェントから指揮できるOpenAIアシスタントの軍隊に、ライブラリ全体を変換します。
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
+---
+
+Copyright © 2026 [OpenSIN-AI][profile-link]。<br />
+このプロジェクトは[MIT](https://github.com/Family-Team-Projects/opensin-chat/blob/master/LICENSE)ライセンスの下でライセンスされています。
+
+<!-- LINK GROUP -->
+
+[back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-222628?style=flat-square
+[profile-link]: https://github.com/Family-Team-Projects
+[vector-admin]: https://github.com/Family-Team-Projects/vector-admin
+[assistant-swarm]: https://github.com/Family-Team-Projects/openai-assistant-swarm
+[docker-btn]: ./images/deployBtns/docker.png
+[docker-deploy]: ./docker/HOW_TO_USE_DOCKER.md
+[aws-btn]: ./images/deployBtns/aws.png
+[aws-deploy]: ./cloud-deployments/aws/cloudformation/DEPLOY.md
+[gcp-btn]: https://deploy.cloud.run/button.svg
+[gcp-deploy]: ./cloud-deployments/gcp/deployment/DEPLOY.md
+[do-btn]: https://www.deploytodo.com/do-btn-blue.svg
+[do-deploy]: ./cloud-deployments/digitalocean/terraform/DEPLOY.md
+[render-btn]: https://render.com/images/deploy-to-render-button.svg
+[render-deploy]: https://render.com/deploy?repo=https://github.com/Family-Team-Projects/opensin-chat&branch=render
+[render-btn]: https://render.com/images/deploy-to-render-button.svg
+[render-deploy]: https://render.com/deploy?repo=https://github.com/Family-Team-Projects/opensin-chat&branch=render
+[railway-btn]: https://railway.app/button.svg
+[railway-deploy]: https://railway.app/template/HNSCS1?referralCode=WFgJkn

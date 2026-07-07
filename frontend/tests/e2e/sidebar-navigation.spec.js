@@ -1,1 +1,160 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBQdXJwb3NlOiBFMkUgdGVzdCBmb3Igc2lkZWJhciBuYXZpZ2F0aW9uIOKAlCB3b3Jrc3BhY2UgbGlzdCBsb2FkaW5nLAovLyBjbGlja2luZyBhIHdvcmtzcGFjZSB0byBlbnRlciBjaGF0LCBhbmQgc2lkZWJhciBjb2xsYXBzZS9leHBhbmQgdG9nZ2xlLgovLyBEb2NzOiBmcm9udGVuZC90ZXN0cy9lMmUvUkVBRE1FLmRvYy5tZAovLwovLyBVc2VzIGFuIGV4aXN0aW5nIHdvcmtzcGFjZSBmcm9tIHRoZSBzZXJ2ZXIgKGxpc3RlZCB2aWEgQVBJKSBpbnN0ZWFkIG9mCi8vIGNyZWF0aW5nIGEgbmV3IG9uZSwgdG8gYXZvaWQgaGl0dGluZyB0aGUgd29ya3NwYWNlLWNyZWF0aW9uIHJhdGUgbGltaXRlcgovLyAoNSBwZXIgaG91ciBwZXIgSVApLgppbXBvcnQgeyB0ZXN0LCBleHBlY3QgfSBmcm9tICJAcGxheXdyaWdodC90ZXN0IjsKaW1wb3J0IHsKICBzZWVkU2Vzc2lvbiwKICBtb2NrT25ib2FyZGluZ0NoZWNrLAogIGFzc2VydEFwcExvYWRlZCwKfSBmcm9tICIuL19oZWxwZXJzLmpzIjsKaW1wb3J0IHsgc2hhcmVkTG9naW4gYXMgbG9naW4gfSBmcm9tICIuL190b2tlbi1jYWNoZS5qcyI7Cgp0ZXN0LmRlc2NyaWJlKCJzaWRlYmFyIG5hdmlnYXRpb24iLCAoKSA9PiB7CiAgdGVzdC5kZXNjcmliZS5jb25maWd1cmUoeyBtb2RlOiAic2VyaWFsIiB9KTsKCiAgbGV0IHRva2VuOwogIGxldCBzbHVnOwogIGxldCB3b3Jrc3BhY2VOYW1lOwoKICB0ZXN0LmJlZm9yZUFsbChhc3luYyAoeyByZXF1ZXN0IH0pID0+IHsKICAgIHRva2VuID0gYXdhaXQgbG9naW4ocmVxdWVzdCk7CgogICAgLy8gTGlzdCBleGlzdGluZyB3b3Jrc3BhY2VzIGFuZCB1c2UgdGhlIGZpcnN0IG9uZSDigJQgYXZvaWRzIHRoZQogICAgLy8gd29ya3NwYWNlLWNyZWF0aW9uIHJhdGUgbGltaXRlciAoNS9ob3VyKS4KICAgIGNvbnN0IHJlc3BvbnNlID0gYXdhaXQgcmVxdWVzdC5nZXQoIi9hcGkvd29ya3NwYWNlcyIsIHsKICAgICAgaGVhZGVyczogeyBBdXRob3JpemF0aW9uOiBgQmVhcmVyICR7dG9rZW59YCB9LAogICAgfSk7CiAgICBleHBlY3QocmVzcG9uc2Uub2soKSkudG9CZVRydXRoeSgpOwogICAgY29uc3QgeyB3b3Jrc3BhY2VzIH0gPSBhd2FpdCByZXNwb25zZS5qc29uKCk7CiAgICBleHBlY3Qod29ya3NwYWNlcy5sZW5ndGgpLnRvQmVHcmVhdGVyVGhhbigwKTsKICAgIHNsdWcgPSB3b3Jrc3BhY2VzWzBdLnNsdWc7CiAgICB3b3Jrc3BhY2VOYW1lID0gd29ya3NwYWNlc1swXS5uYW1lOwogIH0pOwoKICB0ZXN0LmJlZm9yZUVhY2goYXN5bmMgKHsgcGFnZSB9KSA9PiB7CiAgICBhd2FpdCBzZWVkU2Vzc2lvbihwYWdlLCB0b2tlbik7CiAgICBhd2FpdCBtb2NrT25ib2FyZGluZ0NoZWNrKHBhZ2UpOwogIH0pOwoKICB0ZXN0KCJ3b3Jrc3BhY2UgbGlzdCBsb2FkcyBhbmQgY2xpY2tpbmcgYSB3b3Jrc3BhY2Ugb3BlbnMgY2hhdCIsIGFzeW5jICh7CiAgICBwYWdlLAogIH0pID0+IHsKICAgIGF3YWl0IHBhZ2UuZ290bygiLyIsIHsgd2FpdFVudGlsOiAibmV0d29ya2lkbGUiIH0pOwogICAgYXdhaXQgYXNzZXJ0QXBwTG9hZGVkKHBhZ2UpOwoKICAgIGNvbnN0IHNpZGViYXIgPSBwYWdlLmdldEJ5Um9sZSgibmF2aWdhdGlvbiIsIHsKICAgICAgbmFtZTogL01haW4gbmF2aWdhdGlvbi9pLAogICAgfSk7CiAgICBhd2FpdCBleHBlY3Qoc2lkZWJhcikudG9CZVZpc2libGUoeyB0aW1lb3V0OiAxMDAwMCB9KTsKCiAgICBjb25zdCB3c0xpc3QgPSBwYWdlLmdldEJ5Um9sZSgibGlzdCIsIHsgbmFtZTogL1dvcmtzcGFjZXMvaSB9KTsKICAgIGF3YWl0IGV4cGVjdCh3c0xpc3QpLnRvQmVWaXNpYmxlKHsgdGltZW91dDogMTAwMDAgfSk7CgogICAgLy8gQ2xpY2sgdGhlIHdvcmtzcGFjZSBsaW5rCiAgICBjb25zdCB3c0xpbmsgPSBwYWdlCiAgICAgIC5nZXRCeVJvbGUoImxpbmsiLCB7IG5hbWU6IHdvcmtzcGFjZU5hbWUgfSkKICAgICAgLmZpcnN0KCk7CiAgICBhd2FpdCBleHBlY3Qod3NMaW5rKS50b0JlVmlzaWJsZSh7IHRpbWVvdXQ6IDEwMDAwIH0pOwogICAgYXdhaXQgd3NMaW5rLmNsaWNrKCk7CgogICAgLy8gVmVyaWZ5IFVSTCBjaGFuZ2VzIHRvIHRoZSB3b3Jrc3BhY2UgY2hhdCBwYXRoCiAgICBhd2FpdCBwYWdlLndhaXRGb3JVUkwobmV3IFJlZ0V4cChgL3dvcmtzcGFjZS8ke3NsdWd9YCksIHsKICAgICAgdGltZW91dDogMTUwMDAsCiAgICB9KTsKCiAgICAvLyBWZXJpZnkgdGhlIGNoYXQgaW5wdXQgaXMgdmlzaWJsZQogICAgYXdhaXQgZXhwZWN0KHBhZ2UubG9jYXRvcigiI3ByaW1hcnktcHJvbXB0LWlucHV0IikpLnRvQmVWaXNpYmxlKHsKICAgICAgdGltZW91dDogMzAwMDAsCiAgICB9KTsKICB9KTsKCiAgdGVzdCgic2lkZWJhciBjb2xsYXBzZS9leHBhbmQgdG9nZ2xlIHdvcmtzIiwgYXN5bmMgKHsgcGFnZSB9KSA9PiB7CiAgICBhd2FpdCBwYWdlLmdvdG8oYC93b3Jrc3BhY2UvJHtzbHVnfWAsIHsgd2FpdFVudGlsOiAibmV0d29ya2lkbGUiIH0pOwogICAgYXdhaXQgYXNzZXJ0QXBwTG9hZGVkKHBhZ2UpOwoKICAgIGF3YWl0IHBhZ2UKICAgICAgLmxvY2F0b3IoIiNwcmltYXJ5LXByb21wdC1pbnB1dCIpCiAgICAgIC5maXJzdCgpCiAgICAgIC53YWl0Rm9yKHsgc3RhdGU6ICJ2aXNpYmxlIiwgdGltZW91dDogMzAwMDAgfSk7CgogICAgLy8gU2lkZWJhciBpcyBpbml0aWFsbHkgdmlzaWJsZQogICAgY29uc3Qgc2lkZWJhciA9IHBhZ2UuZ2V0QnlSb2xlKCJuYXZpZ2F0aW9uIiwgewogICAgICBuYW1lOiAvTWFpbiBuYXZpZ2F0aW9uL2ksCiAgICB9KTsKICAgIGF3YWl0IGV4cGVjdChzaWRlYmFyKS50b0JlVmlzaWJsZSh7IHRpbWVvdXQ6IDEwMDAwIH0pOwoKICAgIC8vIENsaWNrIHRvIGNvbGxhcHNlIOKAlCB0YXJnZXQgdGhlIHRvZ2dsZSBidXR0b24gaW5zaWRlIHRoZSBzaWRlYmFyIG5hdgogICAgLy8gKHRoZXJlIGFyZSB0d28gIkhpZGUgc2lkZWJhciIgYnV0dG9uczogb25lIGluIExlZnRTaWRlYmFySWNvbkJhciwgb25lCiAgICAvLyBpbiB0aGUgc2lkZWJhciBoZWFkZXIpLiBTY29wZSB0byB0aGUgbmF2IGVsZW1lbnQuCiAgICBjb25zdCBoaWRlQnRuID0gc2lkZWJhci5nZXRCeVJvbGUoImJ1dHRvbiIsIHsKICAgICAgbmFtZTogL0hpZGUgc2lkZWJhci9pLAogICAgfSk7CiAgICBhd2FpdCBleHBlY3QoaGlkZUJ0bikudG9CZVZpc2libGUoeyB0aW1lb3V0OiAxMDAwMCB9KTsKICAgIGF3YWl0IGhpZGVCdG4uY2xpY2soKTsKCiAgICAvLyBBZnRlciBjb2xsYXBzaW5nLCB0aGUgdG9nZ2xlIGJ1dHRvbiBzYXlzICJTaG93IHNpZGViYXIiCiAgICAvLyAoY2hlY2sgYm90aCBwb3NzaWJsZSBsb2NhdGlvbnMpCiAgICBjb25zdCBzaG93QnRuID0gcGFnZS5nZXRCeVJvbGUoImJ1dHRvbiIsIHsKICAgICAgbmFtZTogL1Nob3cgc2lkZWJhci9pLAogICAgfSkuZmlyc3QoKTsKICAgIGF3YWl0IGV4cGVjdChzaG93QnRuKS50b0JlVmlzaWJsZSh7IHRpbWVvdXQ6IDUwMDAgfSk7CgogICAgLy8gVmVyaWZ5IGxvY2FsU3RvcmFnZSBwZXJzaXN0ZWQgdGhlIGNsb3NlZCBzdGF0ZQogICAgY29uc3QgdG9nZ2xlU3RhdGUgPSBhd2FpdCBwYWdlLmV2YWx1YXRlKCgpID0+CiAgICAgIHdpbmRvdy5sb2NhbFN0b3JhZ2UuZ2V0SXRlbSgib3BlbnNpbl9zaWRlYmFyX3RvZ2dsZSIpLAogICAgKTsKICAgIGV4cGVjdCh0b2dnbGVTdGF0ZSkudG9CZSgiY2xvc2VkIik7CgogICAgLy8gQ2xpY2sgdG8gZXhwYW5kCiAgICBhd2FpdCBzaG93QnRuLmNsaWNrKCk7CgogICAgY29uc3QgaGlkZUJ0bkFnYWluID0gcGFnZS5nZXRCeVJvbGUoImJ1dHRvbiIsIHsKICAgICAgbmFtZTogL0hpZGUgc2lkZWJhci9pLAogICAgfSkuZmlyc3QoKTsKICAgIGF3YWl0IGV4cGVjdChoaWRlQnRuQWdhaW4pLnRvQmVWaXNpYmxlKHsgdGltZW91dDogNTAwMCB9KTsKCiAgICBjb25zdCB0b2dnbGVTdGF0ZU9wZW4gPSBhd2FpdCBwYWdlLmV2YWx1YXRlKCgpID0+CiAgICAgIHdpbmRvdy5sb2NhbFN0b3JhZ2UuZ2V0SXRlbSgib3BlbnNpbl9zaWRlYmFyX3RvZ2dsZSIpLAogICAgKTsKICAgIGV4cGVjdCh0b2dnbGVTdGF0ZU9wZW4pLnRvQmUoIm9wZW4iKTsKICB9KTsKCiAgdGVzdCgic2lkZWJhciB0b2dnbGUgc3RhdGUgcGVyc2lzdHMgYWNyb3NzIHBhZ2UgcmVsb2FkIiwgYXN5bmMgKHsgcGFnZSB9KSA9PiB7CiAgICBhd2FpdCBwYWdlLmdvdG8oYC93b3Jrc3BhY2UvJHtzbHVnfWAsIHsgd2FpdFVudGlsOiAibmV0d29ya2lkbGUiIH0pOwogICAgYXdhaXQgYXNzZXJ0QXBwTG9hZGVkKHBhZ2UpOwoKICAgIGF3YWl0IHBhZ2UKICAgICAgLmxvY2F0b3IoIiNwcmltYXJ5LXByb21wdC1pbnB1dCIpCiAgICAgIC5maXJzdCgpCiAgICAgIC53YWl0Rm9yKHsgc3RhdGU6ICJ2aXNpYmxlIiwgdGltZW91dDogMzAwMDAgfSk7CgogICAgLy8gQ29sbGFwc2UgdGhlIHNpZGViYXIg4oCUIHNjb3BlIHRvIG5hdiB0byBhdm9pZCB0aGUgTGVmdFNpZGViYXJJY29uQmFyIGR1cGxpY2F0ZQogICAgY29uc3Qgc2lkZWJhciA9IHBhZ2UuZ2V0QnlSb2xlKCJuYXZpZ2F0aW9uIiwgewogICAgICBuYW1lOiAvTWFpbiBuYXZpZ2F0aW9uL2ksCiAgICB9KTsKICAgIGNvbnN0IGhpZGVCdG4gPSBzaWRlYmFyLmdldEJ5Um9sZSgiYnV0dG9uIiwgewogICAgICBuYW1lOiAvSGlkZSBzaWRlYmFyL2ksCiAgICB9KTsKICAgIGF3YWl0IGV4cGVjdChoaWRlQnRuKS50b0JlVmlzaWJsZSh7IHRpbWVvdXQ6IDEwMDAwIH0pOwogICAgYXdhaXQgaGlkZUJ0bi5jbGljaygpOwoKICAgIGNvbnN0IHNob3dCdG4gPSBwYWdlLmdldEJ5Um9sZSgiYnV0dG9uIiwgewogICAgICBuYW1lOiAvU2hvdyBzaWRlYmFyL2ksCiAgICB9KS5maXJzdCgpOwogICAgYXdhaXQgZXhwZWN0KHNob3dCdG4pLnRvQmVWaXNpYmxlKHsgdGltZW91dDogNTAwMCB9KTsKCiAgICAvLyBSZWxvYWQKICAgIGF3YWl0IHBhZ2UucmVsb2FkKHsgd2FpdFVudGlsOiAibmV0d29ya2lkbGUiIH0pOwogICAgYXdhaXQgYXNzZXJ0QXBwTG9hZGVkKHBhZ2UpOwoKICAgIC8vIEFmdGVyIHJlbG9hZCwgdGhlIHNpZGViYXIgc2hvdWxkIHN0aWxsIGJlIGNvbGxhcHNlZAogICAgYXdhaXQgZXhwZWN0KAogICAgICBwYWdlLmdldEJ5Um9sZSgiYnV0dG9uIiwgeyBuYW1lOiAvU2hvdyBzaWRlYmFyL2kgfSkuZmlyc3QoKSwKICAgICkudG9CZVZpc2libGUoeyB0aW1lb3V0OiAxMDAwMCB9KTsKICB9KTsKfSk7Cg==
+// SPDX-License-Identifier: MIT
+// Purpose: E2E test for sidebar navigation — workspace list loading,
+// clicking a workspace to enter chat, and sidebar collapse/expand toggle.
+// Docs: frontend/tests/e2e/README.doc.md
+//
+// Uses an existing workspace from the server (listed via API) instead of
+// creating a new one, to avoid hitting the workspace-creation rate limiter
+// (5 per hour per IP).
+import { test, expect } from "@playwright/test";
+import {
+  seedSession,
+  mockOnboardingCheck,
+  assertAppLoaded,
+} from "./_helpers.js";
+import { sharedLogin as login } from "./_token-cache.js";
+
+test.describe("sidebar navigation", () => {
+  test.describe.configure({ mode: "serial" });
+
+  let token;
+  let slug;
+  let workspaceName;
+
+  test.beforeAll(async ({ request }) => {
+    token = await login(request);
+
+    // List existing workspaces and use the first one — avoids the
+    // workspace-creation rate limiter (5/hour).
+    const response = await request.get("/api/workspaces", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    expect(response.ok()).toBeTruthy();
+    const { workspaces } = await response.json();
+    expect(workspaces.length).toBeGreaterThan(0);
+    slug = workspaces[0].slug;
+    workspaceName = workspaces[0].name;
+  });
+
+  test.beforeEach(async ({ page }) => {
+    await seedSession(page, token);
+    await mockOnboardingCheck(page);
+  });
+
+  test("workspace list loads and clicking a workspace opens chat", async ({
+    page,
+  }) => {
+    await page.goto("/", { waitUntil: "networkidle" });
+    await assertAppLoaded(page);
+
+    const sidebar = page.getByRole("navigation", {
+      name: /Main navigation/i,
+    });
+    await expect(sidebar).toBeVisible({ timeout: 10000 });
+
+    const wsList = page.getByRole("list", { name: /Workspaces/i });
+    await expect(wsList).toBeVisible({ timeout: 10000 });
+
+    // Click the workspace link
+    const wsLink = page
+      .getByRole("link", { name: workspaceName })
+      .first();
+    await expect(wsLink).toBeVisible({ timeout: 10000 });
+    await wsLink.click();
+
+    // Verify URL changes to the workspace chat path
+    await page.waitForURL(new RegExp(`/workspace/${slug}`), {
+      timeout: 15000,
+    });
+
+    // Verify the chat input is visible
+    await expect(page.locator("#primary-prompt-input")).toBeVisible({
+      timeout: 30000,
+    });
+  });
+
+  test("sidebar collapse/expand toggle works", async ({ page }) => {
+    await page.goto(`/workspace/${slug}`, { waitUntil: "networkidle" });
+    await assertAppLoaded(page);
+
+    await page
+      .locator("#primary-prompt-input")
+      .first()
+      .waitFor({ state: "visible", timeout: 30000 });
+
+    // Sidebar is initially visible
+    const sidebar = page.getByRole("navigation", {
+      name: /Main navigation/i,
+    });
+    await expect(sidebar).toBeVisible({ timeout: 10000 });
+
+    // Click to collapse — target the toggle button inside the sidebar nav
+    // (there are two "Hide sidebar" buttons: one in LeftSidebarIconBar, one
+    // in the sidebar header). Scope to the nav element.
+    const hideBtn = sidebar.getByRole("button", {
+      name: /Hide sidebar/i,
+    });
+    await expect(hideBtn).toBeVisible({ timeout: 10000 });
+    await hideBtn.click();
+
+    // After collapsing, the toggle button says "Show sidebar"
+    // (check both possible locations)
+    const showBtn = page.getByRole("button", {
+      name: /Show sidebar/i,
+    }).first();
+    await expect(showBtn).toBeVisible({ timeout: 5000 });
+
+    // Verify localStorage persisted the closed state
+    const toggleState = await page.evaluate(() =>
+      window.localStorage.getItem("opensin_sidebar_toggle"),
+    );
+    expect(toggleState).toBe("closed");
+
+    // Click to expand
+    await showBtn.click();
+
+    const hideBtnAgain = page.getByRole("button", {
+      name: /Hide sidebar/i,
+    }).first();
+    await expect(hideBtnAgain).toBeVisible({ timeout: 5000 });
+
+    const toggleStateOpen = await page.evaluate(() =>
+      window.localStorage.getItem("opensin_sidebar_toggle"),
+    );
+    expect(toggleStateOpen).toBe("open");
+  });
+
+  test("sidebar toggle state persists across page reload", async ({ page }) => {
+    await page.goto(`/workspace/${slug}`, { waitUntil: "networkidle" });
+    await assertAppLoaded(page);
+
+    await page
+      .locator("#primary-prompt-input")
+      .first()
+      .waitFor({ state: "visible", timeout: 30000 });
+
+    // Collapse the sidebar — scope to nav to avoid the LeftSidebarIconBar duplicate
+    const sidebar = page.getByRole("navigation", {
+      name: /Main navigation/i,
+    });
+    const hideBtn = sidebar.getByRole("button", {
+      name: /Hide sidebar/i,
+    });
+    await expect(hideBtn).toBeVisible({ timeout: 10000 });
+    await hideBtn.click();
+
+    const showBtn = page.getByRole("button", {
+      name: /Show sidebar/i,
+    }).first();
+    await expect(showBtn).toBeVisible({ timeout: 5000 });
+
+    // Reload
+    await page.reload({ waitUntil: "networkidle" });
+    await assertAppLoaded(page);
+
+    // After reload, the sidebar should still be collapsed
+    await expect(
+      page.getByRole("button", { name: /Show sidebar/i }).first(),
+    ).toBeVisible({ timeout: 10000 });
+  });
+});
