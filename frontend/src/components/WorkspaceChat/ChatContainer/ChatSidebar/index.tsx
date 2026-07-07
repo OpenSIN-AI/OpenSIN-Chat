@@ -1,1 +1,373 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovKioKICogUHVycG9zZTogUmVhY3QgY29udGV4dCBwcm92aWRlciBmb3IgcmlnaHQgc2lkZWJhciBwYW5lbCBzdGF0ZSBhbmQgaGVscGVycy4KICogRG9jczogQ2hhdFNpZGViYXIvaW5kZXguZG9jLm1kCiAqLwppbXBvcnQgUmVhY3QsIHsKICBjcmVhdGVDb250ZXh0LAogIHVzZUNvbnRleHQsCiAgdXNlU3RhdGUsCiAgdXNlRWZmZWN0LAogIHVzZUNhbGxiYWNrLAogIHVzZVJlZiwKfSBmcm9tICJyZWFjdCI7CmltcG9ydCB7IHVzZVRyYW5zbGF0aW9uIH0gZnJvbSAicmVhY3QtaTE4bmV4dCI7Cgp0eXBlIExvZ0xldmVsID0gImluZm8iIHwgIndhcm4iIHwgImVycm9yIiB8ICJzdWNjZXNzIiB8ICJkZWJ1ZyI7Cgp0eXBlIExvZ0VudHJ5ID0gewogIGxldmVsOiBMb2dMZXZlbDsKICBtZXNzYWdlOiBzdHJpbmc7CiAgdGltZXN0YW1wOiBzdHJpbmc7Cn07CgpleHBvcnQgY29uc3QgTE9HX0VWRU5UID0gIm9wZW5zaW46bG9nIjsKCmNvbnN0IENoYXRTaWRlYmFyQ29udGV4dCA9IGNyZWF0ZUNvbnRleHQ8YW55Pih1bmRlZmluZWQpOwpjb25zdCBDaGF0U2lkZWJhckxvZ3NDb250ZXh0ID0gY3JlYXRlQ29udGV4dDxhbnk+KHVuZGVmaW5lZCk7Cgpjb25zdCBTT1VSQ0VfRklMVEVSUyA9IHsKICBhbGw6ICJhbGwiLAogIGRvY3VtZW50czogImRvY3VtZW50cyIsCiAgbWVkaWE6ICJtZWRpYSIsCn07Cgpjb25zdCBET0NVTUVOVF9TT1VSQ0VfUFJFRklYRVMgPSBbCiAgInBhcGVybGVzcy1uZ3g6Ly8iLAogICJvYnNpZGlhbjovLyIsCiAgImNvbmZsdWVuY2U6Ly8iLAogICJkcnVwYWx3aWtpOi8vIiwKICAiZ2l0aHViOi8vIiwKICAiZ2l0bGFiOi8vIiwKXTsKCmNvbnN0IE1FRElBX1NPVVJDRV9QUkVGSVhFUzogYW55ID0gWyJ5b3V0dWJlOi8vIl07CgpmdW5jdGlvbiBpc0RvY3VtZW50U291cmNlKGNodW5rU291cmNlKSB7CiAgcmV0dXJuIChET0NVTUVOVF9TT1VSQ0VfUFJFRklYRVMgYXMgYW55KS5zb21lKChwcmVmaXgpID0+CiAgICBjaHVua1NvdXJjZT8uc3RhcnRzV2l0aChwcmVmaXgpLAogICk7Cn0KCmZ1bmN0aW9uIGlzTWVkaWFTb3VyY2UoY2h1bmtTb3VyY2U6IGFueSkgewogIHJldHVybiAoTUVESUFfU09VUkNFX1BSRUZJWEVTIGFzIGFueSkuc29tZSgocHJlZml4KSA9PgogICAgY2h1bmtTb3VyY2U/LnN0YXJ0c1dpdGgocHJlZml4KSwKICApOwp9CgpleHBvcnQgZnVuY3Rpb24gQ2hhdFNpZGViYXJQcm92aWRlcih7IGNoaWxkcmVuIH06IGFueSkgewogIGNvbnN0IFthY3RpdmVTaWRlYmFyLCBzZXRBY3RpdmVTaWRlYmFyXSA9IHVzZVN0YXRlKG51bGwpOwogIGNvbnN0IFtzaWRlYmFyRGF0YSwgc2V0U2lkZWJhckRhdGFdID0gdXNlU3RhdGUobnVsbCk7CgogIGNvbnN0IFtzb3VyY2VGaWx0ZXIsIHNldFNvdXJjZUZpbHRlcl0gPSB1c2VTdGF0ZSgoKSA9PiB7CiAgICB0cnkgewogICAgICByZXR1cm4gKAogICAgICAgIGxvY2FsU3RvcmFnZS5nZXRJdGVtKCJvcGVuc2luX3NvdXJjZV9maWx0ZXIiKSB8fCBTT1VSQ0VfRklMVEVSUy5hbGwKICAgICAgKTsKICAgIH0gY2F0Y2ggewogICAgICByZXR1cm4gU09VUkNFX0ZJTFRFUlMuYWxsOwogICAgfQogIH0pOwoKICAvLyBQcmV2aWV3IHBhbmVsIHN0YXRlOiB7IGNvbnRlbnQsIHRpdGxlLCB0eXBlLCB2ZXJzaW9ucyB9CiAgY29uc3QgW3ByZXZpZXdEYXRhLCBzZXRQcmV2aWV3RGF0YV0gPSB1c2VTdGF0ZShudWxsKTsKCiAgLy8gUGVyc2lzdGVudCBjb25zb2xlIGxvZ3Mg4oCUIHN1cnZpdmUgc2lkZWJhciBwYW5lbCBzd2FwcwogIGNvbnN0IFtjb25zb2xlTG9ncywgc2V0Q29uc29sZUxvZ3NdID0gdXNlU3RhdGU8TG9nRW50cnlbXT4oW10pOwogIGNvbnN0IGNsZWFyQ29uc29sZUxvZ3MgPSB1c2VDYWxsYmFjaygoKSA9PiBzZXRDb25zb2xlTG9ncyhbXSksIFtdKTsKCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIGZ1bmN0aW9uIGhhbmRsZXIoZTogRXZlbnQpIHsKICAgICAgY29uc3QgZGV0YWlsID0gKGUgYXMgQ3VzdG9tRXZlbnQ8TG9nRW50cnk+KS5kZXRhaWw7CiAgICAgIHNldENvbnNvbGVMb2dzKChwcmV2KSA9PiBbLi4ucHJldi5zbGljZSgtNDk5KSwgZGV0YWlsXSk7CiAgICB9CiAgICB3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcihMT0dfRVZFTlQsIGhhbmRsZXIgYXMgYW55KTsKICAgIHJldHVybiAoKSA9PiB3aW5kb3cucmVtb3ZlRXZlbnRMaXN0ZW5lcihMT0dfRVZFTlQsIGhhbmRsZXIgYXMgYW55KTsKICB9LCBbXSk7CgogIHVzZUVmZmVjdCgoKSA9PiB7CiAgICB0cnkgewogICAgICBsb2NhbFN0b3JhZ2Uuc2V0SXRlbSgib3BlbnNpbl9zb3VyY2VfZmlsdGVyIiwgc291cmNlRmlsdGVyKTsKICAgIH0gY2F0Y2gge30KICB9LCBbc291cmNlRmlsdGVyXSk7CgogIGZ1bmN0aW9uIG9wZW5TaWRlYmFyKHR5cGU6IGFueSwgZGF0YTogYW55ID0gbnVsbCkgewogICAgc2V0QWN0aXZlU2lkZWJhcih0eXBlKTsKICAgIHNldFNpZGViYXJEYXRhKGRhdGEpOwogIH0KCiAgZnVuY3Rpb24gY2xvc2VTaWRlYmFyKCkgewogICAgc2V0QWN0aXZlU2lkZWJhcihudWxsKTsKICAgIHNldFNpZGViYXJEYXRhKG51bGwpOwogIH0KCiAgZnVuY3Rpb24gdG9nZ2xlU2lkZWJhcih0eXBlOiBhbnksIGRhdGE6IGFueSA9IG51bGwpIHsKICAgIGlmIChhY3RpdmVTaWRlYmFyID09PSB0eXBlKSBjbG9zZVNpZGViYXIoKTsKICAgIGVsc2Ugb3BlblNpZGViYXIodHlwZSwgZGF0YSk7CiAgfQoKICBjb25zdCBvcGVuUHJldmlldyA9IHVzZUNhbGxiYWNrKChkYXRhKSA9PiB7CiAgICBzZXRQcmV2aWV3RGF0YShkYXRhKTsKICAgIHNldEFjdGl2ZVNpZGViYXIoInByZXZpZXciKTsKICB9LCBbXSk7CgogIHJldHVybiAoCiAgICA8Q2hhdFNpZGViYXJDb250ZXh0LlByb3ZpZGVyCiAgICAgIHZhbHVlPXt7CiAgICAgICAgYWN0aXZlU2lkZWJhciwKICAgICAgICBzaWRlYmFyRGF0YSwKICAgICAgICBvcGVuU2lkZWJhciwKICAgICAgICBjbG9zZVNpZGViYXIsCiAgICAgICAgdG9nZ2xlU2lkZWJhciwKICAgICAgICBzb3VyY2VGaWx0ZXIsCiAgICAgICAgc2V0U291cmNlRmlsdGVyLAogICAgICAgIFNPVVJDRV9GSUxURVJTLAogICAgICAgIGlzRG9jdW1lbnRTb3VyY2UsCiAgICAgICAgaXNNZWRpYVNvdXJjZSwKICAgICAgICBwcmV2aWV3RGF0YSwKICAgICAgICBzZXRQcmV2aWV3RGF0YSwKICAgICAgICBvcGVuUHJldmlldywKICAgICAgfX0KICAgID4KICAgICAgPENoYXRTaWRlYmFyTG9nc0NvbnRleHQuUHJvdmlkZXIKICAgICAgICB2YWx1ZT17eyBjb25zb2xlTG9ncywgY2xlYXJDb25zb2xlTG9ncyB9fQogICAgICA+CiAgICAgICAge2NoaWxkcmVufQogICAgICA8L0NoYXRTaWRlYmFyTG9nc0NvbnRleHQuUHJvdmlkZXI+CiAgICA8L0NoYXRTaWRlYmFyQ29udGV4dC5Qcm92aWRlcj4KICApOwp9CgpleHBvcnQgZnVuY3Rpb24gdXNlQ2hhdFNpZGViYXIoKSB7CiAgY29uc3QgY3R4ID0gdXNlQ29udGV4dChDaGF0U2lkZWJhckNvbnRleHQpOwogIGlmICghY3R4KQogICAgdGhyb3cgbmV3IEVycm9yKCJ1c2VDaGF0U2lkZWJhciBtdXN0IGJlIHVzZWQgd2l0aGluIENoYXRTaWRlYmFyUHJvdmlkZXIiKTsKICByZXR1cm4gY3R4Owp9CgpleHBvcnQgZnVuY3Rpb24gdXNlU291cmNlc1NpZGViYXIoKSB7CiAgY29uc3QgY3R4ID0gdXNlQ29udGV4dChDaGF0U2lkZWJhckNvbnRleHQpOwogIGlmICghY3R4KQogICAgdGhyb3cgbmV3IEVycm9yKAogICAgICAidXNlU291cmNlc1NpZGViYXIgbXVzdCBiZSB1c2VkIHdpdGhpbiBDaGF0U2lkZWJhclByb3ZpZGVyIiwKICAgICk7CiAgY29uc3QgeyBhY3RpdmVTaWRlYmFyLCBzaWRlYmFyRGF0YSwgb3BlblNpZGViYXIsIGNsb3NlU2lkZWJhciB9ID0gY3R4OwogIHJldHVybiB7CiAgICBzaWRlYmFyT3BlbjogYWN0aXZlU2lkZWJhciA9PT0gInNvdXJjZXMiLAogICAgc291cmNlczogYWN0aXZlU2lkZWJhciA9PT0gInNvdXJjZXMiID8gc2lkZWJhckRhdGEgfHwgW10gOiBbXSwKICAgIG9wZW5TaWRlYmFyOiAoc291cmNlcykgPT4gb3BlblNpZGViYXIoInNvdXJjZXMiLCBzb3VyY2VzKSwKICAgIGNsb3NlU2lkZWJhciwKICB9Owp9CgpleHBvcnQgZnVuY3Rpb24gdXNlTWVtb3JpZXNTaWRlYmFyKCkgewogIGNvbnN0IGN0eCA9IHVzZUNvbnRleHQoQ2hhdFNpZGViYXJDb250ZXh0KTsKICBpZiAoIWN0eCkKICAgIHRocm93IG5ldyBFcnJvcigKICAgICAgInVzZU1lbW9yaWVzU2lkZWJhciBtdXN0IGJlIHVzZWQgd2l0aGluIENoYXRTaWRlYmFyUHJvdmlkZXIiLAogICAgKTsKICBjb25zdCB7IGFjdGl2ZVNpZGViYXIsIHRvZ2dsZVNpZGViYXIsIGNsb3NlU2lkZWJhciB9ID0gY3R4OwogIHJldHVybiB7CiAgICBzaWRlYmFyT3BlbjogYWN0aXZlU2lkZWJhciA9PT0gIm1lbW9yaWVzIiwKICAgIHRvZ2dsZVNpZGViYXI6ICgpID0+IHRvZ2dsZVNpZGViYXIoIm1lbW9yaWVzIiksCiAgICBjbG9zZVNpZGViYXIsCiAgfTsKfQoKZXhwb3J0IGZ1bmN0aW9uIHVzZVByZXZpZXdTaWRlYmFyKCkgewogIGNvbnN0IGN0eCA9IHVzZUNvbnRleHQoQ2hhdFNpZGViYXJDb250ZXh0KTsKICBpZiAoIWN0eCkKICAgIHRocm93IG5ldyBFcnJvcigKICAgICAgInVzZVByZXZpZXdTaWRlYmFyIG11c3QgYmUgdXNlZCB3aXRoaW4gQ2hhdFNpZGViYXJQcm92aWRlciIsCiAgICApOwogIGNvbnN0IHsKICAgIGFjdGl2ZVNpZGViYXIsCiAgICBwcmV2aWV3RGF0YSwKICAgIG9wZW5QcmV2aWV3LAogICAgY2xvc2VTaWRlYmFyLAogICAgdG9nZ2xlU2lkZWJhciwKICB9ID0gY3R4OwogIHJldHVybiB7CiAgICBzaWRlYmFyT3BlbjogYWN0aXZlU2lkZWJhciA9PT0gInByZXZpZXciLAogICAgcHJldmlld0RhdGEsCiAgICBvcGVuUHJldmlldywKICAgIGNsb3NlU2lkZWJhciwKICAgIHRvZ2dsZVByZXZpZXc6ICgpID0+IHRvZ2dsZVNpZGViYXIoInByZXZpZXciKSwKICB9Owp9CgpleHBvcnQgZnVuY3Rpb24gdXNlQ29uc29sZVNpZGViYXIoKSB7CiAgY29uc3QgY3R4ID0gdXNlQ29udGV4dChDaGF0U2lkZWJhckNvbnRleHQpOwogIGNvbnN0IGxvZ3NDdHggPSB1c2VDb250ZXh0KENoYXRTaWRlYmFyTG9nc0NvbnRleHQpOwogIGlmICghY3R4KQogICAgdGhyb3cgbmV3IEVycm9yKAogICAgICAidXNlQ29uc29sZVNpZGViYXIgbXVzdCBiZSB1c2VkIHdpdGhpbiBDaGF0U2lkZWJhclByb3ZpZGVyIiwKICAgICk7CiAgY29uc3QgeyBhY3RpdmVTaWRlYmFyLCB0b2dnbGVTaWRlYmFyLCBjbG9zZVNpZGViYXIgfSA9IGN0eDsKICBjb25zdCB7IGNvbnNvbGVMb2dzLCBjbGVhckNvbnNvbGVMb2dzIH0gPSBsb2dzQ3R4OwogIHJldHVybiB7CiAgICBzaWRlYmFyT3BlbjogYWN0aXZlU2lkZWJhciA9PT0gImNvbnNvbGUiLAogICAgdG9nZ2xlQ29uc29sZTogKCkgPT4gdG9nZ2xlU2lkZWJhcigiY29uc29sZSIpLAogICAgY2xvc2VTaWRlYmFyLAogICAgY29uc29sZUxvZ3MsCiAgICBjbGVhckNvbnNvbGVMb2dzLAogIH07Cn0KCmV4cG9ydCBmdW5jdGlvbiB1c2VDaGF0U2lkZWJhckxvZ3MoKSB7CiAgY29uc3QgY3R4ID0gdXNlQ29udGV4dChDaGF0U2lkZWJhckxvZ3NDb250ZXh0KTsKICBpZiAoIWN0eCkKICAgIHRocm93IG5ldyBFcnJvcigKICAgICAgInVzZUNoYXRTaWRlYmFyTG9ncyBtdXN0IGJlIHVzZWQgd2l0aGluIENoYXRTaWRlYmFyUHJvdmlkZXIiLAogICAgKTsKICByZXR1cm4gY3R4Owp9CgpleHBvcnQgZnVuY3Rpb24gdXNlRmlsZXN5c3RlbVNpZGViYXIoKSB7CiAgY29uc3QgY3R4ID0gdXNlQ29udGV4dChDaGF0U2lkZWJhckNvbnRleHQpOwogIGlmICghY3R4KQogICAgdGhyb3cgbmV3IEVycm9yKAogICAgICAidXNlRmlsZXN5c3RlbVNpZGViYXIgbXVzdCBiZSB1c2VkIHdpdGhpbiBDaGF0U2lkZWJhclByb3ZpZGVyIiwKICAgICk7CiAgY29uc3QgeyBhY3RpdmVTaWRlYmFyLCB0b2dnbGVTaWRlYmFyLCBjbG9zZVNpZGViYXIgfSA9IGN0eDsKICByZXR1cm4gewogICAgc2lkZWJhck9wZW46IGFjdGl2ZVNpZGViYXIgPT09ICJmaWxlc3lzdGVtIiwKICAgIHRvZ2dsZUZpbGVzeXN0ZW06ICgpID0+IHRvZ2dsZVNpZGViYXIoImZpbGVzeXN0ZW0iKSwKICAgIGNsb3NlU2lkZWJhciwKICB9Owp9CgpleHBvcnQgZnVuY3Rpb24gdXNlRGF0YWJhc2VTaWRlYmFyKCkgewogIGNvbnN0IGN0eCA9IHVzZUNvbnRleHQoQ2hhdFNpZGViYXJDb250ZXh0KTsKICBpZiAoIWN0eCkKICAgIHRocm93IG5ldyBFcnJvcigKICAgICAgInVzZURhdGFiYXNlU2lkZWJhciBtdXN0IGJlIHVzZWQgd2l0aGluIENoYXRTaWRlYmFyUHJvdmlkZXIiLAogICAgKTsKICBjb25zdCB7IGFjdGl2ZVNpZGViYXIsIHRvZ2dsZVNpZGViYXIsIGNsb3NlU2lkZWJhciB9ID0gY3R4OwogIHJldHVybiB7CiAgICBzaWRlYmFyT3BlbjogYWN0aXZlU2lkZWJhciA9PT0gImRhdGFiYXNlIiwKICAgIHRvZ2dsZURhdGFiYXNlOiAoKSA9PiB0b2dnbGVTaWRlYmFyKCJkYXRhYmFzZSIpLAogICAgY2xvc2VTaWRlYmFyLAogIH07Cn0KCmV4cG9ydCBmdW5jdGlvbiB1c2VQb2xpdGljYWxTaWRlYmFyKCkgewogIGNvbnN0IGN0eCA9IHVzZUNvbnRleHQoQ2hhdFNpZGViYXJDb250ZXh0KTsKICBpZiAoIWN0eCkKICAgIHRocm93IG5ldyBFcnJvcigKICAgICAgInVzZVBvbGl0aWNhbFNpZGViYXIgbXVzdCBiZSB1c2VkIHdpdGhpbiBDaGF0U2lkZWJhclByb3ZpZGVyIiwKICAgICk7CiAgY29uc3QgeyBhY3RpdmVTaWRlYmFyLCB0b2dnbGVTaWRlYmFyLCBjbG9zZVNpZGViYXIgfSA9IGN0eDsKICByZXR1cm4gewogICAgc2lkZWJhck9wZW46IGFjdGl2ZVNpZGViYXIgPT09ICJwb2xpdGljYWwiLAogICAgdG9nZ2xlUG9saXRpY2FsOiAoKSA9PiB0b2dnbGVTaWRlYmFyKCJwb2xpdGljYWwiKSwKICAgIGNsb3NlU2lkZWJhciwKICB9Owp9CgovKioKICogUmV1c2FibGUgYW5pbWF0aW9uIHdyYXBwZXIgZm9yIHJpZ2h0LXNpZGUgY2hhdCBwYW5lbHMuCiAqIFJlbmRlcnMgYXMgYW4gYWJzb2x1dGVseS1wb3NpdGlvbmVkIHBhbmVsIHRvIHRoZSBsZWZ0IG9mIHRoZSBpY29uIGJhcgogKiBzbyBpdCBuZXZlciBzaGlmdHMgdGhlIGZsZXggbGF5b3V0LiBEcmFnIHRoZSBsZWZ0IGVkZ2UgdG8gcmVzaXplLgogKiBAcGFyYW0ge09iamVjdH0gcHJvcHMKICogQHBhcmFtIHtib29sZWFufSBwcm9wcy5pc09wZW4KICogQHBhcmFtIHtSZWFjdC5SZWFjdE5vZGV9IHByb3BzLmNoaWxkcmVuCiAqLwpleHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBDaGF0U2lkZWJhcih7CiAgaXNPcGVuLAogIGNoaWxkcmVuLAogIG1pbldpZHRoID0gMjQwLAogIG1heFdpZHRoID0gODAwLAogIGRlZmF1bHRXaWR0aCA9IE1hdGgubWF4KDM2NiwgbWluV2lkdGgpLAp9OiBhbnkpIHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgY29uc3QgW3dpZHRoLCBzZXRXaWR0aF0gPSB1c2VTdGF0ZSgoKSA9PiB7CiAgICBpZiAodHlwZW9mIHdpbmRvdyA9PT0gInVuZGVmaW5lZCIpIHJldHVybiBkZWZhdWx0V2lkdGg7CiAgICB0cnkgewogICAgICBjb25zdCBzdG9yZWQgPSB3aW5kb3cubG9jYWxTdG9yYWdlLmdldEl0ZW0oIm9wZW5zaW4tcmlnaHQtc2lkZWJhci13aWR0aCIpOwogICAgICBpZiAoc3RvcmVkKSB7CiAgICAgICAgY29uc3QgbiA9IE51bWJlcihzdG9yZWQpOwogICAgICAgIGlmICghaXNOYU4obikgJiYgbiA+PSBtaW5XaWR0aCAmJiBuIDw9IG1heFdpZHRoKSByZXR1cm4gbjsKICAgICAgfQogICAgfSBjYXRjaCB7fQogICAgcmV0dXJuIGRlZmF1bHRXaWR0aDsKICB9KTsKICBjb25zdCBpc1Jlc2l6aW5nUmVmID0gdXNlUmVmKGZhbHNlKTsKICBjb25zdCByZXNpemVTdGFydFhSZWYgPSB1c2VSZWYoMCk7CiAgY29uc3QgcmVzaXplU3RhcnRXaWR0aFJlZiA9IHVzZVJlZigwKTsKCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIGlmICh0eXBlb2Ygd2luZG93ICE9PSAidW5kZWZpbmVkIikgewogICAgICB0cnkgewogICAgICAgIHdpbmRvdy5sb2NhbFN0b3JhZ2Uuc2V0SXRlbSgKICAgICAgICAgICJvcGVuc2luLXJpZ2h0LXNpZGViYXItd2lkdGgiLAogICAgICAgICAgU3RyaW5nKHdpZHRoKSwKICAgICAgICApOwogICAgICB9IGNhdGNoIHt9CiAgICB9CiAgfSwgW3dpZHRoXSk7CgogIHVzZUVmZmVjdCgoKSA9PiB7CiAgICBmdW5jdGlvbiBoYW5kbGVNb3VzZU1vdmUoZTogTW91c2VFdmVudCkgewogICAgICBpZiAoIWlzUmVzaXppbmdSZWYuY3VycmVudCkgcmV0dXJuOwogICAgICAvLyBSZXNpemUgZnJvbSBsZWZ0IGVkZ2Ugb2YgcmlnaHQgc2lkZWJhciDihpIgZHJhZyBsZWZ0ID0gd2lkZXIsIGRyYWcgcmlnaHQgPSBuYXJyb3dlcgogICAgICBjb25zdCBkZWx0YSA9IHJlc2l6ZVN0YXJ0WFJlZi5jdXJyZW50IC0gZS5jbGllbnRYOwogICAgICBjb25zdCBuZXdXaWR0aCA9IE1hdGgubWluKAogICAgICAgIG1heFdpZHRoLAogICAgICAgIE1hdGgubWF4KG1pbldpZHRoLCByZXNpemVTdGFydFdpZHRoUmVmLmN1cnJlbnQgKyBkZWx0YSksCiAgICAgICk7CiAgICAgIHNldFdpZHRoKG5ld1dpZHRoKTsKICAgIH0KICAgIGZ1bmN0aW9uIGhhbmRsZU1vdXNlVXAoKSB7CiAgICAgIGlmICghaXNSZXNpemluZ1JlZi5jdXJyZW50KSByZXR1cm47CiAgICAgIGlzUmVzaXppbmdSZWYuY3VycmVudCA9IGZhbHNlOwogICAgICBkb2N1bWVudC5ib2R5LnN0eWxlLmN1cnNvciA9ICIiOwogICAgICBkb2N1bWVudC5ib2R5LnN0eWxlLnVzZXJTZWxlY3QgPSAiIjsKICAgIH0KICAgIHdpbmRvdy5hZGRFdmVudExpc3RlbmVyKCJtb3VzZW1vdmUiLCBoYW5kbGVNb3VzZU1vdmUpOwogICAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoIm1vdXNldXAiLCBoYW5kbGVNb3VzZVVwKTsKICAgIHJldHVybiAoKSA9PiB7CiAgICAgIHdpbmRvdy5yZW1vdmVFdmVudExpc3RlbmVyKCJtb3VzZW1vdmUiLCBoYW5kbGVNb3VzZU1vdmUpOwogICAgICB3aW5kb3cucmVtb3ZlRXZlbnRMaXN0ZW5lcigibW91c2V1cCIsIGhhbmRsZU1vdXNlVXApOwogICAgfTsKICB9LCBbbWluV2lkdGgsIG1heFdpZHRoXSk7CgogIGZ1bmN0aW9uIGhhbmRsZVJlc2l6ZVN0YXJ0KGU6IFJlYWN0Lk1vdXNlRXZlbnQpIHsKICAgIGUucHJldmVudERlZmF1bHQoKTsKICAgIGUuc3RvcFByb3BhZ2F0aW9uKCk7CiAgICBpc1Jlc2l6aW5nUmVmLmN1cnJlbnQgPSB0cnVlOwogICAgcmVzaXplU3RhcnRYUmVmLmN1cnJlbnQgPSBlLmNsaWVudFg7CiAgICByZXNpemVTdGFydFdpZHRoUmVmLmN1cnJlbnQgPSB3aWR0aDsKICAgIGRvY3VtZW50LmJvZHkuc3R5bGUuY3Vyc29yID0gImNvbC1yZXNpemUiOwogICAgZG9jdW1lbnQuYm9keS5zdHlsZS51c2VyU2VsZWN0ID0gIm5vbmUiOwogIH0KCiAgLy8gV2hlbiBvcGVuaW5nLCBlbnN1cmUgdGhlIHBhbmVsIGlzIGF0IGxlYXN0IG1pbldpZHRoIChlLmcuIFBERiBhbmFseXNpcyBuZWVkcwogIC8vIG1vcmUgc3BhY2UgdGhhbiB0aGUgZGVmYXVsdCAzNjZweCkuCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIGlmICghaXNPcGVuKSByZXR1cm47CiAgICBzZXRXaWR0aCgodykgPT4gTWF0aC5tYXgodywgbWluV2lkdGgpKTsKICB9LCBbaXNPcGVuLCBtaW5XaWR0aF0pOwoKICBpZiAoIWlzT3BlbikgcmV0dXJuIG51bGw7CgogIHJldHVybiAoCiAgICA8ZGl2CiAgICAgIGNsYXNzTmFtZT0icmVsYXRpdmUgaC1mdWxsIG92ZXJmbG93LWhpZGRlbiBmbGV4IGZsZXgtY29sIGZsZXgtc2hyaW5rLTAgei0yMCIKICAgICAgc3R5bGU9e3sgd2lkdGg6IGAke3dpZHRofXB4YCB9fQogICAgPgogICAgICB7LyogUmVzaXplIGhhbmRsZSBvbiB0aGUgTEVGVCBlZGdlIHNvIHVzZXIgY2FuIGRyYWcgdG8gd2lkZW4gdGhlIHBhbmVsICovfQogICAgICA8ZGl2CiAgICAgICAgb25Nb3VzZURvd249e2hhbmRsZVJlc2l6ZVN0YXJ0fQogICAgICAgIHJvbGU9InNlcGFyYXRvciIKICAgICAgICBhcmlhLW9yaWVudGF0aW9uPSJ2ZXJ0aWNhbCIKICAgICAgICBhcmlhLWxhYmVsPXt0KCJjb21tb24ucmVzaXplUmlnaHRTaWRlYmFyIil9CiAgICAgICAgdGl0bGU9e3QoImNvbW1vbi5kcmFnVG9SZXNpemVXaWR0aCIpfQogICAgICAgIGNsYXNzTmFtZT0iYWJzb2x1dGUgdG9wLTAgbGVmdC0wIGgtZnVsbCB3LTMgY3Vyc29yLWNvbC1yZXNpemUgei01MCBncm91cCBmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciBob3ZlcjpiZy1ibHVlLTUwMC8zMCB0cmFuc2l0aW9uLWNvbG9ycyIKICAgICAgPgogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJ3LTEgaC0xNiBiZy1ibHVlLTQwMC81MCBncm91cC1ob3ZlcjpiZy1ibHVlLTQwMCByb3VuZGVkLWZ1bGwgdHJhbnNpdGlvbi1jb2xvcnMiIC8+CiAgICAgIDwvZGl2PgogICAgICB7Y2hpbGRyZW59CiAgICA8L2Rpdj4KICApOwp9Cg==
+// SPDX-License-Identifier: MIT
+/**
+ * Purpose: React context provider for right sidebar panel state and helpers.
+ * Docs: ChatSidebar/index.doc.md
+ */
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+} from "react";
+import { useTranslation } from "react-i18next";
+
+type LogLevel = "info" | "warn" | "error" | "success" | "debug";
+
+type LogEntry = {
+  level: LogLevel;
+  message: string;
+  timestamp: string;
+};
+
+export const LOG_EVENT = "opensin:log";
+
+const ChatSidebarContext = createContext<any>(undefined);
+const ChatSidebarLogsContext = createContext<any>(undefined);
+
+const SOURCE_FILTERS = {
+  all: "all",
+  documents: "documents",
+  media: "media",
+};
+
+const DOCUMENT_SOURCE_PREFIXES = [
+  "paperless-ngx://",
+  "obsidian://",
+  "confluence://",
+  "drupalwiki://",
+  "github://",
+  "gitlab://",
+];
+
+const MEDIA_SOURCE_PREFIXES: any = ["youtube://"];
+
+function isDocumentSource(chunkSource) {
+  return (DOCUMENT_SOURCE_PREFIXES as any).some((prefix) =>
+    chunkSource?.startsWith(prefix),
+  );
+}
+
+function isMediaSource(chunkSource: any) {
+  return (MEDIA_SOURCE_PREFIXES as any).some((prefix) =>
+    chunkSource?.startsWith(prefix),
+  );
+}
+
+export function ChatSidebarProvider({ children }: any) {
+  const [activeSidebar, setActiveSidebar] = useState(null);
+  const [sidebarData, setSidebarData] = useState(null);
+
+  const [sourceFilter, setSourceFilter] = useState(() => {
+    try {
+      return (
+        localStorage.getItem("opensin_source_filter") || SOURCE_FILTERS.all
+      );
+    } catch {
+      return SOURCE_FILTERS.all;
+    }
+  });
+
+  // Preview panel state: { content, title, type, versions }
+  const [previewData, setPreviewData] = useState(null);
+
+  // Persistent console logs — survive sidebar panel swaps
+  const [consoleLogs, setConsoleLogs] = useState<LogEntry[]>([]);
+  const clearConsoleLogs = useCallback(() => setConsoleLogs([]), []);
+
+  useEffect(() => {
+    function handler(e: Event) {
+      const detail = (e as CustomEvent<LogEntry>).detail;
+      setConsoleLogs((prev) => [...prev.slice(-499), detail]);
+    }
+    window.addEventListener(LOG_EVENT, handler as any);
+    return () => window.removeEventListener(LOG_EVENT, handler as any);
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("opensin_source_filter", sourceFilter);
+    } catch {}
+  }, [sourceFilter]);
+
+  function openSidebar(type: any, data: any = null) {
+    setActiveSidebar(type);
+    setSidebarData(data);
+  }
+
+  function closeSidebar() {
+    setActiveSidebar(null);
+    setSidebarData(null);
+  }
+
+  function toggleSidebar(type: any, data: any = null) {
+    if (activeSidebar === type) closeSidebar();
+    else openSidebar(type, data);
+  }
+
+  const openPreview = useCallback((data) => {
+    setPreviewData(data);
+    setActiveSidebar("preview");
+  }, []);
+
+  return (
+    <ChatSidebarContext.Provider
+      value={{
+        activeSidebar,
+        sidebarData,
+        openSidebar,
+        closeSidebar,
+        toggleSidebar,
+        sourceFilter,
+        setSourceFilter,
+        SOURCE_FILTERS,
+        isDocumentSource,
+        isMediaSource,
+        previewData,
+        setPreviewData,
+        openPreview,
+      }}
+    >
+      <ChatSidebarLogsContext.Provider
+        value={{ consoleLogs, clearConsoleLogs }}
+      >
+        {children}
+      </ChatSidebarLogsContext.Provider>
+    </ChatSidebarContext.Provider>
+  );
+}
+
+export function useChatSidebar() {
+  const ctx = useContext(ChatSidebarContext);
+  if (!ctx)
+    throw new Error("useChatSidebar must be used within ChatSidebarProvider");
+  return ctx;
+}
+
+export function useSourcesSidebar() {
+  const ctx = useContext(ChatSidebarContext);
+  if (!ctx)
+    throw new Error(
+      "useSourcesSidebar must be used within ChatSidebarProvider",
+    );
+  const { activeSidebar, sidebarData, openSidebar, closeSidebar } = ctx;
+  return {
+    sidebarOpen: activeSidebar === "sources",
+    sources: activeSidebar === "sources" ? sidebarData || [] : [],
+    openSidebar: (sources) => openSidebar("sources", sources),
+    closeSidebar,
+  };
+}
+
+export function useMemoriesSidebar() {
+  const ctx = useContext(ChatSidebarContext);
+  if (!ctx)
+    throw new Error(
+      "useMemoriesSidebar must be used within ChatSidebarProvider",
+    );
+  const { activeSidebar, toggleSidebar, closeSidebar } = ctx;
+  return {
+    sidebarOpen: activeSidebar === "memories",
+    toggleSidebar: () => toggleSidebar("memories"),
+    closeSidebar,
+  };
+}
+
+export function usePreviewSidebar() {
+  const ctx = useContext(ChatSidebarContext);
+  if (!ctx)
+    throw new Error(
+      "usePreviewSidebar must be used within ChatSidebarProvider",
+    );
+  const {
+    activeSidebar,
+    previewData,
+    openPreview,
+    closeSidebar,
+    toggleSidebar,
+  } = ctx;
+  return {
+    sidebarOpen: activeSidebar === "preview",
+    previewData,
+    openPreview,
+    closeSidebar,
+    togglePreview: () => toggleSidebar("preview"),
+  };
+}
+
+export function useConsoleSidebar() {
+  const ctx = useContext(ChatSidebarContext);
+  const logsCtx = useContext(ChatSidebarLogsContext);
+  if (!ctx)
+    throw new Error(
+      "useConsoleSidebar must be used within ChatSidebarProvider",
+    );
+  const { activeSidebar, toggleSidebar, closeSidebar } = ctx;
+  const { consoleLogs, clearConsoleLogs } = logsCtx;
+  return {
+    sidebarOpen: activeSidebar === "console",
+    toggleConsole: () => toggleSidebar("console"),
+    closeSidebar,
+    consoleLogs,
+    clearConsoleLogs,
+  };
+}
+
+export function useChatSidebarLogs() {
+  const ctx = useContext(ChatSidebarLogsContext);
+  if (!ctx)
+    throw new Error(
+      "useChatSidebarLogs must be used within ChatSidebarProvider",
+    );
+  return ctx;
+}
+
+export function useFilesystemSidebar() {
+  const ctx = useContext(ChatSidebarContext);
+  if (!ctx)
+    throw new Error(
+      "useFilesystemSidebar must be used within ChatSidebarProvider",
+    );
+  const { activeSidebar, toggleSidebar, closeSidebar } = ctx;
+  return {
+    sidebarOpen: activeSidebar === "filesystem",
+    toggleFilesystem: () => toggleSidebar("filesystem"),
+    closeSidebar,
+  };
+}
+
+export function useDatabaseSidebar() {
+  const ctx = useContext(ChatSidebarContext);
+  if (!ctx)
+    throw new Error(
+      "useDatabaseSidebar must be used within ChatSidebarProvider",
+    );
+  const { activeSidebar, toggleSidebar, closeSidebar } = ctx;
+  return {
+    sidebarOpen: activeSidebar === "database",
+    toggleDatabase: () => toggleSidebar("database"),
+    closeSidebar,
+  };
+}
+
+export function usePoliticalSidebar() {
+  const ctx = useContext(ChatSidebarContext);
+  if (!ctx)
+    throw new Error(
+      "usePoliticalSidebar must be used within ChatSidebarProvider",
+    );
+  const { activeSidebar, toggleSidebar, closeSidebar } = ctx;
+  return {
+    sidebarOpen: activeSidebar === "political",
+    togglePolitical: () => toggleSidebar("political"),
+    closeSidebar,
+  };
+}
+
+/**
+ * Reusable animation wrapper for right-side chat panels.
+ * Renders as an absolutely-positioned panel to the left of the icon bar
+ * so it never shifts the flex layout. Drag the left edge to resize.
+ * @param {Object} props
+ * @param {boolean} props.isOpen
+ * @param {React.ReactNode} props.children
+ */
+export default function ChatSidebar({
+  isOpen,
+  children,
+  minWidth = 240,
+  maxWidth = 800,
+  defaultWidth = Math.max(366, minWidth),
+}: any) {
+  const { t } = useTranslation();
+  const [width, setWidth] = useState(() => {
+    if (typeof window === "undefined") return defaultWidth;
+    try {
+      const stored = window.localStorage.getItem("opensin-right-sidebar-width");
+      if (stored) {
+        const n = Number(stored);
+        if (!isNaN(n) && n >= minWidth && n <= maxWidth) return n;
+      }
+    } catch {}
+    return defaultWidth;
+  });
+  const isResizingRef = useRef(false);
+  const resizeStartXRef = useRef(0);
+  const resizeStartWidthRef = useRef(0);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        window.localStorage.setItem(
+          "opensin-right-sidebar-width",
+          String(width),
+        );
+      } catch {}
+    }
+  }, [width]);
+
+  useEffect(() => {
+    function handleMouseMove(e: MouseEvent) {
+      if (!isResizingRef.current) return;
+      // Resize from left edge of right sidebar → drag left = wider, drag right = narrower
+      const delta = resizeStartXRef.current - e.clientX;
+      const newWidth = Math.min(
+        maxWidth,
+        Math.max(minWidth, resizeStartWidthRef.current + delta),
+      );
+      setWidth(newWidth);
+    }
+    function handleMouseUp() {
+      if (!isResizingRef.current) return;
+      isResizingRef.current = false;
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+    }
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [minWidth, maxWidth]);
+
+  function handleResizeStart(e: React.MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    isResizingRef.current = true;
+    resizeStartXRef.current = e.clientX;
+    resizeStartWidthRef.current = width;
+    document.body.style.cursor = "col-resize";
+    document.body.style.userSelect = "none";
+  }
+
+  // When opening, ensure the panel is at least minWidth (e.g. PDF analysis needs
+  // more space than the default 366px).
+  useEffect(() => {
+    if (!isOpen) return;
+    setWidth((w) => Math.max(w, minWidth));
+  }, [isOpen, minWidth]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div
+      className="relative h-full overflow-hidden flex flex-col flex-shrink-0 z-20"
+      style={{ width: `${width}px` }}
+    >
+      {/* Resize handle on the LEFT edge so user can drag to widen the panel */}
+      <div
+        onMouseDown={handleResizeStart}
+        role="separator"
+        aria-orientation="vertical"
+        aria-label={t("common.resizeRightSidebar")}
+        title={t("common.dragToResizeWidth")}
+        className="absolute top-0 left-0 h-full w-3 cursor-col-resize z-50 group flex items-center justify-center hover:bg-blue-500/30 transition-colors"
+      >
+        <div className="w-1 h-16 bg-blue-400/50 group-hover:bg-blue-400 rounded-full transition-colors" />
+      </div>
+      {children}
+    </div>
+  );
+}

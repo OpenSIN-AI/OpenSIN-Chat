@@ -1,1 +1,50 @@
-IyBDaGF0U2lkZWJhcgoKKipQdXJwb3NlOioqIFJlYWN0IGNvbnRleHQgcHJvdmlkZXIgZm9yIHJpZ2h0IHNpZGViYXIgcGFuZWwgc3RhdGUgYW5kIGhlbHBlcnMuCgoqKkRvY3M6KiogW0NoYXRTaWRlYmFyL2luZGV4LnRzeF0oaW5kZXgudHN4KQoKIyMgV2hhdCB0aGlzIGZpbGUgZG9lcwoKUHJvdmlkZXMgYSBSZWFjdCBjb250ZXh0IChgQ2hhdFNpZGViYXJDb250ZXh0YCkgdGhhdCBtYW5hZ2VzIHdoaWNoIHJpZ2h0IHNpZGViYXIgcGFuZWwgaXMgYWN0aXZlIChgYWN0aXZlU2lkZWJhcmApLCB0aGUgZGF0YSBhc3NvY2lhdGVkIHdpdGggaXQgKGBzaWRlYmFyRGF0YWApLCBzb3VyY2UgZmlsdGVycywgcHJldmlldyBkYXRhLCBhbmQgcGVyc2lzdGVudCBjb25zb2xlIGxvZ3MuIEl0IGFsc28gZXhwb3J0cyBzcGVjaWFsaXplZCBob29rcyBmb3IgZWFjaCBwYW5lbCB0eXBlIChlLmcuLCBgdXNlU291cmNlc1NpZGViYXJgLCBgdXNlRGF0YWJhc2VTaWRlYmFyYCkgYW5kIGEgcmV1c2FibGUgYENoYXRTaWRlYmFyYCBjb21wb25lbnQgdGhhdCB3cmFwcyBhIHBhbmVsIHdpdGggYSBsZWZ0LWVkZ2UgcmVzaXplIGhhbmRsZS4KCiMjIEZpbGVzIHRoYXQgdG91Y2ggaXQKCi0gW2BTaWRlYmFycy50c3hgXSguLi9TaWRlYmFycy50c3gpOiBjb25zdW1lcyBgYWN0aXZlU2lkZWJhcmAgdG8gZGVjaWRlIHdoaWNoIHBhbmVsIHRvIHJlbmRlci4KLSBbYFJpZ2h0U2lkZWJhckljb25CYXIvaW5kZXgudHN4YF0oLi4vUmlnaHRTaWRlYmFySWNvbkJhci9pbmRleC50c3gpOiB1c2VzIGBhY3RpdmVTaWRlYmFyYCBhbmQgYHRvZ2dsZVNpZGViYXJgIHRvIGhpZ2hsaWdodCBhbmQgdG9nZ2xlIHBhbmVscy4KLSBFdmVyeSBgKlNpZGViYXJgIHBhbmVsIGNvbXBvbmVudDogdXNlcyB0aGUgc3BlY2lhbGl6ZWQgaG9va3MgZXhwb3J0ZWQgZnJvbSB0aGlzIGZpbGUuCi0gW2BDaGF0U2lkZWJhci9pbmRleC50ZXN0LmpzeGBdKGluZGV4LnRlc3QuanN4KTogdGVzdHMgdGhlIHByb3ZpZGVyIGNvbnRleHQgYW5kIHNwZWNpYWxpemVkIGhvb2tzLgoKIyMgSW1wb3J0YW50IGNvbmZpZyB2YWx1ZXMKCi0gYFNPVVJDRV9GSUxURVJTYDogYGFsbGAsIGBkb2N1bWVudHNgLCBgbWVkaWFgLgotIGBET0NVTUVOVF9TT1VSQ0VfUFJFRklYRVNgOiBgcGFwZXJsZXNzLW5neDovL2AsIGBvYnNpZGlhbjovL2AsIGBjb25mbHVlbmNlOi8vYCwgYGRydXBhbHdpa2k6Ly9gLCBgZ2l0aHViOi8vYCwgYGdpdGxhYjovL2AuCi0gYE1FRElBX1NPVVJDRV9QUkVGSVhFU2A6IGB5b3V0dWJlOi8vYC4KLSBgTE9HX0VWRU5UID0gIm9wZW5hZmQ6bG9nImA6IGN1c3RvbSBldmVudCBuYW1lIGZvciBjb25zb2xlIGxvZyBlbnRyaWVzLgotIERlZmF1bHQgcGFuZWwgd2lkdGggKGluIGBDaGF0U2lkZWJhcmAgY29tcG9uZW50KTogMzY2cHggYnkgZGVmYXVsdCAob3IgYGRlZmF1bHRXaWR0aGApLCBjbGFtcGVkIHRvIGBtaW5XaWR0aGDigJNgbWF4V2lkdGhgLCBwZXJzaXN0ZWQgdW5kZXIgYG9wZW5hZmQtcmlnaHQtc2lkZWJhci13aWR0aGAuCi0gVGhlIHJlc2l6ZSBoYW5kbGUgaXMgYSAxMnB4LXdpZGUgc3RyaXAgb24gdGhlIGxlZnQgZWRnZSB3aXRoIGEgdmlzaWJsZSBibHVlIGdyaXAgbGluZSBzbyB1c2VycyBjYW4gZmluZCBhbmQgZHJhZyBpdC4KCiMjIFdoeSBjZXJ0YWluIGRlY2lzaW9ucyB3ZXJlIG1hZGUKCi0gVGhlIGByaWdodFNpZGViYXJPcGVuYCBjb2xsYXBzZSBzdGF0ZSB3YXMgcmVtb3ZlZCBiZWNhdXNlIHRoZSBpY29uIGJhciBpcyBub3cgYWx3YXlzIHZpc2libGU7IG9ubHkgdGhlIHBhbmVsIG9wZW4vY2xvc2Ugc3RhdGUgcmVtYWlucy4KLSBgY29uc29sZUxvZ3NgIGFyZSBzdG9yZWQgaW4gdGhlIGNvbnRleHQgc28gdGhleSBzdXJ2aXZlIHBhbmVsIHN3YXBzLgotIGBvcGVuUHJldmlld2AgaXMgYSBjYWxsYmFjayB0aGF0IGJvdGggc2V0cyBwcmV2aWV3IGRhdGEgYW5kIGFjdGl2YXRlcyB0aGUgcHJldmlldyBwYW5lbC4KLSBUaGUgcmVzaXplIGhhbmRsZSBpcyBhdHRhY2hlZCB0byB0aGUgbGVmdCBlZGdlIG9mIHRoZSBwYW5lbCBiZWNhdXNlIHRoZSBwYW5lbCBzaXRzIHRvIHRoZSBsZWZ0IG9mIHRoZSBpY29uIHJhaWw7IGRyYWdnaW5nIGxlZnQgd2lkZW5zIGl0LgoKIyMgVXNhZ2UKCmBgYHRzeAo8Q2hhdFNpZGViYXJQcm92aWRlcj4KICA8U2lkZWJhcnMgd29ya3NwYWNlPXt3b3Jrc3BhY2V9IC8+CjwvQ2hhdFNpZGViYXJQcm92aWRlcj4KYGBgCgpgYGB0c3gKY29uc3QgeyBhY3RpdmVTaWRlYmFyLCB0b2dnbGVTaWRlYmFyIH0gPSB1c2VDaGF0U2lkZWJhcigpOwpgYGAKCiMjIEtub3duIGNhdmVhdHMKCi0gVGhlIGBhbnlgIHR5cGVzIG9uIGNvbnRleHQgdmFsdWVzIGFuZCBoZWxwZXIgZnVuY3Rpb25zIGFyZSBhIGtub3duIHRlY2huaWNhbCBkZWJ0OyB0aGUgZmlsZSBwcmVkYXRlcyBzdHJpY3RlciBUeXBlU2NyaXB0IGFkb3B0aW9uLgotIFRoZSBgbG9jYWxTdG9yYWdlYCBrZXkgYG9wZW5zaW5fcmlnaHRfc2lkZWJhcl9vcGVuYCBpcyBubyBsb25nZXIgdXNlZCBidXQgbWF5IGV4aXN0IGluIHVzZXJzJyBicm93c2VycyBmcm9tIHByZXZpb3VzIHZlcnNpb25zOyBpdCBpcyBoYXJtbGVzcy4KLSBUaGUgcGFuZWwgd2lkdGggaW4gYENoYXRTaWRlYmFyYCBpcyBzdG9yZWQgc2VwYXJhdGVseSBmcm9tIHRoZSBmaXhlZCBgUEFORUxfVyA9IDM2MGAgdXNlZCBpbiBgU2lkZWJhcnMuanN4YDsgdGhlIHR3byBjYW4gZHJpZnQgaWYgbm90IHJlY29uY2lsZWQgbGF0ZXIuCg==
+# ChatSidebar
+
+**Purpose:** React context provider for right sidebar panel state and helpers.
+
+**Docs:** [ChatSidebar/index.tsx](index.tsx)
+
+## What this file does
+
+Provides a React context (`ChatSidebarContext`) that manages which right sidebar panel is active (`activeSidebar`), the data associated with it (`sidebarData`), source filters, preview data, and persistent console logs. It also exports specialized hooks for each panel type (e.g., `useSourcesSidebar`, `useDatabaseSidebar`) and a reusable `ChatSidebar` component that wraps a panel with a left-edge resize handle.
+
+## Files that touch it
+
+- [`Sidebars.tsx`](../Sidebars.tsx): consumes `activeSidebar` to decide which panel to render.
+- [`RightSidebarIconBar/index.tsx`](../RightSidebarIconBar/index.tsx): uses `activeSidebar` and `toggleSidebar` to highlight and toggle panels.
+- Every `*Sidebar` panel component: uses the specialized hooks exported from this file.
+- [`ChatSidebar/index.test.jsx`](index.test.jsx): tests the provider context and specialized hooks.
+
+## Important config values
+
+- `SOURCE_FILTERS`: `all`, `documents`, `media`.
+- `DOCUMENT_SOURCE_PREFIXES`: `paperless-ngx://`, `obsidian://`, `confluence://`, `drupalwiki://`, `github://`, `gitlab://`.
+- `MEDIA_SOURCE_PREFIXES`: `youtube://`.
+- `LOG_EVENT = "openafd:log"`: custom event name for console log entries.
+- Default panel width (in `ChatSidebar` component): 366px by default (or `defaultWidth`), clamped to `minWidth`–`maxWidth`, persisted under `openafd-right-sidebar-width`.
+- The resize handle is a 12px-wide strip on the left edge with a visible blue grip line so users can find and drag it.
+
+## Why certain decisions were made
+
+- The `rightSidebarOpen` collapse state was removed because the icon bar is now always visible; only the panel open/close state remains.
+- `consoleLogs` are stored in the context so they survive panel swaps.
+- `openPreview` is a callback that both sets preview data and activates the preview panel.
+- The resize handle is attached to the left edge of the panel because the panel sits to the left of the icon rail; dragging left widens it.
+
+## Usage
+
+```tsx
+<ChatSidebarProvider>
+  <Sidebars workspace={workspace} />
+</ChatSidebarProvider>
+```
+
+```tsx
+const { activeSidebar, toggleSidebar } = useChatSidebar();
+```
+
+## Known caveats
+
+- The `any` types on context values and helper functions are a known technical debt; the file predates stricter TypeScript adoption.
+- The `localStorage` key `opensin_right_sidebar_open` is no longer used but may exist in users' browsers from previous versions; it is harmless.
+- The panel width in `ChatSidebar` is stored separately from the fixed `PANEL_W = 360` used in `Sidebars.jsx`; the two can drift if not reconciled later.

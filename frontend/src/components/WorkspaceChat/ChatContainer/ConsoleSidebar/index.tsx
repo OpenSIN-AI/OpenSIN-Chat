@@ -1,1 +1,298 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgUmVhY3QsIHsgdXNlU3RhdGUsIHVzZUVmZmVjdCwgdXNlUmVmIH0gZnJvbSAicmVhY3QiOwppbXBvcnQgeyBYIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL1giOwppbXBvcnQgeyBUZXJtaW5hbCB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9UZXJtaW5hbCI7CmltcG9ydCB7IEJ1ZyB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9CdWciOwppbXBvcnQgeyBUcmFzaCB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9UcmFzaCI7CmltcG9ydCB7IHVzZVRyYW5zbGF0aW9uIH0gZnJvbSAicmVhY3QtaTE4bmV4dCI7CmltcG9ydCBDaGF0U2lkZWJhciwgeyB1c2VDb25zb2xlU2lkZWJhciB9IGZyb20gIi4uL0NoYXRTaWRlYmFyIjsKaW1wb3J0IHsgYmFzZUhlYWRlcnMgfSBmcm9tICJAL3V0aWxzL3JlcXVlc3QiOwoKY29uc3QgVEFCUyA9IFsibG9ncyIsICJ0ZXJtaW5hbCJdIGFzIGNvbnN0Owp0eXBlIFRhYk5hbWUgPSAodHlwZW9mIFRBQlMpW251bWJlcl07CgpleHBvcnQgZnVuY3Rpb24gZGlzcGF0Y2hMb2coCiAgbGV2ZWw6ICJpbmZvIiB8ICJ3YXJuIiB8ICJlcnJvciIgfCAic3VjY2VzcyIgfCAiZGVidWciLAogIG1lc3NhZ2U6IHN0cmluZywKKSB7CiAgd2luZG93LmRpc3BhdGNoRXZlbnQoCiAgICBuZXcgQ3VzdG9tRXZlbnQoIm9wZW5zaW46bG9nIiwgewogICAgICBkZXRhaWw6IHsgbGV2ZWwsIG1lc3NhZ2UsIHRpbWVzdGFtcDogbmV3IERhdGUoKS50b0lTT1N0cmluZygpIH0sCiAgICB9KSwKICApOwp9Cgp0eXBlIExvZ0xldmVsID0gImluZm8iIHwgIndhcm4iIHwgImVycm9yIiB8ICJzdWNjZXNzIiB8ICJkZWJ1ZyI7Cgp0eXBlIExvZ0VudHJ5ID0gewogIGxldmVsOiBMb2dMZXZlbDsKICBtZXNzYWdlOiBzdHJpbmc7CiAgdGltZXN0YW1wOiBzdHJpbmc7Cn07Cgpjb25zdCBMRVZFTF9DT0xPUlM6IFJlY29yZDxMb2dMZXZlbCwgc3RyaW5nPiA9IHsKICBpbmZvOiAidGV4dC16aW5jLTMwMCBsaWdodDp0ZXh0LXNsYXRlLTcwMCIsCiAgd2FybjogInRleHQteWVsbG93LTQwMCIsCiAgZXJyb3I6ICJ0ZXh0LXJlZC00MDAiLAogIHN1Y2Nlc3M6ICJ0ZXh0LWdyZWVuLTQwMCIsCiAgZGVidWc6ICJ0ZXh0LWJsdWUtNDAwIiwKfTsKCmZ1bmN0aW9uIExvZ3NUYWIoKSB7CiAgY29uc3QgeyB0LCBpMThuIH0gPSB1c2VUcmFuc2xhdGlvbigpOwogIGNvbnN0IHsgY29uc29sZUxvZ3MsIGNsZWFyQ29uc29sZUxvZ3MgfSA9IHVzZUNvbnNvbGVTaWRlYmFyKCk7CiAgY29uc3QgYm90dG9tUmVmID0gdXNlUmVmPEhUTUxEaXZFbGVtZW50IHwgbnVsbD4obnVsbCk7CgogIHVzZUVmZmVjdCgoKSA9PiB7CiAgICBib3R0b21SZWYuY3VycmVudD8uc2Nyb2xsSW50b1ZpZXcoeyBiZWhhdmlvcjogInNtb290aCIgfSk7CiAgfSwgW2NvbnNvbGVMb2dzXSk7CgogIHJldHVybiAoCiAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCBoLWZ1bGwiPgogICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1iZXR3ZWVuIHB4LTMgcHktMS41IGJvcmRlci1iIGJvcmRlci16aW5jLTgwMCBsaWdodDpib3JkZXItc2xhdGUtMjAwIHNocmluay0wIj4KICAgICAgICA8c3BhbiBjbGFzc05hbWU9InRleHQtWzEwcHhdIGZvbnQtbWVkaXVtIHVwcGVyY2FzZSB0cmFja2luZy13aWRlc3QgdGV4dC16aW5jLTUwMCBsaWdodDp0ZXh0LXNsYXRlLTQwMCI+CiAgICAgICAgICB7dCgiY29uc29sZVNpZGViYXIubG9ncyIpfQogICAgICAgIDwvc3Bhbj4KICAgICAgICA8YnV0dG9uCiAgICAgICAgICB0eXBlPSJidXR0b24iCiAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBjbGVhckNvbnNvbGVMb2dzKCl9CiAgICAgICAgICBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIGdhcC0xIHRleHQtWzEwcHhdIHRleHQtemluYy01MDAgaG92ZXI6dGV4dC16aW5jLTMwMCBib3JkZXItbm9uZSBiZy10cmFuc3BhcmVudCBjdXJzb3ItcG9pbnRlciB0cmFuc2l0aW9uLWNvbG9ycyIKICAgICAgICAgIGFyaWEtbGFiZWw9e3QoImNvbnNvbGVTaWRlYmFyLmNsZWFyIil9CiAgICAgICAgPgogICAgICAgICAgPFRyYXNoIHNpemU9ezExfSBhcmlhLWhpZGRlbj0idHJ1ZSIgLz4KICAgICAgICAgIHt0KCJjb25zb2xlU2lkZWJhci5jbGVhciIpfQogICAgICAgIDwvYnV0dG9uPgogICAgICA8L2Rpdj4KICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXgtMSBvdmVyZmxvdy15LWF1dG8gZm9udC1tb25vIHRleHQtWzExcHhdIGxlYWRpbmctcmVsYXhlZCBwLTMgbm8tc2Nyb2xsIj4KICAgICAgICB7Y29uc29sZUxvZ3MubGVuZ3RoID09PSAwID8gKAogICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXppbmMtNjAwIGxpZ2h0OnRleHQtc2xhdGUtNDAwIHRleHQtY2VudGVyIG10LTgiPgogICAgICAgICAgICB7dCgiY29uc29sZVNpZGViYXIubm9Mb2dzIil9CiAgICAgICAgICA8L3A+CiAgICAgICAgKSA6ICgKICAgICAgICAgIGNvbnNvbGVMb2dzLm1hcCgobG9nLCBpZHgpID0+ICgKICAgICAgICAgICAgPGRpdiBrZXk9e2Ake2xvZy50aW1lc3RhbXB9LSR7aWR4fWB9IGNsYXNzTmFtZT0iZmxleCBnYXAtMiBtYi0wLjUiPgogICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0idGV4dC16aW5jLTYwMCBsaWdodDp0ZXh0LXNsYXRlLTQwMCBzaHJpbmstMCI+CiAgICAgICAgICAgICAgICB7LyogZXNsaW50LWRpc2FibGUgaTE4bmV4dC9uby1saXRlcmFsLXN0cmluZyAqL30KICAgICAgICAgICAgICAgIHtuZXcgRGF0ZShsb2cudGltZXN0YW1wKS50b0xvY2FsZVRpbWVTdHJpbmcoaTE4bi5sYW5ndWFnZSwgewogICAgICAgICAgICAgICAgICBob3VyMTI6IGZhbHNlLAogICAgICAgICAgICAgICAgICBob3VyOiAiMi1kaWdpdCIsCiAgICAgICAgICAgICAgICAgIG1pbnV0ZTogIjItZGlnaXQiLAogICAgICAgICAgICAgICAgICBzZWNvbmQ6ICIyLWRpZ2l0IiwKICAgICAgICAgICAgICAgIH0pfQogICAgICAgICAgICAgICAgey8qIGVzbGludC1lbmFibGUgaTE4bmV4dC9uby1saXRlcmFsLXN0cmluZyAqL30KICAgICAgICAgICAgICA8L3NwYW4+CiAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPXtMRVZFTF9DT0xPUlNbbG9nLmxldmVsXSA/PyBMRVZFTF9DT0xPUlMuaW5mb30+CiAgICAgICAgICAgICAgICB7bG9nLm1lc3NhZ2V9CiAgICAgICAgICAgICAgPC9zcGFuPgogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICkpCiAgICAgICAgKX0KICAgICAgICA8ZGl2IHJlZj17Ym90dG9tUmVmfSAvPgogICAgICA8L2Rpdj4KICAgIDwvZGl2PgogICk7Cn0KCnR5cGUgSGlzdG9yeUVudHJ5ID0KICB8IHsgdHlwZTogImlucHV0IjsgdGV4dDogc3RyaW5nIH0KICB8IHsgdHlwZTogIm91dHB1dCI7IHRleHQ6IHN0cmluZyB9CiAgfCB7IHR5cGU6ICJlcnJvciI7IHRleHQ6IHN0cmluZyB9OwoKZnVuY3Rpb24gVGVybWluYWxUYWIoKSB7CiAgY29uc3QgeyB0IH0gPSB1c2VUcmFuc2xhdGlvbigpOwogIGNvbnN0IFtoaXN0b3J5LCBzZXRIaXN0b3J5XSA9IHVzZVN0YXRlPEhpc3RvcnlFbnRyeVtdPihbXSk7CiAgY29uc3QgW2lucHV0LCBzZXRJbnB1dF0gPSB1c2VTdGF0ZTxzdHJpbmc+KCIiKTsKICBjb25zdCBbY21kSGlzdG9yeSwgc2V0Q21kSGlzdG9yeV0gPSB1c2VTdGF0ZTxzdHJpbmdbXT4oW10pOwogIGNvbnN0IFtoaXN0b3J5SWR4LCBzZXRIaXN0b3J5SWR4XSA9IHVzZVN0YXRlPG51bWJlcj4oLTEpOwogIGNvbnN0IGJvdHRvbVJlZiA9IHVzZVJlZjxIVE1MRGl2RWxlbWVudCB8IG51bGw+KG51bGwpOwogIGNvbnN0IGlucHV0UmVmID0gdXNlUmVmPEhUTUxJbnB1dEVsZW1lbnQgfCBudWxsPihudWxsKTsKCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIGJvdHRvbVJlZi5jdXJyZW50Py5zY3JvbGxJbnRvVmlldyh7IGJlaGF2aW9yOiAic21vb3RoIiB9KTsKICB9LCBbaGlzdG9yeV0pOwoKICBhc3luYyBmdW5jdGlvbiBydW5Db21tYW5kKGNtZDogc3RyaW5nKSB7CiAgICBjb25zdCB0cmltbWVkID0gY21kLnRyaW0oKTsKICAgIGlmICghdHJpbW1lZCkgcmV0dXJuOwoKICAgIHNldENtZEhpc3RvcnkoKHByZXYpID0+IFt0cmltbWVkLCAuLi5wcmV2XS5zbGljZSgwLCAxMDApKTsKICAgIHNldEhpc3RvcnlJZHgoLTEpOwogICAgc2V0SGlzdG9yeSgocHJldikgPT4gWy4uLnByZXYsIHsgdHlwZTogImlucHV0IiwgdGV4dDogYCQgJHt0cmltbWVkfWAgfV0pOwoKICAgIHRyeSB7CiAgICAgIGNvbnN0IHJlcyA9IGF3YWl0IGZldGNoKCIvYXBpL3V0aWxzL3Rlcm1pbmFsL2V4ZWMiLCB7CiAgICAgICAgbWV0aG9kOiAiUE9TVCIsCiAgICAgICAgaGVhZGVyczogeyAuLi5iYXNlSGVhZGVycygpLCAiQ29udGVudC1UeXBlIjogImFwcGxpY2F0aW9uL2pzb24iIH0sCiAgICAgICAgYm9keTogSlNPTi5zdHJpbmdpZnkoeyBjb21tYW5kOiB0cmltbWVkIH0pLAogICAgICB9KTsKICAgICAgaWYgKHJlcy5vaykgewogICAgICAgIGNvbnN0IGRhdGEgPSBhd2FpdCByZXMuanNvbigpOwogICAgICAgIHNldEhpc3RvcnkoKHByZXYpID0+IFsKICAgICAgICAgIC4uLnByZXYsCiAgICAgICAgICB7IHR5cGU6ICJvdXRwdXQiLCB0ZXh0OiBkYXRhLm91dHB1dCA/PyB0KCJjb25zb2xlU2lkZWJhci5ub091dHB1dCIpIH0sCiAgICAgICAgXSk7CiAgICAgIH0gZWxzZSB7CiAgICAgICAgY29uc3QgZXJyID0gYXdhaXQgcmVzLnRleHQoKTsKICAgICAgICBzZXRIaXN0b3J5KChwcmV2KSA9PiBbCiAgICAgICAgICAuLi5wcmV2LAogICAgICAgICAgeyB0eXBlOiAiZXJyb3IiLCB0ZXh0OiB0KCJjb25zb2xlU2lkZWJhci5lcnJvciIsIHsgZXJyb3I6IGVyciB9KSB9LAogICAgICAgIF0pOwogICAgICB9CiAgICB9IGNhdGNoIChlKSB7CiAgICAgIHNldEhpc3RvcnkoKHByZXYpID0+IFsKICAgICAgICAuLi5wcmV2LAogICAgICAgIHsKICAgICAgICAgIHR5cGU6ICJlcnJvciIsCiAgICAgICAgICB0ZXh0OiB0KCJjb25zb2xlLnRlcm1pbmFsX3VuYXZhaWxhYmxlIiksCiAgICAgICAgfSwKICAgICAgXSk7CiAgICB9CiAgfQoKICBmdW5jdGlvbiBoYW5kbGVLZXlEb3duKGU6IFJlYWN0LktleWJvYXJkRXZlbnQ8SFRNTElucHV0RWxlbWVudD4pIHsKICAgIGlmIChlLmtleSA9PT0gIkVudGVyIikgewogICAgICBlLnByZXZlbnREZWZhdWx0KCk7CiAgICAgIHJ1bkNvbW1hbmQoaW5wdXQpOwogICAgICBzZXRJbnB1dCgiIik7CiAgICB9IGVsc2UgaWYgKGUua2V5ID09PSAiQXJyb3dVcCIpIHsKICAgICAgZS5wcmV2ZW50RGVmYXVsdCgpOwogICAgICBjb25zdCBpZHggPSBNYXRoLm1pbihoaXN0b3J5SWR4ICsgMSwgY21kSGlzdG9yeS5sZW5ndGggLSAxKTsKICAgICAgc2V0SGlzdG9yeUlkeChpZHgpOwogICAgICBzZXRJbnB1dChjbWRIaXN0b3J5W2lkeF0gPz8gIiIpOwogICAgfSBlbHNlIGlmIChlLmtleSA9PT0gIkFycm93RG93biIpIHsKICAgICAgZS5wcmV2ZW50RGVmYXVsdCgpOwogICAgICBjb25zdCBpZHggPSBNYXRoLm1heChoaXN0b3J5SWR4IC0gMSwgLTEpOwogICAgICBzZXRIaXN0b3J5SWR4KGlkeCk7CiAgICAgIHNldElucHV0KGlkeCA9PT0gLTEgPyAiIiA6IChjbWRIaXN0b3J5W2lkeF0gPz8gIiIpKTsKICAgIH0KICB9CgogIHJldHVybiAoCiAgICA8ZGl2CiAgICAgIGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCBoLWZ1bGwgY3Vyc29yLXRleHQiCiAgICAgIG9uQ2xpY2s9eygpID0+IGlucHV0UmVmLmN1cnJlbnQ/LmZvY3VzKCl9CiAgICA+CiAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWJldHdlZW4gcHgtMyBweS0xLjUgYm9yZGVyLWIgYm9yZGVyLXppbmMtODAwIGxpZ2h0OmJvcmRlci1zbGF0ZS0yMDAgc2hyaW5rLTAiPgogICAgICAgIDxzcGFuIGNsYXNzTmFtZT0idGV4dC1bMTBweF0gZm9udC1tZWRpdW0gdXBwZXJjYXNlIHRyYWNraW5nLXdpZGVzdCB0ZXh0LXppbmMtNTAwIGxpZ2h0OnRleHQtc2xhdGUtNDAwIj4KICAgICAgICAgIHt0KCJjb25zb2xlU2lkZWJhci50ZXJtaW5hbCIpfQogICAgICAgIDwvc3Bhbj4KICAgICAgICA8YnV0dG9uCiAgICAgICAgICB0eXBlPSJidXR0b24iCiAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBzZXRIaXN0b3J5KFtdKX0KICAgICAgICAgIGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTEgdGV4dC1bMTBweF0gdGV4dC16aW5jLTUwMCBob3Zlcjp0ZXh0LXppbmMtMzAwIGJvcmRlci1ub25lIGJnLXRyYW5zcGFyZW50IGN1cnNvci1wb2ludGVyIHRyYW5zaXRpb24tY29sb3JzIgogICAgICAgICAgYXJpYS1sYWJlbD17dCgiY29uc29sZVNpZGViYXIuY2xlYXIiKX0KICAgICAgICA+CiAgICAgICAgICA8VHJhc2ggc2l6ZT17MTF9IGFyaWEtaGlkZGVuPSJ0cnVlIiAvPgogICAgICAgICAge3QoImNvbnNvbGVTaWRlYmFyLmNsZWFyIil9CiAgICAgICAgPC9idXR0b24+CiAgICAgIDwvZGl2PgogICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleC0xIG92ZXJmbG93LXktYXV0byBmb250LW1vbm8gdGV4dC1bMTFweF0gbGVhZGluZy1yZWxheGVkIHAtMyBuby1zY3JvbGwiPgogICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC16aW5jLTYwMCBsaWdodDp0ZXh0LXNsYXRlLTQwMCBtYi0yIj4KICAgICAgICAgIHt0KCJjb25zb2xlU2lkZWJhci50ZXJtaW5hbEhpbnQiKX0KICAgICAgICA8L3A+CiAgICAgICAge2hpc3RvcnkubWFwKChlbnRyeSwgaWR4KSA9PiAoCiAgICAgICAgICA8ZGl2CiAgICAgICAgICAgIGtleT17YCR7aWR4fS0ke2VudHJ5LnR5cGV9LSR7ZW50cnkudGV4dD8uc2xpY2UoMCwgMjApID8/ICIifWB9CiAgICAgICAgICAgIGNsYXNzTmFtZT17CiAgICAgICAgICAgICAgZW50cnkudHlwZSA9PT0gImlucHV0IgogICAgICAgICAgICAgICAgPyAidGV4dC16aW5jLTIwMCBsaWdodDp0ZXh0LXNsYXRlLTgwMCBtYi0wLjUiCiAgICAgICAgICAgICAgICA6IGVudHJ5LnR5cGUgPT09ICJlcnJvciIKICAgICAgICAgICAgICAgICAgPyAidGV4dC1yZWQtNDAwIG1iLTEgd2hpdGVzcGFjZS1wcmUtd3JhcCIKICAgICAgICAgICAgICAgICAgOiAidGV4dC1ncmVlbi00MDAgbWItMSB3aGl0ZXNwYWNlLXByZS13cmFwIgogICAgICAgICAgICB9CiAgICAgICAgICA+CiAgICAgICAgICAgIHtlbnRyeS50ZXh0fQogICAgICAgICAgPC9kaXY+CiAgICAgICAgKSl9CiAgICAgICAgPGRpdiByZWY9e2JvdHRvbVJlZn0gLz4KICAgICAgPC9kaXY+CiAgICAgIHsvKiBJbnB1dCBsaW5lICovfQogICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTEgcHgtMyBweS0yIGJvcmRlci10IGJvcmRlci16aW5jLTgwMCBsaWdodDpib3JkZXItc2xhdGUtMjAwIHNocmluay0wIj4KICAgICAgICA8c3BhbiBjbGFzc05hbWU9InRleHQtemluYy01MDAgZm9udC1tb25vIHRleHQtWzExcHhdIj4KICAgICAgICAgIHsvKiBlc2xpbnQtZGlzYWJsZSBpMThuZXh0L25vLWxpdGVyYWwtc3RyaW5nICovfSQKICAgICAgICAgIHsvKiBlc2xpbnQtZW5hYmxlIGkxOG5leHQvbm8tbGl0ZXJhbC1zdHJpbmcgKi99CiAgICAgICAgPC9zcGFuPgogICAgICAgIDxpbnB1dAogICAgICAgICAgcmVmPXtpbnB1dFJlZn0KICAgICAgICAgIHR5cGU9InRleHQiCiAgICAgICAgICB2YWx1ZT17aW5wdXR9CiAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IHNldElucHV0KGUudGFyZ2V0LnZhbHVlKX0KICAgICAgICAgIG9uS2V5RG93bj17aGFuZGxlS2V5RG93bn0KICAgICAgICAgIGNsYXNzTmFtZT0iZmxleC0xIGJnLXRyYW5zcGFyZW50IGJvcmRlci1ub25lIG91dGxpbmUtbm9uZSBmb250LW1vbm8gdGV4dC1bMTFweF0gdGV4dC16aW5jLTIwMCBsaWdodDp0ZXh0LXNsYXRlLTgwMCBwbGFjZWhvbGRlcjp0ZXh0LXppbmMtNjAwIGNhcmV0LXdoaXRlIgogICAgICAgICAgcGxhY2Vob2xkZXI9e3QoImNvbnNvbGUudGVybWluYWxfcGxhY2Vob2xkZXIiKX0KICAgICAgICAgIHNwZWxsQ2hlY2s9e2ZhbHNlfQogICAgICAgICAgYXV0b0NvbXBsZXRlPSJvZmYiCiAgICAgICAgLz4KICAgICAgPC9kaXY+CiAgICA8L2Rpdj4KICApOwp9CgpleHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBDb25zb2xlU2lkZWJhcigpIHsKICBjb25zdCB7IHNpZGViYXJPcGVuLCBjbG9zZVNpZGViYXIgfSA9IHVzZUNvbnNvbGVTaWRlYmFyKCk7CiAgY29uc3QgeyB0IH0gPSB1c2VUcmFuc2xhdGlvbigpOwogIGNvbnN0IFthY3RpdmVUYWIsIHNldEFjdGl2ZVRhYl0gPSB1c2VTdGF0ZTxUYWJOYW1lPigibG9ncyIpOwoKICByZXR1cm4gKAogICAgPENoYXRTaWRlYmFyIGlzT3Blbj17c2lkZWJhck9wZW59PgogICAgICA8ZGl2IGNsYXNzTmFtZT0idy1mdWxsIGgtZnVsbCBiZy16aW5jLTkwMCBsaWdodDpiZy13aGl0ZSBsaWdodDpib3JkZXItbCBsaWdodDpib3JkZXItc2xhdGUtMzAwIGZsZXggZmxleC1jb2wgb3ZlcmZsb3ctaGlkZGVuIj4KICAgICAgICB7LyogSGVhZGVyICovfQogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMiBweC00IHB0LTMuNSBwYi0wIHNocmluay0wIj4KICAgICAgICAgIDxUZXJtaW5hbAogICAgICAgICAgICBzaXplPXsxNX0KICAgICAgICAgICAgY2xhc3NOYW1lPSJ0ZXh0LXppbmMtNDAwIGxpZ2h0OnRleHQtc2xhdGUtNTAwIgogICAgICAgICAgICBhcmlhLWhpZGRlbj0idHJ1ZSIKICAgICAgICAgIC8+CiAgICAgICAgICA8cCBjbGFzc05hbWU9ImZsZXgtMSBmb250LW1lZGl1bSB0ZXh0LXNtIHRleHQtd2hpdGUgbGlnaHQ6dGV4dC1zbGF0ZS05MDAiPgogICAgICAgICAgICB7dCgiY29uc29sZS50aXRsZSIpfQogICAgICAgICAgPC9wPgogICAgICAgICAgPGJ1dHRvbgogICAgICAgICAgICBvbkNsaWNrPXtjbG9zZVNpZGViYXJ9CiAgICAgICAgICAgIHR5cGU9ImJ1dHRvbiIKICAgICAgICAgICAgYXJpYS1sYWJlbD17dCgiY29uc29sZS5jbG9zZSIpfQogICAgICAgICAgICBjbGFzc05hbWU9InRleHQtd2hpdGUvNjAgbGlnaHQ6dGV4dC1zbGF0ZS00MDAgaG92ZXI6dGV4dC13aGl0ZSBsaWdodDpob3Zlcjp0ZXh0LXNsYXRlLTkwMCB0cmFuc2l0aW9uLWNvbG9ycyBib3JkZXItbm9uZSBiZy10cmFuc3BhcmVudCBjdXJzb3ItcG9pbnRlciIKICAgICAgICAgID4KICAgICAgICAgICAgPFggc2l6ZT17MTR9IHdlaWdodD0iYm9sZCIgYXJpYS1oaWRkZW49InRydWUiIC8+CiAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICA8L2Rpdj4KICAgICAgICB7LyogVGFiIHN3aXRjaGVyICovfQogICAgICAgIDxkaXYKICAgICAgICAgIHJvbGU9InRhYmxpc3QiCiAgICAgICAgICBhcmlhLWxhYmVsPXt0KCJjb25zb2xlU2lkZWJhci5jb25zb2xlVGFicyIpfQogICAgICAgICAgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMSBweC00IHB0LTIgcGItMCBzaHJpbmstMCIKICAgICAgICA+CiAgICAgICAgICB7VEFCUy5tYXAoKHRhYikgPT4gKAogICAgICAgICAgICA8YnV0dG9uCiAgICAgICAgICAgICAga2V5PXt0YWJ9CiAgICAgICAgICAgICAgdHlwZT0iYnV0dG9uIgogICAgICAgICAgICAgIHJvbGU9InRhYiIKICAgICAgICAgICAgICBhcmlhLXNlbGVjdGVkPXthY3RpdmVUYWIgPT09IHRhYn0KICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBzZXRBY3RpdmVUYWIodGFiKX0KICAgICAgICAgICAgICBjbGFzc05hbWU9e2BmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMS41IGgtNyBweC0zIHJvdW5kZWQtZnVsbCBib3JkZXItbm9uZSBjdXJzb3ItcG9pbnRlciB0ZXh0LXhzIGZvbnQtbWVkaXVtIHVwcGVyY2FzZSB0cmFja2luZy1bMS4ycHhdIHdoaXRlc3BhY2Utbm93cmFwIHRyYW5zaXRpb24tY29sb3JzICR7CiAgICAgICAgICAgICAgICBhY3RpdmVUYWIgPT09IHRhYgogICAgICAgICAgICAgICAgICA/ICJiZy16aW5jLTcwMCBsaWdodDpiZy1zbGF0ZS0yMDAgdGV4dC13aGl0ZSBsaWdodDp0ZXh0LXNsYXRlLTkwMCIKICAgICAgICAgICAgICAgICAgOiAiYmctdHJhbnNwYXJlbnQgaG92ZXI6YmctemluYy04MDAvNTAgbGlnaHQ6aG92ZXI6Ymctc2xhdGUtMTAwIHRleHQtemluYy00MDAgbGlnaHQ6dGV4dC1zbGF0ZS01MDAiCiAgICAgICAgICAgICAgfWB9CiAgICAgICAgICAgID4KICAgICAgICAgICAgICB7dGFiID09PSAibG9ncyIgPyAoCiAgICAgICAgICAgICAgICA8PgogICAgICAgICAgICAgICAgICA8QnVnIHNpemU9ezExfSBhcmlhLWhpZGRlbj0idHJ1ZSIgLz4KICAgICAgICAgICAgICAgICAge3QoImNvbnNvbGUudGFiX2xvZ3MiKX0KICAgICAgICAgICAgICAgIDwvPgogICAgICAgICAgICAgICkgOiAoCiAgICAgICAgICAgICAgICA8PgogICAgICAgICAgICAgICAgICA8VGVybWluYWwgc2l6ZT17MTF9IGFyaWEtaGlkZGVuPSJ0cnVlIiAvPgogICAgICAgICAgICAgICAgICB7dCgiY29uc29sZS50YWJfdGVybWluYWwiKX0KICAgICAgICAgICAgICAgIDwvPgogICAgICAgICAgICAgICl9CiAgICAgICAgICAgIDwvYnV0dG9uPgogICAgICAgICAgKSl9CiAgICAgICAgPC9kaXY+CiAgICAgICAgey8qIENvbnRlbnQgKi99CiAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXgtMSBvdmVyZmxvdy1oaWRkZW4gbXQtMiI+CiAgICAgICAgICB7YWN0aXZlVGFiID09PSAibG9ncyIgPyA8TG9nc1RhYiAvPiA6IDxUZXJtaW5hbFRhYiAvPn0KICAgICAgICA8L2Rpdj4KICAgICAgPC9kaXY+CiAgICA8L0NoYXRTaWRlYmFyPgogICk7Cn0K
+// SPDX-License-Identifier: MIT
+import React, { useState, useEffect, useRef } from "react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { Terminal } from "@phosphor-icons/react/dist/csr/Terminal";
+import { Bug } from "@phosphor-icons/react/dist/csr/Bug";
+import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
+import { useTranslation } from "react-i18next";
+import ChatSidebar, { useConsoleSidebar } from "../ChatSidebar";
+import { baseHeaders } from "@/utils/request";
+
+const TABS = ["logs", "terminal"] as const;
+type TabName = (typeof TABS)[number];
+
+export function dispatchLog(
+  level: "info" | "warn" | "error" | "success" | "debug",
+  message: string,
+) {
+  window.dispatchEvent(
+    new CustomEvent("opensin:log", {
+      detail: { level, message, timestamp: new Date().toISOString() },
+    }),
+  );
+}
+
+type LogLevel = "info" | "warn" | "error" | "success" | "debug";
+
+type LogEntry = {
+  level: LogLevel;
+  message: string;
+  timestamp: string;
+};
+
+const LEVEL_COLORS: Record<LogLevel, string> = {
+  info: "text-zinc-300 light:text-slate-700",
+  warn: "text-yellow-400",
+  error: "text-red-400",
+  success: "text-green-400",
+  debug: "text-blue-400",
+};
+
+function LogsTab() {
+  const { t, i18n } = useTranslation();
+  const { consoleLogs, clearConsoleLogs } = useConsoleSidebar();
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [consoleLogs]);
+
+  return (
+    <div className="flex flex-col h-full">
+      <div className="flex items-center justify-between px-3 py-1.5 border-b border-zinc-800 light:border-slate-200 shrink-0">
+        <span className="text-[10px] font-medium uppercase tracking-widest text-zinc-500 light:text-slate-400">
+          {t("consoleSidebar.logs")}
+        </span>
+        <button
+          type="button"
+          onClick={() => clearConsoleLogs()}
+          className="flex items-center gap-1 text-[10px] text-zinc-500 hover:text-zinc-300 border-none bg-transparent cursor-pointer transition-colors"
+          aria-label={t("consoleSidebar.clear")}
+        >
+          <Trash size={11} aria-hidden="true" />
+          {t("consoleSidebar.clear")}
+        </button>
+      </div>
+      <div className="flex-1 overflow-y-auto font-mono text-[11px] leading-relaxed p-3 no-scroll">
+        {consoleLogs.length === 0 ? (
+          <p className="text-zinc-600 light:text-slate-400 text-center mt-8">
+            {t("consoleSidebar.noLogs")}
+          </p>
+        ) : (
+          consoleLogs.map((log, idx) => (
+            <div key={`${log.timestamp}-${idx}`} className="flex gap-2 mb-0.5">
+              <span className="text-zinc-600 light:text-slate-400 shrink-0">
+                {/* eslint-disable i18next/no-literal-string */}
+                {new Date(log.timestamp).toLocaleTimeString(i18n.language, {
+                  hour12: false,
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                })}
+                {/* eslint-enable i18next/no-literal-string */}
+              </span>
+              <span className={LEVEL_COLORS[log.level] ?? LEVEL_COLORS.info}>
+                {log.message}
+              </span>
+            </div>
+          ))
+        )}
+        <div ref={bottomRef} />
+      </div>
+    </div>
+  );
+}
+
+type HistoryEntry =
+  | { type: "input"; text: string }
+  | { type: "output"; text: string }
+  | { type: "error"; text: string };
+
+function TerminalTab() {
+  const { t } = useTranslation();
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const [input, setInput] = useState<string>("");
+  const [cmdHistory, setCmdHistory] = useState<string[]>([]);
+  const [historyIdx, setHistoryIdx] = useState<number>(-1);
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [history]);
+
+  async function runCommand(cmd: string) {
+    const trimmed = cmd.trim();
+    if (!trimmed) return;
+
+    setCmdHistory((prev) => [trimmed, ...prev].slice(0, 100));
+    setHistoryIdx(-1);
+    setHistory((prev) => [...prev, { type: "input", text: `$ ${trimmed}` }]);
+
+    try {
+      const res = await fetch("/api/utils/terminal/exec", {
+        method: "POST",
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
+        body: JSON.stringify({ command: trimmed }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setHistory((prev) => [
+          ...prev,
+          { type: "output", text: data.output ?? t("consoleSidebar.noOutput") },
+        ]);
+      } else {
+        const err = await res.text();
+        setHistory((prev) => [
+          ...prev,
+          { type: "error", text: t("consoleSidebar.error", { error: err }) },
+        ]);
+      }
+    } catch (e) {
+      setHistory((prev) => [
+        ...prev,
+        {
+          type: "error",
+          text: t("console.terminal_unavailable"),
+        },
+      ]);
+    }
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      runCommand(input);
+      setInput("");
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      const idx = Math.min(historyIdx + 1, cmdHistory.length - 1);
+      setHistoryIdx(idx);
+      setInput(cmdHistory[idx] ?? "");
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      const idx = Math.max(historyIdx - 1, -1);
+      setHistoryIdx(idx);
+      setInput(idx === -1 ? "" : (cmdHistory[idx] ?? ""));
+    }
+  }
+
+  return (
+    <div
+      className="flex flex-col h-full cursor-text"
+      onClick={() => inputRef.current?.focus()}
+    >
+      <div className="flex items-center justify-between px-3 py-1.5 border-b border-zinc-800 light:border-slate-200 shrink-0">
+        <span className="text-[10px] font-medium uppercase tracking-widest text-zinc-500 light:text-slate-400">
+          {t("consoleSidebar.terminal")}
+        </span>
+        <button
+          type="button"
+          onClick={() => setHistory([])}
+          className="flex items-center gap-1 text-[10px] text-zinc-500 hover:text-zinc-300 border-none bg-transparent cursor-pointer transition-colors"
+          aria-label={t("consoleSidebar.clear")}
+        >
+          <Trash size={11} aria-hidden="true" />
+          {t("consoleSidebar.clear")}
+        </button>
+      </div>
+      <div className="flex-1 overflow-y-auto font-mono text-[11px] leading-relaxed p-3 no-scroll">
+        <p className="text-zinc-600 light:text-slate-400 mb-2">
+          {t("consoleSidebar.terminalHint")}
+        </p>
+        {history.map((entry, idx) => (
+          <div
+            key={`${idx}-${entry.type}-${entry.text?.slice(0, 20) ?? ""}`}
+            className={
+              entry.type === "input"
+                ? "text-zinc-200 light:text-slate-800 mb-0.5"
+                : entry.type === "error"
+                  ? "text-red-400 mb-1 whitespace-pre-wrap"
+                  : "text-green-400 mb-1 whitespace-pre-wrap"
+            }
+          >
+            {entry.text}
+          </div>
+        ))}
+        <div ref={bottomRef} />
+      </div>
+      {/* Input line */}
+      <div className="flex items-center gap-1 px-3 py-2 border-t border-zinc-800 light:border-slate-200 shrink-0">
+        <span className="text-zinc-500 font-mono text-[11px]">
+          {/* eslint-disable i18next/no-literal-string */}$
+          {/* eslint-enable i18next/no-literal-string */}
+        </span>
+        <input
+          ref={inputRef}
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+          className="flex-1 bg-transparent border-none outline-none font-mono text-[11px] text-zinc-200 light:text-slate-800 placeholder:text-zinc-600 caret-white"
+          placeholder={t("console.terminal_placeholder")}
+          spellCheck={false}
+          autoComplete="off"
+        />
+      </div>
+    </div>
+  );
+}
+
+export default function ConsoleSidebar() {
+  const { sidebarOpen, closeSidebar } = useConsoleSidebar();
+  const { t } = useTranslation();
+  const [activeTab, setActiveTab] = useState<TabName>("logs");
+
+  return (
+    <ChatSidebar isOpen={sidebarOpen}>
+      <div className="w-full h-full bg-zinc-900 light:bg-white light:border-l light:border-slate-300 flex flex-col overflow-hidden">
+        {/* Header */}
+        <div className="flex items-center gap-2 px-4 pt-3.5 pb-0 shrink-0">
+          <Terminal
+            size={15}
+            className="text-zinc-400 light:text-slate-500"
+            aria-hidden="true"
+          />
+          <p className="flex-1 font-medium text-sm text-white light:text-slate-900">
+            {t("console.title")}
+          </p>
+          <button
+            onClick={closeSidebar}
+            type="button"
+            aria-label={t("console.close")}
+            className="text-white/60 light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer"
+          >
+            <X size={14} weight="bold" aria-hidden="true" />
+          </button>
+        </div>
+        {/* Tab switcher */}
+        <div
+          role="tablist"
+          aria-label={t("consoleSidebar.consoleTabs")}
+          className="flex items-center gap-1 px-4 pt-2 pb-0 shrink-0"
+        >
+          {TABS.map((tab) => (
+            <button
+              key={tab}
+              type="button"
+              role="tab"
+              aria-selected={activeTab === tab}
+              onClick={() => setActiveTab(tab)}
+              className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium uppercase tracking-[1.2px] whitespace-nowrap transition-colors ${
+                activeTab === tab
+                  ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
+                  : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-100 text-zinc-400 light:text-slate-500"
+              }`}
+            >
+              {tab === "logs" ? (
+                <>
+                  <Bug size={11} aria-hidden="true" />
+                  {t("console.tab_logs")}
+                </>
+              ) : (
+                <>
+                  <Terminal size={11} aria-hidden="true" />
+                  {t("console.tab_terminal")}
+                </>
+              )}
+            </button>
+          ))}
+        </div>
+        {/* Content */}
+        <div className="flex-1 overflow-hidden mt-2">
+          {activeTab === "logs" ? <LogsTab /> : <TerminalTab />}
+        </div>
+      </div>
+    </ChatSidebar>
+  );
+}
