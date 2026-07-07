@@ -93,7 +93,7 @@ export default function ImageLightbox() {
         ref={closeButtonRef}
         type="button"
         onClick={close}
-        className="absolute top-4 right-4 p-2 text-white light:text-white hover:text-white/70 transition-colors rounded-full bg-white/10 hover:bg-white/20 border-none cursor-pointer"
+        className="absolute top-4 right-4 p-2 text-white light:text-white hover:text-theme-text-primary transition-colors rounded-full bg-white/10 hover:bg-white/20 border-none cursor-pointer"
         aria-label={t("imageLightbox.close")}
       >
         <X size={24} weight="bold" />
@@ -107,7 +107,7 @@ export default function ImageLightbox() {
               e.stopPropagation();
               handlePrevious();
             }}
-            className="absolute left-4 p-3 text-white light:text-white hover:text-white/70 transition-colors rounded-full bg-white/10 hover:bg-white/20 border-none cursor-pointer"
+            className="absolute left-4 p-3 text-white light:text-white hover:text-theme-text-primary transition-colors rounded-full bg-white/10 hover:bg-white/20 border-none cursor-pointer"
             aria-label={t("imageLightbox.previous")}
           >
             <CaretLeft size={24} weight="bold" />
@@ -118,7 +118,7 @@ export default function ImageLightbox() {
               e.stopPropagation();
               handleNext();
             }}
-            className="absolute right-4 p-3 text-white light:text-white hover:text-white/70 transition-colors rounded-full bg-white/10 hover:bg-white/20 border-none cursor-pointer"
+            className="absolute right-4 p-3 text-white light:text-white hover:text-theme-text-primary transition-colors rounded-full bg-white/10 hover:bg-white/20 border-none cursor-pointer"
             aria-label={t("imageLightbox.next")}
           >
             <CaretRight size={24} weight="bold" />
@@ -134,7 +134,7 @@ export default function ImageLightbox() {
       />
 
       {images.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/70 text-sm bg-black/50 px-3 py-1 rounded-full">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-theme-text-primary text-sm bg-black/50 px-3 py-1 rounded-full">
           {safeIndex + 1} / {images.length}
         </div>
       )}

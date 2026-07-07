@@ -50,7 +50,7 @@ export default function CustomSiteSettings(): JSX.Element {
       <p className="text-sm leading-6 font-semibold text-white">
         {t("customization.items.browser-appearance.title")}
       </p>
-      <p className="text-xs text-white/60">
+      <p className="text-xs text-theme-text-secondary">
         {t("customization.items.browser-appearance.description")}
       </p>
 
@@ -58,7 +58,7 @@ export default function CustomSiteSettings(): JSX.Element {
         <p className="text-sm leading-6 font-medium text-white mt-2">
           {t("customization.items.browser-appearance.tab.title")}
         </p>
-        <p className="text-xs text-white/60">
+        <p className="text-xs text-theme-text-secondary">
           {t("customization.items.browser-appearance.tab.description")}
         </p>
         <div className="flex items-center gap-x-4">
@@ -80,7 +80,7 @@ export default function CustomSiteSettings(): JSX.Element {
         <p className="text-sm leading-6 font-medium text-white mt-2">
           {t("customization.items.browser-appearance.favicon.title")}
         </p>
-        <p className="text-xs text-white/60">
+        <p className="text-xs text-theme-text-secondary">
           {t("customization.items.browser-appearance.favicon.description")}
         </p>
         <div className="flex items-center gap-x-2">

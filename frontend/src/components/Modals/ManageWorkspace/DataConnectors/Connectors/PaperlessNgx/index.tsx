@@ -121,7 +121,7 @@ export default function PaperlessNgxOptions() {
                 : t("dataConnectors.paperlessNgx.submit")}
             </button>
             {loading && (
-              <p className="text-xs text-white/50">
+              <p className="text-xs text-theme-text-secondary">
                 {t("dataConnectors.paperlessNgx.completeHint")}
               </p>
             )}

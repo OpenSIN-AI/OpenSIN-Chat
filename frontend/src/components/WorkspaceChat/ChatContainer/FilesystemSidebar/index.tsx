@@ -569,7 +569,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
                 />
               </div>
             </div>
-            <span className="text-xs text-white/80 flex-shrink-0">
+            <span className="text-xs text-theme-text-primary flex-shrink-0">
               {uploadProgress.current + 1}/{uploadProgress.total}
             </span>
           </div>

@@ -54,7 +54,7 @@ export default function MessageList({
           </MetricsProvider>
         ) : (
           <div className="flex-1 flex items-center justify-center px-4">
-            <p className="text-sm text-center text-white/60 light:text-slate-500">
+            <p className="text-sm text-center text-theme-text-secondary light:text-slate-500">
               {t("chat.history.empty")}
             </p>
           </div>

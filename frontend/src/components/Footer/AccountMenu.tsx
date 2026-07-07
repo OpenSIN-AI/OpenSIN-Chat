@@ -106,7 +106,7 @@ function ThemeSegment() {
               className={`flex items-center justify-center h-6 w-7 rounded-md transition-colors duration-150 ${
                 active
                   ? "bg-white text-slate-900"
-                  : "text-white/70 light:text-slate-500 hover:text-white light:hover:text-slate-800"
+                  : "text-theme-text-primary light:text-slate-500 hover:text-white light:hover:text-slate-800"
               }`}
             >
               <Icon className="h-4 w-4" weight={active ? "fill" : "regular"} />
@@ -254,12 +254,12 @@ export default function AccountMenu({
               <span className="text-sm font-semibold text-white light:text-slate-800 truncate max-w-full">
                 {displayName}
               </span>
-              <span className="text-xs text-white/55 light:text-slate-500 truncate max-w-full">
+              <span className="text-xs text-theme-text-secondary light:text-slate-500 truncate max-w-full">
                 {subtitle}
               </span>
             </div>
             <CaretUpDown
-              className="h-4 w-4 text-white/55 light:text-slate-500 shrink-0"
+              className="h-4 w-4 text-theme-text-secondary light:text-slate-500 shrink-0"
               aria-hidden="true"
             />
           </>
@@ -289,7 +289,7 @@ export default function AccountMenu({
                 <span className="text-sm font-semibold text-white light:text-slate-800 truncate">
                   {displayName}
                 </span>
-                <span className="text-xs text-white/55 light:text-slate-500 truncate">
+                <span className="text-xs text-theme-text-secondary light:text-slate-500 truncate">
                   {subtitle}
                 </span>
               </div>
@@ -344,7 +344,7 @@ export default function AccountMenu({
               <ChatCircleText className={ICON_CLASSES} />
               <span className="flex-grow">{t("common.feedback")}</span>
               <ArrowUpRight
-                className="h-4 w-4 text-white/45 light:text-slate-400"
+                className="h-4 w-4 text-theme-text-secondary light:text-slate-400"
                 aria-hidden="true"
               />
             </a>
@@ -352,7 +352,7 @@ export default function AccountMenu({
             <div className="my-1 h-px bg-white/10 light:bg-slate-200" />
 
             {/* Preferences */}
-            <p className="px-2.5 pt-1 pb-0.5 text-[11px] font-medium uppercase tracking-wide text-white/40 light:text-slate-400">
+            <p className="px-2.5 pt-1 pb-0.5 text-[11px] font-medium uppercase tracking-wide text-theme-placeholder light:text-slate-400">
               {t("common.preferences")}
             </p>
             <ThemeSegment />

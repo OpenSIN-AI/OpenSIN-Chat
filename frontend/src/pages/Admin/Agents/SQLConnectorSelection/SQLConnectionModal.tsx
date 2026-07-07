@@ -297,7 +297,7 @@ export default function SQLConnectionModal({
         >
           <div className="px-7 py-6">
             <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-2">
-              <p className="text-sm text-white/60">
+              <p className="text-sm text-theme-text-secondary">
                 {isEditMode
                   ? t("sqlConnection.descriptionEdit")
                   : t("sqlConnection.descriptionNew")}

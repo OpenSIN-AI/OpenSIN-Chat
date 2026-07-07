@@ -33,7 +33,7 @@ export default function TextSizePreference() {
       <p className="text-sm leading-6 font-semibold text-white">
         {t("chat_window.text_size_label")}
       </p>
-      <p className="text-xs text-white/60">{t("chat_window.text_size")}</p>
+      <p className="text-xs text-theme-text-secondary">{t("chat_window.text_size")}</p>
       <div className="flex items-center gap-x-4">
         <select
           value={selectedSize}

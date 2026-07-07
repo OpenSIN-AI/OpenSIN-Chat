@@ -145,7 +145,7 @@ export default function SuggestedChatMessages({
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-white/60 text-xs mt-2 w-full justify-center max-w-[600px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-theme-text-secondary text-xs mt-2 w-full justify-center max-w-[600px]">
         {suggestedMessages.map((suggestion, index) => (
           <div key={index} className="relative w-full">
             <button
@@ -179,7 +179,7 @@ export default function SuggestedChatMessages({
             </label>
             <input
               placeholder={t("common.message")}
-              className="border-none bg-theme-settings-input-bg text-white placeholder:text-white/20 text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block p-2.5 w-full"
+              className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block p-2.5 w-full"
               value={newMessage.message}
               name="message"
               onChange={onEditChange}

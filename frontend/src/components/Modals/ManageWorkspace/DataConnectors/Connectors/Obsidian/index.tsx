@@ -172,7 +172,7 @@ export default function ObsidianOptions() {
                 : t("connectors.obsidian.import_vault")}
             </button>
             {loading && (
-              <p className="text-xs text-white/50">
+              <p className="text-xs text-theme-text-secondary">
                 {t("connectors.obsidian.processing_time")}
               </p>
             )}

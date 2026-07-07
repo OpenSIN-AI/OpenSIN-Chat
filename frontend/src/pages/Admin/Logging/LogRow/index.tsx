@@ -60,14 +60,14 @@ export default function LogRow({ log }: LogRowProps): JSX.Element {
             (expanded ? (
               <>
                 <CaretUp weight="bold" size={20} />
-                <p className="text-xs text-white/50 w-[20px]">
+                <p className="text-xs text-theme-text-secondary w-[20px]">
                   {t("logging.logRow.hide")}
                 </p>
               </>
             ) : (
               <>
                 <CaretDown weight="bold" size={20} />
-                <p className="text-xs text-white/50 w-[20px]">
+                <p className="text-xs text-theme-text-secondary w-[20px]">
                   {t("logging.logRow.show")}
                 </p>
               </>

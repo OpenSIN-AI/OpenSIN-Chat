@@ -87,7 +87,7 @@ export default function InviteRow({ invite }: { invite: any }) {
               <button
                 type="button"
                 onClick={handleDelete}
-                className="text-xs font-medium text-white/80 light:text-black/80 hover:light:text-red-500 hover:text-red-300 rounded-lg px-2 py-1 hover:bg-white hover:light:bg-red-50 hover:bg-opacity-10"
+                className="text-xs font-medium text-theme-text-primary light:text-black/80 hover:light:text-red-500 hover:text-red-300 rounded-lg px-2 py-1 hover:bg-white hover:light:bg-red-50 hover:bg-opacity-10"
               >
                 <Trash className="h-5 w-5" />
               </button>

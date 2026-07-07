@@ -97,7 +97,7 @@ export default function UploadFile({
         {ready === false ? (
           <div className="flex flex-col items-center justify-center h-full">
             <CloudArrowUp
-              className="w-8 h-8 text-white/80 light:invert"
+              className="w-8 h-8 text-theme-text-primary light:invert"
               aria-hidden="true"
             />
             <div className="text-white text-opacity-80 text-sm font-semibold py-1">
@@ -110,7 +110,7 @@ export default function UploadFile({
         ) : files.length === 0 ? (
           <div className="flex flex-col items-center justify-center">
             <CloudArrowUp
-              className="w-8 h-8 text-white/80 light:invert"
+              className="w-8 h-8 text-theme-text-primary light:invert"
               aria-hidden="true"
             />
             <div className="text-white text-opacity-80 text-sm font-semibold py-1">

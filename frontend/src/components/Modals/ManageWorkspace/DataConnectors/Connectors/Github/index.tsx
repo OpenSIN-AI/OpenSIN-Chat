@@ -173,7 +173,7 @@ export default function GithubOptions() {
                 : t("connectors.github.submit")}
             </button>
             {loading && (
-              <p className="text-xs text-white/50">
+              <p className="text-xs text-theme-text-secondary">
                 {t("connectors.github.task_explained")}
               </p>
             )}

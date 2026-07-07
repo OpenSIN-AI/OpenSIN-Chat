@@ -278,7 +278,7 @@ export default function ActiveWorkspaces() {
                           className={`
                             transition-all duration-[200ms]
                             flex flex-grow w-[75%] gap-x-2 py-[8px] pl-[10px] pr-[6px] rounded-[8px] text-sm justify-start items-center
-                            ${isActive ? "bg-white/10 light:bg-blue-200/70 font-semibold text-white light:text-blue-900" : "text-white/70 light:text-slate-600 hover:bg-white/5 light:hover:bg-slate-200/70 hover:text-white light:hover:text-slate-900"}
+                            ${isActive ? "bg-white/10 light:bg-blue-200/70 font-semibold text-white light:text-blue-900" : "text-theme-text-primary light:text-slate-600 hover:bg-white/5 light:hover:bg-slate-200/70 hover:text-white light:hover:text-slate-900"}
                           `}
                         >
                           <div className="flex flex-row justify-between w-full items-center">
@@ -295,7 +295,7 @@ export default function ActiveWorkspaces() {
                             <SquaresFour
                               size={16}
                               weight="fill"
-                              className={`shrink-0 mr-[2px] ${isActive ? "text-white light:text-blue-800" : "text-white/60 light:text-slate-500"}`}
+                              className={`shrink-0 mr-[2px] ${isActive ? "text-white light:text-blue-800" : "text-theme-text-secondary light:text-slate-500"}`}
                             />
                             <div
                               data-tooltip-id="workspace-name"

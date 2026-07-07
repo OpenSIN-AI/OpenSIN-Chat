@@ -85,7 +85,7 @@ export default function AddVariableModal({
                 autoComplete="off"
                 pattern="^[a-zA-Z0-9_]+$"
               />
-              <p className="mt-2 text-xs text-white/60">
+              <p className="mt-2 text-xs text-theme-text-secondary">
                 {t("admin.systemPromptVariables.addVariable.keyHelp")}
               </p>
             </div>

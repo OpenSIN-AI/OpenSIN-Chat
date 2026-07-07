@@ -19,7 +19,7 @@ export default function ConnectorOption({
       <div className="flex flex-col">
         <div className="text-white font-bold text-[14px]">{name}</div>
         <div>
-          <p className="text-[12px] text-white/60">{description}</p>
+          <p className="text-[12px] text-theme-text-secondary">{description}</p>
         </div>
       </div>
     </button>

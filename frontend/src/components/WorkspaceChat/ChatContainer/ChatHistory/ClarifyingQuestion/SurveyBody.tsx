@@ -4,7 +4,7 @@ import { formatAnswerDisplay } from "./utils";
 
 function StatusMessage({ message }: any) {
   return (
-    <div className="text-xs text-white/60 light:text-slate-600">{message}</div>
+    <div className="text-xs text-theme-text-secondary light:text-slate-600">{message}</div>
   );
 }
 
@@ -12,12 +12,12 @@ function AnswerRow({ question, answer, index, showNumber, skippedLabel }: any) {
   return (
     <div className="flex gap-2">
       {showNumber && (
-        <span className="text-white/50 light:text-slate-500 shrink-0">
+        <span className="text-theme-text-secondary light:text-slate-500 shrink-0">
           {`${index + 1}.`}
         </span>
       )}
       <div className="flex flex-col">
-        <span className="text-white/60 light:text-slate-600">
+        <span className="text-theme-text-secondary light:text-slate-600">
           {question.question}
         </span>
         <span className="font-medium text-white light:text-slate-900">
@@ -34,7 +34,7 @@ function AnswersList({ questions, answers }: any) {
   const skippedLabel = t("chat_window.agent_invocation.answer_skipped");
 
   return (
-    <div className="flex flex-col gap-y-1.5 text-xs text-white/70 light:text-slate-700">
+    <div className="flex flex-col gap-y-1.5 text-xs text-theme-text-primary light:text-slate-700">
       {/* index key OK: static list */}
       {(questions as any).map((q, i) => (
         <AnswerRow

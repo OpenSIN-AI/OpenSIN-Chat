@@ -43,7 +43,7 @@ export default function AgentClarifyingQuestions(): JSX.Element {
         </label>
       </div>
       <div className="flex items-center gap-x-4">
-        <p className="text-xs text-white/60">
+        <p className="text-xs text-theme-text-secondary">
           {t("agent.settings.clarifying-questions.description")}
         </p>
         {loading ? (
@@ -67,7 +67,7 @@ export default function AgentClarifyingQuestions(): JSX.Element {
               <label className="block text-md font-medium text-white">
                 {t("agent.settings.clarifying-questions.max-per-turn.title")}
               </label>
-              <p className="text-xs text-white/60">
+              <p className="text-xs text-theme-text-secondary">
                 {t(
                   "agent.settings.clarifying-questions.max-per-turn.description",
                 )}

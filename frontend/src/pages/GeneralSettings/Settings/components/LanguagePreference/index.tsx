@@ -16,7 +16,7 @@ export default function LanguagePreference() {
       <p className="text-sm leading-6 font-semibold text-white">
         {t("customization.items.display-language.title")}
       </p>
-      <p className="text-xs text-white/60">
+      <p className="text-xs text-theme-text-secondary">
         {t("customization.items.display-language.description")}
       </p>
       <div className="flex items-center gap-x-4">

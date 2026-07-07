@@ -447,7 +447,7 @@ export default forwardRef(function (
           role="log"
           aria-live="polite"
           aria-label={t("chat.aria.chatHistory")}
-          className={`markdown text-white/80 light:text-theme-text-primary font-light ${textSizeClass} h-full relative pb-[60px] pt-2 md:pt-3 md:mx-0 flex flex-col items-center justify-start`}
+          className={`markdown text-theme-text-primary light:text-theme-text-primary font-light ${textSizeClass} h-full relative pb-[60px] pt-2 md:pt-3 md:mx-0 flex flex-col items-center justify-start`}
         >
           <Virtuoso
             ref={virtuosoRef}

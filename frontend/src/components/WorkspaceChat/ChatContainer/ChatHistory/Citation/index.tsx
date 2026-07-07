@@ -268,7 +268,7 @@ export function CitationDetailModal({ source, onClose }: any) {
                     />
 
                     {!!score && (
-                      <div className="w-full flex items-center text-xs text-white/60 light:text-slate-500 gap-x-2 cursor-default">
+                      <div className="w-full flex items-center text-xs text-theme-text-secondary light:text-slate-500 gap-x-2 cursor-default">
                         <div
                           data-tooltip-id="similarity-score"
                           data-tooltip-content={t("citation.similarityTooltip")}

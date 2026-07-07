@@ -109,7 +109,7 @@ function PiperTTSModelSelection({ settings }: any) {
           </select>
           <DemoVoiceSample voiceId={selectedVoice} />
         </div>
-        <p className="text-xs text-white/40">
+        <p className="text-xs text-theme-placeholder">
           {t("textToSpeech.piper.storedIndicator")}
         </p>
       </div>
@@ -117,7 +117,7 @@ function PiperTTSModelSelection({ settings }: any) {
         <button
           type="button"
           onClick={flushVoices}
-          className="w-fit border-none hover:text-white hover:underline text-white/40 text-sm my-4"
+          className="w-fit border-none hover:text-white hover:underline text-theme-placeholder text-sm my-4"
         >
           {t("textToSpeech.piper.flushVoiceCache")}
         </button>

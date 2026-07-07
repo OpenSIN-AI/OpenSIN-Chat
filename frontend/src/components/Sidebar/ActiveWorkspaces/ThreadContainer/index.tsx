@@ -535,7 +535,7 @@ function DateGroupHeader({ label, count, collapsed, onToggle }) {
     <button
       type="button"
       onClick={onToggle}
-      className="w-full flex items-center overflow-hidden text-xs font-medium text-white/40 light:text-theme-text-secondary uppercase tracking-wider py-2 px-3 cursor-pointer hover:text-white/60 light:hover:text-theme-text-primary transition-colors"
+      className="w-full flex items-center overflow-hidden text-xs font-medium text-theme-placeholder light:text-theme-text-secondary uppercase tracking-wider py-2 px-3 cursor-pointer hover:text-theme-text-secondary light:hover:text-theme-text-primary transition-colors"
       aria-expanded={!collapsed}
     >
       {collapsed ? (
@@ -550,7 +550,7 @@ function DateGroupHeader({ label, count, collapsed, onToggle }) {
         />
       )}
       <span>{label}</span>
-      <span className="ml-1 text-white/20 light:text-theme-text-secondary text-[10px]">
+      <span className="ml-1 text-theme-placeholder light:text-theme-text-secondary text-[10px]">
         {count}
       </span>
     </button>
@@ -663,7 +663,7 @@ function UnfolderedDropZone({ children, isDragging }) {
       }`}
     >
       {isDragging && (
-        <p className="text-xs text-white/30 light:text-theme-text-secondary italic px-3 py-0.5">
+        <p className="text-xs text-theme-placeholder light:text-theme-text-secondary italic px-3 py-0.5">
           {t("threadContainer.dropHere")}
         </p>
       )}
@@ -722,11 +722,11 @@ function NewThreadButton({ workspace, mutate }) {
           />
         )}
         {loading ? (
-          <p className="text-left text-white/80 light:text-slate-600 text-[13px]">
+          <p className="text-left text-theme-text-primary light:text-slate-600 text-[13px]">
             {t("threadContainer.startingChat")}
           </p>
         ) : (
-          <p className="text-left text-white/90 light:text-slate-700 text-[13px] font-medium">
+          <p className="text-left text-theme-text-primary light:text-slate-700 text-[13px] font-medium">
             {t("threadContainer.newChat")}
           </p>
         )}
@@ -780,16 +780,16 @@ function NewFolderButton({ workspace, onCreated }) {
           <CircleNotch
             weight="bold"
             size={14}
-            className="shrink-0 animate-spin text-white/60 light:text-slate-500"
+            className="shrink-0 animate-spin text-theme-text-secondary light:text-slate-500"
           />
         ) : (
           <FolderSimplePlus
             weight="bold"
             size={14}
-            className="shrink-0 text-white/60 light:text-slate-500"
+            className="shrink-0 text-theme-text-secondary light:text-slate-500"
           />
         )}
-        <p className="text-left text-white/60 light:text-slate-500 text-[13px] font-medium">
+        <p className="text-left text-theme-text-secondary light:text-slate-500 text-[13px] font-medium">
           {t("threadContainer.newFolder")}
         </p>
       </div>
@@ -829,21 +829,21 @@ function ThreadSearchBar({ value, onChange, onClear }) {
     <div className="relative flex items-center w-full mb-2 mt-1">
       <MagnifyingGlass
         size={14}
-        className="absolute left-3 shrink-0 text-white/40 light:text-slate-400 pointer-events-none"
+        className="absolute left-3 shrink-0 text-theme-placeholder light:text-slate-400 pointer-events-none"
       />
       <input
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={t("threadContainer.searchThreads")}
-        className="w-full h-[30px] pl-8 pr-7 text-[13px] bg-white/5 light:bg-slate-200/70 border border-white/10 light:border-slate-300 rounded-[8px] text-white light:text-slate-700 placeholder:text-white/30 light:placeholder:text-slate-400 focus:outline-none focus:border-white/20 light:focus:border-slate-400 transition-colors"
+        className="w-full h-[30px] pl-8 pr-7 text-[13px] bg-white/5 light:bg-slate-200/70 border border-white/10 light:border-slate-300 rounded-[8px] text-white light:text-slate-700 placeholder:text-theme-placeholder light:placeholder:text-slate-400 focus:outline-none focus:border-white/20 light:focus:border-slate-400 transition-colors"
       />
       {value && (
         <button
           type="button"
           onClick={onClear}
           aria-label={t("threadContainer.clearSearch")}
-          className="absolute right-2 shrink-0 text-white/40 light:text-slate-400 hover:text-white light:hover:text-slate-600 transition-colors"
+          className="absolute right-2 shrink-0 text-theme-placeholder light:text-slate-400 hover:text-white light:hover:text-slate-600 transition-colors"
         >
           <X size={14} weight="bold" />
         </button>
@@ -891,7 +891,7 @@ function SearchResultsList({
       <div className="flex items-center justify-center py-4">
         <CircleNotch
           size={16}
-          className="animate-spin text-white/40 light:text-slate-400"
+          className="animate-spin text-theme-placeholder light:text-slate-400"
         />
       </div>
     );
@@ -899,7 +899,7 @@ function SearchResultsList({
   if (results.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-4 px-3">
-        <p className="text-[13px] text-white/40 light:text-slate-400 text-center">
+        <p className="text-[13px] text-theme-placeholder light:text-slate-400 text-center">
           {t("threadContainer.noResults")}
         </p>
       </div>
@@ -907,7 +907,7 @@ function SearchResultsList({
   }
   return (
     <div className="flex flex-col gap-0.5">
-      <p className="text-[11px] text-white/30 light:text-slate-400 px-3 pb-1 uppercase tracking-wider">
+      <p className="text-[11px] text-theme-placeholder light:text-slate-400 px-3 pb-1 uppercase tracking-wider">
         {t("threadContainer.searchResults", { count: results.length })}
       </p>
       {results.map((thread) => (
@@ -936,15 +936,15 @@ function SearchResultItem({ thread, query, workspace }) {
         {!thread.nameMatch && (
           <ChatText
             size={12}
-            className="shrink-0 text-white/30 light:text-slate-400"
+            className="shrink-0 text-theme-placeholder light:text-slate-400"
           />
         )}
-        <p className="text-left text-[13px] truncate text-white/70 light:text-slate-600 group-hover/sr:text-white light:group-hover/sr:text-theme-text-primary">
+        <p className="text-left text-[13px] truncate text-theme-text-primary light:text-slate-600 group-hover/sr:text-white light:group-hover/sr:text-theme-text-primary">
           <HighlightMatch text={thread.name} query={query} />
         </p>
       </div>
       {thread.contentSnippet && (
-        <p className="text-[11px] text-white/30 light:text-slate-400 truncate pl-[18px] mt-0.5">
+        <p className="text-[11px] text-theme-placeholder light:text-slate-400 truncate pl-[18px] mt-0.5">
           <HighlightMatch text={thread.contentSnippet} query={query} />
         </p>
       )}

@@ -137,7 +137,7 @@ export default function EmbeddingTextSplitterPreference() {
                     <label className="text-white text-sm font-semibold block">
                       {t("text.size.title")}
                     </label>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-theme-text-secondary">
                       {t("text.size.description")}
                     </p>
                   </div>
@@ -159,7 +159,7 @@ export default function EmbeddingTextSplitterPreference() {
                     required={true}
                     autoComplete="off"
                   />
-                  <p className="text-xs text-white/40 mt-2">
+                  <p className="text-xs text-theme-placeholder mt-2">
                     {`${t("text.size.recommend")} ${numberWithCommas(settings?.max_embed_chunk_size || 1000)}.`}
                   </p>
                 </div>
@@ -171,7 +171,7 @@ export default function EmbeddingTextSplitterPreference() {
                     <label className="text-white text-sm font-semibold block">
                       {t("text.overlap.title")}
                     </label>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-theme-text-secondary">
                       {t("text.overlap.description")}
                     </p>
                   </div>

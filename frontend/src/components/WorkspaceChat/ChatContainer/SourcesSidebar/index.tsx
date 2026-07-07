@@ -264,7 +264,7 @@ export default function SourcesSidebar({ workspace }: any) {
               <button
                 onClick={closeSidebar}
                 type="button"
-                className="text-white/60 light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer"
+                className="text-theme-text-secondary light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer"
               >
                 <X size={16} weight="bold" />
               </button>

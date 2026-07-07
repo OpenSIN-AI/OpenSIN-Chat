@@ -45,7 +45,7 @@ export function SerpApiOptions({ settings }: SearchProviderOptionProps) {
   const { t } = useTranslation();
   return (
     <>
-      <p className="text-sm text-white/60 my-2">
+      <p className="text-sm text-theme-text-secondary my-2">
         {t("webSearch.getFreeApiKeySerpApi")}{" "}
         <a
           href="https://serpapi.com/"
@@ -114,7 +114,7 @@ export function SearchApiOptions({ settings }: SearchProviderOptionProps) {
   const { t } = useTranslation();
   return (
     <>
-      <p className="text-sm text-white/60 my-2">
+      <p className="text-sm text-theme-text-secondary my-2">
         {t("webSearch.getFreeApiKeySearchApi")}{" "}
         <a
           href="https://www.searchapi.io/"
@@ -167,7 +167,7 @@ export function SerperDotDevOptions({ settings }: SearchProviderOptionProps) {
   const { t } = useTranslation();
   return (
     <>
-      <p className="text-sm text-white/60 my-2">
+      <p className="text-sm text-theme-text-secondary my-2">
         {t("webSearch.getFreeApiKeySearchApi")}{" "}
         <a
           href="https://serper.dev"
@@ -203,7 +203,7 @@ export function BingSearchOptions({ settings }: SearchProviderOptionProps) {
   const { t } = useTranslation();
   return (
     <>
-      <p className="text-sm text-white/60 my-2">
+      <p className="text-sm text-theme-text-secondary my-2">
         {t("webSearch.getBingWebSearchSubscription")}{" "}
         <a
           href="https://portal.azure.com/"
@@ -231,10 +231,10 @@ export function BingSearchOptions({ settings }: SearchProviderOptionProps) {
           />
         </div>
       </div>
-      <p className="text-sm text-white/60 my-2">
+      <p className="text-sm text-theme-text-secondary my-2">
         {t("webSearch.bingSetupTitle")}
       </p>
-      <ol className="list-decimal text-sm text-white/60 ml-6">
+      <ol className="list-decimal text-sm text-theme-text-secondary ml-6">
         <li>
           {t("webSearch.bingSetupStep1")}{" "}
           <a
@@ -260,7 +260,7 @@ export function BaiduSearchOptions({ settings }: SearchProviderOptionProps) {
   const { t } = useTranslation();
   return (
     <>
-      <p className="text-sm text-white/60 my-2">
+      <p className="text-sm text-theme-text-secondary my-2">
         {t("webSearch.getApiKey")}{" "}
         <a
           href="https://cloud.baidu.com/doc/qianfan-api/s/Wmbq4z7e5"
@@ -298,7 +298,7 @@ export function SerplySearchOptions({ settings }: SearchProviderOptionProps) {
   const { t } = useTranslation();
   return (
     <>
-      <p className="text-sm text-white/60 my-2">
+      <p className="text-sm text-theme-text-secondary my-2">
         {t("webSearch.getFreeApiKeySearchApi")}{" "}
         <a
           href="https://serply.io"
@@ -357,7 +357,7 @@ export function TavilySearchOptions({ settings }: SearchProviderOptionProps) {
   const { t } = useTranslation();
   return (
     <>
-      <p className="text-sm text-white/60 my-2">
+      <p className="text-sm text-theme-text-secondary my-2">
         {t("webSearch.getApiKey")}{" "}
         <a
           href="https://tavily.com/"
@@ -393,7 +393,7 @@ export function DuckDuckGoOptions() {
   const { t } = useTranslation();
   return (
     <>
-      <p className="text-sm text-white/60 my-2">
+      <p className="text-sm text-theme-text-secondary my-2">
         {t("webSearch.duckduckgoNoConfig")}
       </p>
     </>
@@ -404,7 +404,7 @@ export function ExaSearchOptions({ settings }: SearchProviderOptionProps) {
   const { t } = useTranslation();
   return (
     <>
-      <p className="text-sm text-white/60 my-2">
+      <p className="text-sm text-theme-text-secondary my-2">
         {t("webSearch.getApiKey")}{" "}
         <a
           href="https://exa.ai"
@@ -442,7 +442,7 @@ export function PerplexitySearchOptions({
   const { t } = useTranslation();
   return (
     <>
-      <p className="text-sm text-white/60 my-2">
+      <p className="text-sm text-theme-text-secondary my-2">
         {t("webSearch.getApiKey")}{" "}
         <a
           href="https://console.perplexity.ai"
@@ -479,7 +479,7 @@ export function VaneOptions() {
   return (
     <div className="flex gap-x-4">
       <div className="flex flex-col">
-        <p className="text-sm text-white/60 my-2">
+        <p className="text-sm text-theme-text-secondary my-2">
           {t("webSearch.vaneNoConfig")}
         </p>
       </div>

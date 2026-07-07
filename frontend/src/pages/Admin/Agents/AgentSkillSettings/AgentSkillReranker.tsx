@@ -43,7 +43,7 @@ export default function AgentSkillReranker(): JSX.Element {
         </label>
       </div>
       <div className="flex items-center gap-x-4">
-        <p className="text-xs text-white/60">
+        <p className="text-xs text-theme-text-secondary">
           {t("agent.settings.intelligent-skill-selection.description")}
         </p>
         {loading ? (
@@ -66,7 +66,7 @@ export default function AgentSkillReranker(): JSX.Element {
             <label className="block text-md font-medium text-white">
               {t("agent.settings.intelligent-skill-selection.max-tools.title")}
             </label>
-            <p className="text-xs text-white/60">
+            <p className="text-xs text-theme-text-secondary">
               {t(
                 "agent.settings.intelligent-skill-selection.max-tools.description",
               )}

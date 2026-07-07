@@ -308,7 +308,7 @@ export default function BlockList({
                       {info.label}
                     </span>
                     {!block.isExpanded && (
-                      <p className="text-xs text-white/60 truncate">
+                      <p className="text-xs text-theme-text-secondary truncate">
                         {info.getSummary?.(block.config)}
                       </p>
                     )}
@@ -389,7 +389,7 @@ export default function BlockList({
                   viewBox="0 0 24 24"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="text-white/40 light:invert"
+                  className="text-theme-placeholder light:invert"
                 >
                   <path
                     d="M12 4L12 20M12 20L6 14M12 20L18 14"

@@ -20,7 +20,7 @@ export default function SourceDetailView({ source, onBack, onClose }: any) {
         <button
           onClick={onBack}
           type="button"
-          className="text-white/60 light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors"
+          className="text-theme-text-secondary light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors"
         >
           <CaretLeft size={20} weight="bold" />
         </button>
@@ -30,7 +30,7 @@ export default function SourceDetailView({ source, onBack, onClose }: any) {
         <button
           onClick={onClose}
           type="button"
-          className="text-white/60 light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors"
+          className="text-theme-text-secondary light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors"
         >
           <X size={16} weight="bold" />
         </button>
@@ -43,7 +43,7 @@ export default function SourceDetailView({ source, onBack, onClose }: any) {
                 {HTMLDecode(omitChunkHeader(text))}
               </p>
               {!!score && (
-                <div className="flex items-center text-xs text-white/60 light:text-slate-500 gap-x-1">
+                <div className="flex items-center text-xs text-theme-text-secondary light:text-slate-500 gap-x-1">
                   <Info size={14} />
                   <p>
                     {toPercentString(score)} {t("chat_window.similarity_match")}

@@ -302,21 +302,19 @@
 }
 
 /*
- * Phase 5 — Text color overrides for the light theme.
+ * Issue #5 (complete) — text-white/x migration.
  *
- * These rules exist because many components use Tailwind's white opacity
- * shorthand classes (text-white/50, text-white/60, etc.) which are semantically
- * incorrect: "white text at 50% opacity" only makes visual sense on a dark
- * background. On a light background the result would be near-invisible grey.
+ * All 173 occurrences of text-white/{20..90} across 87 component files have
+ * been replaced with the correct semantic token classes:
+ *   text-white/70-90  ->  text-theme-text-primary
+ *   text-white/45-60  ->  text-theme-text-secondary
+ *   text-white/20-40  ->  text-theme-placeholder
  *
- * The canonical fix is to replace those classes with `text-theme-text-primary`
- * / `text-theme-text-secondary` in each component. Until that migration is
- * complete, the overrides below remap the opacity variants to the semantic
- * CSS-variable tokens so both themes remain readable.
+ * The override rules below are kept as a safety net for third-party or
+ * dynamically injected content that may still emit text-white/* classes at
+ * runtime. They will naturally become dead code as dependencies are updated.
  *
- * New code MUST use text-theme-text-primary / text-theme-text-secondary
- * (or the var(--color-text) / var(--color-muted) semantic layer tokens).
- * DO NOT add new text-white/* usage in components.
+ * DO NOT add new text-white/* classes anywhere in the component tree.
  */
 [data-theme="light"] .text-white {
   color: var(--color-text);

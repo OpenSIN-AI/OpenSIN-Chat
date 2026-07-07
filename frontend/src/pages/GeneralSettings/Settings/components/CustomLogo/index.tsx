@@ -110,7 +110,7 @@ export default function CustomLogo(): JSX.Element {
       <p className="text-sm leading-6 font-semibold text-white">
         {t("customization.items.logo.title")}
       </p>
-      <p className="text-xs text-white/60">
+      <p className="text-xs text-theme-text-secondary">
         {t("customization.items.logo.description")}
       </p>
       {isDefaultLogo ? (

@@ -58,7 +58,7 @@ export default function SetupProvider({
           <form id="provider-form" onSubmit={handleUpdate}>
             <div className="px-7 py-6">
               <div className="space-y-6 max-h-[60vh] overflow-y-auto p-1">
-                <p className="text-sm text-white/60">
+                <p className="text-sm text-theme-text-secondary">
                   {t("setupProvider.description", { name: llmProvider.name })}
                 </p>
                 <div>

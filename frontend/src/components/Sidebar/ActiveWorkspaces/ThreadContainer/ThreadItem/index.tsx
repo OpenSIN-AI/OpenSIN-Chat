@@ -141,7 +141,7 @@ function ThreadItem({
               className={`text-left text-[13px] truncate w-full ${
                 isActive
                   ? "font-medium text-white light:text-blue-900"
-                  : "text-white/60 light:text-slate-600 font-normal"
+                  : "text-theme-text-secondary light:text-slate-600 font-normal"
               }`}
             >
               {displayName}

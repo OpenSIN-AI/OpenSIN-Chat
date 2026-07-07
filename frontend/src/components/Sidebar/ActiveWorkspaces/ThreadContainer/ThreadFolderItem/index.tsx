@@ -125,7 +125,7 @@ function FolderQuickAdd({ workspace, folder, isOpen, setIsOpen }: any) {
       >
         <Plus
           size={12}
-          className="text-white/60 light:text-theme-text-secondary"
+          className="text-theme-text-secondary light:text-theme-text-secondary"
         />
       </button>
 
@@ -273,18 +273,18 @@ export default function ThreadFolderItem({
           {open ? (
             <CaretDown
               size={12}
-              className="shrink-0 text-white/50 light:text-theme-text-secondary"
+              className="shrink-0 text-theme-text-secondary light:text-theme-text-secondary"
             />
           ) : (
             <CaretRight
               size={12}
-              className="shrink-0 text-white/50 light:text-theme-text-secondary"
+              className="shrink-0 text-theme-text-secondary light:text-theme-text-secondary"
             />
           )}
           <FolderSimple
             size={16}
             weight="fill"
-            className="shrink-0 text-white/70 light:text-theme-text-secondary"
+            className="shrink-0 text-theme-text-primary light:text-theme-text-secondary"
           />
           {editing ? (
             <input
@@ -307,7 +307,7 @@ export default function ThreadFolderItem({
           ) : (
             <span className="text-sm text-white light:text-theme-text-primary truncate">
               {name}
-              <span className="ml-1 text-white/40 light:text-theme-text-secondary text-xs">
+              <span className="ml-1 text-theme-placeholder light:text-theme-text-secondary text-xs">
                 {t("threadFolderItem.folderThreadCount", {
                   count: threads.length,
                 })}
@@ -339,7 +339,7 @@ export default function ThreadFolderItem({
             >
               <PencilSimple
                 size={12}
-                className="text-white/60 light:text-theme-text-secondary"
+                className="text-theme-text-secondary light:text-theme-text-secondary"
               />
             </button>
             <button
@@ -354,7 +354,7 @@ export default function ThreadFolderItem({
             >
               <Trash
                 size={12}
-                className="text-white/60 hover:text-red-400 light:text-theme-text-secondary"
+                className="text-theme-text-secondary hover:text-red-400 light:text-theme-text-secondary"
               />
             </button>
           </div>

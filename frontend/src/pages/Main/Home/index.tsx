@@ -377,7 +377,7 @@ function NoWorkspacesAssigned() {
       className="h-[var(--content-height)] transition-all duration-500 relative md:ml-[16px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-zinc-900 light:bg-white w-full overflow-hidden"
     >
       <div className="flex flex-col h-full w-full items-center justify-center">
-        <p className="text-white/60 text-sm text-center whitespace-pre-line">
+        <p className="text-theme-text-secondary text-sm text-center whitespace-pre-line">
           {t("home.notAssigned")}
         </p>
       </div>

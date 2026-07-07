@@ -30,7 +30,7 @@ export default function ChatModeSelection({
               setChatMode("automatic");
               setHasChanges(true);
             }}
-            className="border-none transition-bg duration-200 px-6 py-1 text-md text-white/60 disabled:text-white bg-transparent disabled:bg-[#687280] rounded-md hover:bg-white/10"
+            className="border-none transition-bg duration-200 px-6 py-1 text-md text-theme-text-secondary disabled:text-white bg-transparent disabled:bg-[#687280] rounded-md hover:bg-white/10"
           >
             {t("chat.mode.automatic.title")}
           </button>
@@ -41,7 +41,7 @@ export default function ChatModeSelection({
               setChatMode("chat");
               setHasChanges(true);
             }}
-            className="border-none transition-bg duration-200 px-6 py-1 text-md text-white/60 disabled:text-white bg-transparent disabled:bg-[#687280] rounded-md hover:bg-white/10 light:hover:bg-black/10"
+            className="border-none transition-bg duration-200 px-6 py-1 text-md text-theme-text-secondary disabled:text-white bg-transparent disabled:bg-[#687280] rounded-md hover:bg-white/10 light:hover:bg-black/10"
           >
             {t("chat.mode.chat.title")}
           </button>
@@ -52,7 +52,7 @@ export default function ChatModeSelection({
               setChatMode("query");
               setHasChanges(true);
             }}
-            className="border-none transition-bg duration-200 px-6 py-1 text-md text-white/60 disabled:text-white bg-transparent disabled:bg-[#687280] rounded-md hover:bg-white/10 light:hover:bg-black/10"
+            className="border-none transition-bg duration-200 px-6 py-1 text-md text-theme-text-secondary disabled:text-white bg-transparent disabled:bg-[#687280] rounded-md hover:bg-white/10 light:hover:bg-black/10"
           >
             {t("chat.mode.query.title")}
           </button>
@@ -71,7 +71,7 @@ export default function ChatModeSelection({
 function ChatModeExplanation({ chatMode = "chat" }: { chatMode?: string }) {
   const { t } = useTranslation();
   return (
-    <p className="text-sm text-white/60">
+    <p className="text-sm text-theme-text-secondary">
       <b>{t(`chat.mode.${chatMode}.title`)}</b>{" "}
       <Trans
         i18nKey={`chat.mode.${chatMode}.description`}

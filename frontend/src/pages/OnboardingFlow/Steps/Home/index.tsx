@@ -27,7 +27,7 @@ export default function OnboardingHome() {
       <div className="absolute inset-0 hidden light:block bg-no-repeat bg-center bg-cover bg-[url('/onboarding/background-light.jpeg')]" />
 
       <div className="relative z-10 flex justify-center pt-[58px]">
-        <p className="text-white/80 light:text-slate-600 text-3xl font-semibold drop-shadow-lg">
+        <p className="text-theme-text-primary light:text-slate-600 text-3xl font-semibold drop-shadow-lg">
           {t("onboarding.home.appName")}
         </p>
       </div>
@@ -63,7 +63,7 @@ export default function OnboardingHome() {
         </button>
         <Link
           to={paths.appDocs()}
-          className="relative z-10 mt-6 inline-flex items-center gap-2 text-sm text-white/70 light:text-slate-600 hover:text-white light:hover:text-slate-900 transition-colors"
+          className="relative z-10 mt-6 inline-flex items-center gap-2 text-sm text-theme-text-primary light:text-slate-600 hover:text-white light:hover:text-slate-900 transition-colors"
           aria-label={t("onboarding.home.readDocs")}
         >
           <BookOpen className="w-4 h-4" />

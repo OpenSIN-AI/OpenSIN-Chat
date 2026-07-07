@@ -80,7 +80,7 @@ export default function WorkspaceSources({
           <button
             type="button"
             onClick={onAddSources}
-            className="border-none flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-theme-bg-chat-input text-white/80 light:text-theme-text-primary text-xs font-medium hover:bg-zinc-700 light:hover:bg-black/20 transition-colors cursor-pointer"
+            className="border-none flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-theme-bg-chat-input text-theme-text-primary light:text-theme-text-primary text-xs font-medium hover:bg-zinc-700 light:hover:bg-black/20 transition-colors cursor-pointer"
           >
             <Plus size={14} weight="bold" />
             {t("main-page.workspaceSources.add")}

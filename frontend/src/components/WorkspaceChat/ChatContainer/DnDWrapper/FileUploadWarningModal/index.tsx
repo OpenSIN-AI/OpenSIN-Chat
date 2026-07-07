@@ -38,7 +38,7 @@ export default function FileUploadWarningModal({
               })}
             </p>
             <CircleNotch size={32} className="animate-spin text-white" />
-            <p className="text-white/60 text-sm mt-2">
+            <p className="text-theme-text-secondary text-sm mt-2">
               {t("fileUploadWarning.pleaseWait")}
             </p>
           </div>

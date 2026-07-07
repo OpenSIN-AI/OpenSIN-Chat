@@ -186,7 +186,7 @@ export default function AccountModal({ user, hideModal }: any) {
                   required
                   autoComplete="off"
                 />
-                <p className="mt-2 text-xs text-white/60">
+                <p className="mt-2 text-xs text-theme-text-secondary">
                   {t("common.username_requirements")}
                 </p>
               </div>
@@ -206,7 +206,7 @@ export default function AccountModal({ user, hideModal }: any) {
                   )}
                   autoComplete="current-password"
                 />
-                <p className="mt-2 text-xs text-white/60">
+                <p className="mt-2 text-xs text-theme-text-secondary">
                   {t("profile_settings.current_password_description")}
                 </p>
               </div>
@@ -227,7 +227,7 @@ export default function AccountModal({ user, hideModal }: any) {
                   minLength={8}
                   autoComplete="new-password"
                 />
-                <p className="mt-2 text-xs text-white/60">
+                <p className="mt-2 text-xs text-theme-text-secondary">
                   {t("profile_settings.password_description")}
                 </p>
               </div>

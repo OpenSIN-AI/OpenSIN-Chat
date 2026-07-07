@@ -28,7 +28,7 @@ export default function MaxToolCallStack() {
           <label className="block text-md font-medium text-white">
             {t("agent.settings.max-tool-calls.title")}
           </label>
-          <p className="text-xs text-white/60">
+          <p className="text-xs text-theme-text-secondary">
             {t("agent.settings.max-tool-calls.description")}
           </p>
         </div>

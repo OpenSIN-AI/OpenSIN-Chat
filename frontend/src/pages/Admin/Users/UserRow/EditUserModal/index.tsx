@@ -114,7 +114,7 @@ export default function EditUserModal({
                 required={true}
                 autoComplete="off"
               />
-              <p className="mt-2 text-xs text-white/60">
+              <p className="mt-2 text-xs text-theme-text-secondary">
                 {t("common.username_requirements")}
               </p>
             </div>
@@ -135,7 +135,7 @@ export default function EditUserModal({
                 autoComplete="off"
                 minLength={8}
               />
-              <p className="mt-2 text-xs text-white/60">
+              <p className="mt-2 text-xs text-theme-text-secondary">
                 {t("admin.editUser.passwordRequirement")}
               </p>
             </div>

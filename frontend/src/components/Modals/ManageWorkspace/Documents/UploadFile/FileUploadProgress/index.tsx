@@ -177,7 +177,7 @@ function FileUploadProgressComponent({
         <p className="text-white light:text-theme-text-primary text-xs font-medium">
           {truncate(file.name, 30)}
         </p>
-        <p className="text-white/80 light:text-theme-text-secondary text-xs font-medium">
+        <p className="text-theme-text-primary light:text-theme-text-secondary text-xs font-medium">
           {t("uploadProgress.fileSizeAndTime", {
             size: humanFileSize(file.size),
             time: milliToHms(timerMs),

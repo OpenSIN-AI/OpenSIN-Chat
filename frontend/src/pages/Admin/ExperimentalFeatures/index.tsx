@@ -77,7 +77,7 @@ export default function ExperimentalFeatures() {
                   refresh={refresh}
                 />
               ) : (
-                <div className="flex flex-col items-center justify-center h-full text-white/60">
+                <div className="flex flex-col items-center justify-center h-full text-theme-text-secondary">
                   <Flask size={40} />
                   <p className="font-medium">
                     {t("experimentalFeatures.selectFeature")}

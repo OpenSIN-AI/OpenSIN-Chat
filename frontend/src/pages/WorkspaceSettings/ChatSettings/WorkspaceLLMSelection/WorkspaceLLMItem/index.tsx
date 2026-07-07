@@ -103,7 +103,7 @@ export default function WorkspaceLLM({
             />
             <div className="flex flex-col">
               <div className="text-sm font-semibold text-white">{name}</div>
-              <div className="mt-1 text-xs text-white/60">{description}</div>
+              <div className="mt-1 text-xs text-theme-text-secondary">{description}</div>
             </div>
           </div>
           {checked && !NO_SETTINGS_NEEDED.includes(value) && (
@@ -113,7 +113,7 @@ export default function WorkspaceLLM({
                 e.preventDefault();
                 openModal();
               }}
-              className="p-2 text-white/60 hover:text-white hover:bg-theme-bg-hover rounded-md transition-all duration-300"
+              className="p-2 text-theme-text-secondary hover:text-white hover:bg-theme-bg-hover rounded-md transition-all duration-300"
               title={t("workspaceLLMItem.editSettings")}
             >
               <Gear size={20} weight="bold" />
@@ -200,7 +200,7 @@ function SetupProvider({
         <form id="provider-form" onSubmit={handleUpdate}>
           <div className="px-7 py-6">
             <div className="space-y-6 max-h-[60vh] overflow-y-auto p-1">
-              <p className="text-sm text-white/60">
+              <p className="text-sm text-theme-text-secondary">
                 {t("workspaceLLMItem.setupDescription", {
                   name: LLMOption.name,
                 })}

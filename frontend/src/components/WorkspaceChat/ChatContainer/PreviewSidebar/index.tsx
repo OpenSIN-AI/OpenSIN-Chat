@@ -527,7 +527,7 @@ export default function PreviewSidebar() {
             onClick={closeSidebar}
             type="button"
             aria-label={t("common.close")}
-            className="text-white/60 light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer flex-shrink-0"
+            className="text-theme-text-secondary light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer flex-shrink-0"
           >
             <X size={14} weight="bold" />
           </button>

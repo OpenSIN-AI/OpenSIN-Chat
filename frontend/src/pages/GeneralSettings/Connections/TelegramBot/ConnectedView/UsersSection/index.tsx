@@ -141,7 +141,7 @@ function UserRow({
         <div className="w-[60px] flex items-center justify-center shrink-0 mr-36">
           {isPending && code && (
             <div className="bg-zinc-950 light:bg-slate-200 h-[26px] w-[60px] flex items-center justify-center rounded">
-              <span className="text-sm text-white/80 light:text-slate-900 text-center">
+              <span className="text-sm text-theme-text-primary light:text-slate-900 text-center">
                 {code}
               </span>
             </div>
@@ -169,7 +169,7 @@ function UserRow({
             <button
               type="button"
               onClick={() => onRevoke?.(chatId)}
-              className="text-sm text-white/80 light:text-slate-500 hover:text-white light:hover:text-slate-700 transition-colors"
+              className="text-sm text-theme-text-primary light:text-slate-500 hover:text-white light:hover:text-slate-700 transition-colors"
             >
               {t("common.remove")}
             </button>

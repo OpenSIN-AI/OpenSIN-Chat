@@ -58,7 +58,7 @@ export default function FooterCustomization() {
       <p className="text-sm leading-6 font-semibold text-white">
         {t("customization.items.sidebar-footer.title")}
       </p>
-      <p className="text-xs text-white/60">
+      <p className="text-xs text-theme-text-secondary">
         {t("customization.items.sidebar-footer.description")}
       </p>
       <div className="mt-2 flex gap-x-3 font-medium text-white text-sm">

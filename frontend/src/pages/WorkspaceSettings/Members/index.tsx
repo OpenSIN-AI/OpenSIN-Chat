@@ -55,7 +55,7 @@ export default function Members({ workspace }: { workspace: { id: number } }) {
             ))
           ) : (
             <tr>
-              <td className="text-center py-4 text-white/80" colSpan={4}>
+              <td className="text-center py-4 text-theme-text-primary" colSpan={4}>
                 {t("members.noMembers")}
               </td>
             </tr>

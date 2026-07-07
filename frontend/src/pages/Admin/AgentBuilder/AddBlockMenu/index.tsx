@@ -92,7 +92,7 @@ export default function AddBlockMenu({
                   </div>
                   <div className="text-left flex-1">
                     <div className="text-sm font-medium">{info.label}</div>
-                    <div className="text-xs text-white/60">
+                    <div className="text-xs text-theme-text-secondary">
                       {info.description}
                     </div>
                   </div>

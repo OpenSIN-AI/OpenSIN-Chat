@@ -73,7 +73,7 @@ export default function ToolApprovalRequest({
             />
             <div className="flex flex-col gap-y-1">
               {description && (
-                <span className="text-white/60 light:text-slate-700 font-medium font-mono text-xs">
+                <span className="text-theme-text-secondary light:text-slate-700 font-medium font-mono text-xs">
                   {description}
                 </span>
               )}
@@ -114,7 +114,7 @@ function ToolApprovalHeader({
     <div className="flex w-full items-center justify-between">
       <div className="flex items-center gap-2">
         <Hammer size={16} />
-        <div className="text-white/80 light:text-slate-900 font-medium text-sm flex gap-x-1">
+        <div className="text-theme-text-primary light:text-slate-900 font-medium text-sm flex gap-x-1">
           {t("chat_window.agent_invocation.model_wants_to_call")}
           <span className="font-semibold text-sky-400 light:text-sky-600">
             {skillName}
@@ -188,7 +188,7 @@ function ToolApprovalResponseOption({
           {t("chat_window.agent_invocation.reject")}
         </button>
       </div>
-      <label className="flex items-center gap-2 cursor-pointer text-white/60 light:text-slate-600 text-xs hover:text-white/80 light:hover:text-slate-800 transition-colors">
+      <label className="flex items-center gap-2 cursor-pointer text-theme-text-secondary light:text-slate-600 text-xs hover:text-theme-text-primary light:hover:text-slate-800 transition-colors">
         <input
           type="checkbox"
           checked={alwaysAllow}

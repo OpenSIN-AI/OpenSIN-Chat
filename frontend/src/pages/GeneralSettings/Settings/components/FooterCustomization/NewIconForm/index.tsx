@@ -137,7 +137,7 @@ export default function NewIconForm({
             <button
               type="button"
               onClick={handleRemove}
-              className="hover:text-red-500 text-white/80 px-2 py-2 rounded-md text-sm font-bold"
+              className="hover:text-red-500 text-theme-text-primary px-2 py-2 rounded-md text-sm font-bold"
             >
               <X size={20} />
             </button>
