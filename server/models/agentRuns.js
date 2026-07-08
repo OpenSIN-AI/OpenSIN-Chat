@@ -3,8 +3,8 @@
 //          Created by Phase 1 — persists run lifecycle for reconnect-safe SSE.
 // Docs: agentRuns.doc.md
 
-const prisma = require('../utils/prisma').default || require('../utils/prisma');
-const { v4: uuidv4 } = require('uuid');
+const prisma = require("../utils/prisma").default || require("../utils/prisma");
+const { v4: uuidv4 } = require("uuid");
 
 const AgentRuns = {
   /**
@@ -21,7 +21,7 @@ const AgentRuns = {
         parent_run_id: parentRunId,
         agent_name: agentName,
         model,
-        status: 'running',
+        status: "running",
         started_at: new Date(),
       },
     });
@@ -34,7 +34,7 @@ const AgentRuns = {
    * @param {string} status - running | waiting_input | done | error | cancelled
    */
   async updateStatus(runId, status) {
-    const endedAt = ['done', 'error', 'cancelled'].includes(status)
+    const endedAt = ["done", "error", "cancelled"].includes(status)
       ? new Date()
       : null;
     await prisma.agent_runs.update({
@@ -53,9 +53,9 @@ const AgentRuns = {
     return prisma.agent_runs.findMany({
       where: {
         workspace_id: workspaceId,
-        status: { in: ['running', 'waiting_input', 'queued'] },
+        status: { in: ["running", "waiting_input", "queued"] },
       },
-      orderBy: { started_at: 'asc' },
+      orderBy: { started_at: "asc" },
     });
   },
 
@@ -67,7 +67,7 @@ const AgentRuns = {
   async getRecent(workspaceId, limit = 50) {
     return prisma.agent_runs.findMany({
       where: { workspace_id: workspaceId },
-      orderBy: { started_at: 'desc' },
+      orderBy: { started_at: "desc" },
       take: limit,
     });
   },

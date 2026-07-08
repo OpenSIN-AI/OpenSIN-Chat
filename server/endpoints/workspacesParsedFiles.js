@@ -2,27 +2,27 @@
 // Purpose: Endpoints for parsed workspace files (chat uploads) and their
 //          mirror into the server uploads directory for the FilesystemSidebar.
 // Docs: server/endpoints/workspacesParsedFiles.js.doc.md
-const consoleLogger = require('../utils/logger/console.js');
+const consoleLogger = require("../utils/logger/console.js");
 
-const crypto = require('crypto');
-const { reqBody, multiUserMode, userFromSession } = require('../utils/http');
-const { handleFileUpload, mirrorToSupabase } = require('../utils/files/multer');
-const { ParseJobs, JOB_STATUS } = require('../utils/parseJobs');
-const { validatedRequest } = require('../utils/middleware/validatedRequest');
-const { Telemetry } = require('../models/telemetry');
+const crypto = require("crypto");
+const { reqBody, multiUserMode, userFromSession } = require("../utils/http");
+const { handleFileUpload, mirrorToSupabase } = require("../utils/files/multer");
+const { ParseJobs, JOB_STATUS } = require("../utils/parseJobs");
+const { validatedRequest } = require("../utils/middleware/validatedRequest");
+const { Telemetry } = require("../models/telemetry");
 const {
   flexUserRoleValid,
   ROLES,
-} = require('../utils/middleware/multiUserProtected');
-const { EventLogs } = require('../models/eventLogs');
-const { validWorkspaceSlug } = require('../utils/middleware/validWorkspace');
-const { CollectorApi } = require('../utils/collectorApi');
-const { WorkspaceThread } = require('../models/workspaceThread');
-const { WorkspaceParsedFiles } = require('../models/workspaceParsedFiles');
-const { simpleRateLimit } = require('../utils/middleware/simpleRateLimit');
-const fs = require('fs');
-const path = require('path');
-const { ensureStorageDir } = require('../utils/paths');
+} = require("../utils/middleware/multiUserProtected");
+const { EventLogs } = require("../models/eventLogs");
+const { validWorkspaceSlug } = require("../utils/middleware/validWorkspace");
+const { CollectorApi } = require("../utils/collectorApi");
+const { WorkspaceThread } = require("../models/workspaceThread");
+const { WorkspaceParsedFiles } = require("../models/workspaceParsedFiles");
+const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
+const fs = require("fs");
+const path = require("path");
+const { ensureStorageDir } = require("../utils/paths");
 
 async function cleanupHotdirFile(request) {
   try {
@@ -51,16 +51,16 @@ async function copyToUploads(request) {
       await fs.promises.access(filePath);
     } catch {
       consoleLogger.info(
-        '[copyToUploads] source file no longer exists (already processed by collector):',
-        filePath
+        "[copyToUploads] source file no longer exists (already processed by collector):",
+        filePath,
       );
       return;
     }
-    const uploadsDir = ensureStorageDir('uploads');
+    const uploadsDir = ensureStorageDir("uploads");
     const destPath = path.join(uploadsDir, filename);
     await fs.promises.copyFile(filePath, destPath);
   } catch (e) {
-    consoleLogger.info('[copyToUploads] best-effort copy failed:', e.message);
+    consoleLogger.info("[copyToUploads] best-effort copy failed:", e.message);
   }
 }
 
@@ -104,7 +104,7 @@ function extractUpload(request) {
  */
 async function runParseJob(jobId, upload, ctx) {
   const { workspace, user, thread } = ctx;
-  const originalname = upload.file?.originalname || 'unknown';
+  const originalname = upload.file?.originalname || "unknown";
   const collectorFilename = upload.file?.filename || originalname;
   await ParseJobs.markProcessing(jobId);
 
@@ -115,7 +115,7 @@ async function runParseJob(jobId, upload, ctx) {
       await cleanupHotdirFile(upload);
       await ParseJobs.markFailed(
         jobId,
-        `Document processing API is not online. Document ${originalname} will not be parsed.`
+        `Document processing API is not online. Document ${originalname} will not be parsed.`,
       );
       return;
     }
@@ -131,7 +131,7 @@ async function runParseJob(jobId, upload, ctx) {
       await cleanupHotdirFile(upload);
       await ParseJobs.markFailed(
         jobId,
-        reason || 'No document returned from collector'
+        reason || "No document returned from collector",
       );
       return;
     }
@@ -155,7 +155,7 @@ async function runParseJob(jobId, upload, ctx) {
           });
           if (dbError) throw new Error(dbError);
           return file;
-        })
+        }),
       );
       files.push(...batchResults);
     }
@@ -166,13 +166,13 @@ async function runParseJob(jobId, upload, ctx) {
 
     Collector.log(`Document ${originalname} parsed successfully.`);
     await EventLogs.logEvent(
-      'document_uploaded_to_chat',
+      "document_uploaded_to_chat",
       {
         documentName: originalname,
         workspace: workspace.slug,
         thread: thread?.name || null,
       },
-      user?.id
+      user?.id,
     );
     await ParseJobs.markCompleted(jobId, files);
   } catch (e) {
@@ -181,7 +181,7 @@ async function runParseJob(jobId, upload, ctx) {
     consoleLogger.error(`[parse job error ${errorId}]`, e);
     await ParseJobs.markFailed(
       jobId,
-      `Internal server error (${errorId})`
+      `Internal server error (${errorId})`,
     ).catch(() => {});
   }
 }
@@ -190,7 +190,7 @@ function workspaceParsedFilesEndpoints(app) {
   if (!app) return;
 
   app.get(
-    '/workspace/:slug/parsed-files',
+    "/workspace/:slug/parsed-files",
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async (request, response) => {
       try {
@@ -204,7 +204,7 @@ function workspaceParsedFilesEndpoints(app) {
           await WorkspaceParsedFiles.getContextMetadataAndLimits(
             workspace,
             thread || null,
-            multiUserMode(response) ? user : null
+            multiUserMode(response) ? user : null,
           );
 
         return response
@@ -215,15 +215,15 @@ function workspaceParsedFilesEndpoints(app) {
         consoleLogger.error(`[endpoint error ${errorId}]`, e);
         return response.status(500).json({
           success: false,
-          error: 'Internal server error',
+          error: "Internal server error",
           errorId,
         });
       }
-    }
+    },
   );
 
   app.delete(
-    '/workspace/:slug/delete-parsed-files',
+    "/workspace/:slug/delete-parsed-files",
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async function (request, response) {
       try {
@@ -243,18 +243,18 @@ function workspaceParsedFilesEndpoints(app) {
         consoleLogger.error(e.message, e);
         return response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
-    '/workspace/:slug/embed-parsed-file/:fileId',
+    "/workspace/:slug/embed-parsed-file/:fileId",
     [
       validatedRequest,
       // Embed is still an admin/manager only feature
       flexUserRoleValid([ROLES.admin, ROLES.manager]),
       validWorkspaceSlug,
       simpleRateLimit({
-        bucket: 'workspace-embed-parsed',
+        bucket: "workspace-embed-parsed",
         max: 20,
         windowMs: 60 * 1000,
       }),
@@ -270,24 +270,24 @@ function workspaceParsedFilesEndpoints(app) {
           await WorkspaceParsedFiles.moveToDocumentsAndEmbed(
             user,
             fileId,
-            workspace
+            workspace,
           );
 
         if (!success) {
           return response.status(500).json({
             success: false,
-            error: error || 'Failed to embed file',
+            error: error || "Failed to embed file",
           });
         }
 
-        await Telemetry.sendTelemetry('document_embedded');
+        await Telemetry.sendTelemetry("document_embedded");
         await EventLogs.logEvent(
-          'document_embedded',
+          "document_embedded",
           {
-            documentName: document?.name || 'unknown',
+            documentName: document?.name || "unknown",
             workspaceId: workspace.id,
           },
-          user?.id
+          user?.id,
         );
 
         await WorkspaceParsedFiles.delete({ id: parseInt(fileId) });
@@ -300,18 +300,18 @@ function workspaceParsedFilesEndpoints(app) {
         consoleLogger.error(e.message, e);
         return response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
-    '/workspace/:slug/parse',
+    "/workspace/:slug/parse",
     [
       validatedRequest,
       flexUserRoleValid([ROLES.all]),
       handleFileUpload,
       validWorkspaceSlug,
       simpleRateLimit({
-        bucket: 'workspace-parse',
+        bucket: "workspace-parse",
         max: 30,
         windowMs: 60 * 1000,
       }),
@@ -321,12 +321,12 @@ function workspaceParsedFilesEndpoints(app) {
         if (!request.file) {
           return response
             .status(400)
-            .json({ success: false, error: 'No file uploaded.' });
+            .json({ success: false, error: "No file uploaded." });
         }
 
         const user = await userFromSession(request, response);
         const workspace = response.locals.workspace;
-        const originalname = request.file?.originalname || 'unknown';
+        const originalname = request.file?.originalname || "unknown";
 
         // Resolve the thread before responding — it's a fast DB lookup and
         // the background job needs it for row scoping.
@@ -341,7 +341,7 @@ function workspaceParsedFilesEndpoints(app) {
 
         // Back-compat: ?sync=true retains the old blocking behavior for
         // existing API consumers that expect files in the response.
-        const sync = String(request.query?.sync) === 'true';
+        const sync = String(request.query?.sync) === "true";
 
         const job = await ParseJobs.create({
           workspaceId: workspace.id,
@@ -366,7 +366,7 @@ function workspaceParsedFilesEndpoints(app) {
           }
           return response.status(500).json({
             success: false,
-            error: finished?.error || 'Parsing failed',
+            error: finished?.error || "Parsing failed",
           });
         }
 
@@ -374,8 +374,8 @@ function workspaceParsedFilesEndpoints(app) {
         // Parsing, OCR, DB rows and the Supabase mirror run in the
         // background; the client polls /parse-status/:jobId.
         runParseJob(job.id, upload, { workspace, user, thread }).catch((e) => {
-          consoleLogger.error('[parse job] unhandled error', e);
-          ParseJobs.markFailed(job.id, 'Internal server error').catch(() => {});
+          consoleLogger.error("[parse job] unhandled error", e);
+          ParseJobs.markFailed(job.id, "Internal server error").catch(() => {});
         });
 
         return response.status(202).json({
@@ -389,15 +389,15 @@ function workspaceParsedFilesEndpoints(app) {
         consoleLogger.error(`[endpoint error ${errorId}]`, e);
         return response.status(500).json({
           success: false,
-          error: 'Internal server error',
+          error: "Internal server error",
           errorId,
         });
       }
-    }
+    },
   );
 
   app.get(
-    '/workspace/:slug/parse-status/:jobId',
+    "/workspace/:slug/parse-status/:jobId",
     [
       validatedRequest,
       flexUserRoleValid([ROLES.all]),
@@ -406,7 +406,7 @@ function workspaceParsedFilesEndpoints(app) {
       // every ~1.5s, so even ~5 concurrent uploads stay well under the
       // limit while scripted abuse is cut off.
       simpleRateLimit({
-        bucket: 'workspace-parse-status',
+        bucket: "workspace-parse-status",
         max: 240,
         windowMs: 60 * 1000,
       }),
@@ -424,7 +424,7 @@ function workspaceParsedFilesEndpoints(app) {
         if (!job)
           return response
             .status(404)
-            .json({ success: false, error: 'Job not found' });
+            .json({ success: false, error: "Job not found" });
 
         return response.status(200).json({
           success: true,
@@ -437,11 +437,11 @@ function workspaceParsedFilesEndpoints(app) {
         consoleLogger.error(`[endpoint error ${errorId}]`, e);
         return response.status(500).json({
           success: false,
-          error: 'Internal server error',
+          error: "Internal server error",
           errorId,
         });
       }
-    }
+    },
   );
 }
 

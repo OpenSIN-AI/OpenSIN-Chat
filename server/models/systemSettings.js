@@ -14,19 +14,19 @@
 // existing `require("./models/systemSettings")` calls continue to work
 // without any changes.
 
-process.env.NODE_ENV === 'development'
-  ? require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
-  : require('dotenv').config();
+process.env.NODE_ENV === "development"
+  ? require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` })
+  : require("dotenv").config();
 
 const {
   saneDefaultSystemPrompt,
   protectedFields,
   publicFields,
   supportedFields,
-} = require('./systemSettings/constants');
-const { createValidations } = require('./systemSettings/validators');
-const { createGetters } = require('./systemSettings/getters');
-const { createMutations } = require('./systemSettings/mutations');
+} = require("./systemSettings/constants");
+const { createValidations } = require("./systemSettings/validators");
+const { createGetters } = require("./systemSettings/getters");
+const { createMutations } = require("./systemSettings/mutations");
 
 // Build the SystemSettings object by merging constants, getters, and mutations.
 // The factories receive the `SystemSettings` object itself so that methods
@@ -45,9 +45,9 @@ const SystemSettings = {
      * @returns {string | null}
      */
     noLoginRedirect: () => {
-      if (!('SIMPLE_SSO_ENABLED' in process.env)) return null;
-      if (!('SIMPLE_SSO_NO_LOGIN' in process.env)) return null;
-      if (!('SIMPLE_SSO_NO_LOGIN_REDIRECT' in process.env)) return null;
+      if (!("SIMPLE_SSO_ENABLED" in process.env)) return null;
+      if (!("SIMPLE_SSO_NO_LOGIN" in process.env)) return null;
+      if (!("SIMPLE_SSO_NO_LOGIN_REDIRECT" in process.env)) return null;
 
       try {
         let url = new URL(process.env.SIMPLE_SSO_NO_LOGIN_REDIRECT);
