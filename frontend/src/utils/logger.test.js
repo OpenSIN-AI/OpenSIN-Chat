@@ -42,6 +42,12 @@ describe("logger", () => {
       logger.error("msg");
       expect(errorSpy).toHaveBeenCalledWith("msg");
     });
+
+    it("reportError calls console.error with message and error", () => {
+      const err = new Error("boom");
+      logger.reportError("Failed to save", err);
+      expect(errorSpy).toHaveBeenCalledWith("Failed to save", err);
+    });
   });
 
   describe("when DEV is false", () => {
@@ -67,9 +73,35 @@ describe("logger", () => {
       expect(warnSpy).toHaveBeenCalledWith("msg");
     });
 
-    it("error still calls console.error", () => {
+    it("error is silent (no console.error in production)", () => {
       logger.error("msg");
-      expect(errorSpy).toHaveBeenCalledWith("msg");
+      expect(errorSpy).not.toHaveBeenCalled();
+    });
+
+    it("reportError does not call console.error in production", () => {
+      logger.reportError("Failed to save", new Error("boom"));
+      expect(errorSpy).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("_extractMessage", () => {
+    beforeEach(async () => {
+      vi.stubEnv("DEV", true);
+      vi.resetModules();
+      const mod = await import("./logger");
+      logger = mod.default;
+    });
+
+    it("extracts message from Error", () => {
+      expect(logger._extractMessage(new Error("boom"))).toBe("boom");
+    });
+
+    it("returns strings as-is", () => {
+      expect(logger._extractMessage("hello")).toBe("hello");
+    });
+
+    it("extracts message from objects with .message", () => {
+      expect(logger._extractMessage({ message: "fail" })).toBe("fail");
     });
   });
 });

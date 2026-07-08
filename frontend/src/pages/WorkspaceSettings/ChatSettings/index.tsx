@@ -16,6 +16,7 @@ import WorkspaceLLMSelection from "./WorkspaceLLMSelection";
 import ChatQueryRefusalResponse from "./ChatQueryRefusalResponse";
 import CTAButton from "@/components/lib/CTAButton";
 import useSystemSettings from "@/hooks/useSystemSettings";
+import logger from "@/utils/logger";
 
 interface Workspace {
   slug: string;
@@ -60,7 +61,7 @@ export default function ChatSettings({
         // Keep hasChanges true on error so user can retry
       }
     } catch (err) {
-      console.error(err);
+      logger.error(err);
     } finally {
       setSaving(false);
     }

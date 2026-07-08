@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import renderMarkdown from "./chat/markdown";
+import logger from "@/utils/logger";
 
 /**
  * Copies the given markdown string as rich text to the clipboard.
@@ -24,7 +25,7 @@ export async function copyMarkdownAsRichText(
     await navigator.clipboard.write(data);
     return true;
   } catch (error) {
-    console.error("Failed to copy markdown as rich text: ", error);
+    logger.error("Failed to copy markdown as rich text: ", error);
     return false;
   }
 }

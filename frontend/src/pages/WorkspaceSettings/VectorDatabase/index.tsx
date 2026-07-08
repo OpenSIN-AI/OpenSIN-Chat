@@ -11,6 +11,7 @@ import ResetDatabase from "./ResetDatabase";
 import VectorCount from "./VectorCount";
 import VectorSearchMode from "./VectorSearchMode";
 import CTAButton from "@/components/lib/CTAButton";
+import logger from "@/utils/logger";
 
 export default function VectorDatabase({ workspace }: { workspace: any }) {
   const { t } = useTranslation();
@@ -39,7 +40,7 @@ export default function VectorDatabase({ workspace }: { workspace: any }) {
         });
       }
     } catch (err) {
-      console.error(err);
+      logger.error(err);
     } finally {
       setSaving(false);
     }

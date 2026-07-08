@@ -11,6 +11,7 @@ import ChatPromptHistory from "./ChatPromptHistory";
 import System from "@/models/system";
 import useSystemPromptVariables from "@/hooks/useSystemPromptVariables";
 import useDefaultSystemPrompt from "@/hooks/useDefaultSystemPrompt";
+import logger from "@/utils/logger";
 
 interface ChatPromptSettingsProps {
   workspace: any;
@@ -81,7 +82,7 @@ export default function ChatPromptSettings({
         setPrompt(defaultSystemPrompt);
         setHasChanges(true);
       })
-      .catch((e) => console.error(e));
+      .catch((e) => logger.error(e));
   };
 
   return (

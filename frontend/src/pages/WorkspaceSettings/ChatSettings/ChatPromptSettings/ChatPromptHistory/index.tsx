@@ -7,6 +7,7 @@ import PromptHistory from "@/models/promptHistory";
 import PromptHistoryItem from "./PromptHistoryItem";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import logger from "@/utils/logger";
 
 type ChatPromptHistoryProps = {
   show: boolean;
@@ -38,7 +39,7 @@ export default forwardRef(function ChatPromptHistory(
         setHistory(historyData);
       })
       .catch((error) => {
-        console.error(error);
+        logger.error(error);
       })
       .finally(() => {
         setLoading(false);
@@ -53,7 +54,7 @@ export default forwardRef(function ChatPromptHistory(
           if (success) setHistory([]);
         })
         .catch((error) => {
-          console.error(error);
+          logger.error(error);
         });
     }
   }

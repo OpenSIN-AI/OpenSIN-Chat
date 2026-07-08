@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import katex from "katex";
 import "katex/dist/katex.min.css";
+import logger from "@/utils/logger";
 
 function escapeHtml(str: string): string {
   return str
@@ -267,7 +268,7 @@ export default function math_plugin(md, options) {
         .replace(/^\\\[(.*)\\\]$/, "$1");
       return katex.renderToString(latex, options);
     } catch (error) {
-      console.error("KaTeX inline render error:", error);
+      logger.error("KaTeX inline render error:", error);
       return `<span class="katex-error" style="color:red;font-style:italic">${escapeHtml(latex)}</span>`;
     }
   };
@@ -283,7 +284,7 @@ export default function math_plugin(md, options) {
       latex = latex.replace(/^\[(.*)\]$/, "$1").replace(/^\\\[(.*)\\\]$/, "$1");
       return "<p>" + katex.renderToString(latex, options) + "</p>";
     } catch (error) {
-      console.error("KaTeX block render error:", error);
+      logger.error("KaTeX block render error:", error);
       return `<p><span class="katex-error" style="color:red;font-style:italic">${escapeHtml(latex)}</span></p>`;
     }
   };

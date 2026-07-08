@@ -11,6 +11,7 @@ import DeleteWorkspace from "./DeleteWorkspace";
 import CTAButton from "@/components/lib/CTAButton";
 import useWorkspaceBySlug from "@/hooks/useWorkspaceBySlug";
 import { WORKSPACES_KEY } from "@/hooks/useWorkspaces";
+import logger from "@/utils/logger";
 
 export default function GeneralInfo({
   slug,
@@ -48,7 +49,7 @@ export default function GeneralInfo({
         });
       }
     } catch (err) {
-      console.error(err);
+      logger.error(err);
     } finally {
       setSaving(false);
     }
