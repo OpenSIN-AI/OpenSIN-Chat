@@ -62,10 +62,11 @@ module.exports = {
     "^@huggingface/transformers$": "<rootDir>/__mocks__/empty.js",
   },
   // Issue #373: forceExit ensures Jest terminates even if a stray timer
-  // or DB handle keeps the event loop alive. --detectOpenHandles is added
-  // to the test script in package.json so leaks are surfaced in CI output.
+  // or DB handle keeps the event loop alive after all tests complete.
   forceExit: true,
-  // Detect open handles so the "worker failed to exit gracefully" warning
-  // includes a stack trace pointing at the offending resource.
-  detectOpenHandles: true,
+  // detectOpenHandles is intentionally omitted from the default config.
+  // It enables async_hooks tracking across all workers, which causes severe
+  // startup overhead at scale (188 test files × workers) and stalls Jest
+  // when combined with --experimental-vm-modules.  Run with
+  // --detectOpenHandles explicitly when debugging a specific open-handle leak.
 };
