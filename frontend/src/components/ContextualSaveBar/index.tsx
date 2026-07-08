@@ -23,6 +23,7 @@ export default function ContextualSaveBar({
           type="button"
           className="border-none text-theme-text-primary font-medium text-sm px-[10px] py-[6px] rounded-md bg-theme-bg-secondary hover:bg-theme-bg-primary"
           onClick={onCancel}
+          aria-label={t("contextualSaveBar.cancel")}
         >
           {t("contextualSaveBar.cancel")}
         </button>
@@ -30,6 +31,7 @@ export default function ContextualSaveBar({
           type="button"
           className="border-none text-theme-text-primary font-medium text-sm px-[10px] py-[6px] rounded-md bg-primary-button hover:bg-primary-button-hover"
           onClick={onSave}
+          aria-label={t("contextualSaveBar.save")}
         >
           {t("contextualSaveBar.save")}
         </button>

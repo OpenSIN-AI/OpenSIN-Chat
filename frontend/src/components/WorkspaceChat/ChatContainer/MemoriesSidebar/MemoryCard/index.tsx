@@ -63,6 +63,8 @@ export default function MemoryCard({ memory }: any) {
         ref={buttonRef}
         type="button"
         onClick={() => setMenuOpen(!menuOpen)}
+        aria-label={t("common.moreOptions", "More options")}
+        aria-expanded={menuOpen}
         className="shrink-0 border-none bg-transparent cursor-pointer text-zinc-400 light:text-slate-400 hover:text-zinc-50 light:hover:text-slate-900 transition-colors p-0"
       >
         <DotsThreeVertical size={20} weight="bold" />

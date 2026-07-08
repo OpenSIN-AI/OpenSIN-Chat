@@ -63,6 +63,7 @@ export default function SidebarTabs() {
           type="button"
           onClick={() => openSidebar("sources", sidebarData)}
           aria-pressed={activeSidebar === "sources"}
+          aria-label={t("chat_window.memories.tab_sources")}
           className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium uppercase tracking-[1.2px] whitespace-nowrap transition-colors min-w-0 ${
             activeSidebar === "sources"
               ? "bg-zinc-800 light:bg-slate-300 text-theme-text-primary light:text-theme-text-primary"
@@ -80,6 +81,7 @@ export default function SidebarTabs() {
           type="button"
           onClick={() => selectMemoriesTab("workspace")}
           aria-pressed={isMemoriesActive && memoriesActiveTab === "workspace"}
+          aria-label={t("chat_window.memories.tab_workspace")}
           className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium uppercase tracking-[1.2px] whitespace-nowrap transition-colors min-w-0 ${
             isMemoriesActive && memoriesActiveTab === "workspace"
               ? "bg-zinc-800 light:bg-slate-300 text-theme-text-primary light:text-theme-text-primary"
@@ -103,6 +105,7 @@ export default function SidebarTabs() {
           type="button"
           onClick={() => selectMemoriesTab("global")}
           aria-pressed={isMemoriesActive && memoriesActiveTab === "global"}
+          aria-label={t("chat_window.memories.tab_global")}
           className={`flex items-center gap-0.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium uppercase tracking-[1.2px] whitespace-nowrap transition-colors min-w-0 ${
             isMemoriesActive && memoriesActiveTab === "global"
               ? "bg-zinc-800 light:bg-slate-300 text-theme-text-primary light:text-theme-text-primary"

@@ -92,6 +92,7 @@ export default function ProviderKeyStatusPanel() {
           </p>
         </div>
         <button
+          aria-label={t("common.status", "Status")}
           type="button"
           onClick={refresh}
           disabled={isLoading}

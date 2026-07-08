@@ -23,6 +23,8 @@ export default function MemoryTabs() {
         <button
           type="button"
           onClick={() => setActiveTab("workspace")}
+          aria-pressed={activeTab === "workspace"}
+          aria-label={t("chat_window.memories.tab_workspace")}
           data-tooltip-id="memories-workspace-pill"
           data-tooltip-content={workspaceName}
           className={`flex items-center gap-0.5 h-6 px-3 rounded-full border-none cursor-pointer text-xs font-medium uppercase tracking-[1.2px] whitespace-nowrap transition-colors min-w-0 shrink ${
@@ -44,6 +46,8 @@ export default function MemoryTabs() {
         <button
           type="button"
           onClick={() => setActiveTab("global")}
+          aria-pressed={activeTab === "global"}
+          aria-label={t("chat_window.memories.tab_global")}
           className={`flex items-center gap-0.5 h-6 px-3 rounded-full border-none cursor-pointer text-xs font-medium uppercase tracking-[1.2px] whitespace-nowrap transition-colors shrink-0 ${
             activeTab === "global"
               ? "bg-zinc-800 light:bg-slate-300"

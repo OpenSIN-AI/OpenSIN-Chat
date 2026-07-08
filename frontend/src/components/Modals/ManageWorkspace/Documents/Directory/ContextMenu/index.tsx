@@ -70,6 +70,7 @@ export default function ContextMenu({
       <button
         type="button"
         onClick={toggleSelectAll}
+        aria-label={t("common.selectAll", "Select all")}
         className="block w-full text-left px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-file-picker-hover"
       >
         {isAllSelected()
@@ -79,6 +80,7 @@ export default function ContextMenu({
       <button
         type="button"
         onClick={closeContextMenu}
+        aria-label={t("common.close", "Close")}
         className="block w-full text-left px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-file-picker-hover"
       >
         {t("contextMenu.cancel")}

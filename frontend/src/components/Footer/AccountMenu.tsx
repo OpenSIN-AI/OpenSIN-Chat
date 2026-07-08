@@ -99,6 +99,7 @@ function ThemeSegment() {
             <button
               key={key}
               type="button"
+              aria-label={key}
               onClick={() => setTheme(key)}
               aria-label={label}
               aria-pressed={active}
@@ -234,6 +235,8 @@ export default function AccountMenu({
         ref={triggerRef}
         type="button"
         onClick={() => setOpen((v) => !v)}
+        aria-label={t("common.account", "Account")}
+        aria-expanded={open}
         aria-haspopup="menu"
         aria-expanded={open}
         data-tooltip-id={compact ? "lsib-profile" : undefined}
@@ -365,6 +368,7 @@ export default function AccountMenu({
               <button
                 type="button"
                 role="menuitem"
+                aria-label={t("common.signOut")}
                 onClick={handleSignOut}
                 className={ITEM_CLASSES}
               >

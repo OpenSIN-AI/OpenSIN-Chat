@@ -50,7 +50,7 @@ function RunNode({
           <button
             onClick={() => cancelRun(run.runId)}
             className="opacity-0 group-hover:opacity-100 text-theme-text-secondary hover:text-red-400 transition-opacity"
-            aria-label="Run abbrechen"
+            aria-label={t("right_sidebar.cancelRun", "Cancel run")}
           >
             <Stop size={14} weight="fill" />
           </button>

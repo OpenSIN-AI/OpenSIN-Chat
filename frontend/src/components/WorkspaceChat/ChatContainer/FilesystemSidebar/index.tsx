@@ -687,12 +687,14 @@ export default function FilesystemSidebar({ workspace = null }: any) {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={t("sidebar.filesystem.searchPlaceholder")}
+              aria-label={t("sidebar.filesystem.searchPlaceholder")}
               className="w-full text-xs bg-zinc-800 light:bg-slate-100 border border-white/5 light:border-slate-200 rounded-lg pl-8 pr-3 py-2 text-theme-text-primary light:text-theme-text-primary placeholder:text-zinc-500 light:placeholder:text-slate-400 outline-none focus:border-white/20 light:focus:border-slate-400 transition-colors"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
+                aria-label={t("common.clear", "Clear search")}
                 className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
               >
                 <X size={12} weight="bold" />

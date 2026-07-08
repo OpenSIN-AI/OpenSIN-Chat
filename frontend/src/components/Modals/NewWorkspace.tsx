@@ -78,7 +78,7 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
                   >
                     {t("common.workspaces-name")}
                   </label>
-                  <input
+                  <input aria-label={t("new-workspace.name", "Workspace name")}
                     name="name"
                     type="text"
                     id="name"
@@ -100,6 +100,7 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
               <button
                 type="submit"
                 disabled={isSubmitting}
+                aria-label={t("new-workspace.create", "Create workspace")}
                 className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? "..." : t("newWorkspaceModal.save")}

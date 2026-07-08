@@ -168,6 +168,8 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
         <button
           type="button"
           onClick={() => setShowSelector(!showSelector)}
+          aria-label={t("chat_window.select_model")}
+          aria-expanded={showSelector}
           className={`group border-none cursor-pointer px-2.5 py-1 flex items-center rounded-full transition-all pointer-events-auto ${
             showSelector
               ? "bg-zinc-700 light:bg-slate-200"

@@ -302,6 +302,7 @@ export default function NotepadSidebar({ workspace }: any) {
                   <div className="absolute top-1 right-1 flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-all">
                     <button
                       onClick={(e) => handleShareClick(e, note.id)}
+                      aria-label={t("notepad.share", "Share note")}
                       className="text-zinc-400 hover:text-theme-text-secondary transition-all bg-transparent border-none cursor-pointer p-1"
                       title={t("chat_window.share_note", "Teilen")}
                     >
@@ -386,6 +387,7 @@ export default function NotepadSidebar({ workspace }: any) {
                       <button
                         onClick={(e) =>
                           handleUnshareNote(
+                        aria-label={t("notepad.unshare", "Unshare note")}
                             e,
                             note.id,
                             note.source_workspace_slug,
@@ -409,7 +411,8 @@ export default function NotepadSidebar({ workspace }: any) {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() =>
-                          handleTogglePin(activeNote.id, activeNote.pinned)
+                          handleTogglePin(activeNote.
+                        aria-label={t("notepad.togglePin", "Toggle pin")}id, activeNote.pinned)
                         }
                         className={`bg-transparent border-none cursor-pointer p-1 transition-colors ${
                           activeNote.pinned

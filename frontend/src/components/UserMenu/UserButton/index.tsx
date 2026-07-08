@@ -60,6 +60,8 @@ export default function UserButton() {
         type="button"
         ref={buttonRef}
         onClick={() => setShowMenu(!showMenu)}
+        aria-label={t("profile_settings.account")}
+        aria-expanded={showMenu}
         className="uppercase transition-all duration-300 w-[35px] h-[35px] text-base font-semibold rounded-full flex items-center bg-theme-action-menu-bg hover:bg-theme-action-menu-item-hover justify-center text-theme-text-primary p-2 hover:border-slate-100 hover:border-opacity-50 border-transparent border"
       >
         {mode === "multi" ? <UserDisplay /> : <Person size={14} />}
@@ -75,6 +77,7 @@ export default function UserButton() {
               <button
                 type="button"
                 onClick={handleOpenAccountModal}
+                aria-label={t("profile_settings.account")}
                 className="border-none text-theme-text-primary hover:bg-theme-action-menu-item-hover w-full text-left px-4 py-1.5 rounded-md"
               >
                 {t("profile_settings.account")}
@@ -96,6 +99,7 @@ export default function UserButton() {
                 safeRemoveItem(USER_PROMPT_INPUT_MAP);
                 window.location.replace(paths.home());
               }}
+              aria-label={t("profile_settings.signout")}
               className="text-theme-text-primary hover:bg-theme-action-menu-item-hover w-full text-left px-4 py-1.5 rounded-md"
             >
               {t("profile_settings.signout")}

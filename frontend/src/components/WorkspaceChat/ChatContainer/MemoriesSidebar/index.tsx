@@ -245,6 +245,7 @@ function SidebarHeaderWithTabs({ workspace }: any) {
         <button
           onClick={closeSidebar}
           type="button"
+          aria-label={t("common.close")}
           className="text-zinc-50 light:text-slate-900 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
         >
           <X size={16} weight="bold" />
@@ -256,6 +257,8 @@ function SidebarHeaderWithTabs({ workspace }: any) {
         <button
           type="button"
           onClick={() => setActiveTab("memories")}
+          aria-pressed={activeTab === "memories"}
+          aria-label={t("chat_window.memories.title", "Memories")}
           className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium transition-colors ${
             activeTab === "memories"
               ? "bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary"
@@ -267,6 +270,8 @@ function SidebarHeaderWithTabs({ workspace }: any) {
         <button
           type="button"
           onClick={() => setActiveTab("chats")}
+          aria-pressed={activeTab === "chats"}
+          aria-label={t("chat_window.chats_tab", "Chats")}
           className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium transition-colors ${
             activeTab === "chats"
               ? "bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary"
@@ -279,6 +284,8 @@ function SidebarHeaderWithTabs({ workspace }: any) {
         <button
           type="button"
           onClick={() => setActiveTab("urls")}
+          aria-pressed={activeTab === "urls"}
+          aria-label={t("chat_window.urls_tab", "URLs")}
           className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium transition-colors ${
             activeTab === "urls"
               ? "bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary"
