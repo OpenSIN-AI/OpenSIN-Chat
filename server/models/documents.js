@@ -10,7 +10,7 @@ const { EventLogs } = require("./eventLogs");
 const { safeJsonParse } = require("../utils/http");
 
 const Document = {
-  writable: ["pinned", "watched", "lastUpdatedAt"],
+  writable: ["pinned", "watched", "lastUpdatedAt", "contextMode"],
   /**
    * @param {import("@prisma/client").workspace_documents} document - Document PrismaRecord
    * @returns {{

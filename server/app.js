@@ -60,6 +60,9 @@ const {
 } = require("./endpoints/utils/googleAgentSkillEndpoints");
 const { memoryEndpoints } = require("./endpoints/memory");
 const { noteEndpoints } = require("./endpoints/notes");
+const { contextModeEndpoints } = require("./endpoints/contextMode");
+const { transformationEndpoints } = require("./endpoints/transformations");
+const { askEndpoints } = require("./endpoints/ask");
 const { providerStatusEndpoints } = require("./endpoints/providerStatus");
 const { pdfAnalysisEndpoints } = require("./endpoints/pdfAnalysis");
 const { webPushEndpoints } = require("./endpoints/webPush");
@@ -223,6 +226,9 @@ function buildApp() {
   pdfAnalysisEndpoints(app);
   memoryEndpoints(apiRouter);
   noteEndpoints(apiRouter);
+  contextModeEndpoints(apiRouter);
+  transformationEndpoints(apiRouter);
+  askEndpoints(apiRouter);
   providerStatusEndpoints(apiRouter);
   webPushEndpoints(apiRouter);
   telegramEndpoints(apiRouter);

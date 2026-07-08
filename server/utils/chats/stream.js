@@ -21,6 +21,7 @@ const {
   extractImageUrls,
   buildScreenshotUrlPrompt,
 } = require("./extractImageUrls");
+const { withInlineCitations } = require("./inlineCitations");
 
 const VALID_CHAT_MODE = ["automatic", "chat", "query"];
 
@@ -184,6 +185,26 @@ async function streamChatWithWorkspace(
     });
   });
 
+  // Context-mode docs (contextMode="summary"|"full") — prepend summaries or
+  // full text for documents that should always be part of every conversation.
+  const contextModeDocs = await new DocumentManager({
+    workspace,
+    maxTokens: LLMConnector.promptWindowLimit(),
+  }).contextModeDocs();
+  contextModeDocs.forEach((doc) => {
+    const { pageContent, ...metadata } = doc;
+    if (doc.contextMode === "full") {
+      // Treat full-context docs like pinned docs so they are excluded from
+      // the similarity-search filter (avoids double-inclusion).
+      pinnedDocIdentifiers.push(sourceIdentifier(doc));
+    }
+    contextTexts.push(pageContent);
+    sources.push({
+      text: pageContent.slice(0, 1_000) + "...continued on in source document...",
+      ...metadata,
+    });
+  });
+
   // Parsed files — reuse pre-fetched if available, otherwise fetch fresh.
   const parsedFiles =
     prefetchedParsedFiles ??
@@ -291,6 +312,10 @@ async function streamChatWithWorkspace(
       rawHistory,
     }));
   if (imageUrlPrompt) systemPrompt += "\n\n" + imageUrlPrompt;
+
+  // Inject inline-citation instructions when there are context documents so
+  // the LLM marks statements with [source:N] markers for the frontend to render.
+  systemPrompt = withInlineCitations(systemPrompt, contextTexts.length);
   const messages = await LLMConnector.compressMessages(
     {
       systemPrompt,
