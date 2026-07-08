@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React from "react";
+import React, { memo } from "react";
 import { useTranslation } from "react-i18next";
 import {
   formatDateTimeAsMoment,
@@ -8,7 +8,7 @@ import {
 } from "@/utils/directories";
 import { File } from "@phosphor-icons/react/dist/csr/File";
 
-export default function FileRow({ item, selected, toggleSelection }: any) {
+function FileRow({ item, selected, toggleSelection }: any) {
   const { t } = useTranslation();
   return (
     <tr
@@ -54,3 +54,5 @@ export default function FileRow({ item, selected, toggleSelection }: any) {
     </tr>
   );
 }
+
+export default memo(FileRow);

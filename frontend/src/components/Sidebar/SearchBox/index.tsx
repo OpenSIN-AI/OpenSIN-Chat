@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect, useRef, useCallback } from "react";
+import { memo, useState, useEffect, useRef, useCallback } from "react";
 import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
 import { useTranslation } from "react-i18next";
@@ -18,7 +18,7 @@ const DEFAULT_SEARCH_RESULTS = {
 };
 
 const SEARCH_RESULT_SELECTED: any = "search-result-selected";
-export default function SearchBox({ user, showNewWsModal }: any) {
+function SearchBox({ user, showNewWsModal }: any) {
   const { t } = useTranslation();
   const searchRef = useRef(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -234,3 +234,5 @@ function ShortWidthNewWorkspaceButton({ user, showNewWsModal }: any) {
     </>
   );
 }
+
+export default memo(SearchBox);

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -8,7 +8,7 @@ import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 import { isPathMatch } from "@/utils/paths";
 import useScrollActiveItemIntoView from "@/hooks/useScrollActiveItemIntoView";
 
-export default function MenuOption({
+function MenuOption({
   btnText,
   icon,
   href,
@@ -237,3 +237,5 @@ function generateStorageKey({ key = "" }: any) {
   const _key = key.replace(/\s+/g, "_").toLowerCase();
   return `opensin_menu_${_key}_expanded`;
 }
+
+export default memo(MenuOption);

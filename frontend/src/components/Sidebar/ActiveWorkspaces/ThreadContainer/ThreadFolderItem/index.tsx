@@ -10,7 +10,7 @@ import { FolderSimplePlus } from "@phosphor-icons/react/dist/csr/FolderSimplePlu
 import { PencilSimple } from "@phosphor-icons/react/dist/csr/PencilSimple";
 import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
-import React, { useState, useRef, useEffect } from "react";
+import React, { memo, useState, useRef, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import ThreadItem from "../ThreadItem";
@@ -154,7 +154,7 @@ function FolderQuickAdd({ workspace, folder, isOpen, setIsOpen }: any) {
   );
 }
 
-export default function ThreadFolderItem({
+function ThreadFolderItem({
   folder,
   workspace,
   threads = [],
@@ -391,3 +391,5 @@ export default function ThreadFolderItem({
     </div>
   );
 }
+
+export default memo(ThreadFolderItem);

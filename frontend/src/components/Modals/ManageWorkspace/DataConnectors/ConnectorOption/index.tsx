@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
-export default function ConnectorOption({
+import { memo } from "react";
+function ConnectorOption({
   slug,
   selectedConnector,
   setSelectedConnector,
@@ -28,3 +29,5 @@ export default function ConnectorOption({
     </button>
   );
 }
+
+export default memo(ConnectorOption);

@@ -11,7 +11,7 @@ import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
 import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { ChatText } from "@phosphor-icons/react/dist/csr/ChatText";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ThreadItem from "./ThreadItem";
 import ThreadFolderItem from "./ThreadFolderItem";
@@ -82,7 +82,7 @@ function saveDateGroupCollapseState(workspaceSlug, groupId, isCollapsed) {
   } catch {}
 }
 
-export default function ThreadContainer({
+function ThreadContainer({
   workspace,
   isActive: _isActive = false,
   isVirtualThread = false,
@@ -952,3 +952,5 @@ function SearchResultItem({ thread, query, workspace }) {
     </Link>
   );
 }
+
+export default memo(ThreadContainer);

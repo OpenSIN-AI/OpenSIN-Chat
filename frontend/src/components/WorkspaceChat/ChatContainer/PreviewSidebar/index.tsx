@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useState, useRef, useEffect, Suspense, lazy } from "react";
+import { memo, useState, useRef, useEffect, Suspense, lazy } from "react";
 import { useParams } from "react-router-dom";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { ArrowSquareOut } from "@phosphor-icons/react/dist/csr/ArrowSquareOut";
@@ -446,7 +446,7 @@ function PreviewContent({ previewData, activeVersion }: any) {
 
 // Import Eye for empty state icon
 
-export default function PreviewSidebar() {
+function PreviewSidebar() {
   const { sidebarOpen, previewData, closeSidebar } = usePreviewSidebar();
   const { t } = useTranslation();
   const { slug: workspaceSlug } = useParams();
@@ -548,3 +548,5 @@ export default function PreviewSidebar() {
     </ChatSidebar>
   );
 }
+
+export default memo(PreviewSidebar);

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { Fragment, useState, useEffect } from "react";
+import { memo, Fragment, useState, useEffect } from "react";
 import { decode as HTMLDecode } from "he";
 import DOMPurify from "dompurify";
 import { truncate } from "@/utils/strings";
@@ -130,7 +130,7 @@ export function combineLikeSources(sources: any) {
   return Object.values(combined);
 }
 
-export default function Citations({ sources = [] }: any) {
+function Citations({ sources = [] }: any) {
   const {
     sidebarOpen,
     openSidebar,
@@ -433,3 +433,5 @@ export function parseChunkSource({ title = "", chunks = [] }: any) {
   }
   return nullResponse;
 }
+
+export default memo(Citations);

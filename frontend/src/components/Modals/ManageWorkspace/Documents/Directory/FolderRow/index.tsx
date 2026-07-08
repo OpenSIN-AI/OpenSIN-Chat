@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
-import { useState } from "react";
+import { memo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import FileRow from "../FileRow";
 import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
 import { Folder } from "@phosphor-icons/react/dist/csr/Folder";
 import { middleTruncate } from "@/utils/directories";
 
-export default function FolderRow({
+function FolderRow({
   item,
   totalItems = 0,
   selected,
@@ -89,3 +89,5 @@ export default function FolderRow({
     </>
   );
 }
+
+export default memo(FolderRow);

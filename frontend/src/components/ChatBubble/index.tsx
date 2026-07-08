@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React from "react";
+import React, { memo } from "react";
 import UserIcon from "../UserIcon";
 import { userFromStorage } from "@/utils/request";
 import renderMarkdown from "@/utils/chat/markdown";
@@ -54,7 +54,7 @@ const MARKDOWN_SANITIZE_OPTS: DOMPurifyConfig = {
 const safeMarkdown = (html: string): string =>
   DOMPurify.sanitize(html, MARKDOWN_SANITIZE_OPTS);
 
-export default function ChatBubble({
+function ChatBubble({
   message,
   type,
 }: {
@@ -87,3 +87,5 @@ export default function ChatBubble({
     </div>
   );
 }
+
+export default memo(ChatBubble);

@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
+import { memo } from "react";
 import { useTranslation } from "react-i18next";
 
-export default function EmbedderItem({
+function EmbedderItem({
   name,
   value,
   image,
@@ -49,3 +50,5 @@ export default function EmbedderItem({
     </div>
   );
 }
+
+export default memo(EmbedderItem);
