@@ -20,6 +20,7 @@ import KeyboardShortcutsHelp from "@/components/KeyboardShortcutsHelp";
 import ImageLightbox from "@/components/ImageLightbox";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorBoundaryFallback from "./components/ErrorBoundaryFallback";
+import logger from "@/utils/logger";
 
 function SkipToContentLink() {
   const { t } = useTranslation();
@@ -42,7 +43,7 @@ export default function App() {
   return (
     <ErrorBoundary
       FallbackComponent={ErrorBoundaryFallback}
-      onError={console.error}
+      onError={logger.error}
       resetKeys={[location.pathname]}
     >
       <ThemeProvider>
@@ -57,7 +58,7 @@ export default function App() {
                       <main id="main-content">
                         <ErrorBoundary
                           FallbackComponent={ErrorBoundaryFallback}
-                          onError={console.error}
+                          onError={logger.error}
                         >
                           <Outlet />
                         </ErrorBoundary>
