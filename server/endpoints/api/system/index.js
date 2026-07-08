@@ -9,6 +9,8 @@ const { exportChatsAsType } = require("../../../utils/helpers/chat/convertTo");
 const { dumpENV, updateENV } = require("../../../utils/helpers/updateENV");
 const { reqBody } = require("../../../utils/http");
 const { validApiKey } = require("../../../utils/middleware/validApiKey");
+const { validateBody } = require("../../../utils/middleware/validateBody");
+const { SystemSchemas } = require("../../../utils/validation/schemas");
 
 function apiSystemEndpoints(app) {
   if (!app) return;
@@ -103,7 +105,7 @@ function apiSystemEndpoints(app) {
 
   app.post(
     "/v1/system/update-env",
-    [validApiKey],
+    [validApiKey, validateBody(SystemSchemas.updateEnv)],
     async (request, response) => {
       /*
       #swagger.tags = ['System Settings']
@@ -216,7 +218,7 @@ function apiSystemEndpoints(app) {
   );
   app.delete(
     "/v1/system/remove-documents",
-    [validApiKey],
+    [validApiKey, validateBody(SystemSchemas.exportChats)],
     async (request, response) => {
       /*
       #swagger.tags = ['System Settings']
