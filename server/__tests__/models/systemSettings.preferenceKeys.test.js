@@ -23,6 +23,40 @@ jest.mock("../../utils/logger/console.js", () => ({
   log: jest.fn(),
 }));
 
+
+
+jest.mock("../../utils/files", () => ({
+  purgeEntireVectorCache: jest.fn().mockResolvedValue(undefined),
+  hasVectorCachedFiles: jest.fn().mockResolvedValue(false),
+}));
+
+jest.mock("../../utils/BackgroundWorkers/index.js", () => ({
+  BackgroundWorkers: { setupBackgroundJobs: jest.fn() },
+}));
+
+// utils/agents/aibitat pulls in a large set of LLM provider packages
+// (@langchain/openai, @anthropic-ai/sdk, etc.) that are not installed
+// in the unit-test environment. Mock the entire subtree here so that
+// any inline require() inside systemSettings.js that touches aibitat
+// does not cause "Cannot find module" errors.
+jest.mock("../../utils/agents/aibitat/utils/toolReranker.js", () => ({
+  reRankTools: jest.fn().mockResolvedValue([]),
+  ToolReranker: {
+    isEnabled: jest.fn().mockReturnValue(false),
+    getTopN: jest.fn().mockReturnValue(3),
+  },
+}));
+jest.mock(
+  "../../utils/agents/aibitat/plugins/sql-agent/SQLConnectors/utils",
+  () => ({ SQLConnectorPool: {} })
+);
+jest.mock("../../utils/agents/aibitat/plugins/gmail/lib", () => ({}));
+jest.mock("../../utils/agents/aibitat/plugins/google-calendar/lib", () => ({}));
+jest.mock("../../utils/agents/aibitat/plugins/outlook/lib", () => ({}));
+jest.mock("../../utils/agents/aibitat", () => ({
+  defaultMaxToolCalls: jest.fn().mockReturnValue(3),
+}));
+
 jest.mock("../../utils/EncryptionManager", () => ({
   EncryptionManager: class {
     encrypt(v) {
