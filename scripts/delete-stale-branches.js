@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 /**
  * Delete stale branches from OpenSIN-Chat repo.
- * Run: node scripts/delete-stale-branches.js
- * Requires GITHUB_TOKEN env var with repo scope.
+ * Run: GITHUB_TOKEN=<token> node scripts/delete-stale-branches.js
  *
  * Closes #508
  */
@@ -36,15 +35,35 @@ const branchesToDelete = [
   'fix/back-to-chat-desktop-v2',
   'fix/build-config-cleanup',
   'fix/build-deps-and-e2e-smoke',
+  'fix/ci-lint-errors',
+  'fix/ci-lockfile-sync',
+  'fix/cleanup-stale-branches',
+  'fix/delete-stale-branches',
+  'fix/deps-react-i18next-17',
   'fix/frontend-audit-170-bugs',
   'fix/frontend-audit-round5-remaining',
   'fix/mime-v4-compat',
   'fix/pdf-ocr-upload-hang',
   'fix/upload-stall-nginx-body-size',
+  'fix/509-server-tsconfig',
+  'fix/510-god-files-split',
+  'fix/523-input-validation',
+  'fix/524-typescript-errors',
+  'fix/525-typed-context-providers',
+  'fix/528-server-god-files-remaining',
+  'fix/529-server-model-tests',
+  'fix/530-split-large-components',
+  'fix/531-console-error-cleanup',
+  'fix/532-frontend-test-coverage',
+  'fix/533-react-memo',
+  'fix/538-prisma-migrations',
+  'fix/541-aria-attributes',
+  'fix-test-failures',
   'issue-371-error-id',
   'issue-383-remove-deprecated-mark-invalid',
   'issue-390-password-recovery-tests',
   'open-tasks',
+  'pull-request-review',
   'security/remove-public-research-data',
   'test/core-model-coverage-and-smoke',
   'test/endpoints-and-ai-providers',
@@ -59,14 +78,6 @@ const branchesToDelete = [
   'v0/castleoffantasies-5452-ed038939',
   'v0/helaidumse-9762-7be93d55',
   'v0/loriyboasumsu-2542-c5f58ca5',
-  'dependabot/npm_and_yarn/frontend/prettier-3.9.4',
-  'dependabot/npm_and_yarn/frontend/react-i18next-17.0.8',
-  'dependabot/npm_and_yarn/frontend/react-virtuoso-4.18.10',
-  'dependabot/npm_and_yarn/server/anthropic-ai/sdk-0.110.0',
-  'dependabot/npm_and_yarn/server/supabase/storage-js-2.110.1',
-  'fix/deps-react-i18next-17',
-  'fix/delete-stale-branches',
-  'fix/cleanup-stale-branches',
 ];
 
 async function deleteBranch(branch) {
