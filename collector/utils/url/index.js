@@ -1,25 +1,79 @@
 // SPDX-License-Identifier: MIT
 const RuntimeSettings = require("../runtimeSettings");
-/**  ATTN: SECURITY RESEARCHERS
- * To Security researchers about to submit an SSRF report CVE - please don't.
- * We are aware that the code below is does not defend against any of the thousands of ways
- * you can map a hostname to another IP via tunneling, hosts editing, etc. The code below does not have intention of blocking this
- * and is simply to prevent the user from accidentally putting in non-valid websites, which is all this protects
- * since _all urls must be submitted by the user anyway_ and cannot be done with authentication and manager or admin roles.
- * If an attacker has those roles then the system is already vulnerable and this is not a primary concern.
+/**
+ * SSRF Protection
  *
- * We have gotten this report may times, marked them as duplicate or information and continue to get them. We communicate
- * already that deployment (and security) of an instance is on the deployer and system admin deploying it. This would include
- * isolation, firewalls, and the general security of the instance.
+ * The original AnythingLLM comment said "please don't submit SSRF CVEs" —
+ * we're fixing that now. This validator blocks:
+ *   - All RFC 1918 private ranges (10.x, 172.16-31.x, 192.168.x)
+ *   - Loopback (127.x, ::1)
+ *   - Link-local (169.254.x, fe80::) — includes AWS/GCP metadata endpoint
+ *   - Cloud metadata endpoints (169.254.169.254 explicitly)
+ *   - IPv6 private ranges (::1, fc00::/7, fe80::/10)
+ *   - 0.0.0.0 (wildcard bind)
+ *
+ * Can be bypassed via COLLECTOR_ALLOW_ANY_IP for self-hosted setups
+ * where the user intentionally scrapes local services.
  */
 
 const VALID_PROTOCOLS = ["https:", "http:"];
-const INVALID_OCTETS = [192, 172, 10, 127, 169];
 const runtimeSettings = new RuntimeSettings();
 
 /**
+ * Check if an IPv4 address is private/reserved.
+ * @param {string} ip — dotted-quad IPv4
+ * @returns {boolean} true if the IP should be blocked
+ */
+function isPrivateIPv4(ip) {
+  const parts = ip.split(".").map(Number);
+  if (parts.length !== 4 || parts.some((n) => isNaN(n) || n < 0 || n > 255))
+    return true;
+
+  const [a, b] = parts;
+
+  // 0.0.0.0/8 — wildcard / "this host"
+  if (a === 0) return true;
+  // 10.0.0.0/8 — RFC 1918
+  if (a === 10) return true;
+  // 127.0.0.0/8 — loopback
+  if (a === 127) return true;
+  // 169.254.0.0/16 — link-local (includes 169.254.169.254 cloud metadata)
+  if (a === 169 && b === 254) return true;
+  // 172.16.0.0/12 — RFC 1918 (172.16.x – 172.31.x)
+  if (a === 172 && b >= 16 && b <= 31) return true;
+  // 192.168.0.0/16 — RFC 1918
+  if (a === 192 && b === 168) return true;
+  // 100.64.0.0/10 — CGNAT
+  if (a === 100 && b >= 64 && b <= 127) return true;
+  // 240.0.0.0/4 — reserved
+  if (a >= 240) return true;
+
+  return false;
+}
+
+/**
+ * Check if an IPv6 address is private/reserved.
+ * @param {string} ip — colon-separated IPv6
+ * @returns {boolean} true if the IP should be blocked
+ */
+function isPrivateIPv6(ip) {
+  const lower = ip.toLowerCase();
+  // ::1 — loopback
+  if (lower === "::1") return true;
+  // :: — unspecified
+  if (lower === "::") return true;
+  // fe80::/10 — link-local
+  if (lower.startsWith("fe80:") || lower.startsWith("fe9") || lower.startsWith("fea") || lower.startsWith("feb")) return true;
+  // fc00::/7 — unique local (fc00:: – fdff::)
+  if (lower.startsWith("fc") || lower.startsWith("fd")) return true;
+  // ::ffff:0:0/96 — IPv4-mapped (check the embedded IPv4)
+  const v4Mapped = lower.match(/::ffff:(\d+\.\d+\.\d+\.\d+)$/);
+  if (v4Mapped) return isPrivateIPv4(v4Mapped[1]);
+  return false;
+}
+
+/**
  * If an ip address is passed in the user is attempting to collector some internal service running on internal/private IP.
- * This is not a security feature and simply just prevents the user from accidentally entering invalid IP addresses.
  * Can be bypassed via COLLECTOR_ALLOW_ANY_IP environment variable.
  * @param {URL} param0
  * @param {URL['hostname']} param0.hostname
@@ -37,22 +91,28 @@ function isInvalidIp({ hostname }) {
     return false;
   }
 
-  const IPRegex = new RegExp(
+  const IPv4Regex = new RegExp(
     /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/i
   );
 
-  // Not an IP address at all - passthrough
-  if (!IPRegex.test(hostname)) return false;
-  const [octetOne, ..._rest] = hostname.split(".");
+  const IPv6Regex = new RegExp(
+    /^(([0-9a-f]{1,4}:){7}[0-9a-f]{1,4}|([0-9a-f]{1,4}:){1,7}:|([0-9a-f]{1,4}:){1,6}:[0-9a-f]{1,4}|([0-9a-f]{1,4}:){1,5}(:[0-9a-f]{1,4}){1,2}|([0-9a-f]{1,4}:){1,4}(:[0-9a-f]{1,4}){1,3}|([0-9a-f]{1,4}:){1,3}(:[0-9a-f]{1,4}){1,4}|([0-9a-f]{1,4}:){1,2}(:[0-9a-f]{1,4}){1,5}|[0-9a-f]{1,4}:((:[0-9a-f]{1,4}){1,6})|:((:[0-9a-f]{1,4}){1,7}|:)|fe80:(:[0-9a-f]{0,4}){0,4}%[0-9a-zA-Z]+|::(ffff(:0{1,4})?:)?((25[0-5]|(2[0-4]|1?[0-9])?[0-9])\.){3}(25[0-5]|(2[0-4]|1?[0-9])?[0-9])|([0-9a-f]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1?[0-9])?[0-9])\.){3}(25[0-5]|(2[0-4]|1?[0-9])?[0-9]))$/i
+  );
 
-  // If fails to validate to number - abort and return as invalid.
-  if (isNaN(Number(octetOne))) return true;
+  // IPv4 check
+  if (IPv4Regex.test(hostname)) {
+    return isPrivateIPv4(hostname);
+  }
 
-  // Allow localhost loopback and 0.0.0.0 for scraping convenience
-  // for locally hosted services or websites
-  if (["127.0.0.1", "0.0.0.0"].includes(hostname)) return false;
+  // IPv6 check
+  if (IPv6Regex.test(hostname)) {
+    return isPrivateIPv6(hostname);
+  }
 
-  return INVALID_OCTETS.includes(Number(octetOne));
+  // Not an IP address — passthrough (hostname will be resolved by the
+  // HTTP client; DNS-rebinding protection would require a custom DNS
+  // resolver, which is out of scope for this validator).
+  return false;
 }
 
 /**

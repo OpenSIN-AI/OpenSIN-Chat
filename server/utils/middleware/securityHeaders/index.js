@@ -52,6 +52,8 @@ const ENFORCED_CSP_CONNECT_SRC = [
   "https://dashscope.aliyuncs.com",
   "https://api.openai.com/v1",
   "https://api.elevenlabs.io",
+  "https://cvoice.ai",
+  "https://static.cvoice.ai",
   "https://*.supabase.co",
   "https://*.amazonaws.com",
   "https://lh3.googleusercontent.com",

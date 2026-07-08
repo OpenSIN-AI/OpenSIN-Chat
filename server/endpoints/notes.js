@@ -134,8 +134,10 @@ function noteEndpoints(app) {
     async (request, response) => {
       try {
         const workspace = response.locals.workspace;
+        const user = await userFromSession(request, response);
         const workspaces = await WorkspaceNote.getShareableWorkspaces(
           workspace.id,
+          user?.id || null,
         );
         response.status(200).json({ workspaces });
       } catch (e) {

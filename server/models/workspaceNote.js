@@ -73,9 +73,26 @@ const WorkspaceNote = {
     );
   },
 
-  getShareableWorkspaces: async function (currentWorkspaceId) {
+  getShareableWorkspaces: async function (currentWorkspaceId, userId = null) {
+    // P0 fix: Only return workspaces the user is a member of.
+    // Previously this returned ALL workspaces in the instance, leaking
+    // names and slugs of workspaces the user has no access to (IDOR).
+    if (!userId) {
+      // Single-user mode (no auth): return only the current workspace
+      // as there is no membership table to query.
+      return await prisma.$queryRawUnsafe(
+        "SELECT id, name, slug FROM workspaces WHERE id = ? ORDER BY name ASC",
+        Number(currentWorkspaceId),
+      );
+    }
+    // Multi-user mode: filter by workspace_users membership
     return await prisma.$queryRawUnsafe(
-      "SELECT id, name, slug FROM workspaces WHERE id != ? ORDER BY name ASC",
+      `SELECT w.id, w.name, w.slug
+       FROM workspaces w
+       JOIN workspace_users wu ON wu.workspace_id = w.id
+       WHERE wu.user_id = ? AND w.id != ?
+       ORDER BY w.name ASC`,
+      Number(userId),
       Number(currentWorkspaceId),
     );
   },

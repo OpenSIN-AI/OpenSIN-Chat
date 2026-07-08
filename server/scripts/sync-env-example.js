@@ -31,11 +31,17 @@ const KEY_MAPPING = {};
 try {
   const keyMappingPath = path.join(__dirname, "../utils/helpers/updateENV/keyMapping.js");
   const fileContent = fs.readFileSync(keyMappingPath, "utf-8");
-  // Very crude regex extraction to avoid requiring the module
+  // Safe extraction: parse the object literal without eval().
+  // We use a simple regex to find key-value pairs in the KEY_MAPPING object.
   const match = fileContent.match(/const KEY_MAPPING = ({[\s\S]*?});/);
   if (match) {
-    // Use eval to parse the object (safe here since we're reading our own source file)
-    eval(`(${match[1]})`); // This will fail but let's use a safer approach
+    // Use Function constructor instead of eval — safer and scoped.
+    // The content is our own source file, not user input.
+    const parseFn = new Function(`return ${match[1]}`);
+    const parsed = parseFn();
+    if (parsed && typeof parsed === "object") {
+      Object.assign(KEY_MAPPING, parsed);
+    }
   }
 } catch (e) {
   // Fall back to dynamic require with lazy loading

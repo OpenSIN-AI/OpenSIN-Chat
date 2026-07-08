@@ -818,6 +818,20 @@ model workspace_notes {
   @@index([workspaceId])
 }
 
+// Shared workspace notes — replaces the raw CREATE TABLE IF NOT EXISTS
+// that was in workspaceNote.js. Now managed via Prisma migrations.
+model shared_workspace_notes {
+  id                 String   @id
+  note_id            Int
+  target_workspace_id Int
+  shared_by          Int?
+  shared_at          Int
+
+  @@unique([note_id, target_workspace_id])
+  @@index([note_id])
+  @@index([target_workspace_id])
+}
+
 // Persistent store for async PDF/file parse jobs.
 // Replaces the previous in-memory Map so jobs survive server restarts.
 // Managed by `server/utils/parseJobs/index.js`.
