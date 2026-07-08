@@ -2,9 +2,6 @@
 // Docs: SkillPanel.doc.md
 import { Robot } from "@phosphor-icons/react/dist/csr/Robot";
 import { useTranslation } from "react-i18next";
-import FlowPanel from "./AgentFlows/FlowPanel";
-import ImportedSkillConfig from "./Imported/ImportedSkillConfig";
-import ServerPanel from "./MCPServers/ServerPanel";
 
 type SkillPanelProps = {
   selectedSkill: any;
@@ -56,21 +53,21 @@ export function SkillPanel({
         {SelectedSkillComponent ? (
           <>
             {selectedMcpServer ? (
-              <ServerPanel
+              <SelectedSkillComponent
                 server={selectedMcpServer}
                 toggleServer={toggleMCP}
                 onDelete={handleMCPServerDelete}
                 onToggleTool={handleMCPToolToggle}
               />
             ) : selectedFlow ? (
-              <FlowPanel
+              <SelectedSkillComponent
                 flow={selectedFlow}
                 toggleFlow={toggleFlow}
                 enabled={activeFlowIds.includes(selectedFlow.uuid)}
                 onDelete={handleFlowDelete}
               />
             ) : selectedSkill?.imported ? (
-              <ImportedSkillConfig
+              <SelectedSkillComponent
                 key={selectedSkill.hubId}
                 selectedSkill={selectedSkill}
                 setImportedSkills={setImportedSkills}

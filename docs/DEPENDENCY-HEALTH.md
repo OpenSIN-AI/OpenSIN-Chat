@@ -33,6 +33,19 @@ The audit flagged **3** deprecated/abandoned packages.
 | `elevenlabs@^0.5.0` | Deprecated (package renamed) | **Replaced** with `@elevenlabs/elevenlabs-js@^2.51.0`. The TTS module was migrated to the v2 client API (`textToSpeech.convert()` + web-stream buffering). |
 | `@langchain/community` | Latest release is also deprecated | **Accepted finding.** Deprecation is ecosystem-wide across the LangChain JS packages; no non-deprecated successor exists yet. Tracked here and revisited when LangChain publishes a stable replacement. |
 
+## CEO Audit Follow-up (2026-07-08)
+
+The 2026-07-08 CEO Audit Sprint confirmed 3 additional dead packages with 0 imports:
+
+| Package | Status | Action |
+| --- | --- | --- |
+| `@tremor/react@3.18.7` | Dead — 0 imports. Requires Tailwind v3, conflicts with Tailwind v4. | **Remove** via `cd frontend && yarn remove @tremor/react` |
+| `recharts-to-png@2.3.1` | Dead — 0 imports. | **Remove** via `cd frontend && yarn remove recharts-to-png` |
+| `react-confetti-explosion@3.0.3` | Dead — 0 imports. | **Remove** via `cd frontend && yarn remove react-confetti-explosion` |
+
+These removals are safe and eliminate the Tailwind v3/v4 peer conflict warning.
+They are tracked as P2 items and can be done as a standalone chore commit.
+
 ## Maintenance
 
 Re-run the report periodically (or via the CEO-Audit workflow) and update the
