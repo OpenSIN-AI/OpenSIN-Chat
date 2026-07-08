@@ -40,6 +40,7 @@ import { copyText } from "@/utils/clipboard";
 import CorpusPanel from "./CorpusPanel";
 import showToast from "@/utils/toast";
 import { safeErrorMessage } from "@/utils/request";
+import logger from "@/utils/logger";
 
 function formatEta(seconds: number | null): string | null {
   if (seconds == null) return null;
@@ -228,7 +229,7 @@ export function JobsPanel({ isSidebar = false }: { isSidebar?: boolean }) {
     try {
       setJobs((await PdfAnalysis.list()) as PdfJob[]);
     } catch (e) {
-      console.error("Failed to fetch PDF jobs:", e);
+      logger.error("Failed to fetch PDF jobs:", e);
     }
   }, []);
 
@@ -552,7 +553,7 @@ function JobRow({ job, onShowReport, onCancelled }: JobRowProps) {
                 await PdfAnalysis.cancel(job.id);
                 onCancelled?.();
               } catch (e) {
-                console.error(e);
+                logger.error(e);
               }
             }}
             className="text-xs px-3 py-1.5 rounded-md text-red-400 border border-red-400/40 hover:opacity-80"
@@ -757,7 +758,7 @@ function ReportModal({ job, onClose }: ReportModalProps) {
         if (!cancelled) setResult(res as ReportResult);
       })
       .catch((e) => {
-        if (!cancelled) console.error(e);
+        if (!cancelled) logger.error(e);
       });
     return () => {
       cancelled = true;
@@ -1137,7 +1138,7 @@ export function FactsPanel({ onCrossCheck }: FactsPanelProps) {
         })) as Fact[],
       );
     } catch (e) {
-      console.error("Failed to search facts:", e);
+      logger.error("Failed to search facts:", e);
     } finally {
       setLoading(false);
     }
@@ -1152,7 +1153,7 @@ export function FactsPanel({ onCrossCheck }: FactsPanelProps) {
         setFacts(res as Fact[]);
       })
       .catch((e) => {
-        if (!cancelled) console.error(e);
+        if (!cancelled) logger.error(e);
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -1295,7 +1296,7 @@ export function FactsPanel({ onCrossCheck }: FactsPanelProps) {
                         await PdfAnalysis.deleteFact(fact.id);
                         search();
                       } catch (e) {
-                        console.error(e);
+                        logger.error(e);
                       }
                     }}
                     className="text-xs px-2 py-0.5 rounded-md text-red-400 border border-red-400/40 hover:opacity-80 whitespace-nowrap"

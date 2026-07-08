@@ -153,6 +153,7 @@ export default function WorkspaceLLMSelection({
           </div>
         ) : (
           <button
+            aria-label={t("common.selectModel", "Select model")}
             className="w-full max-w-[640px] h-[64px] bg-theme-settings-input-bg rounded-lg flex items-center p-[14px] justify-between cursor-pointer border-2 border-transparent hover:border-primary-button transition-all duration-300"
             type="button"
             onClick={() => setSearchMenuOpen(true)}
