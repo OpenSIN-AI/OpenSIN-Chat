@@ -10,6 +10,7 @@ import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import { Tooltip } from "react-tooltip";
 import DOMPurify from "@/utils/chat/purify";
 import useConnectorBranches from "@/hooks/useConnectorBranches";
+import logger from "@/utils/logger";
 
 const ALERT_SANITIZE_OPTS = {
   ALLOWED_TAGS: ["a", "b", "i", "u", "strong", "em", "br", "p", "span"],
@@ -68,7 +69,7 @@ export default function GithubOptions() {
       setLoading(false);
       return;
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       showToast(e.message, "error", { clear: true });
       setLoading(false);
     }

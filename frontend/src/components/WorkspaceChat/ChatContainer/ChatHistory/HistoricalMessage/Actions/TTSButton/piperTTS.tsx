@@ -6,6 +6,7 @@ import { PauseCircle } from "@phosphor-icons/react/dist/csr/PauseCircle";
 import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import PiperTTSClient from "@/utils/piperTTS";
 import messageToSpeech from "@/utils/chat/messageToSpeech";
+import logger from "@/utils/logger";
 
 export default function PiperTTS({ chatId, voiceId = null, message }: any) {
   const { t } = useTranslation();
@@ -34,7 +35,7 @@ export default function PiperTTS({ chatId, voiceId = null, message }: any) {
         playerRef.current.play();
       }
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       setLoading(false);
       setSpeaking(false);
     }

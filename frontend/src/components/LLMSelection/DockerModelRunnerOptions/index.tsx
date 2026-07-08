@@ -14,6 +14,7 @@ import ModelTableLoadingSkeleton from "@/components/lib/ModelTable/loading";
 import DMRUtils from "@/models/utils/dmrUtils";
 import showToast from "@/utils/toast";
 import useProviderModels from "@/hooks/useProviderModels";
+import logger from "@/utils/logger";
 
 export default function DockerModelRunnerOptions({ settings }: any) {
   const { t } = useTranslation();
@@ -231,7 +232,7 @@ function DockerModelRunnerModelSelection({
         setSearchQuery("");
       }
     } catch (e) {
-      console.error("Error downisLoading model:", e);
+      logger.error("Error downisLoading model:", e);
       showToast(
         e.message || "An error occurred while downisLoading the model",
         "error",
