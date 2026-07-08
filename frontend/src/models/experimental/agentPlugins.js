@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
+import logger from "@/utils/logger";
 
 const AgentPlugins = {
   toggleFeature: async function (hubId, active = false) {
@@ -17,7 +18,7 @@ const AgentPlugins = {
         return true;
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return false;
       });
   },
@@ -35,7 +36,7 @@ const AgentPlugins = {
         return true;
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return false;
       });
   },
@@ -49,7 +50,7 @@ const AgentPlugins = {
         return true;
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return false;
       });
   },

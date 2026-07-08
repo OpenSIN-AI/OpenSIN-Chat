@@ -7,6 +7,7 @@ import AgentFlows from "@/models/agentFlows";
 import MCPServers from "@/models/mcpServers";
 import { getSubSkillPreferenceKeys } from "./skillRegistry";
 import useSubSkillPreferences from "./useSubSkillPreferences";
+import logger from "@/utils/logger";
 
 /**
  * Core hook for managing all agent skill state.
@@ -60,7 +61,7 @@ export default function useAgentSkillsState(defaultSkills) {
       setFileSystemAgentAvailable(fsAgentAvailable);
       setIsMultiUser(!!multiUserMode);
     } catch (e) {
-      console.error(e);
+      logger.error(e);
     } finally {
       setLoading(false);
     }
@@ -71,7 +72,7 @@ export default function useAgentSkillsState(defaultSkills) {
       const { servers = [] } = await MCPServers.listServers();
       setMcpServers(servers);
     } catch (e) {
-      console.error(e);
+      logger.error(e);
     } finally {
       setMcpLoading(false);
     }

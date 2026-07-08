@@ -6,6 +6,7 @@ import System from "@/models/system";
 import showToast from "@/utils/toast";
 import MicButton from "../MicButton";
 import useSilenceDetector from "../useSilenceDetector";
+import logger from "@/utils/logger";
 
 const SILENCE_INTERVAL = 3_200; // ms of silence before auto-stop, matches BrowserNative.
 const MIME_CANDIDATES = [
@@ -87,7 +88,7 @@ export default function ServerSTT({ sendCommand }: any) {
       setStream(audioStream);
       setListening(true);
     } catch (e) {
-      console.error("Failed to start microphone:", e);
+      logger.error("Failed to start microphone:", e);
       showToast(t("chat_window.stt_mic_denied"), "error", { clear: true });
     }
   }, [sendCommand, t]);

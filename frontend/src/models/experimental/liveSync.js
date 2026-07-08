@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
+import logger from "@/utils/logger";
 
 const LiveDocumentSync = {
   featureFlag: "experimental_live_file_sync",
@@ -16,7 +17,7 @@ const LiveDocumentSync = {
       })
       .then((res) => res)
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return false;
       });
   },
@@ -30,7 +31,7 @@ const LiveDocumentSync = {
       })
       .then((res) => res?.queues || [])
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return [];
       });
   },
@@ -51,7 +52,7 @@ const LiveDocumentSync = {
         return true;
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return false;
       });
   },

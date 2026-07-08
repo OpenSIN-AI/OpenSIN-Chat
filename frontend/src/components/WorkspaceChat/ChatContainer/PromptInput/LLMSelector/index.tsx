@@ -18,6 +18,7 @@ import showToast from "@/utils/toast";
 import useWorkspace from "@/hooks/useWorkspaceBySlug";
 import useSystemSettings from "@/hooks/useSystemSettings";
 import Workspace from "@/models/workspace";
+import logger from "@/utils/logger";
 
 export default function LLMSelectorModal({
   workspaceSlug = null,
@@ -107,7 +108,7 @@ export default function LLMSelectorModal({
       window.dispatchEvent(new Event(SAVE_LLM_SELECTOR_EVENT));
     } catch (error) {
       setHasChanges(true);
-      console.error(error);
+      logger.error(error);
       showToast(error.message, "error", { clear: true });
     } finally {
       setSaving(false);

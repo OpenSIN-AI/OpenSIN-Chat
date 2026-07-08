@@ -19,6 +19,7 @@ import SpeechRecognition from "react-speech-recognition";
 import { invalidateChatHistory } from "@/hooks/useChatHistory";
 import { invalidateThreads } from "@/hooks/useThreads";
 import { v4 } from "uuid";
+import logger from "@/utils/logger";
 
 /**
  * Encapsulates all WebSocket, chat streaming, and message-sending logic
@@ -205,11 +206,11 @@ export default function useChatStream({
     Workspace.deleteChats(workspace.slug, [chatId])
       .then((success) => {
         if (!success) {
-          console.error("Failed to delete chat for regeneration.");
+          logger.error("Failed to delete chat for regeneration.");
           return;
         }
         if (!lastUserMessage) {
-          console.error("No user message found for regeneration.");
+          logger.error("No user message found for regeneration.");
           return;
         }
         return sendCommand({
@@ -219,7 +220,7 @@ export default function useChatStream({
           attachments: lastUserMessage?.attachments,
         });
       })
-      .catch((e) => console.error(e));
+      .catch((e) => logger.error(e));
   };
 
   /**

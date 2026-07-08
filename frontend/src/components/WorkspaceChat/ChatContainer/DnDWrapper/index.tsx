@@ -18,6 +18,7 @@ import showToast from "@/utils/toast";
 import FileUploadWarningModal from "./FileUploadWarningModal";
 import { useTranslation } from "react-i18next";
 import { useChatSidebar } from "../ChatSidebar";
+import logger from "@/utils/logger";
 
 export const PDF_UPLOADED_EVENT = "PDF_UPLOADED";
 
@@ -386,7 +387,7 @@ export function DnDFileUploaderProvider({
 
     // Wait for all promises to resolve in some way before dispatching the event to unlock the send button
     Promise.all(promises)
-      .catch((e) => console.error("Attachment processing error:", e))
+      .catch((e) => logger.error("Attachment processing error:", e))
       .finally(() =>
         window.dispatchEvent(new CustomEvent(ATTACHMENTS_PROCESSED_EVENT)),
       );
@@ -453,7 +454,7 @@ export function DnDFileUploaderProvider({
         (pendingFiles as any).map((file) => file.parsedFileId),
       );
     } catch (e) {
-      console.error("Failed to delete parsed files:", e);
+      logger.error("Failed to delete parsed files:", e);
     }
 
     // Remove all files from this batch from the UI
@@ -552,7 +553,7 @@ export function DnDFileUploaderProvider({
         "success",
       );
     } catch (e) {
-      console.error("Failed to embed files:", e);
+      logger.error("Failed to embed files:", e);
       showToast(t("dndWrapper.embedFailed"), "error");
     } finally {
       setIsEmbedding(false);
