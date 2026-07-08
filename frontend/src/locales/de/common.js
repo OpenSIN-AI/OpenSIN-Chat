@@ -1,5 +1,26 @@
 // SPDX-License-Identifier: MIT
 // Anything with "null" requires a translation. Contribute to translation via a PR!
+//
+// ──────────────────────────────────────────────────────────────────────────
+// UNUSED TRANSLATION KEYS — GitHub issue #543
+// ──────────────────────────────────────────────────────────────────────────
+// As of 2026-07-08, `npm run find:unused-translations` reports 403 unused
+// translation keys in the EN locale (out of 3504 total leaf keys).
+// The same keys should be reviewed and removed here after cleanup.
+//
+// DO NOT delete these keys blindly — some may be used via dynamic t() calls
+// that static analysis cannot detect. The dynamic key allowlist in
+// locales/dynamicKeyAllowlist.js covers known dynamic patterns, but it may
+// not be exhaustive.
+//
+// To safely clean up:
+//   1. Run: npm run find:unused-translations
+//   2. Review each reported key manually
+//   3. Add any false positives to dynamicKeyAllowlist.js
+//   4. Run: npm run clean:unused-translations  (deletes confirmed unused keys from en/common.js)
+//   5. Manually mirror deletions in de/common.js
+//   6. Run: npm run verify:translations         (validates de/ completeness)
+// ──────────────────────────────────────────────────────────────────────────
 const TRANSLATIONS = {
   page: {
     title: "OpenSIN Chat",

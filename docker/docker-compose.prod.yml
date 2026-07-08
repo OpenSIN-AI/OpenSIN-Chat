@@ -23,6 +23,7 @@ networks:
 
 services:
   postgres:
+    # TODO(#536): Pin by SHA256 digest for supply-chain integrity.
     image: pgvector/pgvector:pg16
     container_name: opensin-postgres
     restart: always
@@ -52,6 +53,7 @@ services:
         max-file: "3"
 
   redis:
+    # TODO(#536): Pin by SHA256 digest for supply-chain integrity.
     image: redis:7-alpine
     container_name: opensin-redis
     restart: always
@@ -78,6 +80,8 @@ services:
         max-file: "3"
 
   opensin-chat:
+    # TODO(#536): Pin by SHA256 digest. Using :latest is mutable and
+    # non-reproducible — pin to a specific tag + digest.
     image: ghcr.io/opensin-ai/opensin-chat:latest
     container_name: opensin-chat-app
     restart: always

@@ -10,6 +10,8 @@ networks:
 
 services:
   fix-permissions:
+    # TODO(#536): Pin by SHA256 digest — busybox:latest is mutable.
+    #   docker pull busybox && docker inspect --format='{{index .RepoDigests 0}}' busybox
     image: busybox
     container_name: opensin-fix-perms
     volumes:
@@ -20,6 +22,7 @@ services:
     restart: "no"
 
   opensin-chat:
+    # TODO(#536): Pin by SHA256 digest for supply-chain integrity.
     image: opensin-app:v1.14.0
     container_name: opensin-app
     restart: always
@@ -76,6 +79,7 @@ services:
           cpus: '2'
 
   vane:
+    # TODO(#536): Pin by SHA256 digest — third-party image should be pinned.
     image: itzcrazykns1337/vane:v1.0.0
     container_name: opensin-vane
     ports:

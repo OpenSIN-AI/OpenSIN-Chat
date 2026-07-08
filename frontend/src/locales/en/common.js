@@ -1,4 +1,30 @@
 // SPDX-License-Identifier: MIT
+//
+// ──────────────────────────────────────────────────────────────────────────
+// UNUSED TRANSLATION KEYS — GitHub issue #543
+// ──────────────────────────────────────────────────────────────────────────
+// As of 2026-07-08, `npm run find:unused-translations` reports 403 unused
+// translation keys in this file (out of 3504 total leaf keys).
+//
+// These keys are defined here but not referenced statically in any source
+// file (.ts/.tsx/.js/.jsx) under frontend/src/ (excluding locales/).
+//
+// DO NOT delete these keys blindly — some may be used via dynamic t() calls
+// that static analysis cannot detect. The dynamic key allowlist in
+// locales/dynamicKeyAllowlist.js covers known dynamic patterns, but it may
+// not be exhaustive.
+//
+// To safely clean up:
+//   1. Run: npm run find:unused-translations
+//   2. Review each reported key manually
+//   3. Add any false positives to dynamicKeyAllowlist.js
+//   4. Run: npm run clean:unused-translations  (deletes confirmed unused keys)
+//   5. Run: npm run verify:translations         (validates de/ completeness)
+//
+// The findUnusedTranslations.mjs script was also fixed in this issue:
+//   - Fixed broken import (resources.js no longer exports `resources`)
+//   - Added .ts/.tsx file scanning (was only scanning .js/.jsx)
+// ──────────────────────────────────────────────────────────────────────────
 const TRANSLATIONS = {
   page: {
     title: "OpenSIN Chat",

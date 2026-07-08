@@ -4,6 +4,7 @@ const consoleLogger = require("../../../utils/logger/console.js");
 const { getStoragePath } = require("../../../utils/paths");
 const { Telemetry } = require("../../../models/telemetry");
 const { validApiKey } = require("../../../utils/middleware/validApiKey");
+const { simpleRateLimit } = require("../../../utils/middleware/simpleRateLimit");
 const {
   handleAPIFileUpload,
   mirrorToSupabase,
@@ -63,7 +64,7 @@ function apiDocumentEndpoints(app) {
 
   app.post(
     "/v1/document/upload",
-    [validApiKey, handleAPIFileUpload, validateWorkspaceSlugQuery],
+    [validApiKey, handleAPIFileUpload, validateWorkspaceSlugQuery, simpleRateLimit({ bucket: "doc-upload", max: 10, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
     #swagger.tags = ['Documents']
@@ -197,7 +198,7 @@ function apiDocumentEndpoints(app) {
 
   app.post(
     "/v1/document/upload/:folderName",
-    [validApiKey, handleAPIFileUpload, validateWorkspaceSlugQuery],
+    [validApiKey, handleAPIFileUpload, validateWorkspaceSlugQuery, simpleRateLimit({ bucket: "doc-upload", max: 10, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
       #swagger.tags = ['Documents']
@@ -389,7 +390,7 @@ function apiDocumentEndpoints(app) {
 
   app.post(
     "/v1/document/upload-link",
-    [validApiKey, validateWorkspaceSlugQuery],
+    [validApiKey, validateWorkspaceSlugQuery, simpleRateLimit({ bucket: "doc-upload", max: 10, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
     #swagger.tags = ['Documents']
@@ -522,7 +523,7 @@ function apiDocumentEndpoints(app) {
 
   app.post(
     "/v1/document/raw-text",
-    [validApiKey, validateWorkspaceSlugQuery],
+    [validApiKey, validateWorkspaceSlugQuery, simpleRateLimit({ bucket: "doc-upload", max: 10, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
      #swagger.tags = ['Documents']
@@ -942,7 +943,7 @@ function apiDocumentEndpoints(app) {
 
   app.post(
     "/v1/document/create-folder",
-    [validApiKey],
+    [validApiKey, simpleRateLimit({ bucket: "doc-upload", max: 10, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
       #swagger.tags = ['Documents']
@@ -1017,7 +1018,7 @@ function apiDocumentEndpoints(app) {
 
   app.delete(
     "/v1/document/remove-folder",
-    [validApiKey],
+    [validApiKey, simpleRateLimit({ bucket: "doc-upload", max: 10, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
       #swagger.tags = ['Documents']
@@ -1082,7 +1083,7 @@ function apiDocumentEndpoints(app) {
 
   app.post(
     "/v1/document/move-files",
-    [validApiKey],
+    [validApiKey, simpleRateLimit({ bucket: "doc-upload", max: 10, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
       #swagger.tags = ['Documents']

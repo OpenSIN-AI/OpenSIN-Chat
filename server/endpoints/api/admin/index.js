@@ -19,6 +19,7 @@ const {
 } = require("../../../utils/helpers/admin");
 const { multiUserMode, reqBody } = require("../../../utils/http");
 const { validAdminApiKey } = require("../../../utils/middleware/validApiKey");
+const { simpleRateLimit } = require("../../../utils/middleware/simpleRateLimit");
 
 function apiAdminEndpoints(app) {
   if (!app) return;
@@ -95,7 +96,7 @@ function apiAdminEndpoints(app) {
 
   app.post(
     "/v1/admin/users/new",
-    [validAdminApiKey],
+    [validAdminApiKey, simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
     #swagger.tags = ['Admin']
@@ -177,7 +178,7 @@ function apiAdminEndpoints(app) {
 
   app.post(
     "/v1/admin/users/:id",
-    [validAdminApiKey],
+    [validAdminApiKey, simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
     #swagger.tags = ['Admin']
@@ -270,7 +271,7 @@ function apiAdminEndpoints(app) {
 
   app.delete(
     "/v1/admin/users/:id",
-    [validAdminApiKey],
+    [validAdminApiKey, simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
     #swagger.tags = ['Admin']
@@ -406,7 +407,7 @@ function apiAdminEndpoints(app) {
 
   app.post(
     "/v1/admin/invite/new",
-    [validAdminApiKey],
+    [validAdminApiKey, simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
     #swagger.tags = ['Admin']
@@ -480,7 +481,7 @@ function apiAdminEndpoints(app) {
 
   app.delete(
     "/v1/admin/invite/:id",
-    [validAdminApiKey],
+    [validAdminApiKey, simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
     #swagger.tags = ['Admin']
@@ -591,7 +592,7 @@ function apiAdminEndpoints(app) {
 
   app.post(
     "/v1/admin/workspaces/:workspaceId/update-users",
-    [validAdminApiKey],
+    [validAdminApiKey, simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
     #swagger.tags = ['Admin']
@@ -664,7 +665,7 @@ function apiAdminEndpoints(app) {
 
   app.post(
     "/v1/admin/workspaces/:workspaceSlug/manage-users",
-    [validAdminApiKey],
+    [validAdminApiKey, simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
     #swagger.tags = ['Admin']
@@ -789,7 +790,7 @@ function apiAdminEndpoints(app) {
 
   app.post(
     "/v1/admin/workspace-chats",
-    [validAdminApiKey],
+    [validAdminApiKey, simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
     #swagger.tags = ['Admin']
@@ -847,7 +848,7 @@ function apiAdminEndpoints(app) {
 
   app.post(
     "/v1/admin/preferences",
-    [validAdminApiKey],
+    [validAdminApiKey, simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
     #swagger.tags = ['Admin']

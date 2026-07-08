@@ -1,6 +1,20 @@
 # syntax=docker/dockerfile:1
 # Setup base image
-FROM ubuntu:noble-20251013 AS base
+#
+# SECURITY: The base image is pinned to a specific tag (noble-20251013) but
+# should also be pinned by SHA256 digest for full reproducibility and supply-
+# chain protection. To obtain the digest, run:
+#
+#   docker pull ubuntu:noble-20251013 --platform=linux/arm64
+#   docker inspect --format='{{index .RepoDigests 0}}' ubuntu:noble-20251013
+#
+# Then replace the FROM line below with:
+#   FROM ubuntu:noble-20251013@sha256:<DIGEST> AS base
+#
+# The digest must be verified and updated whenever the base image tag is
+# bumped. A digest placeholder is included below — replace <DIGEST> with the
+# real value before building in production.
+FROM ubuntu:noble-20251013@sha256:<DIGEST> AS base
 
 # Build arguments
 ARG ARG_UID=1000
@@ -70,6 +84,10 @@ WORKDIR /app
 # by manually installing a compatible chromedriver.
 RUN if [ "$SKIP_CHROMIUM" != "1" ]; then \
         echo "Need to patch Puppeteer x Chromium support for ARM86 - installing dep!" && \
+        # SECURITY: This Chromium binary is downloaded from a third-party CDN
+        # without checksum verification. Before production use, add a SHA256
+        # checksum check, e.g.:
+        #   echo "<EXPECTED_SHA256>  chrome-linux.zip" | sha256sum -c - && \
         curl -fSL https://webassets.anythingllm.com/chromium-1088-linux-arm64.zip -o chrome-linux.zip && \
         unzip chrome-linux.zip && \
         rm -rf chrome-linux.zip; \

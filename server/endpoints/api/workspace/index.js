@@ -13,6 +13,7 @@ const {
 } = require("../../../utils/helpers");
 const { multiUserMode, reqBody } = require("../../../utils/http");
 const { validApiKey } = require("../../../utils/middleware/validApiKey");
+const { simpleRateLimit } = require("../../../utils/middleware/simpleRateLimit");
 const { VALID_CHAT_MODE } = require("../../../utils/chats/stream");
 const { EventLogs } = require("../../../models/eventLogs");
 const {
@@ -30,7 +31,7 @@ const prisma = require("../../../utils/prisma");
 function apiWorkspaceEndpoints(app) {
   if (!app) return;
 
-  app.post("/v1/workspace/new", [validApiKey], async (request, response) => {
+  app.post("/v1/workspace/new", [validApiKey, simpleRateLimit({ bucket: "workspace-api", max: 60, windowMs: 60 * 1000 })], async (request, response) => {
     /*
     #swagger.tags = ['Workspaces']
     #swagger.description = 'Create a new workspace'
@@ -234,7 +235,7 @@ function apiWorkspaceEndpoints(app) {
 
   app.delete(
     "/v1/workspace/:slug",
-    [validApiKey, workspaceDeletionProtection],
+    [validApiKey, workspaceDeletionProtection, simpleRateLimit({ bucket: "workspace-api", max: 60, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
     #swagger.tags = ['Workspaces']
@@ -295,7 +296,7 @@ function apiWorkspaceEndpoints(app) {
 
   app.post(
     "/v1/workspace/:slug/update",
-    [validApiKey],
+    [validApiKey, simpleRateLimit({ bucket: "workspace-api", max: 60, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
     #swagger.tags = ['Workspaces']
@@ -479,7 +480,7 @@ function apiWorkspaceEndpoints(app) {
 
   app.post(
     "/v1/workspace/:slug/update-embeddings",
-    [validApiKey],
+    [validApiKey, simpleRateLimit({ bucket: "workspace-api", max: 60, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
     #swagger.tags = ['Workspaces']
@@ -556,7 +557,7 @@ function apiWorkspaceEndpoints(app) {
 
   app.post(
     "/v1/workspace/:slug/update-pin",
-    [validApiKey],
+    [validApiKey, simpleRateLimit({ bucket: "workspace-api", max: 60, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
       #swagger.tags = ['Workspaces']
@@ -625,7 +626,7 @@ function apiWorkspaceEndpoints(app) {
 
   app.post(
     "/v1/workspace/:slug/chat",
-    [validApiKey],
+    [validApiKey, simpleRateLimit({ bucket: "workspace-api", max: 60, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
    #swagger.tags = ['Workspaces']
@@ -762,7 +763,7 @@ function apiWorkspaceEndpoints(app) {
 
   app.post(
     "/v1/workspace/:slug/stream-chat",
-    [validApiKey],
+    [validApiKey, simpleRateLimit({ bucket: "workspace-api", max: 60, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
    #swagger.tags = ['Workspaces']
@@ -935,7 +936,7 @@ function apiWorkspaceEndpoints(app) {
 
   app.post(
     "/v1/workspace/:slug/vector-search",
-    [validApiKey],
+    [validApiKey, simpleRateLimit({ bucket: "workspace-api", max: 60, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
     #swagger.tags = ['Workspaces']

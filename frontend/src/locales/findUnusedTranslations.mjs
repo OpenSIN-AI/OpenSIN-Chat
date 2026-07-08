@@ -10,7 +10,8 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { resources } from "./resources.js";
+import enCommon from "./en/common.js";
+const resources = { en: { common: enCommon } };
 import { DYNAMIC_KEY_ALLOWLIST } from "./dynamicKeyAllowlist.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -45,7 +46,7 @@ function collectFiles(dir, results = []) {
       // Skip the locales directory to avoid self-references
       if (entry.name === "locales") continue;
       collectFiles(full, results);
-    } else if (/\.(js|jsx)$/.test(entry.name)) {
+    } else if (/\.(js|jsx|ts|tsx)$/.test(entry.name)) {
       results.push(full);
     }
   }
