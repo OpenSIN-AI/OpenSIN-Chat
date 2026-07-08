@@ -21,7 +21,7 @@ function contextModeEndpoints(app) {
    * Body: { contextMode: "off" | "summary" | "full" }
    */
   app.patch(
-    "/workspaces/:slug/documents/:docId/context-mode",
+    "/workspace/:slug/documents/:docId/context-mode",
     [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager]), validWorkspaceSlug],
     async (request, response) => {
       try {
@@ -72,7 +72,7 @@ function contextModeEndpoints(app) {
    * Forces regeneration of the LLM summary for a document.
    */
   app.post(
-    "/workspaces/:slug/documents/:docId/refresh-summary",
+    "/workspace/:slug/documents/:docId/refresh-summary",
     [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager]), validWorkspaceSlug],
     async (request, response) => {
       try {

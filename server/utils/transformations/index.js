@@ -73,6 +73,15 @@ async function runTransformation({ transformation, document, workspace }) {
     content: output,
   });
 
+  // Embed the insight into the workspace vector namespace so it is
+  // retrievable during RAG queries and cited as a source.
+  try {
+    const { embedInsight } = require("./embedInsight");
+    await embedInsight({ insight, document, workspace, transformation });
+  } catch (e) {
+    consoleLogger.error(`[Transformations] embed insight failed: ${e.message}`);
+  }
+
   consoleLogger.log(
     `[Transformations] "${transformation.name}" applied to ${document.filename}`,
   );

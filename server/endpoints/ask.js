@@ -23,7 +23,7 @@ function askEndpoints(app) {
    * Response: { answer, strategy, subAnswers, sources }
    */
   app.post(
-    "/workspaces/:slug/ask",
+    "/workspace/:slug/ask",
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async (request, response) => {
       try {

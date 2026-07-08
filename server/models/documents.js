@@ -357,6 +357,21 @@ const Document = {
       }
     }
 
+    // Clean up orphaned insights and summary caches for the removed docs.
+    if (docIds.length > 0) {
+      try {
+        const { DocumentSummaryCache } = require("../utils/documentSummary");
+        for (const docId of docIds) {
+          try { DocumentSummaryCache.invalidate(docId); } catch {}
+        }
+      } catch {}
+      try {
+        await prisma.document_insights.deleteMany({
+          where: { docId: { in: docIds } },
+        });
+      } catch {}
+    }
+
     await prisma.$transaction(async (tx) => {
       await tx.workspace_documents.deleteMany({
         where: { id: { in: resolvedDocs.map((d) => d.id) } },

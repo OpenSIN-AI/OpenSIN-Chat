@@ -82,7 +82,7 @@ function transformationEndpoints(app) {
 
   // Apply a transformation to a document in a workspace
   app.post(
-    "/workspaces/:slug/documents/apply-transformation",
+    "/workspace/:slug/documents/apply-transformation",
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async (request, response) => {
       try {
@@ -122,7 +122,7 @@ function transformationEndpoints(app) {
 
   // Retrieve insights for a specific document
   app.get(
-    "/workspaces/:slug/documents/:docId/insights",
+    "/workspace/:slug/documents/:docId/insights",
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async (request, response) => {
       try {
@@ -137,7 +137,7 @@ function transformationEndpoints(app) {
 
   // Delete a single insight
   app.delete(
-    "/workspaces/:slug/insights/:id",
+    "/workspace/:slug/insights/:id",
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async (request, response) => {
       try {

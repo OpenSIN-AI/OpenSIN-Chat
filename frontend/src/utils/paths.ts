@@ -180,6 +180,7 @@ export default {
       return `/settings/model-routers/${id}`;
     },
     systemPromptVariables: () => "/settings/system-prompt-variables",
+    transformations: () => "/settings/transformations",
     logs: () => {
       return "/settings/event-logs";
     },
