@@ -151,7 +151,10 @@ export default function ObsidianOptions() {
                     </p>
 
                     {(selectedFiles as any).map((file, i) => (
-                      <p key={file.webkitRelativePath} className="text-xs text-theme-text-primary mt-2">
+                      <p
+                        key={file.webkitRelativePath}
+                        className="text-xs text-theme-text-primary mt-2"
+                      >
                         {file.webkitRelativePath}
                       </p>
                     ))}

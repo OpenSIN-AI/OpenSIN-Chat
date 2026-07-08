@@ -83,7 +83,10 @@ function WorkspaceSourceItem({ doc, onClick, snippet }: any) {
     >
       <div className="flex gap-[6px] items-start w-full">
         <div className="w-5 h-5 rounded-full bg-zinc-700 light:bg-slate-200 flex items-center justify-center flex-shrink-0">
-          <Icon size={11} className="text-theme-text-primary light:text-theme-text-primary" />
+          <Icon
+            size={11}
+            className="text-theme-text-primary light:text-theme-text-primary"
+          />
         </div>
         <p className="flex-1 font-medium text-sm text-theme-text-primary light:text-theme-text-primary leading-[15px] line-clamp-2">
           {title}

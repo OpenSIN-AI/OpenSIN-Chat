@@ -21,7 +21,7 @@ const path = require("path");
 let consoleLogger;
 try {
   consoleLogger = require("../utils/logger/console.js");
-} catch (e) {
+} catch {
   consoleLogger = { error: console.error, log: console.log };
 }
 
@@ -29,7 +29,10 @@ try {
 // (which hasn't been generated yet in fresh installs).
 const KEY_MAPPING = {};
 try {
-  const keyMappingPath = path.join(__dirname, "../utils/helpers/updateENV/keyMapping.js");
+  const keyMappingPath = path.join(
+    __dirname,
+    "../utils/helpers/updateENV/keyMapping.js",
+  );
   const fileContent = fs.readFileSync(keyMappingPath, "utf-8");
   // Very crude regex extraction to avoid requiring the module
   const match = fileContent.match(/const KEY_MAPPING = ({[\s\S]*?});/);
@@ -37,7 +40,7 @@ try {
     // Use eval to parse the object (safe here since we're reading our own source file)
     eval(`(${match[1]})`); // This will fail but let's use a safer approach
   }
-} catch (e) {
+} catch {
   // Fall back to dynamic require with lazy loading
 }
 
@@ -47,8 +50,12 @@ try {
   keyMappingModule = require("../utils/helpers/updateENV/keyMapping.js");
 } catch (e) {
   if (e.code === "MODULE_NOT_FOUND" && e.message.includes("prisma")) {
-    console.warn("[sync-env-example] Warning: Prisma client not yet generated. This is normal on fresh installs.");
-    console.warn("[sync-env-example] Run 'npm run prisma:setup' after this script.");
+    console.warn(
+      "[sync-env-example] Warning: Prisma client not yet generated. This is normal on fresh installs.",
+    );
+    console.warn(
+      "[sync-env-example] Run 'npm run prisma:setup' after this script.",
+    );
     // Use a minimal fallback
     keyMappingModule = { KEY_MAPPING: {} };
   } else {
@@ -73,42 +80,77 @@ function groupByCategory() {
     const envKey = config.envKey;
     // Heuristic: derive category from envKey prefix
     let category = "Other";
-    if (envKey.includes("OPEN_AI") || envKey.includes("GEMINI") ||
-        envKey.includes("ANTHROPIC") || envKey.includes("GROQ") ||
-        envKey.includes("MISTRAL") || envKey.includes("COHERE") ||
-        envKey.includes("FIREWORKS") || envKey.includes("TOGETHERAI") ||
-        envKey.includes("PERPLEXITY") || envKey.includes("DEEPSEEK") ||
-        envKey.includes("OPENROUTER") || envKey.includes("HUGGING_FACE") ||
-        envKey.includes("KOBOLD") || envKey.includes("TEXT_GEN") ||
-        envKey.includes("GENERIC_OPEN_AI") || envKey.includes("LITELLM") ||
-        envKey.includes("LMSTUDIO") || envKey.includes("LOCAL_AI") ||
-        envKey.includes("OLLAMA") || envKey.includes("BEDROCK") ||
-        envKey.includes("AZURE") || envKey.includes("LLM_") ||
-        envKey.includes("MODEL_") || envKey.startsWith("OPENCODE") ||
-        envKey.startsWith("DOCKER_MODEL") || envKey.includes("NIM") ||
-        envKey.includes("XAI") || envKey.includes("AZURE") ||
-        envKey.includes("COMETAPI") || envKey.includes("NOVITA") ||
-        envKey.includes("APIPIE") || envKey.includes("ZAI") ||
-        envKey.includes("MOONSHOT") || envKey.includes("GITEE_AI") ||
-        envKey.includes("SAMBANOVA") || envKey.includes("LEMONADE") ||
-        envKey.includes("MINIMAX") || envKey.includes("CEREBRAS") ||
-        envKey.includes("PRIVATEMODE") || envKey.includes("FOUNDRY")) {
+    if (
+      envKey.includes("OPEN_AI") ||
+      envKey.includes("GEMINI") ||
+      envKey.includes("ANTHROPIC") ||
+      envKey.includes("GROQ") ||
+      envKey.includes("MISTRAL") ||
+      envKey.includes("COHERE") ||
+      envKey.includes("FIREWORKS") ||
+      envKey.includes("TOGETHERAI") ||
+      envKey.includes("PERPLEXITY") ||
+      envKey.includes("DEEPSEEK") ||
+      envKey.includes("OPENROUTER") ||
+      envKey.includes("HUGGING_FACE") ||
+      envKey.includes("KOBOLD") ||
+      envKey.includes("TEXT_GEN") ||
+      envKey.includes("GENERIC_OPEN_AI") ||
+      envKey.includes("LITELLM") ||
+      envKey.includes("LMSTUDIO") ||
+      envKey.includes("LOCAL_AI") ||
+      envKey.includes("OLLAMA") ||
+      envKey.includes("BEDROCK") ||
+      envKey.includes("AZURE") ||
+      envKey.includes("LLM_") ||
+      envKey.includes("MODEL_") ||
+      envKey.startsWith("OPENCODE") ||
+      envKey.startsWith("DOCKER_MODEL") ||
+      envKey.includes("NIM") ||
+      envKey.includes("XAI") ||
+      envKey.includes("AZURE") ||
+      envKey.includes("COMETAPI") ||
+      envKey.includes("NOVITA") ||
+      envKey.includes("APIPIE") ||
+      envKey.includes("ZAI") ||
+      envKey.includes("MOONSHOT") ||
+      envKey.includes("GITEE_AI") ||
+      envKey.includes("SAMBANOVA") ||
+      envKey.includes("LEMONADE") ||
+      envKey.includes("MINIMAX") ||
+      envKey.includes("CEREBRAS") ||
+      envKey.includes("PRIVATEMODE") ||
+      envKey.includes("FOUNDRY")
+    ) {
       category = "LLM Providers";
     } else if (envKey.includes("EMBEDDING")) {
       category = "Embedding Engines";
-    } else if (envKey.includes("VECTOR_DB") || envKey.includes("CHROMA") ||
-               envKey.includes("PINECONE") || envKey.includes("WEAVIATE") ||
-               envKey.includes("QDRANT") || envKey.includes("PGVECTOR") ||
-               envKey.includes("MILVUS") || envKey.includes("ASTRA") ||
-               envKey.includes("ZILLIZ") || envKey.includes("LANCEDB")) {
+    } else if (
+      envKey.includes("VECTOR_DB") ||
+      envKey.includes("CHROMA") ||
+      envKey.includes("PINECONE") ||
+      envKey.includes("WEAVIATE") ||
+      envKey.includes("QDRANT") ||
+      envKey.includes("PGVECTOR") ||
+      envKey.includes("MILVUS") ||
+      envKey.includes("ASTRA") ||
+      envKey.includes("ZILLIZ") ||
+      envKey.includes("LANCEDB")
+    ) {
       category = "Vector Databases";
-    } else if (envKey.includes("TTS_") || envKey.includes("STT_") ||
-               envKey.includes("WHISPER")) {
+    } else if (
+      envKey.includes("TTS_") ||
+      envKey.includes("STT_") ||
+      envKey.includes("WHISPER")
+    ) {
       category = "Audio / TTS / STT";
     } else if (envKey.includes("AGENT_")) {
       category = "Agent Tools";
-    } else if (envKey === "AUTH_TOKEN" || envKey === "JWT_SECRET" ||
-               envKey.includes("VANE")) {
+    } else if (
+      envKey === "AUTH_TOKEN" ||
+      envKey === "JWT_SECRET" ||
+      envKey.includes("VANE")
+    ) {
       category = "System";
     }
 
@@ -122,7 +164,7 @@ function groupByCategory() {
 /**
  * Generate a commented-out entry for a KEY_MAPPING key.
  */
-function generateEnvEntry(key, config) {
+function _generateEnvEntry(_key, config) {
   const envKey = config.envKey;
   const example = `# ${envKey}=`;
   return example;
@@ -151,7 +193,7 @@ function generateAutoSection() {
 
   Object.entries(groups).forEach(([category, entries]) => {
     section += `### ${category}\n`;
-    entries.forEach(({ key, config }) => {
+    entries.forEach(({ key: _key, config }) => {
       section += `# ${config.envKey}=\n`;
     });
     section += `\n`;

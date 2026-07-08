@@ -38,9 +38,7 @@ export async function streamSSEPost(
     return;
   }
 
-  const reader = response.body
-    .pipeThrough(new TextDecoderStream())
-    .getReader();
+  const reader = response.body.pipeThrough(new TextDecoderStream()).getReader();
 
   let buffer = "";
 
@@ -57,10 +55,12 @@ export async function streamSSEPost(
       return;
     }
     // Strip trailing newline from data per spec
-    const data = eventData.endsWith("\n")
-      ? eventData.slice(0, -1)
-      : eventData;
-    onmessage?.({ data, event: eventType || undefined, id: eventId || undefined });
+    const data = eventData.endsWith("\n") ? eventData.slice(0, -1) : eventData;
+    onmessage?.({
+      data,
+      event: eventType || undefined,
+      id: eventId || undefined,
+    });
     eventType = "";
     eventData = "";
     // eventId is sticky — do NOT reset per SSE spec
@@ -101,7 +101,9 @@ export async function streamSSEPost(
 
         const field = line.slice(0, colonIdx);
         // Spec: if the char after ":" is a space, strip it
-        const value = line.slice(colonIdx + (line[colonIdx + 1] === " " ? 2 : 1));
+        const value = line.slice(
+          colonIdx + (line[colonIdx + 1] === " " ? 2 : 1),
+        );
 
         switch (field) {
           case "data":
@@ -123,7 +125,10 @@ export async function streamSSEPost(
     // Dispatch any leftover event that didn't end with a blank line
     if (eventData) dispatchEvent();
   } catch (err) {
-    if (signal?.aborted || (err instanceof Error && err.name === "AbortError")) {
+    if (
+      signal?.aborted ||
+      (err instanceof Error && err.name === "AbortError")
+    ) {
       // Intentional abort — not an error
     } else {
       onerror?.(err instanceof Error ? err : new Error(String(err)));

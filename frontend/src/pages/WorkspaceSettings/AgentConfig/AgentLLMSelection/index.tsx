@@ -207,7 +207,11 @@ export default function AgentLLMSelection({
                 </div>
               </div>
             </div>
-            <CaretUpDown size={24} weight="bold" className="text-theme-text-primary" />
+            <CaretUpDown
+              size={24}
+              weight="bold"
+              className="text-theme-text-primary"
+            />
           </button>
         )}
       </div>

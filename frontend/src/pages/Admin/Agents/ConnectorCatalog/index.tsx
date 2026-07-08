@@ -4,7 +4,6 @@
 //          Unconfigured providers show "Coming Soon" badge.
 //          Coming-soon services show lock icon.
 // Docs: ConnectorCatalog.doc.md
-import { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { CONNECTOR_CATALOG, CatalogEntry } from "@/data/connectorCatalog";
 import { useConnector } from "@/hooks/useConnector";
@@ -28,7 +27,10 @@ import {
 import showToast from "@/utils/toast";
 
 // Map icon string names to components
-const ICON_MAP: Record<string, React.ComponentType<{ size?: number; weight?: string }>> = {
+const ICON_MAP: Record<
+  string,
+  React.ComponentType<{ size?: number; weight?: string }>
+> = {
   envelope: Envelope,
   "hard-drive": HardDrive,
   "file-text": FileText,
@@ -65,9 +67,10 @@ function ConnectorTile({
   return (
     <div
       className={`relative flex flex-col items-center gap-2 p-4 rounded-xl border transition-all
-        ${isComingSoon
-          ? "border-zinc-800 light:border-slate-200 opacity-60"
-          : "border-zinc-700 light:border-slate-300 hover:border-[#009ee0] hover:shadow-lg"
+        ${
+          isComingSoon
+            ? "border-zinc-800 light:border-slate-200 opacity-60"
+            : "border-zinc-700 light:border-slate-300 hover:border-[#009ee0] hover:shadow-lg"
         }
         bg-zinc-900 light:bg-white w-full`}
     >
@@ -86,11 +89,12 @@ function ConnectorTile({
       {/* Icon */}
       <div
         className={`w-12 h-12 rounded-lg flex items-center justify-center
-          ${entry.category === "google"
-            ? "bg-white/10"
-            : entry.category === "github"
-              ? "bg-zinc-800 light:bg-slate-100"
-              : "bg-zinc-800/50 light:bg-slate-100"
+          ${
+            entry.category === "google"
+              ? "bg-white/10"
+              : entry.category === "github"
+                ? "bg-zinc-800 light:bg-slate-100"
+                : "bg-zinc-800/50 light:bg-slate-100"
           }`}
       >
         <Icon size={24} weight={isComingSoon ? "thin" : "regular"} />
@@ -98,8 +102,12 @@ function ConnectorTile({
 
       {/* Name + description */}
       <div className="text-center">
-        <p className="text-sm font-medium text-theme-text-primary">{entry.name}</p>
-        <p className="text-xs text-theme-text-secondary mt-0.5">{entry.description}</p>
+        <p className="text-sm font-medium text-theme-text-primary">
+          {entry.name}
+        </p>
+        <p className="text-xs text-theme-text-secondary mt-0.5">
+          {entry.description}
+        </p>
       </div>
 
       {/* Action button */}
@@ -147,9 +155,21 @@ export default function ConnectorCatalog() {
 
   // Group entries by category
   const categories = [
-    { key: "google", label: "Google Workspace", entries: CONNECTOR_CATALOG.filter((e) => e.category === "google") },
-    { key: "github", label: "GitHub", entries: CONNECTOR_CATALOG.filter((e) => e.category === "github") },
-    { key: "coming_soon", label: t("connectors.coming_soon_section", "Demnächst verfügbar"), entries: CONNECTOR_CATALOG.filter((e) => e.category === "coming_soon") },
+    {
+      key: "google",
+      label: "Google Workspace",
+      entries: CONNECTOR_CATALOG.filter((e) => e.category === "google"),
+    },
+    {
+      key: "github",
+      label: "GitHub",
+      entries: CONNECTOR_CATALOG.filter((e) => e.category === "github"),
+    },
+    {
+      key: "coming_soon",
+      label: t("connectors.coming_soon_section", "Demnächst verfügbar"),
+      entries: CONNECTOR_CATALOG.filter((e) => e.category === "coming_soon"),
+    },
   ];
 
   function getConnector(entry: CatalogEntry) {
@@ -170,7 +190,8 @@ export default function ConnectorCatalog() {
     if (!c) return;
     c.connect(entry.product).then((ok) => {
       if (ok) showToast(`${entry.name} verbunden!`, "success");
-      else if (c.available) showToast(`Verbindung zu ${entry.name} fehlgeschlagen.`, "error");
+      else if (c.available)
+        showToast(`Verbindung zu ${entry.name} fehlgeschlagen.`, "error");
     });
   }
 
@@ -192,7 +213,10 @@ export default function ConnectorCatalog() {
       </div>
 
       <p className="text-sm text-theme-text-secondary">
-        {t("connectors.description", "Verbinde deine Accounts, damit Agenten auf deine Daten zugreifen können.")}
+        {t(
+          "connectors.description",
+          "Verbinde deine Accounts, damit Agenten auf deine Daten zugreifen können.",
+        )}
       </p>
 
       {categories.map((cat) => (
@@ -203,7 +227,9 @@ export default function ConnectorCatalog() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
             {cat.entries.map((entry) => {
               const c = getConnector(entry);
-              const isAvailable = entry.comingSoon ? false : (c?.available ?? false);
+              const isAvailable = entry.comingSoon
+                ? false
+                : (c?.available ?? false);
               return (
                 <ConnectorTile
                   key={entry.id}

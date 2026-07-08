@@ -33,10 +33,12 @@ export async function fetchWithTimeout(
       // The cleanup is safe because { once: true } means addEventListener
       // won't double-register.
       try {
-        return await fetch(url, { ...rest, signal: controller.signal }).finally(() => {
-          clearTimeout(timer);
-          externalSignal.removeEventListener("abort", onExternalAbort);
-        });
+        return await fetch(url, { ...rest, signal: controller.signal }).finally(
+          () => {
+            clearTimeout(timer);
+            externalSignal.removeEventListener("abort", onExternalAbort);
+          },
+        );
       } catch (e) {
         if (e.name === "AbortError") {
           if (externalSignal?.aborted) throw e;

@@ -78,7 +78,9 @@ export default function EditPresetModal({
                     {t("slashPresets.editPreset.command")}
                   </label>
                   <div className="flex items-center">
-                    <span className="text-theme-text-primary text-sm mr-2 font-bold">/</span>
+                    <span className="text-theme-text-primary text-sm mr-2 font-bold">
+                      /
+                    </span>
                     <input
                       type="text"
                       name="command"

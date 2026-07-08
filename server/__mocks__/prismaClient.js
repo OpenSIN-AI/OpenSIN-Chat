@@ -1,3 +1,4 @@
+/* global jest */
 // Jest stub for @prisma/client.
 // The real Prisma client requires a generated artefact (.prisma/client)
 // that is only produced by `prisma generate`. In unit tests the

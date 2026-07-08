@@ -5,14 +5,14 @@
 // Docs: connectorCatalog.doc.md
 
 export interface CatalogEntry {
-  id: string;            // unique catalog id, e.g. "gmail"
-  provider: string;      // "google" | "github"
-  product: string;       // scope-set key, e.g. "gmail", "drive", "repo"
-  name: string;          // display name
-  description: string;   // short description
-  icon: string;          // phosphor icon name or image path
+  id: string; // unique catalog id, e.g. "gmail"
+  provider: string; // "google" | "github"
+  product: string; // scope-set key, e.g. "gmail", "drive", "repo"
+  name: string; // display name
+  description: string; // short description
+  icon: string; // phosphor icon name or image path
   category: "google" | "github" | "coming_soon";
-  comingSoon?: boolean;  // if true, not yet connectable
+  comingSoon?: boolean; // if true, not yet connectable
 }
 
 export const CONNECTOR_CATALOG: CatalogEntry[] = [

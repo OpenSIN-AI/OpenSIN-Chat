@@ -93,7 +93,8 @@ const REPORT_ONLY_CSP = [
   "worker-src 'self' blob:",
   "connect-src *",
   "object-src 'none'",
-  "upgrade-insecure-requests", "frame-src 'self' blob: data:",
+  "upgrade-insecure-requests",
+  "frame-src 'self' blob: data:",
   "base-uri 'self'",
   "frame-ancestors 'self'",
 ].join("; ");
@@ -111,7 +112,7 @@ function securityHeaders() {
     response.removeHeader("X-Powered-By");
     response.setHeader("X-Content-Type-Options", "nosniff");
     response.setHeader("X-Frame-Options", "DENY");
-        // X-XSS-Protection is deprecated in modern browsers and can introduce
+    // X-XSS-Protection is deprecated in modern browsers and can introduce
     // vulnerabilities in edge cases. CSP is the modern protection mechanism.
     // Setting to "0" explicitly disables the legacy filter.
     response.setHeader("X-XSS-Protection", "0");

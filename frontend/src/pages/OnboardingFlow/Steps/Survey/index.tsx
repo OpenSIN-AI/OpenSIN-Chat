@@ -280,7 +280,10 @@ export default function Survey({
         </div>
 
         <div className="mt-8">
-          <label htmlFor="comment" className="text-theme-text-primary text-base font-medium">
+          <label
+            htmlFor="comment"
+            className="text-theme-text-primary text-base font-medium"
+          >
             {t("onboarding.survey.comment")}{" "}
             <span className="text-neutral-400 text-base font-light">
               {PARENS_OPEN}

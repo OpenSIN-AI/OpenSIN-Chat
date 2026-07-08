@@ -18,7 +18,10 @@ export interface SubagentSpawnParams {
 
 export function useSubagents(workspaceSlug: string) {
   const spawn = useCallback(
-    async (parentRunId: string, params: SubagentSpawnParams): Promise<boolean> => {
+    async (
+      parentRunId: string,
+      params: SubagentSpawnParams,
+    ): Promise<boolean> => {
       try {
         const r = await fetch(
           `${API_BASE}/workspace/${workspaceSlug}/agent-runs/${parentRunId}/spawn`,

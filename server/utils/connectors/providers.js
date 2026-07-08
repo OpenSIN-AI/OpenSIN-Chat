@@ -3,8 +3,7 @@
 //          If env vars are missing, provider is "coming_soon" — app runs fine.
 // Docs: providers.doc.md
 
-const BASE_URL =
-  process.env.SERVER_PUBLIC_URL || "https://sinchat.delqhi.com";
+const BASE_URL = process.env.SERVER_PUBLIC_URL || "https://sinchat.delqhi.com";
 
 /**
  * @typedef {Object} ProviderDef

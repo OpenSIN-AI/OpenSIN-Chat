@@ -25,7 +25,10 @@ const Admin = {
     })
       .then((res) => safeJson(res, { users: [] }))
       .then((res) => res?.users || [])
-      .catch((e) => { console.error('admin.users failed:', e); return []; });
+      .catch((e) => {
+        console.error("admin.users failed:", e);
+        return [];
+      });
   },
   newUser: async (data) => {
     return await fetch(`${API_BASE}/admin/users/new`, {
@@ -62,7 +65,10 @@ const Admin = {
     })
       .then((res) => safeJson(res, { invites: [] }))
       .then((res) => res?.invites || [])
-      .catch((e) => { console.error('admin.invites failed:', e); return []; });
+      .catch((e) => {
+        console.error("admin.invites failed:", e);
+        return [];
+      });
   },
   newInvite: async ({ role = null, workspaceIds = null }) => {
     return await fetch(`${API_BASE}/admin/invite/new`, {
@@ -93,7 +99,10 @@ const Admin = {
     })
       .then((res) => safeJson(res, { workspaces: [] }))
       .then((res) => res?.workspaces || [])
-      .catch((e) => { console.error('admin.workspaces failed:', e); return []; });
+      .catch((e) => {
+        console.error("admin.workspaces failed:", e);
+        return [];
+      });
   },
   workspaceUsers: async (workspaceId) => {
     return await fetch(`${API_BASE}/admin/workspaces/${workspaceId}/users`, {
@@ -102,7 +111,10 @@ const Admin = {
     })
       .then((res) => safeJson(res, { users: [] }))
       .then((res) => res?.users || [])
-      .catch((e) => { console.error('admin.workspaceUsers failed:', e); return []; });
+      .catch((e) => {
+        console.error("admin.workspaceUsers failed:", e);
+        return [];
+      });
   },
   newWorkspace: async (name) => {
     return await fetch(`${API_BASE}/admin/workspaces/new`, {
@@ -151,7 +163,10 @@ const Admin = {
       },
     )
       .then((res) => safeJson(res, null))
-      .catch((e) => { console.error('admin.systemPreferencesByFields failed:', e); return null; });
+      .catch((e) => {
+        console.error("admin.systemPreferencesByFields failed:", e);
+        return null;
+      });
   },
   updateSystemPreferences: async (updates = {}) => {
     return await fetch(`${API_BASE}/admin/system-preferences`, {
@@ -187,7 +202,10 @@ const Admin = {
       headers: baseHeaders(),
     })
       .then((res) => res.ok)
-      .catch((e) => { console.error('admin.deleteApiKey failed:', e); return false; });
+      .catch((e) => {
+        console.error("admin.deleteApiKey failed:", e);
+        return false;
+      });
   },
 };
 

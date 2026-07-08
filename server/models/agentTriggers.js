@@ -59,8 +59,7 @@ const AgentTriggers = {
     const data = {};
     if (patch.name !== undefined) data.name = patch.name;
     if (patch.agentName !== undefined) data.agent_name = patch.agentName;
-    if (patch.config !== undefined)
-      data.config = JSON.stringify(patch.config);
+    if (patch.config !== undefined) data.config = JSON.stringify(patch.config);
     if (patch.active !== undefined) data.active = patch.active;
     if (patch.checkpoint !== undefined)
       data.checkpoint = JSON.stringify(patch.checkpoint);
@@ -108,7 +107,8 @@ const AgentTriggers = {
     const data = {};
     if (patch.status !== undefined) data.status = patch.status;
     if (patch.attempt !== undefined) data.attempt = patch.attempt;
-    if (patch.errorMessage !== undefined) data.error_message = patch.errorMessage;
+    if (patch.errorMessage !== undefined)
+      data.error_message = patch.errorMessage;
     if (patch.result !== undefined) data.result = JSON.stringify(patch.result);
     if (patch.startedAt !== undefined) data.started_at = patch.startedAt;
     if (patch.endedAt !== undefined) data.ended_at = patch.endedAt;
@@ -138,10 +138,7 @@ const AgentTriggers = {
       where: {
         active: true,
         type: "schedule",
-        OR: [
-          { next_run_at: { lte: new Date() } },
-          { next_run_at: null },
-        ],
+        OR: [{ next_run_at: { lte: new Date() } }, { next_run_at: null }],
       },
     });
   },
@@ -154,10 +151,7 @@ const AgentTriggers = {
       where: {
         active: true,
         type: "polling",
-        OR: [
-          { next_run_at: { lte: new Date() } },
-          { next_run_at: null },
-        ],
+        OR: [{ next_run_at: { lte: new Date() } }, { next_run_at: null }],
       },
     });
   },

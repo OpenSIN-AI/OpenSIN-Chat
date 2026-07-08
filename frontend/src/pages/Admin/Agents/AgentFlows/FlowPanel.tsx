@@ -127,8 +127,15 @@ export default function FlowPanel({
         <div className="flex flex-col gap-y-[18px] max-w-[500px]">
           <div className="flex w-full justify-between items-center">
             <div className="flex items-center gap-x-2">
-              <FlowArrow size={24} weight="bold" className="text-theme-text-primary" />
-              <label htmlFor="name" className="text-theme-text-primary text-md font-bold">
+              <FlowArrow
+                size={24}
+                weight="bold"
+                className="text-theme-text-primary"
+              />
+              <label
+                htmlFor="name"
+                className="text-theme-text-primary text-md font-bold"
+              >
                 {flow.name}
               </label>
             </div>

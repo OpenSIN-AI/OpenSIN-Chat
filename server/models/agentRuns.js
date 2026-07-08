@@ -34,7 +34,9 @@ const AgentRuns = {
    * @param {string} status - running | waiting_input | done | error | cancelled
    */
   async updateStatus(runId, status) {
-    const endedAt = ["done", "error", "cancelled"].includes(status) ? new Date() : null;
+    const endedAt = ["done", "error", "cancelled"].includes(status)
+      ? new Date()
+      : null;
     await prisma.agent_runs.update({
       where: { id: runId },
       data: { status, ...(endedAt ? { ended_at: endedAt } : {}) },

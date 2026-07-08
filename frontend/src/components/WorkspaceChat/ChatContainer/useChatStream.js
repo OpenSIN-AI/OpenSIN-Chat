@@ -340,8 +340,11 @@ export default function useChatStream({
       // (once for chatHistory change, once for loadingResponse change).
       const currentChatHistory = chatHistoryRef.current;
       const promptMessage =
-        currentChatHistory.length > 0 ? currentChatHistory[currentChatHistory.length - 1] : null;
-      const remHistory = currentChatHistory.length > 0 ? currentChatHistory.slice(0, -1) : [];
+        currentChatHistory.length > 0
+          ? currentChatHistory[currentChatHistory.length - 1]
+          : null;
+      const remHistory =
+        currentChatHistory.length > 0 ? currentChatHistory.slice(0, -1) : [];
       var _chatHistory = [...remHistory];
 
       if (!!websocket) {
@@ -435,7 +438,6 @@ export default function useChatStream({
     if (loadingResponse === true) {
       fetchReply();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadingResponse, workspace]);
 
   useWebSocket({

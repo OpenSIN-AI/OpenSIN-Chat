@@ -225,7 +225,10 @@ function DemoVoiceSample({ voiceId }: any) {
             </>
           ) : (
             <>
-              <PlayCircle size={20} className="flex-shrink-0 text-theme-text-primary" />
+              <PlayCircle
+                size={20}
+                className="flex-shrink-0 text-theme-text-primary"
+              />
               <p className="text-theme-text-primary text-sm flex-shrink-0">
                 {t("textToSpeech.piper.playSample")}
               </p>

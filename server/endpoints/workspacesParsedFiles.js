@@ -6,10 +6,7 @@ const consoleLogger = require("../utils/logger/console.js");
 
 const crypto = require("crypto");
 const { reqBody, multiUserMode, userFromSession } = require("../utils/http");
-const {
-  handleFileUpload,
-  mirrorToSupabase,
-} = require("../utils/files/multer");
+const { handleFileUpload, mirrorToSupabase } = require("../utils/files/multer");
 const { ParseJobs, JOB_STATUS } = require("../utils/parseJobs");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
 const { Telemetry } = require("../models/telemetry");
@@ -182,9 +179,10 @@ async function runParseJob(jobId, upload, ctx) {
     await cleanupHotdirFile(upload);
     const errorId = crypto.randomUUID();
     consoleLogger.error(`[parse job error ${errorId}]`, e);
-    await ParseJobs.markFailed(jobId, `Internal server error (${errorId})`).catch(
-      () => {},
-    );
+    await ParseJobs.markFailed(
+      jobId,
+      `Internal server error (${errorId})`,
+    ).catch(() => {});
   }
 }
 
@@ -375,14 +373,10 @@ function workspaceParsedFilesEndpoints(app) {
         // Async (default): the file is safely on local disk — respond NOW.
         // Parsing, OCR, DB rows and the Supabase mirror run in the
         // background; the client polls /parse-status/:jobId.
-        runParseJob(job.id, upload, { workspace, user, thread }).catch(
-          (e) => {
-            consoleLogger.error("[parse job] unhandled error", e);
-            ParseJobs.markFailed(job.id, "Internal server error").catch(
-              () => {},
-            );
-          },
-        );
+        runParseJob(job.id, upload, { workspace, user, thread }).catch((e) => {
+          consoleLogger.error("[parse job] unhandled error", e);
+          ParseJobs.markFailed(job.id, "Internal server error").catch(() => {});
+        });
 
         return response.status(202).json({
           success: true,

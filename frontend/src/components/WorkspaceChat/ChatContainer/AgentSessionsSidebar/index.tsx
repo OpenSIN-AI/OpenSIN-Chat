@@ -12,9 +12,7 @@ import { Stop } from "@phosphor-icons/react/dist/csr/Stop";
 
 const statusIcon: Record<string, React.ReactNode> = {
   running: <CircleNotch className="animate-spin text-[#009ee0]" size={14} />,
-  waiting_input: (
-    <span className="text-amber-400 text-xs">⏸</span>
-  ),
+  waiting_input: <span className="text-amber-400 text-xs">⏸</span>,
   done: <CheckCircle className="text-green-500" size={14} />,
   error: <XCircle className="text-red-500" size={14} />,
   queued: <span className="text-zinc-400 text-xs">…</span>,
@@ -29,8 +27,7 @@ function RunNode({
   depth: number;
 }) {
   const { cancelRun } = useAgentRuns();
-  const isActive =
-    run.status === "running" || run.status === "waiting_input";
+  const isActive = run.status === "running" || run.status === "waiting_input";
 
   return (
     <div
@@ -66,7 +63,10 @@ function RunNode({
           {run.toolCalls.map((tc) => (
             <div key={tc.id} className="flex items-center gap-1.5 text-xs">
               {tc.status === "running" && (
-                <CircleNotch className="animate-spin text-theme-text-secondary" size={11} />
+                <CircleNotch
+                  className="animate-spin text-theme-text-secondary"
+                  size={11}
+                />
               )}
               {tc.status === "done" && (
                 <CheckCircle className="text-green-500" size={11} />

@@ -101,20 +101,17 @@ export default function RightSidebarIconBar() {
     {
       id: "workspace-settings",
       icon: Gear,
-      label: t("right_sidebar.icon_workspace_settings", "Workspace-Einstellungen"),
+      label: t(
+        "right_sidebar.icon_workspace_settings",
+        "Workspace-Einstellungen",
+      ),
       action: () => toggleSidebar("workspace-settings"),
       badge: 0,
     },
   ];
 
   // --- Render helper (shared by both sections) ---
-  function renderIcon({
-    id,
-    icon: Icon,
-    label,
-    action,
-    badge = 0,
-  }: any) {
+  function renderIcon({ id, icon: Icon, label, action, badge = 0 }: any) {
     const isActive = activeSidebar === id;
     return (
       <div
@@ -137,9 +134,7 @@ export default function RightSidebarIconBar() {
         </button>
         {/* Live-Badge: Anzahl aktiver Runs */}
         {badge > 0 && (
-          <span
-            className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 rounded-full bg-[#009ee0] text-white text-[10px] font-bold flex items-center justify-center"
-          >
+          <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 rounded-full bg-[#009ee0] text-white text-[10px] font-bold flex items-center justify-center">
             {badge}
           </span>
         )}
@@ -159,7 +154,10 @@ export default function RightSidebarIconBar() {
       {icons.map(renderIcon)}
 
       {/* Divider zwischen den Abschnitten */}
-      <div className="w-6 h-px bg-zinc-700 light:bg-slate-200 my-1.5" aria-hidden />
+      <div
+        className="w-6 h-px bg-zinc-700 light:bg-slate-200 my-1.5"
+        aria-hidden
+      />
 
       {/* NEU: Agent-/Workspace-Abschnitt */}
       {agentIcons.map(renderIcon)}

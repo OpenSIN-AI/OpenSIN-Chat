@@ -91,7 +91,9 @@ export default function MenuOption({
             type="button"
             onClick={handleClick}
             className={`flex flex-grow items-center px-[12px] h-[32px] font-medium w-full text-left ${
-              isChild ? "hover:text-theme-text-primary light:hover:text-theme-text-primary" : "text-white light:text-black"
+              isChild
+                ? "hover:text-theme-text-primary light:hover:text-theme-text-primary"
+                : "text-white light:text-black"
             }`}
           >
             {icon}
@@ -112,7 +114,9 @@ export default function MenuOption({
             ref={ref}
             to={href}
             className={`flex flex-grow items-center px-[12px] h-[32px] font-medium ${
-              isChild ? "hover:text-theme-text-primary light:hover:text-theme-text-primary" : "text-white light:text-black"
+              isChild
+                ? "hover:text-theme-text-primary light:hover:text-theme-text-primary"
+                : "text-white light:text-black"
             }`}
             onClick={hasChildren ? handleClick : undefined}
           >

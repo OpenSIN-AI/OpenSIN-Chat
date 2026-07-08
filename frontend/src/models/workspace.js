@@ -386,17 +386,21 @@ const Workspace = {
    * @param {{onUploadProgress?: (percent: number) => void}} [options]
    * @returns {Promise<{success: boolean, jobId?: string, error?: string}>}
    */
-  uploadAndParseFile: async function (slug, formData, { onUploadProgress } = {}) {
+  uploadAndParseFile: async function (
+    slug,
+    formData,
+    { onUploadProgress } = {},
+  ) {
     return new Promise((resolve) => {
       const xhr = new XMLHttpRequest();
       // Timeout: 120s for the upload phase. If the upload stalls (e.g.
       // nginx client_max_body_size rejects mid-transfer, or Cloudflare
       // tunnel drops), the user gets a clear error instead of an
       // infinite spinner at 72%.
-      const UPLOAD_TIMEOUT_MS = Number(
-        typeof window !== "undefined" &&
-          window.__OPENSIN_UPLOAD_TIMEOUT_MS__,
-      ) || 120_000;
+      const UPLOAD_TIMEOUT_MS =
+        Number(
+          typeof window !== "undefined" && window.__OPENSIN_UPLOAD_TIMEOUT_MS__,
+        ) || 120_000;
       xhr.timeout = UPLOAD_TIMEOUT_MS;
       xhr.open("POST", `${API_BASE}/workspace/${slug}/parse`);
       const headers = baseHeaders();
@@ -456,7 +460,7 @@ const Workspace = {
         {
           method: "GET",
           headers: baseHeaders(),
-        }
+        },
       );
       let data;
       try {

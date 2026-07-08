@@ -1279,8 +1279,7 @@ const TRANSLATIONS = {
     "single-user": {
       password: "Password",
     },
-    "sign-in":
-      "Enter your password to access your {{appName}} instance.",
+    "sign-in": "Enter your password to access your {{appName}} instance.",
     "password-reset": {
       title: "Password Reset",
       description:

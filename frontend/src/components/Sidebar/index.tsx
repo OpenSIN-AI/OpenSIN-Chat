@@ -239,7 +239,9 @@ export function SidebarMobileHeader() {
             alt={t("sidebar.logo")}
             className="h-6 w-6 max-h-6 max-w-6 object-contain"
           />
-          <span className="text-theme-text-primary font-bold text-base">OpenSIN</span>
+          <span className="text-theme-text-primary font-bold text-base">
+            OpenSIN
+          </span>
         </div>
         <div className="w-12"></div>
       </header>
@@ -272,7 +274,9 @@ export function SidebarMobileHeader() {
                   alt={t("sidebar.logo")}
                   className="w-8 h-8 max-h-[32px] max-w-[32px] object-contain"
                 />
-                <span className="text-theme-text-primary font-bold text-base">OpenSIN</span>
+                <span className="text-theme-text-primary font-bold text-base">
+                  OpenSIN
+                </span>
               </div>
               {(!user || user?.role !== "default") && (
                 <div className="flex gap-x-2 items-center text-slate-500 shrink-0">

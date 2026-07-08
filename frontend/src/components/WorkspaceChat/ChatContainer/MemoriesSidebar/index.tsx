@@ -136,7 +136,10 @@ function WorkspaceUrlsTab({ workspace }: any) {
           <div key={doc.docId || idx} className="flex flex-col gap-[2px]">
             <div className="flex gap-2 items-start">
               <div className="w-4 h-4 rounded-full bg-zinc-700 light:bg-slate-200 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <Globe size={10} className="text-theme-text-primary light:text-theme-text-primary" />
+                <Globe
+                  size={10}
+                  className="text-theme-text-primary light:text-theme-text-primary"
+                />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-theme-text-primary light:text-theme-text-primary truncate leading-[15px]">
@@ -311,7 +314,8 @@ function SidebarHeaderWithTabs({ workspace }: any) {
 }
 
 function MemoryList() {
-  const { activeMemories, memoriesLoading, memoriesError } = useMemoriesContext();
+  const { activeMemories, memoriesLoading, memoriesError } =
+    useMemoriesContext();
   const { t } = useTranslation();
 
   if (memoriesLoading) {

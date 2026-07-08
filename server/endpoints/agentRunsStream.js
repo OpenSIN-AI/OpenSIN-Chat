@@ -10,7 +10,7 @@ const { AgentRuns } = require("../models/agentRuns");
 const { Workspace } = require("../models/workspace");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
 const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
-const { safeJsonParse, decodeJWT } = require("../utils/http");
+const { decodeJWT } = require("../utils/http");
 const { SystemSettings } = require("../models/systemSettings");
 const { User } = require("../models/user");
 const { EncryptionManager } = require("../utils/EncryptionManager");
@@ -109,7 +109,9 @@ function agentRunsStream(app) {
         return res.status(401).json({ success: false, error: "Unauthorized" });
       }
       if (!isOriginAllowed(req)) {
-        return res.status(403).json({ success: false, error: "Origin not allowed" });
+        return res
+          .status(403)
+          .json({ success: false, error: "Origin not allowed" });
       }
 
       const slug = req.params.slug;
@@ -117,7 +119,9 @@ function agentRunsStream(app) {
       // Resolve workspace
       const workspace = await Workspace.get({ slug });
       if (!workspace) {
-        return res.status(404).json({ success: false, error: "Workspace not found" });
+        return res
+          .status(404)
+          .json({ success: false, error: "Workspace not found" });
       }
 
       // SSE headers
@@ -132,7 +136,7 @@ function agentRunsStream(app) {
       const send = (event, data) => {
         try {
           res.write(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`);
-        } catch (e) {
+        } catch {
           // connection may have closed
         }
       };

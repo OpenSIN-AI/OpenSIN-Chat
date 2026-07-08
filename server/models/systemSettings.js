@@ -574,8 +574,9 @@ const SystemSettings = {
       OllamaEmbeddingBatchSize:
         (await SettingsManager.get("OLLAMA_EMBEDDING_BATCH_SIZE")) || 1,
       VoyageAiApiKey: !!(await SettingsManager.get("VOYAGEAI_API_KEY")),
-      GenericOpenAiEmbeddingApiKey:
-        !!(await SettingsManager.get("GENERIC_OPEN_AI_EMBEDDING_API_KEY")),
+      GenericOpenAiEmbeddingApiKey: !!(await SettingsManager.get(
+        "GENERIC_OPEN_AI_EMBEDDING_API_KEY",
+      )),
       GenericOpenAiEmbeddingMaxConcurrentChunks:
         (await SettingsManager.get(
           "GENERIC_OPEN_AI_EMBEDDING_MAX_CONCURRENT_CHUNKS",
@@ -595,8 +596,7 @@ const SystemSettings = {
       // --------------------------------------------------------
       LLMProvider: llmProvider,
       LLMModel: getBaseLLMProviderModel({ provider: llmProvider }) || null,
-      ModelRouterId:
-        (await SettingsManager.get("MODEL_ROUTER_ID")) || null,
+      ModelRouterId: (await SettingsManager.get("MODEL_ROUTER_ID")) || null,
       ...this.llmPreferenceKeys(),
 
       // --------------------------------------------------------
@@ -650,12 +650,8 @@ const SystemSettings = {
       TTSCvoiceCustomVoiceModel: await SettingsManager.get(
         "TTS_CVOICE_CUSTOM_VOICE_MODEL",
       ),
-      TTSCvoicePersonName: await SettingsManager.get(
-        "TTS_CVOICE_PERSON_NAME",
-      ),
-      TTSCvoicePersonSlug: await SettingsManager.get(
-        "TTS_CVOICE_PERSON_SLUG",
-      ),
+      TTSCvoicePersonName: await SettingsManager.get("TTS_CVOICE_PERSON_NAME"),
+      TTSCvoicePersonSlug: await SettingsManager.get("TTS_CVOICE_PERSON_SLUG"),
 
       // STT Selection
       SpeechToTextProvider:

@@ -18,21 +18,31 @@ const SystemPromptVariables = {
   DEFAULT_VARIABLES: [
     {
       key: "time",
-      value: () => new Intl.DateTimeFormat(undefined, { timeStyle: "medium" }).format(new Date()),
+      value: () =>
+        new Intl.DateTimeFormat(undefined, { timeStyle: "medium" }).format(
+          new Date(),
+        ),
       description: "Current time",
       type: "system",
       multiUserRequired: false,
     },
     {
       key: "date",
-      value: () => new Intl.DateTimeFormat(undefined, { dateStyle: "long" }).format(new Date()),
+      value: () =>
+        new Intl.DateTimeFormat(undefined, { dateStyle: "long" }).format(
+          new Date(),
+        ),
       description: "Current date",
       type: "system",
       multiUserRequired: false,
     },
     {
       key: "datetime",
-      value: () => new Intl.DateTimeFormat(undefined, { dateStyle: "full", timeStyle: "short" }).format(new Date()),
+      value: () =>
+        new Intl.DateTimeFormat(undefined, {
+          dateStyle: "full",
+          timeStyle: "short",
+        }).format(new Date()),
       description: "Current date and time",
       type: "system",
       multiUserRequired: false,

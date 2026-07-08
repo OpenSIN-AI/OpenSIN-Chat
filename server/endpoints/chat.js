@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-const { reqBody } = require("../utils/http");
+
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
 const {
   ROLES,
@@ -10,9 +10,7 @@ const {
   validWorkspaceSlug,
 } = require("../utils/middleware/validWorkspace");
 const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
-const {
-  streamChatHandler,
-} = require("../utils/helpers/chat/streamHandler");
+const { streamChatHandler } = require("../utils/helpers/chat/streamHandler");
 
 const RATE_LIMIT = {
   bucket: "chat-stream",
@@ -31,7 +29,8 @@ function chatEndpoints(app) {
       validWorkspaceSlug,
       simpleRateLimit(RATE_LIMIT),
     ],
-    (request, response) => streamChatHandler(request, response, { thread: null }),
+    (request, response) =>
+      streamChatHandler(request, response, { thread: null }),
   );
 
   app.post(

@@ -37,7 +37,9 @@ vi.mock("@/hooks/useChatHistory", () => ({
 }));
 
 vi.mock("../contexts/TTSProvider", () => ({
-  TTSProvider: ({ children }) => <div data-testid="tts-provider">{children}</div>,
+  TTSProvider: ({ children }) => (
+    <div data-testid="tts-provider">{children}</div>
+  ),
   useWatchForAutoPlayAssistantTTSResponse: () => {},
 }));
 
@@ -190,7 +192,9 @@ describe("WorkspaceChat — pending message handling", () => {
       writable: true,
     });
 
-    expect(() => renderWorkspaceChat({ loading: true, workspace: null })).not.toThrow();
+    expect(() =>
+      renderWorkspaceChat({ loading: true, workspace: null }),
+    ).not.toThrow();
 
     Object.defineProperty(window, "sessionStorage", {
       value: original,

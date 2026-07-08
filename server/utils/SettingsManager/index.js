@@ -170,7 +170,14 @@ class SettingsManager {
     else process.env[envKey] = String(value);
 
     this._setCache(envKey, value ?? null);
-    await this._audit({ envKey, action, previousRuntime, value, sensitive, userId });
+    await this._audit({
+      envKey,
+      action,
+      previousRuntime,
+      value,
+      sensitive,
+      userId,
+    });
     return true;
   }
 
@@ -194,7 +201,14 @@ class SettingsManager {
   }
 
   /** Write a redacted-safe audit log entry for a setting mutation. */
-  static async _audit({ envKey, action, previousRuntime, value, sensitive, userId }) {
+  static async _audit({
+    envKey,
+    action,
+    previousRuntime,
+    value,
+    sensitive,
+    userId,
+  }) {
     try {
       const redacted = !!sensitive;
       await this._db().settings_audit_log.create({
@@ -240,7 +254,8 @@ class SettingsManager {
         loaded++;
       }
       this._hydrated = true;
-      if (loaded > 0) this.log(`Hydrated ${loaded} setting(s) from DB into runtime env.`);
+      if (loaded > 0)
+        this.log(`Hydrated ${loaded} setting(s) from DB into runtime env.`);
       return loaded;
     } catch (e) {
       // A missing table (pre-migration) is non-fatal — fall back to env vars.
@@ -258,7 +273,8 @@ class SettingsManager {
    * @returns {Promise<{ restored: boolean, value: string|null, error?: string }>}
    */
   static async rollback(envKey, { userId = null } = {}) {
-    if (!envKey) return { restored: false, value: null, error: "envKey required" };
+    if (!envKey)
+      return { restored: false, value: null, error: "envKey required" };
     try {
       const history = await this.auditLog({ envKey, limit: 1 });
       const previous = history?.[0]?.previousValue ?? null;

@@ -4,7 +4,11 @@
 import { useTranslation } from "react-i18next";
 import { Robot } from "@phosphor-icons/react/dist/csr/Robot";
 
-export default function AgentSettingsSidebar({ workspace }: { workspace: any }) {
+export default function AgentSettingsSidebar({
+  workspace,
+}: {
+  workspace: any;
+}) {
   const { t } = useTranslation();
   return (
     <div className="h-full w-[340px] flex flex-col p-3 overflow-y-auto">

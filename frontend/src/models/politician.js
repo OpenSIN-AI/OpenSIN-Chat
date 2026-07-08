@@ -21,7 +21,10 @@ const Politician = {
           body: JSON.stringify({ workspaceSlug }),
         },
       );
-      const data = await res.json().catch((e) => { console.error('politician API json parse failed:', e); return {}; });
+      const data = await res.json().catch((e) => {
+        console.error("politician API json parse failed:", e);
+        return {};
+      });
       if (!res.ok || !data.success) {
         return {
           success: false,
@@ -113,7 +116,10 @@ const Politician = {
         `${API_BASE}/politician/speech-search?${params}`,
         { headers: baseHeaders() },
       );
-      const data = await res.json().catch((e) => { console.error('politician API json parse failed:', e); return {}; });
+      const data = await res.json().catch((e) => {
+        console.error("politician API json parse failed:", e);
+        return {};
+      });
       if (!res.ok)
         return { results: [], error: data.error || `HTTP ${res.status}` };
       return {
@@ -136,7 +142,10 @@ const Politician = {
         `${API_BASE}/utils/bundestag/drucksachen?${params}`,
         { headers: baseHeaders() },
       );
-      const data = await res.json().catch((e) => { console.error('politician API json parse failed:', e); return {}; });
+      const data = await res.json().catch((e) => {
+        console.error("politician API json parse failed:", e);
+        return {};
+      });
       if (data.error) return { results: [], error: data.error };
       return {
         results: data.documents || [],

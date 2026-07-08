@@ -48,9 +48,9 @@ function noteEndpoints(app) {
             .json({ error: "content must be a string" });
         }
         if (content.length > 100_000) {
-          return response
-            .status(400)
-            .json({ error: "content must be a string of max 100,000 characters" });
+          return response.status(400).json({
+            error: "content must be a string of max 100,000 characters",
+          });
         }
 
         // Validate pinned — must be boolean (or coercible default false).
@@ -82,9 +82,9 @@ function noteEndpoints(app) {
         const { content, pinned } = reqBody(request);
         if (content !== undefined) {
           if (typeof content !== "string" || content.length > 100_000) {
-            return response
-              .status(400)
-              .json({ error: "content must be a string of max 100,000 characters" });
+            return response.status(400).json({
+              error: "content must be a string of max 100,000 characters",
+            });
           }
         }
         // IDOR guard: ensure the note belongs to this workspace

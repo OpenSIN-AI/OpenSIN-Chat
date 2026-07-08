@@ -141,7 +141,11 @@ async function getDocumentsByFolder(folderName = "") {
   } catch {
     folderStat = null;
   }
-  if (!folderStat || !folderStat.isDirectory() || !isWithin(documentsPath, folderPath)) {
+  if (
+    !folderStat ||
+    !folderStat.isDirectory() ||
+    !isWithin(documentsPath, folderPath)
+  ) {
     return {
       folder: folderName,
       documents: [],
@@ -301,7 +305,9 @@ async function findDocumentInDocuments(documentName = null) {
   for (const folder of await fs.promises.readdir(documentsPath)) {
     let isFolder;
     try {
-      isFolder = (await fs.promises.lstat(path.join(documentsPath, folder))).isDirectory();
+      isFolder = (
+        await fs.promises.lstat(path.join(documentsPath, folder))
+      ).isDirectory();
     } catch {
       continue;
     }

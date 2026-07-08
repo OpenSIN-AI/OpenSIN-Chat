@@ -9,7 +9,6 @@
 //   NODE_ENV=production node scripts/migrate-env-to-db.js
 //
 // Idempotent: re-running simply upserts the same values.
-const path = require("path");
 
 process.env.NODE_ENV === "development"
   ? require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` })

@@ -54,7 +54,9 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(`[validate-env-completeness] ✓ All ${CRITICAL_KEYS.length} critical keys are documented in .env.example`);
+  console.log(
+    `[validate-env-completeness] ✓ All ${CRITICAL_KEYS.length} critical keys are documented in .env.example`,
+  );
   process.exit(0);
 }
 

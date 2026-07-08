@@ -30,6 +30,9 @@ jobs:
         with:
           node-version: "22"
           cache: "yarn"
+          cache-dependency-path: |
+            frontend/yarn.lock
+            server/yarn.lock
 
       - name: Install dependencies
         run: |
@@ -46,22 +49,19 @@ jobs:
           cd frontend && yarn lint:check
         continue-on-error: false
 
+      # The package.json test scripts are already CI-ready:
+      # server uses "jest --ci --passWithNoTests", frontend uses "vitest run".
+      # Do NOT append --ci here — vitest does not know that flag and crashes.
       - name: Test server
         run: |
-          cd server && NODE_OPTIONS="--experimental-vm-modules" yarn test --ci
+          cd server && yarn test
         continue-on-error: false
 
       - name: Test frontend
         run: |
-          cd frontend && yarn test --ci
+          cd frontend && yarn test
         continue-on-error: false
 
       - name: Report status
-        if: always()
-        run: |
-          if [ $? -eq 0 ]; then
-            echo "✅ All checks passed (lint + test)"
-          else
-            echo "❌ Lint or test failed"
-            exit 1
-          fi
+        if: success()
+        run: echo "All checks passed (lint + test)"

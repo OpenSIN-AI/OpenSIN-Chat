@@ -7,7 +7,7 @@
 // and exposes the returned values.
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, renderHook, waitFor, act } from "@testing-library/react";
+import { render, renderHook } from "@testing-library/react";
 import React from "react";
 
 // --- Mocks ---

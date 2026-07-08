@@ -27,12 +27,16 @@ function agentTriggerEndpoints(app) {
       try {
         const workspace = await Workspace.get({ slug: req.params.slug });
         if (!workspace)
-          return res.status(404).json({ success: false, error: "Workspace not found" });
+          return res
+            .status(404)
+            .json({ success: false, error: "Workspace not found" });
         const triggers = await AgentTriggers.list(workspace.id);
         return res.json({ success: true, triggers });
       } catch (e) {
         consoleLogger.error("[triggers list]", e);
-        return res.status(500).json({ success: false, error: "Internal error" });
+        return res
+          .status(500)
+          .json({ success: false, error: "Internal error" });
       }
     },
   );
@@ -49,9 +53,11 @@ function agentTriggerEndpoints(app) {
       try {
         const workspace = await Workspace.get({ slug: req.params.slug });
         if (!workspace)
-          return res.status(404).json({ success: false, error: "Workspace not found" });
+          return res
+            .status(404)
+            .json({ success: false, error: "Workspace not found" });
 
-        const { name, agentName, type, config } = reqBody(request);
+        const { name, agentName, type, config } = reqBody(req);
         if (!name || !agentName || !type || !config) {
           return res.status(400).json({
             success: false,
@@ -76,7 +82,9 @@ function agentTriggerEndpoints(app) {
         return res.json({ success: true, trigger });
       } catch (e) {
         consoleLogger.error("[triggers create]", e);
-        return res.status(500).json({ success: false, error: "Internal error" });
+        return res
+          .status(500)
+          .json({ success: false, error: "Internal error" });
       }
     },
   );
@@ -93,7 +101,9 @@ function agentTriggerEndpoints(app) {
         return res.json({ success: true, trigger });
       } catch (e) {
         consoleLogger.error("[triggers update]", e);
-        return res.status(500).json({ success: false, error: "Internal error" });
+        return res
+          .status(500)
+          .json({ success: false, error: "Internal error" });
       }
     },
   );
@@ -108,7 +118,9 @@ function agentTriggerEndpoints(app) {
         return res.json({ success: true });
       } catch (e) {
         consoleLogger.error("[triggers delete]", e);
-        return res.status(500).json({ success: false, error: "Internal error" });
+        return res
+          .status(500)
+          .json({ success: false, error: "Internal error" });
       }
     },
   );
@@ -120,11 +132,16 @@ function agentTriggerEndpoints(app) {
     async (req, res) => {
       try {
         const { active } = reqBody(req);
-        const trigger = await AgentTriggers.toggle(req.params.triggerId, active);
+        const trigger = await AgentTriggers.toggle(
+          req.params.triggerId,
+          active,
+        );
         return res.json({ success: true, trigger });
       } catch (e) {
         consoleLogger.error("[triggers toggle]", e);
-        return res.status(500).json({ success: false, error: "Internal error" });
+        return res
+          .status(500)
+          .json({ success: false, error: "Internal error" });
       }
     },
   );
@@ -139,7 +156,9 @@ function agentTriggerEndpoints(app) {
         return res.json({ success: true, runs });
       } catch (e) {
         consoleLogger.error("[trigger runs list]", e);
-        return res.status(500).json({ success: false, error: "Internal error" });
+        return res
+          .status(500)
+          .json({ success: false, error: "Internal error" });
       }
     },
   );
@@ -167,15 +186,19 @@ function agentTriggerEndpoints(app) {
       try {
         const trigger = await AgentTriggers.get(req.params.triggerId);
         if (!trigger)
-          return res.status(404).json({ success: false, error: "Trigger not found" });
+          return res
+            .status(404)
+            .json({ success: false, error: "Trigger not found" });
         // Fire immediately in background
-        triggerEngine._executeTrigger(trigger).catch((e) =>
-          consoleLogger.error("[trigger fire]", e),
-        );
+        triggerEngine
+          ._executeTrigger(trigger)
+          .catch((e) => consoleLogger.error("[trigger fire]", e));
         return res.json({ success: true, message: "Trigger fired" });
       } catch (e) {
         consoleLogger.error("[trigger fire]", e);
-        return res.status(500).json({ success: false, error: "Internal error" });
+        return res
+          .status(500)
+          .json({ success: false, error: "Internal error" });
       }
     },
   );

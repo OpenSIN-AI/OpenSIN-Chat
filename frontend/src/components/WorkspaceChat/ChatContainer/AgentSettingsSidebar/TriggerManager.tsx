@@ -12,7 +12,6 @@ import {
   Play,
   Pause,
   Trash,
-  Pencil,
   CheckCircle,
   XCircle,
   CircleNotch,
@@ -24,7 +23,9 @@ const STATUS_ICONS: Record<string, React.ReactNode> = {
   error: <XCircle size={12} className="text-red-500" />,
   running: <CircleNotch size={12} className="animate-spin text-[#009ee0]" />,
   queued: <span className="text-xs text-zinc-400">…</span>,
-  failed_permanent: <XCircle size={12} className="text-red-600" weight="fill" />,
+  failed_permanent: (
+    <XCircle size={12} className="text-red-600" weight="fill" />
+  ),
 };
 
 function TriggerRow({
@@ -39,14 +40,21 @@ function TriggerRow({
   onDelete: (id: string) => void;
 }) {
   const { t } = useTranslation();
-  const typeIcon = trigger.type === "schedule" ? <Clock size={14} /> : <ArrowsClockwise size={14} />;
+  const typeIcon =
+    trigger.type === "schedule" ? (
+      <Clock size={14} />
+    ) : (
+      <ArrowsClockwise size={14} />
+    );
 
   return (
     <div className="flex flex-col gap-1 p-2 rounded-lg hover:bg-zinc-800/50 light:hover:bg-slate-100/50 group">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 min-w-0">
           {typeIcon}
-          <span className="text-sm text-theme-text-primary truncate">{trigger.name}</span>
+          <span className="text-sm text-theme-text-primary truncate">
+            {trigger.name}
+          </span>
           {!trigger.active && (
             <span className="text-[10px] text-amber-400">paused</span>
           )}
@@ -197,9 +205,14 @@ function CreateTriggerForm({
   );
 }
 
-export default function TriggerManager({ workspaceSlug }: { workspaceSlug: string }) {
+export default function TriggerManager({
+  workspaceSlug,
+}: {
+  workspaceSlug: string;
+}) {
   const { t } = useTranslation();
-  const { triggers, loading, create, toggle, fire, remove } = useTriggers(workspaceSlug);
+  const { triggers, loading, create, toggle, fire, remove } =
+    useTriggers(workspaceSlug);
 
   return (
     <div className="flex flex-col gap-2">

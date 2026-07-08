@@ -156,9 +156,10 @@ class OllamaAILLM {
         });
       };
 
-      const humanDiff = timeout >= 60_000
-        ? `${Math.round(timeout / 60_000)} min`
-        : `${Math.round(timeout / 1_000)} sec`;
+      const humanDiff =
+        timeout >= 60_000
+          ? `${Math.round(timeout / 60_000)} min`
+          : `${Math.round(timeout / 1_000)} sec`;
       OllamaAILLM.#slog(`Applying custom fetch w/timeout of ${humanDiff}.`);
       return noTimeoutFetch;
     } catch (error) {

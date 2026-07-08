@@ -45,7 +45,11 @@ export default function NotepadSidebar({ workspace }: any) {
         setContent(result[0].content || "");
       }
     } catch (e) {
-      setLoadError(e instanceof Error ? e.message : t("common.loadError", "Fehler beim Laden"));
+      setLoadError(
+        e instanceof Error
+          ? e.message
+          : t("common.loadError", "Fehler beim Laden"),
+      );
     } finally {
       setIsLoading(false);
     }
@@ -239,7 +243,9 @@ export default function NotepadSidebar({ workspace }: any) {
           <div className="flex-1 flex flex-col items-center justify-center gap-3 p-4">
             <div className="p-3 rounded-lg bg-red-950/40 border border-red-800/50 text-xs text-red-400 flex items-center gap-2 max-w-xs">
               <Warning size={16} weight="fill" className="flex-shrink-0" />
-              <span>{t("common.loadError", "Fehler beim Laden")}: {loadError}</span>
+              <span>
+                {t("common.loadError", "Fehler beim Laden")}: {loadError}
+              </span>
             </div>
             <button
               onClick={() => {

@@ -287,7 +287,9 @@ class NativeEmbedder {
 
       if (!wroteAnyData) return [];
 
-      const raw = await fs.promises.readFile(tmpFilePath, { encoding: "utf-8" });
+      const raw = await fs.promises.readFile(tmpFilePath, {
+        encoding: "utf-8",
+      });
       const embeddingResults = JSON.parse(raw);
       return embeddingResults.length > 0 ? embeddingResults.flat() : null;
     } finally {

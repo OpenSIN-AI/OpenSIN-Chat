@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Frontend hook for agent triggers — CRUD, toggle, fire, runs.
 import { useCallback, useEffect, useState } from "react";
-import { mutate } from "swr";
 
 const API_BASE = "/api";
 
@@ -79,7 +78,10 @@ export function useTriggers(workspaceSlug: string) {
   );
 
   const update = useCallback(
-    async (triggerId: string, patch: Partial<AgentTrigger>): Promise<boolean> => {
+    async (
+      triggerId: string,
+      patch: Partial<AgentTrigger>,
+    ): Promise<boolean> => {
       const r = await fetch(
         `${API_BASE}/workspace/${workspaceSlug}/triggers/${triggerId}`,
         {
@@ -161,5 +163,16 @@ export function useTriggers(workspaceSlug: string) {
     [workspaceSlug],
   );
 
-  return { triggers, loading, create, update, remove, toggle, fire, getRuns, replayRun, refresh };
+  return {
+    triggers,
+    loading,
+    create,
+    update,
+    remove,
+    toggle,
+    fire,
+    getRuns,
+    replayRun,
+    refresh,
+  };
 }

@@ -66,7 +66,9 @@ function subagentEndpoints(app) {
         );
       } catch (e) {
         consoleLogger.error("[subagent spawn]", e);
-        return res.status(500).json({ success: false, error: "Internal error" });
+        return res
+          .status(500)
+          .json({ success: false, error: "Internal error" });
       }
     },
   );
@@ -83,7 +85,9 @@ function subagentEndpoints(app) {
         return res.json({ success: true, tree });
       } catch (e) {
         consoleLogger.error("[subagent tree]", e);
-        return res.status(500).json({ success: false, error: "Internal error" });
+        return res
+          .status(500)
+          .json({ success: false, error: "Internal error" });
       }
     },
   );

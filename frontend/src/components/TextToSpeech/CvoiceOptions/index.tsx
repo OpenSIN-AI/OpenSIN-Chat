@@ -154,11 +154,15 @@ export default function CvoiceOptions({ settings }: any) {
               type="text"
               name="TTSCvoicePersonName"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-              placeholder={t("textToSpeech.cvoice.advanced.personName.placeholder")}
+              placeholder={t(
+                "textToSpeech.cvoice.advanced.personName.placeholder",
+              )}
               defaultValue={personName}
               autoComplete="off"
               spellCheck={false}
-              onChange={(e) => setPersonName((e.target as unknown as any)?.value)}
+              onChange={(e) =>
+                setPersonName((e.target as unknown as any)?.value)
+              }
             />
           </div>
           <div className="flex flex-col w-60">
@@ -169,17 +173,19 @@ export default function CvoiceOptions({ settings }: any) {
               type="text"
               name="TTSCvoicePersonSlug"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-              placeholder={t("textToSpeech.cvoice.advanced.personSlug.placeholder")}
+              placeholder={t(
+                "textToSpeech.cvoice.advanced.personSlug.placeholder",
+              )}
               defaultValue={personSlug}
               autoComplete="off"
               spellCheck={false}
-              onChange={(e) => setPersonSlug((e.target as unknown as any)?.value)}
+              onChange={(e) =>
+                setPersonSlug((e.target as unknown as any)?.value)
+              }
             />
           </div>
         </div>
-        <p className="mt-2">
-          {t("textToSpeech.cvoice.advanced.help")}
-        </p>
+        <p className="mt-2">{t("textToSpeech.cvoice.advanced.help")}</p>
       </details>
 
       <p className="text-xs leading-[18px] font-base text-white text-opacity-60">

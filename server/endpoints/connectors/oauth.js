@@ -13,7 +13,11 @@ const {
   redirectUri,
   BASE_URL,
 } = require("../../utils/connectors/providers");
-const { createPKCE, putState, takeState } = require("../../utils/connectors/pkce");
+const {
+  createPKCE,
+  putState,
+  takeState,
+} = require("../../utils/connectors/pkce");
 const { ConnectorAccounts } = require("../../models/connectorAccounts");
 const { validatedRequest } = require("../../utils/middleware/validatedRequest");
 const { simpleRateLimit } = require("../../utils/middleware/simpleRateLimit");
@@ -25,24 +29,20 @@ function connectorOAuthEndpoints(app) {
   const router = express.Router();
 
   // GET /connectors — list connected accounts + provider availability
-  router.get(
-    "/connectors",
-    [validatedRequest],
-    async (req, res) => {
-      try {
-        const user = await userFromSession(req);
-        const accounts = await ConnectorAccounts.listSafe(user?.id ?? null);
-        return res.json({
-          success: true,
-          accounts,
-          available: getAvailability(),
-        });
-      } catch (e) {
-        consoleLogger.error("[connectors list]", e);
-        return res.status(500).json({ success: false, error: "Internal error" });
-      }
-    },
-  );
+  router.get("/connectors", [validatedRequest], async (req, res) => {
+    try {
+      const user = await userFromSession(req);
+      const accounts = await ConnectorAccounts.listSafe(user?.id ?? null);
+      return res.json({
+        success: true,
+        accounts,
+        available: getAvailability(),
+      });
+    } catch (e) {
+      consoleLogger.error("[connectors list]", e);
+      return res.status(500).json({ success: false, error: "Internal error" });
+    }
+  });
 
   // GET /connectors/:provider/start?product=gmail — start OAuth flow
   router.get(
@@ -80,10 +80,7 @@ function connectorOAuthEndpoints(app) {
         ...(def.scopeSets._base || []),
         ...(def.scopeSets[product] || []),
       ];
-      if (
-        product &&
-        scopes.length === (def.scopeSets._base || []).length
-      ) {
+      if (product && scopes.length === (def.scopeSets._base || []).length) {
         return res.status(400).json({
           success: false,
           error: `Unknown product '${product}' for ${provider}`,
@@ -120,7 +117,9 @@ function connectorOAuthEndpoints(app) {
         });
       } catch (e) {
         consoleLogger.error(`[connectors ${provider} start]`, e);
-        return res.status(500).json({ success: false, error: "Internal error" });
+        return res
+          .status(500)
+          .json({ success: false, error: "Internal error" });
       }
     },
   );
@@ -136,7 +135,9 @@ function connectorOAuthEndpoints(app) {
         window.opener && window.opener.postMessage(${JSON.stringify(payload)}, "${BASE_URL}");
         setTimeout(() => window.close(), 100);
       </script><p style="font-family:sans-serif;text-align:center;padding:2rem">${
-        payload.ok ? "Verbunden! Fenster schließt sich…" : "Fehler: " + payload.error
+        payload.ok
+          ? "Verbunden! Fenster schließt sich…"
+          : "Fehler: " + payload.error
       }</p></body></html>`);
 
     if (oauthError) {
@@ -148,7 +149,11 @@ function connectorOAuthEndpoints(app) {
 
     const saved = takeState(String(state));
     if (!saved || saved.provider !== provider) {
-      return closePopup({ ok: false, provider, error: "State mismatch or expired" });
+      return closePopup({
+        ok: false,
+        provider,
+        error: "State mismatch or expired",
+      });
     }
 
     try {
@@ -234,7 +239,9 @@ function connectorOAuthEndpoints(app) {
         return res.json(result);
       } catch (e) {
         consoleLogger.error("[connectors disconnect]", e);
-        return res.status(500).json({ success: false, error: "Internal error" });
+        return res
+          .status(500)
+          .json({ success: false, error: "Internal error" });
       }
     },
   );

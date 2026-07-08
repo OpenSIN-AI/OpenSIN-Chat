@@ -99,7 +99,9 @@ export default function TextSizeMenu() {
                   : "hover:bg-zinc-700/50 light:hover:bg-slate-100"
               }`}
             >
-              <span className={`${textClass} text-theme-text-primary light:text-theme-text-primary`}>
+              <span
+                className={`${textClass} text-theme-text-primary light:text-theme-text-primary`}
+              >
                 {label}
               </span>
             </div>
