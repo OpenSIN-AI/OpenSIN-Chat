@@ -62,6 +62,7 @@ function TriggerRow({
         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
             onClick={() => onFire(trigger.id)}
+            aria-label={t("triggers.fire", "Fire trigger")}
             className="text-theme-text-secondary hover:text-[#009ee0]"
             title="Jetzt ausführen"
           >
@@ -69,6 +70,7 @@ function TriggerRow({
           </button>
           <button
             onClick={() => onToggle(trigger.id, !trigger.active)}
+            aria-label={t("triggers.toggle", "Toggle trigger")}
             className="text-theme-text-secondary hover:text-amber-400"
             title={trigger.active ? "Pausieren" : "Aktivieren"}
           >
@@ -76,6 +78,7 @@ function TriggerRow({
           </button>
           <button
             onClick={() => onDelete(trigger.id)}
+            aria-label={t("triggers.delete", "Delete trigger")}
             className="text-theme-text-secondary hover:text-red-400"
             title="Löschen"
           >
@@ -136,6 +139,7 @@ function CreateTriggerForm({
     return (
       <button
         onClick={() => setOpen(true)}
+        aria-label={t("triggers.create", "Create trigger")}
         className="flex items-center gap-1 px-3 py-1.5 bg-[#009ee0]/10 text-[#009ee0] rounded-lg text-xs hover:bg-[#009ee0]/20"
       >
         <Plus size={14} weight="bold" />
@@ -161,12 +165,16 @@ function CreateTriggerForm({
       <div className="flex gap-2">
         <button
           onClick={() => setType("schedule")}
+          aria-pressed={type === "schedule"}
+          aria-label={t("triggers.schedule", "Schedule")}
           className={`px-2 py-1 text-xs rounded ${type === "schedule" ? "bg-[#009ee0] text-white" : "bg-zinc-700 text-zinc-300"}`}
         >
           Schedule
         </button>
         <button
           onClick={() => setType("polling")}
+          aria-pressed={type === "polling"}
+          aria-label={t("triggers.polling", "Polling")}
           className={`px-2 py-1 text-xs rounded ${type === "polling" ? "bg-[#009ee0] text-white" : "bg-zinc-700 text-zinc-300"}`}
         >
           Polling
@@ -196,6 +204,7 @@ function CreateTriggerForm({
         </button>
         <button
           onClick={() => setOpen(false)}
+          aria-label={t("common.cancel", "Cancel")}
           className="px-3 py-1 text-zinc-400 text-xs"
         >
           {t("common.cancel", "Abbrechen")}

@@ -306,6 +306,7 @@ function ChatAttachments({ attachments = [] }: any) {
         <button
           type="button"
           key={`${item.name}-${index}`}
+          aria-label={item.name || t("chat_window.source", "Source")}
           onClick={() => openImageLightbox(imageAttachments, index)}
           className="p-0 border-none bg-transparent cursor-pointer hover:opacity-80 transition-opacity"
         >
@@ -356,6 +357,8 @@ function TruncatableContent({ children }: any) {
         <button
           type="button"
           onClick={() => setIsExpanded(!isExpanded)}
+          aria-label={isExpanded ? t("common.collapse", "Collapse") : t("common.expand", "Expand")}
+          aria-expanded={isExpanded}
           className="text-zinc-300 light:text-slate-700 hover:text-theme-text-primary light:hover:text-theme-text-primary text-xs font-medium leading-4 mt-2"
         >
           {isExpanded ? t("chat_window.see_less") : t("chat_window.see_more")}

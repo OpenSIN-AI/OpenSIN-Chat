@@ -169,6 +169,7 @@ function ThreadItem({
               <div className="flex items-center w-fit md:invisible md:group-hover/thread:visible md:group-focus-within/thread:visible gap-x-1">
                 <button
                   type="button"
+                  aria-label={t("common.threadOptions", "Thread options")}
                   className="border-none"
                   onClick={() => setShowOptions(!showOptions)}
                   aria-label={t("threadItem.threadOptions")}

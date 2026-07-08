@@ -12,6 +12,7 @@ import { titleCase } from "text-case";
 import { useTranslation } from "react-i18next";
 import { humanFileSize } from "@/utils/numbers";
 import MonoProviderIcon from "../MonoProviderIcon";
+import logger from "@/utils/logger";
 
 /**
  * @typedef {Object} ModelDefinition
@@ -57,6 +58,7 @@ export default function ModelTable({
       <button
         type="button"
         onClick={() => setShowAll(!showAll)}
+        aria-label={showAll ? t("common.showLess", "Show less") : t("common.showAll", "Show all")}
         className="border-none text-theme-text-secondary text-sm font-medium hover:underline flex items-center gap-x-[8px]"
       >
         {showAll ? (
@@ -211,7 +213,7 @@ function ModelRow({
           setDownloadPercentage(percentage);
         });
       } catch (e) {
-        console.error("Failed to download model:", e);
+        logger.error("Failed to download model:", e);
       } finally {
         setProcessing(false);
       }
@@ -224,7 +226,7 @@ function ModelRow({
       setProcessing(true);
       await uninstallModel(model.id);
     } catch (e) {
-      console.error("Failed to uninstall model:", e);
+      logger.error("Failed to uninstall model:", e);
     } finally {
       setProcessing(false);
     }
@@ -281,6 +283,7 @@ function ModelRow({
           <>
             <button
               type="button"
+              aria-label={t("common.select", "Select")}
               className="border-none hover:bg-white/20 rounded-lg p-1"
               onClick={() => setShowOptions(!showOptions)}
             >
