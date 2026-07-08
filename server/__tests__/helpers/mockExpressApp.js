@@ -153,10 +153,14 @@ function createMockApp() {
             if (err) reject(err);
             else resolve();
           });
-          // If the middleware returns a promise (async) and doesn't call next,
-          // it's acting as a terminal handler — wait for it then stop.
+          // Async handler that returns a Promise without calling next — wait for it.
           if (result && typeof result.then === "function") {
             result.then(resolve, reject);
+          } else if (response.ended) {
+            // Synchronous terminal handler: it wrote a response but didn't call
+            // next() and didn't return a Promise. The Promise would never settle
+            // — resolve it immediately so the chain moves on.
+            resolve();
           }
         } catch (err) {
           reject(err);
