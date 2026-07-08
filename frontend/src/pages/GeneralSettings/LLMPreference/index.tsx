@@ -390,7 +390,7 @@ function SearchMenuOpen({
           <X
             size={20}
             weight="bold"
-            className="cursor-pointer text-white hover:text-x-button"
+            className="cursor-pointer text-theme-text-primary hover:text-x-button"
             onClick={handleXButton}
           />
         </div>

@@ -98,7 +98,7 @@ export default function AddMemberModal({
             <div className="relative">
               <input
                 onChange={handleSearch}
-                className="w-[400px] h-[34px] bg-theme-bg-primary rounded-[100px] text-white placeholder:text-theme-text-secondary text-sm px-10 pl-10"
+                className="w-[400px] h-[34px] bg-theme-bg-primary rounded-[100px] text-theme-text-primary placeholder:text-theme-text-secondary text-sm px-10 pl-10"
                 placeholder={t("addMemberModal.searchPlaceholder")}
               />
               <MagnifyingGlass

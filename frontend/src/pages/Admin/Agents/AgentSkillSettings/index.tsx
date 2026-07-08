@@ -38,7 +38,7 @@ function AgentSkillSettingsModal({
     <ModalWrapper isOpen={isOpen} closeModal={closeModal}>
       <div className="w-[500px] bg-theme-bg-sidebar px-6 py-4 rounded-lg flex flex-col items-center justify-between relative shadow-lg border border-white/10">
         <div className="w-full flex items-center justify-between">
-          <div className="text-white text-left font-medium text-lg">
+          <div className="text-theme-text-primary text-left font-medium text-lg">
             {t("agent.settings.title")}
           </div>
           <button

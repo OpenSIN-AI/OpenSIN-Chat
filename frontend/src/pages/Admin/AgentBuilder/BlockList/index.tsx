@@ -26,7 +26,7 @@ import FinishNode from "../nodes/FinishNode";
 import WebScrapingNode from "../nodes/WebScrapingNode";
 import FlowInfoNode from "../nodes/FlowInfoNode";
 
-const BLOCK_ICON_CLASS = "w-4 h-4 text-white";
+const BLOCK_ICON_CLASS = "w-4 h-4 text-theme-text-primary";
 
 export const BLOCK_TYPES = {
   FLOW_INFO: "flowInfo",

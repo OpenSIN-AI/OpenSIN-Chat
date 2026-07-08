@@ -227,7 +227,7 @@ function Directory({
       <div className="px-8 pb-8" onContextMenu={handleContextMenu}>
         <div className="flex flex-col gap-y-6">
           <div className="flex items-center justify-between w-[560px] px-5 relative">
-            <h3 className="text-white text-base font-bold">
+            <h3 className="text-theme-text-primary text-base font-bold">
               {t("connectors.directory.my-documents")}
             </h3>
             <div className="relative">

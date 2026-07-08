@@ -184,7 +184,7 @@ export default function ServerPanel({
                 className="w-6 h-6 light:invert"
                 alt={t("common.mcpLogo")}
               />
-              <label htmlFor="name" className="text-white text-md font-bold">
+              <label htmlFor="name" className="text-theme-text-primary text-md font-bold">
                 {titleCase(server.name.replace(/[_-]/g, " "))}
               </label>
               {server.tools.length > 0 && (

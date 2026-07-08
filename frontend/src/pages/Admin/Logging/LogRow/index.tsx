@@ -99,7 +99,7 @@ const EventMetadata = ({
         {t("logging.logRow.eventMetadata")}
       </td>
       <td colSpan={3} className="px-6 py-4 rounded-r-2xl">
-        <div className="w-full rounded-lg bg-theme-bg-secondary p-2 text-white shadow-sm border-white/10 border bg-opacity-10">
+        <div className="w-full rounded-lg bg-theme-bg-secondary p-2 text-theme-text-primary shadow-sm border-white/10 border bg-opacity-10">
           <pre className="overflow-scroll">
             {JSON.stringify(metadata, null, 2)}
           </pre>
@@ -135,7 +135,7 @@ const EventBadge = ({ event }: EventBadgeProps): JSX.Element => {
     };
 
   return (
-    <td className="px-6 py-2 font-medium whitespace-nowrap text-white flex items-center">
+    <td className="px-6 py-2 font-medium whitespace-nowrap text-theme-text-primary flex items-center">
       <span
         className={`rounded-full ${colorTheme.bg} px-2 py-0.5 text-xs font-medium ${colorTheme.text} shadow-sm`}
       >

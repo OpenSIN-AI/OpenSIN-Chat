@@ -33,7 +33,7 @@ export default function WebsiteNode({
           placeholder={t("agentBuilder.websiteNode.urlPlaceholder")}
           value={config.url}
           onChange={(e) => onConfigChange({ url: e.target.value })}
-          className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-white placeholder:text-theme-placeholder focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none"
+          className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-theme-text-primary placeholder:text-theme-placeholder focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none"
           autoComplete="off"
           spellCheck={false}
         />
@@ -45,7 +45,7 @@ export default function WebsiteNode({
         <select
           value={config.action}
           onChange={(e) => onConfigChange({ action: e.target.value })}
-          className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-white focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none"
+          className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-theme-text-primary focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none"
         >
           <option value="read" className="bg-theme-bg-primary">
             {t("agentBuilder.websiteNode.readContent")}
@@ -67,7 +67,7 @@ export default function WebsiteNode({
           placeholder={t("agentBuilder.websiteNode.cssSelectorPlaceholder")}
           value={config.selector}
           onChange={(e) => onConfigChange({ selector: e.target.value })}
-          className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-white placeholder:text-theme-placeholder focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none"
+          className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-theme-text-primary placeholder:text-theme-placeholder focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none"
           autoComplete="off"
           spellCheck={false}
         />

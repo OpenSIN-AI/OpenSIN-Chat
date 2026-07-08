@@ -64,7 +64,7 @@ function ActionMenu({ chatId, forkThread, isEditing, role }: any) {
           <button
             type="button"
             onClick={handleFork}
-            className="border-none rounded-t-lg flex items-center text-white gap-x-2 hover:bg-theme-action-menu-item-hover py-1.5 px-2 transition-colors duration-200 w-full text-left"
+            className="border-none rounded-t-lg flex items-center text-theme-text-primary gap-x-2 hover:bg-theme-action-menu-item-hover py-1.5 px-2 transition-colors duration-200 w-full text-left"
           >
             <TreeView size={18} />
             <span className="text-sm">{t("chat_window.fork")}</span>
@@ -72,7 +72,7 @@ function ActionMenu({ chatId, forkThread, isEditing, role }: any) {
           <button
             type="button"
             onClick={handleDelete}
-            className="border-none flex rounded-b-lg items-center text-white gap-x-2 hover:bg-theme-action-menu-item-hover py-1.5 px-2 transition-colors duration-200 w-full text-left"
+            className="border-none flex rounded-b-lg items-center text-theme-text-primary gap-x-2 hover:bg-theme-action-menu-item-hover py-1.5 px-2 transition-colors duration-200 w-full text-left"
           >
             <Trash size={18} />
             <span className="text-sm">{t("chat_window.delete")}</span>

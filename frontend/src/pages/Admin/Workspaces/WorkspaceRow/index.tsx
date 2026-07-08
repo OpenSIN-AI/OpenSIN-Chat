@@ -62,7 +62,7 @@ export default function WorkspaceRow({
             href={paths.workspace.chat(workspace.slug)}
             target="_blank"
             rel="noreferrer"
-            className="text-white flex items-center hover:underline"
+            className="text-theme-text-primary flex items-center hover:underline"
           >
             <LinkSimple className="mr-2 w-4 h-4" /> {workspace.slug}
           </a>
@@ -70,7 +70,7 @@ export default function WorkspaceRow({
         <td className="px-6">
           <a
             href={paths.workspace.settings.members(workspace.slug)}
-            className="text-white flex items-center underline"
+            className="text-theme-text-primary flex items-center underline"
           >
             {workspace.userIds?.length}
           </a>

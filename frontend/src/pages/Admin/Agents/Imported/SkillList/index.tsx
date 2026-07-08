@@ -37,7 +37,7 @@ export default function ImportedSkillList({
 
   return (
     <div
-      className={`bg-theme-bg-secondary text-white rounded-xl w-full md:min-w-[360px]`}
+      className={`bg-theme-bg-secondary text-theme-text-primary rounded-xl w-full md:min-w-[360px]`}
     >
       {skills.map((config, index) => (
         <div

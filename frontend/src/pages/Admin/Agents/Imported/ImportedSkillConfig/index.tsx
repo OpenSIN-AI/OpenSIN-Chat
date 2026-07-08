@@ -130,7 +130,7 @@ export default function ImportedSkillConfig({
           <div className="flex w-full justify-between items-center">
             <div className="flex items-center gap-x-2">
               <Plug size={24} weight="bold" className="text-theme-text-primary" />
-              <label htmlFor="name" className="text-white text-md font-bold">
+              <label htmlFor="name" className="text-theme-text-primary text-md font-bold">
                 {sentenceCase(config.name)}
               </label>
             </div>
@@ -154,7 +154,7 @@ export default function ImportedSkillConfig({
               href={config.author_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white hover:underline"
+              className="text-theme-text-primary hover:underline"
             >
               {config.author}
             </a>

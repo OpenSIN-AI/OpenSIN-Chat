@@ -280,7 +280,7 @@ export default function Survey({
         </div>
 
         <div className="mt-8">
-          <label htmlFor="comment" className="text-white text-base font-medium">
+          <label htmlFor="comment" className="text-theme-text-primary text-base font-medium">
             {t("onboarding.survey.comment")}{" "}
             <span className="text-neutral-400 text-base font-light">
               {PARENS_OPEN}
@@ -308,7 +308,7 @@ export default function Survey({
           <button
             type="button"
             onClick={skipSurvey}
-            className="text-white text-base font-medium text-opacity-30 hover:text-opacity-100 hover:text-teal mt-8"
+            className="text-theme-text-secondary text-base font-medium hover:text-opacity-100 hover:text-teal mt-8"
           >
             {t("onboarding.survey.skip")}
           </button>

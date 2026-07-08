@@ -108,7 +108,7 @@ export default function DataConnectors() {
               />
             ))
           ) : (
-            <div className="text-white text-center mt-4">
+            <div className="text-theme-text-primary text-center mt-4">
               {t("connectors.no-connectors")}
             </div>
           )}

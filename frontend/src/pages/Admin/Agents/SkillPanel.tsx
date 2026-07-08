@@ -52,7 +52,7 @@ export function SkillPanel({
   const { t } = useTranslation();
   return (
     <div className="flex-[2] flex flex-col gap-y-[18px] mt-10">
-      <div className="bg-theme-bg-secondary text-white rounded-xl flex-1 min-h-0 p-4 overflow-y-scroll overflow-x-visible no-scroll">
+      <div className="bg-theme-bg-secondary text-theme-text-primary rounded-xl flex-1 min-h-0 p-4 overflow-y-scroll overflow-x-visible no-scroll">
         {SelectedSkillComponent ? (
           <>
             {selectedMcpServer ? (

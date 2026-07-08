@@ -29,7 +29,7 @@ export function UploadZone({
     return (
       <div className="px-8">
         <div className="flex items-center justify-start w-[560px]">
-          <h3 className="text-white text-base font-bold ml-5">
+          <h3 className="text-theme-text-primary text-base font-bold ml-5">
             {workspace.name}
           </h3>
         </div>
@@ -51,7 +51,7 @@ export function UploadZone({
     return (
       <div className="px-8">
         <div className="flex items-center justify-start w-[560px]">
-          <h3 className="text-white text-base font-bold ml-5">
+          <h3 className="text-theme-text-primary text-base font-bold ml-5">
             {workspace.name}
           </h3>
         </div>

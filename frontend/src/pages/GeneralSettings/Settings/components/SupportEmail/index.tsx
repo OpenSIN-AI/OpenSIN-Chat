@@ -86,7 +86,7 @@ export default function SupportEmail(): JSX.Element {
           <button
             type="button"
             onClick={(e) => updateSupportEmail(e as any, "")}
-            className="text-white text-base font-medium hover:text-opacity-60"
+            className="text-theme-text-primary text-base font-medium hover:text-opacity-60"
           >
             {t("settings.supportEmail.clear")}
           </button>

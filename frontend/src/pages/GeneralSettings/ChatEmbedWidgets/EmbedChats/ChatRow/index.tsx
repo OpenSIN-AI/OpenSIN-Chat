@@ -62,7 +62,7 @@ export default function ChatRow({ chat, onDelete }: ChatRowProps): JSX.Element {
             href={paths.settings.embedChatWidgets()}
             target="_blank"
             rel="noreferrer"
-            className="text-white flex items-center hover:underline"
+            className="text-theme-text-primary flex items-center hover:underline"
           >
             {chat.embed_config.workspace.name}
           </a>

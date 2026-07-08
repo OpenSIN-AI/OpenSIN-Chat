@@ -35,13 +35,13 @@ export default function ExperimentalFeatures() {
     <FeatureLayout>
       <div className="flex-1 flex gap-x-6 p-4 mt-10">
         <div className="flex flex-col gap-y-[18px]">
-          <div className="text-white flex items-center gap-x-2">
+          <div className="text-theme-text-primary flex items-center gap-x-2">
             <Flask size={24} />
             <p className="text-lg font-medium">
               {t("experimentalFeatures.title")}
             </p>
           </div>
-          <div className="bg-theme-bg-secondary text-white rounded-xl min-w-[360px] w-fit">
+          <div className="bg-theme-bg-secondary text-theme-text-primary rounded-xl min-w-[360px] w-fit">
             {Object.values(configurableFeatures).map(
               (feature: any, index: number) => {
                 const isFirst = index === 0;
@@ -69,7 +69,7 @@ export default function ExperimentalFeatures() {
 
         <FeatureVerification>
           <div className="flex-[2] flex flex-col gap-y-[18px] mt-10">
-            <div className="bg-theme-bg-secondary text-white rounded-xl flex-1 p-4">
+            <div className="bg-theme-bg-secondary text-theme-text-primary rounded-xl flex-1 p-4">
               {selectedFeature ? (
                 <SelectedFeatureComponent
                   feature={configurableFeatures[selectedFeature]}

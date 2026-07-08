@@ -96,7 +96,7 @@ export default function CustomAppName(): JSX.Element {
           <button
             type="button"
             onClick={(e) => updateCustomAppName(e as any, "")}
-            className="text-white text-base font-medium hover:text-opacity-60"
+            className="text-theme-text-primary text-base font-medium hover:text-opacity-60"
           >
             {t("settings.customAppName.clear")}
           </button>
