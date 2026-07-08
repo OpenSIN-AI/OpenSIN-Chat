@@ -23,7 +23,8 @@
     "prisma:setup": "yarn prisma:generate && yarn prisma:migrate",
     "postinstall": "prisma generate --schema=./prisma/schema.prisma",
     "env:sync": "node scripts/sync-env-example.js",
-    "smoke": "node scripts/smoke.mjs"
+    "smoke": "node scripts/smoke.mjs",
+    "type-check": "tsc --noEmit"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
@@ -152,7 +153,8 @@
     "jest": "^30.0.0",
     "node-html-markdown": "^1.3.0",
     "nodemon": "^3.1.14",
-    "prettier": "3.9.4"
+    "prettier": "3.9.4",
+    "typescript": "^5.7.0"
   },
   "optionalDependencies": {
     "ioredis": "^5.4.1"
