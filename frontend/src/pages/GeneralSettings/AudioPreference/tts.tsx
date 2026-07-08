@@ -27,6 +27,7 @@ import KokoroTTSOptions from "@/components/TextToSpeech/KokoroOptions";
 import NvidiaNimTTSOptions from "@/components/TextToSpeech/NvidiaNimOptions";
 import CvoiceTTSOptions from "@/components/TextToSpeech/CvoiceOptions";
 import CvoiceLogo from "@/media/ttsproviders/cvoice.png";
+import logger from "@/utils/logger";
 
 /** Settings object shape passed to TTS provider option components. */
 interface TTSSettings {
@@ -153,7 +154,7 @@ export default function TextToSpeechProvider({
       }
       setHasChanges(!!error);
     } catch (err) {
-      console.error(err);
+      logger.error(err);
     } finally {
       setSaving(false);
     }

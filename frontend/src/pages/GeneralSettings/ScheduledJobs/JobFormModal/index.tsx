@@ -11,6 +11,7 @@ import JobDescription from "./JobDescription";
 import JobSchedule from "./JobSchedule";
 import ToolsSelector from "./ToolsSelector";
 import FormActions from "./FormActions";
+import logger from "@/utils/logger";
 
 type Job = {
   id?: string;
@@ -77,7 +78,7 @@ export default function JobFormModal({
         setAvailableTools(tools || []);
       })
       .catch((e) => {
-        console.error("Failed to fetch available tools:", e);
+        logger.error("Failed to fetch available tools:", e);
       });
   }, []);
 

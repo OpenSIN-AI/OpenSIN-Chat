@@ -28,6 +28,7 @@ import {
   THOUGHT_REGEX_CLOSE,
 } from "@/components/WorkspaceChat/ChatContainer/ChatHistory/ThoughtContainer";
 import useRunDetail from "@/hooks/useRunDetail";
+import logger from "@/utils/logger";
 
 // Pure punctuation used as a list marker — not user-facing copy.
 const PERIOD = ".";
@@ -76,7 +77,7 @@ export default function RunDetailPage() {
       markedRead.current = runId;
       ScheduledJobs.markRunRead(runId)
         .then(() => refresh())
-        .catch((e) => console.error("Failed to mark run as read:", e));
+        .catch((e) => logger.error("Failed to mark run as read:", e));
     }
   }, [run, runId, refresh]);
 

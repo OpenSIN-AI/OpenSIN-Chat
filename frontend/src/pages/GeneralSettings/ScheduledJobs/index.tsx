@@ -13,6 +13,7 @@ import { Bell } from "@phosphor-icons/react/dist/csr/Bell";
 import { Tooltip } from "react-tooltip";
 import useScheduledJobs from "@/hooks/useScheduledJobs";
 import AdminContentPanel from "@/components/AdminContentPanel";
+import logger from "@/utils/logger";
 
 export default function ScheduledJobsPage() {
   const { t } = useTranslation();
@@ -220,7 +221,7 @@ function NotificationBellButton() {
     try {
       await subscribeToPushNotifications();
     } catch (e) {
-      console.error("Failed to subscribe to push notifications:", e);
+      logger.error("Failed to subscribe to push notifications:", e);
     }
     setPermissionState(Notification.permission);
   };
