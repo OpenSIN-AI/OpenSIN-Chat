@@ -56,6 +56,7 @@ function LogsTab() {
         <button
           type="button"
           onClick={() => clearConsoleLogs()}
+          aria-label={t("consoleSidebar.clearLogs", "Clear logs")}
           className="flex items-center gap-1 text-[10px] text-zinc-500 hover:text-zinc-300 border-none bg-transparent cursor-pointer transition-colors"
           aria-label={t("consoleSidebar.clear")}
         >
@@ -179,6 +180,7 @@ function TerminalTab() {
         <button
           type="button"
           onClick={() => setHistory([])}
+          aria-label={t("consoleSidebar.clearHistory", "Clear history")}
           className="flex items-center gap-1 text-[10px] text-zinc-500 hover:text-zinc-300 border-none bg-transparent cursor-pointer transition-colors"
           aria-label={t("consoleSidebar.clear")}
         >
@@ -266,6 +268,7 @@ export default function ConsoleSidebar() {
               key={tab}
               type="button"
               role="tab"
+              aria-label={tab === "logs" ? t("console.tab_logs") : t("console.tab_terminal")}
               aria-selected={activeTab === tab}
               onClick={() => setActiveTab(tab)}
               className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium uppercase tracking-[1.2px] whitespace-nowrap transition-colors ${

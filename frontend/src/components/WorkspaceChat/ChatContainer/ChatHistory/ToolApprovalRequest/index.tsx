@@ -176,6 +176,7 @@ function ToolApprovalResponseOption({
         <button
           type="button"
           onClick={onApprove}
+          aria-label={t("chat_window.agent_invocation.approve")}
           className="border-none transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm"
         >
           {t("chat_window.agent_invocation.approve")}
@@ -183,6 +184,7 @@ function ToolApprovalResponseOption({
         <button
           type="button"
           onClick={onReject}
+          aria-label={t("chat_window.agent_invocation.reject")}
           className="border-none text-theme-text-primary light:text-theme-text-primary text-sm font-medium w-[70px] h-9 rounded-lg hover:bg-white/5 light:hover:bg-slate-300"
         >
           {t("chat_window.agent_invocation.reject")}
@@ -192,6 +194,7 @@ function ToolApprovalResponseOption({
         <input
           type="checkbox"
           checked={alwaysAllow}
+          aria-label={t("chat_window.agent_invocation.always_allow", { skillName })}
           onChange={(e) =>
             setAlwaysAllow((e.target as HTMLInputElement).checked)
           }
