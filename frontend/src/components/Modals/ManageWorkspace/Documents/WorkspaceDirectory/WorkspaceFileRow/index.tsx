@@ -13,6 +13,7 @@ import { PushPin } from "@phosphor-icons/react/dist/csr/PushPin";
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import System from "@/models/system";
+import logger from "@/utils/logger";
 
 export default function WorkspaceFileRow({
   item,
@@ -40,7 +41,7 @@ export default function WorkspaceFileRow({
       });
       await refresh();
     } catch (error) {
-      console.error("Failed to remove document:", error);
+      logger.error("Failed to remove document:", error);
     }
     setSelectedItems({});
     setLoadingMessage("");

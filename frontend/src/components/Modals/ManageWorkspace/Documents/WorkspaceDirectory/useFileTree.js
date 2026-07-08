@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Workspace from "@/models/workspace";
+import logger from "@/utils/logger";
 
 export function useFileTree({
   workspace,
@@ -68,7 +69,7 @@ export function useFileTree({
       await fetchKeys(true);
       setSelectedItems({});
     } catch (error) {
-      console.error("Failed to remove documents:", error);
+      logger.error("Failed to remove documents:", error);
     }
 
     setLoadingMessage("");

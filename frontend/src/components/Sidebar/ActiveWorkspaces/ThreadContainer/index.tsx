@@ -19,6 +19,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import useThreads from "@/hooks/useThreads";
 import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 import {
+import logger from "@/utils/logger";
   DndContext,
   PointerSensor,
   useSensor,
@@ -238,7 +239,7 @@ export default function ThreadContainer({
       await Workspace.threads.deleteBulk(workspace.slug, slugs);
       mutate();
     } catch (e) {
-      console.error("Failed to delete threads:", e);
+      logger.error("Failed to delete threads:", e);
       mutate(); // Rollback visual state
       return;
     }

@@ -9,6 +9,7 @@ import { PauseCircle } from "@phosphor-icons/react/dist/csr/PauseCircle";
 import { PlayCircle } from "@phosphor-icons/react/dist/csr/PlayCircle";
 import usePiperVoices from "@/hooks/usePiperVoices";
 import { useTranslation } from "react-i18next";
+import logger from "@/utils/logger";
 
 export default function PiperTTSOptions({ settings }: any) {
   const { t } = useTranslation();
@@ -56,7 +57,7 @@ function PiperTTSModelSelection({ settings }: any) {
         }),
       )
 
-      .catch((e) => console.error(e));
+      .catch((e) => logger.error(e));
   }
 
   if (loading) {
@@ -158,7 +159,7 @@ function DemoVoiceSample({ voiceId }: any) {
         playerRef.current.play();
       }
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       setLoading(false);
       setSpeaking(false);
     }

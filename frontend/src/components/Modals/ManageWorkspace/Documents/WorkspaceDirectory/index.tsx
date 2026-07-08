@@ -8,6 +8,7 @@ import useDocuments from "@/hooks/useDocuments";
 import useWorkspaceBySlug from "@/hooks/useWorkspaceBySlug";
 import { LoadingState, EmbeddingProgressState } from "./DirectoryStates";
 import {
+import logger from "@/utils/logger";
   toggleSelection,
   toggleSelectAll,
   buildItemsToRemove,
@@ -81,7 +82,7 @@ function WorkspaceDirectory({
       await refresh();
       setSelectedItems({});
     } catch (error) {
-      console.error("Failed to remove documents:", error);
+      logger.error("Failed to remove documents:", error);
     }
 
     setLoadingMessage("");
