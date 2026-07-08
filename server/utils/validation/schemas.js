@@ -14,10 +14,10 @@
  *     [validApiKey, validateBody(WorkspaceSchemas.create)],
  *     handler);
  */
-const { z } = require('zod');
+const { z } = require("zod");
 
 // ── shared primitives ────────────────────────────────────────────────
-const nonEmptyString = z.string().min(1, 'must be a non-empty string');
+const nonEmptyString = z.string().min(1, "must be a non-empty string");
 const optionalString = z.string().optional().default(undefined);
 const positiveInt = z.number().int().positive().optional().default(undefined);
 const slugString = z
@@ -26,7 +26,7 @@ const slugString = z
   .max(200)
   .regex(
     /^[a-z0-9-]+$/,
-    'must contain only lowercase letters, numbers, and hyphens'
+    "must contain only lowercase letters, numbers, and hyphens",
   )
   .optional();
 
@@ -34,7 +34,7 @@ const slugString = z
 const WorkspaceSchemas = {
   // POST /v1/workspace/new
   create: z.object({
-    name: nonEmptyString.max(255, 'must be at most 255 characters'),
+    name: nonEmptyString.max(255, "must be at most 255 characters"),
     similarityThreshold: z.number().min(0).max(1).optional(),
     openAiTemp: z.number().min(0).max(2).optional(),
     openAiHistory: z.number().int().min(0).max(100).optional(),
@@ -80,7 +80,7 @@ const WorkspaceSchemas = {
           mime: z.string().optional(),
           contentString: z.string().optional(),
           url: z.string().url().optional(),
-        })
+        }),
       )
       .optional()
       .default([]),
@@ -99,7 +99,7 @@ const WorkspaceSchemas = {
           mime: z.string().optional(),
           contentString: z.string().optional(),
           url: z.string().url().optional(),
-        })
+        }),
       )
       .optional()
       .default([]),
@@ -125,7 +125,7 @@ const WorkspaceThreadSchemas = {
 
   // POST /v1/workspace/:slug/thread/:threadSlug/update
   update: z.object({
-    name: nonEmptyString.max(255, 'must be at most 255 characters'),
+    name: nonEmptyString.max(255, "must be at most 255 characters"),
   }),
 
   // POST /v1/workspace/:slug/thread/:threadSlug/chat
@@ -140,7 +140,7 @@ const WorkspaceThreadSchemas = {
           mime: z.string().optional(),
           contentString: z.string().optional(),
           url: z.string().url().optional(),
-        })
+        }),
       )
       .optional()
       .default([]),
@@ -159,7 +159,7 @@ const WorkspaceThreadSchemas = {
           mime: z.string().optional(),
           contentString: z.string().optional(),
           url: z.string().url().optional(),
-        })
+        }),
       )
       .optional()
       .default([]),
@@ -172,8 +172,8 @@ const AdminSchemas = {
   // POST /v1/admin/users/new
   createUser: z.object({
     username: nonEmptyString.max(100),
-    password: nonEmptyString.min(8, 'password must be at least 8 characters'),
-    role: z.enum(['admin', 'manager', 'default']).optional().default('default'),
+    password: nonEmptyString.min(8, "password must be at least 8 characters"),
+    role: z.enum(["admin", "manager", "default"]).optional().default("default"),
   }),
 
   // POST /v1/admin/users/:id
@@ -182,13 +182,13 @@ const AdminSchemas = {
       username: z.string().max(100).optional(),
       password: z
         .string()
-        .min(8, 'password must be at least 8 characters')
+        .min(8, "password must be at least 8 characters")
         .optional(),
-      role: z.enum(['admin', 'manager', 'default']).optional(),
+      role: z.enum(["admin", "manager", "default"]).optional(),
       suspended: z.boolean().optional(),
     })
     .refine((data) => Object.keys(data).length > 0, {
-      message: 'at least one field must be provided for update',
+      message: "at least one field must be provided for update",
     }),
 
   // POST /v1/admin/invites
@@ -210,8 +210,8 @@ const AdminSchemas = {
 const DocumentSchemas = {
   // POST /v1/document/upload-link  (link-based ingestion)
   uploadLink: z.object({
-    link: nonEmptyString.url('must be a valid URL'),
-    addToWorkspaces: z.string().optional().default(''),
+    link: nonEmptyString.url("must be a valid URL"),
+    addToWorkspaces: z.string().optional().default(""),
     scraperHeaders: z.record(z.string()).optional().default({}),
     metadata: z
       .union([z.string(), z.record(z.unknown())])
@@ -226,17 +226,17 @@ const DocumentSchemas = {
       .union([z.string(), z.record(z.unknown())])
       .optional()
       .default({}),
-    addToWorkspaces: z.string().optional().default(''),
+    addToWorkspaces: z.string().optional().default(""),
   }),
 
   // POST /v1/document/create-folder
   createFolder: z.object({
-    name: nonEmptyString.max(255, 'must be at most 255 characters'),
+    name: nonEmptyString.max(255, "must be at most 255 characters"),
   }),
 
   // POST /v1/document/delete-folder
   deleteFolder: z.object({
-    name: nonEmptyString.max(255, 'must be at most 255 characters'),
+    name: nonEmptyString.max(255, "must be at most 255 characters"),
   }),
 
   // POST /v1/document/move-files
@@ -246,9 +246,9 @@ const DocumentSchemas = {
         z.object({
           from: nonEmptyString,
           to: z.string().optional(),
-        })
+        }),
       )
-      .min(1, 'files array must not be empty'),
+      .min(1, "files array must not be empty"),
   }),
 };
 
@@ -258,14 +258,14 @@ const SystemSchemas = {
   updateEnv: z
     .record(z.string())
     .refine((data) => Object.keys(data).length > 0, {
-      message: 'at least one setting must be provided',
+      message: "at least one setting must be provided",
     }),
 
   // POST /v1/system/export-chats
   exportChats: z.object({
     names: z
       .array(nonEmptyString)
-      .min(1, 'names must be a non-empty array of strings'),
+      .min(1, "names must be a non-empty array of strings"),
   }),
 };
 
@@ -273,8 +273,8 @@ const SystemSchemas = {
 const InviteSchemas = {
   // POST /invite/:code
   acceptInvite: z.object({
-    username: nonEmptyString.max(100, 'must be at most 100 characters'),
-    password: nonEmptyString.min(8, 'password must be at least 8 characters'),
+    username: nonEmptyString.max(100, "must be at most 100 characters"),
+    password: nonEmptyString.min(8, "password must be at least 8 characters"),
   }),
 };
 
@@ -297,7 +297,7 @@ const EmbedSchemas = {
       enabled: z.boolean().optional(),
     })
     .refine((data) => Object.keys(data).length > 0, {
-      message: 'at least one field must be provided for update',
+      message: "at least one field must be provided for update",
     }),
 };
 

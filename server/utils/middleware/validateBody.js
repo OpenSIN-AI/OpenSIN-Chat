@@ -21,7 +21,6 @@
  * use `.passthrough()` or `.strip()` explicitly when they care — the default
  * Zod behaviour (strip unknown keys) is safe and predictable.
  */
-const { z } = require('zod');
 
 /**
  * @param {z.ZodSchema} schema – a Zod schema describing the expected body.
@@ -36,7 +35,7 @@ function validateBody(schema, opts = {}) {
     // `reqBody()` in utils/http parses string bodies into objects; replicate
     // that here so the middleware works regardless of body-parser config.
     let body = request.body;
-    if (typeof body === 'string') {
+    if (typeof body === "string") {
       try {
         body = JSON.parse(body);
       } catch {
@@ -55,10 +54,10 @@ function validateBody(schema, opts = {}) {
 
     // Aggregate all field-level error messages into a single readable string.
     const issues = result.error.issues.map((issue) => {
-      const path = issue.path.length > 0 ? issue.path.join('.') : 'body';
+      const path = issue.path.length > 0 ? issue.path.join(".") : "body";
       return `${path}: ${issue.message}`;
     });
-    const error = issues.join('; ');
+    const error = issues.join("; ");
 
     return response.status(status).json({
       success: false,
