@@ -13,6 +13,7 @@ import useUser from "@/hooks/useUser";
 import useSystemSettings from "@/hooks/useSystemSettings";
 import System from "@/models/system";
 import { useTranslation } from "react-i18next";
+import logger from "@/utils/logger";
 
 type WorkspaceAgentConfigurationProps = {
   workspace?: any;
@@ -77,7 +78,7 @@ export default function WorkspaceAgentConfiguration({
         });
       }
     } catch (err) {
-      console.error(err);
+      logger.error(err);
     } finally {
       setSaving(false);
     }

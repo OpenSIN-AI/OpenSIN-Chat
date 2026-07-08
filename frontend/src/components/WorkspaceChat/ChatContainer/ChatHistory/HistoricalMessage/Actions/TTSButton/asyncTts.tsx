@@ -6,6 +6,7 @@ import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";
+import logger from "@/utils/logger";
 
 export default function AsyncTTSMessage({
   slug,
@@ -47,7 +48,7 @@ export default function AsyncTTSMessage({
         playerRef.current.play();
       }
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       fetchInFlightRef.current = false;
       setLoading(false);
       setSpeaking(false);

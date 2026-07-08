@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
+import logger from "@/utils/logger";
 
 const Politician = {
   /**
@@ -22,7 +23,7 @@ const Politician = {
         },
       );
       const data = await res.json().catch((e) => {
-        console.error("politician API json parse failed:", e);
+        logger.error("politician API json parse failed:", e);
         return {};
       });
       if (!res.ok || !data.success) {
@@ -117,7 +118,7 @@ const Politician = {
         { headers: baseHeaders() },
       );
       const data = await res.json().catch((e) => {
-        console.error("politician API json parse failed:", e);
+        logger.error("politician API json parse failed:", e);
         return {};
       });
       if (!res.ok)
@@ -143,7 +144,7 @@ const Politician = {
         { headers: baseHeaders() },
       );
       const data = await res.json().catch((e) => {
-        console.error("politician API json parse failed:", e);
+        logger.error("politician API json parse failed:", e);
         return {};
       });
       if (data.error) return { results: [], error: data.error };

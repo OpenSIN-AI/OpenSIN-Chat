@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { useEffect, useState, useRef } from "react";
 import System from "@/models/system";
+import logger from "@/utils/logger";
 
 export default function useProviderEndpointAutoDiscovery({
   provider = null,
@@ -48,7 +49,7 @@ export default function useProviderEndpointAutoDiscovery({
     const { endpoint, models } = await Promise.any(possibleEndpoints)
       .then((resolved) => resolved)
       .catch(() => {
-        console.error("All endpoints failed to resolve.");
+        logger.error("All endpoints failed to resolve.");
         return { endpoint: null, models: null };
       });
 

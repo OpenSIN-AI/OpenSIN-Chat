@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Appearance from "@/models/appearance";
 import { useTranslation } from "react-i18next";
 import Toggle from "@/components/lib/Toggle";
+import logger from "@/utils/logger";
 
 export default function ChatRenderHTML() {
   const { t } = useTranslation();
@@ -15,7 +16,7 @@ export default function ChatRenderHTML() {
     try {
       Appearance.updateSettings({ renderHTML: checked });
     } catch (error) {
-      console.error("Failed to update appearance settings:", error);
+      logger.error("Failed to update appearance settings:", error);
       setRenderHTML(!checked);
     }
     setSaving(false);

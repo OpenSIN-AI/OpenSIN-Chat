@@ -9,6 +9,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Workspace from "@/models/workspace";
+import logger from "@/utils/logger";
 
 // Pure punctuation used to wrap the "(optional)" hint — not translatable.
 const PARENS_OPEN = "(";
@@ -57,7 +58,7 @@ async function sendQuestionnaire({
         safeSetItem(COMPLETE_QUESTIONNAIRE, "true");
       })
       .catch((error) => {
-        console.error(`sendQuestionnaire`, error.message);
+        logger.error(`sendQuestionnaire`, error.message);
       });
   }
 

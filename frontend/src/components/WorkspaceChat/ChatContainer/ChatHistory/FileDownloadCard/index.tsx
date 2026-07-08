@@ -16,6 +16,7 @@ import { useChatSidebar } from "../../ChatSidebar";
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 import useAuthenticatedBlobUrl from "@/hooks/useAuthenticatedBlobUrl";
+import logger from "@/utils/logger";
 
 const AUTO_PREVIEW_MAX = 200;
 const autoPreviewedFiles = new Set();
@@ -209,7 +210,7 @@ function FileDownloadCard({ props, autoPreview = false }) {
       if (!blob) throw new Error("Failed to download file");
       saveAs(blob, filename || storageFilename || "download");
     } catch {
-      console.error("Failed to download file");
+      logger.error("Failed to download file");
     } finally {
       setDownloading(false);
     }
@@ -258,7 +259,7 @@ function FileDownloadCard({ props, autoPreview = false }) {
       }
       showToast(t("preview.source_added"), "success");
     } catch (err) {
-      console.error("Failed to add to source:", err);
+      logger.error("Failed to add to source:", err);
       showToast(t("preview.source_add_failed"), "error");
     } finally {
       setAddingSource(false);

@@ -15,6 +15,7 @@ import {
   getAppIntegrationSkills,
 } from "./skills";
 import AgentFlows from "@/models/agentFlows";
+import logger from "@/utils/logger";
 
 interface AgentSettings {
   [key: string]: any;
@@ -195,7 +196,7 @@ export function useAgents(): UseAgentsReturn {
         setCreateFilesAgentAvailable(createFilesAvailable);
       } catch (e) {
         if (cancelled) return;
-        console.error("Failed to fetch agent settings:", e);
+        logger.error("Failed to fetch agent settings:", e);
       } finally {
         if (!cancelled) setLoading(false);
       }

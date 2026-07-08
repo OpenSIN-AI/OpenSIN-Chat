@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
 import useSystemSettings from "@/hooks/useSystemSettings";
+import logger from "@/utils/logger";
 
 export const LLM_PREFERENCE_CHANGED_EVENT = "llm-preference-changed";
 
@@ -70,7 +71,7 @@ export default function useLLMConfig(
       }
       setHasChanges(!!error);
     } catch (err) {
-      console.error(err);
+      logger.error(err);
     } finally {
       setSaving(false);
     }

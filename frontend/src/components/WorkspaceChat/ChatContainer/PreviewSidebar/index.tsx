@@ -22,6 +22,7 @@ import { baseHeaders } from "@/utils/request";
 import useAuthenticatedBlobUrl from "@/hooks/useAuthenticatedBlobUrl";
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
+import logger from "@/utils/logger";
 
 const HTML_PREVIEW_SANITIZE_OPTS = {
   ALLOWED_TAGS: [
@@ -95,6 +96,8 @@ function VersionDropdown({ versions, activeVersion, onSelect }: any) {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
+        aria-label={open ? t("common.close") : t("common.open", "Open preview")}
+        aria-expanded={open}
         className="flex items-center gap-1 px-2 h-6 rounded border border-zinc-700 light:border-slate-300 bg-zinc-800 light:bg-slate-100 text-xs text-zinc-300 light:text-slate-600 hover:border-zinc-500 light:hover:border-slate-400 transition-colors cursor-pointer"
       >
         <span className="truncate max-w-[120px]">
@@ -193,6 +196,8 @@ function ThreeDotsMenu({ previewData, onAddToSources, addingSource }: any) {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
+        aria-label={open ? t("common.close") : t("common.open", "Open preview")}
+        aria-expanded={open}
         className="flex items-center justify-center w-6 h-6 rounded border-none bg-transparent text-zinc-400 light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary hover:bg-zinc-700 light:hover:bg-slate-100 cursor-pointer transition-colors"
         aria-label={t("common.moreOptions")}
       >
@@ -494,7 +499,7 @@ export default function PreviewSidebar() {
       }
       showToast(t("preview.source_added"), "success");
     } catch (err) {
-      console.error("Failed to add to sources:", err);
+      logger.error("Failed to add to sources:", err);
       showToast(t("preview.source_add_failed"), "error");
     } finally {
       setAddingSource(false);

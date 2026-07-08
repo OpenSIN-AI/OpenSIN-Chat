@@ -4,6 +4,7 @@ import { API_BASE } from "@/utils/constants";
 import { baseHeaders, safeJsonParse } from "@/utils/request";
 import { streamSSEPost } from "@/utils/chat/sseStream";
 import { v4 } from "uuid";
+import logger from "@/utils/logger";
 
 const WorkspaceThread: any = {
   all: async function (workspaceSlug) {
@@ -273,7 +274,7 @@ const WorkspaceThread: any = {
         throw new Error("Failed to delete chats.");
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return false;
       });
   },
@@ -297,7 +298,7 @@ const WorkspaceThread: any = {
         throw new Error("Failed to update chat.");
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return false;
       });
   },

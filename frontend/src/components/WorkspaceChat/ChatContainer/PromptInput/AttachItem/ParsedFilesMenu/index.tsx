@@ -9,6 +9,7 @@ import showToast from "@/utils/toast";
 import { PARSED_FILE_ATTACHMENT_REMOVED_EVENT } from "../../../DnDWrapper";
 import useUser from "@/hooks/useUser";
 import { useTranslation } from "react-i18next";
+import logger from "@/utils/logger";
 
 export default function ParsedFilesMenu({
   onEmbeddingChange,
@@ -73,7 +74,7 @@ export default function ParsedFilesMenu({
       );
       tooltipRef?.current?.close();
     } catch (error) {
-      console.error("Failed to embed files:", error);
+      logger.error("Failed to embed files:", error);
       showToast(t("parsedFilesMenu.embedFailed"), "error");
     }
     setIsEmbedding(false);
@@ -154,6 +155,7 @@ export default function ParsedFilesMenu({
               <button
                 type="button"
                 onClick={(e) => handleRemove(e, file)}
+                aria-label={t("common.remove", "Remove file")}
                 className="border-none text-theme-text-secondary hover:text-theme-text-primary"
                 disabled={isEmbedding}
               >

@@ -11,6 +11,7 @@ import { Download } from "@phosphor-icons/react/dist/csr/Download";
 import showToast from "@/utils/toast";
 import { saveAs } from "file-saver";
 import System from "@/models/system";
+import logger from "@/utils/logger";
 
 interface ExportOption {
   name: string;
@@ -115,7 +116,7 @@ export default function EmbedChatsView() {
         })
         .catch((e) => {
           if (cancelled) return;
-          console.error(e);
+          logger.error(e);
         })
         .finally(() => {
           if (!cancelled) setLoading(false);

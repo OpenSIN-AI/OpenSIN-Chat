@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
+import logger from "@/utils/logger";
 
 export interface ProviderKeyStatus {
   provider: string;
@@ -58,7 +59,7 @@ const ProviderStatus = {
         return res.json();
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return {
           providers: [],
           paths: null,
@@ -85,7 +86,7 @@ const ProviderStatus = {
         return res.json();
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { results: [], checkedAt: null, error: e.message };
       });
   },

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
+import logger from "@/utils/logger";
 
 /**
  * @typedef {Object} SystemPromptVariable
@@ -24,11 +25,11 @@ const SystemPromptVariable: any = {
       })
         .then((res) => res.json())
         .catch((error) => {
-          console.error("Error fetching system prompt variables:", error);
+          logger.error("Error fetching system prompt variables:", error);
           return { variables: [] };
         });
     } catch (error) {
-      console.error("Error fetching system prompt variables:", error);
+      logger.error("Error fetching system prompt variables:", error);
       return { variables: [] };
     }
   },
@@ -47,11 +48,11 @@ const SystemPromptVariable: any = {
       })
         .then((res) => res.json())
         .catch((error) => {
-          console.error("Error creating system prompt variable:", error);
+          logger.error("Error creating system prompt variable:", error);
           return { success: false, error: error?.message ?? String(error) };
         });
     } catch (error) {
-      console.error("Error creating system prompt variable:", error);
+      logger.error("Error creating system prompt variable:", error);
       return {
         success: false,
         error: error instanceof Error ? error.message : String(error),
@@ -74,11 +75,11 @@ const SystemPromptVariable: any = {
       })
         .then((res) => res.json())
         .catch((error) => {
-          console.error("Error updating system prompt variable:", error);
+          logger.error("Error updating system prompt variable:", error);
           return { success: false, error: error?.message ?? String(error) };
         });
     } catch (error) {
-      console.error("Error updating system prompt variable:", error);
+      logger.error("Error updating system prompt variable:", error);
       return {
         success: false,
         error: error instanceof Error ? error.message : String(error),
@@ -100,11 +101,11 @@ const SystemPromptVariable: any = {
       })
         .then((res) => res.json())
         .catch((error) => {
-          console.error("Error deleting system prompt variable:", error);
+          logger.error("Error deleting system prompt variable:", error);
           return { success: false, error: error?.message ?? String(error) };
         });
     } catch (error) {
-      console.error("Error deleting system prompt variable:", error);
+      logger.error("Error deleting system prompt variable:", error);
       return {
         success: false,
         error: error instanceof Error ? error.message : String(error),

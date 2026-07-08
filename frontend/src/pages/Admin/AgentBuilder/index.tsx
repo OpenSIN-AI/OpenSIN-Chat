@@ -14,6 +14,7 @@ import AgentFlows from "@/models/agentFlows";
 import { useTheme } from "@/hooks/useTheme";
 import HeaderMenu from "./HeaderMenu";
 import paths from "@/utils/paths";
+import logger from "@/utils/logger";
 
 interface FlowStep {
   type: string;
@@ -123,7 +124,7 @@ export default function AgentBuilder(): JSX.Element {
         setBlocks(flowBlocks);
       } catch (error) {
         if (cancelled) return;
-        console.error(error);
+        logger.error(error);
         showToast(t("agentBuilder.loadFlowFailed"), "error", { clear: true });
       }
     })();
@@ -145,7 +146,7 @@ export default function AgentBuilder(): JSX.Element {
       if (!success) throw new Error(error);
       setAvailableFlows(flows);
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       showToast(t("agentBuilder.loadFlowsFailed"), "error", { clear: true });
     }
   };
@@ -190,7 +191,7 @@ export default function AgentBuilder(): JSX.Element {
       setCurrentFlowUuid(flow.uuid);
       setBlocks(flowBlocks);
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       showToast(t("agentBuilder.loadFlowFailed"), "error", { clear: true });
     }
   };
@@ -288,7 +289,7 @@ export default function AgentBuilder(): JSX.Element {
       showToast(t("agentBuilder.flowSavedSuccess"), "success", { clear: true });
       await loadAvailableFlows();
     } catch (error: any) {
-      console.error("Save error details:", error);
+      logger.error("Save error details:", error);
       showToast(
         t("agentBuilder.saveFlowFailed", { error: error.message }),
         "error",

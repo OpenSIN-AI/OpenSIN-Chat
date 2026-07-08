@@ -10,6 +10,7 @@ import debounce from "lodash.debounce";
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import { Tooltip } from "react-tooltip";
+import logger from "@/utils/logger";
 
 const DEFAULT_SEARCH_RESULTS = {
   workspaces: [],
@@ -42,7 +43,7 @@ export default function SearchBox({ user, showNewWsModal }: any) {
         await Workspace.searchWorkspaceOrThread(searchValue);
       setSearchResults(searchResults);
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       setSearchResults(DEFAULT_SEARCH_RESULTS);
       showToast(t("sidebarSearch.searchFailed"), "error", { clear: true });
     } finally {

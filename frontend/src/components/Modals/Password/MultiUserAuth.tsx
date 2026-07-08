@@ -10,6 +10,7 @@ import { useModal } from "@/hooks/useModal";
 import RecoveryCodeModal from "@/components/Modals/DisplayRecoveryCodeModal";
 import { useTranslation } from "react-i18next";
 import useCustomAppName from "@/hooks/useCustomAppName";
+import logger from "@/utils/logger";
 
 const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
   const { t } = useTranslation();
@@ -259,7 +260,7 @@ export default function MultiUserAuth() {
         setError(message);
       }
     } catch (err) {
-      console.error(err);
+      logger.error(err);
       setError(err?.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
@@ -283,7 +284,7 @@ export default function MultiUserAuth() {
         showToast(error, "error", { clear: true });
       }
     } catch (err) {
-      console.error(err);
+      logger.error(err);
     }
   };
 
@@ -313,7 +314,7 @@ export default function MultiUserAuth() {
         });
       }
     } catch (err) {
-      console.error(err);
+      logger.error(err);
     }
   };
 
@@ -401,6 +402,7 @@ export default function MultiUserAuth() {
           <button
             disabled={loading || appNameLoading}
             aria-busy={loading || appNameLoading}
+            aria-label={t("common.save", "Save")}
             type="submit"
             className="text-zinc-950 bg-white hover:bg-zinc-300 light:bg-sky-200 light:text-slate-950 light:hover:bg-sky-300 text-sm font-semibold rounded-lg border-primary-button h-[34px] w-full"
           >

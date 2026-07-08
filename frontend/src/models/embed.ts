@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
+import logger from "@/utils/logger";
 
 const Embed: any = {
   embeds: async () => {
@@ -11,7 +12,7 @@ const Embed: any = {
       .then((res) => res.json())
       .then((res) => res?.embeds || [])
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return [];
       });
   },
@@ -23,7 +24,7 @@ const Embed: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { embed: null, error: e.message };
       });
   },
@@ -35,7 +36,7 @@ const Embed: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -49,7 +50,7 @@ const Embed: any = {
         throw new Error(res.statusText);
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -61,7 +62,7 @@ const Embed: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { chats: [], hasPages: false, totalChats: 0 };
       });
   },
@@ -72,7 +73,7 @@ const Embed: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },

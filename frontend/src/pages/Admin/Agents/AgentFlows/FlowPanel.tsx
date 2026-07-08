@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import paths from "@/utils/paths";
 import { useTranslation } from "react-i18next";
 import Toggle from "@/components/lib/Toggle";
+import logger from "@/utils/logger";
 
 type Flow = {
   uuid: string;
@@ -116,7 +117,7 @@ export default function FlowPanel({
       if (!success) throw new Error(error);
       toggleFlow(flow.uuid);
     } catch (error) {
-      console.error("Failed to toggle flow:", error);
+      logger.error("Failed to toggle flow:", error);
       showToast(t("agentFlows.toggleFailed"), "error", { clear: true });
     }
   };

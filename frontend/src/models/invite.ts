@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
+import logger from "@/utils/logger";
 
 const Invite: any = {
   checkInvite: async (inviteCode) => {
@@ -9,7 +10,7 @@ const Invite: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { invite: null, error: e.message };
       });
   },
@@ -21,7 +22,7 @@ const Invite: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },

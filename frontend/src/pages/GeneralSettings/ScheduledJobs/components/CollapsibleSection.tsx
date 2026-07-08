@@ -5,6 +5,7 @@ import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
 import { CheckCircle } from "@phosphor-icons/react/dist/csr/CheckCircle";
 import { Copy } from "@phosphor-icons/react/dist/csr/Copy";
 import { copyMarkdownAsRichText } from "@/utils/clipboard";
+import logger from "@/utils/logger";
 
 // Generic expand/collapse panel used by the run-detail page to wrap each
 // trace section (thinking, tool calls, response, files).
@@ -59,7 +60,7 @@ function CopyButton({ content }: { content: string }) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (e) {
-      console.error("Failed to copy content:", e);
+      logger.error("Failed to copy content:", e);
     }
   };
 

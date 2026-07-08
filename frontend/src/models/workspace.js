@@ -6,6 +6,7 @@ import WorkspaceThread from "@/models/workspaceThread";
 import { v4 } from "uuid";
 import { ABORT_STREAM_EVENT } from "@/utils/chat";
 import { safeGetItem } from "@/utils/safeStorage";
+import logger from "@/utils/logger";
 
 /**
  * Safely parse a fetch Response as JSON.
@@ -117,7 +118,7 @@ const Workspace = {
         throw new Error("Failed to delete chats.");
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return false;
       });
   },
@@ -533,7 +534,7 @@ const Workspace = {
       })
       .then((res) => res.suggestedMessages)
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return null;
       });
   },
@@ -553,7 +554,7 @@ const Workspace = {
         return { success: true, ...json };
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -572,7 +573,7 @@ const Workspace = {
         return true;
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return false;
       });
   },
@@ -602,7 +603,7 @@ const Workspace = {
         return { success: true, error: null };
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -633,7 +634,7 @@ const Workspace = {
         throw new Error("Failed to remove pfp.");
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -648,7 +649,7 @@ const Workspace = {
         throw new Error("Failed to update chat.");
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return false;
       });
   },
@@ -663,7 +664,7 @@ const Workspace = {
         throw new Error("Failed to delete chats.");
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return false;
       });
   },
@@ -674,7 +675,7 @@ const Workspace = {
     })
       .then((res) => safeJson(res))
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -690,7 +691,7 @@ const Workspace = {
       })
       .then((data) => data.newThreadSlug)
       .catch((e) => {
-        console.error("Error forking thread:", e);
+        logger.error("Error forking thread:", e);
         return null;
       });
   },
@@ -783,7 +784,7 @@ const Workspace = {
       );
       return true;
     } catch (error) {
-      console.error("Error reordering workspaces:", error);
+      logger.error("Error reordering workspaces:", error);
       return false;
     }
   },
@@ -819,7 +820,7 @@ const Workspace = {
     })
       .then((res) => safeJson(res))
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { workspaces: [], threads: [] };
       });
     return response;
@@ -841,7 +842,7 @@ const Workspace = {
     )
       .then((res) => safeJson(res))
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { showAgentCommand: false };
       });
   },

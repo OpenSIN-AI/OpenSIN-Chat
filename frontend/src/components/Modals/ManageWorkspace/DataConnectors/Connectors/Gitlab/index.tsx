@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import Toggle from "@/components/lib/Toggle";
 import DOMPurify from "@/utils/chat/purify";
 import useConnectorBranches from "@/hooks/useConnectorBranches";
+import logger from "@/utils/logger";
 
 const ALERT_SANITIZE_OPTS = {
   ALLOWED_TAGS: ["a", "b", "i", "u", "strong", "em", "br", "p", "span"],
@@ -70,7 +71,7 @@ export default function GitlabOptions() {
       setLoading(false);
       return;
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       showToast(e.message, "error", { clear: true });
       setLoading(false);
     }

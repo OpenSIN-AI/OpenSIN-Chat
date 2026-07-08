@@ -12,6 +12,7 @@ import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";
 import useMCPServers, { MCP_SERVERS_KEY } from "@/hooks/useMCPServers";
 import { mutate } from "swr";
+import logger from "@/utils/logger";
 
 type MCPServer = {
   name: string;
@@ -57,7 +58,7 @@ export function MCPServerHeader({
           mutate(MCP_SERVERS_KEY);
         })
         .catch((err) => {
-          console.error(err);
+          logger.error(err);
           showToast(t("agent.mcp.refresh-failed"), "error", { clear: true });
         })
         .finally(() => {

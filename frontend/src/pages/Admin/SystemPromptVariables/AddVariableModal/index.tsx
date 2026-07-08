@@ -5,6 +5,7 @@ import { X } from "@phosphor-icons/react/dist/csr/X";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";
+import logger from "@/utils/logger";
 
 type AddVariableModalProps = {
   closeModal: () => void;
@@ -41,7 +42,7 @@ export default function AddVariableModal({
       if (onRefresh) onRefresh();
       closeModal();
     } catch (error) {
-      console.error("Error creating variable:", error);
+      logger.error("Error creating variable:", error);
       setError(t("admin.systemPromptVariables.addVariable.createFailed"));
     }
   };

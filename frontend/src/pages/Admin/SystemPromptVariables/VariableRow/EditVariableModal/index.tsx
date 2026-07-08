@@ -5,6 +5,7 @@ import { X } from "@phosphor-icons/react/dist/csr/X";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";
+import logger from "@/utils/logger";
 
 type Variable = {
   id?: string;
@@ -51,7 +52,7 @@ export default function EditVariableModal({
       if (onRefresh) onRefresh();
       closeModal();
     } catch (error) {
-      console.error("Error updating variable:", error);
+      logger.error("Error updating variable:", error);
       setError(t("admin.systemPromptVariables.editVariable.updateFailed"));
     }
   };

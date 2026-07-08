@@ -2,6 +2,7 @@
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 import { safeJsonParse } from "@/utils/request";
+import logger from "@/utils/logger";
 
 interface DownloadResponse {
   success: boolean;
@@ -77,7 +78,7 @@ const DMRUtils: any = {
           }
         }
       } catch (error) {
-        console.error("Error downloading model:", error);
+        logger.error("Error downloading model:", error);
         resolve({
           success: false,
           error:

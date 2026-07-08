@@ -19,6 +19,7 @@ import DeepgramSTTOptions from "@/components/SpeechToText/DeepgramOptions";
 import GenericOpenAiSTTOptions from "@/components/SpeechToText/GenericOpenAiOptions";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import UnsavedChangesDialog from "@/components/UnsavedChangesDialog";
+import logger from "@/utils/logger";
 
 interface Provider {
   name: string;
@@ -97,7 +98,7 @@ export default function SpeechToTextProvider({
       }
       setHasChanges(!!error);
     } catch (err) {
-      console.error(err);
+      logger.error(err);
     } finally {
       setSaving(false);
     }

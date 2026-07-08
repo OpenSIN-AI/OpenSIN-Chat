@@ -6,6 +6,7 @@ import Workspace from "@/models/workspace";
 import { useParams } from "react-router-dom";
 import { invalidateChatHistory } from "@/hooks/useChatHistory";
 import {
+import logger from "@/utils/logger";
   useMessageActionsContext,
   DELETE_EVENT,
 } from "@/components/WorkspaceChat/ChatContainer/ChatHistory/MessageActionsContext";
@@ -30,7 +31,7 @@ export function useWatchDeleteMessage({
             invalidateChatHistory(workspaceSlug, threadSlug);
           })
           .catch((e) => {
-            console.error("Failed to delete chat:", e);
+            logger.error("Failed to delete chat:", e);
           });
       }
     }

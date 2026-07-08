@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Appearance from "@/models/appearance";
 import { useTranslation } from "react-i18next";
 import Toggle from "@/components/lib/Toggle";
+import logger from "@/utils/logger";
 
 export default function AutoSpeak() {
   const [saving, setSaving] = useState(false);
@@ -16,7 +17,7 @@ export default function AutoSpeak() {
     try {
       Appearance.updateSettings({ autoPlayAssistantTtsResponse: checked });
     } catch (error) {
-      console.error("Failed to update appearance settings:", error);
+      logger.error("Failed to update appearance settings:", error);
       setAutoPlayAssistantTtsResponse(!checked);
     }
     setSaving(false);

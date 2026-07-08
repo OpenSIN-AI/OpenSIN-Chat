@@ -4,6 +4,7 @@ import System from "@/models/system";
 import showToast from "@/utils/toast";
 import { Info } from "@phosphor-icons/react/dist/csr/Info";
 import { useTranslation } from "react-i18next";
+import logger from "@/utils/logger";
 
 export default function PaperlessNgxOptions() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -42,7 +43,7 @@ export default function PaperlessNgxOptions() {
       e.target.reset();
       setLoading(false);
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       showToast(e.message, "error", { clear: true });
       setLoading(false);
     }

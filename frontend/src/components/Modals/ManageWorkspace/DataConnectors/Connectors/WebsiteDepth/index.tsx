@@ -4,6 +4,7 @@ import System from "@/models/system";
 import showToast from "@/utils/toast";
 import pluralize from "pluralize";
 import { useTranslation } from "react-i18next";
+import logger from "@/utils/logger";
 
 export default function WebsiteDepthOptions() {
   const { t } = useTranslation();
@@ -43,7 +44,7 @@ export default function WebsiteDepthOptions() {
       e.target.reset();
       setLoading(false);
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       showToast(e.message, "error", { clear: true });
       setLoading(false);
     }

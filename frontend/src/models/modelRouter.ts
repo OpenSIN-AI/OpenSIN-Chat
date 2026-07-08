@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
+import logger from "@/utils/logger";
 
 const ModelRouter: any = {
   getAll: async () => {
@@ -11,7 +12,7 @@ const ModelRouter: any = {
       .then((res) => res.json())
       .then((res) => res?.routers || [])
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return [];
       });
   },
@@ -23,7 +24,7 @@ const ModelRouter: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { router: null, error: e.message };
       });
   },
@@ -36,7 +37,7 @@ const ModelRouter: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { router: null, error: e.message };
       });
   },
@@ -49,7 +50,7 @@ const ModelRouter: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { router: null, error: e.message };
       });
   },
@@ -61,7 +62,7 @@ const ModelRouter: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -74,7 +75,7 @@ const ModelRouter: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { rule: null, error: e.message };
       });
   },
@@ -90,7 +91,7 @@ const ModelRouter: any = {
     )
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { rule: null, error: e.message };
       });
   },
@@ -105,7 +106,7 @@ const ModelRouter: any = {
     )
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -118,7 +119,7 @@ const ModelRouter: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },

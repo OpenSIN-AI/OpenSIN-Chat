@@ -5,6 +5,7 @@ import System from "@/models/system";
 import AgentFlows from "@/models/agentFlows";
 import showToast from "@/utils/toast";
 import { castToType } from "@/utils/types";
+import logger from "@/utils/logger";
 
 const IGNORE_CHANGE_SETTINGS = [
   "agentSkillRerankerEnabled",
@@ -75,7 +76,7 @@ export function useAgentForm() {
         setCreateFilesAgentAvailable(createFilesAvailable);
       } catch (e) {
         if (cancelled) return;
-        console.error("Failed to load agent form settings:", e);
+        logger.error("Failed to load agent form settings:", e);
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -194,7 +195,7 @@ export function useAgentForm() {
         });
       }
     } catch (e) {
-      console.error("Failed to save agent preferences:", e);
+      logger.error("Failed to save agent preferences:", e);
       showToast(`Agent preferences failed to save.`, "error", { clear: true });
     }
   };
