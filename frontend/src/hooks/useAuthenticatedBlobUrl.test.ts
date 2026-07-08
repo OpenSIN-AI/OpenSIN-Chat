@@ -42,9 +42,9 @@ describe("useAuthenticatedBlobUrl", () => {
 
   it("fetches the URL with auth headers and creates blob URL", async () => {
     const blob = new Blob(["test"], { type: "text/plain" });
-    global.fetch = vi.fn().mockResolvedValue(
-      new Response(blob, { status: 200 }),
-    );
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(new Response(blob, { status: 200 }));
     const { result } = renderHook(() => useAuthenticatedBlobUrl("/api/file/1"));
     await waitFor(() => expect(result.current.blobUrl).toBe("blob:test-url"));
     expect(global.fetch).toHaveBeenCalledWith(
@@ -58,9 +58,9 @@ describe("useAuthenticatedBlobUrl", () => {
   });
 
   it("sets error to true when fetch returns non-ok response", async () => {
-    global.fetch = vi.fn().mockResolvedValue(
-      new Response("Not found", { status: 404 }),
-    );
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(new Response("Not found", { status: 404 }));
     const { result } = renderHook(() => useAuthenticatedBlobUrl("/api/file/1"));
     await waitFor(() => expect(result.current.error).toBe(true));
     expect(result.current.blobUrl).toBeNull();

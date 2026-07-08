@@ -26,7 +26,11 @@ describe("ChangeWarningModal", () => {
 
   it("renders the warning title", () => {
     render(
-      <ChangeWarningModal warningText="Danger!" onClose={vi.fn()} onConfirm={vi.fn()} />,
+      <ChangeWarningModal
+        warningText="Danger!"
+        onClose={vi.fn()}
+        onConfirm={vi.fn()}
+      />,
     );
     expect(screen.getByText("Warning")).toBeInTheDocument();
   });
@@ -46,7 +50,11 @@ describe("ChangeWarningModal", () => {
   it("calls onClose when close button is clicked", () => {
     const onClose = vi.fn();
     render(
-      <ChangeWarningModal warningText="test" onClose={onClose} onConfirm={vi.fn()} />,
+      <ChangeWarningModal
+        warningText="test"
+        onClose={onClose}
+        onConfirm={vi.fn()}
+      />,
     );
     fireEvent.click(screen.getByLabelText("Close"));
     expect(onClose).toHaveBeenCalledTimes(1);
@@ -55,7 +63,11 @@ describe("ChangeWarningModal", () => {
   it("calls onClose when cancel button is clicked", () => {
     const onClose = vi.fn();
     render(
-      <ChangeWarningModal warningText="test" onClose={onClose} onConfirm={vi.fn()} />,
+      <ChangeWarningModal
+        warningText="test"
+        onClose={onClose}
+        onConfirm={vi.fn()}
+      />,
     );
     fireEvent.click(screen.getByText("Cancel"));
     expect(onClose).toHaveBeenCalledTimes(1);
@@ -76,7 +88,11 @@ describe("ChangeWarningModal", () => {
 
   it("renders with empty warning text", () => {
     const { container } = render(
-      <ChangeWarningModal warningText="" onClose={vi.fn()} onConfirm={vi.fn()} />,
+      <ChangeWarningModal
+        warningText=""
+        onClose={vi.fn()}
+        onConfirm={vi.fn()}
+      />,
     );
     expect(container.querySelector("button")).toBeInTheDocument();
   });

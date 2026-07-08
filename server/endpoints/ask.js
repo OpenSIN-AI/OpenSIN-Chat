@@ -42,9 +42,9 @@ function askEndpoints(app) {
         }
 
         if (question.length > 4_000) {
-          return response
-            .status(400)
-            .json({ error: "question exceeds maximum length of 4 000 characters" });
+          return response.status(400).json({
+            error: "question exceeds maximum length of 4 000 characters",
+          });
         }
 
         const result = await askDocuments({

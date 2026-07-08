@@ -9,7 +9,12 @@ interface FooterProps {
   creatingType: string | null;
 }
 
-export function Footer({ selectedFiles, onClearSelection, itemActionMsg, creatingType }: FooterProps) {
+export function Footer({
+  selectedFiles,
+  onClearSelection,
+  itemActionMsg,
+  creatingType,
+}: FooterProps) {
   const { t } = useTranslation();
 
   return (
@@ -18,7 +23,9 @@ export function Footer({ selectedFiles, onClearSelection, itemActionMsg, creatin
         <div className="border-t border-white/5 light:border-slate-200 p-3 bg-zinc-950 light:bg-slate-50 shrink-0">
           <div className="flex items-center gap-2">
             <span className="text-xs text-zinc-400 light:text-slate-500 flex-1">
-              {t("sidebar.filesystem.fileCount", { count: selectedFiles.length })}
+              {t("sidebar.filesystem.fileCount", {
+                count: selectedFiles.length,
+              })}
             </span>
             <button
               type="button"

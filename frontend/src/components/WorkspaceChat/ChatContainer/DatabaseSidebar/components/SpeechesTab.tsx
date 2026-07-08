@@ -10,7 +10,12 @@ interface SpeechesTabProps {
   speechQuery: string;
 }
 
-export function SpeechesTab({ speechLoading, speechError, speechResults, speechQuery }: SpeechesTabProps) {
+export function SpeechesTab({
+  speechLoading,
+  speechError,
+  speechResults,
+  speechQuery,
+}: SpeechesTabProps) {
   const { t } = useTranslation();
 
   return (
@@ -22,7 +27,10 @@ export function SpeechesTab({ speechLoading, speechError, speechResults, speechQ
       {speechLoading && (
         <div className="flex flex-col gap-2">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="p-3 rounded-xl bg-zinc-800 light:bg-slate-100 animate-pulse space-y-2">
+            <div
+              key={i}
+              className="p-3 rounded-xl bg-zinc-800 light:bg-slate-100 animate-pulse space-y-2"
+            >
               <div className="h-3 w-24 rounded bg-zinc-700 light:bg-slate-200" />
               <div className="h-2 w-full rounded bg-zinc-700 light:bg-slate-200" />
               <div className="h-2 w-3/4 rounded bg-zinc-700 light:bg-slate-200" />
@@ -37,17 +45,26 @@ export function SpeechesTab({ speechLoading, speechError, speechResults, speechQ
         </div>
       )}
 
-      {!speechLoading && !speechError && speechResults.length === 0 && speechQuery && (
-        <p className="text-xs text-zinc-500 italic">
-          {t("sidebar.database.noSpeeches", "Keine Reden gefunden.")}
-        </p>
-      )}
+      {!speechLoading &&
+        !speechError &&
+        speechResults.length === 0 &&
+        speechQuery && (
+          <p className="text-xs text-zinc-500 italic">
+            {t("sidebar.database.noSpeeches", "Keine Reden gefunden.")}
+          </p>
+        )}
 
-      {!speechLoading && !speechError && speechResults.length === 0 && !speechQuery && (
-        <p className="text-xs text-zinc-500 italic">
-          {t("sidebar.database.speechHint", "Suche nach einem Thema, um passende Bundestagsreden zu finden.")}
-        </p>
-      )}
+      {!speechLoading &&
+        !speechError &&
+        speechResults.length === 0 &&
+        !speechQuery && (
+          <p className="text-xs text-zinc-500 italic">
+            {t(
+              "sidebar.database.speechHint",
+              "Suche nach einem Thema, um passende Bundestagsreden zu finden.",
+            )}
+          </p>
+        )}
 
       {speechResults.map((s, i) => (
         <div
@@ -60,14 +77,18 @@ export function SpeechesTab({ speechLoading, speechError, speechResults, speechQ
               {s.politicianName || s.politician_name || "—"}
             </p>
             {s.party && (
-              <span className="text-[10px] text-zinc-500 light:text-slate-400">({s.party})</span>
+              <span className="text-[10px] text-zinc-500 light:text-slate-400">
+                ({s.party})
+              </span>
             )}
           </div>
           <p className="text-xs text-zinc-300 light:text-slate-600 leading-snug line-clamp-3">
             {s.text || s.speechText || s.excerpt || "—"}
           </p>
           {s.date && (
-            <p className="text-[10px] text-zinc-500 light:text-slate-400 mt-1">{s.date}</p>
+            <p className="text-[10px] text-zinc-500 light:text-slate-400 mt-1">
+              {s.date}
+            </p>
           )}
         </div>
       ))}

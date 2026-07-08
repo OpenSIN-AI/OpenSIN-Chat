@@ -94,13 +94,19 @@ export function Filters({
       {activeTab === "speeches" ? (
         <div className="flex gap-2">
           <div className="relative flex-1">
-            <MagnifyingGlass size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-500 light:text-slate-400" />
+            <MagnifyingGlass
+              size={14}
+              className="absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-500 light:text-slate-400"
+            />
             <input
               type="search"
               value={speechQuery}
               onChange={(e) => onSpeechQueryChange(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && onSearchSpeeches()}
-              placeholder={t("sidebar.database.speechSearch", "Thema suchen (z.B. Klima)...")}
+              placeholder={t(
+                "sidebar.database.speechSearch",
+                "Thema suchen (z.B. Klima)...",
+              )}
               aria-label={t("sidebar.database.speechSearch", "Thema suchen...")}
               className="w-full border border-zinc-700 light:border-slate-300 rounded-md pl-8 pr-2 py-1.5 text-sm text-theme-text-primary light:text-theme-text-primary bg-zinc-900 light:bg-white focus:outline-none focus:border-zinc-500"
             />
@@ -117,14 +123,23 @@ export function Filters({
       ) : activeTab === "drucksachen" ? (
         <div className="flex gap-2">
           <div className="relative flex-1">
-            <MagnifyingGlass size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-500 light:text-slate-400" />
+            <MagnifyingGlass
+              size={14}
+              className="absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-500 light:text-slate-400"
+            />
             <input
               type="search"
               value={dipQuery}
               onChange={(e) => onDipQueryChange(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && onSearchDrucksachen()}
-              placeholder={t("sidebar.database.dipSearch", "Bundestags-Drucksachen durchsuchen...")}
-              aria-label={t("sidebar.database.dipSearch", "Bundestags-Drucksachen durchsuchen...")}
+              placeholder={t(
+                "sidebar.database.dipSearch",
+                "Bundestags-Drucksachen durchsuchen...",
+              )}
+              aria-label={t(
+                "sidebar.database.dipSearch",
+                "Bundestags-Drucksachen durchsuchen...",
+              )}
               className="w-full border border-zinc-700 light:border-slate-300 rounded-md pl-8 pr-2 py-1.5 text-sm text-theme-text-primary light:text-theme-text-primary bg-zinc-900 light:bg-white focus:outline-none focus:border-zinc-500"
             />
           </div>
@@ -140,7 +155,10 @@ export function Filters({
       ) : (
         <>
           <div className="relative">
-            <MagnifyingGlass size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-500 light:text-slate-400" />
+            <MagnifyingGlass
+              size={14}
+              className="absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-500 light:text-slate-400"
+            />
             <input
               type="search"
               value={query}
@@ -157,9 +175,13 @@ export function Filters({
               className="flex-1 border border-zinc-700 light:border-slate-300 rounded-md px-2 py-1.5 text-sm text-theme-text-primary light:text-theme-text-primary bg-zinc-900 light:bg-white focus:outline-none focus:border-zinc-500"
               aria-label={t("sidebar.database.partyFilter", "Partei")}
             >
-              <option value="">{t("sidebar.database.allParties", "Alle Parteien")}</option>
+              <option value="">
+                {t("sidebar.database.allParties", "Alle Parteien")}
+              </option>
               {parties.map((p) => (
-                <option key={p} value={p}>{p}</option>
+                <option key={p} value={p}>
+                  {p}
+                </option>
               ))}
             </select>
             <select
@@ -168,9 +190,13 @@ export function Filters({
               className="flex-1 border border-zinc-700 light:border-slate-300 rounded-md px-2 py-1.5 text-sm text-theme-text-primary light:text-theme-text-primary bg-zinc-900 light:bg-white focus:outline-none focus:border-zinc-500"
               aria-label={t("sidebar.database.stateFilter", "Bundesland")}
             >
-              <option value="">{t("sidebar.database.allStates", "Alle Bundesländer")}</option>
+              <option value="">
+                {t("sidebar.database.allStates", "Alle Bundesländer")}
+              </option>
               {states.map((s) => (
-                <option key={s} value={s}>{s}</option>
+                <option key={s} value={s}>
+                  {s}
+                </option>
               ))}
             </select>
           </div>

@@ -22,7 +22,9 @@ export interface MessageActionsContextValue {
   clearEditing: () => void;
 }
 
-const MessageActionsContext = createContext<MessageActionsContextValue | null>(null);
+const MessageActionsContext = createContext<MessageActionsContextValue | null>(
+  null,
+);
 
 /**
  * Provider that centralizes edit/delete event listeners for all messages.
@@ -30,8 +32,12 @@ const MessageActionsContext = createContext<MessageActionsContextValue | null>(n
  * this provider registers just 2 listeners total and dispatches to messages via context.
  */
 export function MessageActionsProvider({ children }: any) {
-  const [editingMessage, setEditingMessage] = useState<EditingMessage | null>(null);
-  const [deletedMessages, setDeletedMessages] = useState(() => new Set<string>());
+  const [editingMessage, setEditingMessage] = useState<EditingMessage | null>(
+    null,
+  );
+  const [deletedMessages, setDeletedMessages] = useState(
+    () => new Set<string>(),
+  );
 
   useEffect(() => {
     function handleEditEvent(e: any) {

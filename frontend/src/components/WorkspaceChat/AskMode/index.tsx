@@ -75,7 +75,11 @@ export default function AskMode({ workspace }: { workspace: any }) {
           className="flex items-center gap-x-1.5 rounded-lg bg-theme-sidebar-item-selected px-4 py-2.5 text-sm font-semibold text-theme-text-primary disabled:opacity-50 hover:opacity-90 transition-opacity"
         >
           {loading ? (
-            <CircleNotch size={16} className="animate-spin" aria-hidden="true" />
+            <CircleNotch
+              size={16}
+              className="animate-spin"
+              aria-hidden="true"
+            />
           ) : (
             <MagnifyingGlass size={16} weight="bold" aria-hidden="true" />
           )}

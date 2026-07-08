@@ -27,7 +27,10 @@ export function EmptyStates({
     return (
       <div className="flex flex-col gap-1">
         {Array.from({ length: 8 }).map((_, i) => (
-          <div key={i} className="flex items-center gap-3 px-3 py-3 animate-pulse">
+          <div
+            key={i}
+            className="flex items-center gap-3 px-3 py-3 animate-pulse"
+          >
             <div className="w-8 h-8 rounded-lg bg-zinc-800 light:bg-slate-200 flex-shrink-0" />
             <div className="flex-1 flex flex-col gap-1.5">
               <div className="h-3 w-32 rounded bg-zinc-800 light:bg-slate-200" />
@@ -43,7 +46,9 @@ export function EmptyStates({
     return (
       <div className="p-3 rounded-xl bg-red-950/40 border border-red-800/50 text-xs text-red-400 flex items-center gap-2">
         <Warning size={16} weight="fill" className="flex-shrink-0" />
-        <span>{t("sidebar.filesystem.error", "Fehler beim Laden:")} {error}</span>
+        <span>
+          {t("sidebar.filesystem.error", "Fehler beim Laden:")} {error}
+        </span>
       </div>
     );
   }
@@ -52,7 +57,11 @@ export function EmptyStates({
     return (
       <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
         <div className="w-16 h-16 rounded-2xl bg-zinc-800 light:bg-slate-100 flex items-center justify-center mb-4">
-          <CloudArrowUp size={28} weight="duotone" className="text-zinc-500 light:text-slate-400" />
+          <CloudArrowUp
+            size={28}
+            weight="duotone"
+            className="text-zinc-500 light:text-slate-400"
+          />
         </div>
         <p className="text-sm font-medium text-theme-text-primary light:text-theme-text-primary mb-1">
           {t("sidebar.filesystem.emptyTitle")}
@@ -75,7 +84,11 @@ export function EmptyStates({
   if (filteredItems.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-12 text-center">
-        <MagnifyingGlass size={24} weight="light" className="text-zinc-600 light:text-slate-300 mb-2" />
+        <MagnifyingGlass
+          size={24}
+          weight="light"
+          className="text-zinc-600 light:text-slate-300 mb-2"
+        />
         <p className="text-xs text-zinc-500 light:text-slate-400">
           {t("sidebar.filesystem.noSearchResults")}
         </p>

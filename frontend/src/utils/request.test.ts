@@ -30,7 +30,12 @@ vi.mock("@/utils/safeStorage", () => ({
   safeGetItem: vi.fn(),
 }));
 
-import { baseHeaders, userFromStorage, safeJsonParse, safeErrorMessage } from "./request";
+import {
+  baseHeaders,
+  userFromStorage,
+  safeJsonParse,
+  safeErrorMessage,
+} from "./request";
 import { safeGetItem } from "@/utils/safeStorage";
 
 describe("request utilities", () => {

@@ -22,7 +22,11 @@ function contextModeEndpoints(app) {
    */
   app.patch(
     "/workspace/:slug/documents/:docId/context-mode",
-    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager]), validWorkspaceSlug],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.admin, ROLES.manager]),
+      validWorkspaceSlug,
+    ],
     async (request, response) => {
       try {
         const workspace = response.locals.workspace;
@@ -73,7 +77,11 @@ function contextModeEndpoints(app) {
    */
   app.post(
     "/workspace/:slug/documents/:docId/refresh-summary",
-    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager]), validWorkspaceSlug],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.admin, ROLES.manager]),
+      validWorkspaceSlug,
+    ],
     async (request, response) => {
       try {
         const workspace = response.locals.workspace;

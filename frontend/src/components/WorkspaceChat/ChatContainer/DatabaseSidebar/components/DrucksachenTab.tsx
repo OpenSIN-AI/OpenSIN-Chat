@@ -10,7 +10,12 @@ interface DrucksachenTabProps {
   dipQuery: string;
 }
 
-export function DrucksachenTab({ dipLoading, dipError, dipResults, dipQuery }: DrucksachenTabProps) {
+export function DrucksachenTab({
+  dipLoading,
+  dipError,
+  dipResults,
+  dipQuery,
+}: DrucksachenTabProps) {
   const { t } = useTranslation();
 
   return (
@@ -22,7 +27,10 @@ export function DrucksachenTab({ dipLoading, dipError, dipResults, dipQuery }: D
       {dipLoading && (
         <div className="flex flex-col gap-2">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="p-3 rounded-xl bg-zinc-800 light:bg-slate-100 animate-pulse space-y-2">
+            <div
+              key={i}
+              className="p-3 rounded-xl bg-zinc-800 light:bg-slate-100 animate-pulse space-y-2"
+            >
               <div className="h-3 w-32 rounded bg-zinc-700 light:bg-slate-200" />
               <div className="h-2 w-full rounded bg-zinc-700 light:bg-slate-200" />
               <div className="h-2 w-3/4 rounded bg-zinc-700 light:bg-slate-200" />
@@ -39,7 +47,10 @@ export function DrucksachenTab({ dipLoading, dipError, dipResults, dipQuery }: D
 
       {!dipLoading && !dipError && dipResults.length === 0 && !dipQuery && (
         <p className="text-xs text-zinc-500 italic">
-          {t("sidebar.database.dipHint", "Suche nach Bundestags-Drucksachen (Anfragen, Anträge, Berichte).")}
+          {t(
+            "sidebar.database.dipHint",
+            "Suche nach Bundestags-Drucksachen (Anfragen, Anträge, Berichte).",
+          )}
         </p>
       )}
 

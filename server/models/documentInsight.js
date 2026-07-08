@@ -29,7 +29,13 @@ const DocumentInsight = {
    *
    * @param {{docId: string, workspaceId: number, transformationId: number, title: string, content: string}} data
    */
-  create: async function ({ docId, workspaceId, transformationId, title, content }) {
+  create: async function ({
+    docId,
+    workspaceId,
+    transformationId,
+    title,
+    content,
+  }) {
     return await prisma.document_insights.create({
       data: {
         docId: String(docId),

@@ -35,12 +35,7 @@ function extensionEndpoints(app) {
         const { apiKey } = response.locals;
         const isMultiUser = multiUserMode(response);
         const workspaces = isMultiUser
-          ? await Workspace.whereWithUser(
-              response.locals.user,
-              {},
-              null,
-              null,
-            )
+          ? await Workspace.whereWithUser(response.locals.user, {}, null, null)
           : await Workspace.where({});
         return response.status(200).json({
           connected: true,
@@ -62,9 +57,7 @@ function extensionEndpoints(app) {
     async (request, response) => {
       try {
         const { apiKey } = response.locals;
-        const { success, error } = await BrowserExtensionApiKey.delete(
-          apiKey?.id,
-        );
+        const { success } = await BrowserExtensionApiKey.delete(apiKey?.id);
         if (!success) {
           return response.status(500).json({
             success: false,
@@ -106,7 +99,11 @@ function extensionEndpoints(app) {
     [
       validatedRequest,
       validBrowserExtensionApiKey,
-      simpleRateLimit({ bucket: "browser-ext-embed", max: 30, windowMs: 60000 }),
+      simpleRateLimit({
+        bucket: "browser-ext-embed",
+        max: 30,
+        windowMs: 60000,
+      }),
     ],
     async (request, response) => {
       try {
@@ -139,8 +136,10 @@ function extensionEndpoints(app) {
           });
         }
         const locations = (result.documents || []).map((d) => d.location);
-        const { failedToEmbed = [], errors = [] } =
-          await Document.addDocuments(workspace, locations);
+        const { failedToEmbed = [], errors = [] } = await Document.addDocuments(
+          workspace,
+          locations,
+        );
         if (failedToEmbed.length > 0) {
           return response
             .status(500)
@@ -228,6 +227,7 @@ function extensionEndpoints(app) {
           user?.id ?? null,
         );
         if (!apiKey) {
+          consoleLogger.error(`Failed to create API key: ${error}`);
           return response.status(500).json({
             success: false,
             error: "Failed to create API key",
@@ -251,7 +251,7 @@ function extensionEndpoints(app) {
     async (request, response) => {
       try {
         const { id } = request.params;
-        const { success, error } = await BrowserExtensionApiKey.delete(id);
+        const { success } = await BrowserExtensionApiKey.delete(id);
         if (!success) {
           return response
             .status(500)

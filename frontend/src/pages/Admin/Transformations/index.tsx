@@ -142,7 +142,9 @@ export default function AdminTransformations() {
           <div
             role="dialog"
             aria-modal="true"
-            aria-label={editing.id ? "Edit Transformation" : "New Transformation"}
+            aria-label={
+              editing.id ? "Edit Transformation" : "New Transformation"
+            }
             className="w-full max-w-lg rounded-lg border border-theme-modal-border bg-theme-bg-secondary p-6 flex flex-col gap-y-3"
             onClick={(e) => e.stopPropagation()}
           >

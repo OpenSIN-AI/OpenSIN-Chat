@@ -57,7 +57,9 @@ const Transformations = {
       headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
-      .then((res) => safeJson<{ transformation: Transformation; error?: string }>(res))
+      .then((res) =>
+        safeJson<{ transformation: Transformation; error?: string }>(res),
+      )
       .then((d) => d.transformation ?? (d as { error: string }))
       .catch((e: Error) => ({ error: e.message }));
   },
@@ -72,7 +74,9 @@ const Transformations = {
       headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
-      .then((res) => safeJson<{ transformation: Transformation; error?: string }>(res))
+      .then((res) =>
+        safeJson<{ transformation: Transformation; error?: string }>(res),
+      )
       .then((d) => d.transformation ?? (d as { error: string }))
       .catch((e: Error) => ({ error: e.message }));
   },
@@ -107,7 +111,9 @@ const Transformations = {
         body: JSON.stringify({ docPath, transformationId }),
       },
     )
-      .then((res) => safeJson<{ insight?: DocumentInsight; error?: string }>(res))
+      .then((res) =>
+        safeJson<{ insight?: DocumentInsight; error?: string }>(res),
+      )
       .catch((e: Error) => ({ error: e.message }));
   },
 

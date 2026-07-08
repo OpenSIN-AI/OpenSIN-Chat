@@ -45,17 +45,17 @@ describe("session utility", () => {
   });
 
   it("returns true when fetch returns 200", async () => {
-    global.fetch = vi.fn().mockResolvedValue(
-      new Response("{}", { status: 200 }),
-    );
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(new Response("{}", { status: 200 }));
     const result = await validateSessionTokenForUser();
     expect(result).toBe(true);
   });
 
   it("returns false when fetch returns non-200 status", async () => {
-    global.fetch = vi.fn().mockResolvedValue(
-      new Response("{}", { status: 401 }),
-    );
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(new Response("{}", { status: 401 }));
     const result = await validateSessionTokenForUser();
     expect(result).toBe(false);
   });
@@ -67,9 +67,9 @@ describe("session utility", () => {
   });
 
   it("sends GET request with base headers to check-token endpoint", async () => {
-    global.fetch = vi.fn().mockResolvedValue(
-      new Response("{}", { status: 200 }),
-    );
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(new Response("{}", { status: 200 }));
     await validateSessionTokenForUser();
     expect(global.fetch).toHaveBeenCalledWith(
       "/api/system/check-token",

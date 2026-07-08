@@ -31,7 +31,10 @@ describe("authInterceptor", () => {
     // Reset installed flag by using vi.resetModules approach
     // We'll test the behavior directly
     global.fetch = vi.fn().mockResolvedValue(
-      new Response("{}", { status: 401, headers: { "Content-Type": "application/json" } }),
+      new Response("{}", {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+      }),
     );
 
     // Since installAuthInterceptor is idempotent and may already be installed,
@@ -48,7 +51,10 @@ describe("authInterceptor", () => {
 
   it("does not trigger handleAuthFailure for non-401 responses", async () => {
     global.fetch = vi.fn().mockResolvedValue(
-      new Response("{}", { status: 200, headers: { "Content-Type": "application/json" } }),
+      new Response("{}", {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }),
     );
 
     installAuthInterceptor();
@@ -60,7 +66,10 @@ describe("authInterceptor", () => {
 
   it("does not trigger handleAuthFailure for non-API paths", async () => {
     global.fetch = vi.fn().mockResolvedValue(
-      new Response("{}", { status: 401, headers: { "Content-Type": "application/json" } }),
+      new Response("{}", {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+      }),
     );
 
     installAuthInterceptor();

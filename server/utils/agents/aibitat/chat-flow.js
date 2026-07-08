@@ -309,7 +309,7 @@ const chatFlowMethods = {
        * - `RateLimitError`
        * - `ServerError`
        */
-      error = null,
+      _error = null,
       // eslint-disable-next-line
       {},
     ) => null,

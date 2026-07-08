@@ -64,10 +64,16 @@ describe("htmlLang utilities", () => {
     it("falls back to 'en' when no language is available", () => {
       vi.mocked(i18next.language, true);
       const originalLang = i18next.language;
-      Object.defineProperty(i18next, "language", { value: undefined, configurable: true });
+      Object.defineProperty(i18next, "language", {
+        value: undefined,
+        configurable: true,
+      });
       syncHtmlLang(undefined);
       expect(document.documentElement.getAttribute("lang")).toBe("en");
-      Object.defineProperty(i18next, "language", { value: originalLang, configurable: true });
+      Object.defineProperty(i18next, "language", {
+        value: originalLang,
+        configurable: true,
+      });
     });
   });
 

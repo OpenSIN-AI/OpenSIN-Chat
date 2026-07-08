@@ -36,7 +36,9 @@ describe("useTriggers", () => {
   });
 
   it("starts with loading=true and empty triggers", () => {
-    global.fetch = vi.fn().mockResolvedValue(jsonResponse({ success: true, triggers: [] }));
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse({ success: true, triggers: [] }));
     const { result } = renderHook(() => useTriggers("my-ws"));
     expect(result.current.loading).toBe(true);
     expect(result.current.triggers).toEqual([]);
@@ -44,14 +46,18 @@ describe("useTriggers", () => {
 
   it("fetches triggers on mount", async () => {
     const triggers = [{ id: "t1", name: "Test", active: true }];
-    global.fetch = vi.fn().mockResolvedValue(jsonResponse({ success: true, triggers }));
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse({ success: true, triggers }));
     const { result } = renderHook(() => useTriggers("my-ws"));
     await waitFor(() => expect(result.current.loading).toBe(false));
     expect(result.current.triggers).toEqual(triggers);
   });
 
   it("create returns true on success and refreshes", async () => {
-    global.fetch = vi.fn().mockResolvedValue(jsonResponse({ success: true, triggers: [] }));
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse({ success: true, triggers: [] }));
     const { result } = renderHook(() => useTriggers("my-ws"));
     await waitFor(() => expect(result.current.loading).toBe(false));
 
@@ -61,7 +67,9 @@ describe("useTriggers", () => {
   });
 
   it("create returns false on failure", async () => {
-    global.fetch = vi.fn().mockResolvedValue(jsonResponse({ success: true, triggers: [] }));
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse({ success: true, triggers: [] }));
     const { result } = renderHook(() => useTriggers("my-ws"));
     await waitFor(() => expect(result.current.loading).toBe(false));
 
@@ -71,7 +79,9 @@ describe("useTriggers", () => {
   });
 
   it("update sends PATCH and returns success", async () => {
-    global.fetch = vi.fn().mockResolvedValue(jsonResponse({ success: true, triggers: [] }));
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse({ success: true, triggers: [] }));
     const { result } = renderHook(() => useTriggers("my-ws"));
     await waitFor(() => expect(result.current.loading).toBe(false));
 
@@ -85,7 +95,9 @@ describe("useTriggers", () => {
   });
 
   it("remove sends DELETE and returns success", async () => {
-    global.fetch = vi.fn().mockResolvedValue(jsonResponse({ success: true, triggers: [] }));
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse({ success: true, triggers: [] }));
     const { result } = renderHook(() => useTriggers("my-ws"));
     await waitFor(() => expect(result.current.loading).toBe(false));
 
@@ -99,7 +111,9 @@ describe("useTriggers", () => {
   });
 
   it("toggle sends POST with active state", async () => {
-    global.fetch = vi.fn().mockResolvedValue(jsonResponse({ success: true, triggers: [] }));
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse({ success: true, triggers: [] }));
     const { result } = renderHook(() => useTriggers("my-ws"));
     await waitFor(() => expect(result.current.loading).toBe(false));
 
@@ -116,7 +130,9 @@ describe("useTriggers", () => {
   });
 
   it("fire sends POST and returns success", async () => {
-    global.fetch = vi.fn().mockResolvedValue(jsonResponse({ success: true, triggers: [] }));
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse({ success: true, triggers: [] }));
     const { result } = renderHook(() => useTriggers("my-ws"));
     await waitFor(() => expect(result.current.loading).toBe(false));
 
@@ -130,7 +146,9 @@ describe("useTriggers", () => {
   });
 
   it("getRuns returns runs array", async () => {
-    global.fetch = vi.fn().mockResolvedValue(jsonResponse({ success: true, triggers: [] }));
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse({ success: true, triggers: [] }));
     const { result } = renderHook(() => useTriggers("my-ws"));
     await waitFor(() => expect(result.current.loading).toBe(false));
 
@@ -141,7 +159,9 @@ describe("useTriggers", () => {
   });
 
   it("getRuns returns empty array when no runs", async () => {
-    global.fetch = vi.fn().mockResolvedValue(jsonResponse({ success: true, triggers: [] }));
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse({ success: true, triggers: [] }));
     const { result } = renderHook(() => useTriggers("my-ws"));
     await waitFor(() => expect(result.current.loading).toBe(false));
 
@@ -151,7 +171,9 @@ describe("useTriggers", () => {
   });
 
   it("replayRun sends POST and returns success", async () => {
-    global.fetch = vi.fn().mockResolvedValue(jsonResponse({ success: true, triggers: [] }));
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse({ success: true, triggers: [] }));
     const { result } = renderHook(() => useTriggers("my-ws"));
     await waitFor(() => expect(result.current.loading).toBe(false));
 

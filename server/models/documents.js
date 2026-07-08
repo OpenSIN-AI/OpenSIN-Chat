@@ -362,7 +362,9 @@ const Document = {
       try {
         const { DocumentSummaryCache } = require("../utils/documentSummary");
         for (const docId of docIds) {
-          try { DocumentSummaryCache.invalidate(docId); } catch {}
+          try {
+            DocumentSummaryCache.invalidate(docId);
+          } catch {}
         }
       } catch {}
       try {

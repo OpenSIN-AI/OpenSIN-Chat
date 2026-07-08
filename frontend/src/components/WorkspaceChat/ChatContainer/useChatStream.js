@@ -439,7 +439,6 @@ export default function useChatStream({
     if (loadingResponse === true) {
       fetchReply();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadingResponse, workspace]);
 
   useWebSocket({

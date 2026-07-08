@@ -105,7 +105,9 @@ function transformationEndpoints(app) {
           id: Number(transformationId),
         });
         if (!transformation)
-          return response.status(404).json({ error: "Transformation not found" });
+          return response
+            .status(404)
+            .json({ error: "Transformation not found" });
 
         const insight = await runTransformation({
           transformation,
@@ -126,7 +128,9 @@ function transformationEndpoints(app) {
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async (request, response) => {
       try {
-        const insights = await DocumentInsight.forDocument(request.params.docId);
+        const insights = await DocumentInsight.forDocument(
+          request.params.docId,
+        );
         response.status(200).json({ insights });
       } catch (e) {
         consoleLogger.error(e);

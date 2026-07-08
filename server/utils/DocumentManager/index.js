@@ -38,9 +38,7 @@ class DocumentManager {
   async contextModeDocs() {
     if (!this.workspace) return [];
     const { Document } = require("../../models/documents");
-    const {
-      generateDocumentSummary,
-    } = require("../documentSummary");
+    const { generateDocumentSummary } = require("../documentSummary");
 
     const docs = await Document.where({
       workspaceId: Number(this.workspace.id),
@@ -53,12 +51,12 @@ class DocumentManager {
       docs.map(async (doc) => {
         if (doc.contextMode === "full") {
           // Reuse the same loader as pinnedDocs.
-          const data = await this.loadPinnedDocument(doc.docpath).catch(
-            (e) => {
-              this.log(`Failed to load full-context document ${doc.docpath}: ${e.message}`);
-              return null;
-            },
-          );
+          const data = await this.loadPinnedDocument(doc.docpath).catch((e) => {
+            this.log(
+              `Failed to load full-context document ${doc.docpath}: ${e.message}`,
+            );
+            return null;
+          });
           if (!data) return null;
           return { ...data, docId: doc.docId, contextMode: "full" };
         }

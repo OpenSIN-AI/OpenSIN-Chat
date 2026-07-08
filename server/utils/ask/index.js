@@ -146,8 +146,7 @@ async function askDocuments({ question, workspace }) {
   // Step 4: synthesis
   const synthesisInput = validAnswers
     .map(
-      (a, i) =>
-        `### Teilrecherche ${i + 1}: "${a.search.term}"\n${a.answer}`,
+      (a, i) => `### Teilrecherche ${i + 1}: "${a.search.term}"\n${a.answer}`,
     )
     .join("\n\n");
 

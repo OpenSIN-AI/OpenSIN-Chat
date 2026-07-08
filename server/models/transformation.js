@@ -11,7 +11,8 @@ const DEFAULT_TRANSFORMATIONS = [
   {
     name: "executive-summary",
     title: "Kurzfassung",
-    description: "Erstellt eine prägnante Zusammenfassung für Entscheidungsträger.",
+    description:
+      "Erstellt eine prägnante Zusammenfassung für Entscheidungsträger.",
     prompt:
       "Erstelle eine strukturierte Kurzfassung des folgenden Dokuments für Entscheidungsträger. Umfang: maximal 250 Wörter. Gliedere in: Kernthema, wichtigste Erkenntnisse (Aufzählung), empfohlene Maßnahmen.",
     applyDefault: false,
@@ -44,9 +45,14 @@ const Transformation = {
         where: { name: tpl.name },
       });
       if (!existing) {
-        await prisma.transformations.create({ data: tpl }).catch((e) =>
-          consoleLogger.error(`[Transformation] Failed to seed "${tpl.name}":`, e.message),
-        );
+        await prisma.transformations
+          .create({ data: tpl })
+          .catch((e) =>
+            consoleLogger.error(
+              `[Transformation] Failed to seed "${tpl.name}":`,
+              e.message,
+            ),
+          );
       }
     }
   },
@@ -67,7 +73,13 @@ const Transformation = {
   },
 
   create: async function (data = {}) {
-    const { name, title, description = null, prompt, applyDefault = false } = data;
+    const {
+      name,
+      title,
+      description = null,
+      prompt,
+      applyDefault = false,
+    } = data;
     if (!name || !title || !prompt)
       throw new Error("name, title, and prompt are required");
 
@@ -80,7 +92,8 @@ const Transformation = {
     const allowed = ["name", "title", "description", "prompt", "applyDefault"];
     const filtered = {};
     for (const key of allowed) {
-      if (Object.prototype.hasOwnProperty.call(data, key)) filtered[key] = data[key];
+      if (Object.prototype.hasOwnProperty.call(data, key))
+        filtered[key] = data[key];
     }
     return await prisma.transformations.update({
       where: { id: Number(id) },

@@ -75,7 +75,11 @@ export function SearchAndCreate({
         <div className="px-3 py-2 border-b border-white/5 light:border-slate-200 shrink-0 bg-zinc-800/50 light:bg-slate-50">
           <div className="flex items-center gap-1.5">
             {creatingType === "folder" ? (
-              <Folder size={14} weight="fill" className="text-blue-400 flex-shrink-0" />
+              <Folder
+                size={14}
+                weight="fill"
+                className="text-blue-400 flex-shrink-0"
+              />
             ) : (
               <FileText size={14} className="text-zinc-400 flex-shrink-0" />
             )}
@@ -88,7 +92,11 @@ export function SearchAndCreate({
                 if (e.key === "Enter") onCreateItem();
                 else if (e.key === "Escape") onCancelCreate();
               }}
-              placeholder={creatingType === "folder" ? t("sidebar.filesystem.folderName") : t("sidebar.filesystem.fileName")}
+              placeholder={
+                creatingType === "folder"
+                  ? t("sidebar.filesystem.folderName")
+                  : t("sidebar.filesystem.fileName")
+              }
               className="flex-1 text-xs bg-zinc-950 light:bg-white border border-zinc-700 light:border-slate-300 rounded-md px-2 py-1 text-theme-text-primary light:text-theme-text-primary focus:outline-none focus:border-zinc-500"
             />
             <button
@@ -135,8 +143,15 @@ export function SearchAndCreate({
             </button>
           )}
           {breadcrumbs.map((crumb, i) => (
-            <div key={crumb.path} className="flex items-center gap-1 flex-shrink-0">
-              {i > 0 && <span className="text-zinc-700 light:text-slate-300 text-xs">/</span>}
+            <div
+              key={crumb.path}
+              className="flex items-center gap-1 flex-shrink-0"
+            >
+              {i > 0 && (
+                <span className="text-zinc-700 light:text-slate-300 text-xs">
+                  /
+                </span>
+              )}
               <button
                 type="button"
                 onClick={() => onNavigateTo(crumb.path)}

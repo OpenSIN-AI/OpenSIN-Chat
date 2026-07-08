@@ -60,7 +60,10 @@ async function generateDocumentSummary({
         if (parsed?.summary) return parsed.summary;
       }
     } catch (e) {
-      consoleLogger.error(`[DocumentSummary] Cache read error (${cacheKey}):`, e.message);
+      consoleLogger.error(
+        `[DocumentSummary] Cache read error (${cacheKey}):`,
+        e.message,
+      );
     }
   }
 
@@ -68,7 +71,9 @@ async function generateDocumentSummary({
   const documentsPath = getStoragePath("documents");
   const filePath = path.resolve(documentsPath, document.docpath);
   if (!fs.existsSync(filePath)) {
-    consoleLogger.error(`[DocumentSummary] File not found: ${document.docpath}`);
+    consoleLogger.error(
+      `[DocumentSummary] File not found: ${document.docpath}`,
+    );
     return null;
   }
 
@@ -76,7 +81,10 @@ async function generateDocumentSummary({
   try {
     data = JSON.parse(fs.readFileSync(filePath, { encoding: "utf-8" }));
   } catch (e) {
-    consoleLogger.error(`[DocumentSummary] Failed to parse file ${document.docpath}:`, e.message);
+    consoleLogger.error(
+      `[DocumentSummary] Failed to parse file ${document.docpath}:`,
+      e.message,
+    );
     return null;
   }
 
@@ -94,7 +102,7 @@ async function generateDocumentSummary({
   );
   const content = String(data.pageContent).slice(0, maxChars);
 
-  let summary = null;
+  let summary;
   try {
     const result = await LLMConnector.getChatCompletion(
       [
@@ -108,7 +116,10 @@ async function generateDocumentSummary({
     );
     summary = result?.textResponse?.trim() || null;
   } catch (e) {
-    consoleLogger.error(`[DocumentSummary] LLM call failed for ${document.docpath}:`, e.message);
+    consoleLogger.error(
+      `[DocumentSummary] LLM call failed for ${document.docpath}:`,
+      e.message,
+    );
     return null;
   }
 
@@ -138,7 +149,9 @@ async function generateDocumentSummary({
     consoleLogger.error(`[DocumentSummary] Cache write error:`, e.message);
   }
 
-  consoleLogger.log(`[DocumentSummary] Generated summary for: ${document.filename}`);
+  consoleLogger.log(
+    `[DocumentSummary] Generated summary for: ${document.filename}`,
+  );
   return summary;
 }
 

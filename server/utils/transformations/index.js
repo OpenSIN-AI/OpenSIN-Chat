@@ -31,7 +31,9 @@ async function runTransformation({ transformation, document, workspace }) {
   try {
     data = JSON.parse(fs.readFileSync(filePath, { encoding: "utf-8" }));
   } catch (e) {
-    throw new Error(`Failed to read document file: ${e.message}`);
+    throw new Error(`Failed to read document file: ${e.message}`, {
+      cause: e,
+    });
   }
 
   if (!data?.pageContent) throw new Error("Document has no page content");

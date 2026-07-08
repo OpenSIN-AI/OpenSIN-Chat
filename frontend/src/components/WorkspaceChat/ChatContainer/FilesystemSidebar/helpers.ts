@@ -10,20 +10,81 @@ import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
 import { File } from "@phosphor-icons/react/dist/csr/File";
 
 export const ALL_FILE_EXTENSIONS = [
-  ".txt", ".md", ".pdf", ".csv", ".json", ".html", ".docx", ".doc",
-  ".rtf", ".epub", ".xlsx", ".pptx", ".xml", ".yaml", ".yml",
-  ".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".bmp", ".tiff",
-  ".mp4", ".avi", ".mov", ".mkv", ".webm",
-  ".mp3", ".wav", ".flac", ".ogg", ".m4a",
-  ".zip", ".tar", ".gz", ".rar", ".7z",
-  ".js", ".ts", ".jsx", ".tsx", ".py", ".go", ".rs", ".java", ".c", ".cpp",
+  ".txt",
+  ".md",
+  ".pdf",
+  ".csv",
+  ".json",
+  ".html",
+  ".docx",
+  ".doc",
+  ".rtf",
+  ".epub",
+  ".xlsx",
+  ".pptx",
+  ".xml",
+  ".yaml",
+  ".yml",
+  ".png",
+  ".jpg",
+  ".jpeg",
+  ".gif",
+  ".svg",
+  ".webp",
+  ".bmp",
+  ".tiff",
+  ".mp4",
+  ".avi",
+  ".mov",
+  ".mkv",
+  ".webm",
+  ".mp3",
+  ".wav",
+  ".flac",
+  ".ogg",
+  ".m4a",
+  ".zip",
+  ".tar",
+  ".gz",
+  ".rar",
+  ".7z",
+  ".js",
+  ".ts",
+  ".jsx",
+  ".tsx",
+  ".py",
+  ".go",
+  ".rs",
+  ".java",
+  ".c",
+  ".cpp",
 ];
 
-export const IMAGE_EXTS = [".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".bmp", ".tiff"];
+export const IMAGE_EXTS = [
+  ".png",
+  ".jpg",
+  ".jpeg",
+  ".gif",
+  ".svg",
+  ".webp",
+  ".bmp",
+  ".tiff",
+];
 export const VIDEO_EXTS = [".mp4", ".avi", ".mov", ".mkv", ".webm"];
 export const AUDIO_EXTS = [".mp3", ".wav", ".flac", ".ogg", ".m4a"];
 export const ARCHIVE_EXTS = [".zip", ".tar", ".gz", ".rar", ".7z"];
-export const CODE_EXTS = [".js", ".ts", ".jsx", ".tsx", ".py", ".go", ".rs", ".java", ".c", ".cpp"];
+export const CODE_EXTS = [
+  ".js",
+  ".ts",
+  ".jsx",
+  ".tsx",
+  ".py",
+  ".go",
+  ".rs",
+  ".java",
+  ".c",
+  ".cpp",
+];
 
 export function getFileIcon(ext: string) {
   if (ext === ".pdf") return FilePdf;
@@ -41,7 +102,8 @@ export function getFileColor(ext: string) {
   if (IMAGE_EXTS.includes(ext)) return "text-green-400 light:text-green-500";
   if (VIDEO_EXTS.includes(ext)) return "text-purple-400 light:text-purple-500";
   if (AUDIO_EXTS.includes(ext)) return "text-amber-400 light:text-amber-500";
-  if (ARCHIVE_EXTS.includes(ext)) return "text-orange-400 light:text-orange-500";
+  if (ARCHIVE_EXTS.includes(ext))
+    return "text-orange-400 light:text-orange-500";
   if (CODE_EXTS.includes(ext)) return "text-blue-400 light:text-blue-500";
   return "text-zinc-400 light:text-slate-500";
 }
@@ -66,8 +128,14 @@ export function formatRelativeDate(dateStr: string, t: any) {
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
   if (diffDays === 0) return t("sidebar.filesystem.today", "heute");
   if (diffDays === 1) return t("sidebar.filesystem.yesterday", "gestern");
-  if (diffDays < 7) return t("sidebar.filesystem.daysAgo", "vor {{count}} Tagen", { count: diffDays });
-  if (diffDays < 30) return t("sidebar.filesystem.weeksAgo", "vor {{count}} Wochen", { count: Math.floor(diffDays / 7) });
+  if (diffDays < 7)
+    return t("sidebar.filesystem.daysAgo", "vor {{count}} Tagen", {
+      count: diffDays,
+    });
+  if (diffDays < 30)
+    return t("sidebar.filesystem.weeksAgo", "vor {{count}} Wochen", {
+      count: Math.floor(diffDays / 7),
+    });
   return date.toLocaleDateString();
 }
 

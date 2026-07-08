@@ -87,71 +87,73 @@ export default function WorkspaceFileRow({
         }`}
         onClick={toggleRowSelection}
       >
-      <div
-        className="col-span-10 w-fit flex gap-x-[2px] items-center relative"
-        data-tooltip-id="ws-directory-item"
-        data-tooltip-content={JSON.stringify({
-          title: item.title,
-          date: formatDateTimeAsMoment(item?.published),
-          extension: getFileExtension(item.url),
-        })}
-      >
-        <div className="shrink-0 w-3 h-3">
-          {!disableSelection ? (
-            <div
-              className={`shrink-0 w-3 h-3 rounded border-[1px] border-solid border-white ${
-                selected ? "text-white" : "text-theme-text-primary light:invert"
-              } flex justify-center items-center cursor-pointer`}
-              role="checkbox"
-              aria-checked={selected}
-              tabIndex={0}
-              onClick={handleRowSelection}
-            >
-              {selected && <div className="w-2 h-2 bg-white rounded-[2px]" />}
-            </div>
-          ) : null}
-        </div>
-        <File
-          className="shrink-0 text-base font-bold w-4 h-4 mr-[3px] ml-1"
-          weight="fill"
-        />
-        <p className="whitespace-nowrap overflow-hidden text-ellipsis max-w-[400px]">
-          {middleTruncate(item.title, 50)}
-        </p>
-      </div>
-      <div className="col-span-2 flex justify-end items-center">
-        {hasChanges ? (
-          <div className="w-4 h-4 ml-2 flex-shrink-0" />
-        ) : (
-          <div className="flex gap-x-2 items-center">
-            <WatchForChanges
-              workspace={workspace}
-              docPath={`${folderName}/${item.name}`}
-              item={item}
-            />
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowInsights(true);
-              }}
-              aria-label="Show Insights"
-              data-tooltip-id="pin-document"
-              data-tooltip-content="Transformations & Insights"
-              className="flex items-center text-theme-text-secondary hover:text-theme-text-primary transition-colors ml-2"
-            >
-              <Sparkle size={16} weight="regular" aria-hidden="true" />
-            </button>
-            <ContextModeSelector
-              workspace={workspace}
-              docId={item.id}
-              item={item}
-            />
-            <RemoveItemFromWorkspace item={item} onClick={onRemoveClick} />
+        <div
+          className="col-span-10 w-fit flex gap-x-[2px] items-center relative"
+          data-tooltip-id="ws-directory-item"
+          data-tooltip-content={JSON.stringify({
+            title: item.title,
+            date: formatDateTimeAsMoment(item?.published),
+            extension: getFileExtension(item.url),
+          })}
+        >
+          <div className="shrink-0 w-3 h-3">
+            {!disableSelection ? (
+              <div
+                className={`shrink-0 w-3 h-3 rounded border-[1px] border-solid border-white ${
+                  selected
+                    ? "text-white"
+                    : "text-theme-text-primary light:invert"
+                } flex justify-center items-center cursor-pointer`}
+                role="checkbox"
+                aria-checked={selected}
+                tabIndex={0}
+                onClick={handleRowSelection}
+              >
+                {selected && <div className="w-2 h-2 bg-white rounded-[2px]" />}
+              </div>
+            ) : null}
           </div>
-        )}
+          <File
+            className="shrink-0 text-base font-bold w-4 h-4 mr-[3px] ml-1"
+            weight="fill"
+          />
+          <p className="whitespace-nowrap overflow-hidden text-ellipsis max-w-[400px]">
+            {middleTruncate(item.title, 50)}
+          </p>
+        </div>
+        <div className="col-span-2 flex justify-end items-center">
+          {hasChanges ? (
+            <div className="w-4 h-4 ml-2 flex-shrink-0" />
+          ) : (
+            <div className="flex gap-x-2 items-center">
+              <WatchForChanges
+                workspace={workspace}
+                docPath={`${folderName}/${item.name}`}
+                item={item}
+              />
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowInsights(true);
+                }}
+                aria-label="Show Insights"
+                data-tooltip-id="pin-document"
+                data-tooltip-content="Transformations & Insights"
+                className="flex items-center text-theme-text-secondary hover:text-theme-text-primary transition-colors ml-2"
+              >
+                <Sparkle size={16} weight="regular" aria-hidden="true" />
+              </button>
+              <ContextModeSelector
+                workspace={workspace}
+                docId={item.id}
+                item={item}
+              />
+              <RemoveItemFromWorkspace item={item} onClick={onRemoveClick} />
+            </div>
+          )}
+        </div>
       </div>
-    </div>
     </>
   );
 }

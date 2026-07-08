@@ -36,7 +36,9 @@ describe("useConnector", () => {
   });
 
   it("starts with empty accounts and not available", () => {
-    global.fetch = vi.fn().mockResolvedValue(jsonResponse({ success: true, accounts: [] }));
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse({ success: true, accounts: [] }));
     const { result } = renderHook(() => useConnector("google"));
     expect(result.current.accounts).toEqual([]);
     expect(result.current.available).toBe(false);
@@ -48,9 +50,11 @@ describe("useConnector", () => {
       { id: 1, provider: "google", status: "active" },
       { id: 2, provider: "microsoft", status: "active" },
     ];
-    global.fetch = vi.fn().mockResolvedValue(
-      jsonResponse({ success: true, accounts, available: { google: true } }),
-    );
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(
+        jsonResponse({ success: true, accounts, available: { google: true } }),
+      );
     const { result } = renderHook(() => useConnector("google"));
     await waitFor(() => expect(result.current.accounts.length).toBe(1));
     expect(result.current.accounts[0].provider).toBe("google");
@@ -58,44 +62,42 @@ describe("useConnector", () => {
   });
 
   it("connect returns false when status is coming_soon", async () => {
-    global.fetch = vi.fn().mockResolvedValue(
-      jsonResponse({ success: true, accounts: [] }),
-    );
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse({ success: true, accounts: [] }));
     const { result } = renderHook(() => useConnector("google"));
     await waitFor(() => expect(result.current.busy).toBe(false));
 
-    global.fetch = vi.fn().mockResolvedValue(
-      jsonResponse({ status: "coming_soon" }),
-    );
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse({ status: "coming_soon" }));
     const ok = await result.current.connect("gmail");
     expect(ok).toBe(false);
     expect(result.current.busy).toBe(false);
   });
 
   it("connect returns false when success is false", async () => {
-    global.fetch = vi.fn().mockResolvedValue(
-      jsonResponse({ success: true, accounts: [] }),
-    );
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse({ success: true, accounts: [] }));
     const { result } = renderHook(() => useConnector("google"));
     await waitFor(() => expect(result.current.busy).toBe(false));
 
-    global.fetch = vi.fn().mockResolvedValue(
-      jsonResponse({ success: false }),
-    );
+    global.fetch = vi.fn().mockResolvedValue(jsonResponse({ success: false }));
     const ok = await result.current.connect("gmail");
     expect(ok).toBe(false);
   });
 
   it("disconnect sends POST and refreshes", async () => {
-    global.fetch = vi.fn().mockResolvedValue(
-      jsonResponse({ success: true, accounts: [] }),
-    );
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse({ success: true, accounts: [] }));
     const { result } = renderHook(() => useConnector("google"));
     await waitFor(() => expect(result.current.accounts).toBeDefined());
 
-    global.fetch = vi.fn().mockResolvedValue(
-      jsonResponse({ success: true, accounts: [] }),
-    );
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(jsonResponse({ success: true, accounts: [] }));
     await result.current.disconnect("account-1");
     expect(global.fetch).toHaveBeenCalledWith(
       "/api/connectors/google/disconnect",

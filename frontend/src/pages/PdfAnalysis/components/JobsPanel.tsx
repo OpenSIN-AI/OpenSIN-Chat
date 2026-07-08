@@ -2,7 +2,6 @@
 // Jobs panel: start form, job list, and individual job rows
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { UploadSimple } from "@phosphor-icons/react/dist/csr/UploadSimple";
 import PdfAnalysis from "@/models/pdfAnalysis";
 import { safeErrorMessage } from "@/utils/request";
 import logger from "@/utils/logger";
@@ -217,7 +216,9 @@ function StartForm({ onStarted, isSidebar = false }: StartFormProps) {
             />
           </div>
           <p className="text-xs text-theme-text-secondary">
-            {t("pdfAnalysis.panel.uploadingPercent", { percent: uploadProgress })}
+            {t("pdfAnalysis.panel.uploadingPercent", {
+              percent: uploadProgress,
+            })}
           </p>
         </div>
       )}
@@ -228,7 +229,9 @@ function StartForm({ onStarted, isSidebar = false }: StartFormProps) {
           disabled={busy}
           className="px-4 py-2 rounded-md text-sm font-medium bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:bg-theme-bg-secondary transition-colors disabled:opacity-50"
         >
-          {busy ? t("pdfAnalysis.panel.submitBusy") : t("pdfAnalysis.panel.submitIdle")}
+          {busy
+            ? t("pdfAnalysis.panel.submitBusy")
+            : t("pdfAnalysis.panel.submitIdle")}
         </button>
       </div>
     </form>
@@ -314,7 +317,9 @@ function JobRow({ job, onShowReport, onCancelled }: JobRowProps) {
               title={t("pdfAnalysis.panel.agentTitle")}
             >
               · {progress.concurrency}{" "}
-              {t("pdfAnalysis.panel.agentsActive", { count: progress.concurrency })}
+              {t("pdfAnalysis.panel.agentsActive", {
+                count: progress.concurrency,
+              })}
             </span>
           )}
         </div>
@@ -324,7 +329,9 @@ function JobRow({ job, onShowReport, onCancelled }: JobRowProps) {
         (progress.etaSeconds != null || progress.pagesPerMinute != null) && (
           <p className="text-xs text-theme-text-secondary">
             {progress.concurrency != null &&
-              t("pdfAnalysis.panel.agentsActive", { count: progress.concurrency })}
+              t("pdfAnalysis.panel.agentsActive", {
+                count: progress.concurrency,
+              })}
             {progress.pagesPerMinute != null &&
               ` · ${t("pdfAnalysis.panel.pagesPerMin", { count: progress.pagesPerMinute })}`}
             {progress.etaSeconds != null &&

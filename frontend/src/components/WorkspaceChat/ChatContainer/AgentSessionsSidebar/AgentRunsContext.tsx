@@ -12,12 +12,7 @@ import React, {
 } from "react";
 
 export type RunStatus =
-  | "queued"
-  | "running"
-  | "waiting_input"
-  | "done"
-  | "error"
-  | "cancelled";
+  "queued" | "running" | "waiting_input" | "done" | "error" | "cancelled";
 
 export interface ToolCall {
   id: string;

@@ -54,13 +54,7 @@ const MARKDOWN_SANITIZE_OPTS: DOMPurifyConfig = {
 const safeMarkdown = (html: string): string =>
   DOMPurify.sanitize(html, MARKDOWN_SANITIZE_OPTS);
 
-function ChatBubble({
-  message,
-  type,
-}: {
-  message: string;
-  type: string;
-}) {
+function ChatBubble({ message, type }: { message: string; type: string }) {
   const isUser = type === "user";
 
   return (

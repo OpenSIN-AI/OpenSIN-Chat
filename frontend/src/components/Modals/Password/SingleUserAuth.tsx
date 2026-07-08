@@ -130,7 +130,8 @@ export default function SingleUserAuth({
               >
                 {t("login.single-user.password")}
               </label>
-              <input aria-label={t("common.password", "Password")}
+              <input
+                aria-label={t("common.password", "Password")}
                 id="single-user-password"
                 name="password"
                 type="password"

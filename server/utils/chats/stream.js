@@ -200,7 +200,8 @@ async function streamChatWithWorkspace(
     }
     contextTexts.push(pageContent);
     sources.push({
-      text: pageContent.slice(0, 1_000) + "...continued on in source document...",
+      text:
+        pageContent.slice(0, 1_000) + "...continued on in source document...",
       ...metadata,
     });
   });

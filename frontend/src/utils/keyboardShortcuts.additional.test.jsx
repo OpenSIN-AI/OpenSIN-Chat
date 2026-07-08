@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 vi.mock("react-i18next", async () => {
   const { createI18nMock } = await import("@/test/i18nMock");
@@ -15,9 +15,12 @@ vi.mock("@/utils/request", () => ({
 }));
 
 // Mock the LLMSelector action event
-vi.mock("@/components/WorkspaceChat/ChatContainer/PromptInput/LLMSelector/action", () => ({
-  TOGGLE_LLM_SELECTOR_EVENT: "toggle-llm-selector",
-}));
+vi.mock(
+  "@/components/WorkspaceChat/ChatContainer/PromptInput/LLMSelector/action",
+  () => ({
+    TOGGLE_LLM_SELECTOR_EVENT: "toggle-llm-selector",
+  }),
+);
 
 // Mock paths
 vi.mock("./paths", () => ({

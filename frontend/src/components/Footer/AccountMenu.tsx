@@ -1,5 +1,11 @@
 // SPDX-License-Identifier: MIT
-import React, { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, {
+  memo,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/csr/ArrowUpRight";
 import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
 import { CaretUpDown } from "@phosphor-icons/react/dist/csr/CaretUpDown";
@@ -150,11 +156,7 @@ function LanguageRow() {
 
 type PopupPosition = { left: number; bottom: number; width: number };
 
-function AccountMenu({
-  compact = false,
-}: {
-  compact?: boolean;
-}) {
+function AccountMenu({ compact = false }: { compact?: boolean }) {
   const { t } = useTranslation();
   const { user } = useUser();
   const { pfp } = usePfp();

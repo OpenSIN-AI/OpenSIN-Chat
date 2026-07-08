@@ -1,13 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { memo } from "react";
-function LLMItem({
-  name,
-  value,
-  image,
-  description,
-  checked,
-  onClick,
-}: any) {
+function LLMItem({ name, value, image, description, checked, onClick }: any) {
   return (
     <div
       onClick={() => onClick(value)}
