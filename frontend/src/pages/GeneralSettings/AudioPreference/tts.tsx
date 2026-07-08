@@ -27,6 +27,7 @@ import KokoroTTSOptions from "@/components/TextToSpeech/KokoroOptions";
 import NvidiaNimTTSOptions from "@/components/TextToSpeech/NvidiaNimOptions";
 import CvoiceTTSOptions from "@/components/TextToSpeech/CvoiceOptions";
 import CvoiceLogo from "@/media/ttsproviders/cvoice.png";
+import logger from "@/utils/logger";
 
 /** Settings object shape passed to TTS provider option components. */
 interface TTSSettings {
@@ -153,7 +154,7 @@ export default function TextToSpeechProvider({
       }
       setHasChanges(!!error);
     } catch (err) {
-      console.error(err);
+      logger.error(err);
     } finally {
       setSaving(false);
     }
@@ -270,6 +271,7 @@ export default function TextToSpeechProvider({
             </div>
           ) : (
             <button
+              aria-label={t("common.selectProvider", "Select provider")}
               className="w-full max-w-[640px] h-[64px] bg-theme-settings-input-bg rounded-lg flex items-center p-[14px] justify-between cursor-pointer border-2 border-transparent hover:border-primary-button transition-all duration-300"
               type="button"
               onClick={() => setSearchMenuOpen(true)}

@@ -19,6 +19,7 @@ import DeepgramSTTOptions from "@/components/SpeechToText/DeepgramOptions";
 import GenericOpenAiSTTOptions from "@/components/SpeechToText/GenericOpenAiOptions";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import UnsavedChangesDialog from "@/components/UnsavedChangesDialog";
+import logger from "@/utils/logger";
 
 interface Provider {
   name: string;
@@ -97,7 +98,7 @@ export default function SpeechToTextProvider({
       }
       setHasChanges(!!error);
     } catch (err) {
-      console.error(err);
+      logger.error(err);
     } finally {
       setSaving(false);
     }
@@ -217,6 +218,7 @@ export default function SpeechToTextProvider({
             </div>
           ) : (
             <button
+              aria-label={t("common.selectProvider", "Select provider")}
               className="w-full max-w-[640px] h-[64px] bg-theme-settings-input-bg rounded-lg flex items-center p-[14px] justify-between cursor-pointer border-2 border-transparent hover:border-primary-button transition-all duration-300"
               type="button"
               onClick={() => setSearchMenuOpen(true)}
