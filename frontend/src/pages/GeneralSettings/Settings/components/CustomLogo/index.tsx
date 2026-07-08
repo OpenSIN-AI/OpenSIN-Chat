@@ -7,6 +7,7 @@ import { useRef, useState, ChangeEvent } from "react";
 import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { useTranslation } from "react-i18next";
 import useIsDefaultLogo from "@/hooks/useIsDefaultLogo";
+import logger from "@/utils/logger";
 
 export default function CustomLogo(): JSX.Element {
   const { t } = useTranslation();
@@ -71,7 +72,7 @@ export default function CustomLogo(): JSX.Element {
     try {
       const { success, error } = await System.removeCustomLogo();
       if (!success) {
-        console.error("Failed to remove logo:", error);
+        logger.error("Failed to remove logo:", error);
         showToast(
           t("customization.items.logo.removeFailed", { error }),
           "error",
@@ -88,7 +89,7 @@ export default function CustomLogo(): JSX.Element {
 
       showToast(t("customization.items.logo.removeSuccess"), "success");
     } catch (err: any) {
-      console.error("Failed to remove logo:", err);
+      logger.error("Failed to remove logo:", err);
       showToast(
         t("customization.items.logo.removeFailed", {
           error: err?.message ?? String(err),

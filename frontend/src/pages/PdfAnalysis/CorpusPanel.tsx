@@ -4,6 +4,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import PdfAnalysis from "@/models/pdfAnalysis";
+import logger from "@/utils/logger";
 
 const CONFLICTS_SEPARATOR = " — vs. — ";
 const PAGES_SEPARATOR = ", ";
@@ -53,7 +54,7 @@ export default function CorpusPanel() {
     try {
       setJobs((await PdfAnalysis.listCorpus()) as CorpusJob[]);
     } catch (e) {
-      console.error("Failed to fetch corpus jobs:", e);
+      logger.error("Failed to fetch corpus jobs:", e);
     }
   }, []);
 
@@ -323,7 +324,7 @@ function CorpusRow({ job, onShowReport, onCancelled }: CorpusRowProps) {
                 await PdfAnalysis.cancelCorpus(job.id);
                 onCancelled?.();
               } catch (e) {
-                console.error(e);
+                logger.error(e);
               }
             }}
             className="text-xs px-3 py-1.5 rounded-md text-red-400 border border-red-400/40 hover:opacity-80"
@@ -352,7 +353,7 @@ function CorpusReportModal({ job, onClose }: CorpusReportModalProps) {
         if (!cancelled) setResult(res as CorpusReport);
       })
       .catch((e) => {
-        if (!cancelled) console.error(e);
+        if (!cancelled) logger.error(e);
       });
     return () => {
       cancelled = true;

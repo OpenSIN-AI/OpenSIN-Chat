@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Appearance from "@/models/appearance";
 import { useTranslation } from "react-i18next";
 import Toggle from "@/components/lib/Toggle";
+import logger from "@/utils/logger";
 
 export default function SpellCheck() {
   const { t } = useTranslation();
@@ -17,7 +18,7 @@ export default function SpellCheck() {
     try {
       Appearance.set("enableSpellCheck", checked);
     } catch (error) {
-      console.error("Failed to update appearance settings:", error);
+      logger.error("Failed to update appearance settings:", error);
       setEnableSpellCheck(!checked);
     }
     setSaving(false);

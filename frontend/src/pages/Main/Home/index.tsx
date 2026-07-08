@@ -33,6 +33,7 @@ import { ChatTooltips } from "@/components/WorkspaceChat/ChatContainer/ChatToolt
 import { ChatSidebarProvider } from "@/components/WorkspaceChat/ChatContainer/ChatSidebar";
 import Sidebars from "@/components/WorkspaceChat/ChatContainer/Sidebars";
 import { FullScreenLoader } from "@/components/Preloader";
+import logger from "@/utils/logger";
 
 interface HomeWorkspace {
   slug: string;
@@ -94,7 +95,7 @@ export default function Home() {
           });
         }
       } catch (e) {
-        console.error("Failed to initialize home workspace:", e);
+        logger.error("Failed to initialize home workspace:", e);
       }
       if (!cancelled) setWorkspaceLoading(false);
     }
@@ -137,7 +138,7 @@ export default function Home() {
           invalidateThreads(ws.slug);
         }
       } catch (e) {
-        console.error("Failed to handle paste:", e);
+        logger.error("Failed to handle paste:", e);
       }
     }
 
@@ -159,7 +160,7 @@ export default function Home() {
         invalidateThreads(ws.slug);
       }
     } catch (e) {
-      console.error("Failed to handle drop:", e);
+      logger.error("Failed to handle drop:", e);
     }
   }
 
@@ -173,7 +174,7 @@ export default function Home() {
         invalidateThreads(workspace!.slug);
       }
     } catch (e) {
-      console.error("Failed to handle drop:", e);
+      logger.error("Failed to handle drop:", e);
     }
   }
 
@@ -289,7 +290,7 @@ function HomeContent({
         navigate(paths.workspace.chat(targetWorkspace.slug));
       }
     } catch (error) {
-      console.error("Error submitting message:", error);
+      logger.error("Error submitting message:", error);
       showToast(t("home.sendMessageFailed"), "error");
       setLoading(false);
       submittingRef.current = false;

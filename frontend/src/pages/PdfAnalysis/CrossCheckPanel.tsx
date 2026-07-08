@@ -4,6 +4,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import PdfAnalysis from "@/models/pdfAnalysis";
+import logger from "@/utils/logger";
 
 interface SourceInput {
   type: string;
@@ -83,7 +84,7 @@ export default function CrossCheckPanel({
     try {
       setJobs((await PdfAnalysis.listCrossChecks()) as CrossCheckJob[]);
     } catch (e) {
-      console.error("Failed to fetch cross-check jobs:", e);
+      logger.error("Failed to fetch cross-check jobs:", e);
     }
   }, []);
 
@@ -411,7 +412,7 @@ function CrossCheckRow({ job, onShowReport, onCancelled }: CrossCheckRowProps) {
                 await PdfAnalysis.cancelCrossCheck(job.id);
                 onCancelled?.();
               } catch (e) {
-                console.error(e);
+                logger.error(e);
               }
             }}
             className="text-xs px-3 py-1.5 rounded-md text-red-400 border border-red-400/40 hover:opacity-80 whitespace-nowrap"
@@ -440,7 +441,7 @@ function CrossCheckReportModal({ job, onClose }: CrossCheckReportModalProps) {
         if (!cancelled) setResult(res as CrossCheckReport);
       })
       .catch((e) => {
-        if (!cancelled) console.error(e);
+        if (!cancelled) logger.error(e);
       });
     return () => {
       cancelled = true;
