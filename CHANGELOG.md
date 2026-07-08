@@ -13,9 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   German celebrity voices from the cvoice.ai dataset (Gronkh, Dieter Bohlen,
   Joko Winterscheidt, Julien Bam, Daniela Katzenberger, Bushido, plus 20,000+
   community voices). Free tier: 10 requests/minute, 1,000 requests/day.
-  - 6 new env vars: `TTS_PROVIDER="cvoice"`, `TTS_CVOICE_API_KEY`,
-    `TTS_CVOICE_ENDPOINT`, `TTS_CVOICE_VOICE_MODEL`,
+  - 6 new env vars: `TTS_CVOICE_API_KEY`, `TTS_CVOICE_ENDPOINT`,
+    `TTS_CVOICE_VOICE_MODEL`, `TTS_CVOICE_CUSTOM_VOICE_MODEL`,
     `TTS_CVOICE_PERSON_NAME`, `TTS_CVOICE_PERSON_SLUG`
+    (selected via `TTS_PROVIDER="cvoice"`)
   - API key stays server-side only — frontend sees only a boolean
     (`TTS_CVOICE_API_KEY_SET`) via `systemSettings.js`
   - In-memory cache (256 entries, LRU) keyed by `voice_id + text hash` —

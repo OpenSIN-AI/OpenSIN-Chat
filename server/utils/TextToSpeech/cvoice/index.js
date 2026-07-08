@@ -51,12 +51,14 @@ const GERMAN_VOICES = [
  * inputs always return the same URL from cvoice.ai, so we can serve cached
  * audio without burning quota.
  */
-class CvoiceTTS {
-  // In-memory cache: hash(text+voice) -> { buffer, mime }
-  // Bounded to avoid unbounded memory growth on long-running servers.
-  #cache = new Map();
-  #cacheLimit = 256;
+// Module-level in-memory cache: hash(text+voice) -> { buffer, mime }.
+// Shared across instances because getTTSProvider() constructs a fresh
+// CvoiceTTS per request — an instance-level cache would never get a hit.
+// Bounded to avoid unbounded memory growth on long-running servers.
+const AUDIO_CACHE = new Map();
+const AUDIO_CACHE_LIMIT = 256;
 
+class CvoiceTTS {
   constructor() {
     if (!process.env.TTS_CVOICE_API_KEY)
       throw new Error(
@@ -66,25 +68,30 @@ class CvoiceTTS {
     this.apiKey = process.env.TTS_CVOICE_API_KEY;
     this.endpoint =
       process.env.TTS_CVOICE_ENDPOINT || "https://cvoice.ai/api/tts";
-    this.voice = process.env.TTS_CVOICE_VOICE_MODEL || GERMAN_VOICES[0].id;
+    this.voice = this.#resolveVoice();
     this.personName = process.env.TTS_CVOICE_PERSON_NAME || null;
     this.personSlug = process.env.TTS_CVOICE_PERSON_SLUG || null;
-
-    // In-memory cache: hash(text+voice) -> { buffer, mime }
-    // Bounded to avoid unbounded memory growth on long-running servers.
-    this.#cache = new Map();
-    this.#cacheLimit = 256;
-
-    // In-memory cache: hash(text+voice) -> { buffer, mime }
-    // Bounded to avoid unbounded memory growth on long-running servers.
-    this.#cache = new Map();
-    this.#cacheLimit = 256;
 
     this.#log(
       `Service (${this.endpoint}) with voice: ${this.voice}${
         this.personName ? ` (person: ${this.personName})` : ""
       }`,
     );
+  }
+
+  /**
+   * Resolve the effective voice id from the environment.
+   *
+   * The settings UI stores the sentinel "__custom__" in TTS_CVOICE_VOICE_MODEL
+   * when the user picked a custom voice — the actual id then lives in
+   * TTS_CVOICE_CUSTOM_VOICE_MODEL. A stale custom id is ignored whenever a
+   * curated voice is selected again.
+   */
+  #resolveVoice() {
+    const configured = (process.env.TTS_CVOICE_VOICE_MODEL || "").trim();
+    const custom = (process.env.TTS_CVOICE_CUSTOM_VOICE_MODEL || "").trim();
+    if (configured === "__custom__") return custom || GERMAN_VOICES[0].id;
+    return configured || GERMAN_VOICES[0].id;
   }
 
   #log(text, ...args) {
@@ -109,16 +116,16 @@ class CvoiceTTS {
   }
 
   #cacheGet(key) {
-    return this.#cache.get(key);
+    return AUDIO_CACHE.get(key);
   }
 
   #cacheSet(key, value) {
-    if (this.#cache.size >= this.#cacheLimit) {
+    if (AUDIO_CACHE.size >= AUDIO_CACHE_LIMIT) {
       // Drop the oldest entry (Map preserves insertion order).
-      const firstKey = this.#cache.keys().next().value;
-      if (firstKey !== undefined) this.#cache.delete(firstKey);
+      const firstKey = AUDIO_CACHE.keys().next().value;
+      if (firstKey !== undefined) AUDIO_CACHE.delete(firstKey);
     }
-    this.#cache.set(key, value);
+    AUDIO_CACHE.set(key, value);
   }
 
   /**
@@ -162,9 +169,32 @@ class CvoiceTTS {
 
   /**
    * POST a single chunk to cvoice.ai and return the audio URL.
-   * Throws on non-2xx so the caller can decide how to react.
+   * Retries up to `maxRetries` times with exponential backoff when the API
+   * responds 429 (free tier: 10 req/min). Throws on other non-2xx statuses
+   * or when retries are exhausted so the caller can decide how to react.
    */
-  async #requestChunk(text) {
+  async #requestChunk(text, maxRetries = 2) {
+    let lastError = null;
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      try {
+        return await this.#requestChunkOnce(text);
+      } catch (e) {
+        lastError = e;
+        if (e?.status !== 429 || attempt === maxRetries) throw e;
+        const delayMs = 2 ** attempt * 1_000; // 1s, 2s, 4s, ...
+        this.#log(
+          `rate limited (429) — retrying in ${delayMs}ms (attempt ${attempt + 1}/${maxRetries})`,
+        );
+        await new Promise((resolve) => setTimeout(resolve, delayMs));
+      }
+    }
+    throw lastError;
+  }
+
+  /**
+   * Single POST to cvoice.ai without retry handling.
+   */
+  async #requestChunkOnce(text) {
     const body = {
       text,
       voice_id: this.voice,

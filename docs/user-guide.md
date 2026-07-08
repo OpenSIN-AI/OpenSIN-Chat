@@ -691,16 +691,17 @@ mit Quellenangabe.
 
 ---
 
-## 16. TTS-Provider einrichten
+## 14. TTS-Provider einrichten
 
-OpenSIN Chat unterstützt **6 TTS-Engines**. Die Auswahl erfolgt in den
+OpenSIN Chat unterstützt **8 TTS-Engines**. Die Auswahl erfolgt in den
 Audio-Einstellungen (`Einstellungen → Audio → TTS-Provider`).
 
-### 16.1 Verfügbare Provider
+### 14.1 Verfügbare Provider
 
 | Provider | Typ | API-Key nötig | Besonderheit |
 |---|---|---|---|
 | **Native** | Browser Web Speech API | ❌ | Kein Internet, keine Qualitätsgarantie |
+| **OpenAI** | Cloud | ✅ | Offizielle OpenAI-TTS-Stimmen (alloy, echo, …) |
 | **OpenAI-kompatibel** | Cloud | ✅ | Funktioniert mit jedem OpenAI-kompatiblen Endpoint |
 | **ElevenLabs** | Cloud | ✅ | Premium-Stimmen, hohe Qualität |
 | **Kokoro** | Lokal | ❌ | ONNX-Modell, läuft auf eigener Hardware |
@@ -708,7 +709,7 @@ Audio-Einstellungen (`Einstellungen → Audio → TTS-Provider`).
 | **NVIDIA NIM** | Cloud | ✅ | NVIDIA Magpie TTS via NIM-API |
 | **cvoice.ai** | Cloud | ✅ | **Deutsche Promi-Stimmen** (Gronkh, Dieter Bohlen, Joko, Julien Bam, Bushido, Daniela Katzenberger) + 20.000 Community-Stimmen |
 
-### 16.2 cvoice.ai einrichten (empfohlen für deutsche Inhalte)
+### 14.2 cvoice.ai einrichten (empfohlen für deutsche Inhalte)
 
 1. **Account erstellen:** https://cvoice.ai/dashboard/api
 2. **API-Key kopieren** (Format: `cvai_...`)
@@ -724,7 +725,7 @@ Audio-Einstellungen (`Einstellungen → Audio → TTS-Provider`).
 **Wichtig:** Der API-Key bleibt serverseitig. Das Frontend sieht nur einen
 Boolean, ob ein Key gesetzt ist — der Key selbst wird nie an den Browser gesendet.
 
-### 16.3 Rate-Limits (cvoice.ai Gratis-Tier)
+### 14.3 Rate-Limits (cvoice.ai Gratis-Tier)
 
 - **10 Requests/Minute**
 - **1.000 Requests/Tag**
@@ -735,29 +736,29 @@ Audio ohne neuen API-Call ausgeliefert.
 
 ---
 
-## 17. Häufige Fragen (FAQ)
+## 15. Häufige Fragen (FAQ)
 
-### 17.1 Wie groß dürfen Dokumente sein?
+### 15.1 Wie groß dürfen Dokumente sein?
 
 - **Einzeldatei:** Bis 100 MB
 - **Workspace gesamt:** Unbegrenzt (lokaler Speicher)
 - **NVIDIA Nemotron:** 1M Context (= ca. 1500 Seiten Text)
 
-### 17.2 Funktioniert das auch offline?
+### 15.2 Funktioniert das auch offline?
 
 - **Vollständig offline:** Mit Ollama oder LM Studio als LLM-Provider
 - **Bundestag-API:** Online (Bundesquelle)
 - **Deep Research:** Online (Web-Suche)
 - **PDF-Reports:** Offline (kein Cloud-Call)
 
-### 17.3 Wie sicher sind meine Daten?
+### 15.3 Wie sicher sind meine Daten?
 
 - **Self-Hosted:** Alle Daten auf deinem Server
 - **Keine Telemetrie:** Null Outbound-Calls zu Dritten
 - **DSGVO:** Volle Kontrolle, lokal in DE/EU hostbar
 - **API-Keys:** Nur für die LLM-Provider, die du konfigurierst
 
-### 17.4 Was kostet der Betrieb?
+### 15.4 Was kostet der Betrieb?
 
 - **Server:** Eigener Mac/Linux/Windows (kein Cloud-Zwang)
 - **LLM-Provider:**
@@ -766,7 +767,7 @@ Audio ohne neuen API-Call ausgeliefert.
   - **Lokal (Ollama / LM Studio):** 0 €/Monat (nur Stromkosten)
 - **Keine Lizenzkosten:** MIT-Lizenz
 
-### 17.5 Was tun wenn die Politiker-DB leer ist?
+### 15.5 Was tun wenn die Politiker-DB leer ist?
 
 ```bash
 # 1. Sync-Job manuell starten
@@ -779,7 +780,7 @@ curl http://localhost:3001/api/politician/stats
 tail -f server/storage/logs/politician-sync.log
 ```
 
-### 17.6 Wie aktualisiere ich die App?
+### 15.6 Wie aktualisiere ich die App?
 
 ```bash
 # 1. Code aktualisieren
@@ -796,7 +797,7 @@ cd frontend && yarn build
 # (je nach Setup: docker compose restart, oder manuell)
 ```
 
-### 17.7 Wo finde ich weitere Hilfe?
+### 15.7 Wo finde ich weitere Hilfe?
 
 - **API-Dokumentation:** `docs/api.md`
 - **Architektur:** `docs/architecture.md`
@@ -806,7 +807,7 @@ cd frontend && yarn build
 
 ---
 
-## 18. Anhang: Tastatur-Shortcuts
+## 16. Anhang: Tastatur-Shortcuts
 
 | Shortcut | Aktion |
 |----------|--------|
