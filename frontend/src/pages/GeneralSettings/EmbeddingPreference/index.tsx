@@ -39,6 +39,7 @@ import ModalWrapper from "@/components/ModalWrapper";
 import CTAButton from "@/components/lib/CTAButton";
 import { useTranslation } from "react-i18next";
 import useEmbeddingPreference from "@/hooks/useEmbeddingPreference";
+import logger from "@/utils/logger";
 
 interface Embedder {
   name: string;
@@ -164,7 +165,7 @@ export default function GeneralEmbeddingPreference() {
       if (newModel === null) return false;
       return settings?.EmbeddingModelPref !== newModel;
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     }
     return false;
   }
@@ -340,6 +341,7 @@ export default function GeneralEmbeddingPreference() {
                   </div>
                 ) : (
                   <button
+                    aria-label={t("common.selectProvider", "Select provider")}
                     className="w-full max-w-[640px] h-[64px] bg-theme-settings-input-bg rounded-lg flex items-center p-[14px] justify-between cursor-pointer border-2 border-transparent hover:border-primary-button transition-all duration-300"
                     type="button"
                     onClick={() => setSearchMenuOpen(true)}
