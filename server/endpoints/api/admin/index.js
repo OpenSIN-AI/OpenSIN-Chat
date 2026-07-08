@@ -1,32 +1,34 @@
 // SPDX-License-Identifier: MIT
-const consoleLogger = require("../../../utils/logger/console.js");
+const consoleLogger = require('../../../utils/logger/console.js');
 
-const { EventLogs } = require("../../../models/eventLogs");
-const { Invite } = require("../../../models/invite");
-const { SystemSettings } = require("../../../models/systemSettings");
-const { User } = require("../../../models/user");
-const { Workspace } = require("../../../models/workspace");
-const { WorkspaceChats } = require("../../../models/workspaceChats");
-const { WorkspaceUser } = require("../../../models/workspaceUsers");
+const { EventLogs } = require('../../../models/eventLogs');
+const { Invite } = require('../../../models/invite');
+const { SystemSettings } = require('../../../models/systemSettings');
+const { User } = require('../../../models/user');
+const { Workspace } = require('../../../models/workspace');
+const { WorkspaceChats } = require('../../../models/workspaceChats');
+const { WorkspaceUser } = require('../../../models/workspaceUsers');
 const {
   BrowserExtensionApiKey,
-} = require("../../../models/browserExtensionApiKey");
-const { ApiKey } = require("../../../models/apiKeys");
+} = require('../../../models/browserExtensionApiKey');
+const { ApiKey } = require('../../../models/apiKeys');
 const {
   canModifyAdmin,
   validCanModify,
   validRoleSelection,
-} = require("../../../utils/helpers/admin");
-const { multiUserMode, reqBody } = require("../../../utils/http");
-const { validAdminApiKey } = require("../../../utils/middleware/validApiKey");
-const { simpleRateLimit } = require("../../../utils/middleware/simpleRateLimit");
-const { validateBody } = require("../../../utils/middleware/validateBody");
-const { AdminSchemas } = require("../../../utils/validation/schemas");
+} = require('../../../utils/helpers/admin');
+const { multiUserMode, reqBody } = require('../../../utils/http');
+const { validAdminApiKey } = require('../../../utils/middleware/validApiKey');
+const {
+  simpleRateLimit,
+} = require('../../../utils/middleware/simpleRateLimit');
+const { validateBody } = require('../../../utils/middleware/validateBody');
+const { AdminSchemas } = require('../../../utils/validation/schemas');
 
 function apiAdminEndpoints(app) {
   if (!app) return;
 
-  app.get("/v1/admin/is-multi-user-mode", [validAdminApiKey], (_, response) => {
+  app.get('/v1/admin/is-multi-user-mode', [validAdminApiKey], (_, response) => {
     /*
     #swagger.tags = ['Admin']
     #swagger.description = 'Check to see if the instance is in multi-user-mode first. Methods are disabled until multi user mode is enabled via the UI.'
@@ -52,7 +54,7 @@ function apiAdminEndpoints(app) {
     response.status(200).json({ isMultiUser });
   });
 
-  app.get("/v1/admin/users", [validAdminApiKey], async (request, response) => {
+  app.get('/v1/admin/users', [validAdminApiKey], async (request, response) => {
     /*
     #swagger.tags = ['Admin']
     #swagger.description = 'Check to see if the instance is in multi-user-mode first. Methods are disabled until multi user mode is enabled via the UI.'
@@ -97,8 +99,12 @@ function apiAdminEndpoints(app) {
   });
 
   app.post(
-    "/v1/admin/users/new",
-    [validAdminApiKey, validateBody(AdminSchemas.createUser), simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
+    '/v1/admin/users/new',
+    [
+      validAdminApiKey,
+      validateBody(AdminSchemas.createUser),
+      simpleRateLimit({ bucket: 'admin-api', max: 30, windowMs: 60 * 1000 }),
+    ],
     async (request, response) => {
       /*
     #swagger.tags = ['Admin']
@@ -162,12 +168,12 @@ function apiAdminEndpoints(app) {
         const { user: newUser, error } = await User.create(newUserParams);
         if (newUser) {
           await EventLogs.logEvent(
-            "user_created",
+            'user_created',
             {
               userName: newUser.username,
-              createdBy: currUser?.username || "api",
+              createdBy: currUser?.username || 'api',
             },
-            currUser?.id,
+            currUser?.id
           );
         }
         response.status(newUser ? 200 : 400).json({ user: newUser, error });
@@ -175,12 +181,16 @@ function apiAdminEndpoints(app) {
         consoleLogger.error(e);
         response.sendStatus(500);
       }
-    },
+    }
   );
 
   app.post(
-    "/v1/admin/users/:id",
-    [validAdminApiKey, validateBody(AdminSchemas.updateUser), simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
+    '/v1/admin/users/:id',
+    [
+      validAdminApiKey,
+      validateBody(AdminSchemas.updateUser),
+      simpleRateLimit({ bucket: 'admin-api', max: 30, windowMs: 60 * 1000 }),
+    ],
     async (request, response) => {
       /*
     #swagger.tags = ['Admin']
@@ -268,12 +278,15 @@ function apiAdminEndpoints(app) {
         consoleLogger.error(e);
         response.sendStatus(500);
       }
-    },
+    }
   );
 
   app.delete(
-    "/v1/admin/users/:id",
-    [validAdminApiKey, simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
+    '/v1/admin/users/:id',
+    [
+      validAdminApiKey,
+      simpleRateLimit({ bucket: 'admin-api', max: 30, windowMs: 60 * 1000 }),
+    ],
     async (request, response) => {
       /*
     #swagger.tags = ['Admin']
@@ -317,7 +330,7 @@ function apiAdminEndpoints(app) {
         if (!user) {
           response
             .status(404)
-            .json({ success: false, error: "User not found." });
+            .json({ success: false, error: 'User not found.' });
           return;
         }
 
@@ -330,7 +343,7 @@ function apiAdminEndpoints(app) {
           return;
         }
 
-        const adminCheck = await canModifyAdmin(user, { role: "__deleted__" });
+        const adminCheck = await canModifyAdmin(user, { role: '__deleted__' });
         if (!adminCheck.valid) {
           response
             .status(200)
@@ -342,23 +355,23 @@ function apiAdminEndpoints(app) {
         await ApiKey.deleteAllForUser(Number(id));
         await User.delete({ id: user.id });
         await EventLogs.logEvent(
-          "user_deleted",
+          'user_deleted',
           {
             userName: user.username,
-            deletedBy: currUser?.username || "api",
+            deletedBy: currUser?.username || 'api',
           },
-          currUser?.id,
+          currUser?.id
         );
         response.status(200).json({ success: true, error: null });
       } catch (e) {
         consoleLogger.error(e);
         response.sendStatus(500);
       }
-    },
+    }
   );
 
   app.get(
-    "/v1/admin/invites",
+    '/v1/admin/invites',
     [validAdminApiKey],
     async (request, response) => {
       /*
@@ -404,12 +417,15 @@ function apiAdminEndpoints(app) {
         consoleLogger.error(e);
         response.sendStatus(500);
       }
-    },
+    }
   );
 
   app.post(
-    "/v1/admin/invite/new",
-    [validAdminApiKey, simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
+    '/v1/admin/invite/new',
+    [
+      validAdminApiKey,
+      simpleRateLimit({ bucket: 'admin-api', max: 30, windowMs: 60 * 1000 }),
+    ],
     async (request, response) => {
       /*
     #swagger.tags = ['Admin']
@@ -465,12 +481,12 @@ function apiAdminEndpoints(app) {
         });
         if (invite) {
           await EventLogs.logEvent(
-            "invite_created",
+            'invite_created',
             {
               inviteCode: invite.code,
               createdBy: response.locals?.apiKey?.createdBy || null,
             },
-            createdByUserId || undefined,
+            createdByUserId || undefined
           );
         }
         response.status(200).json({ invite, error });
@@ -478,12 +494,15 @@ function apiAdminEndpoints(app) {
         consoleLogger.error(e);
         response.sendStatus(500);
       }
-    },
+    }
   );
 
   app.delete(
-    "/v1/admin/invite/:id",
-    [validAdminApiKey, simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
+    '/v1/admin/invite/:id',
+    [
+      validAdminApiKey,
+      simpleRateLimit({ bucket: 'admin-api', max: 30, windowMs: 60 * 1000 }),
+    ],
     async (request, response) => {
       /*
     #swagger.tags = ['Admin']
@@ -525,20 +544,20 @@ function apiAdminEndpoints(app) {
         const { id } = request.params;
         const { success, error } = await Invite.deactivate(id);
         await EventLogs.logEvent(
-          "invite_deleted",
+          'invite_deleted',
           { deletedBy: response.locals?.apiKey?.createdBy || null },
-          response.locals?.apiKey?.createdBy || undefined,
+          response.locals?.apiKey?.createdBy || undefined
         );
         response.status(200).json({ success, error });
       } catch (e) {
         consoleLogger.error(e);
         response.sendStatus(500);
       }
-    },
+    }
   );
 
   app.get(
-    "/v1/admin/workspaces/:workspaceId/users",
+    '/v1/admin/workspaces/:workspaceId/users',
     [validAdminApiKey],
     async (request, response) => {
       /*
@@ -589,12 +608,16 @@ function apiAdminEndpoints(app) {
         consoleLogger.error(e);
         response.sendStatus(500);
       }
-    },
+    }
   );
 
   app.post(
-    "/v1/admin/workspaces/:workspaceId/update-users",
-    [validAdminApiKey, validateBody(AdminSchemas.updateWorkspaceUsers), simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
+    '/v1/admin/workspaces/:workspaceId/update-users',
+    [
+      validAdminApiKey,
+      validateBody(AdminSchemas.updateWorkspaceUsers),
+      simpleRateLimit({ bucket: 'admin-api', max: 30, windowMs: 60 * 1000 }),
+    ],
     async (request, response) => {
       /*
     #swagger.tags = ['Admin']
@@ -650,24 +673,27 @@ function apiAdminEndpoints(app) {
         if (!Array.isArray(userIds)) {
           response
             .status(400)
-            .json({ success: false, error: "userIds must be an array." });
+            .json({ success: false, error: 'userIds must be an array.' });
           return;
         }
         const { success, error } = await Workspace.updateUsers(
           workspaceId,
-          userIds,
+          userIds
         );
         response.status(200).json({ success, error });
       } catch (e) {
         consoleLogger.error(e);
         response.sendStatus(500);
       }
-    },
+    }
   );
 
   app.post(
-    "/v1/admin/workspaces/:workspaceSlug/manage-users",
-    [validAdminApiKey, simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
+    '/v1/admin/workspaces/:workspaceSlug/manage-users',
+    [
+      validAdminApiKey,
+      simpleRateLimit({ bucket: 'admin-api', max: 30, windowMs: 60 * 1000 }),
+    ],
     async (request, response) => {
       /*
     #swagger.tags = ['Admin']
@@ -762,7 +788,7 @@ function apiAdminEndpoints(app) {
         if (reset) {
           const { success, error } = await Workspace.updateUsers(
             workspace.id,
-            userIds,
+            userIds
           );
           return response.status(200).json({
             success,
@@ -774,7 +800,7 @@ function apiAdminEndpoints(app) {
         // Add new users to the workspace if they are not already in the workspace
         const existingUserIds = workspaceUsers.map((user) => user.userId);
         const usersToAdd = userIds.filter(
-          (userId) => !existingUserIds.includes(userId),
+          (userId) => !existingUserIds.includes(userId)
         );
         if (usersToAdd.length > 0)
           await WorkspaceUser.createManyUsers(usersToAdd, workspace.id);
@@ -787,12 +813,15 @@ function apiAdminEndpoints(app) {
         consoleLogger.error(e);
         response.sendStatus(500);
       }
-    },
+    }
   );
 
   app.post(
-    "/v1/admin/workspace-chats",
-    [validAdminApiKey, simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
+    '/v1/admin/workspace-chats',
+    [
+      validAdminApiKey,
+      simpleRateLimit({ bucket: 'admin-api', max: 30, windowMs: 60 * 1000 }),
+    ],
     async (request, response) => {
       /*
     #swagger.tags = ['Admin']
@@ -835,7 +864,7 @@ function apiAdminEndpoints(app) {
           {},
           pgSize,
           clampedOffset * pgSize,
-          { id: "desc" },
+          { id: 'desc' }
         );
 
         const hasPages =
@@ -845,12 +874,15 @@ function apiAdminEndpoints(app) {
         consoleLogger.error(e);
         response.sendStatus(500);
       }
-    },
+    }
   );
 
   app.post(
-    "/v1/admin/preferences",
-    [validAdminApiKey, simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
+    '/v1/admin/preferences',
+    [
+      validAdminApiKey,
+      simpleRateLimit({ bucket: 'admin-api', max: 30, windowMs: 60 * 1000 }),
+    ],
     async (request, response) => {
       /*
     #swagger.tags = ['Admin']
@@ -901,7 +933,7 @@ function apiAdminEndpoints(app) {
         consoleLogger.error(e);
         response.sendStatus(500);
       }
-    },
+    }
   );
 }
 
