@@ -22,7 +22,6 @@ const CSRF_BACKEND = (process.env.CSRF_BACKEND || "memory").toLowerCase();
 let redisClient = null;
 let redisSet = null;
 let redisGet = null;
-let redisDel = null;
 
 if (CSRF_BACKEND === "redis") {
   try {
@@ -42,9 +41,6 @@ if (CSRF_BACKEND === "redis") {
     redisGet = async function (key) {
       return await redisClient.get(key);
     };
-    redisDel = async function (key) {
-      await redisClient.del(key);
-    };
   } catch (err) {
     consoleLogger.warn(
       `[csrfProtection] CSRF_BACKEND=redis requested but ioredis not installed: ${err.message}. Falling back to in-memory.`,
@@ -52,7 +48,6 @@ if (CSRF_BACKEND === "redis") {
     redisClient = null;
     redisSet = null;
     redisGet = null;
-    redisDel = null;
   }
 }
 
