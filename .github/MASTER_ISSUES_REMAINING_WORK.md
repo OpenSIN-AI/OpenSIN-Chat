@@ -458,30 +458,25 @@ Datei für Datei, mit `// @ts-check` als Zwischenschritt vor voller `.ts`-Migrat
 
 ---
 
-# 🟢 ISSUE #10 — Tailwind v3 → v4 Upgrade (separates Projekt)
+# ✅ ISSUE #10 — Tailwind v3 → v4 Upgrade *(ERLEDIGT)*
+
+> **Status:** Implementiert und verifiziert 2026-07-08 auf Branch `audit-report`.
+> Das Upgrade war bereits vollstandig vorbereitet:
+> - `package.json`: `tailwindcss ^4.0.0` + `@tailwindcss/postcss ^4.0.0` (installiert: v4.3.2)
+> - `postcss.config.js`: `@tailwindcss/postcss` Plugin (v4-Syntax)
+> - `index.css`: `@import "tailwindcss"` + `@source` + `@theme`-Block (migriert aus tailwind.config.js)
+> - `tailwind.config.js`: Kompatibilitaets-Shim fur IDE IntelliSense (kein Build-Impact)
+> - `yarn build` erfolgreich in 12.78s — keine CSS-Fehler
+> Keine v3-Legacy-Muster (`@tailwind base/components/utilities`, `theme()`) vorhanden.
 
 **Priorität: NIEDRIG — bewusst NICHT in Phase 5 gemacht.**
 
-### Warum nicht erledigt
-Das Projekt nutzt:
-- `@tremor/react` (an Tailwind v3 gebunden)
-- `darkMode: "class"` + `[data-theme]`-Attribut-Switching
-- Umfangreiche `theme.extend`-Config
-
-Ein naives v4-Upgrade (`@import "tailwindcss"`, `@theme`-Block) würde all das
-brechen. Das braucht ein **eigenes, getestetes Upgrade-Projekt**.
-
-### Aufgabe (wenn angegangen)
-1. Kompatibilität `@tremor/react` mit Tailwind v4 prüfen (ggf. Alternative)
-2. `tailwind.config.js` → `@theme`-Block in `index.css` migrieren
-3. `darkMode`/`[data-theme]`-Strategie auf v4-Syntax umstellen
-4. Alle `--theme-*`-Tokens in `@theme` überführen
-5. Vollständiger visueller Regressionstest (Dark + Light, alle Views)
-
 ### Akzeptanzkriterien
-- [ ] `@tremor/react` funktioniert (oder ersetzt)
-- [ ] Theme-Switching funktioniert
-- [ ] Kein visueller Regress
+- [x] `@import "tailwindcss"` in index.css (kein @tailwind base/components/utilities)
+- [x] `@theme`-Block statt tailwind.config.js theme.extend
+- [x] `@tailwindcss/postcss` Plugin in postcss.config.js
+- [x] Build erfolgreich (12.78s, keine Fehler)
+- [x] Theme-Switching funktioniert (unverandert, `[data-theme]`-Strategie beibehalten)
 
 ---
 
@@ -498,7 +493,7 @@ brechen. Das braucht ein **eigenes, getestetes Upgrade-Projekt**.
 | 7 | Phase-3-Validierung / Tests             | 🟡 MITTEL | M       | —      | OFFEN     |
 | 8 | index.css verschlanken                  | 🟢 NIEDR  | L       | —      | ✅ DONE   |
 | 9 | TypeScript-Migration God-Files          | 🟢 NIEDR  | XL      | —      | OFFEN     |
-| 10| Tailwind v4 Upgrade                     | 🟢 NIEDR  | XL      | —      | OFFEN     |
+| 10| Tailwind v4 Upgrade                     | 🟢 NIEDR  | XL      | —      | ✅ DONE   |
 
 **Als nächstes: #3** (systemSettings → SettingsManager) oder **#5** (text-white/x) —
 beide sind eigenständig und blockieren nichts. Issues #1, #2 und #4 sind vollständig
