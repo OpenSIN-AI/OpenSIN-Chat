@@ -1,0 +1,67 @@
+name: PR Lint & Test (GitHub-hosted)
+
+# Run on every PR to main and on push to main.
+# This is the required status check that gates mergeability.
+# Self-hosted CI pipeline (on OCI VM) remains separate for deploy.
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
+jobs:
+  lint-test:
+    name: Lint & Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22 LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: |
+          cd frontend && yarn install --frozen-lockfile
+          cd ../server && yarn install --frozen-lockfile
+
+      - name: Lint server
+        run: |
+          cd server && yarn lint:check
+        continue-on-error: false
+
+      - name: Lint frontend
+        run: |
+          cd frontend && yarn lint:check
+        continue-on-error: false
+
+      - name: Test server
+        run: |
+          cd server && NODE_OPTIONS="--experimental-vm-modules" yarn test --ci
+        continue-on-error: false
+
+      - name: Test frontend
+        run: |
+          cd frontend && yarn test --ci
+        continue-on-error: false
+
+      - name: Report status
+        if: always()
+        run: |
+          if [ $? -eq 0 ]; then
+            echo "✅ All checks passed (lint + test)"
+          else
+            echo "❌ Lint or test failed"
+            exit 1
+          fi
