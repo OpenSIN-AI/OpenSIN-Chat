@@ -247,7 +247,7 @@ export default function DefaultSystemPrompt() {
             )}
           </div>
         </div>
-      </div>
+      </AdminContentPanel>
     </div>
   );
 }

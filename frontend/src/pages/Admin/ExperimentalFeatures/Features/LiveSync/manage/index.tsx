@@ -35,7 +35,7 @@ export default function LiveDocumentSyncManager(): React.ReactElement {
             <WatchedDocumentsContainer />
           </div>
         </div>
-      </div>
+      </AdminContentPanel>
     </div>
   );
 }

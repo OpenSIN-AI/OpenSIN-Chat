@@ -197,7 +197,7 @@ function BaseLayout({
           </div>
           {children}
         </div>
-      </div>
+      </AdminContentPanel>
     </div>
   );
 }

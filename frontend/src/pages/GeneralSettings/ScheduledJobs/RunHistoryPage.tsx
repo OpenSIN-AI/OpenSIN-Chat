@@ -167,7 +167,7 @@ function RunHistoryLayout({
           </div>
           {children}
         </div>
-      </div>
+      </AdminContentPanel>
     </div>
   );
 }

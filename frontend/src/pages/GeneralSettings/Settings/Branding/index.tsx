@@ -32,7 +32,7 @@ export default function BrandingSettings() {
           <SupportEmail />
           <CustomSiteSettings />
         </div>
-      </div>
+      </AdminContentPanel>
     </div>
   );
 }

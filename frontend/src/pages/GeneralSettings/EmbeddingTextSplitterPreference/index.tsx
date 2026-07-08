@@ -92,7 +92,7 @@ export default function EmbeddingTextSplitterPreference() {
           <div className="w-full h-full flex justify-center items-center">
             <PreLoader />
           </div>
-        </div>
+        </AdminContentPanel>
       ) : (
         <AdminContentPanel>
           <form
@@ -186,7 +186,7 @@ export default function EmbeddingTextSplitterPreference() {
               </div>
             </div>
           </form>
-        </div>
+        </AdminContentPanel>
       )}
 
       <ModalWrapper isOpen={isOpen} closeModal={closeModal}>

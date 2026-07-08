@@ -28,7 +28,7 @@ export default function InterfaceSettings() {
           <LanguagePreference />
           <TextSizePreference />
         </div>
-      </div>
+      </AdminContentPanel>
     </div>
   );
 }

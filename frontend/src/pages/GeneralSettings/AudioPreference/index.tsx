@@ -18,12 +18,12 @@ export default function AudioPreference() {
           <div className="w-full h-full flex justify-center items-center">
             <PreLoader />
           </div>
-        </div>
+        </AdminContentPanel>
       ) : (
         <AdminContentPanel>
           <SpeechToTextProvider settings={settings} />
           <TextToSpeechProvider settings={settings} />
-        </div>
+        </AdminContentPanel>
       )}
     </div>
   );

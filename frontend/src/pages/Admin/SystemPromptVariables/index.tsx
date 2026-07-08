@@ -45,7 +45,7 @@ export default function SystemPromptVariables(): JSX.Element {
               containerClassName="flex w-full"
             />
           </div>
-        </div>
+        </AdminContentPanel>
       </div>
     );
   }
@@ -112,7 +112,7 @@ export default function SystemPromptVariables(): JSX.Element {
             )}
           </div>
         </div>
-      </div>
+      </AdminContentPanel>
 
       <ModalWrapper isOpen={isOpen} closeModal={closeModal}>
         <AddVariableModal closeModal={closeModal} onRefresh={refresh} />

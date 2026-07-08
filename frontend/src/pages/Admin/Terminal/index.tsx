@@ -146,7 +146,7 @@ export default function AdminTerminal(): JSX.Element {
             )}
           </div>
         </div>
-      </div>
+      </AdminContentPanel>
     </div>
   );
 }
