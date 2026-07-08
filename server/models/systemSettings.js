@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+// @ts-check
 // Purpose: Central data-access layer for application-wide system settings.
 // Docs: server/models/systemSettings.doc.md
 const consoleLogger = require("../utils/logger/console.js");
@@ -588,7 +589,7 @@ const SystemSettings = {
       // VectorDB Provider Selection Settings & Configs
       // --------------------------------------------------------
       VectorDB: vectorDB,
-      ...this.vectorDBPreferenceKeys(),
+      ...(await this.vectorDBPreferenceKeys()),
 
       // --------------------------------------------------------
       // LLM Provider Selection Settings & Configs
@@ -597,7 +598,7 @@ const SystemSettings = {
       LLMModel: getBaseLLMProviderModel({ provider: llmProvider }) || null,
       ModelRouterId:
         (await SettingsManager.get("MODEL_ROUTER_ID")) || null,
-      ...this.llmPreferenceKeys(),
+      ...(await this.llmPreferenceKeys()),
 
       // --------------------------------------------------------
       // Whisper (Audio transcription) Selection Settings & Configs
@@ -667,18 +668,21 @@ const SystemSettings = {
       // --------------------------------------------------------
       // Agent Settings & Configs
       // --------------------------------------------------------
-      AgentSerpApiKey: !!process.env.AGENT_SERPAPI_API_KEY || null,
-      AgentSerpApiEngine: process.env.AGENT_SERPAPI_ENGINE || "google",
-      AgentSearchApiKey: !!process.env.AGENT_SEARCHAPI_API_KEY || null,
-      AgentSearchApiEngine: process.env.AGENT_SEARCHAPI_ENGINE || "google",
-      AgentSerperApiKey: !!process.env.AGENT_SERPER_DEV_KEY || null,
-      AgentBingSearchApiKey: !!process.env.AGENT_BING_SEARCH_API_KEY || null,
-      AgentBaiduSearchApiKey: !!process.env.AGENT_BAIDU_SEARCH_API_KEY || null,
-      AgentSerplyApiKey: !!process.env.AGENT_SERPLY_API_KEY || null,
-      AgentSearXNGApiUrl: process.env.AGENT_SEARXNG_API_URL || null,
-      AgentTavilyApiKey: !!process.env.AGENT_TAVILY_API_KEY || null,
-      AgentExaApiKey: !!process.env.AGENT_EXA_API_KEY || null,
-      AgentPerplexityApiKey: !!process.env.AGENT_PERPLEXITY_API_KEY || null,
+      AgentSerpApiKey: !!(await SettingsManager.get("AGENT_SERPAPI_API_KEY")) || null,
+      AgentSerpApiEngine:
+        (await SettingsManager.get("AGENT_SERPAPI_ENGINE")) || "google",
+      AgentSearchApiKey: !!(await SettingsManager.get("AGENT_SEARCHAPI_API_KEY")) || null,
+      AgentSearchApiEngine:
+        (await SettingsManager.get("AGENT_SEARCHAPI_ENGINE")) || "google",
+      AgentSerperApiKey: !!(await SettingsManager.get("AGENT_SERPER_DEV_KEY")) || null,
+      AgentBingSearchApiKey: !!(await SettingsManager.get("AGENT_BING_SEARCH_API_KEY")) || null,
+      AgentBaiduSearchApiKey: !!(await SettingsManager.get("AGENT_BAIDU_SEARCH_API_KEY")) || null,
+      AgentSerplyApiKey: !!(await SettingsManager.get("AGENT_SERPLY_API_KEY")) || null,
+      AgentSearXNGApiUrl:
+        (await SettingsManager.get("AGENT_SEARXNG_API_URL")) || null,
+      AgentTavilyApiKey: !!(await SettingsManager.get("AGENT_TAVILY_API_KEY")) || null,
+      AgentExaApiKey: !!(await SettingsManager.get("AGENT_EXA_API_KEY")) || null,
+      AgentPerplexityApiKey: !!(await SettingsManager.get("AGENT_PERPLEXITY_API_KEY")) || null,
 
       // --------------------------------------------------------
       // Compliance Settings
@@ -905,42 +909,42 @@ const SystemSettings = {
     }
   },
 
-  vectorDBPreferenceKeys: function () {
+  vectorDBPreferenceKeys: async function () {
     return {
       // Pinecone DB Keys
-      PineConeKey: !!process.env.PINECONE_API_KEY,
-      PineConeIndex: process.env.PINECONE_INDEX,
+      PineConeKey: !!(await SettingsManager.get("PINECONE_API_KEY")),
+      PineConeIndex: await SettingsManager.get("PINECONE_INDEX"),
 
       // Chroma DB Keys
-      ChromaEndpoint: process.env.CHROMA_ENDPOINT,
-      ChromaApiHeader: process.env.CHROMA_API_HEADER,
-      ChromaApiKey: !!process.env.CHROMA_API_KEY,
+      ChromaEndpoint: await SettingsManager.get("CHROMA_ENDPOINT"),
+      ChromaApiHeader: await SettingsManager.get("CHROMA_API_HEADER"),
+      ChromaApiKey: !!(await SettingsManager.get("CHROMA_API_KEY")),
 
       // ChromaCloud DB Keys
-      ChromaCloudApiKey: !!process.env.CHROMACLOUD_API_KEY,
-      ChromaCloudTenant: process.env.CHROMACLOUD_TENANT,
-      ChromaCloudDatabase: process.env.CHROMACLOUD_DATABASE,
+      ChromaCloudApiKey: !!(await SettingsManager.get("CHROMACLOUD_API_KEY")),
+      ChromaCloudTenant: await SettingsManager.get("CHROMACLOUD_TENANT"),
+      ChromaCloudDatabase: await SettingsManager.get("CHROMACLOUD_DATABASE"),
 
       // Weaviate DB Keys
-      WeaviateEndpoint: process.env.WEAVIATE_ENDPOINT,
-      WeaviateApiKey: !!process.env.WEAVIATE_API_KEY,
+      WeaviateEndpoint: await SettingsManager.get("WEAVIATE_ENDPOINT"),
+      WeaviateApiKey: !!(await SettingsManager.get("WEAVIATE_API_KEY")),
 
       // QDrant DB Keys
-      QdrantEndpoint: process.env.QDRANT_ENDPOINT,
-      QdrantApiKey: !!process.env.QDRANT_API_KEY,
+      QdrantEndpoint: await SettingsManager.get("QDRANT_ENDPOINT"),
+      QdrantApiKey: !!(await SettingsManager.get("QDRANT_API_KEY")),
 
       // Milvus DB Keys
-      MilvusAddress: process.env.MILVUS_ADDRESS,
-      MilvusUsername: process.env.MILVUS_USERNAME,
-      MilvusPassword: !!process.env.MILVUS_PASSWORD,
+      MilvusAddress: await SettingsManager.get("MILVUS_ADDRESS"),
+      MilvusUsername: await SettingsManager.get("MILVUS_USERNAME"),
+      MilvusPassword: !!(await SettingsManager.get("MILVUS_PASSWORD")),
 
       // Zilliz DB Keys
-      ZillizEndpoint: process.env.ZILLIZ_ENDPOINT,
-      ZillizApiToken: !!process.env.ZILLIZ_API_TOKEN,
+      ZillizEndpoint: await SettingsManager.get("ZILLIZ_ENDPOINT"),
+      ZillizApiToken: !!(await SettingsManager.get("ZILLIZ_API_TOKEN")),
 
       // AstraDB Keys
-      AstraDBApplicationToken: !!process?.env?.ASTRA_DB_APPLICATION_TOKEN,
-      AstraDBEndpoint: process?.env?.ASTRA_DB_ENDPOINT,
+      AstraDBApplicationToken: !!(await SettingsManager.get("ASTRA_DB_APPLICATION_TOKEN")),
+      AstraDBEndpoint: await SettingsManager.get("ASTRA_DB_ENDPOINT"),
 
       // PGVector Keys
       PGVectorConnectionString: !!PGVector.connectionString() || false,
@@ -948,104 +952,111 @@ const SystemSettings = {
     };
   },
 
-  llmPreferenceKeys: function () {
+  llmPreferenceKeys: async function () {
+    const openModelPref = await SettingsManager.get("OPEN_MODEL_PREF");
     return {
       // OpenAI Keys
-      OpenAiKey: !!process.env.OPEN_AI_KEY,
-      OpenAiModelPref: process.env.OPEN_MODEL_PREF || "gpt-4o",
+      OpenAiKey: !!(await SettingsManager.get("OPEN_AI_KEY")),
+      OpenAiModelPref: openModelPref || "gpt-4o",
 
       // Azure + OpenAI Keys
-      AzureOpenAiEndpoint: process.env.AZURE_OPENAI_ENDPOINT,
-      AzureOpenAiKey: !!process.env.AZURE_OPENAI_KEY,
+      AzureOpenAiEndpoint: await SettingsManager.get("AZURE_OPENAI_ENDPOINT"),
+      AzureOpenAiKey: !!(await SettingsManager.get("AZURE_OPENAI_KEY")),
       AzureOpenAiModelPref:
-        process.env.AZURE_OPENAI_MODEL_PREF || process.env.OPEN_MODEL_PREF,
-      AzureOpenAiEmbeddingModelPref: process.env.EMBEDDING_MODEL_PREF,
-      AzureOpenAiTokenLimit: process.env.AZURE_OPENAI_TOKEN_LIMIT || 4096,
-      AzureOpenAiModelType: process.env.AZURE_OPENAI_MODEL_TYPE || "default",
+        (await SettingsManager.get("AZURE_OPENAI_MODEL_PREF")) || openModelPref,
+      AzureOpenAiEmbeddingModelPref: await SettingsManager.get("EMBEDDING_MODEL_PREF"),
+      AzureOpenAiTokenLimit:
+        (await SettingsManager.get("AZURE_OPENAI_TOKEN_LIMIT")) || 4096,
+      AzureOpenAiModelType:
+        (await SettingsManager.get("AZURE_OPENAI_MODEL_TYPE")) || "default",
 
       // Anthropic Keys
-      AnthropicApiKey: !!process.env.ANTHROPIC_API_KEY,
+      AnthropicApiKey: !!(await SettingsManager.get("ANTHROPIC_API_KEY")),
       AnthropicModelPref:
-        process.env.ANTHROPIC_MODEL_PREF || "claude-sonnet-4-6",
-      AnthropicCacheControl: process.env.ANTHROPIC_CACHE_CONTROL || "none",
+        (await SettingsManager.get("ANTHROPIC_MODEL_PREF")) || "claude-sonnet-4-6",
+      AnthropicCacheControl:
+        (await SettingsManager.get("ANTHROPIC_CACHE_CONTROL")) || "none",
 
       // Gemini Keys
-      GeminiLLMApiKey: !!process.env.GEMINI_API_KEY,
+      GeminiLLMApiKey: !!(await SettingsManager.get("GEMINI_API_KEY")),
       GeminiLLMModelPref:
-        process.env.GEMINI_LLM_MODEL_PREF || "gemini-2.0-flash-lite",
+        (await SettingsManager.get("GEMINI_LLM_MODEL_PREF")) || "gemini-2.0-flash-lite",
       GeminiSafetySetting:
-        process.env.GEMINI_SAFETY_SETTING || "BLOCK_MEDIUM_AND_ABOVE",
+        (await SettingsManager.get("GEMINI_SAFETY_SETTING")) || "BLOCK_MEDIUM_AND_ABOVE",
 
       // LMStudio Keys
-      LMStudioBasePath: process.env.LMSTUDIO_BASE_PATH,
-      LMStudioTokenLimit: process.env.LMSTUDIO_MODEL_TOKEN_LIMIT || null,
-      LMStudioModelPref: process.env.LMSTUDIO_MODEL_PREF,
-      LMStudioAuthToken: !!process.env.LMSTUDIO_AUTH_TOKEN,
+      LMStudioBasePath: await SettingsManager.get("LMSTUDIO_BASE_PATH"),
+      LMStudioTokenLimit:
+        (await SettingsManager.get("LMSTUDIO_MODEL_TOKEN_LIMIT")) || null,
+      LMStudioModelPref: await SettingsManager.get("LMSTUDIO_MODEL_PREF"),
+      LMStudioAuthToken: !!(await SettingsManager.get("LMSTUDIO_AUTH_TOKEN")),
 
       // LocalAI Keys
-      LocalAiApiKey: !!process.env.LOCAL_AI_API_KEY,
-      LocalAiBasePath: process.env.LOCAL_AI_BASE_PATH,
-      LocalAiModelPref: process.env.LOCAL_AI_MODEL_PREF,
-      LocalAiTokenLimit: process.env.LOCAL_AI_MODEL_TOKEN_LIMIT,
+      LocalAiApiKey: !!(await SettingsManager.get("LOCAL_AI_API_KEY")),
+      LocalAiBasePath: await SettingsManager.get("LOCAL_AI_BASE_PATH"),
+      LocalAiModelPref: await SettingsManager.get("LOCAL_AI_MODEL_PREF"),
+      LocalAiTokenLimit: await SettingsManager.get("LOCAL_AI_MODEL_TOKEN_LIMIT"),
 
       // Ollama LLM Keys
-      OllamaLLMAuthToken: !!process.env.OLLAMA_AUTH_TOKEN,
-      OllamaLLMBasePath: process.env.OLLAMA_BASE_PATH,
-      OllamaLLMModelPref: process.env.OLLAMA_MODEL_PREF,
-      OllamaLLMTokenLimit: process.env.OLLAMA_MODEL_TOKEN_LIMIT || null,
-      OllamaLLMKeepAliveSeconds: process.env.OLLAMA_KEEP_ALIVE_TIMEOUT ?? 300,
+      OllamaLLMAuthToken: !!(await SettingsManager.get("OLLAMA_AUTH_TOKEN")),
+      OllamaLLMBasePath: await SettingsManager.get("OLLAMA_BASE_PATH"),
+      OllamaLLMModelPref: await SettingsManager.get("OLLAMA_MODEL_PREF"),
+      OllamaLLMTokenLimit:
+        (await SettingsManager.get("OLLAMA_MODEL_TOKEN_LIMIT")) || null,
+      OllamaLLMKeepAliveSeconds:
+        (await SettingsManager.get("OLLAMA_KEEP_ALIVE_TIMEOUT")) ?? 300,
 
       // Fireworks AI API Keys
-      FireworksAiLLMApiKey: !!process.env.FIREWORKS_AI_LLM_API_KEY,
-      FireworksAiLLMModelPref: process.env.FIREWORKS_AI_LLM_MODEL_PREF,
+      FireworksAiLLMApiKey: !!(await SettingsManager.get("FIREWORKS_AI_LLM_API_KEY")),
+      FireworksAiLLMModelPref: await SettingsManager.get("FIREWORKS_AI_LLM_MODEL_PREF"),
 
       // Mistral AI (API) Keys
-      MistralApiKey: !!process.env.MISTRAL_API_KEY,
-      MistralModelPref: process.env.MISTRAL_MODEL_PREF,
+      MistralApiKey: !!(await SettingsManager.get("MISTRAL_API_KEY")),
+      MistralModelPref: await SettingsManager.get("MISTRAL_MODEL_PREF"),
 
       // Groq AI API Keys
-      GroqApiKey: !!process.env.GROQ_API_KEY,
-      GroqModelPref: process.env.GROQ_MODEL_PREF,
+      GroqApiKey: !!(await SettingsManager.get("GROQ_API_KEY")),
+      GroqModelPref: await SettingsManager.get("GROQ_MODEL_PREF"),
 
       // HuggingFace Dedicated Inference
-      HuggingFaceLLMEndpoint: process.env.HUGGING_FACE_LLM_ENDPOINT,
-      HuggingFaceLLMAccessToken: !!process.env.HUGGING_FACE_LLM_API_KEY,
-      HuggingFaceLLMTokenLimit: process.env.HUGGING_FACE_LLM_TOKEN_LIMIT,
+      HuggingFaceLLMEndpoint: await SettingsManager.get("HUGGING_FACE_LLM_ENDPOINT"),
+      HuggingFaceLLMAccessToken: !!(await SettingsManager.get("HUGGING_FACE_LLM_API_KEY")),
+      HuggingFaceLLMTokenLimit: await SettingsManager.get("HUGGING_FACE_LLM_TOKEN_LIMIT"),
 
       // LiteLLM Keys
-      LiteLLMModelPref: process.env.LITE_LLM_MODEL_PREF,
-      LiteLLMTokenLimit: process.env.LITE_LLM_MODEL_TOKEN_LIMIT,
-      LiteLLMBasePath: process.env.LITE_LLM_BASE_PATH,
-      LiteLLMApiKey: !!process.env.LITE_LLM_API_KEY,
+      LiteLLMModelPref: await SettingsManager.get("LITE_LLM_MODEL_PREF"),
+      LiteLLMTokenLimit: await SettingsManager.get("LITE_LLM_MODEL_TOKEN_LIMIT"),
+      LiteLLMBasePath: await SettingsManager.get("LITE_LLM_BASE_PATH"),
+      LiteLLMApiKey: !!(await SettingsManager.get("LITE_LLM_API_KEY")),
 
       // Generic OpenAI Keys
-      GenericOpenAiBasePath: process.env.GENERIC_OPEN_AI_BASE_PATH,
-      GenericOpenAiModelPref: process.env.GENERIC_OPEN_AI_MODEL_PREF,
-      GenericOpenAiTokenLimit: process.env.GENERIC_OPEN_AI_MODEL_TOKEN_LIMIT,
-      GenericOpenAiKey: !!process.env.GENERIC_OPEN_AI_API_KEY,
-      GenericOpenAiMaxTokens: process.env.GENERIC_OPEN_AI_MAX_TOKENS,
+      GenericOpenAiBasePath: await SettingsManager.get("GENERIC_OPEN_AI_BASE_PATH"),
+      GenericOpenAiModelPref: await SettingsManager.get("GENERIC_OPEN_AI_MODEL_PREF"),
+      GenericOpenAiTokenLimit: await SettingsManager.get("GENERIC_OPEN_AI_MODEL_TOKEN_LIMIT"),
+      GenericOpenAiKey: !!(await SettingsManager.get("GENERIC_OPEN_AI_API_KEY")),
+      GenericOpenAiMaxTokens: await SettingsManager.get("GENERIC_OPEN_AI_MAX_TOKENS"),
 
       // xAI LLM API Keys
-      XAIApiKey: !!process.env.XAI_LLM_API_KEY,
-      XAIModelPref: process.env.XAI_LLM_MODEL_PREF,
+      XAIApiKey: !!(await SettingsManager.get("XAI_LLM_API_KEY")),
+      XAIModelPref: await SettingsManager.get("XAI_LLM_MODEL_PREF"),
 
       // NVIDIA NIM Keys
-      NvidiaNimLLMBasePath: process.env.NVIDIA_NIM_LLM_BASE_PATH,
-      NvidiaNimLLMModelPref: process.env.NVIDIA_NIM_LLM_MODEL_PREF,
-      NvidiaNimLLMTokenLimit: process.env.NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT,
+      NvidiaNimLLMBasePath: await SettingsManager.get("NVIDIA_NIM_LLM_BASE_PATH"),
+      NvidiaNimLLMModelPref: await SettingsManager.get("NVIDIA_NIM_LLM_MODEL_PREF"),
+      NvidiaNimLLMTokenLimit: await SettingsManager.get("NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT"),
 
       // OpenCode Zen Keys
-      OpencodeZenBasePath: process.env.OPENCODE_ZEN_BASE_PATH,
-      OpencodeZenModelPref: process.env.OPENCODE_ZEN_MODEL_PREF,
-      OpencodeZenTokenLimit: process.env.OPENCODE_ZEN_MODEL_TOKEN_LIMIT,
-      OpencodeZenApiKey: !!process.env.OPENCODE_ZEN_API_KEY,
+      OpencodeZenBasePath: await SettingsManager.get("OPENCODE_ZEN_BASE_PATH"),
+      OpencodeZenModelPref: await SettingsManager.get("OPENCODE_ZEN_MODEL_PREF"),
+      OpencodeZenTokenLimit: await SettingsManager.get("OPENCODE_ZEN_MODEL_TOKEN_LIMIT"),
+      OpencodeZenApiKey: !!(await SettingsManager.get("OPENCODE_ZEN_API_KEY")),
 
       // Docker Model Runner Keys
-      DockerModelRunnerBasePath: process.env.DOCKER_MODEL_RUNNER_BASE_PATH,
+      DockerModelRunnerBasePath: await SettingsManager.get("DOCKER_MODEL_RUNNER_BASE_PATH"),
       DockerModelRunnerModelPref:
-        process.env.DOCKER_MODEL_RUNNER_LLM_MODEL_PREF,
+        await SettingsManager.get("DOCKER_MODEL_RUNNER_LLM_MODEL_PREF"),
       DockerModelRunnerModelTokenLimit:
-        process.env.DOCKER_MODEL_RUNNER_LLM_MODEL_TOKEN_LIMIT || 8192,
+        (await SettingsManager.get("DOCKER_MODEL_RUNNER_LLM_MODEL_TOKEN_LIMIT")) || 8192,
     };
   },
 
