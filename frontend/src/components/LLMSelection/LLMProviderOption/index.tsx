@@ -23,12 +23,12 @@ export default function LLMProviderOption({
           <img src={image} alt={name} className="h-10 w-10 rounded" />
           <div className="ml-4 text-sm font-semibold">{name}</div>
         </div>
-        <div className="mt-2 text-xs font-base text-white tracking-wide">
+        <div className="mt-2 text-xs font-base text-theme-text-primary tracking-wide">
           {description}
         </div>
         <a
           href={`https://${link}`}
-          className="mt-2 text-xs text-white font-medium underline"
+          className="mt-2 text-xs text-theme-text-primary font-medium underline"
         >
           {link}
         </a>

@@ -48,7 +48,7 @@ export default function DBConnection({
       />
       <div className="flex w-full items-center justify-between">
         <div className="flex flex-col">
-          <div className="text-sm font-semibold text-white">{database_id}</div>
+          <div className="text-sm font-semibold text-theme-text-primary">{database_id}</div>
           <div className="mt-1 text-xs text-description">{engine}</div>
         </div>
         <div className="flex gap-x-2">

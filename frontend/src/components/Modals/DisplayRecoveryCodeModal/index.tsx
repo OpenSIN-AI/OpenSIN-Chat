@@ -54,25 +54,25 @@ export default function RecoveryCodeModal({
           <div className="w-full flex gap-x-2 items-center">
             <Key
               size={24}
-              className="text-white"
+              className="text-theme-text-primary"
               weight="bold"
               aria-hidden="true"
             />
-            <h3 className="text-xl font-semibold text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
+            <h3 className="text-xl font-semibold text-theme-text-primary overflow-hidden overflow-ellipsis whitespace-nowrap">
               {t("recoveryCode.title")}
             </h3>
           </div>
         </div>
         <div className="h-full w-full overflow-y-auto max-h-[calc(100vh-200px)]">
           <div className="py-7 px-9 space-y-2 flex-col">
-            <p className="text-sm text-white flex flex-col">
+            <p className="text-sm text-theme-text-primary flex flex-col">
               {t("recoveryCode.description")} <br />
               <b className="mt-4">{t("recoveryCode.shownOnce")}</b>
             </p>
             <div
               role="button"
               tabIndex={0}
-              className="border-none bg-theme-settings-input-bg text-white hover:text-primary-button
+              className="border-none bg-theme-settings-input-bg text-theme-text-primary hover:text-primary-button
                    flex items-center justify-center rounded-md mt-6 cursor-pointer"
               onClick={handleCopyToClipboard}
               onKeyDown={(e) => {

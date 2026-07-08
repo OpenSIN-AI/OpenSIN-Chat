@@ -92,7 +92,7 @@ export default function AddMemberModal({
       <div className="w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border overflow-hidden">
         <div className="flex items-center justify-between p-6 border-b rounded-t border-theme-modal-border">
           <div className="flex items-center gap-x-4">
-            <h3 className="text-base font-semibold text-white">
+            <h3 className="text-base font-semibold text-theme-text-primary">
               {t("addMemberModal.users")}
             </h3>
             <div className="relative">
@@ -104,7 +104,7 @@ export default function AddMemberModal({
               <MagnifyingGlass
                 size={16}
                 weight="bold"
-                className="text-white text-lg absolute left-3 top-1/2 transform -translate-y-1/2"
+                className="text-theme-text-primary text-lg absolute left-3 top-1/2 transform -translate-y-1/2"
               />
             </div>
           </div>
@@ -114,7 +114,7 @@ export default function AddMemberModal({
             aria-label={t("common.close") || "Close"}
             className="border-none bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center bg-sidebar-button hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
           >
-            <X className="text-white text-lg" />
+            <X className="text-theme-text-primary text-lg" />
           </button>
         </div>
         <form onSubmit={handleUpdate}>
@@ -180,7 +180,7 @@ export default function AddMemberModal({
                     <div className="w-2 h-2 bg-white rounded-[2px]" />
                   )}
                 </div>
-                <p className="text-white text-sm font-medium">
+                <p className="text-theme-text-primary text-sm font-medium">
                   {t("addMemberModal.selectAll")}
                 </p>
               </button>

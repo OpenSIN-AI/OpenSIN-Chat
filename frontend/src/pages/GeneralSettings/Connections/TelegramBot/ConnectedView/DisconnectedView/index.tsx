@@ -149,13 +149,13 @@ function VoiceModeSelector({ config }) {
 
   return (
     <div className="flex items-center justify-between">
-      <span className="text-xs text-white">
+      <span className="text-xs text-theme-text-primary">
         {t("telegram.connected.voice-response")}
       </span>
       <select
         value={voiceMode}
         onChange={handleVoiceModeChange}
-        className="text-xs text-right bg-transparent text-white rounded-md px-2 py-1 outline-none max-w-[260px]"
+        className="text-xs text-right bg-transparent text-theme-text-primary rounded-md px-2 py-1 outline-none max-w-[260px]"
       >
         {getVoiceModeOptions(t).map((opt) => (
           <option key={opt.value} value={opt.value}>

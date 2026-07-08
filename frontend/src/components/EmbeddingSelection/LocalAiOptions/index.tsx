@@ -38,7 +38,7 @@ export default function LocalAiOptions({ settings }: any) {
         <div className="flex flex-col w-60">
           <div className="flex flex-col gap-y-1 mb-2">
             <div className="flex gap-x-1 items-center">
-              <label className="text-white text-sm font-semibold block">
+              <label className="text-theme-text-primary text-sm font-semibold block">
                 {t("localAiEmbedding.apiKeyLabel")}
               </label>
               <Info
@@ -59,7 +59,7 @@ export default function LocalAiOptions({ settings }: any) {
           <input
             type="password"
             name="LocalAiApiKey"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("localAiEmbedding.apiKeyPlaceholder")}
             defaultValue={settings?.LocalAiApiKey ? "*".repeat(20) : ""}
             autoComplete="off"
@@ -78,7 +78,7 @@ export default function LocalAiOptions({ settings }: any) {
             data-tooltip-id="max-embedding-chunk-length-tooltip"
             className="flex gap-x-1 items-center mb-3"
           >
-            <label className="text-white text-sm font-semibold block">
+            <label className="text-theme-text-primary text-sm font-semibold block">
               {t("localAiEmbedding.maxChunkLengthLabel")}
             </label>
             <Info
@@ -97,7 +97,7 @@ export default function LocalAiOptions({ settings }: any) {
           <input
             type="number"
             name="EmbeddingModelMaxChunkLength"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("localAiEmbedding.maxChunkLengthPlaceholder")}
             min={1}
             onScroll={(e) => (e.target as HTMLElement).blur()}
@@ -112,7 +112,7 @@ export default function LocalAiOptions({ settings }: any) {
             data-tooltip-id="embedding-output-dimensions-tooltip"
             className="flex gap-x-1 items-center mb-3"
           >
-            <label className="text-white text-sm font-semibold block">
+            <label className="text-theme-text-primary text-sm font-semibold block">
               {t("localAiEmbedding.outputDimensionsLabel")}
             </label>
             <Info
@@ -133,7 +133,7 @@ export default function LocalAiOptions({ settings }: any) {
           <input
             type="number"
             name="EmbeddingOutputDimensions"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("localAiEmbedding.outputDimensionsPlaceholder")}
             min={1}
             onScroll={(e) => (e.target as HTMLElement).blur()}
@@ -172,7 +172,7 @@ export default function LocalAiOptions({ settings }: any) {
         <div className="w-full flex items-center gap-4">
           <div className="flex flex-col w-60">
             <div className="flex justify-between items-center mb-2">
-              <label className="text-white text-sm font-semibold">
+              <label className="text-theme-text-primary text-sm font-semibold">
                 {t("localAiEmbedding.baseUrlLabel")}
               </label>
               {loading ? (
@@ -195,7 +195,7 @@ export default function LocalAiOptions({ settings }: any) {
             <input
               type="url"
               name="EmbeddingBasePath"
-              className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+              className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
               placeholder={t("localAiEmbedding.baseUrlPlaceholder")}
               value={basePathValue.value}
               required={true}
@@ -227,13 +227,13 @@ function LocalAIModelSelection({
   if (loading || models.length === 0) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-2">
+        <label className="text-theme-text-primary text-sm font-semibold block mb-2">
           {t("localAiEmbedding.modelLabel")}
         </label>
         <select
           name="EmbeddingModelPref"
           disabled={true}
-          className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+          className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} value="">
             {basePath?.includes("/v1")
@@ -247,13 +247,13 @@ function LocalAIModelSelection({
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-2">
+      <label className="text-theme-text-primary text-sm font-semibold block mb-2">
         {t("localAiEmbedding.modelLabel")}
       </label>
       <select
         name="EmbeddingModelPref"
         required={true}
-        className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+        className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
       >
         {models.length > 0 && (
           <optgroup label={t("localAiEmbedding.yourLoadedModels")}>

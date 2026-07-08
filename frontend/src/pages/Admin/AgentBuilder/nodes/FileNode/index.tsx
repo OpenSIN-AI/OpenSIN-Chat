@@ -25,7 +25,7 @@ export default function FileNode({
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">
           {t("agentBuilder.fileNode.operation")}
         </label>
         <select
@@ -45,7 +45,7 @@ export default function FileNode({
         </select>
       </div>
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">
           {t("agentBuilder.fileNode.filePath")}
         </label>
         <input
@@ -60,7 +60,7 @@ export default function FileNode({
       </div>
       {config.operation !== "read" && (
         <div>
-          <label className="block text-sm font-medium text-white mb-2">
+          <label className="block text-sm font-medium text-theme-text-primary mb-2">
             {t("agentBuilder.fileNode.content")}
           </label>
           <textarea
@@ -75,7 +75,7 @@ export default function FileNode({
         </div>
       )}
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">
           {t("agentBuilder.fileNode.storeResultIn")}
         </label>
         {renderVariableSelect(

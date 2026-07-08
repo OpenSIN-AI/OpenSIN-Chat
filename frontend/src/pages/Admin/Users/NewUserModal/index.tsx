@@ -53,7 +53,7 @@ export default function NewUserModal({
     <div className="relative w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border">
       <div className="relative p-6 border-b rounded-t border-theme-modal-border">
         <div className="w-full flex gap-x-2 items-center">
-          <h3 className="text-xl font-semibold text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
+          <h3 className="text-xl font-semibold text-theme-text-primary overflow-hidden overflow-ellipsis whitespace-nowrap">
             {t("newUserModal.title")}
           </h3>
         </div>
@@ -62,7 +62,7 @@ export default function NewUserModal({
           type="button"
           className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
         >
-          <X size={24} weight="bold" className="text-white" />
+          <X size={24} weight="bold" className="text-theme-text-primary" />
         </button>
       </div>
       <div className="p-6">
@@ -71,14 +71,14 @@ export default function NewUserModal({
             <div>
               <label
                 htmlFor="username"
-                className="block mb-2 text-sm font-medium text-white"
+                className="block mb-2 text-sm font-medium text-theme-text-primary"
               >
                 {t("newUserModal.username.label")}
               </label>
               <input
                 name="username"
                 type="text"
-                className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                className="border-none bg-theme-settings-input-bg w-full text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                 placeholder={t("newUserModal.username.placeholder")}
                 minLength={USERNAME_MIN_LENGTH}
                 maxLength={USERNAME_MAX_LENGTH}
@@ -93,14 +93,14 @@ export default function NewUserModal({
             <div>
               <label
                 htmlFor="password"
-                className="block mb-2 text-sm font-medium text-white"
+                className="block mb-2 text-sm font-medium text-theme-text-primary"
               >
                 {t("newUserModal.password.label")}
               </label>
               <input
                 name="password"
                 type="password"
-                className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                className="border-none bg-theme-settings-input-bg w-full text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                 placeholder={t("newUserModal.password.placeholder")}
                 required={true}
                 autoComplete="off"
@@ -113,13 +113,13 @@ export default function NewUserModal({
             <div>
               <label
                 htmlFor="bio"
-                className="block mb-2 text-sm font-medium text-white"
+                className="block mb-2 text-sm font-medium text-theme-text-primary"
               >
                 {t("newUserModal.bio.label")}
               </label>
               <textarea
                 name="bio"
-                className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                className="border-none bg-theme-settings-input-bg w-full text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                 placeholder={t("newUserModal.bio.placeholder")}
                 autoComplete="off"
                 rows={3}
@@ -128,7 +128,7 @@ export default function NewUserModal({
             <div>
               <label
                 htmlFor="role"
-                className="block mb-2 text-sm font-medium text-white"
+                className="block mb-2 text-sm font-medium text-theme-text-primary"
               >
                 {t("newUserModal.role.label")}
               </label>
@@ -137,7 +137,7 @@ export default function NewUserModal({
                 required={true}
                 defaultValue={"default"}
                 onChange={(e) => setRole(e.target.value)}
-                className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                className="border-none bg-theme-settings-input-bg w-full text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
               >
                 <option value="default">{t("common.default")}</option>
                 <option value="manager">{t("common.manager")}</option>
@@ -158,7 +158,7 @@ export default function NewUserModal({
                 {t("newUserModal.error", { error })}
               </p>
             )}
-            <p className="text-white text-xs md:text-sm">
+            <p className="text-theme-text-primary text-xs md:text-sm">
               {t("newUserModal.afterCreate")}
             </p>
           </div>
@@ -166,7 +166,7 @@ export default function NewUserModal({
             <button
               onClick={closeModal}
               type="button"
-              className="transition-all duration-300 text-white hover:bg-zinc-700 px-4 py-2 rounded-lg text-sm"
+              className="transition-all duration-300 text-theme-text-primary hover:bg-zinc-700 px-4 py-2 rounded-lg text-sm"
             >
               {t("common.cancel")}
             </button>

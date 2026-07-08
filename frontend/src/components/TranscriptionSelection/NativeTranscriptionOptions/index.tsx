@@ -12,14 +12,14 @@ export default function NativeTranscriptionOptions({ settings }: any) {
       <LocalWarning model={model} />
       <div className="w-full flex items-center gap-4">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("transcriptionSelection.model")}
           </label>
           <select
             name="WhisperModelPref"
             defaultValue={model}
             onChange={(e) => setModel((e.target as unknown as any)?.value)}
-            className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
           >
             {/* Model identifiers are technical tokens, not user-facing copy. */}
             {/* eslint-disable-next-line i18next/no-literal-string */}

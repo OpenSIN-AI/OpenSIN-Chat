@@ -241,7 +241,7 @@ export default function AccountMenu({
         aria-label={compact ? t("common.profile") : undefined}
         className={
           compact
-            ? "flex items-center justify-center w-9 h-9 rounded-full border border-white/20 light:border-slate-400 cursor-pointer transition-all bg-theme-action-menu-bg hover:bg-theme-action-menu-item-hover text-white shadow-sm"
+            ? "flex items-center justify-center w-9 h-9 rounded-full border border-white/20 light:border-slate-400 cursor-pointer transition-all bg-theme-action-menu-bg hover:bg-theme-action-menu-item-hover text-theme-text-primary shadow-sm"
             : "flex items-center gap-x-2.5 w-full px-2 py-2 rounded-xl hover:bg-theme-action-menu-item-hover transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
         }
       >

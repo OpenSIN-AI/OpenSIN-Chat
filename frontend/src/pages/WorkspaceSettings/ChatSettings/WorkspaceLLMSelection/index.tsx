@@ -94,7 +94,7 @@ export default function WorkspaceLLMSelection({
         <label htmlFor="name" className="block input-label">
           {t("chat.llm.title")}
         </label>
-        <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
+        <p className="text-theme-text-secondary text-xs font-medium py-1.5">
           {t("chat.llm.description")}
         </p>
       </div>
@@ -164,7 +164,7 @@ export default function WorkspaceLLMSelection({
                 className="w-10 h-10 rounded-md"
               />
               <div className="flex flex-col text-left">
-                <div className="text-sm font-semibold text-white">
+                <div className="text-sm font-semibold text-theme-text-primary">
                   {selectedLLMObject?.name}
                 </div>
                 <div className="mt-1 text-xs text-description">
@@ -172,7 +172,7 @@ export default function WorkspaceLLMSelection({
                 </div>
               </div>
             </div>
-            <CaretUpDown size={24} weight="bold" className="text-white" />
+            <CaretUpDown size={24} weight="bold" className="text-theme-text-primary" />
           </button>
         )}
       </div>

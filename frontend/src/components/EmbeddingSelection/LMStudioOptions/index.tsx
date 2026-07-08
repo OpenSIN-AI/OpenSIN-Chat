@@ -50,7 +50,7 @@ export default function LMStudioEmbeddingOptions({ settings }: any) {
             data-tooltip-id="max-embedding-chunk-length-tooltip"
             className="flex gap-x-1 items-center mb-3"
           >
-            <label className="text-white text-sm font-semibold block">
+            <label className="text-theme-text-primary text-sm font-semibold block">
               {t("lmStudioEmbedding.maxChunkLengthLabel")}
             </label>
             <Info
@@ -64,7 +64,7 @@ export default function LMStudioEmbeddingOptions({ settings }: any) {
           <input
             type="number"
             name="EmbeddingModelMaxChunkLength"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder="8192" /* eslint-disable-line i18next/no-literal-string */
             min={1}
             value={maxChunkLength}
@@ -106,7 +106,7 @@ export default function LMStudioEmbeddingOptions({ settings }: any) {
           <div className="flex flex-col w-[300px]">
             <div className="flex justify-between items-center mb-2">
               <div className="flex items-center gap-1">
-                <label className="text-white text-sm font-semibold">
+                <label className="text-theme-text-primary text-sm font-semibold">
                   {t("lmStudioEmbedding.baseUrlLabel")}
                 </label>
                 <Info
@@ -145,7 +145,7 @@ export default function LMStudioEmbeddingOptions({ settings }: any) {
             <input
               type="url"
               name="EmbeddingBasePath"
-              className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+              className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
               placeholder={t("lmStudioEmbedding.baseUrlPlaceholder")}
               value={basePathValue.value}
               required={true}
@@ -157,7 +157,7 @@ export default function LMStudioEmbeddingOptions({ settings }: any) {
           </div>
           <div className="flex flex-col w-60">
             <div className="flex items-center mb-2 gap-x-1">
-              <label className="text-white text-sm font-semibold">
+              <label className="text-theme-text-primary text-sm font-semibold">
                 {t("lmStudioEmbedding.authTokenLabel")}
               </label>
               <Info
@@ -185,7 +185,7 @@ export default function LMStudioEmbeddingOptions({ settings }: any) {
             <input
               type="password"
               name="LMStudioAuthToken"
-              className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg outline-none block w-full p-2.5 focus:outline-primary-button active:outline-primary-button"
+              className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg outline-none block w-full p-2.5 focus:outline-primary-button active:outline-primary-button"
               placeholder={t("lmStudioEmbedding.authTokenPlaceholder")}
               defaultValue={settings?.LMStudioAuthToken ? "*".repeat(20) : ""}
               value={authTokenValue.value}
@@ -218,7 +218,7 @@ function LMStudioModelSelection({
     return (
       <div className="flex flex-col w-60">
         <div className="flex items-center mb-2 gap-x-1">
-          <label className="text-white text-sm font-semibold">
+          <label className="text-theme-text-primary text-sm font-semibold">
             {t("lmStudioEmbedding.modelLabel")}
           </label>
           {!loading && !!basePath && (
@@ -246,7 +246,7 @@ function LMStudioModelSelection({
         <select
           name="EmbeddingModelPref"
           disabled={true}
-          className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+          className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} value="">
             {loading
@@ -262,13 +262,13 @@ function LMStudioModelSelection({
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-2">
+      <label className="text-theme-text-primary text-sm font-semibold block mb-2">
         {t("lmStudioEmbedding.modelLabelReady")}
       </label>
       <select
         name="EmbeddingModelPref"
         required={true}
-        className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+        className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
       >
         {customModels.length > 0 && (
           <optgroup label={t("lmStudioEmbedding.yourLoadedModels")}>
@@ -282,7 +282,7 @@ function LMStudioModelSelection({
           </optgroup>
         )}
       </select>
-      <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
+      <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
         {t("lmStudioEmbedding.modelDescription")}
       </p>
     </div>

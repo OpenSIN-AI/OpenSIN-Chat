@@ -235,11 +235,11 @@ function Directory({
                 type="search"
                 placeholder={t("connectors.directory.search-document")}
                 onChange={handleSearch}
-                className="border-none search-input bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder focus:outline-primary-button active:outline-primary-button outline-none text-sm rounded-lg pl-9 pr-2.5 py-2 w-[250px] h-[32px] light:border-theme-modal-border light:border"
+                className="border-none search-input bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder focus:outline-primary-button active:outline-primary-button outline-none text-sm rounded-lg pl-9 pr-2.5 py-2 w-[250px] h-[32px] light:border-theme-modal-border light:border"
               />
               <MagnifyingGlass
                 size={14}
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-theme-text-primary"
                 weight="bold"
                 aria-hidden="true"
               />
@@ -277,7 +277,7 @@ function Directory({
               {loading ? (
                 <div className="w-full h-full flex items-center justify-center flex-col gap-y-5">
                   <PreLoader />
-                  <p className="text-white text-sm font-semibold animate-pulse text-center w-1/3">
+                  <p className="text-theme-text-primary text-sm font-semibold animate-pulse text-center w-1/3">
                     {loadingMessage}
                   </p>
                 </div>
@@ -302,7 +302,7 @@ function Directory({
                 )
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
-                  <p className="text-white text-opacity-40 text-sm font-medium">
+                  <p className="text-theme-text-placeholder text-sm font-medium">
                     {t("connectors.directory.no-documents")}
                   </p>
                 </div>

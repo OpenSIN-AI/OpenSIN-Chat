@@ -58,13 +58,13 @@ export function SerpApiOptions({ settings }: SearchProviderOptionProps) {
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("common.apiKey")}
           </label>
           <input
             type="password"
             name="env::AgentSerpApiKey"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("webSearch.serpApiApiKey")}
             defaultValue={settings?.AgentSerpApiKey ? "*".repeat(20) : ""}
             required={true}
@@ -73,13 +73,13 @@ export function SerpApiOptions({ settings }: SearchProviderOptionProps) {
           />
         </div>
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("common.engine")}
           </label>
           <select
             name="env::AgentSerpApiEngine"
             required={true}
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             defaultValue={settings?.AgentSerpApiEngine || "google"}
           >
             {SerpApiEngines.map(({ name, value }) => (
@@ -127,13 +127,13 @@ export function SearchApiOptions({ settings }: SearchProviderOptionProps) {
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("common.apiKey")}
           </label>
           <input
             type="password"
             name="env::AgentSearchApiKey"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("webSearch.searchApiApiKey")}
             defaultValue={settings?.AgentSearchApiKey ? "*".repeat(20) : ""}
             required={true}
@@ -142,13 +142,13 @@ export function SearchApiOptions({ settings }: SearchProviderOptionProps) {
           />
         </div>
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("common.engine")}
           </label>
           <select
             name="env::AgentSearchApiEngine"
             required={true}
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             defaultValue={settings?.AgentSearchApiEngine || "google"}
           >
             {SearchApiEngines.map(({ name, value }) => (
@@ -180,13 +180,13 @@ export function SerperDotDevOptions({ settings }: SearchProviderOptionProps) {
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("common.apiKey")}
           </label>
           <input
             type="password"
             name="env::AgentSerperApiKey"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("webSearch.serperApiKey")}
             defaultValue={settings?.AgentSerperApiKey ? "*".repeat(20) : ""}
             required={true}
@@ -216,13 +216,13 @@ export function BingSearchOptions({ settings }: SearchProviderOptionProps) {
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("common.apiKey")}
           </label>
           <input
             type="password"
             name="env::AgentBingSearchApiKey"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("webSearch.bingWebSearchApiKey")}
             defaultValue={settings?.AgentBingSearchApiKey ? "*".repeat(20) : ""}
             required={true}
@@ -273,13 +273,13 @@ export function BaiduSearchOptions({ settings }: SearchProviderOptionProps) {
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("common.apiKey")}
           </label>
           <input
             type="password"
             name="env::AgentBaiduSearchApiKey"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("webSearch.baiduApiKey")}
             defaultValue={
               settings?.AgentBaiduSearchApiKey ? "*".repeat(20) : ""
@@ -311,13 +311,13 @@ export function SerplySearchOptions({ settings }: SearchProviderOptionProps) {
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("common.apiKey")}
           </label>
           <input
             type="password"
             name="env::AgentSerplyApiKey"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("webSearch.serplyApiKey")}
             defaultValue={settings?.AgentSerplyApiKey ? "*".repeat(20) : ""}
             required={true}
@@ -335,13 +335,13 @@ export function SearXNGOptions({ settings }: SearchProviderOptionProps) {
   return (
     <div className="flex gap-x-4">
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
+        <label className="text-theme-text-primary text-sm font-semibold block mb-3">
           {t("webSearch.searxngBaseUrl")}
         </label>
         <input
           type="url"
           name="env::AgentSearXNGApiUrl"
-          className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+          className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
           placeholder={t("webSearch.searxngBaseUrlPlaceholder")}
           defaultValue={settings?.AgentSearXNGApiUrl}
           required={true}
@@ -370,13 +370,13 @@ export function TavilySearchOptions({ settings }: SearchProviderOptionProps) {
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("common.apiKey")}
           </label>
           <input
             type="password"
             name="env::AgentTavilyApiKey"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("webSearch.tavilyApiKey")}
             defaultValue={settings?.AgentTavilyApiKey ? "*".repeat(20) : ""}
             required={true}
@@ -417,13 +417,13 @@ export function ExaSearchOptions({ settings }: SearchProviderOptionProps) {
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("common.apiKey")}
           </label>
           <input
             type="password"
             name="env::AgentExaApiKey"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("webSearch.exaApiKey")}
             defaultValue={settings?.AgentExaApiKey ? "*".repeat(20) : ""}
             required={true}
@@ -455,13 +455,13 @@ export function PerplexitySearchOptions({
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("common.apiKey")}
           </label>
           <input
             type="password"
             name="env::AgentPerplexityApiKey"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("webSearch.perplexityApiKey")}
             defaultValue={settings?.AgentPerplexityApiKey ? "*".repeat(20) : ""}
             required={true}

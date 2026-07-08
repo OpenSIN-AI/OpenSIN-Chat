@@ -92,7 +92,7 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
           <div className="flex flex-col w-[300px]">
             <div className="flex justify-between items-center mb-2">
               <div className="flex items-center gap-1">
-                <label className="text-white text-sm font-semibold">
+                <label className="text-theme-text-primary text-sm font-semibold">
                   {t("lmStudio.baseUrlLabel")}
                 </label>
                 <Info
@@ -130,7 +130,7 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
             <input
               type="url"
               name="LMStudioBasePath"
-              className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+              className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
               placeholder={t("lmStudio.baseUrlPlaceholder")}
               value={basePathValue.value}
               required={true}
@@ -142,7 +142,7 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
           </div>
           <div className="flex flex-col w-60">
             <div className="flex items-center mb-2 gap-x-1">
-              <label className="text-white text-sm font-semibold">
+              <label className="text-theme-text-primary text-sm font-semibold">
                 {t("lmStudio.contextWindowLabel")}
               </label>
               <Info
@@ -159,7 +159,7 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
             <input
               type="number"
               name="LMStudioTokenLimit"
-              className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+              className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
               placeholder={t("lmStudio.contextWindowPlaceholder")}
               min={1}
               value={maxTokens}
@@ -174,7 +174,7 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
         <div className="flex items-start gap-4 mt-4">
           <div className="flex flex-col w-60">
             <div className="flex items-center mb-2 gap-x-1">
-              <label className="text-white text-sm font-semibold">
+              <label className="text-theme-text-primary text-sm font-semibold">
                 {t("lmStudio.authTokenLabel")}
               </label>
               <Info
@@ -202,7 +202,7 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
             <input
               type="password"
               name="LMStudioAuthToken"
-              className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg outline-none block w-full p-2.5 focus:outline-primary-button active:outline-primary-button"
+              className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg outline-none block w-full p-2.5 focus:outline-primary-button active:outline-primary-button"
               placeholder={t("lmStudio.authTokenPlaceholder")}
               defaultValue={settings?.LMStudioAuthToken ? "*".repeat(20) : ""}
               value={authTokenValue.value}
@@ -234,7 +234,7 @@ function LMStudioModelSelection({
     return (
       <div className="flex flex-col w-60">
         <div className="flex items-center mb-2 gap-x-1">
-          <label className="text-white text-sm font-semibold">
+          <label className="text-theme-text-primary text-sm font-semibold">
             {t("lmStudio.modelLabel")}
           </label>
           {!isLoading && !!basePath && (
@@ -262,7 +262,7 @@ function LMStudioModelSelection({
         <select
           name="LMStudioModelPref"
           disabled={true}
-          className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+          className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} value="">
             {isLoading
@@ -278,13 +278,13 @@ function LMStudioModelSelection({
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-2">
+      <label className="text-theme-text-primary text-sm font-semibold block mb-2">
         {t("lmStudio.modelLabel")}
       </label>
       <select
         name="LMStudioModelPref"
         required={true}
-        className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+        className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
       >
         {customModels.length > 0 && (
           <optgroup label={t("lmStudio.yourLoadedModels")}>

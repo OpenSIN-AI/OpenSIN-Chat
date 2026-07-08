@@ -84,7 +84,7 @@ export default function GitlabOptions() {
             <div className="w-full flex flex-col gap-4">
               <div className="flex flex-col pr-10">
                 <div className="flex flex-col gap-y-1 mb-4">
-                  <label className="text-white text-sm font-bold">
+                  <label className="text-theme-text-primary text-sm font-bold">
                     {t("connectors.gitlab.URL")}
                   </label>
                   <p className="text-xs font-normal text-theme-text-secondary">
@@ -94,7 +94,7 @@ export default function GitlabOptions() {
                 <input
                   type="url"
                   name="repo"
-                  className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                   placeholder={t("connectors.gitlab.repoPlaceholder")}
                   required={true}
                   autoComplete="off"
@@ -105,8 +105,8 @@ export default function GitlabOptions() {
               </div>
               <div className="flex flex-col pr-10">
                 <div className="flex flex-col gap-y-1 mb-4">
-                  <label className="text-white font-bold text-sm flex gap-x-2 items-center">
-                    <p className="font-bold text-white">
+                  <label className="text-theme-text-primary font-bold text-sm flex gap-x-2 items-center">
+                    <p className="font-bold text-theme-text-primary">
                       {t("connectors.gitlab.token")}
                     </p>{" "}
                     <p className="text-xs font-light flex items-center">
@@ -123,7 +123,7 @@ export default function GitlabOptions() {
                 <input
                   type="text"
                   name="accessToken"
-                  className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                   placeholder={t("connectors.gitlab.tokenPlaceholder")}
                   required={false}
                   autoComplete="off"
@@ -134,12 +134,12 @@ export default function GitlabOptions() {
               </div>
               <div className="flex flex-col pr-10">
                 <div className="flex flex-col gap-y-1 mb-4">
-                  <label className="text-white font-bold text-sm flex gap-x-2 items-center">
-                    <p className="font-bold text-white">
+                  <label className="text-theme-text-primary font-bold text-sm flex gap-x-2 items-center">
+                    <p className="font-bold text-theme-text-primary">
                       {t("connectors.gitlab.settings")}
                     </p>
                   </label>
-                  <p className="text-xs font-normal text-white">
+                  <p className="text-xs font-normal text-theme-text-primary">
                     {t("connectors.gitlab.token_description")}
                   </p>
                 </div>
@@ -166,8 +166,8 @@ export default function GitlabOptions() {
 
             <div className="flex flex-col w-full py-4 pr-10">
               <div className="flex flex-col gap-y-1 mb-4">
-                <label className="text-white text-sm flex gap-x-2 items-center">
-                  <p className="text-white text-sm font-bold">
+                <label className="text-theme-text-primary text-sm flex gap-x-2 items-center">
+                  <p className="text-theme-text-primary text-sm font-bold">
                     {t("connectors.gitlab.ignores")}
                   </p>
                 </label>
@@ -183,7 +183,7 @@ export default function GitlabOptions() {
                 classNames={{
                   tag: "bg-theme-settings-input-bg light:bg-black/10 bg-blue-300/10 text-zinc-800",
                   input:
-                    "flex p-1 !bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none",
+                    "flex p-1 !bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none",
                 }}
               />
             </div>
@@ -226,7 +226,7 @@ function GitLabBranchSelection({ repo, accessToken }: any) {
     return (
       <div className="flex flex-col w-60">
         <div className="flex flex-col gap-y-1 mb-4">
-          <label className="text-white text-sm font-bold">
+          <label className="text-theme-text-primary text-sm font-bold">
             {t("connectors.gitlab.branch")}
           </label>
           <p className="text-xs font-normal text-theme-text-secondary">
@@ -236,7 +236,7 @@ function GitLabBranchSelection({ repo, accessToken }: any) {
         <select
           name="branch"
           required={true}
-          className="border-none bg-theme-settings-input-bg border-gray-500 text-white focus:outline-primary-button active:outline-primary-button outline-none text-sm rounded-lg block w-full p-2.5"
+          className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary focus:outline-primary-button active:outline-primary-button outline-none text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} value="">
             {t("connectors.gitlab.branch_loading")}
@@ -249,7 +249,7 @@ function GitLabBranchSelection({ repo, accessToken }: any) {
   return (
     <div className="flex flex-col w-60">
       <div className="flex flex-col gap-y-1 mb-4">
-        <label className="text-white text-sm font-bold">
+        <label className="text-theme-text-primary text-sm font-bold">
           {t("connectors.gitlab.branch")}
         </label>
         <p className="text-xs font-normal text-theme-text-secondary">
@@ -259,7 +259,7 @@ function GitLabBranchSelection({ repo, accessToken }: any) {
       <select
         name="branch"
         required={true}
-        className="border-none bg-theme-settings-input-bg border-gray-500 text-white focus:outline-primary-button active:outline-primary-button outline-none text-sm rounded-lg block w-full p-2.5"
+        className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary focus:outline-primary-button active:outline-primary-button outline-none text-sm rounded-lg block w-full p-2.5"
       >
         {(displayBranches as any).map((branch) => {
           return (

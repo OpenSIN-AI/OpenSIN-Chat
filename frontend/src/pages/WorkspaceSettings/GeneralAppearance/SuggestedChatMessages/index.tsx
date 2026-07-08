@@ -126,10 +126,10 @@ export default function SuggestedChatMessages({
         <label className="block input-label">
           {t("general.message.title")}
         </label>
-        <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
+        <p className="text-theme-text-secondary text-xs font-medium py-1.5">
           {t("general.message.description")}
         </p>
-        <div className="text-white text-opacity-60 text-sm font-medium mt-6">
+        <div className="text-theme-text-secondary text-sm font-medium mt-6">
           <PreLoader size="4" />
         </div>
       </div>
@@ -140,7 +140,7 @@ export default function SuggestedChatMessages({
         <label className="block input-label">
           {t("general.message.title")}
         </label>
-        <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
+        <p className="text-theme-text-secondary text-xs font-medium py-1.5">
           {t("general.message.description")}
         </p>
       </div>
@@ -174,12 +174,12 @@ export default function SuggestedChatMessages({
       {editingIndex >= 0 && (
         <div className="flex flex-col gap-y-4 mr-2 mt-8">
           <div className="w-1/2">
-            <label className="text-white text-sm font-semibold block mb-2">
+            <label className="text-theme-text-primary text-sm font-semibold block mb-2">
               {t("common.message")}
             </label>
             <input
               placeholder={t("common.message")}
-              className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block p-2.5 w-full"
+              className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block p-2.5 w-full"
               value={newMessage.message}
               name="message"
               onChange={onEditChange}
@@ -191,7 +191,7 @@ export default function SuggestedChatMessages({
         <button
           type="button"
           onClick={addMessage}
-          className="flex gap-x-2 items-center justify-center mt-6 text-white text-sm hover:text-sky-400 transition-all duration-300"
+          className="flex gap-x-2 items-center justify-center mt-6 text-theme-text-primary text-sm hover:text-sky-400 transition-all duration-300"
         >
           {t("general.message.add")}{" "}
           <Plus className="" size={24} weight="fill" />

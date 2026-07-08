@@ -167,7 +167,7 @@ function WorkspaceDirectory({
               ))
             ) : (
               <div className="w-full h-full flex items-center justify-center">
-                <p className="text-white text-opacity-40 text-sm font-medium">
+                <p className="text-theme-text-placeholder text-sm font-medium">
                   {t("connectors.directory.no_docs")}
                 </p>
               </div>

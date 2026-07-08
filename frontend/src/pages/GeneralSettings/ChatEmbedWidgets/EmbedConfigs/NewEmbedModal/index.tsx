@@ -169,7 +169,7 @@ export const WorkspaceSelection = ({
         name="workspace_id"
         required={true}
         defaultValue={defaultValue ?? undefined}
-        className="min-w-[15rem] rounded-lg bg-theme-settings-input-bg px-4 py-2 text-sm text-white focus:ring-blue-500 focus:border-blue-500"
+        className="min-w-[15rem] rounded-lg bg-theme-settings-input-bg px-4 py-2 text-sm text-theme-text-primary focus:ring-blue-500 focus:border-blue-500"
       >
         {workspaces.map((workspace: any) => {
           return (
@@ -204,7 +204,7 @@ export const NameInput = ({ defaultValue = "" }: { defaultValue?: string }) => {
         id="name"
         defaultValue={defaultValue}
         placeholder={t("newEmbedModal.namePlaceholder")}
-        className="min-w-[15rem] rounded-lg bg-theme-settings-input-bg px-4 py-2 text-sm text-white placeholder:text-theme-settings-input-placeholder focus:ring-blue-500 focus:border-blue-500"
+        className="min-w-[15rem] rounded-lg bg-theme-settings-input-bg px-4 py-2 text-sm text-theme-text-primary placeholder:text-theme-settings-input-placeholder focus:ring-blue-500 focus:border-blue-500"
       />
     </div>
   );
@@ -358,7 +358,7 @@ export const PermittedDomains = ({
         classNames={{
           tag: "bg-theme-settings-input-bg light:bg-black/10 bg-blue-300/10 text-zinc-800",
           input:
-            "flex p-1 !bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none",
+            "flex p-1 !bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none",
         }}
       />
     </div>
@@ -390,7 +390,7 @@ export const NumberInput = ({
       <input
         type="number"
         name={name}
-        className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-[15rem] p-2.5"
+        className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-[15rem] p-2.5"
         min={0}
         defaultValue={defaultValue}
         onWheel={(e) => (e.target as HTMLInputElement).blur()}

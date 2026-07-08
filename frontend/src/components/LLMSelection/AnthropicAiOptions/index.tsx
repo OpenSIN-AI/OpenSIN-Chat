@@ -19,13 +19,13 @@ export default function AnthropicAiOptions({ settings }: any) {
     <div className="w-full flex flex-col">
       <div className="w-full flex items-center gap-[36px] mt-1.5">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("anthropic.apiKey")}
           </label>
           <input
             type="password"
             name="AnthropicApiKey"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("anthropic.apiKey")}
             defaultValue={settings?.AnthropicApiKey ? "*".repeat(20) : ""}
             required={true}
@@ -64,13 +64,13 @@ export default function AnthropicAiOptions({ settings }: any) {
         <div className="w-full flex items-start gap-4 mt-1.5">
           <div className="flex flex-col w-60">
             <div className="flex justify-between items-center mb-2">
-              <label className="text-white text-sm font-semibold">
+              <label className="text-theme-text-primary text-sm font-semibold">
                 {t("anthropic.promptCaching")}
               </label>
             </div>
             <select
               name="AnthropicCacheControl"
-              className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+              className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
             >
               <option value="none">{t("anthropic.noCaching")}</option>
               <option value="5m">{t("anthropic.fiveMinutes")}</option>
@@ -89,13 +89,13 @@ function AnthropicModelSelection({ apiKey, settings }: any) {
   if (isLoading) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
+        <label className="text-theme-text-primary text-sm font-semibold block mb-3">
           {t("anthropic.modelSelection")}
         </label>
         <select
           name="AnthropicModelPref"
           disabled={true}
-          className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+          className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} value="">
             {t("anthropic.loadingModels")}
@@ -107,13 +107,13 @@ function AnthropicModelSelection({ apiKey, settings }: any) {
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-3">
+      <label className="text-theme-text-primary text-sm font-semibold block mb-3">
         {t("anthropic.modelSelection")}
       </label>
       <select
         name="AnthropicModelPref"
         required={true}
-        className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+        className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
       >
         {(customModels as any).map((model) => (
           <option key={model.id} value={model.id}>

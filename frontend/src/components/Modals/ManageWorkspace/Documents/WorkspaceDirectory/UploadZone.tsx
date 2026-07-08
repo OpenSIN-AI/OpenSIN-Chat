@@ -97,7 +97,7 @@ export function UploadZone({
             <button
               type="button"
               onClick={handleSaveChanges}
-              className="border border-slate-200 px-5 py-1.5 rounded-lg text-white text-sm items-center flex gap-x-2 hover:opacity-80 whitespace-nowrap"
+              className="border border-slate-200 px-5 py-1.5 rounded-lg text-theme-text-primary text-sm items-center flex gap-x-2 hover:opacity-80 whitespace-nowrap"
             >
               {t(
                 "modals.manageWorkspace.documents.workspaceDirectory.uploadZone.addToQueue",

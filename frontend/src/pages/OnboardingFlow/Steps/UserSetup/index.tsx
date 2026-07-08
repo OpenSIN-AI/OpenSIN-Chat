@@ -87,7 +87,7 @@ export default function UserSetup({
   return (
     <div className="w-full flex items-center justify-center flex-col gap-y-6">
       <div className="flex flex-col border rounded-lg border-white/20 light:border-theme-sidebar-border p-8 items-center gap-y-4 w-full max-w-[600px]">
-        <div className=" text-white text-sm font-semibold md:-ml-44">
+        <div className=" text-theme-text-primary text-sm font-semibold md:-ml-44">
           {t("onboarding.userSetup.howManyUsers")}
         </div>
         <div className="flex flex-col md:flex-row gap-6 w-full justify-center">
@@ -218,7 +218,7 @@ const JustMe = ({
   return (
     <div className="w-full flex items-center justify-center flex-col gap-y-6">
       <div className="flex flex-col border rounded-lg border-white/20 light:border-theme-sidebar-border p-8 items-center gap-y-4 w-full max-w-[600px]">
-        <div className=" text-white text-sm font-semibold md:-ml-56">
+        <div className=" text-theme-text-primary text-sm font-semibold md:-ml-56">
           {t("onboarding.userSetup.setPassword")}
         </div>
         <div className="flex flex-col md:flex-row gap-6 w-full justify-center">
@@ -253,21 +253,21 @@ const JustMe = ({
           <form className="w-full mt-4" onSubmit={handleSubmit}>
             <label
               htmlFor="name"
-              className="block mb-3 text-sm font-medium text-white"
+              className="block mb-3 text-sm font-medium text-theme-text-primary"
             >
               {t("onboarding.userSetup.instancePassword")}
             </label>
             <input
               name="password"
               type="password"
-              className="border-none bg-theme-settings-input-bg text-white text-sm rounded-lg block w-full p-2.5 focus:outline-primary-button active:outline-primary-button outline-none placeholder:text-theme-text-secondary"
+              className="border-none bg-theme-settings-input-bg text-theme-text-primary text-sm rounded-lg block w-full p-2.5 focus:outline-primary-button active:outline-primary-button outline-none placeholder:text-theme-text-secondary"
               placeholder={t("onboarding.userSetup.placeholder.adminPassword")}
               minLength={6}
               required={true}
               autoComplete="off"
               onChange={handlePasswordChange}
             />
-            <div className="mt-4 text-white text-opacity-80 text-xs font-base -mb-2">
+            <div className="mt-4 text-theme-text-primary text-xs font-base -mb-2">
               {t("onboarding.userSetup.passwordReq")}
               <br />
               <i>{t("onboarding.userSetup.passwordWarn")}</i>{" "}
@@ -349,14 +349,14 @@ const MyTeam = ({
               <div>
                 <label
                   htmlFor="name"
-                  className="block mb-3 text-sm font-medium text-white"
+                  className="block mb-3 text-sm font-medium text-theme-text-primary"
                 >
                   {t("onboarding.userSetup.adminUsername")}
                 </label>
                 <input
                   name="username"
                   type="text"
-                  className="border-none bg-theme-settings-input-bg text-white text-sm rounded-lg block w-full p-2.5 focus:outline-primary-button active:outline-primary-button placeholder:text-theme-text-secondary outline-none"
+                  className="border-none bg-theme-settings-input-bg text-theme-text-primary text-sm rounded-lg block w-full p-2.5 focus:outline-primary-button active:outline-primary-button placeholder:text-theme-text-secondary outline-none"
                   placeholder={t(
                     "onboarding.userSetup.placeholder.adminUsername",
                   )}
@@ -367,20 +367,20 @@ const MyTeam = ({
                   onChange={handleUsernameChange}
                 />
               </div>
-              <p className=" text-white text-opacity-80 text-xs font-base">
+              <p className=" text-theme-text-primary text-xs font-base">
                 {t("common.username_requirements")}
               </p>
               <div className="mt-4">
                 <label
                   htmlFor="name"
-                  className="block mb-3 text-sm font-medium text-white"
+                  className="block mb-3 text-sm font-medium text-theme-text-primary"
                 >
                   {t("onboarding.userSetup.adminPassword")}
                 </label>
                 <input
                   name="password"
                   type="password"
-                  className="border-none bg-theme-settings-input-bg text-white text-sm rounded-lg block w-full p-2.5 focus:outline-primary-button active:outline-primary-button placeholder:text-theme-text-secondary outline-none"
+                  className="border-none bg-theme-settings-input-bg text-theme-text-primary text-sm rounded-lg block w-full p-2.5 focus:outline-primary-button active:outline-primary-button placeholder:text-theme-text-secondary outline-none"
                   placeholder={t(
                     "onboarding.userSetup.placeholder.adminPassword",
                   )}
@@ -390,7 +390,7 @@ const MyTeam = ({
                   onChange={handlePasswordChange}
                 />
               </div>
-              <p className=" text-white text-opacity-80 text-xs font-base">
+              <p className=" text-theme-text-primary text-xs font-base">
                 {t("onboarding.userSetup.adminPasswordReq")}
               </p>
             </div>

@@ -166,11 +166,11 @@ export default function TranscriptionModelPreference() {
             <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] py-16 md:py-6">
               <div className="w-full flex flex-col gap-y-1 pb-6 border-white light:border-theme-sidebar-border border-b-2 border-opacity-10">
                 <div className="flex gap-x-4 items-center">
-                  <p className="text-lg leading-6 font-bold text-white">
+                  <p className="text-lg leading-6 font-bold text-theme-text-primary">
                     {t("transcription.title")}
                   </p>
                 </div>
-                <p className="text-xs leading-[18px] font-base text-white text-opacity-60">
+                <p className="text-xs leading-[18px] font-base text-theme-text-secondary">
                   {t("transcription.description")}
                 </p>
               </div>
@@ -186,7 +186,7 @@ export default function TranscriptionModelPreference() {
                   </CTAButton>
                 )}
               </div>
-              <div className="text-base font-bold text-white mt-6 mb-4">
+              <div className="text-base font-bold text-theme-text-primary mt-6 mb-4">
                 {t("transcription.provider")}
               </div>
               <div className="relative">
@@ -254,7 +254,7 @@ export default function TranscriptionModelPreference() {
                         className="w-10 h-10 rounded-md"
                       />
                       <div className="flex flex-col text-left">
-                        <div className="text-sm font-semibold text-white">
+                        <div className="text-sm font-semibold text-theme-text-primary">
                           {selectedProviderObject?.name}
                         </div>
                         <div className="mt-1 text-xs text-description">
@@ -265,7 +265,7 @@ export default function TranscriptionModelPreference() {
                     <CaretUpDown
                       size={24}
                       weight="bold"
-                      className="text-white"
+                      className="text-theme-text-primary"
                     />
                   </button>
                 )}

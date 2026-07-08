@@ -156,7 +156,7 @@ export default function Survey({
         <div className="w-full flex items-center justify-center px-1 md:px-8 py-4">
           <div className="w-auto flex flex-col gap-y-1 items-center">
             <CheckCircle size={60} className="text-green-500" />
-            <p className="text-white text-lg">
+            <p className="text-theme-text-primary text-lg">
               {t("onboarding.survey.thankYou")}
             </p>
             <a
@@ -186,7 +186,7 @@ export default function Survey({
             type="email"
             placeholder={t("onboarding.survey.emailPlaceholder")}
             required={true}
-            className="mt-2 bg-theme-settings-input-bg text-white focus:outline-primary-button active:outline-primary-button placeholder:text-theme-settings-input-placeholder outline-none text-sm font-medium font-['Plus Jakarta Sans'] leading-tight w-full h-11 p-2.5 bg-theme-settings-input-bg rounded-lg"
+            className="mt-2 bg-theme-settings-input-bg text-theme-text-primary focus:outline-primary-button active:outline-primary-button placeholder:text-theme-settings-input-placeholder outline-none text-sm font-medium font-['Plus Jakarta Sans'] leading-tight w-full h-11 p-2.5 bg-theme-settings-input-bg rounded-lg"
           />
         </div>
 
@@ -291,7 +291,7 @@ export default function Survey({
           <textarea
             name="comment"
             rows={5}
-            className="mt-2 bg-theme-settings-input-bg text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button placeholder:text-theme-settings-input-placeholder outline-none block w-full p-2.5"
+            className="mt-2 bg-theme-settings-input-bg text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button placeholder:text-theme-settings-input-placeholder outline-none block w-full p-2.5"
             placeholder={t("onboarding.survey.commentPlaceholder")}
             wrap="soft"
             autoComplete="off"

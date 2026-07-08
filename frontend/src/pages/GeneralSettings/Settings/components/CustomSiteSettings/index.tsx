@@ -47,7 +47,7 @@ export default function CustomSiteSettings(): JSX.Element {
       onChange={() => setHasChanges(true)}
       onSubmit={handleSiteSettingUpdate}
     >
-      <p className="text-sm leading-6 font-semibold text-white">
+      <p className="text-sm leading-6 font-semibold text-theme-text-primary">
         {t("customization.items.browser-appearance.title")}
       </p>
       <p className="text-xs text-theme-text-secondary">
@@ -55,7 +55,7 @@ export default function CustomSiteSettings(): JSX.Element {
       </p>
 
       <div className="w-fit">
-        <p className="text-sm leading-6 font-medium text-white mt-2">
+        <p className="text-sm leading-6 font-medium text-theme-text-primary mt-2">
           {t("customization.items.browser-appearance.tab.title")}
         </p>
         <p className="text-xs text-theme-text-secondary">
@@ -65,7 +65,7 @@ export default function CustomSiteSettings(): JSX.Element {
           <input
             name="meta_page_title"
             type="text"
-            className="border-none bg-theme-settings-input-bg mt-2 text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-fit py-2 px-4"
+            className="border-none bg-theme-settings-input-bg mt-2 text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-fit py-2 px-4"
             placeholder={t("customSiteSettings.titlePlaceholder")}
             autoComplete="off"
             onChange={(e) =>
@@ -77,7 +77,7 @@ export default function CustomSiteSettings(): JSX.Element {
       </div>
 
       <div className="w-fit">
-        <p className="text-sm leading-6 font-medium text-white mt-2">
+        <p className="text-sm leading-6 font-medium text-theme-text-primary mt-2">
           {t("customization.items.browser-appearance.favicon.title")}
         </p>
         <p className="text-xs text-theme-text-secondary">
@@ -95,7 +95,7 @@ export default function CustomSiteSettings(): JSX.Element {
           <input
             name="meta_page_favicon"
             type="url"
-            className="border-none bg-theme-settings-input-bg mt-2 text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-fit py-2 px-4"
+            className="border-none bg-theme-settings-input-bg mt-2 text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-fit py-2 px-4"
             placeholder={t("customSiteSettings.faviconPlaceholder")}
             onChange={(e) =>
               setSettings((prev) => ({ ...prev, faviconUrl: e.target.value }))

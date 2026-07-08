@@ -20,7 +20,7 @@ export default function CodeNode({
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">
           {t("agentBuilder.codeNode.language")}
         </label>
         <select
@@ -40,7 +40,7 @@ export default function CodeNode({
         </select>
       </div>
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">
           {t("agentBuilder.codeNode.code")}
         </label>
         <textarea
@@ -54,7 +54,7 @@ export default function CodeNode({
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">
           {t("agentBuilder.codeNode.storeResultIn")}
         </label>
         {renderVariableSelect(

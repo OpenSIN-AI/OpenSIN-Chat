@@ -304,7 +304,7 @@ export default function BlockList({
                     })}
                   </div>
                   <div className="flex-1 text-left min-w-0 max-w-[115px]">
-                    <span className="text-sm font-medium text-white block">
+                    <span className="text-sm font-medium text-theme-text-primary block">
                       {info.label}
                     </span>
                     {!block.isExpanded && (
@@ -326,7 +326,7 @@ export default function BlockList({
                               e.stopPropagation();
                               moveBlock(index, index - 1);
                             }}
-                            className="w-7 h-7 flex items-center justify-center rounded-lg bg-theme-bg-primary border border-white/5 text-white hover:bg-theme-action-menu-item-hover transition-colors duration-300"
+                            className="w-7 h-7 flex items-center justify-center rounded-lg bg-theme-bg-primary border border-white/5 text-theme-text-primary hover:bg-theme-action-menu-item-hover transition-colors duration-300"
                             data-tooltip-id="block-action"
                             data-tooltip-content={t(
                               "agentBuilder.blockList.moveBlockUp",
@@ -342,7 +342,7 @@ export default function BlockList({
                               e.stopPropagation();
                               moveBlock(index, index + 1);
                             }}
-                            className="w-7 h-7 flex items-center justify-center rounded-lg bg-theme-bg-primary border border-white/5 text-white hover:bg-theme-action-menu-item-hover transition-colors duration-300"
+                            className="w-7 h-7 flex items-center justify-center rounded-lg bg-theme-bg-primary border border-white/5 text-theme-text-primary hover:bg-theme-action-menu-item-hover transition-colors duration-300"
                             data-tooltip-id="block-action"
                             data-tooltip-content={t(
                               "agentBuilder.blockList.moveBlockDown",

@@ -36,7 +36,7 @@ function BackToChatButton({ t, onClick }: any) {
     <Link
       to={paths.home()}
       onClick={onClick}
-      className="flex items-center gap-x-2 mx-3 mb-1 px-3 py-2 rounded-[6px] bg-theme-action-menu-bg hover:bg-theme-action-menu-item-hover text-white text-sm font-medium transition-all duration-300 border border-transparent hover:border-slate-100 hover:border-opacity-50"
+      className="flex items-center gap-x-2 mx-3 mb-1 px-3 py-2 rounded-[6px] bg-theme-action-menu-bg hover:bg-theme-action-menu-item-hover text-theme-text-primary text-sm font-medium transition-all duration-300 border border-transparent hover:border-slate-100 hover:border-opacity-50"
     >
       <CaretLeft className="h-4 w-4 shrink-0" />
       {t("settings.backToChat")}
@@ -81,7 +81,7 @@ export default function SettingsSidebar() {
               alt={t("common.logo")}
               className="h-6 w-6 max-h-6 max-w-6 object-contain"
             />
-            <span className="text-white font-bold text-base">OpenSIN</span>
+            <span className="text-theme-text-primary font-bold text-base">OpenSIN</span>
           </div>
           <div className="w-12"></div>
         </div>
@@ -110,7 +110,7 @@ export default function SettingsSidebar() {
                     alt={t("common.logo")}
                     className="w-8 h-8 max-h-[32px] max-w-[32px] object-contain"
                   />
-                  <span className="text-white font-bold text-base">
+                  <span className="text-theme-text-primary font-bold text-base">
                     OpenSIN
                   </span>
                 </div>
@@ -166,7 +166,7 @@ export default function SettingsSidebar() {
             alt={t("common.logo")}
             className="h-6 w-6 max-h-[24px] max-w-[24px] object-contain"
           />
-          <span className="text-white font-bold text-sm">OpenSIN</span>
+          <span className="text-theme-text-primary font-bold text-sm">OpenSIN</span>
         </Link>
         <div
           ref={sidebarRef}

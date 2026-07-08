@@ -23,10 +23,10 @@ export default function VectorCount({
     return (
       <div>
         <h3 className="input-label">{t("general.vector.title")}</h3>
-        <p className="text-white text-opacity-60 text-xs font-medium py-1">
+        <p className="text-theme-text-secondary text-xs font-medium py-1">
           {t("general.vector.description")}
         </p>
-        <div className="text-white text-opacity-60 text-sm font-medium">
+        <div className="text-theme-text-secondary text-sm font-medium">
           <PreLoader size="4" />
         </div>
       </div>
@@ -34,7 +34,7 @@ export default function VectorCount({
   return (
     <div>
       <h3 className="input-label">{t("general.vector.title")}</h3>
-      <p className="text-white text-opacity-60 text-sm font-medium">
+      <p className="text-theme-text-secondary text-sm font-medium">
         {vectorCount}
       </p>
     </div>

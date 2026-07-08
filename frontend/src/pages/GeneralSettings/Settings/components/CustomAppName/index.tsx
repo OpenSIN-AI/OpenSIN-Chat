@@ -75,7 +75,7 @@ export default function CustomAppName(): JSX.Element {
       className="flex flex-col gap-y-0.5 mt-4"
       onSubmit={updateCustomAppName}
     >
-      <p className="text-sm leading-6 font-semibold text-white">
+      <p className="text-sm leading-6 font-semibold text-theme-text-primary">
         {t("customization.items.app-name.title")}
       </p>
       <p className="text-xs text-theme-text-secondary">
@@ -85,7 +85,7 @@ export default function CustomAppName(): JSX.Element {
         <input
           name="customAppName"
           type="text"
-          className="border-none bg-theme-settings-input-bg mt-2 text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-fit py-2 px-4"
+          className="border-none bg-theme-settings-input-bg mt-2 text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-fit py-2 px-4"
           placeholder={t("settings.customAppName.placeholder")}
           required={true}
           autoComplete="off"

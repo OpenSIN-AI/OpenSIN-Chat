@@ -55,7 +55,7 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
             data-tooltip-id="max-embedding-chunk-length-tooltip"
             className="flex gap-x-1 items-center mb-3"
           >
-            <label className="text-white text-sm font-semibold block">
+            <label className="text-theme-text-primary text-sm font-semibold block">
               {t("ollamaEmbedding.maxChunkLengthLabel")}
             </label>
             <Info
@@ -69,7 +69,7 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
           <input
             type="number"
             name="EmbeddingModelMaxChunkLength"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("ollamaEmbedding.maxChunkLengthPlaceholder")}
             min={1}
             value={maxChunkLength}
@@ -110,7 +110,7 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
         <div className="w-full flex items-start gap-4">
           <div className="flex flex-col w-60">
             <div className="flex justify-between items-center mb-2">
-              <label className="text-white text-sm font-semibold">
+              <label className="text-theme-text-primary text-sm font-semibold">
                 {t("ollamaEmbedding.baseUrlLabel")}
               </label>
               {loading ? (
@@ -133,7 +133,7 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
             <input
               type="url"
               name="EmbeddingBasePath"
-              className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+              className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
               placeholder={t("ollamaEmbedding.baseUrlPlaceholder")}
               value={basePathValue.value}
               required={true}
@@ -142,7 +142,7 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
               onChange={basePath.onChange}
               onBlur={basePath.onBlur}
             />
-            <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
+            <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
               {t("ollamaEmbedding.baseUrlHelp")}
             </p>
           </div>
@@ -152,7 +152,7 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
               data-tooltip-id="ollama-batch-size-tooltip"
               className="flex gap-x-1 items-center mb-3"
             >
-              <label className="text-white text-sm font-semibold block">
+              <label className="text-theme-text-primary text-sm font-semibold block">
                 {t("ollamaEmbedding.batchSizeLabel")}
               </label>
               <Info
@@ -166,7 +166,7 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
             <input
               type="number"
               name="OllamaEmbeddingBatchSize"
-              className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+              className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
               placeholder={t("ollamaEmbedding.batchSizePlaceholder")}
               min={1}
               value={batchSize}
@@ -175,18 +175,18 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
               required={true}
               autoComplete="off"
             />
-            <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
+            <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
               {t("ollamaEmbedding.batchSizeHelp")}
             </p>
           </div>
           <div>
-            <label className="text-white font-semibold block mb-3 text-sm">
+            <label className="text-theme-text-primary font-semibold block mb-3 text-sm">
               {t("ollamaEmbedding.authTokenLabel")}
             </label>
             <input
               type="password"
               name="OllamaLLMAuthToken"
-              className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+              className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
               placeholder={t("ollamaEmbedding.authTokenPlaceholder")}
               defaultValue={settings?.OllamaLLMAuthToken ? "*".repeat(20) : ""}
               value={authTokenValue.value}
@@ -196,7 +196,7 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
               autoComplete="off"
               spellCheck={false}
             />
-            <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
+            <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
               {t("ollamaEmbedding.authTokenHelp1")}{" "}
               <code>{t("ollamaEmbedding.authTokenBearer")}</code>{" "}
               {t("ollamaEmbedding.authTokenHelp1End")}
@@ -223,13 +223,13 @@ function OllamaEmbeddingModelSelection({ settings, basePath = null }: any) {
   if (loading || customModels.length === 0) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-2">
+        <label className="text-theme-text-primary text-sm font-semibold block mb-2">
           {t("ollamaEmbedding.modelLabel")}
         </label>
         <select
           name="EmbeddingModelPref"
           disabled={true}
-          className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+          className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} value="">
             {!!basePath
@@ -237,7 +237,7 @@ function OllamaEmbeddingModelSelection({ settings, basePath = null }: any) {
               : t("ollamaEmbedding.enterUrlFirst")}
           </option>
         </select>
-        <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
+        <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
           {t("ollamaEmbedding.selectModelHelp")}
         </p>
       </div>
@@ -246,14 +246,14 @@ function OllamaEmbeddingModelSelection({ settings, basePath = null }: any) {
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-2">
+      <label className="text-theme-text-primary text-sm font-semibold block mb-2">
         {t("ollamaEmbedding.modelLabel")}
       </label>
       <select
         name="EmbeddingModelPref"
         required={true}
         defaultValue={settings?.EmbeddingModelPref}
-        className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+        className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
       >
         {customModels.length > 0 && (
           <optgroup label={t("ollamaEmbedding.yourLoadedModels")}>
@@ -267,7 +267,7 @@ function OllamaEmbeddingModelSelection({ settings, basePath = null }: any) {
           </optgroup>
         )}
       </select>
-      <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
+      <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
         {t("ollamaEmbedding.chooseModelHelp")}
       </p>
     </div>

@@ -605,7 +605,7 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
         <button
           type="submit"
           disabled={!link.trim() || submitting}
-          className="border-none flex items-center justify-center gap-2 px-3 py-2 text-sm bg-primary-button hover:bg-theme-button-primary-hover text-white font-medium rounded-md transition-colors disabled:opacity-50 cursor-pointer"
+          className="border-none flex items-center justify-center gap-2 px-3 py-2 text-sm bg-primary-button hover:bg-theme-button-primary-hover text-theme-text-primary font-medium rounded-md transition-colors disabled:opacity-50 cursor-pointer"
         >
           {submitting ? (
             <>

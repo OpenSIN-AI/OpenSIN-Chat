@@ -212,14 +212,14 @@ function FeatureVerification({ children }: FeatureVerificationProps) {
             <div className="relative p-6 border-b rounded-t border-theme-modal-border">
               <div className="flex items-center gap-2">
                 <Flask size={24} className="text-theme-text-primary" />
-                <h3 className="text-xl font-semibold text-white">
+                <h3 className="text-xl font-semibold text-theme-text-primary">
                   {t("experimentalFeatures.termsTitle")}
                 </h3>
               </div>
             </div>
             <form onSubmit={acceptTos}>
               <div className="py-7 px-9 space-y-4 flex-col">
-                <div className="w-full text-white text-md flex flex-col gap-y-4">
+                <div className="text-theme-text-primary text-md flex flex-col gap-y-4">
                   <p>{t("experimentalFeatures.termsP1")}</p>
 
                   <div>
@@ -251,7 +251,7 @@ function FeatureVerification({ children }: FeatureVerificationProps) {
               <div className="flex w-full justify-between items-center p-6 space-x-2 border-t border-theme-modal-border rounded-b">
                 <a
                   href={paths.home()}
-                  className="transition-all duration-300 bg-transparent text-white hover:bg-red-500/50 light:hover:bg-red-300/50 px-4 py-2 rounded-lg text-sm border border-theme-modal-border"
+                  className="transition-all duration-300 bg-transparent text-theme-text-primary hover:bg-red-500/50 light:hover:bg-red-300/50 px-4 py-2 rounded-lg text-sm border border-theme-modal-border"
                 >
                   {t("experimentalFeatures.reject")}
                 </a>

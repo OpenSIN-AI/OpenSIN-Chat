@@ -67,7 +67,7 @@ export default function OllamaLLMOptions({ settings }: any) {
             <div className="flex flex-col w-60">
               <div className="flex justify-between items-center mb-2">
                 <div className="flex items-center gap-1">
-                  <label className="text-white text-sm font-semibold">
+                  <label className="text-theme-text-primary text-sm font-semibold">
                     {t("ollama.baseUrlLabel")}
                   </label>
                   <Info
@@ -105,7 +105,7 @@ export default function OllamaLLMOptions({ settings }: any) {
               <input
                 type="url"
                 name="OllamaLLMBasePath"
-                className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                 placeholder={t("ollama.baseUrlPlaceholder")}
                 value={basePathValue.value}
                 required={true}
@@ -118,7 +118,7 @@ export default function OllamaLLMOptions({ settings }: any) {
 
             <div className="flex flex-col w-60">
               <div className="flex items-center mb-2 gap-x-1">
-                <label className="text-white text-sm font-semibold block">
+                <label className="text-theme-text-primary text-sm font-semibold block">
                   {t("ollama.keepAliveLabel")}
                 </label>
                 <Info
@@ -150,7 +150,7 @@ export default function OllamaLLMOptions({ settings }: any) {
               <select
                 name="OllamaLLMKeepAliveSeconds"
                 required={true}
-                className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+                className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
                 defaultValue={settings?.OllamaLLMKeepAliveSeconds ?? "300"}
               >
                 <option value="0">{t("ollama.keepAliveNoCache")}</option>
@@ -163,7 +163,7 @@ export default function OllamaLLMOptions({ settings }: any) {
           <div className="w-full flex items-start gap-4">
             <div className="flex flex-col w-60">
               <div className="flex items-center mb-2 gap-x-1">
-                <label className="text-white text-sm font-semibold block">
+                <label className="text-theme-text-primary text-sm font-semibold block">
                   {t("ollama.contextWindowLabel")}
                 </label>
                 <Info
@@ -194,7 +194,7 @@ export default function OllamaLLMOptions({ settings }: any) {
               <input
                 type="number"
                 name="OllamaLLMTokenLimit"
-                className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                 placeholder={t("ollama.contextWindowPlaceholder")}
                 min={1}
                 value={maxTokens}
@@ -213,7 +213,7 @@ export default function OllamaLLMOptions({ settings }: any) {
 
             <div className="flex flex-col w-60">
               <div className="flex items-center mb-2 gap-x-1">
-                <label className="text-white text-sm font-semibold">
+                <label className="text-theme-text-primary text-sm font-semibold">
                   {t("ollama.authTokenLabel")}
                 </label>
                 <Info
@@ -243,7 +243,7 @@ export default function OllamaLLMOptions({ settings }: any) {
               <input
                 type="password"
                 name="OllamaLLMAuthToken"
-                className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg outline-none block w-full p-2.5 focus:outline-primary-button active:outline-primary-button"
+                className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg outline-none block w-full p-2.5 focus:outline-primary-button active:outline-primary-button"
                 placeholder={t("ollama.authTokenPlaceholder")}
                 defaultValue={
                   settings?.OllamaLLMAuthToken ? "*".repeat(20) : ""
@@ -277,19 +277,19 @@ function OllamaLLMModelSelection({
   if (isLoading || customModels.length === 0) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-2">
+        <label className="text-theme-text-primary text-sm font-semibold block mb-2">
           {t("ollama.modelLabel")}
         </label>
         <select
           name="OllamaLLMModelPref"
           disabled={true}
-          className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+          className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} value="">
             {!!basePath ? t("ollama.loadingModels") : t("ollama.enterUrlFirst")}
           </option>
         </select>
-        <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
+        <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
           {t("ollama.selectModelHelp")}
         </p>
       </div>
@@ -298,13 +298,13 @@ function OllamaLLMModelSelection({
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-2">
+      <label className="text-theme-text-primary text-sm font-semibold block mb-2">
         {t("ollama.modelLabel")}
       </label>
       <select
         name="OllamaLLMModelPref"
         required={true}
-        className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+        className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
       >
         {customModels.length > 0 && (
           <optgroup label={t("ollama.yourLoadedModels")}>
@@ -318,7 +318,7 @@ function OllamaLLMModelSelection({
           </optgroup>
         )}
       </select>
-      <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
+      <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
         {t("ollama.chooseModelHelp")}
       </p>
     </div>

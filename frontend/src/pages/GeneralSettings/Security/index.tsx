@@ -111,11 +111,11 @@ function MultiUserMode() {
       <div className="w-full flex flex-col gap-y-1 pb-6 border-white light:border-theme-sidebar-border border-b-2 border-opacity-10">
         <div className="w-full flex flex-col gap-y-1">
           <div className="items-center flex gap-x-4">
-            <p className="text-base font-bold text-white mt-6">
+            <p className="text-base font-bold text-theme-text-primary mt-6">
               {t("security.multiuser.title")}
             </p>
           </div>
-          <p className="text-xs leading-[18px] font-base text-white text-opacity-60">
+          <p className="text-xs leading-[18px] font-base text-theme-text-secondary">
             {t("security.multiuser.description")}
           </p>
         </div>
@@ -139,7 +139,7 @@ function MultiUserMode() {
             <div className="space-y-6 flex h-full w-full">
               <div className="w-full flex flex-col gap-y-4">
                 {multiUserMode ? (
-                  <p className="text-white text-sm font-semibold">
+                  <p className="text-theme-text-primary text-sm font-semibold">
                     {t("security.multiuser.enable.is-enable")}
                   </p>
                 ) : (
@@ -158,14 +158,14 @@ function MultiUserMode() {
                     <div className="w-80">
                       <label
                         htmlFor="username"
-                        className="text-white text-sm font-semibold block mb-3"
+                        className="text-theme-text-primary text-sm font-semibold block mb-3"
                       >
                         {t("security.multiuser.enable.username")}
                       </label>
                       <input
                         name="username"
                         type="text"
-                        className="border-none bg-theme-settings-input-bg text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 placeholder:text-theme-settings-input-placeholder focus:ring-blue-500"
+                        className="border-none bg-theme-settings-input-bg text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 placeholder:text-theme-settings-input-placeholder focus:ring-blue-500"
                         placeholder={t("security.placeholder.adminUsername")}
                         minLength={USERNAME_MIN_LENGTH}
                         maxLength={USERNAME_MAX_LENGTH}
@@ -175,21 +175,21 @@ function MultiUserMode() {
                         disabled={multiUserMode}
                         defaultValue={multiUserMode ? "********" : ""}
                       />
-                      <p className="text-white text-opacity-60 text-xs mt-2">
+                      <p className="text-theme-text-secondary text-xs mt-2">
                         {t("common.username_requirements")}
                       </p>
                     </div>
                     <div className="mt-4 w-80">
                       <label
                         htmlFor="password"
-                        className="text-white text-sm font-semibold block mb-3"
+                        className="text-theme-text-primary text-sm font-semibold block mb-3"
                       >
                         {t("security.multiuser.enable.password")}
                       </label>
                       <input
                         name="password"
                         type="password"
-                        className="border-none bg-theme-settings-input-bg text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 placeholder:text-theme-settings-input-placeholder focus:ring-blue-500"
+                        className="border-none bg-theme-settings-input-bg text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 placeholder:text-theme-settings-input-placeholder focus:ring-blue-500"
                         placeholder={t("security.placeholder.adminPassword")}
                         minLength={8}
                         required={true}
@@ -203,7 +203,7 @@ function MultiUserMode() {
               </div>
             </div>
             <div className="flex items-center justify-between space-x-14">
-              <p className="text-white text-opacity-80 text-xs rounded-lg w-96">
+              <p className="text-theme-text-primary text-xs rounded-lg w-96">
                 {t("security.multiuser.enable.description")}
               </p>
             </div>
@@ -294,11 +294,11 @@ function PasswordProtection() {
       <div className="w-full flex flex-col gap-y-1 pb-6 border-white light:border-theme-sidebar-border border-b-2 border-opacity-10">
         <div className="w-full flex flex-col gap-y-1">
           <div className="items-center flex gap-x-4">
-            <p className="text-base font-bold text-white mt-6">
+            <p className="text-base font-bold text-theme-text-primary mt-6">
               {t("security.password.title")}
             </p>
           </div>
-          <p className="text-xs leading-[18px] font-base text-white text-opacity-60">
+          <p className="text-xs leading-[18px] font-base text-theme-text-secondary">
             {t("security.password.description")}
           </p>
         </div>
@@ -333,14 +333,14 @@ function PasswordProtection() {
                     <div className="mt-4 w-80">
                       <label
                         htmlFor="password"
-                        className="text-white text-sm font-semibold block mb-3"
+                        className="text-theme-text-primary text-sm font-semibold block mb-3"
                       >
                         {t("security.password.password-label")}
                       </label>
                       <input
                         name="password"
                         type="password"
-                        className="border-none bg-theme-settings-input-bg text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 placeholder:text-theme-settings-input-placeholder"
+                        className="border-none bg-theme-settings-input-bg text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 placeholder:text-theme-settings-input-placeholder"
                         placeholder={t("security.placeholder.instancePassword")}
                         minLength={8}
                         required={true}
@@ -353,7 +353,7 @@ function PasswordProtection() {
               </div>
             </div>
             <div className="flex items-center justify-between space-x-14">
-              <p className="text-white text-opacity-80 light:text-theme-text text-xs rounded-lg w-96">
+              <p className="text-theme-text-primary light:text-theme-text text-xs rounded-lg w-96">
                 {t("security.password.description")}
               </p>
             </div>

@@ -52,7 +52,7 @@ export default function WorkspaceRow({
     <>
       <tr
         ref={rowRef}
-        className="bg-transparent text-white text-opacity-80 text-xs font-medium border-b border-white/10 h-10"
+        className="bg-transparent text-theme-text-primary text-xs font-medium border-b border-white/10 h-10"
       >
         <th scope="row" className="px-6 whitespace-nowrap">
           {workspace.name}

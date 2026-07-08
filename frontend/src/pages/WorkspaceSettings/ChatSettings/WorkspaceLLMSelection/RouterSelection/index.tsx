@@ -17,7 +17,7 @@ export default function RouterSelection({
   if (isLoading) {
     return (
       <div className="mt-4">
-        <p className="text-sm text-white text-opacity-60">
+        <p className="text-sm text-theme-text-secondary">
           {t("model-router.router-selection.loading-routers")}
         </p>
       </div>
@@ -27,11 +27,11 @@ export default function RouterSelection({
   if (routers.length === 0) {
     return (
       <div className="mt-4">
-        <p className="text-sm text-white text-opacity-60">
+        <p className="text-sm text-theme-text-secondary">
           {t("model-router.router-selection.no-routers-prefix-workspace")}{" "}
           <Link
             to={paths.settings.modelRouters()}
-            className="underline text-white"
+            className="underline text-theme-text-primary"
           >
             {t("model-router.router-selection.no-routers-link")}
           </Link>
@@ -46,14 +46,14 @@ export default function RouterSelection({
       <label className="block input-label">
         {t("model-router.router-selection.model-router-label")}
       </label>
-      <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
+      <p className="text-theme-text-secondary text-xs font-medium py-1.5">
         {t("model-router.router-selection.select-description")}
       </p>
       <select
         name="router_id"
         defaultValue={workspace?.router_id || ""}
         onChange={() => setHasChanges(true)}
-        className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full max-w-[640px] p-2.5"
+        className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full max-w-[640px] p-2.5"
         required
       >
         <option value="">

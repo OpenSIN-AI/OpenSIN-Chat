@@ -100,7 +100,7 @@ export default function MenuOption({
                 isChild ? "text-xs" : "text-sm"
               } leading-loose whitespace-nowrap overflow-hidden ml-2 ${
                 isActive
-                  ? "text-white font-semibold"
+                  ? "text-theme-text-primary font-semibold"
                   : "text-white light:text-black"
               } ${!icon && "pl-5"}`}
             >
@@ -122,7 +122,7 @@ export default function MenuOption({
                 isChild ? "text-xs" : "text-sm"
               } leading-loose whitespace-nowrap overflow-hidden ml-2 ${
                 isActive
-                  ? "text-white font-semibold"
+                  ? "text-theme-text-primary font-semibold"
                   : "text-white light:text-black"
               } ${!icon && "pl-5"}`}
             >
@@ -134,7 +134,7 @@ export default function MenuOption({
           <button
             type="button"
             onClick={handleClick}
-            className="p-2 text-white"
+            className="p-2 text-theme-text-primary"
             aria-label={isExpanded ? t("common.collapse") : t("common.expand")}
             aria-expanded={isExpanded}
           >

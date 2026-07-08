@@ -49,7 +49,7 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
       <div className="w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border overflow-hidden">
         <div className="relative p-6 border-b rounded-t border-theme-modal-border">
           <div className="w-full flex gap-x-2 items-center">
-            <h3 className="text-xl font-semibold text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
+            <h3 className="text-xl font-semibold text-theme-text-primary overflow-hidden overflow-ellipsis whitespace-nowrap">
               {t("new-workspace.title")}
             </h3>
           </div>
@@ -62,7 +62,7 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
             <X
               size={24}
               weight="bold"
-              className="text-white"
+              className="text-theme-text-primary"
               aria-hidden="true"
             />
           </button>
@@ -74,7 +74,7 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
                 <div>
                   <label
                     htmlFor="name"
-                    className="block mb-2 text-sm font-medium text-white"
+                    className="block mb-2 text-sm font-medium text-theme-text-primary"
                   >
                     {t("common.workspaces-name")}
                   </label>
@@ -82,7 +82,7 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
                     name="name"
                     type="text"
                     id="name"
-                    className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                    className="border-none bg-theme-settings-input-bg w-full text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                     placeholder={t("new-workspace.placeholder")}
                     required={true}
                     autoComplete="off"

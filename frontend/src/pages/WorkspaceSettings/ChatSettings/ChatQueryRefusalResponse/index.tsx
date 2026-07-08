@@ -16,7 +16,7 @@ export default function ChatQueryRefusalResponse({
         <label htmlFor="name" className="block input-label">
           {t("chat.refusal.title")}
         </label>
-        <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
+        <p className="text-theme-text-secondary text-xs font-medium py-1.5">
           {t("chat.refusal.desc-start")}{" "}
           <code className="border-none bg-theme-settings-input-bg p-0.5 rounded-sm">
             {t("chat.refusal.query")}
@@ -28,7 +28,7 @@ export default function ChatQueryRefusalResponse({
         name="queryRefusalResponse"
         rows={2}
         defaultValue={chatQueryRefusalResponse(workspace)}
-        className="border-none bg-theme-settings-input-bg placeholder:text-theme-settings-input-placeholder text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 mt-2"
+        className="border-none bg-theme-settings-input-bg placeholder:text-theme-settings-input-placeholder text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 mt-2"
         placeholder={t("chat.refusal.placeholder")}
         required={true}
         wrap="soft"

@@ -622,10 +622,10 @@ export default function DnDFileUploaderWrapper({ children }: any) {
               height={69}
               alt={t("dndWrapper.dragAndDropIcon")}
             />
-            <p className="text-white text-[24px] font-semibold">
+            <p className="text-theme-text-primary text-[24px] font-semibold">
               {t("dndWrapper.addAnything")}
             </p>
-            <p className="text-white text-[16px] text-center">
+            <p className="text-theme-text-primary text-[16px] text-center">
               {t("dndWrapper.dropFileOrImage")}
               <br />
               {t("dndWrapper.workspaceAutoMagically")}

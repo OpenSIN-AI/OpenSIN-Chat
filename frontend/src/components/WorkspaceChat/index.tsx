@@ -97,7 +97,7 @@ export default function WorkspaceChat({
                 </div>
               </div>
               <div className="py-7 px-9 space-y-2 flex-col">
-                <p className="text-white text-sm">
+                <p className="text-theme-text-primary text-sm">
                   {t("workspaceChat.notFoundDescription")}
                 </p>
               </div>

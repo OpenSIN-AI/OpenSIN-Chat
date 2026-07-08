@@ -14,13 +14,13 @@ export default function LiteLLMOptions({ settings }: any) {
     <div className="w-full flex flex-col gap-y-7 mt-1.5">
       <div className="w-full flex items-center gap-[36px]">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("litellm.baseUrl")}
           </label>
           <input
             type="url"
             name="LiteLLMBasePath"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("litellm.baseUrlPlaceholder")}
             defaultValue={settings?.LiteLLMBasePath}
             required={true}
@@ -38,13 +38,13 @@ export default function LiteLLMOptions({ settings }: any) {
           apiKey={apiKey}
         />
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("litellm.modelContextWindow")}
           </label>
           <input
             type="number"
             name="LiteLLMTokenLimit"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("litellm.tokenLimitPlaceholder")}
             min={1}
             onScroll={(e) => (e.target as HTMLElement).blur()}
@@ -57,7 +57,7 @@ export default function LiteLLMOptions({ settings }: any) {
       <div className="w-full flex items-center gap-[36px]">
         <div className="flex flex-col w-60">
           <div className="flex flex-col gap-y-1 mb-4">
-            <label className="text-white text-sm font-semibold flex items-center gap-x-2">
+            <label className="text-theme-text-primary text-sm font-semibold flex items-center gap-x-2">
               {t("litellm.apiKey")}{" "}
               <p className="!text-xs !italic !font-thin">
                 {t("litellm.apiKeyOptional")}
@@ -67,7 +67,7 @@ export default function LiteLLMOptions({ settings }: any) {
           <input
             type="password"
             name="LiteLLMAPIKey"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("litellm.apiKeyPlaceholder")}
             defaultValue={settings?.LiteLLMAPIKey ? "*".repeat(20) : ""}
             autoComplete="off"
@@ -97,13 +97,13 @@ function LiteLLMModelSelection({
   if (isLoading || customModels.length === 0) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
+        <label className="text-theme-text-primary text-sm font-semibold block mb-3">
           {t("litellm.modelSelection")}
         </label>
         <select
           name="LiteLLMModelPref"
           disabled={true}
-          className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+          className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} value="">
             {basePath?.includes("/v1")
@@ -117,13 +117,13 @@ function LiteLLMModelSelection({
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-3">
+      <label className="text-theme-text-primary text-sm font-semibold block mb-3">
         {t("litellm.modelSelection")}
       </label>
       <select
         name="LiteLLMModelPref"
         required={true}
-        className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+        className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
       >
         {customModels.length > 0 && (
           <optgroup label={t("litellm.loadedModels")}>

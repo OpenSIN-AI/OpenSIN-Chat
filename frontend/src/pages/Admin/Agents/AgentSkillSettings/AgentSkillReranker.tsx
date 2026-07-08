@@ -35,9 +35,9 @@ export default function AgentSkillReranker(): JSX.Element {
   return (
     <div className="flex flex-col gap-y-4">
       <div className="flex items-center gap-x-1">
-        <label className="block text-md font-medium text-white flex items-center gap-x-1">
+        <label className="block text-md font-medium text-theme-text-primary flex items-center gap-x-1">
           {t("agent.settings.intelligent-skill-selection.title")}{" "}
-          <i className="ml-1 text-xs text-white pl-2 bg-blue-500/40 rounded-md px-2 py-0.5">
+          <i className="ml-1 text-xs text-theme-text-primary pl-2 bg-blue-500/40 rounded-md px-2 py-0.5">
             {t("agent.settings.intelligent-skill-selection.beta-badge")}
           </i>
         </label>
@@ -63,7 +63,7 @@ export default function AgentSkillReranker(): JSX.Element {
       {enabled && (
         <div className="flex items-center gap-x-4">
           <div className="flex flex-col gap-y-1 flex-1">
-            <label className="block text-md font-medium text-white">
+            <label className="block text-md font-medium text-theme-text-primary">
               {t("agent.settings.intelligent-skill-selection.max-tools.title")}
             </label>
             <p className="text-xs text-theme-text-secondary">
@@ -83,7 +83,7 @@ export default function AgentSkillReranker(): JSX.Element {
               setMaxTools(parseInt(e.target.value, 10));
             }}
             onWheel={(e) => (e.target as HTMLElement).blur()}
-            className="border border-white/10 bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-[80px] p-2.5 text-center"
+            className="border border-white/10 bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-[80px] p-2.5 text-center"
             placeholder="15" // eslint-disable-line i18next/no-literal-string
             autoComplete="off"
           />

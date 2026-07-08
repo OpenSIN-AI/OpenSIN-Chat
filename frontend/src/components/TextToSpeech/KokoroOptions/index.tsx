@@ -21,7 +21,7 @@ export default function KokoroTTSOptions({ settings }: any) {
 
   return (
     <div className="w-full flex flex-col gap-y-7">
-      <p className="text-sm font-base text-white text-opacity-60">
+      <p className="text-sm font-base text-theme-text-secondary">
         {t("kokoro.intro.part1")}{" "}
         <a
           href="https://github.com/remsky/Kokoro-FastAPI"
@@ -35,13 +35,13 @@ export default function KokoroTTSOptions({ settings }: any) {
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-2">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-2">
             {t("kokoro.baseUrl.label")}
           </label>
           <input
             type="url"
             name="TTSKokoroEndpoint"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("kokoro.baseUrl.placeholder")}
             defaultValue={settings?.TTSKokoroEndpoint}
             required={true}
@@ -52,18 +52,18 @@ export default function KokoroTTSOptions({ settings }: any) {
             }
             onBlur={() => setEndpoint(inputEndpoint)}
           />
-          <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
+          <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
             {t("kokoro.baseUrl.help", { service: "kokoro-fastapi" })}
           </p>
         </div>
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-2">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-2">
             {t("kokoro.apiKey.label")}
           </label>
           <input
             type="password"
             name="TTSKokoroKey"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("kokoro.apiKey.placeholder")}
             defaultValue={settings?.TTSKokoroKey ? "*".repeat(20) : ""}
             autoComplete="off"
@@ -73,7 +73,7 @@ export default function KokoroTTSOptions({ settings }: any) {
             }
             onBlur={() => setApiKey(inputApiKey)}
           />
-          <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
+          <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
             {t("kokoro.apiKey.help")}
           </p>
         </div>
@@ -101,13 +101,13 @@ function KokoroVoiceSelection({ settings, endpoint, apiKey = null }: any) {
   if (loading) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
+        <label className="text-theme-text-primary text-sm font-semibold block mb-3">
           {t("kokoro.voiceModel.label")}
         </label>
         <select
           name="TTSKokoroVoiceModel"
           disabled={true}
-          className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+          className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} value="">
             {t("kokoro.voiceModel.loading")}
@@ -120,20 +120,20 @@ function KokoroVoiceSelection({ settings, endpoint, apiKey = null }: any) {
   if (voices.length === 0) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
+        <label className="text-theme-text-primary text-sm font-semibold block mb-3">
           {t("kokoro.voiceModel.label")}
         </label>
         <input
           type="text"
           name="TTSKokoroVoiceModel"
-          className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+          className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
           placeholder={t("kokoro.voiceModel.placeholder")}
           defaultValue={settings?.TTSKokoroVoiceModel ?? "af_bella"}
           required={true}
           autoComplete="off"
           spellCheck={false}
         />
-        <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
+        <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
           {t("kokoro.voiceModel.unreachable")}
         </p>
       </div>
@@ -142,14 +142,14 @@ function KokoroVoiceSelection({ settings, endpoint, apiKey = null }: any) {
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-3">
+      <label className="text-theme-text-primary text-sm font-semibold block mb-3">
         {t("kokoro.voiceModel.label")}
       </label>
       <select
         name="TTSKokoroVoiceModel"
         required={true}
         defaultValue={settings?.TTSKokoroVoiceModel ?? "af_bella"}
-        className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+        className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
       >
         {voices.map((voice) => (
           <option key={voice.id} value={voice.id}>

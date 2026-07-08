@@ -11,13 +11,13 @@ export default function GroqAiOptions({ settings }: any) {
   return (
     <div className="flex gap-[36px] mt-1.5">
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
+        <label className="text-theme-text-primary text-sm font-semibold block mb-3">
           {t("providerSettings.groqAi.apiKey")}
         </label>
         <input
           type="password"
           name="GroqApiKey"
-          className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+          className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
           placeholder={t("providerSettings.groqAi.apiKeyPlaceholder")}
           defaultValue={settings?.GroqApiKey ? "*".repeat(20) : ""}
           required={true}
@@ -41,19 +41,19 @@ function GroqAIModelSelection({ apiKey, settings }: any) {
   if (isLoading) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
+        <label className="text-theme-text-primary text-sm font-semibold block mb-3">
           {t("providerSettings.groqAi.modelSelection")}
         </label>
         <select
           name="GroqModelPref"
           disabled={true}
-          className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+          className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} value="">
             {t("providerSettings.groqAi.loadingModels")}
           </option>
         </select>
-        <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
+        <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
           {t("providerSettings.groqAi.enterApiKeyHint")}
         </p>
       </div>
@@ -62,13 +62,13 @@ function GroqAIModelSelection({ apiKey, settings }: any) {
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-3">
+      <label className="text-theme-text-primary text-sm font-semibold block mb-3">
         {t("providerSettings.groqAi.modelSelection")}
       </label>
       <select
         name="GroqModelPref"
         required={true}
-        className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+        className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
       >
         {customModels.length > 0 && (
           <optgroup label={t("providerSettings.groqAi.availableModels")}>
@@ -82,7 +82,7 @@ function GroqAIModelSelection({ apiKey, settings }: any) {
           </optgroup>
         )}
       </select>
-      <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
+      <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
         {t("providerSettings.groqAi.selectModelHint")}
       </p>
     </div>

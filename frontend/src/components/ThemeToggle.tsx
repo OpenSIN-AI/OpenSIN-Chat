@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useThemeContext } from "@/ThemeContext";
 
 const DEFAULT_BUTTON_CLASSES =
-  "flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all bg-transparent hover:bg-zinc-700 light:hover:bg-slate-200 text-white flex-shrink-0 relative z-10";
+  "flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all bg-transparent hover:bg-zinc-700 light:hover:bg-slate-200 text-theme-text-primary flex-shrink-0 relative z-10";
 
 interface ThemeToggleProps {
   className?: string;

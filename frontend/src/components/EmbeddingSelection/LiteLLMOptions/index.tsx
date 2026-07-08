@@ -17,13 +17,13 @@ export default function LiteLLMOptions({ settings }: any) {
     <div className="w-full flex flex-col gap-y-7">
       <div className="w-full flex items-center gap-[36px] mt-1.5">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("liteLLM.baseUrl.label")}
           </label>
           <input
             type="url"
             name="LiteLLMBasePath"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("liteLLM.baseUrl.placeholder")}
             defaultValue={settings?.LiteLLMBasePath}
             required={true}
@@ -50,7 +50,7 @@ export default function LiteLLMOptions({ settings }: any) {
               size={16}
               className="text-theme-text-secondary cursor-pointer"
             />
-            <label className="text-white text-sm font-semibold block">
+            <label className="text-theme-text-primary text-sm font-semibold block">
               {t("liteLLM.maxChunkLength.label")}
             </label>
             <Tooltip id="max-embedding-chunk-length-tooltip">
@@ -60,7 +60,7 @@ export default function LiteLLMOptions({ settings }: any) {
           <input
             type="number"
             name="EmbeddingModelMaxChunkLength"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("liteLLM.maxChunkLength.placeholder")}
             min={1}
             onScroll={(e) => (e.target as HTMLElement).blur()}
@@ -73,7 +73,7 @@ export default function LiteLLMOptions({ settings }: any) {
       <div className="w-full flex items-center gap-[36px]">
         <div className="flex flex-col w-60">
           <div className="flex flex-col gap-y-1 mb-4">
-            <label className="text-white text-sm font-semibold flex items-center gap-x-2">
+            <label className="text-theme-text-primary text-sm font-semibold flex items-center gap-x-2">
               {t("liteLLM.apiKey.label")}{" "}
               <p className="!text-xs !italic !font-thin">
                 {t("common.optional")}
@@ -83,7 +83,7 @@ export default function LiteLLMOptions({ settings }: any) {
           <input
             type="password"
             name="LiteLLMAPIKey"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("liteLLM.apiKey.placeholder")}
             defaultValue={settings?.LiteLLMAPIKey ? "*".repeat(20) : ""}
             autoComplete="off"
@@ -115,13 +115,13 @@ function LiteLLMModelSelection({
   if (loading || models.length === 0) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
+        <label className="text-theme-text-primary text-sm font-semibold block mb-3">
           {t("liteLLM.modelSelection.label")}
         </label>
         <select
           name="EmbeddingModelPref"
           disabled={true}
-          className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+          className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} value="">
             {basePath?.includes("/v1")
@@ -136,7 +136,7 @@ function LiteLLMModelSelection({
   return (
     <div className="flex flex-col w-60">
       <div className="flex items-center">
-        <label className="text-white text-sm font-semibold block mb-3">
+        <label className="text-theme-text-primary text-sm font-semibold block mb-3">
           {t("liteLLM.modelSelection.label")}
         </label>
         <EmbeddingModelTooltip />
@@ -144,7 +144,7 @@ function LiteLLMModelSelection({
       <select
         name="EmbeddingModelPref"
         required={true}
-        className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+        className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
       >
         {models.length > 0 && (
           <optgroup label={t("liteLLM.modelSelection.yourLoadedModels")}>

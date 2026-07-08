@@ -42,7 +42,7 @@ export default function LogRow({ log }: LogRowProps): JSX.Element {
     <>
       <tr
         onClick={handleRowClick}
-        className={`bg-transparent text-white text-opacity-80 text-xs font-medium border-b border-white/10 h-10 ${
+        className={`bg-transparent text-theme-text-primary text-xs font-medium border-b border-white/10 h-10 ${
           hasMetadata ? "cursor-pointer hover:bg-white/5" : ""
         }`}
       >

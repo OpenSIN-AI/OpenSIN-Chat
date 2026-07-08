@@ -44,13 +44,13 @@ export const PinAlert = memo(() => {
               className="text-theme-text-primary text-lg w-6 h-6"
               weight="regular"
             />
-            <h3 className="text-xl font-semibold text-white">
+            <h3 className="text-xl font-semibold text-theme-text-primary">
               {t("connectors.pinning.what_pinning")}
             </h3>
           </div>
         </div>
         <div className="py-7 px-9 space-y-2 flex-col">
-          <div className="w-full text-white text-md flex flex-col gap-y-2">
+          <div className="text-theme-text-primary text-md flex flex-col gap-y-2">
             <p>
               <span
                 dangerouslySetInnerHTML={{
@@ -116,13 +116,13 @@ export const DocumentWatchAlert = memo(() => {
               className="text-theme-text-primary text-lg w-6 h-6"
               weight="regular"
             />
-            <h3 className="text-xl font-semibold text-white">
+            <h3 className="text-xl font-semibold text-theme-text-primary">
               {t("connectors.watching.what_watching")}
             </h3>
           </div>
         </div>
         <div className="py-7 px-9 space-y-2 flex-col">
-          <div className="w-full text-white text-md flex flex-col gap-y-2">
+          <div className="text-theme-text-primary text-md flex flex-col gap-y-2">
             <p>
               <span
                 dangerouslySetInnerHTML={{

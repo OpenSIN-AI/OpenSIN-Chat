@@ -554,10 +554,10 @@ export default function FilesystemSidebar({ workspace = null }: any) {
             <SpinnerGap
               size={16}
               weight="bold"
-              className="text-white animate-spin flex-shrink-0"
+              className="text-theme-text-primary animate-spin flex-shrink-0"
             />
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-medium text-white truncate">
+              <p className="text-xs font-medium text-theme-text-primary truncate">
                 {uploadProgress.name}
               </p>
               <div className="mt-1 h-1 bg-white/20 rounded-full overflow-hidden">

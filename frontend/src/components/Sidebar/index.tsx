@@ -114,7 +114,7 @@ export default function Sidebar() {
                 alt={t("sidebar.logo")}
                 className="h-9 w-9 max-h-[36px] max-w-[36px] object-contain flex-shrink-0"
               />
-              <span className="text-white font-bold text-lg whitespace-nowrap">
+              <span className="text-theme-text-primary font-bold text-lg whitespace-nowrap">
                 OpenSIN
               </span>
             </Link>
@@ -134,7 +134,7 @@ export default function Sidebar() {
                     ? t("sidebar.hideSidebar")
                     : t("sidebar.showSidebar")
                 }
-                className="flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all bg-transparent hover:bg-zinc-700 light:hover:bg-slate-200 text-white flex-shrink-0 relative z-10"
+                className="flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all bg-transparent hover:bg-zinc-700 light:hover:bg-slate-200 text-theme-text-primary flex-shrink-0 relative z-10"
               >
                 <SidebarSimple
                   size={18}
@@ -239,7 +239,7 @@ export function SidebarMobileHeader() {
             alt={t("sidebar.logo")}
             className="h-6 w-6 max-h-6 max-w-6 object-contain"
           />
-          <span className="text-white font-bold text-base">OpenSIN</span>
+          <span className="text-theme-text-primary font-bold text-base">OpenSIN</span>
         </div>
         <div className="w-12"></div>
       </header>
@@ -272,7 +272,7 @@ export function SidebarMobileHeader() {
                   alt={t("sidebar.logo")}
                   className="w-8 h-8 max-h-[32px] max-w-[32px] object-contain"
                 />
-                <span className="text-white font-bold text-base">OpenSIN</span>
+                <span className="text-theme-text-primary font-bold text-base">OpenSIN</span>
               </div>
               {(!user || user?.role !== "default") && (
                 <div className="flex gap-x-2 items-center text-slate-500 shrink-0">

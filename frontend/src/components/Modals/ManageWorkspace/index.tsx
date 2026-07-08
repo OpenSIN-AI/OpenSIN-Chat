@@ -30,7 +30,7 @@ const ManageWorkspace = ({ hideModal = noop, providedSlug = null }) => {
           <div className="relative p-6 border-b rounded-t border-theme-modal-border">
             <div className="w-full flex gap-x-2 items-center">
               {}
-              <h3 className="text-xl font-semibold text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
+              <h3 className="text-xl font-semibold text-theme-text-primary overflow-hidden overflow-ellipsis whitespace-nowrap">
                 {t("connectors.manage.editingWithName", {
                   name: workspace.name,
                 })}
@@ -45,14 +45,14 @@ const ManageWorkspace = ({ hideModal = noop, providedSlug = null }) => {
               <X
                 size={24}
                 weight="bold"
-                className="text-white"
+                className="text-theme-text-primary"
                 aria-hidden="true"
               />
             </button>
           </div>
           <div className="h-full w-full overflow-y-auto max-h-[calc(100vh-200px)]">
             <div className="py-7 px-9 space-y-2 flex-col">
-              <p className="text-white">
+              <p className="text-theme-text-primary">
                 {t("connectors.manage.desktop-only")}
               </p>
             </div>
@@ -82,12 +82,12 @@ const ManageWorkspace = ({ hideModal = noop, providedSlug = null }) => {
               type="button"
               onClick={hideModal}
               aria-label={t("manageWorkspace.closeDialog")}
-              className="z-29 text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center bg-sidebar-button hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
+              className="z-29 text-theme-text-primary bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center bg-sidebar-button hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
             >
               <X
                 size={20}
                 weight="bold"
-                className="text-white"
+                className="text-theme-text-primary"
                 aria-hidden="true"
               />
             </button>
@@ -129,7 +129,7 @@ const ModalTabSwitcher = ({ selectedTab, setSelectedTab }) => {
           aria-pressed={selectedTab === "documents"}
           className={`border-none px-4 py-2 rounded-[8px] font-semibold hover:bg-theme-modal-border hover:bg-opacity-60 ${
             selectedTab === "documents"
-              ? "bg-theme-modal-border font-bold text-white light:bg-[#E0F2FE] light:text-[#026AA2]"
+              ? "bg-theme-modal-border font-bold text-theme-text-primary light:bg-[#E0F2FE] light:text-[#026AA2]"
               : "text-theme-placeholder font-medium hover:text-theme-text-primary light:hover:text-theme-text-primary light:bg-white light:text-[#535862] light:hover:bg-[#E0F2FE]"
           }`}
         >
@@ -142,7 +142,7 @@ const ModalTabSwitcher = ({ selectedTab, setSelectedTab }) => {
           aria-pressed={selectedTab === "dataConnectors"}
           className={`border-none px-4 py-2 rounded-[8px] font-semibold hover:bg-theme-modal-border hover:bg-opacity-60 ${
             selectedTab === "dataConnectors"
-              ? "bg-theme-modal-border font-bold text-white light:bg-[#E0F2FE] light:text-[#026AA2]"
+              ? "bg-theme-modal-border font-bold text-theme-text-primary light:bg-[#E0F2FE] light:text-[#026AA2]"
               : "text-theme-placeholder font-medium hover:text-theme-text-primary light:hover:text-theme-text-primary light:bg-white light:text-[#535862] light:hover:bg-[#E0F2FE]"
           }`}
         >

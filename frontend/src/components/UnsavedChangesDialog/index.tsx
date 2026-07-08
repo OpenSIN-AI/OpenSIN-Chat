@@ -24,13 +24,13 @@ export default function UnsavedChangesDialog({ blocker }: any) {
         <div className="relative px-6 py-5 border-b rounded-t border-theme-modal-border">
           <div className="w-full flex gap-x-2 items-center">
             <Warning className="text-yellow-400 w-6 h-6" weight="fill" />
-            <h3 className="text-xl font-semibold text-white">
+            <h3 className="text-xl font-semibold text-theme-text-primary">
               {t("common.unsavedChanges") || "Unsaved Changes"}
             </h3>
           </div>
         </div>
         <div className="py-6 px-8">
-          <p className="text-white text-sm">
+          <p className="text-theme-text-primary text-sm">
             {t("common.unsavedChangesDescription") ||
               "You have unsaved changes. Are you sure you want to leave this page?"}
           </p>
@@ -39,7 +39,7 @@ export default function UnsavedChangesDialog({ blocker }: any) {
           <button
             onClick={handleReset}
             type="button"
-            className="transition-all duration-300 bg-transparent text-white hover:opacity-60 px-4 py-2 rounded-lg text-sm border-none"
+            className="transition-all duration-300 bg-transparent text-theme-text-primary hover:opacity-60 px-4 py-2 rounded-lg text-sm border-none"
           >
             {t("common.stayOnPage") || "Stay on Page"}
           </button>

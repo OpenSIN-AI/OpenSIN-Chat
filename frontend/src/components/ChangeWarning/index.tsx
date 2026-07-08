@@ -24,12 +24,12 @@ export default function ChangeWarningModal({
           aria-label={t("common.close") || "Close"}
           className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
         >
-          <X size={24} weight="bold" className="text-white" />
+          <X size={24} weight="bold" className="text-theme-text-primary" />
         </button>
       </div>
       <div className="h-full w-full overflow-y-auto max-h-[calc(100vh-200px)]">
         <div className="py-7 px-9 space-y-2 flex-col">
-          <p className="text-white">
+          <p className="text-theme-text-primary">
             {}
             {/* index key OK: static list */}
             {warningText.split("\n").map((line, index) => (
@@ -49,7 +49,7 @@ export default function ChangeWarningModal({
         <button
           onClick={onClose}
           type="button"
-          className="transition-all duration-300 bg-transparent text-white hover:opacity-60 px-4 py-2 rounded-lg text-sm border-none"
+          className="transition-all duration-300 bg-transparent text-theme-text-primary hover:opacity-60 px-4 py-2 rounded-lg text-sm border-none"
         >
           {t("changeWarning.cancel")}
         </button>

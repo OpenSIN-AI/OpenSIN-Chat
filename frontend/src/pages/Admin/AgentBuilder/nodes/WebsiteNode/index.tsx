@@ -25,7 +25,7 @@ export default function WebsiteNode({
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">
           {t("agentBuilder.websiteNode.url")}
         </label>
         <input
@@ -39,7 +39,7 @@ export default function WebsiteNode({
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">
           {t("agentBuilder.websiteNode.action")}
         </label>
         <select
@@ -59,7 +59,7 @@ export default function WebsiteNode({
         </select>
       </div>
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">
           {t("agentBuilder.websiteNode.cssSelector")}
         </label>
         <input
@@ -73,7 +73,7 @@ export default function WebsiteNode({
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">
           {t("agentBuilder.websiteNode.storeResultIn")}
         </label>
         {renderVariableSelect(

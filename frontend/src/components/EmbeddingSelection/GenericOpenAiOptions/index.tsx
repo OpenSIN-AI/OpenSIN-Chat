@@ -13,13 +13,13 @@ export default function GenericOpenAiEmbeddingOptions({ settings }: any) {
     <div className="w-full flex flex-col gap-y-7">
       <div className="w-full flex items-center gap-[36px] mt-1.5 flex-wrap">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("genericOpenAiEmbedding.baseUrlLabel")}
           </label>
           <input
             type="url"
             name="EmbeddingBasePath"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("genericOpenAiEmbedding.baseUrlPlaceholder")}
             defaultValue={settings?.EmbeddingBasePath}
             required={true}
@@ -28,13 +28,13 @@ export default function GenericOpenAiEmbeddingOptions({ settings }: any) {
           />
         </div>
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("genericOpenAiEmbedding.modelLabel")}
           </label>
           <input
             type="text"
             name="EmbeddingModelPref"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("genericOpenAiEmbedding.modelPlaceholder")}
             defaultValue={settings?.EmbeddingModelPref}
             required={true}
@@ -52,7 +52,7 @@ export default function GenericOpenAiEmbeddingOptions({ settings }: any) {
               size={16}
               className="text-theme-text-secondary cursor-pointer"
             />
-            <label className="text-white text-sm font-semibold block">
+            <label className="text-theme-text-primary text-sm font-semibold block">
               {t("genericOpenAiEmbedding.maxChunkLengthLabel")}
             </label>
             <Tooltip id="max-embedding-chunk-length-tooltip">
@@ -62,7 +62,7 @@ export default function GenericOpenAiEmbeddingOptions({ settings }: any) {
           <input
             type="number"
             name="EmbeddingModelMaxChunkLength"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("genericOpenAiEmbedding.maxChunkLengthPlaceholder")}
             min={1}
             onScroll={(e) => (e.target as HTMLElement).blur()}
@@ -75,7 +75,7 @@ export default function GenericOpenAiEmbeddingOptions({ settings }: any) {
       <div className="w-full flex items-center gap-[36px]">
         <div className="flex flex-col w-60">
           <div className="flex flex-col gap-y-1 mb-4">
-            <label className="text-white text-sm font-semibold flex items-center gap-x-2">
+            <label className="text-theme-text-primary text-sm font-semibold flex items-center gap-x-2">
               {t("genericOpenAiEmbedding.apiKeyLabel")}{" "}
               <p className="!text-xs !italic !font-thin">
                 {t("genericOpenAiEmbedding.optional")}
@@ -85,7 +85,7 @@ export default function GenericOpenAiEmbeddingOptions({ settings }: any) {
           <input
             type="password"
             name="GenericOpenAiEmbeddingApiKey"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("genericOpenAiEmbedding.apiKeyPlaceholder")}
             defaultValue={
               settings?.GenericOpenAiEmbeddingApiKey ? "*".repeat(20) : ""
@@ -124,7 +124,7 @@ export default function GenericOpenAiEmbeddingOptions({ settings }: any) {
         <div className="w-full flex items-start gap-4">
           <div className="flex flex-col w-60">
             <div className="flex flex-col gap-y-1 mb-4">
-              <label className="text-white text-sm font-semibold flex items-center gap-x-2">
+              <label className="text-theme-text-primary text-sm font-semibold flex items-center gap-x-2">
                 {t("genericOpenAiEmbedding.maxConcurrentChunksLabel")}
                 <p className="!text-xs !italic !font-thin">
                   {t("genericOpenAiEmbedding.optional")}
@@ -134,7 +134,7 @@ export default function GenericOpenAiEmbeddingOptions({ settings }: any) {
             <input
               type="number"
               name="GenericOpenAiEmbeddingMaxConcurrentChunks"
-              className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+              className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
               placeholder={t(
                 "genericOpenAiEmbedding.maxConcurrentChunksPlaceholder",
               )}
