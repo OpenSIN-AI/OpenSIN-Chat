@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
+import logger from "@/utils/logger";
 
 const AgentFlows: any = {
   /**
@@ -142,7 +143,7 @@ const AgentFlows: any = {
         .then((res) => res.json());
       return { success: true, flow: result.flow };
     } catch (error) {
-      console.error("Failed to toggle flow:", error);
+      logger.error("Failed to toggle flow:", error);
       return { success: false, error: error.message };
     }
   },

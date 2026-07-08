@@ -2,6 +2,7 @@
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 import showToast from "@/utils/toast";
+import logger from "@/utils/logger";
 
 const DataConnector: any = {
   github: {
@@ -21,7 +22,7 @@ const DataConnector: any = {
           return { branches: data?.branches || [], error: null };
         })
         .catch((e) => {
-          console.error(e);
+          logger.error(e);
           showToast(e.message, "error");
           return { branches: [], error: e.message };
         });
@@ -43,7 +44,7 @@ const DataConnector: any = {
           return { data: res.data, error: null };
         })
         .catch((e) => {
-          console.error(e);
+          logger.error(e);
           return { data: null, error: e.message };
         });
     },
@@ -65,7 +66,7 @@ const DataConnector: any = {
           return { branches: data?.branches || [], error: null };
         })
         .catch((e) => {
-          console.error(e);
+          logger.error(e);
           showToast(e.message, "error");
           return { branches: [], error: e.message };
         });
@@ -96,7 +97,7 @@ const DataConnector: any = {
           return { data: res.data, error: null };
         })
         .catch((e) => {
-          console.error(e);
+          logger.error(e);
           return { data: null, error: e.message };
         });
     },
@@ -114,7 +115,7 @@ const DataConnector: any = {
           return { data: res.data, error: null };
         })
         .catch((e) => {
-          console.error(e);
+          logger.error(e);
           return { data: null, error: e.message };
         });
     },
@@ -132,7 +133,7 @@ const DataConnector: any = {
           return { data: res.data, error: null };
         })
         .catch((e) => {
-          console.error(e);
+          logger.error(e);
           return { data: null, error: e.message };
         });
     },
@@ -167,7 +168,7 @@ const DataConnector: any = {
           return { data: res.data, error: null };
         })
         .catch((e) => {
-          console.error(e);
+          logger.error(e);
           return { data: null, error: e.message };
         });
     },
@@ -190,7 +191,7 @@ const DataConnector: any = {
           return { data: res.data, error: null };
         })
         .catch((e) => {
-          console.error(e);
+          logger.error(e);
           return { data: null, error: e.message };
         });
     },
@@ -210,7 +211,7 @@ const DataConnector: any = {
           return { data: res.data, error: null };
         })
         .catch((e) => {
-          console.error(e);
+          logger.error(e);
           return { data: null, error: e.message };
         });
     },
@@ -229,7 +230,7 @@ const DataConnector: any = {
           return { data: res.data, error: null };
         })
         .catch((e) => {
-          console.error(e);
+          logger.error(e);
           return { data: null, error: e.message };
         });
     },

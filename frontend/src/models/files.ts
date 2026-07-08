@@ -2,6 +2,7 @@
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 import useSWR from "swr";
+import logger from "@/utils/logger";
 
 const fetcher = (url) =>
   fetch(url, { headers: baseHeaders() }).then((res) => {
@@ -25,7 +26,7 @@ const StorageFiles: any = {
         return res.blob();
       })
       .catch((e) => {
-        console.error("Download failed:", e);
+        logger.error("Download failed:", e);
         return null;
       });
   },

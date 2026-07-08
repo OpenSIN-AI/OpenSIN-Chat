@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
+import logger from "@/utils/logger";
 
 /**
  * @typedef {Object} PromptHistory
@@ -30,11 +31,11 @@ const PromptHistory: any = {
         .then((res) => res.json())
         .then((res) => res.history || [])
         .catch((error) => {
-          console.error("Error fetching prompt history:", error);
+          logger.error("Error fetching prompt history:", error);
           return [];
         });
     } catch (error) {
-      console.error("Error fetching prompt history:", error);
+      logger.error("Error fetching prompt history:", error);
       return [];
     }
   },
@@ -55,11 +56,11 @@ const PromptHistory: any = {
       )
         .then((res) => res.json())
         .catch((error) => {
-          console.error("Error clearing prompt history:", error);
+          logger.error("Error clearing prompt history:", error);
           return { success: false, error: error?.message ?? String(error) };
         });
     } catch (error) {
-      console.error("Error clearing prompt history:", error);
+      logger.error("Error clearing prompt history:", error);
       return {
         success: false,
         error: error instanceof Error ? error.message : String(error),
@@ -75,11 +76,11 @@ const PromptHistory: any = {
       })
         .then((res) => res.json())
         .catch((error) => {
-          console.error("Error deleting prompt history:", error);
+          logger.error("Error deleting prompt history:", error);
           return { success: false, error: error?.message ?? String(error) };
         });
     } catch (error) {
-      console.error("Error deleting prompt history:", error);
+      logger.error("Error deleting prompt history:", error);
       return {
         success: false,
         error: error instanceof Error ? error.message : String(error),
