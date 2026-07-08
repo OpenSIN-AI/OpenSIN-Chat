@@ -8,6 +8,10 @@ import logger from "@/utils/logger";
  * Returns the parsed JSON or a fallback when the body is not valid JSON
  * (e.g. when the server sends "Unauthorized" text for 401 responses).
  */
+/** @param {Response} res
+ * @param {*} fallback
+ * @returns {Promise<*>}
+ */
 async function safeJson(res, fallback) {
   if (!res.ok) return fallback;
   try {
@@ -19,6 +23,7 @@ async function safeJson(res, fallback) {
 
 const Admin = {
   // User Management
+  /** @returns {Promise<Array>} */
   users: async () => {
     return await fetch(`${API_BASE}/admin/users`, {
       method: "GET",
@@ -31,6 +36,8 @@ const Admin = {
         return [];
       });
   },
+  /** @param {object} data
+ * @returns {Promise<{user: object|null, error: string|null}>} */
   newUser: async (data) => {
     return await fetch(`${API_BASE}/admin/users/new`, {
       method: "POST",
@@ -40,6 +47,9 @@ const Admin = {
       .then((res) => safeJson(res, { user: null, error: "Request failed" }))
       .catch((e) => ({ user: null, error: e.message }));
   },
+  /** @param {string} userId
+ * @param {object} data
+ * @returns {Promise<{success: boolean, error: string|null}>} */
   updateUser: async (userId, data) => {
     return await fetch(`${API_BASE}/admin/user/${userId}`, {
       method: "POST",
@@ -49,6 +59,8 @@ const Admin = {
       .then((res) => safeJson(res, { success: false, error: "Request failed" }))
       .catch((e) => ({ success: false, error: e.message }));
   },
+  /** @param {string} userId
+ * @returns {Promise<{success: boolean, error: string|null}>} */
   deleteUser: async (userId) => {
     return await fetch(`${API_BASE}/admin/user/${userId}`, {
       method: "DELETE",
@@ -59,6 +71,7 @@ const Admin = {
   },
 
   // Invitations
+  /** @returns {Promise<Array>} */
   invites: async () => {
     return await fetch(`${API_BASE}/admin/invites`, {
       method: "GET",
@@ -71,6 +84,8 @@ const Admin = {
         return [];
       });
   },
+  /** @param {{role?: string|null, workspaceIds?: Array<string>|null}} params
+ * @returns {Promise<{invite: object|null, error: string|null}>} */
   newInvite: async ({ role = null, workspaceIds = null }) => {
     return await fetch(`${API_BASE}/admin/invite/new`, {
       method: "POST",
@@ -83,6 +98,8 @@ const Admin = {
       .then((res) => safeJson(res, { invite: null, error: "Request failed" }))
       .catch((e) => ({ invite: null, error: e.message }));
   },
+  /** @param {string} inviteId
+ * @returns {Promise<{success: boolean, error: string|null}>} */
   disableInvite: async (inviteId) => {
     return await fetch(`${API_BASE}/admin/invite/${inviteId}`, {
       method: "DELETE",
@@ -93,6 +110,7 @@ const Admin = {
   },
 
   // Workspaces Mgmt
+  /** @returns {Promise<Array>} */
   workspaces: async () => {
     return await fetch(`${API_BASE}/admin/workspaces`, {
       method: "GET",
@@ -105,6 +123,8 @@ const Admin = {
         return [];
       });
   },
+  /** @param {string} workspaceId
+ * @returns {Promise<Array>} */
   workspaceUsers: async (workspaceId) => {
     return await fetch(`${API_BASE}/admin/workspaces/${workspaceId}/users`, {
       method: "GET",
@@ -117,6 +137,8 @@ const Admin = {
         return [];
       });
   },
+  /** @param {string} name
+ * @returns {Promise<{workspace: object|null, error: string|null}>} */
   newWorkspace: async (name) => {
     return await fetch(`${API_BASE}/admin/workspaces/new`, {
       method: "POST",
@@ -128,6 +150,9 @@ const Admin = {
       )
       .catch((e) => ({ workspace: null, error: e.message }));
   },
+  /** @param {string} workspaceId
+ * @param {string[]} [userIds=[]]
+ * @returns {Promise<{success: boolean, error: string|null}>} */
   updateUsersInWorkspace: async (workspaceId, userIds = []) => {
     return await fetch(
       `${API_BASE}/admin/workspaces/${workspaceId}/update-users`,
@@ -140,6 +165,8 @@ const Admin = {
       .then((res) => safeJson(res, { success: false, error: "Request failed" }))
       .catch((e) => ({ success: false, error: e.message }));
   },
+  /** @param {string} workspaceId
+ * @returns {Promise<{success: boolean, error: string|null}>} */
   deleteWorkspace: async (workspaceId) => {
     return await fetch(`${API_BASE}/admin/workspaces/${workspaceId}`, {
       method: "DELETE",
@@ -155,6 +182,8 @@ const Admin = {
    * @param {string[]} labels - Array of labels for settings
    * @returns {Promise<{settings: Object, error: string}>} - System preferences object
    */
+  /** @param {string[]} [labels=[]]
+ * @returns {Promise<object|null>} */
   systemPreferencesByFields: async (labels = []) => {
     return await fetch(
       `${API_BASE}/admin/system-preferences-for?labels=${labels.join(",")}`,
@@ -169,6 +198,8 @@ const Admin = {
         return null;
       });
   },
+  /** @param {object} [updates={}]
+ * @returns {Promise<{success: boolean, error: string|null}>} */
   updateSystemPreferences: async (updates = {}) => {
     return await fetch(`${API_BASE}/admin/system-preferences`, {
       method: "POST",
@@ -180,6 +211,7 @@ const Admin = {
   },
 
   // API Keys
+  /** @returns {Promise<{apiKeys: Array, error: string|null}>} */
   getApiKeys: async function () {
     return fetch(`${API_BASE}/admin/api-keys`, {
       method: "GET",
@@ -188,6 +220,8 @@ const Admin = {
       .then((res) => safeJson(res, { apiKeys: [], error: "Request failed" }))
       .catch((e) => ({ apiKeys: [], error: e.message }));
   },
+  /** @param {object} [data={}]
+ * @returns {Promise<{apiKey: object|null, error: string|null}>} */
   generateApiKey: async function (data = {}) {
     return fetch(`${API_BASE}/admin/generate-api-key`, {
       method: "POST",
@@ -197,6 +231,8 @@ const Admin = {
       .then((res) => safeJson(res, { apiKey: null, error: "Request failed" }))
       .catch((e) => ({ apiKey: null, error: e.message }));
   },
+  /** @param {string} [apiKeyId=""]
+ * @returns {Promise<boolean>} */
   deleteApiKey: async function (apiKeyId = "") {
     return fetch(`${API_BASE}/admin/delete-api-key/${apiKeyId}`, {
       method: "DELETE",

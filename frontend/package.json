@@ -39,7 +39,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "e2e": "playwright test",
-    "clean": "rm -rf dist node_modules/.cache"
+    "clean": "rm -rf dist node_modules/.cache",
+    "type-check": "tsc --noEmit -p tsconfig.check.json"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

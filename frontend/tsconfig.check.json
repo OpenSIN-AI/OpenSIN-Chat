@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "checkJs": true,
+    "allowJs": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "incremental": true,
+    "tsBuildInfoFile": ".tsbuildinfo"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "coverage"]
+}

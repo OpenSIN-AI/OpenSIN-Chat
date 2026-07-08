@@ -18,8 +18,8 @@ import ThreadFolderItem from "./ThreadFolderItem";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import useThreads from "@/hooks/useThreads";
 import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
-import {
 import logger from "@/utils/logger";
+import {
   DndContext,
   PointerSensor,
   useSensor,

@@ -7,8 +7,8 @@ import { useTranslation } from "react-i18next";
 import useDocuments from "@/hooks/useDocuments";
 import useWorkspaceBySlug from "@/hooks/useWorkspaceBySlug";
 import { LoadingState, EmbeddingProgressState } from "./DirectoryStates";
-import {
 import logger from "@/utils/logger";
+import {
   toggleSelection,
   toggleSelectAll,
   buildItemsToRemove,

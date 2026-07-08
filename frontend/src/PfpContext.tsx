@@ -11,13 +11,7 @@ import useUser from "./hooks/useUser";
 import System from "./models/system";
 
 export const PFP_CACHE_KEY = "system/pfp";
-
-export interface PfpContextValue {
-  pfp: string | null;
-  setPfp: (next: string | null) => void;
-}
-
-export const PfpContext = createContext<PfpContextValue | undefined>(undefined);
+export const PfpContext = createContext<any>(undefined);
 
 export function PfpProvider({ children }: { children: React.ReactNode }) {
   const { user } = useUser();
@@ -77,7 +71,7 @@ export function PfpProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
-  const value = useMemo<PfpContextValue>(() => ({ pfp: pfp ?? null, setPfp }), [pfp, setPfp]);
+  const value = useMemo(() => ({ pfp: pfp ?? null, setPfp }), [pfp, setPfp]);
 
   return <PfpContext.Provider value={value}>{children}</PfpContext.Provider>;
 }
