@@ -82,7 +82,7 @@ The container maps host port `43939` to internal port `3001`. Open `http://local
 - **OpenSIN PDF Reports** — branded reports (cover, header, footer in OpenSIN blue `#009ee0`) with table of contents, source lists, and politician references — generated directly from research jobs
 - **Agent Plugins** — `@politician-search`, `@deep-research`, `@generate-report`, `@orchestrator`, `@pdf-analyze`, `@browser-vision`, `@image-generation`, `@create-files` — callable directly in chat
 - **Fireworks AI Vision** — multimodal image analysis via Fireworks AI models (minimax-m3, kimi-k2p5/6/7, qwen-3p7-plus). Upload images and the AI describes what it sees
-- **3,700+ Tests** — comprehensive frontend (Vitest) and server (Jest) test coverage
+- **3,000+ Tests** — comprehensive frontend (Vitest) and server (Jest) test coverage
 
 ### UI Features
 
@@ -95,6 +95,7 @@ The container maps host port `43939` to internal port `3001`. Open `http://local
 - **Mobile Responsive** — 375px viewport, overlay panels, no horizontal overflow
 - **Loading Animation** — 3-pulse dots during AI response
 - **Action Buttons** — hover-only (TTS, Copy, Edit, Good Response, More) like ChatGPT/Claude
+- **TTS Providers (6 Engines)** — Native (browser), OpenAI-compatible, ElevenLabs, Kokoro, Piper (local), NVIDIA NIM, **cvoice.ai** (German celebrity voices incl. Gronkh, Dieter Bohlen, Joko, Julien Bam, Bushido, Daniela Katzenberger)
 - **SOTA Charts (ECharts)** — the AI generates interactive charts directly in chat: bar, line, area, pie, radar, scatter, treemap, funnel, radialBar. Apache ECharts 6 rendering with gradient fills, glow shadows, rounded bars, staggered elastic animations, dark/light theme support, hover tooltips, save-as-image (2x PNG), and data-view toolbox. Multi-series support for grouped/comparison charts. The `create-chart` agent plugin sends `{type, dataset, title, caption}` via WebSocket — no external services, no API keys, fully local rendering
 
 ## Screenshots
@@ -169,7 +170,7 @@ flowchart TB
 
 ```
 OpenSIN-Chat/
-├── frontend/          Vite + React 19 + TypeScript + Tailwind v4 + i18next
+├── frontend/          Vite + React 18 + TypeScript + Tailwind + i18next
 ├── server/            Node.js + Express + Prisma + SQLite/Postgres
 │   └── utils/
 │       ├── politician/    Politician DB (Bundestag + Abgeordnetenwatch)

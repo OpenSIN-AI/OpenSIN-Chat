@@ -104,6 +104,7 @@
 ### Other Features
 - `acc1c952` — Vane sidecar as cited answer engine
 - `897ee9ac` — NVIDIA NIM as TTS provider
+- `local` — cvoice.ai as 6th TTS provider (German celebrity voices, server-side key, LRU cache)
 - `446b5ea8` — Image generation, PDF read/edit plugins & admin panels
 - `3a5ca03e` — Inline image preview for generated images
 - `5a6762b4` — In-app developer documentation under /docs

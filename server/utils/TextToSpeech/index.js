@@ -14,6 +14,9 @@ function getTTSProvider() {
     case "nvidia-nim":
       const { NvidiaNimTTS } = require("./nvidiaNim");
       return new NvidiaNimTTS();
+    case "cvoice":
+      const { CvoiceTTS } = require("./cvoice");
+      return new CvoiceTTS();
     default:
       throw new Error("ENV: No TTS_PROVIDER value found in environment!");
   }

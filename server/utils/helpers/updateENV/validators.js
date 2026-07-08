@@ -86,6 +86,7 @@ function supportedTTSProvider(input = "") {
     "generic-openai",
     "kokoro",
     "nvidia-nim",
+    "cvoice",
   ].includes(input);
   return validSelection ? null : `${input} is not a valid TTS provider.`;
 }

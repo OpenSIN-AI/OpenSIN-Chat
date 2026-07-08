@@ -557,6 +557,33 @@ const KEY_MAPPING = {
     checks: [],
   },
 
+  // cvoice.ai TTS (free, 20k+ character voices incl. German curated voices)
+  // API key MUST stay server-side — never expose via NEXT_PUBLIC_ or similar.
+  TTSCvoiceApiKey: {
+    envKey: "TTS_CVOICE_API_KEY",
+    checks: [isNotEmpty],
+  },
+  TTSCvoiceEndpoint: {
+    envKey: "TTS_CVOICE_ENDPOINT",
+    checks: [],
+  },
+  TTSCvoiceVoiceModel: {
+    envKey: "TTS_CVOICE_VOICE_MODEL",
+    checks: [],
+  },
+  TTSCvoiceCustomVoiceModel: {
+    envKey: "TTS_CVOICE_CUSTOM_VOICE_MODEL",
+    checks: [],
+  },
+  TTSCvoicePersonName: {
+    envKey: "TTS_CVOICE_PERSON_NAME",
+    checks: [],
+  },
+  TTSCvoicePersonSlug: {
+    envKey: "TTS_CVOICE_PERSON_SLUG",
+    checks: [],
+  },
+
   // STT Selection
   SpeechToTextProvider: {
     envKey: "STT_PROVIDER",

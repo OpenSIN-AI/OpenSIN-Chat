@@ -251,6 +251,10 @@
 - [ ] Dokumente als Podcast-artige Audio-Zusammenfassung
 - [ ] TTS-Pipeline mit mehreren Stimmen
 - [ ] Google Gemini TTS oder OpenAI TTS API
+- [x] **cvoice.ai TTS-Provider** (6. Engine, 2026-07-08) — 20.000+ Stimmen inkl.
+      deutscher Promis (Gronkh, Dieter Bohlen, Joko, Julien Bam, Bushido,
+      Daniela Katzenberger). Gratis-Tier: 10 req/min, 1.000 req/Tag.
+      API-Key serverseitig, 256-Entry-LRU-Cache für Rate-Limit-Mitigation.
 
 ### P3-6: Notizblock Sharing zwischen Workspaces
 

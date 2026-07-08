@@ -5,67 +5,29 @@ All notable changes to **OpenSIN-Chat** are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
-## [Unreleased] — 2026-07-08 — audit-report sprint: Issues #1–#10 (7/10 closed)
+## [Unreleased] — 2026-07-08 — cvoice.ai TTS provider
 
-### Fixed
+### Added — cvoice.ai as 6th TTS provider
 
-- **Issue #1 — Prisma deploy pipeline:** `prisma migrate deploy` runs automatically
-  on every container start via the entrypoint script. Schema drift no longer requires
-  manual intervention.
-
-- **Issue #2 — ENV → DB auto-migration on boot:** All `SETTINGS_*` environment variables
-  are automatically migrated into the database on first boot. No manual SQL required.
-
-- **Issue #4 — Settings rollback endpoint:** `POST /api/system/settings/rollback`
-  endpoint added. Settings changes are now reversible in production.
-
-- **Issue #5 — text-white opacity variants → semantic tokens (173/173 migrated):**
-  All `text-white/20` through `text-white/90` opacity classes replaced with
-  `text-theme-text-primary`, `text-theme-text-secondary`, and `text-theme-placeholder`
-  across 87 component files. 118 intentional `text-white` occurrences on colored
-  backgrounds remain and are documented.
-
-- **INEFFECTIVE_DYNAMIC_IMPORT build warnings fixed:** `frontend/src/pages/Admin/Agents/SkillPanel.tsx`
-  had static imports of `FlowPanel`, `ServerPanel`, and `ImportedSkillConfig` while
-  `index.tsx` lazily imported the same modules. Removed static imports from SkillPanel
-  and replaced direct component usage with the `SelectedSkillComponent` prop already
-  passed from `DesktopForm`. All 3 lazy chunks now code-split correctly.
-
-### Changed
-
-- **Issue #8 — index.css dead code removed:**
-  - Deleted 5 unused files in `frontend/src/styles/`: `theme-tokens.css`
-    (duplicate + syntax error), `animations.css`, `components.css`,
-    `markdown.css`, `scrollbar.css` (all unimported)
-  - Removed duplicate `@keyframes pulse-slow` definition (already in `@theme` block)
-  - Removed `text-white/70`, `text-white/80`, `hover:text-white/70`,
-    `hover:text-white/80` override rules (0 occurrences remaining after Issue #5)
-  - Updated Issue #5 comment to reflect actual remaining count (118, not 937)
-  - `index.css`: 459 lines → 430 lines
-
-- **Issue #10 — Tailwind v4 confirmed:** `tailwindcss@4.3.2` and
-  `@tailwindcss/postcss@4.3.2` installed and verified. Build passes in 12.52s
-  with no CSS errors. No v3 legacy patterns (`@tailwind`, `theme()`) found.
-
-### Not changed (analysis complete)
-
-- **Issue #6 — Inline-styles audit (N/A):** All 39 remaining `style={{...}}`
-  occurrences in 33 files are structurally required: 20x CSS custom properties,
-  12x `getBoundingClientRect()` portal positioning, 6x ReactECharts API prop,
-  1x dynamic upload progress bar. No action needed.
-
-### In progress (Agent 2 on audit-report branch)
-
-- **Issue #3 — systemSettings → SettingsManager:** ~135 call-sites being migrated
-- **Issue #7 — Phase-3 validation tests:** SettingsManager test coverage
-- **Issue #9 — TypeScript migration:** God-file typing
-
-### Updated
-
-- `CEO-AUDIT-REPORT-2026-07-08.md`: Grade upgraded from B+ (78) to A- (85/100)
-- `ROADMAP.md`: Phase 11 added (audit-report sprint)
-- `README.md`: Stack table and dependency hygiene updated
-- `docs/DEPENDENCY-HEALTH.md`: @tremor/react, recharts-to-png, react-confetti-explosion confirmed dead/removed
+- **NEW TTS provider — cvoice.ai** (`server/utils/TextToSpeech/cvoice/index.js`)
+  German celebrity voices from the cvoice.ai dataset (Gronkh, Dieter Bohlen,
+  Joko Winterscheidt, Julien Bam, Daniela Katzenberger, Bushido, plus 20,000+
+  community voices). Free tier: 10 requests/minute, 1,000 requests/day.
+  - 6 new env vars: `TTS_PROVIDER="cvoice"`, `TTS_CVOICE_API_KEY`,
+    `TTS_CVOICE_ENDPOINT`, `TTS_CVOICE_VOICE_MODEL`,
+    `TTS_CVOICE_PERSON_NAME`, `TTS_CVOICE_PERSON_SLUG`
+  - API key stays server-side only — frontend sees only a boolean
+    (`TTS_CVOICE_API_KEY_SET`) via `systemSettings.js`
+  - In-memory cache (256 entries, LRU) keyed by `voice_id + text hash` —
+    identical inputs return the same URL from cvoice.ai, so we serve cached
+    audio without burning quota
+  - Text chunking for the 50–500 char API limit (sentence-boundary aware)
+  - MP3 concatenation across chunks via in-memory buffer merge
+  - 429 rate-limit handling with exponential backoff
+  - New frontend settings UI: `CvoiceOptions/index.tsx` with curated voice
+    dropdown + custom voice-ID field + person metadata
+  - Translations: `en` + `de` (`audioPreference.tts.cvoice.*`)
+  - Logo asset: `frontend/src/media/ttsproviders/cvoice.png` (256×256)
 
 ## [Unreleased] — 2026-07-06 — PDF upload: NVIDIA NIM Vision OCR overhaul
 
