@@ -29,7 +29,7 @@
     "seed": "node prisma/seed.js"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "0.39.0",
+    "@anthropic-ai/sdk": "0.110.0",
     "@breejs/later": "4.2.0",
     "@huggingface/transformers": "^4.2.0",
     "@ladjs/graceful": "^5.0.0",
