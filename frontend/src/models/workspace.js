@@ -227,8 +227,6 @@ const Workspace = {
     let stallHandled = false;
     function resetStallTimer() {
       if (stallTimer) clearTimeout(stallTimer);
-      /** @type {ReturnType<typeof setTimeout>|null} */
-      let stallTimer = null;
       stallTimer = setTimeout(() => {
         if (stallHandled) return;
         stallHandled = true;

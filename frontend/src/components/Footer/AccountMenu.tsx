@@ -105,7 +105,6 @@ function ThemeSegment() {
             <button
               key={key}
               type="button"
-              aria-label={key}
               onClick={() => setTheme(key)}
               aria-label={label}
               aria-pressed={active}
@@ -237,13 +236,13 @@ function AccountMenu({ compact = false }: { compact?: boolean }) {
         ref={triggerRef}
         type="button"
         onClick={() => setOpen((v) => !v)}
-        aria-label={t("common.account", "Account")}
+        aria-label={
+          compact ? t("common.profile") : t("common.account", "Account")
+        }
         aria-expanded={open}
         aria-haspopup="menu"
-        aria-expanded={open}
         data-tooltip-id={compact ? "lsib-profile" : undefined}
         data-tooltip-content={compact ? t("common.profile") : undefined}
-        aria-label={compact ? t("common.profile") : undefined}
         className={
           compact
             ? "flex items-center justify-center w-9 h-9 rounded-full border border-white/20 light:border-slate-400 cursor-pointer transition-all bg-theme-action-menu-bg hover:bg-theme-action-menu-item-hover text-theme-text-primary shadow-sm"
