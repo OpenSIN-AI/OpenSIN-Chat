@@ -1,47 +1,47 @@
 // SPDX-License-Identifier: MIT
-const consoleLogger = require('../../../utils/logger/console.js');
+const consoleLogger = require("../../../utils/logger/console.js");
 
-const crypto = require('crypto');
-const { v4: uuidv4 } = require('uuid');
-const { Document } = require('../../../models/documents');
-const { Telemetry } = require('../../../models/telemetry');
-const { Workspace } = require('../../../models/workspace');
-const { WorkspaceChats } = require('../../../models/workspaceChats');
+const crypto = require("crypto");
+const { v4: uuidv4 } = require("uuid");
+const { Document } = require("../../../models/documents");
+const { Telemetry } = require("../../../models/telemetry");
+const { Workspace } = require("../../../models/workspace");
+const { WorkspaceChats } = require("../../../models/workspaceChats");
 const {
   getVectorDbClass,
   resolveProviderConnector,
-} = require('../../../utils/helpers');
-const { multiUserMode, reqBody } = require('../../../utils/http');
-const { validApiKey } = require('../../../utils/middleware/validApiKey');
+} = require("../../../utils/helpers");
+const { multiUserMode, reqBody } = require("../../../utils/http");
+const { validApiKey } = require("../../../utils/middleware/validApiKey");
 const {
   simpleRateLimit,
-} = require('../../../utils/middleware/simpleRateLimit');
-const { validateBody } = require('../../../utils/middleware/validateBody');
-const { WorkspaceSchemas } = require('../../../utils/validation/schemas');
-const { VALID_CHAT_MODE } = require('../../../utils/chats/stream');
-const { EventLogs } = require('../../../models/eventLogs');
+} = require("../../../utils/middleware/simpleRateLimit");
+const { validateBody } = require("../../../utils/middleware/validateBody");
+const { WorkspaceSchemas } = require("../../../utils/validation/schemas");
+const { VALID_CHAT_MODE } = require("../../../utils/chats/stream");
+const { EventLogs } = require("../../../models/eventLogs");
 const {
   convertToChatHistory,
   writeResponseChunk,
-} = require('../../../utils/helpers/chat/responses');
-const { startSSEHeartbeat } = require('../../../utils/helpers/sse');
-const { ApiChatHandler } = require('../../../utils/chats/apiChatHandler');
-const { getModelTag } = require('../../utils');
+} = require("../../../utils/helpers/chat/responses");
+const { startSSEHeartbeat } = require("../../../utils/helpers/sse");
+const { ApiChatHandler } = require("../../../utils/chats/apiChatHandler");
+const { getModelTag } = require("../../utils");
 const {
   workspaceDeletionProtection,
-} = require('../../../utils/middleware/workspaceDeletionProtection');
-const prisma = require('../../../utils/prisma');
+} = require("../../../utils/middleware/workspaceDeletionProtection");
+const prisma = require("../../../utils/prisma");
 
 function apiWorkspaceEndpoints(app) {
   if (!app) return;
 
   app.post(
-    '/v1/workspace/new',
+    "/v1/workspace/new",
     [
       validApiKey,
       validateBody(WorkspaceSchemas.create),
       simpleRateLimit({
-        bucket: 'workspace-api',
+        bucket: "workspace-api",
         max: 60,
         windowMs: 60 * 1000,
       }),
@@ -101,7 +101,7 @@ function apiWorkspaceEndpoints(app) {
         const { workspace, message } = await Workspace.new(
           name,
           null,
-          additionalFields
+          additionalFields,
         );
 
         if (!workspace) {
@@ -109,26 +109,26 @@ function apiWorkspaceEndpoints(app) {
           return;
         }
 
-        await Telemetry.sendTelemetry('workspace_created', {
+        await Telemetry.sendTelemetry("workspace_created", {
           multiUserMode: multiUserMode(response),
-          LLMSelection: process.env.LLM_PROVIDER || 'openai',
-          Embedder: process.env.EMBEDDING_ENGINE || 'inherit',
-          VectorDbSelection: process.env.VECTOR_DB || 'lancedb',
-          TTSSelection: process.env.TTS_PROVIDER || 'native',
+          LLMSelection: process.env.LLM_PROVIDER || "openai",
+          Embedder: process.env.EMBEDDING_ENGINE || "inherit",
+          VectorDbSelection: process.env.VECTOR_DB || "lancedb",
+          TTSSelection: process.env.TTS_PROVIDER || "native",
           LLMModel: getModelTag(),
         });
-        await EventLogs.logEvent('api_workspace_created', {
-          workspaceName: workspace?.name || 'Unknown Workspace',
+        await EventLogs.logEvent("api_workspace_created", {
+          workspaceName: workspace?.name || "Unknown Workspace",
         });
         response.status(200).json({ workspace, message });
       } catch (e) {
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
-  app.get('/v1/workspaces', [validApiKey], async (request, response) => {
+  app.get("/v1/workspaces", [validApiKey], async (request, response) => {
     /*
     #swagger.tags = ['Workspaces']
     #swagger.description = 'List all current workspaces'
@@ -183,7 +183,7 @@ function apiWorkspaceEndpoints(app) {
     }
   });
 
-  app.get('/v1/workspace/:slug', [validApiKey], async (request, response) => {
+  app.get("/v1/workspace/:slug", [validApiKey], async (request, response) => {
     /*
     #swagger.tags = ['Workspaces']
     #swagger.description = 'Get a workspace by its unique slug.'
@@ -250,12 +250,12 @@ function apiWorkspaceEndpoints(app) {
   });
 
   app.delete(
-    '/v1/workspace/:slug',
+    "/v1/workspace/:slug",
     [
       validApiKey,
       workspaceDeletionProtection,
       simpleRateLimit({
-        bucket: 'workspace-api',
+        bucket: "workspace-api",
         max: 60,
         windowMs: 60 * 1000,
       }),
@@ -277,7 +277,7 @@ function apiWorkspaceEndpoints(app) {
     }
     */
       try {
-        const { slug = '' } = request.params;
+        const { slug = "" } = request.params;
         const VectorDb = getVectorDbClass();
         const workspace = await Workspace.get({ slug });
 
@@ -302,11 +302,11 @@ function apiWorkspaceEndpoints(app) {
           await tx.workspaces.delete({ where: { id: workspaceId } });
         });
 
-        await EventLogs.logEvent('api_workspace_deleted', {
-          workspaceName: workspace?.name || 'Unknown Workspace',
+        await EventLogs.logEvent("api_workspace_deleted", {
+          workspaceName: workspace?.name || "Unknown Workspace",
         });
         try {
-          await VectorDb['delete-namespace']({ namespace: slug });
+          await VectorDb["delete-namespace"]({ namespace: slug });
         } catch (e) {
           consoleLogger.error(e.message);
         }
@@ -315,16 +315,16 @@ function apiWorkspaceEndpoints(app) {
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
-    '/v1/workspace/:slug/update',
+    "/v1/workspace/:slug/update",
     [
       validApiKey,
       validateBody(WorkspaceSchemas.update),
       simpleRateLimit({
-        bucket: 'workspace-api',
+        bucket: "workspace-api",
         max: 60,
         windowMs: 60 * 1000,
       }),
@@ -394,18 +394,18 @@ function apiWorkspaceEndpoints(app) {
 
         const { workspace, message } = await Workspace.update(
           currWorkspace.id,
-          data
+          data,
         );
         response.status(200).json({ workspace, message });
       } catch (e) {
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.get(
-    '/v1/workspace/:slug/chats',
+    "/v1/workspace/:slug/chats",
     [validApiKey],
     async (request, response) => {
       /*
@@ -469,7 +469,7 @@ function apiWorkspaceEndpoints(app) {
         const {
           apiSessionId = null,
           limit = 100,
-          orderBy = 'asc',
+          orderBy = "asc",
         } = request.query;
         const workspace = await Workspace.get({ slug });
 
@@ -484,20 +484,20 @@ function apiWorkspaceEndpoints(app) {
           parsedLimit < 0 ||
           parsedLimit > 1000
         ) {
-          response.status(400).json({ error: 'Invalid limit' });
+          response.status(400).json({ error: "Invalid limit" });
           return;
         }
         const validLimit = Math.max(1, parsedLimit);
-        const validOrderBy = ['asc', 'desc'].includes(orderBy)
+        const validOrderBy = ["asc", "desc"].includes(orderBy)
           ? orderBy
-          : 'asc';
+          : "asc";
 
         const history = apiSessionId
           ? await WorkspaceChats.forWorkspaceByApiSessionId(
               workspace.id,
               apiSessionId,
               validLimit,
-              { createdAt: validOrderBy }
+              { createdAt: validOrderBy },
             )
           : await WorkspaceChats.forWorkspace(workspace.id, validLimit, {
               createdAt: validOrderBy,
@@ -507,16 +507,16 @@ function apiWorkspaceEndpoints(app) {
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
-    '/v1/workspace/:slug/update-embeddings',
+    "/v1/workspace/:slug/update-embeddings",
     [
       validApiKey,
       validateBody(WorkspaceSchemas.updateDocuments),
       simpleRateLimit({
-        bucket: 'workspace-api',
+        bucket: "workspace-api",
         max: 60,
         windowMs: 60 * 1000,
       }),
@@ -592,16 +592,16 @@ function apiWorkspaceEndpoints(app) {
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
-    '/v1/workspace/:slug/update-pin',
+    "/v1/workspace/:slug/update-pin",
     [
       validApiKey,
       validateBody(WorkspaceSchemas.pinDocument),
       simpleRateLimit({
-        bucket: 'workspace-api',
+        bucket: "workspace-api",
         max: 60,
         windowMs: 60 * 1000,
       }),
@@ -663,22 +663,22 @@ function apiWorkspaceEndpoints(app) {
         await Document.update(document.id, { pinned: pinStatus });
         return response
           .status(200)
-          .json({ message: 'Pin status updated successfully' })
+          .json({ message: "Pin status updated successfully" })
           .end();
       } catch (error) {
-        consoleLogger.error('Error processing the pin status update:', error);
+        consoleLogger.error("Error processing the pin status update:", error);
         return response.status(500).end();
       }
-    }
+    },
   );
 
   app.post(
-    '/v1/workspace/:slug/chat',
+    "/v1/workspace/:slug/chat",
     [
       validApiKey,
       validateBody(WorkspaceSchemas.chat),
       simpleRateLimit({
-        bucket: 'workspace-api',
+        bucket: "workspace-api",
         max: 60,
         windowMs: 60 * 1000,
       }),
@@ -750,7 +750,7 @@ function apiWorkspaceEndpoints(app) {
         if (!workspace) {
           response.status(400).json({
             id: uuidv4(),
-            type: 'abort',
+            type: "abort",
             textResponse: null,
             sources: [],
             close: true,
@@ -766,12 +766,12 @@ function apiWorkspaceEndpoints(app) {
         ) {
           response.status(400).json({
             id: uuidv4(),
-            type: 'abort',
+            type: "abort",
             textResponse: null,
             sources: [],
             close: true,
             error: !message?.length
-              ? 'Message is empty'
+              ? "Message is empty"
               : `${resolvedMode} is not a valid mode.`,
           });
           return;
@@ -788,17 +788,17 @@ function apiWorkspaceEndpoints(app) {
           reset,
         });
 
-        await Telemetry.sendTelemetry('sent_chat', {
+        await Telemetry.sendTelemetry("sent_chat", {
           LLMSelection:
-            workspace.chatProvider ?? process.env.LLM_PROVIDER ?? 'openai',
-          Embedder: process.env.EMBEDDING_ENGINE || 'inherit',
-          VectorDbSelection: process.env.VECTOR_DB || 'lancedb',
-          TTSSelection: process.env.TTS_PROVIDER || 'native',
+            workspace.chatProvider ?? process.env.LLM_PROVIDER ?? "openai",
+          Embedder: process.env.EMBEDDING_ENGINE || "inherit",
+          VectorDbSelection: process.env.VECTOR_DB || "lancedb",
+          TTSSelection: process.env.TTS_PROVIDER || "native",
           LLMModel: getModelTag(),
         });
-        await EventLogs.logEvent('api_sent_chat', {
+        await EventLogs.logEvent("api_sent_chat", {
           workspaceName: workspace?.name,
-          chatModel: workspace?.chatModel || 'System Default',
+          chatModel: workspace?.chatModel || "System Default",
         });
         return response.status(200).json({ ...result });
       } catch (e) {
@@ -806,24 +806,24 @@ function apiWorkspaceEndpoints(app) {
         consoleLogger.error(`[endpoint error ${errorId}]`, e);
         response.status(500).json({
           id: uuidv4(),
-          type: 'abort',
+          type: "abort",
           textResponse: null,
           sources: [],
           close: true,
-          error: 'Internal server error',
+          error: "Internal server error",
           errorId,
         });
       }
-    }
+    },
   );
 
   app.post(
-    '/v1/workspace/:slug/stream-chat',
+    "/v1/workspace/:slug/stream-chat",
     [
       validApiKey,
       validateBody(WorkspaceSchemas.streamChat),
       simpleRateLimit({
-        bucket: 'workspace-api',
+        bucket: "workspace-api",
         max: 60,
         windowMs: 60 * 1000,
       }),
@@ -917,7 +917,7 @@ function apiWorkspaceEndpoints(app) {
         if (!workspace) {
           response.status(400).json({
             id: uuidv4(),
-            type: 'abort',
+            type: "abort",
             textResponse: null,
             sources: [],
             close: true,
@@ -933,23 +933,23 @@ function apiWorkspaceEndpoints(app) {
         ) {
           response.status(400).json({
             id: uuidv4(),
-            type: 'abort',
+            type: "abort",
             textResponse: null,
             sources: [],
             close: true,
             error: !message?.length
-              ? 'Message is empty'
+              ? "Message is empty"
               : `${resolvedMode} is not a valid mode.`,
           });
           return;
         }
 
         response.setHeader(
-          'Cache-Control',
-          'no-store, no-cache, must-revalidate'
+          "Cache-Control",
+          "no-store, no-cache, must-revalidate",
         );
-        response.setHeader('Content-Type', 'text/event-stream');
-        response.setHeader('Connection', 'keep-alive');
+        response.setHeader("Content-Type", "text/event-stream");
+        response.setHeader("Connection", "keep-alive");
         response.flushHeaders();
 
         stopHeartbeat = startSSEHeartbeat(response);
@@ -967,17 +967,17 @@ function apiWorkspaceEndpoints(app) {
         });
         stopHeartbeat();
         stopHeartbeat = null;
-        await Telemetry.sendTelemetry('sent_chat', {
+        await Telemetry.sendTelemetry("sent_chat", {
           LLMSelection:
-            workspace.chatProvider ?? process.env.LLM_PROVIDER ?? 'openai',
-          Embedder: process.env.EMBEDDING_ENGINE || 'inherit',
-          VectorDbSelection: process.env.VECTOR_DB || 'lancedb',
-          TTSSelection: process.env.TTS_PROVIDER || 'native',
+            workspace.chatProvider ?? process.env.LLM_PROVIDER ?? "openai",
+          Embedder: process.env.EMBEDDING_ENGINE || "inherit",
+          VectorDbSelection: process.env.VECTOR_DB || "lancedb",
+          TTSSelection: process.env.TTS_PROVIDER || "native",
           LLMModel: getModelTag(),
         });
-        await EventLogs.logEvent('api_sent_chat', {
+        await EventLogs.logEvent("api_sent_chat", {
           workspaceName: workspace?.name,
-          chatModel: workspace?.chatModel || 'System Default',
+          chatModel: workspace?.chatModel || "System Default",
         });
         response.end();
       } catch (e) {
@@ -986,25 +986,25 @@ function apiWorkspaceEndpoints(app) {
         consoleLogger.error(`[endpoint error ${errorId}]`, e);
         writeResponseChunk(response, {
           id: uuidv4(),
-          type: 'abort',
+          type: "abort",
           textResponse: null,
           sources: [],
           close: true,
-          error: 'Internal server error',
+          error: "Internal server error",
           errorId,
         });
         response.end();
       }
-    }
+    },
   );
 
   app.post(
-    '/v1/workspace/:slug/vector-search',
+    "/v1/workspace/:slug/vector-search",
     [
       validApiKey,
       validateBody(WorkspaceSchemas.vectorSearch),
       simpleRateLimit({
-        bucket: 'workspace-api',
+        bucket: "workspace-api",
         max: 60,
         windowMs: 60 * 1000,
       }),
@@ -1075,7 +1075,7 @@ function apiWorkspaceEndpoints(app) {
 
         if (!query?.length)
           return response.status(400).json({
-            message: 'Query parameter cannot be empty.',
+            message: "Query parameter cannot be empty.",
           });
 
         const VectorDb = getVectorDbClass();
@@ -1085,7 +1085,7 @@ function apiWorkspaceEndpoints(app) {
         if (!hasVectorizedSpace || embeddingsCount === 0)
           return response.status(200).json({
             results: [],
-            message: 'No embeddings found for this workspace.',
+            message: "No embeddings found for this workspace.",
           });
 
         const parseSimilarityThreshold = () => {
@@ -1112,7 +1112,7 @@ function apiWorkspaceEndpoints(app) {
           LLMConnector,
           similarityThreshold: parseSimilarityThreshold(),
           topN: parseTopN(),
-          rerank: workspace?.vectorSearchMode === 'rerank',
+          rerank: workspace?.vectorSearchMode === "rerank",
         });
 
         response.status(200).json({
@@ -1138,7 +1138,7 @@ function apiWorkspaceEndpoints(app) {
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 }
 

@@ -2,28 +2,28 @@
 // Purpose: Document upload route handlers (file upload, link upload, raw text).
 // Extracted from document/index.js as part of issue #510 God-File split.
 
-const consoleLogger = require('../../../utils/logger/console.js');
-const { Telemetry } = require('../../../models/telemetry');
-const { validApiKey } = require('../../../utils/middleware/validApiKey');
+const consoleLogger = require("../../../utils/logger/console.js");
+const { Telemetry } = require("../../../models/telemetry");
+const { validApiKey } = require("../../../utils/middleware/validApiKey");
 const {
   simpleRateLimit,
-} = require('../../../utils/middleware/simpleRateLimit');
+} = require("../../../utils/middleware/simpleRateLimit");
 const {
   handleAPIFileUpload,
   mirrorToSupabase,
-} = require('../../../utils/files/multer');
-const { normalizePath, isWithin } = require('../../../utils/files');
-const { reqBody, safeJsonParse } = require('../../../utils/http');
-const { EventLogs } = require('../../../models/eventLogs');
-const { CollectorApi } = require('../../../utils/collectorApi');
-const fs = require('fs');
-const path = require('path');
-const { Document } = require('../../../models/documents');
-const { validateBody } = require('../../../utils/middleware/validateBody');
-const { DocumentSchemas } = require('../../../utils/validation/schemas');
-const { getStoragePath } = require('../../../utils/paths');
-const documentsPath = getStoragePath('documents');
-const { validateWorkspaceSlugQuery, cleanupHotdirFile } = require('./helpers');
+} = require("../../../utils/files/multer");
+const { normalizePath, isWithin } = require("../../../utils/files");
+const { reqBody, safeJsonParse } = require("../../../utils/http");
+const { EventLogs } = require("../../../models/eventLogs");
+const { CollectorApi } = require("../../../utils/collectorApi");
+const fs = require("fs");
+const path = require("path");
+const { Document } = require("../../../models/documents");
+const { validateBody } = require("../../../utils/middleware/validateBody");
+const { DocumentSchemas } = require("../../../utils/validation/schemas");
+const { getStoragePath } = require("../../../utils/paths");
+const documentsPath = getStoragePath("documents");
+const { validateWorkspaceSlugQuery, cleanupHotdirFile } = require("./helpers");
 
 /**
  * Registers document upload routes on the Express app.
@@ -31,12 +31,12 @@ const { validateWorkspaceSlugQuery, cleanupHotdirFile } = require('./helpers');
  */
 function registerUploadRoutes(app) {
   app.post(
-    '/v1/document/upload',
+    "/v1/document/upload",
     [
       validApiKey,
       handleAPIFileUpload,
       validateWorkspaceSlugQuery,
-      simpleRateLimit({ bucket: 'doc-upload', max: 10, windowMs: 60 * 1000 }),
+      simpleRateLimit({ bucket: "doc-upload", max: 10, windowMs: 60 * 1000 }),
     ],
     async (request, response) => {
       /*
@@ -108,10 +108,10 @@ function registerUploadRoutes(app) {
       try {
         const Collector = new CollectorApi();
         const { originalname } = request.file;
-        const { addToWorkspaces = '', metadata: _metadata = {} } =
+        const { addToWorkspaces = "", metadata: _metadata = {} } =
           reqBody(request);
         const metadata =
-          typeof _metadata === 'string'
+          typeof _metadata === "string"
             ? safeJsonParse(_metadata, {})
             : _metadata;
         const collectorFilename = request.file.filename || originalname;
@@ -136,7 +136,7 @@ function registerUploadRoutes(app) {
 
         const { success, reason, documents } = await Collector.processDocument(
           collectorFilename,
-          metadata
+          metadata,
         );
 
         if (!success || !documents?.length) {
@@ -149,33 +149,33 @@ function registerUploadRoutes(app) {
         }
 
         Collector.log(
-          `Document ${originalname} uploaded processed and successfully. It is now available in documents.`
+          `Document ${originalname} uploaded processed and successfully. It is now available in documents.`,
         );
-        await Telemetry.sendTelemetry('document_uploaded');
-        await EventLogs.logEvent('api_document_uploaded', {
+        await Telemetry.sendTelemetry("document_uploaded");
+        await EventLogs.logEvent("api_document_uploaded", {
           documentName: originalname,
         });
 
         if (!!addToWorkspaces)
           await Document.api.uploadToWorkspace(
             addToWorkspaces,
-            documents?.[0].location
+            documents?.[0].location,
           );
         response.status(200).json({ success: true, error: null, documents });
       } catch (e) {
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
-    '/v1/document/upload/:folderName',
+    "/v1/document/upload/:folderName",
     [
       validApiKey,
       handleAPIFileUpload,
       validateWorkspaceSlugQuery,
-      simpleRateLimit({ bucket: 'doc-upload', max: 10, windowMs: 60 * 1000 }),
+      simpleRateLimit({ bucket: "doc-upload", max: 10, windowMs: 60 * 1000 }),
     ],
     async (request, response) => {
       /*
@@ -264,23 +264,23 @@ function registerUploadRoutes(app) {
       */
       try {
         const { originalname } = request.file;
-        const { addToWorkspaces = '', metadata: _metadata = {} } =
+        const { addToWorkspaces = "", metadata: _metadata = {} } =
           reqBody(request);
         const metadata =
-          typeof _metadata === 'string'
+          typeof _metadata === "string"
             ? safeJsonParse(_metadata, {})
             : _metadata;
         const collectorFilename = request.file.filename || originalname;
         if (!metadata.title) metadata.title = originalname;
 
-        let folder = request.params?.folderName || 'custom-documents';
+        let folder = request.params?.folderName || "custom-documents";
         folder = normalizePath(folder);
         const targetFolderPath = path.join(documentsPath, folder);
 
         if (
           !isWithin(path.resolve(documentsPath), path.resolve(targetFolderPath))
         )
-          throw new Error('Invalid folder name');
+          throw new Error("Invalid folder name");
         try {
           await fs.promises.access(targetFolderPath);
         } catch {
@@ -306,7 +306,7 @@ function registerUploadRoutes(app) {
         // Process the uploaded document with metadata
         const { success, reason, documents } = await Collector.processDocument(
           collectorFilename,
-          metadata
+          metadata,
         );
         if (!success || !documents?.length) {
           await mirrorPromise;
@@ -324,18 +324,18 @@ function registerUploadRoutes(app) {
           if (currentFolder !== folder) {
             const sourcePath = path.join(
               documentsPath,
-              normalizePath(doc.location)
+              normalizePath(doc.location),
             );
             const destinationPath = path.join(
               targetFolderPath,
-              path.basename(doc.location)
+              path.basename(doc.location),
             );
 
             if (
               !isWithin(documentsPath, sourcePath) ||
               !isWithin(documentsPath, destinationPath)
             )
-              throw new Error('Invalid file location');
+              throw new Error("Invalid file location");
 
             await fs.promises.rename(sourcePath, destinationPath);
             doc.location = path.join(folder, path.basename(doc.location));
@@ -344,11 +344,11 @@ function registerUploadRoutes(app) {
         }
 
         Collector.log(
-          `Document ${originalname} uploaded, processed, and moved to folder ${folder} successfully.`
+          `Document ${originalname} uploaded, processed, and moved to folder ${folder} successfully.`,
         );
 
-        await Telemetry.sendTelemetry('document_uploaded');
-        await EventLogs.logEvent('api_document_uploaded', {
+        await Telemetry.sendTelemetry("document_uploaded");
+        await EventLogs.logEvent("api_document_uploaded", {
           documentName: originalname,
           folder,
         });
@@ -356,23 +356,23 @@ function registerUploadRoutes(app) {
         if (!!addToWorkspaces)
           await Document.api.uploadToWorkspace(
             addToWorkspaces,
-            documents?.[0].location
+            documents?.[0].location,
           );
         response.status(200).json({ success: true, error: null, documents });
       } catch (e) {
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
-    '/v1/document/upload-link',
+    "/v1/document/upload-link",
     [
       validApiKey,
       validateWorkspaceSlugQuery,
       validateBody(DocumentSchemas.uploadLink),
-      simpleRateLimit({ bucket: 'doc-upload', max: 10, windowMs: 60 * 1000 }),
+      simpleRateLimit({ bucket: "doc-upload", max: 10, windowMs: 60 * 1000 }),
     ],
     async (request, response) => {
       /*
@@ -442,21 +442,21 @@ function registerUploadRoutes(app) {
         const Collector = new CollectorApi();
         const {
           link,
-          addToWorkspaces = '',
+          addToWorkspaces = "",
           scraperHeaders = {},
           metadata: _metadata = {},
         } = reqBody(request);
-        if (!link || typeof link !== 'string' || !link.trim()) {
+        if (!link || typeof link !== "string" || !link.trim()) {
           return response
             .status(400)
             .json({
               success: false,
-              error: 'link is required and must be a non-empty string.',
+              error: "link is required and must be a non-empty string.",
             })
             .end();
         }
         const metadata =
-          typeof _metadata === 'string'
+          typeof _metadata === "string"
             ? safeJsonParse(_metadata, {})
             : _metadata;
         const processingOnline = await Collector.online();
@@ -474,7 +474,7 @@ function registerUploadRoutes(app) {
         const { success, reason, documents } = await Collector.processLink(
           link,
           scraperHeaders,
-          metadata
+          metadata,
         );
         if (!success || !documents?.length) {
           return response
@@ -484,33 +484,33 @@ function registerUploadRoutes(app) {
         }
 
         Collector.log(
-          `Link ${link} uploaded processed and successfully. It is now available in documents.`
+          `Link ${link} uploaded processed and successfully. It is now available in documents.`,
         );
-        await Telemetry.sendTelemetry('link_uploaded');
-        await EventLogs.logEvent('api_link_uploaded', {
+        await Telemetry.sendTelemetry("link_uploaded");
+        await EventLogs.logEvent("api_link_uploaded", {
           link,
         });
 
         if (!!addToWorkspaces)
           await Document.api.uploadToWorkspace(
             addToWorkspaces,
-            documents?.[0].location
+            documents?.[0].location,
           );
         response.status(200).json({ success: true, error: null, documents });
       } catch (e) {
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
-    '/v1/document/raw-text',
+    "/v1/document/raw-text",
     [
       validApiKey,
       validateWorkspaceSlugQuery,
       validateBody(DocumentSchemas.uploadText),
-      simpleRateLimit({ bucket: 'doc-upload', max: 10, windowMs: 60 * 1000 }),
+      simpleRateLimit({ bucket: "doc-upload", max: 10, windowMs: 60 * 1000 }),
     ],
     async (request, response) => {
       /*
@@ -574,14 +574,14 @@ function registerUploadRoutes(app) {
      */
       try {
         const Collector = new CollectorApi();
-        const requiredMetadata = ['title'];
+        const requiredMetadata = ["title"];
         const {
           textContent,
           metadata: _metadata = {},
-          addToWorkspaces = '',
+          addToWorkspaces = "",
         } = reqBody(request);
         const metadata =
-          typeof _metadata === 'string'
+          typeof _metadata === "string"
             ? safeJsonParse(_metadata, {})
             : _metadata;
         const processingOnline = await Collector.online();
@@ -599,7 +599,7 @@ function registerUploadRoutes(app) {
         if (
           !requiredMetadata.every(
             (reqKey) =>
-              Object.keys(metadata).includes(reqKey) && !!metadata[reqKey]
+              Object.keys(metadata).includes(reqKey) && !!metadata[reqKey],
           )
         ) {
           return response
@@ -608,14 +608,14 @@ function registerUploadRoutes(app) {
               success: false,
               error: `You are missing required metadata key:value pairs in your request. Required metadata key:values are ${requiredMetadata
                 .map((v) => `'${v}'`)
-                .join(', ')}`,
+                .join(", ")}`,
             })
             .end();
         }
 
         if (
           !textContent ||
-          typeof textContent !== 'string' ||
+          typeof textContent !== "string" ||
           textContent?.length === 0
         ) {
           return response
@@ -629,7 +629,7 @@ function registerUploadRoutes(app) {
 
         const { success, reason, documents } = await Collector.processRawText(
           textContent,
-          metadata
+          metadata,
         );
         if (!success || !documents?.length) {
           return response
@@ -639,22 +639,22 @@ function registerUploadRoutes(app) {
         }
 
         Collector.log(
-          `Document created successfully. It is now available in documents.`
+          `Document created successfully. It is now available in documents.`,
         );
-        await Telemetry.sendTelemetry('raw_document_uploaded');
-        await EventLogs.logEvent('api_raw_document_uploaded');
+        await Telemetry.sendTelemetry("raw_document_uploaded");
+        await EventLogs.logEvent("api_raw_document_uploaded");
 
         if (!!addToWorkspaces)
           await Document.api.uploadToWorkspace(
             addToWorkspaces,
-            documents?.[0].location
+            documents?.[0].location,
           );
         response.status(200).json({ success: true, error: null, documents });
       } catch (e) {
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 }
 
