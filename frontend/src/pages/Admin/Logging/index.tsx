@@ -102,7 +102,7 @@ export default function AdminLogs(): JSX.Element {
             />
           </div>
         </div>
-      </div>
+      </AdminContentPanel>
     </div>
   );
 }

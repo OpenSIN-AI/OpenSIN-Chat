@@ -344,7 +344,7 @@ export default function PoliticianSyncDashboard(): React.ReactElement {
             </div>
           )}
         </div>
-      </div>
+      </AdminContentPanel>
     </div>
   );
 }

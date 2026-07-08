@@ -32,7 +32,7 @@ export default function ChatSettings() {
           <ShowScrollbar />
           <ChatRenderHTML />
         </div>
-      </div>
+      </AdminContentPanel>
     </div>
   );
 }

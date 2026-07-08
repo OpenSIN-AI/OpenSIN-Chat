@@ -106,7 +106,7 @@ export default function AdminInvites(): JSX.Element {
             onSuccess={() => mutate(INVITES_KEY)}
           />
         </ModalWrapper>
-      </div>
+      </AdminContentPanel>
     </div>
   );
 }

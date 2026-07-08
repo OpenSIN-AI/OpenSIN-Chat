@@ -49,7 +49,7 @@ export default function AdminWorkspaces(): JSX.Element {
         <ModalWrapper isOpen={isOpen} closeModal={closeModal}>
           <NewWorkspaceModal closeModal={closeModal} />
         </ModalWrapper>
-      </div>
+      </AdminContentPanel>
     </div>
   );
 }

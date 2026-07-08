@@ -172,7 +172,7 @@ export default function SystemHealth(): JSX.Element {
           <ProviderKeyStatusPanel />
           <ConnectivityPanel />
         </div>
-      </div>
+      </AdminContentPanel>
     </div>
   );
 }

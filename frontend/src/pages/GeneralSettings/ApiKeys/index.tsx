@@ -115,7 +115,7 @@ export default function AdminApiKeys(): JSX.Element {
         <ModalWrapper isOpen={isOpen} closeModal={closeModal}>
           <NewApiKeyModal closeModal={closeModal} onSuccess={refresh} />
         </ModalWrapper>
-      </div>
+      </AdminContentPanel>
     </div>
   );
 }

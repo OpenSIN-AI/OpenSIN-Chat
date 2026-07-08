@@ -57,7 +57,7 @@ export default function AdminUsers(): JSX.Element {
             } as any)}
           />
         </ModalWrapper>
-      </div>
+      </AdminContentPanel>
     </div>
   );
 }

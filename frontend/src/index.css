@@ -1,16 +1,18 @@
-// SPDX-License-Identifier: MIT
-// Issue #460: Tailwind CSS v3 → v4 migration.
-// @import "tailwindcss" replaces @tailwind base/components/utilities.
-// @theme block replaces tailwind.config.js theme.extend.
-// @source directives replace the content array in tailwind.config.js.
+/* SPDX-License-Identifier: MIT */
+/*
+ * Issue #460: Tailwind CSS v3 → v4 migration.
+ * @import "tailwindcss" replaces @tailwind base/components/utilities.
+ * @theme block replaces tailwind.config.js theme.extend.
+ * @source directives replace the content array in tailwind.config.js.
+ */
 
 @import "tailwindcss";
 
-// ── Content sources (replaces tailwind.config.js content array) ─────────
+/* ── Content sources (replaces tailwind.config.js content array) ───────── */
 @source "./index.html";
 @source "./src/**/*.{js,jsx,ts,tsx}";
 
-// ── Theme (replaces tailwind.config.js theme.extend) ────────────────────
+/* ── Theme (replaces tailwind.config.js theme.extend) ──────────────────── */
 @theme {
   /* Custom design tokens — migrated from tailwind.config.js theme.extend */
 
