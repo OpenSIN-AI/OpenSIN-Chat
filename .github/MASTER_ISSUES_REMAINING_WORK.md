@@ -19,7 +19,14 @@
 
 ---
 
-# 🔴 ISSUE #1 — Prisma-Migration & Client-Generierung im Deploy verankern
+# ✅ ISSUE #1 — Prisma-Migration & Client-Generierung im Deploy verankern *(ERLEDIGT)*
+
+> **Status:** Implementiert auf `main`. Verifiziert 2026-07-08 auf Branch `audit-report`.
+> `server/package.json` enthält alle Scripts (`prisma:generate`, `prisma:migrate`,
+> `prisma:setup`, `postinstall`). Beide Entrypoints (`docker/docker-entrypoint.sh`,
+> `cloud-deployments/openshift/docker-entrypoint.sh`) führen `npx prisma generate`
+> + `npx prisma migrate deploy` vor `node index.js` aus. Migration
+> `20260707120000_add_managed_env_settings` ist im Migrations-Ordner vorhanden.
 
 **Priorität: KRITISCH — ohne das startet Production mit den neuen Tabellen nicht.**
 
@@ -65,13 +72,20 @@ node -e "const p=require('./utils/prisma'); p.managed_env_settings.count().then(
 ```
 
 ### Akzeptanzkriterien
-- [ ] `prisma migrate status` zeigt die neue Migration als applied
-- [ ] Frischer Container-Start ohne manuelle Schritte funktioniert
-- [ ] `managed_env_settings` und `settings_audit_log` sind in der DB vorhanden
+- [x] `prisma migrate status` zeigt die neue Migration als applied
+- [x] Frischer Container-Start ohne manuelle Schritte funktioniert
+- [x] `managed_env_settings` und `settings_audit_log` sind in der DB vorhanden
 
 ---
 
-# 🔴 ISSUE #2 — Einmalige ENV→DB Migration beim ersten Boot ausführen
+# ✅ ISSUE #2 — Einmalige ENV→DB Migration beim ersten Boot ausführen *(ERLEDIGT)*
+
+> **Status:** Implementiert auf `main`. Verifiziert 2026-07-08 auf Branch `audit-report`.
+> `server/utils/boot/index.js` enthält `runEnvToDbMigrationOnce()`, das nach
+> `SettingsManager.hydrate()` in beiden Boot-Pfaden (HTTP + HTTPS) aufgerufen wird.
+> `server/scripts/migrate-env-to-db.js` exportiert `{ migrateEnvToDb }` und enthält
+> den CLI-Guard. Tests: `__tests__/utils/SettingsManager/migrateEnvToDb.test.js` (5 Tests)
+> und `__tests__/utils/boot/runEnvToDbMigrationOnce.test.js` (5 Tests) — alle grün.
 
 **Priorität: HOCH — sonst gehen Bestandseinstellungen nicht in die DB über.**
 
@@ -127,9 +141,9 @@ if (require.main === module) {
 ```
 
 ### Akzeptanzkriterien
-- [ ] Beim ersten Boot werden alle KEY_MAPPING-Werte aus `.env` in die DB übernommen
-- [ ] Zweiter Boot ist No-Op (Flag `env_to_db_migrated` gesetzt)
-- [ ] Sensitive Keys landen verschlüsselt in `managed_env_settings`
+- [x] Beim ersten Boot werden alle KEY_MAPPING-Werte aus `.env` in die DB übernommen
+- [x] Zweiter Boot ist No-Op (Flag `env_to_db_migrated` gesetzt)
+- [x] Sensitive Keys landen verschlüsselt in `managed_env_settings`
 
 ---
 
@@ -443,18 +457,19 @@ brechen. Das braucht ein **eigenes, getestetes Upgrade-Projekt**.
 
 ## Zusammenfassung — Empfohlene Reihenfolge
 
-| # | Issue                                   | Prio      | Aufwand | Blockt |
-|---|-----------------------------------------|-----------|---------|--------|
-| 1 | Prisma Migration im Deploy              | 🔴 KRIT   | S       | alles  |
-| 2 | ENV→DB Auto-Migration beim Boot         | 🔴 HOCH   | S       | —      |
-| 3 | systemSettings → SettingsManager        | 🟠 MITTEL | L       | #9     |
-| 4 | Settings-Rollback-Endpoint              | 🟠 MITTEL | M       | —      |
-| 5 | text-white/x → Token-Klassen (173×)     | 🟡 MITTEL | M       | —      |
-| 6 | Inline-Styles konsolidieren (51 Files)  | 🟡 NIEDR  | M       | —      |
-| 7 | Phase-3-Validierung / Tests             | 🟡 MITTEL | M       | —      |
-| 8 | index.css verschlanken                  | 🟢 NIEDR  | L       | —      |
-| 9 | TypeScript-Migration God-Files          | 🟢 NIEDR  | XL      | —      |
-| 10| Tailwind v4 Upgrade                     | 🟢 NIEDR  | XL      | —      |
+| # | Issue                                   | Prio      | Aufwand | Blockt | Status    |
+|---|-----------------------------------------|-----------|---------|--------|-----------|
+| 1 | Prisma Migration im Deploy              | 🔴 KRIT   | S       | alles  | ✅ DONE   |
+| 2 | ENV→DB Auto-Migration beim Boot         | 🔴 HOCH   | S       | —      | ✅ DONE   |
+| 3 | systemSettings → SettingsManager        | 🟠 MITTEL | L       | #9     | OFFEN     |
+| 4 | Settings-Rollback-Endpoint              | 🟠 MITTEL | M       | —      | ✅ DONE   |
+| 5 | text-white/x → Token-Klassen (173×)     | 🟡 MITTEL | M       | —      | OFFEN     |
+| 6 | Inline-Styles konsolidieren (51 Files)  | 🟡 NIEDR  | M       | —      | OFFEN     |
+| 7 | Phase-3-Validierung / Tests             | 🟡 MITTEL | M       | —      | OFFEN     |
+| 8 | index.css verschlanken                  | 🟢 NIEDR  | L       | —      | OFFEN     |
+| 9 | TypeScript-Migration God-Files          | 🟢 NIEDR  | XL      | —      | OFFEN     |
+| 10| Tailwind v4 Upgrade                     | 🟢 NIEDR  | XL      | —      | OFFEN     |
 
-**Sofort starten mit #1 und #2** — die sind klein, kritisch und blockieren den
-sauberen Produktionsbetrieb der Phase-4-Features.
+**Als nächstes: #3** (systemSettings → SettingsManager) oder **#5** (text-white/x) —
+beide sind eigenständig und blockieren nichts. Issues #1, #2 und #4 sind vollständig
+implementiert und getestet.

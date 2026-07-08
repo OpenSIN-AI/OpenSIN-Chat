@@ -172,4 +172,6 @@ function handleServerError(error) {
 module.exports = {
   bootHTTP,
   bootSSL,
+  // Exported for unit testing only — not part of the public boot API.
+  _runEnvToDbMigrationOnce: runEnvToDbMigrationOnce,
 };
