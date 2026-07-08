@@ -172,9 +172,12 @@ describe("HistoricalMessage – message rendering", () => {
   });
 
   it("renders assistant message without user bubble styling", () => {
-    const { container } = render(<HistoricalMessage {...baseAssistantProps} />, {
-      wrapper: Wrapper,
-    });
+    const { container } = render(
+      <HistoricalMessage {...baseAssistantProps} />,
+      {
+        wrapper: Wrapper,
+      },
+    );
     // Assistant messages should not have the user bubble bg-zinc-700 class
     const userBubble = container.querySelector(".bg-zinc-700");
     expect(userBubble).toBeNull();
@@ -199,10 +202,9 @@ describe("HistoricalMessage – message rendering", () => {
 
   it("renders long user messages without truncation", () => {
     const longMessage = "A".repeat(500);
-    render(
-      <HistoricalMessage {...baseUserProps} message={longMessage} />,
-      { wrapper: Wrapper },
-    );
+    render(<HistoricalMessage {...baseUserProps} message={longMessage} />, {
+      wrapper: Wrapper,
+    });
     expect(screen.getByText(longMessage)).toBeInTheDocument();
   });
 

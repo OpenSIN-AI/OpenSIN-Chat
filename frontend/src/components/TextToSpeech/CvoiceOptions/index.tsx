@@ -1,6 +1,17 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
+import { useEffect, useState, ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
+
+/**
+ * Settings shape for the cvoice TTS provider fields consumed by this component.
+ */
+interface TTSCvoiceSettings {
+  TTSCvoiceVoiceModel?: string;
+  TTSCvoiceCustomVoiceModel?: string;
+  TTSCvoicePersonName?: string;
+  TTSCvoicePersonSlug?: string;
+  [key: string]: unknown;
+}
 
 /**
  * Curated German voices from cvoice.ai. These IDs are stable and verified by
@@ -35,7 +46,11 @@ export const GERMAN_VOICES = [
   },
 ] as const;
 
-export default function CvoiceOptions({ settings }: any) {
+export default function CvoiceOptions({
+  settings,
+}: {
+  settings: TTSCvoiceSettings;
+}) {
   const { t } = useTranslation();
   const [voice, setVoice] = useState(
     settings?.TTSCvoiceVoiceModel || GERMAN_VOICES[0].id,
@@ -73,6 +88,7 @@ export default function CvoiceOptions({ settings }: any) {
           target="_blank"
           rel="noreferrer"
           className="underline"
+          aria-label={t("textToSpeech.cvoice.docsLink")}
         >
           {t("textToSpeech.cvoice.docsLink")}
         </a>
@@ -80,15 +96,19 @@ export default function CvoiceOptions({ settings }: any) {
 
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-2">
+          <label
+            htmlFor="tts-cvoice-voice-model"
+            className="text-white text-sm font-semibold block mb-2"
+          >
             {t("textToSpeech.cvoice.voiceModel.label")}
           </label>
           <select
+            id="tts-cvoice-voice-model"
             name="TTSCvoiceVoiceModel"
             required={true}
             value={isCustom ? "__custom__" : voice}
-            onChange={(e) => {
-              const v = (e.target as unknown as any)?.value;
+            onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+              const v = e.target.value;
               if (v === "__custom__") {
                 setVoice(customVoice || "");
               } else {
@@ -118,10 +138,14 @@ export default function CvoiceOptions({ settings }: any) {
       {isCustom && (
         <div className="flex gap-x-4">
           <div className="flex flex-col w-60">
-            <label className="text-white text-sm font-semibold block mb-2">
+            <label
+              htmlFor="tts-cvoice-custom-voice"
+              className="text-white text-sm font-semibold block mb-2"
+            >
               {t("textToSpeech.cvoice.customVoiceId.label")}
             </label>
             <input
+              id="tts-cvoice-custom-voice"
               type="text"
               name="TTSCvoiceCustomVoiceModel"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
@@ -129,9 +153,9 @@ export default function CvoiceOptions({ settings }: any) {
               defaultValue={customVoice}
               autoComplete="off"
               spellCheck={false}
-              onChange={(e) => {
-                setCustomVoice((e.target as unknown as any)?.value);
-                setVoice((e.target as unknown as any)?.value);
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                setCustomVoice(e.target.value);
+                setVoice(e.target.value);
               }}
             />
             <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
@@ -142,44 +166,61 @@ export default function CvoiceOptions({ settings }: any) {
       )}
 
       <details className="text-xs text-white text-opacity-60">
-        <summary className="cursor-pointer hover:text-white">
+        <summary
+          className="cursor-pointer hover:text-white"
+          aria-expanded={undefined}
+        >
           {t("textToSpeech.cvoice.advanced.toggle")}
         </summary>
         <div className="flex gap-x-4 mt-3">
           <div className="flex flex-col w-60">
-            <label className="text-white text-sm font-semibold block mb-2">
+            <label
+              htmlFor="tts-cvoice-person-name"
+              className="text-white text-sm font-semibold block mb-2"
+            >
               {t("textToSpeech.cvoice.advanced.personName.label")}
             </label>
             <input
+              id="tts-cvoice-person-name"
               type="text"
               name="TTSCvoicePersonName"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-              placeholder={t("textToSpeech.cvoice.advanced.personName.placeholder")}
+              placeholder={t(
+                "textToSpeech.cvoice.advanced.personName.placeholder",
+              )}
               defaultValue={personName}
               autoComplete="off"
               spellCheck={false}
-              onChange={(e) => setPersonName((e.target as unknown as any)?.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setPersonName(e.target.value)
+              }
             />
           </div>
           <div className="flex flex-col w-60">
-            <label className="text-white text-sm font-semibold block mb-2">
+            <label
+              htmlFor="tts-cvoice-person-slug"
+              className="text-white text-sm font-semibold block mb-2"
+            >
               {t("textToSpeech.cvoice.advanced.personSlug.label")}
             </label>
             <input
+              id="tts-cvoice-person-slug"
               type="text"
               name="TTSCvoicePersonSlug"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-              placeholder={t("textToSpeech.cvoice.advanced.personSlug.placeholder")}
+              placeholder={t(
+                "textToSpeech.cvoice.advanced.personSlug.placeholder",
+              )}
               defaultValue={personSlug}
               autoComplete="off"
               spellCheck={false}
-              onChange={(e) => setPersonSlug((e.target as unknown as any)?.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setPersonSlug(e.target.value)
+              }
             />
           </div>
         </div>
-        <p className="mt-2">
-          {t("textToSpeech.cvoice.advanced.help")}
-        </p>
+        <p className="mt-2">{t("textToSpeech.cvoice.advanced.help")}</p>
       </details>
 
       <p className="text-xs leading-[18px] font-base text-white text-opacity-60">

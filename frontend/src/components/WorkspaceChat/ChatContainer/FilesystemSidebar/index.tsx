@@ -965,16 +965,29 @@ export default function FilesystemSidebar({ workspace = null }: any) {
                         )}
                         {folderState?.error && (
                           <div className="mx-2.5 my-1.5 p-2 rounded-lg bg-red-950/40 border border-red-800/50 text-xs text-red-400 flex items-center gap-1.5">
-                            <Warning size={12} weight="fill" className="flex-shrink-0" />
-                            <span>{t("sidebar.filesystem.error", "Fehler beim Laden:")} {folderState.error}</span>
+                            <Warning
+                              size={12}
+                              weight="fill"
+                              className="flex-shrink-0"
+                            />
+                            <span>
+                              {t(
+                                "sidebar.filesystem.error",
+                                "Fehler beim Laden:",
+                              )}{" "}
+                              {folderState.error}
+                            </span>
                           </div>
                         )}
-                        {!folderLoading && !folderState?.error && folderItems.length === 0 && (
-                          <p className="px-2.5 py-1.5 text-xs text-zinc-600 light:text-slate-400">
-                            {t("sidebar.filesystem.folderEmpty", "Empty")}
-                          </p>
-                        )}
-                        {!folderLoading && !folderState?.error &&
+                        {!folderLoading &&
+                          !folderState?.error &&
+                          folderItems.length === 0 && (
+                            <p className="px-2.5 py-1.5 text-xs text-zinc-600 light:text-slate-400">
+                              {t("sidebar.filesystem.folderEmpty", "Empty")}
+                            </p>
+                          )}
+                        {!folderLoading &&
+                          !folderState?.error &&
                           subFolders.map((sub) => (
                             <div
                               key={sub.path}
@@ -1004,7 +1017,8 @@ export default function FilesystemSidebar({ workspace = null }: any) {
                               </p>
                             </div>
                           ))}
-                        {!folderLoading && !folderState?.error &&
+                        {!folderLoading &&
+                          !folderState?.error &&
                           subFiles.map((file) => {
                             const Icon = getFileIcon(file.ext);
                             const iconColor = getFileColor(file.ext);

@@ -28,74 +28,99 @@ import NvidiaNimTTSOptions from "@/components/TextToSpeech/NvidiaNimOptions";
 import CvoiceTTSOptions from "@/components/TextToSpeech/CvoiceOptions";
 import CvoiceLogo from "@/media/ttsproviders/cvoice.png";
 
+/** Settings object shape passed to TTS provider option components. */
+interface TTSSettings {
+  TextToSpeechProvider?: string;
+  [key: string]: unknown;
+}
+
+/** Translation function type from react-i18next. */
+type TFunction = (key: string, options?: Record<string, unknown>) => string;
+
 interface TTSProvider {
   name: string;
   value: string;
   logo: string;
-  options: (settings: any) => React.ReactNode;
+  options: (settings: TTSSettings) => React.ReactNode;
   description: string;
 }
 
-const PROVIDERS = (t: any): TTSProvider[] => [
+const PROVIDERS = (t: TFunction): TTSProvider[] => [
   {
     name: t("audioPreference.tts.systemNative"),
     value: "native",
     logo: OpenSINChatIcon,
-    options: (settings: any) => <BrowserNative {...({ settings } as any)} />,
+    options: (_settings: TTSSettings) => <BrowserNative />,
     description: t("audioPreference.tts.systemNativeDesc"),
   },
   {
     name: t("audioPreference.tts.openai"),
     value: "openai",
     logo: OpenAiLogo,
-    options: (settings: any) => <OpenAiTTSOptions settings={settings} />,
+    options: (settings: TTSSettings) => (
+      <OpenAiTTSOptions settings={settings} />
+    ),
     description: t("audioPreference.tts.openaiDesc"),
   },
   {
     name: t("audioPreference.tts.elevenlabs"),
     value: "elevenlabs",
     logo: ElevenLabsIcon,
-    options: (settings: any) => <ElevenLabsTTSOptions settings={settings} />,
+    options: (settings: TTSSettings) => (
+      <ElevenLabsTTSOptions settings={settings} />
+    ),
     description: t("audioPreference.tts.elevenlabsDesc"),
   },
   {
     name: t("audioPreference.tts.piper"),
     value: "piper_local",
     logo: PiperTTSIcon,
-    options: (settings: any) => <PiperTTSOptions settings={settings} />,
+    options: (settings: TTSSettings) => <PiperTTSOptions settings={settings} />,
     description: t("audioPreference.tts.piperDesc"),
   },
   {
     name: t("audioPreference.tts.kokoro"),
     value: "kokoro",
     logo: KokoroIcon,
-    options: (settings: any) => <KokoroTTSOptions settings={settings} />,
+    options: (settings: TTSSettings) => (
+      <KokoroTTSOptions settings={settings} />
+    ),
     description: t("audioPreference.tts.kokoroDesc"),
   },
   {
     name: t("audioPreference.tts.openaiCompatible"),
     value: "generic-openai",
     logo: GenericOpenAiLogo,
-    options: (settings: any) => <OpenAiGenericTTSOptions settings={settings} />,
+    options: (settings: TTSSettings) => (
+      <OpenAiGenericTTSOptions settings={settings} />
+    ),
     description: t("audioPreference.tts.openaiCompatibleDesc"),
   },
   {
     name: t("audioPreference.tts.nvidiaNim"),
     value: "nvidia-nim",
     logo: NvidiaNimLogo,
-    options: (settings: any) => <NvidiaNimTTSOptions settings={settings} />,
+    options: (settings: TTSSettings) => (
+      <NvidiaNimTTSOptions settings={settings} />
+    ),
     description: t("audioPreference.tts.nvidiaNimDesc"),
   },
   {
     name: t("audioPreference.tts.cvoice"),
     value: "cvoice",
     logo: CvoiceLogo,
-    options: (settings: any) => <CvoiceTTSOptions settings={settings} />,
+    options: (settings: TTSSettings) => (
+      <CvoiceTTSOptions settings={settings} />
+    ),
     description: t("audioPreference.tts.cvoiceDesc"),
   },
 ];
 
-export default function TextToSpeechProvider({ settings }: { settings: any }) {
+export default function TextToSpeechProvider({
+  settings,
+}: {
+  settings: TTSSettings;
+}) {
   const { t } = useTranslation();
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
@@ -113,7 +138,9 @@ export default function TextToSpeechProvider({ settings }: { settings: any }) {
     setSaving(true);
     try {
       const form = e.target as HTMLFormElement;
-      const data: any = { TextToSpeechProvider: selectedProvider };
+      const data: Record<string, unknown> = {
+        TextToSpeechProvider: selectedProvider,
+      };
       const formData = new FormData(form);
 
       for (const [key, value] of formData.entries()) data[key] = value;

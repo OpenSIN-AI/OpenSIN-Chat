@@ -15,7 +15,7 @@ import {
   getDefaultSkills,
   getConfigurableSkills,
   getAppIntegrationSkills,
-} from "./skills.jsx";
+} from "./skills";
 import MCPServers from "@/models/mcpServers";
 import { useAgentForm } from "@/hooks/useAgentForm";
 import { SkillsNavigation } from "./SkillsNavigation";

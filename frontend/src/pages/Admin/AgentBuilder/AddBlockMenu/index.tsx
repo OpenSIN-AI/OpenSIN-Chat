@@ -88,7 +88,9 @@ export default function AddBlockMenu({
                   className="w-full p-2.5 flex items-center gap-3 hover:bg-theme-action-menu-item-hover text-theme-text-primary transition-colors duration-300 group"
                 >
                   <div className="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center">
-                    <div className="w-fit h-fit text-theme-text-primary">{info.icon}</div>
+                    <div className="w-fit h-fit text-theme-text-primary">
+                      {info.icon}
+                    </div>
                   </div>
                   <div className="text-left flex-1">
                     <div className="text-sm font-medium">{info.label}</div>

@@ -7,12 +7,18 @@ import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";
 
-export default function AsyncTTSMessage({ slug, chatId }: any) {
-  const playerRef = useRef(null);
+export default function AsyncTTSMessage({
+  slug,
+  chatId,
+}: {
+  slug: string;
+  chatId: string;
+}) {
+  const playerRef = useRef<HTMLAudioElement>(null);
   const fetchInFlightRef = useRef(false);
-  const [speaking, setSpeaking] = useState(false as any);
-  const [loading, setLoading] = useState(false as any);
-  const [audioSrc, setAudioSrc] = useState(null);
+  const [speaking, setSpeaking] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [audioSrc, setAudioSrc] = useState<string | null>(null);
   const { t } = useTranslation();
 
   function speakMessage() {

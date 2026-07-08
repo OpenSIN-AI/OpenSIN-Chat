@@ -81,7 +81,9 @@ export default function SettingsSidebar() {
               alt={t("common.logo")}
               className="h-6 w-6 max-h-6 max-w-6 object-contain"
             />
-            <span className="text-theme-text-primary font-bold text-base">OpenSIN</span>
+            <span className="text-theme-text-primary font-bold text-base">
+              OpenSIN
+            </span>
           </div>
           <div className="w-12"></div>
         </div>
@@ -127,7 +129,10 @@ export default function SettingsSidebar() {
               <div className="h-full flex flex-col w-full justify-between pt-4 overflow-y-scroll no-scroll">
                 <div className="h-auto md:sidebar-items">
                   <div className="flex flex-col gap-y-4 pb-[60px] overflow-y-scroll no-scroll">
-                    <BackToChatButton t={t} onClick={() => setShowSidebar(false)} />
+                    <BackToChatButton
+                      t={t}
+                      onClick={() => setShowSidebar(false)}
+                    />
                     <SidebarOptions user={user} t={t} />
                     <div className="h-[1.5px] bg-[#3D4147] mx-3 mt-[14px]" />
                     <SupportEmail />
@@ -166,7 +171,9 @@ export default function SettingsSidebar() {
             alt={t("common.logo")}
             className="h-6 w-6 max-h-[24px] max-w-[24px] object-contain"
           />
-          <span className="text-theme-text-primary font-bold text-sm">OpenSIN</span>
+          <span className="text-theme-text-primary font-bold text-sm">
+            OpenSIN
+          </span>
         </Link>
         <div
           ref={sidebarRef}
@@ -415,7 +422,6 @@ const SidebarOptions = ({ user = null, t }: any) => (
               flex: true,
               roles: ["admin"],
             },
-
           ]}
         />
         <Option
@@ -518,4 +524,3 @@ function AppVersion() {
     </>
   );
 }
-

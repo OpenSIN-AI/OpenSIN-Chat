@@ -1,14 +1,23 @@
 // SPDX-License-Identifier: MIT
+import { ReactNode } from "react";
 import { useTTSProvider } from "@/components/contexts/TTSProvider";
 import NativeTTSMessage from "./native";
 import AsyncTTSMessage from "./asyncTts";
 import PiperTTSMessage from "./piperTTS";
 
-function WrapTTS({ children }: any) {
+function WrapTTS({ children }: { children: ReactNode }) {
   return <div className="mx-2">{children}</div>;
 }
 
-export default function TTSMessage({ slug, chatId, message }: any) {
+export default function TTSMessage({
+  slug,
+  chatId,
+  message,
+}: {
+  slug: string;
+  chatId: string;
+  message: string;
+}) {
   const { settings, provider, loading } = useTTSProvider();
   if (!chatId || loading) return null;
 
@@ -18,6 +27,7 @@ export default function TTSMessage({ slug, chatId, message }: any) {
     case "elevenlabs":
     case "kokoro":
     case "cvoice":
+    case "nvidia-nim":
       return (
         <WrapTTS>
           <AsyncTTSMessage chatId={chatId} slug={slug} />

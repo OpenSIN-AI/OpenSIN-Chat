@@ -4,7 +4,9 @@ import { formatAnswerDisplay } from "./utils";
 
 function StatusMessage({ message }: any) {
   return (
-    <div className="text-xs text-theme-text-secondary light:text-slate-600">{message}</div>
+    <div className="text-xs text-theme-text-secondary light:text-slate-600">
+      {message}
+    </div>
   );
 }
 

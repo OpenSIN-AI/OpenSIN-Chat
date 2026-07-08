@@ -120,7 +120,9 @@ export default function NewUserModal(): JSX.Element {
                   name="password_confirmation"
                   type="password"
                   className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder={t("invite.newUser.passwordConfirmationPlaceholder")}
+                  placeholder={t(
+                    "invite.newUser.passwordConfirmationPlaceholder",
+                  )}
                   required={true}
                   minLength={8}
                   autoComplete="new-password"

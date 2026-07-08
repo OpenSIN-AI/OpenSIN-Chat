@@ -123,7 +123,11 @@ export default function NewApiKeyModal({
                   {copied ? (
                     <Check size={20} className="text-green-400" weight="bold" />
                   ) : (
-                    <Copy size={20} className="text-theme-text-primary" weight="bold" />
+                    <Copy
+                      size={20}
+                      className="text-theme-text-primary"
+                      weight="bold"
+                    />
                   )}
                 </button>
               </div>

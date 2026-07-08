@@ -37,7 +37,8 @@ export const LEGACY_KEY_MAP: Record<string, string> = {
   openafd_folder_collapse_state: "opensin_folder_collapse_state",
   openafd_show_chat_metrics: "opensin_show_chat_metrics",
   openafd_source_filter: "opensin_source_filter",
-  openafd_experimental_feature_preview_unlocked: "opensin_experimental_feature_preview_unlocked",
+  openafd_experimental_feature_preview_unlocked:
+    "opensin_experimental_feature_preview_unlocked",
   openafd_agent_mode: "opensin_agent_mode",
   openafd_tos_experimental_feature_set: "opensin_tos_experimental_feature_set",
 };

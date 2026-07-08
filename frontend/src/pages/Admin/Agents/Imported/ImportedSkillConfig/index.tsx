@@ -129,8 +129,15 @@ export default function ImportedSkillConfig({
         <div className="flex flex-col gap-y-[18px] max-w-[500px]">
           <div className="flex w-full justify-between items-center">
             <div className="flex items-center gap-x-2">
-              <Plug size={24} weight="bold" className="text-theme-text-primary" />
-              <label htmlFor="name" className="text-theme-text-primary text-md font-bold">
+              <Plug
+                size={24}
+                weight="bold"
+                className="text-theme-text-primary"
+              />
+              <label
+                htmlFor="name"
+                className="text-theme-text-primary text-md font-bold"
+              >
                 {sentenceCase(config.name)}
               </label>
             </div>

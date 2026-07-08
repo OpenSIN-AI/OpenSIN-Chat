@@ -158,8 +158,7 @@ export default function SystemHealth(): JSX.Element {
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-theme-bg-container">
       <Sidebar />
-      <AdminContentPanel className="h-[var(--content-height)] relative w-full overflow-y-scroll bg-theme-bg-secondary no-scroll md:my-[16px] md:ml-[2px] md:mr-[16px] md:rounded-[16px]"
-      >
+      <AdminContentPanel className="h-[var(--content-height)] relative w-full overflow-y-scroll bg-theme-bg-secondary no-scroll md:my-[16px] md:ml-[2px] md:mr-[16px] md:rounded-[16px]">
         <div className="flex w-full flex-col gap-y-6 p-4 pt-16 md:p-8 md:pt-6">
           <div className="flex flex-col gap-y-1">
             <h1 className="text-lg font-bold leading-6 text-theme-text-primary">

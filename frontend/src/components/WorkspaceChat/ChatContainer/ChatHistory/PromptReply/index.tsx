@@ -127,7 +127,9 @@ const PromptReply: any = ({
 
 function RenderAssistantChatContent({ message, messageId }: any) {
   const thoughtChainRef = useRef(null);
-  const [pendingThoughtContent, setPendingThoughtContent] = useState<string | null>(null);
+  const [pendingThoughtContent, setPendingThoughtContent] = useState<
+    string | null
+  >(null);
 
   // Update the ThoughtChainComponent imperatively when the message changes.
   // The rendered markdown content is computed during render (not via ref)

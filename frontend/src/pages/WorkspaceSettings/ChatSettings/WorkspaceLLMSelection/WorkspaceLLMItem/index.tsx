@@ -102,8 +102,12 @@ export default function WorkspaceLLM({
               className="w-10 h-10 rounded-md"
             />
             <div className="flex flex-col">
-              <div className="text-sm font-semibold text-theme-text-primary">{name}</div>
-              <div className="mt-1 text-xs text-theme-text-secondary">{description}</div>
+              <div className="text-sm font-semibold text-theme-text-primary">
+                {name}
+              </div>
+              <div className="mt-1 text-xs text-theme-text-secondary">
+                {description}
+              </div>
             </div>
           </div>
           {checked && !NO_SETTINGS_NEEDED.includes(value) && (

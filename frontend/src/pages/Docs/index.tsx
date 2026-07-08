@@ -196,10 +196,15 @@ export default function Docs() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "/" && !mobileNavOpen) {
         const target = e.target as HTMLElement;
-        if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable) return;
+        if (
+          target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable
+        )
+          return;
         e.preventDefault();
         const searchInput = document.querySelector<HTMLInputElement>(
-          'aside input[type="search"]'
+          'aside input[type="search"]',
         );
         searchInput?.focus();
       }

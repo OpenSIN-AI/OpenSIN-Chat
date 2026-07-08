@@ -250,7 +250,6 @@ export function AgentRunsProvider({
 
 export function useAgentRuns() {
   const c = useContext(Ctx);
-  if (!c)
-    throw new Error("useAgentRuns must be used within AgentRunsProvider");
+  if (!c) throw new Error("useAgentRuns must be used within AgentRunsProvider");
   return c;
 }

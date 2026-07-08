@@ -6,7 +6,9 @@ import renderMarkdown from "./chat/markdown";
  * @param {string} markdownString - The markdown string to copy.
  * @returns {Promise<void>}
  */
-export async function copyMarkdownAsRichText(markdownString: string): Promise<boolean> {
+export async function copyMarkdownAsRichText(
+  markdownString: string,
+): Promise<boolean> {
   try {
     const htmlContent = renderMarkdown(markdownString);
     const blobHTML = new Blob([htmlContent], { type: "text/html" });

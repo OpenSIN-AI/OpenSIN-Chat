@@ -13,7 +13,8 @@ function getStatusesMap(t: (key: string) => string) {
   return {
     completed: {
       text: t("scheduledJobs.status.completed"),
-      style: "font-medium text-theme-text-primary light:text-theme-text-primary",
+      style:
+        "font-medium text-theme-text-primary light:text-theme-text-primary",
     },
     failed: {
       text: t("scheduledJobs.status.failed"),

@@ -249,7 +249,10 @@ export default function ApiCallNode({
               <div className="space-y-2">
                 {(config.formData || []).map(
                   (item: FormDataItem, index: number) => (
-                    <div key={`form-${item.key}-${index}`} className="flex gap-2">
+                    <div
+                      key={`form-${item.key}-${index}`}
+                      className="flex gap-2"
+                    >
                       <input
                         type="text"
                         placeholder={t("apiCallNode.formKey")}

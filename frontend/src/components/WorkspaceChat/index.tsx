@@ -126,7 +126,11 @@ export default function WorkspaceChat({
         >
           <AgentRunsProvider
             workspaceSlug={loaded.workspace?.slug || ""}
-            authToken={typeof window !== "undefined" ? localStorage.getItem("opensin_chat_auth_token") || "" : ""}
+            authToken={
+              typeof window !== "undefined"
+                ? localStorage.getItem("opensin_chat_auth_token") || ""
+                : ""
+            }
             apiBase="/api"
           >
             <ChatContainer

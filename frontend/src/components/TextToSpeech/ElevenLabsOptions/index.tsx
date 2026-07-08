@@ -49,7 +49,7 @@ function groupByOrganization(models: any[] = []) {
   }, {});
 }
 
-function ElevenLabsModelSelection({ apiKey, settings }: any) {
+function ElevenLabsModelSelection({ apiKey }: any) {
   const { t } = useTranslation();
   const { customModels, isLoading: loading } = useProviderModels(
     apiKey ? "elevenlabs-tts" : null,

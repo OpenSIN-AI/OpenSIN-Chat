@@ -191,19 +191,26 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
     }
   }, [dipQuery]);
 
-  const openProfile = useCallback(async (id: string) => {
-    setProfileLoading(true);
-    setProfileData(null);
-    setProfileError(null);
-    try {
-      const data = await Politician.getById(id);
-      if (data?.politician) setProfileData(data.politician);
-    } catch (e) {
-      setProfileError(e instanceof Error ? e.message : t("common.loadError", "Fehler beim Laden"));
-    } finally {
-      setProfileLoading(false);
-    }
-  }, [t]);
+  const openProfile = useCallback(
+    async (id: string) => {
+      setProfileLoading(true);
+      setProfileData(null);
+      setProfileError(null);
+      try {
+        const data = await Politician.getById(id);
+        if (data?.politician) setProfileData(data.politician);
+      } catch (e) {
+        setProfileError(
+          e instanceof Error
+            ? e.message
+            : t("common.loadError", "Fehler beim Laden"),
+        );
+      } finally {
+        setProfileLoading(false);
+      }
+    },
+    [t],
+  );
 
   return (
     <ChatSidebar isOpen={sidebarOpen} minWidth={420}>
@@ -463,7 +470,9 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
           {profileError && (
             <div className="p-3 rounded-lg bg-red-950/40 border border-red-800/50 text-xs text-red-400 flex items-center gap-2">
               <Warning size={16} weight="fill" className="flex-shrink-0" />
-              <span>{t("common.loadError", "Fehler beim Laden")}: {profileError}</span>
+              <span>
+                {t("common.loadError", "Fehler beim Laden")}: {profileError}
+              </span>
             </div>
           )}
           {profileData ? (
