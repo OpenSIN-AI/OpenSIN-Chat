@@ -9,6 +9,7 @@ import { safeGetItem, safeRemoveItem } from "@/utils/safeStorage";
 import useSystemSettings from "@/hooks/useSystemSettings";
 import useSWR from "swr";
 import { KeyboardShortcutWrapper } from "@/utils/keyboardShortcuts";
+import logger from "@/utils/logger";
 
 const ONBOARDING_STATUS_KEY = "system/onboarding-status";
 const SESSION_VALID_KEY = "system/session-valid";
@@ -40,7 +41,7 @@ function useIsAuthenticated() {
       return import("@/models/system")
         .then((m) => m.default)
         .catch((err) => {
-          console.error("Auth module load failed", err);
+          logger.error("Auth module load failed", err);
           window.location.href = "/login";
           throw err;
         })

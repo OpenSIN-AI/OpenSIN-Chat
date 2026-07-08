@@ -10,6 +10,7 @@ import RecoveryCodeModal from "@/components/Modals/DisplayRecoveryCodeModal";
 import { useTranslation } from "react-i18next";
 import useCustomAppName from "@/hooks/useCustomAppName";
 import useSystemSettings from "@/hooks/useSystemSettings";
+import logger from "@/utils/logger";
 
 export default function SingleUserAuth({
   autoLogin = false,
@@ -84,7 +85,7 @@ export default function SingleUserAuth({
         setError(message);
       }
     } catch (err) {
-      console.error(err);
+      logger.error(err);
       setError(err?.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
@@ -149,6 +150,7 @@ export default function SingleUserAuth({
           <button
             disabled={loading || appNameLoading}
             type="submit"
+            aria-label={t("common.save", "Save")}
             className="text-zinc-950 bg-white hover:bg-zinc-300 light:bg-sky-200 light:text-slate-950 light:hover:bg-sky-300 text-sm font-semibold rounded-lg border-primary-button h-[34px] w-full"
           >
             {loading

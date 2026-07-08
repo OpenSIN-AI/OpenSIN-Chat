@@ -11,6 +11,7 @@ import SSESocket from "@/utils/chat/SSESocket";
 import { CLEAR_ATTACHMENTS_EVENT } from "@/components/WorkspaceChat/ChatContainer/DnDWrapper";
 import { AUTH_TOKEN } from "@/utils/constants";
 import { safeGetItem } from "@/utils/safeStorage";
+import logger from "@/utils/logger";
 
 /**
  * Build the WebSocket URL for an agent invocation, including the user's
@@ -166,7 +167,7 @@ export default function useWebSocket({
         try {
           handleSocketResponse(ws, event, setChatHistory);
         } catch {
-          console.error("Failed to parse data");
+          logger.error("Failed to parse data");
           intentionalCloseRef.current = true;
           setAgentSessionActive(false);
           window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));
@@ -285,7 +286,7 @@ export default function useWebSocket({
         // Don't set agentSessionActive false here — let the close handler
         // deal with reconnection logic. The error event is always followed
         // by a close event.
-        console.error("[useWebSocket] Socket error event received.");
+        logger.error("[useWebSocket] Socket error event received.");
       });
 
       ws.addEventListener("open", () => {
