@@ -49,6 +49,7 @@ export default function ChangeWarningModal({
         <button
           onClick={onClose}
           type="button"
+          aria-label={t("changeWarning.cancel")}
           className="transition-all duration-300 bg-transparent text-theme-text-primary hover:opacity-60 px-4 py-2 rounded-lg text-sm border-none"
         >
           {t("changeWarning.cancel")}
@@ -56,6 +57,7 @@ export default function ChangeWarningModal({
         <button
           onClick={onConfirm}
           type="submit"
+          aria-label={t("changeWarning.confirm")}
           className="transition-all duration-300 bg-red-500 light:text-theme-text-primary text-white hover:opacity-60 px-4 py-2 rounded-lg text-sm border-none"
         >
           {t("changeWarning.confirm")}

@@ -6,6 +6,7 @@ import showToast from "@/utils/toast";
 import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import { Tooltip } from "react-tooltip";
 import Toggle from "@/components/lib/Toggle";
+import logger from "@/utils/logger";
 
 export default function ConfluenceOptions() {
   const { t } = useTranslation();
@@ -50,7 +51,7 @@ export default function ConfluenceOptions() {
       e.target.reset();
       setLoading(false);
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       showToast(e.message, "error", { clear: true });
       setLoading(false);
     }

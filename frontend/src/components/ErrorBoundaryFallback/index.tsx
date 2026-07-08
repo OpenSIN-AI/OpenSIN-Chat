@@ -7,6 +7,7 @@ import { Check } from "@phosphor-icons/react/dist/csr/Check";
 import { useState } from "react";
 import type { FallbackProps } from "react-error-boundary";
 import { useTranslation } from "react-i18next";
+import logger from "@/utils/logger";
 
 export default function ErrorBoundaryFallback({
   error: rawError,
@@ -47,7 +48,7 @@ ${details.stack}
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error("Failed to copy error details:", err);
+      logger.error("Failed to copy error details:", err);
     }
   };
 
@@ -101,6 +102,7 @@ ${details.stack}
         <button
           type="button"
           onClick={resetErrorBoundary}
+          aria-label={t("errorBoundary.reset")}
           className="flex items-center justify-center gap-2 px-4 py-2 bg-theme-bg-secondary text-theme-text-primary rounded-lg hover:bg-theme-sidebar-item-hover transition-all duration-300 w-full md:w-auto"
         >
           <ArrowClockwise className="w-4 h-4" aria-hidden="true" />
