@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect, useCallback, useRef } from "react";
+import { memo, useState, useEffect, useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
@@ -10,7 +10,7 @@ import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import Note from "@/models/note";
 import ChatSidebar, { useChatSidebar } from "../ChatSidebar";
 
-export default function NotepadSidebar({ workspace }: any) {
+function NotepadSidebar({ workspace }: any) {
   const { t } = useTranslation();
   const { closeSidebar } = useChatSidebar();
   const [notes, setNotes] = useState<any[]>([]);
@@ -489,3 +489,5 @@ export default function NotepadSidebar({ workspace }: any) {
     </ChatSidebar>
   );
 }
+
+export default memo(NotepadSidebar);

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { memo, useEffect, useRef, useState, useCallback } from "react";
 import { createPortal } from "react-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -174,7 +174,7 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
   );
 }
 
-export default function ActiveWorkspaces() {
+function ActiveWorkspaces() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { slug } = useParams();
@@ -404,3 +404,5 @@ export default function ActiveWorkspaces() {
     </DragDropContext>
   );
 }
+
+export default memo(ActiveWorkspaces);

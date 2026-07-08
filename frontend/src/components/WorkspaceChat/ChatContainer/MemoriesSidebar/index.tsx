@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useState } from "react";
+import { memo, useState } from "react";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { ChatCircleText } from "@phosphor-icons/react/dist/csr/ChatCircleText";
 import { Globe } from "@phosphor-icons/react/dist/csr/Globe";
@@ -169,7 +169,7 @@ function WorkspaceUrlsTab({ workspace }: any) {
 }
 
 // ── Main component ────────────────────────────────────────────────────────────
-export default function MemoriesSidebar({ workspace }: any) {
+function MemoriesSidebar({ workspace }: any) {
   return (
     <MemoriesProvider workspace={workspace}>
       <MemoriesSidebarContent workspace={workspace} />
@@ -372,3 +372,5 @@ function EmptyState() {
     </p>
   );
 }
+
+export default memo(MemoriesSidebar);

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
-export default function LLMItem({
+import { memo } from "react";
+function LLMItem({
   name,
   value,
   image,
@@ -38,3 +39,5 @@ export default function LLMItem({
     </div>
   );
 }
+
+export default memo(LLMItem);

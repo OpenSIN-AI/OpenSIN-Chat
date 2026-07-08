@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import paths from "@/utils/paths";
 import useLogo from "@/hooks/useLogo";
 import { House } from "@phosphor-icons/react/dist/csr/House";
@@ -44,7 +44,7 @@ function BackToChatButton({ t, onClick }: any) {
   );
 }
 
-export default function SettingsSidebar() {
+function SettingsSidebar() {
   const { t } = useTranslation();
   const { logo } = useLogo();
   const { user } = useUser();
@@ -525,3 +525,5 @@ function AppVersion() {
     </>
   );
 }
+
+export default memo(SettingsSidebar);
