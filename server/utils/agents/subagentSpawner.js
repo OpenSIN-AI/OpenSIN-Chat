@@ -6,13 +6,13 @@
 //          Modeled after Traycer's agent-to-agent lineage model.
 // Docs: subagentSpawner.doc.md
 
-const { v4: uuidv4 } = require("uuid");
-const path = require("path");
-const fs = require("fs");
-const { agentRunBus } = require("./runBus");
-const { AgentRuns } = require("../../models/agentRuns");
-const { Workspace } = require("../../models/workspace");
-const consoleLogger = require("../logger/console.js");
+const { v4: uuidv4 } = require('uuid');
+const path = require('path');
+const fs = require('fs');
+const { agentRunBus } = require('./runBus');
+const { AgentRuns } = require('../../models/agentRuns');
+const { Workspace } = require('../../models/workspace');
+const consoleLogger = require('../logger/console.js');
 
 /**
  * @class SubagentSpawner
@@ -45,7 +45,7 @@ class SubagentSpawner {
     prompt,
     model = null,
     agentConfig = {},
-    parentAgentName = "Parent Agent",
+    _parentAgentName = 'Parent Agent',
   }) {
     const runId = uuidv4();
 
@@ -61,17 +61,17 @@ class SubagentSpawner {
     const scratchDir = this._createScratchDir(runId);
 
     // 3) Publish spawn event (appears as child in Agent Sessions tree)
-    agentRunBus.publish(workspaceSlug, "run.started", {
+    agentRunBus.publish(workspaceSlug, 'run.started', {
       runId,
       parentRunId,
       agentName,
       model,
-      status: "running",
+      status: 'running',
       ts: Date.now(),
     });
 
     consoleLogger.log(
-      `[SubagentSpawner] Spawned subagent "${agentName}" (run ${runId}) under parent ${parentRunId}`,
+      `[SubagentSpawner] Spawned subagent "${agentName}" (run ${runId}) under parent ${parentRunId}`
     );
 
     try {
@@ -88,22 +88,25 @@ class SubagentSpawner {
       });
 
       // 5) Publish completion
-      agentRunBus.publish(workspaceSlug, "run.finished", {
+      agentRunBus.publish(workspaceSlug, 'run.finished', {
         runId,
-        status: "done",
+        status: 'done',
         ts: Date.now(),
       });
-      await AgentRuns.updateStatus(runId, "done");
+      await AgentRuns.updateStatus(runId, 'done');
 
       return { runId, result };
     } catch (e) {
-      agentRunBus.publish(workspaceSlug, "run.finished", {
+      agentRunBus.publish(workspaceSlug, 'run.finished', {
         runId,
-        status: "error",
+        status: 'error',
         ts: Date.now(),
       });
-      await AgentRuns.updateStatus(runId, "error");
-      consoleLogger.error(`[SubagentSpawner] Subagent "${agentName}" failed:`, e.message);
+      await AgentRuns.updateStatus(runId, 'error');
+      consoleLogger.error(
+        `[SubagentSpawner] Subagent "${agentName}" failed:`,
+        e.message
+      );
       throw e;
     } finally {
       // 6) Clean up scratch dir (optional — keep for debugging)
@@ -128,7 +131,7 @@ class SubagentSpawner {
     scratchDir,
   }) {
     // Lazy-load AgentHandler to avoid circular deps
-    const { AgentHandler } = require("./index");
+    const { AgentHandler } = require('./index');
 
     const workspace = await Workspace.get({ id: workspaceId });
     if (!workspace) throw new Error(`Workspace ${workspaceId} not found`);
@@ -151,7 +154,7 @@ class SubagentSpawner {
     handler._scratchDir = scratchDir;
 
     // Hook introspect to publish log events for this subagent
-    this._hookEvents(handler, runId, workspaceSlug);
+    this._hookEvents(_handler, _runId, _workspaceSlug);
 
     // Start the agent
     const result = await handler.start();
@@ -162,7 +165,7 @@ class SubagentSpawner {
    * Hook AIbitat events to the runBus for this subagent run.
    * @private
    */
-  _hookEvents(handler, runId, workspaceSlug) {
+  _hookEvents(_handler, _runId, _workspaceSlug) {
     // We hook after handler.start() initializes the AIbitat instance.
     // The handler should expose its aibitat instance for hooking.
     // This is called from _runIsolated after handler creation but before start().
@@ -176,12 +179,14 @@ class SubagentSpawner {
    * @private
    */
   _createScratchDir(runId) {
-    const { getStoragePath } = require("../paths");
-    const dir = path.join(getStoragePath("agent-runs"), runId);
+    const { getStoragePath } = require('../paths');
+    const dir = path.join(getStoragePath('agent-runs'), runId);
     try {
       fs.mkdirSync(dir, { recursive: true });
     } catch (e) {
-      consoleLogger.warn(`[SubagentSpawner] Failed to create scratch dir: ${e.message}`);
+      consoleLogger.warn(
+        `[SubagentSpawner] Failed to create scratch dir: ${e.message}`
+      );
     }
     return dir;
   }
@@ -203,12 +208,7 @@ class SubagentSpawner {
    * @param {Array} params.agents - [{ agentName, prompt, model?, agentConfig? }]
    * @returns {Promise<Array>} - [{ runId, result }] in same order as input
    */
-  async spawnParallel({
-    parentRunId,
-    workspaceId,
-    workspaceSlug,
-    agents,
-  }) {
+  async spawnParallel({ parentRunId, workspaceId, workspaceSlug, agents }) {
     const promises = agents.map((a) =>
       this.spawn({
         parentRunId,
@@ -218,7 +218,7 @@ class SubagentSpawner {
         prompt: a.prompt,
         model: a.model,
         agentConfig: a.agentConfig,
-      }).catch((e) => ({ runId: null, result: null, error: e.message })),
+      }).catch((e) => ({ runId: null, result: null, error: e.message }))
     );
     return Promise.all(promises);
   }

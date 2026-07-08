@@ -18,17 +18,17 @@ const apiEngines = {
   _serpApi: async function (query) {
     if (!process.env.AGENT_SERPAPI_API_KEY) {
       this.super.introspect(
-        `${this.caller}: I can't use SerpApi searching because the user has not defined the required API key.\nVisit: https://serpapi.com/ to create the API key for free.`,
+        `${this.caller}: I can't use SerpApi searching because the user has not defined the required API key.\nVisit: https://serpapi.com/ to create the API key for free.`
       );
       return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
     }
 
     this.super.introspect(
-      `${this.caller}: Using SerpApi to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`,
+      `${this.caller}: Using SerpApi to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`
     );
 
     const engine = process.env.AGENT_SERPAPI_ENGINE;
-    const queryParamKey = engine === "amazon" ? "k" : "q";
+    const queryParamKey = engine === 'amazon' ? 'k' : 'q';
 
     const params = new URLSearchParams({
       engine: engine,
@@ -38,14 +38,14 @@ const apiEngines = {
 
     const url = `https://serpapi.com/search.json?${params.toString()}`;
     const { response, error } = await fetch(url, {
-      method: "GET",
+      method: 'GET',
       headers: {},
       signal: AbortSignal.timeout(WEB_FETCH_TIMEOUT_MS),
     })
       .then((res) => {
         if (res.ok) return res.json();
         throw new Error(
-          `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_SERPAPI_API_KEY, 5), q: query })}`,
+          `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_SERPAPI_API_KEY, 5), q: query })}`
         );
       })
       .then((data) => {
@@ -55,79 +55,158 @@ const apiEngines = {
         this.super.handlerProps.log(`SerpApi Error: ${e.message}`);
         return { response: null, error: e.message };
       });
-    if (error)
-      return `There was an error searching for content. ${error}`;
+    if (error) return `There was an error searching for content. ${error}`;
 
     const data = [];
 
     switch (engine) {
-      case "google":
-        if (response.hasOwnProperty("knowledge_graph"))
+      case 'google':
+        if (response.hasOwnProperty('knowledge_graph'))
           data.push(response.knowledge_graph);
-        if (response.hasOwnProperty("answer_box"))
+        if (response.hasOwnProperty('answer_box'))
           data.push(response.answer_box);
         response.organic_results?.forEach((searchResult) => {
           const { title, link, snippet } = searchResult;
           data.push({ title, link, snippet });
         });
         response.local_results?.forEach((searchResult) => {
-          const { title, rating, reviews, description, address, website, extensions } = searchResult;
-          data.push({ title, rating, reviews, description, address, website, extensions });
+          const {
+            title,
+            rating,
+            reviews,
+            description,
+            address,
+            website,
+            extensions,
+          } = searchResult;
+          data.push({
+            title,
+            rating,
+            reviews,
+            description,
+            address,
+            website,
+            extensions,
+          });
         });
         break;
-      case "google_maps":
+      case 'google_maps':
         response.local_results?.slice(0, 10).forEach((searchResult) => {
-          const { title, rating, reviews, description, address, website, extensions } = searchResult;
-          data.push({ title, rating, reviews, description, address, website, extensions });
+          const {
+            title,
+            rating,
+            reviews,
+            description,
+            address,
+            website,
+            extensions,
+          } = searchResult;
+          data.push({
+            title,
+            rating,
+            reviews,
+            description,
+            address,
+            website,
+            extensions,
+          });
         });
         break;
-      case "google_images_light":
+      case 'google_images_light':
         response.images_results?.slice(0, 10).forEach((searchResult) => {
           const { title, source, link, thumbnail } = searchResult;
           data.push({ title, source, link, thumbnail });
         });
         break;
-      case "google_shopping_light":
+      case 'google_shopping_light':
         response.shopping_results?.slice(0, 10).forEach((searchResult) => {
-          const { title, source, price, rating, reviews, snippet, thumbnail, product_link } = searchResult;
-          data.push({ title, source, price, rating, reviews, snippet, thumbnail, product_link });
+          const {
+            title,
+            source,
+            price,
+            rating,
+            reviews,
+            snippet,
+            thumbnail,
+            product_link,
+          } = searchResult;
+          data.push({
+            title,
+            source,
+            price,
+            rating,
+            reviews,
+            snippet,
+            thumbnail,
+            product_link,
+          });
         });
         break;
-      case "google_news_light":
+      case 'google_news_light':
         response.news_results?.slice(0, 10).forEach((searchResult) => {
-          const { title, link, source, thumbnail, snippet, date } = searchResult;
+          const { title, link, source, thumbnail, snippet, date } =
+            searchResult;
           data.push({ title, link, source, thumbnail, snippet, date });
         });
         break;
-      case "google_jobs":
+      case 'google_jobs':
         response.jobs_results?.forEach((searchResult) => {
-          const { title, company_name, location, description, apply_options, extensions } = searchResult;
-          data.push({ title, company_name, location, description, apply_options, extensions });
+          const {
+            title,
+            company_name,
+            location,
+            description,
+            apply_options,
+            extensions,
+          } = searchResult;
+          data.push({
+            title,
+            company_name,
+            location,
+            description,
+            apply_options,
+            extensions,
+          });
         });
         break;
-      case "google_patents":
+      case 'google_patents':
         response.organic_results?.forEach((searchResult) => {
-          const { title, patent_link, snippet, inventor, assignee, publication_number } = searchResult;
-          data.push({ title, patent_link, snippet, inventor, assignee, publication_number });
+          const {
+            title,
+            patent_link,
+            snippet,
+            inventor,
+            assignee,
+            publication_number,
+          } = searchResult;
+          data.push({
+            title,
+            patent_link,
+            snippet,
+            inventor,
+            assignee,
+            publication_number,
+          });
         });
         break;
-      case "google_scholar":
+      case 'google_scholar':
         response.organic_results?.forEach((searchResult) => {
           const { title, link, snippet, publication_info } = searchResult;
           data.push({ title, link, snippet, publication_info });
         });
         break;
-      case "baidu":
-        if (response.hasOwnProperty("answer_box"))
+      case 'baidu':
+        if (response.hasOwnProperty('answer_box'))
           data.push(response.answer_box);
         response.organic_results?.forEach((searchResult) => {
           const { title, link, snippet } = searchResult;
           data.push({ title, link, snippet });
         });
         break;
-      case "amazon":
+      case 'amazon':
         response.organic_results?.slice(0, 10).forEach((searchResult) => {
-          const { title, rating, reviews, price, link_clean, thumbnail } = searchResult;
+          const { title, rating, reviews, price, link_clean, thumbnail } =
+            searchResult;
           data.push({ title, rating, reviews, price, link_clean, thumbnail });
         });
     }
@@ -138,7 +217,7 @@ const apiEngines = {
     this.reportSearchResultsCitations(data);
     const result = JSON.stringify(data);
     this.super.introspect(
-      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
+      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
     );
     return result;
   },
@@ -151,13 +230,13 @@ const apiEngines = {
   _searchApi: async function (query) {
     if (!process.env.AGENT_SEARCHAPI_API_KEY) {
       this.super.introspect(
-        `${this.caller}: I can't use SearchApi searching because the user has not defined the required API key.\nVisit: https://www.searchapi.io/ to create the API key for free.`,
+        `${this.caller}: I can't use SearchApi searching because the user has not defined the required API key.\nVisit: https://www.searchapi.io/ to create the API key for free.`
       );
       return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
     }
 
     this.super.introspect(
-      `${this.caller}: Using SearchApi to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`,
+      `${this.caller}: Using SearchApi to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`
     );
 
     const engine = process.env.AGENT_SEARCHAPI_ENGINE;
@@ -165,18 +244,18 @@ const apiEngines = {
 
     const url = `https://www.searchapi.io/api/v1/search?${params.toString()}`;
     const { response, error } = await fetch(url, {
-      method: "GET",
+      method: 'GET',
       headers: {
         Authorization: `Bearer ${process.env.AGENT_SEARCHAPI_API_KEY}`,
-        "Content-Type": "application/json",
-        "X-SearchApi-Source": "OpenSIN Chat",
+        'Content-Type': 'application/json',
+        'X-SearchApi-Source': 'OpenSIN Chat',
       },
       signal: AbortSignal.timeout(WEB_FETCH_TIMEOUT_MS),
     })
       .then((res) => {
         if (res.ok) return res.json();
         throw new Error(
-          `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_SEARCHAPI_API_KEY, 5), q: query })}`,
+          `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_SEARCHAPI_API_KEY, 5), q: query })}`
         );
       })
       .then((data) => {
@@ -186,13 +265,12 @@ const apiEngines = {
         this.super.handlerProps.log(`SearchApi Error: ${e.message}`);
         return { response: null, error: e.message };
       });
-    if (error)
-      return `There was an error searching for content. ${error}`;
+    if (error) return `There was an error searching for content. ${error}`;
 
     const data = [];
-    if (response.hasOwnProperty("knowledge_graph"))
+    if (response.hasOwnProperty('knowledge_graph'))
       data.push(response.knowledge_graph?.description);
-    if (response.hasOwnProperty("answer_box"))
+    if (response.hasOwnProperty('answer_box'))
       data.push(response.answer_box?.answer);
     response.organic_results?.forEach((searchResult) => {
       const { title, link, snippet } = searchResult;
@@ -205,7 +283,7 @@ const apiEngines = {
     this.reportSearchResultsCitations(data);
     const result = JSON.stringify(data);
     this.super.introspect(
-      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
+      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
     );
     return result;
   },
@@ -218,31 +296,31 @@ const apiEngines = {
   _serperDotDev: async function (query) {
     if (!process.env.AGENT_SERPER_DEV_KEY) {
       this.super.introspect(
-        `${this.caller}: I can't use Serper.dev searching because the user has not defined the required API key.\nVisit: https://serper.dev to create the API key for free.`,
+        `${this.caller}: I can't use Serper.dev searching because the user has not defined the required API key.\nVisit: https://serper.dev to create the API key for free.`
       );
       return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
     }
 
     this.super.introspect(
-      `${this.caller}: Using Serper.dev to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`,
+      `${this.caller}: Using Serper.dev to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`
     );
     const { response, error } = await fetch(
-      "https://google.serper.dev/search",
+      'https://google.serper.dev/search',
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "X-API-KEY": process.env.AGENT_SERPER_DEV_KEY,
-          "Content-Type": "application/json",
+          'X-API-KEY': process.env.AGENT_SERPER_DEV_KEY,
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ q: query }),
-        redirect: "follow",
+        redirect: 'follow',
         signal: AbortSignal.timeout(WEB_FETCH_TIMEOUT_MS),
-      },
+      }
     )
       .then((res) => {
         if (res.ok) return res.json();
         throw new Error(
-          `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_SERPER_DEV_KEY, 5), q: query })}`,
+          `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_SERPER_DEV_KEY, 5), q: query })}`
         );
       })
       .then((data) => {
@@ -252,11 +330,10 @@ const apiEngines = {
         this.super.handlerProps.log(`Serper.dev Error: ${e.message}`);
         return { response: null, error: e.message };
       });
-    if (error)
-      return `There was an error searching for content. ${error}`;
+    if (error) return `There was an error searching for content. ${error}`;
 
     const data = [];
-    if (response.hasOwnProperty("knowledgeGraph"))
+    if (response.hasOwnProperty('knowledgeGraph'))
       data.push(response.knowledgeGraph);
     response.organic?.forEach((searchResult) => {
       const { title, link, snippet } = searchResult;
@@ -269,7 +346,7 @@ const apiEngines = {
     this.reportSearchResultsCitations(data);
     const result = JSON.stringify(data);
     this.super.introspect(
-      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
+      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
     );
     return result;
   },
@@ -281,19 +358,19 @@ const apiEngines = {
   _tavilySearch: async function (query) {
     if (!process.env.AGENT_TAVILY_API_KEY) {
       this.super.introspect(
-        `${this.caller}: I can't use Tavily searching because the user has not defined the required API key.\nVisit: https://tavily.com/ to create the API key.`,
+        `${this.caller}: I can't use Tavily searching because the user has not defined the required API key.\nVisit: https://tavily.com/ to create the API key.`
       );
       return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
     }
 
     this.super.introspect(
-      `${this.caller}: Using Tavily to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`,
+      `${this.caller}: Using Tavily to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`
     );
 
-    const url = "https://api.tavily.com/search";
+    const url = 'https://api.tavily.com/search';
     const { response, error } = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         api_key: process.env.AGENT_TAVILY_API_KEY,
         query: query,
@@ -303,7 +380,7 @@ const apiEngines = {
       .then((res) => {
         if (res.ok) return res.json();
         throw new Error(
-          `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_TAVILY_API_KEY, 5), q: query })}`,
+          `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_TAVILY_API_KEY, 5), q: query })}`
         );
       })
       .then((data) => {
@@ -314,8 +391,7 @@ const apiEngines = {
         return { response: null, error: e.message };
       });
 
-    if (error)
-      return `There was an error searching for content. ${error}`;
+    if (error) return `There was an error searching for content. ${error}`;
 
     const data = [];
     response.results?.forEach((searchResult) => {
@@ -329,7 +405,7 @@ const apiEngines = {
     this.reportSearchResultsCitations(data);
     const result = JSON.stringify(data);
     this.super.introspect(
-      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
+      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
     );
     return result;
   },
@@ -341,25 +417,25 @@ const apiEngines = {
   _exaSearch: async function (query) {
     if (!process.env.AGENT_EXA_API_KEY) {
       this.super.introspect(
-        `${this.caller}: I can't use Exa searching because the user has not defined the required API key.\nVisit: https://exa.ai to create the API key.`,
+        `${this.caller}: I can't use Exa searching because the user has not defined the required API key.\nVisit: https://exa.ai to create the API key.`
       );
       return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
     }
 
     this.super.introspect(
-      `${this.caller}: Using Exa to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`,
+      `${this.caller}: Using Exa to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`
     );
 
-    const url = "https://api.exa.ai/search";
+    const url = 'https://api.exa.ai/search';
     const { response, error } = await fetch(url, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "x-api-key": process.env.AGENT_EXA_API_KEY,
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.AGENT_EXA_API_KEY,
       },
       body: JSON.stringify({
         query: query,
-        type: "auto",
+        type: 'auto',
         numResults: 10,
         contents: { text: true },
       }),
@@ -368,7 +444,7 @@ const apiEngines = {
       .then((res) => {
         if (res.ok) return res.json();
         throw new Error(
-          `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_EXA_API_KEY, 5), q: query })}`,
+          `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_EXA_API_KEY, 5), q: query })}`
         );
       })
       .then((data) => {
@@ -379,8 +455,7 @@ const apiEngines = {
         return { response: null, error: e.message };
       });
 
-    if (error)
-      return `There was an error searching for content. ${error}`;
+    if (error) return `There was an error searching for content. ${error}`;
 
     const data = [];
     response.results?.forEach((searchResult) => {
@@ -394,7 +469,7 @@ const apiEngines = {
     this.reportSearchResultsCitations(data);
     const result = JSON.stringify(data);
     this.super.introspect(
-      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
+      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
     );
     return result;
   },
@@ -406,21 +481,21 @@ const apiEngines = {
   _perplexitySearch: async function (query) {
     if (!process.env.AGENT_PERPLEXITY_API_KEY) {
       this.super.introspect(
-        `${this.caller}: I can't use Perplexity searching because the user has not defined the required API key.\nVisit: [https://console.perplexity.ai](https://console.perplexity.ai) to create the API key.`,
+        `${this.caller}: I can't use Perplexity searching because the user has not defined the required API key.\nVisit: [https://console.perplexity.ai](https://console.perplexity.ai) to create the API key.`
       );
       return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
     }
 
     this.super.introspect(
-      `${this.caller}: Using Perplexity to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`,
+      `${this.caller}: Using Perplexity to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`
     );
 
     const { response, error } = await fetch(
-      "https://api.perplexity.ai/search",
+      'https://api.perplexity.ai/search',
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${process.env.AGENT_PERPLEXITY_API_KEY}`,
         },
         body: JSON.stringify({
@@ -429,12 +504,12 @@ const apiEngines = {
           max_tokens_per_page: 2048,
         }),
         signal: AbortSignal.timeout(WEB_FETCH_TIMEOUT_MS),
-      },
+      }
     )
       .then((res) => {
         if (res.ok) return res.json();
         throw new Error(
-          `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_PERPLEXITY_API_KEY, 5), q: query })}`,
+          `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_PERPLEXITY_API_KEY, 5), q: query })}`
         );
       })
       .then((data) => {
@@ -445,8 +520,7 @@ const apiEngines = {
         return { response: null, error: e.message };
       });
 
-    if (error)
-      return `There was an error searching for content. ${error}`;
+    if (error) return `There was an error searching for content. ${error}`;
 
     const data = [];
     if (response.results) {
@@ -454,19 +528,19 @@ const apiEngines = {
         data.push({
           title: result.title,
           link: result.url,
-          snippet: result.snippet || "",
+          snippet: result.snippet || '',
         });
       });
     }
 
     if (data.length === 0)
-      return "No information was found online for the search query.";
+      return 'No information was found online for the search query.';
 
     this.reportSearchResultsCitations(data);
 
     const result = JSON.stringify(data);
     this.super.introspect(
-      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
+      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
     );
 
     return result;
