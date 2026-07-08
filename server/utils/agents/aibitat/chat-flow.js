@@ -3,8 +3,8 @@
 // Split from index.js as part of issue #528 — God-File reduction.
 // These methods are mixed into AIbitat.prototype.
 
-const { APIError } = require("./error.js");
-const consoleLogger = require("../../logger/console.js");
+const { APIError } = require('./error.js');
+const consoleLogger = require('../../logger/console.js');
 
 /**
  * Chat flow and event methods for AIbitat.
@@ -42,8 +42,8 @@ const chatFlowMethods = {
    */
   emitChatId(uuid = null) {
     if (!this.trackedChatId || !uuid) return null;
-    this.socket?.send?.("reportStreamEvent", {
-      type: "chatId",
+    this.socket?.send?.('reportStreamEvent', {
+      type: 'chatId',
       uuid,
       chatId: this.trackedChatId,
     });
@@ -57,7 +57,7 @@ const chatFlowMethods = {
     if (!citations) return;
     if (Array.isArray(citations))
       this._pendingCitations.push(...citations.filter(Boolean));
-    else if (typeof citations === "object")
+    else if (typeof citations === 'object')
       this._pendingCitations.push(citations);
   },
 
@@ -67,8 +67,8 @@ const chatFlowMethods = {
    */
   flushCitations(messageUuid) {
     if (!messageUuid || this._pendingCitations.length === 0) return;
-    this.socket?.send?.("reportStreamEvent", {
-      type: "citations",
+    this.socket?.send?.('reportStreamEvent', {
+      type: 'citations',
       uuid: messageUuid,
       citations: this._pendingCitations,
     });
@@ -93,8 +93,8 @@ const chatFlowMethods = {
       !routingMetadata.routedTo.shouldNotify
     )
       return;
-    this.socket?.send?.("reportStreamEvent", {
-      type: "modelRouteNotification",
+    this.socket?.send?.('reportStreamEvent', {
+      type: 'modelRouteNotification',
       uuid: `${messageUuid}:route`,
       routedTo: routingMetadata.routedTo,
     });
@@ -114,7 +114,7 @@ const chatFlowMethods = {
    * @param {{questions: Array<Object>, result: Object}} survey - The survey to add
    */
   addClarifyingQuestionSurvey(survey) {
-    if (!survey || typeof survey !== "object") return;
+    if (!survey || typeof survey !== 'object') return;
     this._pendingClarifyingQuestionSurveys.push(survey);
   },
 
@@ -142,7 +142,7 @@ const chatFlowMethods = {
    * @param config
    * @returns
    */
-  agent(name = "", config = {}) {
+  agent(name = '', config = {}) {
     this.agents.set(name, config);
     return this;
   },
@@ -154,7 +154,7 @@ const chatFlowMethods = {
    * @param config
    * @returns
    */
-  channel(name = "", members = [""], config = {}) {
+  channel(name = '', members = [''], config = {}) {
     this.channels.set(name, {
       members,
       ...config,
@@ -168,13 +168,13 @@ const chatFlowMethods = {
    * @throws When the agent configuration is not found.
    * @returns The agent configuration.
    */
-  getAgentConfig(agent = "") {
+  getAgentConfig(agent = '') {
     const config = this.agents.get(agent);
     if (!config) {
       throw new Error(`Agent configuration "${agent}" not found`);
     }
     return {
-      role: "You are a helpful AI assistant.",
+      role: 'You are a helpful AI assistant.',
       ...config,
     };
   },
@@ -185,14 +185,14 @@ const chatFlowMethods = {
    * @throws When the channel configuration is not found.
    * @returns The channel configuration.
    */
-  getChannelConfig(channel = "") {
+  getChannelConfig(channel = '') {
     const config = this.channels.get(channel);
     if (!config) {
       throw new Error(`Channel configuration "${channel}" not found`);
     }
     return {
       maxRounds: 10,
-      role: "",
+      role: '',
       ...config,
     };
   },
@@ -202,7 +202,7 @@ const chatFlowMethods = {
    * @param node The name of the group.
    * @returns The members of the group.
    */
-  getGroupMembers(node = "") {
+  getGroupMembers(node = '') {
     const group = this.getChannelConfig(node);
     return group.members;
   },
@@ -213,7 +213,7 @@ const chatFlowMethods = {
    * @returns
    */
   onAbort(listener = () => null) {
-    this.emitter.on("abort", listener);
+    this.emitter.on('abort', listener);
     return this;
   },
 
@@ -221,7 +221,7 @@ const chatFlowMethods = {
    * Abort the running of any plugins that may still be pending.
    */
   abort() {
-    this.emitter.emit("abort", null, this);
+    this.emitter.emit('abort', null, this);
   },
 
   /**
@@ -230,7 +230,7 @@ const chatFlowMethods = {
    * @returns
    */
   onTerminate(listener = () => null) {
-    this.emitter.on("terminate", listener);
+    this.emitter.on('terminate', listener);
     return this;
   },
 
@@ -238,8 +238,8 @@ const chatFlowMethods = {
    * Terminate the chat.
    * @param node Last node to chat with
    */
-  terminate(node = "") {
-    this.emitter.emit("terminate", node, this);
+  terminate(node = '') {
+    this.emitter.emit('terminate', node, this);
   },
 
   /**
@@ -248,7 +248,7 @@ const chatFlowMethods = {
    * @returns
    */
   onInterrupt(listener = () => null) {
-    this.emitter.on("interrupt", listener);
+    this.emitter.on('interrupt', listener);
     return this;
   },
 
@@ -260,9 +260,9 @@ const chatFlowMethods = {
   interrupt(route) {
     this._chats.push({
       ...route,
-      state: "interrupt",
+      state: 'interrupt',
     });
-    this.emitter.emit("interrupt", route, this);
+    this.emitter.emit('interrupt', route, this);
   },
 
   /**
@@ -270,8 +270,8 @@ const chatFlowMethods = {
    * @param listener
    * @returns
    */
-  onMessage(listener = (chat) => null) {
-    this.emitter.on("message", listener);
+  onMessage(listener = (_chat) => null) {
+    this.emitter.on('message', listener);
     return this;
   },
 
@@ -282,14 +282,14 @@ const chatFlowMethods = {
   newMessage(message) {
     const chat = {
       ...message,
-      state: "success",
+      state: 'success',
     };
 
-    this._chats.push(chat);
+    this._chats.push(_chat);
     if (this._chats.length > 200) {
       this._chats.splice(0, this._chats.length - 200);
     }
-    this.emitter.emit("message", chat, this);
+    this.emitter.emit('message', chat, this);
   },
 
   /**
@@ -312,9 +312,9 @@ const chatFlowMethods = {
       error = null,
       // eslint-disable-next-line
       {}
-    ) => null,
+    ) => null
   ) {
-    this.emitter.on("replyError", listener);
+    this.emitter.on('replyError', listener);
     return this;
   },
 
@@ -324,7 +324,7 @@ const chatFlowMethods = {
    * @returns
    */
   onToolCallResult(listener = () => null) {
-    this.emitter.on("toolCallResult", listener);
+    this.emitter.on('toolCallResult', listener);
     return this;
   },
 
@@ -337,13 +337,13 @@ const chatFlowMethods = {
     const chat = {
       ...route,
       content: error instanceof Error ? error.message : String(error),
-      state: "error",
+      state: 'error',
     };
-    this._chats.push(chat);
+    this._chats.push(_chat);
     if (this._chats.length > 200) {
       this._chats.splice(0, this._chats.length - 200);
     }
-    this.emitter.emit("replyError", error, chat);
+    this.emitter.emit('replyError', error, chat);
   },
 
   /**
@@ -351,8 +351,8 @@ const chatFlowMethods = {
    * @param listener
    * @returns
    */
-  onStart(listener = (chat, aibitat) => null) {
-    this.emitter.on("start", listener);
+  onStart(listener = (_chat, _aibitat) => null) {
+    this.emitter.on('start', listener);
     return this;
   },
 
@@ -362,7 +362,7 @@ const chatFlowMethods = {
    */
   async start(message) {
     this.newMessage(message);
-    this.emitter.emit("start", message, this);
+    this.emitter.emit('start', message, this);
 
     await this.chat({
       to: message.from,
@@ -382,7 +382,7 @@ const chatFlowMethods = {
       let nextNode;
       try {
         nextNode = await this.selectNext(route.from);
-      } catch (error) {
+      } catch (_error) {
         if (error instanceof APIError) {
           return this.newError({ from: route.from, to: route.to }, error);
         }
@@ -406,7 +406,7 @@ const chatFlowMethods = {
 
       const history = this.getHistory({ to: route.from });
       const group = this.getGroupMembers(route.from);
-      const rounds = history.filter((chat) => group.includes(chat.from)).length;
+      const rounds = history.filter((_chat) => group.includes(chat.from)).length;
 
       const { maxRounds } = this.getChannelConfig(route.from);
       if (rounds >= maxRounds) {
@@ -421,7 +421,7 @@ const chatFlowMethods = {
     let reply;
     try {
       reply = await this.reply(route);
-    } catch (error) {
+    } catch (_error) {
       if (error instanceof APIError) {
         return this.newError({ from: route.from, to: route.to }, error);
       }
@@ -429,7 +429,7 @@ const chatFlowMethods = {
     }
 
     if (
-      reply === "TERMINATE" ||
+      reply === 'TERMINATE' ||
       this.hasReachedMaximumRounds(route.from, route.to)
     ) {
       this.terminate(route.to);
@@ -439,7 +439,7 @@ const chatFlowMethods = {
     const newChat = { to: route.from, from: route.to };
 
     if (
-      reply === "INTERRUPT" ||
+      reply === 'INTERRUPT' ||
       (this.agents.get(route.to) && this.shouldAgentInterrupt(route.to))
     ) {
       this.interrupt(newChat);
@@ -456,9 +456,9 @@ const chatFlowMethods = {
    * @param agent
    * @returns {boolean} Whether the agent should interrupt the chat.
    */
-  shouldAgentInterrupt(agent = "") {
+  shouldAgentInterrupt(agent = '') {
     const config = this.getAgentConfig(agent);
-    return this.defaultInterrupt === "ALWAYS" || config.interrupt === "ALWAYS";
+    return this.defaultInterrupt === 'ALWAYS' || config.interrupt === 'ALWAYS';
   },
 
   /**
@@ -466,18 +466,18 @@ const chatFlowMethods = {
    * @param channel The name of the group.
    * @returns The name of the node to chat with.
    */
-  async selectNext(channel = "") {
+  async selectNext(channel = '') {
     const nodes = this.getGroupMembers(channel);
     const channelConfig = this.getChannelConfig(channel);
 
     if (nodes.length < 3) {
       consoleLogger.warn(
-        `- Group (${channel}) is underpopulated with ${nodes.length} agents. Direct communication would be more efficient.`,
+        `- Group (${channel}) is underpopulated with ${nodes.length} agents. Direct communication would be more efficient.`
       );
     }
 
     const availableNodes = nodes.filter(
-      (node) => !this.hasReachedMaximumRounds(channel, node),
+      (node) => !this.hasReachedMaximumRounds(channel, node)
     );
 
     const lastChat = this._chats.filter((c) => c.to === channel).at(-1);
@@ -492,7 +492,7 @@ const chatFlowMethods = {
 
     const provider = this.getProviderForConfig({
       // @ts-expect-error
-      model: "gpt-4",
+      model: 'gpt-4',
       ...this.defaultProvider,
       ...channelConfig,
     });
@@ -502,18 +502,18 @@ const chatFlowMethods = {
 
     const messages = [
       {
-        role: "system",
+        role: 'system',
         content: channelConfig.role,
       },
       {
-        role: "user",
+        role: 'user',
         content: `You are in a role play game. The following roles are available:
-${availableNodes.map((node) => `@${node}: ${this.getAgentConfig(node).role}`).join("\n")}.
+${availableNodes.map((node) => `@${node}: ${this.getAgentConfig(node).role}`).join('\n')}.
 
 Read the following conversation.
 
 CHAT HISTORY
-${history.map((c) => `@${c.from}: ${c.content}`).join("\n")}
+${history.map((c) => `@${c.from}: ${c.content}`).join('\n')}
 
 Then select the next role from that is going to speak next.
 Only return the role.
@@ -522,7 +522,7 @@ Only return the role.
     ];
 
     const { result } = await provider.complete(messages);
-    const name = result?.replace(/^@/g, "");
+    const name = result?.replace(/^@/g, '');
     if (this.agents.get(name)) return name;
 
     return availableNodes[Math.floor(Math.random() * availableNodes.length)];
@@ -531,7 +531,7 @@ Only return the role.
   /**
    * Check if the chat has reached the maximum number of rounds.
    */
-  hasReachedMaximumRounds(from = "", to = "") {
+  hasReachedMaximumRounds(from = '', to = '') {
     return this.getHistory({ from, to }).length >= this.maxRounds;
   },
 
@@ -544,14 +544,14 @@ Only return the role.
     if (this.channels.get(route.to)) {
       return [
         {
-          role: "user",
+          role: 'user',
           content: `You are in a whatsapp group. Read the following conversation and then reply.
 Do not add introduction or conclusion to your reply because this will be a continuous conversation. Don't introduce yourself.
 
 CHAT HISTORY
 ${this.getHistory({ to: route.to })
   .map((c) => `@${c.from}: ${c.content}`)
-  .join("\n")}
+  .join('\n')}
 
 @${route.from}:`,
         },
@@ -561,12 +561,12 @@ ${this.getHistory({ to: route.to })
     return this.getHistory(route).map((c) => {
       const message = {
         content: c.content,
-        role: c.from === route.to ? "user" : "assistant",
+        role: c.from === route.to ? 'user' : 'assistant',
       };
       if (
         c.attachments &&
         c.attachments.length > 0 &&
-        message.role === "user"
+        message.role === 'user'
       ) {
         message.attachments = c.attachments;
       }
@@ -582,8 +582,8 @@ ${this.getHistory({ to: route.to })
    */
   async continue(feedback, attachments = []) {
     const lastChat = this._chats.at(-1);
-    if (!lastChat || lastChat.state !== "interrupt") {
-      throw new Error("No chat to continue");
+    if (!lastChat || lastChat.state !== 'interrupt') {
+      throw new Error('No chat to continue');
     }
 
     this._chats.pop();
@@ -591,7 +591,7 @@ ${this.getHistory({ to: route.to })
     const { from, to } = lastChat;
 
     if (this.hasReachedMaximumRounds(from, to)) {
-      throw new Error("Maximum rounds reached");
+      throw new Error('Maximum rounds reached');
     }
 
     if (feedback) {
@@ -620,8 +620,8 @@ ${this.getHistory({ to: route.to })
    */
   async retry() {
     const lastChat = this._chats.at(-1);
-    if (!lastChat || lastChat.state !== "error") {
-      throw new Error("No chat to retry");
+    if (!lastChat || lastChat.state !== 'error') {
+      throw new Error('No chat to retry');
     }
 
     // eslint-disable-next-line
@@ -635,8 +635,8 @@ ${this.getHistory({ to: route.to })
    * Get the chat history between two nodes or all chats to/from a node.
    */
   getHistory({ from, to }) {
-    return this._chats.filter((chat) => {
-      const isSuccess = chat.state === "success";
+    return this._chats.filter((_chat) => {
+      const isSuccess = chat.state === 'success';
 
       if (!from) {
         return isSuccess && chat.to === to;

@@ -9,14 +9,14 @@
 //   NODE_ENV=production node scripts/migrate-env-to-db.js
 //
 // Idempotent: re-running simply upserts the same values.
-const path = require("path");
+const path = require('path');
 
-process.env.NODE_ENV === "development"
-  ? require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` })
-  : require("dotenv").config();
+process.env.NODE_ENV === 'development'
+  ? require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
+  : require('dotenv').config();
 
-const { KEY_MAPPING } = require("../utils/helpers/updateENV/keyMapping");
-const { SettingsManager } = require("../utils/SettingsManager");
+const { KEY_MAPPING } = require('../utils/helpers/updateENV/keyMapping');
+const { SettingsManager } = require('../utils/SettingsManager');
 
 /**
  * Migrate all KEY_MAPPING env vars from process.env into the DB via
@@ -30,7 +30,7 @@ async function migrateEnvToDb({ silent = false } = {}) {
 
   if (!silent)
     console.log(
-      `[migrate-env-to-db] Scanning ${managedEnvKeys.length} managed settings...`,
+      `[migrate-env-to-db] Scanning ${managedEnvKeys.length} managed settings...`
     );
 
   for (const envKey of managedEnvKeys) {
@@ -42,11 +42,11 @@ async function migrateEnvToDb({ silent = false } = {}) {
     try {
       await SettingsManager.set(envKey, value, {
         userId: null,
-        action: "migrate",
-        category: "env-migration",
+        action: 'migrate',
+        category: 'env-migration',
       });
       if (!silent) {
-        const label = SettingsManager.isSensitive(envKey) ? "(encrypted)" : "";
+        const label = SettingsManager.isSensitive(envKey) ? '(encrypted)' : '';
         console.log(`  migrated ${envKey} ${label}`);
       }
       migrated++;
@@ -57,7 +57,7 @@ async function migrateEnvToDb({ silent = false } = {}) {
 
   if (!silent)
     console.log(
-      `[migrate-env-to-db] Done. Migrated ${migrated}, skipped ${skipped} (unset).`,
+      `[migrate-env-to-db] Done. Migrated ${migrated}, skipped ${skipped} (unset).`
     );
 
   return { migrated, skipped };

@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: MIT
-const consoleLogger = require("../../logger/console.js");
+const consoleLogger = require('../../logger/console.js');
 
-const { getStoragePath } = require("../../paths");
-const path = require("path");
-const fs = require("fs");
-const { toChunks, reportEmbeddingProgress } = require("../../helpers");
-const { v4 } = require("uuid");
-const { SUPPORTED_NATIVE_EMBEDDING_MODELS } = require("./constants");
+const { getStoragePath } = require('../../paths');
+const path = require('path');
+const fs = require('fs');
+const { toChunks, reportEmbeddingProgress } = require('../../helpers');
+const { v4 } = require('uuid');
+const { SUPPORTED_NATIVE_EMBEDDING_MODELS } = require('./constants');
 
 class NativeEmbedder {
-  static defaultModel = "Xenova/all-MiniLM-L6-v2";
+  static defaultModel = 'Xenova/all-MiniLM-L6-v2';
 
   /**
    * Supported embedding models for native.
@@ -31,14 +31,14 @@ class NativeEmbedder {
   // This is a folder that OpenSIN-AI hosts for those who cannot capture the HF model download
   // endpoint for various reasons. This endpoint is not guaranteed to be active or maintained
   // and may go offline at any time at OpenSIN-AI's discretion.
-  #fallbackHost = "https://cdn.opensin.com/support/models/";
+  #fallbackHost = 'https://cdn.opensin.com/support/models/';
 
   constructor() {
-    this.className = "NativeEmbedder";
+    this.className = 'NativeEmbedder';
     this.model = this.getEmbeddingModel();
     this.modelInfo = this.getEmbedderInfo();
-    this.cacheDir = getStoragePath("models");
-    this.modelPath = path.resolve(this.cacheDir, ...this.model.split("/"));
+    this.cacheDir = getStoragePath('models');
+    this.modelPath = path.resolve(this.cacheDir, ...this.model.split('/'));
     // Limit of how many strings we can process in a single pass to stay with resource or network limits
     this.maxConcurrentChunks = this.modelInfo.maxConcurrentChunks;
     this.embeddingMaxChunkLength = this.modelInfo.embeddingMaxChunkLength;
@@ -65,11 +65,11 @@ class NativeEmbedder {
   }
 
   get embeddingPrefix() {
-    return NativeEmbedder.supportedModels[this.model]?.chunkPrefix || "";
+    return NativeEmbedder.supportedModels[this.model]?.chunkPrefix || '';
   }
 
   get queryPrefix() {
-    return NativeEmbedder.supportedModels[this.model]?.queryPrefix || "";
+    return NativeEmbedder.supportedModels[this.model]?.queryPrefix || '';
   }
 
   /**
@@ -79,7 +79,7 @@ class NativeEmbedder {
    */
   static availableModels() {
     return Object.values(NativeEmbedder.supportedModels).map(
-      (model) => model.apiInfo,
+      (model) => model.apiInfo
     );
   }
 
@@ -112,14 +112,14 @@ class NativeEmbedder {
 
   #tempfilePath() {
     const filename = `${v4()}.tmp`;
-    const tmpPath = getStoragePath("tmp");
+    const tmpPath = getStoragePath('tmp');
     fs.mkdirSync(tmpPath, { recursive: true });
     return path.resolve(tmpPath, filename);
   }
 
   async #writeToTempfile(filePath, data) {
     try {
-      await fs.promises.appendFile(filePath, data, { encoding: "utf8" });
+      await fs.promises.appendFile(filePath, data, { encoding: 'utf8' });
     } catch (e) {
       consoleLogger.error(`Error writing to tempfile: ${e}`);
     }
@@ -129,30 +129,30 @@ class NativeEmbedder {
     try {
       // Convert ESM to CommonJS via import so we can load this library.
       const pipeline = (...args) =>
-        import("@huggingface/transformers").then(({ pipeline, env }) => {
+        import('@huggingface/transformers').then(({ pipeline, env }) => {
           if (!this.modelDownloaded) {
             // if model is not downloaded, we will log where we are fetching from.
             if (hostOverride) {
               env.remoteHost = hostOverride;
-              env.remotePathTemplate = "{model}/"; // Our S3 fallback url does not support revision File structure.
+              env.remotePathTemplate = '{model}/'; // Our S3 fallback url does not support revision File structure.
             }
             this.log(`Downloading ${this.model} from ${env.remoteHost}`);
           }
           return pipeline(...args);
         });
       return {
-        pipeline: await pipeline("feature-extraction", this.model, {
+        pipeline: await pipeline('feature-extraction', this.model, {
           cache_dir: this.cacheDir,
           ...(!this.modelDownloaded
             ? {
                 // Show download progress if we need to download any files
                 progress_callback: (data) => {
-                  if (!data.hasOwnProperty("progress")) return;
+                  if (!data.hasOwnProperty('progress')) return;
 
                   consoleLogger.log(
                     `\x1b[36m[NativeEmbedder - Downloading model]\x1b[0m ${
                       data.file
-                    } ${~~data?.progress}%`,
+                    } ${~~data?.progress}%`
                   );
                 },
               }
@@ -178,7 +178,7 @@ class NativeEmbedder {
   async embedderClient() {
     if (!this.modelDownloaded)
       this.log(
-        "The native embedding model has never been run and will be downloaded right now. Subsequent runs will be faster. (~23MB)",
+        'The native embedding model has never been run and will be downloaded right now. Subsequent runs will be faster. (~23MB)'
       );
 
     let fetchResponse = await this.#fetchWithHost();
@@ -188,7 +188,7 @@ class NativeEmbedder {
     }
 
     this.log(
-      `Failed to download model from primary URL. Using fallback ${fetchResponse.retry}`,
+      `Failed to download model from primary URL. Using fallback ${fetchResponse.retry}`
     );
     if (!!fetchResponse.retry)
       fetchResponse = await this.#fetchWithHost(fetchResponse.retry);
@@ -222,7 +222,7 @@ class NativeEmbedder {
   async embedTextInput(textInput) {
     textInput = this.#applyQueryPrefix(textInput);
     const result = await this.embedChunks(
-      Array.isArray(textInput) ? textInput : [textInput],
+      Array.isArray(textInput) ? textInput : [textInput]
     );
     return result?.[0] || [];
   }
@@ -249,11 +249,11 @@ class NativeEmbedder {
 
     try {
       for (let [idx, chunk] of chunks.entries()) {
-        if (idx === 0) await this.#writeToTempfile(tmpFilePath, "[");
+        if (idx === 0) await this.#writeToTempfile(tmpFilePath, '[');
         let data;
         let pipeline = await this.embedderClient();
         let output = await pipeline(chunk, {
-          pooling: "mean",
+          pooling: 'mean',
           normalize: true,
         });
 
@@ -265,7 +265,7 @@ class NativeEmbedder {
           // to be mapped to the wrong text content in addDocumentToNamespace.
           throw new Error(
             `Native embedder returned empty output for chunk group ${idx + 1} of ${chunkLen}. ` +
-              `Document embedding aborted to prevent silent data corruption.`,
+              `Document embedding aborted to prevent silent data corruption.`
           );
         }
 
@@ -273,12 +273,12 @@ class NativeEmbedder {
         data = JSON.stringify(output.tolist());
         await this.#writeToTempfile(tmpFilePath, data);
         this.log(`Embedded Chunk Group ${idx + 1} of ${chunkLen}`);
-        if (chunkLen - 1 !== idx) await this.#writeToTempfile(tmpFilePath, ",");
-        if (chunkLen - 1 === idx) await this.#writeToTempfile(tmpFilePath, "]");
+        if (chunkLen - 1 !== idx) await this.#writeToTempfile(tmpFilePath, ',');
+        if (chunkLen - 1 === idx) await this.#writeToTempfile(tmpFilePath, ']');
 
         reportEmbeddingProgress(
           Math.min((idx + 1) * this.maxConcurrentChunks, totalChunks),
-          totalChunks,
+          totalChunks
         );
         pipeline = null;
         output = null;
@@ -287,7 +287,9 @@ class NativeEmbedder {
 
       if (!wroteAnyData) return [];
 
-      const raw = await fs.promises.readFile(tmpFilePath, { encoding: "utf-8" });
+      const raw = await fs.promises.readFile(tmpFilePath, {
+        encoding: 'utf-8',
+      });
       const embeddingResults = JSON.parse(raw);
       return embeddingResults.length > 0 ? embeddingResults.flat() : null;
     } finally {

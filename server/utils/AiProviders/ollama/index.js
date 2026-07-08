@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: MIT
-const consoleLogger = require("../../logger/console.js");
+const consoleLogger = require('../../logger/console.js');
 
 const {
   writeResponseChunk,
   clientAbortedHandler,
   formatChatHistory,
-} = require("../../helpers/chat/responses");
-const { NativeEmbedder } = require("../../EmbeddingEngines/native");
+} = require('../../helpers/chat/responses');
+const { NativeEmbedder } = require('../../EmbeddingEngines/native');
 const {
   LLMPerformanceMonitor,
-} = require("../../helpers/chat/LLMPerformanceMonitor");
-const { Ollama } = require("ollama");
-const { v4: uuidv4 } = require("uuid");
+} = require('../../helpers/chat/LLMPerformanceMonitor');
+const { Ollama } = require('ollama');
+const { v4: uuidv4 } = require('uuid');
 
 // Docs: https://github.com/jmorganca/ollama/blob/main/docs/api.md
 class OllamaAILLM {
@@ -20,9 +20,9 @@ class OllamaAILLM {
 
   constructor(embedder = null, modelPreference = null) {
     if (!process.env.OLLAMA_BASE_PATH)
-      throw new Error("No Ollama Base Path was set.");
+      throw new Error('No Ollama Base Path was set.');
 
-    this.className = "OllamaAILLM";
+    this.className = 'OllamaAILLM';
     this.authToken = process.env.OLLAMA_AUTH_TOKEN;
     this.basePath = process.env.OLLAMA_BASE_PATH;
     this.model = modelPreference || process.env.OLLAMA_MODEL_PREF;
@@ -65,7 +65,7 @@ class OllamaAILLM {
       user: this.promptWindowLimit() * 0.7,
     };
     this.#log(
-      `model ${this.model} is using a max context window of ${this.promptWindowLimit()}/${OllamaAILLM.maxContextWindow(this.model)} tokens.`,
+      `model ${this.model} is using a max context window of ${this.promptWindowLimit()}/${OllamaAILLM.maxContextWindow(this.model)} tokens.`
     );
   }
 
@@ -97,13 +97,13 @@ class OllamaAILLM {
       const infoPromises = models.map((model) =>
         client
           .show({ model: model.name })
-          .then((info) => ({ name: model.name, ...info })),
+          .then((info) => ({ name: model.name, ...info }))
       );
       const infos = await Promise.all(infoPromises);
       infos.forEach((showInfo) => {
-        if (showInfo.capabilities?.includes("embedding")) return;
+        if (showInfo.capabilities?.includes('embedding')) return;
         const contextWindowKey = Object.keys(showInfo.model_info || {}).find(
-          (key) => key.endsWith(".context_length"),
+          (key) => key.endsWith('.context_length')
         );
         if (!contextWindowKey)
           return (OllamaAILLM.modelContextWindows[showInfo.name] = 4096);
@@ -118,14 +118,14 @@ class OllamaAILLM {
   }
 
   #appendContext(contextTexts = []) {
-    if (!contextTexts || !contextTexts.length) return "";
+    if (!contextTexts || !contextTexts.length) return '';
     return (
-      "\nContext:\n" +
+      '\nContext:\n' +
       contextTexts
         .map((text, i) => {
           return `[CONTEXT ${i}]:\n${text}\n[END CONTEXT ${i}]\n\n`;
         })
-        .join("")
+        .join('')
     );
   }
 
@@ -137,14 +137,14 @@ class OllamaAILLM {
    */
   static applyOllamaFetch() {
     try {
-      if (!("OLLAMA_RESPONSE_TIMEOUT" in process.env)) return fetch;
-      const { Agent } = require("undici");
+      if (!('OLLAMA_RESPONSE_TIMEOUT' in process.env)) return fetch;
+      const { Agent } = require('undici');
       let timeout = process.env.OLLAMA_RESPONSE_TIMEOUT;
 
       if (!timeout || isNaN(Number(timeout)) || Number(timeout) <= 5 * 60_000) {
         OllamaAILLM.#slog(
-          "Timeout option was not set, is not a number, or is less than 5 minutes in ms - falling back to default",
-          { timeout },
+          'Timeout option was not set, is not a number, or is less than 5 minutes in ms - falling back to default',
+          { timeout }
         );
         return fetch;
       } else timeout = Number(timeout);
@@ -156,28 +156,29 @@ class OllamaAILLM {
         });
       };
 
-      const humanDiff = timeout >= 60_000
-        ? `${Math.round(timeout / 60_000)} min`
-        : `${Math.round(timeout / 1_000)} sec`;
+      const humanDiff =
+        timeout >= 60_000
+          ? `${Math.round(timeout / 60_000)} min`
+          : `${Math.round(timeout / 1_000)} sec`;
       OllamaAILLM.#slog(`Applying custom fetch w/timeout of ${humanDiff}.`);
       return noTimeoutFetch;
     } catch (error) {
       OllamaAILLM.#slog(
-        "Error applying custom fetch - using default fetch",
-        error,
+        'Error applying custom fetch - using default fetch',
+        error
       );
       return fetch;
     }
   }
 
   streamingEnabled() {
-    return "streamGetChatCompletion" in this;
+    return 'streamGetChatCompletion' in this;
   }
 
   static promptWindowLimit(modelName) {
     if (Object.keys(OllamaAILLM.modelContextWindows).length === 0) {
       this.#slog(
-        "No context windows cached - Context window may be inaccurately reported.",
+        'No context windows cached - Context window may be inaccurately reported.'
       );
       return Number(process.env.OLLAMA_MODEL_TOKEN_LIMIT) || 4096;
     }
@@ -213,7 +214,7 @@ class OllamaAILLM {
     return Number(OllamaAILLM.modelContextWindows[modelName]) || 16384;
   }
 
-  async isValidChatCompletionModel(_ = "") {
+  async isValidChatCompletionModel(_ = '') {
     return true;
   }
 
@@ -225,7 +226,7 @@ class OllamaAILLM {
   #generateContent({ userPrompt, attachments = [] }) {
     if (!attachments.length) return { content: userPrompt };
     const images = attachments.map(
-      (attachment) => attachment.contentString.split("base64,").slice(-1)[0],
+      (attachment) => attachment.contentString.split('base64,').slice(-1)[0]
     );
     return { content: userPrompt, images };
   }
@@ -236,9 +237,9 @@ class OllamaAILLM {
    */
   #errorHandler(e) {
     switch (e.message) {
-      case "fetch failed":
+      case 'fetch failed':
         throw new Error(
-          "Your Ollama instance could not be reached or is not responding. Please make sure it is running the API server and your connection information is correct in OpenSIN Chat.",
+          'Your Ollama instance could not be reached or is not responding. Please make sure it is running the API server and your connection information is correct in OpenSIN Chat.'
         );
       default:
         return e;
@@ -251,21 +252,21 @@ class OllamaAILLM {
    * @returns
    */
   constructPrompt({
-    systemPrompt = "",
+    systemPrompt = '',
     contextTexts = [],
     chatHistory = [],
-    userPrompt = "",
+    userPrompt = '',
     attachments = [],
   }) {
     const prompt = {
-      role: "system",
+      role: 'system',
       content: `${systemPrompt}${this.#appendContext(contextTexts)}`,
     };
     return [
       prompt,
-      ...formatChatHistory(chatHistory, this.#generateContent, "spread"),
+      ...formatChatHistory(chatHistory, this.#generateContent, 'spread'),
       {
-        role: "user",
+        role: 'user',
         ...this.#generateContent({ userPrompt, attachments }),
       },
     ];
@@ -300,9 +301,9 @@ class OllamaAILLM {
         })
         .catch((e) => {
           throw new Error(
-            `Ollama::getChatCompletion failed to communicate with Ollama. ${this.#errorHandler(e).message}`,
+            `Ollama::getChatCompletion failed to communicate with Ollama. ${this.#errorHandler(e).message}`
           );
-        }),
+        })
     );
 
     if (!result.output.content || !result.output.content.length)
@@ -357,8 +358,8 @@ class OllamaAILLM {
     const { uuid = uuidv4(), sources = [] } = responseProps;
 
     return new Promise(async (resolve) => {
-      let fullText = "";
-      let reasoningText = "";
+      let fullText = '';
+      let reasoningText = '';
       let usage = {
         prompt_tokens: 0,
         completion_tokens: 0,
@@ -372,13 +373,13 @@ class OllamaAILLM {
         stream?.endMeasurement(usage);
         clientAbortedHandler(resolve, fullText);
       };
-      response.on("close", handleAbort);
+      response.on('close', handleAbort);
 
       try {
         for await (const chunk of stream) {
           if (chunk === undefined)
             throw new Error(
-              "Stream returned undefined chunk. Aborting reply - check model provider logs.",
+              'Stream returned undefined chunk. Aborting reply - check model provider logs.'
             );
 
           if (chunk.done) {
@@ -390,18 +391,18 @@ class OllamaAILLM {
             writeResponseChunk(response, {
               uuid,
               sources,
-              type: "textResponseChunk",
-              textResponse: "",
+              type: 'textResponseChunk',
+              textResponse: '',
               close: true,
               error: false,
             });
-            response.removeListener("close", handleAbort);
+            response.removeListener('close', handleAbort);
             stream?.endMeasurement(usage);
             resolve(fullText);
             break;
           }
 
-          if (chunk.hasOwnProperty("message")) {
+          if (chunk.hasOwnProperty('message')) {
             // As of Ollama v0.9.0+, thinking content comes in a separate property
             // in the response object. If it exists, we need to handle it separately by wrapping it in <think> tags.
             const content = chunk.message.content;
@@ -409,11 +410,11 @@ class OllamaAILLM {
 
             if (reasoningToken) {
               if (reasoningText.length === 0) {
-                const startTag = "<think>";
+                const startTag = '<think>';
                 writeResponseChunk(response, {
                   uuid,
                   sources,
-                  type: "textResponseChunk",
+                  type: 'textResponseChunk',
                   textResponse: startTag + reasoningToken,
                   close: false,
                   error: false,
@@ -423,7 +424,7 @@ class OllamaAILLM {
                 writeResponseChunk(response, {
                   uuid,
                   sources,
-                  type: "textResponseChunk",
+                  type: 'textResponseChunk',
                   textResponse: reasoningToken,
                   close: false,
                   error: false,
@@ -433,23 +434,23 @@ class OllamaAILLM {
             } else if (content?.length > 0) {
               // If we have reasoning text, we need to close the reasoning tag and then append the content.
               if (reasoningText.length > 0) {
-                const endTag = "</think>";
+                const endTag = '</think>';
                 writeResponseChunk(response, {
                   uuid,
                   sources,
-                  type: "textResponseChunk",
+                  type: 'textResponseChunk',
                   textResponse: endTag,
                   close: false,
                   error: false,
                 });
                 fullText += reasoningText + endTag;
-                reasoningText = ""; // Reset reasoning buffer
+                reasoningText = ''; // Reset reasoning buffer
               }
               fullText += content; // Append regular text
               writeResponseChunk(response, {
                 uuid,
                 sources,
-                type: "textResponseChunk",
+                type: 'textResponseChunk',
                 textResponse: content,
                 close: false,
                 error: false,
@@ -461,14 +462,14 @@ class OllamaAILLM {
         writeResponseChunk(response, {
           uuid,
           sources: [],
-          type: "textResponseChunk",
-          textResponse: "",
+          type: 'textResponseChunk',
+          textResponse: '',
           close: true,
           error: `Ollama:streaming - could not stream chat. ${
             error?.cause ?? error.message
           }`,
         });
-        response.removeListener("close", handleAbort);
+        response.removeListener('close', handleAbort);
         stream?.endMeasurement(usage);
         resolve(fullText);
       }
@@ -485,18 +486,18 @@ class OllamaAILLM {
         model: this.model,
       });
       return {
-        tools: capabilities.includes("tools") ? true : false,
-        reasoning: capabilities.includes("thinking") ? true : false,
+        tools: capabilities.includes('tools') ? true : false,
+        reasoning: capabilities.includes('thinking') ? true : false,
         imageGeneration: false, // we dont have any image generation capabilities for Ollama or anywhere right now.
-        vision: capabilities.includes("vision") ? true : false,
+        vision: capabilities.includes('vision') ? true : false,
       };
     } catch (error) {
-      consoleLogger.error("Error getting model capabilities:", error);
+      consoleLogger.error('Error getting model capabilities:', error);
       return {
-        tools: "unknown",
-        reasoning: "unknown",
-        imageGeneration: "unknown",
-        vision: "unknown",
+        tools: 'unknown',
+        reasoning: 'unknown',
+        imageGeneration: 'unknown',
+        vision: 'unknown',
       };
     }
   }
@@ -511,7 +512,7 @@ class OllamaAILLM {
 
   async compressMessages(promptArgs = {}, rawHistory = []) {
     await this.assertModelContextLimits();
-    const { messageArrayCompressor } = require("../../helpers/chat");
+    const { messageArrayCompressor } = require('../../helpers/chat');
     const messageArray = this.constructPrompt(promptArgs);
     return await messageArrayCompressor(this, messageArray, rawHistory);
   }
