@@ -22,7 +22,7 @@ const CSRF_BACKEND = (process.env.CSRF_BACKEND || "memory").toLowerCase();
 let redisClient = null;
 let redisSet = null;
 let redisGet = null;
-let redisDel = null;
+let _redisDel = null;
 
 if (CSRF_BACKEND === "redis") {
   try {
@@ -42,7 +42,7 @@ if (CSRF_BACKEND === "redis") {
     redisGet = async function (key) {
       return await redisClient.get(key);
     };
-    redisDel = async function (key) {
+    _redisDel = async function (key) {
       await redisClient.del(key);
     };
   } catch (err) {
@@ -52,7 +52,7 @@ if (CSRF_BACKEND === "redis") {
     redisClient = null;
     redisSet = null;
     redisGet = null;
-    redisDel = null;
+    _redisDel = null;
   }
 }
 
