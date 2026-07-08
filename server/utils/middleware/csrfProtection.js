@@ -8,8 +8,8 @@
 // multiple server instances. Falls back to in-memory Map when Redis is
 // not configured (single-instance deployments).
 // Set CSRF_BACKEND=redis and REDIS_URL=... to enable.
-const consoleLogger = require('../logger/console.js');
-const crypto = require('crypto');
+const consoleLogger = require("../logger/console.js");
+const crypto = require("crypto");
 
 // In-memory store for CSRF tokens with TTL (fallback).
 // Each token is tied to a session JWT hash and expires after 1 hour.
@@ -18,26 +18,26 @@ const MAX_TRACKED_KEYS = 10000;
 const tokens = new Map(); // tokenHash -> { jwtHash, expiresAt }
 
 // Redis backend (optional, for horizontal scaling)
-const CSRF_BACKEND = (process.env.CSRF_BACKEND || 'memory').toLowerCase();
+const CSRF_BACKEND = (process.env.CSRF_BACKEND || "memory").toLowerCase();
 let redisClient = null;
 let redisSet = null;
 let redisGet = null;
 let redisDel = null;
 
-if (CSRF_BACKEND === 'redis') {
+if (CSRF_BACKEND === "redis") {
   try {
-    const IORedis = require('ioredis');
+    const IORedis = require("ioredis");
     redisClient = new IORedis(
-      process.env.REDIS_URL || 'redis://localhost:6379',
-      { lazyConnect: true, maxRetriesPerRequest: 1 }
+      process.env.REDIS_URL || "redis://localhost:6379",
+      { lazyConnect: true, maxRetriesPerRequest: 1 },
     );
     redisClient.connect().catch((err) => {
       consoleLogger.warn(
-        `[csrfProtection] Redis connection failed: ${err.message}. Falling back to in-memory.`
+        `[csrfProtection] Redis connection failed: ${err.message}. Falling back to in-memory.`,
       );
     });
     redisSet = async function (key, value, ttlMs) {
-      await redisClient.set(key, value, 'PX', ttlMs);
+      await redisClient.set(key, value, "PX", ttlMs);
     };
     redisGet = async function (key) {
       return await redisClient.get(key);
@@ -47,7 +47,7 @@ if (CSRF_BACKEND === 'redis') {
     };
   } catch (err) {
     consoleLogger.warn(
-      `[csrfProtection] CSRF_BACKEND=redis requested but ioredis not installed: ${err.message}. Falling back to in-memory.`
+      `[csrfProtection] CSRF_BACKEND=redis requested but ioredis not installed: ${err.message}. Falling back to in-memory.`,
     );
     redisClient = null;
     redisSet = null;
@@ -81,8 +81,8 @@ if (!redisClient) {
  * @returns {Promise<string>} The CSRF token
  */
 async function generateCsrfToken(jwtHash) {
-  const token = crypto.randomBytes(32).toString('hex');
-  const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+  const token = crypto.randomBytes(32).toString("hex");
+  const tokenHash = crypto.createHash("sha256").update(token).digest("hex");
   const key = `csrf:${tokenHash}`;
 
   if (redisSet) {
@@ -91,7 +91,7 @@ async function generateCsrfToken(jwtHash) {
       return token;
     } catch (err) {
       consoleLogger.warn(
-        `[csrfProtection] Redis set failed: ${err.message}. Falling back to in-memory.`
+        `[csrfProtection] Redis set failed: ${err.message}. Falling back to in-memory.`,
       );
     }
   }
@@ -113,7 +113,7 @@ async function generateCsrfToken(jwtHash) {
  */
 async function validateCsrfToken(token, jwtHash) {
   if (!token || !jwtHash) return false;
-  const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+  const tokenHash = crypto.createHash("sha256").update(token).digest("hex");
   const key = `csrf:${tokenHash}`;
 
   if (redisGet) {
@@ -123,7 +123,7 @@ async function validateCsrfToken(token, jwtHash) {
       return stored === jwtHash;
     } catch (err) {
       consoleLogger.warn(
-        `[csrfProtection] Redis get failed: ${err.message}. Falling back to in-memory.`
+        `[csrfProtection] Redis get failed: ${err.message}. Falling back to in-memory.`,
       );
     }
   }
@@ -149,7 +149,7 @@ async function validateCsrfToken(token, jwtHash) {
  */
 async function csrfProtection(request, response, next) {
   // Only protect mutating methods
-  const mutating = !['GET', 'HEAD', 'OPTIONS'].includes(request.method);
+  const mutating = !["GET", "HEAD", "OPTIONS"].includes(request.method);
   if (!mutating) return next();
 
   // API key requests are not subject to CSRF (not auto-sent by browsers)
@@ -157,37 +157,37 @@ async function csrfProtection(request, response, next) {
 
   // Skip in test mode
   if (
-    process.env.NODE_ENV === 'test' &&
-    process.env.INTEGRATION_TEST === 'true'
+    process.env.NODE_ENV === "test" &&
+    process.env.INTEGRATION_TEST === "true"
   ) {
     return next();
   }
 
   // Skip if not in production (development doesn't need CSRF)
-  if (process.env.NODE_ENV !== 'production') return next();
+  if (process.env.NODE_ENV !== "production") return next();
 
   // Get the JWT from Authorization header to compute hash
-  const auth = request.header('Authorization');
-  const token = auth ? auth.split(' ')[1] : null;
+  const auth = request.header("Authorization");
+  const token = auth ? auth.split(" ")[1] : null;
   if (!token) return next(); // Let auth middleware handle missing tokens
 
   // Get CSRF token from header or body
-  const csrfToken = request.header('X-CSRF-Token') || request.body?._csrf;
+  const csrfToken = request.header("X-CSRF-Token") || request.body?._csrf;
   if (!csrfToken) {
     return response.status(403).json({
-      error: 'CSRF token missing. Include X-CSRF-Token header.',
+      error: "CSRF token missing. Include X-CSRF-Token header.",
       id: crypto.randomUUID(),
     });
   }
 
   // Compute JWT hash for comparison
-  const jwtHash = crypto.createHash('sha256').update(token).digest('hex');
+  const jwtHash = crypto.createHash("sha256").update(token).digest("hex");
   if (!(await validateCsrfToken(csrfToken, jwtHash))) {
     consoleLogger.warn(
-      `[csrfProtection] Invalid CSRF token from ${request.ip} on ${request.method} ${request.path}`
+      `[csrfProtection] Invalid CSRF token from ${request.ip} on ${request.method} ${request.path}`,
     );
     return response.status(403).json({
-      error: 'Invalid or expired CSRF token.',
+      error: "Invalid or expired CSRF token.",
       id: crypto.randomUUID(),
     });
   }

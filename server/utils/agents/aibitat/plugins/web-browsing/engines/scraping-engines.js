@@ -3,7 +3,7 @@
 // (Bing, Baidu, Serply, SearXNG, DuckDuckGo, Vane).
 // Split from web-browsing.js as part of issue #528 — God-File reduction.
 
-const { WEB_FETCH_TIMEOUT_MS } = require('./api-engines.js');
+const { WEB_FETCH_TIMEOUT_MS } = require("./api-engines.js");
 
 /**
  * Scraping/alternative search engine implementations.
@@ -14,28 +14,28 @@ const scrapingEngines = {
   _bingWebSearch: async function (query) {
     if (!process.env.AGENT_BING_SEARCH_API_KEY) {
       this.super.introspect(
-        `${this.caller}: I can't use Bing Web Search because the user has not defined the required API key.\nVisit: https://portal.azure.com/ to create the API key.`
+        `${this.caller}: I can't use Bing Web Search because the user has not defined the required API key.\nVisit: https://portal.azure.com/ to create the API key.`,
       );
       return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
     }
 
-    const searchURL = new URL('https://api.bing.microsoft.com/v7.0/search');
-    searchURL.searchParams.append('q', query);
+    const searchURL = new URL("https://api.bing.microsoft.com/v7.0/search");
+    searchURL.searchParams.append("q", query);
 
     this.super.introspect(
-      `${this.caller}: Using Bing Web Search to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`
+      `${this.caller}: Using Bing Web Search to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`,
     );
 
     const searchResponse = await fetch(searchURL, {
       headers: {
-        'Ocp-Apim-Subscription-Key': process.env.AGENT_BING_SEARCH_API_KEY,
+        "Ocp-Apim-Subscription-Key": process.env.AGENT_BING_SEARCH_API_KEY,
       },
       signal: AbortSignal.timeout(WEB_FETCH_TIMEOUT_MS),
     })
       .then((res) => {
         if (res.ok) return res.json();
         throw new Error(
-          `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_BING_SEARCH_API_KEY, 5), q: query })}`
+          `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_BING_SEARCH_API_KEY, 5), q: query })}`,
         );
       })
       .then((data) => {
@@ -57,7 +57,7 @@ const scrapingEngines = {
     this.reportSearchResultsCitations(searchResponse);
     const result = JSON.stringify(searchResponse);
     this.super.introspect(
-      `${this.caller}: I found ${searchResponse.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
+      `${this.caller}: I found ${searchResponse.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
     );
     return result;
   },
@@ -65,44 +65,44 @@ const scrapingEngines = {
   _baiduSearch: async function (query) {
     if (!process.env.AGENT_BAIDU_SEARCH_API_KEY) {
       this.super.introspect(
-        `${this.caller}: I can't use Baidu Search because the user has not defined the required API key.\nVisit: https://cloud.baidu.com/doc/qianfan-api/s/Wmbq4z7e5 to create the API key.`
+        `${this.caller}: I can't use Baidu Search because the user has not defined the required API key.\nVisit: https://cloud.baidu.com/doc/qianfan-api/s/Wmbq4z7e5 to create the API key.`,
       );
       return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
     }
 
     this.super.introspect(
-      `${this.caller}: Using Baidu Search to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`
+      `${this.caller}: Using Baidu Search to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`,
     );
 
     const { response, error } = await fetch(
-      'https://qianfan.baidubce.com/v2/ai_search/web_search',
+      "https://qianfan.baidubce.com/v2/ai_search/web_search",
       {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${process.env.AGENT_BAIDU_SEARCH_API_KEY}`,
-          'X-Appbuilder-Authorization': `Bearer ${process.env.AGENT_BAIDU_SEARCH_API_KEY}`,
+          "X-Appbuilder-Authorization": `Bearer ${process.env.AGENT_BAIDU_SEARCH_API_KEY}`,
         },
         body: JSON.stringify({
-          messages: [{ role: 'user', content: query }],
-          resource_type_filter: [{ type: 'web', top_k: 10 }],
+          messages: [{ role: "user", content: query }],
+          resource_type_filter: [{ type: "web", top_k: 10 }],
         }),
         signal: AbortSignal.timeout(WEB_FETCH_TIMEOUT_MS),
-      }
+      },
     )
       .then(async (res) => {
         if (res.ok) return res.json();
 
-        const body = await res.text().catch(() => '');
+        const body = await res.text().catch(() => "");
         throw new Error(
           `${res.status} - ${res.statusText}. params: ${JSON.stringify({
             auth: this.middleTruncate(
               process.env.AGENT_BAIDU_SEARCH_API_KEY,
-              5
+              5,
             ),
             q: query,
             body: body.slice(0, 300),
-          })}`
+          })}`,
         );
       })
       .then((data) => {
@@ -126,29 +126,29 @@ const scrapingEngines = {
     this.reportSearchResultsCitations(data);
     const result = JSON.stringify(data);
     this.super.introspect(
-      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
+      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
     );
     return result;
   },
 
   _serplyEngine: async function (
     query,
-    language = 'en',
-    hl = 'us',
+    language = "en",
+    hl = "us",
     //eslint-disable-next-line
     limit = 100,
-    device_type = 'desktop',
-    proxy_location = 'US'
+    device_type = "desktop",
+    proxy_location = "US",
   ) {
     if (!process.env.AGENT_SERPLY_API_KEY) {
       this.super.introspect(
-        `${this.caller}: I can't use Serply.io searching because the user has not defined the required API key.\nVisit: https://serply.io to create the API key for free.`
+        `${this.caller}: I can't use Serply.io searching because the user has not defined the required API key.\nVisit: https://serply.io to create the API key for free.`,
       );
       return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
     }
 
     this.super.introspect(
-      `${this.caller}: Using Serply to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`
+      `${this.caller}: Using Serply to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`,
     );
 
     const params = new URLSearchParams({
@@ -159,26 +159,26 @@ const scrapingEngines = {
     });
     const url = `https://api.serply.io/v1/search/${params.toString()}`;
     const { response, error } = await fetch(url, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'X-API-KEY': process.env.AGENT_SERPLY_API_KEY,
-        'Content-Type': 'application/json',
-        'User-Agent': 'opensin-chat',
-        'X-Proxy-Location': proxy_location,
-        'X-User-Agent': device_type,
+        "X-API-KEY": process.env.AGENT_SERPLY_API_KEY,
+        "Content-Type": "application/json",
+        "User-Agent": "opensin-chat",
+        "X-Proxy-Location": proxy_location,
+        "X-User-Agent": device_type,
       },
       signal: AbortSignal.timeout(WEB_FETCH_TIMEOUT_MS),
     })
       .then((res) => {
         if (res.ok) return res.json();
         throw new Error(
-          `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_SERPLY_API_KEY, 5), q: query })}`
+          `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_SERPLY_API_KEY, 5), q: query })}`,
         );
       })
       .then((data) => {
-        if (data?.message === 'Unauthorized')
+        if (data?.message === "Unauthorized")
           throw new Error(
-            'Unauthorized. Please double check your AGENT_SERPLY_API_KEY'
+            "Unauthorized. Please double check your AGENT_SERPLY_API_KEY",
           );
         return { response: data, error: null };
       })
@@ -201,7 +201,7 @@ const scrapingEngines = {
     this.reportSearchResultsCitations(data);
     const result = JSON.stringify(data);
     this.super.introspect(
-      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
+      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
     );
     return result;
   },
@@ -210,39 +210,39 @@ const scrapingEngines = {
     let searchURL;
     if (!process.env.AGENT_SEARXNG_API_URL) {
       this.super.introspect(
-        `${this.caller}: I can't use SearXNG searching because the user has not defined the required base URL.\nPlease set this value in the agent skill settings.`
+        `${this.caller}: I can't use SearXNG searching because the user has not defined the required base URL.\nPlease set this value in the agent skill settings.`,
       );
       return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
     }
 
     try {
       searchURL = new URL(process.env.AGENT_SEARXNG_API_URL);
-      searchURL.searchParams.append('q', query);
-      searchURL.searchParams.append('format', 'json');
+      searchURL.searchParams.append("q", query);
+      searchURL.searchParams.append("format", "json");
     } catch (e) {
       this.super.handlerProps.log(`SearXNG Search: ${e.message}`);
       this.super.introspect(
-        `${this.caller}: I can't use SearXNG searching because the url provided is not a valid URL.`
+        `${this.caller}: I can't use SearXNG searching because the url provided is not a valid URL.`,
       );
       return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
     }
 
     this.super.introspect(
-      `${this.caller}: Using SearXNG to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`
+      `${this.caller}: Using SearXNG to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`,
     );
 
     const { response, error } = await fetch(searchURL.toString(), {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        'User-Agent': 'opensin-chat',
+        "Content-Type": "application/json",
+        "User-Agent": "opensin-chat",
       },
       signal: AbortSignal.timeout(WEB_FETCH_TIMEOUT_MS),
     })
       .then((res) => {
         if (res.ok) return res.json();
         throw new Error(
-          `${res.status} - ${res.statusText}. params: ${JSON.stringify({ url: searchURL.toString() })}`
+          `${res.status} - ${res.statusText}. params: ${JSON.stringify({ url: searchURL.toString() })}`,
         );
       })
       .then((data) => {
@@ -266,18 +266,18 @@ const scrapingEngines = {
     this.reportSearchResultsCitations(data);
     const result = JSON.stringify(data);
     this.super.introspect(
-      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
+      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
     );
     return result;
   },
 
   _duckDuckGoEngine: async function (query) {
     this.super.introspect(
-      `${this.caller}: Using DuckDuckGo to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`
+      `${this.caller}: Using DuckDuckGo to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`,
     );
 
-    const searchURL = new URL('https://html.duckduckgo.com/html');
-    searchURL.searchParams.append('q', query);
+    const searchURL = new URL("https://html.duckduckgo.com/html");
+    searchURL.searchParams.append("q", query);
 
     const response = await fetch(searchURL.toString(), {
       signal: AbortSignal.timeout(WEB_FETCH_TIMEOUT_MS),
@@ -285,7 +285,7 @@ const scrapingEngines = {
       .then((res) => {
         if (res.ok) return res.text();
         throw new Error(
-          `${res.status} - ${res.statusText}. params: ${JSON.stringify({ url: searchURL.toString() })}`
+          `${res.status} - ${res.statusText}. params: ${JSON.stringify({ url: searchURL.toString() })}`,
         );
       })
       .catch((e) => {
@@ -302,21 +302,21 @@ const scrapingEngines = {
       const result = results[i];
 
       const titleMatch = result.match(
-        /<a[^>]*class="result__a"[^>]*>(.*?)<\/a>/
+        /<a[^>]*class="result__a"[^>]*>(.*?)<\/a>/,
       );
-      const title = titleMatch ? titleMatch[1].trim() : '';
+      const title = titleMatch ? titleMatch[1].trim() : "";
 
       const urlMatch = result.match(
-        /<a[^>]*class="result__a"[^>]*href="([^"]*)">/
+        /<a[^>]*class="result__a"[^>]*href="([^"]*)">/,
       );
-      const link = extractUrl(urlMatch ? urlMatch[1] : '');
+      const link = extractUrl(urlMatch ? urlMatch[1] : "");
 
       const snippetMatch = result.match(
-        /<a[^>]*class="result__snippet"[^>]*>(.*?)<\/a>/
+        /<a[^>]*class="result__snippet"[^>]*>(.*?)<\/a>/,
       );
       const snippet = snippetMatch
-        ? snippetMatch[1].replace(/<\/?b>/g, '').trim()
-        : '';
+        ? snippetMatch[1].replace(/<\/?b>/g, "").trim()
+        : "";
 
       if (title && link && snippet) {
         data.push({ title, link, snippet });
@@ -330,23 +330,23 @@ const scrapingEngines = {
     this.reportSearchResultsCitations(data);
     const result = JSON.stringify(data);
     this.super.introspect(
-      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
+      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
     );
     return result;
   },
 
   _vaneEngine: async function (query) {
-    const { VaneClient } = require('../../../../research/vaneClient');
+    const { VaneClient } = require("../../../../research/vaneClient");
 
     if (!(await VaneClient.isAvailable())) {
       this.super.introspect(
-        `${this.caller}: I can't use Vane searching because the Vane sidecar is not reachable at ${process.env.VANE_API_URL || 'http://vane:3000'}. Check that the container is running.`
+        `${this.caller}: I can't use Vane searching because the Vane sidecar is not reachable at ${process.env.VANE_API_URL || "http://vane:3000"}. Check that the container is running.`,
       );
       return `Search is disabled and no content was found. The Vane sidecar is not reachable.`;
     }
 
     this.super.introspect(
-      `${this.caller}: Using Vane to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`
+      `${this.caller}: Using Vane to search for "${query.length > 100 ? `${query.slice(0, 100)}...` : query}"`,
     );
 
     const data = await VaneClient.search(query);
@@ -356,7 +356,7 @@ const scrapingEngines = {
     this.reportSearchResultsCitations(data);
     const result = JSON.stringify(data);
     this.super.introspect(
-      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
+      `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
     );
     return result;
   },
@@ -371,9 +371,9 @@ const scrapingEngines = {
 function extractUrl(ddgLink) {
   if (!ddgLink) return ddgLink;
   try {
-    const fullUrl = ddgLink.startsWith('//') ? `https:${ddgLink}` : ddgLink;
+    const fullUrl = ddgLink.startsWith("//") ? `https:${ddgLink}` : ddgLink;
     const url = new URL(fullUrl);
-    const actualUrl = url.searchParams.get('uddg');
+    const actualUrl = url.searchParams.get("uddg");
     return actualUrl ? decodeURIComponent(actualUrl) : ddgLink;
   } catch {
     return ddgLink;
@@ -393,17 +393,17 @@ function normalizeBaiduSearchReferences(references = []) {
     .filter((reference) => {
       if (!reference) return false;
       const referenceType = String(
-        reference.type || reference.resource_type || 'web'
+        reference.type || reference.resource_type || "web",
       ).toLowerCase();
-      return referenceType === 'web';
+      return referenceType === "web";
     })
     .map((reference) => {
       const title = String(
-        reference.title || reference.web_anchor || ''
+        reference.title || reference.web_anchor || "",
       ).trim();
-      const link = String(reference.url || '').trim();
+      const link = String(reference.url || "").trim();
       const snippet = String(
-        reference.snippet || reference.content || ''
+        reference.snippet || reference.content || "",
       ).trim();
 
       if (!title || !link || seenLinks.has(link)) return null;

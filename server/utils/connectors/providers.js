@@ -3,7 +3,7 @@
 //          If env vars are missing, provider is "coming_soon" — app runs fine.
 // Docs: providers.doc.md
 
-const BASE_URL = process.env.SERVER_PUBLIC_URL || 'https://sinchat.delqhi.com';
+const BASE_URL = process.env.SERVER_PUBLIC_URL || "https://sinchat.delqhi.com";
 
 /**
  * @typedef {Object} ProviderDef
@@ -20,40 +20,40 @@ const BASE_URL = process.env.SERVER_PUBLIC_URL || 'https://sinchat.delqhi.com';
 
 const PROVIDERS = {
   google: {
-    authUrl: 'https://accounts.google.com/o/oauth2/v2/auth',
-    tokenUrl: 'https://oauth2.googleapis.com/token',
-    revokeUrl: 'https://oauth2.googleapis.com/revoke',
+    authUrl: "https://accounts.google.com/o/oauth2/v2/auth",
+    tokenUrl: "https://oauth2.googleapis.com/token",
+    revokeUrl: "https://oauth2.googleapis.com/revoke",
     clientId: process.env.GOOGLE_OAUTH_CLIENT_ID || null,
     clientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET || null,
     usesPKCE: true,
     extraAuthParams: {
-      access_type: 'offline',
-      prompt: 'consent',
-      include_granted_scopes: 'true',
+      access_type: "offline",
+      prompt: "consent",
+      include_granted_scopes: "true",
     },
     scopeSets: {
-      gmail: ['https://www.googleapis.com/auth/gmail.modify'],
-      drive: ['https://www.googleapis.com/auth/drive'],
-      docs: ['https://www.googleapis.com/auth/documents'],
-      sheets: ['https://www.googleapis.com/auth/spreadsheets'],
-      _base: ['openid', 'email', 'profile'],
+      gmail: ["https://www.googleapis.com/auth/gmail.modify"],
+      drive: ["https://www.googleapis.com/auth/drive"],
+      docs: ["https://www.googleapis.com/auth/documents"],
+      sheets: ["https://www.googleapis.com/auth/spreadsheets"],
+      _base: ["openid", "email", "profile"],
     },
-    userinfoUrl: 'https://openidconnect.googleapis.com/v1/userinfo',
+    userinfoUrl: "https://openidconnect.googleapis.com/v1/userinfo",
   },
   github: {
-    authUrl: 'https://github.com/login/oauth/authorize',
-    tokenUrl: 'https://github.com/login/oauth/access_token',
+    authUrl: "https://github.com/login/oauth/authorize",
+    tokenUrl: "https://github.com/login/oauth/access_token",
     revokeUrl: null, // GitHub has no revoke endpoint; delete token locally
     clientId: process.env.GITHUB_OAUTH_CLIENT_ID || null,
     clientSecret: process.env.GITHUB_OAUTH_CLIENT_SECRET || null,
     usesPKCE: true,
     extraAuthParams: {},
     scopeSets: {
-      repo: ['repo'],
-      read: ['repo:status', 'read:org', 'read:user'],
-      _base: ['read:user'],
+      repo: ["repo"],
+      read: ["repo:status", "read:org", "read:user"],
+      _base: ["read:user"],
     },
-    userinfoUrl: 'https://api.github.com/user',
+    userinfoUrl: "https://api.github.com/user",
   },
 };
 
