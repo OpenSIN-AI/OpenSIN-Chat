@@ -62,6 +62,25 @@ const MARKDOWN_SANITIZE_OPTS = {
 };
 const safeMarkdown = (html) => DOMPurify.sanitize(html, MARKDOWN_SANITIZE_OPTS);
 
+/**
+ * Replaces [source:N] markers with clickable superscript citation chips.
+ * The chips use the `.inline-citation` CSS class defined in index.css.
+ */
+function preprocessInlineCitations(markdown: string): string {
+  return markdown.replace(
+    /\[source:(\d+)\]/g,
+    (_m, n) =>
+      `<sup><a href="#citation-${n}" class="inline-citation" data-citation-index="${n}">[${n}]</a></sup>`,
+  );
+}
+
+/**
+ * Strips [source:N] markers for plain-text copy actions.
+ */
+export function stripInlineCitations(text: string): string {
+  return text.replace(/\[source:\d+\]/g, "");
+}
+
 const PromptReply: any = ({
   uuid,
   reply,
@@ -220,7 +239,9 @@ function RenderAssistantChatContent({ message, messageId }: any) {
         <span
           className="flex-1 min-w-0 break-words"
           dangerouslySetInnerHTML={{
-            __html: safeMarkdown(renderMarkdown(msgToRender)),
+            __html: safeMarkdown(
+              renderMarkdown(preprocessInlineCitations(msgToRender)),
+            ),
           }}
         />
       </div>

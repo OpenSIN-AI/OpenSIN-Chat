@@ -17,16 +17,9 @@
 const { z } = require("zod");
 
 // ── shared primitives ────────────────────────────────────────────────
-const nonEmptyString = z
-  .string()
-  .min(1, "must be a non-empty string");
+const nonEmptyString = z.string().min(1, "must be a non-empty string");
 const optionalString = z.string().optional().default(undefined);
-const positiveInt = z
-  .number()
-  .int()
-  .positive()
-  .optional()
-  .default(undefined);
+const positiveInt = z.number().int().positive().optional().default(undefined);
 const slugString = z
   .string()
   .min(1)
@@ -262,10 +255,11 @@ const DocumentSchemas = {
 // ── System schemas ───────────────────────────────────────────────────
 const SystemSchemas = {
   // POST /v1/system/update-env  — env updates are dynamic key/value pairs
-  updateEnv: z.record(z.string()).refine(
-    (data) => Object.keys(data).length > 0,
-    { message: "at least one setting must be provided" },
-  ),
+  updateEnv: z
+    .record(z.string())
+    .refine((data) => Object.keys(data).length > 0, {
+      message: "at least one setting must be provided",
+    }),
 
   // POST /v1/system/export-chats
   exportChats: z.object({

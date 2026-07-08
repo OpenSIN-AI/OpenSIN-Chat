@@ -45,7 +45,7 @@ class SubagentSpawner {
     prompt,
     model = null,
     agentConfig = {},
-    parentAgentName = "Parent Agent",
+    _parentAgentName = "Parent Agent",
   }) {
     const runId = uuidv4();
 
@@ -103,7 +103,10 @@ class SubagentSpawner {
         ts: Date.now(),
       });
       await AgentRuns.updateStatus(runId, "error");
-      consoleLogger.error(`[SubagentSpawner] Subagent "${agentName}" failed:`, e.message);
+      consoleLogger.error(
+        `[SubagentSpawner] Subagent "${agentName}" failed:`,
+        e.message,
+      );
       throw e;
     } finally {
       // 6) Clean up scratch dir (optional — keep for debugging)
@@ -162,7 +165,7 @@ class SubagentSpawner {
    * Hook AIbitat events to the runBus for this subagent run.
    * @private
    */
-  _hookEvents(handler, runId, workspaceSlug) {
+  _hookEvents(_handler, _runId, _workspaceSlug) {
     // We hook after handler.start() initializes the AIbitat instance.
     // The handler should expose its aibitat instance for hooking.
     // This is called from _runIsolated after handler creation but before start().
@@ -181,7 +184,9 @@ class SubagentSpawner {
     try {
       fs.mkdirSync(dir, { recursive: true });
     } catch (e) {
-      consoleLogger.warn(`[SubagentSpawner] Failed to create scratch dir: ${e.message}`);
+      consoleLogger.warn(
+        `[SubagentSpawner] Failed to create scratch dir: ${e.message}`,
+      );
     }
     return dir;
   }
@@ -203,12 +208,7 @@ class SubagentSpawner {
    * @param {Array} params.agents - [{ agentName, prompt, model?, agentConfig? }]
    * @returns {Promise<Array>} - [{ runId, result }] in same order as input
    */
-  async spawnParallel({
-    parentRunId,
-    workspaceId,
-    workspaceSlug,
-    agents,
-  }) {
+  async spawnParallel({ parentRunId, workspaceId, workspaceSlug, agents }) {
     const promises = agents.map((a) =>
       this.spawn({
         parentRunId,
