@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-const consoleLogger = require("../utils/logger/console.js");
+const consoleLogger = require('../utils/logger/console.js');
 
-const prisma = require("../utils/prisma");
+const prisma = require('../utils/prisma');
 /**
  * @typedef {Object} SystemPromptVariable
  * @property {number} id
@@ -14,99 +14,109 @@ const prisma = require("../utils/prisma");
  */
 
 const SystemPromptVariables = {
-  VALID_TYPES: ["user", "workspace", "system", "static"],
+  VALID_TYPES: ['user', 'workspace', 'system', 'static'],
   DEFAULT_VARIABLES: [
     {
-      key: "time",
-      value: () => new Intl.DateTimeFormat(undefined, { timeStyle: "medium" }).format(new Date()),
-      description: "Current time",
-      type: "system",
+      key: 'time',
+      value: () =>
+        new Intl.DateTimeFormat(undefined, { timeStyle: 'medium' }).format(
+          new Date()
+        ),
+      description: 'Current time',
+      type: 'system',
       multiUserRequired: false,
     },
     {
-      key: "date",
-      value: () => new Intl.DateTimeFormat(undefined, { dateStyle: "long" }).format(new Date()),
-      description: "Current date",
-      type: "system",
+      key: 'date',
+      value: () =>
+        new Intl.DateTimeFormat(undefined, { dateStyle: 'long' }).format(
+          new Date()
+        ),
+      description: 'Current date',
+      type: 'system',
       multiUserRequired: false,
     },
     {
-      key: "datetime",
-      value: () => new Intl.DateTimeFormat(undefined, { dateStyle: "full", timeStyle: "short" }).format(new Date()),
-      description: "Current date and time",
-      type: "system",
+      key: 'datetime',
+      value: () =>
+        new Intl.DateTimeFormat(undefined, {
+          dateStyle: 'full',
+          timeStyle: 'short',
+        }).format(new Date()),
+      description: 'Current date and time',
+      type: 'system',
       multiUserRequired: false,
     },
     {
-      key: "user.id",
+      key: 'user.id',
       value: (userId = null) => {
-        if (!userId) return "[User ID]";
+        if (!userId) return '[User ID]';
         return userId;
       },
       description: "Current user's ID",
-      type: "user",
+      type: 'user',
       multiUserRequired: true,
     },
     {
-      key: "user.name",
+      key: 'user.name',
       value: async (userId = null) => {
-        if (!userId) return "[User name]";
+        if (!userId) return '[User name]';
         try {
           const user = await prisma.users.findUnique({
             where: { id: Number(userId) },
             select: { username: true },
           });
-          return user?.username || "[User name is empty or unknown]";
+          return user?.username || '[User name is empty or unknown]';
         } catch (error) {
-          consoleLogger.error("Error fetching user name:", error);
-          return "[User name is empty or unknown]";
+          consoleLogger.error('Error fetching user name:', error);
+          return '[User name is empty or unknown]';
         }
       },
       description: "Current user's username",
-      type: "user",
+      type: 'user',
       multiUserRequired: true,
     },
     {
-      key: "user.bio",
+      key: 'user.bio',
       value: async (userId = null) => {
-        if (!userId) return "[User bio]";
+        if (!userId) return '[User bio]';
         try {
           const user = await prisma.users.findUnique({
             where: { id: Number(userId) },
             select: { bio: true },
           });
-          return user?.bio || "[User bio is empty]";
+          return user?.bio || '[User bio is empty]';
         } catch (error) {
-          consoleLogger.error("Error fetching user bio:", error);
-          return "[User bio is empty]";
+          consoleLogger.error('Error fetching user bio:', error);
+          return '[User bio is empty]';
         }
       },
       description: "Current user's bio field from their profile",
-      type: "user",
+      type: 'user',
       multiUserRequired: true,
     },
     {
-      key: "workspace.id",
+      key: 'workspace.id',
       value: (workspaceId = null) => {
-        if (!workspaceId) return "[Workspace ID]";
+        if (!workspaceId) return '[Workspace ID]';
         return workspaceId;
       },
       description: "Current workspace's ID",
-      type: "workspace",
+      type: 'workspace',
       multiUserRequired: false,
     },
     {
-      key: "workspace.name",
+      key: 'workspace.name',
       value: async (workspaceId = null) => {
-        if (!workspaceId) return "[Workspace name]";
+        if (!workspaceId) return '[Workspace name]';
         const workspace = await prisma.workspaces.findUnique({
           where: { id: Number(workspaceId) },
           select: { name: true },
         });
-        return workspace?.name || "[Workspace name is empty or unknown]";
+        return workspace?.name || '[Workspace name is empty or unknown]';
       },
       description: "Current workspace's name",
-      type: "workspace",
+      type: 'workspace',
       multiUserRequired: false,
     },
   ],
@@ -125,8 +135,8 @@ const SystemPromptVariables = {
       return variable;
     } catch (error) {
       consoleLogger.error(
-        "Error getting system prompt variable:",
-        error.message,
+        'Error getting system prompt variable:',
+        error.message
       );
       return null;
     }
@@ -143,7 +153,7 @@ const SystemPromptVariables = {
     const userDefinedSystemVariables =
       await prisma.system_prompt_variables.findMany({
         take: 500,
-        orderBy: { id: "asc" },
+        orderBy: { id: 'asc' },
       });
     const formattedDbVars = userDefinedSystemVariables.map((v) => ({
       id: v.id,
@@ -172,7 +182,7 @@ const SystemPromptVariables = {
     key,
     value,
     description = null,
-    type = "static",
+    type = 'static',
     userId = null,
   }) {
     try {
@@ -182,14 +192,14 @@ const SystemPromptVariables = {
           key: String(key),
           value: String(value),
           description: description ? String(description) : null,
-          type: type ? String(type) : "static",
+          type: type ? String(type) : 'static',
           userId: userId ? Number(userId) : null,
         },
       });
     } catch (error) {
       consoleLogger.error(
-        "Error creating system prompt variable:",
-        error.message,
+        'Error creating system prompt variable:',
+        error.message
       );
       throw error;
     }
@@ -207,7 +217,7 @@ const SystemPromptVariables = {
       const existingRecord = await prisma.system_prompt_variables.findFirst({
         where: { id: Number(id) },
       });
-      if (!existingRecord) throw new Error("System prompt variable not found");
+      if (!existingRecord) throw new Error('System prompt variable not found');
       await this._checkVariableKey(key, false);
 
       return await prisma.system_prompt_variables.update({
@@ -220,8 +230,8 @@ const SystemPromptVariables = {
       });
     } catch (error) {
       consoleLogger.error(
-        "Error updating system prompt variable:",
-        error.message,
+        'Error updating system prompt variable:',
+        error.message
       );
       throw error;
     }
@@ -239,7 +249,7 @@ const SystemPromptVariables = {
       });
       return true;
     } catch (error) {
-      consoleLogger.error("Error deleting variable:", error);
+      consoleLogger.error('Error deleting variable:', error);
       return false;
     }
   },
@@ -254,7 +264,7 @@ const SystemPromptVariables = {
   expandSystemPromptVariables: async function (
     str,
     userId = null,
-    workspaceId = null,
+    workspaceId = null
   ) {
     if (!str) return str;
 
@@ -270,36 +280,36 @@ const SystemPromptVariables = {
         const key = match.substring(1, match.length - 1); // Remove { and }
 
         // Determine if the variable is a class-based variable (workspace.X or user.X)
-        const isWorkspaceOrUserVariable = ["workspace.", "user."].some(
-          (prefix) => key.startsWith(prefix),
+        const isWorkspaceOrUserVariable = ['workspace.', 'user.'].some(
+          (prefix) => key.startsWith(prefix)
         );
 
         // Handle class-based variables with current workspace's or user's data
         if (isWorkspaceOrUserVariable) {
           let variableTypeDisplay;
-          if (key.startsWith("workspace.")) variableTypeDisplay = "Workspace";
-          else if (key.startsWith("user.")) variableTypeDisplay = "User";
+          if (key.startsWith('workspace.')) variableTypeDisplay = 'Workspace';
+          else if (key.startsWith('user.')) variableTypeDisplay = 'User';
           else throw new Error(`Invalid class-based variable: ${key}`);
 
           // Get the property name after the prefix
-          const prop = key.split(".")[1];
+          const prop = key.split('.')[1];
           const variable = allVariables.find((v) => v.key === key);
 
           // If the variable is a function, call it to get the current value
-          if (variable && typeof variable.value === "function") {
+          if (variable && typeof variable.value === 'function') {
             // If the variable is an async function, call it to get the current value
-            if (variable.value.constructor.name === "AsyncFunction") {
+            if (variable.value.constructor.name === 'AsyncFunction') {
               let value;
               try {
-                if (variableTypeDisplay === "Workspace")
+                if (variableTypeDisplay === 'Workspace')
                   value = await variable.value(workspaceId);
-                else if (variableTypeDisplay === "User")
+                else if (variableTypeDisplay === 'User')
                   value = await variable.value(userId);
                 else throw new Error(`Invalid class-based variable: ${key}`);
               } catch (error) {
                 consoleLogger.error(
                   `Error processing ${variableTypeDisplay} variable ${key}:`,
-                  error,
+                  error
                 );
                 value = `[${variableTypeDisplay} ${prop}]`;
               }
@@ -308,15 +318,15 @@ const SystemPromptVariables = {
               let value;
               try {
                 // Call the variable function with the appropriate workspace or user ID
-                if (variableTypeDisplay === "Workspace")
+                if (variableTypeDisplay === 'Workspace')
                   value = variable.value(workspaceId);
-                else if (variableTypeDisplay === "User")
+                else if (variableTypeDisplay === 'User')
                   value = variable.value(userId);
                 else throw new Error(`Invalid class-based variable: ${key}`);
               } catch (error) {
                 consoleLogger.error(
                   `Error processing ${variableTypeDisplay} variable ${key}:`,
-                  error,
+                  error
                 );
                 value = `[${variableTypeDisplay} ${prop}]`;
               }
@@ -337,11 +347,11 @@ const SystemPromptVariables = {
 
         // For dynamic and system variables, call the function to get the current value
         if (
-          ["system"].includes(variable.type) &&
-          typeof variable.value === "function"
+          ['system'].includes(variable.type) &&
+          typeof variable.value === 'function'
         ) {
           try {
-            if (variable.value.constructor.name === "AsyncFunction") {
+            if (variable.value.constructor.name === 'AsyncFunction') {
               const value = await variable.value(userId);
               result = result.split(match).join(String(value));
             } else {
@@ -351,7 +361,7 @@ const SystemPromptVariables = {
           } catch (error) {
             consoleLogger.error(
               `Error processing dynamic variable ${key}:`,
-              error,
+              error
             );
             result = result.split(match).join(match);
           }
@@ -361,7 +371,7 @@ const SystemPromptVariables = {
       }
       return result;
     } catch (error) {
-      consoleLogger.error("Error in expandSystemPromptVariables:", error);
+      consoleLogger.error('Error in expandSystemPromptVariables:', error);
       return str;
     }
   },
@@ -373,19 +383,19 @@ const SystemPromptVariables = {
    * @returns {Promise<boolean>}
    */
   _checkVariableKey: async function (key = null, checkExisting = true) {
-    if (!key) throw new Error("Key is required");
-    if (typeof key !== "string") throw new Error("Key must be a string");
+    if (!key) throw new Error('Key is required');
+    if (typeof key !== 'string') throw new Error('Key must be a string');
     if (!/^[a-zA-Z0-9_]+$/.test(key))
-      throw new Error("Key must contain only letters, numbers and underscores");
+      throw new Error('Key must contain only letters, numbers and underscores');
     if (key.length > 255)
-      throw new Error("Key must be less than 255 characters");
-    if (key.length < 3) throw new Error("Key must be at least 3 characters");
-    if (key.startsWith("user."))
+      throw new Error('Key must be less than 255 characters');
+    if (key.length < 3) throw new Error('Key must be at least 3 characters');
+    if (key.startsWith('user.'))
       throw new Error("Key cannot start with 'user.'");
-    if (key.startsWith("system."))
+    if (key.startsWith('system.'))
       throw new Error("Key cannot start with 'system.'");
     if (checkExisting && (await this.get(key)) !== null)
-      throw new Error("System prompt variable with this key already exists");
+      throw new Error('System prompt variable with this key already exists');
 
     return true;
   },

@@ -3,8 +3,8 @@
 //          Manages trigger CRUD, checkpoint storage, and run history.
 // Docs: agentTriggers.doc.md
 
-const prisma = require("../utils/prisma").default || require("../utils/prisma");
-const { v4: uuidv4 } = require("uuid");
+const prisma = require('../utils/prisma').default || require('../utils/prisma');
+const { v4: uuidv4 } = require('uuid');
 
 const AgentTriggers = {
   // ─── Trigger CRUD ───
@@ -26,13 +26,13 @@ const AgentTriggers = {
   async list(workspaceId) {
     const rows = await prisma.agent_triggers.findMany({
       where: { workspace_id: workspaceId },
-      orderBy: { created_at: "desc" },
+      orderBy: { created_at: 'desc' },
     });
     return rows.map((r) => ({
       ...r,
-      config: typeof r.config === "string" ? JSON.parse(r.config) : r.config,
+      config: typeof r.config === 'string' ? JSON.parse(r.config) : r.config,
       checkpoint: r.checkpoint
-        ? typeof r.checkpoint === "string"
+        ? typeof r.checkpoint === 'string'
           ? JSON.parse(r.checkpoint)
           : r.checkpoint
         : null,
@@ -46,9 +46,9 @@ const AgentTriggers = {
     if (!r) return null;
     return {
       ...r,
-      config: typeof r.config === "string" ? JSON.parse(r.config) : r.config,
+      config: typeof r.config === 'string' ? JSON.parse(r.config) : r.config,
       checkpoint: r.checkpoint
-        ? typeof r.checkpoint === "string"
+        ? typeof r.checkpoint === 'string'
           ? JSON.parse(r.checkpoint)
           : r.checkpoint
         : null,
@@ -59,8 +59,7 @@ const AgentTriggers = {
     const data = {};
     if (patch.name !== undefined) data.name = patch.name;
     if (patch.agentName !== undefined) data.agent_name = patch.agentName;
-    if (patch.config !== undefined)
-      data.config = JSON.stringify(patch.config);
+    if (patch.config !== undefined) data.config = JSON.stringify(patch.config);
     if (patch.active !== undefined) data.active = patch.active;
     if (patch.checkpoint !== undefined)
       data.checkpoint = JSON.stringify(patch.checkpoint);
@@ -88,7 +87,7 @@ const AgentTriggers = {
       const existing = await prisma.trigger_runs.findFirst({
         where: {
           dedupe_key: dedupeKey,
-          status: { in: ["queued", "running", "done"] },
+          status: { in: ['queued', 'running', 'done'] },
         },
       });
       if (existing) return { id: existing.id, deduplicated: true };
@@ -98,7 +97,7 @@ const AgentTriggers = {
       data: {
         id: uuidv4(),
         trigger_id: triggerId,
-        status: "queued",
+        status: 'queued',
         dedupe_key: dedupeKey || null,
       },
     });
@@ -108,7 +107,8 @@ const AgentTriggers = {
     const data = {};
     if (patch.status !== undefined) data.status = patch.status;
     if (patch.attempt !== undefined) data.attempt = patch.attempt;
-    if (patch.errorMessage !== undefined) data.error_message = patch.errorMessage;
+    if (patch.errorMessage !== undefined)
+      data.error_message = patch.errorMessage;
     if (patch.result !== undefined) data.result = JSON.stringify(patch.result);
     if (patch.startedAt !== undefined) data.started_at = patch.startedAt;
     if (patch.endedAt !== undefined) data.ended_at = patch.endedAt;
@@ -122,7 +122,7 @@ const AgentTriggers = {
   async listRuns(triggerId, limit = 20) {
     return prisma.trigger_runs.findMany({
       where: { trigger_id: triggerId },
-      orderBy: { created_at: "desc" },
+      orderBy: { created_at: 'desc' },
       take: limit,
     });
   },
@@ -137,11 +137,8 @@ const AgentTriggers = {
     return prisma.agent_triggers.findMany({
       where: {
         active: true,
-        type: "schedule",
-        OR: [
-          { next_run_at: { lte: new Date() } },
-          { next_run_at: null },
-        ],
+        type: 'schedule',
+        OR: [{ next_run_at: { lte: new Date() } }, { next_run_at: null }],
       },
     });
   },
@@ -153,11 +150,8 @@ const AgentTriggers = {
     return prisma.agent_triggers.findMany({
       where: {
         active: true,
-        type: "polling",
-        OR: [
-          { next_run_at: { lte: new Date() } },
-          { next_run_at: null },
-        ],
+        type: 'polling',
+        OR: [{ next_run_at: { lte: new Date() } }, { next_run_at: null }],
       },
     });
   },

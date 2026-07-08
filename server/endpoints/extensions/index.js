@@ -1,22 +1,22 @@
 // SPDX-License-Identifier: MIT
-const consoleLogger = require("../../utils/logger/console.js");
+const consoleLogger = require('../../utils/logger/console.js');
 
-const { Telemetry } = require("../../models/telemetry");
-const { CollectorApi } = require("../../utils/collectorApi");
+const { Telemetry } = require('../../models/telemetry');
+const { CollectorApi } = require('../../utils/collectorApi');
 const {
   flexUserRoleValid,
   ROLES,
-} = require("../../utils/middleware/multiUserProtected");
-const { validatedRequest } = require("../../utils/middleware/validatedRequest");
+} = require('../../utils/middleware/multiUserProtected');
+const { validatedRequest } = require('../../utils/middleware/validatedRequest');
 const {
   isSupportedRepoProvider,
-} = require("../../utils/middleware/isSupportedRepoProviders");
+} = require('../../utils/middleware/isSupportedRepoProviders');
 
 function extensionEndpoints(app) {
   if (!app) return;
 
   app.post(
-    "/ext/:repo_platform/branches",
+    '/ext/:repo_platform/branches',
     [
       validatedRequest,
       flexUserRoleValid([ROLES.admin, ROLES.manager]),
@@ -28,7 +28,7 @@ function extensionEndpoints(app) {
         const responseFromProcessor =
           await new CollectorApi().forwardExtensionRequest({
             endpoint: `/ext/${repo_platform}-repo/branches`,
-            method: "POST",
+            method: 'POST',
             body: request.body,
           });
         response.status(200).json(responseFromProcessor);
@@ -36,11 +36,11 @@ function extensionEndpoints(app) {
         consoleLogger.error(e);
         response.sendStatus(500);
       }
-    },
+    }
   );
 
   app.post(
-    "/ext/:repo_platform/repo",
+    '/ext/:repo_platform/repo',
     [
       validatedRequest,
       flexUserRoleValid([ROLES.admin, ROLES.manager]),
@@ -52,10 +52,10 @@ function extensionEndpoints(app) {
         const responseFromProcessor =
           await new CollectorApi().forwardExtensionRequest({
             endpoint: `/ext/${repo_platform}-repo`,
-            method: "POST",
+            method: 'POST',
             body: request.body,
           });
-        await Telemetry.sendTelemetry("extension_invoked", {
+        await Telemetry.sendTelemetry('extension_invoked', {
           type: `${repo_platform}_repo`,
         });
         response.status(200).json(responseFromProcessor);
@@ -63,137 +63,137 @@ function extensionEndpoints(app) {
         consoleLogger.error(e);
         response.sendStatus(500);
       }
-    },
+    }
   );
 
   app.post(
-    "/ext/youtube/transcript",
+    '/ext/youtube/transcript',
     [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager])],
     async (request, response) => {
       try {
         const responseFromProcessor =
           await new CollectorApi().forwardExtensionRequest({
-            endpoint: "/ext/youtube-transcript",
-            method: "POST",
+            endpoint: '/ext/youtube-transcript',
+            method: 'POST',
             body: request.body,
           });
-        await Telemetry.sendTelemetry("extension_invoked", {
-          type: "youtube_transcript",
+        await Telemetry.sendTelemetry('extension_invoked', {
+          type: 'youtube_transcript',
         });
         response.status(200).json(responseFromProcessor);
       } catch (e) {
         consoleLogger.error(e);
         response.sendStatus(500);
       }
-    },
+    }
   );
 
   app.post(
-    "/ext/confluence",
+    '/ext/confluence',
     [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager])],
     async (request, response) => {
       try {
         const responseFromProcessor =
           await new CollectorApi().forwardExtensionRequest({
-            endpoint: "/ext/confluence",
-            method: "POST",
+            endpoint: '/ext/confluence',
+            method: 'POST',
             body: request.body,
           });
-        await Telemetry.sendTelemetry("extension_invoked", {
-          type: "confluence",
+        await Telemetry.sendTelemetry('extension_invoked', {
+          type: 'confluence',
         });
         response.status(200).json(responseFromProcessor);
       } catch (e) {
         consoleLogger.error(e);
         response.sendStatus(500);
       }
-    },
+    }
   );
   app.post(
-    "/ext/website-depth",
+    '/ext/website-depth',
     [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager])],
     async (request, response) => {
       try {
         const responseFromProcessor =
           await new CollectorApi().forwardExtensionRequest({
-            endpoint: "/ext/website-depth",
-            method: "POST",
+            endpoint: '/ext/website-depth',
+            method: 'POST',
             body: request.body,
           });
-        await Telemetry.sendTelemetry("extension_invoked", {
-          type: "website_depth",
+        await Telemetry.sendTelemetry('extension_invoked', {
+          type: 'website_depth',
         });
         response.status(200).json(responseFromProcessor);
       } catch (e) {
         consoleLogger.error(e);
         response.sendStatus(500);
       }
-    },
+    }
   );
   app.post(
-    "/ext/drupalwiki",
+    '/ext/drupalwiki',
     [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager])],
     async (request, response) => {
       try {
         const responseFromProcessor =
           await new CollectorApi().forwardExtensionRequest({
-            endpoint: "/ext/drupalwiki",
-            method: "POST",
+            endpoint: '/ext/drupalwiki',
+            method: 'POST',
             body: request.body,
           });
-        await Telemetry.sendTelemetry("extension_invoked", {
-          type: "drupalwiki",
+        await Telemetry.sendTelemetry('extension_invoked', {
+          type: 'drupalwiki',
         });
         response.status(200).json(responseFromProcessor);
       } catch (e) {
         consoleLogger.error(e);
         response.sendStatus(500);
       }
-    },
-  );
-
-  app.post(
-    "/ext/obsidian/vault",
-    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager])],
-    async (request, response) => {
-      try {
-        const responseFromProcessor =
-          await new CollectorApi().forwardExtensionRequest({
-            endpoint: "/ext/obsidian/vault",
-            method: "POST",
-            body: request.body,
-          });
-        await Telemetry.sendTelemetry("extension_invoked", {
-          type: "obsidian_vault",
-        });
-        response.status(200).json(responseFromProcessor);
-      } catch (e) {
-        consoleLogger.error(e);
-        response.sendStatus(500);
-      }
-    },
+    }
   );
 
   app.post(
-    "/ext/paperless-ngx",
+    '/ext/obsidian/vault',
     [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager])],
     async (request, response) => {
       try {
         const responseFromProcessor =
           await new CollectorApi().forwardExtensionRequest({
-            endpoint: "/ext/paperless-ngx",
-            method: "POST",
+            endpoint: '/ext/obsidian/vault',
+            method: 'POST',
             body: request.body,
           });
-        await Telemetry.sendTelemetry("extension_invoked", {
-          type: "paperless_ngx",
+        await Telemetry.sendTelemetry('extension_invoked', {
+          type: 'obsidian_vault',
         });
         response.status(200).json(responseFromProcessor);
       } catch (e) {
         consoleLogger.error(e);
         response.sendStatus(500);
       }
-    },
+    }
+  );
+
+  app.post(
+    '/ext/paperless-ngx',
+    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager])],
+    async (request, response) => {
+      try {
+        const responseFromProcessor =
+          await new CollectorApi().forwardExtensionRequest({
+            endpoint: '/ext/paperless-ngx',
+            method: 'POST',
+            body: request.body,
+          });
+        await Telemetry.sendTelemetry('extension_invoked', {
+          type: 'paperless_ngx',
+        });
+        response.status(200).json(responseFromProcessor);
+      } catch (e) {
+        consoleLogger.error(e);
+        response.sendStatus(500);
+      }
+    }
   );
 }
 

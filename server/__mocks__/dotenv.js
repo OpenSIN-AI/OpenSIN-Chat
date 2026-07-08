@@ -1,3 +1,4 @@
+/* global jest */
 // Manual Jest mock for dotenv.
 // dotenv is not installed as a server dependency (the server uses its own
 // environment loading). This stub prevents "Cannot find module 'dotenv'"

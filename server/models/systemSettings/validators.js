@@ -2,11 +2,15 @@
 // Purpose: Field validation functions for SystemSettings updates.
 // Extracted from systemSettings.js as part of issue #510 God-File split.
 
-const consoleLogger = require("../../utils/logger/console.js");
-const { isValidUrl, safeJsonParse } = require("../../utils/http");
-const { MetaGenerator } = require("../../utils/boot/MetaGenerator");
-const { isNullOrNaN, mergeStringField, mergeConnections } = require("./helpers");
-const { saneDefaultSystemPrompt } = require("./constants");
+const consoleLogger = require('../../utils/logger/console.js');
+const { isValidUrl, safeJsonParse } = require('../../utils/http');
+const { MetaGenerator } = require('../../utils/boot/MetaGenerator');
+const {
+  isNullOrNaN,
+  mergeStringField,
+  mergeConnections,
+} = require('./helpers');
+const { saneDefaultSystemPrompt } = require('./constants');
 
 /**
  * Creates the validations object bound to a SystemSettings instance.
@@ -31,67 +35,67 @@ function createValidations(systemSettings) {
     },
     text_splitter_chunk_size: async (update) => {
       try {
-        if (isNullOrNaN(update)) throw new Error("Value is not a number.");
-        if (Number(update) <= 0) throw new Error("Value must be non-zero.");
-        const { purgeEntireVectorCache } = require("../../utils/files");
+        if (isNullOrNaN(update)) throw new Error('Value is not a number.');
+        if (Number(update) <= 0) throw new Error('Value must be non-zero.');
+        const { purgeEntireVectorCache } = require('../../utils/files');
         await purgeEntireVectorCache();
         return Number(update);
       } catch (e) {
         consoleLogger.error(
           `Failed to run validation function on text_splitter_chunk_size`,
-          e.message,
+          e.message
         );
         return 1000;
       }
     },
     text_splitter_chunk_overlap: async (update) => {
       try {
-        if (isNullOrNaN(update)) throw new Error("Value is not a number");
-        if (Number(update) < 0) throw new Error("Value cannot be less than 0.");
-        const { purgeEntireVectorCache } = require("../../utils/files");
+        if (isNullOrNaN(update)) throw new Error('Value is not a number');
+        if (Number(update) < 0) throw new Error('Value cannot be less than 0.');
+        const { purgeEntireVectorCache } = require('../../utils/files');
         await purgeEntireVectorCache();
         return Number(update);
       } catch (e) {
         consoleLogger.error(
           `Failed to run validation function on text_splitter_chunk_overlap`,
-          e.message,
+          e.message
         );
         return 20;
       }
     },
     agent_search_provider: (update) => {
       try {
-        if (update === "none") return null;
+        if (update === 'none') return null;
         if (
           ![
-            "google-search-engine",
-            "serpapi",
-            "searchapi",
-            "serper-dot-dev",
-            "bing-search",
-            "baidu-search",
-            "serply-engine",
-            "searxng-engine",
-            "tavily-search",
-            "duckduckgo-engine",
-            "exa-search",
-            "perplexity-search",
-            "vane",
+            'google-search-engine',
+            'serpapi',
+            'searchapi',
+            'serper-dot-dev',
+            'bing-search',
+            'baidu-search',
+            'serply-engine',
+            'searxng-engine',
+            'tavily-search',
+            'duckduckgo-engine',
+            'exa-search',
+            'perplexity-search',
+            'vane',
           ].includes(update)
         )
-          throw new Error("Invalid SERP provider.");
+          throw new Error('Invalid SERP provider.');
         return String(update);
       } catch (e) {
         consoleLogger.error(
           `Failed to run validation function on agent_search_provider`,
-          e.message,
+          e.message
         );
         return null;
       }
     },
     default_agent_skills: (updates) => {
       try {
-        const skills = updates.split(",").filter((skill) => !!skill);
+        const skills = updates.split(',').filter((skill) => !!skill);
         return JSON.stringify(skills);
       } catch {
         consoleLogger.error(`Could not validate agent skills.`);
@@ -100,31 +104,31 @@ function createValidations(systemSettings) {
     },
     memory_enabled: async (update) => {
       try {
-        const enabled = String(update) === "true";
+        const enabled = String(update) === 'true';
         const {
           BackgroundService,
-        } = require("../../utils/BackgroundWorkers/index.js");
+        } = require('../../utils/BackgroundWorkers/index.js');
         const bgService = new BackgroundService();
         const autoSetting = await systemSettings.get({
-          label: "memory_auto_extraction",
+          label: 'memory_auto_extraction',
         });
-        const autoOn = !autoSetting || autoSetting.value === "true";
+        const autoOn = !autoSetting || autoSetting.value === 'true';
         await bgService.syncMemoryJob(enabled && autoOn);
         return String(enabled);
       } catch (e) {
         consoleLogger.error(
           `Failed to run validation function on memory_enabled`,
-          e.message,
+          e.message
         );
         return String(update);
       }
     },
     memory_auto_extraction: async (update) => {
       try {
-        const enabled = String(update) === "true";
+        const enabled = String(update) === 'true';
         const {
           BackgroundService,
-        } = require("../../utils/BackgroundWorkers/index.js");
+        } = require('../../utils/BackgroundWorkers/index.js');
         const bgService = new BackgroundService();
         const memoriesOn = await systemSettings.memoriesEnabled();
         await bgService.syncMemoryJob(memoriesOn && enabled);
@@ -132,14 +136,14 @@ function createValidations(systemSettings) {
       } catch (e) {
         consoleLogger.error(
           `Failed to run validation function on memory_auto_extraction`,
-          e.message,
+          e.message
         );
         return String(update);
       }
     },
     disabled_agent_skills: (updates) => {
       try {
-        const skills = updates.split(",").filter((skill) => !!skill);
+        const skills = updates.split(',').filter((skill) => !!skill);
         return JSON.stringify(skills);
       } catch {
         consoleLogger.error(`Could not validate disabled agent skills.`);
@@ -148,7 +152,7 @@ function createValidations(systemSettings) {
     },
     disabled_filesystem_skills: (updates) => {
       try {
-        const skills = updates.split(",").filter((skill) => !!skill);
+        const skills = updates.split(',').filter((skill) => !!skill);
         return JSON.stringify(skills);
       } catch {
         consoleLogger.error(`Could not validate disabled filesystem skills.`);
@@ -157,7 +161,7 @@ function createValidations(systemSettings) {
     },
     disabled_create_files_skills: (updates) => {
       try {
-        const skills = updates.split(",").filter((skill) => !!skill);
+        const skills = updates.split(',').filter((skill) => !!skill);
         return JSON.stringify(skills);
       } catch {
         consoleLogger.error(`Could not validate disabled create files skills.`);
@@ -166,7 +170,7 @@ function createValidations(systemSettings) {
     },
     disabled_gmail_skills: (updates) => {
       try {
-        const skills = updates.split(",").filter((skill) => !!skill);
+        const skills = updates.split(',').filter((skill) => !!skill);
         return JSON.stringify(skills);
       } catch {
         consoleLogger.error(`Could not validate disabled gmail skills.`);
@@ -174,32 +178,32 @@ function createValidations(systemSettings) {
       }
     },
     gmail_agent_config: async (update) => {
-      const GmailBridge = require("../../utils/agents/aibitat/plugins/gmail/lib");
+      const GmailBridge = require('../../utils/agents/aibitat/plugins/gmail/lib');
       try {
         if (!update) return JSON.stringify({});
 
         const newConfig =
-          typeof update === "string" ? safeJsonParse(update, {}) : update;
+          typeof update === 'string' ? safeJsonParse(update, {}) : update;
         const existingConfig = safeJsonParse(
-          (await systemSettings.get({ label: "gmail_agent_config" }))?.value,
-          {},
+          (await systemSettings.get({ label: 'gmail_agent_config' }))?.value,
+          {}
         );
 
         const mergedConfig = { ...existingConfig };
 
-        mergeStringField(mergedConfig, newConfig, "deploymentId");
+        mergeStringField(mergedConfig, newConfig, 'deploymentId');
         mergeStringField(
           mergedConfig,
           newConfig,
-          "apiKey",
-          (v) => !v.match(/^\*+$/),
+          'apiKey',
+          (v) => !v.match(/^\*+$/)
         );
 
         return JSON.stringify(mergedConfig);
       } catch (e) {
         consoleLogger.error(
           `Could not validate gmail agent config:`,
-          e.message,
+          e.message
         );
         return JSON.stringify({});
       } finally {
@@ -208,43 +212,43 @@ function createValidations(systemSettings) {
     },
     disabled_google_calendar_skills: (updates) => {
       try {
-        const skills = updates.split(",").filter((skill) => !!skill);
+        const skills = updates.split(',').filter((skill) => !!skill);
         return JSON.stringify(skills);
       } catch {
         consoleLogger.error(
-          `Could not validate disabled google calendar skills.`,
+          `Could not validate disabled google calendar skills.`
         );
         return JSON.stringify([]);
       }
     },
     google_calendar_agent_config: async (update) => {
-      const GoogleCalendarBridge = require("../../utils/agents/aibitat/plugins/google-calendar/lib");
+      const GoogleCalendarBridge = require('../../utils/agents/aibitat/plugins/google-calendar/lib');
       try {
         if (!update) return JSON.stringify({});
 
         const newConfig =
-          typeof update === "string" ? safeJsonParse(update, {}) : update;
+          typeof update === 'string' ? safeJsonParse(update, {}) : update;
         const existingConfig = safeJsonParse(
-          (await systemSettings.get({ label: "google_calendar_agent_config" }))
+          (await systemSettings.get({ label: 'google_calendar_agent_config' }))
             ?.value,
-          {},
+          {}
         );
 
         const mergedConfig = { ...existingConfig };
 
-        mergeStringField(mergedConfig, newConfig, "deploymentId");
+        mergeStringField(mergedConfig, newConfig, 'deploymentId');
         mergeStringField(
           mergedConfig,
           newConfig,
-          "apiKey",
-          (v) => !v.match(/^\*+$/),
+          'apiKey',
+          (v) => !v.match(/^\*+$/)
         );
 
         return JSON.stringify(mergedConfig);
       } catch (e) {
         consoleLogger.error(
           `Could not validate google calendar agent config:`,
-          e.message,
+          e.message
         );
         return JSON.stringify({});
       } finally {
@@ -253,7 +257,7 @@ function createValidations(systemSettings) {
     },
     disabled_outlook_skills: (updates) => {
       try {
-        const skills = updates.split(",").filter((skill) => !!skill);
+        const skills = updates.split(',').filter((skill) => !!skill);
         return JSON.stringify(skills);
       } catch {
         consoleLogger.error(`Could not validate disabled outlook skills.`);
@@ -261,26 +265,26 @@ function createValidations(systemSettings) {
       }
     },
     outlook_agent_config: async (update) => {
-      const OutlookBridge = require("../../utils/agents/aibitat/plugins/outlook/lib");
+      const OutlookBridge = require('../../utils/agents/aibitat/plugins/outlook/lib');
       try {
         if (!update) return JSON.stringify({});
 
         const newConfig =
-          typeof update === "string" ? safeJsonParse(update, {}) : update;
+          typeof update === 'string' ? safeJsonParse(update, {}) : update;
         const existingConfig = safeJsonParse(
-          (await systemSettings.get({ label: "outlook_agent_config" }))?.value,
-          {},
+          (await systemSettings.get({ label: 'outlook_agent_config' }))?.value,
+          {}
         );
 
         const mergedConfig = { ...existingConfig };
 
-        mergeStringField(mergedConfig, newConfig, "clientId");
-        mergeStringField(mergedConfig, newConfig, "tenantId");
+        mergeStringField(mergedConfig, newConfig, 'clientId');
+        mergeStringField(mergedConfig, newConfig, 'tenantId');
         mergeStringField(
           mergedConfig,
           newConfig,
-          "clientSecret",
-          (v) => !v.match(/^\*+$/),
+          'clientSecret',
+          (v) => !v.match(/^\*+$/)
         );
 
         if (newConfig.accessToken !== undefined) {
@@ -297,7 +301,7 @@ function createValidations(systemSettings) {
       } catch (e) {
         consoleLogger.error(
           `Could not validate outlook agent config:`,
-          e.message,
+          e.message
         );
         return JSON.stringify({});
       } finally {
@@ -306,13 +310,13 @@ function createValidations(systemSettings) {
     },
     agent_sql_connections: async (updates) => {
       const existingConnections = safeJsonParse(
-        (await systemSettings.get({ label: "agent_sql_connections" }))?.value,
-        [],
+        (await systemSettings.get({ label: 'agent_sql_connections' }))?.value,
+        []
       );
       try {
         const updatedConnections = mergeConnections(
           existingConnections,
-          safeJsonParse(updates, []),
+          safeJsonParse(updates, [])
         );
         return JSON.stringify(updatedConnections);
       } catch {
@@ -321,8 +325,8 @@ function createValidations(systemSettings) {
       }
     },
     agent_clarifying_questions_enabled: (update) => {
-      if (typeof update === "boolean") return update ? "true" : "false";
-      return String(update) === "true" ? "true" : "false";
+      if (typeof update === 'boolean') return update ? 'true' : 'false';
+      return String(update) === 'true' ? 'true' : 'false';
     },
     agent_clarifying_questions_max_per_turn: (update) => {
       const n = Number(update);
@@ -330,14 +334,14 @@ function createValidations(systemSettings) {
       return Math.min(Math.floor(n), 10);
     },
     experimental_live_file_sync: (update) => {
-      if (typeof update === "boolean")
-        return update === true ? "enabled" : "disabled";
-      if (!["enabled", "disabled"].includes(update)) return "disabled";
+      if (typeof update === 'boolean')
+        return update === true ? 'enabled' : 'disabled';
+      if (!['enabled', 'disabled'].includes(update)) return 'disabled';
       return String(update);
     },
     meta_page_title: (newTitle) => {
       try {
-        if (typeof newTitle !== "string" || !newTitle) return null;
+        if (typeof newTitle !== 'string' || !newTitle) return null;
         return String(newTitle);
       } catch {
         return null;
@@ -361,36 +365,36 @@ function createValidations(systemSettings) {
       return String(apiKey);
     },
     default_system_prompt: (prompt) => {
-      if (typeof prompt !== "string" || !prompt) return null;
+      if (typeof prompt !== 'string' || !prompt) return null;
       if (prompt.trim() === saneDefaultSystemPrompt)
         return saneDefaultSystemPrompt;
       return String(prompt.trim());
     },
     image_generation_base_path: (update) => {
       try {
-        if (!update || typeof update !== "string") return undefined;
+        if (!update || typeof update !== 'string') return undefined;
         const url = new URL(update);
         if (!/^https?:$/i.test(url.protocol)) return undefined;
-        return url.origin + url.pathname.replace(/\/+$/, "");
+        return url.origin + url.pathname.replace(/\/+$/, '');
       } catch {
         return undefined;
       }
     },
     image_generation_api_key: async (update) => {
-      if (!update || typeof update !== "string") return undefined;
+      if (!update || typeof update !== 'string') return undefined;
       if (/^-CLEAR-$/.test(update)) {
         return null;
       }
       if (/^\*+$/.test(update)) {
         const existing = await systemSettings.get({
-          label: "image_generation_api_key",
+          label: 'image_generation_api_key',
         });
         return existing?.value ?? null;
       }
       return String(update).trim();
     },
     image_generation_model: (update) => {
-      if (!update || typeof update !== "string") return undefined;
+      if (!update || typeof update !== 'string') return undefined;
       return String(update).trim();
     },
   };

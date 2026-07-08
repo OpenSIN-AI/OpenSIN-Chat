@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: MIT
-const consoleLogger = require("../logger/console.js");
+const consoleLogger = require('../logger/console.js');
 
-const { EncryptionManager } = require("../EncryptionManager");
-const { Agent: UndiciAgent } = require("undici");
+const { EncryptionManager } = require('../EncryptionManager');
+const { Agent: UndiciAgent } = require('undici');
 
 const COLLECTOR_HEALTH_TIMEOUT_MS = 5_000;
 // 5 min — large PDFs with text layers parse in seconds; OCR (PaddleOCR)
 // processes ~5 pages/second. 5 minutes is enough for ~1500 OCR pages.
 // Configurable via env for edge cases.
-const COLLECTOR_PROCESS_TIMEOUT_MS = Number(process.env.COLLECTOR_PROCESS_TIMEOUT_MS) || 300_000;
+const COLLECTOR_PROCESS_TIMEOUT_MS =
+  Number(process.env.COLLECTOR_PROCESS_TIMEOUT_MS) || 300_000;
 
 let _extensionAgent;
 function extensionRequestAgent() {
@@ -49,20 +50,20 @@ class CollectorApi {
    * @returns {number}
    */
   static getCollectorPort() {
-    if (!("COLLECTOR_PORT" in process.env)) return this.DEFAULT_COLLECTOR_PORT;
+    if (!('COLLECTOR_PORT' in process.env)) return this.DEFAULT_COLLECTOR_PORT;
     const port = Number(
-      process.env.COLLECTOR_PORT || this.DEFAULT_COLLECTOR_PORT,
+      process.env.COLLECTOR_PORT || this.DEFAULT_COLLECTOR_PORT
     );
     if (Number.isInteger(port) && port > 0 && port <= 65535) return port;
 
     consoleLogger.warn(
-      `Invalid COLLECTOR_PORT "${process.env.COLLECTOR_PORT}". Falling back to ${this.DEFAULT_COLLECTOR_PORT}.`,
+      `Invalid COLLECTOR_PORT "${process.env.COLLECTOR_PORT}". Falling back to ${this.DEFAULT_COLLECTOR_PORT}.`
     );
     return this.DEFAULT_COLLECTOR_PORT;
   }
 
   constructor() {
-    const { CommunicationKey } = require("../comKey");
+    const { CommunicationKey } = require('../comKey');
     this.comkey = new CommunicationKey();
     this.endpoint = `http://0.0.0.0:${CollectorApi.getCollectorPort()}`;
   }
@@ -77,14 +78,14 @@ class CollectorApi {
    */
   #attachOptions() {
     return {
-      whisperProvider: process.env.WHISPER_PROVIDER || "local",
+      whisperProvider: process.env.WHISPER_PROVIDER || 'local',
       WhisperModelPref: process.env.WHISPER_MODEL_PREF,
       openAiKey: process.env.OPEN_AI_KEY || null,
       ocr: {
-        langList: process.env.TARGET_OCR_LANG || "eng",
+        langList: process.env.TARGET_OCR_LANG || 'eng',
       },
       runtimeSettings: {
-        allowAnyIp: process.env.COLLECTOR_ALLOW_ANY_IP ?? "false",
+        allowAnyIp: process.env.COLLECTOR_ALLOW_ANY_IP ?? 'false',
         browserLaunchArgs: process.env.ANYTHINGLLM_CHROMIUM_ARGS ?? [],
       },
     };
@@ -103,7 +104,7 @@ class CollectorApi {
       signal: AbortSignal.timeout(COLLECTOR_HEALTH_TIMEOUT_MS),
     })
       .then((res) => {
-        if (!res.ok) throw new Error("failed to GET /accepts");
+        if (!res.ok) throw new Error('failed to GET /accepts');
         return res.json();
       })
       .then((res) => res)
@@ -120,7 +121,7 @@ class CollectorApi {
    * @param {Object} metadata - Optional metadata key:value pairs
    * @returns {Promise<Object>} - The response from the collector API
    */
-  async processDocument(filename = "", metadata = {}) {
+  async processDocument(filename = '', metadata = {}) {
     if (!filename) return false;
 
     const data = JSON.stringify({
@@ -130,12 +131,12 @@ class CollectorApi {
     });
 
     return await fetch(`${this.endpoint}/process`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "X-Integrity": this.comkey.sign(data),
-        "X-Payload-Signer": this.comkey.encrypt(
-          new EncryptionManager().xPayload,
+        'Content-Type': 'application/json',
+        'X-Integrity': this.comkey.sign(data),
+        'X-Payload-Signer': this.comkey.encrypt(
+          new EncryptionManager().xPayload
         ),
       },
       body: data,
@@ -143,7 +144,7 @@ class CollectorApi {
       dispatcher: extensionRequestAgent(),
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Response could not be completed");
+        if (!res.ok) throw new Error('Response could not be completed');
         return res.json();
       })
       .then((res) => res)
@@ -161,7 +162,7 @@ class CollectorApi {
    * @param {[key: string]: string} metadata - Optional metadata to attach to the document
    * @returns {Promise<Object>} - The response from the collector API
    */
-  async processLink(link = "", scraperHeaders = {}, metadata = {}) {
+  async processLink(link = '', scraperHeaders = {}, metadata = {}) {
     if (!link) return false;
 
     const data = JSON.stringify({
@@ -172,19 +173,19 @@ class CollectorApi {
     });
 
     return await fetch(`${this.endpoint}/process-link`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "X-Integrity": this.comkey.sign(data),
-        "X-Payload-Signer": this.comkey.encrypt(
-          new EncryptionManager().xPayload,
+        'Content-Type': 'application/json',
+        'X-Integrity': this.comkey.sign(data),
+        'X-Payload-Signer': this.comkey.encrypt(
+          new EncryptionManager().xPayload
         ),
       },
       body: data,
       signal: AbortSignal.timeout(COLLECTOR_PROCESS_TIMEOUT_MS),
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Response could not be completed");
+        if (!res.ok) throw new Error('Response could not be completed');
         return res.json();
       })
       .then((res) => res)
@@ -201,26 +202,26 @@ class CollectorApi {
    * @param {[key: string]: string} metadata - The metadata to process
    * @returns {Promise<Object>} - The response from the collector API
    */
-  async processRawText(textContent = "", metadata = {}) {
+  async processRawText(textContent = '', metadata = {}) {
     const data = JSON.stringify({
       textContent,
       metadata,
       options: this.#attachOptions(),
     });
     return await fetch(`${this.endpoint}/process-raw-text`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "X-Integrity": this.comkey.sign(data),
-        "X-Payload-Signer": this.comkey.encrypt(
-          new EncryptionManager().xPayload,
+        'Content-Type': 'application/json',
+        'X-Integrity': this.comkey.sign(data),
+        'X-Payload-Signer': this.comkey.encrypt(
+          new EncryptionManager().xPayload
         ),
       },
       body: data,
       signal: AbortSignal.timeout(COLLECTOR_PROCESS_TIMEOUT_MS),
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Response could not be completed");
+        if (!res.ok) throw new Error('Response could not be completed');
         return res.json();
       })
       .then((res) => res)
@@ -237,29 +238,29 @@ class CollectorApi {
    * @param {string} filename - The filename of the source audio in the hotdir
    * @returns {Promise<{success: boolean, reason: string|null, wavFilename: string|null}>}
    */
-  async convertAudioToWav(filename = "") {
+  async convertAudioToWav(filename = '') {
     if (!filename)
       return {
         success: false,
-        reason: "No filename provided.",
+        reason: 'No filename provided.',
         wavFilename: null,
       };
 
     const data = JSON.stringify({ filename });
     return await fetch(`${this.endpoint}/util/convert-audio-to-wav`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "X-Integrity": this.comkey.sign(data),
-        "X-Payload-Signer": this.comkey.encrypt(
-          new EncryptionManager().xPayload,
+        'Content-Type': 'application/json',
+        'X-Integrity': this.comkey.sign(data),
+        'X-Payload-Signer': this.comkey.encrypt(
+          new EncryptionManager().xPayload
         ),
       },
       body: data,
       signal: AbortSignal.timeout(COLLECTOR_PROCESS_TIMEOUT_MS),
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Response could not be completed");
+        if (!res.ok) throw new Error('Response could not be completed');
         return res.json();
       })
       .then((json) => json)
@@ -273,15 +274,15 @@ class CollectorApi {
   // all requests through the server. You can use this function to directly expose a specific endpoint
   // on the document processor.
   async forwardExtensionRequest({ endpoint, method, body }) {
-    const data = typeof body === "string" ? body : JSON.stringify(body);
+    const data = typeof body === 'string' ? body : JSON.stringify(body);
     return await fetch(`${this.endpoint}${endpoint}`, {
       method,
       body: data,
       headers: {
-        "Content-Type": "application/json",
-        "X-Integrity": this.comkey.sign(data),
-        "X-Payload-Signer": this.comkey.encrypt(
-          new EncryptionManager().xPayload,
+        'Content-Type': 'application/json',
+        'X-Integrity': this.comkey.sign(data),
+        'X-Payload-Signer': this.comkey.encrypt(
+          new EncryptionManager().xPayload
         ),
       },
       // Extensions do a lot of work, and may take a while to complete so we need to increase the timeout
@@ -289,7 +290,7 @@ class CollectorApi {
       dispatcher: extensionRequestAgent(),
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Response could not be completed");
+        if (!res.ok) throw new Error('Response could not be completed');
         return res.json();
       })
       .then((res) => res)
@@ -306,7 +307,7 @@ class CollectorApi {
    * @param {"text"|"html"} captureAs - The format to capture the content as
    * @returns {Promise<Object>} - The response from the collector API
    */
-  async getLinkContent(link = "", captureAs = "text") {
+  async getLinkContent(link = '', captureAs = 'text') {
     if (!link) return false;
 
     const data = JSON.stringify({
@@ -315,19 +316,19 @@ class CollectorApi {
       options: this.#attachOptions(),
     });
     return await fetch(`${this.endpoint}/util/get-link`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "X-Integrity": this.comkey.sign(data),
-        "X-Payload-Signer": this.comkey.encrypt(
-          new EncryptionManager().xPayload,
+        'Content-Type': 'application/json',
+        'X-Integrity': this.comkey.sign(data),
+        'X-Payload-Signer': this.comkey.encrypt(
+          new EncryptionManager().xPayload
         ),
       },
       body: data,
       signal: AbortSignal.timeout(COLLECTOR_PROCESS_TIMEOUT_MS),
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Response could not be completed");
+        if (!res.ok) throw new Error('Response could not be completed');
         return res.json();
       })
       .then((res) => res)
@@ -345,7 +346,7 @@ class CollectorApi {
    * @param {string} parseOptions.absolutePath - If provided, use this absolute path instead of looking in the hotdir
    * @returns {Promise<Object>} - The response from the collector API
    */
-  async parseDocument(filename = "", parseOptions = {}) {
+  async parseDocument(filename = '', parseOptions = {}) {
     if (!filename) return false;
 
     const data = JSON.stringify({
@@ -357,19 +358,19 @@ class CollectorApi {
     });
 
     return await fetch(`${this.endpoint}/parse`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "X-Integrity": this.comkey.sign(data),
-        "X-Payload-Signer": this.comkey.encrypt(
-          new EncryptionManager().xPayload,
+        'Content-Type': 'application/json',
+        'X-Integrity': this.comkey.sign(data),
+        'X-Payload-Signer': this.comkey.encrypt(
+          new EncryptionManager().xPayload
         ),
       },
       body: data,
       signal: AbortSignal.timeout(COLLECTOR_PROCESS_TIMEOUT_MS),
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Response could not be completed");
+        if (!res.ok) throw new Error('Response could not be completed');
         return res.json();
       })
       .then((res) => res)
