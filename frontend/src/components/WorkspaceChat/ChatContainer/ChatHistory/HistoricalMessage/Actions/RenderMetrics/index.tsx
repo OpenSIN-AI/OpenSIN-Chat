@@ -4,7 +4,13 @@ import { formatDuration, numberWithCommas } from "@/utils/numbers";
 import React, { useEffect, useState, useContext } from "react";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { useTranslation } from "react-i18next";
-const MetricsContext = React.createContext<any>(undefined);
+
+export interface MetricsContextValue {
+  showMetricsAutomatically: boolean;
+  setShowMetricsAutomatically: (value: boolean) => void;
+}
+
+const MetricsContext = React.createContext<MetricsContextValue | undefined>(undefined);
 const SHOW_METRICS_KEY = "opensin_show_chat_metrics";
 const SHOW_METRICS_EVENT = "opensin_show_metrics_change";
 
@@ -113,7 +119,7 @@ export function MetricsProvider({ children }: any) {
 export default function RenderMetrics({ metrics = {} }: any) {
   // Inherit the showMetricsAutomatically state from the MetricsProvider so the state is shared across all chats
   const { showMetricsAutomatically, setShowMetricsAutomatically } =
-    useContext(MetricsContext);
+    useContext(MetricsContext) as MetricsContextValue;
   const { t } = useTranslation();
   const isMobile = useIsMobileLayout();
   if (!metrics?.duration || !metrics?.outputTps || isMobile) return null;

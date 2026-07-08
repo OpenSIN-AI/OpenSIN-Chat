@@ -13,7 +13,21 @@ import { API_BASE } from "@/utils/constants";
 import { baseHeaders, safeJsonParse } from "@/utils/request";
 import Workspace from "@/models/workspace";
 
-const EmbeddingProgressContext = createContext<any>(undefined);
+export interface EmbeddingFileStatus {
+  status: "pending" | "embedding" | "complete" | "failed";
+  chunksProcessed?: number;
+  totalChunks?: number;
+  error?: string;
+}
+
+export interface EmbeddingProgressContextValue {
+  embeddingProgressMap: Record<string, Record<string, EmbeddingFileStatus>>;
+  startEmbedding: (slug: string, filenames: string[]) => void;
+  connectSSE: (slug: string) => void;
+  removeQueuedFile: (slug: string, filename: string) => Promise<boolean>;
+}
+
+const EmbeddingProgressContext = createContext<EmbeddingProgressContextValue | undefined>(undefined);
 
 export function useEmbeddingProgress() {
   return useContext(EmbeddingProgressContext);
@@ -31,7 +45,7 @@ export function useWorkspaceEmbeddingProgress(
   { onProgressCleared }: any = {},
 ) {
   const { embeddingProgressMap, startEmbedding, connectSSE, removeQueuedFile } =
-    useEmbeddingProgress();
+    useEmbeddingProgress() as EmbeddingProgressContextValue;
   const embeddingProgress = embeddingProgressMap[slug] || null;
 
   // Store callback in ref to avoid stale closures
@@ -64,7 +78,7 @@ export function useWorkspaceEmbeddingProgress(
 
 const CLEANUP_DELAY_MS = 1_500;
 export function EmbeddingProgressProvider({ children }: any) {
-  const [embeddingProgressMap, setEmbeddingProgressMap] = useState({} as any);
+  const [embeddingProgressMap, setEmbeddingProgressMap] = useState<Record<string, Record<string, EmbeddingFileStatus>>>({});
   const abortControllersRef = useRef<
     Record<string, AbortController | undefined>
   >({});
@@ -84,7 +98,7 @@ export function EmbeddingProgressProvider({ children }: any) {
   }, []);
 
   const updateFileStatus = useCallback(
-    (slug, filename, status) =>
+    (slug, filename, status: EmbeddingFileStatus) =>
       setEmbeddingProgressMap((prev) => ({
         ...prev,
         [slug]: { ...(prev[slug] ?? {}), [filename]: status },
@@ -242,7 +256,7 @@ export function EmbeddingProgressProvider({ children }: any) {
     return success;
   }, []);
 
-  const contextValue = useMemo(
+  const contextValue = useMemo<EmbeddingProgressContextValue>(
     () => ({
       embeddingProgressMap,
       startEmbedding,

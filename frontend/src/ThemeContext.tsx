@@ -2,11 +2,18 @@
 import React, { createContext, useContext, useMemo } from "react";
 import { useTheme } from "./hooks/useTheme";
 
-const ThemeContext = createContext<any>(undefined);
+export interface ThemeContextValue {
+  theme: string;
+  setTheme: (newTheme: any) => void;
+  availableThemes: string[];
+  isLight: boolean;
+}
 
-export function ThemeProvider({ children }) {
+const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
+
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const themeValue = useTheme({ broadcastLogoChange: true });
-  const memoizedValue = useMemo(
+  const memoizedValue = useMemo<ThemeContextValue>(
     () => themeValue,
     [themeValue.theme, themeValue.isLight, themeValue.setTheme],
   );
