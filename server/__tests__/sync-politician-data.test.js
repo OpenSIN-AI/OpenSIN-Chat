@@ -156,11 +156,16 @@ describe("sync-politician-data: buildDedupeKey", () => {
 // ── Regression: Prisma model shape matches sync job expectations ───────────────
 
 describe("sync-politician-data: Prisma model mapping", () => {
+  // Use jest.requireActual to bypass the moduleNameMapper that replaces
+  // @prisma/client with a mock stub — we need the real generated client here
+  // to verify the Prisma schema shape.
   test("politician_speeches model has the fields required by the sync job", () => {
-    const { PrismaClient } = require("@prisma/client");
-    const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
+    const { PrismaClient } = jest.requireActual("@prisma/client");
+    const { PrismaBetterSqlite3 } = jest.requireActual(
+      "@prisma/adapter-better-sqlite3",
+    );
     const adapter = new PrismaBetterSqlite3({
-      url: "file:../storage/opensin.db",
+      url: "file::memory:",
     });
     const prisma = new PrismaClient({ adapter });
     // Regression for Issue #172: code used prisma.politician_speech (singular)
@@ -191,10 +196,12 @@ describe("sync-politician-data: Prisma model mapping", () => {
   });
 
   test("politician_speech (singular) is NOT a valid model", () => {
-    const { PrismaClient } = require("@prisma/client");
-    const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
+    const { PrismaClient } = jest.requireActual("@prisma/client");
+    const { PrismaBetterSqlite3 } = jest.requireActual(
+      "@prisma/adapter-better-sqlite3",
+    );
     const adapter = new PrismaBetterSqlite3({
-      url: "file:../storage/opensin.db",
+      url: "file::memory:",
     });
     const prisma = new PrismaClient({ adapter });
     expect(prisma.politician_speech).toBeUndefined();

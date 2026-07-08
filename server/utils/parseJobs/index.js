@@ -33,17 +33,30 @@ const JOB_STATUS = {
 // Schema bootstrap
 // ---------------------------------------------------------------------------
 
-// The parse_jobs table is now managed by Prisma migrations (see
+// The parse_jobs table is primarily managed by Prisma migrations (see
 // server/prisma/migrations/20260705120000_add_parse_jobs/migration.sql).
-// The runtime CREATE TABLE IF NOT EXISTS has been removed — run
-// `npx prisma migrate deploy` to create the table.
-// ensureTable() is kept as a no-op for backward compatibility.
+// The CREATE TABLE IF NOT EXISTS guard is also kept here so the table is
+// available in test environments (in-memory SQLite) and any deployment
+// where migrations have not yet been applied.
 
 let _bootstrapped = false;
 
 async function ensureTable() {
-  // No-op: table is managed by Prisma migrations.
+  if (_bootstrapped) return;
   _bootstrapped = true;
+  await prisma.$executeRawUnsafe(
+    `CREATE TABLE IF NOT EXISTS parse_jobs (
+      id           TEXT    PRIMARY KEY,
+      workspaceId  INTEGER NOT NULL,
+      userId       INTEGER,
+      originalname TEXT    NOT NULL,
+      status       TEXT    NOT NULL DEFAULT 'pending',
+      files        TEXT,
+      error        TEXT,
+      createdAt    TEXT    NOT NULL DEFAULT (datetime('now')),
+      finishedAt   TEXT
+    )`,
+  );
 }
 
 // ---------------------------------------------------------------------------

@@ -83,9 +83,20 @@ function pathToRegex(pattern) {
 function createMockApp() {
   const routes = [];
   const register = (method) => (pattern, ...rest) => {
-    const handler = rest[rest.length - 1];
+    // rest may be: [handler] or [middlewareArray, handler] or [mw1, mw2, ..., handler]
+    // Flatten any array arguments so middleware and handler are in one list.
+    const flat = rest.flatMap((a) => (Array.isArray(a) ? a : [a]));
+    const middlewares = flat.slice(0, -1);
+    const handler = flat[flat.length - 1];
     const { regex, paramNames } = pathToRegex(pattern);
-    routes.push({ method: method.toLowerCase(), pattern, regex, paramNames, handler });
+    routes.push({
+      method: method.toLowerCase(),
+      pattern,
+      regex,
+      paramNames,
+      handler,
+      middlewares,
+    });
   };
   const app = {
     get: register("get"),
@@ -96,7 +107,8 @@ function createMockApp() {
   };
 
   /**
-   * Invokes a previously registered route handler.
+   * Invokes a previously registered route handler, running the full
+   * middleware chain first (so mocked middleware can set res.locals etc.).
    * @param {string} method http method
    * @param {string} path the actual path (e.g. "/admin/user/2")
    * @param {{body?: object, params?: object, query?: object, headers?: object, locals?: object}} [req]
@@ -130,7 +142,28 @@ function createMockApp() {
       randomFileName: req.randomFileName,
     };
     const response = createMockRes(req.locals || {});
-    await matched.handler(request, response);
+
+    // Run middleware chain then the final handler
+    const chain = [...(matched.middlewares || []), matched.handler];
+    for (const fn of chain) {
+      if (response.ended) break;
+      await new Promise((resolve, reject) => {
+        try {
+          const result = fn(request, response, (err) => {
+            if (err) reject(err);
+            else resolve();
+          });
+          // If the middleware returns a promise (async) and doesn't call next,
+          // it's acting as a terminal handler — wait for it then stop.
+          if (result && typeof result.then === "function") {
+            result.then(resolve, reject);
+          }
+        } catch (err) {
+          reject(err);
+        }
+      });
+    }
+
     return response;
   }
 

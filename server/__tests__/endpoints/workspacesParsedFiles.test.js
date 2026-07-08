@@ -68,6 +68,60 @@ jest.mock("../../utils/collectorApi", () => ({
   })),
 }));
 
+// Lightweight in-memory ParseJobs mock so the sync-parse route can create,
+// update, and retrieve jobs without hitting SQLite.
+const _jobStore = new Map();
+jest.mock("../../utils/parseJobs", () => {
+  const JOB_STATUS = {
+    PENDING: "pending",
+    PROCESSING: "processing",
+    COMPLETED: "completed",
+    FAILED: "failed",
+  };
+  return {
+    JOB_STATUS,
+    ParseJobs: {
+      create: jest.fn(async ({ workspaceId, userId = null, originalname }) => {
+        const job = {
+          id: "test-job-id",
+          workspaceId,
+          userId,
+          originalname,
+          status: JOB_STATUS.PENDING,
+          files: null,
+          error: null,
+          createdAt: Date.now(),
+          finishedAt: null,
+        };
+        _jobStore.set(job.id, job);
+        return job;
+      }),
+      get: jest.fn(async (jobId) => _jobStore.get(jobId) ?? null),
+      markProcessing: jest.fn(async (jobId) => {
+        const j = _jobStore.get(jobId);
+        if (j) j.status = JOB_STATUS.PROCESSING;
+      }),
+      markCompleted: jest.fn(async (jobId, files) => {
+        const j = _jobStore.get(jobId);
+        if (j) {
+          j.status = JOB_STATUS.COMPLETED;
+          j.files = files;
+          j.finishedAt = Date.now();
+        }
+      }),
+      markFailed: jest.fn(async (jobId, error) => {
+        const j = _jobStore.get(jobId);
+        if (j) {
+          j.status = JOB_STATUS.FAILED;
+          j.error = error;
+          j.finishedAt = Date.now();
+        }
+      }),
+    },
+    recoverStalledJobs: jest.fn(),
+  };
+});
+
 const { createMockApp, createMockRes } = require("../helpers/mockExpressApp");
 const { workspaceParsedFilesEndpoints } = require("../../endpoints/workspacesParsedFiles");
 
@@ -101,7 +155,10 @@ async function callWithLocals(harness, method, path, req = {}, locals = {}) {
 }
 
 describe("Workspace Parsed Files endpoints", () => {
-  afterEach(() => jest.clearAllMocks());
+  afterEach(() => {
+    jest.clearAllMocks();
+    _jobStore.clear();
+  });
 
   describe("GET /workspace/:slug/parsed-files", () => {
     const workspace = { id: 1, name: "WS" };
