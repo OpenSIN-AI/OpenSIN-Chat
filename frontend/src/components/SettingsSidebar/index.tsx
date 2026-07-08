@@ -71,6 +71,7 @@ export default function SettingsSidebar() {
           <button
             type="button"
             onClick={() => setShowSidebar(true)}
+            aria-label={t("common.showSidebar")}
             className="rounded-md p-2 flex items-center justify-center text-theme-text-secondary"
           >
             <List className="h-6 w-6" />

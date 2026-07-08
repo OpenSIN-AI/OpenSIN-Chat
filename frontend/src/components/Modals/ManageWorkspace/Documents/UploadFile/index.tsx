@@ -144,7 +144,7 @@ export default function UploadFile({
         {t("connectors.upload.or-submit-link")}
       </div>
       <form onSubmit={handleSendLink} className="flex gap-x-2">
-        <input
+        <input aria-label={t("common.url", "URL")}
           disabled={fetchingUrl}
           name="link"
           type="url"

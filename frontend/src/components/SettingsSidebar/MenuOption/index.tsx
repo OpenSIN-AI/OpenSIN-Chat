@@ -89,6 +89,7 @@ export default function MenuOption({
         {hasChildren && !href ? (
           <button
             type="button"
+            aria-label={name}
             onClick={handleClick}
             className={`flex flex-grow items-center px-[12px] h-[32px] font-medium w-full text-left ${
               isChild
