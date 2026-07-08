@@ -21,10 +21,7 @@ import SystemPromptVariable from "./systemPromptVariable";
 function isOnboardingBypassEnabled() {
   try {
     if (import.meta.env.VITE_DISABLE_ONBOARDING === "true") return true;
-    return (
-      safeGetItem("opensin_disable_onboarding") === "true" ||
-      safeGetItem("anythingllm_disable_onboarding") === "true"
-    );
+    return safeGetItem("opensin_disable_onboarding") === "true";
   } catch {
     return false;
   }

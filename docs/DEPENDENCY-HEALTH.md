@@ -39,12 +39,29 @@ The 2026-07-08 CEO Audit Sprint confirmed 3 additional dead packages with 0 impo
 
 | Package | Status | Action |
 | --- | --- | --- |
-| `@tremor/react@3.18.7` | Dead — 0 imports. Requires Tailwind v3, conflicts with Tailwind v4. | **Remove** via `cd frontend && yarn remove @tremor/react` |
-| `recharts-to-png@2.3.1` | Dead — 0 imports. | **Remove** via `cd frontend && yarn remove recharts-to-png` |
-| `react-confetti-explosion@3.0.3` | Dead — 0 imports. | **Remove** via `cd frontend && yarn remove react-confetti-explosion` |
+| `@tremor/react@3.18.7` | Dead — 0 imports. Required Tailwind v3, conflicted with v4. | **Removed** (already absent from `frontend/package.json`) |
+| `recharts-to-png@2.3.1` | Dead — 0 imports. | **Removed** (already absent from `frontend/package.json`) |
+| `react-confetti-explosion@3.0.3` | Dead — 0 imports. | **Removed** (already absent from `frontend/package.json`) |
 
-These removals are safe and eliminate the Tailwind v3/v4 peer conflict warning.
-They are tracked as P2 items and can be done as a standalone chore commit.
+All three were already absent from `package.json` before the sprint. Confirmed via `yarn remove` (no-op). Tailwind v3/v4 peer conflict is resolved.
+
+## localStorage Key Rebrand (2026-07-08)
+
+All `anythingllm_*` localStorage keys have been fully migrated to `opensin_*`.
+The fallback read paths (`safeGetItem("anythingllm_*")`) that were previously
+kept for backwards compatibility are now removed:
+
+| File | Key removed |
+| --- | --- |
+| `frontend/src/main.tsx` | `anythingllm_pdf_mock`, `anythingllm_ws_mock` |
+| `frontend/src/mocks/browser.ts` | `anythingllm_ws_mock` |
+| `frontend/src/models/system.js` | `anythingllm_disable_onboarding` |
+| `frontend/src/mocks/auditHandlers.ts` | comment updated |
+| `frontend/src/mocks/pdfAnalysisHandlers.ts` | comment updated |
+
+Any existing `anythingllm_*` entries in a user's browser localStorage are now
+inert. Users who previously used these dev flags must re-set them with the
+`opensin_*` prefix.
 
 ## Maintenance
 

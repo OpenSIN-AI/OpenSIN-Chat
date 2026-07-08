@@ -40,9 +40,7 @@ const REACTWRAP = isDev ? React.Fragment : React.StrictMode;
 if (
   isDev &&
   (safeGetItem("opensin_pdf_mock") === "true" ||
-    safeGetItem("anythingllm_pdf_mock") === "true" ||
-    safeGetItem("opensin_ws_mock") === "true" ||
-    safeGetItem("anythingllm_ws_mock") === "true")
+    safeGetItem("opensin_ws_mock") === "true")
 ) {
   const { startMockWorker } = await import("@/mocks/browser");
   await startMockWorker();

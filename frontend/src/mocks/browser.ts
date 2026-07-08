@@ -9,9 +9,7 @@ import { safeGetItem } from "@/utils/safeStorage";
 
 // Audit handlers are only registered when the audit flag is set, so the PDF
 // mock keeps working independently.
-const auditEnabled =
-  safeGetItem("opensin_ws_mock") === "true" ||
-  safeGetItem("anythingllm_ws_mock") === "true";
+const auditEnabled = safeGetItem("opensin_ws_mock") === "true";
 
 export const worker = setupWorker(
   ...pdfAnalysisHandlers,
