@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
+import logger from "@/utils/logger";
 
 const Telegram: any = {
   /**
@@ -13,7 +14,7 @@ const Telegram: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { config: null, error: e.message };
       });
   },
@@ -35,7 +36,7 @@ const Telegram: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -51,7 +52,7 @@ const Telegram: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -66,7 +67,7 @@ const Telegram: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { active: false, bot_username: null };
       });
   },
@@ -81,7 +82,7 @@ const Telegram: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { users: [] };
       });
   },
@@ -96,7 +97,7 @@ const Telegram: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { users: [] };
       });
   },
@@ -114,7 +115,7 @@ const Telegram: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -132,7 +133,7 @@ const Telegram: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -150,7 +151,7 @@ const Telegram: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -168,7 +169,7 @@ const Telegram: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
+import logger from "@/utils/logger";
 
 /**
  * Safely parse a JSON response body.
@@ -26,7 +27,7 @@ const Admin = {
       .then((res) => safeJson(res, { users: [] }))
       .then((res) => res?.users || [])
       .catch((e) => {
-        console.error("admin.users failed:", e);
+        logger.error("admin.users failed:", e);
         return [];
       });
   },
@@ -66,7 +67,7 @@ const Admin = {
       .then((res) => safeJson(res, { invites: [] }))
       .then((res) => res?.invites || [])
       .catch((e) => {
-        console.error("admin.invites failed:", e);
+        logger.error("admin.invites failed:", e);
         return [];
       });
   },
@@ -100,7 +101,7 @@ const Admin = {
       .then((res) => safeJson(res, { workspaces: [] }))
       .then((res) => res?.workspaces || [])
       .catch((e) => {
-        console.error("admin.workspaces failed:", e);
+        logger.error("admin.workspaces failed:", e);
         return [];
       });
   },
@@ -112,7 +113,7 @@ const Admin = {
       .then((res) => safeJson(res, { users: [] }))
       .then((res) => res?.users || [])
       .catch((e) => {
-        console.error("admin.workspaceUsers failed:", e);
+        logger.error("admin.workspaceUsers failed:", e);
         return [];
       });
   },
@@ -164,7 +165,7 @@ const Admin = {
     )
       .then((res) => safeJson(res, null))
       .catch((e) => {
-        console.error("admin.systemPreferencesByFields failed:", e);
+        logger.error("admin.systemPreferencesByFields failed:", e);
         return null;
       });
   },
@@ -203,7 +204,7 @@ const Admin = {
     })
       .then((res) => res.ok)
       .catch((e) => {
-        console.error("admin.deleteApiKey failed:", e);
+        logger.error("admin.deleteApiKey failed:", e);
         return false;
       });
   },

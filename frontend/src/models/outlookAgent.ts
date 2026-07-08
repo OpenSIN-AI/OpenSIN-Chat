@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
+import logger from "@/utils/logger";
 
 const OutlookAgent: any = {
   /**
@@ -25,7 +26,7 @@ const OutlookAgent: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -41,7 +42,7 @@ const OutlookAgent: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -57,7 +58,7 @@ const OutlookAgent: any = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },

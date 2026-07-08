@@ -12,6 +12,7 @@ import DataConnector from "./dataConnector";
 import LiveDocumentSync from "./experimental/liveSync";
 import AgentPlugins from "./experimental/agentPlugins";
 import SystemPromptVariable from "./systemPromptVariable";
+import logger from "@/utils/logger";
 
 /**
  * Dev-only: returns true when the onboarding gate should be bypassed.
@@ -186,7 +187,7 @@ const System = {
         return data;
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -204,7 +205,7 @@ const System = {
         return data;
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -249,7 +250,7 @@ const System = {
         return res.json();
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { newValues: null, error: e.message };
       });
   },
@@ -275,7 +276,7 @@ const System = {
         return res.json();
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -287,7 +288,7 @@ const System = {
     })
       .then((res) => safeJson(res))
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -299,7 +300,7 @@ const System = {
       .then((res) => safeJson(res))
       .then((res) => res?.multiUserMode)
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return false;
       });
   },
@@ -311,7 +312,7 @@ const System = {
     })
       .then((res) => res.ok)
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return false;
       });
   },
@@ -323,7 +324,7 @@ const System = {
     })
       .then((res) => res.ok)
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return false;
       });
   },
@@ -335,7 +336,7 @@ const System = {
     })
       .then((res) => res.ok)
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return false;
       });
   },
@@ -350,7 +351,7 @@ const System = {
         return { success: true, error: null };
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -365,7 +366,7 @@ const System = {
         return { success: true, error: null };
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -388,7 +389,7 @@ const System = {
     )
       .then((res) => safeJson(res))
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { footerData: [], error: e.message };
       });
 
@@ -420,7 +421,7 @@ const System = {
     )
       .then((res) => safeJson(res))
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { supportEmail: "", error: e.message };
       });
 
@@ -451,7 +452,7 @@ const System = {
     )
       .then((res) => safeJson(res))
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { customAppName: "", error: e.message };
       });
 
@@ -481,7 +482,7 @@ const System = {
         saneDefaultSystemPrompt: res.saneDefaultSystemPrompt,
       }))
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { defaultSystemPrompt: "", saneDefaultSystemPrompt: "" };
       });
   },
@@ -495,7 +496,7 @@ const System = {
       const data = await res.json();
       return data;
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       return { success: false, message: e.message };
     }
   },
@@ -555,7 +556,7 @@ const System = {
         throw new Error("Failed to remove pfp.");
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -572,7 +573,7 @@ const System = {
       })
       .then((res) => res?.isDefaultLogo)
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return null;
       });
   },
@@ -585,7 +586,7 @@ const System = {
         throw new Error("Error removing logo!");
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -601,7 +602,7 @@ const System = {
         return res.json();
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { apiKey: null, error: e.message };
       });
   },
@@ -618,7 +619,7 @@ const System = {
         return res.json();
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { apiKey: null, error: e.message };
       });
   },
@@ -629,7 +630,7 @@ const System = {
     })
       .then((res) => res.ok)
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return false;
       });
   },
@@ -664,7 +665,7 @@ const System = {
         return res.json();
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { models: [], error: e.message };
       })
       .finally(() => {
@@ -679,7 +680,7 @@ const System = {
     })
       .then((res) => safeJson(res))
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return [];
       });
   },
@@ -691,7 +692,7 @@ const System = {
     })
       .then((res) => safeJson(res))
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { logs: [], hasPages: false };
       });
   },
@@ -702,7 +703,7 @@ const System = {
     })
       .then((res) => safeJson(res))
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -731,7 +732,7 @@ const System = {
         };
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { stdout: "", stderr: "", exitCode: -1, error: e.message };
       });
   },
@@ -742,7 +743,7 @@ const System = {
     })
       .then((res) => safeJson(res))
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -759,7 +760,7 @@ const System = {
         throw new Error(res.statusText);
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return null;
       });
   },
@@ -771,7 +772,7 @@ const System = {
     })
       .then((res) => safeJson(res))
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -788,7 +789,7 @@ const System = {
       })
       .then((res) => res.presets)
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return [];
       });
   },
@@ -809,7 +810,7 @@ const System = {
       })
       .then((res) => ({ preset: res.preset, error: null }))
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { preset: null, error: e.message };
       });
   },
@@ -830,7 +831,7 @@ const System = {
       })
       .then((res) => ({ preset: res.preset, error: null }))
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { preset: null, error: e.message };
       });
   },
@@ -845,7 +846,7 @@ const System = {
         return true;
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return false;
       });
   },
@@ -896,7 +897,7 @@ const System = {
         return await res.json();
       })
       .catch((e) => {
-        console.error(e);
+        logger.error(e);
         return { valid: false, user: null, token: null, message: e.message };
       });
   },
@@ -946,7 +947,7 @@ const System = {
     })
       .then((res) => safeJson(res))
       .catch((e) => {
-        console.error("Failed to validate SQL connection:", e);
+        logger.error("Failed to validate SQL connection:", e);
         return { success: false, error: e.message };
       });
   },
