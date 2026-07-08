@@ -14,24 +14,29 @@ import DOMPurify from "@/utils/chat/purify";
 import ThinkingAnimation from "@/media/animations/thinking-animation.webm";
 import ThinkingStatic from "@/media/animations/thinking-static.png";
 
+export interface ThoughtExpansionContextValue {
+  getExpanded: (messageId: string | number) => boolean;
+  setExpanded: (messageId: string | number, expanded: boolean) => void;
+}
+
 /**
  * Context to persist thought expansion state across component transitions
  * (e.g., from PromptReply to HistoricalMessage)
  */
-const ThoughtExpansionContext = createContext<any>(null);
+const ThoughtExpansionContext = createContext<ThoughtExpansionContextValue | null>(null);
 
 export function ThoughtExpansionProvider({ children }: any) {
-  const [expansionStates, setExpansionStates] = useState({} as any);
+  const [expansionStates, setExpansionStates] = useState<Record<string, boolean>>({});
 
   const getExpanded = useCallback(
-    (messageId) => {
+    (messageId: string | number) => {
       if (!messageId) return false;
       return expansionStates[messageId] ?? false;
     },
     [expansionStates],
   );
 
-  const setExpanded = useCallback((messageId, expanded) => {
+  const setExpanded = useCallback((messageId: string | number, expanded: boolean) => {
     if (!messageId) return;
     setExpansionStates((prev) => ({
       ...prev,

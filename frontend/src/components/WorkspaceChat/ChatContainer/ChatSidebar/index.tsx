@@ -23,8 +23,29 @@ type LogEntry = {
 
 export const LOG_EVENT = "opensin:log";
 
-const ChatSidebarContext = createContext<any>(undefined);
-const ChatSidebarLogsContext = createContext<any>(undefined);
+export interface ChatSidebarContextValue {
+  activeSidebar: string | null;
+  sidebarData: any;
+  openSidebar: (type: any, data?: any) => void;
+  closeSidebar: () => void;
+  toggleSidebar: (type: any, data?: any) => void;
+  sourceFilter: string;
+  setSourceFilter: (filter: string) => void;
+  SOURCE_FILTERS: Record<string, string>;
+  isDocumentSource: (chunkSource: string) => boolean;
+  isMediaSource: (chunkSource: any) => boolean;
+  previewData: any;
+  setPreviewData: (data: any) => void;
+  openPreview: (data: any) => void;
+}
+
+export interface ChatSidebarLogsContextValue {
+  consoleLogs: LogEntry[];
+  clearConsoleLogs: () => void;
+}
+
+const ChatSidebarContext = createContext<ChatSidebarContextValue | undefined>(undefined);
+const ChatSidebarLogsContext = createContext<ChatSidebarLogsContextValue | undefined>(undefined);
 
 const SOURCE_FILTERS = {
   all: "all",
@@ -56,8 +77,8 @@ function isMediaSource(chunkSource: any) {
 }
 
 export function ChatSidebarProvider({ children }: any) {
-  const [activeSidebar, setActiveSidebar] = useState(null);
-  const [sidebarData, setSidebarData] = useState(null);
+  const [activeSidebar, setActiveSidebar] = useState<string | null>(null);
+  const [sidebarData, setSidebarData] = useState<any>(null);
 
   const [sourceFilter, setSourceFilter] = useState(() => {
     try {
@@ -70,7 +91,7 @@ export function ChatSidebarProvider({ children }: any) {
   });
 
   // Preview panel state: { content, title, type, versions }
-  const [previewData, setPreviewData] = useState(null);
+  const [previewData, setPreviewData] = useState<any>(null);
 
   // Persistent console logs — survive sidebar panel swaps
   const [consoleLogs, setConsoleLogs] = useState<LogEntry[]>([]);
@@ -204,7 +225,7 @@ export function useConsoleSidebar() {
       "useConsoleSidebar must be used within ChatSidebarProvider",
     );
   const { activeSidebar, toggleSidebar, closeSidebar } = ctx;
-  const { consoleLogs, clearConsoleLogs } = logsCtx;
+  const { consoleLogs, clearConsoleLogs } = logsCtx as ChatSidebarLogsContextValue;
   return {
     sidebarOpen: activeSidebar === "console",
     toggleConsole: () => toggleSidebar("console"),

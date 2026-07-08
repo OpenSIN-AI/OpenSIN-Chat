@@ -12,13 +12,36 @@ import { useNavigate } from "react-router-dom";
 import { safeJsonParse } from "@/utils/request";
 import { safeGetItem, safeSetItem, safeRemoveItem } from "@/utils/safeStorage";
 
-export const AuthContext = createContext<any>(null);
+export interface AuthUser {
+  id?: string | number;
+  username?: string;
+  email?: string;
+  role?: string;
+  [key: string]: unknown;
+}
+
+export interface AuthStore {
+  user: AuthUser | null;
+  authToken: string | null;
+}
+
+export interface AuthActions {
+  updateUser: (user: AuthUser, authToken?: string) => void;
+  unsetUser: () => void;
+}
+
+export interface AuthContextValue {
+  store: AuthStore;
+  actions: AuthActions;
+}
+
+export const AuthContext = createContext<AuthContextValue | null>(null);
 export const userKey = "system/refresh-user";
 
-export function AuthProvider(props) {
+export function AuthProvider(props: { children: React.ReactNode }) {
   // Lazy initialiser so localStorage access and safeJsonParse only run on the
   // very first render rather than on every render of the provider.
-  const [store, setStore] = useState(() => {
+  const [store, setStore] = useState<AuthStore>(() => {
     const localUser = safeGetItem(AUTH_USER);
     const localAuthToken = safeGetItem(AUTH_TOKEN);
     return {
@@ -64,7 +87,7 @@ export function AuthProvider(props) {
    * 2. updateUser / unsetUser also invalidate the SWR user cache so any
    *    component that calls useUser() immediately sees the new state.
    */
-  const [actions] = useState({
+  const [actions] = useState<AuthActions>({
     updateUser: (user, authToken = "" as any) => {
       safeSetItem(AUTH_USER, JSON.stringify(user));
       safeSetItem(AUTH_TOKEN, authToken);
@@ -81,7 +104,7 @@ export function AuthProvider(props) {
     },
   });
 
-  const value = useMemo(() => ({ store, actions }), [store, actions]);
+  const value = useMemo<AuthContextValue>(() => ({ store, actions }), [store, actions]);
 
   return (
     <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>

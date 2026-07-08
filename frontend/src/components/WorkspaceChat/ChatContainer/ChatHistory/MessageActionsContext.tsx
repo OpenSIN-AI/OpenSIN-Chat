@@ -10,7 +10,19 @@ import {
 const EDIT_EVENT = "toggle-message-edit";
 const DELETE_EVENT = "delete-message";
 
-const MessageActionsContext = createContext<any>(null);
+export interface EditingMessage {
+  chatId: string;
+  role: string;
+}
+
+export interface MessageActionsContextValue {
+  editingMessage: EditingMessage | null;
+  isEditing: (chatId: string, role: string) => boolean;
+  isDeleted: (chatId: string) => boolean;
+  clearEditing: () => void;
+}
+
+const MessageActionsContext = createContext<MessageActionsContextValue | null>(null);
 
 /**
  * Provider that centralizes edit/delete event listeners for all messages.
@@ -18,8 +30,8 @@ const MessageActionsContext = createContext<any>(null);
  * this provider registers just 2 listeners total and dispatches to messages via context.
  */
 export function MessageActionsProvider({ children }: any) {
-  const [editingMessage, setEditingMessage] = useState(null);
-  const [deletedMessages, setDeletedMessages] = useState(() => new Set());
+  const [editingMessage, setEditingMessage] = useState<EditingMessage | null>(null);
+  const [deletedMessages, setDeletedMessages] = useState(() => new Set<string>());
 
   useEffect(() => {
     function handleEditEvent(e: any) {
@@ -55,14 +67,14 @@ export function MessageActionsProvider({ children }: any) {
   }, []);
 
   const isEditing = useCallback(
-    (chatId, role) => {
+    (chatId: string, role: string) => {
       return editingMessage?.chatId === chatId && editingMessage?.role === role;
     },
     [editingMessage],
   );
 
   const isDeleted = useCallback(
-    (chatId) => {
+    (chatId: string) => {
       return deletedMessages.has(chatId);
     },
     [deletedMessages],

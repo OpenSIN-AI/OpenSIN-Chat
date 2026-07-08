@@ -18,7 +18,42 @@ export const LIMITS = {
   global: 5,
 };
 
-const MemoriesContext = createContext(null);
+export interface MemoryEntry {
+  id: string | number;
+  content: string;
+  scope: string;
+  [key: string]: unknown;
+}
+
+export interface MemoriesContextValue {
+  workspace: { slug: string; [key: string]: unknown } | null;
+  sidebarOpen: boolean;
+  closeSidebar: () => void;
+  canToggle: boolean;
+  memories: { workspace: MemoryEntry[]; global: MemoryEntry[] };
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+  activeMemories: MemoryEntry[];
+  enabled: boolean;
+  setEnabled: (enabled: boolean) => void;
+  autoExtraction: boolean;
+  setAutoExtraction: (value: boolean) => void;
+  loadingEnabled: boolean;
+  memoriesLoading: boolean;
+  memoriesError: any;
+  modalState: { open: boolean; mode: string };
+  editingMemory: MemoryEntry | null;
+  openCreateModal: () => void;
+  openEditModal: (memory: MemoryEntry) => void;
+  closeModal: () => void;
+  handleCreate: (content: string) => Promise<boolean>;
+  handleDelete: (memoryId: string | number) => Promise<boolean>;
+  handleUpdate: (memoryId: string | number, content: string) => Promise<boolean>;
+  handlePromote: (memoryId: string | number) => Promise<boolean>;
+  handleDemote: (memoryId: string | number) => Promise<boolean>;
+}
+
+const MemoriesContext = createContext<MemoriesContextValue | null>(null);
 
 export function useMemoriesContext() {
   const ctx = useContext(MemoriesContext);
@@ -28,14 +63,14 @@ export function useMemoriesContext() {
   return ctx;
 }
 
-export function MemoriesProvider({ workspace, children }) {
+export function MemoriesProvider({ workspace, children }: any) {
   const { sidebarOpen, closeSidebar } = useMemoriesSidebar();
   const { user } = useUser();
   const canToggle = !user || user?.role === "admin";
 
   const [activeTab, setActiveTab] = useState("workspace");
   const [modalState, setModalState] = useState({ open: false, mode: "create" });
-  const [editingMemory, setEditingMemory] = useState(null);
+  const [editingMemory, setEditingMemory] = useState<MemoryEntry | null>(null);
   const { settings, loading: settingsLoading } = useSystemSettings();
   const [enabled, setEnabled] = useState(false);
   const [autoExtraction, setAutoExtraction] = useState(true);
@@ -123,7 +158,7 @@ export function MemoriesProvider({ workspace, children }) {
   const activeMemories =
     activeTab === "workspace" ? memories.workspace : memories.global;
 
-  const value = useMemo(
+  const value = useMemo<MemoriesContextValue>(
     () => ({
       workspace,
       sidebarOpen,

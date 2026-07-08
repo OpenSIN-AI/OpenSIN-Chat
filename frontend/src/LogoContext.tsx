@@ -16,7 +16,14 @@ import { resolveDarkMode } from "./hooks/useTheme";
 export const REFETCH_LOGO_EVENT = "refetch-logo";
 export const LOGO_CACHE_KEY = "system/logo";
 
-export const LogoContext = createContext<any>(undefined);
+export interface LogoContextValue {
+  logo: string;
+  setLogo: (logo: string) => void;
+  loginLogo: string;
+  isCustomLogo: boolean;
+}
+
+export const LogoContext = createContext<LogoContextValue | undefined>(undefined);
 
 type LogoData = {
   logo: string;
@@ -24,7 +31,7 @@ type LogoData = {
   isCustomLogo: boolean;
 };
 
-export function LogoProvider({ children }) {
+export function LogoProvider({ children }: { children: React.ReactNode }) {
   // Tracks the currently rendered blob: object URL so it can be revoked
   // *after* the new logo has been rendered, preventing a broken-image flash
   // or permanent disappearance when the theme changes.
@@ -102,7 +109,7 @@ export function LogoProvider({ children }) {
     [mutate],
   );
 
-  const value = useMemo(
+  const value = useMemo<LogoContextValue>(
     () => ({
       logo: data!.logo,
       setLogo,
