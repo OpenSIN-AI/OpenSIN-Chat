@@ -31,6 +31,7 @@ export default function LLMSelectorSidePanel({
           <button
             key={llm.value}
             type="button"
+            aria-label={llm.label}
             data-llm-value={llm.value}
             className={`border-none cursor-pointer flex gap-2 items-center px-2.5 py-1.5 rounded-md transition-colors ${
               selectedLLMProvider === llm.value

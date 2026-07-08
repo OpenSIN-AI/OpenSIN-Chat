@@ -21,6 +21,7 @@ import Workspace from "@/models/workspace";
 import useDocuments from "@/hooks/useDocuments";
 import showToast from "@/utils/toast";
 import { ATTACHMENTS_PROCESSED_EVENT } from "../../../DnDWrapper";
+import logger from "@/utils/logger";
 
 /**
  * Simple Bitbucket logo SVG used as a stand-in for the official brand icon.
@@ -408,6 +409,7 @@ function SourcesView({ t, workspaceSlug, onBack, onClose }) {
               <button
                 key={file.id}
                 type="button"
+                aria-label={file.name || t("common.addFile", "Add file")}
                 disabled={addingId === file.id}
                 onClick={() => handleAdd(file)}
                 className="border-none bg-transparent w-full flex items-center gap-2.5 px-2.5 py-2 rounded-md cursor-pointer text-left hover:bg-zinc-700 light:hover:bg-slate-200 transition-colors disabled:opacity-50"
@@ -533,7 +535,7 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
       setLink("");
       onClose?.();
     } catch (err) {
-      console.error(err);
+      logger.error(err);
       const msg = t("chat_window.attach_menu.url_server_error", {
         status: 0,
         statusText: "client",
