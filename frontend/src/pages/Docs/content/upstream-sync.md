@@ -58,7 +58,7 @@ Die letzten 23 Upstream-Commits (4 Merge-Commits ausgeschlossen) sind wie folgt 
 |---|---------------------|------------------------------------------------------------------------|---------|
 | 01 | `security-hardening`  | CVE-Spam-Filter, Universal-SDK-Timeout, Path-Safety, Consent-Param   | 4       |
 | 02 | `critical-bugfixes`   | Output-Korruption (XML), SearXNG, Swagger-Config, Azure-Fallback     | 5       |
-| 03 | `voice-features`      | Server-Side STT (OpenAI), Kokoro TTS                                  | 2       |
+| 03 | `voice-features`      | Server-Side STT (OpenAI), Kokoro TTS, cvoice.ai (OpenSIN-only)        | 2       |
 | 04 | `document-handling`   | HTML→Markdown Scraping, konfigurierbares Sync-Intervall               | 2       |
 | 05 | `llm-providers`       | Cerebras, Kill-Default-Thread, Generic-OpenAI, Agent-Summarizer      | 5       |
 | 06 | `ui-docs`             | Toggle-Styles, Sponsoren, Embedding-Provider-Liste, Terms-Wording    | 5       |
