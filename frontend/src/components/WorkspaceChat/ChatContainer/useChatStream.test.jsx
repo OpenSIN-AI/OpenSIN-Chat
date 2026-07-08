@@ -7,7 +7,7 @@
 // and exposes the returned values.
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, renderHook } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import React from "react";
 
 // --- Mocks ---
@@ -119,66 +119,10 @@ function createWrapper(workspace = { slug: "test-ws" }, threadSlug = null) {
 }
 
 // useChatStream uses useContext(DndUploaderContext) and useNavigate, so we
-// need a wrapper that provides the context. We'll use a custom render approach.
+// need a wrapper that provides the context. We render the hook through a
+// harness component (renderHook can't provide the context cleanly here).
 import { DndUploaderContext } from "./DnDWrapper";
-
-function renderUseChatStream({ workspace = { slug: "test-ws" }, threadSlug = null, knownHistory = [] } = {}) {
-  function TestComponent() {
-    // We need to dynamically import to avoid hoisting issues
-    return null;
-  }
-
-  // Since useChatStream uses several hooks that need providers, we'll use
-  // renderHook with a wrapper that provides the DnD context.
-  const wrapper = ({ children }) => (
-    <DndUploaderContext.Provider
-      value={{ files: [], parseAttachments: () => [] }}
-    >
-      {children}
-    </DndUploaderContext.Provider>
-  );
-
-  return renderHook(
-    () => {
-      // Dynamic require to avoid ESM/CJS issues with the mock
-      const mod = await import("./useChatStream");
-      return mod.default({ workspace, threadSlug, knownHistory });
-    },
-    { wrapper },
-  );
-}
-
-// Actually, renderHook doesn't support async callbacks. Let's use a
-// synchronous approach with a test component instead.
-
-function useChatStreamHarness({ workspace, threadSlug, knownHistory }) {
-  const [result, setResult] = React.useState(null);
-  React.useEffect(() => {
-    import("./useChatStream").then((mod) => {
-      // The hook is a React hook, so we can't call it outside a component.
-      // Instead, we'll use a component-based approach below.
-    });
-  }, []);
-  return result;
-}
-
-// Simpler approach: a test component that calls the hook and exposes state.
-function TestHarness({ workspace, threadSlug, knownHistory, onReady }) {
-  // We import the hook at module level (mocked) and call it directly.
-  // The mocks above ensure all dependencies are stubbed.
-  const hook = useChatStreamRef.current
-    ? useChatStreamRef.current({ workspace, threadSlug, knownHistory })
-    : null;
-  React.useEffect(() => {
-    if (hook) onReady(hook);
-  }, [hook]);
-  return null;
-}
-
-// We need to import the hook at the top level after mocks are set up.
 import useChatStream from "./useChatStream";
-
-const useChatStreamRef = { current: useChatStream };
 
 function renderHookViaComponent(props = {}) {
   const result = { current: null };

@@ -37,7 +37,7 @@ class MockEventSource {
   close() {}
 }
 
-// @ts-ignore
+// @ts-expect-error - assigning a minimal mock to the global EventSource
 global.EventSource = MockEventSource;
 
 describe("AgentRunsContext", () => {

@@ -52,7 +52,7 @@ export function Chartable({ props }: any) {
       : props.content;
   if (content === null) return null;
 
-  let data: any[] = [];
+  let data: any[];
   try {
     data =
       typeof content.dataset === "string"
