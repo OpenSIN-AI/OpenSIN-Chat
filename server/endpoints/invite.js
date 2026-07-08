@@ -9,6 +9,8 @@ const {
   simpleSSOLoginDisabledMiddleware,
 } = require("../utils/middleware/simpleSSOEnabled");
 const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
+const { validateBody } = require("../utils/middleware/validateBody");
+const { InviteSchemas } = require("../utils/validation/schemas");
 
 function inviteEndpoints(app) {
   if (!app) return;
@@ -61,6 +63,7 @@ function inviteEndpoints(app) {
     "/invite/:code",
     [
       simpleSSOLoginDisabledMiddleware,
+      validateBody(InviteSchemas.acceptInvite),
       simpleRateLimit({
         bucket: "invite-accept",
         max: 5,

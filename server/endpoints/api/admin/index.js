@@ -20,6 +20,8 @@ const {
 const { multiUserMode, reqBody } = require("../../../utils/http");
 const { validAdminApiKey } = require("../../../utils/middleware/validApiKey");
 const { simpleRateLimit } = require("../../../utils/middleware/simpleRateLimit");
+const { validateBody } = require("../../../utils/middleware/validateBody");
+const { AdminSchemas } = require("../../../utils/validation/schemas");
 
 function apiAdminEndpoints(app) {
   if (!app) return;
@@ -96,7 +98,7 @@ function apiAdminEndpoints(app) {
 
   app.post(
     "/v1/admin/users/new",
-    [validAdminApiKey, simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
+    [validAdminApiKey, validateBody(AdminSchemas.createUser), simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
     #swagger.tags = ['Admin']
@@ -178,7 +180,7 @@ function apiAdminEndpoints(app) {
 
   app.post(
     "/v1/admin/users/:id",
-    [validAdminApiKey, simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
+    [validAdminApiKey, validateBody(AdminSchemas.updateUser), simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
     #swagger.tags = ['Admin']
@@ -592,7 +594,7 @@ function apiAdminEndpoints(app) {
 
   app.post(
     "/v1/admin/workspaces/:workspaceId/update-users",
-    [validAdminApiKey, simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
+    [validAdminApiKey, validateBody(AdminSchemas.updateWorkspaceUsers), simpleRateLimit({ bucket: "admin-api", max: 30, windowMs: 60 * 1000 })],
     async (request, response) => {
       /*
     #swagger.tags = ['Admin']

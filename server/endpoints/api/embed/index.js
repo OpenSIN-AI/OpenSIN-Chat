@@ -6,6 +6,8 @@ const { EmbedChats } = require("../../../models/embedChats");
 const { validApiKey } = require("../../../utils/middleware/validApiKey");
 const { reqBody } = require("../../../utils/http");
 const { Workspace } = require("../../../models/workspace");
+const { validateBody } = require("../../../utils/middleware/validateBody");
+const { EmbedSchemas } = require("../../../utils/validation/schemas");
 
 /**
  * In multi-user mode, verifies that the embed belongs to the API key creator.
@@ -237,7 +239,7 @@ function apiEmbedEndpoints(app) {
     },
   );
 
-  app.post("/v1/embed/new", [validApiKey], async (request, response) => {
+  app.post("/v1/embed/new", [validApiKey, validateBody(EmbedSchemas.create)], async (request, response) => {
     /*
       #swagger.tags = ['Embed']
       #swagger.description = 'Create a new embed configuration'
@@ -323,7 +325,7 @@ function apiEmbedEndpoints(app) {
     }
   });
 
-  app.post("/v1/embed/:embedUuid", [validApiKey], async (request, response) => {
+  app.post("/v1/embed/:embedUuid", [validApiKey, validateBody(EmbedSchemas.update)], async (request, response) => {
     /*
       #swagger.tags = ['Embed']
       #swagger.description = 'Update an existing embed configuration'

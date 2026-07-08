@@ -18,13 +18,15 @@ const { WorkspaceChats } = require("../../../models/workspaceChats");
 const { User } = require("../../../models/user");
 const { ApiChatHandler } = require("../../../utils/chats/apiChatHandler");
 const { getModelTag } = require("../../utils");
+const { validateBody } = require("../../../utils/middleware/validateBody");
+const { WorkspaceThreadSchemas } = require("../../../utils/validation/schemas");
 
 function apiWorkspaceThreadEndpoints(app) {
   if (!app) return;
 
   app.post(
     "/v1/workspace/:slug/thread/new",
-    [validApiKey],
+    [validApiKey, validateBody(WorkspaceThreadSchemas.create)],
     async (request, response) => {
       /*
       #swagger.tags = ['Workspace Threads']
@@ -114,7 +116,7 @@ function apiWorkspaceThreadEndpoints(app) {
 
   app.post(
     "/v1/workspace/:slug/thread/:threadSlug/update",
-    [validApiKey],
+    [validApiKey, validateBody(WorkspaceThreadSchemas.update)],
     async (request, response) => {
       /*
       #swagger.tags = ['Workspace Threads']
@@ -343,7 +345,7 @@ function apiWorkspaceThreadEndpoints(app) {
 
   app.post(
     "/v1/workspace/:slug/thread/:threadSlug/chat",
-    [validApiKey],
+    [validApiKey, validateBody(WorkspaceThreadSchemas.chat)],
     async (request, response) => {
       /*
       #swagger.tags = ['Workspace Threads']
@@ -506,7 +508,7 @@ function apiWorkspaceThreadEndpoints(app) {
 
   app.post(
     "/v1/workspace/:slug/thread/:threadSlug/stream-chat",
-    [validApiKey],
+    [validApiKey, validateBody(WorkspaceThreadSchemas.streamChat)],
     async (request, response) => {
       /*
       #swagger.tags = ['Workspace Threads']
