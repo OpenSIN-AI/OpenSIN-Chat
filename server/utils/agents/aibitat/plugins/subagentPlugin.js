@@ -17,7 +17,7 @@ const { subagentSpawner } = require("./subagentSpawner");
 function subagentPlugin(_aibitat) {
   return {
     name: "subagent-spawner",
-    setup(_aibitat) {
+    setup(aibitat) {
       aibitat.function({
         super: aibitat,
         name: "spawn_subagent",

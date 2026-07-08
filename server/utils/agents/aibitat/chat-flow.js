@@ -285,7 +285,7 @@ const chatFlowMethods = {
       state: "success",
     };
 
-    this._chats.push(_chat);
+    this._chats.push(chat);
     if (this._chats.length > 200) {
       this._chats.splice(0, this._chats.length - 200);
     }
@@ -339,7 +339,7 @@ const chatFlowMethods = {
       content: error instanceof Error ? error.message : String(error),
       state: "error",
     };
-    this._chats.push(_chat);
+    this._chats.push(chat);
     if (this._chats.length > 200) {
       this._chats.splice(0, this._chats.length - 200);
     }
@@ -382,7 +382,7 @@ const chatFlowMethods = {
       let nextNode;
       try {
         nextNode = await this.selectNext(route.from);
-      } catch (_error) {
+      } catch (error) {
         if (error instanceof APIError) {
           return this.newError({ from: route.from, to: route.to }, error);
         }
@@ -406,7 +406,7 @@ const chatFlowMethods = {
 
       const history = this.getHistory({ to: route.from });
       const group = this.getGroupMembers(route.from);
-      const rounds = history.filter((_chat) => group.includes(chat.from)).length;
+      const rounds = history.filter((chat) => group.includes(chat.from)).length;
 
       const { maxRounds } = this.getChannelConfig(route.from);
       if (rounds >= maxRounds) {
@@ -421,7 +421,7 @@ const chatFlowMethods = {
     let reply;
     try {
       reply = await this.reply(route);
-    } catch (_error) {
+    } catch (error) {
       if (error instanceof APIError) {
         return this.newError({ from: route.from, to: route.to }, error);
       }
@@ -635,7 +635,7 @@ ${this.getHistory({ to: route.to })
    * Get the chat history between two nodes or all chats to/from a node.
    */
   getHistory({ from, to }) {
-    return this._chats.filter((_chat) => {
+    return this._chats.filter((chat) => {
       const isSuccess = chat.state === "success";
 
       if (!from) {

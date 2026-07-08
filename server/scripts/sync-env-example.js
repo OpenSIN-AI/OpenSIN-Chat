@@ -21,7 +21,7 @@ const path = require("path");
 let consoleLogger;
 try {
   consoleLogger = require("../utils/logger/console.js");
-} catch (_e) {
+} catch {
   consoleLogger = { error: console.error, log: console.log };
 }
 
@@ -46,7 +46,7 @@ try {
       Object.assign(KEY_MAPPING, parsed);
     }
   }
-} catch (_e) {
+} catch {
   // Fall back to dynamic require with lazy loading
 }
 
@@ -54,7 +54,7 @@ try {
 let keyMappingModule;
 try {
   keyMappingModule = require("../utils/helpers/updateENV/keyMapping.js");
-} catch (_e) {
+} catch (e) {
   if (e.code === "MODULE_NOT_FOUND" && e.message.includes("prisma")) {
     console.warn(
       "[sync-env-example] Warning: Prisma client not yet generated. This is normal on fresh installs.",
@@ -199,7 +199,7 @@ function generateAutoSection() {
 
   Object.entries(groups).forEach(([category, entries]) => {
     section += `### ${category}\n`;
-    entries.forEach(({ key, config }) => {
+    entries.forEach(({ key: _key, config }) => {
       section += `# ${config.envKey}=\n`;
     });
     section += `\n`;
@@ -227,7 +227,7 @@ async function main() {
     console.log(
       `[sync-env-example] ✓ Updated ${ENV_EXAMPLE_PATH} (${newContent.length} bytes)`,
     );
-  } catch (_e) {
+  } catch (e) {
     consoleLogger.error(`[sync-env-example] Failed: ${e.message}`);
     process.exit(1);
   }
