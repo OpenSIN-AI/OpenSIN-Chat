@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";
+import logger from "@/utils/logger";
 
 export default function YoutubeOptions() {
   const { t } = useTranslation();
@@ -42,7 +43,7 @@ export default function YoutubeOptions() {
       setLoading(false);
       return;
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       showToast(e.message, "error", { clear: true });
       setLoading(false);
     }

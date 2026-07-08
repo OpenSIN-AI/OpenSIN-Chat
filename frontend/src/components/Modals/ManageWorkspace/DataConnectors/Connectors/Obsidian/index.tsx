@@ -5,6 +5,7 @@ import { FolderOpen } from "@phosphor-icons/react/dist/csr/FolderOpen";
 import { Info } from "@phosphor-icons/react/dist/csr/Info";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
+import logger from "@/utils/logger";
 
 export default function ObsidianOptions() {
   const { t } = useTranslation();
@@ -90,7 +91,7 @@ export default function ObsidianOptions() {
 
       setLoading(false);
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       showToast(e.message, "error", { clear: true });
       setLoading(false);
     }

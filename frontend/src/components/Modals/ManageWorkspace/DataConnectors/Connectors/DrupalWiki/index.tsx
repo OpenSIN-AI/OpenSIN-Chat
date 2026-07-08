@@ -12,6 +12,7 @@ import System from "@/models/system";
 import showToast from "@/utils/toast";
 import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import { Tooltip } from "react-tooltip";
+import logger from "@/utils/logger";
 
 export default function DrupalWikiOptions() {
   const { t } = useTranslation();
@@ -50,7 +51,7 @@ export default function DrupalWikiOptions() {
       e.target.reset();
       setLoading(false);
     } catch (e) {
-      console.error(e);
+      logger.error(e);
       showToast(e.message, "error", { clear: true });
       setLoading(false);
     }

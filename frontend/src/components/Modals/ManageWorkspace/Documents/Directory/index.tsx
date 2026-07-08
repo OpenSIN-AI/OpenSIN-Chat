@@ -21,6 +21,7 @@ import { filterFileSearchResults } from "./utils";
 import ContextMenu from "./ContextMenu";
 import { Tooltip } from "react-tooltip";
 import { safeJsonParse } from "@/utils/request";
+import logger from "@/utils/logger";
 
 function Directory({
   files,
@@ -100,7 +101,7 @@ function Directory({
       await Promise.all([mutateDocuments(), mutateWorkspace()]);
       setSelectedItems({});
     } catch (error) {
-      console.error("Failed to delete files and folders:", error);
+      logger.error("Failed to delete files and folders:", error);
     } finally {
       setLoading(false);
       setSelectedItems({});
@@ -187,7 +188,7 @@ function Directory({
       await Promise.all([mutateDocuments(), mutateWorkspace()]);
       setSelectedItems({});
     } catch (e) {
-      console.error("Failed to refresh after move:", e);
+      logger.error("Failed to refresh after move:", e);
     } finally {
       setLoading(false);
     }
