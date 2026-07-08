@@ -5,9 +5,7 @@
 //          No Redis needed — designed for single-VM (Oracle Free Tier).
 // Docs: triggerEngine.doc.md
 const Bree = require("bree");
-const { getStoragePath } = require("../paths");
 const { AgentTriggers } = require("../../models/agentTriggers");
-const { AgentHandler } = require("../agents");
 const { Workspace } = require("../../models/workspace");
 const consoleLogger = require("../logger/console.js");
 const MAX_ATTEMPTS = 5;
@@ -241,7 +239,6 @@ class TriggerEngine {
    */
   async _invokeAgent(workspace, agentName, prompt) {
     // Delegate to the existing AgentHandler — same path as chat
-    const { AgentHandler } = require("../agents");
     const handler = new AgentHandler({
       workspace,
       prompt,
