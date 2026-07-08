@@ -46,7 +46,7 @@
     "@napi-rs/canvas": "1.0.2",
     "@prisma/adapter-better-sqlite3": "7.8.0",
     "@prisma/client": "7.8.0",
-    "@supabase/storage-js": "^2.108.2",
+    "@supabase/storage-js": "^2.110.1",
     "@vscode/ripgrep": "1.17.1",
     "adm-zip": "^0.5.17",
     "apache-arrow": "^18.1.0",
