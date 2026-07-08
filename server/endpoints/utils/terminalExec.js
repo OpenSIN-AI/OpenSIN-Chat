@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: MIT
-const consoleLogger = require('../../utils/logger/console.js');
+const consoleLogger = require("../../utils/logger/console.js");
 
-const { reqBody } = require('../../utils/http');
-const { validatedRequest } = require('../../utils/middleware/validatedRequest');
+const { reqBody } = require("../../utils/http");
+const { validatedRequest } = require("../../utils/middleware/validatedRequest");
 const {
   flexUserRoleValid,
   ROLES,
-} = require('../../utils/middleware/multiUserProtected');
-const { simpleRateLimit } = require('../../utils/middleware/simpleRateLimit');
-const { execFile } = require('child_process');
-const { promisify } = require('util');
+} = require("../../utils/middleware/multiUserProtected");
+const { simpleRateLimit } = require("../../utils/middleware/simpleRateLimit");
+const { execFile } = require("child_process");
+const { promisify } = require("util");
 
 const execFileAsync = promisify(execFile);
 
@@ -41,9 +41,9 @@ const EXEC_TIMEOUT_MS = 5000;
 const MAX_OUTPUT_BYTES = 8192;
 
 const REDACTED_HOST_PATHS = [
-  [/\/var\/lib\/anythingllm/gi, '<storage>'],
-  [/\/app\/server/gi, '<app>'],
-  [/\/home\/node\/app/gi, '<app>'],
+  [/\/var\/lib\/anythingllm/gi, "<storage>"],
+  [/\/app\/server/gi, "<app>"],
+  [/\/home\/node\/app/gi, "<app>"],
 ];
 
 function redactStorage(value) {
@@ -75,7 +75,7 @@ function validateCommand(cmd, args) {
 
   for (const arg of args) {
     if (SHELL_META_RE.test(arg)) {
-      return { ok: false, reason: 'Shell metacharacters are not allowed.' };
+      return { ok: false, reason: "Shell metacharacters are not allowed." };
     }
     if (rule.argPattern && !rule.argPattern.test(arg)) {
       return {
@@ -100,16 +100,16 @@ function terminalExecEndpoint(app) {
   if (!app) return;
 
   // P1 fix: Gate terminal exec behind enablement check, same as /api/terminal/exec
-  const { isTerminalExecEnabled } = require('../api/terminalExec');
+  const { isTerminalExecEnabled } = require("../api/terminalExec");
   if (!isTerminalExecEnabled()) return;
 
   app.post(
-    '/utils/terminal/exec',
+    "/utils/terminal/exec",
     [
       validatedRequest,
       flexUserRoleValid([ROLES.admin]),
       simpleRateLimit({
-        bucket: 'terminal-exec',
+        bucket: "terminal-exec",
         max: 30,
         windowMs: 60 * 1000,
       }),
@@ -118,9 +118,9 @@ function terminalExecEndpoint(app) {
       try {
         const { command } = reqBody(request);
 
-        if (!command || typeof command !== 'string' || !command.trim()) {
+        if (!command || typeof command !== "string" || !command.trim()) {
           return response.status(400).json({
-            error: 'command must be a non-empty string.',
+            error: "command must be a non-empty string.",
             exitCode: 1,
           });
         }
@@ -143,7 +143,7 @@ function terminalExecEndpoint(app) {
             shell: false, // critical — no shell, prevents injection
           });
 
-          const rawOutput = (stdout || stderr || '').slice(0, MAX_OUTPUT_BYTES);
+          const rawOutput = (stdout || stderr || "").slice(0, MAX_OUTPUT_BYTES);
           const output = redactStorage(rawOutput);
           return response.status(200).json({ output, exitCode: 0 });
         } catch (execErr) {
@@ -151,13 +151,13 @@ function terminalExecEndpoint(app) {
             execErr.stdout ||
             execErr.stderr ||
             execErr.message ||
-            ''
+            ""
           ).slice(0, MAX_OUTPUT_BYTES);
 
           const exitCode =
-            execErr.code === 'ETIMEDOUT'
+            execErr.code === "ETIMEDOUT"
               ? 124
-              : typeof execErr.code === 'number'
+              : typeof execErr.code === "number"
                 ? execErr.code
                 : 1;
 
@@ -165,12 +165,12 @@ function terminalExecEndpoint(app) {
           return response.status(200).json({ output, exitCode });
         }
       } catch (e) {
-        consoleLogger.error('[terminal/exec]', e.message);
+        consoleLogger.error("[terminal/exec]", e.message);
         return response
           .status(500)
-          .json({ error: 'Internal server error.', exitCode: 1 });
+          .json({ error: "Internal server error.", exitCode: 1 });
       }
-    }
+    },
   );
 }
 

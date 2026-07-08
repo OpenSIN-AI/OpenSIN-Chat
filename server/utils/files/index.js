@@ -1,25 +1,25 @@
 // SPDX-License-Identifier: MIT
-const consoleLogger = require('../logger/console.js');
+const consoleLogger = require("../logger/console.js");
 
-const { getStoragePath, getCollectorPath } = require('../paths');
-const fs = require('fs');
-const path = require('path');
-const { v5: uuidv5 } = require('uuid');
-const crypto = require('node:crypto');
-const { Document } = require('../../models/documents');
-const { DocumentSyncQueue } = require('../../models/documentSyncQueue');
+const { getStoragePath, getCollectorPath } = require("../paths");
+const fs = require("fs");
+const path = require("path");
+const { v5: uuidv5 } = require("uuid");
+const crypto = require("node:crypto");
+const { Document } = require("../../models/documents");
+const { DocumentSyncQueue } = require("../../models/documentSyncQueue");
 
-const documentsPath = getStoragePath('documents');
-const directUploadsPath = getStoragePath('direct-uploads');
-const vectorCachePath = getStoragePath('vector-cache');
-const hotdirPath = getCollectorPath('hotdir');
+const documentsPath = getStoragePath("documents");
+const directUploadsPath = getStoragePath("direct-uploads");
+const vectorCachePath = getStoragePath("vector-cache");
+const hotdirPath = getCollectorPath("hotdir");
 
 const MAX_DOC_BYTES = 50 * 1024 * 1024;
 
 // Should take in a folder that is a subfolder of documents
 // eg: youtube-subject/video-123.json
 async function fileData(filePath = null) {
-  if (!filePath) throw new Error('No docPath provided in request');
+  if (!filePath) throw new Error("No docPath provided in request");
   const fullFilePath = path.resolve(documentsPath, normalizePath(filePath));
   if (!isWithin(documentsPath, fullFilePath)) return null;
 
@@ -31,12 +31,12 @@ async function fileData(filePath = null) {
   }
   if (stat.size > MAX_DOC_BYTES) {
     consoleLogger.warn(
-      `[fileData] Refusing ${filePath}: ${stat.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`
+      `[fileData] Refusing ${filePath}: ${stat.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`,
     );
     return null;
   }
   try {
-    const data = await fs.promises.readFile(fullFilePath, 'utf8');
+    const data = await fs.promises.readFile(fullFilePath, "utf8");
     return JSON.parse(data);
   } catch {
     consoleLogger.error(`[fileData] Failed to parse JSON from ${filePath}`);
@@ -48,13 +48,13 @@ async function viewLocalFiles() {
   await fs.promises.mkdir(documentsPath, { recursive: true });
   const liveSyncAvailable = await DocumentSyncQueue.enabled();
   const directory = {
-    name: 'documents',
-    type: 'folder',
+    name: "documents",
+    type: "folder",
     items: [],
   };
 
   for (const file of await fs.promises.readdir(documentsPath)) {
-    if (path.extname(file) === '.md') continue;
+    if (path.extname(file) === ".md") continue;
     const folderPath = path.resolve(documentsPath, file);
     let isFolder;
     try {
@@ -65,7 +65,7 @@ async function viewLocalFiles() {
     if (isFolder) {
       const subdocs = {
         name: file,
-        type: 'folder',
+        type: "folder",
         items: [],
       };
 
@@ -76,13 +76,13 @@ async function viewLocalFiles() {
       for (let i = 0; i < subfiles.length; i++) {
         const subfile = subfiles[i];
         const cachefilename = `${file}/${subfile}`;
-        if (path.extname(subfile) !== '.json') continue;
+        if (path.extname(subfile) !== ".json") continue;
         filePromises.push(
           fileToPickerData({
             pathToFile: path.join(folderPath, subfile),
             liveSyncAvailable,
             cachefilename,
-          })
+          }),
         );
         filenames[cachefilename] = subfile;
       }
@@ -102,7 +102,7 @@ async function viewLocalFiles() {
         item.watched =
           Object.prototype.hasOwnProperty.call(
             watchedDocumentsFilenames,
-            item.name
+            item.name,
           ) || false;
       }
 
@@ -112,8 +112,8 @@ async function viewLocalFiles() {
 
   // Make sure custom-documents is always the first folder in picker
   directory.items = [
-    directory.items.find((folder) => folder.name === 'custom-documents'),
-    ...directory.items.filter((folder) => folder.name !== 'custom-documents'),
+    directory.items.find((folder) => folder.name === "custom-documents"),
+    ...directory.items.filter((folder) => folder.name !== "custom-documents"),
   ].filter((i) => !!i);
 
   return directory;
@@ -124,13 +124,13 @@ async function viewLocalFiles() {
  * @param {string} folderName - The name of the folder to get the documents from.
  * @returns {Promise<{folder: string, documents: any[], code: number, error: string}>} - The documents by folder name.
  */
-async function getDocumentsByFolder(folderName = '') {
+async function getDocumentsByFolder(folderName = "") {
   if (!folderName) {
     return {
       folder: folderName,
       documents: [],
       code: 400,
-      error: 'Folder name must be provided.',
+      error: "Folder name must be provided.",
     };
   }
 
@@ -158,13 +158,13 @@ async function getDocumentsByFolder(folderName = '') {
   const filenames = {};
   const files = await fs.promises.readdir(folderPath);
   for (const file of files) {
-    if (path.extname(file) !== '.json') continue;
+    if (path.extname(file) !== ".json") continue;
     const filePath = path.join(folderPath, file);
     try {
       const st = await fs.promises.stat(filePath);
       if (st.size > MAX_DOC_BYTES) {
         consoleLogger.warn(
-          `[getDocumentsByFolder] Skipping ${file}: ${st.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`
+          `[getDocumentsByFolder] Skipping ${file}: ${st.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`,
         );
         continue;
       }
@@ -174,18 +174,18 @@ async function getDocumentsByFolder(folderName = '') {
     const cachefilename = `${folderName}/${file}`;
     let parsed;
     try {
-      const rawData = await fs.promises.readFile(filePath, 'utf8');
+      const rawData = await fs.promises.readFile(filePath, "utf8");
       parsed = JSON.parse(rawData);
     } catch {
       consoleLogger.error(
-        `[getDocumentsByFolder] Skipping corrupt JSON: ${file}`
+        `[getDocumentsByFolder] Skipping corrupt JSON: ${file}`,
       );
       continue;
     }
     const { pageContent: _pageContent, ...metadata } = parsed;
     documents.push({
       name: file,
-      type: 'file',
+      type: "file",
       ...metadata,
       cached: await cachedVectorInformation(cachefilename, true),
     });
@@ -201,7 +201,7 @@ async function getDocumentsByFolder(folderName = '') {
     doc.pinnedWorkspaces = pinnedWorkspacesByDocument[doc.name] || [];
     doc.watched = Object.prototype.hasOwnProperty.call(
       watchedDocumentsFilenames,
-      doc.name
+      doc.name,
     );
   }
 
@@ -232,14 +232,14 @@ async function cachedVectorInformation(filename = null, checkOnly = false) {
   if (!exists) return { exists, chunks: [] };
 
   consoleLogger.log(
-    `Cached vectorized results of ${filename} found! Using cached data to save on embed costs.`
+    `Cached vectorized results of ${filename} found! Using cached data to save on embed costs.`,
   );
   try {
-    const rawData = await fs.promises.readFile(file, 'utf8');
+    const rawData = await fs.promises.readFile(file, "utf8");
     return { exists: true, chunks: JSON.parse(rawData) };
   } catch {
     consoleLogger.error(
-      `Corrupt vector-cache file detected, ignoring: ${file}`
+      `Corrupt vector-cache file detected, ignoring: ${file}`,
     );
     return { exists: false, chunks: [] };
   }
@@ -251,13 +251,13 @@ async function storeVectorResult(vectorData = [], filename = null) {
   if (!filename) return;
 
   consoleLogger.log(
-    `Caching vectorized results of ${filename} to prevent duplicated embedding.`
+    `Caching vectorized results of ${filename} to prevent duplicated embedding.`,
   );
   await fs.promises.mkdir(vectorCachePath, { recursive: true });
 
   const digest = await vectorCacheKey(filename);
   const writeTo = path.resolve(vectorCachePath, `${digest}.json`);
-  await fs.promises.writeFile(writeTo, JSON.stringify(vectorData), 'utf8');
+  await fs.promises.writeFile(writeTo, JSON.stringify(vectorData), "utf8");
   return;
 }
 
@@ -328,7 +328,7 @@ async function findDocumentInDocuments(documentName = null) {
       const st = await fs.promises.stat(targetFileLocation);
       if (st.size > MAX_DOC_BYTES) {
         consoleLogger.warn(
-          `[findDocumentInDocuments] Skipping ${targetFilename}: ${st.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`
+          `[findDocumentInDocuments] Skipping ${targetFilename}: ${st.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`,
         );
         continue;
       }
@@ -338,7 +338,7 @@ async function findDocumentInDocuments(documentName = null) {
     const cachefilename = `${folder}/${targetFilename}`;
     let parsed;
     try {
-      const rawData = await fs.promises.readFile(targetFileLocation, 'utf8');
+      const rawData = await fs.promises.readFile(targetFileLocation, "utf8");
       parsed = JSON.parse(rawData);
     } catch {
       continue;
@@ -346,7 +346,7 @@ async function findDocumentInDocuments(documentName = null) {
     const { pageContent: _pageContent, ...metadata } = parsed;
     return {
       name: targetFilename,
-      type: 'file',
+      type: "file",
       ...metadata,
       cached: await cachedVectorInformation(cachefilename, true),
     };
@@ -371,19 +371,19 @@ function isWithin(outer, inner) {
     const realInner = fs.realpathSync(inner);
     const rel = path.relative(realOuter, realInner);
 
-    if (rel === '') return false;
+    if (rel === "") return false;
     return (
-      !rel.startsWith(`..${path.sep}`) && rel !== '..' && !path.isAbsolute(rel)
+      !rel.startsWith(`..${path.sep}`) && rel !== ".." && !path.isAbsolute(rel)
     );
   } catch (e) {
-    if (e?.code === 'ENOENT') {
+    if (e?.code === "ENOENT") {
       const resolvedOuter = path.resolve(outer);
       const resolvedInner = path.resolve(inner);
       const rel = path.relative(resolvedOuter, resolvedInner);
-      if (rel === '') return false;
+      if (rel === "") return false;
       return (
         !rel.startsWith(`..${path.sep}`) &&
-        rel !== '..' &&
+        rel !== ".." &&
         !path.isAbsolute(rel)
       );
     }
@@ -391,19 +391,19 @@ function isWithin(outer, inner) {
   }
 }
 
-function normalizePath(filepath = '') {
+function normalizePath(filepath = "") {
   const result = path
-    .normalize(String(filepath).replace(/\0/g, '').trim())
-    .replace(/^(\.\.(\/|\\|$))+/, '')
+    .normalize(String(filepath).replace(/\0/g, "").trim())
+    .replace(/^(\.\.(\/|\\|$))+/, "")
     .trim();
-  if (['..', '.', '/'].includes(result)) throw new Error('Invalid path.');
+  if (["..", ".", "/"].includes(result)) throw new Error("Invalid path.");
   return result;
 }
 
 async function contentHash(filePath) {
-  if (!filePath) return '';
+  if (!filePath) return "";
   try {
-    const fd = await fs.promises.open(filePath, 'r');
+    const fd = await fs.promises.open(filePath, "r");
     try {
       const stat = await fd.stat();
       const sampleBytes = Math.min(8192, stat.size);
@@ -417,18 +417,18 @@ async function contentHash(filePath) {
         tail.set(head.subarray(0, tailBytes));
       }
       return crypto
-        .createHash('sha256')
+        .createHash("sha256")
         .update(head)
         .update(tail)
         .update(String(stat.size))
         .update(String(stat.mtimeMs || 0))
-        .digest('hex')
+        .digest("hex")
         .slice(0, 16);
     } finally {
       await fd.close();
     }
   } catch {
-    return '';
+    return "";
   }
 }
 
@@ -451,7 +451,7 @@ function sanitizeFileName(fileName) {
   return fileName.replace(
     // eslint-disable-next-line no-control-regex
     /[\x00-\x1F<>:"/\\|?*\u201C\u201D\u201E\u201F\u2018\u2019\u201A\u201B\u202E\u200E\u200F\u200B-\u200D]/g,
-    ''
+    "",
   );
 }
 
@@ -461,10 +461,10 @@ function sanitizeFileName(fileName) {
 async function hasVectorCachedFiles() {
   try {
     const entries = await fs.promises.readdir(vectorCachePath);
-    return entries.filter((name) => name.endsWith('.json')).length !== 0;
+    return entries.filter((name) => name.endsWith(".json")).length !== 0;
   } catch (e) {
-    if (e.code !== 'ENOENT') {
-      consoleLogger.error('Error reading vector cache directory:', e.message);
+    if (e.code !== "ENOENT") {
+      consoleLogger.error("Error reading vector cache directory:", e.message);
     }
   }
   return false;
@@ -489,7 +489,7 @@ async function getPinnedWorkspacesByDocument(filenames = []) {
       {
         workspaceId: true,
         docpath: true,
-      }
+      },
     )
   ).reduce((result, { workspaceId, docpath }) => {
     const filename = filenames[docpath];
@@ -516,7 +516,7 @@ async function getWatchedDocumentFilenames(filenames = []) {
       null,
       null,
       null,
-      { workspaceId: true, docpath: true }
+      { workspaceId: true, docpath: true },
     )
   ).reduce((result, { workspaceId, docpath }) => {
     const filename = filenames[docpath];
@@ -563,15 +563,15 @@ async function fileToPickerData({
   if (fileStats.size < FILE_READ_SIZE_THRESHOLD) {
     if (fileStats.size > MAX_DOC_BYTES) {
       consoleLogger.warn(
-        `[fileToPickerData] Skipping ${pathToFile}: ${fileStats.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`
+        `[fileToPickerData] Skipping ${pathToFile}: ${fileStats.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`,
       );
       return null;
     }
     let rawData;
     try {
-      rawData = await fs.promises.readFile(pathToFile, 'utf8');
+      rawData = await fs.promises.readFile(pathToFile, "utf8");
     } catch (err) {
-      consoleLogger.error('Error reading file', err);
+      consoleLogger.error("Error reading file", err);
       return null;
     }
     try {
@@ -579,13 +579,13 @@ async function fileToPickerData({
       // Remove the pageContent field from the metadata - it is large and not needed for the picker
       delete metadata.pageContent;
     } catch (err) {
-      consoleLogger.error('Error parsing file', err);
+      consoleLogger.error("Error parsing file", err);
       return null;
     }
 
     return {
       name: filename,
-      type: 'file',
+      type: "file",
       ...metadata,
       cached: cachedStatus,
       canWatch: liveSyncAvailable
@@ -597,36 +597,36 @@ async function fileToPickerData({
   }
 
   consoleLogger.log(
-    `Stream-parsing ${path.basename(pathToFile)} because it exceeds the ${FILE_READ_SIZE_THRESHOLD} byte limit.`
+    `Stream-parsing ${path.basename(pathToFile)} because it exceeds the ${FILE_READ_SIZE_THRESHOLD} byte limit.`,
   );
-  const stream = fs.createReadStream(pathToFile, { encoding: 'utf8' });
+  const stream = fs.createReadStream(pathToFile, { encoding: "utf8" });
   try {
-    let fileContent = '';
+    let fileContent = "";
     metadata = await new Promise((resolve, reject) => {
       stream
-        .on('data', (chunk) => {
+        .on("data", (chunk) => {
           fileContent += chunk;
         })
-        .on('end', () => {
+        .on("end", () => {
           try {
             metadata = JSON.parse(fileContent);
             // Remove the pageContent field from the metadata - it is large and not needed for the picker
             delete metadata.pageContent;
             resolve(metadata);
           } catch (parseErr) {
-            consoleLogger.error('Error parsing JSON from stream', parseErr);
-            reject(new Error('Failed to parse streamed file content as JSON'));
+            consoleLogger.error("Error parsing JSON from stream", parseErr);
+            reject(new Error("Failed to parse streamed file content as JSON"));
           }
         })
-        .on('error', (err) => {
-          consoleLogger.error('Error parsing file', err);
+        .on("error", (err) => {
+          consoleLogger.error("Error parsing file", err);
           reject(null);
         });
     }).catch((err) => {
-      consoleLogger.error('Error parsing file', err);
+      consoleLogger.error("Error parsing file", err);
     });
   } catch (err) {
-    consoleLogger.error('Error parsing file', err);
+    consoleLogger.error("Error parsing file", err);
     metadata = null;
   } finally {
     stream.destroy();
@@ -640,7 +640,7 @@ async function fileToPickerData({
 
   return {
     name: filename,
-    type: 'file',
+    type: "file",
     ...metadata,
     cached: cachedStatus,
     canWatch: liveSyncAvailable ? DocumentSyncQueue.canWatch(metadata) : false,
@@ -648,17 +648,17 @@ async function fileToPickerData({
 }
 
 const REQUIRED_FILE_OBJECT_FIELDS = [
-  'name',
-  'type',
-  'url',
-  'title',
-  'docAuthor',
-  'description',
-  'docSource',
-  'chunkSource',
-  'published',
-  'wordCount',
-  'token_count_estimate',
+  "name",
+  "type",
+  "url",
+  "title",
+  "docAuthor",
+  "description",
+  "docSource",
+  "chunkSource",
+  "published",
+  "wordCount",
+  "token_count_estimate",
 ];
 
 /**
@@ -668,7 +668,7 @@ const REQUIRED_FILE_OBJECT_FIELDS = [
  */
 function hasRequiredMetadata(metadata = {}) {
   return REQUIRED_FILE_OBJECT_FIELDS.every((field) =>
-    Object.prototype.hasOwnProperty.call(metadata, field)
+    Object.prototype.hasOwnProperty.call(metadata, field),
   );
 }
 

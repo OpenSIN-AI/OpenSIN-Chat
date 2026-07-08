@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
-const consoleLogger = require('../../../utils/logger/console.js');
+const consoleLogger = require("../../../utils/logger/console.js");
 
-const { EmbedConfig } = require('../../../models/embedConfig');
-const { EmbedChats } = require('../../../models/embedChats');
-const { validApiKey } = require('../../../utils/middleware/validApiKey');
-const { reqBody } = require('../../../utils/http');
-const { Workspace } = require('../../../models/workspace');
-const { validateBody } = require('../../../utils/middleware/validateBody');
-const { EmbedSchemas } = require('../../../utils/validation/schemas');
+const { EmbedConfig } = require("../../../models/embedConfig");
+const { EmbedChats } = require("../../../models/embedChats");
+const { validApiKey } = require("../../../utils/middleware/validApiKey");
+const { reqBody } = require("../../../utils/http");
+const { Workspace } = require("../../../models/workspace");
+const { validateBody } = require("../../../utils/middleware/validateBody");
+const { EmbedSchemas } = require("../../../utils/validation/schemas");
 
 /**
  * In multi-user mode, verifies that the embed belongs to the API key creator.
@@ -26,7 +26,7 @@ async function canAccessEmbed(response, embed) {
 function apiEmbedEndpoints(app) {
   if (!app) return;
 
-  app.get('/v1/embed', [validApiKey], async (request, response) => {
+  app.get("/v1/embed", [validApiKey], async (request, response) => {
     /*
       #swagger.tags = ['Embed']
       #swagger.description = 'List all active embeds'
@@ -105,7 +105,7 @@ function apiEmbedEndpoints(app) {
   });
 
   app.get(
-    '/v1/embed/:embedUuid/chats',
+    "/v1/embed/:embedUuid/chats",
     [validApiKey],
     async (request, response) => {
       /*
@@ -157,9 +157,9 @@ function apiEmbedEndpoints(app) {
         const { embedUuid } = request.params;
         const embed = await EmbedConfig.get({ uuid: String(embedUuid) });
         if (!embed)
-          return response.status(404).json({ error: 'Embed not found' });
+          return response.status(404).json({ error: "Embed not found" });
         if (!(await canAccessEmbed(response, embed)))
-          return response.status(403).json({ error: 'Access denied' });
+          return response.status(403).json({ error: "Access denied" });
 
         const chats = await EmbedChats.where({
           embed_config: { uuid: String(embedUuid) },
@@ -169,11 +169,11 @@ function apiEmbedEndpoints(app) {
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.get(
-    '/v1/embed/:embedUuid/chats/:sessionUuid',
+    "/v1/embed/:embedUuid/chats/:sessionUuid",
     [validApiKey],
     async (request, response) => {
       /*
@@ -223,9 +223,9 @@ function apiEmbedEndpoints(app) {
         const { embedUuid, sessionUuid } = request.params;
         const embed = await EmbedConfig.get({ uuid: String(embedUuid) });
         if (!embed)
-          return response.status(404).json({ error: 'Embed not found' });
+          return response.status(404).json({ error: "Embed not found" });
         if (!(await canAccessEmbed(response, embed)))
-          return response.status(403).json({ error: 'Access denied' });
+          return response.status(403).json({ error: "Access denied" });
 
         const chats = await EmbedChats.where({
           embed_config: { uuid: String(embedUuid) },
@@ -236,11 +236,11 @@ function apiEmbedEndpoints(app) {
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
-    '/v1/embed/new',
+    "/v1/embed/new",
     [validApiKey, validateBody(EmbedSchemas.create)],
     async (request, response) => {
       /*
@@ -308,13 +308,13 @@ function apiEmbedEndpoints(app) {
         if (!data.workspace_slug)
           return response
             .status(400)
-            .json({ error: 'Workspace slug is required' });
+            .json({ error: "Workspace slug is required" });
         const workspace = await Workspace.get({
           slug: String(data.workspace_slug),
         });
 
         if (!workspace)
-          return response.status(404).json({ error: 'Workspace not found' });
+          return response.status(404).json({ error: "Workspace not found" });
 
         const { embed, message: error } = await EmbedConfig.new({
           ...data,
@@ -326,11 +326,11 @@ function apiEmbedEndpoints(app) {
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
-    '/v1/embed/:embedUuid',
+    "/v1/embed/:embedUuid",
     [validApiKey, validateBody(EmbedSchemas.update)],
     async (request, response) => {
       /*
@@ -391,10 +391,10 @@ function apiEmbedEndpoints(app) {
 
         const embed = await EmbedConfig.get({ uuid: String(embedUuid) });
         if (!embed) {
-          return response.status(404).json({ error: 'Embed not found' });
+          return response.status(404).json({ error: "Embed not found" });
         }
         if (!(await canAccessEmbed(response, embed))) {
-          return response.status(403).json({ error: 'Access denied' });
+          return response.status(403).json({ error: "Access denied" });
         }
 
         const { success, error } = await EmbedConfig.update(embed.id, data);
@@ -403,11 +403,11 @@ function apiEmbedEndpoints(app) {
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.delete(
-    '/v1/embed/:embedUuid',
+    "/v1/embed/:embedUuid",
     [validApiKey],
     async (request, response) => {
       /*
@@ -445,18 +445,18 @@ function apiEmbedEndpoints(app) {
         const { embedUuid } = request.params;
         const embed = await EmbedConfig.get({ uuid: String(embedUuid) });
         if (!embed)
-          return response.status(404).json({ error: 'Embed not found' });
+          return response.status(404).json({ error: "Embed not found" });
         if (!(await canAccessEmbed(response, embed)))
-          return response.status(403).json({ error: 'Access denied' });
+          return response.status(403).json({ error: "Access denied" });
         const success = await EmbedConfig.delete({ id: embed.id });
         response
           .status(200)
-          .json({ success, error: success ? null : 'Failed to delete embed' });
+          .json({ success, error: success ? null : "Failed to delete embed" });
       } catch (e) {
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 }
 

@@ -2,17 +2,17 @@
 // Purpose: Read operations and feature-check methods for SystemSettings.
 // Extracted from systemSettings.js as part of issue #510 God-File split.
 
-const consoleLogger = require('../../utils/logger/console.js');
-const { getStoragePath } = require('../../utils/paths');
-const { SettingsManager } = require('../../utils/SettingsManager');
-const { PGVector } = require('../../utils/vectorDbProviders/pgvector');
-const { NativeEmbedder } = require('../../utils/EmbeddingEngines/native');
-const { getBaseLLMProviderModel } = require('../../utils/helpers');
-const { safeJsonParse } = require('../../utils/http');
+const consoleLogger = require("../../utils/logger/console.js");
+const { getStoragePath } = require("../../utils/paths");
+const { SettingsManager } = require("../../utils/SettingsManager");
+const { PGVector } = require("../../utils/vectorDbProviders/pgvector");
+const { NativeEmbedder } = require("../../utils/EmbeddingEngines/native");
+const { getBaseLLMProviderModel } = require("../../utils/helpers");
+const { safeJsonParse } = require("../../utils/http");
 const {
   ConnectionStringParser,
-} = require('../../utils/agents/aibitat/plugins/sql-agent/SQLConnectors/utils');
-const prisma = require('../../utils/prisma');
+} = require("../../utils/agents/aibitat/plugins/sql-agent/SQLConnectors/utils");
+const prisma = require("../../utils/prisma");
 
 /**
  * Creates getter methods bound to a SystemSettings instance.
@@ -22,19 +22,19 @@ const prisma = require('../../utils/prisma');
 function createGetters(ss) {
   return {
     currentSettings: async function () {
-      const { hasVectorCachedFiles } = require('../../utils/files');
+      const { hasVectorCachedFiles } = require("../../utils/files");
       const {
         ToolReranker,
-      } = require('../../utils/agents/aibitat/utils/toolReranker');
-      const AIbitat = require('../../utils/agents/aibitat');
+      } = require("../../utils/agents/aibitat/utils/toolReranker");
+      const AIbitat = require("../../utils/agents/aibitat");
 
       // Issue #3: Read provider selection settings from the DB-backed
       // SettingsManager (source of truth after Phase 4). Falls back to
       // process.env gracefully during migration / first boot.
-      const llmProvider = await SettingsManager.get('LLM_PROVIDER');
-      const vectorDB = await SettingsManager.get('VECTOR_DB');
+      const llmProvider = await SettingsManager.get("LLM_PROVIDER");
+      const vectorDB = await SettingsManager.get("VECTOR_DB");
       const embeddingEngine =
-        (await SettingsManager.get('EMBEDDING_ENGINE')) ?? 'native';
+        (await SettingsManager.get("EMBEDDING_ENGINE")) ?? "native";
       return {
         // --------------------------------------------------------
         // General Settings
@@ -49,7 +49,7 @@ function createGetters(ss) {
         MemoryEnabled: await ss.memoriesEnabled(),
         MemoryAutoExtraction: await ss.memoryAutoExtractionSetting(),
         DisableTelemetry:
-          (await SettingsManager.get('DISABLE_TELEMETRY')) || 'false',
+          (await SettingsManager.get("DISABLE_TELEMETRY")) || "false",
 
         // --------------------------------------------------------
         // Embedder Provider Selection Settings & Configs
@@ -57,28 +57,28 @@ function createGetters(ss) {
         EmbeddingEngine: embeddingEngine,
         HasExistingEmbeddings: await ss.hasEmbeddings(),
         HasCachedEmbeddings: await hasVectorCachedFiles(),
-        EmbeddingBasePath: await SettingsManager.get('EMBEDDING_BASE_PATH'),
+        EmbeddingBasePath: await SettingsManager.get("EMBEDDING_BASE_PATH"),
         EmbeddingModelPref:
-          embeddingEngine === 'native'
+          embeddingEngine === "native"
             ? NativeEmbedder._getEmbeddingModel()
-            : await SettingsManager.get('EMBEDDING_MODEL_PREF'),
+            : await SettingsManager.get("EMBEDDING_MODEL_PREF"),
         EmbeddingOutputDimensions:
-          (await SettingsManager.get('EMBEDDING_OUTPUT_DIMENSIONS')) || null,
+          (await SettingsManager.get("EMBEDDING_OUTPUT_DIMENSIONS")) || null,
         EmbeddingModelMaxChunkLength: await SettingsManager.get(
-          'EMBEDDING_MODEL_MAX_CHUNK_LENGTH'
+          "EMBEDDING_MODEL_MAX_CHUNK_LENGTH",
         ),
         OllamaEmbeddingBatchSize:
-          (await SettingsManager.get('OLLAMA_EMBEDDING_BATCH_SIZE')) || 1,
-        VoyageAiApiKey: !!(await SettingsManager.get('VOYAGEAI_API_KEY')),
+          (await SettingsManager.get("OLLAMA_EMBEDDING_BATCH_SIZE")) || 1,
+        VoyageAiApiKey: !!(await SettingsManager.get("VOYAGEAI_API_KEY")),
         GenericOpenAiEmbeddingApiKey: !!(await SettingsManager.get(
-          'GENERIC_OPEN_AI_EMBEDDING_API_KEY'
+          "GENERIC_OPEN_AI_EMBEDDING_API_KEY",
         )),
         GenericOpenAiEmbeddingMaxConcurrentChunks:
           (await SettingsManager.get(
-            'GENERIC_OPEN_AI_EMBEDDING_MAX_CONCURRENT_CHUNKS'
+            "GENERIC_OPEN_AI_EMBEDDING_MAX_CONCURRENT_CHUNKS",
           )) || 500,
         GeminiEmbeddingApiKey: !!(await SettingsManager.get(
-          'GEMINI_EMBEDDING_API_KEY'
+          "GEMINI_EMBEDDING_API_KEY",
         )),
 
         // --------------------------------------------------------
@@ -92,103 +92,103 @@ function createGetters(ss) {
         // --------------------------------------------------------
         LLMProvider: llmProvider,
         LLMModel: getBaseLLMProviderModel({ provider: llmProvider }) || null,
-        ModelRouterId: (await SettingsManager.get('MODEL_ROUTER_ID')) || null,
+        ModelRouterId: (await SettingsManager.get("MODEL_ROUTER_ID")) || null,
         ...ss.llmPreferenceKeys(),
 
         // --------------------------------------------------------
         // Whisper (Audio transcription) Selection Settings & Configs
         // --------------------------------------------------------
         WhisperProvider:
-          (await SettingsManager.get('WHISPER_PROVIDER')) || 'local',
+          (await SettingsManager.get("WHISPER_PROVIDER")) || "local",
         WhisperModelPref:
-          (await SettingsManager.get('WHISPER_MODEL_PREF')) ||
-          'Xenova/whisper-small',
+          (await SettingsManager.get("WHISPER_MODEL_PREF")) ||
+          "Xenova/whisper-small",
 
         // --------------------------------------------------------
         // TTS/STT Selection Settings & Configs
         // --------------------------------------------------------
         TextToSpeechProvider:
-          (await SettingsManager.get('TTS_PROVIDER')) || 'native',
-        TTSOpenAIKey: !!(await SettingsManager.get('TTS_OPEN_AI_KEY')),
+          (await SettingsManager.get("TTS_PROVIDER")) || "native",
+        TTSOpenAIKey: !!(await SettingsManager.get("TTS_OPEN_AI_KEY")),
         TTSOpenAIVoiceModel: await SettingsManager.get(
-          'TTS_OPEN_AI_VOICE_MODEL'
+          "TTS_OPEN_AI_VOICE_MODEL",
         ),
 
         // Eleven Labs TTS
-        TTSElevenLabsKey: !!(await SettingsManager.get('TTS_ELEVEN_LABS_KEY')),
+        TTSElevenLabsKey: !!(await SettingsManager.get("TTS_ELEVEN_LABS_KEY")),
         TTSElevenLabsVoiceModel: await SettingsManager.get(
-          'TTS_ELEVEN_LABS_VOICE_MODEL'
+          "TTS_ELEVEN_LABS_VOICE_MODEL",
         ),
         // Piper TTS
         TTSPiperTTSVoiceModel:
-          (await SettingsManager.get('TTS_PIPER_VOICE_MODEL')) ??
-          'en_US-hfc_female-medium',
+          (await SettingsManager.get("TTS_PIPER_VOICE_MODEL")) ??
+          "en_US-hfc_female-medium",
         // OpenAI Generic TTS
         TTSOpenAICompatibleKey: !!(await SettingsManager.get(
-          'TTS_OPEN_AI_COMPATIBLE_KEY'
+          "TTS_OPEN_AI_COMPATIBLE_KEY",
         )),
         TTSOpenAICompatibleModel: await SettingsManager.get(
-          'TTS_OPEN_AI_COMPATIBLE_MODEL'
+          "TTS_OPEN_AI_COMPATIBLE_MODEL",
         ),
         TTSOpenAICompatibleVoiceModel: await SettingsManager.get(
-          'TTS_OPEN_AI_COMPATIBLE_VOICE_MODEL'
+          "TTS_OPEN_AI_COMPATIBLE_VOICE_MODEL",
         ),
         TTSOpenAICompatibleEndpoint: await SettingsManager.get(
-          'TTS_OPEN_AI_COMPATIBLE_ENDPOINT'
+          "TTS_OPEN_AI_COMPATIBLE_ENDPOINT",
         ),
         // Kokoro TTS
-        TTSKokoroEndpoint: await SettingsManager.get('TTS_KOKORO_ENDPOINT'),
-        TTSKokoroKey: !!(await SettingsManager.get('TTS_KOKORO_KEY')),
+        TTSKokoroEndpoint: await SettingsManager.get("TTS_KOKORO_ENDPOINT"),
+        TTSKokoroKey: !!(await SettingsManager.get("TTS_KOKORO_KEY")),
         TTSKokoroVoiceModel: await SettingsManager.get(
-          'TTS_KOKORO_VOICE_MODEL'
+          "TTS_KOKORO_VOICE_MODEL",
         ),
 
         // cvoice.ai TTS
-        TTSCvoiceApiKey: !!(await SettingsManager.get('TTS_CVOICE_API_KEY')),
-        TTSCvoiceEndpoint: await SettingsManager.get('TTS_CVOICE_ENDPOINT'),
+        TTSCvoiceApiKey: !!(await SettingsManager.get("TTS_CVOICE_API_KEY")),
+        TTSCvoiceEndpoint: await SettingsManager.get("TTS_CVOICE_ENDPOINT"),
         TTSCvoiceVoiceModel: await SettingsManager.get(
-          'TTS_CVOICE_VOICE_MODEL'
+          "TTS_CVOICE_VOICE_MODEL",
         ),
         TTSCvoiceCustomVoiceModel: await SettingsManager.get(
-          'TTS_CVOICE_CUSTOM_VOICE_MODEL'
+          "TTS_CVOICE_CUSTOM_VOICE_MODEL",
         ),
         TTSCvoicePersonName: await SettingsManager.get(
-          'TTS_CVOICE_PERSON_NAME'
+          "TTS_CVOICE_PERSON_NAME",
         ),
         TTSCvoicePersonSlug: await SettingsManager.get(
-          'TTS_CVOICE_PERSON_SLUG'
+          "TTS_CVOICE_PERSON_SLUG",
         ),
 
         // STT Selection
         SpeechToTextProvider:
-          (await SettingsManager.get('STT_PROVIDER')) || 'native',
+          (await SettingsManager.get("STT_PROVIDER")) || "native",
         // STT OpenAI
-        STTOpenAIModel: await SettingsManager.get('STT_OPEN_AI_MODEL'),
+        STTOpenAIModel: await SettingsManager.get("STT_OPEN_AI_MODEL"),
 
         // STT Deepgram
         STTDeepgramApiKey: !!(await SettingsManager.get(
-          'STT_DEEPGRAM_API_KEY'
+          "STT_DEEPGRAM_API_KEY",
         )),
-        STTDeepgramModel: await SettingsManager.get('STT_DEEPGRAM_MODEL'),
+        STTDeepgramModel: await SettingsManager.get("STT_DEEPGRAM_MODEL"),
 
         // STT Generic OpenAI
         STTOpenAICompatibleKey: !!(await SettingsManager.get(
-          'STT_OPEN_AI_COMPATIBLE_KEY'
+          "STT_OPEN_AI_COMPATIBLE_KEY",
         )),
         STTOpenAICompatibleModel: await SettingsManager.get(
-          'STT_OPEN_AI_COMPATIBLE_MODEL'
+          "STT_OPEN_AI_COMPATIBLE_MODEL",
         ),
         STTOpenAICompatibleEndpoint: await SettingsManager.get(
-          'STT_OPEN_AI_COMPATIBLE_ENDPOINT'
+          "STT_OPEN_AI_COMPATIBLE_ENDPOINT",
         ),
 
         // --------------------------------------------------------
         // Agent Settings & Configs
         // --------------------------------------------------------
         AgentSerpApiKey: !!process.env.AGENT_SERPAPI_API_KEY || null,
-        AgentSerpApiEngine: process.env.AGENT_SERPAPI_ENGINE || 'google',
+        AgentSerpApiEngine: process.env.AGENT_SERPAPI_ENGINE || "google",
         AgentSearchApiKey: !!process.env.AGENT_SEARCHAPI_API_KEY || null,
-        AgentSearchApiEngine: process.env.AGENT_SEARCHAPI_ENGINE || 'google',
+        AgentSearchApiEngine: process.env.AGENT_SEARCHAPI_ENGINE || "google",
         AgentSerperApiKey: !!process.env.AGENT_SERPER_DEV_KEY || null,
         AgentBingSearchApiKey: !!process.env.AGENT_BING_SEARCH_API_KEY || null,
         AgentBaiduSearchApiKey:
@@ -204,15 +204,15 @@ function createGetters(ss) {
         // --------------------------------------------------------
         // Disable View Chat History for the whole instance.
         DisableViewChatHistory:
-          'DISABLE_VIEW_CHAT_HISTORY' in process.env || false,
+          "DISABLE_VIEW_CHAT_HISTORY" in process.env || false,
         WorkspaceDeletionProtection:
-          'WORKSPACE_DELETION_PROTECTION' in process.env || false,
+          "WORKSPACE_DELETION_PROTECTION" in process.env || false,
 
         // --------------------------------------------------------
         // Simple SSO Settings
         // --------------------------------------------------------
-        SimpleSSOEnabled: 'SIMPLE_SSO_ENABLED' in process.env || false,
-        SimpleSSONoLogin: 'SIMPLE_SSO_NO_LOGIN' in process.env || false,
+        SimpleSSOEnabled: "SIMPLE_SSO_ENABLED" in process.env || false,
+        SimpleSSONoLogin: "SIMPLE_SSO_NO_LOGIN" in process.env || false,
         SimpleSSONoLoginRedirect: ss.simpleSSO.noLoginRedirect(),
 
         // --------------------------------------------------------
@@ -223,14 +223,14 @@ function createGetters(ss) {
         AgentSkillRerankerTopN: ToolReranker.getTopN(),
         AgentClarifyingQuestionsEnabled:
           (await ss.getValueOrFallback(
-            { label: 'agent_clarifying_questions_enabled' },
-            'false'
-          )) === 'true',
+            { label: "agent_clarifying_questions_enabled" },
+            "false",
+          )) === "true",
         AgentClarifyingQuestionsMaxPerTurn: Number(
           (await ss.getValueOrFallback(
-            { label: 'agent_clarifying_questions_max_per_turn' },
-            '3'
-          )) || 3
+            { label: "agent_clarifying_questions_max_per_turn" },
+            "3",
+          )) || 3,
         ),
       };
     },
@@ -271,8 +271,8 @@ function createGetters(ss) {
 
     isMultiUserMode: async function () {
       try {
-        const setting = await ss.get({ label: 'multi_user_mode' });
-        return setting?.value === 'true';
+        const setting = await ss.get({ label: "multi_user_mode" });
+        return setting?.value === "true";
       } catch (error) {
         consoleLogger.error(error.message);
         return false;
@@ -281,8 +281,8 @@ function createGetters(ss) {
 
     memoriesEnabled: async function () {
       try {
-        const setting = await ss.get({ label: 'memory_enabled' });
-        return setting?.value === 'true';
+        const setting = await ss.get({ label: "memory_enabled" });
+        return setting?.value === "true";
       } catch (error) {
         consoleLogger.error(error.message);
         return false;
@@ -292,8 +292,8 @@ function createGetters(ss) {
     autoMemoriesEnabled: async function () {
       try {
         if (!(await ss.memoriesEnabled())) return false;
-        const setting = await ss.get({ label: 'memory_auto_extraction' });
-        return !setting || setting.value === 'true';
+        const setting = await ss.get({ label: "memory_auto_extraction" });
+        return !setting || setting.value === "true";
       } catch (error) {
         consoleLogger.error(error.message);
         return false;
@@ -302,8 +302,8 @@ function createGetters(ss) {
 
     memoryAutoExtractionSetting: async function () {
       try {
-        const setting = await ss.get({ label: 'memory_auto_extraction' });
-        return !setting || setting.value === 'true';
+        const setting = await ss.get({ label: "memory_auto_extraction" });
+        return !setting || setting.value === "true";
       } catch (error) {
         consoleLogger.error(error.message);
         return true;
@@ -319,7 +319,7 @@ function createGetters(ss) {
 
     currentLogoFilename: async function () {
       try {
-        const setting = await ss.get({ label: 'logo_filename' });
+        const setting = await ss.get({ label: "logo_filename" });
         return setting?.value || null;
       } catch (error) {
         consoleLogger.error(error.message);
@@ -329,7 +329,7 @@ function createGetters(ss) {
 
     hasEmbeddings: async function () {
       try {
-        const { Document } = require('../documents');
+        const { Document } = require("../documents");
         const count = await Document.count({}, 1);
         return count > 0;
       } catch (error) {
@@ -385,7 +385,7 @@ function createGetters(ss) {
       return {
         // OpenAI Keys
         OpenAiKey: !!process.env.OPEN_AI_KEY,
-        OpenAiModelPref: process.env.OPEN_MODEL_PREF || 'gpt-4o',
+        OpenAiModelPref: process.env.OPEN_MODEL_PREF || "gpt-4o",
 
         // Azure + OpenAI Keys
         AzureOpenAiEndpoint: process.env.AZURE_OPENAI_ENDPOINT,
@@ -394,20 +394,20 @@ function createGetters(ss) {
           process.env.AZURE_OPENAI_MODEL_PREF || process.env.OPEN_MODEL_PREF,
         AzureOpenAiEmbeddingModelPref: process.env.EMBEDDING_MODEL_PREF,
         AzureOpenAiTokenLimit: process.env.AZURE_OPENAI_TOKEN_LIMIT || 4096,
-        AzureOpenAiModelType: process.env.AZURE_OPENAI_MODEL_TYPE || 'default',
+        AzureOpenAiModelType: process.env.AZURE_OPENAI_MODEL_TYPE || "default",
 
         // Anthropic Keys
         AnthropicApiKey: !!process.env.ANTHROPIC_API_KEY,
         AnthropicModelPref:
-          process.env.ANTHROPIC_MODEL_PREF || 'claude-sonnet-4-6',
-        AnthropicCacheControl: process.env.ANTHROPIC_CACHE_CONTROL || 'none',
+          process.env.ANTHROPIC_MODEL_PREF || "claude-sonnet-4-6",
+        AnthropicCacheControl: process.env.ANTHROPIC_CACHE_CONTROL || "none",
 
         // Gemini Keys
         GeminiLLMApiKey: !!process.env.GEMINI_API_KEY,
         GeminiLLMModelPref:
-          process.env.GEMINI_LLM_MODEL_PREF || 'gemini-2.0-flash-lite',
+          process.env.GEMINI_LLM_MODEL_PREF || "gemini-2.0-flash-lite",
         GeminiSafetySetting:
-          process.env.GEMINI_SAFETY_SETTING || 'BLOCK_MEDIUM_AND_ABOVE',
+          process.env.GEMINI_SAFETY_SETTING || "BLOCK_MEDIUM_AND_ABOVE",
 
         // LMStudio Keys
         LMStudioBasePath: process.env.LMSTUDIO_BASE_PATH,
@@ -484,7 +484,7 @@ function createGetters(ss) {
 
     agent_sql_connections: async function () {
       const setting = await ss.get({
-        label: 'agent_sql_connections',
+        label: "agent_sql_connections",
       });
       if (!setting) return [];
 
@@ -493,11 +493,11 @@ function createGetters(ss) {
 
       const connections = parsedList
         .map((conn) => {
-          if (!conn || typeof conn !== 'object' || !conn.engine) return null;
+          if (!conn || typeof conn !== "object" || !conn.engine) return null;
           try {
             let scheme = conn.engine;
-            if (scheme === 'sql-server') scheme = 'mssql';
-            if (scheme === 'postgresql') scheme = 'postgres';
+            if (scheme === "sql-server") scheme = "mssql";
+            if (scheme === "postgresql") scheme = "postgres";
             const parser = new ConnectionStringParser({ scheme });
 
             const parsedConn = parser.parse(conn.connectionString);
@@ -513,7 +513,7 @@ function createGetters(ss) {
           } catch (e) {
             consoleLogger.error(
               `Failed to parse SQL connection "${conn.database_id ?? conn.engine}":`,
-              e.message
+              e.message,
             );
             return null;
           }
@@ -526,8 +526,8 @@ function createGetters(ss) {
     getFeatureFlags: async function () {
       return {
         experimental_live_file_sync:
-          (await ss.get({ label: 'experimental_live_file_sync' }))?.value ===
-          'enabled',
+          (await ss.get({ label: "experimental_live_file_sync" }))?.value ===
+          "enabled",
       };
     },
 
@@ -539,7 +539,7 @@ function createGetters(ss) {
      */
     hubSettings: async function () {
       try {
-        const hubKey = await ss.get({ label: 'hub_api_key' });
+        const hubKey = await ss.get({ label: "hub_api_key" });
         return { connectionKey: hubKey?.value || null };
       } catch (error) {
         consoleLogger.error(error.message);

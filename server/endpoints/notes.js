@@ -1,25 +1,25 @@
 // SPDX-License-Identifier: MIT
-const consoleLogger = require('../utils/logger/console.js');
-const fs = require('fs');
-const path = require('path');
+const consoleLogger = require("../utils/logger/console.js");
+const fs = require("fs");
+const path = require("path");
 
-const { WorkspaceNote } = require('../models/workspaceNote');
-const { Document } = require('../models/documents');
-const { Workspace } = require('../models/workspace');
-const { userFromSession, reqBody } = require('../utils/http');
-const { validatedRequest } = require('../utils/middleware/validatedRequest');
+const { WorkspaceNote } = require("../models/workspaceNote");
+const { Document } = require("../models/documents");
+const { Workspace } = require("../models/workspace");
+const { userFromSession, reqBody } = require("../utils/http");
+const { validatedRequest } = require("../utils/middleware/validatedRequest");
 const {
   flexUserRoleValid,
   ROLES,
-} = require('../utils/middleware/multiUserProtected');
-const { validWorkspaceSlug } = require('../utils/middleware/validWorkspace');
-const { getStoragePath } = require('../utils/paths');
+} = require("../utils/middleware/multiUserProtected");
+const { validWorkspaceSlug } = require("../utils/middleware/validWorkspace");
+const { getStoragePath } = require("../utils/paths");
 
 function noteEndpoints(app) {
   if (!app) return;
 
   app.get(
-    '/workspaces/:slug/notes',
+    "/workspaces/:slug/notes",
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async (request, response) => {
       try {
@@ -30,36 +30,36 @@ function noteEndpoints(app) {
         consoleLogger.error(e);
         return response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
-    '/workspaces/:slug/notes',
+    "/workspaces/:slug/notes",
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async (request, response) => {
       try {
         const workspace = response.locals.workspace;
-        const { content = '', pinned = false } = reqBody(request);
+        const { content = "", pinned = false } = reqBody(request);
 
         // Validate content — mirror the same rules enforced by PUT.
-        if (typeof content !== 'string') {
+        if (typeof content !== "string") {
           return response
             .status(400)
-            .json({ error: 'content must be a string' });
+            .json({ error: "content must be a string" });
         }
         if (content.length > 100_000) {
           return response
             .status(400)
             .json({
-              error: 'content must be a string of max 100,000 characters',
+              error: "content must be a string of max 100,000 characters",
             });
         }
 
         // Validate pinned — must be boolean (or coercible default false).
-        if (typeof pinned !== 'boolean') {
+        if (typeof pinned !== "boolean") {
           return response
             .status(400)
-            .json({ error: 'pinned must be a boolean' });
+            .json({ error: "pinned must be a boolean" });
         }
 
         const note = await WorkspaceNote.create(workspace.id, content, pinned);
@@ -68,33 +68,33 @@ function noteEndpoints(app) {
         consoleLogger.error(e);
         return response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.put(
-    '/workspaces/:slug/notes/:id',
+    "/workspaces/:slug/notes/:id",
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async (request, response) => {
       try {
         const workspace = response.locals.workspace;
         const noteId = Number(request.params.id);
         if (!Number.isInteger(noteId) || noteId <= 0) {
-          return response.status(400).json({ error: 'Invalid note id' });
+          return response.status(400).json({ error: "Invalid note id" });
         }
         const { content, pinned } = reqBody(request);
         if (content !== undefined) {
-          if (typeof content !== 'string' || content.length > 100_000) {
+          if (typeof content !== "string" || content.length > 100_000) {
             return response
               .status(400)
               .json({
-                error: 'content must be a string of max 100,000 characters',
+                error: "content must be a string of max 100,000 characters",
               });
           }
         }
         // IDOR guard: ensure the note belongs to this workspace
         const existing = await WorkspaceNote.get(noteId);
         if (!existing || existing.workspaceId !== workspace.id) {
-          return response.status(404).json({ error: 'Note not found' });
+          return response.status(404).json({ error: "Note not found" });
         }
         const updates = {};
         if (content !== undefined) updates.content = content;
@@ -105,23 +105,23 @@ function noteEndpoints(app) {
         consoleLogger.error(e);
         return response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.delete(
-    '/workspaces/:slug/notes/:id',
+    "/workspaces/:slug/notes/:id",
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async (request, response) => {
       try {
         const workspace = response.locals.workspace;
         const noteId = Number(request.params.id);
         if (!Number.isInteger(noteId) || noteId <= 0) {
-          return response.status(400).json({ error: 'Invalid note id' });
+          return response.status(400).json({ error: "Invalid note id" });
         }
         // IDOR guard: ensure the note belongs to this workspace
         const existing = await WorkspaceNote.get(noteId);
         if (!existing || existing.workspaceId !== workspace.id) {
-          return response.status(404).json({ error: 'Note not found' });
+          return response.status(404).json({ error: "Note not found" });
         }
         await WorkspaceNote.delete(noteId);
         response.status(200).json({ success: true });
@@ -129,11 +129,11 @@ function noteEndpoints(app) {
         consoleLogger.error(e);
         return response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.get(
-    '/workspaces/:slug/notes/shareable-workspaces',
+    "/workspaces/:slug/notes/shareable-workspaces",
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async (request, response) => {
       try {
@@ -141,18 +141,18 @@ function noteEndpoints(app) {
         const user = await userFromSession(request, response);
         const workspaces = await WorkspaceNote.getShareableWorkspaces(
           workspace.id,
-          user?.id || null
+          user?.id || null,
         );
         response.status(200).json({ workspaces });
       } catch (e) {
         consoleLogger.error(e);
         return response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.get(
-    '/workspaces/:slug/notes/shared',
+    "/workspaces/:slug/notes/shared",
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async (request, response) => {
       try {
@@ -163,76 +163,76 @@ function noteEndpoints(app) {
         consoleLogger.error(e);
         return response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
-    '/workspaces/:slug/notes/:id/share',
+    "/workspaces/:slug/notes/:id/share",
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async (request, response) => {
       try {
         const workspace = response.locals.workspace;
         const noteId = Number(request.params.id);
         if (!Number.isInteger(noteId) || noteId <= 0) {
-          return response.status(400).json({ error: 'Invalid note id' });
+          return response.status(400).json({ error: "Invalid note id" });
         }
         const { targetWorkspaceSlug } = reqBody(request);
         if (!targetWorkspaceSlug) {
           return response
             .status(400)
-            .json({ error: 'targetWorkspaceSlug is required' });
+            .json({ error: "targetWorkspaceSlug is required" });
         }
         // IDOR guard: ensure the note belongs to this workspace
         const existing = await WorkspaceNote.get(noteId);
         if (!existing || existing.workspaceId !== workspace.id) {
-          return response.status(404).json({ error: 'Note not found' });
+          return response.status(404).json({ error: "Note not found" });
         }
         const target = await Workspace.get({ slug: targetWorkspaceSlug });
         if (!target) {
           return response
             .status(404)
-            .json({ error: 'Target workspace not found' });
+            .json({ error: "Target workspace not found" });
         }
         const user = await userFromSession(request, response);
         const shared = await WorkspaceNote.shareToWorkspace(
           noteId,
           target.id,
-          user?.id || null
+          user?.id || null,
         );
         response.status(200).json({ shared });
       } catch (e) {
         consoleLogger.error(e);
         return response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.delete(
-    '/workspaces/:slug/notes/:id/share',
+    "/workspaces/:slug/notes/:id/share",
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async (request, response) => {
       try {
         const workspace = response.locals.workspace;
         const noteId = Number(request.params.id);
         if (!Number.isInteger(noteId) || noteId <= 0) {
-          return response.status(400).json({ error: 'Invalid note id' });
+          return response.status(400).json({ error: "Invalid note id" });
         }
         const { targetWorkspaceSlug } = request.query;
         if (!targetWorkspaceSlug) {
           return response
             .status(400)
-            .json({ error: 'targetWorkspaceSlug is required' });
+            .json({ error: "targetWorkspaceSlug is required" });
         }
         // IDOR guard: ensure the note belongs to this workspace
         const existing = await WorkspaceNote.get(noteId);
         if (!existing || existing.workspaceId !== workspace.id) {
-          return response.status(404).json({ error: 'Note not found' });
+          return response.status(404).json({ error: "Note not found" });
         }
         const target = await Workspace.get({ slug: targetWorkspaceSlug });
         if (!target) {
           return response
             .status(404)
-            .json({ error: 'Target workspace not found' });
+            .json({ error: "Target workspace not found" });
         }
         await WorkspaceNote.unshareFromWorkspace(noteId, target.id);
         response.status(200).json({ success: true });
@@ -240,17 +240,17 @@ function noteEndpoints(app) {
         consoleLogger.error(e);
         return response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.get(
-    '/workspaces/:slug/document-snippets',
+    "/workspaces/:slug/document-snippets",
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async (request, response) => {
       try {
         const workspace = response.locals.workspace;
         const docs = await Document.forWorkspace(workspace.id);
-        const documentsPath = getStoragePath('documents');
+        const documentsPath = getStoragePath("documents");
         const snippets = {};
 
         // Read only the first 8 KB of each document file instead of loading
@@ -262,12 +262,12 @@ function noteEndpoints(app) {
             const fullPath = path.join(documentsPath, doc.docpath);
             let buf;
             try {
-              const fd = await fs.promises.open(fullPath, 'r');
+              const fd = await fs.promises.open(fullPath, "r");
               const result = await fd.read(
                 Buffer.alloc(READ_BYTES),
                 0,
                 READ_BYTES,
-                0
+                0,
               );
               await fd.close();
               buf = result.buffer.subarray(0, result.bytesRead);
@@ -275,9 +275,9 @@ function noteEndpoints(app) {
               continue; // file missing or unreadable — skip silently
             }
             const clean = buf
-              .toString('utf-8')
-              .replace(/<[^>]+>/g, ' ')
-              .replace(/\s+/g, ' ')
+              .toString("utf-8")
+              .replace(/<[^>]+>/g, " ")
+              .replace(/\s+/g, " ")
               .trim();
             if (clean.length > 0) {
               snippets[doc.docId] = clean.slice(0, 200);
@@ -290,7 +290,7 @@ function noteEndpoints(app) {
         consoleLogger.error(e);
         return response.sendStatus(500);
       }
-    }
+    },
   );
 }
 

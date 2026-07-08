@@ -17,7 +17,7 @@
 // DATABASE_URL, ports, storage paths, HTTPS certs) intentionally stay in the
 // `.env` file — they are required *before* the DB/decryption layer is
 // available (chicken-and-egg), so they cannot be stored encrypted in the DB.
-const consoleLogger = require('../logger/console.js');
+const consoleLogger = require("../logger/console.js");
 
 // Keys whose values must be encrypted at rest. Matches secrets, tokens, keys,
 // passwords and DB connection strings regardless of provider.
@@ -38,20 +38,20 @@ class SettingsManager {
   }
 
   /** Whether an env key holds a sensitive value that must be encrypted. */
-  static isSensitive(envKey = '') {
+  static isSensitive(envKey = "") {
     return SENSITIVE_KEY_PATTERN.test(String(envKey));
   }
 
   /** Lazily required prisma client (avoids loading it at module import time). */
   static _db() {
-    if (!this.__db) this.__db = require('../prisma');
+    if (!this.__db) this.__db = require("../prisma");
     return this.__db;
   }
 
   /** Lazily constructed EncryptionManager (avoids circular boot deps). */
   static _encryptor() {
     if (!this.__encryptor) {
-      const { EncryptionManager } = require('../EncryptionManager');
+      const { EncryptionManager } = require("../EncryptionManager");
       this.__encryptor = new EncryptionManager();
     }
     return this.__encryptor;
@@ -132,8 +132,8 @@ class SettingsManager {
    * @param {{ userId?: number|null, category?: string|null, action?: string }} [opts]
    */
   static async set(envKey, value, opts = {}) {
-    const { userId = null, category = null, action = 'update' } = opts;
-    if (!envKey) throw new Error('SettingsManager.set requires an envKey');
+    const { userId = null, category = null, action = "update" } = opts;
+    if (!envKey) throw new Error("SettingsManager.set requires an envKey");
 
     const sensitive = this.isSensitive(envKey);
     const previousRuntime = process.env[envKey] ?? null;
@@ -214,15 +214,15 @@ class SettingsManager {
       await this._db().settings_audit_log.create({
         data: {
           envKey,
-          action: action || 'update',
+          action: action || "update",
           previousValue: redacted
             ? previousRuntime
-              ? '***redacted***'
+              ? "***redacted***"
               : null
             : (previousRuntime ?? null),
           newValue: redacted
             ? value
-              ? '***redacted***'
+              ? "***redacted***"
               : null
             : value === null || value === undefined
               ? null
@@ -274,18 +274,18 @@ class SettingsManager {
    */
   static async rollback(envKey, { userId = null } = {}) {
     if (!envKey)
-      return { restored: false, value: null, error: 'envKey required' };
+      return { restored: false, value: null, error: "envKey required" };
     try {
       const history = await this.auditLog({ envKey, limit: 1 });
       const previous = history?.[0]?.previousValue ?? null;
       // If the stored previous value was redacted, we cannot safely restore it.
-      if (previous === '***redacted***')
+      if (previous === "***redacted***")
         return {
           restored: false,
           value: null,
-          error: 'Previous value was redacted — cannot restore automatically.',
+          error: "Previous value was redacted — cannot restore automatically.",
         };
-      await this.set(envKey, previous, { userId, action: 'rollback' });
+      await this.set(envKey, previous, { userId, action: "rollback" });
       return { restored: true, value: previous };
     } catch (e) {
       this.log(`rollback() failed for "${envKey}": ${e.message}`);
@@ -301,7 +301,7 @@ class SettingsManager {
     try {
       return await this._db().settings_audit_log.findMany({
         where: envKey ? { envKey } : undefined,
-        orderBy: { createdAt: 'desc' },
+        orderBy: { createdAt: "desc" },
         take: Math.min(Number(limit) || 100, 500),
       });
     } catch (e) {
