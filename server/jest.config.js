@@ -53,6 +53,13 @@ module.exports = {
     // this stub prevents the @prisma/client package from trying to connect
     // to a real database when loaded as a transitive dependency.
     "^@prisma/client$": "<rootDir>/__mocks__/prismaClient.js",
+    // @huggingface/transformers ships ESM (.mjs) and depends on native ONNX
+    // binaries that fail inside the Jest VM sandbox.  Map to an empty CJS
+    // stub so any test file that doesn't explicitly jest.mock() the module
+    // doesn't crash the suite with a Float32Array/native-code error.
+    // Tests that DO care (EmbeddingRerankers.test.js) override this mapping
+    // with their own jest.mock() call, which takes precedence.
+    "^@huggingface/transformers$": "<rootDir>/__mocks__/empty.js",
   },
   // Issue #373: forceExit ensures Jest terminates even if a stray timer
   // or DB handle keeps the event loop alive. --detectOpenHandles is added

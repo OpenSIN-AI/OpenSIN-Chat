@@ -390,4 +390,14 @@ function agentWebsocket(app, routePrefix = "") {
   );
 }
 
-module.exports = { agentWebsocket };
+/**
+ * Reset the active connection counter.  Only intended for use in tests to
+ * prevent module-level state from leaking between test cases — the counter
+ * is module-scoped and shared across all tests because Jest caches requires.
+ */
+function _resetForTest() {
+  activeConnectionCount = 0;
+  _wsLock = Promise.resolve();
+}
+
+module.exports = { agentWebsocket, _resetForTest };

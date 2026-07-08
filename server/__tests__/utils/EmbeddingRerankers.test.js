@@ -4,11 +4,6 @@
 // Covers: NativeEmbeddingReranker — constructor, host property,
 // preload, rerank happy path, and error handling.
 
-jest.mock("@xenova/transformers", () => ({
-  pipeline: jest.fn(),
-  env: { allowLocalModels: false },
-}), { virtual: true });
-
 jest.mock("../../utils/logger/console.js", () => ({
   error: jest.fn(),
   log: jest.fn(),
@@ -24,7 +19,9 @@ jest.mock("fs", () => ({
   mkdirSync: jest.fn(),
 }));
 
-// Mock @xenova/transformers
+// Shared mock objects — defined before jest.mock() factories so the
+// factory closures can reference them.  jest.mock() is hoisted above
+// the variable declarations, so we use `let` + re-assign in beforeEach.
 const mockAutoModel = {
   from_pretrained: jest.fn(),
 };
@@ -40,7 +37,9 @@ const mockEnv = {
   remotePathTemplate: "{model}/{file}",
 };
 
-jest.mock("@xenova/transformers", () => ({
+// The production code does `await import("@huggingface/transformers")` — mock
+// it so the Jest sandbox never tries to load the real native ONNX binaries.
+jest.mock("@huggingface/transformers", () => ({
   AutoModelForSequenceClassification: mockAutoModel,
   AutoTokenizer: mockAutoTokenizer,
   env: mockEnv,

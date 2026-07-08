@@ -96,7 +96,12 @@ jest.mock("../../utils/parseJobs", () => {
         _jobStore.set(job.id, job);
         return job;
       }),
-      get: jest.fn(async (jobId) => _jobStore.get(jobId) ?? null),
+      get: jest.fn(async (jobId, { workspaceId } = {}) => {
+        const job = _jobStore.get(jobId) ?? null;
+        if (!job) return null;
+        if (workspaceId != null && job.workspaceId !== workspaceId) return null;
+        return job;
+      }),
       markProcessing: jest.fn(async (jobId) => {
         const j = _jobStore.get(jobId);
         if (j) j.status = JOB_STATUS.PROCESSING;
