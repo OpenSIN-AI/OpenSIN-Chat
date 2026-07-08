@@ -685,6 +685,49 @@ const Workspace = {
         return false;
       });
   },
+  /**
+   * Sets the context mode of a document in a workspace.
+   * @param {string} slug
+   * @param {string} docId - document docId
+   * @param {"off"|"summary"|"full"} contextMode
+   * @returns {Promise<boolean>}
+   */
+  setContextModeForDocument: async function (slug, docId, contextMode) {
+    return fetch(
+      `${API_BASE}/workspace/${slug}/documents/${encodeURIComponent(docId)}/context-mode`,
+      {
+        method: "PATCH",
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
+        body: JSON.stringify({ contextMode }),
+      },
+    )
+      .then((res) => res.ok)
+      .catch((e) => {
+        logger.error(e);
+        return false;
+      });
+  },
+
+  /**
+   * Multi-query "Ask" mode: researches workspace documents and returns a
+   * synthesised answer with sub-answers and sources.
+   * @param {string} slug
+   * @param {string} question
+   * @returns {Promise<{answer: string, strategy: object[], subAnswers: object[], sources: object[]}|{error: string}>}
+   */
+  askDocuments: async function (slug, question) {
+    return fetch(`${API_BASE}/workspace/${slug}/ask`, {
+      method: "POST",
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
+      body: JSON.stringify({ question }),
+    })
+      .then((res) => safeJson(res))
+      .catch((e) => {
+        logger.error(e);
+        return { error: e.message };
+      });
+  },
+
   /** @param {string} slug
  * @param {string} chatId
  * @returns {Promise<object>}

@@ -154,21 +154,34 @@ describe("sync-politician-data: buildDedupeKey", () => {
 });
 
 // ── Regression: Prisma model shape matches sync job expectations ───────────────
+//
+// We verify the generated Prisma schema via the DMMF (Data Model Meta Format)
+// embedded in the compiled client artefact.  We import from the internal
+// `.prisma/client` barrel rather than `@prisma/client` because the Jest
+// moduleNameMapper replaces `@prisma/client` with a lightweight mock and
+// jest.requireActual() does NOT bypass moduleNameMapper.
 
 describe("sync-politician-data: Prisma model mapping", () => {
+  // Build the field-name set once for both tests.
+  let dmmfModels;
+  beforeAll(() => {
+    // Resolve the path at runtime so Jest doesn't try to map it.
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const dmmf = require(
+      require.resolve(".prisma/client/default.js", {
+        paths: [require.resolve("@prisma/client/package.json").replace("/package.json", "")],
+      }),
+    );
+    dmmfModels = dmmf.Prisma.dmmf.datamodel.models;
+  });
+
   test("politician_speeches model has the fields required by the sync job", () => {
-    const { PrismaClient } = require("@prisma/client");
-    const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
-    const adapter = new PrismaBetterSqlite3({
-      url: "file:../storage/opensin.db",
-    });
-    const prisma = new PrismaClient({ adapter });
     // Regression for Issue #172: code used prisma.politician_speech (singular)
     // which does not exist; the generated model is politician_speeches (plural).
-    expect(prisma.politician_speeches).toBeDefined();
-    expect(typeof prisma.politician_speeches.findFirst).toBe("function");
-    expect(typeof prisma.politician_speeches.upsert).toBe("function");
-    // Fields the sync job writes during upsert
+    const model = dmmfModels.find((m) => m.name === "politician_speeches");
+    expect(model).toBeDefined();
+
+    const fieldNames = new Set(model.fields.map((f) => f.name));
     const expectedFields = [
       "dedupeKey",
       "politicianId",
@@ -185,19 +198,14 @@ describe("sync-politician-data: Prisma model mapping", () => {
       "updatedAt",
     ];
     for (const field of expectedFields) {
-      expect(prisma.politician_speeches.fields).toHaveProperty(field);
+      expect(fieldNames).toContain(field);
     }
-    prisma.$disconnect();
   });
 
   test("politician_speech (singular) is NOT a valid model", () => {
-    const { PrismaClient } = require("@prisma/client");
-    const { PrismaBetterSqlite3 } = require("@prisma/adapter-better-sqlite3");
-    const adapter = new PrismaBetterSqlite3({
-      url: "file:../storage/opensin.db",
-    });
-    const prisma = new PrismaClient({ adapter });
-    expect(prisma.politician_speech).toBeUndefined();
-    prisma.$disconnect();
+    const singularModel = dmmfModels.find(
+      (m) => m.name === "politician_speech",
+    );
+    expect(singularModel).toBeUndefined();
   });
 });

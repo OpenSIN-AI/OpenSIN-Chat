@@ -14,20 +14,34 @@ jest.mock("../../utils/http", () => ({
   multiUserMode: (...a) => mockMultiUserMode(...a),
   makeJWT: (...a) => mockMakeJWT(...a),
   queryParams: (req) => req.query,
+  decodeJWT: jest.fn(() => ({ id: 1, p: "password-hash" })),
 }));
 jest.mock("../../utils/middleware/validatedRequest", () => ({
   validatedRequest: (_req, _res, next) => next(),
   invalidateAuthTokenHash: jest.fn(),
   getAuthTokenHash: jest.fn(() => "$2a$10$mockhash"),
 }));
+jest.mock("../../utils/middleware/requireAuthWhenOnboardingComplete", () => ({
+  requireAuthWhenOnboardingComplete: (_req, _res, next) => next(),
+}));
+jest.mock("../../utils/middleware/requireApiKeyOrSession", () => ({
+  requireApiKeyOrSession: (_req, _res, next) => next(),
+  validateSessionToken: jest.fn(),
+}));
+jest.mock("../../utils/middleware/simpleRateLimit", () => ({
+  simpleRateLimit: jest.fn(() => (_req, _res, next) => next()),
+}));
 const mockFlexUserRoleValid = jest.fn(() => (_req, _res, next) => next());
-const mockIsMultiUserSetup = jest.fn(() => (_req, _res, next) => next());
+// isMultiUserSetup is used directly as middleware (not called as a factory),
+// so the mock must call next() when invoked as (req, res, next).
+const mockIsMultiUserSetup = jest.fn((_req, _res, next) => next());
 jest.mock("../../utils/middleware/multiUserProtected", () => ({
   flexUserRoleValid: (...a) => mockFlexUserRoleValid(...a),
   ROLES: { admin: "admin", manager: "manager", default: "default", all: "<all>" },
   isMultiUserSetup: (...a) => mockIsMultiUserSetup(...a),
 }));
-const mockSimpleSSOEnabled = jest.fn(() => (_req, _res, next) => next());
+// simpleSSOEnabled is also used directly as middleware, not as a factory.
+const mockSimpleSSOEnabled = jest.fn((_req, _res, next) => next());
 jest.mock("../../utils/middleware/simpleSSOEnabled", () => ({
   simpleSSOEnabled: (...a) => mockSimpleSSOEnabled(...a),
   simpleSSOLoginDisabled: jest.fn(() => false),

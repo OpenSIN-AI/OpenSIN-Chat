@@ -51,6 +51,12 @@ const WorkspaceThread = {
         if (existing) {
           const slugSeed = randomBytes(4).toString("hex").slice(0, 8);
           slug = this.slugify(`${data.slug}-${slugSeed}`, { lower: true });
+          // Verify the new slug is also free before inserting.
+          const stillExists = await this.get({ slug });
+          if (stillExists) {
+            // Extremely unlikely second collision — fall back to a full UUID.
+            slug = uuidv4();
+          }
         }
       }
 

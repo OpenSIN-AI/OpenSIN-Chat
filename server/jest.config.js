@@ -53,12 +53,20 @@ module.exports = {
     // this stub prevents the @prisma/client package from trying to connect
     // to a real database when loaded as a transitive dependency.
     "^@prisma/client$": "<rootDir>/__mocks__/prismaClient.js",
+    // @huggingface/transformers ships ESM (.mjs) and depends on native ONNX
+    // binaries that fail inside the Jest VM sandbox.  Map to an empty CJS
+    // stub so any test file that doesn't explicitly jest.mock() the module
+    // doesn't crash the suite with a Float32Array/native-code error.
+    // Tests that DO care (EmbeddingRerankers.test.js) override this mapping
+    // with their own jest.mock() call, which takes precedence.
+    "^@huggingface/transformers$": "<rootDir>/__mocks__/empty.js",
   },
   // Issue #373: forceExit ensures Jest terminates even if a stray timer
-  // or DB handle keeps the event loop alive. --detectOpenHandles is added
-  // to the test script in package.json so leaks are surfaced in CI output.
+  // or DB handle keeps the event loop alive after all tests complete.
   forceExit: true,
-  // Detect open handles so the "worker failed to exit gracefully" warning
-  // includes a stack trace pointing at the offending resource.
-  detectOpenHandles: true,
+  // detectOpenHandles is intentionally omitted from the default config.
+  // It enables async_hooks tracking across all workers, which causes severe
+  // startup overhead at scale (188 test files × workers) and stalls Jest
+  // when combined with --experimental-vm-modules.  Run with
+  // --detectOpenHandles explicitly when debugging a specific open-handle leak.
 };

@@ -132,19 +132,18 @@ describe("Invite model", () => {
         claimedBy: 10,
         workspaceIds: "[1,2]",
       });
-      prisma.workspaces.findMany.mockResolvedValue([{ id: 1 }, { id: 2 }, { id: 3 }]);
-      prisma.workspace_users.findFirst.mockResolvedValue(null);
-      prisma.workspace_users.create.mockResolvedValue({});
+      prisma.workspaces.findMany.mockResolvedValue([{ id: 1 }, { id: 2 }]);
+      prisma.workspace_users.findMany.mockResolvedValue([]); // no existing memberships
+      prisma.workspace_users.createMany.mockResolvedValue({ count: 2 });
 
       const { success, error } = await Invite.markClaimed(1, { id: 10 });
       expect(success).toBe(true);
       expect(error).toBeNull();
-      expect(prisma.workspace_users.create).toHaveBeenCalledTimes(2);
-      expect(prisma.workspace_users.create).toHaveBeenCalledWith({
-        data: { user_id: 10, workspace_id: 1 },
-      });
-      expect(prisma.workspace_users.create).toHaveBeenCalledWith({
-        data: { user_id: 10, workspace_id: 2 },
+      expect(prisma.workspace_users.createMany).toHaveBeenCalledWith({
+        data: expect.arrayContaining([
+          { user_id: 10, workspace_id: 1 },
+          { user_id: 10, workspace_id: 2 },
+        ]),
       });
     });
 
@@ -182,8 +181,8 @@ describe("Invite model", () => {
         workspaceIds: "[99]",
       });
       prisma.workspaces.findMany.mockResolvedValue([{ id: 99 }]);
-      prisma.workspace_users.findFirst.mockResolvedValue(null);
-      prisma.workspace_users.create.mockRejectedValue(new Error("fail"));
+      prisma.workspace_users.findMany.mockResolvedValue([]);
+      prisma.workspace_users.createMany.mockRejectedValue(new Error("fail"));
 
       const { success, error } = await Invite.markClaimed(4, { id: 10 });
       expect(success).toBe(false);
@@ -206,18 +205,16 @@ describe("Invite model", () => {
       });
       prisma.workspaces.findMany.mockResolvedValue([{ id: 1 }, { id: 2 }]);
       // User is already a member of workspace 1 but not workspace 2
-      prisma.workspace_users.findFirst.mockImplementation((args) => {
-        if (args.where.workspace_id === 1) return { id: 100, user_id: 10, workspace_id: 1 };
-        return null;
-      });
-      prisma.workspace_users.create.mockResolvedValue({});
+      prisma.workspace_users.findMany.mockResolvedValue([
+        { workspace_id: 1 },
+      ]);
+      prisma.workspace_users.createMany.mockResolvedValue({ count: 1 });
 
       const { success } = await Invite.markClaimed(5, { id: 10 });
       expect(success).toBe(true);
-      // Only workspace 2 should trigger create (workspace 1 already exists)
-      expect(prisma.workspace_users.create).toHaveBeenCalledTimes(1);
-      expect(prisma.workspace_users.create).toHaveBeenCalledWith({
-        data: { user_id: 10, workspace_id: 2 },
+      // Only workspace 2 should trigger createMany (workspace 1 already exists)
+      expect(prisma.workspace_users.createMany).toHaveBeenCalledWith({
+        data: [{ user_id: 10, workspace_id: 2 }],
       });
     });
   });

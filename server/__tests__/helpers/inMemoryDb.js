@@ -18,19 +18,22 @@
 // `require("../../../utils/prisma")` inside the code-under-test resolves to
 // the in-memory DB.
 
+const path = require("path");
 const Database = require("better-sqlite3");
 
 /**
  * Create an in-memory SQLite database and a matching Prisma mock.
  *
- * @param {string} [prismaModulePath="../../../utils/prisma"] — module path
- *   that the code-under-test uses to require prisma.  Override when the test
- *   file lives at a different depth.
+ * @param {string} [prismaModulePath="utils/prisma"] — path to the prisma
+ *   module relative to the server root (e.g. "utils/prisma").  Callers that
+ *   previously passed a test-file-relative path like "../../../utils/prisma"
+ *   should be updated to pass just "utils/prisma" (or omit the argument to
+ *   use the default).
  * @returns {{ prisma: object, __db: import("better-sqlite3").Database }}
  *   `prisma` is the mock object with $executeRawUnsafe / $queryRawUnsafe;
  *   `__db` is the raw better-sqlite3 instance for direct SQL access.
  */
-function createInMemoryDb(prismaModulePath = "../../utils/prisma") {
+function createInMemoryDb(prismaModulePath = "utils/prisma") {
   const db = new Database(":memory:");
 
   const prisma = {
@@ -41,10 +44,16 @@ function createInMemoryDb(prismaModulePath = "../../utils/prisma") {
       db.prepare(sql).all(...params),
   };
 
-  // Install the mock on the prisma module so code-under-test that does
-  // `require("../../../utils/prisma")` picks up the in-memory instance.
-  // jest.mock is hoisted, so we use jest.doMock for runtime installation.
-  jest.doMock(prismaModulePath, () => prisma, { virtual: true });
+  // Resolve to the absolute path that Jest uses internally as the module key.
+  // We always resolve from the server root so the path convention is
+  // independent of where the calling test file lives.
+  const serverRoot = path.resolve(__dirname, "../..");
+  // Support both "utils/prisma" (new convention) and legacy "../../../utils/prisma"
+  // style paths by detecting whether the first segment looks like a relative jump.
+  const resolved = prismaModulePath.startsWith(".")
+    ? require.resolve(path.resolve(serverRoot, prismaModulePath))
+    : require.resolve(path.resolve(serverRoot, prismaModulePath));
+  jest.doMock(resolved, () => prisma);
 
   return { prisma, __db: db };
 }

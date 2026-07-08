@@ -23,7 +23,7 @@ const executionMethods = {
    * @param {string} pluginName
    * @returns {string}
    */
-  #parseFunctionName(pluginName = "") {
+  _parseFunctionName(pluginName = "") {
     if (!pluginName.includes("#") && !pluginName.startsWith("@@"))
       return pluginName;
     if (pluginName.startsWith("@@")) return pluginName.replace("@@", "");
@@ -35,7 +35,7 @@ const executionMethods = {
    * @param {Array} messages - Array of chat messages
    * @returns {string|null} The user's prompt or null if not found
    */
-  #extractUserPrompt(messages) {
+  _extractUserPrompt(messages) {
     if (!messages || !Array.isArray(messages)) return null;
 
     for (let i = messages.length - 1; i >= 0; i--) {
@@ -89,13 +89,13 @@ const executionMethods = {
     ];
 
     let functions = fromConfig.functions
-      ?.map((name) => this.functions.get(this.#parseFunctionName(name)))
+      ?.map((name) => this.functions.get(this._parseFunctionName(name)))
       .filter((a) => !!a);
 
     // Rerank tools based on user prompt if enabled
     if (ToolReranker.isEnabled() && functions?.length) {
       const toolReranker = new ToolReranker();
-      const userPrompt = this.#extractUserPrompt(messages);
+      const userPrompt = this._extractUserPrompt(messages);
       if (userPrompt)
         functions = await toolReranker.rerank(userPrompt, functions);
     } else {
@@ -116,7 +116,7 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
     if (this.resolveRoute) {
       try {
         const userPrompt =
-          this.#extractUserPrompt(messages) || route.content || "";
+          this._extractUserPrompt(messages) || route.content || "";
         const resolved = await this.resolveRoute(userPrompt);
         if (resolved) {
           this.defaultProvider = {
@@ -165,7 +165,7 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
    * @returns {Promise<any>} - The result of the provider call
    * @throws {APIError} - If the provider call fails
    */
-  async #safeProviderCall(providerCall) {
+  async _safeProviderCall(providerCall) {
     try {
       return await providerCall();
     } catch (error) {
@@ -179,7 +179,7 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
   /**
    * Record provider usage to per-invocation cost accumulator.
    */
-  #recordInvocationUsage() {
+  _recordInvocationUsage() {
     this._invocationCostUsd ??= 0;
     try {
       const usage = this.providerInstance?.getUsage?.() || {};
@@ -250,7 +250,7 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
       this?.introspect?.(
         `Maximum execution depth reached. Generating final response without further tool calls.`,
       );
-      const fallbackStream = await this.#safeProviderCall(() =>
+      const fallbackStream = await this._safeProviderCall(() =>
         this.providerInstance.stream(messages, [], eventHandler),
       );
       const fallbackUuid = fallbackStream?.uuid || v4();
@@ -269,10 +269,10 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
     checkInvocationBudget();
 
     /** @type {{ functionCall: { name: string, arguments: string }, textResponse: string }} */
-    const completionStream = await this.#safeProviderCall(() =>
+    const completionStream = await this._safeProviderCall(() =>
       this.providerInstance.stream(messages, functions, eventHandler),
     );
-    this.#recordInvocationUsage();
+    this._recordInvocationUsage();
 
     if (completionStream.functionCall) {
       const { name, arguments: args } = completionStream.functionCall;
@@ -493,7 +493,7 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
       this?.introspect?.(
         `Maximum execution depth reached. Generating final response without further tool calls.`,
       );
-      const fallbackCompletion = await this.#safeProviderCall(() =>
+      const fallbackCompletion = await this._safeProviderCall(() =>
         this.providerInstance.complete(messages, []),
       );
       eventHandler?.("reportStreamEvent", {
@@ -510,10 +510,10 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
 
     checkInvocationBudget();
 
-    const completion = await this.#safeProviderCall(() =>
+    const completion = await this._safeProviderCall(() =>
       this.providerInstance.complete(messages, functions),
     );
-    this.#recordInvocationUsage();
+    this._recordInvocationUsage();
 
     if (completion.functionCall) {
       const { name, arguments: args } = completion.functionCall;

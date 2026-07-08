@@ -78,6 +78,7 @@ class TriggerEngine {
       typeof trigger.config === "string"
         ? JSON.parse(trigger.config)
         : trigger.config;
+
     const dedupeKey = `schedule-${trigger.id}-${Date.now()}`;
     const run = await AgentTriggers.createRun({
       triggerId: trigger.id,
@@ -98,6 +99,7 @@ class TriggerEngine {
         trigger.agent_name,
         config.prompt || "Trigger fired",
       );
+
       await AgentTriggers.updateRun(run.id, {
         status: "done",
         result,
@@ -111,6 +113,7 @@ class TriggerEngine {
         lastRunAt: new Date(),
         nextRunAt,
       });
+
       consoleLogger.log(
         `[TriggerEngine] Trigger ${trigger.name} executed successfully`,
       );
@@ -176,6 +179,7 @@ class TriggerEngine {
         nextRunAt,
         checkpoint: pollResult.newCheckpoint,
       });
+
       consoleLogger.log(
         `[TriggerEngine] Polling trigger ${trigger.name} fired — ${pollResult.itemCount} new items`,
       );

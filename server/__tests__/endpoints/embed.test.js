@@ -22,6 +22,10 @@ jest.mock("../../utils/middleware/embedMiddleware", () => ({
   validEmbedConfig: (_req, _res, next) => next(),
   canRespond: (_req, _res, next) => next(),
   setConnectionMeta: (_req, _res, next) => next(),
+  // embedCors and canAccessEmbed are referenced in the embed endpoint's
+  // middleware arrays — must be present in the mock to avoid fn-is-not-a-function.
+  embedCors: (_req, _res, next) => next(),
+  canAccessEmbed: (_req, _res, next) => next(),
 }));
 
 const { streamChatWithForEmbed } = require("../../utils/chats/embed");

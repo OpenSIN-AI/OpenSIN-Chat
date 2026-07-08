@@ -320,6 +320,17 @@ function agentWebsocket(app, routePrefix = "") {
           }
         };
 
+        // Yield at least one macro-task tick before sending the initial status
+        // message.  The server and client share the same Node.js event loop in
+        // tests; both the client "open" event and the server handler fire off
+        // the same HTTP upgrade callback.  The server's async init() resolves
+        // as microtasks (before I/O), so without a macro-task yield the send()
+        // happens before the client's "open" listener returns and before the
+        // caller can register a "message" listener — causing the message to be
+        // silently dropped (no listener yet).  setTimeout(0) defers the send
+        // until after the client has processed its "open" and had a chance to
+        // register a listener.
+        await new Promise((resolve) => setTimeout(resolve, 0));
         try {
           socket.send(
             JSON.stringify({
@@ -390,4 +401,14 @@ function agentWebsocket(app, routePrefix = "") {
   );
 }
 
-module.exports = { agentWebsocket };
+/**
+ * Reset the active connection counter.  Only intended for use in tests to
+ * prevent module-level state from leaking between test cases — the counter
+ * is module-scoped and shared across all tests because Jest caches requires.
+ */
+function _resetForTest() {
+  activeConnectionCount = 0;
+  _wsLock = Promise.resolve();
+}
+
+module.exports = { agentWebsocket, _resetForTest };

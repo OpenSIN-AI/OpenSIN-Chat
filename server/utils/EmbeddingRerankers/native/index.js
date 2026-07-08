@@ -44,11 +44,13 @@ class NativeEmbeddingReranker {
    * @returns {string} The host of the current reranker suite.
    */
   get host() {
-    if (!NativeEmbeddingReranker.#transformers) return "https://huggingface.co";
+    const raw = NativeEmbeddingReranker.#transformers
+      ? NativeEmbeddingReranker.#transformers.env.remoteHost
+      : "https://huggingface.co";
     try {
-      return new URL(NativeEmbeddingReranker.#transformers.env.remoteHost).host;
+      return new URL(raw).host;
     } catch {
-      return this.#fallbackHost;
+      return raw;
     }
   }
 

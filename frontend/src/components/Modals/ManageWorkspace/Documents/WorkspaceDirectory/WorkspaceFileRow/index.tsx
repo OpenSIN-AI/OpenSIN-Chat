@@ -10,7 +10,10 @@ import { ArrowUUpLeft } from "@phosphor-icons/react/dist/csr/ArrowUUpLeft";
 import { Eye } from "@phosphor-icons/react/dist/csr/Eye";
 import { File } from "@phosphor-icons/react/dist/csr/File";
 import { PushPin } from "@phosphor-icons/react/dist/csr/PushPin";
+import { Sparkle } from "@phosphor-icons/react/dist/csr/Sparkle";
 import Workspace from "@/models/workspace";
+import ContextModeSelector from "./ContextModeSelector";
+import DocumentInsightsModal from "@/components/Modals/DocumentInsights";
 import showToast from "@/utils/toast";
 import System from "@/models/system";
 import logger from "@/utils/logger";
@@ -29,6 +32,9 @@ export default function WorkspaceFileRow({
   disableSelection,
   setSelectedItems,
 }) {
+  const { t } = useTranslation();
+  const [showInsights, setShowInsights] = useState(false);
+
   const onRemoveClick = async (e) => {
     e.stopPropagation();
     setLoading(true);
@@ -61,16 +67,26 @@ export default function WorkspaceFileRow({
 
   const isMovedItem = movedItems?.some((movedItem) => movedItem.id === item.id);
   return (
-    <div
-      className={`text-theme-text-primary text-xs grid grid-cols-12 py-2 pl-3.5 pr-8 h-[34px] items-center file-row ${
-        !disableSelection
-          ? "hover:bg-theme-file-picker-hover cursor-pointer"
-          : ""
-      } ${isMovedItem ? "selected light:text-white" : ""} ${
-        selected ? "selected light:text-white" : ""
-      }`}
-      onClick={toggleRowSelection}
-    >
+    <>
+      {showInsights && (
+        <DocumentInsightsModal
+          workspace={workspace}
+          docPath={`${folderName}/${item.name}`}
+          docId={item.id}
+          docTitle={item.title}
+          closeModal={() => setShowInsights(false)}
+        />
+      )}
+      <div
+        className={`text-theme-text-primary text-xs grid grid-cols-12 py-2 pl-3.5 pr-8 h-[34px] items-center file-row ${
+          !disableSelection
+            ? "hover:bg-theme-file-picker-hover cursor-pointer"
+            : ""
+        } ${isMovedItem ? "selected light:text-white" : ""} ${
+          selected ? "selected light:text-white" : ""
+        }`}
+        onClick={toggleRowSelection}
+      >
       <div
         className="col-span-10 w-fit flex gap-x-[2px] items-center relative"
         data-tooltip-id="ws-directory-item"
@@ -113,9 +129,22 @@ export default function WorkspaceFileRow({
               docPath={`${folderName}/${item.name}`}
               item={item}
             />
-            <PinItemToWorkspace
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowInsights(true);
+              }}
+              aria-label="Show Insights"
+              data-tooltip-id="pin-document"
+              data-tooltip-content="Transformations & Insights"
+              className="flex items-center text-theme-text-secondary hover:text-theme-text-primary transition-colors ml-2"
+            >
+              <Sparkle size={16} weight="regular" aria-hidden="true" />
+            </button>
+            <ContextModeSelector
               workspace={workspace}
-              docPath={`${folderName}/${item.name}`}
+              docId={item.id}
               item={item}
             />
             <RemoveItemFromWorkspace item={item} onClick={onRemoveClick} />
@@ -123,6 +152,7 @@ export default function WorkspaceFileRow({
         )}
       </div>
     </div>
+    </>
   );
 }
 
