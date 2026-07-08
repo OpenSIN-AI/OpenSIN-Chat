@@ -387,12 +387,12 @@ function NotepadSidebar({ workspace }: any) {
                       <button
                         onClick={(e) =>
                           handleUnshareNote(
-                        aria-label={t("notepad.unshare", "Unshare note")}
                             e,
                             note.id,
                             note.source_workspace_slug,
                           )
                         }
+                        aria-label={t("notepad.unshare", "Unshare note")}
                         className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 text-zinc-400 hover:text-red-400 transition-all bg-transparent border-none cursor-pointer p-1"
                         title={t("chat_window.unshare", "Teilen aufheben")}
                       >
@@ -411,9 +411,9 @@ function NotepadSidebar({ workspace }: any) {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() =>
-                          handleTogglePin(activeNote.
-                        aria-label={t("notepad.togglePin", "Toggle pin")}id, activeNote.pinned)
+                          handleTogglePin(activeNote.id, activeNote.pinned)
                         }
+                        aria-label={t("notepad.togglePin", "Toggle pin")}
                         className={`bg-transparent border-none cursor-pointer p-1 transition-colors ${
                           activeNote.pinned
                             ? "text-theme-text-secondary"

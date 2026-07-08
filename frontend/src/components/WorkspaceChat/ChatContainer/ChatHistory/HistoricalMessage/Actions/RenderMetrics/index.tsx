@@ -121,9 +121,9 @@ export default function RenderMetrics({ metrics = {} }: any) {
   return (
     <button
       type="button"
-      onClick={() => setShowMetricsAutomatically(toggleAutoShowMetrics()
+      onClick={() => setShowMetricsAutomatically(toggleAutoShowMetrics())}
       aria-label={t("chat_window.metrics", "Toggle metrics")}
-      aria-expanded={showMetricsAutomatically)}
+      aria-expanded={showMetricsAutomatically}
       data-tooltip-id="metrics-visibility"
       data-tooltip-content={
         showMetricsAutomatically

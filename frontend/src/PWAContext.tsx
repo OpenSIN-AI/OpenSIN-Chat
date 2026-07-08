@@ -14,10 +14,6 @@ declare global {
   }
 }
 
-export interface PWAModeContextValue {
-  isPWA: boolean;
-}
-
 /**
  * Detects if the application is running as a standalone PWA
  * @returns {boolean} True if running as standalone PWA
@@ -41,7 +37,7 @@ function isStandalonePWA() {
   );
 }
 
-const PWAModeContext = createContext<PWAModeContextValue>({ isPWA: false });
+const PWAModeContext = createContext<any>({ isPWA: false });
 export function PWAModeProvider({ children }: { children: React.ReactNode }) {
   const [isPWA, setIsPWA] = useState(() => isStandalonePWA());
 
@@ -93,7 +89,7 @@ export function PWAModeProvider({ children }: { children: React.ReactNode }) {
     };
   }, [isPWA]);
 
-  const value = useMemo<PWAModeContextValue>(() => ({ isPWA }), [isPWA]);
+  const value = useMemo(() => ({ isPWA }), [isPWA]);
 
   return (
     <PWAModeContext.Provider value={value}>{children}</PWAModeContext.Provider>

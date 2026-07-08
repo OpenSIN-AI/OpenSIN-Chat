@@ -13,21 +13,7 @@ import { API_BASE } from "@/utils/constants";
 import { baseHeaders, safeJsonParse } from "@/utils/request";
 import Workspace from "@/models/workspace";
 
-export interface EmbeddingFileStatus {
-  status: "pending" | "embedding" | "complete" | "failed";
-  chunksProcessed?: number;
-  totalChunks?: number;
-  error?: string;
-}
-
-export interface EmbeddingProgressContextValue {
-  embeddingProgressMap: Record<string, Record<string, EmbeddingFileStatus>>;
-  startEmbedding: (slug: string, filenames: string[]) => void;
-  connectSSE: (slug: string) => void;
-  removeQueuedFile: (slug: string, filename: string) => Promise<boolean>;
-}
-
-const EmbeddingProgressContext = createContext<EmbeddingProgressContextValue | undefined>(undefined);
+const EmbeddingProgressContext = createContext<any>(undefined);
 
 export function useEmbeddingProgress() {
   return useContext(EmbeddingProgressContext);
@@ -45,7 +31,7 @@ export function useWorkspaceEmbeddingProgress(
   { onProgressCleared }: any = {},
 ) {
   const { embeddingProgressMap, startEmbedding, connectSSE, removeQueuedFile } =
-    useEmbeddingProgress() as EmbeddingProgressContextValue;
+    useEmbeddingProgress();
   const embeddingProgress = embeddingProgressMap[slug] || null;
 
   // Store callback in ref to avoid stale closures
@@ -69,7 +55,7 @@ export function useWorkspaceEmbeddingProgress(
   }, [embeddingProgress]);
 
   const removeQueued = useCallback(
-    (filename) => removeQueuedFile(slug, filename),
+    (filename: string) => removeQueuedFile(slug, filename),
     [slug, removeQueuedFile],
   );
 
@@ -78,7 +64,7 @@ export function useWorkspaceEmbeddingProgress(
 
 const CLEANUP_DELAY_MS = 1_500;
 export function EmbeddingProgressProvider({ children }: any) {
-  const [embeddingProgressMap, setEmbeddingProgressMap] = useState<Record<string, Record<string, EmbeddingFileStatus>>>({});
+  const [embeddingProgressMap, setEmbeddingProgressMap] = useState({} as any);
   const abortControllersRef = useRef<
     Record<string, AbortController | undefined>
   >({});
@@ -98,8 +84,8 @@ export function EmbeddingProgressProvider({ children }: any) {
   }, []);
 
   const updateFileStatus = useCallback(
-    (slug, filename, status: EmbeddingFileStatus) =>
-      setEmbeddingProgressMap((prev) => ({
+    (slug: string, filename: string, status: string) =>
+      setEmbeddingProgressMap((prev: Record<string, Record<string, any>>) => ({
         ...prev,
         [slug]: { ...(prev[slug] ?? {}), [filename]: status },
       })),
@@ -107,16 +93,16 @@ export function EmbeddingProgressProvider({ children }: any) {
   );
 
   const handleMessage = useCallback(
-    (slug, msg, ctrl) => {
+    (slug: string, msg: MessageEvent, ctrl: AbortController | null) => {
       const data = safeJsonParse(msg.data, null);
       if (!data) return;
 
       switch (data.type) {
         case "batch_starting": {
           const initial = Object.fromEntries(
-            (data.filenames || []).map((name) => [name, { status: "pending" }]),
+            (data.filenames || []).map((name: string) => [name, { status: "pending" }]),
           );
-          setEmbeddingProgressMap((prev) => ({
+          setEmbeddingProgressMap((prev: Record<string, Record<string, any>>) => ({
             ...prev,
             [slug]: { ...initial, ...(prev[slug] ?? {}) },
           }));
@@ -151,7 +137,7 @@ export function EmbeddingProgressProvider({ children }: any) {
           break;
 
         case "file_removed":
-          setEmbeddingProgressMap((prev) => {
+          setEmbeddingProgressMap((prev: Record<string, Record<string, any>>) => {
             const slugMap = { ...(prev[slug] ?? {}) };
             delete slugMap[data.filename];
             if (Object.keys(slugMap).length === 0) {
@@ -166,7 +152,7 @@ export function EmbeddingProgressProvider({ children }: any) {
           // If there was an error, mark all pending or embedding files as failed
           // because something went wrong and we don't know the status of the files
           if (data.error) {
-            setEmbeddingProgressMap((prev) => {
+            setEmbeddingProgressMap((prev: Record<string, Record<string, any>>) => {
               const slugMap: Record<string, any> = { ...(prev[slug] ?? {}) };
               for (const [filename, info] of Object.entries(slugMap)) {
                 const fileInfo = info as { status: string; [key: string]: any };
@@ -186,7 +172,7 @@ export function EmbeddingProgressProvider({ children }: any) {
           ctrl?.abort();
           delete abortControllersRef.current[slug];
           cleanupTimeoutsRef.current[slug] = setTimeout(() => {
-            setEmbeddingProgressMap((prev) => {
+            setEmbeddingProgressMap((prev: Record<string, Record<string, any>>) => {
               const { [slug]: _, ...rest } = prev;
               return rest;
             });
@@ -229,7 +215,7 @@ export function EmbeddingProgressProvider({ children }: any) {
   );
 
   const startEmbedding = useCallback(
-    (slug, filenames) => {
+    (slug: string, filenames: string[]) => {
       abortControllersRef.current[slug]?.abort();
       delete abortControllersRef.current[slug];
 
@@ -241,7 +227,7 @@ export function EmbeddingProgressProvider({ children }: any) {
       const newEntries = Object.fromEntries(
         (filenames as any).map((name) => [name, { status: "pending" }]),
       );
-      setEmbeddingProgressMap((prev) => ({
+      setEmbeddingProgressMap((prev: Record<string, Record<string, any>>) => ({
         ...prev,
         [slug]: newEntries,
       }));
@@ -256,7 +242,7 @@ export function EmbeddingProgressProvider({ children }: any) {
     return success;
   }, []);
 
-  const contextValue = useMemo<EmbeddingProgressContextValue>(
+  const contextValue = useMemo(
     () => ({
       embeddingProgressMap,
       startEmbedding,

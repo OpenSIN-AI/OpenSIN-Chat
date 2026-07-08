@@ -12,6 +12,9 @@ const Politician = {
    * @param {string} workspaceSlug
    * @returns {Promise<{success: boolean, message?: string, error?: string}>}
    */
+  /** @param {string} politicianId
+ * @param {string} workspaceSlug
+ * @returns {Promise<{success: boolean, data?: object, error?: string}>} */
   addToWorkspace: async function (politicianId, workspaceSlug) {
     try {
       const res = await fetch(
@@ -34,7 +37,7 @@ const Politician = {
       }
       return { success: true, data };
     } catch (e) {
-      return { success: false, error: e.message };
+      return { success: false, error: /** @type {Error} */ (e).message };
     }
   },
 
@@ -43,6 +46,8 @@ const Politician = {
    * @param {string} politicianId
    * @returns {Promise<object|null>}
    */
+  /** @param {string} politicianId
+ * @returns {Promise<object|null>} */
   getById: async function (politicianId) {
     try {
       const res = await fetch(`${API_BASE}/politician/${politicianId}`, {
@@ -61,6 +66,9 @@ const Politician = {
    * @param {object} [opts] — { limit, offset }
    * @returns {Promise<object|null>}
    */
+  /** @param {string} politicianId
+ * @param {{limit?: number, offset?: number}} [opts={}]
+ * @returns {Promise<object|null>} */
   getVotes: async function (politicianId, opts = {}) {
     try {
       const params = new URLSearchParams();
@@ -84,6 +92,9 @@ const Politician = {
    * @param {object} [opts] — { limit, offset }
    * @returns {Promise<object|null>}
    */
+  /** @param {string} politicianId
+ * @param {{limit?: number, offset?: number}} [opts={}]
+ * @returns {Promise<object|null>} */
   getSpeeches: async function (politicianId, opts = {}) {
     try {
       const params = new URLSearchParams();
@@ -107,6 +118,9 @@ const Politician = {
    * @param {object} [opts] — { party, source, limit }
    * @returns {Promise<{results: object[], error?: string}>}
    */
+  /** @param {string} query
+ * @param {{party?: string, source?: string, limit?: number}} [opts={}]
+ * @returns {Promise<{results: Array, error?: string}>} */
   searchSpeeches: async function (query, opts = {}) {
     try {
       const params = new URLSearchParams({ q: query });
@@ -128,10 +142,13 @@ const Politician = {
         error: data.error,
       };
     } catch (e) {
-      return { results: [], error: e.message };
+      return { results: [], error: /** @type {Error} */ (e).message };
     }
   },
 
+  /** @param {string} query
+ * @param {{faction?: string, limit?: number}} [opts={}]
+ * @returns {Promise<{results: Array, error: string|null}>} */
   searchDrucksachen: async function (query, opts = {}) {
     try {
       const params = new URLSearchParams();
@@ -153,10 +170,12 @@ const Politician = {
         error: null,
       };
     } catch (e) {
-      return { results: [], error: e.message };
+      return { results: [], error: /** @type {Error} */ (e).message };
     }
   },
 
+  /** @param {string} politicianId
+ * @returns {Promise<object|null>} */
   getProfile: async function (politicianId) {
     try {
       const res = await fetch(`${API_BASE}/politician/${politicianId}`, {

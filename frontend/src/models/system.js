@@ -36,6 +36,9 @@ function isOnboardingBypassEnabled() {
  * @param {Response} res
  * @returns {Promise<any>}
  */
+/** @param {Response} res
+ * @returns {Promise<any>}
+ */
 async function safeJson(res) {
   if (!res.ok) {
     const text = await res.text().catch(() => "");
@@ -52,12 +55,16 @@ const System = {
     canViewChatHistory: "opensin_can_view_chat_history",
     deploymentVersion: "opensin_deployment_version",
   },
+  /** @returns {Promise<{online: boolean, version: string}>} */
   ping: async function () {
     return await fetchWithTimeout(`${API_BASE}/ping`)
       .then((res) => safeJson(res))
       .then((res) => res?.online || false)
       .catch(() => false);
   },
+  /** @param {string|null} [slug=null]
+ * @returns {Promise<{vectorDimensions: number, vectorCount: number}>}
+ */
   totalIndexes: async function (slug = null) {
     const url = new URL(`${fullApiUrl()}/system/system-vectors`);
     if (!!slug) url.searchParams.append("slug", encodeURIComponent(slug));
@@ -83,6 +90,7 @@ const System = {
    * The bypass is ignored entirely in production builds.
    * @returns {Promise<boolean>}
    */
+  /** @returns {Promise<boolean>} */
   isOnboardingComplete: async function () {
     // Onboarding is permanently disabled for this instance.
     // Always return true so the frontend never shows the onboarding flow.
@@ -92,6 +100,7 @@ const System = {
    * Marks the onboarding as complete.
    * @returns {Promise<boolean>}
    */
+  /** @returns {Promise<{success: boolean}>} */
   markOnboardingComplete: async function () {
     return await fetch(`${API_BASE}/onboarding`, {
       method: "POST",
@@ -100,6 +109,7 @@ const System = {
       .then((res) => res.ok)
       .catch(() => false);
   },
+  /** @returns {Promise<any>} */
   keys: async function () {
     return await fetchWithTimeout(`${API_BASE}/setup-complete`)
       .then((res) => {
@@ -109,6 +119,7 @@ const System = {
       .then((res) => res.results)
       .catch(() => null);
   },
+  /** @returns {Promise<{localFiles: string[], message: string|null}>} */
   localFiles: async function () {
     return await fetchWithTimeout(`${API_BASE}/system/local-files`, {
       headers: baseHeaders(),
@@ -120,6 +131,7 @@ const System = {
       .then((res) => res.localFiles)
       .catch(() => null);
   },
+  /** @returns {boolean} */
   needsAuthCheck: function () {
     const lastAuthCheck = safeGetItem(AUTH_TIMESTAMP);
     if (!lastAuthCheck) return true;
@@ -127,6 +139,9 @@ const System = {
     return Number(new Date()) > expiresAtMs;
   },
 
+  /** @param {string|null} [currentToken=null]
+ * @returns {Promise<{authenticated: boolean, user: object|null}>}
+ */
   checkAuth: async function (currentToken = null) {
     const valid = await fetchWithTimeout(`${API_BASE}/system/check-token`, {
       headers: baseHeaders(currentToken),
@@ -139,6 +154,9 @@ const System = {
     }
     return valid;
   },
+  /** @param {{username: string, password: string}} body
+ * @returns {Promise<{token: string|null, user: object|null, error: string|null}>}
+ */
   requestToken: async function (body) {
     return await fetchWithTimeout(`${API_BASE}/request-token`, {
       method: "POST",
@@ -173,6 +191,10 @@ const System = {
         return { success: false, user: null, message: e.message };
       });
   },
+  /** @param {string} username
+ * @param {string} recoveryCodes
+ * @returns {Promise<{success: boolean, error: string|null}>}
+ */
   recoverAccount: async function (username, recoveryCodes) {
     return await fetchWithTimeout(`${API_BASE}/system/recover-account`, {
       method: "POST",
@@ -191,6 +213,11 @@ const System = {
         return { success: false, error: e.message };
       });
   },
+  /** @param {string} token
+ * @param {string} newPassword
+ * @param {string} confirmPassword
+ * @returns {Promise<{success: boolean, error: string|null}>}
+ */
   resetPassword: async function (token, newPassword, confirmPassword) {
     return await fetchWithTimeout(`${API_BASE}/system/reset-password`, {
       method: "POST",
@@ -210,6 +237,7 @@ const System = {
       });
   },
 
+  /** @returns {Promise<boolean>} */
   checkDocumentProcessorOnline: async () => {
     return await fetchWithTimeout(
       `${API_BASE}/system/document-processing-status`,
@@ -220,6 +248,7 @@ const System = {
       .then((res) => res.ok)
       .catch(() => false);
   },
+  /** @returns {Promise<object>} */
   acceptedDocumentTypes: async () => {
     return await fetch(`${API_BASE}/system/accepted-document-types`, {
       headers: baseHeaders(),
@@ -228,6 +257,8 @@ const System = {
       .then((res) => res?.types)
       .catch(() => null);
   },
+  /** @param {object} data
+ * @returns {Promise<{success: boolean, error: string|null}>} */
   updateSystem: async (data) => {
     return await fetch(`${API_BASE}/system/update-env`, {
       method: "POST",
@@ -254,6 +285,8 @@ const System = {
         return { newValues: null, error: e.message };
       });
   },
+  /** @param {object} data
+ * @returns {Promise<{success: boolean, error: string|null}>} */
   updateSystemPassword: async (data) => {
     return await fetch(`${API_BASE}/system/update-password`, {
       method: "POST",
@@ -280,6 +313,8 @@ const System = {
         return { success: false, error: e.message };
       });
   },
+  /** @param {object} data
+ * @returns {Promise<{success: boolean, error: string|null}>} */
   setupMultiUser: async (data) => {
     return await fetch(`${API_BASE}/system/enable-multi-user`, {
       method: "POST",
@@ -292,6 +327,7 @@ const System = {
         return { success: false, error: e.message };
       });
   },
+  /** @returns {Promise<boolean>} */
   isMultiUserMode: async () => {
     return await fetch(`${API_BASE}/system/multi-user-mode`, {
       method: "GET",
@@ -304,6 +340,8 @@ const System = {
         return false;
       });
   },
+  /** @param {string} name
+ * @returns {Promise<{success: boolean, error: string|null}>} */
   deleteDocument: async (name) => {
     return await fetch(`${API_BASE}/system/remove-document`, {
       method: "DELETE",
@@ -316,6 +354,8 @@ const System = {
         return false;
       });
   },
+  /** @param {string[]} [names=[]]
+ * @returns {Promise<{success: boolean, error: string|null}>} */
   deleteDocuments: async (names = []) => {
     return await fetch(`${API_BASE}/system/remove-documents`, {
       method: "DELETE",
@@ -328,6 +368,8 @@ const System = {
         return false;
       });
   },
+  /** @param {string} name
+ * @returns {Promise<{success: boolean, error: string|null}>} */
   deleteFolder: async (name) => {
     return await fetch(`${API_BASE}/system/remove-folder`, {
       method: "DELETE",
@@ -340,6 +382,8 @@ const System = {
         return false;
       });
   },
+  /** @param {FormData} formData
+ * @returns {Promise<{success: boolean, error: string|null}>} */
   uploadPfp: async function (formData) {
     return await fetch(`${API_BASE}/system/upload-pfp`, {
       method: "POST",
@@ -355,6 +399,8 @@ const System = {
         return { success: false, error: e.message };
       });
   },
+  /** @param {FormData} formData
+ * @returns {Promise<{success: boolean, error: string|null}>} */
   uploadLogo: async function (formData) {
     return await fetch(`${API_BASE}/system/upload-logo`, {
       method: "POST",
@@ -370,6 +416,7 @@ const System = {
         return { success: false, error: e.message };
       });
   },
+  /** @returns {Promise<Array>} */
   fetchCustomFooterIcons: async function () {
     const cache = safeGetItem(this.cacheKeys.footerIcons);
     const { data, lastFetched } = cache
@@ -402,6 +449,7 @@ const System = {
     );
     return { footerData: newData, error: null };
   },
+  /** @returns {Promise<string|null>} */
   fetchSupportEmail: async function () {
     const cache = safeGetItem(this.cacheKeys.supportEmail);
     const { email, lastFetched } = cache
@@ -433,6 +481,7 @@ const System = {
     return { email: supportEmail, error: null };
   },
 
+  /** @returns {Promise<string|null>} */
   fetchCustomAppName: async function () {
     const cache = safeGetItem(this.cacheKeys.customAppName);
     const { appName, lastFetched } = cache
@@ -471,6 +520,7 @@ const System = {
    * Fetches the default system prompt from the server.
    * @returns {Promise<{defaultSystemPrompt: string, saneDefaultSystemPrompt: string}>}
    */
+  /** @returns {Promise<string>} */
   fetchDefaultSystemPrompt: async function () {
     return await fetch(`${API_BASE}/system/default-system-prompt`, {
       method: "GET",
@@ -486,6 +536,8 @@ const System = {
         return { defaultSystemPrompt: "", saneDefaultSystemPrompt: "" };
       });
   },
+  /** @param {string} defaultSystemPrompt
+ * @returns {Promise<{success: boolean, error: string|null}>} */
   updateDefaultSystemPrompt: async function (defaultSystemPrompt) {
     try {
       const res = await fetch(`${API_BASE}/system/default-system-prompt`, {
@@ -500,6 +552,7 @@ const System = {
       return { success: false, message: e.message };
     }
   },
+  /** @returns {Promise<any>} */
   fetchLogo: async function () {
     const url = new URL(`${fullApiUrl()}/system/logo`);
     // Resolve the stored theme preference (system/light/dark/legacy "default")
@@ -531,6 +584,8 @@ const System = {
       })
       .catch(() => ({ isCustomLogo: false, logoURL: null }));
   },
+  /** @param {string} id
+ * @returns {Promise<string|null>} */
   fetchPfp: async function (id) {
     return await fetch(`${API_BASE}/system/pfp/${id}`, {
       method: "GET",
@@ -546,6 +601,7 @@ const System = {
         return null;
       });
   },
+  /** @returns {Promise<{success: boolean, error: string|null}>} */
   removePfp: async function () {
     return await fetch(`${API_BASE}/system/remove-pfp`, {
       method: "DELETE",
@@ -561,6 +617,7 @@ const System = {
       });
   },
 
+  /** @returns {Promise<boolean>} */
   isDefaultLogo: async function () {
     return await fetch(`${API_BASE}/system/is-default-logo`, {
       method: "GET",
@@ -577,6 +634,7 @@ const System = {
         return null;
       });
   },
+  /** @returns {Promise<{success: boolean, error: string|null}>} */
   removeCustomLogo: async function () {
     return await fetch(`${API_BASE}/system/remove-logo`, {
       headers: baseHeaders(),
@@ -590,6 +648,7 @@ const System = {
         return { success: false, error: e.message };
       });
   },
+  /** @returns {Promise<{apiKeys: Array, error: string|null}>} */
   getApiKeys: async function () {
     return fetch(`${API_BASE}/system/api-keys`, {
       method: "GET",
@@ -606,6 +665,8 @@ const System = {
         return { apiKey: null, error: e.message };
       });
   },
+  /** @param {object} [data={}]
+ * @returns {Promise<{apiKey: object|null, error: string|null}>} */
   generateApiKey: async function (data = {}) {
     return fetch(`${API_BASE}/system/generate-api-key`, {
       method: "POST",
@@ -623,6 +684,8 @@ const System = {
         return { apiKey: null, error: e.message };
       });
   },
+  /** @param {string} [apiKeyId=""]
+ * @returns {Promise<boolean>} */
   deleteApiKey: async function (apiKeyId = "") {
     return fetch(`${API_BASE}/system/api-key/${apiKeyId}`, {
       method: "DELETE",
@@ -634,6 +697,12 @@ const System = {
         return false;
       });
   },
+  /** @param {string} provider
+   * @param {string|null} [apiKey=null]
+   * @param {string|null} [basePath=null]
+   * @param {number|null} [timeout=null]
+   * @returns {Promise<Array<string>>}
+   */
   customModels: async function (
     provider,
     apiKey = null,
@@ -672,6 +741,8 @@ const System = {
         if (timerId) clearTimeout(timerId);
       });
   },
+  /** @param {number} [offset=0]
+ * @returns {Promise<Array>} */
   chats: async (offset = 0) => {
     return await fetch(`${API_BASE}/system/workspace-chats`, {
       method: "POST",
@@ -684,6 +755,8 @@ const System = {
         return [];
       });
   },
+  /** @param {number} [offset=0]
+ * @returns {Promise<Array>} */
   eventLogs: async (offset = 0) => {
     return await fetch(`${API_BASE}/system/event-logs`, {
       method: "POST",
@@ -696,6 +769,7 @@ const System = {
         return { logs: [], hasPages: false };
       });
   },
+  /** @returns {Promise<{success: boolean, error: string|null}>} */
   clearEventLogs: async () => {
     return await fetch(`${API_BASE}/system/event-logs`, {
       method: "DELETE",
@@ -707,6 +781,9 @@ const System = {
         return { success: false, error: e.message };
       });
   },
+  /** @param {{command: string, cwd?: string}} params
+   * @returns {Promise<{stdout: string, stderr: string, exitCode: number}>}
+   */
   execTerminalCommand: async function ({ command, cwd = "/app" }) {
     return await fetch(`${API_BASE}/terminal/exec`, {
       method: "POST",
@@ -736,6 +813,8 @@ const System = {
         return { stdout: "", stderr: "", exitCode: -1, error: e.message };
       });
   },
+  /** @param {string} chatId
+ * @returns {Promise<{success: boolean, error: string|null}>} */
   deleteChat: async (chatId) => {
     return await fetch(`${API_BASE}/system/workspace-chats/${chatId}`, {
       method: "DELETE",
@@ -747,6 +826,9 @@ const System = {
         return { success: false, error: e.message };
       });
   },
+  /** @param {string} [type="csv"]
+ * @param {string} [chatType="workspace"]
+ * @returns {Promise<Blob>} */
   exportChats: async (type = "csv", chatType = "workspace") => {
     const url = new URL(`${fullApiUrl()}/system/export-chats`);
     url.searchParams.append("type", type);
@@ -764,6 +846,8 @@ const System = {
         return null;
       });
   },
+  /** @param {object} data
+ * @returns {Promise<{success: boolean, error: string|null}>} */
   updateUser: async (data) => {
     return await fetch(`${API_BASE}/system/user`, {
       method: "POST",
@@ -778,6 +862,7 @@ const System = {
   },
   dataConnectors: DataConnector,
 
+  /** @returns {Promise<Array>} */
   getSlashCommandPresets: async function () {
     return await fetch(`${API_BASE}/system/slash-command-presets`, {
       method: "GET",
@@ -794,6 +879,8 @@ const System = {
       });
   },
 
+  /** @param {object} presetData
+ * @returns {Promise<{preset: object|null, error: string|null}>} */
   createSlashCommandPreset: async function (presetData) {
     return await fetch(`${API_BASE}/system/slash-command-presets`, {
       method: "POST",
@@ -815,6 +902,9 @@ const System = {
       });
   },
 
+  /** @param {string} presetId
+ * @param {object} presetData
+ * @returns {Promise<{preset: object|null, error: string|null}>} */
   updateSlashCommandPreset: async function (presetId, presetData) {
     return await fetch(`${API_BASE}/system/slash-command-presets/${presetId}`, {
       method: "POST",
@@ -836,6 +926,8 @@ const System = {
       });
   },
 
+  /** @param {string} presetId
+ * @returns {Promise<{success: boolean, error: string|null}>} */
   deleteSlashCommandPreset: async function (presetId) {
     return await fetch(`${API_BASE}/system/slash-command-presets/${presetId}`, {
       method: "DELETE",
@@ -857,6 +949,7 @@ const System = {
    * in local storage for 24 hours.
    * @returns {Promise<{viewable: boolean, error: string | null}>}
    */
+  /** @returns {Promise<any>} */
   fetchCanViewChatHistory: async function () {
     const cache = safeGetItem(this.cacheKeys.canViewChatHistory);
     const { viewable, lastFetched } = cache
@@ -884,6 +977,8 @@ const System = {
    * @param {string} publicToken - the token to validate against
    * @returns {Promise<{valid: boolean, user: import("@prisma/client").users | null, token: string | null, message: string | null}>}
    */
+  /** @param {string} publicToken
+ * @returns {Promise<{token: string|null, user: object|null, error: string|null}>} */
   simpleSSOLogin: async function (publicToken) {
     return fetch(`${API_BASE}/request-token/sso/simple?token=${publicToken}`, {
       method: "GET",
@@ -906,6 +1001,7 @@ const System = {
    * Fetches the app version from the server.
    * @returns {Promise<string | null>} The app version.
    */
+  /** @returns {Promise<string|null>} */
   fetchAppVersion: async function () {
     const cache = safeGetItem(this.cacheKeys.deploymentVersion);
     const { version, lastFetched } = cache
@@ -939,6 +1035,9 @@ const System = {
    * @param {string} connectionString - the connection string to validate
    * @returns {Promise<{success: boolean, error: string | null}>}
    */
+  /** @param {string} engine
+ * @param {string} connectionString
+ * @returns {Promise<{success: boolean, error: string|null}>} */
   validateSQLConnection: async function (engine, connectionString) {
     return fetch(`${API_BASE}/system/validate-sql-connection`, {
       method: "POST",
@@ -957,6 +1056,7 @@ const System = {
    * The filesystem-agent skill is only available when running in a Docker container.
    * @returns {Promise<boolean>}
    */
+  /** @returns {Promise<boolean>} */
   isFileSystemAgentAvailable: async function () {
     return fetch(`${API_BASE}/agent-skills/filesystem-agent/is-available`, {
       method: "GET",
@@ -972,6 +1072,7 @@ const System = {
    * The create-files-agent skill is only available when running in a Docker container.
    * @returns {Promise<boolean>}
    */
+  /** @returns {Promise<boolean>} */
   isCreateFilesAgentAvailable: async function () {
     return fetch(`${API_BASE}/agent-skills/create-files-agent/is-available`, {
       method: "GET",
@@ -989,6 +1090,9 @@ const System = {
    * @param {string} [filename] - Filename hint for the upload.
    * @returns {Promise<{text: string|null, error: string|null}>}
    */
+  /** @param {Blob} audioBlob
+ * @param {string} [filename="audio.webm"]
+ * @returns {Promise<{text: string|null, error: string|null}>} */
   transcribeAudio: async function (audioBlob, filename = "audio.webm") {
     const formData = new FormData();
     formData.append("audio", audioBlob, filename);

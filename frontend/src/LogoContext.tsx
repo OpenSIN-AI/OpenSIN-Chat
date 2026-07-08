@@ -16,14 +16,7 @@ import { resolveDarkMode } from "./hooks/useTheme";
 export const REFETCH_LOGO_EVENT = "refetch-logo";
 export const LOGO_CACHE_KEY = "system/logo";
 
-export interface LogoContextValue {
-  logo: string;
-  setLogo: (logo: string) => void;
-  loginLogo: string;
-  isCustomLogo: boolean;
-}
-
-export const LogoContext = createContext<LogoContextValue | undefined>(undefined);
+export const LogoContext = createContext<any>(undefined);
 
 type LogoData = {
   logo: string;
@@ -109,7 +102,7 @@ export function LogoProvider({ children }: { children: React.ReactNode }) {
     [mutate],
   );
 
-  const value = useMemo<LogoContextValue>(
+  const value = useMemo(
     () => ({
       logo: data!.logo,
       setLogo,
