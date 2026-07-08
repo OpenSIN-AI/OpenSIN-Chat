@@ -5360,15 +5360,15 @@ react-redux@^9.2.0:
     "@types/use-sync-external-store" "^0.0.6"
     use-sync-external-store "^1.4.0"
 
-react-router-dom@^6.30.4:
+react-router-dom@^6:
   version "6.30.4"
-  resolved "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.30.4.tgz"
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.30.4.tgz#f7167bf3da6c7d9132130ea985dd06def25e84d5"
   integrity sha512-q4HvNl+mmDdkS0g+MqiBZNteQJCuimWoOyHMy4T/RQLAn9Z29+E91QXRaxOujeMl2HTzRSS0KFPd7lxX3PjV0Q==
   dependencies:
     "@remix-run/router" "1.23.3"
     react-router "6.30.4"
 
-react-router@6.30.4, react-router@^6.30.4:
+react-router@6.30.4, react-router@^6, react-router@^6.30.4:
   version "6.30.4"
   resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.30.4.tgz#638f35176527bd243d96d81d35d33b757bad46c2"
   integrity sha512-SVUsDe+DybHM/WmYKIVYhZh1o5Dcuf16yM6WjG02Q9XVFMZIJyHYhwrr6bFBXZkVP6z69kNkMyBCujt8FaFLJA==
