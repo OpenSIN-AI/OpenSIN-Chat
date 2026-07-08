@@ -9,6 +9,7 @@ import ModalWrapper from "@/components/ModalWrapper";
 import EditVariableModal from "./EditVariableModal";
 import { truncate } from "@/utils/strings";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
+import logger from "@/utils/logger";
 
 type VariableType = "system" | "user" | "workspace" | "static";
 
@@ -59,7 +60,7 @@ export default function VariableRow({
       );
       if (onRefresh) onRefresh();
     } catch (error) {
-      console.error("Error deleting variable:", error);
+      logger.error("Error deleting variable:", error);
       showToast(t("admin.systemPromptVariables.page.deleteFailed"), "error", {
         clear: true,
       });

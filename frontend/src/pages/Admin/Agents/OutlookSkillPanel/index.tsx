@@ -27,6 +27,7 @@ import OutlookIcon from "./outlook.png";
 import { Tooltip } from "react-tooltip";
 import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
+import logger from "@/utils/logger";
 
 interface OutlookSkillPanelProps {
   title: string;
@@ -86,7 +87,7 @@ export default function OutlookSkillPanel({
         }
       }
     } catch (e) {
-      console.error("Failed to fetch Outlook status:", e);
+      logger.error("Failed to fetch Outlook status:", e);
     }
   };
 
@@ -132,7 +133,7 @@ export default function OutlookSkillPanel({
       window.history.replaceState({}, document.title, window.location.pathname);
     } else if (outlookAuth === "error") {
       const message = urlParams.get("message");
-      console.error("Outlook auth error:", message);
+      logger.error("Outlook auth error:", message);
       window.history.replaceState({}, document.title, window.location.pathname);
     }
   }, []);
@@ -165,10 +166,10 @@ export default function OutlookSkillPanel({
       if (data.success && data.url) {
         window.open(data.url, "_blank");
       } else {
-        console.error("Failed to get auth URL:", data.error);
+        logger.error("Failed to get auth URL:", data.error);
       }
     } catch (e) {
-      console.error("Auth error:", e);
+      logger.error("Auth error:", e);
     } finally {
       setAuthLoading(false);
     }
@@ -182,7 +183,7 @@ export default function OutlookSkillPanel({
         setIsAuthenticated(false);
       }
     } catch (e) {
-      console.error("Revoke error:", e);
+      logger.error("Revoke error:", e);
     } finally {
       setAuthLoading(false);
     }

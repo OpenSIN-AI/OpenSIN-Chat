@@ -11,6 +11,7 @@ import { DB_LOGOS } from "./DBConnection";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
 import Toggle from "@/components/lib/Toggle";
+import logger from "@/utils/logger";
 
 type DatabaseEngine = "postgresql" | "mysql" | "sql-server";
 
@@ -257,7 +258,7 @@ export default function SQLConnectionModal({
       setHasChanges?.(true);
       handleClose();
     } catch (error: any) {
-      console.error("Error validating connection:", error);
+      logger.error("Error validating connection:", error);
       showToast(
         error?.message || t("sqlConnection.validationFailed"),
         "error",
