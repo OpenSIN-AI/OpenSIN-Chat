@@ -86,7 +86,7 @@ async function isAuthorizedRequest(request) {
     return true;
   }
 
-  if (!process.env.AUTH_TOKEN) return true;
+  if (!process.env.AUTH_TOKEN) return false;
 
   const { p } = decoded;
   if (p === null || typeof p !== "string" || p.length < 16) return false;

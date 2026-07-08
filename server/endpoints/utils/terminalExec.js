@@ -3,6 +3,7 @@ const consoleLogger = require("../../utils/logger/console.js");
 
 const { reqBody } = require("../../utils/http");
 const { validatedRequest } = require("../../utils/middleware/validatedRequest");
+const { flexUserRoleValid, ROLES } = require("../../utils/middleware/multiUserProtected");
 const { simpleRateLimit } = require("../../utils/middleware/simpleRateLimit");
 const { execFile } = require("child_process");
 const { promisify } = require("util");
@@ -21,14 +22,13 @@ const COMMAND_WHITELIST = {
   date: { maxArgs: 1, argPattern: /^[+%a-zA-Z0-9_\s/-]*$/ },
   whoami: { maxArgs: 0, argPattern: null },
   uname: { maxArgs: 1, argPattern: /^-[a-z]+$/ },
-  env: { maxArgs: 0, argPattern: null },
   uptime: { maxArgs: 0, argPattern: null },
   df: { maxArgs: 2, argPattern: /^[a-zA-Z0-9_./-]*$/ },
   du: { maxArgs: 3, argPattern: /^[a-zA-Z0-9_./-]*$/ },
-  cat: { maxArgs: 1, argPattern: /^[a-zA-Z0-9_./-]*$/ },
   head: { maxArgs: 3, argPattern: /^[a-zA-Z0-9_./-]*$/ },
   tail: { maxArgs: 3, argPattern: /^[a-zA-Z0-9_./-]*$/ },
   wc: { maxArgs: 2, argPattern: /^[a-zA-Z0-9_./-]*$/ },
+  // P1 fix: Removed `cat` (can read .env with secrets) and `env` (dumps all env vars including API keys)
 };
 
 /** Shell metacharacters that must never appear in any argument. */
@@ -96,10 +96,15 @@ function validateCommand(cmd, args) {
 function terminalExecEndpoint(app) {
   if (!app) return;
 
+  // P1 fix: Gate terminal exec behind enablement check, same as /api/terminal/exec
+  const { isTerminalExecEnabled } = require("../api/terminalExec");
+  if (!isTerminalExecEnabled()) return;
+
   app.post(
     "/utils/terminal/exec",
     [
       validatedRequest,
+      flexUserRoleValid([ROLES.admin]),
       simpleRateLimit({
         bucket: "terminal-exec",
         max: 30,

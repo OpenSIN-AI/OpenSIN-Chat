@@ -105,7 +105,9 @@ const REPORT_ONLY_CSP = [
  * @returns {import("express").RequestHandler}
  */
 function securityHeaders() {
-  const hstsEnabled = String(process.env.ENABLE_HSTS).toLowerCase() === "true";
+  const hstsEnabled =
+    String(process.env.ENABLE_HSTS).toLowerCase() === "true" ||
+    (process.env.NODE_ENV === "production" && !process.env.DISABLE_HSTS);
   const cspReportOnly =
     String(process.env.CSP_REPORT_ONLY).toLowerCase() === "true";
 
@@ -118,6 +120,10 @@ function securityHeaders() {
     // Setting to "0" explicitly disables the legacy filter.
     response.setHeader("X-XSS-Protection", "0");
     response.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+    // P2 fix: Cross-Origin isolation headers (normally set by Helmet)
+    response.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+    response.setHeader("Cross-Origin-Resource-Policy", "same-origin");
+    response.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
     response.setHeader("Permissions-Policy", PERMISSIONS_POLICY);
 
     if (response.locals && typeof response.locals === "object") {

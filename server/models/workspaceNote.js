@@ -1,18 +1,13 @@
 // SPDX-License-Identifier: MIT
 const prisma = require("../utils/prisma");
 
-const SHARED_TABLE_SQL = `CREATE TABLE IF NOT EXISTS shared_workspace_notes (
-    id TEXT PRIMARY KEY,
-    note_id INTEGER NOT NULL,
-    target_workspace_id INTEGER NOT NULL,
-    shared_by INTEGER,
-    shared_at INTEGER,
-    UNIQUE(note_id, target_workspace_id)
-)`;
+// P2 fix: shared_workspace_notes is now a Prisma model (schema.prisma).
+// The runtime CREATE TABLE IF NOT EXISTS has been removed — use Prisma migrations.
+// ensureSharedTable() is kept as a no-op for backward compatibility.
 
 const WorkspaceNote = {
   ensureSharedTable: async function () {
-    await prisma.$executeRawUnsafe(SHARED_TABLE_SQL);
+    // No-op: table is managed by Prisma migrations
   },
 
   get: async function (id) {
