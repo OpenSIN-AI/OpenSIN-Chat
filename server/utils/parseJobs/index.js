@@ -33,36 +33,16 @@ const JOB_STATUS = {
 // Schema bootstrap
 // ---------------------------------------------------------------------------
 
-// Idempotent CREATE so the table exists even if the Prisma migration has not
-// been applied yet (e.g. during local development without running `migrate`).
-const ENSURE_TABLE_SQL = `
-CREATE TABLE IF NOT EXISTS "parse_jobs" (
-    "id"           TEXT     NOT NULL PRIMARY KEY,
-    "workspaceId"  INTEGER  NOT NULL,
-    "userId"       INTEGER,
-    "originalname" TEXT     NOT NULL,
-    "status"       TEXT     NOT NULL DEFAULT 'pending',
-    "files"        TEXT,
-    "error"        TEXT,
-    "createdAt"    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "finishedAt"   DATETIME
-)`;
-
-const ENSURE_IDX_WORKSPACE_SQL = `
-CREATE INDEX IF NOT EXISTS "parse_jobs_workspaceId_status_idx"
-ON "parse_jobs"("workspaceId", "status")`;
-
-const ENSURE_IDX_CREATED_SQL = `
-CREATE INDEX IF NOT EXISTS "parse_jobs_createdAt_idx"
-ON "parse_jobs"("createdAt")`;
+// The parse_jobs table is now managed by Prisma migrations (see
+// server/prisma/migrations/20260705120000_add_parse_jobs/migration.sql).
+// The runtime CREATE TABLE IF NOT EXISTS has been removed — run
+// `npx prisma migrate deploy` to create the table.
+// ensureTable() is kept as a no-op for backward compatibility.
 
 let _bootstrapped = false;
 
 async function ensureTable() {
-  if (_bootstrapped) return;
-  await prisma.$executeRawUnsafe(ENSURE_TABLE_SQL);
-  await prisma.$executeRawUnsafe(ENSURE_IDX_WORKSPACE_SQL);
-  await prisma.$executeRawUnsafe(ENSURE_IDX_CREATED_SQL);
+  // No-op: table is managed by Prisma migrations.
   _bootstrapped = true;
 }
 
