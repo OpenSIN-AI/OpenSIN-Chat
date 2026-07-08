@@ -283,47 +283,28 @@
 }
 
 /*
- * Issue #5 Light Theme Compatibility Layer
+ * Issue #5 Light Theme Compatibility Layer — ABGESCHLOSSEN (2026-07-08)
  *
- * COMPLETED: Migration of text-white/{20..90} opacity variants to semantic tokens
- *   text-white/70-90  ->  text-theme-text-primary
- *   text-white/45-60  ->  text-theme-text-secondary
- *   text-white/20-40  ->  text-theme-placeholder
- * All 173 opacity variant occurrences migrated across 87 component files.
+ * Migration der text-white-Klassen zu semantischen Tokens ist abgeschlossen:
+ *   text-white text-opacity-*/70-90  ->  text-theme-text-primary   (migriert)
+ *   text-white text-opacity-*/45-60  ->  text-theme-text-secondary (migriert)
+ *   text-white text-opacity-*/20-40  ->  text-theme-placeholder    (migriert)
  *
- * REMAINING: ~937 occurrences of plain text-white need case-by-case review:
- *   - 97 are intentional-white on colored backgrounds (buttons, badges) -> keep as-is
- *   - ~840 should be migrated to text-theme-text-primary or light:text-theme-text-primary
- * This requires per-component analysis to avoid regressions (not a sed-replace task).
+ * Verbleibende 118 text-white-Vorkommen sind intentionell:
+ *   - farbige Hintergrunde (bg-red-500, bg-blue-600, bg-[#009ee0], bg-primary-button)
+ *   - Zustands-Klassen (selected light:text-white, peer-checked, isActive)
+ *   - Fokus-/Hover-Zustande (focus:text-white, group-hover/sr:text-white)
  *
- * CURRENT APPROACH: The override rules below serve as a light-theme compatibility
- * layer for all text-white usage (plain + opacity variants). This allows incremental
- * migration without breaking light theme. These rules become dead code as components
- * are progressively updated to use semantic tokens.
- *
- * DO NOT add new text-white/* classes. Use text-theme-text-primary or its variants.
+ * Die Overrides fur text-white/20..80 wurden entfernt (0 Vorkommen im Code).
+ * Der Override fur plain .text-white bleibt als Sicherheitsnetz fuer die
+ * 118 intentionellen Vorkommen im Light-Theme.
  */
 [data-theme="light"] .text-white {
   color: var(--color-text);
 }
 
-[data-theme="light"] .text-white\/80,
-[data-theme="light"] .text-white\/70 {
-  color: var(--color-text);
-}
-
-[data-theme="light"] .text-description,
-[data-theme="light"] .text-white\/60,
-[data-theme="light"] .text-white\/55,
-[data-theme="light"] .text-white\/50,
-[data-theme="light"] .text-white\/45 {
+[data-theme="light"] .text-description {
   color: var(--theme-text-secondary);
-}
-
-[data-theme="light"] .text-white\/40,
-[data-theme="light"] .text-white\/30,
-[data-theme="light"] .text-white\/20 {
-  color: var(--color-muted);
 }
 
 [data-theme="light"] .bg-theme-bg-secondary {
@@ -352,11 +333,6 @@
 [data-theme="light"] .hover\:bg-white\/10:hover,
 [data-theme="light"] .hover\:bg-white\/20:hover {
   background-color: var(--theme-bg-hover);
-}
-
-[data-theme="light"] .hover\:text-white\/70:hover,
-[data-theme="light"] .hover\:text-white\/80:hover {
-  color: var(--theme-text-primary);
 }
 
 /*
@@ -394,11 +370,6 @@ body {
   html {
     overscroll-behavior: none;
   }
-}
-
-@keyframes pulse-slow {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
 }
 
 /* ── Dark mode strategy ────────────────────────────────────────────────── */

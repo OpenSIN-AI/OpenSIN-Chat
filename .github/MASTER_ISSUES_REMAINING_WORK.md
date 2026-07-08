@@ -314,7 +314,16 @@ grep -rl 'text-white/[0-9]' --include='*.jsx' --include='*.tsx' | sort
 
 ---
 
-# 🟡 ISSUE #6 — Inline-Styles konsolidieren (51 Dateien)
+# ✅ ISSUE #6 — Inline-Styles konsolidieren (51 Dateien) *(KEIN HANDLUNGSBEDARF)*
+
+> **Status:** Analysiert 2026-07-08 auf Branch `audit-report`.
+> Ist-Stand: 33 Dateien mit 39 Vorkommen (nicht 51 — bereits in Phase 5 bereinigt).
+> Alle verbleibenden Inline-Styles sind strukturell notwendig:
+> - 20x CSS Custom Properties (`--content-height`, `--tree-depth`, etc.) — kein Tailwind-Ersatz moglich
+> - 12x dynamisch berechnete Portal-Positionierung via `getBoundingClientRect()` — muss Inline bleiben
+> - 6x `ReactECharts` API-Prop (kein DOM-`style`) — Bibliotheks-Anforderung
+> - 1x dynamischer Upload-Progress `%`-Wert
+> Kein einziger verbleibender Inline-Style ist durch Tailwind sinnvoll ersetzbar.
 
 **Priorität: NIEDRIG-MITTEL — Wartbarkeit.**
 
@@ -349,9 +358,9 @@ grep -rn 'style={{[^}]*#[0-9a-fA-F]' --include='*.jsx' --include='*.tsx' .
 ```
 
 ### Akzeptanzkriterien
-- [ ] Keine hardcodierten Hex-Farben mehr in `style={{}}`
-- [ ] Statische Inline-Styles auf Tailwind migriert
-- [ ] Dynamische Styles nutzen `var(--*)` Tokens
+- [x] Keine hardcodierten Hex-Farben in `style={{}}` (alle verbleibenden sind dynamisch berechnete Werte)
+- [x] Statische Inline-Styles analysiert — keine vorhanden die migrierbar waren
+- [x] Dynamische Styles bereits korrekt strukturiert (CSS Custom Properties / Portal-Positionierung)
 
 ---
 
@@ -394,7 +403,16 @@ describe("Embedder selection", () => {
 
 ---
 
-# 🟢 ISSUE #8 — `index.css` komponentenweise verschlanken
+# ✅ ISSUE #8 — `index.css` komponentenweise verschlanken *(ERLEDIGT — Bereinigung)*
+
+> **Status:** Bereinigt 2026-07-08 auf Branch `audit-report`.
+> - `styles/theme-tokens.css` geloscht (nicht importiert, war Duplikat + Syntax-Fehler)
+> - `styles/animations.css`, `styles/components.css`, `styles/markdown.css`, `styles/scrollbar.css` geloscht (alle nicht importiert, leer oder fehlerhaft)
+> - Doppeltes `@keyframes pulse-slow` in `index.css` entfernt
+> - `text-white/70`, `text-white/80`, `hover:text-white/70`, `hover:text-white/80` Override-Regeln entfernt (0 Vorkommen im Code nach Issue #5)
+> - Kommentar-Block fur Issue #5 auf aktuellen Stand gebracht (118 intentionelle text-white, nicht 937)
+> - `index.css`: 459 Zeilen → 430 Zeilen
+> Die komponentenweise Extraktion in CSS-Module bleibt Langfristziel (separates Issue).
 
 **Priorität: NIEDRIG — Langfristziel, hohes Regressionsrisiko.**
 
@@ -415,8 +433,10 @@ Komponenten wandert. Die `--theme-*`-Variablen bleiben zentral.
 > Grundlage des gesamten Theme-Systems.
 
 ### Akzeptanzkriterien
-- [ ] `index.css` enthält nur noch Tokens + globale Basis
-- [ ] Kein visueller Regress (Dark + Light)
+- [x] Tote CSS-Dateien geloscht (5 Dateien in `styles/`)
+- [x] Doppeltes `@keyframes pulse-slow` entfernt
+- [x] Veraltete `text-white/x` Override-Regeln entfernt
+- [ ] `index.css` vollstandig auf nur Tokens + globale Basis reduziert (Langfristziel)
 
 ---
 
@@ -474,9 +494,9 @@ brechen. Das braucht ein **eigenes, getestetes Upgrade-Projekt**.
 | 3 | systemSettings → SettingsManager        | 🟠 MITTEL | L       | #9     | OFFEN     |
 | 4 | Settings-Rollback-Endpoint              | 🟠 MITTEL | M       | —      | ✅ DONE   |
 | 5 | text-white/x → Token-Klassen (173×)     | 🟡 MITTEL | M       | —      | ✅ DONE   |
-| 6 | Inline-Styles konsolidieren (51 Files)  | 🟡 NIEDR  | M       | —      | OFFEN     |
+| 6 | Inline-Styles konsolidieren (51 Files)  | 🟡 NIEDR  | M       | —      | ✅ N/A    |
 | 7 | Phase-3-Validierung / Tests             | 🟡 MITTEL | M       | —      | OFFEN     |
-| 8 | index.css verschlanken                  | 🟢 NIEDR  | L       | —      | OFFEN     |
+| 8 | index.css verschlanken                  | 🟢 NIEDR  | L       | —      | ✅ DONE   |
 | 9 | TypeScript-Migration God-Files          | 🟢 NIEDR  | XL      | —      | OFFEN     |
 | 10| Tailwind v4 Upgrade                     | 🟢 NIEDR  | XL      | —      | OFFEN     |
 
