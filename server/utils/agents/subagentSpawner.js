@@ -154,7 +154,7 @@ class SubagentSpawner {
     handler._scratchDir = scratchDir;
 
     // Hook introspect to publish log events for this subagent
-    this._hookEvents(_handler, _runId, _workspaceSlug);
+    this._hookEvents(handler, runId, workspaceSlug);
 
     // Start the agent
     const result = await handler.start();

@@ -57,7 +57,7 @@ function agentTriggerEndpoints(app) {
             .status(404)
             .json({ success: false, error: "Workspace not found" });
 
-        const { name, agentName, type, config } = reqBody(request);
+        const { name, agentName, type, config } = reqBody(req);
         if (!name || !agentName || !type || !config) {
           return res.status(400).json({
             success: false,

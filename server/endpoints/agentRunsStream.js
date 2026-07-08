@@ -136,7 +136,7 @@ function agentRunsStream(app) {
       const send = (event, data) => {
         try {
           res.write(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`);
-        } catch (_e) {
+        } catch {
           // connection may have closed
         }
       };
