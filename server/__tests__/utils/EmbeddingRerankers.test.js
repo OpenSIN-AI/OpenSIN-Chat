@@ -25,13 +25,16 @@ jest.mock("fs", () => ({
 const mockAutoModel = {
   from_pretrained: jest.fn(),
 };
-const mockAutoTokenizer = jest.fn(() => {
-  return jest.fn((queries, opts) => ({
-    input_ids: [[1, 2, 3]],
-    attention_mask: [[1, 1, 1]],
-    ...opts,
-  }));
-});
+// Production code calls AutoTokenizer.from_pretrained(...) as a static method.
+// Give the mock function a from_pretrained property that returns a callable
+// tokenizer function.
+const mockTokenizerFn = jest.fn((queries, opts) => ({
+  input_ids: [[1, 2, 3]],
+  attention_mask: [[1, 1, 1]],
+  ...opts,
+}));
+const mockAutoTokenizer = jest.fn(() => mockTokenizerFn);
+mockAutoTokenizer.from_pretrained = jest.fn(async () => mockTokenizerFn);
 const mockEnv = {
   remoteHost: "https://huggingface.co",
   remotePathTemplate: "{model}/{file}",
@@ -50,8 +53,16 @@ const { NativeEmbeddingReranker } = require("../../utils/EmbeddingRerankers/nati
 describe("NativeEmbeddingReranker", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    // Reset static private fields between tests via re-require
+    // Clear static private fields (#model, #tokenizer, #transformers) by
+    // resetting the module registry so the next require() gets a fresh class.
     jest.resetModules();
+    // Re-register the @huggingface/transformers mock after resetModules clears
+    // it.  Tests that need specific return values override these in their body.
+    jest.doMock("@huggingface/transformers", () => ({
+      AutoModelForSequenceClassification: mockAutoModel,
+      AutoTokenizer: mockAutoTokenizer,
+      env: mockEnv,
+    }));
   });
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -104,23 +115,28 @@ describe("NativeEmbeddingReranker", () => {
     it("reranks documents and returns top-K sorted by score", async () => {
       const { NativeEmbeddingReranker: FreshReranker } = require("../../utils/EmbeddingRerankers/native");
 
-      // Mock the model and tokenizer
-      const mockModel = {
-        sigmoid: () => ({
-          tolist: () => [
-            [0.3],
-            [0.9],
-            [0.5],
-          ],
-        }),
-      };
+      // Production code calls: const { logits } = await model(inputs)
+      // then logits.sigmoid().tolist() — so the model mock must be callable
+      // and return { logits: { sigmoid, tolist } }.
+      const mockModel = jest.fn(async () => ({
+        logits: {
+          sigmoid: () => ({
+            tolist: () => [
+              [0.3],
+              [0.9],
+              [0.5],
+            ],
+          }),
+        },
+      }));
       mockAutoModel.from_pretrained.mockResolvedValue(mockModel);
 
       const mockTokenizerFn = jest.fn(() => ({
         input_ids: [[1, 2, 3]],
         attention_mask: [[1, 1, 1]],
       }));
-      mockAutoTokenizer.mockReturnValue(mockTokenizerFn);
+      // Production code calls AutoTokenizer.from_pretrained(...) statically.
+      mockAutoTokenizer.from_pretrained.mockResolvedValue(mockTokenizerFn);
 
       const reranker = new FreshReranker();
       const documents = [
@@ -145,13 +161,13 @@ describe("NativeEmbeddingReranker", () => {
     it("respects topK option", async () => {
       const { NativeEmbeddingReranker: FreshReranker } = require("../../utils/EmbeddingRerankers/native");
 
-      const mockModel = {
-        sigmoid: () => ({
-          tolist: () => [[0.1], [0.8], [0.3], [0.6]],
-        }),
-      };
+      const mockModel = jest.fn(async () => ({
+        logits: {
+          sigmoid: () => ({ tolist: () => [[0.1], [0.8], [0.3], [0.6]] }),
+        },
+      }));
       mockAutoModel.from_pretrained.mockResolvedValue(mockModel);
-      mockAutoTokenizer.mockReturnValue(jest.fn(() => ({ input_ids: [[1]], attention_mask: [[1]] })));
+      mockAutoTokenizer.from_pretrained.mockResolvedValue(jest.fn(() => ({ input_ids: [[1]], attention_mask: [[1]] })));
 
       const reranker = new FreshReranker();
       const documents = [
@@ -168,11 +184,11 @@ describe("NativeEmbeddingReranker", () => {
     it("handles single document rerank", async () => {
       const { NativeEmbeddingReranker: FreshReranker } = require("../../utils/EmbeddingRerankers/native");
 
-      const mockModel = {
-        sigmoid: () => ({ tolist: () => [[0.7]] }),
-      };
+      const mockModel = jest.fn(async () => ({
+        logits: { sigmoid: () => ({ tolist: () => [[0.7]] }) },
+      }));
       mockAutoModel.from_pretrained.mockResolvedValue(mockModel);
-      mockAutoTokenizer.mockReturnValue(jest.fn(() => ({ input_ids: [[1]], attention_mask: [[1]] })));
+      mockAutoTokenizer.from_pretrained.mockResolvedValue(jest.fn(() => ({ input_ids: [[1]], attention_mask: [[1]] })));
 
       const reranker = new FreshReranker();
       const result = await reranker.rerank("query", [{ text: "only doc" }], { topK: 4 });
@@ -185,11 +201,11 @@ describe("NativeEmbeddingReranker", () => {
     it("preserves original document properties in results", async () => {
       const { NativeEmbeddingReranker: FreshReranker } = require("../../utils/EmbeddingRerankers/native");
 
-      const mockModel = {
-        sigmoid: () => ({ tolist: () => [[0.5]] }),
-      };
+      const mockModel = jest.fn(async () => ({
+        logits: { sigmoid: () => ({ tolist: () => [[0.5]] }) },
+      }));
       mockAutoModel.from_pretrained.mockResolvedValue(mockModel);
-      mockAutoTokenizer.mockReturnValue(jest.fn(() => ({ input_ids: [[1]], attention_mask: [[1]] })));
+      mockAutoTokenizer.from_pretrained.mockResolvedValue(jest.fn(() => ({ input_ids: [[1]], attention_mask: [[1]] })));
 
       const reranker = new FreshReranker();
       const doc = { text: "content", id: "doc-42", metadata: { page: 1 } };
