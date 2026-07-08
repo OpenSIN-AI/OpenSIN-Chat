@@ -60,9 +60,10 @@ module.exports = {
     "^@prisma/client$": "<rootDir>/__mocks__/prismaClient.js",
     "^@ladjs/graceful$": "<rootDir>/__mocks__/empty.js",
     "^@mintplex-labs/bree$": "<rootDir>/__mocks__/empty.js",
-    "^@breejs/later$": "<rootDir>/__mocks__/empty.js",
-    "^js-tiktoken$": "<rootDir>/__mocks__/empty.js",
-    "^p-queue$": "<rootDir>/__mocks__/empty.js",
+    // NOTE: js-tiktoken, p-queue and @breejs/later are real, installed CJS
+    // dependencies used directly by the code under test. They must NOT be
+    // stubbed — doing so previously broke ~78 suites (tokenizer, job queue
+    // and scheduler code paths). Leave them to resolve normally.
   },
   // Issue #373: forceExit ensures Jest terminates even if a stray timer
   // or DB handle keeps the event loop alive. --detectOpenHandles is added
