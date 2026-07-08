@@ -94,3 +94,4 @@ export interface ISystemSettings {
 /** The SystemSettings singleton (typed). */
 declare const SystemSettings: ISystemSettings;
 export default SystemSettings;
+export { SystemSettings };

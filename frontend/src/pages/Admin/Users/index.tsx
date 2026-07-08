@@ -188,7 +188,7 @@ export function MessageLimitInput({
       />
       {enabled && (
         <div className="mt-4">
-          <label className="text-white text-sm font-semibold block mb-4">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-4">
             {t("admin.usersPage.messageLimitPerDay")}
           </label>
           <div className="relative mt-2">
@@ -203,7 +203,7 @@ export function MessageLimitInput({
               }}
               value={limit}
               min={1}
-              className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+              className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             />
           </div>
         </div>

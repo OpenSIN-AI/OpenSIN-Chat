@@ -100,10 +100,10 @@ export default function UploadFile({
               className="w-8 h-8 text-theme-text-primary light:invert"
               aria-hidden="true"
             />
-            <div className="text-white text-opacity-80 text-sm font-semibold py-1">
+            <div className="text-theme-text-primary text-sm font-semibold py-1">
               {t("connectors.upload.processor-offline")}
             </div>
-            <div className="text-white text-opacity-60 text-xs font-medium py-1 px-20 text-center">
+            <div className="text-theme-text-secondary text-xs font-medium py-1 px-20 text-center">
               {t("connectors.upload.processor-offline-desc")}
             </div>
           </div>
@@ -113,10 +113,10 @@ export default function UploadFile({
               className="w-8 h-8 text-theme-text-primary light:invert"
               aria-hidden="true"
             />
-            <div className="text-white text-opacity-80 text-sm font-semibold py-1">
+            <div className="text-theme-text-primary text-sm font-semibold py-1">
               {t("connectors.upload.click-upload")}
             </div>
-            <div className="text-white text-opacity-60 text-xs font-medium py-1">
+            <div className="text-theme-text-secondary text-xs font-medium py-1">
               {t("connectors.upload.file-types")}
             </div>
           </div>
@@ -140,7 +140,7 @@ export default function UploadFile({
           </div>
         )}
       </div>
-      <div className="text-center text-white text-opacity-50 text-xs font-medium w-[560px] py-2">
+      <div className="text-center text-theme-text-secondary text-xs font-medium w-[560px] py-2">
         {t("connectors.upload.or-submit-link")}
       </div>
       <form onSubmit={handleSendLink} className="flex gap-x-2">
@@ -148,7 +148,7 @@ export default function UploadFile({
           disabled={fetchingUrl}
           name="link"
           type="url"
-          className="border-none disabled:bg-theme-settings-input-bg disabled:text-theme-settings-input-placeholder bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-3/4 p-2.5"
+          className="border-none disabled:bg-theme-settings-input-bg disabled:text-theme-settings-input-placeholder bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-3/4 p-2.5"
           placeholder={t("connectors.upload.placeholder-link")}
           autoComplete="off"
         />
@@ -162,7 +162,7 @@ export default function UploadFile({
             : t("connectors.upload.fetch-website")}
         </button>
       </form>
-      <div className="mt-6 text-center text-white text-opacity-80 text-xs font-medium w-[560px]">
+      <div className="mt-6 text-center text-theme-text-primary text-xs font-medium w-[560px]">
         {t("connectors.upload.privacy-notice")}
       </div>
     </div>

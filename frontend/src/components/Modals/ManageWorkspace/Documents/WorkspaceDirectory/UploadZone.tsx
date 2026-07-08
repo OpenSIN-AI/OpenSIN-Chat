@@ -29,7 +29,7 @@ export function UploadZone({
     return (
       <div className="px-8">
         <div className="flex items-center justify-start w-[560px]">
-          <h3 className="text-white text-base font-bold ml-5">
+          <h3 className="text-theme-text-primary text-base font-bold ml-5">
             {workspace.name}
           </h3>
         </div>
@@ -51,7 +51,7 @@ export function UploadZone({
     return (
       <div className="px-8">
         <div className="flex items-center justify-start w-[560px]">
-          <h3 className="text-white text-base font-bold ml-5">
+          <h3 className="text-theme-text-primary text-base font-bold ml-5">
             {workspace.name}
           </h3>
         </div>
@@ -97,7 +97,7 @@ export function UploadZone({
             <button
               type="button"
               onClick={handleSaveChanges}
-              className="border border-slate-200 px-5 py-1.5 rounded-lg text-white text-sm items-center flex gap-x-2 hover:opacity-80 whitespace-nowrap"
+              className="border border-slate-200 px-5 py-1.5 rounded-lg text-theme-text-primary text-sm items-center flex gap-x-2 hover:opacity-80 whitespace-nowrap"
             >
               {t(
                 "modals.manageWorkspace.documents.workspaceDirectory.uploadZone.addToQueue",

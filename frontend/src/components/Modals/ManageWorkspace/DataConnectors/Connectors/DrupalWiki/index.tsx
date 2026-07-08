@@ -64,8 +64,8 @@ export default function DrupalWikiOptions() {
             <div className="w-full flex flex-col gap-4">
               <div className="flex flex-col pr-10">
                 <div className="flex flex-col gap-y-1 mb-4">
-                  <label className="text-white text-sm font-bold flex gap-x-2 items-center">
-                    <p className="font-bold text-white">
+                  <label className="text-theme-text-primary text-sm font-bold flex gap-x-2 items-center">
+                    <p className="font-bold text-theme-text-primary">
                       {t("drupalWiki.baseUrlLabel")}
                     </p>
                   </label>
@@ -88,7 +88,7 @@ export default function DrupalWikiOptions() {
                 <input
                   type="url"
                   name="baseUrl"
-                  className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                   placeholder={t("drupalWiki.baseUrlPlaceholder")}
                   required={true}
                   autoComplete="off"
@@ -97,7 +97,7 @@ export default function DrupalWikiOptions() {
               </div>
               <div className="flex flex-col pr-10">
                 <div className="flex flex-col gap-y-1 mb-4">
-                  <label className="text-white text-sm font-bold">
+                  <label className="text-theme-text-primary text-sm font-bold">
                     {t("drupalWiki.spaceIdsLabel")}
                   </label>
                   <p className="text-xs font-normal text-theme-text-secondary">
@@ -120,7 +120,7 @@ export default function DrupalWikiOptions() {
                 <input
                   type="text"
                   name="spaceIds"
-                  className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                   placeholder={t("drupalWiki.spaceIdsPlaceholder")}
                   required={true}
                   autoComplete="off"
@@ -129,8 +129,8 @@ export default function DrupalWikiOptions() {
               </div>
               <div className="flex flex-col pr-10">
                 <div className="flex flex-col gap-y-1 mb-4">
-                  <label className="text-white text-sm font-bold flex gap-x-2 items-center">
-                    <p className="font-bold text-white">
+                  <label className="text-theme-text-primary text-sm font-bold flex gap-x-2 items-center">
+                    <p className="font-bold text-theme-text-primary">
                       {t("drupalWiki.apiTokenLabel")}
                     </p>
                     <Warning
@@ -169,7 +169,7 @@ export default function DrupalWikiOptions() {
                 <input
                   type="password"
                   name="accessToken"
-                  className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                   placeholder={t("drupalWiki.apiTokenPlaceholder")}
                   required={true}
                   autoComplete="off"

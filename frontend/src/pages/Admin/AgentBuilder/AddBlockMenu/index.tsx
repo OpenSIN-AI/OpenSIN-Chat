@@ -63,7 +63,7 @@ export default function AddBlockMenu({
       <button
         type="button"
         onClick={() => setShowBlockMenu(!showBlockMenu)}
-        className="transition-all duration-300 w-full p-2.5 bg-theme-action-menu-bg hover:bg-theme-action-menu-item-hover border border-white/10 rounded-lg text-white flex items-center justify-center gap-2 text-sm font-medium"
+        className="transition-all duration-300 w-full p-2.5 bg-theme-action-menu-bg hover:bg-theme-action-menu-item-hover border border-white/10 rounded-lg text-theme-text-primary flex items-center justify-center gap-2 text-sm font-medium"
       >
         <Plus className="w-4 h-4" />
         {t("common.addBlock")}
@@ -85,10 +85,10 @@ export default function AddBlockMenu({
                     addBlock(type);
                     setShowBlockMenu(false);
                   }}
-                  className="w-full p-2.5 flex items-center gap-3 hover:bg-theme-action-menu-item-hover text-white transition-colors duration-300 group"
+                  className="w-full p-2.5 flex items-center gap-3 hover:bg-theme-action-menu-item-hover text-theme-text-primary transition-colors duration-300 group"
                 >
                   <div className="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center">
-                    <div className="w-fit h-fit text-white">{info.icon}</div>
+                    <div className="w-fit h-fit text-theme-text-primary">{info.icon}</div>
                   </div>
                   <div className="text-left flex-1">
                     <div className="text-sm font-medium">{info.label}</div>

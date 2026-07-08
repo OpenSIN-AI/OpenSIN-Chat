@@ -306,7 +306,7 @@ export default function ActiveWorkspaces() {
                                 <p
                                   className={`
                                   text-[14px] leading-loose whitespace-nowrap overflow-hidden
-                                  ${isActive ? "font-bold text-white light:text-blue-900" : "font-medium "} truncate
+                                  ${isActive ? "font-bold text-theme-text-primary light:text-blue-900" : "font-medium "} truncate
                                   w-full group-hover:w-[130px] group-hover:duration-200
                                 `}
                                 >

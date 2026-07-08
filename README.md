@@ -82,7 +82,7 @@ The container maps host port `43939` to internal port `3001`. Open `http://local
 - **OpenSIN PDF Reports** — branded reports (cover, header, footer in OpenSIN blue `#009ee0`) with table of contents, source lists, and politician references — generated directly from research jobs
 - **Agent Plugins** — `@politician-search`, `@deep-research`, `@generate-report`, `@orchestrator`, `@pdf-analyze`, `@browser-vision`, `@image-generation`, `@create-files` — callable directly in chat
 - **Fireworks AI Vision** — multimodal image analysis via Fireworks AI models (minimax-m3, kimi-k2p5/6/7, qwen-3p7-plus). Upload images and the AI describes what it sees
-- **3,000+ Tests** — comprehensive frontend (Vitest) and server (Jest) test coverage
+- **3,700+ Tests** — comprehensive frontend (Vitest) and server (Jest) test coverage
 
 ### UI Features
 
@@ -169,7 +169,7 @@ flowchart TB
 
 ```
 OpenSIN-Chat/
-├── frontend/          Vite + React 18 + TypeScript + Tailwind + i18next
+├── frontend/          Vite + React 19 + TypeScript + Tailwind v4 + i18next
 ├── server/            Node.js + Express + Prisma + SQLite/Postgres
 │   └── utils/
 │       ├── politician/    Politician DB (Bundestag + Abgeordnetenwatch)

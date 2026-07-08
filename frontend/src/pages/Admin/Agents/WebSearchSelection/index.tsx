@@ -276,7 +276,7 @@ export default function AgentWebSearchSelection({
                     <X
                       size={20}
                       weight="bold"
-                      className="cursor-pointer text-white hover:text-x-button"
+                      className="cursor-pointer text-theme-text-primary hover:text-x-button"
                       onClick={handleXButton}
                     />
                   </div>
@@ -307,7 +307,7 @@ export default function AgentWebSearchSelection({
                     className="w-10 h-10 rounded-md"
                   />
                   <div className="flex flex-col text-left">
-                    <div className="text-sm font-semibold text-white">
+                    <div className="text-sm font-semibold text-theme-text-primary">
                       {selectedSearchProviderObject.name}
                     </div>
                     <div className="mt-1 text-xs text-description">
@@ -315,7 +315,7 @@ export default function AgentWebSearchSelection({
                     </div>
                   </div>
                 </div>
-                <CaretUpDown size={24} weight="bold" className="text-white" />
+                <CaretUpDown size={24} weight="bold" className="text-theme-text-primary" />
               </button>
             )}
           </div>

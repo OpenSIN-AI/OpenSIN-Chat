@@ -17,13 +17,13 @@ export default function GeminiOptions({ settings }: any) {
       <div className="w-full flex flex-col gap-y-4">
         <div className="w-full flex items-center gap-[36px] mt-1.5">
           <div className="flex flex-col w-60">
-            <label className="text-white text-sm font-semibold block mb-3">
+            <label className="text-theme-text-primary text-sm font-semibold block mb-3">
               {t("providerSettings.geminiEmbedding.apiKey")}
             </label>
             <input
               type="password"
               name="GeminiEmbeddingApiKey"
-              className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+              className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
               placeholder={t(
                 "providerSettings.geminiEmbedding.apiKeyPlaceholder",
               )}
@@ -36,13 +36,13 @@ export default function GeminiOptions({ settings }: any) {
             />
           </div>
           <div className="flex flex-col w-60">
-            <label className="text-white text-sm font-semibold block mb-3">
+            <label className="text-theme-text-primary text-sm font-semibold block mb-3">
               {t("providerSettings.geminiEmbedding.modelPreference")}
             </label>
             <select
               name="EmbeddingModelPref"
               required={true}
-              className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+              className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
             >
               <optgroup
                 label={t("providerSettings.geminiEmbedding.availableModels")}
@@ -64,7 +64,7 @@ export default function GeminiOptions({ settings }: any) {
           data-tooltip-id="embedding-output-dimensions-tooltip"
           className="flex gap-x-1 items-center mb-3"
         >
-          <label className="text-white text-sm font-semibold block">
+          <label className="text-theme-text-primary text-sm font-semibold block">
             {t("providerSettings.geminiEmbedding.outputDimensions")}
           </label>
           <Info
@@ -86,7 +86,7 @@ export default function GeminiOptions({ settings }: any) {
         <input
           type="number"
           name="EmbeddingOutputDimensions"
-          className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+          className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
           placeholder={t(
             "providerSettings.geminiEmbedding.outputDimensionsPlaceholder",
           )}

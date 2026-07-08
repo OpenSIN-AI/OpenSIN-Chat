@@ -107,7 +107,7 @@ export default function MemoryModal({
             type="button"
             onClick={handleSubmit}
             disabled={!content.trim() || isSubmitting}
-            className="h-9 px-5 rounded-lg border-none bg-zinc-50 light:bg-slate-900 text-zinc-900 light:text-white text-sm font-medium cursor-pointer hover:bg-white light:hover:bg-slate-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            className="h-9 px-5 rounded-lg border-none bg-zinc-50 light:bg-slate-900 text-zinc-900 light:text-theme-text-primary text-sm font-medium cursor-pointer hover:bg-white light:hover:bg-slate-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
           >
             {submitLabel}
           </button>

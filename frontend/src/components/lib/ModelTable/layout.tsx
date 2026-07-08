@@ -51,7 +51,7 @@ export default function ModelTableLayout({
             placeholder={t("modelTable.searchModels")}
             value={searchQuery}
             disabled={loading}
-            className="min-h-[32px] border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 pl-[30px] py-2 search-input disabled:opacity-50 disabled:cursor-not-allowed"
+            className="min-h-[32px] border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 pl-[30px] py-2 search-input disabled:opacity-50 disabled:cursor-not-allowed"
             onChange={(e) => {
               e.preventDefault();
               e.stopPropagation();

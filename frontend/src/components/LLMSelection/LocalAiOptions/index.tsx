@@ -54,13 +54,13 @@ export default function LocalAiOptions({ settings, showAlert = false }: any) {
               apiKey={apiKey}
             />
             <div className="flex flex-col w-60">
-              <label className="text-white text-sm font-semibold block mb-2">
+              <label className="text-theme-text-primary text-sm font-semibold block mb-2">
                 {t("localAiLlm.contextWindowLabel")}
               </label>
               <input
                 type="number"
                 name="LocalAiTokenLimit"
-                className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                 placeholder={t("localAiLlm.contextWindowPlaceholder")}
                 min={1}
                 onScroll={(e) => (e.target as HTMLElement).blur()}
@@ -73,7 +73,7 @@ export default function LocalAiOptions({ settings, showAlert = false }: any) {
         )}
         <div className="flex flex-col w-60">
           <div className="flex flex-col gap-y-1 mb-2">
-            <label className="text-white text-sm font-semibold flex items-center gap-x-2">
+            <label className="text-theme-text-primary text-sm font-semibold flex items-center gap-x-2">
               {t("localAiLlm.apiKeyLabel")}{" "}
               <p className="!text-xs !italic !font-thin">
                 {t("localAiLlm.optional")}
@@ -83,7 +83,7 @@ export default function LocalAiOptions({ settings, showAlert = false }: any) {
           <input
             type="password"
             name="LocalAiApiKey"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("localAiLlm.apiKeyPlaceholder")}
             defaultValue={settings?.LocalAiApiKey ? "*".repeat(20) : ""}
             autoComplete="off"
@@ -119,7 +119,7 @@ export default function LocalAiOptions({ settings, showAlert = false }: any) {
         <div className="w-full flex items-center gap-4">
           <div className="flex flex-col w-60">
             <div className="flex justify-between items-center mb-2">
-              <label className="text-white text-sm font-semibold">
+              <label className="text-theme-text-primary text-sm font-semibold">
                 {t("localAiLlm.baseUrlLabel")}
               </label>
               {loading ? (
@@ -141,7 +141,7 @@ export default function LocalAiOptions({ settings, showAlert = false }: any) {
             <input
               type="url"
               name="LocalAiBasePath"
-              className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+              className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
               placeholder={t("localAiLlm.baseUrlPlaceholder")}
               value={basePathValue.value}
               required={true}
@@ -171,13 +171,13 @@ function LocalAIModelSelection({
   if (isLoading || customModels.length === 0) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-2">
+        <label className="text-theme-text-primary text-sm font-semibold block mb-2">
           {t("localAiLlm.modelLabel")}
         </label>
         <select
           name="LocalAiModelPref"
           disabled={true}
-          className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+          className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} value="">
             {basePath?.includes("/v1")
@@ -191,13 +191,13 @@ function LocalAIModelSelection({
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-2">
+      <label className="text-theme-text-primary text-sm font-semibold block mb-2">
         {t("localAiLlm.modelLabel")}
       </label>
       <select
         name="LocalAiModelPref"
         required={true}
-        className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+        className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
       >
         {customModels.length > 0 && (
           <optgroup label={t("localAiLlm.yourLoadedModels")}>

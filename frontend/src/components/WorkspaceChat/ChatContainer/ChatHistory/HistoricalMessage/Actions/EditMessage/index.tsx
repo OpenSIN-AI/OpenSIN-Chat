@@ -179,7 +179,7 @@ function EditActionBar({ onCancel, onSave, isUserMessage = false }: any) {
         )}
         <button
           type="submit"
-          className="border-none bg-zinc-50 light:bg-slate-800 text-zinc-800 light:text-white text-sm font-medium w-[70px] h-9 rounded-lg hover:bg-zinc-200 light:hover:bg-slate-800"
+          className="border-none bg-zinc-50 light:bg-slate-800 text-zinc-800 light:text-theme-text-primary text-sm font-medium w-[70px] h-9 rounded-lg hover:bg-zinc-200 light:hover:bg-slate-800"
         >
           {isUserMessage ? t("chat_window.submit") : t("chat_window.save")}
         </button>

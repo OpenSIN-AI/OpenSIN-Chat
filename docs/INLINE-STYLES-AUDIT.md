@@ -1,19 +1,24 @@
 # Inline-Styles Audit
 
 > Status after the migration described in this document. All **non-CSS-custom-property** inline styles in `frontend/src/` have been migrated to Tailwind utilities or to CSS custom properties (`--*`).
+>
+> **audit-report sprint follow-up (2026-07-08):** Re-audited all 39 remaining `style={{` blocks across 33 files. Confirmed all are structurally required. Issue #6 closed as N/A.
 
 ## Summary
 
 | Metric | Value |
 |--------|-------|
 | Initial `style={{` occurrences in production source | ~77 |
-| Final `style={{` occurrences in production source | 74 |
-| Of those, only setting CSS custom properties | 74 |
-| Inline styles with non-CSS-var keys | **0** |
+| After Phase 5 migration | 74 |
+| After audit-report sprint (2026-07-08) | **39** (33 files) |
+| CSS custom properties | 20 |
+| `getBoundingClientRect()` portal positioning | 12 |
+| ReactECharts API prop (not DOM style) | 6 |
+| Dynamic upload progress % | 1 |
+| Inline styles replaceable by Tailwind | **0** |
 | `inlineStyles/css-vars-only` warnings | **0** |
-| Documented exceptions | **0** |
 
-The remaining 74 `style={{` blocks are all **CSS custom properties** that drive Tailwind arbitrary-value classes (`w-[var(--x)]`, `h-[var(--x)]`, etc.). They are explicitly allowed by the `inlineStyles/css-vars-only` ESLint rule.
+All remaining `style={{` blocks are structurally required. None can be replaced by Tailwind arbitrary values without breaking functionality.
 
 ## What was migrated
 

@@ -26,7 +26,7 @@ export default function RemoteNvidiaNimOptions({ settings }: any) {
     <div className="flex gap-[36px] mt-1.5">
       <div className="flex flex-col w-60">
         <div className="flex justify-between items-center mb-2">
-          <label className="text-white text-sm font-semibold">
+          <label className="text-theme-text-primary text-sm font-semibold">
             {t("providerSettings.nvidiaNim.baseUrl")}
           </label>
           {loading ? (
@@ -48,7 +48,7 @@ export default function RemoteNvidiaNimOptions({ settings }: any) {
         <input
           type="url"
           name="NvidiaNimLLMBasePath"
-          className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+          className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
           placeholder={t("providerSettings.nvidiaNim.baseUrlPlaceholder")}
           value={basePathValue.value}
           required={true}
@@ -57,7 +57,7 @@ export default function RemoteNvidiaNimOptions({ settings }: any) {
           onChange={basePath.onChange}
           onBlur={basePath.onBlur}
         />
-        <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
+        <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
           {t("providerSettings.nvidiaNim.baseUrlHelp")}
         </p>
       </div>
@@ -82,13 +82,13 @@ function NvidiaNimModelSelection({ settings, basePath }: any) {
   if (isLoading && allModels.length === 0) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
+        <label className="text-theme-text-primary text-sm font-semibold block mb-3">
           {t("providerSettings.nvidiaNim.modelSelection")}
         </label>
         <select
           name="NvidiaNimLLMModelPref"
           disabled={true}
-          className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+          className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} value="">
             {t("providerSettings.nvidiaNim.loadingModels")}
@@ -100,13 +100,13 @@ function NvidiaNimModelSelection({ settings, basePath }: any) {
 
   return (
     <div className="flex flex-col w-60">
-      <label className="text-white text-sm font-semibold block mb-3">
+      <label className="text-theme-text-primary text-sm font-semibold block mb-3">
         {t("providerSettings.nvidiaNim.modelSelection")}
       </label>
       <select
         name="NvidiaNimLLMModelPref"
         required={true}
-        className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+        className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
       >
         {(allModels as any).map((model) => {
           const id = typeof model === "string" ? model : model.id;

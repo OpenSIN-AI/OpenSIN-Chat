@@ -16,7 +16,7 @@ function FreeFormLLMInput({ workspace, setHasChanges }: any) {
       <label htmlFor="freeform-chat-model" className="block input-label">
         {t("chat.model.title")}
       </label>
-      <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
+      <p className="text-theme-text-secondary text-xs font-medium py-1.5">
         {t("chat.model.description")}
       </p>
       <input
@@ -26,7 +26,7 @@ function FreeFormLLMInput({ workspace, setHasChanges }: any) {
         aria-label={t("chat.model.title")}
         defaultValue={workspace?.chatModel || ""}
         onChange={() => setHasChanges(true)}
-        className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+        className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
         placeholder={t("modelSelector.chatModel.placeholder")}
       />
     </div>
@@ -50,7 +50,7 @@ export default function ModelSelector({
     if (selectedLLM !== "default") {
       return (
         <div className="w-full h-10 justify-center items-center flex mt-4">
-          <p className="text-sm font-base text-white text-opacity-60 text-center">
+          <p className="text-sm font-base text-theme-text-secondary text-center">
             {t("modelSelector.multiModelNotSupported")}
             <br />
             {t("modelSelector.workspaceWillUse")}{" "}

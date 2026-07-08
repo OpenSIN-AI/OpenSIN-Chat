@@ -11,7 +11,7 @@ export default function ModelRouterOptions({ settings }: any) {
   if (loading) {
     return (
       <div className="w-full flex flex-col gap-y-4">
-        <p className="text-sm text-white text-opacity-60">
+        <p className="text-sm text-theme-text-secondary">
           {t("model-router.router-selection.loading-routers")}
         </p>
       </div>
@@ -21,11 +21,11 @@ export default function ModelRouterOptions({ settings }: any) {
   if (routers.length === 0) {
     return (
       <div className="w-full flex flex-col gap-y-4">
-        <p className="text-sm text-white text-opacity-60">
+        <p className="text-sm text-theme-text-secondary">
           {t("model-router.router-selection.no-routers-prefix-settings")}{" "}
           <Link
             to={paths.settings.modelRouters()}
-            className="underline text-white"
+            className="underline text-theme-text-primary"
           >
             {t("model-router.router-selection.no-routers-link")}
           </Link>
@@ -42,13 +42,13 @@ export default function ModelRouterOptions({ settings }: any) {
     <div className="w-full flex flex-col gap-y-4">
       <div className="w-full flex items-center gap-[36px]">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("model-router.router-selection.model-router-label")}
           </label>
           <select
             name="ModelRouterId"
             defaultValue={settings?.ModelRouterId || ""}
-            className="border-none bg-theme-settings-input-bg text-white text-sm rounded-lg block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
             required
           >
             <option value="">

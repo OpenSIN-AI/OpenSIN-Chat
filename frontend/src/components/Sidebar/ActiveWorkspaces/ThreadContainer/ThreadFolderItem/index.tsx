@@ -305,7 +305,7 @@ export default function ThreadFolderItem({
               onClick={(e) => e.stopPropagation()}
             />
           ) : (
-            <span className="text-sm text-white light:text-theme-text-primary truncate">
+            <span className="text-sm text-theme-text-primary light:text-theme-text-primary truncate">
               {name}
               <span className="ml-1 text-theme-placeholder light:text-theme-text-secondary text-xs">
                 {t("threadFolderItem.folderThreadCount", {

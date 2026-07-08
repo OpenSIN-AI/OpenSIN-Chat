@@ -232,7 +232,7 @@ function AttachmentItem({ attachment, onImageClick }: any) {
         <Icon size={24} weight="light" className="text-theme-attachment-icon" />
       </div>
       <div className="flex flex-col w-[125px]">
-        <p className="text-white text-xs font-semibold truncate">{file.name}</p>
+        <p className="text-theme-text-primary text-xs font-semibold truncate">{file.name}</p>
         <p className="text-theme-attachment-text-secondary text-[10px] leading-[14px] font-medium">
           {status === "embedded"
             ? t("attachments.fileEmbedded")

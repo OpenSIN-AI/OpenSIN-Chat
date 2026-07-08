@@ -40,7 +40,7 @@ export default function DockerModelRunnerOptions({ settings }: any) {
         <div className="flex flex-col w-60">
           <div className="flex items-center gap-1 mb-3">
             <div className="flex justify-between items-center gap-x-2">
-              <label className="text-white text-sm font-semibold">
+              <label className="text-theme-text-primary text-sm font-semibold">
                 {t("dockerModelRunner.baseUrlLabel")}
               </label>
               {loading ? (
@@ -96,7 +96,7 @@ export default function DockerModelRunnerOptions({ settings }: any) {
           <input
             type="url"
             name="DockerModelRunnerBasePath"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("dockerModelRunner.baseUrlPlaceholder")}
             value={basePathValue.value}
             required={true}
@@ -108,7 +108,7 @@ export default function DockerModelRunnerOptions({ settings }: any) {
         </div>
         <div className="flex flex-col w-60">
           <div className="flex items-center gap-1 mb-3">
-            <label className="text-white text-sm font-semibold block">
+            <label className="text-theme-text-primary text-sm font-semibold block">
               {t("dockerModelRunner.modelContextWindowLabel")}
             </label>
             <Tooltip
@@ -161,7 +161,7 @@ export default function DockerModelRunnerOptions({ settings }: any) {
           <input
             type="number"
             name="DockerModelRunnerModelTokenLimit"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("dockerModelRunner.contextWindowPlaceholder")}
             min={1}
             value={maxTokens}

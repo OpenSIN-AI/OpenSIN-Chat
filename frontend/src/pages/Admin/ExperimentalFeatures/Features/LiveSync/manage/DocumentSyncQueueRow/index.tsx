@@ -28,7 +28,7 @@ export default function DocumentSyncQueueRow({ queue }: { queue: any }) {
     <>
       <tr
         ref={rowRef}
-        className="bg-transparent text-white text-opacity-80 text-sm font-medium"
+        className="bg-transparent text-theme-text-primary text-sm font-medium"
       >
         <td scope="row" className="px-6 py-4 whitespace-nowrap">
           {stripUuidAndJsonFromString(queue.workspaceDoc.filename)}

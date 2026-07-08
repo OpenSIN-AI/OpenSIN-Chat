@@ -14,7 +14,7 @@ export default function PiperTTSOptions({ settings }: any) {
   const { t } = useTranslation();
   return (
     <>
-      <p className="text-sm font-base text-white text-opacity-60 mb-4">
+      <p className="text-sm font-base text-theme-text-secondary mb-4">
         {t("textToSpeech.piper.description")}
       </p>
       <div className="flex gap-x-4 items-center">
@@ -62,14 +62,14 @@ function PiperTTSModelSelection({ settings }: any) {
   if (loading) {
     return (
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
+        <label className="text-theme-text-primary text-sm font-semibold block mb-3">
           {t("textToSpeech.piper.voiceModelSelection")}
         </label>
         <select
           name="TTSPiperTTSVoiceModel"
           value=""
           disabled={true}
-          className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+          className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
         >
           <option value="" disabled={true}>
             {t("textToSpeech.piper.loadingModels")}
@@ -82,7 +82,7 @@ function PiperTTSModelSelection({ settings }: any) {
   return (
     <div className="flex flex-col w-fit">
       <div className="flex flex-col w-60">
-        <label className="text-white text-sm font-semibold block mb-3">
+        <label className="text-theme-text-primary text-sm font-semibold block mb-3">
           {t("textToSpeech.piper.voiceModelSelection")}
         </label>
         <div className="flex items-center w-fit gap-x-4 mb-2">
@@ -93,7 +93,7 @@ function PiperTTSModelSelection({ settings }: any) {
               setSelectedVoice((e.target as unknown as any)?.value)
             }
             value={selectedVoice}
-            className="border-none flex-shrink-0 bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+            className="border-none flex-shrink-0 bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
           >
             {voicesByLanguage(voices).map(([lang, voices]) => {
               return (
@@ -225,8 +225,8 @@ function DemoVoiceSample({ voiceId }: any) {
             </>
           ) : (
             <>
-              <PlayCircle size={20} className="flex-shrink-0 text-white" />
-              <p className="text-white text-sm flex-shrink-0">
+              <PlayCircle size={20} className="flex-shrink-0 text-theme-text-primary" />
+              <p className="text-theme-text-primary text-sm flex-shrink-0">
                 {t("textToSpeech.piper.playSample")}
               </p>
             </>

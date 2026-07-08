@@ -29,7 +29,7 @@ export default function AgentList({
   return (
     <>
       <div
-        className={`bg-theme-bg-secondary text-white rounded-xl ${
+        className={`bg-theme-bg-secondary text-theme-text-primary rounded-xl ${
           isMobile ? "w-full" : "min-w-[360px] w-fit"
         }`}
       >

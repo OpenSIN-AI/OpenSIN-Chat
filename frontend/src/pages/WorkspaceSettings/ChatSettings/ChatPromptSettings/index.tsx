@@ -100,10 +100,10 @@ export default function ChatPromptSettings({
               {t("chat.prompt.title")}
             </label>
           </div>
-          <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
+          <p className="text-theme-text-secondary text-xs font-medium py-1.5">
             {t("chat.prompt.description")}
           </p>
-          <p className="text-white text-opacity-60 text-xs font-medium mb-2">
+          <p className="text-theme-text-secondary text-xs font-medium mb-2">
             {t("chatPromptSettings.youCanInsert")}{" "}
             <Link
               to={paths.settings.systemPromptVariables()}
@@ -172,12 +172,12 @@ export default function ChatPromptSettings({
                   setHasChanges(true);
                 }}
                 defaultValue={prompt}
-                className="border-none bg-theme-settings-input-bg text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 mt-2 resize-y overflow-y-scroll min-h-[150px]"
+                className="border-none bg-theme-settings-input-bg text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 mt-2 resize-y overflow-y-scroll min-h-[150px]"
               />
             ) : (
               <div
                 onClick={() => setIsEditing(true)}
-                className="border-none bg-theme-settings-input-bg text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 mt-2 resize-y overflow-y-scroll min-h-[150px]"
+                className="border-none bg-theme-settings-input-bg text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 mt-2 resize-y overflow-y-scroll min-h-[150px]"
               >
                 <Highlighter
                   className="whitespace-pre-wrap"

@@ -30,7 +30,7 @@ export default function ApiKeyRow({
 
   return (
     <>
-      <tr className="bg-transparent text-white text-opacity-80 text-xs font-medium border-b border-white/10">
+      <tr className="bg-transparent text-theme-text-primary text-xs font-medium border-b border-white/10">
         <td scope="row" className="px-6 py-3 whitespace-nowrap align-middle">
           {apiKey.name || t("api.row.unnamed")}
         </td>

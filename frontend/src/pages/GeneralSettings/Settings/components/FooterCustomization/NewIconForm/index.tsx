@@ -121,7 +121,7 @@ export default function NewIconForm({
         value={selectedUrl}
         onChange={handleUrlChange}
         placeholder={t("footerCustomization.newIconForm.urlPlaceholder")}
-        className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-md p-2.5 w-[300px] h-[32px] focus:outline-primary-button active:outline-primary-button outline-none"
+        className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-md p-2.5 w-[300px] h-[32px] focus:outline-primary-button active:outline-primary-button outline-none"
         required
       />
       {selectedIcon !== "Plus" && (

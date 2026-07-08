@@ -389,7 +389,7 @@ export default function ThreadContainer({
   if (loading) {
     return (
       <div className="flex flex-col bg-pulse w-full h-10 items-center justify-center">
-        <p className="text-xs text-white animate-pulse">
+        <p className="text-xs text-theme-text-primary animate-pulse">
           {t("threadContainer.loadingThreads")}
         </p>
       </div>
@@ -521,7 +521,7 @@ export default function ThreadContainer({
 
       <DragOverlay>
         {draggedThread ? (
-          <div className="bg-zinc-800 light:bg-slate-200 rounded-lg px-3 py-1.5 text-sm text-white light:text-theme-text-primary shadow-lg opacity-90 pointer-events-none">
+          <div className="bg-zinc-800 light:bg-slate-200 rounded-lg px-3 py-1.5 text-sm text-theme-text-primary light:text-theme-text-primary shadow-lg opacity-90 pointer-events-none">
             {draggedThread.name}
           </div>
         ) : null}

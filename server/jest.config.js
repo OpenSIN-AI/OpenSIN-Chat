@@ -40,6 +40,29 @@ module.exports = {
     // but Jest's CJS module registry cannot (without experimental VM
     // modules) — map to a tiny crypto.randomUUID-backed shim in tests.
     "^uuid$": "<rootDir>/__tests__/helpers/uuidShim.js",
+    // dotenv is not a server dependency — it is only used in scripts that
+    // run outside of the server process (e.g. migrate-env-to-db.js). Map
+    // it to a no-op stub so any module that requires("dotenv") at the top
+    // level does not cause "Cannot find module" in Jest.
+    "^dotenv$": "<rootDir>/__mocks__/dotenv.js",
+    // Native/optional peer deps that are not installed in the test
+    // environment. Map each to an empty stub so transitive requires
+    // (e.g. vectorDbProviders → pg, http → jsonwebtoken) don't crash
+    // test suites that don't exercise those code paths.
+    "^pg$": "<rootDir>/__mocks__/empty.js",
+    "^jsonwebtoken$": "<rootDir>/__mocks__/empty.js",
+    "^jsonrepair$": "<rootDir>/__mocks__/empty.js",
+    // Prisma generated client (requires a running `prisma generate`).
+    // The utils/prisma module is mocked per-test; these stubs prevent
+    // the @prisma/client package from failing to resolve its generated
+    // artefacts when loaded as a transitive dependency.
+    "^\\.prisma/client/default$": "<rootDir>/__mocks__/empty.js",
+    "^@prisma/client$": "<rootDir>/__mocks__/prismaClient.js",
+    "^@ladjs/graceful$": "<rootDir>/__mocks__/empty.js",
+    "^@mintplex-labs/bree$": "<rootDir>/__mocks__/empty.js",
+    "^@breejs/later$": "<rootDir>/__mocks__/empty.js",
+    "^js-tiktoken$": "<rootDir>/__mocks__/empty.js",
+    "^p-queue$": "<rootDir>/__mocks__/empty.js",
   },
   // Issue #373: forceExit ensures Jest terminates even if a stray timer
   // or DB handle keeps the event loop alive. --detectOpenHandles is added

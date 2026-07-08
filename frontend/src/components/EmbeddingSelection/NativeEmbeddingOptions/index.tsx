@@ -27,7 +27,7 @@ export default function NativeEmbeddingOptions({ settings }: any) {
     <div className="w-full flex flex-col gap-y-4">
       <div className="w-full flex flex-col mt-1.5">
         <div className="flex flex-col w-96">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("providerSettings.nativeEmbedding.modelPreference")}
           </label>
           <select

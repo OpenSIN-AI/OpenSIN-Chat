@@ -276,7 +276,7 @@ export default function SQLConnectionModal({
       <div className="relative w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border">
         <div className="relative p-6 border-b rounded-t border-theme-modal-border">
           <div className="w-full flex gap-x-2 items-center">
-            <h3 className="text-xl font-semibold text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
+            <h3 className="text-xl font-semibold text-theme-text-primary overflow-hidden overflow-ellipsis whitespace-nowrap">
               {isEditMode
                 ? t("sqlConnection.editTitle")
                 : t("sqlConnection.newTitle")}
@@ -287,7 +287,7 @@ export default function SQLConnectionModal({
             type="button"
             className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
           >
-            <X size={24} weight="bold" className="text-white" />
+            <X size={24} weight="bold" className="text-theme-text-primary" />
           </button>
         </div>
         <form
@@ -317,7 +317,7 @@ export default function SQLConnectionModal({
                   </p>
                 </div>
 
-                <label className="block mb-2 text-sm font-medium text-white mt-4">
+                <label className="block mb-2 text-sm font-medium text-theme-text-primary mt-4">
                   {t("sqlConnection.selectEngine")}
                 </label>
                 <div className="grid md:grid-cols-4 gap-4 grid-cols-2">
@@ -340,13 +340,13 @@ export default function SQLConnectionModal({
               </div>
 
               <div className="flex flex-col w-full">
-                <label className="block mb-2 text-sm font-medium text-white">
+                <label className="block mb-2 text-sm font-medium text-theme-text-primary">
                   {t("sqlConnection.connectionName")}
                 </label>
                 <input
                   type="text"
                   name="name"
-                  className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  className="border-none bg-theme-settings-input-bg w-full text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                   placeholder={t("sqlConnection.connectionNamePlaceholder")}
                   required={true}
                   autoComplete="off"
@@ -357,13 +357,13 @@ export default function SQLConnectionModal({
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="flex flex-col">
-                  <label className="block mb-2 text-sm font-medium text-white">
+                  <label className="block mb-2 text-sm font-medium text-theme-text-primary">
                     {t("sqlConnection.databaseUser")}
                   </label>
                   <input
                     type="text"
                     name="username"
-                    className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                    className="border-none bg-theme-settings-input-bg w-full text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                     placeholder={t("sqlConnection.databaseUserPlaceholder")}
                     required={true}
                     autoComplete="off"
@@ -372,13 +372,13 @@ export default function SQLConnectionModal({
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label className="block mb-2 text-sm font-medium text-white">
+                  <label className="block mb-2 text-sm font-medium text-theme-text-primary">
                     {t("sqlConnection.databasePassword")}
                   </label>
                   <input
                     type="password"
                     name="password"
-                    className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                    className="border-none bg-theme-settings-input-bg w-full text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                     placeholder={t("sqlConnection.databasePasswordPlaceholder")}
                     required={true}
                     autoComplete="off"
@@ -390,13 +390,13 @@ export default function SQLConnectionModal({
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <div className="sm:col-span-2">
-                  <label className="block mb-2 text-sm font-medium text-white">
+                  <label className="block mb-2 text-sm font-medium text-theme-text-primary">
                     {t("sqlConnection.serverEndpoint")}
                   </label>
                   <input
                     type="text"
                     name="host"
-                    className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                    className="border-none bg-theme-settings-input-bg w-full text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                     placeholder={t("sqlConnection.serverEndpointPlaceholder")}
                     required={true}
                     autoComplete="off"
@@ -405,13 +405,13 @@ export default function SQLConnectionModal({
                   />
                 </div>
                 <div>
-                  <label className="block mb-2 text-sm font-medium text-white">
+                  <label className="block mb-2 text-sm font-medium text-theme-text-primary">
                     {t("sqlConnection.port")}
                   </label>
                   <input
                     type="text"
                     name="port"
-                    className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                    className="border-none bg-theme-settings-input-bg w-full text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                     placeholder={t("sqlConnection.portPlaceholder")}
                     required={false}
                     autoComplete="off"
@@ -422,13 +422,13 @@ export default function SQLConnectionModal({
               </div>
 
               <div className="flex flex-col">
-                <label className="block mb-2 text-sm font-medium text-white">
+                <label className="block mb-2 text-sm font-medium text-theme-text-primary">
                   {t("sqlConnection.database")}
                 </label>
                 <input
                   type="text"
                   name="database"
-                  className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  className="border-none bg-theme-settings-input-bg w-full text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                   placeholder={t("sqlConnection.databasePlaceholder")}
                   required={true}
                   autoComplete="off"
@@ -439,13 +439,13 @@ export default function SQLConnectionModal({
 
               {engine === "postgresql" && (
                 <div className="flex flex-col">
-                  <label className="block mb-2 text-sm font-medium text-white">
+                  <label className="block mb-2 text-sm font-medium text-theme-text-primary">
                     {t("sqlConnection.schemaOptional")}
                   </label>
                   <input
                     type="text"
                     name="schema"
-                    className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                    className="border-none bg-theme-settings-input-bg w-full text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                     placeholder={t("sqlConnection.schemaPlaceholder")}
                     required={false}
                     autoComplete="off"
@@ -474,7 +474,7 @@ export default function SQLConnectionModal({
             <button
               type="button"
               onClick={handleClose}
-              className="transition-all duration-300 text-white hover:bg-zinc-700 light:hover:bg-theme-bg-primary px-4 py-2 rounded-lg text-sm"
+              className="transition-all duration-300 text-theme-text-primary hover:bg-zinc-700 light:hover:bg-theme-bg-primary px-4 py-2 rounded-lg text-sm"
             >
               {t("sqlConnection.cancel")}
             </button>

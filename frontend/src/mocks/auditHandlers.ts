@@ -2,7 +2,7 @@
 // DEV-ONLY mock handlers used purely for optical/UX audits of the right
 // sidebar panels without a running backend. Loaded exclusively when
 // import.meta.env.DEV === true and the localStorage flag
-// `anythingllm_ws_mock` is set to "true". Never active in production.
+// `opensin_ws_mock` is set to "true". Never active in production.
 import { http, HttpResponse } from "msw";
 
 const workspace = {

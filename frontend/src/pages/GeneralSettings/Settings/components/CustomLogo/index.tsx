@@ -107,7 +107,7 @@ export default function CustomLogo(): JSX.Element {
 
   return (
     <div className="flex flex-col gap-y-0.5 my-4">
-      <p className="text-sm leading-6 font-semibold text-white">
+      <p className="text-sm leading-6 font-semibold text-theme-text-primary">
         {t("customization.items.logo.title")}
       </p>
       <p className="text-xs text-theme-text-secondary">

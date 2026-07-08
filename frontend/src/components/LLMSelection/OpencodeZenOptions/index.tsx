@@ -7,13 +7,13 @@ export default function OpencodeZenOptions({ settings }: any) {
     <div className="flex flex-col gap-y-7">
       <div className="flex gap-[36px] mt-1.5 flex-wrap">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("providerSettings.opencodeZen.baseUrl")}
           </label>
           <input
             type="url"
             name="OpencodeZenBasePath"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("providerSettings.opencodeZen.baseUrlPlaceholder")}
             defaultValue={
               settings?.OpencodeZenBasePath || "https://opencode.ai/zen/v1"
@@ -25,13 +25,13 @@ export default function OpencodeZenOptions({ settings }: any) {
           />
         </div>
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("providerSettings.opencodeZen.apiKey")}
           </label>
           <input
             type="password"
             name="OpencodeZenApiKey"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("providerSettings.opencodeZen.apiKeyPlaceholder")}
             defaultValue={settings?.OpencodeZenApiKey ? "*".repeat(20) : ""}
             onChange={() => {}}
@@ -41,13 +41,13 @@ export default function OpencodeZenOptions({ settings }: any) {
           />
         </div>
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("providerSettings.opencodeZen.modelId")}
           </label>
           <input
             type="text"
             name="OpencodeZenModelPref"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t("providerSettings.opencodeZen.modelIdPlaceholder")}
             defaultValue={
               settings?.OpencodeZenModelPref || "nemotron-3-ultra-free"
@@ -61,13 +61,13 @@ export default function OpencodeZenOptions({ settings }: any) {
       </div>
       <div className="flex gap-[36px] flex-wrap">
         <div className="flex flex-col w-60">
-          <label className="text-white text-sm font-semibold block mb-3">
+          <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             {t("providerSettings.opencodeZen.modelContextWindow")}
           </label>
           <input
             type="number"
             name="OpencodeZenTokenLimit"
-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+            className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder={t(
               "providerSettings.opencodeZen.tokenLimitPlaceholder",
             )}

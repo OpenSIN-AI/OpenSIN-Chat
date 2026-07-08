@@ -296,7 +296,7 @@ function RunHeader({
             type="button"
             onClick={onContinueInThread}
             disabled={continuing}
-            className="border-none h-9 px-5 rounded-lg bg-zinc-50 text-zinc-950 light:bg-slate-900 light:text-white text-sm font-medium hover:bg-zinc-200 light:hover:bg-slate-800 transition-colors disabled:opacity-50 shrink-0"
+            className="border-none h-9 px-5 rounded-lg bg-zinc-50 text-zinc-950 light:bg-slate-900 light:text-theme-text-primary text-sm font-medium hover:bg-zinc-200 light:hover:bg-slate-800 transition-colors disabled:opacity-50 shrink-0"
           >
             {continuing
               ? t("scheduledJobs.runDetail.creating")

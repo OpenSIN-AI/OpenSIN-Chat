@@ -140,7 +140,7 @@ function ThreadItem({
             <p
               className={`text-left text-[13px] truncate w-full ${
                 isActive
-                  ? "font-medium text-white light:text-blue-900"
+                  ? "font-medium text-theme-text-primary light:text-blue-900"
                   : "text-theme-text-secondary light:text-slate-600 font-normal"
               }`}
             >

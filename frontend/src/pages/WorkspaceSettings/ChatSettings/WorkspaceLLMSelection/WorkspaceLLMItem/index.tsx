@@ -102,7 +102,7 @@ export default function WorkspaceLLM({
               className="w-10 h-10 rounded-md"
             />
             <div className="flex flex-col">
-              <div className="text-sm font-semibold text-white">{name}</div>
+              <div className="text-sm font-semibold text-theme-text-primary">{name}</div>
               <div className="mt-1 text-xs text-theme-text-secondary">{description}</div>
             </div>
           </div>
@@ -185,7 +185,7 @@ function SetupProvider({
       <div className="relative w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border">
         <div className="relative p-6 border-b rounded-t border-theme-modal-border">
           <div className="w-full flex gap-x-2 items-center">
-            <h3 className="text-xl font-semibold text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
+            <h3 className="text-xl font-semibold text-theme-text-primary overflow-hidden overflow-ellipsis whitespace-nowrap">
               {t("workspaceLLMItem.settingsTitle", { name: LLMOption.name })}
             </h3>
           </div>
@@ -194,7 +194,7 @@ function SetupProvider({
             type="button"
             className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
           >
-            <X size={24} weight="bold" className="text-white" />
+            <X size={24} weight="bold" className="text-theme-text-primary" />
           </button>
         </div>
         <form id="provider-form" onSubmit={handleUpdate}>
@@ -214,7 +214,7 @@ function SetupProvider({
             <button
               type="button"
               onClick={closeModal}
-              className="transition-all duration-300 text-white hover:bg-zinc-700 px-4 py-2 rounded-lg text-sm"
+              className="transition-all duration-300 text-theme-text-primary hover:bg-zinc-700 px-4 py-2 rounded-lg text-sm"
             >
               {t("workspaceLLMItem.cancel")}
             </button>

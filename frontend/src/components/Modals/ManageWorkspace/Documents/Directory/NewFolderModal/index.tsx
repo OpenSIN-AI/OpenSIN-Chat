@@ -46,7 +46,7 @@ export default function NewFolderModal({ closeModal, files, setFiles }: any) {
     <div className="w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border">
       <div className="relative p-6 border-b rounded-t border-theme-modal-border">
         <div className="w-full flex gap-x-2 items-center">
-          <h3 className="text-xl font-semibold text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
+          <h3 className="text-xl font-semibold text-theme-text-primary overflow-hidden overflow-ellipsis whitespace-nowrap">
             {t("newFolderModal.title")}
           </h3>
         </div>
@@ -59,7 +59,7 @@ export default function NewFolderModal({ closeModal, files, setFiles }: any) {
           <X
             size={24}
             weight="bold"
-            className="text-white"
+            className="text-theme-text-primary"
             aria-hidden="true"
           />
         </button>
@@ -70,14 +70,14 @@ export default function NewFolderModal({ closeModal, files, setFiles }: any) {
             <div>
               <label
                 htmlFor="folderName"
-                className="block mb-2 text-sm font-medium text-white"
+                className="block mb-2 text-sm font-medium text-theme-text-primary"
               >
                 {t("newFolderModal.folderNameLabel")}
               </label>
               <input
                 name="folderName"
                 type="text"
-                className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                className="border-none bg-theme-settings-input-bg w-full text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                 placeholder={t("newFolderModal.folderNamePlaceholder")}
                 required={true}
                 autoComplete="off"
@@ -96,7 +96,7 @@ export default function NewFolderModal({ closeModal, files, setFiles }: any) {
               type="button"
               onClick={closeModal}
               aria-label={t("newFolderModal.cancelAriaLabel")}
-              className="transition-all duration-300 text-white hover:bg-zinc-700 px-4 py-2 rounded-lg text-sm"
+              className="transition-all duration-300 text-theme-text-primary hover:bg-zinc-700 px-4 py-2 rounded-lg text-sm"
             >
               {t("newFolderModal.cancel")}
             </button>

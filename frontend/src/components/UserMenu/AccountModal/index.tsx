@@ -112,7 +112,7 @@ export default function AccountModal({ user, hideModal }: any) {
       <div className="w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border overflow-hidden">
         <div className="relative p-6 border-b rounded-t border-theme-modal-border">
           <div className="w-full flex gap-x-2 items-center">
-            <h3 className="text-xl font-semibold text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
+            <h3 className="text-xl font-semibold text-theme-text-primary overflow-hidden overflow-ellipsis whitespace-nowrap">
               {t("profile_settings.edit_account")}
             </h3>
           </div>
@@ -122,7 +122,7 @@ export default function AccountModal({ user, hideModal }: any) {
             aria-label={t("profile_settings.close") || "Close"}
             className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
           >
-            <X size={24} weight="bold" className="text-white" />
+            <X size={24} weight="bold" className="text-theme-text-primary" />
           </button>
         </div>
         <div className="h-full w-full overflow-y-auto max-h-[calc(100vh-200px)]">
@@ -177,7 +177,7 @@ export default function AccountModal({ user, hideModal }: any) {
                 <input
                   name="username"
                   type="text"
-                  className="border-none bg-theme-settings-input-bg placeholder:text-theme-settings-input-placeholder border-gray-500 text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  className="border-none bg-theme-settings-input-bg placeholder:text-theme-settings-input-placeholder border-gray-500 text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                   placeholder={t("accountModal.usernamePlaceholder")}
                   minLength={USERNAME_MIN_LENGTH}
                   maxLength={USERNAME_MAX_LENGTH}
@@ -193,14 +193,14 @@ export default function AccountModal({ user, hideModal }: any) {
               <div>
                 <label
                   htmlFor="currentPassword"
-                  className="block mb-2 text-sm font-medium text-white"
+                  className="block mb-2 text-sm font-medium text-theme-text-primary"
                 >
                   {t("profile_settings.current_password")}
                 </label>
                 <input
                   name="currentPassword"
                   type="password"
-                  className="border-none bg-theme-settings-input-bg placeholder:text-theme-settings-input-placeholder border-gray-500 text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  className="border-none bg-theme-settings-input-bg placeholder:text-theme-settings-input-placeholder border-gray-500 text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                   placeholder={t(
                     "profile_settings.current_password_placeholder",
                   )}
@@ -213,14 +213,14 @@ export default function AccountModal({ user, hideModal }: any) {
               <div>
                 <label
                   htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-white"
+                  className="block mb-2 text-sm font-medium text-theme-text-primary"
                 >
                   {t("profile_settings.new_password")}
                 </label>
                 <input
                   name="password"
                   type="password"
-                  className="border-none bg-theme-settings-input-bg placeholder:text-theme-settings-input-placeholder border-gray-500 text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  className="border-none bg-theme-settings-input-bg placeholder:text-theme-settings-input-placeholder border-gray-500 text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                   placeholder={t("accountModal.passwordPlaceholder", {
                     username: user.username,
                   })}
@@ -234,13 +234,13 @@ export default function AccountModal({ user, hideModal }: any) {
               <div>
                 <label
                   htmlFor="bio"
-                  className="block mb-2 text-sm font-medium text-white"
+                  className="block mb-2 text-sm font-medium text-theme-text-primary"
                 >
                   {t("accountModal.bio")}
                 </label>
                 <textarea
                   name="bio"
-                  className="border-none bg-theme-settings-input-bg placeholder:text-theme-settings-input-placeholder border-gray-500 text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 min-h-[100px] resize-y"
+                  className="border-none bg-theme-settings-input-bg placeholder:text-theme-settings-input-placeholder border-gray-500 text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 min-h-[100px] resize-y"
                   placeholder={t("accountModal.bioPlaceholder")}
                   defaultValue={user.bio}
                 />
@@ -260,7 +260,7 @@ export default function AccountModal({ user, hideModal }: any) {
               <button
                 onClick={hideModal}
                 type="button"
-                className="transition-all duration-300 text-white hover:bg-zinc-700 px-4 py-2 rounded-lg text-sm"
+                className="transition-all duration-300 text-theme-text-primary hover:bg-zinc-700 px-4 py-2 rounded-lg text-sm"
               >
                 {t("profile_settings.cancel")}
               </button>
@@ -290,13 +290,13 @@ function LanguagePreference() {
     <div>
       <label
         htmlFor="userLang"
-        className="block mb-2 text-sm font-medium text-white"
+        className="block mb-2 text-sm font-medium text-theme-text-primary"
       >
         {t("profile_settings.language")}
       </label>
       <select
         name="userLang"
-        className="border-none bg-theme-settings-input-bg w-fit mt-2 px-4 focus:outline-primary-button active:outline-primary-button outline-none text-white text-sm rounded-lg block py-2"
+        className="border-none bg-theme-settings-input-bg w-fit mt-2 px-4 focus:outline-primary-button active:outline-primary-button outline-none text-theme-text-primary text-sm rounded-lg block py-2"
         defaultValue={currentLanguage || "en"}
         onChange={(e) => changeLanguage((e.target as unknown as any)?.value)}
       >
@@ -319,7 +319,7 @@ function ThemePreference() {
     <div>
       <label
         htmlFor="theme"
-        className="block mb-2 text-sm font-medium text-white"
+        className="block mb-2 text-sm font-medium text-theme-text-primary"
       >
         {t("profile_settings.theme")}
       </label>
@@ -327,7 +327,7 @@ function ThemePreference() {
         name="theme"
         value={theme}
         onChange={(e) => setTheme((e.target as unknown as any)?.value)}
-        className="border-none bg-theme-settings-input-bg w-fit px-4 focus:outline-primary-button active:outline-primary-button outline-none text-white text-sm rounded-lg block py-2"
+        className="border-none bg-theme-settings-input-bg w-fit px-4 focus:outline-primary-button active:outline-primary-button outline-none text-theme-text-primary text-sm rounded-lg block py-2"
       >
         {Object.entries(availableThemes).map(([key, value]) => (
           <option key={key} value={key}>
@@ -358,7 +358,7 @@ function AutoSubmitPreference() {
       <div className="flex items-center gap-x-1 mb-2">
         <label
           htmlFor="autoSubmit"
-          className="block text-sm font-medium text-white"
+          className="block text-sm font-medium text-theme-text-primary"
         >
           {t("customization.chat.auto_submit.title")}
         </label>
@@ -367,7 +367,7 @@ function AutoSubmitPreference() {
           data-tooltip-content={t("customization.chat.auto_submit.description")}
           className="cursor-pointer h-fit"
         >
-          <Info size={16} weight="bold" className="text-white" />
+          <Info size={16} weight="bold" className="text-theme-text-primary" />
         </div>
       </div>
       <Toggle size="lg" enabled={autoSubmitSttInput} onChange={handleChange} />
@@ -403,7 +403,7 @@ function AutoSpeakPreference() {
       <div className="flex items-center gap-x-1 mb-2">
         <label
           htmlFor="autoSpeak"
-          className="block text-sm font-medium text-white"
+          className="block text-sm font-medium text-theme-text-primary"
         >
           {t("customization.chat.auto_speak.title")}
         </label>
@@ -412,7 +412,7 @@ function AutoSpeakPreference() {
           data-tooltip-content={t("customization.chat.auto_speak.description")}
           className="cursor-pointer h-fit"
         >
-          <Info size={16} weight="bold" className="text-white" />
+          <Info size={16} weight="bold" className="text-theme-text-primary" />
         </div>
       </div>
       <Toggle

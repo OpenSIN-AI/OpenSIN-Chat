@@ -108,7 +108,7 @@ export default function WorkspaceAgentConfiguration({
                 >
                   {t("agentConfig.configureAgentSkills")}
                 </a>
-                <p className="text-white text-opacity-60 text-xs font-medium">
+                <p className="text-theme-text-secondary text-xs font-medium">
                   {t("agentConfig.configureDescription")}
                 </p>
               </div>

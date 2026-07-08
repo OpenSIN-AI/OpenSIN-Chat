@@ -147,12 +147,12 @@ export default function DefaultSystemPrompt() {
                 <form onSubmit={handleSubmit} className="space-y-3">
                   <label
                     htmlFor="default-system-prompt"
-                    className=" text-base font-bold text-white"
+                    className=" text-base font-bold text-theme-text-primary"
                   >
                     {t("defaultSystemPrompt.label")}
                   </label>
                   <div className="space-y-1">
-                    <p className="text-white text-opacity-60 text-xs font-medium">
+                    <p className="text-theme-text-secondary text-xs font-medium">
                       {t("defaultSystemPrompt.description.part1")}{" "}
                       <span className="font-bold">
                         {t("defaultSystemPrompt.description.specificWorkspace")}
@@ -163,7 +163,7 @@ export default function DefaultSystemPrompt() {
                       </span>
                       {t("defaultSystemPrompt.description.part3")}
                     </p>
-                    <p className="text-white text-opacity-60 text-xs font-medium mb-2">
+                    <p className="text-theme-text-secondary text-xs font-medium mb-2">
                       {t("defaultSystemPrompt.variables.intro")}{" "}
                       <Link
                         to={paths.settings.systemPromptVariables()}
@@ -209,7 +209,7 @@ export default function DefaultSystemPrompt() {
                       }
                       placeholder={t("defaultSystemPrompt.placeholder")}
                       rows={5}
-                      className="w-full border-none bg-theme-settings-input-bg placeholder:text-theme-settings-input-placeholder text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block p-2.5 resize-y overflow-y-scroll min-h-[150px]"
+                      className="w-full border-none bg-theme-settings-input-bg placeholder:text-theme-settings-input-placeholder text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block p-2.5 resize-y overflow-y-scroll min-h-[150px]"
                     />
                   ) : (
                     <div
@@ -219,7 +219,7 @@ export default function DefaultSystemPrompt() {
                           isEditing: true,
                         }))
                       }
-                      className="w-full border-none bg-theme-settings-input-bg text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block p-2.5 cursor-text resize-y overflow-y-scroll min-h-[150px]"
+                      className="w-full border-none bg-theme-settings-input-bg text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block p-2.5 cursor-text resize-y overflow-y-scroll min-h-[150px]"
                     >
                       <Highlighter
                         className="whitespace-pre-wrap"

@@ -57,7 +57,7 @@ export default function WebsiteDepthOptions() {
             <div className="w-full flex flex-col gap-4">
               <div className="flex flex-col pr-10">
                 <div className="flex flex-col gap-y-1 mb-4">
-                  <label className="text-white text-sm font-bold">
+                  <label className="text-theme-text-primary text-sm font-bold">
                     {t("connectors.website-depth.URL")}
                   </label>
                   <p className="text-xs font-normal text-theme-text-secondary">
@@ -67,7 +67,7 @@ export default function WebsiteDepthOptions() {
                 <input
                   type="url"
                   name="url"
-                  className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                   placeholder={t("connectors.website-depth.urlPlaceholder")}
                   required={true}
                   autoComplete="off"
@@ -76,7 +76,7 @@ export default function WebsiteDepthOptions() {
               </div>
               <div className="flex flex-col pr-10">
                 <div className="flex flex-col gap-y-1 mb-4">
-                  <label className="text-white text-sm font-bold">
+                  <label className="text-theme-text-primary text-sm font-bold">
                     {" "}
                     {t("connectors.website-depth.depth")}
                   </label>
@@ -89,14 +89,14 @@ export default function WebsiteDepthOptions() {
                   name="depth"
                   min="1"
                   max="5"
-                  className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                   required={true}
                   defaultValue="1"
                 />
               </div>
               <div className="flex flex-col pr-10">
                 <div className="flex flex-col gap-y-1 mb-4">
-                  <label className="text-white text-sm font-bold">
+                  <label className="text-theme-text-primary text-sm font-bold">
                     {t("connectors.website-depth.max_pages")}
                   </label>
                   <p className="text-xs font-normal text-theme-text-secondary">
@@ -107,7 +107,7 @@ export default function WebsiteDepthOptions() {
                   type="number"
                   name="maxLinks"
                   min="1"
-                  className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                   required={true}
                   defaultValue="20"
                 />

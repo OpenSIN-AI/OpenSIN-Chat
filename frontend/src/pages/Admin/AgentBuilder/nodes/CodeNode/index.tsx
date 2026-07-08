@@ -20,13 +20,13 @@ export default function CodeNode({
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">
           {t("agentBuilder.codeNode.language")}
         </label>
         <select
           value={config.language}
           onChange={(e) => onConfigChange({ language: e.target.value })}
-          className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-white focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none"
+          className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-theme-text-primary focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none"
         >
           <option value="javascript" className="bg-theme-bg-primary">
             {t("agentBuilder.codeNode.javascript")}
@@ -40,21 +40,21 @@ export default function CodeNode({
         </select>
       </div>
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">
           {t("agentBuilder.codeNode.code")}
         </label>
         <textarea
           placeholder={t("agentBuilder.codeNode.codePlaceholder")}
           value={config.code}
           onChange={(e) => onConfigChange({ code: e.target.value })}
-          className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-white placeholder:text-theme-placeholder focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none font-mono"
+          className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-theme-text-primary placeholder:text-theme-placeholder focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none font-mono"
           rows={5}
           autoComplete="off"
           spellCheck={false}
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">
           {t("agentBuilder.codeNode.storeResultIn")}
         </label>
         {renderVariableSelect(

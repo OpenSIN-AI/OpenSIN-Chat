@@ -25,13 +25,13 @@ export default function FileNode({
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">
           {t("agentBuilder.fileNode.operation")}
         </label>
         <select
           value={config.operation}
           onChange={(e) => onConfigChange({ operation: e.target.value })}
-          className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-white focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none"
+          className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-theme-text-primary focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none"
         >
           <option value="read" className="bg-theme-bg-primary">
             {t("agentBuilder.fileNode.readFile")}
@@ -45,7 +45,7 @@ export default function FileNode({
         </select>
       </div>
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">
           {t("agentBuilder.fileNode.filePath")}
         </label>
         <input
@@ -53,21 +53,21 @@ export default function FileNode({
           placeholder={t("agentBuilder.fileNode.filePathPlaceholder")}
           value={config.path}
           onChange={(e) => onConfigChange({ path: e.target.value })}
-          className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-white placeholder:text-theme-placeholder focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none"
+          className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-theme-text-primary placeholder:text-theme-placeholder focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none"
           autoComplete="off"
           spellCheck={false}
         />
       </div>
       {config.operation !== "read" && (
         <div>
-          <label className="block text-sm font-medium text-white mb-2">
+          <label className="block text-sm font-medium text-theme-text-primary mb-2">
             {t("agentBuilder.fileNode.content")}
           </label>
           <textarea
             placeholder={t("agentBuilder.fileNode.contentPlaceholder")}
             value={config.content}
             onChange={(e) => onConfigChange({ content: e.target.value })}
-            className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-white placeholder:text-theme-placeholder focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none"
+            className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-theme-text-primary placeholder:text-theme-placeholder focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none"
             rows={3}
             autoComplete="off"
             spellCheck={false}
@@ -75,7 +75,7 @@ export default function FileNode({
         </div>
       )}
       <div>
-        <label className="block text-sm font-medium text-white mb-2">
+        <label className="block text-sm font-medium text-theme-text-primary mb-2">
           {t("agentBuilder.fileNode.storeResultIn")}
         </label>
         {renderVariableSelect(

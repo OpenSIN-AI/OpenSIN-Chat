@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // DEV-ONLY mock handlers for /pdf-analysis/* endpoints.
 // These are loaded exclusively when import.meta.env.DEV === true and the
-// localStorage flag `anythingllm_pdf_mock` is set to "true".
+// localStorage flag `opensin_pdf_mock` is set to "true".
 import { http, HttpResponse, delay } from "msw";
 
 const JOB_STORE: Record<string, any> = {};

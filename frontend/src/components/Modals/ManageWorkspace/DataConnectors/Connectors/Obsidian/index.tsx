@@ -113,7 +113,7 @@ export default function ObsidianOptions() {
 
               <div className="flex flex-col">
                 <div className="flex flex-col gap-y-1 mb-4">
-                  <label className="text-white text-sm font-bold">
+                  <label className="text-theme-text-primary text-sm font-bold">
                     {t("connectors.obsidian.vault_location")}
                   </label>
                   <p className="text-xs font-normal text-theme-text-secondary">
@@ -126,13 +126,13 @@ export default function ObsidianOptions() {
                     value={vaultPath}
                     onChange={(e) => setVaultPath(e.target.value)}
                     placeholder="/path/to/your/vault" // eslint-disable-line i18next/no-literal-string
-                    className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                    className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                     required={true}
                     autoComplete="off"
                     spellCheck={false}
                     readOnly
                   />
-                  <label className="px-3 py-2 bg-theme-settings-input-bg border border-none rounded-lg text-white hover:bg-theme-settings-input-bg/80 cursor-pointer">
+                  <label className="px-3 py-2 bg-theme-settings-input-bg border border-none rounded-lg text-theme-text-primary hover:bg-theme-settings-input-bg/80 cursor-pointer">
                     <FolderOpen size={20} />
                     <input
                       type="file"
@@ -144,14 +144,14 @@ export default function ObsidianOptions() {
                 </div>
                 {selectedFiles.length > 0 && (
                   <>
-                    <p className="text-xs text-white mt-2 font-bold">
+                    <p className="text-xs text-theme-text-primary mt-2 font-bold">
                       {t("connectors.obsidian.selected_files", {
                         count: selectedFiles.length,
                       })}
                     </p>
 
                     {(selectedFiles as any).map((file, i) => (
-                      <p key={file.webkitRelativePath} className="text-xs text-white mt-2">
+                      <p key={file.webkitRelativePath} className="text-xs text-theme-text-primary mt-2">
                         {file.webkitRelativePath}
                       </p>
                     ))}
