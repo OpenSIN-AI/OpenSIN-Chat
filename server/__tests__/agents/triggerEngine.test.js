@@ -5,7 +5,7 @@
 describe("TriggerEngine Logic", () => {
   // Test exponential backoff calculation
   describe("Exponential Backoff", () => {
-    function calculateBackoff(attempt: number): number {
+    function calculateBackoff(attempt) {
       const baseDelay = Math.pow(2, attempt) * 1000;
       const jitter = Math.random() * 1000;
       return baseDelay + jitter;
@@ -45,7 +45,7 @@ describe("TriggerEngine Logic", () => {
       failureCounts = new Map();
     });
 
-    function recordFailure(triggerId: string): boolean {
+    function recordFailure(triggerId) {
       const count = (failureCounts.get(triggerId) || 0) + 1;
       failureCounts.set(triggerId, count);
       return count >= CIRCUIT_BREAKER_THRESHOLD;
@@ -78,7 +78,7 @@ describe("TriggerEngine Logic", () => {
 
   // Test idempotency key logic
   describe("Idempotency", () => {
-    function createDedupeKey(type: string, triggerId: string, checksum: string | number): string {
+    function createDedupeKey(type, triggerId, checksum) {
       return `${type}-${triggerId}-${checksum}`;
     }
 

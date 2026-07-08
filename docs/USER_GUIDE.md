@@ -63,6 +63,13 @@ See [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md) for detailed instructions on:
 - **Subagent spawning**: Isolated run contexts with parent-child lineage
 - **Trigger engine**: Schedule agent runs with cron expressions
 
+### Text-to-Speech (TTS)
+- **7 TTS Engines**: Native (browser), OpenAI-compatible, ElevenLabs, Kokoro, Piper (local), NVIDIA NIM, **cvoice.ai** (German celebrity voices)
+- **cvoice.ai**: 20,000+ voices incl. Gronkh, Dieter Bohlen, Joko, Julien Bam, Bushido, Daniela Katzenberger
+- **Server-side API key**: Frontend sees only a boolean — key never exposed to client
+- **LRU cache**: 256-entry in-memory cache mitigates rate limits (10 req/min, 1,000 req/day free tier)
+- **Config**: `TTS_PROVIDER="cvoice"` + `TTS_CVOICE_API_KEY` in `server/.env`
+
 ## Configuration
 
 ### Environment Variables

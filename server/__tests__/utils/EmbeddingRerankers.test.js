@@ -1,1 +1,226 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBUZXN0cyBmb3IgRW1iZWRkaW5nUmVyYW5rZXJzIChJc3N1ZSAjMzg1KS4KLy8KLy8gQ292ZXJzOiBOYXRpdmVFbWJlZGRpbmdSZXJhbmtlciDigJQgY29uc3RydWN0b3IsIGhvc3QgcHJvcGVydHksCi8vIHByZWxvYWQsIHJlcmFuayBoYXBweSBwYXRoLCBhbmQgZXJyb3IgaGFuZGxpbmcuCgpqZXN0Lm1vY2soIi4uLy4uL2xvZ2dlci9jb25zb2xlLmpzIiwgKCkgPT4gKHsKICBlcnJvcjogamVzdC5mbigpLAogIGxvZzogamVzdC5mbigpLAp9KSk7CgpqZXN0Lm1vY2soIi4uLy4uL3BhdGhzIiwgKCkgPT4gKHsKICBnZXRTdG9yYWdlUGF0aDogKC4uLnBhcnRzKSA9PiAiL3RtcC9mYWtlLXN0b3JhZ2UvIiArIHBhcnRzLmpvaW4oIi8iKSwKfSkpOwoKLy8gTW9jayBmcwpqZXN0Lm1vY2soImZzIiwgKCkgPT4gKHsKICBleGlzdHNTeW5jOiBqZXN0LmZuKCgpID0+IHRydWUpLAogIG1rZGlyU3luYzogamVzdC5mbigpLAp9KSk7CgovLyBNb2NrIEB4ZW5vdmEvdHJhbnNmb3JtZXJzCmNvbnN0IG1vY2tBdXRvTW9kZWwgPSB7CiAgZnJvbV9wcmV0cmFpbmVkOiBqZXN0LmZuKCksCn07CmNvbnN0IG1vY2tBdXRvVG9rZW5pemVyID0gamVzdC5mbigoKSA9PiB7CiAgcmV0dXJuIGplc3QuZm4oKHF1ZXJpZXMsIG9wdHMpID0+ICh7CiAgICBpbnB1dF9pZHM6IFtbMSwgMiwgM11dLAogICAgYXR0ZW50aW9uX21hc2s6IFtbMSwgMSwgMV1dLAogICAgLi4ub3B0cywKICB9KSk7Cn0pOwpjb25zdCBtb2NrRW52ID0gewogIHJlbW90ZUhvc3Q6ICJodHRwczovL2h1Z2dpbmdmYWNlLmNvIiwKICByZW1vdGVQYXRoVGVtcGxhdGU6ICJ7bW9kZWx9L3tmaWxlfSIsCn07CgpqZXN0Lm1vY2soIkB4ZW5vdmEvdHJhbnNmb3JtZXJzIiwgKCkgPT4gKHsKICBBdXRvTW9kZWxGb3JTZXF1ZW5jZUNsYXNzaWZpY2F0aW9uOiBtb2NrQXV0b01vZGVsLAogIEF1dG9Ub2tlbml6ZXI6IG1vY2tBdXRvVG9rZW5pemVyLAogIGVudjogbW9ja0VudiwKfSkpOwoKY29uc3QgeyBOYXRpdmVFbWJlZGRpbmdSZXJhbmtlciB9ID0gcmVxdWlyZSgiLi4vLi4vdXRpbHMvRW1iZWRkaW5nUmVyYW5rZXJzL25hdGl2ZSIpOwoKZGVzY3JpYmUoIk5hdGl2ZUVtYmVkZGluZ1JlcmFua2VyIiwgKCkgPT4gewogIGJlZm9yZUVhY2goKCkgPT4gewogICAgamVzdC5jbGVhckFsbE1vY2tzKCk7CiAgICAvLyBSZXNldCBzdGF0aWMgcHJpdmF0ZSBmaWVsZHMgYmV0d2VlbiB0ZXN0cyB2aWEgcmUtcmVxdWlyZQogICAgamVzdC5yZXNldE1vZHVsZXMoKTsKICB9KTsKCiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgLy8gQ29uc3RydWN0b3IKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICBkZXNjcmliZSgiY29uc3RydWN0b3IiLCAoKSA9PiB7CiAgICBpdCgiaW5pdGlhbGl6ZXMgd2l0aCBkZWZhdWx0IG1vZGVsIiwgKCkgPT4gewogICAgICBjb25zdCByZXJhbmtlciA9IG5ldyBOYXRpdmVFbWJlZGRpbmdSZXJhbmtlcigpOwogICAgICBleHBlY3QocmVyYW5rZXIubW9kZWwpLnRvQmUoIlhlbm92YS9tcy1tYXJjby1NaW5pTE0tTC02LXYyIik7CiAgICAgIGV4cGVjdChyZXJhbmtlci5tb2RlbERvd25sb2FkZWQpLnRvQmUodHJ1ZSk7IC8vIGZzLmV4aXN0c1N5bmMgbW9ja2VkIHRvIHRydWUKICAgIH0pOwoKICAgIGl0KCJzZXRzIGNhY2hlRGlyIGFuZCBtb2RlbFBhdGgiLCAoKSA9PiB7CiAgICAgIGNvbnN0IHJlcmFua2VyID0gbmV3IE5hdGl2ZUVtYmVkZGluZ1JlcmFua2VyKCk7CiAgICAgIGV4cGVjdChyZXJhbmtlci5jYWNoZURpcikudG9Db250YWluKCJtb2RlbHMiKTsKICAgICAgZXhwZWN0KHJlcmFua2VyLm1vZGVsUGF0aCkudG9Db250YWluKCJYZW5vdmEiKTsKICAgIH0pOwogIH0pOwoKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAvLyBob3N0IHByb3BlcnR5CiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgZGVzY3JpYmUoImhvc3QiLCAoKSA9PiB7CiAgICBpdCgicmV0dXJucyBodWdnaW5nZmFjZS5jbyB3aGVuIHRyYW5zZm9ybWVycyBub3QgaW5pdGlhbGl6ZWQiLCAoKSA9PiB7CiAgICAgIGNvbnN0IHJlcmFua2VyID0gbmV3IE5hdGl2ZUVtYmVkZGluZ1JlcmFua2VyKCk7CiAgICAgIGV4cGVjdChyZXJhbmtlci5ob3N0KS50b0JlKCJodWdnaW5nZmFjZS5jbyIpOwogICAgfSk7CiAgfSk7CgogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIC8vIHByZWxvYWQKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICBkZXNjcmliZSgicHJlbG9hZCIsICgpID0+IHsKICAgIGl0KCJjYWxscyBpbml0Q2xpZW50IHdpdGhvdXQgdGhyb3dpbmciLCBhc3luYyAoKSA9PiB7CiAgICAgIGNvbnN0IHsgTmF0aXZlRW1iZWRkaW5nUmVyYW5rZXI6IEZyZXNoUmVyYW5rZXIgfSA9IHJlcXVpcmUoIi4uLy4uL3V0aWxzL0VtYmVkZGluZ1JlcmFua2Vycy9uYXRpdmUiKTsKICAgICAgbW9ja0F1dG9Nb2RlbC5mcm9tX3ByZXRyYWluZWQubW9ja1Jlc29sdmVkVmFsdWUoewogICAgICAgIHNpZ21vaWQ6ICgpID0+ICh7IHRvbGlzdDogKCkgPT4gW1swLjldXSB9KSwKICAgICAgfSk7CgogICAgICBjb25zdCByZXJhbmtlciA9IG5ldyBGcmVzaFJlcmFua2VyKCk7CiAgICAgIC8vIHByZWxvYWQgc2hvdWxkIG5vdCB0aHJvdyBldmVuIGlmIGluaXQgZmFpbHMKICAgICAgYXdhaXQgZXhwZWN0KHJlcmFua2VyLnByZWxvYWQoKSkucmVzb2x2ZXMubm90LnRvVGhyb3coKTsKICAgIH0pOwogIH0pOwoKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAvLyByZXJhbmsKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICBkZXNjcmliZSgicmVyYW5rIiwgKCkgPT4gewogICAgaXQoInJlcmFua3MgZG9jdW1lbnRzIGFuZCByZXR1cm5zIHRvcC1LIHNvcnRlZCBieSBzY29yZSIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3QgeyBOYXRpdmVFbWJlZGRpbmdSZXJhbmtlcjogRnJlc2hSZXJhbmtlciB9ID0gcmVxdWlyZSgiLi4vLi4vdXRpbHMvRW1iZWRkaW5nUmVyYW5rZXJzL25hdGl2ZSIpOwoKICAgICAgLy8gTW9jayB0aGUgbW9kZWwgYW5kIHRva2VuaXplcgogICAgICBjb25zdCBtb2NrTW9kZWwgPSB7CiAgICAgICAgc2lnbW9pZDogKCkgPT4gKHsKICAgICAgICAgIHRvbGlzdDogKCkgPT4gWwogICAgICAgICAgICBbMC4zXSwKICAgICAgICAgICAgWzAuOV0sCiAgICAgICAgICAgIFswLjVdLAogICAgICAgICAgXSwKICAgICAgICB9KSwKICAgICAgfTsKICAgICAgbW9ja0F1dG9Nb2RlbC5mcm9tX3ByZXRyYWluZWQubW9ja1Jlc29sdmVkVmFsdWUobW9ja01vZGVsKTsKCiAgICAgIGNvbnN0IG1vY2tUb2tlbml6ZXJGbiA9IGplc3QuZm4oKCkgPT4gKHsKICAgICAgICBpbnB1dF9pZHM6IFtbMSwgMiwgM11dLAogICAgICAgIGF0dGVudGlvbl9tYXNrOiBbWzEsIDEsIDFdXSwKICAgICAgfSkpOwogICAgICBtb2NrQXV0b1Rva2VuaXplci5tb2NrUmV0dXJuVmFsdWUobW9ja1Rva2VuaXplckZuKTsKCiAgICAgIGNvbnN0IHJlcmFua2VyID0gbmV3IEZyZXNoUmVyYW5rZXIoKTsKICAgICAgY29uc3QgZG9jdW1lbnRzID0gWwogICAgICAgIHsgdGV4dDogImRvYyAxIiB9LAogICAgICAgIHsgdGV4dDogImRvYyAyIiB9LAogICAgICAgIHsgdGV4dDogImRvYyAzIiB9LAogICAgICBdOwoKICAgICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgcmVyYW5rZXIucmVyYW5rKCJxdWVyeSIsIGRvY3VtZW50cywgeyB0b3BLOiAyIH0pOwoKICAgICAgZXhwZWN0KHJlc3VsdCkudG9IYXZlTGVuZ3RoKDIpOwogICAgICAvLyBIaWdoZXN0IHNjb3JlICgwLjkpIHNob3VsZCBiZSBmaXJzdAogICAgICBleHBlY3QocmVzdWx0WzBdLnJlcmFua19zY29yZSkudG9CZSgwLjkpOwogICAgICBleHBlY3QocmVzdWx0WzBdLnRleHQpLnRvQmUoImRvYyAyIik7CiAgICAgIC8vIFNlY29uZCBoaWdoZXN0ICgwLjUpCiAgICAgIGV4cGVjdChyZXN1bHRbMV0ucmVyYW5rX3Njb3JlKS50b0JlKDAuNSk7CiAgICAgIGV4cGVjdChyZXN1bHRbMV0udGV4dCkudG9CZSgiZG9jIDMiKTsKICAgICAgLy8gRWFjaCByZXN1bHQgc2hvdWxkIGhhdmUgcmVyYW5rX2NvcnB1c19pZAogICAgICBleHBlY3QocmVzdWx0WzBdLnJlcmFua19jb3JwdXNfaWQpLnRvQmVEZWZpbmVkKCk7CiAgICB9KTsKCiAgICBpdCgicmVzcGVjdHMgdG9wSyBvcHRpb24iLCBhc3luYyAoKSA9PiB7CiAgICAgIGNvbnN0IHsgTmF0aXZlRW1iZWRkaW5nUmVyYW5rZXI6IEZyZXNoUmVyYW5rZXIgfSA9IHJlcXVpcmUoIi4uLy4uL3V0aWxzL0VtYmVkZGluZ1JlcmFua2Vycy9uYXRpdmUiKTsKCiAgICAgIGNvbnN0IG1vY2tNb2RlbCA9IHsKICAgICAgICBzaWdtb2lkOiAoKSA9PiAoewogICAgICAgICAgdG9saXN0OiAoKSA9PiBbWzAuMV0sIFswLjhdLCBbMC4zXSwgWzAuNl1dLAogICAgICAgIH0pLAogICAgICB9OwogICAgICBtb2NrQXV0b01vZGVsLmZyb21fcHJldHJhaW5lZC5tb2NrUmVzb2x2ZWRWYWx1ZShtb2NrTW9kZWwpOwogICAgICBtb2NrQXV0b1Rva2VuaXplci5tb2NrUmV0dXJuVmFsdWUoamVzdC5mbigoKSA9PiAoeyBpbnB1dF9pZHM6IFtbMV1dLCBhdHRlbnRpb25fbWFzazogW1sxXV0gfSkpKTsKCiAgICAgIGNvbnN0IHJlcmFua2VyID0gbmV3IEZyZXNoUmVyYW5rZXIoKTsKICAgICAgY29uc3QgZG9jdW1lbnRzID0gWwogICAgICAgIHsgdGV4dDogImEiIH0sCiAgICAgICAgeyB0ZXh0OiAiYiIgfSwKICAgICAgICB7IHRleHQ6ICJjIiB9LAogICAgICAgIHsgdGV4dDogImQiIH0sCiAgICAgIF07CgogICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCByZXJhbmtlci5yZXJhbmsoInF1ZXJ5IiwgZG9jdW1lbnRzLCB7IHRvcEs6IDMgfSk7CiAgICAgIGV4cGVjdChyZXN1bHQpLnRvSGF2ZUxlbmd0aCgzKTsKICAgIH0pOwoKICAgIGl0KCJoYW5kbGVzIHNpbmdsZSBkb2N1bWVudCByZXJhbmsiLCBhc3luYyAoKSA9PiB7CiAgICAgIGNvbnN0IHsgTmF0aXZlRW1iZWRkaW5nUmVyYW5rZXI6IEZyZXNoUmVyYW5rZXIgfSA9IHJlcXVpcmUoIi4uLy4uL3V0aWxzL0VtYmVkZGluZ1JlcmFua2Vycy9uYXRpdmUiKTsKCiAgICAgIGNvbnN0IG1vY2tNb2RlbCA9IHsKICAgICAgICBzaWdtb2lkOiAoKSA9PiAoeyB0b2xpc3Q6ICgpID0+IFtbMC43XV0gfSksCiAgICAgIH07CiAgICAgIG1vY2tBdXRvTW9kZWwuZnJvbV9wcmV0cmFpbmVkLm1vY2tSZXNvbHZlZFZhbHVlKG1vY2tNb2RlbCk7CiAgICAgIG1vY2tBdXRvVG9rZW5pemVyLm1vY2tSZXR1cm5WYWx1ZShqZXN0LmZuKCgpID0+ICh7IGlucHV0X2lkczogW1sxXV0sIGF0dGVudGlvbl9tYXNrOiBbWzFdXSB9KSkpOwoKICAgICAgY29uc3QgcmVyYW5rZXIgPSBuZXcgRnJlc2hSZXJhbmtlcigpOwogICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCByZXJhbmtlci5yZXJhbmsoInF1ZXJ5IiwgW3sgdGV4dDogIm9ubHkgZG9jIiB9XSwgeyB0b3BLOiA0IH0pOwoKICAgICAgZXhwZWN0KHJlc3VsdCkudG9IYXZlTGVuZ3RoKDEpOwogICAgICBleHBlY3QocmVzdWx0WzBdLnRleHQpLnRvQmUoIm9ubHkgZG9jIik7CiAgICAgIGV4cGVjdChyZXN1bHRbMF0ucmVyYW5rX3Njb3JlKS50b0JlKDAuNyk7CiAgICB9KTsKCiAgICBpdCgicHJlc2VydmVzIG9yaWdpbmFsIGRvY3VtZW50IHByb3BlcnRpZXMgaW4gcmVzdWx0cyIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3QgeyBOYXRpdmVFbWJlZGRpbmdSZXJhbmtlcjogRnJlc2hSZXJhbmtlciB9ID0gcmVxdWlyZSgiLi4vLi4vdXRpbHMvRW1iZWRkaW5nUmVyYW5rZXJzL25hdGl2ZSIpOwoKICAgICAgY29uc3QgbW9ja01vZGVsID0gewogICAgICAgIHNpZ21vaWQ6ICgpID0+ICh7IHRvbGlzdDogKCkgPT4gW1swLjVdXSB9KSwKICAgICAgfTsKICAgICAgbW9ja0F1dG9Nb2RlbC5mcm9tX3ByZXRyYWluZWQubW9ja1Jlc29sdmVkVmFsdWUobW9ja01vZGVsKTsKICAgICAgbW9ja0F1dG9Ub2tlbml6ZXIubW9ja1JldHVyblZhbHVlKGplc3QuZm4oKCkgPT4gKHsgaW5wdXRfaWRzOiBbWzFdXSwgYXR0ZW50aW9uX21hc2s6IFtbMV1dIH0pKSk7CgogICAgICBjb25zdCByZXJhbmtlciA9IG5ldyBGcmVzaFJlcmFua2VyKCk7CiAgICAgIGNvbnN0IGRvYyA9IHsgdGV4dDogImNvbnRlbnQiLCBpZDogImRvYy00MiIsIG1ldGFkYXRhOiB7IHBhZ2U6IDEgfSB9OwogICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCByZXJhbmtlci5yZXJhbmsoInF1ZXJ5IiwgW2RvY10sIHsgdG9wSzogMSB9KTsKCiAgICAgIGV4cGVjdChyZXN1bHRbMF0uaWQpLnRvQmUoImRvYy00MiIpOwogICAgICBleHBlY3QocmVzdWx0WzBdLm1ldGFkYXRhKS50b0VxdWFsKHsgcGFnZTogMSB9KTsKICAgIH0pOwogIH0pOwoKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAvLyBFcnJvciBwYXRocwogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIGRlc2NyaWJlKCJlcnJvciBoYW5kbGluZyIsICgpID0+IHsKICAgIGl0KCJwcmVsb2FkIGRvZXMgbm90IHRocm93IHdoZW4gaW5pdENsaWVudCBmYWlscyIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3QgeyBOYXRpdmVFbWJlZGRpbmdSZXJhbmtlcjogRnJlc2hSZXJhbmtlciB9ID0gcmVxdWlyZSgiLi4vLi4vdXRpbHMvRW1iZWRkaW5nUmVyYW5rZXJzL25hdGl2ZSIpOwogICAgICBtb2NrQXV0b01vZGVsLmZyb21fcHJldHJhaW5lZC5tb2NrUmVqZWN0ZWRWYWx1ZShuZXcgRXJyb3IoIk5ldHdvcmsgZXJyb3IiKSk7CgogICAgICBjb25zdCByZXJhbmtlciA9IG5ldyBGcmVzaFJlcmFua2VyKCk7CiAgICAgIGF3YWl0IGV4cGVjdChyZXJhbmtlci5wcmVsb2FkKCkpLnJlc29sdmVzLm5vdC50b1Rocm93KCk7CiAgICB9KTsKCiAgICBpdCgicmVyYW5rIHRocm93cyB3aGVuIG1vZGVsIGZhaWxzIHRvIGxvYWQiLCBhc3luYyAoKSA9PiB7CiAgICAgIGNvbnN0IHsgTmF0aXZlRW1iZWRkaW5nUmVyYW5rZXI6IEZyZXNoUmVyYW5rZXIgfSA9IHJlcXVpcmUoIi4uLy4uL3V0aWxzL0VtYmVkZGluZ1JlcmFua2Vycy9uYXRpdmUiKTsKICAgICAgbW9ja0F1dG9Nb2RlbC5mcm9tX3ByZXRyYWluZWQubW9ja1JlamVjdGVkVmFsdWUobmV3IEVycm9yKCJNb2RlbCBsb2FkIGZhaWxlZCIpKTsKCiAgICAgIGNvbnN0IHJlcmFua2VyID0gbmV3IEZyZXNoUmVyYW5rZXIoKTsKICAgICAgYXdhaXQgZXhwZWN0KAogICAgICAgIHJlcmFua2VyLnJlcmFuaygicXVlcnkiLCBbeyB0ZXh0OiAiZG9jIiB9XSwgeyB0b3BLOiAxIH0pLAogICAgICApLnJlamVjdHMudG9UaHJvdygpOwogICAgfSk7CiAgfSk7Cn0pOwo=
+// SPDX-License-Identifier: MIT
+// Tests for EmbeddingRerankers (Issue #385).
+//
+// Covers: NativeEmbeddingReranker — constructor, host property,
+// preload, rerank happy path, and error handling.
+
+jest.mock("@xenova/transformers", () => ({
+  pipeline: jest.fn(),
+  env: { allowLocalModels: false },
+}), { virtual: true });
+
+jest.mock("../../utils/logger/console.js", () => ({
+  error: jest.fn(),
+  log: jest.fn(),
+}));
+
+jest.mock("../../utils/paths", () => ({
+  getStoragePath: (...parts) => "/tmp/fake-storage/" + parts.join("/"),
+}));
+
+// Mock fs
+jest.mock("fs", () => ({
+  existsSync: jest.fn(() => true),
+  mkdirSync: jest.fn(),
+}));
+
+// Mock @xenova/transformers
+const mockAutoModel = {
+  from_pretrained: jest.fn(),
+};
+const mockAutoTokenizer = jest.fn(() => {
+  return jest.fn((queries, opts) => ({
+    input_ids: [[1, 2, 3]],
+    attention_mask: [[1, 1, 1]],
+    ...opts,
+  }));
+});
+const mockEnv = {
+  remoteHost: "https://huggingface.co",
+  remotePathTemplate: "{model}/{file}",
+};
+
+jest.mock("@xenova/transformers", () => ({
+  AutoModelForSequenceClassification: mockAutoModel,
+  AutoTokenizer: mockAutoTokenizer,
+  env: mockEnv,
+}));
+
+const { NativeEmbeddingReranker } = require("../../utils/EmbeddingRerankers/native");
+
+describe("NativeEmbeddingReranker", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    // Reset static private fields between tests via re-require
+    jest.resetModules();
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // Constructor
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("constructor", () => {
+    it("initializes with default model", () => {
+      const reranker = new NativeEmbeddingReranker();
+      expect(reranker.model).toBe("Xenova/ms-marco-MiniLM-L-6-v2");
+      expect(reranker.modelDownloaded).toBe(true); // fs.existsSync mocked to true
+    });
+
+    it("sets cacheDir and modelPath", () => {
+      const reranker = new NativeEmbeddingReranker();
+      expect(reranker.cacheDir).toContain("models");
+      expect(reranker.modelPath).toContain("Xenova");
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // host property
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("host", () => {
+    it("returns huggingface.co when transformers not initialized", () => {
+      const reranker = new NativeEmbeddingReranker();
+      expect(reranker.host).toBe("huggingface.co");
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // preload
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("preload", () => {
+    it("calls initClient without throwing", async () => {
+      const { NativeEmbeddingReranker: FreshReranker } = require("../../utils/EmbeddingRerankers/native");
+      mockAutoModel.from_pretrained.mockResolvedValue({
+        sigmoid: () => ({ tolist: () => [[0.9]] }),
+      });
+
+      const reranker = new FreshReranker();
+      // preload should not throw even if init fails
+      await expect(reranker.preload()).resolves.not.toThrow();
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // rerank
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("rerank", () => {
+    it("reranks documents and returns top-K sorted by score", async () => {
+      const { NativeEmbeddingReranker: FreshReranker } = require("../../utils/EmbeddingRerankers/native");
+
+      // Mock the model and tokenizer
+      const mockModel = {
+        sigmoid: () => ({
+          tolist: () => [
+            [0.3],
+            [0.9],
+            [0.5],
+          ],
+        }),
+      };
+      mockAutoModel.from_pretrained.mockResolvedValue(mockModel);
+
+      const mockTokenizerFn = jest.fn(() => ({
+        input_ids: [[1, 2, 3]],
+        attention_mask: [[1, 1, 1]],
+      }));
+      mockAutoTokenizer.mockReturnValue(mockTokenizerFn);
+
+      const reranker = new FreshReranker();
+      const documents = [
+        { text: "doc 1" },
+        { text: "doc 2" },
+        { text: "doc 3" },
+      ];
+
+      const result = await reranker.rerank("query", documents, { topK: 2 });
+
+      expect(result).toHaveLength(2);
+      // Highest score (0.9) should be first
+      expect(result[0].rerank_score).toBe(0.9);
+      expect(result[0].text).toBe("doc 2");
+      // Second highest (0.5)
+      expect(result[1].rerank_score).toBe(0.5);
+      expect(result[1].text).toBe("doc 3");
+      // Each result should have rerank_corpus_id
+      expect(result[0].rerank_corpus_id).toBeDefined();
+    });
+
+    it("respects topK option", async () => {
+      const { NativeEmbeddingReranker: FreshReranker } = require("../../utils/EmbeddingRerankers/native");
+
+      const mockModel = {
+        sigmoid: () => ({
+          tolist: () => [[0.1], [0.8], [0.3], [0.6]],
+        }),
+      };
+      mockAutoModel.from_pretrained.mockResolvedValue(mockModel);
+      mockAutoTokenizer.mockReturnValue(jest.fn(() => ({ input_ids: [[1]], attention_mask: [[1]] })));
+
+      const reranker = new FreshReranker();
+      const documents = [
+        { text: "a" },
+        { text: "b" },
+        { text: "c" },
+        { text: "d" },
+      ];
+
+      const result = await reranker.rerank("query", documents, { topK: 3 });
+      expect(result).toHaveLength(3);
+    });
+
+    it("handles single document rerank", async () => {
+      const { NativeEmbeddingReranker: FreshReranker } = require("../../utils/EmbeddingRerankers/native");
+
+      const mockModel = {
+        sigmoid: () => ({ tolist: () => [[0.7]] }),
+      };
+      mockAutoModel.from_pretrained.mockResolvedValue(mockModel);
+      mockAutoTokenizer.mockReturnValue(jest.fn(() => ({ input_ids: [[1]], attention_mask: [[1]] })));
+
+      const reranker = new FreshReranker();
+      const result = await reranker.rerank("query", [{ text: "only doc" }], { topK: 4 });
+
+      expect(result).toHaveLength(1);
+      expect(result[0].text).toBe("only doc");
+      expect(result[0].rerank_score).toBe(0.7);
+    });
+
+    it("preserves original document properties in results", async () => {
+      const { NativeEmbeddingReranker: FreshReranker } = require("../../utils/EmbeddingRerankers/native");
+
+      const mockModel = {
+        sigmoid: () => ({ tolist: () => [[0.5]] }),
+      };
+      mockAutoModel.from_pretrained.mockResolvedValue(mockModel);
+      mockAutoTokenizer.mockReturnValue(jest.fn(() => ({ input_ids: [[1]], attention_mask: [[1]] })));
+
+      const reranker = new FreshReranker();
+      const doc = { text: "content", id: "doc-42", metadata: { page: 1 } };
+      const result = await reranker.rerank("query", [doc], { topK: 1 });
+
+      expect(result[0].id).toBe("doc-42");
+      expect(result[0].metadata).toEqual({ page: 1 });
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // Error paths
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("error handling", () => {
+    it("preload does not throw when initClient fails", async () => {
+      const { NativeEmbeddingReranker: FreshReranker } = require("../../utils/EmbeddingRerankers/native");
+      mockAutoModel.from_pretrained.mockRejectedValue(new Error("Network error"));
+
+      const reranker = new FreshReranker();
+      await expect(reranker.preload()).resolves.not.toThrow();
+    });
+
+    it("rerank throws when model fails to load", async () => {
+      const { NativeEmbeddingReranker: FreshReranker } = require("../../utils/EmbeddingRerankers/native");
+      mockAutoModel.from_pretrained.mockRejectedValue(new Error("Model load failed"));
+
+      const reranker = new FreshReranker();
+      await expect(
+        reranker.rerank("query", [{ text: "doc" }], { topK: 1 }),
+      ).rejects.toThrow();
+    });
+  });
+});

@@ -255,6 +255,5 @@ describe("Invite model (security-critical)", () => {
         ]),
       });
     });
-    });
   });
 });

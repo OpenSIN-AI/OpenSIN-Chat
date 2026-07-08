@@ -176,12 +176,14 @@ describe("PasswordResetToken model (security-critical)", () => {
 
   describe("PasswordResetToken.create", () => {
     it("creates a reset token with a UUID and 10-minute expiry", async () => {
-      prisma.password_reset_tokens.create.mockResolvedValue({
-        id: 1,
-        user_id: 42,
-        token: "test-uuid-1234",
-        expiresAt: expect.any(Date),
-      });
+      prisma.password_reset_tokens.create.mockImplementation(({ data }) =>
+        Promise.resolve({
+          id: 1,
+          user_id: 42,
+          token: "test-uuid-1234",
+          expiresAt: data.expiresAt,
+        }),
+      );
 
       const { passwordResetToken, error } =
         await PasswordResetToken.create(42);
@@ -281,7 +283,7 @@ describe("PasswordResetToken model (security-critical)", () => {
 
   describe("PasswordResetToken.claim (single-use atomic claim)", () => {
     it("atomically claims a valid, non-expired token", async () => {
-      prisma.password_reset_tokens.updateMany.mockResolvedValue({ count: 1 });
+      prisma.password_reset_tokens.deleteMany.mockResolvedValue({ count: 1 });
       prisma.password_reset_tokens.findUnique.mockResolvedValue({
         user_id: 42,
       });
@@ -293,7 +295,7 @@ describe("PasswordResetToken model (security-critical)", () => {
     });
 
     it("returns count=0 when token was already claimed (race condition)", async () => {
-      prisma.password_reset_tokens.updateMany.mockResolvedValue({ count: 0 });
+      prisma.password_reset_tokens.deleteMany.mockResolvedValue({ count: 0 });
 
       const result = await PasswordResetToken.claim("raced-token");
 
@@ -302,7 +304,7 @@ describe("PasswordResetToken model (security-critical)", () => {
     });
 
     it("returns count=0 on error", async () => {
-      prisma.password_reset_tokens.updateMany.mockRejectedValue(
+      prisma.password_reset_tokens.deleteMany.mockRejectedValue(
         new Error("DB error"),
       );
 

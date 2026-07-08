@@ -532,7 +532,7 @@ function buildOption(
   if (!dataset || dataset.length === 0) return null;
 
   const lowerType = type.toLowerCase();
-  let option: Record<string, any> | null = null;
+  let option: Record<string, any> | null;
 
   const seriesKeys = dataset[0]
     ? Object.keys(dataset[0]).filter((k) => k !== "name")

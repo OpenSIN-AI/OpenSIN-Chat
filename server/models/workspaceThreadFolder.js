@@ -8,7 +8,7 @@ const WorkspaceThreadFolder = {
   where: async function ({ workspace_id, user_id = null }) {
     if (workspace_id === undefined || workspace_id === null) return [];
     const filters = { workspace_id };
-    if (user_id !== undefined) filters.user_id = user_id;
+    if (user_id !== undefined && user_id !== null) filters.user_id = user_id;
 
     // ==========================================
     // <-- ÄNDERUNG: Sortierung der Ordner

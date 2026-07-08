@@ -1,1 +1,255 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBUZXN0cyBmb3IgRW1iZWRkaW5nRW5naW5lcyAoSXNzdWUgIzM4NSkuCi8vCi8vIENvdmVyczogT3BlbkFpRW1iZWRkZXIg4oCUIGNvbnN0cnVjdG9yIHdpdGgvd2l0aG91dCBBUEkga2V5LAovLyBlbWJlZENodW5rcyBoYXBweSBwYXRoLCBlcnJvciBoYW5kbGluZywgdGltZW91dCwgYW5kCi8vIE5hdGl2ZUVtYmVkZGVyIOKAlCBtb2RlbCBzZWxlY3Rpb24sIHByZWZpeCBwcm9wZXJ0aWVzLCBhdmFpbGFibGVNb2RlbHMuCgpqZXN0Lm1vY2soIi4uLy4uL3V0aWxzL2xvZ2dlci9jb25zb2xlLmpzIiwgKCkgPT4gKHsKICBlcnJvcjogamVzdC5mbigpLAogIGxvZzogamVzdC5mbigpLAp9KSk7CgpqZXN0Lm1vY2soIi4uLy4uL3V0aWxzL2hlbHBlcnMiLCAoKSA9PiAoewogIHRvQ2h1bmtzOiAoYXJyLCBzaXplKSA9PiB7CiAgICBjb25zdCBjaHVua3MgPSBbXTsKICAgIGZvciAobGV0IGkgPSAwOyBpIDwgYXJyLmxlbmd0aDsgaSArPSBzaXplKSBjaHVua3MucHVzaChhcnIuc2xpY2UoaSwgaSArIHNpemUpKTsKICAgIHJldHVybiBjaHVua3M7CiAgfSwKICByZXBvcnRFbWJlZGRpbmdQcm9ncmVzczogamVzdC5mbigpLAp9KSk7CgpqZXN0Lm1vY2soIi4uLy4uL3V0aWxzL3BhdGhzIiwgKCkgPT4gKHsKICBnZXRTdG9yYWdlUGF0aDogKC4uLnBhcnRzKSA9PiAiL3RtcC9mYWtlLXN0b3JhZ2UvIiArIHBhcnRzLmpvaW4oIi8iKSwKfSkpOwoKLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACi8vIE9wZW5BaUVtYmVkZGVyIHRlc3RzCi8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgApjb25zdCBtb2NrT3BlbkFJRW1iZWRkaW5ncyA9IHsKICBjcmVhdGU6IGplc3QuZm4oKSwKfTsKamVzdC5tb2NrKCJvcGVuYWkiLCAoKSA9PiAoewogIE9wZW5BSTogamVzdC5mbigoKSA9PiAoeyBlbWJlZGRpbmdzOiBtb2NrT3BlbkFJRW1iZWRkaW5ncyB9KSksCn0pKTsKCmNvbnN0IHsgT3BlbkFpRW1iZWRkZXIgfSA9IHJlcXVpcmUoIi4uLy4uL3V0aWxzL0VtYmVkZGluZ0VuZ2luZXMvb3BlbkFpIik7CgpkZXNjcmliZSgiT3BlbkFpRW1iZWRkZXIiLCAoKSA9PiB7CiAgYmVmb3JlRWFjaCgoKSA9PiB7CiAgICBqZXN0LmNsZWFyQWxsTW9ja3MoKTsKICAgIHByb2Nlc3MuZW52Lk9QRU5fQUlfS0VZID0gInRlc3Qta2V5LTEyMyI7CiAgICBwcm9jZXNzLmVudi5FTUJFRERJTkdfTU9ERUxfUFJFRiA9ICJ0ZXh0LWVtYmVkZGluZy1hZGEtMDAyIjsKICB9KTsKCiAgYWZ0ZXJFYWNoKCgpID0+IHsKICAgIGRlbGV0ZSBwcm9jZXNzLmVudi5PUEVOX0FJX0tFWTsKICAgIGRlbGV0ZSBwcm9jZXNzLmVudi5FTUJFRERJTkdfTU9ERUxfUFJFRjsKICB9KTsKCiAgZGVzY3JpYmUoImNvbnN0cnVjdG9yIiwgKCkgPT4gewogICAgaXQoImluaXRpYWxpemVzIHdpdGggQVBJIGtleSBhbmQgZGVmYXVsdCBtb2RlbCIsICgpID0+IHsKICAgICAgY29uc3QgZW1iZWRkZXIgPSBuZXcgT3BlbkFpRW1iZWRkZXIoKTsKICAgICAgZXhwZWN0KGVtYmVkZGVyLmNsYXNzTmFtZSkudG9CZSgiT3BlbkFpRW1iZWRkZXIiKTsKICAgICAgZXhwZWN0KGVtYmVkZGVyLm1vZGVsKS50b0JlKCJ0ZXh0LWVtYmVkZGluZy1hZGEtMDAyIik7CiAgICAgIGV4cGVjdChlbWJlZGRlci5tYXhDb25jdXJyZW50Q2h1bmtzKS50b0JlKDUwMCk7CiAgICAgIGV4cGVjdChlbWJlZGRlci5lbWJlZGRpbmdNYXhDaHVua0xlbmd0aCkudG9CZSg4MTkxKTsKICAgIH0pOwoKICAgIGl0KCJ0aHJvd3Mgd2hlbiBPUEVOX0FJX0tFWSBpcyBub3Qgc2V0IiwgKCkgPT4gewogICAgICBkZWxldGUgcHJvY2Vzcy5lbnYuT1BFTl9BSV9LRVk7CiAgICAgIGV4cGVjdCgoKSA9PiBuZXcgT3BlbkFpRW1iZWRkZXIoKSkudG9UaHJvdygiTm8gT3BlbkFJIEFQSSBrZXkgd2FzIHNldC4iKTsKICAgIH0pOwoKICAgIGl0KCJ1c2VzIEVNQkVERElOR19NT0RFTF9QUkVGIHdoZW4gc2V0IiwgKCkgPT4gewogICAgICBwcm9jZXNzLmVudi5FTUJFRERJTkdfTU9ERUxfUFJFRiA9ICJ0ZXh0LWVtYmVkZGluZy0zLXNtYWxsIjsKICAgICAgY29uc3QgZW1iZWRkZXIgPSBuZXcgT3BlbkFpRW1iZWRkZXIoKTsKICAgICAgZXhwZWN0KGVtYmVkZGVyLm1vZGVsKS50b0JlKCJ0ZXh0LWVtYmVkZGluZy0zLXNtYWxsIik7CiAgICB9KTsKICB9KTsKCiAgZGVzY3JpYmUoImVtYmVkQ2h1bmtzIiwgKCkgPT4gewogICAgaXQoImVtYmVkcyB0ZXh0IGNodW5rcyBzdWNjZXNzZnVsbHkiLCBhc3luYyAoKSA9PiB7CiAgICAgIGNvbnN0IGZha2VFbWJlZGRpbmdzID0gWwogICAgICAgIHsgZW1iZWRkaW5nOiBbMC4xLCAwLjIsIDAuM10gfSwKICAgICAgICB7IGVtYmVkZGluZzogWzAuNCwgMC41LCAwLjZdIH0sCiAgICAgIF07CiAgICAgIG1vY2tPcGVuQUlFbWJlZGRpbmdzLmNyZWF0ZS5tb2NrUmVzb2x2ZWRWYWx1ZSh7IGRhdGE6IGZha2VFbWJlZGRpbmdzIH0pOwoKICAgICAgY29uc3QgZW1iZWRkZXIgPSBuZXcgT3BlbkFpRW1iZWRkZXIoKTsKICAgICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgZW1iZWRkZXIuZW1iZWRDaHVua3MoWyJoZWxsbyIsICJ3b3JsZCJdKTsKCiAgICAgIGV4cGVjdChyZXN1bHQpLnRvRXF1YWwoWwogICAgICAgIFswLjEsIDAuMiwgMC4zXSwKICAgICAgICBbMC40LCAwLjUsIDAuNl0sCiAgICAgIF0pOwogICAgICBleHBlY3QobW9ja09wZW5BSUVtYmVkZGluZ3MuY3JlYXRlKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCh7CiAgICAgICAgbW9kZWw6ICJ0ZXh0LWVtYmVkZGluZy1hZGEtMDAyIiwKICAgICAgICBpbnB1dDogWyJoZWxsbyIsICJ3b3JsZCJdLAogICAgICB9KTsKICAgIH0pOwoKICAgIGl0KCJ0aHJvd3Mgb24gQVBJIGVycm9yIiwgYXN5bmMgKCkgPT4gewogICAgICBtb2NrT3BlbkFJRW1iZWRkaW5ncy5jcmVhdGUubW9ja1JlamVjdGVkVmFsdWUoewogICAgICAgIHJlc3BvbnNlOiB7IGRhdGE6IHsgZXJyb3I6IHsgY29kZTogInJhdGVfbGltaXQiLCBtZXNzYWdlOiAiVG9vIG1hbnkgcmVxdWVzdHMiIH0gfSB9LAogICAgICAgIG1lc3NhZ2U6ICJSZXF1ZXN0IGZhaWxlZCIsCiAgICAgIH0pOwoKICAgICAgY29uc3QgZW1iZWRkZXIgPSBuZXcgT3BlbkFpRW1iZWRkZXIoKTsKICAgICAgYXdhaXQgZXhwZWN0KGVtYmVkZGVyLmVtYmVkQ2h1bmtzKFsidGV4dCJdKSkucmVqZWN0cy50b1Rocm93KAogICAgICAgIC9PcGVuQUkgRmFpbGVkIHRvIGVtYmVkLywKICAgICAgKTsKICAgIH0pOwoKICAgIGl0KCJoYW5kbGVzIGVtcHR5IGlucHV0IGFycmF5IiwgYXN5bmMgKCkgPT4gewogICAgICBtb2NrT3BlbkFJRW1iZWRkaW5ncy5jcmVhdGUubW9ja1Jlc29sdmVkVmFsdWUoeyBkYXRhOiBbXSB9KTsKCiAgICAgIGNvbnN0IGVtYmVkZGVyID0gbmV3IE9wZW5BaUVtYmVkZGVyKCk7CiAgICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IGVtYmVkZGVyLmVtYmVkQ2h1bmtzKFtdKTsKCiAgICAgIGV4cGVjdChyZXN1bHQpLnRvQmVOdWxsKCk7CiAgICB9KTsKCiAgICBpdCgiZW1iZWRzIGxhcmdlIGlucHV0IGluIGJhdGNoZXMiLCBhc3luYyAoKSA9PiB7CiAgICAgIC8vIENyZWF0ZSA2MDAgY2h1bmtzIHRvIGV4Y2VlZCBtYXhDb25jdXJyZW50Q2h1bmtzICg1MDApCiAgICAgIGNvbnN0IHRleHRzID0gQXJyYXkuZnJvbSh7IGxlbmd0aDogNjAwIH0sIChfLCBpKSA9PiBgdGV4dC0ke2l9YCk7CiAgICAgIGNvbnN0IGZha2VEYXRhID0gdGV4dHMubWFwKCgpID0+ICh7IGVtYmVkZGluZzogWzAuMSwgMC4yXSB9KSk7CiAgICAgIG1vY2tPcGVuQUlFbWJlZGRpbmdzLmNyZWF0ZQogICAgICAgIC5tb2NrUmVzb2x2ZWRWYWx1ZU9uY2UoeyBkYXRhOiBmYWtlRGF0YS5zbGljZSgwLCA1MDApIH0pCiAgICAgICAgLm1vY2tSZXNvbHZlZFZhbHVlT25jZSh7IGRhdGE6IGZha2VEYXRhLnNsaWNlKDUwMCkgfSk7CgogICAgICBjb25zdCBlbWJlZGRlciA9IG5ldyBPcGVuQWlFbWJlZGRlcigpOwogICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBlbWJlZGRlci5lbWJlZENodW5rcyh0ZXh0cyk7CgogICAgICBleHBlY3QocmVzdWx0KS50b0hhdmVMZW5ndGgoNjAwKTsKICAgICAgZXhwZWN0KG1vY2tPcGVuQUlFbWJlZGRpbmdzLmNyZWF0ZSkudG9IYXZlQmVlbkNhbGxlZFRpbWVzKDIpOwogICAgfSk7CiAgfSk7CgogIGRlc2NyaWJlKCJlbWJlZFRleHRJbnB1dCIsICgpID0+IHsKICAgIGl0KCJlbWJlZHMgYSBzaW5nbGUgdGV4dCBpbnB1dCBhbmQgcmV0dXJucyBmaXJzdCBlbWJlZGRpbmciLCBhc3luYyAoKSA9PiB7CiAgICAgIG1vY2tPcGVuQUlFbWJlZGRpbmdzLmNyZWF0ZS5tb2NrUmVzb2x2ZWRWYWx1ZSh7CiAgICAgICAgZGF0YTogW3sgZW1iZWRkaW5nOiBbMC4xLCAwLjIsIDAuM10gfV0sCiAgICAgIH0pOwoKICAgICAgY29uc3QgZW1iZWRkZXIgPSBuZXcgT3BlbkFpRW1iZWRkZXIoKTsKICAgICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgZW1iZWRkZXIuZW1iZWRUZXh0SW5wdXQoImhlbGxvIik7CgogICAgICBleHBlY3QocmVzdWx0KS50b0VxdWFsKFswLjEsIDAuMiwgMC4zXSk7CiAgICB9KTsKCiAgICBpdCgiaGFuZGxlcyBhcnJheSBpbnB1dCBmb3IgZW1iZWRUZXh0SW5wdXQiLCBhc3luYyAoKSA9PiB7CiAgICAgIG1vY2tPcGVuQUlFbWJlZGRpbmdzLmNyZWF0ZS5tb2NrUmVzb2x2ZWRWYWx1ZSh7CiAgICAgICAgZGF0YTogWwogICAgICAgICAgeyBlbWJlZGRpbmc6IFswLjEsIDAuMl0gfSwKICAgICAgICAgIHsgZW1iZWRkaW5nOiBbMC4zLCAwLjRdIH0sCiAgICAgICAgXSwKICAgICAgfSk7CgogICAgICBjb25zdCBlbWJlZGRlciA9IG5ldyBPcGVuQWlFbWJlZGRlcigpOwogICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBlbWJlZGRlci5lbWJlZFRleHRJbnB1dChbImEiLCAiYiJdKTsKCiAgICAgIGV4cGVjdChyZXN1bHQpLnRvRXF1YWwoWzAuMSwgMC4yXSk7CiAgICB9KTsKICB9KTsKfSk7CgovLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKLy8gTmF0aXZlRW1iZWRkZXIgdGVzdHMKLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACmplc3QubW9jaygiLi4vLi4vdXRpbHMvRW1iZWRkaW5nRW5naW5lcy9uYXRpdmUvY29uc3RhbnRzIiwgKCkgPT4gKHsKICBTVVBQT1JURURfTkFUSVZFX0VNQkVERElOR19NT0RFTFM6IHsKICAgICJYZW5vdmEvYWxsLU1pbmlMTS1MNi12MiI6IHsKICAgICAgY2h1bmtQcmVmaXg6ICIiLAogICAgICBxdWVyeVByZWZpeDogIiIsCiAgICAgIG1heENvbmN1cnJlbnRDaHVua3M6IDI1MCwKICAgICAgZW1iZWRkaW5nTWF4Q2h1bmtMZW5ndGg6IDUxMiwKICAgICAgYXBpSW5mbzogewogICAgICAgIGlkOiAiWGVub3ZhL2FsbC1NaW5pTE0tTDYtdjIiLAogICAgICAgIG5hbWU6ICJhbGwtTWluaUxNLUw2LXYyIiwKICAgICAgICBkZXNjcmlwdGlvbjogIlNtYWxsIGFuZCBmYXN0IiwKICAgICAgICBsYW5nOiAiZW4iLAogICAgICAgIHNpemU6ICIyM01CIiwKICAgICAgICBtb2RlbENhcmQ6ICJodHRwczovL2h1Z2dpbmdmYWNlLmNvL1hlbm92YS9hbGwtTWluaUxNLUw2LXYyIiwKICAgICAgfSwKICAgIH0sCiAgICAiWGVub3ZhL25vbWljLWVtYmVkLXRleHQtdjEiOiB7CiAgICAgIGNodW5rUHJlZml4OiAic2VhcmNoX2RvY3VtZW50OiIsCiAgICAgIHF1ZXJ5UHJlZml4OiAic2VhcmNoX3F1ZXJ5OiIsCiAgICAgIG1heENvbmN1cnJlbnRDaHVua3M6IDEwMCwKICAgICAgZW1iZWRkaW5nTWF4Q2h1bmtMZW5ndGg6IDgxOTIsCiAgICAgIGFwaUluZm86IHsKICAgICAgICBpZDogIlhlbm92YS9ub21pYy1lbWJlZC10ZXh0LXYxIiwKICAgICAgICBuYW1lOiAibm9taWMtZW1iZWQtdGV4dC12MSIsCiAgICAgICAgZGVzY3JpcHRpb246ICJMb25nIGNvbnRleHQiLAogICAgICAgIGxhbmc6ICJlbiIsCiAgICAgICAgc2l6ZTogIjI3Mk1CIiwKICAgICAgICBtb2RlbENhcmQ6ICJodHRwczovL2h1Z2dpbmdmYWNlLmNvL1hlbm92YS9ub21pYy1lbWJlZC10ZXh0LXYxIiwKICAgICAgfSwKICAgIH0sCiAgfSwKfSkpOwoKamVzdC5tb2NrKCJ1dWlkIiwgKCkgPT4gKHsgdjQ6ICgpID0+ICJmYWtlLXV1aWQiIH0pKTsKCmNvbnN0IHsgTmF0aXZlRW1iZWRkZXIgfSA9IHJlcXVpcmUoIi4uLy4uL3V0aWxzL0VtYmVkZGluZ0VuZ2luZXMvbmF0aXZlIik7CgpkZXNjcmliZSgiTmF0aXZlRW1iZWRkZXIiLCAoKSA9PiB7CiAgYmVmb3JlRWFjaCgoKSA9PiB7CiAgICBqZXN0LmNsZWFyQWxsTW9ja3MoKTsKICAgIGRlbGV0ZSBwcm9jZXNzLmVudi5FTUJFRERJTkdfTU9ERUxfUFJFRjsKICB9KTsKCiAgZGVzY3JpYmUoImNvbnN0cnVjdG9yIiwgKCkgPT4gewogICAgaXQoImluaXRpYWxpemVzIHdpdGggZGVmYXVsdCBtb2RlbCIsICgpID0+IHsKICAgICAgY29uc3QgZW1iZWRkZXIgPSBuZXcgTmF0aXZlRW1iZWRkZXIoKTsKICAgICAgZXhwZWN0KGVtYmVkZGVyLmNsYXNzTmFtZSkudG9CZSgiTmF0aXZlRW1iZWRkZXIiKTsKICAgICAgZXhwZWN0KGVtYmVkZGVyLm1vZGVsKS50b0JlKCJYZW5vdmEvYWxsLU1pbmlMTS1MNi12MiIpOwogICAgfSk7CgogICAgaXQoInVzZXMgbW9kZWwgZnJvbSBFTUJFRERJTkdfTU9ERUxfUFJFRiB3aGVuIHN1cHBvcnRlZCIsICgpID0+IHsKICAgICAgcHJvY2Vzcy5lbnYuRU1CRURESU5HX01PREVMX1BSRUYgPSAiWGVub3ZhL25vbWljLWVtYmVkLXRleHQtdjEiOwogICAgICBjb25zdCBlbWJlZGRlciA9IG5ldyBOYXRpdmVFbWJlZGRlcigpOwogICAgICBleHBlY3QoZW1iZWRkZXIubW9kZWwpLnRvQmUoIlhlbm92YS9ub21pYy1lbWJlZC10ZXh0LXYxIik7CiAgICB9KTsKCiAgICBpdCgiZmFsbHMgYmFjayB0byBkZWZhdWx0IHdoZW4gRU1CRURESU5HX01PREVMX1BSRUYgaXMgdW5zdXBwb3J0ZWQiLCAoKSA9PiB7CiAgICAgIHByb2Nlc3MuZW52LkVNQkVERElOR19NT0RFTF9QUkVGID0gInVuc3VwcG9ydGVkL21vZGVsIjsKICAgICAgY29uc3QgZW1iZWRkZXIgPSBuZXcgTmF0aXZlRW1iZWRkZXIoKTsKICAgICAgZXhwZWN0KGVtYmVkZGVyLm1vZGVsKS50b0JlKCJYZW5vdmEvYWxsLU1pbmlMTS1MNi12MiIpOwogICAgfSk7CiAgfSk7CgogIGRlc2NyaWJlKCJhdmFpbGFibGVNb2RlbHMiLCAoKSA9PiB7CiAgICBpdCgicmV0dXJucyBsaXN0IG9mIHN1cHBvcnRlZCBtb2RlbHMiLCAoKSA9PiB7CiAgICAgIGNvbnN0IG1vZGVscyA9IE5hdGl2ZUVtYmVkZGVyLmF2YWlsYWJsZU1vZGVscygpOwogICAgICBleHBlY3QobW9kZWxzKS50b0hhdmVMZW5ndGgoMik7CiAgICAgIGV4cGVjdChtb2RlbHNbMF0pLnRvSGF2ZVByb3BlcnR5KCJpZCIpOwogICAgICBleHBlY3QobW9kZWxzWzBdKS50b0hhdmVQcm9wZXJ0eSgibmFtZSIpOwogICAgfSk7CiAgfSk7CgogIGRlc2NyaWJlKCJlbWJlZGRpbmdQcmVmaXggLyBxdWVyeVByZWZpeCIsICgpID0+IHsKICAgIGl0KCJyZXR1cm5zIGVtcHR5IHByZWZpeCBmb3IgTWluaUxNIG1vZGVsIiwgKCkgPT4gewogICAgICBjb25zdCBlbWJlZGRlciA9IG5ldyBOYXRpdmVFbWJlZGRlcigpOwogICAgICBleHBlY3QoZW1iZWRkZXIuZW1iZWRkaW5nUHJlZml4KS50b0JlKCIiKTsKICAgICAgZXhwZWN0KGVtYmVkZGVyLnF1ZXJ5UHJlZml4KS50b0JlKCIiKTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIGNvcnJlY3QgcHJlZml4ZXMgZm9yIG5vbWljIG1vZGVsIiwgKCkgPT4gewogICAgICBwcm9jZXNzLmVudi5FTUJFRERJTkdfTU9ERUxfUFJFRiA9ICJYZW5vdmEvbm9taWMtZW1iZWQtdGV4dC12MSI7CiAgICAgIGNvbnN0IGVtYmVkZGVyID0gbmV3IE5hdGl2ZUVtYmVkZGVyKCk7CiAgICAgIGV4cGVjdChlbWJlZGRlci5lbWJlZGRpbmdQcmVmaXgpLnRvQmUoInNlYXJjaF9kb2N1bWVudDoiKTsKICAgICAgZXhwZWN0KGVtYmVkZGVyLnF1ZXJ5UHJlZml4KS50b0JlKCJzZWFyY2hfcXVlcnk6Iik7CiAgICB9KTsKICB9KTsKCiAgZGVzY3JpYmUoImdldEVtYmVkZGVySW5mbyIsICgpID0+IHsKICAgIGl0KCJyZXR1cm5zIG1vZGVsIGluZm8gb2JqZWN0IiwgKCkgPT4gewogICAgICBjb25zdCBlbWJlZGRlciA9IG5ldyBOYXRpdmVFbWJlZGRlcigpOwogICAgICBjb25zdCBpbmZvID0gZW1iZWRkZXIuZ2V0RW1iZWRkZXJJbmZvKCk7CiAgICAgIGV4cGVjdChpbmZvKS50b0hhdmVQcm9wZXJ0eSgibWF4Q29uY3VycmVudENodW5rcyIpOwogICAgICBleHBlY3QoaW5mbykudG9IYXZlUHJvcGVydHkoImVtYmVkZGluZ01heENodW5rTGVuZ3RoIik7CiAgICB9KTsKICB9KTsKfSk7Cg==
+// SPDX-License-Identifier: MIT
+// Tests for EmbeddingEngines (Issue #385).
+//
+// Covers: OpenAiEmbedder — constructor with/without API key,
+// embedChunks happy path, error handling, timeout, and
+// NativeEmbedder — model selection, prefix properties, availableModels.
+
+jest.mock("../../utils/logger/console.js", () => ({
+  error: jest.fn(),
+  log: jest.fn(),
+}));
+
+jest.mock("../../utils/helpers", () => ({
+  toChunks: (arr, size) => {
+    const chunks = [];
+    for (let i = 0; i < arr.length; i += size) chunks.push(arr.slice(i, i + size));
+    return chunks;
+  },
+  reportEmbeddingProgress: jest.fn(),
+}));
+
+jest.mock("../../utils/paths", () => ({
+  getStoragePath: (...parts) => "/tmp/fake-storage/" + parts.join("/"),
+}));
+
+// ─────────────────────────────────────────────────────────────────────────────
+// OpenAiEmbedder tests
+// ─────────────────────────────────────────────────────────────────────────────
+const mockOpenAIEmbeddings = {
+  create: jest.fn(),
+};
+jest.mock("openai", () => ({
+  OpenAI: jest.fn(() => ({ embeddings: mockOpenAIEmbeddings })),
+}));
+
+const { OpenAiEmbedder } = require("../../utils/EmbeddingEngines/openAi");
+
+describe("OpenAiEmbedder", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    process.env.OPEN_AI_KEY = "test-key-123";
+    process.env.EMBEDDING_MODEL_PREF = "text-embedding-ada-002";
+  });
+
+  afterEach(() => {
+    delete process.env.OPEN_AI_KEY;
+    delete process.env.EMBEDDING_MODEL_PREF;
+  });
+
+  describe("constructor", () => {
+    it("initializes with API key and default model", () => {
+      const embedder = new OpenAiEmbedder();
+      expect(embedder.className).toBe("OpenAiEmbedder");
+      expect(embedder.model).toBe("text-embedding-ada-002");
+      expect(embedder.maxConcurrentChunks).toBe(500);
+      expect(embedder.embeddingMaxChunkLength).toBe(8191);
+    });
+
+    it("throws when OPEN_AI_KEY is not set", () => {
+      delete process.env.OPEN_AI_KEY;
+      expect(() => new OpenAiEmbedder()).toThrow("No OpenAI API key was set.");
+    });
+
+    it("uses EMBEDDING_MODEL_PREF when set", () => {
+      process.env.EMBEDDING_MODEL_PREF = "text-embedding-3-small";
+      const embedder = new OpenAiEmbedder();
+      expect(embedder.model).toBe("text-embedding-3-small");
+    });
+  });
+
+  describe("embedChunks", () => {
+    it("embeds text chunks successfully", async () => {
+      const fakeEmbeddings = [
+        { embedding: [0.1, 0.2, 0.3] },
+        { embedding: [0.4, 0.5, 0.6] },
+      ];
+      mockOpenAIEmbeddings.create.mockResolvedValue({ data: fakeEmbeddings });
+
+      const embedder = new OpenAiEmbedder();
+      const result = await embedder.embedChunks(["hello", "world"]);
+
+      expect(result).toEqual([
+        [0.1, 0.2, 0.3],
+        [0.4, 0.5, 0.6],
+      ]);
+      expect(mockOpenAIEmbeddings.create).toHaveBeenCalledWith({
+        model: "text-embedding-ada-002",
+        input: ["hello", "world"],
+      });
+    });
+
+    it("throws on API error", async () => {
+      mockOpenAIEmbeddings.create.mockRejectedValue({
+        response: { data: { error: { code: "rate_limit", message: "Too many requests" } } },
+        message: "Request failed",
+      });
+
+      const embedder = new OpenAiEmbedder();
+      await expect(embedder.embedChunks(["text"])).rejects.toThrow(
+        /OpenAI Failed to embed/,
+      );
+    });
+
+    it("handles empty input array", async () => {
+      mockOpenAIEmbeddings.create.mockResolvedValue({ data: [] });
+
+      const embedder = new OpenAiEmbedder();
+      const result = await embedder.embedChunks([]);
+
+      expect(result).toBeNull();
+    });
+
+    it("embeds large input in batches", async () => {
+      // Create 600 chunks to exceed maxConcurrentChunks (500)
+      const texts = Array.from({ length: 600 }, (_, i) => `text-${i}`);
+      const fakeData = texts.map(() => ({ embedding: [0.1, 0.2] }));
+      mockOpenAIEmbeddings.create
+        .mockResolvedValueOnce({ data: fakeData.slice(0, 500) })
+        .mockResolvedValueOnce({ data: fakeData.slice(500) });
+
+      const embedder = new OpenAiEmbedder();
+      const result = await embedder.embedChunks(texts);
+
+      expect(result).toHaveLength(600);
+      expect(mockOpenAIEmbeddings.create).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  describe("embedTextInput", () => {
+    it("embeds a single text input and returns first embedding", async () => {
+      mockOpenAIEmbeddings.create.mockResolvedValue({
+        data: [{ embedding: [0.1, 0.2, 0.3] }],
+      });
+
+      const embedder = new OpenAiEmbedder();
+      const result = await embedder.embedTextInput("hello");
+
+      expect(result).toEqual([0.1, 0.2, 0.3]);
+    });
+
+    it("handles array input for embedTextInput", async () => {
+      mockOpenAIEmbeddings.create.mockResolvedValue({
+        data: [
+          { embedding: [0.1, 0.2] },
+          { embedding: [0.3, 0.4] },
+        ],
+      });
+
+      const embedder = new OpenAiEmbedder();
+      const result = await embedder.embedTextInput(["a", "b"]);
+
+      expect(result).toEqual([0.1, 0.2]);
+    });
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// NativeEmbedder tests
+// ─────────────────────────────────────────────────────────────────────────────
+jest.mock("../../utils/EmbeddingEngines/native/constants", () => ({
+  SUPPORTED_NATIVE_EMBEDDING_MODELS: {
+    "Xenova/all-MiniLM-L6-v2": {
+      chunkPrefix: "",
+      queryPrefix: "",
+      maxConcurrentChunks: 250,
+      embeddingMaxChunkLength: 512,
+      apiInfo: {
+        id: "Xenova/all-MiniLM-L6-v2",
+        name: "all-MiniLM-L6-v2",
+        description: "Small and fast",
+        lang: "en",
+        size: "23MB",
+        modelCard: "https://huggingface.co/Xenova/all-MiniLM-L6-v2",
+      },
+    },
+    "Xenova/nomic-embed-text-v1": {
+      chunkPrefix: "search_document:",
+      queryPrefix: "search_query:",
+      maxConcurrentChunks: 100,
+      embeddingMaxChunkLength: 8192,
+      apiInfo: {
+        id: "Xenova/nomic-embed-text-v1",
+        name: "nomic-embed-text-v1",
+        description: "Long context",
+        lang: "en",
+        size: "272MB",
+        modelCard: "https://huggingface.co/Xenova/nomic-embed-text-v1",
+      },
+    },
+  },
+}));
+
+jest.mock("uuid", () => ({ v4: () => "fake-uuid" }));
+
+const { NativeEmbedder } = require("../../utils/EmbeddingEngines/native");
+
+describe("NativeEmbedder", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    delete process.env.EMBEDDING_MODEL_PREF;
+  });
+
+  describe("constructor", () => {
+    it("initializes with default model", () => {
+      const embedder = new NativeEmbedder();
+      expect(embedder.className).toBe("NativeEmbedder");
+      expect(embedder.model).toBe("Xenova/all-MiniLM-L6-v2");
+    });
+
+    it("uses model from EMBEDDING_MODEL_PREF when supported", () => {
+      process.env.EMBEDDING_MODEL_PREF = "Xenova/nomic-embed-text-v1";
+      const embedder = new NativeEmbedder();
+      expect(embedder.model).toBe("Xenova/nomic-embed-text-v1");
+    });
+
+    it("falls back to default when EMBEDDING_MODEL_PREF is unsupported", () => {
+      process.env.EMBEDDING_MODEL_PREF = "unsupported/model";
+      const embedder = new NativeEmbedder();
+      expect(embedder.model).toBe("Xenova/all-MiniLM-L6-v2");
+    });
+  });
+
+  describe("availableModels", () => {
+    it("returns list of supported models", () => {
+      const models = NativeEmbedder.availableModels();
+      expect(models).toHaveLength(2);
+      expect(models[0]).toHaveProperty("id");
+      expect(models[0]).toHaveProperty("name");
+    });
+  });
+
+  describe("embeddingPrefix / queryPrefix", () => {
+    it("returns empty prefix for MiniLM model", () => {
+      const embedder = new NativeEmbedder();
+      expect(embedder.embeddingPrefix).toBe("");
+      expect(embedder.queryPrefix).toBe("");
+    });
+
+    it("returns correct prefixes for nomic model", () => {
+      process.env.EMBEDDING_MODEL_PREF = "Xenova/nomic-embed-text-v1";
+      const embedder = new NativeEmbedder();
+      expect(embedder.embeddingPrefix).toBe("search_document:");
+      expect(embedder.queryPrefix).toBe("search_query:");
+    });
+  });
+
+  describe("getEmbedderInfo", () => {
+    it("returns model info object", () => {
+      const embedder = new NativeEmbedder();
+      const info = embedder.getEmbedderInfo();
+      expect(info).toHaveProperty("maxConcurrentChunks");
+      expect(info).toHaveProperty("embeddingMaxChunkLength");
+    });
+  });
+});

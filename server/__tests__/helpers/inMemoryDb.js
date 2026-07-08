@@ -30,7 +30,7 @@ const Database = require("better-sqlite3");
  *   `prisma` is the mock object with $executeRawUnsafe / $queryRawUnsafe;
  *   `__db` is the raw better-sqlite3 instance for direct SQL access.
  */
-function createInMemoryDb(prismaModulePath = "../../../utils/prisma") {
+function createInMemoryDb(prismaModulePath = "../../utils/prisma") {
   const db = new Database(":memory:");
 
   const prisma = {
@@ -44,7 +44,7 @@ function createInMemoryDb(prismaModulePath = "../../../utils/prisma") {
   // Install the mock on the prisma module so code-under-test that does
   // `require("../../../utils/prisma")` picks up the in-memory instance.
   // jest.mock is hoisted, so we use jest.doMock for runtime installation.
-  jest.doMock(prismaModulePath, () => prisma, { virtual: false });
+  jest.doMock(prismaModulePath, () => prisma, { virtual: true });
 
   return { prisma, __db: db };
 }

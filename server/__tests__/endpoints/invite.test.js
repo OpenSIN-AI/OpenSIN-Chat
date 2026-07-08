@@ -14,6 +14,8 @@ jest.mock("../../utils/prisma", () => {
   const mockWorkspaceUsers = {
     create: jest.fn(),
     findFirst: jest.fn(),
+    findMany: jest.fn(),
+    createMany: jest.fn(),
   };
   return {
     invites: mockInvites,
@@ -25,6 +27,7 @@ jest.mock("../../utils/prisma", () => {
         workspaces: mockWorkspaces,
         workspace_users: mockWorkspaceUsers,
       };
+      // Make tx behave like the prisma mock (Proxy-like: return mock for any model)
       return fn(tx);
     }),
   };

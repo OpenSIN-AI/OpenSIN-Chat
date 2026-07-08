@@ -1,1 +1,286 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBUZXN0cyBmb3Igd2ViUHVzaCBlbmRwb2ludHMgKElzc3VlICMzODIpLgovLwovLyBDb3ZlcnM6IEdFVCAvd2ViLXB1c2gvcHVia2V5LCBQT1NUIC93ZWItcHVzaC9zdWJzY3JpYmUsCi8vIFBPU1QgL3dlYi1wdXNoL3Vuc3Vic2NyaWJlLCBHRVQgL3dlYi1wdXNoL3N1YnNjcmlwdGlvbnMsCi8vIFBPU1QgL3dlYi1wdXNoL3NlbmQKLy8KLy8gVXNlcyB0aGUgbW9ja0V4cHJlc3NBcHAgaGFybmVzcyB0byByZWdpc3RlciByb3V0ZXMgYW5kIGludm9rZSBoYW5kbGVycwovLyB3aXRob3V0IGJvb3RpbmcgYSByZWFsIEhUVFAgc2VydmVyLgoKamVzdC5tb2NrKCIuLi8uLi91dGlscy9taWRkbGV3YXJlL3ZhbGlkYXRlZFJlcXVlc3QiLCAoKSA9PiAoewogIHZhbGlkYXRlZFJlcXVlc3Q6IChfcmVxLCBfcmVzLCBuZXh0KSA9PiBuZXh0KCksCn0pKTsKamVzdC5tb2NrKCIuLi8uLi91dGlscy9sb2dnZXIvY29uc29sZS5qcyIsICgpID0+ICh7CiAgZXJyb3I6IGplc3QuZm4oKSwKICBsb2c6IGplc3QuZm4oKSwKfSkpOwoKY29uc3QgbW9ja0dldFB1YmxpY0tleSA9IGplc3QuZm4oKTsKY29uc3QgbW9ja1JlZ2lzdGVyU3Vic2NyaXB0aW9uID0gamVzdC5mbigpOwpjb25zdCBtb2NrVW5yZWdpc3RlclN1YnNjcmlwdGlvbiA9IGplc3QuZm4oKTsKY29uc3QgbW9ja0xpc3RTdWJzY3JpcHRpb25zID0gamVzdC5mbigpOwpjb25zdCBtb2NrU2VuZE5vdGlmaWNhdGlvbiA9IGplc3QuZm4oKTsKamVzdC5tb2NrKCIuLi8uLi91dGlscy9QdXNoTm90aWZpY2F0aW9ucy9pbmRleC5qcyIsICgpID0+ICh7CiAgcHVzaE5vdGlmaWNhdGlvblNlcnZpY2U6IHsKICAgIGdldFB1YmxpY0tleTogKC4uLmEpID0+IG1vY2tHZXRQdWJsaWNLZXkoLi4uYSksCiAgICByZWdpc3RlclN1YnNjcmlwdGlvbjogKC4uLmEpID0+IG1vY2tSZWdpc3RlclN1YnNjcmlwdGlvbiguLi5hKSwKICAgIHVucmVnaXN0ZXJTdWJzY3JpcHRpb246ICguLi5hKSA9PiBtb2NrVW5yZWdpc3RlclN1YnNjcmlwdGlvbiguLi5hKSwKICAgIGxpc3RTdWJzY3JpcHRpb25zOiAoLi4uYSkgPT4gbW9ja0xpc3RTdWJzY3JpcHRpb25zKC4uLmEpLAogICAgc2VuZE5vdGlmaWNhdGlvbjogKC4uLmEpID0+IG1vY2tTZW5kTm90aWZpY2F0aW9uKC4uLmEpLAogIH0sCn0pKTsKCmNvbnN0IHsgd2ViUHVzaEVuZHBvaW50cyB9ID0gcmVxdWlyZSgiLi4vLi4vZW5kcG9pbnRzL3dlYlB1c2giKTsKY29uc3QgeyBjcmVhdGVNb2NrQXBwIH0gPSByZXF1aXJlKCIuLi9oZWxwZXJzL21vY2tFeHByZXNzQXBwIik7CgpmdW5jdGlvbiBidWlsZEFwcCgpIHsKICBjb25zdCBoYXJuZXNzID0gY3JlYXRlTW9ja0FwcCgpOwogIHdlYlB1c2hFbmRwb2ludHMoaGFybmVzcy5hcHApOwogIHJldHVybiBoYXJuZXNzOwp9CgpkZXNjcmliZSgid2ViUHVzaEVuZHBvaW50cyIsICgpID0+IHsKICBsZXQgYXBwOwogIGJlZm9yZUVhY2goKCkgPT4gewogICAgYXBwID0gYnVpbGRBcHAoKTsKICAgIGplc3QuY2xlYXJBbGxNb2NrcygpOwogIH0pOwoKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAvLyBHRVQgL3dlYi1wdXNoL3B1YmtleQogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIGRlc2NyaWJlKCJHRVQgL3dlYi1wdXNoL3B1YmtleSIsICgpID0+IHsKICAgIGl0KCJyZXR1cm5zIHRoZSBWQVBJRCBwdWJsaWMga2V5IiwgYXN5bmMgKCkgPT4gewogICAgICBtb2NrR2V0UHVibGljS2V5Lm1vY2tSZXNvbHZlZFZhbHVlKCJCRkFLRV9QVUJMSUNfS0VZXzEyMzQ1Iik7CgogICAgICBjb25zdCByZXMgPSBhd2FpdCBhcHAuY2FsbCgiZ2V0IiwgIi93ZWItcHVzaC9wdWJrZXkiKTsKCiAgICAgIGV4cGVjdChyZXMuc3RhdHVzQ29kZSkudG9CZSgyMDApOwogICAgICBleHBlY3QocmVzLmJvZHkucHVibGljS2V5KS50b0JlKCJCRkFLRV9QVUJMSUNfS0VZXzEyMzQ1Iik7CiAgICAgIGV4cGVjdChtb2NrR2V0UHVibGljS2V5KS50b0hhdmVCZWVuQ2FsbGVkVGltZXMoMSk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyA1MDAgd2hlbiBnZXRQdWJsaWNLZXkgdGhyb3dzIiwgYXN5bmMgKCkgPT4gewogICAgICBtb2NrR2V0UHVibGljS2V5Lm1vY2tSZWplY3RlZFZhbHVlKG5ldyBFcnJvcigiTm8gVkFQSUQga2V5cyBjb25maWd1cmVkIikpOwoKICAgICAgY29uc3QgcmVzID0gYXdhaXQgYXBwLmNhbGwoImdldCIsICIvd2ViLXB1c2gvcHVia2V5Iik7CgogICAgICBleHBlY3QocmVzLnN0YXR1c0NvZGUpLnRvQmUoNTAwKTsKICAgICAgZXhwZWN0KHJlcy5ib2R5LmVycm9yKS50b0JlKCJGYWlsZWQgdG8gcHJvdmlkZSBWQVBJRCBrZXkiKTsKICAgICAgZXhwZWN0KHJlcy5ib2R5LmlkKS50b0JlRGVmaW5lZCgpOwogICAgfSk7CiAgfSk7CgogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIC8vIFBPU1QgL3dlYi1wdXNoL3N1YnNjcmliZQogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIGRlc2NyaWJlKCJQT1NUIC93ZWItcHVzaC9zdWJzY3JpYmUiLCAoKSA9PiB7CiAgICBjb25zdCB2YWxpZEJvZHkgPSB7CiAgICAgIGVuZHBvaW50OiAiaHR0cHM6Ly9mY20uZ29vZ2xlYXBpcy5jb20vZmNtL3NlbmQvYWJjMTIzIiwKICAgICAga2V5czogewogICAgICAgIHAyNTZkaDogIkJQMjU2REhfS0VZIiwKICAgICAgICBhdXRoOiAiQVVUSF9LRVkiLAogICAgICB9LAogICAgfTsKCiAgICBpdCgicmVnaXN0ZXJzIGEgc3Vic2NyaXB0aW9uIHN1Y2Nlc3NmdWxseSIsIGFzeW5jICgpID0+IHsKICAgICAgbW9ja1JlZ2lzdGVyU3Vic2NyaXB0aW9uLm1vY2tSZXNvbHZlZFZhbHVlKHsgaWQ6IDQyIH0pOwoKICAgICAgY29uc3QgcmVzID0gYXdhaXQgYXBwLmNhbGwoInBvc3QiLCAiL3dlYi1wdXNoL3N1YnNjcmliZSIsIHsKICAgICAgICBib2R5OiB2YWxpZEJvZHksCiAgICAgIH0pOwoKICAgICAgZXhwZWN0KHJlcy5zdGF0dXNDb2RlKS50b0JlKDIwMSk7CiAgICAgIGV4cGVjdChyZXMuYm9keS5zdWNjZXNzKS50b0JlKHRydWUpOwogICAgICBleHBlY3QocmVzLmJvZHkuaWQpLnRvQmUoNDIpOwogICAgICBleHBlY3QobW9ja1JlZ2lzdGVyU3Vic2NyaXB0aW9uKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgKICAgICAgICBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7CiAgICAgICAgICBlbmRwb2ludDogdmFsaWRCb2R5LmVuZHBvaW50LAogICAgICAgICAgcDI1NmRoOiAiQlAyNTZESF9LRVkiLAogICAgICAgICAgYXV0aDogIkFVVEhfS0VZIiwKICAgICAgICB9KSwKICAgICAgKTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIDQwMCB3aGVuIGVuZHBvaW50IGlzIG1pc3NpbmciLCBhc3luYyAoKSA9PiB7CiAgICAgIGNvbnN0IHJlcyA9IGF3YWl0IGFwcC5jYWxsKCJwb3N0IiwgIi93ZWItcHVzaC9zdWJzY3JpYmUiLCB7CiAgICAgICAgYm9keTogeyBrZXlzOiB7IHAyNTZkaDogImtleSIsIGF1dGg6ICJrZXkiIH0gfSwKICAgICAgfSk7CgogICAgICBleHBlY3QocmVzLnN0YXR1c0NvZGUpLnRvQmUoNDAwKTsKICAgICAgZXhwZWN0KHJlcy5ib2R5LmVycm9yKS50b0NvbnRhaW4oImVuZHBvaW50Iik7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyA0MDAgd2hlbiBrZXlzLnAyNTZkaCBpcyBtaXNzaW5nIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCByZXMgPSBhd2FpdCBhcHAuY2FsbCgicG9zdCIsICIvd2ViLXB1c2gvc3Vic2NyaWJlIiwgewogICAgICAgIGJvZHk6IHsKICAgICAgICAgIGVuZHBvaW50OiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9wdXNoIiwKICAgICAgICAgIGtleXM6IHsgYXV0aDogIkFVVEhfS0VZIiB9LAogICAgICAgIH0sCiAgICAgIH0pOwoKICAgICAgZXhwZWN0KHJlcy5zdGF0dXNDb2RlKS50b0JlKDQwMCk7CiAgICAgIGV4cGVjdChyZXMuYm9keS5lcnJvcikudG9Db250YWluKCJwMjU2ZGgiKTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIDQwMCB3aGVuIGtleXMuYXV0aCBpcyBtaXNzaW5nIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCByZXMgPSBhd2FpdCBhcHAuY2FsbCgicG9zdCIsICIvd2ViLXB1c2gvc3Vic2NyaWJlIiwgewogICAgICAgIGJvZHk6IHsKICAgICAgICAgIGVuZHBvaW50OiAiaHR0cHM6Ly9leGFtcGxlLmNvbS9wdXNoIiwKICAgICAgICAgIGtleXM6IHsgcDI1NmRoOiAiUDI1NkRIX0tFWSIgfSwKICAgICAgICB9LAogICAgICB9KTsKCiAgICAgIGV4cGVjdChyZXMuc3RhdHVzQ29kZSkudG9CZSg0MDApOwogICAgICBleHBlY3QocmVzLmJvZHkuZXJyb3IpLnRvQ29udGFpbigiYXV0aCIpOwogICAgfSk7CgogICAgaXQoInJldHVybnMgNTAwIHdoZW4gcmVnaXN0ZXJTdWJzY3JpcHRpb24gdGhyb3dzIiwgYXN5bmMgKCkgPT4gewogICAgICBtb2NrUmVnaXN0ZXJTdWJzY3JpcHRpb24ubW9ja1JlamVjdGVkVmFsdWUobmV3IEVycm9yKCJEQiBlcnJvciIpKTsKCiAgICAgIGNvbnN0IHJlcyA9IGF3YWl0IGFwcC5jYWxsKCJwb3N0IiwgIi93ZWItcHVzaC9zdWJzY3JpYmUiLCB7CiAgICAgICAgYm9keTogdmFsaWRCb2R5LAogICAgICB9KTsKCiAgICAgIGV4cGVjdChyZXMuc3RhdHVzQ29kZSkudG9CZSg1MDApOwogICAgICBleHBlY3QocmVzLmJvZHkuZXJyb3IpLnRvQmUoIlN1YnNjcmlwdGlvbiBmYWlsZWQiKTsKICAgICAgZXhwZWN0KHJlcy5ib2R5LmlkKS50b0JlRGVmaW5lZCgpOwogICAgfSk7CiAgfSk7CgogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIC8vIFBPU1QgL3dlYi1wdXNoL3Vuc3Vic2NyaWJlCiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgZGVzY3JpYmUoIlBPU1QgL3dlYi1wdXNoL3Vuc3Vic2NyaWJlIiwgKCkgPT4gewogICAgaXQoInVucmVnaXN0ZXJzIGEgc3Vic2NyaXB0aW9uIHN1Y2Nlc3NmdWxseSIsIGFzeW5jICgpID0+IHsKICAgICAgbW9ja1VucmVnaXN0ZXJTdWJzY3JpcHRpb24ubW9ja1Jlc29sdmVkVmFsdWUodHJ1ZSk7CgogICAgICBjb25zdCByZXMgPSBhd2FpdCBhcHAuY2FsbCgicG9zdCIsICIvd2ViLXB1c2gvdW5zdWJzY3JpYmUiLCB7CiAgICAgICAgYm9keTogeyBlbmRwb2ludDogImh0dHBzOi8vZXhhbXBsZS5jb20vcHVzaC9hYmMiIH0sCiAgICAgIH0pOwoKICAgICAgZXhwZWN0KHJlcy5zdGF0dXNDb2RlKS50b0JlKDIwMCk7CiAgICAgIGV4cGVjdChyZXMuYm9keS5zdWNjZXNzKS50b0JlKHRydWUpOwogICAgICBleHBlY3QocmVzLmJvZHkucmVtb3ZlZCkudG9CZSh0cnVlKTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIDQwMCB3aGVuIGVuZHBvaW50IGlzIG1pc3NpbmciLCBhc3luYyAoKSA9PiB7CiAgICAgIGNvbnN0IHJlcyA9IGF3YWl0IGFwcC5jYWxsKCJwb3N0IiwgIi93ZWItcHVzaC91bnN1YnNjcmliZSIsIHsKICAgICAgICBib2R5OiB7fSwKICAgICAgfSk7CgogICAgICBleHBlY3QocmVzLnN0YXR1c0NvZGUpLnRvQmUoNDAwKTsKICAgICAgZXhwZWN0KHJlcy5ib2R5LmVycm9yKS50b0JlKCJlbmRwb2ludCByZXF1aXJlZCIpOwogICAgfSk7CgogICAgaXQoInJldHVybnMgNDAwIHdoZW4gZW5kcG9pbnQgaXMgbm90IGEgc3RyaW5nIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCByZXMgPSBhd2FpdCBhcHAuY2FsbCgicG9zdCIsICIvd2ViLXB1c2gvdW5zdWJzY3JpYmUiLCB7CiAgICAgICAgYm9keTogeyBlbmRwb2ludDogMTIzNDUgfSwKICAgICAgfSk7CgogICAgICBleHBlY3QocmVzLnN0YXR1c0NvZGUpLnRvQmUoNDAwKTsKICAgICAgZXhwZWN0KHJlcy5ib2R5LmVycm9yKS50b0JlKCJlbmRwb2ludCByZXF1aXJlZCIpOwogICAgfSk7CgogICAgaXQoInJldHVybnMgNTAwIHdoZW4gdW5yZWdpc3RlclN1YnNjcmlwdGlvbiB0aHJvd3MiLCBhc3luYyAoKSA9PiB7CiAgICAgIG1vY2tVbnJlZ2lzdGVyU3Vic2NyaXB0aW9uLm1vY2tSZWplY3RlZFZhbHVlKG5ldyBFcnJvcigiREIgZXJyb3IiKSk7CgogICAgICBjb25zdCByZXMgPSBhd2FpdCBhcHAuY2FsbCgicG9zdCIsICIvd2ViLXB1c2gvdW5zdWJzY3JpYmUiLCB7CiAgICAgICAgYm9keTogeyBlbmRwb2ludDogImh0dHBzOi8vZXhhbXBsZS5jb20vcHVzaC9hYmMiIH0sCiAgICAgIH0pOwoKICAgICAgZXhwZWN0KHJlcy5zdGF0dXNDb2RlKS50b0JlKDUwMCk7CiAgICAgIGV4cGVjdChyZXMuYm9keS5lcnJvcikudG9CZSgiVW5zdWJzY3JpYmUgZmFpbGVkIik7CiAgICB9KTsKICB9KTsKCiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgLy8gR0VUIC93ZWItcHVzaC9zdWJzY3JpcHRpb25zCiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgZGVzY3JpYmUoIkdFVCAvd2ViLXB1c2gvc3Vic2NyaXB0aW9ucyIsICgpID0+IHsKICAgIGl0KCJyZXR1cm5zIGxpc3Qgb2Ygc3Vic2NyaXB0aW9ucyIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3QgZmFrZVN1YnMgPSBbCiAgICAgICAgeyBpZDogMSwgZW5kcG9pbnQ6ICJodHRwczovL2V4YW1wbGUuY29tL3B1c2gvMSIgfSwKICAgICAgICB7IGlkOiAyLCBlbmRwb2ludDogImh0dHBzOi8vZXhhbXBsZS5jb20vcHVzaC8yIiB9LAogICAgICBdOwogICAgICBtb2NrTGlzdFN1YnNjcmlwdGlvbnMubW9ja1Jlc29sdmVkVmFsdWUoZmFrZVN1YnMpOwoKICAgICAgY29uc3QgcmVzID0gYXdhaXQgYXBwLmNhbGwoImdldCIsICIvd2ViLXB1c2gvc3Vic2NyaXB0aW9ucyIpOwoKICAgICAgZXhwZWN0KHJlcy5zdGF0dXNDb2RlKS50b0JlKDIwMCk7CiAgICAgIGV4cGVjdChyZXMuYm9keS5zdWJzY3JpcHRpb25zKS50b0VxdWFsKGZha2VTdWJzKTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIDUwMCB3aGVuIGxpc3RTdWJzY3JpcHRpb25zIHRocm93cyIsIGFzeW5jICgpID0+IHsKICAgICAgbW9ja0xpc3RTdWJzY3JpcHRpb25zLm1vY2tSZWplY3RlZFZhbHVlKG5ldyBFcnJvcigiREIgZXJyb3IiKSk7CgogICAgICBjb25zdCByZXMgPSBhd2FpdCBhcHAuY2FsbCgiZ2V0IiwgIi93ZWItcHVzaC9zdWJzY3JpcHRpb25zIik7CgogICAgICBleHBlY3QocmVzLnN0YXR1c0NvZGUpLnRvQmUoNTAwKTsKICAgICAgZXhwZWN0KHJlcy5ib2R5LmVycm9yKS50b0JlKCJGYWlsZWQgdG8gbGlzdCBzdWJzY3JpcHRpb25zIik7CiAgICB9KTsKICB9KTsKCiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgLy8gUE9TVCAvd2ViLXB1c2gvc2VuZAogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIGRlc2NyaWJlKCJQT1NUIC93ZWItcHVzaC9zZW5kIiwgKCkgPT4gewogICAgaXQoInNlbmRzIGEgbm90aWZpY2F0aW9uIHN1Y2Nlc3NmdWxseSIsIGFzeW5jICgpID0+IHsKICAgICAgbW9ja1NlbmROb3RpZmljYXRpb24ubW9ja1Jlc29sdmVkVmFsdWUoeyBzdWNjZXNzOiB0cnVlLCBzZW50OiA1IH0pOwoKICAgICAgY29uc3QgcmVzID0gYXdhaXQgYXBwLmNhbGwoInBvc3QiLCAiL3dlYi1wdXNoL3NlbmQiLCB7CiAgICAgICAgYm9keTogewogICAgICAgICAgdGl0bGU6ICJUZXN0IE5vdGlmaWNhdGlvbiIsCiAgICAgICAgICBib2R5OiAiSGVsbG8gV29ybGQiLAogICAgICAgICAgdXJsOiAiaHR0cHM6Ly9leGFtcGxlLmNvbSIsCiAgICAgICAgICB0bzogInByaW1hcnkiLAogICAgICAgIH0sCiAgICAgIH0pOwoKICAgICAgZXhwZWN0KHJlcy5zdGF0dXNDb2RlKS50b0JlKDIwMCk7CiAgICAgIGV4cGVjdChyZXMuYm9keS5zdWNjZXNzKS50b0JlKHRydWUpOwogICAgICBleHBlY3QobW9ja1NlbmROb3RpZmljYXRpb24pLnRvSGF2ZUJlZW5DYWxsZWRXaXRoKAogICAgICAgIGV4cGVjdC5vYmplY3RDb250YWluaW5nKHsKICAgICAgICAgIHRvOiAicHJpbWFyeSIsCiAgICAgICAgICBwYXlsb2FkOiBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7CiAgICAgICAgICAgIHRpdGxlOiAiVGVzdCBOb3RpZmljYXRpb24iLAogICAgICAgICAgICBib2R5OiAiSGVsbG8gV29ybGQiLAogICAgICAgICAgfSksCiAgICAgICAgfSksCiAgICAgICk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyA0MDAgd2hlbiB0aXRsZSBpcyBtaXNzaW5nIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCByZXMgPSBhd2FpdCBhcHAuY2FsbCgicG9zdCIsICIvd2ViLXB1c2gvc2VuZCIsIHsKICAgICAgICBib2R5OiB7IGJvZHk6ICJIZWxsbyBXb3JsZCIgfSwKICAgICAgfSk7CgogICAgICBleHBlY3QocmVzLnN0YXR1c0NvZGUpLnRvQmUoNDAwKTsKICAgICAgZXhwZWN0KHJlcy5ib2R5LmVycm9yKS50b0JlKCJ0aXRsZSByZXF1aXJlZCIpOwogICAgfSk7CgogICAgaXQoImRlZmF1bHRzIHRvICdwcmltYXJ5JyByZWNpcGllbnQgd2hlbiAndG8nIGlzIG5vdCBzcGVjaWZpZWQiLCBhc3luYyAoKSA9PiB7CiAgICAgIG1vY2tTZW5kTm90aWZpY2F0aW9uLm1vY2tSZXNvbHZlZFZhbHVlKHsgc3VjY2VzczogdHJ1ZSB9KTsKCiAgICAgIGF3YWl0IGFwcC5jYWxsKCJwb3N0IiwgIi93ZWItcHVzaC9zZW5kIiwgewogICAgICAgIGJvZHk6IHsgdGl0bGU6ICJOb3RpZmljYXRpb24iIH0sCiAgICAgIH0pOwoKICAgICAgZXhwZWN0KG1vY2tTZW5kTm90aWZpY2F0aW9uKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgKICAgICAgICBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7IHRvOiAicHJpbWFyeSIgfSksCiAgICAgICk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyA1MDAgd2hlbiBzZW5kTm90aWZpY2F0aW9uIHRocm93cyIsIGFzeW5jICgpID0+IHsKICAgICAgbW9ja1NlbmROb3RpZmljYXRpb24ubW9ja1JlamVjdGVkVmFsdWUobmV3IEVycm9yKCJQdXNoIHNlcnZpY2UgZG93biIpKTsKCiAgICAgIGNvbnN0IHJlcyA9IGF3YWl0IGFwcC5jYWxsKCJwb3N0IiwgIi93ZWItcHVzaC9zZW5kIiwgewogICAgICAgIGJvZHk6IHsgdGl0bGU6ICJUZXN0IiB9LAogICAgICB9KTsKCiAgICAgIGV4cGVjdChyZXMuc3RhdHVzQ29kZSkudG9CZSg1MDApOwogICAgICBleHBlY3QocmVzLmJvZHkuZXJyb3IpLnRvQmUoIlNlbmQgZmFpbGVkIik7CiAgICB9KTsKICB9KTsKfSk7Cg==
+// SPDX-License-Identifier: MIT
+// Tests for webPush endpoints (Issue #382).
+//
+// Covers: GET /web-push/pubkey, POST /web-push/subscribe,
+// POST /web-push/unsubscribe, GET /web-push/subscriptions,
+// POST /web-push/send
+//
+// Uses the mockExpressApp harness to register routes and invoke handlers
+// without booting a real HTTP server.
+
+jest.mock("../../utils/middleware/validatedRequest", () => ({
+  validatedRequest: (_req, _res, next) => next(),
+}));
+jest.mock("../../utils/logger/console.js", () => ({
+  error: jest.fn(),
+  log: jest.fn(),
+}));
+
+const mockGetPublicKey = jest.fn();
+const mockRegisterSubscription = jest.fn();
+const mockUnregisterSubscription = jest.fn();
+const mockListSubscriptions = jest.fn();
+const mockSendNotification = jest.fn();
+jest.mock("../../utils/PushNotifications/index.js", () => ({
+  pushNotificationService: {
+    getPublicKey: (...a) => mockGetPublicKey(...a),
+    registerSubscription: (...a) => mockRegisterSubscription(...a),
+    unregisterSubscription: (...a) => mockUnregisterSubscription(...a),
+    listSubscriptions: (...a) => mockListSubscriptions(...a),
+    sendNotification: (...a) => mockSendNotification(...a),
+  },
+}));
+
+const { webPushEndpoints } = require("../../endpoints/webPush");
+const { createMockApp } = require("../helpers/mockExpressApp");
+
+function buildApp() {
+  const harness = createMockApp();
+  webPushEndpoints(harness.app);
+  return harness;
+}
+
+describe("webPushEndpoints", () => {
+  let app;
+  beforeEach(() => {
+    app = buildApp();
+    jest.clearAllMocks();
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // GET /web-push/pubkey
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("GET /web-push/pubkey", () => {
+    it("returns the VAPID public key", async () => {
+      mockGetPublicKey.mockResolvedValue("BFAKE_PUBLIC_KEY_12345");
+
+      const res = await app.call("get", "/web-push/pubkey");
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body.publicKey).toBe("BFAKE_PUBLIC_KEY_12345");
+      expect(mockGetPublicKey).toHaveBeenCalledTimes(1);
+    });
+
+    it("returns 500 when getPublicKey throws", async () => {
+      mockGetPublicKey.mockRejectedValue(new Error("No VAPID keys configured"));
+
+      const res = await app.call("get", "/web-push/pubkey");
+
+      expect(res.statusCode).toBe(500);
+      expect(res.body.error).toBe("Failed to provide VAPID key");
+      expect(res.body.id).toBeDefined();
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // POST /web-push/subscribe
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("POST /web-push/subscribe", () => {
+    const validBody = {
+      endpoint: "https://fcm.googleapis.com/fcm/send/abc123",
+      keys: {
+        p256dh: "BP256DH_KEY",
+        auth: "AUTH_KEY",
+      },
+    };
+
+    it("registers a subscription successfully", async () => {
+      mockRegisterSubscription.mockResolvedValue({ id: 42 });
+
+      const res = await app.call("post", "/web-push/subscribe", {
+        body: validBody,
+      });
+
+      expect(res.statusCode).toBe(201);
+      expect(res.body.success).toBe(true);
+      expect(res.body.id).toBe(42);
+      expect(mockRegisterSubscription).toHaveBeenCalledWith(
+        expect.objectContaining({
+          endpoint: validBody.endpoint,
+          p256dh: "BP256DH_KEY",
+          auth: "AUTH_KEY",
+        }),
+      );
+    });
+
+    it("returns 400 when endpoint is missing", async () => {
+      const res = await app.call("post", "/web-push/subscribe", {
+        body: { keys: { p256dh: "key", auth: "key" } },
+      });
+
+      expect(res.statusCode).toBe(400);
+      expect(res.body.error).toContain("endpoint");
+    });
+
+    it("returns 400 when keys.p256dh is missing", async () => {
+      const res = await app.call("post", "/web-push/subscribe", {
+        body: {
+          endpoint: "https://example.com/push",
+          keys: { auth: "AUTH_KEY" },
+        },
+      });
+
+      expect(res.statusCode).toBe(400);
+      expect(res.body.error).toContain("p256dh");
+    });
+
+    it("returns 400 when keys.auth is missing", async () => {
+      const res = await app.call("post", "/web-push/subscribe", {
+        body: {
+          endpoint: "https://example.com/push",
+          keys: { p256dh: "P256DH_KEY" },
+        },
+      });
+
+      expect(res.statusCode).toBe(400);
+      expect(res.body.error).toContain("auth");
+    });
+
+    it("returns 500 when registerSubscription throws", async () => {
+      mockRegisterSubscription.mockRejectedValue(new Error("DB error"));
+
+      const res = await app.call("post", "/web-push/subscribe", {
+        body: validBody,
+      });
+
+      expect(res.statusCode).toBe(500);
+      expect(res.body.error).toBe("Subscription failed");
+      expect(res.body.id).toBeDefined();
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // POST /web-push/unsubscribe
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("POST /web-push/unsubscribe", () => {
+    it("unregisters a subscription successfully", async () => {
+      mockUnregisterSubscription.mockResolvedValue(true);
+
+      const res = await app.call("post", "/web-push/unsubscribe", {
+        body: { endpoint: "https://example.com/push/abc" },
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(res.body.removed).toBe(true);
+    });
+
+    it("returns 400 when endpoint is missing", async () => {
+      const res = await app.call("post", "/web-push/unsubscribe", {
+        body: {},
+      });
+
+      expect(res.statusCode).toBe(400);
+      expect(res.body.error).toBe("endpoint required");
+    });
+
+    it("returns 400 when endpoint is not a string", async () => {
+      const res = await app.call("post", "/web-push/unsubscribe", {
+        body: { endpoint: 12345 },
+      });
+
+      expect(res.statusCode).toBe(400);
+      expect(res.body.error).toBe("endpoint required");
+    });
+
+    it("returns 500 when unregisterSubscription throws", async () => {
+      mockUnregisterSubscription.mockRejectedValue(new Error("DB error"));
+
+      const res = await app.call("post", "/web-push/unsubscribe", {
+        body: { endpoint: "https://example.com/push/abc" },
+      });
+
+      expect(res.statusCode).toBe(500);
+      expect(res.body.error).toBe("Unsubscribe failed");
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // GET /web-push/subscriptions
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("GET /web-push/subscriptions", () => {
+    it("returns list of subscriptions", async () => {
+      const fakeSubs = [
+        { id: 1, endpoint: "https://example.com/push/1" },
+        { id: 2, endpoint: "https://example.com/push/2" },
+      ];
+      mockListSubscriptions.mockResolvedValue(fakeSubs);
+
+      const res = await app.call("get", "/web-push/subscriptions");
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body.subscriptions).toEqual(fakeSubs);
+    });
+
+    it("returns 500 when listSubscriptions throws", async () => {
+      mockListSubscriptions.mockRejectedValue(new Error("DB error"));
+
+      const res = await app.call("get", "/web-push/subscriptions");
+
+      expect(res.statusCode).toBe(500);
+      expect(res.body.error).toBe("Failed to list subscriptions");
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // POST /web-push/send
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("POST /web-push/send", () => {
+    it("sends a notification successfully", async () => {
+      mockSendNotification.mockResolvedValue({ success: true, sent: 5 });
+
+      const res = await app.call("post", "/web-push/send", {
+        body: {
+          title: "Test Notification",
+          body: "Hello World",
+          url: "https://example.com",
+          to: "primary",
+        },
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(mockSendNotification).toHaveBeenCalledWith(
+        expect.objectContaining({
+          to: "primary",
+          payload: expect.objectContaining({
+            title: "Test Notification",
+            body: "Hello World",
+          }),
+        }),
+      );
+    });
+
+    it("returns 400 when title is missing", async () => {
+      const res = await app.call("post", "/web-push/send", {
+        body: { body: "Hello World" },
+      });
+
+      expect(res.statusCode).toBe(400);
+      expect(res.body.error).toBe("title required");
+    });
+
+    it("defaults to 'primary' recipient when 'to' is not specified", async () => {
+      mockSendNotification.mockResolvedValue({ success: true });
+
+      await app.call("post", "/web-push/send", {
+        body: { title: "Notification" },
+      });
+
+      expect(mockSendNotification).toHaveBeenCalledWith(
+        expect.objectContaining({ to: "primary" }),
+      );
+    });
+
+    it("returns 500 when sendNotification throws", async () => {
+      mockSendNotification.mockRejectedValue(new Error("Push service down"));
+
+      const res = await app.call("post", "/web-push/send", {
+        body: { title: "Test" },
+      });
+
+      expect(res.statusCode).toBe(500);
+      expect(res.body.error).toBe("Send failed");
+    });
+  });
+});

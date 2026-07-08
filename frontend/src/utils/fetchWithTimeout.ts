@@ -33,14 +33,18 @@ export async function fetchWithTimeout(
       // The cleanup is safe because { once: true } means addEventListener
       // won't double-register.
       try {
-        return await fetch(url, { ...rest, signal: controller.signal }).finally(() => {
-          clearTimeout(timer);
-          externalSignal.removeEventListener("abort", onExternalAbort);
-        });
+        return await fetch(url, { ...rest, signal: controller.signal }).finally(
+          () => {
+            clearTimeout(timer);
+            externalSignal.removeEventListener("abort", onExternalAbort);
+          },
+        );
       } catch (e) {
         if (e.name === "AbortError") {
           if (externalSignal?.aborted) throw e;
-          throw new Error("Request timeout — server did not respond.");
+          throw new Error("Request timeout — server did not respond.", {
+            cause: e,
+          });
         }
         throw e;
       } finally {
@@ -56,7 +60,9 @@ export async function fetchWithTimeout(
     // Distinguish a real timeout/cancel from a network error.
     if (e.name === "AbortError") {
       if (externalSignal?.aborted) throw e; // intentional cancel — let caller ignore
-      throw new Error("Request timeout — server did not respond.");
+      throw new Error("Request timeout — server did not respond.", {
+        cause: e,
+      });
     }
     throw e;
   } finally {

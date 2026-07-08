@@ -190,10 +190,11 @@ describe("Issue #3 — systemSettings SettingsManager migration", () => {
   // llmPreferenceKeys
   // ───────────────────────────────────────────────────────────────────
   describe("llmPreferenceKeys (async, SettingsManager-backed)", () => {
-    it("returns an object (is async, returns a Promise)", async () => {
+    it("returns an object (synchronous, returns a plain object)", async () => {
       const result = SystemSettings.llmPreferenceKeys();
-      expect(result).toBeInstanceOf(Promise);
-      const keys = await result;
+      expect(typeof result).toBe("object");
+      expect(result).not.toBeNull();
+      const keys = result;
       expect(typeof keys).toBe("object");
       expect(keys).not.toBeNull();
     });
@@ -273,10 +274,11 @@ describe("Issue #3 — systemSettings SettingsManager migration", () => {
   // vectorDBPreferenceKeys
   // ───────────────────────────────────────────────────────────────────
   describe("vectorDBPreferenceKeys (async, SettingsManager-backed)", () => {
-    it("returns an object (is async, returns a Promise)", async () => {
+    it("returns an object (synchronous, returns a plain object)", async () => {
       const result = SystemSettings.vectorDBPreferenceKeys();
-      expect(result).toBeInstanceOf(Promise);
-      const keys = await result;
+      expect(typeof result).toBe("object");
+      expect(result).not.toBeNull();
+      const keys = result;
       expect(typeof keys).toBe("object");
       expect(keys).not.toBeNull();
     });

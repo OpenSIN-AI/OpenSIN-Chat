@@ -87,7 +87,7 @@ describe("WorkspaceThread model", () => {
       expect(thread.slug).toBe("custom-slug");
       // Slug was checked for collision
       expect(prisma.workspace_threads.findFirst).toHaveBeenCalledWith({
-        slug: "custom-slug",
+        where: { slug: "custom-slug" },
       });
     });
 

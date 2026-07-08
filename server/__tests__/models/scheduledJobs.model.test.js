@@ -1,1 +1,489 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBUZXN0cyBmb3IgU2NoZWR1bGVkSm9iIGFuZCBTY2hlZHVsZWRKb2JSdW4gbW9kZWxzIChJc3N1ZSAjMzg0KS4KLy8KLy8gQ292ZXJzIHRoZSBqb2IgbGlmZWN5Y2xlOiBjcmVhdGlvbiwgY3JvbiB2YWxpZGF0aW9uLCBzdGF0dXMgdHJhbnNpdGlvbnMKLy8gKHF1ZXVlZCDihpIgcnVubmluZyDihpIgY29tcGxldGVkL2ZhaWxlZCksIHRpbWVvdXQsIGRlZHVwLCBhbmQgY2xlYW51cC4KCmplc3QubW9jaygiLi4vLi4vdXRpbHMvbG9nZ2VyL2NvbnNvbGUuanMiLCAoKSA9PiAoewogIGVycm9yOiBqZXN0LmZuKCksCiAgbG9nOiBqZXN0LmZuKCksCn0pKTsKCi8vIE1vY2sgcHJpc21hIHdpdGggYSByZWFsaXN0aWMgaW4tbWVtb3J5IHN0b3JlCmNvbnN0IG1vY2tQcmlzbWEgPSB7CiAgc2NoZWR1bGVkX2pvYnM6IHsKICAgIGNyZWF0ZTogamVzdC5mbigpLAogICAgdXBkYXRlOiBqZXN0LmZuKCksCiAgICBmaW5kRmlyc3Q6IGplc3QuZm4oKSwKICAgIGZpbmRNYW55OiBqZXN0LmZuKCksCiAgICBkZWxldGU6IGplc3QuZm4oKSwKICAgIGNvdW50OiBqZXN0LmZuKCksCiAgfSwKICBzY2hlZHVsZWRfam9iX3J1bnM6IHsKICAgIGNyZWF0ZTogamVzdC5mbigpLAogICAgdXBkYXRlTWFueTogamVzdC5mbigpLAogICAgZmluZEZpcnN0OiBqZXN0LmZuKCksCiAgICBmaW5kTWFueTogamVzdC5mbigpLAogICAgZGVsZXRlTWFueTogamVzdC5mbigpLAogICAgY291bnQ6IGplc3QuZm4oKSwKICB9LAogICR0cmFuc2FjdGlvbjogamVzdC5mbihhc3luYyAoZm4pID0+IGZuKG1vY2tQcmlzbWEpKSwKfTsKCmplc3QubW9jaygiLi4vLi4vdXRpbHMvcHJpc21hIiwgKCkgPT4gbW9ja1ByaXNtYSk7CgpqZXN0Lm1vY2soIi4uLy4uL3V0aWxzL2RhdGFiYXNlL3F1ZXJ5TGltaXRzIiwgKCkgPT4gKHsKICBjbGFtcExpbWl0OiAobGltaXQsIG9wdHMpID0+IGxpbWl0IHx8IG9wdHM/LmZhbGxiYWNrIHx8IDEwMCwKICBNQVhfTElTVF9MSU1JVDogMTAwLAp9KSk7Cgpjb25zdCB7IFNjaGVkdWxlZEpvYiB9ID0gcmVxdWlyZSgiLi4vLi4vbW9kZWxzL3NjaGVkdWxlZEpvYiIpOwpjb25zdCB7IFNjaGVkdWxlZEpvYlJ1biB9ID0gcmVxdWlyZSgiLi4vLi4vbW9kZWxzL3NjaGVkdWxlZEpvYlJ1biIpOwoKZGVzY3JpYmUoIlNjaGVkdWxlZEpvYiBtb2RlbCIsICgpID0+IHsKICBiZWZvcmVFYWNoKCgpID0+IGplc3QuY2xlYXJBbGxNb2NrcygpKTsKCiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgLy8gaXNWYWxpZENyb24KICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICBkZXNjcmliZSgiaXNWYWxpZENyb24iLCAoKSA9PiB7CiAgICBpdCgicmV0dXJucyB0cnVlIGZvciB2YWxpZCBjcm9uIGV4cHJlc3Npb25zIiwgKCkgPT4gewogICAgICBleHBlY3QoU2NoZWR1bGVkSm9iLmlzVmFsaWRDcm9uKCIwIDkgKiAqIDEtNSIpKS50b0JlKHRydWUpOwogICAgICBleHBlY3QoU2NoZWR1bGVkSm9iLmlzVmFsaWRDcm9uKCIqLzMwICogKiAqICoiKSkudG9CZSh0cnVlKTsKICAgICAgZXhwZWN0KFNjaGVkdWxlZEpvYi5pc1ZhbGlkQ3JvbigiMCAwIDEgKiAqIikpLnRvQmUodHJ1ZSk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyBmYWxzZSBmb3IgaW52YWxpZCBjcm9uIGV4cHJlc3Npb25zIiwgKCkgPT4gewogICAgICBleHBlY3QoU2NoZWR1bGVkSm9iLmlzVmFsaWRDcm9uKCJub3QtYS1jcm9uIikpLnRvQmUoZmFsc2UpOwogICAgICBleHBlY3QoU2NoZWR1bGVkSm9iLmlzVmFsaWRDcm9uKCIiKSkudG9CZShmYWxzZSk7CiAgICAgIGV4cGVjdChTY2hlZHVsZWRKb2IuaXNWYWxpZENyb24oIjEwMCA5OSA5OSA5OSA5OSIpKS50b0JlKGZhbHNlKTsKICAgIH0pOwogIH0pOwoKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAvLyBjb21wdXRlTmV4dFJ1bkF0CiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgZGVzY3JpYmUoImNvbXB1dGVOZXh0UnVuQXQiLCAoKSA9PiB7CiAgICBpdCgicmV0dXJucyBhIERhdGUgZm9yIHZhbGlkIGNyb24iLCAoKSA9PiB7CiAgICAgIGNvbnN0IHJlc3VsdCA9IFNjaGVkdWxlZEpvYi5jb21wdXRlTmV4dFJ1bkF0KCIwIDkgKiAqICoiKTsKICAgICAgZXhwZWN0KHJlc3VsdCkudG9CZUluc3RhbmNlT2YoRGF0ZSk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyBudWxsIGZvciBpbnZhbGlkIGNyb24iLCAoKSA9PiB7CiAgICAgIGNvbnN0IHJlc3VsdCA9IFNjaGVkdWxlZEpvYi5jb21wdXRlTmV4dFJ1bkF0KCJpbnZhbGlkIik7CiAgICAgIGV4cGVjdChyZXN1bHQpLnRvQmVOdWxsKCk7CiAgICB9KTsKICB9KTsKCiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgLy8gY3JlYXRlCiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgZGVzY3JpYmUoImNyZWF0ZSIsICgpID0+IHsKICAgIGl0KCJjcmVhdGVzIGEgam9iIHdpdGggdmFsaWQgY3JvbiBleHByZXNzaW9uIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCBmYWtlSm9iID0geyBpZDogMSwgbmFtZTogIkRhaWx5IFJlcG9ydCIsIHNjaGVkdWxlOiAiMCA5ICogKiAqIiwgZW5hYmxlZDogZmFsc2UgfTsKICAgICAgbW9ja1ByaXNtYS5zY2hlZHVsZWRfam9icy5jcmVhdGUubW9ja1Jlc29sdmVkVmFsdWUoZmFrZUpvYik7CgogICAgICBjb25zdCB7IGpvYiwgZXJyb3IgfSA9IGF3YWl0IFNjaGVkdWxlZEpvYi5jcmVhdGUoewogICAgICAgIG5hbWU6ICJEYWlseSBSZXBvcnQiLAogICAgICAgIHByb21wdDogIkdlbmVyYXRlIHJlcG9ydCIsCiAgICAgICAgc2NoZWR1bGU6ICIwIDkgKiAqICoiLAogICAgICB9KTsKCiAgICAgIGV4cGVjdChlcnJvcikudG9CZU51bGwoKTsKICAgICAgZXhwZWN0KGpvYikudG9FcXVhbChmYWtlSm9iKTsKICAgICAgZXhwZWN0KG1vY2tQcmlzbWEuc2NoZWR1bGVkX2pvYnMuY3JlYXRlKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgKICAgICAgICBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7CiAgICAgICAgICBkYXRhOiBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7CiAgICAgICAgICAgIG5hbWU6ICJEYWlseSBSZXBvcnQiLAogICAgICAgICAgICBzY2hlZHVsZTogIjAgOSAqICogKiIsCiAgICAgICAgICB9KSwKICAgICAgICB9KSwKICAgICAgKTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIGVycm9yIGZvciBpbnZhbGlkIGNyb24gZXhwcmVzc2lvbiIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3QgeyBqb2IsIGVycm9yIH0gPSBhd2FpdCBTY2hlZHVsZWRKb2IuY3JlYXRlKHsKICAgICAgICBuYW1lOiAiQmFkIEpvYiIsCiAgICAgICAgcHJvbXB0OiAidGVzdCIsCiAgICAgICAgc2NoZWR1bGU6ICJpbnZhbGlkLWNyb24iLAogICAgICB9KTsKCiAgICAgIGV4cGVjdChqb2IpLnRvQmVOdWxsKCk7CiAgICAgIGV4cGVjdChlcnJvcikudG9CZSgiSW52YWxpZCBjcm9uIGV4cHJlc3Npb24iKTsKICAgICAgZXhwZWN0KG1vY2tQcmlzbWEuc2NoZWR1bGVkX2pvYnMuY3JlYXRlKS5ub3QudG9IYXZlQmVlbkNhbGxlZCgpOwogICAgfSk7CgogICAgaXQoInNlcmlhbGl6ZXMgdG9vbHMgYXJyYXkgdG8gSlNPTiBzdHJpbmciLCBhc3luYyAoKSA9PiB7CiAgICAgIG1vY2tQcmlzbWEuc2NoZWR1bGVkX2pvYnMuY3JlYXRlLm1vY2tSZXNvbHZlZFZhbHVlKHsgaWQ6IDEgfSk7CiAgICAgIGF3YWl0IFNjaGVkdWxlZEpvYi5jcmVhdGUoewogICAgICAgIG5hbWU6ICJKb2IiLAogICAgICAgIHByb21wdDogInRlc3QiLAogICAgICAgIHRvb2xzOiBbInRvb2wxIiwgInRvb2wyIl0sCiAgICAgICAgc2NoZWR1bGU6ICIwIDkgKiAqICoiLAogICAgICB9KTsKCiAgICAgIGV4cGVjdChtb2NrUHJpc21hLnNjaGVkdWxlZF9qb2JzLmNyZWF0ZSkudG9IYXZlQmVlbkNhbGxlZFdpdGgoCiAgICAgICAgZXhwZWN0Lm9iamVjdENvbnRhaW5pbmcoewogICAgICAgICAgZGF0YTogZXhwZWN0Lm9iamVjdENvbnRhaW5pbmcoewogICAgICAgICAgICB0b29sczogSlNPTi5zdHJpbmdpZnkoWyJ0b29sMSIsICJ0b29sMiJdKSwKICAgICAgICAgIH0pLAogICAgICAgIH0pLAogICAgICApOwogICAgfSk7CgogICAgaXQoInNldHMgdG9vbHMgdG8gbnVsbCB3aGVuIG5vdCBwcm92aWRlZCIsIGFzeW5jICgpID0+IHsKICAgICAgbW9ja1ByaXNtYS5zY2hlZHVsZWRfam9icy5jcmVhdGUubW9ja1Jlc29sdmVkVmFsdWUoeyBpZDogMSB9KTsKICAgICAgYXdhaXQgU2NoZWR1bGVkSm9iLmNyZWF0ZSh7CiAgICAgICAgbmFtZTogIkpvYiIsCiAgICAgICAgcHJvbXB0OiAidGVzdCIsCiAgICAgICAgc2NoZWR1bGU6ICIwIDkgKiAqICoiLAogICAgICB9KTsKCiAgICAgIGV4cGVjdChtb2NrUHJpc21hLnNjaGVkdWxlZF9qb2JzLmNyZWF0ZSkudG9IYXZlQmVlbkNhbGxlZFdpdGgoCiAgICAgICAgZXhwZWN0Lm9iamVjdENvbnRhaW5pbmcoewogICAgICAgICAgZGF0YTogZXhwZWN0Lm9iamVjdENvbnRhaW5pbmcoeyB0b29sczogbnVsbCB9KSwKICAgICAgICB9KSwKICAgICAgKTsKICAgIH0pOwogIH0pOwoKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAvLyB1cGRhdGUKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICBkZXNjcmliZSgidXBkYXRlIiwgKCkgPT4gewogICAgaXQoInVwZGF0ZXMgd3JpdGFibGUgZmllbGRzIiwgYXN5bmMgKCkgPT4gewogICAgICBjb25zdCBmYWtlSm9iID0geyBpZDogMSwgbmFtZTogIlVwZGF0ZWQiLCBlbmFibGVkOiB0cnVlIH07CiAgICAgIG1vY2tQcmlzbWEuc2NoZWR1bGVkX2pvYnMudXBkYXRlLm1vY2tSZXNvbHZlZFZhbHVlKGZha2VKb2IpOwoKICAgICAgY29uc3QgeyBqb2IsIGVycm9yIH0gPSBhd2FpdCBTY2hlZHVsZWRKb2IudXBkYXRlKDEsIHsgbmFtZTogIlVwZGF0ZWQiIH0pOwoKICAgICAgZXhwZWN0KGVycm9yKS50b0JlTnVsbCgpOwogICAgICBleHBlY3Qoam9iKS50b0VxdWFsKGZha2VKb2IpOwogICAgICBleHBlY3QobW9ja1ByaXNtYS5zY2hlZHVsZWRfam9icy51cGRhdGUpLnRvSGF2ZUJlZW5DYWxsZWRXaXRoKAogICAgICAgIGV4cGVjdC5vYmplY3RDb250YWluaW5nKHsKICAgICAgICAgIHdoZXJlOiB7IGlkOiAxIH0sCiAgICAgICAgICBkYXRhOiBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7IG5hbWU6ICJVcGRhdGVkIiB9KSwKICAgICAgICB9KSwKICAgICAgKTsKICAgIH0pOwoKICAgIGl0KCJyZWplY3RzIGludmFsaWQgY3JvbiBvbiB1cGRhdGUiLCBhc3luYyAoKSA9PiB7CiAgICAgIGNvbnN0IHsgam9iLCBlcnJvciB9ID0gYXdhaXQgU2NoZWR1bGVkSm9iLnVwZGF0ZSgxLCB7IHNjaGVkdWxlOiAiYmFkIiB9KTsKCiAgICAgIGV4cGVjdChqb2IpLnRvQmVOdWxsKCk7CiAgICAgIGV4cGVjdChlcnJvcikudG9CZSgiSW52YWxpZCBjcm9uIGV4cHJlc3Npb24iKTsKICAgIH0pOwoKICAgIGl0KCJyZWNhbGN1bGF0ZXMgbmV4dFJ1bkF0IHdoZW4gc2NoZWR1bGUgY2hhbmdlcyIsIGFzeW5jICgpID0+IHsKICAgICAgbW9ja1ByaXNtYS5zY2hlZHVsZWRfam9icy51cGRhdGUubW9ja1Jlc29sdmVkVmFsdWUoeyBpZDogMSB9KTsKCiAgICAgIGF3YWl0IFNjaGVkdWxlZEpvYi51cGRhdGUoMSwgeyBzY2hlZHVsZTogIjAgMTAgKiAqICoiIH0pOwoKICAgICAgZXhwZWN0KG1vY2tQcmlzbWEuc2NoZWR1bGVkX2pvYnMudXBkYXRlKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgKICAgICAgICBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7CiAgICAgICAgICBkYXRhOiBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7CiAgICAgICAgICAgIHNjaGVkdWxlOiAiMCAxMCAqICogKiIsCiAgICAgICAgICAgIG5leHRSdW5BdDogZXhwZWN0LmFueShEYXRlKSwKICAgICAgICAgIH0pLAogICAgICAgIH0pLAogICAgICApOwogICAgfSk7CgogICAgaXQoInNlcmlhbGl6ZXMgdG9vbHMgb24gdXBkYXRlIiwgYXN5bmMgKCkgPT4gewogICAgICBtb2NrUHJpc21hLnNjaGVkdWxlZF9qb2JzLnVwZGF0ZS5tb2NrUmVzb2x2ZWRWYWx1ZSh7IGlkOiAxIH0pOwoKICAgICAgYXdhaXQgU2NoZWR1bGVkSm9iLnVwZGF0ZSgxLCB7IHRvb2xzOiBbImEiLCAiYiJdIH0pOwoKICAgICAgZXhwZWN0KG1vY2tQcmlzbWEuc2NoZWR1bGVkX2pvYnMudXBkYXRlKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgKICAgICAgICBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7CiAgICAgICAgICBkYXRhOiBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7IHRvb2xzOiBKU09OLnN0cmluZ2lmeShbImEiLCAiYiJdKSB9KSwKICAgICAgICB9KSwKICAgICAgKTsKICAgIH0pOwogIH0pOwoKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAvLyBnZXQgLyB3aGVyZSAvIGRlbGV0ZQogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIGRlc2NyaWJlKCJnZXQiLCAoKSA9PiB7CiAgICBpdCgicmV0dXJucyBqb2Igd2hlbiBmb3VuZCIsIGFzeW5jICgpID0+IHsKICAgICAgbW9ja1ByaXNtYS5zY2hlZHVsZWRfam9icy5maW5kRmlyc3QubW9ja1Jlc29sdmVkVmFsdWUoeyBpZDogMSwgbmFtZTogIkpvYiIgfSk7CgogICAgICBjb25zdCBqb2IgPSBhd2FpdCBTY2hlZHVsZWRKb2IuZ2V0KHsgaWQ6IDEgfSk7CiAgICAgIGV4cGVjdChqb2IpLnRvRXF1YWwoeyBpZDogMSwgbmFtZTogIkpvYiIgfSk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyBudWxsIHdoZW4gbm90IGZvdW5kIiwgYXN5bmMgKCkgPT4gewogICAgICBtb2NrUHJpc21hLnNjaGVkdWxlZF9qb2JzLmZpbmRGaXJzdC5tb2NrUmVzb2x2ZWRWYWx1ZShudWxsKTsKCiAgICAgIGNvbnN0IGpvYiA9IGF3YWl0IFNjaGVkdWxlZEpvYi5nZXQoeyBpZDogOTk5IH0pOwogICAgICBleHBlY3Qoam9iKS50b0JlTnVsbCgpOwogICAgfSk7CiAgfSk7CgogIGRlc2NyaWJlKCJ3aGVyZSIsICgpID0+IHsKICAgIGl0KCJyZXR1cm5zIGFycmF5IG9mIGpvYnMiLCBhc3luYyAoKSA9PiB7CiAgICAgIGNvbnN0IGZha2VKb2JzID0gW3sgaWQ6IDEgfSwgeyBpZDogMiB9XTsKICAgICAgbW9ja1ByaXNtYS5zY2hlZHVsZWRfam9icy5maW5kTWFueS5tb2NrUmVzb2x2ZWRWYWx1ZShmYWtlSm9icyk7CgogICAgICBjb25zdCBqb2JzID0gYXdhaXQgU2NoZWR1bGVkSm9iLndoZXJlKHt9KTsKICAgICAgZXhwZWN0KGpvYnMpLnRvRXF1YWwoZmFrZUpvYnMpOwogICAgfSk7CgogICAgaXQoInJldHVybnMgZW1wdHkgYXJyYXkgb24gZXJyb3IiLCBhc3luYyAoKSA9PiB7CiAgICAgIG1vY2tQcmlzbWEuc2NoZWR1bGVkX2pvYnMuZmluZE1hbnkubW9ja1JlamVjdGVkVmFsdWUobmV3IEVycm9yKCJEQiBlcnJvciIpKTsKCiAgICAgIGNvbnN0IGpvYnMgPSBhd2FpdCBTY2hlZHVsZWRKb2Iud2hlcmUoe30pOwogICAgICBleHBlY3Qoam9icykudG9FcXVhbChbXSk7CiAgICB9KTsKICB9KTsKCiAgZGVzY3JpYmUoImRlbGV0ZSIsICgpID0+IHsKICAgIGl0KCJyZXR1cm5zIHRydWUgb24gc3VjY2Vzc2Z1bCBkZWxldGUiLCBhc3luYyAoKSA9PiB7CiAgICAgIG1vY2tQcmlzbWEuc2NoZWR1bGVkX2pvYnMuZGVsZXRlLm1vY2tSZXNvbHZlZFZhbHVlKHt9KTsKCiAgICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IFNjaGVkdWxlZEpvYi5kZWxldGUoMSk7CiAgICAgIGV4cGVjdChyZXN1bHQpLnRvQmUodHJ1ZSk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyBmYWxzZSBvbiBlcnJvciIsIGFzeW5jICgpID0+IHsKICAgICAgbW9ja1ByaXNtYS5zY2hlZHVsZWRfam9icy5kZWxldGUubW9ja1JlamVjdGVkVmFsdWUobmV3IEVycm9yKCJOb3QgZm91bmQiKSk7CgogICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBTY2hlZHVsZWRKb2IuZGVsZXRlKDk5OSk7CiAgICAgIGV4cGVjdChyZXN1bHQpLnRvQmUoZmFsc2UpOwogICAgfSk7CiAgfSk7Cn0pOwoKZGVzY3JpYmUoIlNjaGVkdWxlZEpvYlJ1biBtb2RlbCIsICgpID0+IHsKICBiZWZvcmVFYWNoKCgpID0+IGplc3QuY2xlYXJBbGxNb2NrcygpKTsKCiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgLy8gc3RhcnQgKGNsYWltIGEgcnVuKQogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIGRlc2NyaWJlKCJzdGFydCIsICgpID0+IHsKICAgIGl0KCJjcmVhdGVzIGEgcXVldWVkIHJ1biB3aGVuIG5vIGluLWZsaWdodCBydW4gZXhpc3RzIiwgYXN5bmMgKCkgPT4gewogICAgICBtb2NrUHJpc21hLnNjaGVkdWxlZF9qb2JfcnVucy5maW5kRmlyc3QubW9ja1Jlc29sdmVkVmFsdWUobnVsbCk7CiAgICAgIGNvbnN0IGZha2VSdW4gPSB7IGlkOiAxLCBqb2JJZDogNSwgc3RhdHVzOiAicXVldWVkIiB9OwogICAgICBtb2NrUHJpc21hLnNjaGVkdWxlZF9qb2JfcnVucy5jcmVhdGUubW9ja1Jlc29sdmVkVmFsdWUoZmFrZVJ1bik7CgogICAgICBjb25zdCBydW4gPSBhd2FpdCBTY2hlZHVsZWRKb2JSdW4uc3RhcnQoNSk7CgogICAgICBleHBlY3QocnVuKS50b0VxdWFsKGZha2VSdW4pOwogICAgICBleHBlY3QobW9ja1ByaXNtYS5zY2hlZHVsZWRfam9iX3J1bnMuY3JlYXRlKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgKICAgICAgICBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7CiAgICAgICAgICBkYXRhOiBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7CiAgICAgICAgICAgIGpvYklkOiA1LAogICAgICAgICAgICBzdGF0dXM6ICJxdWV1ZWQiLAogICAgICAgICAgfSksCiAgICAgICAgfSksCiAgICAgICk7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyBudWxsIHdoZW4gYSBydW4gaXMgYWxyZWFkeSBpbiBmbGlnaHQgKGRlZHVwKSIsIGFzeW5jICgpID0+IHsKICAgICAgbW9ja1ByaXNtYS5zY2hlZHVsZWRfam9iX3J1bnMuZmluZEZpcnN0Lm1vY2tSZXNvbHZlZFZhbHVlKHsgaWQ6IDk5IH0pOwoKICAgICAgY29uc3QgcnVuID0gYXdhaXQgU2NoZWR1bGVkSm9iUnVuLnN0YXJ0KDUpOwoKICAgICAgZXhwZWN0KHJ1bikudG9CZU51bGwoKTsKICAgICAgZXhwZWN0KG1vY2tQcmlzbWEuc2NoZWR1bGVkX2pvYl9ydW5zLmNyZWF0ZSkubm90LnRvSGF2ZUJlZW5DYWxsZWQoKTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIG51bGwgb24gZXJyb3IiLCBhc3luYyAoKSA9PiB7CiAgICAgIG1vY2tQcmlzbWEuc2NoZWR1bGVkX2pvYl9ydW5zLmZpbmRGaXJzdC5tb2NrUmVqZWN0ZWRWYWx1ZShuZXcgRXJyb3IoIkRCIGVycm9yIikpOwoKICAgICAgY29uc3QgcnVuID0gYXdhaXQgU2NoZWR1bGVkSm9iUnVuLnN0YXJ0KDUpOwogICAgICBleHBlY3QocnVuKS50b0JlTnVsbCgpOwogICAgfSk7CiAgfSk7CgogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIC8vIG1hcmtSdW5uaW5nIChxdWV1ZWQg4oaSIHJ1bm5pbmcpCiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgZGVzY3JpYmUoIm1hcmtSdW5uaW5nIiwgKCkgPT4gewogICAgaXQoInRyYW5zaXRpb25zIHF1ZXVlZCBydW4gdG8gcnVubmluZyIsIGFzeW5jICgpID0+IHsKICAgICAgbW9ja1ByaXNtYS5zY2hlZHVsZWRfam9iX3J1bnMudXBkYXRlTWFueS5tb2NrUmVzb2x2ZWRWYWx1ZSh7IGNvdW50OiAxIH0pOwoKICAgICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgU2NoZWR1bGVkSm9iUnVuLm1hcmtSdW5uaW5nKDEpOwoKICAgICAgZXhwZWN0KHJlc3VsdCkudG9CZSh0cnVlKTsKICAgICAgZXhwZWN0KG1vY2tQcmlzbWEuc2NoZWR1bGVkX2pvYl9ydW5zLnVwZGF0ZU1hbnkpLnRvSGF2ZUJlZW5DYWxsZWRXaXRoKAogICAgICAgIGV4cGVjdC5vYmplY3RDb250YWluaW5nKHsKICAgICAgICAgIHdoZXJlOiB7IGlkOiAxLCBzdGF0dXM6ICJxdWV1ZWQiIH0sCiAgICAgICAgICBkYXRhOiBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7CiAgICAgICAgICAgIHN0YXR1czogInJ1bm5pbmciLAogICAgICAgICAgICBzdGFydGVkQXQ6IGV4cGVjdC5hbnkoRGF0ZSksCiAgICAgICAgICB9KSwKICAgICAgICB9KSwKICAgICAgKTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIGZhbHNlIHdoZW4gcnVuIGlzIG5vdCBpbiBxdWV1ZWQgc3RhdGUiLCBhc3luYyAoKSA9PiB7CiAgICAgIG1vY2tQcmlzbWEuc2NoZWR1bGVkX2pvYl9ydW5zLnVwZGF0ZU1hbnkubW9ja1Jlc29sdmVkVmFsdWUoeyBjb3VudDogMCB9KTsKCiAgICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IFNjaGVkdWxlZEpvYlJ1bi5tYXJrUnVubmluZygxKTsKICAgICAgZXhwZWN0KHJlc3VsdCkudG9CZShmYWxzZSk7CiAgICB9KTsKICB9KTsKCiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgLy8gY29tcGxldGUgKHJ1bm5pbmcg4oaSIGNvbXBsZXRlZCkKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICBkZXNjcmliZSgiY29tcGxldGUiLCAoKSA9PiB7CiAgICBpdCgibWFya3MgYSBydW4gYXMgY29tcGxldGVkIHdpdGggcmVzdWx0IiwgYXN5bmMgKCkgPT4gewogICAgICBtb2NrUHJpc21hLnNjaGVkdWxlZF9qb2JfcnVucy51cGRhdGVNYW55Lm1vY2tSZXNvbHZlZFZhbHVlKHsgY291bnQ6IDEgfSk7CiAgICAgIG1vY2tQcmlzbWEuc2NoZWR1bGVkX2pvYl9ydW5zLmZpbmRGaXJzdC5tb2NrUmVzb2x2ZWRWYWx1ZSh7CiAgICAgICAgaWQ6IDEsCiAgICAgICAgc3RhdHVzOiAiY29tcGxldGVkIiwKICAgICAgICByZXN1bHQ6ICd7InRleHQiOiJkb25lIn0nLAogICAgICB9KTsKCiAgICAgIGNvbnN0IHJ1biA9IGF3YWl0IFNjaGVkdWxlZEpvYlJ1bi5jb21wbGV0ZSgxLCB7IHJlc3VsdDogeyB0ZXh0OiAiZG9uZSIgfSB9KTsKCiAgICAgIGV4cGVjdChydW4pLm5vdC50b0JlTnVsbCgpOwogICAgICBleHBlY3QocnVuLnN0YXR1cykudG9CZSgiY29tcGxldGVkIik7CiAgICAgIGV4cGVjdChtb2NrUHJpc21hLnNjaGVkdWxlZF9qb2JfcnVucy51cGRhdGVNYW55KS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgKICAgICAgICBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7CiAgICAgICAgICBkYXRhOiBleHBlY3Qub2JqZWN0Q29udGFpbmluZyh7CiAgICAgICAgICAgIHN0YXR1czogImNvbXBsZXRlZCIsCiAgICAgICAgICAgIHJlc3VsdDogSlNPTi5zdHJpbmdpZnkoeyB0ZXh0OiAiZG9uZSIgfSksCiAgICAgICAgICB9KSwKICAgICAgICB9KSwKICAgICAgKTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIG51bGwgd2hlbiBydW4gaXMgYWxyZWFkeSB0ZXJtaW5hbCIsIGFzeW5jICgpID0+IHsKICAgICAgbW9ja1ByaXNtYS5zY2hlZHVsZWRfam9iX3J1bnMudXBkYXRlTWFueS5tb2NrUmVzb2x2ZWRWYWx1ZSh7IGNvdW50OiAwIH0pOwoKICAgICAgY29uc3QgcnVuID0gYXdhaXQgU2NoZWR1bGVkSm9iUnVuLmNvbXBsZXRlKDEsIHsgcmVzdWx0OiAidGVzdCIgfSk7CiAgICAgIGV4cGVjdChydW4pLnRvQmVOdWxsKCk7CiAgICB9KTsKICB9KTsKCiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgLy8gZmFpbCAocnVubmluZyDihpIgZmFpbGVkKQogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIGRlc2NyaWJlKCJmYWlsIiwgKCkgPT4gewogICAgaXQoIm1hcmtzIGEgcnVuIGFzIGZhaWxlZCB3aXRoIGVycm9yIG1lc3NhZ2UiLCBhc3luYyAoKSA9PiB7CiAgICAgIG1vY2tQcmlzbWEuc2NoZWR1bGVkX2pvYl9ydW5zLnVwZGF0ZU1hbnkubW9ja1Jlc29sdmVkVmFsdWUoeyBjb3VudDogMSB9KTsKICAgICAgbW9ja1ByaXNtYS5zY2hlZHVsZWRfam9iX3J1bnMuZmluZEZpcnN0Lm1vY2tSZXNvbHZlZFZhbHVlKHsKICAgICAgICBpZDogMSwKICAgICAgICBzdGF0dXM6ICJmYWlsZWQiLAogICAgICAgIGVycm9yOiAiU29tZXRoaW5nIHdlbnQgd3JvbmciLAogICAgICB9KTsKCiAgICAgIGNvbnN0IHJ1biA9IGF3YWl0IFNjaGVkdWxlZEpvYlJ1bi5mYWlsKDEsIHsgZXJyb3I6ICJTb21ldGhpbmcgd2VudCB3cm9uZyIgfSk7CgogICAgICBleHBlY3QocnVuKS5ub3QudG9CZU51bGwoKTsKICAgICAgZXhwZWN0KHJ1bi5zdGF0dXMpLnRvQmUoImZhaWxlZCIpOwogICAgICBleHBlY3QocnVuLmVycm9yKS50b0JlKCJTb21ldGhpbmcgd2VudCB3cm9uZyIpOwogICAgfSk7CgogICAgaXQoInJldHVybnMgbnVsbCB3aGVuIHJ1biBpcyBhbHJlYWR5IHRlcm1pbmFsIiwgYXN5bmMgKCkgPT4gewogICAgICBtb2NrUHJpc21hLnNjaGVkdWxlZF9qb2JfcnVucy51cGRhdGVNYW55Lm1vY2tSZXNvbHZlZFZhbHVlKHsgY291bnQ6IDAgfSk7CgogICAgICBjb25zdCBydW4gPSBhd2FpdCBTY2hlZHVsZWRKb2JSdW4uZmFpbCgxLCB7IGVycm9yOiAidGVzdCIgfSk7CiAgICAgIGV4cGVjdChydW4pLnRvQmVOdWxsKCk7CiAgICB9KTsKICB9KTsKCiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgLy8gdGltZW91dCAocnVubmluZyDihpIgdGltZWRfb3V0KQogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIGRlc2NyaWJlKCJ0aW1lb3V0IiwgKCkgPT4gewogICAgaXQoIm1hcmtzIGEgcnVuIGFzIHRpbWVkX291dCIsIGFzeW5jICgpID0+IHsKICAgICAgbW9ja1ByaXNtYS5zY2hlZHVsZWRfam9iX3J1bnMudXBkYXRlTWFueS5tb2NrUmVzb2x2ZWRWYWx1ZSh7IGNvdW50OiAxIH0pOwogICAgICBtb2NrUHJpc21hLnNjaGVkdWxlZF9qb2JfcnVucy5maW5kRmlyc3QubW9ja1Jlc29sdmVkVmFsdWUoewogICAgICAgIGlkOiAxLAogICAgICAgIHN0YXR1czogInRpbWVkX291dCIsCiAgICAgICAgZXJyb3I6ICJKb2IgZXhlY3V0aW9uIHRpbWVkIG91dCIsCiAgICAgIH0pOwoKICAgICAgY29uc3QgcnVuID0gYXdhaXQgU2NoZWR1bGVkSm9iUnVuLnRpbWVvdXQoMSk7CgogICAgICBleHBlY3QocnVuKS5ub3QudG9CZU51bGwoKTsKICAgICAgZXhwZWN0KHJ1bi5zdGF0dXMpLnRvQmUoInRpbWVkX291dCIpOwogICAgICBleHBlY3QocnVuLmVycm9yKS50b0JlKCJKb2IgZXhlY3V0aW9uIHRpbWVkIG91dCIpOwogICAgfSk7CgogICAgaXQoInJldHVybnMgbnVsbCB3aGVuIHJ1biBpcyBhbHJlYWR5IHRlcm1pbmFsIiwgYXN5bmMgKCkgPT4gewogICAgICBtb2NrUHJpc21hLnNjaGVkdWxlZF9qb2JfcnVucy51cGRhdGVNYW55Lm1vY2tSZXNvbHZlZFZhbHVlKHsgY291bnQ6IDAgfSk7CgogICAgICBjb25zdCBydW4gPSBhd2FpdCBTY2hlZHVsZWRKb2JSdW4udGltZW91dCgxKTsKICAgICAgZXhwZWN0KHJ1bikudG9CZU51bGwoKTsKICAgIH0pOwogIH0pOwoKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAvLyBmYWlsSWZOb3RUZXJtaW5hbAogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIGRlc2NyaWJlKCJmYWlsSWZOb3RUZXJtaW5hbCIsICgpID0+IHsKICAgIGl0KCJjb25kaXRpb25hbGx5IGZhaWxzIGEgbm9uLXRlcm1pbmFsIHJ1biIsIGFzeW5jICgpID0+IHsKICAgICAgbW9ja1ByaXNtYS5zY2hlZHVsZWRfam9iX3J1bnMudXBkYXRlTWFueS5tb2NrUmVzb2x2ZWRWYWx1ZSh7IGNvdW50OiAxIH0pOwoKICAgICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgU2NoZWR1bGVkSm9iUnVuLmZhaWxJZk5vdFRlcm1pbmFsKDEsICJXb3JrZXIgY3Jhc2hlZCIpOwogICAgICBleHBlY3QocmVzdWx0KS50b0JlKHRydWUpOwogICAgfSk7CgogICAgaXQoImRvZXMgbm90IGZhaWwgYW4gYWxyZWFkeS10ZXJtaW5hbCBydW4iLCBhc3luYyAoKSA9PiB7CiAgICAgIG1vY2tQcmlzbWEuc2NoZWR1bGVkX2pvYl9ydW5zLnVwZGF0ZU1hbnkubW9ja1Jlc29sdmVkVmFsdWUoeyBjb3VudDogMCB9KTsKCiAgICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IFNjaGVkdWxlZEpvYlJ1bi5mYWlsSWZOb3RUZXJtaW5hbCgxLCAiV29ya2VyIGNyYXNoZWQiKTsKICAgICAgZXhwZWN0KHJlc3VsdCkudG9CZShmYWxzZSk7CiAgICB9KTsKICB9KTsKCiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgLy8gTGlmZWN5Y2xlOiBxdWV1ZWQg4oaSIHJ1bm5pbmcg4oaSIGNvbXBsZXRlZAogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIGRlc2NyaWJlKCJmdWxsIGxpZmVjeWNsZSIsICgpID0+IHsKICAgIGl0KCJxdWV1ZWQg4oaSIHJ1bm5pbmcg4oaSIGNvbXBsZXRlZCIsIGFzeW5jICgpID0+IHsKICAgICAgLy8gU3RhcnQ6IGNyZWF0ZSBxdWV1ZWQgcnVuCiAgICAgIG1vY2tQcmlzbWEuc2NoZWR1bGVkX2pvYl9ydW5zLmZpbmRGaXJzdC5tb2NrUmVzb2x2ZWRWYWx1ZShudWxsKTsKICAgICAgbW9ja1ByaXNtYS5zY2hlZHVsZWRfam9iX3J1bnMuY3JlYXRlLm1vY2tSZXNvbHZlZFZhbHVlKHsKICAgICAgICBpZDogMTAsCiAgICAgICAgam9iSWQ6IDEsCiAgICAgICAgc3RhdHVzOiAicXVldWVkIiwKICAgICAgfSk7CiAgICAgIGNvbnN0IHN0YXJ0ZWQgPSBhd2FpdCBTY2hlZHVsZWRKb2JSdW4uc3RhcnQoMSk7CiAgICAgIGV4cGVjdChzdGFydGVkLnN0YXR1cykudG9CZSgicXVldWVkIik7CgogICAgICAvLyBNYXJrIHJ1bm5pbmcKICAgICAgbW9ja1ByaXNtYS5zY2hlZHVsZWRfam9iX3J1bnMudXBkYXRlTWFueS5tb2NrUmVzb2x2ZWRWYWx1ZSh7IGNvdW50OiAxIH0pOwogICAgICBjb25zdCBydW5uaW5nID0gYXdhaXQgU2NoZWR1bGVkSm9iUnVuLm1hcmtSdW5uaW5nKDEwKTsKICAgICAgZXhwZWN0KHJ1bm5pbmcpLnRvQmUodHJ1ZSk7CgogICAgICAvLyBDb21wbGV0ZQogICAgICBtb2NrUHJpc21hLnNjaGVkdWxlZF9qb2JfcnVucy5maW5kRmlyc3QubW9ja1Jlc29sdmVkVmFsdWUoewogICAgICAgIGlkOiAxMCwKICAgICAgICBzdGF0dXM6ICJjb21wbGV0ZWQiLAogICAgICAgIHJlc3VsdDogJ3sidGV4dCI6Im9rIn0nLAogICAgICB9KTsKICAgICAgY29uc3QgY29tcGxldGVkID0gYXdhaXQgU2NoZWR1bGVkSm9iUnVuLmNvbXBsZXRlKDEwLCB7IHJlc3VsdDogeyB0ZXh0OiAib2siIH0gfSk7CiAgICAgIGV4cGVjdChjb21wbGV0ZWQuc3RhdHVzKS50b0JlKCJjb21wbGV0ZWQiKTsKICAgIH0pOwoKICAgIGl0KCJxdWV1ZWQg4oaSIHJ1bm5pbmcg4oaSIGZhaWxlZCIsIGFzeW5jICgpID0+IHsKICAgICAgbW9ja1ByaXNtYS5zY2hlZHVsZWRfam9iX3J1bnMuZmluZEZpcnN0Lm1vY2tSZXNvbHZlZFZhbHVlKG51bGwpOwogICAgICBtb2NrUHJpc21hLnNjaGVkdWxlZF9qb2JfcnVucy5jcmVhdGUubW9ja1Jlc29sdmVkVmFsdWUoewogICAgICAgIGlkOiAyMCwKICAgICAgICBqb2JJZDogMiwKICAgICAgICBzdGF0dXM6ICJxdWV1ZWQiLAogICAgICB9KTsKICAgICAgY29uc3Qgc3RhcnRlZCA9IGF3YWl0IFNjaGVkdWxlZEpvYlJ1bi5zdGFydCgyKTsKICAgICAgZXhwZWN0KHN0YXJ0ZWQuc3RhdHVzKS50b0JlKCJxdWV1ZWQiKTsKCiAgICAgIG1vY2tQcmlzbWEuc2NoZWR1bGVkX2pvYl9ydW5zLnVwZGF0ZU1hbnkubW9ja1Jlc29sdmVkVmFsdWUoeyBjb3VudDogMSB9KTsKICAgICAgYXdhaXQgU2NoZWR1bGVkSm9iUnVuLm1hcmtSdW5uaW5nKDIwKTsKCiAgICAgIG1vY2tQcmlzbWEuc2NoZWR1bGVkX2pvYl9ydW5zLmZpbmRGaXJzdC5tb2NrUmVzb2x2ZWRWYWx1ZSh7CiAgICAgICAgaWQ6IDIwLAogICAgICAgIHN0YXR1czogImZhaWxlZCIsCiAgICAgICAgZXJyb3I6ICJFeGVjdXRpb24gZXJyb3IiLAogICAgICB9KTsKICAgICAgY29uc3QgZmFpbGVkID0gYXdhaXQgU2NoZWR1bGVkSm9iUnVuLmZhaWwoMjAsIHsgZXJyb3I6ICJFeGVjdXRpb24gZXJyb3IiIH0pOwogICAgICBleHBlY3QoZmFpbGVkLnN0YXR1cykudG9CZSgiZmFpbGVkIik7CiAgICAgIGV4cGVjdChmYWlsZWQuZXJyb3IpLnRvQmUoIkV4ZWN1dGlvbiBlcnJvciIpOwogICAgfSk7CiAgfSk7Cn0pOwo=
+// SPDX-License-Identifier: MIT
+// Tests for ScheduledJob and ScheduledJobRun models (Issue #384).
+//
+// Covers the job lifecycle: creation, cron validation, status transitions
+// (queued → running → completed/failed), timeout, dedup, and cleanup.
+
+jest.mock("../../utils/logger/console.js", () => ({
+  error: jest.fn(),
+  log: jest.fn(),
+}));
+
+// Mock prisma with a realistic in-memory store
+const mockPrisma = {
+  scheduled_jobs: {
+    create: jest.fn(),
+    update: jest.fn(),
+    findFirst: jest.fn(),
+    findMany: jest.fn(),
+    delete: jest.fn(),
+    count: jest.fn(),
+  },
+  scheduled_job_runs: {
+    create: jest.fn(),
+    updateMany: jest.fn(),
+    findFirst: jest.fn(),
+    findMany: jest.fn(),
+    deleteMany: jest.fn(),
+    count: jest.fn(),
+  },
+  $transaction: jest.fn(async (fn) => fn(mockPrisma)),
+};
+
+jest.mock("../../utils/prisma", () => mockPrisma);
+
+jest.mock("../../utils/database/queryLimits", () => ({
+  clampLimit: (limit, opts) => limit || opts?.fallback || 100,
+  MAX_LIST_LIMIT: 100,
+}));
+
+const { ScheduledJob } = require("../../models/scheduledJob");
+const { ScheduledJobRun } = require("../../models/scheduledJobRun");
+
+describe("ScheduledJob model", () => {
+  beforeEach(() => jest.clearAllMocks());
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // isValidCron
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("isValidCron", () => {
+    it("returns true for valid cron expressions", () => {
+      expect(ScheduledJob.isValidCron("0 9 * * 1-5")).toBe(true);
+      expect(ScheduledJob.isValidCron("*/30 * * * *")).toBe(true);
+      expect(ScheduledJob.isValidCron("0 0 1 * *")).toBe(true);
+    });
+
+    it("returns false for invalid cron expressions", () => {
+      expect(ScheduledJob.isValidCron("not-a-cron")).toBe(false);
+      expect(ScheduledJob.isValidCron("")).toBe(false);
+      expect(ScheduledJob.isValidCron("100 99 99 99 99")).toBe(false);
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // computeNextRunAt
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("computeNextRunAt", () => {
+    it("returns a Date for valid cron", () => {
+      const result = ScheduledJob.computeNextRunAt("0 9 * * *");
+      expect(result).toBeInstanceOf(Date);
+    });
+
+    it("returns null for invalid cron", () => {
+      const result = ScheduledJob.computeNextRunAt("invalid");
+      expect(result).toBeNull();
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // create
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("create", () => {
+    it("creates a job with valid cron expression", async () => {
+      const fakeJob = { id: 1, name: "Daily Report", schedule: "0 9 * * *", enabled: false };
+      mockPrisma.scheduled_jobs.create.mockResolvedValue(fakeJob);
+
+      const { job, error } = await ScheduledJob.create({
+        name: "Daily Report",
+        prompt: "Generate report",
+        schedule: "0 9 * * *",
+      });
+
+      expect(error).toBeNull();
+      expect(job).toEqual(fakeJob);
+      expect(mockPrisma.scheduled_jobs.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            name: "Daily Report",
+            schedule: "0 9 * * *",
+          }),
+        }),
+      );
+    });
+
+    it("returns error for invalid cron expression", async () => {
+      const { job, error } = await ScheduledJob.create({
+        name: "Bad Job",
+        prompt: "test",
+        schedule: "invalid-cron",
+      });
+
+      expect(job).toBeNull();
+      expect(error).toBe("Invalid cron expression");
+      expect(mockPrisma.scheduled_jobs.create).not.toHaveBeenCalled();
+    });
+
+    it("serializes tools array to JSON string", async () => {
+      mockPrisma.scheduled_jobs.create.mockResolvedValue({ id: 1 });
+      await ScheduledJob.create({
+        name: "Job",
+        prompt: "test",
+        tools: ["tool1", "tool2"],
+        schedule: "0 9 * * *",
+      });
+
+      expect(mockPrisma.scheduled_jobs.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            tools: JSON.stringify(["tool1", "tool2"]),
+          }),
+        }),
+      );
+    });
+
+    it("sets tools to null when not provided", async () => {
+      mockPrisma.scheduled_jobs.create.mockResolvedValue({ id: 1 });
+      await ScheduledJob.create({
+        name: "Job",
+        prompt: "test",
+        schedule: "0 9 * * *",
+      });
+
+      expect(mockPrisma.scheduled_jobs.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({ tools: null }),
+        }),
+      );
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // update
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("update", () => {
+    it("updates writable fields", async () => {
+      const fakeJob = { id: 1, name: "Updated", enabled: true };
+      mockPrisma.scheduled_jobs.update.mockResolvedValue(fakeJob);
+
+      const { job, error } = await ScheduledJob.update(1, { name: "Updated" });
+
+      expect(error).toBeNull();
+      expect(job).toEqual(fakeJob);
+      expect(mockPrisma.scheduled_jobs.update).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: { id: 1 },
+          data: expect.objectContaining({ name: "Updated" }),
+        }),
+      );
+    });
+
+    it("rejects invalid cron on update", async () => {
+      const { job, error } = await ScheduledJob.update(1, { schedule: "bad" });
+
+      expect(job).toBeNull();
+      expect(error).toBe("Invalid cron expression");
+    });
+
+    it("recalculates nextRunAt when schedule changes", async () => {
+      mockPrisma.scheduled_jobs.update.mockResolvedValue({ id: 1 });
+
+      await ScheduledJob.update(1, { schedule: "0 10 * * *" });
+
+      expect(mockPrisma.scheduled_jobs.update).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            schedule: "0 10 * * *",
+            nextRunAt: expect.any(Date),
+          }),
+        }),
+      );
+    });
+
+    it("serializes tools on update", async () => {
+      mockPrisma.scheduled_jobs.update.mockResolvedValue({ id: 1 });
+
+      await ScheduledJob.update(1, { tools: ["a", "b"] });
+
+      expect(mockPrisma.scheduled_jobs.update).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({ tools: JSON.stringify(["a", "b"]) }),
+        }),
+      );
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // get / where / delete
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("get", () => {
+    it("returns job when found", async () => {
+      mockPrisma.scheduled_jobs.findFirst.mockResolvedValue({ id: 1, name: "Job" });
+
+      const job = await ScheduledJob.get({ id: 1 });
+      expect(job).toEqual({ id: 1, name: "Job" });
+    });
+
+    it("returns null when not found", async () => {
+      mockPrisma.scheduled_jobs.findFirst.mockResolvedValue(null);
+
+      const job = await ScheduledJob.get({ id: 999 });
+      expect(job).toBeNull();
+    });
+  });
+
+  describe("where", () => {
+    it("returns array of jobs", async () => {
+      const fakeJobs = [{ id: 1 }, { id: 2 }];
+      mockPrisma.scheduled_jobs.findMany.mockResolvedValue(fakeJobs);
+
+      const jobs = await ScheduledJob.where({});
+      expect(jobs).toEqual(fakeJobs);
+    });
+
+    it("returns empty array on error", async () => {
+      mockPrisma.scheduled_jobs.findMany.mockRejectedValue(new Error("DB error"));
+
+      const jobs = await ScheduledJob.where({});
+      expect(jobs).toEqual([]);
+    });
+  });
+
+  describe("delete", () => {
+    it("returns true on successful delete", async () => {
+      mockPrisma.scheduled_jobs.delete.mockResolvedValue({});
+
+      const result = await ScheduledJob.delete(1);
+      expect(result).toBe(true);
+    });
+
+    it("returns false on error", async () => {
+      mockPrisma.scheduled_jobs.delete.mockRejectedValue(new Error("Not found"));
+
+      const result = await ScheduledJob.delete(999);
+      expect(result).toBe(false);
+    });
+  });
+});
+
+describe("ScheduledJobRun model", () => {
+  beforeEach(() => jest.clearAllMocks());
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // start (claim a run)
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("start", () => {
+    it("creates a queued run when no in-flight run exists", async () => {
+      mockPrisma.scheduled_job_runs.findFirst.mockResolvedValue(null);
+      const fakeRun = { id: 1, jobId: 5, status: "queued" };
+      mockPrisma.scheduled_job_runs.create.mockResolvedValue(fakeRun);
+
+      const run = await ScheduledJobRun.start(5);
+
+      expect(run).toEqual(fakeRun);
+      expect(mockPrisma.scheduled_job_runs.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            jobId: 5,
+            status: "queued",
+          }),
+        }),
+      );
+    });
+
+    it("returns null when a run is already in flight (dedup)", async () => {
+      mockPrisma.scheduled_job_runs.findFirst.mockResolvedValue({ id: 99 });
+
+      const run = await ScheduledJobRun.start(5);
+
+      expect(run).toBeNull();
+      expect(mockPrisma.scheduled_job_runs.create).not.toHaveBeenCalled();
+    });
+
+    it("returns null on error", async () => {
+      mockPrisma.scheduled_job_runs.findFirst.mockRejectedValue(new Error("DB error"));
+
+      const run = await ScheduledJobRun.start(5);
+      expect(run).toBeNull();
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // markRunning (queued → running)
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("markRunning", () => {
+    it("transitions queued run to running", async () => {
+      mockPrisma.scheduled_job_runs.updateMany.mockResolvedValue({ count: 1 });
+
+      const result = await ScheduledJobRun.markRunning(1);
+
+      expect(result).toBe(true);
+      expect(mockPrisma.scheduled_job_runs.updateMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: { id: 1, status: "queued" },
+          data: expect.objectContaining({
+            status: "running",
+            startedAt: expect.any(Date),
+          }),
+        }),
+      );
+    });
+
+    it("returns false when run is not in queued state", async () => {
+      mockPrisma.scheduled_job_runs.updateMany.mockResolvedValue({ count: 0 });
+
+      const result = await ScheduledJobRun.markRunning(1);
+      expect(result).toBe(false);
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // complete (running → completed)
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("complete", () => {
+    it("marks a run as completed with result", async () => {
+      mockPrisma.scheduled_job_runs.updateMany.mockResolvedValue({ count: 1 });
+      mockPrisma.scheduled_job_runs.findFirst.mockResolvedValue({
+        id: 1,
+        status: "completed",
+        result: '{"text":"done"}',
+      });
+
+      const run = await ScheduledJobRun.complete(1, { result: { text: "done" } });
+
+      expect(run).not.toBeNull();
+      expect(run.status).toBe("completed");
+      expect(mockPrisma.scheduled_job_runs.updateMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            status: "completed",
+            result: JSON.stringify({ text: "done" }),
+          }),
+        }),
+      );
+    });
+
+    it("returns null when run is already terminal", async () => {
+      mockPrisma.scheduled_job_runs.updateMany.mockResolvedValue({ count: 0 });
+
+      const run = await ScheduledJobRun.complete(1, { result: "test" });
+      expect(run).toBeNull();
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // fail (running → failed)
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("fail", () => {
+    it("marks a run as failed with error message", async () => {
+      mockPrisma.scheduled_job_runs.updateMany.mockResolvedValue({ count: 1 });
+      mockPrisma.scheduled_job_runs.findFirst.mockResolvedValue({
+        id: 1,
+        status: "failed",
+        error: "Something went wrong",
+      });
+
+      const run = await ScheduledJobRun.fail(1, { error: "Something went wrong" });
+
+      expect(run).not.toBeNull();
+      expect(run.status).toBe("failed");
+      expect(run.error).toBe("Something went wrong");
+    });
+
+    it("returns null when run is already terminal", async () => {
+      mockPrisma.scheduled_job_runs.updateMany.mockResolvedValue({ count: 0 });
+
+      const run = await ScheduledJobRun.fail(1, { error: "test" });
+      expect(run).toBeNull();
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // timeout (running → timed_out)
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("timeout", () => {
+    it("marks a run as timed_out", async () => {
+      mockPrisma.scheduled_job_runs.updateMany.mockResolvedValue({ count: 1 });
+      mockPrisma.scheduled_job_runs.findFirst.mockResolvedValue({
+        id: 1,
+        status: "timed_out",
+        error: "Job execution timed out",
+      });
+
+      const run = await ScheduledJobRun.timeout(1);
+
+      expect(run).not.toBeNull();
+      expect(run.status).toBe("timed_out");
+      expect(run.error).toBe("Job execution timed out");
+    });
+
+    it("returns null when run is already terminal", async () => {
+      mockPrisma.scheduled_job_runs.updateMany.mockResolvedValue({ count: 0 });
+
+      const run = await ScheduledJobRun.timeout(1);
+      expect(run).toBeNull();
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // failIfNotTerminal
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("failIfNotTerminal", () => {
+    it("conditionally fails a non-terminal run", async () => {
+      mockPrisma.scheduled_job_runs.updateMany.mockResolvedValue({ count: 1 });
+
+      const result = await ScheduledJobRun.failIfNotTerminal(1, "Worker crashed");
+      expect(result).toBe(true);
+    });
+
+    it("does not fail an already-terminal run", async () => {
+      mockPrisma.scheduled_job_runs.updateMany.mockResolvedValue({ count: 0 });
+
+      const result = await ScheduledJobRun.failIfNotTerminal(1, "Worker crashed");
+      expect(result).toBe(false);
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // Lifecycle: queued → running → completed
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("full lifecycle", () => {
+    it("queued → running → completed", async () => {
+      // Start: create queued run
+      mockPrisma.scheduled_job_runs.findFirst.mockResolvedValue(null);
+      mockPrisma.scheduled_job_runs.create.mockResolvedValue({
+        id: 10,
+        jobId: 1,
+        status: "queued",
+      });
+      const started = await ScheduledJobRun.start(1);
+      expect(started.status).toBe("queued");
+
+      // Mark running
+      mockPrisma.scheduled_job_runs.updateMany.mockResolvedValue({ count: 1 });
+      const running = await ScheduledJobRun.markRunning(10);
+      expect(running).toBe(true);
+
+      // Complete
+      mockPrisma.scheduled_job_runs.findFirst.mockResolvedValue({
+        id: 10,
+        status: "completed",
+        result: '{"text":"ok"}',
+      });
+      const completed = await ScheduledJobRun.complete(10, { result: { text: "ok" } });
+      expect(completed.status).toBe("completed");
+    });
+
+    it("queued → running → failed", async () => {
+      mockPrisma.scheduled_job_runs.findFirst.mockResolvedValue(null);
+      mockPrisma.scheduled_job_runs.create.mockResolvedValue({
+        id: 20,
+        jobId: 2,
+        status: "queued",
+      });
+      const started = await ScheduledJobRun.start(2);
+      expect(started.status).toBe("queued");
+
+      mockPrisma.scheduled_job_runs.updateMany.mockResolvedValue({ count: 1 });
+      await ScheduledJobRun.markRunning(20);
+
+      mockPrisma.scheduled_job_runs.findFirst.mockResolvedValue({
+        id: 20,
+        status: "failed",
+        error: "Execution error",
+      });
+      const failed = await ScheduledJobRun.fail(20, { error: "Execution error" });
+      expect(failed.status).toBe("failed");
+      expect(failed.error).toBe("Execution error");
+    });
+  });
+});

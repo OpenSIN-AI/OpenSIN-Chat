@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: MIT
 /* eslint-env jest */
 
+jest.mock("@inquirer/prompts", () => ({
+  input: jest.fn(),
+}));
+
 const cliModule = require("../../../../../utils/agents/aibitat/plugins/cli.js");
 const { cli } = cliModule;
 const { input } = require("@inquirer/prompts");

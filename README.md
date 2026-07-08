@@ -95,7 +95,7 @@ The container maps host port `43939` to internal port `3001`. Open `http://local
 - **Mobile Responsive** — 375px viewport, overlay panels, no horizontal overflow
 - **Loading Animation** — 3-pulse dots during AI response
 - **Action Buttons** — hover-only (TTS, Copy, Edit, Good Response, More) like ChatGPT/Claude
-- **TTS Providers (6 Engines)** — Native (browser), OpenAI-compatible, ElevenLabs, Kokoro, Piper (local), NVIDIA NIM, **cvoice.ai** (German celebrity voices incl. Gronkh, Dieter Bohlen, Joko, Julien Bam, Bushido, Daniela Katzenberger)
+- **TTS Providers (7 Engines)** — Native (browser), OpenAI-compatible, ElevenLabs, Kokoro, Piper (local), NVIDIA NIM, **cvoice.ai** (German celebrity voices incl. Gronkh, Dieter Bohlen, Joko, Julien Bam, Bushido, Daniela Katzenberger)
 - **SOTA Charts (ECharts)** — the AI generates interactive charts directly in chat: bar, line, area, pie, radar, scatter, treemap, funnel, radialBar. Apache ECharts 6 rendering with gradient fills, glow shadows, rounded bars, staggered elastic animations, dark/light theme support, hover tooltips, save-as-image (2x PNG), and data-view toolbox. Multi-series support for grouped/comparison charts. The `create-chart` agent plugin sends `{type, dataset, title, caption}` via WebSocket — no external services, no API keys, fully local rendering
 
 ## Screenshots

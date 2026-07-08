@@ -7,7 +7,7 @@
 // and exposes the returned values.
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, renderHook, waitFor, act } from "@testing-library/react";
+import { render, renderHook } from "@testing-library/react";
 import React from "react";
 
 // --- Mocks ---
@@ -122,7 +122,11 @@ function createWrapper(workspace = { slug: "test-ws" }, threadSlug = null) {
 // need a wrapper that provides the context. We'll use a custom render approach.
 import { DndUploaderContext } from "./DnDWrapper";
 
-function renderUseChatStream({ workspace = { slug: "test-ws" }, threadSlug = null, knownHistory = [] } = {}) {
+function renderUseChatStream({
+  workspace = { slug: "test-ws" },
+  threadSlug = null,
+  knownHistory = [],
+} = {}) {
   function TestComponent() {
     // We need to dynamically import to avoid hoisting issues
     return null;
@@ -139,7 +143,7 @@ function renderUseChatStream({ workspace = { slug: "test-ws" }, threadSlug = nul
   );
 
   return renderHook(
-    () => {
+    async () => {
       // Dynamic require to avoid ESM/CJS issues with the mock
       const mod = await import("./useChatStream");
       return mod.default({ workspace, threadSlug, knownHistory });

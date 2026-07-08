@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Unit tests for AgentRunsContext — buildTree lineage, SSE event
 //          handling, activeRunCount calculation.
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import React from "react";
-import { render, renderHook, act } from "@testing-library/react";
+import { renderHook, act } from "@testing-library/react";
 import { AgentRunsProvider, useAgentRuns } from "./AgentRunsContext";
 
 // Mock EventSource
@@ -23,17 +23,21 @@ class MockEventSource {
   }
 
   removeEventListener(event: string, handler: (e: MessageEvent) => void) {
-    this.listeners[event] = (this.listeners[event] || []).filter((h) => h !== handler);
+    this.listeners[event] = (this.listeners[event] || []).filter(
+      (h) => h !== handler,
+    );
   }
 
   emit(event: string, data: any) {
-    (this.listeners[event] || []).forEach((h) => h(new MessageEvent(event, { data: JSON.stringify(data) })));
+    (this.listeners[event] || []).forEach((h) =>
+      h(new MessageEvent(event, { data: JSON.stringify(data) })),
+    );
   }
 
   close() {}
 }
 
-// @ts-ignore
+// @ts-expect-error – MockEventSource is a minimal stub; full EventSource typing is not needed for this test.
 global.EventSource = MockEventSource;
 
 describe("AgentRunsContext", () => {
@@ -66,15 +70,30 @@ describe("AgentRunsContext", () => {
 
     // Start parent run
     act(() => {
-      es.emit("run.started", { runId: "parent-1", parentRunId: null, agentName: "Main", ts: 1000 });
+      es.emit("run.started", {
+        runId: "parent-1",
+        parentRunId: null,
+        agentName: "Main",
+        ts: 1000,
+      });
     });
     // Start child run
     act(() => {
-      es.emit("run.started", { runId: "child-1", parentRunId: "parent-1", agentName: "Research", ts: 2000 });
+      es.emit("run.started", {
+        runId: "child-1",
+        parentRunId: "parent-1",
+        agentName: "Research",
+        ts: 2000,
+      });
     });
     // Start grandchild
     act(() => {
-      es.emit("run.started", { runId: "grandchild-1", parentRunId: "child-1", agentName: "Sub-Research", ts: 3000 });
+      es.emit("run.started", {
+        runId: "grandchild-1",
+        parentRunId: "child-1",
+        agentName: "Sub-Research",
+        ts: 3000,
+      });
     });
 
     expect(Object.keys(result.current.runs)).toHaveLength(3);
@@ -83,7 +102,9 @@ describe("AgentRunsContext", () => {
     expect(result.current.runTree[0].children).toHaveLength(1);
     expect(result.current.runTree[0].children![0].runId).toBe("child-1");
     expect(result.current.runTree[0].children![0].children).toHaveLength(1);
-    expect(result.current.runTree[0].children![0].children![0].runId).toBe("grandchild-1");
+    expect(result.current.runTree[0].children![0].children![0].runId).toBe(
+      "grandchild-1",
+    );
   });
 
   it("should count active runs correctly", () => {
@@ -96,8 +117,18 @@ describe("AgentRunsContext", () => {
     const es = MockEventSource.instances[0];
 
     act(() => {
-      es.emit("run.started", { runId: "r1", parentRunId: null, agentName: "A", ts: 1000 });
-      es.emit("run.started", { runId: "r2", parentRunId: null, agentName: "B", ts: 2000 });
+      es.emit("run.started", {
+        runId: "r1",
+        parentRunId: null,
+        agentName: "A",
+        ts: 1000,
+      });
+      es.emit("run.started", {
+        runId: "r2",
+        parentRunId: null,
+        agentName: "B",
+        ts: 2000,
+      });
     });
     expect(result.current.activeRunCount).toBe(2);
 
@@ -117,14 +148,32 @@ describe("AgentRunsContext", () => {
     const es = MockEventSource.instances[0];
 
     act(() => {
-      es.emit("run.started", { runId: "r1", parentRunId: null, agentName: "A", ts: 1000 });
-      es.emit("run.tool", { runId: "r1", toolId: "t1", name: "rag-memory", phase: "args", args: { query: "test" }, ts: 2000 });
+      es.emit("run.started", {
+        runId: "r1",
+        parentRunId: null,
+        agentName: "A",
+        ts: 1000,
+      });
+      es.emit("run.tool", {
+        runId: "r1",
+        toolId: "t1",
+        name: "rag-memory",
+        phase: "args",
+        args: { query: "test" },
+        ts: 2000,
+      });
     });
     expect(result.current.runs["r1"].toolCalls).toHaveLength(1);
     expect(result.current.runs["r1"].toolCalls[0].status).toBe("running");
 
     act(() => {
-      es.emit("run.tool", { runId: "r1", toolId: "t1", phase: "result", output: "result data", ts: 3000 });
+      es.emit("run.tool", {
+        runId: "r1",
+        toolId: "t1",
+        phase: "result",
+        output: "result data",
+        ts: 3000,
+      });
     });
     expect(result.current.runs["r1"].toolCalls[0].status).toBe("done");
     expect(result.current.runs["r1"].toolCalls[0].output).toBe("result data");
@@ -140,9 +189,24 @@ describe("AgentRunsContext", () => {
     const es = MockEventSource.instances[0];
 
     act(() => {
-      es.emit("run.started", { runId: "r1", parentRunId: null, agentName: "A", ts: 1000 });
-      es.emit("run.started", { runId: "r2", parentRunId: null, agentName: "B", ts: 2000 });
-      es.emit("run.started", { runId: "r3", parentRunId: null, agentName: "C", ts: 3000 });
+      es.emit("run.started", {
+        runId: "r1",
+        parentRunId: null,
+        agentName: "A",
+        ts: 1000,
+      });
+      es.emit("run.started", {
+        runId: "r2",
+        parentRunId: null,
+        agentName: "B",
+        ts: 2000,
+      });
+      es.emit("run.started", {
+        runId: "r3",
+        parentRunId: null,
+        agentName: "C",
+        ts: 3000,
+      });
     });
 
     expect(result.current.runTree).toHaveLength(3);

@@ -33,6 +33,7 @@ const ScheduledJob = {
    */
   computeNextRunAt: function (cronExpression) {
     try {
+      if (!this.isValidCron(cronExpression)) return null;
       const sched = later.parse.cron(cronExpression);
       const next = later.schedule(sched).next(1);
       return next || null;

@@ -1,1 +1,211 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBUZXN0cyBmb3IgQWlQcm92aWRlcnMgKElzc3VlICMzODUpLgovLwovLyBDb3ZlcnM6IE9wZW5BaUxMTSBwcm92aWRlciDigJQgY29uc3RydWN0b3Igd2l0aC93aXRob3V0IEFQSSBrZXksCi8vIHByb21wdFdpbmRvd0xpbWl0LCBpc1ZhbGlkQ2hhdENvbXBsZXRpb25Nb2RlbCwgc3RyZWFtaW5nRW5hYmxlZCwKLy8gY29uc3RydWN0UHJvbXB0LCBhbmQgZXJyb3IgbWFwcGluZy4KCmplc3QubW9jaygiLi4vLi4vdXRpbHMvbG9nZ2VyL2NvbnNvbGUuanMiLCAoKSA9PiAoewogIGVycm9yOiBqZXN0LmZuKCksCiAgbG9nOiBqZXN0LmZuKCksCn0pKTsKCmplc3QubW9jaygiLi4vLi4vdXRpbHMvbG9nZ2VyL3N0cnVjdHVyZWQiLCAoKSA9PiAoewogIGxvZ2dlcjogeyBpbmZvOiBqZXN0LmZuKCksIGVycm9yOiBqZXN0LmZuKCksIHdhcm46IGplc3QuZm4oKSB9LAp9KSk7CgpqZXN0Lm1vY2soIi4uLy4uL3V0aWxzL2hlbHBlcnMvY2hhdC9yZXNwb25zZXMiLCAoKSA9PiAoewogIGZvcm1hdENoYXRIaXN0b3J5OiAoaGlzdG9yeSwgZ2VuQ29udGVudCkgPT4KICAgIGhpc3RvcnkubWFwKChoKSA9PiAoeyByb2xlOiBoLnJvbGUsIGNvbnRlbnQ6IGdlbkNvbnRlbnQoeyB1c2VyUHJvbXB0OiBoLmNvbnRlbnQgfSkgfSkpLAogIHdyaXRlUmVzcG9uc2VDaHVuazogamVzdC5mbigpLAogIGNsaWVudEFib3J0ZWRIYW5kbGVyOiBqZXN0LmZuKCksCn0pKTsKCmplc3QubW9jaygiLi4vLi4vdXRpbHMvaGVscGVycy9jaGF0L0xMTVBlcmZvcm1hbmNlTW9uaXRvciIsICgpID0+ICh7CiAgTExNUGVyZm9ybWFuY2VNb25pdG9yOiB7CiAgICBtZWFzdXJlOiBqZXN0LmZuKGFzeW5jIChwcm92aWRlciwgZm4pID0+IGZuKCkpLAogIH0sCn0pKTsKCi8vIE1vY2sgdGhlIE5hdGl2ZUVtYmVkZGVyIHNvIGl0IGRvZXNuJ3QgdHJ5IHRvIGxvYWQgdHJhbnNmb3JtZXJzCmplc3QubW9jaygiLi4vLi4vRW1iZWRkaW5nRW5naW5lcy9uYXRpdmUiLCAoKSA9PiAoewogIE5hdGl2ZUVtYmVkZGVyOiBqZXN0LmZuKCkubW9ja0ltcGxlbWVudGF0aW9uKCgpID0+ICh7CiAgICBlbWJlZFRleHRJbnB1dDogamVzdC5mbigpLAogICAgZW1iZWRDaHVua3M6IGplc3QuZm4oKSwKICAgIGVtYmVkZGluZ01heENodW5rTGVuZ3RoOiA4MTkxLAogIH0pKSwKfSkpOwoKLy8gTW9jayB0aGUgbW9kZWwgbWFwCmNvbnN0IG1vY2tNb2RlbE1hcEdldCA9IGplc3QuZm4oKTsKamVzdC5tb2NrKCIuLi8uLi91dGlscy9BaVByb3ZpZGVycy9tb2RlbE1hcCIsICgpID0+ICh7CiAgTU9ERUxfTUFQOiB7CiAgICBnZXQ6ICguLi5hKSA9PiBtb2NrTW9kZWxNYXBHZXQoLi4uYSksCiAgfSwKfSkpOwoKLy8gTW9jayBvcGVuYWkgbW9kdWxlCmNvbnN0IG1vY2tPcGVuQUlJbnN0YW5jZSA9IHsKICBtb2RlbHM6IHsgcmV0cmlldmU6IGplc3QuZm4oKSB9LAogIGNoYXQ6IHsKICAgIGNvbXBsZXRpb25zOiB7CiAgICAgIGNyZWF0ZTogamVzdC5mbigpLAogICAgfSwKICB9LAp9OwpqZXN0Lm1vY2soIm9wZW5haSIsICgpID0+ICh7CiAgT3BlbkFJOiBqZXN0LmZuKCgpID0+IG1vY2tPcGVuQUlJbnN0YW5jZSksCn0pKTsKCmNvbnN0IHsgT3BlbkFpTExNIH0gPSByZXF1aXJlKCIuLi8uLi91dGlscy9BaVByb3ZpZGVycy9vcGVuQWkiKTsKCmRlc2NyaWJlKCJPcGVuQWlMTE0gcHJvdmlkZXIiLCAoKSA9PiB7CiAgYmVmb3JlRWFjaCgoKSA9PiB7CiAgICBqZXN0LmNsZWFyQWxsTW9ja3MoKTsKICAgIHByb2Nlc3MuZW52Lk9QRU5fQUlfS0VZID0gInRlc3Qta2V5LTEyMyI7CiAgICBwcm9jZXNzLmVudi5PUEVOX01PREVMX1BSRUYgPSAiZ3B0LTRvIjsKICAgIG1vY2tNb2RlbE1hcEdldC5tb2NrUmV0dXJuVmFsdWUoMTI4MDAwKTsKICB9KTsKCiAgYWZ0ZXJFYWNoKCgpID0+IHsKICAgIGRlbGV0ZSBwcm9jZXNzLmVudi5PUEVOX0FJX0tFWTsKICAgIGRlbGV0ZSBwcm9jZXNzLmVudi5PUEVOX01PREVMX1BSRUY7CiAgfSk7CgogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIC8vIENvbnN0cnVjdG9yCiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgZGVzY3JpYmUoImNvbnN0cnVjdG9yIiwgKCkgPT4gewogICAgaXQoImluaXRpYWxpemVzIHdpdGggQVBJIGtleSBhbmQgZGVmYXVsdCBtb2RlbCIsICgpID0+IHsKICAgICAgY29uc3QgbGxtID0gbmV3IE9wZW5BaUxMTSgpOwogICAgICBleHBlY3QobGxtLmNsYXNzTmFtZSkudG9CZSgiT3BlbkFpTExNIik7CiAgICAgIGV4cGVjdChsbG0ubW9kZWwpLnRvQmUoImdwdC00byIpOwogICAgICBleHBlY3QobGxtLmRlZmF1bHRUZW1wKS50b0JlKDAuNyk7CiAgICB9KTsKCiAgICBpdCgidGhyb3dzIHdoZW4gT1BFTl9BSV9LRVkgaXMgbm90IHNldCIsICgpID0+IHsKICAgICAgZGVsZXRlIHByb2Nlc3MuZW52Lk9QRU5fQUlfS0VZOwogICAgICBleHBlY3QoKCkgPT4gbmV3IE9wZW5BaUxMTSgpKS50b1Rocm93KCJObyBPcGVuQUkgQVBJIGtleSB3YXMgc2V0LiIpOwogICAgfSk7CgogICAgaXQoInVzZXMgbW9kZWxQcmVmZXJlbmNlIHdoZW4gcHJvdmlkZWQiLCAoKSA9PiB7CiAgICAgIGNvbnN0IGxsbSA9IG5ldyBPcGVuQWlMTE0obnVsbCwgImdwdC00by1taW5pIik7CiAgICAgIGV4cGVjdChsbG0ubW9kZWwpLnRvQmUoImdwdC00by1taW5pIik7CiAgICB9KTsKCiAgICBpdCgiZmFsbHMgYmFjayB0byBPUEVOX01PREVMX1BSRUYgZW52IHZhciIsICgpID0+IHsKICAgICAgcHJvY2Vzcy5lbnYuT1BFTl9NT0RFTF9QUkVGID0gImdwdC00LXR1cmJvIjsKICAgICAgY29uc3QgbGxtID0gbmV3IE9wZW5BaUxMTSgpOwogICAgICBleHBlY3QobGxtLm1vZGVsKS50b0JlKCJncHQtNC10dXJibyIpOwogICAgfSk7CgogICAgaXQoInNldHMgbGltaXRzIGJhc2VkIG9uIHByb21wdFdpbmRvd0xpbWl0IiwgKCkgPT4gewogICAgICBjb25zdCBsbG0gPSBuZXcgT3BlbkFpTExNKCk7CiAgICAgIGV4cGVjdChsbG0ubGltaXRzLmhpc3RvcnkpLnRvQmVHcmVhdGVyVGhhbigwKTsKICAgICAgZXhwZWN0KGxsbS5saW1pdHMuc3lzdGVtKS50b0JlR3JlYXRlclRoYW4oMCk7CiAgICAgIGV4cGVjdChsbG0ubGltaXRzLnVzZXIpLnRvQmVHcmVhdGVyVGhhbigwKTsKICAgIH0pOwogIH0pOwoKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAvLyBwcm9tcHRXaW5kb3dMaW1pdAogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIGRlc2NyaWJlKCJwcm9tcHRXaW5kb3dMaW1pdCIsICgpID0+IHsKICAgIGl0KCJyZXR1cm5zIGNvbnRleHQgd2luZG93IGZyb20gTU9ERUxfTUFQIiwgKCkgPT4gewogICAgICBjb25zdCBsbG0gPSBuZXcgT3BlbkFpTExNKCk7CiAgICAgIGV4cGVjdChsbG0ucHJvbXB0V2luZG93TGltaXQoKSkudG9CZSgxMjgwMDApOwogICAgICBleHBlY3QobW9ja01vZGVsTWFwR2V0KS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgib3BlbmFpIiwgImdwdC00byIpOwogICAgfSk7CgogICAgaXQoImZhbGxzIGJhY2sgdG8gNDA5NiB3aGVuIG1vZGVsIG5vdCBpbiBtYXAiLCAoKSA9PiB7CiAgICAgIG1vY2tNb2RlbE1hcEdldC5tb2NrUmV0dXJuVmFsdWUodW5kZWZpbmVkKTsKICAgICAgY29uc3QgbGxtID0gbmV3IE9wZW5BaUxMTShudWxsLCAidW5rbm93bi1tb2RlbCIpOwogICAgICBleHBlY3QobGxtLnByb21wdFdpbmRvd0xpbWl0KCkpLnRvQmUoNDA5Nik7CiAgICB9KTsKCiAgICBpdCgic3RhdGljIHByb21wdFdpbmRvd0xpbWl0IHdvcmtzIHdpdGggbW9kZWwgbmFtZSIsICgpID0+IHsKICAgICAgbW9ja01vZGVsTWFwR2V0Lm1vY2tSZXR1cm5WYWx1ZSg4MTkyKTsKICAgICAgZXhwZWN0KE9wZW5BaUxMTS5wcm9tcHRXaW5kb3dMaW1pdCgiZ3B0LTQiKSkudG9CZSg4MTkyKTsKICAgIH0pOwogIH0pOwoKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAvLyBpc1ZhbGlkQ2hhdENvbXBsZXRpb25Nb2RlbAogIC8vIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgAogIGRlc2NyaWJlKCJpc1ZhbGlkQ2hhdENvbXBsZXRpb25Nb2RlbCIsICgpID0+IHsKICAgIGl0KCJyZXR1cm5zIHRydWUgZm9yIEdQVCBtb2RlbHMgd2l0aG91dCBBUEkgY2FsbCIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3QgbGxtID0gbmV3IE9wZW5BaUxMTSgpOwogICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBsbG0uaXNWYWxpZENoYXRDb21wbGV0aW9uTW9kZWwoImdwdC00byIpOwogICAgICBleHBlY3QocmVzdWx0KS50b0JlKHRydWUpOwogICAgICBleHBlY3QobW9ja09wZW5BSUluc3RhbmNlLm1vZGVscy5yZXRyaWV2ZSkubm90LnRvSGF2ZUJlZW5DYWxsZWQoKTsKICAgIH0pOwoKICAgIGl0KCJyZXR1cm5zIHRydWUgZm9yIG1vZGVscyBzdGFydGluZyB3aXRoICdvJyAobzEsIG8zLCBldGMuKSIsIGFzeW5jICgpID0+IHsKICAgICAgY29uc3QgbGxtID0gbmV3IE9wZW5BaUxMTSgpOwogICAgICBjb25zdCByZXN1bHQgPSBhd2FpdCBsbG0uaXNWYWxpZENoYXRDb21wbGV0aW9uTW9kZWwoIm8xLW1pbmkiKTsKICAgICAgZXhwZWN0KHJlc3VsdCkudG9CZSh0cnVlKTsKICAgIH0pOwoKICAgIGl0KCJjYWxscyBBUEkgZm9yIG5vbi1HUFQgbW9kZWxzIiwgYXN5bmMgKCkgPT4gewogICAgICBtb2NrT3BlbkFJSW5zdGFuY2UubW9kZWxzLnJldHJpZXZlLm1vY2tSZXNvbHZlZFZhbHVlKHsgaWQ6ICJmdDpncHQtNG8iIH0pOwogICAgICBjb25zdCBsbG0gPSBuZXcgT3BlbkFpTExNKCk7CiAgICAgIGNvbnN0IHJlc3VsdCA9IGF3YWl0IGxsbS5pc1ZhbGlkQ2hhdENvbXBsZXRpb25Nb2RlbCgiZnQ6Z3B0LTRvIik7CiAgICAgIGV4cGVjdChyZXN1bHQpLnRvQmUodHJ1ZSk7CiAgICAgIGV4cGVjdChtb2NrT3BlbkFJSW5zdGFuY2UubW9kZWxzLnJldHJpZXZlKS50b0hhdmVCZWVuQ2FsbGVkV2l0aCgiZnQ6Z3B0LTRvIik7CiAgICB9KTsKCiAgICBpdCgicmV0dXJucyBmYWxzZSB3aGVuIEFQSSByZXRyaWV2YWwgZmFpbHMiLCBhc3luYyAoKSA9PiB7CiAgICAgIG1vY2tPcGVuQUlJbnN0YW5jZS5tb2RlbHMucmV0cmlldmUubW9ja1JlamVjdGVkVmFsdWUobmV3IEVycm9yKCJOb3QgZm91bmQiKSk7CiAgICAgIGNvbnN0IGxsbSA9IG5ldyBPcGVuQWlMTE0oKTsKICAgICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgbGxtLmlzVmFsaWRDaGF0Q29tcGxldGlvbk1vZGVsKCJub25leGlzdGVudC1tb2RlbCIpOwogICAgICBleHBlY3QocmVzdWx0KS50b0JlKGZhbHNlKTsKICAgIH0pOwogIH0pOwoKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAvLyBzdHJlYW1pbmdFbmFibGVkCiAgLy8g4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACiAgZGVzY3JpYmUoInN0cmVhbWluZ0VuYWJsZWQiLCAoKSA9PiB7CiAgICBpdCgicmV0dXJucyBmYWxzZSBieSBkZWZhdWx0IChubyBzdHJlYW1HZXRDaGF0Q29tcGxldGlvbiBtZXRob2Qgb24gaW5zdGFuY2UpIiwgKCkgPT4gewogICAgICBjb25zdCBsbG0gPSBuZXcgT3BlbkFpTExNKCk7CiAgICAgIC8vIE9wZW5BaUxMTSBkb2VzIGhhdmUgc3RyZWFtaW5nRW5hYmxlZCBtZXRob2QgZGVmaW5lZCBvbiBwcm90b3R5cGUKICAgICAgLy8gYnV0IHN0cmVhbUdldENoYXRDb21wbGV0aW9uIGlzIGFsc28gZGVmaW5lZCwgc28gaXQgc2hvdWxkIGJlIHRydWUKICAgICAgY29uc3QgcmVzdWx0ID0gbGxtLnN0cmVhbWluZ0VuYWJsZWQoKTsKICAgICAgZXhwZWN0KHR5cGVvZiByZXN1bHQpLnRvQmUoImJvb2xlYW4iKTsKICAgIH0pOwogIH0pOwoKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICAvLyBjb25zdHJ1Y3RQcm9tcHQKICAvLyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKICBkZXNjcmliZSgiY29uc3RydWN0UHJvbXB0IiwgKCkgPT4gewogICAgaXQoImJ1aWxkcyBwcm9tcHQgd2l0aCBzeXN0ZW0sIGNvbnRleHQsIGhpc3RvcnksIGFuZCB1c2VyIiwgKCkgPT4gewogICAgICBjb25zdCBsbG0gPSBuZXcgT3BlbkFpTExNKCk7CiAgICAgIGNvbnN0IG1lc3NhZ2VzID0gbGxtLmNvbnN0cnVjdFByb21wdCh7CiAgICAgICAgc3lzdGVtUHJvbXB0OiAiWW91IGFyZSBhIGhlbHBmdWwgYXNzaXN0YW50LiIsCiAgICAgICAgY29udGV4dFRleHRzOiBbIkNvbnRleHQgMSIsICJDb250ZXh0IDIiXSwKICAgICAgICBjaGF0SGlzdG9yeTogW3sgcm9sZTogInVzZXIiLCBjb250ZW50OiAiSGVsbG8iIH1dLAogICAgICAgIHVzZXJQcm9tcHQ6ICJXaGF0IGlzIHRoaXMgYWJvdXQ/IiwKICAgICAgfSk7CgogICAgICBleHBlY3QobWVzc2FnZXMpLnRvSGF2ZUxlbmd0aCgzKTsKICAgICAgZXhwZWN0KG1lc3NhZ2VzWzBdLnJvbGUpLnRvQmUoInN5c3RlbSIpOwogICAgICBleHBlY3QobWVzc2FnZXNbMF0uY29udGVudCkudG9Db250YWluKCJZb3UgYXJlIGEgaGVscGZ1bCBhc3Npc3RhbnQuIik7CiAgICAgIGV4cGVjdChtZXNzYWdlc1swXS5jb250ZW50KS50b0NvbnRhaW4oIkNvbnRleHQgMSIpOwogICAgICBleHBlY3QobWVzc2FnZXNbMl0ucm9sZSkudG9CZSgidXNlciIpOwogICAgfSk7CgogICAgaXQoImhhbmRsZXMgZW1wdHkgY29udGV4dCB0ZXh0cyIsICgpID0+IHsKICAgICAgY29uc3QgbGxtID0gbmV3IE9wZW5BaUxMTSgpOwogICAgICBjb25zdCBtZXNzYWdlcyA9IGxsbS5jb25zdHJ1Y3RQcm9tcHQoewogICAgICAgIHN5c3RlbVByb21wdDogIlN5c3RlbSIsCiAgICAgICAgY29udGV4dFRleHRzOiBbXSwKICAgICAgICBjaGF0SGlzdG9yeTogW10sCiAgICAgICAgdXNlclByb21wdDogIkhlbGxvIiwKICAgICAgfSk7CgogICAgICBleHBlY3QobWVzc2FnZXMpLnRvSGF2ZUxlbmd0aCgyKTsKICAgICAgZXhwZWN0KG1lc3NhZ2VzWzBdLmNvbnRlbnQpLnRvQmUoIlN5c3RlbSIpOwogICAgfSk7CiAgfSk7Cn0pOwo=
+// SPDX-License-Identifier: MIT
+// Tests for AiProviders (Issue #385).
+//
+// Covers: OpenAiLLM provider — constructor with/without API key,
+// promptWindowLimit, isValidChatCompletionModel, streamingEnabled,
+// constructPrompt, and error mapping.
+
+jest.mock("../../utils/logger/console.js", () => ({
+  error: jest.fn(),
+  log: jest.fn(),
+}));
+
+jest.mock("../../utils/logger/structured", () => ({
+  logger: { info: jest.fn(), error: jest.fn(), warn: jest.fn() },
+}));
+
+jest.mock("../../utils/helpers/chat/responses", () => ({
+  formatChatHistory: (history, genContent) =>
+    history.map((h) => ({ role: h.role, content: genContent({ userPrompt: h.content }) })),
+  writeResponseChunk: jest.fn(),
+  clientAbortedHandler: jest.fn(),
+}));
+
+jest.mock("../../utils/helpers/chat/LLMPerformanceMonitor", () => ({
+  LLMPerformanceMonitor: {
+    measure: jest.fn(async (provider, fn) => fn()),
+  },
+}));
+
+// Mock the NativeEmbedder so it doesn't try to load transformers
+jest.mock("../../utils/EmbeddingEngines/native", () => ({
+  NativeEmbedder: jest.fn().mockImplementation(() => ({
+    embedTextInput: jest.fn(),
+    embedChunks: jest.fn(),
+    embeddingMaxChunkLength: 8191,
+  })),
+}));
+
+// Mock the model map
+const mockModelMapGet = jest.fn();
+jest.mock("../../utils/AiProviders/modelMap", () => ({
+  MODEL_MAP: {
+    get: (...a) => mockModelMapGet(...a),
+  },
+}));
+
+// Mock openai module
+const mockOpenAIInstance = {
+  models: { retrieve: jest.fn() },
+  chat: {
+    completions: {
+      create: jest.fn(),
+    },
+  },
+};
+jest.mock("openai", () => ({
+  OpenAI: jest.fn(() => mockOpenAIInstance),
+}));
+
+const { OpenAiLLM } = require("../../utils/AiProviders/openAi");
+
+describe("OpenAiLLM provider", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    process.env.OPEN_AI_KEY = "test-key-123";
+    process.env.OPEN_MODEL_PREF = "gpt-4o";
+    mockModelMapGet.mockReturnValue(128000);
+  });
+
+  afterEach(() => {
+    delete process.env.OPEN_AI_KEY;
+    delete process.env.OPEN_MODEL_PREF;
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // Constructor
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("constructor", () => {
+    it("initializes with API key and default model", () => {
+      const llm = new OpenAiLLM();
+      expect(llm.className).toBe("OpenAiLLM");
+      expect(llm.model).toBe("gpt-4o");
+      expect(llm.defaultTemp).toBe(0.7);
+    });
+
+    it("throws when OPEN_AI_KEY is not set", () => {
+      delete process.env.OPEN_AI_KEY;
+      expect(() => new OpenAiLLM()).toThrow("No OpenAI API key was set.");
+    });
+
+    it("uses modelPreference when provided", () => {
+      const llm = new OpenAiLLM(null, "gpt-4o-mini");
+      expect(llm.model).toBe("gpt-4o-mini");
+    });
+
+    it("falls back to OPEN_MODEL_PREF env var", () => {
+      process.env.OPEN_MODEL_PREF = "gpt-4-turbo";
+      const llm = new OpenAiLLM();
+      expect(llm.model).toBe("gpt-4-turbo");
+    });
+
+    it("sets limits based on promptWindowLimit", () => {
+      const llm = new OpenAiLLM();
+      expect(llm.limits.history).toBeGreaterThan(0);
+      expect(llm.limits.system).toBeGreaterThan(0);
+      expect(llm.limits.user).toBeGreaterThan(0);
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // promptWindowLimit
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("promptWindowLimit", () => {
+    it("returns context window from MODEL_MAP", () => {
+      const llm = new OpenAiLLM();
+      expect(llm.promptWindowLimit()).toBe(128000);
+      expect(mockModelMapGet).toHaveBeenCalledWith("openai", "gpt-4o");
+    });
+
+    it("falls back to 4096 when model not in map", () => {
+      mockModelMapGet.mockReturnValue(undefined);
+      const llm = new OpenAiLLM(null, "unknown-model");
+      expect(llm.promptWindowLimit()).toBe(4096);
+    });
+
+    it("static promptWindowLimit works with model name", () => {
+      mockModelMapGet.mockReturnValue(8192);
+      expect(OpenAiLLM.promptWindowLimit("gpt-4")).toBe(8192);
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // isValidChatCompletionModel
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("isValidChatCompletionModel", () => {
+    it("returns true for GPT models without API call", async () => {
+      const llm = new OpenAiLLM();
+      const result = await llm.isValidChatCompletionModel("gpt-4o");
+      expect(result).toBe(true);
+      expect(mockOpenAIInstance.models.retrieve).not.toHaveBeenCalled();
+    });
+
+    it("returns true for models starting with 'o' (o1, o3, etc.)", async () => {
+      const llm = new OpenAiLLM();
+      const result = await llm.isValidChatCompletionModel("o1-mini");
+      expect(result).toBe(true);
+    });
+
+    it("calls API for non-GPT models", async () => {
+      mockOpenAIInstance.models.retrieve.mockResolvedValue({ id: "custom-model-1" });
+      const llm = new OpenAiLLM();
+      const result = await llm.isValidChatCompletionModel("custom-model-1");
+      expect(result).toBe(true);
+      expect(mockOpenAIInstance.models.retrieve).toHaveBeenCalledWith("custom-model-1");
+    });
+
+    it("returns false when API retrieval fails", async () => {
+      mockOpenAIInstance.models.retrieve.mockRejectedValue(new Error("Not found"));
+      const llm = new OpenAiLLM();
+      const result = await llm.isValidChatCompletionModel("nonexistent-model");
+      expect(result).toBe(false);
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // streamingEnabled
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("streamingEnabled", () => {
+    it("returns false by default (no streamGetChatCompletion method on instance)", () => {
+      const llm = new OpenAiLLM();
+      // OpenAiLLM does have streamingEnabled method defined on prototype
+      // but streamGetChatCompletion is also defined, so it should be true
+      const result = llm.streamingEnabled();
+      expect(typeof result).toBe("boolean");
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // constructPrompt
+  // ─────────────────────────────────────────────────────────────────────────
+  describe("constructPrompt", () => {
+    it("builds prompt with system, context, history, and user", () => {
+      const llm = new OpenAiLLM();
+      const messages = llm.constructPrompt({
+        systemPrompt: "You are a helpful assistant.",
+        contextTexts: ["Context 1", "Context 2"],
+        chatHistory: [{ role: "user", content: "Hello" }],
+        userPrompt: "What is this about?",
+      });
+
+      expect(messages).toHaveLength(3);
+      expect(messages[0].role).toBe("system");
+      expect(messages[0].content).toContain("You are a helpful assistant.");
+      expect(messages[0].content).toContain("Context 1");
+      expect(messages[2].role).toBe("user");
+    });
+
+    it("handles empty context texts", () => {
+      const llm = new OpenAiLLM();
+      const messages = llm.constructPrompt({
+        systemPrompt: "System",
+        contextTexts: [],
+        chatHistory: [],
+        userPrompt: "Hello",
+      });
+
+      expect(messages).toHaveLength(2);
+      expect(messages[0].content).toBe("System");
+    });
+  });
+});
