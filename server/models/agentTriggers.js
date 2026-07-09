@@ -134,12 +134,16 @@ const AgentTriggers = {
    * Called by the Bree scheduler job.
    */
   async getDueScheduleTriggers() {
+    // Batch cap prevents a stalled clock from flooding the executor with
+    // thousands of overdue triggers in one scheduler tick.
     return prisma.agent_triggers.findMany({
       where: {
         active: true,
         type: "schedule",
         OR: [{ next_run_at: { lte: new Date() } }, { next_run_at: null }],
       },
+      orderBy: { next_run_at: "asc" },
+      take: 100,
     });
   },
 
@@ -153,6 +157,8 @@ const AgentTriggers = {
         type: "polling",
         OR: [{ next_run_at: { lte: new Date() } }, { next_run_at: null }],
       },
+      orderBy: { next_run_at: "asc" },
+      take: 100,
     });
   },
 };

@@ -4,7 +4,9 @@
 // Split from outlook/lib.js as part of issue #528 — God-File reduction.
 
 const crypto = require("crypto");
-const pkceChallenge = require("pkce-challenge");
+// pkce-challenge v3: the module exports { default, generateChallenge, verifyChallenge }.
+// The module object itself is NOT callable — use .default() (sync, no await needed).
+const { default: _pkceChallenge } = require("pkce-challenge");
 const { SystemSettings } = require("../../../../../models/systemSettings");
 const { safeJsonParse } = require("../../../../http");
 const consoleLogger = require("../../../../logger/console.js");
@@ -124,7 +126,7 @@ class OutlookBridge {
 
     const authType = config.authType || AUTH_TYPES.common;
     const authority = getAuthority(authType, config.tenantId);
-    const { code_verifier, code_challenge } = await pkceChallenge();
+    const { code_verifier, code_challenge } = _pkceChallenge();
     const state = crypto.randomBytes(16).toString("hex");
     this._state = state;
     this._codeVerifier = code_verifier;
