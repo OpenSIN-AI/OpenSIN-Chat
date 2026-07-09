@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { appendContext } = require("../appendContext");
 const consoleLogger = require("../../logger/console.js");
 
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
@@ -68,17 +69,6 @@ class NvidiaNimLLM {
     return message;
   }
 
-  #appendContext(contextTexts = []) {
-    if (!contextTexts || !contextTexts.length) return "";
-    return (
-      "\nContext:\n" +
-      contextTexts
-        .map((text, i) => {
-          return `[CONTEXT ${i}]:\n${text}\n[END CONTEXT ${i}]\n\n`;
-        })
-        .join("")
-    );
-  }
 
   /**
    * Set the model token limit `NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT` for the given model ID
@@ -179,7 +169,7 @@ class NvidiaNimLLM {
   }) {
     const prompt = {
       role: "system",
-      content: `${systemPrompt}${this.#appendContext(contextTexts)}`,
+      content: `${systemPrompt}${appendContext(contextTexts)}`,
     };
     return [
       prompt,

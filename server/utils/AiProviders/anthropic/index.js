@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { appendContext } = require("../appendContext");
 const consoleLogger = require("../../logger/console.js");
 
 const { logger } = require("../../logger/structured");
@@ -201,7 +202,7 @@ class AnthropicLLM {
   }) {
     const prompt = {
       role: "system",
-      content: `${systemPrompt}${this.#appendContext(contextTexts)}`,
+      content: `${systemPrompt}${appendContext(contextTexts)}`,
     };
 
     return [
@@ -367,17 +368,6 @@ class AnthropicLLM {
     });
   }
 
-  #appendContext(contextTexts = []) {
-    if (!contextTexts || !contextTexts.length) return "";
-    return (
-      "\nContext:\n" +
-      contextTexts
-        .map((text, i) => {
-          return `[CONTEXT ${i}]:\n${text}\n[END CONTEXT ${i}]\n\n`;
-        })
-        .join("")
-    );
-  }
 
   async compressMessages(promptArgs = {}, rawHistory = []) {
     const { messageStringCompressor } = require("../../helpers/chat");

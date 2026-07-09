@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { appendContext } = require("../appendContext");
 const consoleLogger = require("../../logger/console.js");
 
 const { logger } = require("../../logger/structured");
@@ -87,17 +88,6 @@ class GenericOpenAiLLM {
     return headers;
   }
 
-  #appendContext(contextTexts = []) {
-    if (!contextTexts || !contextTexts.length) return "";
-    return (
-      "\nContext:\n" +
-      contextTexts
-        .map((text, i) => {
-          return `[CONTEXT ${i}]:\n${text}\n[END CONTEXT ${i}]\n\n`;
-        })
-        .join("")
-    );
-  }
 
   streamingEnabled() {
     if (process.env.GENERIC_OPENAI_STREAMING_DISABLED === "true") return false;
@@ -206,7 +196,7 @@ class GenericOpenAiLLM {
   }) {
     const prompt = {
       role: "system",
-      content: `${systemPrompt}${this.#appendContext(contextTexts)}`,
+      content: `${systemPrompt}${appendContext(contextTexts)}`,
     };
     return [
       prompt,

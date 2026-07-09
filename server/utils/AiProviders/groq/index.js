@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { appendContext } = require("../appendContext");
 const consoleLogger = require("../../logger/console.js");
 
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
@@ -32,17 +33,6 @@ class GroqLLM {
     this.defaultTemp = 0.7;
   }
 
-  #appendContext(contextTexts = []) {
-    if (!contextTexts || !contextTexts.length) return "";
-    return (
-      "\nContext:\n" +
-      contextTexts
-        .map((text, i) => {
-          return `[CONTEXT ${i}]:\n${text}\n[END CONTEXT ${i}]\n\n`;
-        })
-        .join("")
-    );
-  }
 
   #log(text, ...args) {
     consoleLogger.log(`\x1b[32m[GroqAi]\x1b[0m ${text}`, ...args);
@@ -110,7 +100,7 @@ class GroqLLM {
     const DEFAULT_PROMPT_STRUCT = [
       {
         role: "system",
-        content: `${systemPrompt}${this.#appendContext(contextTexts)}`,
+        content: `${systemPrompt}${appendContext(contextTexts)}`,
       },
       ...chatHistory,
       { role: "user", content: userPrompt },
@@ -137,7 +127,7 @@ class GroqLLM {
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       // {
       //   role: "user",
-      //   content: `${systemPrompt}${this.#appendContext(contextTexts)}`,
+      //   content: `${systemPrompt}${appendContext(contextTexts)}`,
       // },
       // {
       //   role: "assistant",

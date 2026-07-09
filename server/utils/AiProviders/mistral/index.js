@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { appendContext } = require("../appendContext");
 const { logger } = require("../../logger/structured");
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
 const {
@@ -42,17 +43,6 @@ class MistralLLM {
     logger.info(this.className, `${text}${suffix}`);
   }
 
-  #appendContext(contextTexts = []) {
-    if (!contextTexts || !contextTexts.length) return "";
-    return (
-      "\nContext:\n" +
-      contextTexts
-        .map((text, i) => {
-          return `[CONTEXT ${i}]:\n${text}\n[END CONTEXT ${i}]\n\n`;
-        })
-        .join("")
-    );
-  }
 
   streamingEnabled() {
     return "streamGetChatCompletion" in this;
@@ -104,7 +94,7 @@ class MistralLLM {
   }) {
     const prompt = {
       role: "system",
-      content: `${systemPrompt}${this.#appendContext(contextTexts)}`,
+      content: `${systemPrompt}${appendContext(contextTexts)}`,
     };
     return [
       prompt,

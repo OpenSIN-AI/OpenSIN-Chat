@@ -470,7 +470,44 @@ class PGVector extends VectorDatabase {
   }
 
   /**
-   * create a table if it doesn't exist
+   * Build the HNSW index SQL for approximate nearest-neighbour search.
+   *
+   * HNSW (Hierarchical Navigable Small World) turns every query from an
+   * O(n) sequential scan into an O(log n) graph traversal. For a corpus
+   * of German parliamentary documents this is the single biggest
+   * performance lever in the pgvector provider.
+   *
+   * Parameters chosen:
+   *   m = 16          — neighbours per node (good balance of recall / build speed)
+   *   ef_construction = 64  — candidate set at build time (higher = better recall)
+   * Both can be raised for higher recall at the cost of more memory/build time.
+   *
+   * Requires pgvector >= 0.5.0 (released 2023-05-25).
+   * The index is created with IF NOT EXISTS so re-initialisation is safe.
+   *
+   * @returns {string}
+   */
+  createHnswIndexSql() {
+    const table = PGVector.tableName();
+    return `CREATE INDEX IF NOT EXISTS "${table}_hnsw_idx"
+      ON "${table}" USING hnsw (embedding vector_cosine_ops)
+      WITH (m = 16, ef_construction = 64)`;
+  }
+
+  /**
+   * Build the plain B-tree index SQL on the `namespace` column.
+   * The similarity query always includes `WHERE namespace = $2`, so this
+   * index eliminates a full-table scan for the pre-filter step.
+   * @returns {string}
+   */
+  createNamespaceIndexSql() {
+    const table = PGVector.tableName();
+    return `CREATE INDEX IF NOT EXISTS "${table}_namespace_idx"
+      ON "${table}" (namespace)`;
+  }
+
+  /**
+   * create a table if it doesn't exist, then ensure both search indexes exist.
    * @param {pgsql.Client} connection
    * @param {number} dimensions
    * @returns
@@ -479,6 +516,41 @@ class PGVector extends VectorDatabase {
     this.logger(`Creating embedding table with ${dimensions} dimensions`);
     await connection.query(this.createExtensionSql);
     await connection.query(this.createTableSql(dimensions));
+
+    // Verify pgvector supports HNSW (>= 0.5.0) before attempting to create
+    // the index. If the version check fails we skip HNSW silently so the
+    // server still starts on older deployments (fallback: sequential scan).
+    try {
+      const extResult = await connection.query(
+        `SELECT extversion FROM pg_extension WHERE extname = 'vector'`,
+      );
+      const versionStr = extResult.rows[0]?.extversion ?? "0.0.0";
+      const [major, minor] = versionStr.split(".").map(Number);
+      const supportsHnsw = major > 0 || (major === 0 && minor >= 5);
+
+      if (supportsHnsw) {
+        await connection.query(this.createHnswIndexSql());
+        this.logger(`HNSW index ensured on "${PGVector.tableName()}"`);
+      } else {
+        this.logger(
+          `pgvector ${versionStr} < 0.5.0 — skipping HNSW index (sequential scan fallback)`,
+        );
+      }
+    } catch (err) {
+      // Non-fatal — the table and extension are still usable.
+      this.logger(
+        `HNSW index creation skipped: ${err.message}`,
+      );
+    }
+
+    // The namespace B-tree index is always safe to create regardless of version.
+    try {
+      await connection.query(this.createNamespaceIndexSql());
+      this.logger(`Namespace index ensured on "${PGVector.tableName()}"`);
+    } catch (err) {
+      this.logger(`Namespace index creation skipped: ${err.message}`);
+    }
+
     return true;
   }
 

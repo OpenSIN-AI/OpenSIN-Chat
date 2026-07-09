@@ -88,17 +88,6 @@ class GeminiLLM {
     return now - timestampMs > MAX_STALE;
   }
 
-  #appendContext(contextTexts = []) {
-    if (!contextTexts || !contextTexts.length) return "";
-    return (
-      "\nContext:\n" +
-      contextTexts
-        .map((text, i) => {
-          return `[CONTEXT ${i}]:\n${text}\n[END CONTEXT ${i}]\n\n`;
-        })
-        .join("")
-    );
-  }
 
   streamingEnabled() {
     return "streamGetChatCompletion" in this;
@@ -351,7 +340,7 @@ class GeminiLLM {
     if (this.supportsSystemPrompt) {
       prompt.push({
         role: "system",
-        content: `${systemPrompt}${this.#appendContext(contextTexts)}`,
+        content: `${systemPrompt}${appendContext(contextTexts)}`,
       });
     } else {
       this.#log(
@@ -360,7 +349,7 @@ class GeminiLLM {
       prompt.push(
         {
           role: "user",
-          content: `${systemPrompt}${this.#appendContext(contextTexts)}`,
+          content: `${systemPrompt}${appendContext(contextTexts)}`,
         },
         {
           role: "assistant",
