@@ -50,6 +50,7 @@ function isDangerousEntryName(fileName = "") {
 
 function resolveYauzl() {
   try {
+    // eslint-disable-next-line import/no-extraneous-dependencies
     return require("yauzl");
   } catch {
     return null;
@@ -75,7 +76,7 @@ async function validateWithYauzl(
   { maxTotalBytes, maxFiles, maxRatio }
 ) {
   const yauzl = resolveYauzl();
-  if (!yauzl) return { safe: true, available: false };
+  if (!yauzl) return { safe: false, available: false, reason: "yauzl not available" };
 
   return await new Promise((resolve) => {
     yauzl.open(filePath, { lazyEntries: true }, (err, zip) => {
@@ -167,7 +168,7 @@ async function validateWithYauzl(
  */
 function validateWithAdmZip(filePath, { maxTotalBytes, maxFiles, maxRatio }) {
   const AdmZip = resolveAdmZip();
-  if (!AdmZip) return { safe: true, available: false };
+  if (!AdmZip) return { safe: false, available: false, reason: "adm-zip not available" };
   try {
     const archive = new AdmZip(filePath);
     const entries = archive.getEntries();
@@ -262,7 +263,12 @@ async function validateArchive(
   if (admResult.available !== false) return admResult;
   if (admResult.safe === false) return admResult;
 
-  return { safe: true, available: false };
+  return {
+    safe: false,
+    available: false,
+    reason:
+      "No zip validation library available (yauzl/adm-zip missing) — rejecting archive as a precaution.",
+  };
 }
 
 /**

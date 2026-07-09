@@ -13,7 +13,8 @@
     "dev": "cross-env NODE_ENV=development nodemon --ignore hotdir --ignore storage --trace-warnings index.js",
     "start": "cross-env NODE_ENV=production node index.js",
     "lint": "eslint --fix .",
-    "lint:check": "eslint ."
+    "lint:check": "eslint .",
+    "test": "jest --ci --passWithNoTests"
   },
   "dependencies": {
     "@langchain/community": "^1.1.29",
@@ -59,6 +60,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-unused-imports": "^4.0.0",
     "globals": "^17.4.0",
+    "jest": "^30.0.0",
     "nodemon": "^3.1.14",
     "prettier": "^2.4.1"
   },

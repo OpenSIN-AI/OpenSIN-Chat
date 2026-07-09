@@ -4,7 +4,7 @@
 //          dead-letter state. Uses Bree for scheduling (already in the repo).
 //          No Redis needed — designed for single-VM (Oracle Free Tier).
 // Docs: triggerEngine.doc.md
-const Bree = require("bree");
+const Bree = require("@mintplex-labs/bree");
 const { AgentTriggers } = require("../../models/agentTriggers");
 const { Workspace } = require("../../models/workspace");
 const { AgentHandler } = require("./index");

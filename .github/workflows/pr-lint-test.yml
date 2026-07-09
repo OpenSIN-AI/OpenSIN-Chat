@@ -35,6 +35,7 @@ jobs:
         run: |
           cd frontend && yarn install --frozen-lockfile
           cd ../server && yarn install --frozen-lockfile
+          cd ../collector && yarn install --frozen-lockfile
 
       - name: Lint server
         run: |
@@ -46,6 +47,11 @@ jobs:
           cd frontend && yarn lint:check
         continue-on-error: false
 
+      - name: Lint collector
+        run: |
+          cd collector && yarn lint:check
+        continue-on-error: false
+
       - name: Test server
         run: |
           cd server && NODE_OPTIONS="--experimental-vm-modules" yarn test --ci
@@ -54,6 +60,11 @@ jobs:
       - name: Test frontend
         run: |
           cd frontend && yarn test --ci
+        continue-on-error: false
+
+      - name: Test collector
+        run: |
+          cd collector && yarn test --ci
         continue-on-error: false
 
       - name: Report status
