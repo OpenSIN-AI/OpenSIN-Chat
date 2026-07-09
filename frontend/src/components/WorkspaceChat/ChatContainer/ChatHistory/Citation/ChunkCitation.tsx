@@ -139,16 +139,14 @@ export default function ChunkCitationPopoverManager({
   const { source } = popover;
   // Prefer the top-level `text` field (curated source shape) or fall back
   // to the first chunk's text (combineLikeSources shape).
-  const rawText =
-    source.text ?? source.chunks?.[0]?.text ?? null;
-  const previewText = rawText
-    ? omitChunkHeader(rawText).slice(0, 400)
-    : null;
+  const rawText = source.text ?? source.chunks?.[0]?.text ?? null;
+  const previewText = rawText ? omitChunkHeader(rawText).slice(0, 400) : null;
 
   // External link — only shown for link:// chunkSources
   const chunkSource = source.chunks?.[0]?.chunkSource ?? null;
-  const externalHref =
-    chunkSource?.startsWith("link://") ? chunkSource.replace("link://", "") : null;
+  const externalHref = chunkSource?.startsWith("link://")
+    ? chunkSource.replace("link://", "")
+    : null;
 
   return (
     <>
@@ -162,7 +160,11 @@ export default function ChunkCitationPopoverManager({
         onMouseEnter={cancelHide}
         onMouseLeave={hidePopover}
         className="fixed z-[9999] w-72 rounded-xl border border-theme-modal-border bg-theme-bg-secondary shadow-2xl text-xs leading-relaxed"
-        style={{ left: popover.x, top: popover.y, transform: "translateY(-100%)" }}
+        style={{
+          left: popover.x,
+          top: popover.y,
+          transform: "translateY(-100%)",
+        }}
       >
         {/* Header */}
         <div className="flex items-start justify-between gap-2 px-3 pt-3 pb-1.5 border-b border-theme-modal-border">
@@ -205,12 +207,15 @@ export default function ChunkCitationPopoverManager({
         {(source.score != null || source.chunkIndex != null) && (
           <div className="flex items-center gap-3 px-3 pb-2.5 text-theme-text-secondary opacity-70">
             {source.score != null && (
-              <span>{Math.round(source.score * 100)}% {t(
-                "chat_window.similarity_match",
-              )}</span>
+              <span>
+                {Math.round(source.score * 100)}%{" "}
+                {t("chat_window.similarity_match")}
+              </span>
             )}
             {source.chunkIndex != null && (
-              <span>{t("citation.chunkIndex", { index: source.chunkIndex + 1 })}</span>
+              <span>
+                {t("citation.chunkIndex", { index: source.chunkIndex + 1 })}
+              </span>
             )}
           </div>
         )}

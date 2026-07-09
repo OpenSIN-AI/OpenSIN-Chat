@@ -11,7 +11,11 @@
  *   onClose      {function} - Called when the user dismisses (X or Cancel).
  *   onConfirm    {function} - Called when the user confirms the action.
  */
-export default function ChangeWarningModal({ warningText, onClose, onConfirm }) {
+export default function ChangeWarningModal({
+  warningText,
+  onClose,
+  onConfirm,
+}) {
   // Split on real newlines as well as the literal two-character "\n" sequence,
   // since callers (and JSX string attributes) may pass either form.
   const lines = (warningText ?? "")

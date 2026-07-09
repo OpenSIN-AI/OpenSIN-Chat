@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/SettingsSidebar";
-import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import { PencilSimple } from "@phosphor-icons/react/dist/csr/PencilSimple";
 import { X } from "@phosphor-icons/react/dist/csr/X";
@@ -21,7 +20,6 @@ export default function ModelRouters() {
   const [editingRouter, setEditingRouter] = useState<any>(null);
 
   const openCreateModal = () => {
-  const isMobile = useIsMobileLayout();
     setEditingRouter(null);
     openModal();
   };

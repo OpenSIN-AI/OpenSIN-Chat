@@ -64,7 +64,15 @@ export default function useSilenceDetector(stream, { onSilence, silenceMs }) {
     return () => {
       if (raf) cancelAnimationFrame(raf);
       if (silenceTimer) clearTimeout(silenceTimer);
-      if (ctx.state !== "closed") ctx.close().catch((e) => console.warn("[useSilenceDetector] non-fatal error:", e?.message || e));
+      if (ctx.state !== "closed")
+        ctx
+          .close()
+          .catch((e) =>
+            console.warn(
+              "[useSilenceDetector] non-fatal error:",
+              e?.message || e,
+            ),
+          );
     };
   }, [stream, silenceMs]);
 }

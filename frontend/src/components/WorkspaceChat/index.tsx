@@ -70,7 +70,9 @@ export default function WorkspaceChat({
   let hasPendingMessage = false;
   try {
     hasPendingMessage = !!sessionStorage.getItem(PENDING_HOME_MESSAGE);
-  } catch (e) { console.warn("[WorkspaceChat] non-fatal error:", e?.message || e); }
+  } catch (e) {
+    console.warn("[WorkspaceChat] non-fatal error:", e?.message || e);
+  }
   if (loaded === null) {
     if (hasPendingMessage) {
       return (

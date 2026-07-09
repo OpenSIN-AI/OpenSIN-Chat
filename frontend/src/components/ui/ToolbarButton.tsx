@@ -41,7 +41,6 @@ export default function ToolbarButton({
 
   return (
     <button
-      // eslint-disable-next-line react/button-has-type
       type={type}
       className={`${BASE} ${sizeClasses} ${className}`.trim()}
       {...rest}

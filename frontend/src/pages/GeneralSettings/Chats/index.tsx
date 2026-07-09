@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useEffect, useRef, useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
-import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import useQuery from "@/hooks/useQuery";
@@ -97,7 +96,6 @@ export default function WorkspaceChats() {
   };
 
   const toggleMenu = () => {
-  const isMobile = useIsMobileLayout();
     setShowMenu(!showMenu);
   };
 

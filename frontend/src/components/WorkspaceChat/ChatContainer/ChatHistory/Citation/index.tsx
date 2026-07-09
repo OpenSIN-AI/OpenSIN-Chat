@@ -348,7 +348,9 @@ export function parseChunkSource({ title = "", chunks = [] }: any) {
     // but the document will not be linkable
     try {
       url = new URL(chunks[0].chunkSource.split(sourceID)[1]);
-    } catch (e) { console.warn("[Citation] non-fatal error:", e?.message || e); }
+    } catch (e) {
+      console.warn("[Citation] non-fatal error:", e?.message || e);
+    }
 
     if (!url) return nullResponse;
     switch (sourceID) {

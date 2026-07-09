@@ -2,7 +2,6 @@
 import React, { useEffect, useRef, useState, FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/SettingsSidebar";
-import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
 import {
@@ -87,7 +86,6 @@ export default function GeneralLLMPreference() {
   };
 
   const updateLLMChoice = (selection: string) => {
-  const isMobile = useIsMobileLayout();
     setSearchQuery("");
     setSelectedLLM(selection);
     setSearchMenuOpen(false);

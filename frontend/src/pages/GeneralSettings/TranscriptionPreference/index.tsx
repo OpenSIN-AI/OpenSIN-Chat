@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 import React, { useState, useEffect, useRef, FormEvent } from "react";
-import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import Sidebar from "@/components/SettingsSidebar";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
@@ -107,7 +106,6 @@ export default function TranscriptionModelPreference() {
   };
 
   const updateProviderChoice = (selection: string) => {
-  const isMobile = useIsMobileLayout();
     setSearchQuery("");
     setSelectedProvider(selection);
     setSearchMenuOpen(false);

@@ -7,7 +7,6 @@ const ImportedSkillConfig = React.lazy(
 );
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/SettingsSidebar";
-import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import showToast from "@/utils/toast";
 import ContextualSaveBar from "@/components/ContextualSaveBar";
 import { FullScreenLoader } from "@/components/Preloader";
@@ -57,7 +56,6 @@ export default function AdminAgents() {
   const { configurableSkills, appIntegrationSkills, defaultSkills } =
     useMemo(() => {
       const filterByMode = ([_, config]: [string, any]) => {
-  const isMobile = useIsMobileLayout();
         if (!config.mode) return true;
         if (config.mode.includes("singleUserOnly") && isMultiUserMode)
           return false;

@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React, { useState, useEffect, useRef, FormEvent } from "react";
 import Sidebar from "@/components/SettingsSidebar";
-import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
 import { useModal } from "@/hooks/useModal";
@@ -117,7 +116,6 @@ export default function GeneralVectorDatabase() {
   };
 
   const updateVectorChoice = (selection: string) => {
-  const isMobile = useIsMobileLayout();
     setSearchQuery("");
     setSelectedVDB(selection);
     setSearchMenuOpen(false);
