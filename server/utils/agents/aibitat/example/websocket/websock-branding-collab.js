@@ -6,7 +6,7 @@
 const consoleLogger = require("../../../../logger/console.js");
 
 const express = require("express");
-const chalk = require("chalk");
+const pc = require("picocolors");
 const AIbitat = require("../../index.js");
 const {
   websocket,
@@ -62,7 +62,7 @@ app.listen(port, () => {
 });
 
 async function runAIbitat(socket) {
-  consoleLogger.log(chalk.blue("Booting AIbitat class & starting agent(s)"));
+  consoleLogger.log(pc.blue("Booting AIbitat class & starting agent(s)"));
 
   const aibitat = new AIbitat({
     provider: "openai",

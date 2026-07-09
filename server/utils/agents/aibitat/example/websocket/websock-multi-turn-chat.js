@@ -6,7 +6,7 @@
 const consoleLogger = require("../../../../logger/console.js");
 
 const express = require("express");
-const chalk = require("chalk");
+const pc = require("picocolors");
 const AIbitat = require("../../index.js");
 const {
   websocket,
@@ -71,7 +71,7 @@ async function runAIbitat(socket) {
     throw new Error(
       "This example requires a valid OPEN_AI_KEY in the env.development file",
     );
-  consoleLogger.log(chalk.blue("Booting AIbitat class & starting agent(s)"));
+  consoleLogger.log(pc.blue("Booting AIbitat class & starting agent(s)"));
   const aibitat = new AIbitat({
     provider: "openai",
     model: "gpt-4o",

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 const consoleLogger = require("../logger/console.js");
 
-const chalk = require("chalk");
+const pc = require("picocolors");
 
 /**
  * Checks if a skill is auto-approved by the ENV variable AGENT_AUTO_APPROVED_SKILLS.
@@ -29,7 +29,7 @@ function skillIsAutoApproved({ skillName }) {
     return false;
 
   consoleLogger.log(
-    chalk.green(
+    pc.green(
       `Skill ${skillName} is auto-approved by the ENV variable AGENT_AUTO_APPROVED_SKILLS.`,
     ),
   );

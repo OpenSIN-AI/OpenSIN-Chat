@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 const consoleLogger = require("../../../logger/console.js");
 
-const chalk = require("chalk");
+const pc = require("picocolors");
 const { Telemetry } = require("../../../../models/telemetry");
 const { v4: uuidv4 } = require("uuid");
 const { skillIsAutoApproved } = require("../../../helpers/agents");
@@ -82,7 +82,7 @@ const httpSocket = {
           let errorMessage =
             error?.message || "An error occurred while running the agent.";
 
-          consoleLogger.error(chalk.red(`   error: ${errorMessage}`), error);
+          consoleLogger.error(pc.red(`   error: ${errorMessage}`), error);
           aibitat.introspect(
             `Error encountered while running: ${errorMessage}`,
           );
@@ -139,7 +139,7 @@ const httpSocket = {
           );
           if (isWhitelisted) {
             consoleLogger.log(
-              chalk.green(`Skill ${skillName} is whitelisted - auto-approved.`),
+              pc.green(`Skill ${skillName} is whitelisted - auto-approved.`),
             );
             return {
               approved: true,
@@ -151,7 +151,7 @@ const httpSocket = {
           const ipc = getWorkerIPC();
           if (!telegramChatId || !ipc) {
             consoleLogger.log(
-              chalk.yellow(
+              pc.yellow(
                 `Tool approval requested for ${skillName} but no Telegram context available. Auto-denying for safety.`,
               ),
             );
@@ -165,7 +165,7 @@ const httpSocket = {
           const requestId = uuidv4();
 
           consoleLogger.log(
-            chalk.blue(
+            pc.blue(
               `Requesting tool approval for ${skillName} (${requestId})`,
             ),
           );
@@ -187,7 +187,7 @@ const httpSocket = {
 
               if (msg.approved) {
                 consoleLogger.log(
-                  chalk.green(
+                  pc.green(
                     `Tool ${skillName} approved by user via Telegram`,
                   ),
                 );
@@ -198,7 +198,7 @@ const httpSocket = {
               }
 
               consoleLogger.log(
-                chalk.yellow(`Tool ${skillName} denied by user via Telegram`),
+                pc.yellow(`Tool ${skillName} denied by user via Telegram`),
               );
               return resolve({
                 approved: false,
@@ -223,7 +223,7 @@ const httpSocket = {
               ipc.removeListener("message", messageHandler);
 
               consoleLogger.log(
-                chalk.yellow(
+                pc.yellow(
                   `Tool approval request timed out after ${TOOL_APPROVAL_TIMEOUT_MS}ms`,
                 ),
               );
