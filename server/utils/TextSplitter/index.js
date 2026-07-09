@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 const consoleLogger = require("../logger/console.js");
+const { getChunkingStrategy } = require("./strategies");
 
 /**
  * @typedef {object} DocumentMetadata
@@ -31,8 +32,21 @@ class TextSplitter {
    * @param {number} [config.chunkSize = 1000] - The size of each chunk.
    * @param {number} [config.chunkOverlap = 20] - The overlap between chunks.
    * @param {Object} [config.chunkHeaderMeta = null] - Metadata to be added to the start of each chunk - will come after the prefix.
+   * @param {string} [config.chunkingStrategy = "default"] - Named chunking strategy from strategies.js.
+   *   When set, strategy defaults are used as the base and are overridden by any explicit
+   *   chunkSize / chunkOverlap values passed in config. This lets callers say
+   *   `new TextSplitter({ chunkingStrategy: "plenum" })` without having to know the
+   *   exact size/overlap values.
    */
   constructor(config = {}) {
+    // If a named strategy was requested, merge its defaults under any explicit overrides.
+    if (config.chunkingStrategy) {
+      const strategyDefaults = getChunkingStrategy(config.chunkingStrategy);
+      config = {
+        ...strategyDefaults, // strategy baseline (chunkSize, chunkOverlap, separator/separatorPattern)
+        ...config,           // caller-supplied values win
+      };
+    }
     this.config = config;
     this.#splitter = this.#setSplitter(config);
   }
@@ -155,6 +169,7 @@ class TextSplitter {
    * @param {string} [config.chunkPrefix = ""] - Prefix to be added to the start of each chunk.
    * @param {number} [config.chunkSize = 1000] - The size of each chunk.
    * @param {number} [config.chunkOverlap = 20] - The overlap between chunks.
+   * @param {RegExp} [config.separatorPattern] - Optional regex separator from a chunking strategy.
    */
   #setSplitter(config = {}) {
     return new RecursiveSplitter({
@@ -163,6 +178,7 @@ class TextSplitter {
         ? 20
         : Number(config?.chunkOverlap),
       chunkHeader: this.stringifyHeader(),
+      separatorPattern: config?.separatorPattern ?? null,
     });
   }
 
@@ -173,14 +189,23 @@ class TextSplitter {
 
 // Wrapper for Langchain default RecursiveCharacterTextSplitter class.
 class RecursiveSplitter {
-  constructor({ chunkSize, chunkOverlap, chunkHeader = null }) {
+  constructor({ chunkSize, chunkOverlap, chunkHeader = null, separatorPattern = null }) {
     const {
       RecursiveCharacterTextSplitter,
     } = require("@langchain/textsplitters");
+
+    // When a strategy provides a regex separator we pre-split the document on
+    // that boundary first, then run RecursiveCharacterTextSplitter on each
+    // section to stay within chunkSize. This two-pass approach preserves
+    // semantic boundaries (speaker turns, §-paragraphs) while still handling
+    // sections that exceed chunkSize.
+    this.separatorPattern = separatorPattern ?? null;
+
     this.log(`Will split with`, {
       chunkSize,
       chunkOverlap,
       chunkHeader: chunkHeader ? `${chunkHeader?.slice(0, 50)}...` : null,
+      separatorPattern: separatorPattern ? separatorPattern.toString() : null,
     });
     this.chunkHeader = chunkHeader;
     this.engine = new RecursiveCharacterTextSplitter({
@@ -194,6 +219,34 @@ class RecursiveSplitter {
   }
 
   async _splitText(documentText) {
+    // Two-pass split: if a strategy provided a separatorPattern, pre-split
+    // the text on semantic boundaries first (speaker turns, §-paragraphs…),
+    // then run the recursive splitter on each section to enforce chunkSize.
+    if (this.separatorPattern) {
+      const sections = documentText
+        .split(this.separatorPattern)
+        .filter((s) => s.trim().length > 0);
+
+      const allChunks = [];
+      for (const section of sections) {
+        if (!this.chunkHeader) {
+          const chunks = await this.engine.splitText(section);
+          allChunks.push(...chunks);
+        } else {
+          const strings = await this.engine.splitText(section);
+          const documents = await this.engine.createDocuments(strings, [], {
+            chunkHeader: this.chunkHeader,
+          });
+          allChunks.push(
+            ...documents
+              .filter((doc) => !!doc.pageContent)
+              .map((doc) => doc.pageContent),
+          );
+        }
+      }
+      return allChunks;
+    }
+
     if (!this.chunkHeader) return this.engine.splitText(documentText);
     const strings = await this.engine.splitText(documentText);
     const documents = await this.engine.createDocuments(strings, [], {
@@ -206,3 +259,4 @@ class RecursiveSplitter {
 }
 
 module.exports.TextSplitter = TextSplitter;
+module.exports.getChunkingStrategy = getChunkingStrategy;

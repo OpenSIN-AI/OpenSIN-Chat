@@ -4611,6 +4611,10 @@ const TRANSLATIONS = {
     moreCount: "+ {{count}}",
     similarityTooltip:
       "This is the semantic similarity score of this chunk of text compared to your query calculated by the vector database.",
+    unknownSource: "Unknown source",
+    openSource: "Open source",
+    noPreview: "No preview available.",
+    chunkIndex: "Chunk {{index}}",
   },
   contextualSaveBar: {
     unsavedChanges: "Unsaved Changes",

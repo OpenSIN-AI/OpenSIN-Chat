@@ -50,9 +50,9 @@ git fetch upstream
 
 ### Requirements
 
-- **Node.js**: v18+ required
+- **Node.js**: v22+ required (`engines.node: ">=22.0.0"` in root `package.json`). Install via `nvm install 22 && nvm use 22`.
 - **Package manager**: `yarn` ONLY — never use `npm`
-- **Docker**: Use OrbStack on macOS (`orb` CLI, not `docker`). On Linux, use Docker directly.
+- **Docker**: On macOS you can use Docker Desktop or OrbStack. On Linux, use Docker directly.
 
 ### Installation
 

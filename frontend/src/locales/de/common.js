@@ -302,7 +302,7 @@ const TRANSLATIONS = {
       baseUrl: "NVIDIA NIM Basis-URL",
       autoDetect: "Automatisch erkennen",
       baseUrlPlaceholder: "http://localhost:8000/v1",
-      baseUrlHelp: "Geben Sie die URL ein, unter der NVIDIA NIM läuft.",
+      baseUrlHelp: "Geben Sie die URL ein, unter der NVIDIA NIM l��uft.",
       modelSelection: "Chat-Modellauswahl",
       loadingModels: "-- verfügbare Modelle werden geladen --",
     },
@@ -4715,6 +4715,10 @@ const TRANSLATIONS = {
     moreCount: "+ {{count}}",
     similarityTooltip:
       "Dies ist die semantische Ähnlichkeitsbewertung dieses Textabschnitts im Vergleich zu Ihrer Anfrage, berechnet durch die Vektordatenbank.",
+    unknownSource: "Unbekannte Quelle",
+    openSource: "Quelle öffnen",
+    noPreview: "Keine Vorschau verfügbar.",
+    chunkIndex: "Abschnitt {{index}}",
   },
   contextualSaveBar: {
     unsavedChanges: "Ungespeicherte Änderungen",

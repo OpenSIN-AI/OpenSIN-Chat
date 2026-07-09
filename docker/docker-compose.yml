@@ -85,6 +85,40 @@ services:
           memory: 2g
           cpus: '2'
 
+  # --- Docling PDF-Parsing Service (optional) --------------------------------
+  # Docling (IBM, MIT licence) uses a vision model for layout analysis.
+  # It understands two-column layouts, tables, and headings — significantly
+  # better than pdf.js text extraction for German Drucksachen / Plenarprotokolle.
+  #
+  # Activation: set DOCLING_ENDPOINT=http://docling:5001 in .env
+  # The service is disabled by default (profiles: [docling]) — activate with:
+  #   docker compose --profile docling up -d
+  #
+  # Resource note: the image pulls ~2 GB and requires ~3 GB RAM at peak.
+  # Lower RAM deployments should leave this service disabled.
+  docling:
+    image: quay.io/docling-project/docling-serve:latest
+    container_name: opensin-docling
+    profiles: ["docling"]
+    ports:
+      - "5001:5001"
+    environment:
+      - DOCLING_SERVE_ENABLE_UI=false
+      - DOCLING_SERVE_MAX_ASYNC_JOBS=2
+    restart: unless-stopped
+    networks:
+      - opensin-chat
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 3g
+          cpus: '2'
+
   vane:
     # TODO(#536): Pin by SHA256 digest — third-party image should be pinned.
     image: itzcrazykns1337/vane:latest

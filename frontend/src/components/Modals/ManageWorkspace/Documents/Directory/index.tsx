@@ -18,6 +18,7 @@ import useWorkspaceBySlug from "@/hooks/useWorkspaceBySlug";
 import NewFolderModal from "./NewFolderModal";
 import debounce from "lodash.debounce";
 import { filterFileSearchResults } from "./utils";
+import ToolbarButton from "@/components/ui/ToolbarButton";
 import ContextMenu from "./ContextMenu";
 import { Tooltip } from "react-tooltip";
 import { safeJsonParse } from "@/utils/request";
@@ -254,9 +255,9 @@ function Directory({
               <Plus
                 size={18}
                 weight="bold"
-                className="text-theme-text-primary light:text-[#0ba5ec]"
+                className="text-theme-text-primary light:text-sky-500"
               />
-              <div className="text-theme-text-primary light:text-[#0ba5ec] text-xs font-bold leading-[18px]">
+              <div className="text-theme-text-primary light:text-sky-500 text-xs font-bold leading-[18px]">
                 {t("connectors.directory.new-folder")}
               </div>
             </button>
@@ -313,25 +314,23 @@ function Directory({
               <div className="absolute bottom-[12px] left-0 right-0 flex justify-center pointer-events-none">
                 <div className="mx-auto bg-white/40 light:bg-white rounded-lg py-1 px-2 pointer-events-auto light:shadow-lg">
                   <div className="flex flex-row items-center gap-x-2">
-                    <button
-                      type="button"
+                    <ToolbarButton
                       onClick={moveToWorkspace}
                       onMouseEnter={() => setHighlightWorkspace(true)}
                       onMouseLeave={() => setHighlightWorkspace(false)}
-                      className="border-none text-sm font-semibold bg-white light:bg-[#E0F2FE] h-[30px] px-2.5 rounded-lg hover:bg-neutral-800/80 hover:text-theme-text-primary light:hover:text-theme-text-primary light:text-[#026AA2] light:hover:bg-[#026AA2] light:hover:text-theme-text-primary light:hover:text-theme-text-primary"
                     >
                       {t("connectors.directory.move-workspace")}
-                    </button>
+                    </ToolbarButton>
                     <div className="relative">
-                      <button
-                        type="button"
+                      <ToolbarButton
+                        iconOnly
+                        className="group"
                         onClick={() =>
                           setShowFolderSelection(!showFolderSelection)
                         }
-                        className="border-none text-sm font-semibold bg-white light:bg-[#E0F2FE] h-[32px] w-[32px] rounded-lg text-dark-text hover:bg-neutral-800/80 hover:text-theme-text-primary light:hover:text-theme-text-primary light:text-[#026AA2] light:hover:bg-[#026AA2] light:hover:text-theme-text-primary light:hover:text-theme-text-primary flex justify-center items-center group"
                       >
-                        <MoveToFolderIcon className="text-dark-text light:text-[#026AA2] group-hover:text-theme-text-primary light:hover:text-theme-text-primary" />
-                      </button>
+                        <MoveToFolderIcon className="text-dark-text light:text-sky-700 group-hover:text-theme-text-primary" />
+                      </ToolbarButton>
                       {showFolderSelection && (
                         <FolderSelectionPopup
                           folders={files.items.filter(
@@ -342,14 +341,13 @@ function Directory({
                         />
                       )}
                     </div>
-                    <button
-                      type="button"
+                    <ToolbarButton
+                      iconOnly
                       onClick={deleteFiles}
                       aria-label={t("directory.deleteSelectedAriaLabel")}
-                      className="border-none text-sm font-semibold bg-white light:bg-[#E0F2FE] h-[32px] w-[32px] rounded-lg text-dark-text hover:bg-neutral-800/80 hover:text-theme-text-primary light:hover:text-theme-text-primary light:text-[#026AA2] light:hover:bg-[#026AA2] light:hover:text-theme-text-primary light:hover:text-theme-text-primary flex justify-center items-center"
                     >
                       <Trash size={18} weight="bold" aria-hidden="true" />
-                    </button>
+                    </ToolbarButton>
                   </div>
                 </div>
               </div>

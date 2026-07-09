@@ -5,6 +5,67 @@ All notable changes to **OpenSIN-Chat** are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [Unreleased] — 2026-07-09 — Branch cleanup & dependency upgrades
+
+### Changed
+
+- **All feature and fix branches merged into main and deleted.** 11 stale/merged
+  branches removed (`check-and-merge-branches`, `chore/remove-upstream-fork-references`,
+  `fix/audit-round3-v2`, `fix/ci-lint-errors-and-trigger-polling`, `fix/code-quality-fixes`,
+  `fix/deep-audit-round2`, `fix/deep-audit-round3`, `fixing-multiple-issues`,
+  `phantom-dependencies`, `v0/alamsunduius-4185-639c863f`, `v0/bagelbro-6165-b76a95df`).
+
+### Fixed (merged via `fixing-multiple-issues` / `fix/deep-audit-round2` / `fix/deep-audit-round3`)
+
+- `useQuery.js` — replaced `window.location` with `useLocation()` from react-router so
+  query-param parsing works correctly inside the SPA router context.
+- Removed duplicate stale `useQuery.test.js` that used `window.history` approach.
+- `parseJobs.js` rewritten with raw SQL, fixing mock-chain failures in browse-directory tests.
+- `lazy-load PuppeteerWebBaseLoader` — moved to async import to prevent SSR/build errors.
+- `minimatch v9` destructured export fixed (`{ minimatch }` → default import).
+- `agentRuns.getActive` capped to prevent unbounded queries.
+- Missing server deps installed (`pkce-challenge` call fixed).
+- `manualChunks` function form corrected in Vite config.
+- `AccountMenu` aria-label added for accessibility.
+- Stream test mock updated for `contextModeDocs`.
+- `DocumentManager` mock extended with `contextModeDocs` stub.
+- Server lint errors in `triggerEngine` and `triggerPollers` resolved.
+- Per-connector polling implemented (each connector polls independently).
+- Error boundary component added (`frontend/src/components/ErrorBoundary/`).
+- Enhanced error message display components added.
+- Babel dependencies upgraded, test script updated.
+- All stale test probe and debug files removed from repo.
+
+### Changed — Dependency upgrades (Dependabot, 2026-07-09)
+
+9 of 10 Dependabot PRs merged to main (#575–#582, #584):
+
+| Package | From | To |
+|---|---|---|
+| `react-dropzone` | 14.4.1 | 15.0.0 |
+| `@vitejs/plugin-react` | 6.0.2 | 6.0.3 |
+| `cron-parser` | 4.9.0 | 5.6.1 |
+| `cronstrue` | 2.61.0 | 3.24.0 |
+| `typescript` | 5.7.3 | 7.0.2 |
+| `jsdom` | 26.1.0 | 29.1.1 |
+| `msw` | 2.14.6 | 2.15.0 |
+| `langchain` | 1.5.2 | 1.5.3 |
+| `@playwright/test` | 1.61.0 | 1.61.1 |
+
+PR #583 (`jsonrepair` 3.14.0 → 3.15.0) was closed due to a merge conflict in
+`server/package.json` caused by the other Dependabot PRs; Dependabot will recreate
+it automatically.
+
+### Removed — Fork references from main docs (#572)
+
+- All remaining `AnythingLLM` / `Mintplex Labs` user-visible references stripped
+  from top-level docs (`README.md`, `CONTRIBUTING.md`, `DEPLOYMENT_GUIDE.md`,
+  `BARE_METAL.md`, etc.) except legally required attribution in `THIRD_PARTY.md`,
+  `CREDITS.md`, and `LICENSE`.
+- `CREDITS.md` added: canonical attribution file for the AnythingLLM origin.
+
+---
+
 ## [Unreleased] — 2026-07-08 — cvoice.ai TTS provider
 
 ### Added — cvoice.ai as 6th TTS provider

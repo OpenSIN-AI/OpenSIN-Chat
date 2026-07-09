@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/SettingsSidebar";
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { ArrowLeft } from "@phosphor-icons/react/dist/csr/ArrowLeft";
 import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import showToast from "@/utils/toast";
@@ -12,6 +12,7 @@ import RuleBuilder from "../RuleBuilder";
 import useModelRouter from "@/hooks/useModelRouter";
 
 export default function RouterRulesPage() {
+  const isMobile = useIsMobileLayout();
   const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();

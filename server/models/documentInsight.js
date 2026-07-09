@@ -2,6 +2,10 @@
 const consoleLogger = require("../utils/logger/console.js");
 const prisma = require("../utils/prisma");
 
+// Hard cap: a document is unlikely to have more than 1 000 insight records.
+// This prevents a full-table scan if the table grows unexpectedly.
+const MAX_INSIGHTS_PER_DOC = 1_000;
+
 const DocumentInsight = {
   /**
    * Returns all insights for a given document (by docId string).
@@ -14,6 +18,7 @@ const DocumentInsight = {
       return await prisma.document_insights.findMany({
         where: { docId: String(docId) },
         orderBy: { createdAt: "desc" },
+        take: MAX_INSIGHTS_PER_DOC,
         include: {
           transformation: { select: { name: true } },
         },

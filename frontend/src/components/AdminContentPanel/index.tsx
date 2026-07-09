@@ -2,7 +2,7 @@
 // Issue #6: Shared wrapper that owns the --content-height CSS variable
 // injection, replacing 28 identical inline style={{ "--content-height": ... }}
 // occurrences across Admin and GeneralSettings pages.
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 
 interface AdminContentPanelProps {
   children: React.ReactNode;
@@ -13,7 +13,7 @@ interface AdminContentPanelProps {
  * Drop-in replacement for the repeated pattern:
  *
  *   <div
- *     style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
+ *     style={{ "--content-height": isMobileLayout ? "100%" : "calc(100% - 32px)" }}
  *     className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px]
  *                md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full
  *                overflow-y-scroll p-4 md:p-0"
@@ -28,11 +28,12 @@ export default function AdminContentPanel({
   children,
   className = "",
 }: AdminContentPanelProps) {
+  const isMobileLayout = useIsMobileLayout();
   return (
     <div
       style={
         {
-          "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
+          "--content-height": isMobileLayout ? "100%" : "calc(100% - 32px)",
         } as React.CSSProperties
       }
       className={`h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0 ${className}`.trim()}

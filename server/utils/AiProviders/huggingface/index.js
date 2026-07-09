@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { appendContext } = require("../appendContext");
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
 const {
   LLMPerformanceMonitor,
@@ -34,17 +35,6 @@ class HuggingFaceLLM {
     this.defaultTemp = 0.2;
   }
 
-  #appendContext(contextTexts = []) {
-    if (!contextTexts || !contextTexts.length) return "";
-    return (
-      "\nContext:\n" +
-      contextTexts
-        .map((text, i) => {
-          return `[CONTEXT ${i}]:\n${text}\n[END CONTEXT ${i}]\n\n`;
-        })
-        .join("")
-    );
-  }
 
   streamingEnabled() {
     return "streamGetChatCompletion" in this;
@@ -77,7 +67,7 @@ class HuggingFaceLLM {
     // System prompt it not enabled for HF model chats
     const prompt = {
       role: "user",
-      content: `${systemPrompt}${this.#appendContext(contextTexts)}`,
+      content: `${systemPrompt}${appendContext(contextTexts)}`,
     };
     const assistantResponse = {
       role: "assistant",

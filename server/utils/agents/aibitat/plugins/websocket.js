@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 const consoleLogger = require("../../../logger/console.js");
 
-const chalk = require("chalk");
+const pc = require("picocolors");
 const { Telemetry } = require("../../../../models/telemetry");
 const { v4: uuidv4 } = require("uuid");
 const { safeJsonParse } = require("../../../http");
@@ -75,7 +75,7 @@ const websocket = {
             let errorMessage =
               error?.message || "An error occurred while running the agent.";
 
-            consoleLogger.error(chalk.red(`   error: ${errorMessage}`), error);
+            consoleLogger.error(pc.red(`   error: ${errorMessage}`), error);
             aibitat.introspect(
               `Error encountered while running: ${errorMessage}`,
             );
@@ -85,7 +85,7 @@ const websocket = {
             aibitat.terminate();
           } catch (err) {
             consoleLogger.error(
-              chalk.red("   error: onError handler failed"),
+              pc.red("   error: onError handler failed"),
               err,
             );
           }
@@ -128,7 +128,7 @@ const websocket = {
         }) {
           if (skillIsAutoApproved({ skillName })) {
             consoleLogger.log(
-              chalk.green(
+              pc.green(
                 `Skill ${skillName} is auto-approved by AGENT_AUTO_APPROVED_SKILLS`,
               ),
             );
@@ -147,7 +147,7 @@ const websocket = {
           );
           if (isWhitelisted) {
             consoleLogger.log(
-              chalk.green(
+              pc.green(
                 (userId ? `User ${userId} - ` : "") +
                   `Skill ${skillName} is whitelisted - auto-approved.`,
               ),
@@ -224,7 +224,7 @@ const websocket = {
 
             timeoutId = setTimeout(() => {
               consoleLogger.log(
-                chalk.yellow(
+                pc.yellow(
                   `Tool approval request timed out after ${TOOL_APPROVAL_TIMEOUT_MS}ms`,
                 ),
               );
@@ -318,7 +318,7 @@ const websocket = {
               delete socket.handleClarificationResponse;
 
               consoleLogger.log(
-                chalk.yellow(
+                pc.yellow(
                   `Clarification request timed out after ${timeoutMs}ms`,
                 ),
               );
@@ -394,7 +394,7 @@ const websocket = {
 
               socketTimeout = setTimeout(() => {
                 consoleLogger.log(
-                  chalk.red(
+                  pc.red(
                     `Client took too long to respond, chat thread is dead after ${SOCKET_TIMEOUT_MS}ms`,
                   ),
                 );
@@ -404,9 +404,9 @@ const websocket = {
             });
           };
 
-          return socket.awaitResponse(`Provide feedback to ${chalk.yellow(
+          return socket.awaitResponse(`Provide feedback to ${pc.yellow(
             node.to,
-          )} as ${chalk.yellow(node.from)}.
+          )} as ${pc.yellow(node.from)}.
            Press enter to skip and use auto-reply, or type 'exit' to end the conversation: \n`);
         };
 

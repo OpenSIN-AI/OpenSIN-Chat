@@ -4,6 +4,10 @@ const consoleLogger = require("../utils/logger/console.js");
 const { safeJsonParse } = require("../utils/http");
 const prisma = require("../utils/prisma");
 
+// Default upper bound when no caller-supplied limit is given.
+// Prevents a full-table scan on large deployments.
+const MAX_INVITE_LIST = 1_000;
+
 const Invite = {
   // Invites expire after this many ms. Configurable via INVITE_EXPIRY_HOURS env var.
   // Default: 7 days (168 hours). 0 disables expiry (backwards-compatible).
@@ -155,9 +159,13 @@ const Invite = {
 
   where: async function (clause = {}, limit) {
     try {
+      // `limit || undefined` would pass undefined when limit is 0, leaving the
+      // query unbounded. Use an explicit nullish check and fall back to
+      // MAX_INVITE_LIST so the query always has a hard cap.
+      const take = limit != null && limit > 0 ? limit : MAX_INVITE_LIST;
       const invites = await prisma.invites.findMany({
         where: clause,
-        take: limit || undefined,
+        take,
       });
       return invites;
     } catch (error) {

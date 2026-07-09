@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { appendContext } = require("../appendContext");
 const consoleLogger = require("../../logger/console.js");
 
 const { getStoragePath } = require("../../paths");
@@ -67,17 +68,6 @@ class DockerModelRunnerLLM {
     };
   }
 
-  #appendContext(contextTexts = []) {
-    if (!contextTexts || !contextTexts.length) return "";
-    return (
-      "\nContext:\n" +
-      contextTexts
-        .map((text, i) => {
-          return `[CONTEXT ${i}]:\n${text}\n[END CONTEXT ${i}]\n\n`;
-        })
-        .join("")
-    );
-  }
 
   streamingEnabled() {
     return "streamGetChatCompletion" in this;
@@ -135,7 +125,7 @@ class DockerModelRunnerLLM {
   }) {
     const prompt = {
       role: "system",
-      content: `${systemPrompt}${this.#appendContext(contextTexts)}`,
+      content: `${systemPrompt}${appendContext(contextTexts)}`,
     };
     return [
       prompt,

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { appendContext } = require("../appendContext");
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
 const {
   LLMPerformanceMonitor,
@@ -30,17 +31,6 @@ class LocalAiLLM {
     this.defaultTemp = 0.7;
   }
 
-  #appendContext(contextTexts = []) {
-    if (!contextTexts || !contextTexts.length) return "";
-    return (
-      "\nContext:\n" +
-      contextTexts
-        .map((text, i) => {
-          return `[CONTEXT ${i}]:\n${text}\n[END CONTEXT ${i}]\n\n`;
-        })
-        .join("")
-    );
-  }
 
   streamingEnabled() {
     return "streamGetChatCompletion" in this;
@@ -102,7 +92,7 @@ class LocalAiLLM {
   }) {
     const prompt = {
       role: "system",
-      content: `${systemPrompt}${this.#appendContext(contextTexts)}`,
+      content: `${systemPrompt}${appendContext(contextTexts)}`,
     };
     return [
       prompt,

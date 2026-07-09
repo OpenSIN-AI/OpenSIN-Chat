@@ -3,7 +3,7 @@
 const consoleLogger = require("../../../logger/console.js");
 
 const { input } = require("@inquirer/prompts");
-const chalk = require("chalk");
+const pc = require("picocolors");
 
 /**
  * Command-line Interface plugin. It prints the messages on the console and asks for feedback
@@ -24,7 +24,7 @@ const cli = {
           let errorMessage =
             error?.message || "An error occurred while running the agent.";
 
-          consoleLogger.error(chalk.red(`   error: ${errorMessage}`), error);
+          consoleLogger.error(pc.red(`   error: ${errorMessage}`), error);
         });
 
         aibitat.onStart(() => {
@@ -75,8 +75,8 @@ const cli = {
    * @param simulateStream
    */
       print: async function (message = {}, simulateStream = true) {
-        const replying = chalk.dim(`(to ${message.to})`);
-        const reference = `${chalk.magenta("✎")} ${chalk.bold(
+        const replying = pc.dim(`(to ${message.to})`);
+        const reference = `${pc.magenta("✎")} ${pc.bold(
           message.from,
         )} ${replying}:`;
 
@@ -131,9 +131,9 @@ const cli = {
        */
       askForFeedback: function (node = {}) {
         return input({
-          message: `Provide feedback to ${chalk.yellow(
+          message: `Provide feedback to ${pc.yellow(
             node.to,
-          )} as ${chalk.yellow(
+          )} as ${pc.yellow(
             node.from,
           )}. Press enter to skip and use auto-reply, or type 'exit' to end the conversation: `,
         });

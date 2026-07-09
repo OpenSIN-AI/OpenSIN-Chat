@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import React, { useState, useRef, useEffect, FormEvent } from "react";
 import Sidebar from "@/components/SettingsSidebar";
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
 import OpenSINChatIcon from "@/media/logo/opensin-icon.svg";
@@ -207,6 +207,7 @@ export default function GeneralEmbeddingPreference() {
   };
 
   const updateChoice = (selection: string) => {
+  const isMobile = useIsMobileLayout();
     setSearchQuery("");
     setSelectedEmbedder(selection);
     setSearchMenuOpen(false);

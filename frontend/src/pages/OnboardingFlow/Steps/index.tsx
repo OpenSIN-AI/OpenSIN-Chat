@@ -4,7 +4,7 @@ import { ArrowLeft } from "@phosphor-icons/react/dist/csr/ArrowLeft";
 import { ArrowRight } from "@phosphor-icons/react/dist/csr/ArrowRight";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import useRedirectToHomeOnOnboardingComplete from "@/hooks/useOnboardingComplete";
 import Home from "./Home";
 import LLMPreference from "./LLMPreference";
@@ -40,6 +40,7 @@ export function OnboardingLayout({
   children,
 }: OnboardingLayoutProps): JSX.Element {
   useRedirectToHomeOnOnboardingComplete();
+  const isMobile = useIsMobileLayout();
   const { t } = useTranslation();
   const [header, setHeader] = useState({
     title: "",

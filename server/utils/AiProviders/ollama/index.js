@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { appendContext } = require("../appendContext");
 const consoleLogger = require("../../logger/console.js");
 
 const {
@@ -117,17 +118,6 @@ class OllamaAILLM {
     }
   }
 
-  #appendContext(contextTexts = []) {
-    if (!contextTexts || !contextTexts.length) return "";
-    return (
-      "\nContext:\n" +
-      contextTexts
-        .map((text, i) => {
-          return `[CONTEXT ${i}]:\n${text}\n[END CONTEXT ${i}]\n\n`;
-        })
-        .join("")
-    );
-  }
 
   /**
    * Apply a custom fetch function to the Ollama client.
@@ -260,7 +250,7 @@ class OllamaAILLM {
   }) {
     const prompt = {
       role: "system",
-      content: `${systemPrompt}${this.#appendContext(contextTexts)}`,
+      content: `${systemPrompt}${appendContext(contextTexts)}`,
     };
     return [
       prompt,

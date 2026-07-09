@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import Sidebar from "@/components/SettingsSidebar";
 import ContextualSaveBar from "@/components/ContextualSaveBar";
 
@@ -14,6 +14,7 @@ export default function AgentLayout({
   handleSubmit: () => void;
   handleCancel: () => void;
 }) {
+  const isMobile = useIsMobileLayout();
   return (
     <div
       id="workspace-agent-settings-container"

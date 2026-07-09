@@ -58,6 +58,8 @@ const ConnectorAccounts = {
 
   /**
    * List connected accounts WITHOUT token blobs (safe for frontend).
+   * A user realistically has at most a handful of connected providers, so
+   * 100 is a generous hard cap that prevents unbounded reads.
    * @param {number|null} userId
    * @returns {Promise<Array>}
    */
@@ -73,6 +75,8 @@ const ConnectorAccounts = {
         expires_at: true,
         updated_at: true,
       },
+      take: 100,
+      orderBy: { id: "desc" },
     });
   },
 

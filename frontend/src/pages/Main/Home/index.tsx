@@ -3,7 +3,7 @@
 // Docs: index.doc.md
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import {
   PROMPT_INPUT_EVENT,
   PROMPT_INPUT_ID,
@@ -68,6 +68,7 @@ async function createDefaultWorkspace(
 }
 
 export default function Home() {
+  const isMobile = useIsMobileLayout();
   const { t } = useTranslation();
   const { user } = useUser();
   const [workspace, setWorkspace] = useState<HomeWorkspace | null>(null);

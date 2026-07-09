@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import renderMarkdown from "@/utils/chat/markdown";
 import DOMPurify from "@/utils/chat/purify";
 import Citations from "../Citation";
+import ChunkCitationPopoverManager from "../Citation/ChunkCitation";
 import GroundingBadge from "../GroundingBadge";
 import {
   THOUGHT_REGEX_CLOSE,
@@ -139,6 +140,9 @@ const PromptReply: any = ({
         />
         <GroundingBadge sources={sources} />
         <Citations sources={sources} />
+        {sources.length > 0 && (
+          <ChunkCitationPopoverManager sources={sources} messageId={uuid} />
+        )}
       </div>
     </div>
   );

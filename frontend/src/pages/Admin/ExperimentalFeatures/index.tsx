@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/SettingsSidebar";
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { FullScreenLoader } from "@/components/Preloader";
 import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
 import { Flask } from "@phosphor-icons/react/dist/csr/Flask";
@@ -14,6 +14,7 @@ import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 import useExperimentalFeatures from "@/hooks/useExperimentalFeatures";
 
 export default function ExperimentalFeatures() {
+  const isMobile = useIsMobileLayout();
   const { t } = useTranslation();
   const { featureFlags, isLoading, refresh } = useExperimentalFeatures();
   const [selectedFeature, setSelectedFeature] = useState(
