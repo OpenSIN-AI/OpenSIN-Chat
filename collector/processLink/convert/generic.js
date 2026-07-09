@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: MIT
 const { v4 } = require("uuid");
-const {
-  PuppeteerWebBaseLoader,
-} = require("@langchain/community/document_loaders/web/puppeteer");
+// PuppeteerWebBaseLoader is required lazily inside scrapeWithCustomLoader()
+// because @langchain/community's puppeteer loader tries to require("puppeteer")
+// at module-load time when it is imported at the top level. Since puppeteer is
+// an optional dependency (large binary, not installed in all environments),
+// a top-level require crashes the entire collector on boot even when Puppeteer
+// is never actually used for the current request.
 const { writeToServerDocuments } = require("../../utils/files");
 const { tokenizeString } = require("../../utils/tokenizer");
 const { default: slugify } = require("slugify");
@@ -266,6 +269,9 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
     };
 
     const scrapeWithCustomLoader = async () => {
+      const { PuppeteerWebBaseLoader } = require(
+        "@langchain/community/document_loaders/web/puppeteer"
+      );
       const loader = new PuppeteerWebBaseLoader(link, {
         launchOptions: {
           headless: launchConfig.headless,
