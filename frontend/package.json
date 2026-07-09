@@ -73,7 +73,7 @@
     "react": "^19.1.0",
     "react-device-detect": "^2.2.2",
     "react-dom": "^19.1.0",
-    "react-dropzone": "^14.2.3",
+    "react-dropzone": "^15.0.0",
     "react-error-boundary": "^6.1.2",
     "react-highlight-words": "^0.21.0",
     "react-i18next": "^17.0.8",
