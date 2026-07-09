@@ -15,6 +15,7 @@ const { SystemSettings } = require("../models/systemSettings");
 // mid-load, which crashed the server at boot ("argument handler must be a
 // function"). Requiring at call time guarantees the fully-resolved functions.
 const { reqBody } = require("../utils/http");
+const { sanitizeFileName } = require("../utils/files");
 const { fetchWithTimeout } = require("../utils/helpers/fetchWithTimeout");
 const { ResilientHttpClient } = require("../utils/helpers/resilientHttpClient");
 
@@ -453,12 +454,18 @@ function utilEndpoints(app) {
         const upload = multer({
           storage: multer.diskStorage({
             destination: (req, file, cb) => {
+              // safeStorageJoin already jails the path inside the storage root
+              // and throws if a traversal attempt is detected. ensureStorageDir
+              // receives the pre-resolved absolute path so it never re-joins the
+              // raw query param against the file system.
               const dir = safeStorageJoin("uploads", req.query.path || "");
-              ensureStorageDir(path.join("uploads", req.query.path || ""));
+              ensureStorageDir(dir);
               cb(null, dir);
             },
             filename: (req, file, cb) => {
-              cb(null, file.originalname);
+              // Sanitize before persisting: strips path separators, null bytes,
+              // and other dangerous characters (mirrors server/utils/files/multer.js).
+              cb(null, sanitizeFileName(file.originalname));
             },
           }),
           limits: { fileSize: 500 * 1024 * 1024 },
