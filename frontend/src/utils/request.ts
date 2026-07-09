@@ -21,7 +21,7 @@ export function safeJsonParse(jsonString, fallback = null) {
   try {
     if (jsonString === null || jsonString === undefined) return fallback;
     return JSON.parse(jsonString);
-  } catch {}
+  } catch (e) { console.warn("[request] non-fatal error:", e?.message || e); }
   return fallback;
 }
 

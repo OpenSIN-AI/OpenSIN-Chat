@@ -132,7 +132,7 @@ test.describe("API keys management", () => {
       const cancelBtn = page.getByRole("button", {
         name: /cancel|abbrechen/i,
       }).first();
-      await cancelBtn.click().catch(() => {});
+      await cancelBtn.click().catch((e) => console.warn("[api-keys.spec] non-fatal error:", e?.message || e));
       createdKeyName = null;
       test.skip(true, "Backend rejected API key creation — skipping create test");
     }

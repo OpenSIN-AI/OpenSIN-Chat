@@ -111,7 +111,7 @@ export async function getOrCreateWorkspace(request, token) {
       if (workspaces && workspaces.length > 0) {
         return workspaces[0].slug;
       }
-    } catch {}
+    } catch (e) { console.warn("[_helpers] non-fatal error:", e?.message || e); }
   }
   // Fall back to creating one
   return createWorkspace(request, token);

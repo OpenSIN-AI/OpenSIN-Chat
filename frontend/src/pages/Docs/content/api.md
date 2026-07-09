@@ -1155,10 +1155,10 @@ curl -s "http://localhost:3001/api/reports/$REPORT_ID" \
 |---------|--------|---------|
 | JavaScript/TypeScript | 📅 Geplant | `@opensin/sdk` |
 | Python | 📅 Geplant | `opensin-sdk` |
-| Go | 📅 Geplant | `github.com/Family-Team-Projects/opensin-go` |
+| Go | 📅 Geplant | `github.com/OpenSIN-AI/opensin-go` |
 
 Bei Interesse: Issue auf GitHub erstellen.
 
 ---
 
-*Letztes Update: 2026-06-07 · API-Version: v1 · Maintainer: @Family-Team-Projects*
+*Letztes Update: 2026-06-07 · API-Version: v1 · Maintainer: @OpenSIN-AI*

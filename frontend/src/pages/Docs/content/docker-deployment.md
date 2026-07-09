@@ -212,7 +212,7 @@ For development or custom modifications.
 
 ```bash
 # 1. Clone repo
-git clone https://github.com/Family-Team-Projects/OpenSIN-Chat.git
+git clone https://github.com/OpenSIN-AI/OpenSIN-Chat.git
 cd OpenSIN-Chat
 
 # 2. Checkout version

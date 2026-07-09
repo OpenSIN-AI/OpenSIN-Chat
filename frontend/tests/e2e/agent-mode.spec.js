@@ -38,7 +38,7 @@ test.describe("agent mode (@agent prefix)", () => {
         .delete(`/api/workspace/${createdSlug}`, {
           headers: { Authorization: `Bearer ${token}` },
         })
-        .catch(() => {});
+        .catch((e) => console.warn("[agent-mode.spec] non-fatal error:", e?.message || e));
       createdSlug = null;
     }
   });

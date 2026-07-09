@@ -92,7 +92,7 @@ function persistMode(modeId) {
   try {
     if (modeId) localStorage.setItem(AGENT_MODE_STORAGE_KEY, modeId);
     else localStorage.removeItem(AGENT_MODE_STORAGE_KEY);
-  } catch {}
+  } catch (e) { console.warn("[AgentModeButtonx] non-fatal error:", e?.message || e); }
 }
 
 export function useAgentMode() {

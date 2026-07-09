@@ -210,7 +210,7 @@ export function AgentRunsProvider({
             headers: { Authorization: `Bearer ${authToken}` },
           },
         );
-      } catch {}
+      } catch (e) { console.warn("[AgentRunsContextx] non-fatal error:", e?.message || e); }
     },
     [apiBase, workspaceSlug, authToken],
   );
@@ -229,7 +229,7 @@ export function AgentRunsProvider({
             body: JSON.stringify(payload),
           },
         );
-      } catch {}
+      } catch (e) { console.warn("[AgentRunsContextx] non-fatal error:", e?.message || e); }
     },
     [apiBase, workspaceSlug, authToken],
   );

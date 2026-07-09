@@ -4060,10 +4060,6 @@ const TRANSLATIONS = {
     icon_memories: "Memories",
     icon_console: "Console & Terminal",
     icon_pdf_analysis: "PDF Analysis",
-    icon_notepad: "Notepad",
-    icon_agent_sessions: "Agent Sessions",
-    icon_agent_settings: "Agent Settings",
-    icon_workspace_settings: "Workspace Settings",
   },
   dataConnectors: {
     paperlessNgx: {
@@ -4213,7 +4209,7 @@ const TRANSLATIONS = {
     enabled: "enabled",
     disabled: "disabled",
     eventsNoIp:
-      'All events do not record IP-address and contain <b>no identifying</b> content, settings, chats, or other non-usage based information. To see the list of event tags collected you can look on <a href="https://github.com/search?q=repo%3AFamily-Team-Projects%2Fopensin-chat%20.sendTelemetry(&amp;type=code" class="underline text-blue-400" target="_blank" rel="noreferrer">GitHub here</a>.',
+      'All events do not record IP-address and contain <b>no identifying</b> content, settings, chats, or other non-usage based information. To see the list of event tags collected you can look on <a href="https://github.com/search?q=repo%3AOpenSIN-AI%2Fopensin-chat%20.sendTelemetry(&amp;type=code" class="underline text-blue-400" target="_blank" rel="noreferrer">GitHub here</a>.',
     respectPrivacy:
       'As an open-source project we respect your right to privacy. We are dedicated to building the best solution for integrating AI and documents privately and securely. If you do decide to turn off telemetry all we ask is to consider sending us feedback and thoughts so that we can continue to improve OpenSIN Chat for you. <a href="mailto:team@opensin.com" class="underline text-blue-400" target="_blank" rel="noreferrer">team@opensin.com</a>.',
   },

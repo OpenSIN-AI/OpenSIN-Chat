@@ -17,6 +17,14 @@ export const LEGACY_THEME_KEY = "theme";
 export const RESET_TOKEN = "opensin_resetToken";
 
 // Legacy key mapping for migration from openafd_ → opensin_ prefix.
+// TODO: After LEGACY_KEY_REMOVAL_DATE (6 months after v1.14.0 GA),
+// drop LEGACY_STORAGE_KEYS and the migration logic in safeStorage.ts.
+export const LEGACY_KEY_REMOVAL_DATE = "2027-01-01";
+// Legacy key mapping for migration from openafd_ → opensin_ prefix.
+// TODO: After LEGACY_KEY_REMOVAL_DATE, drop LEGACY_STORAGE_KEYS and the
+//       migration logic in safeStorage.ts.
+export const LEGACY_KEY_REMOVAL_DATE = "2027-01-01"; // 6 months after v1.14.0 GA
+
 // Used by safeStorage to transparently migrate old keys on first access.
 export const LEGACY_KEY_MAP: Record<string, string> = {
   openafd_user: AUTH_USER,

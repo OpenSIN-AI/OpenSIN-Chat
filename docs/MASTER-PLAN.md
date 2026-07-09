@@ -64,7 +64,7 @@
   - Sticky "Neuer Chat" / "Neuer Ordner" am Sidebar-Boden
 - [ ] Screenshots einbinden (8-10 im User Guide)
 - [ ] Tastatur-Shortcuts verifizieren (`Cmd+K`, `Cmd+N`, `Cmd+U`, `Cmd+/`, `Esc`)
-- [ ] Falsche GitHub-Links korrigieren (`Family-Team-Projects/OpenSIN-Chat` → `OpenSIN-AI/OpenSIN-Chat`)
+- [x] ~~Falsche GitHub-Links korrigieren~~ ✅ erledigt (Family-Team-Projects → OpenSIN-AI)
 - [ ] FAQ: Kosten-Sektion aktualisieren (Fireworks AI statt Ollama als primär)
 - [ ] FAQ: Live-Demo-URL aktualisieren
 - [ ] Version: `v0.1.0` → aktuelle Version
@@ -175,7 +175,7 @@
 
 ### P2-3: Dependabot-Alerts
 
-- 5 Vulnerabilities (2 high, 2 moderate, 1 low) auf `Family-Team-Projects/OpenAfD-Chat`
+- 5 Vulnerabilities (2 high, 2 moderate, 1 low) auf `OpenSIN-AI/OpenSIN-Chat`
 - `dependabot/npm_and_yarn/server/cohere-ai-8.0.0`
 - `dependabot/npm_and_yarn/server/fix-path-5.0.0`
 - [ ] `yarn audit` in OpenAfD-Chat ausführen

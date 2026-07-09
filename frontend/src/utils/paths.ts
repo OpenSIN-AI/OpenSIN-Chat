@@ -66,7 +66,7 @@ export default {
     },
   },
   github: () => {
-    return "https://github.com/Family-Team-Projects/OpenSIN-Chat";
+    return "https://github.com/OpenSIN-AI/OpenSIN-Chat";
   },
   discord: () => {
     return "https://discord.gg/6UyHPeGZAC";

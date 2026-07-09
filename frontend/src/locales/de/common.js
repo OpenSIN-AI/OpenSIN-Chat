@@ -4308,7 +4308,7 @@ const TRANSLATIONS = {
     enabled: "aktiviert",
     disabled: "deaktiviert",
     eventsNoIp:
-      'Alle Ereignisse zeichnen keine IP-Adresse auf und enthalten <b>keine identifizierenden</b> Inhalte, Einstellungen, Chats oder andere nicht nutzungsbasierte Informationen. Um die Liste der erfassten Ereignis-Tags einzusehen, können Sie auf <a href="https://github.com/search?q=repo%3AFamily-Team-Projects%2Fopensin-chat%20.sendTelemetry(&amp;type=code" class="underline text-blue-400" target="_blank" rel="noreferrer">GitHub</a> nachsehen.',
+      'Alle Ereignisse zeichnen keine IP-Adresse auf und enthalten <b>keine identifizierenden</b> Inhalte, Einstellungen, Chats oder andere nicht nutzungsbasierte Informationen. Um die Liste der erfassten Ereignis-Tags einzusehen, können Sie auf <a href="https://github.com/search?q=repo%3AOpenSIN-AI%2Fopensin-chat%20.sendTelemetry(&amp;type=code" class="underline text-blue-400" target="_blank" rel="noreferrer">GitHub</a> nachsehen.',
     respectPrivacy:
       'Als Open-Source-Projekt respektieren wir Ihr Recht auf Datenschutz. Wir widmen uns der Entwicklung der besten Lösung für die private und sichere Integration von KI und Dokumenten. Wenn Sie sich entscheiden, die Telemetrie zu deaktivieren, bitten wir Sie nur, uns Feedback und Gedanken zu senden, damit wir OpenSIN Chat für Sie weiter verbessern können. <a href="mailto:team@opensin.com" class="underline text-blue-400" target="_blank" rel="noreferrer">team@opensin.com</a>.',
   },

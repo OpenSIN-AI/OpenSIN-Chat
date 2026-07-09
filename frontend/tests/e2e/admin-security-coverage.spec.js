@@ -547,7 +547,7 @@ test.describe("NOTIFICATIONS / TOASTS", () => {
     // Trigger a toast via invalid action — guarding against crash
     const anySelectable = page.locator("input").first();
     if (await anySelectable.count()) {
-      await anySelectable.fill("x").catch(() => {});
+      await anySelectable.fill("x").catch((e) => console.warn("[admin-security-coverage.spec] non-fatal error:", e?.message || e));
     }
     // Just verify toast container presence somewhere on the page
     await page.waitForTimeout(300);

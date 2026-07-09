@@ -205,7 +205,7 @@ export default function SourcesSidebar({ workspace }: any) {
       );
       const data = await res.json();
       if (data?.snippets) setSnippets(data.snippets);
-    } catch {}
+    } catch (e) { console.warn("[indexx] non-fatal error:", e?.message || e); }
   }, []);
 
   useEffect(() => {

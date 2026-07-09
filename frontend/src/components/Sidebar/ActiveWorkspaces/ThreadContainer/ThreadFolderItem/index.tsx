@@ -24,7 +24,7 @@ function loadFolderCollapseState(): Record<string, boolean> {
   try {
     const stored = safeGetItem(FOLDER_COLLAPSE_KEY);
     if (stored) return JSON.parse(stored);
-  } catch {}
+  } catch (e) { console.warn("[indexx] non-fatal error:", e?.message || e); }
   return {};
 }
 
@@ -33,7 +33,7 @@ function saveFolderCollapseState(folderId: number, collapsed: boolean) {
     const state = loadFolderCollapseState();
     state[String(folderId)] = collapsed;
     safeSetItem(FOLDER_COLLAPSE_KEY, JSON.stringify(state));
-  } catch {}
+  } catch (e) { console.warn("[indexx] non-fatal error:", e?.message || e); }
 }
 
 /** Small + dropdown for Folder rows: creates a new Chat inside the folder or a new sub-folder */

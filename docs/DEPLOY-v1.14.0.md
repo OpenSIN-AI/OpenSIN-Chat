@@ -44,7 +44,7 @@ sudo docker compose -f docker/docker-compose.yml up -d opensin-chat
 
 Image: `opensin-app:v1.14.0` size 3.92 GB (vs. 8.96 GB for v0.56.15 — the new build removed the bloated base layer).
 
-**Bonus fix:** `docker-compose.yml` had `itzcrazykns1337/vane:v1.0.0` (a tag that does not exist on Docker Hub); reverted to `itzcrazykns1337/vane:latest` for the vane sidecar (only `opensin-chat` was upped in this round; vane will continue running with old compose definitions or be re-added with a verified tag in v1.14.1).
+**Bonus fix:** `docker-compose.yml` had `itzcrazykns1337/vane:latest` (a tag that does not exist on Docker Hub); reverted to `itzcrazykns1337/vane:latest` for the vane sidecar (only `opensin-chat` was upped in this round; vane will continue running with old compose definitions or be re-added with a verified tag in v1.14.1).
 
 ## Phase 3 — Apply to production VM (DONE in-session via SSH `sin-supabase`)
 

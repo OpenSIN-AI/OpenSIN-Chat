@@ -94,7 +94,7 @@ test.describe("admin pages", () => {
     // The "Admin" group in the sidebar expands to show child options.
     // Click the "Admin" group header to expand it.
     const adminGroup = page.getByText(/^Admin$/i, { exact: false }).first();
-    await adminGroup.click().catch(() => {});
+    await adminGroup.click().catch((e) => console.warn("[admin-pages.spec] non-fatal error:", e?.message || e));
 
     // Wait a moment for the child options to expand
     await page.waitForTimeout(1000);
