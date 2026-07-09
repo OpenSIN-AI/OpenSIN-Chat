@@ -419,6 +419,117 @@ class PGVector extends VectorDatabase {
     return result;
   }
 
+  /**
+   * Performs a Hybrid Search (vector + BM25 full-text) fused with
+   * Reciprocal Rank Fusion (RRF).
+   *
+   * Why RRF: Merging ranked lists by score is tricky because vector distances
+   * and ts_rank values live on incompatible scales. RRF (k=60) only uses
+   * rank positions, is parameter-insensitive, and consistently outperforms
+   * naive score-based merging on mixed query types.
+   *
+   * Activated when workspace.vectorSearchMode === "hybrid". Falls back to
+   * the standard vector-only path for all other modes.
+   *
+   * @param {Object} params
+   * @param {pgsql.Client} params.client
+   * @param {string} params.namespace
+   * @param {string} params.query        - raw text query for full-text arm
+   * @param {number[]} params.queryVector - embedding vector for ANN arm
+   * @param {number} params.similarityThreshold
+   * @param {number} params.topN
+   * @param {string[]} params.filterIdentifiers
+   * @returns {Promise<{contextTexts: string[], sourceDocuments: Object[], scores: number[]}>}
+   */
+  async hybridSimilarityResponse({
+    client,
+    namespace,
+    query,
+    queryVector,
+    similarityThreshold = 0.25,
+    topN = 4,
+    filterIdentifiers = [],
+  }) {
+    const table = PGVector.tableName();
+    const embedding = `[${queryVector.map(Number).join(",")}]`;
+    const candidateLimit = topN * 3; // fetch more than needed before RRF re-rank
+
+    // --- Arm 1: ANN vector search ---
+    const vectorRes = await client.query(
+      `SELECT id, metadata,
+              1 - (embedding ${this.operator.cosine} $1) AS vector_score
+       FROM "${table}"
+       WHERE namespace = $2
+       ORDER BY embedding ${this.operator.cosine} $1 ASC
+       LIMIT $3`,
+      [embedding, namespace, candidateLimit],
+    );
+
+    // --- Arm 2: BM25 full-text search (falls back to empty if FTS not set up) ---
+    let ftsRows = [];
+    try {
+      const ftsRes = await client.query(
+        `SELECT id, metadata,
+                ts_rank(fts, plainto_tsquery('german', $1)) AS fts_score
+         FROM "${table}"
+         WHERE namespace = $2
+           AND fts @@ plainto_tsquery('german', $1)
+         ORDER BY fts_score DESC
+         LIMIT $3`,
+        [query, namespace, candidateLimit],
+      );
+      ftsRows = ftsRes.rows;
+    } catch {
+      // FTS column not yet available (Postgres < 12 or migration not run).
+      // Gracefully degrade to vector-only for this request.
+      this.logger(
+        "Hybrid search FTS arm unavailable — falling back to vector-only for this query",
+      );
+    }
+
+    // --- Reciprocal Rank Fusion (k=60, standard constant) ---
+    const K = 60;
+    const rrfScores = new Map(); // id -> cumulative RRF score
+
+    vectorRes.rows.forEach((row, i) => {
+      rrfScores.set(row.id, (rrfScores.get(row.id) ?? 0) + 1 / (K + i + 1));
+    });
+    ftsRows.forEach((row, i) => {
+      rrfScores.set(row.id, (rrfScores.get(row.id) ?? 0) + 1 / (K + i + 1));
+    });
+
+    // Build a lookup map for metadata (union of both arms)
+    const metaMap = new Map();
+    for (const row of vectorRes.rows) metaMap.set(row.id, row.metadata);
+    for (const row of ftsRows) metaMap.set(row.id, row.metadata);
+
+    // Sort by descending RRF score and apply similarity threshold / filter
+    const ranked = [...rrfScores.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, topN);
+
+    const result = { contextTexts: [], sourceDocuments: [], scores: [] };
+    for (const [id, rrfScore] of ranked) {
+      const metadata = metaMap.get(id);
+      if (!metadata) continue;
+      // RRF scores top out around 1/61 ≈ 0.016 for a #1 match in both arms.
+      // We normalise to [0,1] by treating max possible score (1/61 + 1/61) as 1.
+      const normScore = Math.min(rrfScore / (2 / (K + 1)), 1);
+      if (normScore < similarityThreshold) continue;
+      if (filterIdentifiers.includes(sourceIdentifier(metadata))) {
+        this.logger(
+          "A source was filtered from context as its parent document is pinned.",
+        );
+        continue;
+      }
+      result.contextTexts.push(metadata.text ?? "");
+      result.sourceDocuments.push({ ...metadata, score: normScore });
+      result.scores.push(normScore);
+    }
+
+    return result;
+  }
+
   normalizeVector(vector) {
     const magnitude = Math.sqrt(
       vector.reduce((sum, val) => sum + val * val, 0),
@@ -549,6 +660,32 @@ class PGVector extends VectorDatabase {
       this.logger(`Namespace index ensured on "${PGVector.tableName()}"`);
     } catch (err) {
       this.logger(`Namespace index creation skipped: ${err.message}`);
+    }
+
+    // Full-text search column + GIN index for hybrid search (Punkt 17).
+    // The generated column extracts the `text` key from the JSONB metadata
+    // column and converts it to a German tsvector for BM25-style ranking.
+    // Requires Postgres 12+ (GENERATED ALWAYS AS … STORED syntax).
+    // Both statements are safe to run on existing tables because they use
+    // ADD COLUMN IF NOT EXISTS / CREATE INDEX IF NOT EXISTS.
+    try {
+      const table = PGVector.tableName();
+      await connection.query(
+        `ALTER TABLE "${table}"
+         ADD COLUMN IF NOT EXISTS fts tsvector
+           GENERATED ALWAYS AS (
+             to_tsvector('german', COALESCE(metadata->>'text', ''))
+           ) STORED`,
+      );
+      await connection.query(
+        `CREATE INDEX IF NOT EXISTS "${table}_fts_idx"
+         ON "${table}" USING GIN (fts)`,
+      );
+      this.logger(`FTS column and GIN index ensured on "${table}"`);
+    } catch (err) {
+      // Non-fatal — generated columns require Postgres 12+ and the german
+      // dictionary. On older instances the app still works with vector-only search.
+      this.logger(`FTS setup skipped: ${err.message}`);
     }
 
     return true;
@@ -698,7 +835,9 @@ class PGVector extends VectorDatabase {
           const vectorRecord = {
             id: uuidv4(),
             values: vector,
-            metadata: { ...metadata, text: textChunks[i] },
+            // chunkIndex lets the frontend show "chunk N of M" and enables
+            // chunk-level citation previews (RAGFlow-style hover popover).
+            metadata: { ...metadata, text: textChunks[i], chunkIndex: i },
           };
 
           vectors.push(vectorRecord);
@@ -818,10 +957,16 @@ class PGVector extends VectorDatabase {
     similarityThreshold = 0.25,
     topN = 4,
     filterIdentifiers = [],
+    // Optional workspace object — used to read vectorSearchMode for hybrid search.
+    // When vectorSearchMode === "hybrid" both vector ANN and BM25 full-text arms
+    // are run in parallel and fused with Reciprocal Rank Fusion (RRF).
+    workspace = null,
   }) {
     let connection = null;
     if (!namespace || !input || !LLMConnector)
       throw new Error("Invalid request to performSimilaritySearch.");
+
+    const useHybrid = workspace?.vectorSearchMode === "hybrid";
 
     try {
       connection = await this.connect();
@@ -846,14 +991,25 @@ class PGVector extends VectorDatabase {
             "Failed to generate embedding for query. The embedding model may be unavailable or returned an empty vector.",
         };
       }
-      const result = await this.similarityResponse({
-        client: connection,
-        namespace,
-        queryVector,
-        similarityThreshold,
-        topN,
-        filterIdentifiers,
-      });
+
+      const result = useHybrid
+        ? await this.hybridSimilarityResponse({
+            client: connection,
+            namespace,
+            query: input,
+            queryVector,
+            similarityThreshold,
+            topN,
+            filterIdentifiers,
+          })
+        : await this.similarityResponse({
+            client: connection,
+            namespace,
+            queryVector,
+            similarityThreshold,
+            topN,
+            filterIdentifiers,
+          });
 
       const { contextTexts, sourceDocuments } = result;
       const sources = sourceDocuments.map((metadata, i) => {

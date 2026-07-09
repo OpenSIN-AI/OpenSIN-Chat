@@ -255,9 +255,9 @@ function Directory({
               <Plus
                 size={18}
                 weight="bold"
-                className="text-theme-text-primary light:text-[#0ba5ec]"
+                className="text-theme-text-primary light:text-sky-500"
               />
-              <div className="text-theme-text-primary light:text-[#0ba5ec] text-xs font-bold leading-[18px]">
+              <div className="text-theme-text-primary light:text-sky-500 text-xs font-bold leading-[18px]">
                 {t("connectors.directory.new-folder")}
               </div>
             </button>
@@ -329,7 +329,7 @@ function Directory({
                           setShowFolderSelection(!showFolderSelection)
                         }
                       >
-                        <MoveToFolderIcon className="text-dark-text light:text-[#026AA2] group-hover:text-theme-text-primary" />
+                        <MoveToFolderIcon className="text-dark-text light:text-sky-700 group-hover:text-theme-text-primary" />
                       </ToolbarButton>
                       {showFolderSelection && (
                         <FolderSelectionPopup
