@@ -20,6 +20,10 @@ vi.mock("../ChatSidebar", () => ({
   }),
 }));
 
+vi.mock("../AgentSessionsSidebar/AgentRunsContext", () => ({
+  useAgentRuns: () => ({ activeRunCount: 0 }),
+}));
+
 // Render helper that provides the Router context useNavigate() requires.
 function renderBar() {
   return render(
@@ -34,10 +38,10 @@ describe("RightSidebarIconBar", () => {
     vi.clearAllMocks();
   });
 
-  it("renders all icon buttons (7 panels + notepad panel)", () => {
+  it("renders all icon buttons (8 panels + 3 agent buttons)", () => {
     const { container } = renderBar();
     const buttons = container.querySelectorAll("button");
-    expect(buttons.length).toBe(8);
+    expect(buttons.length).toBe(11);
   });
 
   it("calls toggleSidebar with 'pdf-analysis' when PDF-analysis icon clicked", () => {
