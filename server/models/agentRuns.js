@@ -50,12 +50,15 @@ const AgentRuns = {
    * @returns {Promise<Array>}
    */
   async getActive(workspaceId) {
+    // Cap at 50: if a crash leaves many runs in a non-terminal state the SSE
+    // reconnect snapshot must not pull unbounded rows into memory.
     return prisma.agent_runs.findMany({
       where: {
         workspace_id: workspaceId,
         status: { in: ["running", "waiting_input", "queued"] },
       },
       orderBy: { started_at: "asc" },
+      take: 50,
     });
   },
 
