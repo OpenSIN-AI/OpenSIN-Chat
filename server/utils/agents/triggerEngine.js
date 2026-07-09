@@ -7,6 +7,7 @@
 const Bree = require("bree");
 const { AgentTriggers } = require("../../models/agentTriggers");
 const { Workspace } = require("../../models/workspace");
+const { AgentHandler } = require("./index");
 const consoleLogger = require("../logger/console.js");
 const MAX_ATTEMPTS = 5;
 const CIRCUIT_BREAKER_THRESHOLD = 5; // consecutive failures before pausing

@@ -199,11 +199,7 @@ function generateAutoSection() {
 
   Object.entries(groups).forEach(([category, entries]) => {
     section += `### ${category}\n`;
-<<<<<<< HEAD
-    entries.forEach(({ key: _key, config }) => {
-=======
     entries.forEach(({ config }) => {
->>>>>>> 0334f658 (refactor: streamline EmbeddingProgressContext logic and update tests)
       section += `# ${config.envKey}=\n`;
     });
     section += `\n`;
