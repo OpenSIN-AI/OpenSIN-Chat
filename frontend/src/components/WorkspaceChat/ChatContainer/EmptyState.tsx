@@ -25,10 +25,10 @@ function CapabilityCard({ icon: Icon, title, description, onClick }: any) {
     <button
       type="button"
       onClick={onClick}
-      className="group flex flex-col gap-2 p-4 rounded-xl border border-white/10 light:border-slate-200 bg-white/[0.03] light:bg-slate-50 hover:bg-white/[0.08] light:hover:bg-slate-100 hover:border-white/20 light:hover:border-slate-300 transition-all text-left w-full"
+      className="group flex flex-col gap-2 p-4 rounded-xl border border-white/[0.06] light:border-zinc-200 bg-transparent hover:bg-white/[0.04] light:hover:bg-zinc-50 hover:border-white/[0.12] light:hover:border-zinc-300 transition-all text-left w-full"
     >
-      <div className="w-8 h-8 rounded-lg bg-theme-accent/15 flex items-center justify-center flex-shrink-0">
-        <Icon size={16} className="text-theme-accent" />
+      <div className="w-7 h-7 rounded-lg bg-white/[0.06] light:bg-zinc-100 flex items-center justify-center flex-shrink-0">
+        <Icon size={14} className="text-[#a1a1aa] light:text-zinc-500" />
       </div>
       <div className="flex flex-col gap-0.5">
         <span className="text-sm font-medium text-theme-text-primary light:text-theme-text-primary">
@@ -109,12 +109,12 @@ export default function EmptyState({
   return (
     <div className="flex flex-col h-full w-full items-center justify-center overflow-y-auto px-2 md:px-6">
       <div className="flex flex-col items-center w-full max-w-[800px] py-8">
-        <h1 className="text-white light:text-theme-text-primary text-2xl md:text-3xl font-semibold mb-3 text-center tracking-tight">
+        <h1 className="text-[#fafafa] light:text-zinc-900 text-2xl md:text-3xl font-semibold mb-3 text-center tracking-tight">
           {t("main-page.greeting")}
         </h1>
         {modelName && (
           <div className="flex items-center gap-x-1.5 mb-8">
-            <span className="inline-flex items-center gap-x-1 px-2.5 py-1 rounded-full text-xs font-medium bg-theme-accent/10 text-theme-accent border border-theme-accent/20">
+            <span className="inline-flex items-center gap-x-1 px-2.5 py-1 rounded-full text-xs font-medium bg-white/[0.06] light:bg-zinc-100 text-[#a1a1aa] light:text-zinc-600 border border-white/[0.08] light:border-zinc-200">
               <Sparkle size={11} weight="fill" />
               {modelName}
             </span>

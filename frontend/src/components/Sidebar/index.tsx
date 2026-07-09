@@ -100,25 +100,25 @@ export default function Sidebar() {
       <nav
         aria-label={t("sidebar.mainNavigation")}
         style={{ width: showSidebar ? `${sidebarWidth}px` : "0px" }}
-        className={`relative transition-all duration-500 flex-shrink-0 z-40 bg-zinc-950 light:bg-slate-100 hidden md:flex overflow-hidden ${showSidebar ? "border-r border-white/5 light:border-slate-200" : ""}`}
+        className={`relative transition-all duration-500 flex-shrink-0 z-40 bg-[#111111] light:bg-[#f9fafb] hidden md:flex overflow-hidden ${showSidebar ? "border-r border-white/[0.06] light:border-zinc-200" : ""}`}
       >
-        <div className="overflow-hidden h-full flex flex-col">
-          <div className="flex shrink-0 w-full items-center justify-between gap-x-2 my-[14px] px-[14px]">
+        <div className="overflow-hidden h-full flex flex-col w-full">
+          <div className="flex shrink-0 w-full items-center justify-between gap-x-2 my-3 px-3">
             <Link
               to={paths.home()}
               aria-label={t("sidebar.home")}
-              className="flex items-center gap-x-2.5 overflow-hidden flex-shrink min-w-0"
+              className="flex items-center gap-x-2 overflow-hidden flex-shrink min-w-0 px-1"
             >
               <img
                 src={logo}
                 alt={t("sidebar.logo")}
-                className="h-9 w-9 max-h-[36px] max-w-[36px] object-contain flex-shrink-0"
+                className="h-7 w-7 max-h-[28px] max-w-[28px] object-contain flex-shrink-0"
               />
-              <span className="text-theme-text-primary font-bold text-lg whitespace-nowrap">
+              <span className="text-[#fafafa] light:text-zinc-900 font-semibold text-sm tracking-tight whitespace-nowrap">
                 OpenSIN
               </span>
             </Link>
-            <div className="flex items-center gap-1 flex-shrink-0">
+            <div className="flex items-center gap-0.5 flex-shrink-0">
               <ThemeToggle />
               <button
                 type="button"
@@ -134,10 +134,10 @@ export default function Sidebar() {
                     ? t("sidebar.hideSidebar")
                     : t("sidebar.showSidebar")
                 }
-                className="flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all bg-transparent hover:bg-zinc-700 light:hover:bg-slate-200 text-theme-text-primary flex-shrink-0 relative z-10"
+                className="flex items-center justify-center w-7 h-7 rounded-md border-none cursor-pointer transition-colors bg-transparent hover:bg-white/[0.06] light:hover:bg-zinc-100 text-[#71717a] hover:text-[#fafafa] light:text-zinc-500 light:hover:text-zinc-900 flex-shrink-0"
               >
                 <SidebarSimple
-                  size={18}
+                  size={16}
                   weight={showSidebar ? "fill" : "regular"}
                 />
               </button>
@@ -151,7 +151,7 @@ export default function Sidebar() {
           </div>
           <div
             ref={sidebarRef}
-            className="w-full relative flex-1 flex flex-col px-[10px] pb-[10px] min-h-0 overflow-hidden"
+            className="w-full relative flex-1 flex flex-col px-2 pb-2 min-h-0 overflow-hidden"
           >
             <div className="flex flex-col h-full overflow-hidden">
               <div className="flex-grow flex flex-col min-h-0">
@@ -176,9 +176,9 @@ export default function Sidebar() {
             aria-orientation="vertical"
             aria-label={t("sidebar.resizeSidebar")}
             title={t("sidebar.resizeSidebarTitle")}
-            className="absolute top-0 right-0 h-full w-[6px] cursor-col-resize z-50 group flex items-center justify-center hover:bg-blue-500/20 transition-colors -mr-[3px]"
+            className="absolute top-0 right-0 h-full w-[5px] cursor-col-resize z-50 group flex items-center justify-center hover:bg-white/[0.04] transition-colors"
           >
-            <div className="w-[2px] h-12 bg-transparent group-hover:bg-blue-400 rounded-full transition-colors" />
+            <div className="w-px h-8 bg-transparent group-hover:bg-white/20 rounded-full transition-colors" />
           </div>
         )}
         {showingNewWsModal && <NewWorkspaceModal hideModal={hideNewWsModal} />}
@@ -222,7 +222,7 @@ export function SidebarMobileHeader() {
     <>
       <header
         aria-label={t("sidebar.topNavigationMobile")}
-        className="fixed top-0 left-0 right-0 z-10 flex justify-between items-center px-4 py-2 bg-theme-bg-sidebar light:bg-white text-slate-200 shadow-lg h-16"
+        className="fixed top-0 left-0 right-0 z-10 flex justify-between items-center px-4 py-2 bg-[#111111] light:bg-white border-b border-white/[0.06] light:border-zinc-200 h-14"
       >
         <button
           type="button"
@@ -318,10 +318,10 @@ function NewWorkspaceButton({ user, showNewWsModal }: any) {
         type="button"
         onClick={showNewWsModal}
         aria-label={t("new-workspace.title")}
-        className="flex flex-grow w-[75%] h-[44px] gap-x-2 py-[5px] px-4 bg-white rounded-lg text-sidebar justify-center items-center hover:bg-opacity-80 transition-all duration-300"
+        className="flex flex-grow w-[75%] h-10 gap-x-2 py-1.5 px-4 bg-white rounded-md text-zinc-900 justify-center items-center hover:bg-zinc-100 transition-colors duration-150 text-sm font-medium"
       >
-        <Plus className="h-5 w-5" aria-hidden="true" />
-        <p className="text-sidebar text-sm font-semibold">
+        <Plus className="h-4 w-4" aria-hidden="true" />
+        <p className="text-sm font-medium">
           {t("new-workspace.title")}
         </p>
       </button>

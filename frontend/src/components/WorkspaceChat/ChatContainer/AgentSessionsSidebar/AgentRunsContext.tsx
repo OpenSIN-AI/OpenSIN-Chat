@@ -247,8 +247,19 @@ export function AgentRunsProvider({
   );
 }
 
+// Safe fallback used when the hook is consumed outside of an
+// AgentRunsProvider (e.g. the Home screen renders the chat chrome without an
+// active workspace agent stream). Returning inert defaults keeps shared UI
+// like the RightSidebarIconBar functional instead of crashing the tree.
+const EMPTY_AGENT_RUNS: AgentRunsCtx = {
+  runs: {},
+  runTree: [],
+  activeRunCount: 0,
+  cancelRun: async () => {},
+  respondToInput: () => {},
+};
+
 export function useAgentRuns() {
   const c = useContext(Ctx);
-  if (!c) throw new Error("useAgentRuns must be used within AgentRunsProvider");
-  return c;
+  return c ?? EMPTY_AGENT_RUNS;
 }

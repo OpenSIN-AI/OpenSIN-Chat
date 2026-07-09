@@ -66,7 +66,7 @@ function SearchBox({ user, showNewWsModal }: any) {
   }, []);
 
   return (
-    <div className="flex gap-x-[5px] w-full items-center h-[32px]">
+    <div className="flex gap-x-1.5 w-full items-center h-7">
       <div className="relative h-full w-full flex">
         <input
           ref={searchRef}
@@ -76,13 +76,13 @@ function SearchBox({ user, showNewWsModal }: any) {
           onChange={handleSearch}
           onReset={handleReset}
           onFocus={(e) => e.target.select()}
-          className="border-none w-full h-full rounded-lg bg-theme-sidebar-item-default pl-9 focus:pl-4 pr-1 placeholder:text-theme-text-secondary light:placeholder:text-slate-500 placeholder:font-semibold outline-none text-theme-text-primary search-input peer text-sm"
+          className="border border-white/[0.06] light:border-zinc-200 w-full h-full rounded-md bg-white/[0.03] light:bg-zinc-50 pl-7 focus:pl-3 pr-1 placeholder:text-[#52525b] light:placeholder:text-zinc-400 placeholder:text-xs outline-none focus:ring-1 focus:ring-white/10 light:focus:ring-zinc-300 text-[#fafafa] light:text-zinc-900 search-input peer text-xs transition-all"
         />
         {!searchTerm && (
           <MagnifyingGlass
-            size={14}
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-theme-settings-input-placeholder peer-focus:invisible"
-            weight="bold"
+            size={12}
+            className="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-[#52525b] light:text-zinc-400 peer-focus:invisible"
+            weight="regular"
           />
         )}
       </div>
@@ -217,12 +217,12 @@ function ShortWidthNewWorkspaceButton({ user, showNewWsModal }: any) {
         data-tooltip-content={t("new-workspace.title")}
         aria-label={t("new-workspace.title")}
         onClick={showNewWsModal}
-        className="border-none flex items-center justify-center bg-white  rounded-lg p-[8px] hover:bg-white/80 light:hover:bg-slate-300 transition-all duration-300"
+        className="flex items-center justify-center bg-white light:bg-zinc-900 rounded-md p-1.5 hover:bg-zinc-100 light:hover:bg-zinc-800 transition-colors duration-150 border-none flex-shrink-0"
       >
         <Plus
-          size={16}
+          size={13}
           weight="bold"
-          className="text-black light:text-slate-500"
+          className="text-zinc-900 light:text-white"
         />
       </button>
       <Tooltip

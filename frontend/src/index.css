@@ -14,29 +14,29 @@
 
 /* ── Theme (replaces tailwind.config.js theme.extend) ──────────────────── */
 @theme {
-  /* Custom design tokens — migrated from tailwind.config.js theme.extend */
+  /* Custom design tokens — v0-style monochrome palette */
 
-  /* Brand colors */
-  --color-theme-accent: #10b981;
-  --color-theme-accent-light: #34d399;
-  --color-theme-accent-dark: #059669;
+  /* Accent: neutral white (no color) */
+  --color-theme-accent: #ffffff;
+  --color-theme-accent-light: #e4e4e7;
+  --color-theme-accent-dark: #a1a1aa;
 
-  /* Background tokens (used by .bg-theme-* utilities) */
-  --color-theme-bg-primary: #18181b;
-  --color-theme-bg-secondary: #27272a;
-  --color-theme-bg-tertiary: #3f3f46;
+  /* Background tokens */
+  --color-theme-bg-primary: #0a0a0a;
+  --color-theme-bg-secondary: #111111;
+  --color-theme-bg-tertiary: #1c1c1c;
 
   /* Text tokens */
   --color-theme-text-primary: #fafafa;
   --color-theme-text-secondary: #a1a1aa;
-  --color-theme-text-muted: #71717a;
+  --color-theme-text-muted: #52525b;
 
   /* Modal/border tokens */
-  --color-theme-modal-border: #3f3f46;
+  --color-theme-modal-border: #27272a;
 
-  /* Font families */
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  /* Font families — Geist (v0's own font) */
+  --font-sans: "Geist", "Geist Fallback", system-ui, -apple-system, sans-serif;
+  --font-mono: "Geist Mono", "Geist Mono Fallback", "JetBrains Mono", monospace;
 
   /* Custom animations */
   --animate-fade-in: fade-in 0.3s ease-out;
@@ -59,62 +59,62 @@
     }
   }
 
-  --theme-button-cta: #e4e4e7;
+  --theme-button-cta: #ffffff;
 
-  --theme-file-row-even: #0e0f0f;
-  --theme-file-row-odd: #1b1b1e;
-  --theme-file-row-selected-even: rgba(228, 228, 231, 0.2);
-  --theme-file-row-selected-odd: rgba(228, 228, 231, 0.1);
-  --theme-file-picker-hover: rgb(228 228 231 / 0.2);
+  --theme-file-row-even: #0a0a0a;
+  --theme-file-row-odd: #111111;
+  --theme-file-row-selected-even: rgba(255, 255, 255, 0.08);
+  --theme-file-row-selected-odd: rgba(255, 255, 255, 0.05);
+  --theme-file-picker-hover: rgba(255, 255, 255, 0.06);
 
-  --theme-home-text: #ffffff;
-  --theme-home-text-secondary: #9f9fa0;
-  --theme-home-bg-card: #1a1b1b;
-  --theme-home-bg-button: #252626;
-  --theme-home-border: rgba(255, 255, 255, 0.2);
-  --theme-home-button-primary: #e4e4e7;
-  --theme-home-button-primary-hover: rgba(228, 228, 231, 0.9);
-  --theme-home-button-secondary: #27282a;
-  --theme-home-button-secondary-hover: rgba(228, 228, 231, 0.1);
-  --theme-home-button-secondary-text: #ffffff;
-  --theme-home-button-secondary-hover-text: #e4e4e7;
-  --theme-home-update-card-bg: #1c1c1c;
-  --theme-home-update-card-hover: #252525;
-  --theme-home-update-source: #71717a;
+  --theme-home-text: #fafafa;
+  --theme-home-text-secondary: #71717a;
+  --theme-home-bg-card: #111111;
+  --theme-home-bg-button: #1c1c1c;
+  --theme-home-border: rgba(255, 255, 255, 0.08);
+  --theme-home-button-primary: #ffffff;
+  --theme-home-button-primary-hover: #e4e4e7;
+  --theme-home-button-secondary: #1c1c1c;
+  --theme-home-button-secondary-hover: rgba(255, 255, 255, 0.06);
+  --theme-home-button-secondary-text: #fafafa;
+  --theme-home-button-secondary-hover-text: #fafafa;
+  --theme-home-update-card-bg: #111111;
+  --theme-home-update-card-hover: #1c1c1c;
+  --theme-home-update-source: #52525b;
 
-  --theme-checklist-item-bg: #203c48;
-  --theme-checklist-item-bg-hover: #255d75;
-  --theme-checklist-item-text: #b9e6fe;
-  --theme-checklist-item-completed-bg: #36463d;
-  --theme-checklist-item-completed-text: #a6f4c5;
-  --theme-checklist-checkbox-fill: #a6f4c5;
-  --theme-checklist-checkbox-text: #36463d;
-  --theme-checklist-item-hover: #e4e4e7;
-  --theme-checklist-checkbox-border: #ffffff;
-  --theme-checklist-button-border: #e4e4e7;
+  --theme-checklist-item-bg: #1c1c1c;
+  --theme-checklist-item-bg-hover: #27272a;
+  --theme-checklist-item-text: #e4e4e7;
+  --theme-checklist-item-completed-bg: #1c1c1c;
+  --theme-checklist-item-completed-text: #a1a1aa;
+  --theme-checklist-checkbox-fill: #ffffff;
+  --theme-checklist-checkbox-text: #0a0a0a;
+  --theme-checklist-item-hover: #fafafa;
+  --theme-checklist-checkbox-border: #52525b;
+  --theme-checklist-button-border: #3f3f46;
   --theme-checklist-button-text: #e4e4e7;
-  --theme-checklist-button-hover-bg: rgba(54, 191, 250, 0.2);
-  --theme-checklist-button-hover-border: rgba(54, 191, 250, 0.8);
+  --theme-checklist-button-hover-bg: rgba(255, 255, 255, 0.05);
+  --theme-checklist-button-hover-border: rgba(255, 255, 255, 0.3);
 
-  --theme-home-button-secondary-border: #acc1e6;
-  --theme-home-button-secondary-border-hover: #293056;
+  --theme-home-button-secondary-border: #27272a;
+  --theme-home-button-secondary-border-hover: #3f3f46;
 
-  --theme-attachment-bg: #18191a;
+  --theme-attachment-bg: #111111;
   --theme-attachment-error-bg: rgba(180, 35, 24, 0.4);
-  --theme-attachment-success-bg: #18191a;
-  --theme-attachment-text: #ffffff;
-  --theme-attachment-text-secondary: rgba(255, 255, 255, 0.8);
-  --theme-attachment-icon: #ffffff;
-  --theme-attachment-icon-spinner: #ffffff;
-  --theme-attachment-icon-spinner-bg: #27282a;
+  --theme-attachment-success-bg: #111111;
+  --theme-attachment-text: #fafafa;
+  --theme-attachment-text-secondary: rgba(255, 255, 255, 0.7);
+  --theme-attachment-icon: #fafafa;
+  --theme-attachment-icon-spinner: #fafafa;
+  --theme-attachment-icon-spinner-bg: #1c1c1c;
 
-  --theme-button-text: #a8a9ab;
-  --theme-button-code-hover-text: #e4e4e7;
-  --theme-button-code-hover-bg: #22343f;
+  --theme-button-text: #71717a;
+  --theme-button-code-hover-text: #fafafa;
+  --theme-button-code-hover-bg: #1c1c1c;
   --theme-button-disable-hover-text: #fec84b;
-  --theme-button-disable-hover-bg: #3a3128;
+  --theme-button-disable-hover-bg: #2a2318;
   --theme-button-delete-hover-text: #f97066;
-  --theme-button-delete-hover-bg: #37282b;
+  --theme-button-delete-hover-bg: #2a1515;
 
   /* Scrollbar colors (white-scrollbar) */
   --theme-scrollbar-thumb: #ffffff;
@@ -137,6 +137,78 @@
   /* File row borders */
   --theme-file-row-border: rgba(255, 255, 255, 0.05);
   --theme-file-row-border-selected: rgba(255, 255, 255, 0.1);
+}
+
+/*
+ * Dark-mode (default) semantic tokens.
+ * These mirror the same names used in [data-theme="light"] so that
+ * components can reference --theme-* without a light/dark guard.
+ */
+:root {
+  --theme-loader: #ffffff;
+
+  /* Backgrounds */
+  --theme-bg-primary: #0a0a0a;
+  --theme-bg-secondary: #111111;
+  --theme-bg-sidebar: #111111;
+  --theme-bg-container: #0a0a0a;
+  --theme-popup-menu-bg: #1c1c1c;
+  --theme-bg-hover: rgba(255, 255, 255, 0.04);
+
+  --theme-bg-chat: #0a0a0a;
+  --theme-bg-chat-input: #111111;
+
+  /* Text */
+  --theme-text-primary: #fafafa;
+  --theme-text-secondary: #a1a1aa;
+  --theme-placeholder: #52525b;
+
+  /* Sidebar items */
+  --theme-sidebar-item-default: transparent;
+  --theme-sidebar-item-selected: #1c1c1c;
+  --theme-sidebar-item-hover: #161616;
+
+  --theme-sidebar-item-text-inactive: #71717a;
+  --theme-sidebar-item-text-active: #fafafa;
+
+  --theme-sidebar-item-workspace-active: #fafafa;
+  --theme-sidebar-item-workspace-inactive: #71717a;
+
+  --theme-sidebar-subitem-default: transparent;
+  --theme-sidebar-subitem-selected: #1c1c1c;
+  --theme-sidebar-thread-selected: #1c1c1c;
+  --theme-sidebar-subitem-hover: #161616;
+  --theme-sidebar-border: #1c1c1c;
+
+  /* Footer icons */
+  --theme-sidebar-footer-icon: #111111;
+  --theme-sidebar-footer-icon-fill: #71717a;
+  --theme-sidebar-footer-icon-hover: #27272a;
+
+  /* Chat input */
+  --theme-chat-input-border: #27272a;
+
+  /* Action menus */
+  --theme-action-menu-bg: #1c1c1c;
+  --theme-action-menu-item-hover: rgba(255, 255, 255, 0.05);
+
+  /* Settings inputs */
+  --theme-settings-input-bg: #111111;
+  --theme-settings-input-placeholder: rgba(255, 255, 255, 0.3);
+  --theme-settings-input-active: rgba(255, 255, 255, 0.1);
+  --theme-settings-input-text: #fafafa;
+
+  /* Modals */
+  --theme-modal-border: #27272a;
+
+  /* Primary button — white on black (v0 style) */
+  --theme-button-primary: #ffffff;
+  --theme-button-primary-hover: #e4e4e7;
+
+  /* Scrollbar */
+  --theme-scrollbar-thumb: #27272a;
+  --theme-scrollbar-thumb-hover: #3f3f46;
+  --theme-scrollbar-track: transparent;
 }
 
 [data-theme="light"] {
@@ -351,17 +423,11 @@ body {
   padding: 0;
   margin: 0;
   font-family:
-    "plus-jakarta-sans",
+    "Geist",
+    "Geist Fallback",
     -apple-system,
     BlinkMacSystemFont,
-    Segoe UI,
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    Fira Sans,
-    Droid Sans,
-    Helvetica Neue,
+    "Segoe UI",
     sans-serif;
   background-color: var(--theme-bg-primary);
 }
@@ -427,16 +493,17 @@ body {
 
 /* ── Inline citations ──────────────────────────────────────────────────── */
 .inline-citation {
-  color: var(--color-theme-accent, #10b981);
-  text-decoration: none;
-  font-weight: 600;
+  color: var(--color-theme-accent, #ffffff);
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.3);
+  font-weight: 500;
   cursor: pointer;
-  transition: color 0.15s ease;
+  transition: text-decoration-color 0.15s ease;
 }
 
 .inline-citation:hover {
-  color: var(--color-theme-accent-light, #34d399);
-  text-decoration: underline;
+  color: var(--color-theme-accent-light, #e4e4e7);
+  text-decoration-color: rgba(255, 255, 255, 0.7);
 }
 
 [data-theme="light"] .inline-citation {

@@ -35,7 +35,14 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="manifest" href="/manifest.json" />
 
-    <!-- Preload brand font to avoid the render-blocking CSS chain. -->
+    <!-- Geist — v0's own font family, loaded from Vercel CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Preload brand font kept as fallback -->
     <link rel="preload" href="/fonts/PlusJakartaSans.ttf" as="font" type="font/ttf" crossorigin />
   </head>
 
