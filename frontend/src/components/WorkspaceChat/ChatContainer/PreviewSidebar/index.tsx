@@ -196,10 +196,9 @@ function ThreeDotsMenu({ previewData, onAddToSources, addingSource }: any) {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        aria-label={open ? t("common.close") : t("common.open", "Open preview")}
+        aria-label={t("common.moreOptions")}
         aria-expanded={open}
         className="flex items-center justify-center w-6 h-6 rounded border-none bg-transparent text-zinc-400 light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary hover:bg-zinc-700 light:hover:bg-slate-100 cursor-pointer transition-colors"
-        aria-label={t("common.moreOptions")}
       >
         <DotsThree size={16} weight="bold" />
       </button>

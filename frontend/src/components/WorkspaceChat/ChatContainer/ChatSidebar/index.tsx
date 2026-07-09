@@ -113,7 +113,9 @@ export function ChatSidebarProvider({ children }: any) {
   useEffect(() => {
     try {
       localStorage.setItem("opensin_source_filter", sourceFilter);
-    } catch (e) { console.warn("[indexx] non-fatal error:", e?.message || e); }
+    } catch (e) {
+      console.warn("[index] non-fatal error:", e?.message || e);
+    }
   }, [sourceFilter]);
 
   function openSidebar(type: any, data: any = null) {
@@ -315,7 +317,9 @@ export default function ChatSidebar({
         const n = Number(stored);
         if (!isNaN(n) && n >= minWidth && n <= maxWidth) return n;
       }
-    } catch (e) { console.warn("[indexx] non-fatal error:", e?.message || e); }
+    } catch (e) {
+      console.warn("[index] non-fatal error:", e?.message || e);
+    }
     return defaultWidth;
   });
   const isResizingRef = useRef(false);
@@ -329,7 +333,9 @@ export default function ChatSidebar({
           "opensin-right-sidebar-width",
           String(width),
         );
-      } catch (e) { console.warn("[indexx] non-fatal error:", e?.message || e); }
+      } catch (e) {
+        console.warn("[index] non-fatal error:", e?.message || e);
+      }
     }
   }, [width]);
 

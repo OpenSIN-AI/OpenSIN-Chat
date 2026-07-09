@@ -130,9 +130,9 @@ export function useAgents(): UseAgentsReturn {
   });
   const allAppIntegrationSkills = getAppIntegrationSkills(t);
 
+  const isMobile = useIsMobileLayout();
   const isMultiUserMode = settings?.MultiUserMode ?? false;
   const filterSkillsByMode = ([_, skillConfig]: [string, any]) => {
-  const isMobile = useIsMobileLayout();
     if (!skillConfig.mode) return true;
     if (skillConfig.mode.includes("singleUserOnly") && isMultiUserMode)
       return false;

@@ -25,7 +25,9 @@ export default function ModelTableLayout({
     setIsRefreshing(true);
     try {
       await fetchModels?.();
-    } catch (e) { console.warn("[layoutx] non-fatal error:", e?.message || e); } finally {
+    } catch (e) {
+      console.warn("[layout] non-fatal error:", e?.message || e);
+    } finally {
       setIsRefreshing(false);
     }
   }

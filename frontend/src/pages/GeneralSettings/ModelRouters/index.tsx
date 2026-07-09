@@ -19,9 +19,9 @@ export default function ModelRouters() {
   const { isOpen, openModal, closeModal } = useModal();
   const { routers, isLoading, refresh } = useModelRouters();
   const [editingRouter, setEditingRouter] = useState<any>(null);
+  const isMobile = useIsMobileLayout();
 
   const openCreateModal = () => {
-  const isMobile = useIsMobileLayout();
     setEditingRouter(null);
     openModal();
   };

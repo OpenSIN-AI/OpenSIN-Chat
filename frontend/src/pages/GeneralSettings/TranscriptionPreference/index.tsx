@@ -60,6 +60,7 @@ export default function TranscriptionModelPreference() {
   const [searchMenuOpen, setSearchMenuOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const { t } = useTranslation();
+  const isMobile = useIsMobileLayout();
   const systemSettingsHook = useSystemSettings() as any;
   const {
     settings: systemSettings,
@@ -107,7 +108,6 @@ export default function TranscriptionModelPreference() {
   };
 
   const updateProviderChoice = (selection: string) => {
-  const isMobile = useIsMobileLayout();
     setSearchQuery("");
     setSelectedProvider(selection);
     setSearchMenuOpen(false);

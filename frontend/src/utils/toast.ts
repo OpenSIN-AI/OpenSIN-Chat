@@ -34,7 +34,6 @@ const showToast: any = (
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
-    limit: 3,
     theme:
       stored === "default" || stored === null
         ? "dark"

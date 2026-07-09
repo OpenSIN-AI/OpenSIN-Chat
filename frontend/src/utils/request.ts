@@ -10,10 +10,13 @@ export function userFromStorage() {
   return safeJsonParse(userString, null);
 }
 
-export function baseHeaders(providedToken = null) {
+export function baseHeaders(
+  providedToken: string | null = null,
+): Record<string, string> {
   const token = providedToken || safeGetItem(AUTH_TOKEN);
+  if (!token) return {};
   return {
-    Authorization: token ? `Bearer ${token}` : null,
+    Authorization: `Bearer ${token}`,
   };
 }
 
@@ -21,7 +24,9 @@ export function safeJsonParse(jsonString, fallback = null) {
   try {
     if (jsonString === null || jsonString === undefined) return fallback;
     return JSON.parse(jsonString);
-  } catch (e) { console.warn("[request] non-fatal error:", e?.message || e); }
+  } catch (e) {
+    console.warn("[request] non-fatal error:", e?.message || e);
+  }
   return fallback;
 }
 

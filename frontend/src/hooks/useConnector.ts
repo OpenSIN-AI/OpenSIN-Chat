@@ -122,7 +122,9 @@ export function useConnector(provider: string): UseConnectorResult {
           body: JSON.stringify({ account }),
         });
         refresh();
-      } catch (e) { console.warn("[useConnector] non-fatal error:", e?.message || e); }
+      } catch (e) {
+        console.warn("[useConnector] non-fatal error:", e?.message || e);
+      }
     },
     [provider, refresh],
   );

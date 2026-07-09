@@ -13,7 +13,11 @@ import RouterSelection from "@/pages/WorkspaceSettings/ChatSettings/WorkspaceLLM
  * - "bedrock"         → free-form text input (AWS Bedrock model IDs are arbitrary)
  * - anything else     → ChatModelSelection (provider-specific dropdown)
  */
-export default function ModelSelector({ selectedLLM, workspace, setHasChanges }) {
+export default function ModelSelector({
+  selectedLLM,
+  workspace,
+  setHasChanges,
+}) {
   if (!selectedLLM || selectedLLM === "default") return null;
 
   if (selectedLLM === "opensin-router") {

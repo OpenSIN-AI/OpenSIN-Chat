@@ -53,11 +53,11 @@ export default function AdminAgents() {
     IGNORE_CHANGE_SETTINGS,
   } = useAgentForm();
 
+  const isMobile = useIsMobileLayout();
   const isMultiUserMode = settings?.MultiUserMode ?? false;
   const { configurableSkills, appIntegrationSkills, defaultSkills } =
     useMemo(() => {
       const filterByMode = ([_, config]: [string, any]) => {
-  const isMobile = useIsMobileLayout();
         if (!config.mode) return true;
         if (config.mode.includes("singleUserOnly") && isMultiUserMode)
           return false;

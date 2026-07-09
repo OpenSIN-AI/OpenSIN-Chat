@@ -49,6 +49,7 @@ export default function GeneralLLMPreference() {
   const [searchMenuOpen, setSearchMenuOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const { t } = useTranslation();
+  const isMobile = useIsMobileLayout();
   const { keys: settings, isLoading: loading } = useLLMProviders();
 
   const blocker = useUnsavedChanges(hasChanges);
@@ -87,7 +88,6 @@ export default function GeneralLLMPreference() {
   };
 
   const updateLLMChoice = (selection: string) => {
-  const isMobile = useIsMobileLayout();
     setSearchQuery("");
     setSelectedLLM(selection);
     setSearchMenuOpen(false);
