@@ -1,1 +1,79 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyB1c2VTdGF0ZSB9IGZyb20gInJlYWN0IjsKaW1wb3J0IHsgdXNlVHJhbnNsYXRpb24gfSBmcm9tICJyZWFjdC1pMThuZXh0IjsKaW1wb3J0IHsgU3BhcmtsZSB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9TcGFya2xlIjsKaW1wb3J0IHsgVG9vbHRpcCB9IGZyb20gInJlYWN0LXRvb2x0aXAiOwppbXBvcnQgeyBiYXNlSGVhZGVycyB9IGZyb20gIkAvdXRpbHMvcmVxdWVzdCI7CgovKioKICogRW5oYW5jZSBQcm9tcHQgQnV0dG9uIOKAlCBpbXByb3ZlcyB0aGUgY3VycmVudCBwcm9tcHQgdmlhIHRoZSBzZXJ2ZXIgQVBJLgogKi8KaW50ZXJmYWNlIEVuaGFuY2VQcm9tcHRCdXR0b25Qcm9wcyB7CiAgcHJvbXB0SW5wdXQ6IHN0cmluZzsKICBzZXRQcm9tcHRJbnB1dDogKGlucHV0OiBzdHJpbmcpID0+IHZvaWQ7CiAgaXNTdHJlYW1pbmc6IGJvb2xlYW47Cn0KCmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIEVuaGFuY2VQcm9tcHRCdXR0b24oewogIHByb21wdElucHV0LAogIHNldFByb21wdElucHV0LAogIGlzU3RyZWFtaW5nLAp9OiBFbmhhbmNlUHJvbXB0QnV0dG9uUHJvcHMpIHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgY29uc3QgW2xvYWRpbmcsIHNldExvYWRpbmddID0gdXNlU3RhdGUoZmFsc2UpOwoKICBhc3luYyBmdW5jdGlvbiBoYW5kbGVFbmhhbmNlKCkgewogICAgY29uc3QgdGV4dCA9IHByb21wdElucHV0LnRyaW0oKTsKICAgIGlmICghdGV4dCB8fCBsb2FkaW5nIHx8IGlzU3RyZWFtaW5nKSByZXR1cm47CiAgICBzZXRMb2FkaW5nKHRydWUpOwogICAgdHJ5IHsKICAgICAgY29uc3QgcmVzID0gYXdhaXQgZmV0Y2goIi9hcGkvdXRpbHMvZW5oYW5jZS1wcm9tcHQiLCB7CiAgICAgICAgbWV0aG9kOiAiUE9TVCIsCiAgICAgICAgaGVhZGVyczogewogICAgICAgICAgIkNvbnRlbnQtVHlwZSI6ICJhcHBsaWNhdGlvbi9qc29uIiwKICAgICAgICAgIC4uLmJhc2VIZWFkZXJzKCksCiAgICAgICAgfSwKICAgICAgICBib2R5OiBKU09OLnN0cmluZ2lmeSh7IHByb21wdDogdGV4dCB9KSwKICAgICAgfSk7CiAgICAgIGlmIChyZXMub2spIHsKICAgICAgICBjb25zdCBkYXRhID0gYXdhaXQgcmVzLmpzb24oKTsKICAgICAgICBpZiAoZGF0YS5lbmhhbmNlZCkgc2V0UHJvbXB0SW5wdXQoZGF0YS5lbmhhbmNlZCk7CiAgICAgIH0KICAgIH0gY2F0Y2ggewogICAgICAvLyBzaWxlbnRseSBpZ25vcmUg4oCUIHNlcnZlciBtYXkgbm90IHN1cHBvcnQgdGhlIGVuZHBvaW50IHlldAogICAgfSBmaW5hbGx5IHsKICAgICAgc2V0TG9hZGluZyhmYWxzZSk7CiAgICB9CiAgfQoKICBpZiAoIXByb21wdElucHV0LnRyaW0oKSkgcmV0dXJuIG51bGw7CgogIHJldHVybiAoCiAgICA8PgogICAgICA8YnV0dG9uCiAgICAgICAgdHlwZT0iYnV0dG9uIgogICAgICAgIG9uQ2xpY2s9e2hhbmRsZUVuaGFuY2V9CiAgICAgICAgZGlzYWJsZWQ9e2xvYWRpbmcgfHwgaXNTdHJlYW1pbmd9CiAgICAgICAgZGF0YS10b29sdGlwLWlkPSJlbmhhbmNlLXByb21wdCIKICAgICAgICBkYXRhLXRvb2x0aXAtY29udGVudD17dCgiY2hhdF93aW5kb3cuZW5oYW5jZV9wcm9tcHQiKX0KICAgICAgICBhcmlhLWxhYmVsPXt0KCJjaGF0X3dpbmRvdy5lbmhhbmNlX3Byb21wdCIpfQogICAgICAgIGNsYXNzTmFtZT0iZ3JvdXAgYm9yZGVyLW5vbmUgcmVsYXRpdmUgZmxleCBqdXN0aWZ5LWNlbnRlciBpdGVtcy1jZW50ZXIgY3Vyc29yLXBvaW50ZXIgdy02IGgtNiByb3VuZGVkLWZ1bGwgaG92ZXI6YmctemluYy03MDAgbGlnaHQ6aG92ZXI6Ymctc2xhdGUtMjAwIgogICAgICA+CiAgICAgICAgPFNwYXJrbGUKICAgICAgICAgIHNpemU9ezE4fQogICAgICAgICAgY2xhc3NOYW1lPXtgcG9pbnRlci1ldmVudHMtbm9uZSBzaHJpbmstMCAkewogICAgICAgICAgICBsb2FkaW5nCiAgICAgICAgICAgICAgPyAidGV4dC15ZWxsb3ctNDAwIGFuaW1hdGUtc3BpbiIKICAgICAgICAgICAgICA6ICJ0ZXh0LXppbmMtMzAwIGxpZ2h0OnRleHQtc2xhdGUtNjAwIGdyb3VwLWhvdmVyOnRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IGxpZ2h0OmhvdmVyOnRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IGxpZ2h0Omdyb3VwLWhvdmVyOnRleHQtc2xhdGUtODAwIgogICAgICAgICAgfWB9CiAgICAgICAgLz4KICAgICAgPC9idXR0b24+CiAgICAgIDxUb29sdGlwCiAgICAgICAgaWQ9ImVuaGFuY2UtcHJvbXB0IgogICAgICAgIHBsYWNlPSJib3R0b20iCiAgICAgICAgZGVsYXlTaG93PXszMDB9CiAgICAgICAgY2xhc3NOYW1lPSJ0b29sdGlwICF0ZXh0LXhzIHotWzk5XSIKICAgICAgLz4KICAgIDwvPgogICk7Cn0K
+// SPDX-License-Identifier: MIT
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Sparkle } from "@phosphor-icons/react/dist/csr/Sparkle";
+import { Tooltip } from "react-tooltip";
+import { baseHeaders } from "@/utils/request";
+
+/**
+ * Enhance Prompt Button — improves the current prompt via the server API.
+ */
+interface EnhancePromptButtonProps {
+  promptInput: string;
+  setPromptInput: (input: string) => void;
+  isStreaming: boolean;
+}
+
+export default function EnhancePromptButton({
+  promptInput,
+  setPromptInput,
+  isStreaming,
+}: EnhancePromptButtonProps) {
+  const { t } = useTranslation();
+  const [loading, setLoading] = useState(false);
+
+  async function handleEnhance() {
+    const text = promptInput.trim();
+    if (!text || loading || isStreaming) return;
+    setLoading(true);
+    try {
+      const res = await fetch("/api/utils/enhance-prompt", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...baseHeaders(),
+        },
+        body: JSON.stringify({ prompt: text }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.enhanced) setPromptInput(data.enhanced);
+      }
+    } catch {
+      // silently ignore — server may not support the endpoint yet
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (!promptInput.trim()) return null;
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={handleEnhance}
+        disabled={loading || isStreaming}
+        data-tooltip-id="enhance-prompt"
+        data-tooltip-content={t("chat_window.enhance_prompt")}
+        aria-label={t("chat_window.enhance_prompt")}
+        className="group border-none relative flex justify-center items-center cursor-pointer w-6 h-6 rounded-full hover:bg-zinc-700 light:hover:bg-slate-200"
+      >
+        <Sparkle
+          size={18}
+          className={`pointer-events-none shrink-0 ${
+            loading
+              ? "text-yellow-400 animate-spin"
+              : "text-zinc-300 light:text-slate-600 group-hover:text-theme-text-primary light:hover:text-theme-text-primary light:group-hover:text-slate-800"
+          }`}
+        />
+      </button>
+      <Tooltip
+        id="enhance-prompt"
+        place="bottom"
+        delayShow={300}
+        className="tooltip !text-xs z-99"
+      />
+    </>
+  );
+}

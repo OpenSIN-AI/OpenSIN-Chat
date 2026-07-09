@@ -1,1 +1,325 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgUmVhY3QsIHsgdXNlU3RhdGUgfSBmcm9tICJyZWFjdCI7CmltcG9ydCBTeXN0ZW0gZnJvbSAiQC9tb2RlbHMvc3lzdGVtIjsKaW1wb3J0IHsgdXNlVHJhbnNsYXRpb24gfSBmcm9tICJyZWFjdC1pMThuZXh0IjsKaW1wb3J0IHNob3dUb2FzdCBmcm9tICJAL3V0aWxzL3RvYXN0IjsKaW1wb3J0IHBsdXJhbGl6ZSBmcm9tICJwbHVyYWxpemUiOwppbXBvcnQgeyBUYWdzSW5wdXQgfSBmcm9tICJyZWFjdC10YWctaW5wdXQtY29tcG9uZW50IjsKaW1wb3J0IHsgSW5mbyB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9JbmZvIjsKaW1wb3J0IHsgV2FybmluZyB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9XYXJuaW5nIjsKaW1wb3J0IHsgVG9vbHRpcCB9IGZyb20gInJlYWN0LXRvb2x0aXAiOwppbXBvcnQgRE9NUHVyaWZ5IGZyb20gIkAvdXRpbHMvY2hhdC9wdXJpZnkiOwppbXBvcnQgdXNlQ29ubmVjdG9yQnJhbmNoZXMgZnJvbSAiQC9ob29rcy91c2VDb25uZWN0b3JCcmFuY2hlcyI7CmltcG9ydCBsb2dnZXIgZnJvbSAiQC91dGlscy9sb2dnZXIiOwoKY29uc3QgQUxFUlRfU0FOSVRJWkVfT1BUUyA9IHsKICBBTExPV0VEX1RBR1M6IFsiYSIsICJiIiwgImkiLCAidSIsICJzdHJvbmciLCAiZW0iLCAiYnIiLCAicCIsICJzcGFuIl0sCn07CmNvbnN0IHNhZmVBbGVydCA9IChodG1sKSA9PiBET01QdXJpZnkuc2FuaXRpemUoaHRtbCwgQUxFUlRfU0FOSVRJWkVfT1BUUyk7Cgpjb25zdCBERUZBVUxUX0JSQU5DSEVTID0gWyJtYWluIiwgIm1hc3RlciJdOwpleHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBHaXRodWJPcHRpb25zKCkgewogIGNvbnN0IHsgdCB9ID0gdXNlVHJhbnNsYXRpb24oKTsKICBjb25zdCBbbG9hZGluZywgc2V0TG9hZGluZ10gPSB1c2VTdGF0ZTxib29sZWFuPihmYWxzZSk7CiAgY29uc3QgW3JlcG8sIHNldFJlcG9dID0gdXNlU3RhdGUobnVsbCk7CiAgY29uc3QgW2FjY2Vzc1Rva2VuLCBzZXRBY2Nlc3NUb2tlbl0gPSB1c2VTdGF0ZShudWxsKTsKICBjb25zdCBbaWdub3Jlcywgc2V0SWdub3Jlc10gPSB1c2VTdGF0ZTxzdHJpbmdbXT4oW10pOwoKICBjb25zdCBbc2V0dGluZ3MsIHNldFNldHRpbmdzXSA9IHVzZVN0YXRlKHsKICAgIHJlcG86IG51bGwsCiAgICBhY2Nlc3NUb2tlbjogbnVsbCwKICB9IGFzIGFueSk7CgogIGNvbnN0IGhhbmRsZVN1Ym1pdCA9IGFzeW5jIChlKSA9PiB7CiAgICBlLnByZXZlbnREZWZhdWx0KCk7CiAgICBjb25zdCBmb3JtID0gbmV3IEZvcm1EYXRhKGUudGFyZ2V0KTsKCiAgICB0cnkgewogICAgICBzZXRMb2FkaW5nKHRydWUpOwogICAgICBzaG93VG9hc3QodCgiY29ubmVjdG9ycy5naXRodWIuZmV0Y2hpbmdfZmlsZXMiKSwgImluZm8iLCB7CiAgICAgICAgY2xlYXI6IHRydWUsCiAgICAgICAgYXV0b0Nsb3NlOiBmYWxzZSwKICAgICAgfSk7CiAgICAgIGNvbnN0IHsgZGF0YSwgZXJyb3IgfSA9IGF3YWl0IFN5c3RlbS5kYXRhQ29ubmVjdG9ycy5naXRodWIuY29sbGVjdCh7CiAgICAgICAgcmVwbzogZm9ybS5nZXQoInJlcG8iKSwKICAgICAgICBhY2Nlc3NUb2tlbjogZm9ybS5nZXQoImFjY2Vzc1Rva2VuIiksCiAgICAgICAgYnJhbmNoOiBmb3JtLmdldCgiYnJhbmNoIiksCiAgICAgICAgaWdub3JlUGF0aHM6IGlnbm9yZXMsCiAgICAgIH0pOwoKICAgICAgaWYgKCEhZXJyb3IpIHsKICAgICAgICBzaG93VG9hc3QoZXJyb3IsICJlcnJvciIsIHsgY2xlYXI6IHRydWUgfSk7CiAgICAgICAgc2V0TG9hZGluZyhmYWxzZSk7CiAgICAgICAgcmV0dXJuOwogICAgICB9CgogICAgICBzaG93VG9hc3QoCiAgICAgICAgdCgiY29ubmVjdG9ycy5naXRodWIuZmlsZXNfY29sbGVjdGVkIiwgewogICAgICAgICAgZmlsZXM6IGRhdGEuZmlsZXMsCiAgICAgICAgICBmaWxlUGx1cmFsOiBwbHVyYWxpemUoImZpbGUiLCBkYXRhLmZpbGVzKSwKICAgICAgICAgIGF1dGhvcjogZGF0YS5hdXRob3IsCiAgICAgICAgICByZXBvOiBkYXRhLnJlcG8sCiAgICAgICAgICBicmFuY2g6IGRhdGEuYnJhbmNoLAogICAgICAgICAgZGVzdGluYXRpb246IGRhdGEuZGVzdGluYXRpb24sCiAgICAgICAgfSksCiAgICAgICAgInN1Y2Nlc3MiLAogICAgICAgIHsgY2xlYXI6IHRydWUgfSwKICAgICAgKTsKICAgICAgZS50YXJnZXQucmVzZXQoKTsKICAgICAgc2V0TG9hZGluZyhmYWxzZSk7CiAgICAgIHJldHVybjsKICAgIH0gY2F0Y2ggKGUpIHsKICAgICAgbG9nZ2VyLmVycm9yKGUpOwogICAgICBzaG93VG9hc3QoZS5tZXNzYWdlLCAiZXJyb3IiLCB7IGNsZWFyOiB0cnVlIH0pOwogICAgICBzZXRMb2FkaW5nKGZhbHNlKTsKICAgIH0KICB9OwoKICByZXR1cm4gKAogICAgPGRpdiBjbGFzc05hbWU9ImZsZXggdy1mdWxsIj4KICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgdy1mdWxsIHB4LTEgbWQ6cGItNiBwYi0xNiI+CiAgICAgICAgPGZvcm0gY2xhc3NOYW1lPSJ3LWZ1bGwiIG9uU3VibWl0PXtoYW5kbGVTdWJtaXR9PgogICAgICAgICAgPGRpdiBjbGFzc05hbWU9InctZnVsbCBmbGV4IGZsZXgtY29sIHB5LTIiPgogICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0idy1mdWxsIGZsZXggZmxleC1jb2wgZ2FwLTQiPgogICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIHByLTEwIj4KICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIGdhcC15LTEgbWItNCI+CiAgICAgICAgICAgICAgICAgIDxsYWJlbCBjbGFzc05hbWU9InRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IHRleHQtc20gZm9udC1ib2xkIj4KICAgICAgICAgICAgICAgICAgICB7dCgiY29ubmVjdG9ycy5naXRodWIuVVJMIil9CiAgICAgICAgICAgICAgICAgIDwvbGFiZWw+CiAgICAgICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC14cyBmb250LW5vcm1hbCB0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5Ij4KICAgICAgICAgICAgICAgICAgICB7dCgiY29ubmVjdG9ycy5naXRodWIuVVJMX2V4cGxhaW5lZCIpfQogICAgICAgICAgICAgICAgICA8L3A+CiAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgIDxpbnB1dAogICAgICAgICAgICAgICAgICB0eXBlPSJ1cmwiCiAgICAgICAgICAgICAgICAgIG5hbWU9InJlcG8iCiAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0iYm9yZGVyLW5vbmUgYmctdGhlbWUtc2V0dGluZ3MtaW5wdXQtYmcgdGV4dC10aGVtZS10ZXh0LXByaW1hcnkgcGxhY2Vob2xkZXI6dGV4dC10aGVtZS1zZXR0aW5ncy1pbnB1dC1wbGFjZWhvbGRlciB0ZXh0LXNtIHJvdW5kZWQtbGcgZm9jdXM6b3V0bGluZS1wcmltYXJ5LWJ1dHRvbiBhY3RpdmU6b3V0bGluZS1wcmltYXJ5LWJ1dHRvbiBvdXRsaW5lLW5vbmUgYmxvY2sgdy1mdWxsIHAtMi41IgogICAgICAgICAgICAgICAgICBwbGFjZWhvbGRlcj17dCgiY29ubmVjdG9ycy5naXRodWIucmVwb1BsYWNlaG9sZGVyIil9CiAgICAgICAgICAgICAgICAgIHJlcXVpcmVkPXt0cnVlfQogICAgICAgICAgICAgICAgICBhdXRvQ29tcGxldGU9Im9mZiIKICAgICAgICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBzZXRSZXBvKGUudGFyZ2V0LnZhbHVlKX0KICAgICAgICAgICAgICAgICAgb25CbHVyPXsoKSA9PiBzZXRTZXR0aW5ncyh7IC4uLnNldHRpbmdzLCByZXBvIH0pfQogICAgICAgICAgICAgICAgICBzcGVsbENoZWNrPXtmYWxzZX0KICAgICAgICAgICAgICAgIC8+CiAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgcHItMTAiPgogICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgZ2FwLXktMSBtYi00Ij4KICAgICAgICAgICAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXByaW1hcnkgZm9udC1ib2xkIHRleHQtc20gZmxleCBnYXAteC0yIGl0ZW1zLWNlbnRlciI+CiAgICAgICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJmb250LWJvbGQgdGV4dC10aGVtZS10ZXh0LXByaW1hcnkiPgogICAgICAgICAgICAgICAgICAgICAge3QoImNvbm5lY3RvcnMuZ2l0aHViLnRva2VuIil9CiAgICAgICAgICAgICAgICAgICAgPC9wPnsiICJ9CiAgICAgICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXhzIGZvbnQtbGlnaHQgZmxleCBpdGVtcy1jZW50ZXIiPgogICAgICAgICAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJ0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5Ij4KICAgICAgICAgICAgICAgICAgICAgICAge3QoImNvbm5lY3RvcnMuZ2l0aHViLm9wdGlvbmFsIil9CiAgICAgICAgICAgICAgICAgICAgICA8L3NwYW4+CiAgICAgICAgICAgICAgICAgICAgICA8UEFUVG9vbHRpcCBhY2Nlc3NUb2tlbj17YWNjZXNzVG9rZW59IC8+CiAgICAgICAgICAgICAgICAgICAgPC9wPgogICAgICAgICAgICAgICAgICA8L2xhYmVsPgogICAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9InRleHQteHMgZm9udC1ub3JtYWwgdGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSI+CiAgICAgICAgICAgICAgICAgICAge3QoImNvbm5lY3RvcnMuZ2l0aHViLnRva2VuX2V4cGxhaW5lZCIpfQogICAgICAgICAgICAgICAgICA8L3A+CiAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgIDxpbnB1dAogICAgICAgICAgICAgICAgICB0eXBlPSJ0ZXh0IgogICAgICAgICAgICAgICAgICBuYW1lPSJhY2Nlc3NUb2tlbiIKICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJib3JkZXItbm9uZSBiZy10aGVtZS1zZXR0aW5ncy1pbnB1dC1iZyB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBwbGFjZWhvbGRlcjp0ZXh0LXRoZW1lLXNldHRpbmdzLWlucHV0LXBsYWNlaG9sZGVyIHRleHQtc20gcm91bmRlZC1sZyBmb2N1czpvdXRsaW5lLXByaW1hcnktYnV0dG9uIGFjdGl2ZTpvdXRsaW5lLXByaW1hcnktYnV0dG9uIG91dGxpbmUtbm9uZSBibG9jayB3LWZ1bGwgcC0yLjUiCiAgICAgICAgICAgICAgICAgIHBsYWNlaG9sZGVyPXt0KCJjb25uZWN0b3JzLmdpdGh1Yi50b2tlblBsYWNlaG9sZGVyIil9CiAgICAgICAgICAgICAgICAgIHJlcXVpcmVkPXtmYWxzZX0KICAgICAgICAgICAgICAgICAgYXV0b0NvbXBsZXRlPSJvZmYiCiAgICAgICAgICAgICAgICAgIHNwZWxsQ2hlY2s9e2ZhbHNlfQogICAgICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IHNldEFjY2Vzc1Rva2VuKGUudGFyZ2V0LnZhbHVlKX0KICAgICAgICAgICAgICAgICAgb25CbHVyPXsoKSA9PiBzZXRTZXR0aW5ncyh7IC4uLnNldHRpbmdzLCBhY2Nlc3NUb2tlbiB9KX0KICAgICAgICAgICAgICAgIC8+CiAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgPEdpdEh1YkJyYW5jaFNlbGVjdGlvbgogICAgICAgICAgICAgICAgcmVwbz17c2V0dGluZ3MucmVwb30KICAgICAgICAgICAgICAgIGFjY2Vzc1Rva2VuPXtzZXR0aW5ncy5hY2Nlc3NUb2tlbn0KICAgICAgICAgICAgICAvPgogICAgICAgICAgICA8L2Rpdj4KCiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIHctZnVsbCBweS00IHByLTEwIj4KICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCBnYXAteS0xIG1iLTQiPgogICAgICAgICAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXByaW1hcnkgdGV4dC1zbSBmbGV4IGdhcC14LTIgaXRlbXMtY2VudGVyIj4KICAgICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSB0ZXh0LXNtIGZvbnQtYm9sZCI+CiAgICAgICAgICAgICAgICAgICAge3QoImNvbm5lY3RvcnMuZ2l0aHViLmlnbm9yZXMiKX0KICAgICAgICAgICAgICAgICAgPC9wPgogICAgICAgICAgICAgICAgPC9sYWJlbD4KICAgICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC14cyBmb250LW5vcm1hbCB0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5Ij4KICAgICAgICAgICAgICAgICAge3QoImNvbm5lY3RvcnMuZ2l0aHViLmdpdF9pZ25vcmUiKX0KICAgICAgICAgICAgICAgIDwvcD4KICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICA8VGFnc0lucHV0CiAgICAgICAgICAgICAgICB2YWx1ZT17aWdub3Jlc30KICAgICAgICAgICAgICAgIG9uQ2hhbmdlPXtzZXRJZ25vcmVzfQogICAgICAgICAgICAgICAgbmFtZT0iaWdub3JlcyIKICAgICAgICAgICAgICAgIHBsYWNlSG9sZGVyPXt0KCJjb25uZWN0b3JzLmdpdGh1Yi5pZ25vcmVzUGxhY2Vob2xkZXIiKX0KICAgICAgICAgICAgICAgIGNsYXNzTmFtZXM9e3sKICAgICAgICAgICAgICAgICAgdGFnOiAiYmctdGhlbWUtc2V0dGluZ3MtaW5wdXQtYmcgbGlnaHQ6YmctYmxhY2svMTAgYmctYmx1ZS0zMDAvMTAgdGV4dC16aW5jLTgwMCIsCiAgICAgICAgICAgICAgICAgIGlucHV0OgogICAgICAgICAgICAgICAgICAgICJmbGV4IHAtMSAhYmctdGhlbWUtc2V0dGluZ3MtaW5wdXQtYmcgdGV4dC10aGVtZS10ZXh0LXByaW1hcnkgcGxhY2Vob2xkZXI6dGV4dC10aGVtZS1zZXR0aW5ncy1pbnB1dC1wbGFjZWhvbGRlciB0ZXh0LXNtIHJvdW5kZWQtbGcgZm9jdXM6b3V0bGluZS1wcmltYXJ5LWJ1dHRvbiBhY3RpdmU6b3V0bGluZS1wcmltYXJ5LWJ1dHRvbiBvdXRsaW5lLW5vbmUiLAogICAgICAgICAgICAgICAgfX0KICAgICAgICAgICAgICAvPgogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDwvZGl2PgoKICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIGdhcC15LTIgdy1mdWxsIHByLTEwIj4KICAgICAgICAgICAgPFBBVEFsZXJ0IGFjY2Vzc1Rva2VuPXthY2Nlc3NUb2tlbn0gLz4KICAgICAgICAgICAgPGJ1dHRvbgogICAgICAgICAgICAgIHR5cGU9InN1Ym1pdCIKICAgICAgICAgICAgICBkaXNhYmxlZD17bG9hZGluZ30KICAgICAgICAgICAgICBjbGFzc05hbWU9Im10LTIgdy1mdWxsIGp1c3RpZnktY2VudGVyIGJvcmRlci1ub25lIHB4LTQgcHktMiByb3VuZGVkLWxnIHRleHQtZGFyay10ZXh0IGxpZ2h0OnRleHQtd2hpdGUgdGV4dC1zbSBmb250LWJvbGQgaXRlbXMtY2VudGVyIGZsZXggZ2FwLXgtMiBiZy10aGVtZS1ob21lLWJ1dHRvbi1wcmltYXJ5IGhvdmVyOmJnLXRoZW1lLWhvbWUtYnV0dG9uLXByaW1hcnktaG92ZXIgZGlzYWJsZWQ6YmctdGhlbWUtaG9tZS1idXR0b24tcHJpbWFyeS1ob3ZlciBkaXNhYmxlZDpjdXJzb3Itbm90LWFsbG93ZWQiCiAgICAgICAgICAgID4KICAgICAgICAgICAgICB7bG9hZGluZwogICAgICAgICAgICAgICAgPyB0KCJjb25uZWN0b3JzLmdpdGh1Yi5jb2xsZWN0aW5nX2ZpbGVzIikKICAgICAgICAgICAgICAgIDogdCgiY29ubmVjdG9ycy5naXRodWIuc3VibWl0Iil9CiAgICAgICAgICAgIDwvYnV0dG9uPgogICAgICAgICAgICB7bG9hZGluZyAmJiAoCiAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXhzIHRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkiPgogICAgICAgICAgICAgICAge3QoImNvbm5lY3RvcnMuZ2l0aHViLnRhc2tfZXhwbGFpbmVkIil9CiAgICAgICAgICAgICAgPC9wPgogICAgICAgICAgICApfQogICAgICAgICAgPC9kaXY+CiAgICAgICAgPC9mb3JtPgogICAgICA8L2Rpdj4KICAgIDwvZGl2PgogICk7Cn0KCmZ1bmN0aW9uIEdpdEh1YkJyYW5jaFNlbGVjdGlvbih7IHJlcG8sIGFjY2Vzc1Rva2VuIH06IGFueSkgewogIGNvbnN0IHsgdCB9ID0gdXNlVHJhbnNsYXRpb24oKTsKICBjb25zdCB7IGJyYW5jaGVzOiBhbGxCcmFuY2hlcywgaXNMb2FkaW5nOiBsb2FkaW5nIH0gPSB1c2VDb25uZWN0b3JCcmFuY2hlcygKICAgICJnaXRodWIiLAogICAgcmVwbywKICAgIGFjY2Vzc1Rva2VuLAogICk7CiAgY29uc3QgZGlzcGxheUJyYW5jaGVzID0KICAgIGFsbEJyYW5jaGVzLmxlbmd0aCA+IDAgPyBhbGxCcmFuY2hlcyA6IERFRkFVTFRfQlJBTkNIRVM7CgogIGlmIChsb2FkaW5nKSB7CiAgICByZXR1cm4gKAogICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCB3LTYwIj4KICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCBnYXAteS0xIG1iLTQiPgogICAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXByaW1hcnkgdGV4dC1zbSBmb250LWJvbGQiPgogICAgICAgICAgICB7dCgiY29ubmVjdG9ycy5naXRodWIuYnJhbmNoX2xhYmVsIil9CiAgICAgICAgICA8L2xhYmVsPgogICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXhzIGZvbnQtbm9ybWFsIHRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkiPgogICAgICAgICAgICB7dCgiY29ubmVjdG9ycy5naXRodWIuYnJhbmNoIil9CiAgICAgICAgICA8L3A+CiAgICAgICAgPC9kaXY+CiAgICAgICAgPHNlbGVjdAogICAgICAgICAgbmFtZT0iYnJhbmNoIgogICAgICAgICAgcmVxdWlyZWQ9e3RydWV9CiAgICAgICAgICBjbGFzc05hbWU9ImJvcmRlci1ub25lIGJnLXRoZW1lLXNldHRpbmdzLWlucHV0LWJnIGJvcmRlci1ncmF5LTUwMCB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBmb2N1czpvdXRsaW5lLXByaW1hcnktYnV0dG9uIGFjdGl2ZTpvdXRsaW5lLXByaW1hcnktYnV0dG9uIG91dGxpbmUtbm9uZSB0ZXh0LXNtIHJvdW5kZWQtbGcgYmxvY2sgdy1mdWxsIHAtMi41IgogICAgICAgID4KICAgICAgICAgIDxvcHRpb24gZGlzYWJsZWQ9e3RydWV9IHZhbHVlPSIiPgogICAgICAgICAgICB7dCgiY29ubmVjdG9ycy5naXRodWIuYnJhbmNoX2xvYWRpbmciKX0KICAgICAgICAgIDwvb3B0aW9uPgogICAgICAgIDwvc2VsZWN0PgogICAgICA8L2Rpdj4KICAgICk7CiAgfQoKICByZXR1cm4gKAogICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgdy02MCI+CiAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIGdhcC15LTEgbWItNCI+CiAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXByaW1hcnkgdGV4dC1zbSBmb250LWJvbGQiPgogICAgICAgICAge3QoImNvbm5lY3RvcnMuZ2l0aHViLmJyYW5jaF9sYWJlbCIpfQogICAgICAgIDwvbGFiZWw+CiAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXhzIGZvbnQtbm9ybWFsIHRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkiPgogICAgICAgICAge3QoImNvbm5lY3RvcnMuZ2l0aHViLmJyYW5jaF9leHBsYWluZWQiKX0KICAgICAgICA8L3A+CiAgICAgIDwvZGl2PgogICAgICA8c2VsZWN0CiAgICAgICAgbmFtZT0iYnJhbmNoIgogICAgICAgIHJlcXVpcmVkPXt0cnVlfQogICAgICAgIGNsYXNzTmFtZT0iYm9yZGVyLW5vbmUgYmctdGhlbWUtc2V0dGluZ3MtaW5wdXQtYmcgYm9yZGVyLWdyYXktNTAwIHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IGZvY3VzOm91dGxpbmUtcHJpbWFyeS1idXR0b24gYWN0aXZlOm91dGxpbmUtcHJpbWFyeS1idXR0b24gb3V0bGluZS1ub25lIHRleHQtc20gcm91bmRlZC1sZyBibG9jayB3LWZ1bGwgcC0yLjUiCiAgICAgID4KICAgICAgICB7KGRpc3BsYXlCcmFuY2hlcyBhcyBhbnkpLm1hcCgoYnJhbmNoKSA9PiB7CiAgICAgICAgICByZXR1cm4gKAogICAgICAgICAgICA8b3B0aW9uIGtleT17YnJhbmNofSB2YWx1ZT17YnJhbmNofT4KICAgICAgICAgICAgICB7YnJhbmNofQogICAgICAgICAgICA8L29wdGlvbj4KICAgICAgICAgICk7CiAgICAgICAgfSl9CiAgICAgIDwvc2VsZWN0PgogICAgPC9kaXY+CiAgKTsKfQoKZnVuY3Rpb24gUEFUQWxlcnQoeyBhY2Nlc3NUb2tlbiB9OiBhbnkpIHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgaWYgKCEhYWNjZXNzVG9rZW4pIHJldHVybiBudWxsOwogIHJldHVybiAoCiAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCBtZDpmbGV4LXJvdyBtZDppdGVtcy1jZW50ZXIgZ2FwLXgtMiB0ZXh0LXdoaXRlIG1iLTQgYmctYmx1ZS04MDAvMzAgdy1maXQgcm91bmRlZC1sZyBweC00IHB5LTIiPgogICAgICA8ZGl2IGNsYXNzTmFtZT0iZ2FwLXgtMiBmbGV4IGl0ZW1zLWNlbnRlciI+CiAgICAgICAgPEluZm8gY2xhc3NOYW1lPSJzaHJpbmstMCIgc2l6ZT17MjV9IGFyaWEtaGlkZGVuPSJ0cnVlIiAvPgogICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC1zbSI+CiAgICAgICAgICA8c3BhbgogICAgICAgICAgICBkYW5nZXJvdXNseVNldElubmVySFRNTD17ewogICAgICAgICAgICAgIF9faHRtbDogc2FmZUFsZXJ0KHQoImNvbm5lY3RvcnMuZ2l0aHViLnRva2VuX2luZm9ybWF0aW9uIikpLAogICAgICAgICAgICB9fQogICAgICAgICAgLz4KICAgICAgICAgIDxiciAvPgogICAgICAgICAgPGJyIC8+CiAgICAgICAgICA8YQogICAgICAgICAgICBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vc2V0dGluZ3MvcGVyc29uYWwtYWNjZXNzLXRva2Vucy9uZXciCiAgICAgICAgICAgIHJlbD0ibm9yZWZlcnJlciIKICAgICAgICAgICAgdGFyZ2V0PSJfYmxhbmsiCiAgICAgICAgICAgIGNsYXNzTmFtZT0idW5kZXJsaW5lIgogICAgICAgICAgICBvbkNsaWNrPXsoZSkgPT4gZS5zdG9wUHJvcGFnYXRpb24oKX0KICAgICAgICAgID4KICAgICAgICAgICAgeyIgIn0KICAgICAgICAgICAge3QoImNvbm5lY3RvcnMuZ2l0aHViLnRva2VuX3BlcnNvbmFsIil9CiAgICAgICAgICA8L2E+CiAgICAgICAgPC9wPgogICAgICA8L2Rpdj4KICAgIDwvZGl2PgogICk7Cn0KCmZ1bmN0aW9uIFBBVFRvb2x0aXAoeyBhY2Nlc3NUb2tlbiB9OiBhbnkpIHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgaWYgKCEhYWNjZXNzVG9rZW4pIHJldHVybiBudWxsOwogIHJldHVybiAoCiAgICA8PgogICAgICB7IWFjY2Vzc1Rva2VuICYmICgKICAgICAgICA8V2FybmluZwogICAgICAgICAgc2l6ZT17MTR9CiAgICAgICAgICBjbGFzc05hbWU9Im1sLTEgdGV4dC1vcmFuZ2UtNTAwIGN1cnNvci1wb2ludGVyIgogICAgICAgICAgZGF0YS10b29sdGlwLWlkPSJhY2Nlc3MtdG9rZW4tdG9vbHRpcCIKICAgICAgICAgIGRhdGEtdG9vbHRpcC1wbGFjZT0icmlnaHQiCiAgICAgICAgLz4KICAgICAgKX0KICAgICAgPFRvb2x0aXAKICAgICAgICBkZWxheUhpZGU9ezMwMH0KICAgICAgICBpZD0iYWNjZXNzLXRva2VuLXRvb2x0aXAiCiAgICAgICAgY2xhc3NOYW1lPSJtYXgtdy14cyB6LVs5OV0iCiAgICAgICAgY2xpY2thYmxlPXt0cnVlfQogICAgICA+CiAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXNtIj4KICAgICAgICAgIHt0KCJjb25uZWN0b3JzLmdpdGh1Yi50b2tlbl9leHBsYWluZWRfc3RhcnQiKX0KICAgICAgICAgIDxhCiAgICAgICAgICAgIGhyZWY9Imh0dHBzOi8vZG9jcy5naXRodWIuY29tL2VuL2F1dGhlbnRpY2F0aW9uL2tlZXBpbmcteW91ci1hY2NvdW50LWFuZC1kYXRhLXNlY3VyZS9tYW5hZ2luZy15b3VyLXBlcnNvbmFsLWFjY2Vzcy10b2tlbnMiCiAgICAgICAgICAgIHJlbD0ibm9yZWZlcnJlciIKICAgICAgICAgICAgdGFyZ2V0PSJfYmxhbmsiCiAgICAgICAgICAgIGNsYXNzTmFtZT0idW5kZXJsaW5lIgogICAgICAgICAgICBvbkNsaWNrPXsoZSkgPT4gZS5zdG9wUHJvcGFnYXRpb24oKX0KICAgICAgICAgID4KICAgICAgICAgICAge3QoImNvbm5lY3RvcnMuZ2l0aHViLnRva2VuX2V4cGxhaW5lZF9saW5rMSIpfQogICAgICAgICAgPC9hPgogICAgICAgICAge3QoImNvbm5lY3RvcnMuZ2l0aHViLnRva2VuX2V4cGxhaW5lZF9taWRkbGUiKX0KICAgICAgICAgIDxhCiAgICAgICAgICAgIGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9zZXR0aW5ncy9wZXJzb25hbC1hY2Nlc3MtdG9rZW5zL25ldyIKICAgICAgICAgICAgcmVsPSJub3JlZmVycmVyIgogICAgICAgICAgICB0YXJnZXQ9Il9ibGFuayIKICAgICAgICAgICAgY2xhc3NOYW1lPSJ1bmRlcmxpbmUiCiAgICAgICAgICAgIG9uQ2xpY2s9eyhlKSA9PiBlLnN0b3BQcm9wYWdhdGlvbigpfQogICAgICAgICAgPgogICAgICAgICAgICB7dCgiY29ubmVjdG9ycy5naXRodWIudG9rZW5fZXhwbGFpbmVkX2xpbmsyIil9CiAgICAgICAgICA8L2E+CiAgICAgICAgICB7dCgiY29ubmVjdG9ycy5naXRodWIudG9rZW5fZXhwbGFpbmVkX2VuZCIpfQogICAgICAgIDwvcD4KICAgICAgPC9Ub29sdGlwPgogICAgPC8+CiAgKTsKfQo=
+// SPDX-License-Identifier: MIT
+import React, { useState } from "react";
+import System from "@/models/system";
+import { useTranslation } from "react-i18next";
+import showToast from "@/utils/toast";
+import pluralize from "pluralize";
+import { TagsInput } from "react-tag-input-component";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
+import { Tooltip } from "react-tooltip";
+import DOMPurify from "@/utils/chat/purify";
+import useConnectorBranches from "@/hooks/useConnectorBranches";
+import logger from "@/utils/logger";
+
+const ALERT_SANITIZE_OPTS = {
+  ALLOWED_TAGS: ["a", "b", "i", "u", "strong", "em", "br", "p", "span"],
+};
+const safeAlert = (html) => DOMPurify.sanitize(html, ALERT_SANITIZE_OPTS);
+
+const DEFAULT_BRANCHES = ["main", "master"];
+export default function GithubOptions() {
+  const { t } = useTranslation();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [repo, setRepo] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
+  const [ignores, setIgnores] = useState<string[]>([]);
+
+  const [settings, setSettings] = useState({
+    repo: null,
+    accessToken: null,
+  } as any);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = new FormData(e.target);
+
+    try {
+      setLoading(true);
+      showToast(t("connectors.github.fetching_files"), "info", {
+        clear: true,
+        autoClose: false,
+      });
+      const { data, error } = await System.dataConnectors.github.collect({
+        repo: form.get("repo"),
+        accessToken: form.get("accessToken"),
+        branch: form.get("branch"),
+        ignorePaths: ignores,
+      });
+
+      if (!!error) {
+        showToast(error, "error", { clear: true });
+        setLoading(false);
+        return;
+      }
+
+      showToast(
+        t("connectors.github.files_collected", {
+          files: data.files,
+          filePlural: pluralize("file", data.files),
+          author: data.author,
+          repo: data.repo,
+          branch: data.branch,
+          destination: data.destination,
+        }),
+        "success",
+        { clear: true },
+      );
+      e.target.reset();
+      setLoading(false);
+      return;
+    } catch (e) {
+      logger.error(e);
+      showToast(e.message, "error", { clear: true });
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="flex w-full">
+      <div className="flex flex-col w-full px-1 md:pb-6 pb-16">
+        <form className="w-full" onSubmit={handleSubmit}>
+          <div className="w-full flex flex-col py-2">
+            <div className="w-full flex flex-col gap-4">
+              <div className="flex flex-col pr-10">
+                <div className="flex flex-col gap-y-1 mb-4">
+                  <label className="text-theme-text-primary text-sm font-bold">
+                    {t("connectors.github.URL")}
+                  </label>
+                  <p className="text-xs font-normal text-theme-text-secondary">
+                    {t("connectors.github.URL_explained")}
+                  </p>
+                </div>
+                <input
+                  type="url"
+                  name="repo"
+                  className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  placeholder={t("connectors.github.repoPlaceholder")}
+                  required={true}
+                  autoComplete="off"
+                  onChange={(e) => setRepo(e.target.value)}
+                  onBlur={() => setSettings({ ...settings, repo })}
+                  spellCheck={false}
+                />
+              </div>
+              <div className="flex flex-col pr-10">
+                <div className="flex flex-col gap-y-1 mb-4">
+                  <label className="text-theme-text-primary font-bold text-sm flex gap-x-2 items-center">
+                    <p className="font-bold text-theme-text-primary">
+                      {t("connectors.github.token")}
+                    </p>{" "}
+                    <p className="text-xs font-light flex items-center">
+                      <span className="text-theme-text-secondary">
+                        {t("connectors.github.optional")}
+                      </span>
+                      <PATTooltip accessToken={accessToken} />
+                    </p>
+                  </label>
+                  <p className="text-xs font-normal text-theme-text-secondary">
+                    {t("connectors.github.token_explained")}
+                  </p>
+                </div>
+                <input
+                  type="text"
+                  name="accessToken"
+                  className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  placeholder={t("connectors.github.tokenPlaceholder")}
+                  required={false}
+                  autoComplete="off"
+                  spellCheck={false}
+                  onChange={(e) => setAccessToken(e.target.value)}
+                  onBlur={() => setSettings({ ...settings, accessToken })}
+                />
+              </div>
+              <GitHubBranchSelection
+                repo={settings.repo}
+                accessToken={settings.accessToken}
+              />
+            </div>
+
+            <div className="flex flex-col w-full py-4 pr-10">
+              <div className="flex flex-col gap-y-1 mb-4">
+                <label className="text-theme-text-primary text-sm flex gap-x-2 items-center">
+                  <p className="text-theme-text-primary text-sm font-bold">
+                    {t("connectors.github.ignores")}
+                  </p>
+                </label>
+                <p className="text-xs font-normal text-theme-text-secondary">
+                  {t("connectors.github.git_ignore")}
+                </p>
+              </div>
+              <TagsInput
+                value={ignores}
+                onChange={setIgnores}
+                name="ignores"
+                placeHolder={t("connectors.github.ignoresPlaceholder")}
+                classNames={{
+                  tag: "bg-theme-settings-input-bg light:bg-black/10 bg-blue-300/10 text-zinc-800",
+                  input:
+                    "flex p-1 !bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none",
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-y-2 w-full pr-10">
+            <PATAlert accessToken={accessToken} />
+            <button
+              type="submit"
+              disabled={loading}
+              className="mt-2 w-full justify-center border-none px-4 py-2 rounded-lg text-dark-text light:text-white text-sm font-bold items-center flex gap-x-2 bg-theme-home-button-primary hover:bg-theme-home-button-primary-hover disabled:bg-theme-home-button-primary-hover disabled:cursor-not-allowed"
+            >
+              {loading
+                ? t("connectors.github.collecting_files")
+                : t("connectors.github.submit")}
+            </button>
+            {loading && (
+              <p className="text-xs text-theme-text-secondary">
+                {t("connectors.github.task_explained")}
+              </p>
+            )}
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+function GitHubBranchSelection({ repo, accessToken }: any) {
+  const { t } = useTranslation();
+  const { branches: allBranches, isLoading: loading } = useConnectorBranches(
+    "github",
+    repo,
+    accessToken,
+  );
+  const displayBranches =
+    allBranches.length > 0 ? allBranches : DEFAULT_BRANCHES;
+
+  if (loading) {
+    return (
+      <div className="flex flex-col w-60">
+        <div className="flex flex-col gap-y-1 mb-4">
+          <label className="text-theme-text-primary text-sm font-bold">
+            {t("connectors.github.branch_label")}
+          </label>
+          <p className="text-xs font-normal text-theme-text-secondary">
+            {t("connectors.github.branch")}
+          </p>
+        </div>
+        <select
+          name="branch"
+          required={true}
+          className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary focus:outline-primary-button active:outline-primary-button outline-none text-sm rounded-lg block w-full p-2.5"
+        >
+          <option disabled={true} value="">
+            {t("connectors.github.branch_loading")}
+          </option>
+        </select>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col w-60">
+      <div className="flex flex-col gap-y-1 mb-4">
+        <label className="text-theme-text-primary text-sm font-bold">
+          {t("connectors.github.branch_label")}
+        </label>
+        <p className="text-xs font-normal text-theme-text-secondary">
+          {t("connectors.github.branch_explained")}
+        </p>
+      </div>
+      <select
+        name="branch"
+        required={true}
+        className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary focus:outline-primary-button active:outline-primary-button outline-none text-sm rounded-lg block w-full p-2.5"
+      >
+        {(displayBranches as any).map((branch) => {
+          return (
+            <option key={branch} value={branch}>
+              {branch}
+            </option>
+          );
+        })}
+      </select>
+    </div>
+  );
+}
+
+function PATAlert({ accessToken }: any) {
+  const { t } = useTranslation();
+  if (!!accessToken) return null;
+  return (
+    <div className="flex flex-col md:flex-row md:items-center gap-x-2 text-white mb-4 bg-blue-800/30 w-fit rounded-lg px-4 py-2">
+      <div className="gap-x-2 flex items-center">
+        <Info className="shrink-0" size={25} aria-hidden="true" />
+        <p className="text-sm">
+          <span
+            dangerouslySetInnerHTML={{
+              __html: safeAlert(t("connectors.github.token_information")),
+            }}
+          />
+          <br />
+          <br />
+          <a
+            href="https://github.com/settings/personal-access-tokens/new"
+            rel="noreferrer"
+            target="_blank"
+            className="underline"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {" "}
+            {t("connectors.github.token_personal")}
+          </a>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function PATTooltip({ accessToken }: any) {
+  const { t } = useTranslation();
+  if (!!accessToken) return null;
+  return (
+    <>
+      {!accessToken && (
+        <Warning
+          size={14}
+          className="ml-1 text-orange-500 cursor-pointer"
+          data-tooltip-id="access-token-tooltip"
+          data-tooltip-place="right"
+        />
+      )}
+      <Tooltip
+        delayHide={300}
+        id="access-token-tooltip"
+        className="max-w-xs z-99"
+        clickable={true}
+      >
+        <p className="text-sm">
+          {t("connectors.github.token_explained_start")}
+          <a
+            href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens"
+            rel="noreferrer"
+            target="_blank"
+            className="underline"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {t("connectors.github.token_explained_link1")}
+          </a>
+          {t("connectors.github.token_explained_middle")}
+          <a
+            href="https://github.com/settings/personal-access-tokens/new"
+            rel="noreferrer"
+            target="_blank"
+            className="underline"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {t("connectors.github.token_explained_link2")}
+          </a>
+          {t("connectors.github.token_explained_end")}
+        </p>
+      </Tooltip>
+    </>
+  );
+}

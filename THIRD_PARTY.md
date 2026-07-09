@@ -1,8 +1,19 @@
 # Third-Party Components
 
-OpenSIN Chat is a sovereign, independent AI platform (MIT-licensed) by
-[OpenSIN-AI](https://github.com/OpenSIN-AI). For acknowledgments of open-source projects that
-contributed to this codebase, see [`CREDITS.md`](./CREDITS.md).
+OpenSIN Chat is a sovereign, independent AI platform (MIT-licensed). It builds on
+architectural foundations from earlier open-source work, which we gratefully acknowledge below.
+
+> It builds on architectural concepts and engineering practices from prior open-source work,
+> including [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) by [Mintplex Labs Inc.](https://github.com/Mintplex-Labs).
+> We gratefully acknowledge **Timothy Carambat** and the Mintplex team for establishing foundational patterns
+> and maintaining high standards of open-source engineering.
+
+## Foundational acknowledgments
+
+| Project | License | Usage |
+|---------|---------|-------|
+| [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) | MIT | Architectural foundation that inspired the full-stack structure (frontend, server, collector, vector-DB layer) |
+| [Mintplex Labs](https://github.com/Mintplex-Labs) | MIT | Authors of the foundational open-source work |
 
 ## Third-Party NPM Packages
 
@@ -14,7 +25,9 @@ The following packages are used by OpenSIN Chat:
 | `@mintplex-labs/bree` | Background job scheduling | MIT |
 | `@mintplex-labs/piper-tts-web` | Local text-to-speech (Piper) | MIT |
 
-## Key Dependencies
+These packages are actively maintained by the Mintplex team and we retain their original names to ensure compatibility and proper attribution.
+
+## Key dependencies
 
 | Project | License | Usage |
 |---------|---------|-------|
@@ -36,7 +49,7 @@ The following packages are used by OpenSIN Chat:
 
 Models are loaded locally within the container; no external requests are made without explicit user configuration.
 
-## External Data Sources
+## External data sources
 
 | Source | Usage |
 |--------|-------|
@@ -44,7 +57,7 @@ Models are loaded locally within the container; no external requests are made wi
 | [Abgeordnetenwatch API](https://www.abgeordnetenwatch.de/) | Constituency, committees, side jobs |
 | [SerpAPI](https://serpapi.com/) / DuckDuckGo | Web search in research pipeline |
 
-## Provider Integrations
+## Provider integrations
 
 The project supports LLM, embedding, and vector-DB providers via their respective official SDKs and APIs. See `docs/api.md` and `docs/DATA-SOURCES.md` for details.
 
@@ -60,12 +73,13 @@ Review their terms of service directly:
 
 ## Browser-Stack
 
-React 19, Vite, TailwindCSS, Phosphor Icons — all MIT/Apache.
+- React 19, Vite, TailwindCSS, Phosphor Icons — all MIT/Apache.
 
 ## Search & API Providers (for Agents)
 
-Google Programmable Search, SearchApi.io, SerpApi, Serper.dev,
-Bing Search, Baidu Search, Serply.io, SearXNG, Tavily, Exa, Perplexity Search.
+- Google Programmable Search, SearchApi.io, SerpApi, Serper.dev,
+  Bing Search, Baidu Search, Serply.io, SearXNG, Tavily, Exa, Perplexity
+  Search.
 
 ---
 

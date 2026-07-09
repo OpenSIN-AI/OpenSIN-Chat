@@ -110,7 +110,7 @@ These items are tracked but do not currently pose an active security risk:
 
 ## Telemetry
 
-- **Zero telemetry** — no third-party analytics, no outbound tracking, no
+- **Zero telemetry** — no PostHog, no Mintplex CDN, no analytics, no
   tracking of any kind.
 - All telemetry is completely disabled.
 

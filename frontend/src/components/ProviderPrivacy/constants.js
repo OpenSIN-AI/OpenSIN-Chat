@@ -16,6 +16,7 @@ import GroqLogo from "@/media/llmprovider/groq.png";
 import LiteLLMLogo from "@/media/llmprovider/litellm.png";
 import XAILogo from "@/media/llmprovider/xai.png";
 import LanceDbLogo from "@/media/vectordbs/lancedb.png";
+import ChromaLogo from "@/media/vectordbs/chroma.png";
 import VoyageAiLogo from "@/media/embeddingprovider/voyageai.png";
 import PGVectorLogo from "@/media/vectordbs/pgvector.png";
 import DockerModelRunnerLogo from "@/media/llmprovider/docker-model-runner.png";
@@ -121,6 +122,14 @@ const LLM_PROVIDER_PRIVACY_MAP = {
 };
 
 const VECTOR_DB_PROVIDER_PRIVACY_MAP = {
+  chroma: {
+    name: "Chroma",
+    description: [
+      "Your vectors and document text are stored on your Chroma instance.",
+      "Access to your instance is managed by you.",
+    ],
+    logo: ChromaLogo,
+  },
   pgvector: {
     name: "PGVector",
     description: [

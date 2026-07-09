@@ -1,1 +1,146 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBJbmxpbmVkIHRvIGJyZWFrIHRoZSBjaXJjdWxhciBpbXBvcnQ6IHVzZVRoZW1lIOKGkiBMb2dvQ29udGV4dCDihpIgKGNoYWluKSDihpIgdXNlVGhlbWUuCi8vIEtlZXAgaW4gc3luYyB3aXRoIHRoZSBSRUZFVENIX0xPR09fRVZFTlQgY29uc3RhbnQgaW4gQC9Mb2dvQ29udGV4dC4KY29uc3QgUkVGRVRDSF9MT0dPX0VWRU5UID0gInJlZmV0Y2gtbG9nbyI7CmltcG9ydCB7IHVzZVN0YXRlLCB1c2VFZmZlY3QsIHVzZVJlZiB9IGZyb20gInJlYWN0IjsKaW1wb3J0IHsgTEVHQUNZX1RIRU1FX0tFWSwgVEhFTUVfS0VZIH0gZnJvbSAiQC91dGlscy9jb25zdGFudHMiOwppbXBvcnQgeyBzYWZlR2V0SXRlbSwgc2FmZVNldEl0ZW0sIHNhZmVSZW1vdmVJdGVtIH0gZnJvbSAiQC91dGlscy9zYWZlU3RvcmFnZSI7CmltcG9ydCB7IHVzZUNhbGxiYWNrIH0gZnJvbSAicmVhY3QiOwoKLyoqCiAqIFJlYWRzIHRoZSB0aGVtZSBwcmVmZXJlbmNlIGZyb20gbG9jYWxTdG9yYWdlLCBwcmVmZXJyaW5nIHRoZSBuYW1lc3BhY2VkCiAqIGBvcGVuYWZkX3RoZW1lYCBrZXkgYW5kIGZhbGxpbmcgYmFjayB0byB0aGUgbGVnYWN5IGB0aGVtZWAga2V5IGZvcgogKiBiYWNrd2FyZCBjb21wYXRpYmlsaXR5LiBJZiB0aGUgbGVnYWN5IGtleSBpcyBmb3VuZCwgaXQgaXMgbWlncmF0ZWQKICogdG8gdGhlIG5ldyBrZXkuCiAqCiAqIE1vdmVkIGhlcmUgZnJvbSBzYWZlU3RvcmFnZS50cyB0byBicmVhayBhIGNpcmN1bGFyIGltcG9ydCBkZXBlbmRlbmN5LgogKgogKiBAcmV0dXJucyB7c3RyaW5nIHwgbnVsbH0gVGhlIHN0b3JlZCB0aGVtZSB2YWx1ZSBvciBudWxsLgogKi8KZXhwb3J0IGZ1bmN0aW9uIGdldFN0b3JlZFRoZW1lKCk6IHN0cmluZyB8IG51bGwgewogIGNvbnN0IG5hbWVzcGFjZWQgPSBzYWZlR2V0SXRlbShUSEVNRV9LRVkpOwogIGlmIChuYW1lc3BhY2VkICE9PSBudWxsKSByZXR1cm4gbmFtZXNwYWNlZDsKCiAgY29uc3QgbGVnYWN5ID0gc2FmZUdldEl0ZW0oTEVHQUNZX1RIRU1FX0tFWSk7CiAgaWYgKGxlZ2FjeSAhPT0gbnVsbCkgewogICAgLy8gTWlncmF0ZSBsZWdhY3kga2V5IHRvIG5hbWVzcGFjZWQga2V5CiAgICBzYWZlU2V0SXRlbShUSEVNRV9LRVksIGxlZ2FjeSk7CiAgICBzYWZlUmVtb3ZlSXRlbShMRUdBQ1lfVEhFTUVfS0VZKTsKICAgIHJldHVybiBsZWdhY3k7CiAgfQogIHJldHVybiBudWxsOwp9Cgpjb25zdCBhdmFpbGFibGVUaGVtZXMgPSB7CiAgc3lzdGVtOiAiU3lzdGVtIiwKICBsaWdodDogIkxpZ2h0IiwKICBkYXJrOiAiRGFyayIsCn07CgovKioKICogUmVzb2x2ZXMgdGhlIHN0b3JlZCB0aGVtZSBwcmVmZXJlbmNlIGludG8gYSBjb25jcmV0ZSAibGlnaHQiIG9yICJkYXJrIgogKiB2YWx1ZS4gSGFuZGxlcyB0aGUgbGVnYWN5ICJkZWZhdWx0IiB2YWx1ZSAodHJlYXRlZCBhcyBkYXJrKSBhbmQgdGhlCiAqICJzeXN0ZW0iIHZhbHVlIChyZXNvbHZlZCBhZ2FpbnN0IHRoZSBPUyBwcmVmZXJlbmNlKS4gUHVyZSBoZWxwZXIgdXNhYmxlCiAqIG91dHNpZGUgb2YgUmVhY3QgKGUuZy4gaW4gTG9nb0NvbnRleHQgYW5kIHRoZSBzeXN0ZW0gQVBJIG1vZGVsKS4KICogQHJldHVybnMge2Jvb2xlYW59IFdoZXRoZXIgdGhlIHJlc29sdmVkIHRoZW1lIGlzIGRhcmsgbW9kZS4KICovCmV4cG9ydCBmdW5jdGlvbiByZXNvbHZlRGFya01vZGUoKTogYm9vbGVhbiB7CiAgY29uc3Qgc3RvcmVkID0gZ2V0U3RvcmVkVGhlbWUoKTsKICBsZXQgdGhlbWUgPSBzdG9yZWQgPT09ICJkZWZhdWx0IiA/ICJkYXJrIiA6IHN0b3JlZCB8fCAic3lzdGVtIjsKICBpZiAodGhlbWUgPT09ICJzeXN0ZW0iKSB7CiAgICB0aGVtZSA9IHdpbmRvdy5tYXRjaE1lZGlhPy4oIihwcmVmZXJzLWNvbG9yLXNjaGVtZTogbGlnaHQpIikubWF0Y2hlcwogICAgICA/ICJsaWdodCIKICAgICAgOiAiZGFyayI7CiAgfQogIHJldHVybiB0aGVtZSAhPT0gImxpZ2h0IjsKfQoKLyoqCiAqIEB0eXBlZGVmIHsnc3lzdGVtJyB8ICdsaWdodCcgfCAnZGFyayd9IFRoZW1lT3B0aW9uCiAqLwoKLyoqCiAqIEB0eXBlZGVmIHtPYmplY3R9IFVzZVRoZW1lUmVzdWx0CiAqIEBwcm9wZXJ0eSB7VGhlbWVPcHRpb259IHRoZW1lIC0gVGhlIGN1cnJlbnQgdGhlbWUgcHJlZmVyZW5jZSBzdG9yZWQgaW4gbG9jYWxTdG9yYWdlLgogKiBAcHJvcGVydHkgeyhuZXdUaGVtZTogVGhlbWVPcHRpb24pID0+IHZvaWR9IHNldFRoZW1lIC0gU2V0cyB0aGUgdGhlbWUgcHJlZmVyZW5jZS4KICogQHByb3BlcnR5IHt7c3lzdGVtOiBzdHJpbmcsIGxpZ2h0OiBzdHJpbmcsIGRhcms6IHN0cmluZ319IGF2YWlsYWJsZVRoZW1lcyAtIE1hcCBvZiB0aGVtZSBrZXlzIHRvIGRpc3BsYXkgbmFtZXMuCiAqIEBwcm9wZXJ0eSB7Ym9vbGVhbn0gaXNMaWdodCAtIFdoZXRoZXIgdGhlIHJlc29sdmVkIHRoZW1lIGlzIGxpZ2h0IChleHBsaWNpdGx5IG9yIHZpYSBzeXN0ZW0gcHJlZmVyZW5jZSkuCiAqLwoKLyoqCiAqIERldGVybWluZXMgdGhlIGN1cnJlbnQgdGhlbWUgb2YgdGhlIGFwcGxpY2F0aW9uLgogKiAic3lzdGVtIiBmb2xsb3dzIHRoZSBPUyBwcmVmZXJlbmNlLCAibGlnaHQiIGFuZCAiZGFyayIgZm9yY2UgdGhhdCBtb2RlLgogKiBAcmV0dXJucyB7VXNlVGhlbWVSZXN1bHR9CiAqLwpleHBvcnQgZnVuY3Rpb24gdXNlVGhlbWUoeyBicm9hZGNhc3RMb2dvQ2hhbmdlID0gZmFsc2UgfSA9IHt9KSB7CiAgY29uc3QgW3RoZW1lLCBfc2V0VGhlbWVdID0gdXNlU3RhdGUoKCkgPT4gewogICAgY29uc3Qgc3RvcmVkID0gZ2V0U3RvcmVkVGhlbWUoKTsKICAgIGlmIChzdG9yZWQgPT09ICJkZWZhdWx0IikgcmV0dXJuICJkYXJrIjsgLy8gbWlncmF0ZSBsZWdhY3kgdmFsdWUKICAgIHJldHVybiBzdG9yZWQgfHwgInN5c3RlbSI7CiAgfSk7CgogIGNvbnN0IFtzeXN0ZW1UaGVtZSwgc2V0U3lzdGVtVGhlbWVdID0gdXNlU3RhdGUoKCkgPT4KICAgIHdpbmRvdy5tYXRjaE1lZGlhPy4oIihwcmVmZXJzLWNvbG9yLXNjaGVtZTogbGlnaHQpIikubWF0Y2hlcwogICAgICA/ICJsaWdodCIKICAgICAgOiAiZGFyayIsCiAgKTsKICBjb25zdCBoYXNNb3VudGVkUmVmID0gdXNlUmVmKGZhbHNlKTsKCiAgLy8gTGlzdGVuIGZvciBPUyBsZXZlbCB0aGVtZSBjaGFuZ2VzCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIGlmICghd2luZG93Lm1hdGNoTWVkaWEpIHJldHVybjsKICAgIGNvbnN0IG1xbDogYW55ID0gd2luZG93Lm1hdGNoTWVkaWEoIihwcmVmZXJzLWNvbG9yLXNjaGVtZTogbGlnaHQpIik7CiAgICBjb25zdCBoYW5kbGVyID0gKGUpID0+IHNldFN5c3RlbVRoZW1lKGUubWF0Y2hlcyA/ICJsaWdodCIgOiAiZGFyayIpOwogICAgbXFsLmFkZEV2ZW50TGlzdGVuZXIoImNoYW5nZSIsIGhhbmRsZXIpOwogICAgcmV0dXJuICgpID0+IG1xbC5yZW1vdmVFdmVudExpc3RlbmVyKCJjaGFuZ2UiLCBoYW5kbGVyKTsKICB9LCBbXSk7CgogIGNvbnN0IHJlc29sdmVkVGhlbWUgPSB0aGVtZSA9PT0gInN5c3RlbSIgPyBzeXN0ZW1UaGVtZSA6IHRoZW1lOwoKICB1c2VFZmZlY3QoKCkgPT4gewogICAgZG9jdW1lbnQuZG9jdW1lbnRFbGVtZW50LnNldEF0dHJpYnV0ZSgiZGF0YS10aGVtZSIsIHJlc29sdmVkVGhlbWUpOwogICAgZG9jdW1lbnQuZG9jdW1lbnRFbGVtZW50LmNsYXNzTGlzdC50b2dnbGUoCiAgICAgICJsaWdodCIsCiAgICAgIHJlc29sdmVkVGhlbWUgPT09ICJsaWdodCIsCiAgICApOwogICAgZG9jdW1lbnQuYm9keS5jbGFzc0xpc3QudG9nZ2xlKCJsaWdodCIsIHJlc29sdmVkVGhlbWUgPT09ICJsaWdodCIpOwogICAgc2FmZVNldEl0ZW0oVEhFTUVfS0VZLCB0aGVtZSk7CiAgICBpZiAoIWhhc01vdW50ZWRSZWYuY3VycmVudCkgewogICAgICBoYXNNb3VudGVkUmVmLmN1cnJlbnQgPSB0cnVlOwogICAgICByZXR1cm47CiAgICB9CiAgICBpZiAoYnJvYWRjYXN0TG9nb0NoYW5nZSkgewogICAgICB3aW5kb3cuZGlzcGF0Y2hFdmVudChuZXcgRXZlbnQoUkVGRVRDSF9MT0dPX0VWRU5UKSk7CiAgICB9CiAgfSwgW2Jyb2FkY2FzdExvZ29DaGFuZ2UsIHJlc29sdmVkVGhlbWUsIHRoZW1lXSk7CgogIC8vIEluIGRldmVsb3BtZW50LCBhdHRhY2gga2V5YmluZCBjb21iaW5hdGlvbnMgdG8gdG9nZ2xlIHRoZW1lCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIGlmICghaW1wb3J0Lm1ldGEuZW52LkRFVikgcmV0dXJuOwogICAgZnVuY3Rpb24gdG9nZ2xlT25LZXliaW5kKGUpIHsKICAgICAgaWYgKGUubWV0YUtleSAmJiBlLmtleSA9PT0gIi4iKSB7CiAgICAgICAgZS5wcmV2ZW50RGVmYXVsdCgpOwogICAgICAgIF9zZXRUaGVtZSgocHJldikgPT4gKHByZXYgPT09ICJsaWdodCIgPyAiZGFyayIgOiAibGlnaHQiKSk7CiAgICAgIH0KICAgIH0KICAgIGRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoImtleWRvd24iLCB0b2dnbGVPbktleWJpbmQpOwogICAgcmV0dXJuICgpID0+IGRvY3VtZW50LnJlbW92ZUV2ZW50TGlzdGVuZXIoImtleWRvd24iLCB0b2dnbGVPbktleWJpbmQpOwogIH0sIFtdKTsKCiAgLyoqCiAgICogU2V0cyB0aGUgdGhlbWUgb2YgdGhlIGFwcGxpY2F0aW9uIGFuZCBydW5zIGFueQogICAqIG90aGVyIG5lY2Vzc2FyeSBzaWRlIGVmZmVjdHMKICAgKiBAcGFyYW0ge1RoZW1lT3B0aW9ufSBuZXdUaGVtZSBUaGUgbmV3IHRoZW1lIHRvIHNldAogICAqLwogIGNvbnN0IHNldFRoZW1lID0gdXNlQ2FsbGJhY2soKG5ld1RoZW1lOiBhbnkpID0+IHsKICAgIF9zZXRUaGVtZShuZXdUaGVtZSk7CiAgICAvLyBUaGUgdXNlRWZmZWN0IGFib3ZlIGFscmVhZHkgZGlzcGF0Y2hlcyBSRUZFVENIX0xPR09fRVZFTlQgd2hlbgogICAgLy8gcmVzb2x2ZWRUaGVtZSBjaGFuZ2VzLiBPbmx5IGRpc3BhdGNoIGhlcmUgaWYgdGhlIHRoZW1lIGRpZG4ndAogICAgLy8gYWN0dWFsbHkgY2hhbmdlIChlLmcuIHVzZXIgY2xpY2tlZCB0aGUgc2FtZSB0aGVtZSBidXR0b24pIHRvCiAgICAvLyBhdm9pZCBhIGR1cGxpY2F0ZSBldmVudCBvbiBldmVyeSBzZXRUaGVtZSBjYWxsLgogICAgaWYgKG5ld1RoZW1lID09PSB0aGVtZSkgewogICAgICB3aW5kb3cuZGlzcGF0Y2hFdmVudChuZXcgRXZlbnQoUkVGRVRDSF9MT0dPX0VWRU5UKSk7CiAgICB9CiAgfSwgW3RoZW1lXSk7CgogIHJldHVybiB7CiAgICB0aGVtZSwKICAgIHNldFRoZW1lLAogICAgYXZhaWxhYmxlVGhlbWVzLAogICAgaXNMaWdodDogcmVzb2x2ZWRUaGVtZSA9PT0gImxpZ2h0IiwKICB9Owp9Cg==
+// SPDX-License-Identifier: MIT
+// Inlined to break the circular import: useTheme → LogoContext → (chain) → useTheme.
+// Keep in sync with the REFETCH_LOGO_EVENT constant in @/LogoContext.
+const REFETCH_LOGO_EVENT = "refetch-logo";
+import { useState, useEffect, useRef } from "react";
+import { LEGACY_THEME_KEY, THEME_KEY } from "@/utils/constants";
+import { safeGetItem, safeSetItem, safeRemoveItem } from "@/utils/safeStorage";
+import { useCallback } from "react";
+
+/**
+ * Reads the theme preference from localStorage, preferring the namespaced
+ * `openafd_theme` key and falling back to the legacy `theme` key for
+ * backward compatibility. If the legacy key is found, it is migrated
+ * to the new key.
+ *
+ * Moved here from safeStorage.ts to break a circular import dependency.
+ *
+ * @returns {string | null} The stored theme value or null.
+ */
+export function getStoredTheme(): string | null {
+  const namespaced = safeGetItem(THEME_KEY);
+  if (namespaced !== null) return namespaced;
+
+  const legacy = safeGetItem(LEGACY_THEME_KEY);
+  if (legacy !== null) {
+    // Migrate legacy key to namespaced key
+    safeSetItem(THEME_KEY, legacy);
+    safeRemoveItem(LEGACY_THEME_KEY);
+    return legacy;
+  }
+  return null;
+}
+
+const availableThemes = {
+  system: "System",
+  light: "Light",
+  dark: "Dark",
+};
+
+/**
+ * Resolves the stored theme preference into a concrete "light" or "dark"
+ * value. Handles the legacy "default" value (treated as dark) and the
+ * "system" value (resolved against the OS preference). Pure helper usable
+ * outside of React (e.g. in LogoContext and the system API model).
+ * @returns {boolean} Whether the resolved theme is dark mode.
+ */
+export function resolveDarkMode(): boolean {
+  const stored = getStoredTheme();
+  let theme = stored === "default" ? "dark" : stored || "system";
+  if (theme === "system") {
+    theme = window.matchMedia?.("(prefers-color-scheme: light)").matches
+      ? "light"
+      : "dark";
+  }
+  return theme !== "light";
+}
+
+/**
+ * @typedef {'system' | 'light' | 'dark'} ThemeOption
+ */
+
+/**
+ * @typedef {Object} UseThemeResult
+ * @property {ThemeOption} theme - The current theme preference stored in localStorage.
+ * @property {(newTheme: ThemeOption) => void} setTheme - Sets the theme preference.
+ * @property {{system: string, light: string, dark: string}} availableThemes - Map of theme keys to display names.
+ * @property {boolean} isLight - Whether the resolved theme is light (explicitly or via system preference).
+ */
+
+/**
+ * Determines the current theme of the application.
+ * "system" follows the OS preference, "light" and "dark" force that mode.
+ * @returns {UseThemeResult}
+ */
+export function useTheme({ broadcastLogoChange = false } = {}) {
+  const [theme, _setTheme] = useState(() => {
+    const stored = getStoredTheme();
+    if (stored === "default") return "dark"; // migrate legacy value
+    return stored || "system";
+  });
+
+  const [systemTheme, setSystemTheme] = useState(() =>
+    window.matchMedia?.("(prefers-color-scheme: light)").matches
+      ? "light"
+      : "dark",
+  );
+  const hasMountedRef = useRef(false);
+
+  // Listen for OS level theme changes
+  useEffect(() => {
+    if (!window.matchMedia) return;
+    const mql: any = window.matchMedia("(prefers-color-scheme: light)");
+    const handler = (e) => setSystemTheme(e.matches ? "light" : "dark");
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+
+  const resolvedTheme = theme === "system" ? systemTheme : theme;
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", resolvedTheme);
+    document.documentElement.classList.toggle(
+      "light",
+      resolvedTheme === "light",
+    );
+    document.body.classList.toggle("light", resolvedTheme === "light");
+    safeSetItem(THEME_KEY, theme);
+    if (!hasMountedRef.current) {
+      hasMountedRef.current = true;
+      return;
+    }
+    if (broadcastLogoChange) {
+      window.dispatchEvent(new Event(REFETCH_LOGO_EVENT));
+    }
+  }, [broadcastLogoChange, resolvedTheme, theme]);
+
+  // In development, attach keybind combinations to toggle theme
+  useEffect(() => {
+    if (!import.meta.env.DEV) return;
+    function toggleOnKeybind(e) {
+      if (e.metaKey && e.key === ".") {
+        e.preventDefault();
+        _setTheme((prev) => (prev === "light" ? "dark" : "light"));
+      }
+    }
+    document.addEventListener("keydown", toggleOnKeybind);
+    return () => document.removeEventListener("keydown", toggleOnKeybind);
+  }, []);
+
+  /**
+   * Sets the theme of the application and runs any
+   * other necessary side effects
+   * @param {ThemeOption} newTheme The new theme to set
+   */
+  const setTheme = useCallback((newTheme: any) => {
+    _setTheme(newTheme);
+    window.dispatchEvent(new Event(REFETCH_LOGO_EVENT));
+  }, []);
+
+  return {
+    theme,
+    setTheme,
+    availableThemes,
+    isLight: resolvedTheme === "light",
+  };
+}

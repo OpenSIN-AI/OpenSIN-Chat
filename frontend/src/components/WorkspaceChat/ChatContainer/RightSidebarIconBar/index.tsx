@@ -1,1 +1,166 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBQdXJwb3NlOiBQQVRDSCBmb3IgUmlnaHRTaWRlYmFySWNvbkJhci9pbmRleC50c3gKLy8gICAgICAgICAgQWRkcyBhIHNlY29uZCwgdmlzdWFsbHkgc2VwYXJhdGVkIGljb24gc2VjdGlvbiBmb3IgQWdlbnQgZmVhdHVyZXMuCi8vCi8vIFRoaXMgaXMgdGhlIENPTVBMRVRFIG1vZGlmaWVkIGZpbGUuIFJlcGxhY2UgdGhlIGV4aXN0aW5nIGluZGV4LnRzeCB3aXRoIHRoaXMuCi8vIENoYW5nZXMgZnJvbSBvcmlnaW5hbDoKLy8gICAxLiBBZGRlZCBpbXBvcnRzOiBCcm9hZGNhc3QsIFJvYm90LCBHZWFyIGljb25zICsgdXNlQWdlbnRSdW5zCi8vICAgMi4gQWRkZWQgYWdlbnRJY29ucyBhcnJheSAoMyBuZXcgaWNvbnMpCi8vICAgMy4gQWRkZWQgZGl2aWRlciArIGFnZW50IHNlY3Rpb24gaW4gSlNYCi8vICAgNC4gQWRkZWQgbGl2ZSBiYWRnZSBmb3IgYWN0aXZlIHJ1biBjb3VudAovLwppbXBvcnQgeyBUb29sdGlwIH0gZnJvbSAicmVhY3QtdG9vbHRpcCI7CmltcG9ydCB7IEV5ZSB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9FeWUiOwppbXBvcnQgeyBGb2xkZXJPcGVuIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL0ZvbGRlck9wZW4iOwppbXBvcnQgeyBEYXRhYmFzZSB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9EYXRhYmFzZSI7CmltcG9ydCB7IE5ld3NwYXBlciB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9OZXdzcGFwZXIiOwppbXBvcnQgeyBCb29rT3BlbiB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9Cb29rT3BlbiI7CmltcG9ydCB7IEJyYWluIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL0JyYWluIjsKaW1wb3J0IHsgRmlsZVBkZiB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9GaWxlUGRmIjsKaW1wb3J0IHsgTm90ZXBhZCB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9Ob3RlcGFkIjsKaW1wb3J0IHsgQnJvYWRjYXN0IH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL0Jyb2FkY2FzdCI7CmltcG9ydCB7IFJvYm90IH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL1JvYm90IjsKaW1wb3J0IHsgR2VhciB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9HZWFyIjsKaW1wb3J0IHsgdXNlQ2hhdFNpZGViYXIgfSBmcm9tICIuLi9DaGF0U2lkZWJhciI7CmltcG9ydCB7IHVzZUFnZW50UnVucyB9IGZyb20gIi4uL0FnZW50U2Vzc2lvbnNTaWRlYmFyL0FnZW50UnVuc0NvbnRleHQiOwppbXBvcnQgeyB1c2VUcmFuc2xhdGlvbiB9IGZyb20gInJlYWN0LWkxOG5leHQiOwoKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gUmlnaHRTaWRlYmFySWNvbkJhcigpIHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgY29uc3QgeyBhY3RpdmVTaWRlYmFyLCB0b2dnbGVTaWRlYmFyIH0gPSB1c2VDaGF0U2lkZWJhcigpOwogIGNvbnN0IHsgYWN0aXZlUnVuQ291bnQgfSA9IHVzZUFnZW50UnVucygpOwoKICAvLyAtLS0gQmVzdGVoZW5kZSBQYW5lbC1JY29ucyAodW52ZXLDpG5kZXJ0KSAtLS0KICBjb25zdCBpY29ucyA9IFsKICAgIHsKICAgICAgaWQ6ICJwcmV2aWV3IiwKICAgICAgaWNvbjogRXllLAogICAgICBsYWJlbDogdCgicmlnaHRfc2lkZWJhci5pY29uX3ByZXZpZXciLCAiVm9yc2NoYXUiKSwKICAgICAgYWN0aW9uOiAoKSA9PiB0b2dnbGVTaWRlYmFyKCJwcmV2aWV3IiksCiAgICB9LAogICAgewogICAgICBpZDogImZpbGVzeXN0ZW0iLAogICAgICBpY29uOiBGb2xkZXJPcGVuLAogICAgICBsYWJlbDogdCgicmlnaHRfc2lkZWJhci5pY29uX2ZpbGVzeXN0ZW0iLCAiVmVyemVpY2huaXMiKSwKICAgICAgYWN0aW9uOiAoKSA9PiB0b2dnbGVTaWRlYmFyKCJmaWxlc3lzdGVtIiksCiAgICB9LAogICAgewogICAgICBpZDogImRhdGFiYXNlIiwKICAgICAgaWNvbjogRGF0YWJhc2UsCiAgICAgIGxhYmVsOiB0KCJyaWdodF9zaWRlYmFyLmljb25fZGF0YWJhc2UiLCAiUG9saXRpa2VyLURhdGVuYmFuayIpLAogICAgICBhY3Rpb246ICgpID0+IHRvZ2dsZVNpZGViYXIoImRhdGFiYXNlIiksCiAgICB9LAogICAgewogICAgICBpZDogInBvbGl0aWNhbCIsCiAgICAgIGljb246IE5ld3NwYXBlciwKICAgICAgbGFiZWw6IHQoInJpZ2h0X3NpZGViYXIuaWNvbl9wb2xpdGljYWwiLCAiUG9saXRpc2NoZXMiKSwKICAgICAgYWN0aW9uOiAoKSA9PiB0b2dnbGVTaWRlYmFyKCJwb2xpdGljYWwiKSwKICAgIH0sCiAgICB7CiAgICAgIGlkOiAic291cmNlcyIsCiAgICAgIGljb246IEJvb2tPcGVuLAogICAgICBsYWJlbDogdCgicmlnaHRfc2lkZWJhci5pY29uX3NvdXJjZXMiLCAiUXVlbGxlbiIpLAogICAgICBhY3Rpb246ICgpID0+IHRvZ2dsZVNpZGViYXIoInNvdXJjZXMiKSwKICAgIH0sCiAgICB7CiAgICAgIGlkOiAibWVtb3JpZXMiLAogICAgICBpY29uOiBCcmFpbiwKICAgICAgbGFiZWw6IHQoInJpZ2h0X3NpZGViYXIuaWNvbl9tZW1vcmllcyIsICJNZW1vcmllcyIpLAogICAgICBhY3Rpb246ICgpID0+IHRvZ2dsZVNpZGViYXIoIm1lbW9yaWVzIiksCiAgICB9LAogICAgewogICAgICBpZDogInBkZi1hbmFseXNpcyIsCiAgICAgIGljb246IEZpbGVQZGYsCiAgICAgIGxhYmVsOiB0KCJyaWdodF9zaWRlYmFyLmljb25fcGRmX2FuYWx5c2lzIiwgIlBERi1BbmFseXNlIiksCiAgICAgIGFjdGlvbjogKCkgPT4gdG9nZ2xlU2lkZWJhcigicGRmLWFuYWx5c2lzIiksCiAgICB9LAogICAgewogICAgICBpZDogIm5vdGVwYWQiLAogICAgICBpY29uOiBOb3RlcGFkLAogICAgICBsYWJlbDogdCgicmlnaHRfc2lkZWJhci5pY29uX25vdGVwYWQiLCAiTm90aXpibG9jayIpLAogICAgICBhY3Rpb246ICgpID0+IHRvZ2dsZVNpZGViYXIoIm5vdGVwYWQiKSwKICAgIH0sCiAgXTsKCiAgLy8gLS0tIE5FVTogQWdlbnQtL1dvcmtzcGFjZS1TZWN0aW9uIChnZXRyZW5udCBkdXJjaCBEaXZpZGVyKSAtLS0KICBjb25zdCBhZ2VudEljb25zID0gWwogICAgewogICAgICBpZDogImFnZW50LXNlc3Npb25zIiwKICAgICAgaWNvbjogQnJvYWRjYXN0LAogICAgICBsYWJlbDogdCgicmlnaHRfc2lkZWJhci5pY29uX2FnZW50X3Nlc3Npb25zIiwgIkFnZW50LVNlc3Npb25zIiksCiAgICAgIGFjdGlvbjogKCkgPT4gdG9nZ2xlU2lkZWJhcigiYWdlbnQtc2Vzc2lvbnMiKSwKICAgICAgYmFkZ2U6IGFjdGl2ZVJ1bkNvdW50LAogICAgfSwKICAgIHsKICAgICAgaWQ6ICJhZ2VudC1zZXR0aW5ncyIsCiAgICAgIGljb246IFJvYm90LAogICAgICBsYWJlbDogdCgicmlnaHRfc2lkZWJhci5pY29uX2FnZW50X3NldHRpbmdzIiwgIkFnZW50LUVpbnN0ZWxsdW5nZW4iKSwKICAgICAgYWN0aW9uOiAoKSA9PiB0b2dnbGVTaWRlYmFyKCJhZ2VudC1zZXR0aW5ncyIpLAogICAgICBiYWRnZTogMCwKICAgIH0sCiAgICB7CiAgICAgIGlkOiAid29ya3NwYWNlLXNldHRpbmdzIiwKICAgICAgaWNvbjogR2VhciwKICAgICAgbGFiZWw6IHQoCiAgICAgICAgInJpZ2h0X3NpZGViYXIuaWNvbl93b3Jrc3BhY2Vfc2V0dGluZ3MiLAogICAgICAgICJXb3Jrc3BhY2UtRWluc3RlbGx1bmdlbiIsCiAgICAgICksCiAgICAgIGFjdGlvbjogKCkgPT4gdG9nZ2xlU2lkZWJhcigid29ya3NwYWNlLXNldHRpbmdzIiksCiAgICAgIGJhZGdlOiAwLAogICAgfSwKICBdOwoKICAvLyAtLS0gUmVuZGVyIGhlbHBlciAoc2hhcmVkIGJ5IGJvdGggc2VjdGlvbnMpIC0tLQogIGZ1bmN0aW9uIHJlbmRlckljb24oeyBpZCwgaWNvbjogSWNvbiwgbGFiZWwsIGFjdGlvbiwgYmFkZ2UgPSAwIH06IGFueSkgewogICAgY29uc3QgaXNBY3RpdmUgPSBhY3RpdmVTaWRlYmFyID09PSBpZDsKICAgIHJldHVybiAoCiAgICAgIDxkaXYKICAgICAgICBrZXk9e2lkfQogICAgICAgIGNsYXNzTmFtZT0icmVsYXRpdmUgZmxleCBmbGV4LWNvbCBpdGVtcy1jZW50ZXIiCiAgICAgICAgZGF0YS10b29sdGlwLWlkPXtgcnNpYi0ke2lkfWB9CiAgICAgICAgZGF0YS10b29sdGlwLWNvbnRlbnQ9e2xhYmVsfQogICAgICA+CiAgICAgICAgPGJ1dHRvbgogICAgICAgICAgdHlwZT0iYnV0dG9uIgogICAgICAgICAgb25DbGljaz17YWN0aW9ufQogICAgICAgICAgYXJpYS1sYWJlbD17bGFiZWx9CiAgICAgICAgICBjbGFzc05hbWU9e2BmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciB3LTggaC04IHJvdW5kZWQtbGcgYm9yZGVyLW5vbmUgdHJhbnNpdGlvbi1hbGwgJHsKICAgICAgICAgICAgaXNBY3RpdmUKICAgICAgICAgICAgICA/ICJjdXJzb3ItcG9pbnRlciBiZy16aW5jLTcwMCBsaWdodDpiZy1zbGF0ZS0yMDAgdGV4dC10aGVtZS10ZXh0LXByaW1hcnkgbGlnaHQ6dGV4dC10aGVtZS10ZXh0LXByaW1hcnkiCiAgICAgICAgICAgICAgOiAiY3Vyc29yLXBvaW50ZXIgdGV4dC16aW5jLTQwMCBsaWdodDp0ZXh0LXNsYXRlLTUwMCBob3ZlcjpiZy16aW5jLTgwMCBsaWdodDpob3ZlcjpiZy1zbGF0ZS0xMDAgaG92ZXI6dGV4dC10aGVtZS10ZXh0LXByaW1hcnkgbGlnaHQ6aG92ZXI6dGV4dC10aGVtZS10ZXh0LXByaW1hcnkiCiAgICAgICAgICB9YH0KICAgICAgICA+CiAgICAgICAgICA8SWNvbiBzaXplPXsxOH0gd2VpZ2h0PXtpc0FjdGl2ZSA/ICJmaWxsIiA6ICJyZWd1bGFyIn0gLz4KICAgICAgICA8L2J1dHRvbj4KICAgICAgICB7LyogTGl2ZS1CYWRnZTogQW56YWhsIGFrdGl2ZXIgUnVucyAqL30KICAgICAgICB7YmFkZ2UgPiAwICYmICgKICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0iYWJzb2x1dGUgLXRvcC0wLjUgLXJpZ2h0LTAuNSBtaW4tdy1bMTZweF0gaC00IHB4LTEgcm91bmRlZC1mdWxsIGJnLVsjMDA5ZWUwXSB0ZXh0LXdoaXRlIHRleHQtWzEwcHhdIGZvbnQtYm9sZCBmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciI+CiAgICAgICAgICAgIHtiYWRnZX0KICAgICAgICAgIDwvc3Bhbj4KICAgICAgICApfQogICAgICAgIDxUb29sdGlwCiAgICAgICAgICBpZD17YHJzaWItJHtpZH1gfQogICAgICAgICAgcGxhY2U9ImxlZnQiCiAgICAgICAgICBkZWxheVNob3c9ezMwMH0KICAgICAgICAgIGNsYXNzTmFtZT0idG9vbHRpcCAhdGV4dC14cyB6LVs5OV0iCiAgICAgICAgLz4KICAgICAgPC9kaXY+CiAgICApOwogIH0KCiAgcmV0dXJuICgKICAgIDxkaXYgY2xhc3NOYW1lPSJoaWRkZW4gbWQ6ZmxleCBmbGV4LWNvbCBpdGVtcy1jZW50ZXIgZ2FwLTEgcHktMiBweC0xIGJnLXppbmMtOTAwIGxpZ2h0OmJnLXdoaXRlIGgtZnVsbCBmbGV4LXNocmluay0wIHctWzQ0cHhdIG15LTIgbXItMiByb3VuZGVkLTJ4bCBvdmVyZmxvdy15LWF1dG8iPgogICAgICB7LyogQmVzdGVoZW5kZSBQYW5lbC1JY29ucyAqL30KICAgICAge2ljb25zLm1hcChyZW5kZXJJY29uKX0KCiAgICAgIHsvKiBEaXZpZGVyIHp3aXNjaGVuIGRlbiBBYnNjaG5pdHRlbiAqL30KICAgICAgPGRpdgogICAgICAgIGNsYXNzTmFtZT0idy02IGgtcHggYmctemluYy03MDAgbGlnaHQ6Ymctc2xhdGUtMjAwIG15LTEuNSIKICAgICAgICBhcmlhLWhpZGRlbgogICAgICAvPgoKICAgICAgey8qIE5FVTogQWdlbnQtL1dvcmtzcGFjZS1BYnNjaG5pdHQgKi99CiAgICAgIHthZ2VudEljb25zLm1hcChyZW5kZXJJY29uKX0KICAgIDwvZGl2PgogICk7Cn0K
+// SPDX-License-Identifier: MIT
+// Purpose: PATCH for RightSidebarIconBar/index.tsx
+//          Adds a second, visually separated icon section for Agent features.
+//
+// This is the COMPLETE modified file. Replace the existing index.tsx with this.
+// Changes from original:
+//   1. Added imports: Broadcast, Robot, Gear icons + useAgentRuns
+//   2. Added agentIcons array (3 new icons)
+//   3. Added divider + agent section in JSX
+//   4. Added live badge for active run count
+//
+import { Tooltip } from "react-tooltip";
+import { Eye } from "@phosphor-icons/react/dist/csr/Eye";
+import { FolderOpen } from "@phosphor-icons/react/dist/csr/FolderOpen";
+import { Database } from "@phosphor-icons/react/dist/csr/Database";
+import { Newspaper } from "@phosphor-icons/react/dist/csr/Newspaper";
+import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
+import { Brain } from "@phosphor-icons/react/dist/csr/Brain";
+import { FilePdf } from "@phosphor-icons/react/dist/csr/FilePdf";
+import { Notepad } from "@phosphor-icons/react/dist/csr/Notepad";
+import { Broadcast } from "@phosphor-icons/react/dist/csr/Broadcast";
+import { Robot } from "@phosphor-icons/react/dist/csr/Robot";
+import { Gear } from "@phosphor-icons/react/dist/csr/Gear";
+import { useChatSidebar } from "../ChatSidebar";
+import { useAgentRuns } from "../AgentSessionsSidebar/AgentRunsContext";
+import { useTranslation } from "react-i18next";
+
+export default function RightSidebarIconBar() {
+  const { t } = useTranslation();
+  const { activeSidebar, toggleSidebar } = useChatSidebar();
+  const { activeRunCount } = useAgentRuns();
+
+  // --- Bestehende Panel-Icons (unverändert) ---
+  const icons = [
+    {
+      id: "preview",
+      icon: Eye,
+      label: t("right_sidebar.icon_preview", "Vorschau"),
+      action: () => toggleSidebar("preview"),
+    },
+    {
+      id: "filesystem",
+      icon: FolderOpen,
+      label: t("right_sidebar.icon_filesystem", "Verzeichnis"),
+      action: () => toggleSidebar("filesystem"),
+    },
+    {
+      id: "database",
+      icon: Database,
+      label: t("right_sidebar.icon_database", "Politiker-Datenbank"),
+      action: () => toggleSidebar("database"),
+    },
+    {
+      id: "political",
+      icon: Newspaper,
+      label: t("right_sidebar.icon_political", "Politisches"),
+      action: () => toggleSidebar("political"),
+    },
+    {
+      id: "sources",
+      icon: BookOpen,
+      label: t("right_sidebar.icon_sources", "Quellen"),
+      action: () => toggleSidebar("sources"),
+    },
+    {
+      id: "memories",
+      icon: Brain,
+      label: t("right_sidebar.icon_memories", "Memories"),
+      action: () => toggleSidebar("memories"),
+    },
+    {
+      id: "pdf-analysis",
+      icon: FilePdf,
+      label: t("right_sidebar.icon_pdf_analysis", "PDF-Analyse"),
+      action: () => toggleSidebar("pdf-analysis"),
+    },
+    {
+      id: "notepad",
+      icon: Notepad,
+      label: t("right_sidebar.icon_notepad", "Notizblock"),
+      action: () => toggleSidebar("notepad"),
+    },
+  ];
+
+  // --- NEU: Agent-/Workspace-Section (getrennt durch Divider) ---
+  const agentIcons = [
+    {
+      id: "agent-sessions",
+      icon: Broadcast,
+      label: t("right_sidebar.icon_agent_sessions", "Agent-Sessions"),
+      action: () => toggleSidebar("agent-sessions"),
+      badge: activeRunCount,
+    },
+    {
+      id: "agent-settings",
+      icon: Robot,
+      label: t("right_sidebar.icon_agent_settings", "Agent-Einstellungen"),
+      action: () => toggleSidebar("agent-settings"),
+      badge: 0,
+    },
+    {
+      id: "workspace-settings",
+      icon: Gear,
+      label: t(
+        "right_sidebar.icon_workspace_settings",
+        "Workspace-Einstellungen",
+      ),
+      action: () => toggleSidebar("workspace-settings"),
+      badge: 0,
+    },
+  ];
+
+  // --- Render helper (shared by both sections) ---
+  function renderIcon({ id, icon: Icon, label, action, badge = 0 }: any) {
+    const isActive = activeSidebar === id;
+    return (
+      <div
+        key={id}
+        className="relative flex flex-col items-center"
+        data-tooltip-id={`rsib-${id}`}
+        data-tooltip-content={label}
+      >
+        <button
+          type="button"
+          onClick={action}
+          aria-label={label}
+          className={`flex items-center justify-center w-8 h-8 rounded-lg border-none transition-all ${
+            isActive
+              ? "cursor-pointer bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary"
+              : "cursor-pointer text-zinc-400 light:text-slate-500 hover:bg-zinc-800 light:hover:bg-slate-100 hover:text-theme-text-primary light:hover:text-theme-text-primary"
+          }`}
+        >
+          <Icon size={18} weight={isActive ? "fill" : "regular"} />
+        </button>
+        {/* Live-Badge: Anzahl aktiver Runs */}
+        {badge > 0 && (
+          <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 rounded-full bg-[#009ee0] text-white text-[10px] font-bold flex items-center justify-center">
+            {badge}
+          </span>
+        )}
+        <Tooltip
+          id={`rsib-${id}`}
+          place="left"
+          delayShow={300}
+          className="tooltip !text-xs z-99"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="hidden md:flex flex-col items-center gap-1 py-2 px-1 bg-zinc-900 light:bg-white h-full flex-shrink-0 w-[44px] my-2 mr-2 rounded-2xl overflow-y-auto">
+      {/* Bestehende Panel-Icons */}
+      {icons.map(renderIcon)}
+
+      {/* Divider zwischen den Abschnitten */}
+      <div
+        className="w-6 h-px bg-zinc-700 light:bg-slate-200 my-1.5"
+        aria-hidden
+      />
+
+      {/* NEU: Agent-/Workspace-Abschnitt */}
+      {agentIcons.map(renderIcon)}
+    </div>
+  );
+}

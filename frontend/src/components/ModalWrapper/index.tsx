@@ -1,1 +1,126 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyB1c2VFZmZlY3QsIHVzZVJlZiB9IGZyb20gInJlYWN0IjsKaW1wb3J0IHsgY3JlYXRlUG9ydGFsIH0gZnJvbSAicmVhY3QtZG9tIjsKLyoqCiAqIEB0eXBlZGVmIHtPYmplY3R9IE1vZGFsV3JhcHBlclByb3BzCiAqIEBwcm9wZXJ0eSB7aW1wb3J0KCJyZWFjdCIpLlJlYWN0Q29tcG9uZW50RWxlbWVudH0gY2hpbGRyZW4gLSBUaGUgRE9NL0pTWCB0byByZW5kZXIKICogQHByb3BlcnR5IHtib29sZWFufSBpc09wZW4gLSBPcHRpb24gdGhhdCByZW5kZXJzIHRoZSBtb2RhbAogKiBAcHJvcGVydHkge2Jvb2xlYW59IG5vUG9ydGFsIC0gKGRlZmF1bHQ6IGZhbHNlKSBVc2VkIGZvciBjcmVhdGluZyBzdWItRE9NIG1vZGFscyB0aGF0IG5lZWQgdG8gYmUgcmVuZGVyZWQgYXMgYSBjaGlsZCBlbGVtZW50IGluc3RlYWQgb2YgYSBtb2RhbCBwbGFjZWQgYXQgdGhlIHJvb3QKICogTm90ZTogVGhpcyBjYW4gaW1wYWN0IHRoZSBiZy1vdmVybGF5IHByZXNlbnRhdGlvbiBkdWUgdG8gY29uZmxpY3RpbmcgRE9NIHBvc2l0aW9ucyBzbyBpZiB1c2luZyB0aGlzIHByb3BlcnR5IHlvdSBzaG91bGQKICAgIGRvdWJsZSBjaGVjayBpdCByZW5kZXJzIGFzIGRlc2lyZWQuCiAqIEBwcm9wZXJ0eSB7RnVuY3Rpb259IFtjbG9zZU1vZGFsXSAtIE9wdGlvbmFsIGNhbGxiYWNrIHRvIGNsb3NlIHRoZSBtb2RhbC4gV2hlbiBwcm92aWRlZCwgRXNjYXBlIGtleSBhbmQgYmFja2Ryb3AgY2xpY2sgd2lsbCBkaXNtaXNzIHRoZSBtb2RhbC4KICovCgpjb25zdCBGT0NVU0FCTEVfU0VMRUNUT1IgPSBbCiAgImJ1dHRvbjpub3QoW2Rpc2FibGVkXSkiLAogICJbaHJlZl0iLAogICJpbnB1dDpub3QoW2Rpc2FibGVkXSkiLAogICJzZWxlY3Q6bm90KFtkaXNhYmxlZF0pIiwKICAidGV4dGFyZWE6bm90KFtkaXNhYmxlZF0pIiwKICAnW3RhYmluZGV4XTpub3QoW3RhYmluZGV4PSItMSJdKScsCl0uam9pbigiLCIpOwoKLyoqCiAqCiAqIEBwYXJhbSB7TW9kYWxXcmFwcGVyUHJvcHN9IHByb3BzIC0gTW9kYWxXcmFwcGVyUHJvcHMgdG8gcGFzcwogKiBAcmV0dXJucyB7aW1wb3J0KCJyZWFjdCIpLlJlYWN0Tm9kZX0KICovCmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIE1vZGFsV3JhcHBlcih7CiAgY2hpbGRyZW4sCiAgaXNPcGVuLAogIG5vUG9ydGFsID0gZmFsc2UsCiAgY2xvc2VNb2RhbCwKICBhcmlhTGFiZWwsCn06IGFueSkgewogIGNvbnN0IGRpYWxvZ1JlZiA9IHVzZVJlZjxIVE1MRGl2RWxlbWVudCB8IG51bGw+KG51bGwpOwogIGNvbnN0IHByZXZpb3VzQWN0aXZlRWxlbWVudCA9IHVzZVJlZjxIVE1MRWxlbWVudCB8IG51bGw+KG51bGwpOwoKICB1c2VFZmZlY3QoKCkgPT4gewogICAgaWYgKCFpc09wZW4pIHJldHVybjsKCiAgICBwcmV2aW91c0FjdGl2ZUVsZW1lbnQuY3VycmVudCA9CiAgICAgIChkb2N1bWVudC5hY3RpdmVFbGVtZW50IGFzIEhUTUxFbGVtZW50KSA/PyBudWxsOwoKICAgIGNvbnN0IHByZXZPdmVyZmxvdyA9IGRvY3VtZW50LmJvZHkuc3R5bGUub3ZlcmZsb3c7CiAgICBkb2N1bWVudC5ib2R5LnN0eWxlLm92ZXJmbG93ID0gImhpZGRlbiI7CgogICAgY29uc3QgZGlhbG9nID0gZGlhbG9nUmVmLmN1cnJlbnQ7CiAgICBjb25zdCBmb2N1c0ZpcnN0ID0gKCkgPT4gewogICAgICBpZiAoIWRpYWxvZykgcmV0dXJuOwogICAgICBjb25zdCBmaXJzdCA9IGRpYWxvZy5xdWVyeVNlbGVjdG9yPEhUTUxFbGVtZW50PihGT0NVU0FCTEVfU0VMRUNUT1IpOwogICAgICBpZiAoZmlyc3QpIGZpcnN0LmZvY3VzKCk7CiAgICAgIGVsc2UgaWYgKGRpYWxvZykgZGlhbG9nLmZvY3VzKCk7CiAgICB9OwogICAgY29uc3QgZm9jdXNUaW1lciA9IHdpbmRvdy5zZXRUaW1lb3V0KGZvY3VzRmlyc3QsIDApOwoKICAgIGNvbnN0IGhhbmRsZUtleURvd24gPSAoZTogS2V5Ym9hcmRFdmVudCkgPT4gewogICAgICBpZiAoZS5rZXkgPT09ICJFc2NhcGUiKSB7CiAgICAgICAgaWYgKGNsb3NlTW9kYWwpIHsKICAgICAgICAgIGUuc3RvcFByb3BhZ2F0aW9uKCk7CiAgICAgICAgICBjbG9zZU1vZGFsKCk7CiAgICAgICAgfQogICAgICAgIHJldHVybjsKICAgICAgfQogICAgICBpZiAoZS5rZXkgIT09ICJUYWIiIHx8ICFkaWFsb2cpIHJldHVybjsKICAgICAgY29uc3QgZm9jdXNhYmxlcyA9IEFycmF5LmZyb20oCiAgICAgICAgZGlhbG9nLnF1ZXJ5U2VsZWN0b3JBbGw8SFRNTEVsZW1lbnQ+KEZPQ1VTQUJMRV9TRUxFQ1RPUiksCiAgICAgICkuZmlsdGVyKChlbCkgPT4gIWVsLmhhc0F0dHJpYnV0ZSgiYXJpYS1oaWRkZW4iKSk7CiAgICAgIGlmIChmb2N1c2FibGVzLmxlbmd0aCA9PT0gMCkgewogICAgICAgIGUucHJldmVudERlZmF1bHQoKTsKICAgICAgICBkaWFsb2cuZm9jdXMoKTsKICAgICAgICByZXR1cm47CiAgICAgIH0KICAgICAgY29uc3QgZmlyc3QgPSBmb2N1c2FibGVzWzBdOwogICAgICBjb25zdCBsYXN0ID0gZm9jdXNhYmxlc1tmb2N1c2FibGVzLmxlbmd0aCAtIDFdOwogICAgICBjb25zdCBhY3RpdmUgPSBkb2N1bWVudC5hY3RpdmVFbGVtZW50IGFzIEhUTUxFbGVtZW50IHwgbnVsbDsKICAgICAgaWYgKGUuc2hpZnRLZXkgJiYgKGFjdGl2ZSA9PT0gZmlyc3QgfHwgIWRpYWxvZy5jb250YWlucyhhY3RpdmUpKSkgewogICAgICAgIGUucHJldmVudERlZmF1bHQoKTsKICAgICAgICBsYXN0LmZvY3VzKCk7CiAgICAgIH0gZWxzZSBpZiAoIWUuc2hpZnRLZXkgJiYgYWN0aXZlID09PSBsYXN0KSB7CiAgICAgICAgZS5wcmV2ZW50RGVmYXVsdCgpOwogICAgICAgIGZpcnN0LmZvY3VzKCk7CiAgICAgIH0KICAgIH07CiAgICBkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCJrZXlkb3duIiwgaGFuZGxlS2V5RG93biwgdHJ1ZSk7CgogICAgcmV0dXJuICgpID0+IHsKICAgICAgd2luZG93LmNsZWFyVGltZW91dChmb2N1c1RpbWVyKTsKICAgICAgZG9jdW1lbnQucmVtb3ZlRXZlbnRMaXN0ZW5lcigia2V5ZG93biIsIGhhbmRsZUtleURvd24sIHRydWUpOwogICAgICBkb2N1bWVudC5ib2R5LnN0eWxlLm92ZXJmbG93ID0gcHJldk92ZXJmbG93OwogICAgICBjb25zdCBwcmV2aW91c2x5ID0gcHJldmlvdXNBY3RpdmVFbGVtZW50LmN1cnJlbnQ7CiAgICAgIGlmICgKICAgICAgICBwcmV2aW91c2x5ICYmCiAgICAgICAgdHlwZW9mIHByZXZpb3VzbHkuZm9jdXMgPT09ICJmdW5jdGlvbiIgJiYKICAgICAgICBkb2N1bWVudC5jb250YWlucyhwcmV2aW91c2x5KQogICAgICApIHsKICAgICAgICBwcmV2aW91c2x5LmZvY3VzKCk7CiAgICAgIH0KICAgIH07CiAgfSwgW2lzT3BlbiwgY2xvc2VNb2RhbF0pOwoKICBpZiAoIWlzT3BlbikgcmV0dXJuIG51bGw7CgogIGNvbnN0IG1vZGFsQ29udGVudCA9IGNsb3NlTW9kYWwgPyAoCiAgICA8ZGl2IG9uQ2xpY2s9eyhlOiBhbnkpID0+IGUuc3RvcFByb3BhZ2F0aW9uKCl9PntjaGlsZHJlbn08L2Rpdj4KICApIDogKAogICAgY2hpbGRyZW4KICApOwoKICBjb25zdCBtb2RhbCA9ICgKICAgIDxkaXYKICAgICAgcmVmPXtkaWFsb2dSZWZ9CiAgICAgIGNsYXNzTmFtZT0iYmctYmxhY2svNjAgYmFja2Ryb3AtYmx1ci1zbSBmaXhlZCB0b3AtMCBsZWZ0LTAgb3V0bGluZS1ub25lIHctc2NyZWVuIGgtc2NyZWVuIGZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIHotWzk5XSIKICAgICAgb25DbGljaz17Y2xvc2VNb2RhbCA/IGNsb3NlTW9kYWwgOiB1bmRlZmluZWR9CiAgICAgIHJvbGU9ImRpYWxvZyIKICAgICAgYXJpYS1tb2RhbD0idHJ1ZSIKICAgICAgYXJpYS1sYWJlbD17YXJpYUxhYmVsIHx8IHVuZGVmaW5lZH0KICAgICAgdGFiSW5kZXg9ey0xfQogICAgPgogICAgICB7bW9kYWxDb250ZW50fQogICAgPC9kaXY+CiAgKTsKCiAgaWYgKG5vUG9ydGFsKSByZXR1cm4gbW9kYWw7CgogIHJldHVybiBjcmVhdGVQb3J0YWwobW9kYWwsIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJyb290IikpOwp9Cg==
+// SPDX-License-Identifier: MIT
+import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
+/**
+ * @typedef {Object} ModalWrapperProps
+ * @property {import("react").ReactComponentElement} children - The DOM/JSX to render
+ * @property {boolean} isOpen - Option that renders the modal
+ * @property {boolean} noPortal - (default: false) Used for creating sub-DOM modals that need to be rendered as a child element instead of a modal placed at the root
+ * Note: This can impact the bg-overlay presentation due to conflicting DOM positions so if using this property you should
+    double check it renders as desired.
+ * @property {Function} [closeModal] - Optional callback to close the modal. When provided, Escape key and backdrop click will dismiss the modal.
+ */
+
+const FOCUSABLE_SELECTOR = [
+  "button:not([disabled])",
+  "[href]",
+  "input:not([disabled])",
+  "select:not([disabled])",
+  "textarea:not([disabled])",
+  '[tabindex]:not([tabindex="-1"])',
+].join(",");
+
+/**
+ *
+ * @param {ModalWrapperProps} props - ModalWrapperProps to pass
+ * @returns {import("react").ReactNode}
+ */
+export default function ModalWrapper({
+  children,
+  isOpen,
+  noPortal = false,
+  closeModal,
+  ariaLabel,
+}: any) {
+  const dialogRef = useRef<HTMLDivElement | null>(null);
+  const previousActiveElement = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    previousActiveElement.current =
+      (document.activeElement as HTMLElement) ?? null;
+
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const dialog = dialogRef.current;
+    const focusFirst = () => {
+      if (!dialog) return;
+      const first = dialog.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+      if (first) first.focus();
+      else if (dialog) dialog.focus();
+    };
+    const focusTimer = window.setTimeout(focusFirst, 0);
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (closeModal) {
+          e.stopPropagation();
+          closeModal();
+        }
+        return;
+      }
+      if (e.key !== "Tab" || !dialog) return;
+      const focusables = Array.from(
+        dialog.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+      ).filter((el) => !el.hasAttribute("aria-hidden"));
+      if (focusables.length === 0) {
+        e.preventDefault();
+        dialog.focus();
+        return;
+      }
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+      if (e.shiftKey && (active === first || !dialog.contains(active))) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown, true);
+
+    return () => {
+      window.clearTimeout(focusTimer);
+      document.removeEventListener("keydown", handleKeyDown, true);
+      document.body.style.overflow = prevOverflow;
+      const previously = previousActiveElement.current;
+      if (
+        previously &&
+        typeof previously.focus === "function" &&
+        document.contains(previously)
+      ) {
+        previously.focus();
+      }
+    };
+  }, [isOpen, closeModal]);
+
+  if (!isOpen) return null;
+
+  const modalContent = closeModal ? (
+    <div onClick={(e: any) => e.stopPropagation()}>{children}</div>
+  ) : (
+    children
+  );
+
+  const modal = (
+    <div
+      ref={dialogRef}
+      className="bg-black/60 backdrop-blur-sm fixed top-0 left-0 outline-none w-screen h-screen flex items-center justify-center z-99"
+      onClick={closeModal ? closeModal : undefined}
+      role="dialog"
+      aria-modal="true"
+      aria-label={ariaLabel || undefined}
+      tabIndex={-1}
+    >
+      {modalContent}
+    </div>
+  );
+
+  if (noPortal) return modal;
+
+  return createPortal(modal, document.getElementById("root"));
+}

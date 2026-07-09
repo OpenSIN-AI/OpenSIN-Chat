@@ -1,1 +1,303 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyB1c2VTdGF0ZSB9IGZyb20gInJlYWN0IjsKaW1wb3J0IHsgSW5mbyB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9JbmZvIjsKaW1wb3J0IHsgQ2FyZXREb3duIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL0NhcmV0RG93biI7CmltcG9ydCB7IENhcmV0VXAgfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvQ2FyZXRVcCI7CmltcG9ydCB7IENpcmNsZU5vdGNoIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL0NpcmNsZU5vdGNoIjsKaW1wb3J0IHsgV2FybmluZyB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9XYXJuaW5nIjsKaW1wb3J0IHsgdXNlVHJhbnNsYXRpb24gfSBmcm9tICJyZWFjdC1pMThuZXh0IjsKaW1wb3J0IHBhdGhzIGZyb20gIkAvdXRpbHMvcGF0aHMiOwppbXBvcnQgeyBMTVNUVURJT19DT01NT05fVVJMUyB9IGZyb20gIkAvdXRpbHMvY29uc3RhbnRzIjsKaW1wb3J0IHVzZVByb3ZpZGVyRW5kcG9pbnRBdXRvRGlzY292ZXJ5IGZyb20gIkAvaG9va3MvdXNlUHJvdmlkZXJFbmRwb2ludEF1dG9EaXNjb3ZlcnkiOwppbXBvcnQgeyBUb29sdGlwIH0gZnJvbSAicmVhY3QtdG9vbHRpcCI7CmltcG9ydCB1c2VQcm92aWRlck1vZGVscyBmcm9tICJAL2hvb2tzL3VzZVByb3ZpZGVyTW9kZWxzIjsKCmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIExNU3R1ZGlvT3B0aW9ucyh7IHNldHRpbmdzLCBzaG93QWxlcnQgPSBmYWxzZSB9OiBhbnkpIHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgY29uc3QgewogICAgYXV0b0RldGVjdGluZzogbG9hZGluZywKICAgIGJhc2VQYXRoLAogICAgYmFzZVBhdGhWYWx1ZSwKICAgIGF1dGhUb2tlbiwKICAgIGF1dGhUb2tlblZhbHVlLAogICAgc2hvd0FkdmFuY2VkQ29udHJvbHMsCiAgICBzZXRTaG93QWR2YW5jZWRDb250cm9scywKICAgIGhhbmRsZUF1dG9EZXRlY3RDbGljaywKICB9ID0gdXNlUHJvdmlkZXJFbmRwb2ludEF1dG9EaXNjb3ZlcnkoewogICAgcHJvdmlkZXI6ICJsbXN0dWRpbyIsCiAgICBpbml0aWFsQmFzZVBhdGg6IHNldHRpbmdzPy5MTVN0dWRpb0Jhc2VQYXRoLAogICAgRU5EUE9JTlRTOiBMTVNUVURJT19DT01NT05fVVJMUywKICB9KTsKCiAgY29uc3QgW21heFRva2Vucywgc2V0TWF4VG9rZW5zXSA9IHVzZVN0YXRlKAogICAgc2V0dGluZ3M/LkxNU3R1ZGlvVG9rZW5MaW1pdCB8fCAiIiwKICApOwoKICBjb25zdCBoYW5kbGVNYXhUb2tlbnNDaGFuZ2U6IGFueSA9IChlKSA9PiB7CiAgICBzZXRNYXhUb2tlbnMoCiAgICAgIChlLnRhcmdldCBhcyB1bmtub3duIGFzIGFueSk/LnZhbHVlCiAgICAgICAgPyBOdW1iZXIoKGUudGFyZ2V0IGFzIHVua25vd24gYXMgYW55KT8udmFsdWUpCiAgICAgICAgOiAiIiwKICAgICk7CiAgfTsKCiAgcmV0dXJuICgKICAgIDxkaXYgY2xhc3NOYW1lPSJ3LWZ1bGwgZmxleCBmbGV4LWNvbCBnYXAteS03Ij4KICAgICAge3Nob3dBbGVydCAmJiAoCiAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgbWQ6ZmxleC1yb3cgbWQ6aXRlbXMtY2VudGVyIGdhcC14LTIgdGV4dC13aGl0ZSBtYi02IGJnLWJsdWUtODAwLzMwIHctZml0IHJvdW5kZWQtbGcgcHgtNCBweS0yIj4KICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJnYXAteC0yIGZsZXggaXRlbXMtY2VudGVyIj4KICAgICAgICAgICAgPEluZm8gc2l6ZT17MTJ9IGNsYXNzTmFtZT0iaGlkZGVuIG1kOnZpc2libGUiIC8+CiAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC1zbSBtZDp0ZXh0LWJhc2UiPgogICAgICAgICAgICAgIHt0KCJsbVN0dWRpby5lbWJlZGRpbmdBbGVydCIpfQogICAgICAgICAgICA8L3A+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDxhCiAgICAgICAgICAgIGhyZWY9e3BhdGhzLnNldHRpbmdzLmVtYmVkZGVyLm1vZGVsUHJlZmVyZW5jZSgpfQogICAgICAgICAgICBjbGFzc05hbWU9InRleHQtc20gbWQ6dGV4dC1iYXNlIG15LTIgdW5kZXJsaW5lIgogICAgICAgICAgPgogICAgICAgICAgICB7dCgibG1TdHVkaW8ubWFuYWdlRW1iZWRkaW5nIil9CiAgICAgICAgICA8L2E+CiAgICAgICAgPC9kaXY+CiAgICAgICl9CiAgICAgIDxkaXYgY2xhc3NOYW1lPSJ3LWZ1bGwgZmxleCBpdGVtcy1zdGFydCBnYXAtWzM2cHhdIG10LTEuNSI+CiAgICAgICAgPExNU3R1ZGlvTW9kZWxTZWxlY3Rpb24KICAgICAgICAgIHNldHRpbmdzPXtzZXR0aW5nc30KICAgICAgICAgIGJhc2VQYXRoPXtiYXNlUGF0aC52YWx1ZX0KICAgICAgICAgIGFwaUtleT17YXV0aFRva2VuVmFsdWUudmFsdWV9CiAgICAgICAgLz4KICAgICAgPC9kaXY+CiAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGp1c3RpZnktc3RhcnQgbXQtNCI+CiAgICAgICAgPGJ1dHRvbgogICAgICAgICAgdHlwZT0iYnV0dG9uIgogICAgICAgICAgb25DbGljaz17KGUpID0+IHsKICAgICAgICAgICAgZS5wcmV2ZW50RGVmYXVsdCgpOwogICAgICAgICAgICBzZXRTaG93QWR2YW5jZWRDb250cm9scyghc2hvd0FkdmFuY2VkQ29udHJvbHMpOwogICAgICAgICAgfX0KICAgICAgICAgIGNsYXNzTmFtZT0iYm9yZGVyLW5vbmUgdGV4dC10aGVtZS10ZXh0LXByaW1hcnkgaG92ZXI6dGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSBmbGV4IGl0ZW1zLWNlbnRlciB0ZXh0LXNtIgogICAgICAgID4KICAgICAgICAgIHtzaG93QWR2YW5jZWRDb250cm9scwogICAgICAgICAgICA/IHQoImxtU3R1ZGlvLmhpZGVBZHZhbmNlZCIpCiAgICAgICAgICAgIDogdCgibG1TdHVkaW8uc2hvd0FkdmFuY2VkIil9eyIgIn0KICAgICAgICAgIHt0KCJsbVN0dWRpby5hZHZhbmNlZFNldHRpbmdzIil9CiAgICAgICAgICB7c2hvd0FkdmFuY2VkQ29udHJvbHMgPyAoCiAgICAgICAgICAgIDxDYXJldFVwIHNpemU9ezE0fSBjbGFzc05hbWU9Im1sLTEiIC8+CiAgICAgICAgICApIDogKAogICAgICAgICAgICA8Q2FyZXREb3duIHNpemU9ezE0fSBjbGFzc05hbWU9Im1sLTEiIC8+CiAgICAgICAgICApfQogICAgICAgIDwvYnV0dG9uPgogICAgICA8L2Rpdj4KCiAgICAgIDxkaXYgaGlkZGVuPXshc2hvd0FkdmFuY2VkQ29udHJvbHN9PgogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJ3LWZ1bGwgZmxleCBpdGVtcy1zdGFydCBnYXAtNCI+CiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCB3LVszMDBweF0iPgogICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBqdXN0aWZ5LWJldHdlZW4gaXRlbXMtY2VudGVyIG1iLTIiPgogICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMSI+CiAgICAgICAgICAgICAgICA8bGFiZWwgY2xhc3NOYW1lPSJ0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSB0ZXh0LXNtIGZvbnQtc2VtaWJvbGQiPgogICAgICAgICAgICAgICAgICB7dCgibG1TdHVkaW8uYmFzZVVybExhYmVsIil9CiAgICAgICAgICAgICAgICA8L2xhYmVsPgogICAgICAgICAgICAgICAgPEluZm8KICAgICAgICAgICAgICAgICAgc2l6ZT17MTh9CiAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSBjdXJzb3ItcG9pbnRlciIKICAgICAgICAgICAgICAgICAgZGF0YS10b29sdGlwLWlkPSJsbXN0dWRpby1iYXNlLXVybCIKICAgICAgICAgICAgICAgICAgZGF0YS10b29sdGlwLWNvbnRlbnQ9e3QoImxtU3R1ZGlvLmJhc2VVcmxUb29sdGlwIil9CiAgICAgICAgICAgICAgICAvPgogICAgICAgICAgICAgICAgPFRvb2x0aXAKICAgICAgICAgICAgICAgICAgaWQ9Imxtc3R1ZGlvLWJhc2UtdXJsIgogICAgICAgICAgICAgICAgICBwbGFjZT0idG9wIgogICAgICAgICAgICAgICAgICBkZWxheVNob3c9ezMwMH0KICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJ0b29sdGlwICF0ZXh0LXhzICFvcGFjaXR5LTEwMCAhbWF4LXctWzI1MHB4XSAhd2hpdGVzcGFjZS1ub3JtYWwgIWJyZWFrLXdvcmRzIgogICAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICB7bG9hZGluZyA/ICgKICAgICAgICAgICAgICAgIDxDaXJjbGVOb3RjaAogICAgICAgICAgICAgICAgICBzaXplPXsxNn0KICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJ0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5IGFuaW1hdGUtc3BpbiIKICAgICAgICAgICAgICAgIC8+CiAgICAgICAgICAgICAgKSA6ICgKICAgICAgICAgICAgICAgIDw+CiAgICAgICAgICAgICAgICAgIHshYmFzZVBhdGhWYWx1ZS52YWx1ZSAmJiAoCiAgICAgICAgICAgICAgICAgICAgPGJ1dHRvbgogICAgICAgICAgICAgICAgICAgICAgdHlwZT0iYnV0dG9uIgogICAgICAgICAgICAgICAgICAgICAgb25DbGljaz17aGFuZGxlQXV0b0RldGVjdENsaWNrfQogICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJib3JkZXItbm9uZSBiZy1wcmltYXJ5LWJ1dHRvbiB0ZXh0LXhzIGZvbnQtbWVkaXVtIHB4LTIgcHktMSByb3VuZGVkLWxnIGhvdmVyOmJnLXNlY29uZGFyeSBob3Zlcjp0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBsaWdodDpob3Zlcjp0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBzaGFkb3ctWzBfNHB4XzE0cHhfcmdiYSgwLDAsMCwwLjI1KV0iCiAgICAgICAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgICAgICAge3QoImxtU3R1ZGlvLmF1dG9EZXRlY3QiKX0KICAgICAgICAgICAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICAgICAgICAgICAgKX0KICAgICAgICAgICAgICAgIDwvPgogICAgICAgICAgICAgICl9CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICA8aW5wdXQKICAgICAgICAgICAgICB0eXBlPSJ1cmwiCiAgICAgICAgICAgICAgbmFtZT0iTE1TdHVkaW9CYXNlUGF0aCIKICAgICAgICAgICAgICBjbGFzc05hbWU9ImJvcmRlci1ub25lIGJnLXRoZW1lLXNldHRpbmdzLWlucHV0LWJnIHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IHBsYWNlaG9sZGVyOnRleHQtdGhlbWUtc2V0dGluZ3MtaW5wdXQtcGxhY2Vob2xkZXIgdGV4dC1zbSByb3VuZGVkLWxnIGZvY3VzOm91dGxpbmUtcHJpbWFyeS1idXR0b24gYWN0aXZlOm91dGxpbmUtcHJpbWFyeS1idXR0b24gb3V0bGluZS1ub25lIGJsb2NrIHctZnVsbCBwLTIuNSIKICAgICAgICAgICAgICBwbGFjZWhvbGRlcj17dCgibG1TdHVkaW8uYmFzZVVybFBsYWNlaG9sZGVyIil9CiAgICAgICAgICAgICAgdmFsdWU9e2Jhc2VQYXRoVmFsdWUudmFsdWV9CiAgICAgICAgICAgICAgcmVxdWlyZWQ9e3RydWV9CiAgICAgICAgICAgICAgYXV0b0NvbXBsZXRlPSJvZmYiCiAgICAgICAgICAgICAgc3BlbGxDaGVjaz17ZmFsc2V9CiAgICAgICAgICAgICAgb25DaGFuZ2U9e2Jhc2VQYXRoLm9uQ2hhbmdlfQogICAgICAgICAgICAgIG9uQmx1cj17YmFzZVBhdGgub25CbHVyfQogICAgICAgICAgICAvPgogICAgICAgICAgPC9kaXY+CiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBmbGV4LWNvbCB3LTYwIj4KICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIG1iLTIgZ2FwLXgtMSI+CiAgICAgICAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXByaW1hcnkgdGV4dC1zbSBmb250LXNlbWlib2xkIj4KICAgICAgICAgICAgICAgIHt0KCJsbVN0dWRpby5jb250ZXh0V2luZG93TGFiZWwiKX0KICAgICAgICAgICAgICA8L2xhYmVsPgogICAgICAgICAgICAgIDxJbmZvCiAgICAgICAgICAgICAgICBzaXplPXsxOH0KICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSBjdXJzb3ItcG9pbnRlciIKICAgICAgICAgICAgICAgIGRhdGEtdG9vbHRpcC1pZD0ibG1zdHVkaW8tbWF4LXRva2VucyIKICAgICAgICAgICAgICAgIGRhdGEtdG9vbHRpcC1jb250ZW50PXt0KCJsbVN0dWRpby5jb250ZXh0V2luZG93VG9vbHRpcCIpfQogICAgICAgICAgICAgIC8+CiAgICAgICAgICAgICAgPFRvb2x0aXAKICAgICAgICAgICAgICAgIGlkPSJsbXN0dWRpby1tYXgtdG9rZW5zIgogICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJ0b29sdGlwICF0ZXh0LXhzICFvcGFjaXR5LTEwMCAhbWF4LXctWzI1MHB4XSAhd2hpdGVzcGFjZS1ub3JtYWwgIWJyZWFrLXdvcmRzIgogICAgICAgICAgICAgIC8+CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICA8aW5wdXQKICAgICAgICAgICAgICB0eXBlPSJudW1iZXIiCiAgICAgICAgICAgICAgbmFtZT0iTE1TdHVkaW9Ub2tlbkxpbWl0IgogICAgICAgICAgICAgIGNsYXNzTmFtZT0iYm9yZGVyLW5vbmUgYmctdGhlbWUtc2V0dGluZ3MtaW5wdXQtYmcgdGV4dC10aGVtZS10ZXh0LXByaW1hcnkgcGxhY2Vob2xkZXI6dGV4dC10aGVtZS1zZXR0aW5ncy1pbnB1dC1wbGFjZWhvbGRlciB0ZXh0LXNtIHJvdW5kZWQtbGcgZm9jdXM6b3V0bGluZS1wcmltYXJ5LWJ1dHRvbiBhY3RpdmU6b3V0bGluZS1wcmltYXJ5LWJ1dHRvbiBvdXRsaW5lLW5vbmUgYmxvY2sgdy1mdWxsIHAtMi41IgogICAgICAgICAgICAgIHBsYWNlaG9sZGVyPXt0KCJsbVN0dWRpby5jb250ZXh0V2luZG93UGxhY2Vob2xkZXIiKX0KICAgICAgICAgICAgICBtaW49ezF9CiAgICAgICAgICAgICAgdmFsdWU9e21heFRva2Vuc30KICAgICAgICAgICAgICBvbkNoYW5nZT17aGFuZGxlTWF4VG9rZW5zQ2hhbmdlfQogICAgICAgICAgICAgIG9uU2Nyb2xsPXsoZSkgPT4gKGUudGFyZ2V0IGFzIEhUTUxFbGVtZW50KS5ibHVyKCl9CiAgICAgICAgICAgICAgcmVxdWlyZWQ9e2ZhbHNlfQogICAgICAgICAgICAgIGF1dG9Db21wbGV0ZT0ib2ZmIgogICAgICAgICAgICAvPgogICAgICAgICAgPC9kaXY+CiAgICAgICAgPC9kaXY+CgogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLXN0YXJ0IGdhcC00IG10LTQiPgogICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgdy02MCI+CiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBtYi0yIGdhcC14LTEiPgogICAgICAgICAgICAgIDxsYWJlbCBjbGFzc05hbWU9InRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IHRleHQtc20gZm9udC1zZW1pYm9sZCI+CiAgICAgICAgICAgICAgICB7dCgibG1TdHVkaW8uYXV0aFRva2VuTGFiZWwiKX0KICAgICAgICAgICAgICA8L2xhYmVsPgogICAgICAgICAgICAgIDxJbmZvCiAgICAgICAgICAgICAgICBzaXplPXsxOH0KICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSBjdXJzb3ItcG9pbnRlciIKICAgICAgICAgICAgICAgIGRhdGEtdG9vbHRpcC1pZD0ibG1zdHVkaW8tYXV0aGVudGljYXRpb24tdG9rZW4iCiAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgICA8VG9vbHRpcAogICAgICAgICAgICAgICAgaWQ9Imxtc3R1ZGlvLWF1dGhlbnRpY2F0aW9uLXRva2VuIgogICAgICAgICAgICAgICAgcGxhY2U9InRvcCIKICAgICAgICAgICAgICAgIGRlbGF5U2hvdz17MzAwfQogICAgICAgICAgICAgICAgZGVsYXlIaWRlPXs0MDB9CiAgICAgICAgICAgICAgICBjbGlja2FibGU9e3RydWV9CiAgICAgICAgICAgICAgICBjbGFzc05hbWU9InRvb2x0aXAgIXRleHQteHMgIW9wYWNpdHktMTAwICFtYXgtdy1bMjUwcHhdICF3aGl0ZXNwYWNlLW5vcm1hbCAhYnJlYWstd29yZHMiCiAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXhzIGxlYWRpbmctWzE4cHhdIGZvbnQtYmFzZSI+CiAgICAgICAgICAgICAgICAgIHt0KCJsbVN0dWRpby5hdXRoVG9rZW5Ub29sdGlwUGFydDEiKX17IiAifQogICAgICAgICAgICAgICAgICA8Y29kZT57dCgibG1TdHVkaW8uYXV0aFRva2VuVG9vbHRpcEJlYXJlciIpfTwvY29kZT57IiAifQogICAgICAgICAgICAgICAgICB7dCgibG1TdHVkaW8uYXV0aFRva2VuVG9vbHRpcFBhcnQyIil9CiAgICAgICAgICAgICAgICAgIDxiciAvPiA8YnIgLz4KICAgICAgICAgICAgICAgICAge3QoImxtU3R1ZGlvLmF1dGhUb2tlblRvb2x0aXBQYXJ0MyIpfQogICAgICAgICAgICAgICAgPC9wPgogICAgICAgICAgICAgIDwvVG9vbHRpcD4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgIDxpbnB1dAogICAgICAgICAgICAgIHR5cGU9InBhc3N3b3JkIgogICAgICAgICAgICAgIG5hbWU9IkxNU3R1ZGlvQXV0aFRva2VuIgogICAgICAgICAgICAgIGNsYXNzTmFtZT0iYm9yZGVyLW5vbmUgYmctdGhlbWUtc2V0dGluZ3MtaW5wdXQtYmcgdGV4dC10aGVtZS10ZXh0LXByaW1hcnkgcGxhY2Vob2xkZXI6dGV4dC10aGVtZS1zZXR0aW5ncy1pbnB1dC1wbGFjZWhvbGRlciB0ZXh0LXNtIHJvdW5kZWQtbGcgb3V0bGluZS1ub25lIGJsb2NrIHctZnVsbCBwLTIuNSBmb2N1czpvdXRsaW5lLXByaW1hcnktYnV0dG9uIGFjdGl2ZTpvdXRsaW5lLXByaW1hcnktYnV0dG9uIgogICAgICAgICAgICAgIHBsYWNlaG9sZGVyPXt0KCJsbVN0dWRpby5hdXRoVG9rZW5QbGFjZWhvbGRlciIpfQogICAgICAgICAgICAgIGRlZmF1bHRWYWx1ZT17c2V0dGluZ3M/LkxNU3R1ZGlvQXV0aFRva2VuID8gIioiLnJlcGVhdCgyMCkgOiAiIn0KICAgICAgICAgICAgICB2YWx1ZT17YXV0aFRva2VuVmFsdWUudmFsdWV9CiAgICAgICAgICAgICAgb25DaGFuZ2U9e2F1dGhUb2tlbi5vbkNoYW5nZX0KICAgICAgICAgICAgICBvbkJsdXI9e2F1dGhUb2tlbi5vbkJsdXJ9CiAgICAgICAgICAgICAgcmVxdWlyZWQ9e2ZhbHNlfQogICAgICAgICAgICAgIGF1dG9Db21wbGV0ZT0ib2ZmIgogICAgICAgICAgICAgIHNwZWxsQ2hlY2s9e2ZhbHNlfQogICAgICAgICAgICAvPgogICAgICAgICAgPC9kaXY+CiAgICAgICAgPC9kaXY+CiAgICAgIDwvZGl2PgogICAgPC9kaXY+CiAgKTsKfQoKZnVuY3Rpb24gTE1TdHVkaW9Nb2RlbFNlbGVjdGlvbih7CiAgc2V0dGluZ3MsCiAgYmFzZVBhdGggPSBudWxsLAogIGFwaUtleSA9IG51bGwsCn06IGFueSkgewogIGNvbnN0IHsgdCB9ID0gdXNlVHJhbnNsYXRpb24oKTsKICBjb25zdCB7IGN1c3RvbU1vZGVscywgaXNMb2FkaW5nIH0gPSB1c2VQcm92aWRlck1vZGVscygKICAgICJsbXN0dWRpbyIsCiAgICBhcGlLZXksCiAgICBiYXNlUGF0aCwKICApOwogIGlmIChpc0xvYWRpbmcgfHwgY3VzdG9tTW9kZWxzLmxlbmd0aCA9PT0gMCkgewogICAgcmV0dXJuICgKICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgdy02MCI+CiAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIG1iLTIgZ2FwLXgtMSI+CiAgICAgICAgICA8bGFiZWwgY2xhc3NOYW1lPSJ0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSB0ZXh0LXNtIGZvbnQtc2VtaWJvbGQiPgogICAgICAgICAgICB7dCgibG1TdHVkaW8ubW9kZWxMYWJlbCIpfQogICAgICAgICAgPC9sYWJlbD4KICAgICAgICAgIHshaXNMb2FkaW5nICYmICEhYmFzZVBhdGggJiYgKAogICAgICAgICAgICA8PgogICAgICAgICAgICAgIDxXYXJuaW5nCiAgICAgICAgICAgICAgICBzaXplPXsxOH0KICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0idGV4dC1yZWQtNDAwIGN1cnNvci1wb2ludGVyIgogICAgICAgICAgICAgICAgZGF0YS10b29sdGlwLWlkPSJsbXN0dWRpby1zZWxlY3RlZC1tb2RlbCIKICAgICAgICAgICAgICAvPgogICAgICAgICAgICAgIDxUb29sdGlwCiAgICAgICAgICAgICAgICBpZD0ibG1zdHVkaW8tc2VsZWN0ZWQtbW9kZWwiCiAgICAgICAgICAgICAgICBwbGFjZT0idG9wIgogICAgICAgICAgICAgICAgZGVsYXlTaG93PXszMDB9CiAgICAgICAgICAgICAgICBkZWxheUhpZGU9ezQwMH0KICAgICAgICAgICAgICAgIGNsaWNrYWJsZT17dHJ1ZX0KICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0idG9vbHRpcCAhdGV4dC14cyAhb3BhY2l0eS0xMDAgei1bOTldICFtYXgtdy1bMjUwcHhdICF3aGl0ZXNwYWNlLW5vcm1hbCAhYnJlYWstd29yZHMiCiAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXhzIGxlYWRpbmctWzE4cHhdIGZvbnQtYmFzZSI+CiAgICAgICAgICAgICAgICAgIHt0KCJsbVN0dWRpby5tb2RlbEVycm9yVG9vbHRpcCIpfQogICAgICAgICAgICAgICAgPC9wPgogICAgICAgICAgICAgIDwvVG9vbHRpcD4KICAgICAgICAgICAgPC8+CiAgICAgICAgICApfQogICAgICAgIDwvZGl2PgogICAgICAgIDxzZWxlY3QKICAgICAgICAgIG5hbWU9IkxNU3R1ZGlvTW9kZWxQcmVmIgogICAgICAgICAgZGlzYWJsZWQ9e3RydWV9CiAgICAgICAgICBjbGFzc05hbWU9ImJvcmRlci1ub25lIGJnLXRoZW1lLXNldHRpbmdzLWlucHV0LWJnIGJvcmRlci1ncmF5LTUwMCB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSB0ZXh0LXNtIHJvdW5kZWQtbGcgYmxvY2sgdy1mdWxsIHAtMi41IgogICAgICAgID4KICAgICAgICAgIDxvcHRpb24gZGlzYWJsZWQ9e3RydWV9IHZhbHVlPSIiPgogICAgICAgICAgICB7aXNMb2FkaW5nCiAgICAgICAgICAgICAgPyB0KCJsbVN0dWRpby5sb2FkaW5nTW9kZWxzIikKICAgICAgICAgICAgICA6ICEhYmFzZVBhdGgKICAgICAgICAgICAgICAgID8gdCgibG1TdHVkaW8ubm9Nb2RlbHNGb3VuZCIpCiAgICAgICAgICAgICAgICA6IHQoImxtU3R1ZGlvLmVudGVyVXJsRmlyc3QiKX0KICAgICAgICAgIDwvb3B0aW9uPgogICAgICAgIDwvc2VsZWN0PgogICAgICA8L2Rpdj4KICAgICk7CiAgfQoKICByZXR1cm4gKAogICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgdy02MCI+CiAgICAgIDxsYWJlbCBjbGFzc05hbWU9InRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IHRleHQtc20gZm9udC1zZW1pYm9sZCBibG9jayBtYi0yIj4KICAgICAgICB7dCgibG1TdHVkaW8ubW9kZWxMYWJlbCIpfQogICAgICA8L2xhYmVsPgogICAgICA8c2VsZWN0CiAgICAgICAgbmFtZT0iTE1TdHVkaW9Nb2RlbFByZWYiCiAgICAgICAgcmVxdWlyZWQ9e3RydWV9CiAgICAgICAgY2xhc3NOYW1lPSJib3JkZXItbm9uZSBiZy10aGVtZS1zZXR0aW5ncy1pbnB1dC1iZyBib3JkZXItZ3JheS01MDAgdGV4dC10aGVtZS10ZXh0LXByaW1hcnkgdGV4dC1zbSByb3VuZGVkLWxnIGJsb2NrIHctZnVsbCBwLTIuNSIKICAgICAgPgogICAgICAgIHtjdXN0b21Nb2RlbHMubGVuZ3RoID4gMCAmJiAoCiAgICAgICAgICA8b3B0Z3JvdXAgbGFiZWw9e3QoImxtU3R1ZGlvLnlvdXJMb2FkZWRNb2RlbHMiKX0+CiAgICAgICAgICAgIHsoY3VzdG9tTW9kZWxzIGFzIGFueSkubWFwKChtb2RlbCkgPT4gewogICAgICAgICAgICAgIHJldHVybiAoCiAgICAgICAgICAgICAgICA8b3B0aW9uIGtleT17bW9kZWwuaWR9IHZhbHVlPXttb2RlbC5pZH0+CiAgICAgICAgICAgICAgICAgIHttb2RlbC5pZH0KICAgICAgICAgICAgICAgIDwvb3B0aW9uPgogICAgICAgICAgICAgICk7CiAgICAgICAgICAgIH0pfQogICAgICAgICAgPC9vcHRncm91cD4KICAgICAgICApfQogICAgICA8L3NlbGVjdD4KICAgIDwvZGl2PgogICk7Cn0K
+// SPDX-License-Identifier: MIT
+import { useState } from "react";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
+import { CaretUp } from "@phosphor-icons/react/dist/csr/CaretUp";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
+import { useTranslation } from "react-i18next";
+import paths from "@/utils/paths";
+import { LMSTUDIO_COMMON_URLS } from "@/utils/constants";
+import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
+import { Tooltip } from "react-tooltip";
+import useProviderModels from "@/hooks/useProviderModels";
+
+export default function LMStudioOptions({ settings, showAlert = false }: any) {
+  const { t } = useTranslation();
+  const {
+    autoDetecting: loading,
+    basePath,
+    basePathValue,
+    authToken,
+    authTokenValue,
+    showAdvancedControls,
+    setShowAdvancedControls,
+    handleAutoDetectClick,
+  } = useProviderEndpointAutoDiscovery({
+    provider: "lmstudio",
+    initialBasePath: settings?.LMStudioBasePath,
+    ENDPOINTS: LMSTUDIO_COMMON_URLS,
+  });
+
+  const [maxTokens, setMaxTokens] = useState(
+    settings?.LMStudioTokenLimit || "",
+  );
+
+  const handleMaxTokensChange: any = (e) => {
+    setMaxTokens(
+      (e.target as unknown as any)?.value
+        ? Number((e.target as unknown as any)?.value)
+        : "",
+    );
+  };
+
+  return (
+    <div className="w-full flex flex-col gap-y-7">
+      {showAlert && (
+        <div className="flex flex-col md:flex-row md:items-center gap-x-2 text-white mb-6 bg-blue-800/30 w-fit rounded-lg px-4 py-2">
+          <div className="gap-x-2 flex items-center">
+            <Info size={12} className="hidden md:visible" />
+            <p className="text-sm md:text-base">
+              {t("lmStudio.embeddingAlert")}
+            </p>
+          </div>
+          <a
+            href={paths.settings.embedder.modelPreference()}
+            className="text-sm md:text-base my-2 underline"
+          >
+            {t("lmStudio.manageEmbedding")}
+          </a>
+        </div>
+      )}
+      <div className="w-full flex items-start gap-[36px] mt-1.5">
+        <LMStudioModelSelection
+          settings={settings}
+          basePath={basePath.value}
+          apiKey={authTokenValue.value}
+        />
+      </div>
+      <div className="flex justify-start mt-4">
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            setShowAdvancedControls(!showAdvancedControls);
+          }}
+          className="border-none text-theme-text-primary hover:text-theme-text-secondary flex items-center text-sm"
+        >
+          {showAdvancedControls
+            ? t("lmStudio.hideAdvanced")
+            : t("lmStudio.showAdvanced")}{" "}
+          {t("lmStudio.advancedSettings")}
+          {showAdvancedControls ? (
+            <CaretUp size={14} className="ml-1" />
+          ) : (
+            <CaretDown size={14} className="ml-1" />
+          )}
+        </button>
+      </div>
+
+      <div hidden={!showAdvancedControls}>
+        <div className="w-full flex items-start gap-4">
+          <div className="flex flex-col w-[300px]">
+            <div className="flex justify-between items-center mb-2">
+              <div className="flex items-center gap-1">
+                <label className="text-theme-text-primary text-sm font-semibold">
+                  {t("lmStudio.baseUrlLabel")}
+                </label>
+                <Info
+                  size={18}
+                  className="text-theme-text-secondary cursor-pointer"
+                  data-tooltip-id="lmstudio-base-url"
+                  data-tooltip-content={t("lmStudio.baseUrlTooltip")}
+                />
+                <Tooltip
+                  id="lmstudio-base-url"
+                  place="top"
+                  delayShow={300}
+                  className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
+                />
+              </div>
+              {loading ? (
+                <CircleNotch
+                  size={16}
+                  className="text-theme-text-secondary animate-spin"
+                />
+              ) : (
+                <>
+                  {!basePathValue.value && (
+                    <button
+                      type="button"
+                      onClick={handleAutoDetectClick}
+                      className="border-none bg-primary-button text-xs font-medium px-2 py-1 rounded-lg hover:bg-secondary hover:text-theme-text-primary light:hover:text-theme-text-primary shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
+                    >
+                      {t("lmStudio.autoDetect")}
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
+            <input
+              type="url"
+              name="LMStudioBasePath"
+              className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+              placeholder={t("lmStudio.baseUrlPlaceholder")}
+              value={basePathValue.value}
+              required={true}
+              autoComplete="off"
+              spellCheck={false}
+              onChange={basePath.onChange}
+              onBlur={basePath.onBlur}
+            />
+          </div>
+          <div className="flex flex-col w-60">
+            <div className="flex items-center mb-2 gap-x-1">
+              <label className="text-theme-text-primary text-sm font-semibold">
+                {t("lmStudio.contextWindowLabel")}
+              </label>
+              <Info
+                size={18}
+                className="text-theme-text-secondary cursor-pointer"
+                data-tooltip-id="lmstudio-max-tokens"
+                data-tooltip-content={t("lmStudio.contextWindowTooltip")}
+              />
+              <Tooltip
+                id="lmstudio-max-tokens"
+                className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
+              />
+            </div>
+            <input
+              type="number"
+              name="LMStudioTokenLimit"
+              className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+              placeholder={t("lmStudio.contextWindowPlaceholder")}
+              min={1}
+              value={maxTokens}
+              onChange={handleMaxTokensChange}
+              onScroll={(e) => (e.target as HTMLElement).blur()}
+              required={false}
+              autoComplete="off"
+            />
+          </div>
+        </div>
+
+        <div className="flex items-start gap-4 mt-4">
+          <div className="flex flex-col w-60">
+            <div className="flex items-center mb-2 gap-x-1">
+              <label className="text-theme-text-primary text-sm font-semibold">
+                {t("lmStudio.authTokenLabel")}
+              </label>
+              <Info
+                size={18}
+                className="text-theme-text-secondary cursor-pointer"
+                data-tooltip-id="lmstudio-authentication-token"
+              />
+              <Tooltip
+                id="lmstudio-authentication-token"
+                place="top"
+                delayShow={300}
+                delayHide={400}
+                clickable={true}
+                className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
+              >
+                <p className="text-xs leading-[18px] font-base">
+                  {t("lmStudio.authTokenTooltipPart1")}{" "}
+                  <code>{t("lmStudio.authTokenTooltipBearer")}</code>{" "}
+                  {t("lmStudio.authTokenTooltipPart2")}
+                  <br /> <br />
+                  {t("lmStudio.authTokenTooltipPart3")}
+                </p>
+              </Tooltip>
+            </div>
+            <input
+              type="password"
+              name="LMStudioAuthToken"
+              className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg outline-none block w-full p-2.5 focus:outline-primary-button active:outline-primary-button"
+              placeholder={t("lmStudio.authTokenPlaceholder")}
+              defaultValue={settings?.LMStudioAuthToken ? "*".repeat(20) : ""}
+              value={authTokenValue.value}
+              onChange={authToken.onChange}
+              onBlur={authToken.onBlur}
+              required={false}
+              autoComplete="off"
+              spellCheck={false}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function LMStudioModelSelection({
+  settings,
+  basePath = null,
+  apiKey = null,
+}: any) {
+  const { t } = useTranslation();
+  const { customModels, isLoading } = useProviderModels(
+    "lmstudio",
+    apiKey,
+    basePath,
+  );
+  if (isLoading || customModels.length === 0) {
+    return (
+      <div className="flex flex-col w-60">
+        <div className="flex items-center mb-2 gap-x-1">
+          <label className="text-theme-text-primary text-sm font-semibold">
+            {t("lmStudio.modelLabel")}
+          </label>
+          {!isLoading && !!basePath && (
+            <>
+              <Warning
+                size={18}
+                className="text-red-400 cursor-pointer"
+                data-tooltip-id="lmstudio-selected-model"
+              />
+              <Tooltip
+                id="lmstudio-selected-model"
+                place="top"
+                delayShow={300}
+                delayHide={400}
+                clickable={true}
+                className="tooltip !text-xs !opacity-100 z-99 !max-w-[250px] !whitespace-normal !break-words"
+              >
+                <p className="text-xs leading-[18px] font-base">
+                  {t("lmStudio.modelErrorTooltip")}
+                </p>
+              </Tooltip>
+            </>
+          )}
+        </div>
+        <select
+          name="LMStudioModelPref"
+          disabled={true}
+          className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
+        >
+          <option disabled={true} value="">
+            {isLoading
+              ? t("lmStudio.loadingModels")
+              : !!basePath
+                ? t("lmStudio.noModelsFound")
+                : t("lmStudio.enterUrlFirst")}
+          </option>
+        </select>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col w-60">
+      <label className="text-theme-text-primary text-sm font-semibold block mb-2">
+        {t("lmStudio.modelLabel")}
+      </label>
+      <select
+        name="LMStudioModelPref"
+        required={true}
+        className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
+      >
+        {customModels.length > 0 && (
+          <optgroup label={t("lmStudio.yourLoadedModels")}>
+            {(customModels as any).map((model) => {
+              return (
+                <option key={model.id} value={model.id}>
+                  {model.id}
+                </option>
+              );
+            })}
+          </optgroup>
+        )}
+      </select>
+    </div>
+  );
+}

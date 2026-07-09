@@ -1,1 +1,434 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBQdXJwb3NlOiBQYWdlIGNvbXBvbmVudCBmb3IgYnVpbGRpbmcgYW5kIGVkaXRpbmcgYWdlbnQgZmxvd3MuCi8vIERvY3M6IEFnZW50QnVpbGRlci5kb2MubWQKaW1wb3J0IFJlYWN0LCB7IHVzZVN0YXRlLCB1c2VFZmZlY3QsIHVzZVJlZiB9IGZyb20gInJlYWN0IjsKaW1wb3J0IHsgdXNlVHJhbnNsYXRpb24gfSBmcm9tICJyZWFjdC1pMThuZXh0IjsKaW1wb3J0IHsgdXNlTmF2aWdhdGUsIHVzZVBhcmFtcyB9IGZyb20gInJlYWN0LXJvdXRlci1kb20iOwppbXBvcnQgeyBUb29sdGlwIH0gZnJvbSAicmVhY3QtdG9vbHRpcCI7CgppbXBvcnQgQmxvY2tMaXN0LCB7IEJMT0NLX1RZUEVTLCBCTE9DS19JTkZPIH0gZnJvbSAiLi9CbG9ja0xpc3QiOwppbXBvcnQgdHlwZSB7IEJsb2NrLCBCbG9ja0NvbmZpZyB9IGZyb20gIi4vQmxvY2tMaXN0IjsKaW1wb3J0IEFkZEJsb2NrTWVudSBmcm9tICIuL0FkZEJsb2NrTWVudSI7CmltcG9ydCBzaG93VG9hc3QgZnJvbSAiQC91dGlscy90b2FzdCI7CmltcG9ydCBBZ2VudEZsb3dzIGZyb20gIkAvbW9kZWxzL2FnZW50Rmxvd3MiOwppbXBvcnQgeyB1c2VUaGVtZSB9IGZyb20gIkAvaG9va3MvdXNlVGhlbWUiOwppbXBvcnQgSGVhZGVyTWVudSBmcm9tICIuL0hlYWRlck1lbnUiOwppbXBvcnQgcGF0aHMgZnJvbSAiQC91dGlscy9wYXRocyI7CmltcG9ydCBsb2dnZXIgZnJvbSAiQC91dGlscy9sb2dnZXIiOwoKaW50ZXJmYWNlIEZsb3dTdGVwIHsKICB0eXBlOiBzdHJpbmc7CiAgY29uZmlnOiBCbG9ja0NvbmZpZzsKfQoKaW50ZXJmYWNlIEZsb3dDb25maWcgewogIG5hbWU6IHN0cmluZzsKICBkZXNjcmlwdGlvbjogc3RyaW5nOwogIGFjdGl2ZTogYm9vbGVhbjsKICBzdGVwczogRmxvd1N0ZXBbXTsKfQoKaW50ZXJmYWNlIEZsb3cgewogIHV1aWQ6IHN0cmluZzsKICBjb25maWc6IEZsb3dDb25maWc7CiAgW2tleTogc3RyaW5nXTogYW55Owp9Cgpjb25zdCBERUZBVUxUX0JMT0NLUzogQmxvY2tbXSA9IFsKICB7CiAgICBpZDogImZsb3dfaW5mbyIsCiAgICB0eXBlOiBCTE9DS19UWVBFUy5GTE9XX0lORk8sCiAgICBjb25maWc6IHsKICAgICAgbmFtZTogIiIsCiAgICAgIGRlc2NyaXB0aW9uOiAiIiwKICAgIH0sCiAgICBpc0V4cGFuZGVkOiB0cnVlLAogIH0sCiAgewogICAgaWQ6ICJzdGFydCIsCiAgICB0eXBlOiBCTE9DS19UWVBFUy5TVEFSVCwKICAgIGNvbmZpZzogewogICAgICB2YXJpYWJsZXM6IFt7IG5hbWU6ICIiLCB2YWx1ZTogIiIgfV0sCiAgICB9LAogICAgaXNFeHBhbmRlZDogdHJ1ZSwKICB9LAogIHsKICAgIGlkOiAiZmluaXNoIiwKICAgIHR5cGU6IEJMT0NLX1RZUEVTLkZJTklTSCwKICAgIGNvbmZpZzoge30sCiAgICBpc0V4cGFuZGVkOiBmYWxzZSwKICB9LApdOwoKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gQWdlbnRCdWlsZGVyKCk6IEpTWC5FbGVtZW50IHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgY29uc3QgeyBmbG93SWQgfSA9IHVzZVBhcmFtczx7IGZsb3dJZD86IHN0cmluZyB9PigpOwogIGNvbnN0IHsgdGhlbWUgfSA9IHVzZVRoZW1lKCk7CiAgY29uc3QgbmF2aWdhdGUgPSB1c2VOYXZpZ2F0ZSgpOwogIGNvbnN0IFthZ2VudE5hbWUsIHNldEFnZW50TmFtZV0gPSB1c2VTdGF0ZSgiIik7CiAgY29uc3QgWywgc2V0QWdlbnREZXNjcmlwdGlvbl0gPSB1c2VTdGF0ZSgiIik7CiAgY29uc3QgW2N1cnJlbnRGbG93VXVpZCwgc2V0Q3VycmVudEZsb3dVdWlkXSA9IHVzZVN0YXRlPHN0cmluZyB8IG51bGw+KG51bGwpOwogIGNvbnN0IFthY3RpdmUsIHNldEFjdGl2ZV0gPSB1c2VTdGF0ZSh0cnVlKTsKICBjb25zdCBbYmxvY2tzLCBzZXRCbG9ja3NdID0gdXNlU3RhdGU8QmxvY2tbXT4oREVGQVVMVF9CTE9DS1MpOwogIGNvbnN0IFtzZWxlY3RlZEJsb2NrLCBzZXRTZWxlY3RlZEJsb2NrXSA9IHVzZVN0YXRlKCJzdGFydCIpOwogIGNvbnN0IFtzaG93QmxvY2tNZW51LCBzZXRTaG93QmxvY2tNZW51XSA9IHVzZVN0YXRlKGZhbHNlKTsKICBjb25zdCBbYXZhaWxhYmxlRmxvd3MsIHNldEF2YWlsYWJsZUZsb3dzXSA9IHVzZVN0YXRlPEZsb3dbXT4oW10pOwogIGNvbnN0IG5hbWVSZWYgPSB1c2VSZWY8SFRNTElucHV0RWxlbWVudCB8IG51bGw+KG51bGwpOwogIGNvbnN0IGRlc2NyaXB0aW9uUmVmID0gdXNlUmVmPEhUTUxJbnB1dEVsZW1lbnQgfCBudWxsPihudWxsKTsKCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIGxvYWRBdmFpbGFibGVGbG93cygpOwogIH0sIFtdKTsKCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIGlmICghZmxvd0lkKSByZXR1cm47CiAgICBsZXQgY2FuY2VsbGVkID0gZmFsc2U7CiAgICAoYXN5bmMgKCkgPT4gewogICAgICB0cnkgewogICAgICAgIGNvbnN0IHsgc3VjY2VzcywgZXJyb3IsIGZsb3cgfSA9IGF3YWl0IEFnZW50Rmxvd3MuZ2V0RmxvdyhmbG93SWQpOwogICAgICAgIGlmIChjYW5jZWxsZWQpIHJldHVybjsKICAgICAgICBpZiAoIXN1Y2Nlc3MpIHRocm93IG5ldyBFcnJvcihlcnJvcik7CgogICAgICAgIGNvbnN0IGZsb3dCbG9ja3M6IEJsb2NrW10gPSBbCiAgICAgICAgICB7CiAgICAgICAgICAgIGlkOiAiZmxvd19pbmZvIiwKICAgICAgICAgICAgdHlwZTogQkxPQ0tfVFlQRVMuRkxPV19JTkZPLAogICAgICAgICAgICBjb25maWc6IHsKICAgICAgICAgICAgICBuYW1lOiBmbG93LmNvbmZpZy5uYW1lLAogICAgICAgICAgICAgIGRlc2NyaXB0aW9uOiBmbG93LmNvbmZpZy5kZXNjcmlwdGlvbiwKICAgICAgICAgICAgfSwKICAgICAgICAgICAgaXNFeHBhbmRlZDogdHJ1ZSwKICAgICAgICAgIH0sCiAgICAgICAgICAuLi5mbG93LmNvbmZpZy5zdGVwcy5tYXAoKHN0ZXA6IEZsb3dTdGVwLCBpbmRleDogbnVtYmVyKSA9PiAoewogICAgICAgICAgICBpZDogaW5kZXggPT09IDAgPyAic3RhcnQiIDogYGJsb2NrXyR7aW5kZXh9YCwKICAgICAgICAgICAgdHlwZTogc3RlcC50eXBlLAogICAgICAgICAgICBjb25maWc6IHN0ZXAuY29uZmlnLAogICAgICAgICAgICBpc0V4cGFuZGVkOiB0cnVlLAogICAgICAgICAgfSkpLAogICAgICAgIF07CgogICAgICAgIGlmIChmbG93QmxvY2tzW2Zsb3dCbG9ja3MubGVuZ3RoIC0gMV0/LnR5cGUgIT09IEJMT0NLX1RZUEVTLkZJTklTSCkgewogICAgICAgICAgZmxvd0Jsb2Nrcy5wdXNoKHsKICAgICAgICAgICAgaWQ6ICJmaW5pc2giLAogICAgICAgICAgICB0eXBlOiBCTE9DS19UWVBFUy5GSU5JU0gsCiAgICAgICAgICAgIGNvbmZpZzoge30sCiAgICAgICAgICAgIGlzRXhwYW5kZWQ6IGZhbHNlLAogICAgICAgICAgfSk7CiAgICAgICAgfQoKICAgICAgICBpZiAoY2FuY2VsbGVkKSByZXR1cm47CiAgICAgICAgc2V0QWdlbnROYW1lKGZsb3cuY29uZmlnLm5hbWUpOwogICAgICAgIHNldEFnZW50RGVzY3JpcHRpb24oZmxvdy5jb25maWcuZGVzY3JpcHRpb24pOwogICAgICAgIHNldEFjdGl2ZShmbG93LmNvbmZpZy5hY3RpdmUgPz8gdHJ1ZSk7CiAgICAgICAgc2V0Q3VycmVudEZsb3dVdWlkKGZsb3cudXVpZCk7CiAgICAgICAgc2V0QmxvY2tzKGZsb3dCbG9ja3MpOwogICAgICB9IGNhdGNoIChlcnJvcikgewogICAgICAgIGlmIChjYW5jZWxsZWQpIHJldHVybjsKICAgICAgICBsb2dnZXIuZXJyb3IoZXJyb3IpOwogICAgICAgIHNob3dUb2FzdCh0KCJhZ2VudEJ1aWxkZXIubG9hZEZsb3dGYWlsZWQiKSwgImVycm9yIiwgeyBjbGVhcjogdHJ1ZSB9KTsKICAgICAgfQogICAgfSkoKTsKICAgIHJldHVybiAoKSA9PiB7CiAgICAgIGNhbmNlbGxlZCA9IHRydWU7CiAgICB9OwogIH0sIFtmbG93SWRdKTsKCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIGNvbnN0IGZsb3dJbmZvQmxvY2sgPSBibG9ja3MuZmluZCgKICAgICAgKGJsb2NrKSA9PiBibG9jay50eXBlID09PSBCTE9DS19UWVBFUy5GTE9XX0lORk8sCiAgICApOwogICAgc2V0QWdlbnROYW1lKGZsb3dJbmZvQmxvY2s/LmNvbmZpZz8ubmFtZSB8fCAiIik7CiAgfSwgW2Jsb2Nrc10pOwoKICBjb25zdCBsb2FkQXZhaWxhYmxlRmxvd3MgPSBhc3luYyAoKSA9PiB7CiAgICB0cnkgewogICAgICBjb25zdCB7IHN1Y2Nlc3MsIGVycm9yLCBmbG93cyB9ID0gYXdhaXQgQWdlbnRGbG93cy5saXN0Rmxvd3MoKTsKICAgICAgaWYgKCFzdWNjZXNzKSB0aHJvdyBuZXcgRXJyb3IoZXJyb3IpOwogICAgICBzZXRBdmFpbGFibGVGbG93cyhmbG93cyk7CiAgICB9IGNhdGNoIChlcnJvcikgewogICAgICBsb2dnZXIuZXJyb3IoZXJyb3IpOwogICAgICBzaG93VG9hc3QodCgiYWdlbnRCdWlsZGVyLmxvYWRGbG93c0ZhaWxlZCIpLCAiZXJyb3IiLCB7IGNsZWFyOiB0cnVlIH0pOwogICAgfQogIH07CgogIGNvbnN0IGxvYWRGbG93ID0gYXN5bmMgKHV1aWQ6IHN0cmluZykgPT4gewogICAgdHJ5IHsKICAgICAgY29uc3QgeyBzdWNjZXNzLCBlcnJvciwgZmxvdyB9ID0gYXdhaXQgQWdlbnRGbG93cy5nZXRGbG93KHV1aWQpOwogICAgICBpZiAoIXN1Y2Nlc3MpIHRocm93IG5ldyBFcnJvcihlcnJvcik7CgogICAgICAvLyBDb252ZXJ0IHN0ZXBzIHRvIGJsb2NrcyB3aXRoIElEcywgZW5zdXJpbmcgZmluaXNoIGJsb2NrIGlzIGF0IHRoZSBlbmQKICAgICAgY29uc3QgZmxvd0Jsb2NrczogQmxvY2tbXSA9IFsKICAgICAgICB7CiAgICAgICAgICBpZDogImZsb3dfaW5mbyIsCiAgICAgICAgICB0eXBlOiBCTE9DS19UWVBFUy5GTE9XX0lORk8sCiAgICAgICAgICBjb25maWc6IHsKICAgICAgICAgICAgbmFtZTogZmxvdy5jb25maWcubmFtZSwKICAgICAgICAgICAgZGVzY3JpcHRpb246IGZsb3cuY29uZmlnLmRlc2NyaXB0aW9uLAogICAgICAgICAgfSwKICAgICAgICAgIGlzRXhwYW5kZWQ6IHRydWUsCiAgICAgICAgfSwKICAgICAgICAuLi5mbG93LmNvbmZpZy5zdGVwcy5tYXAoKHN0ZXA6IEZsb3dTdGVwLCBpbmRleDogbnVtYmVyKSA9PiAoewogICAgICAgICAgaWQ6IGluZGV4ID09PSAwID8gInN0YXJ0IiA6IGBibG9ja18ke2luZGV4fWAsCiAgICAgICAgICB0eXBlOiBzdGVwLnR5cGUsCiAgICAgICAgICBjb25maWc6IHN0ZXAuY29uZmlnLAogICAgICAgICAgaXNFeHBhbmRlZDogdHJ1ZSwKICAgICAgICB9KSksCiAgICAgIF07CgogICAgICAvLyBBZGQgZmluaXNoIGJsb2NrIGlmIG5vdCBwcmVzZW50CiAgICAgIGlmIChmbG93QmxvY2tzW2Zsb3dCbG9ja3MubGVuZ3RoIC0gMV0/LnR5cGUgIT09IEJMT0NLX1RZUEVTLkZJTklTSCkgewogICAgICAgIGZsb3dCbG9ja3MucHVzaCh7CiAgICAgICAgICBpZDogImZpbmlzaCIsCiAgICAgICAgICB0eXBlOiBCTE9DS19UWVBFUy5GSU5JU0gsCiAgICAgICAgICBjb25maWc6IHt9LAogICAgICAgICAgaXNFeHBhbmRlZDogZmFsc2UsCiAgICAgICAgfSk7CiAgICAgIH0KCiAgICAgIHNldEFnZW50TmFtZShmbG93LmNvbmZpZy5uYW1lKTsKICAgICAgc2V0QWdlbnREZXNjcmlwdGlvbihmbG93LmNvbmZpZy5kZXNjcmlwdGlvbik7CiAgICAgIHNldEFjdGl2ZShmbG93LmNvbmZpZy5hY3RpdmUgPz8gdHJ1ZSk7CiAgICAgIHNldEN1cnJlbnRGbG93VXVpZChmbG93LnV1aWQpOwogICAgICBzZXRCbG9ja3MoZmxvd0Jsb2Nrcyk7CiAgICB9IGNhdGNoIChlcnJvcikgewogICAgICBsb2dnZXIuZXJyb3IoZXJyb3IpOwogICAgICBzaG93VG9hc3QodCgiYWdlbnRCdWlsZGVyLmxvYWRGbG93RmFpbGVkIiksICJlcnJvciIsIHsgY2xlYXI6IHRydWUgfSk7CiAgICB9CiAgfTsKCiAgY29uc3QgYWRkQmxvY2sgPSAodHlwZTogc3RyaW5nKSA9PiB7CiAgICBjb25zdCBuZXdCbG9jazogQmxvY2sgPSB7CiAgICAgIGlkOiBgYmxvY2tfJHtEYXRlLm5vdygpfV8ke01hdGgucmFuZG9tKCkudG9TdHJpbmcoMzYpLnNsaWNlKDIsIDgpfWAsCiAgICAgIHR5cGUsCiAgICAgIGNvbmZpZzogeyAuLi5CTE9DS19JTkZPW3R5cGUgYXMga2V5b2YgdHlwZW9mIEJMT0NLX0lORk9dPy5kZWZhdWx0Q29uZmlnIH0sCiAgICAgIGlzRXhwYW5kZWQ6IHRydWUsCiAgICB9OwogICAgc2V0QmxvY2tzKChwcmV2KSA9PiB7CiAgICAgIGNvbnN0IG5ld0Jsb2NrcyA9IFsuLi5wcmV2XTsKICAgICAgbmV3QmxvY2tzLnNwbGljZShuZXdCbG9ja3MubGVuZ3RoIC0gMSwgMCwgbmV3QmxvY2spOwogICAgICByZXR1cm4gbmV3QmxvY2tzOwogICAgfSk7CiAgICBzZXRTaG93QmxvY2tNZW51KGZhbHNlKTsKICB9OwoKICBjb25zdCB1cGRhdGVCbG9ja0NvbmZpZyA9IChibG9ja0lkOiBzdHJpbmcsIGNvbmZpZzogUGFydGlhbDxCbG9ja0NvbmZpZz4pID0+IHsKICAgIHNldEJsb2NrcygocHJldikgPT4KICAgICAgcHJldi5tYXAoKGJsb2NrKSA9PgogICAgICAgIGJsb2NrLmlkID09PSBibG9ja0lkCiAgICAgICAgICA/IHsgLi4uYmxvY2ssIGNvbmZpZzogeyAuLi5ibG9jay5jb25maWcsIC4uLmNvbmZpZyB9IH0KICAgICAgICAgIDogYmxvY2ssCiAgICAgICksCiAgICApOwogIH07CgogIGNvbnN0IHJlbW92ZUJsb2NrID0gKGJsb2NrSWQ6IHN0cmluZykgPT4gewogICAgaWYgKGJsb2NrSWQgPT09ICJzdGFydCIpIHJldHVybjsKICAgIHNldEJsb2NrcygocHJldikgPT4gcHJldi5maWx0ZXIoKGJsb2NrKSA9PiBibG9jay5pZCAhPT0gYmxvY2tJZCkpOwogICAgaWYgKHNlbGVjdGVkQmxvY2sgPT09IGJsb2NrSWQpIHsKICAgICAgc2V0U2VsZWN0ZWRCbG9jaygic3RhcnQiKTsKICAgIH0KICB9OwoKICBjb25zdCBzYXZlRmxvdyA9IGFzeW5jICgpID0+IHsKICAgIGNvbnN0IGZsb3dJbmZvQmxvY2sgPSBibG9ja3MuZmluZCgKICAgICAgKGJsb2NrKSA9PiBibG9jay50eXBlID09PSBCTE9DS19UWVBFUy5GTE9XX0lORk8sCiAgICApOwogICAgY29uc3QgbmFtZSA9IGZsb3dJbmZvQmxvY2s/LmNvbmZpZz8ubmFtZTsKICAgIGNvbnN0IGRlc2NyaXB0aW9uID0gZmxvd0luZm9CbG9jaz8uY29uZmlnPy5kZXNjcmlwdGlvbjsKCiAgICBpZiAoIW5hbWU/LnRyaW0oKSB8fCAhZGVzY3JpcHRpb24/LnRyaW0oKSkgewogICAgICAvLyBNYWtlIHN1cmUgdGhlIGZsb3cgaW5mbyBibG9jayBpcyBleHBhbmRlZCBmaXJzdAogICAgICBpZiAoIWZsb3dJbmZvQmxvY2s/LmlzRXhwYW5kZWQpIHsKICAgICAgICBzZXRCbG9ja3MoCiAgICAgICAgICBibG9ja3MubWFwKChibG9jaykgPT4KICAgICAgICAgICAgYmxvY2sudHlwZSA9PT0gQkxPQ0tfVFlQRVMuRkxPV19JTkZPCiAgICAgICAgICAgICAgPyB7IC4uLmJsb2NrLCBpc0V4cGFuZGVkOiB0cnVlIH0KICAgICAgICAgICAgICA6IGJsb2NrLAogICAgICAgICAgKSwKICAgICAgICApOwogICAgICAgIC8vIFNtYWxsIGRlbGF5IHRvIGFsbG93IGV4cGFuc2lvbiBhbmltYXRpb24gdG8gY29tcGxldGUKICAgICAgICBhd2FpdCBuZXcgUHJvbWlzZSgocmVzb2x2ZSkgPT4gc2V0VGltZW91dChyZXNvbHZlLCAxMDApKTsKICAgICAgfQoKICAgICAgaWYgKCFuYW1lPy50cmltKCkpIHsKICAgICAgICBuYW1lUmVmLmN1cnJlbnQ/LmZvY3VzKCk7CiAgICAgIH0gZWxzZSBpZiAoIWRlc2NyaXB0aW9uPy50cmltKCkpIHsKICAgICAgICBkZXNjcmlwdGlvblJlZi5jdXJyZW50Py5mb2N1cygpOwogICAgICB9CiAgICAgIHNob3dUb2FzdCh0KCJhZ2VudEJ1aWxkZXIubmFtZUFuZERlc2NyaXB0aW9uUmVxdWlyZWQiKSwgImVycm9yIiwgewogICAgICAgIGNsZWFyOiB0cnVlLAogICAgICB9KTsKICAgICAgcmV0dXJuOwogICAgfQoKICAgIGNvbnN0IGZsb3dDb25maWc6IEZsb3dDb25maWcgPSB7CiAgICAgIG5hbWUsCiAgICAgIGRlc2NyaXB0aW9uLAogICAgICBhY3RpdmUsCiAgICAgIHN0ZXBzOiBibG9ja3MKICAgICAgICAuZmlsdGVyKAogICAgICAgICAgKGJsb2NrKSA9PgogICAgICAgICAgICBibG9jay50eXBlICE9PSBCTE9DS19UWVBFUy5GSU5JU0ggJiYKICAgICAgICAgICAgYmxvY2sudHlwZSAhPT0gQkxPQ0tfVFlQRVMuRkxPV19JTkZPLAogICAgICAgICkKICAgICAgICAubWFwKChibG9jaykgPT4gKHsKICAgICAgICAgIHR5cGU6IGJsb2NrLnR5cGUsCiAgICAgICAgICBjb25maWc6IGJsb2NrLmNvbmZpZywKICAgICAgICB9KSksCiAgICB9OwoKICAgIHRyeSB7CiAgICAgIGNvbnN0IHsgc3VjY2VzcywgZXJyb3IsIGZsb3cgfSA9IGF3YWl0IEFnZW50Rmxvd3Muc2F2ZUZsb3coCiAgICAgICAgbmFtZSwKICAgICAgICBmbG93Q29uZmlnLAogICAgICAgIGN1cnJlbnRGbG93VXVpZCwKICAgICAgKTsKICAgICAgaWYgKCFzdWNjZXNzKSB0aHJvdyBuZXcgRXJyb3IoZXJyb3IpOwoKICAgICAgc2V0Q3VycmVudEZsb3dVdWlkKGZsb3cudXVpZCk7CiAgICAgIHNob3dUb2FzdCh0KCJhZ2VudEJ1aWxkZXIuZmxvd1NhdmVkU3VjY2VzcyIpLCAic3VjY2VzcyIsIHsgY2xlYXI6IHRydWUgfSk7CiAgICAgIGF3YWl0IGxvYWRBdmFpbGFibGVGbG93cygpOwogICAgfSBjYXRjaCAoZXJyb3I6IGFueSkgewogICAgICBsb2dnZXIuZXJyb3IoIlNhdmUgZXJyb3IgZGV0YWlsczoiLCBlcnJvcik7CiAgICAgIHNob3dUb2FzdCgKICAgICAgICB0KCJhZ2VudEJ1aWxkZXIuc2F2ZUZsb3dGYWlsZWQiLCB7IGVycm9yOiBlcnJvci5tZXNzYWdlIH0pLAogICAgICAgICJlcnJvciIsCiAgICAgICAgewogICAgICAgICAgY2xlYXI6IHRydWUsCiAgICAgICAgfSwKICAgICAgKTsKICAgIH0KICB9OwoKICBjb25zdCB0b2dnbGVCbG9ja0V4cGFuc2lvbiA9IChibG9ja0lkOiBzdHJpbmcpID0+IHsKICAgIHNldEJsb2NrcygocHJldikgPT4KICAgICAgcHJldi5tYXAoKGJsb2NrKSA9PgogICAgICAgIGJsb2NrLmlkID09PSBibG9ja0lkCiAgICAgICAgICA/IHsgLi4uYmxvY2ssIGlzRXhwYW5kZWQ6ICFibG9jay5pc0V4cGFuZGVkIH0KICAgICAgICAgIDogYmxvY2ssCiAgICAgICksCiAgICApOwogIH07CgogIC8vIEdldCBhbGwgYXZhaWxhYmxlIHZhcmlhYmxlcyBmcm9tIHRoZSBzdGFydCBibG9jawogIGNvbnN0IGdldEF2YWlsYWJsZVZhcmlhYmxlcyA9ICgpID0+IHsKICAgIGNvbnN0IHN0YXJ0QmxvY2sgPSBibG9ja3MuZmluZCgoYikgPT4gYi50eXBlID09PSBCTE9DS19UWVBFUy5TVEFSVCk7CiAgICByZXR1cm4gc3RhcnRCbG9jaz8uY29uZmlnPy52YXJpYWJsZXM/LmZpbHRlcigodjogYW55KSA9PiB2Lm5hbWUpIHx8IFtdOwogIH07CgogIGNvbnN0IHJlbmRlclZhcmlhYmxlU2VsZWN0ID0gKAogICAgdmFsdWU6IGFueSwKICAgIG9uQ2hhbmdlOiAodmFsdWU6IHN0cmluZykgPT4gdm9pZCwKICAgIHBsYWNlaG9sZGVyID0gdCgiYWdlbnRCdWlsZGVyLnNlbGVjdFZhcmlhYmxlIiksCiAgKSA9PiAoCiAgICA8c2VsZWN0CiAgICAgIHZhbHVlPXt2YWx1ZSB8fCAiIn0KICAgICAgb25DaGFuZ2U9eyhlKSA9PiBvbkNoYW5nZShlLnRhcmdldC52YWx1ZSl9CiAgICAgIGNsYXNzTmFtZT0idy1mdWxsIGJvcmRlci1ub25lIGJnLXRoZW1lLXNldHRpbmdzLWlucHV0LWJnIHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IHRleHQtc20gcm91bmRlZC1sZyBmb2N1czpvdXRsaW5lLXByaW1hcnktYnV0dG9uIGFjdGl2ZTpvdXRsaW5lLXByaW1hcnktYnV0dG9uIG91dGxpbmUtbm9uZSBwLTIuNSIKICAgID4KICAgICAgPG9wdGlvbiB2YWx1ZT0iIiBjbGFzc05hbWU9ImJnLXRoZW1lLWJnLXByaW1hcnkiPgogICAgICAgIHtwbGFjZWhvbGRlcn0KICAgICAgPC9vcHRpb24+CiAgICAgIHtnZXRBdmFpbGFibGVWYXJpYWJsZXMoKS5tYXAoKHY6IGFueSkgPT4gKAogICAgICAgIDxvcHRpb24ga2V5PXt2Lm5hbWV9IHZhbHVlPXt2Lm5hbWV9IGNsYXNzTmFtZT0iYmctdGhlbWUtYmctcHJpbWFyeSI+CiAgICAgICAgICB7di5uYW1lfQogICAgICAgIDwvb3B0aW9uPgogICAgICApKX0KICAgIDwvc2VsZWN0PgogICk7CgogIGNvbnN0IGRlbGV0ZVZhcmlhYmxlID0gKHZhcmlhYmxlTmFtZTogc3RyaW5nKSA9PiB7CiAgICAvLyBDbGVhbiB1cCByZWZlcmVuY2VzIGluIG90aGVyIGJsb2NrcwogICAgYmxvY2tzLmZvckVhY2goKGJsb2NrKSA9PiB7CiAgICAgIGlmIChibG9jay50eXBlID09PSBCTE9DS19UWVBFUy5TVEFSVCkgcmV0dXJuOwoKICAgICAgbGV0IGNvbmZpZ1VwZGF0ZWQgPSBmYWxzZTsKICAgICAgY29uc3QgbmV3Q29uZmlnID0geyAuLi5ibG9jay5jb25maWcgfTsKCiAgICAgIC8vIENoZWNrIGFuZCBjbGVhbiByZXNwb25zZVZhcmlhYmxlL3Jlc3VsdFZhcmlhYmxlCiAgICAgIGlmIChuZXdDb25maWcucmVzcG9uc2VWYXJpYWJsZSA9PT0gdmFyaWFibGVOYW1lKSB7CiAgICAgICAgbmV3Q29uZmlnLnJlc3BvbnNlVmFyaWFibGUgPSAiIjsKICAgICAgICBjb25maWdVcGRhdGVkID0gdHJ1ZTsKICAgICAgfQogICAgICBpZiAobmV3Q29uZmlnLnJlc3VsdFZhcmlhYmxlID09PSB2YXJpYWJsZU5hbWUpIHsKICAgICAgICBuZXdDb25maWcucmVzdWx0VmFyaWFibGUgPSAiIjsKICAgICAgICBjb25maWdVcGRhdGVkID0gdHJ1ZTsKICAgICAgfQoKICAgICAgaWYgKGNvbmZpZ1VwZGF0ZWQpIHsKICAgICAgICB1cGRhdGVCbG9ja0NvbmZpZyhibG9jay5pZCwgbmV3Q29uZmlnKTsKICAgICAgfQogICAgfSk7CiAgfTsKCiAgY29uc3QgY2xlYXJGbG93ID0gKCkgPT4gewogICAgaWYgKCEhZmxvd0lkKSBuYXZpZ2F0ZShwYXRocy5hZ2VudHMuYnVpbGRlcigpKTsKICAgIHNldEFnZW50TmFtZSgiIik7CiAgICBzZXRBZ2VudERlc2NyaXB0aW9uKCIiKTsKICAgIHNldEN1cnJlbnRGbG93VXVpZChudWxsKTsKICAgIHNldEFjdGl2ZSh0cnVlKTsKICAgIHNldEJsb2NrcyhERUZBVUxUX0JMT0NLUyk7CiAgfTsKCiAgY29uc3QgbW92ZUJsb2NrID0gKGZyb21JbmRleDogbnVtYmVyLCB0b0luZGV4OiBudW1iZXIpID0+IHsKICAgIHNldEJsb2NrcygocHJldikgPT4gewogICAgICBjb25zdCBuZXdCbG9ja3MgPSBbLi4ucHJldl07CiAgICAgIGNvbnN0IFttb3ZlZEJsb2NrXSA9IG5ld0Jsb2Nrcy5zcGxpY2UoZnJvbUluZGV4LCAxKTsKICAgICAgbmV3QmxvY2tzLnNwbGljZSh0b0luZGV4LCAwLCBtb3ZlZEJsb2NrKTsKICAgICAgcmV0dXJuIG5ld0Jsb2NrczsKICAgIH0pOwogIH07CgogIHJldHVybiAoCiAgICA8ZGl2CiAgICAgIGNsYXNzTmFtZT17YHJlbGF0aXZlIHctc2NyZWVuIGgtc2NyZWVuIGZsZXggZmxleC1jb2wgYmctdGhlbWUtYmctcHJpbWFyeSBvdmVyZmxvdy1jbGlwIGJnLVtsZW5ndGg6MTVweF8xNXB4XSBiZy1bcG9zaXRpb246LTcuNXB4Xy03LjVweF0gJHsKICAgICAgICB0aGVtZSA9PT0gImxpZ2h0IgogICAgICAgICAgPyAiYmctW3JhZGlhbC1ncmFkaWVudChyZ2JhKDAsXzAsXzAsXzAuMSlfMXB4LF90cmFuc3BhcmVudF8wKV0iCiAgICAgICAgICA6ICJiZy1bcmFkaWFsLWdyYWRpZW50KHJnYmEoMjU1LF8yNTUsXzI1NSxfMC4xKV8xcHgsX3RyYW5zcGFyZW50XzApXSIKICAgICAgfWB9CiAgICA+CiAgICAgIDxIZWFkZXJNZW51CiAgICAgICAgYWdlbnROYW1lPXthZ2VudE5hbWV9CiAgICAgICAgYXZhaWxhYmxlRmxvd3M9e2F2YWlsYWJsZUZsb3dzfQogICAgICAgIG9uTmV3Rmxvdz17Y2xlYXJGbG93fQogICAgICAgIG9uU2F2ZUZsb3c9e3NhdmVGbG93fQogICAgICAvPgogICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleC0xIG1pbi1oLTAgcC02IG92ZXJmbG93LXktYXV0byI+CiAgICAgICAgPGRpdgogICAgICAgICAgY2xhc3NOYW1lPXtgbWF4LXcteGwgbXgtYXV0byBtdC0xNCAke3Nob3dCbG9ja01lbnUgPyAicGItNTIiIDogIiJ9YH0KICAgICAgICA+CiAgICAgICAgICA8QmxvY2tMaXN0CiAgICAgICAgICAgIGJsb2Nrcz17YmxvY2tzfQogICAgICAgICAgICB1cGRhdGVCbG9ja0NvbmZpZz17dXBkYXRlQmxvY2tDb25maWd9CiAgICAgICAgICAgIHJlbW92ZUJsb2NrPXtyZW1vdmVCbG9ja30KICAgICAgICAgICAgdG9nZ2xlQmxvY2tFeHBhbnNpb249e3RvZ2dsZUJsb2NrRXhwYW5zaW9ufQogICAgICAgICAgICByZW5kZXJWYXJpYWJsZVNlbGVjdD17cmVuZGVyVmFyaWFibGVTZWxlY3R9CiAgICAgICAgICAgIG9uRGVsZXRlVmFyaWFibGU9e2RlbGV0ZVZhcmlhYmxlfQogICAgICAgICAgICBtb3ZlQmxvY2s9e21vdmVCbG9ja30KICAgICAgICAgICAgcmVmcz17eyBuYW1lUmVmLCBkZXNjcmlwdGlvblJlZiB9fQogICAgICAgICAgLz4KCiAgICAgICAgICA8QWRkQmxvY2tNZW51CiAgICAgICAgICAgIGJsb2Nrcz17YmxvY2tzfQogICAgICAgICAgICBzaG93QmxvY2tNZW51PXtzaG93QmxvY2tNZW51fQogICAgICAgICAgICBzZXRTaG93QmxvY2tNZW51PXtzZXRTaG93QmxvY2tNZW51fQogICAgICAgICAgICBhZGRCbG9jaz17YWRkQmxvY2t9CiAgICAgICAgICAvPgogICAgICAgIDwvZGl2PgogICAgICA8L2Rpdj4KICAgICAgPFRvb2x0aXAKICAgICAgICBpZD0iY29udGVudC1zdW1tYXJpemF0aW9uLXRvb2x0aXAiCiAgICAgICAgcGxhY2U9InRvcCIKICAgICAgICBkZWxheVNob3c9ezMwMH0KICAgICAgICBjbGFzc05hbWU9InRvb2x0aXAgIXRleHQteHMgei1bOTldIgogICAgICA+CiAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXNtIj4KICAgICAgICAgIHt0KCJhZ2VudEJ1aWxkZXIuc3VtbWFyaXplRGVzY3JpcHRpb24iKX0KICAgICAgICAgIDxiciAvPgogICAgICAgICAgPGJyIC8+CiAgICAgICAgICB7dCgiYWdlbnRCdWlsZGVyLnN1bW1hcml6ZU5vdGUiKX0KICAgICAgICA8L3A+CiAgICAgIDwvVG9vbHRpcD4KICAgIDwvZGl2PgogICk7Cn0K
+// SPDX-License-Identifier: MIT
+// Purpose: Page component for building and editing agent flows.
+// Docs: AgentBuilder.doc.md
+import React, { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate, useParams } from "react-router-dom";
+import { Tooltip } from "react-tooltip";
+
+import BlockList, { BLOCK_TYPES, BLOCK_INFO } from "./BlockList";
+import type { Block, BlockConfig } from "./BlockList";
+import AddBlockMenu from "./AddBlockMenu";
+import showToast from "@/utils/toast";
+import AgentFlows from "@/models/agentFlows";
+import { useTheme } from "@/hooks/useTheme";
+import HeaderMenu from "./HeaderMenu";
+import paths from "@/utils/paths";
+import logger from "@/utils/logger";
+
+interface FlowStep {
+  type: string;
+  config: BlockConfig;
+}
+
+interface FlowConfig {
+  name: string;
+  description: string;
+  active: boolean;
+  steps: FlowStep[];
+}
+
+interface Flow {
+  uuid: string;
+  config: FlowConfig;
+  [key: string]: any;
+}
+
+const DEFAULT_BLOCKS: Block[] = [
+  {
+    id: "flow_info",
+    type: BLOCK_TYPES.FLOW_INFO,
+    config: {
+      name: "",
+      description: "",
+    },
+    isExpanded: true,
+  },
+  {
+    id: "start",
+    type: BLOCK_TYPES.START,
+    config: {
+      variables: [{ name: "", value: "" }],
+    },
+    isExpanded: true,
+  },
+  {
+    id: "finish",
+    type: BLOCK_TYPES.FINISH,
+    config: {},
+    isExpanded: false,
+  },
+];
+
+export default function AgentBuilder(): JSX.Element {
+  const { t } = useTranslation();
+  const { flowId } = useParams<{ flowId?: string }>();
+  const { theme } = useTheme();
+  const navigate = useNavigate();
+  const [agentName, setAgentName] = useState("");
+  const [, setAgentDescription] = useState("");
+  const [currentFlowUuid, setCurrentFlowUuid] = useState<string | null>(null);
+  const [active, setActive] = useState(true);
+  const [blocks, setBlocks] = useState<Block[]>(DEFAULT_BLOCKS);
+  const [selectedBlock, setSelectedBlock] = useState("start");
+  const [showBlockMenu, setShowBlockMenu] = useState(false);
+  const [availableFlows, setAvailableFlows] = useState<Flow[]>([]);
+  const nameRef = useRef<HTMLInputElement | null>(null);
+  const descriptionRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    loadAvailableFlows();
+  }, []);
+
+  useEffect(() => {
+    if (!flowId) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const { success, error, flow } = await AgentFlows.getFlow(flowId);
+        if (cancelled) return;
+        if (!success) throw new Error(error);
+
+        const flowBlocks: Block[] = [
+          {
+            id: "flow_info",
+            type: BLOCK_TYPES.FLOW_INFO,
+            config: {
+              name: flow.config.name,
+              description: flow.config.description,
+            },
+            isExpanded: true,
+          },
+          ...flow.config.steps.map((step: FlowStep, index: number) => ({
+            id: index === 0 ? "start" : `block_${index}`,
+            type: step.type,
+            config: step.config,
+            isExpanded: true,
+          })),
+        ];
+
+        if (flowBlocks[flowBlocks.length - 1]?.type !== BLOCK_TYPES.FINISH) {
+          flowBlocks.push({
+            id: "finish",
+            type: BLOCK_TYPES.FINISH,
+            config: {},
+            isExpanded: false,
+          });
+        }
+
+        if (cancelled) return;
+        setAgentName(flow.config.name);
+        setAgentDescription(flow.config.description);
+        setActive(flow.config.active ?? true);
+        setCurrentFlowUuid(flow.uuid);
+        setBlocks(flowBlocks);
+      } catch (error) {
+        if (cancelled) return;
+        logger.error(error);
+        showToast(t("agentBuilder.loadFlowFailed"), "error", { clear: true });
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [flowId]);
+
+  useEffect(() => {
+    const flowInfoBlock = blocks.find(
+      (block) => block.type === BLOCK_TYPES.FLOW_INFO,
+    );
+    setAgentName(flowInfoBlock?.config?.name || "");
+  }, [blocks]);
+
+  const loadAvailableFlows = async () => {
+    try {
+      const { success, error, flows } = await AgentFlows.listFlows();
+      if (!success) throw new Error(error);
+      setAvailableFlows(flows);
+    } catch (error) {
+      logger.error(error);
+      showToast(t("agentBuilder.loadFlowsFailed"), "error", { clear: true });
+    }
+  };
+
+  const loadFlow = async (uuid: string) => {
+    try {
+      const { success, error, flow } = await AgentFlows.getFlow(uuid);
+      if (!success) throw new Error(error);
+
+      // Convert steps to blocks with IDs, ensuring finish block is at the end
+      const flowBlocks: Block[] = [
+        {
+          id: "flow_info",
+          type: BLOCK_TYPES.FLOW_INFO,
+          config: {
+            name: flow.config.name,
+            description: flow.config.description,
+          },
+          isExpanded: true,
+        },
+        ...flow.config.steps.map((step: FlowStep, index: number) => ({
+          id: index === 0 ? "start" : `block_${index}`,
+          type: step.type,
+          config: step.config,
+          isExpanded: true,
+        })),
+      ];
+
+      // Add finish block if not present
+      if (flowBlocks[flowBlocks.length - 1]?.type !== BLOCK_TYPES.FINISH) {
+        flowBlocks.push({
+          id: "finish",
+          type: BLOCK_TYPES.FINISH,
+          config: {},
+          isExpanded: false,
+        });
+      }
+
+      setAgentName(flow.config.name);
+      setAgentDescription(flow.config.description);
+      setActive(flow.config.active ?? true);
+      setCurrentFlowUuid(flow.uuid);
+      setBlocks(flowBlocks);
+    } catch (error) {
+      logger.error(error);
+      showToast(t("agentBuilder.loadFlowFailed"), "error", { clear: true });
+    }
+  };
+
+  const addBlock = (type: string) => {
+    const newBlock: Block = {
+      id: `block_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+      type,
+      config: { ...BLOCK_INFO[type as keyof typeof BLOCK_INFO]?.defaultConfig },
+      isExpanded: true,
+    };
+    setBlocks((prev) => {
+      const newBlocks = [...prev];
+      newBlocks.splice(newBlocks.length - 1, 0, newBlock);
+      return newBlocks;
+    });
+    setShowBlockMenu(false);
+  };
+
+  const updateBlockConfig = (blockId: string, config: Partial<BlockConfig>) => {
+    setBlocks((prev) =>
+      prev.map((block) =>
+        block.id === blockId
+          ? { ...block, config: { ...block.config, ...config } }
+          : block,
+      ),
+    );
+  };
+
+  const removeBlock = (blockId: string) => {
+    if (blockId === "start") return;
+    setBlocks((prev) => prev.filter((block) => block.id !== blockId));
+    if (selectedBlock === blockId) {
+      setSelectedBlock("start");
+    }
+  };
+
+  const saveFlow = async () => {
+    const flowInfoBlock = blocks.find(
+      (block) => block.type === BLOCK_TYPES.FLOW_INFO,
+    );
+    const name = flowInfoBlock?.config?.name;
+    const description = flowInfoBlock?.config?.description;
+
+    if (!name?.trim() || !description?.trim()) {
+      // Make sure the flow info block is expanded first
+      if (!flowInfoBlock?.isExpanded) {
+        setBlocks(
+          blocks.map((block) =>
+            block.type === BLOCK_TYPES.FLOW_INFO
+              ? { ...block, isExpanded: true }
+              : block,
+          ),
+        );
+        // Small delay to allow expansion animation to complete
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
+
+      if (!name?.trim()) {
+        nameRef.current?.focus();
+      } else if (!description?.trim()) {
+        descriptionRef.current?.focus();
+      }
+      showToast(t("agentBuilder.nameAndDescriptionRequired"), "error", {
+        clear: true,
+      });
+      return;
+    }
+
+    const flowConfig: FlowConfig = {
+      name,
+      description,
+      active,
+      steps: blocks
+        .filter(
+          (block) =>
+            block.type !== BLOCK_TYPES.FINISH &&
+            block.type !== BLOCK_TYPES.FLOW_INFO,
+        )
+        .map((block) => ({
+          type: block.type,
+          config: block.config,
+        })),
+    };
+
+    try {
+      const { success, error, flow } = await AgentFlows.saveFlow(
+        name,
+        flowConfig,
+        currentFlowUuid,
+      );
+      if (!success) throw new Error(error);
+
+      setCurrentFlowUuid(flow.uuid);
+      showToast(t("agentBuilder.flowSavedSuccess"), "success", { clear: true });
+      await loadAvailableFlows();
+    } catch (error: any) {
+      logger.error("Save error details:", error);
+      showToast(
+        t("agentBuilder.saveFlowFailed", { error: error.message }),
+        "error",
+        {
+          clear: true,
+        },
+      );
+    }
+  };
+
+  const toggleBlockExpansion = (blockId: string) => {
+    setBlocks((prev) =>
+      prev.map((block) =>
+        block.id === blockId
+          ? { ...block, isExpanded: !block.isExpanded }
+          : block,
+      ),
+    );
+  };
+
+  // Get all available variables from the start block
+  const getAvailableVariables = () => {
+    const startBlock = blocks.find((b) => b.type === BLOCK_TYPES.START);
+    return startBlock?.config?.variables?.filter((v: any) => v.name) || [];
+  };
+
+  const renderVariableSelect = (
+    value: any,
+    onChange: (value: string) => void,
+    placeholder = t("agentBuilder.selectVariable"),
+  ) => (
+    <select
+      value={value || ""}
+      onChange={(e) => onChange(e.target.value)}
+      className="w-full border-none bg-theme-settings-input-bg text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none p-2.5"
+    >
+      <option value="" className="bg-theme-bg-primary">
+        {placeholder}
+      </option>
+      {getAvailableVariables().map((v: any) => (
+        <option key={v.name} value={v.name} className="bg-theme-bg-primary">
+          {v.name}
+        </option>
+      ))}
+    </select>
+  );
+
+  const deleteVariable = (variableName: string) => {
+    // Clean up references in other blocks
+    blocks.forEach((block) => {
+      if (block.type === BLOCK_TYPES.START) return;
+
+      let configUpdated = false;
+      const newConfig = { ...block.config };
+
+      // Check and clean responseVariable/resultVariable
+      if (newConfig.responseVariable === variableName) {
+        newConfig.responseVariable = "";
+        configUpdated = true;
+      }
+      if (newConfig.resultVariable === variableName) {
+        newConfig.resultVariable = "";
+        configUpdated = true;
+      }
+
+      if (configUpdated) {
+        updateBlockConfig(block.id, newConfig);
+      }
+    });
+  };
+
+  const clearFlow = () => {
+    if (!!flowId) navigate(paths.agents.builder());
+    setAgentName("");
+    setAgentDescription("");
+    setCurrentFlowUuid(null);
+    setActive(true);
+    setBlocks(DEFAULT_BLOCKS);
+  };
+
+  const moveBlock = (fromIndex: number, toIndex: number) => {
+    setBlocks((prev) => {
+      const newBlocks = [...prev];
+      const [movedBlock] = newBlocks.splice(fromIndex, 1);
+      newBlocks.splice(toIndex, 0, movedBlock);
+      return newBlocks;
+    });
+  };
+
+  return (
+    <div
+      className={`relative w-screen h-screen flex flex-col bg-theme-bg-primary overflow-clip bg-[length:15px_15px] bg-[position:-7.5px_-7.5px] ${
+        theme === "light"
+          ? "bg-[radial-gradient(rgba(0,_0,_0,_0.1)_1px,_transparent_0)]"
+          : "bg-[radial-gradient(rgba(255,_255,_255,_0.1)_1px,_transparent_0)]"
+      }`}
+    >
+      <HeaderMenu
+        agentName={agentName}
+        availableFlows={availableFlows}
+        onNewFlow={clearFlow}
+        onSaveFlow={saveFlow}
+      />
+      <div className="flex-1 min-h-0 p-6 overflow-y-auto">
+        <div
+          className={`max-w-xl mx-auto mt-14 ${showBlockMenu ? "pb-52" : ""}`}
+        >
+          <BlockList
+            blocks={blocks}
+            updateBlockConfig={updateBlockConfig}
+            removeBlock={removeBlock}
+            toggleBlockExpansion={toggleBlockExpansion}
+            renderVariableSelect={renderVariableSelect}
+            onDeleteVariable={deleteVariable}
+            moveBlock={moveBlock}
+            refs={{ nameRef, descriptionRef }}
+          />
+
+          <AddBlockMenu
+            blocks={blocks}
+            showBlockMenu={showBlockMenu}
+            setShowBlockMenu={setShowBlockMenu}
+            addBlock={addBlock}
+          />
+        </div>
+      </div>
+      <Tooltip
+        id="content-summarization-tooltip"
+        place="top"
+        delayShow={300}
+        className="tooltip !text-xs z-99"
+      >
+        <p className="text-sm">
+          {t("agentBuilder.summarizeDescription")}
+          <br />
+          <br />
+          {t("agentBuilder.summarizeNote")}
+        </p>
+      </Tooltip>
+    </div>
+  );
+}

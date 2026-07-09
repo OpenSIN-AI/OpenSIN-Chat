@@ -9,9 +9,9 @@ OpenSIN Chat is designed as a **local-first** application. When utilizing the se
 * **Air-Gap Capability:** OpenSIN Chat can be operated in a strictly air-gapped environment with no internet connectivity, provided local LLM and Vector database providers (e.g., Ollama, LocalAI, LanceDB) are utilized.
 
 ## 2. Telemetry and Analytics
-**OpenSIN Chat sends no telemetry, no analytics, and no usage data of any kind.** All outbound telemetry has been completely removed at the source level.
+**OpenSIN Chat sends no telemetry, no analytics, and no usage data of any kind.** All upstream telemetry from the AnythingLLM base has been completely removed at the source level.
 
-* **Zero outbound calls:** There are no connections to any third-party analytics provider — not in the development build, not in the production build, not at startup, not during use.
+* **Zero outbound calls:** There are no connections to PostHog, Mintplex Labs, or any other third-party analytics provider — not in the development build, not in the production build, not at startup, not during use.
 * **No data ever leaves your infrastructure** unless you explicitly configure an external LLM or vector-DB provider. (See §3.)
 * **Audit-friendly:** The telemetry boot function has been reduced to a no-op stub, so you can verify the absence of any external calls by reading `server/utils/telemetry/index.js` directly.
 

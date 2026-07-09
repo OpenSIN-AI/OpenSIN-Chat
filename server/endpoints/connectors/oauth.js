@@ -1,1 +1,264 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBQdXJwb3NlOiBPQXV0aCBjb25uZWN0b3IgZW5kcG9pbnRzIOKAlCBzdGFydCwgY2FsbGJhY2ssIGxpc3QsIGRpc2Nvbm5lY3QuCi8vICAgICAgICAgIEdyYWNlZnVsIGRlZ3JhZGF0aW9uOiBpZiBPQXV0aCBlbnYgdmFycyBub3Qgc2V0LCByZXR1cm5zICJjb21pbmdfc29vbiIKLy8gICAgICAgICAgaW5zdGVhZCBvZiBjcmFzaGluZy4gQXBwIHJ1bnMgcHJvZHVjdGlvbi1yZWFkeSBXSVRIT1VUIE9BdXRoIGNvbmZpZy4KLy8gRG9jczogb2F1dGguZG9jLm1kCgpjb25zdCBjcnlwdG8gPSByZXF1aXJlKCJub2RlOmNyeXB0byIpOwpjb25zdCBleHByZXNzID0gcmVxdWlyZSgiZXhwcmVzcyIpOwpjb25zdCB7CiAgUFJPVklERVJTLAogIGlzUHJvdmlkZXJBdmFpbGFibGUsCiAgZ2V0QXZhaWxhYmlsaXR5LAogIHJlZGlyZWN0VXJpLAogIEJBU0VfVVJMLAp9ID0gcmVxdWlyZSgiLi4vLi4vdXRpbHMvY29ubmVjdG9ycy9wcm92aWRlcnMiKTsKY29uc3QgewogIGNyZWF0ZVBLQ0UsCiAgcHV0U3RhdGUsCiAgdGFrZVN0YXRlLAp9ID0gcmVxdWlyZSgiLi4vLi4vdXRpbHMvY29ubmVjdG9ycy9wa2NlIik7CmNvbnN0IHsgQ29ubmVjdG9yQWNjb3VudHMgfSA9IHJlcXVpcmUoIi4uLy4uL21vZGVscy9jb25uZWN0b3JBY2NvdW50cyIpOwpjb25zdCB7IHZhbGlkYXRlZFJlcXVlc3QgfSA9IHJlcXVpcmUoIi4uLy4uL3V0aWxzL21pZGRsZXdhcmUvdmFsaWRhdGVkUmVxdWVzdCIpOwpjb25zdCB7IHNpbXBsZVJhdGVMaW1pdCB9ID0gcmVxdWlyZSgiLi4vLi4vdXRpbHMvbWlkZGxld2FyZS9zaW1wbGVSYXRlTGltaXQiKTsKY29uc3QgeyB1c2VyRnJvbVNlc3Npb24gfSA9IHJlcXVpcmUoIi4uLy4uL3V0aWxzL2h0dHAiKTsKY29uc3QgY29uc29sZUxvZ2dlciA9IHJlcXVpcmUoIi4uLy4uL3V0aWxzL2xvZ2dlci9jb25zb2xlLmpzIik7CgpmdW5jdGlvbiBjb25uZWN0b3JPQXV0aEVuZHBvaW50cyhhcHApIHsKICBpZiAoIWFwcCkgcmV0dXJuOwogIGNvbnN0IHJvdXRlciA9IGV4cHJlc3MuUm91dGVyKCk7CgogIC8vIEdFVCAvY29ubmVjdG9ycyDigJQgbGlzdCBjb25uZWN0ZWQgYWNjb3VudHMgKyBwcm92aWRlciBhdmFpbGFiaWxpdHkKICByb3V0ZXIuZ2V0KCIvY29ubmVjdG9ycyIsIFt2YWxpZGF0ZWRSZXF1ZXN0XSwgYXN5bmMgKHJlcSwgcmVzKSA9PiB7CiAgICB0cnkgewogICAgICBjb25zdCB1c2VyID0gYXdhaXQgdXNlckZyb21TZXNzaW9uKHJlcSk7CiAgICAgIGNvbnN0IGFjY291bnRzID0gYXdhaXQgQ29ubmVjdG9yQWNjb3VudHMubGlzdFNhZmUodXNlcj8uaWQgPz8gbnVsbCk7CiAgICAgIHJldHVybiByZXMuanNvbih7CiAgICAgICAgc3VjY2VzczogdHJ1ZSwKICAgICAgICBhY2NvdW50cywKICAgICAgICBhdmFpbGFibGU6IGdldEF2YWlsYWJpbGl0eSgpLAogICAgICB9KTsKICAgIH0gY2F0Y2ggKGUpIHsKICAgICAgY29uc29sZUxvZ2dlci5lcnJvcigiW2Nvbm5lY3RvcnMgbGlzdF0iLCBlKTsKICAgICAgcmV0dXJuIHJlcy5zdGF0dXMoNTAwKS5qc29uKHsgc3VjY2VzczogZmFsc2UsIGVycm9yOiAiSW50ZXJuYWwgZXJyb3IiIH0pOwogICAgfQogIH0pOwoKICAvLyBHRVQgL2Nvbm5lY3RvcnMvOnByb3ZpZGVyL3N0YXJ0P3Byb2R1Y3Q9Z21haWwg4oCUIHN0YXJ0IE9BdXRoIGZsb3cKICByb3V0ZXIuZ2V0KAogICAgIi9jb25uZWN0b3JzLzpwcm92aWRlci9zdGFydCIsCiAgICBbCiAgICAgIHZhbGlkYXRlZFJlcXVlc3QsCiAgICAgIHNpbXBsZVJhdGVMaW1pdCh7CiAgICAgICAgYnVja2V0OiAiY29ubmVjdG9ycy1zdGFydCIsCiAgICAgICAgbWF4OiAzMCwKICAgICAgICB3aW5kb3dNczogNjAgKiAxMDAwLAogICAgICB9KSwKICAgIF0sCiAgICBhc3luYyAocmVxLCByZXMpID0+IHsKICAgICAgY29uc3QgeyBwcm92aWRlciB9ID0gcmVxLnBhcmFtczsKICAgICAgY29uc3QgcHJvZHVjdCA9IFN0cmluZyhyZXEucXVlcnkucHJvZHVjdCB8fCAiIikudG9Mb3dlckNhc2UoKTsKICAgICAgY29uc3QgZGVmID0gUFJPVklERVJTW3Byb3ZpZGVyXTsKCiAgICAgIGlmICghZGVmKSB7CiAgICAgICAgcmV0dXJuIHJlcwogICAgICAgICAgLnN0YXR1cyg0MDQpCiAgICAgICAgICAuanNvbih7IHN1Y2Nlc3M6IGZhbHNlLCBlcnJvcjogIlVua25vd24gcHJvdmlkZXIiIH0pOwogICAgICB9CgogICAgICAvLyBHcmFjZWZ1bCBkZWdyYWRhdGlvbjogbm90IGNvbmZpZ3VyZWQg4oaSIGNvbWluZ19zb29uCiAgICAgIGlmICghaXNQcm92aWRlckF2YWlsYWJsZShwcm92aWRlcikpIHsKICAgICAgICByZXR1cm4gcmVzLnN0YXR1cygyMDApLmpzb24oewogICAgICAgICAgc3VjY2VzczogZmFsc2UsCiAgICAgICAgICBzdGF0dXM6ICJjb21pbmdfc29vbiIsCiAgICAgICAgICBlcnJvcjogYCR7cHJvdmlkZXJ9IE9BdXRoIGlzIG5vdCBjb25maWd1cmVkLiBTZXQgJHtwcm92aWRlciA9PT0gImdvb2dsZSIgPyAiR09PR0xFX09BVVRIX0NMSUVOVF9JRCIgOiAiR0lUSFVCX09BVVRIX0NMSUVOVF9JRCJ9IGluIC5lbnYgdG8gZW5hYmxlLmAsCiAgICAgICAgfSk7CiAgICAgIH0KCiAgICAgIC8vIFZhbGlkYXRlIHByb2R1Y3Qgc2NvcGUgc2V0CiAgICAgIGNvbnN0IHNjb3BlcyA9IFsKICAgICAgICAuLi4oZGVmLnNjb3BlU2V0cy5fYmFzZSB8fCBbXSksCiAgICAgICAgLi4uKGRlZi5zY29wZVNldHNbcHJvZHVjdF0gfHwgW10pLAogICAgICBdOwogICAgICBpZiAocHJvZHVjdCAmJiBzY29wZXMubGVuZ3RoID09PSAoZGVmLnNjb3BlU2V0cy5fYmFzZSB8fCBbXSkubGVuZ3RoKSB7CiAgICAgICAgcmV0dXJuIHJlcy5zdGF0dXMoNDAwKS5qc29uKHsKICAgICAgICAgIHN1Y2Nlc3M6IGZhbHNlLAogICAgICAgICAgZXJyb3I6IGBVbmtub3duIHByb2R1Y3QgJyR7cHJvZHVjdH0nIGZvciAke3Byb3ZpZGVyfWAsCiAgICAgICAgfSk7CiAgICAgIH0KCiAgICAgIHRyeSB7CiAgICAgICAgY29uc3QgdXNlciA9IGF3YWl0IHVzZXJGcm9tU2Vzc2lvbihyZXEpOwogICAgICAgIGNvbnN0IHN0YXRlID0gY3J5cHRvLnJhbmRvbVVVSUQoKTsKICAgICAgICBjb25zdCB7IHZlcmlmaWVyLCBjaGFsbGVuZ2UgfSA9IGNyZWF0ZVBLQ0UoKTsKICAgICAgICBwdXRTdGF0ZShzdGF0ZSwgewogICAgICAgICAgdmVyaWZpZXIsCiAgICAgICAgICBwcm92aWRlciwKICAgICAgICAgIHByb2R1Y3QsCiAgICAgICAgICB1c2VySWQ6IHVzZXI/LmlkID8/IG51bGwsCiAgICAgICAgICBzY29wZXMsCiAgICAgICAgfSk7CgogICAgICAgIGNvbnN0IHBhcmFtcyA9IG5ldyBVUkxTZWFyY2hQYXJhbXMoewogICAgICAgICAgY2xpZW50X2lkOiBkZWYuY2xpZW50SWQsCiAgICAgICAgICByZWRpcmVjdF91cmk6IHJlZGlyZWN0VXJpKHByb3ZpZGVyKSwKICAgICAgICAgIHJlc3BvbnNlX3R5cGU6ICJjb2RlIiwKICAgICAgICAgIHNjb3BlOiBzY29wZXMuam9pbigiICIpLAogICAgICAgICAgc3RhdGUsCiAgICAgICAgICAuLi4oZGVmLnVzZXNQS0NFCiAgICAgICAgICAgID8geyBjb2RlX2NoYWxsZW5nZTogY2hhbGxlbmdlLCBjb2RlX2NoYWxsZW5nZV9tZXRob2Q6ICJTMjU2IiB9CiAgICAgICAgICAgIDoge30pLAogICAgICAgICAgLi4uKGRlZi5leHRyYUF1dGhQYXJhbXMgfHwge30pLAogICAgICAgIH0pOwoKICAgICAgICByZXR1cm4gcmVzLmpzb24oewogICAgICAgICAgc3VjY2VzczogdHJ1ZSwKICAgICAgICAgIGF1dGhvcml6ZVVybDogYCR7ZGVmLmF1dGhVcmx9PyR7cGFyYW1zLnRvU3RyaW5nKCl9YCwKICAgICAgICB9KTsKICAgICAgfSBjYXRjaCAoZSkgewogICAgICAgIGNvbnNvbGVMb2dnZXIuZXJyb3IoYFtjb25uZWN0b3JzICR7cHJvdmlkZXJ9IHN0YXJ0XWAsIGUpOwogICAgICAgIHJldHVybiByZXMKICAgICAgICAgIC5zdGF0dXMoNTAwKQogICAgICAgICAgLmpzb24oeyBzdWNjZXNzOiBmYWxzZSwgZXJyb3I6ICJJbnRlcm5hbCBlcnJvciIgfSk7CiAgICAgIH0KICAgIH0sCiAgKTsKCiAgLy8gR0VUIC9jb25uZWN0b3JzLzpwcm92aWRlci9jYWxsYmFjaz9jb2RlPS4uLiZzdGF0ZT0uLi4g4oCUIE9BdXRoIGNhbGxiYWNrCiAgcm91dGVyLmdldCgiL2Nvbm5lY3RvcnMvOnByb3ZpZGVyL2NhbGxiYWNrIiwgYXN5bmMgKHJlcSwgcmVzKSA9PiB7CiAgICBjb25zdCB7IHByb3ZpZGVyIH0gPSByZXEucGFyYW1zOwogICAgY29uc3QgeyBjb2RlLCBzdGF0ZSwgZXJyb3I6IG9hdXRoRXJyb3IgfSA9IHJlcS5xdWVyeTsKICAgIGNvbnN0IGRlZiA9IFBST1ZJREVSU1twcm92aWRlcl07CgogICAgLy8gRXNjYXBlIEhUTUwgc3BlY2lhbCBjaGFyYWN0ZXJzIGJlZm9yZSBpbnRlcnBvbGF0aW5nIHVzZXItY29udHJvbGxlZAogICAgLy8gc3RyaW5ncyBpbnRvIHRoZSBwYWdlIGJvZHkuIEFsc28gZXNjYXBlIDwvc2NyaXB0PiBpbiBKU09OIHBheWxvYWRzCiAgICAvLyB0byBwcmV2ZW50IHNjcmlwdCBpbmplY3Rpb24gdmlhIEpTT04uc3RyaW5naWZ5IG91dHB1dC4KICAgIGNvbnN0IGVzY0h0bWwgPSAocykgPT4KICAgICAgU3RyaW5nKHMpCiAgICAgICAgLnJlcGxhY2UoLyYvZywgIiZhbXA7IikKICAgICAgICAucmVwbGFjZSgvPC9nLCAiJmx0OyIpCiAgICAgICAgLnJlcGxhY2UoLz4vZywgIiZndDsiKQogICAgICAgIC5yZXBsYWNlKC8iL2csICImcXVvdDsiKQogICAgICAgIC5yZXBsYWNlKC8nL2csICImIzM5OyIpOwoKICAgIC8vIEpTT04uc3RyaW5naWZ5IGlzIE5PVCBzYWZlIGluc2lkZSBhIDxzY3JpcHQ+IHRhZyDigJQgdGhlIHN0cmluZwogICAgLy8gIjwvc2NyaXB0PiIgd291bGQgY2xvc2UgdGhlIHRhZy4gUmVwbGFjZSA8IHdpdGggXHUwMDNjIGluIHRoZQogICAgLy8gc2VyaWFsaXplZCBKU09OIHRvIHByZXZlbnQgdGhpcy4KICAgIGNvbnN0IHNhZmVKc29uID0gKG9iaikgPT4KICAgICAgSlNPTi5zdHJpbmdpZnkob2JqKS5yZXBsYWNlKC88L2csICJcXHUwMDNjIik7CgogICAgY29uc3QgY2xvc2VQb3B1cCA9IChwYXlsb2FkKSA9PgogICAgICByZXMuc2VuZChgPCFkb2N0eXBlIGh0bWw+PGh0bWw+PGJvZHk+PHNjcmlwdD4KICAgICAgICB3aW5kb3cub3BlbmVyICYmIHdpbmRvdy5vcGVuZXIucG9zdE1lc3NhZ2UoJHtzYWZlSnNvbihwYXlsb2FkKX0sICIke0JBU0VfVVJMfSIpOwogICAgICAgIHNldFRpbWVvdXQoKCkgPT4gd2luZG93LmNsb3NlKCksIDEwMCk7CiAgICAgIDwvc2NyaXB0PjxwIHN0eWxlPSJmb250LWZhbWlseTpzYW5zLXNlcmlmO3RleHQtYWxpZ246Y2VudGVyO3BhZGRpbmc6MnJlbSI+JHsKICAgICAgICBwYXlsb2FkLm9rCiAgICAgICAgICA/ICJWZXJidW5kZW4hIEZlbnN0ZXIgc2NobGllw590IHNpY2jigKYiCiAgICAgICAgICA6ICJGZWhsZXI6ICIgKyBlc2NIdG1sKHBheWxvYWQuZXJyb3IpCiAgICAgIH08L3A+PC9ib2R5PjwvaHRtbD5gKTsKCiAgICBpZiAob2F1dGhFcnJvcikgewogICAgICByZXR1cm4gY2xvc2VQb3B1cCh7IG9rOiBmYWxzZSwgcHJvdmlkZXIsIGVycm9yOiBTdHJpbmcob2F1dGhFcnJvcikgfSk7CiAgICB9CiAgICBpZiAoIWRlZiB8fCAhY29kZSB8fCAhc3RhdGUpIHsKICAgICAgcmV0dXJuIGNsb3NlUG9wdXAoeyBvazogZmFsc2UsIHByb3ZpZGVyLCBlcnJvcjogIkludmFsaWQgY2FsbGJhY2siIH0pOwogICAgfQoKICAgIGNvbnN0IHNhdmVkID0gdGFrZVN0YXRlKFN0cmluZyhzdGF0ZSkpOwogICAgaWYgKCFzYXZlZCB8fCBzYXZlZC5wcm92aWRlciAhPT0gcHJvdmlkZXIpIHsKICAgICAgcmV0dXJuIGNsb3NlUG9wdXAoewogICAgICAgIG9rOiBmYWxzZSwKICAgICAgICBwcm92aWRlciwKICAgICAgICBlcnJvcjogIlN0YXRlIG1pc21hdGNoIG9yIGV4cGlyZWQiLAogICAgICB9KTsKICAgIH0KCiAgICB0cnkgewogICAgICAvLyBFeGNoYW5nZSBjb2RlIGZvciB0b2tlbgogICAgICBjb25zdCBib2R5ID0gbmV3IFVSTFNlYXJjaFBhcmFtcyh7CiAgICAgICAgY2xpZW50X2lkOiBkZWYuY2xpZW50SWQsCiAgICAgICAgY2xpZW50X3NlY3JldDogZGVmLmNsaWVudFNlY3JldCB8fCAiIiwKICAgICAgICBjb2RlOiBTdHJpbmcoY29kZSksCiAgICAgICAgZ3JhbnRfdHlwZTogImF1dGhvcml6YXRpb25fY29kZSIsCiAgICAgICAgcmVkaXJlY3RfdXJpOiByZWRpcmVjdFVyaShwcm92aWRlciksCiAgICAgICAgLi4uKGRlZi51c2VzUEtDRSA/IHsgY29kZV92ZXJpZmllcjogc2F2ZWQudmVyaWZpZXIgfSA6IHt9KSwKICAgICAgfSk7CgogICAgICBjb25zdCB0b2tlblJlcyA9IGF3YWl0IGZldGNoKGRlZi50b2tlblVybCwgewogICAgICAgIG1ldGhvZDogIlBPU1QiLAogICAgICAgIGhlYWRlcnM6IHsKICAgICAgICAgICJDb250ZW50LVR5cGUiOiAiYXBwbGljYXRpb24veC13d3ctZm9ybS11cmxlbmNvZGVkIiwKICAgICAgICAgIEFjY2VwdDogImFwcGxpY2F0aW9uL2pzb24iLAogICAgICAgIH0sCiAgICAgICAgYm9keSwKICAgICAgfSk7CiAgICAgIGNvbnN0IHRvayA9IGF3YWl0IHRva2VuUmVzLmpzb24oKTsKICAgICAgaWYgKCF0b2tlblJlcy5vayB8fCB0b2suZXJyb3IpIHsKICAgICAgICB0aHJvdyBuZXcgRXJyb3IoCiAgICAgICAgICB0b2suZXJyb3JfZGVzY3JpcHRpb24gfHwgdG9rLmVycm9yIHx8ICJUb2tlbiBleGNoYW5nZSBmYWlsZWQiLAogICAgICAgICk7CiAgICAgIH0KCiAgICAgIC8vIEZldGNoIGFjY291bnQgZGlzcGxheSBuYW1lCiAgICAgIGxldCBwcm92aWRlckFjY291bnQgPSBudWxsOwogICAgICB0cnkgewogICAgICAgIGNvbnN0IHVpID0gYXdhaXQgZmV0Y2goZGVmLnVzZXJpbmZvVXJsLCB7CiAgICAgICAgICBoZWFkZXJzOiB7CiAgICAgICAgICAgIEF1dGhvcml6YXRpb246IGBCZWFyZXIgJHt0b2suYWNjZXNzX3Rva2VufWAsCiAgICAgICAgICAgICJVc2VyLUFnZW50IjogIk9wZW5TSU4tQ2hhdCIsCiAgICAgICAgICAgIEFjY2VwdDogImFwcGxpY2F0aW9uL2pzb24iLAogICAgICAgICAgfSwKICAgICAgICB9KTsKICAgICAgICBjb25zdCB1aiA9IGF3YWl0IHVpLmpzb24oKTsKICAgICAgICBwcm92aWRlckFjY291bnQgPSB1ai5lbWFpbCB8fCB1ai5sb2dpbiB8fCB1ai5uYW1lIHx8IG51bGw7CiAgICAgIH0gY2F0Y2gge30KCiAgICAgIGNvbnN0IGV4cGlyZXNBdCA9IHRvay5leHBpcmVzX2luCiAgICAgICAgPyBuZXcgRGF0ZShEYXRlLm5vdygpICsgTnVtYmVyKHRvay5leHBpcmVzX2luKSAqIDEwMDApCiAgICAgICAgOiBudWxsOwoKICAgICAgYXdhaXQgQ29ubmVjdG9yQWNjb3VudHMudXBzZXJ0KHsKICAgICAgICB1c2VySWQ6IHNhdmVkLnVzZXJJZCwKICAgICAgICBwcm92aWRlciwKICAgICAgICBwcm92aWRlckFjY291bnQsCiAgICAgICAgc2NvcGVzOiBzYXZlZC5zY29wZXMuam9pbigiICIpLAogICAgICAgIGFjY2Vzc1Rva2VuOiB0b2suYWNjZXNzX3Rva2VuLAogICAgICAgIHJlZnJlc2hUb2tlbjogdG9rLnJlZnJlc2hfdG9rZW4sCiAgICAgICAgdG9rZW5UeXBlOiB0b2sudG9rZW5fdHlwZSB8fCAiQmVhcmVyIiwKICAgICAgICBleHBpcmVzQXQsCiAgICAgIH0pOwoKICAgICAgcmV0dXJuIGNsb3NlUG9wdXAoewogICAgICAgIG9rOiB0cnVlLAogICAgICAgIHByb3ZpZGVyLAogICAgICAgIHByb2R1Y3Q6IHNhdmVkLnByb2R1Y3QsCiAgICAgICAgYWNjb3VudDogcHJvdmlkZXJBY2NvdW50LAogICAgICB9KTsKICAgIH0gY2F0Y2ggKGUpIHsKICAgICAgY29uc29sZUxvZ2dlci5lcnJvcihgW2Nvbm5lY3RvcnMgJHtwcm92aWRlcn0gY2FsbGJhY2tdYCwgZSk7CiAgICAgIHJldHVybiBjbG9zZVBvcHVwKHsgb2s6IGZhbHNlLCBwcm92aWRlciwgZXJyb3I6IGUubWVzc2FnZSB9KTsKICAgIH0KICB9KTsKCiAgLy8gUE9TVCAvY29ubmVjdG9ycy86cHJvdmlkZXIvZGlzY29ubmVjdCDigJQgcmV2b2tlICsgZGVsZXRlCiAgcm91dGVyLnBvc3QoCiAgICAiL2Nvbm5lY3RvcnMvOnByb3ZpZGVyL2Rpc2Nvbm5lY3QiLAogICAgW3ZhbGlkYXRlZFJlcXVlc3RdLAogICAgYXN5bmMgKHJlcSwgcmVzKSA9PiB7CiAgICAgIHRyeSB7CiAgICAgICAgY29uc3QgdXNlciA9IGF3YWl0IHVzZXJGcm9tU2Vzc2lvbihyZXEpOwogICAgICAgIGNvbnN0IHsgYWNjb3VudCB9ID0gcmVxLmJvZHkgfHwge307CiAgICAgICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgQ29ubmVjdG9yQWNjb3VudHMucmV2b2tlKAogICAgICAgICAgdXNlcj8uaWQgPz8gbnVsbCwKICAgICAgICAgIHJlcS5wYXJhbXMucHJvdmlkZXIsCiAgICAgICAgICBhY2NvdW50LAogICAgICAgICk7CiAgICAgICAgcmV0dXJuIHJlcy5qc29uKHJlc3VsdCk7CiAgICAgIH0gY2F0Y2ggKGUpIHsKICAgICAgICBjb25zb2xlTG9nZ2VyLmVycm9yKCJbY29ubmVjdG9ycyBkaXNjb25uZWN0XSIsIGUpOwogICAgICAgIHJldHVybiByZXMKICAgICAgICAgIC5zdGF0dXMoNTAwKQogICAgICAgICAgLmpzb24oeyBzdWNjZXNzOiBmYWxzZSwgZXJyb3I6ICJJbnRlcm5hbCBlcnJvciIgfSk7CiAgICAgIH0KICAgIH0sCiAgKTsKCiAgYXBwLnVzZSgiL2FwaSIsIHJvdXRlcik7Cn0KCm1vZHVsZS5leHBvcnRzID0geyBjb25uZWN0b3JPQXV0aEVuZHBvaW50cyB9Owo=
+// SPDX-License-Identifier: MIT
+// Purpose: OAuth connector endpoints — start, callback, list, disconnect.
+//          Graceful degradation: if OAuth env vars not set, returns "coming_soon"
+//          instead of crashing. App runs production-ready WITHOUT OAuth config.
+// Docs: oauth.doc.md
+
+const crypto = require("node:crypto");
+const express = require("express");
+const {
+  PROVIDERS,
+  isProviderAvailable,
+  getAvailability,
+  redirectUri,
+  BASE_URL,
+} = require("../../utils/connectors/providers");
+const {
+  createPKCE,
+  putState,
+  takeState,
+} = require("../../utils/connectors/pkce");
+const { ConnectorAccounts } = require("../../models/connectorAccounts");
+const { validatedRequest } = require("../../utils/middleware/validatedRequest");
+const { simpleRateLimit } = require("../../utils/middleware/simpleRateLimit");
+const { userFromSession } = require("../../utils/http");
+const consoleLogger = require("../../utils/logger/console.js");
+
+function connectorOAuthEndpoints(app) {
+  if (!app) return;
+  const router = express.Router();
+
+  // GET /connectors — list connected accounts + provider availability
+  router.get("/connectors", [validatedRequest], async (req, res) => {
+    try {
+      const user = await userFromSession(req);
+      const accounts = await ConnectorAccounts.listSafe(user?.id ?? null);
+      return res.json({
+        success: true,
+        accounts,
+        available: getAvailability(),
+      });
+    } catch (e) {
+      consoleLogger.error("[connectors list]", e);
+      return res.status(500).json({ success: false, error: "Internal error" });
+    }
+  });
+
+  // GET /connectors/:provider/start?product=gmail — start OAuth flow
+  router.get(
+    "/connectors/:provider/start",
+    [
+      validatedRequest,
+      simpleRateLimit({
+        bucket: "connectors-start",
+        max: 30,
+        windowMs: 60 * 1000,
+      }),
+    ],
+    async (req, res) => {
+      const { provider } = req.params;
+      const product = String(req.query.product || "").toLowerCase();
+      const def = PROVIDERS[provider];
+
+      if (!def) {
+        return res
+          .status(404)
+          .json({ success: false, error: "Unknown provider" });
+      }
+
+      // Graceful degradation: not configured → coming_soon
+      if (!isProviderAvailable(provider)) {
+        return res.status(200).json({
+          success: false,
+          status: "coming_soon",
+          error: `${provider} OAuth is not configured. Set ${provider === "google" ? "GOOGLE_OAUTH_CLIENT_ID" : "GITHUB_OAUTH_CLIENT_ID"} in .env to enable.`,
+        });
+      }
+
+      // Validate product scope set
+      const scopes = [
+        ...(def.scopeSets._base || []),
+        ...(def.scopeSets[product] || []),
+      ];
+      if (product && scopes.length === (def.scopeSets._base || []).length) {
+        return res.status(400).json({
+          success: false,
+          error: `Unknown product '${product}' for ${provider}`,
+        });
+      }
+
+      try {
+        const user = await userFromSession(req);
+        const state = crypto.randomUUID();
+        const { verifier, challenge } = createPKCE();
+        putState(state, {
+          verifier,
+          provider,
+          product,
+          userId: user?.id ?? null,
+          scopes,
+        });
+
+        const params = new URLSearchParams({
+          client_id: def.clientId,
+          redirect_uri: redirectUri(provider),
+          response_type: "code",
+          scope: scopes.join(" "),
+          state,
+          ...(def.usesPKCE
+            ? { code_challenge: challenge, code_challenge_method: "S256" }
+            : {}),
+          ...(def.extraAuthParams || {}),
+        });
+
+        return res.json({
+          success: true,
+          authorizeUrl: `${def.authUrl}?${params.toString()}`,
+        });
+      } catch (e) {
+        consoleLogger.error(`[connectors ${provider} start]`, e);
+        return res
+          .status(500)
+          .json({ success: false, error: "Internal error" });
+      }
+    },
+  );
+
+  // GET /connectors/:provider/callback?code=...&state=... — OAuth callback
+  router.get("/connectors/:provider/callback", async (req, res) => {
+    const { provider } = req.params;
+    const { code, state, error: oauthError } = req.query;
+    const def = PROVIDERS[provider];
+
+    // Escape HTML special characters before interpolating user-controlled
+    // strings into the page body. The postMessage payload uses JSON.stringify
+    // (safe for the script block); the <p> tag needs explicit escaping because
+    // oauthError comes directly from req.query and could contain </p><script>.
+    const escHtml = (s) =>
+      String(s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
+    const closePopup = (payload) =>
+      res.send(`<!doctype html><html><body><script>
+        window.opener && window.opener.postMessage(${JSON.stringify(payload)}, "${BASE_URL}");
+        setTimeout(() => window.close(), 100);
+      </script><p style="font-family:sans-serif;text-align:center;padding:2rem">${
+        payload.ok
+          ? "Verbunden! Fenster schließt sich…"
+          : "Fehler: " + escHtml(payload.error)
+      }</p></body></html>`);
+
+    if (oauthError) {
+      return closePopup({ ok: false, provider, error: String(oauthError) });
+    }
+    if (!def || !code || !state) {
+      return closePopup({ ok: false, provider, error: "Invalid callback" });
+    }
+
+    const saved = takeState(String(state));
+    if (!saved || saved.provider !== provider) {
+      return closePopup({
+        ok: false,
+        provider,
+        error: "State mismatch or expired",
+      });
+    }
+
+    try {
+      // Exchange code for token
+      const body = new URLSearchParams({
+        client_id: def.clientId,
+        client_secret: def.clientSecret || "",
+        code: String(code),
+        grant_type: "authorization_code",
+        redirect_uri: redirectUri(provider),
+        ...(def.usesPKCE ? { code_verifier: saved.verifier } : {}),
+      });
+
+      const tokenRes = await fetch(def.tokenUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json",
+        },
+        body,
+      });
+      const tok = await tokenRes.json();
+      if (!tokenRes.ok || tok.error) {
+        throw new Error(
+          tok.error_description || tok.error || "Token exchange failed",
+        );
+      }
+
+      // Fetch account display name
+      let providerAccount = null;
+      try {
+        const ui = await fetch(def.userinfoUrl, {
+          headers: {
+            Authorization: `Bearer ${tok.access_token}`,
+            "User-Agent": "OpenSIN-Chat",
+            Accept: "application/json",
+          },
+        });
+        const uj = await ui.json();
+        providerAccount = uj.email || uj.login || uj.name || null;
+      } catch {}
+
+      const expiresAt = tok.expires_in
+        ? new Date(Date.now() + Number(tok.expires_in) * 1000)
+        : null;
+
+      await ConnectorAccounts.upsert({
+        userId: saved.userId,
+        provider,
+        providerAccount,
+        scopes: saved.scopes.join(" "),
+        accessToken: tok.access_token,
+        refreshToken: tok.refresh_token,
+        tokenType: tok.token_type || "Bearer",
+        expiresAt,
+      });
+
+      return closePopup({
+        ok: true,
+        provider,
+        product: saved.product,
+        account: providerAccount,
+      });
+    } catch (e) {
+      consoleLogger.error(`[connectors ${provider} callback]`, e);
+      return closePopup({ ok: false, provider, error: e.message });
+    }
+  });
+
+  // POST /connectors/:provider/disconnect — revoke + delete
+  router.post(
+    "/connectors/:provider/disconnect",
+    [validatedRequest],
+    async (req, res) => {
+      try {
+        const user = await userFromSession(req);
+        const { account } = req.body || {};
+        const result = await ConnectorAccounts.revoke(
+          user?.id ?? null,
+          req.params.provider,
+          account,
+        );
+        return res.json(result);
+      } catch (e) {
+        consoleLogger.error("[connectors disconnect]", e);
+        return res
+          .status(500)
+          .json({ success: false, error: "Internal error" });
+      }
+    },
+  );
+
+  app.use("/api", router);
+}
+
+module.exports = { connectorOAuthEndpoints };

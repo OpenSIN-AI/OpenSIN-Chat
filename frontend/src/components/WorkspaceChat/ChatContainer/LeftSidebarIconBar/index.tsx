@@ -1,1 +1,54 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyBUb29sdGlwIH0gZnJvbSAicmVhY3QtdG9vbHRpcCI7CmltcG9ydCB7IFNpZGViYXJTaW1wbGUgfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvU2lkZWJhclNpbXBsZSI7CmltcG9ydCB7IHVzZVRyYW5zbGF0aW9uIH0gZnJvbSAicmVhY3QtaTE4bmV4dCI7CmltcG9ydCB7IHVzZVNpZGViYXJUb2dnbGUgfSBmcm9tICJAL2NvbXBvbmVudHMvU2lkZWJhci9TaWRlYmFyVG9nZ2xlIjsKaW1wb3J0IEFjY291bnRNZW51IGZyb20gIkAvY29tcG9uZW50cy9Gb290ZXIvQWNjb3VudE1lbnUiOwoKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gTGVmdFNpZGViYXJJY29uQmFyKCkgewogIGNvbnN0IHsgc2hvd1NpZGViYXIsIHNldFNob3dTaWRlYmFyLCBjYW5Ub2dnbGVTaWRlYmFyIH0gPSB1c2VTaWRlYmFyVG9nZ2xlKCk7CiAgY29uc3QgeyB0IH0gPSB1c2VUcmFuc2xhdGlvbigpOwoKICBpZiAoIWNhblRvZ2dsZVNpZGViYXIpIHJldHVybiBudWxsOwoKICByZXR1cm4gKAogICAgPGRpdiBjbGFzc05hbWU9ImZpeGVkIGxlZnQtMCB0b3AtMiBoLVtjYWxjKDEwMHZoLTE2cHgpXSBmbGV4IGZsZXgtY29sIGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWJldHdlZW4gcHktMiBweC0xIGJnLXppbmMtOTAwIGxpZ2h0OmJnLXdoaXRlIGZsZXgtc2hyaW5rLTAgdy1bNDRweF0gbWwtMiByb3VuZGVkLTJ4bCB6LTMwIj4KICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgaXRlbXMtY2VudGVyIGdhcC0xIj4KICAgICAgICA8YnV0dG9uCiAgICAgICAgICB0eXBlPSJidXR0b24iCiAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBzZXRTaG93U2lkZWJhcigocHJldikgPT4gIXByZXYpfQogICAgICAgICAgZGF0YS10b29sdGlwLWlkPSJsc2liLXRvZ2dsZSIKICAgICAgICAgIGRhdGEtdG9vbHRpcC1jb250ZW50PXsKICAgICAgICAgICAgc2hvd1NpZGViYXIgPyB0KCJjb21tb24uaGlkZVNpZGViYXIiKSA6IHQoImNvbW1vbi5zaG93U2lkZWJhciIpCiAgICAgICAgICB9CiAgICAgICAgICBhcmlhLWxhYmVsPXsKICAgICAgICAgICAgc2hvd1NpZGViYXIgPyB0KCJjb21tb24uaGlkZVNpZGViYXIiKSA6IHQoImNvbW1vbi5zaG93U2lkZWJhciIpCiAgICAgICAgICB9CiAgICAgICAgICBjbGFzc05hbWU9e2BmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciB3LTggaC04IHJvdW5kZWQtbGcgYm9yZGVyLW5vbmUgY3Vyc29yLXBvaW50ZXIgdHJhbnNpdGlvbi1hbGwgJHsKICAgICAgICAgICAgc2hvd1NpZGViYXIKICAgICAgICAgICAgICA/ICJiZy16aW5jLTcwMCBsaWdodDpiZy1zbGF0ZS0yMDAgdGV4dC10aGVtZS10ZXh0LXByaW1hcnkgbGlnaHQ6dGV4dC10aGVtZS10ZXh0LXByaW1hcnkiCiAgICAgICAgICAgICAgOiAidGV4dC16aW5jLTQwMCBsaWdodDp0ZXh0LXNsYXRlLTUwMCBob3ZlcjpiZy16aW5jLTgwMCBsaWdodDpob3ZlcjpiZy1zbGF0ZS0xMDAgaG92ZXI6dGV4dC10aGVtZS10ZXh0LXByaW1hcnkgbGlnaHQ6aG92ZXI6dGV4dC10aGVtZS10ZXh0LXByaW1hcnkiCiAgICAgICAgICB9YH0KICAgICAgICA+CiAgICAgICAgICA8U2lkZWJhclNpbXBsZSBzaXplPXsxOH0gd2VpZ2h0PXtzaG93U2lkZWJhciA/ICJmaWxsIiA6ICJyZWd1bGFyIn0gLz4KICAgICAgICA8L2J1dHRvbj4KICAgICAgICA8VG9vbHRpcAogICAgICAgICAgaWQ9ImxzaWItdG9nZ2xlIgogICAgICAgICAgcGxhY2U9InJpZ2h0IgogICAgICAgICAgZGVsYXlTaG93PXszMDB9CiAgICAgICAgICBjbGFzc05hbWU9InRvb2x0aXAgIXRleHQteHMgei1bOTldIgogICAgICAgIC8+CiAgICAgIDwvZGl2PgoKICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgaXRlbXMtY2VudGVyIGdhcC0xIj4KICAgICAgICA8QWNjb3VudE1lbnUgY29tcGFjdCAvPgogICAgICAgIDxUb29sdGlwCiAgICAgICAgICBpZD0ibHNpYi1wcm9maWxlIgogICAgICAgICAgcGxhY2U9InJpZ2h0IgogICAgICAgICAgZGVsYXlTaG93PXszMDB9CiAgICAgICAgICBjbGFzc05hbWU9InRvb2x0aXAgIXRleHQteHMgei1bOTldIgogICAgICAgIC8+CiAgICAgIDwvZGl2PgogICAgPC9kaXY+CiAgKTsKfQo=
+// SPDX-License-Identifier: MIT
+import { Tooltip } from "react-tooltip";
+import { SidebarSimple } from "@phosphor-icons/react/dist/csr/SidebarSimple";
+import { useTranslation } from "react-i18next";
+import { useSidebarToggle } from "@/components/Sidebar/SidebarToggle";
+import AccountMenu from "@/components/Footer/AccountMenu";
+
+export default function LeftSidebarIconBar() {
+  const { showSidebar, setShowSidebar, canToggleSidebar } = useSidebarToggle();
+  const { t } = useTranslation();
+
+  if (!canToggleSidebar) return null;
+
+  return (
+    <div className="fixed left-0 top-2 h-[calc(100vh-16px)] flex flex-col items-center justify-between py-2 px-1 bg-zinc-900 light:bg-white flex-shrink-0 w-[44px] ml-2 rounded-2xl z-30">
+      <div className="flex flex-col items-center gap-1">
+        <button
+          type="button"
+          onClick={() => setShowSidebar((prev) => !prev)}
+          data-tooltip-id="lsib-toggle"
+          data-tooltip-content={
+            showSidebar ? t("common.hideSidebar") : t("common.showSidebar")
+          }
+          aria-label={
+            showSidebar ? t("common.hideSidebar") : t("common.showSidebar")
+          }
+          className={`flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all ${
+            showSidebar
+              ? "bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary"
+              : "text-zinc-400 light:text-slate-500 hover:bg-zinc-800 light:hover:bg-slate-100 hover:text-theme-text-primary light:hover:text-theme-text-primary"
+          }`}
+        >
+          <SidebarSimple size={18} weight={showSidebar ? "fill" : "regular"} />
+        </button>
+        <Tooltip
+          id="lsib-toggle"
+          place="right"
+          delayShow={300}
+          className="tooltip !text-xs z-99"
+        />
+      </div>
+
+      <div className="flex flex-col items-center gap-1">
+        <AccountMenu compact />
+        <Tooltip
+          id="lsib-profile"
+          place="right"
+          delayShow={300}
+          className="tooltip !text-xs z-99"
+        />
+      </div>
+    </div>
+  );
+}

@@ -172,14 +172,13 @@ describe("utils/numbers – humanFileSize", () => {
 
 describe("utils/numbers – milliToHms", () => {
   it("formats milliseconds as h/m/s with 2-decimal seconds", () => {
-    expect(milliToHms(0)).toBe("");
+    // Seconds are always shown (even at 0) and the result is trimmed.
+    expect(milliToHms(0)).toBe("0.00s");
     expect(milliToHms(1000)).toBe("1.00s");
-    // 60_000ms = 60s = 1m. The seconds remainder is 0, which is < 0.01,
-    // so the seconds portion is dropped. The minutes are kept (1m).
-    expect(milliToHms(60_000)).toBe("1m ");
-    // 3_600_000ms = 1h. The minute and second remainders are both 0 and
-    // dropped, so the output is just "1h ".
-    expect(milliToHms(3_600_000)).toBe("1h ");
+    // 60_000ms = 60s = 1m 0.00s.
+    expect(milliToHms(60_000)).toBe("1m 0.00s");
+    // 3_600_000ms = 1h. Minutes are 0 (omitted); seconds are shown as 0.00s.
+    expect(milliToHms(3_600_000)).toBe("1h 0.00s");
   });
 
   it("combines hours, minutes, seconds", () => {

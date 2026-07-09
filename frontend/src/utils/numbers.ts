@@ -63,7 +63,7 @@ export function milliToHms(milli = 0) {
   // trim() removes any trailing space left when h or m produced a display suffix.
   const hDisplay = h >= 1 ? h + "h " : "";
   const mDisplay = m >= 1 ? m + "m " : "";
-  const sDisplay = s.toFixed(2) + "s";
+  const sDisplay = s >= 0 ? s.toFixed(2) + "s" : "";
   return (hDisplay + mDisplay + sDisplay).trim();
 }
 

@@ -1,1 +1,209 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBQdXJwb3NlOiBSRVNUIGVuZHBvaW50cyBmb3IgYWdlbnQgdHJpZ2dlcnMg4oCUIENSVUQsIHRvZ2dsZSwgbGlzdCBydW5zLCByZXBsYXkuCi8vIERvY3M6IGFnZW50VHJpZ2dlcnNFbmRwb2ludC5kb2MubWQKCmNvbnN0IGV4cHJlc3MgPSByZXF1aXJlKCJleHByZXNzIik7CmNvbnN0IHsgQWdlbnRUcmlnZ2VycyB9ID0gcmVxdWlyZSgiLi4vbW9kZWxzL2FnZW50VHJpZ2dlcnMiKTsKY29uc3QgeyB0cmlnZ2VyRW5naW5lLCBjbGVhckZhaWx1cmVDb3VudCB9ID0gcmVxdWlyZSgiLi4vdXRpbHMvYWdlbnRzL3RyaWdnZXJFbmdpbmUiKTsKY29uc3QgeyBXb3Jrc3BhY2UgfSA9IHJlcXVpcmUoIi4uL21vZGVscy93b3Jrc3BhY2UiKTsKY29uc3QgewogIGZsZXhVc2VyUm9sZVZhbGlkLAogIFJPTEVTLAp9ID0gcmVxdWlyZSgiLi4vdXRpbHMvbWlkZGxld2FyZS9tdWx0aVVzZXJQcm90ZWN0ZWQiKTsKY29uc3QgeyB2YWxpZGF0ZWRSZXF1ZXN0IH0gPSByZXF1aXJlKCIuLi91dGlscy9taWRkbGV3YXJlL3ZhbGlkYXRlZFJlcXVlc3QiKTsKY29uc3QgeyBzaW1wbGVSYXRlTGltaXQgfSA9IHJlcXVpcmUoIi4uL3V0aWxzL21pZGRsZXdhcmUvc2ltcGxlUmF0ZUxpbWl0Iik7CmNvbnN0IHsgcmVxQm9keSB9ID0gcmVxdWlyZSgiLi4vdXRpbHMvaHR0cCIpOwpjb25zdCBjb25zb2xlTG9nZ2VyID0gcmVxdWlyZSgiLi4vdXRpbHMvbG9nZ2VyL2NvbnNvbGUuanMiKTsKCmZ1bmN0aW9uIGFnZW50VHJpZ2dlckVuZHBvaW50cyhhcHApIHsKICBpZiAoIWFwcCkgcmV0dXJuOwogIGNvbnN0IHJvdXRlciA9IGV4cHJlc3MuUm91dGVyKCk7CgogIC8vIExpc3QgdHJpZ2dlcnMgZm9yIGEgd29ya3NwYWNlCiAgcm91dGVyLmdldCgKICAgICIvd29ya3NwYWNlLzpzbHVnL3RyaWdnZXJzIiwKICAgIFt2YWxpZGF0ZWRSZXF1ZXN0LCBmbGV4VXNlclJvbGVWYWxpZChbUk9MRVMuYWRtaW5dKV0sCiAgICBhc3luYyAocmVxLCByZXMpID0+IHsKICAgICAgdHJ5IHsKICAgICAgICBjb25zdCB3b3Jrc3BhY2UgPSBhd2FpdCBXb3Jrc3BhY2UuZ2V0KHsgc2x1ZzogcmVxLnBhcmFtcy5zbHVnIH0pOwogICAgICAgIGlmICghd29ya3NwYWNlKQogICAgICAgICAgcmV0dXJuIHJlcwogICAgICAgICAgICAuc3RhdHVzKDQwNCkKICAgICAgICAgICAgLmpzb24oeyBzdWNjZXNzOiBmYWxzZSwgZXJyb3I6ICJXb3Jrc3BhY2Ugbm90IGZvdW5kIiB9KTsKICAgICAgICBjb25zdCB0cmlnZ2VycyA9IGF3YWl0IEFnZW50VHJpZ2dlcnMubGlzdCh3b3Jrc3BhY2UuaWQpOwogICAgICAgIHJldHVybiByZXMuanNvbih7IHN1Y2Nlc3M6IHRydWUsIHRyaWdnZXJzIH0pOwogICAgICB9IGNhdGNoIChlKSB7CiAgICAgICAgY29uc29sZUxvZ2dlci5lcnJvcigiW3RyaWdnZXJzIGxpc3RdIiwgZSk7CiAgICAgICAgcmV0dXJuIHJlcwogICAgICAgICAgLnN0YXR1cyg1MDApCiAgICAgICAgICAuanNvbih7IHN1Y2Nlc3M6IGZhbHNlLCBlcnJvcjogIkludGVybmFsIGVycm9yIiB9KTsKICAgICAgfQogICAgfSwKICApOwoKICAvLyBDcmVhdGUgYSB0cmlnZ2VyCiAgcm91dGVyLnBvc3QoCiAgICAiL3dvcmtzcGFjZS86c2x1Zy90cmlnZ2VycyIsCiAgICBbCiAgICAgIHZhbGlkYXRlZFJlcXVlc3QsCiAgICAgIGZsZXhVc2VyUm9sZVZhbGlkKFtST0xFUy5hZG1pbl0pLAogICAgICBzaW1wbGVSYXRlTGltaXQoeyBidWNrZXQ6ICJ0cmlnZ2Vycy1jcmVhdGUiLCBtYXg6IDIwLCB3aW5kb3dNczogNjBfMDAwIH0pLAogICAgXSwKICAgIGFzeW5jIChyZXEsIHJlcykgPT4gewogICAgICB0cnkgewogICAgICAgIGNvbnN0IHdvcmtzcGFjZSA9IGF3YWl0IFdvcmtzcGFjZS5nZXQoeyBzbHVnOiByZXEucGFyYW1zLnNsdWcgfSk7CiAgICAgICAgaWYgKCF3b3Jrc3BhY2UpCiAgICAgICAgICByZXR1cm4gcmVzCiAgICAgICAgICAgIC5zdGF0dXMoNDA0KQogICAgICAgICAgICAuanNvbih7IHN1Y2Nlc3M6IGZhbHNlLCBlcnJvcjogIldvcmtzcGFjZSBub3QgZm91bmQiIH0pOwoKICAgICAgICBjb25zdCB7IG5hbWUsIGFnZW50TmFtZSwgdHlwZSwgY29uZmlnIH0gPSByZXFCb2R5KHJlcSk7CiAgICAgICAgaWYgKCFuYW1lIHx8ICFhZ2VudE5hbWUgfHwgIXR5cGUgfHwgIWNvbmZpZykgewogICAgICAgICAgcmV0dXJuIHJlcy5zdGF0dXMoNDAwKS5qc29uKHsKICAgICAgICAgICAgc3VjY2VzczogZmFsc2UsCiAgICAgICAgICAgIGVycm9yOiAibmFtZSwgYWdlbnROYW1lLCB0eXBlLCBhbmQgY29uZmlnIGFyZSByZXF1aXJlZCIsCiAgICAgICAgICB9KTsKICAgICAgICB9CgogICAgICAgIGlmICghWyJzY2hlZHVsZSIsICJwb2xsaW5nIl0uaW5jbHVkZXModHlwZSkpIHsKICAgICAgICAgIHJldHVybiByZXMuc3RhdHVzKDQwMCkuanNvbih7CiAgICAgICAgICAgIHN1Y2Nlc3M6IGZhbHNlLAogICAgICAgICAgICBlcnJvcjogInR5cGUgbXVzdCBiZSAnc2NoZWR1bGUnIG9yICdwb2xsaW5nJyIsCiAgICAgICAgICB9KTsKICAgICAgICB9CgogICAgICAgIGNvbnN0IHRyaWdnZXIgPSBhd2FpdCBBZ2VudFRyaWdnZXJzLmNyZWF0ZSh7CiAgICAgICAgICB3b3Jrc3BhY2VJZDogd29ya3NwYWNlLmlkLAogICAgICAgICAgYWdlbnROYW1lLAogICAgICAgICAgbmFtZSwKICAgICAgICAgIHR5cGUsCiAgICAgICAgICBjb25maWcsCiAgICAgICAgfSk7CiAgICAgICAgcmV0dXJuIHJlcy5qc29uKHsgc3VjY2VzczogdHJ1ZSwgdHJpZ2dlciB9KTsKICAgICAgfSBjYXRjaCAoZSkgewogICAgICAgIGNvbnNvbGVMb2dnZXIuZXJyb3IoIlt0cmlnZ2VycyBjcmVhdGVdIiwgZSk7CiAgICAgICAgcmV0dXJuIHJlcwogICAgICAgICAgLnN0YXR1cyg1MDApCiAgICAgICAgICAuanNvbih7IHN1Y2Nlc3M6IGZhbHNlLCBlcnJvcjogIkludGVybmFsIGVycm9yIiB9KTsKICAgICAgfQogICAgfSwKICApOwoKICAvLyBVcGRhdGUgYSB0cmlnZ2VyCiAgcm91dGVyLnBhdGNoKAogICAgIi93b3Jrc3BhY2UvOnNsdWcvdHJpZ2dlcnMvOnRyaWdnZXJJZCIsCiAgICBbdmFsaWRhdGVkUmVxdWVzdCwgZmxleFVzZXJSb2xlVmFsaWQoW1JPTEVTLmFkbWluXSldLAogICAgYXN5bmMgKHJlcSwgcmVzKSA9PiB7CiAgICAgIHRyeSB7CiAgICAgICAgY29uc3QgeyB0cmlnZ2VySWQgfSA9IHJlcS5wYXJhbXM7CiAgICAgICAgY29uc3Qgd29ya3NwYWNlID0gYXdhaXQgV29ya3NwYWNlLmdldCh7IHNsdWc6IHJlcS5wYXJhbXMuc2x1ZyB9KTsKICAgICAgICBpZiAoIXdvcmtzcGFjZSkKICAgICAgICAgIHJldHVybiByZXMKICAgICAgICAgICAgLnN0YXR1cyg0MDQpCiAgICAgICAgICAgIC5qc29uKHsgc3VjY2VzczogZmFsc2UsIGVycm9yOiAiV29ya3NwYWNlIG5vdCBmb3VuZCIgfSk7CgogICAgICAgIC8vIFZlcmlmeSB0aGUgdHJpZ2dlciBiZWxvbmdzIHRvIHRoaXMgd29ya3NwYWNlCiAgICAgICAgY29uc3QgdHJpZ2dlciA9IGF3YWl0IEFnZW50VHJpZ2dlcnMuZ2V0KHRyaWdnZXJJZCk7CiAgICAgICAgaWYgKCF0cmlnZ2VyIHx8IHRyaWdnZXIud29ya3NwYWNlX2lkICE9PSB3b3Jrc3BhY2UuaWQpCiAgICAgICAgICByZXR1cm4gcmVzCiAgICAgICAgICAgIC5zdGF0dXMoNDA0KQogICAgICAgICAgICAuanNvbih7IHN1Y2Nlc3M6IGZhbHNlLCBlcnJvcjogIlRyaWdnZXIgbm90IGZvdW5kIiB9KTsKCiAgICAgICAgY29uc3QgdXBkYXRlZCA9IGF3YWl0IEFnZW50VHJpZ2dlcnMudXBkYXRlKHRyaWdnZXJJZCwgcmVxQm9keShyZXEpKTsKICAgICAgICByZXR1cm4gcmVzLmpzb24oeyBzdWNjZXNzOiB0cnVlLCB0cmlnZ2VyOiB1cGRhdGVkIH0pOwogICAgICB9IGNhdGNoIChlKSB7CiAgICAgICAgY29uc29sZUxvZ2dlci5lcnJvcigiW3RyaWdnZXJzIHVwZGF0ZV0iLCBlKTsKICAgICAgICByZXR1cm4gcmVzCiAgICAgICAgICAuc3RhdHVzKDUwMCkKICAgICAgICAgIC5qc29uKHsgc3VjY2VzczogZmFsc2UsIGVycm9yOiAiSW50ZXJuYWwgZXJyb3IiIH0pOwogICAgICB9CiAgICB9LAogICk7CgogIC8vIERlbGV0ZSBhIHRyaWdnZXIKICByb3V0ZXIuZGVsZXRlKAogICAgIi93b3Jrc3BhY2UvOnNsdWcvdHJpZ2dlcnMvOnRyaWdnZXJJZCIsCiAgICBbdmFsaWRhdGVkUmVxdWVzdCwgZmxleFVzZXJSb2xlVmFsaWQoW1JPTEVTLmFkbWluXSldLAogICAgYXN5bmMgKHJlcSwgcmVzKSA9PiB7CiAgICAgIHRyeSB7CiAgICAgICAgY29uc3Qgd29ya3NwYWNlID0gYXdhaXQgV29ya3NwYWNlLmdldCh7IHNsdWc6IHJlcS5wYXJhbXMuc2x1ZyB9KTsKICAgICAgICBpZiAoIXdvcmtzcGFjZSkKICAgICAgICAgIHJldHVybiByZXMKICAgICAgICAgICAgLnN0YXR1cyg0MDQpCiAgICAgICAgICAgIC5qc29uKHsgc3VjY2VzczogZmFsc2UsIGVycm9yOiAiV29ya3NwYWNlIG5vdCBmb3VuZCIgfSk7CgogICAgICAgIGNvbnN0IHRyaWdnZXIgPSBhd2FpdCBBZ2VudFRyaWdnZXJzLmdldChyZXEucGFyYW1zLnRyaWdnZXJJZCk7CiAgICAgICAgaWYgKCF0cmlnZ2VyIHx8IHRyaWdnZXIud29ya3NwYWNlX2lkICE9PSB3b3Jrc3BhY2UuaWQpCiAgICAgICAgICByZXR1cm4gcmVzCiAgICAgICAgICAgIC5zdGF0dXMoNDA0KQogICAgICAgICAgICAuanNvbih7IHN1Y2Nlc3M6IGZhbHNlLCBlcnJvcjogIlRyaWdnZXIgbm90IGZvdW5kIiB9KTsKCiAgICAgICAgYXdhaXQgQWdlbnRUcmlnZ2Vycy5kZWxldGUocmVxLnBhcmFtcy50cmlnZ2VySWQpOwogICAgICAgIGNsZWFyRmFpbHVyZUNvdW50KHJlcS5wYXJhbXMudHJpZ2dlcklkKTsKICAgICAgICByZXR1cm4gcmVzLmpzb24oeyBzdWNjZXNzOiB0cnVlIH0pOwogICAgICB9IGNhdGNoIChlKSB7CiAgICAgICAgY29uc29sZUxvZ2dlci5lcnJvcigiW3RyaWdnZXJzIGRlbGV0ZV0iLCBlKTsKICAgICAgICByZXR1cm4gcmVzCiAgICAgICAgICAuc3RhdHVzKDUwMCkKICAgICAgICAgIC5qc29uKHsgc3VjY2VzczogZmFsc2UsIGVycm9yOiAiSW50ZXJuYWwgZXJyb3IiIH0pOwogICAgICB9CiAgICB9LAogICk7CgogIC8vIFRvZ2dsZSB0cmlnZ2VyIGFjdGl2ZSBzdGF0dXMKICByb3V0ZXIucG9zdCgKICAgICIvd29ya3NwYWNlLzpzbHVnL3RyaWdnZXJzLzp0cmlnZ2VySWQvdG9nZ2xlIiwKICAgIFt2YWxpZGF0ZWRSZXF1ZXN0LCBmbGV4VXNlclJvbGVWYWxpZChbUk9MRVMuYWRtaW5dKV0sCiAgICBhc3luYyAocmVxLCByZXMpID0+IHsKICAgICAgdHJ5IHsKICAgICAgICBjb25zdCB7IGFjdGl2ZSB9ID0gcmVxQm9keShyZXEpOwogICAgICAgIGNvbnN0IHdvcmtzcGFjZSA9IGF3YWl0IFdvcmtzcGFjZS5nZXQoeyBzbHVnOiByZXEucGFyYW1zLnNsdWcgfSk7CiAgICAgICAgaWYgKCF3b3Jrc3BhY2UpCiAgICAgICAgICByZXR1cm4gcmVzCiAgICAgICAgICAgIC5zdGF0dXMoNDA0KQogICAgICAgICAgICAuanNvbih7IHN1Y2Nlc3M6IGZhbHNlLCBlcnJvcjogIldvcmtzcGFjZSBub3QgZm91bmQiIH0pOwoKICAgICAgICBjb25zdCB0cmlnZ2VyID0gYXdhaXQgQWdlbnRUcmlnZ2Vycy5nZXQocmVxLnBhcmFtcy50cmlnZ2VySWQpOwogICAgICAgIGlmICghdHJpZ2dlciB8fCB0cmlnZ2VyLndvcmtzcGFjZV9pZCAhPT0gd29ya3NwYWNlLmlkKQogICAgICAgICAgcmV0dXJuIHJlcwogICAgICAgICAgICAuc3RhdHVzKDQwNCkKICAgICAgICAgICAgLmpzb24oeyBzdWNjZXNzOiBmYWxzZSwgZXJyb3I6ICJUcmlnZ2VyIG5vdCBmb3VuZCIgfSk7CgogICAgICAgIGNvbnN0IHVwZGF0ZWQgPSBhd2FpdCBBZ2VudFRyaWdnZXJzLnRvZ2dsZSgKICAgICAgICAgIHJlcS5wYXJhbXMudHJpZ2dlcklkLAogICAgICAgICAgYWN0aXZlLAogICAgICAgICk7CiAgICAgICAgcmV0dXJuIHJlcy5qc29uKHsgc3VjY2VzczogdHJ1ZSwgdHJpZ2dlcjogdXBkYXRlZCB9KTsKICAgICAgfSBjYXRjaCAoZSkgewogICAgICAgIGNvbnNvbGVMb2dnZXIuZXJyb3IoIlt0cmlnZ2VycyB0b2dnbGVdIiwgZSk7CiAgICAgICAgcmV0dXJuIHJlcwogICAgICAgICAgLnN0YXR1cyg1MDApCiAgICAgICAgICAuanNvbih7IHN1Y2Nlc3M6IGZhbHNlLCBlcnJvcjogIkludGVybmFsIGVycm9yIiB9KTsKICAgICAgfQogICAgfSwKICApOwoKICAvLyBMaXN0IHJ1bnMgZm9yIGEgdHJpZ2dlcgogIHJvdXRlci5nZXQoCiAgICAiL3dvcmtzcGFjZS86c2x1Zy90cmlnZ2Vycy86dHJpZ2dlcklkL3J1bnMiLAogICAgW3ZhbGlkYXRlZFJlcXVlc3QsIGZsZXhVc2VyUm9sZVZhbGlkKFtST0xFUy5hZG1pbl0pXSwKICAgIGFzeW5jIChyZXEsIHJlcykgPT4gewogICAgICB0cnkgewogICAgICAgIGNvbnN0IHdvcmtzcGFjZSA9IGF3YWl0IFdvcmtzcGFjZS5nZXQoeyBzbHVnOiByZXEucGFyYW1zLnNsdWcgfSk7CiAgICAgICAgaWYgKCF3b3Jrc3BhY2UpCiAgICAgICAgICByZXR1cm4gcmVzCiAgICAgICAgICAgIC5zdGF0dXMoNDA0KQogICAgICAgICAgICAuanNvbih7IHN1Y2Nlc3M6IGZhbHNlLCBlcnJvcjogIldvcmtzcGFjZSBub3QgZm91bmQiIH0pOwoKICAgICAgICBjb25zdCB0cmlnZ2VyID0gYXdhaXQgQWdlbnRUcmlnZ2Vycy5nZXQocmVxLnBhcmFtcy50cmlnZ2VySWQpOwogICAgICAgIGlmICghdHJpZ2dlciB8fCB0cmlnZ2VyLndvcmtzcGFjZV9pZCAhPT0gd29ya3NwYWNlLmlkKQogICAgICAgICAgcmV0dXJuIHJlcwogICAgICAgICAgICAuc3RhdHVzKDQwNCkKICAgICAgICAgICAgLmpzb24oeyBzdWNjZXNzOiBmYWxzZSwgZXJyb3I6ICJUcmlnZ2VyIG5vdCBmb3VuZCIgfSk7CgogICAgICAgIGNvbnN0IHJ1bnMgPSBhd2FpdCBBZ2VudFRyaWdnZXJzLmxpc3RSdW5zKHJlcS5wYXJhbXMudHJpZ2dlcklkLCA1MCk7CiAgICAgICAgcmV0dXJuIHJlcy5qc29uKHsgc3VjY2VzczogdHJ1ZSwgcnVucyB9KTsKICAgICAgfSBjYXRjaCAoZSkgewogICAgICAgIGNvbnNvbGVMb2dnZXIuZXJyb3IoIlt0cmlnZ2VyIHJ1bnMgbGlzdF0iLCBlKTsKICAgICAgICByZXR1cm4gcmVzCiAgICAgICAgICAuc3RhdHVzKDUwMCkKICAgICAgICAgIC5qc29uKHsgc3VjY2VzczogZmFsc2UsIGVycm9yOiAiSW50ZXJuYWwgZXJyb3IiIH0pOwogICAgICB9CiAgICB9LAogICk7CgogIC8vIE1hbnVhbGx5IHJlcGxheSBhIGZhaWxlZCBydW4KICByb3V0ZXIucG9zdCgKICAgICIvd29ya3NwYWNlLzpzbHVnL3RyaWdnZXJzLzp0cmlnZ2VySWQvcnVucy86cnVuSWQvcmVwbGF5IiwKICAgIFt2YWxpZGF0ZWRSZXF1ZXN0LCBmbGV4VXNlclJvbGVWYWxpZChbUk9MRVMuYWRtaW5dKV0sCiAgICBhc3luYyAocmVxLCByZXMpID0+IHsKICAgICAgdHJ5IHsKICAgICAgICBjb25zdCB3b3Jrc3BhY2UgPSBhd2FpdCBXb3Jrc3BhY2UuZ2V0KHsgc2x1ZzogcmVxLnBhcmFtcy5zbHVnIH0pOwogICAgICAgIGlmICghd29ya3NwYWNlKQogICAgICAgICAgcmV0dXJuIHJlcwogICAgICAgICAgICAuc3RhdHVzKDQwNCkKICAgICAgICAgICAgLmpzb24oeyBzdWNjZXNzOiBmYWxzZSwgZXJyb3I6ICJXb3Jrc3BhY2Ugbm90IGZvdW5kIiB9KTsKCiAgICAgICAgY29uc3QgdHJpZ2dlciA9IGF3YWl0IEFnZW50VHJpZ2dlcnMuZ2V0KHJlcS5wYXJhbXMudHJpZ2dlcklkKTsKICAgICAgICBpZiAoIXRyaWdnZXIgfHwgdHJpZ2dlci53b3Jrc3BhY2VfaWQgIT09IHdvcmtzcGFjZS5pZCkKICAgICAgICAgIHJldHVybiByZXMKICAgICAgICAgICAgLnN0YXR1cyg0MDQpCiAgICAgICAgICAgIC5qc29uKHsgc3VjY2VzczogZmFsc2UsIGVycm9yOiAiVHJpZ2dlciBub3QgZm91bmQiIH0pOwoKICAgICAgICBhd2FpdCB0cmlnZ2VyRW5naW5lLnJlcGxheVJ1bihyZXEucGFyYW1zLnJ1bklkKTsKICAgICAgICByZXR1cm4gcmVzLmpzb24oeyBzdWNjZXNzOiB0cnVlIH0pOwogICAgICB9IGNhdGNoIChlKSB7CiAgICAgICAgY29uc29sZUxvZ2dlci5lcnJvcigiW3RyaWdnZXIgcmVwbGF5XSIsIGUpOwogICAgICAgIHJldHVybiByZXMuc3RhdHVzKDUwMCkuanNvbih7IHN1Y2Nlc3M6IGZhbHNlLCBlcnJvcjogZS5tZXNzYWdlIH0pOwogICAgICB9CiAgICB9LAogICk7CgogIC8vIE1hbnVhbGx5IGZpcmUgYSB0cmlnZ2VyICh0ZXN0KQogIHJvdXRlci5wb3N0KAogICAgIi93b3Jrc3BhY2UvOnNsdWcvdHJpZ2dlcnMvOnRyaWdnZXJJZC9maXJlIiwKICAgIFt2YWxpZGF0ZWRSZXF1ZXN0LCBmbGV4VXNlclJvbGVWYWxpZChbUk9MRVMuYWRtaW5dKV0sCiAgICBhc3luYyAocmVxLCByZXMpID0+IHsKICAgICAgdHJ5IHsKICAgICAgICBjb25zdCB3b3Jrc3BhY2UgPSBhd2FpdCBXb3Jrc3BhY2UuZ2V0KHsgc2x1ZzogcmVxLnBhcmFtcy5zbHVnIH0pOwogICAgICAgIGlmICghd29ya3NwYWNlKQogICAgICAgICAgcmV0dXJuIHJlcwogICAgICAgICAgICAuc3RhdHVzKDQwNCkKICAgICAgICAgICAgLmpzb24oeyBzdWNjZXNzOiBmYWxzZSwgZXJyb3I6ICJXb3Jrc3BhY2Ugbm90IGZvdW5kIiB9KTsKCiAgICAgICAgY29uc3QgdHJpZ2dlciA9IGF3YWl0IEFnZW50VHJpZ2dlcnMuZ2V0KHJlcS5wYXJhbXMudHJpZ2dlcklkKTsKICAgICAgICBpZiAoIXRyaWdnZXIgfHwgdHJpZ2dlci53b3Jrc3BhY2VfaWQgIT09IHdvcmtzcGFjZS5pZCkKICAgICAgICAgIHJldHVybiByZXMKICAgICAgICAgICAgLnN0YXR1cyg0MDQpCiAgICAgICAgICAgIC5qc29uKHsgc3VjY2VzczogZmFsc2UsIGVycm9yOiAiVHJpZ2dlciBub3QgZm91bmQiIH0pOwoKICAgICAgICAvLyBGaXJlIGltbWVkaWF0ZWx5IGluIGJhY2tncm91bmQKICAgICAgICB0cmlnZ2VyRW5naW5lCiAgICAgICAgICAuX2V4ZWN1dGVUcmlnZ2VyKHRyaWdnZXIpCiAgICAgICAgICAuY2F0Y2goKGUpID0+IGNvbnNvbGVMb2dnZXIuZXJyb3IoIlt0cmlnZ2VyIGZpcmVdIiwgZSkpOwogICAgICAgIHJldHVybiByZXMuanNvbih7IHN1Y2Nlc3M6IHRydWUsIG1lc3NhZ2U6ICJUcmlnZ2VyIGZpcmVkIiB9KTsKICAgICAgfSBjYXRjaCAoZSkgewogICAgICAgIGNvbnNvbGVMb2dnZXIuZXJyb3IoIlt0cmlnZ2VyIGZpcmVdIiwgZSk7CiAgICAgICAgcmV0dXJuIHJlcwogICAgICAgICAgLnN0YXR1cyg1MDApCiAgICAgICAgICAuanNvbih7IHN1Y2Nlc3M6IGZhbHNlLCBlcnJvcjogIkludGVybmFsIGVycm9yIiB9KTsKICAgICAgfQogICAgfSwKICApOwoKICBhcHAudXNlKCIvYXBpIiwgcm91dGVyKTsKfQoKbW9kdWxlLmV4cG9ydHMgPSB7IGFnZW50VHJpZ2dlckVuZHBvaW50cyB9Owo=
+// SPDX-License-Identifier: MIT
+// Purpose: REST endpoints for agent triggers — CRUD, toggle, list runs, replay.
+// Docs: agentTriggersEndpoint.doc.md
+
+const express = require("express");
+const { AgentTriggers } = require("../models/agentTriggers");
+const { triggerEngine } = require("../utils/agents/triggerEngine");
+const { Workspace } = require("../models/workspace");
+const {
+  flexUserRoleValid,
+  ROLES,
+} = require("../utils/middleware/multiUserProtected");
+const { validatedRequest } = require("../utils/middleware/validatedRequest");
+const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
+const { reqBody } = require("../utils/http");
+const consoleLogger = require("../utils/logger/console.js");
+
+function agentTriggerEndpoints(app) {
+  if (!app) return;
+  const router = express.Router();
+
+  // List triggers for a workspace
+  router.get(
+    "/workspace/:slug/triggers",
+    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    async (req, res) => {
+      try {
+        const workspace = await Workspace.get({ slug: req.params.slug });
+        if (!workspace)
+          return res
+            .status(404)
+            .json({ success: false, error: "Workspace not found" });
+        const triggers = await AgentTriggers.list(workspace.id);
+        return res.json({ success: true, triggers });
+      } catch (e) {
+        consoleLogger.error("[triggers list]", e);
+        return res
+          .status(500)
+          .json({ success: false, error: "Internal error" });
+      }
+    },
+  );
+
+  // Create a trigger
+  router.post(
+    "/workspace/:slug/triggers",
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.admin]),
+      simpleRateLimit({ bucket: "triggers-create", max: 20, windowMs: 60_000 }),
+    ],
+    async (req, res) => {
+      try {
+        const workspace = await Workspace.get({ slug: req.params.slug });
+        if (!workspace)
+          return res
+            .status(404)
+            .json({ success: false, error: "Workspace not found" });
+
+        const { name, agentName, type, config } = reqBody(req);
+        if (!name || !agentName || !type || !config) {
+          return res.status(400).json({
+            success: false,
+            error: "name, agentName, type, and config are required",
+          });
+        }
+
+        if (!["schedule", "polling"].includes(type)) {
+          return res.status(400).json({
+            success: false,
+            error: "type must be 'schedule' or 'polling'",
+          });
+        }
+
+        const trigger = await AgentTriggers.create({
+          workspaceId: workspace.id,
+          agentName,
+          name,
+          type,
+          config,
+        });
+        return res.json({ success: true, trigger });
+      } catch (e) {
+        consoleLogger.error("[triggers create]", e);
+        return res
+          .status(500)
+          .json({ success: false, error: "Internal error" });
+      }
+    },
+  );
+
+  // Update a trigger
+  router.patch(
+    "/workspace/:slug/triggers/:triggerId",
+    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    async (req, res) => {
+      try {
+        const { triggerId } = req.params;
+        const patch = reqBody(req);
+        const trigger = await AgentTriggers.update(triggerId, patch);
+        return res.json({ success: true, trigger });
+      } catch (e) {
+        consoleLogger.error("[triggers update]", e);
+        return res
+          .status(500)
+          .json({ success: false, error: "Internal error" });
+      }
+    },
+  );
+
+  // Delete a trigger
+  router.delete(
+    "/workspace/:slug/triggers/:triggerId",
+    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    async (req, res) => {
+      try {
+        await AgentTriggers.delete(req.params.triggerId);
+        return res.json({ success: true });
+      } catch (e) {
+        consoleLogger.error("[triggers delete]", e);
+        return res
+          .status(500)
+          .json({ success: false, error: "Internal error" });
+      }
+    },
+  );
+
+  // Toggle trigger active status
+  router.post(
+    "/workspace/:slug/triggers/:triggerId/toggle",
+    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    async (req, res) => {
+      try {
+        const { active } = reqBody(req);
+        const trigger = await AgentTriggers.toggle(
+          req.params.triggerId,
+          active,
+        );
+        return res.json({ success: true, trigger });
+      } catch (e) {
+        consoleLogger.error("[triggers toggle]", e);
+        return res
+          .status(500)
+          .json({ success: false, error: "Internal error" });
+      }
+    },
+  );
+
+  // List runs for a trigger
+  router.get(
+    "/workspace/:slug/triggers/:triggerId/runs",
+    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    async (req, res) => {
+      try {
+        const runs = await AgentTriggers.listRuns(req.params.triggerId, 50);
+        return res.json({ success: true, runs });
+      } catch (e) {
+        consoleLogger.error("[trigger runs list]", e);
+        return res
+          .status(500)
+          .json({ success: false, error: "Internal error" });
+      }
+    },
+  );
+
+  // Manually replay a failed run
+  router.post(
+    "/workspace/:slug/triggers/:triggerId/runs/:runId/replay",
+    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    async (req, res) => {
+      try {
+        await triggerEngine.replayRun(req.params.runId);
+        return res.json({ success: true });
+      } catch (e) {
+        consoleLogger.error("[trigger replay]", e);
+        return res.status(500).json({ success: false, error: e.message });
+      }
+    },
+  );
+
+  // Manually fire a trigger (test)
+  router.post(
+    "/workspace/:slug/triggers/:triggerId/fire",
+    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    async (req, res) => {
+      try {
+        const trigger = await AgentTriggers.get(req.params.triggerId);
+        if (!trigger)
+          return res
+            .status(404)
+            .json({ success: false, error: "Trigger not found" });
+        // Fire immediately in background
+        triggerEngine
+          ._executeTrigger(trigger)
+          .catch((e) => consoleLogger.error("[trigger fire]", e));
+        return res.json({ success: true, message: "Trigger fired" });
+      } catch (e) {
+        consoleLogger.error("[trigger fire]", e);
+        return res
+          .status(500)
+          .json({ success: false, error: "Internal error" });
+      }
+    },
+  );
+
+  app.use("/api", router);
+}
+
+module.exports = { agentTriggerEndpoints };
