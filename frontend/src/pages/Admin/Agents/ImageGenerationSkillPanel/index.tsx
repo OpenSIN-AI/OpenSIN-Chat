@@ -7,12 +7,15 @@ import useSystemSettings from "@/hooks/useSystemSettings";
 import type { Icon } from "@phosphor-icons/react/dist/lib/types";
 
 const IMAGE_MODELS = [
+  "google/imagen-4.0-fast-generate-001",
+  "google/imagen-4.0-generate-001",
+  "google/imagen-4.0-ultra-generate-001",
+  "openai/gpt-image-1",
+  "openai/gpt-image-1-mini",
+  "openai/gpt-image-1.5",
+  "bfl/flux-2-pro",
   "dall-e-3",
-  "dall-e-2",
   "gpt-image-1",
-  "stable-image-ultra",
-  "black-forest-labs/flux.1-schnell",
-  "black-forest-labs/flux-pro",
 ];
 
 const INPUT_CLASSES =
@@ -101,7 +104,7 @@ export default function ImageGenerationSkillPanel({
                 name="system::image_generation_base_path"
                 type="url"
                 defaultValue={basePath}
-                placeholder="https://api.openai.com"
+                placeholder="https://ai-gateway.vercel.sh"
                 aria-invalid={urlError}
                 onBlur={(e) => setUrlError(!isValidBaseUrl(e.target.value))}
                 onChange={(e) => {
@@ -118,7 +121,7 @@ export default function ImageGenerationSkillPanel({
                 <p className="text-theme-text-secondary text-xs">
                   {t("agent.skill.image_generation.base_url.help")}{" "}
                   <code className="bg-zinc-800 px-1 rounded">
-                    https://api.openai.com
+                    https://ai-gateway.vercel.sh
                   </code>
                 </p>
               )}

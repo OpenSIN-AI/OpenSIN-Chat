@@ -27,10 +27,10 @@ export const AGENT_MODES = [
     icon: ImageIcon,
     label: "Bilder generieren",
     description: "KI-generierte Bilder erstellen",
-    enabled: false,
-    badge: "coming soon",
+    enabled: true,
     prefix: "@agent [image-gen]",
-    systemPromptHint: "",
+    systemPromptHint:
+      "You are operating in IMAGE GENERATION mode. Use the image-generation tool to create the requested image. Translate the user's request into a detailed, descriptive English image prompt covering subject, style, composition, colors, and lighting. Choose a short descriptive filename. If image generation is not configured, tell the user to enable and configure the 'Image Generation' skill in the admin agent settings.",
   },
   {
     id: "video-gen",
