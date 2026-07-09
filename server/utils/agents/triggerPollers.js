@@ -39,7 +39,7 @@ async function pollConnector(config, checkpoint) {
       };
     default:
       consoleLogger.warn(
-        `[TriggerPollers] Unknown connector_type "${type}" — returning no changes`
+        `[TriggerPollers] Unknown connector_type "${type}" — returning no changes`,
       );
       return {
         hasChanges: false,
@@ -158,9 +158,9 @@ async function pollGitHub(config, checkpoint) {
       new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
 
     const url = `https://api.github.com/repos/${encodeURIComponent(
-      config.repo
+      config.repo,
     )}/${kind}?state=${encodeURIComponent(state)}&since=${encodeURIComponent(
-      since
+      since,
     )}&per_page=50&sort=updated&direction=desc`;
 
     const headers = {
