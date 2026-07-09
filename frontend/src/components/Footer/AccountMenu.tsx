@@ -236,9 +236,7 @@ function AccountMenu({ compact = false }: { compact?: boolean }) {
         ref={triggerRef}
         type="button"
         onClick={() => setOpen((v) => !v)}
-        aria-label={
-          compact ? t("common.profile") : t("common.account", "Account")
-        }
+        aria-label={compact ? t("common.profile") : undefined}
         aria-expanded={open}
         aria-haspopup="menu"
         data-tooltip-id={compact ? "lsib-profile" : undefined}

@@ -67,12 +67,20 @@ export default defineConfig({
         chunkFileNames: "assets/[name]-[hash].js",
         assetFileNames: "assets/[name]-[hash].[ext]",
         // Manual chunks for better caching of vendor code.
-        // (Previously at build.manualChunks where Rollup silently ignores it.)
-        manualChunks: {
-          "react-vendor": ["react", "react-dom", "react-router-dom"],
-          "pdf-vendor": ["react-pdf"],
-          "chart-vendor": ["echarts", "echarts-for-react", "recharts"],
-          "markdown-vendor": ["react-markdown", "markdown-it", "remark-gfm"],
+        // Rolldown (Vite 8) only accepts the function form of manualChunks —
+        // the object form throws "TypeError: manualChunks is not a function".
+        manualChunks(id) {
+          if (!id.includes("node_modules")) return undefined;
+          if (/node_modules\/(react|react-dom|react-router-dom)\//.test(id))
+            return "react-vendor";
+          if (/node_modules\/react-pdf\//.test(id)) return "pdf-vendor";
+          if (/node_modules\/(echarts|echarts-for-react|recharts)\//.test(id))
+            return "chart-vendor";
+          if (
+            /node_modules\/(react-markdown|markdown-it|remark-gfm)\//.test(id)
+          )
+            return "markdown-vendor";
+          return undefined;
         },
       },
     },
