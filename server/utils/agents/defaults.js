@@ -14,6 +14,7 @@ const DEFAULT_SKILLS = [
   AgentPlugins.webScraping.name,
   AgentPlugins.generateReport.name,
   AgentPlugins.deepResearch.name,
+  AgentPlugins.imageGeneration.name,
 ];
 
 /**

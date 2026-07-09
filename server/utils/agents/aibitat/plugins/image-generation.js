@@ -95,27 +95,45 @@ module.exports.imageGeneration = {
               const {
                 SystemSettings,
               } = require("../../../../models/systemSettings");
-              const basePath = (
+
+              // Resolve base path: DB setting → env → hardcoded AI Gateway default
+              const storedBasePath = (
                 await SystemSettings.getValueOrFallback(
                   { label: "image_generation_base_path" },
                   "",
                 )
               ).replace(/\/+$/, "");
-              const apiKey =
+              const basePath =
+                storedBasePath ||
+                (process.env.IMAGE_GENERATION_BASE_PATH || "").replace(
+                  /\/+$/,
+                  "",
+                ) ||
+                "https://ai-gateway.vercel.sh";
+
+              // Resolve API key: DB setting → env fallbacks
+              const storedApiKey =
                 (
                   await SystemSettings.get({
                     label: "image_generation_api_key",
                   })
                 )?.value || "";
-              const model =
+              const apiKey =
+                storedApiKey ||
+                process.env.IMAGE_GENERATION_API_KEY ||
+                process.env.AI_GATEWAY_API_KEY ||
+                "";
+
+              // Resolve model: DB setting → env → sensible default
+              const storedModel =
                 (await SystemSettings.getValueOrFallback(
                   { label: "image_generation_model" },
                   "",
-                )) || undefined;
-
-              if (!basePath) {
-                return "Image generation is not configured. Please set the image generation base path in the admin settings.";
-              }
+                )) || "";
+              const model =
+                storedModel ||
+                process.env.IMAGE_GENERATION_MODEL ||
+                "google/imagen-4.0-fast-generate-001";
 
               const url = `${basePath}/v1/images/generations`;
               const headers = { "Content-Type": "application/json" };
