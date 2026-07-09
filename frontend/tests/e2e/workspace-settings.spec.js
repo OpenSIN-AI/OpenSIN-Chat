@@ -99,7 +99,7 @@ test.describe("workspace settings tabs", () => {
     // Click save — should not crash. We don't assert success because the
     // backend may reject depending on LLM config; we only verify the button
     // is wired and the form submits without a JS error.
-    await saveBtn.click().catch(() => {});
+    await saveBtn.click().catch((e) => console.warn("[workspace-settings.spec] non-fatal error:", e?.message || e));
     await page.waitForTimeout(2000);
 
     // Page should still be loaded (no crash)

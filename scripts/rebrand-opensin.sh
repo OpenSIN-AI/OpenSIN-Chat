@@ -23,7 +23,7 @@ git ls-files -z \
 git ls-files -z | grep -zvE "$EXCLUDE" | xargs -0 perl -i -pe '
   s#openafd\.delqhi\.com#opensin.delqhi.com#g;
   s#docs\.openafd\.com#docs.opensin.delqhi.com#g;
-  s#Family-Team-Projects/OpenAfD-Chat#OpenSIN-AI/OpenSIN-Chat#g;
+  s#OpenSIN-AI/OpenSIN-Chat#OpenSIN-AI/OpenSIN-Chat#g;
 '
 
 # 3) Package-Namen (npm scope-frei) angleichen.

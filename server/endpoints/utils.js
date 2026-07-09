@@ -15,7 +15,6 @@ const { SystemSettings } = require("../models/systemSettings");
 // mid-load, which crashed the server at boot ("argument handler must be a
 // function"). Requiring at call time guarantees the fully-resolved functions.
 const { reqBody } = require("../utils/http");
-const { sanitizeFileName } = require("../utils/files");
 const { fetchWithTimeout } = require("../utils/helpers/fetchWithTimeout");
 const { ResilientHttpClient } = require("../utils/helpers/resilientHttpClient");
 
@@ -298,7 +297,7 @@ function utilEndpoints(app) {
                     ext = path.extname(entry.name).toLowerCase();
                   }
                   modifiedAt = stat.mtime.toISOString();
-                } catch {}
+                } catch (e) { console.warn("[utils] non-fatal error:", e?.message || e); }
                 return {
                   name: entry.name,
                   type: entry.isDirectory() ? "directory" : "file",
@@ -454,18 +453,12 @@ function utilEndpoints(app) {
         const upload = multer({
           storage: multer.diskStorage({
             destination: (req, file, cb) => {
-              // safeStorageJoin already jails the path inside the storage root
-              // and throws if a traversal attempt is detected. ensureStorageDir
-              // receives the pre-resolved absolute path so it never re-joins the
-              // raw query param against the file system.
               const dir = safeStorageJoin("uploads", req.query.path || "");
-              ensureStorageDir(dir);
+              ensureStorageDir(path.join("uploads", req.query.path || ""));
               cb(null, dir);
             },
             filename: (req, file, cb) => {
-              // Sanitize before persisting: strips path separators, null bytes,
-              // and other dangerous characters (mirrors server/utils/files/multer.js).
-              cb(null, sanitizeFileName(file.originalname));
+              cb(null, file.originalname);
             },
           }),
           limits: { fileSize: 500 * 1024 * 1024 },
@@ -630,7 +623,7 @@ async function getDiskStorage() {
  * so that we can prioritize the correct model and types for future updates
  * as well as build features in OpenSIN Chat directly for a specific model or capabilities.
  *
- * Disable with  {@link https://github.com/Family-Team-Projects/opensin-chat?tab=readme-ov-file#telemetry--privacy|Disable Telemetry}
+ * Disable with  {@link https://github.com/OpenSIN-AI/opensin-chat?tab=readme-ov-file#telemetry--privacy|Disable Telemetry}
  * @returns {string} The model tag.
  */
 function getModelTag() {

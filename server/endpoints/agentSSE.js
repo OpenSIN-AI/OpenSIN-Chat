@@ -137,7 +137,7 @@ function createSSESocket(res) {
           }
           res.end();
         }
-      } catch {}
+      } catch (e) { console.warn("[agentSSE] non-fatal error:", e?.message || e); }
       this._emit("close");
     },
 
@@ -147,7 +147,7 @@ function createSSESocket(res) {
       this.readyState = 3;
       try {
         if (!res.writableEnded) res.end();
-      } catch {}
+      } catch (e) { console.warn("[agentSSE] non-fatal error:", e?.message || e); }
       this._emit("close");
     },
 
@@ -267,7 +267,7 @@ function agentSSE(app, routePrefix = "") {
             );
             try {
               agentHandler.aibitat.abort();
-            } catch {}
+            } catch (e) { console.warn("[agentSSE] non-fatal error:", e?.message || e); }
             socket.close();
             return;
           }
@@ -289,7 +289,7 @@ function agentSSE(app, routePrefix = "") {
                   id: crypto.randomUUID(),
                 }),
               );
-            } catch {}
+            } catch (e) { console.warn("[agentSSE] non-fatal error:", e?.message || e); }
             return;
           }
           relayToSocket.call(socket, data.toString());
@@ -312,10 +312,10 @@ function agentSSE(app, routePrefix = "") {
                 id,
               }),
             );
-          } catch {}
+          } catch (e) { console.warn("[agentSSE] non-fatal error:", e?.message || e); }
           try {
             socket.close(1008, "Session ended");
-          } catch {}
+          } catch (e) { console.warn("[agentSSE] non-fatal error:", e?.message || e); }
           return;
         }
 
@@ -334,10 +334,10 @@ function agentSSE(app, routePrefix = "") {
               id,
             }),
           );
-        } catch {}
+        } catch (e) { console.warn("[agentSSE] non-fatal error:", e?.message || e); }
         try {
           socket.close();
-        } catch {}
+        } catch (e) { console.warn("[agentSSE] non-fatal error:", e?.message || e); }
       }
     },
   );

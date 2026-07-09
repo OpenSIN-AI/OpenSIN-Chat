@@ -30,7 +30,7 @@ test.describe("chat flow — 5 messages", () => {
       const responseIndicator = page.locator(".dot-falling, .bg-red-50").first();
       await responseIndicator.waitFor({ state: "visible", timeout: 45000 });
       // Wait for the response to finish streaming (or for the error bubble to stabilise).
-      await responseIndicator.waitFor({ state: "hidden", timeout: 45000 }).catch(() => {});
+      await responseIndicator.waitFor({ state: "hidden", timeout: 45000 }).catch((e) => console.warn("[chat-5-messages.spec] non-fatal error:", e?.message || e));
 
       testLog.push({ step: `chat-message-${i}`, marker, responseHandled: true });
     }

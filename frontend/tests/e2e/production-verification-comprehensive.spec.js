@@ -83,7 +83,7 @@ for (const [key, site] of Object.entries(SITES)) {
           .delete(`${site.url}/api/workspace/${createdSlug}`, {
             headers: { Authorization: `Bearer ${token}` },
           })
-          .catch(() => {});
+          .catch((e) => console.warn("[production-verification-comprehensive.spec] non-fatal error:", e?.message || e));
         createdSlug = null;
       }
     });

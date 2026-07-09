@@ -62,7 +62,7 @@ test.describe("authenticated production smoke", () => {
         .delete(`${siteUrl}/api/workspace/${createdSlug}`, {
           headers: { Authorization: `Bearer ${token}` },
         })
-        .catch(() => {});
+        .catch((e) => console.warn("[production-authenticated-smoke.spec] non-fatal error:", e?.message || e));
       createdSlug = null;
     }
   });
@@ -99,7 +99,7 @@ test.describe("authenticated production smoke", () => {
       await expect(page.getByText(marker, { exact: false })).toBeAttached({ timeout: 15000 });
       const indicator = page.locator(".dot-falling, .bg-red-50").first();
       await indicator.waitFor({ state: "visible", timeout: 45000 });
-      await indicator.waitFor({ state: "hidden", timeout: 45000 }).catch(() => {});
+      await indicator.waitFor({ state: "hidden", timeout: 45000 }).catch((e) => console.warn("[production-authenticated-smoke.spec] non-fatal error:", e?.message || e));
       testLog.push({ step: `chat-message-${i}`, marker });
     }
     await screenshot(page, "02-chat-after-5");

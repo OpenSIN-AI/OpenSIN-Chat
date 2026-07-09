@@ -49,10 +49,6 @@ const { mcpServersEndpoints } = require("./endpoints/mcpServers");
 const { agentRunsStream } = require("./endpoints/agentRunsStream");
 const { subagentEndpoints } = require("./endpoints/subagents");
 const { scheduledJobEndpoints } = require("./endpoints/scheduledJobs");
-const { agentTriggerEndpoints } = require("./endpoints/agentTriggers");
-const {
-  connectorOAuthEndpoints,
-} = require("./endpoints/connectors/oauth");
 const {
   outlookAgentEndpoints,
 } = require("./endpoints/utils/outlookAgentUtils");
@@ -64,9 +60,6 @@ const { noteEndpoints } = require("./endpoints/notes");
 const { contextModeEndpoints } = require("./endpoints/contextMode");
 const { transformationEndpoints } = require("./endpoints/transformations");
 const { askEndpoints } = require("./endpoints/ask");
-const {
-  workspaceParsedFilesEndpoints,
-} = require("./endpoints/workspacesParsedFiles");
 const { providerStatusEndpoints } = require("./endpoints/providerStatus");
 const { pdfAnalysisEndpoints } = require("./endpoints/pdfAnalysis");
 const { webPushEndpoints } = require("./endpoints/webPush");
@@ -75,14 +68,16 @@ const cspViolationEndpoint = require("./endpoints/cspViolation");
 const { httpLogger } = require("./middleware/httpLogger");
 const { securityHeaders } = require("./utils/middleware/securityHeaders");
 
+// RELIABILITY: Log the error and let the graceful shutdown handler in
+// server/index.js drain in-flight requests before exiting. Calling
+// process.exit(1) directly here drops all active HTTP requests and
+// background jobs (PDF analysis, embeddings, politician sync).
 process.on("unhandledRejection", (reason, promise) => {
-  console.error("Unhandled Rejection at:", promise, "reason:", reason);
-  process.exit(1);
+  console.error("[FATAL] Unhandled Rejection at:", promise, "reason:", reason);
 });
 
 process.on("uncaughtException", (err) => {
-  console.error("Uncaught Exception:", err);
-  process.exit(1);
+  console.error("[FATAL] Uncaught Exception:", err);
 });
 
 // Body-parser limit for JSON/text/urlencoded payloads.
@@ -225,8 +220,6 @@ function buildApp() {
   subagentEndpoints(apiRouter);
 
   scheduledJobEndpoints(apiRouter);
-  agentTriggerEndpoints(apiRouter);
-  connectorOAuthEndpoints(app); // mounts its own /api router internally
   outlookAgentEndpoints(apiRouter);
   googleAgentSkillEndpoints(apiRouter);
   pdfAnalysisEndpoints(app);
@@ -235,7 +228,6 @@ function buildApp() {
   contextModeEndpoints(apiRouter);
   transformationEndpoints(apiRouter);
   askEndpoints(apiRouter);
-  workspaceParsedFilesEndpoints(app);
   providerStatusEndpoints(apiRouter);
   webPushEndpoints(apiRouter);
   telegramEndpoints(apiRouter);

@@ -38,7 +38,7 @@ test.describe("workspace management lifecycle", () => {
         .delete(`/api/workspace/${createdSlug}`, {
           headers: { Authorization: `Bearer ${token}` },
         })
-        .catch(() => {});
+        .catch((e) => console.warn("[workspace-management.spec] non-fatal error:", e?.message || e));
       createdSlug = null;
     }
   });

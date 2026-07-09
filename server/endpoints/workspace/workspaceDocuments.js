@@ -71,7 +71,7 @@ function workspaceDocumentEndpoints(app) {
 
         // Kick off the Supabase durability mirror out-of-band — the client
         // never waits for the OCI → Supabase roundtrip.
-        const mirrorPromise = mirrorToSupabase(request).catch(() => {});
+        const mirrorPromise = mirrorToSupabase(request).catch((e) => console.warn("[workspaceDocuments] non-fatal error:", e?.message || e));
 
         const { success, reason, documents } = await Collector.processDocument(
           collectorFilename,
@@ -496,7 +496,7 @@ function workspaceDocumentEndpoints(app) {
         }
 
         // Out-of-band Supabase durability mirror (see /upload above).
-        const mirrorPromise = mirrorToSupabase(request).catch(() => {});
+        const mirrorPromise = mirrorToSupabase(request).catch((e) => console.warn("[workspaceDocuments] non-fatal error:", e?.message || e));
 
         const { success, reason, documents } = await Collector.processDocument(
           collectorFilename,

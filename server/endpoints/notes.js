@@ -278,7 +278,7 @@ function noteEndpoints(app) {
             if (clean.length > 0) {
               snippets[doc.docId] = clean.slice(0, 200);
             }
-          } catch {}
+          } catch (e) { console.warn("[notes] non-fatal error:", e?.message || e); }
         }
 
         response.status(200).json({ snippets });

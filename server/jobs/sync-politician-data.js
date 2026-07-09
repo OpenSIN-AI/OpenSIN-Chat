@@ -969,6 +969,6 @@ async function main() {
 
 main().catch(async (err) => {
   console.error("[sync-politician-data] Fatal error:", err.message);
-  await prisma.$disconnect().catch(() => {});
+  await prisma.$disconnect().catch((e) => console.warn("[sync-politician-data] non-fatal error:", e?.message || e));
   process.exit(1);
 });

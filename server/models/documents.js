@@ -364,14 +364,14 @@ const Document = {
         for (const docId of docIds) {
           try {
             DocumentSummaryCache.invalidate(docId);
-          } catch {}
+          } catch (e) { console.warn("[documents] non-fatal error:", e?.message || e); }
         }
-      } catch {}
+      } catch (e) { console.warn("[documents] non-fatal error:", e?.message || e); }
       try {
         await prisma.document_insights.deleteMany({
           where: { docId: { in: docIds } },
         });
-      } catch {}
+      } catch (e) { console.warn("[documents] non-fatal error:", e?.message || e); }
     }
 
     await prisma.$transaction(async (tx) => {

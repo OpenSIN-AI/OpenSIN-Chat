@@ -123,7 +123,7 @@ test.describe("01-20 CHAT INTERACTION TESTS", () => {
     await context.grantPermissions(["clipboard-read", "clipboard-write"]);
     const m = marker("copy");
     await sendMessage(page, `E2E test 3 (${m})`);
-    await waitForResponseRouting(page).catch(() => {});
+    await waitForResponseRouting(page).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
 
     // Hover over the message — look for the copy button (data-tooltip-id="copy-assistant-text")
     // The user message has a copy button too. We click the assistant one to be safe.
@@ -133,7 +133,7 @@ test.describe("01-20 CHAT INTERACTION TESTS", () => {
 
     if (count > 0) {
       // Click the first copy button. The component must not crash.
-      await buttons.first().click({ timeout: 5000 }).catch(() => {});
+      await buttons.first().click({ timeout: 5000 }).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
       // The hook signals success via "copied" state — the icon usually shows a check briefly.
       // We don't assert clipboard contents to avoid provider quirks; rendering without crash is the contract.
       await page.waitForTimeout(500);
@@ -143,7 +143,7 @@ test.describe("01-20 CHAT INTERACTION TESTS", () => {
   test("4. Delete a chat message", async ({ page }) => {
     const m = marker("del");
     await sendMessage(page, `E2E test 4 (${m})`);
-    await waitForResponseRouting(page).catch(() => {});
+    await waitForResponseRouting(page).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
 
     // There is no "delete message" feature in v1.x of this codebase — confirm
     // the absence so we don't accidentally regress to silent failures.
@@ -158,7 +158,7 @@ test.describe("01-20 CHAT INTERACTION TESTS", () => {
   test("5. Regenerate response", async ({ page }) => {
     const m = marker("regen");
     await sendMessage(page, `E2E test 5 (${m})`);
-    await waitForResponseRouting(page).catch(() => {});
+    await waitForResponseRouting(page).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
 
     // Look for a regenerate button — usually scoped to the assistant message
     // actions. We look for any tooltipped button containing "regenerate".
@@ -170,7 +170,7 @@ test.describe("01-20 CHAT INTERACTION TESTS", () => {
       // Most workspaces have an "Try again" affordance — soft pass.
       test.skip(true, "No regenerate affordance found in DOM (acceptable for unsupported workspaces)");
     } else {
-      await regenBtn.first().click({ timeout: 5000 }).catch(() => {});
+      await regenBtn.first().click({ timeout: 5000 }).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
       await page.waitForTimeout(1500);
     }
   });
@@ -178,7 +178,7 @@ test.describe("01-20 CHAT INTERACTION TESTS", () => {
   test("6. Thumbs up/down feedback", async ({ page }) => {
     const m = marker("fb");
     await sendMessage(page, `E2E test 6 (${m})`);
-    await waitForResponseRouting(page).catch(() => {});
+    await waitForResponseRouting(page).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
 
     // Look for thumbs buttons by ARIA label
     const thumbsUp = page.locator('[aria-label*="thumbs up" i], [data-tooltip-id*="thumbs-up"]');
@@ -191,7 +191,7 @@ test.describe("01-20 CHAT INTERACTION TESTS", () => {
       return;
     }
     if (upCount > 0) {
-      await thumbsUp.first().click({ timeout: 5000 }).catch(() => {});
+      await thumbsUp.first().click({ timeout: 5000 }).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
       await page.waitForTimeout(300);
     }
   });
@@ -200,7 +200,7 @@ test.describe("01-20 CHAT INTERACTION TESTS", () => {
     // Fill the chat with several messages
     for (let i = 0; i < 4; i++) {
       await sendMessage(page, `E2E test 7 msg-${i} (${marker()})`);
-      await waitForResponseRouting(page).catch(() => {});
+      await waitForResponseRouting(page).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
       await page.waitForTimeout(800);
     }
 
@@ -222,7 +222,7 @@ test.describe("01-20 CHAT INTERACTION TESTS", () => {
     // Send a marker first
     const m = marker("reset");
     await sendMessage(page, `E2E test 8 pre-reset (${m})`);
-    await waitForResponseRouting(page).catch(() => {});
+    await waitForResponseRouting(page).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
 
     // Find the "New chat" / "Reset" button — usually in the chat header or sidebar
     // Look for any button with text matching.
@@ -234,7 +234,7 @@ test.describe("01-20 CHAT INTERACTION TESTS", () => {
       test.skip(true, "No reset/new-chat button found");
       return;
     }
-    await resetBtn.first().click({ timeout: 5000 }).catch(() => {});
+    await resetBtn.first().click({ timeout: 5000 }).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
     await page.waitForTimeout(1000);
   });
 
@@ -259,7 +259,7 @@ test.describe("01-20 CHAT INTERACTION TESTS", () => {
     await assertAppLoaded(page);
     await page.locator("#primary-prompt-input").first().waitFor({ state: "visible", timeout: 30000 });
     await sendMessage(page, `E2E test 9 (${mA}) workspace A`);
-    await waitForResponseRouting(page).catch(() => {});
+    await waitForResponseRouting(page).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
 
     if (!wsB) {
       test.skip(true, "Workspace creation rate-limited — cannot test switch");
@@ -272,7 +272,7 @@ test.describe("01-20 CHAT INTERACTION TESTS", () => {
     await page.locator("#primary-prompt-input").first().waitFor({ state: "visible", timeout: 30000 });
     const mB = marker("state-B");
     await sendMessage(page, `E2E test 9 (${mB}) workspace B`);
-    await waitForResponseRouting(page).catch(() => {});
+    await waitForResponseRouting(page).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
 
     // Switch back to A
     await page.goto(`/workspace/${slug}/t/new`, { waitUntil: "networkidle" });
@@ -286,7 +286,7 @@ test.describe("01-20 CHAT INTERACTION TESTS", () => {
     if (wsB) {
       await request.delete(`/api/workspace/${wsB}`, {
         headers: { Authorization: `Bearer ${token}` },
-      }).catch(() => {});
+      }).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
     }
   });
 
@@ -295,14 +295,14 @@ test.describe("01-20 CHAT INTERACTION TESTS", () => {
     const m = marker("agent");
     await sendMessage(page, `@agent Reply with the word AGENT_OK_${m}`);
     // The agent response can take up to 60s; tolerate any finish state.
-    await waitForResponseRouting(page).catch(() => {});
+    await waitForResponseRouting(page).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
     await page.waitForTimeout(2000);
   });
 
   test("11. Code block rendering", async ({ page }) => {
     const m = marker("code");
     await sendMessage(page, `Write a Python "hello world" function (${m}) and include it as a fenced code block.`);
-    await waitForResponseRouting(page).catch(() => {});
+    await waitForResponseRouting(page).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
     // Check whether the response rendered a <pre> / <code> / .hljs element.
     const codeEls = await page.locator("pre code, .hljs, code").count();
     // Soft assertion — at least 0 (no crash) is acceptable.
@@ -313,14 +313,14 @@ test.describe("01-20 CHAT INTERACTION TESTS", () => {
   test("12. Markdown rendering", async ({ page }) => {
     const m = marker("md");
     await sendMessage(page, `Reply with one bold word, one italic word, and a short list. Marker ${m}.`);
-    await waitForResponseRouting(page).catch(() => {});
+    await waitForResponseRouting(page).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
     await page.waitForTimeout(1500);
   });
 
   test("13. Table rendering", async ({ page }) => {
     const m = marker("tbl");
     await sendMessage(page, `Provide a 3-column markdown table comparing A, B, C with rows. Marker ${m}.`);
-    await waitForResponseRouting(page).catch(() => {});
+    await waitForResponseRouting(page).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
     await page.waitForTimeout(1500);
   });
 
@@ -328,7 +328,7 @@ test.describe("01-20 CHAT INTERACTION TESTS", () => {
     // Tolerate absence — most workspaces don't support image gen
     const m = marker("img");
     await sendMessage(page, `Describe an image (${m})`);
-    await waitForResponseRouting(page).catch(() => {});
+    await waitForResponseRouting(page).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
     await page.waitForTimeout(1500);
   });
 
@@ -337,12 +337,12 @@ test.describe("01-20 CHAT INTERACTION TESTS", () => {
     // context use is impossible to verify client-side in headless without
     // a configured backend.
     await sendMessage(page, "Was ist 2+2?");
-    await waitForResponseRouting(page).catch(() => {});
+    await waitForResponseRouting(page).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
     const m = marker("ctx");
     await sendMessage(page, `Und mal 10? Marker ${m}`);
     // Verify the second message renders
     await expect(page.getByText(m, { exact: false })).toBeVisible({ timeout: 15000 });
-    await waitForResponseRouting(page).catch(() => {});
+    await waitForResponseRouting(page).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
   });
 
   test("16. Multi-line input (Shift+Enter)", async ({ page }) => {
@@ -386,13 +386,13 @@ test.describe("01-20 CHAT INTERACTION TESTS", () => {
   test("19. Streaming complete indicator", async ({ page }) => {
     const m = marker("done");
     await sendMessage(page, `E2E test 19 (${m})`);
-    await waitForResponseRouting(page).catch(() => {});
+    await waitForResponseRouting(page).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
     // Wait for the dot-falling to disappear (response complete)
     await page
       .locator(".dot-falling")
       .first()
       .waitFor({ state: "detached", timeout: 30000 })
-      .catch(() => {});
+      .catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
   });
 
   test("20. Error message handling (route interception)", async ({ page }) => {
@@ -452,7 +452,7 @@ test.describe("21-27 WORKSPACE SETTINGS TESTS", () => {
         const { workspace } = await resp.json();
         testSlug = workspace.slug;
       }
-    } catch {}
+    } catch (e) { console.warn("[full-coverage.spec] non-fatal error:", e?.message || e); }
     testSlug = testSlug || slug;
 
     await page.goto(`/workspace/${testSlug}/settings/general-appearance`, {
@@ -511,7 +511,7 @@ test.describe("21-27 WORKSPACE SETTINGS TESTS", () => {
     await t.fill("0.42");
     const btn = page.getByRole("button", { name: /update workspace|workspace aktualisieren/i });
     if (await btn.count()) {
-      await btn.click().catch(() => {});
+      await btn.click().catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
       await page.waitForTimeout(1000);
     }
     await page.reload({ waitUntil: "networkidle" });
@@ -543,7 +543,7 @@ test.describe("21-27 WORKSPACE SETTINGS TESTS", () => {
     await greeting.fill("Hello from E2E!");
     const btn = page.getByRole("button", { name: /update workspace|workspace aktualisieren/i });
     if (await btn.count()) {
-      await btn.click().catch(() => {});
+      await btn.click().catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
       await page.waitForTimeout(1000);
     }
   });
@@ -559,7 +559,7 @@ test.describe("21-27 WORKSPACE SETTINGS TESTS", () => {
         const { workspace } = await resp.json();
         delSlug = workspace.slug;
       }
-    } catch {}
+    } catch (e) { console.warn("[full-coverage.spec] non-fatal error:", e?.message || e); }
     if (!delSlug) {
       test.skip(true, "Workspace create rate-limited");
       return;
@@ -593,12 +593,12 @@ test.describe("28-30 CHAT FOOTER/BOTTOM", () => {
     const btn = page.locator('button:has-text("Theme"), [aria-label*="theme" i], [data-tooltip-id*="theme"]');
     const c = await btn.count();
     if (c === 0) test.skip(true, "No theme toggle");
-    else await btn.first().click({ timeout: 5000 }).catch(() => {});
+    else await btn.first().click({ timeout: 5000 }).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
   });
   test("30. Account menu", async ({ page }) => {
     const avatar = page.locator('[data-testid="user-menu"], button[aria-label*="account" i], button[aria-label*="user" i]').first();
     if ((await avatar.count()) > 0) {
-      await avatar.click({ timeout: 5000 }).catch(() => {});
+      await avatar.click({ timeout: 5000 }).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
       await page.waitForTimeout(500);
     }
   });
@@ -622,7 +622,7 @@ test.describe("31-34 URL ROUTING", () => {
           chatId = data.chats[0].id || data.chats[0].slug;
         }
       }
-    } catch {}
+    } catch (e) { console.warn("[full-coverage.spec] non-fatal error:", e?.message || e); }
   });
   test.beforeEach(async ({ page }) => {
     await seedSession(page, token);
@@ -674,7 +674,7 @@ test.describe("35-37 TOAST NOTIFICATIONS", () => {
     await inp.fill("42");
     const btn = page.getByRole("button", { name: /update workspace|workspace aktualisieren/i });
     if (await btn.count()) {
-      await btn.click({ timeout: 5000 }).catch(() => {});
+      await btn.click({ timeout: 5000 }).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
       // Toast element lives at .Toastify toast class OR role=status
       await page.waitForTimeout(1500);
     }
@@ -696,7 +696,7 @@ test.describe("35-37 TOAST NOTIFICATIONS", () => {
     await inp.fill("99");
     const btn = page.getByRole("button", { name: /update workspace|workspace aktualisieren/i });
     if (await btn.count()) {
-      await btn.click({ timeout: 5000 }).catch(() => {});
+      await btn.click({ timeout: 5000 }).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
       await page.waitForTimeout(1500);
     }
   });
@@ -746,7 +746,7 @@ test.describe("38-41 KEYBOARD SHORTCUTS", () => {
     // Open the user menu or settings modal
     const userBtn = page.locator('[data-testid="user-menu"]').first();
     if ((await userBtn.count()) > 0) {
-      await userBtn.click({ timeout: 5000 }).catch(() => {});
+      await userBtn.click({ timeout: 5000 }).catch((e) => console.warn("[full-coverage.spec] non-fatal error:", e?.message || e));
       await page.waitForTimeout(500);
       await page.keyboard.press("Escape");
       await page.waitForTimeout(500);

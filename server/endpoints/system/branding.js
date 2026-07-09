@@ -154,7 +154,7 @@ function brandingEndpoints(app) {
           });
           await supabaseStorage
             .deleteFile("assets", request.file.supabasePath)
-            .catch(() => {});
+            .catch((e) => console.warn("[branding] non-fatal error:", e?.message || e));
         } else {
           newFilename = await renameLogoFile(request.file.originalname);
         }
@@ -171,7 +171,7 @@ function brandingEndpoints(app) {
           if (isSupabase) {
             await supabaseStorage
               .deleteFile("assets", newFilename)
-              .catch(() => {});
+              .catch((e) => console.warn("[branding] non-fatal error:", e?.message || e));
           } else {
             const assetsDir = getStoragePath("assets");
             const newLogoPath = path.join(
@@ -179,7 +179,7 @@ function brandingEndpoints(app) {
               normalizePath(newFilename),
             );
             if (isWithin(path.resolve(assetsDir), path.resolve(newLogoPath)))
-              await fs.promises.unlink(newLogoPath).catch(() => {});
+              await fs.promises.unlink(newLogoPath).catch((e) => console.warn("[branding] non-fatal error:", e?.message || e));
           }
           return response.status(500).json({
             message: error || "Failed to update with new logo.",
@@ -195,7 +195,7 @@ function brandingEndpoints(app) {
         ) {
           await supabaseStorage
             .deleteFile("assets", existingLogoFilename)
-            .catch(() => {});
+            .catch((e) => console.warn("[branding] non-fatal error:", e?.message || e));
         }
 
         return response.status(200).json({

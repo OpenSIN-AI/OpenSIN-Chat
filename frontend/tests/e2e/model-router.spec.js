@@ -140,7 +140,7 @@ test.describe("model router configuration", () => {
         const cancelBtn = page.getByRole("button", {
           name: /cancel|abbrechen/i,
         }).first();
-        await cancelBtn.click().catch(() => {});
+        await cancelBtn.click().catch((e) => console.warn("[model-router.spec] non-fatal error:", e?.message || e));
         createdRouterName = null;
         test.skip(true, "No configured LLM provider available — skipping router creation test");
       }

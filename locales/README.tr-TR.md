@@ -1,11 +1,11 @@
 <a name="readme-top"></a>
 
 <p align="center">
-  <a href="https://opensin.com"><img src="https://github.com/Family-Team-Projects/opensin-chat/blob/master/images/wordmark.png?raw=true" alt="OpenSIN Chat logo"></a>
+  <a href="https://opensin.com"><img src="https://github.com/OpenSIN-AI/opensin-chat/blob/master/images/wordmark.png?raw=true" alt="OpenSIN Chat logo"></a>
 </p>
 
 <div align='center'>
-<a href="https://trendshift.io/repositories/2415" target="_blank"><img src="https://trendshift.io/api/badge/repositories/2415" alt="Family-Team-Projects%2Fopensin-chat | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+<a href="https://trendshift.io/repositories/2415" target="_blank"><img src="https://trendshift.io/api/badge/repositories/2415" alt="OpenSIN-AI%2Fopensin-chat | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 </div>
 
 <p align="center">
@@ -17,7 +17,7 @@ Belgelerinizle sohbet edin, yapay zeka ajanlarını kullanın, son derece özell
   <a href="https://discord.gg/6UyHPeGZAC" target="_blank">
       <img src="https://img.shields.io/badge/chat-opensin-chat-blue.svg?style=flat&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAH1UExURQAAAP////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////r6+ubn5+7u7/3+/v39/enq6urq6/v7+97f39rb26eoqT1BQ0pOT4+Rkuzs7cnKykZKS0NHSHl8fdzd3ejo6UxPUUBDRdzc3RwgIh8jJSAkJm5xcvHx8aanqB4iJFBTVezt7V5hYlJVVuLj43p9fiImKCMnKZKUlaaoqSElJ21wcfT09O3u7uvr6zE0Nr6/wCUpK5qcnf7+/nh7fEdKTHx+f0tPUOTl5aipqiouMGtubz5CRDQ4OsTGxufn515hY7a3uH1/gXBydIOFhlVYWvX29qaoqCQoKs7Pz/Pz87/AwUtOUNfY2dHR0mhrbOvr7E5RUy8zNXR2d/f39+Xl5UZJSx0hIzQ3Odra2/z8/GlsbaGjpERHSezs7L/BwScrLTQ4Odna2zM3Obm7u3x/gKSmp9jZ2T1AQu/v71pdXkVISr2+vygsLiInKTg7PaOlpisvMcXGxzk8PldaXPLy8u7u7rm6u7S1tsDBwvj4+MPExbe4ueXm5s/Q0Kyf7ewAAAAodFJOUwAABClsrNjx/QM2l9/7lhmI6jTB/kA1GgKJN+nea6vy/MLZQYeVKK3rVA5tAAAAAWJLR0QB/wIt3gAAAAd0SU1FB+cKBAAmMZBHjXIAAAISSURBVDjLY2CAAkYmZhZWNnYODnY2VhZmJkYGVMDIycXNw6sBBbw8fFycyEoYGfkFBDVQgKAAPyMjQl5IWEQDDYgIC8FUMDKKsmlgAWyiEBWMjGJY5YEqxMAqGMWFNXAAYXGgAkYJSQ2cQFKCkYFRShq3AmkpRgYJbghbU0tbB0Tr6ukbgGhDI10gySfBwCwDUWBsYmpmDqQtLK2sbTQ0bO3sHYA8GWYGWWj4WTs6Obu4ami4OTm7exhqeHp5+4DCVJZBDmqdr7ufn3+ArkZgkJ+fU3CIRmgYWFiOARYGvo5OQUHhEUAFTkF+kVHRsLBgkIeyYmLjwoOc4hMSk5JTnINS06DC8gwcEEZ6RqZGlpOfc3ZObl5+gZ+TR2ERWFyBQQFMF5eklmqUpQb5+ReU61ZUOvkFVVXXQBSAraitq29o1GiKcfLzc29u0mjxBzq0tQ0kww5xZHtHUGeXhkZhdxBYgZ4d0LI6c4gjwd7siQQraOp1AivQ6CuAKZCDBBRQQQNQgUb/BGf3cqCCiZOcnCe3QQIKHNRTpk6bDgpZjRkzg3pBQTBrdtCcuZCgluAD0vPmL1gIdvSixUuWgqNs2YJ+DUhkEYxuggkGmOQUcckrioPTJCOXEnZ5JS5YslbGnuyVERlDDFvGEUPOWvwqaH6RVkHKeuDMK6SKnHlVhTgx8jeTmqy6Eij7K6nLqiGyPwChsa1MUrnq1wAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMy0xMC0wNFQwMDozODo0OSswMDowMB9V0a8AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjMtMTAtMDRUMDA6Mzg6NDkrMDA6MDBuCGkTAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDIzLTEwLTA0VDAwOjM4OjQ5KzAwOjAwOR1IzAAAAABJRU5ErkJggg==" alt="Discord">
   </a> |
-  <a href="https://github.com/Family-Team-Projects/opensin-chat/blob/master/LICENSE" target="_blank">
+  <a href="https://github.com/OpenSIN-AI/opensin-chat/blob/master/LICENSE" target="_blank">
       <img src="https://img.shields.io/static/v1?label=license&message=MIT&color=white" alt="License">
   </a> |
   <a href="https://docs.sinchat.delqhi.com" target="_blank">
@@ -38,7 +38,7 @@ Belgelerinizle sohbet edin, yapay zeka ajanlarını kullanın, son derece özell
 
 Herhangi bir belgeyi, kaynağı veya içeriği sohbet sırasında herhangi bir büyük dil modelinin referans olarak kullanabileceği bir bağlama dönüştürmenizi sağlayan tam kapsamlı bir uygulama. Bu uygulama, kullanmak istediğiniz LLM veya Vektör Veritabanını seçmenize olanak tanırken, çok kullanıcılı yönetim ve yetkilendirme desteği de sunar.
 
-![Chatting](https://github.com/Family-Team-Projects/opensin-chat/releases/download/v1.11.2/OpenSIN Chat720p.gif)
+![Chatting](https://github.com/OpenSIN-AI/opensin-chat/releases/download/v1.11.2/OpenSIN Chat720p.gif)
 
 <details>
 <summary><kbd>Demoyu izle!</kbd></summary>
@@ -60,7 +60,7 @@ OpenSIN Chat ayrıca birden fazla kullanıcıyı da destekler; burada örneğin 
 - 🖼️ **Çoklu-mod desteği (hem kapalı kaynak hem de açık kaynak LLM'ler!)**
 - 👤 Çok kullanıcılı destek ve yetkilendirme _(Yalnızca Docker sürümünde)_
 - 🦾 Çalışma alanı içinde ajanlar (web'de gezinme vb.)
-- 💬 [Web sitenize gömülebilir özel sohbet aracı](https://github.com/Family-Team-Projects/opensin-embed/blob/main/README.md) _(Yalnızca Docker sürümünde)_
+- 💬 [Web sitenize gömülebilir özel sohbet aracı](https://github.com/OpenSIN-AI/opensin-embed/blob/main/README.md) _(Yalnızca Docker sürümünde)_
 - 📖 Çoklu belge türü desteği (PDF, TXT, DOCX vb.)
 - Sade ve kullanışlı sohbet arayüzü, sürükle-bırak özelliği ve net kaynak gösterimi.
 - %100 bulut konuşlandırmaya hazır.
@@ -120,7 +120,7 @@ OpenSIN Chat ayrıca birden fazla kullanıcıyı da destekler; burada örneğin 
 
 **Ses Transkripsiyon Modelleri:**
 
-- [OpenSIN Chat Built-in](https://github.com/Family-Team-Projects/opensin-chat/tree/master/server/storage/models#audiovideo-transcription) (default)
+- [OpenSIN Chat Built-in](https://github.com/OpenSIN-AI/opensin-chat/tree/master/server/storage/models#audiovideo-transcription) (default)
 - [OpenAI](https://openai.com/)
 
 **TTS (text-to-speech) desteği:**
@@ -155,8 +155,8 @@ Bu monorepo üç ana bölümden oluşmaktadır:
 - **`server`**: NodeJS ve Express tabanlı bir sunucu, tüm etkileşimleri yönetir ve vektör veritabanı işlemleri ile LLM entegrasyonlarını gerçekleştirir.
 - **`collector`**: Kullanıcı arayüzünden gelen belgeleri işleyen ve ayrıştıran NodeJS Express tabanlı bir sunucu.
 - **`docker`**: Docker kurulum talimatları, derleme süreci ve kaynak koddan nasıl derleneceğine dair bilgiler içerir.
-- **`embed`**: [Web gömme widget’ı](https://github.com/Family-Team-Projects/opensin-embed) oluşturma ve entegrasyonu için alt modül.
-- **`browser-extension`**: [Chrome tarayıcı eklentisi](https://github.com/Family-Team-Projects/opensin-extension) için alt modül.
+- **`embed`**: [Web gömme widget’ı](https://github.com/OpenSIN-AI/opensin-embed) oluşturma ve entegrasyonu için alt modül.
+- **`browser-extension`**: [Chrome tarayıcı eklentisi](https://github.com/OpenSIN-AI/opensin-extension) için alt modül.
 
 ## 🛳 Kendi Sunucunuzda Barındırma
 
@@ -208,7 +208,7 @@ Yalnızca ürün ve yol haritası kararlarını almamıza yardımcı olacak kull
 
 Bu verileri doğrulamak için kod içinde **`Telemetry.sendTelemetry` çağrılarını** inceleyebilirsiniz. Ayrıca, bu olaylar günlük kaydına yazıldığı için hangi verilerin gönderildiğini görebilirsiniz (eğer etkinleştirilmişse). **IP adresi veya diğer tanımlayıcı bilgiler toplanmaz.** Telemetri sağlayıcısı, açık kaynaklı bir telemetri toplama hizmeti olan [PostHog](https://posthog.com/)‘dur.
 
-[Kaynak kodda tüm telemetri olaylarını görüntüle](https://github.com/search?q=repo%3AFamily-Team-Projects%2Fopensin-chat%20.sendTelemetry(&type=code)
+[Kaynak kodda tüm telemetri olaylarını görüntüle](https://github.com/search?q=repo%3AOpenSIN-AI%2Fopensin-chat%20.sendTelemetry(&type=code)
 
 </details>
 
@@ -220,9 +220,9 @@ Bu verileri doğrulamak için kod içinde **`Telemetry.sendTelemetry` çağrıla
 
 ## 🌟 Katkıda Bulunanlar
 
-[![opensin contributors](https://contrib.rocks/image?repo=Family-Team-Projects/OpenSIN-Chat)](https://github.com/Family-Team-Projects/OpenSIN-Chat/graphs/contributors)
+[![opensin contributors](https://contrib.rocks/image?repo=OpenSIN-AI/OpenSIN-Chat)](https://github.com/OpenSIN-AI/OpenSIN-Chat/graphs/contributors)
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Family-Team-Projects/OpenSIN-Chat&type=Timeline)](https://star-history.com/#Family-Team-Projects/OpenSIN-Chat&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=OpenSIN-AI/OpenSIN-Chat&type=Timeline)](https://star-history.com/#OpenSIN-AI/OpenSIN-Chat&Date)
 
 ## 🔗 Diğer Ürünler
 
@@ -243,9 +243,9 @@ Bu proje [MIT](../LICENSE) lisansı ile lisanslanmıştır.
 <!-- LINK GROUP -->
 
 [back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-222628?style=flat-square
-[profile-link]: https://github.com/Family-Team-Projects
-[vector-admin]: https://github.com/Family-Team-Projects/vector-admin
-[assistant-swarm]: https://github.com/Family-Team-Projects/openai-assistant-swarm
+[profile-link]: https://github.com/OpenSIN-AI
+[vector-admin]: https://github.com/OpenSIN-AI/vector-admin
+[assistant-swarm]: https://github.com/OpenSIN-AI/openai-assistant-swarm
 [docker-btn]: ./images/deployBtns/docker.png
 [docker-deploy]: ./docker/HOW_TO_USE_DOCKER.md
 [aws-btn]: ./images/deployBtns/aws.png
@@ -255,9 +255,9 @@ Bu proje [MIT](../LICENSE) lisansı ile lisanslanmıştır.
 [do-btn]: https://www.deploytodo.com/do-btn-blue.svg
 [do-deploy]: ./cloud-deployments/digitalocean/terraform/DEPLOY.md
 [render-btn]: https://render.com/images/deploy-to-render-button.svg
-[render-deploy]: https://render.com/deploy?repo=https://github.com/Family-Team-Projects/opensin-chat&branch=render
+[render-deploy]: https://render.com/deploy?repo=https://github.com/OpenSIN-AI/opensin-chat&branch=render
 [render-btn]: https://render.com/images/deploy-to-render-button.svg
-[render-deploy]: https://render.com/deploy?repo=https://github.com/Family-Team-Projects/opensin-chat&branch=render
+[render-deploy]: https://render.com/deploy?repo=https://github.com/OpenSIN-AI/opensin-chat&branch=render
 [railway-btn]: https://railway.app/button.svg
 [railway-deploy]: https://railway.app/template/HNSCS1?referralCode=WFgJkn
 [repocloud-btn]: https://d16t0pc4846x52.cloudfront.net/deploylobe.svg

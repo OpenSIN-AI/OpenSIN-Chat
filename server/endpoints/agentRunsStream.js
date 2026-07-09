@@ -170,7 +170,7 @@ function agentRunsStream(app) {
       const keepAlive = setInterval(() => {
         try {
           res.write(": keep-alive\n\n");
-        } catch {}
+        } catch (e) { console.warn("[agentRunsStream] non-fatal error:", e?.message || e); }
       }, 15000);
 
       // Cleanup on disconnect
@@ -192,7 +192,7 @@ function agentRunsStream(app) {
       agentRunBus.emit("cancel", { runId });
       try {
         await AgentRuns.updateStatus(runId, "cancelled");
-      } catch {}
+      } catch (e) { console.warn("[agentRunsStream] non-fatal error:", e?.message || e); }
       return res.json({ success: true });
     },
   );
