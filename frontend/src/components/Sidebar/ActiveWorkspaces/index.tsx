@@ -123,20 +123,10 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
         }}
         data-tooltip-id="workspace-quick-add"
         data-tooltip-content={t("activeWorkspaces.createTooltip")}
-        className={`group/plus border-none rounded-md flex items-center justify-center p-[2px] transition-colors ${
-          isActive
-            ? "hover:bg-zinc-500 light:hover:bg-sky-800/30"
-            : "hover:bg-zinc-500 light:hover:bg-slate-400"
-        }`}
+        className="group/plus border-none rounded-md flex items-center justify-center p-1 transition-colors hover:bg-white/[0.06] light:hover:bg-zinc-100"
         aria-label={t("activeWorkspaces.createTooltip")}
       >
-        <Plus
-          className={`h-[20px] w-[20px] ${
-            isActive
-              ? "text-zinc-400 hover:text-theme-text-primary light:hover:text-theme-text-primary light:text-blue-700 light:group-hover/plus:text-blue-900"
-              : "text-zinc-400 hover:text-theme-text-primary light:text-theme-text-primary light:group-hover/plus:text-slate-950"
-          }`}
-        />
+        <Plus className="h-3.5 w-3.5 text-[#71717a] group-hover/plus:text-[#fafafa] light:text-zinc-500 light:group-hover/plus:text-zinc-900 transition-colors" />
       </button>
 
       {open &&
@@ -148,23 +138,23 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
               left: menuPos.left,
               zIndex: 9999,
             }}
-            className="w-44 rounded-lg border border-white/10 light:border-slate-200 bg-zinc-800 light:bg-white shadow-xl overflow-hidden"
+            className="w-44 rounded-lg border border-white/[0.08] light:border-zinc-200 bg-[#1c1c1c] light:bg-white shadow-2xl overflow-hidden"
           >
             <button
               type="button"
               onClick={handleNewChat}
-              className="w-full flex items-center gap-x-2 px-3 py-2 text-sm text-slate-200 light:text-slate-700 hover:bg-zinc-700 light:hover:bg-slate-100 transition-colors"
+              className="w-full flex items-center gap-x-2 px-3 py-2 text-xs text-[#a1a1aa] light:text-zinc-600 hover:bg-white/[0.06] light:hover:bg-zinc-50 hover:text-[#fafafa] light:hover:text-zinc-900 transition-colors"
             >
-              <ChatCircleText size={15} />
+              <ChatCircleText size={13} />
               {t("activeWorkspaces.newChat")}
             </button>
-            <div className="h-px bg-white/10 light:bg-slate-200" />
+            <div className="h-px bg-white/[0.06] light:bg-zinc-200" />
             <button
               type="button"
               onClick={handleNewFolder}
-              className="w-full flex items-center gap-x-2 px-3 py-2 text-sm text-slate-200 light:text-slate-700 hover:bg-zinc-700 light:hover:bg-slate-100 transition-colors"
+              className="w-full flex items-center gap-x-2 px-3 py-2 text-xs text-[#a1a1aa] light:text-zinc-600 hover:bg-white/[0.06] light:hover:bg-zinc-50 hover:text-[#fafafa] light:hover:text-zinc-900 transition-colors"
             >
-              <FolderSimplePlus size={15} />
+              <FolderSimplePlus size={13} />
               {t("activeWorkspaces.newFolder")}
             </button>
           </div>,
@@ -276,47 +266,40 @@ function ActiveWorkspaces() {
                           to={paths.workspace.chat(workspace.slug)}
                           aria-current={isActive ? "page" : undefined}
                           className={`
-                            transition-all duration-[200ms]
-                            flex flex-grow w-[75%] gap-x-2 py-[8px] pl-[10px] pr-[6px] rounded-[8px] text-sm justify-start items-center
-                            ${isActive ? "bg-white/10 light:bg-blue-200/70 font-semibold text-white light:text-blue-900" : "text-theme-text-primary light:text-slate-600 hover:bg-white/5 light:hover:bg-slate-200/70 hover:text-theme-text-primary light:hover:text-theme-text-primary"}
+                            transition-colors duration-150
+                            flex flex-grow w-[75%] gap-x-2 py-1.5 pl-2 pr-1.5 rounded-md text-sm justify-start items-center
+                            ${isActive
+                              ? "bg-white/[0.08] light:bg-zinc-100 text-[#fafafa] light:text-zinc-900"
+                              : "text-[#a1a1aa] light:text-zinc-500 hover:bg-white/[0.04] light:hover:bg-zinc-50 hover:text-[#fafafa] light:hover:text-zinc-900"
+                            }
                           `}
                         >
-                          <div className="flex flex-row justify-between w-full items-center">
+                          <div className="flex flex-row justify-between w-full items-center gap-x-1">
                             <div
                               {...provided.dragHandleProps}
-                              className="cursor-grab mr-[3px] opacity-0 group-hover:opacity-100 transition-opacity duration-150"
+                              className="cursor-grab opacity-0 group-hover:opacity-100 transition-opacity duration-150 flex-shrink-0"
                             >
-                              <DotsSixVertical
-                                size={20}
-                                className={`${isActive ? "text-white light:text-blue-800" : ""}`}
-                                weight="bold"
-                              />
+                              <DotsSixVertical size={14} weight="bold" className="text-[#52525b]" />
                             </div>
                             <SquaresFour
-                              size={16}
-                              weight="fill"
-                              className={`shrink-0 mr-[2px] ${isActive ? "text-white light:text-blue-800" : "text-theme-text-secondary light:text-slate-500"}`}
+                              size={14}
+                              weight={isActive ? "fill" : "regular"}
+                              className={`shrink-0 ${isActive ? "text-[#fafafa] light:text-zinc-900" : "text-[#52525b] light:text-zinc-400"}`}
                             />
                             <div
                               data-tooltip-id="workspace-name"
                               data-tooltip-content={workspace.name}
-                              className="flex items-center space-x-2 overflow-hidden flex-grow"
+                              className="flex items-center overflow-hidden flex-grow"
                             >
-                              <div className="w-[130px] overflow-hidden">
-                                <p
-                                  className={`
-                                  text-[14px] leading-loose whitespace-nowrap overflow-hidden
-                                  ${isActive ? "font-bold text-theme-text-primary light:text-blue-900" : "font-medium "} truncate
-                                  w-full group-hover:w-[130px] group-hover:duration-200
-                                `}
-                                >
-                                  {workspace.name}
-                                </p>
-                              </div>
+                              <p
+                                className={`text-xs leading-relaxed whitespace-nowrap overflow-hidden truncate font-medium ${isActive ? "text-[#fafafa] light:text-zinc-900" : ""}`}
+                              >
+                                {workspace.name}
+                              </p>
                             </div>
                             {user?.role !== "default" && (
                               <div
-                                className={`flex items-center gap-x-[2px] transition-opacity duration-200 ${isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
+                                className={`flex items-center gap-x-0.5 transition-opacity duration-150 flex-shrink-0 ${isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
                               >
                                 <WorkspaceQuickAdd
                                   workspace={workspace}
@@ -336,11 +319,9 @@ function ActiveWorkspaces() {
                                   aria-label={t(
                                     "activeWorkspaces.uploadDocuments",
                                   )}
-                                  className={`group/upload border-none rounded-md flex items-center justify-center ml-auto p-[2px] ${isActive ? "hover:bg-zinc-500 light:hover:bg-sky-800/30" : "hover:bg-zinc-500 light:hover:bg-slate-400"}`}
+                                  className="group/upload border-none rounded-md flex items-center justify-center p-1 hover:bg-white/[0.06] light:hover:bg-zinc-100 transition-colors"
                                 >
-                                  <UploadSimple
-                                    className={`h-[20px] w-[20px] ${isActive ? "text-zinc-400 hover:text-theme-text-primary light:hover:text-theme-text-primary light:text-blue-700 light:group-hover/upload:text-blue-900" : "text-zinc-400 hover:text-theme-text-primary light:text-theme-text-primary light:group-hover/upload:text-slate-950"}`}
-                                  />
+                                  <UploadSimple className="h-3.5 w-3.5 text-[#71717a] group-hover/upload:text-[#fafafa] light:text-zinc-400 light:group-hover/upload:text-zinc-900 transition-colors" />
                                 </button>
                                 <button
                                   type="button"
@@ -355,7 +336,7 @@ function ActiveWorkspaces() {
                                           ),
                                     );
                                   }}
-                                  className={`group/gear rounded-md flex items-center justify-center ml-auto p-[2px] ${isActive ? "hover:bg-zinc-500 light:hover:bg-sky-800/30" : "hover:bg-zinc-500 light:hover:bg-slate-400"}`}
+                                  className="group/gear rounded-md flex items-center justify-center p-1 hover:bg-white/[0.06] light:hover:bg-zinc-100 transition-colors"
                                   aria-label={t(
                                     "sidebar.generalAppearanceSettings",
                                   )}
@@ -365,13 +346,11 @@ function ActiveWorkspaces() {
                                   )}
                                 >
                                   <GearSix
-                                    color={
-                                      isInWorkspaceSettings &&
-                                      workspace.slug === slug
-                                        ? "var(--theme-accent)"
-                                        : undefined
-                                    }
-                                    className={`h-[20px] w-[20px] ${isActive ? "text-zinc-400 hover:text-theme-text-primary light:hover:text-theme-text-primary light:text-blue-700 light:group-hover/gear:text-blue-900" : "text-zinc-400 hover:text-theme-text-primary light:text-theme-text-primary light:group-hover/gear:text-slate-950"}`}
+                                    className={`h-3.5 w-3.5 transition-colors ${
+                                      isInWorkspaceSettings && workspace.slug === slug
+                                        ? "text-[#fafafa] light:text-zinc-900"
+                                        : "text-[#71717a] group-hover/gear:text-[#fafafa] light:text-zinc-400 light:group-hover/gear:text-zinc-900"
+                                    }`}
                                   />
                                 </button>
                               </div>

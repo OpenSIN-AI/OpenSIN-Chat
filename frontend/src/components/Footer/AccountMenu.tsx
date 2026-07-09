@@ -72,7 +72,7 @@ function Avatar({
   return (
     <div
       aria-hidden="true"
-      className={`rounded-full shrink-0 flex items-center justify-center bg-primary-button text-slate-900 ${fontSize} font-semibold uppercase ${cls}`}
+      className={`rounded-full shrink-0 flex items-center justify-center bg-white light:bg-zinc-900 text-zinc-900 light:text-white ${fontSize} font-semibold uppercase ${cls}`}
       style={style}
     >
       {initials}
@@ -229,7 +229,7 @@ function AccountMenu({ compact = false }: { compact?: boolean }) {
       className={
         compact
           ? ""
-          : "w-full px-2 pt-2 border-t border-white/10 light:border-slate-300/70"
+          : "w-full px-2 pt-2 border-t border-white/[0.06] light:border-zinc-200"
       }
     >
       <button
@@ -282,7 +282,7 @@ function AccountMenu({ compact = false }: { compact?: boolean }) {
               bottom: pos.bottom,
               width: pos.width,
             }}
-            className="z-[60] rounded-xl border border-theme-sidebar-border light:border-slate-300 bg-theme-action-menu-bg light:bg-white shadow-xl shadow-black/30 p-1.5 max-h-[70vh] overflow-y-auto no-scroll"
+            className="z-[60] rounded-xl border border-white/[0.08] light:border-zinc-200 bg-[#161616] light:bg-white shadow-2xl shadow-black/50 p-1.5 max-h-[70vh] overflow-y-auto no-scroll"
           >
             {/* Identity header */}
             <div className="flex items-center gap-x-2.5 px-2.5 py-2">

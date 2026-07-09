@@ -109,7 +109,7 @@ const HistoricalMessage = ({
         className={`${isDeleted ? "animate-remove" : ""} flex justify-end w-full group py-2.5`}
       >
         <div className="flex flex-col items-end max-w-[80%]">
-          <div className="bg-zinc-700 light:bg-slate-100 text-zinc-50 light:text-slate-800 rounded-2xl rounded-br-sm px-4 py-2.5 [&_p]:m-0 shadow-sm">
+          <div className="bg-white light:bg-zinc-900 text-zinc-900 light:text-zinc-50 rounded-2xl rounded-br-sm px-4 py-2.5 [&_p]:m-0">
             <TruncatableContent>
               <RenderChatContent
                 role={role}
@@ -348,7 +348,7 @@ function TruncatableContent({ children }: any) {
         </div>
         {showTruncation && (
           <>
-            <div className="absolute bottom-0 left-0 right-0 h-[36px] light:hidden pointer-events-none bg-[linear-gradient(180deg,_rgba(63,_63,_70,_0.00)_0%,_rgba(63,_63,_70,_0.65)_50%,_#3F3F46_100%)]" />
+            <div className="absolute bottom-0 left-0 right-0 h-[36px] light:hidden pointer-events-none bg-[linear-gradient(180deg,_rgba(13,_13,_13,_0.00)_0%,_rgba(13,_13,_13,_0.65)_50%,_#0d0d0d_100%)]" />
             <div className="absolute bottom-0 left-0 right-0 h-[36px] hidden light:block pointer-events-none bg-[linear-gradient(180deg,_rgba(241,_245,_249,_0.00)_0%,_rgba(241,_245,_249,_0.65)_50%,_#F1F5F9_100%)]" />
           </>
         )}
