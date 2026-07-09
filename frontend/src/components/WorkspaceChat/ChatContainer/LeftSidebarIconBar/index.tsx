@@ -12,7 +12,7 @@ export default function LeftSidebarIconBar() {
   if (!canToggleSidebar) return null;
 
   return (
-    <div className="fixed left-0 top-2 h-[calc(100vh-16px)] flex flex-col items-center justify-between py-2 px-1 bg-zinc-900 light:bg-white flex-shrink-0 w-[44px] ml-2 rounded-2xl z-30">
+    <div className="hidden md:flex flex-col items-center justify-between py-2 px-1 bg-zinc-900 light:bg-white flex-shrink-0 w-[44px] mx-2 my-2 rounded-2xl z-30 self-stretch">
       <div className="flex flex-col items-center gap-1">
         <button
           type="button"

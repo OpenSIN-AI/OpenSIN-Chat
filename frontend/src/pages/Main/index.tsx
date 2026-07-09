@@ -7,10 +7,7 @@ import Home from "./Home";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import Sidebar, { SidebarMobileHeader } from "@/components/Sidebar";
 import LeftSidebarIconBar from "@/components/WorkspaceChat/ChatContainer/LeftSidebarIconBar";
-import {
-  SidebarToggleProvider,
-  useSidebarToggle,
-} from "@/components/Sidebar/SidebarToggle";
+import { SidebarToggleProvider } from "@/components/Sidebar/SidebarToggle";
 
 export default function Main() {
   const { t } = useTranslation();
@@ -41,17 +38,13 @@ export default function Main() {
 }
 
 function MainLayout() {
-  const { showSidebar } = useSidebarToggle();
   const isMobile = useIsMobileLayout();
-  const railVisible = !isMobile && !showSidebar;
 
   return (
-    <div className="w-screen h-screen overflow-hidden bg-zinc-950 light:bg-slate-50 flex">
+    <div className="w-screen h-screen overflow-hidden bg-zinc-950 light:bg-slate-50 flex flex-row">
       {!isMobile ? <LeftSidebarIconBar /> : null}
       {!isMobile ? <Sidebar /> : <SidebarMobileHeader />}
-      <div
-        className={`flex-1 min-w-0 overflow-hidden ${railVisible ? "md:ml-[52px]" : ""}`}
-      >
+      <div className="flex-1 min-w-0 overflow-hidden">
         <Home />
       </div>
     </div>

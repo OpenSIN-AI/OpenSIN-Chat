@@ -100,7 +100,7 @@ export default function Sidebar() {
       <nav
         aria-label={t("sidebar.mainNavigation")}
         style={{ width: showSidebar ? `${sidebarWidth}px` : "0px" }}
-        className="relative transition-all duration-500 flex-shrink-0 z-40 bg-zinc-950 light:bg-slate-100 hidden md:flex border-r border-white/5 light:border-slate-200"
+        className={`relative transition-all duration-500 flex-shrink-0 z-40 bg-zinc-950 light:bg-slate-100 hidden md:flex overflow-hidden ${showSidebar ? "border-r border-white/5 light:border-slate-200" : ""}`}
       >
         <div className="overflow-hidden h-full flex flex-col">
           <div className="flex shrink-0 w-full items-center justify-between gap-x-2 my-[14px] px-[14px]">

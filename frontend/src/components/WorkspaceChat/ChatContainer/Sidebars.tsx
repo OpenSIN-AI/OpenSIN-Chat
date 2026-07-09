@@ -37,7 +37,7 @@ export default function Sidebars({ workspace }: SidebarsProps) {
     >
       {/* Panel area — only when a panel is active */}
       {activeSidebar && (
-        <div className="h-full flex-shrink-0 relative my-2 rounded-2xl bg-zinc-900 light:bg-white shadow-lg md:shadow-lg shadow-black/40 z-30 md:z-auto absolute md:relative inset-0 md:inset-auto w-full md:w-auto">
+        <div className="h-full flex-shrink-0 relative my-2 rounded-2xl bg-zinc-900 light:bg-white shadow-lg shadow-black/40 z-30">
           {activeSidebar === "sources" && (
             <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
               <SourcesSidebar workspace={workspace} />
