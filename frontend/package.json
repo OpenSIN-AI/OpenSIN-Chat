@@ -50,7 +50,7 @@
     "@microsoft/fetch-event-source": "^2.0.1",
     "@mintplex-labs/piper-tts-web": "^1.0.4",
     "@phosphor-icons/react": "^2.1.10",
-    "cronstrue": "^2.50.0",
+    "cronstrue": "^3.24.0",
     "dayjs": "^1.11.21",
     "docx": "^9.7.1",
     "dompurify": "^3.4.11",
