@@ -20,6 +20,7 @@ jest.mock("../../../utils/logger/console.js", () => ({
 jest.mock("../../../utils/DocumentManager", () => ({
   DocumentManager: jest.fn().mockImplementation(() => ({
     pinnedDocs: jest.fn().mockResolvedValue([]),
+    contextModeDocs: jest.fn().mockResolvedValue([]),
   })),
 }));
 jest.mock("../../../models/workspaceChats", () => ({
