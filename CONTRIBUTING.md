@@ -90,10 +90,10 @@ Alternatively, run `yarn setup` from the root which installs dependencies, sets 
 
 ## Brand Rules
 
-- **Never** re-introduce `AnythingLLM` or `Mintplex Labs` strings outside allowed files
 - Brand: OpenSIN-AI, primary color `#009ee0`
 - Check branding: `./scripts/check-branding.sh`
 - Product name: OpenSIN-Chat (never "SINChat" or "Open SIN Chat")
+- See [`BRANDING.md`](./BRANDING.md) for full guidelines and [`CREDITS.md`](./CREDITS.md) for upstream acknowledgments
 
 ## SIN-Code Tools
 
@@ -140,8 +140,7 @@ For the best chance of having your pull request accepted, please follow these gu
    doesn't have tests.
 2. Run `yarn lint:check` and `yarn build` before requesting review. Your code
    will not be merged if lint or build fails.
-3. Run `./scripts/check-branding.sh` — it must pass (no `AnythingLLM` or
-   `Mintplex Labs` strings in new code).
+3. Run `./scripts/check-branding.sh` — it must pass (no upstream brand strings in new code).
 4. If you change the public API, update the documentation in `docs/` of this repository.
 5. Aim to minimize the number of changes in each pull request. Keep to solving
    one problem at a time, when possible.
@@ -177,7 +176,9 @@ The core library is written in Node.js. There are additional sub-repositories fo
 
 ## Brand guard
 
-OpenSIN-Chat is an independent product inspired by AnythingLLM (MIT). Nearly 100% of the codebase has been rewritten or replaced. Never re-introduce `AnythingLLM` or `Mintplex Labs` strings in user-facing code, UI, or docs. The branding check (`./scripts/check-branding.sh`) must pass before merge. See [`AGENTS.md`](AGENTS.md) for the full project rules.
+OpenSIN-Chat is a sovereign, independent product by OpenSIN-AI. The branding check
+(`./scripts/check-branding.sh`) must pass before merge. See [`AGENTS.md`](AGENTS.md) for the
+full project rules and [`CREDITS.md`](./CREDITS.md) for upstream acknowledgments.
 
 ## Release process
 

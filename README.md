@@ -40,7 +40,7 @@
 
 OpenSIN Chat is a **self-hosted AI platform** for political work, research, and knowledge management. Upload your documents (Bundestag papers, press releases, legislation drafts) and the AI answers questions **only from your sources**, with traceable citations. No hallucinations from thin air, no cloud dependency, zero telemetry.
 
-A sovereign, independent product built by [OpenSIN-AI](https://github.com/OpenSIN-AI) and optimized for the German political sphere. Originally inspired by AnythingLLM, OpenSIN Chat has evolved into a purpose-built system for political research with specialized agents, politician databases, and compliance features.
+A sovereign, independent product built by [OpenSIN-AI](https://github.com/OpenSIN-AI) and optimized for the German political sphere. OpenSIN Chat is a purpose-built system for political research with specialized agents, politician databases, and compliance features.
 
 ## Quick Start
 
@@ -243,17 +243,9 @@ Distributed under the **MIT License**. See [LICENSE](./LICENSE) for details.
 
 ## Credits
 
-OpenSIN Chat was **inspired by** **[AnythingLLM](https://github.com/Mintplex-Labs/anything-llm)** by **[Mintplex Labs Inc.](https://github.com/Mintplex-Labs)** (MIT license), but has since diverged into a fully independent product with nearly 100% of the codebase rewritten or replaced.
-
-We gratefully acknowledge **Timothy Carambat** and the entire Mintplex team. Their early architectural work provided the initial spark for this project.
-
-> *AnythingLLM is a full-stack application that enables you to turn any document, resource, or piece of content into context that any LLM can use as reference during chatting. Built and maintained by Mintplex Labs Inc.*
-
-**What was originally inspired by AnythingLLM:** the basic full-stack structure (frontend + server + collector), LLM/embedding/vector DB provider abstraction, and the agent framework concept.
-
-**What OpenSIN Chat has built independently (nearly 100% rewritten):** complete rebranding (OpenSIN blue, German language, custom logo), all telemetry removed, GDPR-affine defaults, political-use-case specialisation, Politician Database, Deep Research Pipeline, PDF Reports, Agent Plugins, NVIDIA NIM Vision OCR, async upload pipeline with parseJobs, ECharts visualisation, REST APIs, comprehensive test & CI infrastructure, and significant architectural refactoring across frontend, server, and collector.
-
-A full list of third-party components is in [THIRD_PARTY.md](./THIRD_PARTY.md).
+OpenSIN Chat is a sovereign, independent product by [OpenSIN-AI](https://github.com/OpenSIN-AI).
+For acknowledgments of open-source projects that contributed to this codebase, see
+[`CREDITS.md`](./CREDITS.md).
 
 ---
 
