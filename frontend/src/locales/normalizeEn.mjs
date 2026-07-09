@@ -3,8 +3,20 @@
 // This script is used to normalize the translations files to ensure they are all the same.
 // This will take the en file and compare it to all other files and ensure they are all the same.
 // If a non-en file is missing a key, it will be added to the file and set to null
-import { resources } from "./resources.js";
 import fs from "fs";
+import { supportedLngs } from "./resources.js";
+
+// resources.js exports metadata only (locales load lazily in i18n.ts),
+// so this script builds the resources map itself from the locale dirs.
+const resources = Object.fromEntries(
+  await Promise.all(
+    supportedLngs.map(async (lang) => [
+      lang,
+      { common: (await import(`./${lang}/common.js`)).default },
+    ]),
+  ),
+);
+
 const languageNames = new Intl.DisplayNames(Object.keys(resources), {
   type: "language",
 });
