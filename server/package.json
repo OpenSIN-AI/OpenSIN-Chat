@@ -23,7 +23,7 @@
     "prisma:setup": "yarn prisma:generate && yarn prisma:migrate",
     "postinstall": "prisma generate --schema=./prisma/schema.prisma",
     "env:sync": "node scripts/sync-env-example.js",
-    "smoke": "node scripts/smoke.mjs",
+    "smoke": "node ../scripts/smoke.mjs",
     "type-check": "tsc --noEmit"
   },
   "prisma": {
