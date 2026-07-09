@@ -46,10 +46,10 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
 
   return (
     <ModalWrapper isOpen={true} closeModal={hideModal}>
-      <div className="w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border overflow-hidden">
-        <div className="relative p-6 border-b rounded-t border-theme-modal-border">
+      <div className="w-full max-w-lg bg-theme-bg-secondary rounded-xl shadow-2xl shadow-black/40 border border-theme-modal-border overflow-hidden">
+        <div className="relative px-6 py-5 border-b border-theme-modal-border">
           <div className="w-full flex gap-x-2 items-center">
-            <h3 className="text-xl font-semibold text-theme-text-primary overflow-hidden overflow-ellipsis whitespace-nowrap">
+            <h3 className="text-base font-semibold tracking-tight text-theme-text-primary overflow-hidden overflow-ellipsis whitespace-nowrap">
               {t("new-workspace.title")}
             </h3>
           </div>
@@ -57,24 +57,24 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
             type="button"
             onClick={hideModal}
             aria-label={t("newWorkspaceModal.closeAriaLabel")}
-            className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
+            className="absolute top-4 right-4 transition-colors duration-150 bg-transparent rounded-md text-sm p-1.5 inline-flex items-center hover:bg-theme-modal-border border-transparent border"
           >
             <X
-              size={24}
+              size={18}
               weight="bold"
-              className="text-theme-text-primary"
+              className="text-theme-text-secondary"
               aria-hidden="true"
             />
           </button>
         </div>
         <div className="h-full w-full overflow-y-auto max-h-[calc(100vh-200px)]">
           <form ref={formEl} onSubmit={handleCreate}>
-            <div className="py-7 px-9 space-y-2 flex-col">
+            <div className="py-6 px-6 flex-col">
               <div className="w-full flex flex-col gap-y-4">
                 <div>
                   <label
                     htmlFor="name"
-                    className="block mb-2 text-sm font-medium text-theme-text-primary"
+                    className="block mb-2 text-xs font-medium uppercase tracking-wider text-theme-text-secondary"
                   >
                     {t("common.workspaces-name")}
                   </label>
@@ -83,7 +83,7 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
                     name="name"
                     type="text"
                     id="name"
-                    className="border-none bg-theme-settings-input-bg w-full text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                    className="border border-theme-modal-border bg-theme-settings-input-bg w-full text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-none focus:border-theme-text-secondary transition-colors block h-10 px-3"
                     placeholder={t("new-workspace.placeholder")}
                     required={true}
                     autoComplete="off"
@@ -91,18 +91,25 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
                   />
                 </div>
                 {error && (
-                  <p className="text-red-400 text-sm">
+                  <p className="rounded-md border border-red-500/20 bg-red-500/[0.08] px-3 py-2 text-xs text-red-400">
                     {t("newWorkspaceModal.error", { error })}
                   </p>
                 )}
               </div>
             </div>
-            <div className="flex w-full justify-end items-center p-6 space-x-2 border-t border-theme-modal-border rounded-b">
+            <div className="flex w-full justify-end items-center px-6 py-4 space-x-2 border-t border-theme-modal-border">
+              <button
+                type="button"
+                onClick={hideModal}
+                className="transition-colors duration-150 text-theme-text-secondary hover:text-theme-text-primary px-4 h-9 rounded-lg text-sm"
+              >
+                {t("common.cancel", "Cancel")}
+              </button>
               <button
                 type="submit"
                 disabled={isSubmitting}
                 aria-label={t("new-workspace.create", "Create workspace")}
-                className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                className="transition-colors duration-150 bg-white text-black hover:bg-zinc-200 px-4 h-9 rounded-lg text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? "..." : t("newWorkspaceModal.save")}
               </button>
