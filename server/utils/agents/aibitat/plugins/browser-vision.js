@@ -212,7 +212,7 @@ async function fetchHtml(url) {
     } catch {
       // Playwright not installed or launch failed — fall through to fetch
     } finally {
-      if (browser) await browser.close().catch(() => {});
+      if (browser) await browser.close().catch((e) => console.warn("[browser-vision] non-fatal error:", e?.message || e));
     }
   }
   return fetchWithRetry(url);
@@ -427,7 +427,7 @@ const browserVision = {
                     received += value?.length ?? 0;
                   }
                 } finally {
-                  await reader.cancel().catch(() => {});
+                  await reader.cancel().catch((e) => console.warn("[browser-vision] non-fatal error:", e?.message || e));
                 }
               } else {
                 html = await res.text();

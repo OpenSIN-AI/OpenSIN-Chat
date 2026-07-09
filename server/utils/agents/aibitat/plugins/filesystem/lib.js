@@ -200,7 +200,7 @@ class FilesystemManager {
     } catch (error) {
       try {
         await fs.unlink(tempPath);
-      } catch {}
+      } catch (e) { console.warn("[lib] non-fatal error:", e?.message || e); }
       throw error;
     }
   }
@@ -658,8 +658,7 @@ class FilesystemManager {
    * @returns {Promise<string[]>} Array of matching file paths
    */
   async searchFilesWithGlob(rootPath, pattern, options = {}) {
-    // minimatch@9 no longer exports a bare function — destructure the named export.
-    const { minimatch } = require("minimatch");
+    const minimatch = require("minimatch");
     const { excludePatterns = [] } = options;
     const results = [];
     const matchOptions = { dot: true, nocase: true };

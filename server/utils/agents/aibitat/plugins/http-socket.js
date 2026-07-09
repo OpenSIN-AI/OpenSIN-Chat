@@ -25,7 +25,7 @@ function getWorkerIPC() {
           process.removeListener(event, handler),
       };
     }
-  } catch {}
+  } catch (e) { console.warn("[http-socket] non-fatal error:", e?.message || e); }
 
   // Fallback for child_process workers
   if (typeof process.send === "function") {

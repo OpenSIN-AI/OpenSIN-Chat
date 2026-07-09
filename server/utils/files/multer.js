@@ -215,7 +215,7 @@ function handleFileUpload(request, response, next) {
     if (request.file && request.file.size === 0) {
       try {
         if (request.file.path) fs.rmSync(request.file.path, { force: true });
-      } catch {}
+      } catch (e) { console.warn("[multer] non-fatal error:", e?.message || e); }
       response
         .status(400)
         .json({ success: false, error: "Empty file not allowed" })
@@ -257,7 +257,7 @@ function handleAPIFileUpload(request, response, next) {
     if (request.file && request.file.size === 0) {
       try {
         if (request.file.path) fs.rmSync(request.file.path, { force: true });
-      } catch {}
+      } catch (e) { console.warn("[multer] non-fatal error:", e?.message || e); }
       response
         .status(400)
         .json({ success: false, error: "Empty file not allowed" })
@@ -300,7 +300,7 @@ function handleAssetUpload(request, response, next) {
     if (request.file && request.file.size === 0) {
       try {
         if (request.file.path) fs.rmSync(request.file.path, { force: true });
-      } catch {}
+      } catch (e) { console.warn("[multer] non-fatal error:", e?.message || e); }
       response
         .status(400)
         .json({ success: false, error: "Empty file not allowed" })
@@ -367,7 +367,7 @@ function handlePfpUpload(request, response, next) {
     if (request.file && request.file.size === 0) {
       try {
         if (request.file.path) fs.rmSync(request.file.path, { force: true });
-      } catch {}
+      } catch (e) { console.warn("[multer] non-fatal error:", e?.message || e); }
       response
         .status(400)
         .json({ success: false, error: "Empty file not allowed" })
@@ -451,7 +451,7 @@ function cleanupUploadedFile(request) {
       const bucket = request.file.supabaseBucket || "documents";
       supabaseStorage
         .deleteFile(bucket, request.file.supabasePath)
-        .catch(() => {});
+        .catch((e) => console.warn("[multer] non-fatal error:", e?.message || e));
     }
   } catch {
     // Best-effort Supabase cleanup

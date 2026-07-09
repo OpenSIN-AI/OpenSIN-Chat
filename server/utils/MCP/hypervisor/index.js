@@ -644,10 +644,10 @@ class MCPHypervisor {
       if (timeoutId) clearTimeout(timeoutId);
       try {
         transport?.close?.();
-      } catch {}
+      } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
       try {
         if (transport?._process?.kill) transport._process.kill("SIGTERM");
-      } catch {}
+      } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
       delete this.mcps[name];
       throw error;
     }

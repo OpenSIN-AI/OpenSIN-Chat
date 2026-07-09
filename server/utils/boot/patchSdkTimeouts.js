@@ -10,15 +10,15 @@ const DEFAULT_MAX_RETRIES = 0;
  * at least 10 minutes for the 80% use case so
  * the transport layer doesn't kill connections before the SDK does.
  *
- * When `ANYTHINGLLM_FETCH_TIMEOUT` is set (milliseconds), both the undici
+ * When `OPENSIN_FETCH_TIMEOUT` (or deprecated `ANYTHINGLLM_FETCH_TIMEOUT`) is set (milliseconds), both the undici
  * dispatcher and the SDK-level AbortController deadline are raised to that
  * value instead — for users with slow local models that need even longer.
  *
  * Must be called before any provider module is required.
  */
 function patchSdkTimeouts() {
-  const envDefinedTimeout = process.env.ANYTHINGLLM_FETCH_TIMEOUT;
-  const envDefinedMaxRetries = process.env.ANYTHINGLLM_MAX_RETRIES;
+  const envDefinedTimeout = process.env.OPENSIN_FETCH_TIMEOUT ?? process.env.ANYTHINGLLM_FETCH_TIMEOUT; // deprecated alias
+  const envDefinedMaxRetries = process.env.OPENSIN_MAX_RETRIES ?? process.env.ANYTHINGLLM_MAX_RETRIES; // deprecated alias
   let timeoutMs = DEFAULT_TIMEOUT_MS;
   let maxRetries = DEFAULT_MAX_RETRIES;
 
@@ -26,7 +26,7 @@ function patchSdkTimeouts() {
     const parsed = parseInt(envDefinedTimeout, 10);
     if (!Number.isFinite(parsed) || parsed <= 0) {
       consoleLogger.warn(
-        `${LOG_PREFIX} ANYTHINGLLM_FETCH_TIMEOUT="${envDefinedTimeout}" is not a valid positive integer — using default ${DEFAULT_TIMEOUT_MS}ms.`,
+        `${LOG_PREFIX} OPENSIN_FETCH_TIMEOUT/ANYTHINGLLM_FETCH_TIMEOUT="${envDefinedTimeout}" is not a valid positive integer — using default ${DEFAULT_TIMEOUT_MS}ms.`,
       );
     } else {
       timeoutMs = parsed;
@@ -37,7 +37,7 @@ function patchSdkTimeouts() {
     const parsed = parseInt(envDefinedMaxRetries, 10);
     if (!Number.isFinite(parsed) || parsed < 0) {
       consoleLogger.warn(
-        `${LOG_PREFIX} ANYTHINGLLM_MAX_RETRIES="${envDefinedMaxRetries}" is not a valid non-negative integer — using default ${DEFAULT_MAX_RETRIES}.`,
+        `${LOG_PREFIX} OPENSIN_MAX_RETRIES/ANYTHINGLLM_MAX_RETRIES="${envDefinedMaxRetries}" is not a valid non-negative integer — using default ${DEFAULT_MAX_RETRIES}.`,
       );
     } else {
       maxRetries = parsed;

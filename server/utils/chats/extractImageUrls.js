@@ -42,7 +42,7 @@ async function getWorker() {
  */
 function enqueueOcr(task) {
   const run = ocrQueue.then(task, task);
-  ocrQueue = run.catch(() => {});
+  ocrQueue = run.catch((e) => console.warn("[extractImageUrls] non-fatal error:", e?.message || e));
   return run;
 }
 

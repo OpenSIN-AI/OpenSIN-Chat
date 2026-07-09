@@ -71,7 +71,8 @@ function dumpENV() {
     "GENERIC_OPEN_AI_CUSTOM_HEADERS",
 
     // Specify Chromium args for collector
-    "ANYTHINGLLM_CHROMIUM_ARGS",
+    "OPENSIN_CHROMIUM_ARGS",
+    "ANYTHINGLLM_CHROMIUM_ARGS", // deprecated alias
 
     // Allow setting a custom response timeout for Ollama
     "OLLAMA_RESPONSE_TIMEOUT",
@@ -90,8 +91,10 @@ function dumpENV() {
     "AGENT_AUTO_APPROVED_SKILLS",
 
     // Allow setting a custom fetch timeouts for providers
-    "ANYTHINGLLM_FETCH_TIMEOUT",
-    "ANYTHINGLLM_MAX_RETRIES",
+    "OPENSIN_FETCH_TIMEOUT",
+    "OPENSIN_MAX_RETRIES",
+    "ANYTHINGLLM_FETCH_TIMEOUT", // deprecated alias
+    "ANYTHINGLLM_MAX_RETRIES", // deprecated alias
   ];
 
   // Simple sanitization of each value to prevent ENV injection via newline or quote escaping.

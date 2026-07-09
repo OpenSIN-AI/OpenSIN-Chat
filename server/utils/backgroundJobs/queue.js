@@ -209,7 +209,7 @@ class PersistentBackgroundQueue {
   start() {
     consoleLogger.log("[Queue] Starting persistent background queue...");
     // Fire-and-forget — Fehler hier dürfen den Server-Boot nicht blockieren
-    this._pruneOldJobs().catch(() => {});
+    this._pruneOldJobs().catch((e) => console.warn("[queue] non-fatal error:", e?.message || e));
     this._ensurePolling();
   }
 

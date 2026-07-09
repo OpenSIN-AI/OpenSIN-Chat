@@ -20,7 +20,7 @@ const WorkspaceAgentInvocation = {
         where: { uuid: String(uuid) },
         data: { closed: true },
       });
-    } catch {}
+    } catch (e) { console.warn("[workspaceAgentInvocation] non-fatal error:", e?.message || e); }
   },
 
   new: async function ({ prompt, workspace, user = null, thread = null }) {

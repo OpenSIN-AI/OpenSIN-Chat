@@ -346,7 +346,7 @@ function getBaseLLMProviderModel({ provider = null } = {}) {
  * Until this helper existed the ENV was read directly, which made @agent
  * invocations crash: the container had NVIDIA_NIM_LLM_MODEL_PREF hard-coded
  * to a model that could not serve tool-calling, and any DB override was
- * ignored. See https://github.com/Family-Team-Projects/OpenSIN-Chat/issues/100
+ * ignored. See https://github.com/OpenSIN-AI/OpenSIN-Chat/issues/100
  *
  * Wrapped in try/catch so boot-time callers (where the SystemSettings model
  * is not yet importable) still get the ENV fallback instead of throwing.

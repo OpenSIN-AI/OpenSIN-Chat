@@ -48,7 +48,7 @@ app.ws("/ws", function (ws, _response) {
         }),
       );
     });
-  } catch {}
+  } catch (e) { console.warn("[websock-branding-collab] non-fatal error:", e?.message || e); }
 });
 
 app.all("*", function (_, response) {

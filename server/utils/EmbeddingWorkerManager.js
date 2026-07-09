@@ -230,7 +230,7 @@ async function embedFiles(slug, files, workspaceId, userId) {
       }
       eventHistory.delete(slug);
     }
-    bg.removeJob(jobId).catch(() => {});
+    bg.removeJob(jobId).catch((e) => console.warn("[EmbeddingWorkerManager] non-fatal error:", e?.message || e));
 
     if (!workerCompleted) {
       emitProgress(slug, {
@@ -258,7 +258,7 @@ async function embedFiles(slug, files, workspaceId, userId) {
       }
       eventHistory.delete(slug);
     }
-    bg.removeJob(jobId).catch(() => {});
+    bg.removeJob(jobId).catch((e) => console.warn("[EmbeddingWorkerManager] non-fatal error:", e?.message || e));
     if (!workerCompleted) {
       emitProgress(slug, {
         type: "all_complete",
