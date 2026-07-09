@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
 import { useMemo } from "react";
+import { useLocation } from "react-router-dom";
 
 /**
  * Returns a URLSearchParams instance for the current URL query string.
- * Reads directly from window.location so it does not require a Router context.
+ * Re-memoizes whenever the router location's search string changes.
  */
 export default function useQuery() {
-  const search = typeof window !== "undefined" ? window.location.search : "";
+  const { search } = useLocation();
   return useMemo(() => new URLSearchParams(search), [search]);
 }
