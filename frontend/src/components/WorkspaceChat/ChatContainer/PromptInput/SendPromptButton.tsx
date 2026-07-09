@@ -22,9 +22,9 @@ export default function SendPromptButton({
         ref={formRef}
         type="submit"
         disabled={isDisabled || !promptInput.trim().length}
-        className={`border-none flex justify-center items-center rounded-full w-7 h-7 transition-all ${
+        className={`border-none flex justify-center items-center rounded-full w-7 h-7 transition-colors duration-150 ${
           promptInput.trim().length && !isDisabled
-            ? "cursor-pointer bg-white hover:bg-zinc-100 shadow-sm"
+            ? "cursor-pointer bg-[#fafafa] hover:bg-[#e4e4e7] light:bg-zinc-900 light:hover:bg-zinc-800"
             : "cursor-not-allowed bg-white/[0.06] light:bg-zinc-100"
         }`}
         data-tooltip-id="send-prompt"
@@ -38,7 +38,7 @@ export default function SendPromptButton({
         <ArrowUp
           className={`w-[15px] h-[15px] pointer-events-none ${
             promptInput.trim().length && !isDisabled
-              ? "text-black light:text-black"
+              ? "text-black light:text-white"
               : "text-[#3f3f46] light:text-zinc-400"
           }`}
           weight="bold"
