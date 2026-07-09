@@ -4,7 +4,7 @@
 //          Refresh-coalescing prevents thundering-herd on token refresh.
 // Docs: connectorAccounts.doc.md
 
-const prisma = require("../utils/prisma").default || require("../utils/prisma");
+const prisma = require("../utils/prisma");
 const { EncryptionManager } = require("../utils/EncryptionManager");
 const { PROVIDERS } = require("../utils/connectors/providers");
 const consoleLogger = require("../utils/logger/console.js");
@@ -63,7 +63,7 @@ const ConnectorAccounts = {
    */
   async listSafe(userId) {
     return prisma.connector_accounts.findMany({
-      where: { user_id: userId ?? null },
+      where: { user_id: userId ?? 0 },
       select: {
         id: true,
         provider: true,
@@ -84,7 +84,7 @@ const ConnectorAccounts = {
   async getFreshAccessToken({ userId, provider, providerAccount = null }) {
     const acc = await prisma.connector_accounts.findFirst({
       where: {
-        user_id: userId ?? null,
+        user_id: userId ?? 0,
         provider,
         status: "active",
         ...(providerAccount ? { provider_account: providerAccount } : {}),
@@ -188,7 +188,7 @@ const ConnectorAccounts = {
     const def = PROVIDERS[provider];
     const acc = await prisma.connector_accounts.findFirst({
       where: {
-        user_id: userId ?? null,
+        user_id: userId ?? 0,
         provider,
         ...(providerAccount ? { provider_account: providerAccount } : {}),
       },

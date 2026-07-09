@@ -1,6 +1,18 @@
 // SPDX-License-Identifier: MIT
 /* global process */
-import { resources } from "./resources.js";
+import { supportedLngs } from "./resources.js";
+
+// resources.js exports metadata only (locales load lazily in i18n.ts),
+// so this script builds the resources map itself from the locale dirs.
+const resources = Object.fromEntries(
+  await Promise.all(
+    supportedLngs.map(async (lang) => [
+      lang,
+      { common: (await import(`./${lang}/common.js`)).default },
+    ]),
+  ),
+);
+
 const languageNames = new Intl.DisplayNames(Object.keys(resources), {
   type: "language",
 });

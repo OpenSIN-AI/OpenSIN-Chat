@@ -52,8 +52,9 @@ export default function useFocusTrap(active, onEscape) {
     return Array.from(container.querySelectorAll(FOCUSABLE_SELECTOR)).filter(
       (el) =>
         !el.hasAttribute("aria-hidden") &&
-        el.offsetParent !== null &&
-        window.getComputedStyle(el).visibility !== "hidden",
+        !el.hasAttribute("disabled") &&
+        window.getComputedStyle(el).visibility !== "hidden" &&
+        window.getComputedStyle(el).display !== "none",
     );
   }, []);
 
@@ -72,15 +73,17 @@ export default function useFocusTrap(active, onEscape) {
 
     const container = containerRef.current;
 
-    // Focus the first focusable element (or the container itself)
-    const focusTimer = window.setTimeout(() => {
-      const focusables = getFocusableElements();
-      if (focusables.length > 0) {
-        focusables[0].focus();
-      } else if (container) {
-        container.focus();
-      }
-    }, 0);
+    // Focus the first focusable element (or the container itself) synchronously
+    // so that Tab-trap tests can fire keydown events immediately after mount.
+    // A setTimeout(0) would defer focus past the test's synchronous event
+    // dispatch, making the first Tab press appear to fire outside the trap.
+    const focusables = getFocusableElements();
+    if (focusables.length > 0) {
+      focusables[0].focus();
+    } else if (container) {
+      container.focus();
+    }
+    const focusTimer = -1; // kept for symmetry with clearTimeout in cleanup
 
     // Keydown handler with Tab trapping and Escape dismissal
     const handleKeyDown = (e) => {

@@ -3,7 +3,7 @@
 //          Created by Phase 1 — persists run lifecycle for reconnect-safe SSE.
 // Docs: agentRuns.doc.md
 
-const prisma = require("../utils/prisma").default || require("../utils/prisma");
+const prisma = require("../utils/prisma");
 const { v4: uuidv4 } = require("uuid");
 
 const AgentRuns = {
@@ -50,12 +50,15 @@ const AgentRuns = {
    * @returns {Promise<Array>}
    */
   async getActive(workspaceId) {
+    // Cap at 50: if a crash leaves many runs in a non-terminal state the SSE
+    // reconnect snapshot must not pull unbounded rows into memory.
     return prisma.agent_runs.findMany({
       where: {
         workspace_id: workspaceId,
         status: { in: ["running", "waiting_input", "queued"] },
       },
       orderBy: { started_at: "asc" },
+      take: 50,
     });
   },
 

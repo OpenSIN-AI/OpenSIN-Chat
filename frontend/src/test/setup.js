@@ -19,6 +19,34 @@ Object.defineProperty(window, "localStorage", {
   writable: true,
 });
 
+// jsdom does not implement ResizeObserver. Provide a no-op stub so components
+// that use scroll areas or resize-aware layouts don't throw ReferenceError.
+if (typeof globalThis.ResizeObserver === "undefined") {
+  globalThis.ResizeObserver = class ResizeObserver {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  };
+}
+
+// jsdom does not implement ClipboardItem. Provide a minimal stub so any code
+// that calls `new ClipboardItem({ ... })` in tests does not throw a ReferenceError
+// before it can reach the mocked navigator.clipboard.write().
+if (typeof globalThis.ClipboardItem === "undefined") {
+  class ClipboardItemStub {
+    constructor(data) {
+      this._data = data;
+    }
+    getType(type) {
+      return Promise.resolve(this._data[type]);
+    }
+    get types() {
+      return Object.keys(this._data);
+    }
+  }
+  globalThis.ClipboardItem = ClipboardItemStub;
+}
+
 afterEach(() => {
   cleanup();
   vi.clearAllMocks();

@@ -26,7 +26,12 @@ vi.mock("@/utils/paths", () => ({
   },
 }));
 
-import { swrFetcher, swrConfig, handleAuthFailure } from "./swrFetcher";
+import {
+  swrFetcher,
+  swrConfig,
+  handleAuthFailure,
+  __resetRedirectFlag,
+} from "./swrFetcher";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
 import { safeRemoveItem } from "@/utils/safeStorage";
 
@@ -128,8 +133,15 @@ describe("swrConfig", () => {
 });
 
 describe("handleAuthFailure", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    // The swrFetcher 401 test earlier in this file sets the module-level
+    // redirectingToLogin flag, which would cause handleAuthFailure() here
+    // to be a no-op. Reset it so this suite tests the function in isolation.
+    __resetRedirectFlag();
+  });
+
   it("clears auth storage keys", () => {
-    // Reset the redirecting flag by calling handleAuthFailure
     handleAuthFailure();
     expect(safeRemoveItem).toHaveBeenCalledWith("opensin_user");
     expect(safeRemoveItem).toHaveBeenCalledWith("opensin_authToken");

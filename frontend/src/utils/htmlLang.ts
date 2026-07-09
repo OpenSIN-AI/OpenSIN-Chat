@@ -17,10 +17,13 @@ export function syncHtmlLang(lng) {
 
 export function syncDocumentTitle() {
   const titleKey = i18next.t("page.title");
-  document.title =
-    typeof titleKey === "string" && titleKey.length > 0
-      ? titleKey
-      : "OpenSIN Chat";
+  // i18next returns the lookup key verbatim ("page.title") when no translation
+  // is loaded. Treat that as a missing translation and fall back to the default.
+  const isTranslated =
+    typeof titleKey === "string" &&
+    titleKey.length > 0 &&
+    titleKey !== "page.title";
+  document.title = isTranslated ? titleKey : "OpenSIN Chat";
   const description = i18next.t("page.description");
   if (typeof description === "string" && description.length > 0) {
     const meta =

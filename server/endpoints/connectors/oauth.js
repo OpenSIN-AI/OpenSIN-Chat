@@ -130,6 +130,18 @@ function connectorOAuthEndpoints(app) {
     const { code, state, error: oauthError } = req.query;
     const def = PROVIDERS[provider];
 
+    // Escape HTML special characters before interpolating user-controlled
+    // strings into the page body. The postMessage payload uses JSON.stringify
+    // (safe for the script block); the <p> tag needs explicit escaping because
+    // oauthError comes directly from req.query and could contain </p><script>.
+    const escHtml = (s) =>
+      String(s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
     const closePopup = (payload) =>
       res.send(`<!doctype html><html><body><script>
         window.opener && window.opener.postMessage(${JSON.stringify(payload)}, "${BASE_URL}");
@@ -137,7 +149,7 @@ function connectorOAuthEndpoints(app) {
       </script><p style="font-family:sans-serif;text-align:center;padding:2rem">${
         payload.ok
           ? "Verbunden! Fenster schließt sich…"
-          : "Fehler: " + payload.error
+          : "Fehler: " + escHtml(payload.error)
       }</p></body></html>`);
 
     if (oauthError) {

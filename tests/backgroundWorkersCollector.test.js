@@ -12,7 +12,6 @@ vi.mock("@mintplex-labs/bree", () => {
     add: vi.fn(() => Promise.resolve()),
     remove: vi.fn(() => Promise.resolve()),
     run: vi.fn(() => Promise.resolve()),
-    start: vi.fn(() => Promise.resolve()),
     workers: new Map(),
     config: { jobs: [] },
   }));

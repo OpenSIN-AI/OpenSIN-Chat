@@ -888,3 +888,79 @@ model document_insights {
   @@index([docId])
   @@index([workspaceId])
 }
+
+// Agent run lifecycle — persists run state for reconnect-safe SSE.
+// Created by subagentSpawner; read by agentRunsStream on reconnect.
+// Status values: running | waiting_input | queued | done | error | cancelled
+model agent_runs {
+  id            String    @id
+  workspace_id  Int
+  parent_run_id String?
+  agent_name    String
+  model         String?
+  status        String    @default("running")
+  started_at    DateTime  @default(now())
+  ended_at      DateTime?
+
+  @@index([workspace_id, status])
+  @@index([started_at])
+}
+
+// Agent trigger definitions — schedule and polling triggers per workspace.
+// Type values: schedule | polling
+model agent_triggers {
+  id           String    @id
+  workspace_id Int
+  agent_name   String
+  name         String
+  type         String
+  config       String    // JSON string
+  active       Boolean   @default(true)
+  checkpoint   String?   // JSON string
+  last_run_at  DateTime?
+  next_run_at  DateTime?
+  created_at   DateTime  @default(now())
+
+  @@index([workspace_id])
+  @@index([active, next_run_at])
+}
+
+// Trigger run history with idempotency via dedupe_key.
+// Status values: queued | running | done | error
+model trigger_runs {
+  id            String    @id
+  trigger_id    String
+  status        String    @default("queued")
+  dedupe_key    String?
+  attempt       Int       @default(0)
+  error_message String?
+  result        String?   // JSON string
+  started_at    DateTime?
+  ended_at      DateTime?
+  created_at    DateTime  @default(now())
+
+  @@index([trigger_id, created_at])
+  @@index([dedupe_key, status])
+}
+
+// OAuth connector accounts with AES-GCM-encrypted tokens.
+// Composite unique key prevents duplicate connections per user+provider+account.
+model connector_accounts {
+  id                Int       @id @default(autoincrement())
+  user_id           Int       @default(0)
+  provider          String
+  provider_account  String    @default("")
+  scopes            String?
+  access_token_enc  String
+  refresh_token_enc String?
+  token_type        String    @default("Bearer")
+  expires_at        DateTime?
+  last_refresh_at   DateTime?
+  status            String    @default("active")
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @default(now()) @updatedAt
+
+  @@unique([user_id, provider, provider_account])
+  @@index([user_id])
+  @@index([status])
+}

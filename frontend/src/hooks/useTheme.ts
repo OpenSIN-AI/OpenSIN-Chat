@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
-import { REFETCH_LOGO_EVENT } from "@/LogoContext";
+// Inlined to break the circular import: useTheme → LogoContext → (chain) → useTheme.
+// Keep in sync with the REFETCH_LOGO_EVENT constant in @/LogoContext.
+const REFETCH_LOGO_EVENT = "refetch-logo";
 import { useState, useEffect, useRef } from "react";
 import { LEGACY_THEME_KEY, THEME_KEY } from "@/utils/constants";
 import { safeGetItem, safeSetItem, safeRemoveItem } from "@/utils/safeStorage";

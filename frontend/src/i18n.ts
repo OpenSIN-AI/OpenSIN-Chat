@@ -26,6 +26,7 @@ i18next
       convertDetectedLanguage: (lng: string) => lng.split("-")[0],
     },
     debug: import.meta.env.DEV,
+    ns: [defaultNS],
     defaultNS,
     lowerCaseLng: true,
     interpolation: {

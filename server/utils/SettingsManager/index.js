@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Phase 4 — DB-backed settings abstraction that replaces the
-// AnythingLLM anti-pattern of mutating `process.env` at runtime and dumping
+// upstream anti-pattern of mutating `process.env` at runtime and dumping
 // application settings back to the `.env` file.
 //
 // Architecture:

@@ -190,6 +190,12 @@ ALLOWED_FILES=(
   # ── In-app documentation pages (upstream context) ───
   #    frontend/src/pages/Docs/content/ mirrors docs/ for the in-app docs viewer.
   "frontend/src/pages/Docs/content/"
+
+  # ── Historical / immutable files ──────────────────────────────────────
+  "server/prisma/migrations/20260707120000_add_managed_env_settings/migration.sql"  # migration files are immutable once applied; comment references upstream anti-pattern
+  "docs/DEPENDENCY-HEALTH.md"                # documents the anythingllm_* -> opensin_* localStorage migration
+  "docs/CEO-AUDIT-REPORT-2026-07-08.md"      # audit report documenting the de-forking status
+  "tests/backgroundWorkersCollector.test.js"  # vi.mock("@mintplex-labs/bree") — real published npm package name
 )
 
 # Build ripgrep exclude-from-file

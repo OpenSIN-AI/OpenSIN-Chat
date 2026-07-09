@@ -47,9 +47,13 @@ export default function useChatStream({
   const chatHistoryRef = useRef(chatHistory);
   chatHistoryRef.current = chatHistory;
 
-  const isEmpty = !threadSlug
-    ? true
-    : chatHistory.length === 0 && !sessionStorage.getItem(PENDING_HOME_MESSAGE);
+  // isEmpty is true only when there is no thread, no chat history, and no
+  // pending home message. A threadSlug alone is enough to consider the view
+  // non-empty so the chat input/welcome screen renders correctly.
+  const isEmpty =
+    !threadSlug &&
+    chatHistory.length === 0 &&
+    !sessionStorage.getItem(PENDING_HOME_MESSAGE);
 
   const { listening, resetTranscript } = useSpeechRecognition({
     clearTranscriptOnListen: true,
@@ -120,11 +124,11 @@ export default function useChatStream({
     const observer = new ResizeObserver(([entry]) => {
       const inputHeight =
         entry.borderBoxSize?.[0]?.blockSize ?? entry.target.offsetHeight;
-      chatEl.style.paddingBottom = `${inputHeight}px`;
+      if (chatEl?.style) chatEl.style.paddingBottom = `${inputHeight}px`;
     });
     observer.observe(wrapper);
     const initialHeight = wrapper.offsetHeight;
-    chatEl.style.paddingBottom = `${initialHeight}px`;
+    if (chatEl?.style) chatEl.style.paddingBottom = `${initialHeight}px`;
     return () => observer.disconnect();
   }, [isEmpty]);
 

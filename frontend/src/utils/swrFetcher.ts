@@ -9,6 +9,16 @@ import paths from "@/utils/paths";
 let redirectingToLogin = false;
 
 /**
+ * Resets the redirect guard. Only intended for use in test suites that need
+ * to call handleAuthFailure() in isolation after a prior test already set the
+ * flag (e.g. via a mocked 401 response).
+ * @internal
+ */
+export function __resetRedirectFlag() {
+  redirectingToLogin = false;
+}
+
+/**
  * Clears auth-related localStorage keys and redirects to the login page.
  * Guarded by a module-level flag so that multiple simultaneous 401s
  * only trigger one redirect.

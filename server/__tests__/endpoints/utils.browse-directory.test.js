@@ -83,6 +83,16 @@ jest.mock("../../utils/http", () => ({
   decodeJWT: jest.fn(),
 }));
 
+// endpoints/utils.js now imports sanitizeFileName from utils/files.
+// utils/files transitively requires models/documents → utils/prisma →
+// @prisma/adapter-better-sqlite3, whose native better-sqlite3 binding fails
+// in the Jest environment. Mock the whole module to stop that chain.
+jest.mock("../../utils/files", () => ({
+  sanitizeFileName: jest.fn((name) => name),
+  writeToServerDocuments: jest.fn(),
+  deleteFromServerDocuments: jest.fn(),
+}));
+
 const path = require("path");
 const fs = require("fs");
 const { createMockApp } = require("../helpers/mockExpressApp");

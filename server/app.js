@@ -49,6 +49,10 @@ const { mcpServersEndpoints } = require("./endpoints/mcpServers");
 const { agentRunsStream } = require("./endpoints/agentRunsStream");
 const { subagentEndpoints } = require("./endpoints/subagents");
 const { scheduledJobEndpoints } = require("./endpoints/scheduledJobs");
+const { agentTriggerEndpoints } = require("./endpoints/agentTriggers");
+const {
+  connectorOAuthEndpoints,
+} = require("./endpoints/connectors/oauth");
 const {
   outlookAgentEndpoints,
 } = require("./endpoints/utils/outlookAgentUtils");
@@ -60,6 +64,9 @@ const { noteEndpoints } = require("./endpoints/notes");
 const { contextModeEndpoints } = require("./endpoints/contextMode");
 const { transformationEndpoints } = require("./endpoints/transformations");
 const { askEndpoints } = require("./endpoints/ask");
+const {
+  workspaceParsedFilesEndpoints,
+} = require("./endpoints/workspacesParsedFiles");
 const { providerStatusEndpoints } = require("./endpoints/providerStatus");
 const { pdfAnalysisEndpoints } = require("./endpoints/pdfAnalysis");
 const { webPushEndpoints } = require("./endpoints/webPush");
@@ -218,6 +225,8 @@ function buildApp() {
   subagentEndpoints(apiRouter);
 
   scheduledJobEndpoints(apiRouter);
+  agentTriggerEndpoints(apiRouter);
+  connectorOAuthEndpoints(app); // mounts its own /api router internally
   outlookAgentEndpoints(apiRouter);
   googleAgentSkillEndpoints(apiRouter);
   pdfAnalysisEndpoints(app);
@@ -226,6 +235,7 @@ function buildApp() {
   contextModeEndpoints(apiRouter);
   transformationEndpoints(apiRouter);
   askEndpoints(apiRouter);
+  workspaceParsedFilesEndpoints(app);
   providerStatusEndpoints(apiRouter);
   webPushEndpoints(apiRouter);
   telegramEndpoints(apiRouter);
