@@ -57,13 +57,6 @@ export default defineConfig({
     sourcemap: false,
     // Use the modern esbuild target for smaller, faster output.
     target: "es2020",
-    // Manual chunks for better caching of vendor code.
-    manualChunks: {
-      "react-vendor": ["react", "react-dom", "react-router-dom"],
-      "pdf-vendor": ["react-pdf", "pdfjs-dist"],
-      "chart-vendor": ["echarts", "echarts-for-react", "recharts"],
-      "markdown-vendor": ["react-markdown", "markdown-it", "remark-gfm"],
-    },
     // Increase the chunk size warning limit — the PDF and chart vendors
     // are intentionally large and split into separate chunks.
     chunkSizeWarningLimit: 600,
@@ -73,6 +66,14 @@ export default defineConfig({
         entryFileNames: "assets/[name]-[hash].js",
         chunkFileNames: "assets/[name]-[hash].js",
         assetFileNames: "assets/[name]-[hash].[ext]",
+        // Manual chunks for better caching of vendor code.
+        // (Previously at build.manualChunks where Rollup silently ignores it.)
+        manualChunks: {
+          "react-vendor": ["react", "react-dom", "react-router-dom"],
+          "pdf-vendor": ["react-pdf"],
+          "chart-vendor": ["echarts", "echarts-for-react", "recharts"],
+          "markdown-vendor": ["react-markdown", "markdown-it", "remark-gfm"],
+        },
       },
     },
   },

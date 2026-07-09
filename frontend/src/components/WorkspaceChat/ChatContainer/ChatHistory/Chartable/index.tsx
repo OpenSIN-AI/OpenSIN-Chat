@@ -4,8 +4,8 @@
 // Docs: Replaces recharts/@tremor with Apache ECharts for gradient/glow/animation.
 
 import DOMPurify from "@/utils/chat/purify";
-import { safeJsonParse } from "@/utils/request.js";
-import renderMarkdown from "@/utils/chat/markdown.js";
+import { safeJsonParse } from "@/utils/request";
+import renderMarkdown from "@/utils/chat/markdown";
 import { memo } from "react";
 import EChartRenderer from "./EChartRenderer";
 
