@@ -12,7 +12,7 @@ const { reqBody } = require("../http");
  * but only pass the relevant settings to the collector per-request and be able to
  * access them across the collector via a single instance of RuntimeSettings.
  *
- * TODO: We may want to set all options passed from backend to collector here,
+ * TODO(https://github.com/OpenSIN-AI/OpenSIN-Chat/issues/new?title=Expand+RuntimeSettings+to+cover+all+collector+options): We may want to set all options passed from backend to collector here,
  * but for now - we are only setting the runtime settings specifically for backwards
  * compatibility with existing CollectorApi usage.
  */
@@ -52,7 +52,7 @@ class RuntimeSettings {
 
   /**
    * Parse the runtime settings from the request body options body
-   * see #attachOptions https://github.com/Family-Team-Projects/opensin-chat/blob/ebf112007e0d579af3d2b43569db95bdfc59074b/server/utils/collectorApi/index.js#L18
+   * see #attachOptions https://github.com/OpenSIN-AI/opensin-chat/blob/ebf112007e0d579af3d2b43569db95bdfc59074b/server/utils/collectorApi/index.js#L18
    * @param {import('express').Request} request
    * @returns {void}
    */

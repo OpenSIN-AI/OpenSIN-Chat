@@ -1,11 +1,8 @@
 // SPDX-License-Identifier: MIT
 const { v4 } = require("uuid");
-// PuppeteerWebBaseLoader is required lazily inside scrapeWithCustomLoader()
-// because @langchain/community's puppeteer loader tries to require("puppeteer")
-// at module-load time when it is imported at the top level. Since puppeteer is
-// an optional dependency (large binary, not installed in all environments),
-// a top-level require crashes the entire collector on boot even when Puppeteer
-// is never actually used for the current request.
+const {
+  PuppeteerWebBaseLoader,
+} = require("@langchain/community/document_loaders/web/puppeteer");
 const { writeToServerDocuments } = require("../../utils/files");
 const { tokenizeString } = require("../../utils/tokenizer");
 const { default: slugify } = require("slugify");
@@ -201,11 +198,11 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
           if (page && !page.isClosed()) {
             try {
               req.continue();
-            } catch {}
+            } catch (e) { console.warn("[generic] non-fatal error:", e?.message || e); }
           } else {
             try {
               req.abort();
-            } catch {}
+            } catch (e) { console.warn("[generic] non-fatal error:", e?.message || e); }
           }
         };
         page.on("request", onRequest);
@@ -263,15 +260,12 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
         }
         return { pageContent: originalContent };
       } finally {
-        if (page) await page.close().catch(() => {});
+        if (page) await page.close().catch((e) => console.warn("[generic] non-fatal error:", e?.message || e));
         await browserPool.release(browser);
       }
     };
 
     const scrapeWithCustomLoader = async () => {
-      const { PuppeteerWebBaseLoader } = require(
-        "@langchain/community/document_loaders/web/puppeteer"
-      );
       const loader = new PuppeteerWebBaseLoader(link, {
         launchOptions: {
           headless: launchConfig.headless,

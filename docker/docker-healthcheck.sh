@@ -55,5 +55,5 @@ if [ -f "$FACTS_DB" ]; then
   fi
 fi
 
-  echo "Server is up; PDF-Storage und Job/Facts-Store OK"
+echo "Server is up; PDF-Storage und Job/Facts-Store OK"
 exit 0

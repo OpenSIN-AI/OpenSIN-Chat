@@ -173,9 +173,9 @@ async function createTesseractWorkerWithTimeout(languages, cachePath) {
   const workerPromise = createWorker(languages, OEM.LSTM_ONLY, workerOptions);
   workerPromise
     .then((worker) => {
-      if (timedOut) worker?.terminate?.().catch(() => {});
+      if (timedOut) worker?.terminate?.().catch((e) => console.warn("[index] non-fatal error:", e?.message || e));
     })
-    .catch(() => {});
+    .catch((e) => console.warn("[index] non-fatal error:", e?.message || e));
 
   return await Promise.race([
     workerPromise,
@@ -530,7 +530,7 @@ class OCRLoader {
         return documents;
       };
 
-      const pagesPromise = processPages().catch(() => {});
+      const pagesPromise = processPages().catch((e) => console.warn("[index] non-fatal error:", e?.message || e));
       await Promise.race([timeoutPromise, pagesPromise]);
     } catch (e) {
       this.log(`Error: ${e.message}`, e.stack);
@@ -586,7 +586,7 @@ class OCRLoader {
           try {
             const sharp = (await import("sharp")).default;
             imageBuffer = await sharp(filePath).rotate().png().toBuffer();
-          } catch {}
+          } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
 
           const text = await nimOcrImage(imageBuffer);
           this.log(`Completed NIM OCR of ${documentTitle}!`, {
@@ -625,7 +625,7 @@ class OCRLoader {
             const sharp = (await import("sharp")).default;
             const oriented = await sharp(filePath).rotate().png().toBuffer();
             recognizeInput = oriented;
-          } catch {}
+          } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
           const { data } = await worker.recognize(recognizeInput, {}, "text");
           content = data.text;
         };
@@ -693,7 +693,7 @@ class OCRLoader {
               try {
                 const sharp = (await import("sharp")).default;
                 buf = await sharp(filePaths[idx]).rotate().png().toBuffer();
-              } catch {}
+              } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
               return buf;
             } catch {
               return null;
@@ -764,7 +764,7 @@ class OCRLoader {
                 .png()
                 .toBuffer();
               recognizeInput = oriented;
-            } catch {}
+            } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
             const { data } = await worker.recognize(recognizeInput, {}, "text");
             results[idx] = data.text;
           } catch (e) {

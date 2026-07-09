@@ -122,7 +122,7 @@ class PDFLoader {
           } finally {
             try {
               if (typeof page.cleanup === "function") await page.cleanup();
-            } catch {}
+            } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
           }
         })
       );

@@ -1,3 +1,5 @@
+**DISCLAIMER:** This extension is a community-contributed data source for political research. OpenSIN Chat is a politically neutral platform. Extensions for individual parties (AfD, CDU, SPD, Grüne, etc.) may be added by contributors. The presence of this extension does not imply endorsement.
+
 # AfD-Pressemitteilungs-Importer
 
 Importiert Pressemitteilungen direkt von [afd.de/presse](https://www.afd.de/presse/pressemitteilungen/).

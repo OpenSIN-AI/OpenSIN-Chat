@@ -169,7 +169,7 @@ async function wipeCollectorStorage() {
         if (file === "__HOTDIR__.md") continue;
         try {
           fs.rmSync(path.join(directory, file));
-        } catch {}
+        } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
       }
       resolve();
     });
@@ -184,7 +184,7 @@ async function wipeCollectorStorage() {
         if (file === ".placeholder") continue;
         try {
           fs.rmSync(path.join(directory, file));
-        } catch {}
+        } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
       }
       resolve();
     });

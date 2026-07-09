@@ -3,7 +3,7 @@ const RuntimeSettings = require("../runtimeSettings");
 /**
  * SSRF Protection
  *
- * The original upstream comment said "please don't submit SSRF CVEs" —
+ * The original AnythingLLM comment said "please don't submit SSRF CVEs" —
  * we're fixing that now. This validator blocks:
  *   - All RFC 1918 private ranges (10.x, 172.16-31.x, 192.168.x)
  *   - Loopback (127.x, ::1)
@@ -129,7 +129,7 @@ function validURL(url) {
     if (!VALID_PROTOCOLS.includes(destination.protocol)) return false;
     if (isInvalidIp(destination)) return false;
     return true;
-  } catch {}
+  } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
   return false;
 }
 

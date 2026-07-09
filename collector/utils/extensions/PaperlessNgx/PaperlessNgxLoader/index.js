@@ -110,7 +110,7 @@ class PaperlessNgxLoader {
         writeStream.destroy();
         try {
           fs.rmSync(tempPath, { force: true });
-        } catch {}
+        } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
         throw e;
       }
     } else {
@@ -125,7 +125,7 @@ class PaperlessNgxLoader {
       } catch (e) {
         try {
           fs.rmSync(tempPath, { force: true });
-        } catch {}
+        } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
         throw e;
       }
     }
@@ -277,13 +277,13 @@ class PaperlessNgxLoader {
       } finally {
         try {
           fs.rmSync(tempPath, { force: true });
-        } catch {}
+        } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
       }
     } catch (error) {
       if (downloaded?.tempPath) {
         try {
           fs.rmSync(downloaded.tempPath, { force: true });
-        } catch {}
+        } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
       }
       // eslint-disable-next-line no-console
       console.error(

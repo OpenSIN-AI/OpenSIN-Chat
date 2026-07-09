@@ -115,7 +115,7 @@ class LocalWhisper {
       if (outputFile) {
         try {
           fs.rmSync(outputFile, { force: true });
-        } catch {}
+        } catch (e) { console.warn("[localWhisper] non-fatal error:", e?.message || e); }
       }
       // eslint-disable-next-line no-console
       console.error(`convertToWavAudioData`, error);

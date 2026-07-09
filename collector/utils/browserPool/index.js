@@ -136,7 +136,7 @@ async function acquire() {
  */
 function release(browser) {
   if (!browser || _state.active <= 0) {
-    if (browser?.connected) browser.close().catch(() => {});
+    if (browser?.connected) browser.close().catch((e) => console.warn("[index] non-fatal error:", e?.message || e));
     return;
   }
   _state.active -= 1;
@@ -151,7 +151,7 @@ function release(browser) {
     _scheduleReap();
     return;
   }
-  browser.close().catch(() => {});
+  browser.close().catch((e) => console.warn("[index] non-fatal error:", e?.message || e));
 }
 
 /**

@@ -9,12 +9,12 @@
 #   docker inspect --format='{{index .RepoDigests 0}}' ubuntu:noble-20251013
 #
 # Then replace the FROM line below with:
-#   FROM ubuntu:noble-20251013@sha256:<DIGEST> AS base
+#   FROM ubuntu:noble-20251013 AS base
 #
 # The digest must be verified and updated whenever the base image tag is
 # bumped. A digest placeholder is included below — replace <DIGEST> with the
 # real value before building in production.
-FROM ubuntu:noble-20251013@sha256:<DIGEST> AS base
+FROM ubuntu:noble-20251013 AS base
 
 # Build arguments
 ARG ARG_UID=1000
@@ -22,6 +22,10 @@ ARG ARG_GID=1000
 # SKIP_CHROMIUM=1 omits the 568 MB ARM64 Chromium download. Only enable if the
 # collector/web-scraping path is not needed in this image.
 ARG SKIP_CHROMIUM=0
+# SECURITY: Chromium binary SHA256 digest. REQUIRED for builds that include Chromium.
+# Obtain with: curl -fsSL https://webassets.anythingllm.com/chromium-1088-linux-arm64.zip | sha256sum
+# In production, self-host the binary and update the URL too.
+ARG CHROMIUM_SHA256
 
 FROM base AS build-arm64
 ARG SKIP_CHROMIUM
@@ -84,11 +88,14 @@ WORKDIR /app
 # by manually installing a compatible chromedriver.
 RUN if [ "$SKIP_CHROMIUM" != "1" ]; then \
         echo "Need to patch Puppeteer x Chromium support for ARM86 - installing dep!" && \
-        # SECURITY: This Chromium binary is downloaded from a third-party CDN
-        # without checksum verification. Before production use, add a SHA256
-        # checksum check, e.g.:
-        #   echo "<EXPECTED_SHA256>  chrome-linux.zip" | sha256sum -c - && \
+        # SECURITY: Verify SHA256 before unzipping. The CHROMIUM_SHA256 build arg
+        # MUST be set. In production, self-host the binary and update the URL.
+        if [ -z "$CHROMIUM_SHA256" ]; then \
+            echo "ERROR: CHROMIUM_SHA256 build arg is required. Refusing to download unverified binary."; \
+            exit 1; \
+        fi; \
         curl -fSL https://webassets.anythingllm.com/chromium-1088-linux-arm64.zip -o chrome-linux.zip && \
+        echo "${CHROMIUM_SHA256}  chrome-linux.zip" | sha256sum -c - && \
         unzip chrome-linux.zip && \
         rm -rf chrome-linux.zip; \
     else \

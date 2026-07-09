@@ -6,7 +6,11 @@ networks:
   opensin-chat:
     driver: bridge
   haus-netzwerk:
+    # Optional: only required for the multi-host sin-supabase deployment.
+    # For local single-host setups, comment out the `networks: - haus-netzwerk`
+    # lines under each service. See docker/HOW_TO_USE_DOCKER.md for details.
     external: true
+    name: ${HAUS_NETZWERK_NAME:-haus-netzwerk}
 
 services:
   fix-permissions:
@@ -23,6 +27,9 @@ services:
 
   opensin-chat:
     # TODO(#536): Pin by SHA256 digest for supply-chain integrity.
+    # If the image 'opensin-app:v1.14.0' exists locally, use it.
+    # Otherwise, build from source using the Dockerfile below.
+    # To force a rebuild: docker compose build --no-cache
     image: opensin-app:v1.14.0
     container_name: opensin-app
     restart: always
@@ -80,7 +87,7 @@ services:
 
   vane:
     # TODO(#536): Pin by SHA256 digest — third-party image should be pinned.
-    image: itzcrazykns1337/vane:v1.0.0
+    image: itzcrazykns1337/vane:latest
     container_name: opensin-vane
     ports:
       # Host 8310 → container 8300. Internal 8300 avoids clashing with

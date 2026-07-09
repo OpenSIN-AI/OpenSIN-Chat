@@ -81,8 +81,15 @@ WORKDIR /app
 # Puppeteer does not ship with an ARM86 compatible build for Chromium
 # so web-scraping would be broken in arm docker containers unless we patch it
 # by manually installing a compatible chromedriver.
-RUN echo "Need to patch Puppeteer x Chromium support for ARM86 - installing dep!" && \
+# SECURITY: CHROMIUM_SHA256 build arg is REQUIRED. Refuse to build without it.
+ARG CHROMIUM_SHA256
+RUN if [ -z "$CHROMIUM_SHA256" ]; then \
+        echo "ERROR: CHROMIUM_SHA256 build arg is required. Refusing to download unverified binary."; \
+        exit 1; \
+    fi && \
+    echo "Need to patch Puppeteer x Chromium support for ARM86 - installing dep!" && \
     curl -fSL https://webassets.anythingllm.com/chromium-1088-linux-arm64.zip -o chrome-linux.zip && \
+    echo "${CHROMIUM_SHA256}  chrome-linux.zip" | sha256sum -c - && \
     unzip chrome-linux.zip && \
     rm -rf chrome-linux.zip
 

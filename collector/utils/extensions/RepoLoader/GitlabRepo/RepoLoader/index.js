@@ -84,7 +84,7 @@ class GitLabRepoLoader {
           `[Gitlab Loader]: baseUrl host ${hostname} is not in the standard GitLab allowlist (gitlab.com / gitlab.<sub>.<tld>). Please confirm this instance is trusted — PAT will be sent to it.`
         );
       }
-    } catch {}
+    } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
     return true;
   }
 

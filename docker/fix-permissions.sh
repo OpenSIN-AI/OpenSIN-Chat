@@ -11,12 +11,17 @@ PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 
 echo "Fixing storage permissions for uid:gid ${UID_TARGET}:${GID_TARGET}..."
 
-# OpenSIN storage
-if [ -d "$PROJECT_ROOT/server/storage" ]; then
-  echo "  Fixing $PROJECT_ROOT/server/storage ..."
-  chown -R "${UID_TARGET}:${GID_TARGET}" "$PROJECT_ROOT/server/storage"
-  chmod -R u=rwX,g=rX,o=rX "$PROJECT_ROOT/server/storage"
-fi
+# Fix all mounted volume directories (must match docker-compose.yml volumes)
+for dir in "$PROJECT_ROOT/server/storage" "$PROJECT_ROOT/collector/hotdir" "$PROJECT_ROOT/collector/outputs"; do
+  if [ -d "$dir" ]; then
+    echo "  Fixing $dir ..."
+    chown -R "${UID_TARGET}:${GID_TARGET}" "$dir"
+    chmod -R u=rwX,g=rX,o=rX "$dir"
+  else
+    mkdir -p "$dir"
+    chown "${UID_TARGET}:${GID_TARGET}" "$dir"
+  fi
+done
 
 # Create tmp if missing
 mkdir -p "$PROJECT_ROOT/server/storage/tmp"

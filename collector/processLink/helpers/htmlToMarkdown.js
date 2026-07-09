@@ -132,7 +132,7 @@ function resolveUrls(root, baseUrl) {
     if (!href || /^(https?:|mailto:|tel:|javascript:|#)/i.test(href)) continue;
     try {
       a.setAttribute("href", new URL(href, baseUrl).toString());
-    } catch {}
+    } catch (e) { console.warn("[htmlToMarkdown] non-fatal error:", e?.message || e); }
   }
 
   for (const img of root.querySelectorAll("img[src]")) {
@@ -164,7 +164,7 @@ function resolveUrls(root, baseUrl) {
     if (!/^https?:/i.test(src)) {
       try {
         img.setAttribute("src", new URL(src, baseUrl).toString());
-      } catch {}
+      } catch (e) { console.warn("[htmlToMarkdown] non-fatal error:", e?.message || e); }
     }
 
     const alt = (img.getAttribute("alt") || "").trim();

@@ -33,7 +33,7 @@ class CommunicationKey {
         this.#readPublicKey(),
         Buffer.from(signature, "hex")
       );
-    } catch {}
+    } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
     return false;
   }
 
@@ -48,7 +48,7 @@ class CommunicationKey {
           Buffer.from(base64String, "base64")
         )
         .toString();
-    } catch {}
+    } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
     return null;
   }
 }
