@@ -4,11 +4,12 @@
 //          dead-letter state. Uses Bree for scheduling (already in the repo).
 //          No Redis needed — designed for single-VM (Oracle Free Tier).
 // Docs: triggerEngine.doc.md
-const Bree = require("bree");
-const { AgentTriggers } = require("../../models/agentTriggers");
-const { Workspace } = require("../../models/workspace");
-const { AgentHandler } = require("./index");
-const consoleLogger = require("../logger/console.js");
+const Bree = require('bree');
+const { getStoragePath } = require('../paths');
+const { AgentTriggers } = require('../../models/agentTriggers');
+const { AgentHandler } = require('../agents');
+const { Workspace } = require('../../models/workspace');
+const consoleLogger = require('../logger/console.js');
 const MAX_ATTEMPTS = 5;
 const CIRCUIT_BREAKER_THRESHOLD = 5; // consecutive failures before pausing
 const POLL_INTERVAL_MS = 60 * 1000; // Bree checks every 60s
@@ -30,7 +31,7 @@ class TriggerEngine {
       root: false, // no job files needed — we use a cron callback
       jobs: [
         {
-          name: "trigger-scheduler",
+          name: 'trigger-scheduler',
           interval: POLL_INTERVAL_MS,
           timeout: POLL_INTERVAL_MS, // first run after 60s
         },
@@ -41,7 +42,7 @@ class TriggerEngine {
     // programmatic interval in the main process.
     // (Bree's worker threads don't share Prisma connections.)
     this._useIntervalInstead();
-    consoleLogger.log("[TriggerEngine] Initialized — polling every 60s");
+    consoleLogger.log('[TriggerEngine] Initialized — polling every 60s');
   }
   _useIntervalInstead() {
     // Run in main process (Oracle Free VM = single process, safe)
@@ -50,7 +51,7 @@ class TriggerEngine {
         await this._checkScheduleTriggers();
         await this._checkPollingTriggers();
       } catch (e) {
-        consoleLogger.error("[TriggerEngine] check error:", e.message);
+        consoleLogger.error('[TriggerEngine] check error:', e.message);
       }
     };
     // Start after 60s, then every 60s
@@ -76,10 +77,9 @@ class TriggerEngine {
    */
   async _executeTrigger(trigger) {
     const config =
-      typeof trigger.config === "string"
+      typeof trigger.config === 'string'
         ? JSON.parse(trigger.config)
         : trigger.config;
-
     const dedupeKey = `schedule-${trigger.id}-${Date.now()}`;
     const run = await AgentTriggers.createRun({
       triggerId: trigger.id,
@@ -87,22 +87,21 @@ class TriggerEngine {
     });
     if (run.deduplicated) return;
     await AgentTriggers.updateRun(run.id, {
-      status: "running",
+      status: 'running',
       startedAt: new Date(),
       attempt: 1,
     });
     try {
       const workspace = await Workspace.get({ id: trigger.workspace_id });
-      if (!workspace) throw new Error("Workspace not found");
+      if (!workspace) throw new Error('Workspace not found');
       // Invoke the agent with the trigger's prompt
       const result = await this._invokeAgent(
         workspace,
         trigger.agent_name,
-        config.prompt || "Trigger fired",
+        config.prompt || 'Trigger fired'
       );
-
       await AgentTriggers.updateRun(run.id, {
-        status: "done",
+        status: 'done',
         result,
         endedAt: new Date(),
       });
@@ -114,9 +113,8 @@ class TriggerEngine {
         lastRunAt: new Date(),
         nextRunAt,
       });
-
       consoleLogger.log(
-        `[TriggerEngine] Trigger ${trigger.name} executed successfully`,
+        `[TriggerEngine] Trigger ${trigger.name} executed successfully`
       );
     } catch (e) {
       await this._handleFailure(trigger, run.id, e);
@@ -127,11 +125,11 @@ class TriggerEngine {
    */
   async _executePollingTrigger(trigger) {
     const config =
-      typeof trigger.config === "string"
+      typeof trigger.config === 'string'
         ? JSON.parse(trigger.config)
         : trigger.config;
     const checkpoint = trigger.checkpoint
-      ? typeof trigger.checkpoint === "string"
+      ? typeof trigger.checkpoint === 'string'
         ? JSON.parse(trigger.checkpoint)
         : trigger.checkpoint
       : null;
@@ -141,7 +139,7 @@ class TriggerEngine {
       if (!pollResult.hasChanges) {
         // No changes — just update next_run_at
         const nextRunAt = new Date(
-          Date.now() + (config.poll_interval_ms || 300_000),
+          Date.now() + (config.poll_interval_ms || 300_000)
         );
         await AgentTriggers.update(trigger.id, { nextRunAt });
         return;
@@ -154,44 +152,43 @@ class TriggerEngine {
       });
       if (run.deduplicated) return;
       await AgentTriggers.updateRun(run.id, {
-        status: "running",
+        status: 'running',
         startedAt: new Date(),
         attempt: 1,
       });
       const workspace = await Workspace.get({ id: trigger.workspace_id });
-      if (!workspace) throw new Error("Workspace not found");
+      if (!workspace) throw new Error('Workspace not found');
       const result = await this._invokeAgent(
         workspace,
         trigger.agent_name,
-        config.prompt || "New items detected by polling trigger",
+        config.prompt || 'New items detected by polling trigger'
       );
       await AgentTriggers.updateRun(run.id, {
-        status: "done",
+        status: 'done',
         result,
         endedAt: new Date(),
       });
       // Update checkpoint
       failureCounts.set(trigger.id, 0);
       const nextRunAt = new Date(
-        Date.now() + (config.poll_interval_ms || 300_000),
+        Date.now() + (config.poll_interval_ms || 300_000)
       );
       await AgentTriggers.update(trigger.id, {
         lastRunAt: new Date(),
         nextRunAt,
         checkpoint: pollResult.newCheckpoint,
       });
-
       consoleLogger.log(
-        `[TriggerEngine] Polling trigger ${trigger.name} fired — ${pollResult.itemCount} new items`,
+        `[TriggerEngine] Polling trigger ${trigger.name} fired — ${pollResult.itemCount} new items`
       );
     } catch (e) {
       // For polling, don't create a run record on poll failure — just log
       consoleLogger.error(
         `[TriggerEngine] Polling trigger ${trigger.name} poll error:`,
-        e.message,
+        e.message
       );
       const nextRunAt = new Date(
-        Date.now() + (config.poll_interval_ms || 300_000),
+        Date.now() + (config.poll_interval_ms || 300_000)
       );
       await AgentTriggers.update(trigger.id, { nextRunAt });
     }
@@ -205,17 +202,17 @@ class TriggerEngine {
     failureCounts.set(trigger.id, failures);
     consoleLogger.error(
       `[TriggerEngine] Trigger ${trigger.name} failed (attempt ${attempt}/${MAX_ATTEMPTS}):`,
-      error.message,
+      error.message
     );
     if (attempt >= MAX_ATTEMPTS) {
       // Dead-letter
       await AgentTriggers.updateRun(runId, {
-        status: "failed_permanent",
+        status: 'failed_permanent',
         errorMessage: error.message,
         endedAt: new Date(),
       });
       consoleLogger.error(
-        `[TriggerEngine] Trigger ${trigger.name} permanently failed — dead-lettered`,
+        `[TriggerEngine] Trigger ${trigger.name} permanently failed — dead-lettered`
       );
     } else {
       // Exponential backoff with jitter
@@ -223,7 +220,7 @@ class TriggerEngine {
       const jitter = Math.random() * 1000;
       const nextAttemptAt = new Date(Date.now() + baseDelay + jitter);
       await AgentTriggers.updateRun(runId, {
-        status: "queued",
+        status: 'queued',
         attempt: attempt + 1,
         errorMessage: error.message,
       });
@@ -234,7 +231,7 @@ class TriggerEngine {
       await AgentTriggers.toggle(trigger.id, false);
       failureCounts.set(trigger.id, 0);
       consoleLogger.warn(
-        `[TriggerEngine] Circuit breaker tripped for trigger ${trigger.name} — auto-paused after ${failures} consecutive failures`,
+        `[TriggerEngine] Circuit breaker tripped for trigger ${trigger.name} — auto-paused after ${failures} consecutive failures`
       );
     }
   }
@@ -244,6 +241,7 @@ class TriggerEngine {
    */
   async _invokeAgent(workspace, agentName, prompt) {
     // Delegate to the existing AgentHandler — same path as chat
+    const { AgentHandler } = require('../agents');
     const handler = new AgentHandler({
       workspace,
       prompt,
@@ -254,19 +252,15 @@ class TriggerEngine {
   }
   /**
    * Poll a connector for changes. Returns { hasChanges, newCheckpoint, itemCount, checksum }.
-   * This is a stub — actual polling logic per connector type goes here.
-   * Phase 5.1: Gmail polling (check for new emails since checkpoint)
-   * Phase 5.2: GitHub polling (check for new issues/PRs)
+   * Delegates to triggerPollers for per-connector implementations:
+   *   - gmail: uses GmailBridge to search recent messages
+   *   - github: fetches issues/PRs since last checkpoint
+   *   - rss/atom: parses feed and compares item GUIDs
+   *   - webhook: no-op (push-based)
    */
   async _pollConnector(config, checkpoint) {
-    // TODO: Implement per-connector polling
-    // For now, return no changes
-    return {
-      hasChanges: false,
-      newCheckpoint: checkpoint,
-      itemCount: 0,
-      checksum: null,
-    };
+    const { pollConnector } = require('./triggerPollers');
+    return await pollConnector(config, checkpoint);
   }
   /**
    * Calculate the next run time from a cron expression.
@@ -274,13 +268,13 @@ class TriggerEngine {
    */
   _calculateNextRun(cronExpression) {
     try {
-      const cronParser = require("cron-parser");
+      const cronParser = require('cron-parser');
       const interval = cronParser.parseExpression(cronExpression);
       return interval.next().toDate();
     } catch (e) {
       // If cron is invalid, default to +1 hour
       consoleLogger.warn(
-        `[TriggerEngine] Invalid cron "${cronExpression}": ${e.message}`,
+        `[TriggerEngine] Invalid cron "${cronExpression}": ${e.message}`
       );
       return new Date(Date.now() + 3600_000);
     }
@@ -290,15 +284,15 @@ class TriggerEngine {
    */
   async replayRun(runId) {
     const run = await AgentTriggers.getRun(runId);
-    if (!run) throw new Error("Run not found");
-    if (!["error", "failed_permanent"].includes(run.status)) {
-      throw new Error("Only failed runs can be replayed");
+    if (!run) throw new Error('Run not found');
+    if (!['error', 'failed_permanent'].includes(run.status)) {
+      throw new Error('Only failed runs can be replayed');
     }
     const trigger = await AgentTriggers.get(run.trigger_id);
-    if (!trigger) throw new Error("Trigger not found");
+    if (!trigger) throw new Error('Trigger not found');
     // Reset and re-execute
     await AgentTriggers.updateRun(runId, {
-      status: "queued",
+      status: 'queued',
       attempt: 0,
       errorMessage: null,
     });

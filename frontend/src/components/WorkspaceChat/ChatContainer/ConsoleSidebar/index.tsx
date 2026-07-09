@@ -58,7 +58,6 @@ function LogsTab() {
           onClick={() => clearConsoleLogs()}
           aria-label={t("consoleSidebar.clearLogs", "Clear logs")}
           className="flex items-center gap-1 text-[10px] text-zinc-500 hover:text-zinc-300 border-none bg-transparent cursor-pointer transition-colors"
-          aria-label={t("consoleSidebar.clear")}
         >
           <Trash size={11} aria-hidden="true" />
           {t("consoleSidebar.clear")}
@@ -182,7 +181,6 @@ function TerminalTab() {
           onClick={() => setHistory([])}
           aria-label={t("consoleSidebar.clearHistory", "Clear history")}
           className="flex items-center gap-1 text-[10px] text-zinc-500 hover:text-zinc-300 border-none bg-transparent cursor-pointer transition-colors"
-          aria-label={t("consoleSidebar.clear")}
         >
           <Trash size={11} aria-hidden="true" />
           {t("consoleSidebar.clear")}

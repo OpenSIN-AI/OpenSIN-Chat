@@ -172,7 +172,6 @@ function ThreadItem({
                   aria-label={t("common.threadOptions", "Thread options")}
                   className="border-none"
                   onClick={() => setShowOptions(!showOptions)}
-                  aria-label={t("threadItem.threadOptions")}
                 >
                   <DotsThree
                     className="text-slate-300 light:text-theme-text-secondary hover:text-theme-text-primary light:hover:text-theme-text-primary hover:light:text-theme-text-primary"

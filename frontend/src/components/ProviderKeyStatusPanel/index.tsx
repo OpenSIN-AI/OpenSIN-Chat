@@ -97,7 +97,6 @@ export default function ProviderKeyStatusPanel() {
           onClick={refresh}
           disabled={isLoading}
           className="flex items-center gap-x-1 rounded-lg border border-theme-sidebar-border px-2.5 py-1.5 text-xs text-theme-text-primary hover:bg-theme-bg-secondary disabled:opacity-50"
-          aria-label={t("providerKeyStatus.refresh.ariaLabel")}
         >
           <ArrowsClockwise
             size={14}

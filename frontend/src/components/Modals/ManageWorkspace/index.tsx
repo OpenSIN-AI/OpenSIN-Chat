@@ -126,7 +126,6 @@ const ModalTabSwitcher = ({ selectedTab, setSelectedTab }) => {
           type="button"
           onClick={() => setSelectedTab("documents")}
           aria-label={t("manageWorkspace.documents", "Documents")}
-          aria-label={t("manageWorkspace.showDocumentsTab")}
           aria-pressed={selectedTab === "documents"}
           className={`border-none px-4 py-2 rounded-[8px] font-semibold hover:bg-theme-modal-border hover:bg-opacity-60 ${
             selectedTab === "documents"
@@ -140,7 +139,6 @@ const ModalTabSwitcher = ({ selectedTab, setSelectedTab }) => {
           type="button"
           onClick={() => setSelectedTab("dataConnectors")}
           aria-label={t("manageWorkspace.dataConnectors", "Data Connectors")}
-          aria-label={t("manageWorkspace.showDataConnectorsTab")}
           aria-pressed={selectedTab === "dataConnectors"}
           className={`border-none px-4 py-2 rounded-[8px] font-semibold hover:bg-theme-modal-border hover:bg-opacity-60 ${
             selectedTab === "dataConnectors"
