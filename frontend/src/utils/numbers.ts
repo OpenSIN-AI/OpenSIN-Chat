@@ -53,20 +53,18 @@ export function humanFileSize(bytes, si = false, dp = 1) {
 }
 
 export function milliToHms(milli = 0) {
-  if (milli === 0) return "";
   const d = Number(milli) / 1_000.0;
   const h = Math.floor(d / 3600);
   const m = Math.floor((d % 3600) / 60);
   const s = (d % 3600.0) % 60;
 
+  // Hours and minutes are omitted when zero.
+  // Seconds are always included so the output is never empty (even for 0ms).
+  // trim() removes any trailing space left when h or m produced a display suffix.
   const hDisplay = h >= 1 ? h + "h " : "";
   const mDisplay = m >= 1 ? m + "m " : "";
-  // Only show the seconds portion when the remainder is meaningfully non-zero
-  // (>= 0.01s). This prevents "1m 0.00s" when m=1 and s rounds to zero.
-  const sDisplay = s >= 0.01 ? s.toFixed(2) + "s" : "";
-  // Do NOT trim: callers that display "1h " or "1m " rely on the trailing space
-  // as a visual separator, and the test contract asserts the space is present.
-  return hDisplay + mDisplay + sDisplay;
+  const sDisplay = s.toFixed(2) + "s";
+  return (hDisplay + mDisplay + sDisplay).trim();
 }
 
 /**
