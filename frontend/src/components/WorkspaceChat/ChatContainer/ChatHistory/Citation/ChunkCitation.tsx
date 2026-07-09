@@ -99,10 +99,14 @@ export default function ChunkCitationPopoverManager({
   useEffect(() => {
     if (sources.length === 0) return;
 
-    // The message content is rendered inside a sibling element; we search up
-    // to the nearest .prompt-reply-container or fall back to document.
+    // Scope the anchor query to the rendered message block.
+    // The `data-message-id` attribute is set on our own wrapper div (see JSX).
+    // `closest()` checks the element itself first, so this always finds the
+    // wrapper even when containerRef.current is the div itself.
+    // Fallback to `document` only if the ref is not yet mounted.
     const root =
-      containerRef.current?.closest("[data-message-id]") ?? document;
+      containerRef.current?.closest(`[data-message-id="${messageId}"]`) ??
+      document;
 
     const anchors: NodeListOf<HTMLElement> = root.querySelectorAll(
       `[data-citation-index]`,
@@ -129,7 +133,8 @@ export default function ChunkCitationPopoverManager({
     };
   }, [sources, messageId, showPopover, hidePopover]);
 
-  if (!popover.visible || !popover.source) return <div ref={containerRef} />;
+  if (!popover.visible || !popover.source)
+    return <div ref={containerRef} data-message-id={messageId} />;
 
   const { source } = popover;
   // Prefer the top-level `text` field (curated source shape) or fall back
@@ -147,8 +152,8 @@ export default function ChunkCitationPopoverManager({
 
   return (
     <>
-      {/* Invisible anchor sentinel so the ref is always mounted */}
-      <div ref={containerRef} />
+      {/* Invisible anchor sentinel — carries data-message-id for scoped querySelectorAll */}
+      <div ref={containerRef} data-message-id={messageId} />
 
       {/* Fixed popover — rendered in document flow but positioned with fixed */}
       <div

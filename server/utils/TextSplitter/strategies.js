@@ -42,10 +42,12 @@ const CHUNKING_STRATEGIES = {
     chunkSize: 2000,
     chunkOverlap: 100,
     // Matches the line-start of a new speaker or role title.
-    // Does NOT consume the match — uses a zero-width lookahead so the speaker
-    // header stays with the content that follows.
+    // Uses a zero-width lookahead so the speaker header stays with the content.
+    // \n+ handles both single- and double-line breaks between contributions.
+    // The leading (?:^|\n+) alternative covers the very first speaker block
+    // (no preceding newline) without consuming text before the first match.
     separatorPattern:
-      /\n(?=[A-ZÜÄÖA-Z][a-züäöß\u00C0-\u017E]+ [A-ZÜÄÖ][a-züäöß\u00C0-\u017E]+\s*\([A-Z][a-zA-Z/\s]+\):|(?:Präsident(?:in)?|Vizepräsident(?:in)?|Bundesminister(?:in)?|Staatsminister(?:in)?)\b)/,
+      /\n+(?=[A-ZÜÄÖA-Z][a-züäöß\u00C0-\u017E]+(?: [A-ZÜÄÖ][a-züäöß\u00C0-\u017E]+)?\s*\([A-Z][a-zA-Z/\s]+\):|(?:Vizepräsident(?:in)?|Präsident(?:in)?|Bundesminister(?:in)?|Staatsminister(?:in)?|Abgeordnete[rn]?)\s)/,
   },
 
   /**

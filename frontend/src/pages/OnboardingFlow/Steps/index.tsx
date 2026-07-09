@@ -40,6 +40,7 @@ export function OnboardingLayout({
   children,
 }: OnboardingLayoutProps): JSX.Element {
   useRedirectToHomeOnOnboardingComplete();
+  const isMobile = useIsMobileLayout();
   const { t } = useTranslation();
   const [header, setHeader] = useState({
     title: "",
