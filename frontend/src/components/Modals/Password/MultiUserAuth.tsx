@@ -23,12 +23,12 @@ import logger from "@/utils/logger";
 
 /* Shared field styles so every input looks identical */
 const FIELD_CLASS =
-  "w-full h-12 rounded-xl border border-white/10 bg-zinc-800/60 light:bg-slate-100 light:border-slate-200 pl-11 pr-4 text-sm text-zinc-100 light:text-slate-900 placeholder:text-zinc-600 transition focus:outline-none focus:border-[#009ee0] focus:ring-2 focus:ring-[#009ee0]/30";
-const LABEL_CLASS = "text-sm font-medium text-zinc-300 light:text-slate-700";
+  "w-full h-10 rounded-lg border border-white/[0.08] light:border-zinc-200 bg-[#1c1c1c] light:bg-zinc-50 pl-10 pr-4 text-sm text-[#fafafa] light:text-zinc-900 placeholder:text-[#3f3f46] light:placeholder:text-zinc-300 transition focus:outline-none focus:border-white/20 light:focus:border-zinc-400 focus:bg-[#222222] light:focus:bg-white";
+const LABEL_CLASS = "text-xs font-medium text-[#a1a1aa] light:text-zinc-500 uppercase tracking-wider";
 const PRIMARY_BTN_CLASS =
-  "mt-2 flex h-12 w-full items-center justify-center gap-x-2 rounded-xl bg-[#009ee0] text-sm font-semibold text-white transition hover:bg-[#0089c4] focus:outline-none focus:ring-2 focus:ring-[#009ee0]/40 disabled:cursor-not-allowed disabled:opacity-60";
+  "mt-2 flex h-10 w-full items-center justify-center gap-x-2 rounded-lg bg-[#fafafa] light:bg-zinc-900 text-sm font-semibold text-zinc-900 light:text-white transition hover:bg-[#e4e4e7] light:hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-white/20 disabled:cursor-not-allowed disabled:opacity-40";
 const LINK_BTN_CLASS =
-  "flex items-center justify-center gap-x-1.5 text-sm text-zinc-400 light:text-slate-500 hover:text-[#009ee0] transition";
+  "flex items-center justify-center gap-x-1.5 text-xs text-[#71717a] light:text-zinc-400 hover:text-[#a1a1aa] light:hover:text-zinc-600 transition";
 
 const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
   const { t } = useTranslation();
@@ -59,11 +59,11 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col w-full">
-      <div className="flex flex-col gap-y-2 mb-8">
-        <h2 className="text-2xl font-semibold tracking-tight text-zinc-50 light:text-slate-900">
+      <div className="flex flex-col gap-y-1.5 mb-7">
+        <h2 className="text-xl font-semibold tracking-tight text-[#fafafa] light:text-zinc-900">
           {t("login.password-reset.title")}
         </h2>
-        <p className="text-sm text-zinc-400 light:text-slate-500 leading-relaxed">
+        <p className="text-sm text-[#71717a] light:text-zinc-500 leading-relaxed">
           {t("login.password-reset.description")}
         </p>
       </div>
@@ -164,11 +164,11 @@ const ResetPasswordForm = ({ onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col w-full">
-      <div className="flex flex-col gap-y-2 mb-8">
-        <h2 className="text-2xl font-semibold tracking-tight text-zinc-50 light:text-slate-900">
+      <div className="flex flex-col gap-y-1.5 mb-7">
+        <h2 className="text-xl font-semibold tracking-tight text-[#fafafa] light:text-zinc-900">
           {t("multiUserAuth.resetPassword.title")}
         </h2>
-        <p className="text-sm text-zinc-400 light:text-slate-500 leading-relaxed">
+        <p className="text-sm text-[#71717a] light:text-zinc-500 leading-relaxed">
           {t("multiUserAuth.resetPassword.description")}
         </p>
       </div>
@@ -369,11 +369,11 @@ export default function MultiUserAuth() {
   return (
     <>
       <form onSubmit={handleLogin} className="flex flex-col w-full">
-        <div className="flex flex-col gap-y-2 mb-8">
-          <h2 className="text-2xl font-semibold tracking-tight text-zinc-50 light:text-slate-900">
+        <div className="flex flex-col gap-y-1.5 mb-7">
+          <h2 className="text-xl font-semibold tracking-tight text-[#fafafa] light:text-zinc-900">
             {t("login.multi-user.welcome")}
           </h2>
-          <p className="text-sm text-zinc-400 light:text-slate-500 leading-relaxed">
+          <p className="text-sm text-[#71717a] light:text-zinc-500 leading-relaxed">
             {t("login.sign-in", { appName: appName || "OpenSIN Chat" })}
           </p>
         </div>
@@ -432,7 +432,7 @@ export default function MultiUserAuth() {
           {error && (
             <p
               role="alert"
-              className="rounded-lg border border-red-500/20 bg-red-500/10 px-3 py-2 text-sm text-red-400"
+              className="rounded-md border border-red-500/20 bg-red-500/[0.08] px-3 py-2 text-xs text-red-400"
             >
               {t("login.multi-user.errorPrefix", { error })}
             </p>

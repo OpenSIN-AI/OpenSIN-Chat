@@ -40,77 +40,66 @@ export default function PasswordModal({ mode = "single" }: any) {
   const { loginLogo, isCustomLogo } = useLogo();
 
   return (
-    <div className="fixed inset-0 flex bg-zinc-950 light:bg-slate-50 overflow-hidden">
+    <div className="fixed inset-0 flex bg-[#0a0a0a] light:bg-[#fafafa] overflow-hidden">
       {/* Left brand panel */}
-      <div className="relative hidden lg:flex lg:w-[45%] flex-col justify-between p-12 xl:p-16 border-r border-white/5">
-        {/* subtle accent glow */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10"
-          style={{
-            background:
-              "radial-gradient(120% 100% at 15% 0%, rgba(0,158,224,0.14) 0%, rgba(0,158,224,0) 55%)",
-          }}
-        />
-
-        <div className="flex items-center gap-x-3">
+      <div className="relative hidden lg:flex lg:w-[44%] flex-col justify-between p-14 xl:p-16 border-r border-white/[0.06] light:border-zinc-200">
+        <div className="flex items-center gap-x-2.5">
           <img
             src={loginLogo}
             alt={t("common.logo")}
-            className={`max-h-9 w-auto object-contain ${
+            className={`max-h-8 w-auto object-contain ${
               isCustomLogo ? "rounded-md" : ""
             }`}
           />
-          <span className="text-zinc-100 text-lg font-semibold tracking-tight">
+          <span className="text-[#fafafa] light:text-zinc-900 text-sm font-semibold tracking-tight">
             OpenSIN Chat
           </span>
         </div>
 
-        <div className="max-w-md">
-          <h1 className="text-4xl xl:text-5xl font-semibold text-zinc-50 leading-tight text-balance">
+        <div className="max-w-sm">
+          <h1 className="text-3xl xl:text-[2.5rem] font-semibold text-[#fafafa] light:text-zinc-900 leading-[1.15] text-balance tracking-tight">
             Dein souveräner KI-Arbeitsraum.
           </h1>
-          <p className="mt-4 text-zinc-400 text-base leading-relaxed text-pretty">
+          <p className="mt-4 text-[#71717a] light:text-zinc-500 text-sm leading-relaxed text-pretty">
             Chatte mit deinen Dokumenten, automatisiere Recherche und behalte
             die volle Kontrolle über deine Daten.
           </p>
 
-          <ul className="mt-10 flex flex-col gap-y-5">
+          <ul className="mt-10 flex flex-col gap-y-4">
             {FEATURES.map(({ icon: Icon, title, desc }) => (
               <li key={title} className="flex items-start gap-x-3">
-                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#009ee0]/10 ring-1 ring-[#009ee0]/25">
-                  <Icon size={18} weight="bold" className="text-[#009ee0]" />
+                <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/[0.08] light:border-zinc-200 bg-white/[0.04] light:bg-zinc-50">
+                  <Icon size={15} weight="bold" className="text-[#a1a1aa] light:text-zinc-500" />
                 </span>
                 <div>
-                  <p className="text-sm font-medium text-zinc-100">{title}</p>
-                  <p className="text-sm text-zinc-500">{desc}</p>
+                  <p className="text-sm font-medium text-[#e4e4e7] light:text-zinc-800">{title}</p>
+                  <p className="text-xs text-[#52525b] light:text-zinc-400 mt-0.5 leading-relaxed">{desc}</p>
                 </div>
               </li>
             ))}
           </ul>
         </div>
 
-        <p className="text-xs text-zinc-600">
-          © {new Date().getFullYear()} OpenSIN Chat · Selbst gehostet · Keine
-          Telemetrie
+        <p className="text-[11px] text-[#3f3f46] light:text-zinc-400 tracking-wide">
+          © {new Date().getFullYear()} OpenSIN Chat · Selbst gehostet · Keine Telemetrie
         </p>
       </div>
 
       {/* Right form panel */}
-      <div className="flex w-full lg:w-[55%] items-center justify-center p-6 sm:p-10">
-        <div className="w-full max-w-sm">
-          {/* Logo shown on top for mobile / when left panel is hidden */}
+      <div className="flex w-full lg:w-[56%] items-center justify-center p-6 sm:p-10">
+        <div className="w-full max-w-[360px]">
+          {/* Logo for mobile */}
           <div className="mb-8 flex flex-col items-center gap-y-3 lg:hidden">
             <img
               src={loginLogo}
               alt={t("common.logo")}
-              className={`max-h-14 object-contain ${
+              className={`max-h-10 object-contain ${
                 isCustomLogo ? "rounded-lg" : ""
               }`}
             />
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-zinc-900/60 light:bg-white light:border-slate-200 p-8 shadow-2xl shadow-black/30 backdrop-blur-sm">
+          <div className="rounded-xl border border-white/[0.08] light:border-zinc-200 bg-[#111111] light:bg-white p-7 shadow-2xl shadow-black/40">
             {mode === "single" ? (
               <SingleUserAuth />
             ) : mode === "single-auto" ? (
