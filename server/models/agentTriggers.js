@@ -3,7 +3,7 @@
 //          Manages trigger CRUD, checkpoint storage, and run history.
 // Docs: agentTriggers.doc.md
 
-const prisma = require("../utils/prisma").default || require("../utils/prisma");
+const prisma = require("../utils/prisma");
 const { v4: uuidv4 } = require("uuid");
 
 const AgentTriggers = {

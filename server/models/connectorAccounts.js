@@ -4,7 +4,7 @@
 //          Refresh-coalescing prevents thundering-herd on token refresh.
 // Docs: connectorAccounts.doc.md
 
-const prisma = require("../utils/prisma").default || require("../utils/prisma");
+const prisma = require("../utils/prisma");
 const { EncryptionManager } = require("../utils/EncryptionManager");
 const { PROVIDERS } = require("../utils/connectors/providers");
 const consoleLogger = require("../utils/logger/console.js");

@@ -3,7 +3,7 @@
 //          Created by Phase 1 — persists run lifecycle for reconnect-safe SSE.
 // Docs: agentRuns.doc.md
 
-const prisma = require("../utils/prisma").default || require("../utils/prisma");
+const prisma = require("../utils/prisma");
 const { v4: uuidv4 } = require("uuid");
 
 const AgentRuns = {

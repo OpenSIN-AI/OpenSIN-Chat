@@ -64,6 +64,9 @@ const { noteEndpoints } = require("./endpoints/notes");
 const { contextModeEndpoints } = require("./endpoints/contextMode");
 const { transformationEndpoints } = require("./endpoints/transformations");
 const { askEndpoints } = require("./endpoints/ask");
+const {
+  workspaceParsedFilesEndpoints,
+} = require("./endpoints/workspacesParsedFiles");
 const { providerStatusEndpoints } = require("./endpoints/providerStatus");
 const { pdfAnalysisEndpoints } = require("./endpoints/pdfAnalysis");
 const { webPushEndpoints } = require("./endpoints/webPush");
@@ -232,6 +235,7 @@ function buildApp() {
   contextModeEndpoints(apiRouter);
   transformationEndpoints(apiRouter);
   askEndpoints(apiRouter);
+  workspaceParsedFilesEndpoints(app);
   providerStatusEndpoints(apiRouter);
   webPushEndpoints(apiRouter);
   telegramEndpoints(apiRouter);
