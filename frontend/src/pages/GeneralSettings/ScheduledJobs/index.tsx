@@ -3,7 +3,9 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/SettingsSidebar";
 import ScheduledJobs from "@/models/scheduledJobs";
-import useWebPushNotifications from "@/hooks/useWebPushNotifications";
+import useWebPushNotifications, {
+  subscribeToPushNotifications,
+} from "@/hooks/useWebPushNotifications";
 import JobFormModal from "./JobFormModal";
 import ModalWrapper from "@/components/ModalWrapper";
 import { useModal } from "@/hooks/useModal";

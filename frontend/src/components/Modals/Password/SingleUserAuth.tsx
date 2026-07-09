@@ -19,10 +19,10 @@ export default function SingleUserAuth({
 }) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<any>(null);
   const [recoveryCodes, setRecoveryCodes] = useState<string[]>([]);
   const [downloadComplete, setDownloadComplete] = useState<boolean>(false);
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState<any>(null);
 
   const { appName, isLoading: appNameLoading } = useCustomAppName();
   const { settings } = useSystemSettings();

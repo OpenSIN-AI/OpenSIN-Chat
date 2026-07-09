@@ -26,8 +26,8 @@ export default function TextSizeMenu() {
     const stored = safeGetItem("opensin_text_size");
     return VALID_TEXT_SIZES.includes(stored as any) ? stored : "normal";
   });
-  const menuRef: any = useRef(null);
-  const buttonRef = useRef(null);
+  const menuRef: any = useRef<any>(null);
+  const buttonRef = useRef<any>(null);
 
   useEffect(() => {
     if (!showMenu) return;

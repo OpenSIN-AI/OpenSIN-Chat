@@ -19,7 +19,7 @@ export default function ToolApprovalRequest({
 }: any) {
   const [isExpanded, setIsExpanded] = useState(false as any);
   const [responded, setResponded] = useState(false as any);
-  const [approved, setApproved] = useState(null);
+  const [approved, setApproved] = useState<any>(null);
   const [alwaysAllow, setAlwaysAllow] = useState(false as any);
   const hasPayload = payload && Object.keys(payload).length > 0;
 

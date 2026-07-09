@@ -30,10 +30,10 @@ export default function LLMSelectorModal({
   const { workspace, isLoading: workspaceLoading } = useWorkspace(slug);
   const { settings: systemSettings, loading: settingsLoading } =
     useSystemSettings();
-  const [settings, setSettings] = useState(null);
-  const [selectedLLMProvider, setSelectedLLMProvider] = useState(null);
+  const [settings, setSettings] = useState<any>(null);
+  const [selectedLLMProvider, setSelectedLLMProvider] = useState<any>(null);
   const [selectedLLMModel, setSelectedLLMModel] = useState("");
-  const [selectedRouterId, setSelectedRouterId] = useState(null);
+  const [selectedRouterId, setSelectedRouterId] = useState<any>(null);
   const [availableProviders, setAvailableProviders] = useState(
     WORKSPACE_LLM_PROVIDERS,
   );

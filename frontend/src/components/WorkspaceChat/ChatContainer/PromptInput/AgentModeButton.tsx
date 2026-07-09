@@ -100,8 +100,8 @@ function persistMode(modeId) {
 export function useAgentMode() {
   const [activeMode, setActiveMode] = useState(loadPersistedMode);
   const [showDropdown, setShowDropdown] = useState(false);
-  const buttonRef = useRef(null);
-  const dropdownRef = useRef(null);
+  const buttonRef = useRef<any>(null);
+  const dropdownRef = useRef<any>(null);
 
   useEffect(() => {
     if (!showDropdown) return;

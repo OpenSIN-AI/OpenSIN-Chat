@@ -149,7 +149,7 @@ const PromptReply: any = ({
 };
 
 function RenderAssistantChatContent({ message, messageId }: any) {
-  const thoughtChainRef = useRef(null);
+  const thoughtChainRef = useRef<any>(null);
   const [pendingThoughtContent, setPendingThoughtContent] = useState<
     string | null
   >(null);

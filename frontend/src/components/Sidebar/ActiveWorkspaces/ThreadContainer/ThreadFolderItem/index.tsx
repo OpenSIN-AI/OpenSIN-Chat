@@ -183,7 +183,7 @@ function ThreadFolderItem({
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState<string>(folder.name);
   const [quickAddOpen, setQuickAddOpen] = useState(false);
-  const inputRef = useRef(null);
+  const inputRef = useRef<any>(null);
 
   // When the active thread moves into this folder (via DnD), auto-expand it
   useEffect(() => {

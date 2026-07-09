@@ -183,7 +183,7 @@ function ActiveWorkspaces() {
     isLoading: loading,
     mutate: mutateWorkspaces,
   } = useWorkspaces({ ordered: true });
-  const [selectedWs, setSelectedWs] = useState(null);
+  const [selectedWs, setSelectedWs] = useState<any>(null);
   const { showing, showModal, hideModal } = useManageWorkspaceModal();
   const { user } = useUser();
   const isInWorkspaceSettings = !!useMatch("/workspace/:slug/settings/:tab");

@@ -22,8 +22,8 @@ const DEFAULT_BRANCHES = ["main", "master"];
 export default function GitlabOptions() {
   const { t } = useTranslation();
   const [loading, setLoading] = useState<boolean>(false);
-  const [repo, setRepo] = useState(null);
-  const [accessToken, setAccessToken] = useState(null);
+  const [repo, setRepo] = useState<any>(null);
+  const [accessToken, setAccessToken] = useState<any>(null);
   const [ignores, setIgnores] = useState<string[]>([]);
   const [settings, setSettings] = useState({
     repo: null,

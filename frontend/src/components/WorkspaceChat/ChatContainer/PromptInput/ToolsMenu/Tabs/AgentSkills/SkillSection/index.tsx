@@ -13,7 +13,7 @@ export default function SkillSection({
   highlighted = false,
   children,
 }: any) {
-  const ref = useRef(null);
+  const ref = useRef<any>(null);
   useEffect(() => {
     if (highlighted) ref.current?.scrollIntoView({ block: "nearest" });
   }, [highlighted]);

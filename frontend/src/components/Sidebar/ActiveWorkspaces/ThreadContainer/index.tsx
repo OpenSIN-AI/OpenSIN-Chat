@@ -146,7 +146,7 @@ function ThreadContainer({
   }, [threads]);
 
   const [ctrlPressed, setCtrlPressed] = useState(false);
-  const [activeId, setActiveId] = useState(null);
+  const [activeId, setActiveId] = useState<any>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),

@@ -16,8 +16,8 @@ export default function SlashCommandRow({
   const { t } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false as any);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 } as any);
-  const menuRef: any = useRef(null);
-  const menuBtnRef = useRef(null);
+  const menuRef: any = useRef<any>(null);
+  const menuBtnRef = useRef<any>(null);
 
   useEffect(() => {
     if (!menuOpen) return;

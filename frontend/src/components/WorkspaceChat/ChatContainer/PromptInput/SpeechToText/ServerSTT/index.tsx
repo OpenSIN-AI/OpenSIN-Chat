@@ -27,9 +27,9 @@ export default function ServerSTT({ sendCommand }: any) {
   const { t } = useTranslation();
   const [listening, setListening] = useState(false as any);
   const [processing, setProcessing] = useState(false as any);
-  const [stream, setStream] = useState(null);
-  const recorderRef = useRef(null);
-  const chunksRef = useRef([]);
+  const [stream, setStream] = useState<any>(null);
+  const recorderRef = useRef<any>(null);
+  const chunksRef = useRef<any[]>([]);
 
   const stopListening = useCallback(() => {
     const recorder = recorderRef.current;

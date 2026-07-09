@@ -166,6 +166,7 @@ export default function GeneralLLMPreference() {
 }
 
 function LoadingState() {
+  const isMobile = useIsMobileLayout();
   return (
     <div
       style={
@@ -215,6 +216,7 @@ function ContentArea({
   settings: any;
   t: any;
 }) {
+  const isMobile = useIsMobileLayout();
   return (
     <div
       style={

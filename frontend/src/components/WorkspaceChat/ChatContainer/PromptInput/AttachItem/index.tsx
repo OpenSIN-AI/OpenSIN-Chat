@@ -29,9 +29,9 @@ export default function AttachItem({
   const params = useParams();
   const slug = workspaceSlug || params.slug;
   const threadSlug = workspaceThreadSlug ?? params.threadSlug ?? null;
-  const tooltipRef = useRef(null);
-  const menuRef = useRef(null);
-  const buttonRef = useRef(null);
+  const tooltipRef = useRef<any>(null);
+  const menuRef = useRef<any>(null);
+  const buttonRef = useRef<any>(null);
   const [showMenu, setShowMenu] = useState(false);
   const [menuPos, setMenuPos] = useState<{ top: number; left: number } | null>(
     null,

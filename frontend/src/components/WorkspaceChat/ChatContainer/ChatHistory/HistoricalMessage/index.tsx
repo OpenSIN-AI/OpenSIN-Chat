@@ -294,6 +294,7 @@ export default memo(
  * Other attachment types may be supported here in the future.
  */
 function ChatAttachments({ attachments = [] }: any) {
+  const { t } = useTranslation();
   const imageAttachments = (attachments as any).filter(
     (item: any) =>
       item?.contentString &&
@@ -322,7 +323,7 @@ function ChatAttachments({ attachments = [] }: any) {
 }
 
 function TruncatableContent({ children }: any) {
-  const contentRef = useRef(null);
+  const contentRef = useRef<any>(null);
   const [isExpanded, setIsExpanded] = useState(false as any);
   const [isOverflowing, setIsOverflowing] = useState(false as any);
   const { t } = useTranslation();

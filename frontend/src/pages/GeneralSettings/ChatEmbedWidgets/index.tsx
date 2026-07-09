@@ -111,6 +111,7 @@ type WidgetLayoutProps = {
 };
 
 function WidgetLayout({ children }: WidgetLayoutProps): JSX.Element {
+  const isMobile = useIsMobileLayout();
   return (
     <div
       id="workspace-widget-settings-container"
@@ -136,6 +137,7 @@ function WidgetList({
   selectedView,
   handleClick,
 }: WidgetListProps): JSX.Element {
+  const isMobile = useIsMobileLayout();
   const { t } = useTranslation();
   const views: Record<string, { title: string }> = {
     configs: {

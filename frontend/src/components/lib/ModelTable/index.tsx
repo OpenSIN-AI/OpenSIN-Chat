@@ -193,7 +193,7 @@ function ModelRow({
   },
 }) {
   const { t } = useTranslation();
-  const modelRowRef = useRef(null);
+  const modelRowRef = useRef<any>(null);
   const [showOptions, setShowOptions] = useState(false as any);
   const [processing, setProcessing] = useState(false as any);
   const [downloadPercentage, setDownloadPercentage] = useState(0 as any);

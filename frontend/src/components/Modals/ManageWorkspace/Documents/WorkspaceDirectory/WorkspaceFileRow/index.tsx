@@ -173,7 +173,7 @@ const PinItemToWorkspace = memo(function PinItemToWorkspace({
   );
   // Reuse a single CustomEvent instance across renders instead of allocating
   // a new one on every render. The event is stateless and only dispatched.
-  const pinEventRef = useRef(null);
+  const pinEventRef = useRef<any>(null);
   if (pinEventRef.current === null) {
     pinEventRef.current = new CustomEvent("pinned_document");
   }
@@ -261,10 +261,11 @@ const WatchForChanges = memo(function WatchForChanges({
   docPath: string;
   item: any;
 }) {
+  const { t } = useTranslation();
   const [watched, setWatched] = useState(item?.watched || false);
   // Reuse a single CustomEvent instance across renders instead of allocating
   // a new one on every render. The event is stateless and only dispatched.
-  const watchEventRef = useRef(null);
+  const watchEventRef = useRef<any>(null);
   if (watchEventRef.current === null) {
     watchEventRef.current = new CustomEvent("watch_document_for_changes");
   }

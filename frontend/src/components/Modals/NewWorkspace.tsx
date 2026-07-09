@@ -11,9 +11,9 @@ import ModalWrapper from "@/components/ModalWrapper";
 
 const noop = () => false;
 export default function NewWorkspaceModal({ hideModal = noop }: any) {
-  const formEl = useRef(null);
+  const formEl = useRef<any>(null);
   const navigate = useNavigate();
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<any>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { t } = useTranslation();
   const handleCreate = async (e) => {

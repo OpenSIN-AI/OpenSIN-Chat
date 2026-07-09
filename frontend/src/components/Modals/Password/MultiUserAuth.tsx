@@ -218,11 +218,11 @@ const ResetPasswordForm = ({ onSubmit }) => {
 export default function MultiUserAuth() {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [recoveryCodes, setRecoveryCodes] = useState([]);
+  const [error, setError] = useState<any>(null);
+  const [recoveryCodes, setRecoveryCodes] = useState<any[]>([]);
   const [downloadComplete, setDownloadComplete] = useState(false);
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
+  const [user, setUser] = useState<any>(null);
+  const [token, setToken] = useState<any>(null);
   const [showRecoveryForm, setShowRecoveryForm] = useState(false);
   const [showResetPasswordForm, setShowResetPasswordForm] = useState(false);
 

@@ -187,7 +187,7 @@ export default function SourcesSidebar({ workspace }: any) {
   const { sources, sidebarOpen, closeSidebar } = useSourcesSidebar();
   const { t } = useTranslation();
   const isMobile = useIsMobileLayout();
-  const [selectedSource, setSelectedSource] = useState(null);
+  const [selectedSource, setSelectedSource] = useState<any>(null);
   const [snippets, setSnippets] = useState<Record<string, string>>({});
   const { sourceFilter, isDocumentSource, isMediaSource } = useChatSidebar();
 

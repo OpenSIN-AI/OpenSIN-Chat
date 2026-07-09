@@ -17,8 +17,8 @@ export default function MemoryCard({ memory }: any) {
   } = useMemoriesContext();
 
   const [menuOpen, setMenuOpen] = useState(false as any);
-  const menuRef: any = useRef(null);
-  const buttonRef = useRef(null);
+  const menuRef: any = useRef<any>(null);
+  const buttonRef = useRef<any>(null);
 
   useEffect(() => {
     if (!menuOpen) return;

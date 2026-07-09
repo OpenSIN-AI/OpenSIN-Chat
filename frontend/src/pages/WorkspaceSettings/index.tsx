@@ -45,6 +45,7 @@ export default function WorkspaceSettings(): JSX.Element | null {
 }
 
 function ShowWorkspaceChat(): JSX.Element | null {
+  const isMobile = useIsMobileLayout();
   const { t } = useTranslation();
   const { slug, tab } = useParams() as { slug?: string; tab?: string };
   const { user } = useUser();

@@ -195,8 +195,8 @@ function DockerModelRunnerModelSelection({
     isLoading,
     refresh: fetchModels,
   } = useProviderModels("docker-model-runner", null, basePath);
-  const [customModels, setCustomModels] = useState([]);
-  const [filteredModels, setFilteredModels] = useState([]);
+  const [customModels, setCustomModels] = useState<any[]>([]);
+  const [filteredModels, setFilteredModels] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
   async function downloadModel(

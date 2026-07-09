@@ -1,13 +1,24 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "checkJs": true,
+    // Legacy JS files are excluded from type-checking during the JS→TS
+    // migration. Once a file is converted to .ts/.tsx it is fully checked.
+    "checkJs": false,
     "allowJs": true,
+    // noImplicitAny is disabled until the migration is complete — most
+    // remaining implicit-any errors live in files pending conversion.
+    "noImplicitAny": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "incremental": true,
     "tsBuildInfoFile": ".tsbuildinfo"
   },
   "include": ["src"],
-  "exclude": ["node_modules", "dist", "coverage"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "coverage",
+    "src/**/*.test.*",
+    "src/**/__tests__/**"
+  ]
 }

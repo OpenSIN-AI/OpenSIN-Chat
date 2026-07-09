@@ -20,7 +20,7 @@ const DEFAULT_SEARCH_RESULTS = {
 const SEARCH_RESULT_SELECTED: any = "search-result-selected";
 function SearchBox({ user, showNewWsModal }: any) {
   const { t } = useTranslation();
-  const searchRef = useRef(null);
+  const searchRef = useRef<any>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
   const [searchResults, setSearchResults] = useState(DEFAULT_SEARCH_RESULTS);

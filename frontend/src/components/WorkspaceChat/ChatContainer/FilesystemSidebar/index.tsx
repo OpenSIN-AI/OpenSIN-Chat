@@ -43,21 +43,21 @@ export default function FilesystemSidebar({ workspace = null }: any) {
   } = useFileBrowser();
 
   const [showSysInfo, setShowSysInfo] = useState(false);
-  const [creatingType, setCreatingType] = useState(null);
+  const [creatingType, setCreatingType] = useState<any>(null);
   const [newItemName, setNewItemName] = useState("");
-  const [itemActionMsg, setItemActionMsg] = useState(null);
-  const [deletingPath, setDeletingPath] = useState(null);
+  const [itemActionMsg, setItemActionMsg] = useState<any>(null);
+  const [deletingPath, setDeletingPath] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [isDragOver, setIsDragOver] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [collapsedSections, setCollapsedSections] = useState({});
-  const [expandedFolders, setExpandedFolders] = useState({});
+  const [collapsedSections, setCollapsedSections] = useState<any>({});
+  const [expandedFolders, setExpandedFolders] = useState<any>({});
   const [uploadProgress, setUploadProgress] = useState({
     current: 0,
     total: 0,
     name: "",
   });
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<any>(null);
   const dragCounterRef = useRef(0);
 
   useEffect(() => {

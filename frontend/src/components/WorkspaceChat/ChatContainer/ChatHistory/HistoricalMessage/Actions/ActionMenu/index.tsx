@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 function ActionMenu({ chatId, forkThread, isEditing, role }: any) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false as any);
-  const menuRef = useRef(null);
+  const menuRef = useRef<any>(null);
 
   const toggleMenu = () => setOpen(!open);
 

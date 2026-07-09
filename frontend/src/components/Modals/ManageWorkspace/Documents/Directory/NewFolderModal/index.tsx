@@ -5,7 +5,7 @@ import Document from "@/models/document";
 import { useTranslation } from "react-i18next";
 
 export default function NewFolderModal({ closeModal, files, setFiles }: any) {
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<any>(null);
   const [folderName, setFolderName] = useState("");
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();

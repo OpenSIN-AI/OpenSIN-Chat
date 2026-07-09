@@ -322,6 +322,7 @@ function SkillLayout({
   handleSubmit,
   handleCancel,
 }: SkillLayoutProps) {
+  const isMobile = useIsMobileLayout();
   return (
     <div
       id="workspace-agent-settings-container"
