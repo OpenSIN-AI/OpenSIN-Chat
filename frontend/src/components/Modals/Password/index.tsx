@@ -1,38 +1,126 @@
 // SPDX-License-Identifier: MIT
 import React from "react";
 import { useTranslation } from "react-i18next";
-import System from "../../../models/system";
+import { ShieldCheck, EyeSlash, Cpu } from "@phosphor-icons/react";
 import SingleUserAuth from "./SingleUserAuth";
 import MultiUserAuth from "./MultiUserAuth";
+import useLogo from "../../../hooks/useLogo";
+import System from "../../../models/system";
 import {
   AUTH_TOKEN,
   AUTH_USER,
   AUTH_TIMESTAMP,
 } from "../../../utils/constants";
-import useLogo from "../../../hooks/useLogo";
 import useSystemSettings from "../../../hooks/useSystemSettings";
 import { safeGetItem, safeRemoveItem } from "@/utils/safeStorage";
 import useSWR from "swr";
 
 const AUTH_CHECK_KEY = "system/auth-check";
 
+const FEATURES = [
+  {
+    icon: ShieldCheck,
+    title: "Souverän & selbst gehostet",
+    desc: "Deine Daten bleiben auf deiner eigenen Infrastruktur.",
+  },
+  {
+    icon: EyeSlash,
+    title: "Keine Telemetrie",
+    desc: "Null Outbound-Tracking. DSGVO-konforme Defaults.",
+  },
+  {
+    icon: Cpu,
+    title: "Deine Modelle, deine Regeln",
+    desc: "Von OpenAI bis Ollama — lokal oder in der Cloud.",
+  },
+];
+
 export default function PasswordModal({ mode = "single" }: any) {
   const { t } = useTranslation();
   const { loginLogo, isCustomLogo } = useLogo();
+
   return (
-    <div className="fixed inset-0 bg-zinc-950 light:bg-slate-50 flex flex-col items-center justify-center overflow-hidden">
-      <img
-        src={loginLogo}
-        alt={t("common.logo")}
-        className={`max-h-[80px] object-contain ${isCustomLogo ? "rounded-lg" : ""}`}
-      />
-      {mode === "single" ? (
-        <SingleUserAuth />
-      ) : mode === "single-auto" ? (
-        <SingleUserAuth autoLogin={true} />
-      ) : (
-        <MultiUserAuth />
-      )}
+    <div className="fixed inset-0 flex bg-zinc-950 light:bg-slate-50 overflow-hidden">
+      {/* Left brand panel */}
+      <div className="relative hidden lg:flex lg:w-[45%] flex-col justify-between p-12 xl:p-16 border-r border-white/5">
+        {/* subtle accent glow */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10"
+          style={{
+            background:
+              "radial-gradient(120% 100% at 15% 0%, rgba(0,158,224,0.14) 0%, rgba(0,158,224,0) 55%)",
+          }}
+        />
+
+        <div className="flex items-center gap-x-3">
+          <img
+            src={loginLogo}
+            alt={t("common.logo")}
+            className={`max-h-9 w-auto object-contain ${
+              isCustomLogo ? "rounded-md" : ""
+            }`}
+          />
+          <span className="text-zinc-100 text-lg font-semibold tracking-tight">
+            OpenSIN Chat
+          </span>
+        </div>
+
+        <div className="max-w-md">
+          <h1 className="text-4xl xl:text-5xl font-semibold text-zinc-50 leading-tight text-balance">
+            Dein souveräner KI-Arbeitsraum.
+          </h1>
+          <p className="mt-4 text-zinc-400 text-base leading-relaxed text-pretty">
+            Chatte mit deinen Dokumenten, automatisiere Recherche und behalte
+            die volle Kontrolle über deine Daten.
+          </p>
+
+          <ul className="mt-10 flex flex-col gap-y-5">
+            {FEATURES.map(({ icon: Icon, title, desc }) => (
+              <li key={title} className="flex items-start gap-x-3">
+                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#009ee0]/10 ring-1 ring-[#009ee0]/25">
+                  <Icon size={18} weight="bold" className="text-[#009ee0]" />
+                </span>
+                <div>
+                  <p className="text-sm font-medium text-zinc-100">{title}</p>
+                  <p className="text-sm text-zinc-500">{desc}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <p className="text-xs text-zinc-600">
+          © {new Date().getFullYear()} OpenSIN Chat · Selbst gehostet · Keine
+          Telemetrie
+        </p>
+      </div>
+
+      {/* Right form panel */}
+      <div className="flex w-full lg:w-[55%] items-center justify-center p-6 sm:p-10">
+        <div className="w-full max-w-sm">
+          {/* Logo shown on top for mobile / when left panel is hidden */}
+          <div className="mb-8 flex flex-col items-center gap-y-3 lg:hidden">
+            <img
+              src={loginLogo}
+              alt={t("common.logo")}
+              className={`max-h-14 object-contain ${
+                isCustomLogo ? "rounded-lg" : ""
+              }`}
+            />
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-zinc-900/60 light:bg-white light:border-slate-200 p-8 shadow-2xl shadow-black/30 backdrop-blur-sm">
+            {mode === "single" ? (
+              <SingleUserAuth />
+            ) : mode === "single-auto" ? (
+              <SingleUserAuth autoLogin={true} />
+            ) : (
+              <MultiUserAuth />
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -47,8 +135,6 @@ export function usePasswordModal(notry: any = false) {
 
   const currentToken = safeGetItem(AUTH_TOKEN);
 
-  // Determine if we actually need a token validity check.
-  // Skip when: settings are still loading, notry guard allows skip, or no token exists.
   const skipCheck =
     settingsLoading ||
     (!System.needsAuthCheck() && notry === false) ||
@@ -62,14 +148,10 @@ export function usePasswordModal(notry: any = false) {
     { revalidateOnFocus: false, dedupingInterval: 5000 },
   );
 
-  // While settings or token check are in-flight, stay in the loading state.
   if (settingsLoading || (needsTokenCheck && tokenLoading)) {
     return { loading: true, requiresAuth: false, mode: "single" };
   }
 
-  // If the settings API itself failed (500, 429, network error), surface
-  // an error so the caller can show a friendly message instead of silently
-  // proceeding with empty settings (which would render a broken UI).
   if (settingsError && !settingsLoading) {
     return {
       loading: false,
@@ -79,12 +161,6 @@ export function usePasswordModal(notry: any = false) {
     };
   }
 
-  // Auth is not required in this environment
-  // Single-user no-password mode: we still need to render the single-user auth
-  // modal so it can auto-request a session token and store it. The token is
-  // required for authenticated system endpoints like API key management.
-  // But if we already have a valid token, skip auto-login to avoid infinite
-  // redirect loops (requestToken → redirect → reload → requestToken → …).
   if (!MultiUserMode && !RequiresAuth) {
     if (currentToken) {
       return { loading: false, requiresAuth: false, mode: "single" };
@@ -92,7 +168,6 @@ export function usePasswordModal(notry: any = false) {
     return { loading: false, requiresAuth: true, mode: "single-auto" };
   }
 
-  // Skip the check (valid cached timestamp / notry guard)
   if (!System.needsAuthCheck() && notry === false) {
     return {
       loading: false,
@@ -103,12 +178,10 @@ export function usePasswordModal(notry: any = false) {
 
   const mode = MultiUserMode ? "multi" : "single";
 
-  // No token present at all — require login
   if (!currentToken) {
     return { loading: false, requiresAuth: true, mode };
   }
 
-  // Token check returned invalid — clean up storage
   if (tokenValid === false) {
     safeRemoveItem(AUTH_USER);
     safeRemoveItem(AUTH_TOKEN);
