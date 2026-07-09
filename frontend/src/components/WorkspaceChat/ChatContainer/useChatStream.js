@@ -47,9 +47,13 @@ export default function useChatStream({
   const chatHistoryRef = useRef(chatHistory);
   chatHistoryRef.current = chatHistory;
 
-  const isEmpty = !threadSlug
-    ? true
-    : chatHistory.length === 0 && !sessionStorage.getItem(PENDING_HOME_MESSAGE);
+  // isEmpty is true only when there is no thread, no chat history, and no
+  // pending home message. A threadSlug alone is enough to consider the view
+  // non-empty so the chat input/welcome screen renders correctly.
+  const isEmpty =
+    !threadSlug &&
+    chatHistory.length === 0 &&
+    !sessionStorage.getItem(PENDING_HOME_MESSAGE);
 
   const { listening, resetTranscript } = useSpeechRecognition({
     clearTranscriptOnListen: true,

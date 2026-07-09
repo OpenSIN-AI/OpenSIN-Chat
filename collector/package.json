@@ -14,7 +14,7 @@
     "start": "cross-env NODE_ENV=production node index.js",
     "lint": "eslint --fix .",
     "lint:check": "eslint .",
-    "test": "jest --ci --passWithNoTests"
+    "test": "node_modules/.bin/jest --ci --passWithNoTests"
   },
   "dependencies": {
     "@langchain/community": "^1.1.29",

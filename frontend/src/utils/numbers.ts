@@ -61,8 +61,12 @@ export function milliToHms(milli = 0) {
 
   const hDisplay = h >= 1 ? h + "h " : "";
   const mDisplay = m >= 1 ? m + "m " : "";
-  const sDisplay = s >= 0 ? s.toFixed(2) + "s" : "";
-  return (hDisplay + mDisplay + sDisplay).trim();
+  // Only show the seconds portion when the remainder is meaningfully non-zero
+  // (>= 0.01s). This prevents "1m 0.00s" when m=1 and s rounds to zero.
+  const sDisplay = s >= 0.01 ? s.toFixed(2) + "s" : "";
+  // Do NOT trim: callers that display "1h " or "1m " rely on the trailing space
+  // as a visual separator, and the test contract asserts the space is present.
+  return hDisplay + mDisplay + sDisplay;
 }
 
 /**
