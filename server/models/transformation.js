@@ -2,6 +2,10 @@
 const consoleLogger = require("../utils/logger/console.js");
 const prisma = require("../utils/prisma");
 
+// Hard cap for listing all transformations. Admins are unlikely to create
+// more than a few hundred; this prevents a full-table scan.
+const MAX_TRANSFORMATIONS = 1_000;
+
 /**
  * Default transformations that ship with the system and are seeded into the
  * database on first use. They provide a useful starting set without requiring
@@ -60,6 +64,7 @@ const Transformation = {
   all: async function () {
     return await prisma.transformations.findMany({
       orderBy: { id: "asc" },
+      take: MAX_TRANSFORMATIONS,
     });
   },
 
