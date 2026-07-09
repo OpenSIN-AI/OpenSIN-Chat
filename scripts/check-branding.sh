@@ -18,10 +18,7 @@ cd "$REPO_ROOT"
 ALLOWED_FILES=(
   # ── Intentional upstream credit ───────────────────────────
   "THIRD_PARTY.md"                     # canonical credit doc (merged: acknowledgments + NPM packages)
-  "BRANDING.md"                        # branding policy references upstream
-  "README.md"                          # "Stand auf Schultern von Riesen" section
-  "TERMS_SELF_HOSTED.md"               # §2 references AnythingLLM telemetry
-  "TERMS.md"                           # generic terms
+  "CREDITS.md"                       # new dedicated home for upstream acknowledgments
   "docs/changelog-recent.md"           # recent changelog entries referencing upstream
   "docs/abandoned-packages-audit.md"   # audit doc referencing upstream git deps
 
@@ -176,9 +173,6 @@ ALLOWED_FILES=(
 
   # ── Project identity & policy docs ──────────────────
   #    Reference the upstream AnythingLLM / Mintplex Labs origin for context.
-  "AGENTS.md"
-  "CONTRIBUTING.md"
-  "SECURITY.md"
   "CHANGELOG.md"
 
   # ── Audit & feature docs (upstream context) ─────────
