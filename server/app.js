@@ -51,6 +51,9 @@ const { subagentEndpoints } = require("./endpoints/subagents");
 const { scheduledJobEndpoints } = require("./endpoints/scheduledJobs");
 const { agentTriggerEndpoints } = require("./endpoints/agentTriggers");
 const {
+  connectorOAuthEndpoints,
+} = require("./endpoints/connectors/oauth");
+const {
   outlookAgentEndpoints,
 } = require("./endpoints/utils/outlookAgentUtils");
 const {
@@ -220,6 +223,7 @@ function buildApp() {
 
   scheduledJobEndpoints(apiRouter);
   agentTriggerEndpoints(apiRouter);
+  connectorOAuthEndpoints(app); // mounts its own /api router internally
   outlookAgentEndpoints(apiRouter);
   googleAgentSkillEndpoints(apiRouter);
   pdfAnalysisEndpoints(app);

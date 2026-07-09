@@ -50,7 +50,7 @@
     "uuid": "^14.0.1",
     "wavefile": "^11.0.0",
     "winston": "^3.13.0",
-    "yauzl": "^3.0.0",
+    "yauzl": "^3",
     "youtube-transcript-plus": "^2.0.0",
     "youtubei.js": "^9.1.0"
   },
