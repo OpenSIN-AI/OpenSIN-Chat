@@ -3,7 +3,7 @@
 > **GSD-Phasen:** Get Shit Done — jede Phase ist ein abgeschlossenes Deliverable.  
 > **Status:** All 10 phases ✅ COMPLETE — OpenSIN-Chat is production-ready. This document is now a historical archive.  
 > **Repo:** [OpenSIN-AI/OpenSIN-Chat](https://github.com/OpenSIN-AI/OpenSIN-Chat)  
-> **Letztes Update:** 2026-06-24
+> **Letztes Update:** 2026-07-09
 
 ---
 
@@ -365,26 +365,29 @@
 
 ## Quick Stats
 
-- **Total Commits:** 320+ (since v1.13.0; 734 total on main since fork)
+- **Total Commits:** 590+ on main since fork (320+ since v1.13.0)
 - **Files Changed:** 2,700+ (350K+ insertions, 150K+ deletions since v1.13.0)
-- **CEO Audit:** Grade A (94.5/100 — final audit 2026-06-17, `docs/ceo-audit-final.md`)
-- **GitHub Issues:** All closed (inkl. #22 test expansion — 3602 tests)
+- **CEO Audit:** Grade A- (85/100 — latest audit 2026-07-08, `docs/CEO-AUDIT-REPORT-2026-07-08.md`)
+- **GitHub Issues:** All closed (0 open as of 2026-07-09)
+- **Open PRs:** 0 (all Dependabot PRs merged 2026-07-09; all feature branches deleted)
 - **Politician DB:** 733 politicians, 7382 speeches synced (`804b6388`)
 - **SBOM:** SPDX 2.3 + CycloneDX 1.5 generated (`758ffba1`, `sbom/` directory)
 - **CoDocs:** 0 broken refs, 35+ `.doc.md` companions
 - **SPDX Headers:** 22 modules with license header (`3e77ed07`)
-- **CI/CD:** Self-hosted CI webhook receiver (ersetzt n8n + GitHub Actions)
+- **CI/CD:** Self-hosted CI webhook receiver on OCI VM
 - **Tunnel:** 2 Cloudflare Tunnels, unified 30s health check via systemd timer (`9e62abc4`)
-- **i18next:** ❌ CANCELLED — user chose to ignore warnings (noise-only, no functional impact); ~1859 warnings remain
+- **i18next:** CANCELLED — user chose to ignore warnings (noise-only, no functional impact); ~1859 warnings remain
 - **ESLint:** 0 Errors, 0 Warnings
 - **TypeScript:** 100% migration complete (all JSX → TSX)
-- **Tests:** 3,602 (1,914 server + 1,688 frontend, 338 test files) — coverage configured: server 21.3% stmts / frontend 53.5% stmts, 70% threshold gate for new/changed code; see `docs/CEO-AUDIT-RERUN-2026-06-23.md`
-- **Scale & Deploy:** Helm chart linted + tested, production Docker Compose, Redis session cache documented, CDN for static assets documented
+- **Tests:** 3,600+ (frontend + server, 338 test files) — coverage configured: server 21.3% stmts / frontend 53.5% stmts, 70% threshold gate for new/changed code
+- **Dependencies:** 75 server deps, 50 frontend deps — all up to date as of 2026-07-09
+- **Scale & Deploy:** Helm chart linted + tested, production Docker Compose, deployment guide complete
 - **Code Quality:** Critical deps pinned to exact versions, oversized files refactored (system.js 2094→8 LOC, updateENV.js 1195→4 LOC)
 - **Docs:** /docs mit Landing Page, Kategorien, Suche, persistentem rechten TOC, Theme-Toggle
+- **De-Forking:** 100% complete — all AnythingLLM branding removed incl. localStorage keys
 
 ---
 
 *All phases complete. OpenSIN-Chat is production-ready.*  
 *Owner: @OpenSIN-AI*  
-*Updated: 2026-06-24*
+*Updated: 2026-07-09*
