@@ -100,21 +100,21 @@ export default function Sidebar() {
       <nav
         aria-label={t("sidebar.mainNavigation")}
         style={{ width: showSidebar ? `${sidebarWidth}px` : "0px" }}
-        className={`relative transition-all duration-500 flex-shrink-0 z-40 bg-[#111111] light:bg-[#f9fafb] hidden md:flex overflow-hidden ${showSidebar ? "border-r border-white/[0.06] light:border-zinc-200" : ""}`}
+        className={`relative transition-all duration-500 flex-shrink-0 z-40 bg-[#111111] light:bg-[#f9fafb] hidden md:flex overflow-hidden ${showSidebar ? "border-r border-white/[0.05] light:border-zinc-200" : ""}`}
       >
         <div className="overflow-hidden h-full flex flex-col w-full">
-          <div className="flex shrink-0 w-full items-center justify-between gap-x-2 my-3 px-3">
+          <div className="flex shrink-0 w-full items-center justify-between gap-x-2 mt-3 mb-2 px-3">
             <Link
               to={paths.home()}
               aria-label={t("sidebar.home")}
-              className="flex items-center gap-x-2 overflow-hidden flex-shrink min-w-0 px-1"
+              className="flex items-center gap-x-2 overflow-hidden flex-shrink min-w-0 px-1 py-1 rounded-md hover:bg-white/[0.04] light:hover:bg-zinc-100 transition-colors"
             >
               <img
                 src={logo}
                 alt={t("sidebar.logo")}
-                className="h-7 w-7 max-h-[28px] max-w-[28px] object-contain flex-shrink-0"
+                className="h-6 w-6 max-h-[24px] max-w-[24px] object-contain flex-shrink-0"
               />
-              <span className="text-[#fafafa] light:text-zinc-900 font-semibold text-sm tracking-tight whitespace-nowrap">
+              <span className="text-[#e4e4e7] light:text-zinc-900 font-semibold text-sm tracking-tight whitespace-nowrap">
                 OpenSIN
               </span>
             </Link>
@@ -134,10 +134,10 @@ export default function Sidebar() {
                     ? t("sidebar.hideSidebar")
                     : t("sidebar.showSidebar")
                 }
-                className="flex items-center justify-center w-7 h-7 rounded-md border-none cursor-pointer transition-colors bg-transparent hover:bg-white/[0.06] light:hover:bg-zinc-100 text-[#71717a] hover:text-[#fafafa] light:text-zinc-500 light:hover:text-zinc-900 flex-shrink-0"
+                className="flex items-center justify-center w-7 h-7 rounded-md border-none cursor-pointer transition-colors bg-transparent hover:bg-white/[0.06] light:hover:bg-zinc-100 text-[#52525b] hover:text-[#a1a1aa] light:text-zinc-400 light:hover:text-zinc-700 flex-shrink-0"
               >
                 <SidebarSimple
-                  size={16}
+                  size={15}
                   weight={showSidebar ? "fill" : "regular"}
                 />
               </button>

@@ -12,7 +12,7 @@ export default function LeftSidebarIconBar() {
   if (!canToggleSidebar) return null;
 
   return (
-    <div className="hidden md:flex flex-col items-center justify-between py-2 px-1 bg-zinc-900 light:bg-white flex-shrink-0 w-[44px] mx-2 my-2 rounded-2xl z-30 self-stretch">
+    <div className="hidden md:flex flex-col items-center justify-between py-2 px-1 bg-[#111111] light:bg-white border border-white/[0.05] light:border-zinc-200 flex-shrink-0 w-[44px] mx-2 my-2 rounded-xl z-30 self-stretch">
       <div className="flex flex-col items-center gap-1">
         <button
           type="button"
@@ -26,11 +26,11 @@ export default function LeftSidebarIconBar() {
           }
           className={`flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all ${
             showSidebar
-              ? "bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary"
-              : "text-zinc-400 light:text-slate-500 hover:bg-zinc-800 light:hover:bg-slate-100 hover:text-theme-text-primary light:hover:text-theme-text-primary"
+              ? "bg-white/[0.08] light:bg-zinc-100 text-[#e4e4e7] light:text-zinc-900"
+              : "text-[#52525b] light:text-zinc-400 hover:bg-white/[0.05] light:hover:bg-zinc-50 hover:text-[#a1a1aa] light:hover:text-zinc-700"
           }`}
         >
-          <SidebarSimple size={18} weight={showSidebar ? "fill" : "regular"} />
+          <SidebarSimple size={16} weight={showSidebar ? "fill" : "regular"} />
         </button>
         <Tooltip
           id="lsib-toggle"
