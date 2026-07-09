@@ -5,7 +5,6 @@ import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
 import { DefaultBadge } from "./Badges/default";
 
 export default function SkillList({
-  const isMobile = useIsMobileLayout();
   skills = {},
   selectedSkill = null,
   handleClick = null,
@@ -19,6 +18,7 @@ export default function SkillList({
   handleClick?: ((skill: string) => void) | null;
   activeSkills?: string[];
 }) {
+  const isMobile = useIsMobileLayout();
   const { t } = useTranslation();
   if (Object.keys(skills).length === 0) return null;
 

@@ -16,11 +16,12 @@
 import React from "react";
 
 // Base classes shared by every variant — dark default, light override.
+// sky-100 (~#E0F2FE) and sky-700 (~#026AA2) replace the previous hardcoded hex values.
 const BASE =
   "border-none text-sm font-semibold rounded-lg " +
-  "bg-white light:bg-[#E0F2FE] " +
+  "bg-white light:bg-sky-100 " +
   "hover:bg-neutral-800/80 hover:text-theme-text-primary " +
-  "light:text-[#026AA2] light:hover:bg-[#026AA2] light:hover:text-theme-text-primary";
+  "light:text-sky-700 light:hover:bg-sky-700 light:hover:text-theme-text-primary";
 
 type ToolbarButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   /** When true, renders a square 32 × 32 px icon-only button. */

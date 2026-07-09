@@ -6,7 +6,6 @@ import { DefaultBadge } from "./Badges/default";
 import { Tooltip } from "react-tooltip";
 
 export default function AgentList({
-  const isMobile = useIsMobileLayout();
   isDefault = false,
   skills = {},
   selectedSkill = null,
@@ -24,6 +23,7 @@ export default function AgentList({
   activeSkills?: string[];
   Icon?: React.ComponentType<{ size: number }> | null;
 }) {
+  const isMobile = useIsMobileLayout();
   const { t } = useTranslation();
   if (Object.keys(skills).length === 0) return null;
 
