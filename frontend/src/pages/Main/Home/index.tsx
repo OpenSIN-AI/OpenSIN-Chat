@@ -369,6 +369,7 @@ function HomeContent({
 
 function NoWorkspacesAssigned() {
   const { t } = useTranslation();
+  const isMobile = useIsMobileLayout();
   return (
     <div
       style={
