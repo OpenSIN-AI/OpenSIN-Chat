@@ -3,7 +3,20 @@ const consoleLogger = require("../utils/logger/console.js");
 
 const prisma = require("../utils/prisma");
 
+/**
+ * Append-only audit event log.
+ * Deletes are disabled by default (EVENT_LOGS_ALLOW_PURGE=1 to override)
+ * to preserve a tamper-resistant activity trail.
+ */
 const EventLogs = {
+  /**
+   * Persist a named audit event with optional metadata and user attribution.
+   * @param {string} event - Event name, e.g. "api_key_created"
+   * @param {Object} [metadata={}] - Arbitrary key/value payload serialised to JSON
+   * @param {number|null} [userId=null] - ID of the acting user (null = system action)
+   * @param {Object|null} [tx=null] - Optional Prisma transaction client
+   * @returns {Promise<{eventLog: Object|null, message: string|null}>}
+   */
   logEvent: async function (event, metadata = {}, userId = null, tx = null) {
     try {
       const client = tx || prisma;
@@ -26,6 +39,13 @@ const EventLogs = {
     }
   },
 
+  /**
+   * Return log entries for a specific event name.
+   * @param {string} event - Event name to filter by
+   * @param {number|null} [limit=null] - Max rows (default 1000)
+   * @param {Object|null} [orderBy=null] - Prisma orderBy (default occurredAt desc)
+   * @returns {Promise<Array>}
+   */
   getByEvent: async function (event, limit = null, orderBy = null) {
     try {
       const logs = await prisma.event_logs.findMany({
@@ -49,6 +69,13 @@ const EventLogs = {
     }
   },
 
+  /**
+   * Return log entries attributed to a specific user.
+   * @param {number|null} userId
+   * @param {number|null} [limit=null] - Max rows (default 1000)
+   * @param {Object|null} [orderBy=null] - Prisma orderBy (default occurredAt desc)
+   * @returns {Promise<Array>}
+   */
   getByUserId: async function (userId, limit = null, orderBy = null) {
     try {
       const logs = await prisma.event_logs.findMany({
@@ -72,6 +99,14 @@ const EventLogs = {
     }
   },
 
+  /**
+   * Generic paginated query over event_logs (no user join).
+   * @param {Object} [clause={}] - Prisma where clause
+   * @param {number|null} [limit=null] - Max rows (default 1000)
+   * @param {Object|null} [orderBy=null] - Prisma orderBy
+   * @param {number|null} [offset=null] - Rows to skip (for pagination)
+   * @returns {Promise<Array>}
+   */
   where: async function (
     clause = {},
     limit = null,
@@ -101,6 +136,14 @@ const EventLogs = {
     }
   },
 
+  /**
+   * Paginated query including joined user data (username).
+   * @param {Object} [clause={}] - Prisma where clause
+   * @param {number|null} [limit=null] - Max rows (default 1000)
+   * @param {number|null} [offset=null] - Rows to skip
+   * @param {Object|null} [orderBy=null] - Prisma orderBy
+   * @returns {Promise<Array<{id, event, metadata, userId, occurredAt, user: {username}}>>}
+   */
   whereWithData: async function (
     clause = {},
     limit = null,
@@ -143,6 +186,11 @@ const EventLogs = {
     }
   },
 
+  /**
+   * Count log entries matching the clause.
+   * @param {Object} [clause={}] - Prisma where clause
+   * @returns {Promise<number>}
+   */
   count: async function (clause = {}) {
     try {
       const count = await prisma.event_logs.count({
@@ -155,6 +203,12 @@ const EventLogs = {
     }
   },
 
+  /**
+   * Purge log entries. Disabled by default — set EVENT_LOGS_ALLOW_PURGE=1
+   * to enable. Throws if the env var is not set (append-only protection).
+   * @param {Object} [clause={}] - Prisma where clause
+   * @returns {Promise<boolean>}
+   */
   delete: async function (clause = {}) {
     const allow = process.env.EVENT_LOGS_ALLOW_PURGE;
     if (allow !== "1" && allow !== "true") {

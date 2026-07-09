@@ -39,6 +39,15 @@ const MAX_COMMAND_LENGTH = 2000;
 const MAX_CWD_LENGTH = 500;
 const MAX_OUTPUT_BYTES = 1024 * 1024;
 
+/**
+ * The canonical root that all cwd values must stay within.
+ * Defaults to STORAGE_DIR (the app's data directory) so admins can inspect
+ * log/storage directories, but cannot escape to /, /etc, /var, etc.
+ */
+const ALLOWED_CWD_ROOT = path.resolve(
+  process.env.STORAGE_DIR || process.cwd(),
+);
+
 const execRateLimit = simpleRateLimit({
   bucket: "terminal-exec",
   max: 5,
@@ -62,7 +71,7 @@ const COMMAND_WHITELIST = {
   df: { maxArgs: 2, argPattern: /^[a-zA-Z0-9_./-]*$/ },
   du: { maxArgs: 3, argPattern: /^[a-zA-Z0-9_./-]*$/ },
   free: { maxArgs: 1, argPattern: /^-[a-z]+$/ },
-  cat: { maxArgs: 1, argPattern: /^[a-zA-Z0-9_./-]*$/ },
+  // cat REMOVED — can read .env and private key files even with .. blocked
   head: { maxArgs: 3, argPattern: /^[a-zA-Z0-9_./-]*$/ },
   tail: { maxArgs: 3, argPattern: /^[a-zA-Z0-9_./-]*$/ },
   wc: { maxArgs: 2, argPattern: /^[a-zA-Z0-9_./-]*$/ },
@@ -70,9 +79,8 @@ const COMMAND_WHITELIST = {
   hostname: { maxArgs: 0, argPattern: null },
   id: { maxArgs: 0, argPattern: null },
   which: { maxArgs: 1, argPattern: /^[a-zA-Z0-9_.-]*$/ },
-  node: { maxArgs: 1, argPattern: /^(--version|-v)$/ },
-  npm: { maxArgs: 1, argPattern: /^(--version|-v)$/ },
-  yarn: { maxArgs: 1, argPattern: /^(--version|-v)$/ },
+  // node/npm/yarn --version REMOVED — unnecessary surface; version info is
+  // available in package.json or via the admin dashboard
   git: { maxArgs: 2, argPattern: /^(status|log|branch|--oneline|-s|-b)$/ },
 };
 
@@ -88,7 +96,7 @@ const SHELL_META_RE = /[;&|`$<>(){}\\*?!#~^\n\r]/;
  */
 const PATH_ARG_COMMANDS = new Set([
   "ls",
-  "cat",
+  // "cat" removed from whitelist — see COMMAND_WHITELIST comment above
   "head",
   "tail",
   "du",
@@ -198,10 +206,19 @@ function apiTerminalExecEndpoints(app) {
         if (!validation.ok)
           return response.status(403).json({ error: validation.reason });
 
-        const execCwd =
-          cwd && typeof cwd === "string" && cwd.trim()
-            ? path.resolve(cwd)
-            : process.cwd();
+        // Resolve cwd relative to ALLOWED_CWD_ROOT (never relative to /).
+        // Using path.resolve(ALLOWED_CWD_ROOT, cwd) means an absolute cwd
+        // like "/etc" becomes ALLOWED_CWD_ROOT + "/etc" only when cwd is
+        // relative — but a truly absolute path would still escape.
+        // We therefore always join then verify containment.
+        const rawCwd =
+          cwd && typeof cwd === "string" && cwd.trim() ? cwd.trim() : ".";
+        const execCwd = path.resolve(ALLOWED_CWD_ROOT, rawCwd);
+        if (!execCwd.startsWith(ALLOWED_CWD_ROOT + path.sep) && execCwd !== ALLOWED_CWD_ROOT) {
+          return response.status(403).json({
+            error: "cwd must stay within the allowed working directory.",
+          });
+        }
 
         await new Promise((resolve) => {
           execFile(
@@ -248,4 +265,5 @@ module.exports = {
   isTerminalExecEnabled,
   hasPathTraversalSegment,
   COMMAND_WHITELIST,
+  ALLOWED_CWD_ROOT,
 };

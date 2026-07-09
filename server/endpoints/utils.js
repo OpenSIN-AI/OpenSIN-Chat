@@ -67,9 +67,6 @@ function utilEndpoints(app) {
   const { enhancePromptEndpoint } = require("./utils/enhancePrompt");
   enhancePromptEndpoint(app);
 
-  const { terminalExecEndpoint } = require("./utils/terminalExec");
-  terminalExecEndpoint(app);
-
   // Bundestag DIP API proxy — avoids CORS for the browser (Issue #57)
   app.get(
     "/utils/bundestag/drucksachen",

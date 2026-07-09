@@ -61,6 +61,10 @@ const Transformation = {
     }
   },
 
+  /**
+   * Return all transformations ordered by id, capped at MAX_TRANSFORMATIONS.
+   * @returns {Promise<Array>}
+   */
   all: async function () {
     return await prisma.transformations.findMany({
       orderBy: { id: "asc" },
@@ -68,6 +72,11 @@ const Transformation = {
     });
   },
 
+  /**
+   * Return the first transformation matching the clause.
+   * @param {Object} [clause={}] - Prisma where clause
+   * @returns {Promise<Object|null>}
+   */
   get: async function (clause = {}) {
     try {
       return await prisma.transformations.findFirst({ where: clause });
@@ -77,6 +86,16 @@ const Transformation = {
     }
   },
 
+  /**
+   * Create a new transformation.
+   * @param {Object} data
+   * @param {string} data.name - Unique machine-readable key
+   * @param {string} data.title - Human-readable display name
+   * @param {string} [data.description] - Optional description
+   * @param {string} data.prompt - The LLM prompt template
+   * @param {boolean} [data.applyDefault=false] - Apply automatically to all documents
+   * @returns {Promise<Object>} Created transformation record
+   */
   create: async function (data = {}) {
     const {
       name,
@@ -93,6 +112,13 @@ const Transformation = {
     });
   },
 
+  /**
+   * Update allowed fields of an existing transformation.
+   * Only `name`, `title`, `description`, `prompt`, and `applyDefault` are writable.
+   * @param {number|string} id - Transformation primary key
+   * @param {Object} data - Fields to update
+   * @returns {Promise<Object>} Updated transformation record
+   */
   update: async function (id, data = {}) {
     const allowed = ["name", "title", "description", "prompt", "applyDefault"];
     const filtered = {};
@@ -106,6 +132,11 @@ const Transformation = {
     });
   },
 
+  /**
+   * Permanently delete a transformation by primary key.
+   * @param {number|string} id
+   * @returns {Promise<boolean>}
+   */
   delete: async function (id) {
     await prisma.transformations.delete({ where: { id: Number(id) } });
     return true;
