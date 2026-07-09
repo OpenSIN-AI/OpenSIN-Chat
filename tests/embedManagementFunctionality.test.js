@@ -96,8 +96,8 @@ beforeAll(async () => {
 afterAll(async () => {
   const { Workspace } = await vi.importActual("../server/models/workspace");
   const { EmbedConfig } = await vi.importActual("../server/models/embedConfig");
-  await EmbedConfig.delete({ id: testEmbed?.id }).catch(() => {});
-  if (testWorkspace) await Workspace.delete({ id: testWorkspace.id }).catch(() => {});
+  await EmbedConfig.delete({ id: testEmbed?.id }).catch((e) => console.warn("[embedManagementFunctionality.test] non-fatal error:", e?.message || e));
+  if (testWorkspace) await Workspace.delete({ id: testWorkspace.id }).catch((e) => console.warn("[embedManagementFunctionality.test] non-fatal error:", e?.message || e));
 });
 
 beforeEach(async () => {

@@ -44,8 +44,8 @@ let _bootstrapped = false;
 async function ensureTable() {
   if (_bootstrapped) return;
   _bootstrapped = true;
-  await prisma.$executeRawUnsafe(
-    `CREATE TABLE IF NOT EXISTS parse_jobs (
+  await prisma.$executeRaw`
+    CREATE TABLE IF NOT EXISTS parse_jobs (
       id           TEXT    PRIMARY KEY,
       workspaceId  INTEGER NOT NULL,
       userId       INTEGER,
@@ -55,8 +55,7 @@ async function ensureTable() {
       error        TEXT,
       createdAt    TEXT    NOT NULL DEFAULT (datetime('now')),
       finishedAt   TEXT
-    )`,
-  );
+    )`;
 }
 
 // ---------------------------------------------------------------------------
@@ -72,16 +71,12 @@ async function ensureTable() {
 async function recoverStalledJobs() {
   try {
     await ensureTable();
-    await prisma.$executeRawUnsafe(
-      `UPDATE parse_jobs
-          SET status     = ?,
-              error      = ?,
+    await prisma.$executeRaw`
+      UPDATE parse_jobs
+          SET status     = ${JOB_STATUS.FAILED},
+              error      = ${"Server restarted while this job was processing. Please re-upload the file."},
               finishedAt = datetime('now')
-        WHERE status = ?`,
-      JOB_STATUS.FAILED,
-      "Server restarted while this job was processing. Please re-upload the file.",
-      JOB_STATUS.PROCESSING,
-    );
+        WHERE status = ${JOB_STATUS.PROCESSING}`;
     // Rows stuck in "pending" past the grace period lost their worker too —
     // e.g. the server crashed between ParseJobs.create() and markProcessing().
     // Without this, the frontend polls a forever-pending job until timeout.
@@ -89,18 +84,13 @@ async function recoverStalledJobs() {
       1,
       Math.round(PENDING_STALE_MS / 60000),
     );
-    await prisma.$executeRawUnsafe(
-      `UPDATE parse_jobs
-          SET status     = ?,
-              error      = ?,
+    await prisma.$executeRaw`
+      UPDATE parse_jobs
+          SET status     = ${JOB_STATUS.FAILED},
+              error      = ${"Server restarted before this job could start. Please re-upload the file."},
               finishedAt = datetime('now')
-        WHERE status = ?
-          AND createdAt < datetime('now', ?)`,
-      JOB_STATUS.FAILED,
-      "Server restarted before this job could start. Please re-upload the file.",
-      JOB_STATUS.PENDING,
-      `-${pendingStaleMinutes} minutes`,
-    );
+        WHERE status = ${JOB_STATUS.PENDING}
+          AND createdAt < datetime('now', ${"-" + pendingStaleMinutes + " minutes"})`;
     // Boot-time sweep: without this, finished jobs only get cleaned up when
     // someone uploads a new file — on quiet instances they linger forever.
     await sweep();
@@ -122,15 +112,11 @@ async function sweep() {
   // ("...T...Z") would corrupt the lexicographic comparison because
   // ' ' < 'T' and same-day rows would always sort below the cutoff.
   const ttlMinutes = Math.round(JOB_TTL_MS / 60000);
-  await prisma.$executeRawUnsafe(
-    `DELETE FROM parse_jobs
-      WHERE status IN (?, ?)
+  await prisma.$executeRaw`
+    DELETE FROM parse_jobs
+      WHERE status IN (${JOB_STATUS.COMPLETED}, ${JOB_STATUS.FAILED})
         AND finishedAt IS NOT NULL
-        AND finishedAt < datetime('now', ?)`,
-    JOB_STATUS.COMPLETED,
-    JOB_STATUS.FAILED,
-    `-${ttlMinutes} minutes`,
-  );
+        AND finishedAt < datetime('now', ${"-" + ttlMinutes + " minutes"})`;
 }
 
 // ---------------------------------------------------------------------------
@@ -152,15 +138,9 @@ async function create({ workspaceId, userId = null, originalname }) {
   );
 
   const id = v4();
-  await prisma.$executeRawUnsafe(
-    `INSERT INTO parse_jobs (id, workspaceId, userId, originalname, status, createdAt)
-     VALUES (?, ?, ?, ?, ?, datetime('now'))`,
-    id,
-    workspaceId,
-    userId ?? null,
-    originalname,
-    JOB_STATUS.PENDING,
-  );
+  await prisma.$executeRaw`
+    INSERT INTO parse_jobs (id, workspaceId, userId, originalname, status, createdAt)
+     VALUES (${id}, ${workspaceId}, ${userId ?? null}, ${originalname}, ${JOB_STATUS.PENDING}, datetime('now'))`;
   return _toJob(await _queryOne("SELECT * FROM parse_jobs WHERE id = ?", id));
 }
 
@@ -184,11 +164,7 @@ async function get(jobId, { workspaceId, userId = null }) {
 
 /** Mark a job as actively processing. */
 async function markProcessing(jobId) {
-  await prisma.$executeRawUnsafe(
-    `UPDATE parse_jobs SET status = ? WHERE id = ?`,
-    JOB_STATUS.PROCESSING,
-    jobId,
-  );
+  await prisma.$executeRaw`UPDATE parse_jobs SET status = ${JOB_STATUS.PROCESSING} WHERE id = ${jobId}`;
 }
 
 /**
@@ -197,16 +173,12 @@ async function markProcessing(jobId) {
  * @param {Array<object>} files
  */
 async function markCompleted(jobId, files) {
-  await prisma.$executeRawUnsafe(
-    `UPDATE parse_jobs
-        SET status     = ?,
-            files      = ?,
+  await prisma.$executeRaw`
+    UPDATE parse_jobs
+        SET status     = ${JOB_STATUS.COMPLETED},
+            files      = ${JSON.stringify(files ?? [])},
             finishedAt = datetime('now')
-      WHERE id = ?`,
-    JOB_STATUS.COMPLETED,
-    JSON.stringify(files ?? []),
-    jobId,
-  );
+      WHERE id = ${jobId}`;
 }
 
 /**
@@ -215,16 +187,12 @@ async function markCompleted(jobId, files) {
  * @param {string} error
  */
 async function markFailed(jobId, error) {
-  await prisma.$executeRawUnsafe(
-    `UPDATE parse_jobs
-        SET status     = ?,
-            error      = ?,
+  await prisma.$executeRaw`
+    UPDATE parse_jobs
+        SET status     = ${JOB_STATUS.FAILED},
+            error      = ${error || "Unknown error"},
             finishedAt = datetime('now')
-      WHERE id = ?`,
-    JOB_STATUS.FAILED,
-    error || "Unknown error",
-    jobId,
-  );
+      WHERE id = ${jobId}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -232,6 +200,9 @@ async function markFailed(jobId, error) {
 // ---------------------------------------------------------------------------
 
 async function _queryOne(sql, ...params) {
+  // NOTE: sql is dynamically constructed — cannot use $queryRaw template
+  // literal here. All params are bound via ? placeholders (no string
+  // interpolation), so this is safe from SQL injection.
   const rows = await prisma.$queryRawUnsafe(sql, ...params);
   return Array.isArray(rows) ? (rows[0] ?? null) : (rows ?? null);
 }

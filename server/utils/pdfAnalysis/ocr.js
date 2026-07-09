@@ -52,7 +52,7 @@ async function getWorker() {
 /** Serialisiert OCR-Aufrufe über den einen Worker. */
 function enqueueOcr(task) {
   const run = ocrQueue.then(task, task);
-  ocrQueue = run.catch(() => {});
+  ocrQueue = run.catch((e) => console.warn("[ocr] non-fatal error:", e?.message || e));
   return run;
 }
 

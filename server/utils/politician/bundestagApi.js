@@ -121,7 +121,7 @@ class BundestagApi {
     const res = await this.#fetch(url, headers);
     if (!res.ok) {
       this.log(`HTTP ${res.status} for ${url}`);
-      await res.text?.().catch(() => {});
+      await res.text?.().catch((e) => console.warn("[bundestagApi] non-fatal error:", e?.message || e));
       return null;
     }
     return res.json();
@@ -332,7 +332,7 @@ class BundestagApi {
     try {
       const res = await this.#fetch(profileUrl, { Accept: "text/html" });
       if (!res.ok) {
-        res.text?.().catch(() => {});
+        res.text?.().catch((e) => console.warn("[bundestagApi] non-fatal error:", e?.message || e));
         return null;
       }
       return await res.text();

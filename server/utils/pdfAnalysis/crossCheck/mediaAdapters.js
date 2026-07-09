@@ -113,7 +113,7 @@ async function downloadVideo(url) {
     throw err;
   } finally {
     clearTimeout(timer);
-    reader.cancel().catch(() => {});
+    reader.cancel().catch((e) => console.warn("[mediaAdapters] non-fatal error:", e?.message || e));
     if (!streamEnded) stream.destroy();
   }
   return { file: tmpFile, dir: tmpDir };

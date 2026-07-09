@@ -49,7 +49,7 @@ async function withCache(key, fn, ttl = DEFAULT_TTL_MS) {
   if (stale !== null) {
     fn()
       .then((val) => setCached(key, val))
-      .catch(() => {});
+      .catch((e) => console.warn("[cache] non-fatal error:", e?.message || e));
     return stale;
   }
 

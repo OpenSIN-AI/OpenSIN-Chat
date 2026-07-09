@@ -96,7 +96,7 @@ beforeAll(async () => {
 afterAll(async () => {
   const { Workspace } = await vi.importActual("../server/models/workspace");
   const { EmbedConfig } = await vi.importActual("../server/models/embedConfig");
-  await EmbedConfig.delete({}).catch(() => {});
+  await EmbedConfig.delete({}).catch((e) => console.warn("[embedFunctionality.test] non-fatal error:", e?.message || e));
   if (testWorkspace) await Workspace.delete({ id: testWorkspace.id });
 });
 

@@ -107,7 +107,7 @@ class AbgeordnetenwatchApi {
     const res = await this.#fetch(url);
     if (!res.ok) {
       this.log(`HTTP ${res.status} for ${url}`);
-      await res.text?.().catch(() => {});
+      await res.text?.().catch((e) => console.warn("[abgeordnetenwatchApi] non-fatal error:", e?.message || e));
       return null;
     }
     return res.json();
