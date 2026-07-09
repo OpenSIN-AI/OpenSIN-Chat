@@ -100,12 +100,17 @@ export function EmbeddingProgressProvider({ children }: any) {
       switch (data.type) {
         case "batch_starting": {
           const initial = Object.fromEntries(
-            (data.filenames || []).map((name: string) => [name, { status: "pending" }]),
+            (data.filenames || []).map((name: string) => [
+              name,
+              { status: "pending" },
+            ]),
           );
-          setEmbeddingProgressMap((prev: Record<string, Record<string, any>>) => ({
-            ...prev,
-            [slug]: { ...initial, ...(prev[slug] ?? {}) },
-          }));
+          setEmbeddingProgressMap(
+            (prev: Record<string, Record<string, any>>) => ({
+              ...prev,
+              [slug]: { ...initial, ...(prev[slug] ?? {}) },
+            }),
+          );
           break;
         }
 
@@ -137,45 +142,54 @@ export function EmbeddingProgressProvider({ children }: any) {
           break;
 
         case "file_removed":
-          setEmbeddingProgressMap((prev: Record<string, Record<string, any>>) => {
-            const slugMap = { ...(prev[slug] ?? {}) };
-            delete slugMap[data.filename];
-            if (Object.keys(slugMap).length === 0) {
-              const { [slug]: _, ...rest } = prev;
-              return rest;
-            }
-            return { ...prev, [slug]: slugMap };
-          });
+          setEmbeddingProgressMap(
+            (prev: Record<string, Record<string, any>>) => {
+              const slugMap = { ...(prev[slug] ?? {}) };
+              delete slugMap[data.filename];
+              if (Object.keys(slugMap).length === 0) {
+                const { [slug]: _, ...rest } = prev;
+                return rest;
+              }
+              return { ...prev, [slug]: slugMap };
+            },
+          );
           break;
 
         case "all_complete":
           // If there was an error, mark all pending or embedding files as failed
           // because something went wrong and we don't know the status of the files
           if (data.error) {
-            setEmbeddingProgressMap((prev: Record<string, Record<string, any>>) => {
-              const slugMap: Record<string, any> = { ...(prev[slug] ?? {}) };
-              for (const [filename, info] of Object.entries(slugMap)) {
-                const fileInfo = info as { status: string; [key: string]: any };
-                if (
-                  fileInfo.status === "pending" ||
-                  fileInfo.status === "embedding"
-                ) {
-                  slugMap[filename] = {
-                    status: "failed",
-                    error: data.error,
+            setEmbeddingProgressMap(
+              (prev: Record<string, Record<string, any>>) => {
+                const slugMap: Record<string, any> = { ...(prev[slug] ?? {}) };
+                for (const [filename, info] of Object.entries(slugMap)) {
+                  const fileInfo = info as {
+                    status: string;
+                    [key: string]: any;
                   };
+                  if (
+                    fileInfo.status === "pending" ||
+                    fileInfo.status === "embedding"
+                  ) {
+                    slugMap[filename] = {
+                      status: "failed",
+                      error: data.error,
+                    };
+                  }
                 }
-              }
-              return { ...prev, [slug]: slugMap };
-            });
+                return { ...prev, [slug]: slugMap };
+              },
+            );
           }
           ctrl?.abort();
           delete abortControllersRef.current[slug];
           cleanupTimeoutsRef.current[slug] = setTimeout(() => {
-            setEmbeddingProgressMap((prev: Record<string, Record<string, any>>) => {
-              const { [slug]: _, ...rest } = prev;
-              return rest;
-            });
+            setEmbeddingProgressMap(
+              (prev: Record<string, Record<string, any>>) => {
+                const { [slug]: _, ...rest } = prev;
+                return rest;
+              },
+            );
             delete cleanupTimeoutsRef.current[slug];
           }, CLEANUP_DELAY_MS);
           break;

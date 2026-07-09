@@ -23,10 +23,13 @@ export interface ThoughtExpansionContextValue {
  * Context to persist thought expansion state across component transitions
  * (e.g., from PromptReply to HistoricalMessage)
  */
-const ThoughtExpansionContext = createContext<ThoughtExpansionContextValue | null>(null);
+const ThoughtExpansionContext =
+  createContext<ThoughtExpansionContextValue | null>(null);
 
 export function ThoughtExpansionProvider({ children }: any) {
-  const [expansionStates, setExpansionStates] = useState<Record<string, boolean>>({});
+  const [expansionStates, setExpansionStates] = useState<
+    Record<string, boolean>
+  >({});
 
   const getExpanded = useCallback(
     (messageId: string | number) => {
@@ -36,13 +39,16 @@ export function ThoughtExpansionProvider({ children }: any) {
     [expansionStates],
   );
 
-  const setExpanded = useCallback((messageId: string | number, expanded: boolean) => {
-    if (!messageId) return;
-    setExpansionStates((prev) => ({
-      ...prev,
-      [messageId]: expanded,
-    }));
-  }, []);
+  const setExpanded = useCallback(
+    (messageId: string | number, expanded: boolean) => {
+      if (!messageId) return;
+      setExpansionStates((prev) => ({
+        ...prev,
+        [messageId]: expanded,
+      }));
+    },
+    [],
+  );
 
   return (
     <ThoughtExpansionContext.Provider value={{ getExpanded, setExpanded }}>

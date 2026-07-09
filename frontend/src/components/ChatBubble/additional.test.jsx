@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 vi.mock("react-i18next", async () => {
   const { createI18nMock } = await import("@/test/i18nMock");
@@ -52,12 +52,18 @@ describe("ChatBubble additional tests", () => {
 
   it("has aria-label 'User message' for user type", () => {
     render(<ChatBubble message="test" type="user" />);
-    expect(screen.getByRole("article")).toHaveAttribute("aria-label", "User message");
+    expect(screen.getByRole("article")).toHaveAttribute(
+      "aria-label",
+      "User message",
+    );
   });
 
   it("has aria-label 'Assistant message' for assistant type", () => {
     render(<ChatBubble message="test" type="assistant" />);
-    expect(screen.getByRole("article")).toHaveAttribute("aria-label", "Assistant message");
+    expect(screen.getByRole("article")).toHaveAttribute(
+      "aria-label",
+      "Assistant message",
+    );
   });
 
   it("renders markdown with special characters", () => {

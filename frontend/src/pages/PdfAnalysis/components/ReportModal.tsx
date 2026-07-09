@@ -130,7 +130,13 @@ export function ReportModal({ job, onClose }: ReportModalProps) {
 
           <button
             type="button"
-            onClick={() => downloadMarkdown(job.documentName, reportMd, t("pdfAnalysis.panel.reportSuffix"))}
+            onClick={() =>
+              downloadMarkdown(
+                job.documentName,
+                reportMd,
+                t("pdfAnalysis.panel.reportSuffix"),
+              )
+            }
             disabled={!result?.report}
             className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:bg-theme-bg-secondary transition-colors disabled:opacity-50"
             title={t("pdfAnalysis.panel.downloadMd")}
@@ -141,7 +147,13 @@ export function ReportModal({ job, onClose }: ReportModalProps) {
 
           <button
             type="button"
-            onClick={() => downloadDocx(job.documentName, reportMd, t("pdfAnalysis.panel.reportSuffix")).catch(() => {})}
+            onClick={() =>
+              downloadDocx(
+                job.documentName,
+                reportMd,
+                t("pdfAnalysis.panel.reportSuffix"),
+              ).catch(() => {})
+            }
             disabled={!result?.report}
             className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:bg-theme-bg-secondary transition-colors disabled:opacity-50"
             title={t("pdfAnalysis.panel.downloadDocx")}
@@ -152,7 +164,13 @@ export function ReportModal({ job, onClose }: ReportModalProps) {
 
           <button
             type="button"
-            onClick={() => downloadPdf(job.documentName, reportMd, t("pdfAnalysis.panel.reportSuffix"))}
+            onClick={() =>
+              downloadPdf(
+                job.documentName,
+                reportMd,
+                t("pdfAnalysis.panel.reportSuffix"),
+              )
+            }
             disabled={!result?.report}
             className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:bg-theme-bg-secondary transition-colors disabled:opacity-50"
             title={t("pdfAnalysis.panel.downloadPdf")}
@@ -188,7 +206,11 @@ export function ReportModal({ job, onClose }: ReportModalProps) {
                       type="button"
                       onClick={() => scrollToHeading(h.id)}
                       className={`w-full text-left text-xs text-theme-text-secondary hover:text-theme-text-primary leading-snug py-0.5 ${
-                        h.level === 1 ? "font-semibold" : h.level === 2 ? "pl-3" : "pl-6 opacity-80"
+                        h.level === 1
+                          ? "font-semibold"
+                          : h.level === 2
+                            ? "pl-3"
+                            : "pl-6 opacity-80"
                       }`}
                     >
                       {h.text}
@@ -213,7 +235,9 @@ export function ReportModal({ job, onClose }: ReportModalProps) {
                     factsStored: result.factsStored,
                   })}
                   {result.chunkErrors > 0 &&
-                    t("pdfAnalysis.panel.chunkErrors", { count: result.chunkErrors })}
+                    t("pdfAnalysis.panel.chunkErrors", {
+                      count: result.chunkErrors,
+                    })}
                 </p>
                 <Suspense fallback={<PreLoader />}>
                   <ReactMarkdown
@@ -222,72 +246,122 @@ export function ReportModal({ job, onClose }: ReportModalProps) {
                       {
                         h1: ({ children, ...p }: any) => {
                           const text = nodeToText(children);
-                          const id = text.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-");
+                          const id = text
+                            .toLowerCase()
+                            .replace(/[^\w\s-]/g, "")
+                            .replace(/\s+/g, "-");
                           return (
-                            <h1 data-heading-id={id} className="text-lg font-bold text-theme-text-primary mt-6 mb-3 leading-snug" {...p}>
+                            <h1
+                              data-heading-id={id}
+                              className="text-lg font-bold text-theme-text-primary mt-6 mb-3 leading-snug"
+                              {...p}
+                            >
                               {children}
                             </h1>
                           );
                         },
                         h2: ({ children, ...p }: any) => {
                           const text = nodeToText(children);
-                          const id = text.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-");
+                          const id = text
+                            .toLowerCase()
+                            .replace(/[^\w\s-]/g, "")
+                            .replace(/\s+/g, "-");
                           return (
-                            <h2 data-heading-id={id} className="text-base font-semibold text-theme-text-primary mt-5 mb-2 leading-snug" {...p}>
+                            <h2
+                              data-heading-id={id}
+                              className="text-base font-semibold text-theme-text-primary mt-5 mb-2 leading-snug"
+                              {...p}
+                            >
                               {children}
                             </h2>
                           );
                         },
                         h3: ({ children, ...p }: any) => {
                           const text = nodeToText(children);
-                          const id = text.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-");
+                          const id = text
+                            .toLowerCase()
+                            .replace(/[^\w\s-]/g, "")
+                            .replace(/\s+/g, "-");
                           return (
-                            <h3 data-heading-id={id} className="text-sm font-semibold text-theme-text-primary mt-4 mb-1.5" {...p}>
+                            <h3
+                              data-heading-id={id}
+                              className="text-sm font-semibold text-theme-text-primary mt-4 mb-1.5"
+                              {...p}
+                            >
                               {children}
                             </h3>
                           );
                         },
                         p: ({ children }: any) => (
-                          <p className="text-sm text-theme-text-primary leading-relaxed mb-3">{children}</p>
+                          <p className="text-sm text-theme-text-primary leading-relaxed mb-3">
+                            {children}
+                          </p>
                         ),
                         strong: ({ children }: any) => (
-                          <strong className="font-semibold text-theme-text-primary">{children}</strong>
+                          <strong className="font-semibold text-theme-text-primary">
+                            {children}
+                          </strong>
                         ),
                         em: ({ children }: any) => (
-                          <em className="italic text-theme-text-secondary">{children}</em>
+                          <em className="italic text-theme-text-secondary">
+                            {children}
+                          </em>
                         ),
                         ul: ({ children }: any) => (
-                          <ul className="list-disc list-inside text-sm text-theme-text-primary mb-3 flex flex-col gap-1 pl-2">{children}</ul>
+                          <ul className="list-disc list-inside text-sm text-theme-text-primary mb-3 flex flex-col gap-1 pl-2">
+                            {children}
+                          </ul>
                         ),
                         ol: ({ children }: any) => (
-                          <ol className="list-decimal list-inside text-sm text-theme-text-primary mb-3 flex flex-col gap-1 pl-2">{children}</ol>
+                          <ol className="list-decimal list-inside text-sm text-theme-text-primary mb-3 flex flex-col gap-1 pl-2">
+                            {children}
+                          </ol>
                         ),
-                        li: ({ children }: any) => <li className="leading-relaxed">{children}</li>,
-                        hr: () => <hr className="border-theme-sidebar-border my-4" />,
+                        li: ({ children }: any) => (
+                          <li className="leading-relaxed">{children}</li>
+                        ),
+                        hr: () => (
+                          <hr className="border-theme-sidebar-border my-4" />
+                        ),
                         blockquote: ({ children }: any) => (
                           <blockquote className="border-l-2 border-theme-sidebar-border pl-3 text-sm text-theme-text-secondary italic">
                             {children}
                           </blockquote>
                         ),
                         pre: ({ children }: any) => (
-                          <pre className="bg-theme-bg-container rounded-md p-3 text-xs font-mono text-theme-text-primary overflow-x-auto">{children}</pre>
+                          <pre className="bg-theme-bg-container rounded-md p-3 text-xs font-mono text-theme-text-primary overflow-x-auto">
+                            {children}
+                          </pre>
                         ),
                         code: ({ className, children, ...props }: any) =>
                           className ? (
-                            <code className={className} {...props}>{children}</code>
+                            <code className={className} {...props}>
+                              {children}
+                            </code>
                           ) : (
-                            <code className="px-1 py-0.5 rounded bg-theme-bg-container text-xs font-mono text-theme-text-primary" {...props}>{children}</code>
+                            <code
+                              className="px-1 py-0.5 rounded bg-theme-bg-container text-xs font-mono text-theme-text-primary"
+                              {...props}
+                            >
+                              {children}
+                            </code>
                           ),
                         table: ({ children }: any) => (
                           <div className="overflow-x-auto my-3">
-                            <table className="text-sm w-full border-collapse">{children}</table>
+                            <table className="text-sm w-full border-collapse">
+                              {children}
+                            </table>
                           </div>
                         ),
                         th: ({ children }: any) => (
-                          <th className="text-left text-xs font-semibold text-theme-text-primary border border-theme-sidebar-border px-2 py-1">{children}</th>
+                          <th className="text-left text-xs font-semibold text-theme-text-primary border border-theme-sidebar-border px-2 py-1">
+                            {children}
+                          </th>
                         ),
                         td: ({ children }: any) => (
-                          <td className="text-xs text-theme-text-primary border border-theme-sidebar-border px-2 py-1">{children}</td>
+                          <td className="text-xs text-theme-text-primary border border-theme-sidebar-border px-2 py-1">
+                            {children}
+                          </td>
                         ),
                       } as any
                     }

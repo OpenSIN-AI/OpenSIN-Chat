@@ -23,6 +23,7 @@ let redisClient = null;
 let redisSet = null;
 let redisGet = null;
 
+
 if (CSRF_BACKEND === "redis") {
   try {
     const IORedis = require("ioredis");
@@ -41,6 +42,7 @@ if (CSRF_BACKEND === "redis") {
     redisGet = async function (key) {
       return await redisClient.get(key);
     };
+
   } catch (err) {
     consoleLogger.warn(
       `[csrfProtection] CSRF_BACKEND=redis requested but ioredis not installed: ${err.message}. Falling back to in-memory.`,
@@ -48,6 +50,7 @@ if (CSRF_BACKEND === "redis") {
     redisClient = null;
     redisSet = null;
     redisGet = null;
+
   }
 }
 

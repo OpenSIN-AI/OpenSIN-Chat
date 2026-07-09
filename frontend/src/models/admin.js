@@ -37,7 +37,7 @@ const Admin = {
       });
   },
   /** @param {object} data
- * @returns {Promise<{user: object|null, error: string|null}>} */
+   * @returns {Promise<{user: object|null, error: string|null}>} */
   newUser: async (data) => {
     return await fetch(`${API_BASE}/admin/users/new`, {
       method: "POST",
@@ -48,8 +48,8 @@ const Admin = {
       .catch((e) => ({ user: null, error: e.message }));
   },
   /** @param {string} userId
- * @param {object} data
- * @returns {Promise<{success: boolean, error: string|null}>} */
+   * @param {object} data
+   * @returns {Promise<{success: boolean, error: string|null}>} */
   updateUser: async (userId, data) => {
     return await fetch(`${API_BASE}/admin/user/${userId}`, {
       method: "POST",
@@ -60,7 +60,7 @@ const Admin = {
       .catch((e) => ({ success: false, error: e.message }));
   },
   /** @param {string} userId
- * @returns {Promise<{success: boolean, error: string|null}>} */
+   * @returns {Promise<{success: boolean, error: string|null}>} */
   deleteUser: async (userId) => {
     return await fetch(`${API_BASE}/admin/user/${userId}`, {
       method: "DELETE",
@@ -85,7 +85,7 @@ const Admin = {
       });
   },
   /** @param {{role?: string|null, workspaceIds?: Array<string>|null}} params
- * @returns {Promise<{invite: object|null, error: string|null}>} */
+   * @returns {Promise<{invite: object|null, error: string|null}>} */
   newInvite: async ({ role = null, workspaceIds = null }) => {
     return await fetch(`${API_BASE}/admin/invite/new`, {
       method: "POST",
@@ -99,7 +99,7 @@ const Admin = {
       .catch((e) => ({ invite: null, error: e.message }));
   },
   /** @param {string} inviteId
- * @returns {Promise<{success: boolean, error: string|null}>} */
+   * @returns {Promise<{success: boolean, error: string|null}>} */
   disableInvite: async (inviteId) => {
     return await fetch(`${API_BASE}/admin/invite/${inviteId}`, {
       method: "DELETE",
@@ -124,7 +124,7 @@ const Admin = {
       });
   },
   /** @param {string} workspaceId
- * @returns {Promise<Array>} */
+   * @returns {Promise<Array>} */
   workspaceUsers: async (workspaceId) => {
     return await fetch(`${API_BASE}/admin/workspaces/${workspaceId}/users`, {
       method: "GET",
@@ -138,7 +138,7 @@ const Admin = {
       });
   },
   /** @param {string} name
- * @returns {Promise<{workspace: object|null, error: string|null}>} */
+   * @returns {Promise<{workspace: object|null, error: string|null}>} */
   newWorkspace: async (name) => {
     return await fetch(`${API_BASE}/admin/workspaces/new`, {
       method: "POST",
@@ -151,8 +151,8 @@ const Admin = {
       .catch((e) => ({ workspace: null, error: e.message }));
   },
   /** @param {string} workspaceId
- * @param {string[]} [userIds=[]]
- * @returns {Promise<{success: boolean, error: string|null}>} */
+   * @param {string[]} [userIds=[]]
+   * @returns {Promise<{success: boolean, error: string|null}>} */
   updateUsersInWorkspace: async (workspaceId, userIds = []) => {
     return await fetch(
       `${API_BASE}/admin/workspaces/${workspaceId}/update-users`,
@@ -166,7 +166,7 @@ const Admin = {
       .catch((e) => ({ success: false, error: e.message }));
   },
   /** @param {string} workspaceId
- * @returns {Promise<{success: boolean, error: string|null}>} */
+   * @returns {Promise<{success: boolean, error: string|null}>} */
   deleteWorkspace: async (workspaceId) => {
     return await fetch(`${API_BASE}/admin/workspaces/${workspaceId}`, {
       method: "DELETE",
@@ -183,7 +183,7 @@ const Admin = {
    * @returns {Promise<{settings: Object, error: string}>} - System preferences object
    */
   /** @param {string[]} [labels=[]]
- * @returns {Promise<object|null>} */
+   * @returns {Promise<object|null>} */
   systemPreferencesByFields: async (labels = []) => {
     return await fetch(
       `${API_BASE}/admin/system-preferences-for?labels=${labels.join(",")}`,
@@ -199,7 +199,7 @@ const Admin = {
       });
   },
   /** @param {object} [updates={}]
- * @returns {Promise<{success: boolean, error: string|null}>} */
+   * @returns {Promise<{success: boolean, error: string|null}>} */
   updateSystemPreferences: async (updates = {}) => {
     return await fetch(`${API_BASE}/admin/system-preferences`, {
       method: "POST",
@@ -221,7 +221,7 @@ const Admin = {
       .catch((e) => ({ apiKeys: [], error: e.message }));
   },
   /** @param {object} [data={}]
- * @returns {Promise<{apiKey: object|null, error: string|null}>} */
+   * @returns {Promise<{apiKey: object|null, error: string|null}>} */
   generateApiKey: async function (data = {}) {
     return fetch(`${API_BASE}/admin/generate-api-key`, {
       method: "POST",
@@ -232,7 +232,7 @@ const Admin = {
       .catch((e) => ({ apiKey: null, error: e.message }));
   },
   /** @param {string} [apiKeyId=""]
- * @returns {Promise<boolean>} */
+   * @returns {Promise<boolean>} */
   deleteApiKey: async function (apiKeyId = "") {
     return fetch(`${API_BASE}/admin/delete-api-key/${apiKeyId}`, {
       method: "DELETE",

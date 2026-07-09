@@ -332,6 +332,16 @@ const router = createBrowserRouter([
         },
       },
       {
+        path: "/settings/transformations",
+        lazy: async () => {
+          const { default: AdminTransformations } =
+            await import("@/pages/Admin/Transformations");
+          return {
+            element: <AdminRoute Component={AdminTransformations} />,
+          };
+        },
+      },
+      {
         path: "/settings/politician-sync",
         lazy: async () => {
           const { default: PoliticianSync } =

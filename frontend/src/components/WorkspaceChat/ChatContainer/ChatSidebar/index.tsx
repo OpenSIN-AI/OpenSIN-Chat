@@ -44,8 +44,12 @@ export interface ChatSidebarLogsContextValue {
   clearConsoleLogs: () => void;
 }
 
-const ChatSidebarContext = createContext<ChatSidebarContextValue | undefined>(undefined);
-const ChatSidebarLogsContext = createContext<ChatSidebarLogsContextValue | undefined>(undefined);
+const ChatSidebarContext = createContext<ChatSidebarContextValue | undefined>(
+  undefined,
+);
+const ChatSidebarLogsContext = createContext<
+  ChatSidebarLogsContextValue | undefined
+>(undefined);
 
 const SOURCE_FILTERS = {
   all: "all",
@@ -225,7 +229,8 @@ export function useConsoleSidebar() {
       "useConsoleSidebar must be used within ChatSidebarProvider",
     );
   const { activeSidebar, toggleSidebar, closeSidebar } = ctx;
-  const { consoleLogs, clearConsoleLogs } = logsCtx as ChatSidebarLogsContextValue;
+  const { consoleLogs, clearConsoleLogs } =
+    logsCtx as ChatSidebarLogsContextValue;
   return {
     sidebarOpen: activeSidebar === "console",
     toggleConsole: () => toggleSidebar("console"),

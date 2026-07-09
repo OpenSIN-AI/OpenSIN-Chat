@@ -1,5 +1,11 @@
 // SPDX-License-Identifier: MIT
-import React, { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, {
+  memo,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/csr/ArrowUpRight";
 import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
 import { CaretUpDown } from "@phosphor-icons/react/dist/csr/CaretUpDown";
@@ -99,7 +105,6 @@ function ThemeSegment() {
             <button
               key={key}
               type="button"
-              aria-label={key}
               onClick={() => setTheme(key)}
               aria-label={label}
               aria-pressed={active}
@@ -150,11 +155,7 @@ function LanguageRow() {
 
 type PopupPosition = { left: number; bottom: number; width: number };
 
-function AccountMenu({
-  compact = false,
-}: {
-  compact?: boolean;
-}) {
+function AccountMenu({ compact = false }: { compact?: boolean }) {
   const { t } = useTranslation();
   const { user } = useUser();
   const { pfp } = usePfp();
@@ -235,13 +236,13 @@ function AccountMenu({
         ref={triggerRef}
         type="button"
         onClick={() => setOpen((v) => !v)}
-        aria-label={t("common.account", "Account")}
+        aria-label={
+          compact ? t("common.profile") : t("common.account", "Account")
+        }
         aria-expanded={open}
         aria-haspopup="menu"
-        aria-expanded={open}
         data-tooltip-id={compact ? "lsib-profile" : undefined}
         data-tooltip-content={compact ? t("common.profile") : undefined}
-        aria-label={compact ? t("common.profile") : undefined}
         className={
           compact
             ? "flex items-center justify-center w-9 h-9 rounded-full border border-white/20 light:border-slate-400 cursor-pointer transition-all bg-theme-action-menu-bg hover:bg-theme-action-menu-item-hover text-theme-text-primary shadow-sm"

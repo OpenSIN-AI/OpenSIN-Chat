@@ -57,7 +57,7 @@ const express = require("express");
 const http = require("node:http");
 const WebSocket = require("ws");
 const expressWs = require("@mintplex-labs/express-ws").default;
-const { agentWebsocket } = require("../../endpoints/agentWebsocket");
+const { agentWebsocket, _resetForTest } = require("../../endpoints/agentWebsocket");
 const {
   WorkspaceAgentInvocation,
 } = require("../../models/workspaceAgentInvocation");
@@ -101,6 +101,9 @@ describe("agentWebsocket — error paths", () => {
 
   beforeEach(async () => {
     jest.clearAllMocks();
+    // Reset module-level connection counter so the previous test's sockets
+    // don't bleed into this test and cause spurious 1013 over-capacity rejections.
+    _resetForTest();
     const app = express();
     // expressWs must be bound to the *same* http.Server instance we listen
     // on — passing no server makes it create an internal one that never

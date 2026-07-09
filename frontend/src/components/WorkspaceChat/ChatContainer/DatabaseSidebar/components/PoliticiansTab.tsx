@@ -44,7 +44,10 @@ export function PoliticiansTab({
       {loading && politicians.length === 0 && (
         <div className="flex flex-col gap-2">
           {Array.from({ length: 5 }).map((_, i) => (
-            <div key={i} className="flex items-center gap-3 p-2.5 rounded-xl bg-zinc-800 light:bg-slate-100 animate-pulse">
+            <div
+              key={i}
+              className="flex items-center gap-3 p-2.5 rounded-xl bg-zinc-800 light:bg-slate-100 animate-pulse"
+            >
               <div className="w-8 h-8 rounded-full bg-zinc-700 light:bg-slate-200 flex-shrink-0" />
               <div className="flex-1 space-y-1.5">
                 <div className="h-3 w-28 rounded bg-zinc-700 light:bg-slate-200" />
@@ -57,7 +60,9 @@ export function PoliticiansTab({
 
       {error && (
         <div className="p-3 rounded-lg bg-red-950/40 border border-red-800/50 text-xs text-red-400 flex flex-col gap-2">
-          <span>{t("sidebar.database.error", "Fehler beim Laden")}: {error}</span>
+          <span>
+            {t("sidebar.database.error", "Fehler beim Laden")}: {error}
+          </span>
           <button
             onClick={onRefresh}
             type="button"
@@ -76,8 +81,14 @@ export function PoliticiansTab({
       )}
 
       {politicians.map((p) => {
-        const name = `${p.first_name || ""} ${p.last_name || ""}`.trim() || p.label || t("common.unknown", "—");
-        const constituency = p.constituency?.label || p.electoral_data?.constituency?.label || null;
+        const name =
+          `${p.first_name || ""} ${p.last_name || ""}`.trim() ||
+          p.label ||
+          t("common.unknown", "—");
+        const constituency =
+          p.constituency?.label ||
+          p.electoral_data?.constituency?.label ||
+          null;
         const profileUrl = p.abgeordnetenwatch_url || null;
         const isSelected = selected.has(p.id);
         const isAdding = adding.has(p.id);
@@ -94,12 +105,19 @@ export function PoliticiansTab({
           >
             <button
               type="button"
-              onClick={(e) => { e.stopPropagation(); onToggleSelected(p.id); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleSelected(p.id);
+              }}
               className="text-zinc-400 light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
               aria-label={t("sidebar.database.select", "Auswählen")}
             >
               {isSelected ? (
-                <CheckSquare size={16} weight="fill" className="text-blue-500" />
+                <CheckSquare
+                  size={16}
+                  weight="fill"
+                  className="text-blue-500"
+                />
               ) : (
                 <Square size={16} />
               )}
@@ -112,18 +130,33 @@ export function PoliticiansTab({
                 {name}
               </p>
               <p className="text-[11px] text-zinc-500 light:text-slate-400 truncate">
-                {[p.party?.label, p.state, constituency].filter(Boolean).join(separator)}
+                {[p.party?.label, p.state, constituency]
+                  .filter(Boolean)
+                  .join(separator)}
               </p>
             </div>
             <button
               type="button"
-              onClick={(e) => { e.stopPropagation(); onAddToWorkspace(p.id); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onAddToWorkspace(p.id);
+              }}
               disabled={isAdding || !workspaceSlug}
               className="text-zinc-500 hover:text-blue-400 disabled:opacity-40 transition-colors border-none bg-transparent cursor-pointer"
-              aria-label={t("sidebar.database.addToWorkspace", "Zur Quelle hinzufügen")}
-              title={t("sidebar.database.addToWorkspace", "Zur Quelle hinzufügen")}
+              aria-label={t(
+                "sidebar.database.addToWorkspace",
+                "Zur Quelle hinzufügen",
+              )}
+              title={t(
+                "sidebar.database.addToWorkspace",
+                "Zur Quelle hinzufügen",
+              )}
             >
-              <Plus size={16} weight={isAdding ? "bold" : "regular"} className={isAdding ? "animate-pulse" : ""} />
+              <Plus
+                size={16}
+                weight={isAdding ? "bold" : "regular"}
+                className={isAdding ? "animate-pulse" : ""}
+              />
             </button>
             {profileUrl && (
               <a
@@ -143,7 +176,10 @@ export function PoliticiansTab({
 
       <div className="mt-3 p-3 rounded-xl bg-zinc-800/50 light:bg-slate-100 border border-zinc-700 light:border-slate-200">
         <p className="text-[10px] text-zinc-500 light:text-slate-500 leading-relaxed">
-          {t("sidebar.database.hint", "Nutze @agent im Chat, um gezielt nach Politikern oder deren Reden zu recherchieren.")}
+          {t(
+            "sidebar.database.hint",
+            "Nutze @agent im Chat, um gezielt nach Politikern oder deren Reden zu recherchieren.",
+          )}
         </p>
       </div>
     </>

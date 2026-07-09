@@ -11,7 +11,11 @@ interface SidebarHeaderProps {
   onClose: () => void;
 }
 
-export function SidebarHeader({ loading, onRefresh, onClose }: SidebarHeaderProps) {
+export function SidebarHeader({
+  loading,
+  onRefresh,
+  onClose,
+}: SidebarHeaderProps) {
   const { t } = useTranslation();
 
   return (
@@ -27,7 +31,11 @@ export function SidebarHeader({ loading, onRefresh, onClose }: SidebarHeaderProp
         className="text-zinc-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer p-1"
         aria-label={t("common.refresh", "Aktualisieren")}
       >
-        <ArrowClockwise size={13} weight="bold" className={loading ? "animate-spin" : ""} />
+        <ArrowClockwise
+          size={13}
+          weight="bold"
+          className={loading ? "animate-spin" : ""}
+        />
       </button>
       <button
         onClick={onClose}

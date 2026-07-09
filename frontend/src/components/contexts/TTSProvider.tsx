@@ -11,7 +11,9 @@ export interface TTSProviderContextValue {
   loading: boolean;
 }
 
-const TTSProviderContext = createContext<TTSProviderContextValue | undefined>(undefined);
+const TTSProviderContext = createContext<TTSProviderContextValue | undefined>(
+  undefined,
+);
 
 /**
  * This component is used to provide the TTS provider context to the application.

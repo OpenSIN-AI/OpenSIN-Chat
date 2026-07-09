@@ -5,9 +5,13 @@ import React from "react";
 let docxMod = null;
 let jsPDFMod = null;
 const docxReady = () =>
-  docxMod ? Promise.resolve(docxMod) : import("docx").then((m) => (docxMod = m));
+  docxMod
+    ? Promise.resolve(docxMod)
+    : import("docx").then((m) => (docxMod = m));
 const jsPDFReady = () =>
-  jsPDFMod ? Promise.resolve(jsPDFMod) : import("jspdf").then((m) => (jsPDFMod = m.default ?? m));
+  jsPDFMod
+    ? Promise.resolve(jsPDFMod)
+    : import("jspdf").then((m) => (jsPDFMod = m.default ?? m));
 
 export function formatEta(seconds: number | null): string | null {
   if (seconds == null) return null;
@@ -66,7 +70,11 @@ export function extractHeadings(markdown = ""): Heading[] {
 /**
  * Download the report as plain Markdown (.md).
  */
-export function downloadMarkdown(filename: string, content: string, suffix: string) {
+export function downloadMarkdown(
+  filename: string,
+  content: string,
+  suffix: string,
+) {
   const blob = new Blob([content], { type: "text/markdown;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
@@ -80,8 +88,13 @@ export function downloadMarkdown(filename: string, content: string, suffix: stri
  * Download the report as a DOCX file using the `docx` library.
  * Converts basic Markdown headings and paragraphs — bold/italic are preserved.
  */
-export async function downloadDocx(filename: string, content: string, suffix: string) {
-  const { Document, Packer, Paragraph, TextRun, HeadingLevel } = await docxReady();
+export async function downloadDocx(
+  filename: string,
+  content: string,
+  suffix: string,
+) {
+  const { Document, Packer, Paragraph, TextRun, HeadingLevel } =
+    await docxReady();
   const lines = content.split("\n");
   const children = [];
 
@@ -94,11 +107,17 @@ export async function downloadDocx(filename: string, content: string, suffix: st
     const h2 = line.match(/^##\s+(.*)/);
     const h1 = line.match(/^#\s+(.*)/);
     if (h1) {
-      children.push(new Paragraph({ text: h1[1], heading: HeadingLevel.HEADING_1 }));
+      children.push(
+        new Paragraph({ text: h1[1], heading: HeadingLevel.HEADING_1 }),
+      );
     } else if (h2) {
-      children.push(new Paragraph({ text: h2[1], heading: HeadingLevel.HEADING_2 }));
+      children.push(
+        new Paragraph({ text: h2[1], heading: HeadingLevel.HEADING_2 }),
+      );
     } else if (h3) {
-      children.push(new Paragraph({ text: h3[1], heading: HeadingLevel.HEADING_3 }));
+      children.push(
+        new Paragraph({ text: h3[1], heading: HeadingLevel.HEADING_3 }),
+      );
     } else {
       // Inline bold: **text**
       const parts = line.split(/(\*\*[^*]+\*\*)/g);
@@ -124,7 +143,11 @@ export async function downloadDocx(filename: string, content: string, suffix: st
  * Download the report as a PDF using jsPDF.
  * Renders the text content line by line with basic heading detection.
  */
-export async function downloadPdf(filename: string, content: string, suffix: string) {
+export async function downloadPdf(
+  filename: string,
+  content: string,
+  suffix: string,
+) {
   const JsPDF = await jsPDFReady();
   const doc = new JsPDF({ unit: "mm", format: "a4" });
   const pageW = doc.internal.pageSize.getWidth();

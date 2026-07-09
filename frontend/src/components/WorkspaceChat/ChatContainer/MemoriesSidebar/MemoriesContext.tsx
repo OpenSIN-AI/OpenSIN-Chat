@@ -48,7 +48,10 @@ export interface MemoriesContextValue {
   closeModal: () => void;
   handleCreate: (content: string) => Promise<boolean>;
   handleDelete: (memoryId: string | number) => Promise<boolean>;
-  handleUpdate: (memoryId: string | number, content: string) => Promise<boolean>;
+  handleUpdate: (
+    memoryId: string | number,
+    content: string,
+  ) => Promise<boolean>;
   handlePromote: (memoryId: string | number) => Promise<boolean>;
   handleDemote: (memoryId: string | number) => Promise<boolean>;
 }

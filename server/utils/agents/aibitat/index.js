@@ -5,7 +5,6 @@
 // Execution methods: ./execution.js
 // Utility functions: ./utils.js
 
-/* eslint-disable unused-imports/no-unused-vars */
 const { EventEmitter } = require("events");
 const Providers = require("./providers/index.js");
 const { chatFlowMethods } = require("./chat-flow.js");

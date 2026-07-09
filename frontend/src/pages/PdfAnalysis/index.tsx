@@ -14,7 +14,11 @@ import { JobsPanel } from "./components/JobsPanel";
 import { FactsPanel } from "./components/FactsPanel";
 import { TabButton } from "./components/TabButton";
 
-export function PdfAnalysisPanel({ isSidebar = false }: { isSidebar?: boolean }) {
+export function PdfAnalysisPanel({
+  isSidebar = false,
+}: {
+  isSidebar?: boolean;
+}) {
   const { t } = useTranslation();
   const [tab, setTab] = useState("jobs");
   const [crossCheckFactIds, setCrossCheckFactIds] = useState<string[]>([]);
@@ -41,7 +45,10 @@ export function PdfAnalysisPanel({ isSidebar = false }: { isSidebar?: boolean })
           <TabButton active={tab === "facts"} onClick={() => setTab("facts")}>
             {t("pdfAnalysis.panel.tabFacts")}
           </TabButton>
-          <TabButton active={tab === "crosscheck"} onClick={() => setTab("crosscheck")}>
+          <TabButton
+            active={tab === "crosscheck"}
+            onClick={() => setTab("crosscheck")}
+          >
             {t("pdfAnalysis.panel.tabCrossCheck")}
           </TabButton>
           <TabButton active={tab === "corpus"} onClick={() => setTab("corpus")}>

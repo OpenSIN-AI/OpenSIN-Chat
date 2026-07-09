@@ -11,9 +11,7 @@ import { baseHeaders } from "@/utils/request";
 import { API_BASE } from "@/utils/constants";
 import showToast from "@/utils/toast";
 import ChatSidebar, { useFilesystemSidebar } from "../ChatSidebar";
-import {
-  getBreadcrumbs,
-} from "./helpers";
+import { getBreadcrumbs } from "./helpers";
 import { SidebarHeader } from "./components/SidebarHeader";
 import { SearchAndCreate } from "./components/SearchAndCreate";
 import { EmptyStates } from "./components/EmptyStates";
@@ -116,7 +114,11 @@ export default function FilesystemSidebar({ workspace = null }: any) {
       const files = Array.from(fileList);
       if (files.length === 0) return;
       setUploading(true);
-      setUploadProgress({ current: 0, total: files.length, name: files[0].name });
+      setUploadProgress({
+        current: 0,
+        total: files.length,
+        name: files[0].name,
+      });
       let successCount = 0;
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
@@ -132,15 +134,28 @@ export default function FilesystemSidebar({ workspace = null }: any) {
             successCount++;
           } else {
             const data = await res.json().catch(() => ({}));
-            showToast(`${file.name}: ${data?.error || t("sidebar.filesystem.uploadFailed")}`, "error");
+            showToast(
+              `${file.name}: ${data?.error || t("sidebar.filesystem.uploadFailed")}`,
+              "error",
+            );
           }
         } catch (e) {
-          showToast(`${file.name}: ${e?.message || t("sidebar.filesystem.uploadFailed")}`, "error");
+          showToast(
+            `${file.name}: ${e?.message || t("sidebar.filesystem.uploadFailed")}`,
+            "error",
+          );
         }
       }
-      setUploadProgress({ current: files.length, total: files.length, name: "" });
+      setUploadProgress({
+        current: files.length,
+        total: files.length,
+        name: "",
+      });
       if (successCount > 0) {
-        showToast(t("sidebar.filesystem.uploadSuccess", { count: successCount }), "success");
+        showToast(
+          t("sidebar.filesystem.uploadSuccess", { count: successCount }),
+          "success",
+        );
         browse(currentPath || "");
       }
       setUploading(false);
@@ -200,7 +215,10 @@ export default function FilesystemSidebar({ workspace = null }: any) {
     const fn = creatingType === "folder" ? createDirectory : createFile;
     try {
       await fn(newItemName.trim(), currentPath || "");
-      setItemActionMsg({ success: true, message: t("sidebar.filesystem.createSuccess") });
+      setItemActionMsg({
+        success: true,
+        message: t("sidebar.filesystem.createSuccess"),
+      });
       setCreatingType(null);
       setNewItemName("");
       browse(currentPath || "");
@@ -210,7 +228,15 @@ export default function FilesystemSidebar({ workspace = null }: any) {
         message: `${t("sidebar.filesystem.createFailed")}: ${err?.message ?? err}`,
       });
     }
-  }, [creatingType, createDirectory, createFile, newItemName, currentPath, browse, t]);
+  }, [
+    creatingType,
+    createDirectory,
+    createFile,
+    newItemName,
+    currentPath,
+    browse,
+    t,
+  ]);
 
   const handleDownload = useCallback(
     async (item) => {
@@ -239,25 +265,52 @@ export default function FilesystemSidebar({ workspace = null }: any) {
 
   const sysInfoRows = sysInfo
     ? [
-        { icon: Cpu, label: t("sidebar.filesystem.sysInfoPlatform", "Plattform"), value: `${sysInfo.platform} (${sysInfo.arch})` },
+        {
+          icon: Cpu,
+          label: t("sidebar.filesystem.sysInfoPlatform", "Plattform"),
+          value: `${sysInfo.platform} (${sysInfo.arch})`,
+        },
         { icon: Cpu, label: "Node.js", value: sysInfo.nodeVersion },
         {
           icon: HardDrive,
           label: t("sidebar.filesystem.sysInfoStorageFree", "Speicher frei"),
-          value: sysInfo.storage?.current != null ? `${sysInfo.storage.current} GB / ${sysInfo.storage.capacity} GB` : "—",
+          value:
+            sysInfo.storage?.current != null
+              ? `${sysInfo.storage.current} GB / ${sysInfo.storage.capacity} GB`
+              : "—",
         },
-        { icon: Cpu, label: t("sidebar.filesystem.sysInfoRamFree", "RAM frei"), value: `${sysInfo.freeMemMB} MB / ${sysInfo.totalMemMB} MB` },
-        { icon: FolderOpen, label: t("sidebar.filesystem.sysInfoStorage", "Storage"), value: sysInfo.uploadPath },
+        {
+          icon: Cpu,
+          label: t("sidebar.filesystem.sysInfoRamFree", "RAM frei"),
+          value: `${sysInfo.freeMemMB} MB / ${sysInfo.totalMemMB} MB`,
+        },
+        {
+          icon: FolderOpen,
+          label: t("sidebar.filesystem.sysInfoStorage", "Storage"),
+          value: sysInfo.uploadPath,
+        },
       ]
     : [];
 
   const folders = filteredItems.filter((item) => item.type === "directory");
   const allFiles = filteredItems.filter((item) => item.type === "file");
 
-  const REPORT_KEYWORDS = ["bericht", "report", "analyse", "analysis", "summary", "zusammenfassung", "pdf-report", "ki-bericht"];
+  const REPORT_KEYWORDS = [
+    "bericht",
+    "report",
+    "analyse",
+    "analysis",
+    "summary",
+    "zusammenfassung",
+    "pdf-report",
+    "ki-bericht",
+  ];
   const reportFiles = allFiles.filter((item) => {
     const nameLower = item.name.toLowerCase();
-    return REPORT_KEYWORDS.some((kw) => nameLower.includes(kw)) || (item.ext === ".pdf" && nameLower.includes("bericht"));
+    return (
+      REPORT_KEYWORDS.some((kw) => nameLower.includes(kw)) ||
+      (item.ext === ".pdf" && nameLower.includes("bericht"))
+    );
   });
   const uploadFiles = allFiles.filter((item) => !reportFiles.includes(item));
 
@@ -310,7 +363,11 @@ export default function FilesystemSidebar({ workspace = null }: any) {
         onDragOver={handleDragOver}
         onDrop={handleDrop}
       >
-        <Overlays isDragOver={isDragOver} uploading={uploading} uploadProgress={uploadProgress} />
+        <Overlays
+          isDragOver={isDragOver}
+          uploading={uploading}
+          uploadProgress={uploadProgress}
+        />
 
         <SidebarHeader
           fileCount={fileCount}
@@ -338,7 +395,10 @@ export default function FilesystemSidebar({ workspace = null }: any) {
           newItemName={newItemName}
           onNewItemNameChange={setNewItemName}
           onCreateItem={handleCreateItem}
-          onCancelCreate={() => { setCreatingType(null); setNewItemName(""); }}
+          onCancelCreate={() => {
+            setCreatingType(null);
+            setNewItemName("");
+          }}
           itemActionMsg={itemActionMsg}
           currentPath={currentPath}
           parentPath={parentPath}

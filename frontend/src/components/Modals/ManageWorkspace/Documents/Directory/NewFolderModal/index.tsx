@@ -74,7 +74,8 @@ export default function NewFolderModal({ closeModal, files, setFiles }: any) {
               >
                 {t("newFolderModal.folderNameLabel")}
               </label>
-              <input aria-label={t("common.folderName", "Folder name")}
+              <input
+                aria-label={t("common.folderName", "Folder name")}
                 name="folderName"
                 type="text"
                 className="border-none bg-theme-settings-input-bg w-full text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"

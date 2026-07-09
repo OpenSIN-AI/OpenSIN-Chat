@@ -286,6 +286,7 @@ describe("PasswordResetToken model (security-critical)", () => {
       prisma.password_reset_tokens.deleteMany.mockResolvedValue({ count: 1 });
       prisma.password_reset_tokens.findUnique.mockResolvedValue({
         user_id: 42,
+        expiresAt: new Date(Date.now() + 600_000), // 10 minutes in the future
       });
 
       const result = await PasswordResetToken.claim("valid-token");
@@ -295,6 +296,8 @@ describe("PasswordResetToken model (security-critical)", () => {
     });
 
     it("returns count=0 when token was already claimed (race condition)", async () => {
+      // Token has already been deleted by a concurrent request — findUnique returns null.
+      prisma.password_reset_tokens.findUnique.mockResolvedValue(null);
       prisma.password_reset_tokens.deleteMany.mockResolvedValue({ count: 0 });
 
       const result = await PasswordResetToken.claim("raced-token");

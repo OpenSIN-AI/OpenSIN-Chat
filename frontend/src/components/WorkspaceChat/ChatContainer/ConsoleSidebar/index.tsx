@@ -268,7 +268,11 @@ export default function ConsoleSidebar() {
               key={tab}
               type="button"
               role="tab"
-              aria-label={tab === "logs" ? t("console.tab_logs") : t("console.tab_terminal")}
+              aria-label={
+                tab === "logs"
+                  ? t("console.tab_logs")
+                  : t("console.tab_terminal")
+              }
               aria-selected={activeTab === tab}
               onClick={() => setActiveTab(tab)}
               className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium uppercase tracking-[1.2px] whitespace-nowrap transition-colors ${

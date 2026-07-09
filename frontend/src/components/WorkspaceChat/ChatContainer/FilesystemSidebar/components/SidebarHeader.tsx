@@ -6,8 +6,6 @@ import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { Info } from "@phosphor-icons/react/dist/csr/Info";
 import { ArrowClockwise } from "@phosphor-icons/react/dist/csr/ArrowClockwise";
 import { X } from "@phosphor-icons/react/dist/csr/X";
-import { Cpu } from "@phosphor-icons/react/dist/csr/Cpu";
-import { HardDrive } from "@phosphor-icons/react/dist/csr/HardDrive";
 import { useTranslation } from "react-i18next";
 
 interface SidebarHeaderProps {
@@ -45,7 +43,11 @@ export function SidebarHeader({
   return (
     <>
       <div className="flex items-center gap-2 px-4 pt-4 pb-3 shrink-0 border-b border-white/5 light:border-slate-200">
-        <FolderOpen size={18} weight="fill" className="text-zinc-300 light:text-slate-400 flex-shrink-0" />
+        <FolderOpen
+          size={18}
+          weight="fill"
+          className="text-zinc-300 light:text-slate-400 flex-shrink-0"
+        />
         <p className="flex-1 font-semibold text-sm text-theme-text-primary light:text-theme-text-primary">
           {t("sidebar.filesystem.title")}
         </p>
@@ -62,7 +64,9 @@ export function SidebarHeader({
           aria-label={t("sidebar.filesystem.upload")}
         >
           <Upload size={14} weight="bold" />
-          <span className="hidden lg:inline">{t("sidebar.filesystem.upload")}</span>
+          <span className="hidden lg:inline">
+            {t("sidebar.filesystem.upload")}
+          </span>
         </button>
         <button
           type="button"
@@ -87,7 +91,11 @@ export function SidebarHeader({
           className="text-zinc-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer p-1"
           aria-label={t("common.refresh")}
         >
-          <ArrowClockwise size={14} weight="bold" className={loading ? "animate-spin" : ""} />
+          <ArrowClockwise
+            size={14}
+            weight="bold"
+            className={loading ? "animate-spin" : ""}
+          />
         </button>
         <button
           type="button"
@@ -112,7 +120,10 @@ export function SidebarHeader({
           <div className="flex flex-col gap-2">
             {sysInfoRows.map(({ icon: Icon, label, value }) => (
               <div key={label} className="flex items-center gap-2">
-                <Icon size={12} className="text-zinc-500 light:text-slate-400 flex-shrink-0" />
+                <Icon
+                  size={12}
+                  className="text-zinc-500 light:text-slate-400 flex-shrink-0"
+                />
                 <span className="text-[10px] text-zinc-500 light:text-slate-400 uppercase tracking-widest flex-shrink-0">
                   {label}
                 </span>

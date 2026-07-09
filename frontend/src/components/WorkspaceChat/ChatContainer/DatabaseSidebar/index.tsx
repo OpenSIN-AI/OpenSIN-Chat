@@ -99,13 +99,18 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
       try {
         const result = await Politician.addToWorkspace(id, workspaceSlug);
         if (!result.success) {
-          setAddError(result.error || t("sidebar.database.addFailed", "Hinzufügen fehlgeschlagen"));
+          setAddError(
+            result.error ||
+              t("sidebar.database.addFailed", "Hinzufügen fehlgeschlagen"),
+          );
         } else {
           await mutateDocuments();
         }
       } catch (e) {
         setAddError(
-          e instanceof Error ? e.message : t("sidebar.database.addFailed", "Hinzufügen fehlgeschlagen"),
+          e instanceof Error
+            ? e.message
+            : t("sidebar.database.addFailed", "Hinzufügen fehlgeschlagen"),
         );
       } finally {
         setAdding((prev) => {
@@ -128,7 +133,10 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
       const result = await Politician.addToWorkspace(id, workspaceSlug);
       if (!result.success) {
         failed++;
-        setAddError(result.error || t("sidebar.database.addFailed", "Hinzufügen fehlgeschlagen"));
+        setAddError(
+          result.error ||
+            t("sidebar.database.addFailed", "Hinzufügen fehlgeschlagen"),
+        );
       }
     }
     if (failed === 0) {
@@ -138,14 +146,17 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
     setAdding(new Set());
   }, [workspaceSlug, selected, mutateDocuments, t]);
 
-  const allSelected = politicians.length > 0 && selected.size === politicians.length;
+  const allSelected =
+    politicians.length > 0 && selected.size === politicians.length;
 
   const searchSpeeches = useCallback(async () => {
     if (!speechQuery.trim()) return;
     setSpeechLoading(true);
     setSpeechError(null);
     try {
-      const { results, error } = await Politician.searchSpeeches(speechQuery, { limit: 10 });
+      const { results, error } = await Politician.searchSpeeches(speechQuery, {
+        limit: 10,
+      });
       if (error) setSpeechError(error);
       else setSpeechResults(results);
     } catch (e) {
@@ -160,7 +171,10 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
     setDipLoading(true);
     setDipError(null);
     try {
-      const { results, error } = await Politician.searchDrucksachen(dipQuery, { faction: "AfD", limit: 10 });
+      const { results, error } = await Politician.searchDrucksachen(dipQuery, {
+        faction: "AfD",
+        limit: 10,
+      });
       if (error) setDipError(error);
       else setDipResults(results);
     } catch (e) {
@@ -179,7 +193,11 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
         const data = await Politician.getById(id);
         if (data?.politician) setProfileData(data.politician);
       } catch (e) {
-        setProfileError(e instanceof Error ? e.message : t("common.loadError", "Fehler beim Laden"));
+        setProfileError(
+          e instanceof Error
+            ? e.message
+            : t("common.loadError", "Fehler beim Laden"),
+        );
       } finally {
         setProfileLoading(false);
       }
@@ -190,11 +208,18 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
   return (
     <ChatSidebar isOpen={sidebarOpen} minWidth={420}>
       <div className="w-full h-full bg-zinc-900 light:bg-white light:border-l light:border-slate-300 flex flex-col overflow-hidden">
-        <SidebarHeader loading={loading} onRefresh={refresh} onClose={closeSidebar} />
+        <SidebarHeader
+          loading={loading}
+          onRefresh={refresh}
+          onClose={closeSidebar}
+        />
 
         <Filters
           activeTab={activeTab}
-          onTabChange={(tab) => { setActiveTab(tab); setProfileData(null); }}
+          onTabChange={(tab) => {
+            setActiveTab(tab);
+            setProfileData(null);
+          }}
           query={query}
           onQueryChange={setQuery}
           party={party}
@@ -222,7 +247,11 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
               className="flex items-center gap-1.5 text-xs text-zinc-400 light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
             >
               {allSelected ? (
-                <CheckSquare size={14} weight="fill" className="text-blue-500" />
+                <CheckSquare
+                  size={14}
+                  weight="fill"
+                  className="text-blue-500"
+                />
               ) : (
                 <Square size={14} />
               )}
@@ -238,7 +267,9 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
                 className="flex items-center gap-1 text-xs font-medium text-white bg-blue-600 hover:bg-blue-500 disabled:opacity-50 rounded-md px-2 py-1 transition-colors"
               >
                 <Plus size={12} weight="bold" />
-                {t("sidebar.database.addSelected", "{{count}} hinzufügen", { count: selected.size })}
+                {t("sidebar.database.addSelected", "{{count}} hinzufügen", {
+                  count: selected.size,
+                })}
               </button>
             )}
           </div>
@@ -246,7 +277,10 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
 
         {!workspaceSlug && (
           <div className="px-4 py-2 text-xs text-amber-400 bg-amber-950/20 border-b border-amber-900/30">
-            {t("sidebar.database.noWorkspace", "Kein Workspace ausgewählt — Quellen-Hinzufügen deaktiviert.")}
+            {t(
+              "sidebar.database.noWorkspace",
+              "Kein Workspace ausgewählt — Quellen-Hinzufügen deaktiviert.",
+            )}
           </div>
         )}
 
@@ -261,7 +295,9 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
           {profileError && (
             <div className="p-3 rounded-lg bg-red-950/40 border border-red-800/50 text-xs text-red-400 flex items-center gap-2">
               <Warning size={16} weight="fill" className="flex-shrink-0" />
-              <span>{t("common.loadError", "Fehler beim Laden")}: {profileError}</span>
+              <span>
+                {t("common.loadError", "Fehler beim Laden")}: {profileError}
+              </span>
             </div>
           )}
           {profileData ? (

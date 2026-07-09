@@ -111,6 +111,19 @@ function workspaceDocumentEndpoints(app) {
           return;
         }
 
+        // Fire-and-forget: apply default transformations to newly uploaded doc.
+        const {
+          applyDefaultTransformations,
+        } = require("../../utils/transformations/autoApply");
+        applyDefaultTransformations({
+          workspace: currWorkspace,
+          docPaths: [document.location],
+        }).catch((e) =>
+          consoleLogger.error(
+            `[Transformations] auto-apply failed: ${e.message}`,
+          ),
+        );
+
         response.status(200).json({ success: true, error: null, document });
       } catch (e) {
         cleanupHotdirFile(request);

@@ -194,7 +194,9 @@ function ToolApprovalResponseOption({
         <input
           type="checkbox"
           checked={alwaysAllow}
-          aria-label={t("chat_window.agent_invocation.always_allow", { skillName })}
+          aria-label={t("chat_window.agent_invocation.always_allow", {
+            skillName,
+          })}
           onChange={(e) =>
             setAlwaysAllow((e.target as HTMLInputElement).checked)
           }

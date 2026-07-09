@@ -47,7 +47,8 @@ async function showErrorToast(message: string) {
     showToast(message, "error");
   } catch {
     // Toast module unavailable — fail silently in production.
-    if (isDev) console.warn("[logger] Could not load toast module for error reporting");
+    if (isDev)
+      console.warn("[logger] Could not load toast module for error reporting");
   }
 }
 

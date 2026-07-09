@@ -18,7 +18,13 @@ interface ProfileCardProps {
   onAddToWorkspace: (id: string) => void;
 }
 
-export function ProfileCard({ profileData, adding, workspaceSlug, onBack, onAddToWorkspace }: ProfileCardProps) {
+export function ProfileCard({
+  profileData,
+  adding,
+  workspaceSlug,
+  onBack,
+  onAddToWorkspace,
+}: ProfileCardProps) {
   const { t } = useTranslation();
 
   return (
@@ -50,22 +56,26 @@ export function ProfileCard({ profileData, adding, workspaceSlug, onBack, onAddT
       <div className="flex flex-col gap-1.5 text-xs text-zinc-300 light:text-slate-600">
         {profileData.party && (
           <div className="flex items-center gap-2">
-            <Briefcase size={12} className="text-zinc-500 flex-shrink-0" /> {profileData.party}
+            <Briefcase size={12} className="text-zinc-500 flex-shrink-0" />{" "}
+            {profileData.party}
           </div>
         )}
         {profileData.state && (
           <div className="flex items-center gap-2">
-            <MapPin size={12} className="text-zinc-500 flex-shrink-0" /> {profileData.state}
+            <MapPin size={12} className="text-zinc-500 flex-shrink-0" />{" "}
+            {profileData.state}
           </div>
         )}
         {profileData.electoralDistrict && (
           <div className="flex items-center gap-2">
-            <MapPin size={12} className="text-zinc-500 flex-shrink-0" /> {profileData.electoralDistrict}
+            <MapPin size={12} className="text-zinc-500 flex-shrink-0" />{" "}
+            {profileData.electoralDistrict}
           </div>
         )}
         {profileData.email && (
           <div className="flex items-center gap-2">
-            <EnvelopeSimple size={12} className="text-zinc-500 flex-shrink-0" /> {profileData.email}
+            <EnvelopeSimple size={12} className="text-zinc-500 flex-shrink-0" />{" "}
+            {profileData.email}
           </div>
         )}
         {profileData.birthDate && (
@@ -76,7 +86,8 @@ export function ProfileCard({ profileData, adding, workspaceSlug, onBack, onAddT
         )}
         {profileData.profession && (
           <div className="flex items-center gap-2">
-            <Briefcase size={12} className="text-zinc-500 flex-shrink-0" /> {profileData.profession}
+            <Briefcase size={12} className="text-zinc-500 flex-shrink-0" />{" "}
+            {profileData.profession}
           </div>
         )}
       </div>

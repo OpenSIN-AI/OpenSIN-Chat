@@ -357,7 +357,11 @@ function TruncatableContent({ children }: any) {
         <button
           type="button"
           onClick={() => setIsExpanded(!isExpanded)}
-          aria-label={isExpanded ? t("common.collapse", "Collapse") : t("common.expand", "Expand")}
+          aria-label={
+            isExpanded
+              ? t("common.collapse", "Collapse")
+              : t("common.expand", "Expand")
+          }
           aria-expanded={isExpanded}
           className="text-zinc-300 light:text-slate-700 hover:text-theme-text-primary light:hover:text-theme-text-primary text-xs font-medium leading-4 mt-2"
         >

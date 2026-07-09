@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 vi.mock("react-i18next", async () => {
   const { createI18nMock } = await import("@/test/i18nMock");
@@ -28,10 +28,7 @@ describe("ErrorBoundaryFallback additional tests", () => {
   it("renders with error that has no message", () => {
     render(
       <MemoryRouter>
-        <ErrorBoundaryFallback
-          error={{}}
-          resetErrorBoundary={vi.fn()}
-        />
+        <ErrorBoundaryFallback error={{}} resetErrorBoundary={vi.fn()} />
       </MemoryRouter>,
     );
     expect(screen.getByRole("alert")).toBeInTheDocument();
@@ -40,10 +37,7 @@ describe("ErrorBoundaryFallback additional tests", () => {
   it("renders with null error", () => {
     render(
       <MemoryRouter>
-        <ErrorBoundaryFallback
-          error={null}
-          resetErrorBoundary={vi.fn()}
-        />
+        <ErrorBoundaryFallback error={null} resetErrorBoundary={vi.fn()} />
       </MemoryRouter>,
     );
     expect(screen.getByRole("alert")).toBeInTheDocument();
@@ -52,10 +46,7 @@ describe("ErrorBoundaryFallback additional tests", () => {
   it("renders with undefined error", () => {
     render(
       <MemoryRouter>
-        <ErrorBoundaryFallback
-          error={undefined}
-          resetErrorBoundary={vi.fn()}
-        />
+        <ErrorBoundaryFallback error={undefined} resetErrorBoundary={vi.fn()} />
       </MemoryRouter>,
     );
     expect(screen.getByRole("alert")).toBeInTheDocument();

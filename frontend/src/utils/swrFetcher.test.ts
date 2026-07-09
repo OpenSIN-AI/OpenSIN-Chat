@@ -81,7 +81,9 @@ describe("swrFetcher", () => {
   });
 
   it("throws an error with status on non-ok response", async () => {
-    fetchWithTimeout.mockResolvedValue(jsonResponse({ error: "not found" }, 404));
+    fetchWithTimeout.mockResolvedValue(
+      jsonResponse({ error: "not found" }, 404),
+    );
     try {
       await swrFetcher("/items/999");
       expect.fail("Should have thrown");

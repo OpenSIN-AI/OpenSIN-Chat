@@ -38,8 +38,7 @@ export default function ModelTable({
   alias = "",
   models = [] as any[],
   downloadModel = null as
-    | ((modelId: string, fileSize: any, cb: (p: number) => void) => void)
-    | null,
+    ((modelId: string, fileSize: any, cb: (p: number) => void) => void) | null,
   uninstallModel = null as ((modelId: string) => void) | null,
   setActiveModel = (_id: string) => {},
   selectedModelId = "",
@@ -58,7 +57,11 @@ export default function ModelTable({
       <button
         type="button"
         onClick={() => setShowAll(!showAll)}
-        aria-label={showAll ? t("common.showLess", "Show less") : t("common.showAll", "Show all")}
+        aria-label={
+          showAll
+            ? t("common.showLess", "Show less")
+            : t("common.showAll", "Show all")
+        }
         className="border-none text-theme-text-secondary text-sm font-medium hover:underline flex items-center gap-x-[8px]"
       >
         {showAll ? (

@@ -57,7 +57,6 @@ export default function usePromptInputStorage({ promptInput, setPromptInput }) {
       setPromptInput(userPromptInputValue);
     }
     // Re-run when the storage key changes (thread/workspace switch).
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storageKey]);
 
   const debouncedWriteToStorage = useMemo(

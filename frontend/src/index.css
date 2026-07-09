@@ -425,6 +425,28 @@ body {
   }
 }
 
+/* ── Inline citations ──────────────────────────────────────────────────── */
+.inline-citation {
+  color: var(--color-theme-accent, #10b981);
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.inline-citation:hover {
+  color: var(--color-theme-accent-light, #34d399);
+  text-decoration: underline;
+}
+
+[data-theme="light"] .inline-citation {
+  color: #0079b0;
+}
+
+[data-theme="light"] .inline-citation:hover {
+  color: #009ee0;
+}
+
 /* ── Katex styles ──────────────────────────────────────────────────────── */
 /* Keep the katex import after Tailwind so it can override preflight */
 @import "katex/dist/katex.min.css";

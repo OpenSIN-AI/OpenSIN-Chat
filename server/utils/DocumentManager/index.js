@@ -27,6 +27,78 @@ class DocumentManager {
     });
   }
 
+  /**
+   * Returns documents whose contextMode is "summary" or "full".
+   * "full" documents are loaded exactly like pinned docs (full page content).
+   * "summary" documents are loaded by generating/retrieving an LLM summary and
+   * returning it as a lightweight page-content substitute.
+   *
+   * @returns {Promise<Array<{pageContent: string, token_count_estimate: number, filename: string, docId: string, contextMode: string}>>}
+   */
+  async contextModeDocs() {
+    if (!this.workspace) return [];
+    const { Document } = require("../../models/documents");
+    const { generateDocumentSummary } = require("../documentSummary");
+
+    const docs = await Document.where({
+      workspaceId: Number(this.workspace.id),
+      contextMode: { in: ["summary", "full"] },
+    });
+
+    if (docs.length === 0) return [];
+
+    const results = await Promise.all(
+      docs.map(async (doc) => {
+        if (doc.contextMode === "full") {
+          // Reuse the same loader as pinnedDocs.
+          const data = await this.loadPinnedDocument(doc.docpath).catch((e) => {
+            this.log(
+              `Failed to load full-context document ${doc.docpath}: ${e.message}`,
+            );
+            return null;
+          });
+          if (!data) return null;
+          return { ...data, docId: doc.docId, contextMode: "full" };
+        }
+
+        // contextMode === "summary"
+        const summary = await generateDocumentSummary({
+          document: doc,
+          workspace: this.workspace,
+        });
+        if (!summary) return null;
+
+        const tokenEstimate = Math.ceil(summary.length / 4);
+        return {
+          pageContent: `[Zusammenfassung von: ${doc.filename}]\n\n${summary}`,
+          token_count_estimate: tokenEstimate,
+          filename: doc.filename,
+          docId: doc.docId,
+          contextMode: "summary",
+        };
+      }),
+    );
+
+    let tokens = 0;
+    const contextDocs = [];
+    for (const data of results) {
+      if (!data) continue;
+      if (tokens >= this.maxTokens) {
+        this.log(
+          `Skipping context-mode document — token limit of ${this.maxTokens} already exceeded.`,
+        );
+        continue;
+      }
+      contextDocs.push(data);
+      tokens += data.token_count_estimate || 0;
+    }
+
+    this.log(
+      `Found ${contextDocs.length} context-mode sources — prepending with ~${tokens} tokens.`,
+    );
+    return contextDocs;
+  }
+
   async loadPinnedDocument(docPath) {
     const filePath = path.resolve(this.documentStoragePath, docPath);
     const data = JSON.parse(fs.readFileSync(filePath, { encoding: "utf-8" }));

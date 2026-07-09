@@ -21,9 +21,8 @@
  * use `.passthrough()` or `.strip()` explicitly when they care — the default
  * Zod behaviour (strip unknown keys) is safe and predictable.
  */
-
 /**
- * @param {z.ZodSchema} schema – a Zod schema describing the expected body.
+ * @param {import("zod").ZodSchema} schema – a Zod schema describing the expected body.
  * @param {object}      [opts]
  * @param {number}      [opts.status=400]  – HTTP status returned on validation failure.
  * @returns {import('express').RequestHandler}

@@ -98,6 +98,8 @@ describe("ModalWrapper", () => {
         <div data-testid="inline-content">Inline</div>
       </ModalWrapper>,
     );
-    expect(container.querySelector('[data-testid="inline-content"]')).toBeInTheDocument();
+    expect(
+      container.querySelector('[data-testid="inline-content"]'),
+    ).toBeInTheDocument();
   });
 });

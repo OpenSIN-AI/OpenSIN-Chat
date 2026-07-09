@@ -78,7 +78,8 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
                   >
                     {t("common.workspaces-name")}
                   </label>
-                  <input aria-label={t("new-workspace.name", "Workspace name")}
+                  <input
+                    aria-label={t("new-workspace.name", "Workspace name")}
                     name="name"
                     type="text"
                     id="name"

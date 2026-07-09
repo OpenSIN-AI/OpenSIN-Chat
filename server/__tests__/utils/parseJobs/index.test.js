@@ -18,6 +18,13 @@
 // Refactored in #374 to use the shared in-memory SQLite test helper instead
 // of a bespoke jest.mock("../../../utils/prisma") block.
 
+// Reset the module registry so this file always gets a fresh parseJobs
+// module — otherwise jest caches the module from another test suite that
+// already ran ensureTable() with the real (mocked) prisma, leaving the
+// _bootstrapped guard set to true and skipping table creation in our
+// in-memory DB.
+jest.resetModules();
+
 const {
   createInMemoryDb,
   closeInMemoryDb,
@@ -26,7 +33,7 @@ const {
 
 // Create the in-memory DB and install the prisma mock. The helper handles
 // the jest.doMock call so the code-under-test picks up this instance.
-const { prisma, __db } = createInMemoryDb("../../../utils/prisma");
+const { prisma, __db } = createInMemoryDb("utils/prisma");
 
 const { ParseJobs, JOB_STATUS, recoverStalledJobs } = require("../../../utils/parseJobs");
 

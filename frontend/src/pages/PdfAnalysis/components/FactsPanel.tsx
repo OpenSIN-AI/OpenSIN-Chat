@@ -131,15 +131,22 @@ export function FactsPanel({ onCrossCheck }: FactsPanelProps) {
                     page: fact.source.page,
                   })}
                   {fact.source.pageCorrected && (
-                    <span className="ml-1 text-blue-400" title={t("pdfAnalysis.panel.pageCorrectedAria")}>
+                    <span
+                      className="ml-1 text-blue-400"
+                      title={t("pdfAnalysis.panel.pageCorrectedAria")}
+                    >
                       {t("pdfAnalysis.panel.pageCorrected")}
                     </span>
                   )}
                   {fact.verified === true && (
-                    <span className="ml-1 text-green-400">{t("pdfAnalysis.panel.verified")}</span>
+                    <span className="ml-1 text-green-400">
+                      {t("pdfAnalysis.panel.verified")}
+                    </span>
                   )}
                   {fact.verified === false && (
-                    <span className="ml-1 text-yellow-400">{t("pdfAnalysis.panel.notVerified")}</span>
+                    <span className="ml-1 text-yellow-400">
+                      {t("pdfAnalysis.panel.notVerified")}
+                    </span>
                   )}
                 </span>
                 {fact.tags?.map((tag) => (
@@ -161,7 +168,9 @@ export function FactsPanel({ onCrossCheck }: FactsPanelProps) {
                     }`}
                     title={t("pdfAnalysis.panel.checkedAt", {
                       date: fact.crossCheck.checkedAt
-                        ? new Date(fact.crossCheck.checkedAt).toLocaleString(i18n.language)
+                        ? new Date(fact.crossCheck.checkedAt).toLocaleString(
+                            i18n.language,
+                          )
                         : "—",
                     })}
                   >
@@ -178,7 +187,9 @@ export function FactsPanel({ onCrossCheck }: FactsPanelProps) {
                     type="button"
                     onClick={() => onCrossCheck?.(fact.id)}
                     className="text-xs px-2 py-0.5 rounded-md text-theme-text-primary border border-theme-sidebar-border hover:opacity-80"
-                    aria-label={t("pdfAnalysis.panel.checkSourcesAria", { text: fact.detail.slice(0, 40) })}
+                    aria-label={t("pdfAnalysis.panel.checkSourcesAria", {
+                      text: fact.detail.slice(0, 40),
+                    })}
                   >
                     {t("pdfAnalysis.panel.checkSources")}
                   </button>
@@ -193,7 +204,9 @@ export function FactsPanel({ onCrossCheck }: FactsPanelProps) {
                       }
                     }}
                     className="text-xs px-2 py-0.5 rounded-md text-red-400 border border-red-400/40 hover:opacity-80 whitespace-nowrap"
-                    aria-label={t("pdfAnalysis.panel.deleteFactAria", { text: fact.detail.slice(0, 40) })}
+                    aria-label={t("pdfAnalysis.panel.deleteFactAria", {
+                      text: fact.detail.slice(0, 40),
+                    })}
                   >
                     {t("pdfAnalysis.panel.delete")}
                   </button>

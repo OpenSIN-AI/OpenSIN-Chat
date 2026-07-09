@@ -33,8 +33,8 @@ const Workspace = {
   maxContextWindowLimit: 0.8,
 
   /** @param {object} [data={}]
- * @returns {Promise<{workspace: object|null, message: string}>}
- */
+   * @returns {Promise<{workspace: object|null, message: string}>}
+   */
   new: async function (data = {}) {
     const { workspace, message } = await fetch(`${API_BASE}/workspace/new`, {
       method: "POST",
@@ -49,9 +49,9 @@ const Workspace = {
     return { workspace, message };
   },
   /** @param {string} slug
- * @param {object} [data={}]
- * @returns {Promise<{workspace: object|null, message: string}>}
- */
+   * @param {object} [data={}]
+   * @returns {Promise<{workspace: object|null, message: string}>}
+   */
   update: async function (slug, data = {}) {
     const { workspace, message } = await fetch(
       `${API_BASE}/workspace/${slug}/update`,
@@ -69,9 +69,9 @@ const Workspace = {
     return { workspace, message };
   },
   /** @param {string} slug
- * @param {object} [changes={}]
- * @returns {Promise<{success: boolean, error: string|null}>}
- */
+   * @param {object} [changes={}]
+   * @returns {Promise<{success: boolean, error: string|null}>}
+   */
   modifyEmbeddings: async function (slug, changes = {}) {
     const { workspace, message } = await fetch(
       `${API_BASE}/workspace/${slug}/update-embeddings`,
@@ -89,9 +89,9 @@ const Workspace = {
     return { workspace, message };
   },
   /** @param {string} slug
- * @param {string} filename
- * @returns {Promise<{success: boolean, error: string|null}>}
- */
+   * @param {string} filename
+   * @returns {Promise<{success: boolean, error: string|null}>}
+   */
   removeQueuedEmbedding: async function (slug, filename) {
     return fetch(`${API_BASE}/workspace/${slug}/embed-queue`, {
       method: "DELETE",
@@ -102,8 +102,8 @@ const Workspace = {
       .catch(() => ({ success: false }));
   },
   /** @param {string} slug
- * @returns {Promise<object>}
- */
+   * @returns {Promise<object>}
+   */
   chatHistory: async function (slug) {
     const history = await fetch(`${API_BASE}/workspace/${slug}/chats`, {
       method: "GET",
@@ -115,10 +115,10 @@ const Workspace = {
     return history;
   },
   /** @param {string} chatId
- * @param {string} slug
- * @param {string} feedback
- * @returns {Promise<{success: boolean}>}
- */
+   * @param {string} slug
+   * @param {string} feedback
+   * @returns {Promise<{success: boolean}>}
+   */
   updateChatFeedback: async function (chatId, slug, feedback) {
     const result = await fetch(
       `${API_BASE}/workspace/${slug}/chat-feedback/${chatId}`,
@@ -134,9 +134,9 @@ const Workspace = {
   },
 
   /** @param {string} [slug=""]
- * @param {string[]} [chatIds=[]]
- * @returns {Promise<{success: boolean, error: string|null}>}
- */
+   * @param {string[]} [chatIds=[]]
+   * @returns {Promise<{success: boolean, error: string|null}>}
+   */
   deleteChats: async function (slug = "", chatIds = []) {
     return await fetch(`${API_BASE}/workspace/${slug}/delete-chats`, {
       method: "DELETE",
@@ -153,10 +153,10 @@ const Workspace = {
       });
   },
   /** @param {string} [slug=""]
- * @param {string} [threadSlug=""]
- * @param {string|number} startingId
- * @returns {Promise<{success: boolean, error: string|null}>}
- */
+   * @param {string} [threadSlug=""]
+   * @param {string|number} startingId
+   * @returns {Promise<{success: boolean, error: string|null}>}
+   */
   deleteEditedChats: async function (slug = "", threadSlug = "", startingId) {
     if (!!threadSlug)
       return this.threads._deleteEditedChats(slug, threadSlug, startingId);
@@ -210,11 +210,11 @@ const Workspace = {
     );
   },
   /** @param {{slug: string}} param0
- * @param {string} message
- * @param {function} handleChat
- * @param {Array} [attachments=[]]
- * @returns {Promise<void>}
- */
+   * @param {string} message
+   * @param {function} handleChat
+   * @param {Array} [attachments=[]]
+   * @returns {Promise<void>}
+   */
   streamChat: async function ({ slug }, message, handleChat, attachments = []) {
     const ctrl = new AbortController();
 
@@ -227,9 +227,7 @@ const Workspace = {
     let stallHandled = false;
     function resetStallTimer() {
       if (stallTimer) clearTimeout(stallTimer);
-      /** @type {ReturnType<typeof setTimeout>|null} */
-    let stallTimer = null;
-    stallTimer = setTimeout(() => {
+      stallTimer = setTimeout(() => {
         if (stallHandled) return;
         stallHandled = true;
         handleChat({
@@ -252,7 +250,7 @@ const Workspace = {
     // event to be handled which resets the UI for us to be able to send another message.
     // The backend response abort handling is done in each LLM's handleStreamResponse.
     /** @param {Event} event */
-  const handleAbort = (event) => {
+    const handleAbort = (event) => {
       const detail = event && /** @type {CustomEvent} */ (event).detail;
       if (detail && detail.workspaceSlug && detail.workspaceSlug !== slug) {
         return;
@@ -365,8 +363,8 @@ const Workspace = {
     return workspaces;
   },
   /** @param {string} [slug=""]
- * @returns {Promise<any>}
- */
+   * @returns {Promise<any>}
+   */
   bySlug: async function (slug = "") {
     const workspace = await fetch(`${API_BASE}/workspace/${slug}`, {
       headers: baseHeaders(),
@@ -377,8 +375,8 @@ const Workspace = {
     return workspace;
   },
   /** @param {string} slug
- * @returns {Promise<{success: boolean, error: string|null}>}
- */
+   * @returns {Promise<{success: boolean, error: string|null}>}
+   */
   delete: async function (slug) {
     const result = await fetch(`${API_BASE}/workspace/${slug}`, {
       method: "DELETE",
@@ -390,8 +388,8 @@ const Workspace = {
     return result;
   },
   /** @param {string} slug
- * @returns {Promise<{success: boolean, error: string|null}>}
- */
+   * @returns {Promise<{success: boolean, error: string|null}>}
+   */
   wipeVectorDb: async function (slug) {
     return await fetch(`${API_BASE}/workspace/${slug}/reset-vector-db`, {
       method: "DELETE",
@@ -401,9 +399,9 @@ const Workspace = {
       .catch(() => false);
   },
   /** @param {string} slug
- * @param {FormData} formData
- * @returns {Promise<object>}
- */
+   * @param {FormData} formData
+   * @returns {Promise<object>}
+   */
   uploadFile: async function (slug, formData) {
     const response = await fetch(`${API_BASE}/workspace/${slug}/upload`, {
       method: "POST",
@@ -428,9 +426,9 @@ const Workspace = {
     return { response, data };
   },
   /** @param {string} slug
- * @param {FormData} formData
- * @returns {Promise<object>}
- */
+   * @param {FormData} formData
+   * @returns {Promise<object>}
+   */
   parseFile: async function (slug, formData) {
     const response = await fetch(`${API_BASE}/workspace/${slug}/parse`, {
       method: "POST",
@@ -539,9 +537,9 @@ const Workspace = {
    * @returns {Promise<{success: boolean, status?: "pending"|"processing"|"completed"|"failed", files?: object[]|null, error?: string|null, statusCode: number|null, retryAfterMs: number|null}>}
    */
   /** @param {string} slug
- * @param {string} jobId
- * @returns {Promise<object>}
- */
+   * @param {string} jobId
+   * @returns {Promise<object>}
+   */
   parseFileStatus: async function (slug, jobId) {
     try {
       const res = await fetch(
@@ -578,9 +576,9 @@ const Workspace = {
   },
 
   /** @param {string} slug
- * @param {string|null} [threadSlug=null]
- * @returns {Promise<object>}
- */
+   * @param {string|null} [threadSlug=null]
+   * @returns {Promise<object>}
+   */
   getParsedFiles: async function (slug, threadSlug = null) {
     const basePath = new URL(`${fullApiUrl()}/workspace/${slug}/parsed-files`);
     if (threadSlug) basePath.searchParams.set("threadSlug", threadSlug);
@@ -593,9 +591,9 @@ const Workspace = {
     return data;
   },
   /** @param {string} slug
- * @param {string} link
- * @returns {Promise<object>}
- */
+   * @param {string} link
+   * @returns {Promise<object>}
+   */
   uploadLink: async function (slug, link) {
     const response = await fetch(`${API_BASE}/workspace/${slug}/upload-link`, {
       method: "POST",
@@ -619,8 +617,8 @@ const Workspace = {
   },
 
   /** @param {string} slug
- * @returns {Promise<Array<string>>}
- */
+   * @returns {Promise<Array<string>>}
+   */
   getSuggestedMessages: async function (slug) {
     return await fetch(`${API_BASE}/workspace/${slug}/suggested-messages`, {
       method: "GET",
@@ -638,9 +636,9 @@ const Workspace = {
       });
   },
   /** @param {string} slug
- * @param {Array<string>} messages
- * @returns {Promise<{success: boolean, error: string|null}>}
- */
+   * @param {Array<string>} messages
+   * @returns {Promise<{success: boolean, error: string|null}>}
+   */
   setSuggestedMessages: async function (slug, messages) {
     return fetch(`${API_BASE}/workspace/${slug}/suggested-messages`, {
       method: "POST",
@@ -662,10 +660,10 @@ const Workspace = {
       });
   },
   /** @param {string} slug
- * @param {string} docPath
- * @param {boolean} pinStatus
- * @returns {Promise<{success: boolean, error: string|null}>}
- */
+   * @param {string} docPath
+   * @param {boolean} pinStatus
+   * @returns {Promise<{success: boolean, error: string|null}>}
+   */
   setPinForDocument: async function (slug, docPath, pinStatus) {
     return fetch(`${API_BASE}/workspace/${slug}/update-pin`, {
       method: "POST",
@@ -685,10 +683,53 @@ const Workspace = {
         return false;
       });
   },
+  /**
+   * Sets the context mode of a document in a workspace.
+   * @param {string} slug
+   * @param {string} docId - document docId
+   * @param {"off"|"summary"|"full"} contextMode
+   * @returns {Promise<boolean>}
+   */
+  setContextModeForDocument: async function (slug, docId, contextMode) {
+    return fetch(
+      `${API_BASE}/workspace/${slug}/documents/${encodeURIComponent(docId)}/context-mode`,
+      {
+        method: "PATCH",
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
+        body: JSON.stringify({ contextMode }),
+      },
+    )
+      .then((res) => res.ok)
+      .catch((e) => {
+        logger.error(e);
+        return false;
+      });
+  },
+
+  /**
+   * Multi-query "Ask" mode: researches workspace documents and returns a
+   * synthesised answer with sub-answers and sources.
+   * @param {string} slug
+   * @param {string} question
+   * @returns {Promise<{answer: string, strategy: object[], subAnswers: object[], sources: object[]}|{error: string}>}
+   */
+  askDocuments: async function (slug, question) {
+    return fetch(`${API_BASE}/workspace/${slug}/ask`, {
+      method: "POST",
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
+      body: JSON.stringify({ question }),
+    })
+      .then((res) => safeJson(res))
+      .catch((e) => {
+        logger.error(e);
+        return { error: e.message };
+      });
+  },
+
   /** @param {string} slug
- * @param {string} chatId
- * @returns {Promise<object>}
- */
+   * @param {string} chatId
+   * @returns {Promise<object>}
+   */
   ttsMessage: async function (slug, chatId) {
     return await fetch(`${API_BASE}/workspace/${slug}/tts/${chatId}`, {
       method: "GET",
@@ -705,9 +746,9 @@ const Workspace = {
       });
   },
   /** @param {FormData} formData
- * @param {string} slug
- * @returns {Promise<object>}
- */
+   * @param {string} slug
+   * @returns {Promise<object>}
+   */
   uploadPfp: async function (formData, slug) {
     return await fetch(`${API_BASE}/workspace/${slug}/upload-pfp`, {
       method: "POST",
@@ -725,8 +766,8 @@ const Workspace = {
   },
 
   /** @param {string} slug
- * @returns {Promise<string|null>}
- */
+   * @returns {Promise<string|null>}
+   */
   fetchPfp: async function (slug) {
     return await fetch(`${API_BASE}/workspace/${slug}/pfp`, {
       method: "GET",
@@ -744,8 +785,8 @@ const Workspace = {
   },
 
   /** @param {string} slug
- * @returns {Promise<{success: boolean, error: string|null}>}
- */
+   * @returns {Promise<{success: boolean, error: string|null}>}
+   */
   removePfp: async function (slug) {
     return await fetch(`${API_BASE}/workspace/${slug}/remove-pfp`, {
       method: "DELETE",
@@ -761,11 +802,11 @@ const Workspace = {
       });
   },
   /** @param {string} [slug=""]
- * @param {string} chatId
- * @param {string} newText
- * @param {string} [role="assistant"]
- * @returns {Promise<{history: Array, chatId: string}>}
- */
+   * @param {string} chatId
+   * @param {string} newText
+   * @param {string} [role="assistant"]
+   * @returns {Promise<{history: Array, chatId: string}>}
+   */
   _updateChat: async function (slug = "", chatId, newText, role = "assistant") {
     return await fetch(`${API_BASE}/workspace/${slug}/update-chat`, {
       method: "POST",
@@ -782,9 +823,9 @@ const Workspace = {
       });
   },
   /** @param {string} [slug=""]
- * @param {number|string} startingId
- * @returns {Promise<{success: boolean, error: string|null}>}
- */
+   * @param {number|string} startingId
+   * @returns {Promise<{success: boolean, error: string|null}>}
+   */
   _deleteEditedChats: async function (slug = "", startingId) {
     return await fetch(`${API_BASE}/workspace/${slug}/delete-edited-chats`, {
       method: "DELETE",
@@ -801,8 +842,8 @@ const Workspace = {
       });
   },
   /** @param {string} chatId
- * @returns {Promise<{success: boolean, error: string|null}>}
- */
+   * @returns {Promise<{success: boolean, error: string|null}>}
+   */
   deleteChat: async (chatId) => {
     return await fetch(`${API_BASE}/workspace/workspace-chats/${chatId}`, {
       method: "PUT",
@@ -815,10 +856,10 @@ const Workspace = {
       });
   },
   /** @param {string} [slug=""]
- * @param {string|null} [threadSlug=null]
- * @param {string|null} [chatId=null]
- * @returns {Promise<{thread: object|null, error: string|null}>}
- */
+   * @param {string|null} [threadSlug=null]
+   * @param {string|null} [chatId=null]
+   * @returns {Promise<{thread: object|null, error: string|null}>}
+   */
   forkThread: async function (slug = "", threadSlug = null, chatId = null) {
     return await fetch(`${API_BASE}/workspace/${slug}/thread/fork`, {
       method: "POST",
@@ -842,9 +883,9 @@ const Workspace = {
    * @returns {Promise<{response: {ok: boolean}, data: {success: boolean, error: string|null, document: {id: string, location:string}|null}}>}
    */
   /** @param {string} slug
- * @param {FormData} formData
- * @returns {Promise<object>}
- */
+   * @param {FormData} formData
+   * @returns {Promise<object>}
+   */
   uploadAndEmbedFile: async function (slug, formData) {
     const response = await fetch(
       `${API_BASE}/workspace/${slug}/upload-and-embed`,
@@ -868,9 +909,9 @@ const Workspace = {
   },
 
   /** @param {string} slug
- * @param {Array<string|number>} [fileIds=[]]
- * @returns {Promise<{success: boolean, error: string|null}>}
- */
+   * @param {Array<string|number>} [fileIds=[]]
+   * @returns {Promise<{success: boolean, error: string|null}>}
+   */
   deleteParsedFiles: async function (slug, fileIds = []) {
     const response = await fetch(
       `${API_BASE}/workspace/${slug}/delete-parsed-files`,
@@ -884,9 +925,9 @@ const Workspace = {
   },
 
   /** @param {string} slug
- * @param {string|number} fileId
- * @returns {Promise<object>}
- */
+   * @param {string|number} fileId
+   * @returns {Promise<object>}
+   */
   embedParsedFile: async function (slug, fileId) {
     const response = await fetch(
       `${API_BASE}/workspace/${slug}/embed-parsed-file/${fileId}`,
@@ -912,9 +953,9 @@ const Workspace = {
    * @returns {Promise<boolean>}
    */
   /** @param {string} slug
- * @param {string} documentLocation
- * @returns {Promise<{success: boolean, error: string|null}>}
- */
+   * @param {string} documentLocation
+   * @returns {Promise<{success: boolean, error: string|null}>}
+   */
   deleteAndUnembedFile: async function (slug, documentLocation) {
     const response = await fetch(
       `${API_BASE}/workspace/${slug}/remove-and-unembed`,
@@ -933,8 +974,8 @@ const Workspace = {
    * @returns {boolean}
    */
   /** @param {Array<string|number>} [workspaceIds=[]]
- * @returns {boolean}
- */
+   * @returns {boolean}
+   */
   storeWorkspaceOrder: function (workspaceIds = []) {
     try {
       localStorage.setItem(
@@ -954,8 +995,8 @@ const Workspace = {
    * @returns {Array} - ordered workspaces
    */
   /** @param {Array<object>} [workspaces=[]]
- * @returns {Array<object>}
- */
+   * @returns {Array<object>}
+   */
   orderWorkspaces: function (workspaces = []) {
     const workspaceOrderPreference =
       safeJsonParse(safeGetItem(this.workspaceOrderStorageKey)) || [];
@@ -975,8 +1016,8 @@ const Workspace = {
    * @returns {Promise<{workspaces: [{slug: string, name: string}], threads: [{slug: string, name: string, workspace: {slug: string, name: string}}]}}>}
    */
   /** @param {string} searchTerm
- * @returns {Promise<object>}
- */
+   * @returns {Promise<object>}
+   */
   searchWorkspaceOrThread: async function (searchTerm) {
     const response = await fetch(`${API_BASE}/workspace/search`, {
       method: "POST",
@@ -1000,8 +1041,8 @@ const Workspace = {
    * @returns {Promise<{showAgentCommand: boolean}>}
    */
   /** @param {string|null} [slug=null]
- * @returns {Promise<{showAgentCommand: boolean}>}
- */
+   * @returns {Promise<{showAgentCommand: boolean}>}
+   */
   agentCommandAvailable: async function (slug = null) {
     if (!slug) return { showAgentCommand: true };
     return await fetch(
