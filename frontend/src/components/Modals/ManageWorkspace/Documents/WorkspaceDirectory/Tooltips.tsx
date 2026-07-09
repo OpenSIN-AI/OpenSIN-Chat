@@ -1,1 +1,64 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgUmVhY3QgZnJvbSAicmVhY3QiOwppbXBvcnQgeyBUb29sdGlwIH0gZnJvbSAicmVhY3QtdG9vbHRpcCI7CmltcG9ydCB7IHNhZmVKc29uUGFyc2UgfSBmcm9tICJAL3V0aWxzL3JlcXVlc3QiOwoKaW50ZXJmYWNlIFRvb2x0aXBEYXRhIHsKICB0aXRsZTogc3RyaW5nOwogIGRhdGU6IHN0cmluZzsKICBleHRlbnNpb246IHN0cmluZzsKfQoKLyoqCiAqIFRvb2x0aXBzIGZvciB0aGUgd29ya3NwYWNlIGRpcmVjdG9yeSBjb21wb25lbnRzLiBSZW5kZXJzIHdoZW4gdGhlIHdvcmtzcGFjZSBkaXJlY3RvcnkgaXMgc2hvd24KICogb3IgdXBkYXRlZCBzbyB0aGF0IHRvb2x0aXBzIGFyZSBhdHRhY2hlZCBhcyB0aGUgaXRlbXMgYXJlIGNoYW5nZWQuCiAqLwpleHBvcnQgZnVuY3Rpb24gV29ya3NwYWNlRG9jdW1lbnRUb29sdGlwcygpIHsKICByZXR1cm4gKAogICAgPD4KICAgICAgPFRvb2x0aXAKICAgICAgICBpZD0id3MtZGlyZWN0b3J5LWl0ZW0iCiAgICAgICAgcGxhY2U9ImJvdHRvbSIKICAgICAgICBkZWxheVNob3c9ezgwMH0KICAgICAgICBjbGFzc05hbWU9InRvb2x0aXAgaW52ZXJ0IGxpZ2h0OmludmVydC0wIHotWzk5XSBtYXgtdy1bMjAwcHhdIgogICAgICAgIHJlbmRlcj17KHsgY29udGVudCB9OiB7IGNvbnRlbnQ6IHN0cmluZyB9KSA9PiB7CiAgICAgICAgICBjb25zdCBkYXRhID0gc2FmZUpzb25QYXJzZShjb250ZW50LCBudWxsKSBhcyBUb29sdGlwRGF0YSB8IG51bGw7CiAgICAgICAgICBpZiAoIWRhdGEpIHJldHVybiBudWxsOwogICAgICAgICAgcmV0dXJuICgKICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9InRleHQteHMiPgogICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC13aGl0ZSBsaWdodDppbnZlcnQgZm9udC1tZWRpdW0gYnJlYWstYWxsIj4KICAgICAgICAgICAgICAgIHtkYXRhLnRpdGxlfQogICAgICAgICAgICAgIDwvcD4KICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBtdC0xIGdhcC14LTIiPgogICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSIiPgogICAgICAgICAgICAgICAgICBEYXRlOiA8Yj57ZGF0YS5kYXRlfTwvYj4KICAgICAgICAgICAgICAgIDwvcD4KICAgICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0iIj4KICAgICAgICAgICAgICAgICAgVHlwZTogPGI+e2RhdGEuZXh0ZW5zaW9ufTwvYj4KICAgICAgICAgICAgICAgIDwvcD4KICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICApOwogICAgICAgIH19CiAgICAgIC8+CiAgICAgIDxUb29sdGlwCiAgICAgICAgaWQ9IndhdGNoLWNoYW5nZXMiCiAgICAgICAgcGxhY2U9ImJvdHRvbSIKICAgICAgICBkZWxheVNob3c9ezMwMH0KICAgICAgICBjbGFzc05hbWU9InRvb2x0aXAgaW52ZXJ0ICF0ZXh0LXhzIgogICAgICAvPgogICAgICA8VG9vbHRpcAogICAgICAgIGlkPSJwaW4tZG9jdW1lbnQiCiAgICAgICAgcGxhY2U9ImJvdHRvbSIKICAgICAgICBkZWxheVNob3c9ezMwMH0KICAgICAgICBjbGFzc05hbWU9InRvb2x0aXAgaW52ZXJ0ICF0ZXh0LXhzIgogICAgICAvPgogICAgICA8VG9vbHRpcAogICAgICAgIGlkPSJyZW1vdmUtZG9jdW1lbnQiCiAgICAgICAgcGxhY2U9ImJvdHRvbSIKICAgICAgICBkZWxheVNob3c9ezMwMH0KICAgICAgICBjbGFzc05hbWU9InRvb2x0aXAgaW52ZXJ0ICF0ZXh0LXhzIgogICAgICAvPgogICAgPC8+CiAgKTsKfQo=
+// SPDX-License-Identifier: MIT
+import React from "react";
+import { Tooltip } from "react-tooltip";
+import { safeJsonParse } from "@/utils/request";
+
+interface TooltipData {
+  title: string;
+  date: string;
+  extension: string;
+}
+
+/**
+ * Tooltips for the workspace directory components. Renders when the workspace directory is shown
+ * or updated so that tooltips are attached as the items are changed.
+ */
+export function WorkspaceDocumentTooltips() {
+  return (
+    <>
+      <Tooltip
+        id="ws-directory-item"
+        place="bottom"
+        delayShow={800}
+        className="tooltip invert light:invert-0 z-99 max-w-[200px]"
+        render={({ content }: { content: string }) => {
+          const data = safeJsonParse(content, null) as TooltipData | null;
+          if (!data) return null;
+          return (
+            <div className="text-xs">
+              <p className="text-white light:invert font-medium break-all">
+                {data.title}
+              </p>
+              <div className="flex mt-1 gap-x-2">
+                <p className="">
+                  Date: <b>{data.date}</b>
+                </p>
+                <p className="">
+                  Type: <b>{data.extension}</b>
+                </p>
+              </div>
+            </div>
+          );
+        }}
+      />
+      <Tooltip
+        id="watch-changes"
+        place="bottom"
+        delayShow={300}
+        className="tooltip invert !text-xs"
+      />
+      <Tooltip
+        id="pin-document"
+        place="bottom"
+        delayShow={300}
+        className="tooltip invert !text-xs"
+      />
+      <Tooltip
+        id="remove-document"
+        place="bottom"
+        delayShow={300}
+        className="tooltip invert !text-xs"
+      />
+    </>
+  );
+}

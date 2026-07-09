@@ -1,1 +1,54 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyB1c2VUcmFuc2xhdGlvbiB9IGZyb20gInJlYWN0LWkxOG5leHQiOwppbXBvcnQgeyBBdCB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9BdCI7CmltcG9ydCB7IFRvb2x0aXAgfSBmcm9tICJyZWFjdC10b29sdGlwIjsKCmludGVyZmFjZSBBZ2VudFNlc3Npb25CdXR0b25Qcm9wcyB7CiAgc2VuZENvbW1hbmQ6IChjbWQ6IHsgdGV4dDogc3RyaW5nOyB3cml0ZU1vZGU6IHN0cmluZyB9KSA9PiB2b2lkOwogIHByb21wdElucHV0OiBzdHJpbmc7CiAgdGV4dGFyZWFSZWY6IFJlYWN0LlJlZk9iamVjdDxIVE1MVGV4dEFyZWFFbGVtZW50IHwgbnVsbD47CiAgdmlzaWJsZT86IGJvb2xlYW47Cn0KCmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIEFnZW50U2Vzc2lvbkJ1dHRvbih7CiAgc2VuZENvbW1hbmQsCiAgcHJvbXB0SW5wdXQsCiAgdGV4dGFyZWFSZWYsCiAgdmlzaWJsZSA9IHRydWUsCn06IEFnZW50U2Vzc2lvbkJ1dHRvblByb3BzKSB7CiAgY29uc3QgeyB0IH0gPSB1c2VUcmFuc2xhdGlvbigpOwogIGlmICghdmlzaWJsZSkgcmV0dXJuIG51bGw7CgogIGZ1bmN0aW9uIGhhbmRsZUNsaWNrKCkgewogICAgdHJ5IHsKICAgICAgaWYgKHByb21wdElucHV0Py50cmltKCk/LnN0YXJ0c1dpdGgoIkBhZ2VudCIpKSByZXR1cm47CiAgICAgIHNlbmRDb21tYW5kKHsgdGV4dDogIkBhZ2VudCIsIHdyaXRlTW9kZTogInByZXBlbmQiIH0pOwogICAgfSBmaW5hbGx5IHsKICAgICAgdGV4dGFyZWFSZWY/LmN1cnJlbnQ/LmZvY3VzKCk7CiAgICB9CiAgfQoKICByZXR1cm4gKAogICAgPD4KICAgICAgPGJ1dHRvbgogICAgICAgIHR5cGU9ImJ1dHRvbiIKICAgICAgICBvbkNsaWNrPXtoYW5kbGVDbGlja30KICAgICAgICBkYXRhLXRvb2x0aXAtaWQ9ImFnZW50LXNlc3Npb24iCiAgICAgICAgZGF0YS10b29sdGlwLWNvbnRlbnQ9e3QoImNoYXRfd2luZG93LnN0YXJ0X2FnZW50X3Nlc3Npb24iKX0KICAgICAgICBhcmlhLWxhYmVsPXt0KCJjaGF0X3dpbmRvdy5zdGFydF9hZ2VudF9zZXNzaW9uIil9CiAgICAgICAgY2xhc3NOYW1lPSJncm91cCBib3JkZXItbm9uZSByZWxhdGl2ZSBmbGV4IGp1c3RpZnktY2VudGVyIGl0ZW1zLWNlbnRlciBjdXJzb3ItcG9pbnRlciB3LTYgaC02IHJvdW5kZWQtZnVsbCBob3ZlcjpiZy16aW5jLTcwMCBsaWdodDpob3ZlcjpiZy1zbGF0ZS0yMDAiCiAgICAgID4KICAgICAgICA8QXQKICAgICAgICAgIHNpemU9ezE4fQogICAgICAgICAgY2xhc3NOYW1lPSJwb2ludGVyLWV2ZW50cy1ub25lIHRleHQtemluYy0zMDAgbGlnaHQ6dGV4dC1zbGF0ZS02MDAgZ3JvdXAtaG92ZXI6dGV4dC10aGVtZS10ZXh0LXByaW1hcnkgbGlnaHQ6aG92ZXI6dGV4dC10aGVtZS10ZXh0LXByaW1hcnkgbGlnaHQ6Z3JvdXAtaG92ZXI6dGV4dC1zbGF0ZS02MDAgc2hyaW5rLTAiCiAgICAgICAgLz4KICAgICAgPC9idXR0b24+CiAgICAgIDxUb29sdGlwCiAgICAgICAgaWQ9ImFnZW50LXNlc3Npb24iCiAgICAgICAgcGxhY2U9ImJvdHRvbSIKICAgICAgICBkZWxheVNob3c9ezMwMH0KICAgICAgICBjbGFzc05hbWU9InRvb2x0aXAgIXRleHQteHMgei1bOTldIgogICAgICAvPgogICAgPC8+CiAgKTsKfQo=
+// SPDX-License-Identifier: MIT
+import { useTranslation } from "react-i18next";
+import { At } from "@phosphor-icons/react/dist/csr/At";
+import { Tooltip } from "react-tooltip";
+
+interface AgentSessionButtonProps {
+  sendCommand: (cmd: { text: string; writeMode: string }) => void;
+  promptInput: string;
+  textareaRef: React.RefObject<HTMLTextAreaElement | null>;
+  visible?: boolean;
+}
+
+export default function AgentSessionButton({
+  sendCommand,
+  promptInput,
+  textareaRef,
+  visible = true,
+}: AgentSessionButtonProps) {
+  const { t } = useTranslation();
+  if (!visible) return null;
+
+  function handleClick() {
+    try {
+      if (promptInput?.trim()?.startsWith("@agent")) return;
+      sendCommand({ text: "@agent", writeMode: "prepend" });
+    } finally {
+      textareaRef?.current?.focus();
+    }
+  }
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={handleClick}
+        data-tooltip-id="agent-session"
+        data-tooltip-content={t("chat_window.start_agent_session")}
+        aria-label={t("chat_window.start_agent_session")}
+        className="group border-none relative flex justify-center items-center cursor-pointer w-6 h-6 rounded-full hover:bg-zinc-700 light:hover:bg-slate-200"
+      >
+        <At
+          size={18}
+          className="pointer-events-none text-zinc-300 light:text-slate-600 group-hover:text-theme-text-primary light:hover:text-theme-text-primary light:group-hover:text-slate-600 shrink-0"
+        />
+      </button>
+      <Tooltip
+        id="agent-session"
+        place="bottom"
+        delayShow={300}
+        className="tooltip !text-xs z-99"
+      />
+    </>
+  );
+}

@@ -1,1 +1,291 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgU3lzdGVtIGZyb20gIkAvbW9kZWxzL3N5c3RlbSI7CmltcG9ydCBzaG93VG9hc3QgZnJvbSAiQC91dGlscy90b2FzdCI7CmltcG9ydCB7IEdlYXIgfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvR2VhciI7CmltcG9ydCB7IFBsdWcgfSBmcm9tICJAcGhvc3Bob3ItaWNvbnMvcmVhY3QvZGlzdC9jc3IvUGx1ZyI7CmltcG9ydCB7IHVzZUVmZmVjdCwgdXNlU3RhdGUsIHVzZVJlZiB9IGZyb20gInJlYWN0IjsKaW1wb3J0IHsgc2VudGVuY2VDYXNlIH0gZnJvbSAidGV4dC1jYXNlIjsKaW1wb3J0IFRvZ2dsZSBmcm9tICJAL2NvbXBvbmVudHMvbGliL1RvZ2dsZSI7CmltcG9ydCB7IHVzZVRyYW5zbGF0aW9uIH0gZnJvbSAicmVhY3QtaTE4bmV4dCI7CgovKioKICogQ29udmVydHMgc2V0dXBfYXJncyB0byBpbnB1dHMgZm9yIHRoZSBmb3JtIGJ1aWxkZXIKICogQHBhcmFtIHtvYmplY3R9IHNldHVwQXJncyAtIFRoZSBzZXR1cCBhcmd1bWVudHMgb2JqZWN0CiAqIEByZXR1cm5zIHtvYmplY3R9IC0gVGhlIGlucHV0cyBvYmplY3QKICovCmZ1bmN0aW9uIGlucHV0c0Zyb21BcmdzKHNldHVwQXJnczogYW55KTogUmVjb3JkPHN0cmluZywgYW55PiB7CiAgaWYgKAogICAgIXNldHVwQXJncyB8fAogICAgc2V0dXBBcmdzLmNvbnN0cnVjdG9yPy5jYWxsPy4oKS50b1N0cmluZygpICE9PSAiW29iamVjdCBPYmplY3RdIgogICkgewogICAgcmV0dXJuIHt9OwogIH0KICByZXR1cm4gT2JqZWN0LmVudHJpZXMoc2V0dXBBcmdzKS5yZWR1Y2UoCiAgICAoYWNjLCBba2V5LCBwcm9wc106IFtzdHJpbmcsIGFueV0pID0+ICh7CiAgICAgIC4uLmFjYywKICAgICAgW2tleV06IHByb3BzLmhhc093blByb3BlcnR5KCJ2YWx1ZSIpCiAgICAgICAgPyBwcm9wcy52YWx1ZQogICAgICAgIDogcHJvcHM/LmlucHV0Py5kZWZhdWx0IHx8ICIiLAogICAgfSksCiAgICB7fSwKICApOwp9CgovKioKICogSW1wb3J0ZWQgc2tpbGwgY29uZmlnIGNvbXBvbmVudCBmb3IgaW1wb3J0ZWQgc2tpbGxzIG9ubHkuCiAqIEByZXR1cm5zIHtKU1guRWxlbWVudH0KICovCmludGVyZmFjZSBJbXBvcnRlZFNraWxsQ29uZmlnUHJvcHMgewogIHNlbGVjdGVkU2tpbGw6IGFueTsgLy8gaW1wb3J0ZWQgc2tpbGwgY29uZmlnIG9iamVjdAogIHNldEltcG9ydGVkU2tpbGxzOiAodXBkYXRlcjogKHByZXY6IGFueVtdKSA9PiBhbnlbXSkgPT4gdm9pZDsgLy8gZnVuY3Rpb24gdG8gc2V0IGltcG9ydGVkIHNraWxscyBzaW5jZSBjb25maWcgaXMgZmlsZS13cml0ZQp9CgpleHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBJbXBvcnRlZFNraWxsQ29uZmlnKHsKICBzZWxlY3RlZFNraWxsLAogIHNldEltcG9ydGVkU2tpbGxzLAp9OiBJbXBvcnRlZFNraWxsQ29uZmlnUHJvcHMpIHsKICBjb25zdCB7IHQgfSA9IHVzZVRyYW5zbGF0aW9uKCk7CiAgY29uc3QgW2NvbmZpZywgc2V0Q29uZmlnXSA9IHVzZVN0YXRlKHNlbGVjdGVkU2tpbGwpOwogIGNvbnN0IFtoYXNDaGFuZ2VzLCBzZXRIYXNDaGFuZ2VzXSA9IHVzZVN0YXRlKGZhbHNlKTsKICBjb25zdCBbaW5wdXRzLCBzZXRJbnB1dHNdID0gdXNlU3RhdGUoCiAgICBpbnB1dHNGcm9tQXJncyhzZWxlY3RlZFNraWxsPy5zZXR1cF9hcmdzKSwKICApOwoKICBjb25zdCBoYXNTZXR1cEFyZ3MgPQogICAgc2VsZWN0ZWRTa2lsbD8uc2V0dXBfYXJncyAmJgogICAgT2JqZWN0LmtleXMoc2VsZWN0ZWRTa2lsbC5zZXR1cF9hcmdzKS5sZW5ndGggPiAwOwoKICBhc3luYyBmdW5jdGlvbiB0b2dnbGVTa2lsbCgpIHsKICAgIGNvbnN0IHVwZGF0ZWRDb25maWcgPSB7IC4uLnNlbGVjdGVkU2tpbGwsIGFjdGl2ZTogIWNvbmZpZy5hY3RpdmUgfTsKICAgIGF3YWl0IFN5c3RlbS5leHBlcmltZW50YWxGZWF0dXJlcy5hZ2VudFBsdWdpbnMudXBkYXRlUGx1Z2luQ29uZmlnKAogICAgICBjb25maWcuaHViSWQsCiAgICAgIHsgYWN0aXZlOiAhY29uZmlnLmFjdGl2ZSB9LAogICAgKTsKICAgIHNldEltcG9ydGVkU2tpbGxzKChwcmV2KSA9PgogICAgICBwcmV2Lm1hcCgocykgPT4gKHMuaHViSWQgPT09IGNvbmZpZy5odWJJZCA/IHVwZGF0ZWRDb25maWcgOiBzKSksCiAgICApOwogICAgc2V0Q29uZmlnKHVwZGF0ZWRDb25maWcpOwogICAgc2hvd1RvYXN0KAogICAgICB1cGRhdGVkQ29uZmlnLmFjdGl2ZQogICAgICAgID8gdCgiaW1wb3J0ZWRTa2lsbENvbmZpZy5za2lsbEFjdGl2YXRlZCIpCiAgICAgICAgOiB0KCJpbXBvcnRlZFNraWxsQ29uZmlnLnNraWxsRGVhY3RpdmF0ZWQiKSwKICAgICAgInN1Y2Nlc3MiLAogICAgICB7IGNsZWFyOiB0cnVlIH0sCiAgICApOwogIH0KCiAgYXN5bmMgZnVuY3Rpb24gaGFuZGxlU3VibWl0KGU6IFJlYWN0LkZvcm1FdmVudDxIVE1MRm9ybUVsZW1lbnQ+KSB7CiAgICBlLnByZXZlbnREZWZhdWx0KCk7CiAgICBjb25zdCBlcnJvcnM6IHN0cmluZ1tdID0gW107CiAgICBjb25zdCB1cGRhdGVkQ29uZmlnID0geyAuLi5jb25maWcgfTsKCiAgICBmb3IgKGNvbnN0IFtrZXksIHZhbHVlXSBvZiBPYmplY3QuZW50cmllcyhpbnB1dHMpKSB7CiAgICAgIGNvbnN0IHNldHRpbmdzID0gY29uZmlnLnNldHVwX2FyZ3Nba2V5XTsKICAgICAgaWYgKHNldHRpbmdzLnJlcXVpcmVkICYmICF2YWx1ZSkgewogICAgICAgIGVycm9ycy5wdXNoKHQoImltcG9ydGVkU2tpbGxDb25maWcuZXJyb3JSZXF1aXJlZFZhbHVlIiwgeyBrZXkgfSkpOwogICAgICAgIGNvbnRpbnVlOwogICAgICB9CiAgICAgIGlmICh0eXBlb2YgdmFsdWUgIT09IHNldHRpbmdzLnR5cGUpIHsKICAgICAgICBlcnJvcnMucHVzaCgKICAgICAgICAgIHQoImltcG9ydGVkU2tpbGxDb25maWcuZXJyb3JUeXBlTWlzbWF0Y2giLCB7CiAgICAgICAgICAgIGtleSwKICAgICAgICAgICAgdHlwZTogc2V0dGluZ3MudHlwZSwKICAgICAgICAgIH0pLAogICAgICAgICk7CiAgICAgICAgY29udGludWU7CiAgICAgIH0KICAgICAgdXBkYXRlZENvbmZpZy5zZXR1cF9hcmdzW2tleV0udmFsdWUgPSB2YWx1ZTsKICAgIH0KCiAgICBpZiAoZXJyb3JzLmxlbmd0aCA+IDApIHsKICAgICAgZXJyb3JzLmZvckVhY2goKGVycm9yKSA9PiBzaG93VG9hc3QoZXJyb3IsICJlcnJvciIpKTsKICAgICAgcmV0dXJuOwogICAgfQoKICAgIGF3YWl0IFN5c3RlbS5leHBlcmltZW50YWxGZWF0dXJlcy5hZ2VudFBsdWdpbnMudXBkYXRlUGx1Z2luQ29uZmlnKAogICAgICBjb25maWcuaHViSWQsCiAgICAgIHVwZGF0ZWRDb25maWcsCiAgICApOwogICAgc2V0Q29uZmlnKHVwZGF0ZWRDb25maWcpOwogICAgc2V0SW1wb3J0ZWRTa2lsbHMoKHByZXYpID0+CiAgICAgIHByZXYubWFwKChza2lsbCkgPT4KICAgICAgICBza2lsbC5odWJJZCA9PT0gY29uZmlnLmh1YklkID8gdXBkYXRlZENvbmZpZyA6IHNraWxsLAogICAgICApLAogICAgKTsKICAgIHNob3dUb2FzdCh0KCJpbXBvcnRlZFNraWxsQ29uZmlnLmNvbmZpZ1VwZGF0ZWQiKSwgInN1Y2Nlc3MiKTsKICAgIHNldEhhc0NoYW5nZXMoZmFsc2UpOwogIH0KCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIHNldEhhc0NoYW5nZXMoCiAgICAgIEpTT04uc3RyaW5naWZ5KGlucHV0cykgIT09CiAgICAgICAgSlNPTi5zdHJpbmdpZnkoaW5wdXRzRnJvbUFyZ3Moc2VsZWN0ZWRTa2lsbC5zZXR1cF9hcmdzKSksCiAgICApOwogIH0sIFtpbnB1dHNdKTsKCiAgcmV0dXJuICgKICAgIDw+CiAgICAgIDxkaXYgY2xhc3NOYW1lPSJwLTIiPgogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIGdhcC15LVsxOHB4XSBtYXgtdy1bNTAwcHhdIj4KICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IHctZnVsbCBqdXN0aWZ5LWJldHdlZW4gaXRlbXMtY2VudGVyIj4KICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZsZXggaXRlbXMtY2VudGVyIGdhcC14LTIiPgogICAgICAgICAgICAgIDxQbHVnCiAgICAgICAgICAgICAgICBzaXplPXsyNH0KICAgICAgICAgICAgICAgIHdlaWdodD0iYm9sZCIKICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXByaW1hcnkiCiAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgICA8bGFiZWwKICAgICAgICAgICAgICAgIGh0bWxGb3I9Im5hbWUiCiAgICAgICAgICAgICAgICBjbGFzc05hbWU9InRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IHRleHQtbWQgZm9udC1ib2xkIgogICAgICAgICAgICAgID4KICAgICAgICAgICAgICAgIHtzZW50ZW5jZUNhc2UoY29uZmlnLm5hbWUpfQogICAgICAgICAgICAgIDwvbGFiZWw+CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIgZ2FwLXgtMiI+CiAgICAgICAgICAgICAgPFRvZ2dsZQogICAgICAgICAgICAgICAgc2l6ZT0ibGciCiAgICAgICAgICAgICAgICBlbmFibGVkPXtjb25maWcuYWN0aXZlfQogICAgICAgICAgICAgICAgb25DaGFuZ2U9e3RvZ2dsZVNraWxsfQogICAgICAgICAgICAgIC8+CiAgICAgICAgICAgICAgPE1hbmFnZVNraWxsTWVudQogICAgICAgICAgICAgICAgY29uZmlnPXtjb25maWd9CiAgICAgICAgICAgICAgICBzZXRJbXBvcnRlZFNraWxscz17c2V0SW1wb3J0ZWRTa2lsbHN9CiAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDxwIGNsYXNzTmFtZT0idGV4dC10aGVtZS10ZXh0LXNlY29uZGFyeSB0ZXh0LXhzIGZvbnQtbWVkaXVtIHB5LTEuNSI+CiAgICAgICAgICAgIHt0KCJpbXBvcnRlZFNraWxsQ29uZmlnLmRlc2NyaXB0aW9uQnlBdXRob3IiLCB7CiAgICAgICAgICAgICAgZGVzY3JpcHRpb246IGNvbmZpZy5kZXNjcmlwdGlvbiwKICAgICAgICAgICAgfSl9eyIgIn0KICAgICAgICAgICAgPGEKICAgICAgICAgICAgICBocmVmPXtjb25maWcuYXV0aG9yX3VybH0KICAgICAgICAgICAgICB0YXJnZXQ9Il9ibGFuayIKICAgICAgICAgICAgICByZWw9Im5vb3BlbmVyIG5vcmVmZXJyZXIiCiAgICAgICAgICAgICAgY2xhc3NOYW1lPSJ0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBob3Zlcjp1bmRlcmxpbmUiCiAgICAgICAgICAgID4KICAgICAgICAgICAgICB7Y29uZmlnLmF1dGhvcn0KICAgICAgICAgICAgPC9hPgogICAgICAgICAgPC9wPgoKICAgICAgICAgIHtoYXNTZXR1cEFyZ3MgPyAoCiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGZsZXgtY29sIGdhcC15LTIiPgogICAgICAgICAgICAgIHtPYmplY3QuZW50cmllcyhjb25maWcuc2V0dXBfYXJncykubWFwKAogICAgICAgICAgICAgICAgKFtrZXksIHByb3BzXTogW3N0cmluZywgYW55XSkgPT4gKAogICAgICAgICAgICAgICAgICA8ZGl2IGtleT17a2V5fSBjbGFzc05hbWU9ImZsZXggZmxleC1jb2wgZ2FwLXktMSI+CiAgICAgICAgICAgICAgICAgICAgPGxhYmVsCiAgICAgICAgICAgICAgICAgICAgICBodG1sRm9yPXtrZXl9CiAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9InRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IHRleHQtc20gZm9udC1ib2xkIgogICAgICAgICAgICAgICAgICAgID4KICAgICAgICAgICAgICAgICAgICAgIHtrZXl9CiAgICAgICAgICAgICAgICAgICAgPC9sYWJlbD4KICAgICAgICAgICAgICAgICAgICA8aW5wdXQKICAgICAgICAgICAgICAgICAgICAgIHR5cGU9e3Byb3BzPy5pbnB1dD8udHlwZSB8fCAidGV4dCJ9CiAgICAgICAgICAgICAgICAgICAgICByZXF1aXJlZD17cHJvcHM/LmlucHV0Py5yZXF1aXJlZH0KICAgICAgICAgICAgICAgICAgICAgIGRlZmF1bHRWYWx1ZT17CiAgICAgICAgICAgICAgICAgICAgICAgIHByb3BzLmhhc093blByb3BlcnR5KCJ2YWx1ZSIpCiAgICAgICAgICAgICAgICAgICAgICAgICAgPyBwcm9wcy52YWx1ZQogICAgICAgICAgICAgICAgICAgICAgICAgIDogcHJvcHM/LmlucHV0Py5kZWZhdWx0IHx8ICIiCiAgICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+CiAgICAgICAgICAgICAgICAgICAgICAgIHNldElucHV0cyh7IC4uLmlucHV0cywgW2tleV06IGUudGFyZ2V0LnZhbHVlIH0pCiAgICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgICBwbGFjZWhvbGRlcj17cHJvcHM/LmlucHV0Py5wbGFjZWhvbGRlciB8fCAiIn0KICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0iYm9yZGVyLXNvbGlkIGJnLXRyYW5zcGFyZW50IGJvcmRlciBib3JkZXItd2hpdGUgbGlnaHQ6Ym9yZGVyLWJsYWNrIHJvdW5kZWQtbWQgcC0yIHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IHRleHQtc20iCiAgICAgICAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9InRleHQtdGhlbWUtdGV4dC1zZWNvbmRhcnkgdGV4dC14cyBmb250LW1lZGl1bSBweS0xLjUiPgogICAgICAgICAgICAgICAgICAgICAge3Byb3BzPy5pbnB1dD8uaGludH0KICAgICAgICAgICAgICAgICAgICA8L3A+CiAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgKSwKICAgICAgICAgICAgICApfQogICAgICAgICAgICAgIHtoYXNDaGFuZ2VzICYmICgKICAgICAgICAgICAgICAgIDxidXR0b24KICAgICAgICAgICAgICAgICAgb25DbGljaz17aGFuZGxlU3VibWl0IGFzIGFueX0KICAgICAgICAgICAgICAgICAgdHlwZT0iYnV0dG9uIgogICAgICAgICAgICAgICAgICBjbGFzc05hbWU9ImJnLWJsdWUtNTAwIHRleHQtd2hpdGUgbGlnaHQ6dGV4dC10aGVtZS10ZXh0LXByaW1hcnkgcm91bmRlZC1tZCBwLTIiCiAgICAgICAgICAgICAgICA+CiAgICAgICAgICAgICAgICAgIHt0KCJpbXBvcnRlZFNraWxsQ29uZmlnLnNhdmUiKX0KICAgICAgICAgICAgICAgIDwvYnV0dG9uPgogICAgICAgICAgICAgICl9CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgKSA6ICgKICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJ0ZXh0LXRoZW1lLXRleHQtc2Vjb25kYXJ5IHRleHQtc20gZm9udC1tZWRpdW0gcHktMS41Ij4KICAgICAgICAgICAgICB7dCgiaW1wb3J0ZWRTa2lsbENvbmZpZy5ub09wdGlvbnMiKX0KICAgICAgICAgICAgPC9wPgogICAgICAgICAgKX0KICAgICAgICA8L2Rpdj4KICAgICAgPC9kaXY+CiAgICA8Lz4KICApOwp9CgppbnRlcmZhY2UgTWFuYWdlU2tpbGxNZW51UHJvcHMgewogIGNvbmZpZzogYW55OwogIHNldEltcG9ydGVkU2tpbGxzOiAodXBkYXRlcjogKHByZXY6IGFueVtdKSA9PiBhbnlbXSkgPT4gdm9pZDsKfQoKZnVuY3Rpb24gTWFuYWdlU2tpbGxNZW51KHsgY29uZmlnLCBzZXRJbXBvcnRlZFNraWxscyB9OiBNYW5hZ2VTa2lsbE1lbnVQcm9wcykgewogIGNvbnN0IHsgdCB9ID0gdXNlVHJhbnNsYXRpb24oKTsKICBjb25zdCBbb3Blbiwgc2V0T3Blbl0gPSB1c2VTdGF0ZShmYWxzZSk7CiAgY29uc3QgbWVudVJlZiA9IHVzZVJlZjxIVE1MRGl2RWxlbWVudD4obnVsbCk7CgogIGFzeW5jIGZ1bmN0aW9uIGRlbGV0ZVNraWxsKCkgewogICAgaWYgKCF3aW5kb3cuY29uZmlybSh0KCJpbXBvcnRlZFNraWxsQ29uZmlnLmNvbmZpcm1EZWxldGVTa2lsbCIpKSkgcmV0dXJuOwogICAgdHJ5IHsKICAgICAgY29uc3Qgc3VjY2VzcyA9CiAgICAgICAgYXdhaXQgU3lzdGVtLmV4cGVyaW1lbnRhbEZlYXR1cmVzLmFnZW50UGx1Z2lucy5kZWxldGVQbHVnaW4oCiAgICAgICAgICBjb25maWcuaHViSWQsCiAgICAgICAgKTsKICAgICAgaWYgKHN1Y2Nlc3MpIHsKICAgICAgICBzZXRJbXBvcnRlZFNraWxscygocHJldikgPT4KICAgICAgICAgIHByZXYuZmlsdGVyKChzKSA9PiBzLmh1YklkICE9PSBjb25maWcuaHViSWQpLAogICAgICAgICk7CiAgICAgICAgc2hvd1RvYXN0KHQoImltcG9ydGVkU2tpbGxDb25maWcuc2tpbGxEZWxldGVkIiksICJzdWNjZXNzIik7CiAgICAgICAgc2V0T3BlbihmYWxzZSk7CiAgICAgIH0gZWxzZSB7CiAgICAgICAgc2hvd1RvYXN0KHQoImltcG9ydGVkU2tpbGxDb25maWcuc2tpbGxEZWxldGVGYWlsZWQiKSwgImVycm9yIik7CiAgICAgIH0KICAgIH0gY2F0Y2ggKGUpIHsKICAgICAgc2hvd1RvYXN0KHQoImltcG9ydGVkU2tpbGxDb25maWcuc2tpbGxEZWxldGVGYWlsZWQiKSwgImVycm9yIik7CiAgICB9CiAgfQoKICB1c2VFZmZlY3QoKCkgPT4gewogICAgY29uc3QgaGFuZGxlQ2xpY2tPdXRzaWRlID0gKGV2ZW50OiBNb3VzZUV2ZW50KSA9PiB7CiAgICAgIGlmIChtZW51UmVmLmN1cnJlbnQgJiYgIW1lbnVSZWYuY3VycmVudC5jb250YWlucyhldmVudC50YXJnZXQgYXMgTm9kZSkpIHsKICAgICAgICBzZXRPcGVuKGZhbHNlKTsKICAgICAgfQogICAgfTsKCiAgICBkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCJtb3VzZWRvd24iLCBoYW5kbGVDbGlja091dHNpZGUpOwogICAgcmV0dXJuICgpID0+IHsKICAgICAgZG9jdW1lbnQucmVtb3ZlRXZlbnRMaXN0ZW5lcigibW91c2Vkb3duIiwgaGFuZGxlQ2xpY2tPdXRzaWRlKTsKICAgIH07CiAgfSwgW10pOwoKICBpZiAoIWNvbmZpZy5odWJJZCkgcmV0dXJuIG51bGw7CiAgcmV0dXJuICgKICAgIDxkaXYgY2xhc3NOYW1lPSJyZWxhdGl2ZSIgcmVmPXttZW51UmVmfT4KICAgICAgPGJ1dHRvbgogICAgICAgIHR5cGU9ImJ1dHRvbiIKICAgICAgICBvbkNsaWNrPXsoKSA9PiBzZXRPcGVuKCFvcGVuKX0KICAgICAgICBjbGFzc05hbWU9InAtMS41IHJvdW5kZWQtbGcgdGV4dC10aGVtZS10ZXh0LXByaW1hcnkgaG92ZXI6YmctdGhlbWUtYWN0aW9uLW1lbnUtaXRlbS1ob3ZlciB0cmFuc2l0aW9uLWNvbG9ycyBkdXJhdGlvbi0zMDAiCiAgICAgID4KICAgICAgICA8R2VhciBjbGFzc05hbWU9ImgtNSB3LTUiIHdlaWdodD0iYm9sZCIgLz4KICAgICAgPC9idXR0b24+CiAgICAgIHtvcGVuICYmICgKICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iYWJzb2x1dGUgdy1bMTAwcHhdIC10b3AtMSBsZWZ0LTcgbXQtMSBib3JkZXItWzEuNXB4XSBib3JkZXItd2hpdGUvNDAgcm91bmRlZC1sZyBiZy10aGVtZS1hY3Rpb24tbWVudS1iZyBmbGV4IGZsZXgtY29sIHNoYWRvdy1bMF80cHhfMTRweF9yZ2JhKDAsMCwwLDAuMjUpXSB0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSB6LVs5OV0gbWQ6ei0xMCI+CiAgICAgICAgICA8YnV0dG9uCiAgICAgICAgICAgIHR5cGU9ImJ1dHRvbiIKICAgICAgICAgICAgb25DbGljaz17ZGVsZXRlU2tpbGx9CiAgICAgICAgICAgIGNsYXNzTmFtZT0iYm9yZGVyLW5vbmUgZmxleCBpdGVtcy1jZW50ZXIgcm91bmRlZC1sZyBnYXAteC0yIGhvdmVyOmJnLXRoZW1lLWFjdGlvbi1tZW51LWl0ZW0taG92ZXIgcHktMS41IHB4LTIgdHJhbnNpdGlvbi1jb2xvcnMgZHVyYXRpb24tMjAwIHctZnVsbCB0ZXh0LWxlZnQiCiAgICAgICAgICA+CiAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0idGV4dC1zbSI+CiAgICAgICAgICAgICAge3QoImltcG9ydGVkU2tpbGxDb25maWcuZGVsZXRlU2tpbGwiKX0KICAgICAgICAgICAgPC9zcGFuPgogICAgICAgICAgPC9idXR0b24+CiAgICAgICAgPC9kaXY+CiAgICAgICl9CiAgICA8L2Rpdj4KICApOwp9Cg==
+// SPDX-License-Identifier: MIT
+import System from "@/models/system";
+import showToast from "@/utils/toast";
+import { Gear } from "@phosphor-icons/react/dist/csr/Gear";
+import { Plug } from "@phosphor-icons/react/dist/csr/Plug";
+import { useEffect, useState, useRef } from "react";
+import { sentenceCase } from "text-case";
+import Toggle from "@/components/lib/Toggle";
+import { useTranslation } from "react-i18next";
+
+/**
+ * Converts setup_args to inputs for the form builder
+ * @param {object} setupArgs - The setup arguments object
+ * @returns {object} - The inputs object
+ */
+function inputsFromArgs(setupArgs: any): Record<string, any> {
+  if (
+    !setupArgs ||
+    setupArgs.constructor?.call?.().toString() !== "[object Object]"
+  ) {
+    return {};
+  }
+  return Object.entries(setupArgs).reduce(
+    (acc, [key, props]: [string, any]) => ({
+      ...acc,
+      [key]: props.hasOwnProperty("value")
+        ? props.value
+        : props?.input?.default || "",
+    }),
+    {},
+  );
+}
+
+/**
+ * Imported skill config component for imported skills only.
+ * @returns {JSX.Element}
+ */
+interface ImportedSkillConfigProps {
+  selectedSkill: any; // imported skill config object
+  setImportedSkills: (updater: (prev: any[]) => any[]) => void; // function to set imported skills since config is file-write
+}
+
+export default function ImportedSkillConfig({
+  selectedSkill,
+  setImportedSkills,
+}: ImportedSkillConfigProps) {
+  const { t } = useTranslation();
+  const [config, setConfig] = useState(selectedSkill);
+  const [hasChanges, setHasChanges] = useState(false);
+  const [inputs, setInputs] = useState(
+    inputsFromArgs(selectedSkill?.setup_args),
+  );
+
+  const hasSetupArgs =
+    selectedSkill?.setup_args &&
+    Object.keys(selectedSkill.setup_args).length > 0;
+
+  async function toggleSkill() {
+    const updatedConfig = { ...selectedSkill, active: !config.active };
+    await System.experimentalFeatures.agentPlugins.updatePluginConfig(
+      config.hubId,
+      { active: !config.active },
+    );
+    setImportedSkills((prev) =>
+      prev.map((s) => (s.hubId === config.hubId ? updatedConfig : s)),
+    );
+    setConfig(updatedConfig);
+    showToast(
+      updatedConfig.active
+        ? t("importedSkillConfig.skillActivated")
+        : t("importedSkillConfig.skillDeactivated"),
+      "success",
+      { clear: true },
+    );
+  }
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const errors: string[] = [];
+    const updatedConfig = { ...config };
+
+    for (const [key, value] of Object.entries(inputs)) {
+      const settings = config.setup_args[key];
+      if (settings.required && !value) {
+        errors.push(t("importedSkillConfig.errorRequiredValue", { key }));
+        continue;
+      }
+      if (typeof value !== settings.type) {
+        errors.push(
+          t("importedSkillConfig.errorTypeMismatch", {
+            key,
+            type: settings.type,
+          }),
+        );
+        continue;
+      }
+      updatedConfig.setup_args[key].value = value;
+    }
+
+    if (errors.length > 0) {
+      errors.forEach((error) => showToast(error, "error"));
+      return;
+    }
+
+    await System.experimentalFeatures.agentPlugins.updatePluginConfig(
+      config.hubId,
+      updatedConfig,
+    );
+    setConfig(updatedConfig);
+    setImportedSkills((prev) =>
+      prev.map((skill) =>
+        skill.hubId === config.hubId ? updatedConfig : skill,
+      ),
+    );
+    showToast(t("importedSkillConfig.configUpdated"), "success");
+    setHasChanges(false);
+  }
+
+  useEffect(() => {
+    setHasChanges(
+      JSON.stringify(inputs) !==
+        JSON.stringify(inputsFromArgs(selectedSkill.setup_args)),
+    );
+  }, [inputs]);
+
+  return (
+    <>
+      <div className="p-2">
+        <div className="flex flex-col gap-y-[18px] max-w-[500px]">
+          <div className="flex w-full justify-between items-center">
+            <div className="flex items-center gap-x-2">
+              <Plug
+                size={24}
+                weight="bold"
+                className="text-theme-text-primary"
+              />
+              <label
+                htmlFor="name"
+                className="text-theme-text-primary text-md font-bold"
+              >
+                {sentenceCase(config.name)}
+              </label>
+            </div>
+            <div className="flex items-center gap-x-2">
+              <Toggle
+                size="lg"
+                enabled={config.active}
+                onChange={toggleSkill}
+              />
+              <ManageSkillMenu
+                config={config}
+                setImportedSkills={setImportedSkills}
+              />
+            </div>
+          </div>
+          <p className="text-theme-text-secondary text-xs font-medium py-1.5">
+            {t("importedSkillConfig.descriptionByAuthor", {
+              description: config.description,
+            })}{" "}
+            <a
+              href={config.author_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-theme-text-primary hover:underline"
+            >
+              {config.author}
+            </a>
+          </p>
+
+          {hasSetupArgs ? (
+            <div className="flex flex-col gap-y-2">
+              {Object.entries(config.setup_args).map(
+                ([key, props]: [string, any]) => (
+                  <div key={key} className="flex flex-col gap-y-1">
+                    <label
+                      htmlFor={key}
+                      className="text-theme-text-primary text-sm font-bold"
+                    >
+                      {key}
+                    </label>
+                    <input
+                      type={props?.input?.type || "text"}
+                      required={props?.input?.required}
+                      defaultValue={
+                        props.hasOwnProperty("value")
+                          ? props.value
+                          : props?.input?.default || ""
+                      }
+                      onChange={(e) =>
+                        setInputs({ ...inputs, [key]: e.target.value })
+                      }
+                      placeholder={props?.input?.placeholder || ""}
+                      className="border-solid bg-transparent border border-white light:border-black rounded-md p-2 text-theme-text-primary text-sm"
+                    />
+                    <p className="text-theme-text-secondary text-xs font-medium py-1.5">
+                      {props?.input?.hint}
+                    </p>
+                  </div>
+                ),
+              )}
+              {hasChanges && (
+                <button
+                  onClick={handleSubmit as any}
+                  type="button"
+                  className="bg-blue-500 text-white light:text-theme-text-primary rounded-md p-2"
+                >
+                  {t("importedSkillConfig.save")}
+                </button>
+              )}
+            </div>
+          ) : (
+            <p className="text-theme-text-secondary text-sm font-medium py-1.5">
+              {t("importedSkillConfig.noOptions")}
+            </p>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}
+
+interface ManageSkillMenuProps {
+  config: any;
+  setImportedSkills: (updater: (prev: any[]) => any[]) => void;
+}
+
+function ManageSkillMenu({ config, setImportedSkills }: ManageSkillMenuProps) {
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  async function deleteSkill() {
+    if (!window.confirm(t("importedSkillConfig.confirmDeleteSkill"))) return;
+    try {
+      const success =
+        await System.experimentalFeatures.agentPlugins.deletePlugin(
+          config.hubId,
+        );
+      if (success) {
+        setImportedSkills((prev) =>
+          prev.filter((s) => s.hubId !== config.hubId),
+        );
+        showToast(t("importedSkillConfig.skillDeleted"), "success");
+        setOpen(false);
+      } else {
+        showToast(t("importedSkillConfig.skillDeleteFailed"), "error");
+      }
+    } catch (e) {
+      showToast(t("importedSkillConfig.skillDeleteFailed"), "error");
+    }
+  }
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  if (!config.hubId) return null;
+  return (
+    <div className="relative" ref={menuRef}>
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className="p-1.5 rounded-lg text-theme-text-primary hover:bg-theme-action-menu-item-hover transition-colors duration-300"
+      >
+        <Gear className="h-5 w-5" weight="bold" />
+      </button>
+      {open && (
+        <div className="absolute w-[100px] -top-1 left-7 mt-1 border-[1.5px] border-white/40 rounded-lg bg-theme-action-menu-bg flex flex-col shadow-[0_4px_14px_rgba(0,0,0,0.25)] text-theme-text-primary z-99 md:z-10">
+          <button
+            type="button"
+            onClick={deleteSkill}
+            className="border-none flex items-center rounded-lg gap-x-2 hover:bg-theme-action-menu-item-hover py-1.5 px-2 transition-colors duration-200 w-full text-left"
+          >
+            <span className="text-sm">
+              {t("importedSkillConfig.deleteSkill")}
+            </span>
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}

@@ -1,1 +1,89 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyB1c2VDYWxsYmFjaywgdXNlRWZmZWN0IH0gZnJvbSAicmVhY3QiOwppbXBvcnQgeyBNaWNyb3Bob25lIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL01pY3JvcGhvbmUiOwppbXBvcnQgeyBDaXJjbGVOb3RjaCB9IGZyb20gIkBwaG9zcGhvci1pY29ucy9yZWFjdC9kaXN0L2Nzci9DaXJjbGVOb3RjaCI7CmltcG9ydCB7IFRvb2x0aXAgfSBmcm9tICJyZWFjdC10b29sdGlwIjsKaW1wb3J0IHsgdXNlVHJhbnNsYXRpb24gfSBmcm9tICJyZWFjdC1pMThuZXh0IjsKaW1wb3J0IHsgUFJPTVBUX0lOUFVUX0VWRU5UIH0gZnJvbSAiLi4vLi4vLi4vUHJvbXB0SW5wdXQiOwoKLyoqCiAqIFNoYXJlZCBtaWNyb3Bob25lIGJ1dHRvbiBmb3IgYWxsIHNwZWVjaC10by10ZXh0IHByb3ZpZGVycy4gT3ducyB0aGUgQ3RybCtNCiAqIHNob3J0Y3V0IGFuZCB0aGUgUFJPTVBUX0lOUFVUX0VWRU5UIGxpc3RlbmVyIHNvIGVhY2ggcHJvdmlkZXIgb25seSBoYXMgdG8KICogaW1wbGVtZW50IHN0YXJ0L3N0b3AuCiAqIEBwYXJhbSB7T2JqZWN0fSBwcm9wcyAtIFRoZSBjb21wb25lbnQgcHJvcHMKICogQHBhcmFtIHtib29sZWFufSBwcm9wcy5saXN0ZW5pbmcgLSBXaGV0aGVyIHRoZSBwcm92aWRlciBpcyBhY3RpdmVseSBsaXN0ZW5pbmcKICogQHBhcmFtIHtib29sZWFufSBbcHJvcHMucHJvY2Vzc2luZ10gLSBXaGV0aGVyIGEgdHJhbnNjcmlwdGlvbiByZXF1ZXN0IGlzIGluIGZsaWdodAogKiBAcGFyYW0geygpID0+IHZvaWR9IHByb3BzLm9uU3RhcnQgLSBDYWxsZWQgdG8gYmVnaW4gbGlzdGVuaW5nCiAqIEBwYXJhbSB7KCkgPT4gdm9pZH0gcHJvcHMub25TdG9wIC0gQ2FsbGVkIHRvIGVuZCBsaXN0ZW5pbmcKICogQHJldHVybnMge1JlYWN0LlJlYWN0RWxlbWVudH0gVGhlIE1pY0J1dHRvbiBjb21wb25lbnQKICovCmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIE1pY0J1dHRvbih7CiAgbGlzdGVuaW5nLAogIHByb2Nlc3NpbmcgPSBmYWxzZSwKICBvblN0YXJ0LAogIG9uU3RvcCwKfTogYW55KSB7CiAgY29uc3QgeyB0IH0gPSB1c2VUcmFuc2xhdGlvbigpOwoKICBjb25zdCB0b2dnbGUgPSB1c2VDYWxsYmFjaygoKSA9PiB7CiAgICBpZiAocHJvY2Vzc2luZykgcmV0dXJuOwogICAgaWYgKGxpc3RlbmluZykgb25TdG9wKCk7CiAgICBlbHNlIG9uU3RhcnQoKTsKICB9LCBbbGlzdGVuaW5nLCBwcm9jZXNzaW5nLCBvblN0YXJ0LCBvblN0b3BdKTsKCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIGNvbnN0IG9uS2V5OiBhbnkgPSAoZXZlbnQpID0+IHsKICAgICAgLy8gQ1RSTCArIG0gb24gTWFjIGFuZCBXaW5kb3dzIHRvIHRvZ2dsZSBTVFQgbGlzdGVuaW5nCiAgICAgIGlmIChldmVudC5jdHJsS2V5ICYmIGV2ZW50LmtleUNvZGUgPT09IDc3KSB0b2dnbGUoKTsKICAgIH07CiAgICBkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCJrZXlkb3duIiwgb25LZXkpOwogICAgcmV0dXJuICgpID0+IGRvY3VtZW50LnJlbW92ZUV2ZW50TGlzdGVuZXIoImtleWRvd24iLCBvbktleSk7CiAgfSwgW3RvZ2dsZV0pOwoKICB1c2VFZmZlY3QoKCkgPT4gewogICAgY29uc3Qgb25Qcm9tcHRVcGRhdGU6IGFueSA9IChlKSA9PiB7CiAgICAgIGlmICghZT8uZGV0YWlsICYmIGxpc3RlbmluZykgb25TdG9wKCk7CiAgICB9OwogICAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoUFJPTVBUX0lOUFVUX0VWRU5ULCBvblByb21wdFVwZGF0ZSk7CiAgICByZXR1cm4gKCkgPT4gd2luZG93LnJlbW92ZUV2ZW50TGlzdGVuZXIoUFJPTVBUX0lOUFVUX0VWRU5ULCBvblByb21wdFVwZGF0ZSk7CiAgfSwgW2xpc3RlbmluZywgb25TdG9wXSk7CgogIGNvbnN0IGFjdGl2ZSA9IGxpc3RlbmluZyB8fCBwcm9jZXNzaW5nOwogIHJldHVybiAoCiAgICA8YnV0dG9uCiAgICAgIHR5cGU9ImJ1dHRvbiIKICAgICAgZGF0YS10b29sdGlwLWlkPSJ0b29sdGlwLW1pY3JvcGhvbmUtYnRuIgogICAgICBkYXRhLXRvb2x0aXAtY29udGVudD17YCR7dCgiY2hhdF93aW5kb3cubWljcm9waG9uZSIpfSAoQ1RSTCArIE0pYH0KICAgICAgYXJpYS1sYWJlbD17dCgiY2hhdF93aW5kb3cubWljcm9waG9uZSIpfQogICAgICBvbkNsaWNrPXt0b2dnbGV9CiAgICAgIGRpc2FibGVkPXtwcm9jZXNzaW5nfQogICAgICBjbGFzc05hbWU9e2Bncm91cCBib3JkZXItbm9uZSByZWxhdGl2ZSBmbGV4IGp1c3RpZnktY2VudGVyIGl0ZW1zLWNlbnRlciBjdXJzb3ItcG9pbnRlciB3LTggaC04IHJvdW5kZWQtZnVsbCBob3ZlcjpiZy16aW5jLTcwMCBsaWdodDpob3ZlcjpiZy1zbGF0ZS0yMDAgYmctdHJhbnNwYXJlbnQgJHsKICAgICAgICBhY3RpdmUgPyAiYmctemluYy03MDAgbGlnaHQ6Ymctc2xhdGUtMjAwIiA6ICIiCiAgICAgIH1gfQogICAgPgogICAgICB7cHJvY2Vzc2luZyA/ICgKICAgICAgICA8Q2lyY2xlTm90Y2gKICAgICAgICAgIHNpemU9ezE4fQogICAgICAgICAgd2VpZ2h0PSJib2xkIgogICAgICAgICAgY2xhc3NOYW1lPSJwb2ludGVyLWV2ZW50cy1ub25lIHRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IGxpZ2h0OnRleHQtdGhlbWUtdGV4dC1wcmltYXJ5IGFuaW1hdGUtc3BpbiBzaHJpbmstMCIKICAgICAgICAvPgogICAgICApIDogKAogICAgICAgIDxNaWNyb3Bob25lCiAgICAgICAgICB3ZWlnaHQ9InJlZ3VsYXIiCiAgICAgICAgICBzaXplPXsxOH0KICAgICAgICAgIGNsYXNzTmFtZT17YHBvaW50ZXItZXZlbnRzLW5vbmUgdGV4dC16aW5jLTMwMCBsaWdodDp0ZXh0LXNsYXRlLTYwMCBncm91cC1ob3Zlcjp0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBsaWdodDpob3Zlcjp0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBsaWdodDpncm91cC1ob3Zlcjp0ZXh0LXNsYXRlLTYwMCBzaHJpbmstMCAkewogICAgICAgICAgICBsaXN0ZW5pbmcKICAgICAgICAgICAgICA/ICJhbmltYXRlLXB1bHNlLWdsb3cgIXRleHQtd2hpdGUgbGlnaHQ6IXRleHQtc2xhdGUtODAwIgogICAgICAgICAgICAgIDogIiIKICAgICAgICAgIH1gfQogICAgICAgIC8+CiAgICAgICl9CiAgICAgIDxUb29sdGlwCiAgICAgICAgaWQ9InRvb2x0aXAtbWljcm9waG9uZS1idG4iCiAgICAgICAgcGxhY2U9InRvcCIKICAgICAgICBkZWxheVNob3c9ezMwMH0KICAgICAgICBjbGFzc05hbWU9InRvb2x0aXAgIXRleHQteHMgei1bOTldIgogICAgICAvPgogICAgPC9idXR0b24+CiAgKTsKfQo=
+// SPDX-License-Identifier: MIT
+import { useCallback, useEffect } from "react";
+import { Microphone } from "@phosphor-icons/react/dist/csr/Microphone";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
+import { Tooltip } from "react-tooltip";
+import { useTranslation } from "react-i18next";
+import { PROMPT_INPUT_EVENT } from "../../../PromptInput";
+
+/**
+ * Shared microphone button for all speech-to-text providers. Owns the Ctrl+M
+ * shortcut and the PROMPT_INPUT_EVENT listener so each provider only has to
+ * implement start/stop.
+ * @param {Object} props - The component props
+ * @param {boolean} props.listening - Whether the provider is actively listening
+ * @param {boolean} [props.processing] - Whether a transcription request is in flight
+ * @param {() => void} props.onStart - Called to begin listening
+ * @param {() => void} props.onStop - Called to end listening
+ * @returns {React.ReactElement} The MicButton component
+ */
+export default function MicButton({
+  listening,
+  processing = false,
+  onStart,
+  onStop,
+}: any) {
+  const { t } = useTranslation();
+
+  const toggle = useCallback(() => {
+    if (processing) return;
+    if (listening) onStop();
+    else onStart();
+  }, [listening, processing, onStart, onStop]);
+
+  useEffect(() => {
+    const onKey: any = (event) => {
+      // CTRL + m on Mac and Windows to toggle STT listening
+      if (event.ctrlKey && event.keyCode === 77) toggle();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [toggle]);
+
+  useEffect(() => {
+    const onPromptUpdate: any = (e) => {
+      if (!e?.detail && listening) onStop();
+    };
+    window.addEventListener(PROMPT_INPUT_EVENT, onPromptUpdate);
+    return () => window.removeEventListener(PROMPT_INPUT_EVENT, onPromptUpdate);
+  }, [listening, onStop]);
+
+  const active = listening || processing;
+  return (
+    <button
+      type="button"
+      data-tooltip-id="tooltip-microphone-btn"
+      data-tooltip-content={`${t("chat_window.microphone")} (CTRL + M)`}
+      aria-label={t("chat_window.microphone")}
+      onClick={toggle}
+      disabled={processing}
+      className={`group border-none relative flex justify-center items-center cursor-pointer w-8 h-8 rounded-full hover:bg-zinc-700 light:hover:bg-slate-200 bg-transparent ${
+        active ? "bg-zinc-700 light:bg-slate-200" : ""
+      }`}
+    >
+      {processing ? (
+        <CircleNotch
+          size={18}
+          weight="bold"
+          className="pointer-events-none text-theme-text-primary light:text-theme-text-primary animate-spin shrink-0"
+        />
+      ) : (
+        <Microphone
+          weight="regular"
+          size={18}
+          className={`pointer-events-none text-zinc-300 light:text-slate-600 group-hover:text-theme-text-primary light:hover:text-theme-text-primary light:group-hover:text-slate-600 shrink-0 ${
+            listening
+              ? "animate-pulse-glow !text-white light:!text-slate-800"
+              : ""
+          }`}
+        />
+      )}
+      <Tooltip
+        id="tooltip-microphone-btn"
+        place="top"
+        delayShow={300}
+        className="tooltip !text-xs z-99"
+      />
+    </button>
+  );
+}

@@ -4060,6 +4060,10 @@ const TRANSLATIONS = {
     icon_memories: "Memories",
     icon_console: "Console & Terminal",
     icon_pdf_analysis: "PDF Analysis",
+    icon_notepad: "Notepad",
+    icon_agent_sessions: "Agent Sessions",
+    icon_agent_settings: "Agent Settings",
+    icon_workspace_settings: "Workspace Settings",
   },
   dataConnectors: {
     paperlessNgx: {

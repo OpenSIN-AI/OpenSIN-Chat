@@ -1,1 +1,200 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAppbXBvcnQgeyBQbHVzIH0gZnJvbSAiQHBob3NwaG9yLWljb25zL3JlYWN0L2Rpc3QvY3NyL1BsdXMiOwppbXBvcnQgeyBUb29sdGlwIH0gZnJvbSAicmVhY3QtdG9vbHRpcCI7CmltcG9ydCB7IHVzZVRyYW5zbGF0aW9uIH0gZnJvbSAicmVhY3QtaTE4bmV4dCI7CmltcG9ydCB7IHVzZVJlZiwgdXNlU3RhdGUsIHVzZUVmZmVjdCB9IGZyb20gInJlYWN0IjsKaW1wb3J0IHsgY3JlYXRlUG9ydGFsIH0gZnJvbSAicmVhY3QtZG9tIjsKaW1wb3J0IHsgdXNlUGFyYW1zIH0gZnJvbSAicmVhY3Qtcm91dGVyLWRvbSI7CmltcG9ydCBXb3Jrc3BhY2UgZnJvbSAiQC9tb2RlbHMvd29ya3NwYWNlIjsKaW1wb3J0IHNob3dUb2FzdCBmcm9tICJAL3V0aWxzL3RvYXN0IjsKaW1wb3J0IHsKICBBVFRBQ0hNRU5UU19QUk9DRVNTRURfRVZFTlQsCiAgUkVNT1ZFX0FUVEFDSE1FTlRfRVZFTlQsCn0gZnJvbSAiLi4vLi4vRG5EV3JhcHBlciI7CmltcG9ydCB7IHVzZVRoZW1lIH0gZnJvbSAiQC9ob29rcy91c2VUaGVtZSI7CmltcG9ydCBQYXJzZWRGaWxlc01lbnUgZnJvbSAiLi9QYXJzZWRGaWxlc01lbnUiOwppbXBvcnQgQWRkU291cmNlTWVudSBmcm9tICIuL0FkZFNvdXJjZU1lbnUiOwppbXBvcnQgdXNlRG9jdW1lbnQgZnJvbSAiQC9ob29rcy91c2VEb2N1bWVudCI7CgovKioKICogVGhpcyBpcyBhIHNpbXBsZSBwcm94eSBjb21wb25lbnQgdGhhdCBjbGlja3Mgb24gdGhlIERuRCBmaWxlIHVwbG9hZGVyIGZvciB0aGUgdXNlci4KICogQHJldHVybnMKICovCmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uIEF0dGFjaEl0ZW0oewogIHdvcmtzcGFjZVNsdWcgPSBudWxsLAogIHdvcmtzcGFjZVRocmVhZFNsdWcgPSBudWxsLAp9KSB7CiAgY29uc3QgeyB0IH0gPSB1c2VUcmFuc2xhdGlvbigpOwogIGNvbnN0IHsgdGhlbWUgfSA9IHVzZVRoZW1lKCk7CiAgY29uc3QgcGFyYW1zID0gdXNlUGFyYW1zKCk7CiAgY29uc3Qgc2x1ZyA9IHdvcmtzcGFjZVNsdWcgfHwgcGFyYW1zLnNsdWc7CiAgY29uc3QgdGhyZWFkU2x1ZyA9IHdvcmtzcGFjZVRocmVhZFNsdWcgPz8gcGFyYW1zLnRocmVhZFNsdWcgPz8gbnVsbDsKICBjb25zdCB0b29sdGlwUmVmID0gdXNlUmVmKG51bGwpOwogIGNvbnN0IG1lbnVSZWYgPSB1c2VSZWYobnVsbCk7CiAgY29uc3QgYnV0dG9uUmVmID0gdXNlUmVmKG51bGwpOwogIGNvbnN0IFtzaG93TWVudSwgc2V0U2hvd01lbnVdID0gdXNlU3RhdGUoZmFsc2UpOwogIGNvbnN0IFttZW51UG9zLCBzZXRNZW51UG9zXSA9IHVzZVN0YXRlPHsgdG9wOiBudW1iZXI7IGxlZnQ6IG51bWJlciB9IHwgbnVsbD4oCiAgICBudWxsLAogICk7CiAgY29uc3QgW2lzRW1iZWRkaW5nLCBzZXRJc0VtYmVkZGluZ10gPSB1c2VTdGF0ZShmYWxzZSk7CiAgY29uc3QgW3Nob3dUb29sdGlwLCBzZXRTaG93VG9vbHRpcF0gPSB1c2VTdGF0ZShmYWxzZSk7CgogIGNvbnN0IHsKICAgIGRvY3VtZW50OiBwYXJzZWRGaWxlcywKICAgIGlzTG9hZGluZywKICAgIHJlZnJlc2gsCiAgfSA9IHVzZURvY3VtZW50KHNsdWcsIHRocmVhZFNsdWcpOwoKICBjb25zdCBmaWxlcyA9IHBhcnNlZEZpbGVzPy5maWxlcyB8fCBbXTsKICBjb25zdCBjdXJyZW50VG9rZW5zID0gcGFyc2VkRmlsZXM/LmN1cnJlbnRDb250ZXh0VG9rZW5Db3VudCB8fCAwOwogIGNvbnN0IGNvbnRleHRXaW5kb3cgPSBwYXJzZWRGaWxlcz8uY29udGV4dFdpbmRvdyB8fCBJbmZpbml0eTsKCiAgdXNlRWZmZWN0KCgpID0+IHsKICAgIHNldFNob3dUb29sdGlwKGZpbGVzLmxlbmd0aCA+IDApOwogIH0sIFtmaWxlc10pOwoKICAvKioKICAgKiBIYW5kbGVzIHRoZSByZW1vdmFsIG9mIGFuIGF0dGFjaG1lbnQgZnJvbSB0aGUgcGFyc2VkIGZpbGVzCiAgICogYW5kIHRyaWdnZXJzIGEgcmUtZmV0Y2ggb2YgdGhlIHBhcnNlZCBmaWxlcy4KICAgKiBUaGlzIGZ1bmN0aW9uIGhhbmRsZXMgd2hlbiB0aGUgdXNlciBjbGlja3MgdGhlIFggb24gYW4gQXR0YWNobWVudCB2aWEgdGhlIEF0dGFjaG1lbnRNYW5hZ2VyCiAgICogc28gd2UgbmVlZCB0byBzeW5jIHRoZSBzdGF0ZSBpbiB0aGUgUGFyc2VkRmlsZXNNZW51IHBpY2tlciBoZXJlLgogICAqLwogIGFzeW5jIGZ1bmN0aW9uIGhhbmRsZVJlbW92ZUF0dGFjaG1lbnQoZSkgewogICAgY29uc3QgeyBkb2N1bWVudCB9ID0gZS5kZXRhaWw7CiAgICBhd2FpdCBXb3Jrc3BhY2UuZGVsZXRlUGFyc2VkRmlsZXMoc2x1ZywgW2RvY3VtZW50LmlkXSk7CiAgICByZWZyZXNoKCk7CiAgfQoKICAvKioKICAgKiBUb2dnbGVzIHRoZSBhdHRhY2gtc291cmNlIGRyb3Bkb3duIG1lbnUuCiAgICogQHBhcmFtIHtNb3VzZUV2ZW50fSBlIC0gVGhlIGNsaWNrIGV2ZW50LgogICAqIEByZXR1cm5zIHt2b2lkfQogICAqLwogIGZ1bmN0aW9uIGhhbmRsZUNsaWNrKGUpIHsKICAgIGU/LnRhcmdldD8uYmx1cigpOwogICAgaWYgKCFzaG93TWVudSAmJiBidXR0b25SZWYuY3VycmVudCkgewogICAgICBjb25zdCByZWN0ID0gKGJ1dHRvblJlZi5jdXJyZW50IGFzIEhUTUxFbGVtZW50KS5nZXRCb3VuZGluZ0NsaWVudFJlY3QoKTsKICAgICAgc2V0TWVudVBvcyh7IHRvcDogcmVjdC50b3AsIGxlZnQ6IHJlY3QubGVmdCB9KTsKICAgIH0KICAgIHNldFNob3dNZW51KChwcmV2KSA9PiAhcHJldik7CiAgICByZXR1cm47CiAgfQoKICAvKioKICAgKiBUcmlnZ2VycyB0aGUgaGlkZGVuIGxvY2FsIGZpbGUgdXBsb2FkZXIgKERuRCBpbnB1dCkuCiAgICogU2hvd3MgYSB3YXJuaW5nIHRvYXN0IGlmIHRoZSBkb2N1bWVudCBwcm9jZXNzb3IgaXMgb2ZmbGluZS4KICAgKiBAcmV0dXJucyB7dm9pZH0KICAgKi8KICBmdW5jdGlvbiB0cmlnZ2VyTG9jYWxVcGxvYWQoKSB7CiAgICBjb25zdCBpbnB1dCA9IGRvY3VtZW50Py5nZXRFbGVtZW50QnlJZCgiZG5kLWNoYXQtZmlsZS11cGxvYWRlciIpOwogICAgaWYgKGlucHV0Py5kaXNhYmxlZCkgewogICAgICBzaG93VG9hc3QodCgiZG5kV3JhcHBlci5wcm9jZXNzb3JPZmZsaW5lIiksICJlcnJvciIpOwogICAgICByZXR1cm47CiAgICB9CiAgICBpbnB1dD8uY2xpY2soKTsKICB9CgogIHVzZUVmZmVjdCgoKSA9PiB7CiAgICB3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcihBVFRBQ0hNRU5UU19QUk9DRVNTRURfRVZFTlQsIHJlZnJlc2gpOwogICAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoUkVNT1ZFX0FUVEFDSE1FTlRfRVZFTlQsIGhhbmRsZVJlbW92ZUF0dGFjaG1lbnQpOwogICAgcmV0dXJuICgpID0+IHsKICAgICAgd2luZG93LnJlbW92ZUV2ZW50TGlzdGVuZXIoQVRUQUNITUVOVFNfUFJPQ0VTU0VEX0VWRU5ULCByZWZyZXNoKTsKICAgICAgd2luZG93LnJlbW92ZUV2ZW50TGlzdGVuZXIoCiAgICAgICAgUkVNT1ZFX0FUVEFDSE1FTlRfRVZFTlQsCiAgICAgICAgaGFuZGxlUmVtb3ZlQXR0YWNobWVudCwKICAgICAgKTsKICAgIH07CiAgfSwgW3NsdWcsIHRocmVhZFNsdWcsIHJlZnJlc2hdKTsKCiAgcmV0dXJuICgKICAgIDxkaXYgY2xhc3NOYW1lPSJyZWxhdGl2ZSBmbGV4IGl0ZW1zLWNlbnRlciI+CiAgICAgIDxidXR0b24KICAgICAgICByZWY9e2J1dHRvblJlZn0KICAgICAgICBpZD0iYXR0YWNoLWl0ZW0tYnRuIgogICAgICAgIGRhdGEtdG9vbHRpcC1pZD17CiAgICAgICAgICBzaG93VG9vbHRpcCA/ICJ0b29sdGlwLWF0dGFjaC1pdGVtLWJ0biIgOiAiYXR0YWNoLWl0ZW0tYnRuIgogICAgICAgIH0KICAgICAgICBkYXRhLXRvb2x0aXAtY29udGVudD17CiAgICAgICAgICAhc2hvd1Rvb2x0aXAgPyB0KCJjaGF0X3dpbmRvdy5hdHRhY2hfZmlsZSIpIDogdW5kZWZpbmVkCiAgICAgICAgfQogICAgICAgIGFyaWEtbGFiZWw9e3QoImNoYXRfd2luZG93LmF0dGFjaF9maWxlIil9CiAgICAgICAgYXJpYS1leHBhbmRlZD17c2hvd01lbnV9CiAgICAgICAgZGF0YS10ZXN0aWQ9ImF0dGFjaC1pdGVtLXRyaWdnZXIiCiAgICAgICAgdHlwZT0iYnV0dG9uIgogICAgICAgIG9uQ2xpY2s9e2hhbmRsZUNsaWNrfQogICAgICAgIG9uUG9pbnRlckVudGVyPXtyZWZyZXNofQogICAgICAgIGNsYXNzTmFtZT0iZ3JvdXAgYm9yZGVyLW5vbmUgcmVsYXRpdmUgZmxleCBqdXN0aWZ5LWNlbnRlciBpdGVtcy1jZW50ZXIgY3Vyc29yLXBvaW50ZXIgdy02IGgtNiByb3VuZGVkLWZ1bGwgaG92ZXI6YmctemluYy03MDAgbGlnaHQ6aG92ZXI6Ymctc2xhdGUtMjAwIgogICAgICA+CiAgICAgICAgPGRpdiBjbGFzc05hbWU9InJlbGF0aXZlIj4KICAgICAgICAgIDxQbHVzCiAgICAgICAgICAgIHNpemU9ezE4fQogICAgICAgICAgICBjbGFzc05hbWU9InBvaW50ZXItZXZlbnRzLW5vbmUgdGV4dC16aW5jLTMwMCBsaWdodDp0ZXh0LXNsYXRlLTYwMCBncm91cC1ob3Zlcjp0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBsaWdodDpob3Zlcjp0ZXh0LXRoZW1lLXRleHQtcHJpbWFyeSBsaWdodDpncm91cC1ob3Zlcjp0ZXh0LXNsYXRlLTYwMCBzaHJpbmstMCIKICAgICAgICAgICAgd2VpZ2h0PSJib2xkIgogICAgICAgICAgLz4KICAgICAgICAgIHtmaWxlcy5sZW5ndGggPiAwICYmICgKICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImFic29sdXRlIC10b3AtMi41IC1yaWdodC0yIGJnLXdoaXRlIHRleHQtYmxhY2sgbGlnaHQ6aW52ZXJ0IHRleHQtWzhweF0gcm91bmRlZC1mdWxsIHB4LTEgZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIiPgogICAgICAgICAgICAgIHtmaWxlcy5sZW5ndGh9CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgKX0KICAgICAgICA8L2Rpdj4KICAgICAgPC9idXR0b24+CiAgICAgIHtzaG93VG9vbHRpcCAmJiAoCiAgICAgICAgPFRvb2x0aXAKICAgICAgICAgIHJlZj17dG9vbHRpcFJlZn0KICAgICAgICAgIGlkPSJ0b29sdGlwLWF0dGFjaC1pdGVtLWJ0biIKICAgICAgICAgIHBsYWNlPSJ0b3AiCiAgICAgICAgICBvcGFjaXR5PXsxfQogICAgICAgICAgY2xpY2thYmxlPXshaXNFbWJlZGRpbmd9CiAgICAgICAgICBkZWxheVNob3c9ezMwMH0KICAgICAgICAgIGRlbGF5SGlkZT17aXNFbWJlZGRpbmcgPyA5OTk5OTkgOiA4MDB9IC8vIFByZXZlbnQgdG9vbHRpcCBmcm9tIGhpZGluZyBkdXJpbmcgZW1iZWRkaW5nCiAgICAgICAgICBhcnJvd0NvbG9yPXsKICAgICAgICAgICAgdGhlbWUgPT09ICJsaWdodCIKICAgICAgICAgICAgICA/ICJ2YXIoLS10aGVtZS1tb2RhbC1ib3JkZXIpIgogICAgICAgICAgICAgIDogInZhcigtLXRoZW1lLWJnLXByaW1hcnkpIgogICAgICAgICAgfQogICAgICAgICAgY2xhc3NOYW1lPSJ6LVs5OV0gIXctWzQwMHB4XSAhYmctdGhlbWUtYmctcHJpbWFyeSAhcHgtWzVweF0gIXJvdW5kZWQtbGcgIXBvaW50ZXItZXZlbnRzLWF1dG8gbGlnaHQ6Ym9yZGVyLTIgbGlnaHQ6Ym9yZGVyLXRoZW1lLW1vZGFsLWJvcmRlciIKICAgICAgICA+CiAgICAgICAgICA8UGFyc2VkRmlsZXNNZW51CiAgICAgICAgICAgIG9uRW1iZWRkaW5nQ2hhbmdlPXtzZXRJc0VtYmVkZGluZ30KICAgICAgICAgICAgdG9vbHRpcFJlZj17dG9vbHRpcFJlZn0KICAgICAgICAgICAgaXNMb2FkaW5nPXtpc0xvYWRpbmd9CiAgICAgICAgICAgIGZpbGVzPXtmaWxlc30KICAgICAgICAgICAgY3VycmVudFRva2Vucz17Y3VycmVudFRva2Vuc30KICAgICAgICAgICAgY29udGV4dFdpbmRvdz17Y29udGV4dFdpbmRvd30KICAgICAgICAgICAgd29ya3NwYWNlU2x1Zz17c2x1Z30KICAgICAgICAgICAgdGhyZWFkU2x1Zz17dGhyZWFkU2x1Z30KICAgICAgICAgICAgcmVmcmVzaD17cmVmcmVzaH0KICAgICAgICAgIC8+CiAgICAgICAgPC9Ub29sdGlwPgogICAgICApfQogICAgICB7c2hvd01lbnUgJiYKICAgICAgICBtZW51UG9zICE9PSBudWxsICYmCiAgICAgICAgY3JlYXRlUG9ydGFsKAogICAgICAgICAgPD4KICAgICAgICAgICAgey8qIEJhY2tkcm9wIHRvIGNsb3NlIG1lbnUgb24gb3V0c2lkZSBjbGljayAqL30KICAgICAgICAgICAgPGRpdgogICAgICAgICAgICAgIGNsYXNzTmFtZT0iZml4ZWQgaW5zZXQtMCB6LVs5OTldIgogICAgICAgICAgICAgIG9uTW91c2VEb3duPXsoZSkgPT4gZS5wcmV2ZW50RGVmYXVsdCgpfQogICAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IHNldFNob3dNZW51KGZhbHNlKX0KICAgICAgICAgICAgLz4KICAgICAgICAgICAgPGRpdgogICAgICAgICAgICAgIHJlZj17bWVudVJlZn0KICAgICAgICAgICAgICBzdHlsZT17ewogICAgICAgICAgICAgICAgIi0tYXR0YWNoLWJvdHRvbSI6IGBjYWxjKDEwMHZoIC0gJHttZW51UG9zLnRvcH1weCArIDhweClgLAogICAgICAgICAgICAgICAgIi0tYXR0YWNoLWxlZnQiOiBgJHttZW51UG9zLmxlZnR9cHhgLAogICAgICAgICAgICAgIH19CiAgICAgICAgICAgICAgY2xhc3NOYW1lPSJmaXhlZCBib3R0b20tW3ZhcigtLWF0dGFjaC1ib3R0b20pXSBsZWZ0LVt2YXIoLS1hdHRhY2gtbGVmdCldIGJnLXppbmMtODAwIGxpZ2h0OmJnLXNsYXRlLTUwIGJvcmRlciBib3JkZXItemluYy03MDAgbGlnaHQ6Ym9yZGVyLXNsYXRlLTMwMCByb3VuZGVkLWxnIHNoYWRvdy1sZyB6LVsxMDAwXSBwLTAiCiAgICAgICAgICAgICAgb25Nb3VzZURvd249eyhlKSA9PiBlLnN0b3BQcm9wYWdhdGlvbigpfQogICAgICAgICAgICA+CiAgICAgICAgICAgICAgPEFkZFNvdXJjZU1lbnUKICAgICAgICAgICAgICAgIHdvcmtzcGFjZVNsdWc9e3NsdWd9CiAgICAgICAgICAgICAgICBvbkNsb3NlPXsoKSA9PiBzZXRTaG93TWVudShmYWxzZSl9CiAgICAgICAgICAgICAgICBvbkFkZExvY2FsRmlsZXM9e3RyaWdnZXJMb2NhbFVwbG9hZH0KICAgICAgICAgICAgICAvPgogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgIDwvPiwKICAgICAgICAgIGRvY3VtZW50LmJvZHksCiAgICAgICAgKX0KICAgIDwvZGl2PgogICk7Cn0K
+// SPDX-License-Identifier: MIT
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
+import { Tooltip } from "react-tooltip";
+import { useTranslation } from "react-i18next";
+import { useRef, useState, useEffect } from "react";
+import { createPortal } from "react-dom";
+import { useParams } from "react-router-dom";
+import Workspace from "@/models/workspace";
+import showToast from "@/utils/toast";
+import {
+  ATTACHMENTS_PROCESSED_EVENT,
+  REMOVE_ATTACHMENT_EVENT,
+} from "../../DnDWrapper";
+import { useTheme } from "@/hooks/useTheme";
+import ParsedFilesMenu from "./ParsedFilesMenu";
+import AddSourceMenu from "./AddSourceMenu";
+import useDocument from "@/hooks/useDocument";
+
+/**
+ * This is a simple proxy component that clicks on the DnD file uploader for the user.
+ * @returns
+ */
+export default function AttachItem({
+  workspaceSlug = null,
+  workspaceThreadSlug = null,
+}) {
+  const { t } = useTranslation();
+  const { theme } = useTheme();
+  const params = useParams();
+  const slug = workspaceSlug || params.slug;
+  const threadSlug = workspaceThreadSlug ?? params.threadSlug ?? null;
+  const tooltipRef = useRef(null);
+  const menuRef = useRef(null);
+  const buttonRef = useRef(null);
+  const [showMenu, setShowMenu] = useState(false);
+  const [menuPos, setMenuPos] = useState<{ top: number; left: number } | null>(
+    null,
+  );
+  const [isEmbedding, setIsEmbedding] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  const {
+    document: parsedFiles,
+    isLoading,
+    refresh,
+  } = useDocument(slug, threadSlug);
+
+  const files = parsedFiles?.files || [];
+  const currentTokens = parsedFiles?.currentContextTokenCount || 0;
+  const contextWindow = parsedFiles?.contextWindow || Infinity;
+
+  useEffect(() => {
+    setShowTooltip(files.length > 0);
+  }, [files]);
+
+  /**
+   * Handles the removal of an attachment from the parsed files
+   * and triggers a re-fetch of the parsed files.
+   * This function handles when the user clicks the X on an Attachment via the AttachmentManager
+   * so we need to sync the state in the ParsedFilesMenu picker here.
+   */
+  async function handleRemoveAttachment(e) {
+    const { document } = e.detail;
+    await Workspace.deleteParsedFiles(slug, [document.id]);
+    refresh();
+  }
+
+  /**
+   * Toggles the attach-source dropdown menu.
+   * @param {MouseEvent} e - The click event.
+   * @returns {void}
+   */
+  function handleClick(e) {
+    e?.target?.blur();
+    if (!showMenu && buttonRef.current) {
+      const rect = (buttonRef.current as HTMLElement).getBoundingClientRect();
+      setMenuPos({ top: rect.top, left: rect.left });
+    }
+    setShowMenu((prev) => !prev);
+    return;
+  }
+
+  /**
+   * Triggers the hidden local file uploader (DnD input).
+   * Shows a warning toast if the document processor is offline.
+   * @returns {void}
+   */
+  function triggerLocalUpload() {
+    const input = document?.getElementById("dnd-chat-file-uploader");
+    if (input?.disabled) {
+      showToast(t("dndWrapper.processorOffline"), "error");
+      return;
+    }
+    input?.click();
+  }
+
+  useEffect(() => {
+    window.addEventListener(ATTACHMENTS_PROCESSED_EVENT, refresh);
+    window.addEventListener(REMOVE_ATTACHMENT_EVENT, handleRemoveAttachment);
+    return () => {
+      window.removeEventListener(ATTACHMENTS_PROCESSED_EVENT, refresh);
+      window.removeEventListener(
+        REMOVE_ATTACHMENT_EVENT,
+        handleRemoveAttachment,
+      );
+    };
+  }, [slug, threadSlug, refresh]);
+
+  return (
+    <div className="relative flex items-center">
+      <button
+        ref={buttonRef}
+        id="attach-item-btn"
+        data-tooltip-id={
+          showTooltip ? "tooltip-attach-item-btn" : "attach-item-btn"
+        }
+        data-tooltip-content={
+          !showTooltip ? t("chat_window.attach_file") : undefined
+        }
+        aria-label={t("chat_window.attach_file")}
+        aria-expanded={showMenu}
+        data-testid="attach-item-trigger"
+        type="button"
+        onClick={handleClick}
+        onPointerEnter={refresh}
+        className="group border-none relative flex justify-center items-center cursor-pointer w-6 h-6 rounded-full hover:bg-zinc-700 light:hover:bg-slate-200"
+      >
+        <div className="relative">
+          <Plus
+            size={18}
+            className="pointer-events-none text-zinc-300 light:text-slate-600 group-hover:text-theme-text-primary light:hover:text-theme-text-primary light:group-hover:text-slate-600 shrink-0"
+            weight="bold"
+          />
+          {files.length > 0 && (
+            <div className="absolute -top-2.5 -right-2 bg-white text-black light:invert text-[8px] rounded-full px-1 flex items-center justify-center">
+              {files.length}
+            </div>
+          )}
+        </div>
+      </button>
+      {showTooltip && (
+        <Tooltip
+          ref={tooltipRef}
+          id="tooltip-attach-item-btn"
+          place="top"
+          opacity={1}
+          clickable={!isEmbedding}
+          delayShow={300}
+          delayHide={isEmbedding ? 999999 : 800} // Prevent tooltip from hiding during embedding
+          arrowColor={
+            theme === "light"
+              ? "var(--theme-modal-border)"
+              : "var(--theme-bg-primary)"
+          }
+          className="z-99 !w-[400px] !bg-theme-bg-primary !px-[5px] !rounded-lg !pointer-events-auto light:border-2 light:border-theme-modal-border"
+        >
+          <ParsedFilesMenu
+            onEmbeddingChange={setIsEmbedding}
+            tooltipRef={tooltipRef}
+            isLoading={isLoading}
+            files={files}
+            currentTokens={currentTokens}
+            contextWindow={contextWindow}
+            workspaceSlug={slug}
+            threadSlug={threadSlug}
+            refresh={refresh}
+          />
+        </Tooltip>
+      )}
+      {showMenu &&
+        menuPos !== null &&
+        createPortal(
+          <>
+            {/* Backdrop to close menu on outside click */}
+            <div
+              className="fixed inset-0 z-[999]"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => setShowMenu(false)}
+            />
+            <div
+              ref={menuRef}
+              style={{
+                "--attach-bottom": `calc(100vh - ${menuPos.top}px + 8px)`,
+                "--attach-left": `${menuPos.left}px`,
+              }}
+              className="fixed bottom-[var(--attach-bottom)] left-[var(--attach-left)] bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-300 rounded-lg shadow-lg z-[1000] p-0"
+              onMouseDown={(e) => e.stopPropagation()}
+            >
+              <AddSourceMenu
+                workspaceSlug={slug}
+                onClose={() => setShowMenu(false)}
+                onAddLocalFiles={triggerLocalUpload}
+              />
+            </div>
+          </>,
+          document.body,
+        )}
+    </div>
+  );
+}

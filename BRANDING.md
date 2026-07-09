@@ -1,6 +1,8 @@
 # Branding Guidelines — OpenSIN Chat
 
-> OpenSIN Chat is a sovereign, independent product by [OpenSIN-AI](https://github.com/OpenSIN-AI).
+> **Important:** OpenSIN Chat is a sovereign, independent product by [OpenSIN-AI](https://github.com/OpenSIN-AI).
+> While it shares architectural foundations with earlier work, it is NOT a fork and should not be referred to as such.
+> It is a purpose-built platform for political research, German compliance, and specialized intelligence workflows.
 
 ## Colors
 
@@ -21,7 +23,8 @@
 - **Display Name:** `OpenSIN Chat` (with space, in UI)
 - **Package Name:** `opensin-chat` (in `package.json`)
 - **Storage Key Prefix:** `opensin_` (e.g., `opensin_user`, `opensin_authToken`)
-- **Third-party NPM Packages:** upstream package scopes remain unchanged where used as-is
+- **DB Provider Identifier:** `anythingllm-router` (kept for database backward compatibility)
+- **Third-party NPM Packages:** `@mintplex-labs/*` remain unchanged where used
 
 ## External URLs
 
@@ -32,6 +35,11 @@
 ## Telemetry Policy
 
 **NO outbound calls to third parties.** This is a hard requirement.
-Code reviews must verify this compliance.
+Blocked URLs:
 
-For upstream acknowledgments and third-party component credits, see [`CREDITS.md`](./CREDITS.md).
+- PostHog / Mintplex CDN
+- `cdn.anythingllm.com`
+- `hub.anythingllm.com`
+- `docs.anythingllm.com`
+
+Code reviews must verify this compliance.
