@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@langchain/community": "^1.1.29",
+    "@langchain/textsplitters": "^0.1.0",
     "@xenova/transformers": "^2.14.0",
     "ajv": "^8.20.0",
     "body-parser": "2.3.0",
@@ -49,6 +50,7 @@
     "uuid": "^14.0.1",
     "wavefile": "^11.0.0",
     "winston": "^3.13.0",
+    "yauzl": "^3.0.0",
     "youtube-transcript-plus": "^2.0.0",
     "youtubei.js": "^9.1.0"
   },
