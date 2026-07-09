@@ -124,11 +124,11 @@ export default function useChatStream({
     const observer = new ResizeObserver(([entry]) => {
       const inputHeight =
         entry.borderBoxSize?.[0]?.blockSize ?? entry.target.offsetHeight;
-      chatEl.style.paddingBottom = `${inputHeight}px`;
+      if (chatEl?.style) chatEl.style.paddingBottom = `${inputHeight}px`;
     });
     observer.observe(wrapper);
     const initialHeight = wrapper.offsetHeight;
-    chatEl.style.paddingBottom = `${initialHeight}px`;
+    if (chatEl?.style) chatEl.style.paddingBottom = `${initialHeight}px`;
     return () => observer.disconnect();
   }, [isEmpty]);
 

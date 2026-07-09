@@ -11,7 +11,11 @@ import { PROVIDER_PRIVACY_MAP } from "./constants";
  */
 function resolveProvider(map, key) {
   if (key == null) return null;
-  return map[key] ?? { name: key };
+  return (
+    map[key] ?? {
+      name: key.charAt(0).toUpperCase() + key.slice(1),
+    }
+  );
 }
 
 /**

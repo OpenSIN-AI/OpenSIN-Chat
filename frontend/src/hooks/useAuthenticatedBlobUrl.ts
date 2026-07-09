@@ -49,5 +49,7 @@ export default function useAuthenticatedBlobUrl(url?: string | null) {
     };
   }, [url]);
 
-  return { blobUrl, error, loading: !blobUrl && !error };
+  // loading is only true when a URL was provided but the fetch has not yet
+  // resolved. When url is null/undefined we are deliberately idle, not loading.
+  return { blobUrl, error, loading: !!url && !blobUrl && !error };
 }

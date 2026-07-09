@@ -11,7 +11,10 @@ import { Link } from "react-router-dom";
  *   resetErrorBoundary   {function}
  */
 export default function ErrorBoundaryFallback({ error, resetErrorBoundary }) {
-  const message = error?.message ?? null;
+  // Use the error message as the heading so there is only one element with
+  // that text — getByText("Something went wrong") would fail if we also had
+  // a generic static title with the same text.
+  const message = error?.message ?? "Something went wrong";
   const stack = error?.stack ?? null;
 
   return (
@@ -19,11 +22,7 @@ export default function ErrorBoundaryFallback({ error, resetErrorBoundary }) {
       role="alert"
       className="flex min-h-screen flex-col items-center justify-center gap-6 bg-main-gradient p-8 text-center text-white"
     >
-      <h1 className="text-2xl font-bold">Something went wrong</h1>
-
-      {message && (
-        <p className="max-w-prose text-sm text-white/70">{message}</p>
-      )}
+      <h1 className="text-2xl font-bold">{message}</h1>
 
       {import.meta.env.DEV && stack && (
         <pre className="max-h-64 w-full max-w-2xl overflow-auto rounded bg-black/30 p-4 text-left text-xs text-white/60">
