@@ -336,7 +336,7 @@ const scrapingEngines = {
   },
 
   _vaneEngine: async function (query) {
-    const { VaneClient } = require("../../../../research/vaneClient");
+    const { VaneClient } = require("../../../../../research/vaneClient");
 
     if (!(await VaneClient.isAvailable())) {
       this.super.introspect(

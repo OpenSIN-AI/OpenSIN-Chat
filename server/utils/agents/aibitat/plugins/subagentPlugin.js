@@ -5,7 +5,7 @@
 //          The child runs in isolation and its result is returned.
 // Docs: subagentPlugin.doc.md
 
-const { subagentSpawner } = require("./subagentSpawner");
+const { subagentSpawner } = require("../../subagentSpawner");
 
 /**
  * AIbitat plugin that gives agents the ability to spawn subagents.
