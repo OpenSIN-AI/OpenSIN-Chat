@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "@/components/SettingsSidebar";
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import ConnectedView from "./ConnectedView";
 import SetupView from "./SetupView";
@@ -22,6 +22,7 @@ interface TelegramBotConfig {
 }
 
 export default function TelegramBotSettings(): React.ReactElement {
+  const isMobile = useIsMobileLayout();
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { config, isLoading } = useTelegramBot();

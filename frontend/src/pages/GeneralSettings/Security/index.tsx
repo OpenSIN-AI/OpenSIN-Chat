@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { useState, useEffect, FormEvent } from "react";
 import Sidebar from "@/components/SettingsSidebar";
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import showToast from "@/utils/toast";
 import System from "@/models/system";
 import paths from "@/utils/paths";
@@ -19,6 +19,7 @@ import {
 } from "@/utils/username";
 
 export default function GeneralSecurity() {
+  const isMobile = useIsMobileLayout();
   const { t } = useTranslation();
   return (
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">

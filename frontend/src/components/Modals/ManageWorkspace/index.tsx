@@ -3,7 +3,7 @@ import React, { useState, useEffect, memo } from "react";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
-import { isMobileOnly } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import useUser from "../../../hooks/useUser";
 import useSystemSettings from "../../../hooks/useSystemSettings";
 import useWorkspace from "../../../hooks/useWorkspaceBySlug";
@@ -21,9 +21,11 @@ const ManageWorkspace = ({ hideModal = noop, providedSlug = null }) => {
   const { workspace } = useWorkspace(providedSlug ?? slug);
   const [selectedTab, setSelectedTab] = useState<string>("documents");
 
+  const isMobileLayout = useIsMobileLayout();
+
   if (!workspace) return null;
 
-  if (isMobileOnly) {
+  if (isMobileLayout) {
     return (
       <ModalWrapper isOpen={true} closeModal={hideModal}>
         <div className="w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border overflow-hidden">

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Sidebar, { SidebarMobileHeader } from "@/components/Sidebar";
 import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { FullScreenLoader } from "@/components/Preloader";
 import { ArrowUUpLeft } from "@phosphor-icons/react/dist/csr/ArrowUUpLeft";
 import { ChatText } from "@phosphor-icons/react/dist/csr/ChatText";
@@ -33,6 +33,7 @@ const TABS: Record<string, React.ComponentType<any>> = {
 };
 
 export default function WorkspaceSettings(): JSX.Element | null {
+  const isMobile = useIsMobileLayout();
   const { loading, requiresAuth, mode } = usePasswordModal();
 
   if (loading) return <FullScreenLoader />;

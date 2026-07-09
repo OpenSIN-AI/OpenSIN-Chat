@@ -447,6 +447,23 @@ body {
   color: #009ee0;
 }
 
+/* ── Reduced motion (WCAG 2.3.3) ───────────────────────────────────────── */
+/* Users who opt into reduced motion via OS settings get instant transitions.
+   The !important overrides Tailwind utility classes (e.g. animate-*, transition-*)
+   and any inline transition/animation declarations.
+   scroll-behavior: auto prevents smooth-scroll on <html> which can cause
+   vestibular issues. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* ── Katex styles ──────────────────────────────────────────────────────── */
 /* Keep the katex import after Tailwind so it can override preflight */
 @import "katex/dist/katex.min.css";

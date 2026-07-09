@@ -3,7 +3,7 @@
 // Docs: useAgents.doc.md
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import Admin from "@/models/admin";
 import System from "@/models/system";
 import MCPServers from "@/models/mcpServers";
@@ -132,6 +132,7 @@ export function useAgents(): UseAgentsReturn {
 
   const isMultiUserMode = settings?.MultiUserMode ?? false;
   const filterSkillsByMode = ([_, skillConfig]: [string, any]) => {
+  const isMobile = useIsMobileLayout();
     if (!skillConfig.mode) return true;
     if (skillConfig.mode.includes("singleUserOnly") && isMultiUserMode)
       return false;

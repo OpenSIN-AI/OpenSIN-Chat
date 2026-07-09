@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/SettingsSidebar";
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { ArrowLeft } from "@phosphor-icons/react/dist/csr/ArrowLeft";
 import { ChatText } from "@phosphor-icons/react/dist/csr/ChatText";
 import { Brain } from "@phosphor-icons/react/dist/csr/Brain";
@@ -62,6 +62,7 @@ interface Job {
 }
 
 export default function RunDetailPage() {
+  const isMobile = useIsMobileLayout();
   const { t } = useTranslation();
   const { id, runId } = useParams();
   const navigate = useNavigate();
