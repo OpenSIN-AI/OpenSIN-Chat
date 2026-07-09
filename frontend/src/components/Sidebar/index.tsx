@@ -227,7 +227,6 @@ export function SidebarMobileHeader() {
         <button
           type="button"
           onClick={() => setShowSidebar(true)}
-          aria-label={t("common.showSidebar")}
           className="rounded-md p-2 flex items-center justify-center text-theme-text-secondary hover:bg-white/10 transition-colors"
           aria-label={t("sidebar.openSidebar")}
           aria-expanded={showSidebar}

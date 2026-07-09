@@ -67,7 +67,7 @@ function loadDateGroupCollapseState(workspaceSlug) {
   try {
     const stored = safeGetItem(`thread-folder-collapse-${workspaceSlug}`);
     if (stored) return JSON.parse(stored);
-  } catch (e) { console.warn("[indexx] non-fatal error:", e?.message || e); }
+  } catch (e) { console.warn("[ThreadContainer] non-fatal error:", e?.message || e); }
   return {};
 }
 
@@ -79,7 +79,7 @@ function saveDateGroupCollapseState(workspaceSlug, groupId, isCollapsed) {
       `thread-folder-collapse-${workspaceSlug}`,
       JSON.stringify(state),
     );
-  } catch (e) { console.warn("[indexx] non-fatal error:", e?.message || e); }
+  } catch (e) { console.warn("[ThreadContainer] non-fatal error:", e?.message || e); }
 }
 
 function ThreadContainer({
