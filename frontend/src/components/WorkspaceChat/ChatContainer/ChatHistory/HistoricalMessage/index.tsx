@@ -70,12 +70,12 @@ const HistoricalMessage = ({
     return (
       <div key={uuid} className="flex justify-start w-full">
         <div className="py-1.5 pl-0 pr-4 flex flex-col md:max-w-[80%]">
-          <div className="p-2 rounded-lg bg-red-50 text-red-500">
-            <span className="inline-block">
-              <Warning className="h-4 w-4 mb-1 inline-block" />{" "}
+          <div className="p-3 rounded-lg border border-red-500/20 bg-red-500/[0.08] text-red-400">
+            <span className="inline-flex items-center gap-x-1.5 text-sm font-medium">
+              <Warning className="h-4 w-4 inline-block" />
               {t("common.couldNotRespond")}
             </span>
-            <p className="text-xs font-mono mt-2 border-l-2 border-red-300 pl-2 bg-red-200 p-2 rounded-sm">
+            <p className="text-xs font-mono mt-2 border-l-2 border-red-500/40 pl-2.5 py-1.5 bg-red-500/[0.06] rounded-sm text-red-300/90">
               {error}
             </p>
           </div>
@@ -109,7 +109,7 @@ const HistoricalMessage = ({
         className={`${isDeleted ? "animate-remove" : ""} flex justify-end w-full group py-2.5`}
       >
         <div className="flex flex-col items-end max-w-[80%]">
-          <div className="bg-white light:bg-zinc-900 text-zinc-900 light:text-zinc-50 rounded-2xl rounded-br-sm px-4 py-2.5 [&_p]:m-0">
+          <div className="bg-white/[0.06] light:bg-zinc-100 border border-white/[0.06] light:border-zinc-200 text-[#e4e4e7] light:text-zinc-900 rounded-xl rounded-br-md px-4 py-2.5 [&_p]:m-0">
             <TruncatableContent>
               <RenderChatContent
                 role={role}
