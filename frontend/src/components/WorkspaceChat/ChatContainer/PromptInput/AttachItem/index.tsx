@@ -152,7 +152,7 @@ export default function AttachItem({
               ? "var(--theme-modal-border)"
               : "var(--theme-bg-primary)"
           }
-          className="z-99 !w-[400px] !bg-theme-bg-primary !px-[5px] !rounded-lg !pointer-events-auto light:border-2 light:border-theme-modal-border"
+          className="z-[99] !w-[400px] !bg-theme-bg-primary !px-[5px] !rounded-lg !pointer-events-auto light:border-2 light:border-theme-modal-border"
         >
           <ParsedFilesMenu
             onEmbeddingChange={setIsEmbedding}

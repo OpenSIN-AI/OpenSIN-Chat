@@ -66,7 +66,7 @@ export default function DockerModelRunnerOptions({ settings }: any) {
               delayShow={300}
               delayHide={800}
               clickable={true}
-              className="tooltip !text-xs !opacity-100 z-99 !max-w-[250px] !whitespace-normal !break-words"
+              className="tooltip !text-xs !opacity-100 z-[99] !max-w-[250px] !whitespace-normal !break-words"
             >
               {t("dockerModelRunner.baseUrlTooltip1")}
               <br />
@@ -118,7 +118,7 @@ export default function DockerModelRunnerOptions({ settings }: any) {
               delayShow={300}
               delayHide={800}
               clickable={true}
-              className="tooltip !text-xs !opacity-100 z-99 !max-w-[350px] !whitespace-normal !break-words"
+              className="tooltip !text-xs !opacity-100 z-[99] !max-w-[350px] !whitespace-normal !break-words"
             >
               {t("dockerModelRunner.modelContextWindowTooltip1")}
               <br />
@@ -318,7 +318,7 @@ function DockerModelRunnerModelSelection({
       <Tooltip
         id="install-model-tooltip"
         place="top"
-        className="tooltip !text-xs !opacity-100 z-99"
+        className="tooltip !text-xs !opacity-100 z-[99]"
       />
       <input
         type="hidden"

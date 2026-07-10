@@ -36,7 +36,7 @@ export default function LeftSidebarIconBar() {
           id="lsib-toggle"
           place="right"
           delayShow={300}
-          className="tooltip !text-xs z-99"
+          className="tooltip !text-xs z-[99]"
         />
       </div>
 
@@ -47,7 +47,7 @@ export default function LeftSidebarIconBar() {
             id="lsib-profile"
             place="right"
             delayShow={300}
-            className="tooltip !text-xs z-99"
+            className="tooltip !text-xs z-[99]"
           />
         </div>
       )}

@@ -49,7 +49,7 @@ export default function SendPromptButton({
         id="send-prompt"
         place="bottom"
         delayShow={300}
-        className="tooltip !text-xs z-99"
+        className="tooltip !text-xs z-[99]"
       />
     </>
   );

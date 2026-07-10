@@ -250,7 +250,7 @@ function LMStudioModelSelection({
                 delayShow={300}
                 delayHide={400}
                 clickable={true}
-                className="tooltip !text-xs !opacity-100 z-99 !max-w-[250px] !whitespace-normal !break-words"
+                className="tooltip !text-xs !opacity-100 z-[99] !max-w-[250px] !whitespace-normal !break-words"
               >
                 <p className="text-xs leading-[18px] font-base">
                   {t("lmStudio.modelErrorTooltip")}

@@ -420,7 +420,7 @@ export default function AgentBuilder(): JSX.Element {
         id="content-summarization-tooltip"
         place="top"
         delayShow={300}
-        className="tooltip !text-xs z-99"
+        className="tooltip !text-xs z-[99]"
       >
         <p className="text-sm">
           {t("agentBuilder.summarizeDescription")}

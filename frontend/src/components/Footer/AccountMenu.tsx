@@ -39,7 +39,7 @@ import { safeRemoveItem } from "@/utils/safeStorage";
 const FEEDBACK_URL = `${paths.github()}/issues/new`;
 
 const ITEM_CLASSES =
-  "group flex items-center gap-x-3 w-full text-left px-2.5 py-2 rounded-lg text-sm text-theme-text-primary light:text-theme-text-primary hover:bg-theme-action-menu-item-hover transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400";
+  "group flex items-center gap-x-3 w-full text-left px-2.5 py-2 rounded-lg text-sm text-theme-text-primary light:text-zinc-800 hover:bg-theme-action-menu-item-hover light:hover:bg-zinc-100 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400";
 
 const ICON_CLASSES = "h-[18px] w-[18px] shrink-0 opacity-80";
 

@@ -392,7 +392,7 @@ function DirectoryTooltips() {
       id="directory-item"
       place="bottom"
       delayShow={800}
-      className="tooltip invert light:invert-0 z-99 max-w-[300px]"
+      className="tooltip invert light:invert-0 z-[99] max-w-[300px]"
       render={({ content }) => {
         const data = safeJsonParse(content, null);
         if (!data) return null;

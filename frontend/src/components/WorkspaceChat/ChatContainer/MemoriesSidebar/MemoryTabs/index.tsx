@@ -77,7 +77,7 @@ export default function MemoryTabs() {
         id="memories-workspace-pill"
         place="bottom"
         delayShow={800}
-        className="tooltip !text-xs z-99"
+        className="tooltip !text-xs z-[99]"
       />
     </div>
   );

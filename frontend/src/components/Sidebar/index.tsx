@@ -145,7 +145,7 @@ export default function Sidebar() {
                 id="sidebar-header-toggle"
                 place="bottom"
                 delayShow={300}
-                className="tooltip !text-xs z-99"
+                className="tooltip !text-xs z-[99]"
               />
             </div>
           </div>
@@ -246,7 +246,7 @@ export function SidebarMobileHeader() {
         <div className="w-12"></div>
       </header>
       <div
-        className={`z-99 fixed top-0 left-0 transition-all duration-500 w-[100vw] h-[100vh] ${
+        className={`z-[99] fixed top-0 left-0 transition-all duration-500 w-[100vw] h-[100vh] ${
           showSidebar ? "translate-x-0" : "-translate-x-[100vw]"
         }`}
       >
@@ -296,7 +296,7 @@ export function SidebarMobileHeader() {
                   <ActiveWorkspaces />
                 </div>
               </div>
-              <div className="z-99 absolute bottom-0 left-0 right-0 pt-2 pb-6 rounded-br-[26px] bg-theme-bg-sidebar bg-opacity-80 backdrop-filter backdrop-blur-md">
+              <div className="z-[99] absolute bottom-0 left-0 right-0 pt-2 pb-6 rounded-br-[26px] bg-theme-bg-sidebar bg-opacity-80 backdrop-filter backdrop-blur-md">
                 <Footer />
               </div>
             </div>
@@ -336,25 +336,25 @@ function WorkspaceAndThreadTooltips() {
         id="workspace-name"
         place="right"
         delayShow={800}
-        className="tooltip !text-xs z-99"
+        className="tooltip !text-xs z-[99]"
       />
       <Tooltip
         id="workspace-thread-name"
         place="right"
         delayShow={800}
-        className="tooltip !text-xs z-99"
+        className="tooltip !text-xs z-[99]"
       />
       <Tooltip
         id="upload-workspace"
         place="top"
         delayShow={300}
-        className="tooltip !text-xs z-99"
+        className="tooltip !text-xs z-[99]"
       />
       <Tooltip
         id="gear-workspace"
         place="top"
         delayShow={300}
-        className="tooltip !text-xs z-99"
+        className="tooltip !text-xs z-[99]"
       />
     </React.Fragment>,
     document.body,

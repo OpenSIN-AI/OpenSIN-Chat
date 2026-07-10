@@ -109,7 +109,7 @@ export default function ModalWrapper({
   const modal = (
     <div
       ref={dialogRef}
-      className="bg-black/60 backdrop-blur-sm fixed top-0 left-0 outline-none w-screen h-screen flex items-center justify-center z-99"
+      className="bg-black/60 backdrop-blur-sm fixed top-0 left-0 outline-none w-screen h-screen flex items-center justify-center z-[99]"
       onClick={closeModal ? closeModal : undefined}
       role="dialog"
       aria-modal="true"

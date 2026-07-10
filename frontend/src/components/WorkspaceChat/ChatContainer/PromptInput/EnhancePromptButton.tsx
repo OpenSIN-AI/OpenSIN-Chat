@@ -72,7 +72,7 @@ export default function EnhancePromptButton({
         id="enhance-prompt"
         place="bottom"
         delayShow={300}
-        className="tooltip !text-xs z-99"
+        className="tooltip !text-xs z-[99]"
       />
     </>
   );

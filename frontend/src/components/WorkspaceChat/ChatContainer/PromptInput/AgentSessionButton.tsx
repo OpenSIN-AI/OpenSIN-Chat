@@ -47,7 +47,7 @@ export default function AgentSessionButton({
         id="agent-session"
         place="bottom"
         delayShow={300}
-        className="tooltip !text-xs z-99"
+        className="tooltip !text-xs z-[99]"
       />
     </>
   );

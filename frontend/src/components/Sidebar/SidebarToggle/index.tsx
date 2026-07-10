@@ -130,7 +130,7 @@ export function ToggleSidebarButton({ showSidebar, setShowSidebar }: any) {
         id="sidebar-toggle"
         place="top"
         delayShow={300}
-        className="tooltip !text-xs z-99"
+        className="tooltip !text-xs z-[99]"
       />
     </>
   );

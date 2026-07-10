@@ -89,7 +89,7 @@ function SettingsSidebar() {
           <div className="w-12"></div>
         </div>
         <div
-          className={`z-99 fixed top-0 left-0 transition-all duration-500 w-[100vw] h-[100vh] ${
+          className={`z-[99] fixed top-0 left-0 transition-all duration-500 w-[100vw] h-[100vh] ${
             showSidebar ? "translate-x-0" : "-translate-x-[100vw]"
           }`}
         >

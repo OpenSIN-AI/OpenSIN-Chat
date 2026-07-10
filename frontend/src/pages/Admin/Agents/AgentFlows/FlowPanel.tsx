@@ -69,7 +69,7 @@ function ManageFlowMenu({ flow, onDelete }: ManageFlowMenuProps): JSX.Element {
         <Gear className="h-5 w-5" weight="bold" />
       </button>
       {open && (
-        <div className="absolute min-w-[140px] top-full right-0 mt-1 border-[1.5px] border-white/40 rounded-lg bg-theme-action-menu-bg flex flex-col shadow-[0_4px_14px_rgba(0,0,0,0.25)] text-theme-text-primary z-99 md:z-10">
+        <div className="absolute min-w-[140px] top-full right-0 mt-1 border-[1.5px] border-white/40 rounded-lg bg-theme-action-menu-bg flex flex-col shadow-[0_4px_14px_rgba(0,0,0,0.25)] text-theme-text-primary z-[99] md:z-10">
           <button
             type="button"
             onClick={() => navigate(paths.agents.editAgent(flow.uuid))}

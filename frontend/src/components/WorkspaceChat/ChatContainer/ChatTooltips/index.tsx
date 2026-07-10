@@ -110,7 +110,7 @@ export function ChatTooltips() {
         id="agent-skill-disabled-tooltip"
         place="top"
         delayShow={300}
-        className="tooltip !text-xs z-99"
+        className="tooltip !text-xs z-[99]"
         content={t("chat_window.agent_skills_disabled_in_session")}
       />
       <DocumentLevelTooltip />

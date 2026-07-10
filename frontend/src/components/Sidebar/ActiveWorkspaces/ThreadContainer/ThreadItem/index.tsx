@@ -23,26 +23,31 @@ import { copyText } from "@/utils/clipboard";
 const THREAD_CALLOUT_DETAIL_WIDTH: any = 26;
 const DEFAULT_THREAD_NAMES = ["Thread", "New Thread", "*New Thread"];
 
+// Returns a localized display name for a thread.
+// Standard English names are replaced with the German i18n key when no
+// meaningful date is available for disambiguation.
 export function threadDisplayName(
   thread: any,
   duplicateNames?: Set<string>,
+  t?: (key: string, fallback?: string) => string,
 ): string {
-  if (!thread?.name) return "";
+  if (!thread?.name) return t?.("threadItem.defaultName", "Neuer Chat") ?? "Neuer Chat";
   const isDefault = DEFAULT_THREAD_NAMES.includes(thread.name);
   const needsDisambiguation = isDefault || duplicateNames?.has(thread.name);
   if (!needsDisambiguation) return thread.name;
   const dateRaw = thread.lastUpdatedAt || thread.createdAt;
-  if (!dateRaw) return thread.name;
+  const baseName = t?.("threadItem.defaultName", "Neuer Chat") ?? "Neuer Chat";
+  if (!dateRaw) return baseName;
   const d = new Date(dateRaw);
-  const date = d.toLocaleDateString(undefined, {
+  const date = d.toLocaleDateString("de-DE", {
     day: "2-digit",
     month: "2-digit",
   });
-  const time = d.toLocaleTimeString(undefined, {
+  const time = d.toLocaleTimeString("de-DE", {
     hour: "2-digit",
     minute: "2-digit",
   });
-  return `${thread.name} · ${date} ${time}`;
+  return `${baseName} · ${date} ${time}`;
 }
 
 function ThreadItem({
@@ -64,7 +69,7 @@ function ThreadItem({
   const workspaceSlug = workspace?.slug ?? urlSlug;
   const optionsContainer = useRef(null);
   const [showOptions, setShowOptions] = useState(false);
-  const displayName = threadDisplayName(thread, duplicateNames);
+  const displayName = threadDisplayName(thread, duplicateNames, t);
   const linkTo = thread.virtual
     ? paths.workspace.chat(workspaceSlug)
     : !thread.slug

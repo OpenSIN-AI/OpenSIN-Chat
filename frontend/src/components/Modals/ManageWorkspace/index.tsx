@@ -75,7 +75,7 @@ const ManageWorkspace = ({ hideModal = noop, providedSlug = null }) => {
   }
 
   return (
-    <div className="w-screen h-screen fixed top-0 left-0 flex justify-center items-center z-99">
+    <div className="w-screen h-screen fixed top-0 left-0 flex justify-center items-center z-[99]">
       <div className="backdrop h-full w-full absolute top-0 z-10" />
       <div className="absolute max-h-full w-fit transition duration-300 z-20 md:overflow-y-auto py-10">
         <div className="relative bg-theme-bg-secondary rounded-[12px] shadow border-2 border-theme-modal-border">

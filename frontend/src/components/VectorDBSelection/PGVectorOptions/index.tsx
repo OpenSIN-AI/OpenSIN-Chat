@@ -22,7 +22,7 @@ export default function PGVectorOptions({ settings }: any) {
             <Tooltip
               delayHide={300}
               id="pgvector-connection-string-tooltip"
-              className="max-w-md z-99"
+              className="max-w-md z-[99]"
               clickable={true}
             >
               <p className="text-md whitespace-pre-line break-words">
@@ -70,7 +70,7 @@ export default function PGVectorOptions({ settings }: any) {
             <Tooltip
               delayHide={300}
               id="pgvector-table-name-tooltip"
-              className="max-w-md z-99"
+              className="max-w-md z-[99]"
               clickable={true}
             >
               <p className="text-md whitespace-pre-line break-words">

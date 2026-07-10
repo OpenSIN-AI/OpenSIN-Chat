@@ -143,7 +143,7 @@ export default function DrupalWikiOptions() {
                     <Tooltip
                       delayHide={300}
                       id="access-token-tooltip"
-                      className="max-w-xs z-99"
+                      className="max-w-xs z-[99]"
                       clickable={true}
                     >
                       <p className="text-sm font-light text-theme-text-primary">

@@ -20,7 +20,7 @@ export function WorkspaceDocumentTooltips() {
         id="ws-directory-item"
         place="bottom"
         delayShow={800}
-        className="tooltip invert light:invert-0 z-99 max-w-[200px]"
+        className="tooltip invert light:invert-0 z-[99] max-w-[200px]"
         render={({ content }: { content: string }) => {
           const data = safeJsonParse(content, null) as TooltipData | null;
           if (!data) return null;

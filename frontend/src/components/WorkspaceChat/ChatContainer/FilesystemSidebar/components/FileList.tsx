@@ -202,7 +202,7 @@ export function FileList({
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-xs text-theme-text-primary light:text-theme-text-primary font-medium truncate">
-                            {file.name}
+                            {file.name || t("sidebar.filesystem.unknownFile", "Unbekannte Datei")}
                           </p>
                           <span className="text-[10px] text-zinc-500 light:text-slate-400">
                             {formatSize(file.size)}
@@ -350,7 +350,7 @@ function FileSection({
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm text-theme-text-primary light:text-theme-text-primary font-medium truncate">
-                    {item.name}
+                    {item.name || t("sidebar.filesystem.unknownFile", "Unbekannte Datei")}
                   </p>
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-zinc-500 light:text-slate-400">

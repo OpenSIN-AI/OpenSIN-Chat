@@ -82,7 +82,7 @@ export default function MicButton({
         id="tooltip-microphone-btn"
         place="top"
         delayShow={300}
-        className="tooltip !text-xs z-99"
+        className="tooltip !text-xs z-[99]"
       />
     </button>
   );
