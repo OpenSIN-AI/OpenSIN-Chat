@@ -123,12 +123,12 @@ export default function AttachItem({
         type="button"
         onClick={handleClick}
         onPointerEnter={refresh}
-        className="group border-none relative flex justify-center items-center cursor-pointer w-6 h-6 rounded-full hover:bg-zinc-700 light:hover:bg-slate-200"
+        className="group border border-transparent relative flex justify-center items-center cursor-pointer w-6 h-6 rounded-full transition-colors duration-150 hover:bg-white/[0.04] light:hover:bg-zinc-100 hover:border-white/[0.06] light:hover:border-zinc-200"
       >
         <div className="relative">
           <Plus
-            size={18}
-            className="pointer-events-none text-zinc-300 light:text-slate-600 group-hover:text-theme-text-primary light:hover:text-theme-text-primary light:group-hover:text-slate-600 shrink-0"
+            size={16}
+            className="pointer-events-none text-[#a1a1aa] light:text-zinc-600 group-hover:text-[#e4e4e7] light:group-hover:text-zinc-900 shrink-0"
             weight="bold"
           />
           {files.length > 0 && (
@@ -183,7 +183,7 @@ export default function AttachItem({
                 "--attach-bottom": `calc(100vh - ${menuPos.top}px + 8px)`,
                 "--attach-left": `${menuPos.left}px`,
               }}
-              className="fixed bottom-[var(--attach-bottom)] left-[var(--attach-left)] bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-300 rounded-lg shadow-lg z-[1000] p-0"
+              className="fixed bottom-[var(--attach-bottom)] left-[var(--attach-left)] bg-[#141414] light:bg-white border border-white/[0.07] light:border-zinc-200 rounded-xl shadow-2xl shadow-black/50 z-[1000] p-0"
               onMouseDown={(e) => e.stopPropagation()}
             >
               <AddSourceMenu
