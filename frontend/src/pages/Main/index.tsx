@@ -16,7 +16,7 @@ export default function Main() {
   if (loading) return <FullScreenLoader />;
   if (apiError)
     return (
-      <div className="fixed inset-0 bg-zinc-950 light:bg-slate-50 flex flex-col items-center justify-center overflow-hidden p-6">
+      <div className="fixed inset-0 bg-[#0a0a0a] light:bg-[#f9fafb] flex flex-col items-center justify-center overflow-hidden p-6">
         <div className="text-center max-w-md">
           <p className="text-red-400 text-xl font-semibold mb-2">
             {t("error.serverUnavailable")}
@@ -41,7 +41,7 @@ function MainLayout() {
   const isMobile = useIsMobileLayout();
 
   return (
-    <div className="w-screen h-screen overflow-hidden bg-zinc-950 light:bg-slate-50 flex flex-row">
+    <div className="w-screen h-screen overflow-hidden bg-[#0a0a0a] light:bg-[#f9fafb] flex flex-row">
       {!isMobile ? <LeftSidebarIconBar /> : null}
       {!isMobile ? <Sidebar /> : <SidebarMobileHeader />}
       <div className="flex-1 min-w-0 overflow-hidden">

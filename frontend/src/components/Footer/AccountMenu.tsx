@@ -98,7 +98,7 @@ function ThemeSegment() {
       <span className="text-sm text-theme-text-primary light:text-theme-text-primary">
         {t("common.theme")}
       </span>
-      <div className="flex items-center gap-0.5 rounded-lg bg-black/20 light:bg-black/5 p-0.5">
+      <div className="flex items-center gap-0.5 rounded-md bg-white/[0.06] light:bg-zinc-100 p-0.5">
         {options.map(({ key, label, Icon }) => {
           const active = theme === key;
           return (
@@ -109,13 +109,13 @@ function ThemeSegment() {
               aria-label={label}
               aria-pressed={active}
               title={label}
-              className={`flex items-center justify-center h-6 w-7 rounded-md transition-colors duration-150 ${
+              className={`flex items-center justify-center h-5.5 w-6 rounded-[5px] transition-colors duration-150 ${
                 active
-                  ? "bg-white text-slate-900"
-                  : "text-theme-text-primary light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary"
+                  ? "bg-[#fafafa] light:bg-white text-zinc-900 light:text-zinc-900 shadow-sm"
+                  : "text-[#71717a] light:text-zinc-400 hover:text-[#a1a1aa] light:hover:text-zinc-700"
               }`}
             >
-              <Icon className="h-4 w-4" weight={active ? "fill" : "regular"} />
+              <Icon className="h-3.5 w-3.5" weight={active ? "fill" : "regular"} />
             </button>
           );
         })}
@@ -229,7 +229,7 @@ function AccountMenu({ compact = false }: { compact?: boolean }) {
       className={
         compact
           ? ""
-          : "w-full px-2 pt-2 border-t border-white/[0.06] light:border-zinc-200"
+          : "w-full px-2 pt-2 border-t border-white/[0.05] light:border-zinc-200"
       }
     >
       <button
@@ -243,8 +243,8 @@ function AccountMenu({ compact = false }: { compact?: boolean }) {
         data-tooltip-content={compact ? t("common.profile") : undefined}
         className={
           compact
-            ? "flex items-center justify-center w-9 h-9 rounded-full border border-white/20 light:border-slate-400 cursor-pointer transition-all bg-theme-action-menu-bg hover:bg-theme-action-menu-item-hover text-theme-text-primary shadow-sm"
-            : "flex items-center gap-x-2.5 w-full px-2 py-2 rounded-xl hover:bg-theme-action-menu-item-hover transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+            ? "flex items-center justify-center w-8 h-8 rounded-full border border-white/[0.08] light:border-slate-200 cursor-pointer transition-all bg-white/[0.04] hover:bg-white/[0.08] text-theme-text-primary"
+            : "flex items-center gap-x-2.5 w-full px-2 py-1.5 rounded-lg hover:bg-white/[0.04] light:hover:bg-zinc-50 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/20"
         }
       >
         {compact ? (
@@ -282,7 +282,7 @@ function AccountMenu({ compact = false }: { compact?: boolean }) {
               bottom: pos.bottom,
               width: pos.width,
             }}
-            className="z-[60] rounded-xl border border-white/[0.08] light:border-zinc-200 bg-[#161616] light:bg-white shadow-2xl shadow-black/50 p-1.5 max-h-[70vh] overflow-y-auto no-scroll"
+            className="z-[60] rounded-xl border border-white/[0.07] light:border-zinc-200 bg-[#141414] light:bg-white shadow-2xl shadow-black/60 p-1.5 max-h-[70vh] overflow-y-auto no-scroll"
           >
             {/* Identity header */}
             <div className="flex items-center gap-x-2.5 px-2.5 py-2">

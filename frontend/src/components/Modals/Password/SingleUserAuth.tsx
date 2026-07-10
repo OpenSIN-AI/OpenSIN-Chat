@@ -104,11 +104,11 @@ export default function SingleUserAuth({
   return (
     <>
       <form onSubmit={handleLogin} className="flex flex-col w-full">
-        <div className="flex flex-col gap-y-2 mb-8">
-          <h2 className="text-2xl font-semibold tracking-tight text-zinc-50 light:text-slate-900">
+        <div className="flex flex-col gap-y-1.5 mb-7">
+          <h2 className="text-xl font-semibold tracking-tight text-[#fafafa] light:text-zinc-900">
             {t("login.multi-user.welcome")}
           </h2>
-          <p className="text-sm text-zinc-400 light:text-slate-500 leading-relaxed">
+          <p className="text-sm text-[#71717a] light:text-zinc-500 leading-relaxed">
             {t("login.sign-in", { appName: appName || "OpenSIN Chat" })}
           </p>
         </div>
@@ -116,14 +116,14 @@ export default function SingleUserAuth({
         <div className="flex flex-col gap-y-2">
           <label
             htmlFor="single-user-password"
-            className="text-sm font-medium text-zinc-300 light:text-slate-700"
+            className="text-xs font-medium text-[#a1a1aa] light:text-zinc-500 uppercase tracking-wider"
           >
             {t("login.single-user.password")}
           </label>
           <div className="relative">
             <Lock
-              size={18}
-              className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500"
+              size={15}
+              className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[#52525b]"
             />
             <input
               aria-label={t("common.password", "Password")}
@@ -131,7 +131,7 @@ export default function SingleUserAuth({
               name="password"
               type={showPassword ? "text" : "password"}
               placeholder="••••••••"
-              className="w-full h-12 rounded-xl border border-white/10 bg-zinc-800/60 light:bg-slate-100 light:border-slate-200 pl-11 pr-11 text-sm text-zinc-100 light:text-slate-900 placeholder:text-zinc-600 transition focus:outline-none focus:border-[#009ee0] focus:ring-2 focus:ring-[#009ee0]/30"
+              className="w-full h-10 rounded-lg border border-white/[0.08] light:border-zinc-200 bg-[#1c1c1c] light:bg-zinc-50 pl-10 pr-10 text-sm text-[#fafafa] light:text-zinc-900 placeholder:text-[#3f3f46] light:placeholder:text-zinc-300 transition focus:outline-none focus:border-white/20 light:focus:border-zinc-400 focus:bg-[#222222] light:focus:bg-white"
               required={true}
               autoComplete="current-password"
             />
@@ -139,16 +139,16 @@ export default function SingleUserAuth({
               type="button"
               onClick={() => setShowPassword((s) => !s)}
               aria-label={showPassword ? "Hide password" : "Show password"}
-              className="absolute right-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-white/5 transition"
+              className="absolute right-2 top-1/2 -translate-y-1/2 flex h-7 w-7 items-center justify-center rounded-md text-[#52525b] hover:text-[#a1a1aa] hover:bg-white/[0.05] transition"
             >
-              {showPassword ? <EyeSlash size={18} /> : <Eye size={18} />}
+              {showPassword ? <EyeSlash size={15} /> : <Eye size={15} />}
             </button>
           </div>
 
           {error && (
             <p
               role="alert"
-              className="mt-1 rounded-lg border border-red-500/20 bg-red-500/10 px-3 py-2 text-sm text-red-400"
+              className="rounded-md border border-red-500/20 bg-red-500/[0.08] px-3 py-2 text-xs text-red-400"
             >
               {t("login.multi-user.errorPrefix", { error })}
             </p>
@@ -159,11 +159,11 @@ export default function SingleUserAuth({
           disabled={loading || appNameLoading}
           type="submit"
           aria-label={t("common.save", "Save")}
-          className="mt-8 flex h-12 w-full items-center justify-center gap-x-2 rounded-xl bg-[#009ee0] text-sm font-semibold text-white transition hover:bg-[#0089c4] focus:outline-none focus:ring-2 focus:ring-[#009ee0]/40 disabled:cursor-not-allowed disabled:opacity-60"
+          className="mt-6 flex h-10 w-full items-center justify-center gap-x-2 rounded-lg bg-[#fafafa] light:bg-zinc-900 text-sm font-semibold text-zinc-900 light:text-white transition hover:bg-[#e4e4e7] light:hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-white/20 disabled:cursor-not-allowed disabled:opacity-40"
         >
           {loading ? (
             <>
-              <CircleNotch size={18} className="animate-spin" />
+              <CircleNotch size={16} className="animate-spin" />
               {t("login.multi-user.validating")}
             </>
           ) : (

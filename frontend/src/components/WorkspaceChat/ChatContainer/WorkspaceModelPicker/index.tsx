@@ -170,17 +170,17 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
           onClick={() => setShowSelector(!showSelector)}
           aria-label={t("chat_window.select_model")}
           aria-expanded={showSelector}
-          className={`group border-none cursor-pointer px-2.5 py-1 flex items-center rounded-full transition-all pointer-events-auto ${
+          className={`group border cursor-pointer px-2.5 py-1 flex items-center rounded-full transition-colors duration-150 pointer-events-auto ${
             showSelector
-              ? "bg-zinc-700 light:bg-slate-200"
-              : "hover:bg-zinc-700 light:hover:bg-slate-200"
+              ? "bg-white/[0.06] light:bg-zinc-100 border-white/[0.08] light:border-zinc-200"
+              : "border-transparent hover:bg-white/[0.04] light:hover:bg-zinc-100 hover:border-white/[0.06] light:hover:border-zinc-200"
           }`}
         >
           <span
             className={`text-xs ${
               showSelector
-                ? "text-theme-text-primary light:text-theme-text-primary"
-                : "text-zinc-500 light:text-slate-500 group-hover:text-theme-text-primary light:hover:text-theme-text-primary light:group-hover:text-slate-800"
+                ? "text-[#e4e4e7] light:text-zinc-900"
+                : "text-[#71717a] light:text-zinc-500 group-hover:text-[#a1a1aa] light:group-hover:text-zinc-800"
             }`}
           >
             {modelName || t("chat_window.select_model")}
@@ -188,7 +188,7 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
         </button>
 
         {showSelector && (
-          <div className="absolute left-0 top-full mt-1 bg-zinc-800 light:bg-white border border-zinc-700 light:border-slate-300 rounded-xl shadow-lg w-[620px] overflow-hidden pointer-events-auto">
+          <div className="absolute left-0 top-full mt-1 bg-[#141414] light:bg-white border border-white/[0.07] light:border-zinc-200 rounded-xl shadow-2xl shadow-black/50 w-[620px] overflow-hidden pointer-events-auto">
             <LLMSelectorModal
               key={refreshKey}
               workspaceSlug={slug}

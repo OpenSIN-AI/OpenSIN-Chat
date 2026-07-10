@@ -269,8 +269,8 @@ function ActiveWorkspaces() {
                             transition-colors duration-150
                             flex flex-grow w-[75%] gap-x-2 py-1.5 pl-2 pr-1.5 rounded-md text-sm justify-start items-center
                             ${isActive
-                              ? "bg-white/[0.08] light:bg-zinc-100 text-[#fafafa] light:text-zinc-900"
-                              : "text-[#a1a1aa] light:text-zinc-500 hover:bg-white/[0.04] light:hover:bg-zinc-50 hover:text-[#fafafa] light:hover:text-zinc-900"
+                              ? "bg-white/[0.06] light:bg-zinc-100 text-[#e4e4e7] light:text-zinc-900"
+                              : "text-[#71717a] light:text-zinc-500 hover:bg-white/[0.03] light:hover:bg-zinc-50 hover:text-[#a1a1aa] light:hover:text-zinc-900"
                             }
                           `}
                         >

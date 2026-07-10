@@ -25,16 +25,16 @@ function CapabilityCard({ icon: Icon, title, description, onClick }: any) {
     <button
       type="button"
       onClick={onClick}
-      className="group flex flex-col gap-2 p-4 rounded-xl border border-white/[0.06] light:border-zinc-200 bg-transparent hover:bg-white/[0.04] light:hover:bg-zinc-50 hover:border-white/[0.12] light:hover:border-zinc-300 transition-all text-left w-full"
+      className="group flex items-start gap-3 p-3.5 rounded-lg border border-white/[0.05] light:border-zinc-200 bg-transparent hover:bg-white/[0.03] light:hover:bg-zinc-50 hover:border-white/[0.09] light:hover:border-zinc-300 transition-all text-left w-full"
     >
-      <div className="w-7 h-7 rounded-lg bg-white/[0.06] light:bg-zinc-100 flex items-center justify-center flex-shrink-0">
-        <Icon size={14} className="text-[#a1a1aa] light:text-zinc-500" />
+      <div className="mt-0.5 w-6 h-6 rounded-md border border-white/[0.06] light:border-zinc-200 bg-white/[0.04] light:bg-zinc-100 flex items-center justify-center flex-shrink-0">
+        <Icon size={13} className="text-[#71717a] light:text-zinc-400" />
       </div>
       <div className="flex flex-col gap-0.5">
-        <span className="text-sm font-medium text-theme-text-primary light:text-theme-text-primary">
+        <span className="text-sm font-medium text-[#e4e4e7] light:text-zinc-800">
           {title}
         </span>
-        <span className="text-xs text-zinc-500 light:text-slate-500 leading-tight">
+        <span className="text-xs text-[#52525b] light:text-zinc-400 leading-relaxed">
           {description}
         </span>
       </div>
@@ -108,21 +108,21 @@ export default function EmptyState({
 
   return (
     <div className="flex flex-col h-full w-full items-center justify-center overflow-y-auto px-2 md:px-6">
-      <div className="flex flex-col items-center w-full max-w-[800px] py-8">
-        <h1 className="text-[#fafafa] light:text-zinc-900 text-2xl md:text-3xl font-semibold mb-3 text-center tracking-tight">
+      <div className="flex flex-col items-center w-full max-w-[720px] py-8">
+        <h1 className="text-[#e4e4e7] light:text-zinc-900 text-2xl md:text-[1.75rem] font-semibold mb-2.5 text-center tracking-tight text-balance">
           {t("main-page.greeting")}
         </h1>
         {modelName && (
-          <div className="flex items-center gap-x-1.5 mb-8">
-            <span className="inline-flex items-center gap-x-1 px-2.5 py-1 rounded-full text-xs font-medium bg-white/[0.06] light:bg-zinc-100 text-[#a1a1aa] light:text-zinc-600 border border-white/[0.08] light:border-zinc-200">
-              <Sparkle size={11} weight="fill" />
+          <div className="flex items-center gap-x-1.5 mb-7">
+            <span className="inline-flex items-center gap-x-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-white/[0.04] light:bg-zinc-100 text-[#71717a] light:text-zinc-500 border border-white/[0.06] light:border-zinc-200">
+              <Sparkle size={10} weight="fill" />
               {modelName}
             </span>
           </div>
         )}
-        {!modelName && <div className="mb-8" />}
+        {!modelName && <div className="mb-7" />}
 
-        <div className="flex items-center gap-x-2 mb-3">
+        <div className="flex items-center gap-x-2 mb-2.5">
           <AgentModeButton
             sendCommand={sendCommand}
             promptInput=""
@@ -130,7 +130,7 @@ export default function EmptyState({
             visible={true}
             {...agentMode}
           />
-          <span className="text-xs text-zinc-400 light:text-slate-500">
+          <span className="text-xs text-[#52525b] light:text-zinc-400">
             {t2("chat_window.start_agent_session")}
           </span>
         </div>
@@ -146,8 +146,8 @@ export default function EmptyState({
           threadSlug={threadSlug}
         />
 
-        <div className="grid grid-cols-2 gap-3 w-full mt-6">
-          {capabilities.map((cap, idx) => (
+        <div className="grid grid-cols-2 gap-2 w-full mt-5">
+          {capabilities.map((cap) => (
             <CapabilityCard
               key={cap.title}
               icon={cap.icon}

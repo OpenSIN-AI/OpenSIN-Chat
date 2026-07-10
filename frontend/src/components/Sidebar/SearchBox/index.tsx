@@ -76,12 +76,12 @@ function SearchBox({ user, showNewWsModal }: any) {
           onChange={handleSearch}
           onReset={handleReset}
           onFocus={(e) => e.target.select()}
-          className="border border-white/[0.06] light:border-zinc-200 w-full h-full rounded-md bg-white/[0.03] light:bg-zinc-50 pl-7 focus:pl-3 pr-1 placeholder:text-[#52525b] light:placeholder:text-zinc-400 placeholder:text-xs outline-none focus:ring-1 focus:ring-white/10 light:focus:ring-zinc-300 text-[#fafafa] light:text-zinc-900 search-input peer text-xs transition-all"
+          className="border border-white/[0.05] light:border-zinc-200 w-full h-full rounded-md bg-white/[0.02] light:bg-zinc-50 pl-7 focus:pl-3 pr-1 placeholder:text-[#3f3f46] light:placeholder:text-zinc-400 placeholder:text-xs outline-none focus:ring-1 focus:ring-white/[0.08] light:focus:ring-zinc-300 text-[#e4e4e7] light:text-zinc-900 search-input peer text-xs transition-all"
         />
         {!searchTerm && (
           <MagnifyingGlass
-            size={12}
-            className="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-[#52525b] light:text-zinc-400 peer-focus:invisible"
+            size={11}
+            className="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-[#3f3f46] light:text-zinc-400 peer-focus:invisible"
             weight="regular"
           />
         )}
@@ -217,10 +217,10 @@ function ShortWidthNewWorkspaceButton({ user, showNewWsModal }: any) {
         data-tooltip-content={t("new-workspace.title")}
         aria-label={t("new-workspace.title")}
         onClick={showNewWsModal}
-        className="flex items-center justify-center bg-white light:bg-zinc-900 rounded-md p-1.5 hover:bg-zinc-100 light:hover:bg-zinc-800 transition-colors duration-150 border-none flex-shrink-0"
+        className="flex items-center justify-center bg-[#fafafa] light:bg-zinc-900 rounded-md p-1.5 hover:bg-[#e4e4e7] light:hover:bg-zinc-800 transition-colors duration-150 border-none flex-shrink-0"
       >
         <Plus
-          size={13}
+          size={12}
           weight="bold"
           className="text-zinc-900 light:text-white"
         />
