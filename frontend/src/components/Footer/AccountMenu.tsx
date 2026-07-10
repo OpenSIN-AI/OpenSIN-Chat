@@ -95,7 +95,7 @@ function ThemeSegment() {
 
   return (
     <div className="flex items-center justify-between px-2.5 py-1.5">
-      <span className="text-sm text-theme-text-primary light:text-theme-text-primary">
+      <span className="text-sm text-theme-text-primary light:text-zinc-800">
         {t("common.theme")}
       </span>
       <div className="flex items-center gap-0.5 rounded-md bg-white/[0.06] light:bg-zinc-100 p-0.5">
@@ -134,14 +134,14 @@ function LanguageRow() {
   } = useLanguageOptions();
   return (
     <div className="flex items-center justify-between px-2.5 py-1.5">
-      <span className="text-sm text-theme-text-primary light:text-theme-text-primary">
+      <span className="text-sm text-theme-text-primary light:text-zinc-800">
         {t("common.language")}
       </span>
       <select
         aria-label={t("common.language")}
         value={currentLanguage || "en"}
         onChange={(e) => changeLanguage(e.target.value)}
-        className="border-none bg-black/20 light:bg-black/5 text-theme-text-primary light:text-theme-text-primary text-xs rounded-md py-1.5 pl-2.5 pr-6 outline-none focus:ring-2 focus:ring-white/40 cursor-pointer"
+        className="border-none bg-black/20 light:bg-zinc-100 text-theme-text-primary light:text-zinc-800 text-xs rounded-md py-1.5 pl-2.5 pr-6 outline-none focus:ring-2 focus:ring-blue-400/40 cursor-pointer"
       >
         {supportedLanguages.map((lang) => (
           <option key={lang} value={lang}>
@@ -288,12 +288,14 @@ function AccountMenu({ compact = false }: { compact?: boolean }) {
             <div className="flex items-center gap-x-2.5 px-2.5 py-2">
               <Avatar pfp={pfp} initials={initials} />
               <div className="flex flex-col min-w-0">
-                <span className="text-sm font-semibold text-theme-text-primary light:text-theme-text-primary truncate">
+                <span className="text-sm font-semibold text-theme-text-primary light:text-zinc-900 truncate">
                   {displayName}
                 </span>
-                <span className="text-xs text-theme-text-secondary light:text-slate-500 truncate">
-                  {subtitle}
-                </span>
+                {!!subtitle && (
+                  <span className="text-xs text-theme-text-secondary light:text-slate-500 truncate">
+                    {subtitle}
+                  </span>
+                )}
               </div>
             </div>
 
@@ -354,7 +356,7 @@ function AccountMenu({ compact = false }: { compact?: boolean }) {
             <div className="my-1 h-px bg-white/10 light:bg-slate-200" />
 
             {/* Preferences */}
-            <p className="px-2.5 pt-1 pb-0.5 text-[11px] font-medium uppercase tracking-wide text-theme-placeholder light:text-slate-400">
+            <p className="px-2.5 pt-1 pb-0.5 text-[11px] font-medium uppercase tracking-wide text-theme-placeholder light:text-zinc-400">
               {t("common.preferences")}
             </p>
             <ThemeSegment />

@@ -177,15 +177,15 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
           aria-expanded={showSelector}
           className={`group border cursor-pointer px-2.5 py-1 flex items-center rounded-full transition-colors duration-150 pointer-events-auto ${
             showSelector
-              ? "bg-white/[0.06] light:bg-zinc-100 border-white/[0.08] light:border-zinc-200"
-              : "border-transparent hover:bg-white/[0.04] light:hover:bg-zinc-100 hover:border-white/[0.06] light:hover:border-zinc-200"
+              ? "bg-white/[0.06] light:bg-zinc-100 border-white/[0.08] light:border-zinc-300"
+              : "bg-white/[0.03] light:bg-zinc-100 border-white/[0.06] light:border-zinc-300 hover:bg-white/[0.06] light:hover:bg-zinc-200"
           }`}
         >
           <span
             className={`text-xs ${
               showSelector
                 ? "text-[#e4e4e7] light:text-zinc-900"
-                : "text-[#71717a] light:text-zinc-500 group-hover:text-[#a1a1aa] light:group-hover:text-zinc-800"
+                : "text-[#71717a] light:text-zinc-600 group-hover:text-[#a1a1aa] light:group-hover:text-zinc-900"
             }`}
           >
             {modelName || t("chat_window.select_model")}
