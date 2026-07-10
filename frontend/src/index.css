@@ -391,16 +391,13 @@
  * 118 intentionellen Vorkommen im Light-Theme.
  */
 [data-theme="light"] .text-white {
-  color: var(--color-text);
+  color: var(--theme-text-primary);
 }
 
 [data-theme="light"] .text-description {
   color: var(--theme-text-secondary);
 }
 
-[data-theme="light"] .bg-theme-bg-secondary {
-  border: 1px solid var(--theme-sidebar-border);
-}
 
 [data-theme="light"] .border-white\/5,
 [data-theme="light"] .border-white\/10,
@@ -614,6 +611,12 @@ body {
   color: var(--color-theme-accent, #ffffff);
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+[data-theme="light"] .markdown a {
+  color: #009ee0;
+}
+[data-theme="light"] .markdown a:hover {
+  color: #0079b0;
 }
 .markdown strong {
   font-weight: 600;
