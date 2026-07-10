@@ -27,6 +27,7 @@ function RunNode({
   depth: number;
 }) {
   const { cancelRun } = useAgentRuns();
+  const { t } = useTranslation();
   const isActive = run.status === "running" || run.status === "waiting_input";
 
   return (

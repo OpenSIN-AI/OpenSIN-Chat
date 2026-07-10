@@ -31,6 +31,10 @@ function isPdfFile(file: File): boolean {
 export const DndUploaderContext = createContext<{
   files: any[];
   parseAttachments: () => any[];
+  onDrop?: (acceptedFiles: any[], rejections?: any[]) => void | Promise<void>;
+  ready?: boolean;
+  dragging?: boolean;
+  setDragging?: (dragging: boolean) => void;
 }>({
   files: [],
   parseAttachments: () => [],
@@ -91,9 +95,9 @@ export function DnDFileUploaderProvider({
 
   // Refs to always point at the latest handler closures so the
   // window event listeners (registered once on mount) never go stale.
-  const handleRemoveRef = useRef(null);
-  const handlePastedAttachmentRef = useRef(null);
-  const handleRemoveParsedFileRef = useRef(null);
+  const handleRemoveRef = useRef<any>(null);
+  const handlePastedAttachmentRef = useRef<any>(null);
+  const handleRemoveParsedFileRef = useRef<any>(null);
 
   useEffect(() => {
     function onRemove(e) {
@@ -191,7 +195,7 @@ export function DnDFileUploaderProvider({
   async function handlePastedAttachment(event: any) {
     const { files = [] } = event.detail;
     if (!files.length) return;
-    const newAccepted = [];
+    const newAccepted: any[] = [];
     for (const file of files) {
       if (file.type.startsWith("image/")) {
         newAccepted.push({
@@ -285,7 +289,7 @@ export function DnDFileUploaderProvider({
    */
   async function embedEligibleAttachments(newAttachments: any = []) {
     window.dispatchEvent(new CustomEvent(ATTACHMENTS_PROCESSING_EVENT));
-    const promises = [];
+    const promises: any[] = [];
 
     const { currentContextTokenCount, contextWindow } =
       await mutateParsedFiles();
@@ -295,7 +299,7 @@ export function DnDFileUploaderProvider({
     setMaxTokens(workspaceContextWindow);
 
     let totalTokenCount = currentContextTokenCount;
-    const batchPendingFiles = [];
+    const batchPendingFiles: any[] = [];
 
     for (const attachment of newAttachments) {
       // Images/attachments are chat specific.
@@ -413,7 +417,7 @@ export function DnDFileUploaderProvider({
     setDragging(false);
 
     /** @type {Attachment[]} */
-    const newAccepted = [];
+    const newAccepted: any[] = [];
     for (const file of acceptedFiles) {
       if (file.type.startsWith("image/")) {
         newAccepted.push({
@@ -602,8 +606,8 @@ export default function DnDFileUploaderWrapper({ children }: any) {
     disabled: !ready,
     noClick: true,
     noKeyboard: true,
-    onDragEnter: () => setDragging(true),
-    onDragLeave: () => setDragging(false),
+    onDragEnter: () => setDragging?.(true),
+    onDragLeave: () => setDragging?.(false),
   });
 
   return (

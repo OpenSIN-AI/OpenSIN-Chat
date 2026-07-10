@@ -41,7 +41,7 @@ export default function WorkspaceChat({
   // Stores { key, workspace, history } currently rendered. Lags the props so
   // the previous chat stays mounted until the next one's history is ready,
   // avoiding a skeleton/loader flash on workspace/thread switches.
-  const [loaded, setLoaded] = useState(null);
+  const [loaded, setLoaded] = useState<any>(null);
 
   useEffect(() => {
     if (loading || historyLoading) return;
@@ -71,7 +71,7 @@ export default function WorkspaceChat({
   try {
     hasPendingMessage = !!sessionStorage.getItem(PENDING_HOME_MESSAGE);
   } catch (e) {
-    console.warn("[WorkspaceChat] non-fatal error:", e?.message || e);
+    console.warn("[index] non-fatal error:", e?.message || e);
   }
   if (loaded === null) {
     if (hasPendingMessage) {

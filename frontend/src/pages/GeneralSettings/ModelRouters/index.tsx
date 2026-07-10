@@ -18,6 +18,7 @@ export default function ModelRouters() {
   const { isOpen, openModal, closeModal } = useModal();
   const { routers, isLoading, refresh } = useModelRouters();
   const [editingRouter, setEditingRouter] = useState<any>(null);
+  const isMobile = useIsMobileLayout();
 
   const openCreateModal = () => {
     setEditingRouter(null);
@@ -86,6 +87,7 @@ interface LayoutProps {
 }
 
 function Layout({ t, showAction, onAction, children }: LayoutProps) {
+  const isMobile = useIsMobileLayout();
   return (
     <div className="w-screen h-screen overflow-hidden bg-zinc-950 light:bg-slate-50 flex md:mt-0 mt-6">
       <Sidebar />

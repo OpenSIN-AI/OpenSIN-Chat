@@ -9,7 +9,7 @@ export default function SkillRow({
   highlighted = false,
   disabled = false,
 }: any) {
-  const ref = useRef(null);
+  const ref = useRef<any>(null);
   useEffect(() => {
     if (highlighted) ref.current?.scrollIntoView({ block: "nearest" });
   }, [highlighted]);

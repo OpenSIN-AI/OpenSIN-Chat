@@ -98,6 +98,7 @@ interface FeatureLayoutProps {
 }
 
 function FeatureLayout({ children }: FeatureLayoutProps) {
+  const isMobile = useIsMobileLayout();
   return (
     <div
       id="workspace-feature-settings-container"

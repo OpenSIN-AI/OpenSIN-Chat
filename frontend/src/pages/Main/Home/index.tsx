@@ -236,6 +236,7 @@ function HomeContent({
   threadSlug,
   setThreadSlug,
 }: HomeContentProps) {
+  const isMobile = useIsMobileLayout();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const isMobile = useIsMobileLayout();
@@ -369,6 +370,7 @@ function HomeContent({
 }
 
 function NoWorkspacesAssigned() {
+  const isMobile = useIsMobileLayout();
   const { t } = useTranslation();
   const isMobile = useIsMobileLayout();
   return (

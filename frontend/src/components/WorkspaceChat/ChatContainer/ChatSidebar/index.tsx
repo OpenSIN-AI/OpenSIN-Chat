@@ -114,7 +114,7 @@ export function ChatSidebarProvider({ children }: any) {
     try {
       localStorage.setItem("opensin_source_filter", sourceFilter);
     } catch (e) {
-      console.warn("[ChatSidebar] non-fatal error:", e?.message || e);
+      console.warn("[index] non-fatal error:", e?.message || e);
     }
   }, [sourceFilter]);
 
@@ -318,7 +318,7 @@ export default function ChatSidebar({
         if (!isNaN(n) && n >= minWidth && n <= maxWidth) return n;
       }
     } catch (e) {
-      console.warn("[ChatSidebar] non-fatal error:", e?.message || e);
+      console.warn("[index] non-fatal error:", e?.message || e);
     }
     return defaultWidth;
   });
@@ -334,7 +334,7 @@ export default function ChatSidebar({
           String(width),
         );
       } catch (e) {
-        console.warn("[ChatSidebar] non-fatal error:", e?.message || e);
+        console.warn("[index] non-fatal error:", e?.message || e);
       }
     }
   }, [width]);

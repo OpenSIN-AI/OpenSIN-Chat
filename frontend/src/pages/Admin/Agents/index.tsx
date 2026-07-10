@@ -52,6 +52,7 @@ export default function AdminAgents() {
     IGNORE_CHANGE_SETTINGS,
   } = useAgentForm();
 
+  const isMobile = useIsMobileLayout();
   const isMultiUserMode = settings?.MultiUserMode ?? false;
   const { configurableSkills, appIntegrationSkills, defaultSkills } =
     useMemo(() => {
@@ -320,6 +321,7 @@ function SkillLayout({
   handleSubmit,
   handleCancel,
 }: SkillLayoutProps) {
+  const isMobile = useIsMobileLayout();
   return (
     <div
       id="workspace-agent-settings-container"

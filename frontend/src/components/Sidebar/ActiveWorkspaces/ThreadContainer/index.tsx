@@ -68,7 +68,7 @@ function loadDateGroupCollapseState(workspaceSlug) {
     const stored = safeGetItem(`thread-folder-collapse-${workspaceSlug}`);
     if (stored) return JSON.parse(stored);
   } catch (e) {
-    console.warn("[ThreadContainer] non-fatal error:", e?.message || e);
+    console.warn("[index] non-fatal error:", e?.message || e);
   }
   return {};
 }
@@ -82,7 +82,7 @@ function saveDateGroupCollapseState(workspaceSlug, groupId, isCollapsed) {
       JSON.stringify(state),
     );
   } catch (e) {
-    console.warn("[ThreadContainer] non-fatal error:", e?.message || e);
+    console.warn("[index] non-fatal error:", e?.message || e);
   }
 }
 
@@ -146,7 +146,7 @@ function ThreadContainer({
   }, [threads]);
 
   const [ctrlPressed, setCtrlPressed] = useState(false);
-  const [activeId, setActiveId] = useState(null);
+  const [activeId, setActiveId] = useState<any>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),

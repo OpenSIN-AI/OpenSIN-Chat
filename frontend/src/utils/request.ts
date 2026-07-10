@@ -10,10 +10,13 @@ export function userFromStorage() {
   return safeJsonParse(userString, null);
 }
 
-export function baseHeaders(providedToken = null) {
+export function baseHeaders(
+  providedToken: string | null = null,
+): Record<string, string> {
   const token = providedToken || safeGetItem(AUTH_TOKEN);
+  if (!token) return {};
   return {
-    Authorization: token ? `Bearer ${token}` : null,
+    Authorization: `Bearer ${token}`,
   };
 }
 

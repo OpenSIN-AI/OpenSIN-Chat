@@ -125,7 +125,7 @@ export default function AddSourceMenu({
 
   const [view, setView] = useState("root"); // "root" | "sources" | "url"
   const [open, setOpen] = useState(isOpenProp ?? !trigger);
-  const menuRef = useRef(null);
+  const menuRef = useRef<any>(null);
 
   const isControlled = isOpenProp !== undefined;
   const isTriggerMode = !isControlled && !!trigger;
@@ -362,7 +362,7 @@ function SourcesView({ t, workspaceSlug, onBack, onClose }) {
     mutate: mutateDocuments,
   } = useDocuments();
   const files = useMemo(() => flattenLocalFiles(localFiles), [localFiles]);
-  const [addingId, setAddingId] = useState(null);
+  const [addingId, setAddingId] = useState<any>(null);
 
   async function handleAdd(file) {
     if (!workspaceSlug) {
@@ -437,7 +437,7 @@ function SourcesView({ t, workspaceSlug, onBack, onClose }) {
 }
 
 function UrlView({ t, workspaceSlug, onBack, onClose }) {
-  const inputRef = useRef(null);
+  const inputRef = useRef<any>(null);
   const [link, setLink] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");

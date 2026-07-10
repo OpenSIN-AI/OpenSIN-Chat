@@ -349,7 +349,7 @@ export function parseChunkSource({ title = "", chunks = [] }: any) {
     try {
       url = new URL(chunks[0].chunkSource.split(sourceID)[1]);
     } catch (e) {
-      console.warn("[Citation] non-fatal error:", e?.message || e);
+      console.warn("[index] non-fatal error:", e?.message || e);
     }
 
     if (!url) return nullResponse;

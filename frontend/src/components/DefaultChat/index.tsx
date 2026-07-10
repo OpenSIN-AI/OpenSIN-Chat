@@ -25,7 +25,7 @@ export default function DefaultChatContainer() {
   const { user } = useUser();
   const { logo } = useLogo();
   const { workspaces, isLoading: loading } = useWorkspaces();
-  const [lastVisitedWorkspace, setLastVisitedWorkspace] = useState(null);
+  const [lastVisitedWorkspace, setLastVisitedWorkspace] = useState<any>(null);
 
   useEffect(() => {
     const serializedLastVisitedWorkspace = safeGetItem(LAST_VISITED_WORKSPACE);

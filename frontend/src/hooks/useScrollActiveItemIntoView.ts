@@ -14,7 +14,7 @@ export default function useScrollActiveItemIntoView({
   behavior,
   block,
 }) {
-  const ref = useRef(null);
+  const ref = useRef<any>(null);
 
   useEffect(() => {
     if (isActive) {

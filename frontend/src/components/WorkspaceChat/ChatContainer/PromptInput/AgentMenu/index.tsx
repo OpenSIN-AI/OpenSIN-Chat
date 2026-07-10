@@ -42,7 +42,7 @@ export function AvailableAgents({
   promptRef,
   centered = false,
 }: any) {
-  const formRef = useRef(null);
+  const formRef = useRef<any>(null);
   const agentSessionActive = useIsAgentSessionActive();
   const [searchParams] = useSearchParams();
   const { t } = useTranslation();

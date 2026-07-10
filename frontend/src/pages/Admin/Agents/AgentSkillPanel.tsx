@@ -52,13 +52,15 @@ export default function AgentSkillPanel({
   agentSkills,
 }: AgentSkillPanelProps): JSX.Element {
   const { t } = useTranslation();
+  const noop = () => {};
+  const skillKey = selectedSkill ?? "";
   if (selectedMcpServer) {
     return (
       <ServerPanel
         server={selectedMcpServer}
-        toggleServer={toggleMCP}
-        onDelete={handleMCPServerDelete}
-        onToggleTool={handleMCPToolToggle}
+        toggleServer={toggleMCP ?? noop}
+        onDelete={handleMCPServerDelete ?? noop}
+        onToggleTool={handleMCPToolToggle ?? noop}
       />
     );
   }
@@ -67,9 +69,9 @@ export default function AgentSkillPanel({
     return (
       <FlowPanel
         flow={selectedFlow}
-        toggleFlow={toggleFlow}
+        toggleFlow={toggleFlow ?? noop}
         enabled={activeFlowIds?.includes(selectedFlow.uuid) ?? false}
-        onDelete={handleFlowDelete}
+        onDelete={handleFlowDelete ?? noop}
       />
     );
   }
@@ -79,15 +81,15 @@ export default function AgentSkillPanel({
       <ImportedSkillConfig
         key={(selectedSkill as any).hubId}
         selectedSkill={selectedSkill}
-        setImportedSkills={setImportedSkills}
+        setImportedSkills={setImportedSkills ?? (() => {})}
       />
     );
   }
 
   const SelectedSkillComponent =
-    defaultSkills?.[selectedSkill]?.component ||
-    configurableSkills?.[selectedSkill]?.component ||
-    appIntegrationSkills?.[selectedSkill]?.component ||
+    defaultSkills?.[skillKey]?.component ||
+    configurableSkills?.[skillKey]?.component ||
+    appIntegrationSkills?.[skillKey]?.component ||
     null;
 
   if (!SelectedSkillComponent) {
@@ -99,48 +101,48 @@ export default function AgentSkillPanel({
     );
   }
 
-  if (defaultSkills?.[selectedSkill]) {
+  if (defaultSkills?.[skillKey]) {
     return (
       <SelectedSkillComponent
-        skill={defaultSkills[selectedSkill]?.skill}
+        skill={defaultSkills[skillKey]?.skill}
         settings={settings}
         toggleSkill={toggleDefaultSkill}
         enabled={
-          !disabledAgentSkills?.includes(defaultSkills[selectedSkill]?.skill)
+          !disabledAgentSkills?.includes(defaultSkills[skillKey]?.skill)
         }
         setHasChanges={setHasChanges}
-        {...defaultSkills[selectedSkill]}
+        {...defaultSkills[skillKey]}
       />
     );
   }
 
-  if (configurableSkills?.[selectedSkill]) {
+  if (configurableSkills?.[skillKey]) {
     return (
       <SelectedSkillComponent
-        skill={configurableSkills[selectedSkill]?.skill}
+        skill={configurableSkills[skillKey]?.skill}
         settings={settings}
         toggleSkill={toggleAgentSkill}
         enabled={agentSkills?.includes(
-          configurableSkills[selectedSkill]?.skill,
+          configurableSkills[skillKey]?.skill,
         )}
         setHasChanges={setHasChanges}
         hasChanges={hasChanges}
-        {...configurableSkills[selectedSkill]}
+        {...configurableSkills[skillKey]}
       />
     );
   }
 
   return (
     <SelectedSkillComponent
-      skill={appIntegrationSkills?.[selectedSkill]?.skill}
+      skill={appIntegrationSkills?.[skillKey]?.skill}
       settings={settings}
       toggleSkill={toggleAgentSkill}
       enabled={agentSkills?.includes(
-        appIntegrationSkills?.[selectedSkill]?.skill,
+        appIntegrationSkills?.[skillKey]?.skill,
       )}
       setHasChanges={setHasChanges}
       hasChanges={hasChanges}
-      {...appIntegrationSkills?.[selectedSkill]}
+      {...appIntegrationSkills?.[skillKey]}
     />
   );
 }

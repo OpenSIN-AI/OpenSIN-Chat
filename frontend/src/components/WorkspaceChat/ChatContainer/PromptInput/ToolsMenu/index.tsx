@@ -60,7 +60,7 @@ export default function ToolsMenu({
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const [maxHeight, setMaxHeight] = useState(360 as any);
   const itemCountRef = useRef(0);
-  const popoverRef = useRef(null);
+  const popoverRef = useRef<any>(null);
 
   // Always open to the slash commands
   useEffect(() => {

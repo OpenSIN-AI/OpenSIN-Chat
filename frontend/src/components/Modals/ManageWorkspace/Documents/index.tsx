@@ -14,11 +14,11 @@ export default function DocumentSettings({ workspace }) {
   const [availableDocs, setAvailableDocs] = useState({ items: [] });
   const [loading, setLoading] = useState(true);
   const [workspaceDocs, setWorkspaceDocs] = useState({ items: [] });
-  const [selectedItems, setSelectedItems] = useState({});
+  const [selectedItems, setSelectedItems] = useState<any>({});
   const [hasChanges, setHasChanges] = useState(false);
-  const [movedItems, setMovedItems] = useState([]);
+  const [movedItems, setMovedItems] = useState<any[]>([]);
   const [loadingMessage, setLoadingMessage] = useState("");
-  const prevDocsRef = useRef(null);
+  const prevDocsRef = useRef<any>(null);
   const [autoSelectNew, setAutoSelectNew] = useState(false);
 
   const {

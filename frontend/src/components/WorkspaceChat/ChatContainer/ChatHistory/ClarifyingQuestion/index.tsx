@@ -130,7 +130,7 @@ export default function ClarifyingQuestionCard({
 }: any) {
   const [index, setIndex] = useState(0 as any);
   const [responded, setResponded] = useState(false as any);
-  const [submittedResult, setSubmittedResult] = useState(null);
+  const [submittedResult, setSubmittedResult] = useState<any>(null);
   const [drafts, setDrafts] = useState(() =>
     (questions as any).map((q) => emptyDraftFor(q)),
   );

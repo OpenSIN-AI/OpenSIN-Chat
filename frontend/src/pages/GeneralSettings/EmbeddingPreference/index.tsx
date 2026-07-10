@@ -141,6 +141,7 @@ export default function GeneralEmbeddingPreference() {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const { isOpen, openModal, closeModal } = useModal();
   const { t } = useTranslation();
+  const isMobile = useIsMobileLayout();
 
   useEffect(() => {
     if (isLoading || !settings) return;

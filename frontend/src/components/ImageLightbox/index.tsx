@@ -21,7 +21,7 @@ export function openImageLightbox(images: any, initialIndex: any = 0) {
 
 export default function ImageLightbox() {
   const { t } = useTranslation();
-  const [images, setImages] = useState(null);
+  const [images, setImages] = useState<any>(null);
   const [currentIndex, setCurrentIndex] = useState(0 as any);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);

@@ -58,6 +58,7 @@ function Layout({
   t: (key: string) => string;
   children: React.ReactNode;
 }) {
+  const isMobile = useIsMobileLayout();
   const navigate = useNavigate();
 
   return (

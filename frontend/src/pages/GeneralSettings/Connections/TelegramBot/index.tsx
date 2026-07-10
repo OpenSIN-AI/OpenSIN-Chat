@@ -79,6 +79,7 @@ function ConnectionsLayout({
   children,
   fullPage = false,
 }: ConnectionsLayoutProps): React.ReactElement {
+  const isMobile = useIsMobileLayout();
   const { t } = useTranslation();
   return (
     <div className="w-screen h-screen overflow-hidden bg-zinc-950 light:bg-slate-50 flex md:mt-0 mt-6">

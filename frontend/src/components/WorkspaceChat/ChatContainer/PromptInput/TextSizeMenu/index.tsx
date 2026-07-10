@@ -9,7 +9,7 @@ import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 const VALID_TEXT_SIZES = ["small", "normal", "large"];
 
 export default function TextSizeButton() {
-  const tooltipRef = useRef(null);
+  const tooltipRef = useRef<any>(null);
   const { t } = useTranslation();
   const { theme } = useTheme();
 

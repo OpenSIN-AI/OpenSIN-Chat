@@ -25,7 +25,7 @@ function loadFolderCollapseState(): Record<string, boolean> {
     const stored = safeGetItem(FOLDER_COLLAPSE_KEY);
     if (stored) return JSON.parse(stored);
   } catch (e) {
-    console.warn("[ThreadFolderItem] non-fatal error:", e?.message || e);
+    console.warn("[index] non-fatal error:", e?.message || e);
   }
   return {};
 }
@@ -36,7 +36,7 @@ function saveFolderCollapseState(folderId: number, collapsed: boolean) {
     state[String(folderId)] = collapsed;
     safeSetItem(FOLDER_COLLAPSE_KEY, JSON.stringify(state));
   } catch (e) {
-    console.warn("[ThreadFolderItem] non-fatal error:", e?.message || e);
+    console.warn("[index] non-fatal error:", e?.message || e);
   }
 }
 
@@ -183,7 +183,7 @@ function ThreadFolderItem({
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState<string>(folder.name);
   const [quickAddOpen, setQuickAddOpen] = useState(false);
-  const inputRef = useRef(null);
+  const inputRef = useRef<any>(null);
 
   // When the active thread moves into this folder (via DnD), auto-expand it
   useEffect(() => {

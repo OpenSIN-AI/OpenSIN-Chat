@@ -129,10 +129,10 @@ function PiperTTSModelSelection({ settings }: any) {
 
 function DemoVoiceSample({ voiceId }: any) {
   const { t } = useTranslation();
-  const playerRef = useRef(null);
+  const playerRef = useRef<any>(null);
   const [speaking, setSpeaking] = useState(false as any);
   const [loading, setLoading] = useState(false as any);
-  const [audioSrc, setAudioSrc] = useState(null);
+  const [audioSrc, setAudioSrc] = useState<any>(null);
   const clientRef = useRef<any>(null);
 
   async function speakMessage(e: any) {

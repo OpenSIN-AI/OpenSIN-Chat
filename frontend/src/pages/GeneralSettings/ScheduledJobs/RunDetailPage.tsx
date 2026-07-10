@@ -174,6 +174,7 @@ export default function RunDetailPage() {
 }
 
 function RunDetailLayout({ children }: { children: React.ReactNode }) {
+  const isMobile = useIsMobileLayout();
   return (
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
       <Sidebar />

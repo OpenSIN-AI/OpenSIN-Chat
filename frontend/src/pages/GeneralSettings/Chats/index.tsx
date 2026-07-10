@@ -66,6 +66,7 @@ export default function WorkspaceChats() {
   const [offset, setOffset] = useState(Number(query.get("offset") || 0));
   const [canNext, setCanNext] = useState(false);
   const { t } = useTranslation();
+  const isMobile = useIsMobileLayout();
 
   const handleDumpChats = async (exportType: keyof typeof exportOptions) => {
     try {

@@ -129,6 +129,7 @@ export function useAgents(): UseAgentsReturn {
   });
   const allAppIntegrationSkills = getAppIntegrationSkills(t);
 
+  const isMobile = useIsMobileLayout();
   const isMultiUserMode = settings?.MultiUserMode ?? false;
   const filterSkillsByMode = ([_, skillConfig]: [string, any]) => {
     if (!skillConfig.mode) return true;
