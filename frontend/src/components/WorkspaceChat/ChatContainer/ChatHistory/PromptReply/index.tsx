@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Renders the live streamed assistant reply and its transient activity state.
+// Docs: index.doc.md
 
 import { memo, useRef, useEffect, useState } from "react";
 import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
+import { Sparkle } from "@phosphor-icons/react/dist/csr/Sparkle";
 import { useTranslation } from "react-i18next";
 import renderMarkdown from "@/utils/chat/markdown";
 import DOMPurify from "@/utils/chat/purify";
@@ -95,14 +98,8 @@ const PromptReply: any = ({
 
   if (pending) {
     return (
-      <div className="flex justify-start w-full py-2.5">
-        <div className="flex items-center w-full">
-          <div className="flex items-center gap-1.5 px-1">
-            <span className="w-2.5 h-2.5 rounded-full bg-zinc-500 light:bg-slate-400 animate-pulse [animation-delay:0ms]" />
-            <span className="w-2.5 h-2.5 rounded-full bg-zinc-500 light:bg-slate-400 animate-pulse [animation-delay:200ms]" />
-            <span className="w-2.5 h-2.5 rounded-full bg-zinc-500 light:bg-slate-400 animate-pulse [animation-delay:400ms]" />
-          </div>
-        </div>
+      <div className="flex w-full justify-start py-3">
+        <AssistantActivity label={t("statusResponse.thinking")} />
       </div>
     );
   }
@@ -131,7 +128,7 @@ const PromptReply: any = ({
   }
 
   return (
-    <div key={uuid} className="flex justify-start w-full py-2.5">
+    <div key={uuid} className="flex w-full justify-start py-3">
       <div className="flex flex-col w-full md:max-w-[85%]">
         <RenderAssistantChatContent
           key={`${uuid}-prompt-reply-content`}
@@ -149,6 +146,7 @@ const PromptReply: any = ({
 };
 
 function RenderAssistantChatContent({ message, messageId }: any) {
+  const { t } = useTranslation();
   const thoughtChainRef = useRef<any>(null);
   const [pendingThoughtContent, setPendingThoughtContent] = useState<
     string | null
@@ -219,7 +217,7 @@ function RenderAssistantChatContent({ message, messageId }: any) {
             content={message}
             className="mt-0"
           />
-          <div className="dot-falling light:invert" />
+          <AssistantActivity label={t("statusResponse.thinking")} compact />
         </div>
       </div>
     );
@@ -249,6 +247,25 @@ function RenderAssistantChatContent({ message, messageId }: any) {
           }}
         />
       </div>
+    </div>
+  );
+}
+
+function AssistantActivity({ label, compact = false }: any) {
+  return (
+    <div
+      className={`flex items-center gap-2 text-xs font-medium text-theme-text-secondary ${compact ? "" : "px-0.5"}`}
+      role="status"
+      aria-live="polite"
+    >
+      <Sparkle size={14} weight="fill" className="animate-pulse" />
+      {!compact && <span>{label}</span>}
+      <span
+        className="h-1 w-7 overflow-hidden rounded-full bg-current/20"
+        aria-hidden="true"
+      >
+        <i className="block h-full w-1/2 animate-pulse rounded-full bg-current" />
+      </span>
     </div>
   );
 }

@@ -355,7 +355,7 @@ function HomeContent({
         className="relative z-[2] flex h-[var(--content-height)] min-w-0 flex-1 md:m-4"
       >
         <ChatSettingsMenu />
-        <div className="relative h-full w-full min-w-0 flex-1 overflow-hidden bg-theme-bg-container md:rounded-2xl md:border md:border-theme-modal-border">
+        <div className="relative h-full w-full min-w-0 flex-1 overflow-hidden bg-theme-bg-container">
           <WorkspaceModelPicker workspaceSlug={workspace?.slug} />
           <DnDFileUploaderWrapper>
             <EmptyState
@@ -390,7 +390,10 @@ function HomeSkeleton() {
         <div className="h-28 w-full animate-pulse rounded-2xl border border-theme-modal-border bg-theme-bg-secondary" />
         <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
           {[0, 1, 2, 3].map((item) => (
-            <div key={item} className="h-20 animate-pulse rounded-xl border border-theme-modal-border bg-theme-bg-secondary" />
+            <div
+              key={item}
+              className="h-20 animate-pulse rounded-xl border border-theme-modal-border bg-theme-bg-secondary"
+            />
           ))}
         </div>
       </div>

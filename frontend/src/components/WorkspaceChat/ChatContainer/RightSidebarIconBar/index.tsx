@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Provides compact access to workspace side panels and active agent sessions.
+// Docs: index.doc.md
 // Purpose: PATCH for RightSidebarIconBar/index.tsx
 //          Adds a second, visually separated icon section for Agent features.
 //
@@ -112,17 +114,17 @@ export default function RightSidebarIconBar() {
           onClick={action}
           aria-label={label}
           aria-pressed={isActive}
-          className={`flex h-11 w-11 items-center justify-center rounded-xl border-none transition-colors ${
+          className={`flex h-9 w-9 items-center justify-center rounded-lg border-none transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 ${
             isActive
-              ? "cursor-pointer bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary"
-              : "cursor-pointer text-zinc-400 light:text-slate-600 hover:bg-zinc-800 light:hover:bg-slate-100 hover:text-theme-text-primary light:hover:text-theme-text-primary"
+              ? "cursor-pointer bg-white/[0.10] text-theme-text-primary light:bg-slate-200 light:text-theme-text-primary"
+              : "cursor-pointer text-zinc-500 hover:bg-white/[0.06] hover:text-theme-text-primary light:text-slate-600 light:hover:bg-slate-100 light:hover:text-theme-text-primary"
           }`}
         >
-          <Icon size={18} weight={isActive ? "fill" : "regular"} />
+          <Icon size={17} weight={isActive ? "fill" : "regular"} />
         </button>
         {/* Live-Badge: Anzahl aktiver Runs */}
         {badge > 0 && (
-          <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 rounded-full bg-[#009ee0] text-white text-[10px] font-bold flex items-center justify-center">
+          <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-[#009ee0] px-1 text-[10px] font-bold text-white">
             {badge}
           </span>
         )}
@@ -140,14 +142,14 @@ export default function RightSidebarIconBar() {
   return (
     <nav
       aria-label={t("common.rightSidebar")}
-      className="hidden h-full w-14 flex-shrink-0 flex-col items-center gap-1 overflow-y-auto border-l border-theme-modal-border bg-theme-bg-container py-3 md:flex"
+      className="hidden h-full w-12 flex-shrink-0 flex-col items-center gap-0.5 overflow-y-auto border-l border-theme-modal-border bg-theme-bg-container py-2.5 md:flex"
     >
       {/* Bestehende Panel-Icons */}
       {icons.map(renderIcon)}
 
       {/* Divider zwischen den Abschnitten */}
       <div
-        className="w-6 h-px bg-zinc-700 light:bg-slate-200 my-1.5"
+        className="my-1.5 h-px w-5 bg-white/[0.10] light:bg-slate-200"
         aria-hidden
       />
 

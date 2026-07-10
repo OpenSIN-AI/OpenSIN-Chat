@@ -38,10 +38,10 @@ describe("RightSidebarIconBar", () => {
     vi.clearAllMocks();
   });
 
-  it("renders all icon buttons (8 panels + 3 agent buttons)", () => {
+  it("renders all icon buttons (8 panels + agent sessions)", () => {
     const { container } = renderBar();
     const buttons = container.querySelectorAll("button");
-    expect(buttons.length).toBe(11);
+    expect(buttons.length).toBe(9);
   });
 
   it("calls toggleSidebar with 'pdf-analysis' when PDF-analysis icon clicked", () => {

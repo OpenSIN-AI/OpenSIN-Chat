@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Displays persisted user and assistant messages with attachments, citations, and message actions.
+// Docs: index.doc.md
 import React, { memo, useLayoutEffect, useRef, useState } from "react";
 import { Info } from "@phosphor-icons/react/dist/csr/Info";
 import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
@@ -109,7 +111,7 @@ const HistoricalMessage = ({
         className={`${isDeleted ? "animate-remove" : ""} flex justify-end w-full group py-2.5`}
       >
         <div className="flex flex-col items-end max-w-[80%]">
-          <div className="bg-white/[0.06] light:bg-zinc-100 border border-white/[0.06] light:border-zinc-200 text-[#e4e4e7] light:text-zinc-900 rounded-xl rounded-br-md px-4 py-2.5 [&_p]:m-0">
+          <div className="rounded-2xl rounded-br-md border border-white/[0.08] bg-white/[0.06] px-3.5 py-2 text-[#e4e4e7] [&_p]:m-0 light:border-zinc-200 light:bg-zinc-100 light:text-zinc-900">
             <TruncatableContent>
               <RenderChatContent
                 role={role}
@@ -140,7 +142,7 @@ const HistoricalMessage = ({
     <div
       key={uuid}
       onAnimationEnd={onEndAnimation}
-      className={`${isDeleted ? "animate-remove" : ""} flex justify-start w-full group py-2.5`}
+      className={`${isDeleted ? "animate-remove" : ""} group flex w-full justify-start py-3`}
     >
       <div className="flex flex-col md:max-w-[85%] w-full">
         {isEditing ? (

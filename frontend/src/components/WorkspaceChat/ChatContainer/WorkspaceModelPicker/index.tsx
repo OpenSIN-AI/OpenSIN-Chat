@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Shows and opens the active workspace model selector.
+// Docs: index.doc.md
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -167,7 +169,7 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
       )}
       <div
         className={`hidden md:block absolute top-2 z-30 transition-all duration-500 pointer-events-none ${
-          sidebarOpen ? "left-3" : "left-11"
+          sidebarOpen ? "left-4" : "left-12"
         }`}
       >
         <button
@@ -175,17 +177,17 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
           onClick={() => setShowSelector(!showSelector)}
           aria-label={t("chat_window.select_model")}
           aria-expanded={showSelector}
-          className={`group border cursor-pointer px-2.5 py-1 flex items-center rounded-full transition-colors duration-150 pointer-events-auto ${
+          className={`group flex cursor-pointer items-center rounded-md border px-2.5 py-1 transition-colors duration-150 pointer-events-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 ${
             showSelector
-              ? "bg-white/[0.06] light:bg-zinc-100 border-white/[0.08] light:border-zinc-300"
-              : "bg-white/[0.03] light:bg-zinc-100 border-white/[0.06] light:border-zinc-300 hover:bg-white/[0.06] light:hover:bg-zinc-200"
+              ? "border-white/[0.14] bg-white/[0.08] light:border-zinc-300 light:bg-zinc-100"
+              : "border-white/[0.08] bg-[#111111]/80 light:border-zinc-300 light:bg-zinc-100 hover:border-white/[0.14] hover:bg-white/[0.06] light:hover:bg-zinc-200"
           }`}
         >
           <span
             className={`text-xs ${
               showSelector
                 ? "text-[#e4e4e7] light:text-zinc-900"
-                : "text-[#71717a] light:text-zinc-600 group-hover:text-[#a1a1aa] light:group-hover:text-zinc-900"
+                : "text-[#a1a1aa] light:text-zinc-600 group-hover:text-[#e4e4e7] light:group-hover:text-zinc-900"
             }`}
           >
             {modelName || t("chat_window.select_model")}

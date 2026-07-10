@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Presents the authentication shell with a restrained, workspace-first visual hierarchy.
+// Docs: index.doc.md
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { ShieldCheck, EyeSlash, Cpu } from "@phosphor-icons/react";
@@ -40,9 +42,9 @@ export default function PasswordModal({ mode = "single" }: any) {
   const { loginLogo, isCustomLogo } = useLogo();
 
   return (
-    <div className="fixed inset-0 flex bg-[#0a0a0a] light:bg-[#fafafa] overflow-hidden">
-      {/* Left brand panel */}
-      <div className="relative hidden lg:flex lg:w-[44%] flex-col justify-center gap-y-12 p-14 xl:p-16 border-r border-white/[0.06] light:border-zinc-200">
+    <div className="fixed inset-0 flex overflow-hidden bg-[#0a0a0a] light:bg-[#fafafa]">
+      {/* Workspace context */}
+      <aside className="relative hidden min-w-[22rem] max-w-[28rem] flex-1 flex-col justify-between border-r border-white/[0.08] bg-[#0d0d0d] p-10 light:border-zinc-200 light:bg-zinc-50 lg:flex xl:p-12">
         <div className="flex items-center gap-x-2.5">
           <img
             src={loginLogo}
@@ -51,43 +53,55 @@ export default function PasswordModal({ mode = "single" }: any) {
               isCustomLogo ? "rounded-md" : ""
             }`}
           />
-          <span className="text-[#fafafa] light:text-zinc-900 text-sm font-semibold tracking-tight">
+          <span className="text-sm font-semibold tracking-tight text-[#fafafa] light:text-zinc-900">
             OpenSIN Chat
           </span>
         </div>
 
-        <div className="max-w-sm">
-          <h1 className="text-3xl xl:text-[2.5rem] font-semibold text-[#fafafa] light:text-zinc-900 leading-[1.15] text-balance tracking-tight">
+        <div className="max-w-xs">
+          <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.16em] text-[#71717a] light:text-zinc-500">
+            Souveräner Arbeitsbereich
+          </p>
+          <h1 className="text-3xl font-semibold leading-[1.12] tracking-tight text-[#fafafa] text-balance light:text-zinc-900 xl:text-[2.25rem]">
             Dein souveräner KI-Arbeitsraum.
           </h1>
-          <p className="mt-4 text-[#71717a] light:text-zinc-500 text-sm leading-relaxed text-pretty">
+          <p className="mt-4 text-sm leading-relaxed text-[#a1a1aa] text-pretty light:text-zinc-500">
             Chatte mit deinen Dokumenten, automatisiere Recherche und behalte
             die volle Kontrolle über deine Daten.
           </p>
 
-          <ul className="mt-10 flex flex-col gap-y-4">
+          <ul className="mt-9 flex flex-col gap-y-4">
             {FEATURES.map(({ icon: Icon, title, desc }) => (
               <li key={title} className="flex items-start gap-x-3">
-                <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/[0.08] light:border-zinc-200 bg-white/[0.04] light:bg-zinc-50">
-                  <Icon size={15} weight="bold" className="text-[#a1a1aa] light:text-zinc-500" />
+                <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-white/[0.08] bg-white/[0.04] light:border-zinc-200 light:bg-white">
+                  <Icon
+                    size={15}
+                    weight="bold"
+                    className="text-[#a1a1aa] light:text-zinc-500"
+                  />
                 </span>
                 <div>
-                  <p className="text-sm font-medium text-[#e4e4e7] light:text-zinc-800">{title}</p>
-                  <p className="text-xs text-[#52525b] light:text-zinc-400 mt-0.5 leading-relaxed">{desc}</p>
+                  <p className="text-sm font-medium text-[#e4e4e7] light:text-zinc-800">
+                    {title}
+                  </p>
+                  <p className="mt-0.5 text-xs leading-relaxed text-[#71717a] light:text-zinc-500">
+                    {desc}
+                  </p>
                 </div>
               </li>
             ))}
           </ul>
         </div>
 
-        <p className="text-[11px] text-[#3f3f46] light:text-zinc-400 tracking-wide mt-4">
-          © {new Date().getFullYear()} OpenSIN Chat · Selbst gehostet · Keine Telemetrie
+        <p className="text-[11px] tracking-wide text-[#52525b] light:text-zinc-400">
+          © {new Date().getFullYear()} OpenSIN Chat · Selbst gehostet · Keine
+          Telemetrie
         </p>
-      </div>
+      </aside>
 
       {/* Right form panel */}
-      <div className="flex w-full lg:w-[56%] items-center justify-center p-6 sm:p-10">
-        <div className="w-full max-w-[360px]">
+      <main className="flex w-full items-center justify-center bg-[#0a0a0a] p-6 light:bg-white sm:p-10">
+        <div className="w-full max-w-[380px]">
           {/* Logo for mobile */}
           <div className="mb-8 flex flex-col items-center gap-y-3 lg:hidden">
             <img
@@ -99,7 +113,7 @@ export default function PasswordModal({ mode = "single" }: any) {
             />
           </div>
 
-          <div className="rounded-xl border border-white/[0.08] light:border-zinc-200 bg-[#111111] light:bg-white p-7 shadow-2xl shadow-black/40">
+          <div className="rounded-xl border border-white/[0.1] bg-[#111111] p-7 shadow-[0_24px_80px_rgba(0,0,0,0.28)] light:border-zinc-200 light:bg-white sm:p-8">
             {mode === "single" ? (
               <SingleUserAuth />
             ) : mode === "single-auto" ? (
@@ -109,7 +123,7 @@ export default function PasswordModal({ mode = "single" }: any) {
             )}
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

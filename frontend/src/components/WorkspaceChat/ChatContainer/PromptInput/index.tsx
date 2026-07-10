@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Provides the persistent chat composer and its workspace tools.
+// Docs: index.doc.md
 import { useTranslation } from "react-i18next";
 import StopGenerationButton from "./StopGenerationButton";
 import SpeechToText from "./SpeechToText";
@@ -82,11 +84,11 @@ export default function PromptInput({
         className={
           centered
             ? "flex flex-col gap-y-1 rounded-2xl w-full items-center"
-            : "flex flex-col gap-y-1 rounded-2xl w-full mx-auto max-w-[800px] items-center px-2 md:px-6"
+            : "mx-auto flex w-full max-w-[760px] flex-col items-center gap-y-1 px-4 md:px-8"
         }
       >
         <div
-          className={`flex items-center rounded-lg w-full ${centered ? "mb-0" : "mb-4"}`}
+          className={`flex w-full items-center rounded-lg ${centered ? "mb-0" : "mb-3"}`}
         >
           <div className="relative w-full">
             <ToolsMenu
@@ -98,7 +100,7 @@ export default function PromptInput({
               centered={centered}
               highlightedIndexRef={toolsHighlightRef}
             />
-            <div className="flex flex-col overflow-hidden rounded-2xl border border-theme-modal-border bg-theme-bg-secondary px-3 shadow-lg shadow-black/10 transition-colors duration-200 focus-within:border-[#009ee0] focus-within:ring-2 focus-within:ring-[#009ee0]/15 sm:px-4">
+            <div className="flex flex-col overflow-hidden rounded-2xl border border-white/[0.10] bg-[#121212] px-3 shadow-[0_12px_36px_rgba(0,0,0,0.18)] transition-colors duration-200 focus-within:border-white/[0.24] light:border-zinc-300 light:bg-white light:focus-within:border-zinc-400 sm:px-4">
               <AttachmentManager attachments={attachments} />
               <div className="flex items-center">
                 <TextArea

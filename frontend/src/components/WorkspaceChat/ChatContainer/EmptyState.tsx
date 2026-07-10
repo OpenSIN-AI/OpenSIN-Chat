@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Renders the first-chat workspace with quick actions and the centred prompt input.
+// Docs: EmptyState.doc.md
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import PromptInput from "./PromptInput";
@@ -24,9 +26,9 @@ function CapabilityCard({ icon: Icon, title, description, onClick }: any) {
     <button
       type="button"
       onClick={onClick}
-      className="group flex min-h-20 w-full items-start gap-3 rounded-xl border border-theme-modal-border bg-theme-bg-secondary p-4 text-left transition-colors hover:border-[#009ee0]/40 hover:bg-theme-bg-hover"
+      className="group flex min-h-20 w-full items-start gap-3 rounded-lg border border-theme-modal-border bg-theme-bg-secondary p-4 text-left transition-colors hover:border-theme-text-muted hover:bg-theme-bg-hover focus:outline-none focus:ring-2 focus:ring-white/20"
     >
-      <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-theme-modal-border bg-theme-bg-tertiary">
+      <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-md border border-theme-modal-border bg-theme-bg-tertiary">
         <Icon size={16} className="text-theme-text-secondary" />
       </div>
       <div className="flex flex-col gap-0.5">
@@ -105,12 +107,12 @@ export default function EmptyState({
   return (
     <div className="flex flex-col h-full w-full items-center overflow-y-auto px-2 md:px-6">
       <div className="flex flex-col items-center w-full max-w-[720px] py-8 my-auto">
-        <h1 className="text-[#e4e4e7] light:text-zinc-900 text-2xl md:text-[1.75rem] font-semibold mb-2.5 text-center tracking-tight text-balance">
+        <h1 className="mb-2.5 text-center text-2xl font-semibold tracking-tight text-[#e4e4e7] text-balance light:text-zinc-900 md:text-[1.75rem]">
           {t("main-page.greeting")}
         </h1>
         {modelName && (
           <div className="flex items-center gap-x-1.5 mb-7">
-            <span className="inline-flex items-center gap-x-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-white/[0.04] light:bg-zinc-100 text-[#71717a] light:text-zinc-600 border border-white/[0.06] light:border-zinc-200">
+            <span className="inline-flex items-center gap-x-1 rounded-md border border-white/[0.06] bg-white/[0.04] px-2 py-0.5 text-[11px] font-medium text-[#a1a1aa] light:border-zinc-200 light:bg-zinc-100 light:text-zinc-600">
               <Sparkle size={10} weight="fill" />
               {modelName}
             </span>

@@ -162,13 +162,14 @@ describe("HistoricalMessage – message rendering", () => {
     expect(screen.queryByText("Hello from assistant")).not.toBeInTheDocument();
   });
 
-  it("renders user message bubble with correct styling classes", () => {
+  it("renders user message bubble with compact conversation styling", () => {
     const { container } = render(<HistoricalMessage {...baseUserProps} />, {
       wrapper: Wrapper,
     });
-    const bubble = container.querySelector(".bg-zinc-700");
+    const bubble = container.querySelector(".rounded-br-md");
     expect(bubble).toBeInTheDocument();
-    expect(bubble?.className).toContain("text-zinc-50");
+    expect(bubble?.className).toContain("rounded-2xl");
+    expect(bubble?.className).toContain("text-[#e4e4e7]");
   });
 
   it("renders assistant message without user bubble styling", () => {
@@ -178,8 +179,8 @@ describe("HistoricalMessage – message rendering", () => {
         wrapper: Wrapper,
       },
     );
-    // Assistant messages should not have the user bubble bg-zinc-700 class
-    const userBubble = container.querySelector(".bg-zinc-700");
+    // Assistant messages remain unboxed, unlike compact user bubbles.
+    const userBubble = container.querySelector(".rounded-br-md");
     expect(userBubble).toBeNull();
   });
 

@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Virtualizes and renders the workspace conversation as a compact, readable message stream.
+// Docs: index.doc.md
 import {
   useImperativeHandle,
   useRef,
@@ -447,14 +449,14 @@ export default forwardRef(function (
           role="log"
           aria-live="polite"
           aria-label={t("chat.aria.chatHistory")}
-          className={`markdown text-theme-text-primary light:text-theme-text-primary font-light ${textSizeClass} h-full relative pb-[60px] pt-2 md:pt-3 md:mx-0 flex flex-col items-center justify-start`}
+          className={`markdown text-theme-text-primary light:text-theme-text-primary font-light ${textSizeClass} relative flex h-full flex-col items-center justify-start pb-[132px] pt-5 md:pt-6`}
         >
           <Virtuoso
             ref={virtuosoRef}
             data={compiledRows}
             computeItemKey={computeItemKey}
             itemContent={(index, row) => (
-              <div className="w-full max-w-[800px] mx-auto px-2 md:px-6">
+              <div className="mx-auto w-full max-w-[760px] px-4 md:px-8">
                 {renderRow(row, index)}
               </div>
             )}
@@ -465,7 +467,7 @@ export default forwardRef(function (
             }}
             atBottomStateChange={handleScrollState}
             className="h-full w-full overflow-y-scroll"
-            defaultItemHeight={120}
+            defaultItemHeight={64}
             increaseViewportBy={{ top: 600, bottom: 600 }}
           />
           {showing && (
