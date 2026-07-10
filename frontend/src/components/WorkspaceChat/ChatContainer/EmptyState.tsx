@@ -103,9 +103,9 @@ export default function EmptyState({
   ];
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-start overflow-y-auto px-4 py-8 md:px-8 md:pt-[12vh] lg:pt-[15vh]">
-      <div className="flex w-full max-w-4xl flex-col items-center py-4">
-        <h1 className="mb-3 text-balance text-center text-2xl font-semibold tracking-tight text-theme-text-primary md:text-3xl">
+    <div className="flex flex-col h-full w-full items-center overflow-y-auto px-2 md:px-6">
+      <div className="flex flex-col items-center w-full max-w-[720px] py-8 my-auto">
+        <h1 className="text-[#e4e4e7] light:text-zinc-900 text-2xl md:text-[1.75rem] font-semibold mb-2.5 text-center tracking-tight text-balance">
           {t("main-page.greeting")}
         </h1>
         {modelName && (

@@ -41,34 +41,25 @@ export function DrucksachenTab({
       )}
 
       {dipError && (
-        <div className="p-3 rounded-lg bg-amber-950/30 border border-amber-800/40 flex flex-col gap-2">
-          <div className="flex items-start gap-2">
-            <Key
-              size={14}
-              weight="fill"
-              className="text-amber-400 flex-shrink-0 mt-0.5"
-            />
-            <p className="text-xs text-amber-300 leading-snug">{dipError}</p>
-          </div>
-          <p className="text-[10px] text-amber-400/70 leading-snug">
-            {t(
-              "sidebar.database.dipKeyHint",
-              "Den DIP API-Schlüssel erhältst du kostenlos unter",
-            )}{" "}
-            <a
-              href="https://dip.bundestag.de/über-dip/hilfe/api"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline text-amber-300 hover:text-amber-200 transition-colors"
-            >
-              dip.bundestag.de
-            </a>
-            {". "}
-            {t(
-              "sidebar.database.dipKeyConfig",
-              "Trage ihn in den Servereinstellungen unter DIP_API_KEY ein.",
-            )}
-          </p>
+        <div className="p-3 rounded-lg bg-red-950/40 border border-red-800/50 text-xs text-red-400 flex flex-col gap-1.5">
+          <span>{dipError}</span>
+          {/api.?schl|key|KEY/i.test(dipError) && (
+            <span className="text-red-300/70">
+              Setze{" "}
+              <code className="bg-red-900/40 px-1 py-0.5 rounded font-mono">
+                BUNDESTAG_DIP_API_KEY
+              </code>{" "}
+              in der Server-Umgebung.{" "}
+              <a
+                href="https://dip.bundestag.de/documents/informationsblatt_zur_dip_api_v01.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline text-red-300/80 hover:text-red-200"
+              >
+                DIP API-Dokumentation
+              </a>
+            </span>
+          )}
         </div>
       )}
 

@@ -26,10 +26,14 @@
   --color-theme-bg-secondary: #111111;
   --color-theme-bg-tertiary: #1c1c1c;
 
-  /* Text tokens */
-  --color-theme-text-primary: #fafafa;
-  --color-theme-text-secondary: #a1a1aa;
-  --color-theme-text-muted: #52525b;
+  /* Text tokens — bridge to the runtime --theme-* vars so the Tailwind
+   * `text-theme-text-*` utilities flip with [data-theme="light"] instead of
+   * being frozen at the dark-mode literals (which rendered invisible on the
+   * white light-mode background). Dark-mode values are unchanged because the
+   * runtime :root defaults match these literals. */
+  --color-theme-text-primary: var(--theme-text-primary, #fafafa);
+  --color-theme-text-secondary: var(--theme-text-secondary, #a1a1aa);
+  --color-theme-text-muted: var(--theme-placeholder, #52525b);
 
   /* Modal/border tokens */
   --color-theme-modal-border: #27272a;

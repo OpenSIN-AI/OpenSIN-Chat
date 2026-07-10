@@ -172,7 +172,6 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
     setDipError(null);
     try {
       const { results, error } = await Politician.searchDrucksachen(dipQuery, {
-        faction: "AfD",
         limit: 10,
       });
       if (error) setDipError(error);

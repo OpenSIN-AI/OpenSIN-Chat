@@ -64,13 +64,16 @@ function queryParams(request) {
  * and embeds issuer/audience claims so that the verifier can detect tokens
  * minted with weaker settings.
  * @param {object} info - The info to include in the JWT
- * @param {string} expiry - The expiry time for the JWT (default: 15m)
+ * @param {string} expiry - The expiry time for the JWT (default: 30d)
  * @returns {string} The JWT
  */
 function makeJWT(info = {}, expiry = null) {
   if (!process.env.JWT_SECRET)
     throw new Error("Cannot create JWT as JWT_SECRET is unset.");
-  const ttl = expiry ?? process.env.JWT_EXPIRY ?? "15m";
+  // Default to 30 days so sessions survive a normal work-week without forcing
+  // re-login. The VM currently has no JWT_EXPIRY env var set, which previously
+  // fell back to 15 minutes — far too short for production use.
+  const ttl = expiry ?? process.env.JWT_EXPIRY ?? "30d";
   return JWT.sign(info, process.env.JWT_SECRET, {
     algorithm: "HS256",
     expiresIn: ttl,
