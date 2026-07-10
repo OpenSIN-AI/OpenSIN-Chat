@@ -411,7 +411,7 @@ const RenderChatContent = memo(
     return (
       <>
         <span
-          className="markdown flex flex-col gap-y-0.5 text-theme-text-primary light:text-theme-text-primary leading-relaxed"
+          className="markdown flex flex-col gap-y-0.5 text-theme-text-primary light:text-zinc-900 leading-relaxed"
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(renderMarkdown(msgToRender)),
           }}

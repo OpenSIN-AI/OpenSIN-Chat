@@ -19,8 +19,7 @@ import { Brain } from "@phosphor-icons/react/dist/csr/Brain";
 import { FilePdf } from "@phosphor-icons/react/dist/csr/FilePdf";
 import { Notepad } from "@phosphor-icons/react/dist/csr/Notepad";
 import { Broadcast } from "@phosphor-icons/react/dist/csr/Broadcast";
-import { Robot } from "@phosphor-icons/react/dist/csr/Robot";
-import { Gear } from "@phosphor-icons/react/dist/csr/Gear";
+
 import { useChatSidebar } from "../ChatSidebar";
 import { useAgentRuns } from "../AgentSessionsSidebar/AgentRunsContext";
 import { useTranslation } from "react-i18next";
@@ -82,7 +81,9 @@ export default function RightSidebarIconBar() {
     },
   ];
 
-  // --- NEU: Agent-/Workspace-Section (getrennt durch Divider) ---
+  // --- Agent-/Workspace-Section (getrennt durch Divider) ---
+  // agent-settings und workspace-settings sind noch nicht implementiert
+  // und werden ausgeblendet bis sie fertig sind.
   const agentIcons = [
     {
       id: "agent-sessions",
@@ -91,31 +92,14 @@ export default function RightSidebarIconBar() {
       action: () => toggleSidebar("agent-sessions"),
       badge: activeRunCount,
     },
-    {
-      id: "agent-settings",
-      icon: Robot,
-      label: t("right_sidebar.icon_agent_settings", "Agent-Einstellungen"),
-      action: () => toggleSidebar("agent-settings"),
-      badge: 0,
-    },
-    {
-      id: "workspace-settings",
-      icon: Gear,
-      label: t(
-        "right_sidebar.icon_workspace_settings",
-        "Workspace-Einstellungen",
-      ),
-      action: () => toggleSidebar("workspace-settings"),
-      badge: 0,
-    },
   ];
 
   // --- Render helper (shared by both sections) ---
   function renderIcon({ id, icon: Icon, label, action, badge = 0 }: any) {
     const isActive = activeSidebar === id;
-    // When a panel is open the icon bar sits at the far right — tooltip "left"
-    // would fly off screen. Use "bottom" when any panel is active.
-    const tooltipPlace = activeSidebar ? "bottom" : "left";
+    // Always use "left" so tooltips appear inside the viewport.
+    // The icon bar is at the right edge — "right" would clip outside the window.
+    const tooltipPlace = "left";
     return (
       <div
         key={id}
