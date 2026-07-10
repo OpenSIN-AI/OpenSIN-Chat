@@ -131,7 +131,7 @@
     "jsdom": "^29.1.1",
     "msw": "^2.15.0",
     "postcss": "8.5.16",
-    "prettier": "^3.9.4",
+    "prettier": "^3.9.5",
     "process": "^0.11.10",
     "rollup-plugin-visualizer": "^5.9.0",
     "sharp": "^0.34.0",
