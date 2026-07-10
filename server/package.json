@@ -77,7 +77,7 @@
     "jsonrepair": "^3.14.0",
     "jsonwebtoken": "9.0.3",
     "langchain": "1.5.3",
-    "marked": "15.0.12",
+    "marked": "18.0.6",
     "mime": "^4.1.0",
     "minimatch": "^9",
     "mssql": "^12.7.0",
