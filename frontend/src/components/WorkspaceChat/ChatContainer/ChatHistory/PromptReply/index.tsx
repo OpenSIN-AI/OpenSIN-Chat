@@ -241,7 +241,7 @@ function RenderAssistantChatContent({ message, messageId }: any) {
           />
         )}
         <span
-          className="flex-1 min-w-0 break-words"
+          className="markdown flex-1 min-w-0 break-words text-theme-text-primary light:text-theme-text-primary leading-relaxed"
           dangerouslySetInnerHTML={{
             __html: safeMarkdown(
               renderMarkdown(preprocessInlineCitations(msgToRender)),

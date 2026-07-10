@@ -40,8 +40,25 @@ export function DrucksachenTab({
       )}
 
       {dipError && (
-        <div className="p-3 rounded-lg bg-red-950/40 border border-red-800/50 text-xs text-red-400">
-          {dipError}
+        <div className="p-3 rounded-lg bg-red-950/40 border border-red-800/50 text-xs text-red-400 flex flex-col gap-1.5">
+          <span>{dipError}</span>
+          {/api.?schl|key|KEY/i.test(dipError) && (
+            <span className="text-red-300/70">
+              Setze{" "}
+              <code className="bg-red-900/40 px-1 py-0.5 rounded font-mono">
+                BUNDESTAG_DIP_API_KEY
+              </code>{" "}
+              in der Server-Umgebung.{" "}
+              <a
+                href="https://dip.bundestag.de/documents/informationsblatt_zur_dip_api_v01.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline text-red-300/80 hover:text-red-200"
+              >
+                DIP API-Dokumentation
+              </a>
+            </span>
+          )}
         </div>
       )}
 
