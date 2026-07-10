@@ -32,7 +32,6 @@ import WorkspaceModelPicker from "@/components/WorkspaceChat/ChatContainer/Works
 import { ChatTooltips } from "@/components/WorkspaceChat/ChatContainer/ChatTooltips";
 import { ChatSidebarProvider } from "@/components/WorkspaceChat/ChatContainer/ChatSidebar";
 import Sidebars from "@/components/WorkspaceChat/ChatContainer/Sidebars";
-import { FullScreenLoader } from "@/components/Preloader";
 import logger from "@/utils/logger";
 
 interface HomeWorkspace {
@@ -180,7 +179,7 @@ export default function Home() {
   }
 
   if (workspaceLoading) {
-    return <FullScreenLoader />;
+    return <HomeSkeleton />;
   }
 
   if (!workspace && user?.role === "default") {
@@ -343,10 +342,10 @@ function HomeContent({
             "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
           } as React.CSSProperties
         }
-        className="h-[var(--content-height)] relative flex md:ml-[16px] md:mr-[16px] md:my-[16px] flex-1 min-w-0 z-[2]"
+        className="relative z-[2] flex h-[var(--content-height)] min-w-0 flex-1 md:m-4"
       >
         <ChatSettingsMenu />
-          <div className="flex-1 min-w-0 transition-all duration-500 relative md:rounded-[14px] bg-[#0f0f0f] light:bg-white w-full h-full overflow-hidden border border-white/[0.05] light:border-solid light:border light:border-theme-modal-border">
+        <div className="relative h-full w-full min-w-0 flex-1 overflow-hidden bg-theme-bg-container md:rounded-2xl md:border md:border-theme-modal-border">
           <WorkspaceModelPicker workspaceSlug={workspace?.slug} />
           <DnDFileUploaderWrapper>
             <EmptyState
@@ -365,6 +364,28 @@ function HomeContent({
         <Sidebars workspace={workspace} />
       </div>
     </ChatSidebarProvider>
+  );
+}
+
+function HomeSkeleton() {
+  const { t } = useTranslation();
+  return (
+    <div
+      className="relative flex h-full min-w-0 flex-1 items-center justify-center overflow-hidden bg-theme-bg-container px-4 md:m-4 md:rounded-2xl md:border md:border-theme-modal-border"
+      role="status"
+      aria-live="polite"
+    >
+      <div className="flex w-full max-w-2xl flex-col items-center gap-6">
+        <div className="h-8 w-64 max-w-full animate-pulse rounded-lg bg-theme-bg-tertiary" />
+        <div className="h-28 w-full animate-pulse rounded-2xl border border-theme-modal-border bg-theme-bg-secondary" />
+        <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
+          {[0, 1, 2, 3].map((item) => (
+            <div key={item} className="h-20 animate-pulse rounded-xl border border-theme-modal-border bg-theme-bg-secondary" />
+          ))}
+        </div>
+      </div>
+      <span className="sr-only">{t("common.loading")}</span>
+    </div>
   );
 }
 

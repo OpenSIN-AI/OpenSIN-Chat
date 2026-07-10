@@ -222,12 +222,12 @@
    * making e.g. AI response text white-on-white in light mode.
    */
   --color-theme-text-primary:  #0e0f0f;
-  --color-theme-text-secondary: #7a7d7e;
-  --color-theme-text-muted:    #9ca3af;
-  --color-theme-bg-primary:    #ffffff;
+  --color-theme-text-secondary: #52525b;
+  --color-theme-text-muted:    #71717a;
+  --color-theme-bg-primary:    #f4f4f5;
   --color-theme-bg-secondary:  #ffffff;
-  --color-theme-bg-tertiary:   #edf2fa;
-  --color-theme-modal-border:  #d3d3d3;
+  --color-theme-bg-tertiary:   #e4e4e7;
+  --color-theme-modal-border:  #d4d4d8;
   --color-theme-accent:        #009ee0;
   --color-theme-accent-light:  #0079b0;
   --color-theme-accent-dark:   #52525b;
@@ -245,12 +245,12 @@
   color-scheme: light;
 
   --theme-loader: #000000;
-  --theme-bg-primary: #ffffff;
+  --theme-bg-primary: #f4f4f5;
   --theme-bg-secondary: #ffffff;
-  --theme-bg-sidebar: #edf2fa;
-  --theme-bg-container: #f9fbfd;
-  --theme-popup-menu-bg: #c2e7fe;
-  --theme-bg-hover: rgba(0, 0, 0, 0.05);
+  --theme-bg-sidebar: #fafafa;
+  --theme-bg-container: #ffffff;
+  --theme-popup-menu-bg: #ffffff;
+  --theme-bg-hover: rgba(0, 0, 0, 0.06);
 
   --theme-bg-chat: #ffffff;
   --theme-bg-chat-input: #eaeaea;
@@ -390,10 +390,6 @@
  * Der Override fur plain .text-white bleibt als Sicherheitsnetz fuer die
  * 118 intentionellen Vorkommen im Light-Theme.
  */
-[data-theme="light"] .text-white {
-  color: var(--theme-text-primary);
-}
-
 [data-theme="light"] .text-description {
   color: var(--theme-text-secondary);
 }
@@ -432,6 +428,12 @@ onboarding flow since its background is dark and is the same fill as the inputs.
 [data-layout="onboarding"] > * input:not([data-theme="light"]),
 [data-layout="onboarding"] > * textarea:not([data-theme="light"]) {
   border: 1px solid #ffffff;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
 }
 
 html,
@@ -499,6 +501,11 @@ body {
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  :where(button, a, input, textarea, select, [tabindex]):focus-visible {
+    outline: 2px solid #009ee0;
+    outline-offset: 2px;
   }
 }
 

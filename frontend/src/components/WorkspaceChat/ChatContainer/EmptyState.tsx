@@ -24,16 +24,16 @@ function CapabilityCard({ icon: Icon, title, description, onClick }: any) {
     <button
       type="button"
       onClick={onClick}
-      className="group flex items-start gap-3 p-3.5 rounded-lg border border-white/[0.05] light:border-zinc-200 bg-transparent hover:bg-white/[0.03] light:hover:bg-zinc-50 hover:border-white/[0.09] light:hover:border-zinc-300 transition-all text-left w-full"
+      className="group flex min-h-20 w-full items-start gap-3 rounded-xl border border-theme-modal-border bg-theme-bg-secondary p-4 text-left transition-colors hover:border-[#009ee0]/40 hover:bg-theme-bg-hover"
     >
-      <div className="mt-0.5 w-6 h-6 rounded-md border border-white/[0.06] light:border-zinc-200 bg-white/[0.04] light:bg-zinc-100 flex items-center justify-center flex-shrink-0">
-        <Icon size={13} className="text-[#71717a] light:text-zinc-400" />
+      <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-theme-modal-border bg-theme-bg-tertiary">
+        <Icon size={16} className="text-theme-text-secondary" />
       </div>
       <div className="flex flex-col gap-0.5">
-        <span className="text-sm font-medium text-[#e4e4e7] light:text-zinc-800">
+        <span className="text-sm font-medium text-theme-text-primary">
           {title}
         </span>
-        <span className="text-xs text-[#52525b] light:text-zinc-400 leading-relaxed">
+        <span className="text-sm leading-relaxed text-theme-text-secondary">
           {description}
         </span>
       </div>
@@ -103,9 +103,9 @@ export default function EmptyState({
   ];
 
   return (
-    <div className="flex flex-col h-full w-full items-center justify-center overflow-y-auto px-2 md:px-6">
-      <div className="flex flex-col items-center w-full max-w-[720px] py-8">
-        <h1 className="text-[#e4e4e7] light:text-zinc-900 text-2xl md:text-[1.75rem] font-semibold mb-2.5 text-center tracking-tight text-balance">
+    <div className="flex h-full w-full flex-col items-center justify-start overflow-y-auto px-4 py-8 sm:justify-center md:px-8">
+      <div className="flex w-full max-w-3xl flex-col items-center py-6">
+        <h1 className="mb-3 text-balance text-center text-2xl font-semibold tracking-tight text-theme-text-primary md:text-3xl">
           {t("main-page.greeting")}
         </h1>
         {modelName && (
@@ -129,7 +129,7 @@ export default function EmptyState({
           threadSlug={threadSlug}
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full mt-5">
+        <div className="mt-6 grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
           {capabilities.map((cap) => (
             <CapabilityCard
               key={cap.title}

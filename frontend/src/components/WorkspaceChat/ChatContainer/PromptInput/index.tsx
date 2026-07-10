@@ -98,7 +98,7 @@ export default function PromptInput({
               centered={centered}
               highlightedIndexRef={toolsHighlightRef}
             />
-            <div className="bg-[#141414] light:bg-white border border-white/[0.07] light:border-zinc-200 shadow-none rounded-xl flex flex-col px-4 overflow-hidden focus-within:border-white/[0.12] light:focus-within:border-zinc-300 transition-colors duration-200">
+            <div className="flex flex-col overflow-hidden rounded-2xl border border-theme-modal-border bg-theme-bg-secondary px-3 shadow-lg shadow-black/10 transition-colors duration-200 focus-within:border-[#009ee0] focus-within:ring-2 focus-within:ring-[#009ee0]/15 sm:px-4">
               <AttachmentManager attachments={attachments} />
               <div className="flex items-center">
                 <TextArea
@@ -114,8 +114,8 @@ export default function PromptInput({
                   adjustTextArea={adjustTextArea}
                 />
               </div>
-              <div className="flex justify-between items-center pt-2 pb-2">
-                <div className="flex items-center gap-x-0.25">
+              <div className="flex items-end justify-between gap-2 py-2">
+                <div className="flex min-w-0 items-center">
                   <div className="flex items-center gap-x-1">
                     <AttachItem
                       workspaceSlug={workspaceSlug}

@@ -111,7 +111,8 @@ export default function RightSidebarIconBar() {
           type="button"
           onClick={action}
           aria-label={label}
-          className={`flex items-center justify-center w-8 h-8 rounded-lg border-none transition-all ${
+          aria-pressed={isActive}
+          className={`flex h-11 w-11 items-center justify-center rounded-xl border-none transition-colors ${
             isActive
               ? "cursor-pointer bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary"
               : "cursor-pointer text-zinc-400 light:text-slate-600 hover:bg-zinc-800 light:hover:bg-slate-100 hover:text-theme-text-primary light:hover:text-theme-text-primary"
@@ -137,7 +138,10 @@ export default function RightSidebarIconBar() {
   }
 
   return (
-    <div className="hidden md:flex flex-col items-center gap-1 py-2 px-1 bg-zinc-900 light:bg-white h-full flex-shrink-0 w-[44px] my-2 mr-2 rounded-2xl overflow-y-auto no-scrollbar">
+    <nav
+      aria-label={t("common.rightSidebar")}
+      className="my-2 mr-2 hidden h-[calc(100%-1rem)] w-14 flex-shrink-0 flex-col items-center gap-1 overflow-y-auto rounded-2xl border border-theme-modal-border bg-theme-bg-secondary py-2 md:flex"
+    >
       {/* Bestehende Panel-Icons */}
       {icons.map(renderIcon)}
 
@@ -149,6 +153,6 @@ export default function RightSidebarIconBar() {
 
       {/* NEU: Agent-/Workspace-Abschnitt */}
       {agentIcons.map(renderIcon)}
-    </div>
+    </nav>
   );
 }

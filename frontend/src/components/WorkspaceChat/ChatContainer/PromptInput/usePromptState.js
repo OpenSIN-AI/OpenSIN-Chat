@@ -134,6 +134,8 @@ export default function usePromptState({
    * @param {KeyboardEvent} event
    */
   function captureEnterOrUndo(event) {
+    if (event.nativeEvent?.isComposing || event.keyCode === 229) return;
+
     // Forward keyboard events to the ToolsMenu when open
     if (showTools) {
       if (

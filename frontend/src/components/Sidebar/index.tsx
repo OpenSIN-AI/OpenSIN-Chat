@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { List } from "@phosphor-icons/react/dist/csr/List";
 import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import { SidebarSimple } from "@phosphor-icons/react/dist/csr/SidebarSimple";
 import ThemeToggle from "@/components/ThemeToggle";
 import NewWorkspaceModal, {
@@ -100,7 +101,7 @@ export default function Sidebar() {
       <nav
         aria-label={t("sidebar.mainNavigation")}
         style={{ width: showSidebar ? `${sidebarWidth}px` : "0px" }}
-        className={`relative transition-all duration-500 flex-shrink-0 z-40 bg-[#111111] light:bg-[#f9fafb] hidden md:flex overflow-hidden ${showSidebar ? "border-r border-white/[0.05] light:border-zinc-200" : ""}`}
+        className={`relative z-40 hidden flex-shrink-0 overflow-hidden bg-theme-bg-sidebar transition-[width] duration-200 md:flex ${showSidebar ? "border-r border-theme-modal-border" : ""}`}
       >
         <div className="overflow-hidden h-full flex flex-col w-full">
           <div className="flex shrink-0 w-full items-center justify-between gap-x-2 mt-3 mb-2 px-3">
@@ -134,7 +135,7 @@ export default function Sidebar() {
                     ? t("sidebar.hideSidebar")
                     : t("sidebar.showSidebar")
                 }
-                className="flex items-center justify-center w-7 h-7 rounded-md border-none cursor-pointer transition-colors bg-transparent hover:bg-white/[0.06] light:hover:bg-zinc-100 text-[#52525b] hover:text-[#a1a1aa] light:text-zinc-400 light:hover:text-zinc-700 flex-shrink-0"
+                className="flex h-11 w-11 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
               >
                 <SidebarSimple
                   size={15}
@@ -248,9 +249,10 @@ export function SidebarMobileHeader() {
         <div className="w-12"></div>
       </header>
       <div
-        className={`z-[99] fixed top-0 left-0 transition-all duration-500 w-[100vw] h-[100vh] ${
-          showSidebar ? "translate-x-0" : "-translate-x-[100vw]"
+        className={`fixed inset-0 z-[99] h-dvh w-full transition-transform duration-200 ${
+          showSidebar ? "translate-x-0" : "-translate-x-full pointer-events-none"
         }`}
+        aria-hidden={!showSidebar}
       >
         <div
           className={`transition-all duration-500 fixed top-0 left-0 bg-theme-bg-secondary bg-opacity-75 w-screen h-screen ${
@@ -263,8 +265,9 @@ export function SidebarMobileHeader() {
         />
         <div
           ref={sidebarRef}
-          className="h-[100vh] fixed top-0 left-0 rounded-r-[26px] bg-theme-bg-sidebar w-[80%] p-[18px]"
-          role="navigation"
+          className="fixed inset-y-0 left-0 h-dvh w-[min(86vw,360px)] rounded-r-2xl border-r border-theme-modal-border bg-theme-bg-sidebar p-4 shadow-2xl"
+          role="dialog"
+          aria-modal="true"
           aria-label={t("sidebar.mobileNavigation")}
         >
           <div className="w-full h-full flex flex-col overflow-x-hidden justify-between">
@@ -280,11 +283,17 @@ export function SidebarMobileHeader() {
                   OpenSIN
                 </span>
               </div>
-              {(!user || user?.role !== "default") && (
-                <div className="flex gap-x-2 items-center text-slate-500 shrink-0">
-                  <SettingsButton />
-                </div>
-              )}
+              <div className="flex shrink-0 items-center gap-1 text-theme-text-secondary">
+                {(!user || user?.role !== "default") && <SettingsButton />}
+                <button
+                  type="button"
+                  onClick={() => setShowSidebar(false)}
+                  aria-label={t("common.close")}
+                  className="flex h-11 w-11 items-center justify-center rounded-lg transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
+                >
+                  <X className="h-5 w-5" aria-hidden="true" />
+                </button>
+              </div>
             </div>
 
             {/* Primary Body */}
