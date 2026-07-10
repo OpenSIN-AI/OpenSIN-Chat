@@ -114,7 +114,7 @@ export default function EmptyState({
         </h1>
         {modelName && (
           <div className="flex items-center gap-x-1.5 mb-7">
-            <span className="inline-flex items-center gap-x-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-white/[0.04] light:bg-zinc-100 text-[#71717a] light:text-zinc-500 border border-white/[0.06] light:border-zinc-200">
+            <span className="inline-flex items-center gap-x-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-white/[0.04] light:bg-zinc-100 text-[#71717a] light:text-zinc-600 border border-white/[0.06] light:border-zinc-200">
               <Sparkle size={10} weight="fill" />
               {modelName}
             </span>

@@ -4137,8 +4137,8 @@ const TRANSLATIONS = {
     retry: "Erneut versuchen",
     political: {
       title: "Politisches",
-      drucksachen: "Bundestag-Drucksachen (AfD)",
-      news: "AfD Pressemitteilungen",
+      drucksachen: "Bundestag-Drucksachen",
+      news: "Pressemitteilungen",
       empty: "Keine Drucksachen gefunden.",
       rss_empty: "Keine Pressemitteilungen gefunden.",
       hint: 'Tipp: "@agent Bundestag Drucksache..." im Chat für detaillierte Abfragen.',
