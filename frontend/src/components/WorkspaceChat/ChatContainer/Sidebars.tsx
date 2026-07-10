@@ -10,6 +10,9 @@ import DatabaseSidebar from "./DatabaseSidebar";
 import PoliticalSidebar from "./PoliticalSidebar";
 import PdfAnalysisSidebar from "./PdfAnalysisSidebar";
 import NotepadSidebar from "./NotepadSidebar";
+import AgentSessionsSidebar from "./AgentSessionsSidebar";
+import AgentSettingsSidebar from "./AgentSettingsSidebar";
+import WorkspaceSettingsSidebar from "./WorkspaceSettingsSidebar";
 import RightSidebarIconBar from "./RightSidebarIconBar";
 import { useChatSidebar } from "./ChatSidebar";
 import { useTranslation } from "react-i18next";
@@ -81,6 +84,21 @@ export default function Sidebars({ workspace }: SidebarsProps) {
           {activeSidebar === "notepad" && (
             <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
               <NotepadSidebar workspace={workspace} />
+            </ErrorBoundary>
+          )}
+          {activeSidebar === "agent-sessions" && (
+            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+              <AgentSessionsSidebar />
+            </ErrorBoundary>
+          )}
+          {activeSidebar === "agent-settings" && (
+            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+              <AgentSettingsSidebar workspace={workspace} />
+            </ErrorBoundary>
+          )}
+          {activeSidebar === "workspace-settings" && (
+            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+              <WorkspaceSettingsSidebar workspace={workspace} />
             </ErrorBoundary>
           )}
         </div>

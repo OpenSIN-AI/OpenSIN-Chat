@@ -884,7 +884,7 @@ const TRANSLATIONS = {
       type_url: "URL",
       type_db: "Datenbank",
     },
-    greeting: "Wie kann ich Ihnen heute helfen?",
+    greeting: "Wie kann ich dir heute helfen?",
   },
   "new-workspace": {
     title: "Neuer Workspace",

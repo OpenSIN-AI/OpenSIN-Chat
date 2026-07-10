@@ -442,6 +442,13 @@ body {
 /* v4 uses @custom-variant instead of the darkMode config option */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ── Light mode variant ────────────────────────────────────────────────── */
+/* Defines the `light:` utility prefix used throughout the codebase.
+   Matches when a `.light` class is present on an ancestor element
+   (set by useTheme on <html> and <body>) OR when [data-theme="light"]
+   is set on an ancestor. */
+@custom-variant light (&:where([data-theme="light"] *, .light *));
+
 /* ── Light mode theme overrides ────────────────────────────────────────── */
 /* In v4, theme overrides for light mode can be done with @media or
    a .light class variant. The existing .light: utilities in the codebase
