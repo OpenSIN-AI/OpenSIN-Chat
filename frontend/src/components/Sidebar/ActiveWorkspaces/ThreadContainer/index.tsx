@@ -506,7 +506,7 @@ function ThreadContainer({
             />
           </>
         )}
-        <div className="sticky bottom-0 bg-zinc-950 light:bg-slate-100 pt-1 pb-1 z-10 -mx-[10px] px-[10px]">
+        <div className="sticky bottom-0 z-10 -mx-2.5 bg-theme-bg-sidebar px-2.5 py-1">
           <NewFolderButton
             workspace={workspace}
             onCreated={(f) => {

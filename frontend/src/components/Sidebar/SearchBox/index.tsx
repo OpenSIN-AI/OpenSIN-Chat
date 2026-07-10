@@ -76,12 +76,12 @@ function SearchBox({ user, showNewWsModal }: any) {
           onChange={handleSearch}
           onReset={handleReset}
           onFocus={(e) => e.target.select()}
-          className="border border-white/[0.05] light:border-zinc-200 w-full h-full rounded-md bg-white/[0.02] light:bg-zinc-50 pl-7 focus:pl-3 pr-1 placeholder:text-[#3f3f46] light:placeholder:text-zinc-400 placeholder:text-xs outline-none focus:ring-1 focus:ring-white/[0.08] light:focus:ring-zinc-300 text-[#e4e4e7] light:text-zinc-900 search-input peer text-xs transition-all"
+          className="search-input peer h-full w-full rounded-md border border-theme-modal-border bg-theme-bg-primary pl-7 pr-1 text-xs text-theme-text-primary outline-none transition-all placeholder:text-xs placeholder:text-theme-placeholder focus:pl-3 focus:ring-1 focus:ring-theme-text-secondary"
         />
         {!searchTerm && (
           <MagnifyingGlass
             size={11}
-            className="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-[#3f3f46] light:text-zinc-400 peer-focus:invisible"
+            className="absolute left-2.5 top-1/2 -translate-y-1/2 text-theme-placeholder peer-focus:invisible"
             weight="regular"
           />
         )}
@@ -191,7 +191,7 @@ function SearchResultItem({ to, name, hint }: any) {
     <Link
       to={to}
       onClick={() => window.dispatchEvent(new Event(SEARCH_RESULT_SELECTED))}
-      className="hover:bg-[#FFF]/10 light:hover:bg-[#000]/10 transition-all duration-300 rounded-sm px-[8px] py-[2px]"
+      className="rounded-sm px-2 py-0.5 transition-colors duration-200 hover:bg-theme-bg-hover"
     >
       <p className="text-theme-text-primary text-sm truncate w-[80%]">
         {name}

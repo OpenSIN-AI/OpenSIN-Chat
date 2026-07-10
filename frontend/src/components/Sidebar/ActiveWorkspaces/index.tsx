@@ -268,9 +268,10 @@ function ActiveWorkspaces() {
                           className={`
                             transition-colors duration-150
                             flex flex-grow w-[75%] gap-x-2 py-1.5 pl-2 pr-1.5 rounded-md text-sm justify-start items-center
-                            ${isActive
-                              ? "bg-white/[0.06] light:bg-zinc-100 text-[#e4e4e7] light:text-zinc-900"
-                              : "text-[#71717a] light:text-zinc-500 hover:bg-white/[0.03] light:hover:bg-zinc-50 hover:text-[#a1a1aa] light:hover:text-zinc-900"
+                            ${
+                              isActive
+                                ? "bg-theme-sidebar-item-selected text-theme-sidebar-item-text-active"
+                                : "text-theme-sidebar-item-text-inactive hover:bg-theme-sidebar-item-hover hover:text-theme-text-primary"
                             }
                           `}
                         >
@@ -279,12 +280,16 @@ function ActiveWorkspaces() {
                               {...provided.dragHandleProps}
                               className="cursor-grab opacity-0 group-hover:opacity-100 transition-opacity duration-150 flex-shrink-0"
                             >
-                              <DotsSixVertical size={14} weight="bold" className="text-[#52525b]" />
+                              <DotsSixVertical
+                                size={14}
+                                weight="bold"
+                                className="text-[#52525b]"
+                              />
                             </div>
                             <SquaresFour
                               size={14}
                               weight={isActive ? "fill" : "regular"}
-                              className={`shrink-0 ${isActive ? "text-[#fafafa] light:text-zinc-900" : "text-[#52525b] light:text-zinc-400"}`}
+                              className={`shrink-0 ${isActive ? "text-theme-sidebar-item-text-active" : "text-theme-placeholder"}`}
                             />
                             <div
                               data-tooltip-id="workspace-name"
@@ -292,7 +297,7 @@ function ActiveWorkspaces() {
                               className="flex items-center overflow-hidden flex-grow"
                             >
                               <p
-                                className={`text-xs leading-relaxed whitespace-nowrap overflow-hidden truncate font-medium ${isActive ? "text-[#fafafa] light:text-zinc-900" : ""}`}
+                                className={`truncate whitespace-nowrap text-xs font-medium leading-relaxed ${isActive ? "text-theme-sidebar-item-text-active" : ""}`}
                               >
                                 {workspace.name}
                               </p>
@@ -347,7 +352,8 @@ function ActiveWorkspaces() {
                                 >
                                   <GearSix
                                     className={`h-3.5 w-3.5 transition-colors ${
-                                      isInWorkspaceSettings && workspace.slug === slug
+                                      isInWorkspaceSettings &&
+                                      workspace.slug === slug
                                         ? "text-[#fafafa] light:text-zinc-900"
                                         : "text-[#71717a] group-hover/gear:text-[#fafafa] light:text-zinc-400 light:group-hover/gear:text-zinc-900"
                                     }`}

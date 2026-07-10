@@ -108,14 +108,14 @@ export default function Sidebar() {
             <Link
               to={paths.home()}
               aria-label={t("sidebar.home")}
-              className="flex items-center gap-x-2 overflow-hidden flex-shrink min-w-0 px-1 py-1 rounded-md hover:bg-white/[0.04] light:hover:bg-zinc-100 transition-colors"
+              className="flex items-center gap-x-2 overflow-hidden flex-shrink min-w-0 px-1 py-1 rounded-md hover:bg-theme-bg-hover transition-colors"
             >
               <img
                 src={logo}
                 alt={t("sidebar.logo")}
                 className="h-6 w-6 max-h-[24px] max-w-[24px] object-contain flex-shrink-0"
               />
-              <span className="text-[#e4e4e7] light:text-zinc-900 font-semibold text-sm tracking-tight whitespace-nowrap">
+              <span className="text-theme-text-primary font-semibold text-sm tracking-tight whitespace-nowrap">
                 OpenSIN
               </span>
             </Link>
@@ -225,7 +225,7 @@ export function SidebarMobileHeader() {
     <>
       <header
         aria-label={t("sidebar.topNavigationMobile")}
-        className="fixed top-0 left-0 right-0 z-10 flex justify-between items-center px-4 py-2 bg-[#111111] light:bg-white border-b border-white/[0.06] light:border-zinc-200 h-14"
+        className="fixed top-0 left-0 right-0 z-10 flex h-14 items-center justify-between border-b border-theme-modal-border bg-theme-bg-sidebar px-4 py-2"
       >
         <button
           type="button"
@@ -250,12 +250,14 @@ export function SidebarMobileHeader() {
       </header>
       <div
         className={`fixed inset-0 z-[99] h-dvh w-full transition-transform duration-200 ${
-          showSidebar ? "translate-x-0" : "-translate-x-full pointer-events-none"
+          showSidebar
+            ? "translate-x-0"
+            : "-translate-x-full pointer-events-none"
         }`}
         aria-hidden={!showSidebar}
       >
         <div
-          className={`transition-all duration-500 fixed top-0 left-0 bg-theme-bg-secondary bg-opacity-75 w-screen h-screen ${
+          className={`fixed left-0 top-0 h-screen w-screen bg-theme-overlay transition-opacity duration-200 ${
             showSidebar
               ? "opacity-100 pointer-events-auto"
               : "opacity-0 pointer-events-none"
@@ -332,9 +334,7 @@ function NewWorkspaceButton({ user, showNewWsModal }: any) {
         className="flex flex-grow w-[75%] h-10 gap-x-2 py-1.5 px-4 bg-white rounded-md text-zinc-900 justify-center items-center hover:bg-zinc-100 transition-colors duration-150 text-sm font-medium"
       >
         <Plus className="h-4 w-4" aria-hidden="true" />
-        <p className="text-sm font-medium">
-          {t("new-workspace.title")}
-        </p>
+        <p className="text-sm font-medium">{t("new-workspace.title")}</p>
       </button>
     </div>
   );
