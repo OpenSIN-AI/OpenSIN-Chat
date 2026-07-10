@@ -778,20 +778,20 @@ function NewFolderButton({ workspace, onCreated }) {
     <button
       type="button"
       onClick={onClick}
-      className="w-full relative flex h-[34px] items-center border-none hover:bg-white/5 light:hover:bg-slate-200/70 rounded-[8px] transition-colors"
+      className="relative flex h-9 w-full items-center rounded-lg border-none text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
     >
       <div className="flex w-full gap-x-2 items-center pl-3">
         {loading ? (
           <CircleNotch
             weight="bold"
             size={14}
-            className="shrink-0 animate-spin text-theme-text-secondary light:text-slate-500"
+            className="shrink-0 animate-spin"
           />
         ) : (
           <FolderSimplePlus
             weight="bold"
             size={14}
-            className="shrink-0 text-theme-text-secondary light:text-slate-500"
+            className="shrink-0"
           />
         )}
         <p className="text-left text-theme-text-secondary light:text-slate-500 text-[13px] font-medium">

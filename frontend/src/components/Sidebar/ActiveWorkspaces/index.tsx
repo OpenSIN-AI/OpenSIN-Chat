@@ -123,10 +123,10 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
         }}
         data-tooltip-id="workspace-quick-add"
         data-tooltip-content={t("activeWorkspaces.createTooltip")}
-        className="group/plus border-none rounded-md flex items-center justify-center p-1 transition-colors hover:bg-white/[0.06] light:hover:bg-zinc-100"
+        className="group/plus flex items-center justify-center rounded-md border-none p-1 text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
         aria-label={t("activeWorkspaces.createTooltip")}
       >
-        <Plus className="h-3.5 w-3.5 text-[#71717a] group-hover/plus:text-[#fafafa] light:text-zinc-500 light:group-hover/plus:text-zinc-900 transition-colors" />
+        <Plus className="h-3.5 w-3.5 transition-colors" />
       </button>
 
       {open &&
@@ -138,21 +138,21 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
               left: menuPos.left,
               zIndex: 9999,
             }}
-            className="w-44 rounded-lg border border-white/[0.08] light:border-zinc-200 bg-[#1c1c1c] light:bg-white shadow-2xl overflow-hidden"
+            className="w-44 overflow-hidden rounded-lg border border-theme-modal-border bg-theme-bg-secondary py-1 shadow-2xl"
           >
             <button
               type="button"
               onClick={handleNewChat}
-              className="w-full flex items-center gap-x-2 px-3 py-2 text-xs text-[#a1a1aa] light:text-zinc-600 hover:bg-white/[0.06] light:hover:bg-zinc-50 hover:text-[#fafafa] light:hover:text-zinc-900 transition-colors"
+              className="flex w-full items-center gap-2 px-3 py-2 text-xs text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
             >
               <ChatCircleText size={13} />
               {t("activeWorkspaces.newChat")}
             </button>
-            <div className="h-px bg-white/[0.06] light:bg-zinc-200" />
+            <div className="mx-2 h-px bg-theme-modal-border" />
             <button
               type="button"
               onClick={handleNewFolder}
-              className="w-full flex items-center gap-x-2 px-3 py-2 text-xs text-[#a1a1aa] light:text-zinc-600 hover:bg-white/[0.06] light:hover:bg-zinc-50 hover:text-[#fafafa] light:hover:text-zinc-900 transition-colors"
+              className="flex w-full items-center gap-2 px-3 py-2 text-xs text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
             >
               <FolderSimplePlus size={13} />
               {t("activeWorkspaces.newFolder")}
@@ -283,7 +283,7 @@ function ActiveWorkspaces() {
                               <DotsSixVertical
                                 size={14}
                                 weight="bold"
-                                className="text-[#52525b]"
+                                className="text-theme-placeholder"
                               />
                             </div>
                             <SquaresFour
@@ -324,9 +324,9 @@ function ActiveWorkspaces() {
                                   aria-label={t(
                                     "activeWorkspaces.uploadDocuments",
                                   )}
-                                  className="group/upload border-none rounded-md flex items-center justify-center p-1 hover:bg-white/[0.06] light:hover:bg-zinc-100 transition-colors"
+                                  className="group/upload flex items-center justify-center rounded-md border-none p-1 text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
                                 >
-                                  <UploadSimple className="h-3.5 w-3.5 text-[#71717a] group-hover/upload:text-[#fafafa] light:text-zinc-400 light:group-hover/upload:text-zinc-900 transition-colors" />
+                                  <UploadSimple className="h-3.5 w-3.5 transition-colors" />
                                 </button>
                                 <button
                                   type="button"
@@ -341,7 +341,7 @@ function ActiveWorkspaces() {
                                           ),
                                     );
                                   }}
-                                  className="group/gear rounded-md flex items-center justify-center p-1 hover:bg-white/[0.06] light:hover:bg-zinc-100 transition-colors"
+                                  className="group/gear flex items-center justify-center rounded-md p-1 text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
                                   aria-label={t(
                                     "sidebar.generalAppearanceSettings",
                                   )}
@@ -354,8 +354,8 @@ function ActiveWorkspaces() {
                                     className={`h-3.5 w-3.5 transition-colors ${
                                       isInWorkspaceSettings &&
                                       workspace.slug === slug
-                                        ? "text-[#fafafa] light:text-zinc-900"
-                                        : "text-[#71717a] group-hover/gear:text-[#fafafa] light:text-zinc-400 light:group-hover/gear:text-zinc-900"
+                                        ? "text-theme-text-primary"
+                                        : ""
                                     }`}
                                   />
                                 </button>
