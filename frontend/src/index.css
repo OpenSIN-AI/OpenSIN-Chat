@@ -653,6 +653,24 @@ body {
   background: rgba(0,0,0,0.03);
 }
 
+/* ── Light-mode markdown text color override ────────────────────────────── */
+/* Force all markdown child elements to dark text in light mode,
+   overriding any inherited light token values. */
+[data-theme="light"] .markdown,
+[data-theme="light"] .markdown p,
+[data-theme="light"] .markdown li,
+[data-theme="light"] .markdown h1,
+[data-theme="light"] .markdown h2,
+[data-theme="light"] .markdown h3,
+[data-theme="light"] .markdown h4,
+[data-theme="light"] .markdown h5,
+[data-theme="light"] .markdown h6,
+[data-theme="light"] .markdown span,
+[data-theme="light"] .markdown td,
+[data-theme="light"] .markdown th {
+  color: #18181b;
+}
+
 /* ── Katex styles ──────────────────────────────────────────────────────── */
 /* Keep the katex import after Tailwind so it can override preflight */
 @import "katex/dist/katex.min.css";
