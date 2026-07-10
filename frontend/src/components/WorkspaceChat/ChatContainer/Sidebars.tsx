@@ -35,12 +35,12 @@ export default function Sidebars({ workspace }: SidebarsProps) {
 
   return (
     <div
-      className="h-full flex flex-row flex-shrink-0 overflow-hidden"
+      className="hidden h-full flex-shrink-0 flex-row overflow-hidden md:flex"
       aria-label={t("common.rightSidebar")}
     >
       {/* Panel area — only when a panel is active */}
       {activeSidebar && (
-        <div className="h-full flex-shrink-0 relative my-2 rounded-2xl bg-zinc-900 light:bg-white shadow-lg shadow-black/40 z-30 overflow-hidden min-w-0 max-w-[calc(100vw-1rem)] md:max-w-none">
+        <div className="relative z-30 h-full min-w-0 flex-shrink-0 overflow-hidden border-l border-theme-modal-border bg-theme-bg-container md:max-w-none">
           {activeSidebar === "sources" && (
             <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
               <SourcesSidebar workspace={workspace} />

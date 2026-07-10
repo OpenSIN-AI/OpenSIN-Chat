@@ -140,7 +140,7 @@ export default function RightSidebarIconBar() {
   return (
     <nav
       aria-label={t("common.rightSidebar")}
-      className="my-2 mr-2 hidden h-[calc(100%-1rem)] w-14 flex-shrink-0 flex-col items-center gap-1 overflow-y-auto rounded-2xl border border-theme-modal-border bg-theme-bg-secondary py-2 md:flex"
+      className="hidden h-full w-14 flex-shrink-0 flex-col items-center gap-1 overflow-y-auto border-l border-theme-modal-border bg-theme-bg-container py-3 md:flex"
     >
       {/* Bestehende Panel-Icons */}
       {icons.map(renderIcon)}
