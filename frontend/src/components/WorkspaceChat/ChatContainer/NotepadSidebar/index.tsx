@@ -18,6 +18,7 @@ function NotepadSidebar({ workspace }: any) {
   const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const saveTimerRef = useRef<any>(null);
   const slug = workspace?.slug;
@@ -40,10 +41,11 @@ function NotepadSidebar({ workspace }: any) {
       setNotes(result);
       setSharedNotes(shared);
       setShareableWorkspaces(workspaces);
-      if (result.length > 0 && !activeNote) {
-        setActiveNote(result[0]);
+      setActiveNote((current: any) => {
+        if (current || result.length === 0) return current;
         setContent(result[0].content || "");
-      }
+        return result[0];
+      });
     } catch (e) {
       setLoadError(
         e instanceof Error
@@ -53,7 +55,7 @@ function NotepadSidebar({ workspace }: any) {
     } finally {
       setIsLoading(false);
     }
-  }, [slug, activeNote, t]);
+  }, [slug, t]);
 
   useEffect(() => {
     loadNotes();
@@ -81,12 +83,23 @@ function NotepadSidebar({ workspace }: any) {
   }, [sharingNoteId]);
 
   const handleNewNote = async () => {
-    if (!slug) return;
-    const note = await Note.create(slug, { content: "" });
-    if (note) {
+    if (!slug || isCreating) return;
+    setIsCreating(true);
+    setLoadError(null);
+    try {
+      const note = await Note.create(slug, { content: "" });
+      if (!note) {
+        setLoadError(
+          t("chat_window.create_note_failed", "Notiz konnte nicht erstellt werden."),
+        );
+        return;
+      }
       setNotes((prev) => [note, ...prev]);
+      setActiveSharedNote(null);
       setActiveNote(note);
       setContent("");
+    } finally {
+      setIsCreating(false);
     }
   };
 
@@ -227,11 +240,15 @@ function NotepadSidebar({ workspace }: any) {
             </button>
           </div>
           <button
+            type="button"
             onClick={handleNewNote}
-            className="flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg bg-theme-bg-secondary text-theme-text-secondary hover:opacity-80 transition-opacity text-sm border border-theme-border"
+            disabled={!slug || isCreating}
+            className="flex min-h-11 items-center justify-center gap-x-1.5 rounded-lg border border-theme-border bg-theme-bg-secondary px-3 py-2 text-sm text-theme-text-secondary transition-opacity hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            <Plus size={14} />
-            {t("chat_window.new_note", "Neue Notiz")}
+            <Plus size={16} aria-hidden="true" />
+            {isCreating
+              ? t("chat_window.creating_note", "Erstellen...")
+              : t("chat_window.new_note", "Neue Notiz")}
           </button>
         </div>
 

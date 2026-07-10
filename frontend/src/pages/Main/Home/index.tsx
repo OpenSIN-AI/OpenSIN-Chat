@@ -80,8 +80,18 @@ export default function Home() {
     let cancelled = false;
     async function init() {
       try {
-        const ws = await getTargetWorkspace();
+        let ws = await getTargetWorkspace();
         if (cancelled) return;
+
+        // Home tools such as notes require a workspace even before the first
+        // chat message is sent. Create the default workspace during bootstrap
+        // instead of leaving these tools visible but non-functional.
+        if (!ws && user?.role !== "default") {
+          ws = await createDefaultWorkspace(
+            i18next.t("new-workspace.placeholder"),
+          );
+        }
+
         if (ws) {
           const [suggestedMessages, { showAgentCommand }] = await Promise.all([
             Workspace.getSuggestedMessages(ws.slug),
