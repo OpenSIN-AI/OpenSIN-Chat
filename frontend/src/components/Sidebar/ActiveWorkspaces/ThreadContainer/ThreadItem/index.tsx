@@ -31,10 +31,15 @@ export function threadDisplayName(
   duplicateNames?: Set<string>,
   t?: (key: string, fallback?: string) => string,
 ): string {
-  if (!thread?.name) return t?.("threadItem.defaultName", "Neuer Chat") ?? "Neuer Chat";
+  if (!thread?.name)
+    return t?.("threadItem.defaultName", "Neuer Chat") ?? "Neuer Chat";
   // Strip leading * that the backend sometimes prepends to default thread names
-  const cleanName = thread.name.startsWith("*") ? thread.name.slice(1).trim() : thread.name;
-  const isDefault = DEFAULT_THREAD_NAMES.includes(cleanName) || DEFAULT_THREAD_NAMES.includes(thread.name);
+  const cleanName = thread.name.startsWith("*")
+    ? thread.name.slice(1).trim()
+    : thread.name;
+  const isDefault =
+    DEFAULT_THREAD_NAMES.includes(cleanName) ||
+    DEFAULT_THREAD_NAMES.includes(thread.name);
   const needsDisambiguation = isDefault || duplicateNames?.has(cleanName);
   const dateRaw = thread.lastUpdatedAt || thread.createdAt;
   const baseName = t?.("threadItem.defaultName", "Neuer Chat") ?? "Neuer Chat";
@@ -110,7 +115,7 @@ function ThreadItem({
       role="listitem"
     >
       <div
-        className={`flex w-full items-center justify-between pr-1 group/thread relative ${isActive ? "bg-white/10 light:bg-blue-200/70" : "hover:bg-white/5 light:hover:bg-slate-200/70"} rounded-[6px] transition-colors`}
+        className={`group/thread relative flex w-full items-center justify-between rounded-md pr-1 transition-colors ${isActive ? "bg-theme-sidebar-item-selected" : "hover:bg-theme-sidebar-item-hover"}`}
       >
         {thread.deleted ? (
           <div className="w-full flex justify-between">
@@ -147,8 +152,8 @@ function ThreadItem({
             <p
               className={`text-left text-[13px] truncate w-full ${
                 isActive
-                  ? "font-medium text-theme-text-primary light:text-blue-900"
-                  : "text-theme-text-secondary light:text-slate-600 font-normal"
+                  ? "font-medium text-theme-sidebar-item-text-active"
+                  : "font-normal text-theme-sidebar-item-text-inactive"
               }`}
             >
               {displayName}

@@ -37,6 +37,12 @@ const availableThemes = {
   dark: "Dark",
 };
 
+const SYSTEM_THEME_QUERY = "(prefers-color-scheme: dark)";
+
+function getSystemTheme() {
+  return window.matchMedia?.(SYSTEM_THEME_QUERY).matches ? "dark" : "light";
+}
+
 /**
  * Resolves the stored theme preference into a concrete "light" or "dark"
  * value. Handles the legacy "default" value (treated as dark) and the
@@ -47,11 +53,7 @@ const availableThemes = {
 export function resolveDarkMode(): boolean {
   const stored = getStoredTheme();
   let theme = stored === "default" ? "dark" : stored || "system";
-  if (theme === "system") {
-    theme = window.matchMedia?.("(prefers-color-scheme: light)").matches
-      ? "light"
-      : "dark";
-  }
+  if (theme === "system") theme = getSystemTheme();
   return theme !== "light";
 }
 
@@ -79,31 +81,36 @@ export function useTheme({ broadcastLogoChange = false } = {}) {
     return stored || "system";
   });
 
-  const [systemTheme, setSystemTheme] = useState(() =>
-    window.matchMedia?.("(prefers-color-scheme: light)").matches
-      ? "light"
-      : "dark",
-  );
+  const [systemTheme, setSystemTheme] = useState(getSystemTheme);
   const hasMountedRef = useRef(false);
 
-  // Listen for OS level theme changes
+  // Keep the system preference live while supporting older Safari versions.
   useEffect(() => {
     if (!window.matchMedia) return;
-    const mql: any = window.matchMedia("(prefers-color-scheme: light)");
-    const handler = (e) => setSystemTheme(e.matches ? "light" : "dark");
-    mql.addEventListener("change", handler);
-    return () => mql.removeEventListener("change", handler);
+    const mediaQuery = window.matchMedia(SYSTEM_THEME_QUERY);
+    const handleChange = (event: MediaQueryListEvent) =>
+      setSystemTheme(event.matches ? "dark" : "light");
+
+    setSystemTheme(mediaQuery.matches ? "dark" : "light");
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener("change", handleChange);
+      return () => mediaQuery.removeEventListener("change", handleChange);
+    }
+
+    mediaQuery.addListener(handleChange);
+    return () => mediaQuery.removeListener(handleChange);
   }, []);
 
   const resolvedTheme = theme === "system" ? systemTheme : theme;
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", resolvedTheme);
-    document.documentElement.classList.toggle(
-      "light",
-      resolvedTheme === "light",
-    );
-    document.body.classList.toggle("light", resolvedTheme === "light");
+    const isLight = resolvedTheme === "light";
+    document.documentElement.classList.toggle("light", isLight);
+    document.documentElement.classList.toggle("dark", !isLight);
+    document.body.classList.toggle("light", isLight);
+    document.body.classList.toggle("dark", !isLight);
+    document.documentElement.style.colorScheme = resolvedTheme;
     safeSetItem(THEME_KEY, theme);
     if (!hasMountedRef.current) {
       hasMountedRef.current = true;
@@ -134,7 +141,6 @@ export function useTheme({ broadcastLogoChange = false } = {}) {
    */
   const setTheme = useCallback((newTheme: any) => {
     _setTheme(newTheme);
-    window.dispatchEvent(new Event(REFETCH_LOGO_EVENT));
   }, []);
 
   return {
