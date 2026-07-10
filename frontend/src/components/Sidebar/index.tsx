@@ -161,9 +161,11 @@ export default function Sidebar() {
                     <ActiveWorkspaces />
                   </div>
                 </div>
-                <div className="shrink-0 pt-2 pb-1 z-10">
-                  <Footer />
-                </div>
+                {showSidebar && (
+                  <div className="shrink-0 pt-2 pb-1 z-10">
+                    <Footer />
+                  </div>
+                )}
               </div>
             </div>
           </div>
