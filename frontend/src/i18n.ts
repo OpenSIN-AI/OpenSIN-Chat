@@ -18,11 +18,17 @@ i18next
     ),
   )
   .init({
-    fallbackLng: "en",
+    fallbackLng: "de",
     load: "languageOnly",
     supportedLngs,
     nonExplicitSupportedLngs: true,
     detection: {
+      // OpenSIN Chat is a German-first app. Only honor an explicit user choice
+      // saved in localStorage; otherwise fall back to German instead of the
+      // browser language so the UI stays consistent (no EN/DE mix).
+      order: ["localStorage"],
+      lookupLocalStorage: "i18nextLng",
+      caches: ["localStorage"],
       convertDetectedLanguage: (lng: string) => lng.split("-")[0],
     },
     debug: import.meta.env.DEV,
