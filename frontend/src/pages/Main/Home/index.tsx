@@ -239,7 +239,6 @@ function HomeContent({
   const isMobile = useIsMobileLayout();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const isMobile = useIsMobileLayout();
   const [loading, setLoading] = useState(false);
   const submittingRef = useRef(false);
   const { files, parseAttachments } = useContext(DndUploaderContext);
@@ -372,7 +371,6 @@ function HomeContent({
 function NoWorkspacesAssigned() {
   const isMobile = useIsMobileLayout();
   const { t } = useTranslation();
-  const isMobile = useIsMobileLayout();
   return (
     <div
       style={
