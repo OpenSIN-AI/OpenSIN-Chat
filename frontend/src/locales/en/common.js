@@ -4041,8 +4041,8 @@ const TRANSLATIONS = {
     retry: "Try again",
     political: {
       title: "Political",
-      drucksachen: "Bundestag documents (AfD)",
-      news: "AfD press releases",
+      drucksachen: "Bundestag documents",
+      news: "Press releases",
       empty: "No documents found.",
       rss_empty: "No press releases found.",
       hint: 'Tip: "@agent Bundestag document..." in chat for detailed queries.',
