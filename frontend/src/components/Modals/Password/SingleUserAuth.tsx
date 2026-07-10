@@ -24,6 +24,7 @@ export default function SingleUserAuth({
   const [recoveryCodes, setRecoveryCodes] = useState<string[]>([]);
   const [downloadComplete, setDownloadComplete] = useState<boolean>(false);
   const [token, setToken] = useState<any>(null);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const { appName, isLoading: appNameLoading } = useCustomAppName();
   const { settings } = useSystemSettings();

@@ -252,6 +252,7 @@ export default function MultiUserAuth() {
   const [token, setToken] = useState<any>(null);
   const [showRecoveryForm, setShowRecoveryForm] = useState(false);
   const [showResetPasswordForm, setShowResetPasswordForm] = useState(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const { appName, isLoading: appNameLoading } = useCustomAppName();
 
