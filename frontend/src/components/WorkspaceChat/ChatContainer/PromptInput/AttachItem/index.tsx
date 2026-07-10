@@ -183,7 +183,7 @@ export default function AttachItem({
                 "--attach-bottom": `calc(100vh - ${menuPos.top}px + 8px)`,
                 "--attach-left": `${menuPos.left}px`,
               }}
-              className="fixed bottom-[var(--attach-bottom)] left-[var(--attach-left)] bg-[#141414] light:bg-white border border-white/[0.07] light:border-zinc-200 rounded-xl shadow-2xl shadow-black/50 z-[1000] p-0"
+              className="fixed bottom-[var(--attach-bottom)] left-[var(--attach-left)] bg-theme-bg-secondary light:bg-white border border-white/[0.07] light:border-zinc-200 rounded-xl shadow-2xl shadow-black/50 z-[1000] p-0"
               onMouseDown={(e) => e.stopPropagation()}
             >
               <AddSourceMenu

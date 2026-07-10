@@ -180,7 +180,7 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
           className={`group flex cursor-pointer items-center rounded-md border px-2.5 py-1 transition-colors duration-150 pointer-events-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 ${
             showSelector
               ? "border-white/[0.14] bg-white/[0.08] light:border-zinc-300 light:bg-zinc-100"
-              : "border-white/[0.08] bg-[#111111]/80 light:border-zinc-300 light:bg-zinc-100 hover:border-white/[0.14] hover:bg-white/[0.06] light:hover:bg-zinc-200"
+              : "border-white/[0.08] bg-theme-bg-secondary/80 light:border-zinc-300 light:bg-zinc-100 hover:border-white/[0.14] hover:bg-white/[0.06] light:hover:bg-zinc-200"
           }`}
         >
           <span
@@ -195,7 +195,7 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
         </button>
 
         {showSelector && (
-          <div className="absolute left-0 top-full mt-1 bg-[#141414] light:bg-white border border-white/[0.07] light:border-zinc-200 rounded-xl shadow-2xl shadow-black/50 w-[620px] overflow-hidden pointer-events-auto">
+          <div className="absolute left-0 top-full mt-1 bg-theme-bg-secondary light:bg-white border border-white/[0.07] light:border-zinc-200 rounded-xl shadow-2xl shadow-black/50 w-[620px] overflow-hidden pointer-events-auto">
             <LLMSelectorModal
               key={refreshKey}
               workspaceSlug={slug}

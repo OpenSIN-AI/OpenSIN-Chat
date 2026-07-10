@@ -282,7 +282,7 @@ function AccountMenu({ compact = false }: { compact?: boolean }) {
               bottom: pos.bottom,
               width: pos.width,
             }}
-            className="z-[60] rounded-xl border border-white/[0.07] light:border-zinc-200 bg-[#141414] light:bg-white shadow-2xl shadow-black/60 p-1.5 max-h-[70vh] overflow-y-auto no-scroll"
+            className="z-[60] rounded-xl border border-white/[0.07] light:border-zinc-200 bg-theme-bg-secondary light:bg-white shadow-2xl shadow-black/60 p-1.5 max-h-[70vh] overflow-y-auto no-scroll"
           >
             {/* Identity header */}
             <div className="flex items-center gap-x-2.5 px-2.5 py-2">

@@ -16,7 +16,7 @@ export default function Main() {
   if (loading) return <FullScreenLoader />;
   if (apiError)
     return (
-      <div className="fixed inset-0 bg-[#0a0a0a] light:bg-[#f9fafb] flex flex-col items-center justify-center overflow-hidden p-6">
+      <div className="fixed inset-0 bg-theme-bg-primary light:bg-[#f9fafb] flex flex-col items-center justify-center overflow-hidden p-6">
         <div className="text-center max-w-md">
           <p className="text-red-400 text-xl font-semibold mb-2">
             {t("error.serverUnavailable")}

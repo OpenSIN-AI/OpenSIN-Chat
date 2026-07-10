@@ -100,7 +100,7 @@ export default function PromptInput({
               centered={centered}
               highlightedIndexRef={toolsHighlightRef}
             />
-            <div className="flex flex-col overflow-hidden rounded-2xl border border-white/[0.10] bg-[#121212] px-3 shadow-[0_12px_36px_rgba(0,0,0,0.18)] transition-colors duration-200 focus-within:border-white/[0.24] light:border-zinc-300 light:bg-white light:focus-within:border-zinc-400 sm:px-4">
+            <div className="flex flex-col overflow-hidden rounded-2xl border border-white/[0.10] bg-theme-bg-secondary px-3 shadow-[0_12px_36px_rgba(0,0,0,0.18)] transition-colors duration-200 focus-within:border-white/[0.24] light:border-zinc-300 light:bg-white light:focus-within:border-zinc-400 sm:px-4">
               <AttachmentManager attachments={attachments} />
               <div className="flex items-center">
                 <TextArea

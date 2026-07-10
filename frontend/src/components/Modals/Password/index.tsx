@@ -42,9 +42,9 @@ export default function PasswordModal({ mode = "single" }: any) {
   const { loginLogo, isCustomLogo } = useLogo();
 
   return (
-    <div className="fixed inset-0 flex overflow-hidden bg-[#0a0a0a] light:bg-[#fafafa]">
+    <div className="fixed inset-0 flex overflow-hidden bg-theme-bg-primary light:bg-[#fafafa]">
       {/* Workspace context */}
-      <aside className="relative hidden min-w-[22rem] max-w-[28rem] flex-1 flex-col justify-between border-r border-white/[0.08] bg-[#0d0d0d] p-10 light:border-zinc-200 light:bg-zinc-50 lg:flex xl:p-12">
+      <aside className="relative hidden min-w-[22rem] max-w-[28rem] flex-1 flex-col justify-between border-r border-white/[0.08] bg-theme-bg-sidebar p-10 light:border-zinc-200 light:bg-zinc-50 lg:flex xl:p-12">
         <div className="flex items-center gap-x-2.5">
           <img
             src={loginLogo}
@@ -100,7 +100,7 @@ export default function PasswordModal({ mode = "single" }: any) {
       </aside>
 
       {/* Right form panel */}
-      <main className="flex w-full items-center justify-center bg-[#0a0a0a] p-6 light:bg-white sm:p-10">
+      <main className="flex w-full items-center justify-center bg-theme-bg-primary p-6 light:bg-white sm:p-10">
         <div className="w-full max-w-[380px]">
           {/* Logo for mobile */}
           <div className="mb-8 flex flex-col items-center gap-y-3 lg:hidden">
@@ -113,7 +113,7 @@ export default function PasswordModal({ mode = "single" }: any) {
             />
           </div>
 
-          <div className="rounded-xl border border-white/[0.1] bg-[#111111] p-7 shadow-[0_24px_80px_rgba(0,0,0,0.28)] light:border-zinc-200 light:bg-white sm:p-8">
+          <div className="rounded-xl border border-white/[0.1] bg-theme-bg-secondary p-7 shadow-[0_24px_80px_rgba(0,0,0,0.28)] light:border-zinc-200 light:bg-white sm:p-8">
             {mode === "single" ? (
               <SingleUserAuth />
             ) : mode === "single-auto" ? (

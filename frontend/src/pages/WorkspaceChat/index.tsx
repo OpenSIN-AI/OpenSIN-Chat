@@ -35,7 +35,7 @@ function WorkspaceChatLayout() {
   const isMobile = useIsMobileLayout();
   const railVisible = !isMobile && !showSidebar;
   return (
-    <div className="w-screen h-screen overflow-hidden bg-[#0a0a0a] light:bg-[#f9fafb] flex">
+    <div className="w-screen h-screen overflow-hidden bg-theme-bg-primary light:bg-[#f9fafb] flex">
       {!isMobile && <LeftSidebarIconBar />}
       {!isMobile ? <Sidebar /> : <SidebarMobileHeader />}
       <div
