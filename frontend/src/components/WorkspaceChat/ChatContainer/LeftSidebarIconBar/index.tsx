@@ -40,15 +40,17 @@ export default function LeftSidebarIconBar() {
         />
       </div>
 
-      <div className="flex flex-col items-center gap-1">
-        <AccountMenu compact />
-        <Tooltip
-          id="lsib-profile"
-          place="right"
-          delayShow={300}
-          className="tooltip !text-xs z-99"
-        />
-      </div>
+      {!showSidebar && (
+        <div className="flex flex-col items-center gap-1">
+          <AccountMenu compact />
+          <Tooltip
+            id="lsib-profile"
+            place="right"
+            delayShow={300}
+            className="tooltip !text-xs z-99"
+          />
+        </div>
+      )}
     </div>
   );
 }

@@ -213,6 +213,25 @@
 
 [data-theme="light"] {
   /* Phase 5 — light-theme semantic token overrides */
+
+  /*
+   * Override Tailwind @theme color tokens for light mode.
+   * The @theme block defines --color-theme-* as static tokens used by
+   * Tailwind utilities (e.g. text-theme-text-primary → var(--color-theme-text-primary)).
+   * Without these overrides the utilities always output the dark-mode values,
+   * making e.g. AI response text white-on-white in light mode.
+   */
+  --color-theme-text-primary:  #0e0f0f;
+  --color-theme-text-secondary: #7a7d7e;
+  --color-theme-text-muted:    #9ca3af;
+  --color-theme-bg-primary:    #ffffff;
+  --color-theme-bg-secondary:  #ffffff;
+  --color-theme-bg-tertiary:   #edf2fa;
+  --color-theme-modal-border:  #d3d3d3;
+  --color-theme-accent:        #009ee0;
+  --color-theme-accent-light:  #0079b0;
+  --color-theme-accent-dark:   #52525b;
+
   --color-brand:         #009ee0;
   --color-surface:       #ffffff;
   --color-surface-raised:#edf2fa;
