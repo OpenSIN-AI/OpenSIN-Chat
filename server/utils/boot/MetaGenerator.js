@@ -457,10 +457,46 @@ class MetaGenerator {
    * @param {number} code
    * @param {string|null} prerenderedBody
    */
+  /**
+   * Read the entry `<script>`/`<link>` asset paths from the built
+   * `_index.html` so the server emits the real (hashed) bundle names
+   * produced by the production Vite/Rolldown build instead of the
+   * dev-only `/index.js` + `/index.css` placeholders.
+   *
+   * @returns {{entryJs: string, entryCss: string}}
+   */
+  async #readEntryAssets() {
+    const fs = require("fs");
+    const path = require("path");
+    const fallback = { entryJs: "/index.js", entryCss: "/index.css" };
+    try {
+      const htmlPath = path.resolve(__dirname, "../../public/_index.html");
+      if (!fs.existsSync(htmlPath)) return fallback;
+      const html = fs.readFileSync(htmlPath, "utf8");
+
+      const scriptMatch = html.match(
+        /<script[^>]*type="module"[^>]*src="([^"]+\.js)"/,
+      );
+      const entryJs = scriptMatch ? scriptMatch[1] : fallback.entryJs;
+
+      // Entry CSS carries the `index-` hash (vendor CSS is pdf-vendor / markdown / ...).
+      const cssMatch = html.match(
+        /<link[^>]*rel="stylesheet"[^>]*href="(\/assets\/index-[^"]+\.css)"/,
+      );
+      const entryCss = cssMatch ? cssMatch[1] : fallback.entryCss;
+
+      return { entryJs, entryCss };
+    } catch (err) {
+      this.#log(`could not read entry assets from _index.html: ${err.message}`);
+      return fallback;
+    }
+  }
+
   async generate(request, response, code = 200, prerenderedBody = null) {
     if (this.#customConfig === null) await this.#fetchConfg();
     const routePath = request?.path || "/";
     const { js, css } = await this.#readVitePreloadList();
+    const { entryJs, entryCss } = await this.#readEntryAssets();
     const filteredJs = this.#filterPreloadList(js, routePath);
     const preloadTags = this.#buildPreloadTags(filteredJs);
     const cssTags = this.#buildCssTags(css, routePath);
@@ -477,8 +513,8 @@ class MetaGenerator {
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             ${this.#assembleMeta()}
             ${preloadTags}
-            <script type="module" crossorigin src="/index.js"></script>
-            <link rel="stylesheet" crossorigin href="/index.css">
+            <script type="module" crossorigin src="${entryJs}"></script>
+            <link rel="stylesheet" crossorigin href="${entryCss}">
             ${cssTags}
           </head>
           <body>
