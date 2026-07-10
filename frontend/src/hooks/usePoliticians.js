@@ -26,12 +26,15 @@ function mapPolitician(p) {
 
 /**
  * Hook for searching and filtering the local politician database.
- * Defaults to the AfD party (optimized for the primary target audience) but
- * allows switching party, filtering by state, and searching by name.
+ * Defaults to no party filter ("Alle Parteien") so the visible dropdown label
+ * matches the actual query — previously the filter was locked to "AfD" while
+ * the dropdown showed "Alle Parteien", causing name searches for non-AfD
+ * politicians (e.g. "Merz") to silently return nothing. The AfD party remains
+ * selectable from the dropdown.
  */
 export function usePoliticians() {
   const [query, setQuery] = useState("");
-  const [party, setParty] = useState("AfD");
+  const [party, setParty] = useState("");
   const [state, setState] = useState("");
 
   const params = useMemo(() => {

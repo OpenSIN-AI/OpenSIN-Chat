@@ -107,8 +107,8 @@ export default function EmptyState({
   ];
 
   return (
-    <div className="flex flex-col h-full w-full items-center justify-center overflow-y-auto px-2 md:px-6">
-      <div className="flex flex-col items-center w-full max-w-[720px] py-8">
+    <div className="flex flex-col h-full w-full items-center overflow-y-auto px-2 md:px-6">
+      <div className="flex flex-col items-center w-full max-w-[720px] py-8 my-auto">
         <h1 className="text-[#e4e4e7] light:text-zinc-900 text-2xl md:text-[1.75rem] font-semibold mb-2.5 text-center tracking-tight text-balance">
           {t("main-page.greeting")}
         </h1>
