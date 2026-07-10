@@ -198,6 +198,7 @@ WORKDIR /app
 FROM build AS backend-build
 
 COPY --chown=opensin:opensin ./server/package.json ./server/yarn.lock /app/server/
+COPY --chown=opensin:opensin ./server/prisma/schema.prisma /app/server/prisma/schema.prisma
 WORKDIR /app/server
 RUN --mount=type=cache,target=/yarn-cache,uid=1000,gid=1000 \
     YARN_CACHE_FOLDER=/yarn-cache \
