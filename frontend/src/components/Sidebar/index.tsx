@@ -22,9 +22,9 @@ import SearchBox from "./SearchBox";
 import { Tooltip } from "react-tooltip";
 import { createPortal } from "react-dom";
 
-const SIDEBAR_MIN_WIDTH = 220;
-const SIDEBAR_MAX_WIDTH = 480;
-const SIDEBAR_DEFAULT_WIDTH = 292;
+const SIDEBAR_MIN_WIDTH = 260;
+const SIDEBAR_MAX_WIDTH = 420;
+const SIDEBAR_DEFAULT_WIDTH = 288;
 const SIDEBAR_WIDTH_STORAGE_KEY = "opensin-sidebar-width";
 
 export default function Sidebar() {
@@ -101,10 +101,10 @@ export default function Sidebar() {
       <nav
         aria-label={t("sidebar.mainNavigation")}
         style={{ width: showSidebar ? `${sidebarWidth}px` : "0px" }}
-        className={`relative z-40 hidden flex-shrink-0 overflow-hidden bg-theme-bg-sidebar transition-[width] duration-200 md:flex ${showSidebar ? "border-r border-theme-modal-border" : ""}`}
+        className={`relative z-40 hidden flex-shrink-0 overflow-hidden bg-theme-bg-sidebar transition-[width] duration-200 ease-out md:flex ${showSidebar ? "border-r border-theme-modal-border" : ""}`}
       >
         <div className="overflow-hidden h-full flex flex-col w-full">
-          <div className="flex shrink-0 w-full items-center justify-between gap-x-2 mt-3 mb-2 px-3">
+          <div className="flex h-14 w-full shrink-0 items-center justify-between gap-2 border-b border-theme-modal-border px-3">
             <Link
               to={paths.home()}
               aria-label={t("sidebar.home")}
@@ -135,7 +135,7 @@ export default function Sidebar() {
                     ? t("sidebar.hideSidebar")
                     : t("sidebar.showSidebar")
                 }
-                className="flex h-11 w-11 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
+                className="flex h-9 w-9 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg border-none bg-transparent text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-text-secondary"
               >
                 <SidebarSimple
                   size={15}
@@ -152,7 +152,7 @@ export default function Sidebar() {
           </div>
           <div
             ref={sidebarRef}
-            className="w-full relative flex-1 flex flex-col px-2 pb-2 min-h-0 overflow-hidden"
+            className="relative flex min-h-0 w-full flex-1 flex-col overflow-hidden px-3 pb-3 pt-2"
           >
             <div className="flex flex-col h-full overflow-hidden">
               <div className="flex-grow flex flex-col min-h-0">
@@ -179,9 +179,9 @@ export default function Sidebar() {
             aria-orientation="vertical"
             aria-label={t("sidebar.resizeSidebar")}
             title={t("sidebar.resizeSidebarTitle")}
-            className="absolute top-0 right-0 h-full w-[5px] cursor-col-resize z-50 group flex items-center justify-center hover:bg-white/[0.04] transition-colors"
+            className="group absolute right-0 top-0 z-50 flex h-full w-1.5 cursor-col-resize items-center justify-center transition-colors hover:bg-theme-bg-hover"
           >
-            <div className="w-px h-8 bg-transparent group-hover:bg-white/20 rounded-full transition-colors" />
+            <div className="h-10 w-px rounded-full bg-transparent transition-colors group-hover:bg-theme-text-secondary" />
           </div>
         )}
         {showingNewWsModal && <NewWorkspaceModal hideModal={hideNewWsModal} />}
@@ -331,7 +331,7 @@ function NewWorkspaceButton({ user, showNewWsModal }: any) {
         type="button"
         onClick={showNewWsModal}
         aria-label={t("new-workspace.title")}
-        className="flex flex-grow w-[75%] h-10 gap-x-2 py-1.5 px-4 bg-white rounded-md text-zinc-900 justify-center items-center hover:bg-zinc-100 transition-colors duration-150 text-sm font-medium"
+        className="flex h-10 w-full flex-grow items-center justify-center gap-2 rounded-lg border border-theme-modal-border bg-theme-bg-secondary px-4 py-1.5 text-sm font-medium text-theme-text-primary transition-colors duration-150 hover:bg-theme-bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-text-secondary"
       >
         <Plus className="h-4 w-4" aria-hidden="true" />
         <p className="text-sm font-medium">{t("new-workspace.title")}</p>

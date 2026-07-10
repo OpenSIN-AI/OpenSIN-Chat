@@ -710,7 +710,7 @@ function NewThreadButton({ workspace, mutate }) {
     <button
       type="button"
       onClick={onClick}
-      className="w-full relative flex h-[34px] items-center border border-white/10 light:border-slate-300 hover:bg-white/10 light:hover:bg-slate-200 rounded-[8px] transition-colors mb-1"
+      className="relative mb-1 flex h-9 w-full items-center rounded-lg border border-theme-modal-border bg-theme-bg-secondary transition-colors hover:bg-theme-bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-text-secondary"
     >
       <div className="flex w-full gap-x-2 items-center pl-3">
         {loading ? (
@@ -723,7 +723,7 @@ function NewThreadButton({ workspace, mutate }) {
           <Plus
             weight="bold"
             size={14}
-            className="shrink-0 text-theme-text-primary light:text-theme-text-primary"
+            className="shrink-0 text-theme-text-primary"
           />
         )}
         {loading ? (
@@ -731,7 +731,7 @@ function NewThreadButton({ workspace, mutate }) {
             {t("threadContainer.startingChat")}
           </p>
         ) : (
-          <p className="text-left text-theme-text-primary light:text-slate-700 text-[13px] font-medium">
+          <p className="text-left text-[13px] font-medium text-theme-text-primary">
             {t("threadContainer.newChat")}
           </p>
         )}
