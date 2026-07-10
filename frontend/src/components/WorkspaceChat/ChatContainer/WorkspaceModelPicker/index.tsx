@@ -185,7 +185,7 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
             className={`text-xs ${
               showSelector
                 ? "text-[#e4e4e7] light:text-zinc-900"
-                : "text-[#71717a] light:text-zinc-500 group-hover:text-[#a1a1aa] light:group-hover:text-zinc-800"
+                : "text-[#71717a] light:text-zinc-600 group-hover:text-[#a1a1aa] light:group-hover:text-zinc-900"
             }`}
           >
             {modelName || t("chat_window.select_model")}
