@@ -35,11 +35,16 @@ function prettifyModelName(rawModel: string): string {
     .map((word) => {
       // Keep well-known acronyms uppercase
       const upper = [
+        "m1",
         "m2",
         "m3",
         "m4",
+        "v1",
+        "v2",
+        "v3",
         "v4",
         "v5",
+        "vl",
         "llm",
         "gpt",
         "api",

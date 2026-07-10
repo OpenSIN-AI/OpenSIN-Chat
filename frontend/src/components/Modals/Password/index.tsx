@@ -42,7 +42,7 @@ export default function PasswordModal({ mode = "single" }: any) {
   return (
     <div className="fixed inset-0 flex bg-[#0a0a0a] light:bg-[#fafafa] overflow-hidden">
       {/* Left brand panel */}
-      <div className="relative hidden lg:flex lg:w-[44%] flex-col justify-between p-14 xl:p-16 border-r border-white/[0.06] light:border-zinc-200">
+      <div className="relative hidden lg:flex lg:w-[44%] flex-col justify-center gap-y-12 p-14 xl:p-16 border-r border-white/[0.06] light:border-zinc-200">
         <div className="flex items-center gap-x-2.5">
           <img
             src={loginLogo}
@@ -80,7 +80,7 @@ export default function PasswordModal({ mode = "single" }: any) {
           </ul>
         </div>
 
-        <p className="text-[11px] text-[#3f3f46] light:text-zinc-400 tracking-wide">
+        <p className="text-[11px] text-[#3f3f46] light:text-zinc-400 tracking-wide mt-4">
           © {new Date().getFullYear()} OpenSIN Chat · Selbst gehostet · Keine Telemetrie
         </p>
       </div>

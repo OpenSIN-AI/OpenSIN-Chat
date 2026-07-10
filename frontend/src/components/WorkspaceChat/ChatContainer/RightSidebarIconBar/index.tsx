@@ -113,6 +113,9 @@ export default function RightSidebarIconBar() {
   // --- Render helper (shared by both sections) ---
   function renderIcon({ id, icon: Icon, label, action, badge = 0 }: any) {
     const isActive = activeSidebar === id;
+    // When a panel is open the icon bar sits at the far right — tooltip "left"
+    // would fly off screen. Use "bottom" when any panel is active.
+    const tooltipPlace = activeSidebar ? "bottom" : "left";
     return (
       <div
         key={id}
@@ -140,7 +143,7 @@ export default function RightSidebarIconBar() {
         )}
         <Tooltip
           id={`rsib-${id}`}
-          place="left"
+          place={tooltipPlace}
           delayShow={300}
           className="tooltip !text-xs z-99"
         />
@@ -149,7 +152,7 @@ export default function RightSidebarIconBar() {
   }
 
   return (
-    <div className="hidden md:flex flex-col items-center gap-1 py-2 px-1 bg-zinc-900 light:bg-white h-full flex-shrink-0 w-[44px] my-2 mr-2 rounded-2xl overflow-y-auto">
+    <div className="hidden md:flex flex-col items-center gap-1 py-2 px-1 bg-zinc-900 light:bg-white h-full flex-shrink-0 w-[44px] my-2 mr-2 rounded-2xl overflow-y-auto no-scrollbar">
       {/* Bestehende Panel-Icons */}
       {icons.map(renderIcon)}
 

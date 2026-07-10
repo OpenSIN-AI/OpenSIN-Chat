@@ -71,7 +71,7 @@ function ChatBubble({ message, type }: { message: string; type: string }) {
           <div
             role="article"
             aria-label={isUser ? "User message" : "Assistant message"}
-            className={`markdown whitespace-pre-line text-theme-text-primary light:text-theme-text-primary font-normal text-sm md:text-sm flex flex-col gap-y-1 mt-2`}
+            className={`markdown text-theme-text-primary light:text-theme-text-primary font-normal text-sm md:text-sm leading-relaxed flex flex-col gap-y-1 mt-2`}
             dangerouslySetInnerHTML={{
               __html: safeMarkdown(renderMarkdown(message)),
             }}

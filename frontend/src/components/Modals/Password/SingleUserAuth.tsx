@@ -159,7 +159,7 @@ export default function SingleUserAuth({
         <button
           disabled={loading || appNameLoading}
           type="submit"
-          aria-label={t("common.save", "Save")}
+          aria-label={t("login.multi-user.login", "Login")}
           className="mt-6 flex h-10 w-full items-center justify-center gap-x-2 rounded-lg bg-[#fafafa] light:bg-zinc-900 text-sm font-semibold text-zinc-900 light:text-white transition hover:bg-[#e4e4e7] light:hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-white/20 disabled:cursor-not-allowed disabled:opacity-40"
         >
           {loading ? (

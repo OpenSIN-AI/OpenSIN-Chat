@@ -146,7 +146,7 @@ export default function EmptyState({
           threadSlug={threadSlug}
         />
 
-        <div className="grid grid-cols-2 gap-2 w-full mt-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full mt-5">
           {capabilities.map((cap) => (
             <CapabilityCard
               key={cap.title}

@@ -21,7 +21,7 @@ import { useTranslation } from "react-i18next";
 import { copyText } from "@/utils/clipboard";
 
 const THREAD_CALLOUT_DETAIL_WIDTH: any = 26;
-const DEFAULT_THREAD_NAMES = ["Thread", "New Thread"];
+const DEFAULT_THREAD_NAMES = ["Thread", "New Thread", "*New Thread"];
 
 export function threadDisplayName(
   thread: any,
