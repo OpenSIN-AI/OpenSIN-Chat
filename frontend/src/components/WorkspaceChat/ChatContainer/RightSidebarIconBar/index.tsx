@@ -129,6 +129,7 @@ export default function RightSidebarIconBar() {
           id={`rsib-${id}`}
           place={tooltipPlace}
           delayShow={300}
+          positionStrategy="fixed"
           className="tooltip !text-xs z-[99]"
         />
       </div>

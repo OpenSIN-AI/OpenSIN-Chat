@@ -32,11 +32,13 @@ export function threadDisplayName(
   t?: (key: string, fallback?: string) => string,
 ): string {
   if (!thread?.name) return t?.("threadItem.defaultName", "Neuer Chat") ?? "Neuer Chat";
-  const isDefault = DEFAULT_THREAD_NAMES.includes(thread.name);
-  const needsDisambiguation = isDefault || duplicateNames?.has(thread.name);
-  if (!needsDisambiguation) return thread.name;
+  // Strip leading * that the backend sometimes prepends to default thread names
+  const cleanName = thread.name.startsWith("*") ? thread.name.slice(1).trim() : thread.name;
+  const isDefault = DEFAULT_THREAD_NAMES.includes(cleanName) || DEFAULT_THREAD_NAMES.includes(thread.name);
+  const needsDisambiguation = isDefault || duplicateNames?.has(cleanName);
   const dateRaw = thread.lastUpdatedAt || thread.createdAt;
   const baseName = t?.("threadItem.defaultName", "Neuer Chat") ?? "Neuer Chat";
+  if (!needsDisambiguation) return cleanName;
   if (!dateRaw) return baseName;
   const d = new Date(dateRaw);
   const date = d.toLocaleDateString("de-DE", {
