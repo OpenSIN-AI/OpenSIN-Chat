@@ -53,6 +53,7 @@ export default function Sidebar() {
   const isResizingRef = useRef(false);
   const resizeStartXRef = useRef(0);
   const resizeStartWidthRef = useRef(0);
+  const resizeFrameRef = useRef<number | null>(null);
 
   // Persist width changes
   useEffect(() => {
@@ -61,9 +62,10 @@ export default function Sidebar() {
     }
   }, [sidebarWidth]);
 
-  function handleResizeStart(e: React.MouseEvent) {
+  function handleResizeStart(e: React.PointerEvent) {
     e.preventDefault();
     e.stopPropagation();
+    e.currentTarget.setPointerCapture(e.pointerId);
     isResizingRef.current = true;
     resizeStartXRef.current = e.clientX;
     resizeStartWidthRef.current = sidebarWidth;
@@ -71,28 +73,34 @@ export default function Sidebar() {
     document.body.style.userSelect = "none";
   }
 
-  // Mount global mouse listeners ONCE on mount, not on every sidebarWidth change
   useEffect(() => {
-    function handleMouseMove(e: MouseEvent) {
+    function handlePointerMove(e: PointerEvent) {
       if (!isResizingRef.current) return;
-      const delta = e.clientX - resizeStartXRef.current;
-      const newWidth = Math.min(
-        SIDEBAR_MAX_WIDTH,
-        Math.max(SIDEBAR_MIN_WIDTH, resizeStartWidthRef.current + delta),
+      const maxWidth = Math.min(SIDEBAR_MAX_WIDTH, window.innerWidth * 0.45);
+      const nextWidth = Math.min(
+        maxWidth,
+        Math.max(
+          SIDEBAR_MIN_WIDTH,
+          resizeStartWidthRef.current + e.clientX - resizeStartXRef.current,
+        ),
       );
-      setSidebarWidth(newWidth);
+      if (resizeFrameRef.current) cancelAnimationFrame(resizeFrameRef.current);
+      resizeFrameRef.current = requestAnimationFrame(() =>
+        setSidebarWidth(nextWidth),
+      );
     }
-    function handleMouseUp() {
+    function handlePointerUp() {
       if (!isResizingRef.current) return;
       isResizingRef.current = false;
       document.body.style.cursor = "";
       document.body.style.userSelect = "";
     }
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerup", handlePointerUp);
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", handlePointerUp);
+      if (resizeFrameRef.current) cancelAnimationFrame(resizeFrameRef.current);
     };
   }, []);
 
@@ -174,7 +182,7 @@ export default function Sidebar() {
         {/* Resize Handle */}
         {showSidebar && (
           <div
-            onMouseDown={handleResizeStart}
+            onPointerDown={handleResizeStart}
             role="separator"
             aria-orientation="vertical"
             aria-label={t("sidebar.resizeSidebar")}

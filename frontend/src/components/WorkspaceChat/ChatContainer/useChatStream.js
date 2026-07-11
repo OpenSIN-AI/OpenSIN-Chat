@@ -42,6 +42,8 @@ export default function useChatStream({
   const activeThreadSlug = threadSlug;
   const prevLoadingResponse = useRef(loadingResponse);
   const lastResponseWasError = useRef(false);
+  const activeChatKey = `${workspace?.slug || ""}:${threadSlug || "default"}`;
+  const previousChatKey = useRef(activeChatKey);
   // Ref to always access the latest chatHistory inside effects without
   // re-triggering the fetchReply effect on every chatHistory change.
   const chatHistoryRef = useRef(chatHistory);
@@ -81,6 +83,13 @@ export default function useChatStream({
    * so the next successful response syncs normally.
    */
   useEffect(() => {
+    if (previousChatKey.current !== activeChatKey) {
+      previousChatKey.current = activeChatKey;
+      lastResponseWasError.current = false;
+      setLoadingResponse(false);
+      setChatHistory(knownHistory);
+      return;
+    }
     if (!loadingResponse) {
       if (lastResponseWasError.current) {
         lastResponseWasError.current = false;
@@ -98,7 +107,7 @@ export default function useChatStream({
         setChatHistory(knownHistory);
       }
     }
-  }, [knownHistory]);
+  }, [knownHistory, activeChatKey]);
 
   /**
    * Invalidate the SWR chat history cache after streaming completes.

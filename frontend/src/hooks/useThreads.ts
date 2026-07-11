@@ -42,6 +42,11 @@ export default function useThreads(workspaceSlug) {
   const { data, error, isLoading, mutate } = useSWR(
     threadsKey(workspaceSlug),
     () => Workspace.threads.all(workspaceSlug),
+    {
+      keepPreviousData: true,
+      dedupingInterval: 30_000,
+      revalidateIfStale: false,
+    },
   );
 
   const threads = Array.isArray(data?.threads)

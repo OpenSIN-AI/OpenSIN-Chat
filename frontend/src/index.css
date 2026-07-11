@@ -234,17 +234,17 @@
   --color-theme-text-primary: #0e0f0f;
   --color-theme-text-secondary: #52525b;
   --color-theme-text-muted: #71717a;
-  --color-theme-bg-primary: #f4f4f5;
+  --color-theme-bg-primary: #f7f7f5;
   --color-theme-bg-secondary: #ffffff;
-  --color-theme-bg-tertiary: #e4e4e7;
-  --color-theme-modal-border: #d4d4d8;
-  --color-theme-accent: #009ee0;
-  --color-theme-accent-light: #0079b0;
-  --color-theme-accent-dark: #52525b;
+  --color-theme-bg-tertiary: #efefec;
+  --color-theme-modal-border: #deded9;
+  --color-theme-accent: #181817;
+  --color-theme-accent-light: #3f3f3d;
+  --color-theme-accent-dark: #73736f;
 
-  --color-brand: #009ee0;
+  --color-brand: #181817;
   --color-surface: #ffffff;
-  --color-surface-raised: #edf2fa;
+  --color-surface-raised: #f2f2ef;
   --color-text: #0e0f0f;
   --color-muted: rgba(0, 0, 0, 0.5);
 
@@ -255,21 +255,21 @@
   color-scheme: light;
 
   --theme-loader: #000000;
-  --theme-bg-primary: #f4f4f5;
+  --theme-bg-primary: #f7f7f5;
   --theme-bg-secondary: #ffffff;
-  --theme-bg-sidebar: #fafafa;
+  --theme-bg-sidebar: #f2f2ef;
   --theme-bg-container: #ffffff;
   --theme-popup-menu-bg: #ffffff;
-  --theme-bg-hover: rgba(0, 0, 0, 0.06);
+  --theme-bg-hover: rgba(24, 24, 23, 0.055);
 
   --theme-bg-chat: #ffffff;
-  --theme-bg-chat-input: #eaeaea;
+  --theme-bg-chat-input: #ffffff;
   --theme-text-primary: #0e0f0f;
   --theme-text-secondary: #7a7d7e;
   --theme-placeholder: #9ca3af;
   --theme-sidebar-item-default: transparent;
-  --theme-sidebar-item-selected: #e4e4e7;
-  --theme-sidebar-item-hover: #f4f4f5;
+  --theme-sidebar-item-selected: #e7e7e3;
+  --theme-sidebar-item-hover: #ebebe7;
 
   --theme-sidebar-item-text-inactive: #52525b;
   --theme-sidebar-item-text-active: #18181b;
@@ -786,6 +786,79 @@ body {
     inset-block: 0;
     right: 3rem;
     width: min(30rem, calc(100vw - 3rem));
+  }
+}
+
+/* ── Codex + v0 interaction primitives ────────────────────────────────── */
+:root {
+  --app-radius-sm: 0.5rem;
+  --app-radius-md: 0.75rem;
+  --app-radius-lg: 1rem;
+  --app-shadow-menu: 0 12px 32px rgba(0, 0, 0, 0.16), 0 2px 8px rgba(0, 0, 0, 0.08);
+  --app-transition: 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  background: var(--theme-bg-primary);
+  color: var(--theme-text-primary);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+}
+
+:where(button, a, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--theme-text-primary);
+  outline-offset: 2px;
+}
+
+.app-surface {
+  border: 1px solid var(--theme-modal-border);
+  border-radius: var(--app-radius-md);
+  background: var(--theme-bg-secondary);
+}
+
+.app-menu {
+  border: 1px solid var(--theme-modal-border);
+  border-radius: var(--app-radius-md);
+  background: var(--theme-popup-menu-bg);
+  box-shadow: var(--app-shadow-menu);
+}
+
+.app-icon-button {
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: var(--app-radius-sm);
+  background: transparent;
+  color: var(--theme-text-secondary);
+  transition: background-color var(--app-transition), color var(--app-transition);
+}
+.app-icon-button:hover {
+  background: var(--theme-bg-hover);
+  color: var(--theme-text-primary);
+}
+
+.app-skeleton {
+  background: linear-gradient(90deg, var(--theme-bg-tertiary) 25%, var(--theme-bg-hover) 50%, var(--theme-bg-tertiary) 75%);
+  background-size: 200% 100%;
+  animation: app-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes app-shimmer {
+  to { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 

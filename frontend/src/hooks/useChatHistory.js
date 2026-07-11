@@ -29,6 +29,20 @@ export function invalidateChatHistory(workspaceSlug, threadSlug = null) {
   return globalMutate(chatHistoryKey(workspaceSlug, threadSlug));
 }
 
+const fetchChatHistory = (workspaceSlug, threadSlug = null) =>
+  threadSlug
+    ? Workspace.threads.chatHistory(workspaceSlug, threadSlug)
+    : Workspace.chatHistory(workspaceSlug);
+
+export function prefetchChatHistory(workspaceSlug, threadSlug = null) {
+  const key = chatHistoryKey(workspaceSlug, threadSlug);
+  if (!key) return Promise.resolve();
+  return globalMutate(key, fetchChatHistory(workspaceSlug, threadSlug), {
+    populateCache: true,
+    revalidate: false,
+  });
+}
+
 /**
  * Fetches chat history for a workspace or thread with caching,
  * request de-duplication and stale-while-revalidate.
@@ -47,11 +61,11 @@ export function invalidateChatHistory(workspaceSlug, threadSlug = null) {
 export default function useChatHistory(workspaceSlug, threadSlug = null) {
   const { data, error, isLoading, mutate } = useSWR(
     chatHistoryKey(workspaceSlug, threadSlug),
-    () => {
-      if (threadSlug) {
-        return Workspace.threads.chatHistory(workspaceSlug, threadSlug);
-      }
-      return Workspace.chatHistory(workspaceSlug);
+    () => fetchChatHistory(workspaceSlug, threadSlug),
+    {
+      keepPreviousData: true,
+      dedupingInterval: 30_000,
+      revalidateIfStale: false,
     },
   );
 

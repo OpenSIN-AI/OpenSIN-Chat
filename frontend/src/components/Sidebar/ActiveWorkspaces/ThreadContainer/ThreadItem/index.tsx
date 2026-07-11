@@ -6,6 +6,7 @@ import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
 import { invalidateThreads } from "@/hooks/useThreads";
+import { prefetchChatHistory } from "@/hooks/useChatHistory";
 import { ArrowCounterClockwise } from "@phosphor-icons/react/dist/csr/ArrowCounterClockwise";
 import { DotsThree } from "@phosphor-icons/react/dist/csr/DotsThree";
 import { Link as LinkIcon } from "@phosphor-icons/react/dist/csr/Link";
@@ -149,6 +150,12 @@ function ThreadItem({
             className="w-full pl-3 py-1 overflow-hidden"
             aria-current={isActive ? "page" : undefined}
             onPointerDown={(e) => e.stopPropagation()}
+            onPointerEnter={() =>
+              prefetchChatHistory(workspaceSlug, thread.slug || null)
+            }
+            onFocus={() =>
+              prefetchChatHistory(workspaceSlug, thread.slug || null)
+            }
           >
             <p
               className={`text-left text-[13px] truncate w-full ${
