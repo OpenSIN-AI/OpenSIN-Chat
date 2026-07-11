@@ -12,6 +12,7 @@ import React, {
   useRef,
 } from "react";
 import { useTranslation } from "react-i18next";
+import { useSidebarToggle } from "@/components/Sidebar/SidebarToggle";
 
 type LogLevel = "info" | "warn" | "error" | "success" | "debug";
 
@@ -101,6 +102,10 @@ export function ChatSidebarProvider({ children }: any) {
   const [consoleLogs, setConsoleLogs] = useState<LogEntry[]>([]);
   const clearConsoleLogs = useCallback(() => setConsoleLogs([]), []);
 
+  // Workspace shell: coordinate left sidebar with right panel
+  const { collapseForRightPanel, restoreFromRightPanel } =
+    useSidebarToggle();
+
   useEffect(() => {
     function handler(e: Event) {
       const detail = (e as CustomEvent<LogEntry>).detail;
@@ -121,11 +126,13 @@ export function ChatSidebarProvider({ children }: any) {
   function openSidebar(type: any, data: any = null) {
     setActiveSidebar(type);
     setSidebarData(data);
+    collapseForRightPanel();
   }
 
   function closeSidebar() {
     setActiveSidebar(null);
     setSidebarData(null);
+    restoreFromRightPanel();
   }
 
   function toggleSidebar(type: any, data: any = null) {
@@ -137,6 +144,25 @@ export function ChatSidebarProvider({ children }: any) {
     setPreviewData(data);
     setActiveSidebar("preview");
   }, []);
+
+  // Escape key closes the active right panel
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape" && activeSidebar) {
+        const target = e.target as HTMLElement;
+        if (
+          target?.matches(
+            "input, textarea, [contenteditable='true']",
+          )
+        )
+          return;
+        e.preventDefault();
+        closeSidebar();
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeSidebar, closeSidebar]);
 
   return (
     <ChatSidebarContext.Provider
