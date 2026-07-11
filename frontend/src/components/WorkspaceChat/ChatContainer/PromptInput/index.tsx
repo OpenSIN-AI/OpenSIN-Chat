@@ -116,7 +116,7 @@ export default function PromptInput({
                   adjustTextArea={adjustTextArea}
                 />
               </div>
-              <div className="flex items-center justify-between gap-1 border-t border-[var(--chat-border)]/60 py-1.5 sm:gap-2 sm:border-0 sm:py-2">
+              <div className="flex items-center justify-between gap-1 py-1.5 sm:gap-2 sm:py-2">
                 <div className="flex min-w-0 flex-1 items-center overflow-hidden">
                   <div className="flex items-center gap-x-1">
                     <AttachItem
