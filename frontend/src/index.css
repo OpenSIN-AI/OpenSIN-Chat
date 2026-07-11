@@ -749,6 +749,46 @@ body {
 .notepad-prose th, .notepad-prose td { min-width: 4rem; border: 1px solid var(--theme-sidebar-border); padding: 0.45rem; vertical-align: top; }
 .notepad-prose th { background: var(--theme-bg-secondary); font-weight: 600; }
 
+/* ── Workspace shell responsive (Issue #607 §16) ──────────────────────── */
+.workspace-panel {
+  display: flex;
+  width: clamp(20rem, 32vw, 30rem);
+  min-width: 0;
+  flex-direction: column;
+  border-left: 1px solid var(--theme-border);
+  background: var(--theme-bg-sidebar);
+}
+.workspace-utility-rail {
+  width: 3rem;
+  flex: 0 0 3rem;
+  border-left: 1px solid var(--theme-border);
+}
+@media (max-width: 900px) {
+  .workspace-panel {
+    position: absolute;
+    inset: 0 3rem 0 0;
+    z-index: 30;
+    width: auto;
+  }
+}
+@media (max-width: 520px) {
+  .workspace-composer-toolbar {
+    flex-wrap: wrap;
+  }
+  .workspace-panel {
+    inset: 0 3rem 0 0;
+    width: auto;
+  }
+}
+@media (min-width: 521px) and (max-width: 900px) {
+  .workspace-panel {
+    position: absolute;
+    inset-block: 0;
+    right: 3rem;
+    width: min(30rem, calc(100vw - 3rem));
+  }
+}
+
 /* ── Katex styles ──────────────────────────────────────────────────────── */
 /* Keep the katex import after Tailwind so it can override preflight */
 @import "katex/dist/katex.min.css";

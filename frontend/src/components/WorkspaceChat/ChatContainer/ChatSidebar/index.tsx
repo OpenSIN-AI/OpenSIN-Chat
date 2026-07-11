@@ -104,6 +104,8 @@ export function ChatSidebarProvider({ children }: any) {
   const [consoleLogs, setConsoleLogs] = useState<LogEntry[]>([]);
   const clearConsoleLogs = useCallback(() => setConsoleLogs([]), []);
 
+  // Workspace shell: coordinate left sidebar with right panel (handled via leftSidebarRef above)
+
   useEffect(() => {
     function handler(e: Event) {
       const detail = (e as CustomEvent<LogEntry>).detail;
@@ -150,6 +152,25 @@ export function ChatSidebarProvider({ children }: any) {
     }
     setActiveSidebar("preview");
   }, [activeSidebar, leftSidebarOpen, setLeftSidebarOpen]);
+
+  // Escape key closes the active right panel
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape" && activeSidebar) {
+        const target = e.target as HTMLElement;
+        if (
+          target?.matches(
+            "input, textarea, [contenteditable='true']",
+          )
+        )
+          return;
+        e.preventDefault();
+        closeSidebar();
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeSidebar, closeSidebar]);
 
   return (
     <ChatSidebarContext.Provider

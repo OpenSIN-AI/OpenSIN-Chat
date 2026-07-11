@@ -5,6 +5,7 @@ import React, {
   useState,
   useEffect,
   useMemo,
+  useCallback,
 } from "react";
 import { useLocation } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
@@ -26,12 +27,18 @@ interface SidebarToggleContextValue {
   showSidebar: boolean;
   setShowSidebar: React.Dispatch<React.SetStateAction<boolean>>;
   canToggleSidebar: boolean;
+  previousLeftSidebarOpen: boolean | null;
+  collapseForRightPanel: () => void;
+  restoreFromRightPanel: () => void;
 }
 
 const SidebarToggleContext = createContext<SidebarToggleContextValue>({
   showSidebar: true,
   setShowSidebar: () => {},
   canToggleSidebar: true,
+  previousLeftSidebarOpen: null,
+  collapseForRightPanel: () => {},
+  restoreFromRightPanel: () => {},
 });
 
 export function SidebarToggleProvider({
@@ -41,7 +48,27 @@ export function SidebarToggleProvider({
 }) {
   const [showSidebar, setShowSidebar] = useState(() => previousSidebarState());
   const [canToggleSidebar, setCanToggleSidebar] = useState(true);
+  const [previousLeftSidebarOpen, setPreviousLeftSidebarOpen] = useState<
+    boolean | null
+  >(null);
   const { pathname } = useLocation();
+
+  const collapseForRightPanel = useCallback(() => {
+    setPreviousLeftSidebarOpen((prev) => {
+      if (prev !== null) return prev;
+      return showSidebar;
+    });
+    setShowSidebar(false);
+  }, [showSidebar]);
+
+  const restoreFromRightPanel = useCallback(() => {
+    setPreviousLeftSidebarOpen((prev) => {
+      if (prev !== null) {
+        setShowSidebar(prev);
+      }
+      return null;
+    });
+  }, []);
 
   useEffect(() => {
     function checkPath() {
@@ -88,8 +115,21 @@ export function SidebarToggleProvider({
   }, [showSidebar]);
 
   const value = useMemo(
-    () => ({ showSidebar, setShowSidebar, canToggleSidebar }),
-    [showSidebar, canToggleSidebar],
+    () => ({
+      showSidebar,
+      setShowSidebar,
+      canToggleSidebar,
+      previousLeftSidebarOpen,
+      collapseForRightPanel,
+      restoreFromRightPanel,
+    }),
+    [
+      showSidebar,
+      canToggleSidebar,
+      previousLeftSidebarOpen,
+      collapseForRightPanel,
+      restoreFromRightPanel,
+    ],
   );
 
   return (
