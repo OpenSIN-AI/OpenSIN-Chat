@@ -38,7 +38,7 @@ export function PdfFileInput({
       <button
         type="button"
         onClick={() => inputRef.current?.click()}
-        className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-theme-sidebar-border bg-theme-bg-container text-sm text-theme-text-primary hover:bg-theme-bg-secondary transition-colors"
+        className="flex items-center gap-2 rounded-lg bg-theme-bg-tertiary px-3 py-2 text-sm font-medium text-theme-text-primary transition-colors hover:bg-theme-bg-hover"
       >
         <UploadSimple size={14} aria-hidden="true" />
         {label}
