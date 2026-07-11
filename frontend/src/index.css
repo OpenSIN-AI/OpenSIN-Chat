@@ -571,11 +571,12 @@ body {
   }
 }
 
-/* Single, clean focus ring on the chat composer — one subtle shadow on
-   both themes (no white inner ring + grey outer ring combo). */
+/* NO inner focus ring on the chat composer — only the OUTER container
+   border is visible (cyan on focus, mid-grey otherwise). The chat
+   prompt must not get its own ring on top of the container ring. */
 #primary-prompt-input:focus-visible,
 #workspace-composer:focus-visible {
-  box-shadow: 0 0 0 1px #a1a1aa !important;
+  box-shadow: none !important;
 }
 
 /* ── Custom utility classes (replaces @tailwind components) ────────────── */
