@@ -33,14 +33,17 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
   const [menuPos, setMenuPos] = useState({ top: 0, left: 0 });
 
   useEffect(() => {
     if (!open) return;
     const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node))
-        setOpen(false);
+      const target = e.target as Node;
+      if (ref.current?.contains(target) || menuRef.current?.contains(target))
+        return;
+      setOpen(false);
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
@@ -132,6 +135,7 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
       {open &&
         createPortal(
           <div
+            ref={menuRef}
             style={{
               position: "fixed",
               top: menuPos.top,
