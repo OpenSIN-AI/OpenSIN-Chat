@@ -42,6 +42,39 @@ const TRANSLATIONS = {
   a11y: {
     skipToContent: "Zum Hauptinhalt springen",
   },
+  commandHub: {
+    title: "Suche und Befehle",
+    placeholder: "Chats und Arbeitsbereiche durchsuchen oder Befehl eingeben",
+    searchButton: "Suchen",
+    openSearch: "Suche und Befehle öffnen",
+    emptyTitle: "Keine Treffer",
+    emptyDescription: "Versuchen Sie einen anderen Suchbegriff.",
+    createFailed: "Chat konnte nicht erstellt werden",
+    untitledChat: "Unbenannter Chat",
+    inWorkspace: "In {{name}}",
+    groups: {
+      recent: "Letzte Chats",
+      quickActions: "Schnellaktionen",
+      workspaces: "Arbeitsbereiche",
+      navigation: "Navigation",
+    },
+    footer: {
+      navigate: "Navigieren",
+      open: "Öffnen",
+      close: "Schließen",
+    },
+    actions: {
+      newChat: "Neuer Chat",
+      newChatDescription: "Eine neue Unterhaltung in diesem Arbeitsbereich beginnen",
+      workspaceSettings: "Arbeitsbereich-Einstellungen",
+      workspaceSettingsDescription: "Den aktuellen Arbeitsbereich konfigurieren",
+      scheduled: "Geplante Aufgaben",
+      scheduledDescription: "Automatisierte Aufgaben anzeigen und verwalten",
+      docs: "Dokumentation",
+      docsDescription: "Die OpenSIN-Dokumentation öffnen",
+      openWorkspace: "Zu diesem Arbeitsbereich wechseln",
+    },
+  },
   auth: {
     username: "Benutzername",
     password: "Passwort",
@@ -952,7 +985,24 @@ const TRANSLATIONS = {
       chatHistory: "Chat-Verlauf",
       streamingResponse: "KI antwortet…",
       errorMessage: "Ein Fehler ist aufgetreten",
+      welcome: "Unterhaltung beginnen",
+      capabilities: "Workspace-Schnellzugriffe",
+      scrollToBottom: "Zur neuesten Nachricht scrollen",
     },
+    welcome: {
+      eyebrow: "OpenSIN Intelligence",
+      description:
+        "Stelle eine Frage, durchsuche deine Quellen oder verwandle deine Recherche in klare, belegte Antworten.",
+      model: "Aktives Modell: {{model}}",
+    },
+    capability_sources: "Quellen durchsuchen",
+    capability_sources_desc: "Dokumente und Links im Workspace durchsuchen",
+    capability_notes: "Notizen öffnen",
+    capability_notes_desc: "Erkenntnisse festhalten, ohne die Recherche zu verlassen",
+    capability_database: "Datenbank durchsuchen",
+    capability_database_desc: "Strukturierte Parlamentsdaten erkunden",
+    capability_rag: "Mit Quellen antworten",
+    capability_rag_desc: "Die nächste Antwort auf deine Dokumente stützen",
     llm: {
       title: "Workspace-LLM-Anbieter",
       description:
@@ -4089,6 +4139,8 @@ const TRANSLATIONS = {
     backToWorkspaces: "Zurück zu Workspaces",
     openSettings: "Einstellungen öffnen",
     workspacesList: "Workspaces",
+    projects: "Projekte",
+    chats: "Chats",
     workspaceCloud: "Workspace-Cloud",
     generalAppearanceSettings: "Allgemeine Erscheinungseinstellungen",
     database: {
@@ -4365,7 +4417,8 @@ const TRANSLATIONS = {
     cancelDelete: "Thread-Löschung abbrechen",
   },
   threadContainer: {
-    loadingThreads: "Threads werden geladen...",
+    loadingThreads: "Chats werden geladen...",
+    noProjects: "Noch keine Projekte",
     moveError: "Thread konnte nicht verschoben werden.",
     dropHere: "Hierher ziehen (ohne Ordner)",
     createError: "Thread konnte nicht erstellt werden - {{error}}",
@@ -4960,7 +5013,7 @@ const TRANSLATIONS = {
     daysAgo: "vor {{count}} T.",
     never: "Nie",
   },
-  // ── Batch 14 — i18next/no-literal-string fixes ─────────────────────
+  // ── Batch 14 — i18next/no-literal-string fixes ──────���──────────────
   vectorSearch: {
     searchPreference: "Suchpräferenz",
     default: "Standard",

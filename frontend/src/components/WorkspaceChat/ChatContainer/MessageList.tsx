@@ -38,7 +38,7 @@ export default function MessageList({
   const hasHistory = chatHistory.length > 0;
 
   return (
-    <div className="flex flex-col h-full w-full">
+    <div className="flex h-full w-full flex-col bg-[var(--chat-canvas)]">
       <div className="contents">
         {hasHistory ? (
           <MetricsProvider>

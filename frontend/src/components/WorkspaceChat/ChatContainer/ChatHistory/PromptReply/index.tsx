@@ -98,7 +98,7 @@ const PromptReply: any = ({
 
   if (pending) {
     return (
-      <div className="flex w-full justify-start py-3">
+      <div className="flex min-h-14 w-full justify-start py-4">
         <AssistantActivity label={t("statusResponse.thinking")} />
       </div>
     );
@@ -128,8 +128,8 @@ const PromptReply: any = ({
   }
 
   return (
-    <div key={uuid} className="flex w-full justify-start py-3">
-      <div className="flex flex-col w-full md:max-w-[85%]">
+    <div key={uuid} className="flex min-h-14 w-full justify-start py-4">
+      <div className="flex w-full flex-col">
         <RenderAssistantChatContent
           key={`${uuid}-prompt-reply-content`}
           message={reply}
@@ -239,7 +239,7 @@ function RenderAssistantChatContent({ message, messageId }: any) {
           />
         )}
         <span
-          className="markdown flex-1 min-w-0 break-words text-theme-text-primary light:text-theme-text-primary leading-relaxed"
+          className="markdown min-w-0 flex-1 break-words leading-relaxed text-[var(--chat-text)]"
           dangerouslySetInnerHTML={{
             __html: safeMarkdown(
               renderMarkdown(preprocessInlineCitations(msgToRender)),
@@ -254,7 +254,7 @@ function RenderAssistantChatContent({ message, messageId }: any) {
 function AssistantActivity({ label, compact = false }: any) {
   return (
     <div
-      className={`flex items-center gap-2 text-xs font-medium text-theme-text-secondary ${compact ? "" : "px-0.5"}`}
+      className={`flex items-center gap-2 text-xs font-medium text-[var(--chat-text-muted)] ${compact ? "" : "px-0.5"}`}
       role="status"
       aria-live="polite"
     >

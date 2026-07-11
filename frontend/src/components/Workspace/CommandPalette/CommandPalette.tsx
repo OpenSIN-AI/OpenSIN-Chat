@@ -1,16 +1,20 @@
 // SPDX-License-Identifier: MIT
-// Purpose: Command palette — Cmd+K global search with grouped results, keyboard navigation, and accessible semantics.
-// Docs: Based on Issue #607 §13 CommandPalette spec + Issue #8.
+// Purpose: Global command hub with grouped live results and keyboard-first navigation.
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
 import { File } from "@phosphor-icons/react/dist/csr/File";
-import { Notebook } from "@phosphor-icons/react/dist/csr/Notebook";
-import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { cn } from "@/utils/cn";
+
+export type CommandGroup =
+  | "recent"
+  | "quickActions"
+  | "workspaces"
+  | "navigation";
 
 export type CommandItem = {
   id: string;
-  group: "Navigation" | "Unterhaltungen" | "Notizen" | "Dateien" | "Aktionen";
+  group: CommandGroup;
   label: string;
   description?: string;
   keywords?: string[];
@@ -25,59 +29,68 @@ interface CommandPaletteProps {
   items: CommandItem[];
 }
 
+const GROUP_ORDER: CommandGroup[] = [
+  "recent",
+  "quickActions",
+  "workspaces",
+  "navigation",
+];
+
 export function CommandPalette({
   open,
   onOpenChange,
   items,
 }: CommandPaletteProps) {
+  const { t } = useTranslation();
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
+  const returnFocusRef = useRef<HTMLElement | null>(null);
+  const itemRefs = useRef(new Map<string, HTMLButtonElement>());
 
   const filtered = useMemo(() => {
     const normalized = query.trim().toLocaleLowerCase();
     if (!normalized) return items;
-    return items.filter((item) => {
-      const searchable = [
-        item.label,
-        item.description ?? "",
-        ...(item.keywords ?? []),
-      ]
+    return items.filter((item) =>
+      [item.label, item.description ?? "", ...(item.keywords ?? [])]
         .join(" ")
-        .toLocaleLowerCase();
-      return searchable.includes(normalized);
-    });
+        .toLocaleLowerCase()
+        .includes(normalized),
+    );
   }, [items, query]);
 
-  const groups = useMemo(() => {
-    const grouped = new Map<string, CommandItem[]>();
-    for (const item of filtered) {
-      const current = grouped.get(item.group) ?? [];
-      current.push(item);
-      grouped.set(item.group, current);
-    }
-    return grouped;
-  }, [filtered]);
+  const groups = useMemo(
+    () =>
+      GROUP_ORDER.map((group) => ({
+        group,
+        items: filtered.filter((item) => item.group === group),
+      })).filter((entry) => entry.items.length > 0),
+    [filtered],
+  );
 
   useEffect(() => {
     if (!open) return;
+    returnFocusRef.current = document.activeElement as HTMLElement;
     setQuery("");
     setActiveIndex(0);
-    window.requestAnimationFrame(() => {
-      inputRef.current?.focus();
-    });
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.requestAnimationFrame(() => inputRef.current?.focus());
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.requestAnimationFrame(() => returnFocusRef.current?.focus());
+    };
   }, [open]);
 
   useEffect(() => {
-    function handleShortcut(event: KeyboardEvent) {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
-        event.preventDefault();
-        onOpenChange(!open);
-      }
-    }
-    window.addEventListener("keydown", handleShortcut);
-    return () => window.removeEventListener("keydown", handleShortcut);
-  }, [open, onOpenChange]);
+    if (filtered.length === 0) return;
+    setActiveIndex((current) => Math.min(current, filtered.length - 1));
+  }, [filtered.length]);
+
+  useEffect(() => {
+    const active = filtered[activeIndex];
+    if (active) itemRefs.current.get(active.id)?.scrollIntoView({ block: "nearest" });
+  }, [activeIndex, filtered]);
 
   if (!open) return null;
 
@@ -86,25 +99,27 @@ export function CommandPalette({
     await item.perform();
   }
 
+  function close() {
+    onOpenChange(false);
+  }
+
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-start justify-center bg-black/20 px-3 pt-[12vh] max-[600px]:items-stretch max-[600px]:pt-3"
+      className="fixed inset-0 z-[100] flex items-start justify-center bg-theme-overlay px-3 pt-[10vh] backdrop-blur-[2px] max-[600px]:items-stretch max-[600px]:p-0"
       role="presentation"
-      onMouseDown={(event) => {
-        if (event.currentTarget === event.target) onOpenChange(false);
-      }}
+      onMouseDown={(event) => event.currentTarget === event.target && close()}
     >
-      <div
+      <section
         role="dialog"
-        aria-label="Suche und Befehle"
-        className="flex w-full max-w-[640px] flex-col overflow-hidden rounded-xl border border-theme-border bg-theme-bg-sidebar shadow-2xl max-[600px]:h-full"
+        aria-modal="true"
+        aria-labelledby="command-hub-title"
+        className="flex max-h-[min(620px,80vh)] w-full max-w-[640px] flex-col overflow-hidden rounded-2xl border border-theme-modal-border bg-theme-bg-sidebar shadow-2xl max-[600px]:mt-14 max-[600px]:max-h-none max-[600px]:rounded-none max-[600px]:border-x-0"
       >
-        {/* Search input */}
-        <div className="flex items-center gap-3 border-b border-theme-border px-4 py-3">
-          <MagnifyingGlass
-            size={18}
-            className="flex-shrink-0 text-theme-text-muted"
-          />
+        <h2 id="command-hub-title" className="sr-only">
+          {t("commandHub.title")}
+        </h2>
+        <div className="flex h-14 shrink-0 items-center gap-3 border-b border-theme-modal-border px-4">
+          <MagnifyingGlass size={19} className="shrink-0 text-theme-text-muted" />
           <input
             ref={inputRef}
             value={query}
@@ -116,62 +131,70 @@ export function CommandPalette({
                 ? `command-${filtered[activeIndex].id}`
                 : undefined
             }
-            placeholder="Suchen oder Befehl eingeben"
+            placeholder={t("commandHub.placeholder")}
             onChange={(event) => {
               setQuery(event.target.value);
               setActiveIndex(0);
             }}
             onKeyDown={(event) => {
-              if (event.nativeEvent.isComposing || event.keyCode === 229)
-                return;
+              if (event.nativeEvent.isComposing || event.keyCode === 229) return;
               if (event.key === "Escape") {
                 event.preventDefault();
-                onOpenChange(false);
-              }
-              if (event.key === "ArrowDown") {
+                close();
+              } else if (event.key === "ArrowDown") {
                 event.preventDefault();
                 setActiveIndex((current) =>
-                  Math.min(current + 1, filtered.length - 1),
+                  filtered.length ? (current + 1) % filtered.length : 0,
                 );
-              }
-              if (event.key === "ArrowUp") {
+              } else if (event.key === "ArrowUp") {
                 event.preventDefault();
-                setActiveIndex((current) => Math.max(current - 1, 0));
-              }
-              if (event.key === "Enter" && filtered[activeIndex]) {
+                setActiveIndex((current) =>
+                  filtered.length
+                    ? (current - 1 + filtered.length) % filtered.length
+                    : 0,
+                );
+              } else if (event.key === "Tab") {
+                event.preventDefault();
+                setActiveIndex((current) =>
+                  filtered.length
+                    ? (current + (event.shiftKey ? -1 : 1) + filtered.length) %
+                      filtered.length
+                    : 0,
+                );
+              } else if (event.key === "Enter" && filtered[activeIndex]) {
                 event.preventDefault();
                 void execute(filtered[activeIndex]);
               }
             }}
             className="min-w-0 flex-1 border-none bg-transparent text-sm text-theme-text-primary outline-none placeholder:text-theme-text-muted"
           />
-          <kbd className="flex-shrink-0 rounded border border-theme-border bg-theme-bg-tertiary px-1.5 py-0.5 text-[10px] font-medium text-theme-text-muted">
+          <kbd className="shrink-0 rounded-md border border-theme-modal-border bg-theme-bg-tertiary px-2 py-1 text-[10px] font-medium text-theme-text-muted">
             Esc
           </kbd>
         </div>
 
-        {/* Results */}
         <div
           id="command-results"
           role="listbox"
-          className="max-h-[360px] overflow-y-auto p-2"
+          className="no-scroll min-h-0 flex-1 overflow-y-auto p-2"
         >
           {filtered.length === 0 ? (
-            <div className="flex flex-col items-center py-8 text-center">
+            <div className="flex flex-col items-center gap-1 py-12 text-center">
+              <MagnifyingGlass size={22} className="text-theme-text-muted" />
               <p className="text-sm font-medium text-theme-text-primary">
-                Keine Treffer
+                {t("commandHub.emptyTitle")}
               </p>
-              <p className="mt-1 text-xs text-theme-text-secondary">
-                Versuche einen anderen Suchbegriff.
+              <p className="text-xs text-theme-text-secondary">
+                {t("commandHub.emptyDescription")}
               </p>
             </div>
           ) : (
-            Array.from(groups.entries()).map(([group, groupItems]) => (
-              <div key={group} className="mb-2">
-                <div className="px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-theme-text-muted">
-                  {group}
+            groups.map(({ group, items: groupItems }) => (
+              <div key={group} className="flex flex-col gap-0.5 pb-2 last:pb-0">
+                <div className="px-2 pb-1 pt-2 text-[11px] font-medium text-theme-text-muted">
+                  {t(`commandHub.groups.${group}`)}
                 </div>
-                <div role="group" aria-label={group}>
+                <div role="group" aria-label={t(`commandHub.groups.${group}`)}>
                   {groupItems.map((item) => {
                     const index = filtered.findIndex(
                       (candidate) => candidate.id === item.id,
@@ -179,6 +202,10 @@ export function CommandPalette({
                     const active = index === activeIndex;
                     return (
                       <button
+                        ref={(node) => {
+                          if (node) itemRefs.current.set(item.id, node);
+                          else itemRefs.current.delete(item.id);
+                        }}
                         key={item.id}
                         id={`command-${item.id}`}
                         type="button"
@@ -187,27 +214,27 @@ export function CommandPalette({
                         onMouseEnter={() => setActiveIndex(index)}
                         onClick={() => void execute(item)}
                         className={cn(
-                          "flex min-w-0 w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left transition-colors",
+                          "flex min-h-11 w-full min-w-0 items-center gap-3 rounded-lg px-3 py-2 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-text-secondary",
                           active
-                            ? "bg-theme-bg-tertiary text-theme-text-primary"
+                            ? "bg-theme-bg-hover text-theme-text-primary"
                             : "text-theme-text-secondary hover:bg-theme-bg-tertiary hover:text-theme-text-primary",
                         )}
                       >
-                        <span className="flex-shrink-0 text-theme-text-muted">
-                          {item.icon ?? <File size={16} />}
+                        <span className="shrink-0 text-theme-text-muted">
+                          {item.icon ?? <File size={17} />}
                         </span>
                         <span className="min-w-0 flex-1">
                           <span className="block truncate text-sm font-medium">
                             {item.label}
                           </span>
                           {item.description && (
-                            <span className="block truncate text-xs text-theme-text-secondary">
+                            <span className="block truncate text-xs text-theme-text-muted">
                               {item.description}
                             </span>
                           )}
                         </span>
                         {item.shortcut && (
-                          <kbd className="flex-shrink-0 rounded border border-theme-border bg-theme-bg-secondary px-1.5 py-0.5 text-[10px] text-theme-text-muted">
+                          <kbd className="shrink-0 rounded-md border border-theme-modal-border bg-theme-bg-secondary px-1.5 py-0.5 text-[10px] text-theme-text-muted">
                             {item.shortcut}
                           </kbd>
                         )}
@@ -220,50 +247,12 @@ export function CommandPalette({
           )}
         </div>
 
-        {/* Footer */}
-        <div className="flex items-center gap-4 border-t border-theme-border px-4 py-2 text-[10px] text-theme-text-muted">
-          <span>
-            <kbd className="mr-1">↑↓</kbd>Navigieren
-          </span>
-          <span>
-            <kbd className="mr-1">↵</kbd>Öffnen
-          </span>
-          <span>
-            <kbd className="mr-1">Esc</kbd>Schließen
-          </span>
-        </div>
-      </div>
+        <footer className="flex shrink-0 items-center gap-4 border-t border-theme-modal-border px-4 py-2 text-[10px] text-theme-text-muted max-[420px]:hidden">
+          <span><kbd className="mr-1">↑↓</kbd>{t("commandHub.footer.navigate")}</span>
+          <span><kbd className="mr-1">↵</kbd>{t("commandHub.footer.open")}</span>
+          <span className="ml-auto"><kbd className="mr-1">Esc</kbd>{t("commandHub.footer.close")}</span>
+        </footer>
+      </section>
     </div>
   );
 }
-
-export const defaultWorkspaceCommands: CommandItem[] = [
-  {
-    id: "new-conversation",
-    group: "Aktionen",
-    label: "Neue Unterhaltung",
-    description: "Eine leere Unterhaltung beginnen",
-    keywords: ["chat", "new"],
-    shortcut: "⌘N",
-    icon: <Plus size={16} />,
-    perform: () => {},
-  },
-  {
-    id: "open-notes",
-    group: "Navigation",
-    label: "Notizen öffnen",
-    description: "Notizbibliothek und Editor anzeigen",
-    keywords: ["notes", "notepad"],
-    icon: <Notebook size={16} />,
-    perform: () => {},
-  },
-  {
-    id: "open-files",
-    group: "Navigation",
-    label: "Dateien öffnen",
-    description: "Workspace-Dateien anzeigen",
-    keywords: ["files", "documents"],
-    icon: <File size={16} />,
-    perform: () => {},
-  },
-];

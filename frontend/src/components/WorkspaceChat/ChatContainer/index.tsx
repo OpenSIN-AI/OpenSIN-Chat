@@ -37,13 +37,13 @@ export default function ChatContainer({
     <ChatSidebarProvider>
       <ReportPreviewListener />
       <div
-        style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
+        style={{
+          "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
+        }}
         className="relative z-[2] flex h-[var(--content-height)] min-w-0 flex-1 overflow-hidden md:mx-[16px] md:my-[16px]"
       >
         <ChatHeader workspaceSlug={workspace?.slug} isEmpty={isEmpty} />
-        <div
-          className={`relative h-full min-w-0 flex-1 overflow-hidden bg-theme-bg-primary md:rounded-xl light:bg-white${isEmpty ? "" : " text-theme-text-primary light:text-theme-text-primary"}`}
-        >
+        <main className="relative h-full min-w-0 flex-1 overflow-hidden bg-[var(--chat-canvas)] text-[var(--chat-text)] md:rounded-2xl md:border md:border-[var(--chat-border)]">
           <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
             <DnDFileUploaderWrapper>
               {/* Threads should always show the chat interface, even when empty,
@@ -76,7 +76,7 @@ export default function ChatContainer({
             </DnDFileUploaderWrapper>
           </ErrorBoundary>
           <ChatTooltips />
-        </div>
+        </main>
         <Sidebars workspace={workspace} />
       </div>
     </ChatSidebarProvider>
