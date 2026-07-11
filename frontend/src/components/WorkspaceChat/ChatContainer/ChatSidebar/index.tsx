@@ -12,6 +12,7 @@ import React, {
   useRef,
 } from "react";
 import { useTranslation } from "react-i18next";
+import { useSidebarToggle } from "@/components/Sidebar/SidebarToggle";
 
 type LogLevel = "info" | "warn" | "error" | "success" | "debug";
 
@@ -83,6 +84,8 @@ function isMediaSource(chunkSource: any) {
 export function ChatSidebarProvider({ children }: any) {
   const [activeSidebar, setActiveSidebar] = useState<string | null>(null);
   const [sidebarData, setSidebarData] = useState<any>(null);
+  const leftSidebarRef = useRef<boolean | null>(null);
+  const { showSidebar: leftSidebarOpen, setShowSidebar: setLeftSidebarOpen } = useSidebarToggle();
 
   const [sourceFilter, setSourceFilter] = useState(() => {
     try {
@@ -119,6 +122,10 @@ export function ChatSidebarProvider({ children }: any) {
   }, [sourceFilter]);
 
   function openSidebar(type: any, data: any = null) {
+    if (!activeSidebar) {
+      leftSidebarRef.current = leftSidebarOpen;
+      if (leftSidebarOpen) setLeftSidebarOpen(false);
+    }
     setActiveSidebar(type);
     setSidebarData(data);
   }
@@ -126,6 +133,8 @@ export function ChatSidebarProvider({ children }: any) {
   function closeSidebar() {
     setActiveSidebar(null);
     setSidebarData(null);
+    if (leftSidebarRef.current) setLeftSidebarOpen(true);
+    leftSidebarRef.current = null;
   }
 
   function toggleSidebar(type: any, data: any = null) {
@@ -135,8 +144,12 @@ export function ChatSidebarProvider({ children }: any) {
 
   const openPreview = useCallback((data) => {
     setPreviewData(data);
+    if (!activeSidebar) {
+      leftSidebarRef.current = leftSidebarOpen;
+      if (leftSidebarOpen) setLeftSidebarOpen(false);
+    }
     setActiveSidebar("preview");
-  }, []);
+  }, [activeSidebar, leftSidebarOpen, setLeftSidebarOpen]);
 
   return (
     <ChatSidebarContext.Provider

@@ -24,7 +24,9 @@ function noteEndpoints(app) {
     async (request, response) => {
       try {
         const workspace = response.locals.workspace;
-        const notes = await WorkspaceNote.forWorkspace(workspace.id);
+        const notes = await WorkspaceNote.forWorkspace(workspace.id, {
+          trash: request.query.trash === "true",
+        });
         response.status(200).json({ notes });
       } catch (e) {
         consoleLogger.error(e);
@@ -39,28 +41,33 @@ function noteEndpoints(app) {
     async (request, response) => {
       try {
         const workspace = response.locals.workspace;
-        const { content = "", pinned = false } = reqBody(request);
-
-        // Validate content — mirror the same rules enforced by PUT.
-        if (typeof content !== "string") {
-          return response
-            .status(400)
-            .json({ error: "content must be a string" });
+        const {
+          title = "",
+          content = "",
+          plainText = "",
+          tags = [],
+          folder = null,
+          pinned = false,
+        } = reqBody(request);
+        if (
+          typeof title !== "string" || title.length > 300 ||
+          typeof content !== "string" || content.length > 500_000 ||
+          typeof plainText !== "string" || plainText.length > 100_000 ||
+          !Array.isArray(tags) || tags.length > 30 ||
+          tags.some((tag) => typeof tag !== "string" || tag.length > 50) ||
+          (folder !== null && (typeof folder !== "string" || folder.length > 100)) ||
+          typeof pinned !== "boolean"
+        ) {
+          return response.status(400).json({ error: "Invalid note data" });
         }
-        if (content.length > 100_000) {
-          return response.status(400).json({
-            error: "content must be a string of max 100,000 characters",
-          });
-        }
-
-        // Validate pinned — must be boolean (or coercible default false).
-        if (typeof pinned !== "boolean") {
-          return response
-            .status(400)
-            .json({ error: "pinned must be a boolean" });
-        }
-
-        const note = await WorkspaceNote.create(workspace.id, content, pinned);
+        const note = await WorkspaceNote.create(workspace.id, {
+          title,
+          content,
+          plainText,
+          tags: JSON.stringify(tags),
+          folder,
+          pinned,
+        });
         response.status(200).json({ note });
       } catch (e) {
         consoleLogger.error(e);
@@ -79,21 +86,27 @@ function noteEndpoints(app) {
         if (!Number.isInteger(noteId) || noteId <= 0) {
           return response.status(400).json({ error: "Invalid note id" });
         }
-        const { content, pinned } = reqBody(request);
-        if (content !== undefined) {
-          if (typeof content !== "string" || content.length > 100_000) {
-            return response.status(400).json({
-              error: "content must be a string of max 100,000 characters",
-            });
-          }
+        const { title, content, plainText, tags, folder, pinned } = reqBody(request);
+        if (
+          (title !== undefined && (typeof title !== "string" || title.length > 300)) ||
+          (content !== undefined && (typeof content !== "string" || content.length > 500_000)) ||
+          (plainText !== undefined && (typeof plainText !== "string" || plainText.length > 100_000)) ||
+          (tags !== undefined && (!Array.isArray(tags) || tags.length > 30 || tags.some((tag) => typeof tag !== "string" || tag.length > 50))) ||
+          (folder !== undefined && folder !== null && (typeof folder !== "string" || folder.length > 100)) ||
+          (pinned !== undefined && typeof pinned !== "boolean")
+        ) {
+          return response.status(400).json({ error: "Invalid note data" });
         }
-        // IDOR guard: ensure the note belongs to this workspace
         const existing = await WorkspaceNote.get(noteId);
         if (!existing || existing.workspaceId !== workspace.id) {
           return response.status(404).json({ error: "Note not found" });
         }
         const updates = {};
+        if (title !== undefined) updates.title = title;
         if (content !== undefined) updates.content = content;
+        if (plainText !== undefined) updates.plainText = plainText;
+        if (tags !== undefined) updates.tags = JSON.stringify(tags);
+        if (folder !== undefined) updates.folder = folder;
         if (pinned !== undefined) updates.pinned = pinned;
         const note = await WorkspaceNote.update(noteId, updates);
         response.status(200).json({ note });
@@ -119,7 +132,31 @@ function noteEndpoints(app) {
         if (!existing || existing.workspaceId !== workspace.id) {
           return response.status(404).json({ error: "Note not found" });
         }
-        await WorkspaceNote.delete(noteId);
+        if (request.query.permanent === "true") {
+          await WorkspaceNote.delete(noteId);
+        } else {
+          await WorkspaceNote.trash(noteId);
+        }
+        response.status(200).json({ success: true });
+      } catch (e) {
+        consoleLogger.error(e);
+        return response.sendStatus(500);
+      }
+    },
+  );
+
+  app.post(
+    "/workspaces/:slug/notes/:id/restore",
+    [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
+    async (request, response) => {
+      try {
+        const workspace = response.locals.workspace;
+        const noteId = Number(request.params.id);
+        const existing = await WorkspaceNote.get(noteId);
+        if (!Number.isInteger(noteId) || !existing || existing.workspaceId !== workspace.id) {
+          return response.status(404).json({ error: "Note not found" });
+        }
+        await WorkspaceNote.restore(noteId);
         response.status(200).json({ success: true });
       } catch (e) {
         consoleLogger.error(e);

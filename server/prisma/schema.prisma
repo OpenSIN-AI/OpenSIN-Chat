@@ -810,15 +810,22 @@ model job_queue {
 }
 
 model workspace_notes {
-  id          Int       @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   workspaceId Int
-  content     String    @default("")
-  pinned      Boolean?  @default(false)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @default(now())
+  title       String     @default("")
+  content     String     @default("")
+  plainText   String     @default("")
+  tags        String     @default("[]")
+  folder      String?
+  pinned      Boolean?   @default(false)
+  archivedAt  DateTime?
+  deletedAt   DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @default(now())
   workspace   workspaces @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 
   @@index([workspaceId])
+  @@index([workspaceId, deletedAt])
 }
 
 // Shared workspace notes — replaces the raw CREATE TABLE IF NOT EXISTS
