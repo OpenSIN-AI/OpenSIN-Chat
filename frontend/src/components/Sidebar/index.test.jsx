@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 vi.mock("react-i18next", async () => {
   const { createI18nMock } = await import("@/test/i18nMock");
@@ -39,8 +39,20 @@ vi.mock("./WorkspaceSwitcher", () => ({
   ),
 }));
 
+const newThreadMock = vi.fn().mockResolvedValue({
+  thread: { slug: "new-thread" },
+  error: null,
+});
+
+vi.mock("@/models/workspace", () => ({
+  default: { threads: { new: (...args) => newThreadMock(...args) } },
+}));
+
 vi.mock("@/hooks/useWorkspaces", () => ({
-  default: () => ({ workspaces: [], isLoading: false }),
+  default: () => ({
+    workspaces: [{ id: 1, name: "OpenSIN", slug: "opensin" }],
+    isLoading: false,
+  }),
 }));
 
 vi.mock("../Footer", () => ({
@@ -105,6 +117,14 @@ describe("Sidebar (desktop)", () => {
     renderSidebar();
     expect(screen.getByTestId("workspace-switcher")).toBeInTheDocument();
     expect(screen.getByTestId("active-workspaces")).toBeInTheDocument();
+  });
+
+  it("creates a chat in the active workspace", async () => {
+    renderSidebar();
+    fireEvent.click(screen.getByRole("button", { name: /new chat/i }));
+    await waitFor(() =>
+      expect(newThreadMock).toHaveBeenCalledWith("opensin"),
+    );
   });
 
   it("renders the Footer inside the sidebar", () => {

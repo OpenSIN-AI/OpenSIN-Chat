@@ -197,24 +197,6 @@ describe("ThreadContainer", () => {
     });
   });
 
-  describe("New thread button", () => {
-    it("erstellt einen neuen Thread und navigiert", async () => {
-      renderContainer();
-      const buttons = screen.getAllByRole("button");
-      const newChatBtn = buttons.find((b) =>
-        /newChat|New Chat|new chat/i.test(b.textContent),
-      );
-      expect(newChatBtn).toBeTruthy();
-      fireEvent.click(newChatBtn);
-      await waitFor(() => {
-        expect(newThreadMock).toHaveBeenCalledWith("my-workspace");
-      });
-      await waitFor(() => {
-        expect(navigateMock).toHaveBeenCalled();
-      });
-    });
-  });
-
   describe("THREAD_RENAME_EVENT", () => {
     it("aktualisiert Thread-Namen bei renameEvent", async () => {
       useThreadsMock.mockReturnValue({
