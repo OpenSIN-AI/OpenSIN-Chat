@@ -35,7 +35,7 @@ function RunNode({
       className="flex flex-col pl-[calc(var(--tree-depth,0)*12px)]"
       style={{ "--tree-depth": depth } as React.CSSProperties}
     >
-      <div className="flex items-center justify-between gap-2 py-1.5 px-2 rounded-lg hover:bg-zinc-800/50 light:hover:bg-slate-100/50 group">
+      <div className="flex items-center justify-between gap-2 py-1.5 px-2 rounded-lg hover:bg-theme-sidebar-item-hover group">
         <div className="flex items-center gap-2 min-w-0">
           {statusIcon[run.status]}
           <span className="text-sm text-theme-text-primary truncate">

@@ -211,7 +211,7 @@ export default function AgentModeButton({
           className={`group border-none relative flex justify-center items-center cursor-pointer rounded-lg transition-all ${
             activeMode
               ? "bg-theme-accent/15 px-2 h-7 gap-1.5"
-              : "w-6 h-7 hover:bg-zinc-700 light:hover:bg-slate-200"
+              : "w-6 h-7 hover:bg-theme-bg-tertiary"
           }`}
         >
           <ActiveIcon
@@ -220,7 +220,7 @@ export default function AgentModeButton({
             className={`pointer-events-none shrink-0 ${
               activeMode
                 ? "text-theme-accent"
-                : "text-zinc-300 light:text-slate-600 group-hover:text-theme-text-primary light:hover:text-theme-text-primary light:group-hover:text-slate-600"
+                : "text-theme-text-secondary group-hover:text-theme-text-primary"
             }`}
           />
           {activeMode && (
@@ -233,10 +233,10 @@ export default function AgentModeButton({
           <button
             type="button"
             onClick={() => clearMode(sendCommand, textareaRef, promptInput)}
-            className="ml-0.5 flex items-center justify-center w-4 h-4 rounded-full hover:bg-zinc-600 light:hover:bg-slate-300 transition-colors"
+            className="ml-0.5 flex items-center justify-center w-4 h-4 rounded-full hover:bg-theme-bg-tertiary transition-colors"
             aria-label={t("agentMode.removeMode")}
           >
-            <X size={10} className="text-zinc-400 light:text-slate-500" />
+            <X size={10} className="text-theme-text-secondary" />
           </button>
         )}
       </div>
@@ -280,38 +280,31 @@ export default function AgentModeButton({
                 return { top: btnRect.bottom + 6, left };
               })(),
             }}
-            className="z-50 w-[300px] bg-zinc-800 light:bg-white border border-zinc-700 light:border-slate-300 rounded-xl shadow-2xl overflow-hidden"
+            className="z-50 w-[300px] bg-theme-bg-sidebar border border-theme-sidebar-border rounded-xl shadow-2xl overflow-hidden"
           >
-            <div className="px-3 py-2 border-b border-zinc-700 light:border-slate-200">
+            <div className="px-3 py-2 border-b border-theme-sidebar-border">
               <div className="flex items-center gap-1.5">
                 <Sparkle
                   size={12}
                   weight="fill"
                   className="text-theme-accent"
                 />
-                <span className="text-xs font-semibold text-theme-text-primary light:text-theme-text-primary">
+                <span className="text-xs font-semibold text-theme-text-primary">
                   {t("agentMode.title")}
                 </span>
               </div>
             </div>
             <div className="py-1">
-              {AGENT_MODES.map((mode) => {
+              {AGENT_MODES.filter((mode) => mode.enabled).map((mode) => {
                 const Icon = mode.icon;
                 return (
                   <button
                     key={mode.id}
                     type="button"
-                    disabled={!mode.enabled}
                     aria-pressed={activeMode?.id === mode.id}
                     aria-label={mode.label}
-                    onClick={() =>
-                      mode.enabled && selectMode(mode, sendCommand, textareaRef)
-                    }
-                    className={`w-full flex items-start gap-3 px-3 py-2.5 text-left transition-colors border-none ${
-                      mode.enabled
-                        ? "hover:bg-zinc-700/50 light:hover:bg-slate-100 cursor-pointer"
-                        : "opacity-50 cursor-not-allowed"
-                    } ${
+                    onClick={() => selectMode(mode, sendCommand, textareaRef)}
+                    className={`w-full flex items-start gap-3 px-3 py-2.5 text-left transition-colors border-none hover:bg-theme-sidebar-item-hover cursor-pointer ${
                       activeMode?.id === mode.id ? "bg-theme-accent/10" : ""
                     }`}
                   >
@@ -319,7 +312,7 @@ export default function AgentModeButton({
                       className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
                         activeMode?.id === mode.id
                           ? "bg-theme-accent/20"
-                          : "bg-zinc-700/50 light:bg-slate-100"
+                          : "bg-theme-bg-tertiary"
                       }`}
                     >
                       <Icon
@@ -327,17 +320,17 @@ export default function AgentModeButton({
                         className={
                           activeMode?.id === mode.id
                             ? "text-theme-accent"
-                            : "text-zinc-300 light:text-slate-600"
+                            : "text-theme-text-secondary"
                         }
                       />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5">
-                        <span className="text-sm font-medium text-theme-text-primary light:text-theme-text-primary">
+                        <span className="text-sm font-medium text-theme-text-primary">
                           {mode.label}
                         </span>
                         {mode.badge && (
-                          <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-full bg-zinc-700 light:bg-slate-200 text-zinc-400 light:text-slate-500 uppercase tracking-wide">
+                          <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-full bg-theme-bg-tertiary text-theme-text-secondary uppercase tracking-wide">
                             {mode.badge}
                           </span>
                         )}
@@ -347,14 +340,14 @@ export default function AgentModeButton({
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-zinc-400 light:text-slate-500 leading-tight mt-0.5">
+                      <p className="text-xs text-theme-text-secondary leading-tight mt-0.5">
                         {mode.description}
                       </p>
                     </div>
                     {mode.enabled && (
                       <CaretRight
                         size={12}
-                        className="text-zinc-600 light:text-slate-400 flex-shrink-0 mt-2"
+                        className="text-theme-text-secondary flex-shrink-0 mt-2"
                       />
                     )}
                   </button>

@@ -57,14 +57,14 @@ export default function EnhancePromptButton({
         data-tooltip-id="enhance-prompt"
         data-tooltip-content={t("chat_window.enhance_prompt")}
         aria-label={t("chat_window.enhance_prompt")}
-        className="group border-none relative flex justify-center items-center cursor-pointer w-6 h-6 rounded-full hover:bg-zinc-700 light:hover:bg-slate-200"
+        className="group border-none relative flex justify-center items-center cursor-pointer w-6 h-6 rounded-full hover:bg-theme-bg-tertiary"
       >
         <Sparkle
           size={18}
           className={`pointer-events-none shrink-0 ${
             loading
               ? "text-yellow-400 animate-spin"
-              : "text-zinc-300 light:text-slate-600 group-hover:text-theme-text-primary light:hover:text-theme-text-primary light:group-hover:text-slate-800"
+              : "text-theme-text-secondary group-hover:text-theme-text-primary"
           }`}
         />
       </button>

@@ -148,6 +148,7 @@ function ThreadItem({
             data-tooltip-content={displayName}
             className="w-full pl-3 py-1 overflow-hidden"
             aria-current={isActive ? "page" : undefined}
+            onPointerDown={(e) => e.stopPropagation()}
           >
             <p
               className={`text-left text-[13px] truncate w-full ${
@@ -352,7 +353,7 @@ function OptionsMenu({
   return (
     <div
       ref={menuRef}
-      className="absolute w-fit z-[20] top-[25px] right-[10px] bg-zinc-900 light:bg-theme-bg-sidebar light:border-[1px] light:border-theme-sidebar-border rounded-lg p-1"
+      className="absolute w-fit z-[20] top-[25px] right-[10px] bg-theme-bg-sidebar border-[1px] border-theme-sidebar-border rounded-lg p-1"
     >
       <button
         onClick={handleNewChat}
@@ -362,7 +363,7 @@ function OptionsMenu({
         <Plus size={18} />
         <p className="text-sm">{t("threadItem.newChat")}</p>
       </button>
-      <div className="w-full h-px bg-zinc-700 light:bg-slate-200 my-0.5" />
+      <div className="w-full h-px bg-theme-bg-secondary my-0.5" />
       <button
         onClick={handleCopyLink}
         type="button"

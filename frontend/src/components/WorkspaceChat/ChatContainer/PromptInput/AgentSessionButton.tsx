@@ -36,11 +36,11 @@ export default function AgentSessionButton({
         data-tooltip-id="agent-session"
         data-tooltip-content={t("chat_window.start_agent_session")}
         aria-label={t("chat_window.start_agent_session")}
-        className="group border-none relative flex justify-center items-center cursor-pointer w-6 h-6 rounded-full hover:bg-zinc-700 light:hover:bg-slate-200"
+        className="group border-none relative flex justify-center items-center cursor-pointer w-6 h-6 rounded-full hover:bg-theme-bg-tertiary"
       >
         <At
           size={18}
-          className="pointer-events-none text-zinc-300 light:text-slate-600 group-hover:text-theme-text-primary light:hover:text-theme-text-primary light:group-hover:text-slate-600 shrink-0"
+          className="pointer-events-none text-theme-text-secondary group-hover:text-theme-text-primary shrink-0"
         />
       </button>
       <Tooltip

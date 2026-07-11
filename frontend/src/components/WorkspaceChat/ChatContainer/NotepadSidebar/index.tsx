@@ -241,25 +241,25 @@ function NotepadSidebar({ workspace }: any) {
   const noteItemClass = (selected: boolean) =>
     `group relative w-full text-left rounded-lg px-2.5 py-2 cursor-pointer transition-colors border-none ${
       selected
-        ? "bg-zinc-800 light:bg-slate-200 shadow-sm"
-        : "hover:bg-zinc-800/60 light:hover:bg-slate-100"
+        ? "bg-theme-sidebar-item-selected shadow-sm"
+        : "hover:bg-theme-sidebar-item-hover"
     }`;
 
   return (
     <ChatSidebar isOpen={true} minWidth={360} defaultWidth={420}>
       <div className="w-full h-full flex flex-col overflow-hidden">
         {/* Header */}
-        <div className="flex items-center gap-2 px-4 pt-4 pb-3 shrink-0 border-b border-white/5 light:border-slate-200">
+        <div className="flex items-center gap-2 px-4 pt-4 pb-3 shrink-0 border-b border-theme-sidebar-border">
           <Notepad
             size={18}
             weight="fill"
-            className="text-zinc-300 light:text-slate-500 flex-shrink-0"
+            className="text-theme-text-secondary flex-shrink-0"
           />
-          <p className="flex-1 font-semibold text-sm text-theme-text-primary light:text-theme-text-primary">
+          <p className="flex-1 font-semibold text-sm text-theme-text-primary">
             {t("chat_window.notepad", "Notizblock")}
           </p>
           {notes.length > 0 && (
-            <span className="text-[10px] font-bold text-zinc-400 light:text-slate-500 bg-zinc-800 light:bg-slate-100 rounded-full px-2 py-0.5">
+            <span className="text-[10px] font-bold text-theme-text-secondary bg-theme-bg-tertiary rounded-full px-2 py-0.5">
               {notes.length}
             </span>
           )}
@@ -267,7 +267,7 @@ function NotepadSidebar({ workspace }: any) {
             type="button"
             onClick={handleNewNote}
             disabled={!slug || isCreating}
-            className="flex items-center justify-center text-zinc-400 light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer p-1 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="flex items-center justify-center text-theme-text-secondary hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer p-1 disabled:opacity-40 disabled:cursor-not-allowed"
             aria-label={t("chat_window.new_note", "Neue Notiz")}
             title={
               isCreating
@@ -281,7 +281,7 @@ function NotepadSidebar({ workspace }: any) {
             onClick={closeSidebar}
             type="button"
             aria-label={t("common.close", "Schließen")}
-            className="text-zinc-400 light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer p-1"
+            className="text-theme-text-secondary hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer p-1"
           >
             <X size={16} weight="bold" />
           </button>
@@ -292,7 +292,7 @@ function NotepadSidebar({ workspace }: any) {
             {[...Array(4)].map((_, i) => (
               <div
                 key={i}
-                className="h-12 rounded-lg bg-zinc-800/70 light:bg-slate-100 animate-pulse"
+                className="h-12 rounded-lg bg-theme-bg-tertiary animate-pulse"
               />
             ))}
           </div>
@@ -309,14 +309,14 @@ function NotepadSidebar({ workspace }: any) {
                 setIsLoading(true);
                 loadNotes();
               }}
-              className="flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg bg-white/5 light:bg-slate-100 text-theme-text-secondary hover:bg-white/10 light:hover:bg-slate-200 transition-colors text-sm border-none cursor-pointer"
+              className="flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg bg-theme-bg-tertiary text-theme-text-secondary hover:bg-theme-bg-quaternary transition-colors text-sm border-none cursor-pointer"
             >
               {t("sidebar.retry", "Erneut versuchen")}
             </button>
           </div>
         ) : !hasNotes ? (
           <div className="flex-1 flex flex-col items-center justify-center gap-4 p-6 text-center">
-            <div className="w-12 h-12 rounded-2xl bg-zinc-800/80 light:bg-slate-100 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-2xl bg-theme-bg-tertiary flex items-center justify-center">
               <Notepad
                 size={22}
                 weight="duotone"
@@ -327,7 +327,7 @@ function NotepadSidebar({ workspace }: any) {
               <p className="text-sm font-medium text-theme-text-primary light:text-theme-text-primary">
                 {t("chat_window.no_notes", "Noch keine Notizen vorhanden.")}
               </p>
-              <p className="text-xs text-zinc-500 light:text-slate-500 max-w-[220px]">
+              <p className="text-sm text-theme-text-secondary max-w-[220px]">
                 {t(
                   "chat_window.notes_empty_hint",
                   "Halte Gedanken, To-dos und Recherche direkt im Workspace fest.",
@@ -347,7 +347,7 @@ function NotepadSidebar({ workspace }: any) {
         ) : (
           <div className="flex flex-1 min-h-0 overflow-hidden">
             {/* Note list */}
-            <aside className="w-[172px] flex-shrink-0 flex flex-col min-h-0 border-r border-white/5 light:border-slate-200">
+            <aside className="w-[172px] flex-shrink-0 flex flex-col min-h-0 border-r border-theme-sidebar-border">
               <div className="flex-1 overflow-y-auto no-scroll p-2 flex flex-col gap-1">
                 {notes.map((note) => (
                   <div key={note.id} className="relative group">
@@ -361,14 +361,14 @@ function NotepadSidebar({ workspace }: any) {
                           <PushPin
                             size={10}
                             weight="fill"
-                            className="text-zinc-400 light:text-slate-500 flex-shrink-0 mt-0.5"
+                            className="text-theme-text-secondary flex-shrink-0 mt-0.5"
                           />
                         )}
                         <div className="min-w-0 flex-1">
                           <p className="text-xs font-medium text-theme-text-primary light:text-theme-text-primary truncate leading-snug">
                             {notePreview(note.content, emptyNoteLabel)}
                           </p>
-                          <p className="text-[10px] text-zinc-500 light:text-slate-500 mt-0.5">
+                          <p className="text-[10px] text-theme-text-secondary mt-0.5">
                             {formatDate(note.updatedAt)}
                           </p>
                         </div>
@@ -378,7 +378,7 @@ function NotepadSidebar({ workspace }: any) {
                       <button
                         onClick={(e) => handleShareClick(e, note.id)}
                         aria-label={t("notepad.share", "Share note")}
-                        className="text-zinc-500 hover:text-theme-text-secondary transition-colors bg-transparent border-none cursor-pointer p-0.5 rounded"
+                        className="text-theme-text-secondary hover:text-theme-text-primary transition-colors bg-transparent border-none cursor-pointer p-0.5 rounded"
                         title={t("chat_window.share_note", "Teilen")}
                       >
                         <ShareNetwork size={11} />
@@ -389,7 +389,7 @@ function NotepadSidebar({ workspace }: any) {
                           handleDeleteNote(note.id);
                         }}
                         aria-label={t("common.delete", "Löschen")}
-                        className="text-zinc-500 hover:text-red-400 transition-colors bg-transparent border-none cursor-pointer p-0.5 rounded"
+                        className="text-theme-text-secondary hover:text-red-400 transition-colors bg-transparent border-none cursor-pointer p-0.5 rounded"
                       >
                         <Trash size={11} />
                       </button>
@@ -397,7 +397,7 @@ function NotepadSidebar({ workspace }: any) {
                     {sharingNoteId === note.id && (
                       <div
                         ref={shareDropdownRef}
-                        className="absolute left-full top-0 ml-2 z-50 min-w-[168px] bg-zinc-900 light:bg-white border border-white/10 light:border-slate-200 rounded-xl shadow-xl py-1.5"
+                        className="absolute left-full top-0 ml-2 z-50 min-w-[168px] bg-theme-bg-sidebar border border-theme-sidebar-border rounded-xl shadow-xl py-1.5"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <p className="px-3 py-1 text-[10px] text-zinc-500 light:text-slate-500 uppercase tracking-widest font-medium">
@@ -418,7 +418,7 @@ function NotepadSidebar({ workspace }: any) {
                               onClick={() =>
                                 handleShareToWorkspace(note.id, ws.slug)
                               }
-                              className="w-full text-left px-3 py-1.5 text-xs text-theme-text-primary light:text-theme-text-primary hover:bg-zinc-800 light:hover:bg-slate-100 transition-colors bg-transparent border-none cursor-pointer truncate"
+                              className="w-full text-left px-3 py-1.5 text-xs text-theme-text-primary hover:bg-theme-sidebar-item-hover transition-colors bg-transparent border-none cursor-pointer truncate"
                             >
                               {ws.name}
                             </button>
@@ -431,7 +431,7 @@ function NotepadSidebar({ workspace }: any) {
 
                 {sharedNotes.length > 0 && (
                   <>
-                    <p className="px-2 pt-2 pb-1 text-[10px] text-zinc-500 light:text-slate-500 uppercase tracking-widest font-medium">
+                    <p className="px-2 pt-2 pb-1 text-[10px] text-theme-text-secondary uppercase tracking-widest font-medium">
                       {t("chat_window.shared_notes", "Geteilte Notizen")}
                     </p>
                     {sharedNotes.map((note) => (
@@ -451,7 +451,7 @@ function NotepadSidebar({ workspace }: any) {
                               <p className="text-xs font-medium text-theme-text-primary light:text-theme-text-primary truncate leading-snug">
                                 {notePreview(note.content, emptyNoteLabel)}
                               </p>
-                              <p className="text-[10px] text-zinc-500 light:text-slate-500 mt-0.5 truncate">
+                              <p className="text-[10px] text-theme-text-secondary mt-0.5 truncate">
                                 {t("chat_window.from", "von")}{" "}
                                 {note.source_workspace_name}
                               </p>
@@ -467,7 +467,7 @@ function NotepadSidebar({ workspace }: any) {
                             )
                           }
                           aria-label={t("notepad.unshare", "Unshare note")}
-                          className="absolute top-1.5 right-1 opacity-0 group-hover:opacity-100 text-zinc-500 hover:text-red-400 transition-opacity bg-transparent border-none cursor-pointer p-0.5 rounded"
+                          className="absolute top-1.5 right-1 opacity-0 group-hover:opacity-100 text-theme-text-secondary hover:text-red-400 transition-opacity bg-transparent border-none cursor-pointer p-0.5 rounded"
                           title={t("chat_window.unshare", "Teilen aufheben")}
                         >
                           <Trash size={11} />
@@ -493,8 +493,8 @@ function NotepadSidebar({ workspace }: any) {
                         aria-label={t("notepad.togglePin", "Toggle pin")}
                         className={`flex items-center justify-center w-7 h-7 rounded-lg transition-colors border-none cursor-pointer ${
                           activeNote.pinned
-                            ? "bg-zinc-800 light:bg-slate-200 text-theme-text-primary"
-                            : "bg-transparent text-zinc-500 hover:bg-zinc-800/60 light:hover:bg-slate-100 hover:text-theme-text-secondary"
+                            ? "bg-theme-bg-tertiary text-theme-text-primary"
+                            : "bg-transparent text-theme-text-secondary hover:bg-theme-bg-tertiary hover:text-theme-text-primary"
                         }`}
                       >
                         <PushPin
@@ -509,7 +509,7 @@ function NotepadSidebar({ workspace }: any) {
                       </span>
                     </div>
                   </div>
-                  <div className="flex-1 min-h-0 rounded-xl border border-white/5 light:border-slate-200 bg-zinc-950/40 light:bg-white shadow-sm overflow-hidden">
+                  <div className="flex-1 min-h-0 rounded-xl border border-theme-sidebar-border bg-theme-bg-primary shadow-sm overflow-hidden">
                     <textarea
                       value={content}
                       onChange={handleContentChange}
@@ -524,7 +524,7 @@ function NotepadSidebar({ workspace }: any) {
                         "chat_window.note_placeholder",
                         "Hier Notiz schreiben...",
                       )}
-                      className="w-full h-full bg-transparent text-sm leading-relaxed text-theme-text-primary light:text-theme-text-primary p-4 outline-none resize-none placeholder:text-zinc-500 light:placeholder:text-slate-400"
+                      className="w-full h-full bg-transparent text-sm leading-relaxed text-theme-text-primary p-4 outline-none resize-none placeholder:text-theme-text-secondary"
                     />
                   </div>
                 </>
@@ -532,24 +532,24 @@ function NotepadSidebar({ workspace }: any) {
                 <>
                   <div className="flex items-center gap-1.5 mb-2 shrink-0 px-1">
                     <ShareNetwork size={12} className="text-[#009ee0]" />
-                    <span className="text-[10px] text-zinc-500 light:text-slate-500 truncate">
+                    <span className="text-[10px] text-theme-text-secondary truncate">
                       {t("chat_window.from", "von")}{" "}
                       {activeSharedNote.source_workspace_name}
                       {" · "}
                       {t("chat_window.read_only", "Schreibgeschützt")}
                     </span>
                   </div>
-                  <div className="flex-1 min-h-0 rounded-xl border border-white/5 light:border-slate-200 bg-zinc-950/20 light:bg-slate-50 overflow-hidden">
+                  <div className="flex-1 min-h-0 rounded-xl border border-theme-sidebar-border bg-theme-bg-secondary overflow-hidden">
                     <textarea
                       value={content}
                       readOnly
-                      className="w-full h-full bg-transparent text-sm leading-relaxed text-theme-text-primary light:text-theme-text-primary p-4 outline-none resize-none opacity-80 cursor-default"
+                      className="w-full h-full bg-transparent text-sm leading-relaxed text-theme-text-primary p-4 outline-none resize-none opacity-80 cursor-default"
                     />
                   </div>
                 </>
               ) : (
-                <div className="flex-1 flex items-center justify-center rounded-xl border border-dashed border-white/10 light:border-slate-200">
-                  <p className="text-sm text-zinc-500 light:text-slate-500 px-4 text-center">
+                <div className="flex-1 flex items-center justify-center rounded-xl border border-dashed border-theme-sidebar-border">
+                  <p className="text-sm text-theme-text-secondary px-4 text-center">
                     {t(
                       "chat_window.select_or_create_note",
                       "Notiz auswählen oder erstellen",

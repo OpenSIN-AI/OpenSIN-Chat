@@ -67,16 +67,16 @@ export default function TextSizeMenu() {
         aria-expanded={showMenu}
         className={`group border-none cursor-pointer flex items-center justify-center w-[35px] h-[35px] rounded-full transition-all ${
           showMenu
-            ? "bg-zinc-700 light:bg-slate-200"
-            : "hover:bg-zinc-700 light:hover:bg-slate-200"
+            ? "bg-theme-bg-tertiary"
+            : "hover:bg-theme-bg-tertiary"
         }`}
       >
         <SlidersHorizontal
           size={18}
           className={
             showMenu
-              ? "text-theme-text-primary light:text-theme-text-primary"
-              : "text-zinc-300 light:text-slate-600 group-hover:text-theme-text-primary light:hover:text-theme-text-primary light:group-hover:text-slate-800"
+              ? "text-theme-text-primary"
+              : "text-theme-text-secondary group-hover:text-theme-text-primary"
           }
         />
       </button>
@@ -84,9 +84,9 @@ export default function TextSizeMenu() {
       {showMenu && (
         <div
           ref={menuRef}
-          className="absolute right-0 top-[42px] bg-zinc-800 light:bg-white border border-zinc-700 light:border-slate-300 rounded-lg p-3 w-[200px] flex flex-col gap-1 shadow-lg"
+          className="absolute right-0 top-[42px] bg-theme-bg-sidebar border border-theme-sidebar-border rounded-lg p-3 w-[200px] flex flex-col gap-1 shadow-lg"
         >
-          <p className="text-[10px] font-medium text-zinc-400 light:text-slate-500 px-2 mb-0.5">
+          <p className="text-[10px] font-medium text-theme-text-secondary px-2 mb-0.5">
             {t("chat_window.text_size_label")}
           </p>
           {(TEXT_SIZES as any).map(({ key, label, textClass }: any) => (
@@ -95,8 +95,8 @@ export default function TextSizeMenu() {
               onClick={() => handleTextSizeChange(key)}
               className={`flex items-center px-2 py-1 rounded cursor-pointer ${
                 selectedSize === key
-                  ? "bg-zinc-700 light:bg-slate-200"
-                  : "hover:bg-zinc-700/50 light:hover:bg-slate-100"
+                  ? "bg-theme-bg-tertiary"
+                  : "hover:bg-theme-bg-tertiary"
               }`}
             >
               <span
