@@ -135,10 +135,9 @@ export default function Sidebar() {
   const startX = useRef(0);
   const startWidth = useRef(0);
 
-  useEffect(
-    () => safeSetItem(SIDEBAR_WIDTH_STORAGE_KEY, String(sidebarWidth)),
-    [sidebarWidth],
-  );
+  useEffect(() => {
+    safeSetItem(SIDEBAR_WIDTH_STORAGE_KEY, String(sidebarWidth));
+  }, [sidebarWidth]);
   useEffect(() => {
     const move = (event: PointerEvent) => {
       if (!resizing.current) return;

@@ -31,6 +31,18 @@ vi.mock("./ActiveWorkspaces", () => ({
   default: () => <div data-testid="active-workspaces" />,
 }));
 
+vi.mock("./WorkspaceSwitcher", () => ({
+  default: () => (
+    <a href="/" aria-label="Home" data-testid="workspace-switcher">
+      OpenSIN
+    </a>
+  ),
+}));
+
+vi.mock("@/hooks/useWorkspaces", () => ({
+  default: () => ({ workspaces: [], isLoading: false }),
+}));
+
 vi.mock("../Footer", () => ({
   default: () => <footer data-testid="footer" />,
 }));
@@ -89,9 +101,9 @@ describe("Sidebar (desktop)", () => {
     expect(homeLink.getAttribute("href")).toBe("/");
   });
 
-  it("renders the SearchBox and ActiveWorkspaces children", () => {
+  it("renders the workspace switcher and ActiveWorkspaces children", () => {
     renderSidebar();
-    expect(screen.getByTestId("search-box")).toBeInTheDocument();
+    expect(screen.getByTestId("workspace-switcher")).toBeInTheDocument();
     expect(screen.getByTestId("active-workspaces")).toBeInTheDocument();
   });
 
