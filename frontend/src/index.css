@@ -575,7 +575,7 @@ body {
    both themes (no white inner ring + grey outer ring combo). */
 #primary-prompt-input:focus-visible,
 #workspace-composer:focus-visible {
-  box-shadow: 0 0 0 1px var(--theme-modal-border) !important;
+  box-shadow: 0 0 0 1px #a1a1aa !important;
 }
 
 /* ── Custom utility classes (replaces @tailwind components) ────────────── */
