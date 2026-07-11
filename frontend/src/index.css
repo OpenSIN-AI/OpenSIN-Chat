@@ -202,7 +202,7 @@
   --chat-surface-elevated: #191919;
   --chat-border: #2a2a2a;
   --chat-text: #fafafa;
-  --chat-text-muted: #8b8b8b;
+  --chat-text-muted: #a3a3a3;
   --chat-accent: #65d6c5;
   --chat-user-bubble: #202020;
   --chat-focus-ring: rgba(101, 214, 197, 0.5);
@@ -302,7 +302,7 @@
   --chat-surface-elevated: #f0f0ed;
   --chat-border: #d9d9d5;
   --chat-text: #151514;
-  --chat-text-muted: #6f716f;
+  --chat-text-muted: #5f625f;
   --chat-accent: #0f766e;
   --chat-user-bubble: #ececea;
   --chat-focus-ring: rgba(15, 118, 110, 0.35);

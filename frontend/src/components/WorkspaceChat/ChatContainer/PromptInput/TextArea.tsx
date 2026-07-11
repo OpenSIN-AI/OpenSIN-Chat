@@ -53,7 +53,7 @@ export default function TextArea({
       value={promptInput}
       spellCheck={Appearance.get("enableSpellCheck")}
       maxLength={PROMPT_INPUT_MAX_LENGTH}
-      className={`min-h-12 max-h-[40vh] w-full flex-grow cursor-text resize-none border-none bg-transparent px-1 pb-2 pt-4 leading-6 text-[var(--chat-text)] placeholder:text-[var(--chat-text-muted)] focus:outline-none active:outline-none md:max-h-[300px] pwa:!text-[16px] ${textSizeClass}`}
+      className={`min-h-10 max-h-[32vh] w-full flex-grow cursor-text resize-none border-none bg-transparent px-1 pb-1.5 pt-3 leading-6 text-[var(--chat-text)] placeholder:text-[var(--chat-text-muted)] focus:outline-none active:outline-none md:max-h-[240px] pwa:!text-[16px] ${textSizeClass}`}
       placeholder={t("chat_window.send_message")}
     />
   );
