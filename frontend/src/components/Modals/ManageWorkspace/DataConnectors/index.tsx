@@ -77,47 +77,55 @@ export default function DataConnectors() {
   );
 
   return (
-    <div className="flex upload-modal -mt-10 relative min-h-[80vh] w-[70vw]">
-      <div className="w-full p-4 top-0 z-20">
-        <div className="w-full flex items-center sticky top-0 z-50">
-          <MagnifyingGlass
-            size={16}
-            weight="bold"
-            className="absolute left-4 z-30 text-theme-text-primary"
-          />
-          <input
-            type="text"
-            placeholder={t("connectors.search-placeholder")}
-            className="border-none z-20 pl-10 h-[38px] rounded-full w-full px-4 py-1 text-sm border-2 border-slate-300/40 outline-none focus:outline-primary-button active:outline-primary-button outline-none placeholder:text-theme-settings-input-placeholder  bg-theme-settings-input-bg"
-            autoComplete="off"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+    <div className="upload-modal grid min-h-0 min-w-0 gap-3 lg:h-[calc(88vh-164px)] lg:grid-cols-[minmax(260px,0.8fr)_minmax(0,1.2fr)]">
+      <aside className="flex min-h-[300px] min-w-0 flex-col overflow-hidden rounded-xl bg-theme-bg-secondary lg:min-h-0">
+        <div className="shrink-0 p-3">
+          <label className="relative block">
+            <span className="sr-only">
+              {t("connectors.search-placeholder")}
+            </span>
+            <MagnifyingGlass
+              size={16}
+              weight="bold"
+              className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-theme-text-secondary"
+              aria-hidden="true"
+            />
+            <input
+              type="search"
+              placeholder={t("connectors.search-placeholder")}
+              className="h-10 w-full rounded-lg border-none bg-theme-settings-input-bg py-2 pl-10 pr-3 text-sm text-theme-text-primary outline-none placeholder:text-theme-settings-input-placeholder focus:bg-theme-bg-hover"
+              autoComplete="off"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </label>
         </div>
-        <div className="mt-2 flex flex-col gap-y-2">
+        <div className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto px-2 pb-2">
           {filteredConnectors.length > 0 ? (
-            (filteredConnectors as any).map((slug, index) => (
+            filteredConnectors.map((connectorSlug) => (
               <ConnectorOption
-                key={slug}
-                slug={slug}
+                key={connectorSlug}
+                slug={connectorSlug}
                 selectedConnector={selectedConnector}
                 setSelectedConnector={setSelectedConnector}
-                image={DATA_CONNECTORS[slug].image}
-                name={DATA_CONNECTORS[slug].name}
-                description={DATA_CONNECTORS[slug].description}
+                image={DATA_CONNECTORS[connectorSlug].image}
+                name={DATA_CONNECTORS[connectorSlug].name}
+                description={DATA_CONNECTORS[connectorSlug].description}
               />
             ))
           ) : (
-            <div className="text-theme-text-primary text-center mt-4">
+            <p className="p-6 text-center text-sm text-theme-text-secondary">
               {t("connectors.no-connectors")}
-            </div>
+            </p>
           )}
         </div>
-      </div>
-      <div className="xl:block hidden absolute left-1/2 top-0 bottom-0 w-[0.5px] bg-white/20 -translate-x-1/2"></div>
-      <div className="w-full p-4 top-0 text-theme-text-primary min-w-[500px]">
+      </aside>
+      <section
+        className="min-h-[420px] min-w-0 overflow-auto rounded-xl bg-theme-bg-secondary p-4 text-theme-text-primary sm:p-5 lg:min-h-0"
+        aria-live="polite"
+      >
         {DATA_CONNECTORS[selectedConnector].options}
-      </div>
+      </section>
     </div>
   );
 }

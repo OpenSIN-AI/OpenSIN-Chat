@@ -15,10 +15,15 @@ function ActiveWorkspaces() {
   const isHomePage = !!useMatch("/");
 
   const activeWorkspace = useMemo(() => {
-    const current = workspaces.find((workspace: any) => workspace.slug === slug);
+    const current = workspaces.find(
+      (workspace: any) => workspace.slug === slug,
+    );
     if (current) return current;
     if (!isHomePage) return null;
-    const last = safeJsonParse(safeGetItem(LAST_VISITED_WORKSPACE), null as any);
+    const last = safeJsonParse(
+      safeGetItem(LAST_VISITED_WORKSPACE),
+      null as any,
+    );
     return (
       workspaces.find((workspace: any) => workspace.slug === last?.slug) ||
       workspaces[0] ||
@@ -42,7 +47,11 @@ function ActiveWorkspaces() {
   if (!activeWorkspace) return null;
 
   return (
-    <div className="min-h-0 flex-1" role="region" aria-label={activeWorkspace.name}>
+    <div
+      className="min-h-0 flex-1"
+      role="region"
+      aria-label={activeWorkspace.name}
+    >
       <ThreadContainer
         workspace={activeWorkspace}
         isActive={true}

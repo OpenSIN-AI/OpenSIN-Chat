@@ -4089,6 +4089,7 @@ const TRANSLATIONS = {
     backToWorkspaces: "Zurück zu Workspaces",
     openSettings: "Einstellungen öffnen",
     workspacesList: "Workspaces",
+    workspaceCloud: "Workspace-Cloud",
     generalAppearanceSettings: "Allgemeine Erscheinungseinstellungen",
     database: {
       title: "Abgeordnete",

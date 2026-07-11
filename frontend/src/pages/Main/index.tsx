@@ -44,7 +44,9 @@ function MainLayout() {
     <div className="flex h-dvh w-full overflow-hidden bg-theme-bg-primary">
       {!isMobile ? <LeftSidebarIconBar /> : null}
       {!isMobile ? <Sidebar /> : <SidebarMobileHeader />}
-      <div className={`flex-1 min-w-0 overflow-hidden${isMobile ? " pt-14" : ""}`}>
+      <div
+        className={`flex-1 min-w-0 overflow-hidden${isMobile ? " pt-14" : ""}`}
+      >
         <Home />
       </div>
     </div>

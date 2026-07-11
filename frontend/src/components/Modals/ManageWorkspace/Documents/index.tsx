@@ -240,7 +240,7 @@ export default function DocumentSettings({ workspace }) {
   }, [availableDocs, embeddingProgress]);
 
   return (
-    <div className="upload-modal relative z-10 -mt-6 flex min-w-0 flex-col items-center 2xl:flex-row 2xl:items-start">
+    <div className="upload-modal relative z-10 flex min-w-0 flex-col items-stretch gap-3 lg:flex-row lg:items-stretch">
       <Directory
         {...({
           files: visibleAvailableDocs,
@@ -259,8 +259,10 @@ export default function DocumentSettings({ workspace }) {
           setLoadingMessage: setLoadingMessage,
         } as any)}
       />
-      <div className="upload-modal-arrow">
-        <ArrowsDownUp className="h-11 w-11 text-base font-bold text-theme-text-primary 2xl:rotate-90" />
+      <div className="flex shrink-0 items-center justify-center py-1 lg:px-1 lg:py-0">
+        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-theme-bg-secondary text-theme-text-secondary">
+          <ArrowsDownUp className="h-5 w-5 lg:rotate-90" />
+        </span>
       </div>
       <WorkspaceDirectory
         workspace={workspace}

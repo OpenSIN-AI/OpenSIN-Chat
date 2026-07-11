@@ -85,7 +85,8 @@ export function ChatSidebarProvider({ children }: any) {
   const [activeSidebar, setActiveSidebar] = useState<string | null>(null);
   const [sidebarData, setSidebarData] = useState<any>(null);
   const leftSidebarRef = useRef<boolean | null>(null);
-  const { showSidebar: leftSidebarOpen, setShowSidebar: setLeftSidebarOpen } = useSidebarToggle();
+  const { showSidebar: leftSidebarOpen, setShowSidebar: setLeftSidebarOpen } =
+    useSidebarToggle();
 
   const [sourceFilter, setSourceFilter] = useState(() => {
     try {
@@ -144,25 +145,24 @@ export function ChatSidebarProvider({ children }: any) {
     else openSidebar(type, data);
   }
 
-  const openPreview = useCallback((data) => {
-    setPreviewData(data);
-    if (!activeSidebar) {
-      leftSidebarRef.current = leftSidebarOpen;
-      if (leftSidebarOpen) setLeftSidebarOpen(false);
-    }
-    setActiveSidebar("preview");
-  }, [activeSidebar, leftSidebarOpen, setLeftSidebarOpen]);
+  const openPreview = useCallback(
+    (data) => {
+      setPreviewData(data);
+      if (!activeSidebar) {
+        leftSidebarRef.current = leftSidebarOpen;
+        if (leftSidebarOpen) setLeftSidebarOpen(false);
+      }
+      setActiveSidebar("preview");
+    },
+    [activeSidebar, leftSidebarOpen, setLeftSidebarOpen],
+  );
 
   // Escape key closes the active right panel
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === "Escape" && activeSidebar) {
         const target = e.target as HTMLElement;
-        if (
-          target?.matches(
-            "input, textarea, [contenteditable='true']",
-          )
-        )
+        if (target?.matches("input, textarea, [contenteditable='true']"))
           return;
         e.preventDefault();
         closeSidebar();

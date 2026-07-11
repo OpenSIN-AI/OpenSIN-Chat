@@ -3993,6 +3993,7 @@ const TRANSLATIONS = {
     backToWorkspaces: "Back to workspaces",
     openSettings: "Open settings",
     workspacesList: "Workspaces",
+    workspaceCloud: "Workspace Cloud",
     generalAppearanceSettings: "General appearance settings",
     database: {
       title: "Politicians",

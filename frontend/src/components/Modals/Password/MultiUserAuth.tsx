@@ -24,7 +24,8 @@ import logger from "@/utils/logger";
 /* Shared field styles so every input looks identical */
 const FIELD_CLASS =
   "w-full h-10 rounded-lg border border-white/[0.08] light:border-zinc-200 bg-[#1c1c1c] light:bg-zinc-50 pl-10 pr-4 text-sm text-[#fafafa] light:text-zinc-900 placeholder:text-[#3f3f46] light:placeholder:text-zinc-300 transition focus:outline-none focus:border-white/20 light:focus:border-zinc-400 focus:bg-[#222222] light:focus:bg-white";
-const LABEL_CLASS = "text-xs font-medium text-[#a1a1aa] light:text-zinc-500 uppercase tracking-wider";
+const LABEL_CLASS =
+  "text-xs font-medium text-[#a1a1aa] light:text-zinc-500 uppercase tracking-wider";
 const PRIMARY_BTN_CLASS =
   "mt-2 flex h-10 w-full items-center justify-center gap-x-2 rounded-lg bg-[#fafafa] light:bg-zinc-900 text-sm font-semibold text-zinc-900 light:text-white transition hover:bg-[#e4e4e7] light:hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-white/20 disabled:cursor-not-allowed disabled:opacity-40";
 const LINK_BTN_CLASS =

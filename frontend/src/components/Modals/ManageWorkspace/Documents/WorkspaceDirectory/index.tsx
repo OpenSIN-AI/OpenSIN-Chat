@@ -100,19 +100,19 @@ function WorkspaceDirectory({
   const embeddedDocCount = getEmbeddedDocCount(files);
 
   return (
-    <div className="px-8">
-      <div className="flex items-center justify-start w-[560px]">
-        <h3 className="text-theme-text-primary text-base font-bold ml-5">
+    <div className="min-w-0 flex-1">
+      <div className="flex items-center justify-start px-1 sm:px-3">
+        <h3 className="text-base font-bold text-theme-text-primary">
           {workspace.name}
         </h3>
       </div>
-      <div className="relative w-[560px] h-[445px] mt-5">
+      <div className="relative mt-3 h-[445px] min-w-0">
         <div
           className={`absolute inset-0 rounded-2xl ${
             highlightWorkspace ? "border-4 border-cyan-300/80 z-[999]" : ""
           }`}
         />
-        <div className="relative w-full h-full bg-theme-settings-input-bg rounded-2xl overflow-hidden border border-theme-modal-border">
+        <div className="relative h-full w-full overflow-hidden rounded-xl bg-theme-bg-secondary">
           <div className="text-theme-text-primary text-xs grid grid-cols-12 py-2 px-3.5 border-b border-white/20 light:border-theme-modal-border bg-theme-settings-input-bg sticky top-0 z-10">
             <div className="col-span-10 flex items-center gap-x-[4px]">
               {!hasChanges &&
@@ -199,7 +199,7 @@ function WorkspaceDirectory({
           <button
             type="button"
             onClick={handleSaveChanges}
-            className="border border-slate-200 px-5 py-2.5 rounded-lg text-white text-sm items-center flex gap-x-2 hover:bg-slate-200 hover:text-slate-800 focus:ring-gray-800"
+            className="flex items-center gap-2 rounded-lg bg-theme-text-primary px-5 py-2.5 text-sm font-medium text-theme-bg-primary transition-opacity hover:opacity-85"
           >
             {t("connectors.directory.save_embed")}
           </button>

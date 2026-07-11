@@ -15,7 +15,9 @@ import paths from "@/utils/paths";
 import { LAST_VISITED_WORKSPACE } from "@/utils/constants";
 import { safeGetItem } from "@/utils/safeStorage";
 import { safeJsonParse } from "@/utils/request";
-import ManageWorkspace, { useManageWorkspaceModal } from "@/components/Modals/ManageWorkspace";
+import ManageWorkspace, {
+  useManageWorkspaceModal,
+} from "@/components/Modals/ManageWorkspace";
 
 type Props = { onCreate: () => void; onNavigate?: () => void };
 
@@ -33,7 +35,10 @@ export default function WorkspaceSwitcher({ onCreate, onNavigate }: Props) {
   const activeWorkspace = useMemo(() => {
     const direct = workspaces.find((workspace: any) => workspace.slug === slug);
     if (direct) return direct;
-    const last = safeJsonParse(safeGetItem(LAST_VISITED_WORKSPACE), null as any);
+    const last = safeJsonParse(
+      safeGetItem(LAST_VISITED_WORKSPACE),
+      null as any,
+    );
     return (
       workspaces.find((workspace: any) => workspace.slug === last?.slug) ||
       workspaces[0]
@@ -44,7 +49,10 @@ export default function WorkspaceSwitcher({ onCreate, onNavigate }: Props) {
     if (!open) return;
     const close = (event: MouseEvent) => {
       const target = event.target as Node;
-      if (!triggerRef.current?.contains(target) && !menuRef.current?.contains(target))
+      if (
+        !triggerRef.current?.contains(target) &&
+        !menuRef.current?.contains(target)
+      )
         setOpen(false);
     };
     const escape = (event: KeyboardEvent) => {
@@ -81,9 +89,14 @@ export default function WorkspaceSwitcher({ onCreate, onNavigate }: Props) {
             {(activeWorkspace?.name || "O").slice(0, 1).toUpperCase()}
           </span>
           <span className="min-w-0 flex-1 truncate text-sm font-semibold">
-            {isLoading ? t("common.loading") : activeWorkspace?.name || "OpenSIN"}
+            {isLoading
+              ? t("common.loading")
+              : activeWorkspace?.name || "OpenSIN"}
           </span>
-          <CaretDown size={14} className={`shrink-0 text-theme-text-secondary transition-transform ${open ? "rotate-180" : ""}`} />
+          <CaretDown
+            size={14}
+            className={`shrink-0 text-theme-text-secondary transition-transform ${open ? "rotate-180" : ""}`}
+          />
         </button>
 
         {open && (
@@ -107,8 +120,13 @@ export default function WorkspaceSwitcher({ onCreate, onNavigate }: Props) {
                     onClick={() => go(paths.workspace.chat(workspace.slug))}
                     className={`flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-sm transition-colors ${active ? "bg-theme-sidebar-item-selected text-theme-sidebar-item-text-active" : "text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary"}`}
                   >
-                    <SquaresFour size={16} weight={active ? "fill" : "regular"} />
-                    <span className="min-w-0 flex-1 truncate">{workspace.name}</span>
+                    <SquaresFour
+                      size={16}
+                      weight={active ? "fill" : "regular"}
+                    />
+                    <span className="min-w-0 flex-1 truncate">
+                      {workspace.name}
+                    </span>
                     {active && <Check size={14} weight="bold" />}
                   </button>
                 );
@@ -116,24 +134,62 @@ export default function WorkspaceSwitcher({ onCreate, onNavigate }: Props) {
             </div>
             <div className="my-1 h-px bg-theme-modal-border" />
             {user?.role !== "default" && (
-              <button type="button" role="menuitem" onClick={() => { setOpen(false); onCreate(); }} className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-sm text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary">
-                <Plus size={16} />{t("new-workspace.title")}
+              <button
+                type="button"
+                role="menuitem"
+                onClick={() => {
+                  setOpen(false);
+                  onCreate();
+                }}
+                className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-sm text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
+              >
+                <Plus size={16} />
+                {t("new-workspace.title")}
               </button>
             )}
             {activeWorkspace && user?.role !== "default" && (
               <>
-                <button type="button" role="menuitem" onClick={() => go(paths.workspace.settings.generalAppearance(activeWorkspace.slug))} className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-sm text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary">
-                  <GearSix size={16} />{t("sidebar.workspaceSettings", "Workspace settings")}
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={() =>
+                    go(
+                      paths.workspace.settings.generalAppearance(
+                        activeWorkspace.slug,
+                      ),
+                    )
+                  }
+                  className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-sm text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
+                >
+                  <GearSix size={16} />
+                  {t("sidebar.workspaceSettings", "Workspace settings")}
                 </button>
-                <button type="button" role="menuitem" onClick={() => { setOpen(false); showModal(); }} className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-sm text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary">
-                  <CloudArrowUp size={16} />{t("sidebar.workspaceCloud", "Workspace Cloud")}
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={() => {
+                    setOpen(false);
+                    showModal();
+                  }}
+                  className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-sm text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
+                >
+                  <CloudArrowUp size={16} />
+                  {t("sidebar.workspaceCloud", "Workspace Cloud")}
                 </button>
               </>
             )}
           </div>
         )}
       </div>
-      {showing && activeWorkspace && createPortal(<ManageWorkspace hideModal={hideModal} providedSlug={activeWorkspace.slug} />, document.body)}
+      {showing &&
+        activeWorkspace &&
+        createPortal(
+          <ManageWorkspace
+            hideModal={hideModal}
+            providedSlug={activeWorkspace.slug}
+          />,
+          document.body,
+        )}
     </>
   );
 }
