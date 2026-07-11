@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { List } from "@phosphor-icons/react/dist/csr/List";
@@ -7,6 +7,7 @@ import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { SidebarSimple } from "@phosphor-icons/react/dist/csr/SidebarSimple";
 import { CalendarBlank } from "@phosphor-icons/react/dist/csr/CalendarBlank";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
 import { useTranslation } from "react-i18next";
 import { Tooltip } from "react-tooltip";
 import ActiveWorkspaces from "./ActiveWorkspaces";
@@ -33,7 +34,13 @@ const SIDEBAR_MAX_WIDTH = 420;
 const SIDEBAR_DEFAULT_WIDTH = 288;
 const SIDEBAR_WIDTH_STORAGE_KEY = "opensin-sidebar-width";
 
-function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
+function SidebarContent({
+  onNavigate,
+  onOpenSearch,
+}: {
+  onNavigate?: () => void;
+  onOpenSearch?: () => void;
+}) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { slug } = useParams();
@@ -90,6 +97,17 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
       <div className="flex min-h-0 flex-1 flex-col px-3 pb-2">
         <button
           type="button"
+          onClick={onOpenSearch}
+          className="mb-2 flex h-10 w-full shrink-0 items-center gap-2 rounded-lg border border-theme-modal-border bg-theme-bg-secondary px-3 text-sm text-theme-text-muted transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-text-secondary"
+        >
+          <MagnifyingGlass size={16} />
+          <span>{t("commandHub.searchButton")}</span>
+          <kbd className="ml-auto rounded border border-theme-modal-border bg-theme-bg-tertiary px-1.5 py-0.5 text-[10px] text-theme-text-muted">
+            ⌘K
+          </kbd>
+        </button>
+        <button
+          type="button"
           onClick={newChat}
           disabled={!activeWorkspace || creating}
           className="mb-2 flex h-10 w-full shrink-0 items-center justify-center gap-2 rounded-lg bg-theme-sidebar-item-selected px-3 text-sm font-medium text-theme-sidebar-item-text-active transition-colors hover:bg-theme-bg-hover disabled:cursor-not-allowed disabled:opacity-50"
@@ -121,7 +139,7 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 
-export default function Sidebar() {
+export default function Sidebar({ onOpenSearch }: { onOpenSearch?: () => void }) {
   const { t } = useTranslation();
   const { showSidebar, setShowSidebar } = useSidebarToggle();
   const [sidebarWidth, setSidebarWidth] = useState(() => {
@@ -185,7 +203,7 @@ export default function Sidebar() {
               <SidebarSimple size={16} weight="fill" />
             </button>
           </div>
-          <SidebarContent />
+          <SidebarContent onOpenSearch={onOpenSearch} />
         </div>
         {showSidebar && (
           <div
@@ -217,7 +235,11 @@ export default function Sidebar() {
   );
 }
 
-export function SidebarMobileHeader() {
+export function SidebarMobileHeader({
+  onOpenSearch,
+}: {
+  onOpenSearch?: () => void;
+}) {
   const { t } = useTranslation();
   const { user } = useUser();
   const [open, setOpen] = useState(false);
@@ -249,6 +271,14 @@ export function SidebarMobileHeader() {
         <span className="ml-2 text-sm font-semibold text-theme-text-primary">
           OpenSIN
         </span>
+        <button
+          type="button"
+          onClick={onOpenSearch}
+          aria-label={t("commandHub.openSearch")}
+          className="ml-auto flex h-10 w-10 items-center justify-center rounded-lg text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-text-secondary"
+        >
+          <MagnifyingGlass size={20} />
+        </button>
       </header>
       <div
         className={`fixed inset-0 z-[99] md:hidden ${open ? "visible" : "invisible pointer-events-none"}`}
@@ -275,7 +305,13 @@ export function SidebarMobileHeader() {
               <X size={18} />
             </button>
           </div>
-          <SidebarContent onNavigate={() => setOpen(false)} />
+          <SidebarContent
+            onNavigate={() => setOpen(false)}
+            onOpenSearch={() => {
+              setOpen(false);
+              onOpenSearch?.();
+            }}
+          />
         </div>
       </div>
     </>
