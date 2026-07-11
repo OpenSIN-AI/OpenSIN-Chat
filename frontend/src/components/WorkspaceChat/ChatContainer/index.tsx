@@ -38,11 +38,11 @@ export default function ChatContainer({
       <ReportPreviewListener />
       <div
         style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
-        className="h-[var(--content-height)] relative flex md:ml-[16px] md:mr-[16px] md:my-[16px] flex-1 min-w-0 z-[2]"
+        className="relative z-[2] flex h-[var(--content-height)] min-w-0 flex-1 overflow-hidden md:mx-[16px] md:my-[16px]"
       >
         <ChatHeader workspaceSlug={workspace?.slug} isEmpty={isEmpty} />
         <div
-          className={`flex-1 min-w-0 transition-all duration-500 relative md:rounded-xl bg-theme-bg-primary light:bg-white w-full h-full overflow-hidden${isEmpty ? "" : " text-theme-text-primary light:text-theme-text-primary"}`}
+          className={`relative h-full min-w-0 flex-1 overflow-hidden bg-theme-bg-primary md:rounded-xl light:bg-white${isEmpty ? "" : " text-theme-text-primary light:text-theme-text-primary"}`}
         >
           <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
             <DnDFileUploaderWrapper>

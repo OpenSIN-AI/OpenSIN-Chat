@@ -356,9 +356,22 @@ export default function ChatSidebar({
     }
     return defaultWidth;
   });
+  const [isResizing, setIsResizing] = useState(false);
   const isResizingRef = useRef(false);
   const resizeStartXRef = useRef(0);
   const resizeStartWidthRef = useRef(0);
+  const frameRef = useRef<number | null>(null);
+
+  const clampWidth = useCallback(
+    (nextWidth: number) => {
+      const viewportLimit =
+        typeof window === "undefined"
+          ? maxWidth
+          : Math.max(minWidth, window.innerWidth - 420);
+      return Math.min(maxWidth, viewportLimit, Math.max(minWidth, nextWidth));
+    },
+    [maxWidth, minWidth],
+  );
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -374,34 +387,44 @@ export default function ChatSidebar({
   }, [width]);
 
   useEffect(() => {
-    function handleMouseMove(e: MouseEvent) {
+    function handlePointerMove(e: PointerEvent) {
       if (!isResizingRef.current) return;
-      // Resize from left edge of right sidebar → drag left = wider, drag right = narrower
-      const delta = resizeStartXRef.current - e.clientX;
-      const newWidth = Math.min(
-        maxWidth,
-        Math.max(minWidth, resizeStartWidthRef.current + delta),
-      );
-      setWidth(newWidth);
+      const nextWidth =
+        resizeStartWidthRef.current + resizeStartXRef.current - e.clientX;
+      if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
+      frameRef.current = requestAnimationFrame(() => {
+        setWidth(clampWidth(nextWidth));
+        frameRef.current = null;
+      });
     }
-    function handleMouseUp() {
+    function handlePointerUp() {
       if (!isResizingRef.current) return;
       isResizingRef.current = false;
+      setIsResizing(false);
       document.body.style.cursor = "";
       document.body.style.userSelect = "";
     }
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
+    function handleViewportResize() {
+      setWidth((current) => clampWidth(current));
+    }
+    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerup", handlePointerUp);
+    window.addEventListener("resize", handleViewportResize);
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", handlePointerUp);
+      window.removeEventListener("resize", handleViewportResize);
+      if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
     };
-  }, [minWidth, maxWidth]);
+  }, [clampWidth]);
 
-  function handleResizeStart(e: React.MouseEvent) {
+  function handleResizeStart(e: React.PointerEvent) {
     e.preventDefault();
     e.stopPropagation();
     isResizingRef.current = true;
+    setIsResizing(true);
     resizeStartXRef.current = e.clientX;
     resizeStartWidthRef.current = width;
     document.body.style.cursor = "col-resize";
@@ -412,27 +435,36 @@ export default function ChatSidebar({
   // more space than the default 366px).
   useEffect(() => {
     if (!isOpen) return;
-    setWidth((w) => Math.max(w, minWidth));
-  }, [isOpen, minWidth]);
+    setWidth((current) => clampWidth(current));
+  }, [clampWidth, isOpen]);
 
   if (!isOpen) return null;
 
   return (
     <div
-      className="relative h-full overflow-hidden flex flex-col flex-shrink-0 z-20 bg-theme-bg-sidebar"
-      style={{ width: `${width}px` }}
+      className={`relative z-20 flex h-full shrink-0 flex-col overflow-hidden bg-theme-bg-sidebar ${isResizing ? "" : "transition-[width] duration-150 ease-out"}`}
+      style={{ width: `${width}px`, containerType: "inline-size" }}
     >
-      {/* Resize handle on the LEFT edge so user can drag to widen the panel */}
       <div
-        onMouseDown={handleResizeStart}
+        onPointerDown={handleResizeStart}
         role="separator"
         aria-orientation="vertical"
+        aria-valuemin={minWidth}
+        aria-valuemax={maxWidth}
+        aria-valuenow={Math.round(width)}
         aria-label={t("common.resizeRightSidebar")}
         title={t("common.dragToResizeWidth")}
-        className="absolute top-0 left-0 h-full w-3 cursor-col-resize z-50 group flex items-center justify-center hover:bg-blue-500/30 transition-colors"
+        className="group absolute left-0 top-0 z-50 flex h-full w-5 touch-none cursor-col-resize items-center justify-center"
       >
-        <div className="w-1 h-16 bg-blue-400/50 group-hover:bg-blue-400 rounded-full transition-colors" />
+        <div
+          className={`h-16 w-0.5 rounded-full transition-colors ${isResizing ? "bg-blue-400" : "bg-theme-modal-border group-hover:bg-blue-400"}`}
+        />
       </div>
+      {isResizing && (
+        <output className="pointer-events-none absolute left-4 top-3 z-50 rounded-md border border-theme-modal-border bg-theme-bg-primary px-2 py-1 text-[10px] font-medium text-theme-text-secondary shadow-sm">
+          {Math.round(width)} px
+        </output>
+      )}
       {children}
     </div>
   );

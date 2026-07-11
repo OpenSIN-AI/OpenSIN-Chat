@@ -105,8 +105,8 @@ export default function EmptyState({
   ];
 
   return (
-    <div className="flex flex-col h-full w-full items-center overflow-y-auto px-2 md:px-6">
-      <div className="flex flex-col items-center w-full max-w-[720px] py-8 my-auto">
+    <div className="flex h-full w-full flex-col items-center overflow-y-auto px-3 md:px-6">
+      <div className="my-auto flex w-full max-w-[720px] flex-col items-center py-8">
         <h1 className="mb-2.5 text-center text-2xl font-semibold tracking-tight text-[#e4e4e7] text-balance light:text-zinc-900 md:text-[1.75rem]">
           {t("main-page.greeting")}
         </h1>
@@ -131,7 +131,7 @@ export default function EmptyState({
           threadSlug={threadSlug}
         />
 
-        <div className="mt-6 grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
+        <div className="mt-6 grid w-full grid-cols-[repeat(auto-fit,minmax(min(100%,15rem),1fr))] gap-3">
           {capabilities.map((cap) => (
             <CapabilityCard
               key={cap.title}

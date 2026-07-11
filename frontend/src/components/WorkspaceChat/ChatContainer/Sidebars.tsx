@@ -35,7 +35,7 @@ export default function Sidebars({ workspace }: SidebarsProps) {
 
   return (
     <div
-      className="hidden h-full flex-shrink-0 flex-row overflow-hidden md:flex"
+      className="relative hidden h-full min-w-0 shrink-0 flex-row overflow-hidden md:flex"
       aria-label={t("common.rightSidebar")}
     >
       {/* Panel area — only when a panel is active */}
