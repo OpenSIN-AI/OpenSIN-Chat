@@ -6,6 +6,7 @@ import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { FolderSimplePlus } from "@phosphor-icons/react/dist/csr/FolderSimplePlus";
+import { FolderSimple } from "@phosphor-icons/react/dist/csr/FolderSimple";
 import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
 import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
 import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
@@ -88,8 +89,9 @@ function saveDateGroupCollapseState(workspaceSlug, groupId, isCollapsed) {
 
 function ThreadContainer({
   workspace,
-  isActive: _isActive = false,
+  isActive = false,
   isVirtualThread = false,
+  codexProject = false,
 }) {
   const { threadSlug = null } = useParams();
   const navigate = useNavigate();
@@ -111,6 +113,15 @@ function ThreadContainer({
   const [chatsOpen, setChatsOpen] = useState(
     () => safeGetItem(`sidebar-chats-open-${workspace.slug}`) !== "false",
   );
+  const [projectOpen, setProjectOpen] = useState(
+    () =>
+      isActive ||
+      safeGetItem(`sidebar-codex-project-open-${workspace.slug}`) !== "false",
+  );
+
+  useEffect(() => {
+    if (isActive) setProjectOpen(true);
+  }, [isActive]);
 
   const isSearchActive = searchQuery.trim().length > 0;
 
@@ -418,6 +429,91 @@ function ThreadContainer({
   const draggedThread = activeId
     ? threads.find((t) => t.slug === activeId)
     : null;
+
+  if (codexProject) {
+    const visibleThreads = [...threads].sort((a, b) => {
+      const aDate = new Date(a.lastUpdatedAt || a.createdAt || 0).getTime();
+      const bDate = new Date(b.lastUpdatedAt || b.createdAt || 0).getTime();
+      return bDate - aDate;
+    });
+
+    return (
+      <section className="w-full overflow-hidden rounded-md">
+        <button
+          type="button"
+          aria-expanded={projectOpen}
+          onClick={() => {
+            const next = !projectOpen;
+            setProjectOpen(next);
+            safeSetItem(
+              `sidebar-codex-project-open-${workspace.slug}`,
+              String(next),
+            );
+          }}
+          className={`group flex h-8 w-full items-center gap-2 rounded-md px-2 text-left transition-colors hover:bg-theme-bg-hover ${isActive ? "text-theme-text-primary" : "text-theme-text-secondary"}`}
+        >
+          <FolderSimple size={16} className="shrink-0" />
+          <span className="min-w-0 flex-1 truncate text-sm font-medium">
+            {workspace.name}
+          </span>
+          <span className="text-[11px] tabular-nums text-theme-placeholder">
+            {visibleThreads.length + (defaultThreadHasChats ? 1 : 0)}
+          </span>
+          {projectOpen ? (
+            <CaretDown size={12} className="shrink-0" />
+          ) : (
+            <CaretRight size={12} className="shrink-0" />
+          )}
+        </button>
+
+        {projectOpen && (
+          <div className="ml-5 border-l border-theme-sidebar-border pl-1.5">
+            {defaultThreadHasChats && (
+              <ThreadItem
+                idx={0}
+                isActive={isActive && !threadSlug}
+                workspace={workspace}
+                thread={{ slug: null, name: "default" }}
+                hasNext={visibleThreads.length > 0}
+              />
+            )}
+            {visibleThreads.map((thread, index) => (
+              <ThreadItem
+                key={thread.slug}
+                idx={index + (defaultThreadHasChats ? 1 : 0)}
+                ctrlPressed={ctrlPressed}
+                toggleMarkForDeletion={toggleForDeletion}
+                isActive={isActive && thread.slug === threadSlug}
+                workspace={workspace}
+                onRemove={removeThread}
+                thread={thread}
+                hasNext={index < visibleThreads.length - 1}
+                duplicateNames={duplicateNames}
+              />
+            ))}
+            {isVirtualThread &&
+              visibleThreads.length === 0 &&
+              !defaultThreadHasChats && (
+                <ThreadItem
+                  idx={0}
+                  isActive
+                  workspace={workspace}
+                  thread={{ slug: null, name: "*New Thread", virtual: true }}
+                  hasNext={false}
+                />
+              )}
+            {!isVirtualThread &&
+              visibleThreads.length === 0 &&
+              !defaultThreadHasChats && (
+                <p className="truncate px-3 py-1.5 text-xs text-theme-placeholder">
+                  {t("threadContainer.noThreads", "Keine Chats")}
+                </p>
+              )}
+          </div>
+        )}
+      </section>
+    );
+  }
 
   return (
     <DndContext
