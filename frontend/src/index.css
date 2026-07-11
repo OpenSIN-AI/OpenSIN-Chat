@@ -571,6 +571,16 @@ body {
   }
 }
 
+/* Kill the GLOBAL fallback focus ring (line 863-866) on the chat composer
+   textarea. That rule replaces the cyan outline with a double box-shadow
+   (2px bg-secondary + 2px modal-border) which renders as a white inner ring
+   and a grey outer ring around the input — the visible "double frame" the
+   user reported. */
+#primary-prompt-input:focus-visible,
+#workspace-composer:focus-visible {
+  box-shadow: none !important;
+}
+
 /* ── Custom utility classes (replaces @tailwind components) ────────────── */
 @layer components {
   .no-scrollbar::-webkit-scrollbar {
