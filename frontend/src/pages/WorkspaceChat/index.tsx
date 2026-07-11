@@ -209,7 +209,7 @@ function ShowWorkspaceChat() {
     suggestedMessages,
     showAgentCommand,
     isLoading,
-  } = useWorkspaceChats(slug);
+  } = useWorkspaceChats(slug ?? "");
   const rawWorkspace = rawWorkspaceValue as
     | { slug: string; name: string; [key: string]: unknown }
     | null;
