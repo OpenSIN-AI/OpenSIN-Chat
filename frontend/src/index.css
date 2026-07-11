@@ -25,6 +25,10 @@
   --color-theme-bg-primary: #0a0a0a;
   --color-theme-bg-secondary: #111111;
   --color-theme-bg-tertiary: #1c1c1c;
+  --color-theme-bg-sidebar: #111111;
+  --color-theme-bg-container: #0a0a0a;
+  --color-theme-bg-hover: rgba(255, 255, 255, 0.07);
+  --color-theme-overlay: rgba(0, 0, 0, 0.62);
 
   /* Text tokens — bridge to the runtime --theme-* vars so the Tailwind
    * `text-theme-text-*` utilities flip with [data-theme="light"] instead of
@@ -246,6 +250,9 @@
   --color-theme-bg-primary: #ffffff;
   --color-theme-bg-secondary: #ffffff;
   --color-theme-bg-tertiary: #f5f5f4;
+  --color-theme-bg-sidebar: #f5f5f4;
+  --color-theme-bg-container: #ffffff;
+  --color-theme-bg-hover: rgba(0, 0, 0, 0.05);
   --color-theme-modal-border: #e7e5e4;
   --color-theme-accent: #181817;
   --color-theme-accent-light: #3f3f3d;
