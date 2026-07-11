@@ -7,8 +7,15 @@ import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { PushPin } from "@phosphor-icons/react/dist/csr/PushPin";
 import { ShareNetwork } from "@phosphor-icons/react/dist/csr/ShareNetwork";
 import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
+import { Notepad } from "@phosphor-icons/react/dist/csr/Notepad";
 import Note from "@/models/note";
 import ChatSidebar, { useChatSidebar } from "../ChatSidebar";
+
+function notePreview(content: string, fallback: string) {
+  const line = (content || "").trim().split("\n")[0]?.trim();
+  if (!line) return fallback;
+  return line.length > 42 ? `${line.slice(0, 42)}…` : line;
+}
 
 function NotepadSidebar({ workspace }: any) {
   const { t } = useTranslation();
@@ -28,6 +35,8 @@ function NotepadSidebar({ workspace }: any) {
   const [sharingNoteId, setSharingNoteId] = useState<any>(null);
   const [activeSharedNote, setActiveSharedNote] = useState<any>(null);
   const shareDropdownRef = useRef<any>(null);
+
+  const emptyNoteLabel = t("chat_window.empty_note", "Leere Notiz");
 
   const loadNotes = useCallback(async () => {
     if (!slug) return;
@@ -169,6 +178,11 @@ function NotepadSidebar({ workspace }: any) {
           (a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0),
         );
       });
+      if (activeNote?.id === noteId) {
+        setActiveNote((prev: any) =>
+          prev ? { ...prev, pinned: !currentPinned } : prev,
+        );
+      }
     }
   };
 
@@ -222,43 +236,69 @@ function NotepadSidebar({ workspace }: any) {
   };
 
   const wordCount = content.trim() ? content.trim().split(/\s+/).length : 0;
+  const hasNotes = notes.length > 0 || sharedNotes.length > 0;
+
+  const noteItemClass = (selected: boolean) =>
+    `group relative w-full text-left rounded-lg px-2.5 py-2 cursor-pointer transition-colors border-none ${
+      selected
+        ? "bg-zinc-800 light:bg-slate-200 shadow-sm"
+        : "hover:bg-zinc-800/60 light:hover:bg-slate-100"
+    }`;
 
   return (
-    <ChatSidebar isOpen={true}>
-      <div className="w-full h-full bg-zinc-900 light:bg-white flex flex-col overflow-hidden">
-        <div className="flex flex-col shrink-0 gap-2 p-4 pb-2">
-          <div className="flex items-start justify-between">
-            <p className="font-medium text-base leading-6 text-theme-text-primary light:text-theme-text-primary">
-              {t("chat_window.notepad", "Notizblock")}
-            </p>
-            <button
-              onClick={closeSidebar}
-              type="button"
-              className="text-theme-text-secondary light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
-            >
-              <X size={16} weight="bold" />
-            </button>
-          </div>
+    <ChatSidebar isOpen={true} minWidth={360} defaultWidth={420}>
+      <div className="w-full h-full flex flex-col overflow-hidden">
+        {/* Header */}
+        <div className="flex items-center gap-2 px-4 pt-4 pb-3 shrink-0 border-b border-white/5 light:border-slate-200">
+          <Notepad
+            size={18}
+            weight="fill"
+            className="text-zinc-300 light:text-slate-500 flex-shrink-0"
+          />
+          <p className="flex-1 font-semibold text-sm text-theme-text-primary light:text-theme-text-primary">
+            {t("chat_window.notepad", "Notizblock")}
+          </p>
+          {notes.length > 0 && (
+            <span className="text-[10px] font-bold text-zinc-400 light:text-slate-500 bg-zinc-800 light:bg-slate-100 rounded-full px-2 py-0.5">
+              {notes.length}
+            </span>
+          )}
           <button
             type="button"
             onClick={handleNewNote}
             disabled={!slug || isCreating}
-            className="flex min-h-11 items-center justify-center gap-x-1.5 rounded-lg border border-theme-border bg-theme-bg-secondary px-3 py-2 text-sm text-theme-text-secondary transition-opacity hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex items-center justify-center text-zinc-400 light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer p-1 disabled:opacity-40 disabled:cursor-not-allowed"
+            aria-label={t("chat_window.new_note", "Neue Notiz")}
+            title={
+              isCreating
+                ? t("chat_window.creating_note", "Erstellen...")
+                : t("chat_window.new_note", "Neue Notiz")
+            }
           >
-            <Plus size={16} aria-hidden="true" />
-            {isCreating
-              ? t("chat_window.creating_note", "Erstellen...")
-              : t("chat_window.new_note", "Neue Notiz")}
+            <Plus size={16} weight="bold" />
+          </button>
+          <button
+            onClick={closeSidebar}
+            type="button"
+            aria-label={t("common.close", "Schließen")}
+            className="text-zinc-400 light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer p-1"
+          >
+            <X size={16} weight="bold" />
           </button>
         </div>
 
         {isLoading ? (
-          <div className="flex-1 flex items-center justify-center">
-            <div className="dot-falling light:invert" />
+          <div className="flex-1 flex flex-col gap-2 p-4">
+            {[...Array(4)].map((_, i) => (
+              <div
+                key={i}
+                className="h-12 rounded-lg bg-zinc-800/70 light:bg-slate-100 animate-pulse"
+              />
+            ))}
           </div>
         ) : loadError ? (
-          <div className="flex-1 flex flex-col items-center justify-center gap-3 p-4">
-            <div className="p-3 rounded-lg bg-red-950/40 border border-red-800/50 text-xs text-red-400 flex items-center gap-2 max-w-xs">
+          <div className="flex-1 flex flex-col items-center justify-center gap-3 p-6">
+            <div className="p-3 rounded-xl bg-red-950/40 light:bg-red-50 border border-red-800/50 light:border-red-200 text-xs text-red-400 light:text-red-600 flex items-center gap-2 max-w-xs">
               <Warning size={16} weight="fill" className="flex-shrink-0" />
               <span>
                 {t("common.loadError", "Fehler beim Laden")}: {loadError}
@@ -269,229 +309,247 @@ function NotepadSidebar({ workspace }: any) {
                 setIsLoading(true);
                 loadNotes();
               }}
-              className="flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg bg-theme-bg-secondary text-theme-text-secondary hover:opacity-80 transition-opacity text-sm border border-theme-border"
+              className="flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg bg-white/5 light:bg-slate-100 text-theme-text-secondary hover:bg-white/10 light:hover:bg-slate-200 transition-colors text-sm border-none cursor-pointer"
             >
               {t("sidebar.retry", "Erneut versuchen")}
             </button>
           </div>
-        ) : notes.length === 0 ? (
-          <div className="flex-1 flex flex-col items-center justify-center gap-2 p-4">
-            <p className="text-sm text-zinc-400 light:text-slate-500 text-center">
-              {t("chat_window.no_notes", "Noch keine Notizen vorhanden.")}
-            </p>
+        ) : !hasNotes ? (
+          <div className="flex-1 flex flex-col items-center justify-center gap-4 p-6 text-center">
+            <div className="w-12 h-12 rounded-2xl bg-zinc-800/80 light:bg-slate-100 flex items-center justify-center">
+              <Notepad
+                size={22}
+                weight="duotone"
+                className="text-zinc-400 light:text-slate-500"
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <p className="text-sm font-medium text-theme-text-primary light:text-theme-text-primary">
+                {t("chat_window.no_notes", "Noch keine Notizen vorhanden.")}
+              </p>
+              <p className="text-xs text-zinc-500 light:text-slate-500 max-w-[220px]">
+                {t(
+                  "chat_window.notes_empty_hint",
+                  "Halte Gedanken, To-dos und Recherche direkt im Workspace fest.",
+                )}
+              </p>
+            </div>
             <button
+              type="button"
               onClick={handleNewNote}
-              className="flex items-center gap-x-1.5 px-3 py-1.5 rounded-lg bg-theme-bg-secondary text-theme-text-secondary hover:opacity-80 transition-opacity text-sm border border-theme-border"
+              disabled={isCreating}
+              className="flex items-center gap-x-1.5 px-4 py-2 rounded-lg bg-white text-zinc-900 light:bg-zinc-900 light:text-white hover:bg-zinc-200 light:hover:bg-zinc-800 transition-colors text-sm font-medium border-none cursor-pointer disabled:opacity-50"
             >
-              <Plus size={14} />
+              <Plus size={14} weight="bold" />
               {t("chat_window.create_first_note", "Erste Notiz erstellen")}
             </button>
           </div>
         ) : (
-          <div className="flex flex-1 overflow-hidden">
-            <div className="w-48 flex-shrink-0 border-r border-theme-border overflow-y-auto no-scroll">
-              {notes.map((note) => (
-                <div
-                  key={note.id}
-                  onClick={() => handleSelectNote(note)}
-                  className={`group relative px-3 py-2 cursor-pointer border-b border-theme-border transition-colors ${
-                    activeNote?.id === note.id
-                      ? "bg-zinc-700 light:bg-slate-200"
-                      : "hover:bg-zinc-800 light:hover:bg-slate-100"
-                  }`}
-                >
-                  <div className="flex items-center gap-1.5">
-                    {note.pinned && (
-                      <PushPin
-                        size={10}
-                        weight="fill"
-                        className="text-theme-text-secondary flex-shrink-0"
-                      />
-                    )}
-                    <p className="flex-1 text-xs text-theme-text-primary light:text-theme-text-primary truncate">
-                      {(note.content || "").slice(0, 40) ||
-                        t("chat_window.empty_note", "Leere Notiz")}
-                    </p>
-                  </div>
-                  <p className="text-[10px] text-zinc-400 light:text-slate-500 mt-0.5">
-                    {formatDate(note.updatedAt)}
-                  </p>
-                  <div className="absolute top-1 right-1 flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-all">
+          <div className="flex flex-1 min-h-0 overflow-hidden">
+            {/* Note list */}
+            <aside className="w-[172px] flex-shrink-0 flex flex-col min-h-0 border-r border-white/5 light:border-slate-200">
+              <div className="flex-1 overflow-y-auto no-scroll p-2 flex flex-col gap-1">
+                {notes.map((note) => (
+                  <div key={note.id} className="relative group">
                     <button
-                      onClick={(e) => handleShareClick(e, note.id)}
-                      aria-label={t("notepad.share", "Share note")}
-                      className="text-zinc-400 hover:text-theme-text-secondary transition-all bg-transparent border-none cursor-pointer p-1"
-                      title={t("chat_window.share_note", "Teilen")}
+                      type="button"
+                      onClick={() => handleSelectNote(note)}
+                      className={noteItemClass(activeNote?.id === note.id)}
                     >
-                      <ShareNetwork size={12} />
-                    </button>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteNote(note.id);
-                      }}
-                      className="text-zinc-400 hover:text-red-400 transition-all bg-transparent border-none cursor-pointer p-1"
-                    >
-                      <Trash size={12} />
-                    </button>
-                  </div>
-                  {sharingNoteId === note.id && (
-                    <div
-                      ref={shareDropdownRef}
-                      className="absolute left-full top-0 ml-1 z-50 min-w-[160px] bg-zinc-800 light:bg-white border border-theme-border rounded-lg shadow-xl py-1"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <p className="px-3 py-1 text-[10px] text-zinc-400 light:text-slate-500 uppercase tracking-wide">
-                        {t("chat_window.share_to", "Teilen an")}
-                      </p>
-                      {shareableWorkspaces.length === 0 ? (
-                        <p className="px-3 py-2 text-xs text-zinc-400 light:text-slate-500">
-                          {t(
-                            "chat_window.no_other_workspaces",
-                            "Keine weiteren Workspaces",
-                          )}
-                        </p>
-                      ) : (
-                        shareableWorkspaces.map((ws) => (
-                          <button
-                            key={ws.id}
-                            onClick={() =>
-                              handleShareToWorkspace(note.id, ws.slug)
-                            }
-                            className="w-full text-left px-3 py-1.5 text-xs text-theme-text-primary light:text-theme-text-primary hover:bg-zinc-700 light:hover:bg-slate-100 transition-colors bg-transparent border-none cursor-pointer truncate"
-                          >
-                            {ws.name}
-                          </button>
-                        ))
-                      )}
-                    </div>
-                  )}
-                </div>
-              ))}
-
-              {sharedNotes.length > 0 && (
-                <>
-                  <div className="px-3 py-1.5 border-b border-theme-border bg-theme-bg-secondary">
-                    <p className="text-[10px] text-zinc-400 light:text-slate-500 uppercase tracking-wide font-medium">
-                      {t("chat_window.shared_notes", "Geteilte Notizen")}
-                    </p>
-                  </div>
-                  {sharedNotes.map((note) => (
-                    <div
-                      key={`shared-${note.id}`}
-                      onClick={() => handleSelectSharedNote(note)}
-                      className={`group relative px-3 py-2 cursor-pointer border-b border-theme-border transition-colors ${
-                        activeSharedNote?.id === note.id
-                          ? "bg-zinc-700 light:bg-slate-200"
-                          : "hover:bg-zinc-800 light:hover:bg-slate-100"
-                      }`}
-                    >
-                      <div className="flex items-center gap-1.5">
-                        <ShareNetwork
-                          size={10}
-                          weight="fill"
-                          className="text-primary-button flex-shrink-0"
-                        />
-                        <p className="flex-1 text-xs text-theme-text-primary light:text-theme-text-primary truncate">
-                          {(note.content || "").slice(0, 35) ||
-                            t("chat_window.empty_note", "Leere Notiz")}
-                        </p>
+                      <div className="flex items-start gap-1.5 pr-6">
+                        {note.pinned && (
+                          <PushPin
+                            size={10}
+                            weight="fill"
+                            className="text-zinc-400 light:text-slate-500 flex-shrink-0 mt-0.5"
+                          />
+                        )}
+                        <div className="min-w-0 flex-1">
+                          <p className="text-xs font-medium text-theme-text-primary light:text-theme-text-primary truncate leading-snug">
+                            {notePreview(note.content, emptyNoteLabel)}
+                          </p>
+                          <p className="text-[10px] text-zinc-500 light:text-slate-500 mt-0.5">
+                            {formatDate(note.updatedAt)}
+                          </p>
+                        </div>
                       </div>
-                      <p className="text-[10px] text-zinc-400 light:text-slate-500 mt-0.5">
-                        {t("chat_window.from", "von")}{" "}
-                        {note.source_workspace_name}
-                      </p>
+                    </button>
+                    <div className="absolute top-1.5 right-1 flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
                       <button
-                        onClick={(e) =>
-                          handleUnshareNote(
-                            e,
-                            note.id,
-                            note.source_workspace_slug,
-                          )
-                        }
-                        aria-label={t("notepad.unshare", "Unshare note")}
-                        className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 text-zinc-400 hover:text-red-400 transition-all bg-transparent border-none cursor-pointer p-1"
-                        title={t("chat_window.unshare", "Teilen aufheben")}
+                        onClick={(e) => handleShareClick(e, note.id)}
+                        aria-label={t("notepad.share", "Share note")}
+                        className="text-zinc-500 hover:text-theme-text-secondary transition-colors bg-transparent border-none cursor-pointer p-0.5 rounded"
+                        title={t("chat_window.share_note", "Teilen")}
                       >
-                        <Trash size={12} />
+                        <ShareNetwork size={11} />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteNote(note.id);
+                        }}
+                        aria-label={t("common.delete", "Löschen")}
+                        className="text-zinc-500 hover:text-red-400 transition-colors bg-transparent border-none cursor-pointer p-0.5 rounded"
+                      >
+                        <Trash size={11} />
                       </button>
                     </div>
-                  ))}
-                </>
-              )}
-            </div>
+                    {sharingNoteId === note.id && (
+                      <div
+                        ref={shareDropdownRef}
+                        className="absolute left-full top-0 ml-2 z-50 min-w-[168px] bg-zinc-900 light:bg-white border border-white/10 light:border-slate-200 rounded-xl shadow-xl py-1.5"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <p className="px-3 py-1 text-[10px] text-zinc-500 light:text-slate-500 uppercase tracking-widest font-medium">
+                          {t("chat_window.share_to", "Teilen an")}
+                        </p>
+                        {shareableWorkspaces.length === 0 ? (
+                          <p className="px-3 py-2 text-xs text-zinc-500 light:text-slate-500">
+                            {t(
+                              "chat_window.no_other_workspaces",
+                              "Keine weiteren Workspaces",
+                            )}
+                          </p>
+                        ) : (
+                          shareableWorkspaces.map((ws) => (
+                            <button
+                              key={ws.id}
+                              type="button"
+                              onClick={() =>
+                                handleShareToWorkspace(note.id, ws.slug)
+                              }
+                              className="w-full text-left px-3 py-1.5 text-xs text-theme-text-primary light:text-theme-text-primary hover:bg-zinc-800 light:hover:bg-slate-100 transition-colors bg-transparent border-none cursor-pointer truncate"
+                            >
+                              {ws.name}
+                            </button>
+                          ))
+                        )}
+                      </div>
+                    )}
+                  </div>
+                ))}
 
-            <div className="flex-1 flex flex-col overflow-hidden">
+                {sharedNotes.length > 0 && (
+                  <>
+                    <p className="px-2 pt-2 pb-1 text-[10px] text-zinc-500 light:text-slate-500 uppercase tracking-widest font-medium">
+                      {t("chat_window.shared_notes", "Geteilte Notizen")}
+                    </p>
+                    {sharedNotes.map((note) => (
+                      <div key={`shared-${note.id}`} className="relative group">
+                        <button
+                          type="button"
+                          onClick={() => handleSelectSharedNote(note)}
+                          className={noteItemClass(activeSharedNote?.id === note.id)}
+                        >
+                          <div className="flex items-start gap-1.5 pr-5">
+                            <ShareNetwork
+                              size={10}
+                              weight="fill"
+                              className="text-[#009ee0] flex-shrink-0 mt-0.5"
+                            />
+                            <div className="min-w-0 flex-1">
+                              <p className="text-xs font-medium text-theme-text-primary light:text-theme-text-primary truncate leading-snug">
+                                {notePreview(note.content, emptyNoteLabel)}
+                              </p>
+                              <p className="text-[10px] text-zinc-500 light:text-slate-500 mt-0.5 truncate">
+                                {t("chat_window.from", "von")}{" "}
+                                {note.source_workspace_name}
+                              </p>
+                            </div>
+                          </div>
+                        </button>
+                        <button
+                          onClick={(e) =>
+                            handleUnshareNote(
+                              e,
+                              note.id,
+                              note.source_workspace_slug,
+                            )
+                          }
+                          aria-label={t("notepad.unshare", "Unshare note")}
+                          className="absolute top-1.5 right-1 opacity-0 group-hover:opacity-100 text-zinc-500 hover:text-red-400 transition-opacity bg-transparent border-none cursor-pointer p-0.5 rounded"
+                          title={t("chat_window.unshare", "Teilen aufheben")}
+                        >
+                          <Trash size={11} />
+                        </button>
+                      </div>
+                    ))}
+                  </>
+                )}
+              </div>
+            </aside>
+
+            {/* Editor */}
+            <main className="flex-1 flex flex-col min-w-0 min-h-0 p-3">
               {activeNote ? (
                 <>
-                  <div className="flex items-center justify-between px-3 py-1.5 border-b border-theme-border">
-                    <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-between mb-2 shrink-0">
+                    <div className="flex items-center gap-1.5">
                       <button
+                        type="button"
                         onClick={() =>
                           handleTogglePin(activeNote.id, activeNote.pinned)
                         }
                         aria-label={t("notepad.togglePin", "Toggle pin")}
-                        className={`bg-transparent border-none cursor-pointer p-1 transition-colors ${
+                        className={`flex items-center justify-center w-7 h-7 rounded-lg transition-colors border-none cursor-pointer ${
                           activeNote.pinned
-                            ? "text-theme-text-secondary"
-                            : "text-zinc-500 hover:text-theme-text-secondary"
+                            ? "bg-zinc-800 light:bg-slate-200 text-theme-text-primary"
+                            : "bg-transparent text-zinc-500 hover:bg-zinc-800/60 light:hover:bg-slate-100 hover:text-theme-text-secondary"
                         }`}
                       >
                         <PushPin
-                          size={12}
+                          size={13}
                           weight={activeNote.pinned ? "fill" : "regular"}
                         />
                       </button>
-                      <span className="text-[10px] text-zinc-400 light:text-slate-500">
+                      <span className="text-[10px] text-zinc-500 light:text-slate-500 tabular-nums">
                         {isSaving
                           ? t("chat_window.saving", "Speichern...")
                           : `${wordCount} ${t("chat_window.words", "Wörter")}`}
                       </span>
                     </div>
                   </div>
-                  <textarea
-                    value={content}
-                    onChange={handleContentChange}
-                    onBlur={() => {
-                      if (saveTimerRef.current) {
-                        clearTimeout(saveTimerRef.current);
-                        saveTimerRef.current = null;
-                      }
-                      if (activeNote) saveNote(activeNote.id, content);
-                    }}
-                    placeholder={t(
-                      "chat_window.note_placeholder",
-                      "Hier Notiz schreiben...",
-                    )}
-                    className="flex-1 w-full bg-transparent text-sm text-theme-text-primary light:text-theme-text-primary p-3 outline-none resize-none placeholder:text-zinc-500"
-                  />
+                  <div className="flex-1 min-h-0 rounded-xl border border-white/5 light:border-slate-200 bg-zinc-950/40 light:bg-white shadow-sm overflow-hidden">
+                    <textarea
+                      value={content}
+                      onChange={handleContentChange}
+                      onBlur={() => {
+                        if (saveTimerRef.current) {
+                          clearTimeout(saveTimerRef.current);
+                          saveTimerRef.current = null;
+                        }
+                        if (activeNote) saveNote(activeNote.id, content);
+                      }}
+                      placeholder={t(
+                        "chat_window.note_placeholder",
+                        "Hier Notiz schreiben...",
+                      )}
+                      className="w-full h-full bg-transparent text-sm leading-relaxed text-theme-text-primary light:text-theme-text-primary p-4 outline-none resize-none placeholder:text-zinc-500 light:placeholder:text-slate-400"
+                    />
+                  </div>
                 </>
               ) : activeSharedNote ? (
                 <>
-                  <div className="flex items-center justify-between px-3 py-1.5 border-b border-theme-border">
-                    <div className="flex items-center gap-1.5">
-                      <ShareNetwork size={12} className="text-primary-button" />
-                      <span className="text-[10px] text-zinc-400 light:text-slate-500">
-                        {t("chat_window.from", "von")}{" "}
-                        {activeSharedNote.source_workspace_name}
-                        {" · "}
-                        {t("chat_window.read_only", "Schreibgeschützt")}
-                      </span>
-                    </div>
+                  <div className="flex items-center gap-1.5 mb-2 shrink-0 px-1">
+                    <ShareNetwork size={12} className="text-[#009ee0]" />
+                    <span className="text-[10px] text-zinc-500 light:text-slate-500 truncate">
+                      {t("chat_window.from", "von")}{" "}
+                      {activeSharedNote.source_workspace_name}
+                      {" · "}
+                      {t("chat_window.read_only", "Schreibgeschützt")}
+                    </span>
                   </div>
-                  <textarea
-                    value={content}
-                    readOnly
-                    placeholder={t(
-                      "chat_window.note_placeholder",
-                      "Hier Notiz schreiben...",
-                    )}
-                    className="flex-1 w-full bg-transparent text-sm text-theme-text-primary light:text-theme-text-primary p-3 outline-none resize-none placeholder:text-zinc-500 cursor-default opacity-70"
-                  />
+                  <div className="flex-1 min-h-0 rounded-xl border border-white/5 light:border-slate-200 bg-zinc-950/20 light:bg-slate-50 overflow-hidden">
+                    <textarea
+                      value={content}
+                      readOnly
+                      className="w-full h-full bg-transparent text-sm leading-relaxed text-theme-text-primary light:text-theme-text-primary p-4 outline-none resize-none opacity-80 cursor-default"
+                    />
+                  </div>
                 </>
               ) : (
-                <div className="flex-1 flex items-center justify-center">
-                  <p className="text-sm text-zinc-400 light:text-slate-500">
+                <div className="flex-1 flex items-center justify-center rounded-xl border border-dashed border-white/10 light:border-slate-200">
+                  <p className="text-sm text-zinc-500 light:text-slate-500 px-4 text-center">
                     {t(
                       "chat_window.select_or_create_note",
                       "Notiz auswählen oder erstellen",
@@ -499,7 +557,7 @@ function NotepadSidebar({ workspace }: any) {
                   </p>
                 </div>
               )}
-            </div>
+            </main>
           </div>
         )}
       </div>
