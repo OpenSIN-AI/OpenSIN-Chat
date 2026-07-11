@@ -98,7 +98,7 @@ function VersionDropdown({ versions, activeVersion, onSelect }: any) {
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? t("common.close") : t("common.open", "Open preview")}
         aria-expanded={open}
-        className="flex items-center gap-1 px-2 h-6 rounded border border-zinc-700 light:border-slate-300 bg-zinc-800 light:bg-slate-100 text-xs text-zinc-300 light:text-slate-600 hover:border-zinc-500 light:hover:border-slate-400 transition-colors cursor-pointer"
+        className="flex items-center gap-1 px-2 h-6 rounded border border-theme-border bg-theme-bg-secondary text-xs text-theme-text-secondary hover:border-zinc-500 transition-colors cursor-pointer"
       >
         <span className="truncate max-w-[120px]">
           {versions[activeVersion]?.label ||
@@ -107,7 +107,7 @@ function VersionDropdown({ versions, activeVersion, onSelect }: any) {
         <CaretDown size={10} />
       </button>
       {open && (
-        <div className="absolute left-0 top-[28px] z-50 bg-zinc-800 light:bg-white border border-zinc-700 light:border-slate-200 rounded-lg shadow-xl py-1 min-w-[160px]">
+        <div className="absolute left-0 top-[28px] z-50 bg-theme-bg-secondary border border-theme-border rounded-lg shadow-xl py-1 min-w-[160px]">
           {(versions as any).map((v, idx) => (
             <button
               key={v.label || idx}
@@ -118,8 +118,8 @@ function VersionDropdown({ versions, activeVersion, onSelect }: any) {
               }}
               className={`w-full text-left px-3 py-1.5 text-xs transition-colors border-none cursor-pointer ${
                 idx === activeVersion
-                  ? "bg-zinc-700 light:bg-slate-100 text-theme-text-primary light:text-theme-text-primary"
-                  : "bg-transparent text-zinc-300 light:text-slate-600 hover:bg-zinc-700/60 light:hover:bg-slate-50"
+                  ? "bg-theme-bg-tertiary text-theme-text-primary"
+                  : "bg-transparent text-theme-text-secondary hover:bg-theme-bg-tertiary"
               }`}
             >
               {v.label || t("preview.version", { number: idx + 1 })}
@@ -198,16 +198,16 @@ function ThreeDotsMenu({ previewData, onAddToSources, addingSource }: any) {
         onClick={() => setOpen((v) => !v)}
         aria-label={t("common.moreOptions")}
         aria-expanded={open}
-        className="flex items-center justify-center w-6 h-6 rounded border-none bg-transparent text-zinc-400 light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary hover:bg-zinc-700 light:hover:bg-slate-100 cursor-pointer transition-colors"
+        className="flex items-center justify-center w-6 h-6 rounded border-none bg-transparent text-theme-text-muted hover:text-theme-text-primary hover:bg-theme-bg-tertiary cursor-pointer transition-colors"
       >
         <DotsThree size={16} weight="bold" />
       </button>
       {open && (
-        <div className="absolute right-0 top-[28px] z-50 bg-zinc-800 light:bg-white border border-zinc-700 light:border-slate-200 rounded-lg shadow-xl py-1 w-[192px]">
+        <div className="absolute right-0 top-[28px] z-50 bg-theme-bg-secondary border border-theme-border rounded-lg shadow-xl py-1 w-[192px]">
           <button
             type="button"
             onClick={handleDownload}
-            className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-zinc-300 light:text-slate-600 hover:bg-zinc-700/60 light:hover:bg-slate-50 border-none bg-transparent cursor-pointer transition-colors"
+            className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-theme-text-secondary hover:bg-theme-bg-tertiary border-none bg-transparent cursor-pointer transition-colors"
           >
             <DownloadSimple size={13} />
             {t("preview.menu.download")}
@@ -215,12 +215,12 @@ function ThreeDotsMenu({ previewData, onAddToSources, addingSource }: any) {
           <button
             type="button"
             onClick={handleOpenNewTab}
-            className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-zinc-300 light:text-slate-600 hover:bg-zinc-700/60 light:hover:bg-slate-50 border-none bg-transparent cursor-pointer transition-colors"
+            className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-theme-text-secondary hover:bg-theme-bg-tertiary border-none bg-transparent cursor-pointer transition-colors"
           >
             <ArrowSquareOut size={13} />
             {t("preview.menu.open_new_tab")}
           </button>
-          <div className="my-1 border-t border-zinc-700 light:border-slate-200" />
+          <div className="my-1 border-t border-theme-border" />
           <button
             type="button"
             onClick={handleAddToSources}
@@ -255,16 +255,16 @@ function IframePreview({ url, title }: any) {
 
   if (fetchError && !url?.includes("/api/utils/reports/")) {
     return (
-      <div className="flex flex-col items-center justify-center h-full gap-3 bg-zinc-900 light:bg-white">
-        <FilePdf size={28} className="text-zinc-500 light:text-slate-400" />
-        <p className="text-xs text-zinc-500 light:text-slate-400 text-center px-4">
+      <div className="flex flex-col items-center justify-center h-full gap-3 bg-theme-bg-sidebar">
+        <FilePdf size={28} className="text-theme-text-muted" />
+        <p className="text-xs text-theme-text-muted text-center px-4">
           {t("preview.load_error")}
         </p>
         <a
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-800 light:bg-slate-100 text-xs text-zinc-300 light:text-slate-600 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors no-underline"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-theme-bg-secondary text-xs text-theme-text-secondary hover:text-theme-text-primary transition-colors no-underline"
         >
           <ArrowSquareOut size={12} />
           {t("preview.open_externally")}
@@ -280,9 +280,9 @@ function IframePreview({ url, title }: any) {
           <div className="flex flex-col items-center justify-center h-full gap-3 bg-zinc-900 light:bg-white">
             <FilePdf
               size={28}
-              className="text-zinc-500 light:text-slate-400 animate-pulse"
+              className="text-theme-text-muted animate-pulse"
             />
-            <p className="text-xs text-zinc-500 light:text-slate-400">
+            <p className="text-xs text-theme-text-muted">
               {t("preview.loading")}
             </p>
           </div>
@@ -309,16 +309,16 @@ function IframePreview({ url, title }: any) {
 
   if (isPdf && fetchError) {
     return (
-      <div className="flex flex-col items-center justify-center h-full gap-3 bg-zinc-900 light:bg-white">
-        <FilePdf size={28} className="text-zinc-500 light:text-slate-400" />
-        <p className="text-xs text-zinc-500 light:text-slate-400 text-center px-4">
+      <div className="flex flex-col items-center justify-center h-full gap-3 bg-theme-bg-sidebar">
+        <FilePdf size={28} className="text-theme-text-muted" />
+        <p className="text-xs text-theme-text-muted text-center px-4">
           {t("preview.load_error")}
         </p>
         <a
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-800 light:bg-slate-100 text-xs text-zinc-300 light:text-slate-600 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors no-underline"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-theme-bg-secondary text-xs text-theme-text-secondary hover:text-theme-text-primary transition-colors no-underline"
         >
           <ArrowSquareOut size={12} />
           {t("preview.open_externally")}
@@ -362,9 +362,9 @@ function ImagePreview({ url, title }: { url: string; title?: string }) {
 
   if (fetchError) {
     return (
-      <div className="flex flex-col items-center justify-center h-full gap-3 bg-zinc-900 light:bg-white">
-        <Image size={28} className="text-zinc-500 light:text-slate-400" />
-        <p className="text-xs text-zinc-500 light:text-slate-400 text-center px-4">
+      <div className="flex flex-col items-center justify-center h-full gap-3 bg-theme-bg-sidebar">
+        <Image size={28} className="text-theme-text-muted" />
+        <p className="text-xs text-theme-text-muted text-center px-4">
           {t("preview.load_error")}
         </p>
       </div>
@@ -373,17 +373,14 @@ function ImagePreview({ url, title }: { url: string; title?: string }) {
 
   if (!blobUrl) {
     return (
-      <div className="flex items-center justify-center h-full bg-zinc-900 light:bg-white">
-        <Image
-          size={28}
-          className="text-zinc-500 light:text-slate-400 animate-pulse"
-        />
+      <div className="flex items-center justify-center h-full bg-theme-bg-sidebar">
+        <Image size={28} className="text-theme-text-muted animate-pulse" />
       </div>
     );
   }
 
   return (
-    <div className="flex items-center justify-center w-full h-full bg-zinc-900 light:bg-slate-50 p-4">
+    <div className="flex items-center justify-center w-full h-full bg-theme-bg-sidebar p-4">
       <img
         src={blobUrl}
         alt={title || t("preview.generated_image")}
@@ -397,7 +394,7 @@ function PreviewContent({ previewData, activeVersion }: any) {
   const { t } = useTranslation();
   if (!previewData) {
     return (
-      <div className="flex flex-col items-center justify-center h-full gap-3 text-zinc-500 light:text-slate-400">
+      <div className="flex flex-col items-center justify-center h-full gap-3 text-theme-text-muted">
         <Eye size={32} />
         <p className="text-sm text-center px-4">{t("preview.empty")}</p>
       </div>
@@ -436,7 +433,7 @@ function PreviewContent({ previewData, activeVersion }: any) {
   // Plain text / markdown
   return (
     <div className="w-full h-full overflow-auto p-4">
-      <pre className="text-xs text-zinc-300 light:text-slate-700 whitespace-pre-wrap font-mono leading-relaxed">
+      <pre className="text-xs text-theme-text-secondary whitespace-pre-wrap font-mono leading-relaxed">
         {version.content || previewData.content || ""}
       </pre>
     </div>
@@ -507,9 +504,9 @@ function PreviewSidebar() {
 
   return (
     <ChatSidebar isOpen={sidebarOpen}>
-      <div className="w-full h-full bg-zinc-900 light:bg-white light:border-l light:border-slate-300 flex flex-col overflow-hidden">
+      <div className="w-full h-full bg-theme-bg-sidebar flex flex-col overflow-hidden">
         {/* Header */}
-        <div className="flex items-center gap-2 px-4 pt-4 pb-3 shrink-0 border-b border-zinc-800 light:border-slate-200">
+        <div className="flex items-center gap-2 px-4 pt-4 pb-3 shrink-0 border-b border-theme-border">
           <TypeIcon
             size={16}
             className="text-zinc-400 light:text-slate-500 shrink-0"

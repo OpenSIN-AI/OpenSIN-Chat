@@ -4,6 +4,8 @@ import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import { CheckSquare } from "@phosphor-icons/react/dist/csr/CheckSquare";
 import { Square } from "@phosphor-icons/react/dist/csr/Square";
 import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
+import { Database } from "@phosphor-icons/react/dist/csr/Database";
+import { ArrowClockwise } from "@phosphor-icons/react/dist/csr/ArrowClockwise";
 import { useTranslation } from "react-i18next";
 import useSWR from "swr";
 import { usePoliticians } from "@/hooks/usePoliticians";
@@ -11,7 +13,7 @@ import useDocuments from "@/hooks/useDocuments";
 import Politician from "@/models/politician";
 import { swrFetcher } from "@/utils/swrFetcher";
 import ChatSidebar, { useDatabaseSidebar } from "../ChatSidebar";
-import { SidebarHeader } from "./components/SidebarHeader";
+import { PanelHeader } from "@/components/ui/PanelHeader";
 import { Filters } from "./components/Filters";
 import { ProfileCard } from "./components/ProfileCard";
 import { PoliticiansTab } from "./components/PoliticiansTab";
@@ -206,10 +208,25 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
 
   return (
     <ChatSidebar isOpen={sidebarOpen} minWidth={420}>
-      <div className="w-full h-full bg-zinc-900 light:bg-white light:border-l light:border-slate-300 flex flex-col overflow-hidden">
-        <SidebarHeader
-          loading={loading}
-          onRefresh={refresh}
+      <div className="w-full h-full bg-theme-bg-sidebar flex flex-col overflow-hidden">
+        <PanelHeader
+          icon={<Database size={15} weight="fill" />}
+          title={t("sidebar.database.title", "Politiker-Datenbank")}
+          actions={
+            <button
+              onClick={refresh}
+              type="button"
+              disabled={loading}
+              className="text-theme-text-muted hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer p-1"
+              aria-label={t("common.refresh", "Aktualisieren")}
+            >
+              <ArrowClockwise
+                size={13}
+                weight="bold"
+                className={loading ? "animate-spin" : ""}
+              />
+            </button>
+          }
           onClose={closeSidebar}
         />
 
@@ -239,11 +256,11 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
 
         {/* Bulk action bar */}
         {politicians.length > 0 && (
-          <div className="px-4 py-2 flex items-center justify-between border-b border-zinc-800 light:border-slate-200 shrink-0">
+          <div className="px-4 py-2 flex items-center justify-between border-b border-theme-border shrink-0">
             <button
               type="button"
               onClick={selectAll}
-              className="flex items-center gap-1.5 text-xs text-zinc-400 light:text-slate-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
+              className="flex items-center gap-1.5 text-xs text-theme-text-muted hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
             >
               {allSelected ? (
                 <CheckSquare

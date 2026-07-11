@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-import { X } from "@phosphor-icons/react/dist/csr/X";
 import { Newspaper } from "@phosphor-icons/react/dist/csr/Newspaper";
 import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
 import { ArrowClockwise } from "@phosphor-icons/react/dist/csr/ArrowClockwise";
@@ -7,11 +6,12 @@ import { ArrowSquareOut } from "@phosphor-icons/react/dist/csr/ArrowSquareOut";
 import { useTranslation } from "react-i18next";
 import { usePoliticalData } from "@/hooks/usePoliticalData";
 import ChatSidebar, { usePoliticalSidebar } from "../ChatSidebar";
+import { PanelHeader } from "@/components/ui/PanelHeader";
 
 function Section({ title, loading, error, onRetry, retryLabel, children }) {
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-[10px] uppercase tracking-widest text-zinc-500 light:text-slate-400">
+      <p className="text-[10px] uppercase tracking-widest text-theme-text-muted">
         {title}
       </p>
       {loading && (
@@ -19,7 +19,7 @@ function Section({ title, loading, error, onRetry, retryLabel, children }) {
           {Array.from({ length: 3 }).map((_, i) => (
             <div
               key={i}
-              className="h-10 rounded-xl bg-zinc-800 light:bg-slate-100 animate-pulse"
+              className="h-10 rounded-xl bg-theme-bg-tertiary animate-pulse"
             />
           ))}
         </div>
@@ -61,35 +61,29 @@ export default function PoliticalSidebar() {
 
   return (
     <ChatSidebar isOpen={sidebarOpen}>
-      <div className="w-full h-full bg-zinc-900 light:bg-white light:border-l light:border-slate-300 flex flex-col overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center gap-2 px-4 pt-4 pb-3 shrink-0 border-b border-zinc-800 light:border-slate-200">
-          <Newspaper size={15} className="text-zinc-400 light:text-slate-500" />
-          <p className="flex-1 font-medium text-sm text-theme-text-primary light:text-theme-text-primary">
-            {t("sidebar.political.title")}
-          </p>
-          <button
-            onClick={refreshAll}
-            type="button"
-            disabled={loadingDrucksachen || loadingRss}
-            className="text-zinc-500 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer disabled:opacity-40 mr-1"
-            aria-label={t("common.refresh")}
-          >
-            <ArrowClockwise
-              size={13}
-              weight="bold"
-              className={loadingDrucksachen || loadingRss ? "animate-spin" : ""}
-            />
-          </button>
-          <button
-            onClick={closeSidebar}
-            type="button"
-            aria-label={t("common.close")}
-            className="text-theme-text-secondary light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
-          >
-            <X size={14} weight="bold" />
-          </button>
-        </div>
+      <div className="w-full h-full bg-theme-bg-sidebar flex flex-col overflow-hidden">
+        <PanelHeader
+          icon={<Newspaper size={15} weight="fill" />}
+          title={t("sidebar.political.title")}
+          actions={
+            <button
+              onClick={refreshAll}
+              type="button"
+              disabled={loadingDrucksachen || loadingRss}
+              className="text-theme-text-muted hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer disabled:opacity-40 p-1"
+              aria-label={t("common.refresh")}
+            >
+              <ArrowClockwise
+                size={13}
+                weight="bold"
+                className={
+                  loadingDrucksachen || loadingRss ? "animate-spin" : ""
+                }
+              />
+            </button>
+          }
+          onClose={closeSidebar}
+        />
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto p-4 no-scroll flex flex-col gap-4">
@@ -112,7 +106,7 @@ export default function PoliticalSidebar() {
                   href={d.drucksache_url || "#"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-start gap-2.5 p-2.5 rounded-xl bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-200 hover:border-zinc-500 transition-colors"
+                  className="flex items-start gap-2.5 p-2.5 rounded-xl bg-theme-bg-secondary border border-theme-border hover:border-zinc-500 transition-colors"
                 >
                   <FileText
                     size={14}
@@ -150,7 +144,7 @@ export default function PoliticalSidebar() {
                   href={item.link || "#"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-start gap-2.5 p-2.5 rounded-xl bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-200 hover:border-zinc-500 transition-colors"
+                  className="flex items-start gap-2.5 p-2.5 rounded-xl bg-theme-bg-secondary border border-theme-border hover:border-zinc-500 transition-colors"
                 >
                   <Newspaper
                     size={14}
@@ -169,8 +163,8 @@ export default function PoliticalSidebar() {
             )}
           </Section>
 
-          <div className="p-3 rounded-xl bg-zinc-800/50 light:bg-slate-100 border border-zinc-700 light:border-slate-200">
-            <p className="text-[10px] text-zinc-500 light:text-slate-500 leading-relaxed">
+          <div className="p-3 rounded-xl bg-theme-bg-tertiary border border-theme-border">
+            <p className="text-[10px] text-theme-text-muted leading-relaxed">
               {t("sidebar.political.hint")}
             </p>
           </div>

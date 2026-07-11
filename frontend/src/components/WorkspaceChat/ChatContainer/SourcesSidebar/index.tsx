@@ -3,10 +3,9 @@ import { useState, useEffect, useCallback } from "react";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
-import { X } from "@phosphor-icons/react/dist/csr/X";
-import { Globe } from "@phosphor-icons/react/dist/csr/Globe";
 import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
 import { Database } from "@phosphor-icons/react/dist/csr/Database";
+import { Globe } from "@phosphor-icons/react/dist/csr/Globe";
 import paths from "@/utils/paths";
 import useThreads from "@/hooks/useThreads";
 import {
@@ -20,6 +19,7 @@ import SidebarTabs from "../ChatSidebar/SidebarTabs";
 import { MemoriesProvider } from "../MemoriesSidebar/MemoriesContext";
 import { safeJsonParse, baseHeaders } from "@/utils/request";
 import { API_BASE } from "@/utils/constants";
+import { PanelHeader } from "@/components/ui/PanelHeader";
 
 // Re-export for backward compat with existing imports
 export { useSourcesSidebar } from "../ChatSidebar";
@@ -79,14 +79,11 @@ function WorkspaceSourceItem({ doc, onClick, snippet }: any) {
     <button
       type="button"
       onClick={onClick}
-      className="flex flex-col gap-1.5 w-full text-left p-2.5 rounded-lg border border-theme-border bg-zinc-800/50 light:bg-slate-50 hover:bg-zinc-800 light:hover:bg-slate-100 transition-colors"
+      className="flex flex-col gap-1.5 w-full text-left p-2.5 rounded-lg border border-theme-border bg-theme-bg-secondary hover:bg-theme-bg-tertiary transition-colors"
     >
       <div className="flex gap-[6px] items-start w-full">
-        <div className="w-5 h-5 rounded-full bg-zinc-700 light:bg-slate-200 flex items-center justify-center flex-shrink-0">
-          <Icon
-            size={11}
-            className="text-theme-text-primary light:text-theme-text-primary"
-          />
+        <div className="w-5 h-5 rounded-full bg-theme-bg-tertiary flex items-center justify-center flex-shrink-0">
+          <Icon size={11} className="text-theme-text-primary" />
         </div>
         <p className="flex-1 font-medium text-sm text-theme-text-primary light:text-theme-text-primary leading-[15px] line-clamp-2">
           {title}
@@ -120,7 +117,7 @@ function WorkspaceChatsTab({ workspace, onClose }: any) {
         {[...Array(4)].map((_, i) => (
           <div
             key={i}
-            className="h-12 rounded-lg bg-zinc-800 light:bg-slate-100 animate-pulse"
+            className="h-12 rounded-lg bg-theme-bg-tertiary animate-pulse"
           />
         ))}
       </div>
@@ -162,16 +159,14 @@ function WorkspaceChatsTab({ workspace, onClose }: any) {
             to={href}
             onClick={onClose}
             className={`flex flex-col gap-0.5 px-3 py-2 rounded-lg transition-colors no-underline group ${
-              isActive
-                ? "bg-zinc-700 light:bg-slate-200"
-                : "hover:bg-zinc-800 light:hover:bg-slate-100"
+              isActive ? "bg-theme-bg-tertiary" : "hover:bg-theme-bg-secondary"
             }`}
           >
             <span
               className={`text-sm font-medium truncate ${
                 isActive
-                  ? "text-theme-text-primary light:text-theme-text-primary"
-                  : "text-zinc-200 light:text-slate-700"
+                  ? "text-theme-text-primary"
+                  : "text-theme-text-secondary"
               }`}
             >
               {thread.name}
@@ -257,27 +252,19 @@ export default function SourcesSidebar({ workspace }: any) {
   return (
     <MemoriesProvider workspace={workspace}>
       <ChatSidebar isOpen={sidebarOpen}>
-        <div className="w-full h-full bg-zinc-900 light:bg-white p-4 flex flex-col gap-4 overflow-hidden">
+        <div className="w-full h-full bg-theme-bg-sidebar p-4 flex flex-col gap-4 overflow-hidden">
           {/* Header */}
-          <div className="flex flex-col shrink-0 gap-2">
-            <div className="flex items-start justify-between">
-              <p className="font-medium text-base leading-6 text-theme-text-primary light:text-theme-text-primary">
-                {isWorkspaceMode
-                  ? t("chat_window.workspace_sources")
-                  : t("chat_window.sources")}
-              </p>
-              <button
-                onClick={closeSidebar}
-                type="button"
-                className="text-theme-text-secondary light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
-              >
-                <X size={16} weight="bold" />
-              </button>
-            </div>
+          <PanelHeader
+            title={
+              isWorkspaceMode
+                ? t("chat_window.workspace_sources")
+                : t("chat_window.sources")
+            }
+            onClose={closeSidebar}
+          />
 
-            {/* Only Arbeitsbereich + Global tabs — no Chats/Quellen toggle */}
-            <SidebarTabs />
-          </div>
+          {/* Tabs */}
+          <SidebarTabs />
 
           {/* Sources list */}
           <div className="flex flex-col gap-3 overflow-y-auto no-scroll">

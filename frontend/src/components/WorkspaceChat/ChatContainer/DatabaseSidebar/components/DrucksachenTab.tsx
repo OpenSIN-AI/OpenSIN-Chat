@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Drucksachen tab: search results display for Bundestag printed matters
 import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
-import { Key } from "@phosphor-icons/react/dist/csr/Key";
 import { useTranslation } from "react-i18next";
 
 interface DrucksachenTabProps {

@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
 import React, { useState, useEffect, useRef } from "react";
-import { X } from "@phosphor-icons/react/dist/csr/X";
 import { Terminal } from "@phosphor-icons/react/dist/csr/Terminal";
 import { Bug } from "@phosphor-icons/react/dist/csr/Bug";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { useTranslation } from "react-i18next";
 import ChatSidebar, { useConsoleSidebar } from "../ChatSidebar";
 import { baseHeaders } from "@/utils/request";
+import { PanelHeader } from "@/components/ui/PanelHeader";
 
 const TABS = ["logs", "terminal"] as const;
 type TabName = (typeof TABS)[number];
@@ -49,15 +49,15 @@ function LogsTab() {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex items-center justify-between px-3 py-1.5 border-b border-zinc-800 light:border-slate-200 shrink-0">
-        <span className="text-[10px] font-medium uppercase tracking-widest text-zinc-500 light:text-slate-400">
+      <div className="flex items-center justify-between px-3 py-1.5 border-b border-theme-border shrink-0">
+        <span className="text-[10px] font-medium uppercase tracking-widest text-theme-text-muted">
           {t("consoleSidebar.logs")}
         </span>
         <button
           type="button"
           onClick={() => clearConsoleLogs()}
           aria-label={t("consoleSidebar.clear")}
-          className="flex items-center gap-1 text-[10px] text-zinc-500 hover:text-zinc-300 border-none bg-transparent cursor-pointer transition-colors"
+          className="flex items-center gap-1 text-[10px] text-theme-text-muted hover:text-theme-text-secondary border-none bg-transparent cursor-pointer transition-colors"
         >
           <Trash size={11} aria-hidden="true" />
           {t("consoleSidebar.clear")}
@@ -65,13 +65,13 @@ function LogsTab() {
       </div>
       <div className="flex-1 overflow-y-auto font-mono text-[11px] leading-relaxed p-3 no-scroll">
         {consoleLogs.length === 0 ? (
-          <p className="text-zinc-600 light:text-slate-400 text-center mt-8">
+          <p className="text-theme-text-muted text-center mt-8">
             {t("consoleSidebar.noLogs")}
           </p>
         ) : (
           consoleLogs.map((log, idx) => (
             <div key={`${log.timestamp}-${idx}`} className="flex gap-2 mb-0.5">
-              <span className="text-zinc-600 light:text-slate-400 shrink-0">
+              <span className="text-theme-text-muted shrink-0">
                 {/* eslint-disable i18next/no-literal-string */}
                 {new Date(log.timestamp).toLocaleTimeString(i18n.language, {
                   hour12: false,
@@ -172,22 +172,22 @@ function TerminalTab() {
       className="flex flex-col h-full cursor-text"
       onClick={() => inputRef.current?.focus()}
     >
-      <div className="flex items-center justify-between px-3 py-1.5 border-b border-zinc-800 light:border-slate-200 shrink-0">
-        <span className="text-[10px] font-medium uppercase tracking-widest text-zinc-500 light:text-slate-400">
+      <div className="flex items-center justify-between px-3 py-1.5 border-b border-theme-border shrink-0">
+        <span className="text-[10px] font-medium uppercase tracking-widest text-theme-text-muted">
           {t("consoleSidebar.terminal")}
         </span>
         <button
           type="button"
           onClick={() => setHistory([])}
           aria-label={t("consoleSidebar.clear")}
-          className="flex items-center gap-1 text-[10px] text-zinc-500 hover:text-zinc-300 border-none bg-transparent cursor-pointer transition-colors"
+          className="flex items-center gap-1 text-[10px] text-theme-text-muted hover:text-theme-text-secondary border-none bg-transparent cursor-pointer transition-colors"
         >
           <Trash size={11} aria-hidden="true" />
           {t("consoleSidebar.clear")}
         </button>
       </div>
       <div className="flex-1 overflow-y-auto font-mono text-[11px] leading-relaxed p-3 no-scroll">
-        <p className="text-zinc-600 light:text-slate-400 mb-2">
+        <p className="text-theme-text-muted mb-2">
           {t("consoleSidebar.terminalHint")}
         </p>
         {history.map((entry, idx) => (
@@ -207,8 +207,8 @@ function TerminalTab() {
         <div ref={bottomRef} />
       </div>
       {/* Input line */}
-      <div className="flex items-center gap-1 px-3 py-2 border-t border-zinc-800 light:border-slate-200 shrink-0">
-        <span className="text-zinc-500 font-mono text-[11px]">
+      <div className="flex items-center gap-1 px-3 py-2 border-t border-theme-border shrink-0">
+        <span className="text-theme-text-muted font-mono text-[11px]">
           {/* eslint-disable i18next/no-literal-string */}$
           {/* eslint-enable i18next/no-literal-string */}
         </span>
@@ -218,7 +218,7 @@ function TerminalTab() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="flex-1 bg-transparent border-none outline-none font-mono text-[11px] text-zinc-200 light:text-slate-800 placeholder:text-zinc-600 caret-white"
+          className="flex-1 bg-transparent border-none outline-none font-mono text-[11px] text-theme-text-primary placeholder:text-theme-text-muted"
           placeholder={t("console.terminal_placeholder")}
           spellCheck={false}
           autoComplete="off"
@@ -235,26 +235,12 @@ export default function ConsoleSidebar() {
 
   return (
     <ChatSidebar isOpen={sidebarOpen}>
-      <div className="w-full h-full bg-zinc-900 light:bg-white light:border-l light:border-slate-300 flex flex-col overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center gap-2 px-4 pt-3.5 pb-0 shrink-0">
-          <Terminal
-            size={15}
-            className="text-zinc-400 light:text-slate-500"
-            aria-hidden="true"
-          />
-          <p className="flex-1 font-medium text-sm text-theme-text-primary light:text-theme-text-primary">
-            {t("console.title")}
-          </p>
-          <button
-            onClick={closeSidebar}
-            type="button"
-            aria-label={t("console.close")}
-            className="text-theme-text-secondary light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
-          >
-            <X size={14} weight="bold" aria-hidden="true" />
-          </button>
-        </div>
+      <div className="w-full h-full bg-theme-bg-sidebar flex flex-col overflow-hidden">
+        <PanelHeader
+          icon={<Terminal size={15} weight="fill" />}
+          title={t("console.title")}
+          onClose={closeSidebar}
+        />
         {/* Tab switcher */}
         <div
           role="tablist"
@@ -275,8 +261,8 @@ export default function ConsoleSidebar() {
               onClick={() => setActiveTab(tab)}
               className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium uppercase tracking-[1.2px] whitespace-nowrap transition-colors ${
                 activeTab === tab
-                  ? "bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary"
-                  : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-100 text-zinc-400 light:text-slate-500"
+                  ? "bg-theme-bg-tertiary text-theme-text-primary"
+                  : "bg-transparent hover:bg-theme-bg-secondary text-theme-text-muted"
               }`}
             >
               {tab === "logs" ? (

@@ -3,7 +3,6 @@
 // Docs: Based on Issue #607 §13 CommandPalette spec + Issue #8.
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
-import { ChatCircle } from "@phosphor-icons/react/dist/csr/ChatCircle";
 import { File } from "@phosphor-icons/react/dist/csr/File";
 import { Notebook } from "@phosphor-icons/react/dist/csr/Notebook";
 import { Plus } from "@phosphor-icons/react/dist/csr/Plus";

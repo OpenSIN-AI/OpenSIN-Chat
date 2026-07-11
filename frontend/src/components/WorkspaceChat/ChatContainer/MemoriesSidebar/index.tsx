@@ -51,7 +51,7 @@ function WorkspaceChatsTab({ workspace, onClose }: any) {
         {[...Array(4)].map((_, i) => (
           <div
             key={i}
-            className="h-12 rounded-lg bg-zinc-800 light:bg-slate-100 animate-pulse"
+            className="h-12 rounded-lg bg-theme-bg-tertiary animate-pulse"
           />
         ))}
       </div>
@@ -135,11 +135,8 @@ function WorkspaceUrlsTab({ workspace }: any) {
         return (
           <div key={doc.docId || idx} className="flex flex-col gap-[2px]">
             <div className="flex gap-2 items-start">
-              <div className="w-4 h-4 rounded-full bg-zinc-700 light:bg-slate-200 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <Globe
-                  size={10}
-                  className="text-theme-text-primary light:text-theme-text-primary"
-                />
+              <div className="w-4 h-4 rounded-full bg-theme-bg-tertiary flex items-center justify-center flex-shrink-0 mt-0.5">
+                <Globe size={10} className="text-theme-text-primary" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-theme-text-primary light:text-theme-text-primary truncate leading-[15px]">
@@ -239,14 +236,14 @@ function SidebarHeaderWithTabs({ workspace }: any) {
     <div className="flex flex-col gap-3 h-full overflow-hidden">
       {/* Title row */}
       <div className="flex items-start justify-between shrink-0">
-        <p className="font-medium text-base leading-6 text-zinc-50 light:text-slate-900">
+        <p className="font-medium text-base leading-6 text-theme-text-primary">
           {t("chat_window.memories.title")}
         </p>
         <button
           onClick={closeSidebar}
           type="button"
           aria-label={t("common.close")}
-          className="text-zinc-50 light:text-slate-900 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
+          className="text-theme-text-secondary hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer"
         >
           <X size={16} weight="bold" />
         </button>
@@ -261,8 +258,8 @@ function SidebarHeaderWithTabs({ workspace }: any) {
           aria-label={t("chat_window.memories.title", "Memories")}
           className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium transition-colors ${
             activeTab === "memories"
-              ? "bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary"
-              : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-100 text-zinc-400 light:text-slate-500"
+              ? "bg-theme-bg-tertiary text-theme-text-primary"
+              : "bg-transparent hover:bg-theme-bg-secondary text-theme-text-muted"
           }`}
         >
           <span>{t("chat_window.memories.title", "Memories")}</span>
@@ -274,8 +271,8 @@ function SidebarHeaderWithTabs({ workspace }: any) {
           aria-label={t("chat_window.chats_tab", "Chats")}
           className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium transition-colors ${
             activeTab === "chats"
-              ? "bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary"
-              : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-100 text-zinc-400 light:text-slate-500"
+              ? "bg-theme-bg-tertiary text-theme-text-primary"
+              : "bg-transparent hover:bg-theme-bg-secondary text-theme-text-muted"
           }`}
         >
           <ChatCircleText size={12} weight="bold" />
@@ -288,8 +285,8 @@ function SidebarHeaderWithTabs({ workspace }: any) {
           aria-label={t("chat_window.urls_tab", "URLs")}
           className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium transition-colors ${
             activeTab === "urls"
-              ? "bg-zinc-700 light:bg-slate-200 text-theme-text-primary light:text-theme-text-primary"
-              : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-100 text-zinc-400 light:text-slate-500"
+              ? "bg-theme-bg-tertiary text-theme-text-primary"
+              : "bg-transparent hover:bg-theme-bg-secondary text-theme-text-muted"
           }`}
         >
           <Globe size={12} weight="bold" />
@@ -331,7 +328,7 @@ function MemoryList() {
         {[...Array(3)].map((_, i) => (
           <div
             key={i}
-            className="h-16 rounded-lg bg-zinc-800 light:bg-slate-100 animate-pulse"
+            className="h-16 rounded-lg bg-theme-bg-tertiary animate-pulse"
           />
         ))}
       </div>

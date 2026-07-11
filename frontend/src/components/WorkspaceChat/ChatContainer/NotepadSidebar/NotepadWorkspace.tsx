@@ -5,7 +5,6 @@ import React, { useMemo, useState } from "react";
 import {
   ArrowLeft,
   Plus,
-  PushPin,
   Trash,
 } from "@phosphor-icons/react/dist/csr";
 import { cn } from "@/utils/cn";
