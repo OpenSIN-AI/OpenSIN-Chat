@@ -243,10 +243,10 @@
   --color-theme-text-primary: #0e0f0f;
   --color-theme-text-secondary: #52525b;
   --color-theme-text-muted: #71717a;
-  --color-theme-bg-primary: #f7f7f5;
+  --color-theme-bg-primary: #ffffff;
   --color-theme-bg-secondary: #ffffff;
-  --color-theme-bg-tertiary: #efefec;
-  --color-theme-modal-border: #deded9;
+  --color-theme-bg-tertiary: #f5f5f4;
+  --color-theme-modal-border: #e7e5e4;
   --color-theme-accent: #181817;
   --color-theme-accent-light: #3f3f3d;
   --color-theme-accent-dark: #73736f;
@@ -264,12 +264,12 @@
   color-scheme: light;
 
   --theme-loader: #000000;
-  --theme-bg-primary: #f7f7f5;
+  --theme-bg-primary: #ffffff;
   --theme-bg-secondary: #ffffff;
-  --theme-bg-sidebar: #f2f2ef;
+  --theme-bg-sidebar: #202020;
   --theme-bg-container: #ffffff;
-  --theme-popup-menu-bg: #ffffff;
-  --theme-bg-hover: rgba(24, 24, 23, 0.055);
+  --theme-popup-menu-bg: #292929;
+  --theme-bg-hover: rgba(255, 255, 255, 0.07);
 
   --theme-bg-chat: #ffffff;
   --theme-bg-chat-input: #ffffff;
@@ -296,11 +296,11 @@
   --theme-sidebar-footer-icon-fill: #6e6f6f;
   --theme-sidebar-footer-icon-hover: #d8d6d6;
 
-  --theme-chat-input-border: #d9d9d5;
-  --chat-canvas: #f7f7f5;
-  --chat-surface: #ffffff;
-  --chat-surface-elevated: #f0f0ed;
-  --chat-border: #d9d9d5;
+  --theme-chat-input-border: transparent;
+  --chat-canvas: #ffffff;
+  --chat-surface: #f5f5f4;
+  --chat-surface-elevated: #f5f5f4;
+  --chat-border: transparent;
   --chat-text: #151514;
   --chat-text-muted: #5f625f;
   --chat-accent: #0f766e;
@@ -399,6 +399,25 @@
   --theme-tool-scrollbar-thumb: #cbd5e1;
   --theme-tool-scrollbar-thumb-hover: #94a3b8;
   --theme-tool-scrollbar-track: transparent;
+
+  /* Codex-style navigation: a compact charcoal rail beside a clean canvas. */
+  .codex-sidebar {
+    --theme-bg-sidebar: #202020;
+    --theme-bg-secondary: #292929;
+    --theme-bg-tertiary: #343434;
+    --theme-bg-hover: rgba(255, 255, 255, 0.07);
+    --theme-text-primary: #f5f5f4;
+    --theme-text-secondary: #b5b5b0;
+    --theme-placeholder: #858580;
+    --theme-sidebar-item-selected: #343434;
+    --theme-sidebar-item-hover: #2b2b2b;
+    --theme-sidebar-item-text-active: #f5f5f4;
+    --theme-sidebar-item-text-inactive: #c5c5c0;
+    --theme-sidebar-border: #3a3a3a;
+    --color-theme-text-primary: #f5f5f4;
+    --color-theme-text-secondary: #b5b5b0;
+    --color-theme-text-muted: #858580;
+  }
 }
 
 /*

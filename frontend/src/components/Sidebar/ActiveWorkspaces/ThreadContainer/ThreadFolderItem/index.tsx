@@ -258,10 +258,10 @@ function ThreadFolderItem({
   return (
     <div
       ref={setNodeRef}
-      className={`w-full overflow-x-hidden rounded-lg transition-colors ${isOver ? "bg-theme-sidebar-item-selected shadow-[inset_0_0_0_1px_var(--theme-modal-border)]" : ""}`}
+      className={`w-full overflow-x-hidden rounded-md transition-colors ${isOver ? "bg-theme-sidebar-item-selected" : ""}`}
     >
       {/* Folder header */}
-      <div className="group flex h-9 w-full items-center gap-1 rounded-lg px-2 transition-colors hover:bg-theme-bg-hover">
+      <div className="group flex h-8 w-full items-center gap-1 rounded-md px-1.5 transition-colors hover:bg-theme-bg-hover">
         <button
           type="button"
           onClick={() => {

@@ -98,7 +98,7 @@ function SidebarContent({
         <button
           type="button"
           onClick={onOpenSearch}
-          className="mb-2 flex h-10 w-full shrink-0 items-center gap-2 rounded-lg border border-theme-modal-border bg-theme-bg-secondary px-3 text-sm text-theme-text-muted transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-text-secondary"
+          className="mb-1 flex h-9 w-full shrink-0 items-center gap-2 rounded-md bg-theme-sidebar-item-selected px-2.5 text-sm text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-theme-text-secondary"
         >
           <MagnifyingGlass size={16} />
           <span>{t("commandHub.searchButton")}</span>
@@ -110,7 +110,7 @@ function SidebarContent({
           type="button"
           onClick={newChat}
           disabled={!activeWorkspace || creating}
-          className="mb-2 flex h-10 w-full shrink-0 items-center justify-center gap-2 rounded-lg bg-theme-sidebar-item-selected px-3 text-sm font-medium text-theme-sidebar-item-text-active transition-colors hover:bg-theme-bg-hover disabled:cursor-not-allowed disabled:opacity-50"
+          className="mb-1 flex h-9 w-full shrink-0 items-center gap-2 rounded-md px-2.5 text-sm font-medium text-theme-sidebar-item-text-active transition-colors hover:bg-theme-bg-hover disabled:cursor-not-allowed disabled:opacity-50"
         >
           <Plus size={16} weight="bold" />
           {creating
@@ -187,7 +187,7 @@ export default function Sidebar({ onOpenSearch }: { onOpenSearch?: () => void })
       <nav
         aria-label={t("sidebar.mainNavigation")}
         style={{ width: showSidebar ? sidebarWidth : 0 }}
-        className={`relative z-40 hidden shrink-0 overflow-hidden bg-theme-bg-sidebar transition-[width] duration-200 md:flex ${showSidebar ? "border-r border-theme-modal-border" : ""}`}
+        className="codex-sidebar relative z-40 hidden shrink-0 overflow-hidden bg-theme-bg-sidebar transition-[width] duration-200 md:flex"
       >
         <div
           className="flex h-full w-full shrink-0 flex-col"
