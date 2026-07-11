@@ -733,6 +733,10 @@ body {
 .notepad-prose pre { overflow-x: auto; border: 1px solid var(--theme-sidebar-border); border-radius: 0.65rem; background: var(--theme-bg-secondary); padding: 0.8rem; }
 .notepad-prose pre code { background: transparent; padding: 0; }
 .notepad-prose a { text-decoration: underline; text-underline-offset: 3px; }
+.notepad-prose .notepad-link-card { display: flex; flex-direction: column; gap: 0.25rem; border: 1px solid var(--theme-sidebar-border); border-radius: 0.75rem; background: var(--theme-bg-secondary); padding: 0.85rem 1rem; text-decoration: none; transition: border-color 150ms ease; }
+.notepad-prose .notepad-link-card:hover { border-color: var(--theme-text-secondary); }
+.notepad-link-card-title { overflow: hidden; color: var(--theme-text-primary); font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.notepad-link-card-url { overflow: hidden; color: var(--theme-text-secondary); font-size: 0.7rem; text-overflow: ellipsis; white-space: nowrap; }
 .notepad-prose img { max-height: 24rem; max-width: 100%; border-radius: 0.75rem; border: 1px solid var(--theme-sidebar-border); object-fit: contain; }
 .notepad-prose iframe { aspect-ratio: 16 / 9; width: 100%; max-width: 40rem; border-radius: 0.75rem; border: 1px solid var(--theme-sidebar-border); }
 .notepad-prose hr { margin-block: 1.25rem; border-color: var(--theme-sidebar-border); }

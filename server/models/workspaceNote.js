@@ -51,8 +51,8 @@ const WorkspaceNote = {
       ORDER BY w.name ASC`;
   },
 
-  create: async function (workspaceId, data = {}) {
-    const { title = "", content = "", plainText = "", tags = "[]", folder = null, pinned = false } = data;
+  create: async function (workspaceId, content = "", pinned = false, metadata = {}) {
+    const { title = "", plainText = "", tags = "[]", folder = null } = metadata;
     await prisma.$executeRaw`INSERT INTO workspace_notes (workspaceId, title, content, plainText, tags, folder, pinned, createdAt, updatedAt) VALUES (${Number(workspaceId)}, ${title}, ${content}, ${plainText}, ${tags}, ${folder}, ${pinned ? 1 : 0}, datetime('now'), datetime('now'))`;
     const rows = await prisma.$queryRaw`SELECT * FROM workspace_notes WHERE workspaceId = ${Number(workspaceId)} ORDER BY id DESC LIMIT 1`;
     return Array.isArray(rows) ? rows[0] : rows;

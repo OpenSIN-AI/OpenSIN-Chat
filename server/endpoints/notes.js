@@ -49,25 +49,30 @@ function noteEndpoints(app) {
           folder = null,
           pinned = false,
         } = reqBody(request);
+        if (typeof content !== "string" || content.length > 100_000) {
+          return response.status(400).json({ error: "content must be a string of max 100,000 characters" });
+        }
+        if (typeof pinned !== "boolean") {
+          return response.status(400).json({ error: "pinned must be a boolean" });
+        }
         if (
           typeof title !== "string" || title.length > 300 ||
-          typeof content !== "string" || content.length > 500_000 ||
           typeof plainText !== "string" || plainText.length > 100_000 ||
           !Array.isArray(tags) || tags.length > 30 ||
           tags.some((tag) => typeof tag !== "string" || tag.length > 50) ||
-          (folder !== null && (typeof folder !== "string" || folder.length > 100)) ||
-          typeof pinned !== "boolean"
+          (folder !== null && (typeof folder !== "string" || folder.length > 100))
         ) {
-          return response.status(400).json({ error: "Invalid note data" });
+          return response.status(400).json({ error: "Invalid note metadata" });
         }
-        const note = await WorkspaceNote.create(workspace.id, {
-          title,
-          content,
-          plainText,
-          tags: JSON.stringify(tags),
-          folder,
-          pinned,
-        });
+        const hasMetadata = title || plainText || tags.length || folder;
+        const note = hasMetadata
+          ? await WorkspaceNote.create(workspace.id, content, pinned, {
+              title,
+              plainText,
+              tags: JSON.stringify(tags),
+              folder,
+            })
+          : await WorkspaceNote.create(workspace.id, content, pinned);
         response.status(200).json({ note });
       } catch (e) {
         consoleLogger.error(e);
@@ -87,9 +92,11 @@ function noteEndpoints(app) {
           return response.status(400).json({ error: "Invalid note id" });
         }
         const { title, content, plainText, tags, folder, pinned } = reqBody(request);
+        if (content !== undefined && (typeof content !== "string" || content.length > 100_000)) {
+          return response.status(400).json({ error: "content must be a string of max 100,000 characters" });
+        }
         if (
           (title !== undefined && (typeof title !== "string" || title.length > 300)) ||
-          (content !== undefined && (typeof content !== "string" || content.length > 500_000)) ||
           (plainText !== undefined && (typeof plainText !== "string" || plainText.length > 100_000)) ||
           (tags !== undefined && (!Array.isArray(tags) || tags.length > 30 || tags.some((tag) => typeof tag !== "string" || tag.length > 50))) ||
           (folder !== undefined && folder !== null && (typeof folder !== "string" || folder.length > 100)) ||

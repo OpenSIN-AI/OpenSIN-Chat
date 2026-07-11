@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { useCallback, useRef, useState } from "react";
 import { EditorContent, useEditor } from "@tiptap/react";
+import { Node, mergeAttributes } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
@@ -34,6 +35,28 @@ import {
   TextUnderline,
   YoutubeLogo,
 } from "@phosphor-icons/react";
+
+const LinkCard = Node.create({
+  name: "linkCard",
+  group: "block",
+  atom: true,
+  addAttributes() {
+    return { href: { default: "" }, title: { default: "" } };
+  },
+  parseHTML() {
+    return [{ tag: "a[data-link-card]" }];
+  },
+  renderHTML({ HTMLAttributes }) {
+    let host = HTMLAttributes.href;
+    try { host = new URL(HTMLAttributes.href).hostname.replace(/^www\./, ""); } catch { /* Keep URL. */ }
+    return ["a", mergeAttributes(HTMLAttributes, {
+      "data-link-card": "true",
+      target: "_blank",
+      rel: "noopener noreferrer",
+      class: "notepad-link-card",
+    }), ["span", { class: "notepad-link-card-title" }, HTMLAttributes.title || host], ["span", { class: "notepad-link-card-url" }, host]];
+  },
+});
 
 const emptyDocument = { type: "doc", content: [{ type: "paragraph" }] };
 
@@ -85,6 +108,7 @@ function ToolButton({ active = false, label, onClick, children, disabled = false
 export default function NoteEditor({ content, editable = true, placeholder, onChange }: NoteEditorProps) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [insertOpen, setInsertOpen] = useState(false);
+  const [slashOpen, setSlashOpen] = useState(false);
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -100,6 +124,7 @@ export default function NoteEditor({ content, editable = true, placeholder, onCh
       TableCell,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
       Youtube.configure({ nocookie: true, modestBranding: true, controls: true }),
+      LinkCard,
     ],
     content: parseNoteContent(content),
     editable,
@@ -109,14 +134,30 @@ export default function NoteEditor({ content, editable = true, placeholder, onCh
         class: "notepad-prose min-h-full outline-none",
         "aria-label": placeholder,
       },
+      handleKeyDown(_view, event) {
+        if (event.key === "/" && !event.isComposing && event.keyCode !== 229) {
+          window.setTimeout(() => setSlashOpen(true), 0);
+        }
+        if (event.key === "Escape") setSlashOpen(false);
+        return false;
+      },
       handlePaste(view, event) {
         const file = Array.from(event.clipboardData?.files || []).find((item) => item.type.startsWith("image/"));
-        if (!file) return false;
-        event.preventDefault();
-        const reader = new FileReader();
-        reader.onload = () => editor?.chain().focus().setImage({ src: String(reader.result), alt: file.name }).run();
-        reader.readAsDataURL(file);
-        return true;
+        if (file) {
+          event.preventDefault();
+          const reader = new FileReader();
+          reader.onload = () => editor?.chain().focus().setImage({ src: String(reader.result), alt: file.name }).run();
+          reader.readAsDataURL(file);
+          return true;
+        }
+        const text = event.clipboardData?.getData("text/plain")?.trim();
+        if (!text || !/^https?:\/\/\S+$/i.test(text) || !view.state.selection.empty) return false;
+        if (/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\//i.test(text)) {
+          event.preventDefault();
+          editor?.chain().focus().setYoutubeVideo({ src: text }).run();
+          return true;
+        }
+        return false;
       },
     },
     onUpdate: ({ editor: currentEditor }) => {
@@ -144,6 +185,30 @@ export default function NoteEditor({ content, editable = true, placeholder, onCh
     else editor.chain().focus().setImage({ src: url }).run();
     setInsertOpen(false);
   }, [editor]);
+
+  const insertLinkCard = useCallback(() => {
+    if (!editor) return;
+    const url = window.prompt("Link für Vorschaukarte");
+    if (!url || !/^https?:\/\//i.test(url)) return;
+    editor.chain().focus().insertContent({ type: "linkCard", attrs: { href: url } }).run();
+    setInsertOpen(false);
+    setSlashOpen(false);
+  }, [editor]);
+
+  const runSlashCommand = (command: "text" | "h1" | "h2" | "todo" | "image" | "youtube" | "link" | "table") => {
+    if (!editor) return;
+    const { from } = editor.state.selection;
+    editor.chain().focus().deleteRange({ from: Math.max(0, from - 1), to: from }).run();
+    if (command === "text") editor.chain().focus().setParagraph().run();
+    if (command === "h1") editor.chain().focus().toggleHeading({ level: 1 }).run();
+    if (command === "h2") editor.chain().focus().toggleHeading({ level: 2 }).run();
+    if (command === "todo") editor.chain().focus().toggleTaskList().run();
+    if (command === "image") insertMedia("image");
+    if (command === "youtube") insertMedia("youtube");
+    if (command === "link") insertLinkCard();
+    if (command === "table") editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run();
+    setSlashOpen(false);
+  };
 
   const uploadImage = (file?: File) => {
     if (!file || !file.type.startsWith("image/") || file.size > 400_000) return;
@@ -181,6 +246,7 @@ export default function NoteEditor({ content, editable = true, placeholder, onCh
                 <button className="notepad-menu-item" onClick={() => fileRef.current?.click()}><ImageIcon size={15} /> Bild hochladen</button>
                 <button className="notepad-menu-item" onClick={() => insertMedia("image")}><ImageIcon size={15} /> Bild-URL</button>
                 <button className="notepad-menu-item" onClick={() => insertMedia("youtube")}><YoutubeLogo size={15} /> YouTube</button>
+                <button className="notepad-menu-item" onClick={insertLinkCard}><LinkIcon size={15} /> Link-Vorschau</button>
                 <button className="notepad-menu-item" onClick={() => { editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run(); setInsertOpen(false); }}><TableIcon size={15} /> Tabelle</button>
                 <button className="notepad-menu-item" onClick={() => { editor.chain().focus().setHorizontalRule().run(); setInsertOpen(false); }}><Minus size={15} /> Trennlinie</button>
               </div>
@@ -189,7 +255,21 @@ export default function NoteEditor({ content, editable = true, placeholder, onCh
           <input ref={fileRef} type="file" accept="image/png,image/jpeg,image/gif,image/webp" className="hidden" onChange={(event) => uploadImage(event.target.files?.[0])} />
         </div>
       )}
-      <EditorContent editor={editor} className="min-h-0 flex-1 overflow-y-auto px-5 py-4" />
+      <div className="relative min-h-0 flex-1 overflow-hidden">
+        <EditorContent editor={editor} className="h-full overflow-y-auto px-5 py-4" />
+        {editable && slashOpen && (
+          <div className="absolute left-5 top-3 z-40 grid w-52 gap-1 rounded-xl border border-theme-modal-border bg-theme-bg-secondary p-1.5 shadow-xl" role="menu" aria-label="Block einfügen">
+            <button className="notepad-menu-item" onClick={() => runSlashCommand("text")}>Text</button>
+            <button className="notepad-menu-item" onClick={() => runSlashCommand("h1")}><TextHOne size={15} /> Überschrift 1</button>
+            <button className="notepad-menu-item" onClick={() => runSlashCommand("h2")}><TextHTwo size={15} /> Überschrift 2</button>
+            <button className="notepad-menu-item" onClick={() => runSlashCommand("todo")}><CheckSquare size={15} /> Todo</button>
+            <button className="notepad-menu-item" onClick={() => runSlashCommand("image")}><ImageIcon size={15} /> Bild</button>
+            <button className="notepad-menu-item" onClick={() => runSlashCommand("link")}><LinkIcon size={15} /> Link-Vorschau</button>
+            <button className="notepad-menu-item" onClick={() => runSlashCommand("youtube")}><YoutubeLogo size={15} /> YouTube</button>
+            <button className="notepad-menu-item" onClick={() => runSlashCommand("table")}><TableIcon size={15} /> Tabelle</button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
