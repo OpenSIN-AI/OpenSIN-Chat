@@ -449,14 +449,14 @@ export default forwardRef(function (
           role="log"
           aria-live="polite"
           aria-label={t("chat.aria.chatHistory")}
-          className={`markdown text-theme-text-primary light:text-theme-text-primary font-light ${textSizeClass} relative flex h-full flex-col items-center justify-start pb-[132px] pt-5 md:pt-6`}
+          className={`markdown relative flex h-full flex-col items-center justify-start bg-[var(--chat-canvas)] pb-[152px] pt-4 font-light text-[var(--chat-text)] md:pb-[144px] md:pt-6 ${textSizeClass}`}
         >
           <Virtuoso
             ref={virtuosoRef}
             data={compiledRows}
             computeItemKey={computeItemKey}
             itemContent={(index, row) => (
-              <div className="mx-auto w-full max-w-[760px] min-w-0 px-4 md:px-6 lg:px-8">
+              <div className="mx-auto w-full max-w-3xl min-w-0 px-4 md:px-6">
                 {renderRow(row, index)}
               </div>
             )}
@@ -477,19 +477,16 @@ export default forwardRef(function (
             />
           )}
           {!isAtBottom && (
-            <div className="absolute bottom-[120px] left-1/2 -translate-x-1/2 z-30">
+            <div className="absolute bottom-[136px] left-1/2 z-30 -translate-x-1/2 md:bottom-[128px]">
               <button
                 type="button"
                 onClick={() => {
                   scrollVirtuosoToBottom(!isStreaming);
                 }}
                 aria-label={t("chat.aria.scrollToBottom")}
-                className="flex items-center justify-center w-8 h-8 rounded-full bg-zinc-800 light:bg-white border border-white/10 light:border-slate-200 hover:bg-zinc-700 light:hover:bg-slate-100 shadow-md transition-all"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--chat-border)] bg-[var(--chat-surface)] text-[var(--chat-text-muted)] shadow-lg transition-colors hover:border-[var(--chat-accent)] hover:text-[var(--chat-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--chat-focus-ring)]"
               >
-                <ArrowDown
-                  weight="bold"
-                  className="text-zinc-400 light:text-slate-500 w-3.5 h-3.5"
-                />
+                <ArrowDown weight="bold" className="h-4 w-4" />
               </button>
             </div>
           )}

@@ -75,16 +75,16 @@ export default function PromptInput({
       id="prompt-input-wrapper"
       className={
         centered
-          ? "w-full relative flex justify-center items-center"
-          : "w-full absolute bottom-0 left-0 z-10 flex justify-center items-center pwa:pb-5 px-2 md:px-0"
+          ? "relative flex w-full items-center justify-center"
+          : "absolute inset-x-0 bottom-0 z-10 flex w-full items-center justify-center bg-[var(--chat-canvas)]/95 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 md:px-6"
       }
     >
       <form
         onSubmit={handleSubmit}
         className={
           centered
-            ? "flex flex-col gap-y-1 rounded-2xl w-full items-center"
-            : "mx-auto flex w-full max-w-[760px] flex-col items-center gap-y-1 px-4 md:px-8"
+            ? "flex w-full flex-col items-center"
+            : "mx-auto flex w-full max-w-3xl flex-col items-center"
         }
       >
         <div
@@ -100,7 +100,7 @@ export default function PromptInput({
               centered={centered}
               highlightedIndexRef={toolsHighlightRef}
             />
-            <div className="flex flex-col overflow-hidden rounded-xl border border-theme-modal-border bg-theme-bg-secondary px-3 shadow-[0_8px_28px_rgba(0,0,0,0.14)] transition-[border-color,box-shadow] duration-150 focus-within:border-theme-text-secondary focus-within:shadow-[0_10px_32px_rgba(0,0,0,0.18)] sm:px-4">
+            <div className="flex flex-col overflow-hidden rounded-2xl border border-[var(--chat-border)] bg-[var(--chat-surface)] px-3 shadow-[0_16px_48px_rgba(0,0,0,0.2)] transition-[border-color,box-shadow] duration-150 focus-within:border-[var(--chat-accent)] focus-within:shadow-[0_0_0_3px_var(--chat-focus-ring),0_16px_48px_rgba(0,0,0,0.2)] sm:px-4">
               <AttachmentManager attachments={attachments} />
               <div className="flex items-center">
                 <TextArea
@@ -116,8 +116,8 @@ export default function PromptInput({
                   adjustTextArea={adjustTextArea}
                 />
               </div>
-              <div className="flex items-end justify-between gap-2 py-2">
-                <div className="flex min-w-0 items-center">
+              <div className="flex flex-wrap items-end justify-between gap-2 py-2">
+                <div className="flex min-w-0 flex-1 items-center">
                   <div className="flex items-center gap-x-1">
                     <AttachItem
                       workspaceSlug={workspaceSlug}

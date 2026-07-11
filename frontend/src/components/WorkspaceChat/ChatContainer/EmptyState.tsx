@@ -26,16 +26,16 @@ function CapabilityCard({ icon: Icon, title, description, onClick }: any) {
     <button
       type="button"
       onClick={onClick}
-      className="group flex min-h-20 w-full items-start gap-3 rounded-lg border border-theme-modal-border bg-theme-bg-secondary p-4 text-left transition-colors hover:border-theme-text-muted hover:bg-theme-bg-hover focus:outline-none focus:ring-2 focus:ring-white/20"
+      className="group flex min-h-24 w-full items-start gap-3 rounded-xl border border-[var(--chat-border)] bg-[var(--chat-surface)] p-4 text-left transition-colors hover:border-[var(--chat-accent)] hover:bg-[var(--chat-surface-elevated)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--chat-focus-ring)]"
     >
-      <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-md border border-theme-modal-border bg-theme-bg-tertiary">
-        <Icon size={16} className="text-theme-text-secondary" />
+      <div className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-[var(--chat-border)] bg-[var(--chat-surface-elevated)] text-[var(--chat-accent)]">
+        <Icon size={18} />
       </div>
-      <div className="flex flex-col gap-0.5">
-        <span className="text-sm font-medium text-theme-text-primary">
+      <div className="flex flex-col gap-1">
+        <span className="text-sm font-medium text-[var(--chat-text)]">
           {title}
         </span>
-        <span className="text-sm leading-relaxed text-theme-text-secondary">
+        <span className="text-sm leading-relaxed text-[var(--chat-text-muted)]">
           {description}
         </span>
       </div>
@@ -68,57 +68,60 @@ export default function EmptyState({
   const capabilities = [
     {
       icon: Books,
-      title: t2("chat.capability_sources", "Quellen durchsuchen"),
-      description: t2(
-        "chat.capability_sources_desc",
-        "Durchsuche deine hochgeladenen Dokumente",
-      ),
+      title: t2("chat.capability_sources"),
+      description: t2("chat.capability_sources_desc"),
       onClick: () => toggleSidebar("sources"),
     },
     {
       icon: Notepad,
-      title: t2("chat.capability_notes", "Notizen machen"),
-      description: t2(
-        "chat.capability_notes_desc",
-        "Schreibe Notizen direkt im Workspace",
-      ),
+      title: t2("chat.capability_notes"),
+      description: t2("chat.capability_notes_desc"),
       onClick: () => toggleSidebar("notepad"),
     },
     {
       icon: Database,
-      title: t2("chat.capability_database", "Politiker-Datenbank"),
-      description: t2(
-        "chat.capability_database_desc",
-        "Durchsuche Bundestags-Daten",
-      ),
+      title: t2("chat.capability_database"),
+      description: t2("chat.capability_database_desc"),
       onClick: () => toggleSidebar("database"),
     },
     {
       icon: Sparkle,
-      title: t2("chat.capability_rag", "KI mit Quellen"),
-      description: t2(
-        "chat.capability_rag_desc",
-        "Antworten basierend auf deinen Dokumenten",
-      ),
+      title: t2("chat.capability_rag"),
+      description: t2("chat.capability_rag_desc"),
       onClick: () => toggleSidebar("sources"),
     },
   ];
 
   return (
-    <div className="flex h-full w-full flex-col items-center overflow-y-auto px-3 md:px-6">
-      <div className="my-auto flex w-full max-w-[720px] flex-col items-center py-8">
-        <h1 className="mb-2.5 text-center text-2xl font-semibold tracking-tight text-[#e4e4e7] text-balance light:text-zinc-900 md:text-[1.75rem]">
-          {t("main-page.greeting")}
-        </h1>
-        {modelName && (
-          <div className="flex items-center gap-x-1.5 mb-7">
-            <span className="inline-flex items-center gap-x-1 rounded-md border border-white/[0.06] bg-white/[0.04] px-2 py-0.5 text-[11px] font-medium text-[#a1a1aa] light:border-zinc-200 light:bg-zinc-100 light:text-zinc-600">
-              <Sparkle size={10} weight="fill" />
-              {modelName}
+    <section
+      aria-labelledby="chat-welcome-title"
+      className="flex h-full w-full flex-col items-center overflow-y-auto bg-[var(--chat-canvas)] px-3 md:px-6"
+    >
+      <div className="my-auto flex w-full max-w-3xl flex-col items-center py-8 md:py-12">
+        <div className="mb-6 flex max-w-2xl flex-col items-center text-center">
+          <span className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-[var(--chat-accent)]">
+            {t2("chat.welcome.eyebrow")}
+          </span>
+          <h1
+            id="chat-welcome-title"
+            className="text-balance text-3xl font-semibold tracking-tight text-[var(--chat-text)] md:text-4xl"
+          >
+            {t("main-page.greeting")}
+          </h1>
+          <p className="mt-3 max-w-xl text-pretty text-sm leading-6 text-[var(--chat-text-muted)] md:text-base">
+            {t2("chat.welcome.description")}
+          </p>
+          {modelName && (
+            <span className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-[var(--chat-border)] bg-[var(--chat-surface)] px-3 py-1 text-xs text-[var(--chat-text-muted)]">
+              <Sparkle
+                size={12}
+                weight="fill"
+                className="text-[var(--chat-accent)]"
+              />
+              {t2("chat.welcome.model", { model: modelName })}
             </span>
-          </div>
-        )}
-        {!modelName && <div className="mb-7" />}
+          )}
+        </div>
 
         <PromptInput
           workspace={workspace}
@@ -131,7 +134,11 @@ export default function EmptyState({
           threadSlug={threadSlug}
         />
 
-        <div className="mt-6 grid w-full grid-cols-[repeat(auto-fit,minmax(min(100%,15rem),1fr))] gap-3">
+        <div
+          role="group"
+          aria-label={t2("chat.aria.capabilities")}
+          className="mt-5 grid w-full grid-cols-1 gap-2 sm:grid-cols-2"
+        >
           {capabilities.map((cap) => (
             <CapabilityCard
               key={cap.title}
@@ -143,6 +150,6 @@ export default function EmptyState({
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
