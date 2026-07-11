@@ -39,7 +39,7 @@ function WorkspaceChatLayout() {
       {!isMobile && <LeftSidebarIconBar />}
       {!isMobile ? <Sidebar /> : <SidebarMobileHeader />}
       <div
-        className={`flex-1 min-w-0 transition-all duration-500 ${isMobile ? "pt-14" : ""} ${railVisible ? "md:ml-[52px]" : ""}`}
+        className={`min-w-0 flex-1 transition-[margin] duration-150 ease-out ${isMobile ? "pt-14" : ""} ${railVisible ? "md:ml-[52px]" : ""}`}
       >
         <ShowWorkspaceChat />
       </div>

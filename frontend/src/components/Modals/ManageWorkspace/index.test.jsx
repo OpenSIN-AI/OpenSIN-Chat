@@ -91,7 +91,7 @@ describe("ManageWorkspaceModal", () => {
 
   it("switches to data connectors tab on click", () => {
     render(<ManageWorkspaceModal hideModal={hideModal} />);
-    fireEvent.click(screen.getByLabelText("Show data connectors tab"));
+    fireEvent.click(screen.getAllByRole("tab")[1]);
     expect(screen.getByTestId("dataconnectors-tab")).toBeInTheDocument();
   });
 

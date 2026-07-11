@@ -66,9 +66,7 @@ export default function TextSizeMenu() {
         aria-label={t("chat_window.text_size")}
         aria-expanded={showMenu}
         className={`group border-none cursor-pointer flex items-center justify-center w-[35px] h-[35px] rounded-full transition-all ${
-          showMenu
-            ? "bg-theme-bg-tertiary"
-            : "hover:bg-theme-bg-tertiary"
+          showMenu ? "bg-theme-bg-tertiary" : "hover:bg-theme-bg-tertiary"
         }`}
       >
         <SlidersHorizontal

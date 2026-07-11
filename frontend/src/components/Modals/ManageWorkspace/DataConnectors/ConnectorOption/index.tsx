@@ -12,20 +12,20 @@ function ConnectorOption({
     <button
       type="button"
       onClick={() => setSelectedConnector(slug)}
-      aria-label={name}
-      className={`border-none flex text-left gap-x-3.5 items-center py-2 px-4 hover:bg-theme-file-picker-hover ${
+      aria-pressed={selectedConnector === slug}
+      className={`flex w-full cursor-pointer items-center gap-3 rounded-lg border-none px-3 py-2.5 text-left transition-colors hover:bg-theme-file-picker-hover ${
         selectedConnector === slug ? "bg-theme-file-picker-hover" : ""
-      } rounded-lg cursor-pointer w-full`}
+      }`}
     >
-      <img src={image} alt={name} className="w-[40px] h-[40px] rounded-md" />
-      <div className="flex flex-col">
-        <div className="text-theme-text-primary font-bold text-[14px]">
+      <img src={image} alt="" className="h-10 w-10 shrink-0 rounded-lg" />
+      <span className="min-w-0">
+        <span className="block truncate text-sm font-semibold text-theme-text-primary">
           {name}
-        </div>
-        <div>
-          <p className="text-[12px] text-theme-text-secondary">{description}</p>
-        </div>
-      </div>
+        </span>
+        <span className="mt-0.5 block line-clamp-2 text-xs leading-relaxed text-theme-text-secondary">
+          {description}
+        </span>
+      </span>
     </button>
   );
 }

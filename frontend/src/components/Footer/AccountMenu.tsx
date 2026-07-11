@@ -115,7 +115,10 @@ function ThemeSegment() {
                   : "text-[#71717a] light:text-zinc-400 hover:text-[#a1a1aa] light:hover:text-zinc-700"
               }`}
             >
-              <Icon className="h-3.5 w-3.5" weight={active ? "fill" : "regular"} />
+              <Icon
+                className="h-3.5 w-3.5"
+                weight={active ? "fill" : "regular"}
+              />
             </button>
           );
         })}

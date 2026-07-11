@@ -134,7 +134,7 @@ function FolderQuickAdd({ workspace, folder, isOpen, setIsOpen }: any) {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full mt-1 z-50 w-44 rounded-lg border border-white/10 light:border-slate-200 bg-zinc-800 light:bg-white shadow-xl overflow-hidden">
+        <div className="absolute right-0 top-full z-50 mt-1 w-44 overflow-hidden rounded-xl bg-theme-bg-secondary p-1 shadow-[0_12px_36px_rgba(0,0,0,0.2)]">
           <button
             type="button"
             onClick={handleNewChat}
@@ -258,10 +258,10 @@ function ThreadFolderItem({
   return (
     <div
       ref={setNodeRef}
-      className={`w-full rounded-lg transition-colors overflow-x-hidden ${isOver ? "bg-sky-500/10 ring-1 ring-sky-500/40" : ""}`}
+      className={`w-full overflow-x-hidden rounded-lg transition-colors ${isOver ? "bg-theme-sidebar-item-selected shadow-[inset_0_0_0_1px_var(--theme-modal-border)]" : ""}`}
     >
       {/* Folder header */}
-      <div className="flex items-center w-full h-[38px] group px-2 gap-x-1 rounded-lg hover:bg-[var(--theme-sidebar-thread-selected)] light:hover:bg-slate-200">
+      <div className="group flex h-9 w-full items-center gap-1 rounded-lg px-2 transition-colors hover:bg-theme-bg-hover">
         <button
           type="button"
           onClick={() => {
@@ -305,7 +305,7 @@ function ThreadFolderItem({
               }}
               autoFocus
               aria-label={t("common.rename")}
-              className="bg-transparent border-b border-white/40 text-white light:text-theme-text-primary text-sm outline-none w-full min-w-0"
+              className="w-full min-w-0 rounded-md bg-theme-bg-secondary px-1.5 py-0.5 text-sm text-theme-text-primary outline-none shadow-[0_0_0_2px_var(--theme-modal-border)]"
               onClick={(e) => e.stopPropagation()}
             />
           ) : (

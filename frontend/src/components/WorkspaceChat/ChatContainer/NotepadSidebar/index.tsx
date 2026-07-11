@@ -63,6 +63,8 @@ function NotepadSidebar({ workspace }: any) {
     "saved",
   );
   const [mobileEditor, setMobileEditor] = useState(false);
+  const [isCompact, setIsCompact] = useState(false);
+  const panelRef = useRef<HTMLElement | null>(null);
   const [metaOpen, setMetaOpen] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState<{
     note: any;
@@ -97,6 +99,15 @@ function NotepadSidebar({ workspace }: any) {
     },
     [],
   );
+  useEffect(() => {
+    const panel = panelRef.current;
+    if (!panel) return;
+    const observer = new ResizeObserver(([entry]) => {
+      setIsCompact(entry.contentRect.width < 560);
+    });
+    observer.observe(panel);
+    return () => observer.disconnect();
+  }, []);
   useEffect(() => {
     const shortcut = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
@@ -249,6 +260,7 @@ function NotepadSidebar({ workspace }: any) {
     <>
       <ChatSidebar isOpen={true} minWidth={380} defaultWidth={620}>
         <section
+          ref={panelRef}
           className="flex h-full w-full flex-col overflow-hidden bg-theme-bg-sidebar"
           aria-label={t("chat_window.notepad", "Notizblock")}
         >
@@ -285,7 +297,7 @@ function NotepadSidebar({ workspace }: any) {
 
           <div className="flex min-h-0 flex-1 overflow-hidden">
             <aside
-              className={`${mobileEditor ? "hidden sm:flex" : "flex"} w-full shrink-0 flex-col border-r border-theme-modal-border sm:w-52`}
+              className={`${isCompact && mobileEditor ? "hidden" : "flex"} ${isCompact ? "w-full" : "w-52"} shrink-0 flex-col border-r border-theme-modal-border`}
             >
               <div className="flex flex-col gap-2 border-b border-theme-modal-border p-2">
                 <label className="flex h-8 items-center gap-2 rounded-lg border border-theme-modal-border bg-theme-bg-primary px-2 text-theme-text-secondary focus-within:border-theme-text-secondary">
@@ -465,7 +477,7 @@ function NotepadSidebar({ workspace }: any) {
             </aside>
 
             <main
-              className={`${mobileEditor ? "flex" : "hidden sm:flex"} min-w-0 flex-1 flex-col bg-theme-bg-primary`}
+              className={`${isCompact && !mobileEditor ? "hidden" : "flex"} min-w-0 flex-1 flex-col bg-theme-bg-primary`}
             >
               {visibleActive ? (
                 <>
@@ -473,7 +485,7 @@ function NotepadSidebar({ workspace }: any) {
                     <button
                       type="button"
                       onClick={() => setMobileEditor(false)}
-                      className="notepad-icon-button sm:hidden"
+                      className={`notepad-icon-button ${isCompact ? "inline-flex" : "hidden"}`}
                       aria-label={t("common.back", "Zurück")}
                     >
                       <ArrowLeft size={16} />

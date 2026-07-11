@@ -48,6 +48,11 @@ export default function useWorkspaceChats(slug) {
         showAgentCommand: !!showAgentCommand,
       };
     },
+    {
+      keepPreviousData: true,
+      dedupingInterval: 60_000,
+      revalidateIfStale: false,
+    },
   );
 
   return {

@@ -1,107 +1,77 @@
 // SPDX-License-Identifier: MIT
-import React, { useState, useEffect, memo } from "react";
+import { memo, useEffect, useState } from "react";
 import { X } from "@phosphor-icons/react/dist/csr/X";
+import { CloudArrowUp } from "@phosphor-icons/react/dist/csr/CloudArrowUp";
+import { Database } from "@phosphor-icons/react/dist/csr/Database";
+import { Files } from "@phosphor-icons/react/dist/csr/Files";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
-import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import useUser from "../../../hooks/useUser";
 import useSystemSettings from "../../../hooks/useSystemSettings";
 import useWorkspace from "../../../hooks/useWorkspaceBySlug";
 import DocumentSettings from "./Documents";
 import DataConnectors from "./DataConnectors";
-import ModalWrapper from "@/components/ModalWrapper";
 import { EmbeddingProgressProvider } from "@/EmbeddingProgressContext";
 
 const noop = () => {};
+
 const ManageWorkspace = ({ hideModal = noop, providedSlug = null }) => {
   const { t } = useTranslation();
   const { slug } = useParams();
   const { user } = useUser();
   const { settings } = useSystemSettings();
   const { workspace } = useWorkspace(providedSlug ?? slug);
-  const [selectedTab, setSelectedTab] = useState<string>("documents");
-
-  const isMobileLayout = useIsMobileLayout();
+  const [selectedTab, setSelectedTab] = useState("documents");
 
   if (!workspace) return null;
 
-  if (isMobileLayout) {
-    return (
-      <ModalWrapper isOpen={true} closeModal={hideModal}>
-        <div className="w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border overflow-hidden">
-          <div className="relative p-6 border-b rounded-t border-theme-modal-border">
-            <div className="w-full flex gap-x-2 items-center">
-              {}
-              <h3 className="text-xl font-semibold text-theme-text-primary overflow-hidden overflow-ellipsis whitespace-nowrap">
-                {t("connectors.manage.editingWithName", {
-                  name: workspace.name,
-                })}
-              </h3>
-            </div>
-            <button
-              type="button"
-              onClick={hideModal}
-              aria-label={t("manageWorkspace.closeDialog")}
-              className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
-            >
-              <X
-                size={24}
-                weight="bold"
-                className="text-theme-text-primary"
-                aria-hidden="true"
-              />
-            </button>
-          </div>
-          <div className="h-full w-full overflow-y-auto max-h-[calc(100vh-200px)]">
-            <div className="py-7 px-9 space-y-2 flex-col">
-              <p className="text-theme-text-primary">
-                {t("connectors.manage.desktop-only")}
-              </p>
-            </div>
-          </div>
-          <div className="flex w-full justify-end items-center p-6 space-x-2 border-t border-theme-modal-border rounded-b">
-            <button
-              type="button"
-              onClick={hideModal}
-              aria-label={t("manageWorkspace.dismissDialog")}
-              className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm"
-            >
-              {t("connectors.manage.dismiss")}
-            </button>
-          </div>
-        </div>
-      </ModalWrapper>
-    );
-  }
-
   return (
-    <div className="w-screen h-screen fixed top-0 left-0 flex justify-center items-center z-[99]">
-      <div className="backdrop h-full w-full absolute top-0 z-10" />
-      <div className="absolute max-h-full w-fit transition duration-300 z-20 md:overflow-y-auto py-10">
-        <div className="relative bg-theme-bg-secondary rounded-[12px] shadow border-2 border-theme-modal-border">
-          <div className="flex items-start justify-between p-2 rounded-t border-theme-modal-border relative">
-            <button
-              type="button"
-              onClick={hideModal}
-              aria-label={t("manageWorkspace.closeDialog")}
-              className="z-29 text-theme-text-primary bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center bg-sidebar-button hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
+    <div className="fixed inset-0 z-[99] flex items-end justify-center p-0 sm:items-center sm:p-4">
+      <button
+        type="button"
+        className="absolute inset-0 bg-theme-overlay"
+        onClick={hideModal}
+        aria-label={t("manageWorkspace.dismissDialog")}
+      />
+      <section
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="workspace-cloud-title"
+        className="relative z-10 flex h-[94dvh] w-full min-w-0 flex-col overflow-hidden rounded-t-2xl bg-theme-bg-primary shadow-[0_24px_80px_rgba(0,0,0,0.28)] sm:h-[min(88vh,900px)] sm:max-w-7xl sm:rounded-2xl"
+      >
+        <header className="flex shrink-0 items-center gap-3 px-4 py-3 sm:px-6 sm:py-4">
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-theme-bg-secondary text-theme-text-primary">
+            <CloudArrowUp size={19} weight="bold" />
+          </span>
+          <div className="min-w-0 flex-1">
+            <h2
+              id="workspace-cloud-title"
+              className="truncate text-base font-semibold text-theme-text-primary"
             >
-              <X
-                size={20}
-                weight="bold"
-                className="text-theme-text-primary"
-                aria-hidden="true"
-              />
-            </button>
+              {t("sidebar.workspaceCloud", "Workspace Cloud")}
+            </h2>
+            <p className="truncate text-xs text-theme-text-secondary">
+              {workspace.name}
+            </p>
           </div>
+          <button
+            type="button"
+            onClick={hideModal}
+            aria-label={t("manageWorkspace.closeDialog")}
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
+          >
+            <X size={18} />
+          </button>
+        </header>
 
-          {user?.role !== "default" && (
-            <ModalTabSwitcher
-              selectedTab={selectedTab}
-              setSelectedTab={setSelectedTab}
-            />
-          )}
+        {user?.role !== "default" && (
+          <ModalTabSwitcher
+            selectedTab={selectedTab}
+            setSelectedTab={setSelectedTab}
+          />
+        )}
 
+        <div className="min-h-0 min-w-0 flex-1 overflow-auto px-3 pb-4 pt-3 sm:px-6 sm:pb-6">
           {selectedTab === "documents" ? (
             <EmbeddingProgressProvider>
               <DocumentSettings workspace={workspace} />
@@ -112,7 +82,7 @@ const ManageWorkspace = ({ hideModal = noop, providedSlug = null }) => {
             />
           )}
         </div>
-      </div>
+      </section>
     </div>
   );
 };
@@ -121,62 +91,50 @@ export default memo(ManageWorkspace);
 
 const ModalTabSwitcher = ({ selectedTab, setSelectedTab }) => {
   const { t } = useTranslation();
+  const tabs = [
+    { id: "documents", label: t("connectors.manage.documents"), Icon: Files },
+    {
+      id: "dataConnectors",
+      label: t("connectors.manage.data-connectors"),
+      Icon: Database,
+    },
+  ];
   return (
-    <div className="w-full flex justify-center z-10 relative">
-      <div className="gap-x-2 flex justify-center -mt-[68px] mb-10 bg-theme-bg-secondary p-1 rounded-xl shadow border-2 border-theme-modal-border w-fit">
-        <button
-          type="button"
-          onClick={() => setSelectedTab("documents")}
-          aria-label={t("manageWorkspace.showDocumentsTab")}
-          aria-pressed={selectedTab === "documents"}
-          className={`border-none px-4 py-2 rounded-[8px] font-semibold hover:bg-theme-modal-border hover:bg-opacity-60 ${
-            selectedTab === "documents"
-              ? "bg-theme-modal-border font-bold text-theme-text-primary light:bg-[#E0F2FE] light:text-[#026AA2]"
-              : "text-theme-placeholder font-medium hover:text-theme-text-primary light:hover:text-theme-text-primary light:bg-white light:text-[#535862] light:hover:bg-[#E0F2FE]"
-          }`}
-        >
-          {t("connectors.manage.documents")}
-        </button>
-        <button
-          type="button"
-          onClick={() => setSelectedTab("dataConnectors")}
-          aria-label={t("manageWorkspace.showDataConnectorsTab")}
-          aria-pressed={selectedTab === "dataConnectors"}
-          className={`border-none px-4 py-2 rounded-[8px] font-semibold hover:bg-theme-modal-border hover:bg-opacity-60 ${
-            selectedTab === "dataConnectors"
-              ? "bg-theme-modal-border font-bold text-theme-text-primary light:bg-[#E0F2FE] light:text-[#026AA2]"
-              : "text-theme-placeholder font-medium hover:text-theme-text-primary light:hover:text-theme-text-primary light:bg-white light:text-[#535862] light:hover:bg-[#E0F2FE]"
-          }`}
-        >
-          {t("connectors.manage.data-connectors")}
-        </button>
-      </div>
+    <div className="flex shrink-0 gap-1 px-4 sm:px-6" role="tablist">
+      {tabs.map(({ id, label, Icon }) => {
+        const active = selectedTab === id;
+        return (
+          <button
+            key={id}
+            type="button"
+            role="tab"
+            aria-selected={active}
+            onClick={() => setSelectedTab(id)}
+            className={`flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium transition-colors ${active ? "bg-theme-sidebar-item-selected text-theme-sidebar-item-text-active" : "text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary"}`}
+          >
+            <Icon size={16} weight={active ? "fill" : "regular"} />
+            {label}
+          </button>
+        );
+      })}
     </div>
   );
 };
 
 export function useManageWorkspaceModal() {
   const { user } = useUser();
-  const [showing, setShowing] = useState<boolean>(false);
-
-  function showModal() {
-    if (user?.role !== "default") {
-      setShowing(true);
-    }
-  }
-
-  function hideModal() {
-    setShowing(false);
-  }
+  const [showing, setShowing] = useState(false);
+  const showModal = () => user?.role !== "default" && setShowing(true);
+  const hideModal = () => setShowing(false);
 
   useEffect(() => {
-    function onEscape(event) {
-      if (!showing || event.key !== "Escape") return;
-      setShowing(false);
-    }
-
+    if (!showing) return;
+    const previous = document.body.style.overflow;
+    const onEscape = (event) => event.key === "Escape" && setShowing(false);
+    document.body.style.overflow = "hidden";
     document.addEventListener("keydown", onEscape);
     return () => {
+      document.body.style.overflow = previous;
       document.removeEventListener("keydown", onEscape);
     };
   }, [showing]);

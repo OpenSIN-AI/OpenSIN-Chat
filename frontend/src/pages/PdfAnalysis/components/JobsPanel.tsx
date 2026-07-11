@@ -133,7 +133,7 @@ function StartForm({ onStarted, isSidebar = false }: StartFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-3 p-4 rounded-lg bg-theme-bg-secondary border border-theme-sidebar-border"
+      className="flex flex-col gap-4 rounded-xl bg-theme-bg-secondary p-4 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.04)]"
     >
       <h2 className="text-sm font-semibold text-theme-text-primary uppercase tracking-wide">
         {t("pdfAnalysis.panel.newAnalysis")}
@@ -155,7 +155,7 @@ function StartForm({ onStarted, isSidebar = false }: StartFormProps) {
           onChange={(e) => setTask(e.target.value)}
           rows={2}
           placeholder={t("pdfAnalysis.panel.taskPlaceholder")}
-          className="rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary placeholder:text-theme-text-secondary focus:outline-none focus:border-theme-text-primary"
+          className="rounded-lg border border-transparent bg-theme-bg-tertiary px-3 py-2 text-sm text-theme-text-primary outline-none transition-[background-color,box-shadow] placeholder:text-theme-text-secondary focus:bg-theme-bg-secondary focus:shadow-[0_0_0_2px_var(--theme-modal-border)]"
         />
       </label>
 
@@ -166,7 +166,7 @@ function StartForm({ onStarted, isSidebar = false }: StartFormProps) {
             value={reportType}
             onChange={(e) => setReportType(e.target.value)}
             placeholder={t("pdfAnalysis.panel.reportTypePlaceholder")}
-            className="rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary placeholder:text-theme-text-secondary focus:outline-none focus:border-theme-text-primary"
+            className="rounded-lg border border-transparent bg-theme-bg-tertiary px-3 py-2 text-sm text-theme-text-primary outline-none transition-[background-color,box-shadow] placeholder:text-theme-text-secondary focus:bg-theme-bg-secondary focus:shadow-[0_0_0_2px_var(--theme-modal-border)]"
           />
         </label>
         <label className="flex-1 flex flex-col gap-1 text-sm text-theme-text-secondary">
@@ -175,7 +175,7 @@ function StartForm({ onStarted, isSidebar = false }: StartFormProps) {
             value={factCriteria}
             onChange={(e) => setFactCriteria(e.target.value)}
             placeholder={t("pdfAnalysis.panel.factCriteriaPlaceholder")}
-            className="rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary placeholder:text-theme-text-secondary focus:outline-none focus:border-theme-text-primary"
+            className="rounded-lg border border-transparent bg-theme-bg-tertiary px-3 py-2 text-sm text-theme-text-primary outline-none transition-[background-color,box-shadow] placeholder:text-theme-text-secondary focus:bg-theme-bg-secondary focus:shadow-[0_0_0_2px_var(--theme-modal-border)]"
           />
         </label>
       </div>
@@ -227,7 +227,7 @@ function StartForm({ onStarted, isSidebar = false }: StartFormProps) {
         <button
           type="submit"
           disabled={busy}
-          className="px-4 py-2 rounded-md text-sm font-medium bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:bg-theme-bg-secondary transition-colors disabled:opacity-50"
+          className="rounded-lg bg-theme-text-primary px-4 py-2 text-sm font-medium text-theme-bg-primary shadow-sm transition-[opacity,transform] hover:opacity-85 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
         >
           {busy
             ? t("pdfAnalysis.panel.submitBusy")

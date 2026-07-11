@@ -90,9 +90,11 @@ export const swrConfig = {
   fetcher: swrFetcher,
   revalidateOnFocus: true,
   revalidateOnReconnect: true,
+  focusThrottleInterval: 60_000,
+  keepPreviousData: true,
   shouldRetryOnError: (err) => err?.status !== 401,
-  errorRetryCount: 3,
-  dedupingInterval: 5000,
+  errorRetryCount: 2,
+  dedupingInterval: 15_000,
   onError: (err) => {
     if (err?.status === 401) handleAuthFailure();
   },

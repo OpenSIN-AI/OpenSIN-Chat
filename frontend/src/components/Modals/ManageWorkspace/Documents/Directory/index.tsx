@@ -226,9 +226,9 @@ function Directory({
 
   return (
     <>
-      <div className="px-8 pb-8" onContextMenu={handleContextMenu}>
-        <div className="flex flex-col gap-y-6">
-          <div className="flex items-center justify-between w-[560px] px-5 relative">
+      <div className="min-w-0 flex-1" onContextMenu={handleContextMenu}>
+        <div className="flex min-w-0 flex-col gap-3">
+          <div className="relative flex min-w-0 flex-wrap items-center gap-2 px-1 sm:px-3">
             <h3 className="text-theme-text-primary text-base font-bold">
               {t("connectors.directory.my-documents")}
             </h3>
@@ -237,7 +237,7 @@ function Directory({
                 type="search"
                 placeholder={t("connectors.directory.search-document")}
                 onChange={handleSearch}
-                className="border-none search-input bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder focus:outline-primary-button active:outline-primary-button outline-none text-sm rounded-lg pl-9 pr-2.5 py-2 w-[250px] h-[32px] light:border-theme-modal-border light:border"
+                className="search-input h-8 w-full rounded-lg border-none bg-theme-bg-secondary py-2 pl-9 pr-2.5 text-sm text-theme-text-primary outline-none placeholder:text-theme-settings-input-placeholder focus:bg-theme-bg-hover sm:w-[220px]"
               />
               <MagnifyingGlass
                 size={14}
@@ -263,7 +263,7 @@ function Directory({
             </button>
           </div>
 
-          <div className="relative w-[560px] h-[310px] bg-theme-settings-input-bg rounded-2xl overflow-hidden border border-theme-modal-border">
+          <div className="relative h-[310px] min-w-0 overflow-hidden rounded-xl bg-theme-bg-secondary">
             <div className="absolute top-0 left-0 right-0 z-10 rounded-t-2xl text-theme-text-primary text-xs grid grid-cols-12 py-2 px-8 border-b border-white/20 light:border-theme-modal-border bg-theme-settings-input-bg">
               <p className="col-span-6">{t("common.name")}</p>
               {totalDocCount > 0 && (

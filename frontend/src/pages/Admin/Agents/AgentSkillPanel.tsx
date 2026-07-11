@@ -107,9 +107,7 @@ export default function AgentSkillPanel({
         skill={defaultSkills[skillKey]?.skill}
         settings={settings}
         toggleSkill={toggleDefaultSkill}
-        enabled={
-          !disabledAgentSkills?.includes(defaultSkills[skillKey]?.skill)
-        }
+        enabled={!disabledAgentSkills?.includes(defaultSkills[skillKey]?.skill)}
         setHasChanges={setHasChanges}
         {...defaultSkills[skillKey]}
       />
@@ -122,9 +120,7 @@ export default function AgentSkillPanel({
         skill={configurableSkills[skillKey]?.skill}
         settings={settings}
         toggleSkill={toggleAgentSkill}
-        enabled={agentSkills?.includes(
-          configurableSkills[skillKey]?.skill,
-        )}
+        enabled={agentSkills?.includes(configurableSkills[skillKey]?.skill)}
         setHasChanges={setHasChanges}
         hasChanges={hasChanges}
         {...configurableSkills[skillKey]}
@@ -137,9 +133,7 @@ export default function AgentSkillPanel({
       skill={appIntegrationSkills?.[skillKey]?.skill}
       settings={settings}
       toggleSkill={toggleAgentSkill}
-      enabled={agentSkills?.includes(
-        appIntegrationSkills?.[skillKey]?.skill,
-      )}
+      enabled={agentSkills?.includes(appIntegrationSkills?.[skillKey]?.skill)}
       setHasChanges={setHasChanges}
       hasChanges={hasChanges}
       {...appIntegrationSkills?.[skillKey]}

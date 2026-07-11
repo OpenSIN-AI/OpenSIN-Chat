@@ -105,6 +105,12 @@ function ThreadContainer({
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [projectsOpen, setProjectsOpen] = useState(
+    () => safeGetItem(`sidebar-projects-open-${workspace.slug}`) !== "false",
+  );
+  const [chatsOpen, setChatsOpen] = useState(
+    () => safeGetItem(`sidebar-chats-open-${workspace.slug}`) !== "false",
+  );
 
   const isSearchActive = searchQuery.trim().length > 0;
 
@@ -440,65 +446,142 @@ function ThreadContainer({
           />
         ) : (
           <>
-            {defaultThreadHasChats && (
-              <ThreadItem
-                idx={0}
-                activeIdx={activeThreadIdx}
-                isActive={activeThreadIdx === 0}
-                workspace={workspace}
-                thread={{ slug: null, name: "default" }}
-                hasNext={
-                  unfolderedThreads.length > 0 ||
-                  showVirtualThread ||
-                  folders.length > 0
-                }
-              />
-            )}
-            {folders.map((folder) => {
-              const folderThreads = threads.filter(
-                (t) => t.folder_id === folder.id,
-              );
-              return (
-                <ThreadFolderItem
-                  key={folder.id}
-                  folder={folder}
+            <section className="mb-2">
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  aria-expanded={projectsOpen}
+                  onClick={() => {
+                    const next = !projectsOpen;
+                    setProjectsOpen(next);
+                    safeSetItem(
+                      `sidebar-projects-open-${workspace.slug}`,
+                      String(next),
+                    );
+                  }}
+                  className="flex h-8 min-w-0 flex-1 items-center gap-2 rounded-lg px-2 text-left text-sm font-medium text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
+                >
+                  {projectsOpen ? (
+                    <CaretDown size={13} />
+                  ) : (
+                    <CaretRight size={13} />
+                  )}
+                  <span className="flex-1">
+                    {t("sidebar.projects", "Projects")}
+                  </span>
+                  <span className="text-[11px] text-theme-placeholder">
+                    {folders.length}
+                  </span>
+                </button>
+                <NewFolderButton
                   workspace={workspace}
-                  threads={folderThreads}
-                  activeThreadIdx={activeThreadIdx}
-                  defaultThreadHasChats={defaultThreadHasChats}
-                  ctrlPressed={ctrlPressed}
-                  toggleMarkForDeletion={toggleForDeletion}
-                  onRemoveThread={removeThread}
-                  onFolderDeleted={handleFolderDeleted}
-                  onFolderRenamed={handleFolderRenamed}
-                  duplicateNames={duplicateNames}
+                  compact
+                  onCreated={(folder) => {
+                    mutate(
+                      (current) => ({
+                        ...current,
+                        folders: [...(current?.folders || []), folder],
+                      }),
+                      { revalidate: false },
+                    );
+                    mutate();
+                  }}
                 />
-              );
-            })}
-            <UnfolderedDropZone isDragging={!!activeId}>
-              <UnfolderedDateGroups
-                threads={unfolderedThreads}
-                defaultThreadHasChats={defaultThreadHasChats}
-                activeThreadIdx={activeThreadIdx}
-                ctrlPressed={ctrlPressed}
-                toggleMarkForDeletion={toggleForDeletion}
-                onRemoveThread={removeThread}
-                workspace={workspace}
-                workspaceSlug={workspace.slug}
-                showVirtualThread={showVirtualThread}
-                duplicateNames={duplicateNames}
-              />
-            </UnfolderedDropZone>
-            {showVirtualThread && (
-              <ThreadItem
-                idx={activeThreadIdx}
-                activeIdx={activeThreadIdx}
-                isActive={true}
-                workspace={workspace}
-                thread={{ slug: null, name: "*New Thread", virtual: true }}
-                hasNext={false}
-              />
-            )}
+              </div>
+              {projectsOpen && (
+                <div className="mt-0.5">
+                  {folders.length === 0 && (
+                    <p className="px-7 py-2 text-xs text-theme-placeholder">
+                      {t("threadContainer.noProjects", "No projects yet")}
+                    </p>
+                  )}
+                  {folders.map((folder) => {
+                    const folderThreads = threads.filter(
+                      (thread) => thread.folder_id === folder.id,
+                    );
+                    return (
+                      <ThreadFolderItem
+                        key={folder.id}
+                        folder={folder}
+                        workspace={workspace}
+                        threads={folderThreads}
+                        activeThreadIdx={activeThreadIdx}
+                        defaultThreadHasChats={defaultThreadHasChats}
+                        ctrlPressed={ctrlPressed}
+                        toggleMarkForDeletion={toggleForDeletion}
+                        onRemoveThread={removeThread}
+                        onFolderDeleted={handleFolderDeleted}
+                        onFolderRenamed={handleFolderRenamed}
+                        duplicateNames={duplicateNames}
+                      />
+                    );
+                  })}
+                </div>
+              )}
+            </section>
+            <section>
+              <button
+                type="button"
+                aria-expanded={chatsOpen}
+                onClick={() => {
+                  const next = !chatsOpen;
+                  setChatsOpen(next);
+                  safeSetItem(
+                    `sidebar-chats-open-${workspace.slug}`,
+                    String(next),
+                  );
+                }}
+                className="flex h-8 w-full items-center gap-2 rounded-lg px-2 text-left text-sm font-medium text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
+              >
+                {chatsOpen ? <CaretDown size={13} /> : <CaretRight size={13} />}
+                <span className="flex-1">{t("sidebar.chats", "Chats")}</span>
+                <span className="text-[11px] text-theme-placeholder">
+                  {unfolderedThreads.length + (defaultThreadHasChats ? 1 : 0)}
+                </span>
+              </button>
+              {chatsOpen && (
+                <UnfolderedDropZone isDragging={!!activeId}>
+                  {defaultThreadHasChats && (
+                    <ThreadItem
+                      idx={0}
+                      activeIdx={activeThreadIdx}
+                      isActive={activeThreadIdx === 0}
+                      workspace={workspace}
+                      thread={{ slug: null, name: "default" }}
+                      hasNext={
+                        unfolderedThreads.length > 0 || showVirtualThread
+                      }
+                    />
+                  )}
+                  <UnfolderedDateGroups
+                    threads={unfolderedThreads}
+                    defaultThreadHasChats={defaultThreadHasChats}
+                    activeThreadIdx={activeThreadIdx}
+                    ctrlPressed={ctrlPressed}
+                    toggleMarkForDeletion={toggleForDeletion}
+                    onRemoveThread={removeThread}
+                    workspace={workspace}
+                    workspaceSlug={workspace.slug}
+                    showVirtualThread={showVirtualThread}
+                    duplicateNames={duplicateNames}
+                  />
+                  {showVirtualThread && (
+                    <ThreadItem
+                      idx={activeThreadIdx}
+                      activeIdx={activeThreadIdx}
+                      isActive={true}
+                      workspace={workspace}
+                      thread={{
+                        slug: null,
+                        name: "*New Thread",
+                        virtual: true,
+                      }}
+                      hasNext={false}
+                    />
+                  )}
+                </UnfolderedDropZone>
+              )}
+            </section>
             <DeleteAllThreadButton
               ctrlPressed={ctrlPressed}
               threads={threads}
@@ -506,22 +589,6 @@ function ThreadContainer({
             />
           </>
         )}
-        <div className="sticky bottom-0 z-10 -mx-2.5 bg-theme-bg-sidebar px-2.5 py-1">
-          <NewFolderButton
-            workspace={workspace}
-            onCreated={(f) => {
-              mutate(
-                (current) => {
-                  const currentFolders = current?.folders || [];
-                  return { ...current, folders: [...currentFolders, f] };
-                },
-                { revalidate: false },
-              );
-              mutate();
-            }}
-          />
-          <NewThreadButton workspace={workspace} mutate={mutate} />
-        </div>
       </div>
 
       <DragOverlay>
@@ -662,8 +729,8 @@ function UnfolderedDropZone({ children, isDragging }) {
       className={`w-full rounded-lg transition-colors ${
         isDragging
           ? isOver
-            ? "bg-sky-500/10 ring-1 ring-sky-500/40"
-            : "ring-1 ring-white/10"
+            ? "bg-theme-sidebar-item-selected shadow-[inset_0_0_0_1px_var(--theme-modal-border)]"
+            : "bg-theme-bg-secondary/40"
           : ""
       }`}
     >
@@ -740,7 +807,7 @@ function NewThreadButton({ workspace, mutate }) {
   );
 }
 
-function NewFolderButton({ workspace, onCreated }) {
+function NewFolderButton({ workspace, onCreated, compact = false }) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const onClick = async () => {
@@ -778,9 +845,12 @@ function NewFolderButton({ workspace, onCreated }) {
     <button
       type="button"
       onClick={onClick}
-      className="relative flex h-9 w-full items-center rounded-lg border-none text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
+      aria-label={t("threadContainer.newFolder")}
+      className={`${compact ? "h-8 w-8 justify-center" : "h-9 w-full"} relative flex items-center rounded-lg border-none text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary`}
     >
-      <div className="flex w-full gap-x-2 items-center pl-3">
+      <div
+        className={`flex items-center gap-2 ${compact ? "justify-center" : "w-full pl-3"}`}
+      >
         {loading ? (
           <CircleNotch
             weight="bold"
@@ -788,15 +858,13 @@ function NewFolderButton({ workspace, onCreated }) {
             className="shrink-0 animate-spin"
           />
         ) : (
-          <FolderSimplePlus
-            weight="bold"
-            size={14}
-            className="shrink-0"
-          />
+          <FolderSimplePlus weight="bold" size={14} className="shrink-0" />
         )}
-        <p className="text-left text-theme-text-secondary light:text-slate-500 text-[13px] font-medium">
-          {t("threadContainer.newFolder")}
-        </p>
+        {!compact && (
+          <p className="text-left text-[13px] font-medium text-theme-text-secondary">
+            {t("threadContainer.newFolder")}
+          </p>
+        )}
       </div>
     </button>
   );
@@ -841,7 +909,7 @@ function ThreadSearchBar({ value, onChange, onClear }) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={t("threadContainer.searchThreads")}
-        className="w-full h-[30px] pl-8 pr-7 text-[13px] bg-white/5 light:bg-slate-200/70 border border-white/10 light:border-slate-300 rounded-[8px] text-theme-text-primary light:text-theme-text-primary placeholder:text-theme-placeholder light:placeholder:text-slate-400 focus:outline-none focus:border-white/20 light:focus:border-slate-400 transition-colors"
+        className="h-8 w-full rounded-lg bg-theme-bg-secondary pl-8 pr-7 text-[13px] text-theme-text-primary outline-none transition-colors placeholder:text-theme-placeholder focus:bg-theme-bg-hover"
       />
       {value && (
         <button

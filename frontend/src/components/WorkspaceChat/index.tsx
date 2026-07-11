@@ -136,7 +136,6 @@ export default function WorkspaceChat({
             apiBase="/api"
           >
             <ChatContainer
-              key={loaded.key}
               workspace={loaded.workspace}
               threadSlug={loaded.threadSlug}
               knownHistory={loaded.history}

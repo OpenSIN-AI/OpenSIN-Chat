@@ -280,9 +280,9 @@ export default function AgentModeButton({
                 return { top: btnRect.bottom + 6, left };
               })(),
             }}
-            className="z-50 w-[300px] bg-theme-bg-sidebar border border-theme-sidebar-border rounded-xl shadow-2xl overflow-hidden"
+            className="z-50 w-[300px] overflow-hidden rounded-xl bg-theme-bg-secondary shadow-[0_16px_48px_rgba(0,0,0,0.18),0_2px_8px_rgba(0,0,0,0.08)]"
           >
-            <div className="px-3 py-2 border-b border-theme-sidebar-border">
+            <div className="px-3 pb-1.5 pt-3">
               <div className="flex items-center gap-1.5">
                 <Sparkle
                   size={12}
@@ -304,7 +304,7 @@ export default function AgentModeButton({
                     aria-pressed={activeMode?.id === mode.id}
                     aria-label={mode.label}
                     onClick={() => selectMode(mode, sendCommand, textareaRef)}
-                    className={`w-full flex items-start gap-3 px-3 py-2.5 text-left transition-colors border-none hover:bg-theme-sidebar-item-hover cursor-pointer ${
+                    className={`mx-1.5 flex w-[calc(100%-0.75rem)] cursor-pointer items-start gap-3 rounded-lg border-none px-2.5 py-2.5 text-left transition-colors hover:bg-theme-sidebar-item-hover ${
                       activeMode?.id === mode.id ? "bg-theme-accent/10" : ""
                     }`}
                   >
