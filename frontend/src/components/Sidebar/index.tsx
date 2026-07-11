@@ -31,7 +31,7 @@ import { useSidebarToggle } from "./SidebarToggle";
 
 const SIDEBAR_MIN_WIDTH = 260;
 const SIDEBAR_MAX_WIDTH = 420;
-const SIDEBAR_DEFAULT_WIDTH = 288;
+const SIDEBAR_DEFAULT_WIDTH = 264;
 const SIDEBAR_WIDTH_STORAGE_KEY = "opensin-sidebar-width";
 
 function SidebarContent({
@@ -139,7 +139,11 @@ function SidebarContent({
   );
 }
 
-export default function Sidebar({ onOpenSearch }: { onOpenSearch?: () => void }) {
+export default function Sidebar({
+  onOpenSearch,
+}: {
+  onOpenSearch?: () => void;
+}) {
   const { t } = useTranslation();
   const { showSidebar, setShowSidebar } = useSidebarToggle();
   const [sidebarWidth, setSidebarWidth] = useState(() => {

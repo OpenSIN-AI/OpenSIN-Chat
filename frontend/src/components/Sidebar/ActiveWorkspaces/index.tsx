@@ -44,19 +44,26 @@ function ActiveWorkspaces() {
     );
   }
 
-  if (!activeWorkspace) return null;
+  if (workspaces.length === 0) return null;
 
   return (
-    <div
-      className="min-h-0 flex-1"
-      role="region"
-      aria-label={activeWorkspace.name}
-    >
-      <ThreadContainer
-        workspace={activeWorkspace}
-        isActive={true}
-        isVirtualThread={isHomePage}
-      />
+    <div className="min-h-0 flex-1" role="region" aria-label="Projekte">
+      <p className="px-2 pb-1 pt-3 text-xs font-medium text-theme-placeholder">
+        Projekte
+      </p>
+      <div className="flex flex-col gap-0.5">
+        {workspaces.map((workspace: any) => (
+          <ThreadContainer
+            key={workspace.slug}
+            workspace={workspace}
+            isActive={activeWorkspace?.slug === workspace.slug}
+            isVirtualThread={
+              isHomePage && activeWorkspace?.slug === workspace.slug
+            }
+            codexProject
+          />
+        ))}
+      </div>
     </div>
   );
 }
