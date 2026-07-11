@@ -196,16 +196,16 @@
   --theme-sidebar-footer-icon-hover: #27272a;
 
   /* Chat experience */
-  --theme-chat-input-border: #2a2a2a;
+  --theme-chat-input-border: transparent;
   --chat-canvas: #0a0a0a;
-  --chat-surface: #111111;
+  --chat-surface: transparent;
   --chat-surface-elevated: #191919;
-  --chat-border: #2a2a2a;
+  --chat-border: transparent;
   --chat-text: #fafafa;
   --chat-text-muted: #a3a3a3;
   --chat-accent: #65d6c5;
   --chat-user-bubble: #202020;
-  --chat-focus-ring: rgba(101, 214, 197, 0.5);
+  --chat-focus-ring: transparent;
 
   /* Action menus */
   --theme-action-menu-bg: #1c1c1c;
@@ -298,14 +298,14 @@
 
   --theme-chat-input-border: transparent;
   --chat-canvas: #ffffff;
-  --chat-surface: #f5f5f4;
+  --chat-surface: transparent;
   --chat-surface-elevated: #f5f5f4;
   --chat-border: transparent;
   --chat-text: #151514;
   --chat-text-muted: #5f625f;
   --chat-accent: #0f766e;
   --chat-user-bubble: #ececea;
-  --chat-focus-ring: rgba(15, 118, 110, 0.35);
+  --chat-focus-ring: transparent;
   --theme-action-menu-bg: #eaeaea;
   --theme-action-menu-item-hover: rgba(0, 0, 0, 0.1);
   --theme-settings-input-bg: #edf2fa;
