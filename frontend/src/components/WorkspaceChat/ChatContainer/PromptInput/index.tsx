@@ -100,7 +100,7 @@ export default function PromptInput({
               centered={centered}
               highlightedIndexRef={toolsHighlightRef}
             />
-            <div className="flex flex-col overflow-hidden rounded-2xl border border-[var(--chat-border)] bg-[var(--chat-surface)] px-3 shadow-[0_16px_48px_rgba(0,0,0,0.2)] transition-[border-color,box-shadow] duration-150 focus-within:border-[var(--chat-accent)] focus-within:shadow-[0_0_0_3px_var(--chat-focus-ring),0_16px_48px_rgba(0,0,0,0.2)] sm:px-4">
+            <div className="flex flex-col overflow-hidden rounded-2xl border border-[var(--chat-border)] bg-[var(--chat-surface)] px-3 shadow-[0_8px_28px_rgba(0,0,0,0.12)] transition-[border-color,box-shadow] duration-150 hover:border-[var(--chat-text-muted)] sm:px-4">
               <AttachmentManager attachments={attachments} />
               <div className="flex items-center">
                 <TextArea
@@ -116,8 +116,8 @@ export default function PromptInput({
                   adjustTextArea={adjustTextArea}
                 />
               </div>
-              <div className="flex flex-wrap items-end justify-between gap-2 py-2">
-                <div className="flex min-w-0 flex-1 items-center">
+              <div className="flex items-center justify-between gap-1 border-t border-[var(--chat-border)]/60 py-1.5 sm:gap-2 sm:border-0 sm:py-2">
+                <div className="flex min-w-0 flex-1 items-center overflow-hidden">
                   <div className="flex items-center gap-x-1">
                     <AttachItem
                       workspaceSlug={workspaceSlug}
@@ -138,7 +138,7 @@ export default function PromptInput({
                     autoOpenedToolsRef={autoOpenedToolsRef}
                   />
                 </div>
-                <div className="flex gap-x-2 items-center">
+                <div className="flex shrink-0 items-center gap-1 sm:gap-2">
                   <TextSizeButton />
                   <SpeechToText sendCommand={sendCommand} />
                   <EnhancePromptButton

@@ -4043,6 +4043,8 @@ const TRANSLATIONS = {
     backToWorkspaces: "Back to workspaces",
     openSettings: "Open settings",
     workspacesList: "Workspaces",
+    projects: "Projects",
+    chats: "Chats",
     workspaceCloud: "Workspace Cloud",
     generalAppearanceSettings: "General appearance settings",
     database: {
@@ -4317,6 +4319,7 @@ const TRANSLATIONS = {
   },
   threadContainer: {
     loadingThreads: "Loading threads...",
+    noProjects: "No projects yet",
     moveError: "Thread could not be moved.",
     dropHere: "Drag here (without folder)",
     createError: "Could not create thread - {{error}}",

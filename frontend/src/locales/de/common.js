@@ -4139,6 +4139,8 @@ const TRANSLATIONS = {
     backToWorkspaces: "Zurück zu Workspaces",
     openSettings: "Einstellungen öffnen",
     workspacesList: "Workspaces",
+    projects: "Projekte",
+    chats: "Chats",
     workspaceCloud: "Workspace-Cloud",
     generalAppearanceSettings: "Allgemeine Erscheinungseinstellungen",
     database: {
@@ -4415,7 +4417,8 @@ const TRANSLATIONS = {
     cancelDelete: "Thread-Löschung abbrechen",
   },
   threadContainer: {
-    loadingThreads: "Threads werden geladen...",
+    loadingThreads: "Chats werden geladen...",
+    noProjects: "Noch keine Projekte",
     moveError: "Thread konnte nicht verschoben werden.",
     dropHere: "Hierher ziehen (ohne Ordner)",
     createError: "Thread konnte nicht erstellt werden - {{error}}",
