@@ -1424,7 +1424,24 @@ const TRANSLATIONS = {
       chatHistory: "Chat history",
       streamingResponse: "AI is responding…",
       errorMessage: "An error occurred",
+      welcome: "Start a conversation",
+      capabilities: "Workspace shortcuts",
+      scrollToBottom: "Scroll to the latest message",
     },
+    welcome: {
+      eyebrow: "OpenSIN Intelligence",
+      description:
+        "Ask a question, explore your sources, or turn your research into clear, grounded answers.",
+      model: "Active model: {{model}}",
+    },
+    capability_sources: "Explore sources",
+    capability_sources_desc: "Search documents and links in this workspace",
+    capability_notes: "Open notes",
+    capability_notes_desc: "Capture findings without leaving your research",
+    capability_database: "Search database",
+    capability_database_desc: "Explore structured parliamentary data",
+    capability_rag: "Answer with sources",
+    capability_rag_desc: "Ground the next response in your documents",
     llm: {
       title: "Workspace LLM Provider",
       description:

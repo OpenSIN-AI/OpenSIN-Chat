@@ -90,9 +90,15 @@ describe("EmptyState", () => {
     return render(<Wrapper />);
   }
 
-  it("renders the greeting and prompt input", () => {
+  it("renders the translated welcome region and prompt input", () => {
     renderEmptyState();
-    expect(screen.getByText("How can I help you today?")).toBeInTheDocument();
+    expect(
+      screen.getByRole("region", { name: "How can I help you today?" }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("OpenSIN Intelligence")).toBeInTheDocument();
+    expect(
+      screen.getByRole("group", { name: "Workspace shortcuts" }),
+    ).toBeInTheDocument();
     expect(screen.getByTestId("prompt-input")).toBeInTheDocument();
   });
 

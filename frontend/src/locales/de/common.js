@@ -985,7 +985,24 @@ const TRANSLATIONS = {
       chatHistory: "Chat-Verlauf",
       streamingResponse: "KI antwortet…",
       errorMessage: "Ein Fehler ist aufgetreten",
+      welcome: "Unterhaltung beginnen",
+      capabilities: "Workspace-Schnellzugriffe",
+      scrollToBottom: "Zur neuesten Nachricht scrollen",
     },
+    welcome: {
+      eyebrow: "OpenSIN Intelligence",
+      description:
+        "Stelle eine Frage, durchsuche deine Quellen oder verwandle deine Recherche in klare, belegte Antworten.",
+      model: "Aktives Modell: {{model}}",
+    },
+    capability_sources: "Quellen durchsuchen",
+    capability_sources_desc: "Dokumente und Links im Workspace durchsuchen",
+    capability_notes: "Notizen öffnen",
+    capability_notes_desc: "Erkenntnisse festhalten, ohne die Recherche zu verlassen",
+    capability_database: "Datenbank durchsuchen",
+    capability_database_desc: "Strukturierte Parlamentsdaten erkunden",
+    capability_rag: "Mit Quellen antworten",
+    capability_rag_desc: "Die nächste Antwort auf deine Dokumente stützen",
     llm: {
       title: "Workspace-LLM-Anbieter",
       description:
@@ -4993,7 +5010,7 @@ const TRANSLATIONS = {
     daysAgo: "vor {{count}} T.",
     never: "Nie",
   },
-  // ── Batch 14 — i18next/no-literal-string fixes ─────────────────────
+  // ── Batch 14 — i18next/no-literal-string fixes ──────���──────────────
   vectorSearch: {
     searchPreference: "Suchpräferenz",
     default: "Standard",

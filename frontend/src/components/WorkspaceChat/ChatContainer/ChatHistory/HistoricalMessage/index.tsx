@@ -108,10 +108,10 @@ const HistoricalMessage = ({
       <div
         key={uuid}
         onAnimationEnd={onEndAnimation}
-        className={`${isDeleted ? "animate-remove" : ""} flex justify-end w-full group py-2.5`}
+        className={`${isDeleted ? "animate-remove" : ""} group flex w-full justify-end py-3`}
       >
-        <div className="flex flex-col items-end max-w-[80%]">
-          <div className="rounded-2xl rounded-br-md border border-white/[0.08] bg-white/[0.06] px-3.5 py-2 text-[#e4e4e7] [&_p]:m-0 light:border-zinc-200 light:bg-zinc-100 light:text-zinc-900">
+        <div className="flex max-w-[88%] flex-col items-end sm:max-w-[80%]">
+          <div className="rounded-2xl rounded-br-md border border-[var(--chat-border)] bg-[var(--chat-user-bubble)] px-4 py-2.5 text-[var(--chat-text)] [&_p]:m-0">
             <TruncatableContent>
               <RenderChatContent
                 role={role}
@@ -142,9 +142,9 @@ const HistoricalMessage = ({
     <div
       key={uuid}
       onAnimationEnd={onEndAnimation}
-      className={`${isDeleted ? "animate-remove" : ""} group flex w-full justify-start py-3`}
+      className={`${isDeleted ? "animate-remove" : ""} group flex w-full justify-start py-4`}
     >
-      <div className="flex flex-col md:max-w-[85%] w-full">
+      <div className="flex w-full flex-col">
         {isEditing ? (
           <EditMessageForm
             role={role}
@@ -345,15 +345,12 @@ function TruncatableContent({ children }: any) {
       <div className="relative">
         <div
           ref={contentRef}
-          className={`text-zinc-50 light:text-slate-900 ${showTruncation ? "max-h-[250px] overflow-hidden" : ""}`}
+          className={`text-[var(--chat-text)] ${showTruncation ? "max-h-[250px] overflow-hidden" : ""}`}
         >
           {children}
         </div>
         {showTruncation && (
-          <>
-            <div className="absolute bottom-0 left-0 right-0 h-[36px] light:hidden pointer-events-none bg-[linear-gradient(180deg,_rgba(13,_13,_13,_0.00)_0%,_rgba(13,_13,_13,_0.65)_50%,_#0d0d0d_100%)]" />
-            <div className="absolute bottom-0 left-0 right-0 h-[36px] hidden light:block pointer-events-none bg-[linear-gradient(180deg,_rgba(241,_245,_249,_0.00)_0%,_rgba(241,_245,_249,_0.65)_50%,_#F1F5F9_100%)]" />
-          </>
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-9 border-b border-[var(--chat-border)] bg-[var(--chat-user-bubble)]/90" />
         )}
       </div>
       {isOverflowing && (
@@ -366,7 +363,7 @@ function TruncatableContent({ children }: any) {
               : t("common.expand", "Expand")
           }
           aria-expanded={isExpanded}
-          className="text-zinc-300 light:text-slate-700 hover:text-theme-text-primary light:hover:text-theme-text-primary text-xs font-medium leading-4 mt-2"
+          className="mt-2 text-xs font-medium leading-4 text-[var(--chat-text-muted)] hover:text-[var(--chat-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--chat-focus-ring)]"
         >
           {isExpanded ? t("chat_window.see_less") : t("chat_window.see_more")}
         </button>
@@ -382,7 +379,7 @@ const RenderChatContent = memo(
     if (role !== "assistant")
       return (
         <span
-          className="markdown flex flex-col gap-y-0.5 text-zinc-50 light:text-slate-900 leading-relaxed"
+          className="markdown flex flex-col gap-y-0.5 leading-relaxed text-[var(--chat-text)]"
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(renderMarkdown(message)),
           }}
@@ -413,7 +410,7 @@ const RenderChatContent = memo(
     return (
       <>
         <span
-          className="markdown flex flex-col gap-y-0.5 text-theme-text-primary light:text-zinc-900 leading-relaxed"
+          className="markdown flex flex-col gap-y-0.5 leading-relaxed text-[var(--chat-text)]"
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(renderMarkdown(msgToRender)),
           }}
