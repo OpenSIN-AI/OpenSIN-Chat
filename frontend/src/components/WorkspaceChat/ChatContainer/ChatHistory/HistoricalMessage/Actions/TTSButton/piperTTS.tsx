@@ -7,6 +7,7 @@ import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import PiperTTSClient from "@/utils/piperTTS";
 import messageToSpeech from "@/utils/chat/messageToSpeech";
 import logger from "@/utils/logger";
+import { messageActionButtonClass } from "../MessageActionButton";
 
 export default function PiperTTS({ chatId, voiceId = null, message }: any) {
   const { t } = useTranslation();
@@ -79,7 +80,7 @@ export default function PiperTTS({ chatId, voiceId = null, message }: any) {
   }, [audioSrc]);
 
   return (
-    <div className="mt-3 relative">
+    <div className="relative flex h-7 w-7 items-center justify-center">
       <button
         type="button"
         onClick={speakMessage}
@@ -89,19 +90,19 @@ export default function PiperTTS({ chatId, voiceId = null, message }: any) {
         data-tooltip-content={
           speaking ? t("common.pauseSpeech") : t("common.speakMessage")
         }
-        className="border-none text-[var(--theme-sidebar-footer-icon-fill)]"
+        className={messageActionButtonClass}
         aria-label={
           speaking ? t("common.pauseSpeech") : t("common.speakMessage")
         }
       >
         {speaking ? (
-          <PauseCircle size={18} className="mb-1" />
+          <PauseCircle size={20} />
         ) : (
           <>
             {loading ? (
-              <CircleNotch size={18} className="mb-1 animate-spin" />
+              <CircleNotch size={20} className="animate-spin" />
             ) : (
-              <SpeakerHigh size={18} className="mb-1" />
+              <SpeakerHigh size={20} />
             )}
           </>
         )}

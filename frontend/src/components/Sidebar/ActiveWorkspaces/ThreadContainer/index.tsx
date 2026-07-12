@@ -2,6 +2,7 @@
 import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { FolderSimplePlus } from "@phosphor-icons/react/dist/csr/FolderSimplePlus";
@@ -581,6 +582,7 @@ function ThreadContainer({
                     mutate();
                   }}
                 />
+                <NewChatButton workspace={workspace} compact />
               </div>
               {projectsOpen && (
                 <div className="mt-0.5">
@@ -614,25 +616,32 @@ function ThreadContainer({
               )}
             </section>
             <section>
-              <button
-                type="button"
-                aria-expanded={chatsOpen}
-                onClick={() => {
-                  const next = !chatsOpen;
-                  setChatsOpen(next);
-                  safeSetItem(
-                    `sidebar-chats-open-${workspace.slug}`,
-                    String(next),
-                  );
-                }}
-                className="flex h-8 w-full items-center gap-2 rounded-lg px-2 text-left text-sm font-medium text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
-              >
-                {chatsOpen ? <CaretDown size={13} /> : <CaretRight size={13} />}
-                <span className="flex-1">{t("sidebar.chats", "Chats")}</span>
-                <span className="text-[11px] text-theme-placeholder">
-                  {unfolderedThreads.length + (defaultThreadHasChats ? 1 : 0)}
-                </span>
-              </button>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  aria-expanded={chatsOpen}
+                  onClick={() => {
+                    const next = !chatsOpen;
+                    setChatsOpen(next);
+                    safeSetItem(
+                      `sidebar-chats-open-${workspace.slug}`,
+                      String(next),
+                    );
+                  }}
+                  className="flex h-8 min-w-0 flex-1 items-center gap-2 rounded-lg px-2 text-left text-sm font-medium text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
+                >
+                  {chatsOpen ? (
+                    <CaretDown size={13} />
+                  ) : (
+                    <CaretRight size={13} />
+                  )}
+                  <span className="flex-1">{t("sidebar.chats", "Chats")}</span>
+                  <span className="text-[11px] text-theme-placeholder">
+                    {unfolderedThreads.length + (defaultThreadHasChats ? 1 : 0)}
+                  </span>
+                </button>
+                <NewChatButton workspace={workspace} compact />
+              </div>
               {chatsOpen && (
                 <UnfolderedDropZone isDragging={!!activeId}>
                   {defaultThreadHasChats && (
@@ -835,6 +844,80 @@ function UnfolderedDropZone({ children, isDragging }) {
       )}
       {children}
     </div>
+  );
+}
+
+function NewChatButton({ workspace, folder = null, compact = false }) {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  const onClick = async (event) => {
+    event.stopPropagation();
+    if (!workspace?.slug || loading) return;
+    setLoading(true);
+    try {
+      const { thread, message, error } = await Workspace.threads.new(
+        workspace.slug,
+      );
+      if (message || error || !thread?.slug) {
+        showToast(
+          t("threadContainer.createError", { error: message || error }),
+          "error",
+          { clear: true },
+        );
+        return;
+      }
+      if (folder?.id) {
+        await Workspace.threads.folders.assignThread(
+          workspace.slug,
+          thread.slug,
+          folder.id,
+        );
+      }
+      invalidateThreads(workspace.slug);
+      navigate(paths.workspace.thread(workspace.slug, thread.slug));
+    } catch (e: unknown) {
+      showToast(
+        t("threadContainer.createError", {
+          error: e instanceof Error ? e.message : String(e),
+        }),
+        "error",
+        { clear: true },
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={loading}
+      aria-label={t("threadContainer.newChat")}
+      title={t("threadContainer.newChat")}
+      className={`${compact ? "h-8 w-8 justify-center" : "h-9 w-full"} relative flex items-center rounded-lg border-none text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary disabled:opacity-50`}
+    >
+      <div
+        className={`flex items-center gap-2 ${compact ? "justify-center" : "w-full pl-3"}`}
+      >
+        {loading ? (
+          <CircleNotch
+            weight="bold"
+            size={14}
+            className="shrink-0 animate-spin"
+          />
+        ) : (
+          <Plus weight="bold" size={14} className="shrink-0" />
+        )}
+        {!compact && (
+          <p className="text-left text-[13px] font-medium text-theme-text-secondary">
+            {t("threadContainer.newChat")}
+          </p>
+        )}
+      </div>
+    </button>
   );
 }
 

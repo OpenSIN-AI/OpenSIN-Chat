@@ -65,6 +65,8 @@ const HistoricalMessage = ({
 
   const isRefusalMessage =
     role === "assistant" && message === chatQueryRefusalResponse(workspace);
+  const thoughtChainContent =
+    role === "assistant" ? getThoughtChainContent(message) : null;
 
   if (completeDelete) return null;
 
@@ -157,43 +159,21 @@ const HistoricalMessage = ({
         ) : (
           <div className="break-words">
             <HistoricalClarifyingQuestions surveys={clarifyingQuestions} />
-            {/* Thought chain content — only visible when brain icon is toggled */}
-            {role === "assistant" &&
-              (() => {
-                let thoughtChain = null;
-                if (message?.match(THOUGHT_REGEX_COMPLETE))
-                  thoughtChain = message.match(THOUGHT_REGEX_COMPLETE)?.[0];
-                else if (
-                  message?.match(THOUGHT_REGEX_OPEN) &&
-                  !message?.match(THOUGHT_REGEX_CLOSE)
-                )
-                  thoughtChain = message;
-                return thoughtChain ? (
-                  <ThoughtChainComponent
-                    content={thoughtChain}
-                    messageId={uuid}
-                  />
-                ) : null;
-              })()}
+            {/* Thought chain content — only visible when the brain icon is toggled. */}
+            {thoughtChainContent && (
+              <ThoughtChainComponent
+                content={thoughtChainContent}
+                messageId={uuid}
+              />
+            )}
             {/* Brain icon + message side by side */}
             <div className="flex items-start gap-x-1.5">
-              {role === "assistant" &&
-                (() => {
-                  let thoughtChain = null;
-                  if (message?.match(THOUGHT_REGEX_COMPLETE))
-                    thoughtChain = message.match(THOUGHT_REGEX_COMPLETE)?.[0];
-                  else if (
-                    message?.match(THOUGHT_REGEX_OPEN) &&
-                    !message?.match(THOUGHT_REGEX_CLOSE)
-                  )
-                    thoughtChain = message;
-                  return thoughtChain ? (
-                    <ThoughtBrainButton
-                      messageId={uuid}
-                      content={thoughtChain}
-                    />
-                  ) : null;
-                })()}
+              {thoughtChainContent && (
+                <ThoughtBrainButton
+                  messageId={uuid}
+                  content={thoughtChainContent}
+                />
+              )}
               <div className="flex-1 min-w-0">
                 <RenderChatContent
                   role={role}
@@ -291,6 +271,20 @@ export default memo(
     prevProps.clarifyingQuestions === nextProps.clarifyingQuestions,
 );
 
+function getThoughtChainContent(message: string | null | undefined) {
+  if (!message) return null;
+  if (message.match(THOUGHT_REGEX_COMPLETE)) {
+    return message.match(THOUGHT_REGEX_COMPLETE)?.[0] ?? null;
+  }
+  if (
+    message.match(THOUGHT_REGEX_OPEN) &&
+    !message.match(THOUGHT_REGEX_CLOSE)
+  ) {
+    return message;
+  }
+  return null;
+}
+
 /**
  * Currently only renders image attachments as clickable thumbnails that open in the lightbox.
  * Other attachment types may be supported here in the future.
@@ -373,7 +367,7 @@ function TruncatableContent({ children }: any) {
 }
 
 const RenderChatContent = memo(
-  ({ role, message, messageId }: any) => {
+  ({ role, message }: any) => {
     // If the message is not from the assistant, we can render it directly
     // as normal since the user cannot think (lol)
     if (role !== "assistant")
@@ -385,14 +379,12 @@ const RenderChatContent = memo(
           }}
         />
       );
-    let thoughtChain = null;
     let msgToRender = message;
     if (!message) return null;
 
     // If the message is a perfect thought chain, we can render it directly
     // Complete == open and close tags match perfectly.
     if (message.match(THOUGHT_REGEX_COMPLETE)) {
-      thoughtChain = message.match(THOUGHT_REGEX_COMPLETE)?.[0];
       msgToRender = message.replace(THOUGHT_REGEX_COMPLETE, "");
     }
 
@@ -403,7 +395,6 @@ const RenderChatContent = memo(
       message.match(THOUGHT_REGEX_OPEN) &&
       !message.match(THOUGHT_REGEX_CLOSE)
     ) {
-      thoughtChain = message;
       msgToRender = "";
     }
 
@@ -421,8 +412,7 @@ const RenderChatContent = memo(
   (prevProps, nextProps) => {
     return (
       prevProps.role === nextProps.role &&
-      prevProps.message === nextProps.message &&
-      prevProps.messageId === nextProps.messageId
+      prevProps.message === nextProps.message
     );
   },
 );

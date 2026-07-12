@@ -7,12 +7,11 @@ import {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { List } from "@phosphor-icons/react/dist/csr/List";
 import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { SidebarSimple } from "@phosphor-icons/react/dist/csr/SidebarSimple";
-import { CalendarBlank } from "@phosphor-icons/react/dist/csr/CalendarBlank";
 import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
 import { useTranslation } from "react-i18next";
 import { Tooltip } from "react-tooltip";
@@ -59,7 +58,6 @@ function SidebarContent({
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { slug } = useParams();
-  const { user } = useUser();
   const { workspaces } = useWorkspaces({ ordered: true });
   const [creating, setCreating] = useState(false);
   const { showing, showModal, hideModal } = useNewWorkspaceModal();
@@ -133,16 +131,6 @@ function SidebarContent({
             ? t("common.loading")
             : t("activeWorkspaces.newChat", "New Chat")}
         </button>
-        {user?.role !== "default" && (
-          <Link
-            to={paths.settings.scheduledJobs()}
-            onClick={onNavigate}
-            className="mb-1 flex h-9 shrink-0 items-center gap-2 rounded-lg px-2.5 text-sm text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
-          >
-            <CalendarBlank size={17} />
-            {t("sidebar.scheduled", "Scheduled")}
-          </Link>
-        )}
         <div className="no-scroll min-h-0 flex-1 overflow-y-auto pt-1">
           <ActiveWorkspaces />
         </div>

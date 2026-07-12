@@ -163,7 +163,11 @@ function ThreadItem({
           </Link>
         )}
         {!!thread.slug && !thread.deleted && !thread.virtual && (
-          <div ref={optionsContainer} className="flex items-center">
+          <div
+            ref={optionsContainer}
+            className="flex items-center"
+            onPointerDown={(e) => e.stopPropagation()}
+          >
             {" "}
             {/* Added flex and items-center */}
             {ctrlPressed ? (
@@ -185,7 +189,11 @@ function ThreadItem({
                   type="button"
                   aria-label={t("threadItem.threadOptions")}
                   className="border-none"
-                  onClick={() => setShowOptions(!showOptions)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setShowOptions(!showOptions);
+                  }}
                 >
                   <DotsThree
                     className="text-slate-300 light:text-theme-text-secondary hover:text-theme-text-primary light:hover:text-theme-text-primary hover:light:text-theme-text-primary"
@@ -354,6 +362,7 @@ function OptionsMenu({
   return (
     <div
       ref={menuRef}
+      onPointerDown={(e) => e.stopPropagation()}
       className="absolute w-fit z-[20] top-[25px] right-[10px] bg-theme-bg-sidebar border-[1px] border-theme-sidebar-border rounded-lg p-1"
     >
       <button

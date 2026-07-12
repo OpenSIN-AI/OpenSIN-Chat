@@ -169,7 +169,8 @@ describe("HistoricalMessage – message rendering", () => {
     const bubble = container.querySelector(".rounded-br-md");
     expect(bubble).toBeInTheDocument();
     expect(bubble?.className).toContain("rounded-2xl");
-    expect(bubble?.className).toContain("text-[#e4e4e7]");
+    expect(bubble?.className).toContain("bg-[var(--chat-user-bubble)]");
+    expect(bubble?.className).toContain("text-[var(--chat-text)]");
   });
 
   it("renders assistant message without user bubble styling", () => {

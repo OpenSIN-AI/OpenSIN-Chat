@@ -326,9 +326,7 @@ function ThreadFolderItem({
 
         {/* Action buttons - only show on hover (or when quickAdd dropdown is open) */}
         {!editing && (
-          <div
-            className={`flex items-center gap-x-0.5 transition-opacity ${quickAddOpen ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
-          >
+          <div className="flex items-center gap-x-0.5 opacity-100 transition-opacity">
             <FolderQuickAdd
               workspace={workspace}
               folder={folder}
@@ -379,7 +377,7 @@ function ThreadFolderItem({
           ) : (
             (threads as any).map((thread, i) => (
               <ThreadItem
-                key={thread.slug}
+                key={thread.slug || thread.id || i}
                 idx={i}
                 ctrlPressed={ctrlPressed}
                 toggleMarkForDeletion={toggleMarkForDeletion}

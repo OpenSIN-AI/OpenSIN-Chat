@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { SpeakerHigh } from "@phosphor-icons/react/dist/csr/SpeakerHigh";
 import { PauseCircle } from "@phosphor-icons/react/dist/csr/PauseCircle";
 import messageToSpeech from "@/utils/chat/messageToSpeech";
+import { messageActionButtonClass } from "../MessageActionButton";
 
 export default function NativeTTSMessage({ chatId, message }: any) {
   const { t } = useTranslation();
@@ -46,7 +47,7 @@ export default function NativeTTSMessage({ chatId, message }: any) {
 
   if (!supported) return null;
   return (
-    <div className="relative flex items-center justify-center h-7 w-7">
+    <div className="relative flex h-7 w-7 items-center justify-center">
       <button
         type="button"
         onClick={speakMessage}
@@ -55,7 +56,7 @@ export default function NativeTTSMessage({ chatId, message }: any) {
         data-tooltip-content={
           speaking ? t("common.pauseSpeech") : t("common.speakMessage")
         }
-        className="border-none text-zinc-300 light:text-slate-500"
+        className={messageActionButtonClass}
         aria-label={
           speaking ? t("common.pauseSpeech") : t("common.speakMessage")
         }

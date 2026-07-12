@@ -8,6 +8,7 @@ import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { DotsThreeVertical } from "@phosphor-icons/react/dist/csr/DotsThreeVertical";
 import { TreeView } from "@phosphor-icons/react/dist/csr/TreeView";
 import { useTranslation } from "react-i18next";
+import { messageActionButtonClass } from "../MessageActionButton";
 
 function ActionMenu({ chatId, forkThread, isEditing, role }: any) {
   const { t } = useTranslation();
@@ -46,18 +47,18 @@ function ActionMenu({ chatId, forkThread, isEditing, role }: any) {
 
   return (
     <div
-      className="relative flex items-center justify-center h-7 w-7"
+      className="relative flex h-7 w-7 items-center justify-center"
       ref={menuRef}
     >
       <button
         type="button"
         onClick={toggleMenu}
-        className="border-none text-zinc-300 light:text-slate-500 transition-colors duration-200"
+        className={messageActionButtonClass}
         data-tooltip-id="action-menu"
         data-tooltip-content={t("chat_window.more_actions")}
         aria-label={t("chat_window.more_actions")}
       >
-        <DotsThreeVertical size={24} weight="bold" />
+        <DotsThreeVertical size={20} weight="bold" />
       </button>
       {open && (
         <div className="absolute -top-1 left-7 mt-1 border-[1.5px] border-white/40 rounded-lg bg-theme-action-menu-bg flex flex-col shadow-[0_4px_14px_rgba(0,0,0,0.25)] text-theme-text-primary z-[99] md:z-10">

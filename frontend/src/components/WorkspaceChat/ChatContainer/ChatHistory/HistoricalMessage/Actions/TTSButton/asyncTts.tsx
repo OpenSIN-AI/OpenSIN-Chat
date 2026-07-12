@@ -7,6 +7,7 @@ import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";
 import logger from "@/utils/logger";
+import { messageActionButtonClass } from "../MessageActionButton";
 
 export default function AsyncTTSMessage({
   slug,
@@ -92,7 +93,7 @@ export default function AsyncTTSMessage({
 
   if (!chatId) return null;
   return (
-    <div className="mt-3 relative">
+    <div className="relative flex h-7 w-7 items-center justify-center">
       <button
         type="button"
         onClick={speakMessage}
@@ -103,19 +104,19 @@ export default function AsyncTTSMessage({
             ? t("chat_window.pause_tts_speech_message")
             : t("chat_window.tts_speak_message")
         }
-        className="border-none text-zinc-300 light:text-slate-500"
+        className={messageActionButtonClass}
         aria-label={
           speaking ? t("common.pauseSpeech") : t("common.speakMessage")
         }
       >
         {speaking ? (
-          <PauseCircle size={18} className="mb-1" />
+          <PauseCircle size={20} />
         ) : (
           <>
             {loading ? (
-              <CircleNotch size={18} className="mb-1 animate-spin" />
+              <CircleNotch size={20} className="animate-spin" />
             ) : (
-              <SpeakerHigh size={18} className="mb-1" />
+              <SpeakerHigh size={20} />
             )}
           </>
         )}

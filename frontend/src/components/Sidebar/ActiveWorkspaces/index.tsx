@@ -3,11 +3,14 @@ import { memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useMatch, useParams } from "react-router-dom";
+import { Link, useMatch, useParams } from "react-router-dom";
+import { CalendarBlank } from "@phosphor-icons/react/dist/csr/CalendarBlank";
 import useWorkspaces from "@/hooks/useWorkspaces";
+import useUser from "@/hooks/useUser";
 import { LAST_VISITED_WORKSPACE } from "@/utils/constants";
 import { safeJsonParse } from "@/utils/request";
 import { safeGetItem } from "@/utils/safeStorage";
+import paths from "@/utils/paths";
 import ThreadContainer from "./ThreadContainer";
 
 type WorkspaceSummary = {
@@ -21,6 +24,7 @@ type StoredWorkspace = { slug?: string } | null;
 function ActiveWorkspaces() {
   const { t } = useTranslation();
   const { slug } = useParams();
+  const { user } = useUser();
   const { workspaces, isLoading } = useWorkspaces({ ordered: true });
   const isHomePage = !!useMatch("/");
 
@@ -57,6 +61,7 @@ function ActiveWorkspaces() {
   }
 
   if (workspaces.length === 0) return null;
+  if (!activeWorkspace) return null;
 
   return (
     <div
@@ -68,17 +73,21 @@ function ActiveWorkspaces() {
         {t("sidebar.projects")}
       </p>
       <div className="flex flex-col gap-0.5">
-        {workspaces.map((workspace: WorkspaceSummary) => (
-          <ThreadContainer
-            key={workspace.slug}
-            workspace={workspace}
-            isActive={activeWorkspace?.slug === workspace.slug}
-            isVirtualThread={
-              isHomePage && activeWorkspace?.slug === workspace.slug
-            }
-            codexProject
-          />
-        ))}
+        <ThreadContainer
+          key={activeWorkspace.slug}
+          workspace={activeWorkspace}
+          isActive
+          isVirtualThread={isHomePage}
+        />
+        {user?.role !== "default" && (
+          <Link
+            to={paths.settings.scheduledJobs()}
+            className="mt-1 flex h-8 items-center gap-2 rounded-lg px-2 text-sm font-medium text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
+          >
+            <CalendarBlank size={15} />
+            <span className="flex-1">{t("sidebar.scheduled", "Aufgaben")}</span>
+          </Link>
+        )}
       </div>
     </div>
   );

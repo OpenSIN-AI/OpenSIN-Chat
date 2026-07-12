@@ -12,6 +12,7 @@ import {
   useMessageActionsContext,
   EDIT_EVENT,
 } from "@/components/WorkspaceChat/ChatContainer/ChatHistory/MessageActionsContext";
+import { messageActionButtonClass } from "../MessageActionButton";
 
 export function useEditMessage({ chatId, role }: any) {
   const context = useMessageActionsContext();
@@ -30,11 +31,7 @@ export function EditMessageAction({ chatId = null, role, isEditing }: any) {
 
   if (isEditing) return null;
   return (
-    <div
-      className={`relative flex items-center justify-center h-7 w-7 ${
-        role === "user" && !isEditing ? "" : "!opacity-100"
-      }`}
-    >
+    <div className="relative flex h-7 w-7 items-center justify-center">
       <button
         type="button"
         onClick={handleEditClick}
@@ -45,14 +42,14 @@ export function EditMessageAction({ chatId = null, role, isEditing }: any) {
             ? t("chat_window.edit_prompt")
             : t("chat_window.edit_response")
         }
-        className={`border-none px-0 ${!chatId ? "opacity-30 cursor-not-allowed" : "text-zinc-300 light:text-slate-500"}`}
+        className={messageActionButtonClass}
         aria-label={
           role === "user"
             ? t("chat_window.edit_prompt")
             : t("chat_window.edit_response")
         }
       >
-        <Pencil size={21} />
+        <Pencil size={20} />
       </button>
     </div>
   );
