@@ -35,7 +35,7 @@ export default function VectorCount({
     <div>
       <h3 className="input-label">{t("general.vector.title")}</h3>
       <p className="text-theme-text-secondary text-sm font-medium">
-        {vectorCount}
+        {vectorCount as any}
       </p>
     </div>
   );

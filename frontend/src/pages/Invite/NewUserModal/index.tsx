@@ -38,7 +38,9 @@ export default function NewUserModal(): JSX.Element {
 
       const { success, error } = await Invite.acceptInvite(code, data);
       if (success) {
-        const { valid, user, token, message } = await System.requestToken(data);
+        const { valid, user, token, message } = (await System.requestToken(
+          data as any,
+        )) as any;
         if (valid && !!token && !!user) {
           safeSetItem(AUTH_USER, JSON.stringify(user));
           safeSetItem(AUTH_TOKEN, token);

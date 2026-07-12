@@ -124,7 +124,7 @@ export function formatRelativeDate(dateStr: string, t: any) {
   if (!dateStr) return "";
   const date = new Date(dateStr);
   const now = new Date();
-  const diffMs = now - date;
+  const diffMs = (now as any) - (date as any);
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
   if (diffDays === 0) return t("sidebar.filesystem.today", "heute");
   if (diffDays === 1) return t("sidebar.filesystem.yesterday", "gestern");

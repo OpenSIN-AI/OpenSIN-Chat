@@ -93,6 +93,7 @@ export default function ChatPromptSettings({
         show={showPromptHistory}
         onRestore={handleRestoreFromHistory}
         onClose={() => setShowPromptHistory(false)}
+        onPublishClick={() => {}}
       />
       <div>
         <div className="flex flex-col">

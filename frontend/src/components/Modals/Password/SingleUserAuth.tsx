@@ -40,7 +40,7 @@ export default function SingleUserAuth({
     if (!autoLogin || requiresAuth) return;
     let cancelled = false;
     setLoading(true);
-    System.requestToken({})
+    (System.requestToken({}) as any)
       .then(({ valid, token, message }) => {
         if (cancelled) return;
         if (valid && token) {
@@ -65,12 +65,12 @@ export default function SingleUserAuth({
     setError(null);
     e.preventDefault();
     setLoading(true);
-    const data = {};
+    const data = {} as any;
     const form = new FormData(e.target);
     for (const [key, value] of form.entries()) data[key] = value;
     try {
       const { valid, token, message, recoveryCodes } =
-        await System.requestToken(data);
+        (await System.requestToken(data)) as any;
       if (valid && !!token) {
         setToken(token);
         if (recoveryCodes) {

@@ -29,14 +29,14 @@ describe("useUnsavedChanges", () => {
   it("calls useBlocker with a function that returns hasChanges=true", () => {
     renderHook(() => useUnsavedChanges(true));
     expect(useBlocker).toHaveBeenCalledTimes(1);
-    const blockerFn = useBlocker.mock.calls[0][0];
+    const blockerFn = (useBlocker as any).mock.calls[0][0];
     expect(typeof blockerFn).toBe("function");
     expect(blockerFn()).toBe(true);
   });
 
   it("calls useBlocker with a function that returns hasChanges=false", () => {
     renderHook(() => useUnsavedChanges(false));
-    const blockerFn = useBlocker.mock.calls[0][0];
+    const blockerFn = (useBlocker as any).mock.calls[0][0];
     expect(blockerFn()).toBe(false);
   });
 
@@ -93,8 +93,8 @@ describe("useUnsavedChangesGuard", () => {
     expect(result.current.isBlocking).toBe(false);
   });
 
-  it("returns isBlocking=true when blocker state is blocking", () => {
-    mockBlocker.state = "blocking";
+  it("returns isBlocking=true when blocker state is blocked", () => {
+    mockBlocker.state = "blocked";
     const { result } = renderHook(() => useUnsavedChangesGuard(true));
     expect(result.current.isBlocking).toBe(true);
   });

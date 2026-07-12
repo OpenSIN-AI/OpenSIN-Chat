@@ -96,8 +96,12 @@ describe("useAgentForm", () => {
 
     vi.mocked(Admin.updateSystemPreferences).mockResolvedValue({
       success: true,
-    });
-    vi.mocked(System.updateSystem).mockResolvedValue({ success: true });
+      error: "",
+    } as any);
+    vi.mocked(System.updateSystem).mockResolvedValue({
+      success: true,
+      error: "",
+    } as any);
 
     await act(async () => {
       await result.current.handleSubmit({ preventDefault: vi.fn() });

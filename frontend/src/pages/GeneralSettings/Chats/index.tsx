@@ -89,7 +89,7 @@ export default function WorkspaceChats() {
   const handleClearAllChats = async () => {
     if (!window.confirm(t("recorded.clearConfirm"))) return false;
     try {
-      await System.deleteChat(-1);
+      await System.deleteChat(-1 as any);
       setChats([]);
       showToast(t("recorded.clearedAll"), "success");
     } catch (e) {
@@ -123,8 +123,9 @@ export default function WorkspaceChats() {
     async function fetchChats() {
       setLoading(true);
       try {
-        const { chats: _chats = [], hasPages = false } =
-          await System.chats(offset);
+        const { chats: _chats = [], hasPages = false } = (await System.chats(
+          offset,
+        )) as any;
         if (cancelled) return;
         setChats(_chats);
         setCanNext(hasPages);
@@ -257,7 +258,7 @@ function ChatsContainer({
 
   const handleDeleteChat = async (chatId: number) => {
     try {
-      await System.deleteChat(chatId);
+      await System.deleteChat(chatId as any);
       setChats((prevChats) => prevChats.filter((chat) => chat.id !== chatId));
     } catch (e) {
       showToast(String(e), "error");

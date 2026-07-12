@@ -162,7 +162,7 @@ export function useAgentForm() {
         data.env[label] = String(value);
         continue;
       }
-      data.workspace[key] = castToType(key, value);
+      data.workspace[key] = castToType(key, String(value));
     }
 
     try {

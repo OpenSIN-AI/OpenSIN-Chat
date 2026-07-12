@@ -299,7 +299,7 @@ export default function BlockList({
               >
                 <div className="flex items-center gap-3">
                   <div className="w-7 h-7 rounded-lg bg-white/10 light:bg-white flex items-center justify-center">
-                    {React.cloneElement(info.icon, {
+                    {React.cloneElement(info.icon as React.ReactElement<any>, {
                       className: BLOCK_ICON_CLASS,
                     })}
                   </div>

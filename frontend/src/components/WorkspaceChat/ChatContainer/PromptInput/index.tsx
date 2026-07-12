@@ -39,7 +39,7 @@ export default function PromptInput({
   centered = false,
   workspaceSlug = null,
   threadSlug = null,
-}) {
+}: any) {
   const { t } = useTranslation();
   const { isDisabled } = useIsDisabled();
   const {
@@ -148,7 +148,9 @@ export default function PromptInput({
                   />
                   {isStreaming ? (
                     <StopGenerationButton
-                      workspaceSlug={workspaceSlug ?? workspace?.slug ?? null}
+                      workspaceSlug={
+                        workspaceSlug ?? (workspace as any)?.slug ?? null
+                      }
                       threadSlug={threadSlug ?? null}
                     />
                   ) : (

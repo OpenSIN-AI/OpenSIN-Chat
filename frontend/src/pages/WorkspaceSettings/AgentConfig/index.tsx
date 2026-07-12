@@ -57,7 +57,7 @@ export default function WorkspaceAgentConfiguration({
           continue;
         }
 
-        data.workspace[key] = castToType(key, value);
+        data.workspace[key] = castToType(key, value as string);
       }
 
       const { workspace: updatedWorkspace, message } = await Workspace.update(

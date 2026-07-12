@@ -34,7 +34,7 @@ export default function useProviderEndpointAutoDiscovery({
       possibleEndpoints.push(
         new Promise((resolve, reject) => {
           System.customModels(provider, authTokenValue, endpoint, 2_000)
-            .then((results) => {
+            .then((results: any) => {
               if (!results?.models || results.models.length === 0)
                 throw new Error("No models");
               resolve({ endpoint, models: results.models });

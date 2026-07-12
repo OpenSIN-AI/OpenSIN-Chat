@@ -22,7 +22,7 @@ export default function ThemePreference() {
         >
           {Object.entries(availableThemes).map(([key, value]) => (
             <option key={key} value={key}>
-              {value}
+              {String(value)}
             </option>
           ))}
         </select>

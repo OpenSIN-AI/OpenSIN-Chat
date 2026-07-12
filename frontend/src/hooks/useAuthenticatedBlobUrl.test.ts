@@ -73,7 +73,7 @@ describe("useAuthenticatedBlobUrl", () => {
   });
 
   it("loading is true when url is provided but not yet resolved", () => {
-    global.fetch = vi.fn(() => new Promise(() => {})); // never resolves
+    global.fetch = vi.fn(() => new Promise(() => {})) as any; // never resolves
     const { result } = renderHook(() => useAuthenticatedBlobUrl("/api/file/1"));
     expect(result.current.loading).toBe(true);
     expect(result.current.blobUrl).toBeNull();

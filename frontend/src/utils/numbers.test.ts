@@ -83,7 +83,7 @@ describe("milliToHms – various inputs", () => {
   });
 
   it("handles string numeric input", () => {
-    expect(milliToHms("1000")).toBe("1.00s");
+    expect(milliToHms("1000" as any)).toBe("1.00s");
   });
 
   it("trims trailing whitespace from output", () => {

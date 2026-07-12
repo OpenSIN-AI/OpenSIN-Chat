@@ -392,6 +392,7 @@ export default function AgentBuilder(): JSX.Element {
         availableFlows={availableFlows}
         onNewFlow={clearFlow}
         onSaveFlow={saveFlow}
+        onPublishFlow={saveFlow}
       />
       <div className="flex-1 min-h-0 p-6 overflow-y-auto">
         <div

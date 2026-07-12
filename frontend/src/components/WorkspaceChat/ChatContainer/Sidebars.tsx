@@ -88,7 +88,7 @@ export default function Sidebars({ workspace }: SidebarsProps) {
           )}
           {activeSidebar === "agent-sessions" && (
             <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-              <AgentSessionsSidebar />
+              <AgentSessionsSidebar workspace={workspace} />
             </ErrorBoundary>
           )}
           {activeSidebar === "agent-settings" && (

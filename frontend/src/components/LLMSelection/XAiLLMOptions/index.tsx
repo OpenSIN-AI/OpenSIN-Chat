@@ -70,7 +70,7 @@ function XAIModelSelection({ apiKey, settings }: any) {
         required={true}
         className="border-none bg-theme-settings-input-bg text-theme-text-primary border-theme-border text-sm rounded-lg block w-full p-2.5"
       >
-        {customModels.length > 0 && (
+        {(customModels as any).length > 0 && (
           <optgroup label={t("providerSettings.xAi.availableModels")}>
             {(customModels as any).map((model) => {
               return (

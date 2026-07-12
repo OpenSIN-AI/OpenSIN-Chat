@@ -268,11 +268,11 @@ export default function MultiUserAuth() {
     setLoading(true);
     e.preventDefault();
     try {
-      const data = {};
+      const data = {} as any;
       const form = new FormData(e.target);
       for (const [key, value] of form.entries()) data[key] = value;
       const { valid, user, token, message, recoveryCodes } =
-        await System.requestToken(data);
+        (await System.requestToken(data)) as any;
       if (valid && !!token && !!user) {
         setUser(user);
         setToken(token);
@@ -300,10 +300,9 @@ export default function MultiUserAuth() {
   const handleResetPassword = () => setShowRecoveryForm(true);
   const handleRecoverySubmit = async (username, recoveryCodes) => {
     try {
-      const { success, resetToken, error } = await System.recoverAccount(
-        username,
-        recoveryCodes,
-      );
+      const { success, resetToken, error } = await (
+        System.recoverAccount as any
+      )(username, recoveryCodes);
 
       if (success && resetToken) {
         safeSetItem(RESET_TOKEN, resetToken);

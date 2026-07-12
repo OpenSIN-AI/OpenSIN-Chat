@@ -86,7 +86,9 @@ export default function AttachItem({
    * @returns {void}
    */
   function triggerLocalUpload() {
-    const input = document?.getElementById("dnd-chat-file-uploader");
+    const input = document?.getElementById(
+      "dnd-chat-file-uploader",
+    ) as HTMLInputElement | null;
     if (input?.disabled) {
       showToast(t("dndWrapper.processorOffline"), "error");
       return;

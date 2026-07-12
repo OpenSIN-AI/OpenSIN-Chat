@@ -306,7 +306,7 @@ function OllamaLLMModelSelection({
         required={true}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
       >
-        {customModels.length > 0 && (
+        {(customModels as any).length > 0 && (
           <optgroup label={t("ollama.yourLoadedModels")}>
             {(customModels as any).map((model) => {
               return (

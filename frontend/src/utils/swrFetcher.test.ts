@@ -48,7 +48,7 @@ describe("swrFetcher", () => {
   });
 
   it("prepends API_BASE to relative paths", async () => {
-    fetchWithTimeout.mockResolvedValue(jsonResponse({ ok: true }));
+    (fetchWithTimeout as any).mockResolvedValue(jsonResponse({ ok: true }));
     await swrFetcher("/workspaces");
     expect(fetchWithTimeout).toHaveBeenCalledWith(
       "/api/workspaces",
@@ -61,7 +61,7 @@ describe("swrFetcher", () => {
   });
 
   it("uses absolute URL as-is when it starts with http", async () => {
-    fetchWithTimeout.mockResolvedValue(jsonResponse({ ok: true }));
+    (fetchWithTimeout as any).mockResolvedValue(jsonResponse({ ok: true }));
     await swrFetcher("https://example.com/data");
     expect(fetchWithTimeout).toHaveBeenCalledWith(
       "https://example.com/data",
@@ -70,7 +70,7 @@ describe("swrFetcher", () => {
   });
 
   it("uses URL as-is when it starts with API_BASE", async () => {
-    fetchWithTimeout.mockResolvedValue(jsonResponse({ ok: true }));
+    (fetchWithTimeout as any).mockResolvedValue(jsonResponse({ ok: true }));
     await swrFetcher("/api/workspaces");
     expect(fetchWithTimeout).toHaveBeenCalledWith(
       "/api/workspaces",
@@ -80,13 +80,13 @@ describe("swrFetcher", () => {
 
   it("returns parsed JSON on success", async () => {
     const data = { id: 1, name: "test" };
-    fetchWithTimeout.mockResolvedValue(jsonResponse(data));
+    (fetchWithTimeout as any).mockResolvedValue(jsonResponse(data));
     const result = await swrFetcher("/items/1");
     expect(result).toEqual(data);
   });
 
   it("throws an error with status on non-ok response", async () => {
-    fetchWithTimeout.mockResolvedValue(
+    (fetchWithTimeout as any).mockResolvedValue(
       jsonResponse({ error: "not found" }, 404),
     );
     try {
@@ -99,7 +99,7 @@ describe("swrFetcher", () => {
   });
 
   it("calls handleAuthFailure on 401 response", async () => {
-    fetchWithTimeout.mockResolvedValue(jsonResponse({}, 401));
+    (fetchWithTimeout as any).mockResolvedValue(jsonResponse({}, 401));
     try {
       await swrFetcher("/items");
     } catch {

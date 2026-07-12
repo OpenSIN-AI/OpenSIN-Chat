@@ -9,7 +9,7 @@ import { useBlocker } from "react-router-dom";
  * Block route navigation and tab close when `hasChanges` is true.
  *
  * Returns the blocker so the calling component can render a
- * confirmation dialog when `blocker.state === "blocking"`.
+ * confirmation dialog when `blocker.state === "blocked"`.
  *
  * @param hasChanges - whether the current form has unsaved edits
  * @param message - optional message for the beforeunload event (some browsers ignore custom text)
@@ -39,7 +39,7 @@ export function useUnsavedChangesGuard(hasChanges: boolean) {
   const blocker = useUnsavedChanges(hasChanges);
   return useMemo(
     () => ({
-      isBlocking: blocker.state === "blocking",
+      isBlocking: blocker.state === "blocked",
       reset: () => blocker.reset(),
       proceed: () => blocker.proceed(),
     }),

@@ -7,7 +7,6 @@ import { memo, useMemo, useRef, useCallback, useState } from "react";
 import ReactECharts from "echarts-for-react";
 import { resolveDarkMode } from "@/hooks/useTheme";
 import { v4 } from "uuid";
-// @ts-expect-error - file-saver has no bundled types
 import { saveAs } from "file-saver";
 import { DownloadSimple } from "@phosphor-icons/react/dist/csr/DownloadSimple";
 import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";

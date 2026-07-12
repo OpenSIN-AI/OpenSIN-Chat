@@ -26,7 +26,7 @@ export default function SimpleSSOPassthrough() {
       safeRemoveItem(AUTH_TIMESTAMP);
 
       System.simpleSSOLogin(token!)
-        .then((res) => {
+        .then((res: any) => {
           if (!res.valid) throw new Error(res.message);
 
           safeSetItem(AUTH_USER, JSON.stringify(res.user));

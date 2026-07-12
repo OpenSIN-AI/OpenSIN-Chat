@@ -260,7 +260,12 @@ export default function AgentModeButton({
             role="dialog"
             aria-label={t("chat_window.start_agent_session")}
             onMouseDown={(e) => {
-              if (e.currentTarget.contains(e.target)) e.preventDefault();
+              if (
+                e.target instanceof Node &&
+                e.currentTarget.contains(e.target)
+              ) {
+                e.preventDefault();
+              }
             }}
             style={{
               position: "fixed",

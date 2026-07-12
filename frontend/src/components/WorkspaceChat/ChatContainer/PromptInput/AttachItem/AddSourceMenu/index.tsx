@@ -109,7 +109,7 @@ export default function AddSourceMenu({
   workspaceSlug: string;
   onClose?: () => void;
   onAddLocalFiles?: () => void;
-  trigger?: ReactElement;
+  trigger?: ReactElement<any>;
   disabled?: boolean;
   isOpen?: boolean;
 }) {
@@ -208,11 +208,11 @@ export default function AddSourceMenu({
       disabled,
       onClick: (e) => {
         handleToggle();
-        trigger.props.onClick?.(e);
+        (trigger.props as any)?.onClick?.(e);
       },
       onMouseDown: (e) => {
         e.stopPropagation();
-        trigger.props.onMouseDown?.(e);
+        (trigger.props as any)?.onMouseDown?.(e);
       },
       "aria-haspopup": "true",
       "aria-expanded": isOpen,
@@ -370,10 +370,10 @@ function SourcesView({ t, workspaceSlug, onBack, onClose }) {
       return;
     }
     setAddingId(file.id);
-    const { workspace, message } = await Workspace.modifyEmbeddings(
+    const { workspace, message } = (await Workspace.modifyEmbeddings(
       workspaceSlug,
       { adds: [file.docpath], deletes: [] },
-    );
+    )) as any;
     setAddingId(null);
     if (!workspace) {
       showToast(message || t("chat_window.attach_menu.add_failed"), "error");

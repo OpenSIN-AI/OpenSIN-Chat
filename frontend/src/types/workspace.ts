@@ -7,8 +7,8 @@ export interface Workspace {
   id: number;
   slug: string;
   name: string;
-  chatProvider: string;
-  chatModel: string;
+  chatProvider?: string;
+  chatModel?: string;
   documents?: number;
   threadCount?: number;
   vectorCount?: number;
@@ -16,8 +16,6 @@ export interface Workspace {
   openAiHistory?: number;
   similarityThreshold?: number;
   topN?: number;
-  chatModel?: string;
-  chatProvider?: string;
   createdAt?: string;
   updatedAt?: string;
 }

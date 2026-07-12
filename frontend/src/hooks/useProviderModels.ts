@@ -64,11 +64,9 @@ const PROVIDER_DEFAULT_MODELS: Record<string, string[]> = {
 
 interface ProviderModelsResult {
   defaultModels: string[];
-  // customModels is either a flat array (most providers) or a Record grouped
-  // by organisation (GROUPED_PROVIDERS). Consumers that need .length must
-  // guard with Array.isArray(). Typed as any[] here so callers don't need an
-  // extra cast for the common flat-array case.
-  customModels: any[] | Record<string, any[]>;
+  // customModels is either a flat array (most providers) or a grouped object
+  // for GROUPED_PROVIDERS. Existing callers use both shapes directly.
+  customModels: any;
   isLoading: boolean;
   error: any;
   refresh: () => Promise<any>;
@@ -92,7 +90,7 @@ export default function useProviderModels(
     },
   );
 
-  const models = data?.models ?? [];
+  const models = (data as any)?.models ?? [];
   const hasDefaults =
     provider && PROVIDER_DEFAULT_MODELS.hasOwnProperty(provider);
   const isGrouped = provider && GROUPED_PROVIDERS.includes(provider);

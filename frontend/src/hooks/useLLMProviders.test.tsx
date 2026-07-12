@@ -30,7 +30,7 @@ describe("useLLMProviders", () => {
   });
 
   it("returns null keys while loading", () => {
-    System.keys.mockReturnValue(new Promise(() => {}));
+    (System.keys as any).mockReturnValue(new Promise(() => {}));
     const { result } = renderHook(() => useLLMProviders(), { wrapper });
     expect(result.current.keys).toBeNull();
     expect(result.current.isLoading).toBe(true);
@@ -42,7 +42,7 @@ describe("useLLMProviders", () => {
       VectorDB: "chroma",
       setup_complete: true,
     };
-    System.keys.mockResolvedValue(keys);
+    (System.keys as any).mockResolvedValue(keys);
 
     const { result } = renderHook(() => useLLMProviders(), { wrapper });
 
@@ -53,7 +53,7 @@ describe("useLLMProviders", () => {
   });
 
   it("returns null when keys is null", async () => {
-    System.keys.mockResolvedValue(null);
+    (System.keys as any).mockResolvedValue(null);
 
     const { result } = renderHook(() => useLLMProviders(), { wrapper });
 
@@ -63,7 +63,7 @@ describe("useLLMProviders", () => {
   });
 
   it("exposes error on fetch failure", async () => {
-    System.keys.mockRejectedValue(new Error("Server unreachable"));
+    (System.keys as any).mockRejectedValue(new Error("Server unreachable"));
 
     const { result } = renderHook(() => useLLMProviders(), { wrapper });
 
@@ -74,7 +74,7 @@ describe("useLLMProviders", () => {
   });
 
   it("exposes refresh and mutate functions", async () => {
-    System.keys.mockResolvedValue({ foo: "bar" });
+    (System.keys as any).mockResolvedValue({ foo: "bar" });
 
     const { result } = renderHook(() => useLLMProviders(), { wrapper });
 
@@ -85,7 +85,7 @@ describe("useLLMProviders", () => {
   });
 
   it("calls System.keys() on mount", async () => {
-    System.keys.mockResolvedValue({});
+    (System.keys as any).mockResolvedValue({});
 
     renderHook(() => useLLMProviders(), { wrapper });
 

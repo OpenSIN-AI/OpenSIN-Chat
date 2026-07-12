@@ -598,12 +598,18 @@ function NotepadSidebar({ workspace }: any) {
         </section>
       </ChatSidebar>
       <ConfirmDialog
-        isOpen={!!deleteConfirm}
-        onClose={() => setDeleteConfirm(null)}
+        open={!!deleteConfirm}
+        onOpenChange={(open) => {
+          if (!open) setDeleteConfirm(null);
+        }}
         onConfirm={confirmDelete}
         title={t("notepad.deleteForeverConfirm", "Notiz endgültig löschen?")}
+        description={t(
+          "notepad.deleteForeverDescription",
+          "Diese Aktion kann nicht rückgängig gemacht werden.",
+        )}
         confirmLabel={t("common.delete", "Löschen")}
-        isDestructive
+        destructive
       />
     </>
   );

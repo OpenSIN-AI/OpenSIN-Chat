@@ -111,7 +111,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
 
   const handleUploadFiles = useCallback(
     async (fileList) => {
-      const files = Array.from(fileList);
+      const files = Array.from(fileList) as any[];
       if (files.length === 0) return;
       setUploading(true);
       setUploadProgress({
@@ -376,6 +376,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
           showSysInfo={showSysInfo}
           sysInfoRows={sysInfoRows}
           fileInputRef={fileInputRef}
+          creatingType={creatingType}
           onUploadClick={() => fileInputRef.current?.click()}
           onNewFileClick={() => {
             setCreatingType(creatingType === "file" ? null : "file");

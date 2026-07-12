@@ -55,7 +55,7 @@ const System = {
     canViewChatHistory: "opensin_can_view_chat_history",
     deploymentVersion: "opensin_deployment_version",
   },
-  /** @returns {Promise<{online: boolean, version: string}>} */
+  /** @returns {Promise<boolean>} */
   ping: async function () {
     return await fetchWithTimeout(`${API_BASE}/ping`)
       .then((res) => safeJson(res))
@@ -140,7 +140,7 @@ const System = {
   },
 
   /** @param {string|null} [currentToken=null]
-   * @returns {Promise<{authenticated: boolean, user: object|null}>}
+   * @returns {Promise<boolean>}
    */
   checkAuth: async function (currentToken = null) {
     const valid = await fetchWithTimeout(`${API_BASE}/system/check-token`, {
@@ -154,8 +154,8 @@ const System = {
     }
     return valid;
   },
-  /** @param {{username: string, password: string}} body
-   * @returns {Promise<{token: string|null, user: object|null, error: string|null}>}
+  /** @param {Partial<{username: string, password: string}>} body
+   * @returns {Promise<{valid: boolean, token?: string|null, user?: object|null, message?: string|null, recoveryCodes?: string[]}>}
    */
   requestToken: async function (body) {
     return await fetchWithTimeout(`${API_BASE}/request-token`, {
@@ -701,7 +701,7 @@ const System = {
    * @param {string|null} [apiKey=null]
    * @param {string|null} [basePath=null]
    * @param {number|null} [timeout=null]
-   * @returns {Promise<Array<string>>}
+   * @returns {Promise<{models: Array<any>, error?: string|null}>}
    */
   customModels: async function (
     provider,

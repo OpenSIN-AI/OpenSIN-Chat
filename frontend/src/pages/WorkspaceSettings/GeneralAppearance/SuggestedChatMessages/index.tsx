@@ -37,7 +37,7 @@ export default function SuggestedChatMessages({
   // Sync SWR data into local state once loaded
   const [synced, setSynced] = useState(false);
   if (!isLoading && !synced) {
-    setSuggestedMessages(initialMessages || []);
+    setSuggestedMessages((initialMessages || []) as any);
     setSynced(true);
   }
 
@@ -47,7 +47,7 @@ export default function SuggestedChatMessages({
     );
     const { success, error } = await Workspace.setSuggestedMessages(
       slug,
-      validMessages,
+      validMessages as any,
     );
     if (!success) {
       showToast(t("general.message.saveFailed", { error }), "error");

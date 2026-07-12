@@ -45,35 +45,35 @@ describe("request utilities", () => {
 
   describe("userFromStorage", () => {
     it("returns null when no user is stored", () => {
-      safeGetItem.mockReturnValue(null);
+      (safeGetItem as any).mockReturnValue(null);
       expect(userFromStorage()).toBeNull();
     });
 
     it("returns parsed user object when stored", () => {
       const user = { id: 1, username: "test" };
-      safeGetItem.mockReturnValue(JSON.stringify(user));
+      (safeGetItem as any).mockReturnValue(JSON.stringify(user));
       expect(userFromStorage()).toEqual(user);
     });
 
     it("returns null when stored value is invalid JSON", () => {
-      safeGetItem.mockReturnValue("not-json{");
+      (safeGetItem as any).mockReturnValue("not-json{");
       expect(userFromStorage()).toBeNull();
     });
   });
 
   describe("baseHeaders", () => {
     it("returns Authorization header with token from storage", () => {
-      safeGetItem.mockReturnValue("my-token");
+      (safeGetItem as any).mockReturnValue("my-token");
       expect(baseHeaders()).toEqual({ Authorization: "Bearer my-token" });
     });
 
     it("returns empty object when no token", () => {
-      safeGetItem.mockReturnValue(null);
+      (safeGetItem as any).mockReturnValue(null);
       expect(baseHeaders()).toEqual({});
     });
 
     it("uses provided token over storage token", () => {
-      safeGetItem.mockReturnValue("stored-token");
+      (safeGetItem as any).mockReturnValue("stored-token");
       expect(baseHeaders("provided-token")).toEqual({
         Authorization: "Bearer provided-token",
       });

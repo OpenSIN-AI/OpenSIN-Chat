@@ -34,7 +34,9 @@ export default function WorkspaceRow({
     )
       return false;
     try {
-      const { success, error } = await Admin.deleteWorkspace(workspace.id);
+      const { success, error } = await Admin.deleteWorkspace(
+        workspace.id as any,
+      );
       if (!success) {
         showToast(error, "error", { clear: true });
         return;

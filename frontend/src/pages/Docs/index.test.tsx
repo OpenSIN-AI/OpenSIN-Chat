@@ -97,7 +97,7 @@ vi.mock("@/pages/Docs/docsManifest", () => ({
       slug: "test-doc",
       title: "Test Document",
       description: "A test document for unit tests.",
-      category: "test",
+      category: "test" as any,
       file: "test-doc.md",
       source: "docs/test-doc.md",
     },
@@ -106,13 +106,13 @@ vi.mock("@/pages/Docs/docsManifest", () => ({
   getDocContent: vi.fn(),
   getGroupedDocs: vi.fn(() => [
     {
-      category: "test",
+      category: "test" as any,
       entries: [
         {
           slug: "test-doc",
           title: "Test Document",
           description: "A test document for unit tests.",
-          category: "test",
+          category: "test" as any,
           file: "test-doc.md",
           source: "docs/test-doc.md",
         },
@@ -189,7 +189,7 @@ describe("Docs page", () => {
       slug: "test-doc",
       title: "Test Document",
       description: "A test document.",
-      category: "test",
+      category: "test" as any,
       file: "test-doc.md",
       source: "docs/test-doc.md",
     });
@@ -204,7 +204,7 @@ describe("Docs page", () => {
       slug: "test-doc",
       title: "Test Document",
       description: "A test document.",
-      category: "test",
+      category: "test" as any,
       file: "test-doc.md",
       source: "docs/test-doc.md",
     });
@@ -219,7 +219,7 @@ describe("Docs page", () => {
       slug: "test-doc",
       title: "Test Document",
       description: "A test document.",
-      category: "test",
+      category: "test" as any,
       file: "test-doc.md",
       source: "docs/test-doc.md",
     });
@@ -237,7 +237,7 @@ describe("Docs page", () => {
       slug: "test-doc",
       title: "Test Document",
       description: "A test document.",
-      category: "test",
+      category: "test" as any,
       file: "test-doc.md",
       source: "docs/test-doc.md",
     });
@@ -254,7 +254,7 @@ describe("Docs page", () => {
       slug: "test-doc",
       title: "Test Document",
       description: "A test document.",
-      category: "test",
+      category: "test" as any,
       file: "test-doc.md",
       source: "docs/test-doc.md",
     });
@@ -277,7 +277,7 @@ describe("Docs page", () => {
       slug: "test-doc",
       title: "Test Document",
       description: "A test document.",
-      category: "test",
+      category: "test" as any,
       file: "test-doc.md",
       source: "docs/test-doc.md",
     });
@@ -306,7 +306,7 @@ describe("Docs page", () => {
       slug: "test-doc",
       title: "Test Document",
       description: "A test document.",
-      category: "test",
+      category: "test" as any,
       file: "test-doc.md",
       source: "docs/test-doc.md",
     });
@@ -334,7 +334,7 @@ describe("Docs page", () => {
       slug: "test-doc",
       title: "Test Document",
       description: "A test document.",
-      category: "test",
+      category: "test" as any,
       file: "test-doc.md",
       source: "docs/test-doc.md",
     });

@@ -84,7 +84,7 @@ export function EmbeddingProgressProvider({ children }: any) {
   }, []);
 
   const updateFileStatus = useCallback(
-    (slug: string, filename: string, status: string) =>
+    (slug: string, filename: string, status: Record<string, any>) =>
       setEmbeddingProgressMap((prev: Record<string, Record<string, any>>) => ({
         ...prev,
         [slug]: { ...(prev[slug] ?? {}), [filename]: status },
@@ -115,7 +115,7 @@ export function EmbeddingProgressProvider({ children }: any) {
         }
 
         case "doc_starting":
-          updateFileStatus(slug, data.filename, {
+          updateFileStatus(slug, (data as any).filename, {
             status: "embedding",
             chunksProcessed: 0,
             totalChunks: 0,
@@ -123,21 +123,23 @@ export function EmbeddingProgressProvider({ children }: any) {
           break;
 
         case "chunk_progress":
-          updateFileStatus(slug, data.filename, {
+          updateFileStatus(slug, (data as any).filename, {
             status: "embedding",
-            chunksProcessed: data.chunksProcessed,
-            totalChunks: data.totalChunks,
+            chunksProcessed: (data as any).chunksProcessed,
+            totalChunks: (data as any).totalChunks,
           });
           break;
 
         case "doc_complete":
-          updateFileStatus(slug, data.filename, { status: "complete" });
+          updateFileStatus(slug, (data as any).filename, {
+            status: "complete",
+          });
           break;
 
         case "doc_failed":
-          updateFileStatus(slug, data.filename, {
+          updateFileStatus(slug, (data as any).filename, {
             status: "failed",
-            error: data.error || "Embedding failed",
+            error: (data as any).error || "Embedding failed",
           });
           break;
 
@@ -213,7 +215,7 @@ export function EmbeddingProgressProvider({ children }: any) {
         method: "GET",
         headers: baseHeaders(),
         signal: ctrl.signal,
-        onmessage: (msg) => handleMessage(slug, msg, ctrl),
+        onmessage: (msg: any) => handleMessage(slug, msg, ctrl),
         onclose: () => {
           delete abortControllersRef.current[slug];
         },

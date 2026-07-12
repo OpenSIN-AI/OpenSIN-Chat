@@ -6,7 +6,7 @@ import { TOGGLE_LLM_SELECTOR_EVENT } from "@/components/WorkspaceChat/ChatContai
 
 export const KEYBOARD_SHORTCUTS_HELP_EVENT = "keyboard-shortcuts-help";
 export const isMac =
-  (navigator.userAgentData?.platform ?? navigator.platform)
+  ((navigator as any).userAgentData?.platform ?? navigator.platform)
     .toUpperCase()
     .indexOf("MAC") >= 0;
 export const SHORTCUTS = {

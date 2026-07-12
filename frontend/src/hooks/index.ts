@@ -115,8 +115,8 @@ export function useSystemConfig(): {
   });
 
   return {
-    isOnboarded: data?.onboarded ?? false,
-    isHealthy: data?.healthy ?? false,
+    isOnboarded: (data as any)?.onboarded ?? false,
+    isHealthy: (data as any)?.healthy ?? false,
     loading,
   };
 }

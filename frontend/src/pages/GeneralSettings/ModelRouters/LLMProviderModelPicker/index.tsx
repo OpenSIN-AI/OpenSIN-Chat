@@ -78,8 +78,9 @@ export default function LLMProviderModelPicker({
     let cancelled = false;
     async function fetchModels() {
       setLoadingModels(true);
-      const { models: fetchedModels = [] } =
-        await System.customModels(selectedProvider);
+      const { models: fetchedModels = [] } = (await System.customModels(
+        selectedProvider,
+      )) as any;
       if (cancelled) return;
       setModels(fetchedModels);
       setLoadingModels(false);

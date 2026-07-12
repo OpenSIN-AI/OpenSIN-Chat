@@ -78,9 +78,10 @@ export default function AgentSkillReranker(): JSX.Element {
             min={10}
             value={maxTools}
             onChange={(e) => {
-              if (parseInt(e.target.value, 10) < 10) return;
-              debouncedUpdateMaxTools(e.target.value);
-              setMaxTools(parseInt(e.target.value, 10));
+              const nextMaxTools = parseInt(e.target.value, 10);
+              if (nextMaxTools < 10) return;
+              debouncedUpdateMaxTools(nextMaxTools);
+              setMaxTools(nextMaxTools);
             }}
             onWheel={(e) => (e.target as HTMLElement).blur()}
             className="border border-white/10 bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-[80px] p-2.5 text-center"

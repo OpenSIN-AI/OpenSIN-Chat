@@ -72,7 +72,7 @@ function ThreadItem({
   const workspaceSlug = workspace?.slug ?? urlSlug;
   const optionsContainer = useRef(null);
   const [showOptions, setShowOptions] = useState(false);
-  const displayName = threadDisplayName(thread, duplicateNames, t);
+  const displayName = threadDisplayName(thread, duplicateNames, t as any);
   const linkTo = thread.virtual
     ? paths.workspace.chat(workspaceSlug)
     : !thread.slug

@@ -62,7 +62,9 @@ export default function RouterSelection({
         {routers.map((router) => (
           <option key={router.id} value={router.id}>
             {router.name}
-            {router.description ? ` — ${router.description}` : ""}
+            {(router as any).description
+              ? ` — ${(router as any).description}`
+              : ""}
           </option>
         ))}
       </select>

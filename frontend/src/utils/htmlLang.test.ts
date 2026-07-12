@@ -83,7 +83,7 @@ describe("htmlLang utilities", () => {
         if (key === "page.title") return "OpenSIN Chat";
         if (key === "page.description") return "A chat app";
         return key;
-      });
+      }) as any;
       syncDocumentTitle();
       expect(document.title).toBe("OpenSIN Chat");
     });
@@ -92,13 +92,13 @@ describe("htmlLang utilities", () => {
       i18next.t = vi.fn((key) => {
         if (key === "page.title") return "";
         return "";
-      });
+      }) as any;
       syncDocumentTitle();
       expect(document.title).toBe("OpenSIN Chat");
     });
 
     it("falls back to default title when translation returns the key", () => {
-      i18next.t = vi.fn((key) => key);
+      i18next.t = vi.fn((key) => key) as any;
       syncDocumentTitle();
       expect(document.title).toBe("OpenSIN Chat");
     });
@@ -108,7 +108,7 @@ describe("htmlLang utilities", () => {
         if (key === "page.title") return "Title";
         if (key === "page.description") return "My description";
         return key;
-      });
+      }) as any;
       syncDocumentTitle();
       const meta = document.querySelector('meta[name="description"]');
       expect(meta).not.toBeNull();

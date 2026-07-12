@@ -184,7 +184,7 @@ export function usePasswordModal(notry: any = false) {
     return { loading: false, requiresAuth: true, mode };
   }
 
-  if (tokenValid === false) {
+  if ((tokenValid as any) === false) {
     safeRemoveItem(AUTH_USER);
     safeRemoveItem(AUTH_TOKEN);
     safeRemoveItem(AUTH_TIMESTAMP);

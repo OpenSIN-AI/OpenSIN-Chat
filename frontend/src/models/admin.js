@@ -165,7 +165,7 @@ const Admin = {
       .then((res) => safeJson(res, { success: false, error: "Request failed" }))
       .catch((e) => ({ success: false, error: e.message }));
   },
-  /** @param {string} workspaceId
+  /** @param {string|number} workspaceId
    * @returns {Promise<{success: boolean, error: string|null}>} */
   deleteWorkspace: async (workspaceId) => {
     return await fetch(`${API_BASE}/admin/workspaces/${workspaceId}`, {

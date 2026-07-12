@@ -77,9 +77,10 @@ function NvidiaNimModelSelection({ settings, basePath }: any) {
   );
   const { t } = useTranslation();
   // Combine API-fetched models with default fallback models
-  const allModels = customModels.length > 0 ? customModels : defaultModels;
+  const allModels =
+    (customModels as any).length > 0 ? customModels : defaultModels;
   // Show dropdown as soon as we have either loaded models OR fall back to defaults
-  if (isLoading && allModels.length === 0) {
+  if (isLoading && (allModels as any).length === 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-theme-text-primary text-sm font-semibold block mb-3">

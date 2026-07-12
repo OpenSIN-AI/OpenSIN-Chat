@@ -31,7 +31,7 @@ export default function UploadFile({
     try {
       const { response, data } = await Workspace.uploadLink(
         workspace.slug,
-        form.get("link"),
+        String(form.get("link") ?? ""),
       );
       if (!response.ok) {
         showToast(
