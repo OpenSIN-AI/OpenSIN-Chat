@@ -23,10 +23,8 @@ import FileDownloadCard from "./FileDownloadCard";
 import { useManageWorkspaceModal } from "../../../Modals/ManageWorkspace";
 import ManageWorkspace from "../../../Modals/ManageWorkspace";
 import { ArrowDown } from "@phosphor-icons/react/dist/csr/ArrowDown";
-// Chartable (recharts + @tremor) wird LAZY geladen, um den
-// ESM-Temporal-Dead-Zone-Race im Vite-Build zu vermeiden:
-// die Recharts-Top-Level-Factory ruft s.forwardRef(...) beim Modul-Eval
-// auf, bevor React (aus dem Catch-all-Vendor-Chunk) bereit ist.
+// Chartable (echarts) wird LAZY geladen, damit der Chart-Vendor-Chunk
+// nicht im initialen Bundle landet.
 const Chartable = lazy(() => import("./Chartable"));
 import ModelRouteNotification from "./ModelRouteNotification";
 import Workspace from "@/models/workspace";

@@ -83,12 +83,15 @@ WORKDIR /app
 # by manually installing a compatible chromedriver.
 # SECURITY: CHROMIUM_SHA256 build arg is REQUIRED. Refuse to build without it.
 ARG CHROMIUM_SHA256
+# Default download source is the upstream AnythingLLM CDN (third-party!).
+# For production, self-host the archive and override this arg.
+ARG CHROMIUM_DOWNLOAD_URL=https://webassets.anythingllm.com/chromium-1088-linux-arm64.zip
 RUN if [ -z "$CHROMIUM_SHA256" ]; then \
         echo "ERROR: CHROMIUM_SHA256 build arg is required. Refusing to download unverified binary."; \
         exit 1; \
     fi && \
     echo "Need to patch Puppeteer x Chromium support for ARM86 - installing dep!" && \
-    curl -fSL https://webassets.anythingllm.com/chromium-1088-linux-arm64.zip -o chrome-linux.zip && \
+    curl -fSL "${CHROMIUM_DOWNLOAD_URL}" -o chrome-linux.zip && \
     echo "${CHROMIUM_SHA256}  chrome-linux.zip" | sha256sum -c - && \
     unzip chrome-linux.zip && \
     rm -rf chrome-linux.zip

@@ -74,7 +74,7 @@ export default defineConfig({
           if (/node_modules\/(react|react-dom|react-router-dom)\//.test(id))
             return "react-vendor";
           if (/node_modules\/react-pdf\//.test(id)) return "pdf-vendor";
-          if (/node_modules\/(echarts|echarts-for-react|recharts)\//.test(id))
+          if (/node_modules\/(echarts|echarts-for-react)\//.test(id))
             return "chart-vendor";
           if (
             /node_modules\/(react-markdown|markdown-it|remark-gfm)\//.test(id)

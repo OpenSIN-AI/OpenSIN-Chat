@@ -14,9 +14,9 @@ networks:
 
 services:
   fix-permissions:
-    # TODO(#536): Pin by SHA256 digest — busybox:latest is mutable.
-    #   docker pull busybox && docker inspect --format='{{index .RepoDigests 0}}' busybox
-    image: busybox
+    # Pinned by version tag + multi-arch index digest (#536).
+    # Verified 2026-07-12 via Docker Hub API. Update tag AND digest together.
+    image: busybox:1.37.0@sha256:9532d8c39891ca2ecde4d30d7710e01fb739c87a8b9299685c63704296b16028
     container_name: opensin-fix-perms
     volumes:
       - "../server/storage:/storage"
@@ -120,8 +120,10 @@ services:
           cpus: '2'
 
   vane:
-    # TODO(#536): Pin by SHA256 digest — third-party image should be pinned.
-    image: itzcrazykns1337/vane:latest
+    # Third-party image pinned by version tag + SHA256 digest (#536).
+    # Digest is the multi-arch manifest of v1.12.2, verified 2026-07-12 via
+    # the Docker Hub API. Update tag AND digest together when bumping.
+    image: itzcrazykns1337/vane:v1.12.2@sha256:61f2bbf3386ff3df08911fb3de0e1893b04702a4d49ef13fbadbda937b47ab7c
     container_name: opensin-vane
     ports:
       # Host 8310 → container 8300. Internal 8300 avoids clashing with

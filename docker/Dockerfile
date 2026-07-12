@@ -23,12 +23,19 @@ ARG ARG_GID=1000
 # collector/web-scraping path is not needed in this image.
 ARG SKIP_CHROMIUM=0
 # SECURITY: Chromium binary SHA256 digest. REQUIRED for builds that include Chromium.
-# Obtain with: curl -fsSL https://webassets.anythingllm.com/chromium-1088-linux-arm64.zip | sha256sum
-# In production, self-host the binary and update the URL too.
+# Obtain with: curl -fsSL "$CHROMIUM_DOWNLOAD_URL" | sha256sum
 ARG CHROMIUM_SHA256
+# ARM64 Chromium download source. Default is the upstream AnythingLLM CDN
+# (third-party!). For production builds, self-host the archive and override
+# this arg — the SHA256 check above guards against a tampered download either way.
+ARG CHROMIUM_DOWNLOAD_URL=https://webassets.anythingllm.com/chromium-1088-linux-arm64.zip
 
 FROM base AS build-arm64
 ARG SKIP_CHROMIUM
+# ARGs are NOT inherited across stages — without these redeclarations the
+# CHROMIUM_SHA256 check below always sees an empty value and the build fails.
+ARG CHROMIUM_SHA256
+ARG CHROMIUM_DOWNLOAD_URL
 RUN echo "Preparing build of OpenSIN Chat image for arm64 architecture"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -94,7 +101,7 @@ RUN if [ "$SKIP_CHROMIUM" != "1" ]; then \
             echo "ERROR: CHROMIUM_SHA256 build arg is required. Refusing to download unverified binary."; \
             exit 1; \
         fi; \
-        curl -fSL https://webassets.anythingllm.com/chromium-1088-linux-arm64.zip -o chrome-linux.zip && \
+        curl -fSL "${CHROMIUM_DOWNLOAD_URL}" -o chrome-linux.zip && \
         echo "${CHROMIUM_SHA256}  chrome-linux.zip" | sha256sum -c - && \
         unzip chrome-linux.zip && \
         rm -rf chrome-linux.zip; \
