@@ -2,7 +2,6 @@
 import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
-import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { FolderSimplePlus } from "@phosphor-icons/react/dist/csr/FolderSimplePlus";
@@ -538,7 +537,6 @@ function ThreadContainer({
             isSearching={isSearching}
             query={searchQuery}
             workspace={workspace}
-            onClear={clearSearch}
           />
         ) : (
           <>
@@ -840,69 +838,6 @@ function UnfolderedDropZone({ children, isDragging }) {
   );
 }
 
-function NewThreadButton({ workspace, mutate }) {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const onClick = async () => {
-    if (!workspace?.slug) return;
-    setLoading(true);
-    try {
-      const { thread, error } = await Workspace.threads.new(workspace.slug);
-      if (!!error) {
-        showToast(t("threadContainer.createError", { error }), "error", {
-          clear: true,
-        });
-        setLoading(false);
-        return;
-      }
-      mutate();
-      navigate(paths.workspace.thread(workspace.slug, thread?.slug));
-    } catch (e: any) {
-      showToast(
-        t("threadContainer.createError", { error: String(e?.message || e) }),
-        "error",
-        { clear: true },
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="relative mb-1 flex h-9 w-full items-center rounded-lg border border-theme-modal-border bg-theme-bg-secondary transition-colors hover:bg-theme-bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-text-secondary"
-    >
-      <div className="flex w-full gap-x-2 items-center pl-3">
-        {loading ? (
-          <CircleNotch
-            weight="bold"
-            size={14}
-            className="shrink-0 animate-spin text-theme-text-primary light:text-theme-text-primary"
-          />
-        ) : (
-          <Plus
-            weight="bold"
-            size={14}
-            className="shrink-0 text-theme-text-primary"
-          />
-        )}
-        {loading ? (
-          <p className="text-left text-theme-text-primary light:text-slate-600 text-[13px]">
-            {t("threadContainer.startingChat")}
-          </p>
-        ) : (
-          <p className="text-left text-[13px] font-medium text-theme-text-primary">
-            {t("threadContainer.newChat")}
-          </p>
-        )}
-      </div>
-    </button>
-  );
-}
-
 function NewFolderButton({ workspace, onCreated, compact = false }) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
@@ -974,6 +909,7 @@ function DeleteAllThreadButton({ ctrlPressed, threads, onDelete }) {
     <button
       type="button"
       onClick={onDelete}
+      aria-label={t("threadContainer.deleteSelected")}
       className="w-full relative flex h-[40px] items-center border-none hover:bg-red-400/20 rounded-lg group"
     >
       <div className="flex w-full gap-x-2 items-center pl-4">
@@ -1005,6 +941,7 @@ function ThreadSearchBar({ value, onChange, onClear }) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={t("threadContainer.searchThreads")}
+        aria-label={t("threadContainer.searchThreads")}
         className="h-8 w-full rounded-lg bg-theme-bg-secondary pl-8 pr-7 text-[13px] text-theme-text-primary outline-none transition-colors placeholder:text-theme-placeholder focus:bg-theme-bg-hover"
       />
       {value && (
@@ -1047,13 +984,7 @@ function HighlightMatch({ text, query }) {
   return <>{parts}</>;
 }
 
-function SearchResultsList({
-  results,
-  isSearching,
-  query,
-  workspace,
-  onClear,
-}) {
+function SearchResultsList({ results, isSearching, query, workspace }) {
   const { t } = useTranslation();
   if (isSearching) {
     return (
@@ -1092,7 +1023,6 @@ function SearchResultsList({
 }
 
 function SearchResultItem({ thread, query, workspace }) {
-  const { t } = useTranslation();
   const linkTo = thread.slug
     ? paths.workspace.thread(workspace.slug, thread.slug)
     : paths.workspace.chat(workspace.slug);

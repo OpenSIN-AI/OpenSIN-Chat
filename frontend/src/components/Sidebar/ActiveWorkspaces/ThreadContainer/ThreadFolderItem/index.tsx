@@ -163,7 +163,7 @@ function ThreadFolderItem({
   workspace,
   threads = [],
   activeThreadIdx,
-  defaultThreadHasChats,
+  defaultThreadHasChats: _defaultThreadHasChats,
   ctrlPressed = false,
   toggleMarkForDeletion,
   onRemoveThread,
@@ -189,6 +189,11 @@ function ThreadFolderItem({
   useEffect(() => {
     if (containsActiveThread) setOpen(true);
   }, [containsActiveThread]);
+
+  // Focus the rename input when entering edit mode (a11y-friendly alt to autoFocus)
+  useEffect(() => {
+    if (editing) inputRef.current?.focus();
+  }, [editing]);
 
   const { setNodeRef, isOver } = useDroppable({ id: `folder-${folder.id}` });
 
@@ -303,7 +308,6 @@ function ThreadFolderItem({
                   setEditing(false);
                 }
               }}
-              autoFocus
               aria-label={t("common.rename")}
               className="w-full min-w-0 rounded-md bg-theme-bg-secondary px-1.5 py-0.5 text-sm text-theme-text-primary outline-none shadow-[0_0_0_2px_var(--theme-modal-border)]"
               onClick={(e) => e.stopPropagation()}

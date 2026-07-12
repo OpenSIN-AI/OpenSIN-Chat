@@ -1,5 +1,11 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  type CSSProperties,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { List } from "@phosphor-icons/react/dist/csr/List";
@@ -29,10 +35,19 @@ import { safeJsonParse } from "@/utils/request";
 import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 import { useSidebarToggle } from "./SidebarToggle";
 
+type WorkspaceSummary = {
+  id?: number | string;
+  slug: string;
+  name?: string;
+};
+
+type StoredWorkspace = { slug?: string } | null;
+
 const SIDEBAR_MIN_WIDTH = 260;
 const SIDEBAR_MAX_WIDTH = 420;
 const SIDEBAR_DEFAULT_WIDTH = 264;
 const SIDEBAR_WIDTH_STORAGE_KEY = "opensin-sidebar-width";
+const COMMAND_SHORTCUT_LABEL = "⌘K";
 
 function SidebarContent({
   onNavigate,
@@ -50,16 +65,17 @@ function SidebarContent({
   const { showing, showModal, hideModal } = useNewWorkspaceModal();
   const activeWorkspace = useMemo(() => {
     const current = workspaces.find(
-      (workspace: any) => workspace.slug === slug,
+      (workspace: WorkspaceSummary) => workspace.slug === slug,
     );
     if (current) return current;
     const last = safeJsonParse(
       safeGetItem(LAST_VISITED_WORKSPACE),
-      null as any,
-    );
+      null,
+    ) as StoredWorkspace;
     return (
-      workspaces.find((workspace: any) => workspace.slug === last?.slug) ||
-      workspaces[0]
+      workspaces.find(
+        (workspace: WorkspaceSummary) => workspace.slug === last?.slug,
+      ) || workspaces[0]
     );
   }, [slug, workspaces]);
 
@@ -75,10 +91,10 @@ function SidebarContent({
       invalidateThreads(activeWorkspace.slug);
       navigate(paths.workspace.thread(activeWorkspace.slug, thread.slug));
       onNavigate?.();
-    } catch (error: any) {
+    } catch (error: unknown) {
       showToast(
         t("activeWorkspaces.chatCreateFailed", {
-          error: error?.message || error,
+          error: error instanceof Error ? error.message : String(error),
         }),
         "error",
         { clear: true },
@@ -103,7 +119,7 @@ function SidebarContent({
           <MagnifyingGlass size={16} />
           <span>{t("commandHub.searchButton")}</span>
           <kbd className="ml-auto rounded border border-theme-modal-border bg-theme-bg-tertiary px-1.5 py-0.5 text-[10px] text-theme-text-muted">
-            ⌘K
+            {COMMAND_SHORTCUT_LABEL}
           </kbd>
         </button>
         <button
@@ -190,13 +206,15 @@ export default function Sidebar({
     <>
       <nav
         aria-label={t("sidebar.mainNavigation")}
-        style={{ width: showSidebar ? sidebarWidth : 0 }}
-        className="codex-sidebar relative z-40 hidden shrink-0 overflow-hidden bg-theme-bg-sidebar transition-[width] duration-200 md:flex"
+        style={
+          {
+            "--sidebar-current-width": `${showSidebar ? sidebarWidth : 0}px`,
+            "--sidebar-width": `${sidebarWidth}px`,
+          } as CSSProperties
+        }
+        className="codex-sidebar relative z-40 hidden w-[var(--sidebar-current-width)] shrink-0 overflow-hidden bg-theme-bg-sidebar transition-[width] duration-200 md:flex"
       >
-        <div
-          className="flex h-full w-full shrink-0 flex-col"
-          style={{ width: sidebarWidth }}
-        >
+        <div className="flex h-full w-[var(--sidebar-width)] shrink-0 flex-col">
           <div className="absolute right-2 top-2 z-50 opacity-0 transition-opacity hover:opacity-100 focus-within:opacity-100">
             <button
               type="button"
@@ -288,7 +306,9 @@ export function SidebarMobileHeader({
         className={`fixed inset-0 z-[99] md:hidden ${open ? "visible" : "invisible pointer-events-none"}`}
         aria-hidden={!open}
       >
-        <div
+        <button
+          type="button"
+          aria-label={t("common.close")}
           className={`absolute inset-0 bg-theme-overlay transition-opacity ${open ? "opacity-100" : "opacity-0"}`}
           onClick={() => setOpen(false)}
         />

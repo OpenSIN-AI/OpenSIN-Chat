@@ -21,7 +21,6 @@ import { CSS } from "@dnd-kit/utilities";
 import { useTranslation } from "react-i18next";
 import { copyText } from "@/utils/clipboard";
 
-const THREAD_CALLOUT_DETAIL_WIDTH: any = 26;
 const DEFAULT_THREAD_NAMES = ["Thread", "New Thread", "*New Thread"];
 
 // Returns a localized display name for a thread.
@@ -59,17 +58,13 @@ export function threadDisplayName(
 }
 
 function ThreadItem({
-  idx,
-  activeIdx,
   isActive,
   workspace,
   thread,
   onRemove,
   toggleMarkForDeletion,
-  hasNext,
   ctrlPressed = false,
   draggable = false,
-  folderId = null,
   duplicateNames = null,
 }: any) {
   const { slug: urlSlug, threadSlug = null } = useParams();
@@ -96,7 +91,6 @@ function ThreadItem({
     listeners,
     setNodeRef: setDragRef,
     transform,
-    isDragging,
   } = useDraggable({
     id: thread.slug ?? "__non-draggable__",
     disabled: !draggable || !thread.slug || !!thread.virtual,

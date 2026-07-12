@@ -89,7 +89,7 @@ describe("ActiveWorkspaces", () => {
         <ActiveWorkspaces />
       </MemoryRouter>,
     );
-    expect(screen.getByText("Workspace One")).toBeInTheDocument();
-    expect(screen.getByText("Workspace Two")).toBeInTheDocument();
+    expect(screen.getByTestId("thread-container-ws-1")).toBeInTheDocument();
+    expect(screen.getByTestId("thread-container-ws-2")).toBeInTheDocument();
   });
 });

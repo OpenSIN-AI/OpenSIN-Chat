@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { memo, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useMatch, useParams } from "react-router-dom";
@@ -9,23 +10,34 @@ import { safeJsonParse } from "@/utils/request";
 import { safeGetItem } from "@/utils/safeStorage";
 import ThreadContainer from "./ThreadContainer";
 
+type WorkspaceSummary = {
+  id?: number | string;
+  slug: string;
+  name?: string;
+};
+
+type StoredWorkspace = { slug?: string } | null;
+
 function ActiveWorkspaces() {
+  const { t } = useTranslation();
   const { slug } = useParams();
   const { workspaces, isLoading } = useWorkspaces({ ordered: true });
   const isHomePage = !!useMatch("/");
 
   const activeWorkspace = useMemo(() => {
     const current = workspaces.find(
-      (workspace: any) => workspace.slug === slug,
+      (workspace: WorkspaceSummary) => workspace.slug === slug,
     );
     if (current) return current;
     if (!isHomePage) return null;
     const last = safeJsonParse(
       safeGetItem(LAST_VISITED_WORKSPACE),
-      null as any,
-    );
+      null,
+    ) as StoredWorkspace;
     return (
-      workspaces.find((workspace: any) => workspace.slug === last?.slug) ||
+      workspaces.find(
+        (workspace: WorkspaceSummary) => workspace.slug === last?.slug,
+      ) ||
       workspaces[0] ||
       null
     );
@@ -47,12 +59,16 @@ function ActiveWorkspaces() {
   if (workspaces.length === 0) return null;
 
   return (
-    <div className="min-h-0 flex-1" role="region" aria-label="Projekte">
+    <div
+      className="min-h-0 flex-1"
+      role="region"
+      aria-label={t("sidebar.projects")}
+    >
       <p className="px-2 pb-1 pt-3 text-xs font-medium text-theme-placeholder">
-        Projekte
+        {t("sidebar.projects")}
       </p>
       <div className="flex flex-col gap-0.5">
-        {workspaces.map((workspace: any) => (
+        {workspaces.map((workspace: WorkspaceSummary) => (
           <ThreadContainer
             key={workspace.slug}
             workspace={workspace}

@@ -19,7 +19,17 @@ import ManageWorkspace, {
   useManageWorkspaceModal,
 } from "@/components/Modals/ManageWorkspace";
 
+type WorkspaceSummary = {
+  id?: number | string;
+  slug: string;
+  name?: string;
+};
+
+type StoredWorkspace = { slug?: string } | null;
+
 type Props = { onCreate: () => void; onNavigate?: () => void };
+
+const WORKSPACE_INITIAL_FALLBACK = "O";
 
 export default function WorkspaceSwitcher({ onCreate, onNavigate }: Props) {
   const { t } = useTranslation();
@@ -33,15 +43,18 @@ export default function WorkspaceSwitcher({ onCreate, onNavigate }: Props) {
   const { showing, showModal, hideModal } = useManageWorkspaceModal();
 
   const activeWorkspace = useMemo(() => {
-    const direct = workspaces.find((workspace: any) => workspace.slug === slug);
+    const direct = workspaces.find(
+      (workspace: WorkspaceSummary) => workspace.slug === slug,
+    );
     if (direct) return direct;
     const last = safeJsonParse(
       safeGetItem(LAST_VISITED_WORKSPACE),
-      null as any,
-    );
+      null,
+    ) as StoredWorkspace;
     return (
-      workspaces.find((workspace: any) => workspace.slug === last?.slug) ||
-      workspaces[0]
+      workspaces.find(
+        (workspace: WorkspaceSummary) => workspace.slug === last?.slug,
+      ) || workspaces[0]
     );
   }, [slug, workspaces]);
 
@@ -86,7 +99,9 @@ export default function WorkspaceSwitcher({ onCreate, onNavigate }: Props) {
           className="flex h-9 w-full min-w-0 items-center gap-2 rounded-lg px-2 text-left text-theme-text-primary transition-colors hover:bg-theme-bg-hover"
         >
           <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-theme-modal-border bg-theme-bg-hover text-xs font-semibold text-theme-text-primary">
-            {(activeWorkspace?.name || "O").slice(0, 1).toUpperCase()}
+            {(activeWorkspace?.name || WORKSPACE_INITIAL_FALLBACK)
+              .slice(0, 1)
+              .toUpperCase()}
           </span>
           <span className="min-w-0 flex-1 truncate text-sm font-semibold">
             {isLoading
@@ -109,7 +124,7 @@ export default function WorkspaceSwitcher({ onCreate, onNavigate }: Props) {
               {t("sidebar.workspaces", "Workspaces")}
             </p>
             <div className="max-h-56 overflow-y-auto">
-              {workspaces.map((workspace: any) => {
+              {workspaces.map((workspace: WorkspaceSummary) => {
                 const active = workspace.slug === activeWorkspace?.slug;
                 return (
                   <button

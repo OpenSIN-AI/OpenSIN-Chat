@@ -60,11 +60,9 @@ vi.mock("../Footer", () => ({
 }));
 
 vi.mock("../SettingsButton", () => ({
-  default: () => <button type="button" data-testid="settings-button" />,
-}));
-
-vi.mock("./SearchBox", () => ({
-  default: () => <div data-testid="search-box" />,
+  default: () => (
+    <button type="button" aria-label="settings" data-testid="settings-button" />
+  ),
 }));
 
 vi.mock("react-tooltip", () => ({
@@ -78,7 +76,11 @@ vi.mock("./SidebarToggle", () => ({
     canToggleSidebar: true,
   }),
   ToggleSidebarButton: () => (
-    <button type="button" data-testid="sidebar-toggle" />
+    <button
+      type="button"
+      aria-label="toggle sidebar"
+      data-testid="sidebar-toggle"
+    />
   ),
 }));
 
@@ -122,9 +124,7 @@ describe("Sidebar (desktop)", () => {
   it("creates a chat in the active workspace", async () => {
     renderSidebar();
     fireEvent.click(screen.getByRole("button", { name: /new chat/i }));
-    await waitFor(() =>
-      expect(newThreadMock).toHaveBeenCalledWith("opensin"),
-    );
+    await waitFor(() => expect(newThreadMock).toHaveBeenCalledWith("opensin"));
   });
 
   it("renders the Footer inside the sidebar", () => {
