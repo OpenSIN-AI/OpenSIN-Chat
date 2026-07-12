@@ -3,6 +3,7 @@
  * Purpose: React context provider for right sidebar panel state and helpers.
  * Docs: ChatSidebar/index.doc.md
  */
+import logger from "@/utils/logger";
 import React, {
   createContext,
   useContext,
@@ -65,19 +66,33 @@ const DOCUMENT_SOURCE_PREFIXES = [
   "drupalwiki://",
   "github://",
   "gitlab://",
+  "gmail-thread://",
+  "gmail-attachment://",
+  "google-calendar://",
+  "outlook-thread://",
+  "outlook-attachment://",
 ];
 
 const MEDIA_SOURCE_PREFIXES: any = ["youtube://"];
+const WEB_SOURCE_PREFIXES = ["link://"];
 
 function isDocumentSource(chunkSource) {
-  return (DOCUMENT_SOURCE_PREFIXES as any).some((prefix) =>
-    chunkSource?.startsWith(prefix),
-  );
+  const value = typeof chunkSource === "string" ? chunkSource : "";
+  if (!value) return true;
+  if (isMediaSource(value)) return false;
+  if (WEB_SOURCE_PREFIXES.some((prefix) => value.startsWith(prefix)))
+    return false;
+  if (
+    (DOCUMENT_SOURCE_PREFIXES as any).some((prefix) => value.startsWith(prefix))
+  )
+    return true;
+  return !value.includes("://");
 }
 
 function isMediaSource(chunkSource: any) {
+  const value = typeof chunkSource === "string" ? chunkSource : "";
   return (MEDIA_SOURCE_PREFIXES as any).some((prefix) =>
-    chunkSource?.startsWith(prefix),
+    value.startsWith(prefix),
   );
 }
 
@@ -120,7 +135,7 @@ export function ChatSidebarProvider({ children }: any) {
     try {
       localStorage.setItem("opensin_source_filter", sourceFilter);
     } catch (e) {
-      console.warn("[index] non-fatal error:", e?.message || e);
+      logger.warn("[index] non-fatal error:", e?.message || e);
     }
   }, [sourceFilter]);
 
@@ -352,7 +367,7 @@ export default function ChatSidebar({
         if (!isNaN(n) && n >= minWidth && n <= maxWidth) return n;
       }
     } catch (e) {
-      console.warn("[index] non-fatal error:", e?.message || e);
+      logger.warn("[index] non-fatal error:", e?.message || e);
     }
     return defaultWidth;
   });
@@ -381,7 +396,7 @@ export default function ChatSidebar({
           String(width),
         );
       } catch (e) {
-        console.warn("[index] non-fatal error:", e?.message || e);
+        logger.warn("[index] non-fatal error:", e?.message || e);
       }
     }
   }, [width]);

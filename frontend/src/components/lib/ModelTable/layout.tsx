@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import logger from "@/utils/logger";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ArrowClockwise } from "@phosphor-icons/react/dist/csr/ArrowClockwise";
@@ -26,7 +27,7 @@ export default function ModelTableLayout({
     try {
       await fetchModels?.();
     } catch (e) {
-      console.warn("[layout] non-fatal error:", e?.message || e);
+      logger.warn("[layout] non-fatal error:", e?.message || e);
     } finally {
       setIsRefreshing(false);
     }

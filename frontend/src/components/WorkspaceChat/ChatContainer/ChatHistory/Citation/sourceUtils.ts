@@ -36,6 +36,7 @@ export type CitationSource = {
 };
 
 export type CombinedCitationSource = {
+  id: string;
   title: string;
   chunks: CitationChunk[];
   references: number;
@@ -47,6 +48,9 @@ export type ParsedChunkSource = {
   href: string | null;
   icon: SourceIcon;
 };
+
+type CitationLike = Partial<Omit<CitationSource, "id">> &
+  Partial<Omit<CombinedCitationSource, "id">> & { id?: string | number };
 
 const SOURCE_SCHEMES: Array<{
   scheme: string;
@@ -68,30 +72,84 @@ const SOURCE_SCHEMES: Array<{
   { scheme: "outlook-attachment://", icon: "outlookAttachment" },
 ];
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
+function stringValue(value: unknown, fallback = "") {
+  return typeof value === "string" ? value : fallback;
+}
+
+function numericScore(value: unknown): number | null {
+  return typeof value === "number" ? value : null;
+}
+
+export function getCitationChunks(source: CitationLike = {}): CitationChunk[] {
+  const rawChunks = Array.isArray(source.chunks) ? source.chunks : [];
+
+  if (rawChunks.length > 0) {
+    const normalizedChunks = rawChunks.filter(isRecord).map((chunk) => ({
+      id: (chunk.id as string | number | undefined) ?? source.id,
+      text: stringValue(chunk.text, stringValue(source.text)),
+      chunkSource: stringValue(
+        chunk.chunkSource,
+        stringValue(source.chunkSource),
+      ),
+      score: numericScore(chunk.score) ?? numericScore(source.score),
+    }));
+
+    if (normalizedChunks.length > 0) return normalizedChunks;
+  }
+
+  return [
+    {
+      id: source.id,
+      text: stringValue(source.text),
+      chunkSource: stringValue(source.chunkSource),
+      score: numericScore(source.score),
+    },
+  ];
+}
+
+function sourceTitle(source: CitationLike, chunks: CitationChunk[]) {
+  return (
+    stringValue(source.title).trim() ||
+    stringValue(chunks[0]?.chunkSource).trim() ||
+    "Unknown source"
+  );
+}
+
+function sourceReferenceCount(source: CitationLike, chunks: CitationChunk[]) {
+  if (typeof source.references === "number" && source.references > 0)
+    return source.references;
+  return Math.max(1, chunks.length);
+}
+
+function sourceGroupKey(title: string, chunks: CitationChunk[]) {
+  return `${title}\u0000${chunks[0]?.chunkSource || ""}`;
+}
+
 export function combineLikeSources(
   sources: CitationSource[] = [],
 ): CombinedCitationSource[] {
   const combined = new Map<string, CombinedCitationSource>();
 
-  for (const source of sources) {
-    const title =
-      source.title?.trim() || source.chunkSource || "Unknown source";
-    const current = combined.get(title);
-    const chunk = {
-      id: source.id,
-      text: source.text,
-      chunkSource: source.chunkSource || "",
-      score: source.score ?? null,
-    };
+  for (const source of sources.filter(isRecord)) {
+    const chunks = getCitationChunks(source);
+    const title = sourceTitle(source, chunks);
+    const references = sourceReferenceCount(source, chunks);
+    const groupKey = sourceGroupKey(title, chunks);
+    const current = combined.get(groupKey);
 
     if (current) {
-      current.chunks.push(chunk);
-      current.references += 1;
+      current.chunks.push(...chunks);
+      current.references += references;
     } else {
-      combined.set(title, {
+      combined.set(groupKey, {
+        id: groupKey,
         title,
-        chunks: [chunk],
-        references: 1,
+        chunks,
+        references,
       });
     }
   }
@@ -102,8 +160,10 @@ export function combineLikeSources(
 export function parseChunkSource({
   title = "",
   chunks = [],
+  ...source
 }: CitationSource | CombinedCitationSource = {}): ParsedChunkSource {
-  const chunkSource = chunks[0]?.chunkSource || "";
+  const normalizedChunks = getCitationChunks({ title, chunks, ...source });
+  const chunkSource = normalizedChunks[0]?.chunkSource || "";
   const fallback: ParsedChunkSource = {
     isUrl: false,
     text: null,

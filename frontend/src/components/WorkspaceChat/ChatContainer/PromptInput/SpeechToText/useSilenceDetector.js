@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import logger from "@/utils/logger";
 import { useEffect, useRef } from "react";
 
 const RMS_THRESHOLD = 0.02; // 0..1 — RMS volume below which we treat the mic as silent.
@@ -68,7 +69,7 @@ export default function useSilenceDetector(stream, { onSilence, silenceMs }) {
         ctx
           .close()
           .catch((e) =>
-            console.warn(
+            logger.warn(
               "[useSilenceDetector] non-fatal error:",
               e?.message || e,
             ),

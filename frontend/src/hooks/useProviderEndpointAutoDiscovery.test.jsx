@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Regression tests for provider endpoint auto-discovery hook state and request behavior.
+// Docs: useProviderEndpointAutoDiscovery.test.doc.md
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, act, waitFor } from "@testing-library/react";
 
@@ -27,6 +29,25 @@ describe("useProviderEndpointAutoDiscovery", () => {
     expect(result.current.autoDetectAttempted).toBe(true);
     expect(result.current.basePath.value).toBe("http://a");
     expect(result.current.showAdvancedControls).toBe(false);
+  });
+
+  it("does not send masked stored secrets to endpoint discovery", async () => {
+    System.customModels.mockResolvedValue({ models: ["m1"] });
+    const { result } = renderHook(() =>
+      useProviderEndpointAutoDiscovery({
+        provider: "ollama",
+        initialAuthToken: "*".repeat(20),
+        ENDPOINTS: ["http://a"],
+      }),
+    );
+
+    await waitFor(() => expect(result.current.autoDetecting).toBe(false));
+    expect(System.customModels).toHaveBeenCalledWith(
+      "ollama",
+      null,
+      "http://a",
+      2_000,
+    );
   });
 
   it("shows advanced controls when no endpoint resolves", async () => {

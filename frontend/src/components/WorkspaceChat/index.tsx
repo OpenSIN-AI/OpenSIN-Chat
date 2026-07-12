@@ -3,6 +3,7 @@
 // keeps the previous chat mounted while the next chat's history is being
 // fetched. See index.doc.md for the `useEffect` return-value bug history.
 // Docs: index.doc.md
+import logger from "@/utils/logger";
 import { useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import LoadingChat from "./LoadingChat";
@@ -73,7 +74,7 @@ export default function WorkspaceChat({
   try {
     hasPendingMessage = !!sessionStorage.getItem(PENDING_HOME_MESSAGE);
   } catch (error) {
-    console.warn(
+    logger.warn(
       "[index] non-fatal error:",
       error instanceof Error ? error.message : error,
     );

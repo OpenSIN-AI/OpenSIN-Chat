@@ -86,16 +86,8 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    esbuildOptions: {
-      target: "es2020",
-    },
     // Pre-bundle the polyfill packages so they're available immediately.
-    include: [
-      "process",
-      "stream-browserify",
-      "browserify-zlib",
-      "util",
-    ],
+    include: ["process", "stream-browserify", "browserify-zlib", "util"],
   },
   server: {
     host: "0.0.0.0",

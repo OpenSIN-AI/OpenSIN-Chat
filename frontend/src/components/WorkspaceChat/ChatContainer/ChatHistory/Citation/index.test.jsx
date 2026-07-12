@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Regression coverage for chat citation source grouping, parsing, and rendering.
+// Docs: index.test.doc.md
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 
@@ -132,6 +134,65 @@ describe("Citation", () => {
       expect(result.find((r) => r.title === "Doc B").references).toBe(1);
     });
 
+    it("keeps same-title sources separate when they point at different URLs", () => {
+      const sources = [
+        {
+          id: 1,
+          title: "Home",
+          text: "first",
+          chunkSource: "link://https://alpha.example/home",
+          score: 0.9,
+        },
+        {
+          id: 2,
+          title: "Home",
+          text: "second",
+          chunkSource: "link://https://beta.example/home",
+          score: 0.8,
+        },
+      ];
+
+      const result = combineLikeSources(sources);
+
+      expect(result).toHaveLength(2);
+      expect(result.map((source) => source.chunks[0].chunkSource)).toEqual([
+        "link://https://alpha.example/home",
+        "link://https://beta.example/home",
+      ]);
+    });
+
+    it("preserves already grouped chunks instead of replacing them with a blank top-level chunk", () => {
+      const sources = [
+        {
+          title: "Grouped Doc",
+          references: 2,
+          chunks: [
+            {
+              id: "a",
+              text: "first grouped chunk",
+              chunkSource: "document.txt",
+              score: 0.91,
+            },
+            {
+              id: "b",
+              text: "second grouped chunk",
+              chunkSource: "document.txt",
+              score: 0.82,
+            },
+          ],
+        },
+      ];
+
+      const result = combineLikeSources(sources);
+
+      expect(result).toHaveLength(1);
+      expect(result[0].references).toBe(2);
+      expect(result[0].chunks.map((chunk) => chunk.text)).toEqual([
+        "first grouped chunk",
+        "second grouped chunk",
+      ]);
+    });
+
     it("returns empty array for empty input", () => {
       expect(combineLikeSources([])).toEqual([]);
     });
@@ -145,6 +206,11 @@ describe("Citation", () => {
     it("strips document_metadata header", () => {
       const text = "<document_metadata>meta</document_metadata>real content";
       expect(omitChunkHeader(text)).toBe("real content");
+    });
+
+    it("does not throw when metadata header is malformed", () => {
+      const text = "<document_metadata>meta without closing tag";
+      expect(omitChunkHeader(text)).toBe(text);
     });
   });
 
@@ -170,6 +236,16 @@ describe("Citation", () => {
       });
       expect(result.icon).toBe("link");
       expect(result.isUrl).toBe(true);
+    });
+
+    it("parses legacy top-level chunkSource values without a chunks array", () => {
+      const result = parseChunkSource({
+        title: "My Page",
+        chunkSource: "link://https://example.com/path",
+      });
+
+      expect(result.icon).toBe("link");
+      expect(result.href).toBe("https://example.com/path");
     });
 
     it("parses youtube:// source correctly", () => {
@@ -266,13 +342,15 @@ describe("Citation", () => {
       expect(img.getAttribute("src")).toBe("test.png");
     });
 
-    it("renders favicon for link type with valid url", () => {
+    it("renders a local link icon instead of requesting a third-party favicon", () => {
       const { container } = render(
         <SourceTypeCircle type="link" url="https://example.com" />,
       );
-      const img = container.querySelector("img");
-      expect(img).toBeInTheDocument();
-      expect(img.getAttribute("src")).toContain("favicons?domain=example.com");
+      expect(container.querySelector("img")).not.toBeInTheDocument();
+      expect(
+        container.querySelector('[data-testid="phosphor-linksimple-icon"]'),
+      ).toBeInTheDocument();
+      expect(container.querySelector('img[src*="google.com"]')).toBeNull();
     });
 
     it("renders github icon for github type", () => {

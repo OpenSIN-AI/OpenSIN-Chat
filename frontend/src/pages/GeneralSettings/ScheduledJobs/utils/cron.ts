@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import logger from "@/utils/logger";
 import cronstrue from "cronstrue/i18n";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -54,7 +55,7 @@ export function getTimezoneAbbreviation(): string {
     const tzPart = parts.find((p) => p.type === "timeZoneName");
     return tzPart?.value || "local time";
   } catch (e) {
-    console.warn("Failed to format timezone:", e);
+    logger.warn("Failed to format timezone:", e);
     return "local time";
   }
 }
@@ -76,7 +77,7 @@ export function humanizeCron(cron: string, locale: string): string {
     });
     return `${humanized} ${getTimezoneAbbreviation()}`;
   } catch (e) {
-    console.warn("Failed to humanize cron expression:", e);
+    logger.warn("Failed to humanize cron expression:", e);
     return cron;
   }
 }

@@ -1,13 +1,15 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect, useCallback } from "react";
+/**
+ * Purpose: Render the right-sidebar source list for chat citations and workspace documents.
+ * Docs: index.doc.md
+ */
+import logger from "@/utils/logger";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { useTranslation } from "react-i18next";
-import { Link, useParams } from "react-router-dom";
 import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
 import { Database } from "@phosphor-icons/react/dist/csr/Database";
 import { Globe } from "@phosphor-icons/react/dist/csr/Globe";
-import paths from "@/utils/paths";
-import useThreads from "@/hooks/useThreads";
 import {
   combineLikeSources,
   CitationDetailModal,
@@ -106,76 +108,12 @@ function WorkspaceSourceItem({ doc, onClick, snippet }: any) {
   );
 }
 
-function WorkspaceChatsTab({ workspace, onClose }: any) {
-  const { t } = useTranslation();
-  const { threads, isLoading } = useThreads(workspace?.slug);
-  const { threadSlug: activeThreadSlug } = useParams() as any;
-
-  if (isLoading) {
-    return (
-      <div className="flex flex-col gap-2 overflow-y-auto no-scroll">
-        {[...Array(4)].map((_, i) => (
-          <div
-            key={i}
-            className="h-12 rounded-lg bg-theme-bg-tertiary animate-pulse"
-          />
-        ))}
-      </div>
-    );
-  }
-
-  const allThreads = [
-    // Default thread (no slug)
-    {
-      id: "__default__",
-      slug: null,
-      name: workspace?.name || t("chat_window.default_thread"),
-      virtual: true,
-    },
-    ...threads.filter((th: any) => !th.virtual && !th.deleted),
-  ];
-
-  if (allThreads.length === 0) {
-    return (
-      <p className="text-sm text-zinc-400 light:text-slate-500 text-center py-6">
-        {t("chat_window.no_chats", "Noch keine Chats vorhanden.")}
-      </p>
-    );
-  }
-
-  return (
-    <div className="flex flex-col gap-1 overflow-y-auto no-scroll">
-      {allThreads.map((thread: any) => {
-        const href = thread.slug
-          ? paths.workspace.thread(workspace.slug, thread.slug)
-          : paths.workspace.chat(workspace.slug);
-        const isActive = thread.slug
-          ? activeThreadSlug === thread.slug
-          : !activeThreadSlug;
-
-        return (
-          <Link
-            key={thread.id}
-            to={href}
-            onClick={onClose}
-            className={`flex flex-col gap-0.5 px-3 py-2 rounded-lg transition-colors no-underline group ${
-              isActive ? "bg-theme-bg-tertiary" : "hover:bg-theme-bg-secondary"
-            }`}
-          >
-            <span
-              className={`text-sm font-medium truncate ${
-                isActive
-                  ? "text-theme-text-primary"
-                  : "text-theme-text-secondary"
-              }`}
-            >
-              {thread.name}
-            </span>
-          </Link>
-        );
-      })}
-    </div>
-  );
+function sourceMatchesChunkPredicate(
+  source: any,
+  predicate: (chunkSource: string) => boolean,
+) {
+  const chunks = Array.isArray(source?.chunks) ? source.chunks : [];
+  return chunks.some((chunk: any) => predicate(chunk?.chunkSource || ""));
 }
 
 export default function SourcesSidebar({ workspace }: any) {
@@ -186,7 +124,7 @@ export default function SourcesSidebar({ workspace }: any) {
   const [snippets, setSnippets] = useState<Record<string, string>>({});
   const { sourceFilter, isDocumentSource, isMediaSource } = useChatSidebar();
 
-  const combined = combineLikeSources(sources);
+  const combined = useMemo(() => combineLikeSources(sources), [sources]);
 
   const fetchSnippets = useCallback(async (slug: any) => {
     if (!slug) return;
@@ -201,7 +139,7 @@ export default function SourcesSidebar({ workspace }: any) {
       const data = await res.json();
       if (data?.snippets) setSnippets(data.snippets);
     } catch (e) {
-      console.warn("[index] non-fatal error:", e?.message || e);
+      logger.warn("[index] non-fatal error:", e?.message || e);
     }
   }, []);
 
@@ -213,9 +151,10 @@ export default function SourcesSidebar({ workspace }: any) {
 
   // Filter chat sources based on active filter
   const filteredChatSources = (combined as any).filter((source) => {
-    const chunkSource = source.chunks?.[0]?.chunkSource;
-    if (sourceFilter === "documents") return isDocumentSource(chunkSource);
-    if (sourceFilter === "media") return isMediaSource(chunkSource);
+    if (sourceFilter === "documents")
+      return sourceMatchesChunkPredicate(source, isDocumentSource);
+    if (sourceFilter === "media")
+      return sourceMatchesChunkPredicate(source, isMediaSource);
     return true; // "all"
   });
 
@@ -228,7 +167,7 @@ export default function SourcesSidebar({ workspace }: any) {
     return true; // "all"
   });
 
-  const hasChatSources = filteredChatSources.length > 0;
+  const hasChatSources = combined.length > 0;
   const displaySources = hasChatSources
     ? filteredChatSources
     : filteredWorkspaceDocs;
@@ -287,7 +226,7 @@ export default function SourcesSidebar({ workspace }: any) {
                   />
                 ) : (
                   <SourceItem
-                    key={source.title || idx}
+                    key={source.id || idx}
                     source={source}
                     onClick={() => setSelectedSource(source)}
                   />

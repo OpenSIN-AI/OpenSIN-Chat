@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Frontend application entry point, router registration, auth interception, and dev-only mock bootstrap.
+// Docs: main.doc.md
 // react-speech-recognition (split into the "vendor-speech" chunk) is a
 // babel-compiled CJS library that references the global `regeneratorRuntime`
 // at module-evaluation time. Vite 8/Rolldown no longer injects that polyfill
@@ -34,14 +36,17 @@ installAuthInterceptor();
 const isDev = import.meta.env.DEV;
 const REACTWRAP = isDev ? React.Fragment : React.StrictMode;
 
-// DEV-ONLY: Start the MSW mock worker when the PDF mock flag is set.
-// This intercepts /pdf-analysis/* requests so the PDF-Analyse page
-// can be fully tested without a running backend.
-if (
-  isDev &&
-  (safeGetItem("opensin_pdf_mock") === "true" ||
-    safeGetItem("opensin_ws_mock") === "true")
-) {
+async function startDevMocks() {
+  // DEV-ONLY: Start the MSW mock worker when a mock flag is set. This
+  // intercepts local test/demo routes without requiring a running backend.
+  if (
+    !isDev ||
+    (safeGetItem("opensin_pdf_mock") !== "true" &&
+      safeGetItem("opensin_ws_mock") !== "true")
+  ) {
+    return;
+  }
+
   const { startMockWorker } = await import("@/mocks/browser");
   await startMockWorker();
 }
@@ -475,8 +480,13 @@ const router = createBrowserRouter([
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <REACTWRAP>
-    <RouterProvider router={router} />
-  </REACTWRAP>,
-);
+async function bootstrap() {
+  await startDevMocks();
+  ReactDOM.createRoot(document.getElementById("root")).render(
+    <REACTWRAP>
+      <RouterProvider router={router} />
+    </REACTWRAP>,
+  );
+}
+
+void bootstrap();

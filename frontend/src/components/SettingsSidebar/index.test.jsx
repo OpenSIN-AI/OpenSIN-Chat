@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
-// Tests for SettingsSidebar component
+// Purpose: Regression tests for the SettingsSidebar navigation shell.
+// Docs: index.test.doc.md
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
@@ -44,7 +45,9 @@ vi.mock("@/utils/paths", () => {
 
 vi.mock("../Footer", () => ({ default: () => null }));
 vi.mock("@/components/CanViewChatHistory", () => ({
-  CanViewChatHistoryProvider: ({ children }) => children,
+  CanViewChatHistoryProvider: ({ children }) => (
+    <>{children({ viewable: true })}</>
+  ),
 }));
 vi.mock("@/media/animations/agent-static.png", () => ({
   default: "/agent.png",

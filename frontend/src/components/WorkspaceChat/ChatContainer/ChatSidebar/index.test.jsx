@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Regression tests for right-sidebar context state and source classifiers.
+// Docs: index.test.doc.md
 import { describe, it, expect } from "vitest";
 import { renderHook, act, waitFor } from "@testing-library/react";
 import {
@@ -59,6 +61,27 @@ describe("ChatSidebarProvider", () => {
     );
     expect(result.current.preview.previewData.title).toBe("Doc");
     expect(result.current.preview.sidebarOpen).toBe(true);
+  });
+
+  it("classifies local file chunk sources as documents", () => {
+    const { result } = renderHook(() => useChatSidebar(), { wrapper });
+
+    expect(result.current.isDocumentSource("document.txt")).toBe(true);
+    expect(result.current.isDocumentSource("folder/report.pdf")).toBe(true);
+  });
+
+  it("does not classify web links or media sources as documents", () => {
+    const { result } = renderHook(() => useChatSidebar(), { wrapper });
+
+    expect(result.current.isDocumentSource("link://https://example.com")).toBe(
+      false,
+    );
+    expect(
+      result.current.isDocumentSource("youtube://https://youtu.be/id"),
+    ).toBe(false);
+    expect(result.current.isMediaSource("youtube://https://youtu.be/id")).toBe(
+      true,
+    );
   });
 
   it("accumulates console logs from dispatchLog", async () => {

@@ -1,20 +1,31 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Shared hook for provider endpoint auto-discovery and advanced URL/auth-token controls.
+// Docs: useProviderEndpointAutoDiscovery.doc.md
 import { useEffect, useState, useRef } from "react";
 import System from "@/models/system";
 import logger from "@/utils/logger";
 
+const MASKED_SECRET_PATTERN = /^\*+$/;
+
+export function requestAuthToken(value: string | null) {
+  if (typeof value === "string" && MASKED_SECRET_PATTERN.test(value)) {
+    return null;
+  }
+  return value;
+}
+
 export default function useProviderEndpointAutoDiscovery({
   provider = null,
   initialBasePath = "",
-  initialAuthToken = null,
+  initialAuthToken = "",
   ENDPOINTS = [],
 }) {
   const [loading, setLoading] = useState(false as any);
   const [basePath, setBasePath] = useState(initialBasePath);
   const [basePathValue, setBasePathValue] = useState(initialBasePath);
 
-  const [authToken, setAuthToken] = useState(initialAuthToken);
-  const [authTokenValue, setAuthTokenValue] = useState(initialAuthToken);
+  const [authToken, setAuthToken] = useState(initialAuthToken ?? "");
+  const [authTokenValue, setAuthTokenValue] = useState(initialAuthToken ?? "");
   const [autoDetectAttempted, setAutoDetectAttempted] = useState(false as any);
   const [showAdvancedControls, setShowAdvancedControls] = useState(true as any);
   const mountedRef = useRef(true);
@@ -33,7 +44,12 @@ export default function useProviderEndpointAutoDiscovery({
     ENDPOINTS.forEach((endpoint) => {
       possibleEndpoints.push(
         new Promise((resolve, reject) => {
-          System.customModels(provider, authTokenValue, endpoint, 2_000)
+          System.customModels(
+            provider,
+            requestAuthToken(authTokenValue),
+            endpoint,
+            2_000,
+          )
             .then((results: any) => {
               if (!results?.models || results.models.length === 0)
                 throw new Error("No models");

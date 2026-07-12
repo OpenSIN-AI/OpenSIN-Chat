@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import logger from "@/utils/logger";
 import { encode as HTMLEncode } from "he";
 import markdownIt from "markdown-it";
 import markdownItKatexPlugin from "./plugins/markdown-katex";
@@ -37,7 +38,7 @@ const markdown = markdownIt({
           "</pre></div>"
         );
       } catch (e) {
-        console.warn("[markdown] non-fatal error:", e?.message || e);
+        logger.warn("[markdown] non-fatal error:", e?.message || e);
       }
     }
 

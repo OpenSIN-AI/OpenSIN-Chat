@@ -2,6 +2,7 @@
 // Purpose: React context that consumes the agent-runs SSE stream, holds runs
 //          as a flat map, and exposes a Traycer-style lineage tree (buildTree).
 // Docs: AgentRunsContext.doc.md
+import logger from "@/utils/logger";
 import React, {
   createContext,
   useContext,
@@ -225,7 +226,7 @@ export function AgentRunsProvider({
           },
         );
       } catch (e) {
-        console.warn("[AgentRunsContext] non-fatal error:", e?.message || e);
+        logger.warn("[AgentRunsContext] non-fatal error:", e?.message || e);
       }
     },
     [apiBase, workspaceSlug, authToken],
@@ -246,7 +247,7 @@ export function AgentRunsProvider({
           },
         );
       } catch (e) {
-        console.warn("[AgentRunsContext] non-fatal error:", e?.message || e);
+        logger.warn("[AgentRunsContext] non-fatal error:", e?.message || e);
       }
     },
     [apiBase, workspaceSlug, authToken],

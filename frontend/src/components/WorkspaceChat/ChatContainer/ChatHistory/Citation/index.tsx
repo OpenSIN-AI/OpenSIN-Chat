@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Render chat answer citations and source details.
 // Docs: index.doc.md
-import { memo, Fragment, useState, useEffect, type CSSProperties } from "react";
+import { memo, Fragment, type CSSProperties } from "react";
 import { decode as HTMLDecode } from "he";
 import DOMPurify from "dompurify";
 import { truncate } from "@/utils/strings";
@@ -65,18 +65,17 @@ export function getCustomImage(type: SourceIcon) {
 }
 
 /**
- * Renders a circle with a source type icon inside, or a favicon if URL is provided.
+ * Renders a local source type icon or a bundled provider image.
  * @param {"file"|"link"|"youtube"|"github"|"gitlab"|"confluence"|"drupalwiki"|"obsidian"|"paperlessNgx"} props.type
  * @param {number} [props.size] - Circle diameter in px
  * @param {number} [props.iconSize] - Icon size in px
- * @param {string} [props.url] - Optional URL to fetch favicon from
+ * @param {string} [props.url] - Reserved for call-site compatibility
  * @param {string} [props.customImage] - Optional custom image to display
  */
 export function SourceTypeCircle({
   type = "file",
   size = 22,
   iconSize = 12,
-  url = null,
   customImage = null,
 }: {
   type?: SourceIcon;
@@ -85,23 +84,7 @@ export function SourceTypeCircle({
   url?: string | null;
   customImage?: string | null;
 }) {
-  const { t } = useTranslation();
   const Icon = CIRCLE_ICONS[type] || CIRCLE_ICONS.file;
-  const [imgError, setImgError] = useState(false);
-
-  let faviconUrl = null;
-  if (type === "link" && url) {
-    try {
-      const hostname = new URL(url).hostname;
-      faviconUrl = `https://www.google.com/s2/favicons?domain=${hostname}&sz=64`;
-    } catch {
-      faviconUrl = null;
-    }
-  }
-
-  useEffect(() => {
-    setImgError(false);
-  }, [url]);
 
   return (
     <div
@@ -109,14 +92,7 @@ export function SourceTypeCircle({
       // Dynamic: dimensions passed as props (runtime variable)
       style={{ "--source-circle-size": `${size}px` } as CSSProperties}
     >
-      {faviconUrl && !imgError ? (
-        <img
-          src={faviconUrl}
-          alt={t("common.favicon")}
-          className="object-cover w-full h-full"
-          onError={() => setImgError(true)}
-        />
-      ) : customImage ? (
+      {customImage ? (
         <img
           src={customImage}
           alt={type}
@@ -173,7 +149,7 @@ function Citations({ sources = [] }: { sources?: CitationSource[] }) {
           const customImage = CIRCLE_IMAGES[info.icon];
           return (
             <div
-              key={source.title || idx}
+              key={source.id || idx}
               className={`absolute top-0 size-[22px] rounded-full left-[var(--citation-stack-left)] z-[var(--citation-stack-z)] ${customImage ? "border-none" : "border-2 border-zinc-800 light:border-white"}`}
               style={
                 {
@@ -204,7 +180,10 @@ function Citations({ sources = [] }: { sources?: CitationSource[] }) {
 
 export function omitChunkHeader(text = "") {
   if (!text.includes("<document_metadata>")) return text;
-  return text.split("</document_metadata>")[1].trim();
+  const endTag = "</document_metadata>";
+  const endIndex = text.indexOf(endTag);
+  if (endIndex === -1) return text;
+  return text.slice(endIndex + endTag.length).trim();
 }
 
 export function CitationDetailModal({
@@ -217,7 +196,8 @@ export function CitationDetailModal({
   const { t } = useTranslation();
   if (!source) return null;
 
-  const { references, title, chunks } = source;
+  const { references, title } = source;
+  const chunks = Array.isArray(source.chunks) ? source.chunks : [];
   const { isUrl, text: webpageUrl, href: linkTo } = parseChunkSource(source);
 
   return (

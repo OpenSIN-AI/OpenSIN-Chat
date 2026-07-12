@@ -46,25 +46,64 @@
 
   /* Sidebar tokens — bridge to runtime --theme-* vars so light mode flips */
   --color-theme-sidebar-item-hover: var(--theme-sidebar-item-hover, #161616);
-  --color-theme-sidebar-item-selected: var(--theme-sidebar-item-selected, #1c1c1c);
-  --color-theme-sidebar-item-text-active: var(--theme-sidebar-item-text-active, #fafafa);
-  --color-theme-sidebar-item-text-inactive: var(--theme-sidebar-item-text-inactive, #71717a);
-  --color-theme-sidebar-item-default: var(--theme-sidebar-item-default, transparent);
-  --color-theme-sidebar-item-workspace-active: var(--theme-sidebar-item-workspace-active, #fafafa);
-  --color-theme-sidebar-item-workspace-inactive: var(--theme-sidebar-item-workspace-inactive, #71717a);
-  --color-theme-sidebar-subitem-hover: var(--theme-sidebar-subitem-hover, #161616);
-  --color-theme-sidebar-subitem-selected: var(--theme-sidebar-subitem-selected, #1c1c1c);
-  --color-theme-sidebar-subitem-default: var(--theme-sidebar-subitem-default, transparent);
-  --color-theme-sidebar-thread-selected: var(--theme-sidebar-thread-selected, #1c1c1c);
+  --color-theme-sidebar-item-selected: var(
+    --theme-sidebar-item-selected,
+    #1c1c1c
+  );
+  --color-theme-sidebar-item-text-active: var(
+    --theme-sidebar-item-text-active,
+    #fafafa
+  );
+  --color-theme-sidebar-item-text-inactive: var(
+    --theme-sidebar-item-text-inactive,
+    #71717a
+  );
+  --color-theme-sidebar-item-default: var(
+    --theme-sidebar-item-default,
+    transparent
+  );
+  --color-theme-sidebar-item-workspace-active: var(
+    --theme-sidebar-item-workspace-active,
+    #fafafa
+  );
+  --color-theme-sidebar-item-workspace-inactive: var(
+    --theme-sidebar-item-workspace-inactive,
+    #71717a
+  );
+  --color-theme-sidebar-subitem-hover: var(
+    --theme-sidebar-subitem-hover,
+    #161616
+  );
+  --color-theme-sidebar-subitem-selected: var(
+    --theme-sidebar-subitem-selected,
+    #1c1c1c
+  );
+  --color-theme-sidebar-subitem-default: var(
+    --theme-sidebar-subitem-default,
+    transparent
+  );
+  --color-theme-sidebar-thread-selected: var(
+    --theme-sidebar-thread-selected,
+    #1c1c1c
+  );
   --color-theme-sidebar-border: var(--theme-sidebar-border, #1c1c1c);
   --color-theme-sidebar-footer-icon: var(--theme-sidebar-footer-icon, #111111);
-  --color-theme-sidebar-footer-icon-fill: var(--theme-sidebar-footer-icon-fill, #71717a);
-  --color-theme-sidebar-footer-icon-hover: var(--theme-sidebar-footer-icon-hover, #27272a);
+  --color-theme-sidebar-footer-icon-fill: var(
+    --theme-sidebar-footer-icon-fill,
+    #71717a
+  );
+  --color-theme-sidebar-footer-icon-hover: var(
+    --theme-sidebar-footer-icon-hover,
+    #27272a
+  );
   --color-theme-placeholder: var(--theme-placeholder, #52525b);
 
   /* Action menu tokens */
   --color-theme-action-menu-bg: var(--theme-action-menu-bg, #1c1c1c);
-  --color-theme-action-menu-item-hover: var(--theme-action-menu-item-hover, rgba(255, 255, 255, 0.05));
+  --color-theme-action-menu-item-hover: var(
+    --theme-action-menu-item-hover,
+    rgba(255, 255, 255, 0.05)
+  );
 
   /* Chat tokens */
   --color-theme-bg-chat: var(--theme-bg-chat, #0a0a0a);
@@ -73,22 +112,40 @@
 
   /* Settings input tokens */
   --color-theme-settings-input-bg: var(--theme-settings-input-bg, #111111);
-  --color-theme-settings-input-placeholder: var(--theme-settings-input-placeholder, rgba(255, 255, 255, 0.3));
-  --color-theme-settings-input-active: var(--theme-settings-input-active, rgba(255, 255, 255, 0.1));
+  --color-theme-settings-input-placeholder: var(
+    --theme-settings-input-placeholder,
+    rgba(255, 255, 255, 0.3)
+  );
+  --color-theme-settings-input-active: var(
+    --theme-settings-input-active,
+    rgba(255, 255, 255, 0.1)
+  );
   --color-theme-settings-input-text: var(--theme-settings-input-text, #fafafa);
 
   /* Button tokens */
   --color-theme-button-primary: var(--theme-button-primary, #ffffff);
-  --color-theme-button-primary-hover: var(--theme-button-primary-hover, #e4e4e7);
+  --color-theme-button-primary-hover: var(
+    --theme-button-primary-hover,
+    #e4e4e7
+  );
   --color-theme-button-secondary: var(--theme-button-secondary, #1c1c1c);
-  --color-theme-button-secondary-hover: var(--theme-button-secondary-hover, #27272a);
+  --color-theme-button-secondary-hover: var(
+    --theme-button-secondary-hover,
+    #27272a
+  );
   --color-theme-button-disabled: var(--theme-button-disabled, #1c1c1c);
 
   /* Shared controls */
   --color-theme-border: var(--theme-border, #27272a);
-  --color-theme-border-subtle: var(--theme-border-subtle, rgba(255, 255, 255, 0.08));
+  --color-theme-border-subtle: var(
+    --theme-border-subtle,
+    rgba(255, 255, 255, 0.08)
+  );
   --color-theme-focus: var(--theme-focus, rgba(250, 250, 250, 0.78));
-  --color-theme-control-hover: var(--theme-control-hover, rgba(255, 255, 255, 0.07));
+  --color-theme-control-hover: var(
+    --theme-control-hover,
+    rgba(255, 255, 255, 0.07)
+  );
 
   /* Popup menu */
   --color-theme-bg-popup-menu: var(--theme-popup-menu-bg, #1c1c1c);
@@ -509,10 +566,9 @@
  * Issue #5 Light Theme Compatibility Layer — ABGESCHLOSSEN (2026-07-08)
  *
  * Migration der text-white-Klassen zu semantischen Tokens ist abgeschlossen:
- *   text-white text-opacity-*/
-70-90  ->  text-theme-text-primary   (migriert)
- *   text-white text-opacity-*/45-60  ->  text-theme-text-secondary (migriert)
- *   text-white text-opacity-*/20-40  ->  text-theme-placeholder    (migriert)
+ *   text-white + opacity 70-90  ->  text-theme-text-primary   (migriert)
+ *   text-white + opacity 45-60  ->  text-theme-text-secondary (migriert)
+ *   text-white + opacity 20-40  ->  text-theme-placeholder    (migriert)
  *
  * Verbleibende 118 text-white-Vorkommen sind intentionell:
  *   - farbige Hintergrunde (bg-red-500, bg-blue-600, bg-[#009ee0], bg-primary-button)
@@ -860,32 +916,143 @@ body {
   font-size: 0.875rem;
   line-height: 1.65;
 }
-.notepad-prose > * + * { margin-top: 0.7em; }
-.notepad-prose h1 { font-size: 1.75rem; font-weight: 700; line-height: 1.25; }
-.notepad-prose h2 { font-size: 1.35rem; font-weight: 650; line-height: 1.3; }
-.notepad-prose h3 { font-size: 1.1rem; font-weight: 650; }
-.notepad-prose ul:not([data-type="taskList"]) { list-style: disc; padding-left: 1.25rem; }
-.notepad-prose ol { list-style: decimal; padding-left: 1.25rem; }
-.notepad-prose blockquote { border-left: 2px solid var(--theme-sidebar-border); padding-left: 0.9rem; color: var(--theme-text-secondary); }
-.notepad-prose code { border-radius: 0.3rem; background: var(--theme-bg-tertiary); padding: 0.1rem 0.3rem; font-family: var(--font-mono); font-size: 0.8em; }
-.notepad-prose pre { overflow-x: auto; border: 1px solid var(--theme-sidebar-border); border-radius: 0.65rem; background: var(--theme-bg-secondary); padding: 0.8rem; }
-.notepad-prose pre code { background: transparent; padding: 0; }
-.notepad-prose a { text-decoration: underline; text-underline-offset: 3px; }
-.notepad-prose .notepad-link-card { display: flex; flex-direction: column; gap: 0.25rem; border: 1px solid var(--theme-sidebar-border); border-radius: 0.75rem; background: var(--theme-bg-secondary); padding: 0.85rem 1rem; text-decoration: none; transition: border-color 150ms ease; }
-.notepad-prose .notepad-link-card:hover { border-color: var(--theme-text-secondary); }
-.notepad-link-card-title { overflow: hidden; color: var(--theme-text-primary); font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
-.notepad-link-card-url { overflow: hidden; color: var(--theme-text-secondary); font-size: 0.7rem; text-overflow: ellipsis; white-space: nowrap; }
-.notepad-prose img { max-height: 24rem; max-width: 100%; border-radius: 0.75rem; border: 1px solid var(--theme-sidebar-border); object-fit: contain; }
-.notepad-prose iframe { aspect-ratio: 16 / 9; width: 100%; max-width: 40rem; border-radius: 0.75rem; border: 1px solid var(--theme-sidebar-border); }
-.notepad-prose hr { margin-block: 1.25rem; border-color: var(--theme-sidebar-border); }
-.notepad-prose p.is-editor-empty:first-child::before { pointer-events: none; float: left; height: 0; color: var(--theme-placeholder); content: attr(data-placeholder); }
-.notepad-prose ul[data-type="taskList"] { list-style: none; padding: 0; }
-.notepad-prose ul[data-type="taskList"] li { display: flex; align-items: flex-start; gap: 0.5rem; }
-.notepad-prose ul[data-type="taskList"] li > label { padding-top: 0.18rem; }
-.notepad-prose ul[data-type="taskList"] li > div { min-width: 0; flex: 1; }
-.notepad-prose table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-.notepad-prose th, .notepad-prose td { min-width: 4rem; border: 1px solid var(--theme-sidebar-border); padding: 0.45rem; vertical-align: top; }
-.notepad-prose th { background: var(--theme-bg-secondary); font-weight: 600; }
+.notepad-prose > * + * {
+  margin-top: 0.7em;
+}
+.notepad-prose h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.notepad-prose h2 {
+  font-size: 1.35rem;
+  font-weight: 650;
+  line-height: 1.3;
+}
+.notepad-prose h3 {
+  font-size: 1.1rem;
+  font-weight: 650;
+}
+.notepad-prose ul:not([data-type="taskList"]) {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+.notepad-prose ol {
+  list-style: decimal;
+  padding-left: 1.25rem;
+}
+.notepad-prose blockquote {
+  border-left: 2px solid var(--theme-sidebar-border);
+  padding-left: 0.9rem;
+  color: var(--theme-text-secondary);
+}
+.notepad-prose code {
+  border-radius: 0.3rem;
+  background: var(--theme-bg-tertiary);
+  padding: 0.1rem 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+}
+.notepad-prose pre {
+  overflow-x: auto;
+  border: 1px solid var(--theme-sidebar-border);
+  border-radius: 0.65rem;
+  background: var(--theme-bg-secondary);
+  padding: 0.8rem;
+}
+.notepad-prose pre code {
+  background: transparent;
+  padding: 0;
+}
+.notepad-prose a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.notepad-prose .notepad-link-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  border: 1px solid var(--theme-sidebar-border);
+  border-radius: 0.75rem;
+  background: var(--theme-bg-secondary);
+  padding: 0.85rem 1rem;
+  text-decoration: none;
+  transition: border-color 150ms ease;
+}
+.notepad-prose .notepad-link-card:hover {
+  border-color: var(--theme-text-secondary);
+}
+.notepad-link-card-title {
+  overflow: hidden;
+  color: var(--theme-text-primary);
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.notepad-link-card-url {
+  overflow: hidden;
+  color: var(--theme-text-secondary);
+  font-size: 0.7rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.notepad-prose img {
+  max-height: 24rem;
+  max-width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid var(--theme-sidebar-border);
+  object-fit: contain;
+}
+.notepad-prose iframe {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  max-width: 40rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--theme-sidebar-border);
+}
+.notepad-prose hr {
+  margin-block: 1.25rem;
+  border-color: var(--theme-sidebar-border);
+}
+.notepad-prose p.is-editor-empty:first-child::before {
+  pointer-events: none;
+  float: left;
+  height: 0;
+  color: var(--theme-placeholder);
+  content: attr(data-placeholder);
+}
+.notepad-prose ul[data-type="taskList"] {
+  list-style: none;
+  padding: 0;
+}
+.notepad-prose ul[data-type="taskList"] li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.notepad-prose ul[data-type="taskList"] li > label {
+  padding-top: 0.18rem;
+}
+.notepad-prose ul[data-type="taskList"] li > div {
+  min-width: 0;
+  flex: 1;
+}
+.notepad-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.notepad-prose th,
+.notepad-prose td {
+  min-width: 4rem;
+  border: 1px solid var(--theme-sidebar-border);
+  padding: 0.45rem;
+  vertical-align: top;
+}
+.notepad-prose th {
+  background: var(--theme-bg-secondary);
+  font-weight: 600;
+}
 
 /* ── Workspace shell responsive (Issue #607 §16) ──────────────────────── */
 .workspace-panel {
@@ -932,7 +1099,8 @@ body {
   --app-radius-sm: 0.5rem;
   --app-radius-md: 0.75rem;
   --app-radius-lg: 1rem;
-  --app-shadow-menu: 0 12px 32px rgba(0, 0, 0, 0.16), 0 2px 8px rgba(0, 0, 0, 0.08);
+  --app-shadow-menu:
+    0 12px 32px rgba(0, 0, 0, 0.16), 0 2px 8px rgba(0, 0, 0, 0.08);
   --app-transition: 150ms cubic-bezier(0.2, 0, 0, 1);
 }
 
@@ -948,7 +1116,9 @@ body,
 
 :where(button, a, input, textarea, select, [tabindex]):focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--theme-bg-secondary), 0 0 0 4px var(--theme-modal-border);
+  box-shadow:
+    0 0 0 2px var(--theme-bg-secondary),
+    0 0 0 4px var(--theme-modal-border);
 }
 
 .app-surface {
@@ -974,7 +1144,9 @@ body,
   border-radius: var(--app-radius-sm);
   background: transparent;
   color: var(--theme-text-secondary);
-  transition: background-color var(--app-transition), color var(--app-transition);
+  transition:
+    background-color var(--app-transition),
+    color var(--app-transition);
 }
 .app-icon-button:hover {
   background: var(--theme-bg-hover);
@@ -982,24 +1154,29 @@ body,
 }
 
 .app-skeleton {
-  background: linear-gradient(90deg, var(--theme-bg-tertiary) 25%, var(--theme-bg-hover) 50%, var(--theme-bg-tertiary) 75%);
+  background: linear-gradient(
+    90deg,
+    var(--theme-bg-tertiary) 25%,
+    var(--theme-bg-hover) 50%,
+    var(--theme-bg-tertiary) 75%
+  );
   background-size: 200% 100%;
   animation: app-shimmer 1.4s ease-in-out infinite;
 }
 
 @keyframes app-shimmer {
-  to { background-position: -200% 0; }
+  to {
+    background-position: -200% 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     scroll-behavior: auto !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }
-
-/* ── Katex styles ──────────────────────────────────────────────────────── */
-/* Keep the katex import after Tailwind so it can override preflight */
-@import "katex/dist/katex.min.css";

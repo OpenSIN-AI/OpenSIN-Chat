@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: LM Studio embedding provider settings including endpoint, model, and optional auth token controls.
+// Docs: index.doc.md
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { LMSTUDIO_COMMON_URLS } from "@/utils/constants";
@@ -8,7 +10,9 @@ import { Info } from "@phosphor-icons/react/dist/csr/Info";
 import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import { Tooltip } from "react-tooltip";
-import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
+import useProviderEndpointAutoDiscovery, {
+  requestAuthToken,
+} from "@/hooks/useProviderEndpointAutoDiscovery";
 import useProviderModels from "@/hooks/useProviderModels";
 
 export default function LMStudioEmbeddingOptions({ settings }: any) {
@@ -25,6 +29,7 @@ export default function LMStudioEmbeddingOptions({ settings }: any) {
   } = useProviderEndpointAutoDiscovery({
     provider: "lmstudio",
     initialBasePath: settings?.EmbeddingBasePath,
+    initialAuthToken: settings?.LMStudioAuthToken ? "*".repeat(20) : "",
     ENDPOINTS: LMSTUDIO_COMMON_URLS,
   });
 
@@ -42,7 +47,7 @@ export default function LMStudioEmbeddingOptions({ settings }: any) {
         <LMStudioModelSelection
           settings={settings}
           basePath={basePath.value}
-          apiKey={authTokenValue.value}
+          apiKey={requestAuthToken(authTokenValue.value)}
         />
         <div className="flex flex-col w-60">
           <div
@@ -187,7 +192,6 @@ export default function LMStudioEmbeddingOptions({ settings }: any) {
               name="LMStudioAuthToken"
               className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg outline-none block w-full p-2.5 focus:outline-primary-button active:outline-primary-button"
               placeholder={t("lmStudioEmbedding.authTokenPlaceholder")}
-              defaultValue={settings?.LMStudioAuthToken ? "*".repeat(20) : ""}
               value={authTokenValue.value}
               onChange={authToken.onChange}
               onBlur={authToken.onBlur}

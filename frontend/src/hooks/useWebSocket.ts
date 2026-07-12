@@ -139,7 +139,7 @@ export default function useWebSocket({
         // the connection is stale and we force-close it.
         clearTimeout(heartbeatTimeout);
         heartbeatTimeout = setTimeout(() => {
-          console.warn(
+          logger.warn(
             "[useWebSocket] Heartbeat timeout — connection appears stale.",
           );
           // Mark as unintentional so we attempt reconnection
@@ -203,7 +203,7 @@ export default function useWebSocket({
             INITIAL_BACKOFF_MS * Math.pow(2, attempt),
             MAX_BACKOFF_MS,
           );
-          console.warn(
+          logger.warn(
             `[useWebSocket] Connection lost — attempting reconnect ${attempt + 1}/${MAX_RECONNECT_ATTEMPTS} in ${backoff}ms`,
           );
 

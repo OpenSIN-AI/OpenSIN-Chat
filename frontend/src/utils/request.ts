@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import logger from "@/utils/logger";
 import { AUTH_TOKEN, AUTH_USER } from "./constants";
 import { safeGetItem } from "./safeStorage";
 
@@ -25,7 +26,7 @@ export function safeJsonParse(jsonString, fallback = null) {
     if (jsonString === null || jsonString === undefined) return fallback;
     return JSON.parse(jsonString);
   } catch (e) {
-    console.warn("[request] non-fatal error:", e?.message || e);
+    logger.warn("[request] non-fatal error:", e?.message || e);
   }
   return fallback;
 }

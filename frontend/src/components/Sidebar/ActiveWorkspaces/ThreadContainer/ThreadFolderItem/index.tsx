@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import logger from "@/utils/logger";
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import { invalidateThreads } from "@/hooks/useThreads";
@@ -25,7 +26,7 @@ function loadFolderCollapseState(): Record<string, boolean> {
     const stored = safeGetItem(FOLDER_COLLAPSE_KEY);
     if (stored) return JSON.parse(stored);
   } catch (e) {
-    console.warn("[index] non-fatal error:", e?.message || e);
+    logger.warn("[index] non-fatal error:", e?.message || e);
   }
   return {};
 }
@@ -36,7 +37,7 @@ function saveFolderCollapseState(folderId: number, collapsed: boolean) {
     state[String(folderId)] = collapsed;
     safeSetItem(FOLDER_COLLAPSE_KEY, JSON.stringify(state));
   } catch (e) {
-    console.warn("[index] non-fatal error:", e?.message || e);
+    logger.warn("[index] non-fatal error:", e?.message || e);
   }
 }
 

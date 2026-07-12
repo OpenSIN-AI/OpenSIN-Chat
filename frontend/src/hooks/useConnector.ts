@@ -2,6 +2,7 @@
 // Purpose: React hook for OAuth connector management.
 //          Handles connect (popup), disconnect, and listing connected accounts.
 //          Gracefully handles "coming_soon" when OAuth is not configured.
+import logger from "@/utils/logger";
 import { useCallback, useEffect, useState } from "react";
 import { AUTH_TOKEN } from "@/utils/constants";
 import { safeGetItem } from "@/utils/safeStorage";
@@ -131,7 +132,7 @@ export function useConnector(provider: string): UseConnectorResult {
         });
         refresh();
       } catch (e) {
-        console.warn("[useConnector] non-fatal error:", e?.message || e);
+        logger.warn("[useConnector] non-fatal error:", e?.message || e);
       }
     },
     [provider, refresh],

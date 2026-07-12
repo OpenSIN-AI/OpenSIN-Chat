@@ -32,6 +32,7 @@ vi.mock("@/hooks/useProviderEndpointAutoDiscovery", () => ({
     authToken: { onChange: vi.fn(), onBlur: vi.fn() },
     authTokenValue: { value: "" },
   }),
+  requestAuthToken: (value) => (/^\*+$/.test(value || "") ? null : value || null),
 }));
 
 vi.mock("@/hooks/useProviderModels", () => ({

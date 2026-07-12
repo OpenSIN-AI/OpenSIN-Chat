@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Markdown renderer with thought bubble support
 // Docs: MarkdownRenderer.doc.md
+import logger from "@/utils/logger";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import MarkdownIt from "markdown-it";
@@ -17,7 +18,7 @@ const md = new MarkdownIt({
       try {
         return hljs.highlight(str, { language: lang }).value;
       } catch (e) {
-        console.warn("highlight.js failed:", e);
+        logger.warn("highlight.js failed:", e);
       }
     }
     return "";

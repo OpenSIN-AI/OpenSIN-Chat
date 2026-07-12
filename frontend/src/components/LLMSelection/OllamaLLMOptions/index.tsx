@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Ollama LLM provider settings including model, endpoint, context, token, and auth controls.
+// Docs: index.doc.md
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { OLLAMA_COMMON_URLS } from "@/utils/constants";
@@ -6,7 +8,9 @@ import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
 import { CaretUp } from "@phosphor-icons/react/dist/csr/CaretUp";
 import { Info } from "@phosphor-icons/react/dist/csr/Info";
 import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
-import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
+import useProviderEndpointAutoDiscovery, {
+  requestAuthToken,
+} from "@/hooks/useProviderEndpointAutoDiscovery";
 import { Tooltip } from "react-tooltip";
 import { Link } from "react-router-dom";
 import useProviderModels from "@/hooks/useProviderModels";
@@ -25,6 +29,7 @@ export default function OllamaLLMOptions({ settings }: any) {
   } = useProviderEndpointAutoDiscovery({
     provider: "ollama",
     initialBasePath: settings?.OllamaLLMBasePath,
+    initialAuthToken: settings?.OllamaLLMAuthToken ? "*".repeat(20) : "",
     ENDPOINTS: OLLAMA_COMMON_URLS,
   });
   const [maxTokens, setMaxTokens] = useState(
@@ -37,7 +42,7 @@ export default function OllamaLLMOptions({ settings }: any) {
         <OllamaLLMModelSelection
           settings={settings}
           basePath={basePath.value}
-          authToken={authToken.value}
+          authToken={requestAuthToken(authToken.value)}
         />
       </div>
       <div className="flex justify-start mt-4">
@@ -245,9 +250,6 @@ export default function OllamaLLMOptions({ settings }: any) {
                 name="OllamaLLMAuthToken"
                 className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg outline-none block w-full p-2.5 focus:outline-primary-button active:outline-primary-button"
                 placeholder={t("ollama.authTokenPlaceholder")}
-                defaultValue={
-                  settings?.OllamaLLMAuthToken ? "*".repeat(20) : ""
-                }
                 value={authTokenValue.value}
                 onChange={authToken.onChange}
                 onBlur={authToken.onBlur}

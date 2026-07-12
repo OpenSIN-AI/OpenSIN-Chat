@@ -43,7 +43,7 @@ export default function MobileCitationModal({
             <div className="flex flex-col gap-3 overflow-y-auto no-scroll">
               {(sources as any).map((source, idx) => (
                 <SourceItem
-                  key={source.title || idx}
+                  key={source.id || idx}
                   source={source}
                   onClick={() => setSelectedSource(source)}
                 />

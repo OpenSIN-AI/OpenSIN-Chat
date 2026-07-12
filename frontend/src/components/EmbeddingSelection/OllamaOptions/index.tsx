@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Ollama embedding provider settings including model, endpoint, batching, and auth token controls.
+// Docs: index.doc.md
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import PreLoader from "@/components/Preloader";
@@ -24,6 +26,7 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
   } = useProviderEndpointAutoDiscovery({
     provider: "ollama",
     initialBasePath: settings?.EmbeddingBasePath,
+    initialAuthToken: settings?.OllamaLLMAuthToken ? "*".repeat(20) : "",
     ENDPOINTS: OLLAMA_COMMON_URLS,
   });
 
@@ -188,7 +191,6 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
               name="OllamaLLMAuthToken"
               className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
               placeholder={t("ollamaEmbedding.authTokenPlaceholder")}
-              defaultValue={settings?.OllamaLLMAuthToken ? "*".repeat(20) : ""}
               value={authTokenValue.value}
               onChange={authToken.onChange}
               onBlur={authToken.onBlur}

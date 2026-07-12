@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Admin settings panel for OpenAI-compatible image generation skill configuration.
 // Docs: index.doc.md
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -133,12 +134,14 @@ export default function ImageGenerationSkillPanel({
               </label>
               {clearKey ? (
                 <input
+                  key="clear-image-generation-api-key"
                   type="hidden"
                   name="system::image_generation_api_key"
                   value="-CLEAR-"
                 />
               ) : (
                 <input
+                  key="edit-image-generation-api-key"
                   name="system::image_generation_api_key"
                   type="password"
                   placeholder="sk-..."
