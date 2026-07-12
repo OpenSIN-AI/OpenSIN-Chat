@@ -39,6 +39,15 @@
   --color-theme-text-secondary: var(--theme-text-secondary, #a1a1aa);
   --color-theme-text-muted: var(--theme-placeholder, #52525b);
 
+  /* Sidebar tokens — bridge to runtime --theme-* vars so light mode flips */
+  --color-theme-sidebar-item-hover: var(--theme-sidebar-item-hover, #161616);
+  --color-theme-sidebar-item-selected: var(--theme-sidebar-item-selected, #1c1c1c);
+  --color-theme-sidebar-item-text-active: var(--theme-sidebar-item-text-active, #fafafa);
+  --color-theme-sidebar-item-text-inactive: var(--theme-sidebar-item-text-inactive, #71717a);
+  --color-theme-sidebar-border: var(--theme-sidebar-border, #1c1c1c);
+  --color-theme-placeholder: var(--theme-placeholder, #52525b);
+  --color-theme-action-menu-item-hover: var(--theme-action-menu-item-hover, rgba(255, 255, 255, 0.05));
+
   /* Modal/border tokens */
   --color-theme-modal-border: #27272a;
   --color-theme-overlay: rgba(0, 0, 0, 0.62);
