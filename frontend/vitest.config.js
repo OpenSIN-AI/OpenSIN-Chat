@@ -33,13 +33,11 @@ export default defineConfig({
     // between test files. The main speed gains come from capping workers and
     // from splitting the suite across parallel CI jobs in
     // .github/workflows/tests.yml.
-    pool: "threads",
+    pool: "forks",
     isolate: true,
     // Cap workers on shared CI runners to prevent memory pressure and timeouts.
-    // Two workers keep the jsdom environment overhead low while still running
-    // tests in parallel.
-    maxWorkers: isCI ? 2 : undefined,
-    minWorkers: isCI ? 1 : undefined,
+    maxWorkers: isCI ? 2 : 4,
+    minWorkers: isCI ? 1 : 1,
     // Explicit timeouts prevent hung tests from killing the whole job.
     testTimeout: isCI ? 30000 : 10000,
     hookTimeout: isCI ? 30000 : 10000,

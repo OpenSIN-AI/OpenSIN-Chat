@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Appearance from "@/models/appearance";
 import { useTranslation } from "react-i18next";
 import Toggle from "@/components/lib/Toggle";

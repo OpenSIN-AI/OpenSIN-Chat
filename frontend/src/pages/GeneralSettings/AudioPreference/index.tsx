@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-import React from "react";
 import Sidebar from "@/components/SettingsSidebar";
 import PreLoader from "@/components/Preloader";
 import SpeechToTextProvider from "./stt";

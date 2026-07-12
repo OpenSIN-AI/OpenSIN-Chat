@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-import React from "react";
 import { Sun } from "@phosphor-icons/react/dist/csr/Sun";
 import { Moon } from "@phosphor-icons/react/dist/csr/Moon";
 import { useTranslation } from "react-i18next";

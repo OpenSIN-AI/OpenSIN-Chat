@@ -2,7 +2,6 @@
 // Purpose: Unit tests for AgentRunsContext — buildTree lineage, SSE event
 //          handling, activeRunCount calculation.
 import { describe, it, expect } from "vitest";
-import React from "react";
 import { renderHook, act } from "@testing-library/react";
 import { AgentRunsProvider, useAgentRuns } from "./AgentRunsContext";
 

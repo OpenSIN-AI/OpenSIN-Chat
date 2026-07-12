@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { Suspense, useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import { SWRConfig } from "swr";

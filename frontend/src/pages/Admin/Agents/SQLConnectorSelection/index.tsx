@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import useAgentSQLConnections from "@/hooks/useAgentSQLConnections";
 import DBConnection from "./DBConnection";
 import { Plus } from "@phosphor-icons/react/dist/csr/Plus";

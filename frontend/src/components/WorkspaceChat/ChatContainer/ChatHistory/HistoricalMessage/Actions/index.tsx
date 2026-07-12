@@ -3,7 +3,7 @@
  * Purpose: Render hover action icons (copy, edit, regenerate, feedback, more) for a chat message.
  * Docs: Actions/index.tsx (this file)
  */
-import React, { memo, useState } from "react";
+import { memo, useState } from "react";
 import useCopyText from "@/hooks/useCopyText";
 import { Check } from "@phosphor-icons/react/dist/csr/Check";
 import { ThumbsUp } from "@phosphor-icons/react/dist/csr/ThumbsUp";

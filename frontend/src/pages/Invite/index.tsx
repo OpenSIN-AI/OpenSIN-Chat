@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FullScreenLoader } from "@/components/Preloader";
 import Invite from "@/models/invite";

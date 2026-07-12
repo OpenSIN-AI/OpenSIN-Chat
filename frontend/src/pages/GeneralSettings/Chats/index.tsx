@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { useEffect, useRef, useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
 import Skeleton from "react-loading-skeleton";

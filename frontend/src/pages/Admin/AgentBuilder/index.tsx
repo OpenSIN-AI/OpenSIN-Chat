@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Page component for building and editing agent flows.
 // Docs: AgentBuilder.doc.md
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { Tooltip } from "react-tooltip";

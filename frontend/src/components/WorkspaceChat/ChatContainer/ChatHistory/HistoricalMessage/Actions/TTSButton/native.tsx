@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { SpeakerHigh } from "@phosphor-icons/react/dist/csr/SpeakerHigh";
 import { PauseCircle } from "@phosphor-icons/react/dist/csr/PauseCircle";

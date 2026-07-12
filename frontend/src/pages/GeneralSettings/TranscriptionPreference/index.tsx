@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import React, { useState, useEffect, useRef, FormEvent } from "react";
 import Sidebar from "@/components/SettingsSidebar";
 import System from "@/models/system";

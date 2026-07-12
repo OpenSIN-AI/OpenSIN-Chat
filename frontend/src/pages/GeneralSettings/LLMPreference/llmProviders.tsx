@@ -7,16 +7,11 @@ import AnthropicLogo from "@/media/llmprovider/anthropic.png";
 import GeminiLogo from "@/media/llmprovider/gemini.png";
 import OllamaLogo from "@/media/llmprovider/ollama.png";
 import LMStudioLogo from "@/media/llmprovider/lmstudio.png";
-import LocalAiLogo from "@/media/llmprovider/localai.png";
 import FireworksAILogo from "@/media/llmprovider/fireworksai.jpeg";
-import MistralLogo from "@/media/llmprovider/mistral.jpeg";
 import HuggingFaceLogo from "@/media/llmprovider/huggingface.png";
-import GroqLogo from "@/media/llmprovider/groq.png";
-import LiteLLMLogo from "@/media/llmprovider/litellm.png";
 import XAILogo from "@/media/llmprovider/xai.png";
 import NvidiaNimLogo from "@/media/llmprovider/nvidia-nim.png";
 import OpencodeZenLogo from "@/media/llmprovider/opencode-zen.png";
-import DockerModelRunnerLogo from "@/media/llmprovider/docker-model-runner.png";
 
 // Component imports
 import ModelRouterOptions from "@/components/LLMSelection/ModelRouterOptions";
@@ -24,18 +19,13 @@ import OpenAiOptions from "@/components/LLMSelection/OpenAiOptions";
 import GenericOpenAiOptions from "@/components/LLMSelection/GenericOpenAiOptions";
 import AnthropicAiOptions from "@/components/LLMSelection/AnthropicAiOptions";
 import LMStudioOptions from "@/components/LLMSelection/LMStudioOptions";
-import LocalAiOptions from "@/components/LLMSelection/LocalAiOptions";
 import GeminiLLMOptions from "@/components/LLMSelection/GeminiLLMOptions";
 import OllamaLLMOptions from "@/components/LLMSelection/OllamaLLMOptions";
 import FireworksAiOptions from "@/components/LLMSelection/FireworksAiOptions";
-import MistralOptions from "@/components/LLMSelection/MistralOptions";
 import HuggingFaceOptions from "@/components/LLMSelection/HuggingFaceOptions";
-import GroqAiOptions from "@/components/LLMSelection/GroqAiOptions";
-import LiteLLMOptions from "@/components/LLMSelection/LiteLLMOptions";
 import XAILLMOptions from "@/components/LLMSelection/XAiLLMOptions";
 import NvidiaNimOptions from "@/components/LLMSelection/NvidiaNimOptions";
 import OpencodeZenOptions from "@/components/LLMSelection/OpencodeZenOptions";
-import DockerModelRunnerOptions from "@/components/LLMSelection/DockerModelRunnerOptions";
 
 export interface LLMProvider {
   name: string;
@@ -131,28 +121,6 @@ export const AVAILABLE_LLM_PROVIDERS: LLMProvider[] = [
     requiredConfig: ["LMStudioBasePath"],
   },
   {
-    name: "Docker Model Runner",
-    value: "docker-model-runner",
-    logo: DockerModelRunnerLogo,
-    options: (settings: any) => (
-      <DockerModelRunnerOptions settings={settings} />
-    ),
-    description: "Run LLMs using Docker Model Runner.",
-    requiredConfig: [
-      "DockerModelRunnerBasePath",
-      "DockerModelRunnerModelPref",
-      "DockerModelRunnerModelTokenLimit",
-    ],
-  },
-  {
-    name: "Local AI",
-    value: "localai",
-    logo: LocalAiLogo,
-    options: (settings: any) => <LocalAiOptions settings={settings} />,
-    description: "Run LLMs locally on your own machine.",
-    requiredConfig: ["LocalAiApiKey", "LocalAiBasePath", "LocalAiTokenLimit"],
-  },
-  {
     name: "Fireworks AI",
     value: "fireworksai",
     logo: FireworksAILogo,
@@ -160,31 +128,6 @@ export const AVAILABLE_LLM_PROVIDERS: LLMProvider[] = [
     description:
       "The fastest and most efficient inference engine to build production-ready, compound AI systems.",
     requiredConfig: ["FireworksAiLLMApiKey"],
-  },
-  {
-    name: "Mistral",
-    value: "mistral",
-    logo: MistralLogo,
-    options: (settings: any) => <MistralOptions settings={settings} />,
-    description: "Run open source models from Mistral AI.",
-    requiredConfig: ["MistralApiKey"],
-  },
-  {
-    name: "Groq",
-    value: "groq",
-    logo: GroqLogo,
-    options: (settings: any) => <GroqAiOptions settings={settings} />,
-    description:
-      "The fastest LLM inferencing available for real-time AI applications.",
-    requiredConfig: ["GroqApiKey"],
-  },
-  {
-    name: "LiteLLM",
-    value: "litellm",
-    logo: LiteLLMLogo,
-    options: (settings: any) => <LiteLLMOptions settings={settings} />,
-    description: "Run LiteLLM's OpenAI compatible proxy for various LLMs.",
-    requiredConfig: ["LiteLLMBasePath"],
   },
   {
     name: "xAI",

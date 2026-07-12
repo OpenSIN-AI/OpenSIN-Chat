@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useState } from "react";
+import { useState } from "react";
 import System from "@/models/system";
 import { useTranslation } from "react-i18next";
 import showToast from "@/utils/toast";

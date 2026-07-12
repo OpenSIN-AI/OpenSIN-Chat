@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 
 const FlowInfoNode = forwardRef(

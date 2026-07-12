@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Presents the authentication shell with a restrained, workspace-first visual hierarchy.
 // Docs: index.doc.md
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { ShieldCheck, EyeSlash, Cpu } from "@phosphor-icons/react";
 import SingleUserAuth from "./SingleUserAuth";

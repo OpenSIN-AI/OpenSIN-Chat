@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Lock, Eye, EyeSlash, CircleNotch } from "@phosphor-icons/react";
 import System from "../../../models/system";
 import { AUTH_TOKEN } from "../../../utils/constants";

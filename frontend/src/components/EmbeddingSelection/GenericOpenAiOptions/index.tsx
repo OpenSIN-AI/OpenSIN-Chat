@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
 import { CaretUp } from "@phosphor-icons/react/dist/csr/CaretUp";

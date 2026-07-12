@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import React, { Suspense, useMemo, useState } from "react";
 const FlowPanel = React.lazy(() => import("./AgentFlows/FlowPanel"));
 const ServerPanel = React.lazy(() => import("./MCPServers/ServerPanel"));

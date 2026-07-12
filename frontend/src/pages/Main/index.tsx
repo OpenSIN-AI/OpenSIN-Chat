@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-import React from "react";
 import { useTranslation } from "react-i18next";
 import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
 import { FullScreenLoader } from "@/components/Preloader";

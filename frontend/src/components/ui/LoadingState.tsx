@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Loading state with skeleton rows that approximate the later structure.
 // Docs: Based on Issue #607 Phase 1 + Issue #10 skeleton rules.
-import React from "react";
 import { cn } from "@/utils/cn";
 
 interface LoadingStateProps {

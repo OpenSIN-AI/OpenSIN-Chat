@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Docs: FlowPanel.doc.md
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import AgentFlows from "@/models/agentFlows";
 import showToast from "@/utils/toast";
 import { FlowArrow } from "@phosphor-icons/react/dist/csr/FlowArrow";

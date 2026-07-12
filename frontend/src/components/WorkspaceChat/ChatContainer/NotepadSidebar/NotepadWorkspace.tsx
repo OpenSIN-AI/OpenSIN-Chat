@@ -2,7 +2,9 @@
 // Purpose: Notepad workspace — library (search, filters, list) + editor pane, responsive (list OR editor on narrow viewports).
 // Docs: Based on Issue #607 §12 NotepadWorkspace spec + Issue #6.
 import React, { useMemo, useState } from "react";
-import { ArrowLeft, Plus, Trash } from "@phosphor-icons/react/dist/csr";
+import { ArrowLeft } from "@phosphor-icons/react/dist/csr/ArrowLeft";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
+import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { cn } from "@/utils/cn";
 import { Button } from "@/components/ui/Button";
 import { IconButton } from "@/components/ui/IconButton";

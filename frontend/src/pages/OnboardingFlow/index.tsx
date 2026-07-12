@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-import React from "react";
 import { Navigate } from "react-router-dom";
 import paths from "@/utils/paths";
 

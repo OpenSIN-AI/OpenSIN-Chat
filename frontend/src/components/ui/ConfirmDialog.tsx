@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Confirm dialog for destructive or irreversible actions.
 // Docs: Based on Issue #607 Phase 1 + Issue #9 ConfirmDialog spec.
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { Button } from "./Button";
 import { IconButton } from "./IconButton";

@@ -3,7 +3,7 @@
  * Purpose: Three-dots overflow menu (fork / delete) for assistant chat messages.
  * Docs: ActionMenu/index.tsx (this file)
  */
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { DotsThreeVertical } from "@phosphor-icons/react/dist/csr/DotsThreeVertical";
 import { TreeView } from "@phosphor-icons/react/dist/csr/TreeView";

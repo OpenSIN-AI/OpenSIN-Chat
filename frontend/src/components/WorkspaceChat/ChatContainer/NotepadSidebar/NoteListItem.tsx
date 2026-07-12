@@ -1,12 +1,9 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Compact note list item — title, excerpt, date, pin indicator, context actions.
 // Docs: Based on Issue #607 §12 NoteListItem spec.
-import React from "react";
-import {
-  PushPin,
-  Trash,
-  ArrowCounterClockwise,
-} from "@phosphor-icons/react/dist/csr";
+import { PushPin } from "@phosphor-icons/react/dist/csr/PushPin";
+import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
+import { ArrowCounterClockwise } from "@phosphor-icons/react/dist/csr/ArrowCounterClockwise";
 import { IconButton } from "@/components/ui/IconButton";
 import { cn } from "@/utils/cn";
 

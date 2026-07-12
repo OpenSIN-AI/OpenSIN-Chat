@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Renders a single MCP server panel with tools, config, and status.
 // Docs: ServerPanel.doc.md
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import showToast from "@/utils/toast";
 import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
 import { Gear } from "@phosphor-icons/react/dist/csr/Gear";

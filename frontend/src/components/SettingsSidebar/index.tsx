@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import paths from "@/utils/paths";
 import useLogo from "@/hooks/useLogo";
 import { House } from "@phosphor-icons/react/dist/csr/House";

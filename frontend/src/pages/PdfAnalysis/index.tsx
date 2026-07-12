@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Purpose: PDF analysis page for uploading documents, extracting facts, and cross-checking claims.
 // Docs: index.doc.md
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/Sidebar";
 import LeftSidebarIconBar from "@/components/WorkspaceChat/ChatContainer/LeftSidebarIconBar";

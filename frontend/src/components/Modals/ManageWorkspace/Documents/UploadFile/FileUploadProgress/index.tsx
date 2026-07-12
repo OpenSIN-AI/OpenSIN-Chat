@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useState, useEffect, useRef, memo } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import { useTranslation } from "react-i18next";
 import { truncate } from "@/utils/strings";
 import { CheckCircle } from "@phosphor-icons/react/dist/csr/CheckCircle";

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Displays persisted user and assistant messages with attachments, citations, and message actions.
 // Docs: index.doc.md
-import React, { memo, useLayoutEffect, useRef, useState } from "react";
+import { memo, useLayoutEffect, useRef, useState } from "react";
 import { Info } from "@phosphor-icons/react/dist/csr/Info";
 import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import Actions from "./Actions";

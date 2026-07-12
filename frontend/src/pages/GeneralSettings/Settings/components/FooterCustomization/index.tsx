@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import showToast from "@/utils/toast";
 import NewIconForm from "./NewIconForm";
 import Admin from "@/models/admin";

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FullScreenLoader } from "@/components/Preloader";
 import paths from "@/utils/paths";

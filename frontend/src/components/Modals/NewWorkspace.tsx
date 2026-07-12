@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { mutate } from "swr";
 import Workspace from "@/models/workspace";
