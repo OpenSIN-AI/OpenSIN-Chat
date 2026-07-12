@@ -111,8 +111,17 @@ export function AgentRunsProvider({
     const es = new EventSource(url);
     esRef.current = es;
 
+    const safeParse = (raw: string) => {
+      try {
+        return JSON.parse(raw);
+      } catch {
+        return null;
+      }
+    };
+
     es.addEventListener("run.started", (e) => {
-      const d = JSON.parse((e as MessageEvent).data);
+      const d = safeParse((e as MessageEvent).data);
+      if (!d) return;
       upsertRun(d.runId, {
         parentRunId: d.parentRunId ?? null,
         agentName: d.agentName,
@@ -125,7 +134,8 @@ export function AgentRunsProvider({
     });
 
     es.addEventListener("run.tool", (e) => {
-      const d = JSON.parse((e as MessageEvent).data);
+      const d = safeParse((e as MessageEvent).data);
+      if (!d) return;
       setRuns((prev) => {
         const run = prev[d.runId];
         if (!run) return prev;
@@ -159,7 +169,8 @@ export function AgentRunsProvider({
     });
 
     es.addEventListener("run.log", (e) => {
-      const d = JSON.parse((e as MessageEvent).data);
+      const d = safeParse((e as MessageEvent).data);
+      if (!d) return;
       setRuns((prev) => {
         const run = prev[d.runId];
         if (!run) return prev;
@@ -174,17 +185,20 @@ export function AgentRunsProvider({
     });
 
     es.addEventListener("run.waiting_input", (e) => {
-      const d = JSON.parse((e as MessageEvent).data);
+      const d = safeParse((e as MessageEvent).data);
+      if (!d) return;
       upsertRun(d.runId, { status: "waiting_input" });
     });
 
     es.addEventListener("run.finished", (e) => {
-      const d = JSON.parse((e as MessageEvent).data);
+      const d = safeParse((e as MessageEvent).data);
+      if (!d) return;
       upsertRun(d.runId, { status: d.status, endedAt: d.ts });
     });
 
-    // EventSource reconnects automatically on error — no manual handling needed
-    es.onerror = () => {};
+    es.onerror = () => {
+      // EventSource reconnects automatically — just log for diagnostics
+    };
 
     return () => {
       es.close();

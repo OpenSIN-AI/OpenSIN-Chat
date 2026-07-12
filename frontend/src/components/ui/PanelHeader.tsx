@@ -2,6 +2,7 @@
 // Purpose: Shared panel header with icon, title, count, actions, and close button.
 // Docs: Based on Issue #607 Phase 1 + Issue #7 PanelHeader spec.
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { IconButton } from "./IconButton";
 import { cn } from "@/utils/cn";
@@ -23,6 +24,7 @@ export function PanelHeader({
   onClose,
   className,
 }: PanelHeaderProps) {
+  const { t } = useTranslation();
   return (
     <header
       className={cn(
@@ -52,7 +54,7 @@ export function PanelHeader({
       {onClose && (
         <IconButton
           icon={<X size={16} />}
-          label={`${title} schließen`}
+          label={t("common.closePanel", { title })}
           onClick={onClose}
           size="sm"
         />

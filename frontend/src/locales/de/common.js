@@ -449,8 +449,15 @@ const TRANSLATIONS = {
     tags: "Tags, kommagetrennt",
     details: "Details",
     pin: "Anheften",
+    unpin: "Anheftung lösen",
     restore: "Wiederherstellen",
     deleteForeverConfirm: "Notiz endgültig löschen?",
+    deletePermanent: "Notiz endgültig löschen",
+    moveToTrash: "In Papierkorb",
+    selectNote: "Notiz auswählen",
+    selectNoteDescription:
+      "Wähle links eine Notiz aus oder erstelle eine neue.",
+    newNote: "Neue Notiz",
   },
   chat_window: {
     sources: "Quellen",
@@ -651,6 +658,16 @@ const TRANSLATIONS = {
     stt_mic_access_denied:
       "OpenSIN Chat hat keinen Zugriff auf das Mikrofon. Bitte aktivieren Sie den Zugriff für diese Website, um diese Funktion zu nutzen.",
     chart_loading: "Diagramm wird geladen...",
+    empty_note: "Leere Notiz",
+    metrics: "Metriken",
+    new_note: "Neue Notiz",
+    no_notes: "Keine Notizen",
+    notepad: "Notizen",
+    saving: "Speichern...",
+    shared_notes: "Geteilte Notizen",
+    source: "Quelle",
+    source_count: "Quellenanzahl",
+    words: "Wörter",
   },
   dndWrapper: {
     addAnything: "Fügen Sie etwas hinzu",
@@ -662,6 +679,7 @@ const TRANSLATIONS = {
     processorOffline:
       "Dokumentenprozessor ist offline. Bitte versuchen Sie es später erneut.",
     embedFailed: "Einbetten der Datei(en) fehlgeschlagen.",
+    filesEmbedded: "Dateien eingebettet",
   },
   common: {
     "workspaces-name": "Namen der Workspaces",
@@ -843,6 +861,24 @@ const TRANSLATIONS = {
       get: "GET",
       delete: "DELETE",
     },
+    addFile: "Datei hinzufügen",
+    addToWorkspace: "Zum Workspace hinzufügen",
+    clear: "Leeren",
+    defaultSkillTooltip: "Standard-Skill",
+    folderName: "Ordnername",
+    listSeparator: ", ",
+    loadError: "Laden fehlgeschlagen",
+    open: "Öffnen",
+    password: "Passwort",
+    select: "Auswählen",
+    selectModel: "Modell auswählen",
+    selectProvider: "Provider auswählen",
+    showAll: "Alle anzeigen",
+    showLess: "Weniger anzeigen",
+    unknown: "Unbekannt",
+    closePanel: "{{title}} schließen",
+    closeDialog: "Dialog schließen",
+    clearSearch: "Suche löschen",
   },
   settings: {
     title: "Instanzeinstellungen",
@@ -1085,6 +1121,9 @@ const TRANSLATIONS = {
       hint: "Die meisten LLMs haben verschiedene akzeptable Bereiche gültiger Werte. Konsultieren Sie Ihren LLM-Anbieter für diese Informationen.",
     },
     messageInput: "Nachrichteneingabe",
+    grounding: {
+      based_on_sources: "Basierend auf Quellen",
+    },
   },
   "vector-workspace": {
     identifier: "Vektordatenbank-Identifikator",
@@ -2972,6 +3011,7 @@ const TRANSLATIONS = {
       downloadDocx: "Word-Dokument",
       downloadPdf: "PDF-Dokument",
       reportSuffix: "-bericht",
+      filesSelected: "Dateien ausgewählt",
     },
     corpus: {
       section: "Korpus-Analysen",
@@ -3036,6 +3076,7 @@ const TRANSLATIONS = {
       submitIdle: "Verifikation starten",
       sourcesCount_one: "{{count}} Vergleichsquelle",
       sourcesCount_other: "{{count}} Vergleichsquellen",
+      sourcesCount: "Quellen geprüft",
       deepWebActive: " · Deep-Web-Recherche aktiv",
       moreClaims: " (+{{count}} weitere)",
       statusCompleted: "Abgeschlossen",
@@ -3933,6 +3974,7 @@ const TRANSLATIONS = {
     embedFailed: "Fehler beim Einbetten der Dateien",
     loading: "Wird geladen...",
     noFilesFound: "Keine Dateien gefunden",
+    embedSuccess: "Datei erfolgreich eingebettet",
   },
   admin: {
     editUser: {
@@ -4153,6 +4195,29 @@ const TRANSLATIONS = {
       empty: "Keine Daten geladen.",
       hint: 'Tipp: "@agent Suche AfD Abgeordnete..." im Chat für detaillierte Abfragen.',
       openProfile: "Profil öffnen",
+      addFailed: "Hinzufügen fehlgeschlagen",
+      addSelected: "Ausgewählte hinzufügen",
+      addToWorkspace: "Zum Workspace hinzufügen",
+      allParties: "Alle Parteien",
+      allStates: "Alle Bundesländer",
+      biography: "Biografie",
+      deselectAll: "Alle abwählen",
+      dipResults: "Wahlergebnisse",
+      noDipResults: "Keine Wahlergebnisse",
+      noSpeeches: "Keine Reden gefunden",
+      partyFilter: "Partei",
+      search: "Suche",
+      select: "Auswählen",
+      selectAll: "Alle auswählen",
+      speechResults: "Reden",
+      speechSearch: "Reden durchsuchen",
+      stateFilter: "Bundesland",
+      statMandates: "Mandate",
+      statSpeeches: "Reden",
+      statVotes: "Abstimmungen",
+      tabDrucksachen: "Dokumente",
+      tabPoliticians: "Politiker",
+      tabSpeeches: "Reden",
     },
     filesystem: {
       title: "Dateien",
@@ -4207,6 +4272,13 @@ const TRANSLATIONS = {
       sectionUploads: "Uploads",
       sectionReports: "Analyse-Berichte",
       folderEmpty: "Leer",
+      fileCount: "Dateien",
+      sysInfoPlatform: "Plattform",
+      sysInfoRamFree: "Freier RAM",
+      sysInfoStorage: "Speicher",
+      sysInfoStorageFree: "Freier Speicher",
+      unknownFile: "Unbekannte Datei",
+      uploadSuccess: "Upload erfolgreich",
     },
     retry: "Erneut versuchen",
     political: {
@@ -4218,6 +4290,9 @@ const TRANSLATIONS = {
       hint: 'Tipp: "@agent Bundestag Drucksache..." im Chat für detaillierte Abfragen.',
     },
     searchWorkspace: "Workspaces und Threads durchsuchen",
+    scheduled: "Aufgaben",
+    workspaces: "Workspaces",
+    workspaceSettings: "Workspace-Einstellungen",
   },
   right_sidebar: {
     icon_collapse: "Einklappen",
@@ -4230,6 +4305,14 @@ const TRANSLATIONS = {
     icon_memories: "Memories",
     icon_console: "Konsole & Terminal",
     icon_pdf_analysis: "PDF-Analyse",
+    agent_sessions_title: "Agent-Sitzungen",
+    agent_settings_title: "Agent-Einstellungen",
+    cancelRun: "Ausführung abbrechen",
+    coming_soon: "Demnächst verfügbar",
+    icon_agent_sessions: "Agent-Sitzungen",
+    icon_notepad: "Notizen",
+    no_active_runs: "Keine aktiven Ausführungen",
+    workspace_settings_title: "Workspace-Einstellungen",
   },
   dataConnectors: {
     paperlessNgx: {
@@ -4338,6 +4421,7 @@ const TRANSLATIONS = {
     downloadAriaLabel: "Wiederherstellungscodes herunterladen",
     close: "Schließen",
     download: "Herunterladen",
+    copy: "Wiederherstellungscodes kopieren",
   },
   newFolderModal: {
     title: "Neuen Ordner erstellen",
@@ -4385,6 +4469,7 @@ const TRANSLATIONS = {
       'Alle Ereignisse zeichnen keine IP-Adresse auf und enthalten <b>keine identifizierenden</b> Inhalte, Einstellungen, Chats oder andere nicht nutzungsbasierte Informationen. Um die Liste der erfassten Ereignis-Tags einzusehen, können Sie auf <a href="https://github.com/search?q=repo%3AOpenSIN-AI%2Fopensin-chat%20.sendTelemetry(&amp;type=code" class="underline text-blue-400" target="_blank" rel="noreferrer">GitHub</a> nachsehen.',
     respectPrivacy:
       'Als Open-Source-Projekt respektieren wir Ihr Recht auf Datenschutz. Wir widmen uns der Entwicklung der besten Lösung für die private und sichere Integration von KI und Dokumenten. Wenn Sie sich entscheiden, die Telemetrie zu deaktivieren, bitten wir Sie nur, uns Feedback und Gedanken zu senden, damit wir OpenSIN Chat für Sie weiter verbessern können. <a href="mailto:team@opensin.com" class="underline text-blue-400" target="_blank" rel="noreferrer">team@opensin.com</a>.',
+    telemetryToggleFailed: "Telemetrie konnte nicht umgeschaltet werden",
   },
   invite: {
     newUser: {
@@ -4397,6 +4482,7 @@ const TRANSLATIONS = {
       afterCreateHint:
         "Nach der Erstellung Ihres Kontos können Sie sich mit diesen Anmeldedaten anmelden und Workspaces nutzen.",
       acceptInvitation: "Einladung annehmen",
+      passwordConfirmation: "Passwort bestätigen",
     },
   },
   manageWorkspace: {
@@ -4440,6 +4526,7 @@ const TRANSLATIONS = {
     searchResults: "Ergebnisse ({{count}})",
     noResults: "Keine Threads gefunden",
     clearSearch: "Suche löschen",
+    noThreads: "Noch keine Chats",
   },
   modelTable: {
     modelCount: "({{count}} {{plural}})",
@@ -4740,6 +4827,16 @@ const TRANSLATIONS = {
     title: "Agent Modus wählen",
     active: "aktiv",
     removeMode: "Modus entfernen",
+    deepResearch: "Deep Research",
+    deepResearchDesc:
+      "Durchsucht das Web, analysiert Quellen und erstellt eine umfassende Recherche",
+    imageGen: "Bilder generieren",
+    imageGenDesc: "KI-generierte Bilder erstellen",
+    videoGen: "Video generieren",
+    videoGenDesc: "KI-generierte Videos erstellen",
+    reportGen: "Bericht generieren",
+    reportGenDesc:
+      "Erstellt einen strukturierten, professionellen Bericht mit Quellen",
   },
   agentModelSelection: {
     multiModelNotSupported:
@@ -5273,6 +5370,14 @@ const TRANSLATIONS = {
     voicePlaceholder: "English-US.Female-1",
     voiceHelp1: "Stimmmodell-Bezeichner. Zum Beispiel:",
     voiceHelp2: ".",
+  },
+  pdfPreview: {
+    loadError: "PDF konnte nicht geladen werden",
+    openInNewTab: "In neuem Tab öffnen",
+  },
+  transformations: {
+    confirmDelete: "Diese Transformation löschen?",
+    deleteFailed: "Löschen fehlgeschlagen.",
   },
   sw_update_available: "Eine neue Version ist verfügbar. Jetzt neu laden?",
 };

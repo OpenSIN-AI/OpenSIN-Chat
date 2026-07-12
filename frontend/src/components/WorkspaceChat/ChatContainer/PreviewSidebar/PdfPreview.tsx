@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
@@ -8,6 +9,7 @@ import { FilePdf } from "@phosphor-icons/react/dist/csr/FilePdf";
 pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
 export default function PdfPreview({ blobUrl }: { blobUrl: string }) {
+  const { t } = useTranslation();
   const [numPages, setNumPages] = useState(0);
   const [error, setError] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -27,7 +29,7 @@ export default function PdfPreview({ blobUrl }: { blobUrl: string }) {
       <div className="flex flex-col items-center justify-center h-full gap-3 bg-zinc-900 light:bg-white">
         <FilePdf size={28} className="text-zinc-500 light:text-slate-400" />
         <p className="text-xs text-zinc-500 light:text-slate-400 text-center px-4">
-          PDF konnte nicht geladen werden
+          {t("pdfPreview.loadError")}
         </p>
         <a
           href={blobUrl}
@@ -36,7 +38,7 @@ export default function PdfPreview({ blobUrl }: { blobUrl: string }) {
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-800 light:bg-slate-100 text-xs text-zinc-300 light:text-slate-600 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors no-underline"
         >
           <ArrowSquareOut size={12} />
-          In neuem Tab öffnen
+          {t("pdfPreview.openInNewTab")}
         </a>
       </div>
     );

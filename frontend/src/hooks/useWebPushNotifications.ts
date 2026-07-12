@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import logger from "@/utils/logger";
 import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { API_BASE } from "@/utils/constants";
@@ -17,7 +18,7 @@ function log(message, ...args) {
   if (!import.meta.env.DEV) return;
   if (typeof message === "object") message = JSON.stringify(message, null, 2);
   // eslint-disable-next-line no-console
-  console.log(`[useWebPushNotifications] ${message}`, ...args);
+  logger.debug(`[useWebPushNotifications] ${message}`, ...args);
 }
 
 /**

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import logger from "@/utils/logger";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
@@ -14,9 +15,10 @@ export const AGENT_MODES = [
   {
     id: "deep-research",
     icon: MagnifyingGlass,
-    label: "Deep Research",
-    description:
-      "Durchsucht das Web, analysiert Quellen und erstellt eine umfassende Recherche",
+    label: undefined,
+    labelKey: "agentMode.deepResearch",
+    description: undefined,
+    descriptionKey: "agentMode.deepResearchDesc",
     enabled: true,
     prefix: "@agent [deep-research]",
     systemPromptHint:
@@ -25,8 +27,10 @@ export const AGENT_MODES = [
   {
     id: "image-gen",
     icon: ImageIcon,
-    label: "Bilder generieren",
-    description: "KI-generierte Bilder erstellen",
+    label: undefined,
+    labelKey: "agentMode.imageGen",
+    description: undefined,
+    descriptionKey: "agentMode.imageGenDesc",
     enabled: true,
     prefix: "@agent [image-gen]",
     systemPromptHint:
@@ -35,8 +39,10 @@ export const AGENT_MODES = [
   {
     id: "video-gen",
     icon: VideoCamera,
-    label: "Video generieren",
-    description: "KI-generierte Videos erstellen",
+    label: undefined,
+    labelKey: "agentMode.videoGen",
+    description: undefined,
+    descriptionKey: "agentMode.videoGenDesc",
     enabled: false,
     badge: "coming soon",
     prefix: "@agent [video-gen]",
@@ -45,9 +51,10 @@ export const AGENT_MODES = [
   {
     id: "report",
     icon: FileText,
-    label: "Bericht generieren",
-    description:
-      "Erstellt einen strukturierten, professionellen Bericht mit Quellen",
+    label: undefined,
+    labelKey: "agentMode.reportGen",
+    description: undefined,
+    descriptionKey: "agentMode.reportGenDesc",
     enabled: true,
     prefix: "@agent [report]",
     systemPromptHint:
@@ -93,7 +100,7 @@ function persistMode(modeId) {
     if (modeId) localStorage.setItem(AGENT_MODE_STORAGE_KEY, modeId);
     else localStorage.removeItem(AGENT_MODE_STORAGE_KEY);
   } catch (e) {
-    console.warn("[AgentModeButton] non-fatal error:", e?.message || e);
+    logger.warn("[AgentModeButton] non-fatal error:", e?.message || e);
   }
 }
 
@@ -204,7 +211,9 @@ export default function AgentModeButton({
             }
           }}
           aria-label={
-            activeMode ? activeMode.label : t("chat_window.start_agent_session")
+            activeMode
+              ? t(activeMode.labelKey)
+              : t("chat_window.start_agent_session")
           }
           aria-haspopup="true"
           aria-expanded={showDropdown}
@@ -225,7 +234,7 @@ export default function AgentModeButton({
           />
           {activeMode && (
             <span className="text-xs font-medium text-theme-accent whitespace-nowrap">
-              {activeMode.label}
+              {t(activeMode.labelKey)}
             </span>
           )}
         </button>
@@ -307,7 +316,7 @@ export default function AgentModeButton({
                     key={mode.id}
                     type="button"
                     aria-pressed={activeMode?.id === mode.id}
-                    aria-label={mode.label}
+                    aria-label={t(mode.labelKey)}
                     onClick={() => selectMode(mode, sendCommand, textareaRef)}
                     className={`mx-1.5 flex w-[calc(100%-0.75rem)] cursor-pointer items-start gap-3 rounded-lg border-none px-2.5 py-2.5 text-left transition-colors hover:bg-theme-sidebar-item-hover ${
                       activeMode?.id === mode.id ? "bg-theme-accent/10" : ""
@@ -332,7 +341,7 @@ export default function AgentModeButton({
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5">
                         <span className="text-sm font-medium text-theme-text-primary">
-                          {mode.label}
+                          {t(mode.labelKey)}
                         </span>
                         {mode.badge && (
                           <span className="text-[9px] font-medium px-1.5 py-0.5 rounded-full bg-theme-bg-tertiary text-theme-text-secondary uppercase tracking-wide">
@@ -346,7 +355,7 @@ export default function AgentModeButton({
                         )}
                       </div>
                       <p className="text-xs text-theme-text-secondary leading-tight mt-0.5">
-                        {mode.description}
+                        {t(mode.descriptionKey)}
                       </p>
                     </div>
                     {mode.enabled && (

@@ -151,51 +151,6 @@ export default function AgentBuilder(): JSX.Element {
     }
   };
 
-  const loadFlow = async (uuid: string) => {
-    try {
-      const { success, error, flow } = await AgentFlows.getFlow(uuid);
-      if (!success) throw new Error(error);
-
-      // Convert steps to blocks with IDs, ensuring finish block is at the end
-      const flowBlocks: Block[] = [
-        {
-          id: "flow_info",
-          type: BLOCK_TYPES.FLOW_INFO,
-          config: {
-            name: flow.config.name,
-            description: flow.config.description,
-          },
-          isExpanded: true,
-        },
-        ...flow.config.steps.map((step: FlowStep, index: number) => ({
-          id: index === 0 ? "start" : `block_${index}`,
-          type: step.type,
-          config: step.config,
-          isExpanded: true,
-        })),
-      ];
-
-      // Add finish block if not present
-      if (flowBlocks[flowBlocks.length - 1]?.type !== BLOCK_TYPES.FINISH) {
-        flowBlocks.push({
-          id: "finish",
-          type: BLOCK_TYPES.FINISH,
-          config: {},
-          isExpanded: false,
-        });
-      }
-
-      setAgentName(flow.config.name);
-      setAgentDescription(flow.config.description);
-      setActive(flow.config.active ?? true);
-      setCurrentFlowUuid(flow.uuid);
-      setBlocks(flowBlocks);
-    } catch (error) {
-      logger.error(error);
-      showToast(t("agentBuilder.loadFlowFailed"), "error", { clear: true });
-    }
-  };
-
   const addBlock = (type: string) => {
     const newBlock: Block = {
       id: `block_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,

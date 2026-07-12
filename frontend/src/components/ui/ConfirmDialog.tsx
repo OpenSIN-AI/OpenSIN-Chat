@@ -2,6 +2,7 @@
 // Purpose: Confirm dialog for destructive or irreversible actions.
 // Docs: Based on Issue #607 Phase 1 + Issue #9 ConfirmDialog spec.
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { Button } from "./Button";
 import { IconButton } from "./IconButton";
@@ -29,6 +30,7 @@ export function ConfirmDialog({
   onConfirm,
   onOpenChange,
 }: ConfirmDialogProps) {
+  const { t } = useTranslation();
   const cancelButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -74,7 +76,7 @@ export function ConfirmDialog({
           </h2>
           <IconButton
             icon={<X size={16} />}
-            label="Dialog schließen"
+            label={t("common.closeDialog")}
             onClick={() => onOpenChange(false)}
             size="sm"
           />

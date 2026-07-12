@@ -283,7 +283,7 @@ export default function SourcesSidebar({ workspace }: any) {
                     key={source.docId || idx}
                     doc={source}
                     snippet={snippets[source.docId]}
-                    onClick={() => {}}
+                    onClick={() => setSelectedSource(source)}
                   />
                 ) : (
                   <SourceItem

@@ -2,6 +2,7 @@
 // Purpose: Notepad workspace — library (search, filters, list) + editor pane, responsive (list OR editor on narrow viewports).
 // Docs: Based on Issue #607 §12 NotepadWorkspace spec + Issue #6.
 import React, { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ArrowLeft } from "@phosphor-icons/react/dist/csr/ArrowLeft";
 import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
@@ -54,6 +55,7 @@ export function NotepadWorkspace({
   onClose,
   renderEditor,
 }: NotepadWorkspaceProps) {
+  const { t } = useTranslation();
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<NoteFilter>("all");
   const [sort, setSort] = useState<NoteSort>("updated");
@@ -221,10 +223,12 @@ export function NotepadWorkspace({
               </div>
             ) : (
               <EmptyState
-                title="Notiz auswählen"
-                description="Wähle links eine Notiz aus oder erstelle eine neue."
+                title={t("notepad.selectNote")}
+                description={t("notepad.selectNoteDescription")}
                 action={
-                  <Button onClick={() => void createNote()}>Neue Notiz</Button>
+                  <Button onClick={() => void createNote()}>
+                    {t("notepad.newNote")}
+                  </Button>
                 }
               />
             )}

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useEffect, useState, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { PencilSimple } from "@phosphor-icons/react/dist/csr/PencilSimple";
@@ -16,6 +17,7 @@ const EMPTY_FORM: Partial<Transformation> = {
 };
 
 export default function AdminTransformations() {
+  const { t } = useTranslation();
   const [items, setItems] = useState<Transformation[]>([]);
   const [editing, setEditing] = useState<Partial<Transformation> | null>(null);
   const [saving, setSaving] = useState(false);
@@ -50,10 +52,10 @@ export default function AdminTransformations() {
   };
 
   const remove = async (id: number) => {
-    if (!window.confirm("Delete this transformation?")) return;
+    if (!window.confirm(t("transformations.confirmDelete"))) return;
     const ok = await Transformations.delete(id);
     if (!ok) {
-      showToast("Delete failed.", "error", { clear: true });
+      showToast(t("transformations.deleteFailed"), "error", { clear: true });
       return;
     }
     load();

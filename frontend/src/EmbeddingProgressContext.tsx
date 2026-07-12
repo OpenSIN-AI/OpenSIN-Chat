@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import logger from "@/utils/logger";
 import {
   createContext,
   useCallback,
@@ -224,7 +225,7 @@ export function EmbeddingProgressProvider({ children }: any) {
           ctrl?.abort();
         },
       }).catch((err) => {
-        console.warn("EmbeddingProgress SSE connection failed", err);
+        logger.warn("EmbeddingProgress SSE connection failed", err);
       });
     },
     [handleMessage],

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Compact note list item — title, excerpt, date, pin indicator, context actions.
 // Docs: Based on Issue #607 §12 NoteListItem spec.
+import { useTranslation } from "react-i18next";
 import { PushPin } from "@phosphor-icons/react/dist/csr/PushPin";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { ArrowCounterClockwise } from "@phosphor-icons/react/dist/csr/ArrowCounterClockwise";
@@ -34,6 +35,7 @@ export function NoteListItem({
   onDelete,
   onRestore,
 }: NoteListItemProps) {
+  const { t } = useTranslation();
   return (
     <div
       role="link"
@@ -100,7 +102,7 @@ export function NoteListItem({
             icon={
               <PushPin size={12} weight={note.pinned ? "fill" : "regular"} />
             }
-            label={note.pinned ? "Anheftung lösen" : "Notiz anheften"}
+            label={note.pinned ? t("notepad.unpin") : t("notepad.pin")}
             pressed={note.pinned}
             onClick={(e) => {
               e.stopPropagation();
@@ -111,7 +113,11 @@ export function NoteListItem({
         )}
         <IconButton
           icon={<Trash size={12} />}
-          label={note.deletedAt ? "Notiz endgültig löschen" : "In Papierkorb"}
+          label={
+            note.deletedAt
+              ? t("notepad.deletePermanent")
+              : t("notepad.moveToTrash")
+          }
           variant={note.deletedAt ? "danger" : "ghost"}
           onClick={(e) => {
             e.stopPropagation();

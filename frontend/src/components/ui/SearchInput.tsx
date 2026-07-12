@@ -2,6 +2,7 @@
 // Purpose: Search input with magnifying glass icon and clear button.
 // Docs: Based on Issue #607 Phase 1 design tokens.
 import React, { forwardRef } from "react";
+import { useTranslation } from "react-i18next";
 import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { cn } from "@/utils/cn";
@@ -12,6 +13,7 @@ interface SearchInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
   ({ className, value, onClear, ...props }, ref) => {
+    const { t } = useTranslation();
     return (
       <div
         className={cn(
@@ -36,7 +38,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
           <button
             type="button"
             onClick={onClear}
-            aria-label="Suche löschen"
+            aria-label={t("common.clearSearch")}
             className="flex h-5 w-5 items-center justify-center rounded border-none bg-transparent cursor-pointer text-theme-text-muted hover:text-theme-text-primary"
           >
             <X size={12} />
