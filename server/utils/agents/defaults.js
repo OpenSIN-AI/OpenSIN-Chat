@@ -9,13 +9,13 @@ const MCPCompatibilityLayer = require("../MCP");
 
 // This is a list of skills that are built-in and default enabled.
 const DEFAULT_SKILLS = [
-  AgentPlugins.memory.name,
-  AgentPlugins.docSummarizer.name,
-  AgentPlugins.webScraping.name,
-  AgentPlugins.generateReport.name,
-  AgentPlugins.deepResearch.name,
-  AgentPlugins.imageGeneration.name,
-];
+  AgentPlugins.memory?.name,
+  AgentPlugins.docSummarizer?.name,
+  AgentPlugins.webScraping?.name,
+  AgentPlugins.generateReport?.name,
+  AgentPlugins.deepResearch?.name,
+  AgentPlugins.imageGeneration?.name,
+].filter(Boolean);
 
 /**
  * Configuration for agent skills that require availability checks and disabled sub-skill lists.

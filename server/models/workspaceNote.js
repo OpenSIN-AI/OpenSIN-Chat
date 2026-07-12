@@ -6,81 +6,152 @@ const WorkspaceNote = {
   ensureSharedTable: async function () {},
 
   get: async function (id) {
-    const rows = await prisma.$queryRaw`SELECT * FROM workspace_notes WHERE id = ${Number(id)} LIMIT 1`;
-    return Array.isArray(rows) ? rows[0] : rows;
+    return await prisma.workspace_notes.findFirst({
+      where: { id: Number(id) },
+    });
   },
 
   forWorkspace: async function (workspaceId, { trash = false } = {}) {
     if (trash) {
-      return await prisma.$queryRaw`SELECT * FROM workspace_notes WHERE workspaceId = ${Number(workspaceId)} AND deletedAt IS NOT NULL ORDER BY deletedAt DESC`;
+      return await prisma.workspace_notes.findMany({
+        where: {
+          workspaceId: Number(workspaceId),
+          deletedAt: { not: null },
+        },
+        orderBy: { deletedAt: "desc" },
+      });
     }
-    return await prisma.$queryRaw`SELECT * FROM workspace_notes WHERE workspaceId = ${Number(workspaceId)} AND deletedAt IS NULL ORDER BY pinned DESC, updatedAt DESC`;
+    return await prisma.workspace_notes.findMany({
+      where: {
+        workspaceId: Number(workspaceId),
+        deletedAt: null,
+      },
+      orderBy: [{ pinned: "desc" }, { updatedAt: "desc" }],
+    });
   },
 
   shareToWorkspace: async function (noteId, targetWorkspaceId, userId = null) {
     const id = crypto.randomUUID();
     const sharedAt = Math.floor(Date.now() / 1000);
-    await prisma.$executeRaw`INSERT OR IGNORE INTO shared_workspace_notes (id, note_id, target_workspace_id, shared_by, shared_at) VALUES (${id}, ${Number(noteId)}, ${Number(targetWorkspaceId)}, ${userId ? Number(userId) : null}, ${sharedAt})`;
-    const rows = await prisma.$queryRaw`SELECT * FROM shared_workspace_notes WHERE note_id = ${Number(noteId)} AND target_workspace_id = ${Number(targetWorkspaceId)}`;
-    return Array.isArray(rows) ? rows[0] : rows;
+    await prisma.shared_workspace_notes.create({
+      data: {
+        id,
+        note_id: Number(noteId),
+        target_workspace_id: Number(targetWorkspaceId),
+        shared_by: userId ? Number(userId) : null,
+        shared_at: sharedAt,
+      },
+    });
+    return await prisma.shared_workspace_notes.findFirst({
+      where: {
+        note_id: Number(noteId),
+        target_workspace_id: Number(targetWorkspaceId),
+      },
+    });
   },
 
   unshareFromWorkspace: async function (noteId, targetWorkspaceId) {
-    await prisma.$executeRaw`DELETE FROM shared_workspace_notes WHERE note_id = ${Number(noteId)} AND target_workspace_id = ${Number(targetWorkspaceId)}`;
+    await prisma.shared_workspace_notes.deleteMany({
+      where: {
+        note_id: Number(noteId),
+        target_workspace_id: Number(targetWorkspaceId),
+      },
+    });
     return true;
   },
 
   sharedToWorkspace: async function (workspaceId) {
-    return await prisma.$queryRaw`
-      SELECT n.*, s.shared_at, s.shared_by, w.slug AS source_workspace_slug, w.name AS source_workspace_name
-      FROM shared_workspace_notes s
-      JOIN workspace_notes n ON n.id = s.note_id
-      JOIN workspaces w ON w.id = n.workspaceId
-      WHERE s.target_workspace_id = ${Number(workspaceId)} AND n.deletedAt IS NULL
-      ORDER BY s.shared_at DESC`;
+    const shares = await prisma.shared_workspace_notes.findMany({
+      where: { target_workspace_id: Number(workspaceId) },
+      orderBy: { shared_at: "desc" },
+    });
+    const result = [];
+    for (const s of shares) {
+      const note = await prisma.workspace_notes.findFirst({
+        where: { id: s.note_id, deletedAt: null },
+      });
+      if (!note) continue;
+      const ws = await prisma.workspaces.findFirst({
+        where: { id: note.workspaceId },
+      });
+      result.push({
+        ...note,
+        shared_at: s.shared_at,
+        shared_by: s.shared_by,
+        source_workspace_slug: ws?.slug,
+        source_workspace_name: ws?.name,
+      });
+    }
+    return result;
   },
 
   getShareableWorkspaces: async function (currentWorkspaceId, userId = null) {
     if (!userId) {
-      return await prisma.$queryRaw`SELECT id, name, slug FROM workspaces WHERE id = ${Number(currentWorkspaceId)} ORDER BY name ASC`;
+      return await prisma.workspaces.findMany({
+        where: { id: Number(currentWorkspaceId) },
+        select: { id: true, name: true, slug: true },
+        orderBy: { name: "asc" },
+      });
     }
-    return await prisma.$queryRaw`
-      SELECT w.id, w.name, w.slug FROM workspaces w
-      JOIN workspace_users wu ON wu.workspace_id = w.id
-      WHERE wu.user_id = ${Number(userId)} AND w.id != ${Number(currentWorkspaceId)}
-      ORDER BY w.name ASC`;
+    return await prisma.workspaces.findMany({
+      where: {
+        workspace_users: { some: { user_id: Number(userId) } },
+        id: { not: Number(currentWorkspaceId) },
+      },
+      select: { id: true, name: true, slug: true },
+      orderBy: { name: "asc" },
+    });
   },
 
   create: async function (workspaceId, content = "", pinned = false, metadata = {}) {
     const { title = "", plainText = "", tags = "[]", folder = null } = metadata;
-    await prisma.$executeRaw`INSERT INTO workspace_notes (workspaceId, title, content, plainText, tags, folder, pinned, createdAt, updatedAt) VALUES (${Number(workspaceId)}, ${title}, ${content}, ${plainText}, ${tags}, ${folder}, ${pinned ? 1 : 0}, datetime('now'), datetime('now'))`;
-    const rows = await prisma.$queryRaw`SELECT * FROM workspace_notes WHERE workspaceId = ${Number(workspaceId)} ORDER BY id DESC LIMIT 1`;
-    return Array.isArray(rows) ? rows[0] : rows;
+    return await prisma.workspace_notes.create({
+      data: {
+        workspaceId: Number(workspaceId),
+        title,
+        content,
+        plainText,
+        tags,
+        folder,
+        pinned: pinned ? 1 : 0,
+      },
+    });
   },
 
   update: async function (id, data) {
-    if (data.title !== undefined) await prisma.$executeRaw`UPDATE workspace_notes SET title = ${data.title}, updatedAt = datetime('now') WHERE id = ${Number(id)}`;
-    if (data.content !== undefined) await prisma.$executeRaw`UPDATE workspace_notes SET content = ${data.content}, updatedAt = datetime('now') WHERE id = ${Number(id)}`;
-    if (data.plainText !== undefined) await prisma.$executeRaw`UPDATE workspace_notes SET plainText = ${data.plainText}, updatedAt = datetime('now') WHERE id = ${Number(id)}`;
-    if (data.tags !== undefined) await prisma.$executeRaw`UPDATE workspace_notes SET tags = ${data.tags}, updatedAt = datetime('now') WHERE id = ${Number(id)}`;
-    if (data.folder !== undefined) await prisma.$executeRaw`UPDATE workspace_notes SET folder = ${data.folder}, updatedAt = datetime('now') WHERE id = ${Number(id)}`;
-    if (data.pinned !== undefined) await prisma.$executeRaw`UPDATE workspace_notes SET pinned = ${data.pinned ? 1 : 0}, updatedAt = datetime('now') WHERE id = ${Number(id)}`;
-    const rows = await prisma.$queryRaw`SELECT * FROM workspace_notes WHERE id = ${Number(id)}`;
-    return Array.isArray(rows) ? rows[0] : rows;
+    const updateData = { updatedAt: new Date() };
+    if (data.title !== undefined) updateData.title = data.title;
+    if (data.content !== undefined) updateData.content = data.content;
+    if (data.plainText !== undefined) updateData.plainText = data.plainText;
+    if (data.tags !== undefined) updateData.tags = data.tags;
+    if (data.folder !== undefined) updateData.folder = data.folder;
+    if (data.pinned !== undefined) updateData.pinned = data.pinned ? 1 : 0;
+    return await prisma.workspace_notes.update({
+      where: { id: Number(id) },
+      data: updateData,
+    });
   },
 
   trash: async function (id) {
-    await prisma.$executeRaw`UPDATE workspace_notes SET deletedAt = datetime('now'), updatedAt = datetime('now') WHERE id = ${Number(id)}`;
+    await prisma.workspace_notes.update({
+      where: { id: Number(id) },
+      data: { deletedAt: new Date(), updatedAt: new Date() },
+    });
     return true;
   },
 
   restore: async function (id) {
-    await prisma.$executeRaw`UPDATE workspace_notes SET deletedAt = NULL, updatedAt = datetime('now') WHERE id = ${Number(id)}`;
+    await prisma.workspace_notes.update({
+      where: { id: Number(id) },
+      data: { deletedAt: null, updatedAt: new Date() },
+    });
     return true;
   },
 
   delete: async function (id) {
-    await prisma.$executeRaw`DELETE FROM workspace_notes WHERE id = ${Number(id)}`;
+    await prisma.workspace_notes.delete({
+      where: { id: Number(id) },
+    });
     return true;
   },
 };

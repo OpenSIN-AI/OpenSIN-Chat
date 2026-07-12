@@ -43,8 +43,8 @@ const prismaClientConfig = {
 const prisma = new PrismaClient(prismaClientConfig);
 
 if (!isPostgres) {
-  prisma.$queryRaw`PRAGMA journal_mode=WAL`.catch((e) => console.warn("[index] non-fatal error:", e?.message || e));
-  prisma.$queryRaw`PRAGMA busy_timeout=15000`.catch((e) => console.warn("[index] non-fatal error:", e?.message || e));
+  prisma.$executeRawUnsafe("PRAGMA journal_mode=WAL").catch((e) => console.warn("[index] non-fatal error:", e?.message || e));
+  prisma.$executeRawUnsafe("PRAGMA busy_timeout=15000").catch((e) => console.warn("[index] non-fatal error:", e?.message || e));
 }
 
 module.exports = prisma;

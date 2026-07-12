@@ -216,24 +216,23 @@ describe("Terminal Exec endpoint", () => {
       expect(res.body.stderr).toBe("");
     });
 
-    it("allows node --version", async () => {
+    it("allows git status", async () => {
       const { call } = buildApp();
       const res = await call("post", "/terminal/exec", {
-        body: { command: "node --version" },
+        body: { command: "git status" },
       });
       expect(res.statusCode).toBe(200);
       expect(res.body.exitCode).toBe(0);
-      expect(res.body.stdout).toMatch(/^v\d+/);
     });
 
     it("respects cwd parameter", async () => {
       const { call } = buildApp();
+      const tmpDir = process.env.STORAGE_DIR || process.cwd();
       const res = await call("post", "/terminal/exec", {
-        body: { command: "pwd", cwd: "/tmp" },
+        body: { command: "pwd", cwd: tmpDir },
       });
       expect(res.statusCode).toBe(200);
-      // macOS resolves /tmp to /private/tmp
-      expect(res.body.stdout.trim()).toMatch(/^\/(private\/)?tmp$/);
+      expect(res.body.stdout.trim()).toBe(tmpDir);
     });
   });
 
@@ -242,10 +241,10 @@ describe("Terminal Exec endpoint", () => {
       process.env.NODE_ENV = "development";
     });
 
-    it("blocks '..' segments in cat arguments", async () => {
+    it("blocks '..' segments in head arguments", async () => {
       const { call } = buildApp();
       const res = await call("post", "/terminal/exec", {
-        body: { command: "cat ../../../.env" },
+        body: { command: "head ../../../.env" },
       });
       expect(res.statusCode).toBe(403);
       expect(res.body.error).toMatch(/\.\./);
@@ -254,7 +253,7 @@ describe("Terminal Exec endpoint", () => {
     it("blocks '..' segments buried mid-path", async () => {
       const { call } = buildApp();
       const res = await call("post", "/terminal/exec", {
-        body: { command: "cat foo/../../etc/passwd" },
+        body: { command: "head foo/../../etc/passwd" },
       });
       expect(res.statusCode).toBe(403);
     });
@@ -268,10 +267,10 @@ describe("Terminal Exec endpoint", () => {
       expect(res.body.error).toMatch(/\.\./);
     });
 
-    it("still allows a plain relative filename for cat", async () => {
+    it("still allows a plain relative filename for head", async () => {
       const { call } = buildApp();
       const res = await call("post", "/terminal/exec", {
-        body: { command: "cat package.json" },
+        body: { command: "head package.json" },
       });
       expect(res.statusCode).toBe(200);
     });

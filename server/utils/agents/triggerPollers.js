@@ -1,1 +1,369 @@
-Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVAovLyBQdXJwb3NlOiBQZXItY29ubmVjdG9yIHBvbGxpbmcgaW1wbGVtZW50YXRpb25zIGZvciBUcmlnZ2VyRW5naW5lLgovLyAgICAgICAgICBFYWNoIHBvbGxlciByZXR1cm5zIHsgaGFzQ2hhbmdlcywgbmV3Q2hlY2twb2ludCwgaXRlbUNvdW50LCBjaGVja3N1bSB9Ci8vICAgICAgICAgIHNvIHRoZSBlbmdpbmUgY2FuIGZpcmUgdGhlIGFnZW50IG9ubHkgd2hlbiBuZXcgaXRlbXMgYXJlIGRldGVjdGVkLgovLyAgICAgICAgICBTdXBwb3J0ZWQgY29ubmVjdG9yczogZ21haWwsIGdpdGh1YiwgcnNzLCB3ZWJob29rLgovLyBEb2NzOiB0cmlnZ2VyUG9sbGVycy5kb2MubWQKCmNvbnN0IGNvbnNvbGVMb2dnZXIgPSByZXF1aXJlKCIuLi9sb2dnZXIvY29uc29sZS5qcyIpOwoKY29uc3QgUE9MTF9IVFRQX1RJTUVPVVRfTVMgPSAzMF8wMDA7CgovKioKICogRGlzcGF0Y2ggdG8gdGhlIHJpZ2h0IHBvbGxlciBiYXNlZCBvbiBjb25uZWN0b3JfdHlwZS4KICogUmV0dXJucyBhIG5vLWNoYW5nZSByZXN1bHQgZm9yIHVua25vd24gY29ubmVjdG9yIHR5cGVzIHNvIHRoZSBlbmdpbmUKICoga2VlcHMgdGlja2luZyB3aXRob3V0IGZpcmluZyBzcHVyaW91cyB0cmlnZ2Vycy4KICoKICogQHBhcmFtIHtPYmplY3R9IGNvbmZpZyAtIFRyaWdnZXIgY29uZmlnIChtdXN0IGluY2x1ZGUgY29ubmVjdG9yX3R5cGUgYW5kIGNvbm5lY3Rvci1zcGVjaWZpYyBmaWVsZHMpCiAqIEBwYXJhbSB7T2JqZWN0fG51bGx9IGNoZWNrcG9pbnQgLSBQcmV2aW91cyBjaGVja3BvaW50IGZyb20gbGFzdCBzdWNjZXNzZnVsIHBvbGwKICogQHJldHVybnMge1Byb21pc2U8e2hhc0NoYW5nZXM6IGJvb2xlYW4sIG5ld0NoZWNrcG9pbnQ6IG9iamVjdHxudWxsLCBpdGVtQ291bnQ6IG51bWJlciwgY2hlY2tzdW06IHN0cmluZ3xudWxsLCBlcnJvcj86IHN0cmluZ30+fQogKi8KYXN5bmMgZnVuY3Rpb24gcG9sbENvbm5lY3Rvcihjb25maWcsIGNoZWNrcG9pbnQpIHsKICBjb25zdCB0eXBlID0gKGNvbmZpZy5jb25uZWN0b3JfdHlwZSB8fCAiIikudG9Mb3dlckNhc2UoKTsKCiAgc3dpdGNoICh0eXBlKSB7CiAgICBjYXNlICJnbWFpbCI6CiAgICAgIHJldHVybiBwb2xsR21haWwoY29uZmlnLCBjaGVja3BvaW50KTsKICAgIGNhc2UgImdpdGh1YiI6CiAgICAgIHJldHVybiBwb2xsR2l0SHViKGNvbmZpZywgY2hlY2twb2ludCk7CiAgICBjYXNlICJyc3MiOgogICAgY2FzZSAiYXRvbSI6CiAgICAgIHJldHVybiBwb2xsUnNzKGNvbmZpZywgY2hlY2twb2ludCk7CiAgICBjYXNlICJ3ZWJob29rIjoKICAgICAgLy8gV2ViaG9va3MgYXJlIHB1c2gtYmFzZWQg4oCUIG5vIHBvbGxpbmcgbmVlZGVkLgogICAgICByZXR1cm4gewogICAgICAgIGhhc0NoYW5nZXM6IGZhbHNlLAogICAgICAgIG5ld0NoZWNrcG9pbnQ6IGNoZWNrcG9pbnQsCiAgICAgICAgaXRlbUNvdW50OiAwLAogICAgICAgIGNoZWNrc3VtOiBudWxsLAogICAgICB9OwogICAgZGVmYXVsdDoKICAgICAgY29uc29sZUxvZ2dlci53YXJuKAogICAgICAgIGBbVHJpZ2dlclBvbGxlcnNdIFVua25vd24gY29ubmVjdG9yX3R5cGUgIiR7dHlwZX0iIOKAlCByZXR1cm5pbmcgbm8gY2hhbmdlc2AsCiAgICAgICk7CiAgICAgIHJldHVybiB7CiAgICAgICAgaGFzQ2hhbmdlczogZmFsc2UsCiAgICAgICAgbmV3Q2hlY2twb2ludDogY2hlY2twb2ludCwKICAgICAgICBpdGVtQ291bnQ6IDAsCiAgICAgICAgY2hlY2tzdW06IG51bGwsCiAgICAgIH07CiAgfQp9CgovKioKICogR21haWwgcG9sbGVyOiB1c2VzIHRoZSBleGlzdGluZyBHbWFpbEJyaWRnZSB0byBzZWFyY2ggcmVjZW50IG1lc3NhZ2VzCiAqIGFuZCBjb21wYXJlcyBtZXNzYWdlIElEcyBhZ2FpbnN0IHRoZSBjaGVja3BvaW50LgogKgogKiBDb25maWc6IHsgY29ubmVjdG9yX3R5cGU6ICJnbWFpbCIsIHF1ZXJ5Pzogc3RyaW5nLCBsYWJlbD86IHN0cmluZywgbWF4X3Jlc3VsdHM/OiBudW1iZXIgfQogKiBDaGVja3BvaW50OiB7IGxhc3RNZXNzYWdlSWQ6IHN0cmluZywgbGFzdENoZWNrZWRBdDogSVNPIHN0cmluZyB9CiAqLwphc3luYyBmdW5jdGlvbiBwb2xsR21haWwoY29uZmlnLCBjaGVja3BvaW50KSB7CiAgdHJ5IHsKICAgIGNvbnN0IHsgR21haWxCcmlkZ2UgfSA9IHJlcXVpcmUoIi4vYWliaXRhdC9wbHVnaW5zL2dtYWlsL2xpYi5qcyIpOwogICAgY29uc3QgYXZhaWxhYmxlID0gYXdhaXQgR21haWxCcmlkZ2UuaXNUb29sQXZhaWxhYmxlKCk7CiAgICBpZiAoIWF2YWlsYWJsZSkgewogICAgICByZXR1cm4gewogICAgICAgIGhhc0NoYW5nZXM6IGZhbHNlLAogICAgICAgIG5ld0NoZWNrcG9pbnQ6IGNoZWNrcG9pbnQsCiAgICAgICAgaXRlbUNvdW50OiAwLAogICAgICAgIGNoZWNrc3VtOiBudWxsLAogICAgICAgIGVycm9yOiAiR21haWwgbm90IGNvbmZpZ3VyZWQiLAogICAgICB9OwogICAgfQoKICAgIC8vIEdtYWlsQnJpZGdlIG1ldGhvZHMgYXJlIHN0YXRpYyDigJQgY2FsbCBkaXJlY3RseSBvbiB0aGUgY2xhc3MuCiAgICBjb25zdCBxdWVyeSA9IGNvbmZpZy5xdWVyeSB8fCBjb25maWcubGFiZWwgfHwgImluOmluYm94IjsKICAgIGNvbnN0IG1heFJlc3VsdHMgPSBNYXRoLm1pbihjb25maWcubWF4X3Jlc3VsdHMgfHwgMjUsIDEwMCk7CgogICAgY29uc3QgcmVzdWx0ID0gYXdhaXQgR21haWxCcmlkZ2UucmVxdWVzdCgic2VhcmNoIiwgewogICAgICBxdWVyeSwKICAgICAgbGltaXQ6IG1heFJlc3VsdHMsCiAgICAgIHN0YXJ0OiAwLAogICAgfSk7CgogICAgaWYgKCFyZXN1bHQuc3VjY2VzcykgewogICAgICByZXR1cm4gewogICAgICAgIGhhc0NoYW5nZXM6IGZhbHNlLAogICAgICAgIG5ld0NoZWNrcG9pbnQ6IGNoZWNrcG9pbnQsCiAgICAgICAgaXRlbUNvdW50OiAwLAogICAgICAgIGNoZWNrc3VtOiBudWxsLAogICAgICAgIGVycm9yOiByZXN1bHQuZXJyb3IgfHwgIkdtYWlsIHNlYXJjaCBmYWlsZWQiLAogICAgICB9OwogICAgfQoKICAgIGNvbnN0IG1lc3NhZ2VzID0gQXJyYXkuaXNBcnJheShyZXN1bHQuZGF0YT8ubWVzc2FnZXMpCiAgICAgID8gcmVzdWx0LmRhdGEubWVzc2FnZXMKICAgICAgOiBBcnJheS5pc0FycmF5KHJlc3VsdC5kYXRhKQogICAgICAgID8gcmVzdWx0LmRhdGEKICAgICAgICA6IFtdOwoKICAgIGNvbnN0IGxhc3RNZXNzYWdlSWQgPSBjaGVja3BvaW50Py5sYXN0TWVzc2FnZUlkIHx8IG51bGw7CiAgICBjb25zdCBuZXdNZXNzYWdlcyA9IGxhc3RNZXNzYWdlSWQKICAgICAgPyBtZXNzYWdlcy5maWx0ZXIoKG0pID0+IG0uaWQgJiYgbS5pZCAhPT0gbGFzdE1lc3NhZ2VJZCkKICAgICAgOiBtZXNzYWdlczsKCiAgICBjb25zdCBuZXdlc3QgPSBtZXNzYWdlc1swXTsKICAgIGNvbnN0IG5ld0NoZWNrcG9pbnQgPSBuZXdlc3Q/LmlkCiAgICAgID8gewogICAgICAgICAgbGFzdE1lc3NhZ2VJZDogbmV3ZXN0LmlkLAogICAgICAgICAgbGFzdENoZWNrZWRBdDogbmV3IERhdGUoKS50b0lTT1N0cmluZygpLAogICAgICAgICAgcXVlcnksCiAgICAgICAgfQogICAgICA6IGNoZWNrcG9pbnQ7CgogICAgY29uc3QgY2hlY2tzdW0gPSBuZXdlc3Q/LmlkCiAgICAgID8gYGdtYWlsOiR7bmV3ZXN0LmlkfToke21lc3NhZ2VzLmxlbmd0aH1gCiAgICAgIDogbnVsbDsKCiAgICByZXR1cm4gewogICAgICBoYXNDaGFuZ2VzOiBuZXdNZXNzYWdlcy5sZW5ndGggPiAwLAogICAgICBuZXdDaGVja3BvaW50LAogICAgICBpdGVtQ291bnQ6IG5ld01lc3NhZ2VzLmxlbmd0aCwKICAgICAgY2hlY2tzdW0sCiAgICB9OwogIH0gY2F0Y2ggKGUpIHsKICAgIGNvbnNvbGVMb2dnZXIuZXJyb3IoIltUcmlnZ2VyUG9sbGVyc10gR21haWwgcG9sbCBlcnJvcjoiLCBlLm1lc3NhZ2UpOwogICAgcmV0dXJuIHsKICAgICAgaGFzQ2hhbmdlczogZmFsc2UsCiAgICAgIG5ld0NoZWNrcG9pbnQ6IGNoZWNrcG9pbnQsCiAgICAgIGl0ZW1Db3VudDogMCwKICAgICAgY2hlY2tzdW06IG51bGwsCiAgICAgIGVycm9yOiBlLm1lc3NhZ2UsCiAgICB9OwogIH0KfQoKLyoqCiAqIEdpdEh1YiBwb2xsZXI6IGZldGNoZXMgaXNzdWVzIG9yIFBScyBzaW5jZSB0aGUgbGFzdCBjaGVja3BvaW50IHRpbWVzdGFtcC4KICoKICogQ29uZmlnOiB7IGNvbm5lY3Rvcl90eXBlOiAiZ2l0aHViIiwgcmVwbzogIm93bmVyL25hbWUiLCBraW5kPzogImlzc3VlcyJ8InB1bGxzIiwgdG9rZW4/OiBzdHJpbmcsIHN0YXRlPzogIm9wZW4ifCJjbG9zZWQifCJhbGwiIH0KICogQ2hlY2twb2ludDogeyBsYXN0Q2hlY2tlZEF0OiBJU08gc3RyaW5nLCBsYXN0TnVtYmVyOiBudW1iZXIgfQogKi8KYXN5bmMgZnVuY3Rpb24gcG9sbEdpdEh1Yihjb25maWcsIGNoZWNrcG9pbnQpIHsKICB0cnkgewogICAgaWYgKCFjb25maWcucmVwbyB8fCAhY29uZmlnLnJlcG8uaW5jbHVkZXMoIi8iKSkgewogICAgICByZXR1cm4gewogICAgICAgIGhhc0NoYW5nZXM6IGZhbHNlLAogICAgICAgIG5ld0NoZWNrcG9pbnQ6IGNoZWNrcG9pbnQsCiAgICAgICAgaXRlbUNvdW50OiAwLAogICAgICAgIGNoZWNrc3VtOiBudWxsLAogICAgICAgIGVycm9yOiAiR2l0SHViIGNvbmZpZyByZXF1aXJlcyAncmVwbycgaW4gJ293bmVyL25hbWUnIGZvcm1hdCIsCiAgICAgIH07CiAgICB9CgogICAgY29uc3Qga2luZCA9IGNvbmZpZy5raW5kID09PSAicHVsbHMiID8gInB1bGxzIiA6ICJpc3N1ZXMiOwogICAgY29uc3Qgc3RhdGUgPSBjb25maWcuc3RhdGUgfHwgIm9wZW4iOwogICAgY29uc3Qgc2luY2UgPQogICAgICBjaGVja3BvaW50Py5sYXN0Q2hlY2tlZEF0IHx8CiAgICAgIG5ldyBEYXRlKERhdGUubm93KCkgLSAyNCAqIDYwICogNjAgKiAxMDAwKS50b0lTT1N0cmluZygpOwoKICAgIGNvbnN0IHVybCA9IGBodHRwczovL2FwaS5naXRodWIuY29tL3JlcG9zLyR7ZW5jb2RlVVJJQ29tcG9uZW50KAogICAgICBjb25maWcucmVwbywKICAgICl9LyR7a2luZH0/c3RhdGU9JHtlbmNvZGVVUklDb21wb25lbnQoc3RhdGUpfSZzaW5jZT0ke2VuY29kZVVSSUNvbXBvbmVudCgKICAgICAgc2luY2UsCiAgICApfSZwZXJfcGFnZT01MCZzb3J0PXVwZGF0ZWQmZGlyZWN0aW9uPWRlc2NgOwoKICAgIGNvbnN0IGhlYWRlcnMgPSB7CiAgICAgIEFjY2VwdDogImFwcGxpY2F0aW9uL3ZuZC5naXRodWIranNvbiIsCiAgICAgICJYLUdpdEh1Yi1BcGktVmVyc2lvbiI6ICIyMDIyLTExLTI4IiwKICAgICAgIlVzZXItQWdlbnQiOiAiT3BlblNJTi1DaGF0LVRyaWdnZXJFbmdpbmUvMS4wIiwKICAgIH07CiAgICBpZiAoY29uZmlnLnRva2VuKSBoZWFkZXJzLkF1dGhvcml6YXRpb24gPSBgQmVhcmVyICR7Y29uZmlnLnRva2VufWA7CgogICAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCBmZXRjaCh1cmwsIHsKICAgICAgbWV0aG9kOiAiR0VUIiwKICAgICAgaGVhZGVycywKICAgICAgc2lnbmFsOiBBYm9ydFNpZ25hbC50aW1lb3V0KFBPTExfSFRUUF9USU1FT1VUX01TKSwKICAgIH0pOwoKICAgIGlmICghcmVzcG9uc2Uub2spIHsKICAgICAgcmV0dXJuIHsKICAgICAgICBoYXNDaGFuZ2VzOiBmYWxzZSwKICAgICAgICBuZXdDaGVja3BvaW50OiBjaGVja3BvaW50LAogICAgICAgIGl0ZW1Db3VudDogMCwKICAgICAgICBjaGVja3N1bTogbnVsbCwKICAgICAgICBlcnJvcjogYEdpdEh1YiBBUEkgJHtyZXNwb25zZS5zdGF0dXN9OiAke3Jlc3BvbnNlLnN0YXR1c1RleHR9YCwKICAgICAgfTsKICAgIH0KCiAgICBjb25zdCBpdGVtcyA9IGF3YWl0IHJlc3BvbnNlLmpzb24oKTsKICAgIGlmICghQXJyYXkuaXNBcnJheShpdGVtcykpIHsKICAgICAgcmV0dXJuIHsKICAgICAgICBoYXNDaGFuZ2VzOiBmYWxzZSwKICAgICAgICBuZXdDaGVja3BvaW50OiBjaGVja3BvaW50LAogICAgICAgIGl0ZW1Db3VudDogMCwKICAgICAgICBjaGVja3N1bTogbnVsbCwKICAgICAgICBlcnJvcjogIkdpdEh1YiBBUEkgcmV0dXJuZWQgbm9uLWFycmF5IHJlc3BvbnNlIiwKICAgICAgfTsKICAgIH0KCiAgICBjb25zdCBsYXN0TnVtYmVyID0gY2hlY2twb2ludD8ubGFzdE51bWJlciB8fCAwOwogICAgY29uc3QgbmV3SXRlbXMgPSBpdGVtcy5maWx0ZXIoKGl0KSA9PiAoaXQubnVtYmVyIHx8IDApID4gbGFzdE51bWJlcik7CiAgICBjb25zdCBuZXdlc3QgPSBpdGVtc1swXTsKICAgIGNvbnN0IG5ld0NoZWNrcG9pbnQgPSBuZXdlc3QKICAgICAgPyB7CiAgICAgICAgICBsYXN0Q2hlY2tlZEF0OiBuZXdlc3QudXBkYXRlZF9hdCB8fCBuZXcgRGF0ZSgpLnRvSVNPU3RyaW5nKCksCiAgICAgICAgICBsYXN0TnVtYmVyOiBuZXdlc3QubnVtYmVyIHx8IDAsCiAgICAgICAgfQogICAgICA6IGNoZWNrcG9pbnQ7CgogICAgY29uc3QgY2hlY2tzdW0gPSBuZXdlc3QKICAgICAgPyBgZ2l0aHViOiR7Y29uZmlnLnJlcG99OiR7a2luZH06JHtuZXdlc3QubnVtYmVyfToke2l0ZW1zLmxlbmd0aH1gCiAgICAgIDogbnVsbDsKCiAgICByZXR1cm4gewogICAgICBoYXNDaGFuZ2VzOiBuZXdJdGVtcy5sZW5ndGggPiAwLAogICAgICBuZXdDaGVja3BvaW50LAogICAgICBpdGVtQ291bnQ6IG5ld0l0ZW1zLmxlbmd0aCwKICAgICAgY2hlY2tzdW0sCiAgICB9OwogIH0gY2F0Y2ggKGUpIHsKICAgIGNvbnNvbGVMb2dnZXIuZXJyb3IoIltUcmlnZ2VyUG9sbGVyc10gR2l0SHViIHBvbGwgZXJyb3I6IiwgZS5tZXNzYWdlKTsKICAgIHJldHVybiB7CiAgICAgIGhhc0NoYW5nZXM6IGZhbHNlLAogICAgICBuZXdDaGVja3BvaW50OiBjaGVja3BvaW50LAogICAgICBpdGVtQ291bnQ6IDAsCiAgICAgIGNoZWNrc3VtOiBudWxsLAogICAgICBlcnJvcjogZS5tZXNzYWdlLAogICAgfTsKICB9Cn0KCi8qKgogKiBSU1MvQXRvbSBwb2xsZXI6IGZldGNoZXMgYSBmZWVkIGFuZCBjb21wYXJlcyBpdGVtIEdVSURzL2xpbmtzIGFnYWluc3QgY2hlY2twb2ludC4KICoKICogQ29uZmlnOiB7IGNvbm5lY3Rvcl90eXBlOiAicnNzInwiYXRvbSIsIHVybDogc3RyaW5nLCBtYXhfaXRlbXM/OiBudW1iZXIgfQogKiBDaGVja3BvaW50OiB7IGxhc3RHdWlkOiBzdHJpbmcsIGxhc3RMaW5rOiBzdHJpbmcsIGxhc3RDaGVja2VkQXQ6IElTTyBzdHJpbmcgfQogKi8KYXN5bmMgZnVuY3Rpb24gcG9sbFJzcyhjb25maWcsIGNoZWNrcG9pbnQpIHsKICB0cnkgewogICAgaWYgKCFjb25maWcudXJsKSB7CiAgICAgIHJldHVybiB7CiAgICAgICAgaGFzQ2hhbmdlczogZmFsc2UsCiAgICAgICAgbmV3Q2hlY2twb2ludDogY2hlY2twb2ludCwKICAgICAgICBpdGVtQ291bnQ6IDAsCiAgICAgICAgY2hlY2tzdW06IG51bGwsCiAgICAgICAgZXJyb3I6ICJSU1MgY29uZmlnIHJlcXVpcmVzICd1cmwnIiwKICAgICAgfTsKICAgIH0KCiAgICBjb25zdCByZXNwb25zZSA9IGF3YWl0IGZldGNoKGNvbmZpZy51cmwsIHsKICAgICAgbWV0aG9kOiAiR0VUIiwKICAgICAgaGVhZGVyczogewogICAgICAgIEFjY2VwdDogImFwcGxpY2F0aW9uL3Jzcyt4bWwsIGFwcGxpY2F0aW9uL2F0b20reG1sLCB0ZXh0L3htbCwgKi8qIiwKICAgICAgICAiVXNlci1BZ2VudCI6ICJPcGVuU0lOLUNoYXQtVHJpZ2dlckVuZ2luZS8xLjAiLAogICAgICB9LAogICAgICBzaWduYWw6IEFib3J0U2lnbmFsLnRpbWVvdXQoUE9MTF9IVFRQX1RJTUVPVVRfTVMpLAogICAgfSk7CgogICAgaWYgKCFyZXNwb25zZS5vaykgewogICAgICByZXR1cm4gewogICAgICAgIGhhc0NoYW5nZXM6IGZhbHNlLAogICAgICAgIG5ld0NoZWNrcG9pbnQ6IGNoZWNrcG9pbnQsCiAgICAgICAgaXRlbUNvdW50OiAwLAogICAgICAgIGNoZWNrc3VtOiBudWxsLAogICAgICAgIGVycm9yOiBgUlNTIGZldGNoICR7cmVzcG9uc2Uuc3RhdHVzfTogJHtyZXNwb25zZS5zdGF0dXNUZXh0fWAsCiAgICAgIH07CiAgICB9CgogICAgY29uc3QgeG1sID0gYXdhaXQgcmVzcG9uc2UudGV4dCgpOwogICAgY29uc3QgaXRlbXMgPSBwYXJzZUZlZWRJdGVtcyh4bWwsIGNvbmZpZy5jb25uZWN0b3JfdHlwZSB8fCAicnNzIik7CiAgICBjb25zdCBtYXhJdGVtcyA9IE1hdGgubWluKGNvbmZpZy5tYXhfaXRlbXMgfHwgMjUsIDEwMCk7CiAgICBjb25zdCByZWNlbnQgPSBpdGVtcy5zbGljZSgwLCBtYXhJdGVtcyk7CgogICAgY29uc3QgbGFzdEd1aWQgPSBjaGVja3BvaW50Py5sYXN0R3VpZCB8fCBudWxsOwogICAgY29uc3QgbGFzdExpbmsgPSBjaGVja3BvaW50Py5sYXN0TGluayB8fCBudWxsOwogICAgY29uc3QgbmV3SXRlbXMgPSByZWNlbnQuZmlsdGVyKChpdCkgPT4gewogICAgICBpZiAobGFzdEd1aWQgJiYgaXQuZ3VpZCA9PT0gbGFzdEd1aWQpIHJldHVybiBmYWxzZTsKICAgICAgaWYgKGxhc3RMaW5rICYmIGl0LmxpbmsgPT09IGxhc3RMaW5rKSByZXR1cm4gZmFsc2U7CiAgICAgIHJldHVybiB0cnVlOwogICAgfSk7CgogICAgY29uc3QgbmV3ZXN0ID0gcmVjZW50WzBdOwogICAgY29uc3QgbmV3Q2hlY2twb2ludCA9IG5ld2VzdAogICAgICA/IHsKICAgICAgICAgIGxhc3RHdWlkOiBuZXdlc3QuZ3VpZCB8fCBudWxsLAogICAgICAgICAgbGFzdExpbms6IG5ld2VzdC5saW5rIHx8IG51bGwsCiAgICAgICAgICBsYXN0Q2hlY2tlZEF0OiBuZXcgRGF0ZSgpLnRvSVNPU3RyaW5nKCksCiAgICAgICAgfQogICAgICA6IGNoZWNrcG9pbnQ7CgogICAgY29uc3QgY2hlY2tzdW0gPSBuZXdlc3QKICAgICAgPyBgcnNzOiR7bmV3ZXN0Lmd1aWQgfHwgbmV3ZXN0LmxpbmsgfHwgRGF0ZS5ub3coKX1gCiAgICAgIDogbnVsbDsKCiAgICByZXR1cm4gewogICAgICBoYXNDaGFuZ2VzOiBuZXdJdGVtcy5sZW5ndGggPiAwLAogICAgICBuZXdDaGVja3BvaW50LAogICAgICBpdGVtQ291bnQ6IG5ld0l0ZW1zLmxlbmd0aCwKICAgICAgY2hlY2tzdW0sCiAgICB9OwogIH0gY2F0Y2ggKGUpIHsKICAgIGNvbnNvbGVMb2dnZXIuZXJyb3IoIltUcmlnZ2VyUG9sbGVyc10gUlNTIHBvbGwgZXJyb3I6IiwgZS5tZXNzYWdlKTsKICAgIHJldHVybiB7CiAgICAgIGhhc0NoYW5nZXM6IGZhbHNlLAogICAgICBuZXdDaGVja3BvaW50OiBjaGVja3BvaW50LAogICAgICBpdGVtQ291bnQ6IDAsCiAgICAgIGNoZWNrc3VtOiBudWxsLAogICAgICBlcnJvcjogZS5tZXNzYWdlLAogICAgfTsKICB9Cn0KCi8qKgogKiBMaWdodHdlaWdodCBSU1MvQXRvbSBwYXJzZXIg4oCUIGV4dHJhY3RzIGd1aWQsIGxpbmssIHRpdGxlIGZyb20gPGl0ZW0+IG9yIDxlbnRyeT4gdGFncy4KICogQXZvaWRzIHB1bGxpbmcgaW4gYSBmdWxsIFhNTCBkZXBlbmRlbmN5IGZvciB3aGF0IGlzIGEgc21hbGwgc3Vic2V0LgogKi8KZnVuY3Rpb24gcGFyc2VGZWVkSXRlbXMoeG1sLCB0eXBlKSB7CiAgY29uc3QgaXRlbXMgPSBbXTsKICBjb25zdCB0YWdQYXR0ZXJuID0gdHlwZSA9PT0gImF0b20iID8gLzxlbnRyeVtccz5dL2dpIDogLzxpdGVtW1xzPl0vZ2k7CgogIGxldCBtYXRjaDsKICB3aGlsZSAoKG1hdGNoID0gdGFnUGF0dGVybi5leGVjKHhtbCkpICE9PSBudWxsKSB7CiAgICBjb25zdCBzdGFydCA9IG1hdGNoLmluZGV4OwogICAgY29uc3QgY2xvc2VUYWcgPSB0eXBlID09PSAiYXRvbSIgPyAiPC9lbnRyeT4iIDogIjwvaXRlbT4iOwogICAgY29uc3QgZW5kSWR4ID0geG1sLmluZGV4T2YoY2xvc2VUYWcsIHN0YXJ0KTsKICAgIGlmIChlbmRJZHggPT09IC0xKSBicmVhazsKICAgIGNvbnN0IGJsb2NrID0geG1sLnN1YnN0cmluZyhzdGFydCwgZW5kSWR4ICsgY2xvc2VUYWcubGVuZ3RoKTsKCiAgICBjb25zdCBndWlkID0gZXh0cmFjdFRhZyhibG9jaywgImd1aWQiKSB8fCBleHRyYWN0VGFnKGJsb2NrLCAiaWQiKTsKICAgIGNvbnN0IGxpbmsgPSBleHRyYWN0VGFnKGJsb2NrLCAibGluayIpOwogICAgY29uc3QgdGl0bGUgPSBleHRyYWN0VGFnKGJsb2NrLCAidGl0bGUiKTsKCiAgICBpZiAoZ3VpZCB8fCBsaW5rKSB7CiAgICAgIGl0ZW1zLnB1c2goewogICAgICAgIGd1aWQ6IGd1aWQgfHwgbnVsbCwKICAgICAgICBsaW5rOiBsaW5rIHx8IG51bGwsCiAgICAgICAgdGl0bGU6IHRpdGxlIHx8IG51bGwsCiAgICAgIH0pOwogICAgfQogICAgdGFnUGF0dGVybi5sYXN0SW5kZXggPSBlbmRJZHggKyBjbG9zZVRhZy5sZW5ndGg7CiAgfQogIHJldHVybiBpdGVtczsKfQoKZnVuY3Rpb24gZXh0cmFjdFRhZyhibG9jaywgdGFnKSB7CiAgLy8gTWF0Y2ggPHRhZz52YWx1ZTwvdGFnPiBvciA8dGFnIGF0dHI9Ii4uLiI+dmFsdWU8L3RhZz4KICBjb25zdCByZSA9IG5ldyBSZWdFeHAoYDwke3RhZ31bXj5dKj4oW1xcc1xcU10qPyk8XFwvJHt0YWd9PmAsICJpIik7CiAgY29uc3QgbSA9IGJsb2NrLm1hdGNoKHJlKTsKICBpZiAobSkgewogICAgLy8gU3RyaXAgbmVzdGVkIENEQVRBIGFuZCBIVE1MCiAgICByZXR1cm4gbVsxXQogICAgICAucmVwbGFjZSgvPCFcW0NEQVRBXFsoW1xzXFNdKj8pXF1cXT4vZywgIiQxIikKICAgICAgLnJlcGxhY2UoLzxbXj5dKz4vZywgIiIpCiAgICAgIC50cmltKCk7CiAgfQogIC8vIEhhbmRsZSBzZWxmLWNsb3NpbmcgdGFnczogPHRhZyBocmVmPSIuLi4iIC8+IChjb21tb24gaW4gQXRvbSBmZWVkcykKICBjb25zdCBzZWxmQ2xvc2luZyA9IG5ldyBSZWdFeHAoYDwke3RhZ31bXj5dKlxcc2hyZWY9WyInXShbXiInXSspWyInXVtePl0qLz5gLCAiaSIpOwogIGNvbnN0IHNjID0gYmxvY2subWF0Y2goc2VsZkNsb3NpbmcpOwogIGlmIChzYykgcmV0dXJuIHNjWzFdLnRyaW0oKTsKICByZXR1cm4gbnVsbDsKfQoKbW9kdWxlLmV4cG9ydHMgPSB7CiAgcG9sbENvbm5lY3RvciwKICBwb2xsR21haWwsCiAgcG9sbEdpdEh1YiwKICBwb2xsUnNzLAogIHBhcnNlRmVlZEl0ZW1zLAp9Owo=
+// SPDX-License-Identifier: MIT
+// Purpose: Per-connector polling implementations for TriggerEngine.
+//          Each poller returns { hasChanges, newCheckpoint, itemCount, checksum }
+//          so the engine can fire the agent only when new items are detected.
+//          Supported connectors: gmail, github, rss, webhook.
+// Docs: triggerPollers.doc.md
+
+const consoleLogger = require("../logger/console.js");
+
+const POLL_HTTP_TIMEOUT_MS = 30_000;
+
+/**
+ * Dispatch to the right poller based on connector_type.
+ * Returns a no-change result for unknown connector types so the engine
+ * keeps ticking without firing spurious triggers.
+ *
+ * @param {Object} config - Trigger config (must include connector_type and connector-specific fields)
+ * @param {Object|null} checkpoint - Previous checkpoint from last successful poll
+ * @returns {Promise<{hasChanges: boolean, newCheckpoint: object|null, itemCount: number, checksum: string|null, error?: string}>}
+ */
+async function pollConnector(config, checkpoint) {
+  const type = (config.connector_type || "").toLowerCase();
+
+  switch (type) {
+    case "gmail":
+      return pollGmail(config, checkpoint);
+    case "github":
+      return pollGitHub(config, checkpoint);
+    case "rss":
+    case "atom":
+      return pollRss(config, checkpoint);
+    case "webhook":
+      // Webhooks are push-based — no polling needed.
+      return {
+        hasChanges: false,
+        newCheckpoint: checkpoint,
+        itemCount: 0,
+        checksum: null,
+      };
+    default:
+      consoleLogger.warn(
+        `[TriggerPollers] Unknown connector_type "${type}" — returning no changes`,
+      );
+      return {
+        hasChanges: false,
+        newCheckpoint: checkpoint,
+        itemCount: 0,
+        checksum: null,
+      };
+  }
+}
+
+/**
+ * Gmail poller: uses the existing GmailBridge to search recent messages
+ * and compares message IDs against the checkpoint.
+ *
+ * Config: { connector_type: "gmail", query?: string, label?: string, max_results?: number }
+ * Checkpoint: { lastMessageId: string, lastCheckedAt: ISO string }
+ */
+async function pollGmail(config, checkpoint) {
+  try {
+    const { GmailBridge } = require("./aibitat/plugins/gmail/lib.js");
+    const available = await GmailBridge.isToolAvailable();
+    if (!available) {
+      return {
+        hasChanges: false,
+        newCheckpoint: checkpoint,
+        itemCount: 0,
+        checksum: null,
+        error: "Gmail not configured",
+      };
+    }
+
+    // GmailBridge methods are static — call directly on the class.
+    const query = config.query || config.label || "in:inbox";
+    const maxResults = Math.min(config.max_results || 25, 100);
+
+    const result = await GmailBridge.request("search", {
+      query,
+      limit: maxResults,
+      start: 0,
+    });
+
+    if (!result.success) {
+      return {
+        hasChanges: false,
+        newCheckpoint: checkpoint,
+        itemCount: 0,
+        checksum: null,
+        error: result.error || "Gmail search failed",
+      };
+    }
+
+    const messages = Array.isArray(result.data?.messages)
+      ? result.data.messages
+      : Array.isArray(result.data)
+        ? result.data
+        : [];
+
+    const lastMessageId = checkpoint?.lastMessageId || null;
+    const newMessages = lastMessageId
+      ? messages.filter((m) => m.id && m.id !== lastMessageId)
+      : messages;
+
+    const newest = messages[0];
+    const newCheckpoint = newest?.id
+      ? {
+          lastMessageId: newest.id,
+          lastCheckedAt: new Date().toISOString(),
+          query,
+        }
+      : checkpoint;
+
+    const checksum = newest?.id
+      ? `gmail:${newest.id}:${messages.length}`
+      : null;
+
+    return {
+      hasChanges: newMessages.length > 0,
+      newCheckpoint,
+      itemCount: newMessages.length,
+      checksum,
+    };
+  } catch (e) {
+    consoleLogger.error("[TriggerPollers] Gmail poll error:", e.message);
+    return {
+      hasChanges: false,
+      newCheckpoint: checkpoint,
+      itemCount: 0,
+      checksum: null,
+      error: e.message,
+    };
+  }
+}
+
+/**
+ * GitHub poller: fetches issues or PRs since the last checkpoint timestamp.
+ *
+ * Config: { connector_type: "github", repo: "owner/name", kind?: "issues"|"pulls", token?: string, state?: "open"|"closed"|"all" }
+ * Checkpoint: { lastCheckedAt: ISO string, lastNumber: number }
+ */
+async function pollGitHub(config, checkpoint) {
+  try {
+    if (!config.repo || !config.repo.includes("/")) {
+      return {
+        hasChanges: false,
+        newCheckpoint: checkpoint,
+        itemCount: 0,
+        checksum: null,
+        error: "GitHub config requires 'repo' in 'owner/name' format",
+      };
+    }
+
+    const kind = config.kind === "pulls" ? "pulls" : "issues";
+    const state = config.state || "open";
+    const since =
+      checkpoint?.lastCheckedAt ||
+      new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+
+    const url = `https://api.github.com/repos/${encodeURIComponent(
+      config.repo,
+    )}/${kind}?state=${encodeURIComponent(state)}&since=${encodeURIComponent(
+      since,
+    )}&per_page=50&sort=updated&direction=desc`;
+
+    const headers = {
+      Accept: "application/vnd.github+json",
+      "X-GitHub-Api-Version": "2022-11-28",
+      "User-Agent": "OpenSIN-Chat-TriggerEngine/1.0",
+    };
+    if (config.token) headers.Authorization = `Bearer ${config.token}`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers,
+      signal: AbortSignal.timeout(POLL_HTTP_TIMEOUT_MS),
+    });
+
+    if (!response.ok) {
+      return {
+        hasChanges: false,
+        newCheckpoint: checkpoint,
+        itemCount: 0,
+        checksum: null,
+        error: `GitHub API ${response.status}: ${response.statusText}`,
+      };
+    }
+
+    const items = await response.json();
+    if (!Array.isArray(items)) {
+      return {
+        hasChanges: false,
+        newCheckpoint: checkpoint,
+        itemCount: 0,
+        checksum: null,
+        error: "GitHub API returned non-array response",
+      };
+    }
+
+    const lastNumber = checkpoint?.lastNumber || 0;
+    const newItems = items.filter((it) => (it.number || 0) > lastNumber);
+    const newest = items[0];
+    const newCheckpoint = newest
+      ? {
+          lastCheckedAt: newest.updated_at || new Date().toISOString(),
+          lastNumber: newest.number || 0,
+        }
+      : checkpoint;
+
+    const checksum = newest
+      ? `github:${config.repo}:${kind}:${newest.number}:${items.length}`
+      : null;
+
+    return {
+      hasChanges: newItems.length > 0,
+      newCheckpoint,
+      itemCount: newItems.length,
+      checksum,
+    };
+  } catch (e) {
+    consoleLogger.error("[TriggerPollers] GitHub poll error:", e.message);
+    return {
+      hasChanges: false,
+      newCheckpoint: checkpoint,
+      itemCount: 0,
+      checksum: null,
+      error: e.message,
+    };
+  }
+}
+
+/**
+ * RSS/Atom poller: fetches a feed and compares item GUIDs/links against checkpoint.
+ *
+ * Config: { connector_type: "rss"|"atom", url: string, max_items?: number }
+ * Checkpoint: { lastGuid: string, lastLink: string, lastCheckedAt: ISO string }
+ */
+async function pollRss(config, checkpoint) {
+  try {
+    if (!config.url) {
+      return {
+        hasChanges: false,
+        newCheckpoint: checkpoint,
+        itemCount: 0,
+        checksum: null,
+        error: "RSS config requires 'url'",
+      };
+    }
+
+    const response = await fetch(config.url, {
+      method: "GET",
+      headers: {
+        Accept: "application/rss+xml, application/atom+xml, text/xml, */*",
+        "User-Agent": "OpenSIN-Chat-TriggerEngine/1.0",
+      },
+      signal: AbortSignal.timeout(POLL_HTTP_TIMEOUT_MS),
+    });
+
+    if (!response.ok) {
+      return {
+        hasChanges: false,
+        newCheckpoint: checkpoint,
+        itemCount: 0,
+        checksum: null,
+        error: `RSS fetch ${response.status}: ${response.statusText}`,
+      };
+    }
+
+    const xml = await response.text();
+    const items = parseFeedItems(xml, config.connector_type || "rss");
+    const maxItems = Math.min(config.max_items || 25, 100);
+    const recent = items.slice(0, maxItems);
+
+    const lastGuid = checkpoint?.lastGuid || null;
+    const lastLink = checkpoint?.lastLink || null;
+    const newItems = recent.filter((it) => {
+      if (lastGuid && it.guid === lastGuid) return false;
+      if (lastLink && it.link === lastLink) return false;
+      return true;
+    });
+
+    const newest = recent[0];
+    const newCheckpoint = newest
+      ? {
+          lastGuid: newest.guid || null,
+          lastLink: newest.link || null,
+          lastCheckedAt: new Date().toISOString(),
+        }
+      : checkpoint;
+
+    const checksum = newest
+      ? `rss:${newest.guid || newest.link || Date.now()}`
+      : null;
+
+    return {
+      hasChanges: newItems.length > 0,
+      newCheckpoint,
+      itemCount: newItems.length,
+      checksum,
+    };
+  } catch (e) {
+    consoleLogger.error("[TriggerPollers] RSS poll error:", e.message);
+    return {
+      hasChanges: false,
+      newCheckpoint: checkpoint,
+      itemCount: 0,
+      checksum: null,
+      error: e.message,
+    };
+  }
+}
+
+/**
+ * Lightweight RSS/Atom parser — extracts guid, link, title from <item> or <entry> tags.
+ * Avoids pulling in a full XML dependency for what is a small subset.
+ */
+function parseFeedItems(xml, type) {
+  const items = [];
+  const tagPattern = type === "atom" ? /<entry[\s>]/gi : /<item[\s>]/gi;
+
+  let match;
+  while ((match = tagPattern.exec(xml)) !== null) {
+    const start = match.index;
+    const closeTag = type === "atom" ? "</entry>" : "</item>";
+    const endIdx = xml.indexOf(closeTag, start);
+    if (endIdx === -1) break;
+    const block = xml.substring(start, endIdx + closeTag.length);
+
+    const guid = extractTag(block, "guid") || extractTag(block, "id");
+    const link = extractTag(block, "link");
+    const title = extractTag(block, "title");
+
+    if (guid || link) {
+      items.push({
+        guid: guid || null,
+        link: link || null,
+        title: title || null,
+      });
+    }
+    tagPattern.lastIndex = endIdx + closeTag.length;
+  }
+  return items;
+}
+
+function extractTag(block, tag) {
+  // Match <tag>value</tag> or <tag attr="...">value</tag>
+  const re = new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, "i");
+  const m = block.match(re);
+  if (m) {
+    // Strip nested CDATA and HTML
+    return m[1]
+      .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
+      .replace(/<[^>]+>/g, "")
+      .trim();
+  }
+  // Handle self-closing tags: <tag href="..." /> (common in Atom feeds)
+  const selfClosing = new RegExp(`<${tag}[^>]*\\shref=["']([^"']+)["'][^>]*/>`, "i");
+  const sc = block.match(selfClosing);
+  if (sc) return sc[1].trim();
+  return null;
+}
+
+module.exports = {
+  pollConnector,
+  pollGmail,
+  pollGitHub,
+  pollRss,
+  parseFeedItems,
+};
