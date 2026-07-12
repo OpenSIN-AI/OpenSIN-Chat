@@ -73,17 +73,17 @@ export function Composer({
     <div
       className={cn(
         "pointer-events-none absolute inset-x-0 bottom-0 z-20",
-        "bg-theme-bg-primary/95 px-3 pb-3 pt-8",
+        "bg-gradient-to-t from-theme-bg-primary via-theme-bg-primary/95 to-transparent px-3 pb-3 pt-10",
         className,
       )}
     >
       <div
         className={cn(
-          "pointer-events-auto mx-auto max-w-[52rem] rounded-xl border transition-colors",
+          "pointer-events-auto mx-auto max-w-[52rem] overflow-hidden rounded-2xl border shadow-[0_18px_60px_rgba(0,0,0,0.28)] transition-[border-color,box-shadow] duration-200",
           focused
-            ? "border-theme-text-secondary ring-1 ring-theme-text-secondary"
-            : "border-theme-border",
-          "bg-theme-bg-sidebar",
+            ? "border-theme-focus ring-1 ring-theme-focus/60 shadow-[0_24px_80px_rgba(0,0,0,0.36)]"
+            : "border-theme-chat-input-border",
+          "bg-theme-bg-chat-input/98 backdrop-blur-xl",
         )}
       >
         {/* Attachment previews */}
@@ -92,7 +92,7 @@ export function Composer({
             {attachments.map((a) => (
               <span
                 key={a.id}
-                className="flex items-center gap-1.5 rounded-md border border-theme-border bg-theme-bg-secondary px-2 py-1 text-xs text-theme-text-secondary"
+                className="flex items-center gap-1.5 rounded-md border border-theme-border-subtle bg-theme-button-secondary px-2 py-1 text-xs text-theme-text-secondary shadow-sm"
               >
                 {a.name}
                 {a.status === "uploading" && (
@@ -114,11 +114,11 @@ export function Composer({
           onKeyDown={handleKeyDown}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          className="block max-h-56 min-h-12 w-full resize-none border-0 bg-transparent px-3 pb-2 pt-3 text-sm leading-6 text-theme-text-primary outline-none placeholder:text-theme-text-muted"
+          className="block max-h-56 min-h-14 w-full resize-none border-0 bg-transparent px-4 pb-2.5 pt-3.5 text-sm leading-6 text-theme-text-primary outline-none placeholder:text-theme-text-muted"
         />
 
         {/* Toolbar */}
-        <div className="flex items-center justify-between px-3 pb-2">
+        <div className="flex items-center justify-between border-t border-theme-border-subtle px-3 pb-2.5 pt-2">
           <div className="flex items-center gap-1">
             {onAttach && (
               <IconButton
@@ -140,7 +140,7 @@ export function Composer({
                 type="button"
                 aria-label="Generierung stoppen"
                 onClick={onStop}
-                className="flex h-8 items-center gap-1.5 rounded-lg border border-red-500/30 bg-red-500/10 px-3 text-xs font-medium text-red-500 transition-colors hover:bg-red-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
+                className="flex h-8 items-center gap-1.5 rounded-md border border-red-500/20 bg-red-500/10 px-3 text-xs font-medium text-red-500 transition-colors hover:bg-red-500/20 hover:text-red-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 focus-visible:ring-offset-theme-bg-primary"
               >
                 <Stop size={14} />
                 Stoppen
@@ -152,10 +152,10 @@ export function Composer({
                 disabled={!canSubmit}
                 onClick={() => void submit()}
                 className={cn(
-                  "flex h-8 items-center gap-1.5 rounded-lg px-3 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-text-secondary",
+                  "flex h-8 items-center gap-1.5 rounded-md border px-3 text-xs font-medium shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-focus focus-visible:ring-offset-2 focus-visible:ring-offset-theme-bg-primary",
                   canSubmit
-                    ? "bg-theme-bg-primary text-theme-text-inverse hover:opacity-90"
-                    : "bg-theme-bg-tertiary text-theme-text-muted cursor-not-allowed opacity-50",
+                    ? "border-transparent bg-theme-button-primary text-theme-text-inverse hover:bg-theme-button-primary-hover"
+                    : "cursor-not-allowed border-transparent bg-theme-button-disabled text-theme-text-muted opacity-50 shadow-none",
                 )}
               >
                 <ArrowUp size={14} />
@@ -166,7 +166,7 @@ export function Composer({
         </div>
 
         {/* Disclaimer */}
-        <div className="px-3 pb-2">
+        <div className="px-4 pb-2.5">
           <p className="text-[10px] text-theme-text-muted">
             OpenSIN kann Fehler machen. Wichtige Informationen bitte prüfen.
           </p>

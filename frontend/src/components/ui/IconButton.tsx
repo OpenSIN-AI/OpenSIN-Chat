@@ -14,9 +14,11 @@ interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> 
 
 const variantClasses = {
   ghost:
-    "text-theme-text-secondary hover:bg-theme-bg-tertiary hover:text-theme-text-primary",
-  primary: "bg-theme-bg-primary text-theme-text-inverse hover:opacity-90",
-  danger: "bg-red-600 text-white hover:bg-red-700",
+    "border-transparent text-theme-text-secondary hover:bg-theme-control-hover hover:text-theme-text-primary",
+  primary:
+    "border-transparent bg-theme-button-primary text-theme-text-inverse shadow-sm hover:bg-theme-button-primary-hover",
+  danger:
+    "border-red-500/20 bg-red-500/10 text-red-500 hover:bg-red-500/20 hover:text-red-400",
 };
 
 const sizeClasses = {
@@ -47,12 +49,12 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         aria-pressed={pressed}
         disabled={disabled}
         className={cn(
-          "inline-flex items-center justify-center rounded-lg border-none cursor-pointer transition-colors",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-text-secondary",
-          "disabled:opacity-40 disabled:cursor-not-allowed",
+          "inline-flex items-center justify-center rounded-md border cursor-pointer transition-colors",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-focus focus-visible:ring-offset-2 focus-visible:ring-offset-theme-bg-primary",
+          "disabled:cursor-not-allowed disabled:border-transparent disabled:bg-theme-button-disabled disabled:text-theme-text-muted disabled:opacity-50 disabled:shadow-none",
           variantClasses[variant],
           sizeClasses[size],
-          pressed && "bg-theme-bg-tertiary text-theme-text-primary",
+          pressed && "bg-theme-button-secondary text-theme-text-primary",
           className,
         )}
         {...props}
