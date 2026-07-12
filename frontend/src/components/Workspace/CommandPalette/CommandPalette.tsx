@@ -7,10 +7,7 @@ import { File } from "@phosphor-icons/react/dist/csr/File";
 import { cn } from "@/utils/cn";
 
 export type CommandGroup =
-  | "recent"
-  | "quickActions"
-  | "workspaces"
-  | "navigation";
+  "recent" | "quickActions" | "workspaces" | "navigation";
 
 export type CommandItem = {
   id: string;
@@ -89,7 +86,8 @@ export function CommandPalette({
 
   useEffect(() => {
     const active = filtered[activeIndex];
-    if (active) itemRefs.current.get(active.id)?.scrollIntoView({ block: "nearest" });
+    if (active)
+      itemRefs.current.get(active.id)?.scrollIntoView({ block: "nearest" });
   }, [activeIndex, filtered]);
 
   if (!open) return null;
@@ -119,7 +117,10 @@ export function CommandPalette({
           {t("commandHub.title")}
         </h2>
         <div className="flex h-14 shrink-0 items-center gap-3 border-b border-theme-modal-border px-4">
-          <MagnifyingGlass size={19} className="shrink-0 text-theme-text-muted" />
+          <MagnifyingGlass
+            size={19}
+            className="shrink-0 text-theme-text-muted"
+          />
           <input
             ref={inputRef}
             value={query}
@@ -137,7 +138,8 @@ export function CommandPalette({
               setActiveIndex(0);
             }}
             onKeyDown={(event) => {
-              if (event.nativeEvent.isComposing || event.keyCode === 229) return;
+              if (event.nativeEvent.isComposing || event.keyCode === 229)
+                return;
               if (event.key === "Escape") {
                 event.preventDefault();
                 close();
@@ -248,9 +250,18 @@ export function CommandPalette({
         </div>
 
         <footer className="flex shrink-0 items-center gap-4 border-t border-theme-modal-border px-4 py-2 text-[10px] text-theme-text-muted max-[420px]:hidden">
-          <span><kbd className="mr-1">↑↓</kbd>{t("commandHub.footer.navigate")}</span>
-          <span><kbd className="mr-1">↵</kbd>{t("commandHub.footer.open")}</span>
-          <span className="ml-auto"><kbd className="mr-1">Esc</kbd>{t("commandHub.footer.close")}</span>
+          <span>
+            <kbd className="mr-1">↑↓</kbd>
+            {t("commandHub.footer.navigate")}
+          </span>
+          <span>
+            <kbd className="mr-1">↵</kbd>
+            {t("commandHub.footer.open")}
+          </span>
+          <span className="ml-auto">
+            <kbd className="mr-1">Esc</kbd>
+            {t("commandHub.footer.close")}
+          </span>
         </footer>
       </section>
     </div>

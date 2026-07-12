@@ -48,7 +48,7 @@ describe("ErrorBoundaryFallback", () => {
       error: new Error("test error"),
       resetErrorBoundary,
     });
-    const resetBtn = screen.getByLabelText("Try Again");
+    const resetBtn = screen.getByLabelText("Reset");
     fireEvent.click(resetBtn);
     expect(resetErrorBoundary).toHaveBeenCalledTimes(1);
   });
@@ -58,7 +58,7 @@ describe("ErrorBoundaryFallback", () => {
       error: new Error("test error"),
       resetErrorBoundary: vi.fn(),
     });
-    const homeLink = screen.getByText("Go Home");
+    const homeLink = screen.getByText("Home");
     expect(homeLink.closest("a")).toHaveAttribute("href", "/");
   });
 

@@ -65,9 +65,11 @@ const TRANSLATIONS = {
     },
     actions: {
       newChat: "Neuer Chat",
-      newChatDescription: "Eine neue Unterhaltung in diesem Arbeitsbereich beginnen",
+      newChatDescription:
+        "Eine neue Unterhaltung in diesem Arbeitsbereich beginnen",
       workspaceSettings: "Arbeitsbereich-Einstellungen",
-      workspaceSettingsDescription: "Den aktuellen Arbeitsbereich konfigurieren",
+      workspaceSettingsDescription:
+        "Den aktuellen Arbeitsbereich konfigurieren",
       scheduled: "Geplante Aufgaben",
       scheduledDescription: "Automatisierte Aufgaben anzeigen und verwalten",
       docs: "Dokumentation",
@@ -998,7 +1000,8 @@ const TRANSLATIONS = {
     capability_sources: "Quellen durchsuchen",
     capability_sources_desc: "Dokumente und Links im Workspace durchsuchen",
     capability_notes: "Notizen öffnen",
-    capability_notes_desc: "Erkenntnisse festhalten, ohne die Recherche zu verlassen",
+    capability_notes_desc:
+      "Erkenntnisse festhalten, ohne die Recherche zu verlassen",
     capability_database: "Datenbank durchsuchen",
     capability_database_desc: "Strukturierte Parlamentsdaten erkunden",
     capability_rag: "Mit Quellen antworten",

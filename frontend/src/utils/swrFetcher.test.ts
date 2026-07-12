@@ -115,7 +115,7 @@ describe("swrConfig", () => {
   it("has fetcher, revalidateOnFocus, and dedupingInterval", () => {
     expect(swrConfig.fetcher).toBe(swrFetcher);
     expect(swrConfig.revalidateOnFocus).toBe(true);
-    expect(swrConfig.dedupingInterval).toBe(5000);
+    expect(swrConfig.dedupingInterval).toBe(15000);
   });
 
   it("shouldRetryOnError returns false for 401", () => {
@@ -127,8 +127,8 @@ describe("swrConfig", () => {
     expect(swrConfig.shouldRetryOnError({})).toBe(true);
   });
 
-  it("errorRetryCount is 3", () => {
-    expect(swrConfig.errorRetryCount).toBe(3);
+  it("errorRetryCount is 2", () => {
+    expect(swrConfig.errorRetryCount).toBe(2);
   });
 });
 

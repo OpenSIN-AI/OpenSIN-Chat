@@ -21,8 +21,8 @@ describe("LoadingChat — desktop layout", () => {
   it("renders skeleton placeholders", () => {
     useIsMobileLayout.mockReturnValue(false);
     const { container } = render(<LoadingChat />);
-    // react-loading-skeleton renders elements with class "react-loading-skeleton"
-    const skeletons = container.querySelectorAll(".react-loading-skeleton");
+    // LoadingChat renders custom LoadingLine spans with aria-hidden
+    const skeletons = container.querySelectorAll('[aria-hidden="true"]');
     expect(skeletons.length).toBeGreaterThanOrEqual(3);
   });
 
@@ -31,7 +31,7 @@ describe("LoadingChat — desktop layout", () => {
     const { container } = render(<LoadingChat />);
     const wrapper = container.firstElementChild;
     expect(wrapper).toBeTruthy();
-    expect(wrapper.className).toContain("overflow-y-scroll");
+    expect(wrapper.className).toContain("overflow-hidden");
   });
 });
 

@@ -45,9 +45,9 @@ describe("baseHeaders", () => {
     });
   });
 
-  it("returns null Authorization when no token available", () => {
+  it("returns empty object when no token available", () => {
     window.localStorage.getItem = vi.fn(() => null);
-    expect(baseHeaders()).toEqual({ Authorization: null });
+    expect(baseHeaders()).toEqual({});
   });
 });
 

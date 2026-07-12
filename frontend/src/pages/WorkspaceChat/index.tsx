@@ -113,7 +113,8 @@ function WorkspaceChatLayout() {
         description: t("commandHub.actions.workspaceSettingsDescription"),
         icon: <GearSix size={17} />,
         keywords: ["settings", "preferences"],
-        perform: () => navigate(paths.workspace.settings.generalAppearance(slug)),
+        perform: () =>
+          navigate(paths.workspace.settings.generalAppearance(slug)),
       });
     }
 
@@ -135,7 +136,9 @@ function WorkspaceChatLayout() {
         group: "recent",
         label: thread.name || t("commandHub.untitledChat"),
         description: t("commandHub.inWorkspace", {
-          name: workspaces.find((workspace: any) => workspace.slug === slug)?.name || slug,
+          name:
+            workspaces.find((workspace: any) => workspace.slug === slug)
+              ?.name || slug,
         }),
         icon: <ChatCircle size={17} />,
         keywords: ["conversation", "thread", "recent"],
@@ -210,9 +213,11 @@ function ShowWorkspaceChat() {
     showAgentCommand,
     isLoading,
   } = useWorkspaceChats(slug ?? "");
-  const rawWorkspace = rawWorkspaceValue as
-    | { slug: string; name: string; [key: string]: unknown }
-    | null;
+  const rawWorkspace = rawWorkspaceValue as {
+    slug: string;
+    name: string;
+    [key: string]: unknown;
+  } | null;
   const [workspace, setWorkspace] = useState<any>(null);
   const [loadedSlug, setLoadedSlug] = useState<string | null>(null);
   const [notFound, setNotFound] = useState(false);

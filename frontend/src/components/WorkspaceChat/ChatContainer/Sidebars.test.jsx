@@ -96,7 +96,7 @@ describe("Sidebars", () => {
       activeSidebar: "sources",
     });
     const { container } = render(<Sidebars workspace={workspace} />);
-    const panel = container.querySelector(".rounded-2xl");
+    const panel = container.querySelector(".bg-theme-bg-sidebar");
     expect(panel).toBeInTheDocument();
   });
 

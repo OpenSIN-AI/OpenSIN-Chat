@@ -69,18 +69,20 @@ describe("ConsoleSidebar", () => {
   it("renders the title and close button", () => {
     render(<ConsoleSidebar />);
     expect(screen.getByText(/Console & Terminal/)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Close console/)).toBeInTheDocument();
+    expect(
+      screen.getByLabelText(/Console & Terminal schließen/i),
+    ).toBeInTheDocument();
   });
 
   it("close button has type=button", () => {
     render(<ConsoleSidebar />);
-    const closeBtn = screen.getByLabelText(/Close console/i);
+    const closeBtn = screen.getByLabelText(/Console & Terminal schließen/i);
     expect(closeBtn).toHaveAttribute("type", "button");
   });
 
   it("clicking close button calls closeSidebar", () => {
     render(<ConsoleSidebar />);
-    fireEvent.click(screen.getByLabelText(/Close console/i));
+    fireEvent.click(screen.getByLabelText(/Console & Terminal schließen/i));
     expect(mockCloseSidebar).toHaveBeenCalledTimes(1);
   });
 

@@ -10,6 +10,7 @@ import { SearchInput } from "@/components/ui/SearchInput";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { LoadingState } from "@/components/ui/LoadingState";
 import { UtilityPanel } from "@/components/ui/UtilityPanel";
+import { NoteListItem } from "./NoteListItem";
 
 type Note = {
   id: number;

@@ -61,7 +61,7 @@ describe("ErrorBoundaryFallback additional tests", () => {
         />
       </MemoryRouter>,
     );
-    expect(screen.getByLabelText("Try Again")).toBeInTheDocument();
+    expect(screen.getByLabelText("Reset")).toBeInTheDocument();
   });
 
   it("home link has correct text", () => {
@@ -73,7 +73,7 @@ describe("ErrorBoundaryFallback additional tests", () => {
         />
       </MemoryRouter>,
     );
-    expect(screen.getByText("Go Home")).toBeInTheDocument();
+    expect(screen.getByText("Home")).toBeInTheDocument();
   });
 
   it("renders error with stack trace in dev mode", () => {

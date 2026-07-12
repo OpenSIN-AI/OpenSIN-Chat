@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi } from "vitest";
-import { renderHook, waitFor } from "@testing-library/react";
+import { renderHook, waitFor, act } from "@testing-library/react";
 import { SWRConfig } from "swr";
 import { usePoliticians } from "./usePoliticians";
 
@@ -15,7 +15,7 @@ describe("usePoliticians", () => {
     const { result } = renderHook(() => usePoliticians(), { wrapper: Wrapper });
     expect(result.current.politicians).toEqual([]);
     expect(result.current.loading).toBe(true);
-    expect(result.current.filters.party).toBe("AfD");
+    expect(result.current.filters.party).toBe("");
   });
 
   it("returns politicians after fetch", async () => {
@@ -66,6 +66,8 @@ describe("usePoliticians", () => {
     const { result } = renderHook(() => usePoliticians(), {
       wrapper: Wrapper,
     });
+    // Set party filter to AfD then wait for the fetch to include it
+    act(() => result.current.filters.setParty("AfD"));
     await waitFor(() =>
       expect(fetchMock).toHaveBeenCalledWith(
         expect.stringContaining("/api/politician/search?party=AfD"),

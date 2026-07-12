@@ -24,7 +24,8 @@ describe("useTheme", () => {
   it("defaults to system theme when no preference is stored", () => {
     const { result } = renderHook(() => useTheme());
     expect(result.current.theme).toBe("system");
-    expect(result.current.isLight).toBe(false);
+    // mqlMock.matches = false → system resolves to light
+    expect(result.current.isLight).toBe(true);
     expect(window.dispatchEvent).not.toHaveBeenCalled();
   });
 
@@ -41,7 +42,8 @@ describe("useTheme", () => {
     act(() => result.current.setTheme("light"));
     expect(result.current.theme).toBe("light");
     expect(result.current.isLight).toBe(true);
-    expect(window.dispatchEvent).toHaveBeenCalledTimes(1);
+    // dispatchEvent only fires when broadcastLogoChange=true (default false)
+    expect(window.dispatchEvent).not.toHaveBeenCalled();
   });
 
   it("lists available themes", () => {
@@ -64,7 +66,8 @@ describe("resolveDarkMode", () => {
     window.localStorage.getItem.mockImplementation((key) =>
       key === "theme" ? "system" : null,
     );
+    // matches: true → system prefers dark → resolveDarkMode returns true (is dark)
     window.matchMedia = vi.fn().mockReturnValue({ matches: true });
-    expect(resolveDarkMode()).toBe(false);
+    expect(resolveDarkMode()).toBe(true);
   });
 });

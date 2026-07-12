@@ -67,9 +67,9 @@ describe("request utilities", () => {
       expect(baseHeaders()).toEqual({ Authorization: "Bearer my-token" });
     });
 
-    it("returns null Authorization when no token", () => {
+    it("returns empty object when no token", () => {
       safeGetItem.mockReturnValue(null);
-      expect(baseHeaders()).toEqual({ Authorization: null });
+      expect(baseHeaders()).toEqual({});
     });
 
     it("uses provided token over storage token", () => {

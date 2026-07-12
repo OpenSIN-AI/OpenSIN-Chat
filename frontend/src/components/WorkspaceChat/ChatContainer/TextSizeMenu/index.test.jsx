@@ -60,7 +60,7 @@ describe("TextSizeMenu", () => {
     render(<TextSizeMenu />);
     fireEvent.click(screen.getByRole("button"));
     const normalItem = screen.getByText("Normal").closest("div");
-    expect(normalItem.className).toContain("bg-zinc-700");
+    expect(normalItem.className).toContain("bg-theme-bg-tertiary");
   });
 
   it("uses localStorage value as selected size", () => {
@@ -68,7 +68,7 @@ describe("TextSizeMenu", () => {
     render(<TextSizeMenu />);
     fireEvent.click(screen.getByRole("button"));
     const largeItem = screen.getByText("Large").closest("div");
-    expect(largeItem.className).toContain("bg-zinc-700");
+    expect(largeItem.className).toContain("bg-theme-bg-tertiary");
   });
 
   it("saves size to localStorage on click", () => {

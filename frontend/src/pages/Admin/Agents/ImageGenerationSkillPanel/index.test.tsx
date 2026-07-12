@@ -65,7 +65,7 @@ describe("ImageGenerationSkillPanel", () => {
   it("renders Base URL, API Key, and Model labels via t()", () => {
     render(<ImageGenerationSkillPanel {...baseProps} />);
     expect(
-      screen.getByPlaceholderText("https://api.openai.com"),
+      screen.getByPlaceholderText("https://ai-gateway.vercel.sh"),
     ).toBeInTheDocument();
     expect(screen.getByPlaceholderText("sk-...")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("dall-e-3")).toBeInTheDocument();
@@ -81,7 +81,7 @@ describe("ImageGenerationSkillPanel", () => {
 
   it("does NOT show the base_url error for a valid https:// URL", () => {
     (useSystemSettings as any).mockReturnValue({
-      settings: { image_generation_base_path: "https://api.openai.com" },
+      settings: { image_generation_base_path: "https://ai-gateway.vercel.sh" },
     });
     render(<ImageGenerationSkillPanel {...baseProps} />);
     expect(
@@ -101,7 +101,7 @@ describe("ImageGenerationSkillPanel", () => {
 
   it("shows the base_url error after blur for an ftp:// URL", async () => {
     render(<ImageGenerationSkillPanel {...baseProps} />);
-    const input = screen.getByPlaceholderText("https://api.openai.com");
+    const input = screen.getByPlaceholderText("https://ai-gateway.vercel.sh");
     await userEvent.type(input, "ftp://internal-host");
     fireEvent.blur(input);
     await waitFor(() => {
@@ -115,7 +115,7 @@ describe("ImageGenerationSkillPanel", () => {
 
   it("shows the base_url error after blur for an unparseable URL", async () => {
     render(<ImageGenerationSkillPanel {...baseProps} />);
-    const input = screen.getByPlaceholderText("https://api.openai.com");
+    const input = screen.getByPlaceholderText("https://ai-gateway.vercel.sh");
     await userEvent.type(input, "not a url at all");
     fireEvent.blur(input);
     await waitFor(() => {
@@ -127,12 +127,12 @@ describe("ImageGenerationSkillPanel", () => {
 
   it("clears the error once the URL becomes valid while typing", async () => {
     render(<ImageGenerationSkillPanel {...baseProps} />);
-    const input = screen.getByPlaceholderText("https://api.openai.com");
+    const input = screen.getByPlaceholderText("https://ai-gateway.vercel.sh");
     await userEvent.type(input, "not-a-url");
     fireEvent.blur(input);
     expect(screen.getByText(/valid http/i)).toBeInTheDocument();
     await userEvent.clear(input);
-    await userEvent.type(input, "https://api.openai.com");
+    await userEvent.type(input, "https://ai-gateway.vercel.sh");
     expect(screen.queryByText(/valid http/i)).not.toBeInTheDocument();
   });
 
@@ -149,7 +149,7 @@ describe("ImageGenerationSkillPanel", () => {
 
   it("shows the red border and aria-invalid for invalid URL after blur", async () => {
     render(<ImageGenerationSkillPanel {...baseProps} />);
-    const input = screen.getByPlaceholderText("https://api.openai.com");
+    const input = screen.getByPlaceholderText("https://ai-gateway.vercel.sh");
     await userEvent.type(input, "ftp://files.example.com");
     fireEvent.blur(input);
     await waitFor(() => {
@@ -161,7 +161,7 @@ describe("ImageGenerationSkillPanel", () => {
   it("does NOT render the configuration inputs when the skill is disabled", () => {
     render(<ImageGenerationSkillPanel {...baseProps} enabled={false} />);
     expect(
-      screen.queryByPlaceholderText("https://api.openai.com"),
+      screen.queryByPlaceholderText("https://ai-gateway.vercel.sh"),
     ).not.toBeInTheDocument();
     expect(screen.queryByLabelText(/API Key/)).not.toBeInTheDocument();
     expect(screen.queryByLabelText(/Model/)).not.toBeInTheDocument();
