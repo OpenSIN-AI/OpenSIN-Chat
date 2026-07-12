@@ -85,7 +85,7 @@ export default function WorkspaceSwitcher({ onCreate, onNavigate }: Props) {
           onClick={() => setOpen((value) => !value)}
           className="flex h-9 w-full min-w-0 items-center gap-2 rounded-lg px-2 text-left text-theme-text-primary transition-colors hover:bg-theme-bg-hover"
         >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-theme-sidebar-item-selected text-xs font-semibold text-theme-sidebar-item-text-active">
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-theme-modal-border bg-theme-bg-hover text-xs font-semibold text-theme-text-primary">
             {(activeWorkspace?.name || "O").slice(0, 1).toUpperCase()}
           </span>
           <span className="min-w-0 flex-1 truncate text-sm font-semibold">

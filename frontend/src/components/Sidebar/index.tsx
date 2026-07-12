@@ -90,7 +90,7 @@ function SidebarContent({
 
   return (
     <>
-      <div className="flex h-14 shrink-0 items-center gap-1 px-2.5">
+      <div className="flex h-14 shrink-0 items-center gap-1 px-2.5 pr-12">
         <WorkspaceSwitcher onCreate={showModal} onNavigate={onNavigate} />
         <ThemeToggle />
       </div>
