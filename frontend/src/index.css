@@ -44,9 +44,43 @@
   --color-theme-sidebar-item-selected: var(--theme-sidebar-item-selected, #1c1c1c);
   --color-theme-sidebar-item-text-active: var(--theme-sidebar-item-text-active, #fafafa);
   --color-theme-sidebar-item-text-inactive: var(--theme-sidebar-item-text-inactive, #71717a);
+  --color-theme-sidebar-item-default: var(--theme-sidebar-item-default, transparent);
+  --color-theme-sidebar-item-workspace-active: var(--theme-sidebar-item-workspace-active, #fafafa);
+  --color-theme-sidebar-item-workspace-inactive: var(--theme-sidebar-item-workspace-inactive, #71717a);
+  --color-theme-sidebar-subitem-hover: var(--theme-sidebar-subitem-hover, #161616);
+  --color-theme-sidebar-subitem-selected: var(--theme-sidebar-subitem-selected, #1c1c1c);
+  --color-theme-sidebar-subitem-default: var(--theme-sidebar-subitem-default, transparent);
+  --color-theme-sidebar-thread-selected: var(--theme-sidebar-thread-selected, #1c1c1c);
   --color-theme-sidebar-border: var(--theme-sidebar-border, #1c1c1c);
+  --color-theme-sidebar-footer-icon: var(--theme-sidebar-footer-icon, #111111);
+  --color-theme-sidebar-footer-icon-fill: var(--theme-sidebar-footer-icon-fill, #71717a);
+  --color-theme-sidebar-footer-icon-hover: var(--theme-sidebar-footer-icon-hover, #27272a);
   --color-theme-placeholder: var(--theme-placeholder, #52525b);
+
+  /* Action menu tokens */
+  --color-theme-action-menu-bg: var(--theme-action-menu-bg, #1c1c1c);
   --color-theme-action-menu-item-hover: var(--theme-action-menu-item-hover, rgba(255, 255, 255, 0.05));
+
+  /* Chat tokens */
+  --color-theme-bg-chat: var(--theme-bg-chat, #0a0a0a);
+  --color-theme-bg-chat-input: var(--theme-bg-chat-input, #111111);
+  --color-theme-chat-input-border: var(--theme-chat-input-border, transparent);
+
+  /* Settings input tokens */
+  --color-theme-settings-input-bg: var(--theme-settings-input-bg, #111111);
+  --color-theme-settings-input-placeholder: var(--theme-settings-input-placeholder, rgba(255, 255, 255, 0.3));
+  --color-theme-settings-input-active: var(--theme-settings-input-active, rgba(255, 255, 255, 0.1));
+  --color-theme-settings-input-text: var(--theme-settings-input-text, #fafafa);
+
+  /* Button tokens */
+  --color-theme-button-primary: var(--theme-button-primary, #ffffff);
+  --color-theme-button-primary-hover: var(--theme-button-primary-hover, #e4e4e7);
+
+  /* Popup menu */
+  --color-theme-bg-popup-menu: var(--theme-popup-menu-bg, #1c1c1c);
+
+  /* Loader */
+  --color-theme-loader: var(--theme-loader, #ffffff);
 
   /* Modal/border tokens */
   --color-theme-modal-border: #27272a;
