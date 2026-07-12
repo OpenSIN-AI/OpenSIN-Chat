@@ -1,19 +1,16 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Admin privacy and data-handling settings page.
 // Docs: index.doc.md
-import { useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
-import showToast from "@/utils/toast";
-import System from "@/models/system";
 import PreLoader from "@/components/Preloader";
 import { useTranslation } from "react-i18next";
 import ProviderPrivacy from "@/components/ProviderPrivacy";
-import Toggle from "@/components/lib/Toggle";
 import useSystemSettings from "@/hooks/useSystemSettings";
-import DOMPurify from "@/utils/chat/purify";
 import AdminContentPanel from "@/components/AdminContentPanel";
+import { ShieldCheck } from "@phosphor-icons/react/dist/csr/ShieldCheck";
 
 export default function PrivacyAndDataHandling(): JSX.Element {
-  const { settings, loading } = useSystemSettings();
+  const { loading } = useSystemSettings();
   const { t } = useTranslation();
 
   return (
@@ -40,7 +37,7 @@ export default function PrivacyAndDataHandling(): JSX.Element {
           ) : (
             <div className="overflow-x-auto flex flex-col gap-y-6 pt-6">
               <ProviderPrivacy />
-              <TelemetryLogs settings={settings} />
+              <TelemetryStatus />
             </div>
           )}
         </div>
@@ -49,84 +46,27 @@ export default function PrivacyAndDataHandling(): JSX.Element {
   );
 }
 
-type TelemetryLogsProps = {
-  settings: any;
-};
-
-function TelemetryLogs({ settings }: TelemetryLogsProps): JSX.Element {
-  const [telemetry, setTelemetry] = useState(
-    settings?.DisableTelemetry !== "true",
-  );
+function TelemetryStatus(): JSX.Element {
   const { t } = useTranslation();
-  async function toggleTelemetry() {
-    try {
-      const result = await System.updateSystem({
-        DisableTelemetry: !telemetry ? "false" : "true",
-      });
-      if (result?.error) {
-        showToast(
-          t("privacyAndData.telemetryToggleFailed", {
-            defaultValue: "Failed to update telemetry setting",
-          }),
-          "error",
-          { clear: true },
-        );
-        return;
-      }
-      setTelemetry(!telemetry);
-      showToast(
-        t("privacyAndData.telemetryToggled", {
-          status: !telemetry
-            ? t("privacyAndData.enabled")
-            : t("privacyAndData.disabled"),
-        }),
-        "info",
-        { clear: true },
-      );
-    } catch (e) {
-      showToast(
-        t("privacyAndData.telemetryToggleFailed", {
-          defaultValue: "Failed to update telemetry setting",
-        }),
-        "error",
-        { clear: true },
-      );
-    }
-  }
 
   return (
-    <div className="relative w-full max-h-full">
-      <div className="relative rounded-lg">
-        <div className="space-y-6 flex h-full w-full">
-          <div className="w-full flex flex-col gap-y-4">
-            <div className="">
-              <Toggle
-                size="lg"
-                className="mb-4"
-                label={t("privacy.anonymous")}
-                enabled={telemetry}
-                onChange={toggleTelemetry}
-              />
-            </div>
-          </div>
+    <section className="relative w-full max-w-[720px]">
+      <div className="flex items-start gap-x-3 rounded-lg border border-theme-sidebar-border bg-theme-bg-primary/40 p-4">
+        <div className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full bg-green-500/15 text-green-400 light:text-green-700">
+          <ShieldCheck size={20} weight="bold" />
         </div>
-        <div className="flex flex-col items-left space-y-2">
-          <p className="text-theme-text-secondary text-xs rounded-lg w-96">
-            <span
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(t("privacyAndData.eventsNoIp")),
-              }}
-            />
+        <div className="flex flex-col gap-y-2">
+          <h2 className="text-sm font-semibold leading-5 text-theme-text-primary">
+            {t("privacyAndData.telemetryDisabledTitle")}
+          </h2>
+          <p className="text-xs leading-[18px] text-theme-text-secondary">
+            {t("privacyAndData.telemetryDisabledBody")}
           </p>
-          <p className="text-theme-text-secondary text-xs rounded-lg w-96">
-            <span
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(t("privacyAndData.respectPrivacy")),
-              }}
-            />
+          <p className="text-xs leading-[18px] text-theme-text-secondary">
+            {t("privacyAndData.telemetryDisabledDetail")}
           </p>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

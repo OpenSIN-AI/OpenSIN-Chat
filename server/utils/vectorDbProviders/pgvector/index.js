@@ -649,9 +649,7 @@ class PGVector extends VectorDatabase {
       }
     } catch (err) {
       // Non-fatal — the table and extension are still usable.
-      this.logger(
-        `HNSW index creation skipped: ${err.message}`,
-      );
+      this.logger(`HNSW index creation skipped: ${err.message}`);
     }
 
     // The namespace B-tree index is always safe to create regardless of version.

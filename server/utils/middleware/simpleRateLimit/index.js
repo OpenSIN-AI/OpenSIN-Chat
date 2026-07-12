@@ -136,7 +136,9 @@ function simpleRateLimit({
             try {
               const pttl = await redisTtl(k);
               if (typeof pttl === "number" && pttl > 0) keyReset = now + pttl;
-            } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
+            } catch (e) {
+              console.warn("[index] non-fatal error:", e?.message || e);
+            }
             return { v, keyReset };
           }),
         );

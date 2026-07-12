@@ -95,7 +95,6 @@ class FireworksAiLLM {
     );
   }
 
-
   streamingEnabled() {
     return "streamGetChatCompletion" in this;
   }

@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: MIT
 const consoleLogger = require("../logger/console.js");
 
-const { getGitVersion } = require("../../endpoints/utils");
-const { Telemetry } = require("../../models/telemetry");
-
 function checkColumnTemplate(tablename = null, column = null) {
   if (!tablename || !column)
     throw new Error(`Migration Error`, { tablename, column });
@@ -88,33 +85,11 @@ async function validateTablePragmas(force = false) {
   return;
 }
 
-// Telemetry is anonymized and your data is never read. This can be disabled by setting
-// DISABLE_TELEMETRY=true in the `.env` of however you setup. Telemetry helps us determine use
-// of how OpenSIN Chat is used and how to improve this product!
-// You can see all Telemetry events by ctrl+f `Telemetry.sendTelemetry` calls to verify this claim.
 async function setupTelemetry() {
-  if (process.env.DISABLE_TELEMETRY === "true") {
-    consoleLogger.log(
-      `\x1b[31m[TELEMETRY DISABLED]\x1b[0m Telemetry is marked as disabled - no events will send. Telemetry helps OpenSIN-AI improve OpenSIN Chat.`,
-    );
-    return true;
-  }
-
-  if (Telemetry.isDev()) {
-    consoleLogger.log(
-      `\x1b[33m[TELEMETRY STUBBED]\x1b[0m Anonymous Telemetry stubbed in development.`,
-    );
-    return;
-  }
-
   consoleLogger.log(
-    `\x1b[32m[TELEMETRY ENABLED]\x1b[0m Anonymous Telemetry enabled. Telemetry helps OpenSIN-AI improve OpenSIN Chat.`,
+    `\x1b[32m[OpenSIN Chat]\x1b[0m Telemetry permanently disabled — no outbound analytics.`,
   );
-  await Telemetry.findOrCreateId();
-  await Telemetry.sendTelemetry("server_boot", {
-    commit: getGitVersion(),
-  });
-  return;
+  return true;
 }
 
 module.exports = {

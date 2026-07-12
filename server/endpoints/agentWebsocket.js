@@ -209,7 +209,9 @@ function agentWebsocket(app, routePrefix = "") {
         if (heartbeatTimeout) clearTimeout(heartbeatTimeout);
         withWsLock(() => {
           if (activeConnectionCount > 0) activeConnectionCount--;
-        }).catch((e) => console.warn("[agentWebsocket] non-fatal error:", e?.message || e));
+        }).catch((e) =>
+          console.warn("[agentWebsocket] non-fatal error:", e?.message || e),
+        );
       };
 
       try {
@@ -339,7 +341,9 @@ function agentWebsocket(app, routePrefix = "") {
               role: "assistant",
             }),
           );
-        } catch (e) { console.warn("[agentWebsocket] non-fatal error:", e?.message || e); }
+        } catch (e) {
+          console.warn("[agentWebsocket] non-fatal error:", e?.message || e);
+        }
         await Telemetry.sendTelemetry("agent_chat_started");
         await agentHandler.createAIbitat({ socket });
         await agentHandler.startAgentCluster();

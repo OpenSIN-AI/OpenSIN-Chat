@@ -48,8 +48,7 @@ function createGetters(ss) {
         MultiUserMode: await ss.isMultiUserMode(),
         MemoryEnabled: await ss.memoriesEnabled(),
         MemoryAutoExtraction: await ss.memoryAutoExtractionSetting(),
-        DisableTelemetry:
-          (await SettingsManager.get("DISABLE_TELEMETRY")) || "false",
+        DisableTelemetry: "true",
 
         // --------------------------------------------------------
         // Embedder Provider Selection Settings & Configs

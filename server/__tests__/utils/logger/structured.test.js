@@ -13,6 +13,7 @@ describe("structured logger", () => {
   beforeEach(() => {
     logSpy = jest.spyOn(console, "log").mockImplementation(() => {});
     errorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+    delete process.env.LOG_FORMAT;
   });
 
   afterEach(() => {

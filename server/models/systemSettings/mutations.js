@@ -81,7 +81,9 @@ function createMutations(ss, validations) {
               invalidateMultiUserModeCache,
             } = require("../../utils/middleware/validatedRequest");
             invalidateMultiUserModeCache();
-          } catch (e) { console.warn("[mutations] non-fatal error:", e?.message || e); }
+          } catch (e) {
+            console.warn("[mutations] non-fatal error:", e?.message || e);
+          }
         }
         return { success: true, error: null };
       } catch (error) {

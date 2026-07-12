@@ -95,7 +95,9 @@ async function parseAttachment(attachment) {
 
     try {
       fs.rmSync(tempDir, { recursive: true, force: true });
-    } catch (e) { console.warn("[lib] non-fatal error:", e?.message || e); }
+    } catch (e) {
+      console.warn("[lib] non-fatal error:", e?.message || e);
+    }
 
     if (!result.success) {
       return {
@@ -118,7 +120,9 @@ async function parseAttachment(attachment) {
   } catch (e) {
     try {
       fs.rmSync(tempDir, { recursive: true, force: true });
-    } catch (e) { console.warn("[lib] non-fatal error:", e?.message || e); }
+    } catch (e) {
+      console.warn("[lib] non-fatal error:", e?.message || e);
+    }
     return { success: false, content: null, error: e.message };
   }
 }

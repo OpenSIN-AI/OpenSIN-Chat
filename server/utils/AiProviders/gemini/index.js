@@ -89,7 +89,6 @@ class GeminiLLM {
     return now - timestampMs > MAX_STALE;
   }
 
-
   streamingEnabled() {
     return "streamGetChatCompletion" in this;
   }

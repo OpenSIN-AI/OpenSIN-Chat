@@ -52,7 +52,9 @@ const SystemSettings = {
       try {
         let url = new URL(process.env.SIMPLE_SSO_NO_LOGIN_REDIRECT);
         return url.toString();
-      } catch (e) { console.warn("[systemSettings] non-fatal error:", e?.message || e); }
+      } catch (e) {
+        console.warn("[systemSettings] non-fatal error:", e?.message || e);
+      }
 
       return null;
     },

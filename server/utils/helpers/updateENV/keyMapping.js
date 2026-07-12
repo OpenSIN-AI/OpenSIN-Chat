@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Purpose: KEY_MAPPING — maps frontend config keys to env vars, validators, and update handlers.
 // Docs: server/utils/helpers/updateENV.doc.md
-const consoleLogger = require("../../logger/console.js");
-
-const { Telemetry } = require("../../../models/telemetry");
 const {
   isNotEmpty,
   nonZero,
@@ -415,14 +412,7 @@ const KEY_MAPPING = {
   DisableTelemetry: {
     envKey: "DISABLE_TELEMETRY",
     checks: [],
-    preUpdate: [
-      (_, __, nextValue) => {
-        if (nextValue === "true")
-          Telemetry.sendTelemetry("telemetry_disabled").catch((err) => {
-            consoleLogger.error("Telemetry error:", err.message);
-          });
-      },
-    ],
+    preUpdate: [],
   },
 
   // Agent Integration ENVs

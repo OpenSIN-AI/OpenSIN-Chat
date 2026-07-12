@@ -35,7 +35,12 @@ const WorkspaceAgentInvocation = {
         where: { uuid: String(uuid) },
         data: { closed: true },
       });
-    } catch (e) { console.warn("[workspaceAgentInvocation] non-fatal error:", e?.message || e); }
+    } catch (e) {
+      console.warn(
+        "[workspaceAgentInvocation] non-fatal error:",
+        e?.message || e,
+      );
+    }
   },
 
   /**

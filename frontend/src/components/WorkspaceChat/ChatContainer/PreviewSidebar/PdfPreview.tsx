@@ -60,7 +60,7 @@ export default function PdfPreview({ blobUrl }: { blobUrl: string }) {
               className="text-zinc-500 light:text-slate-400 animate-pulse"
             />
             <p className="text-xs text-zinc-500 light:text-slate-400">
-              PDF wird geladen...
+              {t("pdfPreview.loading")}
             </p>
           </div>
         }

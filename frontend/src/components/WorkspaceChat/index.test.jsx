@@ -13,10 +13,21 @@ import { MemoryRouter } from "react-router-dom";
 
 // --- Mocks ---
 
-vi.mock("react-i18next", async () => {
-  const { createI18nMock } = await import("@/test/i18nMock");
-  return createI18nMock();
-});
+vi.mock("react-i18next", () => ({
+  useTranslation: () => ({
+    t: (key) => key,
+    i18n: { language: "en", changeLanguage: vi.fn() },
+  }),
+  Trans: ({ children, defaults }) => children || defaults || null,
+  I18nextProvider: ({ children }) => children,
+  initReactI18next: { type: "3rdParty", init: vi.fn() },
+}));
+
+vi.mock("@/i18n", () => ({
+  default: {
+    t: (key) => key,
+  },
+}));
 
 vi.mock("react-router-dom", async () => {
   const actual = await vi.importActual("react-router-dom");
@@ -26,15 +37,18 @@ vi.mock("react-router-dom", async () => {
   };
 });
 
-vi.mock("@/hooks/useChatHistory", () => ({
-  default: () => ({
-    history: [],
-    isLoading: false,
-    error: undefined,
-    refresh: vi.fn(),
-    mutate: vi.fn(),
-  }),
-}));
+vi.mock("@/hooks/useChatHistory", () => {
+  const history = [];
+  return {
+    default: () => ({
+      history,
+      isLoading: false,
+      error: undefined,
+      refresh: () => {},
+      mutate: () => {},
+    }),
+  };
+});
 
 vi.mock("../contexts/TTSProvider", () => ({
   TTSProvider: ({ children }) => (
@@ -66,6 +80,12 @@ vi.mock("./ChatContainer/DnDWrapper", () => ({
   ),
 }));
 
+vi.mock("./ChatContainer/AgentSessionsSidebar/AgentRunsContext", () => ({
+  AgentRunsProvider: ({ children }) => (
+    <div data-testid="agent-runs-provider">{children}</div>
+  ),
+}));
+
 vi.mock("../ModalWrapper", () => ({
   default: ({ children, isOpen }) =>
     isOpen ? <div data-testid="modal-wrapper">{children}</div> : null,
@@ -83,7 +103,13 @@ vi.mock("@/utils/clipboard", () => ({
   copyText: vi.fn(),
 }));
 
+vi.mock("@/utils/safeStorage", () => ({
+  safeGetItem: vi.fn(() => null),
+}));
+
 vi.mock("@/utils/constants", () => ({
+  AUTH_TOKEN: "opensin_authToken",
+  LEGACY_KEY_MAP: {},
   PENDING_HOME_MESSAGE: "pending_home_message",
 }));
 

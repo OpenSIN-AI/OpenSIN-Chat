@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
-import { memo, Fragment, useState, useEffect } from "react";
+// Purpose: Render chat answer citations and source details.
+// Docs: index.doc.md
+import { memo, Fragment, useState, useEffect, type CSSProperties } from "react";
 import { decode as HTMLDecode } from "he";
 import DOMPurify from "dompurify";
 import { truncate } from "@/utils/strings";
@@ -18,6 +20,13 @@ import OutlookLogo from "@/pages/Admin/Agents/OutlookSkillPanel/outlook.png";
 import { toPercentString } from "@/utils/numbers";
 import { useTranslation } from "react-i18next";
 import { useSourcesSidebar } from "../../ChatSidebar";
+import {
+  combineLikeSources,
+  parseChunkSource,
+  type CitationSource,
+  type CombinedCitationSource,
+  type SourceIcon,
+} from "./sourceUtils";
 
 const CIRCLE_ICONS = {
   file: FileText,
@@ -42,14 +51,16 @@ const CIRCLE_IMAGES = {
   googleCalendar: GoogleCalendarLogo,
   outlookThread: OutlookLogo,
   outlookAttachment: OutlookLogo,
-};
+} satisfies Partial<Record<SourceIcon, string>>;
+
+export { combineLikeSources, parseChunkSource };
 
 /**
  * Returns the custom image for a given type, or null if no custom image is available.
  * @param {string} type
  * @returns {string|null}
  */
-export function getCustomImage(type: any) {
+export function getCustomImage(type: SourceIcon) {
   return CIRCLE_IMAGES[type] ?? null;
 }
 
@@ -67,10 +78,16 @@ export function SourceTypeCircle({
   iconSize = 12,
   url = null,
   customImage = null,
-}: any) {
+}: {
+  type?: SourceIcon;
+  size?: number;
+  iconSize?: number;
+  url?: string | null;
+  customImage?: string | null;
+}) {
   const { t } = useTranslation();
   const Icon = CIRCLE_ICONS[type] || CIRCLE_ICONS.file;
-  const [imgError, setImgError] = useState(false as any);
+  const [imgError, setImgError] = useState(false);
 
   let faviconUrl = null;
   if (type === "link" && url) {
@@ -90,7 +107,7 @@ export function SourceTypeCircle({
     <div
       className={`${customImage ? "bg-transparent border-none" : "bg-white light:bg-slate-100 border-zinc-800 light:border-white rounded-full"} flex items-center justify-center overflow-hidden w-[var(--source-circle-size)] h-[var(--source-circle-size)]`}
       // Dynamic: dimensions passed as props (runtime variable)
-      style={{ "--source-circle-size": `${size}px` }}
+      style={{ "--source-circle-size": `${size}px` } as CSSProperties}
     >
       {faviconUrl && !imgError ? (
         <img
@@ -112,25 +129,7 @@ export function SourceTypeCircle({
   );
 }
 
-export function combineLikeSources(sources: any) {
-  const combined = {};
-  sources.forEach((source) => {
-    const { id, title, text, chunkSource = "", score = null } = source;
-    if (combined.hasOwnProperty(title)) {
-      combined[title].chunks.push({ id, text, chunkSource, score });
-      combined[title].references += 1;
-    } else {
-      combined[title] = {
-        title,
-        chunks: [{ id, text, chunkSource, score }],
-        references: 1,
-      };
-    }
-  });
-  return Object.values(combined);
-}
-
-function Citations({ sources = [] }: any) {
+function Citations({ sources = [] }: { sources?: CitationSource[] }) {
   const {
     sidebarOpen,
     openSidebar,
@@ -163,21 +162,25 @@ function Citations({ sources = [] }: any) {
       </span>
       <div
         className="relative h-[22px] w-[var(--citation-stack-width)]"
-        style={{
-          "--citation-stack-width": `${visibleSources.length * 17 + 5}px`,
-        }}
+        style={
+          {
+            "--citation-stack-width": `${visibleSources.length * 17 + 5}px`,
+          } as CSSProperties
+        }
       >
-        {(visibleSources as any).map((source, idx) => {
+        {visibleSources.map((source, idx) => {
           const info = parseChunkSource(source);
           const customImage = CIRCLE_IMAGES[info.icon];
           return (
             <div
               key={source.title || idx}
               className={`absolute top-0 size-[22px] rounded-full left-[var(--citation-stack-left)] z-[var(--citation-stack-z)] ${customImage ? "border-none" : "border-2 border-zinc-800 light:border-white"}`}
-              style={{
-                "--citation-stack-left": `${idx * 17}px`,
-                "--citation-stack-z": 3 - idx,
-              }}
+              style={
+                {
+                  "--citation-stack-left": `${idx * 17}px`,
+                  "--citation-stack-z": 3 - idx,
+                } as CSSProperties
+              }
             >
               <SourceTypeCircle
                 type={info.icon}
@@ -199,15 +202,23 @@ function Citations({ sources = [] }: any) {
   );
 }
 
-export function omitChunkHeader(text: any) {
+export function omitChunkHeader(text = "") {
   if (!text.includes("<document_metadata>")) return text;
   return text.split("</document_metadata>")[1].trim();
 }
 
-export function CitationDetailModal({ source, onClose }: any) {
+export function CitationDetailModal({
+  source,
+  onClose,
+}: {
+  source: CombinedCitationSource | null;
+  onClose: () => void;
+}) {
+  const { t } = useTranslation();
+  if (!source) return null;
+
   const { references, title, chunks } = source;
   const { isUrl, text: webpageUrl, href: linkTo } = parseChunkSource(source);
-  const { t } = useTranslation();
 
   return (
     <ModalWrapper isOpen={!!source}>
@@ -253,7 +264,7 @@ export function CitationDetailModal({ source, onClose }: any) {
         </div>
         <div className="h-full w-full overflow-y-auto max-h-[calc(100vh-200px)]">
           <div className="py-7 px-9 space-y-2 flex-col">
-            {(chunks as any).map(({ text, score }, idx) => (
+            {chunks.map(({ text = "", score }, idx) => (
               <Fragment key={`${idx}-${text?.slice(0, 32) ?? ""}`}>
                 <div className="pt-6 text-theme-text-primary light:text-theme-text-primary">
                   <div className="flex flex-col w-full justify-start pb-6 gap-y-1">
@@ -295,145 +306,6 @@ export function CitationDetailModal({ source, onClose }: any) {
       </div>
     </ModalWrapper>
   );
-}
-
-const supportedSources = [
-  "link://",
-  "confluence://",
-  "github://",
-  "gitlab://",
-  "drupalwiki://",
-  "youtube://",
-  "obsidian://",
-  "paperless-ngx://",
-  "gmail-thread://",
-  "gmail-attachment://",
-  "google-calendar://",
-  "outlook-thread://",
-  "outlook-attachment://",
-];
-
-/**
- * Parses the chunk source to get the correct title and/or display text for citations
- * which contain valid outbound links that can be clicked by the
- * user when viewing a citation. Optionally allows various icons
- * to show distinct types of sources.
- * @param {{title: string, chunks: {text: string, chunkSource: string}[]}} options
- * @returns {{isUrl: boolean, text: string, href: string, icon: string}}
- */
-export function parseChunkSource({ title = "", chunks = [] }: any) {
-  const nullResponse = {
-    isUrl: false,
-    text: null,
-    href: null,
-    icon: "file",
-  };
-
-  if (
-    !chunks.length ||
-    !(supportedSources as any).some((source) =>
-      chunks[0].chunkSource?.startsWith(source),
-    )
-  )
-    return nullResponse;
-
-  try {
-    const sourceID = supportedSources.find((source) =>
-      chunks[0].chunkSource?.startsWith(source),
-    );
-    let url, text, icon;
-
-    // Try to parse the URL from the chunk source
-    // If it fails, we'll use the title as the text and the link icon
-    // but the document will not be linkable
-    try {
-      url = new URL(chunks[0].chunkSource.split(sourceID)[1]);
-    } catch (e) {
-      console.warn("[index] non-fatal error:", e?.message || e);
-    }
-
-    if (!url) return nullResponse;
-    switch (sourceID) {
-      case "link://":
-        text = url.host + url.pathname;
-        icon = "link";
-        break;
-
-      case "youtube://":
-        text = title;
-        icon = "youtube";
-        break;
-
-      case "github://":
-        text = title;
-        icon = "github";
-        break;
-
-      case "gitlab://":
-        text = title;
-        icon = "gitlab";
-        break;
-
-      case "confluence://":
-        text = title;
-        icon = "confluence";
-        break;
-
-      case "drupalwiki://":
-        text = title;
-        icon = "drupalwiki";
-        break;
-
-      case "obsidian://":
-        text = title;
-        icon = "obsidian";
-        break;
-
-      case "paperless-ngx://":
-        text = title;
-        icon = "paperlessNgx";
-        break;
-
-      case "gmail-thread://":
-        text = title;
-        icon = "gmailThread";
-        break;
-      case "gmail-attachment://":
-        text = title;
-        icon = "gmailAttachment";
-        break;
-
-      case "google-calendar://":
-        text = title;
-        icon = "googleCalendar";
-        break;
-
-      case "outlook-thread://":
-        text = title;
-        icon = "outlookThread";
-        break;
-
-      case "outlook-attachment://":
-        text = title;
-        icon = "outlookAttachment";
-        break;
-
-      default:
-        text = url.host + url.pathname;
-        icon = "link";
-        break;
-    }
-
-    return {
-      isUrl: !!url,
-      href: url?.toString() ?? "#",
-      text,
-      icon,
-    };
-  } catch (err) {
-    console.warn(`Unsupported source identifier ${chunks[0].chunkSource}`, err);
-  }
-  return nullResponse;
 }
 
 export default memo(Citations);

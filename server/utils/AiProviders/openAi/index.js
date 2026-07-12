@@ -48,7 +48,6 @@ class OpenAiLLM {
     logger.info(this.className, `${text}${suffix}`);
   }
 
-
   streamingEnabled() {
     return "streamGetChatCompletion" in this;
   }

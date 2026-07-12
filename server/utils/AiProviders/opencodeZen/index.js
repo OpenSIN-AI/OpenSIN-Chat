@@ -43,7 +43,6 @@ class OpencodeZenLLM {
     consoleLogger.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
   }
 
-
   /**
    * Set the model token limit `OPENCODE_ZEN_MODEL_TOKEN_LIMIT` for the given model ID
    * @param {string} modelId

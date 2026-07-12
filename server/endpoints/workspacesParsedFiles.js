@@ -122,7 +122,9 @@ async function runParseJob(jobId, upload, ctx) {
 
     // Durability mirror runs in parallel with parsing — neither blocks
     // the other and neither ever blocked the client's upload request.
-    const mirrorPromise = mirrorToSupabase(upload).catch((e) => console.warn("[workspacesParsedFiles] non-fatal error:", e?.message || e));
+    const mirrorPromise = mirrorToSupabase(upload).catch((e) =>
+      console.warn("[workspacesParsedFiles] non-fatal error:", e?.message || e),
+    );
 
     const { success, reason, documents } =
       await Collector.parseDocument(collectorFilename);
@@ -182,7 +184,9 @@ async function runParseJob(jobId, upload, ctx) {
     await ParseJobs.markFailed(
       jobId,
       `Internal server error (${errorId})`,
-    ).catch((e) => console.warn("[workspacesParsedFiles] non-fatal error:", e?.message || e));
+    ).catch((e) =>
+      console.warn("[workspacesParsedFiles] non-fatal error:", e?.message || e),
+    );
   }
 }
 
@@ -375,7 +379,12 @@ function workspaceParsedFilesEndpoints(app) {
         // background; the client polls /parse-status/:jobId.
         runParseJob(job.id, upload, { workspace, user, thread }).catch((e) => {
           consoleLogger.error("[parse job] unhandled error", e);
-          ParseJobs.markFailed(job.id, "Internal server error").catch((e) => console.warn("[workspacesParsedFiles] non-fatal error:", e?.message || e));
+          ParseJobs.markFailed(job.id, "Internal server error").catch((e) =>
+            console.warn(
+              "[workspacesParsedFiles] non-fatal error:",
+              e?.message || e,
+            ),
+          );
         });
 
         return response.status(202).json({

@@ -44,7 +44,7 @@ class TextSplitter {
       const strategyDefaults = getChunkingStrategy(config.chunkingStrategy);
       config = {
         ...strategyDefaults, // strategy baseline (chunkSize, chunkOverlap, separator/separatorPattern)
-        ...config,           // caller-supplied values win
+        ...config, // caller-supplied values win
       };
     }
     this.config = config;
@@ -189,7 +189,12 @@ class TextSplitter {
 
 // Wrapper for Langchain default RecursiveCharacterTextSplitter class.
 class RecursiveSplitter {
-  constructor({ chunkSize, chunkOverlap, chunkHeader = null, separatorPattern = null }) {
+  constructor({
+    chunkSize,
+    chunkOverlap,
+    chunkHeader = null,
+    separatorPattern = null,
+  }) {
     const {
       RecursiveCharacterTextSplitter,
     } = require("@langchain/textsplitters");

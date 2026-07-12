@@ -294,7 +294,9 @@ function utilEndpoints(app) {
                     ext = path.extname(entry.name).toLowerCase();
                   }
                   modifiedAt = stat.mtime.toISOString();
-                } catch (e) { console.warn("[utils] non-fatal error:", e?.message || e); }
+                } catch (e) {
+                  console.warn("[utils] non-fatal error:", e?.message || e);
+                }
                 return {
                   name: entry.name,
                   type: entry.isDirectory() ? "directory" : "file",

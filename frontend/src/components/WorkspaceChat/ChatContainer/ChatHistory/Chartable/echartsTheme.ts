@@ -2,6 +2,8 @@
 // Purpose: SOTA ECharts theme constants — gradients, glow, animations.
 // Docs: Mirrors sin-code image-graph visual quality (Apache ECharts 5.5+).
 
+import i18next from "i18next";
+
 export const SOTA_COLORS = [
   "#6366f1", // indigo
   "#ec4899", // pink
@@ -128,10 +130,14 @@ export const TOOLBOX_FEATURE = {
   },
   dataView: {
     readOnly: true,
-    title: "Daten",
-    lang: ["Datenansicht", "Schließen", "Aktualisieren"],
+    title: i18next.t("chart.toolbox.dataView"),
+    lang: [
+      i18next.t("chart.toolbox.dataView"),
+      i18next.t("chart.toolbox.close"),
+      i18next.t("chart.toolbox.refresh"),
+    ],
   },
-  restore: { title: "Zurücksetzen" },
+  restore: { title: i18next.t("chart.toolbox.reset") },
 };
 
 export const TOOLBOX_STYLE = (isDark: boolean) => ({

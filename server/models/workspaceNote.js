@@ -103,7 +103,12 @@ const WorkspaceNote = {
     });
   },
 
-  create: async function (workspaceId, content = "", pinned = false, metadata = {}) {
+  create: async function (
+    workspaceId,
+    content = "",
+    pinned = false,
+    metadata = {},
+  ) {
     const { title = "", plainText = "", tags = "[]", folder = null } = metadata;
     return await prisma.workspace_notes.create({
       data: {

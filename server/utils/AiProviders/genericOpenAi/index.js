@@ -88,7 +88,6 @@ class GenericOpenAiLLM {
     return headers;
   }
 
-
   streamingEnabled() {
     if (process.env.GENERIC_OPENAI_STREAMING_DISABLED === "true") return false;
     return "streamGetChatCompletion" in this;

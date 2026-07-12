@@ -31,7 +31,6 @@ class LocalAiLLM {
     this.defaultTemp = 0.7;
   }
 
-
   streamingEnabled() {
     return "streamGetChatCompletion" in this;
   }

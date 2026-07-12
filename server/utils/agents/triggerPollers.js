@@ -354,7 +354,10 @@ function extractTag(block, tag) {
       .trim();
   }
   // Handle self-closing tags: <tag href="..." /> (common in Atom feeds)
-  const selfClosing = new RegExp(`<${tag}[^>]*\\shref=["']([^"']+)["'][^>]*/>`, "i");
+  const selfClosing = new RegExp(
+    `<${tag}[^>]*\\shref=["']([^"']+)["'][^>]*/>`,
+    "i",
+  );
   const sc = block.match(selfClosing);
   if (sc) return sc[1].trim();
   return null;

@@ -3,11 +3,13 @@
 //          Handles connect (popup), disconnect, and listing connected accounts.
 //          Gracefully handles "coming_soon" when OAuth is not configured.
 import { useCallback, useEffect, useState } from "react";
+import { AUTH_TOKEN } from "@/utils/constants";
+import { safeGetItem } from "@/utils/safeStorage";
 
 const API_BASE = "/api";
 
 function authHeaders(): Record<string, string> {
-  const token = localStorage.getItem("opensin_chat_auth_token");
+  const token = safeGetItem(AUTH_TOKEN);
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
@@ -81,10 +83,14 @@ export function useConnector(provider: string): UseConnectorResult {
         );
 
         return new Promise<boolean>((resolve) => {
+          let resolved = false;
           function onMsg(e: MessageEvent) {
             if (e.origin !== window.location.origin) return;
             if (!e.data || e.data.provider !== provider) return;
+            if (resolved) return;
+            resolved = true;
             window.removeEventListener("message", onMsg);
+            clearInterval(iv);
             setBusy(false);
             if (e.data.ok) {
               refresh();
@@ -98,6 +104,8 @@ export function useConnector(provider: string): UseConnectorResult {
           // Detect manual popup close
           const iv = setInterval(() => {
             if (popup?.closed) {
+              if (resolved) return;
+              resolved = true;
               clearInterval(iv);
               window.removeEventListener("message", onMsg);
               setBusy(false);

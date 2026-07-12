@@ -69,7 +69,6 @@ class NvidiaNimLLM {
     return message;
   }
 
-
   /**
    * Set the model token limit `NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT` for the given model ID
    * @param {string} modelId

@@ -44,9 +44,7 @@ const MAX_OUTPUT_BYTES = 1024 * 1024;
  * Defaults to STORAGE_DIR (the app's data directory) so admins can inspect
  * log/storage directories, but cannot escape to /, /etc, /var, etc.
  */
-const ALLOWED_CWD_ROOT = path.resolve(
-  process.env.STORAGE_DIR || process.cwd(),
-);
+const ALLOWED_CWD_ROOT = path.resolve(process.env.STORAGE_DIR || process.cwd());
 
 const execRateLimit = simpleRateLimit({
   bucket: "terminal-exec",
@@ -214,7 +212,10 @@ function apiTerminalExecEndpoints(app) {
         const rawCwd =
           cwd && typeof cwd === "string" && cwd.trim() ? cwd.trim() : ".";
         const execCwd = path.resolve(ALLOWED_CWD_ROOT, rawCwd);
-        if (!execCwd.startsWith(ALLOWED_CWD_ROOT + path.sep) && execCwd !== ALLOWED_CWD_ROOT) {
+        if (
+          !execCwd.startsWith(ALLOWED_CWD_ROOT + path.sep) &&
+          execCwd !== ALLOWED_CWD_ROOT
+        ) {
           return response.status(403).json({
             error: "cwd must stay within the allowed working directory.",
           });

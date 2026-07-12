@@ -198,7 +198,9 @@ class SubagentSpawner {
   _cleanupScratchDir(dir) {
     try {
       fs.rmSync(dir, { recursive: true, force: true });
-    } catch (e) { console.warn("[subagentSpawner] non-fatal error:", e?.message || e); }
+    } catch (e) {
+      console.warn("[subagentSpawner] non-fatal error:", e?.message || e);
+    }
   }
 
   /**

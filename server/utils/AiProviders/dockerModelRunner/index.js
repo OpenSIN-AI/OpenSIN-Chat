@@ -68,7 +68,6 @@ class DockerModelRunnerLLM {
     };
   }
 
-
   streamingEnabled() {
     return "streamGetChatCompletion" in this;
   }

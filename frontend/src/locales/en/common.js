@@ -1401,6 +1401,25 @@ const TRANSLATIONS = {
       "recovery-codes": "Recovery Codes",
       "back-to-login": "Back to Login",
     },
+    heroEyebrow: "Sovereign Workspace",
+    heroTitle: "Your sovereign AI workspace.",
+    heroDescription:
+      "Chat with your documents, automate research, and keep full control over your data.",
+    footer: "© {{year}} OpenSIN Chat · Self-hosted · No telemetry",
+    features: {
+      sovereign: {
+        title: "Sovereign & self-hosted",
+        desc: "Your data stays on your own infrastructure.",
+      },
+      noTelemetry: {
+        title: "No telemetry",
+        desc: "Zero outbound tracking. GDPR-compliant defaults.",
+      },
+      yourModels: {
+        title: "Your models, your rules",
+        desc: "From OpenAI to Ollama — local or in the cloud.",
+      },
+    },
   },
   "main-page": {
     greeting: "How can I help you today?",
@@ -2801,7 +2820,7 @@ const TRANSLATIONS = {
     title: "Privacy & Data-Handling",
     description:
       "This is your configuration for how connected third party providers and OpenSIN Chat handle your data.",
-    anonymous: "Anonymous Telemetry Enabled",
+    anonymous: "Telemetry disabled",
   },
   connectors: {
     "search-placeholder": "Search data connectors",
@@ -4359,14 +4378,11 @@ const TRANSLATIONS = {
     uploadDocuments: "Upload documents to this workspace for RAG indexing",
   },
   privacyAndData: {
-    telemetryToggled: "Anonymous Telemetry has been {{status}}.",
-    enabled: "enabled",
-    disabled: "disabled",
-    eventsNoIp:
-      'All events do not record IP-address and contain <b>no identifying</b> content, settings, chats, or other non-usage based information. To see the list of event tags collected you can look on <a href="https://github.com/search?q=repo%3AOpenSIN-AI%2Fopensin-chat%20.sendTelemetry(&amp;type=code" class="underline text-blue-400" target="_blank" rel="noreferrer">GitHub here</a>.',
-    respectPrivacy:
-      'As an open-source project we respect your right to privacy. We are dedicated to building the best solution for integrating AI and documents privately and securely. If you do decide to turn off telemetry all we ask is to consider sending us feedback and thoughts so that we can continue to improve OpenSIN Chat for you. <a href="mailto:team@opensin.com" class="underline text-blue-400" target="_blank" rel="noreferrer">team@opensin.com</a>.',
-    telemetryToggleFailed: "Failed to toggle telemetry",
+    telemetryDisabledTitle: "Telemetry is permanently disabled",
+    telemetryDisabledBody:
+      "OpenSIN Chat does not send analytics, usage telemetry, product events, IP addresses, prompts, chats, settings, or document metadata to OpenSIN-AI or any third-party analytics provider.",
+    telemetryDisabledDetail:
+      "The server keeps a no-op telemetry API only for compatibility with older call sites; every telemetry method returns locally without network traffic.",
   },
   invite: {
     newUser: {
@@ -5255,6 +5271,42 @@ const TRANSLATIONS = {
   pdfPreview: {
     loadError: "PDF could not be loaded",
     openInNewTab: "Open in new tab",
+    loading: "Loading PDF...",
+  },
+  markdown: {
+    copyCode: "Copy code",
+    copy: "Copy",
+    copied: "Copied!",
+  },
+  chart: {
+    toolbox: {
+      dataView: "Data View",
+      close: "Close",
+      refresh: "Refresh",
+      reset: "Reset",
+    },
+  },
+  documentInsights: {
+    savedInsights: "Saved Insights ({{count}})",
+    noInsights: "No insights yet for this document.",
+  },
+  embedPreview: {
+    title: "Embed Widget Preview",
+    description:
+      "This is a live preview of your embed widget. The chat widget appears in the bottom-right corner of this page.",
+    uuid: "UUID",
+    failedToLoad:
+      "Failed to load the embed widget script. Please check your network connection and try again.",
+    browserTitle: "OpenSIN Chat — Embed Widget Preview",
+  },
+  contextMode: {
+    label: "Context mode",
+    standard: "Standard (RAG)",
+    search: "Only relevant excerpts via search",
+    summary: "Summary",
+    summaryAlways: "Summary always in context (token-efficient)",
+    fullText: "Full text (Pin)",
+    entireDoc: "Entire document always in context",
   },
   transformations: {
     confirmDelete: "Delete this transformation?",

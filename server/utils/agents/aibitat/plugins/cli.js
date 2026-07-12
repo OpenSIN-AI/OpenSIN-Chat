@@ -131,9 +131,7 @@ const cli = {
        */
       askForFeedback: function (node = {}) {
         return input({
-          message: `Provide feedback to ${pc.yellow(
-            node.to,
-          )} as ${pc.yellow(
+          message: `Provide feedback to ${pc.yellow(node.to)} as ${pc.yellow(
             node.from,
           )}. Press enter to skip and use auto-reply, or type 'exit' to end the conversation: `,
         });

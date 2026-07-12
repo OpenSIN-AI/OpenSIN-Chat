@@ -118,7 +118,6 @@ class OllamaAILLM {
     }
   }
 
-
   /**
    * Apply a custom fetch function to the Ollama client.
    * This is useful when we want to bypass the default 5m timeout for global fetch

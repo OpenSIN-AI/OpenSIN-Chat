@@ -50,17 +50,25 @@ function noteEndpoints(app) {
           pinned = false,
         } = reqBody(request);
         if (typeof content !== "string" || content.length > 100_000) {
-          return response.status(400).json({ error: "content must be a string of max 100,000 characters" });
+          return response.status(400).json({
+            error: "content must be a string of max 100,000 characters",
+          });
         }
         if (typeof pinned !== "boolean") {
-          return response.status(400).json({ error: "pinned must be a boolean" });
+          return response
+            .status(400)
+            .json({ error: "pinned must be a boolean" });
         }
         if (
-          typeof title !== "string" || title.length > 300 ||
-          typeof plainText !== "string" || plainText.length > 100_000 ||
-          !Array.isArray(tags) || tags.length > 30 ||
+          typeof title !== "string" ||
+          title.length > 300 ||
+          typeof plainText !== "string" ||
+          plainText.length > 100_000 ||
+          !Array.isArray(tags) ||
+          tags.length > 30 ||
           tags.some((tag) => typeof tag !== "string" || tag.length > 50) ||
-          (folder !== null && (typeof folder !== "string" || folder.length > 100))
+          (folder !== null &&
+            (typeof folder !== "string" || folder.length > 100))
         ) {
           return response.status(400).json({ error: "Invalid note metadata" });
         }
@@ -91,15 +99,30 @@ function noteEndpoints(app) {
         if (!Number.isInteger(noteId) || noteId <= 0) {
           return response.status(400).json({ error: "Invalid note id" });
         }
-        const { title, content, plainText, tags, folder, pinned } = reqBody(request);
-        if (content !== undefined && (typeof content !== "string" || content.length > 100_000)) {
-          return response.status(400).json({ error: "content must be a string of max 100,000 characters" });
+        const { title, content, plainText, tags, folder, pinned } =
+          reqBody(request);
+        if (
+          content !== undefined &&
+          (typeof content !== "string" || content.length > 100_000)
+        ) {
+          return response.status(400).json({
+            error: "content must be a string of max 100,000 characters",
+          });
         }
         if (
-          (title !== undefined && (typeof title !== "string" || title.length > 300)) ||
-          (plainText !== undefined && (typeof plainText !== "string" || plainText.length > 100_000)) ||
-          (tags !== undefined && (!Array.isArray(tags) || tags.length > 30 || tags.some((tag) => typeof tag !== "string" || tag.length > 50))) ||
-          (folder !== undefined && folder !== null && (typeof folder !== "string" || folder.length > 100)) ||
+          (title !== undefined &&
+            (typeof title !== "string" || title.length > 300)) ||
+          (plainText !== undefined &&
+            (typeof plainText !== "string" || plainText.length > 100_000)) ||
+          (tags !== undefined &&
+            (!Array.isArray(tags) ||
+              tags.length > 30 ||
+              tags.some(
+                (tag) => typeof tag !== "string" || tag.length > 50,
+              ))) ||
+          (folder !== undefined &&
+            folder !== null &&
+            (typeof folder !== "string" || folder.length > 100)) ||
           (pinned !== undefined && typeof pinned !== "boolean")
         ) {
           return response.status(400).json({ error: "Invalid note data" });
@@ -160,7 +183,11 @@ function noteEndpoints(app) {
         const workspace = response.locals.workspace;
         const noteId = Number(request.params.id);
         const existing = await WorkspaceNote.get(noteId);
-        if (!Number.isInteger(noteId) || !existing || existing.workspaceId !== workspace.id) {
+        if (
+          !Number.isInteger(noteId) ||
+          !existing ||
+          existing.workspaceId !== workspace.id
+        ) {
           return response.status(404).json({ error: "Note not found" });
         }
         await WorkspaceNote.restore(noteId);
@@ -322,7 +349,9 @@ function noteEndpoints(app) {
             if (clean.length > 0) {
               snippets[doc.docId] = clean.slice(0, 200);
             }
-          } catch (e) { console.warn("[notes] non-fatal error:", e?.message || e); }
+          } catch (e) {
+            console.warn("[notes] non-fatal error:", e?.message || e);
+          }
         }
 
         response.status(200).json({ snippets });

@@ -463,7 +463,11 @@ class BackgroundService {
         new Promise((resolve, reject) => {
           const timeoutId = setTimeout(() => {
             worker.kill("SIGKILL");
-            this.bree.remove(workerId).catch((e) => console.warn("[index] non-fatal error:", e?.message || e));
+            this.bree
+              .remove(workerId)
+              .catch((e) =>
+                console.warn("[index] non-fatal error:", e?.message || e),
+              );
             reject(
               new Error(`scheduled job timeout after ${MAX_RUN_TIMEOUT_MS}ms`),
             );

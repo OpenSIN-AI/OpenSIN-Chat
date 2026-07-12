@@ -368,7 +368,6 @@ class AnthropicLLM {
     });
   }
 
-
   async compressMessages(promptArgs = {}, rawHistory = []) {
     const { messageStringCompressor } = require("../../helpers/chat");
     const compressedPrompt = await messageStringCompressor(

@@ -3,8 +3,10 @@
 // Docs: Shows a live preview of an embed widget by its UUID
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function EmbedPreview() {
+  const { t } = useTranslation();
   const { uuid } = useParams<{ uuid: string }>();
   const containerRef = useRef<HTMLDivElement>(null);
   const [scriptError, setScriptError] = useState<string | null>(null);
@@ -36,9 +38,7 @@ export default function EmbedPreview() {
     script.setAttribute("data-base-api-url", `${serverHost}/api/embed`);
     script.src = `${scriptHost}/embed/opensin-chat-widget.min.js`;
     script.onerror = () => {
-      setScriptError(
-        "Failed to load the embed widget script. Please check your network connection and try again.",
-      );
+      setScriptError(t("embedPreview.failedToLoad"));
     };
     script.onload = () => {
       setScriptError(null);
@@ -64,15 +64,14 @@ export default function EmbedPreview() {
     >
       <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8 mb-8">
         <h1 className="text-2xl font-bold text-slate-900 mb-4">
-          Embed Widget Preview
+          {t("embedPreview.title")}
         </h1>
         <p className="text-slate-600 text-sm">
-          This is a live preview of your embed widget. The chat widget appears
-          in the bottom-right corner of this page.
+          {t("embedPreview.description")}
         </p>
         <div className="mt-6 p-4 bg-slate-50 rounded-lg border border-slate-200">
           <p className="text-xs text-slate-500 font-mono break-all">
-            UUID: {uuid}
+            {t("embedPreview.uuid")}: {uuid}
           </p>
         </div>
       </div>
@@ -82,7 +81,7 @@ export default function EmbedPreview() {
         </div>
       )}
       <div className="text-xs text-slate-400">
-        OpenSIN Chat — Embed Widget Preview
+        {t("embedPreview.browserTitle")}
       </div>
     </div>
   );

@@ -18,6 +18,7 @@ cd "$REPO_ROOT"
 ALLOWED_FILES=(
   # ── Intentional upstream credit ───────────────────────────
   "THIRD_PARTY.md"                     # canonical credit doc (merged: acknowledgments + NPM packages)
+  "CREDITS.md"                         # canonical upstream acknowledgments required by license/provenance
   "BRANDING.md"                        # branding policy references upstream
   "README.md"                          # "Stand auf Schultern von Riesen" section
   "TERMS_SELF_HOSTED.md"               # §2 references AnythingLLM telemetry
@@ -33,6 +34,7 @@ ALLOWED_FILES=(
   "server/index.js"                    # require('@mintplex-labs/express-ws') — upstream WebSocket layer
   "server/utils/boot/index.js"         # require('@mintplex-labs/express-ws') — SSL WebSocket boot
   "server/utils/BackgroundWorkers/index.js"   # require('@mintplex-labs/bree') + JSDoc @opensin/bree type ref — upstream scheduler
+  "server/utils/agents/triggerEngine.js"       # require('@mintplex-labs/bree') — upstream scheduler package used as-is
   "server/utils/agents/aibitat/example/websocket/websock-multi-turn-chat.js"  # require('@mintplex-labs/express-ws') — example
   "server/utils/agents/aibitat/example/websocket/websock-branding-collab.js"   # require('@mintplex-labs/express-ws') — example
   "server/utils/agents/aibitat/plugins/create-files/pdf/create-pdf-file.js"    # import('@mintplex-labs/mdpdf') — upstream PDF converter
@@ -51,6 +53,7 @@ ALLOWED_FILES=(
 
   # ── CEO audit reports (reference upstream codebase lineage) ─
   "ceo-audits/"                              # audit docs describe the AnythingLLM codebase OpenSIN-Chat is built on
+  "docs/archive/"                            # immutable historical audit snapshots
 
   # ── Self-reference (linter mentions the strings it forbids) ─
   "scripts/check-branding.sh"

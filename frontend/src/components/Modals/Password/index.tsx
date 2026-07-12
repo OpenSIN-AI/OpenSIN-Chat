@@ -21,18 +21,18 @@ const AUTH_CHECK_KEY = "system/auth-check";
 const FEATURES = [
   {
     icon: ShieldCheck,
-    title: "Souverän & selbst gehostet",
-    desc: "Deine Daten bleiben auf deiner eigenen Infrastruktur.",
+    titleKey: "login.features.sovereign.title",
+    descKey: "login.features.sovereign.desc",
   },
   {
     icon: EyeSlash,
-    title: "Keine Telemetrie",
-    desc: "Null Outbound-Tracking. DSGVO-konforme Defaults.",
+    titleKey: "login.features.noTelemetry.title",
+    descKey: "login.features.noTelemetry.desc",
   },
   {
     icon: Cpu,
-    title: "Deine Modelle, deine Regeln",
-    desc: "Von OpenAI bis Ollama — lokal oder in der Cloud.",
+    titleKey: "login.features.yourModels.title",
+    descKey: "login.features.yourModels.desc",
   },
 ];
 
@@ -59,19 +59,18 @@ export default function PasswordModal({ mode = "single" }: any) {
 
         <div className="max-w-xs">
           <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.16em] text-[#71717a] light:text-zinc-500">
-            Souveräner Arbeitsbereich
+            {t("login.heroEyebrow")}
           </p>
           <h1 className="text-3xl font-semibold leading-[1.12] tracking-tight text-[#fafafa] text-balance light:text-zinc-900 xl:text-[2.25rem]">
-            Dein souveräner KI-Arbeitsraum.
+            {t("login.heroTitle")}
           </h1>
           <p className="mt-4 text-sm leading-relaxed text-[#a1a1aa] text-pretty light:text-zinc-500">
-            Chatte mit deinen Dokumenten, automatisiere Recherche und behalte
-            die volle Kontrolle über deine Daten.
+            {t("login.heroDescription")}
           </p>
 
           <ul className="mt-9 flex flex-col gap-y-4">
-            {FEATURES.map(({ icon: Icon, title, desc }) => (
-              <li key={title} className="flex items-start gap-x-3">
+            {FEATURES.map(({ icon: Icon, titleKey, descKey }) => (
+              <li key={titleKey} className="flex items-start gap-x-3">
                 <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-white/[0.08] bg-white/[0.04] light:border-zinc-200 light:bg-white">
                   <Icon
                     size={15}
@@ -81,10 +80,10 @@ export default function PasswordModal({ mode = "single" }: any) {
                 </span>
                 <div>
                   <p className="text-sm font-medium text-[#e4e4e7] light:text-zinc-800">
-                    {title}
+                    {t(titleKey)}
                   </p>
                   <p className="mt-0.5 text-xs leading-relaxed text-[#71717a] light:text-zinc-500">
-                    {desc}
+                    {t(descKey)}
                   </p>
                 </div>
               </li>
@@ -93,8 +92,7 @@ export default function PasswordModal({ mode = "single" }: any) {
         </div>
 
         <p className="text-[11px] tracking-wide text-[#52525b] light:text-zinc-400">
-          © {new Date().getFullYear()} OpenSIN Chat · Selbst gehostet · Keine
-          Telemetrie
+          {t("login.footer", { year: new Date().getFullYear() })}
         </p>
       </aside>
 

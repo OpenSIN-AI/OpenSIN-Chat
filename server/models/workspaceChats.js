@@ -38,7 +38,9 @@ const WorkspaceChats = {
             where: { id: Number(threadId) },
             data: { lastUpdatedAt: new Date() },
           })
-          .catch((e) => console.warn("[workspaceChats] non-fatal error:", e?.message || e));
+          .catch((e) =>
+            console.warn("[workspaceChats] non-fatal error:", e?.message || e),
+          );
       }
       return { chat, message: null };
     } catch (error) {

@@ -128,7 +128,7 @@ async function _sweepOldJobs() {
        WHERE status IN ('completed', 'failed')
          AND finishedAt IS NOT NULL
          AND finishedAt < datetime('now', ?)`,
-      `-${SWEEP_TTL_MINUTES} minutes`
+      `-${SWEEP_TTL_MINUTES} minutes`,
     );
   } catch (e) {
     consoleLogger.error("[ParseJobs._sweepOldJobs]", e.message);
@@ -158,7 +158,7 @@ const ParseJobs = {
       parseInt(workspaceId),
       userId !== null && userId !== undefined ? parseInt(userId) : null,
       String(originalname),
-      JOB_STATUS.PENDING
+      JOB_STATUS.PENDING,
     );
 
     // Fire-and-forget sweep — do not await so create() returns promptly.
@@ -167,7 +167,7 @@ const ParseJobs = {
     // Return the full job shape so callers (and tests) can read the row immediately.
     const rows = await prisma.$queryRawUnsafe(
       `SELECT * FROM parse_jobs WHERE id = ?`,
-      id
+      id,
     );
     return _toJob(rows[0]);
   },
@@ -191,13 +191,13 @@ const ParseJobs = {
                WHERE id = ? AND workspaceId = ? AND userId = ?`,
               String(jobId),
               parseInt(workspaceId),
-              parseInt(userId)
+              parseInt(userId),
             )
           : await prisma.$queryRawUnsafe(
               `SELECT * FROM parse_jobs
                WHERE id = ? AND workspaceId = ?`,
               String(jobId),
-              parseInt(workspaceId)
+              parseInt(workspaceId),
             );
       return _toJob(rows[0] ?? null);
     } catch (e) {
@@ -216,7 +216,7 @@ const ParseJobs = {
       await prisma.$executeRawUnsafe(
         `UPDATE parse_jobs SET status = ? WHERE id = ?`,
         JOB_STATUS.PROCESSING,
-        String(jobId)
+        String(jobId),
       );
     } catch (e) {
       consoleLogger.error("[ParseJobs.markProcessing]", e.message);
@@ -237,7 +237,7 @@ const ParseJobs = {
          WHERE id = ?`,
         JOB_STATUS.COMPLETED,
         JSON.stringify(files ?? []),
-        String(jobId)
+        String(jobId),
       );
     } catch (e) {
       consoleLogger.error("[ParseJobs.markCompleted]", e.message);
@@ -258,7 +258,7 @@ const ParseJobs = {
          WHERE id = ?`,
         JOB_STATUS.FAILED,
         String(reason || "Unknown error"),
-        String(jobId)
+        String(jobId),
       );
     } catch (e) {
       consoleLogger.error("[ParseJobs.markFailed]", e.message);
@@ -273,16 +273,14 @@ const ParseJobs = {
    */
   async purgeOld(maxAgeMs) {
     const minutes =
-      maxAgeMs !== undefined
-        ? Math.ceil(maxAgeMs / 60000)
-        : SWEEP_TTL_MINUTES;
+      maxAgeMs !== undefined ? Math.ceil(maxAgeMs / 60000) : SWEEP_TTL_MINUTES;
     try {
       await prisma.$executeRawUnsafe(
         `DELETE FROM parse_jobs
          WHERE status IN ('completed', 'failed')
            AND finishedAt IS NOT NULL
            AND finishedAt < datetime('now', ?)`,
-        `-${minutes} minutes`
+        `-${minutes} minutes`,
       );
     } catch (e) {
       consoleLogger.error("[ParseJobs.purgeOld]", e.message);
@@ -317,7 +315,7 @@ async function recoverStalledJobs() {
        WHERE status = ?`,
       JOB_STATUS.FAILED,
       "Server restarted while this job was running — please re-upload.",
-      JOB_STATUS.PROCESSING
+      JOB_STATUS.PROCESSING,
     );
 
     // Mark 'pending' rows past the grace period as failed.
@@ -329,7 +327,7 @@ async function recoverStalledJobs() {
       JOB_STATUS.FAILED,
       "Server restarted before this job was picked up — please re-upload.",
       JOB_STATUS.PENDING,
-      `-${STALL_GRACE_MINUTES} minutes`
+      `-${STALL_GRACE_MINUTES} minutes`,
     );
 
     // Run the TTL sweep at boot for quiet instances.

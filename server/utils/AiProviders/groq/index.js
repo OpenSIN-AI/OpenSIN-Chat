@@ -33,7 +33,6 @@ class GroqLLM {
     this.defaultTemp = 0.7;
   }
 
-
   #log(text, ...args) {
     consoleLogger.log(`\x1b[32m[GroqAi]\x1b[0m ${text}`, ...args);
   }

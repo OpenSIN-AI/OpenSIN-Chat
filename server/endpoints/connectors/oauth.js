@@ -194,7 +194,9 @@ function connectorOAuthEndpoints(app) {
         });
         const uj = await ui.json();
         providerAccount = uj.email || uj.login || uj.name || null;
-      } catch (e) { console.warn("[oauth] non-fatal error:", e?.message || e); }
+      } catch (e) {
+        console.warn("[oauth] non-fatal error:", e?.message || e);
+      }
 
       const expiresAt = tok.expires_in
         ? new Date(Date.now() + Number(tok.expires_in) * 1000)

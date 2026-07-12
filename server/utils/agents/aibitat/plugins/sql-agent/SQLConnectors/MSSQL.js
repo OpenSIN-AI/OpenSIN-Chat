@@ -95,7 +95,11 @@ class MSSQLConnector {
       result.error = err.message;
     } finally {
       if (this.#connected && this._client) {
-        await this._client.close().catch((e) => console.warn("[MSSQL] non-fatal error:", e?.message || e));
+        await this._client
+          .close()
+          .catch((e) =>
+            console.warn("[MSSQL] non-fatal error:", e?.message || e),
+          );
         this.#connected = false;
         this._client = null;
       }

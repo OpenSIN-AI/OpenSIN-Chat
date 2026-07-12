@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Frontend hook for agent triggers — CRUD, toggle, fire, runs.
 import { useCallback, useEffect, useState } from "react";
+import { AUTH_TOKEN } from "@/utils/constants";
+import { safeGetItem } from "@/utils/safeStorage";
 
 const API_BASE = "/api";
 
 function authHeaders(): Record<string, string> {
-  const token = localStorage.getItem("opensin_chat_auth_token");
+  const token = safeGetItem(AUTH_TOKEN);
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 

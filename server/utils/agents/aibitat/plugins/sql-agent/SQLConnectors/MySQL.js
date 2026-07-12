@@ -81,7 +81,11 @@ class MySQLConnector {
       result.error = err.message;
     } finally {
       if (this.#connected && this._client) {
-        await this._client.end().catch((e) => console.warn("[MySQL] non-fatal error:", e?.message || e));
+        await this._client
+          .end()
+          .catch((e) =>
+            console.warn("[MySQL] non-fatal error:", e?.message || e),
+          );
         this.#connected = false;
         this._client = null;
       }

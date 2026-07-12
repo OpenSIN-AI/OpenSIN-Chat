@@ -962,6 +962,25 @@ const TRANSLATIONS = {
       "recovery-codes": "Wiederherstellungscodes",
       "back-to-login": "Zurück zur Anmeldung",
     },
+    heroEyebrow: "Souveräner Arbeitsbereich",
+    heroTitle: "Dein souveräner KI-Arbeitsraum.",
+    heroDescription:
+      "Chatte mit deinen Dokumenten, automatisiere Recherche und behalte die volle Kontrolle über deine Daten.",
+    footer: "© {{year}} OpenSIN Chat · Selbst gehostet · Keine Telemetrie",
+    features: {
+      sovereign: {
+        title: "Souverän & selbst gehostet",
+        desc: "Deine Daten bleiben auf deiner eigenen Infrastruktur.",
+      },
+      noTelemetry: {
+        title: "Keine Telemetrie",
+        desc: "Null Outbound-Tracking. DSGVO-konforme Defaults.",
+      },
+      yourModels: {
+        title: "Deine Modelle, deine Regeln",
+        desc: "Von OpenAI bis Ollama — lokal oder in der Cloud.",
+      },
+    },
   },
   "main-page": {
     workspaceSources: {
@@ -2121,7 +2140,7 @@ const TRANSLATIONS = {
     title: "Datenschutz & Datenverarbeitung",
     description:
       "Dies ist Ihre Konfiguration dafür, wie verbundene Drittanbieter und OpenSIN Chat Ihre Daten behandeln.",
-    anonymous: "Anonyme Telemetrie aktiviert",
+    anonymous: "Telemetrie deaktiviert",
   },
   connectors: {
     "search-placeholder": "Datenverbindungen durchsuchen",
@@ -4462,14 +4481,11 @@ const TRANSLATIONS = {
       "Dokumente in diesen Workspace für RAG-Indizierung hochladen",
   },
   privacyAndData: {
-    telemetryToggled: "Anonyme Telemetrie wurde {{status}}.",
-    enabled: "aktiviert",
-    disabled: "deaktiviert",
-    eventsNoIp:
-      'Alle Ereignisse zeichnen keine IP-Adresse auf und enthalten <b>keine identifizierenden</b> Inhalte, Einstellungen, Chats oder andere nicht nutzungsbasierte Informationen. Um die Liste der erfassten Ereignis-Tags einzusehen, können Sie auf <a href="https://github.com/search?q=repo%3AOpenSIN-AI%2Fopensin-chat%20.sendTelemetry(&amp;type=code" class="underline text-blue-400" target="_blank" rel="noreferrer">GitHub</a> nachsehen.',
-    respectPrivacy:
-      'Als Open-Source-Projekt respektieren wir Ihr Recht auf Datenschutz. Wir widmen uns der Entwicklung der besten Lösung für die private und sichere Integration von KI und Dokumenten. Wenn Sie sich entscheiden, die Telemetrie zu deaktivieren, bitten wir Sie nur, uns Feedback und Gedanken zu senden, damit wir OpenSIN Chat für Sie weiter verbessern können. <a href="mailto:team@opensin.com" class="underline text-blue-400" target="_blank" rel="noreferrer">team@opensin.com</a>.',
-    telemetryToggleFailed: "Telemetrie konnte nicht umgeschaltet werden",
+    telemetryDisabledTitle: "Telemetrie ist dauerhaft deaktiviert",
+    telemetryDisabledBody:
+      "OpenSIN Chat sendet keine Analytics, Nutzungs-Telemetrie, Produkt-Events, IP-Adressen, Prompts, Chats, Einstellungen oder Dokument-Metadaten an OpenSIN-AI oder Drittanbieter-Analytics.",
+    telemetryDisabledDetail:
+      "Der Server behält nur aus Kompatibilitätsgründen eine No-Op-Telemetrie-API; jede Telemetrie-Methode kehrt lokal zurück, ohne Netzwerkverkehr auszulösen.",
   },
   invite: {
     newUser: {
@@ -5374,6 +5390,42 @@ const TRANSLATIONS = {
   pdfPreview: {
     loadError: "PDF konnte nicht geladen werden",
     openInNewTab: "In neuem Tab öffnen",
+    loading: "PDF wird geladen...",
+  },
+  markdown: {
+    copyCode: "Code kopieren",
+    copy: "Kopieren",
+    copied: "Kopiert!",
+  },
+  chart: {
+    toolbox: {
+      dataView: "Datenansicht",
+      close: "Schließen",
+      refresh: "Aktualisieren",
+      reset: "Zurücksetzen",
+    },
+  },
+  documentInsights: {
+    savedInsights: "Gespeicherte Erkenntnisse ({{count}})",
+    noInsights: "Noch keine Erkenntnisse für dieses Dokument.",
+  },
+  embedPreview: {
+    title: "Embed-Widget-Vorschau",
+    description:
+      "Dies ist eine Live-Vorschau deines Embed-Widgets. Das Chat-Widget erscheint in der unteren rechten Ecke dieser Seite.",
+    uuid: "UUID",
+    failedToLoad:
+      "Das Embed-Widget-Skript konnte nicht geladen werden. Bitte überprüfe deine Netzwerkverbindung und versuche es erneut.",
+    browserTitle: "OpenSIN Chat — Embed-Widget-Vorschau",
+  },
+  contextMode: {
+    label: "Kontextmodus",
+    standard: "Standard (RAG)",
+    search: "Nur relevante Auszüge über Suche",
+    summary: "Zusammenfassung",
+    summaryAlways: "Zusammenfassung immer im Kontext (token-effizient)",
+    fullText: "Volltext (Anheften)",
+    entireDoc: "Gesamtes Dokument immer im Kontext",
   },
   transformations: {
     confirmDelete: "Diese Transformation löschen?",

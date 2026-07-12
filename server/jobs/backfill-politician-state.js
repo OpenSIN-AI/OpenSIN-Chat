@@ -196,6 +196,13 @@ async function main() {
 
 main().catch(async (err) => {
   console.error("[backfill] Fatal error:", err.message);
-  await prisma.$disconnect().catch((e) => console.warn("[backfill-politician-state] non-fatal error:", e?.message || e));
+  await prisma
+    .$disconnect()
+    .catch((e) =>
+      console.warn(
+        "[backfill-politician-state] non-fatal error:",
+        e?.message || e,
+      ),
+    );
   process.exit(1);
 });

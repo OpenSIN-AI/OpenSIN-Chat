@@ -13,6 +13,8 @@ import { useParams } from "react-router-dom";
 import { DnDFileUploaderProvider } from "./ChatContainer/DnDWrapper";
 import { AgentRunsProvider } from "./ChatContainer/AgentSessionsSidebar/AgentRunsContext";
 import { WarningCircle } from "@phosphor-icons/react/dist/csr/WarningCircle";
+import { AUTH_TOKEN } from "@/utils/constants";
+import { safeGetItem } from "@/utils/safeStorage";
 import { useTranslation } from "react-i18next";
 import i18n from "@/i18n";
 import {
@@ -132,9 +134,7 @@ export default function WorkspaceChat({
           <AgentRunsProvider
             workspaceSlug={loaded.workspace?.slug || ""}
             authToken={
-              typeof window !== "undefined"
-                ? localStorage.getItem("opensin_chat_auth_token") || ""
-                : ""
+              typeof window !== "undefined" ? safeGetItem(AUTH_TOKEN) || "" : ""
             }
             apiBase="/api"
           >

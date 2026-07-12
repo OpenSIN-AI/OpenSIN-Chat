@@ -17,8 +17,10 @@ const DEFAULT_MAX_RETRIES = 0;
  * Must be called before any provider module is required.
  */
 function patchSdkTimeouts() {
-  const envDefinedTimeout = process.env.OPENSIN_FETCH_TIMEOUT ?? process.env.ANYTHINGLLM_FETCH_TIMEOUT; // deprecated alias
-  const envDefinedMaxRetries = process.env.OPENSIN_MAX_RETRIES ?? process.env.ANYTHINGLLM_MAX_RETRIES; // deprecated alias
+  const envDefinedTimeout =
+    process.env.OPENSIN_FETCH_TIMEOUT ?? process.env.ANYTHINGLLM_FETCH_TIMEOUT; // deprecated alias
+  const envDefinedMaxRetries =
+    process.env.OPENSIN_MAX_RETRIES ?? process.env.ANYTHINGLLM_MAX_RETRIES; // deprecated alias
   let timeoutMs = DEFAULT_TIMEOUT_MS;
   let maxRetries = DEFAULT_MAX_RETRIES;
 

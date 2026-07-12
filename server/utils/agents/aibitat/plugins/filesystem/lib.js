@@ -200,7 +200,9 @@ class FilesystemManager {
     } catch (error) {
       try {
         await fs.unlink(tempPath);
-      } catch (e) { console.warn("[lib] non-fatal error:", e?.message || e); }
+      } catch (e) {
+        console.warn("[lib] non-fatal error:", e?.message || e);
+      }
       throw error;
     }
   }

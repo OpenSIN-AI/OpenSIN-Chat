@@ -24,7 +24,7 @@ export function ConfirmDialog({
   title,
   description,
   confirmLabel,
-  cancelLabel = "Abbrechen",
+  cancelLabel,
   destructive = false,
   loading = false,
   onConfirm,
@@ -92,7 +92,7 @@ export function ConfirmDialog({
             disabled={loading}
             onClick={() => onOpenChange(false)}
           >
-            {cancelLabel}
+            {cancelLabel || t("common.cancel")}
           </Button>
           <Button
             variant={destructive ? "danger" : "primary"}

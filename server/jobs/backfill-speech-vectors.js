@@ -138,6 +138,13 @@ async function main() {
 
 main().catch(async (err) => {
   console.error("[backfill] Fatal error:", err.message);
-  await prisma.$disconnect().catch((e) => console.warn("[backfill-speech-vectors] non-fatal error:", e?.message || e));
+  await prisma
+    .$disconnect()
+    .catch((e) =>
+      console.warn(
+        "[backfill-speech-vectors] non-fatal error:",
+        e?.message || e,
+      ),
+    );
   process.exit(1);
 });

@@ -129,7 +129,6 @@ class LMStudioLLM {
     }
   }
 
-
   streamingEnabled() {
     return "streamGetChatCompletion" in this;
   }

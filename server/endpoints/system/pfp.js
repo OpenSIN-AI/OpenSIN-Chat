@@ -77,7 +77,9 @@ function pfpEndpoints(app) {
           if (request.file?.supabasePath) {
             supabaseStorage
               .deleteFile("avatars", request.file.supabasePath)
-              .catch((e) => console.warn("[pfp] non-fatal error:", e?.message || e));
+              .catch((e) =>
+                console.warn("[pfp] non-fatal error:", e?.message || e),
+              );
           } else {
             const storagePath = getStoragePath("assets", "pfp");
             const newPfpPath = path.join(
@@ -85,7 +87,11 @@ function pfpEndpoints(app) {
               normalizePath(uploadedFileName),
             );
             if (isWithin(path.resolve(storagePath), path.resolve(newPfpPath)))
-              await fs.promises.unlink(newPfpPath).catch((e) => console.warn("[pfp] non-fatal error:", e?.message || e));
+              await fs.promises
+                .unlink(newPfpPath)
+                .catch((e) =>
+                  console.warn("[pfp] non-fatal error:", e?.message || e),
+                );
           }
           return response.status(500).json({
             message: error || "Failed to update with new profile picture.",
@@ -107,7 +113,9 @@ function pfpEndpoints(app) {
           // Also clean up old PFP from Supabase if it was stored there.
           supabaseStorage
             .deleteFile("avatars", `pfp/${oldPfpFilename}`)
-            .catch((e) => console.warn("[pfp] non-fatal error:", e?.message || e));
+            .catch((e) =>
+              console.warn("[pfp] non-fatal error:", e?.message || e),
+            );
         }
 
         return response.status(200).json({

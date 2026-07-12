@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useEffect, useState, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { Sparkle } from "@phosphor-icons/react/dist/csr/Sparkle";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
@@ -28,6 +29,7 @@ export default function DocumentInsightsModal({
   const [insights, setInsights] = useState<DocumentInsight[]>([]);
   const [runningId, setRunningId] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   const loadData = useCallback(async () => {
     setLoading(true);
@@ -148,13 +150,15 @@ export default function DocumentInsightsModal({
           {/* Saved Insights */}
           <section>
             <h3 className="text-xs font-semibold uppercase tracking-wide text-theme-text-secondary mb-2">
-              Saved Insights ({insights.length})
+              {t("documentInsights.savedInsights", { count: insights.length })}
             </h3>
             {loading ? (
-              <p className="text-xs text-theme-text-secondary">Loading...</p>
+              <p className="text-xs text-theme-text-secondary">
+                {t("common.loading")}
+              </p>
             ) : insights.length === 0 ? (
               <p className="text-xs text-theme-text-secondary">
-                No insights yet for this document.
+                {t("documentInsights.noInsights")}
               </p>
             ) : (
               <ul className="flex flex-col gap-y-3">

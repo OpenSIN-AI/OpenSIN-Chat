@@ -64,7 +64,9 @@ const websocket = {
               socket._pendingApproval?.reject?.(
                 new Error("Socket disconnected before tool approval"),
               );
-            } catch (e) { console.warn("[websocket] non-fatal error:", e?.message || e); }
+            } catch (e) {
+              console.warn("[websocket] non-fatal error:", e?.message || e);
+            }
             socket._pendingApproval = null;
             socket.handleToolApproval = null;
             socket.handleClarificationResponse = null;

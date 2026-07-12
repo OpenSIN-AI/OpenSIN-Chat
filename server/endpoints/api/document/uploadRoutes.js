@@ -132,7 +132,9 @@ function registerUploadRoutes(app) {
 
         // Out-of-band Supabase durability mirror — the API client never
         // waits for the OCI → Supabase roundtrip.
-        const mirrorPromise = mirrorToSupabase(request).catch((e) => console.warn("[uploadRoutes] non-fatal error:", e?.message || e));
+        const mirrorPromise = mirrorToSupabase(request).catch((e) =>
+          console.warn("[uploadRoutes] non-fatal error:", e?.message || e),
+        );
 
         const { success, reason, documents } = await Collector.processDocument(
           collectorFilename,
@@ -301,7 +303,9 @@ function registerUploadRoutes(app) {
         }
 
         // Out-of-band Supabase durability mirror (see /v1/document/upload).
-        const mirrorPromise = mirrorToSupabase(request).catch((e) => console.warn("[uploadRoutes] non-fatal error:", e?.message || e));
+        const mirrorPromise = mirrorToSupabase(request).catch((e) =>
+          console.warn("[uploadRoutes] non-fatal error:", e?.message || e),
+        );
 
         // Process the uploaded document with metadata
         const { success, reason, documents } = await Collector.processDocument(

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { memo, useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { PushPin } from "@phosphor-icons/react/dist/csr/PushPin";
 import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
 import Workspace from "@/models/workspace";
@@ -9,18 +10,18 @@ import logger from "@/utils/logger";
 const MODES = [
   {
     value: "off",
-    label: "Standard (RAG)",
-    description: "Only relevant excerpts via search",
+    labelKey: "contextMode.standard",
+    descriptionKey: "contextMode.search",
   },
   {
     value: "summary",
-    label: "Summary",
-    description: "Summary always in context (token-efficient)",
+    labelKey: "contextMode.summary",
+    descriptionKey: "contextMode.summaryAlways",
   },
   {
     value: "full",
-    label: "Full text (Pin)",
-    description: "Entire document always in context",
+    labelKey: "contextMode.fullText",
+    descriptionKey: "contextMode.entireDoc",
   },
 ] as const;
 
@@ -45,6 +46,10 @@ const ContextModeSelector = memo(function ContextModeSelector({
   const [mode, setMode] = useState<ContextMode>(initialMode);
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
+
+  const getLabel = (m: (typeof MODES)[number]) => t(m.labelKey);
+  const getDescription = (m: (typeof MODES)[number]) => t(m.descriptionKey);
 
   useEffect(() => {
     if (!open) return;
@@ -71,8 +76,9 @@ const ContextModeSelector = memo(function ContextModeSelector({
         return;
       }
       setMode(newMode);
+      const activeMode = MODES.find((m) => m.value === newMode);
       showToast(
-        `Context mode: ${MODES.find((m) => m.value === newMode)?.label}`,
+        `${t("contextMode.label")}: ${activeMode ? getLabel(activeMode) : ""}`,
         "success",
         { clear: true },
       );
@@ -84,7 +90,8 @@ const ContextModeSelector = memo(function ContextModeSelector({
 
   if (!item) return <div className="w-[16px] p-[2px] ml-2" />;
   const active = mode !== "off";
-  const activeLabel = MODES.find((m) => m.value === mode)?.label;
+  const activeMode = MODES.find((m) => m.value === mode);
+  const activeLabel = activeMode ? getLabel(activeMode) : "";
 
   return (
     <div className="relative ml-2" ref={menuRef}>
@@ -96,7 +103,7 @@ const ContextModeSelector = memo(function ContextModeSelector({
         }}
         className="group flex items-center gap-x-1 cursor-pointer"
         data-tooltip-id="pin-document"
-        data-tooltip-content={`Context mode: ${activeLabel}`}
+        data-tooltip-content={`${t("contextMode.label")}: ${activeLabel}`}
         aria-haspopup="menu"
         aria-expanded={open}
       >
@@ -135,10 +142,10 @@ const ContextModeSelector = memo(function ContextModeSelector({
               }`}
             >
               <p className="text-xs font-semibold text-theme-text-primary">
-                {m.label}
+                {getLabel(m)}
               </p>
               <p className="text-[10px] text-theme-text-secondary leading-relaxed">
-                {m.description}
+                {getDescription(m)}
               </p>
             </button>
           ))}

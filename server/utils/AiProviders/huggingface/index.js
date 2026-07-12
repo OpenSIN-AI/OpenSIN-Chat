@@ -35,7 +35,6 @@ class HuggingFaceLLM {
     this.defaultTemp = 0.2;
   }
 
-
   streamingEnabled() {
     return "streamGetChatCompletion" in this;
   }

@@ -173,7 +173,9 @@ function settingsEndpoints(app) {
         // from the database when any error occurred during multi-user
         // setup, destroying existing accounts and locking everyone out.
         if (createdUser?.id) {
-          await User.delete({ id: createdUser.id }).catch((e) => console.warn("[settings] non-fatal error:", e?.message || e));
+          await User.delete({ id: createdUser.id }).catch((e) =>
+            console.warn("[settings] non-fatal error:", e?.message || e),
+          );
         }
         await SystemSettings._updateSettings({
           multi_user_mode: false,

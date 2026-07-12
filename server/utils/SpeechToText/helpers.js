@@ -31,8 +31,17 @@ async function convertAudioBufferToWav(audioBuffer, extension) {
       throw new Error("Converted wav path is outside the hotdir.");
     return await fs.readFile(wavPath);
   } finally {
-    await fs.rm(sourcePath, { force: true }).catch((e) => console.warn("[helpers] non-fatal error:", e?.message || e));
-    if (wavPath) await fs.rm(wavPath, { force: true }).catch((e) => console.warn("[helpers] non-fatal error:", e?.message || e));
+    await fs
+      .rm(sourcePath, { force: true })
+      .catch((e) =>
+        console.warn("[helpers] non-fatal error:", e?.message || e),
+      );
+    if (wavPath)
+      await fs
+        .rm(wavPath, { force: true })
+        .catch((e) =>
+          console.warn("[helpers] non-fatal error:", e?.message || e),
+        );
   }
 }
 

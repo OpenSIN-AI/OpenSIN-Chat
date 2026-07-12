@@ -25,7 +25,9 @@ function getWorkerIPC() {
           process.removeListener(event, handler),
       };
     }
-  } catch (e) { console.warn("[http-socket] non-fatal error:", e?.message || e); }
+  } catch (e) {
+    console.warn("[http-socket] non-fatal error:", e?.message || e);
+  }
 
   // Fallback for child_process workers
   if (typeof process.send === "function") {
@@ -165,9 +167,7 @@ const httpSocket = {
           const requestId = uuidv4();
 
           consoleLogger.log(
-            pc.blue(
-              `Requesting tool approval for ${skillName} (${requestId})`,
-            ),
+            pc.blue(`Requesting tool approval for ${skillName} (${requestId})`),
           );
 
           // Send introspection message before the approval UI appears
@@ -187,9 +187,7 @@ const httpSocket = {
 
               if (msg.approved) {
                 consoleLogger.log(
-                  pc.green(
-                    `Tool ${skillName} approved by user via Telegram`,
-                  ),
+                  pc.green(`Tool ${skillName} approved by user via Telegram`),
                 );
                 return resolve({
                   approved: true,

@@ -29,9 +29,15 @@ const consoleLogger = require("../logger/console.js");
  * @property {number} temperature - The sampling temperature for the LLM response
  * @property {import("@prisma/client").users} user - The user object for the chat completion to send to the LLM provider for user tracking (optional)
  *
- * @typedef {function(Array<ChatMessage>, ChatCompletionOptions): Promise<ChatCompletionResponse>} getChatCompletionFunction
+ * @callback getChatCompletionFunction
+ * @param {Array<ChatMessage>} messages
+ * @param {ChatCompletionOptions} options
+ * @returns {Promise<ChatCompletionResponse>}
  *
- * @typedef {function(Array<ChatMessage>, ChatCompletionOptions): Promise<import("./chat/LLMPerformanceMonitor").MonitoredStream>} streamGetChatCompletionFunction
+ * @callback streamGetChatCompletionFunction
+ * @param {Array<ChatMessage>} messages
+ * @param {ChatCompletionOptions} options
+ * @returns {Promise<import("./chat/LLMPerformanceMonitor").MonitoredStream>}
  */
 
 /**

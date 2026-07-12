@@ -8,6 +8,7 @@ import "./themes/github-dark.css";
 import "./themes/github.css";
 import { v4 } from "uuid";
 import { resolveDarkMode } from "@/hooks/useTheme";
+import i18next from "i18next";
 
 const markdown = markdownIt({
   html: Appearance.get("renderHTML") ?? false,
@@ -15,6 +16,8 @@ const markdown = markdownIt({
   highlight: function (code: any, lang: any) {
     const uuid = v4();
     const theme = resolveDarkMode() ? "github-dark" : "github";
+    const copyCodeTitle = i18next.t("markdown.copyCode");
+    const copyLabel = i18next.t("markdown.copy");
 
     if (lang && hljs.getLanguage(lang)) {
       try {
@@ -24,9 +27,9 @@ const markdown = markdownIt({
               <div class="flex gap-2">
                 <code class="text-xs opacity-60">${lang || ""}</code>
               </div>
-              <button data-code-snippet data-code="code-${uuid}" class="flex items-center gap-x-1 hover:text-white light:hover:text-slate-900 transition-colors" title="Code kopieren">
+              <button data-code-snippet data-code="code-${uuid}" class="flex items-center gap-x-1 hover:text-white light:hover:text-slate-900 transition-colors" title="${copyCodeTitle}">
                 <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-                <p class="text-xs" style="margin:0;padding:0;">Kopieren</p>
+                <p class="text-xs" style="margin:0;padding:0;">${copyLabel}</p>
               </button>
             </div>
             <pre class="whitespace-pre-wrap px-4 py-3 overflow-x-auto bg-transparent">` +
@@ -42,9 +45,9 @@ const markdown = markdownIt({
       `<div class="whitespace-pre-line w-full hljs ${theme} rounded-lg relative font-mono font-normal text-sm text-slate-200 light:text-slate-800 my-2 bg-zinc-900 light:bg-slate-50 border border-white/5 light:border-slate-200 overflow-hidden">
         <div class="w-full flex items-center text-slate-400 bg-zinc-800/60 light:bg-slate-200/60 px-3 py-1.5 text-xs font-sans justify-between rounded-t-lg">
           <div class="flex gap-2"><code class="text-xs opacity-60"></code></div>
-          <button data-code-snippet data-code="code-${uuid}" class="flex items-center gap-x-1 hover:text-white light:hover:text-slate-900 transition-colors" title="Code kopieren">
+          <button data-code-snippet data-code="code-${uuid}" class="flex items-center gap-x-1 hover:text-white light:hover:text-slate-900 transition-colors" title="${copyCodeTitle}">
             <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-            <p class="text-xs" style="margin:0;padding:0;">Kopieren</p>
+            <p class="text-xs" style="margin:0;padding:0;">${copyLabel}</p>
           </button>
         </div>
         <pre class="whitespace-pre-wrap px-4 py-3 overflow-x-auto bg-transparent">` +

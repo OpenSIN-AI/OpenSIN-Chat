@@ -3,8 +3,7 @@ const RuntimeSettings = require("../runtimeSettings");
 /**
  * SSRF Protection
  *
- * The original AnythingLLM comment said "please don't submit SSRF CVEs" —
- * we're fixing that now. This validator blocks:
+ * This validator blocks internal and metadata-network targets by default:
  *   - All RFC 1918 private ranges (10.x, 172.16-31.x, 192.168.x)
  *   - Loopback (127.x, ::1)
  *   - Link-local (169.254.x, fe80::) — includes AWS/GCP metadata endpoint
