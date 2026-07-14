@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: MIT
-/// <reference types="vite/client" />
-
 // React 19 moved the JSX namespace under React.JSX.
 // Many files still reference the global JSX namespace (e.g. `JSX.Element`).
 // Re-export it globally so existing code continues to type-check.

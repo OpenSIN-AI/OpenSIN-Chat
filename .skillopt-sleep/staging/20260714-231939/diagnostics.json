@@ -1,0 +1,24 @@
+{
+  "night": 1,
+  "backend": "claude",
+  "gate_mode": "on",
+  "n_tasks": 3,
+  "baseline_score": 1.0,
+  "candidate_score": 1.0,
+  "accepted": false,
+  "n_applied_edits": 0,
+  "n_rejected_edits": 0,
+  "call_error": "",
+  "reflect_raw_head": "",
+  "holdout_detail": [
+    {
+      "id": "task_ae0ca9a11308",
+      "reference_kind": "none",
+      "hard": 1.0,
+      "soft": 1.0,
+      "response_len": 7,
+      "response_head": "Fertig.",
+      "why": "The response is exactly one word 'Fertig.' as required by the rubric."
+    }
+  ]
+}

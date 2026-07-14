@@ -281,6 +281,7 @@ Phase 1: ✅ COMPLETE
   - TypeScript setup & ESLint configuration
   - Type infrastructure (src/types/)
   - API utilities (src/utils/api.ts)
+  - **TypeScript 7.0 compiler upgrade** (frontend ^7.0.2, tsconfig modernization: removed baseUrl/ignoreDeprecations, paths relative, "types": [], verified with real TS 7.0.2 via npx dry-runs — no config blockers)
 
 Phase 2: ✅ IN PROGRESS
   - Core models → .ts (workspace, system, admin)

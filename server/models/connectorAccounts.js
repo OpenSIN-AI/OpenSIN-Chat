@@ -185,7 +185,7 @@ const ConnectorAccounts = {
    * Revoke a connector account: revoke token at provider, then delete DB row.
    * @param {number|null} userId
    * @param {string} provider
-   * @param {string?} providerAccount
+   * @param {string | null} providerAccount
    * @returns {Promise<{success: boolean, error?: string}>}
    */
   async revoke(userId, provider, providerAccount = null) {

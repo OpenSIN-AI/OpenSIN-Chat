@@ -17,9 +17,8 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "ignoreDeprecations": "6.0",
-    "baseUrl": ".",
-    "paths": { "@/*": ["src/*"] }
+    "types": [],
+    "paths": { "@/*": ["./src/*"] }
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "coverage"]

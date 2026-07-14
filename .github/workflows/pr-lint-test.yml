@@ -52,6 +52,16 @@ jobs:
           cd collector && yarn lint:check
         continue-on-error: false
 
+      - name: Type-check server (TS 7+)
+        run: |
+          cd server && yarn type-check
+        continue-on-error: false
+
+      - name: Type-check frontend (TS 7+)
+        run: |
+          cd frontend && yarn type-check
+        continue-on-error: false
+
       - name: Test server
         run: |
           cd server && NODE_OPTIONS="--experimental-vm-modules" yarn test --ci
