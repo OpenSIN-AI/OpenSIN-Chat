@@ -926,7 +926,7 @@ const Workspace = {
 
   /** @param {string} slug
    * @param {string|number} fileId
-   * @returns {Promise<{success: boolean, jobId?: string, error?: string}>}
+   * @returns {Promise<{response: Response, data: any}>}
    */
   embedParsedFile: async function (slug, fileId) {
     const response = await fetch(
