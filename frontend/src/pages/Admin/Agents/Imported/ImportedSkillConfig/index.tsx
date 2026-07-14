@@ -7,6 +7,7 @@ import { useEffect, useState, useRef } from "react";
 import { sentenceCase } from "text-case";
 import Toggle from "@/components/lib/Toggle";
 import { useTranslation } from "react-i18next";
+import useConfirm from "@/hooks/useConfirm";
 
 /**
  * Converts setup_args to inputs for the form builder
@@ -228,9 +229,17 @@ function ManageSkillMenu({ config, setImportedSkills }: ManageSkillMenuProps) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const confirm = useConfirm();
 
   async function deleteSkill() {
-    if (!window.confirm(t("importedSkillConfig.confirmDeleteSkill"))) return;
+    if (
+      !(await confirm({
+        title: t("importedSkillConfig.confirmDeleteSkill"),
+        confirmLabel: t("common.delete"),
+        destructive: true,
+      }))
+    )
+      return;
     try {
       const success =
         await System.experimentalFeatures.agentPlugins.deletePlugin(

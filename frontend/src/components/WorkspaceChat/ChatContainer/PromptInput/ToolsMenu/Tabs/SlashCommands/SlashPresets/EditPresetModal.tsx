@@ -4,6 +4,7 @@ import { X } from "@phosphor-icons/react/dist/csr/X";
 import ModalWrapper from "@/components/ModalWrapper";
 import { CMD_REGEX } from "./constants";
 import { useTranslation } from "react-i18next";
+import useConfirm from "@/hooks/useConfirm";
 
 export default function EditPresetModal({
   isOpen,
@@ -13,6 +14,7 @@ export default function EditPresetModal({
   preset,
 }: any) {
   const { t } = useTranslation();
+  const confirm = useConfirm();
   const [command, setCommand] = useState("");
   const [deleting, setDeleting] = useState(false as any);
 
@@ -40,7 +42,14 @@ export default function EditPresetModal({
   };
 
   const handleDelete = async () => {
-    if (!window.confirm(t("slashPresets.editPreset.deleteConfirm"))) return;
+    if (
+      !(await confirm({
+        title: t("slashPresets.editPreset.deleteConfirm"),
+        confirmLabel: t("common.delete"),
+        destructive: true,
+      }))
+    )
+      return;
 
     setDeleting(true);
     await onDelete(preset.id);

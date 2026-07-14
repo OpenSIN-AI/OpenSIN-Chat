@@ -61,6 +61,10 @@ vi.mock("@/hooks/useFilesystem", () => ({
   useFilesystem: () => filesystemState,
 }));
 
+vi.mock("@/hooks/useConfirm", () => ({
+  default: () => vi.fn(() => Promise.resolve(true)),
+}));
+
 vi.mock("@/hooks/useFileBrowser", () => ({
   useFileBrowser: () => fileBrowserState,
 }));

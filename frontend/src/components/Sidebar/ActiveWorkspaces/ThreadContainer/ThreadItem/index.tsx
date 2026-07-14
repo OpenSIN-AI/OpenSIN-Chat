@@ -20,6 +20,7 @@ import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 import { useTranslation } from "react-i18next";
 import { copyText } from "@/utils/clipboard";
+import useConfirm from "@/hooks/useConfirm";
 
 const DEFAULT_THREAD_NAMES = ["Thread", "New Thread", "*New Thread"];
 
@@ -232,6 +233,7 @@ function OptionsMenu({
   const menuRef: any = useRef(null);
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const confirm = useConfirm();
 
   // Ref menu options
   const outsideClick = (e) => {
@@ -338,7 +340,14 @@ function OptionsMenu({
   };
 
   const handleDelete = async () => {
-    if (!window.confirm(t("threadItem.deleteConfirm"))) return;
+    if (
+      !(await confirm({
+        title: t("threadItem.deleteConfirm"),
+        confirmLabel: t("common.delete"),
+        destructive: true,
+      }))
+    )
+      return;
     try {
       const success = await Workspace.threads.delete(
         workspace.slug,

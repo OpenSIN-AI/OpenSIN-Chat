@@ -3,7 +3,7 @@
 // document directory. Shows concrete, accessible batch-embedding progress
 // (processed/total + per-file state) driven by EmbeddingProgressContext SSE.
 // Docs: none (co-located with WorkspaceDirectory; no separate doc.md required).
-import PreLoader from "@/components/Preloader";
+import { LoadingState as SkeletonLoadingState } from "@/components/ui/LoadingState";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { useTranslation } from "react-i18next";
 
@@ -35,12 +35,7 @@ export function LoadingState({ workspace, loadingMessage }: any) {
         aria-live="polite"
         aria-busy="true"
       >
-        <div className="w-full h-[calc(100%-40px)] flex items-center justify-center flex-col gap-y-5">
-          <PreLoader />
-          <p className="text-theme-text-primary text-sm font-semibold animate-pulse text-center w-1/3">
-            {loadingMessage}
-          </p>
-        </div>
+        <SkeletonLoadingState label={loadingMessage} rows={8} />
       </div>
     </div>
   );

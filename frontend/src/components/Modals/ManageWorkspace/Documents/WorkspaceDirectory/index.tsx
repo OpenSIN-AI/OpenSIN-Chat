@@ -16,6 +16,8 @@ import {
   isAllItemsSelected,
 } from "./directionaryUtils";
 import ToolbarButton from "@/components/ui/ToolbarButton";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { Files } from "@phosphor-icons/react/dist/csr/Files";
 
 function WorkspaceDirectory({
   workspace,
@@ -168,11 +170,11 @@ function WorkspaceDirectory({
                 </div>
               ))
             ) : (
-              <div className="w-full h-full flex items-center justify-center">
-                <p className="text-theme-text-placeholder text-sm font-medium">
-                  {t("connectors.directory.no_docs")}
-                </p>
-              </div>
+              <EmptyState
+                icon={<Files size={24} />}
+                title={t("connectors.directory.no_docs")}
+                compact
+              />
             )}
           </div>
 

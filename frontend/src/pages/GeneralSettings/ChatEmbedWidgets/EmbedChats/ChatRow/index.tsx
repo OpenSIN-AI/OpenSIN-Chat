@@ -9,6 +9,7 @@ import paths from "@/utils/paths";
 import Embed from "@/models/embed";
 import { safeJsonParse } from "@/utils/request";
 import { useTranslation } from "react-i18next";
+import useConfirm from "@/hooks/useConfirm";
 
 // Lazy-load the markdown renderer because it is only used inside the response
 // preview modal. This defers loading highlight.js/markdown-it until the user
@@ -32,6 +33,7 @@ type ChatRowProps = {
 
 export default function ChatRow({ chat, onDelete }: ChatRowProps): JSX.Element {
   const { t } = useTranslation();
+  const confirm = useConfirm();
   const {
     isOpen: isPromptOpen,
     openModal: openPromptModal,
@@ -49,7 +51,14 @@ export default function ChatRow({ chat, onDelete }: ChatRowProps): JSX.Element {
   } = useModal();
 
   const handleDelete = async () => {
-    if (!window.confirm(t("embedChats.chatRow.deleteConfirm"))) return false;
+    if (
+      !(await confirm({
+        title: t("embedChats.chatRow.deleteConfirm"),
+        confirmLabel: t("common.delete"),
+        destructive: true,
+      }))
+    )
+      return false;
     await Embed.deleteChat(chat.id);
     onDelete(chat.id);
   };

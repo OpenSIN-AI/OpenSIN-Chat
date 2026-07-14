@@ -4,6 +4,7 @@ import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { userFromStorage } from "@/utils/request";
 import System from "@/models/system";
 import { useTranslation } from "react-i18next";
+import useConfirm from "@/hooks/useConfirm";
 
 export default function ApiKeyRow({
   apiKey,
@@ -19,8 +20,16 @@ export default function ApiKeyRow({
   removeApiKey: (id: number) => void;
 }) {
   const { t } = useTranslation();
+  const confirm = useConfirm();
   const handleDelete = async () => {
-    if (!window.confirm(t("api.row.deleteConfirm"))) return false;
+    if (
+      !(await confirm({
+        title: t("api.row.deleteConfirm"),
+        confirmLabel: t("common.delete"),
+        destructive: true,
+      }))
+    )
+      return false;
 
     const user = userFromStorage();
     const Model = !!user ? Admin : System;

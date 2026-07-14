@@ -7,6 +7,7 @@ import { XCircle } from "@phosphor-icons/react/dist/csr/XCircle";
 import { useDocumentUpload } from "@/hooks/useDocuments";
 import { humanFileSize, milliToHms } from "../../../../../../utils/numbers";
 import PreLoader from "../../../../../Preloader";
+import { ErrorState } from "@/components/ui/ErrorState";
 
 function FileUploadProgressComponent({
   slug,
@@ -133,23 +134,13 @@ function FileUploadProgressComponent({
       <div
         className={`${
           isFadingOut ? "file-upload-fadeout" : "file-upload"
-        } h-14 px-2 py-2 flex items-center gap-x-4 rounded-lg bg-error/40 light:bg-error/30 light:border-solid light:border-error/40 border border-transparent`}
+        } px-2 py-2 flex items-center gap-x-4 rounded-lg bg-error/40 light:bg-error/30 light:border-solid light:border-error/40 border border-transparent`}
       >
-        <div className="w-6 h-6 flex-shrink-0">
-          <XCircle
-            color="var(--theme-bg-primary)"
-            className="w-6 h-6 stroke-white bg-error rounded-full p-1 w-full h-full"
-            aria-hidden="true"
-          />
-        </div>
-        <div className="flex flex-col">
-          <p className="text-white light:text-red-600 text-xs font-semibold">
-            {truncate(file.name, 30)}
-          </p>
-          <p className="text-red-100 light:text-red-600 text-xs font-medium">
-            {error}
-          </p>
-        </div>
+        <ErrorState
+          title={t("uploadProgress.uploadFailed")}
+          error={error}
+          compact
+        />
       </div>
     );
   }

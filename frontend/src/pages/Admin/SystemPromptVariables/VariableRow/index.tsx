@@ -10,6 +10,7 @@ import EditVariableModal from "./EditVariableModal";
 import { truncate } from "@/utils/strings";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import logger from "@/utils/logger";
+import useConfirm from "@/hooks/useConfirm";
 
 type VariableType = "system" | "user" | "workspace" | "static";
 
@@ -36,15 +37,18 @@ export default function VariableRow({
   const { t } = useTranslation();
   const rowRef = useRef<HTMLTableRowElement>(null);
   const { isOpen, openModal, closeModal } = useModal();
+  const confirm = useConfirm();
 
   const handleDelete = async () => {
     if (!variable.id) return;
     if (
-      !window.confirm(
-        t("admin.systemPromptVariables.page.deleteConfirm", {
+      !(await confirm({
+        title: t("admin.systemPromptVariables.page.deleteConfirm", {
           key: variable.key,
         }),
-      )
+        confirmLabel: t("common.delete"),
+        destructive: true,
+      }))
     )
       return false;
 

@@ -17,6 +17,7 @@ import ThreadItem from "../ThreadItem";
 import { useDroppable } from "@dnd-kit/core";
 import paths from "@/utils/paths";
 import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
+import useConfirm from "@/hooks/useConfirm";
 
 const FOLDER_COLLAPSE_KEY = "opensin_folder_collapse_state";
 
@@ -173,6 +174,7 @@ function ThreadFolderItem({
 }: any) {
   const { threadSlug = null } = useParams();
   const { t } = useTranslation();
+  const confirm = useConfirm();
   const containsActiveThread = (threads as any).some(
     (t) => t.slug === threadSlug,
   );
@@ -233,9 +235,11 @@ function ThreadFolderItem({
 
   async function handleDelete() {
     if (
-      !window.confirm(
-        t("threadFolderItem.deleteConfirm", { name: folder.name }),
-      )
+      !(await confirm({
+        title: t("threadFolderItem.deleteConfirm", { name: folder.name }),
+        confirmLabel: t("common.delete"),
+        destructive: true,
+      }))
     )
       return;
     try {

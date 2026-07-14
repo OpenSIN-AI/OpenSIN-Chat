@@ -12,6 +12,7 @@ import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import { useTranslation } from "react-i18next";
 import useEventLogs from "@/hooks/useEventLogs";
 import AdminContentPanel from "@/components/AdminContentPanel";
+import useConfirm from "@/hooks/useConfirm";
 
 type LogResult = {
   logs?: any[];
@@ -40,9 +41,17 @@ export default function AdminLogs(): JSX.Element {
 
   const logs = result?.logs ?? [];
   const canNext = result?.hasPages ?? false;
+  const confirm = useConfirm();
 
   const handleResetLogs = async () => {
-    if (!window.confirm(t("event.clearConfirm"))) return;
+    if (
+      !(await confirm({
+        title: t("event.clearConfirm"),
+        confirmLabel: t("common.confirm"),
+        destructive: true,
+      }))
+    )
+      return;
     try {
       const { success, error } = await System.clearEventLogs();
       if (success) {

@@ -13,6 +13,7 @@ import showToast from "@/utils/toast";
 import paths from "@/utils/paths";
 import NewRouterModal from "./NewRouterModal";
 import useModelRouters from "@/hooks/useModelRouters";
+import useConfirm from "@/hooks/useConfirm";
 
 export default function ModelRouters() {
   const { t } = useTranslation();
@@ -206,11 +207,16 @@ function RouterRow({
 }: RouterRowProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const confirm = useConfirm();
 
   const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     if (
-      !window.confirm(t("model-router.delete-confirm", { name: router.name }))
+      !(await confirm({
+        title: t("model-router.delete-confirm", { name: router.name }),
+        confirmLabel: t("common.delete"),
+        destructive: true,
+      }))
     )
       return;
 

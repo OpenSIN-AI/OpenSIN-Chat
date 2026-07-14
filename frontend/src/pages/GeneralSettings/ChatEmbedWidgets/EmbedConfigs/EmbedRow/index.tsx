@@ -17,6 +17,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 import { safeJsonParse } from "@/utils/request";
 import { useTranslation } from "react-i18next";
+import useConfirm from "@/hooks/useConfirm";
 
 type Workspace = {
   slug: string;
@@ -40,6 +41,7 @@ type EmbedRowProps = {
 
 export default function EmbedRow({ embed }: EmbedRowProps): JSX.Element {
   const { t } = useTranslation();
+  const confirm = useConfirm();
   const { mutate: mutateEmbeds } = useEmbedConfigs();
   const [enabled, setEnabled] = useState(Number(embed.enabled) === 1);
   const {
@@ -54,7 +56,14 @@ export default function EmbedRow({ embed }: EmbedRowProps): JSX.Element {
   } = useModal();
 
   const handleSuspend = async () => {
-    if (enabled && !window.confirm(t("embedConfigs.embedRow.disableConfirm")))
+    if (
+      enabled &&
+      !(await confirm({
+        title: t("embedConfigs.embedRow.disableConfirm"),
+        confirmLabel: t("common.confirm"),
+        destructive: true,
+      }))
+    )
       return false;
 
     const { success, error } = await Embed.updateEmbed(embed.id, {
@@ -76,7 +85,14 @@ export default function EmbedRow({ embed }: EmbedRowProps): JSX.Element {
     }
   };
   const handleDelete = async () => {
-    if (!window.confirm(t("embedConfigs.embedRow.deleteConfirm"))) return false;
+    if (
+      !(await confirm({
+        title: t("embedConfigs.embedRow.deleteConfirm"),
+        confirmLabel: t("common.delete"),
+        destructive: true,
+      }))
+    )
+      return false;
     const { success, error } = await Embed.deleteEmbed(embed.id);
     if (!success) showToast(error, "error", { clear: true });
     if (success) {

@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 import UploadFile from "../UploadFile";
-import PreLoader from "@/components/Preloader";
 import { memo, useMemo, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import FolderRow from "./FolderRow";
@@ -15,10 +14,14 @@ import MoveToFolderIcon from "./MoveToFolderIcon";
 import { useModal } from "@/hooks/useModal";
 import useDocuments from "@/hooks/useDocuments";
 import useWorkspaceBySlug from "@/hooks/useWorkspaceBySlug";
+import useConfirm from "@/hooks/useConfirm";
 import NewFolderModal from "./NewFolderModal";
 import debounce from "lodash.debounce";
 import { filterFileSearchResults } from "./utils";
 import ToolbarButton from "@/components/ui/ToolbarButton";
+import { LoadingState } from "@/components/ui/LoadingState";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { Files } from "@phosphor-icons/react/dist/csr/Files";
 import ContextMenu from "./ContextMenu";
 import { Tooltip } from "react-tooltip";
 import { safeJsonParse } from "@/utils/request";
@@ -41,6 +44,7 @@ function Directory({
   const { mutate: mutateDocuments } = useDocuments();
   const { mutate: mutateWorkspace } = useWorkspaceBySlug(workspace.slug);
   const { t } = useTranslation();
+  const confirm = useConfirm();
   const amountSelected = useMemo(
     () => Object.keys(selectedItems).length,
     [selectedItems],
@@ -60,7 +64,13 @@ function Directory({
 
   const deleteFiles = async (event) => {
     event.stopPropagation();
-    if (!window.confirm(t("connectors.directory.delete-confirmation"))) {
+    if (
+      !(await confirm({
+        title: t("connectors.directory.delete-confirmation"),
+        confirmLabel: t("common.delete"),
+        destructive: true,
+      }))
+    ) {
       return false;
     }
 
@@ -277,12 +287,7 @@ function Directory({
 
             <div className="overflow-y-auto h-full pt-8">
               {loading ? (
-                <div className="w-full h-full flex items-center justify-center flex-col gap-y-5">
-                  <PreLoader />
-                  <p className="text-theme-text-primary text-sm font-semibold animate-pulse text-center w-1/3">
-                    {loadingMessage}
-                  </p>
-                </div>
+                <LoadingState label={loadingMessage} rows={5} />
               ) : filteredFiles.length > 0 ? (
                 filteredFiles.map(
                   (item, index) =>
@@ -303,11 +308,11 @@ function Directory({
                     ),
                 )
               ) : (
-                <div className="w-full h-full flex items-center justify-center">
-                  <p className="text-theme-text-placeholder text-sm font-medium">
-                    {t("connectors.directory.no-documents")}
-                  </p>
-                </div>
+                <EmptyState
+                  icon={<Files size={24} />}
+                  title={t("connectors.directory.no-documents")}
+                  compact
+                />
               )}
             </div>
             {amountSelected !== 0 && (
