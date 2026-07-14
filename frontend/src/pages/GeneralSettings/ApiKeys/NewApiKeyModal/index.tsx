@@ -41,7 +41,7 @@ export default function NewApiKeyModal({
         name,
       });
       if (!!newApiKey) {
-        setApiKey(newApiKey);
+        setApiKey(newApiKey as ApiKey);
         onSuccess();
       }
       setError(error);

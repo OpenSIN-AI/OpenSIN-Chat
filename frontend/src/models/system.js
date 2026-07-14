@@ -666,7 +666,7 @@ const System = {
       });
   },
   /** @param {object} [data={}]
-   * @returns {Promise<{apiKey: object|null, error: string|null}>} */
+   * @returns {Promise<{apiKey: Record<string, any>|null, error: string|null}>} */
   generateApiKey: async function (data = {}) {
     return fetch(`${API_BASE}/system/generate-api-key`, {
       method: "POST",

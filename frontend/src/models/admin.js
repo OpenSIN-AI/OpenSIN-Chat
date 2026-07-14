@@ -183,7 +183,7 @@ const Admin = {
    * @returns {Promise<{settings: Object, error: string}>} - System preferences object
    */
   /** @param {string[]} [labels=[]]
-   * @returns {Promise<object|null>} */
+   * @returns {Promise<{settings?: Record<string, any>, error?: string}|null>} */
   systemPreferencesByFields: async (labels = []) => {
     return await fetch(
       `${API_BASE}/admin/system-preferences-for?labels=${labels.join(",")}`,
@@ -221,7 +221,7 @@ const Admin = {
       .catch((e) => ({ apiKeys: [], error: e.message }));
   },
   /** @param {object} [data={}]
-   * @returns {Promise<{apiKey: object|null, error: string|null}>} */
+   * @returns {Promise<{apiKey: Record<string, any>|null, error: string|null}>} */
   generateApiKey: async function (data = {}) {
     return fetch(`${API_BASE}/admin/generate-api-key`, {
       method: "POST",

@@ -29,10 +29,10 @@ export default function UploadFile({
     const formEl = e.target;
     const form = new FormData(formEl);
     try {
-      const { response, data } = await Workspace.uploadLink(
+      const { response, data } = (await Workspace.uploadLink(
         workspace.slug,
         String(form.get("link") ?? ""),
-      );
+      )) as { response: { ok: boolean }; data: { error?: string } };
       if (!response.ok) {
         showToast(
           t("connectors.upload.linkUploadError", { error: data.error }),

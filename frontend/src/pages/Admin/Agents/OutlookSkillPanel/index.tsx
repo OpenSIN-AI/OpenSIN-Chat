@@ -77,12 +77,18 @@ export default function OutlookSkillPanel({
         setIsAuthenticated(data.isAuthenticated);
         // Load config from status endpoint
         if (data.config) {
-          setClientId(data.config.clientId || "");
-          setTenantId(data.config.tenantId || "");
-          setClientSecret(data.config.clientSecret || "");
-          setAuthType(data.config.authType || "common");
+          const config = data.config as {
+            clientId?: string;
+            tenantId?: string;
+            clientSecret?: string;
+            authType?: string;
+          };
+          setClientId(config.clientId || "");
+          setTenantId(config.tenantId || "");
+          setClientSecret(config.clientSecret || "");
+          setAuthType(config.authType || "common");
           setConfigDefaultExpanded(
-            !(data.config.clientId && data.config.clientSecret),
+            !(config.clientId && config.clientSecret),
           );
         }
       }
@@ -107,12 +113,18 @@ export default function OutlookSkillPanel({
       setIsMultiUserMode(swrIsMultiUserMode);
       setIsAuthenticated(swrIsAuthenticated);
       if (swrConfig) {
-        setClientId(swrConfig.clientId || "");
-        setTenantId(swrConfig.tenantId || "");
-        setClientSecret(swrConfig.clientSecret || "");
-        setAuthType(swrConfig.authType || "common");
+        const config = swrConfig as {
+          clientId?: string;
+          tenantId?: string;
+          clientSecret?: string;
+          authType?: string;
+        };
+        setClientId(config.clientId || "");
+        setTenantId(config.tenantId || "");
+        setClientSecret(config.clientSecret || "");
+        setAuthType(config.authType || "common");
         setConfigDefaultExpanded(
-          !(swrConfig.clientId && swrConfig.clientSecret),
+          !(config.clientId && config.clientSecret),
         );
       }
       setLoading(false);
