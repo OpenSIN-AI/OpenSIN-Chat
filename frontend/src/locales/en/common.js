@@ -4496,6 +4496,12 @@ const TRANSLATIONS = {
   directoryStates: {
     name: "Name",
     status: "Status",
+    summary: "{{done}} of {{total}} embedded",
+    statusQueued: "Queued",
+    statusEmbedding: "Embedding",
+    statusComplete: "Done",
+    statusFailed: "Failed",
+    chunkProgress: "{{done}}/{{total}} chunks",
     additionalFilesReady: "{{count}} additional file(s) ready to embed",
     addToEmbeddingQueue: "Add to embedding queue",
     addToQueue: "Add to queue",

@@ -4599,6 +4599,12 @@ const TRANSLATIONS = {
   directoryStates: {
     name: "Name",
     status: "Status",
+    summary: "{{done}} von {{total}} eingebettet",
+    statusQueued: "Warteschlange",
+    statusEmbedding: "Einbetten",
+    statusComplete: "Fertig",
+    statusFailed: "Fehlgeschlagen",
+    chunkProgress: "{{done}}/{{total}} Abschnitte",
     additionalFilesReady:
       "{{count}} zusätzliche Datei(en) bereit zum Einbetten",
     addToEmbeddingQueue: "Zur Embedding-Warteschlange hinzufügen",

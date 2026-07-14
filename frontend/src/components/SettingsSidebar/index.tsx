@@ -4,6 +4,7 @@ import paths from "@/utils/paths";
 import useLogo from "@/hooks/useLogo";
 import { House } from "@phosphor-icons/react/dist/csr/House";
 import { List } from "@phosphor-icons/react/dist/csr/List";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import { CaretLeft } from "@phosphor-icons/react/dist/csr/CaretLeft";
 import { Flask } from "@phosphor-icons/react/dist/csr/Flask";
 import { Gear } from "@phosphor-icons/react/dist/csr/Gear";
@@ -49,7 +50,9 @@ function SettingsSidebar() {
   const { logo } = useLogo();
   const { user } = useUser();
   const isMobile = useIsMobileLayout();
-  const sidebarRef = useRef(null);
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const triggerButtonRef = useRef<HTMLButtonElement>(null);
   const [showSidebar, setShowSidebar] = useState(false as any);
   const [showBgOverlay, setShowBgOverlay] = useState(false as any);
 
@@ -64,11 +67,50 @@ function SettingsSidebar() {
     }
   }, [showSidebar]);
 
+  // Focus trap and Escape handling for mobile sidebar overlay
+  useEffect(() => {
+    if (!isMobile || !showSidebar) {
+      // Return focus to trigger when sidebar closes
+      if (!showSidebar && triggerButtonRef.current) {
+        triggerButtonRef.current.focus();
+      }
+      return;
+    }
+
+    // Focus the close button when the sidebar opens
+    closeButtonRef.current?.focus();
+
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        setShowSidebar(false);
+        return;
+      }
+      if (e.key !== "Tab" || !sidebarRef.current) return;
+      const focusable = sidebarRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isMobile, showSidebar]);
+
   if (isMobile) {
     return (
       <>
         <div className="fixed top-0 left-0 right-0 z-10 flex justify-between items-center px-4 py-2 bg-theme-bg-sidebar light:bg-white text-theme-text-secondary shadow-lg h-16">
           <button
+            ref={triggerButtonRef}
             type="button"
             onClick={() => setShowSidebar(true)}
             aria-label={t("common.showSidebar")}
@@ -103,6 +145,9 @@ function SettingsSidebar() {
           />
           <div
             ref={sidebarRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label={t("settings.title")}
             className="h-[100vh] fixed top-0 left-0 rounded-r-[26px] bg-theme-bg-sidebar w-[80%] p-[18px]"
           >
             <div className="w-full h-full flex flex-col overflow-x-hidden justify-between">
@@ -124,6 +169,15 @@ function SettingsSidebar() {
                   >
                     <House className="h-4 w-4" />
                   </a>
+                  <button
+                    ref={closeButtonRef}
+                    type="button"
+                    onClick={() => setShowSidebar(false)}
+                    aria-label={t("common.close")}
+                    className="flex h-9 w-9 items-center justify-center rounded-lg text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary"
+                  >
+                    <X size={18} />
+                  </button>
                 </div>
               </div>
 

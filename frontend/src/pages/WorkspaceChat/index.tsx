@@ -31,6 +31,7 @@ import {
   CommandPalette,
   type CommandItem,
 } from "@/components/Workspace/CommandPalette/CommandPalette";
+import { NAVIGATE_HOME_EVENT } from "@/utils/keyboardShortcuts";
 
 export default function WorkspaceChat() {
   const { loading, requiresAuth, mode } = usePasswordModal();
@@ -179,6 +180,20 @@ function WorkspaceChatLayout() {
     window.addEventListener("keydown", handleCommandShortcut);
     return () => window.removeEventListener("keydown", handleCommandShortcut);
   }, [commandOpen, createChat]);
+
+  // ⌘I shortcut: navigate to current workspace or home via React Router.
+  useEffect(() => {
+    const handleNavigateHome = () => {
+      if (slug) {
+        navigate(paths.workspace.chat(slug));
+      } else {
+        navigate(paths.home());
+      }
+    };
+    window.addEventListener(NAVIGATE_HOME_EVENT, handleNavigateHome);
+    return () =>
+      window.removeEventListener(NAVIGATE_HOME_EVENT, handleNavigateHome);
+  }, [navigate, slug]);
 
   return (
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-primary light:bg-[#f9fafb] flex">
