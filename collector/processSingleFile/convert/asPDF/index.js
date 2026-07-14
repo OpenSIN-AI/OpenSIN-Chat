@@ -81,7 +81,8 @@ async function asPdf({
     // When a significant fraction of pages have no text we OCR the document
     // and merge — preferring the (cleaner) digital text where it exists and
     // filling the gaps with OCR output.
-    const totalPages = Number(docs[0]?.metadata?.pdf?.totalPages) || docs.length;
+    const totalPages =
+      Number(docs[0]?.metadata?.pdf?.totalPages) || docs.length;
     const textPages = docs.length;
     // If fewer than this ratio of pages carry text, treat it as a mixed/
     // partially-scanned document. Configurable via env; set to 0 to disable.

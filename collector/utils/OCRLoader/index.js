@@ -133,14 +133,16 @@ async function nimOcrImage(imageBuffer) {
  * @param {Buffer[]} imageBuffers
  * @returns {Promise<string[]>}
  */
-async function nimOcrBatch(imageBuffers) {
+async function _nimOcrBatch(imageBuffers) {
   const results = new Array(imageBuffers.length).fill("");
   const batches = [];
   for (let i = 0; i < imageBuffers.length; i += NIM_CONCURRENCY) {
-    batches.push(imageBuffers.slice(i, i + NIM_CONCURRENCY).map((buf, j) => ({
-      idx: i + j,
-      buf,
-    })));
+    batches.push(
+      imageBuffers.slice(i, i + NIM_CONCURRENCY).map((buf, j) => ({
+        idx: i + j,
+        buf,
+      }))
+    );
   }
 
   for (const batch of batches) {
@@ -149,7 +151,9 @@ async function nimOcrBatch(imageBuffers) {
         try {
           return { idx, text: await nimOcrImage(buf) };
         } catch (e) {
-          console.error(`[OCRLoader] NIM OCR error on image ${idx}: ${e.message}`);
+          console.error(
+            `[OCRLoader] NIM OCR error on image ${idx}: ${e.message}`
+          );
           return { idx, text: "" };
         }
       })
@@ -173,7 +177,12 @@ async function createTesseractWorkerWithTimeout(languages, cachePath) {
   const workerPromise = createWorker(languages, OEM.LSTM_ONLY, workerOptions);
   workerPromise
     .then((worker) => {
-      if (timedOut) worker?.terminate?.().catch((e) => console.warn("[index] non-fatal error:", e?.message || e));
+      if (timedOut)
+        worker
+          ?.terminate?.()
+          .catch((e) =>
+            console.warn("[index] non-fatal error:", e?.message || e)
+          );
     })
     .catch((e) => console.warn("[index] non-fatal error:", e?.message || e));
 
@@ -210,8 +219,8 @@ class OCRLoader {
       OCR_ENGINE === "tesseract"
         ? "tesseract.js (fallback)"
         : NIM_API_KEY
-          ? `NVIDIA NIM (${NIM_MODEL})`
-          : "NIM (no API key — will fall back to tesseract)";
+        ? `NVIDIA NIM (${NIM_MODEL})`
+        : "NIM (no API key — will fall back to tesseract)";
 
     this.log(
       `OCRLoader initialized — engine: ${engineLabel}, languages:`,
@@ -278,7 +287,6 @@ class OCRLoader {
       isEvalSupported: false,
     });
 
-    const documents = [];
     const meta = await pdfDocument.getMetadata().catch(() => null);
     const metadata = {
       source: filePath,
@@ -358,7 +366,9 @@ class OCRLoader {
     for (let b = 0; b < pageNumbers.length; b += BATCH_SIZE) {
       if (Date.now() - startTime > maxExecutionTime) {
         this.log(
-          `OCR timeout reached at page ${b + 1}/${totalPages}, returning partial results`
+          `OCR timeout reached at page ${
+            b + 1
+          }/${totalPages}, returning partial results`
         );
         break;
       }
@@ -440,9 +450,8 @@ class OCRLoader {
         .filter((r) => r.status === "fulfilled")
         .map((r) => r.value);
       if (workerPool.length === 0) {
-        const firstError = workerResults.find(
-          (r) => r.status === "rejected"
-        )?.reason?.message;
+        const firstError = workerResults.find((r) => r.status === "rejected")
+          ?.reason?.message;
         throw new Error(
           firstError
             ? `Failed to create any OCR workers: ${firstError}`
@@ -514,7 +523,9 @@ class OCRLoader {
                 });
               } catch (pageErr) {
                 this.log(
-                  `[Worker ${workerIndex + 1}] error on pg${pageNum}: ${pageErr.message}`
+                  `[Worker ${workerIndex + 1}] error on pg${pageNum}: ${
+                    pageErr.message
+                  }`
                 );
               }
             }
@@ -530,7 +541,9 @@ class OCRLoader {
         return documents;
       };
 
-      const pagesPromise = processPages().catch((e) => console.warn("[index] non-fatal error:", e?.message || e));
+      const pagesPromise = processPages().catch((e) =>
+        console.warn("[index] non-fatal error:", e?.message || e)
+      );
       await Promise.race([timeoutPromise, pagesPromise]);
     } catch (e) {
       this.log(`Error: ${e.message}`, e.stack);
@@ -586,7 +599,9 @@ class OCRLoader {
           try {
             const sharp = (await import("sharp")).default;
             imageBuffer = await sharp(filePath).rotate().png().toBuffer();
-          } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
+          } catch (e) {
+            console.warn("[index] non-fatal error:", e?.message || e);
+          }
 
           const text = await nimOcrImage(imageBuffer);
           this.log(`Completed NIM OCR of ${documentTitle}!`, {
@@ -625,7 +640,9 @@ class OCRLoader {
             const sharp = (await import("sharp")).default;
             const oriented = await sharp(filePath).rotate().png().toBuffer();
             recognizeInput = oriented;
-          } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
+          } catch (e) {
+            console.warn("[index] non-fatal error:", e?.message || e);
+          }
           const { data } = await worker.recognize(recognizeInput, {}, "text");
           content = data.text;
         };
@@ -693,7 +710,9 @@ class OCRLoader {
               try {
                 const sharp = (await import("sharp")).default;
                 buf = await sharp(filePaths[idx]).rotate().png().toBuffer();
-              } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
+              } catch (e) {
+                console.warn("[index] non-fatal error:", e?.message || e);
+              }
               return buf;
             } catch {
               return null;
@@ -712,7 +731,11 @@ class OCRLoader {
               try {
                 return { idx: batchIndices[j], text: await nimOcrImage(buf) };
               } catch (e) {
-                this.log(`NIM batch error on ${filePaths[batchIndices[j]]}: ${e.message}`);
+                this.log(
+                  `NIM batch error on ${filePaths[batchIndices[j]]}: ${
+                    e.message
+                  }`
+                );
                 return { idx: batchIndices[j], text: null };
               }
             })
@@ -764,7 +787,9 @@ class OCRLoader {
                 .png()
                 .toBuffer();
               recognizeInput = oriented;
-            } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
+            } catch (e) {
+              console.warn("[index] non-fatal error:", e?.message || e);
+            }
             const { data } = await worker.recognize(recognizeInput, {}, "text");
             results[idx] = data.text;
           } catch (e) {

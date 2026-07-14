@@ -142,7 +142,9 @@ async function downloadURIToFile(url, maxTimeout = 10_000) {
     } catch (pipelineError) {
       try {
         fs.rmSync(localFilePath, { force: true });
-      } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
+      } catch (e) {
+        console.warn("[index] non-fatal error:", e?.message || e);
+      }
       throw pipelineError;
     }
 

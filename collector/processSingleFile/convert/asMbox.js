@@ -40,7 +40,7 @@ async function asMbox({
     };
   }
 
-  let mails = [];
+  let mails;
   const mboxStream = fs.createReadStream(fullFilePath);
   try {
     mails = await mboxParser(mboxStream).catch((error) => {

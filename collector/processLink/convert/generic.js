@@ -198,11 +198,15 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
           if (page && !page.isClosed()) {
             try {
               req.continue();
-            } catch (e) { console.warn("[generic] non-fatal error:", e?.message || e); }
+            } catch (e) {
+              console.warn("[generic] non-fatal error:", e?.message || e);
+            }
           } else {
             try {
               req.abort();
-            } catch (e) { console.warn("[generic] non-fatal error:", e?.message || e); }
+            } catch (e) {
+              console.warn("[generic] non-fatal error:", e?.message || e);
+            }
           }
         };
         page.on("request", onRequest);
@@ -216,7 +220,9 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
           response = await page.goto(entryLink, gotoOptions);
         } catch (navErr) {
           if (navErr.message?.includes("ERR_TOO_MANY_REDIRECTS")) {
-            throw new Error(`Too many redirects for ${entryLink}`);
+            throw new Error(`Too many redirects for ${entryLink}`, {
+              cause: navErr,
+            });
           }
           throw navErr;
         }
@@ -260,7 +266,12 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
         }
         return { pageContent: originalContent };
       } finally {
-        if (page) await page.close().catch((e) => console.warn("[generic] non-fatal error:", e?.message || e));
+        if (page)
+          await page
+            .close()
+            .catch((e) =>
+              console.warn("[generic] non-fatal error:", e?.message || e)
+            );
         await browserPool.release(browser);
       }
     };
@@ -309,7 +320,9 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
               });
             } catch (navErr) {
               if (navErr.message?.includes("ERR_TOO_MANY_REDIRECTS"))
-                throw new Error(`Too many redirects for ${this.webPath}`);
+                throw new Error(`Too many redirects for ${this.webPath}`, {
+                  cause: navErr,
+                });
               throw navErr;
             }
 

@@ -50,7 +50,6 @@ function isDangerousEntryName(fileName = "") {
 
 function resolveYauzl() {
   try {
-    // eslint-disable-next-line import/no-extraneous-dependencies
     return require("yauzl");
   } catch {
     return null;
@@ -76,7 +75,8 @@ async function validateWithYauzl(
   { maxTotalBytes, maxFiles, maxRatio }
 ) {
   const yauzl = resolveYauzl();
-  if (!yauzl) return { safe: false, available: false, reason: "yauzl not available" };
+  if (!yauzl)
+    return { safe: false, available: false, reason: "yauzl not available" };
 
   return await new Promise((resolve) => {
     yauzl.open(filePath, { lazyEntries: true }, (err, zip) => {
@@ -168,7 +168,8 @@ async function validateWithYauzl(
  */
 function validateWithAdmZip(filePath, { maxTotalBytes, maxFiles, maxRatio }) {
   const AdmZip = resolveAdmZip();
-  if (!AdmZip) return { safe: false, available: false, reason: "adm-zip not available" };
+  if (!AdmZip)
+    return { safe: false, available: false, reason: "adm-zip not available" };
   try {
     const archive = new AdmZip(filePath);
     const entries = archive.getEntries();

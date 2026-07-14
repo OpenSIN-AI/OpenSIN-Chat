@@ -77,7 +77,8 @@ class YoutubeLoader {
       }
     } catch (e) {
       throw new Error(
-        `Failed to get YouTube video transcription: ${e?.message}`
+        `Failed to get YouTube video transcription: ${e?.message}`,
+        { cause: e }
       );
     }
     return [

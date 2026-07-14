@@ -110,7 +110,9 @@ class PaperlessNgxLoader {
         writeStream.destroy();
         try {
           fs.rmSync(tempPath, { force: true });
-        } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
+        } catch (e) {
+          console.warn("[index] non-fatal error:", e?.message || e);
+        }
         throw e;
       }
     } else {
@@ -125,7 +127,9 @@ class PaperlessNgxLoader {
       } catch (e) {
         try {
           fs.rmSync(tempPath, { force: true });
-        } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
+        } catch (e) {
+          console.warn("[index] non-fatal error:", e?.message || e);
+        }
         throw e;
       }
     }
@@ -249,7 +253,8 @@ class PaperlessNgxLoader {
       return documentsWithContent.filter((doc) => !!doc.content);
     } catch (error) {
       throw new Error(
-        `Failed to fetch documents from Paperless-ngx: ${error.message}`
+        `Failed to fetch documents from Paperless-ngx: ${error.message}`,
+        { cause: error }
       );
     }
   }
@@ -277,13 +282,17 @@ class PaperlessNgxLoader {
       } finally {
         try {
           fs.rmSync(tempPath, { force: true });
-        } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
+        } catch (e) {
+          console.warn("[index] non-fatal error:", e?.message || e);
+        }
       }
     } catch (error) {
       if (downloaded?.tempPath) {
         try {
           fs.rmSync(downloaded.tempPath, { force: true });
-        } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
+        } catch (e) {
+          console.warn("[index] non-fatal error:", e?.message || e);
+        }
       }
       // eslint-disable-next-line no-console
       console.error(

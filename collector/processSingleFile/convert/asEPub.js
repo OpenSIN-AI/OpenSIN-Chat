@@ -16,7 +16,7 @@ async function asEPub({
   options = {},
   metadata = {},
 }) {
-  let content = "";
+  let content;
   try {
     await guardArchiveOrThrow(fullFilePath, filename);
   } catch (err) {

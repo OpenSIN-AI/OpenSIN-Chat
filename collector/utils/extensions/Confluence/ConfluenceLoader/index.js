@@ -96,7 +96,7 @@ class ConfluencePagesLoader {
       return await response.json();
     } catch (error) {
       this.log("Error:", error);
-      throw new Error(error.message);
+      throw new Error(error.message, { cause: error });
     } finally {
       if (prevTlsSetting === undefined)
         delete process.env.NODE_TLS_REJECT_UNAUTHORIZED;

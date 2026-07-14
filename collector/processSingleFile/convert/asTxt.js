@@ -62,7 +62,7 @@ async function asTxt({
   options = {},
   metadata = {},
 }) {
-  let content = "";
+  let content;
   try {
     content = readTextFileWithEncoding(fullFilePath);
   } catch (err) {

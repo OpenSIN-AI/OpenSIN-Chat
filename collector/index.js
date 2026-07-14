@@ -40,7 +40,7 @@ if (
 const corsOriginEnv = process.env.CORS_ORIGIN || "";
 if (corsOriginEnv === "*") {
   throw new Error(
-    "[collector.boot] CORS_ORIGIN=* is forbidden; supply an explicit comma-separated list of allowed origins.",
+    "[collector.boot] CORS_ORIGIN=* is forbidden; supply an explicit comma-separated list of allowed origins."
   );
 }
 const corsOrigin = corsOriginEnv
@@ -49,11 +49,9 @@ const corsOrigin = corsOriginEnv
       .map((s) => s.trim())
       .filter(Boolean)
   : process.env.NODE_ENV === "production"
-    ? false
-    : true;
-app.use(
-  cors({ origin: corsOrigin.length === 1 ? corsOrigin[0] : corsOrigin }),
-);
+  ? false
+  : true;
+app.use(cors({ origin: corsOrigin.length === 1 ? corsOrigin[0] : corsOrigin }));
 app.use(
   bodyParser.text({ limit: FILE_LIMIT }),
   bodyParser.json({ limit: FILE_LIMIT }),

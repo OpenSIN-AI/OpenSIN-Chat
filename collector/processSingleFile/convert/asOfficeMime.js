@@ -36,7 +36,7 @@ async function asOfficeMime({
       documents: [],
     };
   }
-  let content = "";
+  let content;
   try {
     await guardArchiveOrThrow(fullFilePath, filename);
   } catch (err) {
