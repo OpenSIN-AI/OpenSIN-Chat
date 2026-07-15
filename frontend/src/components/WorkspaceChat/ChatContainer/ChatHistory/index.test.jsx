@@ -3,7 +3,7 @@
 import { describe, it, expect, vi, beforeEach, afterAll } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import { createRef } from "react";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 import { VirtuosoMockContext } from "react-virtuoso";
 
 vi.mock("react-i18next", async () => {

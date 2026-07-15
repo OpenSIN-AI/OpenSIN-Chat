@@ -5,7 +5,7 @@ import { Plug } from "@phosphor-icons/react/dist/csr/Plug";
 import { Package } from "@phosphor-icons/react/dist/csr/Package";
 import { FlowArrow } from "@phosphor-icons/react/dist/csr/FlowArrow";
 import { Hammer } from "@phosphor-icons/react/dist/csr/Hammer";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import paths from "@/utils/paths";
 import AgentFlowsList from "./AgentFlows";
 import { MCPServersList, MCPServerHeader } from "./MCPServers";

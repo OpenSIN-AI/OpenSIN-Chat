@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router";
 import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
 import { Check } from "@phosphor-icons/react/dist/csr/Check";
 import { CloudArrowUp } from "@phosphor-icons/react/dist/csr/CloudArrowUp";

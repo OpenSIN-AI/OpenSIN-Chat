@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { memo, useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { saveAs } from "file-saver";
 import { useTranslation } from "react-i18next";
 import { DownloadSimple } from "@phosphor-icons/react/dist/csr/DownloadSimple";

@@ -8,7 +8,7 @@ import { Info } from "@phosphor-icons/react/dist/csr/Info";
 import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 import { Tooltip } from "react-tooltip";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import useProviderModels from "@/hooks/useProviderModels";
 
 export default function OllamaLLMOptions({ settings }: any) {

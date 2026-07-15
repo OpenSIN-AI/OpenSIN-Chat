@@ -4,7 +4,7 @@ import useUser from "@/hooks/useUser";
 import paths from "@/utils/paths";
 import { ArrowUUpLeft } from "@phosphor-icons/react/dist/csr/ArrowUUpLeft";
 import { Wrench } from "@phosphor-icons/react/dist/csr/Wrench";
-import { Link, useMatch } from "react-router-dom";
+import { Link, useMatch } from "react-router";
 
 export default function SettingsButton() {
   const { t } = useTranslation();

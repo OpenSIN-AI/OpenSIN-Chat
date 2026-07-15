@@ -5,7 +5,7 @@ import { ChatCircleText } from "@phosphor-icons/react/dist/csr/ChatCircleText";
 import { Globe } from "@phosphor-icons/react/dist/csr/Globe";
 import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import { useTranslation } from "react-i18next";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router";
 import ChatSidebar from "../ChatSidebar";
 import { MemoriesProvider, useMemoriesContext } from "./MemoriesContext";
 import PersonalizationToggle from "./PersonalizationToggle";

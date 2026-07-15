@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { MemoryRouter, Routes, Route } from "react-router-dom";
+import { MemoryRouter, Routes, Route } from "react-router";
 
 // Stub dnd-kit so we don't need a real DndContext
 vi.mock("@dnd-kit/core", () => ({
@@ -25,8 +25,8 @@ vi.mock("@/hooks/useScrollActiveItemIntoView", () => ({
 const navigateMock = vi.fn();
 const invalidateThreadsMock = vi.fn();
 
-vi.mock("react-router-dom", async () => {
-  const actual = await vi.importActual("react-router-dom");
+vi.mock("react-router", async () => {
+  const actual = await vi.importActual("react-router");
   return {
     ...actual,
     useNavigate: () => navigateMock,

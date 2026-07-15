@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Docs: RunHistoryPage.doc.md
 import { useState, ReactNode } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/SettingsSidebar";
 import { ArrowLeft } from "@phosphor-icons/react/dist/csr/ArrowLeft";

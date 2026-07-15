@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { ArrowSquareOut } from "@phosphor-icons/react/dist/csr/ArrowSquareOut";
 import useSystemSettings from "@/hooks/useSystemSettings";
 import { PROVIDER_PRIVACY_MAP } from "./constants";

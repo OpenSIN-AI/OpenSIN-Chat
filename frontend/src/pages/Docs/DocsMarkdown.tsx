@@ -10,7 +10,7 @@
 //  - a header bar with a language label and a copy-to-clipboard button on every
 //    fenced code block (state-of-the-art docs code blocks).
 import { useEffect, useMemo, useRef, type MouseEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import MarkdownIt from "markdown-it";
 import hljs from "@/utils/chat/hljs";

@@ -6,9 +6,9 @@ import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { CaretLeft } from "@phosphor-icons/react/dist/csr/CaretLeft";
 import AnythingInfinityLogo from "@/media/logo/opensin-icon.svg";
 import { useState, useRef, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router";
 import paths from "@/utils/paths";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
 
 type Flow = {

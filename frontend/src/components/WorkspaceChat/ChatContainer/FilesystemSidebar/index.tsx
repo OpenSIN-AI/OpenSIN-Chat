@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { FolderOpen } from "@phosphor-icons/react/dist/csr/FolderOpen";
 import { Cpu } from "@phosphor-icons/react/dist/csr/Cpu";
 import { HardDrive } from "@phosphor-icons/react/dist/csr/HardDrive";

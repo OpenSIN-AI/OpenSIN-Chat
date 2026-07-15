@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useEffect, useRef, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/SettingsSidebar";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";

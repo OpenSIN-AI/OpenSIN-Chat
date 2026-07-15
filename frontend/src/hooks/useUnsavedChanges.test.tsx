@@ -2,18 +2,18 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { renderHook } from "@testing-library/react";
 
-// Mock react-router-dom — useBlocker returns a fake blocker object
+// Mock react-router — useBlocker returns a fake blocker object
 const mockBlocker = {
   state: "unblocked",
   reset: vi.fn(),
   proceed: vi.fn(),
 };
 
-vi.mock("react-router-dom", () => ({
+vi.mock("react-router", () => ({
   useBlocker: vi.fn(() => mockBlocker),
 }));
 
-import { useBlocker } from "react-router-dom";
+import { useBlocker } from "react-router";
 import { useUnsavedChanges, useUnsavedChangesGuard } from "./useUnsavedChanges";
 
 describe("useUnsavedChanges", () => {

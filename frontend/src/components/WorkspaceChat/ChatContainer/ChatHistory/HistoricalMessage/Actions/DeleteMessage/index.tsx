@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import Workspace from "@/models/workspace";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { invalidateChatHistory } from "@/hooks/useChatHistory";
 import logger from "@/utils/logger";
 import {

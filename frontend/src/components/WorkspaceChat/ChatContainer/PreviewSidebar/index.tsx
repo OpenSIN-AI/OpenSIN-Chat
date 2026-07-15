@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { memo, useState, useRef, useEffect, Suspense, lazy } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { ArrowSquareOut } from "@phosphor-icons/react/dist/csr/ArrowSquareOut";
 import { DownloadSimple } from "@phosphor-icons/react/dist/csr/DownloadSimple";

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useMemo } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 
 /**
  * Returns a URLSearchParams instance for the current URL query string.

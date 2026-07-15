@@ -3,7 +3,7 @@
 // Documentation landing page shown at /docs. Presents an overview of every
 // category with its pages as cards, instead of redirecting straight into a
 // single document.
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
 import { Rocket } from "@phosphor-icons/react/dist/csr/Rocket";
 import { Code } from "@phosphor-icons/react/dist/csr/Code";

@@ -3,7 +3,7 @@
 // Docs: FileSystemSkillPanel.doc.md
 import React, { useEffect, useState, useRef } from "react";
 import Toggle, { SimpleToggleSwitch } from "@/components/lib/Toggle";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { useTranslation, Trans } from "react-i18next";
 import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import { File } from "@phosphor-icons/react/dist/csr/File";

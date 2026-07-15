@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import paths from "@/utils/paths";
 import {
   getDefaultSkills,

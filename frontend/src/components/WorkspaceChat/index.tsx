@@ -9,7 +9,7 @@ import LoadingChat from "./LoadingChat";
 import ChatContainer from "./ChatContainer";
 import paths from "@/utils/paths";
 import ModalWrapper from "../ModalWrapper";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { DnDFileUploaderProvider } from "./ChatContainer/DnDWrapper";
 import { AgentRunsProvider } from "./ChatContainer/AgentSessionsSidebar/AgentRunsContext";
 import { WarningCircle } from "@phosphor-icons/react/dist/csr/WarningCircle";

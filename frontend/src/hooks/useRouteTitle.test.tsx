@@ -2,7 +2,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook } from "@testing-library/react";
 
-vi.mock("react-router-dom", () => ({
+vi.mock("react-router", () => ({
   useLocation: vi.fn(),
 }));
 
@@ -11,7 +11,7 @@ vi.mock("react-i18next", async () => {
   return createI18nMock();
 });
 
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 import useRouteTitle from "./useRouteTitle";
 
 describe("useRouteTitle", () => {

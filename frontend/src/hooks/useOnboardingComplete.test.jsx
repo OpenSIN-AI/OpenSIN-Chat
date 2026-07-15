@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi } from "vitest";
 import { renderHook, waitFor } from "@testing-library/react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { SWRConfig } from "swr";
 import React from "react";
 
@@ -10,8 +10,8 @@ vi.mock("@/hooks", async (importOriginal) => {
   const actual = await importOriginal();
   return { ...actual, useSystemConfig: vi.fn() };
 });
-vi.mock("react-router-dom", async () => {
-  const actual = await vi.importActual("react-router-dom");
+vi.mock("react-router", async () => {
+  const actual = await vi.importActual("react-router");
   return { ...actual, useNavigate: vi.fn() };
 });
 

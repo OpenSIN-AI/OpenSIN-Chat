@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useState, useEffect, useRef, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { useSpeechRecognition } from "react-speech-recognition";
 import { useTranslation } from "react-i18next";
 import Workspace from "@/models/workspace";

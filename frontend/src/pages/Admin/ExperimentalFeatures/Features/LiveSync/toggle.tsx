@@ -7,7 +7,7 @@ import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
 import { ArrowSquareOut } from "@phosphor-icons/react/dist/csr/ArrowSquareOut";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import Toggle from "@/components/lib/Toggle";
 
 interface LiveSyncToggleProps {

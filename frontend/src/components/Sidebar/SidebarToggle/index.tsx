@@ -7,7 +7,7 @@ import React, {
   useMemo,
   useCallback,
 } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 import { Tooltip } from "react-tooltip";
 import { SidebarSimple } from "@phosphor-icons/react/dist/csr/SidebarSimple";
 import { useTranslation } from "react-i18next";

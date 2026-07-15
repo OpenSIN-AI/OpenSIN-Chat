@@ -21,7 +21,7 @@ import type { Icon } from "@phosphor-icons/react/dist/lib/types";
 import { useGoogleCalendarAgent } from "@/hooks/useGoogleAgent";
 import { getGoogleCalendarSkills, filterSkillCategories } from "./utils";
 import { Tooltip } from "react-tooltip";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import paths from "@/utils/paths";
 import GoogleCalendarIcon from "./google-calendar.png";
 

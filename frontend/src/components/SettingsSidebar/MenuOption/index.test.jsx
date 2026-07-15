@@ -8,7 +8,7 @@ vi.mock("react-i18next", async () => {
   return createI18nMock();
 });
 
-vi.mock("react-router-dom", () => ({
+vi.mock("react-router", () => ({
   Link: ({ children, to, onClick, ...props }) => (
     <a href={to} onClick={onClick} {...props}>
       {children}

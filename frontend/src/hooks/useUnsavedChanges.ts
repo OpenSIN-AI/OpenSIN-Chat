@@ -3,7 +3,7 @@
 // Purpose: Reusable hook that blocks navigation when a form has unsaved changes.
 // Uses React Router's useBlocker (v6.30+) + beforeunload for tab/window close.
 import { useCallback, useEffect, useMemo } from "react";
-import { useBlocker } from "react-router-dom";
+import { useBlocker } from "react-router";
 
 /**
  * Block route navigation and tab close when `hasChanges` is true.

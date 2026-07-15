@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import Sidebar, { SidebarMobileHeader } from "@/components/Sidebar";
 import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
@@ -13,7 +13,7 @@ import { Robot } from "@phosphor-icons/react/dist/csr/Robot";
 import { User } from "@phosphor-icons/react/dist/csr/User";
 import { Wrench } from "@phosphor-icons/react/dist/csr/Wrench";
 import paths from "@/utils/paths";
-import { Link, NavLink, Navigate } from "react-router-dom";
+import { Link, NavLink, Navigate } from "react-router";
 import GeneralAppearance from "./GeneralAppearance";
 import ChatSettings from "./ChatSettings";
 import VectorDatabase from "./VectorDatabase";

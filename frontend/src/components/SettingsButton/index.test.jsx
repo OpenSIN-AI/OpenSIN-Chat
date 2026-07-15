@@ -7,7 +7,7 @@ vi.mock("@/hooks/useUser", () => ({
   default: vi.fn(),
 }));
 
-vi.mock("react-router-dom", () => ({
+vi.mock("react-router", () => ({
   Link: ({ to, children, ...props }) => (
     <a href={to} {...props}>
       {children}
@@ -22,7 +22,7 @@ vi.mock("react-i18next", async () => {
 });
 
 import useUser from "@/hooks/useUser";
-import { useMatch } from "react-router-dom";
+import { useMatch } from "react-router";
 
 describe("SettingsButton", () => {
   it("renders settings link when not in settings route", () => {

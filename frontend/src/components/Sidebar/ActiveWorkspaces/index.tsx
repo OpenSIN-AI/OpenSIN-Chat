@@ -3,7 +3,7 @@ import { memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { Link, useMatch, useParams } from "react-router-dom";
+import { Link, useMatch, useParams } from "react-router";
 import { CalendarBlank } from "@phosphor-icons/react/dist/csr/CalendarBlank";
 import useWorkspaces from "@/hooks/useWorkspaces";
 import useUser from "@/hooks/useUser";

@@ -3,7 +3,7 @@
 // Docs: AgentBuilder.doc.md
 import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router";
 import { Tooltip } from "react-tooltip";
 
 import BlockList, { BLOCK_TYPES, BLOCK_INFO } from "./BlockList";

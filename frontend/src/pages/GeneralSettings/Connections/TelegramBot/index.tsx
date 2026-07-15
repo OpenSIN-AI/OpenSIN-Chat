@@ -2,7 +2,7 @@
 // Purpose: Telegram bot settings page
 // Docs: TelegramBot/index.doc.md
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import Sidebar from "@/components/SettingsSidebar";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";

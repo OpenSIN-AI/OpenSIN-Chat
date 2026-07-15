@@ -8,7 +8,7 @@ import {
   USER_PROMPT_INPUT_MAP,
 } from "@/utils/constants";
 import System from "./models/system";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { safeJsonParse } from "@/utils/request";
 import { safeGetItem, safeSetItem, safeRemoveItem } from "@/utils/safeStorage";
 

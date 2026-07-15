@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import Highlighter from "react-highlight-words";
 
 const VARIABLE_SEPARATOR = ", ";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router";
 import paths from "@/utils/paths";
 import ChatPromptHistory from "./ChatPromptHistory";
 import System from "@/models/system";

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useMemo } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 
 /**
  * Returns a reactive URLSearchParams that updates on SPA navigation.

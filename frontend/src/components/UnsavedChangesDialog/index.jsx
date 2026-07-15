@@ -4,10 +4,10 @@ import { useTranslation } from "react-i18next";
 
 /**
  * UnsavedChangesDialog — shown when the user tries to navigate away from a
- * settings page that has unsaved changes. Requires a react-router-dom v6
+ * settings page that has unsaved changes. Requires a react-router v6
  * `blocker` object passed as a prop.
  *
- * @param {{ blocker: import("react-router-dom").Blocker }} props
+ * @param {{ blocker: import("react-router").Blocker }} props
  */
 export default function UnsavedChangesDialog({ blocker }) {
   const { t } = useTranslation();

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import debounce from "lodash.debounce";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router";
 import { useIsAgentSessionActive } from "@/utils/chat/agent";
 import usePromptInputStorage from "@/hooks/usePromptInputStorage";
 import useTextSize from "@/hooks/useTextSize";

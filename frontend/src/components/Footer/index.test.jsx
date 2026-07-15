@@ -52,7 +52,7 @@ vi.mock("../UserMenu/AccountModal", () => ({
   default: () => <div data-testid="account-modal" />,
 }));
 
-vi.mock("react-router-dom", () => ({
+vi.mock("react-router", () => ({
   Link: ({ to, children, ...props }) => (
     <a href={to} {...props}>
       {children}
