@@ -20,8 +20,19 @@ import { FileList } from "./components/FileList";
 import { Overlays } from "./components/Overlays";
 import { Footer } from "./components/Footer";
 
-export default function FilesystemSidebar({ workspace = null }: any) {
-  const { sidebarOpen, closeSidebar } = useFilesystemSidebar();
+/**
+ * Inner file-manager body. Extracted from the former default export so it can
+ * be embedded as the "Dateien" tab inside the consolidated Quellen panel
+ * (SourcesSidebar) as well as rendered standalone by the thin default export
+ * below. It no longer depends on the sidebar-open context: the parent controls
+ * visibility/mount, and `active` gates the initial browse so the listing loads
+ * when the Dateien tab becomes visible.
+ */
+export function FilesystemPanelBody({
+  workspace = null,
+  onClose,
+  active = true,
+}: any) {
   const { t } = useTranslation();
   const confirm = useConfirm();
   const { slug: paramSlug } = useParams();
@@ -44,6 +55,14 @@ export default function FilesystemSidebar({ workspace = null }: any) {
     clearSelection,
   } = useFileBrowser();
 
+  // Scope toggle for the Dateien tab: "workspace" filters the uploads listing
+  // down to docs attached to this workspace; "global" shows the full uploads
+  // tree. NOTE: the backend only exposes one uploads root (no per-workspace
+  // browse endpoint), so "Arbeitsbereich" is an honest client-side filter of
+  // the same view by workspace document membership — not a separate backend
+  // scope. TODO: add a workspace-scoped browse endpoint if we need true
+  // per-workspace roots.
+  const [scope, setScope] = useState<"workspace" | "global">("global");
   const [showSysInfo, setShowSysInfo] = useState(false);
   const [creatingType, setCreatingType] = useState<any>(null);
   const [newItemName, setNewItemName] = useState("");
@@ -63,18 +82,46 @@ export default function FilesystemSidebar({ workspace = null }: any) {
   const dragCounterRef = useRef(0);
 
   useEffect(() => {
-    if (sidebarOpen && currentPath === null) {
+    if (active && currentPath === null) {
       browse("");
     }
-  }, [sidebarOpen, currentPath, browse]);
+  }, [active, currentPath, browse]);
 
   const breadcrumbs = getBreadcrumbs(currentPath, t);
 
+  // Set of workspace document paths (docpath/filename) used by the
+  // "Arbeitsbereich" scope to filter the global uploads listing down to files
+  // attached to this workspace.
+  const workspaceDocKeys = useMemo(() => {
+    const keys = new Set<string>();
+    (workspace?.documents || []).forEach((doc: any) => {
+      if (doc?.docpath) keys.add(String(doc.docpath));
+      if (doc?.filename) keys.add(String(doc.filename));
+    });
+    return keys;
+  }, [workspace?.documents]);
+
+  const isInWorkspaceScope = useCallback(
+    (item: any) => {
+      if (scope === "global") return true;
+      if (item.type === "directory") return true; // keep folders navigable
+      return (
+        workspaceDocKeys.has(item.path) ||
+        workspaceDocKeys.has(item.name) ||
+        [...workspaceDocKeys].some((k) => k.endsWith(`/${item.name}`))
+      );
+    },
+    [scope, workspaceDocKeys],
+  );
+
   const filteredItems = useMemo(() => {
-    if (!searchQuery.trim()) return items;
-    const q = searchQuery.toLowerCase();
-    return items.filter((item) => item.name.toLowerCase().includes(q));
-  }, [items, searchQuery]);
+    let result = items.filter(isInWorkspaceScope);
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter((item) => item.name.toLowerCase().includes(q));
+    }
+    return result;
+  }, [items, searchQuery, isInWorkspaceScope]);
 
   const fileCount = useMemo(
     () => items.filter((i) => i.type === "file").length,
@@ -360,93 +407,139 @@ export default function FilesystemSidebar({ workspace = null }: any) {
   );
 
   return (
-    <ChatSidebar isOpen={sidebarOpen}>
-      <div
-        className="w-full h-full bg-zinc-900 light:bg-white flex flex-col overflow-hidden"
-        onDragEnter={handleDragEnter}
-        onDragLeave={handleDragLeave}
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-      >
-        <Overlays
-          isDragOver={isDragOver}
-          uploading={uploading}
-          uploadProgress={uploadProgress}
-        />
+    <div
+      className="w-full h-full bg-zinc-900 light:bg-white flex flex-col overflow-hidden"
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
+    >
+      <Overlays
+        isDragOver={isDragOver}
+        uploading={uploading}
+        uploadProgress={uploadProgress}
+      />
 
-        <SidebarHeader
-          fileCount={fileCount}
-          uploading={uploading}
-          loading={loading}
-          showSysInfo={showSysInfo}
-          sysInfoRows={sysInfoRows}
-          fileInputRef={fileInputRef}
-          creatingType={creatingType}
-          onUploadClick={() => fileInputRef.current?.click()}
-          onNewFileClick={() => {
-            setCreatingType(creatingType === "file" ? null : "file");
-            setNewItemName("");
-            setItemActionMsg(null);
-          }}
-          onToggleSysInfo={() => setShowSysInfo(!showSysInfo)}
-          onRefresh={() => browse(currentPath || "")}
-          onClose={closeSidebar}
-          onFileInputChange={handleFileInputChange}
-        />
-
-        <SearchAndCreate
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          creatingType={creatingType}
-          newItemName={newItemName}
-          onNewItemNameChange={setNewItemName}
-          onCreateItem={handleCreateItem}
-          onCancelCreate={() => {
-            setCreatingType(null);
-            setNewItemName("");
-          }}
-          itemActionMsg={itemActionMsg}
-          currentPath={currentPath}
-          parentPath={parentPath}
-          breadcrumbs={breadcrumbs}
-          onNavigateUp={navigateUp}
-          onNavigateTo={navigateTo}
-        />
-
-        {/* File list */}
-        <div className="flex-1 overflow-y-auto p-2 no-scroll">
-          <EmptyStates
-            loading={loading}
-            error={error}
-            items={items}
-            filteredItems={filteredItems}
-            onUploadClick={() => fileInputRef.current?.click()}
-          />
-          {!loading && !error && filteredItems.length > 0 && (
-            <FileList
-              folders={folders}
-              uploadFiles={uploadFiles}
-              reportFiles={reportFiles}
-              selectedFiles={selectedFiles}
-              expandedFolders={expandedFolders}
-              collapsedSections={collapsedSections}
-              deletingPath={deletingPath}
-              onToggleFolder={toggleFolder}
-              onToggleSection={toggleSection}
-              onToggleFileSelection={toggleFileSelection}
-              onDownload={handleDownload}
-              onDelete={handleDelete}
-            />
-          )}
-        </div>
-
-        <Footer
-          selectedFiles={selectedFiles}
-          onClearSelection={clearSelection}
-          itemActionMsg={itemActionMsg}
-          creatingType={creatingType}
-        />
+      {/* Arbeitsbereich / Global scope toggle */}
+      <div className="flex items-center gap-1 px-3 pt-3 shrink-0">
+        <button
+          type="button"
+          onClick={() => setScope("workspace")}
+          aria-pressed={scope === "workspace"}
+          className={`flex-1 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium transition-colors ${
+            scope === "workspace"
+              ? "bg-theme-bg-tertiary text-theme-text-primary"
+              : "bg-transparent hover:bg-theme-bg-secondary text-theme-text-muted"
+          }`}
+        >
+          {t("chat_window.sources_tabs.scope_workspace", "Arbeitsbereich")}
+        </button>
+        <button
+          type="button"
+          onClick={() => setScope("global")}
+          aria-pressed={scope === "global"}
+          className={`flex-1 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium transition-colors ${
+            scope === "global"
+              ? "bg-theme-bg-tertiary text-theme-text-primary"
+              : "bg-transparent hover:bg-theme-bg-secondary text-theme-text-muted"
+          }`}
+        >
+          {t("chat_window.sources_tabs.scope_global", "Global")}
+        </button>
       </div>
+
+      <SidebarHeader
+        fileCount={fileCount}
+        uploading={uploading}
+        loading={loading}
+        showSysInfo={showSysInfo}
+        sysInfoRows={sysInfoRows}
+        fileInputRef={fileInputRef}
+        creatingType={creatingType}
+        onUploadClick={() => fileInputRef.current?.click()}
+        onNewFileClick={() => {
+          setCreatingType(creatingType === "file" ? null : "file");
+          setNewItemName("");
+          setItemActionMsg(null);
+        }}
+        onToggleSysInfo={() => setShowSysInfo(!showSysInfo)}
+        onRefresh={() => browse(currentPath || "")}
+        onClose={onClose}
+        onFileInputChange={handleFileInputChange}
+      />
+
+      <SearchAndCreate
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        creatingType={creatingType}
+        newItemName={newItemName}
+        onNewItemNameChange={setNewItemName}
+        onCreateItem={handleCreateItem}
+        onCancelCreate={() => {
+          setCreatingType(null);
+          setNewItemName("");
+        }}
+        itemActionMsg={itemActionMsg}
+        currentPath={currentPath}
+        parentPath={parentPath}
+        breadcrumbs={breadcrumbs}
+        onNavigateUp={navigateUp}
+        onNavigateTo={navigateTo}
+      />
+
+      {/* File list */}
+      <div className="flex-1 overflow-y-auto p-2 no-scroll">
+        <EmptyStates
+          loading={loading}
+          error={error}
+          items={items}
+          filteredItems={filteredItems}
+          onUploadClick={() => fileInputRef.current?.click()}
+        />
+        {!loading && !error && filteredItems.length > 0 && (
+          <FileList
+            folders={folders}
+            uploadFiles={uploadFiles}
+            reportFiles={reportFiles}
+            selectedFiles={selectedFiles}
+            expandedFolders={expandedFolders}
+            collapsedSections={collapsedSections}
+            deletingPath={deletingPath}
+            onToggleFolder={toggleFolder}
+            onToggleSection={toggleSection}
+            onToggleFileSelection={toggleFileSelection}
+            onDownload={handleDownload}
+            onDelete={handleDelete}
+          />
+        )}
+      </div>
+
+      <Footer
+        selectedFiles={selectedFiles}
+        onClearSelection={clearSelection}
+        itemActionMsg={itemActionMsg}
+        creatingType={creatingType}
+      />
+    </div>
+  );
+}
+
+/**
+ * Thin wrapper kept for backward compatibility (and the existing test). The
+ * "filesystem" icon has been removed from the right rail, so this is no longer
+ * reachable from the UI — the file manager now lives in the Quellen panel's
+ * "Dateien" tab (see SourcesSidebar). Left in place so nothing that still
+ * imports the default export breaks.
+ */
+export default function FilesystemSidebar({ workspace = null }: any) {
+  const { sidebarOpen, closeSidebar } = useFilesystemSidebar();
+  return (
+    <ChatSidebar isOpen={sidebarOpen}>
+      <FilesystemPanelBody
+        workspace={workspace}
+        onClose={closeSidebar}
+        active={sidebarOpen}
+      />
     </ChatSidebar>
   );
 }

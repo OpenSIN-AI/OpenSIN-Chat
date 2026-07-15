@@ -66,8 +66,14 @@ export function useMemoriesContext() {
   return ctx;
 }
 
-export function MemoriesProvider({ workspace, children }: any) {
-  const { sidebarOpen, closeSidebar } = useMemoriesSidebar();
+export function MemoriesProvider({ workspace, forceOpen, children }: any) {
+  const { sidebarOpen: hookSidebarOpen, closeSidebar } = useMemoriesSidebar();
+  // When embedded in another panel (e.g. the consolidated Quellen sidebar) the
+  // "memories" sidebar is never the active one, so the hook's sidebarOpen stays
+  // false and memories would never load. `forceOpen` lets the host panel drive
+  // the open state (and thus the useMemories fetch gate) instead.
+  const sidebarOpen =
+    forceOpen !== undefined ? !!forceOpen : hookSidebarOpen;
   const { user } = useUser();
   const canToggle = !user || user?.role === "admin";
 

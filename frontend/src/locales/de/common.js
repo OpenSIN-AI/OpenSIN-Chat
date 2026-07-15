@@ -558,6 +558,12 @@ const TRANSLATIONS = {
     chats_tab: "Chats",
     files_tab: "Dateien",
     urls_tab: "URLs",
+    sources_tabs: {
+      files: "Dateien",
+      cited: "Zitiert",
+      scope_workspace: "Arbeitsbereich",
+      scope_global: "Global",
+    },
     no_urls: "Noch keine URLs hinzugefügt.",
     default_thread: "Standard",
     source_type_url: "URL",

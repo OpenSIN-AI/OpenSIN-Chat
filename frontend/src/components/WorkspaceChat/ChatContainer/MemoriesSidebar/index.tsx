@@ -40,7 +40,7 @@ function getUrlFromDoc(doc: any) {
 }
 
 // ── Chats tab ─────────────────────────────────────────────────────────────────
-function WorkspaceChatsTab({ workspace, onClose }: any) {
+export function WorkspaceChatsTab({ workspace, onClose }: any) {
   const { t } = useTranslation();
   const { threads, isLoading } = useThreads(workspace?.slug);
   const { threadSlug: activeThreadSlug } = useParams() as any;
@@ -113,7 +113,7 @@ function WorkspaceChatsTab({ workspace, onClose }: any) {
 }
 
 // ── URLs tab ──────────────────────────────────────────────────────────────────
-function WorkspaceUrlsTab({ workspace }: any) {
+export function WorkspaceUrlsTab({ workspace }: any) {
   const { t } = useTranslation();
   const docs: any[] = (workspace?.documents || []).filter(isUrlDoc);
 
@@ -198,7 +198,7 @@ function SidebarPanel({ children }: any) {
   );
 }
 
-function MemoryModalWrapper() {
+export function MemoryModalWrapper() {
   const {
     enabled,
     modalState,
@@ -227,7 +227,7 @@ function MemoryModalWrapper() {
 
 function SidebarHeaderWithTabs({ workspace }: any) {
   const { t } = useTranslation();
-  const { closeSidebar, enabled, activeMemories } = useMemoriesContext();
+  const { closeSidebar } = useMemoriesContext();
   const [activeTab, setActiveTab] = useState<"memories" | "chats" | "urls">(
     "memories",
   );
@@ -296,24 +296,33 @@ function SidebarHeaderWithTabs({ workspace }: any) {
 
       {/* Tab content */}
       <div className="flex-1 overflow-hidden flex flex-col gap-3 min-h-0">
-        {activeTab === "memories" && (
-          <>
-            <PersonalizationToggle />
-            {enabled ? (
-              activeMemories.length === 0 ? (
-                <EmptyState />
-              ) : (
-                <MemoryList />
-              )
-            ) : null}
-          </>
-        )}
+        {activeTab === "memories" && <MemoriesTabBody />}
         {activeTab === "chats" && (
           <WorkspaceChatsTab workspace={workspace} onClose={closeSidebar} />
         )}
         {activeTab === "urls" && <WorkspaceUrlsTab workspace={workspace} />}
       </div>
     </div>
+  );
+}
+
+// ── Memories tab body ─────────────────────────────────────────────────────────
+// Personalization toggle + memory list (or empty state). Extracted so the
+// consolidated Quellen panel can render it as its "Erinnerungen" tab. Must be
+// used inside a MemoriesProvider.
+export function MemoriesTabBody() {
+  const { enabled, activeMemories } = useMemoriesContext();
+  return (
+    <>
+      <PersonalizationToggle />
+      {enabled ? (
+        activeMemories.length === 0 ? (
+          <EmptyState />
+        ) : (
+          <MemoryList />
+        )
+      ) : null}
+    </>
   );
 }
 
