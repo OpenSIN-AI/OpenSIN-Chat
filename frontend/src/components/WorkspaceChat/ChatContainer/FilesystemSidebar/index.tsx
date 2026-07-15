@@ -38,6 +38,21 @@ export function FilesystemPanelBody({
   const { slug: paramSlug } = useParams();
   const workspaceSlug = workspace?.slug || paramSlug || "opensin-chat";
   const { data: sysInfo } = useFilesystem();
+
+  // Scope toggle for the Dateien tab.
+  // - "workspace": browses the shared uploads tree (`/utils/*`) and filters the
+  //   listing client-side down to documents attached to this workspace.
+  // - "global": browses the deployment-wide global store (`/utils/global/*`),
+  //   a real separate storage root (STORAGE_DIR/global) shared across ALL
+  //   workspaces — files like a global agents.md / memory.md live here and
+  //   exist independently of any workspace. Browse/upload/create/delete all
+  //   target the global endpoints in this mode.
+  const [scope, setScope] = useState<"workspace" | "global">("workspace");
+
+  // API route prefix for the active scope. The global store mirrors the uploads
+  // route shape under /utils/global (see server/endpoints/utils/globalFiles.js).
+  const apiPrefix = scope === "global" ? "/utils/global" : "/utils";
+
   const {
     currentPath,
     items,
@@ -53,16 +68,7 @@ export function FilesystemPanelBody({
     deleteItem,
     toggleFileSelection,
     clearSelection,
-  } = useFileBrowser();
-
-  // Scope toggle for the Dateien tab: "workspace" filters the uploads listing
-  // down to docs attached to this workspace; "global" shows the full uploads
-  // tree. NOTE: the backend only exposes one uploads root (no per-workspace
-  // browse endpoint), so "Arbeitsbereich" is an honest client-side filter of
-  // the same view by workspace document membership — not a separate backend
-  // scope. TODO: add a workspace-scoped browse endpoint if we need true
-  // per-workspace roots.
-  const [scope, setScope] = useState<"workspace" | "global">("global");
+  } = useFileBrowser(scope);
   const [showSysInfo, setShowSysInfo] = useState(false);
   const [creatingType, setCreatingType] = useState<any>(null);
   const [newItemName, setNewItemName] = useState("");
@@ -86,6 +92,13 @@ export function FilesystemPanelBody({
       browse("");
     }
   }, [active, currentPath, browse]);
+
+  // Re-browse from the root whenever the scope toggles. `browse` is a fresh
+  // callback per scope (its route prefix changes), so switching stores reloads
+  // the listing against the correct backend instead of showing stale items.
+  useEffect(() => {
+    if (active) browse("");
+  }, [scope]);
 
   const breadcrumbs = getBreadcrumbs(currentPath, t);
 
@@ -179,7 +192,7 @@ export function FilesystemPanelBody({
           const formData = new FormData();
           formData.append("file", file, file.name);
           const res = await fetch(
-            `${API_BASE}/utils/upload-file?path=${encodeURIComponent(currentPath || "")}`,
+            `${API_BASE}${apiPrefix}/upload-file?path=${encodeURIComponent(currentPath || "")}`,
             { method: "POST", headers: baseHeaders(), body: formData },
           );
           if (res.ok) {
@@ -213,7 +226,7 @@ export function FilesystemPanelBody({
       setUploading(false);
       setUploadProgress({ current: 0, total: 0, name: "" });
     },
-    [browse, currentPath, t],
+    [browse, currentPath, t, apiPrefix],
   );
 
   const handleDragEnter = useCallback((e) => {
@@ -294,7 +307,7 @@ export function FilesystemPanelBody({
     async (item) => {
       try {
         const res = await fetch(
-          `${API_BASE}/utils/download-file?path=${encodeURIComponent(item.path)}`,
+          `${API_BASE}${apiPrefix}/download-file?path=${encodeURIComponent(item.path)}`,
           { headers: baseHeaders() },
         );
         if (!res.ok) throw new Error("Download failed");
@@ -312,7 +325,7 @@ export function FilesystemPanelBody({
         showToast(t("sidebar.filesystem.downloadFailed"), "error");
       }
     },
-    [t],
+    [t, apiPrefix],
   );
 
   const sysInfoRows = sysInfo
@@ -386,7 +399,7 @@ export function FilesystemPanelBody({
       if (!expandedFolders[folderPath]) {
         try {
           const res = await fetch(
-            `${API_BASE}/utils/browse-directory?path=${encodeURIComponent(folderPath)}`,
+            `${API_BASE}${apiPrefix}/browse-directory?path=${encodeURIComponent(folderPath)}`,
             { headers: baseHeaders() },
           );
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -403,7 +416,7 @@ export function FilesystemPanelBody({
         }
       }
     },
-    [expandedFolders],
+    [expandedFolders, apiPrefix],
   );
 
   return (

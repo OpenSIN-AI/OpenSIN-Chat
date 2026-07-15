@@ -63,6 +63,12 @@ function utilEndpoints(app) {
   } = require("./utils/dockerModelRunnerUtils");
   dockerModelRunnerUtilsEndpoints(app);
 
+  // Global file store (deployment-wide files shared across all workspaces).
+  // Middleware is passed in because these modules are resolved lazily to avoid
+  // the circular-dependency capture described in the import notes above.
+  const { globalFilesEndpoints } = require("./utils/globalFiles");
+  globalFilesEndpoints(app, { validatedRequest, flexUserRoleValid, ROLES });
+
   const { enhancePromptEndpoint } = require("./utils/enhancePrompt");
   enhancePromptEndpoint(app);
 

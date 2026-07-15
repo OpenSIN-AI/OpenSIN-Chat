@@ -153,6 +153,11 @@ describe("FilesystemSidebar", () => {
     ];
     render(<FilesystemSidebar />, { wrapper: Wrapper });
 
+    // No workspace is passed to the standalone sidebar, so the default
+    // "Arbeitsbereich" scope filters files out. Switch to Global to view the
+    // full store.
+    fireEvent.click(screen.getByRole("button", { name: /global/i }));
+
     await waitFor(() => {
       expect(screen.getByText("docs")).toBeInTheDocument();
       expect(screen.getByText("report.pdf")).toBeInTheDocument();
@@ -184,6 +189,7 @@ describe("FilesystemSidebar", () => {
     fileBrowserState.currentPath = "";
     render(<FilesystemSidebar />, { wrapper: Wrapper });
 
+    fireEvent.click(screen.getByRole("button", { name: /global/i }));
     const fileEl = await screen.findByText("doc.txt");
     fireEvent.click(fileEl.closest("div"));
     expect(fileBrowserState.toggleFileSelection).toHaveBeenCalled();
@@ -202,6 +208,7 @@ describe("FilesystemSidebar", () => {
     fileBrowserState.currentPath = "";
     render(<FilesystemSidebar />, { wrapper: Wrapper });
 
+    fireEvent.click(screen.getByRole("button", { name: /global/i }));
     const fileEl = await screen.findByText("archive.xyz");
     fireEvent.click(fileEl.closest("div"));
     expect(fileBrowserState.toggleFileSelection).toHaveBeenCalled();
@@ -252,5 +259,32 @@ describe("FilesystemSidebar", () => {
 
     const refreshBtn = screen.getByLabelText(/refresh|aktualisieren/i);
     expect(refreshBtn).toBeDisabled();
+  });
+
+  it("re-browses from root when the Global scope toggle is clicked", async () => {
+    fileBrowserState.currentPath = "";
+    render(<FilesystemSidebar />, { wrapper: Wrapper });
+
+    // Initial mount + workspace-scope effect may call browse; clear so we
+    // assert specifically on the scope switch.
+    fileBrowserState.browse.mockClear();
+
+    const globalBtn = screen.getByRole("button", { name: /global/i });
+    fireEvent.click(globalBtn);
+
+    await waitFor(() => {
+      expect(globalBtn).toHaveAttribute("aria-pressed", "true");
+      expect(fileBrowserState.browse).toHaveBeenCalledWith("");
+    });
+  });
+
+  it("defaults to the Arbeitsbereich (workspace) scope", () => {
+    fileBrowserState.currentPath = "";
+    render(<FilesystemSidebar />, { wrapper: Wrapper });
+
+    const workspaceBtn = screen.getByRole("button", {
+      name: /arbeitsbereich|workspace/i,
+    });
+    expect(workspaceBtn).toHaveAttribute("aria-pressed", "true");
   });
 });
