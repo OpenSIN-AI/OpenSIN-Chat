@@ -15,37 +15,12 @@ const consoleLogger = require("../../utils/logger/console.js");
 const crypto = require("crypto");
 const {
   getStoragePath,
-  safeStorageJoin,
+  safeGlobalJoin,
   ensureStorageDir,
 } = require("../../utils/paths");
 const { reqBody } = require("../../utils/http");
 
 const GLOBAL_ROOT = "global";
-
-/**
- * Traversal-safe join *inside the global store*.
- *
- * safeStorageJoin only guarantees the target stays within STORAGE_DIR — a
- * relative path like "../uploads" would still resolve to a sibling store. This
- * wrapper additionally pins the result under STORAGE_DIR/global, so the global
- * endpoints cannot be tricked into reading or mutating the uploads tree (or any
- * other sibling) via "../" segments. Throws on any escape.
- *
- * @param {...string} rel path segments relative to the global root
- * @returns {string} absolute path guaranteed inside the global store
- */
-function safeGlobalJoin(...rel) {
-  const path = require("path");
-  const globalRoot = getStoragePath(GLOBAL_ROOT);
-  // First guard the storage boundary, then the tighter global boundary.
-  const target = safeStorageJoin(GLOBAL_ROOT, ...rel);
-  if (target !== globalRoot && !target.startsWith(globalRoot + path.sep)) {
-    throw new Error(
-      `Path traversal blocked: "${rel.join("/")}" escapes the global store.`,
-    );
-  }
-  return target;
-}
 
 /**
  * Register the global-file-store endpoints on the provided router.
@@ -322,4 +297,4 @@ function globalFilesEndpoints(app, { validatedRequest, flexUserRoleValid, ROLES 
   });
 }
 
-module.exports = { globalFilesEndpoints, GLOBAL_ROOT };
+module.exports = { globalFilesEndpoints, GLOBAL_ROOT, safeGlobalJoin };

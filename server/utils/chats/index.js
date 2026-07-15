@@ -100,6 +100,7 @@ async function recentChatHistory({
 async function chatPrompt(workspace, user = null, opts = {}) {
   const { SystemSettings } = require("../../models/systemSettings");
   const { promptWithMemories } = require("../memories");
+  const { appendGlobalContext } = require("../globalContext");
   const basePrompt =
     workspace?.openAiPrompt ?? SystemSettings.saneDefaultSystemPrompt;
   const systemPrompt = await SystemPromptVariables.expandSystemPromptVariables(
@@ -107,8 +108,12 @@ async function chatPrompt(workspace, user = null, opts = {}) {
     user?.id,
     workspace?.id,
   );
+  // Append deployment-wide global text files (agents.md/memory.md/…) as an
+  // additive, clearly fenced block. No-op when the global store is empty, so
+  // the prompt is unchanged for deployments that never use global files.
+  const withGlobal = appendGlobalContext(systemPrompt);
   return promptWithMemories({
-    systemPrompt,
+    systemPrompt: withGlobal,
     userId: user?.id ?? null,
     workspaceId: workspace?.id,
     prompt: opts.prompt ?? "",

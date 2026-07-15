@@ -109,6 +109,27 @@ function safeCollectorJoin(...subdirs) {
 }
 
 /**
+ * Traversal-safe join *inside the global store* (STORAGE_DIR/global).
+ *
+ * safeStorageJoin only guarantees the target stays within STORAGE_DIR — a
+ * relative path like "../uploads" would still resolve to a sibling store. This
+ * wrapper additionally pins the result under STORAGE_DIR/global, so global
+ * callers cannot be tricked into reading or mutating the uploads tree (or any
+ * other sibling) via "../" segments. Throws on any escape.
+ * @param {...string} rel path segments relative to the global root
+ * @returns {string} absolute path guaranteed inside the global store
+ */
+function safeGlobalJoin(...rel) {
+  const globalRoot = getStoragePath("global");
+  const target = safeStorageJoin("global", ...rel);
+  if (target !== globalRoot && !target.startsWith(globalRoot + path.sep))
+    throw new Error(
+      `Path traversal blocked: "${rel.join("/")}" escapes the global store.`,
+    );
+  return target;
+}
+
+/**
  * Resolve a storage subdirectory and make sure it exists on disk.
  * Safe to call repeatedly (mkdir recursive is idempotent).
  * @param {...string} subdirs
@@ -156,6 +177,7 @@ module.exports = {
   getCollectorPath,
   safeStorageJoin,
   safeCollectorJoin,
+  safeGlobalJoin,
   ensureStorageDir,
   pathsHealth,
 };
