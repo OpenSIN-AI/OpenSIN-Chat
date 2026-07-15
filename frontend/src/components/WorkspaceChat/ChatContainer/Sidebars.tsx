@@ -2,10 +2,8 @@
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorBoundaryFallback from "@/components/ErrorBoundaryFallback";
 import SourcesSidebar from "./SourcesSidebar";
-import MemoriesSidebar from "./MemoriesSidebar";
 import PreviewSidebar from "./PreviewSidebar";
 import ConsoleSidebar from "./ConsoleSidebar";
-import FilesystemSidebar from "./FilesystemSidebar";
 import DatabaseSidebar from "./DatabaseSidebar";
 import PoliticalSidebar from "./PoliticalSidebar";
 import PdfAnalysisSidebar from "./PdfAnalysisSidebar";
@@ -46,11 +44,6 @@ export default function Sidebars({ workspace }: SidebarsProps) {
               <SourcesSidebar workspace={workspace} />
             </ErrorBoundary>
           )}
-          {activeSidebar === "memories" && (
-            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-              <MemoriesSidebar workspace={workspace} />
-            </ErrorBoundary>
-          )}
           {activeSidebar === "preview" && (
             <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
               <PreviewSidebar />
@@ -59,11 +52,6 @@ export default function Sidebars({ workspace }: SidebarsProps) {
           {activeSidebar === "console" && (
             <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
               <ConsoleSidebar />
-            </ErrorBoundary>
-          )}
-          {activeSidebar === "filesystem" && (
-            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-              <FilesystemSidebar workspace={workspace} />
             </ErrorBoundary>
           )}
           {activeSidebar === "database" && (

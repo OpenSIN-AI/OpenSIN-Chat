@@ -17,20 +17,12 @@ vi.mock("./SourcesSidebar", () => ({
   default: (props) => <div data-testid="sources-sidebar" {...props} />,
 }));
 
-vi.mock("./MemoriesSidebar", () => ({
-  default: (props) => <div data-testid="memories-sidebar" {...props} />,
-}));
-
 vi.mock("./PreviewSidebar", () => ({
   default: (props) => <div data-testid="preview-sidebar" {...props} />,
 }));
 
 vi.mock("./ConsoleSidebar", () => ({
   default: (props) => <div data-testid="console-sidebar" {...props} />,
-}));
-
-vi.mock("./FilesystemSidebar", () => ({
-  default: (props) => <div data-testid="filesystem-sidebar" {...props} />,
 }));
 
 vi.mock("./DatabaseSidebar", () => ({
@@ -71,10 +63,8 @@ describe("Sidebars", () => {
     });
     render(<Sidebars workspace={workspace} />);
     expect(screen.queryByTestId("sources-sidebar")).not.toBeInTheDocument();
-    expect(screen.queryByTestId("memories-sidebar")).not.toBeInTheDocument();
     expect(screen.queryByTestId("preview-sidebar")).not.toBeInTheDocument();
     expect(screen.queryByTestId("console-sidebar")).not.toBeInTheDocument();
-    expect(screen.queryByTestId("filesystem-sidebar")).not.toBeInTheDocument();
     expect(screen.queryByTestId("database-sidebar")).not.toBeInTheDocument();
     expect(screen.queryByTestId("political-sidebar")).not.toBeInTheDocument();
     expect(
@@ -102,10 +92,8 @@ describe("Sidebars", () => {
 
   it.each([
     ["sources", "sources-sidebar"],
-    ["memories", "memories-sidebar"],
     ["preview", "preview-sidebar"],
     ["console", "console-sidebar"],
-    ["filesystem", "filesystem-sidebar"],
     ["database", "database-sidebar"],
     ["political", "political-sidebar"],
     ["pdf-analysis", "pdf-analysis-sidebar"],

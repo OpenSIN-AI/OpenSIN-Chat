@@ -523,6 +523,12 @@ const TRANSLATIONS = {
     chats_tab: "Chats",
     files_tab: "Files",
     urls_tab: "URLs",
+    sources_tabs: {
+      files: "Files",
+      cited: "Cited",
+      scope_workspace: "Workspace",
+      scope_global: "Global",
+    },
     no_urls: "No URLs added yet.",
     default_thread: "Default",
     source_type_url: "URL",

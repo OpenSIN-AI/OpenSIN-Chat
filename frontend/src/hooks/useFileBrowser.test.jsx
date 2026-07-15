@@ -84,6 +84,32 @@ describe("useFileBrowser", () => {
     expect(result.current.currentPath).toBeNull();
   });
 
+  it("targets the global store endpoints when scope is 'global'", async () => {
+    global.fetch.mockResolvedValueOnce(
+      mockFetchResponse({ path: "", parent: null, items: [] }),
+    );
+
+    const { result } = renderHook(() => useFileBrowser("global"));
+
+    await act(async () => {
+      await result.current.browse("");
+    });
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      "http://localhost:3001/api/utils/global/browse-directory?path=",
+      expect.anything(),
+    );
+
+    global.fetch.mockResolvedValueOnce(mockFetchResponse({ success: true }));
+    await act(async () => {
+      await result.current.deleteItem("agents.md");
+    });
+    const deleteUrl = global.fetch.mock.calls[1][0];
+    expect(deleteUrl).toBe(
+      "http://localhost:3001/api/utils/global/delete-item",
+    );
+  });
+
   it("sets generic HTTP error when json parse fails", async () => {
     global.fetch.mockResolvedValueOnce({
       ok: false,

@@ -3,11 +3,9 @@
 // Docs: index.doc.md
 import { Tooltip } from "react-tooltip";
 import { Eye } from "@phosphor-icons/react/dist/csr/Eye";
-import { FolderOpen } from "@phosphor-icons/react/dist/csr/FolderOpen";
 import { Database } from "@phosphor-icons/react/dist/csr/Database";
 import { Newspaper } from "@phosphor-icons/react/dist/csr/Newspaper";
 import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
-import { Brain } from "@phosphor-icons/react/dist/csr/Brain";
 import { FilePdf } from "@phosphor-icons/react/dist/csr/FilePdf";
 import { Notepad } from "@phosphor-icons/react/dist/csr/Notepad";
 import { Broadcast } from "@phosphor-icons/react/dist/csr/Broadcast";
@@ -29,12 +27,6 @@ export default function RightSidebarIconBar() {
       action: () => toggleSidebar("preview"),
     },
     {
-      id: "filesystem",
-      icon: FolderOpen,
-      label: t("right_sidebar.icon_filesystem", "Verzeichnis"),
-      action: () => toggleSidebar("filesystem"),
-    },
-    {
       id: "database",
       icon: Database,
       label: t("right_sidebar.icon_database", "Politiker-Datenbank"),
@@ -51,12 +43,6 @@ export default function RightSidebarIconBar() {
       icon: BookOpen,
       label: t("right_sidebar.icon_sources", "Quellen"),
       action: () => toggleSidebar("sources"),
-    },
-    {
-      id: "memories",
-      icon: Brain,
-      label: t("right_sidebar.icon_memories", "Memories"),
-      action: () => toggleSidebar("memories"),
     },
     {
       id: "pdf-analysis",

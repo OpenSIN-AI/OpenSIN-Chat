@@ -20,13 +20,39 @@ import { FileList } from "./components/FileList";
 import { Overlays } from "./components/Overlays";
 import { Footer } from "./components/Footer";
 
-export default function FilesystemSidebar({ workspace = null }: any) {
-  const { sidebarOpen, closeSidebar } = useFilesystemSidebar();
+/**
+ * Inner file-manager body. Extracted from the former default export so it can
+ * be embedded as the "Dateien" tab inside the consolidated Quellen panel
+ * (SourcesSidebar) as well as rendered standalone by the thin default export
+ * below. It no longer depends on the sidebar-open context: the parent controls
+ * visibility/mount, and `active` gates the initial browse so the listing loads
+ * when the Dateien tab becomes visible.
+ */
+export function FilesystemPanelBody({
+  workspace = null,
+  onClose,
+  active = true,
+}: any) {
   const { t } = useTranslation();
   const confirm = useConfirm();
   const { slug: paramSlug } = useParams();
   const workspaceSlug = workspace?.slug || paramSlug || "opensin-chat";
   const { data: sysInfo } = useFilesystem();
+
+  // Scope toggle for the Dateien tab.
+  // - "workspace": browses the shared uploads tree (`/utils/*`) and filters the
+  //   listing client-side down to documents attached to this workspace.
+  // - "global": browses the deployment-wide global store (`/utils/global/*`),
+  //   a real separate storage root (STORAGE_DIR/global) shared across ALL
+  //   workspaces — files like a global agents.md / memory.md live here and
+  //   exist independently of any workspace. Browse/upload/create/delete all
+  //   target the global endpoints in this mode.
+  const [scope, setScope] = useState<"workspace" | "global">("workspace");
+
+  // API route prefix for the active scope. The global store mirrors the uploads
+  // route shape under /utils/global (see server/endpoints/utils/globalFiles.js).
+  const apiPrefix = scope === "global" ? "/utils/global" : "/utils";
+
   const {
     currentPath,
     items,
@@ -42,8 +68,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
     deleteItem,
     toggleFileSelection,
     clearSelection,
-  } = useFileBrowser();
-
+  } = useFileBrowser(scope);
   const [showSysInfo, setShowSysInfo] = useState(false);
   const [creatingType, setCreatingType] = useState<any>(null);
   const [newItemName, setNewItemName] = useState("");
@@ -63,18 +88,53 @@ export default function FilesystemSidebar({ workspace = null }: any) {
   const dragCounterRef = useRef(0);
 
   useEffect(() => {
-    if (sidebarOpen && currentPath === null) {
+    if (active && currentPath === null) {
       browse("");
     }
-  }, [sidebarOpen, currentPath, browse]);
+  }, [active, currentPath, browse]);
+
+  // Re-browse from the root whenever the scope toggles. `browse` is a fresh
+  // callback per scope (its route prefix changes), so switching stores reloads
+  // the listing against the correct backend instead of showing stale items.
+  useEffect(() => {
+    if (active) browse("");
+  }, [scope]);
 
   const breadcrumbs = getBreadcrumbs(currentPath, t);
 
+  // Set of workspace document paths (docpath/filename) used by the
+  // "Arbeitsbereich" scope to filter the global uploads listing down to files
+  // attached to this workspace.
+  const workspaceDocKeys = useMemo(() => {
+    const keys = new Set<string>();
+    (workspace?.documents || []).forEach((doc: any) => {
+      if (doc?.docpath) keys.add(String(doc.docpath));
+      if (doc?.filename) keys.add(String(doc.filename));
+    });
+    return keys;
+  }, [workspace?.documents]);
+
+  const isInWorkspaceScope = useCallback(
+    (item: any) => {
+      if (scope === "global") return true;
+      if (item.type === "directory") return true; // keep folders navigable
+      return (
+        workspaceDocKeys.has(item.path) ||
+        workspaceDocKeys.has(item.name) ||
+        [...workspaceDocKeys].some((k) => k.endsWith(`/${item.name}`))
+      );
+    },
+    [scope, workspaceDocKeys],
+  );
+
   const filteredItems = useMemo(() => {
-    if (!searchQuery.trim()) return items;
-    const q = searchQuery.toLowerCase();
-    return items.filter((item) => item.name.toLowerCase().includes(q));
-  }, [items, searchQuery]);
+    let result = items.filter(isInWorkspaceScope);
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter((item) => item.name.toLowerCase().includes(q));
+    }
+    return result;
+  }, [items, searchQuery, isInWorkspaceScope]);
 
   const fileCount = useMemo(
     () => items.filter((i) => i.type === "file").length,
@@ -132,7 +192,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
           const formData = new FormData();
           formData.append("file", file, file.name);
           const res = await fetch(
-            `${API_BASE}/utils/upload-file?path=${encodeURIComponent(currentPath || "")}`,
+            `${API_BASE}${apiPrefix}/upload-file?path=${encodeURIComponent(currentPath || "")}`,
             { method: "POST", headers: baseHeaders(), body: formData },
           );
           if (res.ok) {
@@ -166,7 +226,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
       setUploading(false);
       setUploadProgress({ current: 0, total: 0, name: "" });
     },
-    [browse, currentPath, t],
+    [browse, currentPath, t, apiPrefix],
   );
 
   const handleDragEnter = useCallback((e) => {
@@ -247,7 +307,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
     async (item) => {
       try {
         const res = await fetch(
-          `${API_BASE}/utils/download-file?path=${encodeURIComponent(item.path)}`,
+          `${API_BASE}${apiPrefix}/download-file?path=${encodeURIComponent(item.path)}`,
           { headers: baseHeaders() },
         );
         if (!res.ok) throw new Error("Download failed");
@@ -265,7 +325,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
         showToast(t("sidebar.filesystem.downloadFailed"), "error");
       }
     },
-    [t],
+    [t, apiPrefix],
   );
 
   const sysInfoRows = sysInfo
@@ -339,7 +399,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
       if (!expandedFolders[folderPath]) {
         try {
           const res = await fetch(
-            `${API_BASE}/utils/browse-directory?path=${encodeURIComponent(folderPath)}`,
+            `${API_BASE}${apiPrefix}/browse-directory?path=${encodeURIComponent(folderPath)}`,
             { headers: baseHeaders() },
           );
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -356,97 +416,143 @@ export default function FilesystemSidebar({ workspace = null }: any) {
         }
       }
     },
-    [expandedFolders],
+    [expandedFolders, apiPrefix],
   );
 
   return (
-    <ChatSidebar isOpen={sidebarOpen}>
-      <div
-        className="w-full h-full bg-zinc-900 light:bg-white flex flex-col overflow-hidden"
-        onDragEnter={handleDragEnter}
-        onDragLeave={handleDragLeave}
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-      >
-        <Overlays
-          isDragOver={isDragOver}
-          uploading={uploading}
-          uploadProgress={uploadProgress}
-        />
+    <div
+      className="w-full h-full bg-zinc-900 light:bg-white flex flex-col overflow-hidden"
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
+    >
+      <Overlays
+        isDragOver={isDragOver}
+        uploading={uploading}
+        uploadProgress={uploadProgress}
+      />
 
-        <SidebarHeader
-          fileCount={fileCount}
-          uploading={uploading}
-          loading={loading}
-          showSysInfo={showSysInfo}
-          sysInfoRows={sysInfoRows}
-          fileInputRef={fileInputRef}
-          creatingType={creatingType}
-          onUploadClick={() => fileInputRef.current?.click()}
-          onNewFileClick={() => {
-            setCreatingType(creatingType === "file" ? null : "file");
-            setNewItemName("");
-            setItemActionMsg(null);
-          }}
-          onToggleSysInfo={() => setShowSysInfo(!showSysInfo)}
-          onRefresh={() => browse(currentPath || "")}
-          onClose={closeSidebar}
-          onFileInputChange={handleFileInputChange}
-        />
-
-        <SearchAndCreate
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          creatingType={creatingType}
-          newItemName={newItemName}
-          onNewItemNameChange={setNewItemName}
-          onCreateItem={handleCreateItem}
-          onCancelCreate={() => {
-            setCreatingType(null);
-            setNewItemName("");
-          }}
-          itemActionMsg={itemActionMsg}
-          currentPath={currentPath}
-          parentPath={parentPath}
-          breadcrumbs={breadcrumbs}
-          onNavigateUp={navigateUp}
-          onNavigateTo={navigateTo}
-        />
-
-        {/* File list */}
-        <div className="flex-1 overflow-y-auto p-2 no-scroll">
-          <EmptyStates
-            loading={loading}
-            error={error}
-            items={items}
-            filteredItems={filteredItems}
-            onUploadClick={() => fileInputRef.current?.click()}
-          />
-          {!loading && !error && filteredItems.length > 0 && (
-            <FileList
-              folders={folders}
-              uploadFiles={uploadFiles}
-              reportFiles={reportFiles}
-              selectedFiles={selectedFiles}
-              expandedFolders={expandedFolders}
-              collapsedSections={collapsedSections}
-              deletingPath={deletingPath}
-              onToggleFolder={toggleFolder}
-              onToggleSection={toggleSection}
-              onToggleFileSelection={toggleFileSelection}
-              onDownload={handleDownload}
-              onDelete={handleDelete}
-            />
-          )}
-        </div>
-
-        <Footer
-          selectedFiles={selectedFiles}
-          onClearSelection={clearSelection}
-          itemActionMsg={itemActionMsg}
-          creatingType={creatingType}
-        />
+      {/* Arbeitsbereich / Global scope toggle */}
+      <div className="flex items-center gap-1 px-3 pt-3 shrink-0">
+        <button
+          type="button"
+          onClick={() => setScope("workspace")}
+          aria-pressed={scope === "workspace"}
+          className={`flex-1 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium transition-colors ${
+            scope === "workspace"
+              ? "bg-theme-bg-tertiary text-theme-text-primary"
+              : "bg-transparent hover:bg-theme-bg-secondary text-theme-text-muted"
+          }`}
+        >
+          {t("chat_window.sources_tabs.scope_workspace", "Arbeitsbereich")}
+        </button>
+        <button
+          type="button"
+          onClick={() => setScope("global")}
+          aria-pressed={scope === "global"}
+          className={`flex-1 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium transition-colors ${
+            scope === "global"
+              ? "bg-theme-bg-tertiary text-theme-text-primary"
+              : "bg-transparent hover:bg-theme-bg-secondary text-theme-text-muted"
+          }`}
+        >
+          {t("chat_window.sources_tabs.scope_global", "Global")}
+        </button>
       </div>
+
+      <SidebarHeader
+        fileCount={fileCount}
+        uploading={uploading}
+        loading={loading}
+        showSysInfo={showSysInfo}
+        sysInfoRows={sysInfoRows}
+        fileInputRef={fileInputRef}
+        creatingType={creatingType}
+        onUploadClick={() => fileInputRef.current?.click()}
+        onNewFileClick={() => {
+          setCreatingType(creatingType === "file" ? null : "file");
+          setNewItemName("");
+          setItemActionMsg(null);
+        }}
+        onToggleSysInfo={() => setShowSysInfo(!showSysInfo)}
+        onRefresh={() => browse(currentPath || "")}
+        onClose={onClose}
+        onFileInputChange={handleFileInputChange}
+      />
+
+      <SearchAndCreate
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        creatingType={creatingType}
+        newItemName={newItemName}
+        onNewItemNameChange={setNewItemName}
+        onCreateItem={handleCreateItem}
+        onCancelCreate={() => {
+          setCreatingType(null);
+          setNewItemName("");
+        }}
+        itemActionMsg={itemActionMsg}
+        currentPath={currentPath}
+        parentPath={parentPath}
+        breadcrumbs={breadcrumbs}
+        onNavigateUp={navigateUp}
+        onNavigateTo={navigateTo}
+      />
+
+      {/* File list */}
+      <div className="flex-1 overflow-y-auto p-2 no-scroll">
+        <EmptyStates
+          loading={loading}
+          error={error}
+          items={items}
+          filteredItems={filteredItems}
+          onUploadClick={() => fileInputRef.current?.click()}
+        />
+        {!loading && !error && filteredItems.length > 0 && (
+          <FileList
+            folders={folders}
+            uploadFiles={uploadFiles}
+            reportFiles={reportFiles}
+            selectedFiles={selectedFiles}
+            expandedFolders={expandedFolders}
+            collapsedSections={collapsedSections}
+            deletingPath={deletingPath}
+            onToggleFolder={toggleFolder}
+            onToggleSection={toggleSection}
+            onToggleFileSelection={toggleFileSelection}
+            onDownload={handleDownload}
+            onDelete={handleDelete}
+          />
+        )}
+      </div>
+
+      <Footer
+        selectedFiles={selectedFiles}
+        onClearSelection={clearSelection}
+        itemActionMsg={itemActionMsg}
+        creatingType={creatingType}
+      />
+    </div>
+  );
+}
+
+/**
+ * Thin wrapper kept for backward compatibility (and the existing test). The
+ * "filesystem" icon has been removed from the right rail, so this is no longer
+ * reachable from the UI — the file manager now lives in the Quellen panel's
+ * "Dateien" tab (see SourcesSidebar). Left in place so nothing that still
+ * imports the default export breaks.
+ */
+export default function FilesystemSidebar({ workspace = null }: any) {
+  const { sidebarOpen, closeSidebar } = useFilesystemSidebar();
+  return (
+    <ChatSidebar isOpen={sidebarOpen}>
+      <FilesystemPanelBody
+        workspace={workspace}
+        onClose={closeSidebar}
+        active={sidebarOpen}
+      />
     </ChatSidebar>
   );
 }
