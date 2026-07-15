@@ -111,7 +111,9 @@ describe("useThreads", () => {
     });
 
     it("exposes error on fetch failure", async () => {
-      (Workspace.threads.all as any).mockRejectedValue(new Error("Network error"));
+      (Workspace.threads.all as any).mockRejectedValue(
+        new Error("Network error"),
+      );
 
       const { result } = renderHook(() => useThreads("ws"), { wrapper });
 
