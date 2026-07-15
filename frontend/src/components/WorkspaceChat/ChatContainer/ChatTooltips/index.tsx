@@ -20,119 +20,116 @@ import { useTranslation } from "react-i18next";
 export function ChatTooltips() {
   const { t } = useTranslation();
 
-  return (
+  // All chat tooltips are portaled to document.body with z-[100].
+  //
+  // Why: the message action icons (copy, edit, feedback, regenerate, speak,
+  // more-actions) live inside the chat message's own stacking context. When a
+  // tooltip is rendered inline there without a z-index, it stacks at `auto` and
+  // gets visually overlapped by sibling content that follows the icon row
+  // (e.g. the "Basierend auf Quellen" chip and the Quellen source row),
+  // producing the faulty hover overlap above/around the AI answers.
+  //
+  // Portaling to <body> + z-[100] lifts every tooltip above the chat history,
+  // matching the already-working pattern previously used only for
+  // "similarity-score". Positioning is unaffected — react-tooltip anchors by
+  // the trigger element's rect regardless of where the tooltip node lives.
+  return createPortal(
     <>
       <Tooltip
         id="message-to-speech"
         place="bottom"
         delayShow={300}
-        className="tooltip !text-xs"
+        className="tooltip !text-xs z-[100]"
       />
       <Tooltip
         id="regenerate-assistant-text"
         place="bottom"
         delayShow={300}
-        className="tooltip !text-xs"
+        className="tooltip !text-xs z-[100]"
       />
       <Tooltip
         id="copy-message-text"
         place="bottom"
         delayShow={300}
-        className="tooltip !text-xs"
+        className="tooltip !text-xs z-[100]"
       />
       <Tooltip
         id="feedback-button"
         place="bottom"
         delayShow={300}
-        className="tooltip !text-xs"
+        className="tooltip !text-xs z-[100]"
       />
       <Tooltip
         id="action-menu"
         place="top"
         delayShow={300}
-        className="tooltip !text-xs"
+        className="tooltip !text-xs z-[100]"
       />
       <Tooltip
         id="edit-input-text"
         place="bottom"
         delayShow={300}
-        className="tooltip !text-xs"
+        className="tooltip !text-xs z-[100]"
       />
       <Tooltip
         id="metrics-visibility"
         place="bottom"
         delayShow={300}
-        className="tooltip !text-xs"
+        className="tooltip !text-xs z-[100]"
       />
       <Tooltip
         id="routing-details"
         place="bottom"
         delayShow={300}
-        className="tooltip !text-xs"
+        className="tooltip !text-xs z-[100]"
       />
       <Tooltip
         id="expand-cot"
         place="bottom"
         delayShow={300}
-        className="tooltip !text-xs"
+        className="tooltip !text-xs z-[100]"
       />
       <Tooltip
         id="cot-thinking"
         place="bottom"
         delayShow={500}
-        className="tooltip !text-xs"
+        className="tooltip !text-xs z-[100]"
       />
       <Tooltip
         id="query-refusal-info"
         place="top"
         delayShow={500}
-        className="tooltip !text-xs max-w-[350px]"
+        className="tooltip !text-xs max-w-[350px] z-[100]"
       />
       <Tooltip
         id="context-window-limit-exceeded"
         place="top"
         delayShow={500}
-        className="tooltip !text-xs max-w-[350px]"
+        className="tooltip !text-xs max-w-[350px] z-[100]"
       />
       <Tooltip
         id="attachment-status-tooltip"
         place="top"
         delayShow={300}
-        className="tooltip !text-xs"
+        className="tooltip !text-xs z-[100]"
       />
       <Tooltip
         id="attach-item-btn"
         place="top"
         delayShow={300}
-        className="tooltip !text-xs"
+        className="tooltip !text-xs z-[100]"
       />
       <Tooltip
         id="agent-skill-disabled-tooltip"
         place="top"
         delayShow={300}
-        className="tooltip !text-xs z-[99]"
+        className="tooltip !text-xs z-[100]"
         content={t("chat_window.agent_skills_disabled_in_session")}
       />
-      <DocumentLevelTooltip />
-    </>
-  );
-}
-
-/**
- * This is a document level tooltip that is rendered at the top most level of the document
- * to ensure it is rendered above the chat history and other elements. Anytime we have tooltips
- * in modals the z-indexing can be recalculated and we need to ensure it is rendered at the top most level
- * so it positions correctly.
- */
-function DocumentLevelTooltip() {
-  return createPortal(
-    <>
       <Tooltip
         id="similarity-score"
         place="top"
         delayShow={100}
-        // z-[100] to ensure it renders above the chat history
-        // as the citation modal is z-indexed above the chat history
         className="tooltip !text-xs z-[100]"
       />
     </>,
