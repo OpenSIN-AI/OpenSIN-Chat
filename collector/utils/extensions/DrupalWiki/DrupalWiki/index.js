@@ -109,7 +109,7 @@ class DrupalWiki {
    */
   async #getPageIndexForSpace(spaceId) {
     // errors on fetching the pageIndex is fatal, no error handling
-    let hasNext = true;
+    let hasNext;
     let pageIds = [];
     let pageNr = 0;
     do {

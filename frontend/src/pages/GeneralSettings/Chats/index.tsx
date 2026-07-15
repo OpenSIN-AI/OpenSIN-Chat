@@ -14,6 +14,7 @@ import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { saveAs } from "file-saver";
 import { useTranslation } from "react-i18next";
 import { CanViewChatHistory } from "@/components/CanViewChatHistory";
+import useConfirm from "@/hooks/useConfirm";
 
 interface ExportOption {
   name: string;
@@ -68,6 +69,7 @@ export default function WorkspaceChats() {
   const [canNext, setCanNext] = useState(false);
   const { t } = useTranslation();
   const isMobile = useIsMobileLayout();
+  const confirm = useConfirm();
 
   const handleDumpChats = async (exportType: keyof typeof exportOptions) => {
     try {
@@ -87,7 +89,14 @@ export default function WorkspaceChats() {
   };
 
   const handleClearAllChats = async () => {
-    if (!window.confirm(t("recorded.clearConfirm"))) return false;
+    if (
+      !(await confirm({
+        title: t("recorded.clearConfirm"),
+        confirmLabel: t("common.confirm"),
+        destructive: true,
+      }))
+    )
+      return false;
     try {
       await System.deleteChat(-1 as any);
       setChats([]);

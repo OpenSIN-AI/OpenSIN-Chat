@@ -10,6 +10,7 @@ import paths from "@/utils/paths";
 import { useTranslation } from "react-i18next";
 import Toggle from "@/components/lib/Toggle";
 import logger from "@/utils/logger";
+import useConfirm from "@/hooks/useConfirm";
 
 type Flow = {
   uuid: string;
@@ -27,10 +28,18 @@ function ManageFlowMenu({ flow, onDelete }: ManageFlowMenuProps): JSX.Element {
   const menuRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const confirm = useConfirm();
 
   async function deleteFlow() {
     setOpen(false);
-    if (!window.confirm(t("agentFlows.confirmDelete"))) return;
+    if (
+      !(await confirm({
+        title: t("agentFlows.confirmDelete"),
+        confirmLabel: t("common.delete"),
+        destructive: true,
+      }))
+    )
+      return;
     try {
       const { success, error } = await AgentFlows.deleteFlow(flow.uuid);
       if (success) {

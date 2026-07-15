@@ -7,6 +7,7 @@ import { PencilSimple } from "@phosphor-icons/react/dist/csr/PencilSimple";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import Transformations, { Transformation } from "@/models/transformation";
 import showToast from "@/utils/toast";
+import useConfirm from "@/hooks/useConfirm";
 
 const EMPTY_FORM: Partial<Transformation> = {
   name: "",
@@ -21,6 +22,7 @@ export default function AdminTransformations() {
   const [items, setItems] = useState<Transformation[]>([]);
   const [editing, setEditing] = useState<Partial<Transformation> | null>(null);
   const [saving, setSaving] = useState(false);
+  const confirm = useConfirm();
 
   const load = useCallback(async () => {
     setItems(await Transformations.all());
@@ -52,7 +54,14 @@ export default function AdminTransformations() {
   };
 
   const remove = async (id: number) => {
-    if (!window.confirm(t("transformations.confirmDelete"))) return;
+    if (
+      !(await confirm({
+        title: t("transformations.confirmDelete"),
+        confirmLabel: t("common.delete"),
+        destructive: true,
+      }))
+    )
+      return;
     const ok = await Transformations.delete(id);
     if (!ok) {
       showToast(t("transformations.deleteFailed"), "error", { clear: true });

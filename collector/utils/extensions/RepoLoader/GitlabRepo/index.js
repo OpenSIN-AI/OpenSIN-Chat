@@ -48,7 +48,7 @@ async function loadGitlabRepo(args, response) {
   for (const doc of docs) {
     if (!doc.metadata || (!doc.pageContent && !doc.issue && !doc.wiki))
       continue;
-    let pageContent = null;
+    let pageContent;
 
     const data = {
       id: v4(),

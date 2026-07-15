@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
 import Workspace from "@/models/workspace";
+import useConfirm from "@/hooks/useConfirm";
 import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";
 
@@ -11,8 +12,16 @@ export default function ResetDatabase({
 }) {
   const [deleting, setDeleting] = useState(false);
   const { t } = useTranslation();
+  const confirm = useConfirm();
   const resetVectorDatabase = async () => {
-    if (!window.confirm(`${t("vector-workspace.reset.confirm")}`)) return false;
+    if (
+      !(await confirm({
+        title: `${t("vector-workspace.reset.confirm")}`,
+        confirmLabel: t("common.delete"),
+        destructive: true,
+      }))
+    )
+      return false;
 
     setDeleting(true);
     const success = await Workspace.wipeVectorDb(workspace.slug);

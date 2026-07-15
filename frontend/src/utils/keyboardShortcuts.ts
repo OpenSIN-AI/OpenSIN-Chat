@@ -5,45 +5,54 @@ import { userFromStorage } from "./request";
 import { TOGGLE_LLM_SELECTOR_EVENT } from "@/components/WorkspaceChat/ChatContainer/PromptInput/LLMSelector/action";
 
 export const KEYBOARD_SHORTCUTS_HELP_EVENT = "keyboard-shortcuts-help";
+export const NAVIGATE_HOME_EVENT = "keyboard-navigate-home";
 export const isMac =
   ((navigator as any).userAgentData?.platform ?? navigator.platform)
     .toUpperCase()
     .indexOf("MAC") >= 0;
+
+/**
+ * Navigate via the History API so React Router picks up the change
+ * without a full-page reload.  Falls back to window.location.href if
+ * pushState is unavailable (should not happen in practice).
+ */
+function navigateTo(path: string) {
+  if (window.location.pathname === path) return;
+  window.history.pushState(null, "", path);
+  window.dispatchEvent(new PopStateEvent("popstate"));
+}
+
 export const SHORTCUTS = {
   "⌘ + ,": {
     translationKey: "settings",
     action: () => {
-      window.location.href = paths.settings.interface();
+      navigateTo(paths.settings.interface());
     },
   },
   "⌘ + H": {
     translationKey: "home",
     action: () => {
-      window.location.href = paths.home();
+      navigateTo(paths.home());
     },
   },
   "⌘ + I": {
     translationKey: "workspaces",
     action: () => {
-      window.location.href = paths.settings.workspaces();
-    },
-  },
-  "⌘ + K": {
-    translationKey: "apiKeys",
-    action: () => {
-      window.location.href = paths.settings.apiKeys();
+      // Dispatch to WorkspaceChat which owns the navigate() hook and
+      // can route to the current workspace (or home) client-side.
+      window.dispatchEvent(new Event(NAVIGATE_HOME_EVENT));
     },
   },
   "⌘ + L": {
     translationKey: "llmPreferences",
     action: () => {
-      window.location.href = paths.settings.llmPreference();
+      navigateTo(paths.settings.llmPreference());
     },
   },
   "⌘ + Shift + C": {
     translationKey: "chatSettings",
     action: () => {
-      window.location.href = paths.settings.chat();
+      navigateTo(paths.settings.chat());
     },
   },
   "⌘ + Shift + ?": {

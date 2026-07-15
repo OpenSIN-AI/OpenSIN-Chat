@@ -18,6 +18,7 @@ import { ThemeProvider } from "./ThemeContext";
 import { PWAModeProvider } from "./PWAContext";
 import KeyboardShortcutsHelp from "@/components/KeyboardShortcutsHelp";
 import ImageLightbox from "@/components/ImageLightbox";
+import { ConfirmProvider } from "@/components/ui/ConfirmProvider";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorBoundaryFallback from "./components/ErrorBoundaryFallback";
 import logger from "@/utils/logger";
@@ -54,20 +55,22 @@ export default function App() {
                 <LogoProvider>
                   <PfpProvider>
                     <I18nextProvider i18n={i18n}>
-                      <SkipToContentLink />
-                      <main id="main-content">
-                        <ErrorBoundary
-                          FallbackComponent={ErrorBoundaryFallback}
-                          onError={logger.error}
-                        >
-                          <Outlet />
-                        </ErrorBoundary>
-                      </main>
-                      <div aria-live="polite" aria-atomic="false">
-                        <ToastContainer limit={3} />
-                      </div>
-                      <KeyboardShortcutsHelp />
-                      <ImageLightbox />
+                      <ConfirmProvider>
+                        <SkipToContentLink />
+                        <main id="main-content">
+                          <ErrorBoundary
+                            FallbackComponent={ErrorBoundaryFallback}
+                            onError={logger.error}
+                          >
+                            <Outlet />
+                          </ErrorBoundary>
+                        </main>
+                        <div aria-live="polite" aria-atomic="false">
+                          <ToastContainer limit={3} />
+                        </div>
+                        <KeyboardShortcutsHelp />
+                        <ImageLightbox />
+                      </ConfirmProvider>
                     </I18nextProvider>
                   </PfpProvider>
                 </LogoProvider>

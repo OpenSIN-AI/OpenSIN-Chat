@@ -63,7 +63,12 @@ async function getPageLinks(url, baseUrl) {
     console.error(`Failed to get page links from ${url}.`, error);
     return [];
   } finally {
-    if (page) await page.close().catch((e) => console.warn("[index] non-fatal error:", e?.message || e));
+    if (page)
+      await page
+        .close()
+        .catch((e) =>
+          console.warn("[index] non-fatal error:", e?.message || e)
+        );
     await browserPool.release(browser);
   }
 }
@@ -158,7 +163,12 @@ async function bulkScrapePages(links, outFolderPath) {
       // eslint-disable-next-line no-console
       console.error(`Failed to scrape ${link}.`, error);
     } finally {
-      if (page) await page.close().catch((e) => console.warn("[index] non-fatal error:", e?.message || e));
+      if (page)
+        await page
+          .close()
+          .catch((e) =>
+            console.warn("[index] non-fatal error:", e?.message || e)
+          );
       await browserPool.release(browser);
     }
   }

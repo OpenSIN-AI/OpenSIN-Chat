@@ -3,6 +3,7 @@
 import { DotsThreeVertical } from "@phosphor-icons/react/dist/csr/DotsThreeVertical";
 import { useRef, useState, useEffect } from "react";
 import PromptHistory from "@/models/promptHistory";
+import useConfirm from "@/hooks/useConfirm";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -32,13 +33,20 @@ export default function PromptHistoryItem({
   onPublishClick,
 }: PromptHistoryItemProps): JSX.Element {
   const { t } = useTranslation();
+  const confirm = useConfirm();
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const [expanded, setExpanded] = useState(false);
 
   const deleteHistory = async (id: string) => {
-    if (window.confirm(t("chat.prompt.history.deleteConfirm"))) {
+    if (
+      await confirm({
+        title: t("chat.prompt.history.deleteConfirm"),
+        confirmLabel: t("common.delete"),
+        destructive: true,
+      })
+    ) {
       const { success } = await PromptHistory.delete(id);
       if (success) {
         setHistory((prevHistory) =>

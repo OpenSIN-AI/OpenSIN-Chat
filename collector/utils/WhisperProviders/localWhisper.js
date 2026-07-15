@@ -86,7 +86,9 @@ class LocalWhisper {
         this.#validateAudioFile(wavFile);
       } catch (error) {
         this.#log(`Audio validation failed: ${error.message}`);
-        throw new Error(`Invalid audio file: ${error.message}`);
+        throw new Error(`Invalid audio file: ${error.message}`, {
+          cause: error,
+        });
       }
 
       // Although we use ffmpeg to convert to the correct format (16k hz 32f),
@@ -115,7 +117,9 @@ class LocalWhisper {
       if (outputFile) {
         try {
           fs.rmSync(outputFile, { force: true });
-        } catch (e) { console.warn("[localWhisper] non-fatal error:", e?.message || e); }
+        } catch (e) {
+          console.warn("[localWhisper] non-fatal error:", e?.message || e);
+        }
       }
       // eslint-disable-next-line no-console
       console.error(`convertToWavAudioData`, error);
@@ -164,7 +168,7 @@ class LocalWhisper {
         `Failed to load the native whisper model: ${errMsg}`,
         error.stack
       );
-      throw new Error(errMsg);
+      throw new Error(errMsg, { cause: error });
     }
   }
 

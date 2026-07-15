@@ -69,6 +69,11 @@ vi.mock("react-i18next", async () => {
   return createI18nMock();
 });
 
+const confirmMock = vi.fn(() => Promise.resolve(true));
+vi.mock("@/hooks/useConfirm", () => ({
+  default: () => confirmMock,
+}));
+
 import ThreadItem from "@/components/Sidebar/ActiveWorkspaces/ThreadContainer/ThreadItem";
 
 const baseWorkspace = { slug: "my-workspace" };
@@ -103,6 +108,7 @@ function renderThreadItem(
 
 beforeEach(() => {
   vi.clearAllMocks();
+  confirmMock.mockResolvedValue(true);
   newThreadMock.mockResolvedValue({
     thread: { slug: "new-thread" },
     message: null,
@@ -237,7 +243,7 @@ describe("ThreadItem", () => {
 
   it("'Delete Thread' asks for confirmation and calls Workspace.threads.delete", async () => {
     const onRemove = vi.fn();
-    const confirmSpy = vi.spyOn(window, "confirm").mockReturnValue(true);
+    confirmMock.mockResolvedValue(true);
     renderThreadItem({ onRemove });
     fireEvent.click(screen.getByRole("button", { name: /thread options/i }));
     fireEvent.click(screen.getByText(/delete thread/i));
@@ -246,18 +252,16 @@ describe("ThreadItem", () => {
     });
     expect(onRemove).toHaveBeenCalledWith(1);
     expect(invalidateThreadsMock).toHaveBeenCalledWith("my-workspace");
-    confirmSpy.mockRestore();
   });
 
   it("'Delete Thread' aborts when the user cancels the confirm dialog", async () => {
     const onRemove = vi.fn();
-    const confirmSpy = vi.spyOn(window, "confirm").mockReturnValue(false);
+    confirmMock.mockResolvedValue(false);
     renderThreadItem({ onRemove });
     fireEvent.click(screen.getByRole("button", { name: /thread options/i }));
     fireEvent.click(screen.getByText(/delete thread/i));
     await Promise.resolve();
     expect(deleteThreadMock).not.toHaveBeenCalled();
     expect(onRemove).not.toHaveBeenCalled();
-    confirmSpy.mockRestore();
   });
 });

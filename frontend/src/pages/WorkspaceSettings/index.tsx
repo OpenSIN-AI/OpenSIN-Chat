@@ -119,11 +119,14 @@ function ShowWorkspaceChat(): JSX.Element | null {
       {!isMobile ? <Sidebar /> : <SidebarMobileHeader />}
       <div
         style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
-        className="h-[var(--content-height)] transition-all duration-500 relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll"
+        className={`h-[var(--content-height)] transition-all duration-500 relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll${isMobile ? " pt-14" : ""}`}
       >
-        <div className="flex gap-x-10 pt-6 pb-4 ml-16 mr-8 border-b-2 border-white light:border-theme-chat-input-border border-opacity-10">
+        <div
+          className={`flex gap-x-10 pt-6 pb-4 ml-16 mr-8 border-b-2 border-white light:border-theme-chat-input-border border-opacity-10${isMobile ? " sticky top-0 z-20 bg-theme-bg-secondary" : ""}`}
+        >
           <Link
             to={paths.workspace.chat(slug)}
+            aria-label={t("settings.backToChat")}
             className="absolute top-2 left-2 md:top-4 md:left-4 transition-all duration-300 p-2 rounded-full text-theme-text-primary bg-theme-sidebar-footer-icon hover:bg-theme-sidebar-footer-icon-hover z-10"
           >
             <ArrowUUpLeft className="h-5 w-5" weight="fill" />

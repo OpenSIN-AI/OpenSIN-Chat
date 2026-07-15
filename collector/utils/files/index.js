@@ -127,7 +127,7 @@ function writeToServerDocuments({
 }) {
   if (!filename) throw new Error("Filename is required!");
 
-  let destination = null;
+  let destination;
   if (destinationOverride) destination = path.resolve(destinationOverride);
   else if (options.parseOnly) destination = path.resolve(directUploadsFolder);
   else destination = path.resolve(documentsFolder, "custom-documents");
@@ -169,7 +169,9 @@ async function wipeCollectorStorage() {
         if (file === "__HOTDIR__.md") continue;
         try {
           fs.rmSync(path.join(directory, file));
-        } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
+        } catch (e) {
+          console.warn("[index] non-fatal error:", e?.message || e);
+        }
       }
       resolve();
     });
@@ -184,7 +186,9 @@ async function wipeCollectorStorage() {
         if (file === ".placeholder") continue;
         try {
           fs.rmSync(path.join(directory, file));
-        } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
+        } catch (e) {
+          console.warn("[index] non-fatal error:", e?.message || e);
+        }
       }
       resolve();
     });

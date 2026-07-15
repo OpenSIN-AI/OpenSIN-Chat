@@ -84,7 +84,9 @@ class GitLabRepoLoader {
           `[Gitlab Loader]: baseUrl host ${hostname} is not in the standard GitLab allowlist (gitlab.com / gitlab.<sub>.<tld>). Please confirm this instance is trusted — PAT will be sent to it.`
         );
       }
-    } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
+    } catch (e) {
+      console.warn("[index] non-fatal error:", e?.message || e);
+    }
     return true;
   }
 
@@ -247,7 +249,7 @@ class GitLabRepoLoader {
       endpoint: `/api/v4/projects/${this.projectId}/repository/branches`,
     };
 
-    let branchesPage = [];
+    let branchesPage;
     let maxPages = 1000;
     while ((branchesPage = await this.fetchNextPage(branchesRequestData))) {
       if (!Array.isArray(branchesPage) || !branchesPage?.length) break;
@@ -271,8 +273,8 @@ class GitLabRepoLoader {
       },
     };
 
-    let filesPage = null;
-    let pagePromises = [];
+    let filesPage;
+    let pagePromises;
     let maxPages = 1000;
     while ((filesPage = await this.fetchNextPage(filesRequestData))) {
       if (!Array.isArray(filesPage) || !filesPage?.length) break;
@@ -313,8 +315,8 @@ class GitLabRepoLoader {
       endpoint: `/api/v4/projects/${this.projectId}/issues`,
     };
 
-    let issuesPage = null;
-    let pagePromises = [];
+    let issuesPage;
+    let pagePromises;
     let maxPages = 1000;
     while ((issuesPage = await this.fetchNextPage(issuesRequestData))) {
       if (!Array.isArray(issuesPage) || !issuesPage?.length) break;
@@ -323,7 +325,7 @@ class GitLabRepoLoader {
         const discussionsRequestData = {
           endpoint: `/api/v4/projects/${this.projectId}/issues/${issue.iid}/discussions`,
         };
-        let discussionPage = null;
+        let discussionPage;
         const discussions = [];
 
         while (

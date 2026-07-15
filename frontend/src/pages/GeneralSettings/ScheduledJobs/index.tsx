@@ -16,6 +16,7 @@ import { Tooltip } from "react-tooltip";
 import useScheduledJobs from "@/hooks/useScheduledJobs";
 import AdminContentPanel from "@/components/AdminContentPanel";
 import logger from "@/utils/logger";
+import useConfirm from "@/hooks/useConfirm";
 
 export default function ScheduledJobsPage() {
   const { t } = useTranslation();
@@ -23,9 +24,17 @@ export default function ScheduledJobsPage() {
   const { isOpen, openModal, closeModal } = useModal();
   const { jobs, isLoading, mutate: refresh } = useScheduledJobs();
   const [editingJob, setEditingJob] = useState<any>(null);
+  const confirm = useConfirm();
 
   const handleDelete = async (id: string | number) => {
-    if (!window.confirm(t("scheduledJobs.confirmDelete"))) return;
+    if (
+      !(await confirm({
+        title: t("scheduledJobs.confirmDelete"),
+        confirmLabel: t("common.delete"),
+        destructive: true,
+      }))
+    )
+      return;
     try {
       await ScheduledJobs.delete(id);
       showToast(t("scheduledJobs.toast.deleted"), "success", { clear: true });

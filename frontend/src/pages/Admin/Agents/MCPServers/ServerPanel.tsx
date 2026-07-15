@@ -11,6 +11,7 @@ import { titleCase } from "text-case";
 import MCPServers from "@/models/mcpServers";
 import { SimpleToggleSwitch } from "@/components/lib/Toggle";
 import { useTranslation, Trans } from "react-i18next";
+import useConfirm from "@/hooks/useConfirm";
 
 interface MCPServerTool {
   name: string;
@@ -54,12 +55,16 @@ function ManageServerMenu({
   const [open, setOpen] = useState(false);
   const [running, setRunning] = useState(server.running);
   const menuRef = useRef<HTMLDivElement | null>(null);
+  const confirm = useConfirm();
 
   async function deleteServer() {
     if (
-      !window.confirm(
-        "Are you sure you want to delete this MCP server? It will be removed from your config file and you will need to add it back manually.",
-      )
+      !(await confirm({
+        title:
+          "Are you sure you want to delete this MCP server? It will be removed from your config file and you will need to add it back manually.",
+        confirmLabel: t("common.delete"),
+        destructive: true,
+      }))
     )
       return;
     const { success, error } = await MCPServers.deleteServer(server.name);
@@ -73,11 +78,13 @@ function ManageServerMenu({
 
   async function handleToggleServer() {
     if (
-      !window.confirm(
-        running
+      !(await confirm({
+        title: running
           ? "Are you sure you want to stop this MCP server? It will be started automatically when you next start the server."
           : "Are you sure you want to start this MCP server? It will be started automatically when you next start the server.",
-      )
+        confirmLabel: t("common.confirm"),
+        destructive: true,
+      }))
     )
       return;
 

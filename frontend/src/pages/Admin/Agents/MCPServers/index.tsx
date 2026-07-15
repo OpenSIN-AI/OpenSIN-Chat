@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import useMCPServers, { MCP_SERVERS_KEY } from "@/hooks/useMCPServers";
 import { mutate } from "swr";
 import logger from "@/utils/logger";
+import useConfirm from "@/hooks/useConfirm";
 
 type MCPServer = {
   name: string;
@@ -40,6 +41,7 @@ export function MCPServerHeader({
   const { servers, isLoading, refresh } = useMCPServers();
   const [initialLoaded, setInitialLoaded] = useState(false);
   const [reloading, setReloading] = useState(false);
+  const confirm = useConfirm();
 
   useEffect(() => {
     if (!initialLoaded && !isLoading) {
@@ -48,8 +50,13 @@ export function MCPServerHeader({
     }
   }, [initialLoaded, isLoading, servers, setMcpServers]);
 
-  const refreshMCPServers = () => {
-    if (window.confirm(t("agent.mcp.refresh-confirm"))) {
+  const refreshMCPServers = async () => {
+    if (
+      await confirm({
+        title: t("agent.mcp.refresh-confirm"),
+        confirmLabel: t("common.confirm"),
+      })
+    ) {
       setReloading(true);
       MCPServers.forceReload()
         .then(({ servers = [] }: any) => {

@@ -9,6 +9,7 @@ import System from "@/models/system";
 import ModalWrapper from "@/components/ModalWrapper";
 import { useModal } from "@/hooks/useModal";
 import { safeJsonParse } from "@/utils/request";
+import useConfirm from "@/hooks/useConfirm";
 
 // Lazy-load the markdown renderer because it is only used inside the response
 // preview modal. This keeps the settings route chunk small and defers loading
@@ -34,6 +35,7 @@ export default function ChatRow({
   onDelete,
 }: ChatRowProps): React.JSX.Element {
   const { t } = useTranslation();
+  const confirm = useConfirm();
   const {
     isOpen: isPromptOpen,
     openModal: openPromptModal,
@@ -46,7 +48,14 @@ export default function ChatRow({
   } = useModal();
 
   const handleDelete = async () => {
-    if (!window.confirm(t("recorded.deleteConfirm"))) return false;
+    if (
+      !(await confirm({
+        title: t("recorded.deleteConfirm"),
+        confirmLabel: t("common.delete"),
+        destructive: true,
+      }))
+    )
+      return false;
     await System.deleteChat(chat.id);
     onDelete(chat.id);
   };

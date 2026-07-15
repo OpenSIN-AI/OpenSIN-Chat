@@ -4,6 +4,7 @@ import { useEffect, useState, forwardRef, Ref } from "react";
 import { useTranslation } from "react-i18next";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import PromptHistory from "@/models/promptHistory";
+import useConfirm from "@/hooks/useConfirm";
 import PromptHistoryItem from "./PromptHistoryItem";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -28,6 +29,7 @@ export default forwardRef(function ChatPromptHistory(
   ref: Ref<HTMLDivElement>,
 ) {
   const { t } = useTranslation();
+  const confirm = useConfirm();
   const [history, setHistory] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -46,9 +48,15 @@ export default forwardRef(function ChatPromptHistory(
       });
   }
 
-  function handleClearAll() {
+  async function handleClearAll() {
     if (!workspaceSlug) return;
-    if (window.confirm(t("chat.prompt.history.clearAllConfirm"))) {
+    if (
+      await confirm({
+        title: t("chat.prompt.history.clearAllConfirm"),
+        confirmLabel: t("common.delete"),
+        destructive: true,
+      })
+    ) {
       PromptHistory.clearAll(workspaceSlug)
         .then(({ success }: { success: boolean }) => {
           if (success) setHistory([]);

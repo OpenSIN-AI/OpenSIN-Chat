@@ -62,7 +62,13 @@ function isPrivateIPv6(ip) {
   // :: — unspecified
   if (lower === "::") return true;
   // fe80::/10 — link-local
-  if (lower.startsWith("fe80:") || lower.startsWith("fe9") || lower.startsWith("fea") || lower.startsWith("feb")) return true;
+  if (
+    lower.startsWith("fe80:") ||
+    lower.startsWith("fe9") ||
+    lower.startsWith("fea") ||
+    lower.startsWith("feb")
+  )
+    return true;
   // fc00::/7 — unique local (fc00:: – fdff::)
   if (lower.startsWith("fc") || lower.startsWith("fd")) return true;
   // ::ffff:0:0/96 — IPv4-mapped (check the embedded IPv4)
@@ -128,7 +134,9 @@ function validURL(url) {
     if (!VALID_PROTOCOLS.includes(destination.protocol)) return false;
     if (isInvalidIp(destination)) return false;
     return true;
-  } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
+  } catch (e) {
+    console.warn("[index] non-fatal error:", e?.message || e);
+  }
   return false;
 }
 

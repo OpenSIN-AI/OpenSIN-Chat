@@ -8,6 +8,7 @@ import { copyText } from "@/utils/clipboard";
 import showToast from "@/utils/toast";
 import { mutate } from "swr";
 import { INVITES_KEY } from "@/hooks/useInvites";
+import useConfirm from "@/hooks/useConfirm";
 
 const DASH = "--";
 
@@ -16,8 +17,16 @@ export default function InviteRow({ invite }: { invite: any }) {
   const rowRef = useRef<HTMLTableRowElement>(null);
   const [status, setStatus] = useState(invite.status);
   const [copied, setCopied] = useState(false);
+  const confirm = useConfirm();
   const handleDelete = async () => {
-    if (!window.confirm(t("inviteRow.deactivateConfirm"))) return false;
+    if (
+      !(await confirm({
+        title: t("inviteRow.deactivateConfirm"),
+        confirmLabel: t("common.confirm"),
+        destructive: true,
+      }))
+    )
+      return false;
     try {
       const { success, error } = await Admin.disableInvite(invite.id);
       if (!success) {

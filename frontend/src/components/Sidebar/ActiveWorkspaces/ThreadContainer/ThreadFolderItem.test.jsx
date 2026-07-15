@@ -77,6 +77,11 @@ vi.mock("@/models/workspace", () => ({
   },
 }));
 
+const confirmMock = vi.fn(() => Promise.resolve(true));
+vi.mock("@/hooks/useConfirm", () => ({
+  default: () => confirmMock,
+}));
+
 import ThreadFolderItem from "@/components/Sidebar/ActiveWorkspaces/ThreadContainer/ThreadFolderItem";
 
 const baseFolder = { id: 1, name: "My Folder" };
@@ -118,6 +123,7 @@ function renderFolderItem({
 
 beforeEach(() => {
   vi.clearAllMocks();
+  confirmMock.mockResolvedValue(true);
   newThreadMock.mockResolvedValue({
     thread: { slug: "fresh-thread" },
     message: null,
@@ -253,7 +259,7 @@ describe("ThreadFolderItem", () => {
 
   it("asks for confirmation and calls folders.delete on confirm", async () => {
     const onFolderDeleted = vi.fn();
-    const confirmSpy = vi.spyOn(window, "confirm").mockReturnValue(true);
+    confirmMock.mockResolvedValue(true);
     renderFolderItem({ onFolderDeleted });
     fireEvent.click(screen.getByTitle(/delete/i));
     await vi.waitFor(() => {
@@ -261,17 +267,15 @@ describe("ThreadFolderItem", () => {
     });
     expect(onFolderDeleted).toHaveBeenCalledWith(1);
     expect(invalidateThreadsMock).toHaveBeenCalledWith("my-workspace");
-    confirmSpy.mockRestore();
   });
 
   it("aborts the delete when the user cancels the confirm dialog", async () => {
     const onFolderDeleted = vi.fn();
-    const confirmSpy = vi.spyOn(window, "confirm").mockReturnValue(false);
+    confirmMock.mockResolvedValue(false);
     renderFolderItem({ onFolderDeleted });
     fireEvent.click(screen.getByTitle(/delete/i));
     await Promise.resolve();
     expect(deleteFolderMock).not.toHaveBeenCalled();
     expect(onFolderDeleted).not.toHaveBeenCalled();
-    confirmSpy.mockRestore();
   });
 });

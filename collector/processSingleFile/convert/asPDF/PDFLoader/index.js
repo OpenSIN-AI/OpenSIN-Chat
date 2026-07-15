@@ -34,20 +34,22 @@ class PDFLoader {
     if (!endpoint) return null;
 
     try {
-      const { FormData, Blob, fetch } = await import("node-fetch").catch(
-        () => {
-          // Node 18+ ships native fetch; fall back gracefully if node-fetch
-          // is not installed so this never breaks existing installations.
-          return { FormData: global.FormData, Blob: global.Blob, fetch: global.fetch };
-        },
-      );
+      const { FormData, Blob, fetch } = await import("node-fetch").catch(() => {
+        // Node 18+ ships native fetch; fall back gracefully if node-fetch
+        // is not installed so this never breaks existing installations.
+        return {
+          FormData: global.FormData,
+          Blob: global.Blob,
+          fetch: global.fetch,
+        };
+      });
 
       const fileBuffer = await fs.readFile(this.filePath);
       const form = new FormData();
       form.append(
         "files",
         new Blob([fileBuffer], { type: "application/pdf" }),
-        path.basename(this.filePath),
+        path.basename(this.filePath)
       );
 
       const res = await fetch(`${endpoint}/v1alpha/convert/file`, {
@@ -59,7 +61,9 @@ class PDFLoader {
 
       if (!res.ok) {
         console.warn(
-          `[PDFLoader] Docling HTTP ${res.status} for ${path.basename(this.filePath)} — falling back to pdf.js`,
+          `[PDFLoader] Docling HTTP ${res.status} for ${path.basename(
+            this.filePath
+          )} — falling back to pdf.js`
         );
         return null;
       }
@@ -67,18 +71,19 @@ class PDFLoader {
       const data = await res.json();
       // Docling ≥ 1.x: { document: { md_content: "..." } }
       // Docling 0.x fallback: { markdown: "..." }
-      const markdown =
-        data?.document?.md_content ?? data?.markdown ?? null;
+      const markdown = data?.document?.md_content ?? data?.markdown ?? null;
 
       if (!markdown || markdown.trim().length === 0) return null;
 
       console.log(
-        `[PDFLoader] Docling parsed ${path.basename(this.filePath)} (${markdown.length} chars)`,
+        `[PDFLoader] Docling parsed ${path.basename(this.filePath)} (${
+          markdown.length
+        } chars)`
       );
       return markdown;
     } catch (e) {
       console.warn(
-        `[PDFLoader] Docling unavailable (${e.message}) — falling back to pdf.js`,
+        `[PDFLoader] Docling unavailable (${e.message}) — falling back to pdf.js`
       );
       return null;
     }
@@ -243,7 +248,9 @@ class PDFLoader {
           } finally {
             try {
               if (typeof page.cleanup === "function") await page.cleanup();
-            } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
+            } catch (e) {
+              console.warn("[index] non-fatal error:", e?.message || e);
+            }
           }
         })
       );
@@ -300,7 +307,8 @@ class PDFLoader {
       // eslint-disable-next-line no-console
       console.error(e);
       throw new Error(
-        "Failed to load pdf-parse. Please install it with eg. `npm install pdf-parse`."
+        "Failed to load pdf-parse. Please install it with eg. `npm install pdf-parse`.",
+        { cause: e }
       );
     }
   }

@@ -700,6 +700,8 @@ const TRANSLATIONS = {
     stopped: "Gestoppt",
     loading: "Laden",
     refresh: "Erfrischen",
+    retry: "Erneut versuchen",
+    confirm: "Bestätigen",
     // Common UI strings - merged from second block (fix #120)
     show: "Anzeigen",
     hide: "Ausblenden",
@@ -2357,6 +2359,8 @@ const TRANSLATIONS = {
       "processor-offline": "Dokumentenprozessor nicht verfügbar",
       "processor-offline-desc":
         "Wir können Ihre Dateien momentan nicht hochladen, da der Dokumentenprozessor offline ist. Bitte versuchen Sie es später erneut.",
+      "processor-offline-retry": "Erneut versuchen",
+      "processor-offline-retrying": "Wird geprüft...",
       "click-upload":
         "Klicken Sie zum Hochladen oder ziehen Sie Dateien per Drag & Drop",
       "file-types":
@@ -4599,6 +4603,12 @@ const TRANSLATIONS = {
   directoryStates: {
     name: "Name",
     status: "Status",
+    summary: "{{done}} von {{total}} eingebettet",
+    statusQueued: "Warteschlange",
+    statusEmbedding: "Einbetten",
+    statusComplete: "Fertig",
+    statusFailed: "Fehlgeschlagen",
+    chunkProgress: "{{done}}/{{total}} Abschnitte",
     additionalFilesReady:
       "{{count}} zusätzliche Datei(en) bereit zum Einbetten",
     addToEmbeddingQueue: "Zur Embedding-Warteschlange hinzufügen",
@@ -5142,6 +5152,7 @@ const TRANSLATIONS = {
   uploadProgress: {
     uploadingFile: "Datei wird hochgeladen...",
     failedToUpload: "Diese Datei konnte nicht hochgeladen werden",
+    uploadFailed: "Upload fehlgeschlagen",
     fileSizeAndTime: "{{size}} | {{time}}",
   },
   embeddingFileRow: {

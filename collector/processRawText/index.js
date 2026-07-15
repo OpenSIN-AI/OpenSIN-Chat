@@ -32,7 +32,9 @@ const METADATA_KEYS = {
       try {
         const u = new URL(url);
         validUrl = ["https:", "http:"].includes(u.protocol);
-      } catch (e) { console.warn("[index] non-fatal error:", e?.message || e); }
+      } catch (e) {
+        console.warn("[index] non-fatal error:", e?.message || e);
+      }
 
       if (validUrl) return `web://${url.toLowerCase()}.website`;
       return `file://${stripAndSlug(title)}.txt`;

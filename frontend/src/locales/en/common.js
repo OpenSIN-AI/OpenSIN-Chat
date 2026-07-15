@@ -694,6 +694,8 @@ const TRANSLATIONS = {
       "Username must be 2-32 characters, start with a lowercase letter, and only contain lowercase letters, numbers, underscores, hyphens, and periods.",
     loading: "Loading",
     refresh: "Refresh",
+    retry: "Retry",
+    confirm: "Confirm",
     // Common UI strings - merged from second block (fix #120)
     show: "Show",
     hide: "Hide",
@@ -3029,6 +3031,8 @@ const TRANSLATIONS = {
       "processor-offline": "Document Processor Unavailable",
       "processor-offline-desc":
         "We can't upload your files right now because the document processor is offline. Please try again later.",
+      "processor-offline-retry": "Retry",
+      "processor-offline-retrying": "Checking...",
       "click-upload": "Click to upload or drag and drop",
       "file-types":
         "supports text files, csv's, spreadsheets, audio files, and more!",
@@ -4496,6 +4500,12 @@ const TRANSLATIONS = {
   directoryStates: {
     name: "Name",
     status: "Status",
+    summary: "{{done}} of {{total}} embedded",
+    statusQueued: "Queued",
+    statusEmbedding: "Embedding",
+    statusComplete: "Done",
+    statusFailed: "Failed",
+    chunkProgress: "{{done}}/{{total}} chunks",
     additionalFilesReady: "{{count}} additional file(s) ready to embed",
     addToEmbeddingQueue: "Add to embedding queue",
     addToQueue: "Add to queue",
@@ -5028,6 +5038,7 @@ const TRANSLATIONS = {
   uploadProgress: {
     uploadingFile: "Uploading file...",
     failedToUpload: "this file failed to upload",
+    uploadFailed: "Upload failed",
     fileSizeAndTime: "{{size}} | {{time}}",
   },
   embeddingFileRow: {

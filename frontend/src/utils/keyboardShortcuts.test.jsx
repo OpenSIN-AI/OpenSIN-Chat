@@ -21,6 +21,9 @@ describe("keyboardShortcuts", () => {
     expect(SHORTCUTS["⌘ + ,"].translationKey).toBe("settings");
     expect(SHORTCUTS["⌘ + H"].translationKey).toBe("home");
     expect(SHORTCUTS.F1.translationKey).toBe("help");
+    // ⌘K is intentionally excluded — it is handled locally by WorkspaceChat
+    // to toggle the CommandPalette, avoiding a navigation conflict.
+    expect(SHORTCUTS["⌘ + K"]).toBeUndefined();
   });
 
   it("initKeyboardShortcuts routes F1 to the help event", () => {
@@ -65,5 +68,29 @@ describe("keyboardShortcuts", () => {
     expect(
       container.querySelector('[data-testid="child"]'),
     ).toBeInTheDocument();
+  });
+
+  it("⌘I dispatches navigate-home event instead of navigating to admin route", () => {
+    const cleanup = initKeyboardShortcuts();
+    const handler = vi.fn();
+    window.addEventListener("keyboard-navigate-home", handler);
+    window.dispatchEvent(
+      new KeyboardEvent("keydown", { key: "i", metaKey: true }),
+    );
+    expect(handler).toHaveBeenCalledTimes(1);
+    window.removeEventListener("keyboard-navigate-home", handler);
+    cleanup();
+  });
+
+  it("⌘K does not navigate to api-keys (no global listener)", () => {
+    const cleanup = initKeyboardShortcuts();
+    const pushSpy = vi.spyOn(window.history, "pushState");
+    window.dispatchEvent(
+      new KeyboardEvent("keydown", { key: "k", metaKey: true }),
+    );
+    // pushState should NOT be called for ⌘K since it's handled locally
+    expect(pushSpy).not.toHaveBeenCalled();
+    pushSpy.mockRestore();
+    cleanup();
   });
 });

@@ -6,6 +6,8 @@ import { PencilSimple } from "@phosphor-icons/react/dist/csr/PencilSimple";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { useModal } from "@/hooks/useModal";
 import EditSQLConnection from "./SQLConnectionModal";
+import useConfirm from "@/hooks/useConfirm";
+import { useTranslation } from "react-i18next";
 
 export const DB_LOGOS: Record<string, string> = {
   postgresql: PostgreSQLLogo,
@@ -28,12 +30,16 @@ export default function DBConnection({
 }) {
   const { database_id, engine } = connection;
   const { isOpen, openModal, closeModal } = useModal();
+  const confirm = useConfirm();
+  const { t } = useTranslation();
 
-  function removeConfirmation() {
+  async function removeConfirmation() {
     if (
-      !window.confirm(
-        `Delete ${database_id} from the list of available SQL connections? This cannot be undone.`,
-      )
+      !(await confirm({
+        title: `Delete ${database_id} from the list of available SQL connections? This cannot be undone.`,
+        confirmLabel: t("common.delete"),
+        destructive: true,
+      }))
     )
       return false;
     onRemove(database_id);

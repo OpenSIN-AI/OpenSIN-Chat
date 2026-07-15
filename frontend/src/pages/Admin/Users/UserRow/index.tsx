@@ -10,6 +10,7 @@ import ModalWrapper from "@/components/ModalWrapper";
 import { useTranslation } from "react-i18next";
 import { mutate } from "swr";
 import { USERS_KEY } from "@/hooks/useUsers";
+import useConfirm from "@/hooks/useConfirm";
 
 const ModMap: Record<string, string[]> = {
   admin: ["admin", "manager", "default"],
@@ -28,9 +29,14 @@ export default function UserRow({ currUser, user }: UserRowProps): JSX.Element {
   const canModify = ModMap[currUser?.role || "default"].includes(user.role);
   const [suspended, setSuspended] = useState(user.suspended === 1);
   const { isOpen, openModal, closeModal } = useModal();
+  const confirm = useConfirm();
   const handleSuspend = async () => {
     if (
-      !window.confirm(t("userRow.confirmSuspend", { username: user.username }))
+      !(await confirm({
+        title: t("userRow.confirmSuspend", { username: user.username }),
+        confirmLabel: t("common.confirm"),
+        destructive: true,
+      }))
     )
       return false;
 
@@ -53,7 +59,11 @@ export default function UserRow({ currUser, user }: UserRowProps): JSX.Element {
   };
   const handleDelete = async () => {
     if (
-      !window.confirm(t("userRow.confirmDelete", { username: user.username }))
+      !(await confirm({
+        title: t("userRow.confirmDelete", { username: user.username }),
+        confirmLabel: t("common.delete"),
+        destructive: true,
+      }))
     )
       return false;
     try {

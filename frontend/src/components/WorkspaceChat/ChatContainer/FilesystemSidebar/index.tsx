@@ -7,6 +7,7 @@ import { HardDrive } from "@phosphor-icons/react/dist/csr/HardDrive";
 import { useTranslation } from "react-i18next";
 import { useFilesystem } from "@/hooks/useFilesystem";
 import { useFileBrowser } from "@/hooks/useFileBrowser";
+import useConfirm from "@/hooks/useConfirm";
 import { baseHeaders } from "@/utils/request";
 import { API_BASE } from "@/utils/constants";
 import showToast from "@/utils/toast";
@@ -22,6 +23,7 @@ import { Footer } from "./components/Footer";
 export default function FilesystemSidebar({ workspace = null }: any) {
   const { sidebarOpen, closeSidebar } = useFilesystemSidebar();
   const { t } = useTranslation();
+  const confirm = useConfirm();
   const { slug: paramSlug } = useParams();
   const workspaceSlug = workspace?.slug || paramSlug || "opensin-chat";
   const { data: sysInfo } = useFilesystem();
@@ -82,10 +84,13 @@ export default function FilesystemSidebar({ workspace = null }: any) {
   const handleDelete = useCallback(
     async (itemPath, itemName) => {
       if (
-        !window.confirm(
-          t("sidebar.filesystem.confirmDelete") +
+        !(await confirm({
+          title:
+            t("sidebar.filesystem.confirmDelete") +
             (itemName ? `\n${itemName}` : ""),
-        )
+          confirmLabel: t("common.delete"),
+          destructive: true,
+        }))
       )
         return;
       setDeletingPath(itemPath);
@@ -106,7 +111,7 @@ export default function FilesystemSidebar({ workspace = null }: any) {
         setDeletingPath(null);
       }
     },
-    [deleteItem, browse, currentPath, t],
+    [deleteItem, browse, currentPath, t, confirm],
   );
 
   const handleUploadFiles = useCallback(

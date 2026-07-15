@@ -12,6 +12,7 @@ import { useModal } from "@/hooks/useModal";
 import showToast from "@/utils/toast";
 import RuleForm from "./RuleForm";
 import RuleRow from "./RuleRow";
+import useConfirm from "@/hooks/useConfirm";
 
 interface Rule {
   id: number;
@@ -154,6 +155,7 @@ export default function RuleBuilder({
   onRulesChanged,
 }: RuleBuilderProps) {
   const { t } = useTranslation();
+  const confirm = useConfirm();
   const { isOpen, openModal, closeModal } = useModal();
   const [editingRule, setEditingRule] = useState<Rule | null>(null);
 
@@ -174,9 +176,11 @@ export default function RuleBuilder({
 
   const handleDelete = async (rule: Rule) => {
     if (
-      !window.confirm(
-        t("model-router.rules.delete-confirm", { title: rule.title }),
-      )
+      !(await confirm({
+        title: t("model-router.rules.delete-confirm", { title: rule.title }),
+        confirmLabel: t("common.delete"),
+        destructive: true,
+      }))
     )
       return;
     try {
