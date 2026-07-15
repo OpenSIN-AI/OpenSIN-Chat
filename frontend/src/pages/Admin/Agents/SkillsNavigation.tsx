@@ -6,7 +6,7 @@ import SkillList from "./SkillList";
 import ImportedSkillList from "./Imported/SkillList";
 import { MCPServersList, MCPServerHeader } from "./MCPServers";
 import AgentFlowsList from "./AgentFlows";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import paths from "@/utils/paths";
 import { Hammer } from "@phosphor-icons/react/dist/csr/Hammer";
 import { Package } from "@phosphor-icons/react/dist/csr/Package";

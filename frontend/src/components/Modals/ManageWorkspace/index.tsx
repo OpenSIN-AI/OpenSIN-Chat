@@ -5,7 +5,7 @@ import { CloudArrowUp } from "@phosphor-icons/react/dist/csr/CloudArrowUp";
 import { Database } from "@phosphor-icons/react/dist/csr/Database";
 import { Files } from "@phosphor-icons/react/dist/csr/Files";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import useUser from "../../../hooks/useUser";
 import useSystemSettings from "../../../hooks/useSystemSettings";
 import useWorkspace from "../../../hooks/useWorkspaceBySlug";

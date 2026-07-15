@@ -5,7 +5,7 @@ import ModalWrapper from "@/components/ModalWrapper";
 import pluralize from "pluralize";
 import { numberWithCommas } from "@/utils/numbers";
 import useUser from "@/hooks/useUser";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import Paths from "@/utils/paths";
 import Workspace from "@/models/workspace";
 

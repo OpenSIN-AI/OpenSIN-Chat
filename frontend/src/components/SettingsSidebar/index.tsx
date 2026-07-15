@@ -17,7 +17,7 @@ import AgentIcon from "@/media/animations/agent-static.png";
 import useUser from "@/hooks/useUser";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import Footer from "../Footer";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
 import showToast from "@/utils/toast";
 import { safeGetItem, safeSetItem } from "@/utils/safeStorage";

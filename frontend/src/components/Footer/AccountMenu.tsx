@@ -17,7 +17,7 @@ import { SignIn } from "@phosphor-icons/react/dist/csr/SignIn";
 import { SignOut } from "@phosphor-icons/react/dist/csr/SignOut";
 import { Sun } from "@phosphor-icons/react/dist/csr/Sun";
 import { UserCircle } from "@phosphor-icons/react/dist/csr/UserCircle";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { createPortal } from "react-dom";
 import paths from "@/utils/paths";
 import useUser from "@/hooks/useUser";

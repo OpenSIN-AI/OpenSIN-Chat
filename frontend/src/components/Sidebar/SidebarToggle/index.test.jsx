@@ -7,7 +7,7 @@ import {
   screen,
   fireEvent,
 } from "@testing-library/react";
-import { MemoryRouter, useNavigate } from "react-router-dom";
+import { MemoryRouter, useNavigate } from "react-router";
 
 vi.mock("react-i18next", async () => {
   const { createI18nMock } = await import("@/test/i18nMock");

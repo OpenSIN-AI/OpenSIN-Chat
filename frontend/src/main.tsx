@@ -15,7 +15,7 @@ import {
   Navigate,
   RouterProvider,
   useParams,
-} from "react-router-dom";
+} from "react-router";
 import App from "@/App";
 import PrivateRoute, {
   AdminRoute,

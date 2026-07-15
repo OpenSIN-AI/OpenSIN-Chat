@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 import Invite from "@/models/invite";
 import paths from "@/utils/paths";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
 import { safeSetItem } from "@/utils/safeStorage";
 import System from "@/models/system";

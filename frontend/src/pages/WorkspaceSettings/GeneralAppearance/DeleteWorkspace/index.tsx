@@ -2,7 +2,7 @@
 // Purpose: Workspace deletion UI with accessible in-app confirmation dialog.
 // Docs: Replaces native window.confirm with ConfirmDialog for clear, intentional confirmation.
 import { useState, useCallback } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router";
 import { mutate } from "swr";
 import Workspace from "@/models/workspace";
 import { WORKSPACES_KEY } from "@/hooks/useWorkspaces";

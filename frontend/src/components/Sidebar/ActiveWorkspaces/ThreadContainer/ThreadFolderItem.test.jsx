@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { MemoryRouter, Routes, Route } from "react-router-dom";
+import { MemoryRouter, Routes, Route } from "react-router";
 vi.mock("react-i18next", async () => {
   const { createI18nMock } = await import("@/test/i18nMock");
   return createI18nMock();
@@ -31,8 +31,8 @@ vi.mock("@dnd-kit/utilities", () => ({
 const navigateMock = vi.fn();
 const invalidateThreadsMock = vi.fn();
 
-vi.mock("react-router-dom", async () => {
-  const actual = await vi.importActual("react-router-dom");
+vi.mock("react-router", async () => {
+  const actual = await vi.importActual("react-router");
   return {
     ...actual,
     useNavigate: () => navigateMock,

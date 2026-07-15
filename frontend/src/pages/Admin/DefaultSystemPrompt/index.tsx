@@ -6,7 +6,7 @@ import showToast from "@/utils/toast";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Highlighter from "react-highlight-words";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import paths from "@/utils/paths";
 import useDefaultSystemPrompt from "@/hooks/useDefaultSystemPrompt";
 import useSystemPromptVariables from "@/hooks/useSystemPromptVariables";

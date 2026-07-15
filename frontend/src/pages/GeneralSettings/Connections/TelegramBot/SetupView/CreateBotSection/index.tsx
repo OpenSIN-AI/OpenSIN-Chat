@@ -4,7 +4,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { TelegramLogo } from "@phosphor-icons/react/dist/csr/TelegramLogo";
 import Logo from "@/media/logo/opensin-icon.svg";
 import { Trans, useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 const BOTFATHER_URL = "https://t.me/BotFather";
 

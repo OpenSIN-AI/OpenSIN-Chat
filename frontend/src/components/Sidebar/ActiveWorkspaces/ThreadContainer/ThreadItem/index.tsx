@@ -15,7 +15,7 @@ import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { memo, useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router";
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 import { useTranslation } from "react-i18next";

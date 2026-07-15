@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { Navigate } from "react-router-dom";
+import { Navigate } from "react-router";
 import { FullScreenLoader } from "../Preloader";
 import validateSessionTokenForUser from "@/utils/session";
 import paths from "@/utils/paths";

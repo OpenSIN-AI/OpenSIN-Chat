@@ -18,7 +18,7 @@ vi.mock("@phosphor-icons/react/dist/csr/ArrowSquareOut", () => ({
   ),
 }));
 
-vi.mock("react-router-dom", () => ({
+vi.mock("react-router", () => ({
   Link: ({ children, to, ...props }) => (
     <a href={to} data-testid="policy-link" {...props}>
       {children}

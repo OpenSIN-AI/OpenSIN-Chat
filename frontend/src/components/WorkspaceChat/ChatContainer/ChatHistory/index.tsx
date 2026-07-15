@@ -28,7 +28,7 @@ import { ArrowDown } from "@phosphor-icons/react/dist/csr/ArrowDown";
 const Chartable = lazy(() => import("./Chartable"));
 import ModelRouteNotification from "./ModelRouteNotification";
 import Workspace from "@/models/workspace";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import paths from "@/utils/paths";
 import Appearance from "@/models/appearance";
 import useTextSize from "@/hooks/useTextSize";

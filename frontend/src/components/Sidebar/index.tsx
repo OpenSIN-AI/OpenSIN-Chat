@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router";
 import { List } from "@phosphor-icons/react/dist/csr/List";
 import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { X } from "@phosphor-icons/react/dist/csr/X";

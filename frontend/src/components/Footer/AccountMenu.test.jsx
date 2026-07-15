@@ -7,8 +7,8 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, within } from "@testing-library/react";
 
 // ── Mocks ───────────────────────────────────────────────────────────────────
-// react-router-dom <Link> needs a Router; stub it to a plain anchor.
-vi.mock("react-router-dom", () => ({
+// react-router <Link> needs a Router; stub it to a plain anchor.
+vi.mock("react-router", () => ({
   Link: ({ to, children, ...rest }) => (
     <a href={typeof to === "string" ? to : "#"} {...rest}>
       {children}

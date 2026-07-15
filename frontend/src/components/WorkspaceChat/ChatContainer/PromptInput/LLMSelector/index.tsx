@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import PreLoader from "@/components/Preloader";
 import ChatModelSelection from "./ChatModelSelection";
 import RouterPickerSelection from "./RouterPickerSelection";

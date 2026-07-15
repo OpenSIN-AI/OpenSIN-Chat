@@ -16,7 +16,7 @@ import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ThreadItem from "./ThreadItem";
 import ThreadFolderItem from "./ThreadFolderItem";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router";
 import useThreads, { invalidateThreads } from "@/hooks/useThreads";
 import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 import logger from "@/utils/logger";

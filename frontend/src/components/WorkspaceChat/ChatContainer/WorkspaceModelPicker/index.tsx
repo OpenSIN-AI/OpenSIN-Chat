@@ -2,7 +2,7 @@
 // Purpose: Shows and opens the active workspace model selector.
 // Docs: index.doc.md
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import useUser from "@/hooks/useUser";

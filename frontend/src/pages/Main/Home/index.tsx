@@ -2,7 +2,7 @@
 // Purpose: Main home page that bootstraps an empty/default workspace and hosts the prompt input.
 // Docs: index.doc.md
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import {
   PROMPT_INPUT_EVENT,

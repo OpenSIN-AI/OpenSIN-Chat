@@ -22,7 +22,7 @@ import GMailIcon from "./gmail.png";
 import { useGmailAgent } from "@/hooks/useGoogleAgent";
 import { getGmailSkills, filterSkillCategories } from "./utils";
 import { Tooltip } from "react-tooltip";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import paths from "@/utils/paths";
 
 interface GMailSkillPanelProps {

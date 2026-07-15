@@ -4,7 +4,7 @@ import { Tooltip } from "react-tooltip";
 import { useTranslation } from "react-i18next";
 import { useRef, useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import {

@@ -2,7 +2,7 @@
 // Purpose: Standalone embed widget preview page
 // Docs: Shows a live preview of an embed widget by its UUID
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 
 export default function EmbedPreview() {

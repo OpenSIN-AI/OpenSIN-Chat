@@ -9,7 +9,7 @@ import {
 } from "@testing-library/react";
 import { useEffect } from "react";
 import type { DocHeading } from "@/pages/Docs/DocsMarkdown";
-import { MemoryRouter, Routes, Route } from "react-router-dom";
+import { MemoryRouter, Routes, Route } from "react-router";
 import Docs from "@/pages/Docs";
 
 vi.mock("react-i18next", async () => {
@@ -17,8 +17,8 @@ vi.mock("react-i18next", async () => {
   return createI18nMock();
 });
 
-vi.mock("react-router-dom", async () => {
-  const actual = await vi.importActual("react-router-dom");
+vi.mock("react-router", async () => {
+  const actual = await vi.importActual("react-router");
   return {
     ...actual,
     useParams: vi.fn(),
@@ -126,7 +126,7 @@ vi.mock("@/pages/Docs/docsManifest", () => ({
   ),
 }));
 
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { getDocBySlug, getDocContent } from "@/pages/Docs/docsManifest";
 
 const mockedUseParams = vi.mocked(useParams);

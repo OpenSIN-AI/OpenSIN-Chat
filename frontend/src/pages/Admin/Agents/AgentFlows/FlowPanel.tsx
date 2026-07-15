@@ -5,7 +5,7 @@ import AgentFlows from "@/models/agentFlows";
 import showToast from "@/utils/toast";
 import { FlowArrow } from "@phosphor-icons/react/dist/csr/FlowArrow";
 import { Gear } from "@phosphor-icons/react/dist/csr/Gear";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import paths from "@/utils/paths";
 import { useTranslation } from "react-i18next";
 import Toggle from "@/components/lib/Toggle";

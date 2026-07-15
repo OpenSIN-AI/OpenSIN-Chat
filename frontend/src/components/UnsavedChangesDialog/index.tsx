@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Reusable dialog shown when React Router blocks navigation
-// due to unsaved form changes. Works with useBlocker from react-router-dom.
+// due to unsaved form changes. Works with useBlocker from react-router.
 import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import { useTranslation } from "react-i18next";
 import { useCallback } from "react";
@@ -8,7 +8,7 @@ import ModalWrapper from "@/components/ModalWrapper";
 
 /**
  * @param {Object} props
- * @param {import("react-router-dom").Blocker} props.blocker - The blocker returned by useBlocker
+ * @param {import("react-router").Blocker} props.blocker - The blocker returned by useBlocker
  */
 export default function UnsavedChangesDialog({ blocker }: any) {
   const { t } = useTranslation();

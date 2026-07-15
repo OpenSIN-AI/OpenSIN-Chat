@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import useProviderModels from "@/hooks/useProviderModels";
 
 export default function NativeEmbeddingOptions({ settings }: any) {

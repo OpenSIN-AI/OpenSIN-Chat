@@ -14,7 +14,7 @@ import { EditMessageAction } from "./EditMessage";
 import RenderMetrics from "./RenderMetrics";
 import ActionMenu from "./ActionMenu";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { invalidateChatHistory } from "@/hooks/useChatHistory";
 import { messageActionButtonClass } from "./MessageActionButton";
 

@@ -22,7 +22,7 @@ import {
 } from "../ThoughtContainer";
 import paths from "@/utils/paths";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { chatQueryRefusalResponse } from "@/utils/chat";
 import HistoricalOutputs from "./HistoricalOutputs";
 import HistoricalClarifyingQuestions from "./HistoricalClarifyingQuestions";

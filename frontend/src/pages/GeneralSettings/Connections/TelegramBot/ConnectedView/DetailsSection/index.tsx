@@ -6,7 +6,7 @@ import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import Telegram from "@/models/telegram";
 import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 interface TelegramConfig {
   default_workspace: string;

@@ -7,7 +7,7 @@ vi.mock("react-i18next", async () => {
   return createI18nMock();
 });
 
-vi.mock("react-router-dom", () => ({
+vi.mock("react-router", () => ({
   useParams: () => ({ slug: "test-workspace" }),
 }));
 

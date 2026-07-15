@@ -4,7 +4,7 @@ import useSystemSettings from "@/hooks/useSystemSettings";
 import { PROVIDER_PRIVACY_MAP } from "./constants";
 import { ArrowSquareOut } from "@phosphor-icons/react/dist/csr/ArrowSquareOut";
 import OpenSINChatIcon from "@/media/logo/opensin-icon.svg";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { titleCase, sentenceCase } from "text-case";
 import { useTranslation } from "react-i18next";
 

@@ -25,7 +25,7 @@ import useOutlookAgent from "@/hooks/useOutlookAgent";
 import { getOutlookSkills, filterSkillCategories } from "./utils";
 import OutlookIcon from "./outlook.png";
 import { Tooltip } from "react-tooltip";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import paths from "@/utils/paths";
 import logger from "@/utils/logger";
 

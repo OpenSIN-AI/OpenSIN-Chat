@@ -2,7 +2,7 @@
 // Tests for HistoricalMessage component
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 import HistoricalMessage from "./index";
 
 vi.mock("react-i18next", async () => {

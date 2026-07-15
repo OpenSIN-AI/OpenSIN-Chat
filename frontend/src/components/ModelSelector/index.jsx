@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import ChatModelSelection from "@/pages/WorkspaceSettings/ChatSettings/WorkspaceLLMSelection/ChatModelSelection";
 import RouterSelection from "@/pages/WorkspaceSettings/ChatSettings/WorkspaceLLMSelection/RouterSelection";
 

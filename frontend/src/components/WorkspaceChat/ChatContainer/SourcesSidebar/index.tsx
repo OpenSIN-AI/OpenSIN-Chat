@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { useTranslation } from "react-i18next";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router";
 import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
 import { Database } from "@phosphor-icons/react/dist/csr/Database";
 import { Globe } from "@phosphor-icons/react/dist/csr/Globe";

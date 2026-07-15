@@ -18,7 +18,7 @@ vi.mock("@/utils/logger", () => ({
 }));
 
 import ErrorBoundaryFallback from "./index";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 
 describe("ErrorBoundaryFallback additional tests", () => {
   beforeEach(() => {

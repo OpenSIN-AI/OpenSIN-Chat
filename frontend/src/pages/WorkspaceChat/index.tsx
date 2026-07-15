@@ -7,7 +7,7 @@ import {
   SidebarToggleProvider,
   useSidebarToggle,
 } from "@/components/Sidebar/SidebarToggle";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import { ChatCircle } from "@phosphor-icons/react/dist/csr/ChatCircle";
 import { Plus } from "@phosphor-icons/react/dist/csr/Plus";

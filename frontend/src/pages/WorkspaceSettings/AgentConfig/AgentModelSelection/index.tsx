@@ -5,7 +5,7 @@ import useGetProviderModels, {
 } from "@/hooks/useGetProvidersModels";
 import paths from "@/utils/paths";
 import { useTranslation } from "react-i18next";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router";
 
 /**
  * These models do NOT support function calling

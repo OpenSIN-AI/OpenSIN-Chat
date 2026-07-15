@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
 import { FullScreenLoader } from "@/components/Preloader";
-import { Navigate } from "react-router-dom";
+import { Navigate } from "react-router";
 import paths from "@/utils/paths";
 import useQuery from "@/hooks/useQuery";
 import useSimpleSSO from "@/hooks/useSimpleSSO";

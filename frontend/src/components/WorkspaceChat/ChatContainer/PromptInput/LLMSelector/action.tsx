@@ -6,7 +6,7 @@ import LLMSelectorModal from "./index";
 import { useTheme } from "@/hooks/useTheme";
 import { useRef, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import useUser from "@/hooks/useUser";
 import { useModal } from "@/hooks/useModal";
 import SetupProvider from "./SetupProvider";
