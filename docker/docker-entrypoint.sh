@@ -52,6 +52,37 @@ if [ -f "${STORAGE_DIR:-/app/server/storage}/plugins/opensin_mcp_servers.json" ]
     chown "$(id -u):$(id -g)" "${STORAGE_DIR:-/app/server/storage}/plugins/opensin_mcp_servers.json" 2>/dev/null || true
 fi
 
+# Ensure the collector hotdir + outputs are present and writable by the runtime
+# user. These are bind-mounted from the host (see docker-compose.yml), so their
+# ownership comes from the host filesystem — NOT the image. When the host dir is
+# owned by a different UID than the container user, document uploads fail at
+# write time with a cryptic "Invalid file upload. EACCES: permission denied,
+# open '/app/collector/hotdir/<uuid>_<name>'". We mkdir (idempotent), attempt a
+# best-effort chown (a no-op unless the container has the privilege), then probe
+# writability and fail loudly with an actionable message instead of letting the
+# error surface later at upload time. Operators can also pre-fix ownership on the
+# host with `bash docker/fix-permissions.sh`.
+for collector_dir in /app/collector/hotdir /app/collector/outputs; do
+    mkdir -p "$collector_dir" 2>/dev/null || true
+    chown "$(id -u):$(id -g)" "$collector_dir" 2>/dev/null || true
+    if ! ( : > "$collector_dir/.write-test" ) 2>/dev/null; then
+        echo "================================================================"
+        echo "RUNTIME ERROR: $collector_dir is not writable by uid=$(id -u) gid=$(id -g)."
+        echo ""
+        echo "This directory is bind-mounted from the host, so its ownership"
+        echo "comes from the host filesystem. Document uploads will fail with"
+        echo "'Invalid file upload. EACCES: permission denied' until this is fixed."
+        echo ""
+        echo "Fix it on the host, then restart the container:"
+        echo "  bash docker/fix-permissions.sh"
+        echo "  # or manually:"
+        echo "  sudo chown -R $(id -u):$(id -g) ./collector/hotdir ./collector/outputs"
+        echo "================================================================"
+    else
+        rm -f "$collector_dir/.write-test" 2>/dev/null || true
+    fi
+done
+
 # Defense-in-depth runtime guard for issue #114: the native embedder crashes
 # with a cryptic Node module error when /app/server/utils/paths.js is missing.
 # If the file is not present, fail loudly and tell the operator to rebuild.

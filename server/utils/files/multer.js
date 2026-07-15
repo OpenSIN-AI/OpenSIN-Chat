@@ -180,6 +180,28 @@ function uploadErrorStatus(err) {
 }
 
 /**
+ * Produce a human-readable upload error message. Filesystem permission errors
+ * on the hotdir (EACCES/EPERM/EROFS) are almost always a Docker bind-mount UID
+ * mismatch — the container user cannot write to the host-owned hotdir. Surface
+ * an actionable hint instead of a raw errno so operators know the exact fix
+ * (see docker/fix-permissions.sh and the entrypoint self-heal/guard).
+ * @param {Error & {code?: string}} err
+ * @returns {string}
+ */
+function uploadErrorMessage(err) {
+  if (err && ["EACCES", "EPERM", "EROFS"].includes(err.code)) {
+    return (
+      "Invalid file upload. The collector hotdir is not writable by the " +
+      "server process. In Docker this is usually a bind-mount ownership " +
+      "mismatch — run `bash docker/fix-permissions.sh` on the host (or " +
+      "chown ./collector/hotdir to the container UID) and restart. " +
+      `(${err.code}: ${err.message})`
+    );
+  }
+  return `Invalid file upload. ${err?.message ?? "Unknown error"}`;
+}
+
+/**
  * Handle Generic file upload as documents from the GUI.
  * Routes to Supabase Storage when enabled, otherwise writes to local hotdir.
  * @param {Request} request
@@ -206,7 +228,7 @@ function handleFileUpload(request, response, next) {
         .status(uploadErrorStatus(err))
         .json({
           success: false,
-          error: `Invalid file upload. ${err.message}`,
+          error: uploadErrorMessage(err),
         })
         .end();
       return;
@@ -250,7 +272,7 @@ function handleAPIFileUpload(request, response, next) {
         .status(uploadErrorStatus(err))
         .json({
           success: false,
-          error: `Invalid file upload. ${err.message}`,
+          error: uploadErrorMessage(err),
         })
         .end();
       return;
@@ -295,7 +317,7 @@ function handleAssetUpload(request, response, next) {
         .status(uploadErrorStatus(err))
         .json({
           success: false,
-          error: `Invalid file upload. ${err.message}`,
+          error: uploadErrorMessage(err),
         })
         .end();
       return;
@@ -364,7 +386,7 @@ function handlePfpUpload(request, response, next) {
         .status(uploadErrorStatus(err))
         .json({
           success: false,
-          error: `Invalid file upload. ${err.message}`,
+          error: uploadErrorMessage(err),
         })
         .end();
       return;
