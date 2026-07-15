@@ -25,7 +25,10 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
     const form = new FormData(formEl.current);
     for (const [key, value] of form.entries()) data[key] = value;
     try {
-      const { workspace, message } = await Workspace.new(data);
+      const { workspace, message } = (await Workspace.new(data)) as {
+        workspace?: { slug: string };
+        message?: string;
+      };
       if (!!workspace) {
         hideModal();
         mutate(WORKSPACES_KEY);

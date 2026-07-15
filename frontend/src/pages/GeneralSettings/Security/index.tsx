@@ -270,8 +270,9 @@ function PasswordProtection() {
 
   // Derive usePassword from settings when data loads
   useEffect(() => {
-    if (!isLoading && settings?.RequiresAuth !== undefined) {
-      setUsePassword(settings.RequiresAuth);
+    const s = settings as { RequiresAuth?: boolean };
+    if (!isLoading && s?.RequiresAuth !== undefined) {
+      setUsePassword(s.RequiresAuth);
     }
   }, [isLoading, settings]);
 

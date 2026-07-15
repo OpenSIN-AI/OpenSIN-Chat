@@ -112,7 +112,7 @@ const baseAssistantProps = {
   attachments: [],
   error: false,
   feedbackScore: null,
-  chatId: 42,
+  chatId: "42",
   isLastMessage: false,
   regenerateMessage: vi.fn(),
   saveEditedMessage: vi.fn(),

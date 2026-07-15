@@ -89,7 +89,7 @@ export function useChatHistory(
     workspaceSlug,
     threadSlug,
   );
-  return { messages: history, loading: isLoading, error: error || null };
+  return { messages: history as any, loading: isLoading, error: error || null };
 }
 
 export { chatHistoryKey, invalidateChatHistory };

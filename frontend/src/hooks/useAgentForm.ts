@@ -59,15 +59,14 @@ export function useAgentForm() {
 
         if (cancelled) return;
         const { flows = [] } = flowsRes;
+        const prefs = _preferences as { settings?: any };
         setSettings({
           ..._settings,
-          preferences: _preferences?.settings ?? {},
+          preferences: prefs?.settings ?? {},
         });
-        setAgentSkills(_preferences?.settings?.default_agent_skills ?? []);
-        setDisabledAgentSkills(
-          _preferences?.settings?.disabled_agent_skills ?? [],
-        );
-        setImportedSkills(_preferences?.settings?.imported_agent_skills ?? []);
+        setAgentSkills(prefs?.settings?.default_agent_skills ?? []);
+        setDisabledAgentSkills(prefs?.settings?.disabled_agent_skills ?? []);
+        setImportedSkills(prefs?.settings?.imported_agent_skills ?? []);
         setActiveFlowIds(
           (flows as any).filter((f) => f.active).map((f) => f.uuid),
         );
@@ -176,15 +175,14 @@ export function useAgentForm() {
           "default_agent_skills",
           "imported_agent_skills",
         ]);
+        const prefs2 = _preferences as { settings?: any };
         setSettings({
           ..._settings,
-          preferences: _preferences?.settings ?? {},
+          preferences: prefs2?.settings ?? {},
         });
-        setAgentSkills(_preferences?.settings?.default_agent_skills ?? []);
-        setDisabledAgentSkills(
-          _preferences?.settings?.disabled_agent_skills ?? [],
-        );
-        setImportedSkills(_preferences?.settings?.imported_agent_skills ?? []);
+        setAgentSkills(prefs2?.settings?.default_agent_skills ?? []);
+        setDisabledAgentSkills(prefs2?.settings?.disabled_agent_skills ?? []);
+        setImportedSkills(prefs2?.settings?.imported_agent_skills ?? []);
         setHasChanges(false);
         showToast(`Agent preferences saved successfully.`, "success", {
           clear: true,

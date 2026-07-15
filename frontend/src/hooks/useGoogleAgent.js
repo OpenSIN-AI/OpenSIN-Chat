@@ -20,7 +20,7 @@ export const GOOGLE_CALENDAR_AGENT_KEY = "google-calendar-agent";
  * @returns {{
  *   disabledSkills: string[],
  *   isMultiUserMode: boolean,
- *   config: object | null,
+ *   config: Record<string, any> | null,
  *   isLoading: boolean,
  *   error: Error | undefined,
  *   refresh: () => Promise<any>,
@@ -66,7 +66,7 @@ export function useGmailAgent() {
  * @returns {{
  *   disabledSkills: string[],
  *   isMultiUserMode: boolean,
- *   config: object | null,
+ *   config: Record<string, any> | null,
  *   isLoading: boolean,
  *   error: Error | undefined,
  *   refresh: () => Promise<any>,

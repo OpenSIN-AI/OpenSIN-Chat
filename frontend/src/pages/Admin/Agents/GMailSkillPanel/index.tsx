@@ -74,8 +74,9 @@ export default function GMailSkillPanel({
       setDisabledSkills(swrDisabledSkills);
       setIsMultiUserMode(swrIsMultiUserMode);
       if (swrConfig) {
-        const loadedDeploymentId = swrConfig.deploymentId || "";
-        const loadedApiKey = swrConfig.apiKey || "";
+        const config = swrConfig as { deploymentId?: string; apiKey?: string };
+        const loadedDeploymentId = config.deploymentId || "";
+        const loadedApiKey = config.apiKey || "";
         setDeploymentId(loadedDeploymentId);
         setApiKey(loadedApiKey);
         setConfigDefaultExpanded(!(loadedDeploymentId && loadedApiKey));

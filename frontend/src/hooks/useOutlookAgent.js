@@ -16,7 +16,7 @@ export const OUTLOOK_AGENT_KEY = "outlook-agent";
  *   disabledSkills: string[],
  *   isMultiUserMode: boolean,
  *   isAuthenticated: boolean,
- *   config: object | null,
+ *   config: Record<string, any> | null,
  *   isLoading: boolean,
  *   error: Error | undefined,
  *   refresh: () => Promise<any>,

@@ -1,0 +1,19 @@
+# SkillOpt / SkillOpt-Sleep config for OpenSIN-Chat
+project: .
+target_skill: SKILL.md
+# Preferred for evolution: use a strong coding model as backend (claude, codex, or openai_compatible/local)
+# Start with dry-run + mock, then real backend.
+# See /Users/jeremy/dev/SkillOpt/docs/sleep/README.md for full options.
+
+defaults:
+  backend: claude   # or codex, handoff, azure_openai, openai_compatible
+  source: auto
+  edit_budget: 4
+  max_tasks: 30
+
+preferences: |
+  Prefer verification-first workflows.
+  Use SIN-Code tools.
+  Keep edits minimal and auditable.
+  Follow CoDocs and brand rules strictly.
+  On macOS prefer OrbStack.

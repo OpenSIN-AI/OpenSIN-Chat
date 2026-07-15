@@ -17,7 +17,7 @@ const SW_VERSION = "1.0.0";
 function log(message, ...args) {
   if (!import.meta.env.DEV) return;
   if (typeof message === "object") message = JSON.stringify(message, null, 2);
-  // eslint-disable-next-line no-console
+
   logger.debug(`[useWebPushNotifications] ${message}`, ...args);
 }
 

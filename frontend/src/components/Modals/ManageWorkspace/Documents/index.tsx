@@ -39,10 +39,12 @@ export default function DocumentSettings({ workspace }) {
     const documentsInWorkspace =
       currentWorkspace.documents.map((doc) => doc.docpath) || [];
 
+    const files = localFiles as { items: any[] };
+
     // Documents that are not in the workspace
     const filteredAvailableDocs = {
-      ...localFiles,
-      items: localFiles.items.map((folder) => {
+      ...files,
+      items: files.items.map((folder) => {
         if (folder.items && folder.type === "folder") {
           return {
             ...folder,
@@ -60,8 +62,8 @@ export default function DocumentSettings({ workspace }) {
 
     // Documents that are already in the workspace
     const filteredWorkspaceDocs = {
-      ...localFiles,
-      items: localFiles.items.map((folder) => {
+      ...files,
+      items: files.items.map((folder) => {
         if (folder.items && folder.type === "folder") {
           return {
             ...folder,
@@ -97,7 +99,8 @@ export default function DocumentSettings({ workspace }) {
     }
 
     const newSelected = {};
-    for (const folder of localFiles.items || []) {
+    const lf = localFiles as { items?: any[] };
+    for (const folder of lf.items || []) {
       for (const file of folder.items || []) {
         if (file?.id && !previousIds.has(file.id)) {
           newSelected[file.id] = true;

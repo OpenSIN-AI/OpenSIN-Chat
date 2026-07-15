@@ -28,7 +28,7 @@ describe("useMemories", () => {
   });
 
   it("fetches memories for a workspace slug", async () => {
-    Memory.forWorkspace.mockResolvedValue({
+    (Memory.forWorkspace as any).mockResolvedValue({
       global: [{ id: 1, content: "global mem" }],
       workspace: [{ id: 2, content: "ws mem" }],
     });

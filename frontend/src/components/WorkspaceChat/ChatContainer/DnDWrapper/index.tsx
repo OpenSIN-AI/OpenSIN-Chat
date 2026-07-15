@@ -248,7 +248,16 @@ export function DnDFileUploaderProvider({
     let transientFailures = 0;
 
     while (Date.now() - startedAt < MAX_POLL_MS) {
-      const result = await Workspace.parseFileStatus(workspace.slug, jobId);
+      const result = (await Workspace.parseFileStatus(
+        workspace.slug,
+        jobId,
+      )) as {
+        success?: boolean;
+        status?: string;
+        error?: string;
+        statusCode?: number;
+        retryAfterMs?: number;
+      };
 
       if (result?.success) {
         transientFailures = 0;
@@ -312,7 +321,7 @@ export function DnDFileUploaderProvider({
 
       promises.push(
         (async () => {
-          const uploadResult = await Workspace.uploadAndParseFile(
+          const uploadResult = (await Workspace.uploadAndParseFile(
             workspace.slug,
             formData,
             {
@@ -322,7 +331,7 @@ export function DnDFileUploaderProvider({
                   progress: percent,
                 }),
             },
-          );
+          )) as { success?: boolean; jobId?: string; error?: string };
 
           if (!uploadResult?.success || !uploadResult?.jobId) {
             const errorMsg =
@@ -343,7 +352,14 @@ export function DnDFileUploaderProvider({
             progress: null,
           });
 
-          const jobResult = await pollParseJob(uploadResult.jobId);
+          const jobResult = (await pollParseJob(uploadResult.jobId)) as {
+            status: string;
+            files?: any[];
+            error?: string;
+            success?: boolean;
+            statusCode?: number;
+            retryAfterMs?: number;
+          };
           if (jobResult.status !== "completed" || !jobResult.files?.[0]) {
             const errorMsg =
               jobResult.error ?? t("attachments.fileNotEmbedded");

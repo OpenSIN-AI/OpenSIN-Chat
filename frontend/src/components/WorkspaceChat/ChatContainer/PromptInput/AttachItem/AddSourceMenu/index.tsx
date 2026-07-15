@@ -500,10 +500,10 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
         flattenLocalFiles(await refreshDocuments()).map((f) => f.docpath),
       );
 
-      const { response, data } = await Workspace.uploadLink(
+      const { response, data } = (await Workspace.uploadLink(
         workspaceSlug,
         normalizedUrl,
-      );
+      )) as { response: Response; data: any };
       if (!response.ok) {
         const errMsg =
           data?.error ||

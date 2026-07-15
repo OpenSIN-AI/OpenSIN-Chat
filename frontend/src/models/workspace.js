@@ -102,7 +102,7 @@ const Workspace = {
       .catch(() => ({ success: false }));
   },
   /** @param {string} slug
-   * @returns {Promise<object>}
+   * @returns {Promise<any[]>}
    */
   chatHistory: async function (slug) {
     const history = await fetch(`${API_BASE}/workspace/${slug}/chats`, {
@@ -400,7 +400,7 @@ const Workspace = {
   },
   /** @param {string} slug
    * @param {FormData} formData
-   * @returns {Promise<object>}
+   * @returns {Promise<{response: Response, data: any}>}
    */
   uploadFile: async function (slug, formData) {
     const response = await fetch(`${API_BASE}/workspace/${slug}/upload`, {
@@ -427,7 +427,7 @@ const Workspace = {
   },
   /** @param {string} slug
    * @param {FormData} formData
-   * @returns {Promise<object>}
+   * @returns {Promise<{response: Response, data: any}>}
    */
   parseFile: async function (slug, formData) {
     const response = await fetch(`${API_BASE}/workspace/${slug}/parse`, {
@@ -465,7 +465,7 @@ const Workspace = {
   /** @param {string} slug
    * @param {FormData} formData
    * @param {{onUploadProgress?: function}} [opts={}]
-   * @returns {Promise<object>}
+   * @returns {Promise<{success: boolean, jobId?: string, error?: string}>}
    */
   uploadAndParseFile: async function (
     slug,
@@ -538,7 +538,7 @@ const Workspace = {
    */
   /** @param {string} slug
    * @param {string} jobId
-   * @returns {Promise<object>}
+   * @returns {Promise<{success?: boolean, status?: string, files?: any[], error?: string, statusCode?: number, retryAfterMs?: number}>}
    */
   parseFileStatus: async function (slug, jobId) {
     try {
@@ -577,7 +577,7 @@ const Workspace = {
 
   /** @param {string} slug
    * @param {string|null} [threadSlug=null]
-   * @returns {Promise<object>}
+   * @returns {Promise<{success: boolean, jobId?: string, error?: string}>}
    */
   getParsedFiles: async function (slug, threadSlug = null) {
     const basePath = new URL(`${fullApiUrl()}/workspace/${slug}/parsed-files`);
@@ -592,7 +592,7 @@ const Workspace = {
   },
   /** @param {string} slug
    * @param {string} link
-   * @returns {Promise<object>}
+   * @returns {Promise<{response: Response, data: any}>}
    */
   uploadLink: async function (slug, link) {
     const response = await fetch(`${API_BASE}/workspace/${slug}/upload-link`, {
@@ -728,7 +728,7 @@ const Workspace = {
 
   /** @param {string} slug
    * @param {string} chatId
-   * @returns {Promise<object>}
+   * @returns {Promise<{success: boolean, jobId?: string, error?: string}>}
    */
   ttsMessage: async function (slug, chatId) {
     return await fetch(`${API_BASE}/workspace/${slug}/tts/${chatId}`, {
@@ -747,7 +747,7 @@ const Workspace = {
   },
   /** @param {FormData} formData
    * @param {string} slug
-   * @returns {Promise<object>}
+   * @returns {Promise<{success: boolean, jobId?: string, error?: string}>}
    */
   uploadPfp: async function (formData, slug) {
     return await fetch(`${API_BASE}/workspace/${slug}/upload-pfp`, {
@@ -884,7 +884,7 @@ const Workspace = {
    */
   /** @param {string} slug
    * @param {FormData} formData
-   * @returns {Promise<object>}
+   * @returns {Promise<{success: boolean, jobId?: string, error?: string}>}
    */
   uploadAndEmbedFile: async function (slug, formData) {
     const response = await fetch(
@@ -926,7 +926,7 @@ const Workspace = {
 
   /** @param {string} slug
    * @param {string|number} fileId
-   * @returns {Promise<object>}
+   * @returns {Promise<{response: Response, data: any}>}
    */
   embedParsedFile: async function (slug, fileId) {
     const response = await fetch(
@@ -1016,7 +1016,7 @@ const Workspace = {
    * @returns {Promise<{workspaces: [{slug: string, name: string}], threads: [{slug: string, name: string, workspace: {slug: string, name: string}}]}}>}
    */
   /** @param {string} searchTerm
-   * @returns {Promise<object>}
+   * @returns {Promise<{success: boolean, jobId?: string, error?: string}>}
    */
   searchWorkspaceOrThread: async function (searchTerm) {
     const response = await fetch(`${API_BASE}/workspace/search`, {

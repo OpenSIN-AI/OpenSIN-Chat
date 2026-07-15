@@ -47,7 +47,7 @@ const Politician = {
    * @returns {Promise<object|null>}
    */
   /** @param {string} politicianId
-   * @returns {Promise<object|null>} */
+   * @returns {Promise<{politician?: any} | null>} */
   getById: async function (politicianId) {
     try {
       const res = await fetch(`${API_BASE}/politician/${politicianId}`, {

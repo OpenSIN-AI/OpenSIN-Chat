@@ -38,7 +38,7 @@ export default function AsyncTTSMessage({
           .then((audioBlob) => {
             if (!audioBlob)
               throw new Error("Failed to load or play TTS message response.");
-            setAudioSrc(audioBlob);
+            setAudioSrc(audioBlob as any);
           })
           .catch((e) => showToast(e.message, "error", { clear: true }))
           .finally(() => {

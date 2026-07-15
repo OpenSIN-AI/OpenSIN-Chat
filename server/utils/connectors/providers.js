@@ -9,13 +9,13 @@ const BASE_URL = process.env.SERVER_PUBLIC_URL || "https://sinchat.delqhi.com";
  * @typedef {Object} ProviderDef
  * @property {string} authUrl - OAuth authorization endpoint
  * @property {string} tokenUrl - Token exchange endpoint
- * @property {string?} revokeUrl - Token revocation endpoint
- * @property {string?} clientId - From env (null if not configured)
- * @property {string?} clientSecret - From env (null if not configured)
+ * @property {string | null} revokeUrl - Token revocation endpoint
+ * @property {string | null} clientId - From env (null if not configured)
+ * @property {string | null} clientSecret - From env (null if not configured)
  * @property {boolean} usesPKCE - Whether to send PKCE challenge
  * @property {Object} extraAuthParams - Additional auth query params
  * @property {Object} scopeSets - Named scope bundles per "product"
- * @property {string?} userinfoUrl - Endpoint to fetch account display name
+ * @property {string | null} userinfoUrl - Endpoint to fetch account display name
  */
 
 const PROVIDERS = {

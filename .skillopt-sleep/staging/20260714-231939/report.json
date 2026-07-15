@@ -1,0 +1,18 @@
+{
+  "night": 1,
+  "project": "/Users/jeremy/orca/workspaces/OpenSIN-Chat/amberjack",
+  "started_at": "2026-07-14T23:18:53",
+  "ended_at": "2026-07-14T23:19:39",
+  "n_sessions": 4,
+  "n_tasks": 3,
+  "n_replayed": 3,
+  "baseline_score": 1.0,
+  "candidate_score": 1.0,
+  "accepted": false,
+  "gate_action": "reject",
+  "no_edits_reason": "",
+  "edits": [],
+  "rejected_edits": [],
+  "tokens_used": 2453,
+  "notes": []
+}
