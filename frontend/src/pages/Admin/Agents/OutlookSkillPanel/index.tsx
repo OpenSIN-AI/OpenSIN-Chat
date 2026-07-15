@@ -87,9 +87,7 @@ export default function OutlookSkillPanel({
           setTenantId(config.tenantId || "");
           setClientSecret(config.clientSecret || "");
           setAuthType(config.authType || "common");
-          setConfigDefaultExpanded(
-            !(config.clientId && config.clientSecret),
-          );
+          setConfigDefaultExpanded(!(config.clientId && config.clientSecret));
         }
       }
     } catch (e) {
@@ -123,9 +121,7 @@ export default function OutlookSkillPanel({
         setTenantId(config.tenantId || "");
         setClientSecret(config.clientSecret || "");
         setAuthType(config.authType || "common");
-        setConfigDefaultExpanded(
-          !(config.clientId && config.clientSecret),
-        );
+        setConfigDefaultExpanded(!(config.clientId && config.clientSecret));
       }
       setLoading(false);
     }

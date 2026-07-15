@@ -65,9 +65,7 @@ export function useAgentForm() {
           preferences: prefs?.settings ?? {},
         });
         setAgentSkills(prefs?.settings?.default_agent_skills ?? []);
-        setDisabledAgentSkills(
-          prefs?.settings?.disabled_agent_skills ?? [],
-        );
+        setDisabledAgentSkills(prefs?.settings?.disabled_agent_skills ?? []);
         setImportedSkills(prefs?.settings?.imported_agent_skills ?? []);
         setActiveFlowIds(
           (flows as any).filter((f) => f.active).map((f) => f.uuid),
@@ -183,9 +181,7 @@ export function useAgentForm() {
           preferences: prefs2?.settings ?? {},
         });
         setAgentSkills(prefs2?.settings?.default_agent_skills ?? []);
-        setDisabledAgentSkills(
-          prefs2?.settings?.disabled_agent_skills ?? [],
-        );
+        setDisabledAgentSkills(prefs2?.settings?.disabled_agent_skills ?? []);
         setImportedSkills(prefs2?.settings?.imported_agent_skills ?? []);
         setHasChanges(false);
         showToast(`Agent preferences saved successfully.`, "success", {

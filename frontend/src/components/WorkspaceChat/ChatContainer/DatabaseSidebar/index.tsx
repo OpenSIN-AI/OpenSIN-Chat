@@ -191,7 +191,9 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
       setProfileData(null);
       setProfileError(null);
       try {
-        const data = (await Politician.getById(id)) as { politician?: any } | null;
+        const data = (await Politician.getById(id)) as {
+          politician?: any;
+        } | null;
         if (data?.politician) setProfileData(data.politician);
       } catch (e) {
         setProfileError(

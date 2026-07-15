@@ -248,7 +248,10 @@ export function DnDFileUploaderProvider({
     let transientFailures = 0;
 
     while (Date.now() - startedAt < MAX_POLL_MS) {
-      const result = (await Workspace.parseFileStatus(workspace.slug, jobId)) as {
+      const result = (await Workspace.parseFileStatus(
+        workspace.slug,
+        jobId,
+      )) as {
         success?: boolean;
         status?: string;
         error?: string;
