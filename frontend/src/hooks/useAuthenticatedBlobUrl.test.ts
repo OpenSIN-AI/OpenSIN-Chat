@@ -42,9 +42,12 @@ describe("useAuthenticatedBlobUrl", () => {
 
   it("fetches the URL with auth headers and creates blob URL", async () => {
     const blob = new Blob(["test"], { type: "text/plain" });
+    // Use a minimal Response-like object instead of `new Response(blob)`:
+    // under CI Node (undici) the real Response constructor calls
+    // blob.stream(), which the jsdom Blob does not implement.
     global.fetch = vi
       .fn()
-      .mockResolvedValue(new Response(blob, { status: 200 }));
+      .mockResolvedValue({ ok: true, status: 200, blob: async () => blob });
     const { result } = renderHook(() => useAuthenticatedBlobUrl("/api/file/1"));
     await waitFor(() => expect(result.current.blobUrl).toBe("blob:test-url"));
     expect(global.fetch).toHaveBeenCalledWith(
@@ -60,7 +63,7 @@ describe("useAuthenticatedBlobUrl", () => {
   it("sets error to true when fetch returns non-ok response", async () => {
     global.fetch = vi
       .fn()
-      .mockResolvedValue(new Response("Not found", { status: 404 }));
+      .mockResolvedValue({ ok: false, status: 404, blob: async () => null });
     const { result } = renderHook(() => useAuthenticatedBlobUrl("/api/file/1"));
     await waitFor(() => expect(result.current.error).toBe(true));
     expect(result.current.blobUrl).toBeNull();
