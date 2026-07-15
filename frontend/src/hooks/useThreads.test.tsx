@@ -47,7 +47,7 @@ describe("useThreads", () => {
 
   describe("useThreads hook", () => {
     it("returns empty arrays while loading", () => {
-      Workspace.threads.all.mockReturnValue(new Promise(() => {}));
+      (Workspace.threads.all as any).mockReturnValue(new Promise(() => {}));
       const { result } = renderHook(() => useThreads("ws"), { wrapper });
       expect(result.current.threads).toEqual([]);
       expect(result.current.folders).toEqual([]);
@@ -62,7 +62,7 @@ describe("useThreads", () => {
         folders: [{ id: 1, name: "Folder A" }],
         defaultThreadChatCount: 3,
       };
-      Workspace.threads.all.mockResolvedValue(data);
+      (Workspace.threads.all as any).mockResolvedValue(data);
 
       const { result } = renderHook(() => useThreads("ws"), { wrapper });
 
@@ -76,7 +76,7 @@ describe("useThreads", () => {
     });
 
     it("handles data without threads/folders keys (falls back to data as threads)", async () => {
-      Workspace.threads.all.mockResolvedValue([
+      (Workspace.threads.all as any).mockResolvedValue([
         { slug: "t1", name: "Thread 1" },
       ]);
 
@@ -89,7 +89,7 @@ describe("useThreads", () => {
     });
 
     it("handles data with zero defaultThreadChatCount", async () => {
-      Workspace.threads.all.mockResolvedValue({
+      (Workspace.threads.all as any).mockResolvedValue({
         threads: [],
         folders: [],
         defaultThreadChatCount: 0,
@@ -111,7 +111,7 @@ describe("useThreads", () => {
     });
 
     it("exposes error on fetch failure", async () => {
-      Workspace.threads.all.mockRejectedValue(new Error("Network error"));
+      (Workspace.threads.all as any).mockRejectedValue(new Error("Network error"));
 
       const { result } = renderHook(() => useThreads("ws"), { wrapper });
 
@@ -121,7 +121,7 @@ describe("useThreads", () => {
     });
 
     it("exposes refresh and mutate functions", async () => {
-      Workspace.threads.all.mockResolvedValue({ threads: [] });
+      (Workspace.threads.all as any).mockResolvedValue({ threads: [] });
 
       const { result } = renderHook(() => useThreads("ws"), { wrapper });
 

@@ -104,7 +104,7 @@ describe("useAgentForm", () => {
     } as any);
 
     await act(async () => {
-      await result.current.handleSubmit({ preventDefault: vi.fn() });
+      await result.current.handleSubmit({ preventDefault: vi.fn() } as any);
     });
 
     expect(Admin.updateSystemPreferences).toHaveBeenCalled();

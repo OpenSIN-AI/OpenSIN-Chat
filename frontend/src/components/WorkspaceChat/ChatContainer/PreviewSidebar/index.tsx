@@ -481,7 +481,7 @@ function PreviewSidebar() {
       const { response, data } = (await Workspace.parseFile(
         workspaceSlug,
         formData,
-      )) as { response: Response; data: any };
+      )) as any;
       if (!response.ok) throw new Error(data?.error || "Parse failed");
       const parsedFile = data.files?.[0];
       if (!parsedFile) throw new Error("No parsed file returned");
@@ -489,7 +489,7 @@ function PreviewSidebar() {
       const embedResult = (await Workspace.embedParsedFile(
         workspaceSlug,
         parsedFile.id,
-      )) as { response: Response; data: any };
+      )) as any;
       if (!embedResult.response.ok) {
         throw new Error(embedResult.data?.error || "Embed failed");
       }
