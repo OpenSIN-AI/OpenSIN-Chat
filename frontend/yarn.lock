@@ -914,13 +914,13 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@lobehub/icons@^5.10.1":
-  version "5.10.1"
-  resolved "https://registry.npmjs.org/@lobehub/icons/-/icons-5.10.1.tgz"
-  integrity sha512-KMaE+YqPAXuA8gcmzBFefLa9KgCqmJy9Mg3tlGedrL2coAzCQeps+aqivjejHNMnCDTPnGb+OHvX1um2kT1lQw==
+"@lobehub/icons@^5.13.0":
+  version "5.13.0"
+  resolved "https://registry.yarnpkg.com/@lobehub/icons/-/icons-5.13.0.tgz#69552c2e217ea8fe12e855c21254e902ac80f62f"
+  integrity sha512-iXQF8GFvlwNJMR+PaU3jCgVAn5B8F7P48Fm6aodSXP+b+HJiR266rvlMSYvCULRAB/6/rtS1WZH3npc3p3viFw==
   dependencies:
     antd-style "^4.1.0"
-    es-toolkit "^1.45.1"
+    es-toolkit "^1.49.0"
     lucide-react "^0.469.0"
     polished "^4.3.1"
 
@@ -2940,9 +2940,9 @@ es-to-primitive@^1.3.0:
     is-date-object "^1.0.5"
     is-symbol "^1.0.4"
 
-es-toolkit@^1.45.1:
+es-toolkit@^1.49.0:
   version "1.49.0"
-  resolved "https://registry.npmjs.org/es-toolkit/-/es-toolkit-1.49.0.tgz"
+  resolved "https://registry.yarnpkg.com/es-toolkit/-/es-toolkit-1.49.0.tgz#93c5b031865792fc03cbf5bd20c132a4f976a52a"
   integrity sha512-G5iZ6Pc/FNRY/soKZHC+TxGDD83rHUDXxzaWhGCX44vAv/tMs56WMusnm/KMNK+luUPsgA9U28cGr4RDlSzL2g==
 
 esbuild@^0.28.1:
