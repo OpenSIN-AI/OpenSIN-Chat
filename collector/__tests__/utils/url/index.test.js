@@ -33,7 +33,10 @@ describe("validURL", () => {
     // JS URL does not require extensions, so in theory
     // these should be valid
     expect(validURL("https://random")).toBe(true);
-    expect(validURL("http://123")).toBe(true);
+    // NOTE: "http://123" parses to host 0.0.0.123, which the SSRF guard
+    // blocks as part of 0.0.0.0/8 (see e3d60c48d). Kept here to document
+    // that numeric-host URLs are treated as IPs, not passed through.
+    expect(validURL("http://123")).toBe(false);
 
     // missing protocols
     expect(validURL("www.google.com")).toBe(false);
@@ -57,9 +60,10 @@ describe("validURL", () => {
     expect(validURL("http://10.0.0.1")).toBe(false);
     expect(validURL("http://172.16.0.1")).toBe(false);
 
-    // But localhost should still be allowed
-    expect(validURL("http://127.0.0.1")).toBe(true);
-    expect(validURL("http://0.0.0.0")).toBe(true);
+    // Loopback / wildcard are also blocked by default (SSRF hardening,
+    // e3d60c48d); only reachable when allowAnyIp is enabled.
+    expect(validURL("http://127.0.0.1")).toBe(false);
+    expect(validURL("http://0.0.0.0")).toBe(false);
   });
 
   it("should allow any IP when allowAnyIp is true", () => {
