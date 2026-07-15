@@ -333,6 +333,7 @@ class Provider {
     prompt = "",
   }) {
     const { promptWithMemories } = require("../../../memories");
+    const { appendGlobalContext } = require("../../../globalContext");
     const basePrompt = !workspace?.openAiPrompt
       ? Provider.defaultSystemPromptForProvider(provider)
       : await SystemPromptVariables.expandSystemPromptVariables(
@@ -340,8 +341,12 @@ class Provider {
           user?.id || null,
           workspace.id,
         );
+    // Same deployment-wide global text-file context as the normal chat path,
+    // so @agent turns see the global agents.md/memory.md too. Additive + no-op
+    // when the global store is empty.
+    const withGlobal = appendGlobalContext(basePrompt);
     return promptWithMemories({
-      systemPrompt: basePrompt,
+      systemPrompt: withGlobal,
       userId: user?.id ?? null,
       workspaceId: workspace?.id,
       prompt,
