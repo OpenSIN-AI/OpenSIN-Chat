@@ -195,7 +195,10 @@ async function createTesseractWorkerWithTimeout(languages, cachePath) {
           new Error(
             `Tesseract worker failed to initialize within ${
               WORKER_BOOTSTRAP_TIMEOUT_MS / 1000
-            }s. Configure NVIDIA_NIM_API_KEY for state-of-the-art OCR.`
+            }s. This usually means the OCR engine/language model could not be ` +
+              `fetched from the CDN — set OCR_TESSDATA_PATH (and OCR_CORE_PATH) ` +
+              `to self-hosted files for offline operation, or configure ` +
+              `NVIDIA_NIM_API_KEY for state-of-the-art OCR.`
           )
         );
       }, WORKER_BOOTSTRAP_TIMEOUT_MS)

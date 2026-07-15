@@ -33,7 +33,9 @@ describe("validURL", () => {
     // JS URL does not require extensions, so in theory
     // these should be valid
     expect(validURL("https://random")).toBe(true);
-    expect(validURL("http://123")).toBe(true);
+    // "http://123" normalizes to hostname 0.0.0.123, which falls in the
+    // 0.0.0.0/8 wildcard range blocked by the SSRF guard — so it is invalid.
+    expect(validURL("http://123")).toBe(false);
 
     // missing protocols
     expect(validURL("www.google.com")).toBe(false);
@@ -57,9 +59,10 @@ describe("validURL", () => {
     expect(validURL("http://10.0.0.1")).toBe(false);
     expect(validURL("http://172.16.0.1")).toBe(false);
 
-    // But localhost should still be allowed
-    expect(validURL("http://127.0.0.1")).toBe(true);
-    expect(validURL("http://0.0.0.0")).toBe(true);
+    // Loopback and the 0.0.0.0 wildcard are also blocked by the SSRF guard
+    // (see isPrivateIPv4: 127.0.0.0/8 and 0.0.0.0/8 are internal targets).
+    expect(validURL("http://127.0.0.1")).toBe(false);
+    expect(validURL("http://0.0.0.0")).toBe(false);
   });
 
   it("should allow any IP when allowAnyIp is true", () => {
