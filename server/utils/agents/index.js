@@ -540,7 +540,7 @@ class AgentHandler {
 
       const callOpts = this.parseCallOptions(
         args,
-        AgentPlugins[name].startupConfig.params,
+        AgentPlugins[name].startupConfig?.params,
       );
       const AIbitatPlugin = AgentPlugins[name];
       this.aibitat.use(AIbitatPlugin.plugin(callOpts));
@@ -581,6 +581,11 @@ class AgentHandler {
 
   async init() {
     await this.#validInvocation();
+    // If the invocation could not be resolved (e.g. an EventSource reconnect
+    // arrives after the invocation was closed/removed), bail out cleanly instead
+    // of dereferencing a null invocation in #providerSetupAndCheck(). The SSE
+    // handler checks `!agentHandler.invocation` and closes the socket.
+    if (!this.invocation) return this;
     await this.#providerSetupAndCheck();
 
     // Retrieve cached attachments (images, etc.) from the HTTP request

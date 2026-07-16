@@ -5,6 +5,9 @@ const FETCH_TIMEOUT_MS = 60_000;
 
 module.exports.imageGeneration = {
   name: "image-generation",
+  startupConfig: {
+    params: {},
+  },
   plugin: function () {
     return {
       name: "image-generation",

@@ -60,6 +60,11 @@ module.exports = {
     // Tests that DO care (EmbeddingRerankers.test.js) override this mapping
     // with their own jest.mock() call, which takes precedence.
     "^@huggingface/transformers$": "<rootDir>/__mocks__/empty.js",
+    // mime >= 4 ships ESM-only and is pulled in transitively by the gmail
+    // agent plugin chain (gmail/lib.js → require("mime")). Jest's CJS registry
+    // cannot require() it, so map to an empty stub for tests that only need the
+    // plugin *metadata* (name/startupConfig), not mime's runtime behavior.
+    "^mime$": "<rootDir>/__mocks__/empty.js",
   },
   // Issue #373: forceExit ensures Jest terminates even if a stray timer
   // or DB handle keeps the event loop alive after all tests complete.
