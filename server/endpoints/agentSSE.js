@@ -35,9 +35,30 @@ function isOriginAllowed(request) {
 
   const origin = request.headers.origin;
   if (!origin) {
+    // Browsers omit the Origin header on same-origin safe GET requests, and
+    // the SSE stream is a fetch/EventSource GET — so real same-origin browser
+    // traffic legitimately arrives with no Origin. Distinguish it from
+    // cross-site/non-browser callers via Sec-Fetch-Site (a forbidden header
+    // that scripts cannot spoof), falling back to a Referer-host match.
+    const secFetchSite = request.headers["sec-fetch-site"];
+    if (secFetchSite) {
+      return (
+        secFetchSite === "same-origin" ||
+        secFetchSite === "same-site" ||
+        secFetchSite === "none"
+      );
+    }
+    const referer = request.headers.referer;
+    const refHost = request.headers.host;
+    if (referer && refHost) {
+      try {
+        return new URL(referer).host === refHost.toLowerCase();
+      } catch {
+        return false;
+      }
+    }
     // Non-browser clients (Node, curl) don't send Origin — allow in
     // development, reject in production for defence-in-depth.
-    // This matches the pattern in agentWebsocket.js isOriginAllowed().
     return process.env.NODE_ENV !== "production";
   }
 
@@ -404,4 +425,4 @@ function agentSSE(app, routePrefix = "") {
   app.use(`${routePrefix}/sse`, router);
 }
 
-module.exports = { agentSSE };
+module.exports = { agentSSE, isOriginAllowed };
