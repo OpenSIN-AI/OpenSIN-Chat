@@ -202,6 +202,8 @@ const HistoricalMessage = ({
             <HistoricalOutputs outputs={outputs} />
           </div>
         )}
+        {role === "assistant" && <GroundingBadge sources={sources} />}
+        {role === "assistant" && <Citations sources={sources} />}
         <div className="flex items-start md:items-center gap-x-1">
           <Actions
             message={message}
@@ -249,8 +251,6 @@ const HistoricalMessage = ({
             }
           />
         </div>
-        {role === "assistant" && <GroundingBadge sources={sources} />}
-        {role === "assistant" && <Citations sources={sources} />}
       </div>
     </div>
   );
