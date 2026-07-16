@@ -35,7 +35,7 @@ const {
 // the jest.doMock call so the code-under-test picks up this instance.
 const { prisma, __db } = createInMemoryDb("utils/prisma");
 
-const { ParseJobs, JOB_STATUS, recoverStalledJobs } = require("../../../utils/parseJobs");
+const { ParseJobs, JOB_STATUS, recoverStalledJobs, _toMs } = require("../../../utils/parseJobs");
 
 const WS = 1;
 const OTHER_WS = 2;
@@ -364,5 +364,38 @@ describe("ParseJobs store — corrupted data resilience", () => {
     expect(job.status).toBe(JOB_STATUS.FAILED);
     expect(job.files).toBeNull();
     expect(job.error).toMatch(/corrupted/i);
+  });
+});
+
+// Regression: the parse_jobs table is created with a `DATETIME` column by the
+// Prisma migration, and Prisma's $queryRawUnsafe deserialises DATETIME into a
+// JS Date. The original string-only `_toMs` then threw "s.includes is not a
+// function" on every upload, which the frontend mislabelled as a bogus
+// "Upload timed out after 120s". `_toMs` must accept Date/number/string.
+describe("_toMs (mixed SQLite/Prisma value types)", () => {
+  it("accepts a JS Date (Prisma DATETIME deserialisation) without throwing", () => {
+    const d = new Date("2026-07-16T03:48:28.000Z");
+    expect(() => _toMs(d)).not.toThrow();
+    expect(_toMs(d)).toBe(d.getTime());
+  });
+
+  it("accepts a space-separated SQLite UTC string as UTC", () => {
+    expect(_toMs("2026-07-16 03:48:28")).toBe(Date.parse("2026-07-16T03:48:28Z"));
+  });
+
+  it("accepts an ISO-8601 string unchanged", () => {
+    expect(_toMs("2026-07-16T03:48:28.000Z")).toBe(Date.parse("2026-07-16T03:48:28.000Z"));
+  });
+
+  it("accepts a numeric epoch and passes it through", () => {
+    expect(_toMs(1784173708000)).toBe(1784173708000);
+  });
+
+  it("returns null for null/undefined/empty and invalid dates", () => {
+    expect(_toMs(null)).toBeNull();
+    expect(_toMs(undefined)).toBeNull();
+    expect(_toMs("")).toBeNull();
+    expect(_toMs(new Date("not-a-date"))).toBeNull();
+    expect(_toMs("garbage")).toBeNull();
   });
 });

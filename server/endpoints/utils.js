@@ -8,6 +8,7 @@ const {
   ensureStorageDir,
 } = require("../utils/paths");
 const { SystemSettings } = require("../models/systemSettings");
+const { resolveDipApiKey } = require("../utils/politician/dipApiKey");
 // NOTE: validatedRequest / flexUserRoleValid / ROLES are required lazily inside
 // utilEndpoints() instead of being destructured here. These middleware modules
 // participate in a circular dependency chain; a top-level destructure captures
@@ -78,10 +79,7 @@ function utilEndpoints(app) {
     [validatedRequest],
     async (req, response) => {
       try {
-        const apiKey =
-          process.env.BUNDESTAG_DIP_API_KEY ||
-          process.env.BUNDESTAG_API_KEY ||
-          "";
+        const apiKey = resolveDipApiKey();
         const params = new URLSearchParams({
           format: "json",
           rows: req.query.rows || "10",

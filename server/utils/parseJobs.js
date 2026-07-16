@@ -62,17 +62,30 @@ async function ensureTable() {
 }
 
 /**
- * Convert a SQLite UTC datetime string (space-separated, e.g.
- * "2024-01-15 13:45:00") to a Unix millisecond timestamp.
- * SQLite stores UTC but JS Date.parse treats a bare space-separated
- * string as LOCAL time — we must replace the space with 'T' and
- * append 'Z' to force UTC parsing.
+ * Convert a SQLite datetime value to a Unix millisecond timestamp.
  *
- * @param {string|null} s
+ * The `parse_jobs` table can be created two ways with DIFFERENT column types:
+ *   - `ensureTable()` here declares `createdAt TEXT` → raw queries return a
+ *     string ("2024-01-15 13:45:00", SQLite UTC, space-separated).
+ *   - The Prisma migration `20260705120000_add_parse_jobs` declares
+ *     `createdAt DATETIME` → Prisma's `$queryRawUnsafe` deserialises it into a
+ *     JS **Date** object.
+ * On any deployment where the migration ran, `_toMs` receives a Date, so a
+ * string-only implementation crashed with "s.includes is not a function",
+ * surfacing to the user as a bogus "Upload timed out after 120s". Accept
+ * Date/number/string uniformly.
+ *
+ * @param {string|number|Date|null} s
  * @returns {number|null}
  */
 function _toMs(s) {
-  if (!s) return null;
+  if (s === null || s === undefined) return null;
+  if (s instanceof Date) {
+    const ms = s.getTime();
+    return Number.isNaN(ms) ? null : ms;
+  }
+  if (typeof s === "number") return Number.isNaN(s) ? null : s;
+  if (typeof s !== "string" || s === "") return null;
   // Already ISO-8601 ("2024-01-15T13:45:00.000Z") — pass through.
   const normalised = s.includes("T") ? s : s.replace(" ", "T") + "Z";
   const ms = Date.parse(normalised);
@@ -337,4 +350,4 @@ async function recoverStalledJobs() {
   }
 }
 
-module.exports = { ParseJobs, JOB_STATUS, recoverStalledJobs };
+module.exports = { ParseJobs, JOB_STATUS, recoverStalledJobs, _toMs };

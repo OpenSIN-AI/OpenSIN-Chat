@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 const consoleLogger = require("../logger/console.js");
+const { resolveDipApiKey } = require("./dipApiKey");
 
 /**
  * Bundestag API client — fetches politician data for the current electoral term.
@@ -75,12 +76,7 @@ class BundestagApi {
   constructor(opts = {}) {
     this.baseUrl = BUNDESTAG_API_BASE;
     this.wahlperiode = opts.wahlperiode || DEFAULT_WAHLPERIODE;
-    this.dipApiKey =
-      opts.dipApiKey ||
-      process.env.BUNDESTAG_DIP_API_KEY ||
-      process.env.BUNDESTAG_API_KEY ||
-      process.env.DIP_API_KEY ||
-      null;
+    this.dipApiKey = resolveDipApiKey(opts.dipApiKey);
     this.http = new ResilientHttpClient({
       timeoutMs: 30_000,
       maxRetries: MAX_RETRIES,

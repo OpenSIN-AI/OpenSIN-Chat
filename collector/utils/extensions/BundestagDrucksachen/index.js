@@ -33,11 +33,12 @@ const fs = require("fs");
 const DIP_API_BASE = "https://search.dip.bundestag.de/api/v1";
 
 // API-Key: ab 2024 erforderlich. Ohne Key ist die API gesperrt (HTTP 401).
-// User können einen kostenlosen API-Key beantragen unter
+// Der Bundestag veröffentlicht einen ÖFFENTLICHEN API-Key auf der Hilfeseite
 //   https://dip.bundestag.de/über-dip/hilfe/api
-// Setze den Key in der .env als BUNDESTAG_DIP_API_KEY, oder übergebe ihn
-// per `apiKey`-Parameter an die jeweilige Funktion.
-const DIP_API_KEY = process.env.BUNDESTAG_DIP_API_KEY || null;
+// den wir als Fallback mitliefern, damit die API nie ohne Konfiguration 401
+// liefert. Override per .env (BUNDESTAG_DIP_API_KEY) oder `apiKey`-Parameter.
+const DEFAULT_DIP_API_KEY = "R2BZaee.DjdCyihKZMf8AOjtScubP2EVydegzjmBIQ";
+const DIP_API_KEY = process.env.BUNDESTAG_DIP_API_KEY || DEFAULT_DIP_API_KEY;
 const DIP_MAX_RETRIES = 3;
 const DIP_MAX_PAGES = 100;
 
