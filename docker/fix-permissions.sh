@@ -16,7 +16,10 @@ for dir in "$PROJECT_ROOT/server/storage" "$PROJECT_ROOT/collector/hotdir" "$PRO
   if [ -d "$dir" ]; then
     echo "  Fixing $dir ..."
     chown -R "${UID_TARGET}:${GID_TARGET}" "$dir"
-    chmod -R u=rwX,g=rX,o=rX "$dir"
+    # Group-writable (ug+rwX): the collector/server may run under a different
+    # identity than the on-disk owner (uid drift between host and container).
+    # Group-read-only (g=rX) here was the root cause of EACCES on direct-uploads.
+    chmod -R ug+rwX "$dir"
   else
     mkdir -p "$dir"
     chown "${UID_TARGET}:${GID_TARGET}" "$dir"

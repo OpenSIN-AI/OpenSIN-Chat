@@ -329,10 +329,16 @@ function agentSSE(app, routePrefix = "") {
         await agentHandler.startAgentCluster();
       } catch (e) {
         const id = crypto.randomUUID();
-        consoleLogger.error(`[agentSSE error id=${id}]`, e);
         cleanup();
 
         if (e?.message?.includes("already closed")) {
+          // Expected condition: the client (browser EventSource) reconnected or
+          // navigated away and the invocation was already closed. This is not an
+          // error — log it quietly at debug level instead of spamming ERROR with
+          // a full stack trace on every reconnect attempt.
+          consoleLogger.debug?.(
+            `[agentSSE id=${id}] invocation already closed (client reconnect); ignoring.`,
+          );
           try {
             socket.send(
               JSON.stringify({
@@ -351,6 +357,9 @@ function agentSSE(app, routePrefix = "") {
           }
           return;
         }
+
+        // Genuine, unexpected failure — log at ERROR with the stack trace.
+        consoleLogger.error(`[agentSSE error id=${id}]`, e);
 
         const content =
           e?.message?.includes("No valid provider") ||

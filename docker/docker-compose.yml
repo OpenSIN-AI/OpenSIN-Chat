@@ -22,7 +22,7 @@ services:
       - "../server/storage:/storage"
     user: root
     command: >
-      sh -c "chown -R 1000:1000 /storage && mkdir -p /storage/tmp /storage/models /storage/vector-cache /storage/lancedb && echo 'Permissions fixed'"
+      sh -c "chown -R 1000:1000 /storage && mkdir -p /storage/tmp /storage/models /storage/vector-cache /storage/lancedb /storage/direct-uploads /storage/documents && chmod -R ug+rwX /storage && echo 'Permissions fixed'"
     restart: "no"
 
   opensin-chat:
