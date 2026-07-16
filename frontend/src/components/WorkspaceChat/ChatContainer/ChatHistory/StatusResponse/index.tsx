@@ -3,107 +3,93 @@ import { useState } from "react";
 import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
 import { useTranslation } from "react-i18next";
 
-import AgentAnimation from "@/media/animations/agent-animation.webm";
-import AgentStatic from "@/media/animations/agent-static.png";
-
+/**
+ * v0-style agent status line.
+ *
+ * Design goals (matches Vercel v0 1:1):
+ *  - No heavy card, no video/webm icon. Just a clean single line.
+ *  - While thinking: the current status text shimmers (light sweep).
+ *  - When there is a chain of prior steps, a chevron on the left expands them.
+ *  - Collapsed shows only the latest line; expanded reveals every step.
+ */
 export default function StatusResponse({
   messages = [],
   isThinking = false,
 }: any) {
   const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false as any);
-  // Guard: when isThinking=true but messages is still empty, currentThought is
-  // undefined — accessing .content further down would throw a TypeError.
+
   const currentThought = messages.length ? messages[messages.length - 1] : null;
   const previousThoughts = messages.slice(0, -1);
+  const hasChain = previousThoughts.length > 0;
 
   if (!messages.length && !isThinking) return null;
 
-  function handleExpandClick() {
-    if (previousThoughts.length === 0) return;
+  function handleToggle() {
+    if (!hasChain) return;
     setIsExpanded(!isExpanded);
   }
 
+  const label = currentThought?.content ?? t("statusResponse.thinking");
+
   return (
-    <div className="flex justify-center w-full pr-4">
-      <div className="w-full flex flex-col">
-        <div className="w-full">
-          <div
-            onClick={handleExpandClick}
-            className="relative bg-zinc-800 light:bg-slate-100 p-4 rounded-2xl transition-all duration-100 ease-in-out"
-          >
-            <div className="absolute top-4 left-4 w-[18px] h-[18px]">
-              {isThinking ? (
-                <video
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-[18px] h-[18px] scale-[165%] transition-opacity duration-200 light:invert light:opacity-50"
-                  data-tooltip-id="agent-thinking"
-                  data-tooltip-content={t("statusResponse.thinking")}
-                  aria-label={t("statusResponse.thinking")}
-                >
-                  <source src={AgentAnimation} type="video/webm" />
-                </video>
-              ) : (
-                <img
-                  src={AgentStatic}
-                  alt={t("statusResponse.finished")}
-                  className="w-[18px] h-[18px] transition-opacity duration-200 light:invert light:opacity-50"
-                  data-tooltip-id="agent-thinking"
-                  data-tooltip-content={t("statusResponse.finished")}
-                  aria-label={t("statusResponse.finished")}
-                />
-              )}
-            </div>
-            {previousThoughts?.length > 0 && (
-              <button
-                type="button"
-                onClick={handleExpandClick}
-                className="absolute top-4 right-4 border-none text-zinc-200 light:text-slate-800 transition-colors"
-                data-tooltip-id="expand-cot"
-                data-tooltip-content={
-                  isExpanded
-                    ? t("statusResponse.hideThoughtChain")
-                    : t("statusResponse.showThoughtChain")
-                }
-                aria-label={
-                  isExpanded
-                    ? t("statusResponse.hideThoughtChain")
-                    : t("statusResponse.showThoughtChain")
-                }
-              >
-                <CaretDown
-                  className={`w-4 h-4 transform transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
-                />
-              </button>
-            )}
-            <div
-              className={`ml-[28px] mr-[26px] transition-[max-height] duration-300 ease-in-out origin-top ${isExpanded ? "" : "overflow-hidden max-h-[18px]"}`}
+    <div className="flex w-full justify-start py-1">
+      <div className="flex w-full flex-col gap-y-1">
+        <div className="flex items-center gap-x-1.5">
+          {hasChain ? (
+            <button
+              type="button"
+              onClick={handleToggle}
+              className="flex flex-shrink-0 items-center border-none bg-transparent p-0 text-[var(--chat-text-muted)] transition-colors hover:text-[var(--chat-text)]"
+              aria-label={
+                isExpanded
+                  ? t("statusResponse.hideThoughtChain")
+                  : t("statusResponse.showThoughtChain")
+              }
             >
-              <div className="text-zinc-200 light:text-slate-800 font-mono text-sm leading-[18px]">
-                {!isExpanded ? (
-                  <span className="block w-full truncate">
-                    {currentThought?.content ?? ""}
-                  </span>
-                ) : (
-                  <>
-                    {(previousThoughts as any).map((thought, index) => (
-                      <div
-                        key={`cot-${thought.uuid || index}`}
-                        className="mb-2"
-                      >
-                        {thought.content}
-                      </div>
-                    ))}
-                    <div>{currentThought?.content ?? ""}</div>
-                  </>
-                )}
+              <CaretDown
+                size={14}
+                className={`transform transition-transform duration-200 ${
+                  isExpanded ? "rotate-180" : "-rotate-90"
+                }`}
+              />
+            </button>
+          ) : null}
+          <button
+            type="button"
+            onClick={handleToggle}
+            className={`min-w-0 border-none bg-transparent p-0 text-left text-sm ${
+              hasChain ? "cursor-pointer" : "cursor-default"
+            }`}
+            aria-live="polite"
+          >
+            <span
+              className={`block truncate ${
+                isThinking
+                  ? "thinking-shimmer font-medium"
+                  : "text-[var(--chat-text-muted)]"
+              }`}
+            >
+              {label}
+            </span>
+          </button>
+        </div>
+
+        {isExpanded && hasChain ? (
+          <div className="ml-[22px] flex flex-col gap-y-1 border-l border-[var(--chat-text-muted)]/20 pl-3">
+            {(previousThoughts as any).map((thought, index) => (
+              <div
+                key={`cot-${thought.uuid || index}`}
+                className="text-sm leading-relaxed text-[var(--chat-text-muted)]"
+              >
+                {thought.content}
               </div>
+            ))}
+            <div className="text-sm leading-relaxed text-[var(--chat-text)]">
+              {currentThought?.content ?? ""}
             </div>
           </div>
-        </div>
+        ) : null}
       </div>
     </div>
   );

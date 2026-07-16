@@ -9,10 +9,9 @@ import {
   useCallback,
 } from "react";
 import { useTranslation } from "react-i18next";
+import { Brain } from "@phosphor-icons/react/dist/csr/Brain";
 import renderMarkdown from "@/utils/chat/markdown";
 import DOMPurify from "@/utils/chat/purify";
-import ThinkingAnimation from "@/media/animations/thinking-animation.webm";
-import ThinkingStatic from "@/media/animations/thinking-static.png";
 
 export interface ThoughtExpansionContextValue {
   getExpanded: (messageId: string | number) => boolean;
@@ -147,23 +146,13 @@ export function ThoughtBrainButton({
           : "bg-transparent hover:bg-zinc-800 light:hover:bg-slate-100"
       } ${className}`}
     >
-      {isThinking ? (
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-[16px] h-[16px] scale-[115%] light:invert light:opacity-50"
-        >
-          <source src={ThinkingAnimation} type="video/webm" />
-        </video>
-      ) : (
-        <img
-          src={ThinkingStatic}
-          alt={t("thoughtContainer.thoughtChain")}
-          className="w-[16px] h-[16px] light:invert light:opacity-50"
-        />
-      )}
+      <Brain
+        size={16}
+        weight={isThinking ? "fill" : "regular"}
+        className={`text-[var(--chat-text-muted)] ${
+          isThinking ? "animate-pulse" : ""
+        }`}
+      />
     </button>
   );
 }
