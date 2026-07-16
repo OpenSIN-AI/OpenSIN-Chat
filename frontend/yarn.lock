@@ -2291,9 +2291,9 @@ async-function@^1.0.0:
   resolved "https://registry.npmjs.org/async-function/-/async-function-1.0.0.tgz"
   integrity sha512-hsU18Ae8CDTR6Kgu9DYf0EbCr/a5iGL0rytQDobUcdpYOKokk8LEjVphnXkDkgpi0wYVsqrXuP0bZxJaTqdgoA==
 
-attr-accept@^2.2.4:
+attr-accept@^2.2.5:
   version "2.2.5"
-  resolved "https://registry.npmjs.org/attr-accept/-/attr-accept-2.2.5.tgz"
+  resolved "https://registry.yarnpkg.com/attr-accept/-/attr-accept-2.2.5.tgz#d7061d958e6d4f97bf8665c68b75851a0713ab5e"
   integrity sha512-0bDNnY/u6pPwHDMoF0FieU354oBi0a8rD9FcsLwzcGWbc8KS8KPIi7y+s13OlVY+gMWc/9xEMUgNE6Qm8ZllYQ==
 
 autoprefixer@^10.5.2:
@@ -5602,14 +5602,13 @@ react-dom@^19.2.7:
   dependencies:
     scheduler "^0.27.0"
 
-react-dropzone@^15.0.0:
-  version "15.0.0"
-  resolved "https://registry.npmjs.org/react-dropzone/-/react-dropzone-15.0.0.tgz"
-  integrity sha512-lGjYV/EoqEjEWPnmiSvH4v5IoIAwQM2W4Z1C0Q/Pw2xD0eVzKPS359BQTUMum+1fa0kH2nrKjuavmTPOGhpLPg==
+react-dropzone@^17.0.0:
+  version "17.0.0"
+  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-17.0.0.tgz#8e19640a13b651f4f7693709f314e82fe5ac8ce1"
+  integrity sha512-yedj9VzdC/boq15u0XfzWRGX0Mqpb8dxy/TRDqOIFlISl8nhh38R9QKbztyFqxqLMwLdViVtLbXkv6x/b8gP8A==
   dependencies:
-    attr-accept "^2.2.4"
+    attr-accept "^2.2.5"
     file-selector "^2.1.0"
-    prop-types "^15.8.1"
 
 react-error-boundary@^6.1.2:
   version "6.1.2"
