@@ -502,6 +502,26 @@
     --color-theme-text-primary: #f5f5f4;
     --color-theme-text-secondary: #b5b5b0;
     --color-theme-text-muted: #858580;
+    /* Bridge the background/border/item Tailwind tokens too, otherwise the
+     * bg-theme-* utilities keep the light-mode literals (#f5f5f4) while the
+     * text tokens above flip to near-white — rendering the workspace name and
+     * sidebar items white-on-white (invisible). Keep the rail charcoal. */
+    --color-theme-bg-sidebar: #202020;
+    --color-theme-bg-secondary: #292929;
+    --color-theme-bg-tertiary: #343434;
+    --color-theme-bg-hover: rgba(255, 255, 255, 0.07);
+    --color-theme-placeholder: #858580;
+    --color-theme-sidebar-item-hover: #2b2b2b;
+    --color-theme-sidebar-item-selected: #343434;
+    --color-theme-sidebar-item-text-active: #f5f5f4;
+    --color-theme-sidebar-item-text-inactive: #c5c5c0;
+    --color-theme-sidebar-border: #3a3a3a;
+    --color-theme-modal-border: #3a3a3a;
+    --color-theme-sidebar-subitem-hover: #2b2b2b;
+    --color-theme-sidebar-subitem-selected: #343434;
+    --color-theme-sidebar-thread-selected: #343434;
+    --color-theme-sidebar-item-workspace-active: #f5f5f4;
+    --color-theme-sidebar-item-workspace-inactive: #858580;
   }
 }
 
