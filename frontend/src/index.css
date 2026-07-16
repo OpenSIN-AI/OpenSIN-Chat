@@ -991,6 +991,29 @@ body,
   to { background-position: -200% 0; }
 }
 
+/* v0-style shimmer text: a light sweep travels across muted text while the
+   assistant is thinking. Clean and borderless — no card, no video icon. */
+.thinking-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--chat-text-muted) 0%,
+    var(--chat-text-muted) 35%,
+    var(--chat-text) 50%,
+    var(--chat-text-muted) 65%,
+    var(--chat-text-muted) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: thinking-shimmer 2s linear infinite;
+}
+@keyframes thinking-shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     scroll-behavior: auto !important;

@@ -4,7 +4,6 @@
 
 import { memo, useRef, useEffect, useState } from "react";
 import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
-import { Sparkle } from "@phosphor-icons/react/dist/csr/Sparkle";
 import { useTranslation } from "react-i18next";
 import renderMarkdown from "@/utils/chat/markdown";
 import DOMPurify from "@/utils/chat/purify";
@@ -252,20 +251,15 @@ function RenderAssistantChatContent({ message, messageId }: any) {
 }
 
 function AssistantActivity({ label, compact = false }: any) {
+  // v0-style: clean shimmering text, no icon, no card. The whole label sweeps
+  // with a light gradient while the assistant is working.
   return (
     <div
-      className={`flex items-center gap-2 text-xs font-medium text-[var(--chat-text-muted)] ${compact ? "" : "px-0.5"}`}
+      className={`flex items-center text-sm ${compact ? "" : "px-0.5"}`}
       role="status"
       aria-live="polite"
     >
-      <Sparkle size={14} weight="fill" className="animate-pulse" />
-      {!compact && <span>{label}</span>}
-      <span
-        className="h-1 w-7 overflow-hidden rounded-full bg-current/20"
-        aria-hidden="true"
-      >
-        <i className="block h-full w-1/2 animate-pulse rounded-full bg-current" />
-      </span>
+      <span className="thinking-shimmer font-medium">{label}</span>
     </div>
   );
 }
