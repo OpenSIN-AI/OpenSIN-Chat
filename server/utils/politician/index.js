@@ -174,6 +174,7 @@ class PoliticianDB {
       return normalizeAndDedupePoliticians(results)
         .filter(
           (politician) =>
+            (politician.party || politician.state) &&
             (!filters.party ||
               politician.party ===
                 normalizePoliticalLabel(filters.party, "party")) &&

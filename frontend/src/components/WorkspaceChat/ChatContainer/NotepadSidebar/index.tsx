@@ -309,7 +309,7 @@ function NotepadSidebar({ workspace }: any) {
                     placeholder={t("notepad.search", "Notizen suchen")}
                     className="min-w-0 flex-1 bg-transparent text-xs text-theme-text-primary outline-none placeholder:text-theme-text-muted"
                   />
-                  <kbd className="text-[9px] text-theme-text-muted">⌘K</kbd>
+                  <kbd className={`text-[9px] text-theme-text-muted ${query ? "hidden" : ""}`}>⌘K</kbd>
                 </label>
                 <div className="flex items-center gap-1 overflow-x-auto">
                   {(

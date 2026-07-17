@@ -12,15 +12,18 @@ import {
 export default function useIsDisabled() {
   const [isDisabled, setIsDisabled] = useState(false);
 
-  /**
-   * Handle attachments processing and processed events
-   * to prevent the send button from being clicked when attachments are processing
-   * or else the query may not have relevant context since RAG is not yet ready.
-   */
   useEffect(() => {
     if (!window) return;
-    const onProcessing = () => setIsDisabled(true);
-    const onProcessed = () => setIsDisabled(false);
+    let timeout = null;
+    const onProcessing = () => {
+      setIsDisabled(true);
+      if (timeout) clearTimeout(timeout);
+      timeout = setTimeout(() => setIsDisabled(false), 30_000);
+    };
+    const onProcessed = () => {
+      setIsDisabled(false);
+      if (timeout) clearTimeout(timeout);
+    };
 
     window.addEventListener(ATTACHMENTS_PROCESSING_EVENT, onProcessing);
     window.addEventListener(ATTACHMENTS_PROCESSED_EVENT, onProcessed);
@@ -28,6 +31,7 @@ export default function useIsDisabled() {
     return () => {
       window.removeEventListener(ATTACHMENTS_PROCESSING_EVENT, onProcessing);
       window.removeEventListener(ATTACHMENTS_PROCESSED_EVENT, onProcessed);
+      if (timeout) clearTimeout(timeout);
     };
   }, []);
 

@@ -491,12 +491,13 @@ const System = {
     if (!!appName && Date.now() - lastFetched < 3_600_000)
       return { appName: appName, error: null };
 
-    const { customAppName, error } = await fetch(
+    const { customAppName, error } = await fetchWithTimeout(
       `${API_BASE}/system/custom-app-name`,
       {
         method: "GET",
         cache: "no-cache",
         headers: baseHeaders(),
+        timeoutMs: 10_000,
       },
     )
       .then((res) => safeJson(res))

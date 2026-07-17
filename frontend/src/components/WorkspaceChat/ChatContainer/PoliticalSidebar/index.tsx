@@ -102,8 +102,8 @@ export default function PoliticalSidebar() {
             ) : (
               drucksachen.map((d) => (
                 <a
-                  key={d.id || d.drucksache_url}
-                  href={d.drucksache_url || "#"}
+                  key={d.id || d.dokumentnummer}
+                  href={d.id ? `https://dip.bundestag.de/dokumente/ablage/${d.id}` : "#"}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-start gap-2.5 p-2.5 rounded-xl bg-theme-bg-secondary border border-theme-border hover:border-zinc-500 transition-colors"

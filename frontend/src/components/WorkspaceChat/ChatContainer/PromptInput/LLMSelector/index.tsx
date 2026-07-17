@@ -52,7 +52,7 @@ export default function LLMSelectorModal({
     setSettings(systemSettings);
     setSelectedLLMProvider(providerToSelect);
     autoScrollToSelectedLLMProvider(providerToSelect);
-    setSelectedLLMModel(savedModel);
+    setSelectedLLMModel(savedModel ?? "");
     setSelectedRouterId(
       workspace.router_id || systemSettings?.ModelRouterId || null,
     );

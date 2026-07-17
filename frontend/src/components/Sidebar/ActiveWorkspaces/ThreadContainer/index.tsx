@@ -668,6 +668,11 @@ function ThreadContainer({
                     showVirtualThread={showVirtualThread}
                     duplicateNames={duplicateNames}
                   />
+                  {!defaultThreadHasChats && unfolderedThreads.length === 0 && !showVirtualThread && (
+                    <p className="px-3 py-2 text-[11px] text-theme-text-muted italic">
+                      {t("threadContainer.noThreads", "No chats yet")}
+                    </p>
+                  )}
                   {showVirtualThread && (
                     <ThreadItem
                       idx={activeThreadIdx}

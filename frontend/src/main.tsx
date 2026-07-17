@@ -32,7 +32,7 @@ import { installAuthInterceptor } from "@/utils/authInterceptor";
 installAuthInterceptor();
 
 const isDev = import.meta.env.DEV;
-const REACTWRAP = isDev ? React.Fragment : React.StrictMode;
+const REACTWRAP = isDev ? React.StrictMode : React.Fragment;
 
 // DEV-ONLY: Start the MSW mock worker when the PDF mock flag is set.
 // This intercepts /pdf-analysis/* requests so the PDF-Analyse page
@@ -482,6 +482,6 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <REACTWRAP>
-    <RouterProvider router={router} />
+    <RouterProvider router={router} fallbackElement={<AppHydrateFallback />} />
   </REACTWRAP>,
 );
