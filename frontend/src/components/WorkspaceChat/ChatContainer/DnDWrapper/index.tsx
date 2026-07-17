@@ -32,6 +32,7 @@ export const DndUploaderContext = createContext<{
   files: any[];
   parseAttachments: () => any[];
   onDrop?: (acceptedFiles: any[], rejections?: any[]) => void | Promise<void>;
+  attachExternalFile?: (file: File) => Promise<string>;
   ready?: boolean;
   dragging?: boolean;
   setDragging?: (dragging: boolean) => void;
@@ -463,6 +464,42 @@ export function DnDFileUploaderProvider({
     embedEligibleAttachmentsRef.current(newAccepted);
   }, []);
 
+  /**
+   * Attach a single externally-sourced File (e.g. fetched from the file
+   * browser) as a chat attachment, reusing the same image-vs-embed logic as
+   * onDrop, and return the generated uid so the caller can later remove it via
+   * REMOVE_ATTACHMENT_EVENT (bidirectional list↔pill sync).
+   * @param {File} file
+   * @returns {Promise<string>} the attachment uid
+   */
+  const attachExternalFile = useCallback(async (file: File) => {
+    const uid = v4();
+    const isImage = file.type.startsWith("image/");
+    const attachment = isImage
+      ? {
+          uid,
+          file,
+          contentString: await toBase64(file),
+          status: "success",
+          error: null,
+          type: "attachment",
+        }
+      : {
+          uid,
+          file,
+          contentString: null,
+          status: "in_progress",
+          error: null,
+          type: "upload",
+        };
+    setFiles((prev) => [...prev, attachment]);
+    if (isPdfFile(file)) {
+      window.dispatchEvent(new CustomEvent(PDF_UPLOADED_EVENT));
+    }
+    if (!isImage) embedEligibleAttachmentsRef.current([attachment]);
+    return uid;
+  }, []);
+
   // Handle modal actions
   const handleCloseModal = async () => {
     if (!pendingFiles.length) return;
@@ -581,8 +618,16 @@ export function DnDFileUploaderProvider({
   };
 
   const contextValue = useMemo(
-    () => ({ files, ready, dragging, setDragging, onDrop, parseAttachments }),
-    [files, ready, dragging, onDrop, parseAttachments],
+    () => ({
+      files,
+      ready,
+      dragging,
+      setDragging,
+      onDrop,
+      attachExternalFile,
+      parseAttachments,
+    }),
+    [files, ready, dragging, onDrop, attachExternalFile, parseAttachments],
   );
 
   return (

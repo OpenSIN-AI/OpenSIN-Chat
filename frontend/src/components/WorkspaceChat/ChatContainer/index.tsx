@@ -73,11 +73,11 @@ export default function ChatContainer({
                   />
                 </ErrorBoundary>
               )}
+              <Sidebars workspace={workspace} />
             </DnDFileUploaderWrapper>
           </ErrorBoundary>
           <ChatTooltips />
         </main>
-        <Sidebars workspace={workspace} />
       </div>
     </ChatSidebarProvider>
   );

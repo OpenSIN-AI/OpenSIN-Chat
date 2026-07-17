@@ -6,6 +6,7 @@ import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
 import { Upload } from "@phosphor-icons/react/dist/csr/Upload";
 import { ChartBar } from "@phosphor-icons/react/dist/csr/ChartBar";
 import { CheckCircle } from "@phosphor-icons/react/dist/csr/CheckCircle";
+import { Eye } from "@phosphor-icons/react/dist/csr/Eye";
 import { Download } from "@phosphor-icons/react/dist/csr/Download";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { SpinnerGap } from "@phosphor-icons/react/dist/csr/SpinnerGap";
@@ -29,6 +30,7 @@ interface FileListProps {
   onToggleFolder: (path: string) => void;
   onToggleSection: (section: string) => void;
   onToggleFileSelection: (file: any) => void;
+  onPreview: (item: any) => void;
   onDownload: (item: any) => void;
   onDelete: (itemPath: string, itemName: string) => void;
 }
@@ -44,6 +46,7 @@ export function FileList({
   onToggleFolder,
   onToggleSection,
   onToggleFileSelection,
+  onPreview,
   onDownload,
   onDelete,
 }: FileListProps) {
@@ -217,6 +220,17 @@ export function FileList({
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation();
+                              onPreview(file);
+                            }}
+                            className="text-zinc-500 light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer p-0.5"
+                            aria-label={t("sidebar.filesystem.preview")}
+                          >
+                            <Eye size={12} weight="regular" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
                               onDownload(file);
                             }}
                             className="text-zinc-500 light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer p-0.5"
@@ -256,6 +270,7 @@ export function FileList({
           selectedFiles={selectedFiles}
           deletingPath={deletingPath}
           onToggleFileSelection={onToggleFileSelection}
+          onPreview={onPreview}
           onDownload={onDownload}
           onDelete={onDelete}
           t={t}
@@ -275,6 +290,7 @@ export function FileList({
           selectedFiles={selectedFiles}
           deletingPath={deletingPath}
           onToggleFileSelection={onToggleFileSelection}
+          onPreview={onPreview}
           onDownload={onDownload}
           onDelete={onDelete}
           t={t}
@@ -295,6 +311,7 @@ interface FileSectionProps {
   selectedFiles: any[];
   deletingPath: string | null;
   onToggleFileSelection: (file: any) => void;
+  onPreview: (item: any) => void;
   onDownload: (item: any) => void;
   onDelete: (itemPath: string, itemName: string) => void;
   t: any;
@@ -311,6 +328,7 @@ function FileSection({
   selectedFiles,
   deletingPath,
   onToggleFileSelection,
+  onPreview,
   onDownload,
   onDelete,
   t,
@@ -381,6 +399,17 @@ function FileSection({
                   />
                 )}
                 <div className="flex items-center gap-0.5 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onPreview(item);
+                    }}
+                    className="text-zinc-500 light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors border-none bg-transparent cursor-pointer p-0.5"
+                    aria-label={t("sidebar.filesystem.preview")}
+                  >
+                    <Eye size={14} weight="regular" />
+                  </button>
                   <button
                     type="button"
                     onClick={(e) => {

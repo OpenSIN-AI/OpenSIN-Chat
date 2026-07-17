@@ -118,7 +118,7 @@ const WorkspaceNote = {
         plainText,
         tags,
         folder,
-        pinned: pinned ? 1 : 0,
+        pinned: Boolean(pinned),
       },
     });
   },
@@ -130,7 +130,7 @@ const WorkspaceNote = {
     if (data.plainText !== undefined) updateData.plainText = data.plainText;
     if (data.tags !== undefined) updateData.tags = data.tags;
     if (data.folder !== undefined) updateData.folder = data.folder;
-    if (data.pinned !== undefined) updateData.pinned = data.pinned ? 1 : 0;
+    if (data.pinned !== undefined) updateData.pinned = Boolean(data.pinned);
     return await prisma.workspace_notes.update({
       where: { id: Number(id) },
       data: updateData,

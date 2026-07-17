@@ -97,6 +97,45 @@ export function getFileIcon(ext: string) {
   return File;
 }
 
+/**
+ * Maps a file extension to a PreviewSidebar `previewData.type`. Every file is
+ * previewable: PDFs/images render natively, everything else falls back to the
+ * IframePreview (which itself offers a download/open-externally view for types
+ * the browser can't render inline).
+ */
+export function getPreviewType(ext: string): "pdf" | "image" | "file" {
+  if (ext === ".pdf") return "pdf";
+  if (IMAGE_EXTS.includes(ext)) return "image";
+  return "file";
+}
+
+const EXT_MIME: Record<string, string> = {
+  ".pdf": "application/pdf",
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".gif": "image/gif",
+  ".webp": "image/webp",
+  ".bmp": "image/bmp",
+  ".tiff": "image/tiff",
+  ".svg": "image/svg+xml",
+  ".txt": "text/plain",
+  ".md": "text/markdown",
+  ".csv": "text/csv",
+  ".json": "application/json",
+  ".html": "text/html",
+  ".xml": "application/xml",
+};
+
+/**
+ * Best-effort MIME type from an extension, used as a fallback when a downloaded
+ * blob has no `type` (some servers return application/octet-stream). Matters for
+ * the DnD uploader: image MIME → chat attachment (vision), otherwise → embed.
+ */
+export function mimeFromExt(ext: string) {
+  return EXT_MIME[ext?.toLowerCase()] || "application/octet-stream";
+}
+
 export function getFileColor(ext: string) {
   if (ext === ".pdf") return "text-red-400 light:text-red-500";
   if (IMAGE_EXTS.includes(ext)) return "text-green-400 light:text-green-500";

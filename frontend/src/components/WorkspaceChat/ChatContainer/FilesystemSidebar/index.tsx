@@ -1,5 +1,12 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect, useCallback, useRef, useMemo } from "react";
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  useMemo,
+  useContext,
+} from "react";
 import { useParams } from "react-router";
 import { FolderOpen } from "@phosphor-icons/react/dist/csr/FolderOpen";
 import { Cpu } from "@phosphor-icons/react/dist/csr/Cpu";
@@ -11,8 +18,12 @@ import useConfirm from "@/hooks/useConfirm";
 import { baseHeaders } from "@/utils/request";
 import { API_BASE } from "@/utils/constants";
 import showToast from "@/utils/toast";
-import ChatSidebar, { useFilesystemSidebar } from "../ChatSidebar";
-import { getBreadcrumbs } from "./helpers";
+import ChatSidebar, {
+  useFilesystemSidebar,
+  usePreviewSidebar,
+} from "../ChatSidebar";
+import { DndUploaderContext, REMOVE_ATTACHMENT_EVENT } from "../DnDWrapper";
+import { getBreadcrumbs, getPreviewType, mimeFromExt } from "./helpers";
 import { SidebarHeader } from "./components/SidebarHeader";
 import { SearchAndCreate } from "./components/SearchAndCreate";
 import { EmptyStates } from "./components/EmptyStates";
@@ -40,8 +51,8 @@ export function FilesystemPanelBody({
   const { data: sysInfo } = useFilesystem();
 
   // Scope toggle for the Dateien tab.
-  // - "workspace": browses the shared uploads tree (`/utils/*`) and filters the
-  //   listing client-side down to documents attached to this workspace.
+  // - "workspace": browses the shared uploads tree (`/utils/*`), the default
+  //   store for files uploaded/created through this panel.
   // - "global": browses the deployment-wide global store (`/utils/global/*`),
   //   a real separate storage root (STORAGE_DIR/global) shared across ALL
   //   workspaces — files like a global agents.md / memory.md live here and
@@ -52,6 +63,12 @@ export function FilesystemPanelBody({
   // API route prefix for the active scope. The global store mirrors the uploads
   // route shape under /utils/global (see server/endpoints/utils/globalFiles.js).
   const apiPrefix = scope === "global" ? "/utils/global" : "/utils";
+
+  const { openPreview } = usePreviewSidebar();
+  const { attachExternalFile } = useContext(DndUploaderContext);
+  // Maps a browsed file's path → the chat-attachment uid it produced, so list
+  // selection and the chat pill stay in sync bidirectionally.
+  const pathToUidRef = useRef<Map<string, string>>(new Map());
 
   const {
     currentPath,
@@ -102,39 +119,20 @@ export function FilesystemPanelBody({
 
   const breadcrumbs = getBreadcrumbs(currentPath, t);
 
-  // Set of workspace document paths (docpath/filename) used by the
-  // "Arbeitsbereich" scope to filter the global uploads listing down to files
-  // attached to this workspace.
-  const workspaceDocKeys = useMemo(() => {
-    const keys = new Set<string>();
-    (workspace?.documents || []).forEach((doc: any) => {
-      if (doc?.docpath) keys.add(String(doc.docpath));
-      if (doc?.filename) keys.add(String(doc.filename));
-    });
-    return keys;
-  }, [workspace?.documents]);
-
-  const isInWorkspaceScope = useCallback(
-    (item: any) => {
-      if (scope === "global") return true;
-      if (item.type === "directory") return true; // keep folders navigable
-      return (
-        workspaceDocKeys.has(item.path) ||
-        workspaceDocKeys.has(item.name) ||
-        [...workspaceDocKeys].some((k) => k.endsWith(`/${item.name}`))
-      );
-    },
-    [scope, workspaceDocKeys],
-  );
-
+  // The "workspace" and "global" scopes are already separate storage roots on
+  // the server (`/utils/*` = the shared uploads tree, `/utils/global/*` = the
+  // deployment-wide global store). Each scope's browse listing therefore only
+  // ever contains files that belong to that store — no client-side scoping is
+  // needed. A previous version additionally filtered the workspace listing
+  // against `workspace.documents`, but those entries are embedded-document JSON
+  // paths under `documents/custom-documents/` — a different namespace from the
+  // raw `uploads/` filenames shown here — so the filter matched nothing and
+  // hid every file this panel manages (counter showed N, list showed "none").
   const filteredItems = useMemo(() => {
-    let result = items.filter(isInWorkspaceScope);
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
-      result = result.filter((item) => item.name.toLowerCase().includes(q));
-    }
-    return result;
-  }, [items, searchQuery, isInWorkspaceScope]);
+    if (!searchQuery.trim()) return items;
+    const q = searchQuery.toLowerCase();
+    return items.filter((item) => item.name.toLowerCase().includes(q));
+  }, [items, searchQuery]);
 
   const fileCount = useMemo(
     () => items.filter((i) => i.type === "file").length,
@@ -328,6 +326,76 @@ export function FilesystemPanelBody({
     [t, apiPrefix],
   );
 
+  const handlePreview = useCallback(
+    (item) => {
+      openPreview({
+        type: getPreviewType(item.ext),
+        title: item.name,
+        downloadUrl: `${API_BASE}${apiPrefix}/download-file?path=${encodeURIComponent(item.path)}`,
+      });
+    },
+    [openPreview, apiPrefix],
+  );
+
+  // Wraps panel selection: on select, fetch the file's bytes and attach it as a
+  // chat-context pill (tracking path→uid); on deselect, remove that pill. The
+  // reverse direction (pill X → deselect here) is handled by the effect below.
+  const handleToggleSelection = useCallback(
+    async (item) => {
+      const alreadySelected = selectedFiles.some((f) => f.path === item.path);
+      toggleFileSelection(item);
+      if (alreadySelected) {
+        const uid = pathToUidRef.current.get(item.path);
+        if (uid) {
+          // Delete before dispatching so the reverse-sync listener below finds
+          // no mapping and doesn't toggle the selection a second time.
+          pathToUidRef.current.delete(item.path);
+          window.dispatchEvent(
+            new CustomEvent(REMOVE_ATTACHMENT_EVENT, {
+              detail: { uid, document: null },
+            }),
+          );
+        }
+        return;
+      }
+      try {
+        const res = await fetch(
+          `${API_BASE}${apiPrefix}/download-file?path=${encodeURIComponent(item.path)}`,
+          { headers: baseHeaders() },
+        );
+        if (!res.ok) throw new Error("fetch failed");
+        const blob = await res.blob();
+        const file = new File([blob], item.name, {
+          type: blob.type || mimeFromExt(item.ext),
+        });
+        const uid = await attachExternalFile?.(file);
+        if (uid) pathToUidRef.current.set(item.path, uid);
+        showToast(t("sidebar.filesystem.addedAsContext"), "success");
+      } catch (e) {
+        showToast(t("sidebar.filesystem.contextFailed"), "error");
+      }
+    },
+    [selectedFiles, toggleFileSelection, attachExternalFile, apiPrefix, t],
+  );
+
+  // Reverse sync: when a pill is removed via its X (REMOVE_ATTACHMENT_EVENT),
+  // deselect the matching file in the list so the CheckCircle clears too.
+  useEffect(() => {
+    function onRemove(e: any) {
+      const uid = e?.detail?.uid;
+      if (!uid) return;
+      for (const [path, mappedUid] of pathToUidRef.current.entries()) {
+        if (mappedUid !== uid) continue;
+        pathToUidRef.current.delete(path);
+        const item = selectedFiles.find((f) => f.path === path);
+        if (item) toggleFileSelection(item);
+        break;
+      }
+    }
+    window.addEventListener(REMOVE_ATTACHMENT_EVENT, onRemove);
+    return () => window.removeEventListener(REMOVE_ATTACHMENT_EVENT, onRemove);
+  }, [selectedFiles, toggleFileSelection]);
+
   const sysInfoRows = sysInfo
     ? [
         {
@@ -520,7 +588,8 @@ export function FilesystemPanelBody({
             deletingPath={deletingPath}
             onToggleFolder={toggleFolder}
             onToggleSection={toggleSection}
-            onToggleFileSelection={toggleFileSelection}
+            onToggleFileSelection={handleToggleSelection}
+            onPreview={handlePreview}
             onDownload={handleDownload}
             onDelete={handleDelete}
           />

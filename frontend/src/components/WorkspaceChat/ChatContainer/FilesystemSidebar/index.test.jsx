@@ -27,6 +27,13 @@ vi.mock("../ChatSidebar", async () => {
       sidebarOpen: true,
       closeSidebar: vi.fn(),
     }),
+    usePreviewSidebar: () => ({
+      sidebarOpen: false,
+      previewData: null,
+      openPreview: vi.fn(),
+      closeSidebar: vi.fn(),
+      togglePreview: vi.fn(),
+    }),
   };
 });
 
@@ -153,11 +160,8 @@ describe("FilesystemSidebar", () => {
     ];
     render(<FilesystemSidebar />, { wrapper: Wrapper });
 
-    // No workspace is passed to the standalone sidebar, so the default
-    // "Arbeitsbereich" scope filters files out. Switch to Global to view the
-    // full store.
-    fireEvent.click(screen.getByRole("button", { name: /global/i }));
-
+    // The default "Arbeitsbereich" scope lists the uploads store directly; the
+    // browse listing is shown as-is (only the search box filters it).
     await waitFor(() => {
       expect(screen.getByText("docs")).toBeInTheDocument();
       expect(screen.getByText("report.pdf")).toBeInTheDocument();
@@ -189,7 +193,6 @@ describe("FilesystemSidebar", () => {
     fileBrowserState.currentPath = "";
     render(<FilesystemSidebar />, { wrapper: Wrapper });
 
-    fireEvent.click(screen.getByRole("button", { name: /global/i }));
     const fileEl = await screen.findByText("doc.txt");
     fireEvent.click(fileEl.closest("div"));
     expect(fileBrowserState.toggleFileSelection).toHaveBeenCalled();
@@ -208,7 +211,6 @@ describe("FilesystemSidebar", () => {
     fileBrowserState.currentPath = "";
     render(<FilesystemSidebar />, { wrapper: Wrapper });
 
-    fireEvent.click(screen.getByRole("button", { name: /global/i }));
     const fileEl = await screen.findByText("archive.xyz");
     fireEvent.click(fileEl.closest("div"));
     expect(fileBrowserState.toggleFileSelection).toHaveBeenCalled();

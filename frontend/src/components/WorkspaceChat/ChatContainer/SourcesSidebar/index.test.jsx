@@ -79,7 +79,9 @@ describe("SourcesSidebar (Quellen panel)", () => {
   it("renders the Quellen header and all 5 tab labels", () => {
     render(<SourcesSidebar workspace={workspace} />);
     // Header title resolves via the English i18n mock ("Sources" == Quellen).
-    expect(screen.getByRole("heading", { name: "Sources" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Sources" }),
+    ).toBeInTheDocument();
     expect(screen.getByText("Files")).toBeInTheDocument(); // Dateien
     expect(screen.getByText("Cited")).toBeInTheDocument(); // Zitiert
     expect(screen.getByText("Memories")).toBeInTheDocument(); // Erinnerungen

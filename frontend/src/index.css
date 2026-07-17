@@ -485,43 +485,45 @@
   --theme-tool-scrollbar-thumb-hover: #94a3b8;
   --theme-tool-scrollbar-track: transparent;
 
-  /* Codex-style navigation: a compact charcoal rail beside a clean canvas. */
+  /* Codex-style navigation rail. In light mode it must be LIGHT (light bg +
+   * dark text), matching the rest of the light theme. Earlier this block forced
+   * the rail charcoal to dodge a white-on-white bug; the real fix is to give it
+   * a light background AND dark text so both stay legible. */
   .codex-sidebar {
-    --theme-bg-sidebar: #202020;
-    --theme-bg-secondary: #292929;
-    --theme-bg-tertiary: #343434;
-    --theme-bg-hover: rgba(255, 255, 255, 0.07);
-    --theme-text-primary: #f5f5f4;
-    --theme-text-secondary: #b5b5b0;
-    --theme-placeholder: #858580;
-    --theme-sidebar-item-selected: #343434;
-    --theme-sidebar-item-hover: #2b2b2b;
-    --theme-sidebar-item-text-active: #f5f5f4;
-    --theme-sidebar-item-text-inactive: #c5c5c0;
-    --theme-sidebar-border: #3a3a3a;
-    --color-theme-text-primary: #f5f5f4;
-    --color-theme-text-secondary: #b5b5b0;
-    --color-theme-text-muted: #858580;
-    /* Bridge the background/border/item Tailwind tokens too, otherwise the
-     * bg-theme-* utilities keep the light-mode literals (#f5f5f4) while the
-     * text tokens above flip to near-white — rendering the workspace name and
-     * sidebar items white-on-white (invisible). Keep the rail charcoal. */
-    --color-theme-bg-sidebar: #202020;
-    --color-theme-bg-secondary: #292929;
-    --color-theme-bg-tertiary: #343434;
-    --color-theme-bg-hover: rgba(255, 255, 255, 0.07);
-    --color-theme-placeholder: #858580;
-    --color-theme-sidebar-item-hover: #2b2b2b;
-    --color-theme-sidebar-item-selected: #343434;
-    --color-theme-sidebar-item-text-active: #f5f5f4;
-    --color-theme-sidebar-item-text-inactive: #c5c5c0;
-    --color-theme-sidebar-border: #3a3a3a;
-    --color-theme-modal-border: #3a3a3a;
-    --color-theme-sidebar-subitem-hover: #2b2b2b;
-    --color-theme-sidebar-subitem-selected: #343434;
-    --color-theme-sidebar-thread-selected: #343434;
-    --color-theme-sidebar-item-workspace-active: #f5f5f4;
-    --color-theme-sidebar-item-workspace-inactive: #858580;
+    --theme-bg-sidebar: #f5f5f4;
+    --theme-bg-secondary: #ffffff;
+    --theme-bg-tertiary: #f5f5f4;
+    --theme-bg-hover: rgba(0, 0, 0, 0.05);
+    --theme-text-primary: #0e0f0f;
+    --theme-text-secondary: #52525b;
+    --theme-placeholder: #9ca3af;
+    --theme-sidebar-item-selected: #e7e7e3;
+    --theme-sidebar-item-hover: #ebebe7;
+    --theme-sidebar-item-text-active: #18181b;
+    --theme-sidebar-item-text-inactive: #52525b;
+    --theme-sidebar-border: #d3d4d4;
+    --color-theme-text-primary: #0e0f0f;
+    --color-theme-text-secondary: #52525b;
+    --color-theme-text-muted: #71717a;
+    /* Background/border/item Tailwind tokens: keep them LIGHT so bg-theme-*
+     * utilities render a light rail. Paired with the dark text tokens above,
+     * this stays legible without falling back to charcoal. */
+    --color-theme-bg-sidebar: #f5f5f4;
+    --color-theme-bg-secondary: #ffffff;
+    --color-theme-bg-tertiary: #f5f5f4;
+    --color-theme-bg-hover: rgba(0, 0, 0, 0.05);
+    --color-theme-placeholder: #71717a;
+    --color-theme-sidebar-item-hover: #ebebe7;
+    --color-theme-sidebar-item-selected: #e7e7e3;
+    --color-theme-sidebar-item-text-active: #18181b;
+    --color-theme-sidebar-item-text-inactive: #52525b;
+    --color-theme-sidebar-border: #d3d4d4;
+    --color-theme-modal-border: #e7e5e4;
+    --color-theme-sidebar-subitem-hover: #e2e7ee;
+    --color-theme-sidebar-subitem-selected: #e2e7ee;
+    --color-theme-sidebar-thread-selected: #ffffff;
+    --color-theme-sidebar-item-workspace-active: #000000;
+    --color-theme-sidebar-item-workspace-inactive: #7a7d7e;
   }
 }
 

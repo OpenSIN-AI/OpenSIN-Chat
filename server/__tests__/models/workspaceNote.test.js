@@ -65,8 +65,8 @@ describe("WorkspaceNote model", () => {
   describe("forWorkspace", () => {
     it("returns notes for a workspace ordered by pinned and updatedAt", async () => {
       const fakeNotes = [
-        { id: 2, workspaceId: 10, pinned: 1 },
-        { id: 1, workspaceId: 10, pinned: 0 },
+        { id: 2, workspaceId: 10, pinned: true },
+        { id: 1, workspaceId: 10, pinned: false },
       ];
       mockPrisma.workspace_notes.findMany.mockResolvedValue(fakeNotes);
 
@@ -96,7 +96,7 @@ describe("WorkspaceNote model", () => {
   // ── create ─────────────────────────────────────────────────────────
   describe("create", () => {
     it("creates a note and returns it", async () => {
-      const fakeNote = { id: 1, workspaceId: 10, content: "test", pinned: 0 };
+      const fakeNote = { id: 1, workspaceId: 10, content: "test", pinned: false };
       mockPrisma.workspace_notes.create.mockResolvedValue(fakeNote);
 
       const result = await WorkspaceNote.create(10, "test", false);
@@ -110,18 +110,18 @@ describe("WorkspaceNote model", () => {
           plainText: "",
           tags: "[]",
           folder: null,
-          pinned: 0,
+          pinned: false,
         },
       });
     });
 
-    it("sets pinned to 1 when pinned is true", async () => {
-      mockPrisma.workspace_notes.create.mockResolvedValue({ id: 1, pinned: 1 });
+    it("sets pinned to true when pinned is true", async () => {
+      mockPrisma.workspace_notes.create.mockResolvedValue({ id: 1, pinned: true });
 
       await WorkspaceNote.create(10, "pinned note", true);
 
       expect(mockPrisma.workspace_notes.create).toHaveBeenCalledWith(
-        expect.objectContaining({ data: expect.objectContaining({ pinned: 1 }) }),
+        expect.objectContaining({ data: expect.objectContaining({ pinned: true }) }),
       );
     });
 
@@ -132,7 +132,7 @@ describe("WorkspaceNote model", () => {
 
       expect(mockPrisma.workspace_notes.create).toHaveBeenCalledWith(
         expect.objectContaining({
-          data: expect.objectContaining({ content: "", pinned: 0 }),
+          data: expect.objectContaining({ content: "", pinned: false }),
         }),
       );
     });
@@ -153,37 +153,37 @@ describe("WorkspaceNote model", () => {
     });
 
     it("updates pinned and returns the updated note", async () => {
-      mockPrisma.workspace_notes.update.mockResolvedValue({ id: 1, pinned: 1 });
+      mockPrisma.workspace_notes.update.mockResolvedValue({ id: 1, pinned: true });
 
       const result = await WorkspaceNote.update(1, { pinned: true });
 
-      expect(result.pinned).toBe(1);
+      expect(result.pinned).toBe(true);
       expect(mockPrisma.workspace_notes.update).toHaveBeenCalledWith({
         where: { id: 1 },
-        data: expect.objectContaining({ pinned: 1 }),
+        data: expect.objectContaining({ pinned: true }),
       });
     });
 
     it("updates both content and pinned", async () => {
-      mockPrisma.workspace_notes.update.mockResolvedValue({ id: 1, content: "x", pinned: 1 });
+      mockPrisma.workspace_notes.update.mockResolvedValue({ id: 1, content: "x", pinned: true });
 
       await WorkspaceNote.update(1, { content: "x", pinned: true });
 
       expect(mockPrisma.workspace_notes.update).toHaveBeenCalledTimes(1);
       expect(mockPrisma.workspace_notes.update).toHaveBeenCalledWith({
         where: { id: 1 },
-        data: expect.objectContaining({ content: "x", pinned: 1 }),
+        data: expect.objectContaining({ content: "x", pinned: true }),
       });
     });
 
-    it("sets pinned to 0 when pinned is false", async () => {
-      mockPrisma.workspace_notes.update.mockResolvedValue({ id: 1, pinned: 0 });
+    it("sets pinned to false when pinned is false", async () => {
+      mockPrisma.workspace_notes.update.mockResolvedValue({ id: 1, pinned: false });
 
       await WorkspaceNote.update(1, { pinned: false });
 
       expect(mockPrisma.workspace_notes.update).toHaveBeenCalledWith({
         where: { id: 1 },
-        data: expect.objectContaining({ pinned: 0 }),
+        data: expect.objectContaining({ pinned: false }),
       });
     });
   });
