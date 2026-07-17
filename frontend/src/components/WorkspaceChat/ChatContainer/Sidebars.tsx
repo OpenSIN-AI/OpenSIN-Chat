@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import { createPortal } from "react-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorBoundaryFallback from "@/components/ErrorBoundaryFallback";
 import SourcesSidebar from "./SourcesSidebar";
@@ -22,18 +23,20 @@ import { useTranslation } from "react-i18next";
  * The panel width is controlled by ChatSidebar's internal width state (persisted
  * to localStorage) — the outer wrapper here has no fixed width so it wraps to
  * the ChatSidebar's dynamic width.
+ *
+ * Uses a React portal to render outside the clipped <main> container.
  */
 interface SidebarsProps {
   workspace: any;
 }
 
-export default function Sidebars({ workspace }: SidebarsProps) {
+function SidebarsContent({ workspace }: SidebarsProps) {
   const { t } = useTranslation();
   const { activeSidebar } = useChatSidebar();
 
   return (
     <div
-      className="relative hidden h-full min-w-0 shrink-0 flex-row overflow-hidden md:flex"
+      className="fixed right-0 top-0 z-40 hidden h-full min-w-0 shrink-0 flex-row overflow-hidden md:flex"
       aria-label={t("common.rightSidebar")}
     >
       {/* Panel area — only when a panel is active */}
@@ -95,5 +98,12 @@ export default function Sidebars({ workspace }: SidebarsProps) {
       {/* Icon bar — always visible */}
       <RightSidebarIconBar />
     </div>
+  );
+}
+
+export default function Sidebars({ workspace }: SidebarsProps) {
+  return createPortal(
+    <SidebarsContent workspace={workspace} />,
+    document.body
   );
 }

@@ -203,7 +203,7 @@ export default function Sidebar({
         className="codex-sidebar relative z-40 hidden w-[var(--sidebar-current-width)] shrink-0 overflow-hidden bg-theme-bg-sidebar transition-[width] duration-200 md:flex"
       >
         <div className="flex h-full w-[var(--sidebar-width)] shrink-0 flex-col">
-          <div className="absolute right-2 top-2 z-50 opacity-0 transition-opacity hover:opacity-100 focus-within:opacity-100">
+          <div className="absolute right-2 top-2 z-50 opacity-70 transition-opacity hover:opacity-100 focus-within:opacity-100">
             <button
               type="button"
               onClick={() => setShowSidebar(false)}
