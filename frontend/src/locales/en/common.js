@@ -4484,6 +4484,7 @@ const TRANSLATIONS = {
       "Are you sure you want to delete this thread? All of its chats will be deleted. You cannot undo this.",
     deleteFailed: "Thread could not be deleted!",
     deleteSuccess: "Thread deleted successfully!",
+    defaultName: "New Chat",
     newChat: "New Chat",
     copyLink: "Copy Link",
     deleteThread: "Delete Thread",

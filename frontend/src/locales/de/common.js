@@ -4587,6 +4587,7 @@ const TRANSLATIONS = {
       "Sind Sie sicher, dass Sie diesen Thread löschen möchten? Alle Chats werden gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
     deleteFailed: "Thread konnte nicht gelöscht werden!",
     deleteSuccess: "Thread erfolgreich gelöscht!",
+    defaultName: "Neuer Chat",
     newChat: "Neuer Chat",
     copyLink: "Link kopieren",
     deleteThread: "Thread löschen",
