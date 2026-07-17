@@ -73,7 +73,6 @@ function ChatContainerInner({
   regenerateAssistantMessage,
 }: any) {
   const { t } = useChatSidebar();
-  const { activeSidebar } = useChatSidebar();
 
   return (
     <>
@@ -81,7 +80,7 @@ function ChatContainerInner({
         style={{
           "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
         }}
-        className={`relative z-[2] flex h-[var(--content-height)] min-w-0 flex-1 overflow-hidden md:mx-[16px] md:my-[16px] ${activeSidebar ? "md:mr-[60px]" : ""}`}
+        className="relative z-[2] flex h-[var(--content-height)] min-w-0 flex-1 overflow-hidden md:mx-[16px] md:my-[16px] md:mr-[60px]"
       >
         <ChatHeader workspaceSlug={workspace?.slug} isEmpty={isEmpty} />
         <main className="relative h-full min-w-0 flex-1 overflow-hidden bg-[var(--chat-canvas)] text-[var(--chat-text)] md:rounded-2xl md:border md:border-[var(--chat-border)]">
