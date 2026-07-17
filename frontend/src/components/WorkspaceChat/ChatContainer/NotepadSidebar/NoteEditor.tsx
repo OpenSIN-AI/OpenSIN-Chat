@@ -2,7 +2,21 @@
 import { useCallback, useRef, useState } from "react";
 import { EditorContent, useEditor } from "@tiptap/react";
 import { Node, mergeAttributes } from "@tiptap/core";
-import StarterKit from "@tiptap/starter-kit";
+import Bold from "@tiptap/extension-bold";
+import Blockquote from "@tiptap/extension-blockquote";
+import BulletList from "@tiptap/extension-bullet-list";
+import CodeExtension from "@tiptap/extension-code";
+import CodeBlock from "@tiptap/extension-code-block";
+import Document from "@tiptap/extension-document";
+import HardBreak from "@tiptap/extension-hard-break";
+import Heading from "@tiptap/extension-heading";
+import HorizontalRule from "@tiptap/extension-horizontal-rule";
+import Italic from "@tiptap/extension-italic";
+import ListItem from "@tiptap/extension-list-item";
+import OrderedList from "@tiptap/extension-ordered-list";
+import Paragraph from "@tiptap/extension-paragraph";
+import Strike from "@tiptap/extension-strike";
+import Text from "@tiptap/extension-text";
 import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
@@ -136,8 +150,22 @@ export default function NoteEditor({
   const editor = useEditor(
     {
       extensions: [
-        StarterKit.configure({ link: false, underline: false }),
+        Document,
+        Paragraph,
+        Text,
+        Bold,
+        Italic,
+        Strike,
         Underline,
+        CodeExtension,
+        CodeBlock,
+        Blockquote,
+        BulletList,
+        OrderedList,
+        ListItem,
+        Heading.configure({ levels: [1, 2, 3] }),
+        HorizontalRule,
+        HardBreak,
         Link.configure({
           openOnClick: !editable,
           autolink: true,
