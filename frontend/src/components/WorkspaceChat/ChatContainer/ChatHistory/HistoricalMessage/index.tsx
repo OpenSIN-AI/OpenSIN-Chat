@@ -70,6 +70,19 @@ const HistoricalMessage = ({
 
   if (completeDelete) return null;
 
+  // Skip rendering empty assistant messages
+  if (
+    role === "assistant" &&
+    !message &&
+    !error &&
+    !sources?.length &&
+    !attachments?.length &&
+    !outputs?.length &&
+    !clarifyingQuestions?.length
+  ) {
+    return null;
+  }
+
   if (!!error) {
     return (
       <div key={uuid} className="flex justify-start w-full">
