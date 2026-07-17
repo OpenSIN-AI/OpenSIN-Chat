@@ -42,6 +42,7 @@ services:
       args:
         ARG_UID: ${UID:-1000}
         ARG_GID: ${GID:-1000}
+        SKIP_CHROMIUM: "1"
     volumes:
       - "./.env:/app/server/.env:ro"
       - "../server/storage:/app/server/storage"
