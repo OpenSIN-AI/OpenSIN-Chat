@@ -657,11 +657,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
   }
 
-  :where(button, a, input, textarea, select, [tabindex]):focus-visible {
-    outline: 2px solid #009ee0;
-    outline-offset: 2px;
-  }
-
   /* Strip the cyan focus ring from the chat composer — the dashed/double frame
      on the prompt input was caused by this rule firing on textarea focus.
      The chat composer's :focus state has no useful visual purpose. */
@@ -966,11 +961,6 @@ body,
   color: var(--theme-text-primary);
   font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
-}
-
-:where(button, a, input, textarea, select, [tabindex]):focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--theme-bg-secondary), 0 0 0 4px var(--theme-modal-border);
 }
 
 .app-surface {
