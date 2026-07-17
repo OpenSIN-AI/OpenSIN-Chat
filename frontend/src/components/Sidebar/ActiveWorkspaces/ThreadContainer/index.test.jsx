@@ -105,6 +105,8 @@ function renderContainer(
 
 beforeEach(() => {
   vi.clearAllMocks();
+  window.localStorage.getItem.mockReset().mockReturnValue(null);
+  window.localStorage.setItem.mockReset();
   useThreadsMock.mockReturnValue({
     threads: [],
     folders: [],
@@ -144,6 +146,31 @@ describe("ThreadContainer", () => {
   });
 
   describe("Thread rendering", () => {
+    it("opens the chats list when its disclosure button is clicked", () => {
+      useThreadsMock.mockReturnValue({
+        threads: [{ id: 1, slug: "t1", name: "Thread 1" }],
+        folders: [],
+        defaultThreadHasChats: false,
+        isLoading: false,
+        mutate: mutateMock,
+      });
+      window.localStorage.getItem.mockImplementation((key) =>
+        key === "sidebar-chats-open-my-workspace" ? "false" : null,
+      );
+      renderContainer();
+
+      const chatsButton = screen.getByRole("button", { name: /Chats/i });
+      expect(chatsButton).toHaveAttribute("aria-expanded", "false");
+      fireEvent.click(chatsButton);
+
+      expect(chatsButton).toHaveAttribute("aria-expanded", "true");
+      expect(screen.getByTestId("thread-t1")).toBeInTheDocument();
+      expect(window.localStorage.setItem).toHaveBeenCalledWith(
+        "sidebar-chats-open-my-workspace",
+        "true",
+      );
+    });
+
     it("rendert unfoldered Threads", () => {
       useThreadsMock.mockReturnValue({
         threads: [

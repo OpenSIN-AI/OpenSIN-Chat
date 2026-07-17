@@ -53,10 +53,15 @@ function WorkspaceSettingsRedirect() {
   );
 }
 
+function AppHydrateFallback() {
+  return <div className="min-h-screen bg-theme-bg-primary" aria-busy="true" />;
+}
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    HydrateFallback: AppHydrateFallback,
     children: [
       {
         path: "/",

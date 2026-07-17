@@ -1,5 +1,59 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Aggregates and normalizes politician data from supported sources.
+// Docs: index.doc.md
 const consoleLogger = require("../logger/console.js");
+
+function normalizePoliticalLabel(value, type) {
+  if (!value) return null;
+  let normalized = String(value)
+    .normalize("NFKC")
+    .replace(/[\u00ad\u200b-\u200d\ufeff]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (type === "party") {
+    normalized = normalized.replace(/\.?\s*\(Gruppe\)$/i, "").trim();
+    if (/^die linke$/i.test(normalized)) return "Die Linke";
+  }
+  if (type === "state" && /^mecklenburg[ -]?vorpommern$/i.test(normalized))
+    return "Mecklenburg-Vorpommern";
+  return normalized;
+}
+
+function politicianScore(politician) {
+  return [
+    politician.profileUrl,
+    politician.party,
+    politician.state,
+    politician.electoralDistrict,
+    politician.photoUrl,
+    politician.bio,
+  ].filter(Boolean).length;
+}
+
+function normalizeAndDedupePoliticians(politicians) {
+  const byName = new Map();
+  for (const politician of politicians) {
+    const normalized = {
+      ...politician,
+      party: normalizePoliticalLabel(politician.party, "party"),
+      state: normalizePoliticalLabel(politician.state, "state"),
+    };
+    const name = (
+      normalized.fullName ||
+      `${normalized.firstName || ""} ${normalized.lastName || ""}`
+    )
+      .normalize("NFKC")
+      .replace(/\s+/g, " ")
+      .trim()
+      .toLocaleLowerCase("de-DE");
+    if (!name) continue;
+    const existing = byName.get(name);
+    if (!existing || politicianScore(normalized) > politicianScore(existing))
+      byName.set(name, normalized);
+  }
+  return [...byName.values()];
+}
 
 /**
  * Politician Database Module — unified entry point for politician search,
@@ -91,8 +145,8 @@ class PoliticianDB {
       ];
     }
 
-    if (filters.party) where.party = filters.party;
-    if (filters.state) where.state = filters.state;
+    // Party and state use source-specific spellings. Filter their canonical
+    // values after fetching so one UI option includes every source variant.
     if (filters.faction) where.faction = filters.faction;
     if (filters.source && filters.source !== "all")
       where.source = filters.source;
@@ -115,9 +169,18 @@ class PoliticianDB {
           title: true,
         },
         orderBy: { lastName: "asc" },
-        take: 50,
+        take: 1000,
       });
-      return results;
+      return normalizeAndDedupePoliticians(results)
+        .filter(
+          (politician) =>
+            (!filters.party ||
+              politician.party ===
+                normalizePoliticalLabel(filters.party, "party")) &&
+            (!filters.state ||
+              politician.state === normalizePoliticalLabel(filters.state, "state")),
+        )
+        .slice(0, 50);
     } catch (err) {
       consoleLogger.error(
         `[PoliticianDB] searchPoliticians error: ${err.message}`,
@@ -380,7 +443,13 @@ class PoliticianDB {
         orderBy: { party: "asc" },
         take: 100,
       });
-      return result.map((r) => r.party).filter(Boolean);
+      return [
+        ...new Set(
+          result
+            .map((r) => normalizePoliticalLabel(r.party, "party"))
+            .filter(Boolean),
+        ),
+      ];
     } catch {
       return [];
     }
@@ -399,7 +468,13 @@ class PoliticianDB {
         orderBy: { state: "asc" },
         take: 100,
       });
-      return result.map((r) => r.state).filter(Boolean);
+      return [
+        ...new Set(
+          result
+            .map((r) => normalizePoliticalLabel(r.state, "state"))
+            .filter(Boolean),
+        ),
+      ];
     } catch {
       return [];
     }

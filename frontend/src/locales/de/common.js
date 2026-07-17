@@ -453,6 +453,7 @@ const TRANSLATIONS = {
     restore: "Wiederherstellen",
     deleteForeverConfirm: "Notiz endgültig löschen?",
     deletePermanent: "Notiz endgültig löschen",
+    deleteForeverDescription: "Diese Aktion kann nicht rückgängig gemacht werden.",
     moveToTrash: "In Papierkorb",
     selectNote: "Notiz auswählen",
     selectNoteDescription:
@@ -468,6 +469,8 @@ const TRANSLATIONS = {
     send_message: "Schreibe eine Nachricht",
     attach_file: "Füge eine Datei zum Chat hinzu",
     text_size: "Ändere die Größe des Textes.",
+    select_or_create_note: "Notiz auswählen oder erstellen",
+    note_placeholder: "Schreiben oder ‘/’ für Befehle…",
     microphone: "Spreche deinen Prompt ein.",
     send: "Versende den Prompt an den Workspace.",
     tts_speak_message: "Nachricht vorlesen (TTS)",
@@ -4472,6 +4475,7 @@ const TRANSLATIONS = {
     folderCreateFailed: "Ordner konnte nicht erstellt werden: {{message}}",
     quickAddTitle: "Neuen Chat oder Ordner erstellen",
     newChat: "Neuer Chat",
+    defaultName: "Neuer Chat",
     newFolder: "Neuer Ordner",
     renameFailed: "Umbenennen fehlgeschlagen: {{message}}",
     deleteConfirm:
