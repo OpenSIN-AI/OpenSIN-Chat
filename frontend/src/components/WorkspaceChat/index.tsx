@@ -179,7 +179,7 @@ function copyCodeSnippet(uuid: any) {
 }
 
 // Listens and hunts for all data-code-snippet clicks.
-export function setEventDelegatorForCodeSnippets() {
+function setEventDelegatorForCodeSnippets() {
   const handler = function (e: Event) {
     const target = (e.target as HTMLElement).closest("[data-code-snippet]");
     const uuidCode = (target as HTMLElement | null)?.dataset?.code;
@@ -192,7 +192,7 @@ export function setEventDelegatorForCodeSnippets() {
 
 // Hides markdown image containers when the img fails to load.
 // Replaces the former inline onerror handler that violated CSP.
-export function setEventDelegatorForMarkdownImages() {
+function setEventDelegatorForMarkdownImages() {
   const handler = function (e: Event) {
     const img = e.target as HTMLElement;
     if (img?.tagName !== "IMG") return;

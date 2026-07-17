@@ -19,34 +19,33 @@ import FileUploadWarningModal from "./FileUploadWarningModal";
 import { useTranslation } from "react-i18next";
 import { useChatSidebar } from "../ChatSidebar";
 import logger from "@/utils/logger";
+import {
+  PDF_UPLOADED_EVENT,
+  DndUploaderContext,
+  REMOVE_ATTACHMENT_EVENT,
+  CLEAR_ATTACHMENTS_EVENT,
+  PASTE_ATTACHMENT_EVENT,
+  ATTACHMENTS_PROCESSING_EVENT,
+  ATTACHMENTS_PROCESSED_EVENT,
+  PARSED_FILE_ATTACHMENT_REMOVED_EVENT,
+} from "./constants";
 
-export const PDF_UPLOADED_EVENT = "PDF_UPLOADED";
+export {
+  PDF_UPLOADED_EVENT,
+  DndUploaderContext,
+  REMOVE_ATTACHMENT_EVENT,
+  CLEAR_ATTACHMENTS_EVENT,
+  PASTE_ATTACHMENT_EVENT,
+  ATTACHMENTS_PROCESSING_EVENT,
+  ATTACHMENTS_PROCESSED_EVENT,
+  PARSED_FILE_ATTACHMENT_REMOVED_EVENT,
+};
 
 function isPdfFile(file: File): boolean {
   return (
     file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf")
   );
 }
-
-export const DndUploaderContext = createContext<{
-  files: any[];
-  parseAttachments: () => any[];
-  onDrop?: (acceptedFiles: any[], rejections?: any[]) => void | Promise<void>;
-  attachExternalFile?: (file: File) => Promise<string>;
-  ready?: boolean;
-  dragging?: boolean;
-  setDragging?: (dragging: boolean) => void;
-}>({
-  files: [],
-  parseAttachments: () => [],
-});
-export const REMOVE_ATTACHMENT_EVENT = "ATTACHMENT_REMOVE";
-export const CLEAR_ATTACHMENTS_EVENT = "ATTACHMENT_CLEAR";
-export const PASTE_ATTACHMENT_EVENT = "ATTACHMENT_PASTED";
-export const ATTACHMENTS_PROCESSING_EVENT = "ATTACHMENTS_PROCESSING";
-export const ATTACHMENTS_PROCESSED_EVENT = "ATTACHMENTS_PROCESSED";
-export const PARSED_FILE_ATTACHMENT_REMOVED_EVENT =
-  "PARSED_FILE_ATTACHMENT_REMOVED";
 
 /**
  * File Attachment for automatic upload on the chat container page.
