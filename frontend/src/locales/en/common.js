@@ -453,6 +453,7 @@ const TRANSLATIONS = {
     restore: "Restore",
     deleteForeverConfirm: "Delete this note permanently?",
     deletePermanent: "Delete permanently",
+    deleteForeverDescription: "This action cannot be undone.",
     moveToTrash: "Move to trash",
     selectNote: "Select a note",
     selectNoteDescription: "Select a note on the left or create a new one.",
@@ -467,6 +468,8 @@ const TRANSLATIONS = {
     send_message: "Send a message",
     attach_file: "Attach a file to this chat",
     text_size: "Change text size.",
+    select_or_create_note: "Select or create a note",
+    note_placeholder: "Write or use '/' for commands…",
     microphone: "Speak your prompt.",
     stt_unsupported: "Microphone access is not supported in this browser.",
     stt_mic_denied:
@@ -4370,6 +4373,7 @@ const TRANSLATIONS = {
     folderCreateFailed: "Could not create folder: {{message}}",
     quickAddTitle: "Create new chat or folder",
     newChat: "New Chat",
+    defaultName: "New Chat",
     newFolder: "New Folder",
     renameFailed: "Rename failed: {{message}}",
     deleteConfirm:

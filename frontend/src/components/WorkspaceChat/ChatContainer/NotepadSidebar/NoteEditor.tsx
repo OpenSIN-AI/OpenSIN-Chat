@@ -136,7 +136,7 @@ export default function NoteEditor({
   const editor = useEditor(
     {
       extensions: [
-        StarterKit,
+        StarterKit.configure({ link: false, underline: false }),
         Underline,
         Link.configure({
           openOnClick: !editable,
