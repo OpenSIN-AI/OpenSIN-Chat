@@ -162,6 +162,14 @@ describe("AccountMenu", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("opens the account profile modal instead of navigating to settings", () => {
+    render(<AccountMenu />);
+    openMenu();
+    fireEvent.click(screen.getByRole("menuitem", { name: /Profile/i }));
+    expect(screen.getByTestId("account-modal")).toBeInTheDocument();
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+  });
+
   it("shows the login item when logged out", () => {
     loginMode = null;
     mockUser = null;
@@ -175,15 +183,17 @@ describe("AccountMenu", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("keeps the profile entry available in single-user mode", () => {
+  it("does not turn the profile action into a settings link in single-user mode", () => {
     loginMode = "single";
     mockUser = null;
     render(<AccountMenu />);
     openMenu();
-    expect(screen.getByRole("menuitem", { name: /Profile/i })).toHaveAttribute(
-      "href",
-      "/settings/interface",
-    );
+    expect(
+      screen.queryByRole("menuitem", { name: /Profile/i }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("menuitem", { name: /Settings/i }),
+    ).toHaveAttribute("href", "/settings/interface");
   });
 
   it("closes the menu on Escape", () => {
