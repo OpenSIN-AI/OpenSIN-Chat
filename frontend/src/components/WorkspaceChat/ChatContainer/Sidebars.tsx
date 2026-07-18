@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { createPortal } from "react-dom";
+import { useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorBoundaryFallback from "@/components/ErrorBoundaryFallback";
 import SourcesSidebar from "./SourcesSidebar";
@@ -17,57 +18,59 @@ import { useChatSidebar } from "./ChatSidebar";
 import { useTranslation } from "react-i18next";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 
-function ActiveSidebarPanel({ workspace }: SidebarsProps) {
-  const { activeSidebar } = useChatSidebar();
-  if (!activeSidebar) return null;
+function ActiveSidebarPanel({
+  workspace,
+  sidebarType,
+}: SidebarsProps & { sidebarType: string | null }) {
+  if (!sidebarType) return null;
   return (
     <div className="relative z-30 h-full min-w-0 flex-shrink-0 overflow-hidden border-l border-white/[0.08] bg-theme-bg-sidebar light:border-zinc-200/70 [&>*]:min-w-0 [&>*]:max-w-full">
-      {activeSidebar === "sources" && (
+      {sidebarType === "sources" && (
         <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
           <SourcesSidebar workspace={workspace} />
         </ErrorBoundary>
       )}
-      {activeSidebar === "preview" && (
+      {sidebarType === "preview" && (
         <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
           <PreviewSidebar />
         </ErrorBoundary>
       )}
-      {activeSidebar === "console" && (
+      {sidebarType === "console" && (
         <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
           <ConsoleSidebar />
         </ErrorBoundary>
       )}
-      {activeSidebar === "database" && (
+      {sidebarType === "database" && (
         <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
           <DatabaseSidebar workspace={workspace} />
         </ErrorBoundary>
       )}
-      {activeSidebar === "political" && (
+      {sidebarType === "political" && (
         <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
           <PoliticalSidebar />
         </ErrorBoundary>
       )}
-      {activeSidebar === "pdf-analysis" && (
+      {sidebarType === "pdf-analysis" && (
         <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
           <PdfAnalysisSidebar />
         </ErrorBoundary>
       )}
-      {activeSidebar === "notepad" && (
+      {sidebarType === "notepad" && (
         <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
           <NotepadSidebar workspace={workspace} />
         </ErrorBoundary>
       )}
-      {activeSidebar === "agent-sessions" && (
+      {sidebarType === "agent-sessions" && (
         <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
           <AgentSessionsSidebar workspace={workspace} />
         </ErrorBoundary>
       )}
-      {activeSidebar === "agent-settings" && (
+      {sidebarType === "agent-settings" && (
         <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
           <AgentSettingsSidebar workspace={workspace} />
         </ErrorBoundary>
       )}
-      {activeSidebar === "workspace-settings" && (
+      {sidebarType === "workspace-settings" && (
         <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
           <WorkspaceSettingsSidebar workspace={workspace} />
         </ErrorBoundary>
@@ -110,13 +113,23 @@ interface SidebarsProps {
 function SidebarsContent({ workspace }: SidebarsProps) {
   const { t } = useTranslation();
   const { activeSidebar } = useChatSidebar();
+  const [renderedSidebar, setRenderedSidebar] = useState<string | null>(
+    activeSidebar,
+  );
+
+  useEffect(() => {
+    if (activeSidebar) setRenderedSidebar(activeSidebar);
+  }, [activeSidebar]);
 
   return (
     <div
-      className={`fixed z-40 min-w-0 shrink-0 flex-row overflow-hidden md:right-0 md:top-0 md:h-full md:flex ${activeSidebar ? "inset-0 flex h-full w-full bg-[var(--chat-canvas)] md:inset-auto md:h-full md:w-auto md:bg-transparent" : "hidden"}`}
+      className={`fixed z-40 min-w-0 shrink-0 flex-row overflow-hidden md:right-0 md:top-0 md:h-full md:flex ${activeSidebar ? "inset-0 flex h-full w-full bg-[var(--chat-canvas)] md:inset-auto md:h-full md:w-auto md:bg-transparent" : "hidden md:flex"}`}
       aria-label={t("common.rightSidebar")}
     >
-      <ActiveSidebarPanel workspace={workspace} />
+      <ActiveSidebarPanel
+        workspace={workspace}
+        sidebarType={renderedSidebar}
+      />
 
       {/* Icon bar — always visible */}
       <RightSidebarIconBar />

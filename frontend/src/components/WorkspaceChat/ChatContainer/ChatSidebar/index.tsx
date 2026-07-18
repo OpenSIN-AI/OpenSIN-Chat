@@ -345,6 +345,8 @@ export default function ChatSidebar({
 }: any) {
   const { t } = useTranslation();
   const isMobile = useIsMobileLayout();
+  const [rendered, setRendered] = useState(isOpen);
+  const [visible, setVisible] = useState(false);
   const [width, setWidth] = useState(() => {
     if (typeof window === "undefined") return defaultWidth;
     try {
@@ -440,13 +442,32 @@ export default function ChatSidebar({
     setWidth((current) => clampWidth(current));
   }, [clampWidth, isOpen]);
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    let timer: number | undefined;
+    if (isOpen) {
+      setRendered(true);
+      timer = window.setTimeout(() => setVisible(true), 0);
+    } else {
+      setVisible(false);
+      timer = window.setTimeout(() => setRendered(false), 220);
+    }
+    return () => {
+      if (timer !== undefined) window.clearTimeout(timer);
+    };
+  }, [isOpen]);
+
+  if (!rendered) return null;
 
   return (
     <div
-      className={`relative z-20 flex h-full shrink-0 flex-col overflow-hidden bg-theme-bg-sidebar ${isResizing ? "" : "transition-[width] duration-150 ease-out"}`}
+      className={`relative z-20 flex h-full shrink-0 flex-col overflow-hidden bg-theme-bg-sidebar ${isResizing ? "" : "transition-[width] duration-200 ease-out"}`}
       style={{
-        width: isMobile ? "100%" : `${width}px`,
+        width:
+          isMobile && isOpen && visible
+            ? "100%"
+            : !isMobile && isOpen && visible
+              ? `${width}px`
+              : "0px",
         containerType: "inline-size",
       }}
     >
