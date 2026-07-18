@@ -7,7 +7,7 @@
 // and exposes the returned values.
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, renderHook } from "@testing-library/react";
+import { render, renderHook, act } from "@testing-library/react";
 import React from "react";
 
 // --- Mocks ---
@@ -319,6 +319,45 @@ describe("useChatStream — sendCommand", () => {
       autoSubmit: true,
     });
     expect(ret).toBe(false);
+  });
+
+  it("reports token usage from assistant metrics", async () => {
+    const result = renderHookViaComponent({
+      threadSlug: "usage-thread",
+      knownHistory: [
+        {
+          uuid: "assistant-1",
+          role: "assistant",
+          content: "Answer",
+          metrics: {
+            prompt_tokens: 12,
+            completion_tokens: 8,
+            total_tokens: 20,
+          },
+        },
+        {
+          uuid: "user-1",
+          role: "user",
+          content: "Question",
+          metrics: {
+            prompt_tokens: 99,
+            completion_tokens: 99,
+            total_tokens: 198,
+          },
+        },
+      ],
+    });
+
+    await act(async () => {
+      await result.current.sendCommand({ text: "/usage", autoSubmit: true });
+    });
+
+    const usageMessage = result.current.chatHistory.at(-1);
+    expect(usageMessage.role).toBe("assistant");
+    expect(usageMessage.content).toContain("Responses: 1");
+    expect(usageMessage.content).toContain("Prompt tokens: 12");
+    expect(usageMessage.content).toContain("Completion tokens: 8");
+    expect(usageMessage.content).toContain("Total tokens: 20");
   });
 });
 

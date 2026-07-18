@@ -24,7 +24,7 @@ export default function SendPromptButton({
         ref={formRef}
         type="submit"
         disabled={isDisabled || !promptInput.trim().length}
-        className={`flex h-8 w-8 items-center justify-center rounded-full border-none transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 ${
+        className={`flex h-8 w-8 items-center justify-center rounded-lg border-none transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 ${
           promptInput.trim().length && !isDisabled
             ? "cursor-pointer bg-[#fafafa] hover:bg-[#d4d4d8] light:bg-zinc-900 light:hover:bg-zinc-800"
             : "cursor-not-allowed bg-white/[0.06] light:bg-zinc-100"

@@ -200,7 +200,7 @@ export default function Sidebar({
             "--sidebar-width": `${sidebarWidth}px`,
           } as CSSProperties
         }
-        className="codex-sidebar relative z-40 hidden w-[var(--sidebar-current-width)] shrink-0 overflow-hidden bg-theme-bg-sidebar transition-[width] duration-200 md:flex"
+        className="codex-sidebar relative z-40 hidden w-[var(--sidebar-current-width)] shrink-0 overflow-hidden border-r border-white/[0.08] bg-theme-bg-sidebar transition-[width] duration-200 md:flex light:border-zinc-200/70"
       >
         <div className="flex h-full w-[var(--sidebar-width)] shrink-0 flex-col">
           <div className="absolute right-2 top-2 z-50 opacity-70 transition-opacity hover:opacity-100 focus-within:opacity-100">

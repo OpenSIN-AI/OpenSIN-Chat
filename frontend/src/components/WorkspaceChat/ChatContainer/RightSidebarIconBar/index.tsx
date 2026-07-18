@@ -109,7 +109,7 @@ export default function RightSidebarIconBar() {
   return (
     <nav
       aria-label={t("common.rightSidebar")}
-      className="hidden h-full w-12 flex-shrink-0 flex-col items-center gap-0.5 overflow-y-auto border-l border-theme-modal-border bg-theme-bg-sidebar py-2.5 md:flex"
+      className="hidden h-full w-12 flex-shrink-0 flex-col items-center gap-0.5 overflow-y-auto border-l border-white/[0.08] bg-theme-bg-sidebar py-2.5 md:flex light:border-zinc-200/70"
     >
       {icons.map(renderIcon)}
       <div className="my-1.5 h-px w-5 bg-theme-modal-border" aria-hidden />

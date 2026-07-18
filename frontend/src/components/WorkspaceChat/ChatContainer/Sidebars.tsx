@@ -41,7 +41,7 @@ function SidebarsContent({ workspace }: SidebarsProps) {
     >
       {/* Panel area — only when a panel is active */}
       {activeSidebar && (
-        <div className="relative z-30 h-full min-w-0 flex-shrink-0 overflow-hidden border-l border-theme-modal-border bg-theme-bg-sidebar md:max-w-none">
+        <div className="relative z-30 h-full min-w-0 flex-shrink-0 overflow-hidden border-l border-white/[0.08] bg-theme-bg-sidebar md:max-w-none light:border-zinc-200/70">
           {activeSidebar === "sources" && (
             <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
               <SourcesSidebar workspace={workspace} />

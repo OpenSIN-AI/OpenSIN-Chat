@@ -180,7 +180,7 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
           className={`group flex cursor-pointer items-center rounded-md border px-2.5 py-1 transition-colors duration-150 pointer-events-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 ${
             showSelector
               ? "border-white/[0.14] bg-white/[0.08] light:border-zinc-300 light:bg-zinc-100"
-              : "border-white/[0.08] bg-theme-bg-secondary/80 light:border-zinc-300 light:bg-zinc-100 hover:border-white/[0.14] hover:bg-white/[0.06] light:hover:bg-zinc-200"
+              : "border-white/[0.08] bg-theme-bg-secondary/80 light:border-zinc-200 light:bg-white hover:border-white/[0.14] hover:bg-white/[0.06] light:hover:bg-zinc-50"
           }`}
         >
           <span

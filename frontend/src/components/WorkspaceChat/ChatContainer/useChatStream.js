@@ -270,6 +270,50 @@ export default function useChatStream({
 
     if (!text || text.trim() === "") return false;
 
+    if (text.trim() === "/usage") {
+      const usage = chatHistoryRef.current.reduce(
+        (totals, item) => {
+          if (item.role !== "assistant" || !item.metrics) return totals;
+          totals.promptTokens += Number(item.metrics.prompt_tokens) || 0;
+          totals.completionTokens +=
+            Number(item.metrics.completion_tokens) || 0;
+          totals.totalTokens += Number(item.metrics.total_tokens) || 0;
+          totals.responses += 1;
+          return totals;
+        },
+        { promptTokens: 0, completionTokens: 0, totalTokens: 0, responses: 0 },
+      );
+      const usageMessage = [
+        t("chat_window.usage_title"),
+        t("chat_window.usage_responses", { count: usage.responses }),
+        t("chat_window.usage_prompt_tokens", {
+          count: usage.promptTokens.toLocaleString(),
+        }),
+        t("chat_window.usage_completion_tokens", {
+          count: usage.completionTokens.toLocaleString(),
+        }),
+        t("chat_window.usage_total_tokens", {
+          count: usage.totalTokens.toLocaleString(),
+        }),
+      ].join("\n");
+      setChatHistory((previous) => [
+        ...previous,
+        {
+          uuid: v4(),
+          content: usageMessage,
+          role: "assistant",
+          sources: [],
+          closed: true,
+          error: null,
+          animate: false,
+          pending: false,
+          metrics: {},
+        },
+      ]);
+      setMessageEmit("");
+      return true;
+    }
+
     if (loadingResponse) return false;
 
     if (!activeThreadSlug && chatHistory.length === 0 && history.length === 0) {

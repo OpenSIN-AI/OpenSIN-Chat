@@ -290,8 +290,8 @@
   --theme-button-text: #71717a;
   --theme-button-code-hover-text: #fafafa;
   --theme-button-code-hover-bg: #1c1c1c;
-  --theme-button-disable-hover-text: #fec84b;
-  --theme-button-disable-hover-bg: #2a2318;
+  --theme-button-disable-hover-text: #71717a;
+  --theme-button-disable-hover-bg: #f4f4f5;
   --theme-button-delete-hover-text: #f97066;
   --theme-button-delete-hover-bg: #2a1515;
 
@@ -416,12 +416,12 @@
   --color-theme-text-inverse: #ffffff;
   --color-theme-bg-primary: #ffffff;
   --color-theme-bg-secondary: #ffffff;
-  --color-theme-bg-tertiary: #f5f5f4;
-  --color-theme-bg-sidebar: #f5f5f4;
+  --color-theme-bg-tertiary: #f4f4f5;
+  --color-theme-bg-sidebar: #fafafa;
   --color-theme-bg-container: #ffffff;
   --color-theme-bg-hover: rgba(0, 0, 0, 0.05);
-  --color-theme-modal-border: #e7e5e4;
-  --color-theme-border: #d8d8d4;
+  --color-theme-modal-border: #e4e4e7;
+  --color-theme-border: #e4e4e7;
   --color-theme-border-subtle: rgba(0, 0, 0, 0.08);
   --color-theme-focus: rgba(24, 24, 23, 0.72);
   --color-theme-control-hover: rgba(0, 0, 0, 0.05);
@@ -431,13 +431,13 @@
 
   --color-brand: #181817;
   --color-surface: #ffffff;
-  --color-surface-raised: #f2f2ef;
+  --color-surface-raised: #f4f4f5;
   --color-text: #0e0f0f;
   --color-muted: rgba(0, 0, 0, 0.5);
 
   --brand-primary: #009ee0;
   --brand-primary-dark: #0079b0;
-  --brand-accent: #ffd700;
+  --brand-accent: #009ee0;
 
   color-scheme: light;
 
@@ -456,8 +456,8 @@
   --theme-text-inverse: #ffffff;
   --theme-placeholder: #9ca3af;
   --theme-sidebar-item-default: transparent;
-  --theme-sidebar-item-selected: #e7e7e3;
-  --theme-sidebar-item-hover: #ebebe7;
+  --theme-sidebar-item-selected: #f1f1f3;
+  --theme-sidebar-item-hover: #f4f4f5;
 
   --theme-sidebar-item-text-inactive: #52525b;
   --theme-sidebar-item-text-active: #18181b;
@@ -466,42 +466,42 @@
   --theme-sidebar-item-workspace-inactive: #7a7d7e;
 
   --theme-sidebar-subitem-default: transparent;
-  --theme-sidebar-subitem-selected: #e2e7ee;
+  --theme-sidebar-subitem-selected: #f1f1f3;
   --theme-sidebar-thread-selected: #ffffff;
-  --theme-sidebar-subitem-hover: #e2e7ee;
-  --theme-sidebar-border: #d3d4d4;
+  --theme-sidebar-subitem-hover: #f4f4f5;
+  --theme-sidebar-border: #e4e4e7;
 
   --theme-sidebar-footer-icon: #ffffff;
   --theme-sidebar-footer-icon-fill: #6e6f6f;
   --theme-sidebar-footer-icon-hover: #d8d6d6;
 
-  --theme-chat-input-border: #d8d8d4;
+  --theme-chat-input-border: #e4e4e7;
   --chat-canvas: #ffffff;
   --chat-surface: transparent;
-  --chat-surface-elevated: #f5f5f4;
+  --chat-surface-elevated: #f4f4f5;
   --chat-border: transparent;
   --chat-text: #151514;
   --chat-text-muted: #5f625f;
   --chat-accent: #0f766e;
-  --chat-user-bubble: #ececea;
+  --chat-user-bubble: #f4f4f5;
   --chat-focus-ring: transparent;
-  --theme-action-menu-bg: #eaeaea;
+  --theme-action-menu-bg: #ffffff;
   --theme-action-menu-item-hover: rgba(0, 0, 0, 0.1);
   --theme-settings-input-bg: #edf2fa;
   --theme-settings-input-placeholder: rgba(0, 0, 0, 0.5);
   --theme-settings-input-active: rgb(0 0 0 / 0.2);
   --theme-settings-input-text: #0e0f0f;
-  --theme-modal-border: #d3d3d3;
+  --theme-modal-border: #e4e4e7;
 
   --theme-button-primary: #3f3f46;
   --theme-button-primary-hover: #52525b;
-  --theme-border: #d8d8d4;
+  --theme-border: #e4e4e7;
   --theme-border-subtle: rgba(0, 0, 0, 0.08);
   --theme-focus: rgba(24, 24, 23, 0.72);
   --theme-control-hover: rgba(0, 0, 0, 0.05);
-  --theme-button-secondary: #f3f4f6;
+  --theme-button-secondary: #f4f4f5;
   --theme-button-secondary-hover: #e4e4e7;
-  --theme-button-disabled: #e7e5e4;
+  --theme-button-disabled: #f4f4f5;
 
   --theme-button-cta: #3f3f46;
 
@@ -591,37 +591,37 @@
    * the rail charcoal to dodge a white-on-white bug; the real fix is to give it
    * a light background AND dark text so both stay legible. */
   .codex-sidebar {
-    --theme-bg-sidebar: #f5f5f4;
+    --theme-bg-sidebar: #fafafa;
     --theme-bg-secondary: #ffffff;
-    --theme-bg-tertiary: #f5f5f4;
+    --theme-bg-tertiary: #f4f4f5;
     --theme-bg-hover: rgba(0, 0, 0, 0.05);
     --theme-text-primary: #0e0f0f;
     --theme-text-secondary: #52525b;
     --theme-placeholder: #9ca3af;
-    --theme-sidebar-item-selected: #e7e7e3;
-    --theme-sidebar-item-hover: #ebebe7;
+    --theme-sidebar-item-selected: #f1f1f3;
+    --theme-sidebar-item-hover: #f4f4f5;
     --theme-sidebar-item-text-active: #18181b;
     --theme-sidebar-item-text-inactive: #52525b;
-    --theme-sidebar-border: #d3d4d4;
+    --theme-sidebar-border: #e4e4e7;
     --color-theme-text-primary: #0e0f0f;
     --color-theme-text-secondary: #52525b;
     --color-theme-text-muted: #71717a;
     /* Background/border/item Tailwind tokens: keep them LIGHT so bg-theme-*
      * utilities render a light rail. Paired with the dark text tokens above,
      * this stays legible without falling back to charcoal. */
-    --color-theme-bg-sidebar: #f5f5f4;
+    --color-theme-bg-sidebar: #fafafa;
     --color-theme-bg-secondary: #ffffff;
-    --color-theme-bg-tertiary: #f5f5f4;
+    --color-theme-bg-tertiary: #f4f4f5;
     --color-theme-bg-hover: rgba(0, 0, 0, 0.05);
     --color-theme-placeholder: #71717a;
-    --color-theme-sidebar-item-hover: #ebebe7;
-    --color-theme-sidebar-item-selected: #e7e7e3;
+    --color-theme-sidebar-item-hover: #f4f4f5;
+    --color-theme-sidebar-item-selected: #f1f1f3;
     --color-theme-sidebar-item-text-active: #18181b;
     --color-theme-sidebar-item-text-inactive: #52525b;
-    --color-theme-sidebar-border: #d3d4d4;
-    --color-theme-modal-border: #e7e5e4;
-    --color-theme-sidebar-subitem-hover: #e2e7ee;
-    --color-theme-sidebar-subitem-selected: #e2e7ee;
+    --color-theme-sidebar-border: #e4e4e7;
+    --color-theme-modal-border: #e4e4e7;
+    --color-theme-sidebar-subitem-hover: #f4f4f5;
+    --color-theme-sidebar-subitem-selected: #f1f1f3;
     --color-theme-sidebar-thread-selected: #ffffff;
     --color-theme-sidebar-item-workspace-active: #000000;
     --color-theme-sidebar-item-workspace-inactive: #7a7d7e;

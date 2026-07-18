@@ -40,6 +40,11 @@ export default function SlashCommandsTab({
         description: t("chat_window.preset_reset_description"),
         autoSubmit: true,
       },
+      {
+        command: "/usage",
+        description: t("chat_window.usage_description"),
+        autoSubmit: true,
+      },
       ...(presets as any).map((preset) => ({
         command: preset.command,
         description: preset.description,
