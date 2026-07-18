@@ -14,6 +14,12 @@ vi.mock("@/hooks/useUser", () => ({
   }),
 }));
 
+vi.mock("@/hooks/useFooterSettings", () => ({
+  default: () => ({
+    footerIcons: [{ icon: "GithubLogo", url: "https://github.com/OpenSIN-AI" }],
+  }),
+}));
+
 vi.mock("@/hooks/usePfp", () => ({
   default: () => ({ pfp: null, setPfp: vi.fn() }),
 }));
@@ -155,6 +161,17 @@ describe("Footer", () => {
     render(<Footer />);
     expect(screen.getByText("OpenSIN")).toBeInTheDocument();
     expect(screen.getByText("Demo account")).toBeInTheDocument();
+  });
+
+  it("renders configured footer links directly above the account menu", () => {
+    render(<Footer />);
+    const link = screen.getByRole("link", {
+      name: "https://github.com/OpenSIN-AI",
+    });
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link.compareDocumentPosition(screen.getByText("OpenSIN"))).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
   });
 
   it("does not show the menu items until the trigger is clicked", () => {
