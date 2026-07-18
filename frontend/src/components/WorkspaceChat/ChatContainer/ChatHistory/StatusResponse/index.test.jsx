@@ -21,24 +21,24 @@ describe("StatusResponse", () => {
     expect(container.firstChild).toBeNull();
   });
 
-  it("renders the thinking animation when pending", () => {
+  it("renders the thinking shimmer when pending", () => {
     render(
       <StatusResponse
         messages={[{ uuid: "1", content: "Thinking..." }]}
         isThinking={true}
       />,
     );
-    expect(screen.getByLabelText(/thinking/i)).toBeInTheDocument();
+    expect(document.querySelector(".thinking-shimmer")).toBeInTheDocument();
   });
 
-  it("renders the static icon when not thinking", () => {
+  it("renders the latest status text when not thinking", () => {
     render(
       <StatusResponse
         messages={[{ uuid: "1", content: "Done" }]}
         isThinking={false}
       />,
     );
-    expect(screen.getByAltText(/finished/i)).toBeInTheDocument();
+    expect(screen.getByText("Done")).toBeInTheDocument();
   });
 
   it("shows the current thought content", () => {
@@ -51,7 +51,7 @@ describe("StatusResponse", () => {
         isThinking={false}
       />,
     );
-    expect(screen.getByText("Latest thought")).toBeInTheDocument();
+    expect(screen.getAllByText("Latest thought")).not.toHaveLength(0);
   });
 
   it("expands to show all previous thoughts when expand button is clicked", () => {
@@ -64,10 +64,12 @@ describe("StatusResponse", () => {
         isThinking={false}
       />,
     );
-    const expandButton = screen.getByRole("button");
+    const expandButton = screen.getByRole("button", {
+      name: /show thought chain/i,
+    });
     fireEvent.click(expandButton);
     expect(screen.getByText("First thought")).toBeInTheDocument();
-    expect(screen.getByText("Latest thought")).toBeInTheDocument();
+    expect(screen.getAllByText("Latest thought")).not.toHaveLength(0);
   });
 
   it("does not render expand button when there are no previous thoughts", () => {
@@ -77,6 +79,8 @@ describe("StatusResponse", () => {
         isThinking={false}
       />,
     );
-    expect(screen.queryByRole("button")).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /thought chain/i }),
+    ).not.toBeInTheDocument();
   });
 });

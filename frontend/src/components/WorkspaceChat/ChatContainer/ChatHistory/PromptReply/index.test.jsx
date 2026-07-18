@@ -48,9 +48,9 @@ describe("PromptReply", () => {
     expect(container.firstChild).toBeNull();
   });
 
-  it("renders loading dots when pending", () => {
+  it("renders the shimmering activity state when pending", () => {
     const { container } = render(<PromptReply uuid="1" pending={true} />);
-    expect(container.querySelector(".animate-pulse")).toBeInTheDocument();
+    expect(container.querySelector(".thinking-shimmer")).toBeInTheDocument();
   });
 
   it("renders an error message when error is provided", () => {

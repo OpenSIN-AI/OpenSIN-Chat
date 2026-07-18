@@ -85,8 +85,8 @@ describe("Sidebars", () => {
     mockUseChatSidebar.mockReturnValue({
       activeSidebar: "sources",
     });
-    const { container } = render(<Sidebars workspace={workspace} />);
-    const panel = container.querySelector(".bg-theme-bg-sidebar");
+    render(<Sidebars workspace={workspace} />);
+    const panel = document.body.querySelector(".bg-theme-bg-sidebar");
     expect(panel).toBeInTheDocument();
   });
 
