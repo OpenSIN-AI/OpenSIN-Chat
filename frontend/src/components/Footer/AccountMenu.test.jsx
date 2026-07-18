@@ -175,6 +175,17 @@ describe("AccountMenu", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("keeps the profile entry available in single-user mode", () => {
+    loginMode = "single";
+    mockUser = null;
+    render(<AccountMenu />);
+    openMenu();
+    expect(screen.getByRole("menuitem", { name: /Profile/i })).toHaveAttribute(
+      "href",
+      "/settings/interface",
+    );
+  });
+
   it("closes the menu on Escape", () => {
     render(<AccountMenu />);
     openMenu();

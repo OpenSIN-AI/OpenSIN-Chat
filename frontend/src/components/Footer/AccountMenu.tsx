@@ -305,20 +305,31 @@ function AccountMenu({ compact = false }: { compact?: boolean }) {
             <div className="my-1 h-px bg-white/10 light:bg-slate-200" />
 
             {/* Navigation items */}
-            {!!user && (
-              <button
-                type="button"
-                role="menuitem"
-                onClick={() => {
-                  setShowAccountModal(true);
-                  setOpen(false);
-                }}
-                className={ITEM_CLASSES}
-              >
-                <UserCircle className={ICON_CLASSES} />
-                <span className="flex-grow">{t("common.profile")}</span>
-              </button>
-            )}
+            {isLoggedIn &&
+              (user ? (
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={() => {
+                    setShowAccountModal(true);
+                    setOpen(false);
+                  }}
+                  className={ITEM_CLASSES}
+                >
+                  <UserCircle className={ICON_CLASSES} />
+                  <span className="flex-grow">{t("common.profile")}</span>
+                </button>
+              ) : (
+                <Link
+                  to={paths.settings.interface()}
+                  role="menuitem"
+                  onClick={() => setOpen(false)}
+                  className={ITEM_CLASSES}
+                >
+                  <UserCircle className={ICON_CLASSES} />
+                  <span className="flex-grow">{t("common.profile")}</span>
+                </Link>
+              ))}
 
             <Link
               to={paths.settings.interface()}
