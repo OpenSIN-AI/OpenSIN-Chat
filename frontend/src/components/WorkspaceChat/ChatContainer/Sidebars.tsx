@@ -15,6 +15,74 @@ import WorkspaceSettingsSidebar from "./WorkspaceSettingsSidebar";
 import RightSidebarIconBar from "./RightSidebarIconBar";
 import { useChatSidebar } from "./ChatSidebar";
 import { useTranslation } from "react-i18next";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+
+function ActiveSidebarPanel({ workspace }: SidebarsProps) {
+  const { activeSidebar, closeSidebar } = useChatSidebar();
+  if (!activeSidebar) return null;
+  return (
+    <div className="relative z-30 h-full min-w-0 flex-shrink-0 overflow-hidden border-l border-white/[0.08] bg-theme-bg-sidebar light:border-zinc-200/70 [&>*]:min-w-0 [&>*]:max-w-full">
+      {activeSidebar === "sources" && (
+        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+          <SourcesSidebar workspace={workspace} />
+        </ErrorBoundary>
+      )}
+      {activeSidebar === "preview" && (
+        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+          <PreviewSidebar />
+        </ErrorBoundary>
+      )}
+      {activeSidebar === "console" && (
+        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+          <ConsoleSidebar />
+        </ErrorBoundary>
+      )}
+      {activeSidebar === "database" && (
+        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+          <DatabaseSidebar workspace={workspace} />
+        </ErrorBoundary>
+      )}
+      {activeSidebar === "political" && (
+        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+          <PoliticalSidebar />
+        </ErrorBoundary>
+      )}
+      {activeSidebar === "pdf-analysis" && (
+        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+          <PdfAnalysisSidebar />
+        </ErrorBoundary>
+      )}
+      {activeSidebar === "notepad" && (
+        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+          <NotepadSidebar workspace={workspace} />
+        </ErrorBoundary>
+      )}
+      {activeSidebar === "agent-sessions" && (
+        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+          <AgentSessionsSidebar workspace={workspace} />
+        </ErrorBoundary>
+      )}
+      {activeSidebar === "agent-settings" && (
+        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+          <AgentSettingsSidebar workspace={workspace} />
+        </ErrorBoundary>
+      )}
+      {activeSidebar === "workspace-settings" && (
+        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+          <WorkspaceSettingsSidebar workspace={workspace} />
+        </ErrorBoundary>
+      )}
+      <button
+        type="button"
+        onClick={closeSidebar}
+        aria-label="Panel schließen"
+        className="absolute right-3 top-3 z-50 flex h-11 w-11 items-center justify-center rounded-lg border border-theme-border bg-theme-bg-sidebar/95 text-theme-text-secondary shadow-sm backdrop-blur-sm transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-text-secondary md:hidden"
+      >
+        <X size={18} />
+      </button>
+    </div>
+  );
+}
 
 /**
  * Renders the right sidebar: icon bar + active panel side by side.
@@ -36,64 +104,10 @@ function SidebarsContent({ workspace }: SidebarsProps) {
 
   return (
     <div
-      className="fixed right-0 top-0 z-40 hidden h-full min-w-0 shrink-0 flex-row overflow-hidden md:flex"
+      className={`fixed z-40 min-w-0 shrink-0 flex-row overflow-hidden md:right-0 md:top-0 md:h-full md:flex ${activeSidebar ? "inset-0 flex h-full w-full bg-[var(--chat-canvas)] md:inset-auto md:h-full md:w-auto md:bg-transparent" : "hidden"}`}
       aria-label={t("common.rightSidebar")}
     >
-      {/* Panel area — only when a panel is active */}
-      {activeSidebar && (
-        <div className="relative z-30 h-full min-w-0 flex-shrink-0 overflow-hidden border-l border-white/[0.08] bg-theme-bg-sidebar md:max-w-none light:border-zinc-200/70">
-          {activeSidebar === "sources" && (
-            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-              <SourcesSidebar workspace={workspace} />
-            </ErrorBoundary>
-          )}
-          {activeSidebar === "preview" && (
-            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-              <PreviewSidebar />
-            </ErrorBoundary>
-          )}
-          {activeSidebar === "console" && (
-            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-              <ConsoleSidebar />
-            </ErrorBoundary>
-          )}
-          {activeSidebar === "database" && (
-            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-              <DatabaseSidebar workspace={workspace} />
-            </ErrorBoundary>
-          )}
-          {activeSidebar === "political" && (
-            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-              <PoliticalSidebar />
-            </ErrorBoundary>
-          )}
-          {activeSidebar === "pdf-analysis" && (
-            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-              <PdfAnalysisSidebar />
-            </ErrorBoundary>
-          )}
-          {activeSidebar === "notepad" && (
-            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-              <NotepadSidebar workspace={workspace} />
-            </ErrorBoundary>
-          )}
-          {activeSidebar === "agent-sessions" && (
-            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-              <AgentSessionsSidebar workspace={workspace} />
-            </ErrorBoundary>
-          )}
-          {activeSidebar === "agent-settings" && (
-            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-              <AgentSettingsSidebar workspace={workspace} />
-            </ErrorBoundary>
-          )}
-          {activeSidebar === "workspace-settings" && (
-            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-              <WorkspaceSettingsSidebar workspace={workspace} />
-            </ErrorBoundary>
-          )}
-        </div>
-      )}
+      <ActiveSidebarPanel workspace={workspace} />
 
       {/* Icon bar — always visible */}
       <RightSidebarIconBar />
@@ -102,8 +116,5 @@ function SidebarsContent({ workspace }: SidebarsProps) {
 }
 
 export default function Sidebars({ workspace }: SidebarsProps) {
-  return createPortal(
-    <SidebarsContent workspace={workspace} />,
-    document.body
-  );
+  return createPortal(<SidebarsContent workspace={workspace} />, document.body);
 }

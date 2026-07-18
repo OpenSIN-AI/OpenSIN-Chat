@@ -125,7 +125,7 @@ export default function AttachItem({
         type="button"
         onClick={handleClick}
         onPointerEnter={refresh}
-        className="group border border-transparent relative flex justify-center items-center cursor-pointer w-6 h-6 rounded-full transition-colors duration-150 hover:bg-white/[0.04] light:hover:bg-zinc-100 hover:border-white/[0.06] light:hover:border-zinc-200"
+        className="group border border-transparent relative flex h-11 w-11 items-center justify-center cursor-pointer rounded-full transition-colors duration-150 hover:bg-white/[0.04] light:hover:bg-zinc-100 hover:border-white/[0.06] light:hover:border-zinc-200 md:h-6 md:w-6"
       >
         <div className="relative">
           <Plus
@@ -154,7 +154,7 @@ export default function AttachItem({
               ? "var(--theme-modal-border)"
               : "var(--theme-bg-primary)"
           }
-          className="z-[99] !w-[400px] !bg-theme-bg-primary !px-[5px] !rounded-lg !pointer-events-auto light:border-2 light:border-theme-modal-border"
+          className="z-[99] !w-[min(400px,calc(100vw-24px))] !max-w-[calc(100vw-24px)] !bg-theme-bg-primary !px-[5px] !rounded-lg !pointer-events-auto light:border-2 light:border-theme-modal-border"
         >
           <ParsedFilesMenu
             onEmbeddingChange={setIsEmbedding}
@@ -185,7 +185,7 @@ export default function AttachItem({
                 "--attach-bottom": `calc(100vh - ${menuPos.top}px + 8px)`,
                 "--attach-left": `${menuPos.left}px`,
               }}
-              className="fixed bottom-[var(--attach-bottom)] left-[var(--attach-left)] bg-theme-bg-secondary light:bg-white border border-white/[0.07] light:border-zinc-200 rounded-xl shadow-2xl shadow-black/50 z-[1000] p-0"
+              className="fixed bottom-[var(--attach-bottom)] left-[max(12px,var(--attach-left))] z-[1000] max-w-[calc(100vw-24px)] rounded-xl border border-white/[0.07] bg-theme-bg-secondary p-0 shadow-2xl shadow-black/50 light:border-zinc-200 light:bg-white md:left-[var(--attach-left)]"
               onMouseDown={(e) => e.stopPropagation()}
             >
               <AddSourceMenu

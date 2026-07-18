@@ -294,7 +294,7 @@ export default function AgentModeButton({
                 return { top: btnRect.bottom + 6, left };
               })(),
             }}
-            className="z-50 w-[300px] overflow-hidden rounded-xl bg-theme-bg-secondary shadow-[0_16px_48px_rgba(0,0,0,0.18),0_2px_8px_rgba(0,0,0,0.08)]"
+            className="z-50 w-[min(300px,calc(100vw-24px))] max-w-[calc(100vw-24px)] overflow-hidden rounded-xl bg-theme-bg-secondary shadow-[0_16px_48px_rgba(0,0,0,0.18),0_2px_8px_rgba(0,0,0,0.08)]"
           >
             <div className="px-3 pb-1.5 pt-3">
               <div className="flex items-center gap-1.5">

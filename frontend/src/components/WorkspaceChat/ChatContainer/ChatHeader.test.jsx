@@ -21,6 +21,10 @@ vi.mock("./WorkspaceModelPicker", () => ({
   ),
 }));
 
+vi.mock("./MobileSidebarMenu", () => ({
+  default: () => <div data-testid="mobile-sidebar-menu" />,
+}));
+
 describe("ChatHeader", () => {
   it("renders the workspace model picker", () => {
     render(<ChatHeader workspaceSlug="my-workspace" isEmpty={false} />);

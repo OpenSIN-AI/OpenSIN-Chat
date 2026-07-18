@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import WorkspaceModelPicker from "./WorkspaceModelPicker";
+import MobileSidebarMenu from "./MobileSidebarMenu";
 
 /**
  * Top bar of the chat container: settings menu and model picker.
@@ -19,6 +20,7 @@ export default function ChatHeader({
   return (
     <>
       <WorkspaceModelPicker workspaceSlug={workspaceSlug} />
+      <MobileSidebarMenu />
     </>
   );
 }

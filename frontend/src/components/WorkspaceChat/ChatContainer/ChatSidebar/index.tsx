@@ -13,6 +13,7 @@ import React, {
 } from "react";
 import { useTranslation } from "react-i18next";
 import { useSidebarToggle } from "@/components/Sidebar/SidebarToggle";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 
 type LogLevel = "info" | "warn" | "error" | "success" | "debug";
 
@@ -343,6 +344,7 @@ export default function ChatSidebar({
   defaultWidth = Math.max(366, minWidth),
 }: any) {
   const { t } = useTranslation();
+  const isMobile = useIsMobileLayout();
   const [width, setWidth] = useState(() => {
     if (typeof window === "undefined") return defaultWidth;
     try {
@@ -443,7 +445,10 @@ export default function ChatSidebar({
   return (
     <div
       className={`relative z-20 flex h-full shrink-0 flex-col overflow-hidden bg-theme-bg-sidebar ${isResizing ? "" : "transition-[width] duration-150 ease-out"}`}
-      style={{ width: `${width}px`, containerType: "inline-size" }}
+      style={{
+        width: isMobile ? "100%" : `${width}px`,
+        containerType: "inline-size",
+      }}
     >
       <div
         onPointerDown={handleResizeStart}
@@ -454,7 +459,7 @@ export default function ChatSidebar({
         aria-valuenow={Math.round(width)}
         aria-label={t("common.resizeRightSidebar")}
         title={t("common.dragToResizeWidth")}
-        className="group absolute left-0 top-0 z-50 flex h-full w-5 touch-none cursor-col-resize items-center justify-center"
+        className="group absolute left-0 top-0 z-50 hidden h-full w-5 touch-none cursor-col-resize items-center justify-center md:flex"
       >
         <div
           className={`h-16 w-0.5 rounded-full transition-colors ${isResizing ? "bg-blue-400" : "bg-theme-modal-border group-hover:bg-blue-400"}`}

@@ -100,7 +100,7 @@ export default function AgentSessionsSidebar({
   const { runTree } = useAgentRuns();
 
   return (
-    <div className="h-full w-[340px] flex flex-col p-3 overflow-y-auto">
+    <div className="h-full w-full max-w-full flex flex-col p-3 overflow-y-auto">
       <h3 className="text-sm font-bold text-theme-text-primary mb-2">
         {t("right_sidebar.agent_sessions_title", "Agent-Sessions")}
       </h3>
