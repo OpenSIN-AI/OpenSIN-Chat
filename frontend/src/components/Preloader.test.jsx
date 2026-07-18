@@ -11,6 +11,11 @@ describe("Preloader", () => {
 
   it("renders the full-screen loader", () => {
     const { container } = render(<FullScreenLoader />);
-    expect(container.querySelector("#preloader")).toBeInTheDocument();
+    const loader = container.querySelector("#preloader");
+    expect(loader).toBeInTheDocument();
+    expect(loader).toHaveAttribute("role", "status");
+    expect(loader).toHaveAttribute("aria-busy", "true");
+    expect(container.querySelector(".preloader-logo img")).toBeInTheDocument();
+    expect(container.querySelectorAll(".preloader-dots i")).toHaveLength(3);
   });
 });

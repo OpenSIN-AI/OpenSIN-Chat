@@ -16,6 +16,107 @@
 @source "./index.html";
 @source "./src/**/*.{js,jsx,ts,tsx}";
 
+/* Branded v0-style boot loader. The moving ring keeps the logo legible while
+ * the glow and staggered dots provide activity without the old spinner feel. */
+.preloader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.preloader-mark {
+  position: relative;
+  width: 7rem;
+  height: 7rem;
+  display: grid;
+  place-items: center;
+}
+
+.preloader-glow {
+  position: absolute;
+  inset: 0.65rem;
+  border-radius: 1.75rem;
+  background: #009ee0;
+  filter: blur(1.5rem);
+  opacity: 0.25;
+  animation: preloader-breathe 2.4s ease-in-out infinite;
+}
+
+.preloader-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 2rem;
+  background: conic-gradient(from 0deg, #009ee0, #ffffff, #0079b0, #009ee0);
+  animation: preloader-orbit 1.8s linear infinite;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 2px;
+}
+
+.preloader-logo {
+  position: relative;
+  z-index: 1;
+  width: 5.5rem;
+  height: 5.5rem;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.12), 0 1.5rem 3rem rgb(0 0 0 / 0.35);
+}
+
+.preloader-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.preloader-caption {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--theme-text-secondary, #a1a1aa);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.preloader-dots {
+  display: inline-flex;
+  gap: 0.2rem;
+}
+
+.preloader-dots i {
+  width: 0.24rem;
+  height: 0.24rem;
+  border-radius: 999px;
+  background: #009ee0;
+  animation: preloader-dot 1.2s ease-in-out infinite;
+}
+
+.preloader-dots i:nth-child(2) { animation-delay: 0.15s; }
+.preloader-dots i:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes preloader-orbit {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes preloader-breathe {
+  50% { transform: scale(1.08); opacity: 0.42; }
+}
+
+@keyframes preloader-dot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
+  30% { transform: translateY(-0.2rem); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preloader-ring,
+  .preloader-glow,
+  .preloader-dots i { animation: none; }
+}
+
 /* ── Theme (replaces tailwind.config.js theme.extend) ──────────────────── */
 @theme {
   /* Custom design tokens — v0-style monochrome palette */
