@@ -18,7 +18,7 @@ import { useTranslation } from "react-i18next";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 
 function ActiveSidebarPanel({ workspace }: SidebarsProps) {
-  const { activeSidebar, closeSidebar } = useChatSidebar();
+  const { activeSidebar } = useChatSidebar();
   if (!activeSidebar) return null;
   return (
     <div className="relative z-30 h-full min-w-0 flex-shrink-0 overflow-hidden border-l border-white/[0.08] bg-theme-bg-sidebar light:border-zinc-200/70 [&>*]:min-w-0 [&>*]:max-w-full">
@@ -72,15 +72,24 @@ function ActiveSidebarPanel({ workspace }: SidebarsProps) {
           <WorkspaceSettingsSidebar workspace={workspace} />
         </ErrorBoundary>
       )}
-      <button
-        type="button"
-        onClick={closeSidebar}
-        aria-label="Panel schließen"
-        className="absolute right-3 top-3 z-50 flex h-11 w-11 items-center justify-center rounded-lg border border-theme-border bg-theme-bg-sidebar/95 text-theme-text-secondary shadow-sm backdrop-blur-sm transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-text-secondary md:hidden"
-      >
-        <X size={18} />
-      </button>
     </div>
+  );
+}
+
+function MobileSidebarCloseButton() {
+  const { activeSidebar, closeSidebar } = useChatSidebar();
+  const { t } = useTranslation();
+  if (!activeSidebar) return null;
+
+  return (
+    <button
+      type="button"
+      onClick={closeSidebar}
+      aria-label={t("common.closePanel", "Panel schließen")}
+      className="fixed right-3 top-3 z-[120] flex h-11 w-11 items-center justify-center rounded-lg border border-theme-border bg-theme-bg-sidebar/95 text-theme-text-secondary shadow-lg backdrop-blur-sm transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-text-secondary md:hidden"
+    >
+      <X size={18} />
+    </button>
   );
 }
 
@@ -116,5 +125,11 @@ function SidebarsContent({ workspace }: SidebarsProps) {
 }
 
 export default function Sidebars({ workspace }: SidebarsProps) {
-  return createPortal(<SidebarsContent workspace={workspace} />, document.body);
+  return createPortal(
+    <>
+      <SidebarsContent workspace={workspace} />
+      <MobileSidebarCloseButton />
+    </>,
+    document.body,
+  );
 }
