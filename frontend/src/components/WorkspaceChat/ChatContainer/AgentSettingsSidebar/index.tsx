@@ -11,7 +11,7 @@ export default function AgentSettingsSidebar({
 }) {
   const { t } = useTranslation();
   return (
-    <div className="h-full w-[340px] flex flex-col p-3 overflow-y-auto">
+    <div className="h-full w-full max-w-full flex flex-col p-3 overflow-y-auto">
       <h3 className="text-sm font-bold text-theme-text-primary mb-2 flex items-center gap-2">
         <Robot size={16} />
         {t("right_sidebar.agent_settings_title", "Agent-Einstellungen")}

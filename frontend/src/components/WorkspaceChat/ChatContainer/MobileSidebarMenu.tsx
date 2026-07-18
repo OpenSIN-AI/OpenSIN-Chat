@@ -23,26 +23,38 @@ export default function MobileSidebarMenu() {
 
   const items = [
     ["preview", Eye, t("right_sidebar.icon_preview", "Vorschau")],
-    ["database", Database, t("right_sidebar.icon_database", "Politiker-Datenbank")],
+    [
+      "database",
+      Database,
+      t("right_sidebar.icon_database", "Politiker-Datenbank"),
+    ],
     ["political", Newspaper, t("right_sidebar.icon_political", "Politisches")],
     ["sources", BookOpen, t("right_sidebar.icon_sources", "Quellen")],
-    ["pdf-analysis", FilePdf, t("right_sidebar.icon_pdf_analysis", "PDF-Analyse")],
+    [
+      "pdf-analysis",
+      FilePdf,
+      t("right_sidebar.icon_pdf_analysis", "PDF-Analyse"),
+    ],
     ["notepad", Notepad, t("right_sidebar.icon_notepad", "Notizblock")],
-    ["agent-sessions", Broadcast, t("right_sidebar.icon_agent_sessions", "Agent-Sessions")],
+    [
+      "agent-sessions",
+      Broadcast,
+      t("right_sidebar.icon_agent_sessions", "Agent-Sessions"),
+    ],
   ] as const;
 
   useEffect(() => {
     if (!open) return;
-    const handlePointer = (event: MouseEvent) => {
+    const handlePointer = (event: PointerEvent) => {
       if (!menuRef.current?.contains(event.target as Node)) setOpen(false);
     };
     const handleKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") setOpen(false);
     };
-    document.addEventListener("mousedown", handlePointer);
+    document.addEventListener("pointerdown", handlePointer);
     document.addEventListener("keydown", handleKey);
     return () => {
-      document.removeEventListener("mousedown", handlePointer);
+      document.removeEventListener("pointerdown", handlePointer);
       document.removeEventListener("keydown", handleKey);
     };
   }, [open]);
@@ -51,13 +63,16 @@ export default function MobileSidebarMenu() {
     <div ref={menuRef} className="fixed right-3 top-2 z-50 md:hidden">
       <button
         type="button"
-        aria-label={t("common.rightSidebar")}
+        aria-label={t("common.rightSidebar", "Werkzeuge")}
         aria-expanded={open}
         aria-haspopup="menu"
         onClick={() => setOpen((value) => !value)}
         className="flex h-10 w-10 items-center justify-center rounded-lg border border-theme-border bg-theme-bg-sidebar text-theme-text-secondary shadow-sm transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-text-secondary"
       >
-        <SlidersHorizontal size={19} weight={activeSidebar ? "fill" : "regular"} />
+        <SlidersHorizontal
+          size={19}
+          weight={activeSidebar ? "fill" : "regular"}
+        />
       </button>
       {open && (
         <div
@@ -80,7 +95,10 @@ export default function MobileSidebarMenu() {
                   : "text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary"
               }`}
             >
-              <Icon size={17} weight={activeSidebar === id ? "fill" : "regular"} />
+              <Icon
+                size={17}
+                weight={activeSidebar === id ? "fill" : "regular"}
+              />
               <span className="min-w-0 flex-1 truncate">{label}</span>
               {id === "agent-sessions" && activeRunCount > 0 && (
                 <span className="rounded-full bg-[#009ee0] px-1.5 py-0.5 text-[10px] font-bold text-white">
