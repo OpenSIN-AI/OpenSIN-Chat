@@ -8,10 +8,10 @@ import {
   useMemo,
   useCallback,
   useEffect,
-  forwardRef,
   lazy,
   Suspense,
 } from "react";
+import type { Ref } from "react";
 import type { VirtuosoHandle } from "react-virtuoso";
 import { Virtuoso } from "react-virtuoso";
 import HistoricalMessage from "./HistoricalMessage";
@@ -163,7 +163,7 @@ function buildRows({ history, workspace, websocket, t }: any) {
   return rows;
 }
 
-export default forwardRef(function (
+export default function ChatHistory(
   {
     history = [],
     workspace,
@@ -171,8 +171,8 @@ export default forwardRef(function (
     updateHistory,
     regenerateAssistantMessage,
     websocket = null,
-  }: any,
-  ref,
+    ref,
+  }: any & { ref?: Ref<{ scrollToTop: () => void; scrollToBottom: () => void }> },
 ) {
   const virtuosoRef = useRef<VirtuosoHandle | null>(null);
   const lastScrollTopRef = useRef(0);
@@ -492,7 +492,7 @@ export default forwardRef(function (
       </ThoughtExpansionProvider>
     </MessageActionsProvider>
   );
-});
+}
 
 const getLastMessageInfo: any = (history: any) => {
   const lastMessage = history?.[history.length - 1] || {};

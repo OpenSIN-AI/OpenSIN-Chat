@@ -9,11 +9,10 @@
 #   docker inspect --format='{{index .RepoDigests 0}}' ubuntu:noble-20251013
 #
 # Then replace the FROM line below with:
-#   FROM ubuntu:noble-20251013 AS base
+#   FROM ubuntu@sha256:<DIGEST> AS base
 #
 # The digest must be verified and updated whenever the base image tag is
-# bumped. A digest placeholder is included below — replace <DIGEST> with the
-# real value before building in production.
+# bumped. For production container builds, always use SHA256 pinning.
 FROM ubuntu:noble-20251013 AS base
 
 # Build arguments

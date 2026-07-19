@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
-import { useEffect, useState, forwardRef, Ref } from "react";
+import { useEffect, useState } from "react";
+import type { Ref } from "react";
 import { useTranslation } from "react-i18next";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import PromptHistory from "@/models/promptHistory";
@@ -16,18 +17,17 @@ type ChatPromptHistoryProps = {
   onRestore: (prompt: string) => void;
   onClose: () => void;
   onPublishClick: (prompt: string) => void;
+  ref?: Ref<HTMLDivElement>;
 };
 
-export default forwardRef(function ChatPromptHistory(
-  {
-    show,
-    workspaceSlug,
-    onRestore,
-    onClose,
-    onPublishClick,
-  }: ChatPromptHistoryProps,
-  ref: Ref<HTMLDivElement>,
-) {
+export default function ChatPromptHistory({
+  show,
+  workspaceSlug,
+  onRestore,
+  onClose,
+  onPublishClick,
+  ref,
+}: ChatPromptHistoryProps) {
   const { t } = useTranslation();
   const confirm = useConfirm();
   const [history, setHistory] = useState<any[]>([]);
@@ -125,7 +125,7 @@ export default forwardRef(function ChatPromptHistory(
       </div>
     </div>
   );
-});
+}
 
 function LoaderSkeleton(): JSX.Element {
   const highlightColor = "var(--theme-bg-primary)";

@@ -2,12 +2,12 @@
 import {
   useState,
   useEffect,
-  forwardRef,
   useImperativeHandle,
   createContext,
   useContext,
   useCallback,
 } from "react";
+import type { Ref } from "react";
 import { useTranslation } from "react-i18next";
 import { Brain } from "@phosphor-icons/react/dist/csr/Brain";
 import renderMarkdown from "@/utils/chat/markdown";
@@ -161,11 +161,17 @@ export function ThoughtBrainButton({
  * Renders the expanded thought chain content.
  * Only visible when the expansion state is true (toggled via ThoughtBrainButton).
  */
-export const ThoughtChainComponent = forwardRef(
-  (
-    { content: initialContent, messageId, defaultExpanded = false }: any,
-    ref,
-  ) => {
+export function ThoughtChainComponent({
+  content: initialContent,
+  messageId,
+  defaultExpanded = false,
+  ref,
+}: {
+  content?: any;
+  messageId?: string | number;
+  defaultExpanded?: boolean;
+  ref?: Ref<{ updateContent: (c: any) => void }>;
+}) {
     const [content, setContent] = useState(initialContent);
     const [hasReadableContent, setHasReadableContent] = useState(() =>
       contentIsNotEmpty(initialContent),
@@ -221,6 +227,5 @@ export const ThoughtChainComponent = forwardRef(
         </div>
       </div>
     );
-  },
-);
-ThoughtChainComponent.displayName = "ThoughtChainComponent";
+  }
+  ThoughtChainComponent.displayName = "ThoughtChainComponent";

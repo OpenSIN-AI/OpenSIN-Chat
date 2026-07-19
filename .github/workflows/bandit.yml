@@ -1,0 +1,76 @@
+name: "Bandit Security Scan (Python)"
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "collector/**/*.py"
+      - ".github/workflows/bandit.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "collector/**/*.py"
+      - ".github/workflows/bandit.yml"
+  schedule:
+    - cron: "25 6 * * 1"
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  bandit:
+    name: Bandit Scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Bandit
+        run: pip install bandit[toml]
+
+      - name: Run Bandit
+        run: |
+          bandit -r collector/ \
+            -f json \
+            -o bandit-report.json \
+            --severity-level medium \
+            --confidence-level medium \
+            || true
+
+      - name: Display results
+        if: always()
+        run: |
+          if [ -f bandit-report.json ]; then
+            echo "## Bandit Security Scan Results"
+            python3 -c "
+          import json
+          with open('bandit-report.json') as f:
+              data = json.load(f)
+          metrics = data.get('metrics', {}).get('_totals', {})
+          print(f\"Files scanned: {metrics.get('loc', 'N/A')} lines\")
+          print(f\"Issues found: {len(data.get('results', []))}\")
+          for r in data.get('results', []):
+              severity = r.get('issue_severity', 'UNKNOWN')
+              conf = r.get('issue_confidence', 'UNKNOWN')
+              text = r.get('issue_text', '')
+              fname = r.get('filename', '')
+              line = r.get('line_number', '')
+              print(f'  [{severity}/{conf}] {fname}:{line} - {text}')
+          "
+          fi
+
+      - name: Upload SARIF
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: bandit-report.json
+          category: bandit
+        continue-on-error: true
