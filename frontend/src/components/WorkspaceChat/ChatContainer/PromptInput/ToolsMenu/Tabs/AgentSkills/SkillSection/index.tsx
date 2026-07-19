@@ -42,10 +42,9 @@ export default function SkillSection({
           <span className="text-[10px] font-semibold uppercase tracking-wide text-zinc-400 light:text-slate-500">
             {name}
           </span>
-            <span className="text-[8px] px-1 py-px rounded bg-zinc-600/50 light:bg-slate-200 text-zinc-300 light:text-slate-500 font-medium leading-tight">
-              MCP
-            </span>
-          )}
+          <span className="text-[8px] px-1 py-px rounded bg-zinc-600/50 light:bg-slate-200 text-zinc-300 light:text-slate-500 font-medium leading-tight">
+            MCP
+          </span>
         </div>
         <span className="text-[10px] text-zinc-500 light:text-slate-400 tabular-nums">
           {enabledCount}/{totalCount}
