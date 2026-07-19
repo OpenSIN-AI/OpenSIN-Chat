@@ -619,6 +619,53 @@ const Workspace = {
   /** @param {string} slug
    * @returns {Promise<Array<string>>}
    */
+
+  /**
+   * Attach an existing workspace document as thread chat context (not permanent embed).
+   * @param {string} slug
+   * @param {string} docpath
+   * @param {string|null} [threadSlug=null]
+   */
+  attachDocumentContext: async function (slug, docpath, threadSlug = null) {
+    try {
+      const response = await fetch(
+        `${API_BASE}/workspace/${slug}/attach-document-context`,
+        {
+          method: "POST",
+          headers: { ...baseHeaders(), "Content-Type": "application/json" },
+          body: JSON.stringify({ docpath, threadSlug }),
+        },
+      );
+      const data = await response.json().catch(() => ({}));
+      return { success: !!data.success && response.ok, ...data, status: response.status };
+    } catch (e) {
+      return { success: false, error: e.message };
+    }
+  },
+
+  /**
+   * Fetch a URL and attach it as thread chat context only (no permanent workspace embed).
+   * @param {string} slug
+   * @param {string} link
+   * @param {string|null} [threadSlug=null]
+   */
+  attachLinkContext: async function (slug, link, threadSlug = null) {
+    try {
+      const response = await fetch(
+        `${API_BASE}/workspace/${slug}/attach-link-context`,
+        {
+          method: "POST",
+          headers: { ...baseHeaders(), "Content-Type": "application/json" },
+          body: JSON.stringify({ link, threadSlug }),
+        },
+      );
+      const data = await response.json().catch(() => ({}));
+      return { success: !!data.success && response.ok, ...data, status: response.status };
+    } catch (e) {
+      return { success: false, error: e.message };
+    }
+  },
+
   getSuggestedMessages: async function (slug) {
     return await fetch(`${API_BASE}/workspace/${slug}/suggested-messages`, {
       method: "GET",

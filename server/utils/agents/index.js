@@ -750,32 +750,24 @@ class AgentHandler {
    * @returns {string} The message with the @agent command stripped.
    */
   #stripAgentCommand(message = "") {
-    let stripped = String(message)
-      .replace(/^@agent\s*/, "")
-      .trim();
-
-    const modeMatch = stripped.match(/^\[([a-z-]+)\]\s*(.*)/i);
-    if (modeMatch) {
-      const modeId = modeMatch[1].toLowerCase();
-      const modeHints = {
-        "deep-research":
-          "You are operating in DEEP RESEARCH mode. Use web-search and url-fetch tools extensively. Perform multi-step reasoning: search broadly first, then drill down into specific sources. Always cite your sources with URLs. Structure your response with clear sections: Summary, Key Findings, Sources. Be thorough and analytical. You MUST call the generate_report tool at the end to produce a downloadable PDF report of your findings.",
-        report:
-          "You are operating in REPORT mode. You MUST use the generate_report tool to create a professional PDF report. Call generate_report with a title and a summary containing your structured report in markdown format. Use this structure in the summary: 1) Executive Summary (2-3 sentences), 2) Background/Context, 3) Main Analysis (with subheadings), 4) Key Findings (bulleted), 5) Conclusions, 6) Recommendations. If web-search tools are available, use them to gather current information before generating the report. Always cite sources in the summary text.",
-      };
-      if (modeHints[modeId]) {
-        this.#modeSystemPrompt = modeHints[modeId];
-        this.#activeMode = modeId;
-      }
-      stripped = modeMatch[2].trim();
+    const {
+      parseAgentModeFromPrompt,
+    } = require("./modeHints");
+    const parsed = parseAgentModeFromPrompt(message);
+    this.#modeSystemPrompt = parsed.systemPrompt;
+    this.#activeMode = parsed.modeId;
+    this.#activeSources = parsed.sources;
+    if (parsed.modeId) {
+      this.log(
+        `Agent mode=${parsed.modeId} sources=[${parsed.sources.join(",") || "default"}]`,
+      );
     }
-
-    if (!stripped) return "Hello!";
-    return stripped;
+    return parsed.cleanMessage;
   }
 
   #modeSystemPrompt = null;
   #activeMode = null;
+  #activeSources = [];
 
   startAgentCluster() {
     const cleanContent = this.#stripAgentCommand(this.invocation.prompt);

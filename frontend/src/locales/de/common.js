@@ -531,14 +531,14 @@ const TRANSLATIONS = {
     select_model: "Modell auswählen",
     attach_menu: {
       add_files: "Dateien hinzufügen",
-      section_chat: "Dieser Chat (temporär)",
+      section_chat: "Dieser Chat (Kontext)",
       section_workspace: "Workspace-Wissen (permanent)",
-      current_sources: "Vorhandenes Dokument hinzufügen",
+      current_sources: "Aus Workspace auswählen",
       current_sources_hint:
-        "Wird dauerhaft in diesen Workspace eingebettet und ist in jedem Chat suchbar.",
+        "Wählt ein vorhandenes Workspace-Dokument als festen Kontext nur für diesen Chat — nicht dauerhaft neu einbetten.",
       add_from_url: "Aus URL einfügen",
       url_menu_hint:
-        "Webseite oder YouTube-Video als permanentes Workspace-Wissen speichern.",
+        "Webseite, YouTube oder andere URL diesem Chat als Kontext beifügen.",
       upload_from_computer: "Vom Computer hochladen",
       upload_hint:
         "Bleibt an diesem Thread, bis du es entfernst — kein permanentes Workspace-Wissen.",
@@ -546,13 +546,13 @@ const TRANSLATIONS = {
       no_sources: "Keine Quellen verfügbar",
       no_workspace:
         "Kein Workspace verfügbar. Sende zuerst eine Nachricht, um einen Workspace zu erstellen.",
-      add_success: "Zum Workspace-Wissen hinzugefügt (permanent)",
+      add_success: "Als Chat-Kontext hinzugefügt",
       add_failed: "Quelle konnte nicht hinzugefügt werden",
       url_hint:
-        "Füge die URL einer Webseite oder eines YouTube-Videos ein, um sie als permanentes Workspace-Wissen hinzuzufügen.",
-      url_submit: "Zum Workspace hinzufügen",
-      url_submitting: "Wird hinzugefügt...",
-      url_success: "URL zum Workspace-Wissen hinzugefügt",
+        "URL einer Webseite, eines Videos o. Ä. — wird nur diesem Chat als Kontext beigefügt.",
+      url_submit: "Zum Chat hinzufügen",
+      url_submitting: "Wird geladen...",
+      url_success: "URL als Chat-Kontext hinzugefügt",
       url_failed: "URL konnte nicht hinzugefügt werden",
       url_invalid:
         "Ungültige URL. Bitte prüfe das Format (z.B. https://example.com).",
@@ -4909,6 +4909,29 @@ const TRANSLATIONS = {
     reportGen: "Bericht generieren",
     reportGenDesc:
       "Erstellt einen strukturierten, professionellen Bericht mit Quellen",
+  },
+
+  deepResearchSources: {
+    title: "Recherche-Quellen",
+    subtitle:
+      "Wähle, wo Deep Research suchen darf. Nicht angebundene Quellen sind bald verfügbar.",
+    summaryOne: "Quellen",
+    summaryMany: "{{count}} Quellen",
+    comingSoon: "Bald",
+    web: "Web",
+    email: "E-Mail",
+    storage: "Cloud-Speicher",
+    machine: "Maschine",
+    connectors: {
+      webSearch: "Websuche",
+      gmail: "Gmail",
+      googleDrive: "Google Drive",
+      terrabox: "TerraBox",
+      oracleVm: "Oracle Cloud VM",
+      lightningAi: "Lightning AI VM",
+      localPc: "PC / Mac",
+      mobile: "Handy / iPhone",
+    },
   },
   agentModelSelection: {
     multiModelNotSupported:

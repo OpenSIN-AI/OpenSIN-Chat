@@ -10,6 +10,44 @@ import { VideoCamera } from "@phosphor-icons/react/dist/csr/VideoCamera";
 import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
 import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
 import { X } from "@phosphor-icons/react/dist/csr/X";
+import {
+  DEEP_RESEARCH_SOURCES_EVENT,
+  getDeepResearchSourceIds,
+} from "./DeepResearchSources";
+
+/** Build the text prefix written into the prompt for a given agent mode. */
+export function buildAgentModePrefix(
+  modeId: string,
+  sources?: string[],
+): string {
+  if (modeId === "deep-research") {
+    const src =
+      sources && sources.length > 0
+        ? sources
+        : getDeepResearchSourceIds();
+    const list = src.length ? src.join(",") : "web-search";
+    return `@agent [deep-research]\n[sources:${list}]`;
+  }
+  return `@agent [${modeId}]`;
+}
+
+/**
+ * Replace or inject the agent mode prefix in a prompt string.
+ */
+export function applyAgentModePrefix(
+  prompt: string,
+  modeId: string | null,
+  sources?: string[],
+): string {
+  const cleaned = String(prompt || "")
+    .replace(/^@agent\s*\[[a-z-]+\]\s*/i, "")
+    .replace(/^\[sources:[^\]]+\]\s*/i, "")
+    .replace(/^@agent\s*/i, "")
+    .trim();
+  if (!modeId) return cleaned;
+  const prefix = buildAgentModePrefix(modeId, sources);
+  return cleaned ? `${prefix} ${cleaned}` : prefix;
+}
 
 export const AGENT_MODES = [
   {
@@ -133,7 +171,7 @@ export function useAgentMode() {
     };
   }, [showDropdown]);
 
-  const selectMode = useCallback((mode, sendCommand, textareaRef) => {
+  const selectMode = useCallback((mode, sendCommand, textareaRef, promptInput) => {
     if (!mode.enabled) return;
     setActiveMode(mode);
     persistMode(mode.id);
@@ -142,7 +180,12 @@ export function useAgentMode() {
       new CustomEvent(AGENT_MODE_EVENT, { detail: { mode: mode.id } }),
     );
     if (sendCommand) {
-      sendCommand({ text: mode.prefix, writeMode: "prepend" });
+      const next = applyAgentModePrefix(
+        promptInput || "",
+        mode.id,
+        mode.id === "deep-research" ? getDeepResearchSourceIds() : undefined,
+      );
+      sendCommand({ text: next, writeMode: "replace" });
     }
     if (textareaRef?.current) {
       setTimeout(() => textareaRef.current.focus(), 50);
@@ -157,15 +200,31 @@ export function useAgentMode() {
       new CustomEvent(AGENT_MODE_EVENT, { detail: { mode: null } }),
     );
     if (sendCommand && promptInput) {
-      const cleaned = promptInput
-        .replace(/^@agent\s*\[[a-z-]+\]\s*/i, "")
-        .replace(/^@agent\s*/i, "")
-        .trim();
+      const cleaned = applyAgentModePrefix(promptInput, null);
       sendCommand({ text: cleaned, writeMode: "replace" });
     }
     if (textareaRef?.current) {
       setTimeout(() => textareaRef.current.focus(), 50);
     }
+  }, []);
+
+  // Keep deep-research [sources:...] tag in the prompt when the user toggles sources
+  useEffect(() => {
+    function onSourcesChange(e: Event) {
+      const detail = (e as CustomEvent).detail || {};
+      const sources: string[] = Array.isArray(detail.sources)
+        ? detail.sources
+        : getDeepResearchSourceIds();
+      // Consumers pass prompt rewrite via window custom event payload optional
+      window.dispatchEvent(
+        new CustomEvent("agent-mode-rewrite-prefix", {
+          detail: { modeId: "deep-research", sources },
+        }),
+      );
+    }
+    window.addEventListener(DEEP_RESEARCH_SOURCES_EVENT, onSourcesChange);
+    return () =>
+      window.removeEventListener(DEEP_RESEARCH_SOURCES_EVENT, onSourcesChange);
   }, []);
 
   return {
@@ -317,7 +376,9 @@ export default function AgentModeButton({
                     type="button"
                     aria-pressed={activeMode?.id === mode.id}
                     aria-label={t(mode.labelKey)}
-                    onClick={() => selectMode(mode, sendCommand, textareaRef)}
+                    onClick={() =>
+                      selectMode(mode, sendCommand, textareaRef, promptInput)
+                    }
                     className={`mx-1.5 flex w-[calc(100%-0.75rem)] cursor-pointer items-start gap-3 rounded-lg border-none px-2.5 py-2.5 text-left transition-colors hover:bg-theme-sidebar-item-hover ${
                       activeMode?.id === mode.id ? "bg-theme-accent/10" : ""
                     }`}

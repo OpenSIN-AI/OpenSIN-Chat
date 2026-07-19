@@ -490,13 +490,14 @@ const TRANSLATIONS = {
     more_actions: "More actions",
     attach_menu: {
       add_files: "Add files",
-      section_chat: "This chat (temporary)",
+      section_chat: "This chat (context)",
       section_workspace: "Workspace knowledge (permanent)",
-      current_sources: "Add existing document",
+      current_sources: "Select from workspace",
       current_sources_hint:
-        "Embeds into this workspace permanently so every chat can search it.",
+        "Pick an existing workspace document as fixed context for this chat only — does not re-embed permanently.",
       add_from_url: "Add from URL",
-      url_menu_hint: "Scrape a page or YouTube video into workspace knowledge.",
+      url_menu_hint:
+        "Attach a webpage, YouTube video, or other URL as context for this chat.",
       upload_from_computer: "Upload from computer",
       upload_hint:
         "Attached to this thread until you remove it. Not permanent workspace knowledge.",
@@ -504,13 +505,13 @@ const TRANSLATIONS = {
       no_sources: "No sources available",
       no_workspace:
         "No workspace available. Send a message first to create a workspace.",
-      add_success: "Added to workspace knowledge (permanent)",
+      add_success: "Added as chat context",
       add_failed: "Could not add source",
       url_hint:
-        "Paste the URL of a website or YouTube video to add it as permanent workspace knowledge.",
-      url_submit: "Add to workspace",
-      url_submitting: "Adding...",
-      url_success: "URL added to workspace knowledge",
+        "Paste a webpage, video, or other URL — attached as context for this chat only.",
+      url_submit: "Add to chat",
+      url_submitting: "Loading...",
+      url_success: "URL added as chat context",
       url_failed: "Could not add URL",
       url_invalid:
         "Invalid URL. Please check the format (e.g. https://example.com).",
@@ -4798,6 +4799,29 @@ const TRANSLATIONS = {
     videoGenDesc: "Create AI-generated videos",
     reportGen: "Generate report",
     reportGenDesc: "Creates a structured, professional report with sources",
+  },
+
+  deepResearchSources: {
+    title: "Research sources",
+    subtitle:
+      "Choose where Deep Research may look. Connectors not yet ready are marked coming soon.",
+    summaryOne: "Sources",
+    summaryMany: "{{count}} sources",
+    comingSoon: "Soon",
+    web: "Web",
+    email: "Email",
+    storage: "Cloud storage",
+    machine: "Machine",
+    connectors: {
+      webSearch: "Web search",
+      gmail: "Gmail",
+      googleDrive: "Google Drive",
+      terrabox: "TerraBox",
+      oracleVm: "Oracle Cloud VM",
+      lightningAi: "Lightning AI VM",
+      localPc: "PC / Mac",
+      mobile: "Phone / iPhone",
+    },
   },
   agentModelSelection: {
     multiModelNotSupported:

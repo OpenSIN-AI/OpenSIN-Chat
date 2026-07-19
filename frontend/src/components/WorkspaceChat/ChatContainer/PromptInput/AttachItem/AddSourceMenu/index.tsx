@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: MIT
+// Purpose: "+" attach menu — attach files/URLs as *chat* context (thread-scoped).
+// Docs: Existing workspace docs and URLs become fixed selected context for this chat,
+//       not permanent workspace embeddings.
 import {
   cloneElement,
   useCallback,
@@ -24,7 +27,7 @@ import logger from "@/utils/logger";
 
 /**
  * Recursively flattens the local-files directory tree into a single list of
- * files with their workspace docpath so they can be added to the current workspace.
+ * files with their workspace docpath.
  */
 function flattenLocalFiles(localFiles, parentPath = "") {
   if (!localFiles?.items) return [];
@@ -51,10 +54,6 @@ function flattenLocalFiles(localFiles, parentPath = "") {
   return out;
 }
 
-/**
- * Returns all focusable descendants of a menu container, excluding the
- * container itself when it has tabindex="-1".
- */
 function getFocusableMenuItems(container: HTMLElement | null): HTMLElement[] {
   if (!container) return [];
   return Array.from(
@@ -66,13 +65,13 @@ function getFocusableMenuItems(container: HTMLElement | null): HTMLElement[] {
 
 /**
  * The "+" attach menu shown in the chat composer.
- *
- * Two clear destinations so users understand persistence:
- *  - Chat context (this thread): local upload → parsed files until removed
- *  - Workspace knowledge (permanent): existing docs / URL → embeddings
+ * Everything here attaches to **this chat** (thread context), not permanent
+ * workspace knowledge — pick existing workspace docs or paste a URL as fixed
+ * selected context until the user removes it.
  */
 export default function AddSourceMenu({
   workspaceSlug,
+  threadSlug = null,
   onClose: onCloseProp,
   onAddLocalFiles,
   trigger,
@@ -80,6 +79,7 @@ export default function AddSourceMenu({
   isOpen: isOpenProp,
 }: {
   workspaceSlug: string;
+  threadSlug?: string | null;
   onClose?: () => void;
   onAddLocalFiles?: () => void;
   trigger?: ReactElement<any>;
@@ -194,7 +194,7 @@ export default function AddSourceMenu({
         role="menu"
         aria-label={t("chat_window.attach_menu.add_files")}
         tabIndex={-1}
-        className="flex flex-col gap-1 p-2 min-w-[260px]"
+        className="flex flex-col gap-1 p-2 min-w-[280px]"
         onKeyDown={handleMenuKeyDown}
       >
         {view === "root" && (
@@ -212,6 +212,7 @@ export default function AddSourceMenu({
           <SourcesView
             t={t}
             workspaceSlug={workspaceSlug}
+            threadSlug={threadSlug}
             onBack={() => setView("root")}
             onClose={closeMenu}
           />
@@ -220,6 +221,7 @@ export default function AddSourceMenu({
           <UrlView
             t={t}
             workspaceSlug={workspaceSlug}
+            threadSlug={threadSlug}
             onBack={() => setView("root")}
             onClose={closeMenu}
           />
@@ -304,9 +306,6 @@ function RootView({ t, onAddLocalFiles, onOpenSources, onOpenUrl }) {
         hint={t("chat_window.attach_menu.upload_hint")}
         onClick={onAddLocalFiles}
       />
-      <SectionLabel>
-        {t("chat_window.attach_menu.section_workspace")}
-      </SectionLabel>
       <MenuRow
         icon={Files}
         label={t("chat_window.attach_menu.current_sources")}
@@ -325,15 +324,48 @@ function RootView({ t, onAddLocalFiles, onOpenSources, onOpenUrl }) {
   );
 }
 
-function SourcesView({ t, workspaceSlug, onBack, onClose }) {
+function SourcesView({ t, workspaceSlug, threadSlug, onBack, onClose }) {
   const {
     documents: localFiles,
     isLoading: loading,
-    mutate: mutateDocuments,
   } = useDocuments();
-  const files = useMemo(() => flattenLocalFiles(localFiles), [localFiles]);
+  const [workspaceDocs, setWorkspaceDocs] = useState<any[] | null>(null);
+  const [loadingWs, setLoadingWs] = useState(true);
   const [addingId, setAddingId] = useState<any>(null);
   const [query, setQuery] = useState("");
+
+  // Prefer documents already in this workspace; fall back to all local files.
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setLoadingWs(true);
+      try {
+        const ws = await Workspace.bySlug(workspaceSlug);
+        if (cancelled) return;
+        const docs = (ws?.documents || []).map((d) => ({
+          id: d.id || d.docpath,
+          title: d.filename || d.name || d.title || d.docpath,
+          docpath: d.docpath,
+          isUrl: String(d.docpath || "").includes("http"),
+        }));
+        setWorkspaceDocs(docs);
+      } catch {
+        if (!cancelled) setWorkspaceDocs([]);
+      } finally {
+        if (!cancelled) setLoadingWs(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [workspaceSlug]);
+
+  const allLocal = useMemo(() => flattenLocalFiles(localFiles), [localFiles]);
+  const files = useMemo(() => {
+    if (workspaceDocs && workspaceDocs.length > 0) return workspaceDocs;
+    // Fall back: show local files that can be attached as context
+    return allLocal;
+  }, [workspaceDocs, allLocal]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -351,23 +383,25 @@ function SourcesView({ t, workspaceSlug, onBack, onClose }) {
       return;
     }
     setAddingId(file.id);
-    const { workspace, message } = (await Workspace.modifyEmbeddings(
+    const result = await Workspace.attachDocumentContext(
       workspaceSlug,
-      { adds: [file.docpath], deletes: [] },
-    )) as any;
+      file.docpath,
+      threadSlug,
+    );
     setAddingId(null);
-    if (!workspace) {
-      showToast(message || t("chat_window.attach_menu.add_failed"), "error");
+    if (!result.success) {
+      showToast(result.error || t("chat_window.attach_menu.add_failed"), "error");
       return;
     }
     showToast(t("chat_window.attach_menu.add_success"), "success");
-    await mutateDocuments();
     window.dispatchEvent(new CustomEvent(ATTACHMENTS_PROCESSED_EVENT));
     onClose?.();
   }
 
+  const isLoading = loading || loadingWs;
+
   return (
-    <div className="min-w-[260px]">
+    <div className="min-w-[280px]">
       <BackHeader
         label={t("chat_window.attach_menu.current_sources")}
         onBack={onBack}
@@ -386,7 +420,7 @@ function SourcesView({ t, workspaceSlug, onBack, onClose }) {
         />
       )}
       <div className="flex flex-col gap-0.5 max-h-[260px] overflow-y-auto no-scroll">
-        {loading ? (
+        {isLoading ? (
           <div className="flex items-center justify-center gap-2 py-4 text-xs text-zinc-400 light:text-slate-500">
             <CircleNotch size={14} className="animate-spin" />
             {t("chat_window.attach_menu.loading")}
@@ -429,12 +463,11 @@ function SourcesView({ t, workspaceSlug, onBack, onClose }) {
   );
 }
 
-function UrlView({ t, workspaceSlug, onBack, onClose }) {
+function UrlView({ t, workspaceSlug, threadSlug, onBack, onClose }) {
   const inputRef = useRef<any>(null);
   const [link, setLink] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
-  const { mutate: refreshDocuments } = useDocuments();
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -483,37 +516,17 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
     setError("");
 
     try {
-      const before = new Set(
-        flattenLocalFiles(await refreshDocuments()).map((f) => f.docpath),
-      );
-
-      const { response, data } = (await Workspace.uploadLink(
+      const result = await Workspace.attachLinkContext(
         workspaceSlug,
         normalizedUrl,
-      )) as { response: Response; data: any };
-      if (!response.ok) {
+        threadSlug,
+      );
+      if (!result.success) {
         const errMsg =
-          data?.error ||
-          data?.message ||
-          t("chat_window.attach_menu.url_server_error", {
-            status: response.status,
-            statusText: response.statusText,
-          });
+          result.error || t("chat_window.attach_menu.url_failed");
         setError(errMsg);
         showToast(errMsg, "error", { clear: true });
         return;
-      }
-
-      const after = flattenLocalFiles(await refreshDocuments());
-      const newDocpaths = after
-        .map((f) => f.docpath)
-        .filter((docpath) => !before.has(docpath));
-      if (newDocpaths.length > 0) {
-        await Workspace.modifyEmbeddings(workspaceSlug, {
-          adds: newDocpaths,
-          deletes: [],
-        });
-        await refreshDocuments();
       }
 
       showToast(t("chat_window.attach_menu.url_success"), "success");
@@ -537,7 +550,7 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="w-[min(280px,calc(100vw-24px))] min-w-0"
+      className="w-[min(300px,calc(100vw-24px))] min-w-0"
     >
       <BackHeader
         label={t("chat_window.attach_menu.add_from_url")}

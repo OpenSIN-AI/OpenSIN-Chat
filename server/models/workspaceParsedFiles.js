@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 const consoleLogger = require("../utils/logger/console.js");
 
+const crypto = require("crypto");
 const prisma = require("../utils/prisma");
 const { clampLimit, MAX_LIST_LIMIT } = require("../utils/database/queryLimits");
 const { EventLogs } = require("./eventLogs");
@@ -253,6 +254,82 @@ const WorkspaceParsedFiles = {
     } catch (error) {
       consoleLogger.error("Failed to get context files:", error);
       return [];
+    }
+  },
+
+  /**
+   * Attach an already-parsed document JSON as thread chat context
+   * (WorkspaceParsedFiles), without embedding into permanent workspace knowledge.
+   *
+   * @param {object} params
+   * @param {import("@prisma/client").workspaces} params.workspace
+   * @param {import("@prisma/client").users|null} params.user
+   * @param {import("@prisma/client").workspace_threads|null} params.thread
+   * @param {object} params.document — collector/document JSON with pageContent
+   * @param {string} [params.sourceDocpath] — original documents/ relative path if any
+   * @returns {Promise<{file: object|null, error: string|null}>}
+   */
+  attachDocumentAsChatContext: async function ({
+    workspace,
+    user = null,
+    thread = null,
+    document,
+    sourceDocpath = null,
+  }) {
+    try {
+      if (!workspace?.id) throw new Error("Workspace is required");
+      if (!document?.pageContent) throw new Error("Document has no content");
+
+      await fs.promises.mkdir(directUploadsPath, { recursive: true });
+
+      const safeTitle = String(
+        document.title || document.name || sourceDocpath || "document",
+      )
+        .replace(/[^\w.\- ()[\]]+/g, "_")
+        .slice(0, 120);
+      const id =
+        document.id ||
+        crypto.randomUUID?.() ||
+        `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+      const basename = `${safeTitle}-${id}.json`;
+      const destPath = path.join(directUploadsPath, basename);
+
+      const payload = {
+        ...document,
+        title: document.title || safeTitle,
+        location: basename,
+        // Mark as chat-context only (not a permanent embed)
+        chatContextOnly: true,
+        sourceDocpath: sourceDocpath || document.location || null,
+      };
+      await fs.promises.writeFile(
+        destPath,
+        JSON.stringify(payload),
+        "utf-8",
+      );
+
+      const metadata = { ...payload };
+      delete metadata.pageContent;
+
+      const { file, error } = await this.create({
+        filename: basename,
+        workspaceId: workspace.id,
+        userId: user?.id || null,
+        threadId: thread?.id || null,
+        metadata: JSON.stringify(metadata),
+        tokenCountEstimate:
+          document.token_count_estimate ||
+          Math.ceil(String(document.pageContent).length / 4) ||
+          0,
+      });
+      if (error) throw new Error(error);
+      return { file, error: null };
+    } catch (error) {
+      consoleLogger.error(
+        "FAILED TO ATTACH DOCUMENT AS CHAT CONTEXT.",
+        error.message,
+      );
+      return { file: null, error: error.message };
     }
   },
 };

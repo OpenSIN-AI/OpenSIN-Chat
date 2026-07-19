@@ -410,6 +410,12 @@ class EphemeralAgentHandler extends AgentHandler {
       ? await User.get({ id: Number(this.#userId) })
       : null;
 
+    // Parse mode/sources before loading agent definition so hints land in role.
+    this.#stripAgentCommand(this.#prompt);
+    const combinedExtraRole = [this.#urlPrompt, this.#modeSystemPrompt]
+      .filter(Boolean)
+      .join("\n\n");
+
     this.aibitat.agent(
       WORKSPACE_AGENT.name,
       await WORKSPACE_AGENT.getDefinition(
@@ -417,7 +423,7 @@ class EphemeralAgentHandler extends AgentHandler {
         this.#workspace,
         user,
         this.#prompt,
-        this.#urlPrompt,
+        combinedExtraRole,
       ),
     );
 
@@ -500,12 +506,17 @@ class EphemeralAgentHandler extends AgentHandler {
    * @param {string} message - The message to strip the @agent command from.
    * @returns {string} The message with the @agent command stripped.
    */
+  #modeSystemPrompt = null;
+  #activeMode = null;
+  #activeSources = [];
+
   #stripAgentCommand(message = "") {
-    const stripped = String(message)
-      .replace(/^@agent\s*/, "")
-      .trim();
-    if (!stripped) return "Hello!";
-    return stripped;
+    const { parseAgentModeFromPrompt } = require("./modeHints");
+    const parsed = parseAgentModeFromPrompt(message);
+    this.#modeSystemPrompt = parsed.systemPrompt;
+    this.#activeMode = parsed.modeId;
+    this.#activeSources = parsed.sources;
+    return parsed.cleanMessage;
   }
 
   async createAIbitat(

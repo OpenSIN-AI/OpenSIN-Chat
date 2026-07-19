@@ -192,6 +192,7 @@ export default function AttachItem({
             >
               <AddSourceMenu
                 workspaceSlug={slug}
+                threadSlug={threadSlug}
                 onClose={() => setShowMenu(false)}
                 onAddLocalFiles={triggerLocalUpload}
               />

@@ -57,14 +57,14 @@ describe("AddSourceMenu", () => {
     );
   }
 
-  it("renders sectioned root menu without stub integrations", () => {
+  it("renders chat-context root menu without permanent workspace section", () => {
     renderMenu();
-    expect(screen.getByText("This chat (temporary)")).toBeInTheDocument();
+    expect(screen.getByText("This chat (context)")).toBeInTheDocument();
     expect(
-      screen.getByText("Workspace knowledge (permanent)"),
-    ).toBeInTheDocument();
+      screen.queryByText("Workspace knowledge (permanent)"),
+    ).not.toBeInTheDocument();
     expect(screen.getByText("Upload from computer")).toBeInTheDocument();
-    expect(screen.getByText("Add existing document")).toBeInTheDocument();
+    expect(screen.getByText("Select from workspace")).toBeInTheDocument();
     expect(screen.getByText("Add from URL")).toBeInTheDocument();
     expect(screen.queryByText(/GitHub/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Bitbucket/i)).not.toBeInTheDocument();
@@ -77,11 +77,11 @@ describe("AddSourceMenu", () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it("opens the existing-document submenu and can navigate back", async () => {
+  it("opens the workspace-document submenu and can navigate back", async () => {
     const user = userEvent.setup();
     renderMenu();
     await user.click(
-      screen.getByRole("menuitem", { name: /Add existing document/i }),
+      screen.getByRole("menuitem", { name: /Select from workspace/i }),
     );
     expect(screen.getByText("No sources available")).toBeInTheDocument();
     expect(
@@ -90,7 +90,7 @@ describe("AddSourceMenu", () => {
 
     await user.click(screen.getByRole("menuitem", { name: /^Back$/i }));
     expect(
-      screen.getByRole("menuitem", { name: /Add existing document/i }),
+      screen.getByRole("menuitem", { name: /Select from workspace/i }),
     ).toBeInTheDocument();
   });
 
@@ -99,7 +99,7 @@ describe("AddSourceMenu", () => {
     renderMenu();
     await user.click(screen.getByRole("menuitem", { name: /Add from URL/i }));
     expect(screen.getByPlaceholderText("https://...")).toBeInTheDocument();
-    expect(screen.getByText("Add to workspace")).toBeInTheDocument();
+    expect(screen.getByText("Add to chat")).toBeInTheDocument();
     expect(
       screen.getByRole("menuitem", { name: /^Back$/i }),
     ).toBeInTheDocument();
@@ -111,11 +111,11 @@ describe("AddSourceMenu", () => {
     expect(menu).toHaveAttribute("aria-label", "Add files");
 
     const items = screen.getAllByRole("menuitem");
-    // Upload + existing document + URL (section labels are not menuitems)
+    // Upload + select from workspace + URL (section labels are not menuitems)
     expect(items).toHaveLength(3);
 
     expect(
-      screen.getByRole("menuitem", { name: /Add existing document/i }),
+      screen.getByRole("menuitem", { name: /Select from workspace/i }),
     ).toHaveAttribute("aria-haspopup", "true");
     expect(
       screen.getByRole("menuitem", { name: /Add from URL/i }),

@@ -307,6 +307,159 @@ function workspaceParsedFilesEndpoints(app) {
     },
   );
 
+  /**
+   * Attach an existing workspace document (by docpath) as thread chat context.
+   * Does NOT permanently embed — only injects into this chat until removed.
+   * Body: { docpath: string, threadSlug?: string }
+   */
+  app.post(
+    "/workspace/:slug/attach-document-context",
+    [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
+    async (request, response) => {
+      try {
+        const user = await userFromSession(request, response);
+        const workspace = response.locals.workspace;
+        const { docpath = null, threadSlug = null } = reqBody(request) || {};
+        if (!docpath || typeof docpath !== "string") {
+          return response
+            .status(400)
+            .json({ success: false, error: "docpath is required" });
+        }
+
+        const { fileData } = require("../utils/files");
+        const document = await fileData(docpath);
+        if (!document?.pageContent) {
+          return response.status(404).json({
+            success: false,
+            error: "Document not found or has no content",
+          });
+        }
+
+        const thread = threadSlug
+          ? await WorkspaceThread.get({
+              slug: String(threadSlug),
+              workspace_id: workspace.id,
+              user_id: user?.id || null,
+            })
+          : null;
+
+        const { file, error } =
+          await WorkspaceParsedFiles.attachDocumentAsChatContext({
+            workspace,
+            user: multiUserMode(response) ? user : null,
+            thread,
+            document,
+            sourceDocpath: docpath,
+          });
+
+        if (!file) {
+          return response
+            .status(500)
+            .json({ success: false, error: error || "Failed to attach" });
+        }
+
+        return response.status(200).json({ success: true, file, error: null });
+      } catch (e) {
+        const errorId = crypto.randomUUID();
+        consoleLogger.error(`[attach-document-context ${errorId}]`, e);
+        return response
+          .status(500)
+          .json({ success: false, error: "Internal server error", errorId });
+      }
+    },
+  );
+
+  /**
+   * Fetch a URL (web page / YouTube / etc.) and attach it as chat context only.
+   * Does NOT add permanent workspace embeddings.
+   * Body: { link: string, threadSlug?: string }
+   */
+  app.post(
+    "/workspace/:slug/attach-link-context",
+    [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
+    async (request, response) => {
+      try {
+        const user = await userFromSession(request, response);
+        const workspace = response.locals.workspace;
+        const { link = "", threadSlug = null } = reqBody(request) || {};
+        if (!link || typeof link !== "string") {
+          return response
+            .status(400)
+            .json({ success: false, error: "link is required" });
+        }
+
+        const Collector = new CollectorApi();
+        const online = await Collector.online();
+        if (!online) {
+          return response.status(503).json({
+            success: false,
+            error: "Document processing API is not online.",
+          });
+        }
+
+        const { success, reason, documents } =
+          await Collector.processLink(link);
+        if (!success || !documents?.[0]) {
+          return response
+            .status(500)
+            .json({ success: false, error: reason || "Failed to process link" });
+        }
+
+        const document = documents[0];
+        // processLink may write under documents/; load full content if needed
+        let fullDoc = document;
+        if (!fullDoc.pageContent && fullDoc.location) {
+          const { fileData } = require("../utils/files");
+          const loaded = await fileData(fullDoc.location);
+          if (loaded) fullDoc = loaded;
+        }
+        if (!fullDoc.pageContent) {
+          return response.status(500).json({
+            success: false,
+            error: "Link processed but no text content was extracted",
+          });
+        }
+
+        const thread = threadSlug
+          ? await WorkspaceThread.get({
+              slug: String(threadSlug),
+              workspace_id: workspace.id,
+              user_id: user?.id || null,
+            })
+          : null;
+
+        const { file, error } =
+          await WorkspaceParsedFiles.attachDocumentAsChatContext({
+            workspace,
+            user: multiUserMode(response) ? user : null,
+            thread,
+            document: fullDoc,
+            sourceDocpath: fullDoc.location || null,
+          });
+
+        if (!file) {
+          return response
+            .status(500)
+            .json({ success: false, error: error || "Failed to attach" });
+        }
+
+        await EventLogs.logEvent(
+          "link_attached_to_chat",
+          { link, workspace: workspace.slug },
+          user?.id,
+        );
+
+        return response.status(200).json({ success: true, file, error: null });
+      } catch (e) {
+        const errorId = crypto.randomUUID();
+        consoleLogger.error(`[attach-link-context ${errorId}]`, e);
+        return response
+          .status(500)
+          .json({ success: false, error: "Internal server error", errorId });
+      }
+    },
+  );
+
   app.post(
     "/workspace/:slug/parse",
     [

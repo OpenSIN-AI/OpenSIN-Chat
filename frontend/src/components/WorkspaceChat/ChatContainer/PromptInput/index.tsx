@@ -5,7 +5,10 @@ import { useTranslation } from "react-i18next";
 import StopGenerationButton from "./StopGenerationButton";
 import SpeechToText from "./SpeechToText";
 import AttachmentManager from "./Attachments";
+import { useEffect } from "react";
 import AttachItem from "./AttachItem";
+import DeepResearchSources from "./DeepResearchSources";
+import { applyAgentModePrefix } from "./AgentModeButton";
 import ToolsMenu from "./ToolsMenu";
 import usePromptState from "./usePromptState";
 import useIsDisabled from "./useIsDisabled";
@@ -70,6 +73,28 @@ export default function PromptInput({
 
   const agentMode = useAgentMode();
 
+  // When Deep Research sources change, rewrite [sources:…] in the prompt.
+  useEffect(() => {
+    function onRewrite(e: Event) {
+      if (agentMode?.activeMode?.id !== "deep-research") return;
+      const detail = (e as CustomEvent).detail || {};
+      const sources: string[] = Array.isArray(detail.sources)
+        ? detail.sources
+        : [];
+      const next = applyAgentModePrefix(
+        promptInput || "",
+        "deep-research",
+        sources,
+      );
+      if (next !== promptInput) {
+        sendCommand({ text: next, writeMode: "replace" });
+      }
+    }
+    window.addEventListener("agent-mode-rewrite-prefix", onRewrite);
+    return () =>
+      window.removeEventListener("agent-mode-rewrite-prefix", onRewrite);
+  }, [agentMode?.activeMode?.id, promptInput, sendCommand]);
+
   return (
     <div
       id="prompt-input-wrapper"
@@ -129,6 +154,13 @@ export default function PromptInput({
                       textareaRef={textareaRef}
                       visible={!agentSessionActive && showAgentCommand}
                       {...agentMode}
+                    />
+                    <DeepResearchSources
+                      visible={
+                        !agentSessionActive &&
+                        showAgentCommand &&
+                        agentMode?.activeMode?.id === "deep-research"
+                      }
                     />
                   </div>
                   <ToolsButton
