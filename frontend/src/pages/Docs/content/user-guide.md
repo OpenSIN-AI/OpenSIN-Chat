@@ -19,7 +19,7 @@ Kurzer Screenshot-Tour der wichtigsten Oberflächen (live erfasst):
 | Notizen | ![Notizen](/docs-screenshots/06-notizen.png) |
 | Politiker-DB | ![Politiker](/docs-screenshots/07-politiker.png) |
 | PDF-Analyse | ![PDF](/docs-screenshots/08-pdf.png) |
-| Einstellungen | ![Settings](/docs-screenshots/12-settings.png) |
+| Einstellungen | ![Settings](/docs-screenshots/12-settings-llm.png) |
 | Docs Nutzer/Technik | ![Docs](/docs-screenshots/15-docs-user.png) |
 
 ---
@@ -678,13 +678,13 @@ Ton: sachlich, kämpferisch aber seriös.
 
 ## 12. Einstellungen
 
-![Einstellungen](/docs-screenshots/12-settings.png)
+![Einstellungen](/docs-screenshots/12-settings-llm.png)
 
-![LLM-Einstellungen](/docs-screenshots/13-settings-llm-preference.png)
+![LLM-Einstellungen](/docs-screenshots/12-settings-llm.png)
 
 Öffne die Einstellungen über das **Gear-Icon** (Zahnrad) in der rechten Sidebar.
 
-![Settings](/docs-screenshots/12-settings.png)
+![Settings](/docs-screenshots/12-settings-llm.png)
 
 Verfügbare Einstellungen:
 
