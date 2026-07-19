@@ -85,46 +85,57 @@ vi.mock("@/pages/Docs/DocsToc", () => ({
 }));
 
 vi.mock("@/pages/Docs/DocsLanding", () => ({
-  default: () => <div data-testid="docs-landing">Docs Landing</div>,
+  default: ({
+    audience,
+  }: {
+    audience: string;
+    onAudienceChange: (a: string) => void;
+  }) => <div data-testid="docs-landing">Docs Landing ({audience})</div>,
 }));
 
-vi.mock("@/pages/Docs/docsManifest", () => ({
-  CATEGORY_LABELS: { test: "Test Category" },
-  getCategoryLabel: vi.fn(() => "Test Category"),
-  CATEGORY_ORDER: ["test"],
-  DOC_ENTRIES: [
-    {
-      slug: "test-doc",
-      title: "Test Document",
-      description: "A test document for unit tests.",
-      category: "test" as any,
-      file: "test-doc.md",
-      source: "docs/test-doc.md",
+vi.mock("@/pages/Docs/docsManifest", () => {
+  const testDocEntry = {
+    slug: "test-doc",
+    title: "Test Document",
+    description: "A test document for unit tests.",
+    category: "test" as any,
+    audience: "both" as const,
+    file: "test-doc.md",
+    source: "docs/test-doc.md",
+  };
+  return {
+    CATEGORY_LABELS: { test: "Test Category" },
+    getCategoryLabel: vi.fn(() => "Test Category"),
+    CATEGORY_ORDER: ["test"],
+    DEFAULT_DOCS_AUDIENCE: "user",
+    DOCS_AUDIENCE_PARAM: "audience",
+    DOCS_AUDIENCE_STORAGE_KEY: "docs-audience",
+    docsHref: (slug?: string | null, audience?: string | null) => {
+      const path = slug ? `/docs/${slug}` : "/docs";
+      return audience ? `${path}?audience=${audience}` : path;
     },
-  ],
-  getDocBySlug: vi.fn(),
-  getDocContent: vi.fn(),
-  getGroupedDocs: vi.fn(() => [
-    {
-      category: "test" as any,
-      entries: [
-        {
-          slug: "test-doc",
-          title: "Test Document",
-          description: "A test document for unit tests.",
-          category: "test" as any,
-          file: "test-doc.md",
-          source: "docs/test-doc.md",
-        },
-      ],
+    entryMatchesAudience: vi.fn(() => true),
+    parseDocsAudience: (value: string | null | undefined) => {
+      if (value === "user" || value === "developer") return value;
+      return null;
     },
-  ]),
-  getAdjacentDocs: vi.fn(() => ({ prev: null, next: null })),
-  getEditUrl: vi.fn(
-    () =>
-      "https://github.com/OpenSIN-AI/OpenSIN-Chat/blob/main/docs/test-doc.md",
-  ),
-}));
+    preferredAudienceForEntry: vi.fn(() => "user"),
+    DOC_ENTRIES: [testDocEntry],
+    getDocBySlug: vi.fn(),
+    getDocContent: vi.fn(),
+    getGroupedDocs: vi.fn(() => [
+      {
+        category: "test" as any,
+        entries: [testDocEntry],
+      },
+    ]),
+    getAdjacentDocs: vi.fn(() => ({ prev: null, next: null })),
+    getEditUrl: vi.fn(
+      () =>
+        "https://github.com/OpenSIN-AI/OpenSIN-Chat/blob/main/docs/test-doc.md",
+    ),
+  };
+});
 
 import { useParams } from "react-router";
 import { getDocBySlug, getDocContent } from "@/pages/Docs/docsManifest";
@@ -184,12 +195,13 @@ beforeEach(() => {
 
 describe("Docs page", () => {
   it("renders ThemeToggle in the header", () => {
-    mockedUseParams.mockReturnValue({ slug: "test-doc" });
+    mockedUseParams.mockReturnValue({ slug: "test-doc", audience: "both" as any });
     vi.mocked(getDocBySlug).mockReturnValue({
       slug: "test-doc",
       title: "Test Document",
       description: "A test document.",
       category: "test" as any,
+      audience: "both",
       file: "test-doc.md",
       source: "docs/test-doc.md",
     });
@@ -199,12 +211,13 @@ describe("Docs page", () => {
   });
 
   it("renders the back to app link", () => {
-    mockedUseParams.mockReturnValue({ slug: "test-doc" });
+    mockedUseParams.mockReturnValue({ slug: "test-doc", audience: "both" as any });
     vi.mocked(getDocBySlug).mockReturnValue({
       slug: "test-doc",
       title: "Test Document",
       description: "A test document.",
       category: "test" as any,
+      audience: "both",
       file: "test-doc.md",
       source: "docs/test-doc.md",
     });
@@ -214,12 +227,13 @@ describe("Docs page", () => {
   });
 
   it("renders the right-hand TOC with hidden lg:block classes", () => {
-    mockedUseParams.mockReturnValue({ slug: "test-doc" });
+    mockedUseParams.mockReturnValue({ slug: "test-doc", audience: "both" as any });
     vi.mocked(getDocBySlug).mockReturnValue({
       slug: "test-doc",
       title: "Test Document",
       description: "A test document.",
       category: "test" as any,
+      audience: "both",
       file: "test-doc.md",
       source: "docs/test-doc.md",
     });
@@ -232,12 +246,13 @@ describe("Docs page", () => {
   });
 
   it("renders the floating TOC button with lg:hidden on mobile", () => {
-    mockedUseParams.mockReturnValue({ slug: "test-doc" });
+    mockedUseParams.mockReturnValue({ slug: "test-doc", audience: "both" as any });
     vi.mocked(getDocBySlug).mockReturnValue({
       slug: "test-doc",
       title: "Test Document",
       description: "A test document.",
       category: "test" as any,
+      audience: "both",
       file: "test-doc.md",
       source: "docs/test-doc.md",
     });
@@ -249,12 +264,13 @@ describe("Docs page", () => {
   });
 
   it("opens the mobile TOC drawer when the floating button is clicked", async () => {
-    mockedUseParams.mockReturnValue({ slug: "test-doc" });
+    mockedUseParams.mockReturnValue({ slug: "test-doc", audience: "both" as any });
     vi.mocked(getDocBySlug).mockReturnValue({
       slug: "test-doc",
       title: "Test Document",
       description: "A test document.",
       category: "test" as any,
+      audience: "both",
       file: "test-doc.md",
       source: "docs/test-doc.md",
     });
@@ -272,12 +288,13 @@ describe("Docs page", () => {
   });
 
   it("closes the mobile TOC drawer when a TOC item is clicked", async () => {
-    mockedUseParams.mockReturnValue({ slug: "test-doc" });
+    mockedUseParams.mockReturnValue({ slug: "test-doc", audience: "both" as any });
     vi.mocked(getDocBySlug).mockReturnValue({
       slug: "test-doc",
       title: "Test Document",
       description: "A test document.",
       category: "test" as any,
+      audience: "both",
       file: "test-doc.md",
       source: "docs/test-doc.md",
     });
@@ -301,12 +318,13 @@ describe("Docs page", () => {
   });
 
   it("passes extracted headings to DocsToc", async () => {
-    mockedUseParams.mockReturnValue({ slug: "test-doc" });
+    mockedUseParams.mockReturnValue({ slug: "test-doc", audience: "both" as any });
     vi.mocked(getDocBySlug).mockReturnValue({
       slug: "test-doc",
       title: "Test Document",
       description: "A test document.",
       category: "test" as any,
+      audience: "both",
       file: "test-doc.md",
       source: "docs/test-doc.md",
     });
@@ -329,12 +347,13 @@ describe("Docs page", () => {
   });
 
   it("passes the markdown content to DocsMarkdown", () => {
-    mockedUseParams.mockReturnValue({ slug: "test-doc" });
+    mockedUseParams.mockReturnValue({ slug: "test-doc", audience: "both" as any });
     vi.mocked(getDocBySlug).mockReturnValue({
       slug: "test-doc",
       title: "Test Document",
       description: "A test document.",
       category: "test" as any,
+      audience: "both",
       file: "test-doc.md",
       source: "docs/test-doc.md",
     });

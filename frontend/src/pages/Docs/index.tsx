@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: MIT
 //
-// In-app developer documentation rendered at /docs and /docs/:slug.
+// In-app documentation rendered at /docs and /docs/:slug.
 // Content is curated from the repository's docs/ folder (see docsManifest.ts).
+// Supports User vs Developer audience filtering via ?audience= + localStorage.
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router";
 import { ArrowLeft } from "@phosphor-icons/react/dist/csr/ArrowLeft";
 import { ArrowRight } from "@phosphor-icons/react/dist/csr/ArrowRight";
 import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
@@ -19,32 +20,98 @@ import DocsMarkdown, { type DocHeading } from "./DocsMarkdown";
 import DocsToc from "./DocsToc";
 import DocsLanding from "./DocsLanding";
 import {
+  DEFAULT_DOCS_AUDIENCE,
+  DOCS_AUDIENCE_PARAM,
+  DOCS_AUDIENCE_STORAGE_KEY,
+  docsHref,
+  entryMatchesAudience,
   getCategoryLabel,
   getDocBySlug,
   getDocContent,
   getGroupedDocs,
   getAdjacentDocs,
   getEditUrl,
-  DOC_ENTRIES,
+  parseDocsAudience,
+  preferredAudienceForEntry,
+  type DocsAudience,
 } from "./docsManifest";
 import "./docs.css";
+
+function readStoredAudience(): DocsAudience | null {
+  try {
+    return parseDocsAudience(window.localStorage.getItem(DOCS_AUDIENCE_STORAGE_KEY));
+  } catch {
+    return null;
+  }
+}
+
+function persistAudience(audience: DocsAudience) {
+  try {
+    window.localStorage.setItem(DOCS_AUDIENCE_STORAGE_KEY, audience);
+  } catch {
+    // ignore quota / private mode
+  }
+}
+
+function DocsAudienceSwitch({
+  audience,
+  onChange,
+}: {
+  audience: DocsAudience;
+  onChange: (next: DocsAudience) => void;
+}) {
+  const { t } = useTranslation();
+  const options: { id: DocsAudience; label: string }[] = [
+    { id: "user", label: t("common.docsAudienceUser") },
+    { id: "developer", label: t("common.docsAudienceDeveloper") },
+  ];
+
+  return (
+    <div
+      role="group"
+      aria-label={t("common.docsAudienceSwitchLabel")}
+      className="inline-flex rounded-lg border border-theme-sidebar-border p-0.5 bg-theme-bg-secondary"
+    >
+      {options.map((option) => {
+        const active = audience === option.id;
+        return (
+          <button
+            key={option.id}
+            type="button"
+            onClick={() => onChange(option.id)}
+            aria-pressed={active}
+            className={`px-2.5 sm:px-3 py-1 text-xs sm:text-sm rounded-md transition-colors ${
+              active
+                ? "bg-primary-button text-white font-medium"
+                : "text-theme-text-secondary hover:text-theme-text-primary"
+            }`}
+          >
+            {option.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
 
 function DocsSidebar({
   activeSlug,
   query,
   setQuery,
   onNavigate,
+  audience,
 }: {
   activeSlug: string;
   query: string;
   setQuery: (v: string) => void;
   onNavigate: () => void;
+  audience: DocsAudience;
 }) {
   const { t } = useTranslation();
   const normalizedQuery = query.trim().toLowerCase();
 
   const grouped = useMemo(() => {
-    const groups = getGroupedDocs();
+    const groups = getGroupedDocs(audience);
     if (!normalizedQuery) return groups;
     return groups
       .map((group) => ({
@@ -56,7 +123,7 @@ function DocsSidebar({
         ),
       }))
       .filter((group) => group.entries.length > 0);
-  }, [normalizedQuery]);
+  }, [normalizedQuery, audience]);
 
   return (
     <nav
@@ -94,7 +161,7 @@ function DocsSidebar({
                 return (
                   <Link
                     key={entry.slug}
-                    to={paths.appDocs(`/${entry.slug}`)}
+                    to={docsHref(entry.slug, audience)}
                     onClick={onNavigate}
                     aria-current={isActive ? "page" : undefined}
                     className={`text-sm px-2 py-1.5 rounded-md transition-colors ${
@@ -115,9 +182,15 @@ function DocsSidebar({
   );
 }
 
-function DocsPagination({ slug }: { slug: string }) {
+function DocsPagination({
+  slug,
+  audience,
+}: {
+  slug: string;
+  audience: DocsAudience;
+}) {
   const { t } = useTranslation();
-  const { prev, next } = getAdjacentDocs(slug);
+  const { prev, next } = getAdjacentDocs(slug, audience);
   if (!prev && !next) return null;
 
   return (
@@ -127,7 +200,7 @@ function DocsPagination({ slug }: { slug: string }) {
     >
       {prev ? (
         <Link
-          to={paths.appDocs(`/${prev.slug}`)}
+          to={docsHref(prev.slug, audience)}
           className="group flex items-center gap-3 rounded-lg border border-theme-sidebar-border p-4 transition-colors hover:border-primary-button"
         >
           <ArrowLeft
@@ -148,7 +221,7 @@ function DocsPagination({ slug }: { slug: string }) {
       )}
       {next ? (
         <Link
-          to={paths.appDocs(`/${next.slug}`)}
+          to={docsHref(next.slug, audience)}
           className="group flex items-center justify-end gap-3 rounded-lg border border-theme-sidebar-border p-4 text-right transition-colors hover:border-primary-button"
         >
           <span className="flex flex-col min-w-0">
@@ -174,6 +247,8 @@ function DocsPagination({ slug }: { slug: string }) {
 export default function Docs() {
   const { t } = useTranslation();
   const { slug } = useParams();
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState("");
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [mobileTocOpen, setMobileTocOpen] = useState(false);
@@ -184,7 +259,48 @@ export default function Docs() {
   const entry = useMemo(() => (slug ? getDocBySlug(slug) : null), [slug]);
   const content = useMemo(
     () => (entry ? getDocContent(entry.file) : null),
-    [slug],
+    [entry],
+  );
+
+  const audienceFromUrl = parseDocsAudience(
+    searchParams.get(DOCS_AUDIENCE_PARAM),
+  );
+
+  // Resolve audience: URL > doc preference (deep-link) > localStorage > default.
+  const audience: DocsAudience = useMemo(() => {
+    if (audienceFromUrl) return audienceFromUrl;
+    if (entry && entry.audience !== "both") {
+      return preferredAudienceForEntry(entry, DEFAULT_DOCS_AUDIENCE);
+    }
+    return readStoredAudience() ?? DEFAULT_DOCS_AUDIENCE;
+  }, [audienceFromUrl, entry]);
+
+  // Keep ?audience= and localStorage in sync once resolved.
+  useEffect(() => {
+    persistAudience(audience);
+    if (searchParams.get(DOCS_AUDIENCE_PARAM) === audience) return;
+    const next = new URLSearchParams(searchParams);
+    next.set(DOCS_AUDIENCE_PARAM, audience);
+    setSearchParams(next, { replace: true });
+    // Only re-run when the resolved audience changes — not on every searchParams identity.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentional
+  }, [audience, setSearchParams]);
+
+  const setAudience = useCallback(
+    (next: DocsAudience) => {
+      persistAudience(next);
+      const params = new URLSearchParams(searchParams);
+      params.set(DOCS_AUDIENCE_PARAM, next);
+
+      // If the open page is not visible in the new audience, return to landing.
+      if (entry && !entryMatchesAudience(entry, next)) {
+        navigate(docsHref(null, next));
+        return;
+      }
+
+      setSearchParams(params, { replace: true });
+    },
+    [entry, navigate, searchParams, setSearchParams],
   );
 
   const handleHeadings = useCallback((next: DocHeading[]) => {
@@ -272,16 +388,20 @@ export default function Docs() {
   }, [mobileTocOpen]);
 
   const showToc = Boolean(slug && entry && content);
+  const headerTitle =
+    audience === "developer"
+      ? t("common.docsAudienceDeveloperTitle")
+      : t("common.docsTitle");
 
   return (
     <div className="flex flex-col h-screen w-screen bg-theme-bg-primary text-theme-text-primary overflow-hidden">
       {/* Top bar */}
-      <header className="flex items-center justify-between gap-4 px-4 md:px-6 h-14 border-b border-theme-sidebar-border shrink-0">
-        <div className="flex items-center gap-3">
+      <header className="flex items-center justify-between gap-3 sm:gap-4 px-4 md:px-6 h-14 border-b border-theme-sidebar-border shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <button
             type="button"
             onClick={() => setMobileNavOpen((v) => !v)}
-            className="lg:hidden p-2 rounded-md hover:bg-theme-sidebar-item-hover"
+            className="lg:hidden p-2 rounded-md hover:bg-theme-sidebar-item-hover shrink-0"
             aria-label={t("common.toggleNavigation")}
             aria-expanded={mobileNavOpen}
           >
@@ -291,15 +411,19 @@ export default function Docs() {
               <List className="w-5 h-5" aria-hidden="true" />
             )}
           </button>
-          <Link to={paths.appDocs()} className="flex items-center gap-2">
+          <Link
+            to={docsHref(null, audience)}
+            className="flex items-center gap-2 min-w-0"
+          >
             <BookOpen
-              className="w-5 h-5 text-primary-button"
+              className="w-5 h-5 text-primary-button shrink-0"
               aria-hidden="true"
             />
-            <span className="font-semibold">{t("common.developerDocs")}</span>
+            <span className="font-semibold truncate">{headerTitle}</span>
           </Link>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <DocsAudienceSwitch audience={audience} onChange={setAudience} />
           <ThemeToggle className="flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all bg-transparent hover:bg-theme-sidebar-item-hover text-theme-text-primary flex-shrink-0" />
           <Link
             to={paths.home()}
@@ -319,6 +443,7 @@ export default function Docs() {
             query={query}
             setQuery={setQuery}
             onNavigate={() => {}}
+            audience={audience}
           />
         </aside>
 
@@ -342,6 +467,7 @@ export default function Docs() {
                 query={query}
                 setQuery={setQuery}
                 onNavigate={() => setMobileNavOpen(false)}
+                audience={audience}
               />
             </aside>
           </div>
@@ -353,7 +479,7 @@ export default function Docs() {
           className="flex-1 min-w-0 overflow-y-auto px-4 md:px-10 py-8"
         >
           {!slug ? (
-            <DocsLanding />
+            <DocsLanding audience={audience} onAudienceChange={setAudience} />
           ) : !entry || !content ? (
             <div className="max-w-3xl">
               <h1 className="text-2xl font-bold mb-3">
@@ -363,7 +489,7 @@ export default function Docs() {
                 {t("common.docsNotFoundDesc")}
               </p>
               <Link
-                to={paths.appDocs()}
+                to={docsHref(null, audience)}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-button text-white hover:opacity-90 transition-opacity"
               >
                 {t("common.docsHomepage")}
@@ -391,7 +517,7 @@ export default function Docs() {
                 </a>
               </div>
               <DocsMarkdown content={content} onHeadings={handleHeadings} />
-              <DocsPagination slug={slug} />
+              <DocsPagination slug={slug} audience={audience} />
             </article>
           )}
         </main>
@@ -460,4 +586,4 @@ export default function Docs() {
 }
 
 // Re-export so the manifest's full list is reachable for potential future use.
-export { DOC_ENTRIES };
+export { DOC_ENTRIES } from "./docsManifest";

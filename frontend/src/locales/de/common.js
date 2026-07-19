@@ -848,6 +848,7 @@ const TRANSLATIONS = {
     workspaceUpdated: "Workspace aktualisiert!",
     docs: "Docs",
     developerDocs: "Entwickler-Dokumentation",
+    docsTitle: "Dokumentation",
     docsNotFound: "Seite nicht gefunden",
     docsNotFoundDesc:
       "Das angeforderte Dokument existiert nicht oder wurde verschoben.",
@@ -862,13 +863,26 @@ const TRANSLATIONS = {
     docsCopyCode: "Code kopieren",
     docsCodeCopied: "Kopiert!",
     docsLandingSubtitle:
-      "Alles, was du zum Verstehen, Betreiben und Erweitern von OpenSIN Chat brauchst.",
+      "Anleitungen für den Alltag — und technische Docs für Admins und Entwickler.",
     docsBrowseCategory: "Kategorie ansehen",
     docsPrevious: "Zurück",
     docsNext: "Weiter",
     docsEditOnGithub: "Auf GitHub bearbeiten",
     docsPagesCount_one: "{{count}} Seite",
     docsPagesCount_other: "{{count}} Seiten",
+    docsAudienceSwitchLabel: "Dokumentations-Zielgruppe",
+    docsAudienceUser: "Für Nutzer",
+    docsAudienceDeveloper: "Technik",
+    docsAudienceUserTitle: "Hilfe & Anleitung",
+    docsAudienceDeveloperTitle: "Technische Docs",
+    docsAudienceUserDesc:
+      "Workspaces, Chat, Dokumente, Recherche und tägliche Arbeitsabläufe.",
+    docsAudienceDeveloperDesc:
+      "API, Architektur, Deployment, Betrieb, Sicherheit und Runbooks.",
+    docsAudienceUserCta: "Nutzer-Docs öffnen",
+    docsAudienceDeveloperCta: "Technik-Docs öffnen",
+    docsAudienceUserBrowse: "Nutzer-Dokumentation",
+    docsAudienceDeveloperBrowse: "Technische Dokumentation",
     docsCategories: {
       gettingStarted: "Erste Schritte",
       api: "API-Referenz",
