@@ -2,6 +2,7 @@
 import { useCallback, useRef, useState } from "react";
 import { EditorContent, useEditor } from "@tiptap/react";
 import { Node, mergeAttributes } from "@tiptap/core";
+import { UndoRedo } from "@tiptap/extensions";
 import Bold from "@tiptap/extension-bold";
 import Blockquote from "@tiptap/extension-blockquote";
 import BulletList from "@tiptap/extension-bullet-list";
@@ -150,6 +151,9 @@ export default function NoteEditor({
   const editor = useEditor(
     {
       extensions: [
+        // TipTap v3: undo/redo is not bundled unless UndoRedo is registered.
+        // Without it, toolbar `editor.can().undo()` throws and breaks "add note".
+        UndoRedo,
         Document,
         Paragraph,
         Text,
@@ -345,14 +349,14 @@ export default function NoteEditor({
         >
           <ToolButton
             label="Rückgängig"
-            disabled={!editor.can().undo()}
+            disabled={!editor.can().chain().focus().undo().run()}
             onClick={() => editor.chain().focus().undo().run()}
           >
             <ArrowCounterClockwise size={15} />
           </ToolButton>
           <ToolButton
             label="Wiederholen"
-            disabled={!editor.can().redo()}
+            disabled={!editor.can().chain().focus().redo().run()}
             onClick={() => editor.chain().focus().redo().run()}
           >
             <ArrowClockwise size={15} />
