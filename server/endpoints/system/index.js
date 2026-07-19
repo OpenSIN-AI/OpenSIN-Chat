@@ -11,6 +11,7 @@ const { apiKeyEndpoints } = require("./apiKeys");
 const { dataExportEndpoints } = require("./dataExport");
 const { userManagementEndpoints } = require("./userManagement");
 const { miscEndpoints } = require("./misc");
+const { feedbackEndpoints } = require("./feedback");
 
 function systemEndpoints(app) {
   if (!app) return;
@@ -25,6 +26,7 @@ function systemEndpoints(app) {
   dataExportEndpoints(app);
   userManagementEndpoints(app);
   miscEndpoints(app);
+  feedbackEndpoints(app);
 }
 
 module.exports = { systemEndpoints };

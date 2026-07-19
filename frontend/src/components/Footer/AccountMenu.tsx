@@ -6,7 +6,6 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { ArrowUpRight } from "@phosphor-icons/react/dist/csr/ArrowUpRight";
 import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
 import { CaretUpDown } from "@phosphor-icons/react/dist/csr/CaretUpDown";
 import { ChatCircleText } from "@phosphor-icons/react/dist/csr/ChatCircleText";
@@ -27,6 +26,7 @@ import { useThemeContext } from "@/ThemeContext";
 import { useLanguageOptions } from "@/hooks/useLanguageOptions";
 import { useTranslation } from "react-i18next";
 import AccountModal from "../UserMenu/AccountModal";
+import FeedbackIssueModal from "./FeedbackIssueModal";
 import {
   AUTH_TIMESTAMP,
   AUTH_TOKEN,
@@ -35,8 +35,6 @@ import {
   USER_PROMPT_INPUT_MAP,
 } from "@/utils/constants";
 import { safeRemoveItem } from "@/utils/safeStorage";
-
-const FEEDBACK_URL = `${paths.github()}/issues/new`;
 
 const ITEM_CLASSES =
   "group flex items-center gap-x-3 w-full text-left px-2.5 py-2 rounded-lg text-sm text-theme-text-primary light:text-zinc-800 hover:bg-theme-action-menu-item-hover light:hover:bg-zinc-100 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400";
@@ -165,6 +163,7 @@ function AccountMenu({ compact = false }: { compact?: boolean }) {
   const mode = useLoginMode();
   const [open, setOpen] = useState(false);
   const [showAccountModal, setShowAccountModal] = useState(false);
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [pos, setPos] = useState<PopupPosition | null>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const popupRef = useRef<HTMLDivElement>(null);
@@ -340,21 +339,18 @@ function AccountMenu({ compact = false }: { compact?: boolean }) {
               <span className="flex-grow">{t("common.documentation")}</span>
             </Link>
 
-            <a
-              href={FEEDBACK_URL}
-              target="_blank"
-              rel="noreferrer"
+            <button
+              type="button"
               role="menuitem"
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                setShowFeedbackModal(true);
+                setOpen(false);
+              }}
               className={ITEM_CLASSES}
             >
               <ChatCircleText className={ICON_CLASSES} />
               <span className="flex-grow">{t("common.feedback")}</span>
-              <ArrowUpRight
-                className="h-4 w-4 text-theme-text-secondary light:text-slate-400"
-                aria-hidden="true"
-              />
-            </a>
+            </button>
 
             <div className="my-1 h-px bg-white/10 light:bg-slate-200" />
 
@@ -400,6 +396,11 @@ function AccountMenu({ compact = false }: { compact?: boolean }) {
           hideModal={() => setShowAccountModal(false)}
         />
       )}
+
+      <FeedbackIssueModal
+        isOpen={showFeedbackModal}
+        onClose={() => setShowFeedbackModal(false)}
+      />
     </div>
   );
 }

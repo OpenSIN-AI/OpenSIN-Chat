@@ -1111,6 +1111,44 @@ const System = {
       .catch((e) => ({ text: null, error: e.message }));
   },
 
+  /**
+   * Config for the in-app feedback → GitHub issue modal.
+   * @returns {Promise<{configured:boolean, repo:string, githubNewIssueUrl:string}|null>}
+   */
+  feedbackConfig: async function () {
+    return fetchWithTimeout(`${API_BASE}/system/feedback/config`, {
+      headers: baseHeaders(),
+    })
+      .then((res) => safeJson(res))
+      .catch(() => null);
+  },
+
+  /**
+   * Create a GitHub issue from the in-app feedback form.
+   * @param {{title:string, body?:string, labels?:string[], pageUrl?:string}} payload
+   * @returns {Promise<{success:boolean, issue?:{number:number,url:string,title:string,repo:string}, error?:string, githubNewIssueUrl?:string}>}
+   */
+  createFeedbackIssue: async function (payload) {
+    try {
+      const res = await fetch(`${API_BASE}/system/feedback`, {
+        method: "POST",
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        return {
+          success: false,
+          error: data?.error || `HTTP ${res.status}`,
+          githubNewIssueUrl: data?.githubNewIssueUrl,
+        };
+      }
+      return data;
+    } catch (e) {
+      return { success: false, error: e?.message || "Network error" };
+    }
+  },
+
   experimentalFeatures: {
     liveSync: LiveDocumentSync,
     agentPlugins: AgentPlugins,

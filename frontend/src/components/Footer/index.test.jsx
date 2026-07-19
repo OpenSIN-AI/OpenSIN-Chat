@@ -58,6 +58,21 @@ vi.mock("../UserMenu/AccountModal", () => ({
   default: () => <div data-testid="account-modal" />,
 }));
 
+vi.mock("@/models/system", () => ({
+  default: {
+    feedbackConfig: vi.fn().mockResolvedValue({
+      configured: true,
+      repo: "OpenSIN-AI/OpenSIN-Chat",
+      githubNewIssueUrl: "https://github.com/OpenSIN-AI/OpenSIN-Chat/issues/new",
+    }),
+    createFeedbackIssue: vi.fn(),
+  },
+}));
+
+vi.mock("@/utils/toast", () => ({
+  default: vi.fn(),
+}));
+
 vi.mock("react-router", () => ({
   Link: ({ to, children, ...props }) => (
     <a href={to} {...props}>
@@ -191,14 +206,22 @@ describe("Footer", () => {
     expect(screen.getByText("Sign out")).toBeInTheDocument();
   });
 
-  it("links Feedback to the GitHub new issue page", () => {
+  it("opens the in-app feedback issue modal when Feedback is clicked", async () => {
+    // ModalWrapper portals into #root
+    const root = document.createElement("div");
+    root.id = "root";
+    document.body.appendChild(root);
+
     render(<Footer />);
     fireEvent.click(screen.getByRole("button", { expanded: false }));
-    const feedback = screen.getByText("Feedback").closest("a");
-    expect(feedback).toHaveAttribute(
-      "href",
-      expect.stringContaining("/issues/new"),
-    );
-    expect(feedback).toHaveAttribute("target", "_blank");
+    const feedback = screen.getByRole("menuitem", { name: /Feedback/i });
+    expect(feedback.tagName).toBe("BUTTON");
+    fireEvent.click(feedback);
+    expect(
+      await screen.findByRole("heading", { name: /New GitHub issue/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/Short summary/i)).toBeInTheDocument();
+
+    root.remove();
   });
 });
