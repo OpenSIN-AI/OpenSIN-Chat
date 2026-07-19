@@ -167,38 +167,22 @@ async function streamChatWithWorkspace(
   } = prefetchedContext ??
   (await recentChatHistory({ user, workspace, thread, messageLimit }));
 
-  // Pinned docs — reuse pre-fetched if available, otherwise fetch with token cap.
-  const pinnedDocs =
+  // Always-on docs (legacy pin + contextMode summary/full) — single unified
+  // loader so a document is never injected twice. Reuse pre-fetched if available.
+  const alwaysOnDocs =
     prefetchedPinnedDocs ??
     (await new DocumentManager({
       workspace,
       maxTokens: LLMConnector.promptWindowLimit(),
-    }).pinnedDocs());
-  pinnedDocs.forEach((doc) => {
+    }).alwaysOnContextDocs());
+  alwaysOnDocs.forEach((doc) => {
     const { pageContent, ...metadata } = doc;
-    pinnedDocIdentifiers.push(sourceIdentifier(doc));
-    contextTexts.push(doc.pageContent);
-    sources.push({
-      text:
-        pageContent.slice(0, 1_000) + "...continued on in source document...",
-      ...metadata,
-    });
-  });
-
-  // Context-mode docs (contextMode="summary"|"full") — prepend summaries or
-  // full text for documents that should always be part of every conversation.
-  const contextModeDocs = await new DocumentManager({
-    workspace,
-    maxTokens: LLMConnector.promptWindowLimit(),
-  }).contextModeDocs();
-  contextModeDocs.forEach((doc) => {
-    const { pageContent, ...metadata } = doc;
-    if (doc.contextMode === "full") {
-      // Treat full-context docs like pinned docs so they are excluded from
-      // the similarity-search filter (avoids double-inclusion).
+    // Full-text always-on docs are excluded from similarity search to avoid
+    // duplicating the same content as RAG chunks. Summaries stay searchable.
+    if (doc.contextMode !== "summary") {
       pinnedDocIdentifiers.push(sourceIdentifier(doc));
     }
-    contextTexts.push(pageContent);
+    contextTexts.push(doc.pageContent);
     sources.push({
       text:
         pageContent.slice(0, 1_000) + "...continued on in source document...",
@@ -262,15 +246,11 @@ async function streamChatWithWorkspace(
     filterIdentifiers: pinnedDocIdentifiers,
   });
 
-  // Why does contextTexts get all the info, but sources only get current search?
-  // This is to give the ability of the LLM to "comprehend" a contextual response without
-  // populating the Citations under a response with documents the user "thinks" are irrelevant
-  // due to how we manage backfilling of the context to keep chats with the LLM more correct in responses.
-  // If a past citation was used to answer the question - that is visible in the history so it logically makes sense
-  // and does not appear to the user that a new response used information that is otherwise irrelevant for a given prompt.
-  // TLDR; reduces GitHub issues for "LLM citing document that has no answer in it" while keep answers highly accurate.
+  // Keep contextTexts and sources index-aligned so [source:N] markers map
+  // correctly to sources[N-1] in the frontend. fillSourceWindow may backfill
+  // from history — those chunks must appear in both arrays at the same index.
   contextTexts = [...contextTexts, ...filledSources.contextTexts];
-  sources = [...sources, ...vectorSearchResults.sources];
+  sources = [...sources, ...filledSources.sources];
 
   // If in query mode and no context chunks are found from search, backfill, or pins -  do not
   // let the LLM try to hallucinate a response or use general knowledge and exit early

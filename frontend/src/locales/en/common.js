@@ -490,30 +490,37 @@ const TRANSLATIONS = {
     more_actions: "More actions",
     attach_menu: {
       add_files: "Add files",
-      current_sources: "Current sources",
+      section_chat: "This chat (temporary)",
+      section_workspace: "Workspace knowledge (permanent)",
+      current_sources: "Add existing document",
+      current_sources_hint:
+        "Embeds into this workspace permanently so every chat can search it.",
       add_from_url: "Add from URL",
-      import_from_github: "Import from GitHub",
-      create_from_bitbucket: "Create from Bitbucket",
+      url_menu_hint: "Scrape a page or YouTube video into workspace knowledge.",
       upload_from_computer: "Upload from computer",
-      github_coming_soon: "GitHub integration coming soon",
-      bitbucket_coming_soon: "Bitbucket integration coming soon",
+      upload_hint:
+        "Attached to this thread until you remove it. Not permanent workspace knowledge.",
       loading: "Loading...",
       no_sources: "No sources available",
       no_workspace:
         "No workspace available. Send a message first to create a workspace.",
-      add_success: "Source added to workspace",
+      add_success: "Added to workspace knowledge (permanent)",
       add_failed: "Could not add source",
       url_hint:
-        "Paste the URL of a website or YouTube video to add it as a source.",
-      url_submit: "Add source",
+        "Paste the URL of a website or YouTube video to add it as permanent workspace knowledge.",
+      url_submit: "Add to workspace",
       url_submitting: "Adding...",
-      url_success: "URL added as source",
+      url_success: "URL added to workspace knowledge",
       url_failed: "Could not add URL",
       url_invalid:
         "Invalid URL. Please check the format (e.g. https://example.com).",
       url_incomplete: "Please enter a full web address (e.g. example.com).",
       url_server_error: "Server error loading URL ({{status}} {{statusText}})",
     },
+    attach_active_context:
+      "{{count}} file(s) active in this thread — stay until removed",
+    no_cited_sources:
+      "No citations yet — ask a question about your sources.",
     source_filter_label: "Source Filter",
     source_filter_all: "All",
     source_filter_documents: "Documents",
@@ -3902,7 +3909,9 @@ const TRANSLATIONS = {
     },
   },
   parsedFilesMenu: {
-    currentContext: "Current Context ({{count}} files)",
+    currentContext: "Thread context ({{count}} files)",
+    threadScopeHint:
+      "These files stay attached to this thread for every message until you remove them.",
     contextLimitTooltip:
       "You have exceeded the context window limit. Some files may be truncated or excluded from chat responses. Responses may hallucinate or lack relevant information.",
     contextFullWarning:
@@ -5338,6 +5347,8 @@ const TRANSLATIONS = {
     summaryAlways: "Summary always in context (token-efficient)",
     fullText: "Full text (Pin)",
     entireDoc: "Entire document always in context",
+    setFailed: "Failed to set context mode.",
+    setError: "Error: {{message}}",
   },
   transformations: {
     confirmDelete: "Delete this transformation?",

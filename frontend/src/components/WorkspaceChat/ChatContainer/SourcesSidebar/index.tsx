@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { useTranslation } from "react-i18next";
 import { Globe } from "@phosphor-icons/react/dist/csr/Globe";
@@ -49,29 +49,66 @@ function TabButton({ id, label, icon: Icon, activeTab, onSelect }: any) {
   );
 }
 
+function FilterChip({
+  label,
+  active,
+  onClick,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      className={`h-6 px-2.5 rounded-full border-none cursor-pointer text-[11px] font-medium transition-colors ${
+        active
+          ? "bg-theme-bg-tertiary text-theme-text-primary"
+          : "bg-transparent text-theme-text-muted hover:bg-theme-bg-secondary"
+      }`}
+    >
+      {label}
+    </button>
+  );
+}
+
 export default function SourcesSidebar({ workspace }: any) {
   const { sources, sidebarOpen, closeSidebar } = useSourcesSidebar();
   const { t } = useTranslation();
   const isMobile = useIsMobileLayout();
   const [selectedSource, setSelectedSource] = useState<any>(null);
-  const { sourceFilter, isDocumentSource, isMediaSource } = useChatSidebar();
+  const {
+    sourceFilter,
+    setSourceFilter,
+    SOURCE_FILTERS,
+    isDocumentSource,
+    isMediaSource,
+  } = useChatSidebar();
 
   const combined = combineLikeSources(sources);
 
-  // Filter chat sources based on active filter
   const filteredChatSources = (combined as any).filter((source) => {
     const chunkSource = source.chunks?.[0]?.chunkSource;
     if (sourceFilter === "documents") return isDocumentSource(chunkSource);
     if (sourceFilter === "media") return isMediaSource(chunkSource);
-    return true; // "all"
+    return true;
   });
   const hasChatSources = filteredChatSources.length > 0;
+  const hasAnySources = (combined as any).length > 0;
 
-  // Default to the cited answer sources when present, otherwise the file
-  // manager (Dateien) so the panel always opens on something useful.
   const [tab, setTab] = useState<SourcesTab>(
-    hasChatSources ? "zitiert" : "dateien",
+    hasAnySources ? "zitiert" : "dateien",
   );
+
+  // When a new answer arrives with sources, surface the Zitiert tab so the
+  // user immediately sees what was cited (was previously only set on mount).
+  useEffect(() => {
+    if (sidebarOpen && hasAnySources) {
+      setTab("zitiert");
+    }
+  }, [sidebarOpen, hasAnySources, sources]);
 
   if (isMobile) {
     return (
@@ -116,8 +153,6 @@ export default function SourcesSidebar({ workspace }: any) {
     <MemoriesProvider workspace={workspace} forceOpen={sidebarOpen}>
       <ChatSidebar isOpen={sidebarOpen}>
         <div className="w-full h-full bg-theme-bg-sidebar flex flex-col overflow-hidden">
-          {/* Header + tab strip live in the padded shell; the Dateien tab
-              renders its own full-bleed body, so its container is unpadded. */}
           <div className="px-4 pt-4 flex flex-col gap-3 shrink-0">
             <PanelHeader
               title={t("chat_window.sources", "Quellen")}
@@ -137,7 +172,6 @@ export default function SourcesSidebar({ workspace }: any) {
             </div>
           </div>
 
-          {/* Tab bodies */}
           {tab === "dateien" && (
             <div className="flex-1 min-h-0 overflow-hidden">
               <FilesystemPanelBody
@@ -150,11 +184,36 @@ export default function SourcesSidebar({ workspace }: any) {
 
           {tab === "zitiert" && (
             <div className="flex-1 min-h-0 overflow-y-auto no-scroll px-4 py-3 flex flex-col gap-3">
+              <div className="flex items-center gap-1 flex-wrap">
+                <span className="text-[10px] text-theme-text-muted mr-1">
+                  {t("chat_window.source_filter_label")}
+                </span>
+                <FilterChip
+                  label={t("chat_window.source_filter_all")}
+                  active={sourceFilter === SOURCE_FILTERS.all}
+                  onClick={() => setSourceFilter(SOURCE_FILTERS.all)}
+                />
+                <FilterChip
+                  label={t("chat_window.source_filter_documents")}
+                  active={sourceFilter === SOURCE_FILTERS.documents}
+                  onClick={() => setSourceFilter(SOURCE_FILTERS.documents)}
+                />
+                <FilterChip
+                  label={t("chat_window.source_filter_media")}
+                  active={sourceFilter === SOURCE_FILTERS.media}
+                  onClick={() => setSourceFilter(SOURCE_FILTERS.media)}
+                />
+              </div>
               {!hasChatSources ? (
                 <p className="text-sm text-zinc-400 light:text-slate-500 text-center py-4">
-                  {t("chat_window.no_sources_filter", {
-                    filter: t(`chat_window.source_filter_${sourceFilter}`),
-                  })}
+                  {hasAnySources
+                    ? t("chat_window.no_sources_filter", {
+                        filter: t(`chat_window.source_filter_${sourceFilter}`),
+                      })
+                    : t(
+                        "chat_window.no_cited_sources",
+                        "Noch keine Zitationen — stelle eine Frage zu deinen Quellen.",
+                      )}
                 </p>
               ) : (
                 (filteredChatSources as any).map((source, idx) => (

@@ -47,9 +47,14 @@ function contextModeEndpoints(app) {
           return response.status(404).json({ error: "Document not found" });
         }
 
+        // Keep legacy `pinned` in sync with contextMode so older code paths
+        // (and any external clients still using update-pin) stay consistent:
+        //   full → pinned true (always-on full text)
+        //   off / summary → pinned false
+        const pinned = contextMode === "full";
         await Document._updateAll(
           { docId: String(docId), workspaceId: Number(workspace.id) },
-          { contextMode },
+          { contextMode, pinned },
         );
 
         // Pre-generate a summary immediately when switching to summary mode so

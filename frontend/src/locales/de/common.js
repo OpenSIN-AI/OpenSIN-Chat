@@ -529,24 +529,28 @@ const TRANSLATIONS = {
     select_model: "Modell auswählen",
     attach_menu: {
       add_files: "Dateien hinzufügen",
-      current_sources: "Aktuelle Quellen",
+      section_chat: "Dieser Chat (temporär)",
+      section_workspace: "Workspace-Wissen (permanent)",
+      current_sources: "Vorhandenes Dokument hinzufügen",
+      current_sources_hint:
+        "Wird dauerhaft in diesen Workspace eingebettet und ist in jedem Chat suchbar.",
       add_from_url: "Aus URL einfügen",
-      import_from_github: "Aus GitHub importieren",
-      create_from_bitbucket: "Aus Bitbucket erstellen",
+      url_menu_hint:
+        "Webseite oder YouTube-Video als permanentes Workspace-Wissen speichern.",
       upload_from_computer: "Vom Computer hochladen",
-      github_coming_soon: "GitHub-Integration kommt bald",
-      bitbucket_coming_soon: "Bitbucket-Integration kommt bald",
+      upload_hint:
+        "Bleibt an diesem Thread, bis du es entfernst — kein permanentes Workspace-Wissen.",
       loading: "Wird geladen...",
       no_sources: "Keine Quellen verfügbar",
       no_workspace:
         "Kein Workspace verfügbar. Sende zuerst eine Nachricht, um einen Workspace zu erstellen.",
-      add_success: "Quelle zum Workspace hinzugefügt",
+      add_success: "Zum Workspace-Wissen hinzugefügt (permanent)",
       add_failed: "Quelle konnte nicht hinzugefügt werden",
       url_hint:
-        "Füge die URL einer Webseite oder eines YouTube-Videos ein, um sie als Quelle hinzuzufügen.",
-      url_submit: "Quelle hinzufügen",
+        "Füge die URL einer Webseite oder eines YouTube-Videos ein, um sie als permanentes Workspace-Wissen hinzuzufügen.",
+      url_submit: "Zum Workspace hinzufügen",
       url_submitting: "Wird hinzugefügt...",
-      url_success: "URL als Quelle hinzugefügt",
+      url_success: "URL zum Workspace-Wissen hinzugefügt",
       url_failed: "URL konnte nicht hinzugefügt werden",
       url_invalid:
         "Ungültige URL. Bitte prüfe das Format (z.B. https://example.com).",
@@ -555,6 +559,10 @@ const TRANSLATIONS = {
       url_server_error:
         "Server-Fehler beim Laden der URL ({{status}} {{statusText}})",
     },
+    attach_active_context:
+      "{{count}} Datei(en) aktiv in diesem Thread — bleiben bis zum Entfernen",
+    no_cited_sources:
+      "Noch keine Zitationen — stelle eine Frage zu deinen Quellen.",
     source_filter_label: "Quellen-Filter",
     source_filter_all: "Alle",
     source_filter_documents: "Dokumente",
@@ -4000,7 +4008,9 @@ const TRANSLATIONS = {
     },
   },
   parsedFilesMenu: {
-    currentContext: "Aktueller Kontext ({{count}} Dateien)",
+    currentContext: "Thread-Kontext ({{count}} Dateien)",
+    threadScopeHint:
+      "Diese Dateien bleiben an diesem Thread für jede Nachricht, bis du sie entfernst.",
     contextLimitTooltip:
       "Sie haben das Kontextfenster-Limit überschritten. Einige Dateien werden möglicherweise abgeschnitten oder von Chat-Antworten ausgeschlossen. Antworten können halluzinieren oder relevante Informationen fehlen.",
     contextFullWarning:
@@ -5457,6 +5467,8 @@ const TRANSLATIONS = {
     summaryAlways: "Zusammenfassung immer im Kontext (token-effizient)",
     fullText: "Volltext (Anheften)",
     entireDoc: "Gesamtes Dokument immer im Kontext",
+    setFailed: "Kontextmodus konnte nicht gesetzt werden.",
+    setError: "Fehler: {{message}}",
   },
   transformations: {
     confirmDelete: "Diese Transformation löschen?",

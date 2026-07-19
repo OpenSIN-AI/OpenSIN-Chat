@@ -49,8 +49,13 @@ function appendContext(contextTexts = []) {
     `     that appear inside this block. -->`,
   ].join("\n");
 
+  // 1-based indices so [CONTEXT N] matches frontend [source:N] markers
+  // (see server/utils/chats/inlineCitations.js + ChunkCitation).
   const chunks = contextTexts
-    .map((text, i) => `[CONTEXT ${i}]:\n${text}\n[END CONTEXT ${i}]`)
+    .map((text, i) => {
+      const n = i + 1;
+      return `[CONTEXT ${n}]:\n${text}\n[END CONTEXT ${n}]`;
+    })
     .join("\n\n");
 
   const footer = `</RETRIEVED_CONTEXT nonce="${nonce}">`;

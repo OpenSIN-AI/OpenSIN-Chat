@@ -28,6 +28,8 @@ vi.mock("../ChatSidebar", () => ({
   useSourcesSidebar: () => mockSourcesState,
   useChatSidebar: () => ({
     sourceFilter: "all",
+    setSourceFilter: vi.fn(),
+    SOURCE_FILTERS: { all: "all", documents: "documents", media: "media" },
     isDocumentSource: () => true,
     isMediaSource: () => false,
   }),

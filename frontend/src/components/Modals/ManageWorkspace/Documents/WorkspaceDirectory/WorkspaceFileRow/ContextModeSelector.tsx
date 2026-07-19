@@ -28,6 +28,51 @@ const MODES = [
 type ContextMode = (typeof MODES)[number]["value"];
 
 /**
+ * Resolve the effective context mode for a workspace document from the
+ * multiple places the backend may expose it:
+ * 1. item.contextModes[workspaceId] (file picker enrichment)
+ * 2. item.contextMode (if present)
+ * 3. workspace.documents[].contextMode (workspace API)
+ * 4. legacy pin → "full"
+ */
+function resolveContextMode(
+  workspace: any,
+  docId: string,
+  item: any,
+): ContextMode {
+  const wsId = workspace?.id;
+  const fromMap =
+    item?.contextModes?.[wsId] ?? item?.contextModes?.[String(wsId)];
+  if (fromMap === "off" || fromMap === "summary" || fromMap === "full") {
+    return fromMap;
+  }
+  if (
+    item?.contextMode === "off" ||
+    item?.contextMode === "summary" ||
+    item?.contextMode === "full"
+  ) {
+    return item.contextMode;
+  }
+  const fromWorkspace = workspace?.documents?.find(
+    (d: any) =>
+      d.docId === docId ||
+      d.docId === item?.id ||
+      (item?.name && d.docpath?.endsWith(`/${item.name}`)) ||
+      d.docpath === item?.name,
+  );
+  if (
+    fromWorkspace?.contextMode === "summary" ||
+    fromWorkspace?.contextMode === "full" ||
+    fromWorkspace?.contextMode === "off"
+  ) {
+    return fromWorkspace.contextMode;
+  }
+  if (item?.pinnedWorkspaces?.includes(wsId)) return "full";
+  if (fromWorkspace?.pinned) return "full";
+  return "off";
+}
+
+/**
  * Replaces the binary Pin-Toggle with a three-level context mode selector.
  * Backend: PATCH /workspace/:slug/documents/:docId/context-mode
  */
@@ -40,16 +85,20 @@ const ContextModeSelector = memo(function ContextModeSelector({
   docId: string;
   item: any;
 }) {
-  const initialMode: ContextMode =
-    item?.contextMode ||
-    (item?.pinnedWorkspaces?.includes(workspace.id) ? "full" : "off");
-  const [mode, setMode] = useState<ContextMode>(initialMode);
+  const [mode, setMode] = useState<ContextMode>(() =>
+    resolveContextMode(workspace, docId, item),
+  );
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
 
   const getLabel = (m: (typeof MODES)[number]) => t(m.labelKey);
   const getDescription = (m: (typeof MODES)[number]) => t(m.descriptionKey);
+
+  // Re-sync after document list / workspace refresh so the UI matches backend.
+  useEffect(() => {
+    setMode(resolveContextMode(workspace, docId, item));
+  }, [workspace, docId, item, item?.contextMode, item?.contextModes, item?.pinnedWorkspaces]);
 
   useEffect(() => {
     if (!open) return;
@@ -65,6 +114,9 @@ const ContextModeSelector = memo(function ContextModeSelector({
     e.stopPropagation();
     setOpen(false);
     if (newMode === mode) return;
+    const previous = mode;
+    // Optimistic UI so the mode does not appear to "snap back" while saving.
+    setMode(newMode);
     try {
       const success = await Workspace.setContextModeForDocument(
         workspace.slug,
@@ -72,10 +124,10 @@ const ContextModeSelector = memo(function ContextModeSelector({
         newMode,
       );
       if (!success) {
-        showToast("Failed to set context mode.", "error", { clear: true });
+        setMode(previous);
+        showToast(t("contextMode.setFailed"), "error", { clear: true });
         return;
       }
-      setMode(newMode);
       const activeMode = MODES.find((m) => m.value === newMode);
       showToast(
         `${t("contextMode.label")}: ${activeMode ? getLabel(activeMode) : ""}`,
@@ -83,8 +135,13 @@ const ContextModeSelector = memo(function ContextModeSelector({
         { clear: true },
       );
     } catch (error: any) {
+      setMode(previous);
       logger.error(error);
-      showToast(`Error: ${error.message}`, "error", { clear: true });
+      showToast(
+        t("contextMode.setError", { message: error?.message || String(error) }),
+        "error",
+        { clear: true },
+      );
     }
   };
 

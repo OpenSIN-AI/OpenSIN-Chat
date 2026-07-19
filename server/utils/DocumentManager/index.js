@@ -28,53 +28,75 @@ class DocumentManager {
   }
 
   /**
-   * Returns documents whose contextMode is "summary" or "full".
-   * "full" documents are loaded exactly like pinned docs (full page content).
-   * "summary" documents are loaded by generating/retrieving an LLM summary and
-   * returning it as a lightweight page-content substitute.
+   * Unified always-on context loader.
+   *
+   * Includes documents that should be prepended to every chat turn:
+   * - contextMode === "summary" → LLM summary
+   * - contextMode === "full"    → full page content
+   * - legacy pinned=true with contextMode off/null → treated as full
+   *
+   * Deduplicates by docId so a doc that is both pinned and full is loaded once.
    *
    * @returns {Promise<Array<{pageContent: string, token_count_estimate: number, filename: string, docId: string, contextMode: string}>>}
    */
-  async contextModeDocs() {
+  async alwaysOnContextDocs() {
     if (!this.workspace) return [];
     const { Document } = require("../../models/documents");
     const { generateDocumentSummary } = require("../documentSummary");
 
     const docs = await Document.where({
       workspaceId: Number(this.workspace.id),
-      contextMode: { in: ["summary", "full"] },
+      OR: [{ pinned: true }, { contextMode: { in: ["summary", "full"] } }],
     });
 
     if (docs.length === 0) return [];
 
+    // Dedupe by docId (same document must not be injected twice).
+    const byDocId = new Map();
+    for (const doc of docs) {
+      if (!byDocId.has(doc.docId)) byDocId.set(doc.docId, doc);
+    }
+
     const results = await Promise.all(
-      docs.map(async (doc) => {
-        if (doc.contextMode === "full") {
-          // Reuse the same loader as pinnedDocs.
-          const data = await this.loadPinnedDocument(doc.docpath).catch((e) => {
-            this.log(
-              `Failed to load full-context document ${doc.docpath}: ${e.message}`,
-            );
-            return null;
+      Array.from(byDocId.values()).map(async (doc) => {
+        const mode =
+          doc.contextMode === "summary"
+            ? "summary"
+            : doc.contextMode === "full" || doc.pinned
+              ? "full"
+              : "off";
+
+        if (mode === "off") return null;
+
+        if (mode === "summary") {
+          const summary = await generateDocumentSummary({
+            document: doc,
+            workspace: this.workspace,
           });
-          if (!data) return null;
-          return { ...data, docId: doc.docId, contextMode: "full" };
+          if (!summary) return null;
+          const tokenEstimate = Math.ceil(summary.length / 4);
+          return {
+            pageContent: `[Zusammenfassung von: ${doc.filename}]\n\n${summary}`,
+            token_count_estimate: tokenEstimate,
+            filename: doc.filename,
+            docId: doc.docId,
+            contextMode: "summary",
+            title: doc.filename,
+          };
         }
 
-        // contextMode === "summary"
-        const summary = await generateDocumentSummary({
-          document: doc,
-          workspace: this.workspace,
+        // full (explicit or legacy pin)
+        const data = await this.loadPinnedDocument(doc.docpath).catch((e) => {
+          this.log(
+            `Failed to load full-context document ${doc.docpath}: ${e.message}`,
+          );
+          return null;
         });
-        if (!summary) return null;
-
-        const tokenEstimate = Math.ceil(summary.length / 4);
+        if (!data) return null;
         return {
-          pageContent: `[Zusammenfassung von: ${doc.filename}]\n\n${summary}`,
-          token_count_estimate: tokenEstimate,
-          filename: doc.filename,
+          ...data,
           docId: doc.docId,
-          contextMode: "summary",
+          contextMode: "full",
         };
       }),
     );
@@ -85,7 +107,7 @@ class DocumentManager {
       if (!data) continue;
       if (tokens >= this.maxTokens) {
         this.log(
-          `Skipping context-mode document — token limit of ${this.maxTokens} already exceeded.`,
+          `Skipping always-on document — token limit of ${this.maxTokens} already exceeded.`,
         );
         continue;
       }
@@ -94,9 +116,17 @@ class DocumentManager {
     }
 
     this.log(
-      `Found ${contextDocs.length} context-mode sources — prepending with ~${tokens} tokens.`,
+      `Found ${contextDocs.length} always-on sources — prepending with ~${tokens} tokens.`,
     );
     return contextDocs;
+  }
+
+  /**
+   * @deprecated Prefer alwaysOnContextDocs(). Kept for callers that still
+   * request "context mode" docs; now returns the unified always-on set.
+   */
+  async contextModeDocs() {
+    return this.alwaysOnContextDocs();
   }
 
   async loadPinnedDocument(docPath) {
@@ -116,40 +146,13 @@ class DocumentManager {
     return data;
   }
 
+  /**
+   * Always-on full/summary context for a workspace.
+   * Historically only returned pinned docs; now returns the unified set
+   * (legacy pin + contextMode summary/full) without duplicates.
+   */
   async pinnedDocs() {
-    if (!this.workspace) return [];
-    const docPaths = (await this.pinnedDocuments()).map((doc) => doc.docpath);
-    if (docPaths.length === 0) return [];
-
-    const results = await Promise.all(
-      docPaths.map((docPath) =>
-        this.loadPinnedDocument(docPath).catch((e) => {
-          this.log(`Failed to load pinned document ${docPath}: ${e.message}`);
-          return null;
-        }),
-      ),
-    );
-
-    let tokens = 0;
-    const pinnedDocs = [];
-    for (const data of results) {
-      if (!data) continue;
-
-      if (tokens >= this.maxTokens) {
-        this.log(
-          `Skipping document - Token limit of ${this.maxTokens} has already been exceeded by pinned documents.`,
-        );
-        continue;
-      }
-
-      pinnedDocs.push(data);
-      tokens += data.token_count_estimate || 0;
-    }
-
-    this.log(
-      `Found ${pinnedDocs.length} pinned sources - prepending to content with ~${tokens} tokens of content.`,
-    );
-    return pinnedDocs;
+    return this.alwaysOnContextDocs();
   }
 }
 

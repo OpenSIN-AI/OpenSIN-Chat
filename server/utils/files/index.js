@@ -91,14 +91,18 @@ async function viewLocalFiles() {
         .then((results) => results.filter((i) => hasRequiredMetadata(i))); // Remove invalid file structures
       subdocs.items.push(...results);
 
-      // Grab the pinned workspaces and watched documents for this folder's documents
-      // at the time of the query so we don't have to re-query the database for each file
+      // Grab the pinned workspaces, context modes, and watched documents for
+      // this folder's documents at the time of the query so we don't have to
+      // re-query the database for each file
       const pinnedWorkspacesByDocument =
         await getPinnedWorkspacesByDocument(filenames);
+      const contextModesByDocument =
+        await getContextModesByDocument(filenames);
       const watchedDocumentsFilenames =
         await getWatchedDocumentFilenames(filenames);
       for (const item of subdocs.items) {
         item.pinnedWorkspaces = pinnedWorkspacesByDocument[item.name] || [];
+        item.contextModes = contextModesByDocument[item.name] || {};
         item.watched =
           Object.prototype.hasOwnProperty.call(
             watchedDocumentsFilenames,
@@ -192,13 +196,15 @@ async function getDocumentsByFolder(folderName = "") {
     filenames[cachefilename] = file;
   }
 
-  // Get pinned and watched information for each document in the folder
+  // Get pinned, context-mode, and watched information for each document
   const pinnedWorkspacesByDocument =
     await getPinnedWorkspacesByDocument(filenames);
+  const contextModesByDocument = await getContextModesByDocument(filenames);
   const watchedDocumentsFilenames =
     await getWatchedDocumentFilenames(filenames);
   for (let doc of documents) {
     doc.pinnedWorkspaces = pinnedWorkspacesByDocument[doc.name] || [];
+    doc.contextModes = contextModesByDocument[doc.name] || {};
     doc.watched = Object.prototype.hasOwnProperty.call(
       watchedDocumentsFilenames,
       doc.name,
@@ -496,6 +502,39 @@ async function getPinnedWorkspacesByDocument(filenames = []) {
     if (!result[filename]) result[filename] = [];
     if (!result[filename].includes(workspaceId))
       result[filename].push(workspaceId);
+    return result;
+  }, {});
+}
+
+/**
+ * @param {Record<string, string>} filenames - map of docpath → picker filename
+ * @returns {Promise<Record<string, Record<string|number, string>>>}
+ *   filename → { [workspaceId]: contextMode }
+ */
+async function getContextModesByDocument(filenames = {}) {
+  const paths = Object.keys(filenames);
+  if (paths.length === 0) return {};
+  return (
+    await Document.where(
+      {
+        docpath: { in: paths },
+        contextMode: { in: ["summary", "full"] },
+      },
+      null,
+      null,
+      null,
+      {
+        workspaceId: true,
+        docpath: true,
+        contextMode: true,
+      },
+    )
+  ).reduce((result, { workspaceId, docpath, contextMode }) => {
+    const filename = filenames[docpath];
+    if (!filename) return result;
+    if (!result[filename]) result[filename] = {};
+    result[filename][workspaceId] = contextMode;
+    result[filename][String(workspaceId)] = contextMode;
     return result;
   }, {});
 }

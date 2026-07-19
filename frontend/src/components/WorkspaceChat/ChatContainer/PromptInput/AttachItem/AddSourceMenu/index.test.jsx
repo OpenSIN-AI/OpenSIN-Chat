@@ -4,12 +4,10 @@ import {
   render,
   screen,
   waitFor,
-  within,
   fireEvent,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import AddSourceMenu from "./index";
-import showToast from "@/utils/toast";
 
 vi.mock("react-i18next", async () => {
   const { createI18nMock } = await import("@/test/i18nMock");
@@ -59,13 +57,17 @@ describe("AddSourceMenu", () => {
     );
   }
 
-  it("renders the v0-style root menu items", () => {
+  it("renders sectioned root menu without stub integrations", () => {
     renderMenu();
-    expect(screen.getByText("Import from GitHub")).toBeInTheDocument();
-    expect(screen.getByText("Create from Bitbucket")).toBeInTheDocument();
+    expect(screen.getByText("This chat (temporary)")).toBeInTheDocument();
+    expect(
+      screen.getByText("Workspace knowledge (permanent)"),
+    ).toBeInTheDocument();
     expect(screen.getByText("Upload from computer")).toBeInTheDocument();
-    expect(screen.getByText("Current sources")).toBeInTheDocument();
+    expect(screen.getByText("Add existing document")).toBeInTheDocument();
     expect(screen.getByText("Add from URL")).toBeInTheDocument();
+    expect(screen.queryByText(/GitHub/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Bitbucket/i)).not.toBeInTheDocument();
   });
 
   it("triggers the local file upload handler and closes the menu", () => {
@@ -75,43 +77,11 @@ describe("AddSourceMenu", () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it("shows a coming-soon toast for the Bitbucket placeholder", () => {
-    renderMenu();
-    fireEvent.click(screen.getByText("Create from Bitbucket"));
-    expect(showToast).toHaveBeenCalledWith(
-      "Bitbucket integration coming soon",
-      "info",
-    );
-  });
-
-  it("renders the Bitbucket SVG icon on the Bitbucket row", () => {
-    renderMenu();
-    const row = screen.getByRole("menuitem", {
-      name: /Create from Bitbucket/i,
-    });
-    expect(within(row).getByTestId("bitbucket-icon")).toBeInTheDocument();
-    expect(row.querySelector("svg")).toBeInTheDocument();
-  });
-
-  it("shows a coming-soon toast for the GitHub placeholder and does not trigger upload", async () => {
+  it("opens the existing-document submenu and can navigate back", async () => {
     const user = userEvent.setup();
     renderMenu();
     await user.click(
-      screen.getByRole("menuitem", { name: /Import from GitHub/i }),
-    );
-    expect(showToast).toHaveBeenCalledWith(
-      "GitHub integration coming soon",
-      "info",
-    );
-    expect(onAddLocalFiles).not.toHaveBeenCalled();
-    expect(onClose).not.toHaveBeenCalled();
-  });
-
-  it("opens the Current sources submenu and can navigate back", async () => {
-    const user = userEvent.setup();
-    renderMenu();
-    await user.click(
-      screen.getByRole("menuitem", { name: /Current sources/i }),
+      screen.getByRole("menuitem", { name: /Add existing document/i }),
     );
     expect(screen.getByText("No sources available")).toBeInTheDocument();
     expect(
@@ -120,7 +90,7 @@ describe("AddSourceMenu", () => {
 
     await user.click(screen.getByRole("menuitem", { name: /^Back$/i }));
     expect(
-      screen.getByRole("menuitem", { name: /Current sources/i }),
+      screen.getByRole("menuitem", { name: /Add existing document/i }),
     ).toBeInTheDocument();
   });
 
@@ -129,7 +99,7 @@ describe("AddSourceMenu", () => {
     renderMenu();
     await user.click(screen.getByRole("menuitem", { name: /Add from URL/i }));
     expect(screen.getByPlaceholderText("https://...")).toBeInTheDocument();
-    expect(screen.getByText("Add source")).toBeInTheDocument();
+    expect(screen.getByText("Add to workspace")).toBeInTheDocument();
     expect(
       screen.getByRole("menuitem", { name: /^Back$/i }),
     ).toBeInTheDocument();
@@ -141,10 +111,11 @@ describe("AddSourceMenu", () => {
     expect(menu).toHaveAttribute("aria-label", "Add files");
 
     const items = screen.getAllByRole("menuitem");
-    expect(items).toHaveLength(5);
+    // Upload + existing document + URL (section labels are not menuitems)
+    expect(items).toHaveLength(3);
 
     expect(
-      screen.getByRole("menuitem", { name: /Current sources/i }),
+      screen.getByRole("menuitem", { name: /Add existing document/i }),
     ).toHaveAttribute("aria-haspopup", "true");
     expect(
       screen.getByRole("menuitem", { name: /Add from URL/i }),
@@ -201,7 +172,7 @@ describe("AddSourceMenu", () => {
     await user.click(screen.getByText("Open menu"));
     await waitFor(() =>
       expect(
-        screen.getByRole("menuitem", { name: /Import from GitHub/i }),
+        screen.getByRole("menuitem", { name: /Upload from computer/i }),
       ).toHaveFocus(),
     );
 
@@ -214,13 +185,13 @@ describe("AddSourceMenu", () => {
     const user = userEvent.setup();
     renderWithTrigger();
     await user.click(screen.getByText("Open menu"));
-    const first = screen.getByRole("menuitem", { name: /Import from GitHub/i });
-    const second = screen.getByRole("menuitem", {
-      name: /Create from Bitbucket/i,
-    });
-    const third = screen.getByRole("menuitem", {
+    const first = screen.getByRole("menuitem", {
       name: /Upload from computer/i,
     });
+    const second = screen.getByRole("menuitem", {
+      name: /Add existing document/i,
+    });
+    const third = screen.getByRole("menuitem", { name: /Add from URL/i });
 
     await waitFor(() => expect(first).toHaveFocus());
 
@@ -245,7 +216,7 @@ describe("AddSourceMenu", () => {
     expect(items[0]).toHaveFocus();
   });
 
-  it("selects an item with the Enter key", async () => {
+  it("selects upload with Enter and closes", async () => {
     const user = userEvent.setup();
     renderWithTrigger();
     await user.click(screen.getByText("Open menu"));
@@ -257,36 +228,5 @@ describe("AddSourceMenu", () => {
     await user.keyboard("{Enter}");
     expect(onAddLocalFiles).toHaveBeenCalledTimes(1);
     expect(onClose).toHaveBeenCalledTimes(1);
-  });
-
-  it("selects an item with the Space key", async () => {
-    const user = userEvent.setup();
-    renderWithTrigger();
-    await user.click(screen.getByText("Open menu"));
-    const bitbucket = screen.getByRole("menuitem", {
-      name: /Create from Bitbucket/i,
-    });
-    bitbucket.focus();
-
-    await user.keyboard(" ");
-    expect(showToast).toHaveBeenCalledWith(
-      "Bitbucket integration coming soon",
-      "info",
-    );
-  });
-
-  it("triggers the upload handler from the keyboard without opening the submenus", async () => {
-    const user = userEvent.setup();
-    renderWithTrigger();
-    await user.click(screen.getByText("Open menu"));
-    const upload = screen.getByRole("menuitem", {
-      name: /Upload from computer/i,
-    });
-    upload.focus();
-
-    await user.keyboard("{Enter}");
-    expect(onAddLocalFiles).toHaveBeenCalledTimes(1);
-    expect(onClose).toHaveBeenCalledTimes(1);
-    expect(showToast).not.toHaveBeenCalled();
   });
 });

@@ -9,7 +9,6 @@ import {
 import { ArrowUUpLeft } from "@phosphor-icons/react/dist/csr/ArrowUUpLeft";
 import { Eye } from "@phosphor-icons/react/dist/csr/Eye";
 import { File } from "@phosphor-icons/react/dist/csr/File";
-import { PushPin } from "@phosphor-icons/react/dist/csr/PushPin";
 import { Sparkle } from "@phosphor-icons/react/dist/csr/Sparkle";
 import Workspace from "@/models/workspace";
 import ContextModeSelector from "./ContextModeSelector";
@@ -157,100 +156,6 @@ export default function WorkspaceFileRow({
     </>
   );
 }
-
-const PinItemToWorkspace = memo(function PinItemToWorkspace({
-  workspace,
-  docPath,
-  item,
-}: {
-  workspace: any;
-  docPath: string;
-  item: any;
-}) {
-  const { t } = useTranslation();
-  const [pinned, setPinned] = useState(
-    item?.pinnedWorkspaces?.includes(workspace.id) || false,
-  );
-  // Reuse a single CustomEvent instance across renders instead of allocating
-  // a new one on every render. The event is stateless and only dispatched.
-  const pinEventRef = useRef<any>(null);
-  if (pinEventRef.current === null) {
-    pinEventRef.current = new CustomEvent("pinned_document");
-  }
-  const pinEvent = pinEventRef.current;
-
-  const updatePinStatus = async (e) => {
-    try {
-      e.stopPropagation();
-      if (!pinned) window.dispatchEvent(pinEvent);
-      const success = await Workspace.setPinForDocument(
-        workspace.slug,
-        docPath,
-        !pinned,
-      );
-
-      if (!success) {
-        showToast(t("workspaceFileRow.failedToPin"), "error", {
-          clear: true,
-        });
-        return;
-      }
-
-      showToast(
-        !pinned
-          ? t("workspaceFileRow.documentPinned")
-          : t("workspaceFileRow.documentUnpinned"),
-        "success",
-        { clear: true },
-      );
-      setPinned(!pinned);
-    } catch (error) {
-      showToast(
-        `${t("workspaceFileRow.failedToPin")} ${error.message}`,
-        "error",
-        {
-          clear: true,
-        },
-      );
-      return;
-    }
-  };
-
-  if (!item) return <div className="w-[16px] p-[2px] ml-2" />;
-
-  return (
-    <div
-      onClick={updatePinStatus}
-      className="group flex items-center ml-2 cursor-pointer"
-      data-tooltip-id="pin-document"
-      data-tooltip-content={
-        pinned
-          ? t("workspaceFileRow.unpinFromWorkspace")
-          : t("workspaceFileRow.pinToWorkspace")
-      }
-    >
-      {pinned ? (
-        <div className="bg-theme-settings-input-active group-hover:bg-red-500/20 rounded-3xl whitespace-nowrap">
-          <p className="text-xs px-2 py-0.5 group-hover:text-red-500">
-            <span className="group-hover:hidden">
-              {t("workspaceFileRow.pinned")}
-            </span>
-            <span className="hidden group-hover:inline">
-              {t("workspaceFileRow.unpin")}
-            </span>
-          </p>
-        </div>
-      ) : (
-        <PushPin
-          size={16}
-          weight="regular"
-          className="outline-none text-base font-bold flex-shrink-0"
-          aria-hidden="true"
-        />
-      )}
-    </div>
-  );
-});
 
 const WatchForChanges = memo(function WatchForChanges({
   workspace,

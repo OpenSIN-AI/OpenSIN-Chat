@@ -21,6 +21,7 @@ jest.mock("../../../utils/DocumentManager", () => ({
   DocumentManager: jest.fn().mockImplementation(() => ({
     pinnedDocs: jest.fn().mockResolvedValue([]),
     contextModeDocs: jest.fn().mockResolvedValue([]),
+    alwaysOnContextDocs: jest.fn().mockResolvedValue([]),
   })),
 }));
 jest.mock("../../../models/workspaceChats", () => ({
@@ -40,7 +41,7 @@ jest.mock("../../../utils/helpers", () => ({
   resolveProviderConnector: jest.fn(),
 }));
 jest.mock("../../../utils/helpers/chat", () => ({
-  fillSourceWindow: jest.fn(() => ({ contextTexts: [] })),
+  fillSourceWindow: jest.fn(() => ({ contextTexts: [], sources: [] })),
 }));
 jest.mock("../../../utils/chats/agents", () => ({
   grepAgents: jest.fn().mockResolvedValue(false),

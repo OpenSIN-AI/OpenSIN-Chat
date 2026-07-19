@@ -85,8 +85,13 @@ export default function ParsedFilesMenu({
   return (
     <div className="flex flex-col gap-2 p-2">
       <div className="flex items-center justify-between">
-        <div className="text-sm font-medium text-theme-text-primary">
-          {t("parsedFilesMenu.currentContext", { count: files.length })}
+        <div className="min-w-0">
+          <div className="text-sm font-medium text-theme-text-primary">
+            {t("parsedFilesMenu.currentContext", { count: files.length })}
+          </div>
+          <p className="text-[10px] text-theme-text-secondary leading-snug mt-0.5">
+            {t("parsedFilesMenu.threadScopeHint")}
+          </p>
         </div>
         <div
           {...(contextWindowLimitExceeded &&

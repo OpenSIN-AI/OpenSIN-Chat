@@ -117,7 +117,9 @@ export default function AttachItem({
           showTooltip ? "tooltip-attach-item-btn" : "attach-item-btn"
         }
         data-tooltip-content={
-          !showTooltip ? t("chat_window.attach_file") : undefined
+          !showTooltip
+            ? t("chat_window.attach_file")
+            : t("chat_window.attach_active_context", { count: files.length })
         }
         aria-label={t("chat_window.attach_file")}
         aria-expanded={showMenu}

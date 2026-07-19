@@ -33,7 +33,12 @@ function workspacePinEndpoints(app) {
         });
         if (!document) return response.sendStatus(404);
 
-        await Document.update(document.id, { pinned: pinStatus });
+        // Keep contextMode in sync with the legacy pin endpoint so UI and
+        // always-on loaders stay consistent either way the client updates.
+        await Document.update(document.id, {
+          pinned: pinStatus,
+          contextMode: pinStatus ? "full" : "off",
+        });
         return response.status(200).end();
       } catch (error) {
         consoleLogger.error("Error processing the pin status update:", error);

@@ -11,7 +11,6 @@ import type { ReactElement } from "react";
 import { UploadSimple } from "@phosphor-icons/react/dist/csr/UploadSimple";
 import { Files } from "@phosphor-icons/react/dist/csr/Files";
 import { Globe } from "@phosphor-icons/react/dist/csr/Globe";
-import { GithubLogo } from "@phosphor-icons/react/dist/csr/GithubLogo";
 import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
 import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
@@ -24,41 +23,28 @@ import { ATTACHMENTS_PROCESSED_EVENT } from "../../../DnDWrapper";
 import logger from "@/utils/logger";
 
 /**
- * Simple Bitbucket logo SVG used as a stand-in for the official brand icon.
- * Kept self-contained so we do not add a new dependency.
+ * Recursively flattens the local-files directory tree into a single list of
+ * files with their workspace docpath so they can be added to the current workspace.
  */
-function BitbucketIcon({ size = 16, className = "" }) {
-  return (
-    <svg
-      data-testid="bitbucket-icon"
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M.778 1.213a.768.768 0 00-.768.892l3.263 19.81c.084.5.515.868 1.022.873H19.95a.772.772 0 00.77-.646l3.27-20.03a.768.768 0 00-.768-.891zM14.52 15.53H9.522L8.17 8.466h7.561z" />
-    </svg>
-  );
-}
-
-/**
- * Flattens the nested local-files directory tree into a single list of files
- * with their workspace docpath so they can be added to the current workspace.
- */
-function flattenLocalFiles(localFiles) {
+function flattenLocalFiles(localFiles, parentPath = "") {
   if (!localFiles?.items) return [];
   const out = [];
-  for (const folder of localFiles.items) {
-    if (folder?.type !== "folder" || !Array.isArray(folder.items)) continue;
-    for (const file of folder.items) {
-      if (file?.type !== "file") continue;
+  for (const node of localFiles.items) {
+    if (!node) continue;
+    if (node.type === "folder" && Array.isArray(node.items)) {
+      const folderPath = parentPath
+        ? `${parentPath}/${node.name}`
+        : node.name;
+      out.push(...flattenLocalFiles({ items: node.items }, folderPath));
+      continue;
+    }
+    if (node.type === "file") {
+      const docpath = parentPath ? `${parentPath}/${node.name}` : node.name;
       out.push({
-        id: file.id || `${folder.name}/${file.name}`,
-        title: file.title || file.name,
-        docpath: `${folder.name}/${file.name}`,
-        isUrl: (file.title || file.name || "").startsWith("http"),
+        id: node.id || docpath,
+        title: node.title || node.name,
+        docpath,
+        isUrl: (node.title || node.name || "").startsWith("http"),
       });
     }
   }
@@ -79,24 +65,11 @@ function getFocusableMenuItems(container: HTMLElement | null): HTMLElement[] {
 }
 
 /**
- * The "+" attach menu shown in the chat composer, styled like the v0 prompt
- * input dropdown. Provides the existing upload/source actions plus v0-style
- * placeholder rows for future integrations.
+ * The "+" attach menu shown in the chat composer.
  *
- * The component can be used in two modes:
- *  - Controlled/open content: when no `trigger` is passed, the menu content is
- *    rendered directly and the parent handles visibility (this is how AttachItem
- *    uses it).
- *  - Self-contained dropdown: pass a `trigger` element and the component manages
- *    open/close state, keyboard focus, and click-outside dismissal.
- *
- * @param {Object} props
- * @param {string} props.workspaceSlug
- * @param {Function} props.onClose - close the menu
- * @param {Function} props.onAddLocalFiles - trigger the local file uploader
- * @param {ReactElement} [props.trigger] - element that toggles the menu
- * @param {boolean} [props.disabled] - disables the trigger when provided
- * @param {boolean} [props.isOpen] - controlled open state
+ * Two clear destinations so users understand persistence:
+ *  - Chat context (this thread): local upload → parsed files until removed
+ *  - Workspace knowledge (permanent): existing docs / URL → embeddings
  */
 export default function AddSourceMenu({
   workspaceSlug,
@@ -114,14 +87,6 @@ export default function AddSourceMenu({
   isOpen?: boolean;
 }) {
   const { t } = useTranslation();
-
-  function handleGitHub() {
-    showToast(t("chat_window.attach_menu.github_coming_soon"), "info");
-  }
-
-  function handleBitbucket() {
-    showToast(t("chat_window.attach_menu.bitbucket_coming_soon"), "info");
-  }
 
   const [view, setView] = useState("root"); // "root" | "sources" | "url"
   const [open, setOpen] = useState(isOpenProp ?? !trigger);
@@ -229,14 +194,12 @@ export default function AddSourceMenu({
         role="menu"
         aria-label={t("chat_window.attach_menu.add_files")}
         tabIndex={-1}
-        className="flex flex-col gap-1 p-2 min-w-[240px]"
+        className="flex flex-col gap-1 p-2 min-w-[260px]"
         onKeyDown={handleMenuKeyDown}
       >
         {view === "root" && (
           <RootView
             t={t}
-            onGitHub={handleGitHub}
-            onBitbucket={handleBitbucket}
             onAddLocalFiles={() => {
               onAddLocalFiles?.();
               closeMenu();
@@ -266,7 +229,15 @@ export default function AddSourceMenu({
   );
 }
 
-function MenuRow({ icon: Icon, label, onClick, hasSubmenu = false }) {
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="px-3 pt-1.5 pb-0.5 text-[10px] font-semibold uppercase tracking-wide text-zinc-500 light:text-slate-400">
+      {children}
+    </p>
+  );
+}
+
+function MenuRow({ icon: Icon, label, hint, onClick, hasSubmenu = false }) {
   return (
     <button
       type="button"
@@ -279,8 +250,15 @@ function MenuRow({ icon: Icon, label, onClick, hasSubmenu = false }) {
         size={16}
         className="text-zinc-400 light:text-slate-500 flex-shrink-0"
       />
-      <span className="flex-1 text-sm font-medium text-zinc-100 light:text-slate-800">
-        {label}
+      <span className="flex-1 min-w-0">
+        <span className="block text-sm font-medium text-zinc-100 light:text-slate-800">
+          {label}
+        </span>
+        {hint ? (
+          <span className="block text-[10px] text-zinc-400 light:text-slate-500 leading-snug mt-0.5">
+            {hint}
+          </span>
+        ) : null}
       </span>
       {hasSubmenu && (
         <CaretRight
@@ -314,40 +292,32 @@ function BackHeader({ label, onBack, t }) {
   );
 }
 
-function RootView({
-  t,
-  onGitHub,
-  onBitbucket,
-  onAddLocalFiles,
-  onOpenSources,
-  onOpenUrl,
-}) {
+function RootView({ t, onAddLocalFiles, onOpenSources, onOpenUrl }) {
   return (
     <>
-      <MenuRow
-        icon={GithubLogo}
-        label={t("chat_window.attach_menu.import_from_github")}
-        onClick={onGitHub}
-      />
-      <MenuRow
-        icon={BitbucketIcon}
-        label={t("chat_window.attach_menu.create_from_bitbucket")}
-        onClick={onBitbucket}
-      />
+      <SectionLabel>
+        {t("chat_window.attach_menu.section_chat")}
+      </SectionLabel>
       <MenuRow
         icon={UploadSimple}
         label={t("chat_window.attach_menu.upload_from_computer")}
+        hint={t("chat_window.attach_menu.upload_hint")}
         onClick={onAddLocalFiles}
       />
+      <SectionLabel>
+        {t("chat_window.attach_menu.section_workspace")}
+      </SectionLabel>
       <MenuRow
         icon={Files}
         label={t("chat_window.attach_menu.current_sources")}
+        hint={t("chat_window.attach_menu.current_sources_hint")}
         onClick={onOpenSources}
         hasSubmenu
       />
       <MenuRow
         icon={Globe}
         label={t("chat_window.attach_menu.add_from_url")}
+        hint={t("chat_window.attach_menu.url_menu_hint")}
         onClick={onOpenUrl}
         hasSubmenu
       />
@@ -363,6 +333,17 @@ function SourcesView({ t, workspaceSlug, onBack, onClose }) {
   } = useDocuments();
   const files = useMemo(() => flattenLocalFiles(localFiles), [localFiles]);
   const [addingId, setAddingId] = useState<any>(null);
+  const [query, setQuery] = useState("");
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return files;
+    return files.filter(
+      (f) =>
+        (f.title || "").toLowerCase().includes(q) ||
+        (f.docpath || "").toLowerCase().includes(q),
+    );
+  }, [files, query]);
 
   async function handleAdd(file) {
     if (!workspaceSlug) {
@@ -392,24 +373,36 @@ function SourcesView({ t, workspaceSlug, onBack, onClose }) {
         onBack={onBack}
         t={t}
       />
+      <p className="px-2 pb-1.5 text-[10px] text-zinc-400 light:text-slate-500 leading-snug">
+        {t("chat_window.attach_menu.current_sources_hint")}
+      </p>
+      {files.length > 6 && (
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder={t("common.search")}
+          className="mx-1 mb-1.5 w-[calc(100%-8px)] rounded-md border border-zinc-700 light:border-slate-300 bg-zinc-900 light:bg-white px-2 py-1.5 text-xs text-theme-text-primary outline-none"
+        />
+      )}
       <div className="flex flex-col gap-0.5 max-h-[260px] overflow-y-auto no-scroll">
         {loading ? (
           <div className="flex items-center justify-center gap-2 py-4 text-xs text-zinc-400 light:text-slate-500">
             <CircleNotch size={14} className="animate-spin" />
             {t("chat_window.attach_menu.loading")}
           </div>
-        ) : files.length === 0 ? (
+        ) : filtered.length === 0 ? (
           <p className="text-xs text-zinc-400 light:text-slate-500 text-center py-4">
             {t("chat_window.attach_menu.no_sources")}
           </p>
         ) : (
-          files.map((file) => {
+          filtered.map((file) => {
             const Icon = file.isUrl ? Globe : FileText;
             return (
               <button
                 key={file.id}
                 type="button"
-                aria-label={file.name || t("common.addFile", "Add file")}
+                aria-label={file.title || t("common.addFile", "Add file")}
                 disabled={addingId === file.id}
                 onClick={() => handleAdd(file)}
                 className="border-none bg-transparent w-full flex items-center gap-2.5 px-2.5 py-2 rounded-md cursor-pointer text-left hover:bg-zinc-700 light:hover:bg-slate-200 transition-colors disabled:opacity-50"
@@ -448,14 +441,12 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
   }, []);
 
   function isValidUrl(value) {
-    // Auto-add protocol if missing
     let candidate = value;
     if (!/^https?:\/\//i.test(candidate)) {
       candidate = "https://" + candidate;
     }
     try {
       const url = new URL(candidate);
-      // Reject anything that isn't http(s)
       if (!/^https?:$/.test(url.protocol)) return null;
       return url.toString();
     } catch {
@@ -474,9 +465,6 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
       return;
     }
 
-    // ==========================================
-    // <-- VERBESSERUNG: Client-seitige URL-Validierung
-    // ==========================================
     if (!trimmed.includes(".") && !trimmed.includes("localhost")) {
       const msg = t("chat_window.attach_menu.url_incomplete");
       setError(msg);
@@ -495,7 +483,6 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
     setError("");
 
     try {
-      // Snapshot existing docpaths so we can detect the freshly scraped document.
       const before = new Set(
         flattenLocalFiles(await refreshDocuments()).map((f) => f.docpath),
       );
@@ -517,7 +504,6 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
         return;
       }
 
-      // Find and embed the newly created document(s) into the current workspace.
       const after = flattenLocalFiles(await refreshDocuments());
       const newDocpaths = after
         .map((f) => f.docpath)
