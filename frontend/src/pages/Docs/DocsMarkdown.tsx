@@ -53,6 +53,38 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
   return defaultLinkOpen(tokens, idx, options, env, self);
 };
 
+// Rewrite relative screenshot paths so docs images resolve from /docs-screenshots/*
+// (Vite public/ assets). Supports legacy ../screenshots/… and screenshots/… links.
+const defaultImage =
+  md.renderer.rules.image ||
+  ((tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options));
+
+md.renderer.rules.image = function (tokens, idx, options, env, self) {
+  const token = tokens[idx];
+  const srcIndex = token.attrIndex("src");
+  if (srcIndex >= 0) {
+    let src = token.attrs![srcIndex][1] || "";
+    if (src.startsWith("../screenshots/")) {
+      src = `/docs-screenshots/${src.slice("../screenshots/".length)}`;
+    } else if (src.startsWith("./screenshots/")) {
+      src = `/docs-screenshots/${src.slice("./screenshots/".length)}`;
+    } else if (src.startsWith("screenshots/")) {
+      src = `/docs-screenshots/${src.slice("screenshots/".length)}`;
+    } else if (src.startsWith("../docs-screenshots/")) {
+      src = `/docs-screenshots/${src.slice("../docs-screenshots/".length)}`;
+    }
+    token.attrs![srcIndex][1] = src;
+    if (!token.attrGet("loading")) token.attrSet("loading", "lazy");
+    if (!token.attrGet("class")) {
+      token.attrSet(
+        "class",
+        "docs-screenshot rounded-lg border border-theme-sidebar-border my-4 max-w-full",
+      );
+    }
+  }
+  return defaultImage(tokens, idx, options, env, self);
+};
+
 // Custom fence renderer: wrap highlighted code in a block with a header bar
 // (language label + copy button). The copy button is wired up via event
 // delegation in the component below.

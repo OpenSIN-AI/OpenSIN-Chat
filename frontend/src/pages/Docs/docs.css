@@ -214,3 +214,17 @@
 
 /* Light-mode overrides for code blocks are handled via CSS variables
    (--theme-code-* overridden in [data-theme="light"] in index.css). */
+
+/* Docs screenshots captured via Orca browser tour */
+.docs-markdown img.docs-screenshot,
+.docs-markdown img[src*="/docs-screenshots/"] {
+  display: block;
+  width: 100%;
+  max-width: 48rem;
+  height: auto;
+  margin: 1rem 0 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--theme-sidebar-border, #333) 100%, transparent);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  background: #0b0b0b;
+}

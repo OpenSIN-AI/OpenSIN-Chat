@@ -7,6 +7,23 @@
 
 ---
 
+## Visueller Überblick
+
+Kurzer Screenshot-Tour der wichtigsten Oberflächen (live erfasst):
+
+| Bereich | Screenshot |
+|---------|------------|
+| Login | ![Login](/docs-screenshots/14-login.png) |
+| Home / Chat | ![Home](/docs-screenshots/01-home.png) |
+| Quellen | ![Quellen](/docs-screenshots/05-quellen.png) |
+| Notizen | ![Notizen](/docs-screenshots/06-notizen.png) |
+| Politiker-DB | ![Politiker](/docs-screenshots/07-politiker.png) |
+| PDF-Analyse | ![PDF](/docs-screenshots/08-pdf.png) |
+| Einstellungen | ![Settings](/docs-screenshots/12-settings.png) |
+| Docs Nutzer/Technik | ![Docs](/docs-screenshots/15-docs-user.png) |
+
+---
+
 ## 1. Erste Schritte
 
 ### 1.1 Login
@@ -16,13 +33,13 @@ OpenSIN Chat wird durch ein einzelnes Passwort geschützt, das in der `.env`-Dat
 - **Produktion:** Setze `AUTH_TOKEN` in der `.env` auf ein starkes Passwort. Beim Aufruf der Seite wirst du zur Login-Maske weitergeleitet. Gib das Passwort ein — danach bist du eingeloggt.
 - **Lokale Entwicklung:** Wenn kein `AUTH_TOKEN` gesetzt ist, kannst du die App ohne Passwort öffnen (nur für `localhost`).
 
-![Login](../screenshots/login-light.png)
+![Login](/docs-screenshots/14-login.png)
 
 ### 1.2 Dashboard-Übersicht
 
 Nach dem Login siehst du ein dreispaltiges Layout:
 
-![Dashboard Übersicht](../screenshots/empty-state-light.png)
+![Dashboard Übersicht](/docs-screenshots/01-home.png)
 
 - **Linke Sidebar:**
   - Oben: Workspace-Liste (Wechsel zwischen Workspaces per Klick)
@@ -45,7 +62,7 @@ Nach dem Login siehst du ein dreispaltiges Layout:
 3. Wähle eine LLM-Provider-Konfiguration
 4. Optional: Wähle eine Vektor-DB (Standard: LanceDB lokal)
 
-![Sidebar](../screenshots/sidebar-light.png)
+![Sidebar](/docs-screenshots/01-home.png)
 
 ---
 
@@ -53,7 +70,7 @@ Nach dem Login siehst du ein dreispaltiges Layout:
 
 Das **Kern-Feature**: Du lädst Dokumente hoch und die KI beantwortet Fragen **nur aus diesen Quellen**.
 
-![Dokumente](../screenshots/documents-light.png)
+![Dokumente](/docs-screenshots/05-quellen.png)
 
 ### 2.1 Unterstützte Formate
 
@@ -88,7 +105,7 @@ Das **Kern-Feature**: Du lädst Dokumente hoch und die KI beantwortet Fragen **n
 
 Wenn die KI Antworten aus deinen Dokumenten generiert, erscheint ein **Sparkle-Symbol (✨)** mit dem Modellnamen unter der Antwort. Dieses "Grounding Badge" zeigt dir, dass die Antwort auf deinen hochgeladenen Quellen basiert und nicht frei erfunden wurde.
 
-![Grounding](../screenshots/grounding-dark.png)
+![Grounding](/docs-screenshots/02-chat-thread.png)
 
 ---
 
@@ -103,7 +120,7 @@ Der Chat-Bereich ist das Herzstück von OpenSIN Chat. Das Layout ist zentriert (
 
 ### 3.2 Code-Blöcke
 
-![Chat mit Code-Block](../screenshots/chat-codeblock-light.png)
+![Chat mit Code-Block](/docs-screenshots/02-chat-thread.png)
 
 - **Syntax-Highlighting** für alle gängigen Sprachen (Python, JavaScript, Bash, SQL, etc.)
 - **Kopieren-Button** oben rechts im Code-Block-Header
@@ -114,6 +131,8 @@ Der Chat-Bereich ist das Herzstück von OpenSIN Chat. Das Layout ist zentriert (
 Inline-Code (z.B. `AUTH_TOKEN`) wird mit Hintergrundfarbe, Padding und abgerundeten Ecken dargestellt — klar vom Fließtext abgehoben.
 
 ### 3.4 Action-Buttons
+
+![Chat / Modellwahl](/docs-screenshots/04-model-selector.png)
 
 Unter jeder **KI-Antwort** erscheinen bei **Hover** u. a.:
 
@@ -147,11 +166,15 @@ Während die KI antwortet, siehst du **3 Pulse-Dots** als Loading-Indikator.
 
 Wenn du im Chat-Verlauf nach oben scrollst, erscheint ein kleiner **Scroll-to-Bottom-Button**. Ein Klick bringt dich zurück zur neuesten Nachricht.
 
-![Dark Mode](../screenshots/chat-codeblock-dark.png)
+![Dark Mode](/docs-screenshots/04-model-selector.png)
 
 ---
 
 ## 3A. Quellen im Chat (Attach, Kontext, Zitate)
+
+![Quellen-Sidebar](/docs-screenshots/05-quellen.png)
+
+![Attach-Menü](/docs-screenshots/03-attach-menu.png)
 
 OpenSIN Chat unterscheidet mehrere Quellen-Ebenen — das ist wichtig, damit Antworten nachvollziehbar bleiben:
 
@@ -186,7 +209,7 @@ Zwei Wege, um das Notepad zu öffnen:
 1. **Capability-Karte:** Klicke im Empty State auf die Karte **"Notizen machen"**
 2. **Sidebar-Icon:** Klicke auf das **Notepad-Icon** in der rechten Sidebar
 
-![Notepad](../screenshots/notepad-light.png)
+![Notepad](/docs-screenshots/06-notizen.png)
 
 ### 4.2 Notizen verwalten
 
@@ -234,7 +257,7 @@ Alle UI-Elemente unterstützen beide Modi:
 
 OpenSIN Chat ist vollständig responsive und ab **375px Breite** nutzbar.
 
-![Mobile](../screenshots/mobile-empty-state.png)
+![Mobile](/docs-screenshots/01-home.png)
 
 - **Responsive Layout:** Alle Elemente passen sich an die Bildschirmgröße an
 - **Rechte Sidebar:** Wird auf Mobile als **Overlay-Panel** eingeblendet (öffnen per Icon-Tap)
@@ -245,6 +268,8 @@ OpenSIN Chat ist vollständig responsive und ab **375px Breite** nutzbar.
 ---
 
 ## 7. Politiker-Datenbank nutzen
+
+![Politiker-Datenbank](/docs-screenshots/07-politiker.png)
 
 > **Hinweis:** Die Datenbank muss erst synchronisiert werden. Siehe § 7.7.
 
@@ -449,6 +474,8 @@ Der Orchestrator zerlegt die Aufgabe in:
 
 ## 9. PDF Reports erstellen
 
+![PDF-Analyse](/docs-screenshots/08-pdf.png)
+
 ### 9.1 Aus Chat-Verlauf einen Report generieren
 
 **Im Chat:**
@@ -651,9 +678,13 @@ Ton: sachlich, kämpferisch aber seriös.
 
 ## 12. Einstellungen
 
+![Einstellungen](/docs-screenshots/12-settings.png)
+
+![LLM-Einstellungen](/docs-screenshots/13-settings-llm-preference.png)
+
 Öffne die Einstellungen über das **Gear-Icon** (Zahnrad) in der rechten Sidebar.
 
-![Settings](../screenshots/settings-light.png)
+![Settings](/docs-screenshots/12-settings.png)
 
 Verfügbare Einstellungen:
 
@@ -836,6 +867,10 @@ cd frontend && yarn build
 ```
 
 ### 15.7 Wo finde ich weitere Hilfe?
+
+![Dokumentation Nutzer](/docs-screenshots/15-docs-user.png)
+
+![Dokumentation Technik](/docs-screenshots/16-docs-developer.png)
 
 - **API-Dokumentation:** `docs/api.md`
 - **Architektur:** `docs/architecture.md`

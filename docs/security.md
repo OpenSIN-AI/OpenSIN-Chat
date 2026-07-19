@@ -1,5 +1,8 @@
 # OpenSIN Chat — Sicherheits-Handbuch
 
+![Einstellungen / Sicherheit](/docs-screenshots/12-settings.png)
+
+
 > **Zielgruppe:** Betreiber, Admin, DevOps  
 > **Scope:** Produktive Self-Hosting-Deployments (Docker, Bare-Metal, OCI-VM)  
 > **Stand:** 2026-06-22  

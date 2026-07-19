@@ -1,5 +1,8 @@
 # Production-Architektur
 
+![Produkt-UI Überblick](/docs-screenshots/01-home.png)
+
+
 > **Single source of truth** für „wo läuft sinchat.delqhi.com eigentlich?".
 > Wenn du (oder ein Agent) wissen willst, wie die Live-Deployment-Topologie aussieht — lies dieses Doc zuerst.
 
