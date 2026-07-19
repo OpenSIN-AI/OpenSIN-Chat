@@ -107,6 +107,12 @@ The container maps host port `43939` to internal port `3001`. Open `http://local
 ![Chat with Code Blocks](docs/screenshots/chat-codeblock-light.png)
 ![Sidebar](docs/screenshots/sidebar-light.png)
 
+### Overview Video
+
+> 63-second walkthrough of OpenAFD Chat — produced with [OpenMontage](https://github.com/calesthio/OpenMontage) using existing screenshots and Piper TTS (German, local, $0 cost).
+
+<video src="docs/videos/openafd-chat-overview.mp4" controls width="100%"></video>
+
 ### ECharts — SOTA Diagramme direkt im Chat
 
 Die KI generiert interaktive Apache ECharts-Diagramme ohne externe Dienste:
