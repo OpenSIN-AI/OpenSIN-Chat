@@ -137,7 +137,7 @@ export default function EmbedRow({ embed }: EmbedRowProps): JSX.Element {
           {
             // If the embed was created more than a day ago, show the date, otherwise show the time ago
             dayjs().diff(dayjs(embed.createdAt), "day") > 0
-              ? dayjs(embed.createdAt).format("MMM D, YYYY") // eslint-disable-line i18next/no-literal-string
+              ? dayjs(embed.createdAt).format("MMM D, YYYY")
               : dayjs(embed.createdAt).fromNow()
           }
         </th>

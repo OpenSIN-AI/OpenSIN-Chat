@@ -91,7 +91,7 @@ export default function ParsedFilesMenu({
         <div
           {...(contextWindowLimitExceeded &&
             !canEmbed && {
-              "data-tooltip-id": "context-window-limit-exceeded", // eslint-disable-line i18next/no-literal-string
+              "data-tooltip-id": "context-window-limit-exceeded",
               "data-tooltip-content": t("parsedFilesMenu.contextLimitTooltip"),
             })}
           className={`flex items-center gap-x-1 ${contextWindowLimitExceeded && !canEmbed ? "cursor-pointer" : ""}`}
@@ -102,7 +102,6 @@ export default function ParsedFilesMenu({
           <div
             className={`text-xs ${contextWindowLimitExceeded ? "text-orange-600" : "text-theme-text-secondary"}`}
           >
-            {/* eslint-disable i18next/no-literal-string */}
             {nFormatter(currentTokens)} /{" "}
             {contextWindow ? nFormatter(contextWindow) : "--"} tokens
             {/* eslint-enable i18next/no-literal-string */}

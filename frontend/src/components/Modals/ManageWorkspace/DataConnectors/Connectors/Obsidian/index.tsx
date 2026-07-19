@@ -126,7 +126,7 @@ export default function ObsidianOptions() {
                     type="text"
                     value={vaultPath}
                     onChange={(e) => setVaultPath(e.target.value)}
-                    placeholder="/path/to/your/vault" // eslint-disable-line i18next/no-literal-string
+                    placeholder="/path/to/your/vault"
                     className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                     required={true}
                     autoComplete="off"

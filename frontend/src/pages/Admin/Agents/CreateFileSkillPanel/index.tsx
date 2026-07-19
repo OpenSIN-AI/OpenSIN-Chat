@@ -132,8 +132,8 @@ export default function CreateFileSkillPanel({
             {icon &&
               React.createElement(icon, {
                 size: 24,
-                color: "var(--theme-text-primary)", // eslint-disable-line i18next/no-literal-string
-                weight: "bold", // eslint-disable-line i18next/no-literal-string
+                color: "var(--theme-text-primary)",
+                weight: "bold",
               })}
             <label
               htmlFor="name"

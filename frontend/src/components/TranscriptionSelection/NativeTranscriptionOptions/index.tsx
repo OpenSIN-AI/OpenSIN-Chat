@@ -22,7 +22,6 @@ export default function NativeTranscriptionOptions({ settings }: any) {
             className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
           >
             {/* Model identifiers are technical tokens, not user-facing copy. */}
-            {/* eslint-disable-next-line i18next/no-literal-string */}
             {["Xenova/whisper-small", "Xenova/whisper-large"].map(
               (value, i) => {
                 return (

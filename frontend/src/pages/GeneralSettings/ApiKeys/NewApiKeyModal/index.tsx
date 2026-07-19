@@ -143,7 +143,6 @@ export default function NewApiKeyModal({
             >
               {t("api.readDocumentation")}{" "}
               {
-                // eslint-disable-next-line i18next/no-literal-string
               }
               &rarr;
             </a>

@@ -581,7 +581,7 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
               setLink(e.target.value);
               if (error) setError("");
             }}
-            placeholder="https://..." // eslint-disable-line i18next/no-literal-string
+            placeholder="https://..."
             disabled={submitting}
             aria-invalid={!!error}
             className="flex-1 bg-transparent border-none outline-none text-sm text-theme-text-primary light:text-theme-text-primary py-2 placeholder:text-zinc-500 light:placeholder:text-slate-400"

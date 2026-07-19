@@ -572,7 +572,6 @@ function AppVersion() {
   if (isLoading || !version) return null;
   return (
     <>
-      {/* eslint-disable i18next/no-literal-string */}
       <Link
         to={`https://github.com/OpenSIN-AI/OpenSIN-Chat/releases/tag/v${version}`}
         target="_blank"

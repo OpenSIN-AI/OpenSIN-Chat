@@ -96,7 +96,6 @@ function ProviderPrivacyItem({ title, provider, altText }: any) {
                 <ArrowSquareOut size={12} />
               </Link>
               {
-                // eslint-disable-next-line i18next/no-literal-string
               }
               .
             </div>

@@ -461,7 +461,6 @@ export default function MultiUserAuth() {
             className={LINK_BTN_CLASS}
             onClick={handleResetPassword}
           >
-            {/* eslint-disable-next-line i18next/no-literal-string */}
             {t("login.multi-user.forgot-pass")}?
             <b className="font-semibold text-[#009ee0]">
               {t("login.multi-user.reset")}

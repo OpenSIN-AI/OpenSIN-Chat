@@ -80,7 +80,7 @@ export default function PromptHistoryItem({
             <>
               <span className="text-primary-button">{user.username}</span>{" "}
               <span className="mx-1 text-theme-text-primary">
-                {"•" /* eslint-disable-line i18next/no-literal-string */}
+                {"•"}
               </span>
             </>
           )}

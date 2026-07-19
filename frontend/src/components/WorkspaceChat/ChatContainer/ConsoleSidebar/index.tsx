@@ -72,7 +72,6 @@ function LogsTab() {
           consoleLogs.map((log, idx) => (
             <div key={`${log.timestamp}-${idx}`} className="flex gap-2 mb-0.5">
               <span className="text-theme-text-muted shrink-0">
-                {/* eslint-disable i18next/no-literal-string */}
                 {new Date(log.timestamp).toLocaleTimeString(i18n.language, {
                   hour12: false,
                   hour: "2-digit",
@@ -209,7 +208,6 @@ function TerminalTab() {
       {/* Input line */}
       <div className="flex items-center gap-1 px-3 py-2 border-t border-theme-border shrink-0">
         <span className="text-theme-text-muted font-mono text-[11px]">
-          {/* eslint-disable i18next/no-literal-string */}$
           {/* eslint-enable i18next/no-literal-string */}
         </span>
         <input

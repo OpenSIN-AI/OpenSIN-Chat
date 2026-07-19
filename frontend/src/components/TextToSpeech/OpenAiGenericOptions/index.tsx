@@ -61,7 +61,6 @@ export default function OpenAiGenericTextToSpeechOptions({ settings }: any) {
             autoComplete="off"
             spellCheck={false}
           />
-          {/* eslint-disable i18next/no-literal-string */}
           <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
             {t("textToSpeech.openAiGeneric.ttsModelDescriptionPart1")}
             <code>model</code>

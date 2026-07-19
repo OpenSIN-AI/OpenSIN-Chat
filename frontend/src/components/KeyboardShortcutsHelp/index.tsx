@@ -100,7 +100,6 @@ export default function KeyboardShortcutsHelp() {
                 {t(`keyboard-shortcuts.shortcuts.${shortcut.translationKey}`)}
               </span>
               <kbd className="px-2 py-1 bg-theme-bg-primary text-theme-text-primary rounded border border-theme-sidebar-border">
-                {/* eslint-disable-next-line i18next/no-literal-string */}
                 {isMac ? key : key.replace("⌘", "Ctrl")}
               </kbd>
             </div>

@@ -52,7 +52,6 @@ export default function ApiKeyRow({
         </td>
         <td className="px-6 py-3 text-left align-middle">
           {
-            // eslint-disable-next-line i18next/no-literal-string
             apiKey.createdBy?.username || "--"
           }
         </td>

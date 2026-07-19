@@ -45,7 +45,6 @@ export default function AdminApiKeys(): JSX.Element {
             >
               {t("api.link")}{" "}
               {
-                // eslint-disable-next-line i18next/no-literal-string
               }
               &rarr;
             </a>

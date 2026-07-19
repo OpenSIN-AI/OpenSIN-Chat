@@ -35,7 +35,7 @@ export default function RouterSelection({
           >
             {t("model-router.router-selection.no-routers-link")}
           </Link>
-          {"." /* eslint-disable-line i18next/no-literal-string */}
+          {"."}
         </p>
       </div>
     );

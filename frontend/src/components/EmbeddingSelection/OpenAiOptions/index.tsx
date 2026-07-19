@@ -37,7 +37,6 @@ export default function OpenAiOptions({ settings }: any) {
             <optgroup
               label={t("providerSettings.openAiEmbedding.availableModels")}
             >
-              {/* eslint-disable i18next/no-literal-string */}
               {[
                 "text-embedding-ada-002",
                 "text-embedding-3-small",

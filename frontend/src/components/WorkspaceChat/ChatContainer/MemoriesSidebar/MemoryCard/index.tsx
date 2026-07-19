@@ -48,7 +48,6 @@ export default function MemoryCard({ memory }: any) {
           {memory.content}
         </p>
         <p className="text-xs leading-4 text-zinc-400 light:text-slate-500 mt-1.5">
-          {/* eslint-disable i18next/no-literal-string */}
           {memory.createdAt
             ? new Date(memory.createdAt).toLocaleDateString(undefined, {
                 month: "short",

@@ -57,7 +57,6 @@ export default function GenericOpenAiSpeechToTextOptions({ settings }: any) {
             autoComplete="off"
             spellCheck={false}
           />
-          {/* eslint-disable i18next/no-literal-string */}
           <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
             {t("speechToText.genericOpenAi.modelDescriptionPart1")}
             <code>model</code>

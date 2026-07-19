@@ -65,7 +65,7 @@ export default function LMStudioEmbeddingOptions({ settings }: any) {
             type="number"
             name="EmbeddingModelMaxChunkLength"
             className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="8192" /* eslint-disable-line i18next/no-literal-string */
+            placeholder="8192"
             min={1}
             value={maxChunkLength}
             onChange={handleMaxChunkLengthChange}

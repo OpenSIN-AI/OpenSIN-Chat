@@ -85,7 +85,7 @@ export default function AgentSkillReranker(): JSX.Element {
             }}
             onWheel={(e) => (e.target as HTMLElement).blur()}
             className="border border-white/10 bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-[80px] p-2.5 text-center"
-            placeholder="15" // eslint-disable-line i18next/no-literal-string
+            placeholder="15"
             autoComplete="off"
           />
         </div>

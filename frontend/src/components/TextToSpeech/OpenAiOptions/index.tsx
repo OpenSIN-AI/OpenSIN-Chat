@@ -31,7 +31,6 @@ export default function OpenAiTextToSpeechOptions({ settings }: any) {
           defaultValue={settings?.TTSOpenAIVoiceModel ?? "alloy"}
           className="border-none bg-theme-settings-input-bg border-gray-500 text-theme-text-primary text-sm rounded-lg block w-full p-2.5"
         >
-          {/* eslint-disable i18next/no-literal-string */}
           {["alloy", "echo", "fable", "onyx", "nova", "shimmer"].map(
             (voice) => {
               return (

@@ -45,7 +45,7 @@ export default function MaxToolCallStack() {
           }}
           onWheel={(e) => (e.target as HTMLInputElement).blur()}
           className="border border-white/10 bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-[80px] p-2.5 text-center"
-          placeholder="10" // eslint-disable-line i18next/no-literal-string
+          placeholder="10"
           autoComplete="off"
         />
       </div>

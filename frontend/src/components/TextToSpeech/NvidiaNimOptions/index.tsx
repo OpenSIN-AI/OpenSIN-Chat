@@ -73,7 +73,6 @@ export default function NvidiaNimTTSOptions({ settings }: any) {
           />
           <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
             {t("nvidiaNim.modelHelp1")}{" "}
-            {/* eslint-disable i18next/no-literal-string */}
             <code className="bg-theme-settings-input-bg rounded px-1">
               ai-magnify/arctic-tts
             </code>
@@ -99,7 +98,6 @@ export default function NvidiaNimTTSOptions({ settings }: any) {
           />
           <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
             {t("nvidiaNim.voiceHelp1")}{" "}
-            {/* eslint-disable i18next/no-literal-string */}
             <code className="bg-theme-settings-input-bg rounded px-1">
               English-US.Female-1
             </code>

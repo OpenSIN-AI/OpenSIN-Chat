@@ -171,8 +171,19 @@ export default [
               "https://api.openai.com",
               "sk-...",
               "dall-e-3",
-              "·", "\\*", "-", "/", ":", "%"
+              "·", "\\*", "-", "/", ":", "%",
+              ".", "•", "?", "!",
+              // Numeric placeholders and technical identifiers
+              "bold", "normal", "light", "medium", "semibold",
+              "Ctrl", "⌘", "Alt", "Shift",
+              // Model / provider names that appear as option labels
+              "ada", "embedding", "voyage", "large", "small", "instruct",
+              // CSS custom property patterns
+              "var",
             ]
+          },
+          "callee": {
+            exclude: ["t", "tst"]
           }
         }
       ]

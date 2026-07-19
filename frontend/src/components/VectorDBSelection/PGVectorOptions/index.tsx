@@ -27,7 +27,6 @@ export default function PGVectorOptions({ settings }: any) {
             >
               <p className="text-md whitespace-pre-line break-words">
                 {t("pgVector.connectionString.tooltip.intro")} <br />
-                {/* eslint-disable-next-line i18next/no-literal-string */}
                 <code>postgresql://username:password@host:port/database</code>
                 <br />
                 <br />
@@ -78,7 +77,6 @@ export default function PGVectorOptions({ settings }: any) {
                 <br />
                 <br />
                 {t("pgVector.tableName.tooltip.default")}{" "}
-                {/* eslint-disable-next-line i18next/no-literal-string */}
                 <code>opensin_vectors</code>.
                 <br />
                 <br />

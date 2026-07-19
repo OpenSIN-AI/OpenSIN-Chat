@@ -147,7 +147,6 @@ export default function ConfluenceOptions() {
                   defaultValue={accessType}
                   onChange={(e) => setAccessType(e.target.value)}
                 >
-                  {/* eslint-disable i18next/no-literal-string */}
                   {[
                     {
                       name: t("connectors.confluence.auth_type_username"),
@@ -219,7 +218,6 @@ export default function ConfluenceOptions() {
                             >
                               {t("connectors.confluence.token_explained_link")}
                             </a>
-                            {/* eslint-disable-next-line i18next/no-literal-string */}
                             {"."}
                           </p>
                         </Tooltip>

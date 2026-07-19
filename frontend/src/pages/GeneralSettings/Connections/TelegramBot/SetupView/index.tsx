@@ -104,7 +104,7 @@ function BotTokenInput({
           type={showToken ? "text" : "password"}
           value={botToken}
           onChange={(e) => setBotToken(e.target.value)}
-          placeholder="123456:ABC-DEF123ghlkl-zyx57W2v" // eslint-disable-line i18next/no-literal-string
+          placeholder="123456:ABC-DEF123ghlkl-zyx57W2v"
           className="bg-transparent flex-1 text-sm text-theme-text-primary light:text-theme-text-primary placeholder:text-zinc-400 light:placeholder:text-slate-500 outline-none min-w-0"
           autoComplete="off"
         />
