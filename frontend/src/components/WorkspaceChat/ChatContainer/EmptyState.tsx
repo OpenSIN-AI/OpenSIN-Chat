@@ -7,6 +7,7 @@ import PromptInput from "./PromptInput";
 import { Books } from "@phosphor-icons/react/dist/csr/Books";
 import { Notepad } from "@phosphor-icons/react/dist/csr/Notepad";
 import { Database } from "@phosphor-icons/react/dist/csr/Database";
+import { FilePdf } from "@phosphor-icons/react/dist/csr/FilePdf";
 import { Sparkle } from "@phosphor-icons/react/dist/csr/Sparkle";
 import { useChatSidebar } from "./ChatSidebar";
 
@@ -85,10 +86,10 @@ export default function EmptyState({
       onClick: () => toggleSidebar("database"),
     },
     {
-      icon: Sparkle,
-      title: t2("chat.capability_rag"),
-      description: t2("chat.capability_rag_desc"),
-      onClick: () => toggleSidebar("sources"),
+      icon: FilePdf,
+      title: t2("right_sidebar.icon_pdf_analysis", "PDF-Analyse"),
+      description: t2("chat.capability_pdf_desc", "PDF-Dokumente analysieren und befragen"),
+      onClick: () => toggleSidebar("pdf-analysis"),
     },
   ];
 

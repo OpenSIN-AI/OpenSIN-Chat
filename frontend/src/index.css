@@ -11,6 +11,7 @@
  */
 
 @import "tailwindcss";
+@import "katex/dist/katex.min.css";
 
 /* ── Content sources (replaces tailwind.config.js content array) ───────── */
 @source "./index.html";
@@ -1135,7 +1136,3 @@ body,
     transition-duration: 0.01ms !important;
   }
 }
-
-/* ── Katex styles ──────────────────────────────────────────────────────── */
-/* Keep the katex import after Tailwind so it can override preflight */
-@import "katex/dist/katex.min.css";
