@@ -551,6 +551,7 @@ const TRANSLATIONS = {
     source_count_other: "{{count}} references",
     document: "Document",
     fork: "Fork",
+    edit_unavailable: "Edit available after the reply finishes saving",
     delete: "Delete",
     cancel: "Cancel",
     submit: "Submit",

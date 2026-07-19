@@ -40,8 +40,9 @@ export function MetricsProvider({ children }: any) {
 export default function RenderMetrics({ metrics = {} }: any) {
   if (!metrics?.timestamp) return null;
 
+  // Only show timestamp on message hover/focus — keeps the footer quiet.
   return (
-    <p className="text-xs font-mono text-zinc-400 light:text-slate-500">
+    <p className="text-xs font-mono text-zinc-400 light:text-slate-500 opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-within:opacity-100">
       {buildMetricsString(metrics)}
     </p>
   );

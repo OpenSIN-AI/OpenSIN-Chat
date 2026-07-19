@@ -165,7 +165,9 @@ export default function handleChat(
         }
         const next = [...prev];
         next[chatIdx] = updatedHistory;
-        if (chatIdx > 0 && type === "finalizeResponseStream") {
+        // Keep the preceding user prompt's chatId in sync so "Edit prompt"
+        // is enabled as soon as the server assigns an id (not only at finalize).
+        if (chatId && chatIdx > 0 && prev[chatIdx - 1]?.role === "user") {
           next[chatIdx - 1] = { ...prev[chatIdx - 1], chatId };
         }
         return next;

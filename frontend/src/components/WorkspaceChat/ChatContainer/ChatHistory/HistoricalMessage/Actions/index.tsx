@@ -1,28 +1,22 @@
 // SPDX-License-Identifier: MIT
 /**
- * Purpose: Render hover action icons (copy, edit, regenerate, feedback, more) for a chat message.
+ * Purpose: Render hover action icons (copy, edit, regenerate, more) for a chat message.
  * Docs: Actions/index.tsx (this file)
  */
-import { memo, useState } from "react";
+import { memo } from "react";
 import useCopyText from "@/hooks/useCopyText";
 import { Check } from "@phosphor-icons/react/dist/csr/Check";
-import { ThumbsUp } from "@phosphor-icons/react/dist/csr/ThumbsUp";
 import { ArrowsClockwise } from "@phosphor-icons/react/dist/csr/ArrowsClockwise";
 import { Copy } from "@phosphor-icons/react/dist/csr/Copy";
-import Workspace from "@/models/workspace";
 import { EditMessageAction } from "./EditMessage";
 import RenderMetrics from "./RenderMetrics";
 import ActionMenu from "./ActionMenu";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router";
-import { invalidateChatHistory } from "@/hooks/useChatHistory";
 import { messageActionButtonClass } from "./MessageActionButton";
 
 const Actions: any = ({
   message,
-  feedbackScore,
   chatId,
-  slug,
   isLastMessage,
   regenerateMessage,
   forkThread,
@@ -31,17 +25,6 @@ const Actions: any = ({
   metrics = {},
   ttsButton = null,
 }: any) => {
-  const { t } = useTranslation();
-  const { threadSlug = null } = useParams();
-  const [selectedFeedback, setSelectedFeedback] = useState(feedbackScore);
-  const handleFeedback = async (newFeedback) => {
-    const updatedFeedback =
-      selectedFeedback === newFeedback ? null : newFeedback;
-    await Workspace.updateChatFeedback(chatId, slug, updatedFeedback);
-    setSelectedFeedback(updatedFeedback);
-    invalidateChatHistory(slug, threadSlug);
-  };
-
   if (isEditing) return <RenderMetrics metrics={metrics} />;
 
   return (
@@ -58,14 +41,6 @@ const Actions: any = ({
             chatId={chatId}
           />
         )}
-        {chatId && role !== "user" && (
-          <FeedbackButton
-            isSelected={selectedFeedback === true}
-            handleFeedback={() => handleFeedback(true)}
-            tooltipContent={t("chat_window.good_response")}
-            IconComponent={ThumbsUp}
-          />
-        )}
         <ActionMenu
           chatId={chatId}
           forkThread={forkThread}
@@ -77,28 +52,6 @@ const Actions: any = ({
     </div>
   );
 };
-
-function FeedbackButton({
-  isSelected,
-  handleFeedback,
-  tooltipContent,
-  IconComponent,
-}: any) {
-  return (
-    <div className="relative flex h-7 w-7 items-center justify-center">
-      <button
-        type="button"
-        onClick={handleFeedback}
-        data-tooltip-id="feedback-button"
-        data-tooltip-content={tooltipContent}
-        className={messageActionButtonClass}
-        aria-label={tooltipContent}
-      >
-        <IconComponent size={20} weight={isSelected ? "fill" : "regular"} />
-      </button>
-    </div>
-  );
-}
 
 function CopyMessage({ message }: any) {
   const { copied, copyText } = useCopyText();

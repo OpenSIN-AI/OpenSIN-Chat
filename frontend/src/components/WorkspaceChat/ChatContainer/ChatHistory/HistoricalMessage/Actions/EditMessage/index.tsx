@@ -22,8 +22,11 @@ export function useEditMessage({ chatId, role }: any) {
 
 export function EditMessageAction({ chatId = null, role, isEditing }: any) {
   const { t } = useTranslation();
+  // chatId can be number or string from the API — treat 0 as invalid only.
+  const canEdit = chatId !== null && chatId !== undefined && chatId !== "";
+
   function handleEditClick() {
-    if (!chatId) return;
+    if (!canEdit) return;
     window.dispatchEvent(
       new CustomEvent(EDIT_EVENT, { detail: { chatId, role } }),
     );
@@ -35,12 +38,17 @@ export function EditMessageAction({ chatId = null, role, isEditing }: any) {
       <button
         type="button"
         onClick={handleEditClick}
-        disabled={!chatId}
+        disabled={!canEdit}
         data-tooltip-id="edit-input-text"
         data-tooltip-content={
-          role === "user"
-            ? t("chat_window.edit_prompt")
-            : t("chat_window.edit_response")
+          !canEdit
+            ? t(
+                "chat_window.edit_unavailable",
+                "Edit available after the reply finishes saving",
+              )
+            : role === "user"
+              ? t("chat_window.edit_prompt")
+              : t("chat_window.edit_response")
         }
         className={messageActionButtonClass}
         aria-label={

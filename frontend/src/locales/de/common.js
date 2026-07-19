@@ -483,6 +483,8 @@ const TRANSLATIONS = {
     good_response: "Gute Antwort",
     more_actions: "Weitere Aktionen",
     fork: "Abzweigen",
+    edit_unavailable:
+      "Bearbeiten möglich, sobald die Antwort gespeichert ist",
     delete: "Löschen",
     cancel: "Abbrechen",
     edit_prompt: "Prompt bearbeiten",

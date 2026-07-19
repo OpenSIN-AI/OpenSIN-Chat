@@ -143,7 +143,8 @@ function buildRows({ history, workspace, websocket, t }: any) {
         workspace,
         sources: props.sources,
         feedbackScore: props.feedbackScore,
-        chatId: props.chatId,
+        // Prefer chatId; fall back to id for older payloads so edit/regenerate work.
+        chatId: props.chatId ?? props.id ?? null,
         error: props.error,
         attachments: props.attachments,
         isLastMessage: isLastBotReply,
