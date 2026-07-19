@@ -3,7 +3,7 @@
 > **Zielgruppe:** Endnutzer — Pressestelle, Fraktionsmitarbeiter, Researcher, politische Mitarbeiter
 > **Voraussetzung:** OpenSIN Chat läuft auf `http://localhost:3001` oder `https://sinchat.delqhi.com`
 > **Repository:** [OpenSIN-AI/OpenSIN-Chat](https://github.com/OpenSIN-AI/OpenSIN-Chat)
-> **Stand:** 2026-06-29 · **Version:** v1.0.0
+> **Stand:** 2026-07-19 · **Version:** v1.14.0
 
 ---
 
@@ -115,25 +115,63 @@ Inline-Code (z.B. `AUTH_TOKEN`) wird mit Hintergrundfarbe, Padding und abgerunde
 
 ### 3.4 Action-Buttons
 
-Unter jeder KI-Antwort erscheinen bei **Hover** folgende Buttons:
+Unter jeder **KI-Antwort** erscheinen bei **Hover** u. a.:
 
 | Button | Funktion |
 |--------|----------|
 | Vorlesen | Nachricht wird vorgelesen (Text-to-Speech) |
 | Kopieren | Antwort in die Zwischenablage kopieren |
-| Bearbeiten | Antwort bearbeiten (z.B. für Korrekturen vor dem Export) |
-| Gute Antwort | Feedback geben (Daumen hoch) |
-| Weitere Aktionen | Weitere Optionen (z.B. als Notiz speichern) |
+| Bearbeiten | Antworttext anpassen (z. B. vor Export) |
+| Weitere Aktionen | z. B. als Notiz speichern |
 
-### 3.5 Loading-Animation
+Unter **deinen eigenen (User-)Nachrichten** kannst du den **Prompt bearbeiten**. Danach wird der Thread ab dieser Stelle neu generiert (**Rewind**): neuere Antworten werden verworfen und die KI antwortet auf den geänderten Prompt.
+
+**Zeitstempel** unter Nachrichten erscheinen nur bei **Hover** — so bleibt der Chat ruhiger.
+
+### 3.5 Feedback melden (GitHub-Issue)
+
+Thumbs-up/„Gute Antwort“ gibt es **nicht** mehr. Feedback läuft über den Account-Bereich:
+
+1. Unten links auf dein **Profil / Account-Menü** klicken  
+2. **Feedback / Problem melden** wählen  
+3. Im **In-App-Modal** Titel und Beschreibung eingeben  
+4. Absenden erstellt ein **GitHub-Issue** im Projekt-Repo (sofern `GITHUB_FEEDBACK_TOKEN` serverseitig konfiguriert ist)
+
+So bleiben Fehlermeldungen und Verbesserungsvorschläge im Issue-Tracker, ohne die Chat-UI zu verlassen.
+
+### 3.6 Loading-Animation
 
 Während die KI antwortet, siehst du **3 Pulse-Dots** als Loading-Indikator.
 
-### 3.6 Scroll-to-Bottom
+### 3.7 Scroll-to-Bottom
 
 Wenn du im Chat-Verlauf nach oben scrollst, erscheint ein kleiner **Scroll-to-Bottom-Button**. Ein Klick bringt dich zurück zur neuesten Nachricht.
 
 ![Dark Mode](../screenshots/chat-codeblock-dark.png)
+
+---
+
+## 3A. Quellen im Chat (Attach, Kontext, Zitate)
+
+OpenSIN Chat unterscheidet mehrere Quellen-Ebenen — das ist wichtig, damit Antworten nachvollziehbar bleiben:
+
+| Ebene | Was passiert |
+|-------|----------------|
+| **Workspace-Dokumente** | Dateien im Workspace sind für RAG (semantische Suche) indexiert |
+| **Kontextmodus** (pro Datei) | `aus` / `Zusammenfassung` / `voll` — „immer im Kontext“, unabhängig von der reinen Suche |
+| **Chat-Anhang (Attach)** | Datei **nur für diesen Thread** (Parsed Files), nicht automatisch Workspace-Wissen |
+| **Pinnen** | Wichtige Docs dauerhaft im Prompt (sync mit Kontextmodus „voll“) |
+| **Inline-Zitate** | Antworten nutzen Marker wie `[source:N]` / Context-Quellen — klickbar zur Quelle |
+
+### Typischer Ablauf
+
+1. Dokumente in den **Workspace** laden (Sidebar **Quellen** / Manage Workspace).  
+2. Optional pro Datei den **Kontextmodus** setzen (Summary vs. Full).  
+3. Im Prompt-Feld über **+ / Anhängen** eine Datei nur für den aktuellen Chat wählen.  
+4. Antwort prüfen: **Zitate** und Quellenliste zeigen, woher die Information kommt.  
+5. Die **Quellen-Sidebar** filtert/listet Workspace- und Thread-Kontext.
+
+> **Tipp:** „Full“ + Pin für wenige Kern-Dokumente; den Rest per RAG suchen lassen — spart Tokens und hält Antworten schärfer.
 
 ---
 
@@ -821,4 +859,4 @@ cd frontend && yarn build
 
 ---
 
-*Letztes Update: 2026-06-29 · Version: v1.0.0 · Maintainer: @OpenSIN-AI*
+*Letztes Update: 2026-07-19 · Version: v1.14.0 · Maintainer: @OpenSIN-AI*

@@ -117,10 +117,12 @@ const FILE_TO_SLUG = {
   "PDF-ANALYSIS.md": "pdf-analysis",
   "SECURITY.md": "security",
   "OPERATIONS.md": "operations",
+  "INCIDENT-RESPONSE.md": "incident-response",
   "api.md": "api",
   "user-guide.md": "user-guide",
   "security.md": "security",
   "operations.md": "operations",
+  "incident-response.md": "incident-response",
 };
 
 const DOC_ENTRIES = [
@@ -259,6 +261,15 @@ const DOC_ENTRIES = [
     category: "operations",
     file: "operations.md",
     source: "docs/operations.md",
+  },
+  {
+    slug: "incident-response",
+    title: "Incident-Response-Playbook",
+    description:
+      "Kanonisches Playbook für Ausfälle: Cloudflare-Fehlercodes, SSH-Recovery, Tunnel-Neustart und Preventiv-Monitoring.",
+    category: "operations",
+    file: "incident-response.md",
+    source: "docs/INCIDENT-RESPONSE.md",
   },
 ];
 

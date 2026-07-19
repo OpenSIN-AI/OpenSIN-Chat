@@ -310,7 +310,23 @@ class MetaGenerator {
     try {
       const fs = require("fs/promises");
       const path = require("path");
-      const indexJsPath = path.resolve(__dirname, "../../public/index.js");
+      const publicDir = path.resolve(__dirname, "../../public");
+      // Prefer the hashed entry from _index.html (current Vite/Rolldown build).
+      // Fall back to legacy public/index.js for older images.
+      let indexJsPath = path.join(publicDir, "index.js");
+      try {
+        const html = await fs.readFile(path.join(publicDir, "_index.html"), "utf8");
+        const entryMatch = html.match(
+          /<script[^>]*type="module"[^>]*src="(\/assets\/index-[^"]+\.js)"/,
+        );
+        if (entryMatch) {
+          const candidate = path.join(publicDir, entryMatch[1].replace(/^\//, ""));
+          await fs.access(candidate);
+          indexJsPath = candidate;
+        }
+      } catch {
+        // keep index.js fallback
+      }
       const content = await fs.readFile(indexJsPath, "utf8");
       // Match: m.f=["assets/...js","assets/...css",...]
       const match = content.match(/m\.f\s*=\s*\[([^\]]+)\]/);
