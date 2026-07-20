@@ -4915,7 +4915,7 @@ const TRANSLATIONS = {
     title: "Recherche-Quellen",
     subtitle:
       "Wähle, wo Deep Research suchen darf. Nicht angebundene Quellen sind bald verfügbar.",
-    summaryOne: "Quellen",
+    summaryOne: "1 Quelle",
     summaryMany: "{{count}} Quellen",
     comingSoon: "Bald",
     web: "Web",

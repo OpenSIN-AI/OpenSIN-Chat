@@ -2,7 +2,7 @@
 // Purpose: Gemini-style source picker next to Deep Research mode.
 // Docs: Categories Web / Email / Cloud / Machine; real connectors when ready,
 //       otherwise marked "Coming soon". Selection is persisted for the session.
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 import { Globe } from "@phosphor-icons/react/dist/csr/Globe";
@@ -32,7 +32,6 @@ type SourceCategory = {
   id: DeepResearchSourceId;
   icon: typeof Globe;
   labelKey: string;
-  /** Category itself is usable (e.g. Web always on) */
   ready: boolean;
   connectors: Connector[];
 };
@@ -112,21 +111,51 @@ const SOURCE_CATEGORIES: SourceCategory[] = [
   },
 ];
 
+const ALL_CONNECTOR_IDS = new Set(
+  SOURCE_CATEGORIES.flatMap((c) => c.connectors.map((x) => x.id)),
+);
+const READY_CONNECTOR_IDS = new Set(
+  SOURCE_CATEGORIES.flatMap((c) =>
+    c.connectors.filter((x) => x.ready).map((x) => x.id),
+  ),
+);
+
+/** Legacy alias: early default used category id "web" instead of connector "web-search". */
+const ID_ALIASES: Record<string, string> = {
+  web: "web-search",
+};
+
+/**
+ * Normalize a stored selection: map aliases, drop unknown ids, ensure at least web-search.
+ */
+function normalizeSelection(ids: Iterable<string>): Set<string> {
+  const next = new Set<string>();
+  for (const raw of ids) {
+    const id = ID_ALIASES[String(raw)] || String(raw);
+    if (ALL_CONNECTOR_IDS.has(id)) next.add(id);
+  }
+  if (next.size === 0) next.add("web-search");
+  return next;
+}
+
 function loadSelection(): Set<string> {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return new Set(["web"]);
+    if (!raw) return new Set(["web-search"]);
     const parsed = JSON.parse(raw);
-    if (!Array.isArray(parsed) || parsed.length === 0) return new Set(["web"]);
-    return new Set(parsed.map(String));
+    if (!Array.isArray(parsed) || parsed.length === 0) {
+      return new Set(["web-search"]);
+    }
+    return normalizeSelection(parsed.map(String));
   } catch {
-    return new Set(["web"]);
+    return new Set(["web-search"]);
   }
 }
 
 function persistSelection(sel: Set<string>) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify([...sel]));
+    const normalized = normalizeSelection(sel);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([...normalized]));
   } catch {
     /* ignore */
   }
@@ -134,6 +163,46 @@ function persistSelection(sel: Set<string>) {
 
 export function getDeepResearchSourceIds(): string[] {
   return [...loadSelection()];
+}
+
+type MenuPos = {
+  top?: number;
+  bottom?: number;
+  left: number;
+  maxHeight: number;
+};
+
+function computeMenuPos(btn: HTMLElement, menuEl: HTMLElement | null): MenuPos {
+  const r = btn.getBoundingClientRect();
+  const gap = 6;
+  const pad = 12;
+  const menuWidth = Math.min(280, window.innerWidth - pad * 2);
+  const left = Math.max(
+    pad,
+    Math.min(r.left, window.innerWidth - menuWidth - pad),
+  );
+
+  // Prefer measuring real height after first paint; fall back to estimate
+  const estimatedH = menuEl?.offsetHeight || 360;
+  const spaceBelow = window.innerHeight - r.bottom - gap - pad;
+  const spaceAbove = r.top - gap - pad;
+
+  // Open upward when not enough room below (typical for prompt bar at bottom)
+  const openUp =
+    spaceBelow < Math.min(estimatedH, 280) && spaceAbove > spaceBelow;
+
+  if (openUp) {
+    return {
+      bottom: window.innerHeight - r.top + gap,
+      left,
+      maxHeight: Math.max(160, Math.min(420, spaceAbove)),
+    };
+  }
+  return {
+    top: r.bottom + gap,
+    left,
+    maxHeight: Math.max(160, Math.min(420, spaceBelow)),
+  };
 }
 
 /**
@@ -146,9 +215,17 @@ export default function DeepResearchSources({
 }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState<Set<string>>(loadSelection);
+  const [selected, setSelected] = useState<Set<string>>(() => loadSelection());
+  const [menuPos, setMenuPos] = useState<MenuPos | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
+
+  // One-time migrate legacy "web" → "web-search" so the chip count is correct
+  useEffect(() => {
+    const normalized = loadSelection();
+    setSelected(normalized);
+    persistSelection(normalized);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -173,32 +250,58 @@ export default function DeepResearchSources({
     };
   }, [open]);
 
+  // Reposition on open / resize / scroll so the menu never clips the viewport
+  useLayoutEffect(() => {
+    if (!open || !buttonRef.current) return;
+    function update() {
+      if (!buttonRef.current) return;
+      setMenuPos(computeMenuPos(buttonRef.current, menuRef.current));
+    }
+    update();
+    // Second pass after content paints (accurate height for flip decision)
+    const tId = window.setTimeout(update, 0);
+    window.addEventListener("resize", update);
+    window.addEventListener("scroll", update, true);
+    return () => {
+      window.clearTimeout(tId);
+      window.removeEventListener("resize", update);
+      window.removeEventListener("scroll", update, true);
+    };
+  }, [open]);
+
   const toggleConnector = useCallback((id: string, ready: boolean) => {
     if (!ready) return;
     setSelected((prev) => {
-      const next = new Set(prev);
+      const next = new Set(normalizeSelection(prev));
       if (next.has(id)) {
-        // Keep at least web-search active
-        if (id === "web-search" && next.size === 1) return prev;
+        // Keep at least one ready connector
+        const readyCount = [...next].filter((x) =>
+          READY_CONNECTOR_IDS.has(x),
+        ).length;
+        if (READY_CONNECTOR_IDS.has(id) && readyCount <= 1) return prev;
         next.delete(id);
       } else {
         next.add(id);
       }
-      persistSelection(next);
+      const normalized = normalizeSelection(next);
+      persistSelection(normalized);
       window.dispatchEvent(
         new CustomEvent(DEEP_RESEARCH_SOURCES_EVENT, {
-          detail: { sources: [...next] },
+          detail: { sources: [...normalized] },
         }),
       );
-      return next;
+      return normalized;
     });
   }, []);
 
   if (!visible) return null;
 
-  const activeCount = selected.size;
+  // Count only real connector ids (never category aliases)
+  const activeCount = [...selected].filter((id) =>
+    ALL_CONNECTOR_IDS.has(id),
+  ).length;
   const summary =
-    activeCount <= 1
+    activeCount === 1
       ? t("deepResearchSources.summaryOne")
       : t("deepResearchSources.summaryMany", { count: activeCount });
 
@@ -227,23 +330,22 @@ export default function DeepResearchSources({
       </button>
 
       {open &&
+        menuPos &&
         createPortal(
           <div
             ref={menuRef}
             role="menu"
             aria-label={t("deepResearchSources.title")}
-            style={(() => {
-              if (!buttonRef.current) return { top: 0, left: 0 };
-              const r = buttonRef.current.getBoundingClientRect();
-              return {
-                position: "fixed" as const,
-                top: r.bottom + 6,
-                left: Math.max(12, Math.min(r.left, window.innerWidth - 300)),
-              };
-            })()}
-            className="z-[1000] w-[min(280px,calc(100vw-24px))] overflow-hidden rounded-xl border border-white/[0.08] bg-theme-bg-secondary shadow-2xl light:border-zinc-200 light:bg-white"
+            style={{
+              position: "fixed",
+              top: menuPos.top,
+              bottom: menuPos.bottom,
+              left: menuPos.left,
+              maxHeight: menuPos.maxHeight,
+            }}
+            className="z-[1000] flex w-[min(280px,calc(100vw-24px))] flex-col overflow-hidden rounded-xl border border-white/[0.08] bg-theme-bg-secondary shadow-2xl light:border-zinc-200 light:bg-white"
           >
-            <div className="px-3 pt-3 pb-1.5">
+            <div className="shrink-0 px-3 pt-3 pb-1.5">
               <p className="text-xs font-semibold text-theme-text-primary">
                 {t("deepResearchSources.title")}
               </p>
@@ -251,7 +353,7 @@ export default function DeepResearchSources({
                 {t("deepResearchSources.subtitle")}
               </p>
             </div>
-            <div className="py-1 max-h-[min(60vh,420px)] overflow-y-auto no-scroll">
+            <div className="min-h-0 flex-1 overflow-y-auto py-1 no-scroll">
               {SOURCE_CATEGORIES.map((cat) => {
                 const Icon = cat.icon;
                 return (
@@ -294,7 +396,9 @@ export default function DeepResearchSources({
                                 : "border-theme-modal-border bg-transparent"
                             }`}
                           >
-                            {isOn && !disabled && <Check size={10} weight="bold" />}
+                            {isOn && !disabled && (
+                              <Check size={10} weight="bold" />
+                            )}
                           </span>
                           <span className="flex-1 text-sm text-theme-text-primary">
                             {t(c.labelKey)}

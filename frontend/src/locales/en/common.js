@@ -4805,7 +4805,7 @@ const TRANSLATIONS = {
     title: "Research sources",
     subtitle:
       "Choose where Deep Research may look. Connectors not yet ready are marked coming soon.",
-    summaryOne: "Sources",
+    summaryOne: "1 source",
     summaryMany: "{{count}} sources",
     comingSoon: "Soon",
     web: "Web",
