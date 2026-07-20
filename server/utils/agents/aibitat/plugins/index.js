@@ -19,6 +19,7 @@ const { generateReport } = require("./generate-report.js");
 const { orchestratorAgent } = require("./orchestrator.js");
 const { browserVision } = require("./browser-vision.js");
 const { imageGeneration } = require("./image-generation.js");
+const { videoGeneration } = require("./video-generation.js");
 const { pdfAnalyze } = require("./pdf-analyze.js");
 const { subagentPlugin } = require("./subagentPlugin.js");
 
@@ -43,6 +44,7 @@ module.exports = {
   orchestratorAgent,
   browserVision,
   imageGeneration,
+  videoGeneration,
   pdfAnalyze,
   subagentPlugin,
 
@@ -67,6 +69,7 @@ module.exports = {
   [orchestratorAgent.name]: orchestratorAgent,
   [browserVision.name]: browserVision,
   [imageGeneration.name]: imageGeneration,
+  [videoGeneration.name]: videoGeneration,
   [pdfAnalyze.name]: pdfAnalyze,
   [subagentPlugin.name]: subagentPlugin,
 };

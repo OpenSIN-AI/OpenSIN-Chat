@@ -108,6 +108,7 @@
     "zod": "^4.4.3"
   },
   "resolutions": {
+    "adm-zip": "0.6.0",
     "hono": ">=4.7.0",
     "jwa": "2.0.1",
     "buffer-equal-constant-time": "1.0.1",

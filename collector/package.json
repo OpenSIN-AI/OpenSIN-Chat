@@ -67,6 +67,7 @@
     "prettier": "^2.4.1"
   },
   "resolutions": {
+    "adm-zip": "0.6.0",
     "string-width": "^4.2.3",
     "wrap-ansi": "^7.0.0",
     "jwa": "2.0.1",

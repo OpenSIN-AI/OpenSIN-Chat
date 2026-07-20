@@ -13,6 +13,8 @@ const MODE_HINTS = {
     "You are operating in REPORT mode. You MUST use the generate_report tool to create a professional PDF report. Call generate_report with a title and a summary containing your structured report in markdown format. Use this structure in the summary: 1) Executive Summary (2-3 sentences), 2) Background/Context, 3) Main Analysis (with subheadings), 4) Key Findings (bulleted), 5) Conclusions, 6) Recommendations. If web-search tools are available, use them to gather current information before generating the report. Always cite sources in the summary text.",
   "image-gen":
     "You are operating in IMAGE GENERATION mode. Use the image-generation tool to create the requested image. Translate the user's request into a detailed, descriptive English image prompt covering subject, style, composition, colors, and lighting.",
+  "video-gen":
+    "You are operating in VIDEO GENERATION mode. Use the video-generation tool to create a short video. Write a detailed cinematic English prompt covering subject, camera motion, lighting, and style. Choose a short descriptive filename ending in .mp4. If video generation is not configured, tell the user to set AI_GATEWAY_API_KEY / VIDEO_GENERATION_API_KEY on the server.",
 };
 
 /** Connectors that are UI-selectable but not fully wired yet */

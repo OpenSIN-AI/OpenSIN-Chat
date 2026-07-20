@@ -15,6 +15,7 @@ const DEFAULT_SKILLS = [
   AgentPlugins.generateReport?.name,
   AgentPlugins.deepResearch?.name,
   AgentPlugins.imageGeneration?.name,
+  AgentPlugins.videoGeneration?.name,
 ].filter(Boolean);
 
 /**
@@ -83,7 +84,7 @@ const WORKSPACE_AGENT = {
     ]);
 
     // If clarifying questions tools are enabled, add a note to the role that the user must use the request-user-input tool to ask questions.
-    if (!!clarifyingQuestionsSkills?.length)
+    if (clarifyingQuestionsSkills?.length)
       role +=
         "\n\nWhen you need information from the user (URLs, file paths, preferences, choices, etc.), you MUST use the request-user-input tool. Do not ask questions in your text response - the user cannot reply to text. Only the tool can collect user input.";
 
