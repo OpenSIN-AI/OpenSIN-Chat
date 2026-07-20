@@ -81,10 +81,10 @@ export const AGENT_MODES = [
     labelKey: "agentMode.videoGen",
     description: undefined,
     descriptionKey: "agentMode.videoGenDesc",
-    enabled: false,
-    badge: "coming soon",
+    enabled: true,
     prefix: "@agent [video-gen]",
-    systemPromptHint: "",
+    systemPromptHint:
+      "You are operating in VIDEO GENERATION mode. Use the video-generation tool to create a short video.",
   },
   {
     id: "report",
