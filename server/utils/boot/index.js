@@ -144,6 +144,15 @@ function bootHTTP(app, port = 3001, onReady) {
     })
     .on("error", handleServerError);
 
+  // PERF (CEO): keep tunnel sockets warm — avoids full TLS/CF reconnect tax
+  // (multi-second cold TTFB spikes) between sequential API/chat calls.
+  server.keepAliveTimeout = 65_000;
+  server.headersTimeout = 70_000;
+  // Allow more concurrent sockets from cloudflared → origin
+  if (typeof server.maxConnections !== "number" || server.maxConnections === 0) {
+    server.maxConnections = 512;
+  }
+
   require("@mintplex-labs/express-ws").default(app, server);
 
   registerSignalHandlers();

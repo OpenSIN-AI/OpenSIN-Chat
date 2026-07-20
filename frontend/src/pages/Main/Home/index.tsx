@@ -1,7 +1,14 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Main home page that bootstraps an empty/default workspace and hosts the prompt input.
 // Docs: index.doc.md
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+  lazy,
+  Suspense,
+} from "react";
 import { useNavigate } from "react-router";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import {
@@ -31,8 +38,12 @@ import ChatSettingsMenu from "@/components/WorkspaceChat/ChatContainer/ChatSetti
 import WorkspaceModelPicker from "@/components/WorkspaceChat/ChatContainer/WorkspaceModelPicker";
 import { ChatTooltips } from "@/components/WorkspaceChat/ChatContainer/ChatTooltips";
 import { ChatSidebarProvider } from "@/components/WorkspaceChat/ChatContainer/ChatSidebar";
-import Sidebars from "@/components/WorkspaceChat/ChatContainer/Sidebars";
 import logger from "@/utils/logger";
+
+// PERF: right-rail host is already panel-lazy; keep it off Home's sync graph.
+const Sidebars = lazy(
+  () => import("@/components/WorkspaceChat/ChatContainer/Sidebars"),
+);
 
 interface HomeWorkspace {
   slug: string;
@@ -371,7 +382,9 @@ function HomeContent({
           </DnDFileUploaderWrapper>
           <ChatTooltips />
         </div>
-        <Sidebars workspace={workspace} />
+        <Suspense fallback={null}>
+          <Sidebars workspace={workspace} />
+        </Suspense>
       </div>
     </ChatSidebarProvider>
   );

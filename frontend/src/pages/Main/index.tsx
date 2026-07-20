@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
 import { FullScreenLoader } from "@/components/Preloader";
@@ -8,10 +8,14 @@ import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import Sidebar, { SidebarMobileHeader } from "@/components/Sidebar";
 import LeftSidebarIconBar from "@/components/WorkspaceChat/ChatContainer/LeftSidebarIconBar";
 import { SidebarToggleProvider } from "@/components/Sidebar/SidebarToggle";
-import {
-  CommandPalette,
-  type CommandItem,
-} from "@/components/Workspace/CommandPalette/CommandPalette";
+import type { CommandItem } from "@/components/Workspace/CommandPalette/CommandPalette";
+
+// PERF (CEO): CommandPalette (~140KB) only needed on ⌘K / search — keep off first paint.
+const CommandPalette = lazy(() =>
+  import("@/components/Workspace/CommandPalette/CommandPalette").then((m) => ({
+    default: m.CommandPalette,
+  })),
+);
 
 export default function Main() {
   const { t } = useTranslation();
@@ -46,6 +50,24 @@ function MainLayout() {
   const isMobile = useIsMobileLayout();
   const [commandOpen, setCommandOpen] = useState(false);
 
+  // Warm the workspace chat chunk while the user is on Home so the first
+  // navigation into a thread is instant (cache hit, no waterfall).
+  useEffect(() => {
+    const idle =
+      typeof requestIdleCallback === "function"
+        ? requestIdleCallback
+        : (cb: () => void) => setTimeout(cb, 1200);
+    const cancel =
+      typeof cancelIdleCallback === "function"
+        ? cancelIdleCallback
+        : (id: number) => clearTimeout(id);
+    const id = idle(() => {
+      void import("@/pages/WorkspaceChat");
+      void import("@/components/WorkspaceChat");
+    });
+    return () => cancel(id as number);
+  }, []);
+
   const commandItems: CommandItem[] = [
     {
       id: "docs",
@@ -69,11 +91,15 @@ function MainLayout() {
       >
         <Home />
       </div>
-      <CommandPalette
-        open={commandOpen}
-        onOpenChange={setCommandOpen}
-        items={commandItems}
-      />
+      {commandOpen ? (
+        <Suspense fallback={null}>
+          <CommandPalette
+            open={commandOpen}
+            onOpenChange={setCommandOpen}
+            items={commandItems}
+          />
+        </Suspense>
+      ) : null}
     </div>
   );
 }

@@ -159,25 +159,37 @@ async function streamChatWithWorkspace(
   let metrics;
   let contextTexts = [];
   let sources = [];
-  let pinnedDocIdentifiers = [];
+  const pinnedDocIdentifiers = [];
 
-  // If the router pre-fetched context we can reuse it; otherwise fetch fresh.
-  const {
-    rawHistory,
-    chatHistory,
-    pinnedDocs: prefetchedPinnedDocs,
-    parsedFiles: prefetchedParsedFiles,
-  } = prefetchedContext ??
-  (await recentChatHistory({ user, workspace, thread, messageLimit }));
+  // PERF (CEO): history / always-on docs / parsed files are independent I/O.
+  // Parallelize when not fully pre-fetched — cuts sequential DB/file round-trips
+  // off chat TTFT on the cold path.
+  const [historyResult, alwaysOnDocs, parsedFiles] = await Promise.all([
+    prefetchedContext
+      ? Promise.resolve({
+          rawHistory: prefetchedContext.rawHistory,
+          chatHistory: prefetchedContext.chatHistory,
+        })
+      : recentChatHistory({ user, workspace, thread, messageLimit }),
+    prefetchedContext?.pinnedDocs != null
+      ? Promise.resolve(prefetchedContext.pinnedDocs)
+      : new DocumentManager({
+          workspace,
+          maxTokens: LLMConnector.promptWindowLimit(),
+        }).alwaysOnContextDocs(),
+    prefetchedContext?.parsedFiles != null
+      ? Promise.resolve(prefetchedContext.parsedFiles)
+      : WorkspaceParsedFiles.getContextFiles(
+          workspace,
+          thread || null,
+          user || null,
+        ),
+  ]);
+  const { rawHistory, chatHistory } = historyResult;
 
-  // Always-on docs (legacy pin + contextMode summary/full) — single unified
-  // loader so a document is never injected twice. Reuse pre-fetched if available.
-  const alwaysOnDocs =
-    prefetchedPinnedDocs ??
-    (await new DocumentManager({
-      workspace,
-      maxTokens: LLMConnector.promptWindowLimit(),
-    }).alwaysOnContextDocs());
+  if (!Array.isArray(alwaysOnDocs)) alwaysOnDocs = [];
+  if (!Array.isArray(parsedFiles)) parsedFiles = [];
+
   alwaysOnDocs.forEach((doc) => {
     const { pageContent, ...metadata } = doc;
     // Full-text always-on docs are excluded from similarity search to avoid
@@ -193,14 +205,6 @@ async function streamChatWithWorkspace(
     });
   });
 
-  // Parsed files — reuse pre-fetched if available, otherwise fetch fresh.
-  const parsedFiles =
-    prefetchedParsedFiles ??
-    (await WorkspaceParsedFiles.getContextFiles(
-      workspace,
-      thread || null,
-      user || null,
-    ));
   parsedFiles.forEach((doc) => {
     const { pageContent, ...metadata } = doc;
     contextTexts.push(doc.pageContent);
@@ -229,7 +233,7 @@ async function streamChatWithWorkspace(
         };
 
   // Failed similarity search if it was run at all and failed.
-  if (!!vectorSearchResults.message) {
+  if (vectorSearchResults.message) {
     writeResponseChunk(response, {
       id: uuid,
       type: "abort",
@@ -417,7 +421,7 @@ async function streamChatWithWorkspace(
       user,
     });
 
-    // --- Persistente asynchrone Titel-Generierung (OpenSIN-Chat) ---
+    // --- Persistente asynchrone Titel-Generierung (OpenAfD-Chat) ---
     // Jobs laufen in `server/utils/backgroundJobs/queue.js` und überleben
     // Server-Restarts, Mac-Sleep und Docker-Neustarts (SQLite-basiert).
     // Nur serialisierbare Daten (IDs/Slugs/Strings) in das Payload — keine

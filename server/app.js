@@ -266,15 +266,23 @@ function buildApp() {
     // are content-addressed — they MUST be long-cached. Re-downloading multi-MB
     // bundles on every navigation is a second-scale UX tax. Only HTML and the
     // root index.js/css preload map stay uncached.
+    //
+    // Prefer precompressed .br/.gz companions (see frontend postbuild) so the
+    // Cloudflare Tunnel never hauls multi-MB uncompressed JS over the wire.
+    const publicDir = path.resolve(__dirname, "public");
+    const { precompressedStatic } = require("./utils/http/precompressedStatic");
+    app.use(precompressedStatic(publicDir));
     app.use(
-      express.static(path.resolve(__dirname, "public"), {
+      express.static(publicDir, {
         extensions: ["js"],
+        // etag + lastModified let CF/browser revalidate cheaply when needed
         etag: true,
         lastModified: true,
         setHeaders: (res, filePath) => {
           const base = path.basename(filePath);
           const isHtml =
             filePath.endsWith(".html") || filePath.endsWith("_index.html");
+          // Root entry shims (no content hash) — always revalidate
           const isRootEntry =
             base === "index.js" ||
             base === "index.css" ||
@@ -286,6 +294,7 @@ function buildApp() {
             );
             return;
           }
+          // Fingerprinted build output (…/assets/name-HASH.js|css|…)
           if (
             filePath.includes(`${path.sep}assets${path.sep}`) ||
             filePath.includes("/assets/")
@@ -390,12 +399,10 @@ function buildApp() {
           const resBody = await VectorDb[command](body);
           response.status(200).json({ ...resBody });
         } catch (e) {
-          // eslint-disable-next-line no-console
           console.error(e?.message || "Unknown error", e);
           response.status(500).json({ error: e?.message || String(e) });
         }
       } catch (e) {
-        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);
       }
