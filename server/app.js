@@ -133,6 +133,25 @@ function buildApp() {
   });
   app.use(securityHeaders());
 
+  // PERF: gzip/deflate responses. SSE is excluded (must not buffer chunks).
+  try {
+    const compression = require("compression");
+    app.use(
+      compression({
+        filter: (req, res) => {
+          if (req.headers.accept === "text/event-stream") return false;
+          if (res.getHeader("Content-Type") === "text/event-stream")
+            return false;
+          return compression.filter(req, res);
+        },
+        level: 6,
+        threshold: 1024,
+      }),
+    );
+  } catch {
+    /* optional — lean images without the dep still boot */
+  }
+
   app.use((req, res, next) => {
     res.setHeader(
       "Report-To",
@@ -243,36 +262,39 @@ function buildApp() {
     const { MetaGenerator } = require("./utils/boot/MetaGenerator");
     const IndexPage = new MetaGenerator();
 
+    // PERF (CEO): Hashed Vite assets under /assets/* (incl. index-*.js, vendor-*.js)
+    // are content-addressed — they MUST be long-cached. Re-downloading multi-MB
+    // bundles on every navigation is a second-scale UX tax. Only HTML and the
+    // root index.js/css preload map stay uncached.
     app.use(
       express.static(path.resolve(__dirname, "public"), {
         extensions: ["js"],
+        etag: true,
+        lastModified: true,
         setHeaders: (res, filePath) => {
-          if (filePath.endsWith(".html") || filePath.endsWith("_index.html")) {
+          const base = path.basename(filePath);
+          const isHtml =
+            filePath.endsWith(".html") || filePath.endsWith("_index.html");
+          const isRootEntry =
+            base === "index.js" ||
+            base === "index.css" ||
+            base === "manifest.json";
+          if (isHtml || isRootEntry) {
             res.setHeader(
               "Cache-Control",
               "no-cache, no-store, must-revalidate",
             );
-          } else if (
-            filePath.includes("vendor-") ||
-            filePath.includes("/assets/index-")
+            return;
+          }
+          if (
+            filePath.includes(`${path.sep}assets${path.sep}`) ||
+            filePath.includes("/assets/")
           ) {
-            res.setHeader(
-              "Cache-Control",
-              "no-cache, no-store, must-revalidate",
-            );
-          } else if (
-            filePath.endsWith("/index.js") ||
-            filePath.endsWith("/index.css")
-          ) {
-            res.setHeader(
-              "Cache-Control",
-              "no-cache, no-store, must-revalidate",
-            );
-          } else if (filePath.includes("/assets/")) {
             res.setHeader(
               "Cache-Control",
               "public, max-age=31536000, immutable",
             );
+            return;
           }
         },
       }),

@@ -45,11 +45,12 @@ const CHAT_MESSAGE_MAX_LENGTH = 32_000;
 async function streamChatHandler(request, response, { thread = null } = {}) {
   let stopHeartbeat = null;
   try {
-    const user = await userFromSession(request, response);
+    // PERF: open SSE as early as possible so the client gets headers in ms,
+    // then validate. Body is already buffered by express.json.
     const { message, attachments = [] } = reqBody(request);
     const workspace = response.locals.workspace;
 
-    // --- Input validation ---------------------------------------------------
+    // --- Input validation (sync, before any await) --------------------------
     if (typeof message !== "string" || message.trim().length === 0) {
       response.status(400).json({
         id: uuidv4(),
@@ -78,8 +79,13 @@ async function streamChatHandler(request, response, { thread = null } = {}) {
     response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
     response.setHeader("Content-Type", "text/event-stream");
     response.setHeader("Connection", "keep-alive");
+    // Hint reverse proxies / CF not to buffer SSE
+    response.setHeader("X-Accel-Buffering", "no");
     response.flushHeaders();
     stopHeartbeat = startSSEHeartbeat(response);
+
+    // Session + quota after headers so TTFB is not blocked by DB auth round-trip
+    const user = await userFromSession(request, response);
 
     // --- Daily quota guard --------------------------------------------------
     if (multiUserMode(response) && !(await User.canSendChat(user))) {
