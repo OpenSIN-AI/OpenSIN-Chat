@@ -1,80 +1,90 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Right-rail sidebars host — panels are code-split so TipTap/PDF/etc.
+// stay off the critical chat first-load path (PERF CEO).
 import { createPortal } from "react-dom";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorBoundaryFallback from "@/components/ErrorBoundaryFallback";
-import SourcesSidebar from "./SourcesSidebar";
-import PreviewSidebar from "./PreviewSidebar";
-import ConsoleSidebar from "./ConsoleSidebar";
-import DatabaseSidebar from "./DatabaseSidebar";
-import PoliticalSidebar from "./PoliticalSidebar";
-import PdfAnalysisSidebar from "./PdfAnalysisSidebar";
-import NotepadSidebar from "./NotepadSidebar";
-import AgentSessionsSidebar from "./AgentSessionsSidebar";
-import AgentSettingsSidebar from "./AgentSettingsSidebar";
-import WorkspaceSettingsSidebar from "./WorkspaceSettingsSidebar";
 import RightSidebarIconBar from "./RightSidebarIconBar";
 import { useChatSidebar } from "./ChatSidebar";
 import { useTranslation } from "react-i18next";
 import { X } from "@phosphor-icons/react/dist/csr/X";
+
+// Lazy panels: only the open sidebar is downloaded. Notepad (TipTap), PDF,
+// Database, etc. must not land in the initial WorkspaceChat graph.
+const SourcesSidebar = lazy(() => import("./SourcesSidebar"));
+const PreviewSidebar = lazy(() => import("./PreviewSidebar"));
+const ConsoleSidebar = lazy(() => import("./ConsoleSidebar"));
+const DatabaseSidebar = lazy(() => import("./DatabaseSidebar"));
+const PoliticalSidebar = lazy(() => import("./PoliticalSidebar"));
+const PdfAnalysisSidebar = lazy(() => import("./PdfAnalysisSidebar"));
+const NotepadSidebar = lazy(() => import("./NotepadSidebar"));
+const AgentSessionsSidebar = lazy(() => import("./AgentSessionsSidebar"));
+const AgentSettingsSidebar = lazy(() => import("./AgentSettingsSidebar"));
+const WorkspaceSettingsSidebar = lazy(
+  () => import("./WorkspaceSettingsSidebar"),
+);
+
+function PanelFallback() {
+  return (
+    <div
+      className="flex h-full w-[min(360px,100vw)] items-center justify-center text-xs text-theme-text-secondary"
+      aria-busy="true"
+    >
+      …
+    </div>
+  );
+}
 
 function ActiveSidebarPanel({
   workspace,
   sidebarType,
 }: SidebarsProps & { sidebarType: string | null }) {
   if (!sidebarType) return null;
+
+  let panel: React.ReactNode = null;
+  switch (sidebarType) {
+    case "sources":
+      panel = <SourcesSidebar workspace={workspace} />;
+      break;
+    case "preview":
+      panel = <PreviewSidebar />;
+      break;
+    case "console":
+      panel = <ConsoleSidebar />;
+      break;
+    case "database":
+      panel = <DatabaseSidebar workspace={workspace} />;
+      break;
+    case "political":
+      panel = <PoliticalSidebar />;
+      break;
+    case "pdf-analysis":
+      panel = <PdfAnalysisSidebar />;
+      break;
+    case "notepad":
+      panel = <NotepadSidebar workspace={workspace} />;
+      break;
+    case "agent-sessions":
+      panel = <AgentSessionsSidebar workspace={workspace} />;
+      break;
+    case "agent-settings":
+      panel = <AgentSettingsSidebar workspace={workspace} />;
+      break;
+    case "workspace-settings":
+      panel = <WorkspaceSettingsSidebar workspace={workspace} />;
+      break;
+    default:
+      panel = null;
+  }
+
+  if (!panel) return null;
+
   return (
     <div className="relative z-30 h-full min-w-0 flex-shrink-0 overflow-hidden border-l border-white/[0.08] bg-theme-bg-sidebar light:border-zinc-200/70 [&>*]:min-w-0 [&>*]:max-w-full">
-      {sidebarType === "sources" && (
-        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-          <SourcesSidebar workspace={workspace} />
-        </ErrorBoundary>
-      )}
-      {sidebarType === "preview" && (
-        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-          <PreviewSidebar />
-        </ErrorBoundary>
-      )}
-      {sidebarType === "console" && (
-        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-          <ConsoleSidebar />
-        </ErrorBoundary>
-      )}
-      {sidebarType === "database" && (
-        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-          <DatabaseSidebar workspace={workspace} />
-        </ErrorBoundary>
-      )}
-      {sidebarType === "political" && (
-        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-          <PoliticalSidebar />
-        </ErrorBoundary>
-      )}
-      {sidebarType === "pdf-analysis" && (
-        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-          <PdfAnalysisSidebar />
-        </ErrorBoundary>
-      )}
-      {sidebarType === "notepad" && (
-        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-          <NotepadSidebar workspace={workspace} />
-        </ErrorBoundary>
-      )}
-      {sidebarType === "agent-sessions" && (
-        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-          <AgentSessionsSidebar workspace={workspace} />
-        </ErrorBoundary>
-      )}
-      {sidebarType === "agent-settings" && (
-        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-          <AgentSettingsSidebar workspace={workspace} />
-        </ErrorBoundary>
-      )}
-      {sidebarType === "workspace-settings" && (
-        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-          <WorkspaceSettingsSidebar workspace={workspace} />
-        </ErrorBoundary>
-      )}
+      <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+        <Suspense fallback={<PanelFallback />}>{panel}</Suspense>
+      </ErrorBoundary>
     </div>
   );
 }
@@ -98,13 +108,7 @@ function MobileSidebarCloseButton() {
 
 /**
  * Renders the right sidebar: icon bar + active panel side by side.
- * The icon bar is always visible (44px rail).
- * When a panel is active, the full panel appears to the left of the icon rail.
- * The panel width is controlled by ChatSidebar's internal width state (persisted
- * to localStorage) — the outer wrapper here has no fixed width so it wraps to
- * the ChatSidebar's dynamic width.
- *
- * Uses a React portal to render outside the clipped <main> container.
+ * Icon bar is always visible; panel code is lazy-loaded per type.
  */
 interface SidebarsProps {
   workspace: any;
@@ -131,7 +135,6 @@ function SidebarsContent({ workspace }: SidebarsProps) {
         sidebarType={renderedSidebar}
       />
 
-      {/* Icon bar — always visible */}
       <RightSidebarIconBar />
     </div>
   );

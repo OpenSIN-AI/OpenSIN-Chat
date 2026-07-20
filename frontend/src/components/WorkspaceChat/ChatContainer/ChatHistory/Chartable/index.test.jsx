@@ -92,50 +92,50 @@ describe("Chartable (ECharts)", () => {
     expect(container.innerHTML).toBe("");
   });
 
-  it("renders area chart via ECharts", () => {
+  it("renders area chart via ECharts", async () => {
     render(<Chartable {...makeProps("area")} />);
-    expect(screen.getByTestId("echart-renderer")).toBeInTheDocument();
+    expect(await screen.findByTestId("echart-renderer")).toBeInTheDocument();
     expect(screen.getByTestId("echart-title")).toHaveTextContent("Test Chart");
   });
 
-  it("renders bar chart via ECharts", () => {
+  it("renders bar chart via ECharts", async () => {
     render(<Chartable {...makeProps("bar")} />);
-    expect(screen.getByTestId("echart-renderer")).toBeInTheDocument();
+    expect(await screen.findByTestId("echart-renderer")).toBeInTheDocument();
   });
 
-  it("renders line chart via ECharts", () => {
+  it("renders line chart via ECharts", async () => {
     render(<Chartable {...makeProps("line")} />);
-    expect(screen.getByTestId("echart-renderer")).toBeInTheDocument();
+    expect(await screen.findByTestId("echart-renderer")).toBeInTheDocument();
   });
 
-  it("renders pie chart via ECharts", () => {
+  it("renders pie chart via ECharts", async () => {
     render(<Chartable {...makeProps("pie")} />);
-    expect(screen.getByTestId("echart-renderer")).toBeInTheDocument();
+    expect(await screen.findByTestId("echart-renderer")).toBeInTheDocument();
   });
 
-  it("renders scatter chart via ECharts", () => {
+  it("renders scatter chart via ECharts", async () => {
     render(<Chartable {...makeProps("scatter")} />);
-    expect(screen.getByTestId("echart-renderer")).toBeInTheDocument();
+    expect(await screen.findByTestId("echart-renderer")).toBeInTheDocument();
   });
 
-  it("renders radar chart via ECharts", () => {
+  it("renders radar chart via ECharts", async () => {
     render(<Chartable {...makeProps("radar")} />);
-    expect(screen.getByTestId("echart-renderer")).toBeInTheDocument();
+    expect(await screen.findByTestId("echart-renderer")).toBeInTheDocument();
   });
 
-  it("renders treemap chart via ECharts", () => {
+  it("renders treemap chart via ECharts", async () => {
     render(<Chartable {...makeProps("treemap")} />);
-    expect(screen.getByTestId("echart-renderer")).toBeInTheDocument();
+    expect(await screen.findByTestId("echart-renderer")).toBeInTheDocument();
   });
 
-  it("renders funnel chart via ECharts", () => {
+  it("renders funnel chart via ECharts", async () => {
     render(<Chartable {...makeProps("funnel")} />);
-    expect(screen.getByTestId("echart-renderer")).toBeInTheDocument();
+    expect(await screen.findByTestId("echart-renderer")).toBeInTheDocument();
   });
 
-  it("renders download button", () => {
+  it("renders download button", async () => {
     render(<Chartable {...makeProps("area")} />);
-    expect(screen.getByLabelText("Download graph")).toBeInTheDocument();
+    expect(await screen.findByLabelText("Download graph")).toBeInTheDocument();
   });
 
   it("renders caption when provided", () => {
@@ -147,7 +147,7 @@ describe("Chartable (ECharts)", () => {
     expect(screen.getByText("My caption")).toBeInTheDocument();
   });
 
-  it("renders with chatId present", () => {
+  it("renders with chatId present", async () => {
     const props = {
       props: {
         content: { type: "area", dataset: sampleDataset, title: "Chat Chart" },
@@ -155,10 +155,12 @@ describe("Chartable (ECharts)", () => {
       },
     };
     render(<Chartable {...props} />);
-    expect(screen.getByTestId("echart-title")).toHaveTextContent("Chat Chart");
+    expect(await screen.findByTestId("echart-title")).toHaveTextContent(
+      "Chat Chart",
+    );
   });
 
-  it("handles dataset as JSON string", () => {
+  it("handles dataset as JSON string", async () => {
     render(
       <Chartable
         props={{
@@ -170,13 +172,13 @@ describe("Chartable (ECharts)", () => {
         }}
       />,
     );
-    expect(screen.getByTestId("echart-renderer")).toBeInTheDocument();
+    expect(await screen.findByTestId("echart-renderer")).toBeInTheDocument();
     expect(screen.getByTestId("echart-title")).toHaveTextContent(
       "Parsed Chart",
     );
   });
 
-  it("renders the caption inside the chat container when chatId is present", () => {
+  it("renders the caption inside the chat container when chatId is present", async () => {
     const props = {
       props: {
         content: {
@@ -189,7 +191,9 @@ describe("Chartable (ECharts)", () => {
       },
     };
     render(<Chartable {...props} />);
-    expect(screen.getByTestId("echart-title")).toHaveTextContent("Chat Chart");
+    expect(await screen.findByTestId("echart-title")).toHaveTextContent(
+      "Chat Chart",
+    );
     expect(screen.getByText("Chat caption")).toBeInTheDocument();
   });
 
@@ -202,12 +206,12 @@ describe("Chartable (ECharts)", () => {
     expect(container.innerHTML).toBe("");
   });
 
-  it("renders multi-series bar chart", () => {
+  it("renders multi-series bar chart", async () => {
     const multiSeries = [
       { name: "Jan", AfD: 45, CDU: 62 },
       { name: "Feb", AfD: 38, CDU: 55 },
     ];
     render(<Chartable {...makeProps("bar", multiSeries)} />);
-    expect(screen.getByTestId("echart-renderer")).toBeInTheDocument();
+    expect(await screen.findByTestId("echart-renderer")).toBeInTheDocument();
   });
 });

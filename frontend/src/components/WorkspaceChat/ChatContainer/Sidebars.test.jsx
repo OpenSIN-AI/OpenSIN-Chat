@@ -48,12 +48,12 @@ describe("Sidebars", () => {
     vi.clearAllMocks();
   });
 
-  it("renders the active panel when sidebar is open with activeSidebar", () => {
+  it("renders the active panel when sidebar is open with activeSidebar", async () => {
     mockUseChatSidebar.mockReturnValue({
       activeSidebar: "sources",
     });
     render(<Sidebars workspace={workspace} />);
-    expect(screen.getByTestId("sources-sidebar")).toBeInTheDocument();
+    expect(await screen.findByTestId("sources-sidebar")).toBeInTheDocument();
     expect(screen.getByTestId("right-sidebar-icon-bar")).toBeInTheDocument();
   });
 
@@ -81,11 +81,12 @@ describe("Sidebars", () => {
     expect(screen.getByTestId("right-sidebar-icon-bar")).toBeInTheDocument();
   });
 
-  it("panel container is rendered when sidebar is active", () => {
+  it("panel container is rendered when sidebar is active", async () => {
     mockUseChatSidebar.mockReturnValue({
       activeSidebar: "sources",
     });
     render(<Sidebars workspace={workspace} />);
+    await screen.findByTestId("sources-sidebar");
     const panel = document.body.querySelector(".bg-theme-bg-sidebar");
     expect(panel).toBeInTheDocument();
   });
@@ -97,11 +98,11 @@ describe("Sidebars", () => {
     ["database", "database-sidebar"],
     ["political", "political-sidebar"],
     ["pdf-analysis", "pdf-analysis-sidebar"],
-  ])("renders %s panel when activeSidebar is '%s'", (name, testid) => {
+  ])("renders %s panel when activeSidebar is '%s'", async (name, testid) => {
     mockUseChatSidebar.mockReturnValue({
       activeSidebar: name,
     });
     render(<Sidebars workspace={workspace} />);
-    expect(screen.getByTestId(testid)).toBeInTheDocument();
+    expect(await screen.findByTestId(testid)).toBeInTheDocument();
   });
 });

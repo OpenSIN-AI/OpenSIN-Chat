@@ -9,9 +9,12 @@ import ReportPreviewListener from "./ReportPreviewListener";
 import ChatHeader from "./ChatHeader";
 import EmptyState from "./EmptyState";
 import MessageList from "./MessageList";
-import Sidebars from "./Sidebars";
+import { lazy, Suspense } from "react";
 import useChatStream from "./useChatStream";
 import ErrorBoundaryFallback from "@/components/ErrorBoundaryFallback";
+
+// Lazy: Sidebars host + icon rail; individual panels split further inside.
+const Sidebars = lazy(() => import("./Sidebars"));
 
 export default function ChatContainer({
   workspace,
@@ -116,7 +119,9 @@ function ChatContainerInner({
           <ChatTooltips />
         </main>
       </div>
-      <Sidebars workspace={workspace} />
+      <Suspense fallback={null}>
+        <Sidebars workspace={workspace} />
+      </Suspense>
     </>
   );
 }

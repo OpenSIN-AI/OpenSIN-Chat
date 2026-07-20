@@ -6,8 +6,11 @@
 import DOMPurify from "@/utils/chat/purify";
 import { safeJsonParse } from "@/utils/request";
 import renderMarkdown from "@/utils/chat/markdown";
-import { memo } from "react";
-import EChartRenderer from "./EChartRenderer";
+import { lazy, memo, Suspense } from "react";
+
+// Nested lazy: Chartable chunk stays light; echarts (~1MB) loads only when
+// a chart message is actually rendered (not just when ChatHistory mounts).
+const EChartRenderer = lazy(() => import("./EChartRenderer"));
 
 const CHART_SANITIZE_OPTS: any = {
   ALLOWED_TAGS: [
@@ -74,8 +77,16 @@ export function Chartable({ props }: any) {
   return (
     <div className="flex justify-start w-full">
       <div className="py-2 px-4 w-full flex flex-col md:max-w-[80%]">
-        <div className="bg-theme-bg-primary rounded-2xl border border-white/5 light:border-theme-border-primary overflow-hidden shadow-xl">
-          <EChartRenderer chart={chart} />
+        <div className="bg-theme-bg-primary rounded-2xl border border-white/5 light:border-theme-border-primary overflow-hidden shadow-xl min-h-[200px]">
+          <Suspense
+            fallback={
+              <div className="flex h-[200px] items-center justify-center text-xs text-theme-text-secondary">
+                …
+              </div>
+            }
+          >
+            <EChartRenderer chart={chart} />
+          </Suspense>
         </div>
         {content.caption && (
           <span
