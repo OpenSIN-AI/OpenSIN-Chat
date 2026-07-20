@@ -11,6 +11,17 @@ proposal-director.md → script-director.md → scene-director.md
 → asset-director.md → edit-director.md → compose-director.md
 ```
 
+## BUGS DIE DU KENNEN MUSST (gefixt 2026-07-20)
+
+### Bug 1: Relative Pfade in Remotion kaputt
+`tools/video/video_compose.py` hat relative Pfade wie `14-login.png` zu `file://` URIs konvertiert statt sie für `staticFile()` durchzureichen. **Fix ist drin** — aber prüfe ob dein Branch den Fix hat.
+
+### Bug 2: Kompositionsdauer falsch
+`remotion-composer/src/Root.tsx` hat `max(out_seconds)` als Dauer genommen statt die Summe aller Cut-Durationen. Bei 8 Cuts mit je 0-11s resultierte das in 10s statt 60s. **Fix ist drin.**
+
+### Bug 3: cut.overlay wird ignoriert
+Overlays MÜSSEN in das top-level `overlays` Array, nicht in `cut.overlay`. SceneRenderer rendert nur `overlays[]`, nicht `cut.overlay`.
+
 ## Pipeline-Überblick
 
 ```
