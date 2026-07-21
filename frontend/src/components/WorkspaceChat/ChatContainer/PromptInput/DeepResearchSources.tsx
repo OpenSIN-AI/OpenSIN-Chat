@@ -2,7 +2,13 @@
 // Purpose: Gemini-style source picker next to Deep Research mode.
 // Docs: Categories Web / Email / Cloud / Machine; real connectors when ready,
 //       otherwise marked "Coming soon". Selection is persisted for the session.
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 import { Globe } from "@phosphor-icons/react/dist/csr/Globe";
@@ -16,11 +22,7 @@ import { Plug } from "@phosphor-icons/react/dist/csr/Plug";
 export const DEEP_RESEARCH_SOURCES_EVENT = "deep-research-sources-change";
 const STORAGE_KEY = "opensin_deep_research_sources";
 
-export type DeepResearchSourceId =
-  | "web"
-  | "email"
-  | "storage"
-  | "machine";
+export type DeepResearchSourceId = "web" | "email" | "storage" | "machine";
 
 type Connector = {
   id: string;
@@ -323,10 +325,7 @@ export default function DeepResearchSources({
         <span className="text-xs font-medium text-theme-text-secondary group-hover:text-theme-text-primary whitespace-nowrap">
           {summary}
         </span>
-        <CaretDown
-          size={11}
-          className="text-theme-text-secondary shrink-0"
-        />
+        <CaretDown size={11} className="text-theme-text-secondary shrink-0" />
       </button>
 
       {open &&

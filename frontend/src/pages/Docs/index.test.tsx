@@ -195,7 +195,10 @@ beforeEach(() => {
 
 describe("Docs page", () => {
   it("renders ThemeToggle in the header", () => {
-    mockedUseParams.mockReturnValue({ slug: "test-doc", audience: "both" as any });
+    mockedUseParams.mockReturnValue({
+      slug: "test-doc",
+      audience: "both" as any,
+    });
     vi.mocked(getDocBySlug).mockReturnValue({
       slug: "test-doc",
       title: "Test Document",
@@ -211,7 +214,10 @@ describe("Docs page", () => {
   });
 
   it("renders the back to app link", () => {
-    mockedUseParams.mockReturnValue({ slug: "test-doc", audience: "both" as any });
+    mockedUseParams.mockReturnValue({
+      slug: "test-doc",
+      audience: "both" as any,
+    });
     vi.mocked(getDocBySlug).mockReturnValue({
       slug: "test-doc",
       title: "Test Document",
@@ -227,7 +233,10 @@ describe("Docs page", () => {
   });
 
   it("renders the right-hand TOC with hidden lg:block classes", () => {
-    mockedUseParams.mockReturnValue({ slug: "test-doc", audience: "both" as any });
+    mockedUseParams.mockReturnValue({
+      slug: "test-doc",
+      audience: "both" as any,
+    });
     vi.mocked(getDocBySlug).mockReturnValue({
       slug: "test-doc",
       title: "Test Document",
@@ -246,7 +255,10 @@ describe("Docs page", () => {
   });
 
   it("renders the floating TOC button with lg:hidden on mobile", () => {
-    mockedUseParams.mockReturnValue({ slug: "test-doc", audience: "both" as any });
+    mockedUseParams.mockReturnValue({
+      slug: "test-doc",
+      audience: "both" as any,
+    });
     vi.mocked(getDocBySlug).mockReturnValue({
       slug: "test-doc",
       title: "Test Document",
@@ -264,7 +276,10 @@ describe("Docs page", () => {
   });
 
   it("opens the mobile TOC drawer when the floating button is clicked", async () => {
-    mockedUseParams.mockReturnValue({ slug: "test-doc", audience: "both" as any });
+    mockedUseParams.mockReturnValue({
+      slug: "test-doc",
+      audience: "both" as any,
+    });
     vi.mocked(getDocBySlug).mockReturnValue({
       slug: "test-doc",
       title: "Test Document",
@@ -288,7 +303,10 @@ describe("Docs page", () => {
   });
 
   it("closes the mobile TOC drawer when a TOC item is clicked", async () => {
-    mockedUseParams.mockReturnValue({ slug: "test-doc", audience: "both" as any });
+    mockedUseParams.mockReturnValue({
+      slug: "test-doc",
+      audience: "both" as any,
+    });
     vi.mocked(getDocBySlug).mockReturnValue({
       slug: "test-doc",
       title: "Test Document",
@@ -318,7 +336,10 @@ describe("Docs page", () => {
   });
 
   it("passes extracted headings to DocsToc", async () => {
-    mockedUseParams.mockReturnValue({ slug: "test-doc", audience: "both" as any });
+    mockedUseParams.mockReturnValue({
+      slug: "test-doc",
+      audience: "both" as any,
+    });
     vi.mocked(getDocBySlug).mockReturnValue({
       slug: "test-doc",
       title: "Test Document",
@@ -347,7 +368,10 @@ describe("Docs page", () => {
   });
 
   it("passes the markdown content to DocsMarkdown", () => {
-    mockedUseParams.mockReturnValue({ slug: "test-doc", audience: "both" as any });
+    mockedUseParams.mockReturnValue({
+      slug: "test-doc",
+      audience: "both" as any,
+    });
     vi.mocked(getDocBySlug).mockReturnValue({
       slug: "test-doc",
       title: "Test Document",

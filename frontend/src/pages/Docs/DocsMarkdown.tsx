@@ -57,7 +57,8 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
 // (Vite public/ assets). Supports legacy ../screenshots/… and screenshots/… links.
 const defaultImage =
   md.renderer.rules.image ||
-  ((tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options));
+  ((tokens, idx, options, _env, self) =>
+    self.renderToken(tokens, idx, options));
 
 md.renderer.rules.image = function (tokens, idx, options, env, self) {
   const token = tokens[idx];

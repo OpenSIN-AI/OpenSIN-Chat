@@ -141,9 +141,7 @@ export default function NewApiKeyModal({
               rel="noreferrer"
               className="text-blue-400 hover:underline"
             >
-              {t("api.readDocumentation")}{" "}
-              {
-              }
+              {t("api.readDocumentation")} {}
               &rarr;
             </a>
           </div>

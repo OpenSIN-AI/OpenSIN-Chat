@@ -172,7 +172,9 @@ export default [
               "sk-...",
               "dall-e-3",
               "·", "\\*", "-", "/", ":", "%",
-              ".", "•", "?", "!",
+              // These are fed into RegExp(`^${source}$`) by eslint-plugin-i18next —
+              // escape meta chars so "?" / "." don't crash lint with /^?$/.
+              "\\.", "•", "\\?", "!",
               // Numeric placeholders and technical identifiers
               "bold", "normal", "light", "medium", "semibold",
               "Ctrl", "⌘", "Alt", "Shift",

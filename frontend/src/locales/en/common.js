@@ -520,8 +520,7 @@ const TRANSLATIONS = {
     },
     attach_active_context:
       "{{count}} file(s) active in this thread — stay until removed",
-    no_cited_sources:
-      "No citations yet — ask a question about your sources.",
+    no_cited_sources: "No citations yet — ask a question about your sources.",
     source_filter_label: "Source Filter",
     source_filter_all: "All",
     source_filter_documents: "Documents",

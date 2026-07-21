@@ -130,13 +130,13 @@ export function PoliticiansTab({
                 {name}
               </p>
               <p className="text-[11px] text-zinc-500 light:text-slate-400 truncate">
-                {([p.party?.label, p.state, constituency]
+                {[p.party?.label, p.state, constituency]
                   .filter(Boolean)
                   .join(separator) ||
                   t(
                     "sidebar.database.missingAffiliation",
                     "Keine Partei- oder Landesangabe verfügbar",
-                  ))}
+                  )}
               </p>
             </div>
             <button

@@ -64,7 +64,7 @@ export default function GenericOpenAiSpeechToTextOptions({ settings }: any) {
             <code>whisper-1</code>
             {t("speechToText.genericOpenAi.modelDescriptionPart3")}
           </p>
-          {/* eslint-enable i18next/no-literal-string */}
+          {}
         </div>
       </div>
     </div>

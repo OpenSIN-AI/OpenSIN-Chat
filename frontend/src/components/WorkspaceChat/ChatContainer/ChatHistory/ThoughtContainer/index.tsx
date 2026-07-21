@@ -172,60 +172,60 @@ export function ThoughtChainComponent({
   defaultExpanded?: boolean;
   ref?: Ref<{ updateContent: (c: any) => void }>;
 }) {
-    const [content, setContent] = useState(initialContent);
-    const [hasReadableContent, setHasReadableContent] = useState(() =>
-      contentIsNotEmpty(initialContent),
-    );
-    const { expanded: persistedExpanded, setExpanded: setPersistedExpanded } =
-      useThoughtExpansion(messageId);
-    const [localExpanded, _setLocalExpanded] = useState(defaultExpanded as any);
-    const [persistInitDone, setPersistInitDone] = useState(false);
+  const [content, setContent] = useState(initialContent);
+  const [hasReadableContent, setHasReadableContent] = useState(() =>
+    contentIsNotEmpty(initialContent),
+  );
+  const { expanded: persistedExpanded, setExpanded: setPersistedExpanded } =
+    useThoughtExpansion(messageId);
+  const [localExpanded, _setLocalExpanded] = useState(defaultExpanded as any);
+  const [persistInitDone, setPersistInitDone] = useState(false);
 
-    const isExpanded = messageId ? persistedExpanded : localExpanded;
+  const isExpanded = messageId ? persistedExpanded : localExpanded;
 
-    // On first mount, seed the persisted expansion state for this messageId
-    // so streaming thinking content is visible without a manual click.
-    useEffect(() => {
-      if (messageId && defaultExpanded && !persistInitDone) {
-        setPersistedExpanded(true);
-        setPersistInitDone(true);
-      }
-    }, [messageId, defaultExpanded, persistInitDone, setPersistedExpanded]);
+  // On first mount, seed the persisted expansion state for this messageId
+  // so streaming thinking content is visible without a manual click.
+  useEffect(() => {
+    if (messageId && defaultExpanded && !persistInitDone) {
+      setPersistedExpanded(true);
+      setPersistInitDone(true);
+    }
+  }, [messageId, defaultExpanded, persistInitDone, setPersistedExpanded]);
 
-    useEffect(() => {
-      if (initialContent !== content) {
-        setContent(initialContent);
-        setHasReadableContent(contentIsNotEmpty(initialContent));
-      }
-    }, [initialContent, content]);
+  useEffect(() => {
+    if (initialContent !== content) {
+      setContent(initialContent);
+      setHasReadableContent(contentIsNotEmpty(initialContent));
+    }
+  }, [initialContent, content]);
 
-    useImperativeHandle(ref, () => ({
-      updateContent: (newContent) => {
-        setContent(newContent);
-        setHasReadableContent(contentIsNotEmpty(newContent));
-      },
-    }));
+  useImperativeHandle(ref, () => ({
+    updateContent: (newContent) => {
+      setContent(newContent);
+      setHasReadableContent(contentIsNotEmpty(newContent));
+    },
+  }));
 
-    if (!content || !content.length || !hasReadableContent) return null;
-    // Hidden by default — only show when expanded via the brain button
-    if (!isExpanded) return null;
+  if (!content || !content.length || !hasReadableContent) return null;
+  // Hidden by default — only show when expanded via the brain button
+  if (!isExpanded) return null;
 
-    const tagStrippedContent = content
-      .replace(THOUGHT_REGEX_OPEN, "")
-      .replace(THOUGHT_REGEX_CLOSE, "");
+  const tagStrippedContent = content
+    .replace(THOUGHT_REGEX_OPEN, "")
+    .replace(THOUGHT_REGEX_CLOSE, "");
 
-    return (
-      <div className="w-full mb-2">
-        <div className="bg-zinc-800 light:bg-slate-100 rounded-xl p-4 overflow-y-auto max-h-[400px]">
-          <div className="text-zinc-300 light:text-slate-700 font-mono text-sm leading-relaxed [&_p]:m-0">
-            <span
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(renderMarkdown(tagStrippedContent)),
-              }}
-            />
-          </div>
+  return (
+    <div className="w-full mb-2">
+      <div className="bg-zinc-800 light:bg-slate-100 rounded-xl p-4 overflow-y-auto max-h-[400px]">
+        <div className="text-zinc-300 light:text-slate-700 font-mono text-sm leading-relaxed [&_p]:m-0">
+          <span
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(renderMarkdown(tagStrippedContent)),
+            }}
+          />
         </div>
       </div>
-    );
-  }
-  ThoughtChainComponent.displayName = "ThoughtChainComponent";
+    </div>
+  );
+}
+ThoughtChainComponent.displayName = "ThoughtChainComponent";

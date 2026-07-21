@@ -436,38 +436,55 @@ export default function ChatSidebar({
   }
 
   // When opening, ensure the panel is at least minWidth (e.g. PDF analysis needs
-  // more space than the default 366px).
+  // more space than the default 366px). Skip on mobile — width is always 100%.
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || isMobile) return;
     setWidth((current) => clampWidth(current));
-  }, [clampWidth, isOpen]);
+  }, [clampWidth, isOpen, isMobile]);
 
   useEffect(() => {
     let timer: number | undefined;
     if (isOpen) {
       setRendered(true);
-      timer = window.setTimeout(() => setVisible(true), 0);
+      // Mobile: show immediately (no width-0 intermediate that collapses flex %).
+      // Desktop: one frame delay so width animates 0 → N.
+      if (isMobile) {
+        setVisible(true);
+      } else {
+        timer = window.setTimeout(() => setVisible(true), 0);
+      }
     } else {
       setVisible(false);
-      timer = window.setTimeout(() => setRendered(false), 220);
+      timer = window.setTimeout(() => setRendered(false), isMobile ? 0 : 220);
     }
     return () => {
       if (timer !== undefined) window.clearTimeout(timer);
     };
-  }, [isOpen]);
+  }, [isOpen, isMobile]);
 
   if (!rendered) return null;
 
+  // Mobile/tablet (< md): always fill the fullscreen Sidebars shell.
+  // Never animate via width:0 — cyclic % width on an auto-sized flex parent
+  // collapses the panel to a blank canvas (only chrome X remains).
+  const panelWidth = isMobile
+    ? "100%"
+    : isOpen && visible
+      ? `${width}px`
+      : "0px";
+
   return (
     <div
-      className={`relative z-20 flex h-full shrink-0 flex-col overflow-hidden bg-theme-bg-sidebar ${isResizing ? "" : "transition-[width] duration-200 ease-out"}`}
+      className={`relative z-20 flex h-full min-h-0 min-w-0 shrink-0 flex-col overflow-hidden bg-theme-bg-sidebar ${
+        isMobile
+          ? "w-full max-w-full flex-1"
+          : isResizing
+            ? ""
+            : "transition-[width] duration-200 ease-out"
+      }`}
       style={{
-        width:
-          isMobile && isOpen && visible
-            ? "100%"
-            : !isMobile && isOpen && visible
-              ? `${width}px`
-              : "0px",
+        width: panelWidth,
+        maxWidth: isMobile ? "100%" : undefined,
         containerType: "inline-size",
       }}
     >
@@ -491,7 +508,9 @@ export default function ChatSidebar({
           {Math.round(width)} px
         </output>
       )}
-      {children}
+      <div className="flex h-full min-h-0 min-w-0 w-full flex-1 flex-col overflow-hidden">
+        {children}
+      </div>
     </div>
   );
 }

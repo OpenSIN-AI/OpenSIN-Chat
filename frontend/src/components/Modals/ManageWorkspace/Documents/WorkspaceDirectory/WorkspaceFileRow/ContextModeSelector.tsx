@@ -98,7 +98,14 @@ const ContextModeSelector = memo(function ContextModeSelector({
   // Re-sync after document list / workspace refresh so the UI matches backend.
   useEffect(() => {
     setMode(resolveContextMode(workspace, docId, item));
-  }, [workspace, docId, item, item?.contextMode, item?.contextModes, item?.pinnedWorkspaces]);
+  }, [
+    workspace,
+    docId,
+    item,
+    item?.contextMode,
+    item?.contextModes,
+    item?.pinnedWorkspaces,
+  ]);
 
   useEffect(() => {
     if (!open) return;

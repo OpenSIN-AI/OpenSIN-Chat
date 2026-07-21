@@ -11,8 +11,6 @@ interface ChatHeaderProps {
   isEmpty: boolean;
 }
 
-export default function ChatHeader({
-  workspaceSlug,
-}: ChatHeaderProps) {
+export default function ChatHeader({ workspaceSlug }: ChatHeaderProps) {
   return <WorkspaceModelPicker workspaceSlug={workspaceSlug} />;
 }

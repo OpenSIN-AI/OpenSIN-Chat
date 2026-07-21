@@ -66,7 +66,7 @@ export default function OpenAiGenericTextToSpeechOptions({ settings }: any) {
             <code>model</code>
             {t("textToSpeech.openAiGeneric.ttsModelDescriptionPart2")}
           </p>
-          {/* eslint-enable i18next/no-literal-string */}
+          {}
         </div>
         <div className="flex flex-col w-60">
           <label className="text-theme-text-primary text-sm font-semibold block mb-3">

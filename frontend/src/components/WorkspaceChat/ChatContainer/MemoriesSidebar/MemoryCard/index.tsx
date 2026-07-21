@@ -55,7 +55,7 @@ export default function MemoryCard({ memory }: any) {
                 year: "numeric",
               })
             : "—"}
-          {/* eslint-enable i18next/no-literal-string */}
+          {}
         </p>
       </div>
       <button

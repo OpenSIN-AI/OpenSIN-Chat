@@ -78,7 +78,7 @@ function LogsTab() {
                   minute: "2-digit",
                   second: "2-digit",
                 })}
-                {/* eslint-enable i18next/no-literal-string */}
+                {}
               </span>
               <span className={LEVEL_COLORS[log.level] ?? LEVEL_COLORS.info}>
                 {log.message}
@@ -207,9 +207,7 @@ function TerminalTab() {
       </div>
       {/* Input line */}
       <div className="flex items-center gap-1 px-3 py-2 border-t border-theme-border shrink-0">
-        <span className="text-theme-text-muted font-mono text-[11px]">
-          {/* eslint-enable i18next/no-literal-string */}
-        </span>
+        <span className="text-theme-text-muted font-mono text-[11px]">{}</span>
         <input
           ref={inputRef}
           type="text"

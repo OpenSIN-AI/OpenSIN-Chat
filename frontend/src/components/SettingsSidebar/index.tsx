@@ -580,7 +580,7 @@ function AppVersion() {
       >
         v{version}
       </Link>
-      {/* eslint-enable i18next/no-literal-string */}
+      {}
     </>
   );
 }

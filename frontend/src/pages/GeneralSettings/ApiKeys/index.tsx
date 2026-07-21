@@ -43,9 +43,7 @@ export default function AdminApiKeys(): JSX.Element {
               rel="noreferrer"
               className="text-xs leading-[18px] font-base text-blue-300 light:text-blue-500 hover:underline mt-1"
             >
-              {t("api.link")}{" "}
-              {
-              }
+              {t("api.link")} {}
               &rarr;
             </a>
           </div>

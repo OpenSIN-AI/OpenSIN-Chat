@@ -96,10 +96,16 @@ export function isDocsAudience(value: unknown): value is DocsAudience {
   return value === "user" || value === "developer";
 }
 
-export function parseDocsAudience(value: string | null | undefined): DocsAudience | null {
+export function parseDocsAudience(
+  value: string | null | undefined,
+): DocsAudience | null {
   if (!value) return null;
   const normalized = value.trim().toLowerCase();
-  if (normalized === "user" || normalized === "users" || normalized === "enduser") {
+  if (
+    normalized === "user" ||
+    normalized === "users" ||
+    normalized === "enduser"
+  ) {
     return "user";
   }
   if (
@@ -137,7 +143,10 @@ export function preferredAudienceForEntry(
 }
 
 /** Build /docs or /docs/:slug with optional audience query. */
-export function docsHref(slug?: string | null, audience?: DocsAudience | null): string {
+export function docsHref(
+  slug?: string | null,
+  audience?: DocsAudience | null,
+): string {
   const path = slug ? `/docs/${slug}` : "/docs";
   if (!audience) return path;
   return `${path}?${DOCS_AUDIENCE_PARAM}=${audience}`;

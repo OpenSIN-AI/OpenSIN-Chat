@@ -128,7 +128,11 @@ export default function FeedbackIssueModal({
   if (!isOpen) return null;
 
   return (
-    <ModalWrapper isOpen={isOpen} closeModal={onClose} ariaLabel={t("feedbackModal.title")}>
+    <ModalWrapper
+      isOpen={isOpen}
+      closeModal={onClose}
+      ariaLabel={t("feedbackModal.title")}
+    >
       <div className="relative w-[min(520px,calc(100vw-24px))] max-h-[min(90vh,720px)] overflow-y-auto no-scroll rounded-xl border border-theme-modal-border bg-theme-bg-secondary light:bg-white shadow-2xl">
         {/* Header */}
         <div className="flex items-start justify-between gap-3 px-5 pt-5 pb-3 border-b border-theme-modal-border">
@@ -275,7 +279,10 @@ export default function FeedbackIssueModal({
               )}
 
               {error && (
-                <p className="text-xs text-red-400 light:text-red-600" role="alert">
+                <p
+                  className="text-xs text-red-400 light:text-red-600"
+                  role="alert"
+                >
                   {error}{" "}
                   <a
                     href={fallbackUrl}

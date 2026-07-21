@@ -76,7 +76,7 @@ export default function NvidiaNimTTSOptions({ settings }: any) {
             <code className="bg-theme-settings-input-bg rounded px-1">
               ai-magnify/arctic-tts
             </code>
-            {/* eslint-enable i18next/no-literal-string */}
+            {}
             {t("nvidiaNim.modelHelp2")}
           </p>
         </div>
@@ -101,7 +101,7 @@ export default function NvidiaNimTTSOptions({ settings }: any) {
             <code className="bg-theme-settings-input-bg rounded px-1">
               English-US.Female-1
             </code>
-            {/* eslint-enable i18next/no-literal-string */}
+            {}
             {t("nvidiaNim.voiceHelp2")}
           </p>
         </div>

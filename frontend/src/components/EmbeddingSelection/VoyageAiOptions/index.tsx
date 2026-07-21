@@ -51,7 +51,7 @@ export default function VoyageAiOptions({ settings }: any) {
                   </option>
                 );
               })}
-              {/* eslint-enable i18next/no-literal-string */}
+              {}
             </optgroup>
           </select>
         </div>

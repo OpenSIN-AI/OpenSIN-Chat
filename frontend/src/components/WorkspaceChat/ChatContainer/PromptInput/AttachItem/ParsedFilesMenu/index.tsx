@@ -109,7 +109,7 @@ export default function ParsedFilesMenu({
           >
             {nFormatter(currentTokens)} /{" "}
             {contextWindow ? nFormatter(contextWindow) : "--"} tokens
-            {/* eslint-enable i18next/no-literal-string */}
+            {}
           </div>
         </div>
       </div>
