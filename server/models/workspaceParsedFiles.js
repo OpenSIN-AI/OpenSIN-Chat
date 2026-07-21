@@ -302,11 +302,7 @@ const WorkspaceParsedFiles = {
         chatContextOnly: true,
         sourceDocpath: sourceDocpath || document.location || null,
       };
-      await fs.promises.writeFile(
-        destPath,
-        JSON.stringify(payload),
-        "utf-8",
-      );
+      await fs.promises.writeFile(destPath, JSON.stringify(payload), "utf-8");
 
       const metadata = { ...payload };
       delete metadata.pageContent;

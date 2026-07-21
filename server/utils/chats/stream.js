@@ -164,7 +164,7 @@ async function streamChatWithWorkspace(
   // PERF (CEO): history / always-on docs / parsed files are independent I/O.
   // Parallelize when not fully pre-fetched — cuts sequential DB/file round-trips
   // off chat TTFT on the cold path.
-  const [historyResult, alwaysOnDocs, parsedFiles] = await Promise.all([
+  const [historyResult, alwaysOnDocsRaw, parsedFilesRaw] = await Promise.all([
     prefetchedContext
       ? Promise.resolve({
           rawHistory: prefetchedContext.rawHistory,
@@ -187,8 +187,9 @@ async function streamChatWithWorkspace(
   ]);
   const { rawHistory, chatHistory } = historyResult;
 
-  if (!Array.isArray(alwaysOnDocs)) alwaysOnDocs = [];
-  if (!Array.isArray(parsedFiles)) parsedFiles = [];
+  // Destructure as const from Promise.all — reassigning was a no-const-assign bug.
+  const alwaysOnDocs = Array.isArray(alwaysOnDocsRaw) ? alwaysOnDocsRaw : [];
+  const parsedFiles = Array.isArray(parsedFilesRaw) ? parsedFilesRaw : [];
 
   alwaysOnDocs.forEach((doc) => {
     const { pageContent, ...metadata } = doc;

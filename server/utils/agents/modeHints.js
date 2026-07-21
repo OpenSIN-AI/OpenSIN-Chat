@@ -121,8 +121,7 @@ function parseAgentModeFromPrompt(message = "") {
  */
 function buildAgentModePrefix(modeId, sources = []) {
   if (modeId === "deep-research") {
-    const src =
-      sources.length > 0 ? sources.join(",") : "web-search";
+    const src = sources.length > 0 ? sources.join(",") : "web-search";
     return `@agent [deep-research]\n[sources:${src}]`;
   }
   return `@agent [${modeId}]`;

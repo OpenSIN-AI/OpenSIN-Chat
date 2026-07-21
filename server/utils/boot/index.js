@@ -149,7 +149,10 @@ function bootHTTP(app, port = 3001, onReady) {
   server.keepAliveTimeout = 65_000;
   server.headersTimeout = 70_000;
   // Allow more concurrent sockets from cloudflared → origin
-  if (typeof server.maxConnections !== "number" || server.maxConnections === 0) {
+  if (
+    typeof server.maxConnections !== "number" ||
+    server.maxConnections === 0
+  ) {
     server.maxConnections = 512;
   }
 

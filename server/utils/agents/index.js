@@ -750,9 +750,7 @@ class AgentHandler {
    * @returns {string} The message with the @agent command stripped.
    */
   #stripAgentCommand(message = "") {
-    const {
-      parseAgentModeFromPrompt,
-    } = require("./modeHints");
+    const { parseAgentModeFromPrompt } = require("./modeHints");
     const parsed = parseAgentModeFromPrompt(message);
     this.#modeSystemPrompt = parsed.systemPrompt;
     this.#activeMode = parsed.modeId;

@@ -400,9 +400,10 @@ function workspaceParsedFilesEndpoints(app) {
         const { success, reason, documents } =
           await Collector.processLink(link);
         if (!success || !documents?.[0]) {
-          return response
-            .status(500)
-            .json({ success: false, error: reason || "Failed to process link" });
+          return response.status(500).json({
+            success: false,
+            error: reason || "Failed to process link",
+          });
         }
 
         const document = documents[0];

@@ -315,12 +315,18 @@ class MetaGenerator {
       // Fall back to legacy public/index.js for older images.
       let indexJsPath = path.join(publicDir, "index.js");
       try {
-        const html = await fs.readFile(path.join(publicDir, "_index.html"), "utf8");
+        const html = await fs.readFile(
+          path.join(publicDir, "_index.html"),
+          "utf8",
+        );
         const entryMatch = html.match(
           /<script[^>]*type="module"[^>]*src="(\/assets\/index-[^"]+\.js)"/,
         );
         if (entryMatch) {
-          const candidate = path.join(publicDir, entryMatch[1].replace(/^\//, ""));
+          const candidate = path.join(
+            publicDir,
+            entryMatch[1].replace(/^\//, ""),
+          );
           await fs.access(candidate);
           indexJsPath = candidate;
         }

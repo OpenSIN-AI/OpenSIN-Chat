@@ -29,7 +29,6 @@ const { safeGlobalJoin, getStoragePath } = require("../paths");
 // The global store lives at STORAGE_DIR/global (see globalFiles endpoints).
 const GLOBAL_ROOT = "global";
 
-
 // Which extensions we treat as prompt-safe text.
 const TEXT_EXTENSIONS = new Set([".md", ".markdown", ".txt"]);
 
@@ -69,7 +68,7 @@ function sanitize(raw) {
  * @param {string} globalRoot absolute path of the global store root
  * @returns {Array<{relPath: string, absPath: string, size: number, mtimeMs: number}>}
  */
-function collectTextFiles(globalRoot) {
+function collectTextFiles(_globalRoot) {
   const out = [];
 
   const walk = (relDir, depth) => {

@@ -7,7 +7,7 @@ const path = require("path");
 const { safeJsonParse } = require("../http");
 const { isWithin, normalizePath } = require("../files");
 const { CollectorApi } = require("../collectorApi");
-const { validateUrl } = require("../ssrf");
+const { safeFetch } = require("../ssrf");
 const pluginsPath = getStoragePath("plugins", "agent-skills");
 const sharedWebScraper = new CollectorApi();
 
@@ -316,92 +316,81 @@ class ImportedPlugin {
       );
 
     try {
-      validateUrl(url);
-      const protocol = new URL(url).protocol.replace(":", "");
-      const httpLib = protocol === "https" ? require("https") : require("http");
-
-      const downloadZipFile = new Promise(async (resolve) => {
-        try {
-          consoleLogger.log(
-            "ImportedPlugin.importCommunityItemFromUrl - downloading asset from ",
-            new URL(url).origin,
-          );
-          const zipFile = fs.createWriteStream(zipFilePath);
-          const request = httpLib.get(url, function (response) {
-            if (response.statusCode !== 200) {
-              consoleLogger.error(
-                "ImportedPlugin.importCommunityItemFromUrl - HTTP",
-                response.statusCode,
-                "downloading zip file",
-              );
-              zipFile.destroy();
-              resolve(false);
-              return;
-            }
-
-            // Guard against a malicious/compromised community-hub asset
-            // serving an oversized payload (disk-fill DoS) — abort the
-            // download as soon as we've received more than
-            // MAX_ZIP_DOWNLOAD_BYTES, regardless of what Content-Length
-            // claims (Content-Length can be absent or lied about).
-            let bytesReceived = 0;
-            response.on("data", (chunk) => {
-              bytesReceived += chunk.length;
-              if (bytesReceived > MAX_ZIP_DOWNLOAD_BYTES) {
-                consoleLogger.error(
-                  `ImportedPlugin.importCommunityItemFromUrl - download exceeded ${MAX_ZIP_DOWNLOAD_BYTES} byte limit, aborting.`,
-                );
-                request.destroy();
-                zipFile.destroy();
-                resolve(false);
-              }
-            });
-
-            response.pipe(zipFile);
-            zipFile.on("finish", () => {
-              consoleLogger.log(
-                "ImportedPlugin.importCommunityItemFromUrl - downloaded zip file",
-              );
-              resolve(true);
-            });
-            zipFile.on("error", (error) => {
-              consoleLogger.error(
-                "ImportedPlugin.importCommunityItemFromUrl - zipFile stream error: ",
-                error,
-              );
-              resolve(false);
-            });
-          });
-          request.setTimeout(30000, () => {
-            request.destroy();
-            zipFile.destroy();
-
-            consoleLogger.error(
-              "ImportedPlugin.importCommunityItemFromUrl - download timed out after 30s",
-            );
-            resolve(false);
-          });
-
-          request.on("error", (error) => {
-            consoleLogger.error(
-              "ImportedPlugin.importCommunityItemFromUrl - error downloading zip file: ",
-              error,
-            );
-            zipFile.destroy();
-            resolve(false);
-          });
-        } catch (error) {
-          consoleLogger.error(
-            "ImportedPlugin.importCommunityItemFromUrl - error downloading zip file: ",
-            error,
-          );
-          resolve(false);
-        }
-      });
-
-      const success = await downloadZipFile;
-      if (!success)
+      // safeFetch re-validates every redirect hop against the private-network
+      // blocklist (plain http.get + validateUrl alone is redirect-SSRFable).
+      consoleLogger.log(
+        "ImportedPlugin.importCommunityItemFromUrl - downloading asset from ",
+        new URL(url).origin,
+      );
+      let response;
+      try {
+        response = await safeFetch(url, {
+          signal: AbortSignal.timeout(30_000),
+        });
+      } catch (error) {
+        consoleLogger.error(
+          "ImportedPlugin.importCommunityItemFromUrl - error downloading zip file: ",
+          error,
+        );
         return { success: false, error: "Failed to download zip file." };
+      }
+      if (!response.ok) {
+        consoleLogger.error(
+          "ImportedPlugin.importCommunityItemFromUrl - HTTP",
+          response.status,
+          "downloading zip file",
+        );
+        return { success: false, error: "Failed to download zip file." };
+      }
+
+      const contentLength = response.headers.get("content-length");
+      if (
+        contentLength &&
+        parseInt(contentLength, 10) > MAX_ZIP_DOWNLOAD_BYTES
+      ) {
+        consoleLogger.error(
+          `ImportedPlugin.importCommunityItemFromUrl - Content-Length ${contentLength} exceeds ${MAX_ZIP_DOWNLOAD_BYTES} byte limit, aborting.`,
+        );
+        return { success: false, error: "Failed to download zip file." };
+      }
+
+      // Stream to disk with a hard byte cap (Content-Length can be absent/liar).
+      const reader = response.body?.getReader?.();
+      if (!reader) {
+        const buf = Buffer.from(await response.arrayBuffer());
+        if (buf.length > MAX_ZIP_DOWNLOAD_BYTES) {
+          consoleLogger.error(
+            `ImportedPlugin.importCommunityItemFromUrl - download exceeded ${MAX_ZIP_DOWNLOAD_BYTES} byte limit, aborting.`,
+          );
+          return { success: false, error: "Failed to download zip file." };
+        }
+        fs.writeFileSync(zipFilePath, buf);
+      } else {
+        const chunks = [];
+        let bytesReceived = 0;
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          bytesReceived += value.byteLength;
+          if (bytesReceived > MAX_ZIP_DOWNLOAD_BYTES) {
+            await reader.cancel().catch(() => {});
+            consoleLogger.error(
+              `ImportedPlugin.importCommunityItemFromUrl - download exceeded ${MAX_ZIP_DOWNLOAD_BYTES} byte limit, aborting.`,
+            );
+            try {
+              fs.unlinkSync(zipFilePath);
+            } catch {
+              /* ignore */
+            }
+            return { success: false, error: "Failed to download zip file." };
+          }
+          chunks.push(Buffer.from(value));
+        }
+        fs.writeFileSync(zipFilePath, Buffer.concat(chunks));
+      }
+      consoleLogger.log(
+        "ImportedPlugin.importCommunityItemFromUrl - downloaded zip file",
+      );
 
       // Unzip the file to the plugin folder
       // Note: https://github.com/cthackers/adm-zip?tab=readme-ov-file#electron-original-fs
