@@ -376,9 +376,12 @@ class MetaGenerator {
     const basename = (p) =>
       p.replace(/^\/assets\//, "").replace(/-[A-Za-z0-9]+\.(js|css)$/, "");
 
-    // Always keep the runtime and the main vendor chunk (React + core libs).
+    // Always keep the runtime + React vendor. (Chunk is named `react-vendor-*`,
+    // not `vendor-*` — matching only /vendor-/ missed React entirely.)
     const isCritical = (p) =>
-      /\/rolldown-runtime-/.test(p) || /\/vendor-[A-Za-z0-9]+\.js$/.test(p);
+      /\/rolldown-runtime-/.test(p) ||
+      /\/react-vendor-/.test(p) ||
+      /\/vendor-[A-Za-z0-9_-]+\.js$/.test(p);
 
     if (!this.#isDocsRoute(routePath)) {
       return js.filter(isCritical);
@@ -445,25 +448,41 @@ class MetaGenerator {
   }
 
   /**
-   * Emit stylesheet tags. Critical styles are render-blocking; non-critical
-   * vendor styles are loaded asynchronously so they no longer block first paint.
+   * Emit stylesheet tags for first paint only.
+   *
+   * Vite lists every CSS chunk in `_index.html` (pdf-vendor, markdown, Docs,
+   * github-dark, …). Emitting all of them as render-blocking stylesheets
+   * costs 50–100KB+ of critical CSS on Home/Login. Code-split CSS is injected
+   * automatically by Vite when the corresponding JS chunk loads — we only need
+   * the main `index-*.css` (and docs/markdown CSS on /docs).
+   *
+   * CSP note: we cannot use preload+onload (inline handler). Omission is safe.
    *
    * @param {string[]} css
    * @param {string} routePath
    * @returns {string}
    */
-  #buildCssTags(css, _routePath) {
+  #buildCssTags(css, routePath) {
     if (!css.length) return "";
 
-    return css
-      .map((p) => {
-        // All CSS is loaded synchronously. The former preload+onload
-        // pattern used an inline event handler that violated our
-        // nonce-based CSP (script-src without 'unsafe-inline').
-        // crossorigin must match Vite's runtime <link rel="stylesheet" crossorigin>
-        // injection for code-split CSS.
-        return `<link rel="stylesheet" crossorigin href="${p}">`;
-      })
+    const isEntryCss = (p) => /\/assets\/index-[^/]+\.css$/.test(p);
+    const isDocsCss = (p) =>
+      /\/assets\/(Docs|markdown|github-dark|skeleton)-[^/]+\.css$/.test(p);
+
+    let selected = css.filter(isEntryCss);
+    if (this.#isDocsRoute(routePath)) {
+      selected = [...selected, ...css.filter(isDocsCss)];
+    }
+    // De-dupe while preserving order
+    selected = [...new Set(selected)];
+    if (!selected.length) return "";
+
+    return selected
+      .map(
+        (p) =>
+          // crossorigin must match Vite's runtime stylesheet injection.
+          `<link rel="stylesheet" crossorigin href="${p}">`,
+      )
       .join("\n            ");
   }
 
@@ -515,7 +534,11 @@ class MetaGenerator {
     const { entryJs, entryCss } = await this.#readEntryAssets();
     const filteredJs = this.#filterPreloadList(js, routePath);
     const preloadTags = this.#buildPreloadTags(filteredJs);
-    const cssTags = this.#buildCssTags(css, routePath);
+    // Prefer the filtered list; always ensure entry CSS is present even if
+    // the Vite preload scan missed it.
+    const cssWithEntry =
+      entryCss && !css.includes(entryCss) ? [entryCss, ...css] : css;
+    const cssTags = this.#buildCssTags(cssWithEntry, routePath);
     const rootContent = prerenderedBody
       ? `<div id="root" class="h-screen">${prerenderedBody}</div>`
       : '<div id="root" class="h-screen"></div>';
@@ -530,7 +553,6 @@ class MetaGenerator {
             ${this.#assembleMeta()}
             ${preloadTags}
             <script type="module" crossorigin src="${entryJs}"></script>
-            <link rel="stylesheet" crossorigin href="${entryCss}">
             ${cssTags}
           </head>
           <body>
