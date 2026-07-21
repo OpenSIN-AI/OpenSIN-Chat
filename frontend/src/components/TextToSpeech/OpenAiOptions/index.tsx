@@ -40,7 +40,7 @@ export default function OpenAiTextToSpeechOptions({ settings }: any) {
               );
             },
           )}
-          {/* eslint-enable i18next/no-literal-string */}
+          {}
         </select>
       </div>
     </div>

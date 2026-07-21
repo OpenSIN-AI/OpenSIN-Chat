@@ -79,9 +79,7 @@ export default function PromptHistoryItem({
           {user && (
             <>
               <span className="text-primary-button">{user.username}</span>{" "}
-              <span className="mx-1 text-theme-text-primary">
-                {"•"}
-              </span>
+              <span className="mx-1 text-theme-text-primary">{"•"}</span>
             </>
           )}
           <span className="text-white opacity-50 light:opacity-100">

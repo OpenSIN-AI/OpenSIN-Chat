@@ -21,7 +21,9 @@ function invalidateAuthTokenHash() {
   _cachedAuthTokenHash = null;
 }
 
-const MULTI_USER_MODE_TTL_MS = 60 * 1000;
+// Short TTL: after enable-multi-user the cache is also explicitly invalidated.
+// Keep a small positive TTL for request fan-out, not a 60s ACL window.
+const MULTI_USER_MODE_TTL_MS = 5 * 1000;
 let cachedMultiUserMode = { value: null, expiresAt: 0 };
 async function getCachedMultiUserMode() {
   if (

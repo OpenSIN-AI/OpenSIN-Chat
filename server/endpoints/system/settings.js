@@ -148,6 +148,19 @@ function settingsEndpoints(app) {
         await SystemSettings._updateSettings({
           multi_user_mode: true,
         });
+        // Belt-and-suspenders: drop the validatedRequest multi-user cache
+        // immediately so the next request cannot still use single-user auth.
+        try {
+          const {
+            invalidateMultiUserModeCache,
+          } = require("../../utils/middleware/validatedRequest");
+          invalidateMultiUserModeCache();
+        } catch (e) {
+          console.warn(
+            "[enable-multi-user] cache invalidate non-fatal:",
+            e?.message || e,
+          );
+        }
         await BrowserExtensionApiKey.migrateApiKeysToMultiUser(user.id);
         await Memory.migrateToMultiUser(user.id);
         await WorkspaceChats.migrateToMultiUser(user.id);
@@ -180,6 +193,17 @@ function settingsEndpoints(app) {
         await SystemSettings._updateSettings({
           multi_user_mode: false,
         });
+        try {
+          const {
+            invalidateMultiUserModeCache,
+          } = require("../../utils/middleware/validatedRequest");
+          invalidateMultiUserModeCache();
+        } catch (e2) {
+          console.warn(
+            "[enable-multi-user] rollback cache invalidate non-fatal:",
+            e2?.message || e2,
+          );
+        }
 
         consoleLogger.error(e.message, e);
         response.sendStatus(500);

@@ -163,7 +163,7 @@ export default function ConfluenceOptions() {
                       </option>
                     );
                   })}
-                  {/* eslint-enable i18next/no-literal-string */}
+                  {}
                 </select>
               </div>
               {accessType === "username" && (

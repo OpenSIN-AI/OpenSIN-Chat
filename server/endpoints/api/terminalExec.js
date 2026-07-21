@@ -114,10 +114,40 @@ function hasPathTraversalSegment(arg) {
 }
 
 /**
+ * True for path-like args (not flags like `-la` / `-n`).
+ * @param {string} arg
+ * @returns {boolean}
+ */
+function isPathLikeArg(arg) {
+  return typeof arg === "string" && arg.length > 0 && !arg.startsWith("-");
+}
+
+/**
+ * True if a path-like argument escapes ALLOWED_CWD_ROOT when resolved against
+ * the given working directory. Absolute args always escape unless they happen
+ * to land under the root (which we still reject — absolute paths are banned).
+ * @param {string} arg
+ * @param {string} cwd
+ * @param {string} [root=ALLOWED_CWD_ROOT]
+ * @returns {boolean}
+ */
+function pathArgEscapesRoot(arg, cwd, root = ALLOWED_CWD_ROOT) {
+  if (!isPathLikeArg(arg)) return false;
+  if (path.isAbsolute(arg)) return true;
+  if (hasPathTraversalSegment(arg)) return true;
+  const resolved = path.resolve(cwd, arg);
+  return resolved !== root && !resolved.startsWith(root + path.sep);
+}
+
+/**
  * Validates a parsed command + args against the whitelist.
  * Returns { ok: true } or { ok: false, reason: string }
+ *
+ * @param {string} cmd
+ * @param {string[]} args
+ * @param {{ cwd?: string }} [options] Optional cwd used to resolve path args.
  */
-function validateCommand(cmd, args) {
+function validateCommand(cmd, args, options = {}) {
   if (!Object.prototype.hasOwnProperty.call(COMMAND_WHITELIST, cmd)) {
     return {
       ok: false,
@@ -134,6 +164,13 @@ function validateCommand(cmd, args) {
     };
   }
 
+  const cwdForPaths = path.resolve(
+    ALLOWED_CWD_ROOT,
+    options.cwd && typeof options.cwd === "string" && options.cwd.trim()
+      ? options.cwd.trim()
+      : ".",
+  );
+
   for (const arg of args) {
     if (SHELL_META_RE.test(arg)) {
       return { ok: false, reason: "Shell metacharacters are not allowed." };
@@ -148,6 +185,15 @@ function validateCommand(cmd, args) {
       return {
         ok: false,
         reason: "'..' path segments are not allowed in command arguments.",
+      };
+    }
+    // Block absolute paths and any path arg that resolves outside the storage root.
+    // head/tail previously could read /etc/passwd or host .env despite cwd jail.
+    if (PATH_ARG_COMMANDS.has(cmd) && pathArgEscapesRoot(arg, cwdForPaths)) {
+      return {
+        ok: false,
+        reason:
+          "Absolute paths and paths outside the allowed working directory are not permitted.",
       };
     }
   }
@@ -200,26 +246,25 @@ function apiTerminalExecEndpoints(app) {
         const tokens = command.trim().split(/\s+/);
         const [cmd, ...args] = tokens;
 
-        const validation = validateCommand(cmd, args);
-        if (!validation.ok)
-          return response.status(403).json({ error: validation.reason });
-
         // Resolve cwd relative to ALLOWED_CWD_ROOT (never relative to /).
-        // Using path.resolve(ALLOWED_CWD_ROOT, cwd) means an absolute cwd
-        // like "/etc" becomes ALLOWED_CWD_ROOT + "/etc" only when cwd is
-        // relative — but a truly absolute path would still escape.
-        // We therefore always join then verify containment.
+        // path.resolve(root, absolutePath) returns the absolute path on POSIX,
+        // so we always join then verify containment.
         const rawCwd =
           cwd && typeof cwd === "string" && cwd.trim() ? cwd.trim() : ".";
         const execCwd = path.resolve(ALLOWED_CWD_ROOT, rawCwd);
         if (
-          !execCwd.startsWith(ALLOWED_CWD_ROOT + path.sep) &&
-          execCwd !== ALLOWED_CWD_ROOT
+          execCwd !== ALLOWED_CWD_ROOT &&
+          !execCwd.startsWith(ALLOWED_CWD_ROOT + path.sep)
         ) {
           return response.status(403).json({
             error: "cwd must stay within the allowed working directory.",
           });
         }
+
+        // Validate with resolved cwd so path args cannot escape the jail.
+        const validation = validateCommand(cmd, args, { cwd: rawCwd });
+        if (!validation.ok)
+          return response.status(403).json({ error: validation.reason });
 
         await new Promise((resolve) => {
           execFile(
@@ -265,6 +310,8 @@ module.exports = {
   validateCommand,
   isTerminalExecEnabled,
   hasPathTraversalSegment,
+  pathArgEscapesRoot,
+  isPathLikeArg,
   COMMAND_WHITELIST,
   ALLOWED_CWD_ROOT,
 };

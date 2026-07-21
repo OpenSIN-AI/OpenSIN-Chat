@@ -32,8 +32,11 @@ function precompressedStatic(rootDir) {
     const urlPath = (req.path || "").split("?")[0];
     if (!urlPath || urlPath.includes("..")) return next();
 
+    const rootAbs = path.resolve(rootDir);
     const abs = path.resolve(rootDir, "." + urlPath);
-    if (!abs.startsWith(path.resolve(rootDir))) return next();
+    // Require path.sep after the root to avoid prefix attacks
+    // (e.g. root=/app/public vs abs=/app/public-evil/...).
+    if (abs !== rootAbs && !abs.startsWith(rootAbs + path.sep)) return next();
 
     const ext = path.extname(abs).toLowerCase();
     if (!ENCODABLE_EXT.has(ext)) return next();

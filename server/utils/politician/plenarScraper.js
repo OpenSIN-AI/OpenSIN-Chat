@@ -27,7 +27,6 @@ const DIP_BASE = "https://dserver.bundestag.de";
 // override it via BUNDESTAG_DIP_API_KEY (preferred) or the legacy DIP_API_KEY.
 const DIP_API_BASE = "https://search.dip.bundestag.de/api/v1";
 const { resolveDipApiKey } = require("./dipApiKey");
-const DIP_PUBLIC_API_KEY = resolveDipApiKey();
 
 const { ResilientHttpClient } = require("../helpers/resilientHttpClient");
 

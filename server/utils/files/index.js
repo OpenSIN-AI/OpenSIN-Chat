@@ -96,8 +96,7 @@ async function viewLocalFiles() {
       // re-query the database for each file
       const pinnedWorkspacesByDocument =
         await getPinnedWorkspacesByDocument(filenames);
-      const contextModesByDocument =
-        await getContextModesByDocument(filenames);
+      const contextModesByDocument = await getContextModesByDocument(filenames);
       const watchedDocumentsFilenames =
         await getWatchedDocumentFilenames(filenames);
       for (const item of subdocs.items) {

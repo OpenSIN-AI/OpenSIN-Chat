@@ -167,17 +167,17 @@ function buildRows({ history, workspace, websocket, t }: any) {
   return rows;
 }
 
-export default function ChatHistory(
-  {
-    history = [],
-    workspace,
-    sendCommand,
-    updateHistory,
-    regenerateAssistantMessage,
-    websocket = null,
-    ref,
-  }: any & { ref?: Ref<{ scrollToTop: () => void; scrollToBottom: () => void }> },
-) {
+export default function ChatHistory({
+  history = [],
+  workspace,
+  sendCommand,
+  updateHistory,
+  regenerateAssistantMessage,
+  websocket = null,
+  ref,
+}: any & {
+  ref?: Ref<{ scrollToTop: () => void; scrollToBottom: () => void }>;
+}) {
   const virtuosoRef = useRef<VirtuosoHandle | null>(null);
   const lastScrollTopRef = useRef(0);
   const { t } = useTranslation();

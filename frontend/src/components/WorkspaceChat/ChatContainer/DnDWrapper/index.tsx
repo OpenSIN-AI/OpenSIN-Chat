@@ -2,7 +2,6 @@
 import {
   useState,
   useEffect,
-  createContext,
   useContext,
   useCallback,
   useMemo,
@@ -153,7 +152,7 @@ export function DnDFileUploaderProvider({
     setFiles((prev) =>
       (prev as any).filter((prevFile) => prevFile.uid !== uid),
     );
-    if (!document?.location) return;
+    if (!document?.location || !workspace?.slug) return;
     await Workspace.deleteAndUnembedFile(workspace.slug, document.location);
   }
 
@@ -248,6 +247,9 @@ export function DnDFileUploaderProvider({
     let transientFailures = 0;
 
     while (Date.now() - startedAt < MAX_POLL_MS) {
+      if (!workspace?.slug) {
+        return { success: false, error: "Workspace unavailable" };
+      }
       const result = (await Workspace.parseFileStatus(
         workspace.slug,
         jobId,
@@ -321,6 +323,14 @@ export function DnDFileUploaderProvider({
 
       promises.push(
         (async () => {
+          if (!workspace?.slug) {
+            updateAttachment(attachment.uid, {
+              status: "failed",
+              error: "Workspace unavailable",
+              phase: "error",
+            });
+            return;
+          }
           const uploadResult = (await Workspace.uploadAndParseFile(
             workspace.slug,
             formData,
@@ -502,6 +512,17 @@ export function DnDFileUploaderProvider({
   // Handle modal actions
   const handleCloseModal = async () => {
     if (!pendingFiles.length) return;
+    if (!workspace?.slug) {
+      setFiles((prev) =>
+        (prev as any).filter(
+          (prevFile) =>
+            !(pendingFiles as any).some(
+              (file) => file.attachment.uid === prevFile.uid,
+            ),
+        ),
+      );
+      return;
+    }
 
     try {
       // Delete all files from this batch
@@ -565,22 +586,21 @@ export function DnDFileUploaderProvider({
   };
 
   const handleEmbed = async () => {
-    if (!pendingFiles.length) return;
+    if (!pendingFiles.length || !workspace?.slug) return;
     setIsEmbedding(true);
     setEmbedProgress(0);
 
     try {
       // Embed all pending files
       let completed = 0;
+      const slug = workspace.slug;
       const results = await Promise.all(
         (pendingFiles as any).map((file) =>
-          Workspace.embedParsedFile(workspace.slug, file.parsedFileId).then(
-            (result) => {
-              completed++;
-              setEmbedProgress(completed);
-              return result;
-            },
-          ),
+          Workspace.embedParsedFile(slug, file.parsedFileId).then((result) => {
+            completed++;
+            setEmbedProgress(completed);
+            return result;
+          }),
         ),
       );
 

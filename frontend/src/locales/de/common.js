@@ -453,7 +453,8 @@ const TRANSLATIONS = {
     restore: "Wiederherstellen",
     deleteForeverConfirm: "Notiz endgültig löschen?",
     deletePermanent: "Notiz endgültig löschen",
-    deleteForeverDescription: "Diese Aktion kann nicht rückgängig gemacht werden.",
+    deleteForeverDescription:
+      "Diese Aktion kann nicht rückgängig gemacht werden.",
     moveToTrash: "In Papierkorb",
     selectNote: "Notiz auswählen",
     selectNoteDescription:
@@ -483,8 +484,7 @@ const TRANSLATIONS = {
     good_response: "Gute Antwort",
     more_actions: "Weitere Aktionen",
     fork: "Abzweigen",
-    edit_unavailable:
-      "Bearbeiten möglich, sobald die Antwort gespeichert ist",
+    edit_unavailable: "Bearbeiten möglich, sobald die Antwort gespeichert ist",
     delete: "Löschen",
     cancel: "Abbrechen",
     edit_prompt: "Prompt bearbeiten",

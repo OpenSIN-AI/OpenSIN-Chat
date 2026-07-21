@@ -179,7 +179,8 @@ class PoliticianDB {
               politician.party ===
                 normalizePoliticalLabel(filters.party, "party")) &&
             (!filters.state ||
-              politician.state === normalizePoliticalLabel(filters.state, "state")),
+              politician.state ===
+                normalizePoliticalLabel(filters.state, "state")),
         )
         .slice(0, 50);
     } catch (err) {

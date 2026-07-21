@@ -29,9 +29,7 @@ export default function ModelRouterOptions({ settings }: any) {
           >
             {t("model-router.router-selection.no-routers-link")}
           </Link>
-          {
-          }
-          .
+          {}.
         </p>
       </div>
     );

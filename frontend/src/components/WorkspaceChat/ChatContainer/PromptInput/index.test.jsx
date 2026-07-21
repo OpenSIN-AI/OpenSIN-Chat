@@ -16,6 +16,8 @@ vi.mock("react-router", () => ({
 
 vi.mock("@/hooks/useTheme", () => ({
   useTheme: vi.fn(() => ({ theme: "dark", isLight: false })),
+  getStoredTheme: () => "dark",
+  resolveDarkMode: () => true,
 }));
 
 vi.mock("@/hooks/useDocument", () => ({

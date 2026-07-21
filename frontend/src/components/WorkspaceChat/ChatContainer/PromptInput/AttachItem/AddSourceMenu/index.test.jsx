@@ -1,11 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import {
-  render,
-  screen,
-  waitFor,
-  fireEvent,
-} from "@testing-library/react";
+import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import AddSourceMenu from "./index";
 
@@ -189,7 +184,7 @@ describe("AddSourceMenu", () => {
       name: /Upload from computer/i,
     });
     const second = screen.getByRole("menuitem", {
-      name: /Add existing document/i,
+      name: /Select from workspace/i,
     });
     const third = screen.getByRole("menuitem", { name: /Add from URL/i });
 

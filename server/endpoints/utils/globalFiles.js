@@ -31,14 +31,20 @@ const GLOBAL_ROOT = "global";
  * @param {import("express").Router} app
  * @param {{ validatedRequest: Function, flexUserRoleValid: Function, ROLES: object }} deps
  */
-function globalFilesEndpoints(app, { validatedRequest, flexUserRoleValid, ROLES }) {
+function globalFilesEndpoints(
+  app,
+  { validatedRequest, flexUserRoleValid, ROLES },
+) {
   if (!app) return;
 
   // Ensure the global store exists at registration time (idempotent).
   try {
     ensureStorageDir(GLOBAL_ROOT);
   } catch (e) {
-    consoleLogger.warn("[globalFiles] could not ensure global store:", e?.message || e);
+    consoleLogger.warn(
+      "[globalFiles] could not ensure global store:",
+      e?.message || e,
+    );
   }
 
   const adminGate = [validatedRequest, flexUserRoleValid([ROLES.admin])];

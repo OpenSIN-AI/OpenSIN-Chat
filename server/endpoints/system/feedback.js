@@ -63,7 +63,11 @@ function sanitizeBody(raw) {
 function sanitizeLabels(labels) {
   if (!Array.isArray(labels)) return ["feedback"];
   const picked = labels
-    .map((l) => String(l || "").toLowerCase().trim())
+    .map((l) =>
+      String(l || "")
+        .toLowerCase()
+        .trim(),
+    )
     .filter((l) => ALLOWED_LABELS.has(l));
   return picked.length > 0 ? [...new Set(picked)] : ["feedback"];
 }
@@ -90,9 +94,7 @@ async function createGitHubIssue({ repo, token, title, body, labels }) {
   if (!res.ok) {
     const msg =
       data?.message ||
-      (typeof data?.errors === "object"
-        ? JSON.stringify(data.errors)
-        : null) ||
+      (typeof data?.errors === "object" ? JSON.stringify(data.errors) : null) ||
       `GitHub API ${res.status}`;
     const err = new Error(msg);
     err.status = res.status;
@@ -203,7 +205,10 @@ function feedbackEndpoints(app) {
           },
         });
       } catch (error) {
-        consoleLogger.error("[feedback] failed to create issue:", error.message);
+        consoleLogger.error(
+          "[feedback] failed to create issue:",
+          error.message,
+        );
         const status =
           error.status >= 400 && error.status < 600 ? error.status : 502;
         return response.status(status).json({

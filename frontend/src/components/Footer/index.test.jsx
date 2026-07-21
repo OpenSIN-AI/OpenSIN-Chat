@@ -35,6 +35,8 @@ vi.mock("@/hooks/useTheme", () => ({
     availableThemes: { system: "System", light: "Light", dark: "Dark" },
     isLight: false,
   }),
+  getStoredTheme: () => "system",
+  resolveDarkMode: () => true,
 }));
 vi.mock("@/ThemeContext", () => ({
   useThemeContext: () => ({
@@ -63,7 +65,8 @@ vi.mock("@/models/system", () => ({
     feedbackConfig: vi.fn().mockResolvedValue({
       configured: true,
       repo: "OpenSIN-AI/OpenSIN-Chat",
-      githubNewIssueUrl: "https://github.com/OpenSIN-AI/OpenSIN-Chat/issues/new",
+      githubNewIssueUrl:
+        "https://github.com/OpenSIN-AI/OpenSIN-Chat/issues/new",
     }),
     createFeedbackIssue: vi.fn(),
   },

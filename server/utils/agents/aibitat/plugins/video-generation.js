@@ -50,7 +50,8 @@ module.exports.videoGeneration = {
               },
               duration: {
                 type: "number",
-                description: "Target duration in seconds (provider-dependent). Default 5.",
+                description:
+                  "Target duration in seconds (provider-dependent). Default 5.",
               },
             },
             required: ["prompt", "filename"],
@@ -155,7 +156,9 @@ module.exports.videoGeneration = {
                 body: JSON.stringify({
                   model,
                   prompt,
-                  seconds: String(Math.min(Math.max(Number(duration) || 5, 2), 20)),
+                  seconds: String(
+                    Math.min(Math.max(Number(duration) || 5, 2), 20),
+                  ),
                 }),
                 signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
               }).catch((e) => ({ ok: false, status: 0, _err: e }));
@@ -216,10 +219,13 @@ module.exports.videoGeneration = {
               if (!videoBuffer && jobId && !videoUrl) {
                 for (let i = 0; i < MAX_POLLS; i++) {
                   await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
-                  const pollRes = await fetch(`${basePath}/v1/videos/${jobId}`, {
-                    headers,
-                    signal: AbortSignal.timeout(60_000),
-                  }).catch(() => null);
+                  const pollRes = await fetch(
+                    `${basePath}/v1/videos/${jobId}`,
+                    {
+                      headers,
+                      signal: AbortSignal.timeout(60_000),
+                    },
+                  ).catch(() => null);
                   if (!pollRes?.ok) continue;
                   const pollData = await pollRes.json().catch(() => ({}));
                   const status = String(
@@ -305,7 +311,9 @@ module.exports.videoGeneration = {
               );
               return `Successfully generated video "${displayFilename}" (${sizeMB} MB). The file is ready for download.`;
             } catch (e) {
-              this.super.handlerProps.log(`video-generation error: ${e.message}`);
+              this.super.handlerProps.log(
+                `video-generation error: ${e.message}`,
+              );
               this.super.introspect(`Error: ${e.message}`);
               return `Error generating video: ${e.message}`;
             }
