@@ -6,9 +6,9 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorBoundaryFallback from "@/components/ErrorBoundaryFallback";
 import RightSidebarIconBar from "./RightSidebarIconBar";
+import MobileSidebarMenu from "./MobileSidebarMenu";
 import { useChatSidebar } from "./ChatSidebar";
 import { useTranslation } from "react-i18next";
-import { X } from "@phosphor-icons/react/dist/csr/X";
 
 // Lazy panels: only the open sidebar is downloaded. Notepad (TipTap), PDF,
 // Database, etc. must not land in the initial WorkspaceChat graph.
@@ -89,26 +89,12 @@ function ActiveSidebarPanel({
   );
 }
 
-function MobileSidebarCloseButton() {
-  const { activeSidebar, closeSidebar } = useChatSidebar();
-  const { t } = useTranslation();
-  if (!activeSidebar) return null;
-
-  return (
-    <button
-      type="button"
-      onClick={closeSidebar}
-      aria-label={t("common.closePanel", "Panel schließen")}
-      className="fixed right-3 top-3 z-[120] flex h-11 w-11 items-center justify-center rounded-lg border border-theme-border bg-theme-bg-sidebar/95 text-theme-text-secondary shadow-lg backdrop-blur-sm transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-text-secondary md:hidden"
-    >
-      <X size={18} />
-    </button>
-  );
-}
-
 /**
- * Renders the right sidebar: icon bar + active panel side by side.
- * Icon bar is always visible; panel code is lazy-loaded per type.
+ * Renders the right sidebar: desktop icon bar + active panel.
+ * On mobile/tablet (`md` and below) the icon bar is hidden — tools open via
+ * MobileSidebarMenu (bottom FAB + sheet / in-panel dock). Close is handled
+ * by that dock so we no longer need a separate top-right X that collided
+ * with the left-nav chrome.
  */
 interface SidebarsProps {
   workspace: any;
@@ -127,7 +113,7 @@ function SidebarsContent({ workspace }: SidebarsProps) {
 
   return (
     <div
-      className={`fixed z-40 min-w-0 shrink-0 flex-row overflow-hidden md:right-0 md:top-0 md:h-full md:flex ${activeSidebar ? "inset-0 flex h-full w-full bg-[var(--chat-canvas)] md:inset-auto md:h-full md:w-auto md:bg-transparent" : "hidden md:flex"}`}
+      className={`fixed z-40 min-w-0 shrink-0 flex-row overflow-hidden md:right-0 md:top-0 md:h-full md:flex ${activeSidebar ? "inset-0 flex h-full w-full bg-[var(--chat-canvas)] pb-[calc(56px+env(safe-area-inset-bottom,0px))] md:inset-auto md:h-full md:w-auto md:bg-transparent md:pb-0" : "hidden md:flex"}`}
       aria-label={t("common.rightSidebar")}
     >
       <ActiveSidebarPanel
@@ -144,7 +130,8 @@ export default function Sidebars({ workspace }: SidebarsProps) {
   return createPortal(
     <>
       <SidebarsContent workspace={workspace} />
-      <MobileSidebarCloseButton />
+      {/* Single mobile entry point for right-rail tools (Home + Workspace). */}
+      <MobileSidebarMenu />
     </>,
     document.body,
   );

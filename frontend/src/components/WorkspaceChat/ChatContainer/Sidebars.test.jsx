@@ -41,6 +41,10 @@ vi.mock("./RightSidebarIconBar", () => ({
   default: () => <div data-testid="right-sidebar-icon-bar" />,
 }));
 
+vi.mock("./MobileSidebarMenu", () => ({
+  default: () => <div data-testid="mobile-sidebar-menu" />,
+}));
+
 const workspace = { id: 1, name: "Test Workspace" };
 
 describe("Sidebars", () => {

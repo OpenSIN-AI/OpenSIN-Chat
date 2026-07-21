@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: MIT
 import WorkspaceModelPicker from "./WorkspaceModelPicker";
-import MobileSidebarMenu from "./MobileSidebarMenu";
 
 /**
- * Top bar of the chat container: settings menu and model picker.
- * Accepts: workspaceSlug, isEmpty
- * The dropdown menu is only shown on the first page (before chat starts).
- * Once the chat has started, all icons are in the right sidebar.
+ * Top bar of the chat container: model picker.
+ * Mobile right-rail tools live in Sidebars → MobileSidebarMenu (bottom FAB),
+ * not here — avoids a second entry point fighting the left-nav header.
  */
 interface ChatHeaderProps {
   workspaceSlug: string;
@@ -15,12 +13,6 @@ interface ChatHeaderProps {
 
 export default function ChatHeader({
   workspaceSlug,
-  isEmpty,
 }: ChatHeaderProps) {
-  return (
-    <>
-      <WorkspaceModelPicker workspaceSlug={workspaceSlug} />
-      <MobileSidebarMenu />
-    </>
-  );
+  return <WorkspaceModelPicker workspaceSlug={workspaceSlug} />;
 }
