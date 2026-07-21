@@ -637,7 +637,11 @@ const Workspace = {
         },
       );
       const data = await response.json().catch(() => ({}));
-      return { success: !!data.success && response.ok, ...data, status: response.status };
+      return {
+        success: !!data.success && response.ok,
+        ...data,
+        status: response.status,
+      };
     } catch (e) {
       return { success: false, error: e.message };
     }
@@ -660,7 +664,11 @@ const Workspace = {
         },
       );
       const data = await response.json().catch(() => ({}));
-      return { success: !!data.success && response.ok, ...data, status: response.status };
+      return {
+        success: !!data.success && response.ok,
+        ...data,
+        status: response.status,
+      };
     } catch (e) {
       return { success: false, error: e.message };
     }

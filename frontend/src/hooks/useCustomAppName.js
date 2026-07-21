@@ -21,8 +21,9 @@ export const CUSTOM_APP_NAME_KEY = "system/custom-app-name";
  * }}
  */
 export default function useCustomAppName() {
-  const { data, error, isLoading, mutate } = useSWR(CUSTOM_APP_NAME_KEY, () =>
-    System.fetchCustomAppName(),
+  const { data, error, isLoading, mutate } = useSWR(
+    CUSTOM_APP_NAME_KEY,
+    () => System.fetchCustomAppName(),
     { errorRetryCount: 3, errorRetryInterval: 2000 },
   );
 

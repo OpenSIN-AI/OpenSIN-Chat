@@ -198,9 +198,10 @@ describe("AccountMenu", () => {
     expect(
       screen.queryByRole("menuitem", { name: /Profile/i }),
     ).not.toBeInTheDocument();
-    expect(
-      screen.getByRole("menuitem", { name: /Settings/i }),
-    ).toHaveAttribute("href", "/settings/interface");
+    expect(screen.getByRole("menuitem", { name: /Settings/i })).toHaveAttribute(
+      "href",
+      "/settings/interface",
+    );
   });
 
   it("closes the menu on Escape", () => {

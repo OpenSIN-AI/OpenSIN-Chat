@@ -27,9 +27,7 @@ export default function ImportedSkillList({
           >
             {t("importedSkillList.agentDocs")}
           </a>
-          {
-          }
-          .
+          {}.
         </p>
       </div>
     );

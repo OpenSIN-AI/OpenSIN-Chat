@@ -51,9 +51,7 @@ export default function ApiKeyRow({
           </code>
         </td>
         <td className="px-6 py-3 text-left align-middle">
-          {
-            apiKey.createdBy?.username || "--"
-          }
+          {apiKey.createdBy?.username || "--"}
         </td>
         <td className="px-6 py-3 whitespace-nowrap align-middle">
           {apiKey.createdAt ? new Date(apiKey.createdAt).toLocaleString() : "—"}

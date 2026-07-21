@@ -95,9 +95,7 @@ function ProviderPrivacyItem({ title, provider, altText }: any) {
                 {t("providerPrivacy.privacyPolicy")}
                 <ArrowSquareOut size={12} />
               </Link>
-              {
-              }
-              .
+              {}.
             </div>
           ) : (
             provider.description && (

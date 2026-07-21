@@ -39,7 +39,9 @@ import "./docs.css";
 
 function readStoredAudience(): DocsAudience | null {
   try {
-    return parseDocsAudience(window.localStorage.getItem(DOCS_AUDIENCE_STORAGE_KEY));
+    return parseDocsAudience(
+      window.localStorage.getItem(DOCS_AUDIENCE_STORAGE_KEY),
+    );
   } catch {
     return null;
   }
@@ -283,7 +285,6 @@ export default function Docs() {
     next.set(DOCS_AUDIENCE_PARAM, audience);
     setSearchParams(next, { replace: true });
     // Only re-run when the resolved audience changes — not on every searchParams identity.
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentional
   }, [audience, setSearchParams]);
 
   const setAudience = useCallback(

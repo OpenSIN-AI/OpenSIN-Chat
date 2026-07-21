@@ -35,9 +35,7 @@ function flattenLocalFiles(localFiles, parentPath = "") {
   for (const node of localFiles.items) {
     if (!node) continue;
     if (node.type === "folder" && Array.isArray(node.items)) {
-      const folderPath = parentPath
-        ? `${parentPath}/${node.name}`
-        : node.name;
+      const folderPath = parentPath ? `${parentPath}/${node.name}` : node.name;
       out.push(...flattenLocalFiles({ items: node.items }, folderPath));
       continue;
     }
@@ -297,9 +295,7 @@ function BackHeader({ label, onBack, t }) {
 function RootView({ t, onAddLocalFiles, onOpenSources, onOpenUrl }) {
   return (
     <>
-      <SectionLabel>
-        {t("chat_window.attach_menu.section_chat")}
-      </SectionLabel>
+      <SectionLabel>{t("chat_window.attach_menu.section_chat")}</SectionLabel>
       <MenuRow
         icon={UploadSimple}
         label={t("chat_window.attach_menu.upload_from_computer")}
@@ -325,10 +321,7 @@ function RootView({ t, onAddLocalFiles, onOpenSources, onOpenUrl }) {
 }
 
 function SourcesView({ t, workspaceSlug, threadSlug, onBack, onClose }) {
-  const {
-    documents: localFiles,
-    isLoading: loading,
-  } = useDocuments();
+  const { documents: localFiles, isLoading: loading } = useDocuments();
   const [workspaceDocs, setWorkspaceDocs] = useState<any[] | null>(null);
   const [loadingWs, setLoadingWs] = useState(true);
   const [addingId, setAddingId] = useState<any>(null);
@@ -390,7 +383,10 @@ function SourcesView({ t, workspaceSlug, threadSlug, onBack, onClose }) {
     );
     setAddingId(null);
     if (!result.success) {
-      showToast(result.error || t("chat_window.attach_menu.add_failed"), "error");
+      showToast(
+        result.error || t("chat_window.attach_menu.add_failed"),
+        "error",
+      );
       return;
     }
     showToast(t("chat_window.attach_menu.add_success"), "success");
@@ -522,8 +518,7 @@ function UrlView({ t, workspaceSlug, threadSlug, onBack, onClose }) {
         threadSlug,
       );
       if (!result.success) {
-        const errMsg =
-          result.error || t("chat_window.attach_menu.url_failed");
+        const errMsg = result.error || t("chat_window.attach_menu.url_failed");
         setError(errMsg);
         showToast(errMsg, "error", { clear: true });
         return;

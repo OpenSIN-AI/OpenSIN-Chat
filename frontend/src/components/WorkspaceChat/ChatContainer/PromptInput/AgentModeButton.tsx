@@ -22,9 +22,7 @@ export function buildAgentModePrefix(
 ): string {
   if (modeId === "deep-research") {
     const src =
-      sources && sources.length > 0
-        ? sources
-        : getDeepResearchSourceIds();
+      sources && sources.length > 0 ? sources : getDeepResearchSourceIds();
     const list = src.length ? src.join(",") : "web-search";
     return `@agent [deep-research]\n[sources:${list}]`;
   }
@@ -171,26 +169,29 @@ export function useAgentMode() {
     };
   }, [showDropdown]);
 
-  const selectMode = useCallback((mode, sendCommand, textareaRef, promptInput) => {
-    if (!mode.enabled) return;
-    setActiveMode(mode);
-    persistMode(mode.id);
-    setShowDropdown(false);
-    window.dispatchEvent(
-      new CustomEvent(AGENT_MODE_EVENT, { detail: { mode: mode.id } }),
-    );
-    if (sendCommand) {
-      const next = applyAgentModePrefix(
-        promptInput || "",
-        mode.id,
-        mode.id === "deep-research" ? getDeepResearchSourceIds() : undefined,
+  const selectMode = useCallback(
+    (mode, sendCommand, textareaRef, promptInput) => {
+      if (!mode.enabled) return;
+      setActiveMode(mode);
+      persistMode(mode.id);
+      setShowDropdown(false);
+      window.dispatchEvent(
+        new CustomEvent(AGENT_MODE_EVENT, { detail: { mode: mode.id } }),
       );
-      sendCommand({ text: next, writeMode: "replace" });
-    }
-    if (textareaRef?.current) {
-      setTimeout(() => textareaRef.current.focus(), 50);
-    }
-  }, []);
+      if (sendCommand) {
+        const next = applyAgentModePrefix(
+          promptInput || "",
+          mode.id,
+          mode.id === "deep-research" ? getDeepResearchSourceIds() : undefined,
+        );
+        sendCommand({ text: next, writeMode: "replace" });
+      }
+      if (textareaRef?.current) {
+        setTimeout(() => textareaRef.current.focus(), 50);
+      }
+    },
+    [],
+  );
 
   const clearMode = useCallback((sendCommand, textareaRef, promptInput) => {
     setActiveMode(null);
