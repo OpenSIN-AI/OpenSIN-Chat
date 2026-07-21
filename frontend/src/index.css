@@ -681,6 +681,13 @@ body {
   }
 }
 
+/* iOS Safari zooms focused text fields whose computed font size is below 16px. */
+@media (max-width: 767px) {
+  #primary-prompt-input {
+    font-size: 16px !important;
+  }
+}
+
 /* ── Dark mode strategy ────────────────────────────────────────────────── */
 /* v4 uses @custom-variant instead of the darkMode config option */
 @custom-variant dark (&:where(.dark, .dark *));
