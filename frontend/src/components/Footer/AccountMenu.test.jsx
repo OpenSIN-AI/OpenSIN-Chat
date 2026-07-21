@@ -31,22 +31,29 @@ vi.mock("@/utils/paths", () => ({
   },
 }));
 
-const setTheme = vi.fn();
-let currentTheme = "dark";
+// vi.mock is hoisted above plain consts — use vi.hoisted so toast.ts can call
+// getStoredTheme() at import time without a TDZ ReferenceError.
+const { themeState, setTheme } = vi.hoisted(() => ({
+  themeState: { current: "dark" },
+  setTheme: vi.fn(),
+}));
 vi.mock("@/hooks/useTheme", () => ({
   useTheme: () => ({
-    theme: currentTheme,
+    theme: themeState.current,
     setTheme,
     availableThemes: { system: "System", light: "Light", dark: "Dark" },
-    isLight: currentTheme === "light",
+    isLight: themeState.current === "light",
   }),
+  // toast.ts (and others) import these pure helpers at module load time.
+  getStoredTheme: () => themeState.current,
+  resolveDarkMode: () => themeState.current !== "light",
 }));
 vi.mock("@/ThemeContext", () => ({
   useThemeContext: () => ({
-    theme: currentTheme,
+    theme: themeState.current,
     setTheme,
     availableThemes: { system: "System", light: "Light", dark: "Dark" },
-    isLight: currentTheme === "light",
+    isLight: themeState.current === "light",
   }),
 }));
 
@@ -79,7 +86,7 @@ function openMenu() {
 }
 
 beforeEach(() => {
-  currentTheme = "dark";
+  themeState.current = "dark";
   loginMode = "multi";
   mockUser = { username: "Tester", email: "tester@example.com" };
   vi.clearAllMocks();
@@ -129,7 +136,7 @@ describe("AccountMenu", () => {
   });
 
   it("marks the active theme button with aria-pressed", () => {
-    currentTheme = "light";
+    themeState.current = "light";
     render(<AccountMenu />);
     openMenu();
     expect(screen.getByRole("button", { name: "Light" })).toHaveAttribute(

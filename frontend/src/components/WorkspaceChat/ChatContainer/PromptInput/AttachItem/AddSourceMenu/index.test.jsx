@@ -189,7 +189,7 @@ describe("AddSourceMenu", () => {
       name: /Upload from computer/i,
     });
     const second = screen.getByRole("menuitem", {
-      name: /Add existing document/i,
+      name: /Select from workspace/i,
     });
     const third = screen.getByRole("menuitem", { name: /Add from URL/i });
 

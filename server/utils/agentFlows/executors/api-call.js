@@ -2,7 +2,7 @@
 const consoleLogger = require("../../logger/console.js");
 
 const { safeJsonParse } = require("../../http");
-const { validateUrl } = require("../../ssrf");
+const { safeFetch } = require("../../ssrf");
 
 const API_CALL_TIMEOUT_MS = 30_000; // 30s timeout for outbound API calls
 
@@ -49,9 +49,10 @@ async function executeApiCall(config, context) {
   }
 
   try {
-    validateUrl(url);
+    // safeFetch validates the initial URL and every redirect hop against the
+    // private-network blocklist (plain fetch + validateUrl alone is not enough).
     introspect(`Sending ${method} request to ${url}`);
-    const response = await fetch(url, {
+    const response = await safeFetch(url, {
       ...requestConfig,
       signal: AbortSignal.timeout(API_CALL_TIMEOUT_MS),
     });

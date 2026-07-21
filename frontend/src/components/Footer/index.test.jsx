@@ -35,6 +35,8 @@ vi.mock("@/hooks/useTheme", () => ({
     availableThemes: { system: "System", light: "Light", dark: "Dark" },
     isLight: false,
   }),
+  getStoredTheme: () => "system",
+  resolveDarkMode: () => true,
 }));
 vi.mock("@/ThemeContext", () => ({
   useThemeContext: () => ({

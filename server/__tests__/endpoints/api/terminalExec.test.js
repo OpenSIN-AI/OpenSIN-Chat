@@ -282,6 +282,23 @@ describe("Terminal Exec endpoint", () => {
       });
       expect(res.statusCode).toBe(200);
     });
+
+    it("blocks absolute paths in head arguments", async () => {
+      const { call } = buildApp();
+      const res = await call("post", "/terminal/exec", {
+        body: { command: "head /etc/passwd" },
+      });
+      expect(res.statusCode).toBe(403);
+      expect(res.body.error).toMatch(/absolute|working directory/i);
+    });
+
+    it("blocks absolute paths in ls arguments", async () => {
+      const { call } = buildApp();
+      const res = await call("post", "/terminal/exec", {
+        body: { command: "ls /tmp" },
+      });
+      expect(res.statusCode).toBe(403);
+    });
   });
 
   describe("validateCommand unit tests", () => {
@@ -292,8 +309,15 @@ describe("Terminal Exec endpoint", () => {
 
     it("accepts whitelisted commands with valid args", () => {
       expect(validateCommand("echo", ["hello"]).ok).toBe(true);
-      expect(validateCommand("ls", ["-la", "/tmp"]).ok).toBe(true);
+      expect(validateCommand("ls", ["-la"]).ok).toBe(true);
+      expect(validateCommand("ls", ["."]).ok).toBe(true);
       expect(validateCommand("pwd", []).ok).toBe(true);
+    });
+
+    it("rejects absolute path arguments for path-capable commands", () => {
+      expect(validateCommand("ls", ["-la", "/tmp"]).ok).toBe(false);
+      expect(validateCommand("head", ["/etc/passwd"]).ok).toBe(false);
+      expect(validateCommand("tail", ["/var/log/syslog"]).ok).toBe(false);
     });
 
     it("rejects too many arguments", () => {

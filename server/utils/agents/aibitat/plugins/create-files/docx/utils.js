@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-const { validateUrl } = require("../../../../../ssrf");
+const { safeFetch } = require("../../../../../ssrf");
 /**
  * Utilities for converting markdown to DOCX format.
  * Uses marked for parsing, jsdom for HTML traversal, and docx for document generation.
@@ -179,13 +179,7 @@ async function fetchImage(src, log) {
         return null;
       }
     } else if (src.startsWith("http://") || src.startsWith("https://")) {
-      try {
-        validateUrl(src);
-      } catch (e) {
-        log(`create-docx-file: ${e.message}: ${src}`);
-        return null;
-      }
-
+      // safeFetch re-validates every redirect hop (plain fetch can SSRF via 3xx).
       const controller = new AbortController();
       const timeoutId = setTimeout(
         () => controller.abort(),
@@ -193,7 +187,7 @@ async function fetchImage(src, log) {
       );
 
       try {
-        const response = await fetch(src, {
+        const response = await safeFetch(src, {
           signal: controller.signal,
         });
         clearTimeout(timeoutId);

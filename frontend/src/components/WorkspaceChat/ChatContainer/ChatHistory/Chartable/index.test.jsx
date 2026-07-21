@@ -24,6 +24,7 @@ vi.mock("echarts-for-react", () => ({
 }));
 
 vi.mock("@/hooks/useTheme", () => ({
+  getStoredTheme: () => "dark",
   resolveDarkMode: () => true,
 }));
 
