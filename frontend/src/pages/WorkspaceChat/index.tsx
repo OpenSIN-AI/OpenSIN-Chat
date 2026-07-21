@@ -1,7 +1,14 @@
 // SPDX-License-Identifier: MIT
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { default as WorkspaceChatContainer } from "@/components/WorkspaceChat";
-import Sidebar, { SidebarMobileHeader } from "@/components/Sidebar";
 import LeftSidebarIconBar from "@/components/WorkspaceChat/ChatContainer/LeftSidebarIconBar";
 import {
   SidebarToggleProvider,
@@ -27,11 +34,21 @@ import useUser from "@/hooks/useUser";
 import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
-import {
-  CommandPalette,
-  type CommandItem,
-} from "@/components/Workspace/CommandPalette/CommandPalette";
+import type { CommandItem } from "@/components/Workspace/CommandPalette/CommandPalette";
 import { NAVIGATE_HOME_EVENT } from "@/utils/keyboardShortcuts";
+
+// PERF (CEO): same left-rail split as Main — threads/footer after shell paint.
+const Sidebar = lazy(() => import("@/components/Sidebar"));
+const SidebarMobileHeader = lazy(() =>
+  import("@/components/Sidebar").then((m) => ({
+    default: m.SidebarMobileHeader,
+  })),
+);
+const CommandPalette = lazy(() =>
+  import("@/components/Workspace/CommandPalette/CommandPalette").then((m) => ({
+    default: m.CommandPalette,
+  })),
+);
 
 export default function WorkspaceChat() {
   const { loading, requiresAuth, mode } = usePasswordModal();
@@ -198,21 +215,38 @@ function WorkspaceChatLayout() {
   return (
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-primary light:bg-[#f9fafb] flex">
       {!isMobile && <LeftSidebarIconBar />}
-      {!isMobile ? (
-        <Sidebar onOpenSearch={() => setCommandOpen(true)} />
-      ) : (
-        <SidebarMobileHeader onOpenSearch={() => setCommandOpen(true)} />
-      )}
+      <Suspense
+        fallback={
+          isMobile ? (
+            <div className="fixed inset-x-0 top-0 z-40 h-14" aria-hidden />
+          ) : (
+            <div
+              className="hidden h-full w-[260px] shrink-0 border-r border-white/[0.06] md:block"
+              aria-hidden
+            />
+          )
+        }
+      >
+        {!isMobile ? (
+          <Sidebar onOpenSearch={() => setCommandOpen(true)} />
+        ) : (
+          <SidebarMobileHeader onOpenSearch={() => setCommandOpen(true)} />
+        )}
+      </Suspense>
       <div
         className={`min-w-0 flex-1 transition-[margin] duration-150 ease-out ${isMobile ? "pt-14" : ""} ${railVisible ? "md:ml-[52px]" : ""}`}
       >
         <ShowWorkspaceChat />
       </div>
-      <CommandPalette
-        open={commandOpen}
-        onOpenChange={setCommandOpen}
-        items={commandItems}
-      />
+      {commandOpen ? (
+        <Suspense fallback={null}>
+          <CommandPalette
+            open={commandOpen}
+            onOpenChange={setCommandOpen}
+            items={commandItems}
+          />
+        </Suspense>
+      ) : null}
     </div>
   );
 }

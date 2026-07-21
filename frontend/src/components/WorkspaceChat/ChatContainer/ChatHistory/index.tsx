@@ -14,8 +14,6 @@ import {
 import type { Ref } from "react";
 import type { VirtuosoHandle } from "react-virtuoso";
 import { Virtuoso } from "react-virtuoso";
-import HistoricalMessage from "./HistoricalMessage";
-import PromptReply from "./PromptReply";
 import StatusResponse from "./StatusResponse";
 import ToolApprovalRequest from "./ToolApprovalRequest";
 import ClarifyingQuestionCard from "./ClarifyingQuestion";
@@ -26,6 +24,11 @@ import { ArrowDown } from "@phosphor-icons/react/dist/csr/ArrowDown";
 // Chartable (echarts) wird LAZY geladen, damit der Chart-Vendor-Chunk
 // nicht im initialen Bundle landet.
 const Chartable = lazy(() => import("./Chartable"));
+// PERF (CEO): HistoricalMessage + PromptReply pull markdown-it/hljs/katex
+// (~580KB combined). Load only when a row actually renders — empty threads
+// and first paint of the chat shell stay free of the markdown vendor graph.
+const HistoricalMessage = lazy(() => import("./HistoricalMessage"));
+const PromptReply = lazy(() => import("./PromptReply"));
 import ModelRouteNotification from "./ModelRouteNotification";
 import Workspace from "@/models/workspace";
 import { useParams } from "react-router";
@@ -394,36 +397,58 @@ export default function ChatHistory(
           );
         case "promptReply":
           return (
-            <PromptReply
-              uuid={row.uuid}
-              reply={row.reply}
-              pending={row.pending}
-              sources={row.sources}
-              error={row.error}
-              errorId={row.errorId}
-              closed={row.closed}
-            />
+            <Suspense
+              fallback={
+                <div
+                  className="min-h-[1.5rem] text-xs italic text-theme-text-secondary"
+                  aria-busy="true"
+                >
+                  …
+                </div>
+              }
+            >
+              <PromptReply
+                uuid={row.uuid}
+                reply={row.reply}
+                pending={row.pending}
+                sources={row.sources}
+                error={row.error}
+                errorId={row.errorId}
+                closed={row.closed}
+              />
+            </Suspense>
           );
         case "historical":
           return (
-            <HistoricalMessage
-              uuid={row.uuid}
-              message={row.message}
-              role={row.role}
-              workspace={row.workspace}
-              sources={row.sources}
-              feedbackScore={row.feedbackScore}
-              chatId={row.chatId}
-              error={row.error}
-              attachments={row.attachments}
-              regenerateMessage={stableRegenerate}
-              isLastMessage={row.isLastMessage}
-              saveEditedMessage={saveEditedMessage}
-              forkThread={forkThread}
-              metrics={row.metrics}
-              outputs={row.outputs}
-              clarifyingQuestions={row.clarifyingQuestions}
-            />
+            <Suspense
+              fallback={
+                <div
+                  className="min-h-[1.5rem] text-xs italic text-theme-text-secondary"
+                  aria-busy="true"
+                >
+                  …
+                </div>
+              }
+            >
+              <HistoricalMessage
+                uuid={row.uuid}
+                message={row.message}
+                role={row.role}
+                workspace={row.workspace}
+                sources={row.sources}
+                feedbackScore={row.feedbackScore}
+                chatId={row.chatId}
+                error={row.error}
+                attachments={row.attachments}
+                regenerateMessage={stableRegenerate}
+                isLastMessage={row.isLastMessage}
+                saveEditedMessage={saveEditedMessage}
+                forkThread={forkThread}
+                metrics={row.metrics}
+                outputs={row.outputs}
+                clarifyingQuestions={row.clarifyingQuestions}
+              />
+            </Suspense>
           );
         default:
           return null;

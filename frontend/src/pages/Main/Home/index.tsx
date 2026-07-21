@@ -20,7 +20,6 @@ import DnDFileUploaderWrapper, {
   DnDFileUploaderProvider,
   PASTE_ATTACHMENT_EVENT,
 } from "@/components/WorkspaceChat/ChatContainer/DnDWrapper";
-import EmptyState from "@/components/WorkspaceChat/ChatContainer/EmptyState";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
 import {
@@ -43,6 +42,11 @@ import logger from "@/utils/logger";
 // PERF: right-rail host is already panel-lazy; keep it off Home's sync graph.
 const Sidebars = lazy(
   () => import("@/components/WorkspaceChat/ChatContainer/Sidebars"),
+);
+// PERF (CEO): EmptyState pulls PromptInput + agent/tools (~130KB) — defer until
+// Home shell mounts so auth→home first paint stays chrome-only.
+const EmptyState = lazy(
+  () => import("@/components/WorkspaceChat/ChatContainer/EmptyState"),
 );
 
 interface HomeWorkspace {
@@ -369,16 +373,27 @@ function HomeContent({
         <div className="relative h-full w-full min-w-0 flex-1 overflow-hidden bg-theme-bg-container">
           <WorkspaceModelPicker workspaceSlug={workspace?.slug} />
           <DnDFileUploaderWrapper>
-            <EmptyState
-              workspace={workspace}
-              handleSubmit={handleSubmit}
-              sendCommand={sendCommand}
-              loadingResponse={loading}
-              files={files}
-              t={t}
-              workspaceSlug={workspace?.slug}
-              threadSlug={threadSlug}
-            />
+            <Suspense
+              fallback={
+                <div
+                  className="flex h-full w-full items-center justify-center"
+                  aria-busy="true"
+                >
+                  <div className="h-10 w-10 animate-pulse rounded-full bg-white/10" />
+                </div>
+              }
+            >
+              <EmptyState
+                workspace={workspace}
+                handleSubmit={handleSubmit}
+                sendCommand={sendCommand}
+                loadingResponse={loading}
+                files={files}
+                t={t}
+                workspaceSlug={workspace?.slug}
+                threadSlug={threadSlug}
+              />
+            </Suspense>
           </DnDFileUploaderWrapper>
           <ChatTooltips />
         </div>

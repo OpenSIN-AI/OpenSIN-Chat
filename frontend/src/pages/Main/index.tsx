@@ -5,12 +5,20 @@ import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
 import { FullScreenLoader } from "@/components/Preloader";
 import Home from "./Home";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
-import Sidebar, { SidebarMobileHeader } from "@/components/Sidebar";
 import LeftSidebarIconBar from "@/components/WorkspaceChat/ChatContainer/LeftSidebarIconBar";
 import { SidebarToggleProvider } from "@/components/Sidebar/SidebarToggle";
 import type { CommandItem } from "@/components/Workspace/CommandPalette/CommandPalette";
 
-// PERF (CEO): CommandPalette (~140KB) only needed on ⌘K / search — keep off first paint.
+// PERF (CEO): left workspace rail (threads/footer) off the auth→home critical path.
+// Icon bar stays sync so layout chrome is instant.
+const Sidebar = lazy(() => import("@/components/Sidebar"));
+const SidebarMobileHeader = lazy(() =>
+  import("@/components/Sidebar").then((m) => ({
+    default: m.SidebarMobileHeader,
+  })),
+);
+
+// PERF (CEO): CommandPalette only needed on ⌘K / search — keep off first paint.
 const CommandPalette = lazy(() =>
   import("@/components/Workspace/CommandPalette/CommandPalette").then((m) => ({
     default: m.CommandPalette,
@@ -81,11 +89,24 @@ function MainLayout() {
   return (
     <div className="flex h-dvh w-full overflow-hidden bg-theme-bg-primary">
       {!isMobile ? <LeftSidebarIconBar /> : null}
-      {!isMobile ? (
-        <Sidebar onOpenSearch={() => setCommandOpen(true)} />
-      ) : (
-        <SidebarMobileHeader onOpenSearch={() => setCommandOpen(true)} />
-      )}
+      <Suspense
+        fallback={
+          isMobile ? (
+            <div className="fixed inset-x-0 top-0 z-40 h-14" aria-hidden />
+          ) : (
+            <div
+              className="hidden h-full w-[260px] shrink-0 border-r border-white/[0.06] md:block"
+              aria-hidden
+            />
+          )
+        }
+      >
+        {!isMobile ? (
+          <Sidebar onOpenSearch={() => setCommandOpen(true)} />
+        ) : (
+          <SidebarMobileHeader onOpenSearch={() => setCommandOpen(true)} />
+        )}
+      </Suspense>
       <div
         className={`flex-1 min-w-0 overflow-hidden${isMobile ? " pt-14" : ""}`}
       >
