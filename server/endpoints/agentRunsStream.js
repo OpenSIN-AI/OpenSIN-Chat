@@ -19,41 +19,51 @@ const consoleLogger = require("../utils/logger/console.js");
 
 const EncryptionMgr = new EncryptionManager();
 
-// Reuse the same auth logic as agentSSE.js
-async function isAuthorizedRequest(request) {
+/**
+ * Authenticate the SSE client and return the resolved user (multi-user) so
+ * workspace membership can be enforced. Returns null when unauthorized.
+ * @returns {Promise<{ multiUserMode: boolean, user: object|null }|null>}
+ */
+async function resolveAuthorizedUser(request) {
   if (
     process.env.NODE_ENV === "test" &&
     process.env.INTEGRATION_TEST === "true"
   ) {
-    return true;
+    return { multiUserMode: false, user: null };
   }
 
   const auth = request.headers.authorization;
   const token = auth ? auth.split(" ")[1] : request.query?.token;
-  if (!token) return false;
+  if (!token) return null;
 
   const decoded = decodeJWT(token);
-  if (!decoded) return false;
+  if (!decoded) return null;
 
   const multiUserMode = await SystemSettings.isMultiUserMode();
   if (multiUserMode) {
-    if (!decoded.id) return false;
+    if (!decoded.id) return null;
     const user = await User.get({ id: decoded.id });
-    if (!user || user.suspended) return false;
-    return true;
+    if (!user || user.suspended) return null;
+    return { multiUserMode: true, user };
   }
 
-  if (!process.env.AUTH_TOKEN) return false;
+  if (!process.env.AUTH_TOKEN) return null;
 
   const { p } = decoded;
-  if (p === null || typeof p !== "string" || p.length < 16) return false;
-  if (!/^[A-Za-z0-9+/=_-]+$/.test(p)) return false;
+  if (p === null || typeof p !== "string" || p.length < 16) return null;
+  if (!/^[A-Za-z0-9+/=_-]+$/.test(p)) return null;
 
   const decrypted = EncryptionMgr.decrypt(p);
-  if (!decrypted) return false;
+  if (!decrypted) return null;
 
   const bcrypt = require("bcryptjs");
-  return bcrypt.compareSync(decrypted, getAuthTokenHash());
+  if (!bcrypt.compareSync(decrypted, getAuthTokenHash())) return null;
+  return { multiUserMode: false, user: null };
+}
+
+/** @deprecated use resolveAuthorizedUser — kept for tests that spy on the name */
+async function isAuthorizedRequest(request) {
+  return (await resolveAuthorizedUser(request)) !== null;
 }
 
 function isOriginAllowed(request) {
@@ -103,9 +113,9 @@ function agentRunsStream(app) {
       }),
     ],
     async (req, res) => {
-      // Auth check
-      const authorized = await isAuthorizedRequest(req);
-      if (!authorized) {
+      // Auth check — resolve the user so multi-user workspace ACL can apply.
+      const auth = await resolveAuthorizedUser(req);
+      if (!auth) {
         return res.status(401).json({ success: false, error: "Unauthorized" });
       }
       if (!isOriginAllowed(req)) {
@@ -116,8 +126,11 @@ function agentRunsStream(app) {
 
       const slug = req.params.slug;
 
-      // Resolve workspace
-      const workspace = await Workspace.get({ slug });
+      // Multi-user: only members of the workspace may subscribe to its agent
+      // run events (prevents IDOR via known/guessable slugs).
+      const workspace = auth.multiUserMode
+        ? await Workspace.getWithUser(auth.user, { slug })
+        : await Workspace.get({ slug });
       if (!workspace) {
         return res
           .status(404)
@@ -190,8 +203,14 @@ function agentRunsStream(app) {
     "/workspace/:slug/agent-runs/:runId/cancel",
     [validatedRequest],
     async (req, res) => {
-      const { runId } = req.params;
-      agentRunBus.emit("cancel", { runId });
+      const { slug, runId } = req.params;
+      const workspace = await resolveWorkspaceForRequest(req, res, slug);
+      if (!workspace) {
+        return res
+          .status(404)
+          .json({ success: false, error: "Workspace not found" });
+      }
+      agentRunBus.emit("cancel", { runId, workspaceId: workspace.id });
       try {
         await AgentRuns.updateStatus(runId, "cancelled");
       } catch (e) {
@@ -206,8 +225,18 @@ function agentRunsStream(app) {
     "/workspace/:slug/agent-runs/:runId/respond",
     [validatedRequest],
     async (req, res) => {
-      const { runId } = req.params;
-      agentRunBus.emit("respond", { runId, payload: req.body });
+      const { slug, runId } = req.params;
+      const workspace = await resolveWorkspaceForRequest(req, res, slug);
+      if (!workspace) {
+        return res
+          .status(404)
+          .json({ success: false, error: "Workspace not found" });
+      }
+      agentRunBus.emit("respond", {
+        runId,
+        workspaceId: workspace.id,
+        payload: req.body,
+      });
       return res.json({ success: true });
     },
   );
@@ -215,4 +244,23 @@ function agentRunsStream(app) {
   app.use("/api", router);
 }
 
-module.exports = { agentRunsStream };
+/**
+ * Resolve a workspace for a session-authenticated request, enforcing
+ * multi-user membership when applicable.
+ */
+async function resolveWorkspaceForRequest(req, res, slug) {
+  const multiUser = !!res.locals?.multiUserMode;
+  const user = res.locals?.user || null;
+  if (multiUser) {
+    if (!user) return null;
+    return Workspace.getWithUser(user, { slug });
+  }
+  return Workspace.get({ slug });
+}
+
+module.exports = {
+  agentRunsStream,
+  isAuthorizedRequest,
+  resolveAuthorizedUser,
+  resolveWorkspaceForRequest,
+};

@@ -15,6 +15,7 @@ const os = require("os");
 const path = require("path");
 const { execFile } = require("child_process");
 const { describeImage } = require("../visionAgent");
+const { safeFetch } = require("../../ssrf");
 
 const MAX_KEYFRAMES = Number(process.env.PDF_ANALYSIS_VIDEO_MAX_FRAMES || 8);
 const MAX_VIDEO_BYTES = Number(
@@ -49,7 +50,11 @@ const VIDEO_FETCH_TIMEOUT_MS = Number(
   process.env.PDF_ANALYSIS_VIDEO_FETCH_TIMEOUT_MS || 60000,
 );
 
-/** Lädt ein Video größenbegrenzt in eine Temp-Datei (nach SSRF-Check des Aufrufers). */
+/**
+ * Lädt ein Video größenbegrenzt in eine Temp-Datei.
+ * Uses safeFetch so redirect hops are re-validated against the private-network
+ * blocklist (plain fetch after assertSafeUrl alone is still redirect-SSRFable).
+ */
 async function downloadVideo(url) {
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "xcheck-video-"));
   const tmpFile = path.join(
@@ -58,10 +63,21 @@ async function downloadVideo(url) {
   );
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), VIDEO_FETCH_TIMEOUT_MS);
-  const res = await fetch(url, {
-    headers: { "User-Agent": "OpenSIN-CrossCheck/1.0" },
-    signal: controller.signal,
-  });
+  let res;
+  try {
+    res = await safeFetch(url, {
+      headers: { "User-Agent": "OpenSIN-CrossCheck/1.0" },
+      signal: controller.signal,
+    });
+  } catch (err) {
+    clearTimeout(timer);
+    try {
+      fs.rmSync(tmpDir, { recursive: true, force: true });
+    } catch {
+      /* best-effort cleanup */
+    }
+    throw err;
+  }
   if (!res.ok) {
     clearTimeout(timer);
     try {

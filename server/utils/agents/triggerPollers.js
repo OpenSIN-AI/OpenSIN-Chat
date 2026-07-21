@@ -6,6 +6,7 @@
 // Docs: triggerPollers.doc.md
 
 const consoleLogger = require("../logger/console.js");
+const { safeFetch } = require("../ssrf");
 
 const POLL_HTTP_TIMEOUT_MS = 30_000;
 
@@ -247,7 +248,8 @@ async function pollRss(config, checkpoint) {
       };
     }
 
-    const response = await fetch(config.url, {
+    // safeFetch blocks private/metadata targets on every redirect hop.
+    const response = await safeFetch(config.url, {
       method: "GET",
       headers: {
         Accept: "application/rss+xml, application/atom+xml, text/xml, */*",

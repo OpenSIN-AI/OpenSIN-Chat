@@ -79,12 +79,36 @@ async function validateWithYauzl(
     return { safe: false, available: false, reason: "yauzl not available" };
 
   return await new Promise((resolve) => {
+    let settled = false;
+    const finish = (result) => {
+      if (settled) return;
+      settled = true;
+      resolve(result);
+    };
+
     yauzl.open(filePath, { lazyEntries: true }, (err, zip) => {
       if (err || !zip) {
-        if (err && err.message?.includes("central directory")) {
-          resolve({ safe: true, available: true });
+        const msg = err?.message || "failed to open archive";
+        // Non-zip containers (PDF, plain text, …) fail with "central directory"
+        // style errors — treat those as safe so callers can still process them.
+        // Real I/O / corrupt-zip errors fail closed so dangerous payloads do not
+        // slip through by treating open-failure as "safe".
+        if (
+          /central directory|end of central directory|invalid signature|not a zip|file is not a zip/i.test(
+            msg
+          )
+        ) {
+          finish({
+            safe: true,
+            available: true,
+            reason: "not a zip archive",
+          });
         } else {
-          resolve({ safe: true, available: true });
+          finish({
+            safe: false,
+            available: true,
+            reason: `Failed to open archive: ${msg}`,
+          });
         }
         return;
       }
@@ -96,47 +120,63 @@ async function validateWithYauzl(
         const compressed = entry.compressedSize || 0;
         total += uncompressed;
         if (isDangerousEntryName(entry.fileName)) {
-          resolve({
+          finish({
             safe: false,
             available: true,
             reason: `Archive contains disallowed entry ${entry.fileName} (macros / externalLinks / embeddings are not allowed)`,
           });
-          zip.close();
+          try {
+            zip.close();
+          } catch {
+            /* ignore */
+          }
           return;
         }
         if (total > maxTotalBytes) {
-          resolve({
+          finish({
             safe: false,
             available: true,
             reason: `Archive total uncompressed ${total} exceeds ${maxTotalBytes} bytes (~zip-bomb)`,
           });
-          zip.close();
+          try {
+            zip.close();
+          } catch {
+            /* ignore */
+          }
           return;
         }
         if (count > maxFiles) {
-          resolve({
+          finish({
             safe: false,
             available: true,
             reason: `Archive has more than ${maxFiles} entries`,
           });
-          zip.close();
+          try {
+            zip.close();
+          } catch {
+            /* ignore */
+          }
           return;
         }
         if (compressed > 0 && uncompressed / compressed > maxRatio) {
-          resolve({
+          finish({
             safe: false,
             available: true,
             reason: `Entry ${entry.fileName} has compression ratio ${
               uncompressed / compressed
             }:1 (cap ${maxRatio}:1)`,
           });
-          zip.close();
+          try {
+            zip.close();
+          } catch {
+            /* ignore */
+          }
           return;
         }
         zip.readEntry();
       });
       zip.on("end", () =>
-        resolve({
+        finish({
           safe: true,
           available: true,
           totalUncompressed: total,
@@ -144,7 +184,7 @@ async function validateWithYauzl(
         })
       );
       zip.on("error", (e) =>
-        resolve({
+        finish({
           safe: false,
           available: true,
           reason: `Failed to read archive: ${e.message}`,
@@ -152,8 +192,12 @@ async function validateWithYauzl(
       );
       try {
         zip.readEntry();
-      } catch {
-        resolve({ safe: true, available: true });
+      } catch (e) {
+        finish({
+          safe: false,
+          available: true,
+          reason: `Failed to read archive entries: ${e?.message || e}`,
+        });
       }
     });
   });

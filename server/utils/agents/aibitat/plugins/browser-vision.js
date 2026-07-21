@@ -396,9 +396,8 @@ const browserVision = {
                 `${this.caller}: Fetching page metadata from ${url} ...`,
               );
 
-              validateUrl(url);
-
-              // Only fetch the first 32 KB of the page to get <head> quickly
+              // safeFetch validates the initial URL and every redirect hop
+              // (plain fetch + validateUrl alone is redirect-SSRF vulnerable).
               const controller = new AbortController();
               const timer = setTimeout(
                 () => controller.abort(),
@@ -406,7 +405,7 @@ const browserVision = {
               );
               let res;
               try {
-                res = await fetch(url, {
+                res = await safeFetch(url, {
                   signal: controller.signal,
                   headers: {
                     "User-Agent":
