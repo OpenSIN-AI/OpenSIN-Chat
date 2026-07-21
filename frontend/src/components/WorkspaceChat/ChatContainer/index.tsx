@@ -7,7 +7,6 @@ import { ChatTooltips } from "./ChatTooltips";
 import useChatContainerQuickScroll from "@/hooks/useChatContainerQuickScroll";
 import ReportPreviewListener from "./ReportPreviewListener";
 import ChatHeader from "./ChatHeader";
-import EmptyState from "./EmptyState";
 import MessageList from "./MessageList";
 import { lazy, Suspense } from "react";
 import useChatStream from "./useChatStream";
@@ -15,6 +14,8 @@ import ErrorBoundaryFallback from "@/components/ErrorBoundaryFallback";
 
 // Lazy: Sidebars host + icon rail; individual panels split further inside.
 const Sidebars = lazy(() => import("./Sidebars"));
+// PERF: EmptyState (+ PromptInput) only for empty threads.
+const EmptyState = lazy(() => import("./EmptyState"));
 
 export default function ChatContainer({
   workspace,
@@ -90,14 +91,25 @@ function ChatContainerInner({
           <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
             <DnDFileUploaderWrapper>
               {isEmpty ? (
-                <EmptyState
-                  workspace={workspace}
-                  handleSubmit={handleSubmit}
-                  sendCommand={sendCommand}
-                  loadingResponse={loadingResponse}
-                  files={files}
-                  t={t}
-                />
+                <Suspense
+                  fallback={
+                    <div
+                      className="flex h-full w-full items-center justify-center"
+                      aria-busy="true"
+                    >
+                      <div className="h-10 w-10 animate-pulse rounded-full bg-white/10" />
+                    </div>
+                  }
+                >
+                  <EmptyState
+                    workspace={workspace}
+                    handleSubmit={handleSubmit}
+                    sendCommand={sendCommand}
+                    loadingResponse={loadingResponse}
+                    files={files}
+                    t={t}
+                  />
+                </Suspense>
               ) : (
                 <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
                   <MessageList
