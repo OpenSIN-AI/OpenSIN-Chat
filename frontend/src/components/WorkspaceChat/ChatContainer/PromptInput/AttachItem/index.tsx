@@ -134,16 +134,16 @@ export default function AttachItem({
         onPointerEnter={refresh}
         className="group border border-transparent relative flex h-11 w-11 items-center justify-center cursor-pointer rounded-full transition-colors duration-150 hover:bg-white/[0.04] light:hover:bg-zinc-100 hover:border-white/[0.06] light:hover:border-zinc-200 md:h-6 md:w-6"
       >
-        <div className="relative">
+        <div className="relative flex items-center justify-center">
           <Plus
             size={16}
             className="pointer-events-none text-[#a1a1aa] light:text-zinc-600 group-hover:text-[#e4e4e7] light:group-hover:text-zinc-900 shrink-0"
             weight="bold"
           />
           {pendingAttachments.length > 0 && (
-            <div className="absolute -top-2.5 -right-2 bg-white text-black light:invert text-[8px] rounded-full px-1 flex items-center justify-center">
+            <span className="absolute -top-1.5 -right-2 flex h-3.5 min-w-[14px] items-center justify-center rounded-full bg-blue-600 px-1 text-[9px] font-bold leading-none text-white shadow-sm">
               {pendingAttachments.length}
-            </div>
+            </span>
           )}
         </div>
       </button>

@@ -252,6 +252,7 @@ export function SidebarMobileHeader({
 }) {
   const { t } = useTranslation();
   const { user } = useUser();
+  const { showing, showModal, hideModal } = useNewWorkspaceModal();
   const [open, setOpen] = useState(false);
   useEffect(() => {
     if (!open) return;
@@ -278,14 +279,14 @@ export function SidebarMobileHeader({
         >
           <List size={22} />
         </button>
-        <span className="ml-2 text-sm font-semibold text-theme-text-primary">
-          OpenSIN
-        </span>
+        <div className="ml-1 min-w-0 flex-1">
+          <WorkspaceSwitcher onCreate={showModal} onNavigate={() => setOpen(false)} />
+        </div>
         <button
           type="button"
           onClick={onOpenSearch}
           aria-label={t("commandHub.openSearch")}
-          className="ml-auto flex h-10 w-10 items-center justify-center rounded-lg text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-text-secondary"
+          className="flex h-10 w-10 items-center justify-center rounded-lg text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-text-secondary"
         >
           <MagnifyingGlass size={20} />
         </button>

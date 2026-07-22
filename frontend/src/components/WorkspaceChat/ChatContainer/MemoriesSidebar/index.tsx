@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { memo, useState } from "react";
+import { memo, useState, useMemo } from "react";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { ChatCircleText } from "@phosphor-icons/react/dist/csr/ChatCircleText";
 import { Globe } from "@phosphor-icons/react/dist/csr/Globe";
@@ -12,6 +12,7 @@ import PersonalizationToggle from "./PersonalizationToggle";
 import MemoryCard from "./MemoryCard";
 import MemoryModal from "./MemoryModal";
 import useThreads from "@/hooks/useThreads";
+import useDocument from "@/hooks/useDocument";
 import paths from "@/utils/paths";
 import { safeJsonParse } from "@/utils/request";
 
@@ -19,24 +20,37 @@ export { useMemoriesSidebar } from "../ChatSidebar";
 
 // ── Helpers: identify URL sources and extract their address ───────────────────
 function isUrlDoc(doc: any) {
-  const metadata = safeJsonParse(doc.metadata, {});
-  const docpath = doc.docpath || "";
-  const filename = doc.filename || "";
+  if (!doc) return false;
+  const metadata =
+    typeof doc.metadata === "string"
+      ? safeJsonParse(doc.metadata, {})
+      : doc.metadata || {};
+  const docpath = doc.docpath || doc.path || "";
+  const filename = doc.filename || doc.name || doc.title || "";
+  const title = doc.title || "";
   return (
     !!metadata?.url ||
     !!metadata?.sourceUrl ||
     docpath.includes("link") ||
-    filename.startsWith("http")
+    docpath.includes("http") ||
+    filename.startsWith("http") ||
+    title.startsWith("http")
   );
 }
 
 function getUrlFromDoc(doc: any) {
-  const metadata = safeJsonParse(doc.metadata, {});
-  const filename = doc.filename || "";
+  if (!doc) return "";
+  const metadata =
+    typeof doc.metadata === "string"
+      ? safeJsonParse(doc.metadata, {})
+      : doc.metadata || {};
+  const filename = doc.filename || doc.name || doc.title || "";
   if (metadata?.url) return metadata.url;
   if (metadata?.sourceUrl) return metadata.sourceUrl;
   if (filename.startsWith("http")) return filename;
-  return doc.docpath || "";
+  if (typeof doc.title === "string" && doc.title.startsWith("http"))
+    return doc.title;
+  return doc.docpath || doc.path || "";
 }
 
 // ── Chats tab ─────────────────────────────────────────────────────────────────
@@ -115,7 +129,22 @@ export function WorkspaceChatsTab({ workspace, onClose }: any) {
 // ── URLs tab ──────────────────────────────────────────────────────────────────
 export function WorkspaceUrlsTab({ workspace }: any) {
   const { t } = useTranslation();
-  const docs: any[] = (workspace?.documents || []).filter(isUrlDoc);
+  const { slug: paramSlug, threadSlug } = useParams() as any;
+  const targetWorkspaceSlug = workspace?.slug || paramSlug;
+  const { document: threadParsed } = useDocument(targetWorkspaceSlug, threadSlug);
+
+  const docs = useMemo(() => {
+    const wsDocs = workspace?.documents || [];
+    const threadDocs = threadParsed?.files || [];
+    const combined = [...wsDocs, ...threadDocs];
+    const unique = new Map();
+    for (const d of combined) {
+      if (!d) continue;
+      const key = d.id || d.docId || d.docpath || d.filename || d.name || d.title;
+      if (!unique.has(key)) unique.set(key, d);
+    }
+    return Array.from(unique.values()).filter(isUrlDoc);
+  }, [workspace?.documents, threadParsed?.files]);
 
   if (docs.length === 0) {
     return (
@@ -128,18 +157,21 @@ export function WorkspaceUrlsTab({ workspace }: any) {
   return (
     <div className="flex flex-col gap-2 overflow-y-auto no-scroll">
       {docs.map((doc: any, idx: number) => {
-        const metadata = safeJsonParse(doc.metadata, {});
+        const metadata =
+          typeof doc.metadata === "string"
+            ? safeJsonParse(doc.metadata, {})
+            : doc.metadata || {};
         const url = getUrlFromDoc(doc);
-        const title = metadata?.title || doc.filename || doc.docId || url;
+        const title = metadata?.title || doc.filename || doc.name || doc.docId || url;
         const isHttpUrl = typeof url === "string" && url.startsWith("http");
         return (
-          <div key={doc.docId || idx} className="flex flex-col gap-[2px]">
-            <div className="flex gap-2 items-start">
+          <div key={doc.docId || doc.id || idx} className="flex flex-col gap-[2px]">
+            <div className="flex gap-2 items-start p-2 rounded-lg bg-theme-bg-secondary border border-theme-border">
               <div className="w-4 h-4 rounded-full bg-theme-bg-tertiary flex items-center justify-center flex-shrink-0 mt-0.5">
                 <Globe size={10} className="text-theme-text-primary" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-theme-text-primary light:text-theme-text-primary truncate leading-[15px]">
+                <p className="text-xs font-medium text-theme-text-primary light:text-theme-text-primary truncate leading-snug">
                   {title}
                 </p>
                 {isHttpUrl ? (
@@ -147,7 +179,7 @@ export function WorkspaceUrlsTab({ workspace }: any) {
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[10px] text-zinc-400 light:text-slate-500 leading-[14px] truncate block hover:underline"
+                    className="text-[10px] text-blue-400 light:text-blue-600 leading-[14px] truncate block hover:underline"
                   >
                     {url}
                   </a>

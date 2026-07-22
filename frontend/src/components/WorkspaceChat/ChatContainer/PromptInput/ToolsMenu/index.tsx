@@ -154,9 +154,15 @@ export default function ToolsMenu({
         role="dialog"
         aria-label={t("chat_window.toolsMenu", "Werkzeuge & Einstellungen")}
         onMouseDown={(e) => {
-          // Prevents prompt textarea from losing focus when clicking inside the menu.
-          // Skip for portaled modals so their inputs can still receive focus.
-          if (e.currentTarget.contains(e.target as Node)) e.preventDefault();
+          // Prevents prompt textarea from losing focus when clicking container background,
+          // but allow buttons/inputs/checkboxes to trigger standard click events normally.
+          const target = e.target as HTMLElement;
+          const isInteractive = target.closest(
+            "button, input, select, textarea, [role='menuitemcheckbox']",
+          );
+          if (!isInteractive && e.currentTarget.contains(target)) {
+            e.preventDefault();
+          }
         }}
         // Dynamic: maxHeight computed from viewport measurements at runtime
         style={{ "--tools-menu-max-height": `${maxHeight}px` }}

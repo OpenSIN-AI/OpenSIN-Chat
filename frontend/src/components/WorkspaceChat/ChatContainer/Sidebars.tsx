@@ -82,7 +82,7 @@ function ActiveSidebarPanel({
 
   return (
     <div
-      className="relative z-30 flex h-full min-h-0 w-full min-w-0 max-w-full flex-1 flex-col overflow-hidden border-l border-white/[0.08] bg-theme-bg-sidebar light:border-zinc-200/70 md:w-auto md:max-w-none md:flex-none [&>*]:min-h-0 [&>*]:min-w-0 [&>*]:max-w-full [&>*]:flex-1"
+      className="relative z-30 flex h-full min-h-0 w-full min-w-0 max-w-full flex-1 flex-col overflow-hidden border-l border-white/[0.08] bg-theme-bg-sidebar light:border-zinc-200/70 md:w-auto md:max-w-none md:flex-1 md:basis-0 [&>*]:min-h-0 [&>*]:min-w-0 [&>*]:max-w-full [&>*]:flex-1"
       data-sidebar-panel={sidebarType || undefined}
     >
       <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
@@ -126,7 +126,7 @@ function SidebarsContent({ workspace }: SidebarsProps) {
         activeSidebar
           ? // Mobile/tablet: true fullscreen shell so panels get a definite width/height
             // (flex % width on auto-sized parents collapses to blank canvas).
-            "inset-0 flex h-[100dvh] w-full max-w-full bg-theme-bg-sidebar pb-[calc(56px+env(safe-area-inset-bottom,0px))] md:inset-auto md:h-full md:w-auto md:max-w-none md:bg-transparent md:pb-0"
+            "inset-0 flex h-[100dvh] w-full max-w-full bg-theme-bg-sidebar pb-[calc(56px+env(safe-area-inset-bottom,0px))] md:inset-auto md:h-full md:w-auto md:max-w-none md:bg-transparent md:pb-0 pointer-events-auto"
           : "hidden md:flex"
       }`}
       aria-label={t("common.rightSidebar")}

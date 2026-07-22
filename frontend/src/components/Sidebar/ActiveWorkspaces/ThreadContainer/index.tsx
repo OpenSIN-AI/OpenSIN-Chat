@@ -16,6 +16,7 @@ import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ThreadItem from "./ThreadItem";
 import ThreadFolderItem from "./ThreadFolderItem";
+import NewProjectModal from "@/components/Modals/NewProjectModal";
 import { useParams, useNavigate, Link } from "react-router";
 import useThreads, { invalidateThreads } from "@/hooks/useThreads";
 import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
@@ -621,9 +622,24 @@ function ThreadContainer({
               {projectsOpen && (
                 <div className="mt-0.5">
                   {folders.length === 0 && (
-                    <p className="px-7 py-2 text-xs text-theme-placeholder">
-                      {t("threadContainer.noProjects", "No projects yet")}
-                    </p>
+                    <div className="px-7 py-2 flex flex-col gap-1 items-start">
+                      <p className="text-xs text-theme-placeholder">
+                        {t("threadContainer.noProjects", "Noch keine Projekte")}
+                      </p>
+                      <NewFolderButton
+                        workspace={workspace}
+                        onCreated={(folder) => {
+                          mutate(
+                            (current) => ({
+                              ...current,
+                              folders: [...(current?.folders || []), folder],
+                            }),
+                            { revalidate: false },
+                          );
+                          mutate();
+                        }}
+                      />
+                    </div>
                   )}
                   {folders.map((folder) => {
                     const folderThreads = threads.filter(
@@ -975,64 +991,37 @@ function NewChatButton({ workspace, folder = null, compact = false }: { workspac
 
 function NewFolderButton({ workspace, onCreated, compact = false }: { workspace: WorkspaceProp; onCreated: (folder: Folder) => void; compact?: boolean }) {
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(false);
-  const onClick = async () => {
-    const name = window.prompt(t("threadContainer.folderNamePrompt"))?.trim();
-    if (!name) return;
-    setLoading(true);
-    try {
-      const { folder, message } = await Workspace.threads.folders.new(
-        workspace.slug,
-        name,
-      );
-      if (message || !folder) {
-        showToast(
-          t("threadContainer.folderCreateError", { message }),
-          "error",
-          { clear: true },
-        );
-        return;
-      }
-      onCreated(folder);
-    } catch (e: any) {
-      showToast(
-        t("threadContainer.folderCreateError", {
-          message: String(e?.message || e),
-        }),
-        "error",
-        { clear: true },
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [showModal, setShowModal] = useState(false);
 
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={t("threadContainer.newFolder")}
-      className={`${compact ? "h-8 w-8 justify-center" : "h-9 w-full"} relative flex items-center rounded-lg border-none text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary`}
-    >
-      <div
-        className={`flex items-center gap-2 ${compact ? "justify-center" : "w-full pl-3"}`}
+    <>
+      <button
+        type="button"
+        onClick={() => setShowModal(true)}
+        aria-label={t("threadContainer.newFolder", "Neues Projekt")}
+        title={t("threadContainer.newFolder", "Neues Projekt / GitHub Repo")}
+        className={`${compact ? "h-8 w-8 justify-center" : "h-9 w-full"} relative flex items-center rounded-lg border-none text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary cursor-pointer`}
       >
-        {loading ? (
-          <CircleNotch
-            weight="bold"
-            size={14}
-            className="shrink-0 animate-spin"
-          />
-        ) : (
+        <div
+          className={`flex items-center gap-2 ${compact ? "justify-center" : "w-full pl-3"}`}
+        >
           <FolderSimplePlus weight="bold" size={14} className="shrink-0" />
-        )}
-        {!compact && (
-          <p className="text-left text-[13px] font-medium text-theme-text-secondary">
-            {t("threadContainer.newFolder")}
-          </p>
-        )}
-      </div>
-    </button>
+          {!compact && (
+            <p className="text-left text-[13px] font-medium text-theme-text-secondary">
+              {t("threadContainer.newFolder", "Neues Projekt")}
+            </p>
+          )}
+        </div>
+      </button>
+
+      {showModal && (
+        <NewProjectModal
+          workspace={workspace}
+          hideModal={() => setShowModal(false)}
+          onCreated={onCreated}
+        />
+      )}
+    </>
   );
 }
 

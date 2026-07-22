@@ -168,11 +168,11 @@ export function Filters({
               className="w-full border border-zinc-700 light:border-slate-300 rounded-md pl-8 pr-2 py-1.5 text-sm text-theme-text-primary light:text-theme-text-primary bg-zinc-900 light:bg-white focus:outline-none focus:border-zinc-500"
             />
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 w-full min-w-0">
             <select
               value={party}
               onChange={(e) => onPartyChange(e.target.value)}
-              className="flex-1 border border-zinc-700 light:border-slate-300 rounded-md px-2 py-1.5 text-sm text-theme-text-primary light:text-theme-text-primary bg-zinc-900 light:bg-white focus:outline-none focus:border-zinc-500"
+              className="flex-1 min-w-0 truncate border border-zinc-700 light:border-slate-300 rounded-md px-2 py-1.5 text-sm text-theme-text-primary light:text-theme-text-primary bg-zinc-900 light:bg-white focus:outline-none focus:border-zinc-500"
               aria-label={t("sidebar.database.partyFilter", "Partei")}
             >
               <option value="">
@@ -187,7 +187,7 @@ export function Filters({
             <select
               value={state}
               onChange={(e) => onStateChange(e.target.value)}
-              className="flex-1 border border-zinc-700 light:border-slate-300 rounded-md px-2 py-1.5 text-sm text-theme-text-primary light:text-theme-text-primary bg-zinc-900 light:bg-white focus:outline-none focus:border-zinc-500"
+              className="flex-1 min-w-0 truncate border border-zinc-700 light:border-slate-300 rounded-md px-2 py-1.5 text-sm text-theme-text-primary light:text-theme-text-primary bg-zinc-900 light:bg-white focus:outline-none focus:border-zinc-500"
               aria-label={t("sidebar.database.stateFilter", "Bundesland")}
             >
               <option value="">
