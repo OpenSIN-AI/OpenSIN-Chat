@@ -66,6 +66,10 @@ ALLOWED_FILES=(
   "server/utils/boot/patchSdkTimeouts.js"  # reads ANYTHINGLLM_FETCH_TIMEOUT / ANYTHINGLLM_MAX_RETRIES
   "server/utils/collectorApi/index.js"  # reads ANYTHINGLLM_CHROMIUM_ARGS
 
+  # ── Docker compose env examples (legacy Chromium download URL) ──
+  "docker-opensin/.env.example"        # legacy anythingllm.com Chromium download URL
+  "docker-opensin/docker-compose.yml"  # legacy anythingllm.com Chromium download URL fallback
+
   # ── Functional backward-compat: logo file shim
   #    server must accept the legacy "anythingllm-logo.png" filename
   #    so existing AnythingLLM installs upgrading to OpenSIN-Chat

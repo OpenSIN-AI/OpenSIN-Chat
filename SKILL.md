@@ -6,7 +6,7 @@ Compact, validated operating procedures for agents working on the OpenSIN-Chat r
 - **Project**: OpenSIN-Chat (MIT)
 - **Brand**: OpenSIN-AI (#009ee0)
 - **Stack**: Vite/React/TS/Tailwind frontend + Node/Express/Prisma server + Python collector + Docker/OrbStack
-- **Telemetry**: Disabled (no PostHog, Mintplex, analytics)
+- **Telemetry**: Disabled (no PostHog, no analytics)
 
 ## Non-Negotiables (SACRED)
 1. **VERIFY BEFORE YOU CLAIM**: Never report success without end-to-end execution + visible proof (run commands, click flows, take evidence). If you cannot verify, explicitly say so.
