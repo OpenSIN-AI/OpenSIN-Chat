@@ -4,8 +4,27 @@ import { useTranslation } from "react-i18next";
 
 const VOICE_STORAGE_KEY = "opensin_native_tts_voice";
 
+/**
+ * Preferred macOS system voice name. On macOS the voice is typically named
+ * "Samantha" (en) or "Stimme 2" (de) depending on the system language.
+ * We match on the "Samantha" / "Stimme" pattern so it works across locales.
+ */
+const MACOS_SYSTEM_VOICE_RE = /^(Samantha|Stimme \d+|Victoria|Alex|Karen|Moira)/i;
+
 export function getStoredVoiceName(): string | null {
   return localStorage.getItem(VOICE_STORAGE_KEY);
+}
+
+/**
+ * Select the best default voice from the available list.
+ * Priority: macOS system voice pattern > browser default > first available.
+ */
+function pickDefaultVoice(list: SpeechSynthesisVoice[]): SpeechSynthesisVoice | undefined {
+  return (
+    list.find((v) => MACOS_SYSTEM_VOICE_RE.test(v.name)) ??
+    list.find((v) => v.default) ??
+    list[0]
+  );
 }
 
 export default function BrowserNative() {
@@ -32,13 +51,18 @@ export default function BrowserNative() {
           return a.name.localeCompare(b.name);
         });
         setVoices(sorted);
-        const systemDefault = list.find((v) => v.default);
-        if (systemDefault) {
-          localStorage.setItem(VOICE_STORAGE_KEY, systemDefault.name);
-          setSelected(systemDefault.name);
-        } else if (!localStorage.getItem(VOICE_STORAGE_KEY) && sorted.length) {
-          localStorage.setItem(VOICE_STORAGE_KEY, sorted[0].name);
-          setSelected(sorted[0].name);
+
+        // Only set default on first visit (nothing stored yet)
+        const stored = localStorage.getItem(VOICE_STORAGE_KEY);
+        if (!stored) {
+          const fallback = pickDefaultVoice(list);
+          if (fallback) {
+            localStorage.setItem(VOICE_STORAGE_KEY, fallback.name);
+            setSelected(fallback.name);
+          }
+        } else if (!selected) {
+          // Stored value exists but state wasn't initialized (e.g. SSR → client)
+          setSelected(stored);
         }
       }
     };
@@ -77,9 +101,14 @@ export default function BrowserNative() {
         onChange={(e) => handleChange(e.target.value)}
         className="w-full h-[40px] bg-theme-settings-input-bg rounded-lg px-3 text-sm text-theme-text-primary border-2 border-transparent focus:border-primary-button outline-none cursor-pointer"
       >
+        {voices.length === 0 && (
+          <option value="" disabled>
+            {t("audioPreference.tts.loadingVoices", "Stimmen werden geladen…")}
+          </option>
+        )}
         {voices.map((v) => (
           <option key={v.name} value={v.name}>
-            {v.name} ({v.lang})
+            {v.name} ({v.lang}){v.default ? " — Standard" : ""}
           </option>
         ))}
       </select>

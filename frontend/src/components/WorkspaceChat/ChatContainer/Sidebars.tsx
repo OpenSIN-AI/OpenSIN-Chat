@@ -111,7 +111,13 @@ function SidebarsContent({ workspace }: SidebarsProps) {
   );
 
   useEffect(() => {
-    if (activeSidebar) setRenderedSidebar(activeSidebar);
+    if (activeSidebar) {
+      setRenderedSidebar(activeSidebar);
+    } else {
+      // Clear after close animation finishes so the panel fully unmounts
+      const timer = setTimeout(() => setRenderedSidebar(null), 250);
+      return () => clearTimeout(timer);
+    }
   }, [activeSidebar]);
 
   return (

@@ -2,7 +2,7 @@
 import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { Tooltip } from "react-tooltip";
 import { useTranslation } from "react-i18next";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import { createPortal } from "react-dom";
 import { useParams } from "react-router";
 import Workspace from "@/models/workspace";
@@ -10,6 +10,7 @@ import showToast from "@/utils/toast";
 import {
   ATTACHMENTS_PROCESSED_EVENT,
   REMOVE_ATTACHMENT_EVENT,
+  DndUploaderContext,
 } from "../../DnDWrapper";
 import { useTheme } from "@/hooks/useTheme";
 import ParsedFilesMenu from "./ParsedFilesMenu";
@@ -38,6 +39,10 @@ export default function AttachItem({
   );
   const [isEmbedding, setIsEmbedding] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+
+  // DnD context tracks pending attachments staged for the CURRENT message
+  const dndCtx = useContext(DndUploaderContext);
+  const pendingAttachments = dndCtx?.files || [];
 
   const {
     document: parsedFiles,
@@ -135,9 +140,9 @@ export default function AttachItem({
             className="pointer-events-none text-[#a1a1aa] light:text-zinc-600 group-hover:text-[#e4e4e7] light:group-hover:text-zinc-900 shrink-0"
             weight="bold"
           />
-          {files.length > 0 && (
+          {pendingAttachments.length > 0 && (
             <div className="absolute -top-2.5 -right-2 bg-white text-black light:invert text-[8px] rounded-full px-1 flex items-center justify-center">
-              {files.length}
+              {pendingAttachments.length}
             </div>
           )}
         </div>

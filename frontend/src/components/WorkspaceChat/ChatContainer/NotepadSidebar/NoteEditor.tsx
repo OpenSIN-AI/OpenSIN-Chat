@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useCallback, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { EditorContent, useEditor } from "@tiptap/react";
 import { Node, mergeAttributes } from "@tiptap/core";
 import { UndoRedo } from "@tiptap/extensions";
@@ -145,6 +146,7 @@ export default function NoteEditor({
   placeholder,
   onChange,
 }: NoteEditorProps) {
+  const { t } = useTranslation();
   const fileRef = useRef<HTMLInputElement>(null);
   const [insertOpen, setInsertOpen] = useState(false);
   const [slashOpen, setSlashOpen] = useState(false);
@@ -254,7 +256,7 @@ export default function NoteEditor({
   const insertLink = useCallback(() => {
     if (!editor) return;
     const previous = editor.getAttributes("link").href || "";
-    const url = window.prompt("Link-URL", previous);
+    const url = window.prompt(t('notepad.prompt.linkUrl','Link-URL'), previous);
     if (url === null) return;
     if (!url) editor.chain().focus().extendMarkRange("link").unsetLink().run();
     else
@@ -270,7 +272,7 @@ export default function NoteEditor({
     (kind: "image" | "youtube") => {
       if (!editor) return;
       const url = window.prompt(
-        kind === "youtube" ? "YouTube-URL" : "Bild-URL",
+        kind === "youtube" ? t('notepad.prompt.youtubeUrl','YouTube-URL') : t('notepad.prompt.imageUrl','Bild-URL'),
       );
       if (!url) return;
       if (kind === "youtube")
@@ -283,7 +285,7 @@ export default function NoteEditor({
 
   const insertLinkCard = useCallback(() => {
     if (!editor) return;
-    const url = window.prompt("Link für Vorschaukarte");
+    const url = window.prompt(t('notepad.prompt.linkPreviewUrl','Link für Vorschaukarte'));
     if (!url || !/^https?:\/\//i.test(url)) return;
     editor
       .chain()
@@ -345,17 +347,17 @@ export default function NoteEditor({
         <div
           className="relative flex shrink-0 items-center gap-0.5 overflow-x-auto border-b border-theme-modal-border px-2 py-1.5"
           role="toolbar"
-          aria-label="Text formatieren"
+          aria-label={t('notepad.toolbar.format','Text formatieren')}
         >
           <ToolButton
-            label="Rückgängig"
+            label={t('notepad.toolbar.undo','Rückgängig')}
             disabled={!editor.can().chain().focus().undo().run()}
             onClick={() => editor.chain().focus().undo().run()}
           >
             <ArrowCounterClockwise size={15} />
           </ToolButton>
           <ToolButton
-            label="Wiederholen"
+            label={t('notepad.toolbar.redo','Wiederholen')}
             disabled={!editor.can().chain().focus().redo().run()}
             onClick={() => editor.chain().focus().redo().run()}
           >
@@ -363,7 +365,7 @@ export default function NoteEditor({
           </ToolButton>
           <span className="mx-1 h-4 w-px shrink-0 bg-theme-modal-border" />
           <ToolButton
-            label="Überschrift 1"
+            label={t('notepad.toolbar.heading1','Überschrift 1')}
             active={editor.isActive("heading", { level: 1 })}
             onClick={() =>
               editor.chain().focus().toggleHeading({ level: 1 }).run()
@@ -372,7 +374,7 @@ export default function NoteEditor({
             <TextHOne size={15} />
           </ToolButton>
           <ToolButton
-            label="Überschrift 2"
+            label={t('notepad.toolbar.heading2','Überschrift 2')}
             active={editor.isActive("heading", { level: 2 })}
             onClick={() =>
               editor.chain().focus().toggleHeading({ level: 2 }).run()
@@ -381,70 +383,70 @@ export default function NoteEditor({
             <TextHTwo size={15} />
           </ToolButton>
           <ToolButton
-            label="Fett"
+            label={t('notepad.toolbar.bold','Fett')}
             active={editor.isActive("bold")}
             onClick={() => editor.chain().focus().toggleBold().run()}
           >
             <TextB size={15} />
           </ToolButton>
           <ToolButton
-            label="Kursiv"
+            label={t('notepad.toolbar.italic','Kursiv')}
             active={editor.isActive("italic")}
             onClick={() => editor.chain().focus().toggleItalic().run()}
           >
             <TextItalic size={15} />
           </ToolButton>
           <ToolButton
-            label="Unterstrichen"
+            label={t('notepad.toolbar.underline','Unterstrichen')}
             active={editor.isActive("underline")}
             onClick={() => editor.chain().focus().toggleUnderline().run()}
           >
             <TextUnderline size={15} />
           </ToolButton>
           <ToolButton
-            label="Durchgestrichen"
+            label={t('notepad.toolbar.strikethrough','Durchgestrichen')}
             active={editor.isActive("strike")}
             onClick={() => editor.chain().focus().toggleStrike().run()}
           >
             <TextStrikethrough size={15} />
           </ToolButton>
           <ToolButton
-            label="Aufzählung"
+            label={t('notepad.toolbar.bulletList','Aufzählung')}
             active={editor.isActive("bulletList")}
             onClick={() => editor.chain().focus().toggleBulletList().run()}
           >
             <ListBullets size={15} />
           </ToolButton>
           <ToolButton
-            label="Nummerierte Liste"
+            label={t('notepad.toolbar.orderedList','Nummerierte Liste')}
             active={editor.isActive("orderedList")}
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
           >
             <ListNumbers size={15} />
           </ToolButton>
           <ToolButton
-            label="Todo"
+            label={t('notepad.toolbar.todo','Todo')}
             active={editor.isActive("taskList")}
             onClick={() => editor.chain().focus().toggleTaskList().run()}
           >
             <CheckSquare size={15} />
           </ToolButton>
           <ToolButton
-            label="Zitat"
+            label={t('notepad.toolbar.blockquote','Zitat')}
             active={editor.isActive("blockquote")}
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
           >
             <Quotes size={15} />
           </ToolButton>
           <ToolButton
-            label="Codeblock"
+            label={t('notepad.toolbar.codeBlock','Codeblock')}
             active={editor.isActive("codeBlock")}
             onClick={() => editor.chain().focus().toggleCodeBlock().run()}
           >
             <Code size={15} />
           </ToolButton>
           <ToolButton
-            label="Link"
+            label={t('notepad.toolbar.link','Link')}
             active={editor.isActive("link")}
             onClick={insertLink}
           >
@@ -452,7 +454,7 @@ export default function NoteEditor({
           </ToolButton>
           <div className="relative">
             <ToolButton
-              label="Inhalt einfügen"
+              label={t('notepad.toolbar.insertContent','Inhalt einfügen')}
               active={insertOpen}
               onClick={() => setInsertOpen((value) => !value)}
             >
@@ -464,13 +466,13 @@ export default function NoteEditor({
                   className="notepad-menu-item"
                   onClick={() => fileRef.current?.click()}
                 >
-                  <ImageIcon size={15} /> Bild hochladen
+                  <ImageIcon size={15} /> {t('notepad.insert.uploadImage','Bild hochladen')}
                 </button>
                 <button
                   className="notepad-menu-item"
                   onClick={() => insertMedia("image")}
                 >
-                  <ImageIcon size={15} /> Bild-URL
+                  <ImageIcon size={15} /> {t('notepad.insert.imageUrl','Bild-URL')}
                 </button>
                 <button
                   className="notepad-menu-item"
@@ -479,7 +481,7 @@ export default function NoteEditor({
                   <YoutubeLogo size={15} /> YouTube
                 </button>
                 <button className="notepad-menu-item" onClick={insertLinkCard}>
-                  <LinkIcon size={15} /> Link-Vorschau
+                  <LinkIcon size={15} /> {t('notepad.insert.linkPreview','Link-Vorschau')}
                 </button>
                 <button
                   className="notepad-menu-item"
@@ -492,7 +494,7 @@ export default function NoteEditor({
                     setInsertOpen(false);
                   }}
                 >
-                  <TableIcon size={15} /> Tabelle
+                  <TableIcon size={15} /> {t('notepad.insert.table','Tabelle')}
                 </button>
                 <button
                   className="notepad-menu-item"
@@ -501,7 +503,7 @@ export default function NoteEditor({
                     setInsertOpen(false);
                   }}
                 >
-                  <Minus size={15} /> Trennlinie
+                  <Minus size={15} /> {t('notepad.insert.divider','Trennlinie')}
                 </button>
               </div>
             )}
@@ -524,55 +526,55 @@ export default function NoteEditor({
           <div
             className="absolute left-5 top-3 z-40 grid w-52 gap-1 rounded-xl border border-theme-modal-border bg-theme-bg-secondary p-1.5 shadow-xl"
             role="menu"
-            aria-label="Block einfügen"
+            aria-label={t('notepad.slash.insertBlock','Block einfügen')}
           >
             <button
               className="notepad-menu-item"
               onClick={() => runSlashCommand("text")}
             >
-              Text
+              {t('notepad.slash.text','Text')}
             </button>
             <button
               className="notepad-menu-item"
               onClick={() => runSlashCommand("h1")}
             >
-              <TextHOne size={15} /> Überschrift 1
+              <TextHOne size={15} /> {t('notepad.slash.heading1','Überschrift 1')}
             </button>
             <button
               className="notepad-menu-item"
               onClick={() => runSlashCommand("h2")}
             >
-              <TextHTwo size={15} /> Überschrift 2
+              <TextHTwo size={15} /> {t('notepad.slash.heading2','Überschrift 2')}
             </button>
             <button
               className="notepad-menu-item"
               onClick={() => runSlashCommand("todo")}
             >
-              <CheckSquare size={15} /> Todo
+              <CheckSquare size={15} /> {t('notepad.slash.todo','Todo')}
             </button>
             <button
               className="notepad-menu-item"
               onClick={() => runSlashCommand("image")}
             >
-              <ImageIcon size={15} /> Bild
+              <ImageIcon size={15} /> {t('notepad.slash.image','Bild')}
             </button>
             <button
               className="notepad-menu-item"
               onClick={() => runSlashCommand("link")}
             >
-              <LinkIcon size={15} /> Link-Vorschau
+              <LinkIcon size={15} /> {t('notepad.slash.linkPreview','Link-Vorschau')}
             </button>
             <button
               className="notepad-menu-item"
               onClick={() => runSlashCommand("youtube")}
             >
-              <YoutubeLogo size={15} /> YouTube
+              <YoutubeLogo size={15} /> {t('notepad.slash.youtube','YouTube')}
             </button>
             <button
               className="notepad-menu-item"
               onClick={() => runSlashCommand("table")}
             >
-              <TableIcon size={15} /> Tabelle
+              <TableIcon size={15} /> {t('notepad.slash.table','Tabelle')}
             </button>
           </div>
         )}

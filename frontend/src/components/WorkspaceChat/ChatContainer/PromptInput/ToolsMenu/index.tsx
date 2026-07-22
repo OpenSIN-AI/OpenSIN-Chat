@@ -151,6 +151,8 @@ export default function ToolsMenu({
       />
       <div
         ref={popoverRef}
+        role="dialog"
+        aria-label={t("chat_window.toolsMenu", "Werkzeuge & Einstellungen")}
         onMouseDown={(e) => {
           // Prevents prompt textarea from losing focus when clicking inside the menu.
           // Skip for portaled modals so their inputs can still receive focus.

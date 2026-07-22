@@ -188,6 +188,10 @@ export default function ChatHistory({
   const { showScrollbar } = Appearance.getSettings();
   const { textSizeClass } = useTextSize();
 
+  // Use a ref for history so saveEditedMessage is stable across streamed tokens.
+  const historyRef = useRef(history);
+  historyRef.current = history;
+
   const saveEditedMessage = useCallback(
     async ({
       editedMessage,
@@ -197,11 +201,12 @@ export default function ChatHistory({
       saveOnly = false,
     }: any) => {
       if (!editedMessage) return;
+      const currentHistory = historyRef.current;
 
       if (role === "user" && saveOnly) {
-        const targetIdx = history.findIndex((msg: any) => msg.chatId === chatId);
+        const targetIdx = currentHistory.findIndex((msg: any) => msg.chatId === chatId);
         if (targetIdx < 0) return;
-        const updatedHistory = history.map((msg: any, idx: number) =>
+        const updatedHistory = currentHistory.map((msg: any, idx: number) =>
           idx === targetIdx ? { ...msg, content: editedMessage } : msg,
         );
         updateHistory(updatedHistory);
@@ -217,9 +222,9 @@ export default function ChatHistory({
       }
 
       if (role === "user") {
-        const targetIdx = history.findIndex((msg: any) => msg.chatId === chatId);
+        const targetIdx = currentHistory.findIndex((msg: any) => msg.chatId === chatId);
         if (targetIdx < 0) return;
-        const updatedHistory = history.slice(0, targetIdx + 1);
+        const updatedHistory = currentHistory.slice(0, targetIdx + 1);
         updatedHistory[updatedHistory.length - 1] = {
           ...updatedHistory[updatedHistory.length - 1],
           content: editedMessage,
@@ -235,11 +240,11 @@ export default function ChatHistory({
       }
 
       if (role === "assistant") {
-        const targetIdx = history.findIndex(
+        const targetIdx = currentHistory.findIndex(
           (msg: any) => msg.chatId === chatId && msg.role === role,
         );
         if (targetIdx < 0) return;
-        const updatedHistory = history.map((msg: any, idx: number) =>
+        const updatedHistory = currentHistory.map((msg: any, idx: number) =>
           idx === targetIdx ? { ...msg, content: editedMessage } : msg,
         );
         updateHistory(updatedHistory);
@@ -253,7 +258,7 @@ export default function ChatHistory({
         return;
       }
     },
-    [history, workspace?.slug, threadSlug, sendCommand, updateHistory],
+    [workspace?.slug, threadSlug, sendCommand, updateHistory],
   );
 
   const forkThread = useCallback(
