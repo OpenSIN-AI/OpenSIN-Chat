@@ -203,6 +203,7 @@ function convertToChatHistory(history = []) {
         feedbackScore,
         metrics: data?.metrics || {},
         notebookMode: data?.notebookMode || "chat",
+        codeRunner: data?.codeRunner || null,
         ...(data?.outputs?.length > 0 ? { outputs: data.outputs } : {}),
         ...(data?.clarifyingQuestions?.length > 0
           ? { clarifyingQuestions: data.clarifyingQuestions }

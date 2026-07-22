@@ -195,6 +195,8 @@ const Workspace = {
     chatHandler,
     attachments = [],
     notebookMode = "chat",
+    selectedSourceIds = [],
+    codeRunner = null,
   }) {
     if (!!threadSlug)
       return this.threads.streamChat(
@@ -203,6 +205,8 @@ const Workspace = {
         chatHandler,
         attachments,
         notebookMode,
+        selectedSourceIds,
+        codeRunner,
       );
     return this.streamChat(
       { slug: workspaceSlug },
@@ -210,6 +214,8 @@ const Workspace = {
       chatHandler,
       attachments,
       notebookMode,
+      selectedSourceIds,
+      codeRunner,
     );
   },
   /** @param {{slug: string}} param0
@@ -218,7 +224,7 @@ const Workspace = {
    * @param {Array} [attachments=[]]
    * @returns {Promise<void>}
    */
-  streamChat: async function ({ slug }, message, handleChat, attachments = [], notebookMode = "chat") {
+  streamChat: async function ({ slug }, message, handleChat, attachments = [], notebookMode = "chat", selectedSourceIds = [], codeRunner = null) {
     const ctrl = new AbortController();
 
     // Stall-detection: if no data is received for STALL_TIMEOUT_MS, abort
@@ -267,7 +273,7 @@ const Workspace = {
     try {
       await streamSSEPost(`${API_BASE}/workspace/${slug}/stream-chat`, {
         method: "POST",
-        body: JSON.stringify({ message, attachments, notebookMode }),
+        body: JSON.stringify({ message, attachments, notebookMode, selectedSourceIds, codeRunner }),
         headers: baseHeaders(),
         signal: ctrl.signal,
         async onopen(response) {

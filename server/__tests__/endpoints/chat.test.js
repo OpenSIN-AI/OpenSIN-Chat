@@ -192,6 +192,8 @@ describe("chatEndpoints", () => {
         [],
         expect.any(Object),
         "chat",
+        [],
+        null,
       );
     });
 

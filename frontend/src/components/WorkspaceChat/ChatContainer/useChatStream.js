@@ -25,11 +25,16 @@ import logger from "@/utils/logger";
  * Encapsulates all WebSocket, chat streaming, and message-sending logic
  * for the ChatContainer.
  */
+/**
+ * @param {{ workspace: any, threadSlug: string|null, knownHistory: any[], notebookMode: string, selectedSourceIds: string[], codeRunner: string|null }} options
+ */
 export default function useChatStream({
   workspace,
   threadSlug = null,
   knownHistory = [],
   notebookMode = "chat",
+  selectedSourceIds = [],
+  codeRunner = null,
 }) {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -463,6 +468,8 @@ export default function useChatStream({
           },
           attachments,
           notebookMode,
+          selectedSourceIds,
+          codeRunner,
         });
       } catch (err) {
         // The streamChat onerror/onopen handlers already call handleChat

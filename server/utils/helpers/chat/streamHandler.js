@@ -37,6 +37,9 @@ const { getModelTag } = require("../../../endpoints/utils");
 // change is automatically reflected in both routes.
 const CHAT_MESSAGE_MAX_LENGTH = 32_000;
 
+// Notebook mode whitelist — only these values are accepted from the client.
+const VALID_NOTEBOOK_MODES = new Set(["chat", "work", "code"]);
+
 /**
  * @param {import("express").Request}  request
  * @param {import("express").Response} response
@@ -47,8 +50,30 @@ async function streamChatHandler(request, response, { thread = null } = {}) {
   try {
     // PERF: open SSE as early as possible so the client gets headers in ms,
     // then validate. Body is already buffered by express.json.
-    const { message, attachments = [], notebookMode = "chat" } = reqBody(request);
+    const {
+      message,
+      attachments = [],
+      notebookMode: rawNotebookMode = "chat",
+      selectedSourceIds = [],
+      codeRunner = null,
+    } = reqBody(request);
     const workspace = response.locals.workspace;
+
+    // Whitelist notebookMode — reject unknown values with a fallback to "chat".
+    const notebookMode = VALID_NOTEBOOK_MODES.has(rawNotebookMode)
+      ? rawNotebookMode
+      : "chat";
+
+    // Validate selectedSourceIds — must be an array of strings if provided.
+    const validSelectedSourceIds = Array.isArray(selectedSourceIds)
+      ? selectedSourceIds.filter((id) => typeof id === "string" && id.length > 0)
+      : [];
+
+    // Validate codeRunner — must be a non-empty string if provided.
+    const validCodeRunner =
+      typeof codeRunner === "string" && codeRunner.length > 0
+        ? codeRunner
+        : null;
 
     // --- Input validation (sync, before any await) --------------------------
     if (typeof message !== "string" || message.trim().length === 0) {
@@ -116,6 +141,8 @@ async function streamChatHandler(request, response, { thread = null } = {}) {
       attachments,
       abortController,
       notebookMode,
+      validSelectedSourceIds,
+      validCodeRunner,
     );
     stopHeartbeat();
 

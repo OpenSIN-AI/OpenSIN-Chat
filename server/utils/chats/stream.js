@@ -35,6 +35,8 @@ async function streamChatWithWorkspace(
   attachments = [],
   abortController = null,
   notebookMode = "chat",
+  selectedSourceIds = [],
+  codeRunner = null,
 ) {
   const uuid = uuidv4();
 
@@ -247,6 +249,34 @@ async function streamChatWithWorkspace(
     return;
   }
 
+  // Filter vector search results by selectedSourceIds if provided.
+  // This restricts RAG to only the notebook sources the user explicitly chose.
+  if (
+    selectedSourceIds.length > 0 &&
+    vectorSearchResults.sources.length > 0
+  ) {
+    const allowedSet = new Set(selectedSourceIds);
+    const filteredSources = [];
+    const filteredContextTexts = [];
+
+    for (let i = 0; i < vectorSearchResults.sources.length; i++) {
+      const source = vectorSearchResults.sources[i];
+      // Source ID is typically the document title or a constructed identifier.
+      // Match against the source's title, URL, or any unique identifier.
+      const sourceId =
+        source?.title || source?.url || source?.metadata?.title || "";
+      if (allowedSet.has(sourceId)) {
+        filteredSources.push(source);
+        if (vectorSearchResults.contextTexts[i]) {
+          filteredContextTexts.push(vectorSearchResults.contextTexts[i]);
+        }
+      }
+    }
+
+    vectorSearchResults.sources = filteredSources;
+    vectorSearchResults.contextTexts = filteredContextTexts;
+  }
+
   const { fillSourceWindow } = require("../helpers/chat");
   const filledSources = fillSourceWindow({
     nDocs: workspace?.topN ?? 4,
@@ -424,6 +454,7 @@ async function streamChatWithWorkspace(
         attachments,
         metrics,
         notebookMode,
+        codeRunner,
       },
       threadId: thread?.id || null,
       user,
