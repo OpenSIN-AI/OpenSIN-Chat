@@ -57,7 +57,7 @@ export function websocketURI() {
 }
 
 export default function handleSocketResponse(socket: any, event: MessageEvent, setChatHistory: SetChatHistory) {
-  const data = safeJsonParse(event.data, null);
+  const data: any = safeJsonParse(event.data, null);
   if (data === null) return;
 
   // Handle thread rename
@@ -399,9 +399,9 @@ export default function handleSocketResponse(socket: any, event: MessageEvent, s
         sources: [],
         closed: true,
         error: null,
-        animate: data?.animate || false,
+        animate: (data as any)?.animate || false,
         pending: false,
-        metrics: data.metrics || {},
+        metrics: (data as any).metrics || {},
       },
     ];
   });

@@ -41,8 +41,9 @@ function isProtectedApiRequest(input: RequestInfo | URL): boolean {
   const basePath = apiBase.pathname.replace(/\/+$/, "") || "/";
   const matchesConfiguredApi =
     url.origin === apiBase.origin &&
-    (url.pathname === basePath ||
-      (basePath !== "/" && url.pathname.startsWith(`${basePath}/`)));
+    (basePath === "/" ||
+      url.pathname === basePath ||
+      url.pathname.startsWith(`${basePath}/`));
 
   const matchesSameOriginPdfApi =
     url.origin === window.location.origin &&

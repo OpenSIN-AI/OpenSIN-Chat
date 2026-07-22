@@ -10,7 +10,10 @@ import AttachItem from "./AttachItem";
 import DeepResearchSources from "./DeepResearchSources";
 import { applyAgentModePrefix } from "./AgentModeButton";
 import ToolsMenu from "./ToolsMenu";
-import usePromptState from "./usePromptState";
+import usePromptState, {
+  MAX_EDIT_STACK_SIZE,
+  PROMPT_INPUT_EVENT,
+} from "./usePromptState";
 import useIsDisabled from "./useIsDisabled";
 import TextArea from "./TextArea";
 import AgentModeButton, { useAgentMode } from "./AgentModeButton";
@@ -24,8 +27,7 @@ import CodeRunnerPicker from "@/features/code-runners/CodeRunnerPicker";
 import useSelectedCodeRunner from "@/features/code-runners/useSelectedCodeRunner";
 import { useChatSidebar } from "../ChatSidebar";
 
-export const PROMPT_INPUT_ID = "primary-prompt-input";
-import { PROMPT_INPUT_EVENT, MAX_EDIT_STACK_SIZE } from "./usePromptState";
+export { PROMPT_INPUT_ID } from "./promptLimits";
 export { PROMPT_INPUT_EVENT, MAX_EDIT_STACK_SIZE };
 
 /**
@@ -139,7 +141,6 @@ export default function PromptInput({
                   saveCurrentState={saveCurrentState}
                   textSizeClass={textSizeClass}
                   t={t}
-                  setFocused={() => {}}
                   adjustTextArea={adjustTextArea}
                 />
               </div>

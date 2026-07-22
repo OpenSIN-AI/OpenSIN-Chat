@@ -61,7 +61,7 @@ interface HomeWorkspace {
 }
 
 async function getTargetWorkspace(): Promise<HomeWorkspace | null> {
-  const lastVisited = safeJsonParse(safeGetItem(LAST_VISITED_WORKSPACE));
+  const lastVisited: any = safeJsonParse(safeGetItem(LAST_VISITED_WORKSPACE));
   if (lastVisited?.slug) {
     const workspace = await Workspace.bySlug(lastVisited.slug);
     if (workspace) return workspace as HomeWorkspace;

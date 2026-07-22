@@ -21,6 +21,8 @@ const { assertSafeURL } = require("../../utils/url");
 
 const MAX_RESPONSE_BYTES = 50 * 1024 * 1024;
 const PUPPETEER_TIMEOUT_MS = 60_000;
+const IGNORE_HTTPS_ERRORS =
+  process.env.COLLECTOR_IGNORE_HTTPS_ERRORS === "true";
 
 /**
  * Scrape a generic URL and return the content in the specified format
@@ -210,7 +212,7 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
       console.log(
         "Darwin Development Mode: Disabling headless mode to prevent Chromium from crashing."
       );
-      launchConfig.headless = "false";
+      launchConfig.headless = false;
     }
 
     const capResponseBytes = async (response) => {
@@ -318,7 +320,7 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
       const loader = new PuppeteerWebBaseLoader(link, {
         launchOptions: {
           headless: launchConfig.headless,
-          ignoreHTTPSErrors: true,
+          ignoreHTTPSErrors: IGNORE_HTTPS_ERRORS,
           args: runtimeSettings.get("browserLaunchArgs"),
         },
         gotoOptions: {
@@ -420,6 +422,8 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
     const timeout = setTimeout(() => abortController.abort(), 15_000);
     const visited = new Set();
     let currentLink = link;
+    const entryOrigin = new URL(link).origin;
+    const overrideHeaders = validatedHeaders(headers);
     let hops = 0;
     const MAX_FETCH_HOPS = 5;
     try {
@@ -431,15 +435,18 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
         visited.add(currentLink);
         if (!(await assertSafeURL(currentLink)))
           throw new Error("URL resolves to a blocked network");
+        const requestHeaders = {
+          Accept: "text/html,application/xhtml+xml;q=0.9,*/*;q=0.8",
+          "User-Agent":
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36",
+        };
+        if (new URL(currentLink).origin === entryOrigin)
+          Object.assign(requestHeaders, overrideHeaders);
+
         response = await fetch(currentLink, {
           method: "GET",
           redirect: "manual",
-          headers: {
-            "Content-Type": "text/plain",
-            "User-Agent":
-              "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36,gzip(gfe)",
-            ...validatedHeaders(headers),
-          },
+          headers: requestHeaders,
           signal: abortController.signal,
         });
         if (

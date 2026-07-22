@@ -148,7 +148,7 @@ function useKeyboardShortcuts() {
     let cleanup: (() => void) | null = null;
 
     function syncShortcuts() {
-      const user = userFromStorage();
+      const user = userFromStorage<{ role?: string }>();
       // If there is a user and the user is not an admin do not register the event listener
       // since some of the shortcuts are only available in multi-user mode as admin
       if (!!user && user?.role !== "admin") {

@@ -56,6 +56,7 @@ const TRANSLATIONS = {
       recent: "Letzte Chats",
       quickActions: "Schnellaktionen",
       workspaces: "Arbeitsbereiche",
+      notebooks: "Notebooks",
       navigation: "Navigation",
     },
     footer: {
@@ -65,6 +66,7 @@ const TRANSLATIONS = {
     },
     actions: {
       newChat: "Neuer Chat",
+      createNotebook: "Notebook erstellen",
       newChatDescription:
         "Eine neue Unterhaltung in diesem Arbeitsbereich beginnen",
       workspaceSettings: "Arbeitsbereich-Einstellungen",

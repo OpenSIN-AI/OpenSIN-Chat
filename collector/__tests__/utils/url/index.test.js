@@ -29,6 +29,7 @@ describe("validURL", () => {
 
     expect(validURL("https://www.google.com")).toBe(true);
     expect(validURL("http://www.google.com")).toBe(true);
+    expect(validURL("https://[2606:4700:4700::1111]")).toBe(true);
 
     // JS URL does not require extensions, so in theory
     // these should be valid
@@ -46,6 +47,7 @@ describe("validURL", () => {
     expect(validURL("mailto://www.google.com")).toBe(false);
     expect(validURL("tel://www.google.com")).toBe(false);
     expect(validURL("data://www.google.com")).toBe(false);
+    expect(validURL("https://user:pass@example.com")).toBe(false);
   });
 
   it("should block private/local IPs when allowAnyIp is false (default behavior)", () => {
@@ -63,6 +65,10 @@ describe("validURL", () => {
     // (see isPrivateIPv4: 127.0.0.0/8 and 0.0.0.0/8 are internal targets).
     expect(validURL("http://127.0.0.1")).toBe(false);
     expect(validURL("http://0.0.0.0")).toBe(false);
+    expect(validURL("http://[::1]")).toBe(false);
+    expect(validURL("http://[::ffff:127.0.0.1]")).toBe(false);
+    expect(validURL("http://[64:ff9b::7f00:1]")).toBe(false);
+    expect(validURL("http://[2002:7f00:1::]")).toBe(false);
   });
 
   it("should allow any IP when allowAnyIp is true", () => {

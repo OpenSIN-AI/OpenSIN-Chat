@@ -38,9 +38,6 @@ const { parseChatRequestContext } = require("./requestContext");
 // change is automatically reflected in both routes.
 const CHAT_MESSAGE_MAX_LENGTH = 32_000;
 
-// Notebook mode whitelist — only these values are accepted from the client.
-const VALID_NOTEBOOK_MODES = new Set(["chat", "work", "code"]);
-
 /**
  * @param {import("express").Request}  request
  * @param {import("express").Response} response

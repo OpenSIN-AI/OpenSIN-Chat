@@ -141,7 +141,7 @@ export function AdminRoute({ Component }) {
     return <Navigate to={paths.onboarding.home()} />;
   }
 
-  const user = userFromStorage();
+  const user: any = userFromStorage();
   return isAuthd && (user?.role === "admin" || !multiUserMode) ? (
     <KeyboardShortcutWrapper>
       <Component />
@@ -162,7 +162,7 @@ export function ManagerRoute({ Component }) {
     return <Navigate to={paths.onboarding.home()} />;
   }
 
-  const user = userFromStorage();
+  const user: any = userFromStorage();
   return isAuthd && (user?.role !== "default" || !multiUserMode) ? (
     <KeyboardShortcutWrapper>
       <Component />

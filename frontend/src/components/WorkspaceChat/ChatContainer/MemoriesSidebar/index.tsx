@@ -19,7 +19,7 @@ export { useMemoriesSidebar } from "../ChatSidebar";
 
 // ── Helpers: identify URL sources and extract their address ───────────────────
 function isUrlDoc(doc: any) {
-  const metadata = safeJsonParse(doc.metadata, {});
+  const metadata: any = safeJsonParse(doc.metadata, {});
   const docpath = doc.docpath || "";
   const filename = doc.filename || "";
   return (
@@ -31,7 +31,7 @@ function isUrlDoc(doc: any) {
 }
 
 function getUrlFromDoc(doc: any) {
-  const metadata = safeJsonParse(doc.metadata, {});
+  const metadata: any = safeJsonParse(doc.metadata, {});
   const filename = doc.filename || "";
   if (metadata?.url) return metadata.url;
   if (metadata?.sourceUrl) return metadata.sourceUrl;
@@ -128,7 +128,7 @@ export function WorkspaceUrlsTab({ workspace }: any) {
   return (
     <div className="flex flex-col gap-2 overflow-y-auto no-scroll">
       {docs.map((doc: any, idx: number) => {
-        const metadata = safeJsonParse(doc.metadata, {});
+        const metadata: any = safeJsonParse(doc.metadata, {});
         const url = getUrlFromDoc(doc);
         const title = metadata?.title || doc.filename || doc.docId || url;
         const isHttpUrl = typeof url === "string" && url.startsWith("http");

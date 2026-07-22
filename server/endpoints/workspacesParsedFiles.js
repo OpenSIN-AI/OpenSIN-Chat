@@ -10,6 +10,7 @@ const { handleFileUpload, mirrorToSupabase } = require("../utils/files/multer");
 const { ParseJobs, JOB_STATUS } = require("../utils/parseJobs");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
 const { Telemetry } = require("../models/telemetry");
+const { Document } = require("../models/documents");
 const {
   flexUserRoleValid,
   ROLES,
@@ -202,7 +203,11 @@ function workspaceParsedFilesEndpoints(app) {
         const user = await userFromSession(request, response);
         const workspace = response.locals.workspace;
         const thread = threadSlug
-          ? await WorkspaceThread.get({ slug: String(threadSlug) })
+          ? await WorkspaceThread.get({
+              slug: String(threadSlug),
+              workspace_id: workspace.id,
+              ...(multiUserMode(response) ? { user_id: user?.id || null } : {}),
+            })
           : null;
         const { files, contextWindow, currentContextTokenCount } =
           await WorkspaceParsedFiles.getContextMetadataAndLimits(
@@ -232,12 +237,18 @@ function workspaceParsedFilesEndpoints(app) {
     async function (request, response) {
       try {
         const { fileIds = [] } = reqBody(request);
-        if (!fileIds.length) return response.sendStatus(400);
+        if (!Array.isArray(fileIds) || fileIds.length === 0)
+          return response.sendStatus(400);
+        const parsedFileIds = fileIds
+          .map((id) => Number.parseInt(id, 10))
+          .filter((id) => Number.isSafeInteger(id) && id > 0);
+        if (parsedFileIds.length !== fileIds.length)
+          return response.sendStatus(400);
         const user = await userFromSession(request, response);
         const workspace = response.locals.workspace;
         const success = await WorkspaceParsedFiles.delete({
           id: {
-            in: fileIds.map((id) => parseInt(id)),
+            in: parsedFileIds,
           },
           ...(user ? { userId: user.id } : {}),
           workspaceId: workspace.id,
@@ -294,7 +305,6 @@ function workspaceParsedFilesEndpoints(app) {
           user?.id,
         );
 
-        await WorkspaceParsedFiles.delete({ id: parseInt(fileId) });
         return response.status(200).json({
           success: true,
           error: null,
@@ -326,12 +336,23 @@ function workspaceParsedFilesEndpoints(app) {
             .json({ success: false, error: "docpath is required" });
         }
 
+        const workspaceDocument = await Document.get({
+          workspaceId: workspace.id,
+          docpath,
+        });
+        if (!workspaceDocument) {
+          return response.status(404).json({
+            success: false,
+            error: "Document not found",
+          });
+        }
+
         const { fileData } = require("../utils/files");
-        const document = await fileData(docpath);
+        const document = await fileData(workspaceDocument.docpath);
         if (!document?.pageContent) {
           return response.status(404).json({
             success: false,
-            error: "Document not found or has no content",
+            error: "Document has no content",
           });
         }
 
@@ -466,13 +487,13 @@ function workspaceParsedFilesEndpoints(app) {
     [
       validatedRequest,
       flexUserRoleValid([ROLES.all]),
-      handleFileUpload,
       validWorkspaceSlug,
       simpleRateLimit({
         bucket: "workspace-parse",
         max: 30,
         windowMs: 60 * 1000,
       }),
+      handleFileUpload,
     ],
     async function (request, response) {
       try {

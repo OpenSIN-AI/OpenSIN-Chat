@@ -16,7 +16,6 @@ import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass"
 import { useTranslation } from "react-i18next";
 import { Tooltip } from "react-tooltip";
 import ActiveWorkspaces from "./ActiveWorkspaces";
-import WorkspaceSwitcher from "./WorkspaceSwitcher";
 import NewWorkspaceModal, {
   useNewWorkspaceModal,
 } from "../Modals/NewWorkspace";
@@ -47,7 +46,16 @@ const SIDEBAR_MIN_WIDTH = 260;
 const SIDEBAR_MAX_WIDTH = 420;
 const SIDEBAR_DEFAULT_WIDTH = 264;
 const SIDEBAR_WIDTH_STORAGE_KEY = "opensin-sidebar-width";
-const COMMAND_SHORTCUT_LABEL = "⌘K";
+const APP_NAME = "OpenSIN";
+const APP_MONOGRAM = "S";
+const COMMAND_SHORTCUT_LABEL =
+  typeof navigator !== "undefined" && /Mac|iPhone|iPad|iPod/.test(navigator.platform)
+    ? "⌘K"
+    : "Ctrl K";
+
+function clampSidebarWidth(width: number): number {
+  return Math.min(SIDEBAR_MAX_WIDTH, Math.max(SIDEBAR_MIN_WIDTH, width));
+}
 
 function SidebarContent({
   onNavigate,
@@ -113,9 +121,11 @@ function SidebarContent({
           className="flex min-w-0 items-center gap-2"
         >
           <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-theme-text-primary text-xs font-bold text-theme-bg-primary">
-            S
+            {APP_MONOGRAM}
           </div>
-          <span className="truncate text-sm font-semibold text-theme-text-primary">OpenSIN</span>
+          <span className="truncate text-sm font-semibold text-theme-text-primary">
+            {APP_NAME}
+          </span>
         </button>
         <div className="ml-auto">
           <ThemeToggle />
@@ -128,8 +138,8 @@ function SidebarContent({
           disabled={!activeWorkspace || creating}
           className="mb-1 flex h-9 w-full shrink-0 items-center gap-2 rounded-lg px-2.5 text-sm font-medium text-theme-text-primary hover:bg-theme-bg-hover disabled:opacity-50"
         >
-          <Plus size={16} weight="bold" />
-          {creating ? t("common.loading") : "Neuer Chat"}
+          <Plus size={16} weight="bold" aria-hidden="true" />
+          {creating ? t("common.loading") : t("commandHub.actions.newChat")}
         </button>
         <button
           type="button"
@@ -139,19 +149,21 @@ function SidebarContent({
           }}
           className="mb-3 flex h-9 w-full shrink-0 items-center gap-2 rounded-lg px-2.5 text-sm text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary"
         >
-          <MagnifyingGlass size={16} />
-          <span>Suchen</span>
+          <MagnifyingGlass size={16} aria-hidden="true" />
+          <span>{t("commandHub.searchButton")}</span>
           <kbd className="ml-auto text-[10px] text-theme-text-muted">{COMMAND_SHORTCUT_LABEL}</kbd>
         </button>
         <div className="mb-1 flex items-center justify-between px-2">
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-theme-text-muted">Notebooks</span>
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-theme-text-muted">
+            {t("commandHub.groups.notebooks")}
+          </span>
           <button
             type="button"
             onClick={showModal}
-            aria-label="Notebook erstellen"
+            aria-label={t("commandHub.actions.createNotebook")}
             className="flex h-7 w-7 items-center justify-center rounded-lg text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary"
           >
-            <Plus size={13} />
+            <Plus size={13} aria-hidden="true" />
           </button>
         </div>
         <div className="no-scroll min-h-0 flex-1 overflow-y-auto">
@@ -191,12 +203,8 @@ export default function Sidebar({
     const move = (event: PointerEvent) => {
       if (!resizing.current) return;
       setSidebarWidth(
-        Math.min(
-          SIDEBAR_MAX_WIDTH,
-          Math.max(
-            SIDEBAR_MIN_WIDTH,
-            startWidth.current + event.clientX - startX.current,
-          ),
+        clampSidebarWidth(
+          startWidth.current + event.clientX - startX.current,
         ),
       );
     };
@@ -208,6 +216,7 @@ export default function Sidebar({
     window.addEventListener("pointermove", move);
     window.addEventListener("pointerup", stop);
     return () => {
+      stop();
       window.removeEventListener("pointermove", move);
       window.removeEventListener("pointerup", stop);
     };
@@ -233,7 +242,7 @@ export default function Sidebar({
               aria-label={t("sidebar.hideSidebar")}
               className="flex h-9 w-9 items-center justify-center rounded-lg text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary"
             >
-              <SidebarSimple size={16} weight="fill" />
+              <SidebarSimple size={16} weight="fill" aria-hidden="true" />
             </button>
           </div>
           <SidebarContent onOpenSearch={onOpenSearch} />
@@ -248,10 +257,30 @@ export default function Sidebar({
               document.body.style.cursor = "col-resize";
               document.body.style.userSelect = "none";
             }}
+            onKeyDown={(event) => {
+              const step = event.shiftKey ? 20 : 8;
+              if (event.key === "ArrowLeft") {
+                event.preventDefault();
+                setSidebarWidth((width) => clampSidebarWidth(width - step));
+              } else if (event.key === "ArrowRight") {
+                event.preventDefault();
+                setSidebarWidth((width) => clampSidebarWidth(width + step));
+              } else if (event.key === "Home") {
+                event.preventDefault();
+                setSidebarWidth(SIDEBAR_MIN_WIDTH);
+              } else if (event.key === "End") {
+                event.preventDefault();
+                setSidebarWidth(SIDEBAR_MAX_WIDTH);
+              }
+            }}
             role="separator"
+            tabIndex={0}
             aria-orientation="vertical"
             aria-label={t("sidebar.resizeSidebar")}
-            className="absolute right-0 top-0 z-50 h-full w-1.5 cursor-col-resize hover:bg-theme-bg-hover"
+            aria-valuemin={SIDEBAR_MIN_WIDTH}
+            aria-valuemax={SIDEBAR_MAX_WIDTH}
+            aria-valuenow={sidebarWidth}
+            className="absolute right-0 top-0 z-50 h-full w-1.5 cursor-col-resize hover:bg-theme-bg-hover focus-visible:bg-theme-bg-hover focus-visible:outline-none"
           />
         )}
       </nav>
@@ -300,10 +329,10 @@ export function SidebarMobileHeader({
           aria-expanded={open}
           className="flex h-10 w-10 items-center justify-center rounded-lg text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary"
         >
-          <List size={22} />
+          <List size={22} aria-hidden="true" />
         </button>
         <span className="ml-2 text-sm font-semibold text-theme-text-primary">
-          OpenSIN
+          {APP_NAME}
         </span>
         <button
           type="button"
@@ -314,7 +343,7 @@ export function SidebarMobileHeader({
           aria-label={t("commandHub.openSearch")}
           className="ml-auto flex h-10 w-10 items-center justify-center rounded-lg text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-text-secondary"
         >
-          <MagnifyingGlass size={20} />
+          <MagnifyingGlass size={20} aria-hidden="true" />
         </button>
       </header>
       <div
@@ -341,7 +370,7 @@ export function SidebarMobileHeader({
               aria-label={t("common.close")}
               className="flex h-9 w-9 items-center justify-center rounded-lg text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary"
             >
-              <X size={18} />
+              <X size={18} aria-hidden="true" />
             </button>
           </div>
           <SidebarContent

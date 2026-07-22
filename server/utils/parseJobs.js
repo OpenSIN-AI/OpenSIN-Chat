@@ -39,6 +39,26 @@ const STALL_GRACE_MINUTES = 2;
 
 let _bootstrapped = false;
 
+function positiveInteger(value, field) {
+  const parsed = Number.parseInt(value, 10);
+  if (!Number.isSafeInteger(parsed) || parsed <= 0)
+    throw new TypeError(`${field} must be a positive integer`);
+  return parsed;
+}
+
+function normalizeJobId(value) {
+  const jobId = String(value || "");
+  if (!/^[A-Za-z0-9-]{1,128}$/.test(jobId))
+    throw new TypeError("Invalid parse job id");
+  return jobId;
+}
+
+function normalizeOriginalname(value) {
+  const originalname = String(value || "").trim();
+  if (!originalname) throw new TypeError("originalname is required");
+  return originalname.slice(0, 512);
+}
+
 /**
  * Create the parse_jobs table if it does not exist yet.
  * Idempotent — safe to call multiple times.
@@ -168,9 +188,11 @@ const ParseJobs = {
       `INSERT INTO parse_jobs (id, workspaceId, userId, originalname, status)
        VALUES (?, ?, ?, ?, ?)`,
       id,
-      parseInt(workspaceId),
-      userId !== null && userId !== undefined ? parseInt(userId) : null,
-      String(originalname),
+      positiveInteger(workspaceId, "workspaceId"),
+      userId !== null && userId !== undefined
+        ? positiveInteger(userId, "userId")
+        : null,
+      normalizeOriginalname(originalname),
       JOB_STATUS.PENDING,
     );
 
@@ -202,15 +224,15 @@ const ParseJobs = {
           ? await prisma.$queryRawUnsafe(
               `SELECT * FROM parse_jobs
                WHERE id = ? AND workspaceId = ? AND userId = ?`,
-              String(jobId),
-              parseInt(workspaceId),
-              parseInt(userId),
+              normalizeJobId(jobId),
+              positiveInteger(workspaceId, "workspaceId"),
+              positiveInteger(userId, "userId"),
             )
           : await prisma.$queryRawUnsafe(
               `SELECT * FROM parse_jobs
                WHERE id = ? AND workspaceId = ?`,
-              String(jobId),
-              parseInt(workspaceId),
+              normalizeJobId(jobId),
+              positiveInteger(workspaceId, "workspaceId"),
             );
       return _toJob(rows[0] ?? null);
     } catch (e) {
@@ -229,7 +251,7 @@ const ParseJobs = {
       await prisma.$executeRawUnsafe(
         `UPDATE parse_jobs SET status = ? WHERE id = ?`,
         JOB_STATUS.PROCESSING,
-        String(jobId),
+        normalizeJobId(jobId),
       );
     } catch (e) {
       consoleLogger.error("[ParseJobs.markProcessing]", e.message);
@@ -250,7 +272,7 @@ const ParseJobs = {
          WHERE id = ?`,
         JOB_STATUS.COMPLETED,
         JSON.stringify(files ?? []),
-        String(jobId),
+        normalizeJobId(jobId),
       );
     } catch (e) {
       consoleLogger.error("[ParseJobs.markCompleted]", e.message);
@@ -270,8 +292,8 @@ const ParseJobs = {
          SET status = ?, error = ?, finishedAt = datetime('now')
          WHERE id = ?`,
         JOB_STATUS.FAILED,
-        String(reason || "Unknown error"),
-        String(jobId),
+        String(reason || "Unknown error").slice(0, 2_000),
+        normalizeJobId(jobId),
       );
     } catch (e) {
       consoleLogger.error("[ParseJobs.markFailed]", e.message);
@@ -285,8 +307,19 @@ const ParseJobs = {
    * @returns {Promise<void>}
    */
   async purgeOld(maxAgeMs) {
+    const requestedMaxAge = Number(maxAgeMs);
     const minutes =
-      maxAgeMs !== undefined ? Math.ceil(maxAgeMs / 60000) : SWEEP_TTL_MINUTES;
+      maxAgeMs === undefined
+        ? SWEEP_TTL_MINUTES
+        : Math.min(
+            30 * 24 * 60,
+            Math.max(
+              1,
+              Number.isFinite(requestedMaxAge)
+                ? Math.ceil(requestedMaxAge / 60_000)
+                : SWEEP_TTL_MINUTES,
+            ),
+          );
     try {
       await prisma.$executeRawUnsafe(
         `DELETE FROM parse_jobs

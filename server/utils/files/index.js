@@ -163,6 +163,7 @@ async function getDocumentsByFolder(folderName = "") {
   for (const file of files) {
     if (path.extname(file) !== ".json") continue;
     const filePath = path.join(folderPath, file);
+    if (!isWithin(documentsPath, filePath)) continue;
     try {
       const st = await fs.promises.stat(filePath);
       if (st.size > MAX_DOC_BYTES) {
@@ -595,16 +596,17 @@ async function fileToPickerData({
 }) {
   let metadata = {};
   const filename = path.basename(pathToFile);
+  if (!isWithin(documentsPath, pathToFile)) return null;
   const fileStats = await fs.promises.stat(pathToFile);
+  if (fileStats.size > MAX_DOC_BYTES) {
+    consoleLogger.warn(
+      `[fileToPickerData] Skipping ${pathToFile}: ${fileStats.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`,
+    );
+    return null;
+  }
   const cachedStatus = await cachedVectorInformation(cachefilename, true);
 
   if (fileStats.size < FILE_READ_SIZE_THRESHOLD) {
-    if (fileStats.size > MAX_DOC_BYTES) {
-      consoleLogger.warn(
-        `[fileToPickerData] Skipping ${pathToFile}: ${fileStats.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`,
-      );
-      return null;
-    }
     let rawData;
     try {
       rawData = await fs.promises.readFile(pathToFile, "utf8");

@@ -259,7 +259,7 @@ function AccountMenu({ compact = false }: { compact?: boolean }) {
                 {displayName}
               </span>
               <span className="text-xs text-theme-text-secondary light:text-slate-500 truncate max-w-full">
-                {subtitle}
+                {subtitle as React.ReactNode}
               </span>
             </div>
             <CaretUpDown
@@ -293,9 +293,9 @@ function AccountMenu({ compact = false }: { compact?: boolean }) {
                 <span className="text-sm font-semibold text-theme-text-primary light:text-zinc-900 truncate">
                   {displayName}
                 </span>
-                {!!subtitle && (
+                {!!subtitle && subtitle && (
                   <span className="text-xs text-theme-text-secondary light:text-slate-500 truncate">
-                    {subtitle}
+                    {subtitle as React.ReactNode}
                   </span>
                 )}
               </div>

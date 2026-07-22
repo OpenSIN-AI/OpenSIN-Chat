@@ -6,7 +6,11 @@ const prisma = require("../utils/prisma");
 const { clampLimit, MAX_LIST_LIMIT } = require("../utils/database/queryLimits");
 const { EventLogs } = require("./eventLogs");
 const { Document } = require("./documents");
-const { documentsPath, directUploadsPath } = require("../utils/files");
+const {
+  documentsPath,
+  directUploadsPath,
+  isWithin,
+} = require("../utils/files");
 const { safeJsonParse } = require("../utils/http");
 const fs = require("fs");
 const path = require("path");
@@ -21,24 +25,43 @@ const WorkspaceParsedFiles = {
     tokenCountEstimate = 0,
   }) {
     try {
+      const parsedWorkspaceId = Number.parseInt(workspaceId, 10);
+      const parsedUserId = userId ? Number.parseInt(userId, 10) : null;
+      const parsedThreadId = threadId ? Number.parseInt(threadId, 10) : null;
+      const safeFilename = String(filename || "").trim().slice(0, 512);
+      const safeTokenCount = Number.isFinite(Number(tokenCountEstimate))
+        ? Math.max(0, Math.min(10_000_000, Math.trunc(Number(tokenCountEstimate))))
+        : 0;
+      if (!safeFilename) throw new Error("Filename is required");
+      if (!Number.isSafeInteger(parsedWorkspaceId) || parsedWorkspaceId <= 0)
+        throw new Error("Invalid workspace id");
+      if (userId && (!Number.isSafeInteger(parsedUserId) || parsedUserId <= 0))
+        throw new Error("Invalid user id");
+      if (
+        threadId &&
+        (!Number.isSafeInteger(parsedThreadId) || parsedThreadId <= 0)
+      )
+        throw new Error("Invalid thread id");
+
       const file = await prisma.workspace_parsed_files.create({
         data: {
-          filename,
-          workspaceId: parseInt(workspaceId) || null,
-          userId: userId ? parseInt(userId) : null,
-          threadId: threadId ? parseInt(threadId) : null,
+          filename: safeFilename,
+          workspaceId: parsedWorkspaceId,
+          userId: parsedUserId,
+          threadId: parsedThreadId,
           metadata,
-          tokenCountEstimate,
+          tokenCountEstimate: safeTokenCount,
         },
       });
 
       await EventLogs.logEvent(
         "workspace_file_uploaded",
-        {
-          filename,
-          workspaceId,
-        },
-        userId,
+        { filename: safeFilename, workspaceId: parsedWorkspaceId },
+        parsedUserId,
+      ).catch((error) =>
+        consoleLogger.warn(
+          `Failed to record workspace upload event: ${error.message}`,
+        ),
       );
 
       return { file, error: null };
@@ -121,9 +144,14 @@ const WorkspaceParsedFiles = {
    * @returns {Promise<{ success: boolean, error: string | null, document: import("@prisma/client").workspace_documents | null }>} The result of the operation.
    */
   moveToDocumentsAndEmbed: async function (user = null, fileId, workspace) {
+    let targetPath = null;
+    let embeddedSuccessfully = false;
     try {
+      const parsedFileId = Number.parseInt(fileId, 10);
+      if (!Number.isSafeInteger(parsedFileId) || parsedFileId <= 0)
+        throw new Error("Invalid file id");
       const parsedFile = await this.get({
-        id: parseInt(fileId),
+        id: parsedFileId,
         ...(user ? { userId: user.id } : {}),
         workspaceId: workspace.id,
       });
@@ -136,17 +164,19 @@ const WorkspaceParsedFiles = {
 
       // Get file from metadata location
       const sourceFile = path.join(directUploadsPath, path.basename(location));
-      if (!fs.existsSync(sourceFile)) throw new Error("Source file not found");
+      if (!fs.existsSync(sourceFile) || !isWithin(directUploadsPath, sourceFile))
+        throw new Error("Source file not found");
 
       // Move to custom-documents
       const customDocsPath = path.join(documentsPath, "custom-documents");
       if (!fs.existsSync(customDocsPath))
         fs.mkdirSync(customDocsPath, { recursive: true });
 
-      // Copy the file to custom-documents
-      const targetPath = path.join(customDocsPath, path.basename(location));
-      fs.copyFileSync(sourceFile, targetPath);
-      fs.unlinkSync(sourceFile);
+      // Copy to a unique target so retries or same-named uploads cannot
+      // overwrite an existing workspace document.
+      const targetBasename = `${crypto.randomUUID()}-${path.basename(location)}`;
+      targetPath = path.join(customDocsPath, targetBasename);
+      await fs.promises.copyFile(sourceFile, targetPath, fs.constants.COPYFILE_EXCL);
 
       const {
         failedToEmbed = [],
@@ -154,24 +184,34 @@ const WorkspaceParsedFiles = {
         embedded = [],
       } = await Document.addDocuments(
         workspace,
-        [`custom-documents/${path.basename(location)}`],
+        [`custom-documents/${targetBasename}`],
         parsedFile.userId,
       );
 
       if (failedToEmbed.length > 0)
         throw new Error(errors?.[0] ?? "Failed to embed document");
 
+      embeddedSuccessfully = true;
       const document = await Document.get({
         workspaceId: workspace.id,
         docpath: embedded?.[0],
       });
+      const cleanupResults = await Promise.allSettled([
+        fs.promises.rm(sourceFile, { force: true }),
+        this.delete({ id: parsedFileId }),
+      ]);
+      for (const result of cleanupResults) {
+        if (result.status === "rejected")
+          consoleLogger.warn(
+            `Post-embed cleanup failed: ${result.reason?.message || result.reason}`,
+          );
+      }
       return { success: true, error: null, document };
     } catch (error) {
+      if (targetPath && !embeddedSuccessfully)
+        await fs.promises.rm(targetPath, { force: true }).catch(() => undefined);
       consoleLogger.error("Failed to move and embed file:", error);
       return { success: false, error: error.message, document: null };
-    } finally {
-      // Always delete the file after processing
-      await this.delete({ id: parseInt(fileId) });
     }
   },
 
@@ -236,6 +276,7 @@ const WorkspaceParsedFiles = {
           path.basename(location),
         );
         try {
+          if (!isWithin(directUploadsPath, sourceFile)) continue;
           const content = await fs.promises.readFile(sourceFile, "utf-8");
           const data = safeJsonParse(content, null);
           if (!data?.pageContent) continue;
@@ -276,6 +317,7 @@ const WorkspaceParsedFiles = {
     document,
     sourceDocpath = null,
   }) {
+    let destPath = null;
     try {
       if (!workspace?.id) throw new Error("Workspace is required");
       if (!document?.pageContent) throw new Error("Document has no content");
@@ -287,12 +329,9 @@ const WorkspaceParsedFiles = {
       )
         .replace(/[^\w.\- ()[\]]+/g, "_")
         .slice(0, 120);
-      const id =
-        document.id ||
-        crypto.randomUUID?.() ||
-        `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
-      const basename = `${safeTitle}-${id}.json`;
-      const destPath = path.join(directUploadsPath, basename);
+      const id = crypto.randomUUID();
+      const basename = `${safeTitle || "document"}-${id}.json`;
+      destPath = path.join(directUploadsPath, basename);
 
       const payload = {
         ...document,
@@ -321,6 +360,8 @@ const WorkspaceParsedFiles = {
       if (error) throw new Error(error);
       return { file, error: null };
     } catch (error) {
+      if (destPath)
+        await fs.promises.rm(destPath, { force: true }).catch(() => undefined);
       consoleLogger.error(
         "FAILED TO ATTACH DOCUMENT AS CHAT CONTEXT.",
         error.message,

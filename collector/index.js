@@ -18,6 +18,7 @@ const { processRawText } = require("./processRawText");
 const { convertAudioToWav } = require("./convertAudioToWav");
 const { verifyPayloadIntegrity } = require("./middleware/verifyIntegrity");
 const { httpLogger } = require("./middleware/httpLogger");
+const { browserPool } = require("./utils/browserPool");
 const app = express();
 const FILE_LIMIT = process.env.COLLECTOR_BODY_LIMIT || "50mb";
 const COLLECTOR_PORT = getCollectorPort();
@@ -25,11 +26,12 @@ const COLLECTOR_PORT = getCollectorPort();
 // Only log HTTP requests in development mode and if the ENABLE_HTTP_LOGGER environment variable is set to true
 if (
   process.env.NODE_ENV === "development" &&
-  !!process.env.ENABLE_HTTP_LOGGER
+  process.env.ENABLE_HTTP_LOGGER === "true"
 ) {
   app.use(
     httpLogger({
-      enableTimestamps: !!process.env.ENABLE_HTTP_LOGGER_TIMESTAMPS,
+      enableTimestamps:
+        process.env.ENABLE_HTTP_LOGGER_TIMESTAMPS === "true",
     })
   );
 }
@@ -51,7 +53,11 @@ const corsOrigin = corsOriginEnv
   : process.env.NODE_ENV === "production"
   ? false
   : true;
-app.use(cors({ origin: corsOrigin.length === 1 ? corsOrigin[0] : corsOrigin }));
+const resolvedCorsOrigin =
+  Array.isArray(corsOrigin) && corsOrigin.length === 1
+    ? corsOrigin[0]
+    : corsOrigin;
+app.use(cors({ origin: resolvedCorsOrigin }));
 app.use(
   bodyParser.text({ limit: FILE_LIMIT }),
   bodyParser.json({ limit: FILE_LIMIT }),
@@ -255,19 +261,33 @@ const server = app
     process.exit(1);
   });
 
+let shutdownStarted = false;
 function gracefulShutdown(signal) {
+  if (shutdownStarted) return;
+  shutdownStarted = true;
   // eslint-disable-next-line no-console
   console.log(`[collector] Received ${signal}, shutting down gracefully…`);
-  server.close(() => {
-    // eslint-disable-next-line no-console
-    console.log("[collector] HTTP server closed. Exiting.");
-    process.exit(0);
-  });
-  setTimeout(() => {
+
+  const forceTimer = setTimeout(() => {
     // eslint-disable-next-line no-console
     console.warn("[collector] Forced shutdown after 10s timeout.");
     process.exit(1);
   }, 10_000);
+  forceTimer.unref();
+
+  server.close(async () => {
+    try {
+      await browserPool.shutdown();
+      clearTimeout(forceTimer);
+      // eslint-disable-next-line no-console
+      console.log("[collector] HTTP server and browser pool closed. Exiting.");
+      process.exit(0);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error("[collector] Shutdown failed:", error);
+      process.exit(1);
+    }
+  });
 }
 
 process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));

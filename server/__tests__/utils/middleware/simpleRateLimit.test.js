@@ -32,6 +32,8 @@ describe("simpleRateLimit", () => {
 
   afterEach(() => {
     delete process.env.DISABLE_RATE_LIMITS;
+    jest.useRealTimers();
+    jest.restoreAllMocks();
   });
 
   it("allows requests under the limit and sets headers", () => {
@@ -99,11 +101,8 @@ describe("simpleRateLimit", () => {
     expect(blocked.statusCode).toBe(429);
 
     jest.advanceTimersByTime(1500);
-    Date.now = () => new Date().getTime() + 1500;
     mw(req, mockRes(), next);
     expect(next).toHaveBeenCalledTimes(2);
-
-    jest.useRealTimers();
   });
 
   it("can be disabled via DISABLE_RATE_LIMITS=true", () => {
@@ -116,8 +115,25 @@ describe("simpleRateLimit", () => {
     expect(next).toHaveBeenCalledTimes(10);
   });
 
-  it("throws when no bucket name is provided", () => {
+  it("rejects unsafe or invalid configuration", () => {
     expect(() => simpleRateLimit({ max: 1, windowMs: 1000 })).toThrow();
+    expect(() =>
+      simpleRateLimit({ bucket: "bad bucket", max: 1, windowMs: 1000 }),
+    ).toThrow();
+    expect(() =>
+      simpleRateLimit({ bucket: "valid", max: 0, windowMs: 1000 }),
+    ).toThrow();
+    expect(() =>
+      simpleRateLimit({ bucket: "valid", max: 1, windowMs: 999 }),
+    ).toThrow();
+    expect(() =>
+      simpleRateLimit({
+        bucket: "valid",
+        max: 1,
+        windowMs: 1000,
+        identity: "header",
+      }),
+    ).toThrow();
   });
 
   it("uses only IP key for user identity when no username is provided", () => {

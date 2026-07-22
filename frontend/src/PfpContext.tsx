@@ -24,7 +24,7 @@ export function PfpProvider({ children }: { children: React.ReactNode }) {
   // Revoke the previous blob URL whenever SWR delivers a new one.
   const fetcher = useCallback(async () => {
     if (!user?.id) return null;
-    const next = await System.fetchPfp(user.id);
+    const next = await System.fetchPfp(String(user.id));
     if (objectURLRef.current && objectURLRef.current !== next) {
       URL.revokeObjectURL(objectURLRef.current);
       objectURLRef.current = null;

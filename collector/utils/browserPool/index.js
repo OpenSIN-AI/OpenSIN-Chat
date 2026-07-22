@@ -3,15 +3,39 @@
 // Docs: collector/utils/browserPool/index.js.doc.md
 const puppeteer = require("puppeteer").default || require("puppeteer");
 
-const MAX_CONCURRENT_BROWSERS = 2;
-const IDLE_BROWSER_TTL_MS = 60_000;
-const ACQUIRE_TIMEOUT_MS =
-  Number(process.env.BROWSER_POOL_ACQUIRE_TIMEOUT_MS) || 30_000;
+function boundedIntegerEnv(name, fallback, min, max) {
+  const parsed = Number.parseInt(process.env[name] || "", 10);
+  return Number.isSafeInteger(parsed) && parsed >= min && parsed <= max
+    ? parsed
+    : fallback;
+}
+
+const MAX_CONCURRENT_BROWSERS = boundedIntegerEnv(
+  "MAX_CONCURRENT_BROWSERS",
+  2,
+  1,
+  8,
+);
+const IDLE_BROWSER_TTL_MS = boundedIntegerEnv(
+  "BROWSER_POOL_IDLE_TTL_MS",
+  60_000,
+  10_000,
+  600_000,
+);
+const ACQUIRE_TIMEOUT_MS = boundedIntegerEnv(
+  "BROWSER_POOL_ACQUIRE_TIMEOUT_MS",
+  30_000,
+  1_000,
+  300_000,
+);
+const IGNORE_HTTPS_ERRORS =
+  process.env.COLLECTOR_IGNORE_HTTPS_ERRORS === "true";
 
 const _state = {
   idle: [],
   active: 0,
   pending: [],
+  borrowed: new Set(),
   reapTimer: null,
 };
 
@@ -36,7 +60,6 @@ async function _launchBrowser() {
     "--disable-setuid-sandbox",
     "--disable-dev-shm-usage",
     "--no-zygote",
-    "--single-process",
   ];
   if (process.env.NODE_ENV === "production") {
     args.push(
@@ -45,8 +68,8 @@ async function _launchBrowser() {
     );
   }
   const browser = await puppeteer.launch({
-    headless: isDarwinDev ? "false" : "new",
-    ignoreHTTPSErrors: true,
+    headless: isDarwinDev ? false : "new",
+    ignoreHTTPSErrors: IGNORE_HTTPS_ERRORS,
     args,
   });
   return browser;
@@ -90,13 +113,16 @@ async function acquire() {
     const entry = _state.idle.pop();
     if (entry?.browser?.connected) {
       _state.active += 1;
+      _state.borrowed.add(entry.browser);
       return entry.browser;
     }
   }
   if (_state.active < MAX_CONCURRENT_BROWSERS) {
     _state.active += 1;
     try {
-      return await _launchBrowser();
+      const browser = await _launchBrowser();
+      _state.borrowed.add(browser);
+      return browser;
     } catch (e) {
       _state.active -= 1;
       throw e;
@@ -135,6 +161,7 @@ async function acquire() {
  * @param {import('puppeteer').Browser} browser
  */
 function release(browser) {
+  _state.borrowed.delete(browser);
   if (!browser || _state.active <= 0) {
     if (browser?.connected)
       browser
@@ -148,6 +175,7 @@ function release(browser) {
   if (_state.pending.length) {
     const waiter = _state.pending.shift();
     _state.active += 1;
+    _state.borrowed.add(browser);
     waiter.resolve(browser);
     return;
   }
@@ -167,8 +195,12 @@ function release(browser) {
 async function shutdown() {
   if (_state.reapTimer) clearTimeout(_state.reapTimer);
   _state.reapTimer = null;
-  const all = [..._state.idle.map((e) => e.browser)];
+  const all = new Set([
+    ..._state.idle.map((entry) => entry.browser),
+    ..._state.borrowed,
+  ]);
   _state.idle = [];
+  _state.borrowed.clear();
   _state.active = 0;
   for (const b of all) {
     try {
@@ -177,7 +209,8 @@ async function shutdown() {
       // ignore
     }
   }
-  for (const waiter of _state.pending) waiter.resolve(null);
+  for (const waiter of _state.pending)
+    waiter.reject(new Error("BrowserPool is shutting down"));
   _state.pending = [];
 }
 

@@ -8,6 +8,7 @@ import useTextSize from "@/hooks/useTextSize";
 import { useSlashCommand } from "./SlashCommandMenu";
 import { TOOLS_MENU_KEYBOARD_EVENT } from "./ToolsMenu";
 import { PASTE_ATTACHMENT_EVENT } from "../DnDWrapper";
+import { normalizePromptInput } from "./promptLimits";
 export const PROMPT_INPUT_EVENT = "set_prompt_input";
 export const MAX_EDIT_STACK_SIZE = 100;
 
@@ -26,7 +27,6 @@ export default function usePromptState({
   const toolsHighlightRef = useRef(-1);
   const formRef = useRef(null);
   const textareaRef = useRef(null);
-  const [_, setFocused] = useState(false);
   const undoStack = useRef([]);
   const redoStack = useRef([]);
   const { textSizeClass } = useTextSize();
@@ -62,17 +62,27 @@ export default function usePromptState({
    */
   function handlePromptUpdate(e) {
     const { messageContent, writeMode = "replace" } = e?.detail ?? {};
-    if (writeMode === "append") setPromptInput((prev) => prev + messageContent);
-    else if (writeMode === "prepend")
-      setPromptInput((prev) => messageContent + " " + prev);
-    else setPromptInput(messageContent ?? "");
+    const normalizedMessage = normalizePromptInput(messageContent);
+
+    if (writeMode === "append") {
+      setPromptInput((previous) =>
+        normalizePromptInput(previous + normalizedMessage),
+      );
+    } else if (writeMode === "prepend") {
+      setPromptInput((previous) =>
+        normalizePromptInput(`${normalizedMessage} ${previous}`),
+      );
+    } else {
+      setPromptInput(normalizedMessage);
+    }
   }
 
   useEffect(() => {
-    if (!!window)
-      window.addEventListener(PROMPT_INPUT_EVENT, handlePromptUpdate);
+    if (typeof window === "undefined") return undefined;
+
+    window.addEventListener(PROMPT_INPUT_EVENT, handlePromptUpdate);
     return () =>
-      window?.removeEventListener(PROMPT_INPUT_EVENT, handlePromptUpdate);
+      window.removeEventListener(PROMPT_INPUT_EVENT, handlePromptUpdate);
   }, []);
 
   useEffect(() => {
@@ -112,7 +122,6 @@ export default function usePromptState({
     // Ignore submits from portaled modals (slash command preset forms)
     if (e.target !== e.currentTarget) return;
     if (isStreaming || isDisabled) return;
-    setFocused(false);
     setShowTools(false);
     submit(e);
   }
@@ -211,6 +220,7 @@ export default function usePromptState({
       event.key === "z" &&
       !event.shiftKey
     ) {
+      event.preventDefault();
       if (undoStack.current.length === 0) return;
       const lastState = undoStack.current.pop();
       if (!lastState) return;
@@ -240,28 +250,17 @@ export default function usePromptState({
     e.preventDefault();
     if (e.clipboardData.items.length === 0) return false;
 
-    // paste any clipboard items that are images.
-    for (const item of e.clipboardData.items) {
-      if (item.type.startsWith("image/")) {
-        const file = item.getAsFile();
-        window.dispatchEvent(
-          new CustomEvent(PASTE_ATTACHMENT_EVENT, {
-            detail: { files: [file] },
-          }),
-        );
-        continue;
-      }
+    const files = Array.from(e.clipboardData.items)
+      .filter((item) => item.kind === "file")
+      .map((item) => item.getAsFile())
+      .filter(Boolean);
 
-      // handle files specifically that are not images as uploads
-      if (item.kind === "file") {
-        const file = item.getAsFile();
-        window.dispatchEvent(
-          new CustomEvent(PASTE_ATTACHMENT_EVENT, {
-            detail: { files: [file] },
-          }),
-        );
-        continue;
-      }
+    if (files.length > 0) {
+      window.dispatchEvent(
+        new CustomEvent(PASTE_ATTACHMENT_EVENT, {
+          detail: { files },
+        }),
+      );
     }
 
     const pasteText = e.clipboardData.getData("text/plain");
@@ -270,27 +269,30 @@ export default function usePromptState({
       if (!textarea) return;
       const start = textarea.selectionStart;
       const end = textarea.selectionEnd;
-      const newPromptInput =
+      const nextPromptInput = normalizePromptInput(
         promptInput.substring(0, start) +
-        pasteText +
-        promptInput.substring(end);
-      setPromptInput(newPromptInput);
+          pasteText +
+          promptInput.substring(end),
+      );
+      setPromptInput(nextPromptInput);
 
-      // Set the cursor position after the pasted text
-      // we need to use setTimeout to prevent the cursor from being set to the end of the text
+      // Restore the cursor after React applies the controlled value.
       setTimeout(() => {
-        textarea.selectionStart = textarea.selectionEnd =
-          start + pasteText.length;
+        const nextCursor = Math.min(
+          start + pasteText.length,
+          nextPromptInput.length,
+        );
+        textarea.selectionStart = textarea.selectionEnd = nextCursor;
         adjustTextArea({ target: textarea });
       }, 0);
     }
-    return;
+    return undefined;
   }
 
   function handleChange(e) {
     debouncedSaveState(-1);
     adjustTextArea(e);
-    const value = e.target.value;
+    const value = normalizePromptInput(e.target.value);
     setPromptInput(value);
 
     // Auto-dismiss the tools menu when the "/" that opened it is modified
@@ -305,7 +307,6 @@ export default function usePromptState({
     setPromptInput,
     showTools,
     setShowTools,
-    setFocused,
     autoOpenedToolsRef,
     toolsHighlightRef,
     formRef,

@@ -95,7 +95,7 @@ export function EmbeddingProgressProvider({ children }: any) {
 
   const handleMessage = useCallback(
     (slug: string, msg: MessageEvent, ctrl: AbortController | null) => {
-      const data = safeJsonParse(msg.data, null);
+      const data: any = safeJsonParse(msg.data, null);
       if (!data) return;
 
       switch (data.type) {

@@ -1,12 +1,9 @@
 // SPDX-License-Identifier: MIT
 import Appearance from "@/models/appearance";
-import { PROMPT_INPUT_ID } from "./index";
-
-// Hard ceiling on the prompt size — matches the server-side cap in
-// server/endpoints/chat.js (CHAT_MESSAGE_MAX_LENGTH). Without this, a user
-// can paste a 50000-char string that ends up being charged by the LLM
-// provider, can crash the streaming parser, and stalls the request stream.
-const PROMPT_INPUT_MAX_LENGTH = 32_000;
+import {
+  PROMPT_INPUT_ID,
+  PROMPT_INPUT_MAX_LENGTH,
+} from "./promptLimits";
 
 interface TextAreaProps {
   textareaRef: React.RefObject<HTMLTextAreaElement | null>;
@@ -18,7 +15,6 @@ interface TextAreaProps {
   saveCurrentState: () => void;
   textSizeClass: string;
   t: (key: string) => string;
-  setFocused: (focused: boolean) => void;
   adjustTextArea: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
 }
 
@@ -32,7 +28,6 @@ export default function TextArea({
   saveCurrentState,
   textSizeClass,
   t,
-  setFocused,
   adjustTextArea,
 }: TextAreaProps) {
   return (
@@ -46,12 +41,8 @@ export default function TextArea({
         saveCurrentState();
         handlePasteEvent(e);
       }}
-      required={true}
-      onFocus={() => setFocused(true)}
-      onBlur={(e) => {
-        setFocused(false);
-        adjustTextArea(e);
-      }}
+      required
+      onBlur={adjustTextArea}
       value={promptInput}
       spellCheck={Appearance.get("enableSpellCheck")}
       maxLength={PROMPT_INPUT_MAX_LENGTH}

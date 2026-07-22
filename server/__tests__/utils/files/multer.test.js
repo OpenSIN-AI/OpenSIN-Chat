@@ -69,6 +69,27 @@ function makeUploadRequest({
   return req;
 }
 
+function makeMultipartRequestWithoutFile() {
+  const body = Buffer.from(
+    `--${BOUNDARY}\r\n` +
+      'Content-Disposition: form-data; name="metadata"\r\n\r\n' +
+      '{}\r\n' +
+      `--${BOUNDARY}--\r\n`,
+  );
+  const req = new Readable({
+    read() {
+      this.push(body);
+      this.push(null);
+    },
+  });
+  req.headers = {
+    "content-type": `multipart/form-data; boundary=${BOUNDARY}`,
+    "content-length": String(body.length),
+  };
+  req.method = "POST";
+  return req;
+}
+
 function makeResponse() {
   const res = { statusCode: null, body: null };
   res.status = jest.fn((code) => {
@@ -135,6 +156,17 @@ beforeEach(() => {
 // ---- handleFileUpload ----------------------------------------------------------
 
 describe("handleFileUpload (GUI document uploads)", () => {
+  test("rejects multipart requests without a file", async () => {
+    const { res, nextCalled } = await runHandler(
+      multerHandlers.handleFileUpload,
+      makeMultipartRequestWithoutFile(),
+    );
+
+    expect(nextCalled).toBe(false);
+    expect(res.statusCode).toBe(400);
+    expect(res.body.error).toMatch(/file upload is required/i);
+  });
+
   test("writes the file into the collector hotdir when Supabase is disabled", async () => {
     const req = makeUploadRequest({ filename: "doc.txt", content: "abc" });
     const { nextCalled } = await runHandler(multerHandlers.handleFileUpload, req);
@@ -251,6 +283,17 @@ describe("mirrorToSupabase (decoupled durability mirror)", () => {
 // ---- handleAPIFileUpload -------------------------------------------------------
 
 describe("handleAPIFileUpload (API document uploads)", () => {
+  test("rejects multipart requests without a file", async () => {
+    const { res, nextCalled } = await runHandler(
+      multerHandlers.handleAPIFileUpload,
+      makeMultipartRequestWithoutFile(),
+    );
+
+    expect(nextCalled).toBe(false);
+    expect(res.statusCode).toBe(400);
+    expect(res.body.error).toMatch(/file upload is required/i);
+  });
+
   test("writes to the hotdir when Supabase is disabled", async () => {
     const req = makeUploadRequest({ filename: "api-doc.txt", content: "api" });
     const { nextCalled } = await runHandler(
@@ -282,6 +325,16 @@ describe("handleAPIFileUpload (API document uploads)", () => {
 // ---- handleAssetUpload ---------------------------------------------------------
 
 describe("handleAssetUpload (logo assets)", () => {
+  test("rejects multipart requests without a logo", async () => {
+    const { res, nextCalled } = await runHandler(
+      multerHandlers.handleAssetUpload,
+      makeMultipartRequestWithoutFile(),
+    );
+
+    expect(nextCalled).toBe(false);
+    expect(res.statusCode).toBe(400);
+  });
+
   test("creates STORAGE_DIR/assets and writes the logo there", async () => {
     const req = makeUploadRequest({
       fieldName: "logo",
@@ -323,6 +376,16 @@ describe("handleAssetUpload (logo assets)", () => {
 // ---- handlePfpUpload -----------------------------------------------------------
 
 describe("handlePfpUpload (profile pictures)", () => {
+  test("rejects multipart requests without a profile image", async () => {
+    const { res, nextCalled } = await runHandler(
+      multerHandlers.handlePfpUpload,
+      makeMultipartRequestWithoutFile(),
+    );
+
+    expect(nextCalled).toBe(false);
+    expect(res.statusCode).toBe(400);
+  });
+
   test("stores under STORAGE_DIR/assets/pfp with a random uuid filename", async () => {
     const req = makeUploadRequest({
       filename: "me.jpg",
@@ -375,6 +438,16 @@ describe("handlePfpUpload (profile pictures)", () => {
 // ---- handleAudioUpload ---------------------------------------------------------
 
 describe("handleAudioUpload (STT transcription)", () => {
+  test("rejects multipart requests without audio", async () => {
+    const { res, nextCalled } = await runHandler(
+      multerHandlers.handleAudioUpload,
+      makeMultipartRequestWithoutFile(),
+    );
+
+    expect(nextCalled).toBe(false);
+    expect(res.statusCode).toBe(400);
+  });
+
   test("accepts audio uploads in-memory (buffer, no disk write)", async () => {
     const req = makeUploadRequest({
       fieldName: "audio",

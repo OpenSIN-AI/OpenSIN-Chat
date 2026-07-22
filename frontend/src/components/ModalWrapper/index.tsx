@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useRef } from "react";
+import { type MouseEvent, type ReactNode, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-/**
- * @typedef {Object} ModalWrapperProps
- * @property {import("react").ReactComponentElement} children - The DOM/JSX to render
- * @property {boolean} isOpen - Option that renders the modal
- * @property {boolean} noPortal - (default: false) Used for creating sub-DOM modals that need to be rendered as a child element instead of a modal placed at the root
- * Note: This can impact the bg-overlay presentation due to conflicting DOM positions so if using this property you should
-    double check it renders as desired.
- * @property {Function} [closeModal] - Optional callback to close the modal. When provided, Escape key and backdrop click will dismiss the modal.
- */
+
+interface ModalWrapperProps {
+  children: ReactNode;
+  isOpen: boolean;
+  noPortal?: boolean;
+  closeModal?: () => void;
+  ariaLabel?: string;
+  ariaLabelledBy?: string;
+}
 
 const FOCUSABLE_SELECTOR = [
   "button:not([disabled])",
@@ -20,107 +20,126 @@ const FOCUSABLE_SELECTOR = [
   '[tabindex]:not([tabindex="-1"])',
 ].join(",");
 
-/**
- *
- * @param {ModalWrapperProps} props - ModalWrapperProps to pass
- * @returns {import("react").ReactNode}
- */
+let bodyLockCount = 0;
+let originalBodyOverflow = "";
+
+function lockBodyScroll(): void {
+  if (bodyLockCount === 0) {
+    originalBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+  }
+  bodyLockCount += 1;
+}
+
+function unlockBodyScroll(): void {
+  bodyLockCount = Math.max(0, bodyLockCount - 1);
+  if (bodyLockCount === 0) {
+    document.body.style.overflow = originalBodyOverflow;
+  }
+}
+
 export default function ModalWrapper({
   children,
   isOpen,
   noPortal = false,
   closeModal,
   ariaLabel,
-}: any) {
+  ariaLabelledBy,
+}: ModalWrapperProps) {
   const dialogRef = useRef<HTMLDivElement | null>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
+  const closeModalRef = useRef(closeModal);
 
   useEffect(() => {
-    if (!isOpen) return;
+    closeModalRef.current = closeModal;
+  }, [closeModal]);
+
+  useEffect(() => {
+    if (!isOpen) return undefined;
 
     previousActiveElement.current =
-      (document.activeElement as HTMLElement) ?? null;
-
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    lockBodyScroll();
 
     const dialog = dialogRef.current;
-    const focusFirst = () => {
-      if (!dialog) return;
-      const first = dialog.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
-      if (first) first.focus();
-      else if (dialog) dialog.focus();
-    };
-    const focusTimer = window.setTimeout(focusFirst, 0);
+    const focusTimer = window.setTimeout(() => {
+      const first = dialog?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+      (first ?? dialog)?.focus();
+    }, 0);
 
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        if (closeModal) {
-          e.stopPropagation();
-          closeModal();
+    function handleKeyDown(event: KeyboardEvent) {
+      if (!dialog) return;
+
+      if (event.key === "Escape") {
+        if (closeModalRef.current) {
+          event.preventDefault();
+          event.stopPropagation();
+          closeModalRef.current();
         }
         return;
       }
-      if (e.key !== "Tab" || !dialog) return;
+
+      if (event.key !== "Tab") return;
       const focusables = Array.from(
         dialog.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
-      ).filter((el) => !el.hasAttribute("aria-hidden"));
+      ).filter(
+        (element) =>
+          !element.hasAttribute("aria-hidden") &&
+          element.getAttribute("aria-disabled") !== "true",
+      );
+
       if (focusables.length === 0) {
-        e.preventDefault();
+        event.preventDefault();
         dialog.focus();
         return;
       }
+
       const first = focusables[0];
       const last = focusables[focusables.length - 1];
-      const active = document.activeElement as HTMLElement | null;
-      if (e.shiftKey && (active === first || !dialog.contains(active))) {
-        e.preventDefault();
+      const active = document.activeElement;
+
+      if (event.shiftKey && (active === first || !dialog.contains(active))) {
+        event.preventDefault();
         last.focus();
-      } else if (!e.shiftKey && active === last) {
-        e.preventDefault();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
         first.focus();
       }
-    };
-    document.addEventListener("keydown", handleKeyDown, true);
+    }
 
+    document.addEventListener("keydown", handleKeyDown, true);
     return () => {
       window.clearTimeout(focusTimer);
       document.removeEventListener("keydown", handleKeyDown, true);
-      document.body.style.overflow = prevOverflow;
-      const previously = previousActiveElement.current;
-      if (
-        previously &&
-        typeof previously.focus === "function" &&
-        document.contains(previously)
-      ) {
-        previously.focus();
-      }
+      unlockBodyScroll();
+
+      const previous = previousActiveElement.current;
+      if (previous && document.contains(previous)) previous.focus();
     };
-  }, [isOpen, closeModal]);
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
-  const modalContent = closeModal ? (
-    <div onClick={(e: any) => e.stopPropagation()}>{children}</div>
-  ) : (
-    children
-  );
+  function handleBackdropClick(event: MouseEvent<HTMLDivElement>) {
+    if (event.target === event.currentTarget) closeModalRef.current?.();
+  }
 
   const modal = (
     <div
       ref={dialogRef}
-      className="bg-black/60 backdrop-blur-sm fixed top-0 left-0 outline-none w-screen h-screen flex items-center justify-center z-[99]"
-      onClick={closeModal ? closeModal : undefined}
+      className="fixed left-0 top-0 z-[99] flex h-screen w-screen items-center justify-center bg-black/60 backdrop-blur-sm outline-none"
+      onClick={handleBackdropClick}
       role="dialog"
       aria-modal="true"
-      aria-label={ariaLabel || undefined}
+      aria-label={ariaLabelledBy ? undefined : ariaLabel || "Dialog"}
+      aria-labelledby={ariaLabelledBy}
       tabIndex={-1}
     >
-      {modalContent}
+      {children}
     </div>
   );
 
-  if (noPortal) return modal;
-
-  return createPortal(modal, document.getElementById("root")!);
+  return noPortal ? modal : createPortal(modal, document.body);
 }

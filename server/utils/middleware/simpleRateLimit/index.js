@@ -10,7 +10,28 @@ const RATE_LIMIT_BACKEND = (
 
 let redisClient = null;
 let redisBump = null;
-let redisTtl = null;
+const REDIS_BUMP_SCRIPT = `
+local count = redis.call("INCR", KEYS[1])
+if count == 1 then
+  redis.call("PEXPIRE", KEYS[1], ARGV[1])
+end
+local ttl = redis.call("PTTL", KEYS[1])
+return {count, ttl}
+`;
+
+function disableRedis(reason) {
+  if (!redisBump && !redisClient) return;
+  consoleLogger.warn(
+    `[simpleRateLimit] Redis unavailable: ${reason}. Falling back to in-memory.`,
+  );
+  redisBump = null;
+  try {
+    redisClient?.disconnect();
+  } catch {
+    // Best-effort shutdown only.
+  }
+  redisClient = null;
+}
 
 if (RATE_LIMIT_BACKEND === "redis") {
   try {
@@ -19,18 +40,18 @@ if (RATE_LIMIT_BACKEND === "redis") {
       process.env.REDIS_URL || "redis://localhost:6379",
       { lazyConnect: true, maxRetriesPerRequest: 1 },
     );
-    redisClient.connect().catch((err) => {
-      consoleLogger.warn(
-        `[simpleRateLimit] Redis connection failed: ${err.message}. Falling back to in-memory.`,
-      );
-    });
+    redisClient.connect().catch((err) => disableRedis(err.message));
     redisBump = async function (key, windowMs) {
-      const v = await redisClient.incr(key);
-      if (v === 1) await redisClient.pexpire(key, windowMs);
-      return v;
-    };
-    redisTtl = async function (key) {
-      return await redisClient.pttl(key);
+      const result = await redisClient.eval(
+        REDIS_BUMP_SCRIPT,
+        1,
+        key,
+        String(windowMs),
+      );
+      return {
+        count: Number(result?.[0]),
+        ttl: Number(result?.[1]),
+      };
     };
   } catch (err) {
     consoleLogger.warn(
@@ -38,7 +59,6 @@ if (RATE_LIMIT_BACKEND === "redis") {
     );
     redisClient = null;
     redisBump = null;
-    redisTtl = null;
   }
 }
 
@@ -62,7 +82,7 @@ function getRealIp(request) {
   // from a trusted proxy (which Express already validates via request.ip).
   // In practice, request.ip already includes the correct client IP when behind
   // Cloudflare (trust proxy is configured), so we use it directly.
-  return request.ip || "unknown";
+  return request.ip || request.socket?.remoteAddress || "unknown";
 }
 
 function bucketKeys({ request, bucket, identity }) {
@@ -106,7 +126,18 @@ function simpleRateLimit({
   identity = "ip",
   skipIf = null,
 }) {
-  if (!bucket) throw new Error("simpleRateLimit: bucket is required");
+  if (!/^[A-Za-z0-9._:-]{1,128}$/.test(bucket || ""))
+    throw new Error("simpleRateLimit: bucket must be a safe non-empty name");
+  if (!Number.isSafeInteger(max) || max <= 0 || max > 1_000_000)
+    throw new Error("simpleRateLimit: max must be a positive safe integer");
+  if (
+    !Number.isSafeInteger(windowMs) ||
+    windowMs < 1_000 ||
+    windowMs > 31 * 24 * 60 * 60 * 1_000
+  )
+    throw new Error("simpleRateLimit: windowMs is outside the allowed range");
+  if (!["ip", "user"].includes(identity))
+    throw new Error("simpleRateLimit: identity must be ip or user");
 
   if (
     String(process.env.DISABLE_RATE_LIMITS).toLowerCase() === "true" &&
@@ -130,28 +161,27 @@ function simpleRateLimit({
     if (redisBump) {
       try {
         const counts = await Promise.all(
-          keys.map(async (k) => {
-            const v = await redisBump(k, windowMs);
-            let keyReset = now + windowMs;
-            try {
-              const pttl = await redisTtl(k);
-              if (typeof pttl === "number" && pttl > 0) keyReset = now + pttl;
-            } catch (e) {
-              console.warn("[index] non-fatal error:", e?.message || e);
-            }
-            return { v, keyReset };
+          keys.map(async (key) => {
+            const { count, ttl } = await redisBump(key, windowMs);
+            if (!Number.isFinite(count) || count < 1)
+              throw new Error("Redis returned an invalid rate-limit count");
+            return {
+              count,
+              keyReset: now + (Number.isFinite(ttl) && ttl > 0 ? ttl : windowMs),
+            };
           }),
         );
         let blocked = false;
         let resetAt = now;
         let bumpedCount = 0;
-        for (const { v, keyReset } of counts) {
-          if (v > max) blocked = true;
+        for (const { count, keyReset } of counts) {
+          if (count > max) blocked = true;
           if (keyReset > resetAt) resetAt = keyReset;
-          if (v > bumpedCount) bumpedCount = v;
+          if (count > bumpedCount) bumpedCount = count;
         }
         result = { blocked, resetAt, bumpedCount };
-      } catch {
+      } catch (error) {
+        disableRedis(error?.message || error);
         result = bumpInMemory(keys, max, windowMs);
       }
     } else {

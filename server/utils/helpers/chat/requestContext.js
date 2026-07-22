@@ -28,16 +28,13 @@ function normalizeTurnId(value) {
 
 function normalizeSourceIds(value) {
   if (!Array.isArray(value)) return [];
-  return [
-    ...new Set(
-      value
-        .filter(
-          (item) =>
-            typeof item === "string" && item.length > 0 && item.length <= 500,
-        )
-        .slice(0, MAX_SELECTED_SOURCES),
-    ),
-  ];
+
+  const normalized = value
+    .filter((item) => typeof item === "string")
+    .map((item) => item.trim())
+    .filter((item) => item.length > 0 && item.length <= 500);
+
+  return [...new Set(normalized)].slice(0, MAX_SELECTED_SOURCES);
 }
 
 function normalizeCodeRunnerId(value, notebookMode) {

@@ -25,6 +25,23 @@ function mimeToExtension(mimeType) {
 
 const MAX_REDIRECTS = 3;
 const REDIRECT_STATUSES = new Set([301, 302, 303, 307, 308]);
+const DEFAULT_MAX_FILE_SIZE_BYTES = 500 * 1024 * 1024;
+const configuredMaxFileSize = Number.parseInt(
+  process.env.MAX_COLLECTOR_FILE_SIZE_BYTES || "",
+  10,
+);
+const MAX_FILE_SIZE =
+  Number.isSafeInteger(configuredMaxFileSize) && configuredMaxFileSize > 0
+    ? configuredMaxFileSize
+    : DEFAULT_MAX_FILE_SIZE_BYTES;
+const MAX_FILE_SIZE_LABEL = `${Math.ceil(MAX_FILE_SIZE / 1024 / 1024)}MB`;
+
+function normalizeTimeout(value) {
+  const parsed = Number.parseInt(String(value), 10);
+  return Number.isSafeInteger(parsed) && parsed >= 1_000 && parsed <= 300_000
+    ? parsed
+    : 10_000;
+}
 
 /**
  * Performs a fetch with manual redirect-following that re-runs the SSRF
@@ -85,15 +102,16 @@ async function downloadURIToFile(url, maxTimeout = 10_000) {
     };
 
   try {
+    const timeoutMs = normalizeTimeout(maxTimeout);
     const abortController = new AbortController();
     const timeout = setTimeout(() => {
       abortController.abort();
       // eslint-disable-next-line no-console
       console.error(
-        `Timeout ${maxTimeout}ms reached while downloading file for URL:`,
-        url.toString()
+        `Timeout ${timeoutMs}ms reached while downloading file for URL:`,
+        url.toString(),
       );
-    }, maxTimeout);
+    }, timeoutMs);
 
     const res = await fetchWithValidatedRedirects(url, abortController.signal)
       .then((res) => {
@@ -102,18 +120,32 @@ async function downloadURIToFile(url, maxTimeout = 10_000) {
       })
       .finally(() => clearTimeout(timeout));
 
-    const MAX_FILE_SIZE = 500 * 1024 * 1024;
-    const contentLength = parseInt(
+    const contentLength = Number.parseInt(
       res.headers.get("content-length") || "0",
-      10
+      10,
     );
-    if (contentLength > MAX_FILE_SIZE) {
-      throw new Error("File too large (max 500MB)");
+    if (Number.isFinite(contentLength) && contentLength > MAX_FILE_SIZE) {
+      throw new Error(`File too large (max ${MAX_FILE_SIZE_LABEL})`);
     }
 
     const urlObj = new URL(url);
-    const sluggedPath = slugify(urlObj.pathname, { lower: true });
-    let filename = `${urlObj.hostname}-${sluggedPath}`;
+    const hostPart =
+      slugify(urlObj.hostname, { lower: true, strict: true }) || "download";
+    const rawExtension = path.extname(urlObj.pathname).toLowerCase();
+    const safeExtension = /^\.[a-z0-9]{1,10}$/.test(rawExtension)
+      ? rawExtension
+      : "";
+    const pathWithoutExtension = safeExtension
+      ? urlObj.pathname.slice(0, -safeExtension.length)
+      : urlObj.pathname;
+    const pathPart =
+      slugify(pathWithoutExtension, { lower: true, strict: true }) ||
+      "document";
+    let filename = `${hostPart}-${pathPart}`.slice(
+      0,
+      220 - safeExtension.length,
+    );
+    filename += safeExtension;
 
     const existingExt = path.extname(filename).toLowerCase();
     const { SUPPORTED_FILETYPE_CONVERTERS } = require("../constants");
@@ -143,7 +175,7 @@ async function downloadURIToFile(url, maxTimeout = 10_000) {
       transform(chunk, encoding, callback) {
         bytesWritten += chunk.length;
         if (bytesWritten > MAX_FILE_SIZE) {
-          callback(new Error("File too large (max 500MB)"));
+          callback(new Error(`File too large (max ${MAX_FILE_SIZE_LABEL})`));
           return;
         }
         callback(null, chunk);

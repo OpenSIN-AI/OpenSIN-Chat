@@ -47,7 +47,7 @@ export default function NewUserModal({
     }
   };
 
-  const user = userFromStorage();
+  const user: any = userFromStorage();
 
   return (
     <div className="relative w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border">

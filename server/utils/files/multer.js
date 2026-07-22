@@ -176,7 +176,25 @@ function uploadErrorStatus(err) {
   if (err.message === "File type not allowed") return 415;
   if (err.message === "Only image files are allowed") return 415;
   if (err.message === "Only audio uploads are allowed.") return 415;
+  if (typeof err.code === "string" && err.code.startsWith("LIMIT_"))
+    return 400;
   return 500;
+}
+
+function requireUploadedFile(request, response) {
+  if (request.file) return true;
+  response
+    .status(400)
+    .json({ success: false, error: "A file upload is required" })
+    .end();
+  return false;
+}
+
+function positiveIntegerEnv(name, fallback, max) {
+  const parsed = Number.parseInt(process.env[name] || "", 10);
+  return Number.isSafeInteger(parsed) && parsed > 0 && parsed <= max
+    ? parsed
+    : fallback;
 }
 
 /**
@@ -211,7 +229,7 @@ function uploadErrorMessage(err) {
 // Maximum allowed document upload size in bytes.
 // Configurable via UPLOAD_FILE_LIMIT_MB env var (default 200 MB).
 const DOCUMENT_FILE_LIMIT_BYTES =
-  (Number(process.env.UPLOAD_FILE_LIMIT_MB) || 200) * 1024 * 1024;
+  positiveIntegerEnv("UPLOAD_FILE_LIMIT_MB", 200, 2048) * 1024 * 1024;
 
 function handleFileUpload(request, response, next) {
   // Always stream directly to the local hotdir — constant RAM footprint
@@ -234,7 +252,9 @@ function handleFileUpload(request, response, next) {
       return;
     }
 
-    if (request.file && request.file.size === 0) {
+    if (!requireUploadedFile(request, response)) return;
+
+    if (request.file.size === 0) {
       try {
         if (request.file.path) fs.rmSync(request.file.path, { force: true });
       } catch (e) {
@@ -278,7 +298,9 @@ function handleAPIFileUpload(request, response, next) {
       return;
     }
 
-    if (request.file && request.file.size === 0) {
+    if (!requireUploadedFile(request, response)) return;
+
+    if (request.file.size === 0) {
       try {
         if (request.file.path) fs.rmSync(request.file.path, { force: true });
       } catch (e) {
@@ -323,7 +345,9 @@ function handleAssetUpload(request, response, next) {
       return;
     }
 
-    if (request.file && request.file.size === 0) {
+    if (!requireUploadedFile(request, response)) return;
+
+    if (request.file.size === 0) {
       try {
         if (request.file.path) fs.rmSync(request.file.path, { force: true });
       } catch (e) {
@@ -392,7 +416,9 @@ function handlePfpUpload(request, response, next) {
       return;
     }
 
-    if (request.file && request.file.size === 0) {
+    if (!requireUploadedFile(request, response)) return;
+
+    if (request.file.size === 0) {
       try {
         if (request.file.path) fs.rmSync(request.file.path, { force: true });
       } catch (e) {
@@ -455,6 +481,14 @@ function handleAudioUpload(request, response, next) {
         success: false,
         error: `Invalid audio upload. ${err.message}`,
       });
+    }
+    if (!requireUploadedFile(request, response)) return;
+    if (request.file.size === 0) {
+      response
+        .status(400)
+        .json({ success: false, error: "Empty file not allowed" })
+        .end();
+      return;
     }
     next();
   });
