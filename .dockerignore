@@ -20,6 +20,7 @@ server/coverage
 
 # Runtime data (mounted as volumes, not baked into the image)
 server/storage
+server/storage-opensin
 collector/hotdir
 collector/outputs
 

@@ -189,6 +189,15 @@ WORKDIR /app
 # This avoids esbuild crashing under QEMU when cross-compiling.
 # The output (static HTML/CSS/JS) is platform-independent.
 FROM --platform=$BUILDPLATFORM node:22-slim AS frontend-build
+
+ARG VITE_ENABLE_IMAGE_GENERATION=false
+ARG VITE_ENABLE_VIDEO_GENERATION=false
+ARG VITE_ENABLE_CVOICE_TTS=false
+
+ENV VITE_ENABLE_IMAGE_GENERATION=${VITE_ENABLE_IMAGE_GENERATION}
+ENV VITE_ENABLE_VIDEO_GENERATION=${VITE_ENABLE_VIDEO_GENERATION}
+ENV VITE_ENABLE_CVOICE_TTS=${VITE_ENABLE_CVOICE_TTS}
+
 WORKDIR /app/frontend
 COPY ./frontend/package.json ./frontend/yarn.lock ./
 RUN --mount=type=cache,target=/yarn-cache \
