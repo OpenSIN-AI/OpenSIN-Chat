@@ -234,7 +234,7 @@ export function ReportModal({ job, onClose }: ReportModalProps) {
                     chunks: result.chunks,
                     factsStored: result.factsStored,
                   })}
-                  {result.chunkErrors > 0 &&
+                  {(result.chunkErrors ?? 0) > 0 &&
                     t("pdfAnalysis.panel.chunkErrors", {
                       count: result.chunkErrors,
                     })}

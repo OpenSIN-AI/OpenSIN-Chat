@@ -90,7 +90,7 @@ export default function ObsidianOptions() {
       }
 
       setLoading(false);
-    } catch (e) {
+    } catch (e: any) {
       logger.error(e);
       showToast(e.message, "error", { clear: true });
       setLoading(false);

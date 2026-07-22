@@ -6,8 +6,7 @@ import {
   TtsSession,
 } from "@mintplex-labs/piper-tts-web";
 
-/** @type {import("@mintplex-labs/piper-web-tts").TtsSession | null} */
-let PIPER_SESSION = null;
+let PIPER_SESSION: TtsSession | null = null;
 
 /**
  * @typedef PredictionRequest
@@ -48,7 +47,7 @@ let PIPER_SESSION = null;
  * @param {MessageEvent<PredictionRequest | VoicesRequest | FlushRequest>} event - The event object containing the prediction request
  * @returns {Promise<PredictionRequestResponse|VoicesRequestResponse|FlushRequestResponse>}
  */
-async function main(event) {
+async function main(event: MessageEvent) {
   if (event.data.type === "voices") {
     const storedIds = await stored();
     const voiceList = await voices();
@@ -71,8 +70,8 @@ async function main(event) {
   if (!PIPER_SESSION) {
     PIPER_SESSION = new TtsSession({
       voiceId: event.data.voiceId,
-      progress: (e) => self.postMessage(JSON.stringify(e)),
-      logger: (msg) => self.postMessage(msg),
+      progress: (e: unknown) => self.postMessage(JSON.stringify(e)),
+      logger: (msg: unknown) => self.postMessage(msg),
       ...(!!event.data.baseUrl
         ? {
             wasmPaths: {
@@ -89,16 +88,16 @@ async function main(event) {
     PIPER_SESSION.voiceId = event.data.voiceId;
 
   PIPER_SESSION.predict(event.data.text)
-    .then((res) => {
+    .then((res: Blob | string) => {
       if (res instanceof Blob) {
         self.postMessage({ type: "result", audio: res });
         return;
       }
     })
-    .catch((error) => {
+    .catch((error: unknown) => {
       self.postMessage({
         type: "error",
-        message: error?.message || String(error),
+        message: error instanceof Error ? error.message : String(error),
         error,
       }); // Will be an error.
     });

@@ -364,13 +364,20 @@ function formatChatHistory(
     )
       return historicalMessage;
 
+    // Only pass image attachments (with actual content) to the LLM formatter.
+    // File-reference attachments (contentString: null) are display metadata only.
+    const imageAttachments = historicalMessage.attachments.filter(
+      (a) => a?.contentString && a?.mime?.toLowerCase().startsWith("image/"),
+    );
+    if (!imageAttachments.length) return historicalMessage;
+
     // Some providers, like Ollama, expect the content to be embedded in the message object.
     if (mode === "spread") {
       return {
         role: historicalMessage.role,
         ...formatterFunction({
           userPrompt: historicalMessage.content,
-          attachments: historicalMessage.attachments,
+          attachments: imageAttachments,
         }),
       };
     }
@@ -380,7 +387,7 @@ function formatChatHistory(
       role: historicalMessage.role,
       content: formatterFunction({
         userPrompt: historicalMessage.content,
-        attachments: historicalMessage.attachments,
+        attachments: imageAttachments,
       }),
     };
   });

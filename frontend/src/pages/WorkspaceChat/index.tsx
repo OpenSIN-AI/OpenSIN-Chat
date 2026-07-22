@@ -73,7 +73,7 @@ function WorkspaceChatLayout() {
   const isMobile = useIsMobileLayout();
   const { user } = useUser();
   const { workspaces } = useWorkspaces({ ordered: true });
-  const { threads } = useThreads(slug);
+  const { threads } = useThreads(slug ?? null);
   const [commandOpen, setCommandOpen] = useState(false);
   const [creating, setCreating] = useState(false);
   const railVisible = !isMobile && !showSidebar;
@@ -160,7 +160,7 @@ function WorkspaceChatLayout() {
         }),
         icon: <ChatCircle size={17} />,
         keywords: ["conversation", "thread", "recent"],
-        perform: () => navigate(paths.workspace.thread(slug, thread.slug)),
+        perform: () => navigate(paths.workspace.thread(slug!, thread.slug)),
       });
     });
 

@@ -20,15 +20,15 @@ export function useWatchDeleteMessage({
   const { threadSlug = null } = useParams();
   const [completeDelete, setCompleteDelete] = useState(false);
   const deleteCalled = useRef(false);
-  const isDeleted = context?.isDeleted(chatId) ?? false;
+  const isDeleted = context?.isDeleted(chatId!) ?? false;
 
   useEffect(() => {
     if (isDeleted && !deleteCalled.current) {
       deleteCalled.current = true;
       if (role === "assistant") {
-        Workspace.deleteChat(chatId)
+        Workspace.deleteChat(chatId!)
           .then(() => {
-            invalidateChatHistory(workspaceSlug, threadSlug);
+            invalidateChatHistory(workspaceSlug!, threadSlug ?? undefined);
           })
           .catch((e) => {
             logger.error("Failed to delete chat:", e);

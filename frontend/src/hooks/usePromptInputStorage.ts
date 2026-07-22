@@ -37,7 +37,7 @@ export function clearPromptInputDraft(storageKey) {
     const map = safeJsonParse(safeGetItem(USER_PROMPT_INPUT_MAP), {});
     map[storageKey] = "";
     safeSetItem(USER_PROMPT_INPUT_MAP, JSON.stringify(map));
-  } catch (e) {
+  } catch (e: any) {
     console.warn("[usePromptInputStorage] non-fatal error:", e?.message || e);
   }
 }
@@ -54,6 +54,7 @@ export default function usePromptInputStorage({ promptInput, setPromptInput }) {
 
     const promptInputMap = safeJsonParse(serializedPromptInputMap, {});
 
+    if (!storageKey) return;
     const userPromptInputValue = promptInputMap[storageKey];
     if (userPromptInputValue) {
       setPromptInput(userPromptInputValue);

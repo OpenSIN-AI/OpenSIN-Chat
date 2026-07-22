@@ -68,7 +68,7 @@ export default function GithubOptions() {
       e.target.reset();
       setLoading(false);
       return;
-    } catch (e) {
+    } catch (e: any) {
       logger.error(e);
       showToast(e.message, "error", { clear: true });
       setLoading(false);

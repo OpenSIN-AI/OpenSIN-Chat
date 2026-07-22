@@ -47,7 +47,7 @@ function setDefaultFormState(job?: Job | null): FormState {
     prompt: job?.prompt || "",
     schedule: job?.schedule || "0 9 * * *",
     scheduleMode: "builder",
-    selectedTools: job?.tools ? safeJsonParse(job.tools, []) : [],
+    selectedTools: job?.tools ? safeJsonParse(job.tools, [] as any) : [],
   };
 }
 

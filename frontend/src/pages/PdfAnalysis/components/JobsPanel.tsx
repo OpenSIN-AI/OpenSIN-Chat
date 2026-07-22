@@ -83,7 +83,7 @@ interface StartFormProps {
 
 function StartForm({ onStarted, isSidebar = false }: StartFormProps) {
   const { t } = useTranslation();
-  const fileRef = useRef<HTMLInputElement>(null);
+  const fileRef = useRef<HTMLInputElement>(null!);
   const [task, setTask] = useState("");
   const [reportType, setReportType] = useState("");
   const [factCriteria, setFactCriteria] = useState("");
@@ -109,8 +109,8 @@ function StartForm({ onStarted, isSidebar = false }: StartFormProps) {
       const started = await PdfAnalysis.start({
         pdfPath: uploaded.pdfPath as string,
         task: task.trim(),
-        reportType: reportType.trim() || undefined,
-        factCriteria: factCriteria.trim() || undefined,
+        reportType: reportType.trim(),
+        factCriteria: factCriteria.trim(),
         deepScan,
       });
       if (started.error) throw new Error(started.error);
@@ -287,7 +287,7 @@ function JobRow({ job, onShowReport, onCancelled }: JobRowProps) {
             ? t("pdfAnalysis.panel.statusCompleted")
             : status === "failed"
               ? t("pdfAnalysis.panel.statusFailed")
-              : PHASE_LABELS[progress.phase] || status}
+              : PHASE_LABELS[progress.phase ?? ""] || status}
         </span>
       </div>
 

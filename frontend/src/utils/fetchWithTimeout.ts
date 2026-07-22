@@ -39,7 +39,7 @@ export async function fetchWithTimeout(
             externalSignal.removeEventListener("abort", onExternalAbort);
           },
         );
-      } catch (e) {
+      } catch (e: any) {
         if (e.name === "AbortError") {
           if (externalSignal?.aborted) throw e;
           throw new Error("Request timeout — server did not respond.", {
@@ -56,7 +56,7 @@ export async function fetchWithTimeout(
 
   try {
     return await fetch(url, { ...rest, signal: controller.signal });
-  } catch (e) {
+  } catch (e: any) {
     // Distinguish a real timeout/cancel from a network error.
     if (e.name === "AbortError") {
       if (externalSignal?.aborted) throw e; // intentional cancel — let caller ignore

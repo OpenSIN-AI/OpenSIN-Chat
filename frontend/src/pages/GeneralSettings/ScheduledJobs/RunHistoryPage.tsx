@@ -118,7 +118,7 @@ export default function RunHistoryPage(): JSX.Element {
               <RunRow
                 key={run.id}
                 run={run}
-                jobId={job?.id}
+                jobId={job?.id ?? ""}
                 onKilled={refreshRuns}
               />
             ))}
@@ -162,7 +162,7 @@ function RunHistoryLayout({
             </p>
             <p className="text-xs text-zinc-400 light:text-slate-600">
               {t("scheduledJobs.runHistory.schedule")}{" "}
-              <code>{`${humanizeCron(job?.schedule, i18n.language) ?? ""}—`}</code>
+              <code>{`${humanizeCron(job?.schedule ?? "", i18n.language ?? "en") ?? ""}—`}</code>
             </p>
           </div>
           {children}

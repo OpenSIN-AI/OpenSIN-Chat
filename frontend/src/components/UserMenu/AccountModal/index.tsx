@@ -42,7 +42,7 @@ export default function AccountModal({ user, hideModal }: any) {
       const pfpUrl = await System.fetchPfp(user.id);
       setPfp(pfpUrl);
       showToast(t("profile_settings.upload_success"), "success");
-    } catch (err) {
+    } catch (err: any) {
       showToast(
         t("profile_settings.failed_upload", { error: err?.message }),
         "error",
@@ -59,7 +59,7 @@ export default function AccountModal({ user, hideModal }: any) {
       }
 
       setPfp(null);
-    } catch (err) {
+    } catch (err: any) {
       showToast(
         t("profile_settings.failed_remove", { error: err?.message }),
         "error",
@@ -100,7 +100,7 @@ export default function AccountModal({ user, hideModal }: any) {
       } else {
         showToast(t("profile_settings.failed_update_user", { error }), "error");
       }
-    } catch (err) {
+    } catch (err: any) {
       showToast(
         t("profile_settings.failed_update_user", { error: err?.message }),
         "error",

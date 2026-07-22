@@ -69,7 +69,11 @@ export function useThreads(workspaceSlug: string | null): {
   error: Error | null;
 } {
   const { threads, isLoading: loading, error } = useThreadsSWR(workspaceSlug);
-  return { threads, loading, error: error || null };
+  return {
+    threads: threads as unknown as import("@/types/workspace").Thread[],
+    loading,
+    error: error || null,
+  };
 }
 
 /**
@@ -86,8 +90,8 @@ export function useChatHistory(
   error: Error | null;
 } {
   const { history, isLoading, error } = useChatHistorySWR(
-    workspaceSlug,
-    threadSlug,
+    workspaceSlug!,
+    threadSlug ?? undefined,
   );
   return { messages: history as any, loading: isLoading, error: error || null };
 }

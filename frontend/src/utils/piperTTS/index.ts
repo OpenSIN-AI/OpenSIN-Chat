@@ -2,22 +2,22 @@
 import showToast from "../toast";
 
 export default class PiperTTSClient {
-  static _instance;
+  static _instance: PiperTTSClient | null = null;
   voiceId = "en_US-hfc_female-medium";
-  worker = null;
+  worker: Worker | null = null;
 
-  constructor({ voiceId } = { voiceId: null }) {
+  constructor({ voiceId }: { voiceId?: string | null } = { voiceId: null }) {
     if (PiperTTSClient._instance) {
-      this.voiceId = voiceId !== null ? voiceId : this.voiceId;
+      this.voiceId = voiceId !== null && voiceId !== undefined ? voiceId : this.voiceId;
       return PiperTTSClient._instance;
     }
 
-    this.voiceId = voiceId !== null ? voiceId : this.voiceId;
+    this.voiceId = voiceId !== null && voiceId !== undefined ? voiceId : this.voiceId;
     PiperTTSClient._instance = this;
     return this;
   }
 
-  #getWorker() {
+  #getWorker(): Worker {
     if (!this.worker)
       this.worker = new Worker(new URL("./worker.js", import.meta.url), {
         type: "module",
@@ -35,8 +35,8 @@ export default class PiperTTSClient {
     });
     tmpWorker.postMessage({ type: "voices" });
     return new Promise((resolve, reject) => {
-      let timeout: any = null;
-      const handleMessage = (event) => {
+      let timeout: ReturnType<typeof setTimeout> | null = null;
+      const handleMessage = (event: MessageEvent) => {
         if (event.data.type !== "voices") {
           return;
         }
@@ -61,8 +61,8 @@ export default class PiperTTSClient {
     });
     tmpWorker.postMessage({ type: "flush" });
     return new Promise((resolve, reject) => {
-      let timeout: any = null;
-      const handleMessage = (event) => {
+      let timeout: ReturnType<typeof setTimeout> | null = null;
+      const handleMessage = (event: MessageEvent) => {
         if (event.data.type !== "flush") {
           return;
         }
@@ -91,10 +91,11 @@ export default class PiperTTSClient {
   }> {
     return new Promise<{ blobURL: string | null; error: string | null }>(
       (resolve) => {
-        let timeout: any = null;
-        const handleMessage = (event) => {
+        let timeout: ReturnType<typeof setTimeout> | null = null;
+        const worker = this.worker!;
+        const handleMessage = (event: MessageEvent) => {
           if (event.data.type === "error") {
-            this.worker.removeEventListener("message", handleMessage);
+            worker.removeEventListener("message", handleMessage);
             if (timeout) clearTimeout(timeout);
             return resolve({ blobURL: null, error: event.data.message });
           }
@@ -106,21 +107,21 @@ export default class PiperTTSClient {
             blobURL: URL.createObjectURL(event.data.audio),
             error: null,
           });
-          this.worker.removeEventListener("message", handleMessage);
+          worker.removeEventListener("message", handleMessage);
           if (timeout) clearTimeout(timeout);
         };
 
         timeout = setTimeout(() => {
-          this.worker.removeEventListener("message", handleMessage);
+          worker.removeEventListener("message", handleMessage);
           if (timeout) clearTimeout(timeout);
           resolve({ blobURL: null, error: "PiperTTSWorker Worker timed out." });
         }, 30_000);
-        this.worker.addEventListener("message", handleMessage);
+        worker.addEventListener("message", handleMessage);
       },
     );
   }
 
-  async getAudioBlobForText(textToSpeak, voiceId = null) {
+  async getAudioBlobForText(textToSpeak: string, voiceId: string | null = null) {
     const primaryWorker = this.#getWorker();
     primaryWorker.postMessage({
       type: "init",

@@ -151,7 +151,7 @@ export default function PromptInput({
                     <AgentModeButton
                       sendCommand={sendCommand}
                       promptInput={promptInput}
-                      textareaRef={textareaRef}
+                      textareaRef={textareaRef as any}
                       visible={!agentSessionActive && showAgentCommand}
                       {...agentMode}
                     />

@@ -21,7 +21,7 @@ export default function SlashCommandRow({
 
   useEffect(() => {
     if (!menuOpen) return;
-    function handleClickOutside(e) {
+    function handleClickOutside(e: MouseEvent) {
       if (
         menuRef.current &&
         !menuRef.current.contains(e.target) &&

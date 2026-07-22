@@ -223,7 +223,7 @@ export default function SQLConnectionModal({
       // Validate that we can actually connect to this database
       const { success, error } = await System.validateSQLConnection(
         engine,
-        connectionString,
+        connectionString!,
       );
       if (!success) {
         showToast(error || t("sqlConnection.connectionFailed"), "error", {
@@ -236,7 +236,7 @@ export default function SQLConnectionModal({
       const connectionData: SQLConnection = {
         engine,
         database_id: slugifiedDatabaseId,
-        connectionString,
+        connectionString: connectionString ?? undefined,
         schema: engine === "postgresql" ? config.schema : null,
       };
 
@@ -493,7 +493,7 @@ export default function SQLConnectionModal({
         </form>
       </div>
     </ModalWrapper>,
-    document.getElementById("workspace-agent-settings-container"),
+    document.getElementById("workspace-agent-settings-container")!,
   );
 }
 

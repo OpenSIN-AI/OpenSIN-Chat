@@ -24,7 +24,7 @@ export default function UsersSection({
   pendingUsers,
   approvedUsers,
   fetchUsers,
-}: UsersSectionProps): JSX.Element {
+}: UsersSectionProps): JSX.Element | null {
   const { t } = useTranslation();
 
   async function handleApprove(chatId: string) {

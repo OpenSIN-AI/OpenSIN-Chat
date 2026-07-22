@@ -67,6 +67,18 @@ export default function useWebSocket({
   pendingResetRef,
   workspaceSlug = null,
   threadSlug = null,
+}: {
+  socketId: string | null;
+  websocket: WebSocket | null;
+  setWebsocket: (ws: WebSocket | null) => void;
+  setSocketId: (id: string | null) => void;
+  setAgentSessionActive: (active: boolean) => void;
+  setLoadingResponse: (loading: boolean) => void;
+  handleSocketResponse: (socket: any, event: MessageEvent, setChatHistory: any) => void;
+  setChatHistory: (fn: (prev: any[]) => any[]) => void;
+  pendingResetRef: React.MutableRefObject<boolean>;
+  workspaceSlug?: string | null;
+  threadSlug?: string | null;
 }) {
   // Track whether the close was intentional (user abort, /reset, etc.)
   // so we don't attempt reconnection on intentional disconnects.
@@ -76,10 +88,10 @@ export default function useWebSocket({
   const useSSEFallbackRef = useRef(false);
 
   useEffect(() => {
-    let socket = null;
-    let heartbeatInterval = null;
-    let heartbeatTimeout = null;
-    let reconnectTimer = null;
+    let socket: WebSocket | SSESocket | null = null;
+    let heartbeatInterval: ReturnType<typeof setInterval> | null = null;
+    let heartbeatTimeout: ReturnType<typeof setTimeout> | null = null;
+    let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
     let isMounted = true;
 
     function clearTimers() {
@@ -132,12 +144,12 @@ export default function useWebSocket({
       socket?.close();
     }
 
-    function startHeartbeat(ws) {
+    function startHeartbeat(ws: any) {
       heartbeatInterval = setInterval(() => {
         if (!ws || ws.readyState !== WebSocket.OPEN) return;
         // Clear previous pong timeout; if pong doesn't arrive in time,
         // the connection is stale and we force-close it.
-        clearTimeout(heartbeatTimeout);
+        if (heartbeatTimeout) clearTimeout(heartbeatTimeout);
         heartbeatTimeout = setTimeout(() => {
           console.warn(
             "[useWebSocket] Heartbeat timeout — connection appears stale.",
@@ -158,11 +170,11 @@ export default function useWebSocket({
       }, HEARTBEAT_INTERVAL_MS);
     }
 
-    function attachListeners(ws) {
+    function attachListeners(ws: any) {
       // Reset the pong-timeout whenever any message arrives (including pong).
-      ws.addEventListener("message", (event) => {
+      ws.addEventListener("message", (event: MessageEvent) => {
         // Any incoming message means the connection is alive.
-        clearTimeout(heartbeatTimeout);
+        if (heartbeatTimeout) clearTimeout(heartbeatTimeout);
 
         try {
           handleSocketResponse(ws, event, setChatHistory);
@@ -180,7 +192,7 @@ export default function useWebSocket({
         // overwrote local state with server data missing the current turn.
       });
 
-      ws.addEventListener("close", (event) => {
+      ws.addEventListener("close", (event: CloseEvent) => {
         clearTimers();
 
         // If the server closed with 1008 (Policy Violation), the session
@@ -208,7 +220,7 @@ export default function useWebSocket({
           );
 
           setChatHistory((prev) => [
-            ...(prev as any).filter((msg) => !!msg.content),
+            ...prev.filter((msg) => !!msg.content),
             {
               uuid: v4(),
               type: "statusResponse",
@@ -257,7 +269,7 @@ export default function useWebSocket({
             reconnectAttemptsRef.current >= MAX_RECONNECT_ATTEMPTS &&
             !intentionalCloseRef.current;
           setChatHistory((prev) => [
-            ...(prev as any).filter((msg) => !!msg.content),
+            ...prev.filter((msg) => !!msg.content),
             {
               uuid: v4(),
               type: "statusResponse",
@@ -316,17 +328,18 @@ export default function useWebSocket({
         socket = sseSocket as any;
         setWebsocket(sseSocket as any);
         attachListeners(sseSocket as any);
-      } catch (e) {
+      } catch (e: unknown) {
+        const errMsg = e instanceof Error ? e.message : String(e);
         setChatHistory((prev) => [
-          ...(prev as any).filter((msg) => !!msg.content),
+          ...prev.filter((msg) => !!msg.content),
           {
             uuid: v4(),
             type: "abort",
-            content: e.message,
+            content: errMsg,
             role: "assistant",
             sources: [],
             closed: true,
-            error: e.message,
+            error: errMsg,
             animate: false,
             pending: false,
           },

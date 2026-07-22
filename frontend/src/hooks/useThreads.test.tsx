@@ -14,7 +14,7 @@ vi.mock("@/models/workspace", () => ({
 import Workspace from "@/models/workspace";
 import useThreads, { threadsKey, invalidateThreads } from "./useThreads";
 
-function wrapper({ children }) {
+function wrapper({ children }: { children: React.ReactNode }) {
   return (
     <SWRConfig value={{ provider: () => new Map(), dedupingInterval: 0 }}>
       {children}

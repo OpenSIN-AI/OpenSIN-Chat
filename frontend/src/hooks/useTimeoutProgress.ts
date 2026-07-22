@@ -48,7 +48,7 @@ export default function useTimeoutProgress(
     }
 
     const intervalId = setInterval(() => {
-      const elapsed = Date.now() - startTimeRef.current;
+      const elapsed = Date.now() - startTimeRef.current!;
       const remaining = Math.max(0, timeoutMs - elapsed);
       setProgressPercent((remaining / timeoutMs) * 100);
       if (remaining <= 0) {

@@ -5,7 +5,7 @@ import LiveSyncToggle from "./Features/LiveSync/toggle";
 
 type ConfigurableFeature = {
   title: string;
-  component: ComponentType;
+  component: ComponentType<any>;
   key: string;
 };
 

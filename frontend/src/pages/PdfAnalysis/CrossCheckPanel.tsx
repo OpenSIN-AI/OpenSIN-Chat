@@ -342,9 +342,9 @@ function CrossCheckRow({ job, onShowReport, onCancelled }: CrossCheckRowProps) {
         <div className="min-w-0">
           <p className="text-sm font-medium text-theme-text-primary truncate">
             {job.claims?.[0]}
-            {job.claims?.length > 1 &&
+            {(job.claims?.length ?? 0) > 1 &&
               t("pdfAnalysis.crossCheck.moreClaims", {
-                count: job.claims.length - 1,
+                count: (job.claims?.length ?? 0) - 1,
               })}
           </p>
           <p className="text-xs text-theme-text-secondary">

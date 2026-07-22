@@ -139,6 +139,6 @@ export default function ImageLightbox() {
         </div>
       )}
     </div>,
-    document.getElementById("root"),
+    document.getElementById("root")!,
   );
 }

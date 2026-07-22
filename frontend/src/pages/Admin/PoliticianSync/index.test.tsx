@@ -16,32 +16,32 @@ vi.mock("react-loading-skeleton", () => ({
 }));
 
 vi.mock("@phosphor-icons/react/dist/csr/ArrowsClockwise", () => ({
-  default: (props) => <svg data-testid="arrows-clockwise-icon" {...props} />,
-  ArrowsClockwise: (props) => (
+  default: (props: React.SVGProps<SVGSVGElement>) => <svg data-testid="arrows-clockwise-icon" {...props} />,
+  ArrowsClockwise: (props: React.SVGProps<SVGSVGElement>) => (
     <svg data-testid="arrows-clockwise-icon" {...props} />
   ),
 }));
 vi.mock("@phosphor-icons/react/dist/csr/CheckCircle", () => ({
-  default: (props) => <svg data-testid="check-circle-icon" {...props} />,
-  CheckCircle: (props) => <svg data-testid="check-circle-icon" {...props} />,
+  default: (props: React.SVGProps<SVGSVGElement>) => <svg data-testid="check-circle-icon" {...props} />,
+  CheckCircle: (props: React.SVGProps<SVGSVGElement>) => <svg data-testid="check-circle-icon" {...props} />,
 }));
 vi.mock("@phosphor-icons/react/dist/csr/WarningCircle", () => ({
-  default: (props) => <svg data-testid="warning-circle-icon" {...props} />,
-  WarningCircle: (props) => (
+  default: (props: React.SVGProps<SVGSVGElement>) => <svg data-testid="warning-circle-icon" {...props} />,
+  WarningCircle: (props: React.SVGProps<SVGSVGElement>) => (
     <svg data-testid="warning-circle-icon" {...props} />
   ),
 }));
 vi.mock("@phosphor-icons/react/dist/csr/XCircle", () => ({
-  default: (props) => <svg data-testid="x-circle-icon" {...props} />,
-  XCircle: (props) => <svg data-testid="x-circle-icon" {...props} />,
+  default: (props: React.SVGProps<SVGSVGElement>) => <svg data-testid="x-circle-icon" {...props} />,
+  XCircle: (props: React.SVGProps<SVGSVGElement>) => <svg data-testid="x-circle-icon" {...props} />,
 }));
 vi.mock("@phosphor-icons/react/dist/csr/TrendUp", () => ({
-  default: (props) => <svg data-testid="trend-up-icon" {...props} />,
-  TrendUp: (props) => <svg data-testid="trend-up-icon" {...props} />,
+  default: (props: React.SVGProps<SVGSVGElement>) => <svg data-testid="trend-up-icon" {...props} />,
+  TrendUp: (props: React.SVGProps<SVGSVGElement>) => <svg data-testid="trend-up-icon" {...props} />,
 }));
 
 vi.mock("@/components/lib/CTAButton", () => ({
-  default: ({ children, onClick }) => (
+  default: ({ children, onClick }: { children: React.ReactNode; onClick?: () => void }) => (
     <button type="button" onClick={onClick} data-testid="cta-button">
       {children}
     </button>

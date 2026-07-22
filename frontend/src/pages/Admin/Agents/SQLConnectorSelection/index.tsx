@@ -163,7 +163,7 @@ export default function AgentSQLConnectorSelection({
                           connection={connection as any}
                           onRemove={handleRemoveConnection}
                           onUpdate={handleUpdateConnection}
-                          setHasChanges={setHasChanges}
+                          setHasChanges={setHasChanges!}
                           connections={connections as any}
                         />
                       ))

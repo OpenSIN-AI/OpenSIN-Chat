@@ -31,7 +31,12 @@ const PRIMARY_BTN_CLASS =
 const LINK_BTN_CLASS =
   "flex items-center justify-center gap-x-1.5 text-xs text-[#71717a] light:text-zinc-400 hover:text-[#a1a1aa] light:hover:text-zinc-600 transition";
 
-const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
+interface RecoveryFormProps {
+  onSubmit: (username: string, recoveryCodes: string[]) => Promise<void>;
+  setShowRecoveryForm: (show: boolean) => void;
+}
+
+const RecoveryForm = ({ onSubmit, setShowRecoveryForm }: RecoveryFormProps) => {
   const { t } = useTranslation();
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
@@ -39,13 +44,13 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
     Array(2).fill(""),
   );
 
-  const handleRecoveryCodeChange = (index, value) => {
+  const handleRecoveryCodeChange = (index: number, value: string) => {
     const updatedCodes = [...recoveryCodeInputs];
     updatedCodes[index] = value;
     setRecoveryCodeInputs(updatedCodes);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -147,13 +152,17 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
   );
 };
 
-const ResetPasswordForm = ({ onSubmit }) => {
+interface ResetPasswordFormProps {
+  onSubmit: (newPassword: string, confirmPassword: string) => Promise<void>;
+}
+
+const ResetPasswordForm = ({ onSubmit }: ResetPasswordFormProps) => {
   const { t } = useTranslation();
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -263,13 +272,13 @@ export default function MultiUserAuth() {
     closeModal: closeRecoveryCodeModal,
   } = useModal();
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     setError(null);
     setLoading(true);
     e.preventDefault();
     try {
       const data = {} as any;
-      const form = new FormData(e.target);
+      const form = new FormData(e.currentTarget);
       for (const [key, value] of form.entries()) data[key] = value;
       const { valid, user, token, message, recoveryCodes } =
         (await System.requestToken(data)) as any;
@@ -288,9 +297,9 @@ export default function MultiUserAuth() {
       } else {
         setError(message);
       }
-    } catch (err) {
+    } catch (err: unknown) {
       logger.error(err);
-      setError(err?.message || "Login failed. Please try again.");
+      setError(err instanceof Error ? err.message : "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -298,7 +307,7 @@ export default function MultiUserAuth() {
 
   const handleDownloadComplete = () => setDownloadComplete(true);
   const handleResetPassword = () => setShowRecoveryForm(true);
-  const handleRecoverySubmit = async (username, recoveryCodes) => {
+  const handleRecoverySubmit = async (username: string, recoveryCodes: string[]) => {
     try {
       const { success, resetToken, error } = await (
         System.recoverAccount as any
@@ -316,7 +325,7 @@ export default function MultiUserAuth() {
     }
   };
 
-  const handleResetSubmit = async (newPassword, confirmPassword) => {
+  const handleResetSubmit = async (newPassword: string, confirmPassword: string) => {
     try {
       const resetToken = safeGetItem(RESET_TOKEN);
 

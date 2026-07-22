@@ -323,7 +323,7 @@ function HomeContent({
     }
   }
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const currentMessage =
       (
@@ -371,7 +371,7 @@ function HomeContent({
       >
         <ChatSettingsMenu />
         <div className="relative h-full w-full min-w-0 flex-1 overflow-hidden bg-theme-bg-container">
-          <WorkspaceModelPicker workspaceSlug={workspace?.slug} />
+          <WorkspaceModelPicker workspaceSlug={workspace?.slug ?? null} />
           <DnDFileUploaderWrapper>
             <Suspense
               fallback={
@@ -391,7 +391,7 @@ function HomeContent({
                 files={files}
                 t={t}
                 workspaceSlug={workspace?.slug}
-                threadSlug={threadSlug}
+                threadSlug={threadSlug ?? undefined}
               />
             </Suspense>
           </DnDFileUploaderWrapper>

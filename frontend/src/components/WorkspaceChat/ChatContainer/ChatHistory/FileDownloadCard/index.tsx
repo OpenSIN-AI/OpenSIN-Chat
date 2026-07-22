@@ -201,7 +201,7 @@ function FileDownloadCard({ props, autoPreview = false }) {
       if (storageFilename) {
         blob = await StorageFiles.download(storageFilename);
       } else if (downloadUrl) {
-        const res = await fetch(resolveApiUrl(downloadUrl), {
+        const res = await fetch(resolveApiUrl(downloadUrl)!, {
           headers: baseHeaders(),
         });
         if (!res.ok) throw new Error(`Download failed: ${res.status}`);
@@ -224,7 +224,7 @@ function FileDownloadCard({ props, autoPreview = false }) {
       if (storageFilename) {
         blob = await StorageFiles.download(storageFilename);
       } else if (downloadUrl) {
-        const res = await fetch(resolveApiUrl(downloadUrl), {
+        const res = await fetch(resolveApiUrl(downloadUrl)!, {
           headers: baseHeaders(),
         });
         if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
@@ -272,7 +272,7 @@ function FileDownloadCard({ props, autoPreview = false }) {
       if (storageFilename) {
         blob = await StorageFiles.download(storageFilename);
       } else if (downloadUrl) {
-        const res = await fetch(resolveApiUrl(downloadUrl), {
+        const res = await fetch(resolveApiUrl(downloadUrl)!, {
           headers: baseHeaders(),
         });
         if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
@@ -399,7 +399,7 @@ function ImagePreviewBanner({ url, alt }) {
   return (
     <div className="mb-2 rounded-xl overflow-hidden border border-zinc-700 light:border-slate-200 bg-zinc-900 light:bg-slate-50 flex items-center justify-center max-h-[420px]">
       <img
-        src={blobUrl}
+        src={blobUrl ?? undefined}
         alt={alt}
         className="max-w-full max-h-[420px] object-contain"
       />

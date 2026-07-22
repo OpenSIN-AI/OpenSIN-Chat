@@ -3,18 +3,27 @@ import { useEffect, useState, useRef } from "react";
 import System from "@/models/system";
 import logger from "@/utils/logger";
 
+interface UseProviderEndpointAutoDiscoveryParams {
+  provider?: string | null;
+  initialBasePath?: string;
+  initialAuthToken?: string | null;
+  ENDPOINTS?: string[];
+}
+
 export default function useProviderEndpointAutoDiscovery({
   provider = null,
   initialBasePath = "",
   initialAuthToken = null,
   ENDPOINTS = [],
-}) {
+}: UseProviderEndpointAutoDiscoveryParams) {
   const [loading, setLoading] = useState(false as any);
-  const [basePath, setBasePath] = useState(initialBasePath);
-  const [basePathValue, setBasePathValue] = useState(initialBasePath);
+  const [basePath, setBasePath] = useState<string>(initialBasePath);
+  const [basePathValue, setBasePathValue] = useState<string>(initialBasePath);
 
-  const [authToken, setAuthToken] = useState(initialAuthToken);
-  const [authTokenValue, setAuthTokenValue] = useState(initialAuthToken);
+  const [authToken, setAuthToken] = useState<string | null>(initialAuthToken);
+  const [authTokenValue, setAuthTokenValue] = useState<string | null>(
+    initialAuthToken,
+  );
   const [autoDetectAttempted, setAutoDetectAttempted] = useState(false as any);
   const [showAdvancedControls, setShowAdvancedControls] = useState(true as any);
   const mountedRef = useRef(true);
@@ -29,11 +38,11 @@ export default function useProviderEndpointAutoDiscovery({
   async function autoDetect() {
     setLoading(true);
     setAutoDetectAttempted(true);
-    const possibleEndpoints = [];
+    const possibleEndpoints: Promise<any>[] = [];
     ENDPOINTS.forEach((endpoint) => {
       possibleEndpoints.push(
         new Promise((resolve, reject) => {
-          System.customModels(provider, authTokenValue, endpoint, 2_000)
+          System.customModels(provider!, authTokenValue, endpoint, 2_000)
             .then((results: any) => {
               if (!results?.models || results.models.length === 0)
                 throw new Error("No models");
@@ -56,8 +65,8 @@ export default function useProviderEndpointAutoDiscovery({
     if (!mountedRef.current) return;
 
     if (models !== null) {
-      setBasePath(endpoint);
-      setBasePathValue(endpoint);
+      setBasePath(endpoint!);
+      setBasePathValue(endpoint!);
       setLoading(false);
       setShowAdvancedControls(false);
       return;

@@ -94,7 +94,7 @@ export default function ChatRow({ chat, onDelete }: ChatRowProps): JSX.Element {
           onClick={openResponseModal}
           className="px-6 cursor-pointer hover:shadow-lg"
         >
-          {truncate(safeJsonParse(chat.response, {})?.text, 40)}
+          {truncate(safeJsonParse(chat.response, {} as any)?.text, 40)}
         </td>
         <td className="px-6">{chat.createdAt}</td>
         <td className="px-6 flex items-center gap-x-6 h-full mt-1">
@@ -117,7 +117,7 @@ export default function ChatRow({ chat, onDelete }: ChatRowProps): JSX.Element {
           text={
             <Suspense fallback={null}>
               <MarkdownRenderer
-                content={safeJsonParse(chat.response, {})?.text}
+                content={safeJsonParse(chat.response, {} as any)?.text}
               />
             </Suspense>
           }
@@ -187,7 +187,7 @@ const ConnectionDetails = ({
   connection_information,
 }: ConnectionDetailsProps): JSX.Element | null => {
   const { t } = useTranslation();
-  const details = safeJsonParse(connection_information, {});
+  const details = safeJsonParse(connection_information, {} as any);
   if (Object.keys(details).length === 0) return null;
 
   if (verbose) {

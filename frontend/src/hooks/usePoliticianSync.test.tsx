@@ -4,7 +4,7 @@ import { renderHook, waitFor } from "@testing-library/react";
 import { SWRConfig } from "swr";
 import usePoliticianSync from "./usePoliticianSync";
 
-const Wrapper = ({ children }) => (
+const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <SWRConfig value={{ provider: () => new Map(), dedupingInterval: 0 }}>
     {children}
   </SWRConfig>

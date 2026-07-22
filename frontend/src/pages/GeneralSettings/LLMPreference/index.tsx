@@ -47,7 +47,7 @@ export default function GeneralLLMPreference() {
   const [filteredLLMs, setFilteredLLMs] = useState<LLMProvider[]>([]);
   const [selectedLLM, setSelectedLLM] = useState<string | null>(null);
   const [searchMenuOpen, setSearchMenuOpen] = useState(false);
-  const searchInputRef = useRef<HTMLInputElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null!);
   const { t } = useTranslation();
   const isMobile = useIsMobileLayout();
   const { keys: settings, isLoading: loading } = useLLMProviders();

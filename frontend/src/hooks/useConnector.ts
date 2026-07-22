@@ -130,7 +130,7 @@ export function useConnector(provider: string): UseConnectorResult {
           body: JSON.stringify({ account }),
         });
         refresh();
-      } catch (e) {
+      } catch (e: any) {
         console.warn("[useConnector] non-fatal error:", e?.message || e);
       }
     },

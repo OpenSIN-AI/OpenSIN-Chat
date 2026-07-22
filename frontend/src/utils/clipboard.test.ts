@@ -41,7 +41,7 @@ describe("clipboard utilities", () => {
     });
 
     it("returns false for non-string input", async () => {
-      const result = await copyText(null);
+      const result = await copyText(null as any);
       expect(result).toBe(false);
     });
 

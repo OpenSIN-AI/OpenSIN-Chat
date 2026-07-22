@@ -20,11 +20,11 @@ export function baseHeaders(
   };
 }
 
-export function safeJsonParse(jsonString, fallback = null) {
+export function safeJsonParse(jsonString: any, fallback: any = null): any {
   try {
     if (jsonString === null || jsonString === undefined) return fallback;
     return JSON.parse(jsonString);
-  } catch (e) {
+  } catch (e: any) {
     console.warn("[request] non-fatal error:", e?.message || e);
   }
   return fallback;

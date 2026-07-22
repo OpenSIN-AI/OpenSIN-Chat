@@ -76,7 +76,7 @@ function ChatContainerInner({
   sendCommand,
   regenerateAssistantMessage,
 }: any) {
-  const { t } = useChatSidebar();
+  const { t } = useChatSidebar() as any;
 
   return (
     <>

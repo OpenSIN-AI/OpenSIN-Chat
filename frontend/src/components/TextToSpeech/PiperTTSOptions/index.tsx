@@ -38,7 +38,7 @@ function voicesByLanguage(voices: any = []) {
 function voiceDisplayName(voice: any) {
   const { is_stored, name, quality, files } = voice;
   const onnxFileKey = Object.keys(files).find((key) => key.endsWith(".onnx"));
-  const fileSize = files?.[onnxFileKey]?.size_bytes || 0;
+  const fileSize = files?.[onnxFileKey!]?.size_bytes || 0;
   return `${is_stored ? "✔ " : ""}${titleCase(name)}-${quality === "low" ? "Low" : "HQ"} (${humanFileSize(fileSize)})`;
 }
 

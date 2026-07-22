@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useState } from "react";
+import { useState, type RefObject } from "react";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
@@ -11,6 +11,24 @@ import useUser from "@/hooks/useUser";
 import { useTranslation } from "react-i18next";
 import logger from "@/utils/logger";
 
+interface ParsedFile {
+  id?: string;
+  title?: string;
+  [key: string]: unknown;
+}
+
+interface ParsedFilesMenuProps {
+  onEmbeddingChange?: (isEmbedding: boolean) => void;
+  tooltipRef?: RefObject<{ close: () => void } | null>;
+  files: ParsedFile[];
+  currentTokens: number;
+  contextWindow: number | null;
+  isLoading: boolean;
+  workspaceSlug: string;
+  threadSlug?: string | null;
+  refresh: () => Promise<void>;
+}
+
 export default function ParsedFilesMenu({
   onEmbeddingChange,
   tooltipRef,
@@ -21,7 +39,7 @@ export default function ParsedFilesMenu({
   workspaceSlug,
   threadSlug = null,
   refresh,
-}) {
+}: ParsedFilesMenuProps) {
   const { t } = useTranslation();
   const { user } = useUser();
   const canEmbed = !user || user.role !== "default";
@@ -36,7 +54,7 @@ export default function ParsedFilesMenu({
   const [isEmbedding, setIsEmbedding] = useState(false);
   const [embedProgress, setEmbedProgress] = useState(1);
 
-  async function handleRemove(e, file) {
+  async function handleRemove(e: React.MouseEvent, file: ParsedFile) {
     e.preventDefault();
     e.stopPropagation();
     if (!file?.id) return;
@@ -60,8 +78,8 @@ export default function ParsedFilesMenu({
     try {
       let completed = 0;
       await Promise.all(
-        files.map((file) =>
-          Workspace.embedParsedFile(workspaceSlug, file.id).then(() => {
+        files.map((file: ParsedFile) =>
+          Workspace.embedParsedFile(workspaceSlug, file.id!).then(() => {
             completed++;
             setEmbedProgress(completed + 1);
           }),
@@ -146,7 +164,7 @@ export default function ParsedFilesMenu({
       )}
       <div className="flex flex-col gap-1 max-h-[300px] overflow-y-auto">
         {files.length > 0 &&
-          files.map((file, i) => (
+          files.map((file: ParsedFile, i: number) => (
             <div
               key={file.id || file.title || i}
               className={

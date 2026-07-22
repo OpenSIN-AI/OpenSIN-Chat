@@ -248,7 +248,7 @@ export default function OllamaLLMOptions({ settings }: any) {
                 defaultValue={
                   settings?.OllamaLLMAuthToken ? "*".repeat(20) : ""
                 }
-                value={authTokenValue.value}
+                value={authTokenValue.value ?? ""}
                 onChange={authToken.onChange}
                 onBlur={authToken.onBlur}
                 required={false}

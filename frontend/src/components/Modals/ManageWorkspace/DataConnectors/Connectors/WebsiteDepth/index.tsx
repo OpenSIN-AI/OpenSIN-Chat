@@ -43,7 +43,7 @@ export default function WebsiteDepthOptions() {
       );
       e.target.reset();
       setLoading(false);
-    } catch (e) {
+    } catch (e: any) {
       logger.error(e);
       showToast(e.message, "error", { clear: true });
       setLoading(false);

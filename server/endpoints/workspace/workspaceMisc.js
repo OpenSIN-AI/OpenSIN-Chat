@@ -261,6 +261,49 @@ function workspaceMiscEndpoints(app) {
       }
     },
   );
+
+  app.get(
+    "/workspace/:slug/download-document",
+    [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
+    async (request, response) => {
+      try {
+        const path = require("path");
+        const fs = require("fs");
+        const { getStoragePath } = require("../../utils/paths");
+        const filename = request.query.filename || "";
+        if (!filename || typeof filename !== "string") {
+          return response
+            .status(400)
+            .json({ error: "filename query param is required" });
+        }
+        const safeName = path.basename(filename);
+        const uploadsDir = getStoragePath("uploads");
+        const filePath = path.resolve(uploadsDir, safeName);
+        if (!filePath.startsWith(path.resolve(uploadsDir))) {
+          return response.status(403).json({ error: "Access denied" });
+        }
+        let fileStat;
+        try {
+          fileStat = await fs.promises.stat(filePath);
+        } catch {
+          return response.status(404).json({ error: "File not found" });
+        }
+        if (!fileStat.isFile()) {
+          return response.status(404).json({ error: "File not found" });
+        }
+        response.setHeader(
+          "Content-Disposition",
+          `attachment; filename="${encodeURIComponent(safeName)}"`,
+        );
+        response.setHeader("Content-Type", "application/octet-stream");
+        fs.createReadStream(filePath).pipe(response);
+      } catch (e) {
+        const errorId = crypto.randomUUID();
+        consoleLogger.error(`[endpoint error ${errorId}]`, e);
+        response.status(500).json({ error: "Internal server error", errorId });
+      }
+    },
+  );
 }
 
 module.exports = { workspaceMiscEndpoints };

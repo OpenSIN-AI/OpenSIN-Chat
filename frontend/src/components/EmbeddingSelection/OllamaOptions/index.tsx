@@ -189,7 +189,7 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
               className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
               placeholder={t("ollamaEmbedding.authTokenPlaceholder")}
               defaultValue={settings?.OllamaLLMAuthToken ? "*".repeat(20) : ""}
-              value={authTokenValue.value}
+              value={authTokenValue.value ?? ""}
               onChange={authToken.onChange}
               onBlur={authToken.onBlur}
               required={false}

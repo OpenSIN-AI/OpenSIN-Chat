@@ -30,7 +30,7 @@ function WorkspaceDirectory({
   hasChanges,
   saveChanges,
   movedItems,
-}) {
+}: any) {
   const { mutate: mutateDocuments } = useDocuments();
   const { mutate: mutateWorkspace } = useWorkspaceBySlug(workspace.slug);
   const refresh = async () => {
@@ -54,7 +54,7 @@ function WorkspaceDirectory({
         embeddingProgress={embeddingProgress}
         hasChanges={hasChanges}
         movedItems={movedItems}
-        handleSaveChanges={(e) => {
+        handleSaveChanges={(e: any) => {
           setSelectedItems({});
           saveChanges(e);
         }}
@@ -63,12 +63,12 @@ function WorkspaceDirectory({
     );
   }
 
-  const handleToggleSelection = (item) => {
+  const handleToggleSelection = (item: any) => {
     setSelectedItems(toggleSelection(item, selectedItems));
   };
 
   const handleToggleSelectAll = () => {
-    const allItems = files.items.flatMap((folder) => folder.items);
+    const allItems = files.items.flatMap((folder: any) => folder.items);
     setSelectedItems(toggleSelectAll(allItems, selectedItems));
   };
 
@@ -92,12 +92,12 @@ function WorkspaceDirectory({
     setLoading(false);
   };
 
-  const handleSaveChanges = (e) => {
+  const handleSaveChanges = (e: any) => {
     setSelectedItems({});
     saveChanges(e);
   };
 
-  const allItems = files.items.flatMap((folder) => folder.items);
+  const allItems = files.items.flatMap((folder: any) => folder.items);
   const allSelected = isAllItemsSelected(selectedItems, files);
   const embeddedDocCount = getEmbeddedDocCount(files);
 
@@ -118,7 +118,7 @@ function WorkspaceDirectory({
           <div className="text-theme-text-primary text-xs grid grid-cols-12 py-2 px-3.5 border-b border-white/20 light:border-theme-modal-border bg-theme-settings-input-bg sticky top-0 z-10">
             <div className="col-span-10 flex items-center gap-x-[4px]">
               {!hasChanges &&
-              files.items.some((folder) => folder.items.length > 0) ? (
+              files.items.some((folder: any) => folder.items.length > 0) ? (
                 <div
                   className="shrink-0 w-3 h-3 rounded border-[1px] border-solid border-white text-theme-text-primary flex justify-center items-center cursor-pointer"
                   role="checkbox"
@@ -146,11 +146,11 @@ function WorkspaceDirectory({
             )}
           </div>
           <div className="overflow-y-auto h-[calc(100%-40px)]">
-            {files.items.some((folder) => folder.items.length > 0) ||
+            {files.items.some((folder: any) => folder.items.length > 0) ||
             movedItems.length > 0 ? (
-              files.items.map((folder) => (
+              files.items.map((folder: any) => (
                 <div key={folder.name}>
-                  {folder.items.map((item) => (
+                  {folder.items.map((item: any) => (
                     <WorkspaceFileRow
                       key={item.id}
                       item={item}

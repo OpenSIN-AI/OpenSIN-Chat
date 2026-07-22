@@ -16,7 +16,7 @@ export default function RouterRulesPage() {
   const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
-  const { router, isLoading, error, refresh } = useModelRouter(id);
+  const { router, isLoading, error, refresh } = useModelRouter(id ?? null);
   const redirected = useRef(false);
 
   // Side-effectful redirect must run in an effect, not during render.

@@ -111,7 +111,7 @@ export default function ChoiceForm({
 }: any) {
   const showOther: any = question.allowOther !== false;
 
-  function isChecked(opt) {
+  function isChecked(opt: any) {
     if (question.multiSelect)
       return Array.isArray(draft.selected) && draft.selected.includes(opt);
     return draft.selected === opt;
@@ -121,7 +121,7 @@ export default function ChoiceForm({
     if (question.multiSelect) {
       const list = Array.isArray(draft.selected) ? draft.selected : [];
       const next = list.includes(opt)
-        ? (list as any).filter((o) => o !== opt)
+        ? (list as any).filter((o: any) => o !== opt)
         : [...list, opt];
       onChange({ selected: next, otherSelected: false });
       return;
@@ -141,7 +141,7 @@ export default function ChoiceForm({
 
   return (
     <div className="flex flex-col w-full">
-      {(question.options as any).map((opt, idx) => (
+      {(question.options as any).map((opt: any, idx: number) => (
         <OptionButton
           key={`${opt}-${idx}`}
           label={opt}
@@ -162,7 +162,7 @@ export default function ChoiceForm({
       {showOther && draft.otherSelected && (
         <OtherInput
           value={draft.otherText || ""}
-          onChange={(text) => onChange({ otherText: text })}
+          onChange={(text: string) => onChange({ otherText: text })}
         />
       )}
     </div>

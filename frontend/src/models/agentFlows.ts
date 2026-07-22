@@ -142,7 +142,7 @@ const AgentFlows: any = {
         })
         .then((res) => res.json());
       return { success: true, flow: result.flow };
-    } catch (error) {
+    } catch (error: any) {
       logger.error("Failed to toggle flow:", error);
       return { success: false, error: error.message };
     }

@@ -9,16 +9,49 @@ import { useWorkspaceEmbeddingProgress } from "@/EmbeddingProgressContext";
 import useDocuments from "@/hooks/useDocuments";
 import useWorkspaceBySlug from "@/hooks/useWorkspaceBySlug";
 
-export default function DocumentSettings({ workspace }) {
+interface DocumentFile {
+  id: string;
+  name: string;
+  title: string;
+  type: string;
+  url?: string;
+  published?: string | number;
+  canWatch?: boolean;
+  watched?: boolean;
+  [key: string]: unknown;
+}
+
+interface DocumentFolder {
+  name: string;
+  type: string;
+  items: DocumentFile[];
+  [key: string]: unknown;
+}
+
+interface DocsResponse {
+  items: DocumentFolder[];
+  [key: string]: unknown;
+}
+
+interface DocumentSettingsProps {
+  workspace: {
+    slug: string;
+    name?: string;
+    documents?: { docpath: string }[];
+    [key: string]: unknown;
+  };
+}
+
+export default function DocumentSettings({ workspace }: DocumentSettingsProps) {
   const [highlightWorkspace, setHighlightWorkspace] = useState(false);
-  const [availableDocs, setAvailableDocs] = useState({ items: [] });
+  const [availableDocs, setAvailableDocs] = useState<DocsResponse>({ items: [] });
   const [loading, setLoading] = useState(true);
-  const [workspaceDocs, setWorkspaceDocs] = useState({ items: [] });
-  const [selectedItems, setSelectedItems] = useState<any>({});
+  const [workspaceDocs, setWorkspaceDocs] = useState<DocsResponse>({ items: [] });
+  const [selectedItems, setSelectedItems] = useState<Record<string, boolean>>({});
   const [hasChanges, setHasChanges] = useState(false);
-  const [movedItems, setMovedItems] = useState<any[]>([]);
+  const [movedItems, setMovedItems] = useState<(DocumentFile & { folderName: string })[]>([]);
   const [loadingMessage, setLoadingMessage] = useState("");
-  const prevDocsRef = useRef<any>(null);
+  const prevDocsRef = useRef<DocsResponse | null>(null);
   const [autoSelectNew, setAutoSelectNew] = useState(false);
 
   const {
@@ -37,19 +70,19 @@ export default function DocumentSettings({ workspace }) {
     if (!localFiles || !currentWorkspace) return;
 
     const documentsInWorkspace =
-      currentWorkspace.documents.map((doc) => doc.docpath) || [];
+      currentWorkspace.documents.map((doc: { docpath: string }) => doc.docpath) || [];
 
     const files = localFiles as { items: any[] };
 
     // Documents that are not in the workspace
     const filteredAvailableDocs = {
       ...files,
-      items: files.items.map((folder) => {
+      items: files.items.map((folder: DocumentFolder) => {
         if (folder.items && folder.type === "folder") {
           return {
             ...folder,
             items: folder.items.filter(
-              (file) =>
+              (file: DocumentFile) =>
                 file.type === "file" &&
                 !documentsInWorkspace.includes(`${folder.name}/${file.name}`),
             ),
@@ -63,12 +96,12 @@ export default function DocumentSettings({ workspace }) {
     // Documents that are already in the workspace
     const filteredWorkspaceDocs = {
       ...files,
-      items: files.items.map((folder) => {
+      items: files.items.map((folder: DocumentFolder) => {
         if (folder.items && folder.type === "folder") {
           return {
             ...folder,
             items: folder.items.filter(
-              (file) =>
+              (file: DocumentFile) =>
                 file.type === "file" &&
                 documentsInWorkspace.includes(`${folder.name}/${file.name}`),
             ),
@@ -87,7 +120,7 @@ export default function DocumentSettings({ workspace }) {
   // autoSelectNew logic: when new files appear after an upload, auto-select them
   useEffect(() => {
     if (!autoSelectNew || !localFiles || !prevDocsRef.current) {
-      prevDocsRef.current = localFiles;
+      prevDocsRef.current = localFiles as DocsResponse | null;
       return;
     }
 
@@ -98,8 +131,8 @@ export default function DocumentSettings({ workspace }) {
       }
     }
 
-    const newSelected = {};
-    const lf = localFiles as { items?: any[] };
+    const newSelected: Record<string, boolean> = {};
+    const lf = localFiles as { items?: DocumentFolder[] };
     for (const folder of lf.items || []) {
       for (const file of folder.items || []) {
         if (file?.id && !previousIds.has(file.id)) {
@@ -108,11 +141,11 @@ export default function DocumentSettings({ workspace }) {
       }
     }
     if (Object.keys(newSelected).length > 0) {
-      setSelectedItems((prev) => ({ ...prev, ...newSelected }));
+      setSelectedItems((prev: Record<string, boolean>) => ({ ...prev, ...newSelected }));
     }
 
     setAutoSelectNew(false);
-    prevDocsRef.current = localFiles;
+    prevDocsRef.current = localFiles as DocsResponse | null;
   }, [localFiles, autoSelectNew]);
 
   const { embeddingProgress, startEmbedding } = useWorkspaceEmbeddingProgress(
@@ -136,7 +169,7 @@ export default function DocumentSettings({ workspace }) {
     [mutateDocuments, mutateWorkspace],
   );
 
-  const updateWorkspace = async (e) => {
+  const updateWorkspace = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setLoadingMessage("This may take a while for large documents");
@@ -174,11 +207,11 @@ export default function DocumentSettings({ workspace }) {
     setHighlightWorkspace(false);
     setHasChanges(true);
 
-    const newMovedItems = [];
+    const newMovedItems: (DocumentFile & { folderName: string })[] = [];
 
     for (const itemId of Object.keys(selectedItems)) {
       for (const folder of availableDocs.items) {
-        const foundItem = folder.items.find((file) => file.id === itemId);
+        const foundItem = folder.items.find((file: DocumentFile) => file.id === itemId);
         if (foundItem) {
           newMovedItems.push({ ...foundItem, folderName: folder.name });
           break;
@@ -188,16 +221,16 @@ export default function DocumentSettings({ workspace }) {
 
     setMovedItems([...movedItems, ...newMovedItems]);
 
-    const newAvailableDocs = JSON.parse(JSON.stringify(availableDocs));
-    const newWorkspaceDocs = JSON.parse(JSON.stringify(workspaceDocs));
+    const newAvailableDocs: DocsResponse = JSON.parse(JSON.stringify(availableDocs));
+    const newWorkspaceDocs: DocsResponse = JSON.parse(JSON.stringify(workspaceDocs));
 
     for (const itemId of Object.keys(selectedItems)) {
-      let foundItem = null;
-      let foundFolderIndex = null;
+      let foundItem: DocumentFile | null = null;
+      let foundFolderIndex: number | null = null;
 
       newAvailableDocs.items = newAvailableDocs.items.map(
-        (folder, folderIndex) => {
-          const remainingItems = folder.items.filter((file) => {
+        (folder: DocumentFolder, folderIndex: number) => {
+          const remainingItems = folder.items.filter((file: DocumentFile) => {
             const match = file.id === itemId;
             if (match) {
               foundItem = { ...file };
@@ -213,7 +246,7 @@ export default function DocumentSettings({ workspace }) {
         },
       );
 
-      if (foundItem) {
+      if (foundItem && foundFolderIndex !== null) {
         newWorkspaceDocs.items[foundFolderIndex].items.push(foundItem);
       }
     }

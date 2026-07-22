@@ -3,14 +3,49 @@ import { THREAD_RENAME_EVENT } from "@/components/Sidebar/ActiveWorkspaces/Threa
 import { emitAssistantMessageCompleteEvent } from "@/components/contexts/TTSProvider";
 export const ABORT_STREAM_EVENT = "abort-chat-stream";
 
+interface ChatHistoryItem {
+  uuid?: string;
+  content?: string;
+  role?: string;
+  sources?: any[];
+  closed?: boolean;
+  error?: any;
+  errorId?: string | null;
+  animate?: boolean;
+  pending?: boolean;
+  chatId?: string | null;
+  metrics?: Record<string, any>;
+  type?: string;
+  routedTo?: string | null;
+  [key: string]: any;
+}
+
+interface ChatResult {
+  uuid?: string;
+  textResponse?: string;
+  type?: string;
+  sources?: any[];
+  error?: any;
+  errorId?: string | null;
+  close?: boolean;
+  animate?: boolean;
+  chatId?: string | null;
+  action?: string | null;
+  metrics?: Record<string, any>;
+  routedTo?: string | null;
+  websocketUUID?: string;
+  thread?: { slug?: string; name?: string };
+  [key: string]: any;
+}
+
 // For handling of chat responses in the frontend by their various types.
 export default function handleChat(
-  chatResult,
-  setLoadingResponse,
-  setChatHistory,
-  remHistory,
-  _chatHistory,
-  setWebsocket,
+  chatResult: ChatResult,
+  setLoadingResponse: (v: boolean) => void,
+  setChatHistory: (fn: ChatHistoryItem[] | ((prev: ChatHistoryItem[]) => ChatHistoryItem[])) => void,
+  remHistory: ChatHistoryItem[],
+  _chatHistory: ChatHistoryItem[],
+  setWebsocket: (v: any) => void,
 ) {
   const {
     uuid,
@@ -30,7 +65,7 @@ export default function handleChat(
   const chatHistory = [..._chatHistory];
 
   if (type === "modelRouteNotification") {
-    setChatHistory((prev) => [
+    setChatHistory((prev: ChatHistoryItem[]) => [
       ...prev,
       {
         type: "modelRouteNotification",
@@ -44,7 +79,7 @@ export default function handleChat(
 
   if (type === "abort" || type === "statusResponse") {
     setLoadingResponse(false);
-    setChatHistory((prev) => {
+    setChatHistory((prev: ChatHistoryItem[]) => {
       const withoutPending = prev[prev.length - 1]?.pending
         ? prev.slice(0, -1)
         : prev;
@@ -80,7 +115,7 @@ export default function handleChat(
     });
   } else if (type === "textResponse") {
     setLoadingResponse(false);
-    setChatHistory((prev) => {
+    setChatHistory((prev: ChatHistoryItem[]) => {
       const withoutPending = prev[prev.length - 1]?.pending
         ? prev.slice(0, -1)
         : prev;
@@ -124,8 +159,8 @@ export default function handleChat(
     // so every streaming chunk created a NEW message with just the delta
     // text instead of appending to the existing message. The result was that
     // only the last chunk's text was visible to the user during SSE streaming.
-    setChatHistory((prev) => {
-      const chatIdx = prev.findIndex((chat) => chat.uuid === uuid);
+    setChatHistory((prev: ChatHistoryItem[]) => {
+      const chatIdx = prev.findIndex((chat: ChatHistoryItem) => chat.uuid === uuid);
       if (chatIdx !== -1) {
         const existingHistory = { ...prev[chatIdx] };
         let updatedHistory;
@@ -192,7 +227,7 @@ export default function handleChat(
   } else if (type === "agentInitWebsocketConnection") {
     setWebsocket(chatResult.websocketUUID);
   } else if (type === "stopGeneration") {
-    setChatHistory((prev) => {
+    setChatHistory((prev: ChatHistoryItem[]) => {
       if (prev.length === 0) return prev;
       const chatIdx = prev.length - 1;
       const existingHistory = { ...prev[chatIdx] };
@@ -231,14 +266,14 @@ export default function handleChat(
   }
 }
 
-export function getWorkspaceSystemPrompt(workspace) {
+export function getWorkspaceSystemPrompt(workspace: any) {
   return (
     workspace?.openAiPrompt ??
     "Given the following conversation, relevant context, and a follow up question, reply with an answer to the current question the user is asking. Return only your response to the question given the above information following the users instructions as needed."
   );
 }
 
-export function chatQueryRefusalResponse(workspace) {
+export function chatQueryRefusalResponse(workspace: any) {
   return (
     workspace?.queryRefusalResponse ??
     "There is no relevant information in this workspace to answer your query."

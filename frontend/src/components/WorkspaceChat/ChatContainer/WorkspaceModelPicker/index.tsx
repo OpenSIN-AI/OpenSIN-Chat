@@ -68,7 +68,7 @@ function prettifyModelName(rawModel: string): string {
     .join(" ");
 }
 
-export default function WorkspaceModelPicker({ workspaceSlug = null }) {
+export default function WorkspaceModelPicker({ workspaceSlug = null }: { workspaceSlug?: string | null }) {
   const { t } = useTranslation();
   const isMobile = useIsMobileLayout();
   const { slug: urlSlug } = useParams();
@@ -83,7 +83,7 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
     openModal: openSetupProviderModal,
     closeModal: closeSetupProviderModal,
   } = useModal();
-  const [config, setConfig] = useState({ settings: {}, provider: null });
+  const [config, setConfig] = useState<{ settings: any; provider: any }>({ settings: {}, provider: null });
   const [refreshKey, setRefreshKey] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(
     () => safeGetItem("opensin_sidebar_toggle") !== "closed",

@@ -10,12 +10,12 @@ vi.mock("react-i18next", async () => {
 });
 
 vi.mock("@phosphor-icons/react/dist/csr/Plus", () => ({
-  default: (props) => <svg data-testid="phosphor-plus-icon" {...props} />,
-  Plus: (props) => <svg data-testid="phosphor-plus-icon" {...props} />,
+  default: (props: React.SVGProps<SVGSVGElement>) => <svg data-testid="phosphor-plus-icon" {...props} />,
+  Plus: (props: React.SVGProps<SVGSVGElement>) => <svg data-testid="phosphor-plus-icon" {...props} />,
 }));
 vi.mock("@phosphor-icons/react/dist/csr/DotsThree", () => ({
-  default: (props) => <svg data-testid="dots-three" {...props} />,
-  DotsThree: (props) => <svg data-testid="dots-three" {...props} />,
+  default: (props: React.SVGProps<SVGSVGElement>) => <svg data-testid="dots-three" {...props} />,
+  DotsThree: (props: React.SVGProps<SVGSVGElement>) => <svg data-testid="dots-three" {...props} />,
 }));
 
 describe("SlashCommandRow", () => {
@@ -63,7 +63,7 @@ describe("SlashCommandRow", () => {
   it("opens the action menu when the menu button is clicked", async () => {
     const user = userEvent.setup();
     renderRow();
-    const menuButton = screen.getByTestId("dots-three").closest("button");
+    const menuButton = screen.getByTestId("dots-three").closest("button")!;
     await user.click(menuButton);
     expect(screen.getByRole("button", { name: "Edit" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Publish" })).toBeInTheDocument();
@@ -84,7 +84,7 @@ describe("SlashCommandRow", () => {
         <div data-testid="outside">outside</div>
       </div>,
     );
-    const menuButton = screen.getByTestId("dots-three").closest("button");
+    const menuButton = screen.getByTestId("dots-three").closest("button")!;
     await user.click(menuButton);
     expect(screen.getByRole("button", { name: "Edit" })).toBeInTheDocument();
 
@@ -97,7 +97,7 @@ describe("SlashCommandRow", () => {
   it("calls onEdit when the edit menu item is clicked", async () => {
     const user = userEvent.setup();
     renderRow();
-    const menuButton = screen.getByTestId("dots-three").closest("button");
+    const menuButton = screen.getByTestId("dots-three").closest("button")!;
     await user.click(menuButton);
     await user.click(screen.getByRole("button", { name: "Edit" }));
     expect(onEdit).toHaveBeenCalledTimes(1);
@@ -106,7 +106,7 @@ describe("SlashCommandRow", () => {
   it("calls onPublish when the publish menu item is clicked", async () => {
     const user = userEvent.setup();
     renderRow();
-    const menuButton = screen.getByTestId("dots-three").closest("button");
+    const menuButton = screen.getByTestId("dots-three").closest("button")!;
     await user.click(menuButton);
     await user.click(screen.getByRole("button", { name: "Publish" }));
     expect(onPublish).toHaveBeenCalledTimes(1);
@@ -115,7 +115,7 @@ describe("SlashCommandRow", () => {
   it("does not call onClick when interacting with the menu", async () => {
     const user = userEvent.setup();
     renderRow();
-    const menuButton = screen.getByTestId("dots-three").closest("button");
+    const menuButton = screen.getByTestId("dots-three").closest("button")!;
     await user.click(menuButton);
     await user.click(screen.getByRole("button", { name: "Edit" }));
     expect(onClick).not.toHaveBeenCalled();
@@ -145,7 +145,7 @@ describe("SlashCommandRow", () => {
   it("toggles the menu closed when the menu button is clicked again", async () => {
     const user = userEvent.setup();
     renderRow();
-    const menuButton = screen.getByTestId("dots-three").closest("button");
+    const menuButton = screen.getByTestId("dots-three").closest("button")!;
     await user.click(menuButton);
     expect(screen.getByRole("button", { name: "Edit" })).toBeInTheDocument();
 

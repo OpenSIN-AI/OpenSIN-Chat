@@ -10,7 +10,7 @@ import useSystemSettings from "@/hooks/useSystemSettings";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import UnsavedChangesDialog from "@/components/UnsavedChangesDialog";
 
-export default function CustomAppName(): JSX.Element {
+export default function CustomAppName(): JSX.Element | null {
   const { t } = useTranslation();
   const { appName: fetchedAppName, isLoading: appNameLoading } =
     useCustomAppName();

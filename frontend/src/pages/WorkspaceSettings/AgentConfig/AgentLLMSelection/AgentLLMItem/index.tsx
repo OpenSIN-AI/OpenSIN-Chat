@@ -170,7 +170,7 @@ function SetupProvider({
     const { error } = await System.updateSystem(data);
     if (error) {
       showToast(
-        t("agentLLMItem.saveFailed", { name: LLMOption.name, error }),
+        t("agentLLMItem.saveFailed", { name: LLMOption!.name, error }),
         "error",
       );
       return;

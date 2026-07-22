@@ -27,6 +27,32 @@ import { Tooltip } from "react-tooltip";
 import { safeJsonParse } from "@/utils/request";
 import logger from "@/utils/logger";
 
+interface DirectoryItem {
+  id: string;
+  name: string;
+  type: "folder" | "file";
+  items?: DirectoryItem[];
+}
+
+interface DirectoryFiles {
+  items: DirectoryItem[];
+}
+
+interface DirectoryProps {
+  files: DirectoryFiles;
+  setFiles: React.Dispatch<React.SetStateAction<DirectoryFiles>>;
+  loading: boolean;
+  setLoading: (v: boolean) => void;
+  workspace: { slug: string; [key: string]: any };
+  fetchKeys: () => void;
+  selectedItems: Record<string, boolean>;
+  setSelectedItems: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
+  setHighlightWorkspace: (v: boolean) => void;
+  moveToWorkspace: () => void;
+  setLoadingMessage: (v: string) => void;
+  loadingMessage: string;
+}
+
 function Directory({
   files,
   setFiles,
@@ -40,7 +66,7 @@ function Directory({
   moveToWorkspace,
   setLoadingMessage,
   loadingMessage,
-}) {
+}: DirectoryProps) {
   const { mutate: mutateDocuments } = useDocuments();
   const { mutate: mutateWorkspace } = useWorkspaceBySlug(workspace.slug);
   const { t } = useTranslation();
@@ -62,7 +88,7 @@ function Directory({
     y: 0,
   });
 
-  const deleteFiles = async (event) => {
+  const deleteFiles = async (event: React.MouseEvent) => {
     event.stopPropagation();
     if (
       !(await confirm({
@@ -75,12 +101,12 @@ function Directory({
     }
 
     try {
-      const toRemove = [];
-      const foldersToRemove = [];
+      const toRemove: string[] = [];
+      const foldersToRemove: string[] = [];
 
       for (const itemId of Object.keys(selectedItems)) {
         for (const folder of files.items) {
-          const foundItem = folder.items.find((file) => file.id === itemId);
+          const foundItem = folder.items?.find((file: DirectoryItem) => file.id === itemId);
           if (foundItem) {
             toRemove.push(`${folder.name}/${foundItem.name}`);
             break;
@@ -119,17 +145,17 @@ function Directory({
     }
   };
 
-  const toggleSelection = (item) => {
-    setSelectedItems((prevSelectedItems) => {
+  const toggleSelection = (item: DirectoryItem) => {
+    setSelectedItems((prevSelectedItems: Record<string, boolean>) => {
       const newSelectedItems = { ...prevSelectedItems };
       if (item.type === "folder") {
         // select all files in the folder
         if (newSelectedItems[item.name]) {
           delete newSelectedItems[item.name];
-          item.items.forEach((file) => delete newSelectedItems[file.id]);
+          item.items?.forEach((file: DirectoryItem) => delete newSelectedItems[file.id]);
         } else {
           newSelectedItems[item.name] = true;
-          item.items.forEach((file) => (newSelectedItems[file.id] = true));
+          item.items?.forEach((file: DirectoryItem) => (newSelectedItems[file.id] = true));
         }
       } else {
         // single file selections
@@ -145,23 +171,23 @@ function Directory({
   };
 
   // check if item is selected based on selectedItems state
-  const isSelected = (id, item) => {
+  const isSelected = (id: string, item: DirectoryItem | null) => {
     if (item && item.type === "folder") {
       if (!selectedItems[item.name]) {
         return false;
       }
-      return item.items.every((file) => selectedItems[file.id]);
+      return (item.items ?? []).every((file: DirectoryItem) => selectedItems[file.id]);
     }
 
     return !!selectedItems[id];
   };
 
-  const moveToFolder = async (folder) => {
-    const toMove = [];
+  const moveToFolder = async (folder: DirectoryItem) => {
+    const toMove: (DirectoryItem & { folderName: string })[] = [];
     for (const itemId of Object.keys(selectedItems)) {
       for (const currentFolder of files.items) {
-        const foundItem = currentFolder.items.find(
-          (file) => file.id === itemId,
+        const foundItem = currentFolder.items?.find(
+          (file: DirectoryItem) => file.id === itemId,
         );
         if (foundItem) {
           toMove.push({ ...foundItem, folderName: currentFolder.name });
@@ -207,7 +233,7 @@ function Directory({
 
   const handleSearch = useMemo(
     () =>
-      debounce((e) => {
+      debounce((e: React.ChangeEvent<HTMLInputElement>) => {
         const searchValue = e.target.value;
         setSearchTerm(searchValue);
       }, 500),
@@ -218,9 +244,9 @@ function Directory({
     return () => handleSearch.cancel();
   }, [handleSearch]);
 
-  const filteredFiles = filterFileSearchResults(files, searchTerm);
+  const filteredFiles = filterFileSearchResults(files as any, searchTerm) as unknown as DirectoryItem[];
 
-  const handleContextMenu = (event) => {
+  const handleContextMenu = (event: React.MouseEvent) => {
     event.preventDefault();
     setContextMenu({ visible: true, x: event.clientX, y: event.clientY });
   };
@@ -229,8 +255,8 @@ function Directory({
     setContextMenu({ visible: false, x: 0, y: 0 });
   };
 
-  const totalDocCount = (files?.items ?? []).reduce((acc, folder) => {
-    if (folder.type === "folder") return folder.items.length + acc;
+  const totalDocCount = (files?.items ?? []).reduce((acc: number, folder: DirectoryItem) => {
+    if (folder.type === "folder") return (folder.items?.length ?? 0) + acc;
     return acc;
   }, 0);
 
@@ -290,7 +316,7 @@ function Directory({
                 <LoadingState label={loadingMessage} rows={5} />
               ) : filteredFiles.length > 0 ? (
                 filteredFiles.map(
-                  (item, index) =>
+                  (item: DirectoryItem, index: number) =>
                     item.type === "folder" && (
                       <FolderRow
                         key={item.id ?? `${item.name}-${index}`}
@@ -339,7 +365,7 @@ function Directory({
                       {showFolderSelection && (
                         <FolderSelectionPopup
                           folders={files.items.filter(
-                            (item) => item.type === "folder",
+                            (item: DirectoryItem) => item.type === "folder",
                           )}
                           onSelect={moveToFolder}
                           onClose={() => setShowFolderSelection(false)}

@@ -120,7 +120,7 @@ export function ChatSidebarProvider({ children }: any) {
   useEffect(() => {
     try {
       localStorage.setItem("opensin_source_filter", sourceFilter);
-    } catch (e) {
+    } catch (e: any) {
       console.warn("[index] non-fatal error:", e?.message || e);
     }
   }, [sourceFilter]);
@@ -355,7 +355,7 @@ export default function ChatSidebar({
         const n = Number(stored);
         if (!isNaN(n) && n >= minWidth && n <= maxWidth) return n;
       }
-    } catch (e) {
+    } catch (e: any) {
       console.warn("[index] non-fatal error:", e?.message || e);
     }
     return defaultWidth;
@@ -384,7 +384,7 @@ export default function ChatSidebar({
           "opensin-right-sidebar-width",
           String(width),
         );
-      } catch (e) {
+      } catch (e: any) {
         console.warn("[index] non-fatal error:", e?.message || e);
       }
     }

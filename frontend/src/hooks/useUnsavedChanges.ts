@@ -40,8 +40,8 @@ export function useUnsavedChangesGuard(hasChanges: boolean) {
   return useMemo(
     () => ({
       isBlocking: blocker.state === "blocked",
-      reset: () => blocker.reset(),
-      proceed: () => blocker.proceed(),
+      reset: () => blocker.reset!(),
+      proceed: () => blocker.proceed!(),
     }),
     [blocker],
   );

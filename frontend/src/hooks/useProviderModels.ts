@@ -82,7 +82,7 @@ export default function useProviderModels(
     provider ? [PROVIDER_MODELS_KEY, provider, apiKey, basePath] : null,
     // 20s client-side timeout so the model dropdown never hangs indefinitely
     // on "waiting for models" if the backend is slow to respond.
-    () => System.customModels(provider, apiKey, basePath, 20000),
+    () => System.customModels(provider!, apiKey, basePath, 20000),
     {
       revalidateOnFocus: false,
       dedupingInterval: 5000,

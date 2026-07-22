@@ -15,6 +15,21 @@ import {
   getDeepResearchSourceIds,
 } from "./DeepResearchSources";
 
+type Icon = React.ComponentType<any>;
+
+interface AgentMode {
+  id: string;
+  icon: Icon;
+  label: string | undefined;
+  labelKey: string;
+  description: string | undefined;
+  descriptionKey: string;
+  enabled: boolean;
+  prefix: string;
+  systemPromptHint: string;
+  badge?: string;
+}
+
 /** Build the text prefix written into the prompt for a given agent mode. */
 export function buildAgentModePrefix(
   modeId: string,
@@ -47,7 +62,7 @@ export function applyAgentModePrefix(
   return cleaned ? `${prefix} ${cleaned}` : prefix;
 }
 
-export const AGENT_MODES = [
+export const AGENT_MODES: AgentMode[] = [
   {
     id: "deep-research",
     icon: MagnifyingGlass,
@@ -98,11 +113,11 @@ export const AGENT_MODES = [
   },
 ];
 
-export function getAgentModeById(id) {
+export function getAgentModeById(id: string): AgentMode | null {
   return AGENT_MODES.find((m) => m.id === id) || null;
 }
 
-export function parseAgentMode(message) {
+export function parseAgentMode(message: string) {
   if (!message) return { mode: null, cleanMessage: message };
   const match = message.match(/^@agent\s*\[([a-z-]+)\]\s*(.*)/i);
   if (match) {
@@ -131,12 +146,12 @@ function loadPersistedMode() {
   }
 }
 
-function persistMode(modeId) {
+function persistMode(modeId: string | null) {
   try {
     if (modeId) localStorage.setItem(AGENT_MODE_STORAGE_KEY, modeId);
     else localStorage.removeItem(AGENT_MODE_STORAGE_KEY);
-  } catch (e) {
-    logger.warn("[AgentModeButton] non-fatal error:", e?.message || e);
+  } catch (e: unknown) {
+    logger.warn("[AgentModeButton] non-fatal error:", e instanceof Error ? e.message : String(e));
   }
 }
 
@@ -148,7 +163,7 @@ export function useAgentMode() {
 
   useEffect(() => {
     if (!showDropdown) return;
-    function handleClickOutside(e) {
+    function handleClickOutside(e: MouseEvent) {
       if (
         dropdownRef.current &&
         !dropdownRef.current.contains(e.target) &&
@@ -158,7 +173,7 @@ export function useAgentMode() {
         setShowDropdown(false);
       }
     }
-    function handleEscape(e) {
+    function handleEscape(e: KeyboardEvent) {
       if (e.key === "Escape") setShowDropdown(false);
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -170,7 +185,7 @@ export function useAgentMode() {
   }, [showDropdown]);
 
   const selectMode = useCallback(
-    (mode, sendCommand, textareaRef, promptInput) => {
+    (mode: AgentMode, sendCommand: ((cmd: { text: string; writeMode: string }) => void) | null, textareaRef: React.RefObject<HTMLTextAreaElement> | null, promptInput: string) => {
       if (!mode.enabled) return;
       setActiveMode(mode);
       persistMode(mode.id);
@@ -193,7 +208,7 @@ export function useAgentMode() {
     [],
   );
 
-  const clearMode = useCallback((sendCommand, textareaRef, promptInput) => {
+  const clearMode = useCallback((sendCommand: ((cmd: { text: string; writeMode: string }) => void) | null, textareaRef: React.RefObject<HTMLTextAreaElement> | null, promptInput: string) => {
     setActiveMode(null);
     persistMode(null);
     setShowDropdown(false);
@@ -239,6 +254,20 @@ export function useAgentMode() {
   };
 }
 
+interface AgentModeButtonProps {
+  sendCommand: ((cmd: { text: string; writeMode: string }) => void) | null;
+  promptInput: string;
+  textareaRef: React.RefObject<HTMLTextAreaElement> | null;
+  visible?: boolean;
+  activeMode: AgentMode | null;
+  showDropdown: boolean;
+  setShowDropdown: (v: boolean) => void;
+  buttonRef: React.RefObject<HTMLElement> | null;
+  dropdownRef: React.RefObject<HTMLDivElement> | null;
+  selectMode: (mode: AgentMode, sendCommand: ((cmd: { text: string; writeMode: string }) => void) | null, textareaRef: React.RefObject<HTMLTextAreaElement> | null, promptInput: string) => void;
+  clearMode: (sendCommand: ((cmd: { text: string; writeMode: string }) => void) | null, textareaRef: React.RefObject<HTMLTextAreaElement> | null, promptInput: string) => void;
+}
+
 export default function AgentModeButton({
   sendCommand,
   promptInput,
@@ -251,7 +280,7 @@ export default function AgentModeButton({
   dropdownRef,
   selectMode,
   clearMode,
-}) {
+}: AgentModeButtonProps) {
   const { t } = useTranslation();
   if (!visible) return null;
 
@@ -261,7 +290,7 @@ export default function AgentModeButton({
     <>
       <div className="relative flex items-center">
         <button
-          ref={buttonRef}
+          ref={buttonRef as any}
           type="button"
           onClick={() => setShowDropdown(!showDropdown)}
           onKeyDown={(e) => {

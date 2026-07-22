@@ -66,7 +66,7 @@ export default function RunDetailPage() {
   const { t } = useTranslation();
   const { id, runId } = useParams();
   const navigate = useNavigate();
-  const { run, job, isLoading, mutate: refresh } = useRunDetail(runId);
+  const { run, job, isLoading, mutate: refresh } = useRunDetail(runId ?? null);
   const [continuing, setContinuing] = useState(false);
   const [killing, setKilling] = useState(false);
   const markedRead = useRef<string | null>(null);
@@ -155,7 +155,7 @@ export default function RunDetailPage() {
         result={result}
         continuing={continuing}
         killing={killing}
-        onBack={() => navigate(paths.settings.scheduledJobRuns(id))}
+        onBack={() => navigate(paths.settings.scheduledJobRuns(id!))}
         onContinueInThread={handleContinueInThread}
         onKillRun={handleKillRun}
       />

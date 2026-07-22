@@ -277,7 +277,7 @@ function CorpusRow({ job, onShowReport, onCancelled }: CorpusRowProps) {
             ? t("pdfAnalysis.corpus.statusCompleted")
             : status === "failed"
               ? t("pdfAnalysis.corpus.statusFailed")
-              : CORPUS_PHASE_LABELS[progress.phase] || status}
+              : CORPUS_PHASE_LABELS[progress.phase ?? ""] || status}
         </span>
       </div>
 
@@ -436,7 +436,7 @@ function CorpusReportModal({ job, onClose }: CorpusReportModalProps) {
                 {t("pdfAnalysis.corpus.docsAnalyzed", {
                   count: result.documentsAnalyzed,
                 })}
-                {result.documentsFailed > 0 &&
+                {(result.documentsFailed ?? 0) > 0 &&
                   t("pdfAnalysis.corpus.docsFailed", {
                     count: result.documentsFailed,
                   })}

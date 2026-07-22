@@ -39,7 +39,7 @@ export default function ModelRouters() {
 
   const removeRouter = (id: string | number) => {
     // Optimistic remove — refresh will reconcile
-    refresh((prev: any[]) => prev?.filter((r) => r.id !== id) ?? [], false);
+    refresh(((prev: any[]) => prev?.filter((r) => r.id !== id) ?? []) as any, false);
   };
 
   const isEmpty = !isLoading && routers.length === 0;

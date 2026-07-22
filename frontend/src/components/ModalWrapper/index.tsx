@@ -122,5 +122,5 @@ export default function ModalWrapper({
 
   if (noPortal) return modal;
 
-  return createPortal(modal, document.getElementById("root"));
+  return createPortal(modal, document.getElementById("root")!);
 }

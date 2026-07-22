@@ -64,7 +64,7 @@ export default function AgentSidebarLists({
         </p>
       </div>
       <AgentList
-        skills={defaultSkills}
+        skills={defaultSkills ?? {}}
         selectedSkill={selectedSkill}
         handleClick={handleDefaultClick}
         activeSkills={Object.keys(defaultSkills || {}).filter(
@@ -72,7 +72,7 @@ export default function AgentSidebarLists({
         )}
       />
       <AgentList
-        skills={configurableSkills}
+        skills={configurableSkills ?? {}}
         selectedSkill={selectedSkill}
         handleClick={handleDefaultClick}
         activeSkills={agentSkills}
@@ -85,7 +85,7 @@ export default function AgentSidebarLists({
         </p>
       </div>
       <AgentList
-        skills={appIntegrationSkills}
+        skills={appIntegrationSkills ?? {}}
         selectedSkill={selectedSkill}
         handleClick={handleSkillClick}
         activeSkills={agentSkills}
@@ -98,7 +98,7 @@ export default function AgentSidebarLists({
         </p>
       </div>
       <ImportedSkillList
-        skills={importedSkills}
+        skills={importedSkills ?? []}
         selectedSkill={selectedSkill}
         handleClick={handleSkillClick}
       />
@@ -129,15 +129,15 @@ export default function AgentSidebarLists({
         )}
       </div>
       <AgentFlowsList
-        flows={agentFlows}
+        flows={agentFlows ?? []}
         selectedFlow={selectedFlow}
         handleClick={handleFlowClick}
         activeFlowIds={activeFlowIds}
       />
 
       <MCPServerHeader
-        setMcpServers={setMcpServers}
-        setSelectedMcpServer={setSelectedMcpServer}
+        setMcpServers={setMcpServers!}
+        setSelectedMcpServer={setSelectedMcpServer!}
       >
         {({ loadingMcpServers }: { loadingMcpServers: boolean }) => {
           return (

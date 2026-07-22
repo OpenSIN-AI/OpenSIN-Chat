@@ -54,7 +54,7 @@ function ShowWorkspaceChat(): JSX.Element | null {
     suggestedMessages,
     isLoading: workspaceLoading,
     error: workspaceError,
-  } = useWorkspaceChats(slug);
+  } = useWorkspaceChats(slug ?? "");
   const {
     settings: systemSettings,
     loading: settingsLoading,

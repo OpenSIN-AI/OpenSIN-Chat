@@ -46,7 +46,7 @@ export default function AsyncTTSMessage({
             setLoading(false);
           });
       } else {
-        playerRef.current.play();
+        playerRef.current!.play();
       }
     } catch (e) {
       logger.error(e);
@@ -65,12 +65,12 @@ export default function AsyncTTSMessage({
     }
 
     function handlePause() {
-      player.currentTime = 0;
+      player!.currentTime = 0;
       setSpeaking(false);
     }
 
     function handleEnded() {
-      player.currentTime = 0;
+      player!.currentTime = 0;
       setSpeaking(false);
     }
 
@@ -123,7 +123,7 @@ export default function AsyncTTSMessage({
         <audio
           ref={playerRef}
           hidden={true}
-          src={audioSrc}
+          src={audioSrc ?? undefined}
           autoPlay={true}
           controls={false}
         />

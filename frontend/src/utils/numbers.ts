@@ -19,7 +19,7 @@ export function dollarFormat(input) {
   }).format(input);
 }
 
-export function toPercentString(input = null, decimals = 0) {
+export function toPercentString(input: number | null | undefined = null, decimals = 0) {
   if (input === null || input === undefined || isNaN(input)) return "";
   const value = input * 100;
   const formatted =

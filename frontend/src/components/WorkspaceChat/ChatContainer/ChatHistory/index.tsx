@@ -28,7 +28,7 @@ const Chartable = lazy(() => import("./Chartable"));
 // (~580KB combined). Load only when a row actually renders — empty threads
 // and first paint of the chat shell stay free of the markdown vendor graph.
 const HistoricalMessage = lazy(() => import("./HistoricalMessage"));
-const PromptReply = lazy(() => import("./PromptReply"));
+const PromptReply = lazy(() => import("./PromptReply")) as any;
 import ModelRouteNotification from "./ModelRouteNotification";
 import Workspace from "@/models/workspace";
 import { useParams } from "react-router";
@@ -181,7 +181,7 @@ export default function ChatHistory({
   const virtuosoRef = useRef<VirtuosoHandle | null>(null);
   const lastScrollTopRef = useRef(0);
   const { t } = useTranslation();
-  const { threadSlug = null } = useParams();
+  const { threadSlug = undefined } = useParams();
   const { showing, hideModal } = useManageWorkspaceModal();
   const [isAtBottom, setIsAtBottom] = useState(true as any);
   const isStreaming = history[history.length - 1]?.animate;
@@ -199,9 +199,9 @@ export default function ChatHistory({
       if (!editedMessage) return;
 
       if (role === "user" && saveOnly) {
-        const targetIdx = history.findIndex((msg) => msg.chatId === chatId);
+        const targetIdx = history.findIndex((msg: any) => msg.chatId === chatId);
         if (targetIdx < 0) return;
-        const updatedHistory = history.map((msg, idx) =>
+        const updatedHistory = history.map((msg: any, idx: number) =>
           idx === targetIdx ? { ...msg, content: editedMessage } : msg,
         );
         updateHistory(updatedHistory);
@@ -217,7 +217,7 @@ export default function ChatHistory({
       }
 
       if (role === "user") {
-        const targetIdx = history.findIndex((msg) => msg.chatId === chatId);
+        const targetIdx = history.findIndex((msg: any) => msg.chatId === chatId);
         if (targetIdx < 0) return;
         const updatedHistory = history.slice(0, targetIdx + 1);
         updatedHistory[updatedHistory.length - 1] = {
@@ -236,10 +236,10 @@ export default function ChatHistory({
 
       if (role === "assistant") {
         const targetIdx = history.findIndex(
-          (msg) => msg.chatId === chatId && msg.role === role,
+          (msg: any) => msg.chatId === chatId && msg.role === role,
         );
         if (targetIdx < 0) return;
-        const updatedHistory = history.map((msg, idx) =>
+        const updatedHistory = history.map((msg: any, idx: number) =>
           idx === targetIdx ? { ...msg, content: editedMessage } : msg,
         );
         updateHistory(updatedHistory);
@@ -267,7 +267,7 @@ export default function ChatHistory({
       invalidateChatHistory(workspace.slug, threadSlug);
       window.location.href = paths.workspace.thread(
         workspace.slug,
-        newThreadSlug,
+        newThreadSlug as unknown as string,
       );
     },
     [workspace?.slug, threadSlug],

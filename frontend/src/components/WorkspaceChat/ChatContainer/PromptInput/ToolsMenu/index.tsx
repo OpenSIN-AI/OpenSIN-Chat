@@ -14,7 +14,7 @@ import SlashCommandsTab from "./Tabs/SlashCommands";
 
 export const TOOLS_MENU_KEYBOARD_EVENT: any = "tools-menu-keyboard";
 function getTabs(t, user: any) {
-  const tabs = [
+  const tabs: { key: string; label: string; component: any }[] = [
     {
       key: "slash-commands",
       label: t("chat_window.slash_commands"),
@@ -139,6 +139,8 @@ export default function ToolsMenu({
 
   const { component: ActiveTab } =
     TABS.find((tab) => tab.key === activeTab) ?? {};
+
+  if (!ActiveTab) return null;
 
   return (
     <>

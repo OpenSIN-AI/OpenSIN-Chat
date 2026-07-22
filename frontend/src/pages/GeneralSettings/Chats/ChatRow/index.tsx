@@ -80,7 +80,7 @@ export default function ChatRow({
           onClick={openResponseModal}
           className="px-6 cursor-pointer transform transition-transform duration-200 hover:scale-105 hover:shadow-lg"
         >
-          {truncate(safeJsonParse(chat.response, {})?.text, 40)}
+          {truncate(safeJsonParse(chat.response, {} as any)?.text, 40)}
         </td>
         <td className="px-6">{chat.createdAt}</td>
         <td className="px-6 flex items-center gap-x-6 h-full mt-1">
@@ -101,7 +101,7 @@ export default function ChatRow({
           text={
             <Suspense fallback={null}>
               <MarkdownRenderer
-                content={safeJsonParse(chat.response, {})?.text}
+                content={safeJsonParse(chat.response, {} as any)?.text}
               />
             </Suspense>
           }

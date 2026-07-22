@@ -68,7 +68,7 @@ export function useAgentForm() {
         setDisabledAgentSkills(prefs?.settings?.disabled_agent_skills ?? []);
         setImportedSkills(prefs?.settings?.imported_agent_skills ?? []);
         setActiveFlowIds(
-          (flows as any).filter((f) => f.active).map((f) => f.uuid),
+          (flows as any).filter((f: any) => f.active).map((f: any) => f.uuid),
         );
         setAgentFlows(flows);
         setFileSystemAgentAvailable(fsAgentAvailable);
@@ -88,7 +88,7 @@ export function useAgentForm() {
 
   // Prevent page unload with unsaved changes
   useEffect(() => {
-    const handleBeforeUnload: any = (event) => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
       if (hasChanges) {
         event.preventDefault();
         event.returnValue = "";
@@ -98,10 +98,10 @@ export function useAgentForm() {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [hasChanges]);
 
-  const toggleDefaultSkill: any = (skillName) => {
-    setDisabledAgentSkills((prev) => {
+  const toggleDefaultSkill: any = (skillName: string) => {
+    setDisabledAgentSkills((prev: string[]) => {
       const updatedSkills = prev.includes(skillName)
-        ? (prev as any).filter((name) => name !== skillName)
+        ? (prev as any).filter((name: string) => name !== skillName)
         : [...prev, skillName];
       return updatedSkills;
     });
@@ -111,29 +111,29 @@ export function useAgentForm() {
     setHasChanges(true);
   };
 
-  const toggleAgentSkill: any = (skillName) => {
-    setAgentSkills((prev) => {
+  const toggleAgentSkill: any = (skillName: string) => {
+    setAgentSkills((prev: string[]) => {
       const updatedSkills = prev.includes(skillName)
-        ? (prev as any).filter((name) => name !== skillName)
+        ? (prev as any).filter((name: string) => name !== skillName)
         : [...prev, skillName];
       return updatedSkills;
     });
     setHasChanges(true);
   };
 
-  const toggleFlow: any = (flowId) => {
-    setActiveFlowIds((prev) => {
+  const toggleFlow: any = (flowId: string) => {
+    setActiveFlowIds((prev: string[]) => {
       const updated = prev.includes(flowId)
-        ? (prev as any).filter((id) => id !== flowId)
+        ? (prev as any).filter((id: string) => id !== flowId)
         : [...prev, flowId];
       return updated;
     });
     setHasChanges(true);
   };
 
-  const toggleMCP: any = (serverName) => {
-    setMcpServers((prev) => {
-      return (prev as any).map((server) => {
+  const toggleMCP: any = (serverName: string) => {
+    setMcpServers((prev: any[]) => {
+      return (prev as any).map((server: any) => {
         if (server.name !== serverName) return server;
         return { ...server, running: !server.running };
       });
@@ -141,15 +141,15 @@ export function useAgentForm() {
     setHasChanges(true);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const data = {
+    const data: { workspace: Record<string, any>; system: Record<string, any>; env: Record<string, any> } = {
       workspace: {},
       system: {},
       env: {},
     };
 
-    const form = new FormData(formEl.current);
+    const form = new FormData(formEl.current ?? undefined);
     for (const [key, value] of form.entries()) {
       if (key.startsWith("system::")) {
         const [_, label] = key.split("system::");

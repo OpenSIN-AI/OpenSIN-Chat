@@ -5,7 +5,7 @@ import { API_BASE } from "./constants";
  * Check if a href matches the current pathname.
  * Matches exactly or as a parent path (e.g. /settings/model-routers matches /settings/model-routers/1).
  */
-export function isPathMatch(href, pathname) {
+export function isPathMatch(href: string, pathname: string) {
   return pathname === href || pathname.startsWith(href + "/");
 }
 
@@ -87,11 +87,11 @@ export default {
     return "mailto:support@sinchat.delqhi.com";
   },
   workspace: {
-    chat: (slug, options = {}) => {
+    chat: (slug: string, options: PathOptions = {}) => {
       return applyOptions(`/workspace/${slug}`, options);
     },
     settings: {
-      generalAppearance: (slug) => {
+      generalAppearance: (slug: string) => {
         return `/workspace/${slug}/settings/general-appearance`;
       },
       chatSettings: function (slug: any, options = {}) {
@@ -100,17 +100,17 @@ export default {
           options,
         );
       },
-      vectorDatabase: (slug) => {
+      vectorDatabase: (slug: string) => {
         return `/workspace/${slug}/settings/vector-database`;
       },
-      members: (slug) => {
+      members: (slug: string) => {
         return `/workspace/${slug}/settings/members`;
       },
-      agentConfig: (slug) => {
+      agentConfig: (slug: string) => {
         return `/workspace/${slug}/settings/agent-config`;
       },
     },
-    thread: (wsSlug, threadSlug) => {
+    thread: (wsSlug: string, threadSlug: string) => {
       return `/workspace/${wsSlug}/t/${threadSlug}`;
     },
   },
@@ -176,7 +176,7 @@ export default {
     modelRouters: () => {
       return "/settings/model-routers";
     },
-    modelRouterRules: (id) => {
+    modelRouterRules: (id: string) => {
       return `/settings/model-routers/${id}`;
     },
     systemPromptVariables: () => "/settings/system-prompt-variables",
@@ -199,10 +199,10 @@ export default {
     scheduledJobs: () => {
       return "/settings/scheduled-jobs";
     },
-    scheduledJobRuns: (jobId) => {
+    scheduledJobRuns: (jobId: string) => {
       return `/settings/scheduled-jobs/${jobId}/runs`;
     },
-    scheduledJobRunDetail: (jobId, runId) => {
+    scheduledJobRunDetail: (jobId: string, runId: string) => {
       return `/settings/scheduled-jobs/${jobId}/runs/${runId}`;
     },
     politicianSync: () => {
@@ -219,7 +219,7 @@ export default {
     builder: () => {
       return `/settings/agents/builder`;
     },
-    editAgent: (uuid) => {
+    editAgent: (uuid: string) => {
       return `/settings/agents/builder/${uuid}`;
     },
   },

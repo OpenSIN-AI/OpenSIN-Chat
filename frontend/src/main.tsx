@@ -480,8 +480,8 @@ const router = createBrowserRouter([
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <REACTWRAP>
-    <RouterProvider router={router} fallbackElement={<AppHydrateFallback />} />
+    <RouterProvider router={router} />
   </REACTWRAP>,
 );

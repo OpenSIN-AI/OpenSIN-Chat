@@ -20,6 +20,7 @@ import { useParams, useNavigate, Link } from "react-router";
 import useThreads, { invalidateThreads } from "@/hooks/useThreads";
 import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 import logger from "@/utils/logger";
+import type { ReactNode } from "react";
 import {
   DndContext,
   PointerSensor,
@@ -29,7 +30,35 @@ import {
   closestCenter,
   useDroppable,
 } from "@dnd-kit/core";
+import type { DragStartEvent, DragEndEvent } from "@dnd-kit/core";
 export const THREAD_RENAME_EVENT = "renameThread";
+
+interface Thread {
+  id?: number;
+  slug: string | null;
+  name: string;
+  lastUpdatedAt?: string | null;
+  createdAt?: string | null;
+  folder_id?: number | null;
+  deleted?: boolean;
+  virtual?: boolean;
+}
+
+interface Folder {
+  id: number;
+  name: string;
+}
+
+interface WorkspaceProp {
+  slug: string;
+  name: string;
+}
+
+interface ThreadsData {
+  threads: Thread[];
+  folders: Folder[];
+  defaultThreadChatCount?: number;
+}
 
 const DATE_GROUPS = [
   { id: "today", labelKey: "threadContainer.groupToday" },
@@ -39,7 +68,7 @@ const DATE_GROUPS = [
   { id: "older", labelKey: "threadContainer.groupOlder" },
 ];
 
-function getThreadDateGroup(thread, now = new Date()) {
+function getThreadDateGroup(thread: Thread, now = new Date()) {
   const dateStr = thread.lastUpdatedAt || thread.createdAt;
   if (!dateStr) return "older";
   const date = new Date(dateStr);
@@ -64,17 +93,17 @@ function getThreadDateGroup(thread, now = new Date()) {
   return "older";
 }
 
-function loadDateGroupCollapseState(workspaceSlug) {
+function loadDateGroupCollapseState(workspaceSlug: string): Record<string, boolean> {
   try {
     const stored = safeGetItem(`thread-folder-collapse-${workspaceSlug}`);
     if (stored) return JSON.parse(stored);
-  } catch (e) {
-    console.warn("[index] non-fatal error:", e?.message || e);
+  } catch (e: unknown) {
+    console.warn("[index] non-fatal error:", e instanceof Error ? e.message : e);
   }
   return {};
 }
 
-function saveDateGroupCollapseState(workspaceSlug, groupId, isCollapsed) {
+function saveDateGroupCollapseState(workspaceSlug: string, groupId: string, isCollapsed: boolean) {
   try {
     const state = loadDateGroupCollapseState(workspaceSlug);
     state[groupId] = isCollapsed;
@@ -82,8 +111,8 @@ function saveDateGroupCollapseState(workspaceSlug, groupId, isCollapsed) {
       `thread-folder-collapse-${workspaceSlug}`,
       JSON.stringify(state),
     );
-  } catch (e) {
-    console.warn("[index] non-fatal error:", e?.message || e);
+  } catch (e: unknown) {
+    console.warn("[index] non-fatal error:", e instanceof Error ? e.message : e);
   }
 }
 
@@ -92,6 +121,11 @@ function ThreadContainer({
   isActive = false,
   isVirtualThread = false,
   codexProject = false,
+}: {
+  workspace: WorkspaceProp;
+  isActive?: boolean;
+  isVirtualThread?: boolean;
+  codexProject?: boolean;
 }) {
   const { threadSlug = null } = useParams();
   const navigate = useNavigate();
@@ -170,8 +204,8 @@ function ThreadContainer({
   );
 
   useEffect(() => {
-    const chatHandler = (event) => {
-      const { threadSlug, newName } = event.detail;
+    const chatHandler = (event: Event) => {
+      const { threadSlug, newName } = (event as CustomEvent).detail;
       mutate(
         (current) => {
           const currentThreads = current?.threads || [];
@@ -198,13 +232,13 @@ function ThreadContainer({
 
   // Enable toggling of bulk-deletion by holding meta-key (ctrl on win and cmd/fn on others)
   useEffect(() => {
-    const handleKeyDown = (event) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (["Control", "Meta"].includes(event.key)) {
         setCtrlPressed(true);
       }
     };
 
-    const handleKeyUp = (event) => {
+    const handleKeyUp = (event: KeyboardEvent) => {
       if (["Control", "Meta"].includes(event.key)) {
         setCtrlPressed(false);
         // Only reset bulk-deletion marks if there are actually threads
@@ -237,7 +271,7 @@ function ThreadContainer({
     };
   }, [mutate]);
 
-  const toggleForDeletion = (id) => {
+  const toggleForDeletion = (id: number) => {
     mutate(
       (current) => {
         const currentThreads = current?.threads || [];
@@ -271,7 +305,7 @@ function ThreadContainer({
     }
   };
 
-  function removeThread(threadId) {
+  function removeThread(threadId: number) {
     mutate(
       (current) => {
         const currentThreads = current?.threads || [];
@@ -306,18 +340,18 @@ function ThreadContainer({
   }
 
   // ── Drag-and-drop ──────────────────────────────────────────────────────
-  function handleDragStart({ active }) {
+  function handleDragStart({ active }: DragStartEvent) {
     setActiveId(active.id);
   }
 
-  async function handleDragEnd({ active, over }) {
+  async function handleDragEnd({ active, over }: DragEndEvent) {
     setActiveId(null);
     if (!over) return;
     const draggedSlug = active.id;
     const thread = threads.find((t) => t.slug === draggedSlug);
     if (!thread) return;
 
-    let newFolderId = null;
+    let newFolderId: number | null | undefined = null;
     if (over.id === "unfoldered-drop") {
       newFolderId = null;
     } else if (String(over.id).startsWith("folder-")) {
@@ -375,7 +409,7 @@ function ThreadContainer({
     }
   }
 
-  function handleFolderDeleted(folderId) {
+  function handleFolderDeleted(folderId: number) {
     mutate(
       (current) => {
         const currentThreads = current?.threads || [];
@@ -393,7 +427,7 @@ function ThreadContainer({
     mutate();
   }
 
-  function handleFolderRenamed(folderId, newName) {
+  function handleFolderRenamed(folderId: number, newName: string) {
     mutate(
       (current) => {
         const currentFolders = current?.folders || [];
@@ -712,7 +746,7 @@ function ThreadContainer({
   );
 }
 
-function DateGroupHeader({ label, count, collapsed, onToggle }) {
+function DateGroupHeader({ label, count, collapsed, onToggle }: { label: string; count: number; collapsed: boolean; onToggle: () => void }) {
   return (
     <button
       type="button"
@@ -750,6 +784,17 @@ function UnfolderedDateGroups({
   workspaceSlug,
   showVirtualThread,
   duplicateNames,
+}: {
+  threads: Thread[];
+  defaultThreadHasChats: boolean;
+  activeThreadIdx: number;
+  ctrlPressed: boolean;
+  toggleMarkForDeletion: (id: number) => void;
+  onRemoveThread: (id: number) => void;
+  workspace: WorkspaceProp;
+  workspaceSlug: string;
+  showVirtualThread: boolean;
+  duplicateNames: Set<string>;
 }) {
   const { t } = useTranslation();
   const { threadSlug = null } = useParams();
@@ -759,7 +804,7 @@ function UnfolderedDateGroups({
   );
 
   const grouped = useMemo(() => {
-    const buckets = {};
+    const buckets: Record<string, Thread[]> = {};
     for (const thread of threads) {
       const groupId = getThreadDateGroup(thread);
       if (!buckets[groupId]) buckets[groupId] = [];
@@ -830,7 +875,7 @@ function UnfolderedDateGroups({
   );
 }
 
-function UnfolderedDropZone({ children, isDragging }) {
+function UnfolderedDropZone({ children, isDragging }: { children: ReactNode; isDragging: boolean }) {
   const { t } = useTranslation();
   const { setNodeRef, isOver } = useDroppable({ id: "unfoldered-drop" });
   return (
@@ -854,12 +899,12 @@ function UnfolderedDropZone({ children, isDragging }) {
   );
 }
 
-function NewChatButton({ workspace, folder = null, compact = false }) {
+function NewChatButton({ workspace, folder = null, compact = false }: { workspace: WorkspaceProp; folder?: Folder | null; compact?: boolean }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const onClick = async (event) => {
+  const onClick = async (event: React.MouseEvent) => {
     event.stopPropagation();
     if (!workspace?.slug || loading) return;
     setLoading(true);
@@ -928,7 +973,7 @@ function NewChatButton({ workspace, folder = null, compact = false }) {
   );
 }
 
-function NewFolderButton({ workspace, onCreated, compact = false }) {
+function NewFolderButton({ workspace, onCreated, compact = false }: { workspace: WorkspaceProp; onCreated: (folder: Folder) => void; compact?: boolean }) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const onClick = async () => {
@@ -991,7 +1036,7 @@ function NewFolderButton({ workspace, onCreated, compact = false }) {
   );
 }
 
-function DeleteAllThreadButton({ ctrlPressed, threads, onDelete }) {
+function DeleteAllThreadButton({ ctrlPressed, threads, onDelete }: { ctrlPressed: boolean; threads: Thread[]; onDelete: () => void }) {
   const { t } = useTranslation();
   if (!ctrlPressed || threads.filter((t) => t.deleted).length === 0)
     return null;
@@ -1018,7 +1063,7 @@ function DeleteAllThreadButton({ ctrlPressed, threads, onDelete }) {
   );
 }
 
-function ThreadSearchBar({ value, onChange, onClear }) {
+function ThreadSearchBar({ value, onChange, onClear }: { value: string; onChange: (v: string) => void; onClear: () => void }) {
   const { t } = useTranslation();
   return (
     <div className="relative flex items-center w-full mb-2 mt-1">
@@ -1048,7 +1093,7 @@ function ThreadSearchBar({ value, onChange, onClear }) {
   );
 }
 
-function HighlightMatch({ text, query }) {
+function HighlightMatch({ text, query }: { text: string; query: string }) {
   if (!query || !text) return <>{text}</>;
   const lowerText = String(text).toLowerCase();
   const lowerQuery = String(query).toLowerCase();
@@ -1074,7 +1119,7 @@ function HighlightMatch({ text, query }) {
   return <>{parts}</>;
 }
 
-function SearchResultsList({ results, isSearching, query, workspace }) {
+function SearchResultsList({ results, isSearching, query, workspace }: { results: Thread[]; isSearching: boolean; query: string; workspace: WorkspaceProp }) {
   const { t } = useTranslation();
   if (isSearching) {
     return (
@@ -1112,7 +1157,7 @@ function SearchResultsList({ results, isSearching, query, workspace }) {
   );
 }
 
-function SearchResultItem({ thread, query, workspace }) {
+function SearchResultItem({ thread, query, workspace }: { thread: Thread & { nameMatch?: boolean; contentSnippet?: string }; query: string; workspace: WorkspaceProp }) {
   const linkTo = thread.slug
     ? paths.workspace.thread(workspace.slug, thread.slug)
     : paths.workspace.chat(workspace.slug);

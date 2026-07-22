@@ -25,7 +25,7 @@ function loadFolderCollapseState(): Record<string, boolean> {
   try {
     const stored = safeGetItem(FOLDER_COLLAPSE_KEY);
     if (stored) return JSON.parse(stored);
-  } catch (e) {
+  } catch (e: any) {
     console.warn("[index] non-fatal error:", e?.message || e);
   }
   return {};
@@ -36,7 +36,7 @@ function saveFolderCollapseState(folderId: number, collapsed: boolean) {
     const state = loadFolderCollapseState();
     state[String(folderId)] = collapsed;
     safeSetItem(FOLDER_COLLAPSE_KEY, JSON.stringify(state));
-  } catch (e) {
+  } catch (e: any) {
     console.warn("[index] non-fatal error:", e?.message || e);
   }
 }

@@ -36,7 +36,7 @@ const markdown = markdownIt({
           hljs.highlight(code, { language: lang, ignoreIllegals: true }).value +
           "</pre></div>"
         );
-      } catch (e) {
+      } catch (e: any) {
         console.warn("[markdown] non-fatal error:", e?.message || e);
       }
     }

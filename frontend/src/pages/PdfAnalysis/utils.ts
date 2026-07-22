@@ -2,8 +2,8 @@
 // Utility functions for PdfAnalysis: formatting, heading extraction, and file downloads
 import React from "react";
 
-let docxMod = null;
-let jsPDFMod = null;
+let docxMod: any = null;
+let jsPDFMod: any = null;
 const docxReady = () =>
   docxMod
     ? Promise.resolve(docxMod)
@@ -96,7 +96,7 @@ export async function downloadDocx(
   const { Document, Packer, Paragraph, TextRun, HeadingLevel } =
     await docxReady();
   const lines = content.split("\n");
-  const children = [];
+  const children: any[] = [];
 
   for (const line of lines) {
     if (!line.trim()) {

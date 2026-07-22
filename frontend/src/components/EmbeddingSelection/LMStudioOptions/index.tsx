@@ -188,7 +188,7 @@ export default function LMStudioEmbeddingOptions({ settings }: any) {
               className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg outline-none block w-full p-2.5 focus:outline-primary-button active:outline-primary-button"
               placeholder={t("lmStudioEmbedding.authTokenPlaceholder")}
               defaultValue={settings?.LMStudioAuthToken ? "*".repeat(20) : ""}
-              value={authTokenValue.value}
+              value={authTokenValue.value ?? ""}
               onChange={authToken.onChange}
               onBlur={authToken.onBlur}
               required={false}

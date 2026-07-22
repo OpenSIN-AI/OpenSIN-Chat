@@ -106,7 +106,7 @@ export default function LLMSelectorModal({
 
       if (!!message) throw new Error(message);
       window.dispatchEvent(new Event(SAVE_LLM_SELECTOR_EVENT));
-    } catch (error) {
+    } catch (error: any) {
       setHasChanges(true);
       logger.error(error);
       showToast(error.message, "error", { clear: true });

@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 import { useState, useEffect } from "react";
-import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { useTranslation } from "react-i18next";
 import { Globe } from "@phosphor-icons/react/dist/csr/Globe";
 import { FolderOpen } from "@phosphor-icons/react/dist/csr/FolderOpen";
@@ -11,7 +10,6 @@ import {
   combineLikeSources,
   CitationDetailModal,
 } from "../ChatHistory/Citation";
-import MobileCitationModal from "./MobileCitationModal";
 import SourceItem from "./SourceItem";
 import ChatSidebar, { useSourcesSidebar, useChatSidebar } from "../ChatSidebar";
 import { MemoriesProvider } from "../MemoriesSidebar/MemoriesContext";
@@ -77,7 +75,6 @@ function FilterChip({
 export default function SourcesSidebar({ workspace }: any) {
   const { sources, sidebarOpen, closeSidebar } = useSourcesSidebar();
   const { t } = useTranslation();
-  const isMobile = useIsMobileLayout();
   const [selectedSource, setSelectedSource] = useState<any>(null);
   const {
     sourceFilter,
@@ -109,21 +106,6 @@ export default function SourcesSidebar({ workspace }: any) {
       setTab("zitiert");
     }
   }, [sidebarOpen, hasAnySources, sources]);
-
-  if (isMobile) {
-    return (
-      <MobileCitationModal
-        sources={sources}
-        isOpen={sidebarOpen}
-        selectedSource={selectedSource}
-        setSelectedSource={setSelectedSource}
-        onClose={() => {
-          setSelectedSource(null);
-          closeSidebar();
-        }}
-      />
-    );
-  }
 
   const tabs: { id: SourcesTab; label: string; icon: any }[] = [
     {
@@ -251,6 +233,7 @@ export default function SourcesSidebar({ workspace }: any) {
         <CitationDetailModal
           source={selectedSource}
           onClose={() => setSelectedSource(null)}
+          workspaceSlug={workspace?.slug}
         />
       )}
     </MemoriesProvider>

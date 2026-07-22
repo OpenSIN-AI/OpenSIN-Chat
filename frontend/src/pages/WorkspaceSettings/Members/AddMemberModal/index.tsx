@@ -45,7 +45,7 @@ export default function AddMemberModal({
       } else {
         showToast(error, "error");
       }
-    } catch (err) {
+    } catch (err: any) {
       showToast(err?.message || "Failed to update users.", "error");
     }
   };

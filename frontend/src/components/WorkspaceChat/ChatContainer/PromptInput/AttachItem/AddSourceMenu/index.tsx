@@ -25,13 +25,20 @@ import showToast from "@/utils/toast";
 import { ATTACHMENTS_PROCESSED_EVENT } from "../../../DnDWrapper";
 import logger from "@/utils/logger";
 
+interface LocalFile {
+  id: string;
+  title: string;
+  docpath: string;
+  isUrl: boolean;
+}
+
 /**
  * Recursively flattens the local-files directory tree into a single list of
  * files with their workspace docpath.
  */
-function flattenLocalFiles(localFiles, parentPath = "") {
+function flattenLocalFiles(localFiles: { items?: any[] } | null, parentPath = ""): LocalFile[] {
   if (!localFiles?.items) return [];
-  const out = [];
+  const out: LocalFile[] = [];
   for (const node of localFiles.items) {
     if (!node) continue;
     if (node.type === "folder" && Array.isArray(node.items)) {
@@ -115,7 +122,7 @@ export default function AddSourceMenu({
 
   useEffect(() => {
     if (!isOpen || !isTriggerMode) return;
-    function handleMouseDown(e) {
+    function handleMouseDown(e: MouseEvent) {
       if (!menuRef.current?.contains(e.target)) {
         closeMenu();
       }
@@ -126,7 +133,7 @@ export default function AddSourceMenu({
 
   useEffect(() => {
     if (!isOpen) return;
-    function handleKeyDown(e) {
+    function handleKeyDown(e: KeyboardEvent) {
       if (e.key === "Escape") {
         e.preventDefault();
         closeMenu();
@@ -145,7 +152,7 @@ export default function AddSourceMenu({
     }
   }
 
-  function handleMenuKeyDown(e) {
+  function handleMenuKeyDown(e: React.KeyboardEvent) {
     if (!menuRef.current) return;
     const items = getFocusableMenuItems(menuRef.current);
     if (items.length === 0) return;
@@ -169,11 +176,11 @@ export default function AddSourceMenu({
     if (!trigger) return null;
     return cloneElement(trigger, {
       disabled,
-      onClick: (e) => {
+      onClick: (e: React.MouseEvent) => {
         handleToggle();
         (trigger.props as any)?.onClick?.(e);
       },
-      onMouseDown: (e) => {
+      onMouseDown: (e: React.MouseEvent) => {
         e.stopPropagation();
         (trigger.props as any)?.onMouseDown?.(e);
       },
@@ -237,7 +244,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-function MenuRow({ icon: Icon, label, hint, onClick, hasSubmenu = false }) {
+function MenuRow({ icon: Icon, label, hint, onClick, hasSubmenu = false }: { icon: React.ComponentType<{ size?: number; className?: string }>; label: string; hint?: string; onClick: () => void; hasSubmenu?: boolean }) {
   return (
     <button
       type="button"
@@ -271,7 +278,7 @@ function MenuRow({ icon: Icon, label, hint, onClick, hasSubmenu = false }) {
   );
 }
 
-function BackHeader({ label, onBack, t }) {
+function BackHeader({ label, onBack, t }: { label: string; onBack: () => void; t: (key: string) => string }) {
   return (
     <button
       type="button"
@@ -292,7 +299,7 @@ function BackHeader({ label, onBack, t }) {
   );
 }
 
-function RootView({ t, onAddLocalFiles, onOpenSources, onOpenUrl }) {
+function RootView({ t, onAddLocalFiles, onOpenSources, onOpenUrl }: { t: (key: string) => string; onAddLocalFiles: () => void; onOpenSources: () => void; onOpenUrl: () => void }) {
   return (
     <>
       <SectionLabel>{t("chat_window.attach_menu.section_chat")}</SectionLabel>
@@ -320,7 +327,7 @@ function RootView({ t, onAddLocalFiles, onOpenSources, onOpenUrl }) {
   );
 }
 
-function SourcesView({ t, workspaceSlug, threadSlug, onBack, onClose }) {
+function SourcesView({ t, workspaceSlug, threadSlug, onBack, onClose }: { t: any; workspaceSlug: string; threadSlug: string | null; onBack: () => void; onClose: () => void }) {
   const { documents: localFiles, isLoading: loading } = useDocuments();
   const [workspaceDocs, setWorkspaceDocs] = useState<any[] | null>(null);
   const [loadingWs, setLoadingWs] = useState(true);
@@ -335,7 +342,7 @@ function SourcesView({ t, workspaceSlug, threadSlug, onBack, onClose }) {
       try {
         const ws = await Workspace.bySlug(workspaceSlug);
         if (cancelled) return;
-        const docs = (ws?.documents || []).map((d) => ({
+        const docs = (ws?.documents || []).map((d: any) => ({
           id: d.id || d.docpath,
           title: d.filename || d.name || d.title || d.docpath,
           docpath: d.docpath,
@@ -364,13 +371,13 @@ function SourcesView({ t, workspaceSlug, threadSlug, onBack, onClose }) {
     const q = query.trim().toLowerCase();
     if (!q) return files;
     return files.filter(
-      (f) =>
+      (f: LocalFile) =>
         (f.title || "").toLowerCase().includes(q) ||
         (f.docpath || "").toLowerCase().includes(q),
     );
   }, [files, query]);
 
-  async function handleAdd(file) {
+  async function handleAdd(file: LocalFile) {
     if (!workspaceSlug) {
       showToast(t("chat_window.attach_menu.no_workspace"), "error");
       return;
@@ -426,7 +433,7 @@ function SourcesView({ t, workspaceSlug, threadSlug, onBack, onClose }) {
             {t("chat_window.attach_menu.no_sources")}
           </p>
         ) : (
-          filtered.map((file) => {
+          filtered.map((file: LocalFile) => {
             const Icon = file.isUrl ? Globe : FileText;
             return (
               <button
@@ -459,7 +466,7 @@ function SourcesView({ t, workspaceSlug, threadSlug, onBack, onClose }) {
   );
 }
 
-function UrlView({ t, workspaceSlug, threadSlug, onBack, onClose }) {
+function UrlView({ t, workspaceSlug, threadSlug, onBack, onClose }: { t: (key: string, opts?: any) => string; workspaceSlug: string; threadSlug: string | null; onBack: () => void; onClose: () => void }) {
   const inputRef = useRef<any>(null);
   const [link, setLink] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -469,7 +476,7 @@ function UrlView({ t, workspaceSlug, threadSlug, onBack, onClose }) {
     inputRef.current?.focus();
   }, []);
 
-  function isValidUrl(value) {
+  function isValidUrl(value: string) {
     let candidate = value;
     if (!/^https?:\/\//i.test(candidate)) {
       candidate = "https://" + candidate;
@@ -483,7 +490,7 @@ function UrlView({ t, workspaceSlug, threadSlug, onBack, onClose }) {
     }
   }
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const trimmed = link.trim();
     if (!trimmed || submitting) return;

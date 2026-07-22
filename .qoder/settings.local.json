@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd /Users/jeremy/dev/OpenSIN-Chat && yarn lint:check 2>&1 | tail -40)"
+    ]
+  }
+}

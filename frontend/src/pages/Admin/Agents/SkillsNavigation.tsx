@@ -69,7 +69,7 @@ export function SkillsNavigation(props: SkillsNavigationProps): JSX.Element {
       <div className="flex-1 min-h-0 overflow-y-auto pr-2 pb-4">
         <div className="space-y-4">
           <SkillList
-            skills={defaultSkills}
+            skills={defaultSkills ?? {}}
             selectedSkill={selectedSkill}
             handleClick={handleSkillClick}
             activeSkills={Object.keys(defaultSkills || {}).filter(
@@ -77,7 +77,7 @@ export function SkillsNavigation(props: SkillsNavigationProps): JSX.Element {
             )}
           />
           <SkillList
-            skills={configurableSkills}
+            skills={configurableSkills ?? {}}
             selectedSkill={selectedSkill}
             handleClick={handleSkillClick}
             activeSkills={agentSkills}
@@ -88,7 +88,7 @@ export function SkillsNavigation(props: SkillsNavigationProps): JSX.Element {
             <p className="text-lg font-medium">{t("common.appIntegrations")}</p>
           </div>
           <SkillList
-            skills={appIntegrationSkills}
+            skills={appIntegrationSkills ?? {}}
             selectedSkill={selectedSkill}
             handleClick={handleSkillClick}
             activeSkills={agentSkills}
@@ -99,7 +99,7 @@ export function SkillsNavigation(props: SkillsNavigationProps): JSX.Element {
             <p className="text-lg font-medium">{t("common.customSkills")}</p>
           </div>
           <ImportedSkillList
-            skills={importedSkills}
+            skills={importedSkills ?? []}
             selectedSkill={selectedSkill}
             handleClick={handleSkillClick}
           />
@@ -128,15 +128,15 @@ export function SkillsNavigation(props: SkillsNavigationProps): JSX.Element {
             )}
           </div>
           <AgentFlowsList
-            flows={agentFlows}
+            flows={agentFlows ?? []}
             selectedFlow={selectedFlow}
             handleClick={handleFlowClick}
             activeFlowIds={activeFlowIds}
           />
 
           <MCPServerHeader
-            setMcpServers={setMcpServers}
-            setSelectedMcpServer={setSelectedMcpServer}
+            setMcpServers={setMcpServers!}
+            setSelectedMcpServer={setSelectedMcpServer!}
           >
             {({ loadingMcpServers }: { loadingMcpServers: boolean }) => (
               <MCPServersList

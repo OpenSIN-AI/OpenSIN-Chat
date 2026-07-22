@@ -83,7 +83,7 @@ export default function SingleUserAuth({
       } else {
         setError(message);
       }
-    } catch (err) {
+    } catch (err: any) {
       logger.error(err);
       setError(err?.message || "Login failed. Please try again.");
     } finally {

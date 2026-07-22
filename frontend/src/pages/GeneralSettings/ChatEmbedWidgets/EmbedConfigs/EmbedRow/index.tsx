@@ -218,7 +218,7 @@ type ActiveDomainsProps = {
 
 function ActiveDomains({ domainList }: ActiveDomainsProps): JSX.Element {
   const { t } = useTranslation();
-  const domains = safeJsonParse(domainList, []);
+  const domains = safeJsonParse(domainList, [] as any);
   if (domains.length === 0) return <p>{t("embedConfigs.embedRow.all")}</p>;
   return (
     <div className="flex flex-col gap-y-2">

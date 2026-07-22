@@ -305,13 +305,18 @@ async function streamChatWithWorkspace(
   // Inject inline-citation instructions when there are context documents so
   // the LLM marks statements with [source:N] markers for the frontend to render.
   systemPrompt = withInlineCitations(systemPrompt, contextTexts.length);
+  // Only send image attachments (with actual content) to the LLM.
+  // File-reference attachments (contentString: null) are display metadata only.
+  const llmAttachments = (attachments || []).filter(
+    (a) => a?.contentString && a?.mime?.toLowerCase().startsWith("image/"),
+  );
   const messages = await LLMConnector.compressMessages(
     {
       systemPrompt,
       userPrompt: updatedMessage,
       contextTexts,
       chatHistory,
-      attachments,
+      attachments: llmAttachments,
     },
     rawHistory,
   );

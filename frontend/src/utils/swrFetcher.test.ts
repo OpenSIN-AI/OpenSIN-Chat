@@ -92,7 +92,7 @@ describe("swrFetcher", () => {
     try {
       await swrFetcher("/items/999");
       expect.fail("Should have thrown");
-    } catch (e) {
+    } catch (e: any) {
       expect(e.status).toBe(404);
       expect(e.message).toContain("404");
     }

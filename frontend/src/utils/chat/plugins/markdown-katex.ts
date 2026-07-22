@@ -14,7 +14,7 @@ function escapeHtml(str: string): string {
 
 // Test if potential opening or closing delimieter
 // Assumes that there is a "$" at state.src[pos]
-function isValidDelim(state, pos) {
+function isValidDelim(state: any, pos: number) {
   const max = state.posMax;
   let can_open = true,
     can_close = true;
@@ -42,7 +42,7 @@ function isValidDelim(state, pos) {
   };
 }
 
-function math_inline(state, silent) {
+function math_inline(state: any, silent: boolean) {
   let start, match, token, res, pos;
 
   // Only process $ and \( delimiters for inline math
@@ -154,7 +154,7 @@ function math_inline(state, silent) {
   return true;
 }
 
-function math_block(state, start, end, silent) {
+function math_block(state: any, start: number, end: number, silent: boolean) {
   let firstLine,
     lastLine,
     next,
@@ -178,7 +178,7 @@ function math_block(state, start, end, silent) {
   }
 
   // Determine the closing delimiter and position adjustment
-  let delimiter, posAdjust;
+  let delimiter = "", posAdjust = 0;
   if (isDoubleDollar) {
     delimiter = "$$";
     posAdjust = 2;
@@ -235,7 +235,7 @@ function math_block(state, start, end, silent) {
   return true;
 }
 
-export default function math_plugin(md, options) {
+export default function math_plugin(md: any, options: any) {
   // Default options — throwOnError:false lets KaTeX render an inline error
   // message (red text) instead of throwing, so the user sees a visible
   // error instead of silently falling back to raw LaTeX.
@@ -259,7 +259,7 @@ export default function math_plugin(md, options) {
     options.strict = "ignore";
   }
 
-  const katexInline: any = function (latex) {
+  const katexInline: any = function (latex: string) {
     options.displayMode = false;
     try {
       latex = latex
@@ -273,11 +273,11 @@ export default function math_plugin(md, options) {
     }
   };
 
-  const inlineRenderer: any = function (tokens, idx: any) {
+  const inlineRenderer: any = function (tokens: any[], idx: any) {
     return katexInline(tokens[idx].content);
   };
 
-  const katexBlock: any = function (latex) {
+  const katexBlock: any = function (latex: string) {
     options.displayMode = true;
     try {
       // Remove surrounding delimiters if present
@@ -289,7 +289,7 @@ export default function math_plugin(md, options) {
     }
   };
 
-  const blockRenderer: any = function (tokens, idx: any) {
+  const blockRenderer: any = function (tokens: any[], idx: any) {
     return katexBlock(tokens[idx].content) + "\n";
   };
 

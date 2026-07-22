@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
 import { FullScreenLoader } from "@/components/Preloader";
@@ -7,6 +8,14 @@ import Home from "./Home";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import LeftSidebarIconBar from "@/components/WorkspaceChat/ChatContainer/LeftSidebarIconBar";
 import { SidebarToggleProvider } from "@/components/Sidebar/SidebarToggle";
+import useWorkspaces from "@/hooks/useWorkspaces";
+import useUser from "@/hooks/useUser";
+import paths from "@/utils/paths";
+import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
+import { SquaresFour } from "@phosphor-icons/react/dist/csr/SquaresFour";
+import { GearSix } from "@phosphor-icons/react/dist/csr/GearSix";
+import { CalendarBlank } from "@phosphor-icons/react/dist/csr/CalendarBlank";
+import { Wrench } from "@phosphor-icons/react/dist/csr/Wrench";
 import type { CommandItem } from "@/components/Workspace/CommandPalette/CommandPalette";
 
 // PERF (CEO): left workspace rail (threads/footer) off the auth→home critical path.
@@ -56,6 +65,9 @@ export default function Main() {
 function MainLayout() {
   const { t } = useTranslation();
   const isMobile = useIsMobileLayout();
+  const navigate = useNavigate();
+  const { user } = useUser();
+  const { workspaces } = useWorkspaces();
   const [commandOpen, setCommandOpen] = useState(false);
 
   // Warm the workspace chat chunk while the user is on Home so the first
@@ -76,15 +88,57 @@ function MainLayout() {
     return () => cancel(id as number);
   }, []);
 
-  const commandItems: CommandItem[] = [
-    {
-      id: "docs",
-      group: "navigation",
-      label: t("commandHub.actions.docs"),
-      description: t("commandHub.actions.docsDescription"),
-      keywords: ["help", "documentation"],
-    },
-  ];
+  const commandItems = useMemo<CommandItem[]>(() => {
+    const items: CommandItem[] = [
+      {
+        id: "docs",
+        group: "navigation",
+        label: t("commandHub.actions.docs"),
+        description: t("commandHub.actions.docsDescription"),
+        icon: <BookOpen size={17} />,
+        keywords: ["help", "documentation"],
+        perform: () => navigate(paths.docs()),
+      },
+    ];
+
+    if (user?.role !== "default") {
+      items.push({
+        id: "agent-skills",
+        group: "navigation",
+        label: t("commandHub.actions.agentSkills", "Agent-Fähigkeiten"),
+        description: t(
+          "commandHub.actions.agentSkillsDescription",
+          "Agent-Fähigkeiten und Werkzeuge verwalten",
+        ),
+        icon: <Wrench size={17} />,
+        keywords: ["agent", "skills", "tools"],
+        perform: () => navigate(paths.settings.agentSkills()),
+      });
+      items.push({
+        id: "scheduled",
+        group: "navigation",
+        label: t("commandHub.actions.scheduled"),
+        description: t("commandHub.actions.scheduledDescription"),
+        icon: <CalendarBlank size={17} />,
+        keywords: ["jobs", "tasks", "schedule"],
+        perform: () => navigate(paths.settings.scheduledJobs()),
+      });
+    }
+
+    (workspaces as any[]).forEach((workspace: any) => {
+      items.push({
+        id: `workspace-${workspace.slug}`,
+        group: "workspaces",
+        label: workspace.name,
+        description: t("commandHub.actions.openWorkspace"),
+        icon: <SquaresFour size={17} />,
+        keywords: ["workspace", workspace.slug],
+        perform: () => navigate(paths.workspace.chat(workspace.slug)),
+      });
+    });
+
+    return items;
+  }, [t, navigate, user, workspaces]);
 
   return (
     <div className="flex h-dvh w-full overflow-hidden bg-theme-bg-primary">

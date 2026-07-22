@@ -31,6 +31,13 @@ import { FileList } from "./components/FileList";
 import { Overlays } from "./components/Overlays";
 import { Footer } from "./components/Footer";
 
+interface FilesystemItem {
+  name: string;
+  type: "file" | "directory";
+  path: string;
+  ext: string;
+}
+
 /**
  * Inner file-manager body. Extracted from the former default export so it can
  * be embedded as the "Dateien" tab inside the consolidated Quellen panel
@@ -117,7 +124,7 @@ export function FilesystemPanelBody({
     if (active) browse("");
   }, [scope]);
 
-  const breadcrumbs = getBreadcrumbs(currentPath, t);
+  const breadcrumbs = getBreadcrumbs(currentPath || "", t);
 
   // The "workspace" and "global" scopes are already separate storage roots on
   // the server (`/utils/*` = the shared uploads tree, `/utils/global/*` = the
@@ -129,18 +136,19 @@ export function FilesystemPanelBody({
   // raw `uploads/` filenames shown here — so the filter matched nothing and
   // hid every file this panel manages (counter showed N, list showed "none").
   const filteredItems = useMemo(() => {
-    if (!searchQuery.trim()) return items;
+    const typedItems = items as FilesystemItem[];
+    if (!searchQuery.trim()) return typedItems;
     const q = searchQuery.toLowerCase();
-    return items.filter((item) => item.name.toLowerCase().includes(q));
+    return typedItems.filter((item: FilesystemItem) => item.name.toLowerCase().includes(q));
   }, [items, searchQuery]);
 
   const fileCount = useMemo(
-    () => items.filter((i) => i.type === "file").length,
+    () => (items as FilesystemItem[]).filter((i: FilesystemItem) => i.type === "file").length,
     [items],
   );
 
   const handleDelete = useCallback(
-    async (itemPath, itemName) => {
+    async (itemPath: string, itemName: string) => {
       if (
         !(await confirm({
           title:
@@ -160,10 +168,10 @@ export function FilesystemPanelBody({
           message: t("sidebar.filesystem.deleteSuccess"),
         });
         browse(currentPath || "");
-      } catch (err) {
+      } catch (err: unknown) {
         setItemActionMsg({
           success: false,
-          message: `${t("sidebar.filesystem.deleteFailed")}: ${err?.message ?? err}`,
+          message: `${t("sidebar.filesystem.deleteFailed")}: ${err instanceof Error ? err.message : String(err)}`,
         });
       } finally {
         setDeletingPath(null);
@@ -173,8 +181,8 @@ export function FilesystemPanelBody({
   );
 
   const handleUploadFiles = useCallback(
-    async (fileList) => {
-      const files = Array.from(fileList) as any[];
+    async (fileList: FileList | File[]) => {
+      const files = Array.from(fileList) as File[];
       if (files.length === 0) return;
       setUploading(true);
       setUploadProgress({
@@ -202,9 +210,9 @@ export function FilesystemPanelBody({
               "error",
             );
           }
-        } catch (e) {
+        } catch (e: unknown) {
           showToast(
-            `${file.name}: ${e?.message || t("sidebar.filesystem.uploadFailed")}`,
+            `${file.name}: ${e instanceof Error ? e.message : t("sidebar.filesystem.uploadFailed")}`,
             "error",
           );
         }
@@ -227,7 +235,7 @@ export function FilesystemPanelBody({
     [browse, currentPath, t, apiPrefix],
   );
 
-  const handleDragEnter = useCallback((e) => {
+  const handleDragEnter = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
     dragCounterRef.current++;
@@ -236,7 +244,7 @@ export function FilesystemPanelBody({
     }
   }, []);
 
-  const handleDragLeave = useCallback((e) => {
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
     dragCounterRef.current--;
@@ -245,13 +253,13 @@ export function FilesystemPanelBody({
     }
   }, []);
 
-  const handleDragOver = useCallback((e) => {
+  const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
   }, []);
 
   const handleDrop = useCallback(
-    (e) => {
+    (e: React.DragEvent) => {
       e.preventDefault();
       e.stopPropagation();
       dragCounterRef.current = 0;
@@ -264,7 +272,7 @@ export function FilesystemPanelBody({
   );
 
   const handleFileInputChange = useCallback(
-    (e) => {
+    (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.files && e.target.files.length > 0) {
         handleUploadFiles(e.target.files);
       }
@@ -285,10 +293,10 @@ export function FilesystemPanelBody({
       setCreatingType(null);
       setNewItemName("");
       browse(currentPath || "");
-    } catch (err) {
+    } catch (err: unknown) {
       setItemActionMsg({
         success: false,
-        message: `${t("sidebar.filesystem.createFailed")}: ${err?.message ?? err}`,
+        message: `${t("sidebar.filesystem.createFailed")}: ${err instanceof Error ? err.message : String(err)}`,
       });
     }
   }, [
@@ -302,7 +310,7 @@ export function FilesystemPanelBody({
   ]);
 
   const handleDownload = useCallback(
-    async (item) => {
+    async (item: FilesystemItem) => {
       try {
         const res = await fetch(
           `${API_BASE}${apiPrefix}/download-file?path=${encodeURIComponent(item.path)}`,
@@ -327,7 +335,7 @@ export function FilesystemPanelBody({
   );
 
   const handlePreview = useCallback(
-    (item) => {
+    (item: FilesystemItem) => {
       openPreview({
         type: getPreviewType(item.ext),
         title: item.name,
@@ -341,8 +349,8 @@ export function FilesystemPanelBody({
   // chat-context pill (tracking path→uid); on deselect, remove that pill. The
   // reverse direction (pill X → deselect here) is handled by the effect below.
   const handleToggleSelection = useCallback(
-    async (item) => {
-      const alreadySelected = selectedFiles.some((f) => f.path === item.path);
+    async (item: FilesystemItem) => {
+      const alreadySelected = (selectedFiles as FilesystemItem[]).some((f: FilesystemItem) => f.path === item.path);
       toggleFileSelection(item);
       if (alreadySelected) {
         const uid = pathToUidRef.current.get(item.path);
@@ -387,7 +395,7 @@ export function FilesystemPanelBody({
       for (const [path, mappedUid] of pathToUidRef.current.entries()) {
         if (mappedUid !== uid) continue;
         pathToUidRef.current.delete(path);
-        const item = selectedFiles.find((f) => f.path === path);
+        const item = (selectedFiles as FilesystemItem[]).find((f: FilesystemItem) => f.path === path);
         if (item) toggleFileSelection(item);
         break;
       }
@@ -425,8 +433,8 @@ export function FilesystemPanelBody({
       ]
     : [];
 
-  const folders = filteredItems.filter((item) => item.type === "directory");
-  const allFiles = filteredItems.filter((item) => item.type === "file");
+  const folders = filteredItems.filter((item: FilesystemItem) => item.type === "directory");
+  const allFiles = filteredItems.filter((item: FilesystemItem) => item.type === "file");
 
   const REPORT_KEYWORDS = [
     "bericht",
@@ -438,22 +446,22 @@ export function FilesystemPanelBody({
     "pdf-report",
     "ki-bericht",
   ];
-  const reportFiles = allFiles.filter((item) => {
+  const reportFiles = allFiles.filter((item: FilesystemItem) => {
     const nameLower = item.name.toLowerCase();
     return (
       REPORT_KEYWORDS.some((kw) => nameLower.includes(kw)) ||
       (item.ext === ".pdf" && nameLower.includes("bericht"))
     );
   });
-  const uploadFiles = allFiles.filter((item) => !reportFiles.includes(item));
+  const uploadFiles = allFiles.filter((item: FilesystemItem) => !reportFiles.includes(item));
 
-  const toggleSection = (section) => {
-    setCollapsedSections((prev) => ({ ...prev, [section]: !prev[section] }));
+  const toggleSection = (section: string) => {
+    setCollapsedSections((prev: Record<string, boolean>) => ({ ...prev, [section]: !prev[section] }));
   };
 
   const toggleFolder = useCallback(
-    async (folderPath) => {
-      setExpandedFolders((prev) => {
+    async (folderPath: string) => {
+      setExpandedFolders((prev: Record<string, any>) => {
         const isExpanded = !!prev[folderPath];
         const next = { ...prev };
         if (isExpanded) {
@@ -472,14 +480,14 @@ export function FilesystemPanelBody({
           );
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
           const data = await res.json();
-          setExpandedFolders((prev) => ({
+          setExpandedFolders((prev: Record<string, any>) => ({
             ...prev,
             [folderPath]: { items: data.items || [], loading: false },
           }));
-        } catch (e) {
-          setExpandedFolders((prev) => ({
+        } catch (e: unknown) {
+          setExpandedFolders((prev: Record<string, any>) => ({
             ...prev,
-            [folderPath]: { items: [], loading: false, error: e.message },
+            [folderPath]: { items: [], loading: false, error: e instanceof Error ? e.message : String(e) },
           }));
         }
       }

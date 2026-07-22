@@ -37,7 +37,7 @@ function ActiveInputForm({ question, draft, updateDraft, onSubmit }: any) {
     <InputForm
       question={question}
       draft={draft}
-      onChange={(value) => updateDraft({ skipped: false, value })}
+      onChange={(value: string) => updateDraft({ skipped: false, value })}
       onSubmit={onSubmit}
     />
   );
@@ -56,11 +56,11 @@ function ActiveChoiceForm({
     <ChoiceForm
       question={question}
       draft={draft}
-      onChange={(patch) => updateDraft({ skipped: false, ...patch })}
+      onChange={(patch: Record<string, any>) => updateDraft({ skipped: false, ...patch })}
       onAutoAdvance={
         question.multiSelect
           ? null
-          : (patch) => onAutoAdvance({ skipped: false, ...patch })
+          : (patch: Record<string, any>) => onAutoAdvance({ skipped: false, ...patch })
       }
       allowSkip={allowSkip}
       onSkip={onSkip}
@@ -106,7 +106,7 @@ function CompletedSurvey({ questions, drafts, submittedResult }: any) {
     submittedResult?.timedOut || submittedResult?.skipped
       ? submittedResult
       : {
-          answers: (questions as any).map((q, i) =>
+          answers: (questions as any).map((q: any, i: number) =>
             answerForDraft(q, drafts[i]),
           ),
         };
@@ -132,7 +132,7 @@ export default function ClarifyingQuestionCard({
   const [responded, setResponded] = useState(false as any);
   const [submittedResult, setSubmittedResult] = useState<any>(null);
   const [drafts, setDrafts] = useState(() =>
-    (questions as any).map((q) => emptyDraftFor(q)),
+    (questions as any).map((q: any) => emptyDraftFor(q)),
   );
 
   const progressPercent = useTimeoutProgress(timeoutMs, {
@@ -152,7 +152,7 @@ export default function ClarifyingQuestionCard({
 
   const answeredCount = useMemo(
     () =>
-      questions.reduce((acc, q, i) => {
+      questions.reduce((acc: number, q: any, i: number) => {
         const r = answerForDraft(q, drafts[i]);
         return acc + (r.skipped ? 0 : 1);
       }, 0),
@@ -162,8 +162,8 @@ export default function ClarifyingQuestionCard({
   if (!total) return null;
 
   function updateDraft(patch: any) {
-    setDrafts((prev) =>
-      (prev as any).map((d, i) => (i === index ? { ...d, ...patch } : d)),
+    setDrafts((prev: any[]) =>
+      (prev as any).map((d: any, i: number) => (i === index ? { ...d, ...patch } : d)),
     );
   }
 
@@ -206,11 +206,11 @@ export default function ClarifyingQuestionCard({
 
   function handleSubmitAll(pendingPatch?: any) {
     const resolved = pendingPatch
-      ? (drafts as any).map((d, i) =>
+      ? (drafts as any).map((d: any, i: number) =>
           i === index ? { ...d, ...pendingPatch } : d,
         )
       : drafts;
-    const answers = (questions as any).map((q, i) =>
+    const answers = (questions as any).map((q: any, i: number) =>
       answerForDraft(q, resolved[i]),
     );
     send({ skipped: false, answers });

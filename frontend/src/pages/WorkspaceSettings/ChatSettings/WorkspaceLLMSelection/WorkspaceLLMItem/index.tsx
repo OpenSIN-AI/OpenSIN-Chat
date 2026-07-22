@@ -169,7 +169,7 @@ function SetupProvider({
     if (error) {
       showToast(
         t("workspaceLLMItem.saveFailed", {
-          name: LLMOption.name,
+          name: LLMOption!.name,
           error,
         }),
         "error",

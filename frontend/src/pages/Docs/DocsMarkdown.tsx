@@ -31,10 +31,10 @@ const md = new MarkdownIt({
 // routes (data-internal) or open external GitHub files in a new tab.
 const defaultLinkOpen =
   md.renderer.rules.link_open ||
-  ((tokens, idx, options, _env, self) =>
+  ((tokens: any, idx: any, options: any, _env: any, self: any) =>
     self.renderToken(tokens, idx, options));
 
-md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
+md.renderer.rules.link_open = function (tokens: any, idx: any, options: any, env: any, self: any) {
   const token = tokens[idx];
   const hrefIndex = token.attrIndex("href");
   if (hrefIndex >= 0) {
@@ -57,10 +57,10 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
 // (Vite public/ assets). Supports legacy ../screenshots/… and screenshots/… links.
 const defaultImage =
   md.renderer.rules.image ||
-  ((tokens, idx, options, _env, self) =>
+  ((tokens: any, idx: any, options: any, _env: any, self: any) =>
     self.renderToken(tokens, idx, options));
 
-md.renderer.rules.image = function (tokens, idx, options, env, self) {
+md.renderer.rules.image = function (tokens: any, idx: any, options: any, env: any, self: any) {
   const token = tokens[idx];
   const srcIndex = token.attrIndex("src");
   if (srcIndex >= 0) {
@@ -94,7 +94,7 @@ const copyIcon =
 const checkIcon =
   '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>';
 
-md.renderer.rules.fence = function (tokens, idx) {
+md.renderer.rules.fence = function (tokens: any, idx: any) {
   const token = tokens[idx];
   const info = token.info ? token.info.trim() : "";
   const lang = info.split(/\s+/g)[0] || "";

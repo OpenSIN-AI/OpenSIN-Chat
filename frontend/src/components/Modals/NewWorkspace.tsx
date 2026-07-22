@@ -36,7 +36,7 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
       } else {
         setError(message);
       }
-    } catch (err) {
+    } catch (err: any) {
       setError(
         t("newWorkspaceModal.creationFailed", {
           error: String(err?.message || err),

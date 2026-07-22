@@ -28,7 +28,7 @@ function getHljsTheme(isLight: boolean): string {
  */
 function formatAndHighlight(value: any): { __html: string } | null {
   const parsed =
-    typeof value === "string" ? safeJsonParse(value, value) : value;
+    typeof value === "string" ? safeJsonParse(value, value as any) : value;
   if (typeof parsed !== "object" || parsed === null) return null;
 
   const formatted = JSON.stringify(parsed, null, 2);

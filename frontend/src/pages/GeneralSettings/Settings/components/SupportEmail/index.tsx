@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import useSupportEmail from "@/hooks/useSupportEmail";
 
-export default function SupportEmail(): JSX.Element {
+export default function SupportEmail(): JSX.Element | null {
   const { user } = useUser();
   const { email: fetchedEmail, isLoading } = useSupportEmail();
   const [hasChanges, setHasChanges] = useState(false);

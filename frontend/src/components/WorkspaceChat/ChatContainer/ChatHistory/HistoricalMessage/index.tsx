@@ -298,10 +298,27 @@ function getThoughtChainContent(message: string | null | undefined) {
   return null;
 }
 
-/**
- * Currently only renders image attachments as clickable thumbnails that open in the lightbox.
- * Other attachment types may be supported here in the future.
- */
+function getFileIcon(mime: string) {
+  if (mime.includes("pdf")) return "📄";
+  if (mime.includes("word") || mime.includes("document")) return "📝";
+  if (mime.includes("sheet") || mime.includes("excel") || mime.includes("csv"))
+    return "📊";
+  if (mime.includes("presentation") || mime.includes("powerpoint"))
+    return "📽️";
+  if (mime.includes("zip") || mime.includes("archive") || mime.includes("compressed"))
+    return "📦";
+  if (mime.includes("text/") || mime.includes("json") || mime.includes("xml"))
+    return "📃";
+  return "📎";
+}
+
+function formatFileSize(bytes: number | undefined | null): string | null {
+  if (!bytes || bytes <= 0) return null;
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
 function ChatAttachments({ attachments = [] }: any) {
   const { t } = useTranslation();
   const imageAttachments = (attachments as any).filter(
@@ -309,24 +326,56 @@ function ChatAttachments({ attachments = [] }: any) {
       item?.contentString &&
       (!item?.mime || item.mime.toLowerCase().startsWith("image/")),
   );
-  if (!imageAttachments.length) return null;
+  const fileAttachments = (attachments as any).filter(
+    (item: any) => !item?.contentString && item?.name,
+  );
+  if (!imageAttachments.length && !fileAttachments.length) return null;
   return (
-    <div className="flex flex-wrap gap-4 mt-4">
-      {imageAttachments.map((item, index) => (
-        <button
-          type="button"
-          key={`${item.name}-${index}`}
-          aria-label={item.name || t("chat_window.source", "Source")}
-          onClick={() => openImageLightbox(imageAttachments, index)}
-          className="p-0 border-none bg-transparent cursor-pointer hover:opacity-80 transition-opacity"
-        >
-          <img
-            alt={`Attachment: ${item.name}`}
-            src={item.contentString}
-            className="w-[120px] h-[120px] object-cover rounded-lg"
-          />
-        </button>
-      ))}
+    <div className="flex flex-col gap-2 mt-3">
+      {fileAttachments.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {fileAttachments.map((item: any, index: number) => (
+            <div
+              key={`${item.name}-${index}`}
+              className="inline-flex items-center gap-2 rounded-lg border border-[var(--chat-border)] bg-[var(--chat-user-bubble)] px-3 py-2 max-w-[220px]"
+              title={item.name}
+            >
+              <span className="text-base leading-none shrink-0" aria-hidden>
+                {getFileIcon(item.mime || "")}
+              </span>
+              <div className="flex flex-col min-w-0">
+                <span className="text-xs font-medium text-[var(--chat-text)] truncate leading-tight">
+                  {item.name}
+                </span>
+                {formatFileSize(item.size) && (
+                  <span className="text-[10px] text-[var(--chat-text-muted)] leading-tight">
+                    {formatFileSize(item.size)}
+                  </span>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+      {imageAttachments.length > 0 && (
+        <div className="flex flex-wrap gap-4">
+          {imageAttachments.map((item: any, index: number) => (
+            <button
+              type="button"
+              key={`${item.name}-${index}`}
+              aria-label={item.name || t("chat_window.source", "Source")}
+              onClick={() => openImageLightbox(imageAttachments, index)}
+              className="p-0 border-none bg-transparent cursor-pointer hover:opacity-80 transition-opacity"
+            >
+              <img
+                alt={`Attachment: ${item.name}`}
+                src={item.contentString}
+                className="w-[120px] h-[120px] object-cover rounded-lg"
+              />
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

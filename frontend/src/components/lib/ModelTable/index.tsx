@@ -191,6 +191,14 @@ function ModelRow({
   ui = {
     showRuntime: true,
   },
+}: {
+  alias: string;
+  model: any;
+  downloadModel?: ((modelId: string, fileSize: any, cb: (p: number) => void) => void) | null;
+  uninstallModel?: ((modelId: string) => void) | null;
+  setActiveModel: (id: string) => void;
+  selectedModelId: string;
+  ui?: { showRuntime: boolean };
 }) {
   const { t } = useTranslation();
   const modelRowRef = useRef<any>(null);

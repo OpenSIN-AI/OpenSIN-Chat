@@ -106,7 +106,7 @@ export default function GeneratedFileCard({
 }: GeneratedFileCardProps): JSX.Element {
   const { t } = useTranslation();
   const [downloading, setDownloading] = useState(false);
-  const { badge, bg, text, type } = getFileDisplayInfo(file.filename, t);
+  const { badge, bg, text, type } = getFileDisplayInfo(file.filename ?? "", t);
 
   const handleDownload = async () => {
     if (downloading || !file.storageFilename) return;

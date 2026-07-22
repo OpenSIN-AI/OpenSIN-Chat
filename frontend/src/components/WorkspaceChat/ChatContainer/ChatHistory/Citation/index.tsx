@@ -13,12 +13,15 @@ import { GithubLogo } from "@phosphor-icons/react/dist/csr/GithubLogo";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { YoutubeLogo } from "@phosphor-icons/react/dist/csr/YoutubeLogo";
 import { LinkSimple } from "@phosphor-icons/react/dist/csr/LinkSimple";
+import { DownloadSimple } from "@phosphor-icons/react/dist/csr/DownloadSimple";
 import { GitlabLogo } from "@phosphor-icons/react/dist/csr/GitlabLogo";
 import GmailLogo from "@/pages/Admin/Agents/GMailSkillPanel/gmail.png";
 import GoogleCalendarLogo from "@/pages/Admin/Agents/GoogleCalendarSkillPanel/google-calendar.png";
 import OutlookLogo from "@/pages/Admin/Agents/OutlookSkillPanel/outlook.png";
 import { toPercentString } from "@/utils/numbers";
 import { useTranslation } from "react-i18next";
+import { API_BASE } from "@/utils/constants";
+import { baseHeaders } from "@/utils/request";
 import { useSourcesSidebar } from "../../ChatSidebar";
 import {
   combineLikeSources,
@@ -89,7 +92,7 @@ export function SourceTypeCircle({
   const Icon = CIRCLE_ICONS[type] || CIRCLE_ICONS.file;
   const [imgError, setImgError] = useState(false);
 
-  let faviconUrl = null;
+  let faviconUrl: string | null = null;
   if (type === "link" && url) {
     try {
       const hostname = new URL(url).hostname;
@@ -210,15 +213,39 @@ export function omitChunkHeader(text = "") {
 export function CitationDetailModal({
   source,
   onClose,
+  workspaceSlug,
 }: {
   source: CombinedCitationSource | null;
   onClose: () => void;
+  workspaceSlug?: string;
 }) {
   const { t } = useTranslation();
   if (!source) return null;
 
   const { references, title, chunks } = source;
   const { isUrl, text: webpageUrl, href: linkTo } = parseChunkSource(source);
+
+  const handleDownload = async () => {
+    if (!workspaceSlug || !title) return;
+    try {
+      const res = await fetch(
+        `${API_BASE}/workspace/${workspaceSlug}/download-document?filename=${encodeURIComponent(title)}`,
+        { headers: baseHeaders() },
+      );
+      if (!res.ok) throw new Error("Download failed");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = title;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch {
+      // silently fail — file may not exist in uploads
+    }
+  };
 
   return (
     <ModalWrapper isOpen={!!source}>
@@ -227,7 +254,7 @@ export function CitationDetailModal({
           <div className="w-full flex gap-x-2 items-center">
             {isUrl ? (
               <a
-                href={linkTo}
+                href={linkTo ?? undefined}
                 target="_blank"
                 rel="noreferrer"
                 className="text-xl w-[90%] font-semibold text-theme-text-primary light:text-theme-text-primary whitespace-nowrap hover:underline hover:text-blue-300 light:hover:text-blue-600 flex items-center gap-x-1"
@@ -301,6 +328,18 @@ export function CitationDetailModal({
               </Fragment>
             ))}
             <div className="mb-6"></div>
+            {!isUrl && workspaceSlug && title && (
+              <div className="pb-4">
+                <button
+                  type="button"
+                  onClick={handleDownload}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-600 light:border-slate-300 bg-zinc-800 light:bg-slate-100 text-sm font-medium text-theme-text-primary light:text-theme-text-primary hover:bg-zinc-700 light:hover:bg-slate-200 transition-colors cursor-pointer"
+                >
+                  <DownloadSimple size={16} />
+                  {t("citation.downloadOriginal", "Originaldatei herunterladen")}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

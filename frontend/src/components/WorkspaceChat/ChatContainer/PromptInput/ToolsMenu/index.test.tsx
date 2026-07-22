@@ -150,7 +150,7 @@ describe("ToolsMenu", () => {
     renderMenu();
     const backdrop = document.body.querySelector(".fixed.inset-0");
     expect(backdrop).toBeInTheDocument();
-    await user.click(backdrop);
+    await user.click(backdrop!);
     expect(setShowing).toHaveBeenCalledWith(false);
   });
 
@@ -158,7 +158,7 @@ describe("ToolsMenu", () => {
     const user = userEvent.setup();
     renderMenu();
     const popover = screen.getByTestId("slash-commands-tab").parentElement;
-    await user.click(popover);
+    await user.click(popover!);
     expect(setShowing).not.toHaveBeenCalled();
   });
 

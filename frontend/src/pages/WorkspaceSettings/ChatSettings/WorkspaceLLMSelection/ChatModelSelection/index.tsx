@@ -15,7 +15,7 @@ export default function ChatModelSelection({
   provider,
   workspace,
   setHasChanges,
-}: ChatModelSelectionProps): JSX.Element {
+}: ChatModelSelectionProps): JSX.Element | null {
   const { defaultModels, customModels, loading } =
     useGetProviderModels(provider);
   const { t } = useTranslation();

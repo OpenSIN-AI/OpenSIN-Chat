@@ -43,7 +43,7 @@ export default function AttachItem({
     document: parsedFiles,
     isLoading,
     refresh,
-  } = useDocument(slug, threadSlug);
+  } = useDocument(slug!, threadSlug);
 
   const files = parsedFiles?.files || [];
   const currentTokens = parsedFiles?.currentContextTokenCount || 0;
@@ -61,7 +61,7 @@ export default function AttachItem({
    */
   async function handleRemoveAttachment(e) {
     const { document } = e.detail;
-    await Workspace.deleteParsedFiles(slug, [document.id]);
+    await Workspace.deleteParsedFiles(slug!, [document.id]);
     refresh();
   }
 
@@ -162,10 +162,10 @@ export default function AttachItem({
             onEmbeddingChange={setIsEmbedding}
             tooltipRef={tooltipRef}
             isLoading={isLoading}
-            files={files}
+            files={files as any}
             currentTokens={currentTokens}
             contextWindow={contextWindow}
-            workspaceSlug={slug}
+            workspaceSlug={slug!}
             threadSlug={threadSlug}
             refresh={refresh}
           />
@@ -191,7 +191,7 @@ export default function AttachItem({
               onMouseDown={(e) => e.stopPropagation()}
             >
               <AddSourceMenu
-                workspaceSlug={slug}
+                workspaceSlug={slug!}
                 threadSlug={threadSlug}
                 onClose={() => setShowMenu(false)}
                 onAddLocalFiles={triggerLocalUpload}

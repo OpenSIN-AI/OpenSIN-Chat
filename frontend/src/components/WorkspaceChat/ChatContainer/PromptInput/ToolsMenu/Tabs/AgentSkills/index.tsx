@@ -89,7 +89,7 @@ export default function AgentSkillsTab({
   }
 
   function toggleSection(sectionId: any) {
-    setExpandedSections((prev) => ({
+    setExpandedSections((prev: any) => ({
       ...prev,
       [sectionId]: !prev[sectionId],
     }));
@@ -100,7 +100,7 @@ export default function AgentSkillsTab({
   }
 
   function toggleSubSection(subSectionId: any) {
-    setExpandedSubSections((prev) => ({
+    setExpandedSubSections((prev: any) => ({
       ...prev,
       [subSectionId]: !prev[subSectionId],
     }));
@@ -111,27 +111,27 @@ export default function AgentSkillsTab({
     if (!searchQuery.trim()) return sections;
     const q = searchQuery.toLowerCase();
     return sections
-      .map((section) => {
-        const items = (section.items as any).filter((item) => {
+      .map((section: any) => {
+        const items = (section.items as any).filter((item: any) => {
           const nameMatches = item.name.toLowerCase().includes(q);
           const subSkillMatches =
-            item.subSkills?.some((sub) => sub.name.toLowerCase().includes(q)) ??
+            item.subSkills?.some((sub: any) => sub.name.toLowerCase().includes(q)) ??
             false;
           return nameMatches || subSkillMatches;
         });
         return {
           ...section,
           items,
-          enabledCount: (items as any).filter((i) => i.enabled).length,
+          enabledCount: (items as any).filter((i: any) => i.enabled).length,
         };
       })
-      .filter((section) => section.items.length > 0);
+      .filter((section: any) => section.items.length > 0);
   }, [sections, searchQuery]);
 
   // Flat list of navigable items for keyboard nav
   const { flatItems, flatIndexMap } = useMemo(() => {
-    const items = [];
-    const indexMap = {};
+    const items: any[] = [];
+    const indexMap: Record<string, number> = {};
     for (const section of filteredSections) {
       indexMap[section.id] = items.length;
       items.push({
@@ -171,7 +171,7 @@ export default function AgentSkillsTab({
   useToolsMenuItems({
     items: flatItems,
     highlightedIndex,
-    onSelect: (item) => {
+    onSelect: (item: any) => {
       if (item.type === "header") return item.onToggle();
       if (!agentSessionActive) item.onToggle();
     },
@@ -194,7 +194,7 @@ export default function AgentSkillsTab({
           placeholder={t("common.search")}
         />
       )}
-      {(filteredSections as any).map((section) => (
+      {(filteredSections as any).map((section: any) => (
         <SkillSection
           key={section.id}
           name={section.name}
@@ -205,7 +205,7 @@ export default function AgentSkillsTab({
           isMcp={section.isMcp}
           highlighted={highlightedIndex === flatIndexMap[section.id]}
         >
-          {(section.items as any).map((item) => (
+          {(section.items as any).map((item: any) => (
             <div key={item.id}>
               <SkillRow
                 name={item.name}
@@ -220,7 +220,7 @@ export default function AgentSkillsTab({
                   expanded={isSubSectionExpanded(item.id)}
                   onToggle={() => toggleSubSection(item.id)}
                   enabledCount={
-                    (item.subSkills as any).filter((s) => s.enabled).length
+                    (item.subSkills as any).filter((s: any) => s.enabled).length
                   }
                   totalCount={item.subSkills.length}
                   highlighted={
@@ -228,7 +228,7 @@ export default function AgentSkillsTab({
                   }
                   indented
                 >
-                  {(item.subSkills as any).map((subItem) => (
+                  {(item.subSkills as any).map((subItem: any) => (
                     <SkillRow
                       key={subItem.id}
                       name={subItem.name}

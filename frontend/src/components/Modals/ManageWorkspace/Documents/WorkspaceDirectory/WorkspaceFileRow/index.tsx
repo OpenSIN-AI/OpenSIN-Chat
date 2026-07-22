@@ -30,11 +30,11 @@ export default function WorkspaceFileRow({
   toggleSelection,
   disableSelection,
   setSelectedItems,
-}) {
+}: any) {
   const { t } = useTranslation();
   const [showInsights, setShowInsights] = useState(false);
 
-  const onRemoveClick = async (e) => {
+  const onRemoveClick = async (e: React.MouseEvent) => {
     e.stopPropagation();
     setLoading(true);
 
@@ -53,18 +53,18 @@ export default function WorkspaceFileRow({
     setLoading(false);
   };
 
-  function toggleRowSelection(e) {
+  function toggleRowSelection(e: React.MouseEvent) {
     if (disableSelection) return;
     e.stopPropagation();
     toggleSelection();
   }
 
-  function handleRowSelection(e) {
+  function handleRowSelection(e: React.MouseEvent) {
     e.stopPropagation();
     toggleSelection();
   }
 
-  const isMovedItem = movedItems?.some((movedItem) => movedItem.id === item.id);
+  const isMovedItem = movedItems?.some((movedItem: any) => movedItem.id === item.id);
   return (
     <>
       {showInsights && (
@@ -176,7 +176,7 @@ const WatchForChanges = memo(function WatchForChanges({
   }
   const watchEvent = watchEventRef.current;
 
-  const updateWatchStatus = async (e) => {
+  const updateWatchStatus = async (e: React.MouseEvent) => {
     try {
       e.stopPropagation();
       if (!watched) window.dispatchEvent(watchEvent);
@@ -202,9 +202,9 @@ const WatchForChanges = memo(function WatchForChanges({
         { clear: true },
       );
       setWatched(!watched);
-    } catch (error) {
+    } catch (error: unknown) {
       showToast(
-        `${t("workspaceFileRow.failedToWatch")} ${error.message}`,
+        `${t("workspaceFileRow.failedToWatch")} ${error instanceof Error ? error.message : String(error)}`,
         "error",
         {
           clear: true,
@@ -244,7 +244,7 @@ const WatchForChanges = memo(function WatchForChanges({
   );
 });
 
-const RemoveItemFromWorkspace = ({ item: _item, onClick }) => {
+const RemoveItemFromWorkspace = ({ item: _item, onClick }: any) => {
   const { t } = useTranslation();
   return (
     <div>

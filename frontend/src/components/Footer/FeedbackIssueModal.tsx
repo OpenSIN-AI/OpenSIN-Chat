@@ -110,12 +110,12 @@ export default function FeedbackIssueModal({
       }
 
       setCreated({
-        number: result.issue.number,
-        url: result.issue.url,
-        title: result.issue.title,
+        number: result.issue!.number,
+        url: result.issue!.url,
+        title: result.issue!.title,
       });
       showToast(
-        t("feedbackModal.createSuccess", { number: result.issue.number }),
+        t("feedbackModal.createSuccess", { number: result.issue!.number }),
         "success",
       );
     } catch (err: any) {

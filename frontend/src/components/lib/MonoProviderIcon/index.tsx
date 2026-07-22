@@ -94,7 +94,7 @@ export default function MonoProviderIcon({
   className = "",
   fallbackIconKey = null,
 }: any) {
-  let Icon = null;
+  let Icon: React.ComponentType<any> | null = null;
 
   if (match === "exact") Icon = providerIcons[provider?.toLowerCase()];
   else if (match === "pattern") Icon = findIconByModelName(provider);
