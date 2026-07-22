@@ -107,7 +107,7 @@ const PromptReply: any = ({
     return (
       <div className="flex justify-start w-full py-2.5">
         <div className="flex flex-col md:max-w-[85%] w-full">
-          <span className="inline-block p-2 rounded-lg bg-red-50 text-red-500">
+          <span className="inline-block p-2 rounded-lg bg-red-500/[0.08] text-red-400">
             <Warning className="h-4 w-4 mb-1 inline-block" />{" "}
             {t("promptReply.couldNotRespond")}
             <span className="text-xs">

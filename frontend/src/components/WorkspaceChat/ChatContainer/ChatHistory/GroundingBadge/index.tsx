@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Sparkle } from "@phosphor-icons/react/dist/csr/Sparkle";
 
@@ -7,10 +7,14 @@ function GroundingIndicator({ sources = [] }: { sources?: any[] }) {
   const { t } = useTranslation();
   if (!sources || sources.length === 0) return null;
 
-  const uniqueSources = new Set(
-    sources.map(
-      (s: any) => s?.title || s?.name || s?.location || JSON.stringify(s),
-    ),
+  const uniqueSources = useMemo(
+    () =>
+      new Set(
+        sources.map(
+          (s: any) => s?.title || s?.name || s?.location || JSON.stringify(s),
+        ),
+      ),
+    [sources],
   );
   const count = uniqueSources.size;
 

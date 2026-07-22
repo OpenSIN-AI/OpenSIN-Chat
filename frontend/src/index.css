@@ -368,6 +368,23 @@
   --theme-scrollbar-thumb: #27272a;
   --theme-scrollbar-thumb-hover: #3f3f46;
   --theme-scrollbar-track: transparent;
+
+  /* Z-Index Scale */
+  --z-base: 0;
+  --z-chat-content: 2;
+  --z-prompt-input: 10;
+  --z-sidebar-panel: 20;
+  --z-left-sidebar: 30;
+  --z-right-sidebar: 40;
+  --z-dropdown: 50;
+  --z-sticky: 60;
+  --z-overlay: 80;
+  --z-fab: 100;
+  --z-tooltip: 110;
+  --z-modal-backdrop: 120;
+  --z-modal: 130;
+  --z-toast: 140;
+  --z-dnd-overlay: 150;
 }
 
 [data-theme="light"] {
