@@ -19,7 +19,7 @@ const { convertAudioToWav } = require("./convertAudioToWav");
 const { verifyPayloadIntegrity } = require("./middleware/verifyIntegrity");
 const { httpLogger } = require("./middleware/httpLogger");
 const app = express();
-const FILE_LIMIT = "5GB";
+const FILE_LIMIT = process.env.COLLECTOR_BODY_LIMIT || "50mb";
 const COLLECTOR_PORT = getCollectorPort();
 
 // Only log HTTP requests in development mode and if the ENABLE_HTTP_LOGGER environment variable is set to true
@@ -240,7 +240,7 @@ app.get("/health", function (_, response) {
 });
 
 app.all("{*path}", function (_, response) {
-  response.sendStatus(200);
+  response.sendStatus(404);
 });
 
 const server = app

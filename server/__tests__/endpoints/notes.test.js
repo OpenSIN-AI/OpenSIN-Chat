@@ -29,7 +29,8 @@ jest.mock("../../models/workspace");
 jest.mock("../../utils/paths", () => ({ getStoragePath: jest.fn(() => "/tmp") }));
 
 const { WorkspaceNote } = require("../../models/workspaceNote");
-const { reqBody } = require("../../utils/http");
+const { Workspace } = require("../../models/workspace");
+const { reqBody, userFromSession } = require("../../utils/http");
 const { createMockApp } = require("../helpers/mockExpressApp");
 const { noteEndpoints } = require("../../endpoints/notes");
 
@@ -226,5 +227,46 @@ describe("PUT /workspaces/:slug/notes/:id — content validation parity", () => 
 
     expect(res.statusCode).toBe(400);
     expect(res.body.error).toMatch(/100,000/);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// POST /workspaces/:slug/notes/:id/share — workspace access control
+// ---------------------------------------------------------------------------
+describe("POST /workspaces/:slug/notes/:id/share — access control", () => {
+  beforeEach(() => {
+    WorkspaceNote.get.mockResolvedValue({ id: 7, workspaceId: 1 });
+    Workspace.get.mockResolvedValue({ id: 2, slug: "other" });
+    userFromSession.mockResolvedValue({ id: 5 });
+  });
+
+  it("rejects a target workspace the user cannot access", async () => {
+    WorkspaceNote.getShareableWorkspaces.mockResolvedValue([]);
+
+    const res = await call("POST", "/workspaces/ws/notes/7/share", {
+      body: { targetWorkspaceSlug: "other" },
+      locals: WS_LOCALS,
+    });
+
+    expect(res.statusCode).toBe(404);
+    expect(WorkspaceNote.shareToWorkspace).not.toHaveBeenCalled();
+  });
+
+  it("shares only when the target is in the allowed workspace set", async () => {
+    WorkspaceNote.getShareableWorkspaces.mockResolvedValue([
+      { id: 2, slug: "other" },
+    ]);
+    WorkspaceNote.shareToWorkspace.mockResolvedValue({
+      note_id: 7,
+      target_workspace_id: 2,
+    });
+
+    const res = await call("POST", "/workspaces/ws/notes/7/share", {
+      body: { targetWorkspaceSlug: "other" },
+      locals: WS_LOCALS,
+    });
+
+    expect(res.statusCode).toBe(200);
+    expect(WorkspaceNote.shareToWorkspace).toHaveBeenCalledWith(7, 2, 5);
   });
 });

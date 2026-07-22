@@ -111,8 +111,8 @@ services:
       - STORAGE_DIR=/app/server/storage
       - AUTH_TOKEN=${AUTH_TOKEN:?AUTH_TOKEN env var is required in production}
       - JWT_SECRET=${JWT_SECRET:?JWT_SECRET env var is required in production}
-      - SIG_KEY=${SIG_KEY}
-      - SIG_SALT=${SIG_SALT}
+      - SIG_KEY=${SIG_KEY:?SIG_KEY env var is required in production}
+      - SIG_SALT=${SIG_SALT:?SIG_SALT env var is required in production}
       - LLM_PROVIDER=${LLM_PROVIDER:-generic-openai}
       - GENERIC_OPEN_AI_BASE_PATH=${GENERIC_OPEN_AI_BASE_PATH}
       - GENERIC_OPEN_AI_API_KEY=${GENERIC_OPEN_AI_API_KEY}

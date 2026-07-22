@@ -1,19 +1,15 @@
 name: PR Lint & Test (GitHub-hosted)
 
-# Run on every PR to main and on push to main.
+# Run on every PR to main.
 # This is the required status check that gates mergeability.
 # Self-hosted CI pipeline (on OCI VM) remains separate for deploy.
 
 on:
   pull_request:
     branches: [main]
-  push:
-    branches: [main]
 
 permissions:
   contents: read
-  checks: write
-  pull-requests: write
 
 jobs:
   lint-test:
@@ -30,6 +26,16 @@ jobs:
         with:
           node-version: "22"
           cache: "yarn"
+          cache-dependency-path: |
+            frontend/yarn.lock
+            server/yarn.lock
+            collector/yarn.lock
+
+      - name: Activate Yarn
+        run: |
+          corepack enable
+          corepack prepare yarn@1.22.22 --activate
+          yarn --version
 
       - name: Install dependencies
         run: |
@@ -62,6 +68,12 @@ jobs:
           cd frontend && yarn type-check
         continue-on-error: false
 
+      - name: Verify frontend translations and bundle graph
+        run: |
+          cd frontend
+          yarn verify:translations
+          yarn check:bundle
+
       - name: Test server
         run: |
           cd server && NODE_OPTIONS="--experimental-vm-modules" yarn test --ci
@@ -77,12 +89,10 @@ jobs:
           cd collector && yarn test --ci
         continue-on-error: false
 
-      - name: Report status
-        if: always()
+      - name: Build frontend
         run: |
-          if [ $? -eq 0 ]; then
-            echo "✅ All checks passed (lint + test)"
-          else
-            echo "❌ Lint or test failed"
-            exit 1
-          fi
+          cd frontend && yarn build
+
+      - name: Report status
+        if: success()
+        run: echo "All checks passed (lint + test)"

@@ -5,6 +5,26 @@ networks:
     driver: bridge
 
 services:
+  fix-permissions:
+    image: busybox:1.36.1
+    container_name: opensin-fix-perms
+    user: root
+    command: >
+      sh -c "mkdir -p /storage/tmp /storage/models /storage/vector-cache /storage/lancedb /storage/documents /storage/assets /storage/generated-files /storage/generated-reports /storage/plugins /storage/push-notifications /collector-hotdir /collector-outputs && chown -R ${UID:-1000}:${GID:-1000} /storage /collector-hotdir /collector-outputs && echo 'Permissions fixed'"
+    volumes:
+      - "../server/storage-opensin:/storage:rw"
+      - "../collector/hotdir:/collector-hotdir:rw"
+      - "../collector/outputs:/collector-outputs:rw"
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+    security_opt:
+      - no-new-privileges:true
+    restart: "no"
+
   opensin-chat:
     image: "${OPENSIN_IMAGE_REPOSITORY:-opensin-chat}:${OPENSIN_IMAGE_TAG:-local}"
     container_name: "${COMPOSE_CONTAINER_NAME:-opensin-chat}"
@@ -17,13 +37,16 @@ services:
         ARG_GID: "${GID:-1000}"
         SKIP_CHROMIUM: "${SKIP_CHROMIUM:-1}"
         CHROMIUM_SHA256: "${CHROMIUM_SHA256:-}"
-        CHROMIUM_DOWNLOAD_URL: "${CHROMIUM_DOWNLOAD_URL:-https://webassets.anythingllm.com/chromium-1088-linux-arm64.zip}"
+        CHROMIUM_DOWNLOAD_URL: "${CHROMIUM_DOWNLOAD_URL:-}"
         VITE_ENABLE_IMAGE_GENERATION: "${VITE_ENABLE_IMAGE_GENERATION:-false}"
         VITE_ENABLE_VIDEO_GENERATION: "${VITE_ENABLE_VIDEO_GENERATION:-false}"
         VITE_ENABLE_CVOICE_TTS: "${VITE_ENABLE_CVOICE_TTS:-false}"
 
     init: true
     restart: unless-stopped
+    depends_on:
+      fix-permissions:
+        condition: service_completed_successfully
 
     user: "${UID:-1000}:${GID:-1000}"
 
@@ -47,7 +70,6 @@ services:
       - "/tmp:size=256m,mode=1777"
 
     env_file:
-      - ../.env
       - .env
 
     environment:

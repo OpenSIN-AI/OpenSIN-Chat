@@ -14,7 +14,10 @@ import { DnDFileUploaderProvider } from "./ChatContainer/DnDWrapper";
 import { AgentRunsProvider } from "./ChatContainer/AgentSessionsSidebar/AgentRunsContext";
 import { WarningCircle } from "@phosphor-icons/react/dist/csr/WarningCircle";
 import { AUTH_TOKEN } from "@/utils/constants";
-import { safeGetItem } from "@/utils/safeStorage";
+import {
+  safeGetItem,
+  safeGetSessionItem,
+} from "@/utils/safeStorage";
 import { useTranslation } from "react-i18next";
 import i18n from "@/i18n";
 import {
@@ -69,15 +72,9 @@ export default function WorkspaceChat({
     };
   }, []);
 
-  let hasPendingMessage = false;
-  try {
-    hasPendingMessage = !!sessionStorage.getItem(PENDING_HOME_MESSAGE);
-  } catch (error) {
-    console.warn(
-      "[index] non-fatal error:",
-      error instanceof Error ? error.message : error,
-    );
-  }
+  const hasPendingMessage = Boolean(
+    safeGetSessionItem(PENDING_HOME_MESSAGE),
+  );
   if (loaded === null) {
     if (hasPendingMessage) {
       return (

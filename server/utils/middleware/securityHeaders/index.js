@@ -9,13 +9,13 @@
  * Headers set:
  *  - X-Content-Type-Options: nosniff      (blocks MIME sniffing)
  *  - X-Frame-Options: DENY                (clickjacking, all routes now)
- *  - X-XSS-Protection: 1; mode=block    (legacy XSS protection for older browsers)
+ *  - X-XSS-Protection: 0                (disables the unsafe legacy filter)
  *  - Referrer-Policy: strict-origin-when-cross-origin
  *  - Permissions-Policy                   (kills unused powerful APIs)
  *  - X-Powered-By                         (removed — no stack fingerprinting)
- *  - Strict-Transport-Security            (only when ENABLE_HSTS=true; set it
- *    once TLS termination is confirmed — HSTS on plain HTTP is harmless but
- *    misleading, HSTS behind broken TLS locks users out)
+ *  - Strict-Transport-Security            (enabled by default in production;
+ *    set DISABLE_HSTS=true only when TLS termination is not guaranteed, or
+ *    ENABLE_HSTS=true to opt in outside production)
  *  - Content-Security-Policy              (enforced; restricts outbound
  *    fetches to known LLM + storage endpoints, no inline scripts)
  *  - Content-Security-Policy-Report-Only  (only when CSP_REPORT_ONLY=true;
@@ -32,6 +32,14 @@ const PERMISSIONS_POLICY = [
   // microphone stays self-allowed: speech-to-text uses it
   "microphone=(self)",
 ].join(", ");
+
+function envFlag(name) {
+  return ["1", "true", "yes", "on"].includes(
+    String(process.env[name] ?? "")
+      .trim()
+      .toLowerCase(),
+  );
+}
 
 const ENFORCED_CSP_CONNECT_SRC = [
   "'self'",
@@ -99,6 +107,7 @@ const REPORT_ONLY_CSP = [
   "frame-src 'self' blob: data:",
   "base-uri 'self'",
   "frame-ancestors 'self'",
+  "report-uri /api/csp-violation",
 ].join("; ");
 
 /**
@@ -107,12 +116,15 @@ const REPORT_ONLY_CSP = [
  */
 function securityHeaders() {
   const hstsEnabled =
-    String(process.env.ENABLE_HSTS).toLowerCase() === "true" ||
-    (process.env.NODE_ENV === "production" && !process.env.DISABLE_HSTS);
-  const cspReportOnly =
-    String(process.env.CSP_REPORT_ONLY).toLowerCase() === "true";
+    envFlag("ENABLE_HSTS") ||
+    (process.env.NODE_ENV === "production" && !envFlag("DISABLE_HSTS"));
+  const cspReportOnly = envFlag("CSP_REPORT_ONLY");
 
-  return function securityHeadersMiddleware(_request, response, next) {
+  const crossOriginIsolationEnabled = envFlag(
+    "ENABLE_CROSS_ORIGIN_ISOLATION",
+  );
+
+  return function securityHeadersMiddleware(request, response, next) {
     response.removeHeader("X-Powered-By");
     response.setHeader("X-Content-Type-Options", "nosniff");
     response.setHeader("X-Frame-Options", "DENY");
@@ -121,10 +133,27 @@ function securityHeaders() {
     // Setting to "0" explicitly disables the legacy filter.
     response.setHeader("X-XSS-Protection", "0");
     response.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
-    // P2 fix: Cross-Origin isolation headers (normally set by Helmet)
-    response.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-    response.setHeader("Cross-Origin-Resource-Policy", "same-origin");
-    response.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+
+    // The public widget and its API are intentionally consumed by third-party
+    // origins. CORP=same-origin would make the documented embed feature fail.
+    const isPublicEmbedResource =
+      request.path === "/embed" ||
+      request.path.startsWith("/embed/") ||
+      request.path === "/api/embed" ||
+      request.path.startsWith("/api/embed/");
+    response.setHeader(
+      "Cross-Origin-Resource-Policy",
+      isPublicEmbedResource ? "cross-origin" : "same-origin",
+    );
+
+    // Preserve OAuth/popup integrations by default. Full cross-origin
+    // isolation is opt-in because COEP=require-corp blocks many legitimate
+    // external images, workers and provider resources.
+    response.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+    if (crossOriginIsolationEnabled && !isPublicEmbedResource) {
+      response.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+      response.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+    }
     response.setHeader("Permissions-Policy", PERMISSIONS_POLICY);
 
     if (response.locals && typeof response.locals === "object") {

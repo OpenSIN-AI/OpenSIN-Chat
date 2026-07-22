@@ -21,27 +21,41 @@ server/coverage
 # Runtime data (mounted as volumes, not baked into the image)
 server/storage
 server/storage-opensin
+storage
 collector/hotdir
 collector/outputs
 
 # Docker / env files (mounted at runtime or contain secrets)
 docker/.env
 docker-opensin/.env
+docker-opensin/.env.*
 .env
-.env.example
+.env.*
 
-# IDE / OS noise
+# IDE / OS / local database noise
 .DS_Store
 .vscode
 .idea
 *.swp
 *.swo
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
 
 # OpenSIN tooling / CI / internal directories (not needed in the image)
-.sin
-.sin-code
-.pcpm
-.claude
+**/.sin
+**/.sin-code
+**/.sin_evidence
+**/.pcpm
+**/.claude
+**/.codex
+**/.mimocode
+**/.qoder
+**/.scratch
+**/.skillopt
+**/.skillopt-sleep
 .github
 n8n
 ceo-audits
@@ -50,13 +64,27 @@ images
 extras
 locales
 docker-opensin
+.skillopt
+.skillopt-sleep
+.codex
+.qoder
+sin_goal_mode.db
+bom.json
+sbom
+screenshots
 
-# Test artifacts and large downloads
-frontend/.vitest
-coverage
+# Test artifacts, transient lockfiles and large downloads
+**/.vitest
+**/.playwright-tests
+**/test-results
+**/coverage
+**/.tsbuildinfo
+**/package-lock.json
 .nyc_output
 chrome-linux
 chrome-linux.zip
+bundleinspector.html
+*-report.md
 
 # Documentation only
 *.md

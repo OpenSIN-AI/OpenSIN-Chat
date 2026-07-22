@@ -17,10 +17,11 @@
 
 ```text
 OpenSIN-Chat/
-├── frontend/          Vite + React 18 + TypeScript + Tailwind + i18next
-├── server/            Node.js + Express + Prisma + SQLite (dev) / Postgres (prod)
-├── collector/         Python service for document ingestion and OCR
-├── docker/            Docker / Compose setup
+├── frontend/          Vite + React 19 + TypeScript + Tailwind + i18next
+├── server/            Node.js + Express + Prisma + SQLite
+├── collector/         Node.js worker service for document parsing, OCR, and extraction
+├── docker/            Canonical production image and runtime scripts
+├── docker-opensin/    Hardened Compose profiles
 ├── cloud-deployments/ AWS, GCP, Azure, DO, Helm, OpenShift stubs
 ├── docs/              Architecture, ADRs, plans, runbooks
 └── tests/             E2E and integration tests

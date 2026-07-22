@@ -4,6 +4,12 @@ const consoleLogger = require("../logger/console.js");
 const { ApiKey } = require("../../models/apiKeys");
 const { SystemSettings } = require("../../models/systemSettings");
 
+function extractBearerToken(request) {
+  const auth = request.header("Authorization");
+  if (typeof auth !== "string") return null;
+  return auth.match(/^Bearer\s+([^\s]+)$/i)?.[1] ?? null;
+}
+
 /**
  * Validates the Bearer API key on developer API routes.
  *
@@ -27,8 +33,7 @@ async function validApiKey(request, response, next) {
     return;
   }
 
-  const auth = request.header("Authorization");
-  const bearerKey = auth ? auth.split(" ")[1] : null;
+  const bearerKey = extractBearerToken(request);
   if (!bearerKey) {
     logFailedAuth(request, "missing_bearer");
     response.status(403).json({
@@ -68,11 +73,13 @@ async function validApiKey(request, response, next) {
       return;
     }
     if (user.suspended) {
+      logFailedAuth(request, "suspended_user");
       response.status(401).json({
         error: "User is suspended from system",
       });
       return;
     }
+    response.locals.user = user;
   }
 
   // Expose the validated API key (secret already stripped by ApiKey.get)
@@ -97,8 +104,7 @@ async function validAdminApiKey(request, response, next) {
     return;
   }
 
-  const auth = request.header("Authorization");
-  const bearerKey = auth ? auth.split(" ")[1] : null;
+  const bearerKey = extractBearerToken(request);
   if (!bearerKey) {
     logFailedAuth(request, "missing_bearer");
     response.status(403).json({
@@ -128,14 +134,20 @@ async function validAdminApiKey(request, response, next) {
     }
     const { User } = require("../../models/user");
     const user = await User.get({ id: apiKey.createdBy });
-    if (!user || user.role !== "admin") {
+    if (!user || user.suspended || user.role !== "admin") {
+      logFailedAuth(
+        request,
+        !user ? "deleted_user" : user.suspended ? "suspended_user" : "not_admin",
+      );
       response.status(403).json({
         error: "Admin access required.",
       });
       return;
     }
+    response.locals.user = user;
   }
 
+  response.locals.apiKey = apiKey;
   next();
 }
 
@@ -143,7 +155,7 @@ async function validAdminApiKey(request, response, next) {
  * Log a failed API authentication attempt. Never logs the attempted
  * credential — only IP, method, path, and failure reason.
  * @param {import("express").Request} request
- * @param {"missing_bearer"|"invalid_key"} reason
+ * @param {"missing_bearer"|"invalid_key"|"orphaned_key"|"deleted_user"|"suspended_user"|"not_admin"} reason
  */
 function logFailedAuth(request, reason) {
   try {

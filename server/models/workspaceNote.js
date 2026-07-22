@@ -88,7 +88,7 @@ const WorkspaceNote = {
   getShareableWorkspaces: async function (currentWorkspaceId, userId = null) {
     if (!userId) {
       return await prisma.workspaces.findMany({
-        where: { id: Number(currentWorkspaceId) },
+        where: { id: { not: Number(currentWorkspaceId) } },
         select: { id: true, name: true, slug: true },
         orderBy: { name: "asc" },
       });

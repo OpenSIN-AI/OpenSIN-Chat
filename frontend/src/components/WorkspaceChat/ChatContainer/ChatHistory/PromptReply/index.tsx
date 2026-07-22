@@ -18,11 +18,10 @@ import {
 import AssistantMessageShell from "@/features/messages/AssistantMessageShell";
 import AssistantMessageActions from "@/features/messages/AssistantMessageActions";
 import AnswerSources from "@/features/citations/AnswerSources";
-import CitedMarkdown from "@/features/citations/CitedMarkdown";
 
 const MARKDOWN_SANITIZE_OPTS = {
   ALLOWED_TAGS: [
-    "a", "b", "i", "u", "strong", "em", "br", "p", "span", "div",
+    "a", "b", "i", "u", "strong", "em", "br", "p", "span", "sup", "div",
     "ul", "ol", "li", "blockquote", "pre", "code",
     "h1", "h2", "h3", "h4", "h5", "h6",
     "table", "thead", "tbody", "tr", "th", "td",

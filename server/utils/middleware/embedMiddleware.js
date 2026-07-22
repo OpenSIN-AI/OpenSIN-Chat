@@ -2,7 +2,10 @@
 const { v4: uuidv4, validate } = require("uuid");
 const { VALID_CHAT_MODE } = require("../chats/stream");
 const { EmbedChats } = require("../../models/embedChats");
-const { EmbedConfig } = require("../../models/embedConfig");
+const {
+  EmbedConfig,
+  normalizeEmbedOrigin,
+} = require("../../models/embedConfig");
 const { reqBody } = require("../http");
 
 // Finds or Aborts request for a /:embedId/ url. This should always
@@ -74,9 +77,9 @@ async function canRespond(request, response, next) {
     }
 
     // Check if requester hostname is in the valid allowlist of domains.
-    const host = request.headers.origin ?? "";
+    const origin = normalizeEmbedOrigin(request.headers.origin);
     const allowedHosts = EmbedConfig.parseAllowedHosts(embed);
-    if (allowedHosts !== null && !allowedHosts.includes(host)) {
+    if (allowedHosts !== null && (!origin || !allowedHosts.includes(origin))) {
       response.status(401).json({
         id: uuidv4(),
         type: "abort",
@@ -208,9 +211,9 @@ async function canAccessEmbed(request, response, next) {
       return;
     }
 
-    const host = request.headers.origin ?? "";
+    const origin = normalizeEmbedOrigin(request.headers.origin);
     const allowedHosts = EmbedConfig.parseAllowedHosts(embed);
-    if (allowedHosts !== null && !allowedHosts.includes(host)) {
+    if (allowedHosts !== null && (!origin || !allowedHosts.includes(origin))) {
       response.status(401).json({
         id: uuidv4(),
         type: "abort",
@@ -264,14 +267,15 @@ async function canAccessEmbed(request, response, next) {
  */
 function embedCors(request, response, next) {
   const embed = response.locals.embedConfig;
-  const origin = request.headers.origin;
+  const rawOrigin = request.headers.origin;
+  const origin = normalizeEmbedOrigin(rawOrigin);
 
   if (origin) {
     const allowedHosts = embed ? EmbedConfig.parseAllowedHosts(embed) : null;
-    // No allowlist configured → allow any origin.
-    // Allowlist configured → only allow listed origins.
+    // No allowlist configured → allow any valid HTTP(S) origin.
+    // Allowlist configured → only allow normalized listed origins.
     if (allowedHosts === null || allowedHosts.includes(origin)) {
-      response.setHeader("Access-Control-Allow-Origin", origin);
+      response.setHeader("Access-Control-Allow-Origin", rawOrigin);
       response.setHeader("Vary", "Origin");
       response.setHeader(
         "Access-Control-Allow-Methods",

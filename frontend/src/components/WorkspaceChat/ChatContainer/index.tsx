@@ -8,14 +8,14 @@ import useChatContainerQuickScroll from "@/hooks/useChatContainerQuickScroll";
 import ReportPreviewListener from "./ReportPreviewListener";
 import ChatHeader from "./ChatHeader";
 import MessageList from "./MessageList";
-import { lazy, Suspense, useMemo } from "react";
+import { lazy, Suspense } from "react";
 import useChatStream from "./useChatStream";
 import ErrorBoundaryFallback from "@/components/ErrorBoundaryFallback";
 import NotebookShell from "@/features/notebook/NotebookShell";
 import useNotebookMode from "@/features/notebook/useNotebookMode";
-import useSelectedSources from "@/features/notebook/useSelectedSources";
 import useSelectedCodeRunner from "@/features/code-runners/useSelectedCodeRunner";
 import { buildChatRequestContext } from "@/features/chat/chat-request-context";
+import usePendingSearchNavigation from "@/features/global-search/usePendingSearchNavigation";
 
 // Lazy: Sidebars host + icon rail; individual panels split further inside.
 const Sidebars = lazy(() => import("./Sidebars"));
@@ -32,26 +32,6 @@ export default function ChatContainer({
   const { modeId: notebookMode } = useNotebookMode({
     notebookSlug: workspace?.slug,
     threadSlug,
-  });
-
-  // Get source IDs from chat history (assistant messages with sources)
-  const sourceIds = useMemo(() => {
-    const ids = new Set<string>();
-    for (const msg of knownHistory) {
-      if (msg.role === "assistant" && Array.isArray(msg.sources)) {
-        for (const src of msg.sources) {
-          if (src?.title) ids.add(src.title);
-          if (src?.url) ids.add(src.url);
-        }
-      }
-    }
-    return Array.from(ids);
-  }, [knownHistory]);
-
-  const { selectedIds: selectedSourceIds } = useSelectedSources({
-    notebookSlug: workspace?.slug,
-    threadSlug,
-    sourceIds,
   });
 
   const { runnerId: selectedCodeRunnerId } = useSelectedCodeRunner(workspace?.slug);
@@ -75,7 +55,7 @@ export default function ChatContainer({
       buildChatRequestContext({
         notebookSlug: workspace?.slug,
         threadSlug,
-        codeRunnerId: notebookMode === "code" ? selectedCodeRunnerId : selectedCodeRunnerId,
+        codeRunnerId: selectedCodeRunnerId,
       }),
   });
 
@@ -119,6 +99,12 @@ function ChatContainerInner({
   regenerateAssistantMessage,
 }: any) {
   const { activeSidebar, openSidebar, closeSidebar } = useChatSidebar();
+
+  usePendingSearchNavigation({
+    workspaceSlug: workspace?.slug,
+    threadSlug,
+    openSidebar,
+  });
 
   return (
     <NotebookShell

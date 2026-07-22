@@ -30,7 +30,10 @@ import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
 import { safeJsonParse } from "@/utils/request";
-import { safeGetItem } from "@/utils/safeStorage";
+import {
+  safeGetItem,
+  safeSetSessionItem,
+} from "@/utils/safeStorage";
 import { invalidateThreads } from "@/hooks/useThreads";
 import useUser from "@/hooks/useUser";
 import ChatSettingsMenu from "@/components/WorkspaceChat/ChatContainer/ChatSettingsMenu";
@@ -82,7 +85,6 @@ async function createDefaultWorkspace(
 }
 
 export default function Home() {
-  const isMobile = useIsMobileLayout();
   const { t } = useTranslation();
   const { user } = useUser();
   const [workspace, setWorkspace] = useState<HomeWorkspace | null>(null);
@@ -305,10 +307,13 @@ function HomeContent({
         }
       }
 
-      sessionStorage.setItem(
+      const pendingMessageStored = safeSetSessionItem(
         PENDING_HOME_MESSAGE,
         JSON.stringify({ message, attachments }),
       );
+      if (!pendingMessageStored) {
+        throw new Error("Unable to persist the pending home message");
+      }
 
       if (targetThread) {
         navigate(paths.workspace.thread(targetWorkspace.slug, targetThread));

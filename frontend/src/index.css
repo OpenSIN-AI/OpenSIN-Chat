@@ -431,10 +431,10 @@
   --theme-loader: #000000;
   --theme-bg-primary: #ffffff;
   --theme-bg-secondary: #ffffff;
-  --theme-bg-sidebar: #202020;
+  --theme-bg-sidebar: #fafafa;
   --theme-bg-container: #ffffff;
-  --theme-popup-menu-bg: #292929;
-  --theme-bg-hover: rgba(255, 255, 255, 0.07);
+  --theme-popup-menu-bg: #ffffff;
+  --theme-bg-hover: rgba(0, 0, 0, 0.05);
 
   --theme-bg-chat: #ffffff;
   --theme-bg-chat-input: #ffffff;
@@ -619,10 +619,9 @@
  * Issue #5 Light Theme Compatibility Layer — ABGESCHLOSSEN (2026-07-08)
  *
  * Migration der text-white-Klassen zu semantischen Tokens ist abgeschlossen:
- *   text-white text-opacity-*/
-70-90  ->  text-theme-text-primary   (migriert)
- *   text-white text-opacity-*/45-60  ->  text-theme-text-secondary (migriert)
- *   text-white text-opacity-*/20-40  ->  text-theme-placeholder    (migriert)
+ *   text-white mit 70–90 % Opazität -> text-theme-text-primary (migriert)
+ *   text-white mit 45–60 % Opazität -> text-theme-text-secondary (migriert)
+ *   text-white mit 20–40 % Opazität -> text-theme-placeholder (migriert)
  *
  * Verbleibende 118 text-white-Vorkommen sind intentionell:
  *   - farbige Hintergrunde (bg-red-500, bg-blue-600, bg-[#009ee0], bg-primary-button)
@@ -709,7 +708,7 @@ body {
 /* v4 uses @custom-variant instead of the darkMode config option */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ── Light mode variant ───────────────────────────────���────────────────── */
+/* ── Light mode variant ────────────────────────────────────────────────── */
 /* Defines the `light:` utility prefix used throughout the codebase.
    Matches when a `.light` class is present on an ancestor element
    (set by useTheme on <html> and <body>) OR when [data-theme="light"]

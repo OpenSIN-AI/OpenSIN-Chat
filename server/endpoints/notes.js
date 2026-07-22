@@ -261,6 +261,15 @@ function noteEndpoints(app) {
             .json({ error: "Target workspace not found" });
         }
         const user = await userFromSession(request, response);
+        const shareableWorkspaces = await WorkspaceNote.getShareableWorkspaces(
+          workspace.id,
+          user?.id || null,
+        );
+        if (!shareableWorkspaces.some(({ id }) => id === target.id)) {
+          return response
+            .status(404)
+            .json({ error: "Target workspace not found" });
+        }
         const shared = await WorkspaceNote.shareToWorkspace(
           noteId,
           target.id,
@@ -301,6 +310,16 @@ function noteEndpoints(app) {
             .status(404)
             .json({ error: "Target workspace not found" });
         }
+        const user = await userFromSession(request, response);
+        const shareableWorkspaces = await WorkspaceNote.getShareableWorkspaces(
+          workspace.id,
+          user?.id || null,
+        );
+        if (!shareableWorkspaces.some(({ id }) => id === target.id)) {
+          return response
+            .status(404)
+            .json({ error: "Target workspace not found" });
+        }
         await WorkspaceNote.unshareFromWorkspace(noteId, target.id);
         response.status(200).json({ success: true });
       } catch (e) {
@@ -317,7 +336,7 @@ function noteEndpoints(app) {
       try {
         const workspace = response.locals.workspace;
         const docs = await Document.forWorkspace(workspace.id);
-        const documentsPath = getStoragePath("documents");
+        const documentsPath = path.resolve(getStoragePath("documents"));
         const snippets = {};
 
         // Read only the first 8 KB of each document file instead of loading
@@ -326,20 +345,36 @@ function noteEndpoints(app) {
         const READ_BYTES = 8 * 1024;
         for (const doc of docs) {
           try {
-            const fullPath = path.join(documentsPath, doc.docpath);
+            const fullPath = path.resolve(documentsPath, doc.docpath);
+            const isWithinDocuments =
+              fullPath === documentsPath ||
+              fullPath.startsWith(`${documentsPath}${path.sep}`);
+            if (!isWithinDocuments) {
+              consoleLogger.warn(
+                `[notes] skipped document outside storage root: ${doc.docId}`,
+              );
+              continue;
+            }
+
             let buf;
+            let fd;
             try {
-              const fd = await fs.promises.open(fullPath, "r");
+              fd = await fs.promises.open(fullPath, "r");
               const result = await fd.read(
                 Buffer.alloc(READ_BYTES),
                 0,
                 READ_BYTES,
                 0,
               );
-              await fd.close();
               buf = result.buffer.subarray(0, result.bytesRead);
             } catch {
               continue; // file missing or unreadable — skip silently
+            } finally {
+              await fd?.close().catch((closeError) => {
+                consoleLogger.warn(
+                  `[notes] failed to close document handle: ${closeError.message}`,
+                );
+              });
             }
             const clean = buf
               .toString("utf-8")

@@ -122,20 +122,52 @@ describe("isMultiUserSetup", () => {
 
 describe("strictMultiUserRoleValid", () => {
   const ORIGINAL_ENV = process.env.NODE_ENV;
+  const ORIGINAL_INTEGRATION_TEST = process.env.INTEGRATION_TEST;
 
   beforeEach(() => {
     jest.clearAllMocks();
     process.env.NODE_ENV = "production";
+    delete process.env.INTEGRATION_TEST;
   });
 
   afterAll(() => {
     process.env.NODE_ENV = ORIGINAL_ENV;
+    if (ORIGINAL_INTEGRATION_TEST === undefined) {
+      delete process.env.INTEGRATION_TEST;
+    } else {
+      process.env.INTEGRATION_TEST = ORIGINAL_INTEGRATION_TEST;
+    }
   });
 
   it("calls next when ROLES.all is allowed", async () => {
     const mw = strictMultiUserRoleValid([ROLES.all]);
     const next = jest.fn();
     await mw({}, mockRes(), next);
+    expect(next).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not bypass role checks for NODE_ENV=test alone", async () => {
+    process.env.NODE_ENV = "test";
+    SystemSettings.isMultiUserMode.mockResolvedValue(true);
+    userFromSession.mockResolvedValue({ id: 1, role: "default" });
+    const mw = strictMultiUserRoleValid([ROLES.admin]);
+    const res = mockRes();
+    const next = jest.fn();
+
+    await mw({}, res, next);
+
+    expect(next).not.toHaveBeenCalled();
+    expect(res.statusCode).toBe(401);
+  });
+
+  it("allows only the explicit integration harness to bypass role checks", async () => {
+    process.env.NODE_ENV = "test";
+    process.env.INTEGRATION_TEST = "true";
+    const mw = strictMultiUserRoleValid([ROLES.admin]);
+    const next = jest.fn();
+
+    await mw({}, mockRes(), next);
+
     expect(next).toHaveBeenCalledTimes(1);
   });
 

@@ -176,17 +176,17 @@ flowchart TB
 
 ```
 OpenSIN-Chat/
-├── frontend/          Vite + React 18 + TypeScript + Tailwind + i18next
-├── server/            Node.js + Express + Prisma + SQLite/Postgres
+├── frontend/          Vite + React 19 + TypeScript + Tailwind + i18next
+├── server/            Node.js + Express + Prisma + SQLite
 │   └── utils/
 │       ├── politician/    Politician DB (Bundestag + Abgeordnetenwatch)
 │       ├── research/      Deep Research Pipeline
 │       ├── reports/       PDF Report Generator
 │       ├── orchestrator/  Workflow Engine for Agent Plugins
 │       └── agents/        Agent Definitions
-├── collector/         Python service for document ingestion and OCR
-├── docker/            Original Docker setup (legacy)
-├── docker-opensin/    OpenSIN-Chat Docker / Compose setup
+├── collector/         Node.js worker service for document parsing, OCR, and web extraction
+├── docker/            Canonical production image and runtime scripts
+├── docker-opensin/    Hardened OpenSIN-Chat Compose profiles
 ├── cloud-deployments/ AWS, GCP, Azure, DO, Helm, OpenShift stubs
 ├── tests/             E2E and integration tests
 ├── scripts/           Deploy scripts (deploy-production.sh)
@@ -249,7 +249,7 @@ Distributed under the **MIT License**. See [LICENSE](./LICENSE) for details.
 
 ## Credits
 
-OpenSIN Chat was **inspired by** **[AnythingLLM](https://github.com/Mintplex-Labs/anything-llm)** by **[Mintplex Labs Inc.](https://github.com/Mintplex-Labs)** (MIT license), but has since diverged into a fully independent product with nearly 100% of the codebase rewritten or replaced.
+OpenSIN Chat originated as a fork of **[AnythingLLM](https://github.com/Mintplex-Labs/anything-llm)** by **[Mintplex Labs Inc.](https://github.com/Mintplex-Labs)** under the MIT license. It has since diverged substantially through product-specific features and refactoring, while some upstream architectural foundations remain and are being replaced incrementally.
 
 We gratefully acknowledge **Timothy Carambat** and the entire Mintplex team. Their early architectural work provided the initial spark for this project.
 
@@ -257,7 +257,7 @@ We gratefully acknowledge **Timothy Carambat** and the entire Mintplex team. The
 
 **What was originally inspired by AnythingLLM:** the basic full-stack structure (frontend + server + collector), LLM/embedding/vector DB provider abstraction, and the agent framework concept.
 
-**What OpenSIN Chat has built independently (nearly 100% rewritten):** complete rebranding (OpenSIN blue, German language, custom logo), all telemetry removed, GDPR-affine defaults, political-use-case specialisation, Politician Database, Deep Research Pipeline, PDF Reports, Agent Plugins, NVIDIA NIM Vision OCR, async upload pipeline with parseJobs, ECharts visualisation, REST APIs, comprehensive test & CI infrastructure, and significant architectural refactoring across frontend, server, and collector.
+**What OpenSIN Chat has built independently:** complete rebranding (OpenSIN blue, German language, custom logo), all telemetry removed, GDPR-affine defaults, political-use-case specialisation, Politician Database, Deep Research Pipeline, PDF Reports, Agent Plugins, NVIDIA NIM Vision OCR, async upload pipeline with persistent parse jobs, ECharts visualisation, REST APIs, comprehensive test and CI infrastructure, and substantial architectural refactoring across frontend, server, and collector.
 
 A full list of third-party components is in [THIRD_PARTY.md](./THIRD_PARTY.md).
 

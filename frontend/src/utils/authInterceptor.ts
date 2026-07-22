@@ -2,21 +2,55 @@
 /**
  * Global 401 response interceptor.
  *
- * Patches `window.fetch` once at module-evaluation time so that ANY fetch
- * call to the app's API (`/api/...`) that returns HTTP 401 triggers
- * `handleAuthFailure()` — clearing stale auth tokens and redirecting to
- * the login page.
- *
- * This is necessary because many model-layer methods (e.g. `Workspace.all`)
- * catch fetch errors internally and return default values (`[]`, `null`),
- * which means SWR's `onError` handler never fires. The interceptor operates
- * at the transport layer, before the model layer can swallow the error.
- *
- * The patch is idempotent: importing this module more than once is safe.
+ * Patches `window.fetch` once so authenticated API requests that return 401
+ * clear stale credentials and redirect to login. Requests to unrelated or
+ * attacker-controlled origins must never be able to trigger a local logout.
  */
 import { handleAuthFailure } from "@/utils/swrFetcher";
 
 let installed = false;
+
+function requestUrl(input: RequestInfo | URL): URL | null {
+  try {
+    const rawUrl =
+      typeof input === "string"
+        ? input
+        : input instanceof URL
+          ? input.href
+          : input instanceof Request
+            ? input.url
+            : "";
+    return rawUrl ? new URL(rawUrl, window.location.origin) : null;
+  } catch {
+    return null;
+  }
+}
+
+function isProtectedApiRequest(input: RequestInfo | URL): boolean {
+  const url = requestUrl(input);
+  if (!url) return false;
+
+  const configuredBase = String(import.meta.env.VITE_API_BASE || "/api");
+  let apiBase: URL;
+  try {
+    apiBase = new URL(configuredBase, window.location.origin);
+  } catch {
+    return false;
+  }
+
+  const basePath = apiBase.pathname.replace(/\/+$/, "") || "/";
+  const matchesConfiguredApi =
+    url.origin === apiBase.origin &&
+    (url.pathname === basePath ||
+      (basePath !== "/" && url.pathname.startsWith(`${basePath}/`)));
+
+  const matchesSameOriginPdfApi =
+    url.origin === window.location.origin &&
+    (url.pathname === "/pdf-analysis" ||
+      url.pathname.startsWith("/pdf-analysis/"));
+
+  return matchesConfiguredApi || matchesSameOriginPdfApi;
+}
 
 export function installAuthInterceptor(): void {
   if (installed || typeof window === "undefined") return;
@@ -27,25 +61,10 @@ export function installAuthInterceptor(): void {
     input: RequestInfo | URL,
     init?: RequestInit,
   ): Promise<Response> {
-    const response = await originalFetch.call(this, input, init);
+    const response = await originalFetch.call(window, input, init);
 
-    // Only intercept 401s on API calls (relative /api/ paths or same-origin).
-    if (response.status === 401) {
-      const url =
-        typeof input === "string"
-          ? input
-          : input instanceof URL
-            ? input.href
-            : input instanceof Request
-              ? input.url
-              : "";
-      if (
-        url.includes("/api/") ||
-        url.startsWith("/api/") ||
-        url.includes("/pdf-analysis/")
-      ) {
-        handleAuthFailure();
-      }
+    if (response.status === 401 && isProtectedApiRequest(input)) {
+      handleAuthFailure();
     }
 
     return response;

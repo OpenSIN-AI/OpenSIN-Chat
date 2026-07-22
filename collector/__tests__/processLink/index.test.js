@@ -9,6 +9,7 @@ jest.mock("../../processLink/convert/generic", () => ({
 
 jest.mock("../../utils/url", () => ({
   validURL: jest.fn(),
+  assertSafeURL: jest.fn(),
   validateURL: jest.fn(),
 }));
 
@@ -17,18 +18,22 @@ jest.mock("dotenv", () => ({
 }), { virtual: true });
 
 const { processLink, getLinkText } = require("../../processLink");
-const { validURL, validateURL } = require("../../utils/url");
+const { validURL, assertSafeURL, validateURL } = require("../../utils/url");
 
 describe("processLink", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     validateURL.mockImplementation((u) => u);
+    assertSafeURL.mockResolvedValue(true);
   });
 
   it("returns failure for an invalid URL", async () => {
     validURL.mockReturnValue(false);
     const result = await processLink("not-a-url");
-    expect(result).toEqual({ success: false, reason: "Not a valid URL." });
+    expect(result).toEqual({
+      success: false,
+      reason: "URL is invalid or resolves to a blocked network.",
+    });
   });
 
   it("calls scrapeGenericUrl with saveAsDocument: true", async () => {
@@ -75,12 +80,16 @@ describe("getLinkText", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     validateURL.mockImplementation((u) => u);
+    assertSafeURL.mockResolvedValue(true);
   });
 
   it("returns failure for an invalid URL", async () => {
     validURL.mockReturnValue(false);
     const result = await getLinkText("not-a-url");
-    expect(result).toEqual({ success: false, reason: "Not a valid URL." });
+    expect(result).toEqual({
+      success: false,
+      reason: "URL is invalid or resolves to a blocked network.",
+    });
   });
 
   it("calls scrapeGenericUrl with saveAsDocument: false", async () => {

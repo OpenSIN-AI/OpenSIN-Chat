@@ -6,6 +6,7 @@ import { fileURLToPath, URL } from "url";
 
 // Detect CI so we can tune the build for shared runners.
 const isCI = process.env.CI === "true" || process.env.CI === "1";
+const shouldAnalyze = process.env.ANALYZE === "true";
 
 // Issue #421: Node.js core-module polyfills for browser bundles.
 // Several dependencies (jspdf, react-pdf, pdfjs-dist, etc.) reference
@@ -27,13 +28,14 @@ const nodePolyfills = {
 export default defineConfig({
   plugins: [
     react(),
-    visualizer({
-      filename: "dist/stats.html",
-      template: "treemap",
-      gzipSize: true,
-      brotliSize: true,
-    }),
-  ],
+    shouldAnalyze &&
+      visualizer({
+        filename: "dist/stats.html",
+        template: "treemap",
+        gzipSize: true,
+        brotliSize: true,
+      }),
+  ].filter(Boolean),
   resolve: {
     alias: [
       {
@@ -71,7 +73,7 @@ export default defineConfig({
         // the object form throws "TypeError: manualChunks is not a function".
         manualChunks(id) {
           if (!id.includes("node_modules")) return undefined;
-          if (/node_modules\/(react|react-dom|react-router-dom)\//.test(id))
+          if (/node_modules\/(react|react-dom|react-router)\//.test(id))
             return "react-vendor";
           if (/node_modules\/react-pdf\//.test(id)) return "pdf-vendor";
           if (/node_modules\/(echarts|echarts-for-react)\//.test(id))
@@ -98,7 +100,9 @@ export default defineConfig({
     ],
   },
   server: {
-    host: "0.0.0.0",
+    // Bind to loopback by default. Opt into LAN/tunnel exposure explicitly
+    // with VITE_DEV_HOST=0.0.0.0 (or another trusted interface).
+    host: process.env.VITE_DEV_HOST || "127.0.0.1",
     port: 3000,
     // Proxy API requests to the backend server during development.
     proxy: {

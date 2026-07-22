@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-const { validURL } = require("../utils/url");
+const { validURL, assertSafeURL } = require("../utils/url");
 const { scrapeGenericUrl } = require("./convert/generic");
 const { validateURL } = require("../utils/url");
 
@@ -13,8 +13,8 @@ const { validateURL } = require("../utils/url");
  */
 async function processLink(link, scraperHeaders = {}, metadata = {}) {
   const validatedLink = validateURL(link);
-  if (!validURL(validatedLink))
-    return { success: false, reason: "Not a valid URL." };
+  if (!validURL(validatedLink) || !(await assertSafeURL(validatedLink)))
+    return { success: false, reason: "URL is invalid or resolves to a blocked network." };
   return await scrapeGenericUrl({
     link: validatedLink,
     captureAs: "text",
@@ -33,8 +33,8 @@ async function processLink(link, scraperHeaders = {}, metadata = {}) {
  */
 async function getLinkText(link, captureAs = "text") {
   const validatedLink = validateURL(link);
-  if (!validURL(validatedLink))
-    return { success: false, reason: "Not a valid URL." };
+  if (!validURL(validatedLink) || !(await assertSafeURL(validatedLink)))
+    return { success: false, reason: "URL is invalid or resolves to a blocked network." };
   return await scrapeGenericUrl({
     link: validatedLink,
     captureAs,

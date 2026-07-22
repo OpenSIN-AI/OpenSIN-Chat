@@ -141,7 +141,7 @@ async function create({ workspaceId, userId = null, originalname }) {
   await prisma.$executeRaw`
     INSERT INTO parse_jobs (id, workspaceId, userId, originalname, status, createdAt)
      VALUES (${id}, ${workspaceId}, ${userId ?? null}, ${originalname}, ${JOB_STATUS.PENDING}, datetime('now'))`;
-  return _toJob(await _queryOne("SELECT * FROM parse_jobs WHERE id = ?", id));
+  return _toJob(await _findById(id));
 }
 
 /**
@@ -154,7 +154,7 @@ async function create({ workspaceId, userId = null, originalname }) {
  */
 async function get(jobId, { workspaceId, userId = null }) {
   await ensureTable();
-  const row = await _queryOne("SELECT * FROM parse_jobs WHERE id = ?", jobId);
+  const row = await _findById(jobId);
   if (!row) return null;
   if (row.workspaceId !== workspaceId) return null;
   if (userId !== null && row.userId !== null && row.userId !== userId)
@@ -199,11 +199,9 @@ async function markFailed(jobId, error) {
 // Helpers
 // ---------------------------------------------------------------------------
 
-async function _queryOne(sql, ...params) {
-  // NOTE: sql is dynamically constructed — cannot use $queryRaw template
-  // literal here. All params are bound via ? placeholders (no string
-  // interpolation), so this is safe from SQL injection.
-  const rows = await prisma.$queryRawUnsafe(sql, ...params);
+async function _findById(jobId) {
+  const rows = await prisma.$queryRaw`
+    SELECT * FROM parse_jobs WHERE id = ${jobId} LIMIT 1`;
   return Array.isArray(rows) ? (rows[0] ?? null) : (rows ?? null);
 }
 

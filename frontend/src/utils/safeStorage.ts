@@ -4,30 +4,44 @@ import { LEGACY_KEY_MAP } from "./constants";
 /**
  * Safe localStorage wrappers that never throw.
  *
- * In private browsing mode (Safari) or when storage quota is exceeded,
- * raw localStorage.getItem/setItem can throw a SecurityError or
- * QuotaExceededError. These wrappers catch those exceptions so callers
- * don't need repetitive try-catch blocks.
+ * Browser storage can be unavailable during SSR/tests, in private browsing,
+ * or when access/quota policies block it. Callers therefore receive a safe
+ * fallback instead of a render-breaking exception.
  *
- * Includes transparent migration from legacy `openafd_` keys to `opensin_`
- * keys. When a legacy key is found, its value is copied to the new key and
- * the old key is removed.
+ * Legacy aliases are migrated transparently to their current key names.
  */
 
-// Build a reverse lookup: new key → legacy key
 const REVERSE_LEGACY_MAP: Record<string, string> = {};
 for (const [oldKey, newKey] of Object.entries(LEGACY_KEY_MAP)) {
   REVERSE_LEGACY_MAP[newKey] = oldKey;
 }
 
-function migrateLegacyKey(key: string): string | null {
+function browserStorageOrNull(kind: "local" | "session"): Storage | null {
+  if (typeof window === "undefined") return null;
+  try {
+    return kind === "local" ? window.localStorage : window.sessionStorage;
+  } catch {
+    return null;
+  }
+}
+
+function localStorageOrNull(): Storage | null {
+  return browserStorageOrNull("local");
+}
+
+function sessionStorageOrNull(): Storage | null {
+  return browserStorageOrNull("session");
+}
+
+function migrateLegacyKey(storage: Storage, key: string): string | null {
   const legacyKey = REVERSE_LEGACY_MAP[key];
   if (!legacyKey) return null;
+
   try {
-    const value = window.localStorage.getItem(legacyKey);
+    const value = storage.getItem(legacyKey);
     if (value !== null) {
-      window.localStorage.setItem(key, value);
-      window.localStorage.removeItem(legacyKey);
+      storage.setItem(key, value);
+      storage.removeItem(legacyKey);
     }
     return value;
   } catch {
@@ -36,19 +50,23 @@ function migrateLegacyKey(key: string): string | null {
 }
 
 export function safeGetItem(key: string): string | null {
+  const storage = localStorageOrNull();
+  if (!storage) return null;
+
   try {
-    const value = window.localStorage.getItem(key);
-    if (value !== null) return value;
-    // Try migrating from legacy key
-    return migrateLegacyKey(key);
+    const value = storage.getItem(key);
+    return value !== null ? value : migrateLegacyKey(storage, key);
   } catch {
     return null;
   }
 }
 
 export function safeSetItem(key: string, value: string): boolean {
+  const storage = localStorageOrNull();
+  if (!storage) return false;
+
   try {
-    window.localStorage.setItem(key, value);
+    storage.setItem(key, value);
     return true;
   } catch {
     return false;
@@ -56,9 +74,43 @@ export function safeSetItem(key: string, value: string): boolean {
 }
 
 export function safeRemoveItem(key: string): void {
+  const storage = localStorageOrNull();
+  if (!storage) return;
+
   try {
-    window.localStorage.removeItem(key);
+    storage.removeItem(key);
   } catch {
-    // no-op
+    // Storage failures must not break logout or cleanup flows.
+  }
+}
+
+export function safeGetSessionItem(key: string): string | null {
+  const storage = sessionStorageOrNull();
+  if (!storage) return null;
+  try {
+    return storage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+export function safeSetSessionItem(key: string, value: string): boolean {
+  const storage = sessionStorageOrNull();
+  if (!storage) return false;
+  try {
+    storage.setItem(key, value);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function safeRemoveSessionItem(key: string): void {
+  const storage = sessionStorageOrNull();
+  if (!storage) return;
+  try {
+    storage.removeItem(key);
+  } catch {
+    // Storage failures must not break navigation or cleanup flows.
   }
 }

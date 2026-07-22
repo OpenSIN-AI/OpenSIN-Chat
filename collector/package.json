@@ -1,9 +1,9 @@
 {
   "name": "opensin-chat-document-collector",
   "version": "1.14.0",
-  "description": "Document collector server endpoints",
+  "description": "Isolated document parsing, OCR, and extraction worker for OpenSIN Chat",
   "main": "index.js",
-  "author": "Timothy Carambat (OpenSIN-AI)",
+  "author": "OpenSIN-AI",
   "license": "MIT",
   "private": true,
   "engines": {
@@ -64,7 +64,7 @@
     "globals": "^17.4.0",
     "jest": "^30.0.0",
     "nodemon": "^3.1.14",
-    "prettier": "^2.4.1"
+    "prettier": "^3.9.5"
   },
   "resolutions": {
     "adm-zip": "0.6.0",

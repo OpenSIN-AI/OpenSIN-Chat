@@ -21,6 +21,30 @@ function invalidateAuthTokenHash() {
   _cachedAuthTokenHash = null;
 }
 
+function extractBearerToken(request) {
+  const auth = request.header("Authorization");
+  if (typeof auth !== "string") return null;
+  const match = auth.match(/^Bearer\s+([^\s]+)$/i);
+  return match?.[1] ?? null;
+}
+
+function safeDecodeJWT(token) {
+  if (!token) return null;
+  try {
+    return decodeJWT(token);
+  } catch {
+    return null;
+  }
+}
+
+function envFlag(name) {
+  return ["1", "true", "yes", "on"].includes(
+    String(process.env[name] ?? "")
+      .trim()
+      .toLowerCase(),
+  );
+}
+
 // Short TTL: after enable-multi-user the cache is also explicitly invalidated.
 // Keep a small positive TTL for request fan-out, not a 60s ACL window.
 const MULTI_USER_MODE_TTL_MS = 5 * 1000;
@@ -45,28 +69,27 @@ function invalidateMultiUserModeCache() {
 }
 
 async function validatedRequest(request, response, next) {
+  const integrationTestMode =
+    process.env.NODE_ENV === "test" &&
+    process.env.INTEGRATION_TEST === "true";
   const multiUserMode = await getCachedMultiUserMode();
   response.locals.multiUserMode = multiUserMode;
   if (multiUserMode)
     return await validateMultiUserRequest(request, response, next);
 
-  // Production-mode boot contract.
-  //
-  // The 503 "Server is misconfigured" gate fires ONLY when BOTH secret
-  // envvars are missing — i.e. the server cannot validate ANY incoming
-  // JWT and cannot produce one either. That is the only truly unrecoverable
-  // state for an operator.
-  //
-  // It used to fire when EITHER envvar was missing, which silently
-  // broke legitimate single-user-no-password deployments that set
-  // JWT_SECRET (for session signing) but intentionally leave AUTH_TOKEN
-  // unset so the login endpoint auto-grants a token instead of asking
-  // for a password. Those deployments hit the 503 on every page-load
-  // even though the server was healthy.
+  const isProduction =
+    (process.env.NODE_ENV ?? "").toLowerCase() === "production";
+  const unauthenticatedSingleUserAllowed = envFlag(
+    "ALLOW_UNAUTHENTICATED_SINGLE_USER",
+  );
+
+  // Defense in depth for callers that construct the app without the normal
+  // boot checks. Production must have a signing secret and either an access
+  // password or an explicit opt-in to unauthenticated single-user mode.
   if (
-    (process.env.NODE_ENV ?? "").toLowerCase() === "production" &&
-    !process.env.AUTH_TOKEN &&
-    !process.env.JWT_SECRET
+    isProduction &&
+    (!process.env.JWT_SECRET ||
+      (!process.env.AUTH_TOKEN && !unauthenticatedSingleUserAllowed))
   ) {
     const id =
       typeof crypto !== "undefined" && crypto.randomUUID
@@ -81,19 +104,20 @@ async function validatedRequest(request, response, next) {
     });
   }
 
-  // When in development or test mode passthrough auth token for ease of development.
-  // Or if the user simply did not set an Auth token or JWT Secret
+  // Development, the explicit integration harness and a deliberately enabled
+  // unauthenticated single-user deployment may bypass password validation.
+  // A bare NODE_ENV=test must not disable auth in non-CI environments.
   if (
     process.env.NODE_ENV === "development" ||
-    process.env.NODE_ENV === "test" ||
-    !process.env.AUTH_TOKEN ||
+    integrationTestMode ||
+    (!process.env.AUTH_TOKEN && unauthenticatedSingleUserAllowed) ||
     !process.env.JWT_SECRET
   ) {
     // In test mode, provide a real user context so integration tests can
     // exercise endpoints that call userFromSession without a full auth flow.
     // Creating/looking up a stable test user ensures foreign-key constraints
     // in tables like system_prompt_variables are satisfied.
-    if (process.env.NODE_ENV === "test") {
+    if (integrationTestMode) {
       let testUser = await User.get({ username: "integration.test.user" });
       if (!testUser) {
         try {
@@ -125,8 +149,7 @@ async function validatedRequest(request, response, next) {
     return;
   }
 
-  const auth = request.header("Authorization");
-  const token = auth ? auth.split(" ")[1] : null;
+  const token = extractBearerToken(request);
 
   if (!token) {
     response.status(401).json({
@@ -136,7 +159,8 @@ async function validatedRequest(request, response, next) {
   }
 
   const bcrypt = require("bcryptjs");
-  const { p } = decodeJWT(token);
+  const decoded = safeDecodeJWT(token);
+  const p = decoded?.p;
 
   if (p === null || typeof p !== "string" || p.length < 16) {
     response.status(401).json({
@@ -170,8 +194,7 @@ async function validatedRequest(request, response, next) {
 
 async function validateMultiUserRequest(request, response, next) {
   try {
-    const auth = request.header("Authorization");
-    const token = auth ? auth.split(" ")[1] : null;
+    const token = extractBearerToken(request);
 
     if (!token) {
       response.status(401).json({
@@ -180,15 +203,16 @@ async function validateMultiUserRequest(request, response, next) {
       return;
     }
 
-    const valid = decodeJWT(token);
-    if (!valid || !valid.id) {
+    const valid = safeDecodeJWT(token);
+    const userId = Number(valid?.id);
+    if (!Number.isSafeInteger(userId) || userId <= 0) {
       response.status(401).json({
         error: "Invalid auth token.",
       });
       return;
     }
 
-    const user = await User.get({ id: valid.id });
+    const user = await User.get({ id: userId });
     if (!user) {
       response.status(401).json({
         error: "Invalid auth for user.",

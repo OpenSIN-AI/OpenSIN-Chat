@@ -90,41 +90,82 @@ const { server: httpServer } = bootApp(
   },
 );
 
-// Graceful shutdown: stop the queue and close the HTTP server before exiting
-// so no job is interrupted mid-write (SQLite transactions would catch this,
-// but consistency is safer) and in-progress HTTP requests can finish.
-async function shutdown(signal) {
-  console.log(`[Server] ${signal} received, shutting down...`);
-  BackgroundQueue.stop();
-  stopRetentionSchedule();
-  await shutdownOcr();
+// Graceful shutdown: stop background work, release external resources, then
+// close the listener. Every cleanup step is isolated so one failure cannot
+// prevent the remaining resources from being released.
+let shuttingDown = false;
+
+async function runShutdownStep(name, fn) {
   try {
-    await Telemetry.flush();
-  } catch {
-    /* telemetry flush failure is non-fatal during shutdown */
-  }
-  if (prismaClient) {
-    try {
-      await prismaClient.$disconnect();
-    } catch {
-      /* DB disconnect failure is non-fatal during shutdown */
-    }
-  }
-  if (httpServer && typeof httpServer.close === "function") {
-    httpServer.close(() => {
-      console.log("[Server] HTTP server closed, exiting.");
-      process.exit(0);
-    });
-    // Force-exit after 10s if connections hang
-    setTimeout(() => {
-      console.warn("[Server] Graceful shutdown timeout, forcing exit.");
-      process.exit(1);
-    }, 10000).unref();
-  } else {
-    process.exit(0);
+    await Promise.resolve().then(fn);
+  } catch (error) {
+    console.error(
+      `[Server] Shutdown step "${name}" failed:`,
+      error?.message || error,
+    );
   }
 }
 
-process.on("SIGTERM", () => shutdown("SIGTERM"));
-process.on("SIGINT", () => shutdown("SIGINT"));
-process.on("SIGHUP", () => shutdown("SIGHUP"));
+async function shutdown(signal, exitCode = 0) {
+  if (shuttingDown) return;
+  shuttingDown = true;
+  console.log(`[Server] ${signal} received, shutting down...`);
+
+  const forceExitTimer = setTimeout(() => {
+    console.warn("[Server] Graceful shutdown timeout, forcing exit.");
+    process.exit(1);
+  }, 10000);
+  forceExitTimer.unref();
+
+  let finalExitCode = exitCode;
+  let closeHttpServer = Promise.resolve();
+  if (httpServer && typeof httpServer.close === "function") {
+    closeHttpServer = new Promise((resolve) => {
+      try {
+        httpServer.close((error) => {
+          if (error) {
+            console.error("[Server] HTTP server close failed:", error);
+            finalExitCode = 1;
+          } else {
+            console.log("[Server] HTTP server closed.");
+          }
+          resolve();
+        });
+      } catch (error) {
+        console.error("[Server] HTTP server close failed:", error);
+        finalExitCode = 1;
+        resolve();
+      }
+    });
+  }
+
+  // Stop producers immediately while existing HTTP requests finish with their
+  // database/OCR dependencies still available.
+  await runShutdownStep("background queue", () => BackgroundQueue.stop());
+  await runShutdownStep("retention schedule", () => stopRetentionSchedule());
+  await closeHttpServer;
+
+  // No request can still be using these resources after server.close resolves.
+  await runShutdownStep("OCR workers", () => shutdownOcr());
+  await runShutdownStep("telemetry flush", () => Telemetry.flush());
+  if (prismaClient) {
+    await runShutdownStep("database disconnect", () =>
+      prismaClient.$disconnect(),
+    );
+  }
+
+  clearTimeout(forceExitTimer);
+  process.exit(finalExitCode);
+}
+
+process.on("SIGTERM", () => void shutdown("SIGTERM"));
+process.on("SIGINT", () => void shutdown("SIGINT"));
+process.on("SIGHUP", () => void shutdown("SIGHUP"));
+process.on("unhandledRejection", (reason) => {
+  console.error("[FATAL] Unhandled rejection:", reason);
+  void shutdown("unhandledRejection", 1);
+});
+process.on("uncaughtException", (error) => {
+  console.error("[FATAL] Uncaught exception:", error);
+  void shutdown("uncaughtException", 1);
+});

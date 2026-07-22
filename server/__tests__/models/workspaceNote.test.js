@@ -309,15 +309,15 @@ describe("WorkspaceNote model", () => {
 
   // ── getShareableWorkspaces ─────────────────────────────────────────
   describe("getShareableWorkspaces", () => {
-    it("returns only current workspace in single-user mode (no userId)", async () => {
-      const fakeWorkspaces = [{ id: 10, name: "Current", slug: "current" }];
+    it("returns all other workspaces in single-user mode (no userId)", async () => {
+      const fakeWorkspaces = [{ id: 20, name: "Other", slug: "other" }];
       mockPrisma.workspaces.findMany.mockResolvedValue(fakeWorkspaces);
 
       const result = await WorkspaceNote.getShareableWorkspaces(10);
 
       expect(result).toEqual(fakeWorkspaces);
       expect(mockPrisma.workspaces.findMany).toHaveBeenCalledWith({
-        where: { id: 10 },
+        where: { id: { not: 10 } },
         select: { id: true, name: true, slug: true },
         orderBy: { name: "asc" },
       });

@@ -25,6 +25,13 @@ const { getStoragePath } = require("../../../utils/paths");
 const documentsPath = getStoragePath("documents");
 const { validateWorkspaceSlugQuery, cleanupHotdirFile } = require("./helpers");
 
+function normalizeMetadata(value) {
+  const parsed = typeof value === "string" ? safeJsonParse(value, {}) : value;
+  return parsed && typeof parsed === "object" && !Array.isArray(parsed)
+    ? parsed
+    : {};
+}
+
 /**
  * Registers document upload routes on the Express app.
  * @param {import('express').Express} app
@@ -34,9 +41,9 @@ function registerUploadRoutes(app) {
     "/v1/document/upload",
     [
       validApiKey,
-      handleAPIFileUpload,
-      validateWorkspaceSlugQuery,
       simpleRateLimit({ bucket: "doc-upload", max: 10, windowMs: 60 * 1000 }),
+      validateWorkspaceSlugQuery,
+      handleAPIFileUpload,
     ],
     async (request, response) => {
       /*
@@ -110,10 +117,7 @@ function registerUploadRoutes(app) {
         const { originalname } = request.file;
         const { addToWorkspaces = "", metadata: _metadata = {} } =
           reqBody(request);
-        const metadata =
-          typeof _metadata === "string"
-            ? safeJsonParse(_metadata, {})
-            : _metadata;
+        const metadata = normalizeMetadata(_metadata);
         const collectorFilename = request.file.filename || originalname;
         if (!metadata.title) metadata.title = originalname;
         const processingOnline = await Collector.online();
@@ -165,6 +169,7 @@ function registerUploadRoutes(app) {
           );
         response.status(200).json({ success: true, error: null, documents });
       } catch (e) {
+        await cleanupHotdirFile(request);
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -175,9 +180,9 @@ function registerUploadRoutes(app) {
     "/v1/document/upload/:folderName",
     [
       validApiKey,
-      handleAPIFileUpload,
-      validateWorkspaceSlugQuery,
       simpleRateLimit({ bucket: "doc-upload", max: 10, windowMs: 60 * 1000 }),
+      validateWorkspaceSlugQuery,
+      handleAPIFileUpload,
     ],
     async (request, response) => {
       /*
@@ -268,10 +273,7 @@ function registerUploadRoutes(app) {
         const { originalname } = request.file;
         const { addToWorkspaces = "", metadata: _metadata = {} } =
           reqBody(request);
-        const metadata =
-          typeof _metadata === "string"
-            ? safeJsonParse(_metadata, {})
-            : _metadata;
+        const metadata = normalizeMetadata(_metadata);
         const collectorFilename = request.file.filename || originalname;
         if (!metadata.title) metadata.title = originalname;
 
@@ -364,6 +366,7 @@ function registerUploadRoutes(app) {
           );
         response.status(200).json({ success: true, error: null, documents });
       } catch (e) {
+        await cleanupHotdirFile(request);
         consoleLogger.error(e.message, e);
         response.sendStatus(500);
       }
@@ -459,10 +462,7 @@ function registerUploadRoutes(app) {
             })
             .end();
         }
-        const metadata =
-          typeof _metadata === "string"
-            ? safeJsonParse(_metadata, {})
-            : _metadata;
+        const metadata = normalizeMetadata(_metadata);
         const processingOnline = await Collector.online();
 
         if (!processingOnline) {
@@ -584,10 +584,7 @@ function registerUploadRoutes(app) {
           metadata: _metadata = {},
           addToWorkspaces = "",
         } = reqBody(request);
-        const metadata =
-          typeof _metadata === "string"
-            ? safeJsonParse(_metadata, {})
-            : _metadata;
+        const metadata = normalizeMetadata(_metadata);
         const processingOnline = await Collector.online();
 
         if (!processingOnline) {

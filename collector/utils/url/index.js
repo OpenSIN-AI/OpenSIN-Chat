@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 const RuntimeSettings = require("../runtimeSettings");
+const dns = require("node:dns").promises;
+const net = require("node:net");
 /**
  * SSRF Protection
  *
@@ -28,7 +30,7 @@ function isPrivateIPv4(ip) {
   if (parts.length !== 4 || parts.some((n) => isNaN(n) || n < 0 || n > 255))
     return true;
 
-  const [a, b] = parts;
+  const [a, b, c] = parts;
 
   // 0.0.0.0/8 — wildcard / "this host"
   if (a === 0) return true;
@@ -44,8 +46,15 @@ function isPrivateIPv4(ip) {
   if (a === 192 && b === 168) return true;
   // 100.64.0.0/10 — CGNAT
   if (a === 100 && b >= 64 && b <= 127) return true;
-  // 240.0.0.0/4 — reserved
-  if (a >= 240) return true;
+  // IETF protocol assignments, documentation, 6to4 relay anycast.
+  if (a === 192 && b === 0 && (c === 0 || c === 2)) return true;
+  if (a === 192 && b === 88 && c === 99) return true;
+  // Benchmarking and documentation networks.
+  if (a === 198 && (b === 18 || b === 19)) return true;
+  if (a === 198 && b === 51 && c === 100) return true;
+  if (a === 203 && b === 0 && c === 113) return true;
+  // Multicast and reserved.
+  if (a >= 224) return true;
 
   return false;
 }
@@ -55,25 +64,82 @@ function isPrivateIPv4(ip) {
  * @param {string} ip — colon-separated IPv6
  * @returns {boolean} true if the IP should be blocked
  */
+function expandIPv6(ip) {
+  let normalized = ip.toLowerCase().split("%")[0];
+  if (normalized.includes(".")) {
+    const lastColon = normalized.lastIndexOf(":");
+    const ipv4 = normalized.slice(lastColon + 1);
+    const parts = ipv4.split(".").map(Number);
+    if (
+      parts.length !== 4 ||
+      parts.some((part) => !Number.isInteger(part) || part < 0 || part > 255)
+    )
+      return null;
+    normalized = `${normalized.slice(0, lastColon)}:${(
+      (parts[0] << 8) |
+      parts[1]
+    ).toString(16)}:${((parts[2] << 8) | parts[3]).toString(16)}`;
+  }
+
+  const halves = normalized.split("::");
+  if (halves.length > 2) return null;
+  const left = halves[0] ? halves[0].split(":") : [];
+  const right = halves[1] ? halves[1].split(":") : [];
+  const allParts = [...left, ...right];
+  if (allParts.some((part) => !/^[0-9a-f]{1,4}$/.test(part))) return null;
+
+  if (halves.length === 1) {
+    if (allParts.length !== 8) return null;
+    return allParts.map((part) => Number.parseInt(part, 16));
+  }
+
+  const missing = 8 - allParts.length;
+  if (missing < 1) return null;
+  return [
+    ...left.map((part) => Number.parseInt(part, 16)),
+    ...Array(missing).fill(0),
+    ...right.map((part) => Number.parseInt(part, 16)),
+  ];
+}
+
+function embeddedIPv4(high, low) {
+  return `${high >> 8}.${high & 255}.${low >> 8}.${low & 255}`;
+}
+
 function isPrivateIPv6(ip) {
-  const lower = ip.toLowerCase();
-  // ::1 — loopback
-  if (lower === "::1") return true;
-  // :: — unspecified
-  if (lower === "::") return true;
-  // fe80::/10 — link-local
-  if (
-    lower.startsWith("fe80:") ||
-    lower.startsWith("fe9") ||
-    lower.startsWith("fea") ||
-    lower.startsWith("feb")
-  )
+  const parts = expandIPv6(ip);
+  if (!parts) return true;
+
+  if (parts.every((part) => part === 0)) return true;
+  if (parts.slice(0, 7).every((part) => part === 0) && parts[7] === 1)
     return true;
-  // fc00::/7 — unique local (fc00:: – fdff::)
-  if (lower.startsWith("fc") || lower.startsWith("fd")) return true;
-  // ::ffff:0:0/96 — IPv4-mapped (check the embedded IPv4)
-  const v4Mapped = lower.match(/::ffff:(\d+\.\d+\.\d+\.\d+)$/);
-  if (v4Mapped) return isPrivateIPv4(v4Mapped[1]);
+
+  const first = parts[0];
+  if ((first & 0xfe00) === 0xfc00) return true; // fc00::/7 unique local
+  if ((first & 0xffc0) === 0xfe80) return true; // fe80::/10 link-local
+  if ((first & 0xffc0) === 0xfec0) return true; // fec0::/10 site-local
+  if ((first & 0xff00) === 0xff00) return true; // ff00::/8 multicast
+  if (first === 0x2001 && parts[1] === 0x0db8) return true; // documentation
+  if (first === 0x2001 && parts[1] === 0x0002) return true; // benchmarking
+
+  const mappedOrCompatible =
+    parts.slice(0, 5).every((part) => part === 0) &&
+    (parts[5] === 0 || parts[5] === 0xffff);
+  if (mappedOrCompatible)
+    return isPrivateIPv4(embeddedIPv4(parts[6], parts[7]));
+
+  // NAT64 well-known prefix 64:ff9b::/96.
+  if (
+    parts[0] === 0x0064 &&
+    parts[1] === 0xff9b &&
+    parts.slice(2, 6).every((part) => part === 0)
+  )
+    return isPrivateIPv4(embeddedIPv4(parts[6], parts[7]));
+
+  // 6to4 embeds an IPv4 destination directly after 2002::/16.
+  if (first === 0x2002)
+    return isPrivateIPv4(embeddedIPv4(parts[1], parts[2]));
+
   return false;
 }
 
@@ -84,40 +150,62 @@ function isPrivateIPv6(ip) {
  * @param {URL['hostname']} param0.hostname
  * @returns {boolean}
  */
+function allowAnyIp() {
+  if (!runtimeSettings.get("allowAnyIp")) return false;
+  if (!runtimeSettings.get("seenAnyIpWarning")) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      "\x1b[33mURL IP local address restrictions have been disabled by administrator!\x1b[0m",
+    );
+    runtimeSettings.set("seenAnyIpWarning", true);
+  }
+  return true;
+}
+
+function isPrivateAddress(address) {
+  const normalized = String(address).replace(/^\[|\]$/g, "").split("%")[0];
+  const family = net.isIP(normalized);
+  if (family === 4) return isPrivateIPv4(normalized);
+  if (family === 6) return isPrivateIPv6(normalized);
+  return true;
+}
+
 function isInvalidIp({ hostname }) {
-  if (runtimeSettings.get("allowAnyIp")) {
-    if (!runtimeSettings.get("seenAnyIpWarning")) {
-      // eslint-disable-next-line no-console
-      console.warn(
-        "\x1b[33mURL IP local address restrictions have been disabled by administrator!\x1b[0m"
-      );
-      runtimeSettings.set("seenAnyIpWarning", true);
-    }
+  if (allowAnyIp()) return false;
+  const normalized = String(hostname).replace(/^\[|\]$/g, "").split("%")[0];
+  return net.isIP(normalized) ? isPrivateAddress(normalized) : false;
+}
+
+/**
+ * Resolve a URL hostname and reject it when any returned address is private,
+ * reserved, loopback, link-local, multicast, or otherwise non-public.
+ * Re-run this immediately before every network request and redirect hop.
+ * @param {string} url
+ * @returns {Promise<boolean>}
+ */
+async function assertSafeURL(url) {
+  if (!validURL(url)) return false;
+  if (allowAnyIp()) return true;
+
+  try {
+    const { hostname } = new URL(url);
+    const normalizedHostname = hostname.replace(/^\[|\]$/g, "").split("%")[0];
+    if (net.isIP(normalizedHostname))
+      return !isPrivateAddress(normalizedHostname);
+    const addresses = await dns.lookup(normalizedHostname, {
+      all: true,
+      verbatim: true,
+    });
+    return (
+      addresses.length > 0 &&
+      addresses.every(({ address }) => !isPrivateAddress(address))
+    );
+  } catch (error) {
+    console.warn(
+      `[url] DNS validation failed for ${url}: ${error?.message || error}`,
+    );
     return false;
   }
-
-  const IPv4Regex = new RegExp(
-    /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/i
-  );
-
-  const IPv6Regex = new RegExp(
-    /^(([0-9a-f]{1,4}:){7}[0-9a-f]{1,4}|([0-9a-f]{1,4}:){1,7}:|([0-9a-f]{1,4}:){1,6}:[0-9a-f]{1,4}|([0-9a-f]{1,4}:){1,5}(:[0-9a-f]{1,4}){1,2}|([0-9a-f]{1,4}:){1,4}(:[0-9a-f]{1,4}){1,3}|([0-9a-f]{1,4}:){1,3}(:[0-9a-f]{1,4}){1,4}|([0-9a-f]{1,4}:){1,2}(:[0-9a-f]{1,4}){1,5}|[0-9a-f]{1,4}:((:[0-9a-f]{1,4}){1,6})|:((:[0-9a-f]{1,4}){1,7}|:)|fe80:(:[0-9a-f]{0,4}){0,4}%[0-9a-zA-Z]+|::(ffff(:0{1,4})?:)?((25[0-5]|(2[0-4]|1?[0-9])?[0-9])\.){3}(25[0-5]|(2[0-4]|1?[0-9])?[0-9])|([0-9a-f]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1?[0-9])?[0-9])\.){3}(25[0-5]|(2[0-4]|1?[0-9])?[0-9]))$/i
-  );
-
-  // IPv4 check
-  if (IPv4Regex.test(hostname)) {
-    return isPrivateIPv4(hostname);
-  }
-
-  // IPv6 check
-  if (IPv6Regex.test(hostname)) {
-    return isPrivateIPv6(hostname);
-  }
-
-  // Not an IP address — passthrough (hostname will be resolved by the
-  // HTTP client; DNS-rebinding protection would require a custom DNS
-  // resolver, which is out of scope for this validator).
-  return false;
 }
 
 /**
@@ -132,6 +220,8 @@ function validURL(url) {
   try {
     const destination = new URL(url);
     if (!VALID_PROTOCOLS.includes(destination.protocol)) return false;
+    if (!destination.hostname || destination.username || destination.password)
+      return false;
     if (isInvalidIp(destination)) return false;
     return true;
   } catch (e) {
@@ -202,6 +292,7 @@ function validYoutubeVideoUrl(link, returnVideoId = false) {
 
 module.exports = {
   validURL,
+  assertSafeURL,
   validateURL,
   validYoutubeVideoUrl,
 };

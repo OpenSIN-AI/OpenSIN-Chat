@@ -72,60 +72,81 @@ const cspViolationEndpoint = require("./endpoints/cspViolation");
 const { httpLogger } = require("./middleware/httpLogger");
 const { securityHeaders } = require("./utils/middleware/securityHeaders");
 
-// RELIABILITY: Log the error and let the graceful shutdown handler in
-// server/index.js drain in-flight requests before exiting. Calling
-// process.exit(1) directly here drops all active HTTP requests and
-// background jobs (PDF analysis, embeddings, politician sync).
-process.on("unhandledRejection", (reason, promise) => {
-  console.error("[FATAL] Unhandled Rejection at:", promise, "reason:", reason);
-});
-
-process.on("uncaughtException", (err) => {
-  console.error("[FATAL] Uncaught Exception:", err);
-});
-
 // Body-parser limit for JSON/text/urlencoded payloads.
 // File uploads are handled by multer with its own size limits, so
-// bodyParser does not need to accept multi-GB payloads. 50MB is
-// generous for any legitimate JSON body (chat messages, attachments
-// as base64, etc.) while preventing memory-exhaustion DoS.
-const FILE_LIMIT = process.env.BODY_LIMIT || "50mb";
+// bodyParser does not need to accept large upload-sized payloads. Keep JSON,
+// text and form bodies bounded; file uploads use multer with dedicated limits.
+// Operators can raise this explicitly for a verified integration if required.
+const FILE_LIMIT = process.env.BODY_LIMIT || "10mb";
 
 let activeApp = null;
 // Kept as a reference to prevent the HTTP server from being garbage-collected.
 let _activeServer = null;
 
+function envFlag(name) {
+  return ["1", "true", "yes", "on"].includes(
+    String(process.env[name] ?? "")
+      .trim()
+      .toLowerCase(),
+  );
+}
+
+function parseTrustProxy(value = process.env.TRUST_PROXY) {
+  const normalized = String(value ?? "loopback").trim();
+  const lower = normalized.toLowerCase();
+  if (["0", "false", "no", "off"].includes(lower)) return false;
+  if (["true", "yes", "on"].includes(lower)) return true;
+  if (/^\d+$/.test(normalized)) return Number.parseInt(normalized, 10);
+
+  const entries = normalized
+    .split(",")
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+  return entries.length <= 1 ? entries[0] || "loopback" : entries;
+}
+
 function buildApp() {
   const app = express();
+  app.disable("x-powered-by");
 
-  app.set(
-    "trust proxy",
-    (process.env.TRUST_PROXY ?? "loopback")
-      .split(",")
-      .map((s) => s.trim())
-      .filter(Boolean),
-  );
+  app.set("trust proxy", parseTrustProxy());
   app.use((req, res, next) => {
-    const id = req.headers["x-request-id"] || crypto.randomUUID();
+    const incomingId = req.headers["x-request-id"];
+    const id =
+      typeof incomingId === "string" &&
+      /^[A-Za-z0-9._:-]{1,128}$/.test(incomingId)
+        ? incomingId
+        : crypto.randomUUID();
     req.requestId = id;
     res.setHeader("X-Request-Id", id);
     next();
   });
   app.use((request, response, next) => {
     const mutating = !["GET", "HEAD", "OPTIONS"].includes(request.method);
-    if (mutating && process.env.NODE_ENV === "production") {
+    const isPublicEmbedRequest =
+      request.path === "/api/embed" ||
+      request.path.startsWith("/api/embed/");
+
+    // Public embed mutations are protected by the embed's own origin allowlist,
+    // session validation and rate limits. Applying the global origin list here
+    // would reject legitimate third-party widget hosts before that guard runs.
+    if (
+      mutating &&
+      process.env.NODE_ENV === "production" &&
+      !isPublicEmbedRequest
+    ) {
       const origin = request.headers.origin;
       if (origin) {
         const allowed = (process.env.CORS_ORIGIN || "")
           .split(",")
           .map((s) => s.trim())
           .filter(Boolean);
-        if (
-          allowed.length &&
-          !allowed.includes("*") &&
-          !allowed.some((o) => o.toLowerCase() === origin.toLowerCase())
-        ) {
-          const id = crypto.randomUUID();
+        const sameOrigin = `${request.protocol}://${request.get("host")}`;
+        const allowedOrigins = [sameOrigin, ...allowed].map((value) =>
+          value.toLowerCase(),
+        );
+        if (!allowedOrigins.includes(origin.toLowerCase())) {
+          const id = request.requestId || crypto.randomUUID();
           console.error(
             `[OriginBlock id=${id}] rejected ${request.method} ${request.path} from ${origin}`,
           );
@@ -143,8 +164,13 @@ function buildApp() {
     app.use(
       compression({
         filter: (req, res) => {
-          if (req.headers.accept === "text/event-stream") return false;
-          if (res.getHeader("Content-Type") === "text/event-stream")
+          if (String(req.headers.accept || "").includes("text/event-stream"))
+            return false;
+          if (
+            String(res.getHeader("Content-Type") || "").includes(
+              "text/event-stream",
+            )
+          )
             return false;
           return compression.filter(req, res);
         },
@@ -156,21 +182,30 @@ function buildApp() {
     /* optional — lean images without the dep still boot */
   }
 
-  app.use((req, res, next) => {
+  app.use((_req, res, next) => {
+    const reportEndpoint = "/api/csp-violation";
+    res.setHeader(
+      "Reporting-Endpoints",
+      `csp-endpoint="${reportEndpoint}"`,
+    );
     res.setHeader(
       "Report-To",
-      JSON.stringify({ group: "csp-endpoint", max_age: 10800 }),
+      JSON.stringify({
+        group: "csp-endpoint",
+        max_age: 10800,
+        endpoints: [{ url: reportEndpoint }],
+      }),
     );
     next();
   });
 
   if (
     process.env.NODE_ENV === "development" &&
-    !!process.env.ENABLE_HTTP_LOGGER
+    envFlag("ENABLE_HTTP_LOGGER")
   ) {
     app.use(
       httpLogger({
-        enableTimestamps: !!process.env.ENABLE_HTTP_LOGGER_TIMESTAMPS,
+        enableTimestamps: envFlag("ENABLE_HTTP_LOGGER_TIMESTAMPS"),
       }),
     );
   }
@@ -193,10 +228,19 @@ function buildApp() {
     cors({ origin: corsOrigin.length === 1 ? corsOrigin[0] : corsOrigin }),
   );
 
-  app.use("/request-token", bodyParser.json({ limit: "8kb" }));
-  app.use("/system/reset-password", bodyParser.json({ limit: "8kb" }));
-  app.use("/system/enable-multi-user", bodyParser.json({ limit: "8kb" }));
-  app.use("/invite", bodyParser.json({ limit: "8kb" }));
+  app.use(
+    ["/api/request-token", "/request-token"],
+    bodyParser.json({ limit: "8kb" }),
+  );
+  app.use(
+    ["/api/system/reset-password", "/system/reset-password"],
+    bodyParser.json({ limit: "8kb" }),
+  );
+  app.use(
+    ["/api/system/enable-multi-user", "/system/enable-multi-user"],
+    bodyParser.json({ limit: "8kb" }),
+  );
+  app.use(["/api/invite", "/invite"], bodyParser.json({ limit: "8kb" }));
 
   app.use(bodyParser.text({ limit: FILE_LIMIT }));
   app.use(bodyParser.json({ limit: FILE_LIMIT }));
@@ -332,14 +376,14 @@ function buildApp() {
     }
 
     app.get("/healthz", (_req, res) => res.status(200).json({ status: "ok" }));
-    app.get("/readyz", async (_req, res) => {
+    app.get("/readyz", async (req, res) => {
       if (!prismaClient)
         return res.status(200).json({ status: "ready", db: "unchecked" });
       try {
         await prismaClient.$queryRaw`SELECT 1`;
         res.status(200).json({ status: "ready" });
       } catch (e) {
-        const id = crypto.randomUUID();
+        const id = req.requestId || crypto.randomUUID();
         console.error(`[readyz error] id=${id}`, e);
         res.status(503).json({ status: "not ready", id });
       }
@@ -351,15 +395,22 @@ function buildApp() {
      * React app hydrate the same markup.
      */
     function getDocsPrerender(pathname) {
-      if (pathname === "/docs" || pathname.startsWith("/docs/")) {
-        const slug = pathname.replace("/docs", "").replace(/^\//, "");
-        const fileName = slug ? `${slug}.html` : "user-guide.html";
-        const filePath = path.resolve(__dirname, "public", "docs", fileName);
-        try {
-          if (fs.existsSync(filePath)) return fs.readFileSync(filePath, "utf8");
-        } catch {
-          /* fall back to empty root */
+      if (pathname !== "/docs" && !pathname.startsWith("/docs/")) return null;
+
+      const docsDir = path.resolve(__dirname, "public", "docs");
+      const rawSlug = pathname.slice("/docs".length).replace(/^\/+/, "");
+      const slug = rawSlug || "user-guide";
+      if (!/^[A-Za-z0-9][A-Za-z0-9/_-]*$/.test(slug)) return null;
+
+      const filePath = path.resolve(docsDir, `${slug}.html`);
+      if (!filePath.startsWith(docsDir + path.sep)) return null;
+
+      try {
+        if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+          return fs.readFileSync(filePath, "utf8");
         }
+      } catch {
+        /* fall back to empty root */
       }
       return null;
     }
@@ -426,11 +477,14 @@ function buildApp() {
   // hides the root cause from operators (the previous behaviour caused
   // countless "server error" alerts on user typos). Unknown errors still
   // fall through to the 500 branch below so we never swallow real faults.
-  app.use(function (err, _req, response, _next) {
+  app.use(function (err, req, response, _next) {
     if (!response.headersSent && err) {
-      const id = crypto.randomUUID();
+      const id = req.requestId || crypto.randomUUID();
+      const isMalformedJson =
+        err.type === "entity.parse.failed" ||
+        (err instanceof SyntaxError && err.status === 400 && "body" in err);
 
-      if (err.type === "entity.parse.failed" || err instanceof SyntaxError) {
+      if (isMalformedJson) {
         console.warn(`[errorHandler] id=${id} bad JSON: ${err.message}`);
         return response.status(400).json({
           error: "Malformed JSON body. Please check your request payload.",

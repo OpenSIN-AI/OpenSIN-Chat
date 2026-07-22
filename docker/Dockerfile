@@ -18,18 +18,20 @@ FROM ubuntu:noble-20251013 AS base
 # Build arguments
 ARG ARG_UID=1000
 ARG ARG_GID=1000
-# SKIP_CHROMIUM=1 omits the 568 MB ARM64 Chromium download. Only enable if the
-# collector/web-scraping path is not needed in this image.
-ARG SKIP_CHROMIUM=0
+# SKIP_CHROMIUM=1 omits the 568 MB ARM64 Chromium download. Keep it enabled
+# unless browser-based collection is explicitly required in this image.
+ARG SKIP_CHROMIUM=1
 # SECURITY: Chromium binary SHA256 digest. REQUIRED for builds that include Chromium.
 # Obtain with: curl -fsSL "$CHROMIUM_DOWNLOAD_URL" | sha256sum
 ARG CHROMIUM_SHA256
-# ARM64 Chromium download source. Default is the upstream AnythingLLM CDN
-# (third-party!). For production builds, self-host the archive and override
-# this arg — the SHA256 check above guards against a tampered download either way.
-ARG CHROMIUM_DOWNLOAD_URL=https://webassets.anythingllm.com/chromium-1088-linux-arm64.zip
+# ARM64 Chromium download source. There is deliberately no third-party default.
+# Builds that enable Chromium must provide a self-controlled HTTPS URL and the
+# matching SHA256 digest explicitly.
+ARG CHROMIUM_DOWNLOAD_URL
 
 FROM base AS build-arm64
+ARG ARG_UID=1000
+ARG ARG_GID=1000
 ARG SKIP_CHROMIUM
 # ARGs are NOT inherited across stages — without these redeclarations the
 # CHROMIUM_SHA256 check below always sees an empty value and the build fails.
@@ -53,11 +55,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
     echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_22.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
     apt-get update && \
-    # Install node and yarn
+    # Install Node.js and activate the same Yarn version used by CI.
     apt-get install -yq --no-install-recommends nodejs && \
-    curl -LO https://github.com/yarnpkg/yarn/releases/download/v1.22.19/yarn_1.22.19_all.deb \
-        && dpkg -i yarn_1.22.19_all.deb \
-        && rm yarn_1.22.19_all.deb && \
+    corepack enable && \
+    corepack prepare yarn@1.22.22 --activate && \
     # Install uvx (pinned to 0.6.10) for MCP support
     curl -LsSf https://astral.sh/uv/0.6.10/install.sh | sh && \
         mv /root/.local/bin/uv /usr/local/bin/uv && \
@@ -89,15 +90,15 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh && \
 USER opensin
 WORKDIR /app
 
-# Puppeteer does not ship with an ARM86 compatible build for Chromium
+# Puppeteer does not ship with an ARM64 compatible build for Chromium
 # so web-scraping would be broken in arm docker containers unless we patch it
-# by manually installing a compatible chromedriver.
+# by manually installing a compatible Chromium binary.
 RUN if [ "$SKIP_CHROMIUM" != "1" ]; then \
-        echo "Need to patch Puppeteer x Chromium support for ARM86 - installing dep!" && \
+        echo "Need to patch Puppeteer x Chromium support for ARM64 - installing dep!" && \
         # SECURITY: Verify SHA256 before unzipping. The CHROMIUM_SHA256 build arg
         # MUST be set. In production, self-host the binary and update the URL.
-        if [ -z "$CHROMIUM_SHA256" ]; then \
-            echo "ERROR: CHROMIUM_SHA256 build arg is required. Refusing to download unverified binary."; \
+        if [ -z "$CHROMIUM_DOWNLOAD_URL" ] || [ -z "$CHROMIUM_SHA256" ]; then \
+            echo "ERROR: CHROMIUM_DOWNLOAD_URL and CHROMIUM_SHA256 are required when SKIP_CHROMIUM is not 1."; \
             exit 1; \
         fi; \
         curl -fSL "${CHROMIUM_DOWNLOAD_URL}" -o chrome-linux.zip && \
@@ -122,6 +123,8 @@ RUN echo "Done running arm64 specific installation steps"
 
 # amd64-specific stage
 FROM base AS build-amd64
+ARG ARG_UID=1000
+ARG ARG_GID=1000
 RUN echo "Preparing build of OpenSIN Chat image for non-ARM architecture"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -140,11 +143,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
     echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_22.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
     apt-get update && \
-    # Install node and yarn
+    # Install Node.js and activate the same Yarn version used by CI.
     apt-get install -yq --no-install-recommends nodejs && \
-    curl -LO https://github.com/yarnpkg/yarn/releases/download/v1.22.19/yarn_1.22.19_all.deb \
-        && dpkg -i yarn_1.22.19_all.deb \
-        && rm yarn_1.22.19_all.deb && \
+    corepack enable && \
+    corepack prepare yarn@1.22.22 --activate && \
     # Install uvx (pinned to 0.6.10) for MCP support
     curl -LsSf https://astral.sh/uv/0.6.10/install.sh | sh && \
         mv /root/.local/bin/uv /usr/local/bin/uv && \
@@ -199,6 +201,7 @@ ENV VITE_ENABLE_VIDEO_GENERATION=${VITE_ENABLE_VIDEO_GENERATION}
 ENV VITE_ENABLE_CVOICE_TTS=${VITE_ENABLE_CVOICE_TTS}
 
 WORKDIR /app/frontend
+RUN corepack enable && corepack prepare yarn@1.22.22 --activate
 COPY ./frontend/package.json ./frontend/yarn.lock ./
 RUN --mount=type=cache,target=/yarn-cache \
     YARN_CACHE_FOLDER=/yarn-cache \
@@ -211,11 +214,13 @@ WORKDIR /app
 # Install server layer
 # Also pull and build collector deps (chromium issues prevent bad bindings)
 FROM build AS backend-build
+ARG ARG_UID=1000
+ARG ARG_GID=1000
 
 COPY --chown=opensin:opensin ./server/package.json ./server/yarn.lock /app/server/
 COPY --chown=opensin:opensin ./server/prisma/schema.prisma /app/server/prisma/schema.prisma
 WORKDIR /app/server
-RUN --mount=type=cache,target=/yarn-cache,uid=1000,gid=1000 \
+RUN --mount=type=cache,target=/yarn-cache,uid=${ARG_UID},gid=${ARG_GID} \
     YARN_CACHE_FOLDER=/yarn-cache \
     yarn install --production --frozen-lockfile --network-timeout 600000
 
@@ -239,12 +244,7 @@ RUN test -f /app/server/utils/paths.js || (echo "BUILD ERROR: /app/server/utils/
 COPY --chown=opensin:opensin ./collector/package.json ./collector/yarn.lock /app/collector/
 WORKDIR /app/collector
 ENV PUPPETEER_DOWNLOAD_BASE_URL=https://storage.googleapis.com/chrome-for-testing-public
-# WORKAROUND: force git to resolve github ssh://git@github.com/... over https.
-# Base image has no openssh-client; the epub2-static dep in
-# collector/package.json is pinned to ssh, which crashes yarn install with
-# "ssh: not found". This redirect is non-destructive and only affects this stage.
-RUN git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
-RUN --mount=type=cache,target=/yarn-cache,uid=1000,gid=1000 \
+RUN --mount=type=cache,target=/yarn-cache,uid=${ARG_UID},gid=${ARG_GID} \
     YARN_CACHE_FOLDER=/yarn-cache \
     yarn install --production --frozen-lockfile --network-timeout 600000
 

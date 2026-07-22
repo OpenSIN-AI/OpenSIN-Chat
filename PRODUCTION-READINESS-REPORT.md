@@ -3,13 +3,13 @@
 > **Date:** 2026-06-27  
 > **Method:** 10 parallel subagents (5 audit + 5 fix)  
 > **Commit:** `3f283e63` + all fixes in working tree  
-> **Verdict:** **PRODUCTION READY** — 0 critical, 0 high blockers remaining
+> **Historical verdict (2026-06-27):** production-ready for the tested single-node deployment. This is not a blanket certification for every topology or later working-tree state.
 
 ---
 
 ## Executive Summary
 
-OpenSIN-Chat was audited across 5 domains (Frontend, Server, Security, Code Quality, Documentation) by 5 parallel audit subagents. All findings were triaged and fixed by 5 parallel fix subagents. Final verification confirms **all gates pass**.
+OpenSIN-Chat was audited across five domains and the listed gates passed on the dated commit and working tree. Results below are historical evidence, not a permanent guarantee. Every release must rerun the full verification suite, dependency audit, migration test, container smoke test, and recovery checks.
 
 ### Final Verification (2026-06-27)
 
@@ -111,18 +111,18 @@ OpenSIN-Chat was audited across 5 domains (Frontend, Server, Security, Code Qual
 
 ---
 
-## Remaining Non-Blocking Items
+## Remaining Engineering Debt
 
-These are known issues that do NOT block production readiness:
+These items did not block the tested single-node release, but they do block an unconditional claim of broad production readiness and must remain visible until independently reverified:
 
 | Item | Severity | Rationale |
 |---|---|---|
-| 1,595 TypeScript errors (shipped via esbuild type-stripping) | INFO | Vite strips types without checking — app works at runtime. TS errors are mostly implicit `any` from JS→TS migration. Fixing all 1,595 is a multi-sprint effort. |
-| 2688 ESLint warnings (all `no-explicit-any`) | INFO | Warnings are non-blocking by design. CI gate passes with 0 errors. |
+| Historical TypeScript error count | HIGH | Runtime builds are not a substitute for static correctness. The current CI type-check must pass for each release; new type debt is not accepted. |
+| Historical ESLint warning count | MEDIUM | Warning baselines must decrease and must never be treated as evidence of clean code. |
 | 25 `dangerouslySetInnerHTML` calls | INFO | 21 confirmed sanitized via DOMPurify. 4 in render pipeline paths likely sanitized upstream. No XSS surface confirmed. |
 | 25 MB WASM file (ONNX Runtime) | INFO | Lazy-loaded only when vision features are used. Not in initial bundle. |
 | Server `no-console` warnings (73) | INFO | All are structured logging — not debug output. Non-blocking by design. |
-| Test handle leak warning | INFO | `--forceExit` masks it in CI. Cosmetic issue in test teardown. |
+| Test handle leak warning | MEDIUM | Forced process termination can hide resource leaks. Treat it as unresolved until the leaking handle is identified and normal teardown succeeds. |
 
 ---
 

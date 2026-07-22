@@ -42,8 +42,13 @@ async function isSingleUserMode(_request, response, next) {
  * @returns {function}
  */
 function strictMultiUserRoleValid(allowedRoles = DEFAULT_ROLES) {
-  // In test mode bypass role checks so endpoint tests can run without a full auth flow.
-  if (process.env.NODE_ENV === "test") {
+  // Only the explicit integration harness may bypass role checks. NODE_ENV=test
+  // alone is not sufficient because it can be set accidentally in deployed
+  // environments and should not disable authorization globally.
+  if (
+    process.env.NODE_ENV === "test" &&
+    process.env.INTEGRATION_TEST === "true"
+  ) {
     return async (_request, _response, next) => next();
   }
   return async (request, response, next) => {

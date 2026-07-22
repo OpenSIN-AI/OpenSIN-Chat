@@ -1,23 +1,33 @@
 // SPDX-License-Identifier: MIT
 
+import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 import { isNotebookModeId, type NotebookModeId } from "./modes";
 
-interface NotebookModeScope {
+export interface NotebookModeScope {
   notebookSlug?: string | null;
   threadSlug?: string | null;
 }
 
 const STORAGE_PREFIX = "opensin_notebook_mode";
+export const NOTEBOOK_MODE_CHANGE_EVENT = "opensin:notebook-mode-change";
 
-function storageKey({ notebookSlug, threadSlug }: NotebookModeScope): string {
-  return [STORAGE_PREFIX, notebookSlug || "home", threadSlug || "default"].join(":");
+export function notebookModeStorageKey({
+  notebookSlug,
+  threadSlug,
+}: NotebookModeScope): string {
+  return [STORAGE_PREFIX, notebookSlug || "home", threadSlug || "default"].join(
+    ":",
+  );
 }
 
 export function readNotebookMode(scope: NotebookModeScope): NotebookModeId {
-  try {
-    const value = window.localStorage.getItem(storageKey(scope));
-    return isNotebookModeId(value) ? value : "chat";
-  } catch {
-    return "chat";
-  }
+  const value = safeGetItem(notebookModeStorageKey(scope));
+  return isNotebookModeId(value) ? value : "chat";
+}
+
+export function writeNotebookMode(
+  scope: NotebookModeScope,
+  mode: NotebookModeId,
+): boolean {
+  return safeSetItem(notebookModeStorageKey(scope), mode);
 }

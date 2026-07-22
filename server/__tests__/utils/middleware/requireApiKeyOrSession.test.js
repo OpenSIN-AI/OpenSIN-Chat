@@ -92,9 +92,23 @@ describe("requireApiKeyOrSession", () => {
     });
   });
 
-  it("allows single-user no-password session token with p: null", async () => {
+  it("allows a single-user session token with an encrypted credential claim", async () => {
     const { request, response } = mockReqRes({
       authHeader: "Bearer single-user-token",
+    });
+    const next = jest.fn();
+    ApiKey.get.mockResolvedValue(null);
+    decodeJWT.mockReturnValue({ p: "encrypted-credential" });
+
+    await requireApiKeyOrSession(request, response, next);
+
+    expect(next).toHaveBeenCalledTimes(1);
+    expect(response.locals.user).toBeUndefined();
+  });
+
+  it("rejects signed JWTs without a recognized identity or credential", async () => {
+    const { request, response } = mockReqRes({
+      authHeader: "Bearer unrelated-token",
     });
     const next = jest.fn();
     ApiKey.get.mockResolvedValue(null);
@@ -102,8 +116,8 @@ describe("requireApiKeyOrSession", () => {
 
     await requireApiKeyOrSession(request, response, next);
 
-    expect(next).toHaveBeenCalledTimes(1);
-    expect(response.locals.user).toBeUndefined();
+    expect(next).not.toHaveBeenCalled();
+    expect(response.statusCode).toBe(401);
   });
 
   it("returns 401 when bearer is neither a valid API key nor a valid session token", async () => {
@@ -113,6 +127,21 @@ describe("requireApiKeyOrSession", () => {
     const next = jest.fn();
     ApiKey.get.mockResolvedValue(null);
     decodeJWT.mockReturnValue(null);
+
+    await requireApiKeyOrSession(request, response, next);
+
+    expect(next).not.toHaveBeenCalled();
+    expect(response.statusCode).toBe(401);
+  });
+
+  it("rejects API keys owned by suspended users in multi-user mode", async () => {
+    SystemSettings.isMultiUserMode.mockResolvedValue(true);
+    const { request, response } = mockReqRes({
+      authHeader: "Bearer api-key-secret",
+    });
+    const next = jest.fn();
+    ApiKey.get.mockResolvedValue({ id: 1, createdBy: 42 });
+    User.get.mockResolvedValue({ id: 42, suspended: true });
 
     await requireApiKeyOrSession(request, response, next);
 

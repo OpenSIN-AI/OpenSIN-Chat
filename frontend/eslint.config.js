@@ -105,7 +105,9 @@ export default [
       "prettier/prettier": "error",
 
       "react/react-in-jsx-scope": "off",
-      "react-hooks/exhaustive-deps": "off",
+      // Surface stale-closure and missing dependency bugs without turning the
+      // existing migration backlog into a hard CI failure.
+      "react-hooks/exhaustive-deps": "warn",
       "react/prop-types": "off",
       "react-hooks/set-state-in-effect": "off",
       "react-hooks/static-components": "off",

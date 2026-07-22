@@ -12,6 +12,24 @@ const { clampLimit, MAX_LIST_LIMIT } = require("../utils/database/queryLimits");
  */
 const VALID_CHAT_MODE = ["chat", "query"];
 
+function normalizeEmbedOrigin(value, { assumeHttps = false } = {}) {
+  if (typeof value !== "string") return null;
+  let candidate = value.trim();
+  if (!candidate) return null;
+
+  if (assumeHttps && !/^https?:\/\//i.test(candidate)) {
+    candidate = `https://${candidate}`;
+  }
+
+  try {
+    const url = new URL(candidate);
+    if (!["http:", "https:"].includes(url.protocol)) return null;
+    return url.origin.toLowerCase();
+  } catch {
+    return null;
+  }
+}
+
 const EmbedConfig = {
   writable: [
     // Used for generic updates so we can validate keys in request body
@@ -188,7 +206,15 @@ const EmbedConfig = {
     if (!embed.allowlist_domains) return null;
 
     try {
-      return JSON.parse(embed.allowlist_domains);
+      const parsed = JSON.parse(embed.allowlist_domains);
+      if (!Array.isArray(parsed)) return [];
+      return [
+        ...new Set(
+          parsed
+            .map((value) => normalizeEmbedOrigin(value, { assumeHttps: true }))
+            .filter(Boolean),
+        ),
+      ];
     } catch {
       consoleLogger.error(
         `Failed to parse allowlist_domains for Embed ${embed.id}!`,
@@ -226,29 +252,22 @@ function validatedCreationData(value, field) {
   }
 
   if (field === "allowlist_domains") {
-    try {
-      if (!value) return null;
-      return JSON.stringify(
-        // Iterate and force all domains to URL object
-        // and stringify the result.
-        value
-          .split(",")
-          .map((input) => {
-            let url = input;
-            if (!url.includes("http://") && !url.includes("https://"))
-              url = `https://${url}`;
-            try {
-              new URL(url);
-              return url;
-            } catch {
-              return null;
-            }
-          })
-          .filter((u) => !!u),
-      );
-    } catch {
-      return null;
-    }
+    if (value === null || value === undefined || value === "") return null;
+
+    const inputs = Array.isArray(value) ? value : String(value).split(",");
+    const origins = [
+      ...new Set(
+        inputs
+          .map((input) =>
+            normalizeEmbedOrigin(String(input), { assumeHttps: true }),
+          )
+          .filter(Boolean),
+      ),
+    ];
+
+    // A non-empty but entirely invalid allowlist must deny all origins rather
+    // than becoming null, because null means "allow every origin".
+    return JSON.stringify(origins);
   }
 
   if (BOOLEAN_KEYS.includes(field)) {
@@ -262,4 +281,4 @@ function validatedCreationData(value, field) {
   return null;
 }
 
-module.exports = { EmbedConfig };
+module.exports = { EmbedConfig, normalizeEmbedOrigin };

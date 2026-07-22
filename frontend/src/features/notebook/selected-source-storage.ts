@@ -1,5 +1,11 @@
 // SPDX-License-Identifier: MIT
 
+import {
+  safeGetItem,
+  safeRemoveItem,
+  safeSetItem,
+} from "@/utils/safeStorage";
+
 interface SourceSelectionScope {
   notebookSlug?: string | null;
   threadSlug?: string | null;
@@ -11,55 +17,72 @@ export interface StoredSourceSelection {
 }
 
 const STORAGE_PREFIX = "opensin_selected_sources";
+export const SOURCE_SELECTION_CHANGE_EVENT =
+  "opensin:notebook-sources-change";
 
-function storageKey({ notebookSlug, threadSlug }: SourceSelectionScope): string {
-  return [STORAGE_PREFIX, notebookSlug || "home", threadSlug || "default"].join(":");
+export function sourceSelectionStorageKey({
+  notebookSlug,
+  threadSlug,
+}: SourceSelectionScope): string {
+  return [STORAGE_PREFIX, notebookSlug || "home", threadSlug || "default"].join(
+    ":",
+  );
 }
 
-export function readSelectedSources(scope: SourceSelectionScope): StoredSourceSelection {
+function validSourceIds(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter(
+    (sourceId): sourceId is string =>
+      typeof sourceId === "string" && sourceId.trim().length > 0,
+  );
+}
+
+export function readSelectedSources(
+  scope: SourceSelectionScope,
+): StoredSourceSelection {
+  const raw = safeGetItem(sourceSelectionStorageKey(scope));
+  if (!raw) return { explicit: false, sourceIds: [] };
+
   try {
-    const raw = window.localStorage.getItem(storageKey(scope));
-    if (!raw) return { explicit: false, sourceIds: [] };
+    const parsed: unknown = JSON.parse(raw);
 
-    const parsed = JSON.parse(raw);
-
-    // Migration from old string[] format.
+    // Migration from the legacy string[] format.
     if (Array.isArray(parsed)) {
-      return {
-        explicit: true,
-        sourceIds: parsed.filter((value): value is string => typeof value === "string"),
-      };
+      return { explicit: true, sourceIds: validSourceIds(parsed) };
     }
 
-    if (!parsed || typeof parsed !== "object") return { explicit: false, sourceIds: [] };
+    if (!parsed || typeof parsed !== "object") {
+      return { explicit: false, sourceIds: [] };
+    }
 
+    const value = parsed as { explicit?: unknown; sourceIds?: unknown };
     return {
-      explicit: parsed.explicit === true,
-      sourceIds: Array.isArray(parsed.sourceIds)
-        ? parsed.sourceIds.filter((value: unknown): value is string => typeof value === "string")
-        : [],
+      explicit: value.explicit === true,
+      sourceIds: validSourceIds(value.sourceIds),
     };
   } catch {
     return { explicit: false, sourceIds: [] };
   }
 }
 
-export function writeSelectedSources(scope: SourceSelectionScope, sourceIds: string[]) {
+export function writeSelectedSources(
+  scope: SourceSelectionScope,
+  sourceIds: string[],
+): boolean {
   const value: StoredSourceSelection = {
     explicit: true,
-    sourceIds: [...new Set(sourceIds)],
+    sourceIds: [...new Set(validSourceIds(sourceIds))],
   };
-  window.localStorage.setItem(storageKey(scope), JSON.stringify(value));
+  return safeSetItem(sourceSelectionStorageKey(scope), JSON.stringify(value));
 }
 
-export function clearSelectedSourcesPreference(scope: SourceSelectionScope) {
-  window.localStorage.removeItem(storageKey(scope));
+export function clearSelectedSourcesPreference(
+  scope: SourceSelectionScope,
+): void {
+  safeRemoveItem(sourceSelectionStorageKey(scope));
 }
 
-/**
- * Backward-compatible helper that returns just the source IDs array.
- * Prefer `readSelectedSources` for new code that needs the `explicit` flag.
- */
+/** Backward-compatible helper for consumers that only need the IDs. */
 export function readSelectedSourceIds(scope: SourceSelectionScope): string[] {
   return readSelectedSources(scope).sourceIds;
 }

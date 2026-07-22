@@ -52,7 +52,7 @@ function reqBody(request) {
       return {};
     }
   }
-  return request.body;
+  return request.body ?? {};
 }
 
 function queryParams(request) {
@@ -90,13 +90,19 @@ function makeJWT(info = {}, expiry = null) {
  * @param {import("express").Response} response - The response object
  * @returns {Promise<import("@prisma/client").users | null>} The user
  */
+function extractBearerToken(request) {
+  const auth = request.header("Authorization");
+  if (typeof auth !== "string") return null;
+  const match = auth.match(/^Bearer\s+([^\s]+)$/i);
+  return match?.[1] ?? null;
+}
+
 async function userFromSession(request, response = null) {
   if (!!response && !!response.locals?.user) {
     return response.locals.user;
   }
 
-  const auth = request.header("Authorization");
-  const token = auth ? auth.split(" ")[1] : null;
+  const token = extractBearerToken(request);
 
   if (!token) {
     return null;
@@ -179,8 +185,9 @@ function isValidUrl(urlString = "") {
 }
 
 function toValidNumber(number = null, fallback = null) {
-  if (isNaN(Number(number))) return fallback;
-  return Number(number);
+  if (number === null || number === undefined || number === "") return fallback;
+  const parsed = Number(number);
+  return Number.isFinite(parsed) ? parsed : fallback;
 }
 
 /**

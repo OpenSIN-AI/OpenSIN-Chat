@@ -8,8 +8,15 @@ const COLLECTOR_HEALTH_TIMEOUT_MS = 5_000;
 // 5 min — large PDFs with text layers parse in seconds; OCR (PaddleOCR)
 // processes ~5 pages/second. 5 minutes is enough for ~1500 OCR pages.
 // Configurable via env for edge cases.
+const configuredCollectorTimeout = Number.parseInt(
+  process.env.COLLECTOR_PROCESS_TIMEOUT_MS || "",
+  10,
+);
 const COLLECTOR_PROCESS_TIMEOUT_MS =
-  Number(process.env.COLLECTOR_PROCESS_TIMEOUT_MS) || 300_000;
+  Number.isSafeInteger(configuredCollectorTimeout) &&
+  configuredCollectorTimeout > 0
+    ? configuredCollectorTimeout
+    : 300_000;
 
 let _extensionAgent;
 function extensionRequestAgent() {
@@ -65,7 +72,7 @@ class CollectorApi {
   constructor() {
     const { CommunicationKey } = require("../comKey");
     this.comkey = new CommunicationKey();
-    this.endpoint = `http://0.0.0.0:${CollectorApi.getCollectorPort()}`;
+    this.endpoint = `http://127.0.0.1:${CollectorApi.getCollectorPort()}`;
   }
 
   log(text, ...args) {

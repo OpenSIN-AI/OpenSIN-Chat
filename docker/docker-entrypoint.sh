@@ -1,6 +1,8 @@
 #!/bin/bash
 # SPDX-License-Identifier: MIT
 
+set -o pipefail
+
 # Source /app/.env if it exists (persistent secrets mounted as read-only volume).
 # This ensures secrets survive container recreation even without --env-file.
 # Only sets variables that are not already in the environment (docker run -e wins).
@@ -9,8 +11,9 @@ if [ -f /app/.env ]; then
     # Skip comments and empty lines
     [[ "$key" =~ ^[[:space:]]*# ]] && continue
     [[ -z "$key" ]] && continue
-    # Trim key whitespace
+    # Trim and validate the key before indirect variable access/export.
     key=$(echo "$key" | xargs)
+    [[ "$key" =~ ^[A-Za-z_][A-Za-z0-9_]*$ ]] || continue
     # Trim value: strip CRLF, then leading/trailing whitespace
     value=$(printf '%s' "$raw_value" | sed 's/\r$//')
     value="${value#"${value%%[![:space:]]*}"}"
@@ -19,8 +22,9 @@ if [ -f /app/.env ]; then
     if [[ "$value" =~ ^\"(.*)\"$ ]] || [[ "$value" =~ ^\'(.*)\'$ ]]; then
       value="${BASH_REMATCH[1]}"
     fi
-    # Only set if not already in environment
-    if [ -z "${!key}" ]; then
+    # Only set if not already present in the environment. An explicitly empty
+    # Docker variable still wins over the file value.
+    if [[ ! -v "$key" ]]; then
       export "$key=$value"
     fi
   done < /app/.env
@@ -98,15 +102,30 @@ fi
 # Track child PIDs for graceful shutdown
 SERVER_PID=""
 COLLECTOR_PID=""
+SHUTTING_DOWN=0
 
 shutdown() {
+  [ "$SHUTTING_DOWN" -eq 1 ] && return
+  SHUTTING_DOWN=1
   echo "[entrypoint] Received shutdown signal, forwarding to children…"
-  [ -n "$SERVER_PID" ] && kill -TERM "$SERVER_PID" 2>/dev/null
-  [ -n "$COLLECTOR_PID" ] && kill -TERM "$COLLECTOR_PID" 2>/dev/null
-  # Give children 10s to finish, then force-kill
-  sleep 10
-  [ -n "$SERVER_PID" ] && kill -KILL "$SERVER_PID" 2>/dev/null
-  [ -n "$COLLECTOR_PID" ] && kill -KILL "$COLLECTOR_PID" 2>/dev/null
+  [ -n "$SERVER_PID" ] && kill -TERM "$SERVER_PID" 2>/dev/null || true
+  [ -n "$COLLECTOR_PID" ] && kill -TERM "$COLLECTOR_PID" 2>/dev/null || true
+
+  # Exit as soon as both children stop; force-kill only processes that remain
+  # after the grace period instead of sleeping for ten seconds unconditionally.
+  for _ in {1..10}; do
+    server_alive=0
+    collector_alive=0
+    [ -n "$SERVER_PID" ] && kill -0 "$SERVER_PID" 2>/dev/null && server_alive=1
+    [ -n "$COLLECTOR_PID" ] && kill -0 "$COLLECTOR_PID" 2>/dev/null && collector_alive=1
+    [ "$server_alive" -eq 0 ] && [ "$collector_alive" -eq 0 ] && break
+    sleep 1
+  done
+
+  [ -n "$SERVER_PID" ] && kill -0 "$SERVER_PID" 2>/dev/null && kill -KILL "$SERVER_PID" 2>/dev/null || true
+  [ -n "$COLLECTOR_PID" ] && kill -0 "$COLLECTOR_PID" 2>/dev/null && kill -KILL "$COLLECTOR_PID" 2>/dev/null || true
+  [ -n "$SERVER_PID" ] && wait "$SERVER_PID" 2>/dev/null || true
+  [ -n "$COLLECTOR_PID" ] && wait "$COLLECTOR_PID" 2>/dev/null || true
   exit 0
 }
 
@@ -120,8 +139,8 @@ trap shutdown SIGTERM SIGINT
     if [ -z "$DATABASE_URL" ]; then
       export DATABASE_URL="file:../storage/opensin.db?connection_limit=1"
     fi &&
-    npx prisma generate --schema=./prisma/schema.prisma &&
-    npx prisma migrate deploy --schema=./prisma/schema.prisma &&
+    yarn prisma:generate &&
+    yarn prisma:migrate &&
     node /app/server/index.js
 } &
 SERVER_PID=$!

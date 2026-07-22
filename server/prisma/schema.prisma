@@ -731,10 +731,9 @@ model memories {
   workspaceId Int?                         @map("workspace_id")
   scope       String                       @default("workspace")
   content     String
-  // Semantic embedding for vector similarity search via pgvector.
-  // Dimension matches the default embedding model (text-embedding-3-small = 1536).
-  // Set to null until the memory is first embedded.
-  embedding   Unsupported("vector(1536)")?
+  // Embeddings are stored in the configured vector engine, not in the active
+  // SQLite relational schema. Keeping a PostgreSQL-only vector column here made
+  // the supposedly canonical SQLite schema internally contradictory.
   lastUsedAt  DateTime?                    @map("last_used_at")
   createdAt   DateTime                     @default(now()) @map("created_at")
   updatedAt   DateTime                     @default(now()) @map("updated_at")

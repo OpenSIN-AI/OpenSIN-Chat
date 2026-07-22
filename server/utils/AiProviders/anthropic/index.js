@@ -171,7 +171,7 @@ class AnthropicLLM {
     }
 
     const content = [{ type: "text", text: userPrompt }];
-    for (let attachment of attachments) {
+    for (const attachment of attachments) {
       const parts = attachment.contentString.split("base64,");
       const base64Data = parts.length > 1 ? parts[1] : parts[0];
       let mediaType = attachment.mime;
@@ -238,7 +238,8 @@ class AnthropicLLM {
           prompt_tokens: promptTokens,
           completion_tokens: completionTokens,
           total_tokens: promptTokens + completionTokens,
-          outputTps: completionTokens / result.duration,
+          outputTps:
+            result.duration > 0 ? completionTokens / result.duration : 0,
           duration: result.duration,
           model: this.model,
           provider: this.className,

@@ -2,12 +2,11 @@
 import { AUTH_TOKEN, AUTH_USER } from "./constants";
 import { safeGetItem } from "./safeStorage";
 
-// Sets up the base headers for all authenticated requests so that we are able to prevent
-// basic spoofing since a valid token is required and that cannot be spoofed
-export function userFromStorage() {
+// Sets up the base headers for authenticated requests.
+export function userFromStorage<T = unknown>(): T | null {
   const userString = safeGetItem(AUTH_USER);
   if (!userString) return null;
-  return safeJsonParse(userString, null);
+  return safeJsonParse<T | null>(userString, null);
 }
 
 export function baseHeaders(
@@ -20,22 +19,31 @@ export function baseHeaders(
   };
 }
 
-export function safeJsonParse(jsonString: any, fallback: any = null): any {
+export function safeJsonParse<T = unknown>(
+  jsonString: unknown,
+  fallback: T = null as T,
+): T {
+  if (typeof jsonString !== "string") return fallback;
+
   try {
-    if (jsonString === null || jsonString === undefined) return fallback;
-    return JSON.parse(jsonString);
-  } catch (e: any) {
-    console.warn("[request] non-fatal error:", e?.message || e);
+    return JSON.parse(jsonString) as T;
+  } catch (error: unknown) {
+    console.warn(
+      "[request] Invalid JSON ignored:",
+      error instanceof Error ? error.message : String(error),
+    );
+    return fallback;
   }
-  return fallback;
 }
 
 export function safeErrorMessage(
-  e: unknown,
+  error: unknown,
   fallback = "An unexpected error occurred",
-) {
-  if (e instanceof Error) return e.message;
-  if (typeof e === "string") return e;
-  if (e && typeof e === "object" && "message" in e) return String(e.message);
+): string {
+  if (error instanceof Error) return error.message;
+  if (typeof error === "string") return error;
+  if (error && typeof error === "object" && "message" in error) {
+    return String(error.message);
+  }
   return fallback;
 }

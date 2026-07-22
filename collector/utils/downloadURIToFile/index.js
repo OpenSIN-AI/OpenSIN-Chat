@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const { pipeline } = require("stream/promises");
 const { Transform } = require("stream");
-const { validURL } = require("../url");
+const { validURL, assertSafeURL } = require("../url");
 const { default: slugify } = require("slugify");
 
 // Add a custom slugify extension for slashing to handle URLs with paths.
@@ -35,6 +35,9 @@ const REDIRECT_STATUSES = new Set([301, 302, 303, 307, 308]);
  * @returns {Promise<Response>}
  */
 async function fetchWithValidatedRedirects(url, signal, hopCount = 0) {
+  if (!(await assertSafeURL(url))) {
+    throw new Error(`URL ${url} resolves to a blocked network`);
+  }
   const response = await fetch(url, { redirect: "manual", signal });
   if (!REDIRECT_STATUSES.has(response.status)) return response;
 
@@ -48,9 +51,9 @@ async function fetchWithValidatedRedirects(url, signal, hopCount = 0) {
   if (!location) throw new Error("Redirect with no Location header");
 
   const nextUrl = new URL(location, url).href;
-  if (!validURL(nextUrl)) {
+  if (!validURL(nextUrl) || !(await assertSafeURL(nextUrl))) {
     throw new Error(
-      `Redirect target ${nextUrl} blocked by SSRF guard (origin: ${url})`
+      `Redirect target ${nextUrl} blocked by SSRF guard (origin: ${url})`,
     );
   }
 
@@ -69,8 +72,17 @@ async function fetchWithValidatedRedirects(url, signal, hopCount = 0) {
  * @returns {Promise<{success: boolean, fileLocation: string|null, reason: string|null}>} - The path to the downloaded file
  */
 async function downloadURIToFile(url, maxTimeout = 10_000) {
-  if (!url || typeof url !== "string" || !validURL(url))
-    return { success: false, reason: "Not a valid URL.", fileLocation: null };
+  if (
+    !url ||
+    typeof url !== "string" ||
+    !validURL(url) ||
+    !(await assertSafeURL(url))
+  )
+    return {
+      success: false,
+      reason: "URL is invalid or resolves to a blocked network.",
+      fileLocation: null,
+    };
 
   try {
     const abortController = new AbortController();

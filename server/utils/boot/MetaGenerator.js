@@ -1,6 +1,21 @@
 // SPDX-License-Identifier: MIT
 const consoleLogger = require("../logger/console.js");
 
+const HTML_ESCAPE_MAP = {
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
+  '"': "&quot;",
+  "'": "&#39;",
+};
+
+function escapeHtml(value) {
+  return String(value ?? "").replace(
+    /[&<>"']/g,
+    (character) => HTML_ESCAPE_MAP[character],
+  );
+}
+
 /**
  * @typedef MetaTagDefinition
  * @property {('link'|'meta')} tag - the type of meta tag element
@@ -174,18 +189,18 @@ class MetaGenerator {
   #assembleMeta() {
     const output = [];
     for (const tag of this.#customConfig ?? this.#defaultMeta()) {
-      let htmlString;
-      htmlString = `<${tag.tag} `;
+      let htmlString = `<${tag.tag}`;
 
       if (tag.props !== null) {
-        for (const [key, value] of Object.entries(tag.props))
-          htmlString += `${key}="${value}" `;
+        for (const [key, value] of Object.entries(tag.props)) {
+          if (value === null || value === undefined) continue;
+          htmlString += ` ${key}="${escapeHtml(value)}"`;
+        }
       }
 
-      if (tag.content) {
-        htmlString += `>${tag.content}</${tag.tag}>`;
-      } else {
-        htmlString += `>`;
+      htmlString += ">";
+      if (tag.content !== null && tag.content !== undefined) {
+        htmlString += `${escapeHtml(tag.content)}</${tag.tag}>`;
       }
       output.push(htmlString);
     }
@@ -193,16 +208,24 @@ class MetaGenerator {
   }
 
   #validUrl(faviconUrl = null) {
-    if (faviconUrl === null) return "/favicon.png";
+    const fallback = "/favicon.png";
+    if (typeof faviconUrl !== "string") return fallback;
+
+    const value = faviconUrl.trim();
+    if (!value) return fallback;
+    if (value.startsWith("/") && !value.startsWith("//")) return value;
+
     try {
-      const url = new URL(faviconUrl);
-      return url.toString();
+      const url = new URL(value);
+      return ["http:", "https:"].includes(url.protocol)
+        ? url.toString()
+        : fallback;
     } catch {
-      return "/favicon.png";
+      return fallback;
     }
   }
 
-  async #fetchConfg() {
+  async #fetchConfig() {
     this.#log(`fetching custom meta tag settings...`);
     const { SystemSettings } = require("../../models/systemSettings");
     const customTitle = await SystemSettings.getValueOrFallback(
@@ -442,7 +465,7 @@ class MetaGenerator {
   #buildPreloadTags(js) {
     if (!js.length) return "";
 
-    const REACT_RE = /^vendor-react/;
+    const REACT_RE = /\/react-vendor-/;
     const ordered = [
       ...js.filter((p) => REACT_RE.test(p)),
       ...js.filter((p) => !REACT_RE.test(p)),
@@ -534,7 +557,7 @@ class MetaGenerator {
   }
 
   async generate(request, response, code = 200, prerenderedBody = null) {
-    if (this.#customConfig === null) await this.#fetchConfg();
+    if (this.#customConfig === null) await this.#fetchConfig();
     const routePath = request?.path || "/";
     const { js, css } = await this.#readVitePreloadList();
     const { entryJs, entryCss } = await this.#readEntryAssets();
@@ -584,15 +607,7 @@ class MetaGenerator {
         null,
       );
 
-      let iconUrl = "/favicon.png";
-      if (faviconURL) {
-        try {
-          new URL(faviconURL);
-          iconUrl = faviconURL;
-        } catch {
-          iconUrl = "/favicon.png";
-        }
-      }
+      const iconUrl = this.#validUrl(faviconURL);
 
       const manifest = {
         name: manifestName,

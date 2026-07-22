@@ -17,6 +17,7 @@ const {
 const RuntimeSettings = require("../../utils/runtimeSettings");
 const { htmlToMarkdown } = require("../helpers/htmlToMarkdown");
 const { browserPool } = require("../../utils/browserPool");
+const { assertSafeURL } = require("../../utils/url");
 
 const MAX_RESPONSE_BYTES = 50 * 1024 * 1024;
 const PUPPETEER_TIMEOUT_MS = 60_000;
@@ -124,20 +125,64 @@ async function scrapeGenericUrl({
  * @param {{[key: string]: string}} headers - The headers object to validate
  * @returns {{[key: string]: string}} - The validated headers object
  */
+const FORBIDDEN_SCRAPER_HEADERS = new Set([
+  "connection",
+  "content-length",
+  "host",
+  "proxy-authenticate",
+  "proxy-authorization",
+  "te",
+  "trailer",
+  "transfer-encoding",
+  "upgrade",
+]);
+
 function validatedHeaders(headers = {}) {
   try {
-    if (Object.keys(headers).length === 0) return {};
-    let validHeaders = {};
-    for (const key of Object.keys(headers)) {
-      if (!key?.trim()) continue;
-      if (typeof headers[key] !== "string" || !headers[key]?.trim()) continue;
-      validHeaders[key] = headers[key].trim();
+    if (!headers || typeof headers !== "object" || Array.isArray(headers))
+      return {};
+    const validHeaders = {};
+    for (const [key, rawValue] of Object.entries(headers).slice(0, 32)) {
+      const normalizedKey = key.trim().toLowerCase();
+      if (
+        !/^[!#$%&'*+.^_`|~0-9A-Za-z-]{1,128}$/.test(key.trim()) ||
+        FORBIDDEN_SCRAPER_HEADERS.has(normalizedKey)
+      )
+        continue;
+      if (typeof rawValue !== "string") continue;
+      const value = rawValue.trim();
+      if (!value || value.length > 8192 || /[\r\n]/.test(value)) continue;
+      validHeaders[key.trim()] = value;
     }
     return validHeaders;
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error("Error validating headers", error);
     return {};
+  }
+}
+
+async function continueSafeRequest(request, entryLink, overrideHeaders) {
+  try {
+    const requestUrl = request.url();
+    const destination = new URL(requestUrl);
+    if (!["http:", "https:"].includes(destination.protocol)) {
+      return request.continue();
+    }
+    if (!(await assertSafeURL(requestUrl))) {
+      return request.abort("blockedbyclient");
+    }
+
+    const headers = { ...request.headers() };
+    if (destination.origin === new URL(entryLink).origin) {
+      Object.assign(headers, overrideHeaders);
+    }
+    return request.continue({ headers });
+  } catch (error) {
+    console.warn(
+      `[generic] blocked request during URL validation: ${error?.message || error}`,
+    );
+    return request.abort("blockedbyclient").catch(() => undefined);
   }
 }
 
@@ -191,22 +236,13 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
       let page = null;
       try {
         page = await browser.newPage();
-        if (hasHeaders) await page.setExtraHTTPHeaders(overrideHeaders);
 
         await page.setRequestInterception(true);
         const onRequest = (req) => {
           if (page && !page.isClosed()) {
-            try {
-              req.continue();
-            } catch (e) {
-              console.warn("[generic] non-fatal error:", e?.message || e);
-            }
+            void continueSafeRequest(req, entryLink, overrideHeaders);
           } else {
-            try {
-              req.abort();
-            } catch (e) {
-              console.warn("[generic] non-fatal error:", e?.message || e);
-            }
+            void req.abort("aborted").catch(() => undefined);
           }
         };
         page.on("request", onRequest);
@@ -246,6 +282,8 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
           redirectUrls.add(meta);
           metaDepth += 1;
           try {
+            if (!(await assertSafeURL(meta)))
+              throw new Error("Meta-refresh target resolves to a blocked network");
             await page.goto(meta, { timeout: 10_000, waitUntil: "load" });
             originalContent = await page.content();
             renderedBytes = Buffer.byteLength(originalContent, "utf8");
@@ -310,7 +348,14 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
           });
           try {
             const page = await browser.newPage();
-            await page.setExtraHTTPHeaders(overrideHeaders);
+            await page.setRequestInterception(true);
+            page.on("request", (request) => {
+              void continueSafeRequest(
+                request,
+                this.webPath,
+                overrideHeaders,
+              );
+            });
 
             try {
               await page.goto(this.webPath, {
@@ -347,7 +392,7 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
     if (hasHeaders) {
       await scrapeWithCustomLoader();
     } else {
-      const scrapedDoc = await scrapeWithPool();
+      const scrapedDoc = await scrapeWithPool(link);
       docs = [scrapedDoc];
     }
 
@@ -384,6 +429,8 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
           throw new Error(`Redirect loop detected for ${link}`);
         }
         visited.add(currentLink);
+        if (!(await assertSafeURL(currentLink)))
+          throw new Error("URL resolves to a blocked network");
         response = await fetch(currentLink, {
           method: "GET",
           redirect: "manual",
@@ -409,6 +456,8 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
           } catch {
             break;
           }
+          if (!(await assertSafeURL(next)))
+            throw new Error("Redirect target resolves to a blocked network");
           currentLink = next;
           hops += 1;
           continue;

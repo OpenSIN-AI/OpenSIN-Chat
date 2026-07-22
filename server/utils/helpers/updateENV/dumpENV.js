@@ -28,9 +28,6 @@ function dumpENV() {
     "STORAGE_DIR",
     "SERVER_PORT",
     "COLLECTOR_PORT",
-    // For persistent data encryption
-    "SIG_KEY",
-    "SIG_SALT",
     // Password Schema Keys if present.
     "PASSWORDMINCHAR",
     "PASSWORDMAXCHAR",
@@ -110,7 +107,7 @@ function dumpENV() {
     frozenEnvs[key] = process.env?.[key] || null;
   }
 
-  var envResult = `# Auto-dump ENV from system call on ${new Date().toTimeString()}\n`;
+  let envResult = `# Auto-dump ENV from system call on ${new Date().toTimeString()}\n`;
   envResult += Object.entries(frozenEnvs)
     .map(([key, value]) => `${key}='${sanitizeValue(value)}'`)
     .join("\n");

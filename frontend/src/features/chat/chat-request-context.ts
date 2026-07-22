@@ -26,17 +26,18 @@ export function buildChatRequestContext({
 }: BuildChatRequestContextOptions): ChatRequestContext {
   const selection = readSelectedSources({ notebookSlug, threadSlug });
   const mode = readNotebookMode({ notebookSlug, threadSlug });
+  const runnerCandidate =
+    codeRunnerId ?? readSelectedCodeRunnerId(notebookSlug);
+  const normalizedRunnerId =
+    typeof runnerCandidate === "string" && runnerCandidate.trim()
+      ? runnerCandidate.trim()
+      : null;
 
   return {
     turnId: crypto.randomUUID(),
     notebookMode: mode,
     sourceSelectionExplicit: selection.explicit,
     selectedSourceIds: selection.sourceIds,
-    codeRunnerId:
-      mode === "code" && typeof codeRunnerId === "string" && codeRunnerId.trim()
-        ? codeRunnerId.trim()
-        : typeof codeRunnerId === "string" && codeRunnerId.trim()
-          ? codeRunnerId.trim()
-          : null,
+    codeRunnerId: mode === "code" ? normalizedRunnerId : null,
   };
 }

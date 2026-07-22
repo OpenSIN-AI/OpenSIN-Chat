@@ -14,6 +14,14 @@ function getDummyBcryptHash() {
     _dummyBcryptHash = bcrypt.hashSync("timing-normalization-dummy", 12);
   return _dummyBcryptHash;
 }
+
+function envFlag(name) {
+  return ["1", "true", "yes", "on"].includes(
+    String(process.env[name] ?? "")
+      .trim()
+      .toLowerCase(),
+  );
+}
 const { Telemetry } = require("../../models/telemetry");
 const { EventLogs } = require("../../models/eventLogs");
 const {
@@ -320,10 +328,22 @@ function authEndpoints(app) {
             userAgent: ua,
             cf_connecting_ip: cfIp,
           };
-          // Single-user mode WITHOUT an AUTH_TOKEN env var: auth is disabled.
-          // Auto-grant a session token instead of crashing on
-          // `bcrypt.hashSync(undefined, 12)`.
+          // Single-user mode without AUTH_TOKEN is allowed automatically in
+          // development. Production requires an explicit operator opt-in so a
+          // publicly reachable deployment cannot silently become passwordless.
           if (!process.env.AUTH_TOKEN) {
+            if (
+              process.env.NODE_ENV === "production" &&
+              !envFlag("ALLOW_UNAUTHENTICATED_SINGLE_USER")
+            ) {
+              return response.status(503).json({
+                valid: false,
+                token: null,
+                message:
+                  "Single-user authentication is not configured on this server.",
+              });
+            }
+
             await Telemetry.sendTelemetry("login_event", {
               multiUserMode: false,
             });

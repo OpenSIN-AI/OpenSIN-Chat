@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 const path = require("path");
-const { validURL } = require("../../utils/url");
+const { validURL, assertSafeURL } = require("../../utils/url");
 const { processSingleFile } = require("../../processSingleFile");
 const { downloadURIToFile } = require("../../utils/downloadURIToFile");
 const { ACCEPTED_MIMES } = require("../../utils/constants");
@@ -14,6 +14,36 @@ const { validYoutubeVideoUrl } = require("../../utils/url");
 function parseContentType(contentTypeHeader) {
   if (!contentTypeHeader) return null;
   return contentTypeHeader.toLowerCase().split(";")[0].trim() || null;
+}
+
+const REDIRECT_STATUSES = new Set([301, 302, 303, 307, 308]);
+const MAX_HEAD_REDIRECTS = 5;
+
+async function fetchHeadWithValidatedRedirects(url, signal) {
+  const visited = new Set();
+  let currentUrl = url;
+
+  for (let hop = 0; hop <= MAX_HEAD_REDIRECTS; hop += 1) {
+    if (visited.has(currentUrl)) throw new Error("Redirect loop detected");
+    visited.add(currentUrl);
+    if (!(await assertSafeURL(currentUrl)))
+      throw new Error("URL resolves to a blocked network");
+
+    const response = await fetch(currentUrl, {
+      method: "HEAD",
+      redirect: "manual",
+      signal,
+    });
+    if (!REDIRECT_STATUSES.has(response.status)) return response;
+    if (hop === MAX_HEAD_REDIRECTS)
+      throw new Error(`Too many redirects (limit ${MAX_HEAD_REDIRECTS})`);
+
+    const location = response.headers.get("location");
+    if (!location) throw new Error("Redirect with no Location header");
+    currentUrl = new URL(location, currentUrl).toString();
+  }
+
+  throw new Error("Unable to resolve URL");
 }
 
 /**
@@ -34,10 +64,10 @@ async function getContentTypeFromURL(url) {
       console.error("Timeout fetching content type for URL:", url.toString());
     }, 5_000);
 
-    const res = await fetch(url, {
-      method: "HEAD",
-      signal: abortController.signal,
-    }).finally(() => clearTimeout(timeout));
+    const res = await fetchHeadWithValidatedRedirects(
+      url,
+      abortController.signal,
+    ).finally(() => clearTimeout(timeout));
 
     if (!res.ok)
       return {

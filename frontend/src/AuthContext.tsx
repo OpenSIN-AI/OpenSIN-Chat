@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useState, createContext, useMemo } from "react";
+import React, { createContext, useMemo, useState } from "react";
 import useSWR from "swr";
 import {
   AUTH_TIMESTAMP,
@@ -10,78 +10,113 @@ import {
 import System from "./models/system";
 import { useNavigate } from "react-router";
 import { safeJsonParse } from "@/utils/request";
-import { safeGetItem, safeSetItem, safeRemoveItem } from "@/utils/safeStorage";
+import { safeGetItem, safeRemoveItem, safeSetItem } from "@/utils/safeStorage";
 
-export const AuthContext = createContext<any>(null);
+export interface AuthUser {
+  id?: number;
+  username?: string;
+  role?: string;
+  suspended?: boolean;
+  [key: string]: unknown;
+}
+
+interface AuthStore {
+  user: AuthUser | null;
+  authToken: string | null;
+}
+
+interface RefreshUserResponse {
+  success: boolean;
+  user: AuthUser | null;
+  message?: string | null;
+}
+
+interface AuthActions {
+  updateUser: (user: AuthUser, authToken?: string | null) => void;
+  unsetUser: () => void;
+}
+
+export interface AuthContextValue {
+  store: AuthStore;
+  actions: AuthActions;
+}
+
+export const AuthContext = createContext<AuthContextValue | null>(null);
 export const userKey = "system/refresh-user";
 
+function clearStoredAuth(): void {
+  safeRemoveItem(AUTH_USER);
+  safeRemoveItem(AUTH_TOKEN);
+  safeRemoveItem(AUTH_TIMESTAMP);
+  safeRemoveItem(USER_PROMPT_INPUT_MAP);
+}
+
 export function AuthProvider(props: { children: React.ReactNode }) {
-  // Lazy initialiser so localStorage access and safeJsonParse only run on the
-  // very first render rather than on every render of the provider.
-  const [store, setStore] = useState(() => {
+  const [store, setStore] = useState<AuthStore>(() => {
     const localUser = safeGetItem(AUTH_USER);
-    const localAuthToken = safeGetItem(AUTH_TOKEN);
     return {
-      user: localUser ? safeJsonParse(localUser, null as any) : null,
-      authToken: localAuthToken ? localAuthToken : null,
+      user: localUser
+        ? safeJsonParse<AuthUser | null>(localUser, null)
+        : null,
+      authToken: safeGetItem(AUTH_TOKEN),
     };
   });
 
   const navigate = useNavigate();
-
-  // SWR replaces the useEffect + refreshUser pattern.
-  // Only fires when an authToken is present; the userKey is set to null
-  // otherwise so SWR skips the request entirely.
-  const { mutate } = useSWR(
+  const { mutate } = useSWR<RefreshUserResponse>(
     store.authToken ? userKey : null,
     () => System.refreshUser(),
     {
       revalidateOnFocus: true,
       dedupingInterval: 2000,
       onSuccess(data) {
-        // Single-user mode (no multi-user): data.user is null but success is
-        // true — nothing to do.
-        if (data.success && data.user === null) return;
+        if (!data) return;
 
         if (!data.success) {
-          safeRemoveItem(AUTH_USER);
-          safeRemoveItem(AUTH_TOKEN);
-          safeRemoveItem(AUTH_TIMESTAMP);
-          safeRemoveItem(USER_PROMPT_INPUT_MAP);
+          clearStoredAuth();
           setStore({ user: null, authToken: null });
           navigate("/login");
           return;
         }
 
+        if (data.user === null) {
+          safeRemoveItem(AUTH_USER);
+          setStore((previous) => ({ ...previous, user: null }));
+          return;
+        }
+
         safeSetItem(AUTH_USER, JSON.stringify(data.user));
-        setStore((prev) => ({ ...prev, user: data.user }));
+        setStore((previous) => ({ ...previous, user: data.user }));
       },
     },
   );
 
-  /* NOTE:
-   * 1. These helper functions are not stateful — they are plain actions.
-   * 2. updateUser / unsetUser also invalidate the SWR user cache so any
-   *    component that calls useUser() immediately sees the new state.
-   */
-  const [actions] = useState({
-    updateUser: (user: any, authToken = "" as any) => {
-      safeSetItem(AUTH_USER, JSON.stringify(user));
-      safeSetItem(AUTH_TOKEN, authToken);
-      setStore({ user, authToken });
-      mutate({ success: true, user, message: null }, false);
-    },
-    unsetUser: () => {
-      safeRemoveItem(AUTH_USER);
-      safeRemoveItem(AUTH_TOKEN);
-      safeRemoveItem(AUTH_TIMESTAMP);
-      safeRemoveItem(USER_PROMPT_INPUT_MAP);
-      setStore({ user: null, authToken: null });
-      mutate({ success: false, user: null, message: null }, false);
-    },
-  });
+  const actions = useMemo<AuthActions>(
+    () => ({
+      updateUser(user, authToken) {
+        const nextAuthToken =
+          authToken === undefined ? safeGetItem(AUTH_TOKEN) : authToken;
 
-  const value = useMemo(() => ({ store, actions }), [store, actions]);
+        safeSetItem(AUTH_USER, JSON.stringify(user));
+        if (nextAuthToken) safeSetItem(AUTH_TOKEN, nextAuthToken);
+        else safeRemoveItem(AUTH_TOKEN);
+
+        setStore({ user, authToken: nextAuthToken });
+        void mutate({ success: true, user, message: null }, false);
+      },
+      unsetUser() {
+        clearStoredAuth();
+        setStore({ user: null, authToken: null });
+        void mutate({ success: false, user: null, message: null }, false);
+      },
+    }),
+    [mutate],
+  );
+
+  const value = useMemo<AuthContextValue>(
+    () => ({ store, actions }),
+    [actions, store],
+  );
 
   return (
     <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>

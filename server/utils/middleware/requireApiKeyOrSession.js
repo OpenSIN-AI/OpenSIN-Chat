@@ -9,20 +9,34 @@ const { SystemSettings } = require("../../models/systemSettings");
 const { decodeJWT } = require("../http");
 const { User } = require("../../models/user");
 
+function extractBearerToken(request) {
+  const auth = request.header("Authorization");
+  if (typeof auth !== "string") return null;
+  return auth.match(/^Bearer\s+([^\s]+)$/i)?.[1] ?? null;
+}
+
+function safeDecodeJWT(token) {
+  try {
+    return decodeJWT(token);
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Validate the session JWT from the Authorization header.
  * @param {import("express").Request} request
  * @returns {Promise<{id: number, username: string, role: string}|null>}
  */
 async function validateSessionToken(request) {
-  const auth = request.header("Authorization");
-  const token = auth ? auth.split(" ")[1] : null;
+  const token = extractBearerToken(request);
   if (!token) return null;
 
-  const valid = decodeJWT(token);
-  if (!valid || !valid.id) return null;
+  const valid = safeDecodeJWT(token);
+  const userId = Number(valid?.id);
+  if (!Number.isSafeInteger(userId) || userId <= 0) return null;
 
-  const user = await User.get({ id: valid.id });
+  const user = await User.get({ id: userId });
   if (!user || user.suspended) return null;
 
   return user;
@@ -51,8 +65,7 @@ async function requireApiKeyOrSession(request, response, next) {
   const multiUserMode = await SystemSettings.isMultiUserMode();
   response.locals.multiUserMode = multiUserMode;
 
-  const auth = request.header("Authorization");
-  const bearer = auth ? auth.split(" ")[1] : null;
+  const bearer = extractBearerToken(request);
   if (!bearer) {
     return response.status(401).json({
       error: "No valid API key or session token found.",
@@ -62,15 +75,32 @@ async function requireApiKeyOrSession(request, response, next) {
   // Try API key first.
   const apiKey = await ApiKey.get({ secret: bearer });
   if (apiKey) {
+    if (multiUserMode) {
+      if (!apiKey.createdBy) {
+        return response.status(401).json({
+          error: "No valid API key or session token found.",
+        });
+      }
+      const owner = await User.get({ id: apiKey.createdBy });
+      if (!owner || owner.suspended) {
+        return response.status(401).json({
+          error: "No valid API key or session token found.",
+        });
+      }
+      response.locals.user = owner;
+    }
     response.locals.apiKey = apiKey;
     return next();
   }
 
-  // Try session token. A valid JWT signed by JWT_SECRET is sufficient.
-  // In multi-user mode it carries a user id; in single-user no-password mode
-  // it carries { p: null }.
-  const valid = decodeJWT(bearer);
-  if (!valid || (valid.p === null && valid.id === null)) {
+  // Try a session token. Accept only tokens carrying a recognized identity or
+  // encrypted single-user credential claim; unrelated signed JWTs are rejected.
+  const valid = safeDecodeJWT(bearer);
+  const userId = Number(valid?.id);
+  const hasUserIdentity = Number.isSafeInteger(userId) && userId > 0;
+  const hasSingleUserCredential =
+    typeof valid?.p === "string" && valid.p.length > 0;
+  if (!valid || (!hasUserIdentity && !hasSingleUserCredential)) {
     return response.status(401).json({
       error: "No valid API key or session token found.",
     });
@@ -79,14 +109,14 @@ async function requireApiKeyOrSession(request, response, next) {
   // In multi-user mode, a valid user id is required. A single-user JWT
   // (with `p` set but no `id`) must not be accepted — it has no user
   // identity and would grant access without a valid user context.
-  if (multiUserMode && !valid.id) {
+  if (multiUserMode && !hasUserIdentity) {
     return response.status(401).json({
       error: "No valid API key or session token found.",
     });
   }
 
-  if (valid.id) {
-    const user = await User.get({ id: valid.id });
+  if (hasUserIdentity) {
+    const user = await User.get({ id: userId });
     if (!user || user.suspended) {
       return response.status(401).json({
         error: "No valid API key or session token found.",
