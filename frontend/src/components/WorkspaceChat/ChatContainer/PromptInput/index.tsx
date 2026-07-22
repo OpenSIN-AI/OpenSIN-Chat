@@ -18,6 +18,11 @@ import ToolsButton from "./ToolsButton";
 import SendPromptButton from "./SendPromptButton";
 import EnhancePromptButton from "./EnhancePromptButton";
 import TextSizeButton from "./TextSizeMenu";
+import NotebookModeSwitcher from "@/features/notebook/NotebookModeSwitcher";
+import useNotebookMode from "@/features/notebook/useNotebookMode";
+import CodeRunnerPicker from "@/features/code-runners/CodeRunnerPicker";
+import useSelectedCodeRunner from "@/features/code-runners/useSelectedCodeRunner";
+import { useChatSidebar } from "../ChatSidebar";
 
 export const PROMPT_INPUT_ID = "primary-prompt-input";
 import { PROMPT_INPUT_EVENT, MAX_EDIT_STACK_SIZE } from "./usePromptState";
@@ -45,6 +50,7 @@ export default function PromptInput({
 }: any) {
   const { t } = useTranslation();
   const { isDisabled } = useIsDisabled();
+  const { openSidebar } = useChatSidebar();
   const {
     promptInput,
     setPromptInput,
@@ -72,27 +78,24 @@ export default function PromptInput({
   });
 
   const agentMode = useAgentMode();
+  const notebookSlug = workspaceSlug ?? (workspace as any)?.slug ?? null;
+
+  const notebookMode = useNotebookMode({ notebookSlug, threadSlug });
+  const selectedCodeRunner = useSelectedCodeRunner(notebookSlug);
 
   // When Deep Research sources change, rewrite [sources:…] in the prompt.
   useEffect(() => {
     function onRewrite(e: Event) {
       if (agentMode?.activeMode?.id !== "deep-research") return;
       const detail = (e as CustomEvent).detail || {};
-      const sources: string[] = Array.isArray(detail.sources)
-        ? detail.sources
-        : [];
-      const next = applyAgentModePrefix(
-        promptInput || "",
-        "deep-research",
-        sources,
-      );
+      const sources: string[] = Array.isArray(detail.sources) ? detail.sources : [];
+      const next = applyAgentModePrefix(promptInput || "", "deep-research", sources);
       if (next !== promptInput) {
         sendCommand({ text: next, writeMode: "replace" });
       }
     }
     window.addEventListener("agent-mode-rewrite-prefix", onRewrite);
-    return () =>
-      window.removeEventListener("agent-mode-rewrite-prefix", onRewrite);
+    return () => window.removeEventListener("agent-mode-rewrite-prefix", onRewrite);
   }, [agentMode?.activeMode?.id, promptInput, sendCommand]);
 
   return (
@@ -112,9 +115,7 @@ export default function PromptInput({
             : "mx-auto flex w-full max-w-3xl flex-col items-center"
         }
       >
-        <div
-          className={`flex w-full items-center rounded-lg ${centered ? "mb-0" : "mb-3"}`}
-        >
+        <div className={`flex w-full items-center rounded-lg ${centered ? "mb-0" : "mb-3"}`}>
           <div className="relative w-full">
             <ToolsMenu
               workspace={workspace}
@@ -131,6 +132,7 @@ export default function PromptInput({
                 <TextArea
                   textareaRef={textareaRef}
                   promptInput={promptInput}
+                  placeholder={notebookMode.mode.placeholder}
                   handleChange={handleChange}
                   captureEnterOrUndo={captureEnterOrUndo as any}
                   handlePasteEvent={handlePasteEvent}
@@ -141,57 +143,58 @@ export default function PromptInput({
                   adjustTextArea={adjustTextArea}
                 />
               </div>
-              <div className="flex items-center justify-between gap-1 py-1.5 sm:gap-2 sm:py-2">
-                <div className="flex min-w-0 flex-1 items-center overflow-hidden">
-                  <div className="flex items-center gap-x-1">
-                    <AttachItem
-                      workspaceSlug={workspaceSlug}
-                      workspaceThreadSlug={threadSlug}
-                    />
-                    <AgentModeButton
-                      sendCommand={sendCommand}
-                      promptInput={promptInput}
-                      textareaRef={textareaRef as any}
-                      visible={!agentSessionActive && showAgentCommand}
-                      {...agentMode}
-                    />
-                    <DeepResearchSources
-                      visible={
-                        !agentSessionActive &&
-                        showAgentCommand &&
-                        agentMode?.activeMode?.id === "deep-research"
-                      }
-                    />
+
+              <div className="flex flex-col gap-2 py-2">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex min-w-0 items-center gap-1">
+                    <AttachItem workspaceSlug={workspaceSlug} workspaceThreadSlug={threadSlug} />
+                    <button
+                      type="button"
+                      onClick={() => openSidebar("sources")}
+                      className="flex h-8 items-center rounded-lg border-none px-2 text-xs font-medium text-theme-text-secondary hover:bg-theme-bg-tertiary hover:text-theme-text-primary"
+                    >
+                      Quellen
+                    </button>
+                    {notebookMode.mode.allowsActions && (
+                      <ToolsButton
+                        showTools={showTools}
+                        setShowTools={setShowTools}
+                        textareaRef={textareaRef}
+                        autoOpenedToolsRef={autoOpenedToolsRef}
+                      />
+                    )}
                   </div>
-                  <ToolsButton
-                    showTools={showTools}
-                    setShowTools={setShowTools}
-                    textareaRef={textareaRef}
-                    autoOpenedToolsRef={autoOpenedToolsRef}
-                  />
+                  <NotebookModeSwitcher value={notebookMode.modeId} onChange={notebookMode.setModeId} />
                 </div>
-                <div className="flex shrink-0 items-center gap-1 sm:gap-2">
-                  <TextSizeButton />
-                  <SpeechToText sendCommand={sendCommand} />
-                  <EnhancePromptButton
-                    promptInput={promptInput}
-                    setPromptInput={setPromptInput}
-                    isStreaming={isStreaming}
-                  />
-                  {isStreaming ? (
-                    <StopGenerationButton
-                      workspaceSlug={
-                        workspaceSlug ?? (workspace as any)?.slug ?? null
-                      }
-                      threadSlug={threadSlug ?? null}
-                    />
-                  ) : (
-                    <SendPromptButton
-                      formRef={formRef}
-                      promptInput={promptInput}
-                      isDisabled={isDisabled}
-                    />
-                  )}
+
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex min-w-0 items-center gap-1">
+                    {notebookMode.modeId === "work" && !agentSessionActive && showAgentCommand && (
+                      <>
+                        <AgentModeButton
+                          sendCommand={sendCommand}
+                          promptInput={promptInput}
+                          textareaRef={textareaRef as any}
+                          visible={true}
+                          {...agentMode}
+                        />
+                        <DeepResearchSources visible={agentMode?.activeMode?.id === "deep-research"} />
+                      </>
+                    )}
+                    {notebookMode.modeId === "code" && (
+                      <CodeRunnerPicker value={selectedCodeRunner.runnerId} onChange={selectedCodeRunner.setRunnerId} />
+                    )}
+                  </div>
+                  <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+                    <TextSizeButton />
+                    <SpeechToText sendCommand={sendCommand} />
+                    <EnhancePromptButton promptInput={promptInput} setPromptInput={setPromptInput} isStreaming={isStreaming} />
+                    {isStreaming ? (
+                      <StopGenerationButton workspaceSlug={notebookSlug} threadSlug={threadSlug ?? null} />
+                    ) : (
+                      <SendPromptButton formRef={formRef} promptInput={promptInput} isDisabled={isDisabled} />
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

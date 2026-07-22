@@ -6,8 +6,6 @@ import { Info } from "@phosphor-icons/react/dist/csr/Info";
 import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import Actions from "./Actions";
 import renderMarkdown from "@/utils/chat/markdown";
-import Citations from "../Citation";
-import GroundingBadge from "../GroundingBadge";
 import { v4 } from "uuid";
 import DOMPurify from "@/utils/chat/purify";
 import { EditMessageForm, useEditMessage } from "./Actions/EditMessage";
@@ -27,6 +25,11 @@ import { chatQueryRefusalResponse } from "@/utils/chat";
 import HistoricalOutputs from "./HistoricalOutputs";
 import HistoricalClarifyingQuestions from "./HistoricalClarifyingQuestions";
 import { openImageLightbox } from "@/components/ImageLightbox";
+import AssistantMessageShell from "@/features/messages/AssistantMessageShell";
+import AssistantMessageActions from "@/features/messages/AssistantMessageActions";
+import AnswerSources from "@/features/citations/AnswerSources";
+import CitedMarkdown from "@/features/citations/CitedMarkdown";
+import type { NotebookModeId } from "@/features/notebook/modes";
 
 const HistoricalMessage = ({
   uuid: uuidProp,
@@ -45,10 +48,9 @@ const HistoricalMessage = ({
   metrics = {},
   outputs = [],
   clarifyingQuestions = [],
+  notebookMode = "chat",
+  workDetails = [],
 }: any) => {
-  // Freeze uuid on first render. User messages arrive without a uuid and this value
-  // is used as the wrapper div's `key` — a default param fallback would regenerate
-  // on every render and remount the subtree, wiping TruncatableContent state.
   const [uuid] = useState(() => uuidProp ?? v4());
   const { t } = useTranslation();
   const { isEditing } = useEditMessage({ chatId, role });
@@ -70,7 +72,6 @@ const HistoricalMessage = ({
 
   if (completeDelete) return null;
 
-  // Skip rendering empty assistant messages
   if (
     role === "assistant" &&
     !message &&
@@ -125,8 +126,8 @@ const HistoricalMessage = ({
         onAnimationEnd={onEndAnimation}
         className={`${isDeleted ? "animate-remove" : ""} group flex w-full justify-end py-3`}
       >
-        <div className="flex max-w-[88%] flex-col items-end sm:max-w-[80%]">
-          <div className="rounded-2xl rounded-br-md border border-[var(--chat-border)] bg-[var(--chat-user-bubble)] px-4 py-2.5 text-[var(--chat-text)] [&_p]:m-0">
+        <div className="flex max-w-[90%] flex-col items-end sm:max-w-[75%]">
+          <div className="rounded-[18px] rounded-br-[6px] bg-[var(--chat-user-bubble)] px-4 py-2.5 shadow-sm text-[var(--chat-text)] [&_p]:m-0">
             <TruncatableContent>
               <RenderChatContent
                 role={role}
@@ -153,14 +154,33 @@ const HistoricalMessage = ({
     );
   }
 
+  // Assistant message
+  const cleanedMessage = stripThoughtContent(message);
+
+  function strippedTtsMessage() {
+    if (!message) return message;
+    let ttsMessage = message;
+    ttsMessage = ttsMessage.replace(THOUGHT_REGEX_COMPLETE, "");
+    if (
+      ttsMessage.match(THOUGHT_REGEX_OPEN) &&
+      !ttsMessage.match(THOUGHT_REGEX_CLOSE)
+    ) {
+      ttsMessage = ttsMessage.replace(THOUGHT_REGEX_OPEN, "");
+    }
+    ttsMessage = ttsMessage
+      .replace(/<\/?(response|answer)\s*(?:[^>]*?)?>/gi, " ")
+      .trim();
+    return ttsMessage;
+  }
+
   return (
     <div
       key={uuid}
       onAnimationEnd={onEndAnimation}
-      className={`${isDeleted ? "animate-remove" : ""} group flex w-full justify-start py-4`}
+      className={`${isDeleted ? "animate-remove" : ""} flex w-full justify-start py-5`}
     >
-      <div className="flex w-full flex-col">
-        {isEditing ? (
+      {isEditing ? (
+        <div className="w-full">
           <EditMessageForm
             role={role}
             chatId={chatId}
@@ -169,102 +189,63 @@ const HistoricalMessage = ({
             adjustTextArea={adjustTextArea}
             saveChanges={saveEditedMessage}
           />
-        ) : (
-          <div className="break-words">
-            <HistoricalClarifyingQuestions surveys={clarifyingQuestions} />
-            {/* Thought chain content — only visible when the brain icon is toggled. */}
-            {thoughtChainContent && (
-              <ThoughtChainComponent
-                content={thoughtChainContent}
-                messageId={uuid}
-              />
-            )}
-            {/* Brain icon + message side by side */}
-            <div className="flex items-start gap-x-1.5">
-              {thoughtChainContent && (
-                <ThoughtBrainButton
-                  messageId={uuid}
-                  content={thoughtChainContent}
-                />
-              )}
-              <div className="flex-1 min-w-0">
-                <RenderChatContent
-                  role={role}
-                  message={message}
-                  messageId={uuid}
-                />
-              </div>
-            </div>
-            {isRefusalMessage && (
-              <Link
-                data-tooltip-id="query-refusal-info"
-                data-tooltip-content={`${t("chat.refusal.tooltip-description")}`}
-                className="!no-underline group !flex w-fit"
-                to={paths.chatModes()}
-                target="_blank"
-              >
-                <div className="flex flex-row items-center gap-x-1 group-hover:opacity-100 opacity-60 w-fit">
-                  <Info className="text-theme-text-secondary" />
-                  <p className="!m-0 !p-0 text-theme-text-secondary !no-underline text-xs cursor-pointer">
-                    {t("chat.refusal.tooltip-title")}
-                  </p>
-                </div>
-              </Link>
-            )}
-            <ChatAttachments attachments={attachments} />
-            <HistoricalOutputs outputs={outputs} />
-          </div>
-        )}
-        {role === "assistant" && <GroundingBadge sources={sources} />}
-        {role === "assistant" && <Citations sources={sources} />}
-        <div className="flex items-start md:items-center gap-x-1">
-          <Actions
-            message={message}
-            feedbackScore={feedbackScore}
-            chatId={chatId}
-            slug={workspace?.slug}
-            isLastMessage={isLastMessage}
-            regenerateMessage={regenerateMessage}
-            isEditing={isEditing}
-            role={role}
-            forkThread={forkThread}
-            metrics={metrics}
-            ttsButton={
-              chatId && role !== "user" ? (
-                <TTSMessage
-                  slug={workspace?.slug}
-                  chatId={chatId}
-                  message={
-                    // Strip thought/thinking blocks so TTS only speaks the final answer.
-                    // Mirrors the logic in RenderChatContent and messageToSpeech.js.
-                    (() => {
-                      if (!message) return message;
-                      let ttsMessage = message;
-                      // Remove complete thought blocks entirely.
-                      ttsMessage = ttsMessage.replace(
-                        THOUGHT_REGEX_COMPLETE,
-                        "",
-                      );
-                      // If an unclosed opening tag remains, strip it and everything after.
-                      if (
-                        ttsMessage.match(THOUGHT_REGEX_OPEN) &&
-                        !ttsMessage.match(THOUGHT_REGEX_CLOSE)
-                      ) {
-                        ttsMessage = ttsMessage.replace(THOUGHT_REGEX_OPEN, "");
-                      }
-                      // Strip <response>/<answer> wrapper tags but keep their content.
-                      ttsMessage = ttsMessage
-                        .replace(/<\/?(response|answer)\s*(?:[^>]*?)?>/gi, " ")
-                        .trim();
-                      return ttsMessage;
-                    })()
-                  }
-                />
-              ) : null
-            }
-          />
         </div>
-      </div>
+      ) : (
+        <AssistantMessageShell
+          mode={notebookMode as NotebookModeId}
+          citations={
+            sources?.length ? (
+              <AnswerSources sources={sources} workspaceSlug={workspace?.slug} />
+            ) : null
+          }
+          actions={
+            <AssistantMessageActions
+              message={cleanedMessage || ""}
+              onRegenerate={isLastMessage ? regenerateMessage : undefined}
+              readAloudButton={
+                chatId ? (
+                  <TTSMessage
+                    slug={workspace?.slug}
+                    chatId={chatId}
+                    message={strippedTtsMessage()}
+                  />
+                ) : undefined
+              }
+            />
+          }
+        >
+          <HistoricalClarifyingQuestions surveys={clarifyingQuestions} />
+          {thoughtChainContent && (
+            <ThoughtChainComponent content={thoughtChainContent} messageId={uuid} />
+          )}
+          {thoughtChainContent && (
+            <ThoughtBrainButton messageId={uuid} content={thoughtChainContent} />
+          )}
+          <CitedMarkdown
+            markdown={cleanedMessage || ""}
+            sources={sources}
+            workspaceSlug={workspace?.slug}
+          />
+          {isRefusalMessage && (
+            <Link
+              data-tooltip-id="query-refusal-info"
+              data-tooltip-content={`${t("chat.refusal.tooltip-description")}`}
+              className="!no-underline group !flex w-fit"
+              to={paths.chatModes()}
+              target="_blank"
+            >
+              <div className="flex flex-row items-center gap-x-1 group-hover:opacity-100 opacity-60 w-fit">
+                <Info className="text-theme-text-secondary" />
+                <p className="!m-0 !p-0 text-theme-text-secondary !no-underline text-xs cursor-pointer">
+                  {t("chat.refusal.tooltip-title")}
+                </p>
+              </div>
+            </Link>
+          )}
+          <ChatAttachments attachments={attachments} />
+          <HistoricalOutputs outputs={outputs} />
+        </AssistantMessageShell>
+      )}
     </div>
   );
 };
@@ -281,8 +262,26 @@ export default memo(
     prevProps.isLastMessage === nextProps.isLastMessage &&
     prevProps.feedbackScore === nextProps.feedbackScore &&
     prevProps.outputs === nextProps.outputs &&
-    prevProps.clarifyingQuestions === nextProps.clarifyingQuestions,
+    prevProps.clarifyingQuestions === nextProps.clarifyingQuestions &&
+    prevProps.notebookMode === nextProps.notebookMode,
 );
+
+function stripThoughtContent(message: string | null | undefined): string {
+  if (!message) return "";
+  let result = message;
+  if (result.match(THOUGHT_REGEX_COMPLETE)) {
+    result = result.replace(THOUGHT_REGEX_COMPLETE, "");
+  }
+  if (
+    result.match(THOUGHT_REGEX_OPEN) &&
+    !result.match(THOUGHT_REGEX_CLOSE)
+  ) {
+    result = result.replace(THOUGHT_REGEX_OPEN, "");
+  }
+  return result
+    .replace(/<\/?(response|answer)\s*(?:[^>]*?)?>/gi, " ")
+    .trim();
+}
 
 function getThoughtChainContent(message: string | null | undefined) {
   if (!message) return null;
@@ -386,8 +385,6 @@ function TruncatableContent({ children }: any) {
   const [isOverflowing, setIsOverflowing] = useState(false as any);
   const { t } = useTranslation();
 
-  // useLayoutEffect (not useEffect) so collapse applies before paint — avoids a
-  // one-frame flash of uncollapsed content on mount.
   useLayoutEffect(() => {
     if (contentRef.current) {
       setIsOverflowing(contentRef.current.scrollHeight > 250);
@@ -430,8 +427,6 @@ function TruncatableContent({ children }: any) {
 
 const RenderChatContent = memo(
   ({ role, message }: any) => {
-    // If the message is not from the assistant, we can render it directly
-    // as normal since the user cannot think (lol)
     if (role !== "assistant")
       return (
         <span
@@ -444,15 +439,10 @@ const RenderChatContent = memo(
     let msgToRender = message;
     if (!message) return null;
 
-    // If the message is a perfect thought chain, we can render it directly
-    // Complete == open and close tags match perfectly.
     if (message.match(THOUGHT_REGEX_COMPLETE)) {
       msgToRender = message.replace(THOUGHT_REGEX_COMPLETE, "");
     }
 
-    // If the message is a thought chain but not a complete thought chain (matching opening tags but not closing tags),
-    // we can render it as a thought chain if we can at least find a closing tag
-    // This can occur when the assistant starts with <thinking> and then <response>'s later.
     if (
       message.match(THOUGHT_REGEX_OPEN) &&
       !message.match(THOUGHT_REGEX_CLOSE)

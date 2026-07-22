@@ -48,6 +48,10 @@ vi.mock("./Actions", () => ({
 
 vi.mock("../Citation", () => ({
   default: () => <div data-testid="citations" />,
+  combineLikeSources: (s) => s,
+  parseChunkSource: () => ({ text: "", href: "", icon: "" }),
+  SourceTypeCircle: () => null,
+  CitationDetailModal: () => null,
 }));
 
 vi.mock("../ThoughtContainer", () => ({
@@ -63,6 +67,28 @@ vi.mock("./HistoricalClarifyingQuestions", () => ({ default: () => null }));
 
 vi.mock("@/components/ImageLightbox", () => ({
   openImageLightbox: vi.fn(),
+}));
+
+vi.mock("@/features/messages/AssistantMessageShell", () => ({
+  default: ({ children, citations, actions }) => (
+    <div data-testid="assistant-message-shell">
+      {children}
+      {citations}
+      {actions}
+    </div>
+  ),
+}));
+
+vi.mock("@/features/messages/AssistantMessageActions", () => ({
+  default: () => <div data-testid="actions-bar" />,
+}));
+
+vi.mock("@/features/citations/AnswerSources", () => ({
+  default: () => <div data-testid="citations" />,
+}));
+
+vi.mock("@/features/citations/CitedMarkdown", () => ({
+  default: ({ markdown }) => <span>{markdown}</span>,
 }));
 
 vi.mock(
@@ -149,7 +175,7 @@ describe("HistoricalMessage", () => {
     const { container } = render(<HistoricalMessage {...baseUserProps} />, {
       wrapper: Wrapper,
     });
-    const bubble = container.querySelector(".rounded-br-md");
+    const bubble = container.querySelector(".rounded-br-\\[6px\\]");
     expect(bubble).toBeInTheDocument();
     expect(bubble?.className).toContain("bg-[var(--chat-user-bubble)]");
     expect(bubble?.className).toContain("text-[var(--chat-text)]");

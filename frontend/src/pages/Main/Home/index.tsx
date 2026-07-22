@@ -389,7 +389,6 @@ function HomeContent({
                 sendCommand={sendCommand}
                 loadingResponse={loading}
                 files={files}
-                t={t}
                 workspaceSlug={workspace?.slug}
                 threadSlug={threadSlug ?? undefined}
               />

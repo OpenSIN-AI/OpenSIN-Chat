@@ -135,6 +135,7 @@ function buildRows({ history, workspace, websocket, t }: any) {
         error: props.error,
         errorId: props.errorId,
         closed: props.closed,
+        notebookMode: props.notebookMode || props.metadata?.notebookMode || "chat",
       });
     } else {
       rows.push({
@@ -146,7 +147,6 @@ function buildRows({ history, workspace, websocket, t }: any) {
         workspace,
         sources: props.sources,
         feedbackScore: props.feedbackScore,
-        // Prefer chatId; fall back to id for older payloads so edit/regenerate work.
         chatId: props.chatId ?? props.id ?? null,
         error: props.error,
         attachments: props.attachments,
@@ -154,6 +154,7 @@ function buildRows({ history, workspace, websocket, t }: any) {
         metrics: props.metrics,
         outputs: props.outputs,
         clarifyingQuestions: props.clarifyingQuestions,
+        notebookMode: props.notebookMode || props.metadata?.notebookMode || "chat",
       });
     }
   }
@@ -420,6 +421,7 @@ export default function ChatHistory({
                 error={row.error}
                 errorId={row.errorId}
                 closed={row.closed}
+                notebookMode={row.notebookMode}
               />
             </Suspense>
           );
@@ -452,6 +454,7 @@ export default function ChatHistory({
                 metrics={row.metrics}
                 outputs={row.outputs}
                 clarifyingQuestions={row.clarifyingQuestions}
+                notebookMode={row.notebookMode}
               />
             </Suspense>
           );

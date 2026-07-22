@@ -49,6 +49,10 @@ vi.mock("./Actions", () => ({
 
 vi.mock("../Citation", () => ({
   default: () => <div data-testid="citations" />,
+  combineLikeSources: (s: any[]) => s,
+  parseChunkSource: () => ({ text: "", href: "", icon: "" }),
+  SourceTypeCircle: () => null,
+  CitationDetailModal: () => null,
 }));
 
 vi.mock("../ThoughtContainer", () => ({
@@ -64,6 +68,28 @@ vi.mock("./HistoricalClarifyingQuestions", () => ({ default: () => null }));
 
 vi.mock("@/components/ImageLightbox", () => ({
   openImageLightbox: vi.fn(),
+}));
+
+vi.mock("@/features/messages/AssistantMessageShell", () => ({
+  default: ({ children, citations, actions }: any) => (
+    <div data-testid="assistant-message-shell">
+      {children}
+      {citations}
+      {actions}
+    </div>
+  ),
+}));
+
+vi.mock("@/features/messages/AssistantMessageActions", () => ({
+  default: () => <div data-testid="actions-bar" />,
+}));
+
+vi.mock("@/features/citations/AnswerSources", () => ({
+  default: () => <div data-testid="citations" />,
+}));
+
+vi.mock("@/features/citations/CitedMarkdown", () => ({
+  default: ({ markdown }: { markdown: string }) => <span>{markdown}</span>,
 }));
 
 vi.mock(
@@ -166,9 +192,9 @@ describe("HistoricalMessage – message rendering", () => {
     const { container } = render(<HistoricalMessage {...baseUserProps} />, {
       wrapper: Wrapper,
     });
-    const bubble = container.querySelector(".rounded-br-md");
+    const bubble = container.querySelector(".rounded-br-\\[6px\\]");
     expect(bubble).toBeInTheDocument();
-    expect(bubble?.className).toContain("rounded-2xl");
+    expect(bubble?.className).toContain("rounded-[18px]");
     expect(bubble?.className).toContain("bg-[var(--chat-user-bubble)]");
     expect(bubble?.className).toContain("text-[var(--chat-text)]");
   });
@@ -181,7 +207,7 @@ describe("HistoricalMessage – message rendering", () => {
       },
     );
     // Assistant messages remain unboxed, unlike compact user bubbles.
-    const userBubble = container.querySelector(".rounded-br-md");
+    const userBubble = container.querySelector(".rounded-br-\\[6px\\]");
     expect(userBubble).toBeNull();
   });
 

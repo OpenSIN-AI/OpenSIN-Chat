@@ -41,11 +41,6 @@ function RunNode({
           <span className="text-sm text-theme-text-primary truncate">
             {run.agentName}
           </span>
-          {run.model && (
-            <span className="text-[10px] text-theme-text-secondary">
-              {run.model}
-            </span>
-          )}
         </div>
         {isActive && (
           <button
@@ -102,11 +97,11 @@ export default function AgentSessionsSidebar({
   return (
     <div className="h-full w-full max-w-full flex flex-col p-3 overflow-y-auto">
       <h3 className="text-sm font-bold text-theme-text-primary mb-2">
-        {t("right_sidebar.agent_sessions_title", "Agent-Sessions")}
+        {t("right_sidebar.agent_sessions_title", "Ausführungen")}
       </h3>
       {runTree.length === 0 ? (
         <p className="text-xs text-theme-text-secondary mt-4 text-center">
-          {t("right_sidebar.no_active_runs", "Keine aktiven Agent-Läufe.")}
+          {t("right_sidebar.no_active_runs", "Keine laufenden Aufgaben.")}
         </p>
       ) : (
         <div className="flex flex-col gap-1">

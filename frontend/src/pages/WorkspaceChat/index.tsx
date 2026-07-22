@@ -9,7 +9,6 @@ import {
   useState,
 } from "react";
 import { default as WorkspaceChatContainer } from "@/components/WorkspaceChat";
-import LeftSidebarIconBar from "@/components/WorkspaceChat/ChatContainer/LeftSidebarIconBar";
 import {
   SidebarToggleProvider,
   useSidebarToggle,
@@ -76,7 +75,6 @@ function WorkspaceChatLayout() {
   const { threads } = useThreads(slug ?? null);
   const [commandOpen, setCommandOpen] = useState(false);
   const [creating, setCreating] = useState(false);
-  const railVisible = !isMobile && !showSidebar;
 
   const createChat = useCallback(async () => {
     if (!slug || creating) return;
@@ -214,7 +212,6 @@ function WorkspaceChatLayout() {
 
   return (
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-primary light:bg-[#f9fafb] flex">
-      {!isMobile && <LeftSidebarIconBar />}
       <Suspense
         fallback={
           isMobile ? (
@@ -234,7 +231,7 @@ function WorkspaceChatLayout() {
         )}
       </Suspense>
       <div
-        className={`min-w-0 flex-1 transition-[margin] duration-150 ease-out ${isMobile ? "pt-14" : ""} ${railVisible ? "md:ml-[52px]" : ""}`}
+        className={`min-w-0 flex-1 ${isMobile ? "pt-14" : ""}`}
       >
         <ShowWorkspaceChat />
       </div>

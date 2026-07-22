@@ -24,6 +24,40 @@ vi.mock("../Citation", () => ({
       Citations
     </div>
   ),
+  combineLikeSources: (s) => s,
+  parseChunkSource: () => ({ text: "", href: "", icon: "" }),
+  SourceTypeCircle: () => null,
+  CitationDetailModal: () => null,
+}));
+
+vi.mock("../Citation/ChunkCitation", () => ({
+  default: () => null,
+}));
+
+vi.mock("@/features/messages/AssistantMessageShell", () => ({
+  default: ({ children, citations, actions }) => (
+    <div data-testid="assistant-message-shell">
+      {children}
+      {citations}
+      {actions}
+    </div>
+  ),
+}));
+
+vi.mock("@/features/messages/AssistantMessageActions", () => ({
+  default: () => <div data-testid="assistant-actions" />,
+}));
+
+vi.mock("@/features/citations/AnswerSources", () => ({
+  default: ({ sources }) => (
+    <div data-testid="citations" data-count={sources.length}>
+      Citations
+    </div>
+  ),
+}));
+
+vi.mock("@/features/citations/CitedMarkdown", () => ({
+  default: ({ markdown }) => <span>{markdown}</span>,
 }));
 
 vi.mock("../ThoughtContainer", () => ({

@@ -7,9 +7,7 @@ import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import { useTranslation } from "react-i18next";
 import renderMarkdown from "@/utils/chat/markdown";
 import DOMPurify from "@/utils/chat/purify";
-import Citations from "../Citation";
 import ChunkCitationPopoverManager from "../Citation/ChunkCitation";
-import GroundingBadge from "../GroundingBadge";
 import {
   THOUGHT_REGEX_CLOSE,
   THOUGHT_REGEX_COMPLETE,
@@ -17,58 +15,24 @@ import {
   ThoughtChainComponent,
   ThoughtBrainButton,
 } from "../ThoughtContainer";
+import AssistantMessageShell from "@/features/messages/AssistantMessageShell";
+import AssistantMessageActions from "@/features/messages/AssistantMessageActions";
+import AnswerSources from "@/features/citations/AnswerSources";
+import CitedMarkdown from "@/features/citations/CitedMarkdown";
 
 const MARKDOWN_SANITIZE_OPTS = {
   ALLOWED_TAGS: [
-    "a",
-    "b",
-    "i",
-    "u",
-    "strong",
-    "em",
-    "br",
-    "p",
-    "span",
-    "div",
-    "ul",
-    "ol",
-    "li",
-    "blockquote",
-    "pre",
-    "code",
-    "h1",
-    "h2",
-    "h3",
-    "h4",
-    "h5",
-    "h6",
-    "table",
-    "thead",
-    "tbody",
-    "tr",
-    "th",
-    "td",
-    "img",
-    "hr",
-    "svg",
-    "path",
-    "rect",
-    "polyline",
-    "think",
-    "thinking",
-    "thought",
-    "thought_chain",
-    "think_chain",
-    "response",
-    "answer",
+    "a", "b", "i", "u", "strong", "em", "br", "p", "span", "div",
+    "ul", "ol", "li", "blockquote", "pre", "code",
+    "h1", "h2", "h3", "h4", "h5", "h6",
+    "table", "thead", "tbody", "tr", "th", "td",
+    "img", "hr", "svg", "path", "rect", "polyline",
+    "think", "thinking", "thought", "thought_chain", "think_chain",
+    "response", "answer",
   ],
 };
 const safeMarkdown = (html) => DOMPurify.sanitize(html, MARKDOWN_SANITIZE_OPTS);
 
-/**
- * Replaces [source:N] markers with clickable superscript citation chips.
- * The chips use the `.inline-citation` CSS class defined in index.css.
- */
 function preprocessInlineCitations(markdown: string): string {
   return markdown.replace(
     /\[source:(\d+)\]/g,
@@ -77,11 +41,25 @@ function preprocessInlineCitations(markdown: string): string {
   );
 }
 
-/**
- * Strips [source:N] markers for plain-text copy actions.
- */
 export function stripInlineCitations(text: string): string {
   return text.replace(/\[source:\d+\]/g, "");
+}
+
+function stripThoughtContent(message: string | null | undefined): string {
+  if (!message) return "";
+  let result = message;
+  if (result.match(THOUGHT_REGEX_COMPLETE)) {
+    result = result.replace(THOUGHT_REGEX_COMPLETE, "");
+  }
+  if (
+    result.match(THOUGHT_REGEX_OPEN) &&
+    !result.match(THOUGHT_REGEX_CLOSE)
+  ) {
+    result = result.replace(THOUGHT_REGEX_OPEN, "");
+  }
+  return result
+    .replace(/<\/?(response|answer)\s*(?:[^>]*?)?>/gi, " ")
+    .trim();
 }
 
 const PromptReply: any = ({
@@ -91,6 +69,7 @@ const PromptReply: any = ({
   error,
   errorId = null,
   sources = [],
+  notebookMode = "chat",
 }: any) => {
   const { t } = useTranslation();
   if (!reply && sources.length === 0 && !pending && !error) return null;
@@ -126,20 +105,34 @@ const PromptReply: any = ({
     );
   }
 
+  const cleanedReply = stripThoughtContent(reply);
+
   return (
     <div key={uuid} className="flex min-h-14 w-full justify-start py-4">
-      <div className="flex w-full flex-col">
+      <AssistantMessageShell
+        mode={notebookMode}
+        streaming={Boolean(pending)}
+        citations={
+          sources.length > 0 ? (
+            <AnswerSources sources={sources} />
+          ) : null
+        }
+        actions={
+          <AssistantMessageActions
+            message={cleanedReply}
+            disabled={Boolean(pending)}
+          />
+        }
+      >
         <RenderAssistantChatContent
           key={`${uuid}-prompt-reply-content`}
           message={reply}
           messageId={uuid}
         />
-        <GroundingBadge sources={sources} />
-        <Citations sources={sources} />
         {sources.length > 0 && (
           <ChunkCitationPopoverManager sources={sources} messageId={uuid} />
         )}
-      </div>
+      </AssistantMessageShell>
     </div>
   );
 };
@@ -147,15 +140,8 @@ const PromptReply: any = ({
 function RenderAssistantChatContent({ message, messageId }: any) {
   const { t } = useTranslation();
   const thoughtChainRef = useRef<any>(null);
-  const [pendingThoughtContent, setPendingThoughtContent] = useState<
-    string | null
-  >(null);
+  const [pendingThoughtContent, setPendingThoughtContent] = useState<string | null>(null);
 
-  // Update the ThoughtChainComponent imperatively when the message changes.
-  // The rendered markdown content is computed during render (not via ref)
-  // so streaming chunks appear immediately without a one-render lag.
-  // If the ref is null (component between render states), stash the content
-  // in state so it can be applied once the ref becomes available.
   useEffect(() => {
     if (!message) return;
     const thinking =
@@ -171,13 +157,11 @@ function RenderAssistantChatContent({ message, messageId }: any) {
       return;
     }
 
-    // Ref not ready yet — preserve content for when it mounts
     if (contentToUpdate) {
       setPendingThoughtContent(contentToUpdate);
     }
   }, [message]);
 
-  // Apply pending thought content once the ref becomes available
   useEffect(() => {
     if (pendingThoughtContent && thoughtChainRef.current) {
       thoughtChainRef.current.updateContent(pendingThoughtContent);
@@ -185,18 +169,14 @@ function RenderAssistantChatContent({ message, messageId }: any) {
     }
   }, [pendingThoughtContent]);
 
-  // Guard: when reply is undefined but sources exist, parent falls through
-  // to this component — without a guard, message.match() below throws.
   if (!message) return null;
 
   const thinking =
     message.match(THOUGHT_REGEX_OPEN) && !message.match(THOUGHT_REGEX_CLOSE);
 
-  // Compute rendered content during render so streaming is real-time
   const completeThoughtChain = message.match(THOUGHT_REGEX_COMPLETE)?.[0];
   const msgToRender = message.replace(THOUGHT_REGEX_COMPLETE, "");
 
-  // Determine thought chain content for the brain button
   const thoughtChainContent = thinking
     ? message
     : (completeThoughtChain ?? null);
@@ -238,7 +218,7 @@ function RenderAssistantChatContent({ message, messageId }: any) {
           />
         )}
         <span
-          className="markdown min-w-0 flex-1 break-words leading-relaxed text-[var(--chat-text)]"
+          className="assistant-markdown min-w-0 flex-1 break-words leading-relaxed text-[var(--chat-text)]"
           dangerouslySetInnerHTML={{
             __html: safeMarkdown(
               renderMarkdown(preprocessInlineCitations(msgToRender)),
@@ -251,8 +231,6 @@ function RenderAssistantChatContent({ message, messageId }: any) {
 }
 
 function AssistantActivity({ label, compact = false }: any) {
-  // v0-style: clean shimmering text, no icon, no card. The whole label sweeps
-  // with a light gradient while the assistant is working.
   return (
     <div
       className={`flex items-center text-sm ${compact ? "" : "px-0.5"}`}

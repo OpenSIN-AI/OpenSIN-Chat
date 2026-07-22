@@ -3,12 +3,9 @@ import ChatHistory from "./ChatHistory";
 import PromptInput from "./PromptInput";
 import { MetricsProvider } from "./ChatHistory/HistoricalMessage/Actions/RenderMetrics";
 import { useTranslation } from "react-i18next";
+import ChatActivity from "@/features/activity/ChatActivity";
+import ThinkingIndicator from "@/features/activity/ThinkingIndicator";
 
-/**
- * Chat history with MetricsProvider and PromptInput.
- * Accepts: chatHistoryRef, chatHistory, workspace, sendCommand,
- *          setChatHistory, regenerateAssistantMessage, websocket
- */
 interface MessageListProps {
   chatHistoryRef: React.RefObject<HTMLDivElement | null>;
   chatHistory: any[];
@@ -59,6 +56,10 @@ export default function MessageList({
             </p>
           </div>
         )}
+        <div className="mx-auto w-full max-w-3xl px-4">
+          <ChatActivity />
+          <ThinkingIndicator visible={loadingResponse} />
+        </div>
         <PromptInput
           workspace={workspace}
           submit={handleSubmit}

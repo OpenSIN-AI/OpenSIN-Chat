@@ -11,6 +11,7 @@ import MessageList from "./MessageList";
 import { lazy, Suspense } from "react";
 import useChatStream from "./useChatStream";
 import ErrorBoundaryFallback from "@/components/ErrorBoundaryFallback";
+import NotebookShell from "@/features/notebook/NotebookShell";
 
 // Lazy: Sidebars host + icon rail; individual panels split further inside.
 const Sidebars = lazy(() => import("./Sidebars"));
@@ -25,7 +26,6 @@ export default function ChatContainer({
   const isMobile = useIsMobileLayout();
   const { chatHistoryRef } = useChatContainerQuickScroll();
   const {
-    t,
     loadingResponse,
     chatHistory,
     setChatHistory,
@@ -76,10 +76,16 @@ function ChatContainerInner({
   sendCommand,
   regenerateAssistantMessage,
 }: any) {
-  const { t } = useChatSidebar() as any;
+  const { activeSidebar, openSidebar, closeSidebar } = useChatSidebar();
 
   return (
-    <>
+    <NotebookShell
+      workspace={workspace}
+      activeSidebar={activeSidebar}
+      openSidebar={openSidebar}
+      closeSidebar={closeSidebar}
+      sourceCount={Array.isArray(workspace?.documents) ? workspace.documents.length : 0}
+    >
       <div
         style={{
           "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
@@ -107,7 +113,8 @@ function ChatContainerInner({
                     sendCommand={sendCommand}
                     loadingResponse={loadingResponse}
                     files={files}
-                    t={t}
+                    workspaceSlug={workspace?.slug}
+                    threadSlug={threadSlug}
                   />
                 </Suspense>
               ) : (
@@ -134,6 +141,6 @@ function ChatContainerInner({
       <Suspense fallback={null}>
         <Sidebars workspace={workspace} />
       </Suspense>
-    </>
+    </NotebookShell>
   );
 }

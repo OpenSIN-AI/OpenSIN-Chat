@@ -104,34 +104,52 @@ function SidebarContent({
 
   return (
     <>
-      <div className="flex h-14 shrink-0 items-center gap-1 px-2.5 pr-12">
-        <WorkspaceSwitcher onCreate={showModal} onNavigate={onNavigate} />
-        <ThemeToggle />
-      </div>
-      <div className="flex min-h-0 flex-1 flex-col px-3 pb-2">
+      <div className="flex h-14 shrink-0 items-center px-2.5 pr-3">
         <button
           type="button"
-          onClick={onOpenSearch}
-          className="mb-1 flex h-9 w-full shrink-0 items-center gap-2 rounded-md bg-theme-sidebar-item-selected px-2.5 text-sm text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-theme-text-secondary"
+          onClick={() => navigate(paths.home())}
+          className="flex min-w-0 items-center gap-2"
         >
-          <MagnifyingGlass size={16} />
-          <span>{t("commandHub.searchButton")}</span>
-          <kbd className="ml-auto rounded border border-theme-modal-border bg-theme-bg-tertiary px-1.5 py-0.5 text-[10px] text-theme-text-muted">
-            {COMMAND_SHORTCUT_LABEL}
-          </kbd>
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-theme-text-primary text-xs font-bold text-theme-bg-primary">
+            S
+          </div>
+          <span className="truncate text-sm font-semibold text-theme-text-primary">OpenSIN</span>
         </button>
+        <div className="ml-auto">
+          <ThemeToggle />
+        </div>
+      </div>
+      <div className="flex min-h-0 flex-1 flex-col px-2.5 pb-2">
         <button
           type="button"
           onClick={newChat}
           disabled={!activeWorkspace || creating}
-          className="mb-1 flex h-9 w-full shrink-0 items-center gap-2 rounded-md px-2.5 text-sm font-medium text-theme-sidebar-item-text-active transition-colors hover:bg-theme-bg-hover disabled:cursor-not-allowed disabled:opacity-50"
+          className="mb-1 flex h-9 w-full shrink-0 items-center gap-2 rounded-lg px-2.5 text-sm font-medium text-theme-text-primary hover:bg-theme-bg-hover disabled:opacity-50"
         >
           <Plus size={16} weight="bold" />
-          {creating
-            ? t("common.loading")
-            : t("activeWorkspaces.newChat", "New Chat")}
+          {creating ? t("common.loading") : "Neuer Chat"}
         </button>
-        <div className="no-scroll min-h-0 flex-1 overflow-y-auto pt-1">
+        <button
+          type="button"
+          onClick={onOpenSearch}
+          className="mb-3 flex h-9 w-full shrink-0 items-center gap-2 rounded-lg px-2.5 text-sm text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary"
+        >
+          <MagnifyingGlass size={16} />
+          <span>Suchen</span>
+          <kbd className="ml-auto text-[10px] text-theme-text-muted">{COMMAND_SHORTCUT_LABEL}</kbd>
+        </button>
+        <div className="mb-1 flex items-center justify-between px-2">
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-theme-text-muted">Notebooks</span>
+          <button
+            type="button"
+            onClick={showModal}
+            aria-label="Notebook erstellen"
+            className="flex h-7 w-7 items-center justify-center rounded-lg text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary"
+          >
+            <Plus size={13} />
+          </button>
+        </div>
+        <div className="no-scroll min-h-0 flex-1 overflow-y-auto">
           <ActiveWorkspaces />
         </div>
         <div className="shrink-0 pt-2">

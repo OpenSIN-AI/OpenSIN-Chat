@@ -99,11 +99,27 @@ export function AgentRunsProvider({
   const [runs, setRuns] = useState<Record<string, AgentRun>>({});
   const esRef = useRef<EventSource | null>(null);
 
+  useEffect(() => {
+    setRuns({});
+  }, [workspaceSlug]);
+
+  const MAX_RUNS = 30;
+
   const upsertRun = useCallback((runId: string, patch: Partial<AgentRun>) => {
-    setRuns((prev) => ({
-      ...prev,
-      [runId]: { ...(prev[runId] ?? emptyRun(runId)), ...patch },
-    }));
+    setRuns((previous) => {
+      const next = {
+        ...previous,
+        [runId]: { ...(previous[runId] ?? emptyRun(runId)), ...patch },
+      };
+
+      const ordered = Object.values(next).sort((a, b) => b.startedAt - a.startedAt);
+
+      if (ordered.length <= MAX_RUNS) return next;
+
+      return Object.fromEntries(
+        ordered.slice(0, MAX_RUNS).map((run) => [run.runId, run]),
+      );
+    });
   }, []);
 
   useEffect(() => {

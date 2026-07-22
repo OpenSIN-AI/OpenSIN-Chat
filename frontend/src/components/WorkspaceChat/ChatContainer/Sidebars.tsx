@@ -24,6 +24,7 @@ const AgentSettingsSidebar = lazy(() => import("./AgentSettingsSidebar"));
 const WorkspaceSettingsSidebar = lazy(
   () => import("./WorkspaceSettingsSidebar"),
 );
+const ResultsSidebar = lazy(() => import("./ResultsSidebar"));
 
 function PanelFallback() {
   return (
@@ -73,6 +74,9 @@ function ActiveSidebarPanel({
       break;
     case "workspace-settings":
       panel = <WorkspaceSettingsSidebar workspace={workspace} />;
+      break;
+    case "results":
+      panel = <ResultsSidebar />;
       break;
     default:
       panel = null;

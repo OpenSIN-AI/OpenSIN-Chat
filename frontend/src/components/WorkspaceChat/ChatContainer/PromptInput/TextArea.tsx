@@ -11,6 +11,7 @@ const PROMPT_INPUT_MAX_LENGTH = 32_000;
 interface TextAreaProps {
   textareaRef: React.RefObject<HTMLTextAreaElement | null>;
   promptInput: string;
+  placeholder?: string;
   handleChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   captureEnterOrUndo: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   handlePasteEvent: (e: React.ClipboardEvent<HTMLTextAreaElement>) => void;
@@ -24,6 +25,7 @@ interface TextAreaProps {
 export default function TextArea({
   textareaRef,
   promptInput,
+  placeholder,
   handleChange,
   captureEnterOrUndo,
   handlePasteEvent,
@@ -54,7 +56,7 @@ export default function TextArea({
       spellCheck={Appearance.get("enableSpellCheck")}
       maxLength={PROMPT_INPUT_MAX_LENGTH}
       className={`min-h-10 max-h-[32vh] w-full flex-grow cursor-text resize-none border-none bg-transparent px-1 pb-1.5 pt-3 leading-6 text-[var(--chat-text)] placeholder:text-[var(--chat-text-muted)] focus:outline-none active:outline-none md:max-h-[240px] pwa:!text-[16px] ${textSizeClass}`}
-      placeholder={t("chat_window.send_message")}
+      placeholder={placeholder || t("chat_window.send_message")}
     />
   );
 }
