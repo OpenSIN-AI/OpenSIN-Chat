@@ -2,6 +2,8 @@
 // Purpose: Parse @agent mode tags + research source selections from prompts.
 // Docs: Used by AgentHandler / EphemeralAgentHandler to inject system role hints.
 
+const { isFeatureEnabled } = require("../features");
+
 /**
  * @typedef {{ modeId: string|null, sources: string[], cleanMessage: string, systemPrompt: string|null }} ParsedAgentMode
  */
@@ -16,6 +18,17 @@ const MODE_HINTS = {
   "video-gen":
     "You are operating in VIDEO GENERATION mode. Use the video-generation tool to create a short video. Write a detailed cinematic English prompt covering subject, camera motion, lighting, and style. Choose a short descriptive filename ending in .mp4. If video generation is not configured, tell the user to set AI_GATEWAY_API_KEY / VIDEO_GENERATION_API_KEY on the server.",
 };
+
+const MODE_FEATURES = Object.freeze({
+  "image-gen": "imageGeneration",
+  "video-gen": "videoGeneration",
+});
+
+function isAgentModeEnabled(modeId, env = process.env) {
+  const featureName = MODE_FEATURES[modeId];
+  if (!featureName) return true;
+  return isFeatureEnabled(featureName, env);
+}
 
 /** Connectors that are UI-selectable but not fully wired yet */
 const COMING_SOON_SOURCES = new Set([
@@ -90,6 +103,10 @@ function parseAgentModeFromPrompt(message = "") {
     stripped = (modeMatch[2] || "").trim();
   }
 
+  if (modeId && !isAgentModeEnabled(modeId)) {
+    modeId = null;
+  }
+
   const sourcesMatch = stripped.match(/^\[sources:([^\]]+)\]\s*([\s\S]*)/i);
   if (sourcesMatch) {
     sources = sourcesMatch[1]
@@ -132,6 +149,7 @@ module.exports = {
   COMING_SOON_SOURCES,
   READY_SOURCES,
   buildDeepResearchHint,
+  isAgentModeEnabled,
   parseAgentModeFromPrompt,
   buildAgentModePrefix,
 };

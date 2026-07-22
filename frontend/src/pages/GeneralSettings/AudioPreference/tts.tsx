@@ -17,6 +17,7 @@ import UnsavedChangesDialog from "@/components/UnsavedChangesDialog";
 import KokoroIcon from "@/media/ttsproviders/kokoro.png";
 import NvidiaNimLogo from "@/media/llmprovider/nvidia-nim.png";
 import { useTranslation } from "react-i18next";
+import { FEATURES } from "@/utils/features";
 
 import BrowserNative from "@/components/TextToSpeech/BrowserNative";
 import OpenAiTTSOptions from "@/components/TextToSpeech/OpenAiOptions";
@@ -46,76 +47,79 @@ interface TTSProvider {
   description: string;
 }
 
-const PROVIDERS = (t: TFunction): TTSProvider[] => [
-  {
-    name: t("audioPreference.tts.systemNative"),
-    value: "native",
-    logo: OpenSINChatIcon,
-    options: (_settings: TTSSettings) => <BrowserNative />,
-    description: t("audioPreference.tts.systemNativeDesc"),
-  },
-  {
-    name: t("audioPreference.tts.openai"),
-    value: "openai",
-    logo: OpenAiLogo,
-    options: (settings: TTSSettings) => (
-      <OpenAiTTSOptions settings={settings} />
-    ),
-    description: t("audioPreference.tts.openaiDesc"),
-  },
-  {
-    name: t("audioPreference.tts.elevenlabs"),
-    value: "elevenlabs",
-    logo: ElevenLabsIcon,
-    options: (settings: TTSSettings) => (
-      <ElevenLabsTTSOptions settings={settings} />
-    ),
-    description: t("audioPreference.tts.elevenlabsDesc"),
-  },
-  {
-    name: t("audioPreference.tts.piper"),
-    value: "piper_local",
-    logo: PiperTTSIcon,
-    options: (settings: TTSSettings) => <PiperTTSOptions settings={settings} />,
-    description: t("audioPreference.tts.piperDesc"),
-  },
-  {
-    name: t("audioPreference.tts.kokoro"),
-    value: "kokoro",
-    logo: KokoroIcon,
-    options: (settings: TTSSettings) => (
-      <KokoroTTSOptions settings={settings} />
-    ),
-    description: t("audioPreference.tts.kokoroDesc"),
-  },
-  {
-    name: t("audioPreference.tts.openaiCompatible"),
-    value: "generic-openai",
-    logo: GenericOpenAiLogo,
-    options: (settings: TTSSettings) => (
-      <OpenAiGenericTTSOptions settings={settings} />
-    ),
-    description: t("audioPreference.tts.openaiCompatibleDesc"),
-  },
-  {
-    name: t("audioPreference.tts.nvidiaNim"),
-    value: "nvidia-nim",
-    logo: NvidiaNimLogo,
-    options: (settings: TTSSettings) => (
-      <NvidiaNimTTSOptions settings={settings} />
-    ),
-    description: t("audioPreference.tts.nvidiaNimDesc"),
-  },
-  {
-    name: t("audioPreference.tts.cvoice"),
-    value: "cvoice",
-    logo: CvoiceLogo,
-    options: (settings: TTSSettings) => (
-      <CvoiceTTSOptions settings={settings} />
-    ),
-    description: t("audioPreference.tts.cvoiceDesc"),
-  },
-];
+const PROVIDERS = (t: TFunction): TTSProvider[] =>
+  [
+    {
+      name: t("audioPreference.tts.systemNative"),
+      value: "native",
+      logo: OpenSINChatIcon,
+      options: (_settings: TTSSettings) => <BrowserNative />,
+      description: t("audioPreference.tts.systemNativeDesc"),
+    },
+    {
+      name: t("audioPreference.tts.openai"),
+      value: "openai",
+      logo: OpenAiLogo,
+      options: (settings: TTSSettings) => (
+        <OpenAiTTSOptions settings={settings} />
+      ),
+      description: t("audioPreference.tts.openaiDesc"),
+    },
+    {
+      name: t("audioPreference.tts.elevenlabs"),
+      value: "elevenlabs",
+      logo: ElevenLabsIcon,
+      options: (settings: TTSSettings) => (
+        <ElevenLabsTTSOptions settings={settings} />
+      ),
+      description: t("audioPreference.tts.elevenlabsDesc"),
+    },
+    {
+      name: t("audioPreference.tts.piper"),
+      value: "piper_local",
+      logo: PiperTTSIcon,
+      options: (settings: TTSSettings) => <PiperTTSOptions settings={settings} />,
+      description: t("audioPreference.tts.piperDesc"),
+    },
+    {
+      name: t("audioPreference.tts.kokoro"),
+      value: "kokoro",
+      logo: KokoroIcon,
+      options: (settings: TTSSettings) => (
+        <KokoroTTSOptions settings={settings} />
+      ),
+      description: t("audioPreference.tts.kokoroDesc"),
+    },
+    {
+      name: t("audioPreference.tts.openaiCompatible"),
+      value: "generic-openai",
+      logo: GenericOpenAiLogo,
+      options: (settings: TTSSettings) => (
+        <OpenAiGenericTTSOptions settings={settings} />
+      ),
+      description: t("audioPreference.tts.openaiCompatibleDesc"),
+    },
+    {
+      name: t("audioPreference.tts.nvidiaNim"),
+      value: "nvidia-nim",
+      logo: NvidiaNimLogo,
+      options: (settings: TTSSettings) => (
+        <NvidiaNimTTSOptions settings={settings} />
+      ),
+      description: t("audioPreference.tts.nvidiaNimDesc"),
+    },
+    {
+      name: t("audioPreference.tts.cvoice"),
+      value: "cvoice",
+      logo: CvoiceLogo,
+      options: (settings: TTSSettings) => (
+        <CvoiceTTSOptions settings={settings} />
+      ),
+      description: t("audioPreference.tts.cvoiceDesc"),
+    },
+  ].filter(
+    (provider) => provider.value !== "cvoice" || FEATURES.cvoiceTts,
+  );
 
 export default function TextToSpeechProvider({
   settings,
