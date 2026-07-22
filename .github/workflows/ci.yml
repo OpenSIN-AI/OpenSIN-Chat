@@ -2,28 +2,195 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
-  statuses: write
+
+env:
+  NODE_VERSION: "22"
+  YARN_VERSION: "1.22.22"
 
 jobs:
-  # Trigger the self-hosted CI pipeline on the OCI VM.
-  # The actual work (build, test, lint, deploy) runs there — not on
-  # GitHub runners. The webhook receiver at ci.delqhi.com handles
-  # everything and reports commit status back to GitHub.
-  # This workflow is a no-op stub that just confirms the webhook was
-  # received by checking the commit status appears within 30s.
-  trigger:
-    name: Self-hosted CI
+  maintenance:
+    name: Maintenance scripts
     runs-on: ubuntu-latest
-    timeout-minutes: 1
+    timeout-minutes: 5
+
     steps:
-      - name: Trigger self-hosted pipeline
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Syntax-check maintenance scripts
+        run: node --check scripts/enable-multi-user.cjs
+
+      - name: Test maintenance scripts
+        run: node --test scripts/*.test.cjs
+
+      - name: Validate shell scripts
         run: |
-          echo "CI runs on the OCI VM via webhook receiver at ci.delqhi.com"
-          echo "Commit status will be set by the self-hosted runner."
-          echo "If this check stays pending for >5min, check VM health."
+          bash -n scripts/deploy-production.sh
+          bash -n scripts/generate-auth-token.sh
+
+      - name: Validate Docker Compose
+        run: |
+          cp docker-opensin/.env.example docker-opensin/.env
+          docker compose \
+            -f docker-opensin/docker-compose.yml \
+            -f docker-opensin/docker-compose.production.yml \
+            config >/dev/null
+
+  frontend:
+    name: Frontend
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Activate Yarn
+        run: |
+          corepack enable
+          corepack prepare "yarn@${YARN_VERSION}" --activate
+          yarn --version
+
+      - name: Install frontend dependencies
+        run: |
+          yarn --cwd frontend install \
+            --frozen-lockfile \
+            --network-timeout 600000
+
+      - name: Lint frontend
+        run: yarn --cwd frontend lint:check
+
+      - name: Type-check frontend
+        run: yarn --cwd frontend type-check
+
+      - name: Verify translations
+        run: yarn --cwd frontend verify:translations
+
+      - name: Test frontend
+        run: yarn --cwd frontend test
+
+      - name: Build frontend
+        run: yarn --cwd frontend build
+
+  server:
+    name: Server
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Activate Yarn
+        run: |
+          corepack enable
+          corepack prepare "yarn@${YARN_VERSION}" --activate
+          yarn --version
+
+      - name: Install server dependencies
+        run: |
+          yarn --cwd server install \
+            --frozen-lockfile \
+            --network-timeout 600000
+
+      - name: Lint server
+        run: yarn --cwd server lint:check
+
+      - name: Type-check server
+        run: yarn --cwd server type-check
+
+      - name: Check circular dependencies
+        run: yarn --cwd server check:circular
+
+      - name: Test server
+        run: yarn --cwd server test
+
+  collector:
+    name: Collector
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Activate Yarn
+        run: |
+          corepack enable
+          corepack prepare "yarn@${YARN_VERSION}" --activate
+          yarn --version
+
+      - name: Install collector dependencies
+        run: |
+          yarn --cwd collector install \
+            --frozen-lockfile \
+            --network-timeout 600000
+
+      - name: Lint collector
+        run: yarn --cwd collector lint:check
+
+      - name: Test collector
+        run: yarn --cwd collector test
+
+  container:
+    name: Production container
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    needs:
+      - maintenance
+      - frontend
+      - server
+      - collector
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build production image
+        run: |
+          docker buildx build \
+            --load \
+            --file docker/Dockerfile \
+            --build-arg SKIP_CHROMIUM=1 \
+            --tag opensin-chat:ci \
+            .
+
+      - name: Inspect image
+        run: |
+          docker image inspect opensin-chat:ci >/dev/null

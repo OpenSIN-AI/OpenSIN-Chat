@@ -31,7 +31,7 @@
   "bugs": {
     "url": "https://github.com/OpenSIN-AI/OpenSIN-Chat/issues"
   },
-  "homepage": "https://opensin.delqhi.com",
+  "homepage": "https://sinchat.delqhi.com",
   "engines": {
     "node": ">=22.0.0"
   },
@@ -48,6 +48,7 @@
     "test:server": "cd server && yarn test",
     "test:frontend": "cd frontend && npm run test",
     "test": "yarn test:server && yarn test:frontend",
+    "test:maintenance": "node --test scripts/*.test.cjs",
     "smoke": "node scripts/smoke.mjs"
   },
   "devDependencies": {
