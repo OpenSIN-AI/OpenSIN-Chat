@@ -22,6 +22,7 @@ export default function BrowserNative() {
       if (list.length) {
         const lang = i18n.language?.startsWith("de") ? "de" : "en";
         const sorted = [...list].sort((a, b) => {
+          if (a.default !== b.default) return a.default ? -1 : 1;
           const aMatch = a.lang.startsWith(lang) ? 0 : 1;
           const bMatch = b.lang.startsWith(lang) ? 0 : 1;
           if (aMatch !== bMatch) return aMatch - bMatch;
@@ -31,7 +32,11 @@ export default function BrowserNative() {
           return a.name.localeCompare(b.name);
         });
         setVoices(sorted);
-        if (!localStorage.getItem(VOICE_STORAGE_KEY) && sorted.length) {
+        const systemDefault = list.find((v) => v.default);
+        if (systemDefault) {
+          localStorage.setItem(VOICE_STORAGE_KEY, systemDefault.name);
+          setSelected(systemDefault.name);
+        } else if (!localStorage.getItem(VOICE_STORAGE_KEY) && sorted.length) {
           localStorage.setItem(VOICE_STORAGE_KEY, sorted[0].name);
           setSelected(sorted[0].name);
         }

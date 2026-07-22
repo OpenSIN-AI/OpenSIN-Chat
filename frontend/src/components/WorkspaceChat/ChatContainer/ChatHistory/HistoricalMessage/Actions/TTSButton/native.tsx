@@ -38,13 +38,12 @@ export default function NativeTTSMessage({ chatId, message }: any) {
     if (window.speechSynthesis.speaking && !speaking) return;
     const utterance = new SpeechSynthesisUtterance(messageToSpeech(message));
     utterance.lang = i18n.language?.startsWith("de") ? "de-DE" : "en-US";
+    const voices = window.speechSynthesis.getVoices();
     const voiceName = getStoredVoiceName();
-    if (voiceName) {
-      const voice = window.speechSynthesis
-        .getVoices()
-        .find((v) => v.name === voiceName);
-      if (voice) utterance.voice = voice;
-    }
+    const voice = voiceName
+      ? voices.find((v) => v.name === voiceName)
+      : voices.find((v) => v.default);
+    if (voice) utterance.voice = voice;
     utterance.addEventListener("end", endSpeechUtterance);
     window.speechSynthesis.speak(utterance);
     setSpeaking(true);
