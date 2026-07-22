@@ -235,6 +235,21 @@ async function chatSync({
           threadId: thread?.id || null,
           apiSessionId: sessionId,
         });
+
+        if (allOutputs.length > 0) {
+          const { createArtifactsFromOutputs } = require("../artifacts/fromChat");
+          createArtifactsFromOutputs({
+            workspaceId: workspace.id,
+            threadId: thread?.id || null,
+            chatId: null,
+            userId: user?.id || null,
+            turnId: null,
+            outputs: allOutputs,
+          }).catch((err) =>
+            consoleLogger.error("[API Chat] Artifact creation failed:", err.message),
+          );
+        }
+
         return {
           id: uuid,
           type: "textResponse",
@@ -620,6 +635,21 @@ async function streamChat({
           threadId: thread?.id || null,
           apiSessionId: sessionId,
         });
+
+        if (allOutputs.length > 0) {
+          const { createArtifactsFromOutputs } = require("../artifacts/fromChat");
+          createArtifactsFromOutputs({
+            workspaceId: workspace.id,
+            threadId: thread?.id || null,
+            chatId: null,
+            userId: user?.id || null,
+            turnId: null,
+            outputs: allOutputs,
+          }).catch((err) =>
+            consoleLogger.error("[API Chat Stream] Artifact creation failed:", err.message),
+          );
+        }
+
         writeResponseChunk(response, {
           uuid,
           type: "finalizeResponseStream",

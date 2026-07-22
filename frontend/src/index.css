@@ -1346,3 +1346,16 @@ body,
     transition-duration: 0.01ms !important;
   }
 }
+
+.search-result-highlight {
+  animation: opensin-search-highlight 1.8s ease-out;
+}
+
+@keyframes opensin-search-highlight {
+  0% {
+    background: color-mix(in srgb, var(--chat-text) 12%, transparent);
+  }
+  100% {
+    background: transparent;
+  }
+}

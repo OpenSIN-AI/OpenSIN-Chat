@@ -101,6 +101,7 @@ async function grepAgents({
   thread = null,
   attachments = [],
   urlPrompt = null,
+  turnId = null,
 }) {
   let nativeToolingEnabled = false;
 
@@ -149,6 +150,7 @@ async function grepAgents({
       close: false,
       error: null,
       websocketUUID: newInvocation.uuid,
+      turnId,
     });
 
     // Close HTTP stream-able chunk response method because we will swap to agents now.

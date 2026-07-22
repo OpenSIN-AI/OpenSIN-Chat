@@ -19,8 +19,18 @@ function readStoredSelection(key: string): string[] | null {
     const raw = window.localStorage.getItem(key);
     if (!raw) return null;
     const parsed = JSON.parse(raw);
-    if (!Array.isArray(parsed)) return null;
-    return parsed.filter((value): value is string => typeof value === "string");
+
+    // New format: { explicit: boolean, sourceIds: string[] }
+    if (parsed && typeof parsed === "object" && !Array.isArray(parsed) && Array.isArray(parsed.sourceIds)) {
+      return parsed.sourceIds.filter((value: unknown): value is string => typeof value === "string");
+    }
+
+    // Legacy format: string[]
+    if (Array.isArray(parsed)) {
+      return parsed.filter((value): value is string => typeof value === "string");
+    }
+
+    return null;
   } catch {
     return null;
   }
@@ -45,7 +55,9 @@ export default function useSelectedSources({ notebookSlug, threadSlug, sourceIds
       const unique = Array.from(new Set(nextIds.filter((id) => availableIds.has(id))));
       setSelectedIds(unique);
       try {
-        window.localStorage.setItem(key, JSON.stringify(unique));
+        // Write in the new { explicit, sourceIds } format so that
+        // readSelectedSources (used by buildChatRequestContext) can read it.
+        window.localStorage.setItem(key, JSON.stringify({ explicit: true, sourceIds: unique }));
       } catch {
         // Local persistence is an enhancement, not a requirement.
       }

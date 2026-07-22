@@ -316,7 +316,9 @@ describe("streamChatWithWorkspace", () => {
 
       await streamChatWithWorkspace(res, WORKSPACE, "hallo");
 
-      expect(res.chunks()).toHaveLength(0);
+      // Only the initial requestContext chunk should be present; no response content.
+      const responseChunks = res.chunks().filter((c) => c.type !== "requestContext");
+      expect(responseChunks).toHaveLength(0);
       expect(WorkspaceChats.new).not.toHaveBeenCalled();
     });
   });

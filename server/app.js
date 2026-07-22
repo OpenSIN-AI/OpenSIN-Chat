@@ -64,6 +64,10 @@ const { providerStatusEndpoints } = require("./endpoints/providerStatus");
 const { pdfAnalysisEndpoints } = require("./endpoints/pdfAnalysis");
 const { webPushEndpoints } = require("./endpoints/webPush");
 const { telegramEndpoints } = require("./endpoints/telegram");
+const {
+  workspaceArtifactEndpoints,
+} = require("./endpoints/workspaceArtifacts");
+const { globalSearchEndpoints } = require("./endpoints/globalSearch");
 const cspViolationEndpoint = require("./endpoints/cspViolation");
 const { httpLogger } = require("./middleware/httpLogger");
 const { securityHeaders } = require("./utils/middleware/securityHeaders");
@@ -250,6 +254,8 @@ function buildApp() {
   providerStatusEndpoints(apiRouter);
   webPushEndpoints(apiRouter);
   telegramEndpoints(apiRouter);
+  workspaceArtifactEndpoints(apiRouter);
+  globalSearchEndpoints(apiRouter);
   logBootDiagnostics();
   embeddedEndpoints(apiRouter);
 

@@ -22,6 +22,9 @@ const {
   buildScreenshotUrlPrompt,
 } = require("./extractImageUrls");
 const { withInlineCitations } = require("./inlineCitations");
+const { validateSelectedSources } = require("../helpers/chat/selectedSources");
+const { buildRagScope } = require("../helpers/chat/ragScope");
+const { createArtifactsFromOutputs } = require("../artifacts/fromChat");
 
 const VALID_CHAT_MODE = ["automatic", "chat", "query"];
 
@@ -34,11 +37,51 @@ async function streamChatWithWorkspace(
   thread = null,
   attachments = [],
   abortController = null,
-  notebookMode = "chat",
-  selectedSourceIds = [],
-  codeRunner = null,
+  requestContext = {},
 ) {
+  const {
+    turnId,
+    notebookMode = "chat",
+    sourceSelectionExplicit = false,
+    selectedSourceIds = [],
+    codeRunnerId = null,
+  } = requestContext;
   const uuid = uuidv4();
+
+  // Send the request context to the client so it can correlate turn IDs.
+  writeResponseChunk(response, {
+    type: "requestContext",
+    turnId,
+    notebookMode,
+    selectedSourceIds,
+    codeRunnerId,
+  });
+
+  // Validate requested source IDs against workspace documents (ACL).
+  const sourceSelection = validateSelectedSources({
+    workspace,
+    requestedIds: selectedSourceIds,
+  });
+
+  if (sourceSelection.rejectedIds.length > 0) {
+    consoleLogger.log(
+      `[chat] rejected source ids for workspace ${workspace.id} turn ${turnId}: ${sourceSelection.rejectedIds.length} unknown`,
+    );
+  }
+
+  // Build RAG scope for document-scoped retrieval.
+  const ragScope = buildRagScope({
+    workspace,
+    selectedDocuments: sourceSelection.selectedDocuments,
+    selectionWasExplicit: sourceSelectionExplicit,
+  });
+
+  // If no explicit selection was made, use all workspace documents for RAG.
+  const effectiveSelectedDocuments = sourceSelectionExplicit
+    ? sourceSelection.selectedDocuments
+    : Array.isArray(workspace?.documents)
+      ? workspace.documents
+      : [];
 
   // Extract any URLs visible in image attachments so the LLM can ask whether
   // to analyze them on the web. This is a no-op when there are no images.
@@ -80,6 +123,7 @@ async function streamChatWithWorkspace(
     thread,
     attachments,
     urlPrompt: imageUrlPrompt,
+    turnId,
   });
   if (isAgentChat) return;
 
@@ -151,6 +195,13 @@ async function streamChatWithWorkspace(
       threadId: thread?.id || null,
       include: false,
       user,
+      data: {
+        turnId,
+        notebookMode,
+        selectedSourceIds,
+        codeRunnerId,
+        sourceSelectionExplicit,
+      },
     });
     return;
   }
@@ -194,30 +245,78 @@ async function streamChatWithWorkspace(
   const alwaysOnDocs = Array.isArray(alwaysOnDocsRaw) ? alwaysOnDocsRaw : [];
   const parsedFiles = Array.isArray(parsedFilesRaw) ? parsedFilesRaw : [];
 
-  alwaysOnDocs.forEach((doc) => {
-    const { pageContent, ...metadata } = doc;
-    // Full-text always-on docs are excluded from similarity search to avoid
-    // duplicating the same content as RAG chunks. Summaries stay searchable.
-    if (doc.contextMode !== "summary") {
-      pinnedDocIdentifiers.push(sourceIdentifier(doc));
-    }
-    contextTexts.push(doc.pageContent);
-    sources.push({
-      text:
-        pageContent.slice(0, 1_000) + "...continued on in source document...",
-      ...metadata,
-    });
-  });
+  // When the user explicitly selected sources, filter always-on docs and
+  // parsed files to only include those that match the selection.
+  // When explicit selection is empty, skip all always-on/parsed context.
+  if (sourceSelectionExplicit) {
+    const allowedIds = new Set(ragScope.documentIds);
+    const allowedPaths = new Set(ragScope.documentPaths);
+    const allowedFilenames = new Set(ragScope.filenames);
 
-  parsedFiles.forEach((doc) => {
-    const { pageContent, ...metadata } = doc;
-    contextTexts.push(doc.pageContent);
-    sources.push({
-      text:
-        pageContent.slice(0, 1_000) + "...continued on in source document...",
-      ...metadata,
+    alwaysOnDocs.forEach((doc) => {
+      const { pageContent, ...metadata } = doc;
+      const docId = doc?.docId || metadata?.docId || "";
+      const docPath = doc?.docpath || metadata?.docpath || "";
+      const docFilename = doc?.filename || metadata?.filename || "";
+      if (
+        allowedIds.has(docId) ||
+        allowedPaths.has(docPath) ||
+        allowedFilenames.has(docFilename)
+      ) {
+        pinnedDocIdentifiers.push(sourceIdentifier(doc));
+        contextTexts.push(doc.pageContent);
+        sources.push({
+          text:
+            pageContent.slice(0, 1_000) +
+            "...continued on in source document...",
+          ...metadata,
+        });
+      }
     });
-  });
+
+    parsedFiles.forEach((doc) => {
+      const { pageContent, ...metadata } = doc;
+      const docId = doc?.docId || metadata?.docId || "";
+      const docPath = doc?.docpath || metadata?.docpath || "";
+      const docFilename = doc?.filename || metadata?.filename || "";
+      if (
+        allowedIds.has(docId) ||
+        allowedPaths.has(docPath) ||
+        allowedFilenames.has(docFilename)
+      ) {
+        contextTexts.push(doc.pageContent);
+        sources.push({
+          text:
+            pageContent.slice(0, 1_000) +
+            "...continued on in source document...",
+          ...metadata,
+        });
+      }
+    });
+  } else {
+    alwaysOnDocs.forEach((doc) => {
+      const { pageContent, ...metadata } = doc;
+      if (doc.contextMode !== "summary") {
+        pinnedDocIdentifiers.push(sourceIdentifier(doc));
+      }
+      contextTexts.push(doc.pageContent);
+      sources.push({
+        text:
+          pageContent.slice(0, 1_000) + "...continued on in source document...",
+        ...metadata,
+      });
+    });
+
+    parsedFiles.forEach((doc) => {
+      const { pageContent, ...metadata } = doc;
+      contextTexts.push(doc.pageContent);
+      sources.push({
+        text:
+          pageContent.slice(0, 1_000) + "...continued on in source document...",
+        ...metadata,
+      });
+    });
+  }
 
   const vectorSearchResults =
     embeddingsCount !== 0
@@ -249,47 +348,63 @@ async function streamChatWithWorkspace(
     return;
   }
 
-  // Filter vector search results by selectedSourceIds if provided.
-  // This restricts RAG to only the notebook sources the user explicitly chose.
-  if (
-    selectedSourceIds.length > 0 &&
-    vectorSearchResults.sources.length > 0
-  ) {
-    const allowedSet = new Set(selectedSourceIds);
-    const filteredSources = [];
-    const filteredContextTexts = [];
+  // Filter vector search results by selectedSourceIds when the user made an
+  // explicit selection. When sourceSelectionExplicit is true:
+  // - Non-empty selection: keep only results matching the selected documents
+  // - Empty selection: clear all results (user explicitly chose no sources)
+  if (sourceSelectionExplicit && vectorSearchResults.sources.length > 0) {
+    if (effectiveSelectedDocuments.length === 0) {
+      vectorSearchResults.sources = [];
+      vectorSearchResults.contextTexts = [];
+    } else {
+      const allowedIds = new Set(ragScope.documentIds);
+      const allowedPaths = new Set(ragScope.documentPaths);
+      const allowedFilenames = new Set(ragScope.filenames);
+      const filteredSources = [];
+      const filteredContextTexts = [];
 
-    for (let i = 0; i < vectorSearchResults.sources.length; i++) {
-      const source = vectorSearchResults.sources[i];
-      // Source ID is typically the document title or a constructed identifier.
-      // Match against the source's title, URL, or any unique identifier.
-      const sourceId =
-        source?.title || source?.url || source?.metadata?.title || "";
-      if (allowedSet.has(sourceId)) {
-        filteredSources.push(source);
-        if (vectorSearchResults.contextTexts[i]) {
-          filteredContextTexts.push(vectorSearchResults.contextTexts[i]);
+      for (let i = 0; i < vectorSearchResults.sources.length; i++) {
+        const source = vectorSearchResults.sources[i];
+        const sourceId =
+          source?.title || source?.url || source?.metadata?.title || "";
+        const sourcePath = source?.docpath || source?.metadata?.docpath || "";
+        const sourceFilename =
+          source?.filename || source?.metadata?.filename || "";
+
+        if (
+          allowedIds.has(sourceId) ||
+          allowedPaths.has(sourcePath) ||
+          allowedFilenames.has(sourceFilename)
+        ) {
+          filteredSources.push(source);
+          if (vectorSearchResults.contextTexts[i]) {
+            filteredContextTexts.push(vectorSearchResults.contextTexts[i]);
+          }
         }
       }
-    }
 
-    vectorSearchResults.sources = filteredSources;
-    vectorSearchResults.contextTexts = filteredContextTexts;
+      vectorSearchResults.sources = filteredSources;
+      vectorSearchResults.contextTexts = filteredContextTexts;
+    }
   }
 
-  const { fillSourceWindow } = require("../helpers/chat");
-  const filledSources = fillSourceWindow({
-    nDocs: workspace?.topN ?? 4,
-    searchResults: vectorSearchResults.sources,
-    history: rawHistory,
-    filterIdentifiers: pinnedDocIdentifiers,
-  });
+  // Skip fillSourceWindow when the user explicitly selected sources —
+  // backfilling from history would re-introduce non-selected sources.
+  if (sourceSelectionExplicit) {
+    contextTexts = [...contextTexts, ...vectorSearchResults.contextTexts];
+    sources = [...sources, ...vectorSearchResults.sources];
+  } else {
+    const { fillSourceWindow } = require("../helpers/chat");
+    const filledSources = fillSourceWindow({
+      nDocs: workspace?.topN ?? 4,
+      searchResults: vectorSearchResults.sources,
+      history: rawHistory,
+      filterIdentifiers: pinnedDocIdentifiers,
+    });
 
-  // Keep contextTexts and sources index-aligned so [source:N] markers map
-  // correctly to sources[N-1] in the frontend. fillSourceWindow may backfill
-  // from history — those chunks must appear in both arrays at the same index.
-  contextTexts = [...contextTexts, ...filledSources.contextTexts];
-  sources = [...sources, ...filledSources.sources];
+    contextTexts = [...contextTexts, ...filledSources.contextTexts];
+    sources = [...sources, ...filledSources.sources];
+  }
 
   // If in query mode and no context chunks are found from search, backfill, or pins -  do not
   // let the LLM try to hallucinate a response or use general knowledge and exit early
@@ -318,6 +433,13 @@ async function streamChatWithWorkspace(
       threadId: thread?.id || null,
       include: false,
       user,
+      data: {
+        turnId,
+        notebookMode,
+        selectedSourceIds,
+        codeRunnerId,
+        sourceSelectionExplicit,
+      },
     });
     return;
   }
@@ -454,11 +576,27 @@ async function streamChatWithWorkspace(
         attachments,
         metrics,
         notebookMode,
-        codeRunner,
+        turnId,
+        selectedSourceIds,
+        codeRunnerId,
+        sourceSelectionExplicit,
       },
       threadId: thread?.id || null,
       user,
     });
+
+    if (turnId) {
+      createArtifactsFromOutputs({
+        workspaceId: workspace.id,
+        threadId: thread?.id || null,
+        chatId: chat.id,
+        userId: user?.id || null,
+        turnId,
+        outputs: [],
+      }).catch((err) =>
+        consoleLogger.error("[Chat] Artifact creation failed:", err.message),
+      );
+    }
 
     // --- Persistente asynchrone Titel-Generierung (OpenAfD-Chat) ---
     // Jobs laufen in `server/utils/backgroundJobs/queue.js` und überleben

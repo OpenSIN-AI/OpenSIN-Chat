@@ -46,6 +46,7 @@ class SubagentSpawner {
     model = null,
     agentConfig = {},
     _parentAgentName = "Parent Agent",
+    turnId = null,
   }) {
     const runId = uuidv4();
 
@@ -55,6 +56,7 @@ class SubagentSpawner {
       parentRunId,
       agentName,
       model,
+      turnId,
     });
 
     // 2) Create isolated scratch directory

@@ -214,9 +214,12 @@ describe("streamChatHandler — workspace path (no thread)", () => {
       null,
       [],
       expect.any(Object),
-      "chat",
-      [],
-      null,
+      expect.objectContaining({
+        turnId: expect.any(String),
+        notebookMode: "chat",
+        selectedSourceIds: [],
+        codeRunnerId: null,
+      }),
     );
   });
 
@@ -264,9 +267,12 @@ describe("streamChatHandler — thread path", () => {
       THREAD,
       [],
       expect.any(Object),
-      "chat",
-      [],
-      null,
+      expect.objectContaining({
+        turnId: expect.any(String),
+        notebookMode: "chat",
+        selectedSourceIds: [],
+        codeRunnerId: null,
+      }),
     );
   });
 

@@ -9,10 +9,16 @@ const { v4: uuidv4 } = require("uuid");
 const AgentRuns = {
   /**
    * Create a new run record.
-   * @param {{ workspaceId: number, parentRunId?: string|null, agentName: string, model?: string }} params
+   * @param {{ workspaceId: number, parentRunId?: string|null, agentName: string, model?: string, turnId?: string|null }} params
    * @returns {Promise<{id: string}>}
    */
-  async create({ workspaceId, parentRunId = null, agentName, model = null }) {
+  async create({
+    workspaceId,
+    parentRunId = null,
+    agentName,
+    model = null,
+    turnId = null,
+  }) {
     const id = uuidv4();
     await prisma.agent_runs.create({
       data: {
@@ -22,6 +28,7 @@ const AgentRuns = {
         agent_name: agentName,
         model,
         status: "running",
+        turn_id: turnId,
         started_at: new Date(),
       },
     });

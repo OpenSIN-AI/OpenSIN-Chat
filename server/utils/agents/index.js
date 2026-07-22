@@ -886,6 +886,18 @@ class AgentHandler {
           include: true,
         });
         this.log("Persisted auto-report output to chat history.");
+
+        const { createArtifactsFromOutputs } = require("../artifacts/fromChat");
+        createArtifactsFromOutputs({
+          workspaceId: Number(this.invocation.workspace_id),
+          threadId: this.invocation?.thread_id || null,
+          chatId: lastChat.id,
+          userId: this.invocation?.user_id || null,
+          turnId: resp?.turnId || null,
+          outputs: resp.outputs || [],
+        }).catch((err) =>
+          this.log(`Artifact creation failed: ${err.message}`),
+        );
       }
 
       this.log(

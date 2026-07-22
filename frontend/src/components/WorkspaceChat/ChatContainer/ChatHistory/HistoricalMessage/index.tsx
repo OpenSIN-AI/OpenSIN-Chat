@@ -23,6 +23,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { chatQueryRefusalResponse } from "@/utils/chat";
 import HistoricalOutputs from "./HistoricalOutputs";
+import GeneratedArtifacts from "@/features/artifacts/GeneratedArtifacts";
 import HistoricalClarifyingQuestions from "./HistoricalClarifyingQuestions";
 import { openImageLightbox } from "@/components/ImageLightbox";
 import AssistantMessageShell from "@/features/messages/AssistantMessageShell";
@@ -50,6 +51,7 @@ const HistoricalMessage = ({
   clarifyingQuestions = [],
   notebookMode = "chat",
   workDetails = [],
+  artifacts = [],
 }: any) => {
   const [uuid] = useState(() => uuidProp ?? v4());
   const { t } = useTranslation();
@@ -123,6 +125,8 @@ const HistoricalMessage = ({
     return (
       <div
         key={uuid}
+        id={chatId ? `chat-message-${chatId}` : undefined}
+        data-chat-id={chatId || undefined}
         onAnimationEnd={onEndAnimation}
         className={`${isDeleted ? "animate-remove" : ""} group flex w-full justify-end py-3`}
       >
@@ -176,6 +180,8 @@ const HistoricalMessage = ({
   return (
     <div
       key={uuid}
+      id={chatId ? `chat-message-${chatId}` : undefined}
+      data-chat-id={chatId || undefined}
       onAnimationEnd={onEndAnimation}
       className={`${isDeleted ? "animate-remove" : ""} flex w-full justify-start py-5`}
     >
@@ -244,6 +250,12 @@ const HistoricalMessage = ({
           )}
           <ChatAttachments attachments={attachments} />
           <HistoricalOutputs outputs={outputs} />
+          {artifacts?.length > 0 && (
+            <GeneratedArtifacts
+              artifacts={artifacts}
+              workspaceSlug={workspace?.slug}
+            />
+          )}
         </AssistantMessageShell>
       )}
     </div>
@@ -263,7 +275,8 @@ export default memo(
     prevProps.feedbackScore === nextProps.feedbackScore &&
     prevProps.outputs === nextProps.outputs &&
     prevProps.clarifyingQuestions === nextProps.clarifyingQuestions &&
-    prevProps.notebookMode === nextProps.notebookMode,
+    prevProps.notebookMode === nextProps.notebookMode &&
+    prevProps.artifacts === nextProps.artifacts,
 );
 
 function stripThoughtContent(message: string | null | undefined): string {

@@ -76,7 +76,7 @@ function ActiveSidebarPanel({
       panel = <WorkspaceSettingsSidebar workspace={workspace} />;
       break;
     case "results":
-      panel = <ResultsSidebar />;
+      panel = <ResultsSidebar workspace={workspace} />;
       break;
     default:
       panel = null;

@@ -8,13 +8,13 @@ describe("parseChatRequestContext", () => {
       turnId: "12345678-abcd-1234-abcd-123456789012",
       notebookMode: "code",
       selectedSourceIds: ["doc-1", "doc-1", "doc-2"],
-      codeRunnerId: "codex",
+      codeRunnerId: "codex-cli",
       sourceSelectionExplicit: true,
     });
 
     expect(result.notebookMode).toBe("code");
     expect(result.selectedSourceIds).toEqual(["doc-1", "doc-2"]);
-    expect(result.codeRunnerId).toBe("codex");
+    expect(result.codeRunnerId).toBe("codex-cli");
     expect(result.turnId).toBe("12345678-abcd-1234-abcd-123456789012");
     expect(result.sourceSelectionExplicit).toBe(true);
   });
@@ -26,7 +26,7 @@ describe("parseChatRequestContext", () => {
   });
 
   it("rejects runner outside code mode", () => {
-    const result = parseChatRequestContext({ notebookMode: "work", codeRunnerId: "codex" });
+    const result = parseChatRequestContext({ notebookMode: "work", codeRunnerId: "codex-cli" });
     expect(result.codeRunnerId).toBeNull();
   });
 

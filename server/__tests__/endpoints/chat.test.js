@@ -191,9 +191,12 @@ describe("chatEndpoints", () => {
         THREAD_LOCALS.thread,
         [],
         expect.any(Object),
-        "chat",
-        [],
-        null,
+        expect.objectContaining({
+          turnId: expect.any(String),
+          notebookMode: "chat",
+          selectedSourceIds: [],
+          codeRunnerId: null,
+        }),
       );
     });
 

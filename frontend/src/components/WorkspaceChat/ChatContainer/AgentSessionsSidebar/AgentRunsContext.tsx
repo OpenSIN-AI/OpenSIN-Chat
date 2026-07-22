@@ -16,6 +16,7 @@ export type RunStatus =
 
 export interface ToolCall {
   id: string;
+  turnId?: string;
   name: string;
   args?: Record<string, any>;
   output?: string;
@@ -26,6 +27,7 @@ export interface ToolCall {
 
 export interface AgentRun {
   runId: string;
+  turnId?: string;
   parentRunId: string | null;
   agentName: string;
   model?: string;
@@ -43,6 +45,7 @@ interface AgentRunsCtx {
   activeRunCount: number;
   cancelRun: (runId: string) => Promise<void>;
   respondToInput: (runId: string, payload: any) => void;
+  runsForTurn: (turnId: string) => AgentRun[];
 }
 
 const Ctx = createContext<AgentRunsCtx | undefined>(undefined);
@@ -139,6 +142,7 @@ export function AgentRunsProvider({
       const d = safeParse((e as MessageEvent).data);
       if (!d) return;
       upsertRun(d.runId, {
+        turnId: d.turnId,
         parentRunId: d.parentRunId ?? null,
         agentName: d.agentName,
         model: d.model,
@@ -161,6 +165,7 @@ export function AgentRunsProvider({
             ? { ...run.toolCalls[idx] }
             : {
                 id: d.toolId,
+                turnId: d.turnId || run.turnId,
                 name: d.name,
                 status: "running",
                 startedAt: d.ts || Date.now(),
@@ -222,6 +227,14 @@ export function AgentRunsProvider({
     };
   }, [workspaceSlug, authToken, apiBase, upsertRun]);
 
+  const runsForTurn = useCallback(
+    (turnId: string) =>
+      Object.values(runs)
+        .filter((run) => run.turnId === turnId)
+        .sort((a, b) => a.startedAt - b.startedAt),
+    [runs],
+  );
+
   const runTree = buildTree(runs);
   const activeRunCount = Object.values(runs).filter(
     (r) =>
@@ -270,7 +283,7 @@ export function AgentRunsProvider({
 
   return (
     <Ctx.Provider
-      value={{ runs, runTree, activeRunCount, cancelRun, respondToInput }}
+      value={{ runs, runTree, activeRunCount, cancelRun, respondToInput, runsForTurn }}
     >
       {children}
     </Ctx.Provider>
@@ -287,6 +300,7 @@ const EMPTY_AGENT_RUNS: AgentRunsCtx = {
   activeRunCount: 0,
   cancelRun: async () => {},
   respondToInput: () => {},
+  runsForTurn: () => [],
 };
 
 export function useAgentRuns() {

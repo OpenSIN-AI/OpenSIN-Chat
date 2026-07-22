@@ -192,6 +192,7 @@ function convertToChatHistory(history = []) {
         sentAt: Math.floor(new Date(createdAt).getTime() / 1000),
         attachments: data?.attachments ?? [],
         chatId: id,
+        turnId: data?.turnId || null,
       },
       {
         type: data?.type || "chat",
@@ -203,11 +204,15 @@ function convertToChatHistory(history = []) {
         feedbackScore,
         metrics: data?.metrics || {},
         notebookMode: data?.notebookMode || "chat",
-        codeRunner: data?.codeRunner || null,
+        turnId: data?.turnId || null,
+        selectedSourceIds: data?.selectedSourceIds || [],
+        codeRunnerId: data?.codeRunnerId || data?.codeRunner || null,
+        sourceSelectionExplicit: data?.sourceSelectionExplicit || false,
         ...(data?.outputs?.length > 0 ? { outputs: data.outputs } : {}),
         ...(data?.clarifyingQuestions?.length > 0
           ? { clarifyingQuestions: data.clarifyingQuestions }
           : {}),
+        ...(data?.artifacts?.length > 0 ? { artifacts: data.artifacts } : {}),
       },
     ]);
   }

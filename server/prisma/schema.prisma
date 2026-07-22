@@ -132,9 +132,10 @@ model users {
   memories                     memories[]
   api_keys                     api_keys[]
   invites                      invites[]
-  event_logs                   event_logs[]
-  model_routers                model_routers[]               @relation("RouterOwner")
-  model_router_rules           model_router_rules[]          @relation("RuleOwner")
+   event_logs                   event_logs[]
+   model_routers                model_routers[]               @relation("RouterOwner")
+   model_router_rules           model_router_rules[]          @relation("RuleOwner")
+   artifacts                    workspace_artifacts[]
 
   @@index([failed_login_count])
   @@index([failed_login_last_at])
@@ -203,10 +204,11 @@ model workspaces {
   workspace_agent_invocations  workspace_agent_invocations[]
   prompt_history               prompt_history[]
   workspace_parsed_files       workspace_parsed_files[]
-  memories                     memories[]
-  notes                        workspace_notes[]
+   memories                     memories[]
+   notes                        workspace_notes[]
+   artifacts                    workspace_artifacts[]
 
-  @@index([router_id])
+   @@index([router_id])
 }
 
 model workspace_threads {
@@ -221,11 +223,12 @@ model workspace_threads {
   workspace              workspaces                @relation(fields: [workspace_id], references: [id], onDelete: Cascade)
   user                   users?                    @relation(fields: [user_id], references: [id], onDelete: Cascade)
   folder                 workspace_thread_folders? @relation(fields: [folder_id], references: [id], onDelete: SetNull)
-  workspace_parsed_files workspace_parsed_files[]
+   workspace_parsed_files workspace_parsed_files[]
+   artifacts              workspace_artifacts[]
 
-  @@index([workspace_id])
-  @@index([user_id])
-  @@index([folder_id])
+   @@index([workspace_id])
+   @@index([user_id])
+   @@index([folder_id])
 }
 
 model workspace_thread_folders {
@@ -268,10 +271,11 @@ model workspace_chats {
   lastUpdatedAt   DateTime   @default(now())
   feedbackScore   Boolean?
   memoryProcessed Boolean?   @map("memory_processed")
-  users           users?     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  workspace       workspaces @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+   users           users?     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+   workspace       workspaces @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+   artifacts       workspace_artifacts[]
 
-  @@index([workspaceId])
+   @@index([workspaceId])
   @@index([user_id])
   @@index([thread_id])
   @@index([workspaceId, thread_id])
@@ -906,11 +910,13 @@ model agent_runs {
   agent_name    String
   model         String?
   status        String    @default("running")
+  turn_id       String?
   started_at    DateTime  @default(now())
   ended_at      DateTime?
 
   @@index([workspace_id, status])
   @@index([started_at])
+  @@index([turn_id])
 }
 
 // Agent trigger definitions — schedule and polling triggers per workspace.
@@ -970,4 +976,40 @@ model connector_accounts {
   @@unique([user_id, provider, provider_account])
   @@index([user_id])
   @@index([status])
+}
+
+model workspace_artifacts {
+  id           Int      @id @default(autoincrement())
+  uuid         String   @unique
+  workspaceId  Int
+  threadId     Int?
+  chatId       Int?
+  userId       Int?
+  turnId       String?
+  type         String
+  status       String   @default("ready")
+  title        String
+  description  String?
+  mimeType     String?
+  storagePath  String?
+  downloadName String?
+  content      String?
+  metadata     String?
+  sourceData   String?
+  version      Int      @default(1)
+  parentUuid   String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  workspace workspaces         @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  thread    workspace_threads? @relation(fields: [threadId], references: [id], onDelete: SetNull)
+  chat      workspace_chats?   @relation(fields: [chatId], references: [id], onDelete: SetNull)
+  user      users?             @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([workspaceId, createdAt])
+  @@index([workspaceId, type])
+  @@index([threadId])
+  @@index([chatId])
+  @@index([turnId])
+  @@index([parentUuid])
 }

@@ -22,6 +22,7 @@ import { ConfirmProvider } from "@/components/ui/ConfirmProvider";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorBoundaryFallback from "./components/ErrorBoundaryFallback";
 import logger from "@/utils/logger";
+import { GlobalSearchProvider } from "@/features/global-search/GlobalSearchProvider";
 
 function SkipToContentLink() {
   const { t } = useTranslation();
@@ -56,20 +57,22 @@ export default function App() {
                   <PfpProvider>
                     <I18nextProvider i18n={i18n}>
                       <ConfirmProvider>
-                        <SkipToContentLink />
-                        <main id="main-content">
-                          <ErrorBoundary
-                            FallbackComponent={ErrorBoundaryFallback}
-                            onError={logger.error}
-                          >
-                            <Outlet />
-                          </ErrorBoundary>
-                        </main>
-                        <div aria-live="polite" aria-atomic="false">
-                          <ToastContainer limit={3} />
-                        </div>
-                        <KeyboardShortcutsHelp />
-                        <ImageLightbox />
+                        <GlobalSearchProvider>
+                          <SkipToContentLink />
+                          <main id="main-content">
+                            <ErrorBoundary
+                              FallbackComponent={ErrorBoundaryFallback}
+                              onError={logger.error}
+                            >
+                              <Outlet />
+                            </ErrorBoundary>
+                          </main>
+                          <div aria-live="polite" aria-atomic="false">
+                            <ToastContainer limit={3} />
+                          </div>
+                          <KeyboardShortcutsHelp />
+                          <ImageLightbox />
+                        </GlobalSearchProvider>
                       </ConfirmProvider>
                     </I18nextProvider>
                   </PfpProvider>

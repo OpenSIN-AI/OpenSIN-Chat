@@ -155,6 +155,7 @@ function buildRows({ history, workspace, websocket, t }: any) {
         outputs: props.outputs,
         clarifyingQuestions: props.clarifyingQuestions,
         notebookMode: props.notebookMode || props.metadata?.notebookMode || "chat",
+        artifacts: props.artifacts || [],
       });
     }
   }
@@ -455,6 +456,7 @@ export default function ChatHistory({
                 outputs={row.outputs}
                 clarifyingQuestions={row.clarifyingQuestions}
                 notebookMode={row.notebookMode}
+                artifacts={row.artifacts}
               />
             </Suspense>
           );

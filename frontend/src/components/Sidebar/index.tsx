@@ -33,6 +33,7 @@ import { LAST_VISITED_WORKSPACE } from "@/utils/constants";
 import { safeJsonParse } from "@/utils/request";
 import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 import { useSidebarToggle } from "./SidebarToggle";
+import { useGlobalSearchDialog } from "@/features/global-search/GlobalSearchProvider";
 
 type WorkspaceSummary = {
   id?: number | string;
@@ -61,6 +62,7 @@ function SidebarContent({
   const { workspaces } = useWorkspaces({ ordered: true });
   const [creating, setCreating] = useState(false);
   const { showing, showModal, hideModal } = useNewWorkspaceModal();
+  const { openSearch: openGlobalSearch } = useGlobalSearchDialog();
   const activeWorkspace = useMemo(() => {
     const current = workspaces.find(
       (workspace: WorkspaceSummary) => workspace.slug === slug,
@@ -131,7 +133,10 @@ function SidebarContent({
         </button>
         <button
           type="button"
-          onClick={onOpenSearch}
+          onClick={() => {
+            openGlobalSearch();
+            onOpenSearch?.();
+          }}
           className="mb-3 flex h-9 w-full shrink-0 items-center gap-2 rounded-lg px-2.5 text-sm text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary"
         >
           <MagnifyingGlass size={16} />
@@ -271,6 +276,7 @@ export function SidebarMobileHeader({
   const { t } = useTranslation();
   const { user } = useUser();
   const [open, setOpen] = useState(false);
+  const { openSearch: openGlobalSearch } = useGlobalSearchDialog();
   useEffect(() => {
     if (!open) return;
     const escape = (event: KeyboardEvent) =>
@@ -301,7 +307,10 @@ export function SidebarMobileHeader({
         </span>
         <button
           type="button"
-          onClick={onOpenSearch}
+          onClick={() => {
+            openGlobalSearch();
+            onOpenSearch?.();
+          }}
           aria-label={t("commandHub.openSearch")}
           className="ml-auto flex h-10 w-10 items-center justify-center rounded-lg text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-text-secondary"
         >

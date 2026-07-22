@@ -5,11 +5,12 @@ const { v4: uuidv4 } = require("uuid");
 const NOTEBOOK_MODES = new Set(["chat", "work", "code"]);
 
 const CODE_RUNNERS = new Set([
-  "codex",
+  "codex-cli",
   "claude-code",
   "opencode",
   "orca",
   "mimo-code",
+  "custom-cli",
 ]);
 
 const MAX_SELECTED_SOURCES = 500;
@@ -30,7 +31,10 @@ function normalizeSourceIds(value) {
   return [
     ...new Set(
       value
-        .filter((item) => typeof item === "string" && item.length > 0 && item.length <= 500)
+        .filter(
+          (item) =>
+            typeof item === "string" && item.length > 0 && item.length <= 500,
+        )
         .slice(0, MAX_SELECTED_SOURCES),
     ),
   ];
