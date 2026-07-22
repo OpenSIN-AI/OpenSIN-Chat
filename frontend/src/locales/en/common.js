@@ -61,6 +61,7 @@ const TRANSLATIONS = {
       quickActions: "Quick actions",
       workspaces: "Workspaces",
       notebooks: "Notebooks",
+      sources: "Sources",
       navigation: "Navigation",
     },
     footer: {

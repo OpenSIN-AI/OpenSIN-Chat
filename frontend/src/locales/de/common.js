@@ -57,6 +57,7 @@ const TRANSLATIONS = {
       quickActions: "Schnellaktionen",
       workspaces: "Arbeitsbereiche",
       notebooks: "Notebooks",
+      sources: "Quellen",
       navigation: "Navigation",
     },
     footer: {

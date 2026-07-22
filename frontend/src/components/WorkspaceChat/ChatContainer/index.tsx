@@ -65,7 +65,6 @@ export default function ChatContainer({
       <ChatContainerInner
         workspace={workspace}
         threadSlug={threadSlug}
-        knownHistory={knownHistory}
         isMobile={isMobile}
         chatHistoryRef={chatHistoryRef}
         loadingResponse={loadingResponse}
@@ -85,7 +84,6 @@ export default function ChatContainer({
 function ChatContainerInner({
   workspace,
   threadSlug,
-  knownHistory,
   isMobile,
   chatHistoryRef,
   loadingResponse,

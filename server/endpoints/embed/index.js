@@ -42,6 +42,18 @@ function embedHistoryRateLimit(request, response, next) {
 function embeddedEndpoints(app) {
   if (!app) return;
 
+  // CORS preflights do not match the POST/GET/DELETE handlers below. Register
+  // them explicitly so third-party widget hosts receive the embed-specific
+  // allowlist headers instead of being rejected by the global API policy.
+  app.options(
+    "/embed/:embedId/stream-chat",
+    [validEmbedConfig, embedCors],
+  );
+  app.options(
+    "/embed/:embedId/:sessionId",
+    [validEmbedConfig, embedCors],
+  );
+
   app.post(
     "/embed/:embedId/stream-chat",
     [

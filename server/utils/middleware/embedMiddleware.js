@@ -8,6 +8,16 @@ const {
 } = require("../../models/embedConfig");
 const { reqBody } = require("../http");
 
+const HARD_EMBED_MESSAGE_MAX_LENGTH = 32_000;
+
+function embedMessageLimit(embed) {
+  const configured = Number(embed?.message_limit);
+  if (!Number.isFinite(configured) || configured <= 0) {
+    return HARD_EMBED_MESSAGE_MAX_LENGTH;
+  }
+  return Math.min(Math.floor(configured), HARD_EMBED_MESSAGE_MAX_LENGTH);
+}
+
 // Finds or Aborts request for a /:embedId/ url. This should always
 // be the first middleware and the :embedID should be in the URL.
 async function validEmbedConfig(request, response, next) {
@@ -104,16 +114,31 @@ async function canRespond(request, response, next) {
       return;
     }
 
-    if (!message?.length || !VALID_CHAT_MODE.includes(embed.chat_mode)) {
+    const validMessage =
+      typeof message === "string" && message.trim().length > 0;
+    if (!validMessage || !VALID_CHAT_MODE.includes(embed.chat_mode)) {
       response.status(400).json({
         id: uuidv4(),
         type: "abort",
         textResponse: null,
         sources: [],
         close: true,
-        error: !message?.length
+        error: !validMessage
           ? "Message is empty."
           : `${embed.chat_mode} is not a valid mode.`,
+      });
+      return;
+    }
+
+    const messageLimit = embedMessageLimit(embed);
+    if (message.length > messageLimit) {
+      response.status(413).json({
+        id: uuidv4(),
+        type: "abort",
+        textResponse: null,
+        sources: [],
+        close: true,
+        error: `Message exceeds the ${messageLimit} character limit.`,
       });
       return;
     }
@@ -276,7 +301,7 @@ function embedCors(request, response, next) {
     // Allowlist configured → only allow normalized listed origins.
     if (allowedHosts === null || allowedHosts.includes(origin)) {
       response.setHeader("Access-Control-Allow-Origin", rawOrigin);
-      response.setHeader("Vary", "Origin");
+      response.vary("Origin");
       response.setHeader(
         "Access-Control-Allow-Methods",
         "GET, POST, DELETE, OPTIONS",

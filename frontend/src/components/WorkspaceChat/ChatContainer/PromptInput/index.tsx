@@ -154,7 +154,7 @@ export default function PromptInput({
                       onClick={() => openSidebar("sources")}
                       className="flex h-8 items-center rounded-lg border-none px-2 text-xs font-medium text-theme-text-secondary hover:bg-theme-bg-tertiary hover:text-theme-text-primary"
                     >
-                      Quellen
+                      {t("commandHub.groups.sources")}
                     </button>
                     {notebookMode.mode.allowsActions && (
                       <ToolsButton
