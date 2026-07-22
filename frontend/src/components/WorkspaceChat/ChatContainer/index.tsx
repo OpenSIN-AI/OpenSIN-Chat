@@ -12,6 +12,7 @@ import { lazy, Suspense } from "react";
 import useChatStream from "./useChatStream";
 import ErrorBoundaryFallback from "@/components/ErrorBoundaryFallback";
 import NotebookShell from "@/features/notebook/NotebookShell";
+import useNotebookMode from "@/features/notebook/useNotebookMode";
 
 // Lazy: Sidebars host + icon rail; individual panels split further inside.
 const Sidebars = lazy(() => import("./Sidebars"));
@@ -25,6 +26,10 @@ export default function ChatContainer({
 }) {
   const isMobile = useIsMobileLayout();
   const { chatHistoryRef } = useChatContainerQuickScroll();
+  const { modeId: notebookMode } = useNotebookMode({
+    notebookSlug: workspace?.slug,
+    threadSlug,
+  });
   const {
     loadingResponse,
     chatHistory,
@@ -35,7 +40,7 @@ export default function ChatContainer({
     handleSubmit,
     sendCommand,
     regenerateAssistantMessage,
-  } = useChatStream({ workspace, threadSlug, knownHistory });
+  } = useChatStream({ workspace, threadSlug, knownHistory, notebookMode });
 
   return (
     <ChatSidebarProvider>

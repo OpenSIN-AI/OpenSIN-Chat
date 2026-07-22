@@ -34,6 +34,7 @@ async function streamChatWithWorkspace(
   thread = null,
   attachments = [],
   abortController = null,
+  notebookMode = "chat",
 ) {
   const uuid = uuidv4();
 
@@ -422,6 +423,7 @@ async function streamChatWithWorkspace(
         type: chatMode,
         attachments,
         metrics,
+        notebookMode,
       },
       threadId: thread?.id || null,
       user,

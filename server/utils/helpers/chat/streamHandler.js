@@ -47,7 +47,7 @@ async function streamChatHandler(request, response, { thread = null } = {}) {
   try {
     // PERF: open SSE as early as possible so the client gets headers in ms,
     // then validate. Body is already buffered by express.json.
-    const { message, attachments = [] } = reqBody(request);
+    const { message, attachments = [], notebookMode = "chat" } = reqBody(request);
     const workspace = response.locals.workspace;
 
     // --- Input validation (sync, before any await) --------------------------
@@ -115,6 +115,7 @@ async function streamChatHandler(request, response, { thread = null } = {}) {
       thread,
       attachments,
       abortController,
+      notebookMode,
     );
     stopHeartbeat();
 

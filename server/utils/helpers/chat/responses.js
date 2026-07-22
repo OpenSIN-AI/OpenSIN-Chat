@@ -202,6 +202,7 @@ function convertToChatHistory(history = []) {
         sentAt: Math.floor(new Date(createdAt).getTime() / 1000),
         feedbackScore,
         metrics: data?.metrics || {},
+        notebookMode: data?.notebookMode || "chat",
         ...(data?.outputs?.length > 0 ? { outputs: data.outputs } : {}),
         ...(data?.clarifyingQuestions?.length > 0
           ? { clarifyingQuestions: data.clarifyingQuestions }

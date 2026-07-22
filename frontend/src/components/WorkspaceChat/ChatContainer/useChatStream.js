@@ -29,6 +29,7 @@ export default function useChatStream({
   workspace,
   threadSlug = null,
   knownHistory = [],
+  notebookMode = "chat",
 }) {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -461,6 +462,7 @@ export default function useChatStream({
             );
           },
           attachments,
+          notebookMode,
         });
       } catch (err) {
         // The streamChat onerror/onopen handlers already call handleChat

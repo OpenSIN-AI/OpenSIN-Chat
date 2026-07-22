@@ -106,6 +106,7 @@ const WorkspaceThread: any = {
     message: any,
     handleChat: any,
     attachments: any = [],
+    notebookMode: string = "chat",
   ) {
     const ctrl = new AbortController();
 
@@ -169,7 +170,7 @@ const WorkspaceThread: any = {
         `${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}/stream-chat`,
         {
           method: "POST",
-          body: JSON.stringify({ message, attachments }),
+          body: JSON.stringify({ message, attachments, notebookMode }),
           headers: baseHeaders(),
           signal: ctrl.signal,
           async onopen(response) {

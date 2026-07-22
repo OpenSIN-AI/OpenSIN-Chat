@@ -214,6 +214,7 @@ describe("streamChatHandler — workspace path (no thread)", () => {
       null,
       [],
       expect.any(Object),
+      "chat",
     );
   });
 
@@ -261,6 +262,7 @@ describe("streamChatHandler — thread path", () => {
       THREAD,
       [],
       expect.any(Object),
+      "chat",
     );
   });
 
