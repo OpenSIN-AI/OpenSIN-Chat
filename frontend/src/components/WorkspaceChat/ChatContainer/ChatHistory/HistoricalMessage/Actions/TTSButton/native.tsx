@@ -5,9 +5,10 @@ import { SpeakerHigh } from "@phosphor-icons/react/dist/csr/SpeakerHigh";
 import { PauseCircle } from "@phosphor-icons/react/dist/csr/PauseCircle";
 import messageToSpeech from "@/utils/chat/messageToSpeech";
 import { messageActionButtonClass } from "../MessageActionButton";
+import { getStoredVoiceName } from "@/components/TextToSpeech/BrowserNative";
 
 export default function NativeTTSMessage({ chatId, message }: any) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [speaking, setSpeaking] = useState(false as any);
   const [supported, setSupported] = useState(false as any);
   useEffect(() => {
@@ -29,10 +30,6 @@ export default function NativeTTSMessage({ chatId, message }: any) {
   }
 
   function speakMessage() {
-    // if the user is pausing this particular message
-    // while the synth is speaking we can end it.
-    // If they are clicking another message's TTS
-    // we need to ignore that until they pause the one that is playing.
     if (window.speechSynthesis.speaking && speaking) {
       endSpeechUtterance();
       return;
@@ -40,6 +37,14 @@ export default function NativeTTSMessage({ chatId, message }: any) {
 
     if (window.speechSynthesis.speaking && !speaking) return;
     const utterance = new SpeechSynthesisUtterance(messageToSpeech(message));
+    utterance.lang = i18n.language?.startsWith("de") ? "de-DE" : "en-US";
+    const voiceName = getStoredVoiceName();
+    if (voiceName) {
+      const voice = window.speechSynthesis
+        .getVoices()
+        .find((v) => v.name === voiceName);
+      if (voice) utterance.voice = voice;
+    }
     utterance.addEventListener("end", endSpeechUtterance);
     window.speechSynthesis.speak(utterance);
     setSpeaking(true);
