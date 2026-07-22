@@ -26,15 +26,14 @@ import logger from "@/utils/logger";
  * for the ChatContainer.
  */
 /**
- * @param {{ workspace: any, threadSlug: string|null, knownHistory: any[], notebookMode: string, selectedSourceIds: string[], codeRunner: string|null }} options
+ * @param {{ workspace: any, threadSlug: string|null, knownHistory: any[], notebookMode: string, buildRequestContext?: function|null }} options
  */
 export default function useChatStream({
   workspace,
   threadSlug = null,
   knownHistory = [],
   notebookMode = "chat",
-  selectedSourceIds = [],
-  codeRunner = null,
+  buildRequestContext = null,
 }) {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -441,6 +440,17 @@ export default function useChatStream({
       const attachments = promptMessage?.attachments ?? parseAttachments();
       window.dispatchEvent(new CustomEvent(CLEAR_ATTACHMENTS_EVENT));
 
+      const requestContext =
+        typeof buildRequestContext === "function"
+          ? buildRequestContext()
+          : {
+              turnId: crypto.randomUUID?.() || `pending-${Date.now()}`,
+              notebookMode,
+              sourceSelectionExplicit: false,
+              selectedSourceIds: [],
+              codeRunnerId: null,
+            };
+
       let errorAlreadyHandled = false;
       try {
         await Workspace.multiplexStream({
@@ -467,9 +477,7 @@ export default function useChatStream({
             );
           },
           attachments,
-          notebookMode,
-          selectedSourceIds,
-          codeRunner,
+          requestContext,
         });
       } catch (err) {
         // The streamChat onerror/onopen handlers already call handleChat

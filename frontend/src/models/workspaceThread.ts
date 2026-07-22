@@ -106,10 +106,22 @@ const WorkspaceThread: any = {
     message: any,
     handleChat: any,
     attachments: any = [],
-    notebookMode: string = "chat",
-    selectedSourceIds: string[] = [],
-    codeRunner: string | null = null,
+    requestContext: {
+      turnId?: string;
+      notebookMode?: string;
+      sourceSelectionExplicit?: boolean;
+      selectedSourceIds?: string[];
+      codeRunnerId?: string | null;
+    } = {},
   ) {
+    const {
+      turnId,
+      notebookMode = "chat",
+      sourceSelectionExplicit = false,
+      selectedSourceIds = [],
+      codeRunnerId = null,
+    } = requestContext;
+
     const ctrl = new AbortController();
 
     // Stall-detection: if no data is received for STALL_TIMEOUT_MS, abort
@@ -172,7 +184,15 @@ const WorkspaceThread: any = {
         `${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}/stream-chat`,
         {
           method: "POST",
-          body: JSON.stringify({ message, attachments, notebookMode, selectedSourceIds, codeRunner }),
+          body: JSON.stringify({
+            message,
+            attachments,
+            turnId,
+            notebookMode,
+            sourceSelectionExplicit,
+            selectedSourceIds,
+            codeRunnerId,
+          }),
           headers: baseHeaders(),
           signal: ctrl.signal,
           async onopen(response) {

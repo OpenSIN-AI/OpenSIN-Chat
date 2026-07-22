@@ -15,6 +15,7 @@ import NotebookShell from "@/features/notebook/NotebookShell";
 import useNotebookMode from "@/features/notebook/useNotebookMode";
 import useSelectedSources from "@/features/notebook/useSelectedSources";
 import useSelectedCodeRunner from "@/features/code-runners/useSelectedCodeRunner";
+import { buildChatRequestContext } from "@/features/chat/chat-request-context";
 
 // Lazy: Sidebars host + icon rail; individual panels split further inside.
 const Sidebars = lazy(() => import("./Sidebars"));
@@ -53,7 +54,7 @@ export default function ChatContainer({
     sourceIds,
   });
 
-  const { runnerId: codeRunner } = useSelectedCodeRunner(workspace?.slug);
+  const { runnerId: selectedCodeRunnerId } = useSelectedCodeRunner(workspace?.slug);
 
   const {
     loadingResponse,
@@ -65,7 +66,18 @@ export default function ChatContainer({
     handleSubmit,
     sendCommand,
     regenerateAssistantMessage,
-  } = useChatStream({ workspace, threadSlug, knownHistory, notebookMode, selectedSourceIds, codeRunner });
+  } = useChatStream({
+    workspace,
+    threadSlug,
+    knownHistory,
+    notebookMode,
+    buildRequestContext: () =>
+      buildChatRequestContext({
+        notebookSlug: workspace?.slug,
+        threadSlug,
+        codeRunnerId: notebookMode === "code" ? selectedCodeRunnerId : selectedCodeRunnerId,
+      }),
+  });
 
   return (
     <ChatSidebarProvider>

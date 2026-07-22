@@ -1,0 +1,24 @@
+{
+  "night": 20,
+  "backend": "claude",
+  "gate_mode": "on",
+  "n_tasks": 1,
+  "baseline_score": 1.0,
+  "candidate_score": 1.0,
+  "accepted": false,
+  "n_applied_edits": 0,
+  "n_rejected_edits": 0,
+  "call_error": "",
+  "reflect_raw_head": "",
+  "holdout_detail": [
+    {
+      "id": "llm_b960e6fb426d",
+      "reference_kind": "rule",
+      "hard": 1.0,
+      "soft": 1.0,
+      "response_len": 2874,
+      "response_head": "```markdown\n---\nname: skillopt-sleep-learned\ndescription: Preferences and procedures learned from past local agent sessions.\n---\n\n# skillopt-sleep-learned\n\n## Delegations-Doktrin (Kernregel)\n\nDer Haup",
+      "why": "all checks passed"
+    }
+  ]
+}

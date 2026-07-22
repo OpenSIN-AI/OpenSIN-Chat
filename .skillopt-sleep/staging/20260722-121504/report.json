@@ -1,0 +1,18 @@
+{
+  "night": 20,
+  "project": "/Users/jeremy/dev/OpenSIN-Chat",
+  "started_at": "2026-07-22T12:11:56",
+  "ended_at": "2026-07-22T12:15:04",
+  "n_sessions": 3,
+  "n_tasks": 1,
+  "n_replayed": 1,
+  "baseline_score": 1.0,
+  "candidate_score": 1.0,
+  "accepted": false,
+  "gate_action": "reject",
+  "no_edits_reason": "",
+  "edits": [],
+  "rejected_edits": [],
+  "tokens_used": 940,
+  "notes": []
+}

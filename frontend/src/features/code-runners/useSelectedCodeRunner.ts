@@ -1,41 +1,74 @@
 // SPDX-License-Identifier: MIT
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { CODE_RUNNER_CATALOG } from "./catalog";
 
-const STORAGE_PREFIX = "opensin_code_runner";
+const STORAGE_PREFIX = "opensin_selected_code_runner";
+
+export const CODE_RUNNER_CHANGE_EVENT = "opensin:code-runner-change";
+
+interface CodeRunnerChangeDetail {
+  notebookSlug?: string | null;
+  runnerId?: unknown;
+}
+
+export function codeRunnerStorageKey(notebookSlug?: string | null): string {
+  return [STORAGE_PREFIX, notebookSlug || "home"].join(":");
+}
+
+export function readSelectedCodeRunnerId(notebookSlug?: string | null): string | null {
+  try {
+    const value = window.localStorage.getItem(codeRunnerStorageKey(notebookSlug));
+    return value?.trim() || null;
+  } catch {
+    return null;
+  }
+}
 
 export default function useSelectedCodeRunner(notebookSlug?: string | null) {
-  const storageKey = useMemo(() => `${STORAGE_PREFIX}:${notebookSlug || "home"}`, [notebookSlug]);
-  const [runnerId, setRunnerIdState] = useState<string | null>(null);
+  const storageKey = useMemo(() => codeRunnerStorageKey(notebookSlug), [notebookSlug]);
+  const [runnerId, setRunnerIdState] = useState<string | null>(() =>
+    readSelectedCodeRunnerId(notebookSlug),
+  );
 
   useEffect(() => {
-    try {
-      const saved = window.localStorage.getItem(storageKey);
-      const exists = CODE_RUNNER_CATALOG.some((runner) => runner.id === saved);
-      setRunnerIdState(exists ? saved : null);
-    } catch {
-      setRunnerIdState(null);
+    setRunnerIdState(readSelectedCodeRunnerId(notebookSlug));
+  }, [notebookSlug, storageKey]);
+
+  useEffect(() => {
+    function handleChange(event: Event) {
+      const detail = (event as CustomEvent<CodeRunnerChangeDetail>).detail;
+      const sameNotebook = (detail?.notebookSlug || null) === (notebookSlug || null);
+      if (!sameNotebook || typeof detail?.runnerId !== "string") return;
+      setRunnerIdState(detail.runnerId);
     }
-  }, [storageKey]);
+
+    window.addEventListener(CODE_RUNNER_CHANGE_EVENT, handleChange);
+    return () => window.removeEventListener(CODE_RUNNER_CHANGE_EVENT, handleChange);
+  }, [notebookSlug]);
 
   const setRunnerId = useCallback(
     (nextRunnerId: string) => {
-      const exists = CODE_RUNNER_CATALOG.some((runner) => runner.id === nextRunnerId);
-      if (!exists) return;
-      setRunnerIdState(nextRunnerId);
+      const normalized = nextRunnerId.trim();
+      setRunnerIdState(normalized || null);
+
       try {
-        window.localStorage.setItem(storageKey, nextRunnerId);
+        if (normalized) {
+          window.localStorage.setItem(storageKey, normalized);
+        } else {
+          window.localStorage.removeItem(storageKey);
+        }
       } catch {
-        // Storage is optional.
+        // Storage may be unavailable.
       }
+
+      window.dispatchEvent(
+        new CustomEvent(CODE_RUNNER_CHANGE_EVENT, {
+          detail: { notebookSlug: notebookSlug || null, runnerId: normalized },
+        }),
+      );
     },
-    [storageKey],
+    [notebookSlug, storageKey],
   );
 
-  return {
-    runnerId,
-    runner: CODE_RUNNER_CATALOG.find((item) => item.id === runnerId) || null,
-    setRunnerId,
-  };
+  return { runnerId, setRunnerId };
 }
