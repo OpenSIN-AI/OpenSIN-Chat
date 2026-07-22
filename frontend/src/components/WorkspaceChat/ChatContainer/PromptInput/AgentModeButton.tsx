@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import logger from "@/utils/logger";
+import { FEATURES } from "@/utils/features";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
@@ -82,7 +83,7 @@ export const AGENT_MODES: AgentMode[] = [
     labelKey: "agentMode.imageGen",
     description: undefined,
     descriptionKey: "agentMode.imageGenDesc",
-    enabled: true,
+    enabled: FEATURES.imageGeneration,
     prefix: "@agent [image-gen]",
     systemPromptHint:
       "You are operating in IMAGE GENERATION mode. Use the image-generation tool to create the requested image. Translate the user's request into a detailed, descriptive English image prompt covering subject, style, composition, colors, and lighting. Choose a short descriptive filename. If image generation is not configured, tell the user to enable and configure the 'Image Generation' skill in the admin agent settings.",
@@ -94,7 +95,7 @@ export const AGENT_MODES: AgentMode[] = [
     labelKey: "agentMode.videoGen",
     description: undefined,
     descriptionKey: "agentMode.videoGenDesc",
-    enabled: true,
+    enabled: FEATURES.videoGeneration,
     prefix: "@agent [video-gen]",
     systemPromptHint:
       "You are operating in VIDEO GENERATION mode. Use the video-generation tool to create a short video.",
@@ -140,7 +141,8 @@ function loadPersistedMode() {
   try {
     const stored = localStorage.getItem(AGENT_MODE_STORAGE_KEY);
     if (!stored) return null;
-    return getAgentModeById(stored) || null;
+    const mode = getAgentModeById(stored);
+    return mode?.enabled ? mode : null;
   } catch {
     return null;
   }

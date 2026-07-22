@@ -1,4 +1,8 @@
 // SPDX-License-Identifier: MIT
+"use strict";
+
+const { isFeatureEnabled } = require("../../../features");
+
 const { webBrowsing } = require("./web-browsing.js");
 const { webScraping } = require("./web-scraping.js");
 const { websocket } = require("./websocket.js");
@@ -18,12 +22,21 @@ const { deepResearch } = require("./deep-research.js");
 const { generateReport } = require("./generate-report.js");
 const { orchestratorAgent } = require("./orchestrator.js");
 const { browserVision } = require("./browser-vision.js");
-const { imageGeneration } = require("./image-generation.js");
-const { videoGeneration } = require("./video-generation.js");
 const { pdfAnalyze } = require("./pdf-analyze.js");
 const { subagentPlugin } = require("./subagentPlugin.js");
 
-module.exports = {
+const registry = {};
+
+function registerPlugin(exportName, plugin) {
+  if (!plugin?.name) {
+    throw new Error(`Invalid built-in agent plugin: ${exportName}`);
+  }
+
+  registry[exportName] = plugin;
+  registry[plugin.name] = plugin;
+}
+
+const corePlugins = {
   webScraping,
   webBrowsing,
   websocket,
@@ -43,33 +56,22 @@ module.exports = {
   generateReport,
   orchestratorAgent,
   browserVision,
-  imageGeneration,
-  videoGeneration,
   pdfAnalyze,
   subagentPlugin,
-
-  // Plugin name aliases so they can be pulled by slug as well.
-  [webScraping.name]: webScraping,
-  [webBrowsing.name]: webBrowsing,
-  [websocket.name]: websocket,
-  [docSummarizer.name]: docSummarizer,
-  [chatHistory.name]: chatHistory,
-  [memory.name]: memory,
-  [rechart.name]: rechart,
-  [sqlAgent.name]: sqlAgent,
-  [filesystemAgent.name]: filesystemAgent,
-  [createFilesAgent.name]: createFilesAgent,
-  [gmailAgent.name]: gmailAgent,
-  [outlookAgent.name]: outlookAgent,
-  [googleCalendarAgent.name]: googleCalendarAgent,
-  [requestUserInput.name]: requestUserInput,
-  [politicianSearch.name]: politicianSearch,
-  [deepResearch.name]: deepResearch,
-  [generateReport.name]: generateReport,
-  [orchestratorAgent.name]: orchestratorAgent,
-  [browserVision.name]: browserVision,
-  [imageGeneration.name]: imageGeneration,
-  [videoGeneration.name]: videoGeneration,
-  [pdfAnalyze.name]: pdfAnalyze,
-  [subagentPlugin.name]: subagentPlugin,
 };
+
+for (const [exportName, plugin] of Object.entries(corePlugins)) {
+  registerPlugin(exportName, plugin);
+}
+
+if (isFeatureEnabled("imageGeneration")) {
+  const { imageGeneration } = require("./image-generation.js");
+  registerPlugin("imageGeneration", imageGeneration);
+}
+
+if (isFeatureEnabled("videoGeneration")) {
+  const { videoGeneration } = require("./video-generation.js");
+  registerPlugin("videoGeneration", videoGeneration);
+}
+
+module.exports = registry;
