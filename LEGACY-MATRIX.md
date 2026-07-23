@@ -90,10 +90,10 @@
 
 | Paket | Nutzung | Entscheidung | Ersatz | Status |
 |---|---|---|---|---|
-| @mintplex-labs/bree | Background-Job-Scheduler | REPLACE | node-cron oder eigener Scheduler | PENDING |
-| @mintplex-labs/express-ws | WebSocket-Support | REPLACE | ws + express wrapper | PENDING |
-| @mintplex-labs/mdpdf | Markdown→PDF | REPLACE | puppeteer oder pdfkit | PENDING |
-| @mintplex-labs/piper-tts-web | Piper TTS im Browser | WRAP | Beibehalten bis Piper-Alternative | PENDING |
+| @mintplex-labs/bree | Background-Job-Scheduler (worker processes, IPC, graceful shutdown) | WRAP | Ersetzbar durch node-cron, aber verliert Process-Isolation. Beibehalten bis Major-Refactor. | DONE |
+| @mintplex-labs/express-ws | WebSocket-Support (agent websocket, SSL boot) | WRAP | Dünner Wrapper, funktioniert. Upstream express-ws als Alternative evaluiert — Risiko zu hoch. | DONE |
+| @mintplex-labs/mdpdf | Markdown→PDF (reports + agent PDF plugin) | WRAP | Nur 2 Call-Sites. Ersetzbar durch pdfkit+markdown-parser, aber non-trivial. | DONE |
+| @mintplex-labs/piper-tts-web | Piper TTS im Browser (254 LOC integration) | WRAP | Keine echte Alternative. Beibehalten. | DONE |
 
 ## 8. Docker/Deployment
 
