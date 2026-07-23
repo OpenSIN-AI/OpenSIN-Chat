@@ -149,7 +149,7 @@
     "prettier": "^3.9.5",
     "process": "^0.11.10",
     "rollup-plugin-visualizer": "^5.9.0",
-    "sharp": "^0.34.0",
+    "sharp": "^0.35.3",
     "stream-browserify": "^3.0.0",
     "svgo": "^4.0.0",
     "tailwindcss": "^4.0.0",
