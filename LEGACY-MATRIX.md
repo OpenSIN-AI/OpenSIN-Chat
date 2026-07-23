@@ -1,7 +1,7 @@
 # OpenSIN-Chat Legacy-Matrix
 
 > Systematische Bestandsaufnahme aller AnythingLLM-Erbe-Komponenten.
-> Letzte Aktualisierung: 2026-07-23
+> Letzte Aktualisierung: 2026-07-23 (nach Welle 5)
 
 ## Entscheidungsmodell
 
@@ -10,158 +10,153 @@
 | KEEP | Gehört zum OpenSIN-Produktkern, bleibt wie ist |
 | WRAP | Vorübergehend hinter OpenSIN-Schnittstelle kapseln |
 | REPLACE | Durch kleinere OpenSIN-eigene Implementierung ersetzen |
-| REMOVE | Vollständig entfernen |
-| QUARANTINE | Deaktivieren, als Legacy markieren, später entfernen |
+| REMOVE | Vollständig entfernt |
+| QUARANTINE | UI ausgeblendet, Backend bleibt, keine neue Konfiguration |
 
 ---
 
 ## 1. LLM Provider (server/utils/AiProviders/)
 
-| Provider | Nutzung | Entscheidung | Ersatz/Migration | Status |
-|---|---|---|---|---|
-| fireworksAi | **PRIMÄR** — aktiv in Produktion (SINator Pool) | KEEP | — | — |
-| anthropic | Aktiv konfigurierbar, produktionsrelevant | KEEP | — | — |
-| ollama | Aktiv konfigurierbar, lokal relevant | KEEP | — | — |
-| genericOpenAi | Aktiv als Fallback/OpenAI-kompatibel | KEEP | — | — |
-| openAi | Legacy, wird durch genericOpenAi abgedeckt | REPLACE | genericOpenAi übernimmt | PENDING |
-| gemini | Nicht in aktiver Nutzung | QUARANTINE | — | PENDING |
-| groq | Nicht in aktiver Nutzung | REMOVE | — | PENDING |
-| huggingface | Nicht in aktiver Nutzung | REMOVE | — | PENDING |
-| liteLLM | Nicht in aktiver Nutzung | REMOVE | — | PENDING |
-| lmStudio | Lokal, ähnlich ollama | QUARANTINE | — | PENDING |
-| localAi | Nicht in aktiver Nutzung | REMOVE | — | PENDING |
-| mistral | Nicht in aktiver Nutzung | REMOVE | — | PENDING |
-| nvidiaNim | Früher genutzt, jetzt Fireworks | REMOVE | — | PENDING |
-| xai | Nicht in aktiver Nutzung | QUARANTINE | — | PENDING |
-| opencodeZen | OpenSIN-eigen | KEEP | — | — |
-| dockerModelRunner | Neu, lokal relevant | QUARANTINE | — | PENDING |
-| modelRouter | OpenSIN-eigen | KEEP | — | — |
-| modelMap | OpenSIN-eigen | KEEP | — | — |
+| Provider | Nutzung | Entscheidung | Status |
+|---|---|---|---|
+| fireworksAi | **PRIMÄR** — aktiv in Produktion | KEEP | DONE |
+| anthropic | Aktiv konfigurierbar | KEEP | DONE |
+| ollama | Lokal relevant | KEEP | DONE |
+| genericOpenAi | OpenAI-kompatibel Fallback | KEEP | DONE |
+| openAi | Legacy, durch genericOpenAi abdeckbar | WRAP | DONE |
+| gemini | Aktiv konfigurierbar | KEEP | DONE |
+| nvidiaNim | NVIDIA RTX GPU, aktiv | KEEP | DONE |
+| opencodeZen | OpenSIN-eigen | KEEP | DONE |
+| xai | Aktiv konfigurierbar | KEEP | DONE |
+| dockerModelRunner | Lokal relevant | KEEP | DONE |
+| modelRouter | OpenSIN-eigen | KEEP | DONE |
+| modelMap | OpenSIN-eigen | KEEP | DONE |
+| ~~groq~~ | Nicht genutzt | ~~REMOVE~~ | DONE (entfernt) |
+| ~~huggingface~~ | Nicht genutzt | ~~REMOVE~~ | DONE (entfernt) |
+| ~~liteLLM~~ | Nicht genutzt | ~~REMOVE~~ | DONE (entfernt) |
+| ~~localAi~~ | Nicht genutzt | ~~REMOVE~~ | DONE (entfernt) |
+| ~~mistral~~ | Nicht genutzt | ~~REMOVE~~ | DONE (entfernt) |
 
 ## 2. Embedding Engines (server/utils/EmbeddingEngines/)
 
 | Engine | Nutzung | Entscheidung | Status |
 |---|---|---|---|
-| native | OpenSIN-eigen (Transformers.js) | KEEP | — |
-| ollama | Lokal relevant | KEEP | — |
-| genericOpenAi | OpenAI-kompatibel | KEEP | — |
-| openAi | Legacy, durch genericOpenAi abgedeckt | REPLACE | PENDING |
-| gemini | Nicht aktiv | QUARANTINE | PENDING |
-| liteLLM | Nicht aktiv | REMOVE | PENDING |
-| lmstudio | Lokal, ähnlich ollama | QUARANTINE | PENDING |
-| localAi | Nicht aktiv | REMOVE | PENDING |
-| mistral | Nicht aktiv | REMOVE | PENDING |
-| voyageAi | Nicht aktiv | REMOVE | PENDING |
-| azureOpenAi | Nicht aktiv, Legacy | REMOVE | PENDING |
+| native | OpenSIN-eigen (Transformers.js) | KEEP | DONE |
+| ollama | Lokal relevant | KEEP | DONE |
+| genericOpenAi | OpenAI-kompatibel | KEEP | DONE |
+| openAi | Legacy, WRAP | WRAP | DONE |
+| gemini | Aktiv konfigurierbar | KEEP | DONE |
+| ~~lmstudio~~ | UI ausgeblendet | QUARANTINE | DONE (UI entfernt) |
+| ~~liteLLM~~ | Nicht genutzt | ~~REMOVE~~ | DONE (entfernt) |
+| ~~localAi~~ | Nicht genutzt | ~~REMOVE~~ | DONE (entfernt) |
+| ~~mistral~~ | Nicht genutzt | ~~REMOVE~~ | DONE (entfernt) |
+| ~~voyageAi~~ | Nicht genutzt | ~~REMOVE~~ | DONE (entfernt) |
+| ~~azureOpenAi~~ | Nicht genutzt | ~~REMOVE~~ | DONE (entfernt) |
 
-## 3. Vector DB Providers (server/utils/vectorDbProviders/)
+## 3. Vector DB Providers
 
-| Provider | Nutzung | Entscheidung | Status |
-|---|---|---|---|
-| lance (LanceDB) | **PRIMÄR** — aktiv lokal | KEEP | — |
-| pgvector | Aktiv für PostgreSQL-Profile | KEEP | — |
-
-## 4. Text-to-Speech (server/utils/TextToSpeech/)
-
-| Engine | Nutzung | Entscheidung | Status |
-|---|---|---|---|
-| kokoro | OpenSIN-eigen, lokal | KEEP | — |
-| native | Browser-native TTS | KEEP | — |
-| openAi | API-basiert | KEEP | — |
-| openAiGeneric | OpenAI-kompatibel | KEEP | — |
-| nvidiaNim | Früher genutzt | REMOVE | PENDING |
-| cvoice | Nicht aktiv | REMOVE | PENDING |
-
-## 5. Speech-to-Text (server/utils/SpeechToText/)
-
-| Engine | Nutzung | Entscheidung | Status |
-|---|---|---|---|
-| openAi | API-basiert | KEEP | — |
-| openAiGeneric | OpenAI-kompatibel | KEEP | — |
-| deepgram | Nicht aktiv | QUARANTINE | PENDING |
-
-## 6. Embedding Rerankers (server/utils/EmbeddingRerankers/)
-
-| Engine | Nutzung | Entscheidung | Status |
-|---|---|---|---|
-| native | OpenSIN-eigen | KEEP | — |
-
-## 7. @mintplex-labs Abhängigkeiten
-
-| Paket | Nutzung | Entscheidung | Ersatz | Status |
-|---|---|---|---|---|
-| @mintplex-labs/bree | Background-Job-Scheduler (worker processes, IPC, graceful shutdown) | WRAP | Ersetzbar durch node-cron, aber verliert Process-Isolation. Beibehalten bis Major-Refactor. | DONE |
-| @mintplex-labs/express-ws | WebSocket-Support (agent websocket, SSL boot) | WRAP | Dünner Wrapper, funktioniert. Upstream express-ws als Alternative evaluiert — Risiko zu hoch. | DONE |
-| @mintplex-labs/mdpdf | Markdown→PDF (reports + agent PDF plugin) | WRAP | Nur 2 Call-Sites. Ersetzbar durch pdfkit+markdown-parser, aber non-trivial. | DONE |
-| @mintplex-labs/piper-tts-web | Piper TTS im Browser (254 LOC integration) | WRAP | Keine echte Alternative. Beibehalten. | DONE |
-
-## 8. Docker/Deployment
-
-| Komponente | Nutzung | Entscheidung | Status |
-|---|---|---|---|
-| docker/ (Haupt-Dockerfile + compose) | **PRIMÄR** — aktiv | KEEP | — |
-| docker-opensin/ (Hardened profile) | Aktiv für Produktion | KEEP | — |
-| cloud-deployments/ (AWS/GCP/Azure/DO/Helm/OpenShift) | **NICHT aktiv** | REMOVE | PENDING |
-
-## 9. Frontend Provider-UI (frontend/src/components/LLMSelection/)
-
-| Komponente | Entsprechung Backend | Entscheidung | Status |
-|---|---|---|---|
-| FireworksAiOptions | fireworksAi | KEEP | — |
-| AnthropicAiOptions | anthropic | KEEP | — |
-| OllamaLLMOptions | ollama | KEEP | — |
-| GenericOpenAiOptions | genericOpenAi | KEEP | — |
-| OpenAiOptions | openAi (legacy) | REMOVE | PENDING |
-| GeminiLLMOptions | gemini | QUARANTINE | PENDING |
-| HuggingFaceOptions | huggingface | REMOVE | PENDING |
-| LMStudioOptions | lmStudio | QUARANTINE | PENDING |
-| NvidiaNimOptions | nvidiaNim | REMOVE | PENDING |
-| XAiLLMOptions | xai | QUARANTINE | PENDING |
-| OpencodeZenOptions | opencodeZen | KEEP | — |
-| ModelRouterOptions | modelRouter | KEEP | — |
-
-## 10. Collector
-
-| Komponente | Nutzung | Entscheidung | Status |
-|---|---|---|---|
-| Document parsing (PDF, DOCX, etc.) | Aktiv | KEEP | — |
-| OCR (Tesseract) | Optional aktiv | KEEP | — |
-| Browser automation (Puppeteer) | Optional aktiv | KEEP | — |
-| WhisperProviders | Optional | KEEP | — |
-| safeUnzip | Aktiv | KEEP | — |
-| anythingllm.com Downloads | **NICHT aktiv** | REMOVE | PENDING |
-
-## 11. Repository-Hygiene
-
-| Komponente | Nutzung | Entscheidung | Status |
-|---|---|---|---|
-| 27 .doc.md Dateien | CoDocs-Standard | KEEP (aktualisieren) | — |
-| 525 Test-Dateien | Aktiv | KEEP | — |
-| cloud-deployments/ | Nicht aktiv | REMOVE | PENDING |
-| docker/docker-compose.supabase.yml | Nicht aktiv | QUARANTINE | PENDING |
-| docker/supabase-init/ | Nicht aktiv | QUARANTINE | PENDING |
-| docker/vex/ | Nicht aktiv | REMOVE | PENDING |
-| docker/nginx/ | Nicht aktiv | REMOVE | PENDING |
-| Fake GitHub Clone (NewProjectModal) | Bereits entfernt | DONE | — |
-
-## 12. Daten/Schema
-
-| Aspekt | Status | Entscheidung |
+| Provider | Entscheidung | Status |
 |---|---|---|
-| SQLite als primäre DB | Aktiv | KEEP |
-| PostgreSQL/pgvector | Aktiv für Prod-Profile | KEEP |
-| Prisma Migration Drift | Bekannt (db push statt migrate) | WRAP |
-| workspace_artifacts | Neu hinzugefügt | KEEP |
-| agent_runs.turn_id | Neu hinzugefügt | KEEP |
+| lance (LanceDB) | KEEP | DONE |
+| pgvector | KEEP | DONE |
+
+## 4. Text-to-Speech
+
+| Engine | Entscheidung | Status |
+|---|---|---|
+| kokoro | KEEP | DONE |
+| native | KEEP | DONE |
+| openAi | KEEP | DONE |
+| openAiGeneric | KEEP | DONE |
+| nvidiaNim | KEEP | DONE |
+| ~~cvoice~~ | ~~REMOVE~~ | DONE (entfernt) |
+
+## 5. Speech-to-Text
+
+| Engine | Entscheidung | Status |
+|---|---|---|
+| openAi | KEEP | DONE |
+| openAiGeneric | KEEP | DONE |
+| ~~deepgram~~ | QUARANTINE | DONE (UI entfernt) |
+
+## 6. @mintplex-labs Abhängigkeiten
+
+| Paket | Entscheidung | Status |
+|---|---|---|
+| @mintplex-labs/bree | WRAP | DONE |
+| @mintplex-labs/express-ws | WRAP | DONE |
+| @mintplex-labs/mdpdf | WRAP | DONE |
+| @mintplex-labs/piper-tts-web | WRAP | DONE |
+
+## 7. Docker/Deployment
+
+| Komponente | Entscheidung | Status |
+|---|---|---|
+| docker/ (Haupt-Dockerfile) | KEEP | DONE |
+| docker-opensin/ (Hardened) | KEEP | DONE |
+| ~~cloud-deployments/~~ | ~~REMOVE~~ | DONE (entfernt) |
+| ~~docker/vex/~~ | ~~REMOVE~~ | DONE (entfernt) |
+| ~~docker/nginx/~~ | ~~REMOVE~~ | DONE (entfernt) |
+| ~~docker/supabase*~~ | ~~REMOVE~~ | DONE (entfernt) |
+
+## 8. Collector
+
+| Komponente | Entscheidung | Status |
+|---|---|---|
+| Document parsing | KEEP | DONE |
+| OCR (Tesseract) | KEEP | DONE |
+| Browser automation | KEEP | DONE |
+| WhisperProviders | KEEP | DONE |
+| Contracts dokumentiert | DONE | DONE |
+| ~~epub2 (Mintplex fork)~~ | ~~REMOVE~~ | DONE (entfernt) |
+| ~~moment~~ | ~~REMOVE~~ | DONE (entfernt) |
+| ~~nodemailer~~ | ~~REMOVE~~ | DONE (entfernt) |
+| ~~fix-path~~ | ~~REMOVE~~ | DONE (entfernt) |
+| ~~strip-ansi~~ | ~~REMOVE~~ | DONE (entfernt) |
+| ~~youtube-transcript-plus~~ | ~~REMOVE~~ | DONE (entfernt) |
+
+## 9. Frontend
+
+| Aspekt | Entscheidung | Status |
+|---|---|---|
+| dayjs | KEEP (aktiv genutzt) | DONE |
+| lodash (debounce) | KEEP (aktiv genutzt) | DONE |
+| Node-Polyfills (buffer, process, stream, util) | KEEP (Vite benötigt sie) | DONE |
+| Provider-UI bereinigt | DONE | DONE |
+| LM Studio UI | QUARANTINE | DONE (ausgeblendet) |
+| Deepgram UI | QUARANTINE | DONE (ausgeblendet) |
+
+## 10. Repository-Hygiene
+
+| Komponente | Entscheidung | Status |
+|---|---|---|
+| ~~server/yarn.lock~~ | ~~REMOVE~~ | DONE (entfernt, Root ist kanonisch) |
+| ~~20 .sin-code/ Verzeichnisse~~ | ~~REMOVE~~ | DONE (entfernt) |
+| ~~.legacy/~~ | ~~REMOVE~~ | DONE (entfernt) |
+| LEGACY-MATRIX.md | KEEP | DONE (aktualisiert) |
+| Collector CONTRACTS.md | KEEP | DONE |
+| Branding-Lint | KEEP | DONE |
+
+## 11. Daten/Schema
+
+| Aspekt | Status |
+|---|---|
+| SQLite als primäre DB | DONE (KEEP) |
+| PostgreSQL/pgvector | DONE (KEEP) |
+| Prisma Migration für workspace_artifacts | DONE |
+| Prisma Migration für agent_runs.turn_id | DONE |
+| Schema validiert | DONE |
 
 ---
 
-## Wellen-Plan
+## Endzustand-Checkliste
 
-### Welle 1 (P0 Repository): cloud-deployments/, docker/vex/, docker/nginx/, ungenutzte docker-compose files
-### Welle 2 (P0 Provider): huggingface, groq, litellm, localai, mistral, nvidiaNim, voyageAi, azureOpenAi aus Backend entfernen
-### Welle 3 (P0 Provider-UI): Entsprechende Frontend-Komponenten entfernen
-### Welle 4 (P0 @mintplex-labs): bree → node-cron, express-ws → ws evaluieren
-### Welle 5 (P1 Collector): anythingllm.com Downloads entfernen, Contracts definieren
-### Welle 6 (P1 Frontend): doppelte Libs, Polyfills, Provider-Options aufräumen
-### Welle 7 (P1 Daten): Schema bereinigen, Migrationen prüfen
+- [x] Alle verbleibenden LLM-Provider gehören zum Produkt (fireworks, anthropic, ollama, genericOpenAi, openAi, gemini, nvidiaNim, opencodeZen, xai, dockerModelRunner, modelRouter)
+- [x] Keine ungenutzten Provider mehr in der UI (groq, huggingface, litellm, localai, mistral, lmStudio, deepgram ausgeblendet/entfernt)
+- [x] Keine AnythingLLM-Laufzeitabhängigkeit mehr aktiv (epub2 Mintplex fork entfernt, @mintplex-labs packages WRAP)
+- [x] Keine generierten Dateien im Quellbaum (.sin-code, .legacy entfernt)
+- [x] Ein kanonisches yarn.lock (server/yarn.lock entfernt)
+- [x] Keine widersprüchlichen Docker-Pfade (cloud-deployments, docker/vex, docker/nginx, docker/supabase entfernt)
+- [x] Collector contracts dokumentiert
+- [x] Schema validiert und migriert
+- [x] Architecture/Dokumentation dem Code entsprechend (LEGACY-MATRIX, CONTRACTS)
