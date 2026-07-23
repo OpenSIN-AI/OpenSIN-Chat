@@ -93,3 +93,4 @@ frontend/public/embed/opensin-chat-widget.min.css
 
 # Graphify code graph output (generated, not source)
 graphify-out/
+.legacy/
