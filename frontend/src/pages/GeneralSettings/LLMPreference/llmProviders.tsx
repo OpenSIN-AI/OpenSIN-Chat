@@ -6,7 +6,6 @@ import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";
 import AnthropicLogo from "@/media/llmprovider/anthropic.png";
 import GeminiLogo from "@/media/llmprovider/gemini.png";
 import OllamaLogo from "@/media/llmprovider/ollama.png";
-import LMStudioLogo from "@/media/llmprovider/lmstudio.png";
 import FireworksAILogo from "@/media/llmprovider/fireworksai.jpeg";
 import XAILogo from "@/media/llmprovider/xai.png";
 import NvidiaNimLogo from "@/media/llmprovider/nvidia-nim.png";
@@ -17,7 +16,6 @@ import ModelRouterOptions from "@/components/LLMSelection/ModelRouterOptions";
 import OpenAiOptions from "@/components/LLMSelection/OpenAiOptions";
 import GenericOpenAiOptions from "@/components/LLMSelection/GenericOpenAiOptions";
 import AnthropicAiOptions from "@/components/LLMSelection/AnthropicAiOptions";
-import LMStudioOptions from "@/components/LLMSelection/LMStudioOptions";
 import GeminiLLMOptions from "@/components/LLMSelection/GeminiLLMOptions";
 import OllamaLLMOptions from "@/components/LLMSelection/OllamaLLMOptions";
 import FireworksAiOptions from "@/components/LLMSelection/FireworksAiOptions";
@@ -95,15 +93,6 @@ export const AVAILABLE_LLM_PROVIDERS: LLMProvider[] = [
     options: (settings: any) => <OllamaLLMOptions settings={settings} />,
     description: "Run LLMs locally on your own machine.",
     requiredConfig: ["OllamaLLMBasePath"],
-  },
-  {
-    name: "LM Studio",
-    value: "lmstudio",
-    logo: LMStudioLogo,
-    options: (settings: any) => <LMStudioOptions settings={settings} />,
-    description:
-      "Discover, download, and run thousands of cutting edge LLMs in a few clicks.",
-    requiredConfig: ["LMStudioBasePath"],
   },
   {
     name: "Fireworks AI",

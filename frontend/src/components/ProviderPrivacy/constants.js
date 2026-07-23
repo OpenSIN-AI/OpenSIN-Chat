@@ -8,7 +8,6 @@ import OllamaLogo from "@/media/llmprovider/ollama.png";
 import FireworksAILogo from "@/media/llmprovider/fireworksai.jpeg";
 import NvidiaNimLogo from "@/media/llmprovider/nvidia-nim.png";
 import OpencodeZenLogo from "@/media/llmprovider/opencode-zen.png";
-import LMStudioLogo from "@/media/llmprovider/lmstudio.png";
 import XAILogo from "@/media/llmprovider/xai.png";
 import LanceDbLogo from "@/media/vectordbs/lancedb.png";
 import ChromaLogo from "@/media/vectordbs/chroma.png";
@@ -45,13 +44,6 @@ const LLM_PROVIDER_PRIVACY_MAP = {
     ],
     policyUrl: "https://opencode.ai/docs/zen/",
     logo: OpencodeZenLogo,
-  },
-  lmstudio: {
-    name: "LMStudio",
-    description: [
-      "Your model and chats are only accessible on the server running LMStudio.",
-    ],
-    logo: LMStudioLogo,
   },
   ollama: {
     name: "Ollama",
@@ -131,13 +123,6 @@ const EMBEDDING_ENGINE_PROVIDER_PRIVACY_MAP = {
       "Your document text is embedded privately on the server running Ollama.",
     ],
     logo: OllamaLogo,
-  },
-  lmstudio: {
-    name: "LMStudio",
-    description: [
-      "Your document text is embedded privately on the server running LMStudio.",
-    ],
-    logo: LMStudioLogo,
   },
   "generic-openai": {
     name: "Generic OpenAI compatible service",

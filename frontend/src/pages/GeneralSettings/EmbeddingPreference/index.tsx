@@ -8,7 +8,6 @@ import OpenSINChatIcon from "@/media/logo/opensin-icon.svg";
 import OpenAiLogo from "@/media/llmprovider/openai.png";
 import GeminiAiLogo from "@/media/llmprovider/gemini.png";
 import OllamaLogo from "@/media/llmprovider/ollama.png";
-import LMStudioLogo from "@/media/llmprovider/lmstudio.png";
 import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";
 
 import PreLoader from "@/components/Preloader";
@@ -19,7 +18,6 @@ import OpenAiOptions from "@/components/EmbeddingSelection/OpenAiOptions";
 import GeminiOptions from "@/components/EmbeddingSelection/GeminiOptions";
 import NativeEmbeddingOptions from "@/components/EmbeddingSelection/NativeEmbeddingOptions";
 import OllamaEmbeddingOptions from "@/components/EmbeddingSelection/OllamaOptions";
-import LMStudioEmbeddingOptions from "@/components/EmbeddingSelection/LMStudioOptions";
 import GenericOpenAiEmbeddingOptions from "@/components/EmbeddingSelection/GenericOpenAiOptions";
 
 import EmbedderItem from "@/components/EmbeddingSelection/EmbedderItem";
@@ -70,16 +68,6 @@ const EMBEDDERS: Embedder[] = [
     logo: OllamaLogo,
     options: (settings: any) => <OllamaEmbeddingOptions settings={settings} />,
     description: "Run embedding models locally on your own machine.",
-  },
-  {
-    name: "LM Studio",
-    value: "lmstudio",
-    logo: LMStudioLogo,
-    options: (settings: any) => (
-      <LMStudioEmbeddingOptions settings={settings} />
-    ),
-    description:
-      "Discover, download, and run thousands of cutting edge LLMs in a few clicks.",
   },
   {
     name: "Generic OpenAI",
