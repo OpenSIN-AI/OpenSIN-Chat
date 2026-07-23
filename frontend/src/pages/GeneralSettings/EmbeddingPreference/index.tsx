@@ -7,13 +7,9 @@ import showToast from "@/utils/toast";
 import OpenSINChatIcon from "@/media/logo/opensin-icon.svg";
 import OpenAiLogo from "@/media/llmprovider/openai.png";
 import GeminiAiLogo from "@/media/llmprovider/gemini.png";
-import LocalAiLogo from "@/media/llmprovider/localai.png";
 import OllamaLogo from "@/media/llmprovider/ollama.png";
 import LMStudioLogo from "@/media/llmprovider/lmstudio.png";
-import VoyageAiLogo from "@/media/embeddingprovider/voyageai.png";
-import LiteLLMLogo from "@/media/llmprovider/litellm.png";
 import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";
-import MistralAiLogo from "@/media/llmprovider/mistral.jpeg";
 
 import PreLoader from "@/components/Preloader";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
@@ -21,14 +17,10 @@ import UnsavedChangesDialog from "@/components/UnsavedChangesDialog";
 import ChangeWarningModal from "@/components/ChangeWarning";
 import OpenAiOptions from "@/components/EmbeddingSelection/OpenAiOptions";
 import GeminiOptions from "@/components/EmbeddingSelection/GeminiOptions";
-import LocalAiOptions from "@/components/EmbeddingSelection/LocalAiOptions";
 import NativeEmbeddingOptions from "@/components/EmbeddingSelection/NativeEmbeddingOptions";
 import OllamaEmbeddingOptions from "@/components/EmbeddingSelection/OllamaOptions";
 import LMStudioEmbeddingOptions from "@/components/EmbeddingSelection/LMStudioOptions";
-import VoyageAiOptions from "@/components/EmbeddingSelection/VoyageAiOptions";
-import LiteLLMOptions from "@/components/EmbeddingSelection/LiteLLMOptions";
 import GenericOpenAiEmbeddingOptions from "@/components/EmbeddingSelection/GenericOpenAiOptions";
-import MistralAiOptions from "@/components/EmbeddingSelection/MistralAiOptions";
 
 import EmbedderItem from "@/components/EmbeddingSelection/EmbedderItem";
 import { CaretUpDown } from "@phosphor-icons/react/dist/csr/CaretUpDown";
@@ -73,13 +65,6 @@ const EMBEDDERS: Embedder[] = [
     description: "Run powerful embedding models from Google AI.",
   },
   {
-    name: "Local AI",
-    value: "localai",
-    logo: LocalAiLogo,
-    options: (settings: any) => <LocalAiOptions settings={settings} />,
-    description: "Run embedding models locally on your own machine.",
-  },
-  {
     name: "Ollama",
     value: "ollama",
     logo: OllamaLogo,
@@ -95,27 +80,6 @@ const EMBEDDERS: Embedder[] = [
     ),
     description:
       "Discover, download, and run thousands of cutting edge LLMs in a few clicks.",
-  },
-  {
-    name: "LiteLLM",
-    value: "litellm",
-    logo: LiteLLMLogo,
-    options: (settings: any) => <LiteLLMOptions settings={settings} />,
-    description: "Run powerful embedding models from LiteLLM.",
-  },
-  {
-    name: "Voyage AI",
-    value: "voyageai",
-    logo: VoyageAiLogo,
-    options: (settings: any) => <VoyageAiOptions settings={settings} />,
-    description: "Run powerful embedding models from Voyage AI.",
-  },
-  {
-    name: "Mistral AI",
-    value: "mistral",
-    logo: MistralAiLogo,
-    options: (settings: any) => <MistralAiOptions settings={settings} />,
-    description: "Run powerful embedding models from Mistral AI.",
   },
   {
     name: "Generic OpenAI",

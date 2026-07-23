@@ -191,6 +191,7 @@ export function FilesystemPanelBody({
         name: files[0].name,
       });
       let successCount = 0;
+      let attachedCount = 0;
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         setUploadProgress({ current: i, total: files.length, name: file.name });
@@ -203,6 +204,17 @@ export function FilesystemPanelBody({
           );
           if (res.ok) {
             successCount++;
+            if (scope === "workspace" && attachExternalFile) {
+              try {
+                await attachExternalFile(file);
+                attachedCount++;
+              } catch (error: unknown) {
+                showToast(
+                  `${file.name}: ${error instanceof Error ? error.message : t("sidebar.filesystem.contextFailed")}`,
+                  "error",
+                );
+              }
+            }
           } else {
             const data = await res.json().catch(() => ({}));
             showToast(
@@ -228,11 +240,21 @@ export function FilesystemPanelBody({
           "success",
         );
         browse(currentPath || "");
+        if (attachedCount > 0) {
+          showToast(t("sidebar.filesystem.addedAsContext"), "success");
+        }
       }
       setUploading(false);
       setUploadProgress({ current: 0, total: 0, name: "" });
     },
-    [browse, currentPath, t, apiPrefix],
+    [
+      apiPrefix,
+      attachExternalFile,
+      browse,
+      currentPath,
+      scope,
+      t,
+    ],
   );
 
   const handleDragEnter = useCallback((e: React.DragEvent) => {

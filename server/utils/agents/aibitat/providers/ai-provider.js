@@ -166,22 +166,6 @@ class Provider {
           apiKey: process.env.ANTHROPIC_API_KEY,
           ...config,
         });
-      case "groq":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: "https://api.groq.com/openai/v1",
-          },
-          apiKey: process.env.GROQ_API_KEY,
-          ...config,
-        });
-      case "mistral":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: "https://api.mistral.ai/v1",
-          },
-          apiKey: process.env.MISTRAL_API_KEY ?? null,
-          ...config,
-        });
       case "generic-openai":
         return new ChatOpenAI({
           configuration: {
@@ -233,22 +217,6 @@ class Provider {
           ...config,
         });
       }
-      case "localai":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: process.env.LOCAL_AI_BASE_PATH,
-          },
-          apiKey: process.env.LOCAL_AI_API_KEY ?? "not-used",
-          ...config,
-        });
-      case "litellm":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: process.env.LITE_LLM_BASE_PATH,
-          },
-          apiKey: process.env.LITE_LLM_API_KEY || "not-used",
-          ...config,
-        });
       case "nvidia-nim":
         return new ChatOpenAI({
           configuration: {

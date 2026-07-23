@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT
 "use strict";
 
-const { isFeatureEnabled } = require("../features");
-
 function getTTSProvider() {
   const provider = process.env.TTS_PROVIDER || "openai";
 
@@ -25,18 +23,6 @@ function getTTSProvider() {
     case "nvidia-nim": {
       const { NvidiaNimTTS } = require("./nvidiaNim");
       return new NvidiaNimTTS();
-    }
-
-    case "cvoice": {
-      if (!isFeatureEnabled("cvoiceTts")) {
-        throw new Error(
-          "cvoice TTS is disabled. Set ENABLE_CVOICE_TTS=true only after " +
-            "reviewing the provider, voice rights, and data-processing terms.",
-        );
-      }
-
-      const { CvoiceTTS } = require("./cvoice");
-      return new CvoiceTTS();
     }
 
     default:

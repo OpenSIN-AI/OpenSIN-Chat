@@ -77,7 +77,11 @@ export default function EmptyState({ workspace, handleSubmit, sendCommand, loadi
         />
 
         <div className="mt-6 flex flex-col gap-6">
-          <RecentNotebookSources workspace={workspace} onOpenSources={() => openSidebar("sources")} />
+          <RecentNotebookSources
+            workspace={workspace}
+            threadSlug={threadSlug}
+            onOpenSources={() => openSidebar("sources")}
+          />
           <NotebookQuickActions mode={notebookMode.modeId} onSelect={usePrompt} />
         </div>
 

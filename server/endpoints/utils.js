@@ -646,23 +646,11 @@ function getModelTag() {
     case "ollama":
       model = process.env.OLLAMA_MODEL_PREF;
       break;
-    case "groq":
-      model = process.env.GROQ_MODEL_PREF;
-      break;
-    case "localai":
-      model = process.env.LOCAL_AI_MODEL_PREF;
-      break;
-    case "mistral":
-      model = process.env.MISTRAL_MODEL_PREF;
-      break;
     case "generic-openai":
       model = process.env.GENERIC_OPEN_AI_MODEL_PREF;
       break;
     case "fireworksai":
       model = process.env.FIREWORKS_AI_LLM_MODEL_PREF;
-      break;
-    case "litellm":
-      model = process.env.LITE_LLM_MODEL_PREF;
       break;
     case "xai":
       model = process.env.XAI_LLM_MODEL_PREF;
@@ -678,9 +666,6 @@ function getModelTag() {
       break;
     case "opencode-zen":
       model = process.env.OPENCODE_ZEN_MODEL_PREF;
-      break;
-    case "huggingface":
-      model = null;
       break;
     default:
       model = "--";

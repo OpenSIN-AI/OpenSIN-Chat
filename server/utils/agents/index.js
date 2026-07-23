@@ -137,20 +137,6 @@ class AgentHandler {
         if (!process.env.OLLAMA_BASE_PATH)
           throw new Error("Ollama base path must be provided to use agents.");
         break;
-      case "groq":
-        if (!process.env.GROQ_API_KEY)
-          throw new Error("Groq API key must be provided to use agents.");
-        break;
-      case "localai":
-        if (!process.env.LOCAL_AI_BASE_PATH)
-          throw new Error(
-            "LocalAI must have a valid base path to use for the api.",
-          );
-        break;
-      case "mistral":
-        if (!process.env.MISTRAL_API_KEY)
-          throw new Error("Mistral API key must be provided to use agents.");
-        break;
       case "generic-openai":
         if (!process.env.GENERIC_OPEN_AI_BASE_PATH)
           throw new Error("API base path must be provided to use agents.");
@@ -159,12 +145,6 @@ class AgentHandler {
         if (!process.env.FIREWORKS_AI_LLM_API_KEY)
           throw new Error(
             "FireworksAI API Key must be provided to use agents.",
-          );
-        break;
-      case "litellm":
-        if (!process.env.LITE_LLM_BASE_PATH)
-          throw new Error(
-            "LiteLLM API base path and key must be provided to use agents.",
           );
         break;
       case "xai":
@@ -216,18 +196,10 @@ class AgentHandler {
         return process.env.LMSTUDIO_MODEL_PREF ?? null;
       case "ollama":
         return process.env.OLLAMA_MODEL_PREF ?? "llama3:latest";
-      case "groq":
-        return process.env.GROQ_MODEL_PREF ?? "llama3-70b-8192";
-      case "localai":
-        return process.env.LOCAL_AI_MODEL_PREF ?? null;
-      case "mistral":
-        return process.env.MISTRAL_MODEL_PREF ?? "mistral-medium";
       case "generic-openai":
         return process.env.GENERIC_OPEN_AI_MODEL_PREF ?? null;
       case "fireworksai":
         return process.env.FIREWORKS_AI_LLM_MODEL_PREF ?? null;
-      case "litellm":
-        return process.env.LITE_LLM_MODEL_PREF ?? null;
       case "xai":
         return process.env.XAI_LLM_MODEL_PREF ?? "grok-beta";
       case "nvidia-nim":
@@ -895,9 +867,7 @@ class AgentHandler {
           userId: this.invocation?.user_id || null,
           turnId: resp?.turnId || null,
           outputs: resp.outputs || [],
-        }).catch((err) =>
-          this.log(`Artifact creation failed: ${err.message}`),
-        );
+        }).catch((err) => this.log(`Artifact creation failed: ${err.message}`));
       }
 
       this.log(

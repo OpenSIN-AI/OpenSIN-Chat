@@ -5,11 +5,9 @@ import { useTranslation } from "react-i18next";
 import { useRef, useState, useEffect, useContext } from "react";
 import { createPortal } from "react-dom";
 import { useParams } from "react-router";
-import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import {
   ATTACHMENTS_PROCESSED_EVENT,
-  REMOVE_ATTACHMENT_EVENT,
   DndUploaderContext,
 } from "../../DnDWrapper";
 import { useTheme } from "@/hooks/useTheme";
@@ -59,18 +57,6 @@ export default function AttachItem({
   }, [files]);
 
   /**
-   * Handles the removal of an attachment from the parsed files
-   * and triggers a re-fetch of the parsed files.
-   * This function handles when the user clicks the X on an Attachment via the AttachmentManager
-   * so we need to sync the state in the ParsedFilesMenu picker here.
-   */
-  async function handleRemoveAttachment(e) {
-    const { document } = e.detail;
-    await Workspace.deleteParsedFiles(slug!, [document.id]);
-    refresh();
-  }
-
-  /**
    * Toggles the attach-source dropdown menu.
    * @param {MouseEvent} e - The click event.
    * @returns {void}
@@ -103,15 +89,10 @@ export default function AttachItem({
 
   useEffect(() => {
     window.addEventListener(ATTACHMENTS_PROCESSED_EVENT, refresh);
-    window.addEventListener(REMOVE_ATTACHMENT_EVENT, handleRemoveAttachment);
     return () => {
       window.removeEventListener(ATTACHMENTS_PROCESSED_EVENT, refresh);
-      window.removeEventListener(
-        REMOVE_ATTACHMENT_EVENT,
-        handleRemoveAttachment,
-      );
     };
-  }, [slug, threadSlug, refresh]);
+  }, [refresh]);
 
   return (
     <div className="relative flex items-center">

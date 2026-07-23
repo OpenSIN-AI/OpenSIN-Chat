@@ -19,7 +19,6 @@ const PROVIDER_DEFAULT_MODELS: Record<string, string[]> = {
   gemini: [],
   anthropic: [],
   lmstudio: [],
-  localai: [],
   ollama: [],
   fireworksai: [],
   "nvidia-nim": [
@@ -57,7 +56,6 @@ const PROVIDER_DEFAULT_MODELS: Record<string, string[]> = {
     "deepseek-v4-flash",
     "kimi-k2.6",
   ],
-  groq: [],
   "generic-openai": [],
   xai: ["grok-beta"],
 };

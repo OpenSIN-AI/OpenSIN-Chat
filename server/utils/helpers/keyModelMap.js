@@ -23,12 +23,8 @@ const KEY_MAPPING = {
   ],
   anthropic: ["anthropic_model_pref", "ANTHROPIC_MODEL_PREF"],
   gemini: ["gemini_llm_model_pref", "GEMINI_LLM_MODEL_PREF"],
-  groq: ["groq_model_pref", "GROQ_MODEL_PREF"],
-  mistral: ["mistral_model_pref", "MISTRAL_MODEL_PREF"],
   ollama: ["ollama_model_pref", "OLLAMA_MODEL_PREF"],
   lmstudio: ["lmstudio_model_pref", "LMSTUDIO_MODEL_PREF"],
-  localai: ["local_ai_model_pref", "LOCAL_AI_MODEL_PREF"],
-  litellm: ["lite_llm_model_pref", "LITE_LLM_MODEL_PREF"],
   "generic-openai": [
     "generic_open_ai_model_pref",
     "GENERIC_OPEN_AI_MODEL_PREF",
@@ -39,7 +35,6 @@ const KEY_MAPPING = {
     "docker_model_runner_llm_model_pref",
     "DOCKER_MODEL_RUNNER_LLM_MODEL_PREF",
   ],
-  huggingface: ["huggingface_model_pref"],
 };
 
 /**

@@ -46,6 +46,19 @@ function isPdfFile(file: File): boolean {
   );
 }
 
+function notifyPdfReady(attachment: Attachment, document: unknown) {
+  if (!isPdfFile(attachment.file)) return;
+  window.dispatchEvent(
+    new CustomEvent(PDF_UPLOADED_EVENT, {
+      detail: {
+        uid: attachment.uid,
+        fileName: attachment.file.name,
+        document,
+      },
+    }),
+  );
+}
+
 /**
  * File Attachment for automatic upload on the chat container page.
  * @typedef Attachment
@@ -172,6 +185,8 @@ export function DnDFileUploaderProvider({
     );
     if (!document?.location || !workspace?.slug) return;
     await Workspace.deleteAndUnembedFile(workspace.slug, document.location);
+    await mutateParsedFiles().catch(() => null);
+    window.dispatchEvent(new CustomEvent(ATTACHMENTS_PROCESSED_EVENT));
   }
 
   /**
@@ -439,6 +454,7 @@ export function DnDFileUploaderProvider({
             phase: null,
             progress: null,
           });
+          notifyPdfReady(attachment, file);
         })(),
       );
     }
@@ -495,9 +511,6 @@ export function DnDFileUploaderProvider({
     }
 
     setFiles((prev: Attachment[]) => [...prev, ...newAccepted]);
-    if (newAccepted.some((f) => isPdfFile(f.file))) {
-      window.dispatchEvent(new CustomEvent(PDF_UPLOADED_EVENT));
-    }
     embedEligibleAttachmentsRef.current(newAccepted);
   }, []);
 
@@ -530,9 +543,6 @@ export function DnDFileUploaderProvider({
           type: "upload" as const,
         };
     setFiles((prev: Attachment[]) => [...prev, attachment]);
-    if (isPdfFile(file)) {
-      window.dispatchEvent(new CustomEvent(PDF_UPLOADED_EVENT));
-    }
     if (!isImage) embedEligibleAttachmentsRef.current([attachment]);
     return uid;
   }, []);

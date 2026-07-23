@@ -15,6 +15,40 @@ interface WorkspaceDocument {
   updatedAt?: string;
 }
 
+function stableSourceId(
+  document: WorkspaceDocument,
+  metadata: Record<string, any>,
+): string {
+  const explicit =
+    document.docId ||
+    document.id ||
+    metadata.id ||
+    document.docpath ||
+    document.filename;
+  if (explicit !== undefined && explicit !== null && String(explicit).trim()) {
+    return String(explicit);
+  }
+
+  const fingerprint = [
+    document.title,
+    document.type,
+    document.createdAt,
+    document.updatedAt,
+    metadata.title,
+    metadata.url,
+    metadata.sourceUrl,
+    metadata.source,
+  ]
+    .map((value) => String(value || ""))
+    .join("|");
+  let hash = 2166136261;
+  for (let index = 0; index < fingerprint.length; index += 1) {
+    hash ^= fingerprint.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return `source-${(hash >>> 0).toString(36)}`;
+}
+
 function inferKind(document: WorkspaceDocument, metadata: Record<string, any>): NotebookSourceKind {
   const source = String(
     metadata.source || metadata.sourceUrl || metadata.url || document.docpath || document.filename || "",
@@ -63,7 +97,7 @@ export function workspaceDocumentToNotebookSource(document: WorkspaceDocument, n
   const metadata = safeJsonParse(document.metadata, {}) as Record<string, any>;
   const kind = inferKind(document, metadata);
   const uri = sourceUri(document, metadata);
-  const id = String(document.docId || document.id || metadata.id || document.docpath || document.filename || crypto.randomUUID());
+  const id = stableSourceId(document, metadata);
 
   return {
     id,

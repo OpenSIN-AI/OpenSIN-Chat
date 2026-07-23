@@ -30,8 +30,8 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
         message?: string;
       };
       if (!!workspace) {
+        await mutate(WORKSPACES_KEY);
         hideModal();
-        mutate(WORKSPACES_KEY);
         navigate(paths.workspace.chat(workspace.slug));
       } else {
         setError(message);

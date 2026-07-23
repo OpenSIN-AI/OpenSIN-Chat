@@ -135,27 +135,12 @@ function getLLMProvider({ provider = null, model = null } = {}) {
     case "lmstudio":
       const { LMStudioLLM } = require("../AiProviders/lmStudio");
       return new LMStudioLLM(embedder, model);
-    case "localai":
-      const { LocalAiLLM } = require("../AiProviders/localAi");
-      return new LocalAiLLM(embedder, model);
     case "ollama":
       const { OllamaAILLM } = require("../AiProviders/ollama");
       return new OllamaAILLM(embedder, model);
     case "fireworksai":
       const { FireworksAiLLM } = require("../AiProviders/fireworksAi");
       return new FireworksAiLLM(embedder, model);
-    case "mistral":
-      const { MistralLLM } = require("../AiProviders/mistral");
-      return new MistralLLM(embedder, model);
-    case "huggingface":
-      const { HuggingFaceLLM } = require("../AiProviders/huggingface");
-      return new HuggingFaceLLM(embedder, model);
-    case "groq":
-      const { GroqLLM } = require("../AiProviders/groq");
-      return new GroqLLM(embedder, model);
-    case "litellm":
-      const { LiteLLM } = require("../AiProviders/liteLLM");
-      return new LiteLLM(embedder, model);
     case "generic-openai":
       const { GenericOpenAiLLM } = require("../AiProviders/genericOpenAi");
       return new GenericOpenAiLLM(embedder, model);
@@ -197,14 +182,6 @@ function getEmbeddingEngineSelection() {
     case "openai":
       const { OpenAiEmbedder } = require("../EmbeddingEngines/openAi");
       return new OpenAiEmbedder();
-    case "azure":
-      const {
-        AzureOpenAiEmbedder,
-      } = require("../EmbeddingEngines/azureOpenAi");
-      return new AzureOpenAiEmbedder();
-    case "localai":
-      const { LocalAiEmbedder } = require("../EmbeddingEngines/localAi");
-      return new LocalAiEmbedder();
     case "ollama":
       const { OllamaEmbedder } = require("../EmbeddingEngines/ollama");
       return new OllamaEmbedder();
@@ -213,15 +190,6 @@ function getEmbeddingEngineSelection() {
     case "lmstudio":
       const { LMStudioEmbedder } = require("../EmbeddingEngines/lmstudio");
       return new LMStudioEmbedder();
-    case "voyageai":
-      const { VoyageAiEmbedder } = require("../EmbeddingEngines/voyageAi");
-      return new VoyageAiEmbedder();
-    case "litellm":
-      const { LiteLLMEmbedder } = require("../EmbeddingEngines/liteLLM");
-      return new LiteLLMEmbedder();
-    case "mistral":
-      const { MistralEmbedder } = require("../EmbeddingEngines/mistral");
-      return new MistralEmbedder();
     case "generic-openai":
       const {
         GenericOpenAiEmbedder,
@@ -254,24 +222,12 @@ function getLLMProviderClass({ provider = null } = {}) {
     case "lmstudio":
       const { LMStudioLLM } = require("../AiProviders/lmStudio");
       return LMStudioLLM;
-    case "localai":
-      const { LocalAiLLM } = require("../AiProviders/localAi");
-      return LocalAiLLM;
     case "ollama":
       const { OllamaAILLM } = require("../AiProviders/ollama");
       return OllamaAILLM;
     case "fireworksai":
       const { FireworksAiLLM } = require("../AiProviders/fireworksAi");
       return FireworksAiLLM;
-    case "mistral":
-      const { MistralLLM } = require("../AiProviders/mistral");
-      return MistralLLM;
-    case "huggingface":
-      const { HuggingFaceLLM } = require("../AiProviders/huggingface");
-      return HuggingFaceLLM;
-    case "groq":
-      const { GroqLLM } = require("../AiProviders/groq");
-      return GroqLLM;
     case "generic-openai":
       const { GenericOpenAiLLM } = require("../AiProviders/genericOpenAi");
       return GenericOpenAiLLM;
@@ -312,20 +268,10 @@ function getBaseLLMProviderModel({ provider = null } = {}) {
       return process.env.GEMINI_LLM_MODEL_PREF;
     case "lmstudio":
       return process.env.LMSTUDIO_MODEL_PREF;
-    case "localai":
-      return process.env.LOCAL_AI_MODEL_PREF;
     case "ollama":
       return process.env.OLLAMA_MODEL_PREF;
     case "fireworksai":
       return process.env.FIREWORKS_AI_LLM_MODEL_PREF;
-    case "mistral":
-      return process.env.MISTRAL_MODEL_PREF;
-    case "huggingface":
-      return null;
-    case "groq":
-      return process.env.GROQ_MODEL_PREF;
-    case "litellm":
-      return process.env.LITE_LLM_MODEL_PREF;
     case "generic-openai":
       return process.env.GENERIC_OPEN_AI_MODEL_PREF;
     case "xai":

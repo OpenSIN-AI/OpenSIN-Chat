@@ -16,6 +16,7 @@ import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass"
 import { useTranslation } from "react-i18next";
 import { Tooltip } from "react-tooltip";
 import ActiveWorkspaces from "./ActiveWorkspaces";
+import WorkspaceSwitcher from "./WorkspaceSwitcher";
 import NewWorkspaceModal, {
   useNewWorkspaceModal,
 } from "../Modals/NewWorkspace";
@@ -60,9 +61,11 @@ function clampSidebarWidth(width: number): number {
 function SidebarContent({
   onNavigate,
   onOpenSearch,
+  onClose,
 }: {
   onNavigate?: () => void;
   onOpenSearch?: () => void;
+  onClose?: () => void;
 }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -127,8 +130,18 @@ function SidebarContent({
             {APP_NAME}
           </span>
         </button>
-        <div className="ml-auto">
+        <div className="ml-auto flex shrink-0 items-center gap-1">
           <ThemeToggle />
+          {onClose && (
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label={t("sidebar.hideSidebar")}
+              className="flex h-9 w-9 items-center justify-center rounded-lg text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary"
+            >
+              <SidebarSimple size={16} weight="fill" aria-hidden="true" />
+            </button>
+          )}
         </div>
       </div>
       <div className="flex min-h-0 flex-1 flex-col px-2.5 pb-2">
@@ -161,10 +174,14 @@ function SidebarContent({
             type="button"
             onClick={showModal}
             aria-label={t("commandHub.actions.createNotebook")}
+            title={t("commandHub.actions.createNotebook")}
             className="flex h-7 w-7 items-center justify-center rounded-lg text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary"
           >
             <Plus size={13} aria-hidden="true" />
           </button>
+        </div>
+        <div className="mb-2 px-0.5">
+          <WorkspaceSwitcher onCreate={showModal} onNavigate={onNavigate} />
         </div>
         <div className="no-scroll min-h-0 flex-1 overflow-y-auto">
           <ActiveWorkspaces />
@@ -235,17 +252,10 @@ export default function Sidebar({
         className="codex-sidebar relative z-40 hidden w-[var(--sidebar-current-width)] shrink-0 overflow-hidden border-r border-white/[0.08] bg-theme-bg-sidebar transition-[width] duration-200 md:flex light:border-zinc-200/70"
       >
         <div className="flex h-full w-[var(--sidebar-width)] shrink-0 flex-col">
-          <div className="absolute right-2 top-2 z-50 opacity-70 transition-opacity hover:opacity-100 focus-within:opacity-100">
-            <button
-              type="button"
-              onClick={() => setShowSidebar(false)}
-              aria-label={t("sidebar.hideSidebar")}
-              className="flex h-9 w-9 items-center justify-center rounded-lg text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary"
-            >
-              <SidebarSimple size={16} weight="fill" aria-hidden="true" />
-            </button>
-          </div>
-          <SidebarContent onOpenSearch={onOpenSearch} />
+          <SidebarContent
+            onOpenSearch={onOpenSearch}
+            onClose={() => setShowSidebar(false)}
+          />
         </div>
         {showSidebar && (
           <div

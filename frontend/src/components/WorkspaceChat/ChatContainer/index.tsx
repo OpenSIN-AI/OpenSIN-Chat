@@ -16,11 +16,24 @@ import useNotebookMode from "@/features/notebook/useNotebookMode";
 import useSelectedCodeRunner from "@/features/code-runners/useSelectedCodeRunner";
 import { buildChatRequestContext } from "@/features/chat/chat-request-context";
 import usePendingSearchNavigation from "@/features/global-search/usePendingSearchNavigation";
+import useDocument from "@/hooks/useDocument";
 
 // Lazy: Sidebars host + icon rail; individual panels split further inside.
 const Sidebars = lazy(() => import("./Sidebars"));
 // PERF: EmptyState (+ PromptInput) only for empty threads.
 const EmptyState = lazy(() => import("./EmptyState"));
+
+function sourceKey(source: any): string {
+  return String(
+    source?.docId ||
+      source?.id ||
+      source?.docpath ||
+      source?.location ||
+      source?.filename ||
+      source?.title ||
+      "",
+  );
+}
 
 export default function ChatContainer({
   workspace,
@@ -97,6 +110,18 @@ function ChatContainerInner({
   regenerateAssistantMessage,
 }: any) {
   const { activeSidebar, openSidebar, closeSidebar } = useChatSidebar();
+  const { document: parsedContext } = useDocument(
+    workspace?.slug,
+    threadSlug,
+  );
+  const sourceCount = new Set(
+    [
+      ...(Array.isArray(workspace?.documents) ? workspace.documents : []),
+      ...(Array.isArray(parsedContext?.files) ? parsedContext.files : []),
+    ]
+      .map(sourceKey)
+      .filter(Boolean),
+  ).size;
 
   usePendingSearchNavigation({
     workspaceSlug: workspace?.slug,
@@ -110,7 +135,7 @@ function ChatContainerInner({
       activeSidebar={activeSidebar}
       openSidebar={openSidebar}
       closeSidebar={closeSidebar}
-      sourceCount={Array.isArray(workspace?.documents) ? workspace.documents.length : 0}
+      sourceCount={sourceCount}
     >
       <div
         style={{

@@ -11,14 +11,10 @@ const { getDockerModels } = require("../AiProviders/dockerModelRunner");
 const SUPPORT_CUSTOM_MODELS = [
   "openai",
   "anthropic",
-  "localai",
   "ollama",
   "fireworksai",
   "nvidia-nim",
-  "mistral",
   "lmstudio",
-  "litellm",
-  "groq",
   "xai",
   "gemini",
   "docker-model-runner",
@@ -44,20 +40,12 @@ async function getCustomModels(provider = "", apiKey = null, basePath = null) {
       return await openAiSttModels(apiKey);
     case "anthropic":
       return await anthropicModels(apiKey);
-    case "localai":
-      return await localAIModels(basePath, apiKey);
     case "ollama":
       return await ollamaAIModels(basePath, apiKey);
     case "fireworksai":
       return await getFireworksAiModels(apiKey);
-    case "mistral":
-      return await getMistralModels(apiKey);
     case "lmstudio":
       return await getLMStudioModels(basePath, apiKey);
-    case "litellm":
-      return await liteLLMModels(basePath, apiKey);
-    case "groq":
-      return await getGroqAiModels(apiKey);
     case "xai":
       return await getXAIModels(apiKey);
     case "nvidia-nim":
@@ -265,72 +253,6 @@ async function anthropicModels(_apiKey = null) {
   return { models, error: null };
 }
 
-async function localAIModels(basePath = null, apiKey = null) {
-  const { OpenAI: OpenAIApi } = require("openai");
-  const openai = new OpenAIApi({
-    baseURL: basePath || process.env.LOCAL_AI_BASE_PATH,
-    apiKey: apiKey || process.env.LOCAL_AI_API_KEY || "no-key-required",
-  });
-  const models = await openai.models
-    .list()
-    .then((results) => results.data)
-    .catch((e) => {
-      consoleLogger.error(`LocalAI:listModels`, e.message);
-      return [];
-    });
-
-  // Api Key was successful so lets save it for future uses
-  if (models.length > 0 && !!apiKey) process.env.LOCAL_AI_API_KEY = apiKey;
-  return { models, error: null };
-}
-
-async function getGroqAiModels(_apiKey = null) {
-  const { OpenAI: OpenAIApi } = require("openai");
-  const apiKey =
-    _apiKey === true
-      ? process.env.GROQ_API_KEY
-      : _apiKey || process.env.GROQ_API_KEY || null;
-  if (!apiKey) return { models: [], error: "No API key provided" };
-  const openai = new OpenAIApi({
-    baseURL: "https://api.groq.com/openai/v1",
-    apiKey,
-  });
-  const models = (
-    await openai.models
-      .list()
-      .then((results) => results.data)
-      .catch((e) => {
-        consoleLogger.error(`GroqAi:listModels`, e.message);
-        return [];
-      })
-  ).filter(
-    (model) => !model.id.includes("whisper") && !model.id.includes("tool-use"),
-  );
-
-  // Api Key was successful so lets save it for future uses
-  if (models.length > 0 && !!apiKey) process.env.GROQ_API_KEY = apiKey;
-  return { models, error: null };
-}
-
-async function liteLLMModels(basePath = null, apiKey = null) {
-  const { OpenAI: OpenAIApi } = require("openai");
-  const openai = new OpenAIApi({
-    baseURL: basePath || process.env.LITE_LLM_BASE_PATH,
-    apiKey: apiKey || process.env.LITE_LLM_API_KEY || "no-key-required",
-  });
-  const models = await openai.models
-    .list()
-    .then((results) => results.data)
-    .catch((e) => {
-      consoleLogger.error(`LiteLLM:listModels`, e.message);
-      return [];
-    });
-
-  // Api Key was successful so lets save it for future uses
-  if (models.length > 0 && !!apiKey) process.env.LITE_LLM_API_KEY = apiKey;
-  return { models, error: null };
-}
-
 async function getLMStudioModels(basePath = null, _apiKey = null) {
   try {
     const apiKey =
@@ -408,35 +330,6 @@ async function getFireworksAiModels(apiKey = null) {
       name: model.name,
     };
   });
-  return { models, error: null };
-}
-
-async function getMistralModels(apiKey = null) {
-  const { OpenAI: OpenAIApi } = require("openai");
-  const key = apiKey || process.env.MISTRAL_API_KEY || null;
-  if (!key) return { models: [], error: "No API key provided" };
-  let models;
-  try {
-    const openai = new OpenAIApi({
-      apiKey: key,
-      baseURL: "https://api.mistral.ai/v1",
-    });
-    models = await openai.models
-      .list()
-      .then((results) =>
-        results.data.filter((model) => !model.id.includes("embed")),
-      )
-      .catch((e) => {
-        consoleLogger.error(`Mistral:listModels`, e.message);
-        return [];
-      });
-  } catch (e) {
-    consoleLogger.error(`Mistral:listModels`, e.message);
-    return { models: [], error: null };
-  }
-
-  // Api Key was successful so lets save it for future uses
-  if (models.length > 0 && !!apiKey) process.env.MISTRAL_API_KEY = apiKey;
   return { models, error: null };
 }
 

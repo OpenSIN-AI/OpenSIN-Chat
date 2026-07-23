@@ -8,7 +8,6 @@ import GeminiLogo from "@/media/llmprovider/gemini.png";
 import OllamaLogo from "@/media/llmprovider/ollama.png";
 import LMStudioLogo from "@/media/llmprovider/lmstudio.png";
 import FireworksAILogo from "@/media/llmprovider/fireworksai.jpeg";
-import HuggingFaceLogo from "@/media/llmprovider/huggingface.png";
 import XAILogo from "@/media/llmprovider/xai.png";
 import NvidiaNimLogo from "@/media/llmprovider/nvidia-nim.png";
 import OpencodeZenLogo from "@/media/llmprovider/opencode-zen.png";
@@ -22,7 +21,6 @@ import LMStudioOptions from "@/components/LLMSelection/LMStudioOptions";
 import GeminiLLMOptions from "@/components/LLMSelection/GeminiLLMOptions";
 import OllamaLLMOptions from "@/components/LLMSelection/OllamaLLMOptions";
 import FireworksAiOptions from "@/components/LLMSelection/FireworksAiOptions";
-import HuggingFaceOptions from "@/components/LLMSelection/HuggingFaceOptions";
 import XAILLMOptions from "@/components/LLMSelection/XAiLLMOptions";
 import NvidiaNimOptions from "@/components/LLMSelection/NvidiaNimOptions";
 import OpencodeZenOptions from "@/components/LLMSelection/OpencodeZenOptions";
@@ -89,19 +87,6 @@ export const AVAILABLE_LLM_PROVIDERS: LLMProvider[] = [
     description:
       "Curated AI models gateway by OpenCode. Free models available (Nemotron, DeepSeek, MiMo).",
     requiredConfig: ["OpencodeZenBasePath"],
-  },
-  {
-    name: "HuggingFace",
-    value: "huggingface",
-    logo: HuggingFaceLogo,
-    options: (settings: any) => <HuggingFaceOptions settings={settings} />,
-    description:
-      "Access 150,000+ open-source LLMs and the world's AI community",
-    requiredConfig: [
-      "HuggingFaceLLMEndpoint",
-      "HuggingFaceLLMAccessToken",
-      "HuggingFaceLLMTokenLimit",
-    ],
   },
   {
     name: "Ollama",

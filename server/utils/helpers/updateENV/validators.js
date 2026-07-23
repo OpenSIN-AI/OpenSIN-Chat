@@ -86,7 +86,6 @@ function supportedTTSProvider(input = "") {
     "generic-openai",
     "kokoro",
     "nvidia-nim",
-    "cvoice",
   ].includes(input);
   return validSelection ? null : `${input} is not a valid TTS provider.`;
 }
@@ -117,13 +116,8 @@ function supportedLLM(input = "") {
     "anthropic",
     "gemini",
     "lmstudio",
-    "localai",
     "ollama",
     "fireworksai",
-    "mistral",
-    "huggingface",
-    "groq",
-    "litellm",
     "generic-openai",
     "xai",
     "opencode-zen",
@@ -157,14 +151,10 @@ function supportedEmbeddingModel(input = "") {
   const supported = [
     "openai",
     "gemini",
-    "localai",
     "native",
     "ollama",
     "lmstudio",
-    "voyageai",
-    "litellm",
     "generic-openai",
-    "mistral",
   ];
   return supported.includes(input)
     ? null

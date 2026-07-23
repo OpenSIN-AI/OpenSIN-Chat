@@ -13,7 +13,6 @@ class ContextWindowFinder {
     anthropic: "anthropic",
     openai: "openai",
     gemini: "vertex_ai-language-models",
-    groq: "groq",
     xai: "xai",
   };
   static expiryMs = 1000 * 60 * 60 * 24 * 3;

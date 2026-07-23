@@ -151,20 +151,12 @@ class AIbitat {
         return new Providers.LMStudioProvider({ model: config.model });
       case "ollama":
         return new Providers.OllamaProvider({ model: config.model });
-      case "groq":
-        return new Providers.GroqProvider({ model: config.model });
-      case "localai":
-        return new Providers.LocalAIProvider({ model: config.model });
-      case "mistral":
-        return new Providers.MistralProvider({ model: config.model });
       case "generic-openai":
         return new Providers.GenericOpenAiProvider({ model: config.model });
       case "fireworksai":
         return new Providers.FireworksAIProvider({ model: config.model });
       case "nvidia-nim":
         return new Providers.NvidiaNimProvider({ model: config.model });
-      case "litellm":
-        return new Providers.LiteLLMProvider({ model: config.model });
       case "xai":
         return new Providers.XAIProvider({ model: config.model });
       case "gemini":

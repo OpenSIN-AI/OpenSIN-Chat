@@ -9,15 +9,9 @@ import FireworksAILogo from "@/media/llmprovider/fireworksai.jpeg";
 import NvidiaNimLogo from "@/media/llmprovider/nvidia-nim.png";
 import OpencodeZenLogo from "@/media/llmprovider/opencode-zen.png";
 import LMStudioLogo from "@/media/llmprovider/lmstudio.png";
-import LocalAiLogo from "@/media/llmprovider/localai.png";
-import MistralLogo from "@/media/llmprovider/mistral.jpeg";
-import HuggingFaceLogo from "@/media/llmprovider/huggingface.png";
-import GroqLogo from "@/media/llmprovider/groq.png";
-import LiteLLMLogo from "@/media/llmprovider/litellm.png";
 import XAILogo from "@/media/llmprovider/xai.png";
 import LanceDbLogo from "@/media/vectordbs/lancedb.png";
 import ChromaLogo from "@/media/vectordbs/chroma.png";
-import VoyageAiLogo from "@/media/embeddingprovider/voyageai.png";
 import PGVectorLogo from "@/media/vectordbs/pgvector.png";
 import DockerModelRunnerLogo from "@/media/llmprovider/docker-model-runner.png";
 
@@ -59,13 +53,6 @@ const LLM_PROVIDER_PRIVACY_MAP = {
     ],
     logo: LMStudioLogo,
   },
-  localai: {
-    name: "LocalAI",
-    description: [
-      "Your model and chats are only accessible on the server running LocalAI.",
-    ],
-    logo: LocalAiLogo,
-  },
   ollama: {
     name: "Ollama",
     description: [
@@ -78,34 +65,12 @@ const LLM_PROVIDER_PRIVACY_MAP = {
     policyUrl: "https://fireworks.ai/privacy-policy",
     logo: FireworksAILogo,
   },
-  mistral: {
-    name: "Mistral",
-    policyUrl: "https://legal.mistral.ai/terms/privacy-policy",
-    logo: MistralLogo,
-  },
-  huggingface: {
-    name: "HuggingFace",
-    policyUrl: "https://huggingface.co/privacy",
-    logo: HuggingFaceLogo,
-  },
-  groq: {
-    name: "Groq",
-    policyUrl: "https://groq.com/privacy-policy/",
-    logo: GroqLogo,
-  },
   "generic-openai": {
     name: "Generic OpenAI compatible service",
     description: [
       "Data is shared according to the terms of service applicable with your generic endpoint provider.",
     ],
     logo: GenericOpenAiLogo,
-  },
-  litellm: {
-    name: "LiteLLM",
-    description: [
-      "Your model and chats are only accessible on the server running LiteLLM",
-    ],
-    logo: LiteLLMLogo,
   },
   xai: {
     name: "xAI",
@@ -160,13 +125,6 @@ const EMBEDDING_ENGINE_PROVIDER_PRIVACY_MAP = {
     policyUrl: "https://openai.com/policies/privacy-policy/",
     logo: OpenAiLogo,
   },
-  localai: {
-    name: "LocalAI",
-    description: [
-      "Your document text is embedded privately on the server running LocalAI.",
-    ],
-    logo: LocalAiLogo,
-  },
   ollama: {
     name: "Ollama",
     description: [
@@ -180,23 +138,6 @@ const EMBEDDING_ENGINE_PROVIDER_PRIVACY_MAP = {
       "Your document text is embedded privately on the server running LMStudio.",
     ],
     logo: LMStudioLogo,
-  },
-  voyageai: {
-    name: "Voyage AI",
-    policyUrl: "https://www.voyageai.com/privacy",
-    logo: VoyageAiLogo,
-  },
-  mistral: {
-    name: "Mistral AI",
-    policyUrl: "https://legal.mistral.ai/terms/privacy-policy",
-    logo: MistralLogo,
-  },
-  litellm: {
-    name: "LiteLLM",
-    description: [
-      "Your document text is only accessible on the server running LiteLLM and to the providers you configured in LiteLLM.",
-    ],
-    logo: LiteLLMLogo,
   },
   "generic-openai": {
     name: "Generic OpenAI compatible service",
