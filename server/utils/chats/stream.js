@@ -25,6 +25,7 @@ const { withInlineCitations } = require("./inlineCitations");
 const { validateSelectedSources } = require("../helpers/chat/selectedSources");
 const { buildRagScope } = require("../helpers/chat/ragScope");
 const { createArtifactsFromOutputs } = require("../artifacts/fromChat");
+const { executeRunner, isRunnerAvailable } = require("../codeRunners");
 
 const VALID_CHAT_MODE = ["automatic", "chat", "query"];
 
@@ -614,6 +615,115 @@ async function streamChatWithWorkspace(
       );
     }
     // --- ENDE ---
+
+    // --- Code Runner Execution ---
+    // When notebookMode is "code" and a codeRunnerId is set, execute the
+    // runner with the LLM response as the prompt. Stream output back via SSE.
+    if (notebookMode === "code" && codeRunnerId) {
+      if (!isRunnerAvailable(codeRunnerId)) {
+        writeResponseChunk(response, {
+          uuid,
+          type: "codeRunnerStatus",
+          runnerId: codeRunnerId,
+          status: "unavailable",
+          message: `Runner "${codeRunnerId}" ist auf diesem Server nicht installiert.`,
+          close: false,
+          error: false,
+        });
+      } else {
+        writeResponseChunk(response, {
+          uuid,
+          type: "codeRunnerStatus",
+          runnerId: codeRunnerId,
+          status: "running",
+          message: `Starte Runner "${codeRunnerId}"…`,
+          close: false,
+          error: false,
+        });
+
+        try {
+          const runnerResult = await executeRunner({
+            runnerId: codeRunnerId,
+            prompt: completeText,
+            workspaceId: workspace.id,
+            turnId,
+            onStdout: (chunk) => {
+              writeResponseChunk(response, {
+                uuid,
+                type: "codeRunnerOutput",
+                runnerId: codeRunnerId,
+                stream: "stdout",
+                content: chunk,
+                close: false,
+                error: false,
+              });
+            },
+            onStderr: (chunk) => {
+              writeResponseChunk(response, {
+                uuid,
+                type: "codeRunnerOutput",
+                runnerId: codeRunnerId,
+                stream: "stderr",
+                content: chunk,
+                close: false,
+                error: false,
+              });
+            },
+          });
+
+          writeResponseChunk(response, {
+            uuid,
+            type: "codeRunnerStatus",
+            runnerId: codeRunnerId,
+            status: runnerResult.ok ? "done" : "error",
+            exitCode: runnerResult.exitCode,
+            runnerError: runnerResult.error,
+            stdout: runnerResult.stdout.slice(-4096),
+            stderr: runnerResult.stderr.slice(-4096),
+            close: false,
+            error: false,
+          });
+
+          if (runnerResult.ok && runnerResult.stdout) {
+            createArtifactsFromOutputs({
+              workspaceId: workspace.id,
+              threadId: thread?.id || null,
+              chatId: chat.id,
+              userId: user?.id || null,
+              turnId,
+              outputs: [
+                {
+                  type: "text",
+                  title: `Runner-Ausgabe (${codeRunnerId})`,
+                  content: runnerResult.stdout,
+                  mimeType: "text/plain",
+                  metadata: {
+                    runnerId: codeRunnerId,
+                    exitCode: runnerResult.exitCode,
+                  },
+                },
+              ],
+            }).catch((err) =>
+              consoleLogger.error(
+                "[Chat] Runner artifact creation failed:",
+                err.message,
+              ),
+            );
+          }
+        } catch (runnerErr) {
+          writeResponseChunk(response, {
+            uuid,
+            type: "codeRunnerStatus",
+            runnerId: codeRunnerId,
+            status: "error",
+            runnerError: runnerErr.message,
+            close: false,
+            error: false,
+          });
+        }
+      }
+    }
+    // --- END Code Runner Execution ---
 
     writeResponseChunk(response, {
       uuid,

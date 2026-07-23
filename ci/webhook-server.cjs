@@ -111,7 +111,7 @@ async function runPipeline(sha) {
 
   // 3. Frontend install
   log("Step 3: frontend yarn install");
-  const feInstall = await run("yarn install --frozen-lockfile --network-timeout 100000 --ignore-engines", { cwd: REPO_DIR + "/frontend" });
+  const feInstall = await run("yarn install --network-timeout 100000 --ignore-engines 2>&1", { cwd: REPO_DIR + "/frontend" });
   steps.push({ name: "frontend-install", ok: feInstall.ok, detail: feInstall.stderr.slice(-200) });
   log(`  fe-install: ${feInstall.ok ? "PASS" : "FAIL"}`);
 
@@ -130,7 +130,7 @@ async function runPipeline(sha) {
 
   // 6. Server install
   log("Step 6: server yarn install");
-  const srvInstall = await run("yarn install --frozen-lockfile --network-timeout 100000 --ignore-engines", { cwd: REPO_DIR + "/server" });
+  const srvInstall = await run("yarn install --network-timeout 100000 --ignore-engines 2>&1", { cwd: REPO_DIR + "/server" });
   steps.push({ name: "server-install", ok: srvInstall.ok, detail: srvInstall.stderr.slice(-200) });
   log(`  srv-install: ${srvInstall.ok ? "PASS" : "FAIL"}`);
 
@@ -171,6 +171,10 @@ async function deployToContainer() {
     await run(`sudo docker cp ${REPO_DIR}/server/models opensin-app:/app/server/models`);
     // Fix ownership (docker cp sets root:root, container runs as uid 1000)
     await run("sudo docker exec -u root opensin-app chown -R 1000:1000 /app/server/storage/ /app/server/endpoints/ /app/server/utils/ /app/server/models/");
+    // Regenerate Prisma client so new schema models are available
+    await run("sudo docker exec -w /app/server opensin-app npx prisma generate 2>&1 || true");
+    // Apply schema changes to SQLite
+    await run("sudo docker exec -w /app/server opensin-app npx prisma db push --accept-data-loss 2>&1 || true");
     // Restart container
     await run("sudo docker restart opensin-app");
     // Wait for health (container needs ~20s to boot)

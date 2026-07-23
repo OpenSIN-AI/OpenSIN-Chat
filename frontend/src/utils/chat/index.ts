@@ -247,6 +247,76 @@ export default function handleChat(
     setLoadingResponse(false);
   }
 
+  // --- Code Runner Events ---
+  // Display runner status and output as ephemeral status messages in the chat.
+  if (type === "codeRunnerStatus") {
+    const runnerId = chatResult.runnerId || "runner";
+    const status = chatResult.status || "unknown";
+    const msg =
+      status === "running"
+        ? `▶ ${runnerId}: ${chatResult.message || "läuft…"}`
+        : status === "done"
+          ? `✓ ${runnerId}:fertig (exit ${chatResult.exitCode ?? 0})`
+          : status === "unavailable"
+            ? `⚠ ${runnerId}: ${chatResult.message || "nicht verfügbar"}`
+            : `✗ ${runnerId}: ${chatResult.runnerError || "Fehler"}`;
+
+    setChatHistory((prev: ChatHistoryItem[]) => [
+      ...prev.filter((m: ChatHistoryItem) => !!m.content),
+      {
+        uuid,
+        type: "statusResponse",
+        content: msg,
+        role: "assistant",
+        sources: [],
+        closed: true,
+        error: null,
+        animate: false,
+        pending: false,
+      },
+    ]);
+
+    if (status === "done" || status === "error" || status === "unavailable") {
+      setLoadingResponse(false);
+    }
+  }
+
+  if (type === "codeRunnerOutput") {
+    const stream = chatResult.stream || "stdout";
+    const content = chatResult.content || "";
+    const prefix = stream === "stderr" ? "⚠ " : "";
+    setChatHistory((prev: ChatHistoryItem[]) => {
+      const last = prev[prev.length - 1];
+      if (
+        last?.type === "statusResponse" &&
+        String(last.content || "").startsWith(
+          `${prefix}${chatResult.runnerId || ""}`,
+        )
+      ) {
+        const next = [...prev];
+        next[next.length - 1] = {
+          ...last,
+          content: String(last.content || "") + content,
+        };
+        return next;
+      }
+      return [
+        ...prev,
+        {
+          uuid,
+          type: "statusResponse",
+          content: `${prefix}${content}`,
+          role: "assistant",
+          sources: [],
+          closed: true,
+          error: null,
+          animate: false,
+          pending: false,
+        },
+      ];
+    });
+  }
+
   // Action Handling via special 'action' attribute on response.
   if (action === "reset_chat") setChatHistory([]);
 
