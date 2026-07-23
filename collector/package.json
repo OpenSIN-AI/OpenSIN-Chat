@@ -24,9 +24,7 @@
     "body-parser": "2.3.0",
     "cors": "^2.8.5",
     "dotenv": "17.4.2",
-    "epub2": "git+https://github.com/Mintplex-Labs/epub2-static.git#eb0a45cd41ac1a5b4c97766e9935d97583104d35",
     "express": "^5.2.1",
-    "fix-path": "^4.0.0",
     "html-to-text": "^10.0.0",
     "ignore": "^5.3.0",
     "js-tiktoken": "^1.0.8",
@@ -34,24 +32,20 @@
     "mammoth": "^1.6.0",
     "mbox-parser": "^1.0.1",
     "mime": "^3.0.0",
-    "moment": "^2.29.4",
     "node-html-parser": "^9.0.0",
     "node-xlsx": "^0.24.0",
-    "nodemailer": "^9.0.3",
     "officeparser": "7.2.3",
     "openai": "^6.47.0",
     "pdf-parse": "^1.1.1",
     "puppeteer": "~21.5.2",
     "sharp": "^0.33.5",
     "slugify": "^1.6.6",
-    "strip-ansi": "^7.1.2",
     "tesseract.js": "7.0.0",
     "turndown": "7.2.4",
     "uuid": "^14.0.1",
     "wavefile": "^11.0.0",
     "winston": "^3.13.0",
     "yauzl": "^3",
-    "youtube-transcript-plus": "^2.0.0",
     "youtubei.js": "^9.1.0"
   },
   "devDependencies": {
@@ -101,7 +95,6 @@
     "@grpc/grpc-js": ">=1.10.9",
     "bn.js": ">=4.12.3",
     "ws": ">=8.20.1",
-    "uuid": "^14.0.1",
-    "nodemailer": "^9.0.3"
+    "uuid": "^14.0.1"
   }
 }

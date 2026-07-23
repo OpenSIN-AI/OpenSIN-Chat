@@ -77,6 +77,7 @@ ALLOWED_FILES=(
   "server/utils/files/logo.js"         # legacy logo filename shim
   "server/utils/boot/ensureLLMProvider.js"  # legacy provider name in migration list
   "LEGACY-MATRIX.md"                   # legacy audit document referencing upstream
+  "collector/CONTRACTS.md"             # collector contracts doc referencing removed upstream dep
 
   # ── Operational docs (Docker setup instructions) ─────────
   "server/storage/README.md"           # docker exec commands reference upstream image
