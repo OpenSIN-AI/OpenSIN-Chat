@@ -77,6 +77,7 @@ export function SidebarToggleProvider({
         currentPath === paths.home() ||
         /^\/workspace\/[^\/]+$/.test(currentPath) ||
         /^\/workspace\/[^\/]+\/t\/[^\/]+$/.test(currentPath) ||
+        currentPath === paths.emailCenter() ||
         currentPath === paths.pdfAnalysis();
       setCanToggleSidebar(isVisible);
     }

@@ -21,6 +21,7 @@ import { SquaresFour } from "@phosphor-icons/react/dist/csr/SquaresFour";
 import { CalendarBlank } from "@phosphor-icons/react/dist/csr/CalendarBlank";
 import { GearSix } from "@phosphor-icons/react/dist/csr/GearSix";
 import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
+import { EnvelopeSimple } from "@phosphor-icons/react/dist/csr/EnvelopeSimple";
 import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { FullScreenLoader } from "@/components/Preloader";
@@ -135,6 +136,18 @@ function WorkspaceChatLayout() {
     }
 
     if (user?.role !== "default") {
+      items.push({
+        id: "email-center",
+        group: "quickActions",
+        label: t("sidebar.email", "E-Mails"),
+        description: t(
+          "commandHub.actions.emailCenterDescription",
+          "Postfach, Konten, Gruppen und E-Mail-Workflows öffnen",
+        ),
+        icon: <EnvelopeSimple size={17} />,
+        keywords: ["email", "mail", "gmail", "workflow", "postfach"],
+        perform: () => navigate(paths.emailCenter()),
+      });
       items.push({
         id: "scheduled",
         group: "quickActions",

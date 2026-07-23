@@ -29,11 +29,15 @@ module.exports.GmailMarkRead = {
                 type: "string",
                 description: "The Gmail thread ID to mark as read.",
               },
+              accountId: {
+                type: "string",
+                description: "Connected Gmail account identifier. Omit to use the default account.",
+              },
             },
             required: ["threadId"],
             additionalProperties: false,
           },
-          handler: async function ({ threadId }) {
+          handler: async function ({ threadId, accountId = null }) {
             try {
               this.super.handlerProps.log(`Using the gmail-mark-read tool.`);
 
@@ -59,7 +63,7 @@ module.exports.GmailMarkRead = {
                 `${this.caller}: Marking thread ${threadId} as read`,
               );
 
-              const result = await gmailLib.markRead(threadId);
+              const result = await gmailLib.markRead(threadId, accountId);
 
               if (!result.success) {
                 this.super.introspect(

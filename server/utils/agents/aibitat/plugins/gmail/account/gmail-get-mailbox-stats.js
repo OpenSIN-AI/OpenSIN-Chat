@@ -26,10 +26,15 @@ module.exports.GmailGetMailboxStats = {
           parameters: {
             $schema: "http://json-schema.org/draft-07/schema#",
             type: "object",
-            properties: {},
+            properties: {
+              accountId: {
+                type: "string",
+                description: "Connected Gmail account identifier. Omit to use the default account.",
+              },
+            },
             additionalProperties: false,
           },
-          handler: async function () {
+          handler: async function ({ accountId = null } = {}) {
             try {
               this.super.handlerProps.log(
                 `Using the gmail-get-mailbox-stats tool.`,
@@ -39,7 +44,7 @@ module.exports.GmailGetMailboxStats = {
                 `${this.caller}: Getting Gmail mailbox statistics`,
               );
 
-              const result = await gmailLib.getMailboxStats();
+              const result = await gmailLib.getMailboxStats(accountId);
 
               if (!result.success) {
                 this.super.introspect(

@@ -76,6 +76,10 @@ module.exports.GmailUpdateDraft = {
                 description:
                   "Array of absolute file paths to attach to the draft.",
               },
+              accountId: {
+                type: "string",
+                description: "Connected Gmail account identifier. Omit to use the default account.",
+              },
             },
             required: ["draftId", "to", "subject", "body"],
             additionalProperties: false,
@@ -89,6 +93,7 @@ module.exports.GmailUpdateDraft = {
             bcc,
             htmlBody,
             attachments,
+            accountId = null,
           }) {
             try {
               this.super.handlerProps.log(`Using the gmail-update-draft tool.`);
@@ -168,6 +173,7 @@ module.exports.GmailUpdateDraft = {
               if (cc) options.cc = cc;
               if (bcc) options.bcc = bcc;
               if (htmlBody) options.htmlBody = htmlBody;
+              if (accountId) options.accountId = accountId;
               if (preparedAttachments.length > 0) {
                 options.attachments = preparedAttachments;
               }

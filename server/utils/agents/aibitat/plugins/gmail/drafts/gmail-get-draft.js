@@ -29,11 +29,15 @@ module.exports.GmailGetDraft = {
                 type: "string",
                 description: "The Gmail draft ID to retrieve.",
               },
+              accountId: {
+                type: "string",
+                description: "Connected Gmail account identifier. Omit to use the default account.",
+              },
             },
             required: ["draftId"],
             additionalProperties: false,
           },
-          handler: async function ({ draftId }) {
+          handler: async function ({ draftId, accountId = null }) {
             try {
               this.super.handlerProps.log(`Using the gmail-get-draft tool.`);
 
@@ -45,7 +49,7 @@ module.exports.GmailGetDraft = {
                 `${this.caller}: Retrieving Gmail draft ${draftId}`,
               );
 
-              const result = await gmailLib.getDraft(draftId);
+              const result = await gmailLib.getDraft(draftId, accountId);
 
               if (!result.success) {
                 this.super.introspect(

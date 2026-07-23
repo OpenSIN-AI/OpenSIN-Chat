@@ -31,11 +31,15 @@ module.exports.GmailReadThread = {
                 type: "string",
                 description: "The Gmail thread ID to read.",
               },
+              accountId: {
+                type: "string",
+                description: "Connected Gmail account identifier. Omit to use the default account.",
+              },
             },
             required: ["threadId"],
             additionalProperties: false,
           },
-          handler: async function ({ threadId }) {
+          handler: async function ({ threadId, accountId = null }) {
             try {
               this.super.handlerProps.log(`Using the gmail-read-thread tool.`);
 
@@ -47,7 +51,7 @@ module.exports.GmailReadThread = {
                 `${this.caller}: Reading Gmail thread ${threadId}`,
               );
 
-              const result = await gmailLib.readThread(threadId);
+              const result = await gmailLib.readThread(threadId, accountId);
 
               if (!result.success) {
                 this.super.introspect(

@@ -83,6 +83,10 @@ module.exports.GmailSendEmail = {
                 description:
                   "Array of absolute file paths to attach to the email.",
               },
+              accountId: {
+                type: "string",
+                description: "Connected Gmail account identifier. Omit to use the default account.",
+              },
             },
             required: ["to", "subject", "body"],
             additionalProperties: false,
@@ -96,6 +100,7 @@ module.exports.GmailSendEmail = {
             htmlBody,
             replyTo,
             attachments,
+            accountId = null,
           }) {
             try {
               this.super.handlerProps.log(`Using the gmail-send-email tool.`);
@@ -196,6 +201,7 @@ module.exports.GmailSendEmail = {
               if (bcc) options.bcc = bcc;
               if (htmlBody) options.htmlBody = htmlBody;
               if (replyTo) options.replyTo = replyTo;
+              if (accountId) options.accountId = accountId;
               if (preparedAttachments.length > 0) {
                 options.attachments = preparedAttachments;
               }

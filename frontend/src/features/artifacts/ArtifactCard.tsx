@@ -3,6 +3,7 @@
 import { Download } from "@phosphor-icons/react/dist/csr/Download";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { Eye } from "@phosphor-icons/react/dist/csr/Eye";
+import { useTranslation } from "react-i18next";
 import ArtifactIcon from "./ArtifactIcon";
 import { artifactDownloadUrl } from "./api";
 import type { Artifact } from "./types";
@@ -18,6 +19,8 @@ export default function ArtifactCard({
   onPreview?: (artifact: Artifact) => void;
   onDelete?: (uuid: string) => void;
 }) {
+  const { t, i18n } = useTranslation();
+
   return (
     <div className="group flex items-start gap-3 rounded-xl border border-theme-border bg-theme-bg-primary p-3 transition-colors hover:border-theme-text-muted/30">
       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-theme-bg-tertiary text-theme-text-secondary">
@@ -37,7 +40,7 @@ export default function ArtifactCard({
           <span>{artifact.type}</span>
           {artifact.version > 1 && <span>v{artifact.version}</span>}
           <span>
-            {new Date(artifact.createdAt).toLocaleDateString("de-DE", {
+            {new Date(artifact.createdAt).toLocaleDateString(i18n.language, {
               day: "numeric",
               month: "short",
             })}
@@ -50,7 +53,7 @@ export default function ArtifactCard({
           <button
             type="button"
             onClick={() => onPreview(artifact)}
-            aria-label="Vorschau"
+            aria-label={t("artifacts.preview")}
             className="flex h-7 w-7 items-center justify-center rounded-lg text-theme-text-muted hover:bg-theme-bg-secondary hover:text-theme-text-primary"
           >
             <Eye size={14} />
@@ -59,7 +62,7 @@ export default function ArtifactCard({
         <a
           href={artifactDownloadUrl(workspaceSlug, artifact.uuid)}
           download={artifact.downloadName || undefined}
-          aria-label="Herunterladen"
+          aria-label={t("artifacts.download")}
           className="flex h-7 w-7 items-center justify-center rounded-lg text-theme-text-muted hover:bg-theme-bg-secondary hover:text-theme-text-primary"
         >
           <Download size={14} />
@@ -68,7 +71,7 @@ export default function ArtifactCard({
           <button
             type="button"
             onClick={() => onDelete(artifact.uuid)}
-            aria-label="Löschen"
+            aria-label={t("artifacts.delete")}
             className="flex h-7 w-7 items-center justify-center rounded-lg text-theme-text-muted hover:bg-red-500/10 hover:text-red-400"
           >
             <Trash size={14} />

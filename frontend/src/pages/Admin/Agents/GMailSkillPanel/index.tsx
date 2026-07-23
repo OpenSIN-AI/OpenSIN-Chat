@@ -55,14 +55,12 @@ export default function GMailSkillPanel({
   const [loading, setLoading] = useState(true);
   const [deploymentId, setDeploymentId] = useState("");
   const [apiKey, setApiKey] = useState("");
-  const [isMultiUserMode, setIsMultiUserMode] = useState(false);
   const [configDefaultExpanded, setConfigDefaultExpanded] = useState(true);
   const prevHasChanges = useRef(hasChanges);
   const skillCategories = getGmailSkills(t);
 
   const {
     disabledSkills: swrDisabledSkills,
-    isMultiUserMode: swrIsMultiUserMode,
     config: swrConfig,
     isLoading: swrLoading,
     refresh,
@@ -72,7 +70,6 @@ export default function GMailSkillPanel({
   useEffect(() => {
     if (!swrLoading) {
       setDisabledSkills(swrDisabledSkills);
-      setIsMultiUserMode(swrIsMultiUserMode);
       if (swrConfig) {
         const config = swrConfig as { deploymentId?: string; apiKey?: string };
         const loadedDeploymentId = config.deploymentId || "";
@@ -83,7 +80,7 @@ export default function GMailSkillPanel({
       }
       setLoading(false);
     }
-  }, [swrLoading, swrDisabledSkills, swrIsMultiUserMode, swrConfig]);
+  }, [swrLoading, swrDisabledSkills, swrConfig]);
 
   useEffect(() => {
     if (prevHasChanges.current === true && hasChanges === false) {
@@ -120,19 +117,25 @@ export default function GMailSkillPanel({
           <Toggle
             size="lg"
             enabled={enabled}
-            disabled={disabled || isMultiUserMode}
+            disabled={disabled}
             onChange={() => toggleSkill(skill)}
           />
         </div>
 
-        {isMultiUserMode && (
-          <div className="flex items-center gap-x-2 p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
-            <Warning size={20} className="text-yellow-500 shrink-0" />
-            <p className="text-yellow-500 text-xs">
-              {t("agent.skill.gmail.multiUserWarning")}
+        <Link
+          to={paths.emailCenter()}
+          className="flex items-center justify-between gap-3 rounded-lg border border-theme-sidebar-border/60 bg-theme-bg-secondary/40 p-3 transition-colors hover:bg-theme-bg-secondary"
+        >
+          <div>
+            <p className="text-sm font-semibold text-theme-text-primary">
+              E-Mail Zentrale öffnen
+            </p>
+            <p className="mt-1 text-xs leading-5 text-theme-text-secondary">
+              Mehrere Gmail-Konten, Postfach, Gruppen und KI-Workflows zentral verwalten.
             </p>
           </div>
-        )}
+          <span className="shrink-0 text-lg text-theme-text-secondary">→</span>
+        </Link>
 
         <p className="text-theme-text-secondary text-opacity-60 text-xs font-medium">
           <Trans
@@ -149,7 +152,7 @@ export default function GMailSkillPanel({
           />
         </p>
 
-        {enabled && !isMultiUserMode && (
+        {enabled && (
           <>
             <HiddenFormInputs
               disabledSkills={disabledSkills}

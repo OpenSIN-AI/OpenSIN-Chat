@@ -5,9 +5,7 @@ import { Tooltip } from "react-tooltip";
 import { Eye } from "@phosphor-icons/react/dist/csr/Eye";
 import { Database } from "@phosphor-icons/react/dist/csr/Database";
 import { Newspaper } from "@phosphor-icons/react/dist/csr/Newspaper";
-import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
 import { FilePdf } from "@phosphor-icons/react/dist/csr/FilePdf";
-import { Notepad } from "@phosphor-icons/react/dist/csr/Notepad";
 import { Broadcast } from "@phosphor-icons/react/dist/csr/Broadcast";
 
 import { useChatSidebar } from "../ChatSidebar";
@@ -39,22 +37,10 @@ export default function RightSidebarIconBar() {
       action: () => toggleSidebar("political"),
     },
     {
-      id: "sources",
-      icon: BookOpen,
-      label: t("right_sidebar.icon_sources", "Quellen"),
-      action: () => toggleSidebar("sources"),
-    },
-    {
       id: "pdf-analysis",
       icon: FilePdf,
       label: t("right_sidebar.icon_pdf_analysis", "PDF-Analyse"),
       action: () => toggleSidebar("pdf-analysis"),
-    },
-    {
-      id: "notepad",
-      icon: Notepad,
-      label: t("right_sidebar.icon_notepad", "Notizblock"),
-      action: () => toggleSidebar("notepad"),
     },
   ];
 
@@ -109,7 +95,7 @@ export default function RightSidebarIconBar() {
   return (
     <nav
       aria-label={t("common.rightSidebar")}
-      className="hidden h-full w-12 flex-shrink-0 flex-col items-center gap-0.5 overflow-y-auto border-l border-white/[0.08] bg-theme-bg-sidebar py-2.5 md:flex light:border-zinc-200/70"
+      className="mt-14 hidden h-[calc(100%_-_3.5rem)] w-12 flex-shrink-0 flex-col items-center gap-0.5 overflow-y-auto border-l border-t border-white/[0.08] bg-theme-bg-sidebar px-1 py-2.5 md:flex light:border-zinc-200/70"
     >
       {icons.map(renderIcon)}
       <div className="my-1.5 h-px w-5 bg-theme-modal-border" aria-hidden />

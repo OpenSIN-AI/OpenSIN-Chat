@@ -15,7 +15,7 @@ function googleAgentSkillEndpoints(app) {
 
   app.get(
     "/admin/agent-skills/gmail/status",
-    [validatedRequest, isSingleUserMode],
+    [validatedRequest],
     async (_request, response) => {
       try {
         const config = await GmailBridge.getConfig();
@@ -32,6 +32,8 @@ function googleAgentSkillEndpoints(app) {
         return response.status(200).json({
           success: true,
           isConfigured,
+          accountCount: Array.isArray(config.accounts) ? config.accounts.length : 0,
+          defaultAccountId: config.defaultAccountId || "",
           config: safeConfig,
         });
       } catch (e) {

@@ -5470,6 +5470,16 @@ const TRANSLATIONS = {
     voiceHelp1: "Stimmmodell-Bezeichner. Zum Beispiel:",
     voiceHelp2: ".",
   },
+  artifacts: {
+    result: "Ergebnis",
+    results: "{{count}} Ergebnisse",
+    preview: "Vorschau",
+    download: "Herunterladen",
+    delete: "Löschen",
+    close: "Schließen",
+    noPreview: "Keine Vorschau verfügbar",
+    downloadFile: "Datei herunterladen",
+  },
   pdfPreview: {
     loadError: "PDF konnte nicht geladen werden",
     openInNewTab: "In neuem Tab öffnen",

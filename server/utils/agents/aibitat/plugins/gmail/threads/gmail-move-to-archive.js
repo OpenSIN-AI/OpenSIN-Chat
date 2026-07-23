@@ -29,11 +29,15 @@ module.exports.GmailMoveToArchive = {
                 type: "string",
                 description: "The Gmail thread ID to archive.",
               },
+              accountId: {
+                type: "string",
+                description: "Connected Gmail account identifier. Omit to use the default account.",
+              },
             },
             required: ["threadId"],
             additionalProperties: false,
           },
-          handler: async function ({ threadId }) {
+          handler: async function ({ threadId, accountId = null }) {
             try {
               this.super.handlerProps.log(
                 `Using the gmail-move-to-archive tool.`,
@@ -61,7 +65,7 @@ module.exports.GmailMoveToArchive = {
                 `${this.caller}: Archiving thread ${threadId}`,
               );
 
-              const result = await gmailLib.moveToArchive(threadId);
+              const result = await gmailLib.moveToArchive(threadId, accountId);
 
               if (!result.success) {
                 this.super.introspect(

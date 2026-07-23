@@ -29,11 +29,15 @@ module.exports.GmailDeleteDraft = {
                 type: "string",
                 description: "The Gmail draft ID to delete.",
               },
+              accountId: {
+                type: "string",
+                description: "Connected Gmail account identifier. Omit to use the default account.",
+              },
             },
             required: ["draftId"],
             additionalProperties: false,
           },
-          handler: async function ({ draftId }) {
+          handler: async function ({ draftId, accountId = null }) {
             try {
               this.super.handlerProps.log(`Using the gmail-delete-draft tool.`);
 
@@ -59,7 +63,7 @@ module.exports.GmailDeleteDraft = {
                 `${this.caller}: Deleting Gmail draft ${draftId}`,
               );
 
-              const result = await gmailLib.deleteDraft(draftId);
+              const result = await gmailLib.deleteDraft(draftId, accountId);
 
               if (!result.success) {
                 this.super.introspect(

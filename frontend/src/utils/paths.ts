@@ -212,6 +212,9 @@ export default {
       return "/settings/terminal";
     },
   },
+  emailCenter: () => {
+    return "/mail";
+  },
   pdfAnalysis: () => {
     return "/pdf-analysis";
   },

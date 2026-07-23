@@ -30,11 +30,15 @@ module.exports.GmailSendDraft = {
                 type: "string",
                 description: "The Gmail draft ID to send.",
               },
+              accountId: {
+                type: "string",
+                description: "Connected Gmail account identifier. Omit to use the default account.",
+              },
             },
             required: ["draftId"],
             additionalProperties: false,
           },
-          handler: async function ({ draftId }) {
+          handler: async function ({ draftId, accountId = null }) {
             try {
               this.super.handlerProps.log(`Using the gmail-send-draft tool.`);
 
@@ -60,7 +64,7 @@ module.exports.GmailSendDraft = {
                 `${this.caller}: Sending Gmail draft ${draftId}`,
               );
 
-              const result = await gmailLib.sendDraft(draftId);
+              const result = await gmailLib.sendDraft(draftId, accountId);
 
               if (!result.success) {
                 this.super.introspect(

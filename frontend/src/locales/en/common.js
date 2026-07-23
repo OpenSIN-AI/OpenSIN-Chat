@@ -5349,6 +5349,16 @@ const TRANSLATIONS = {
     voiceHelp1: "Voice model identifier. For example:",
     voiceHelp2: ".",
   },
+  artifacts: {
+    result: "Result",
+    results: "{{count}} results",
+    preview: "Preview",
+    download: "Download",
+    delete: "Delete",
+    close: "Close",
+    noPreview: "No preview available",
+    downloadFile: "Download file",
+  },
   pdfPreview: {
     loadError: "PDF could not be loaded",
     openInNewTab: "Open in new tab",

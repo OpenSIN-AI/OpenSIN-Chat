@@ -79,6 +79,10 @@ module.exports.GmailCreateDraft = {
                 description:
                   "Array of absolute file paths to attach to the draft.",
               },
+              accountId: {
+                type: "string",
+                description: "Connected Gmail account identifier. Omit to use the default account.",
+              },
             },
             required: ["to", "subject", "body"],
             additionalProperties: false,
@@ -91,6 +95,7 @@ module.exports.GmailCreateDraft = {
             bcc,
             htmlBody,
             attachments,
+            accountId = null,
           }) {
             try {
               this.super.handlerProps.log(`Using the gmail-create-draft tool.`);
@@ -169,6 +174,7 @@ module.exports.GmailCreateDraft = {
               if (cc) options.cc = cc;
               if (bcc) options.bcc = bcc;
               if (htmlBody) options.htmlBody = htmlBody;
+              if (accountId) options.accountId = accountId;
               if (preparedAttachments.length > 0) {
                 options.attachments = preparedAttachments;
               }

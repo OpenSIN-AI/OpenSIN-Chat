@@ -452,6 +452,14 @@ const router = createBrowserRouter([
         },
       },
       {
+        path: "/mail",
+        lazy: async () => {
+          const { default: EmailCenterPage } =
+            await import("@/pages/EmailCenter");
+          return { element: <ManagerRoute Component={EmailCenterPage} /> };
+        },
+      },
+      {
         path: "/pdf-analysis",
         lazy: async () => {
           const { default: PdfAnalysisPage } =

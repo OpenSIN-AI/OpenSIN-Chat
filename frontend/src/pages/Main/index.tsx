@@ -16,6 +16,7 @@ import { SquaresFour } from "@phosphor-icons/react/dist/csr/SquaresFour";
 import { GearSix } from "@phosphor-icons/react/dist/csr/GearSix";
 import { CalendarBlank } from "@phosphor-icons/react/dist/csr/CalendarBlank";
 import { Wrench } from "@phosphor-icons/react/dist/csr/Wrench";
+import { EnvelopeSimple } from "@phosphor-icons/react/dist/csr/EnvelopeSimple";
 import type { CommandItem } from "@/components/Workspace/CommandPalette/CommandPalette";
 
 // PERF (CEO): left workspace rail (threads/footer) off the auth→home critical path.
@@ -102,6 +103,18 @@ function MainLayout() {
     ];
 
     if (user?.role !== "default") {
+      items.push({
+        id: "email-center",
+        group: "navigation",
+        label: t("sidebar.email", "E-Mails"),
+        description: t(
+          "commandHub.actions.emailCenterDescription",
+          "Postfach, Konten, Gruppen und E-Mail-Workflows öffnen",
+        ),
+        icon: <EnvelopeSimple size={17} />,
+        keywords: ["email", "mail", "gmail", "workflow", "postfach"],
+        perform: () => navigate(paths.emailCenter()),
+      });
       items.push({
         id: "agent-skills",
         group: "navigation",

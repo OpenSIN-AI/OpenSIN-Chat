@@ -29,11 +29,15 @@ module.exports.GmailMoveToTrash = {
                 type: "string",
                 description: "The Gmail thread ID to move to trash.",
               },
+              accountId: {
+                type: "string",
+                description: "Connected Gmail account identifier. Omit to use the default account.",
+              },
             },
             required: ["threadId"],
             additionalProperties: false,
           },
-          handler: async function ({ threadId }) {
+          handler: async function ({ threadId, accountId = null }) {
             try {
               this.super.handlerProps.log(
                 `Using the gmail-move-to-trash tool.`,
@@ -61,7 +65,7 @@ module.exports.GmailMoveToTrash = {
                 `${this.caller}: Moving thread ${threadId} to trash`,
               );
 
-              const result = await gmailLib.moveToTrash(threadId);
+              const result = await gmailLib.moveToTrash(threadId, accountId);
 
               if (!result.success) {
                 this.super.introspect(

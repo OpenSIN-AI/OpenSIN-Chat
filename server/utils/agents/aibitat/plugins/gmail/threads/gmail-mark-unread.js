@@ -29,11 +29,15 @@ module.exports.GmailMarkUnread = {
                 type: "string",
                 description: "The Gmail thread ID to mark as unread.",
               },
+              accountId: {
+                type: "string",
+                description: "Connected Gmail account identifier. Omit to use the default account.",
+              },
             },
             required: ["threadId"],
             additionalProperties: false,
           },
-          handler: async function ({ threadId }) {
+          handler: async function ({ threadId, accountId = null }) {
             try {
               this.super.handlerProps.log(`Using the gmail-mark-unread tool.`);
 
@@ -59,7 +63,7 @@ module.exports.GmailMarkUnread = {
                 `${this.caller}: Marking thread ${threadId} as unread`,
               );
 
-              const result = await gmailLib.markUnread(threadId);
+              const result = await gmailLib.markUnread(threadId, accountId);
 
               if (!result.success) {
                 this.super.introspect(

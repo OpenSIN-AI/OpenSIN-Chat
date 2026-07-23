@@ -13,6 +13,34 @@ const { ScheduledJobRun } = require("../models/scheduledJobRun.js");
 /** Status of the scheduled job run @type {'success' | 'failed' | 'timed_out' | 'not_found' | 'killed' | undefined} */
 let status;
 let runId = null;
+const EMAIL_WORKFLOW_MARKER = "[[OPENSIN_EMAIL_WORKFLOW:";
+
+function isSilentEmailResult(job, text) {
+  if (!job?.prompt?.startsWith(EMAIL_WORKFLOW_MARKER)) return false;
+  return String(text || "")
+    .trim()
+    .toLowerCase()
+    .includes("keine neue passende e-mail");
+}
+
+async function promptWithEmailHistory(job) {
+  if (!job?.prompt?.startsWith(EMAIL_WORKFLOW_MARKER)) return job.prompt;
+
+  const previousRuns = await ScheduledJobRun.where(
+    { jobId: Number(job.id), status: "completed" },
+    20,
+    { startedAt: "desc" },
+  );
+  const previousResults = previousRuns
+    .map((run) => safeJsonParse(run.result, null)?.text)
+    .filter((text) => typeof text === "string" && text.trim())
+    .map((text) => text.trim())
+    .join("\n---\n")
+    .slice(0, 12_000);
+
+  if (!previousResults) return job.prompt;
+  return `${job.prompt}\n\nBEREITS BEARBEITETE VERLÄUFE AUS FRÜHEREN LÄUFEN\nDie folgenden Ergebnisse dienen ausschließlich der Deduplizierung. Verarbeite keine dort genannten Thread-IDs erneut, außer die E-Mail enthält seitdem eine neue Nachricht.\n${previousResults}`;
+}
 
 process.on("SIGTERM", async () => {
   status = "killed";
@@ -63,11 +91,12 @@ process.on("message", async (payload) => {
     );
     await ScheduledJob.updateRunTimestamps(job.id);
     const { handler, thoughts, toolCalls, state } = agentActionCb();
+    const executionPrompt = await promptWithEmailHistory(job);
 
     const { EphemeralAgentHandler } = require("../utils/agents/ephemeral.js");
     const agentHandler = await new EphemeralAgentHandler({
       uuid: uuidv4(),
-      prompt: job.prompt,
+      prompt: executionPrompt,
     }).init();
 
     // Tool overrides control which tools the agent can use:
@@ -132,7 +161,11 @@ process.on("message", async (payload) => {
       },
     });
     log(`Scheduled job "${job.name}" completed in ${duration}ms)`);
-    await sendWebPushNotification(job, runId, state.textResponse, log);
+    if (!isSilentEmailResult(job, state.textResponse)) {
+      await sendWebPushNotification(job, runId, state.textResponse, log);
+    } else {
+      log(`Email workflow "${job.name}" found no match; suppressing notification`);
+    }
   } catch (error) {
     if (status === "killed") {
       // SIGTERM handler already set status to "killed" and called

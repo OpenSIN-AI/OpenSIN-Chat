@@ -51,11 +51,15 @@ module.exports.GmailGetInbox = {
                   "Optional maximum number of results to return (1-50). Defaults to 10.",
                 default: 10,
               },
+              accountId: {
+                type: "string",
+                description: "Connected Gmail account identifier. Omit to use the default account.",
+              },
             },
             required: [],
             additionalProperties: false,
           },
-          handler: async function ({ query = "", limit = 10 }) {
+          handler: async function ({ query = "", limit = 10, accountId = null }) {
             try {
               this.super.handlerProps.log(`Using the gmail-get-inbox tool.`);
               this.super.introspect(
@@ -64,7 +68,7 @@ module.exports.GmailGetInbox = {
 
               let searchQuery = `is:inbox`;
               if (query) searchQuery += ` ${query}`;
-              const result = await gmailLib.search(searchQuery, limit);
+              const result = await gmailLib.search(searchQuery, limit, 0, accountId);
 
               if (!result.success) {
                 this.super.introspect(

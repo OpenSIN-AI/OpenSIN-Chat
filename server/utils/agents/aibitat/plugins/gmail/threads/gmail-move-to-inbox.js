@@ -29,11 +29,15 @@ module.exports.GmailMoveToInbox = {
                 type: "string",
                 description: "The Gmail thread ID to move to inbox.",
               },
+              accountId: {
+                type: "string",
+                description: "Connected Gmail account identifier. Omit to use the default account.",
+              },
             },
             required: ["threadId"],
             additionalProperties: false,
           },
-          handler: async function ({ threadId }) {
+          handler: async function ({ threadId, accountId = null }) {
             try {
               this.super.handlerProps.log(
                 `Using the gmail-move-to-inbox tool.`,
@@ -61,7 +65,7 @@ module.exports.GmailMoveToInbox = {
                 `${this.caller}: Moving thread ${threadId} to inbox`,
               );
 
-              const result = await gmailLib.moveToInbox(threadId);
+              const result = await gmailLib.moveToInbox(threadId, accountId);
 
               if (!result.success) {
                 this.super.introspect(

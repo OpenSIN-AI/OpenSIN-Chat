@@ -1,7 +1,12 @@
+// SPDX-License-Identifier: MIT
 const fs = require("fs");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
-const { extForType, MAX_ARTIFACT_SIZE_BYTES } = require("./types");
+const {
+  extForType,
+  extForMime,
+  MAX_ARTIFACT_SIZE_BYTES,
+} = require("./types");
 const { safeStringifyJson } = require("./json");
 
 const ARTIFACT_STORAGE_DIR = path.join(
@@ -16,20 +21,28 @@ function ensureStorageDir() {
   return ARTIFACT_STORAGE_DIR;
 }
 
-function buildStoragePath(workspaceId, type, uuid) {
-  const ext = extForType(type);
+function buildStoragePath(workspaceId, type, uuid, mimeType = null) {
+  const ext = extForMime(mimeType) || extForType(type);
   return path.join(ARTIFACT_STORAGE_DIR, String(workspaceId), `${uuid}.${ext}`);
 }
 
 function assertSafePath(targetPath) {
+  if (typeof targetPath !== "string" || targetPath.length === 0) {
+    throw new Error("Artifact storage path is required");
+  }
+
+  const storageRoot = path.resolve(ARTIFACT_STORAGE_DIR);
   const resolved = path.resolve(targetPath);
-  if (!resolved.startsWith(path.resolve(ARTIFACT_STORAGE_DIR))) {
+  const isWithinStorage =
+    resolved === storageRoot || resolved.startsWith(`${storageRoot}${path.sep}`);
+
+  if (!isWithinStorage) {
     throw new Error("Path traversal detected in artifact storage path");
   }
   return resolved;
 }
 
-function storeBuffer(workspaceId, type, buffer) {
+function storeBuffer(workspaceId, type, buffer, mimeType = null) {
   if (!Buffer.isBuffer(buffer))
     throw new Error("storeBuffer requires a Buffer");
   if (buffer.byteLength > MAX_ARTIFACT_SIZE_BYTES) {
@@ -38,7 +51,7 @@ function storeBuffer(workspaceId, type, buffer) {
     );
   }
   const uuid = uuidv4();
-  const storagePath = buildStoragePath(workspaceId, type, uuid);
+  const storagePath = buildStoragePath(workspaceId, type, uuid, mimeType);
   const dir = path.dirname(storagePath);
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(storagePath, buffer);

@@ -1,6 +1,49 @@
+// SPDX-License-Identifier: MIT
 const { storeBuffer, storeJson } = require("./storage");
 const { createArtifact } = require("../../models/workspaceArtifact");
-const { inferTypeFromMime, typeInfo } = require("./types");
+const {
+  inferTypeFromMime,
+  normalizeMimeType,
+  typeInfo,
+} = require("./types");
+
+function decodeArtifactData(data, declaredMimeType = null) {
+  const normalizedDeclaredMime = normalizeMimeType(declaredMimeType);
+  if (Buffer.isBuffer(data)) {
+    return { buffer: data, mimeType: normalizedDeclaredMime };
+  }
+  if (data instanceof Uint8Array) {
+    return { buffer: Buffer.from(data), mimeType: normalizedDeclaredMime };
+  }
+  if (typeof data !== "string") {
+    throw new Error("Artifact data must be a Buffer, Uint8Array, or string");
+  }
+
+  const dataUrl = data.match(/^data:([^;,]+)?(;base64)?,([\s\S]*)$/i);
+  if (!dataUrl) {
+    return {
+      buffer: Buffer.from(data, "utf-8"),
+      mimeType: normalizedDeclaredMime,
+    };
+  }
+
+  const [, embeddedMime, base64Marker, payload] = dataUrl;
+  let buffer;
+  if (base64Marker) {
+    buffer = Buffer.from(payload.replace(/\s/g, ""), "base64");
+  } else {
+    try {
+      buffer = Buffer.from(decodeURIComponent(payload), "utf-8");
+    } catch {
+      throw new Error("Artifact data URL contains invalid percent encoding");
+    }
+  }
+
+  return {
+    buffer,
+    mimeType: normalizeMimeType(embeddedMime) || normalizedDeclaredMime,
+  };
+}
 
 async function createArtifactsFromOutputs({
   workspaceId,
@@ -49,17 +92,26 @@ async function createSingleArtifact({
     content,
     metadata,
   } = output;
-  const resolvedType = type || inferTypeFromMime(mimeType) || "text";
-  const info = typeInfo(resolvedType);
+  let resolvedType = type || inferTypeFromMime(mimeType) || "text";
+  let info = typeInfo(resolvedType);
 
   let storagePath = null;
   let finalContent = content ?? null;
+  let resolvedMimeType = normalizeMimeType(mimeType) || info?.mime || null;
 
-  if (data) {
-    const buffer = Buffer.isBuffer(data)
-      ? data
-      : Buffer.from(String(data), "utf-8");
-    const result = storeBuffer(workspaceId, resolvedType, buffer);
+  if (data !== undefined && data !== null) {
+    const decoded = decodeArtifactData(data, resolvedMimeType);
+    resolvedMimeType = decoded.mimeType || resolvedMimeType;
+    if (!type && resolvedMimeType) {
+      resolvedType = inferTypeFromMime(resolvedMimeType) || resolvedType;
+      info = typeInfo(resolvedType);
+    }
+    const result = storeBuffer(
+      workspaceId,
+      resolvedType,
+      decoded.buffer,
+      resolvedMimeType,
+    );
     storagePath = result.storagePath;
   } else if (resolvedType === "json" && content) {
     try {
@@ -82,7 +134,8 @@ async function createSingleArtifact({
     type: resolvedType,
     title: title || `Generated ${resolvedType}`,
     description: description ?? null,
-    mimeType: info?.mime || "application/octet-stream",
+    mimeType:
+      resolvedMimeType || info?.mime || "application/octet-stream",
     storagePath,
     downloadName: downloadName ?? null,
     content: finalContent,
@@ -91,4 +144,4 @@ async function createSingleArtifact({
   });
 }
 
-module.exports = { createArtifactsFromOutputs };
+module.exports = { createArtifactsFromOutputs, decodeArtifactData };

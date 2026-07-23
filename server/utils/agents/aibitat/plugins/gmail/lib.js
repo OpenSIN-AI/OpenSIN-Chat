@@ -235,28 +235,112 @@ class GmailBridge {
   }
 
   /**
+   * Normalise legacy single-account settings into the multi-account shape.
+   * The top-level deploymentId/apiKey fields are retained for backward
+   * compatibility with the existing Gmail settings panel.
+   */
+  static normalizeConfig(config = {}) {
+    const hasAccountsField = Array.isArray(config.accounts);
+    const rawAccounts = hasAccountsField ? config.accounts : [];
+    let accounts = rawAccounts
+      .filter((account) => account && typeof account === "object")
+      .map((account, index) => ({
+        id: String(account.id || `gmail-${index + 1}`).trim(),
+        label: String(account.label || account.email || `Gmail ${index + 1}`).trim(),
+        email: String(account.email || "").trim(),
+        deploymentId: String(account.deploymentId || "").trim(),
+        apiKey: String(account.apiKey || "").trim(),
+        enabled: account.enabled !== false,
+      }))
+      .filter((account) => account.id && account.deploymentId && account.apiKey);
+
+    if (
+      !hasAccountsField &&
+      accounts.length === 0 &&
+      String(config.deploymentId || "").trim() &&
+      String(config.apiKey || "").trim()
+    ) {
+      accounts = [
+        {
+          id: "primary",
+          label: String(config.label || config.email || "Primäres Gmail-Konto"),
+          email: String(config.email || ""),
+          deploymentId: String(config.deploymentId).trim(),
+          apiKey: String(config.apiKey).trim(),
+          enabled: true,
+        },
+      ];
+    }
+
+    const requestedDefault = String(config.defaultAccountId || "").trim();
+    const defaultAccount =
+      accounts.find((account) => account.id === requestedDefault) ||
+      accounts.find((account) => account.enabled) ||
+      accounts[0] ||
+      null;
+
+    return {
+      ...config,
+      accounts,
+      groups: Array.isArray(config.groups) ? config.groups : [],
+      defaultAccountId: defaultAccount?.id || "",
+      deploymentId: defaultAccount?.deploymentId || "",
+      apiKey: defaultAccount?.apiKey || "",
+    };
+  }
+
+  static resolveAccount(config, accountId = null) {
+    const normalized = GmailBridge.normalizeConfig(config);
+    const explicitAccountId = String(accountId || "").trim();
+    if (explicitAccountId) {
+      return (
+        normalized.accounts.find(
+          (account) =>
+            account.id === explicitAccountId && account.enabled !== false,
+        ) || null
+      );
+    }
+
+    const requestedDefault = String(normalized.defaultAccountId || "").trim();
+    return (
+      normalized.accounts.find(
+        (account) =>
+          account.id === requestedDefault && account.enabled !== false,
+      ) ||
+      normalized.accounts.find((account) => account.enabled !== false) ||
+      null
+    );
+  }
+
+  /**
    * Gets the current Gmail agent configuration from system settings.
-   * @returns {Promise<{deploymentId?: string, apiKey?: string}>}
    */
   static async getConfig() {
     const configJson = await SystemSettings.getValueOrFallback(
       { label: "gmail_agent_config" },
       "{}",
     );
-    return safeJsonParse(configJson, {});
+    return GmailBridge.normalizeConfig(safeJsonParse(configJson, {}));
   }
 
   /**
-   * Updates the Gmail agent configuration in system settings.
-   * @param {Object} updates - Fields to update
-   * @returns {Promise<{success: boolean, error?: string}>}
+   * Updates Gmail configuration while preserving existing account secrets when
+   * a partial configuration is supplied.
    */
   static async updateConfig(updates) {
     try {
-      await SystemSettings.updateSettings({
-        gmail_agent_config: JSON.stringify(updates),
+      const current = await GmailBridge.getConfig();
+      const merged = GmailBridge.normalizeConfig({ ...current, ...updates });
+      const persisted = await SystemSettings.updateSettings({
+        gmail_agent_config: JSON.stringify(merged),
       });
-      return { success: true };
+      if (!persisted?.success) {
+        return {
+          success: false,
+          error: persisted?.error || "Failed to persist Gmail configuration.",
+        };
+      }
+      return { success: true, config: await GmailBridge.getConfig() };
     } catch (error) {
       return { success: false, error: error.message };
     }
@@ -266,32 +350,23 @@ class GmailBridge {
    * Initializes the Gmail bridge by fetching configuration from system settings.
    * @returns {Promise<{success: boolean, error?: string}>}
    */
-  async initialize() {
-    if (this.#isInitialized) return { success: true };
-
+  async initialize(accountId = null) {
     try {
-      const isMultiUser = await SystemSettings.isMultiUserMode();
-      if (isMultiUser) {
-        return {
-          success: false,
-          error:
-            "Gmail integration is not available in multi-user mode for security reasons.",
-        };
-      }
-
       const config = await GmailBridge.getConfig();
-      if (!config.deploymentId || !config.apiKey) {
+      const account = GmailBridge.resolveAccount(config, accountId);
+      if (!account) {
         return {
           success: false,
-          error:
-            "Gmail integration is not configured. Please set the Deployment ID and API Key in the agent settings.",
+          error: accountId
+            ? `Gmail account "${accountId}" is not configured or is disabled.`
+            : "Gmail integration is not configured. Add at least one Gmail account in the E-Mail Center.",
         };
       }
 
-      this.#deploymentId = config.deploymentId;
-      this.#apiKey = config.apiKey;
+      this.#deploymentId = account.deploymentId;
+      this.#apiKey = account.apiKey;
       this.#isInitialized = true;
-      return { success: true };
+      return { success: true, account };
     } catch (error) {
       return { success: false, error: error.message };
     }
@@ -301,21 +376,15 @@ class GmailBridge {
    * Checks if the Gmail bridge is properly configured and available.
    * @returns {Promise<boolean>}
    */
-  async isAvailable() {
-    const result = await this.initialize();
+  async isAvailable(accountId = null) {
+    const result = await this.initialize(accountId);
     return result.success;
   }
 
-  /**
-   * Checks if Gmail tools are available (not in multi-user mode and has configuration).
-   * @returns {Promise<boolean>}
-   */
+  /** Checks if at least one enabled Gmail account is configured. */
   static async isToolAvailable() {
-    const isMultiUser = await SystemSettings.isMultiUserMode();
-    if (isMultiUser) return false;
-
     const config = await GmailBridge.getConfig();
-    return !!(config.deploymentId && config.apiKey);
+    return !!GmailBridge.resolveAccount(config);
   }
 
   get maskedDeploymentId() {
@@ -331,9 +400,13 @@ class GmailBridge {
    * Gets the base URL for the Gmail Google Apps Script deployment.
    * @returns {string}
    */
-  #getBaseUrl() {
-    this.#log(`Getting base URL for deployment ID ${this.maskedDeploymentId}`);
-    return `https://script.google.com/macros/s/${this.#deploymentId}/exec`;
+  #getBaseUrl(deploymentId = this.#deploymentId) {
+    const value = String(deploymentId || "");
+    const masked = value
+      ? `${value.slice(0, 5)}...${value.slice(-5)}`
+      : "(not configured)";
+    this.#log(`Getting base URL for deployment ID ${masked}`);
+    return `https://script.google.com/macros/s/${value}/exec`;
   }
 
   /**
@@ -343,22 +416,26 @@ class GmailBridge {
    * @returns {Promise<{success: boolean, data?: object, error?: string}>}
    */
   async request(action, params = {}) {
-    const initResult = await this.initialize();
+    const accountId = params.accountId || null;
+    const initResult = await this.initialize(accountId);
     if (!initResult.success) {
       return { success: false, error: initResult.error };
     }
 
+    const { accountId: _accountId, ...requestParams } = params;
+    const account = initResult.account;
+
     try {
-      const response = await fetch(this.#getBaseUrl(), {
+      const response = await fetch(this.#getBaseUrl(account.deploymentId), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-OpenSIN Chat-UA": "OpenSIN Chat-Gmail-Agent/1.0",
+          "X-OpenSIN Chat-UA": "OpenSIN Chat-Gmail-Agent/2.0",
         },
         body: JSON.stringify({
-          key: this.#apiKey,
+          key: account.apiKey,
           action,
-          ...params,
+          ...requestParams,
         }),
         signal: AbortSignal.timeout(GMAIL_API_TIMEOUT_MS),
       });
@@ -392,8 +469,8 @@ class GmailBridge {
    * @param {number} start - Starting offset
    * @returns {Promise<{success: boolean, data?: object, error?: string}>}
    */
-  async search(query = "is:inbox", limit = 10, start = 0) {
-    return this.request("search", { query, limit, start });
+  async search(query = "is:inbox", limit = 10, start = 0, accountId = null) {
+    return this.request("search", { query, limit, start, accountId });
   }
 
   /**
@@ -401,8 +478,8 @@ class GmailBridge {
    * @param {string} threadId - The thread ID
    * @returns {Promise<{success: boolean, data?: object, error?: string}>}
    */
-  async readThread(threadId) {
-    return this.request("read_thread", { threadId });
+  async readThread(threadId, accountId = null) {
+    return this.request("read_thread", { threadId, accountId });
   }
 
   /**
@@ -458,8 +535,8 @@ class GmailBridge {
    * @param {string} draftId - The draft ID
    * @returns {Promise<{success: boolean, data?: object, error?: string}>}
    */
-  async getDraft(draftId) {
-    return this.request("get_draft", { draftId });
+  async getDraft(draftId, accountId = null) {
+    return this.request("get_draft", { draftId, accountId });
   }
 
   /**
@@ -467,8 +544,8 @@ class GmailBridge {
    * @param {number} limit - Maximum drafts to return
    * @returns {Promise<{success: boolean, data?: object, error?: string}>}
    */
-  async listDrafts(limit = 25) {
-    return this.request("list_drafts", { limit });
+  async listDrafts(limit = 25, accountId = null) {
+    return this.request("list_drafts", { limit, accountId });
   }
 
   /**
@@ -476,8 +553,8 @@ class GmailBridge {
    * @param {string} draftId - The draft ID
    * @returns {Promise<{success: boolean, data?: object, error?: string}>}
    */
-  async deleteDraft(draftId) {
-    return this.request("delete_draft", { draftId });
+  async deleteDraft(draftId, accountId = null) {
+    return this.request("delete_draft", { draftId, accountId });
   }
 
   /**
@@ -485,8 +562,8 @@ class GmailBridge {
    * @param {string} draftId - The draft ID
    * @returns {Promise<{success: boolean, data?: object, error?: string}>}
    */
-  async sendDraft(draftId) {
-    return this.request("send_draft", { draftId });
+  async sendDraft(draftId, accountId = null) {
+    return this.request("send_draft", { draftId, accountId });
   }
 
   /**
@@ -523,8 +600,8 @@ class GmailBridge {
    * @param {string} threadId - The thread ID
    * @returns {Promise<{success: boolean, data?: object, error?: string}>}
    */
-  async markRead(threadId) {
-    return this.request("mark_read", { threadId });
+  async markRead(threadId, accountId = null) {
+    return this.request("mark_read", { threadId, accountId });
   }
 
   /**
@@ -532,8 +609,8 @@ class GmailBridge {
    * @param {string} threadId - The thread ID
    * @returns {Promise<{success: boolean, data?: object, error?: string}>}
    */
-  async markUnread(threadId) {
-    return this.request("mark_unread", { threadId });
+  async markUnread(threadId, accountId = null) {
+    return this.request("mark_unread", { threadId, accountId });
   }
 
   /**
@@ -541,8 +618,8 @@ class GmailBridge {
    * @param {string} threadId - The thread ID
    * @returns {Promise<{success: boolean, data?: object, error?: string}>}
    */
-  async moveToTrash(threadId) {
-    return this.request("move_to_trash", { threadId });
+  async moveToTrash(threadId, accountId = null) {
+    return this.request("move_to_trash", { threadId, accountId });
   }
 
   /**
@@ -550,8 +627,8 @@ class GmailBridge {
    * @param {string} threadId - The thread ID
    * @returns {Promise<{success: boolean, data?: object, error?: string}>}
    */
-  async moveToArchive(threadId) {
-    return this.request("move_to_archive", { threadId });
+  async moveToArchive(threadId, accountId = null) {
+    return this.request("move_to_archive", { threadId, accountId });
   }
 
   /**
@@ -559,16 +636,16 @@ class GmailBridge {
    * @param {string} threadId - The thread ID
    * @returns {Promise<{success: boolean, data?: object, error?: string}>}
    */
-  async moveToInbox(threadId) {
-    return this.request("move_to_inbox", { threadId });
+  async moveToInbox(threadId, accountId = null) {
+    return this.request("move_to_inbox", { threadId, accountId });
   }
 
   /**
    * Get mailbox statistics.
    * @returns {Promise<{success: boolean, data?: object, error?: string}>}
    */
-  async getMailboxStats() {
-    return this.request("get_mailbox_stats");
+  async getMailboxStats(accountId = null) {
+    return this.request("get_mailbox_stats", { accountId });
   }
 }
 

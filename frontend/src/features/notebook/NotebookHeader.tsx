@@ -31,11 +31,11 @@ export default function NotebookHeader({ notebookName, activeSection, onSectionC
   }
 
   return (
-    <header className="flex h-14 shrink-0 items-center border-b border-theme-border bg-theme-bg-primary px-3 sm:px-5">
+    <header className="flex h-14 shrink-0 items-center border-b border-theme-border bg-theme-bg-primary pl-3 pr-14 sm:pl-5 md:pr-16">
       <div className="min-w-0 shrink">
         <h1 className="truncate text-sm font-semibold text-theme-text-primary">{notebookName || "Unbenanntes Notebook"}</h1>
       </div>
-      <nav aria-label="Notebook-Bereiche" className="ml-auto flex min-w-0 items-center gap-1">
+      <nav aria-label="Notebook-Bereiche" className="no-scroll ml-auto flex min-w-0 items-center gap-1 overflow-x-auto">
         {Object.values(NOTEBOOK_SECTIONS).map((section) => {
           const active = activeSection === section.id;
           const Icon = SECTION_ICONS[section.id];
@@ -52,7 +52,7 @@ export default function NotebookHeader({ notebookName, activeSection, onSectionC
               }`}
             >
               <Icon size={15} weight={active ? "fill" : "regular"} />
-              <span className="hidden sm:inline">{section.label}</span>
+              <span className="hidden lg:inline">{section.label}</span>
               {count !== null && count > 0 && <span className="rounded-full bg-theme-bg-tertiary px-1.5 py-0.5 text-[9px] text-theme-text-secondary">{count}</span>}
             </button>
           );

@@ -199,6 +199,61 @@ function createValidations(systemSettings) {
           (v) => !v.match(/^\*+$/),
         );
 
+        // Multi-account E-Mail Center configuration. Preserve existing secrets
+        // for partial account updates and never accept masked placeholder keys.
+        if (Array.isArray(newConfig.accounts)) {
+          const existingAccounts = Array.isArray(existingConfig.accounts)
+            ? existingConfig.accounts
+            : [];
+          const existingById = new Map(
+            existingAccounts.map((account) => [String(account.id), account]),
+          );
+          mergedConfig.accounts = newConfig.accounts
+            .filter((account) => account && typeof account === "object")
+            .map((account) => {
+              const previous = existingById.get(String(account.id)) || {};
+              const incomingKey = String(account.apiKey || "");
+              return {
+                ...previous,
+                ...account,
+                apiKey:
+                  incomingKey && !/^\*+$/.test(incomingKey)
+                    ? incomingKey
+                    : previous.apiKey || "",
+              };
+            });
+        } else if (
+          Array.isArray(existingConfig.accounts) &&
+          existingConfig.accounts.length > 0 &&
+          (newConfig.deploymentId !== undefined || newConfig.apiKey !== undefined)
+        ) {
+          // Keep the legacy single-account settings panel useful after the
+          // config has been migrated: its two fields edit the default account.
+          const defaultId =
+            existingConfig.defaultAccountId || existingConfig.accounts[0].id;
+          mergedConfig.accounts = existingConfig.accounts.map((account) => {
+            if (String(account.id) !== String(defaultId)) return account;
+            const incomingKey = String(newConfig.apiKey || "");
+            return {
+              ...account,
+              deploymentId:
+                newConfig.deploymentId !== undefined
+                  ? String(newConfig.deploymentId || "")
+                  : account.deploymentId,
+              apiKey:
+                incomingKey && !/^\*+$/.test(incomingKey)
+                  ? incomingKey
+                  : account.apiKey || "",
+            };
+          });
+        }
+        if (Array.isArray(newConfig.groups)) {
+          mergedConfig.groups = newConfig.groups;
+        }
+        if (newConfig.defaultAccountId !== undefined) {
+          mergedConfig.defaultAccountId = String(newConfig.defaultAccountId || "");
+        }
+
         return JSON.stringify(mergedConfig);
       } catch (e) {
         consoleLogger.error(

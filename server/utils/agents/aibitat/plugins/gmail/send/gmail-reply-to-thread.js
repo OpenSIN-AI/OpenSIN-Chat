@@ -80,6 +80,10 @@ module.exports.GmailReplyToThread = {
                 description:
                   "Array of absolute file paths to attach to the reply.",
               },
+              accountId: {
+                type: "string",
+                description: "Connected Gmail account identifier. Omit to use the default account.",
+              },
             },
             required: ["threadId", "body"],
             additionalProperties: false,
@@ -92,6 +96,7 @@ module.exports.GmailReplyToThread = {
             bcc,
             htmlBody,
             attachments,
+            accountId = null,
           }) {
             try {
               this.super.handlerProps.log(
@@ -193,6 +198,7 @@ module.exports.GmailReplyToThread = {
               if (cc) options.cc = cc;
               if (bcc) options.bcc = bcc;
               if (htmlBody) options.htmlBody = htmlBody;
+              if (accountId) options.accountId = accountId;
               if (preparedAttachments.length > 0) {
                 options.attachments = preparedAttachments;
               }

@@ -2,6 +2,7 @@
 
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { Download } from "@phosphor-icons/react/dist/csr/Download";
+import { useTranslation } from "react-i18next";
 import ModalWrapper from "@/components/ModalWrapper";
 import ArtifactIcon from "./ArtifactIcon";
 import { artifactDownloadUrl } from "./api";
@@ -16,6 +17,7 @@ export default function ArtifactPreview({
   workspaceSlug: string;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const isImage = artifact.type === "image";
   const isText = artifact.type === "text" || artifact.type === "code" || artifact.type === "json";
   const downloadUrl = artifactDownloadUrl(workspaceSlug, artifact.uuid);
@@ -34,14 +36,14 @@ export default function ArtifactPreview({
             href={downloadUrl}
             download={artifact.downloadName || undefined}
             className="flex h-8 w-8 items-center justify-center rounded-lg text-theme-text-muted hover:bg-theme-bg-secondary hover:text-theme-text-primary"
-            aria-label="Herunterladen"
+            aria-label={t("artifacts.download")}
           >
             <Download size={15} />
           </a>
           <button
             type="button"
             onClick={onClose}
-            aria-label="Schließen"
+            aria-label={t("artifacts.close")}
             className="flex h-8 w-8 items-center justify-center rounded-lg text-theme-text-muted hover:bg-theme-bg-secondary hover:text-theme-text-primary"
           >
             <X size={15} />
@@ -68,14 +70,14 @@ export default function ArtifactPreview({
           ) : (
             <div className="flex h-48 flex-col items-center justify-center text-center">
               <p className="text-sm text-theme-text-secondary">
-                Keine Vorschau verfügbar
+                {t("artifacts.noPreview")}
               </p>
               <a
                 href={downloadUrl}
                 download={artifact.downloadName || undefined}
                 className="mt-3 rounded-lg bg-theme-bg-secondary px-3 py-2 text-xs font-medium text-theme-text-primary hover:bg-theme-bg-tertiary"
               >
-                Datei herunterladen
+                {t("artifacts.downloadFile")}
               </a>
             </div>
           )}

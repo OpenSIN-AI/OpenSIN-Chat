@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 function safeParseJson(raw) {
   if (raw == null) return null;
   if (typeof raw === "object") return raw;

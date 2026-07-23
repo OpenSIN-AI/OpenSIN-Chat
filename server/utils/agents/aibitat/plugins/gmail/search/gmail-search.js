@@ -68,6 +68,10 @@ module.exports.GmailSearch = {
                 description: "Starting offset for pagination. Defaults to 0.",
                 default: 0,
               },
+              accountId: {
+                type: "string",
+                description: "Connected Gmail account identifier. Omit to use the default account.",
+              },
             },
             required: ["query"],
             additionalProperties: false,
@@ -76,6 +80,7 @@ module.exports.GmailSearch = {
             query = "is:inbox",
             limit = 10,
             start = 0,
+            accountId = null,
           }) {
             try {
               this.super.handlerProps.log(`Using the gmail-search tool.`);
@@ -83,7 +88,7 @@ module.exports.GmailSearch = {
                 `${this.caller}: Searching Gmail with query "${query}"`,
               );
 
-              const result = await gmailLib.search(query, limit, start);
+              const result = await gmailLib.search(query, limit, start, accountId);
 
               if (!result.success) {
                 this.super.introspect(

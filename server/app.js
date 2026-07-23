@@ -49,6 +49,7 @@ const { mcpServersEndpoints } = require("./endpoints/mcpServers");
 const { agentRunsStream } = require("./endpoints/agentRunsStream");
 const { subagentEndpoints } = require("./endpoints/subagents");
 const { scheduledJobEndpoints } = require("./endpoints/scheduledJobs");
+const { emailAutomationEndpoints } = require("./endpoints/emailAutomation");
 const {
   outlookAgentEndpoints,
 } = require("./endpoints/utils/outlookAgentUtils");
@@ -287,6 +288,7 @@ function buildApp() {
   subagentEndpoints(apiRouter);
 
   scheduledJobEndpoints(apiRouter);
+  emailAutomationEndpoints(apiRouter);
   outlookAgentEndpoints(apiRouter);
   googleAgentSkillEndpoints(apiRouter);
   pdfAnalysisEndpoints(app);

@@ -37,10 +37,14 @@ module.exports.GmailListDrafts = {
                   "Maximum number of drafts to return (1-100). Defaults to 25.",
                 default: 25,
               },
+              accountId: {
+                type: "string",
+                description: "Connected Gmail account identifier. Omit to use the default account.",
+              },
             },
             additionalProperties: false,
           },
-          handler: async function ({ limit = 25 }) {
+          handler: async function ({ limit = 25, accountId = null }) {
             try {
               this.super.handlerProps.log(`Using the gmail-list-drafts tool.`);
 
@@ -48,7 +52,7 @@ module.exports.GmailListDrafts = {
                 `${this.caller}: Listing Gmail drafts (limit: ${limit})`,
               );
 
-              const result = await gmailLib.listDrafts(limit);
+              const result = await gmailLib.listDrafts(limit, accountId);
 
               if (!result.success) {
                 this.super.introspect(
