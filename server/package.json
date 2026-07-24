@@ -85,7 +85,7 @@
     "mysql2": "^3.22.6",
     "ollama": "^0.6.3",
     "openai": "6.45.0",
-    "p-queue": "6.6.2",
+    "p-queue": "9.3.3",
     "pdf-lib": "1.17.1",
     "pdf-parse": "^2.4.5",
     "pdfjs-dist": "6.1.200",
