@@ -1,144 +1,78 @@
-# Security Policy
+# Security policy
 
-## Supported Versions
+## Supported versions
 
-Only the latest state of the `main` branch receives security fixes.
+Only the latest state of `main` receives security fixes.
 
-| Version            | Supported          |
-| ------------------ | ------------------ |
-| `main` (latest)    | :white_check_mark: |
-| older tags/commits | :x:                |
+## Reporting a vulnerability
 
-## Reporting a Vulnerability
+Do not open a public issue or pull request for a vulnerability.
 
-**Please do NOT open a public issue or pull request for security vulnerabilities.**
-Public PRs disclose the vulnerability to everyone before a fix is deployed.
+Use GitHub Private Vulnerability Reporting for this repository or email `support@sinchat.delqhi.com`. Include reproduction steps, affected route or file, expected impact and any relevant deployment assumptions.
 
-Instead, use one of these private channels:
+Do not include live credentials, private user data or destructive proof-of-concept payloads.
 
-1. **GitHub Private Vulnerability Reporting** (preferred):
-   [Report a vulnerability](https://github.com/OpenSIN-AI/OpenSIN-Chat/security/advisories/new)
-2. **Email:** [support@sinchat.delqhi.com](mailto:support@sinchat.delqhi.com)
-   — please include steps to reproduce, affected endpoint/file, and impact.
+## Security gates
 
-We aim to acknowledge reports within **72 hours** and to ship a fix or
-mitigation for confirmed CRITICAL/HIGH findings within **14 days**.
+Pull requests and `main` are protected by:
 
-## Scope Notes
+- CodeQL analysis,
+- dependency review for high-severity additions,
+- full-history secret scanning,
+- production dependency audit,
+- lint, types, unit and integration tests,
+- coverage thresholds,
+- production image startup and health verification,
+- browser smoke tests.
 
-OpenSIN Chat is a sovereign, independent product for political research and knowledge management.
-If you discover vulnerabilities in dependencies shared with upstream projects, please also report them to those projects
-so the wider open-source community benefits.
+A green document or manually written readiness report is not a security control.
 
-## Secrets & Deployment Hygiene
+## Secrets and credentials
 
-- Real `.env` files must never be committed (enforced by CI: `ceo-audit.yml`,
-  `secrets-scan.yml`).
-- `JWT_SECRET`, `SIG_KEY`, `SIG_SALT` and all provider API keys must be
-  generated per deployment (e.g. `openssl rand -base64 32`) and rotated
-  whenever they may have been exposed.
-- Demo or onboarding credentials must never ship in the frontend bundle or
-  README. If a credential has ever been published, treat it as compromised
-  and rotate it immediately.
+Real environment files are ignored by Git and Docker. Generate unique deployment secrets for:
+
+- `JWT_SECRET`,
+- `SIG_KEY`,
+- `SIG_SALT`,
+- provider credentials,
+- OAuth client secrets.
+
+Rotate credentials after suspected disclosure.
+
+Developer API keys, browser-extension API keys, password-reset tokens and temporary SSO tokens are stored as SHA-256 digests. Their plaintext value is returned only when issued. Legacy plaintext database rows are migrated to digests after their next successful use.
+
+OAuth connector access and refresh tokens are encrypted at rest with the application's encryption manager.
 
 ## Authentication
 
-- **Single password authentication** via the `AUTH_TOKEN` environment variable.
-- The password is set in the `.env` file, which is never committed to git
-  (listed in `.gitignore`).
-- All API endpoints require authentication except `/api/ping`.
-- The session token is stored in the browser's `localStorage`.
+OpenSIN Chat supports single-user and multi-user modes. Production must have a strong signing secret and an explicit authentication configuration. Security-sensitive routes use authenticated middleware and role checks.
 
-## API Key Handling
+The removed web terminal must not be reintroduced into the API process. Administrative shell access belongs outside the web product and should use normal host access controls.
 
-- **Fireworks AI API Key**: stored in `.env` as `FIREWORKS_AI_LLM_API_KEY`.
-  Never logged, never exposed to the frontend.
-- **SINator Pool Router URL**: stored in `.env` as
-  `FIREWORKS_AI_LLM_BASE_PATH`. Not exposed to the frontend.
-- **Custom User-Agent**: `OpenSIN-Chat/1.0` is set in the
-  `fireworksai.js` provider — the SINator Pool Router blocks the default
-  OpenAI SDK User-Agent, so this custom header is required.
-- The `.env` file is listed in `.gitignore` and never committed.
-- `.env.example` is committed but contains no real secrets — only
-  placeholder values.
+## Runtime isolation
 
-## Port Binding
+The API and document worker are both required for a healthy container. Missing persistent storage, unwritable document directories or either process exiting causes startup or health failure.
 
-- The container binds to `127.0.0.1:38471` — **not** accessible from the
-  public internet.
-- The nginx reverse proxy listens on port `38481` — also localhost only.
-- Only the **Cloudflare Tunnel** exposes the service publicly (via
-  `sinchat.delqhi.com`).
-- No direct port exposure to the internet. All external traffic flows
-  through the tunnel.
+Imported community plugin files may be downloaded and inspected, but their JavaScript handlers are not executed inside the production API process. A future executable plugin system must use a separately sandboxed worker or container.
 
-## Cloudflare Tunnel Security
+## Network and browser security
 
-- The tunnel uses Cloudflare's **zero-trust model** — no inbound ports
-  are required on the VM.
-- **HSTS** is enabled with preload.
-- **HTTPS redirect** (HTTP 301) is enforced at the Cloudflare edge.
-- Security headers are set at the edge:
-  - `X-Frame-Options: DENY`
-  - `X-Content-Type-Options: nosniff`
-  - `Referrer-Policy: strict-origin-when-cross-origin`
-- Content Security Policy (CSP) headers are set via Cloudflare.
+The API applies explicit CORS policy, origin validation for mutating production requests, request IDs, bounded body sizes, security headers and CSP. Public embed resources are handled as an explicit exception rather than weakening global policy.
 
-## Database Security
+The document worker requires signed requests. Development authentication bypasses must remain local, explicit and disabled in production.
 
-- SQLite database at `server/storage/opensin.db` — file permissions `640`.
-- The database is inside the container, not directly accessible from the
-  host filesystem.
-- Backups are stored at `/home/ubuntu/backups/` with restricted permissions.
-- The `workspace_notes` table was created via raw SQL because the Prisma
-  migration was blocked by a CLI version mismatch (see Known Security
-  Considerations below).
+## Database and storage
 
-## Known Security Considerations
+The active application database and runtime storage are owned by `apps/api` and mounted into the production image at `/app/server/storage`. Runtime files must not be committed.
 
-These items are tracked but do not currently pose an active security risk:
+Database changes require Prisma migrations and verification against both a fresh database and an existing database upgrade. Backups are not considered reliable until restore has been tested.
 
-- **@agent WebSocket broken via Cloudflare Tunnel**: Cloudflare strips
-  `Upgrade` headers, which breaks the `@agent` WebSocket channel. This is
-  a **functional** issue, not a security risk.
-- **Dependabot alerts on OpenSIN-Chat (this repo)
-  vulnerabilities (2 high, 2 moderate, 1 low) — being tracked and
-  addressed.
-- **Prisma CLI version mismatch**: container has Prisma CLI `7.8.0` vs
-  project `5.3.1`. Raw SQL workaround is used where migrations are
-  blocked. Upgrading the project Prisma version is on the roadmap.
+## Vulnerability scope
+
+Valid reports include authentication bypass, authorization failure, credential disclosure, remote code execution, SSRF outside documented and explicitly enabled internal-network behavior, cross-tenant data access, stored or zero-interaction XSS, unsafe file handling and sandbox escapes.
+
+Reports that require the reporter to paste their own script into a trusted developer console are generally not vulnerabilities unless another user or tenant can be affected.
 
 ## Telemetry
 
-- **Zero telemetry** — no PostHog, no Mintplex CDN, no analytics, no
-  tracking of any kind.
-- All telemetry is completely disabled.
-
-## Invalid Report Types
-
-The following are intentional design decisions inherited from upstream and
-will be closed without action:
-
-### SSRF reports against the document collector
-
-The collector is intentionally able to reach internal hosts so that
-VPC-internal deployments can scrape internal services
-(see [`collector/utils/url/index.js`](./collector/utils/url/index.js)).
-
-> Note: this exception applies to the **collector** only. The research
-> module's `ContentExtractor` blocks private/link-local targets by default;
-> set `RESEARCH_ALLOW_PRIVATE_NETWORKS=true` to opt in to internal access.
-> Reports that bypass this guard **are valid reports**.
-
-### XSS reports requiring the user to right-click and paste a URL
-
-Valid XSS reports must be zero-action (triggered on page or image load).
-Self-inflicted, single-victim paste scenarios are not accepted.
-
-### "Unauthenticated instance" reports
-
-OpenSIN Chat supports running without authentication for trusted, isolated
-environments. Operators choose between: no auth, single password, or
-multi-user mode during onboarding. A missing password setup is not a
-vulnerability — **bypassing** configured authentication absolutely is, and
-such reports are welcome.
+The application telemetry adapter is disabled. External requests still occur when an operator configures model providers, connectors, web retrieval or other integrations; disabled telemetry does not mean the product is network-isolated.

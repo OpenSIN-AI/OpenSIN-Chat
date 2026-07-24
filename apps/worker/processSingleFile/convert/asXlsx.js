@@ -1,0 +1,233 @@
+// SPDX-License-Identifier: MIT
+const { v4 } = require("uuid");
+const xlsx = require("node-xlsx").default;
+const path = require("path");
+const fs = require("fs");
+const {
+  createdDate,
+  trashFile,
+  writeToServerDocuments,
+  documentsFolder,
+} = require("../../utils/files");
+const { tokenizeString } = require("../../utils/tokenizer");
+const { default: slugify } = require("slugify");
+const { guardArchiveOrThrow } = require("../../utils/safeUnzip");
+
+function safeCsvCell(str) {
+  if (typeof str !== "string") return str;
+  if (/^[=+\-@\t\r]/.test(str)) {
+    if (!/^[-+]?\d+(\.\d+)?$/.test(str)) return "'" + str;
+  }
+  return str;
+}
+
+function convertToCSV(data) {
+  return data
+    .map((row) =>
+      row
+        .map((cell) => {
+          if (cell === null || cell === undefined) return "";
+          let str = String(cell);
+          str = safeCsvCell(str);
+          if (
+            str.includes(",") ||
+            str.includes('"') ||
+            str.includes("\n") ||
+            str.includes("\r")
+          ) {
+            str = `"${str.replace(/"/g, '""')}"`;
+          }
+          return str;
+        })
+        .join(","),
+    )
+    .join("\n");
+}
+
+async function asXlsx({
+  fullFilePath = "",
+  filename = "",
+  options = {},
+  metadata = {},
+}) {
+  const documents = [];
+
+  try {
+    await guardArchiveOrThrow(fullFilePath, filename);
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(`[asXlsx] Refused ${filename}: ${err.message}`);
+    if (!options.absolutePath) trashFile(fullFilePath);
+    return {
+      success: false,
+      reason: err.message,
+      documents: [],
+    };
+  }
+
+  try {
+    const workSheetsFromFile = xlsx.parse(fullFilePath);
+
+    if (options.parseOnly) {
+      const allSheetContents = [];
+      let totalWordCount = 0;
+      const sheetNames = [];
+
+      for (const sheet of workSheetsFromFile) {
+        const processed = processSheet(sheet);
+        if (!processed) continue;
+
+        const { name, content, wordCount } = processed;
+        sheetNames.push(name);
+        allSheetContents.push(`\nSheet: ${name}\n${content}`);
+        totalWordCount += wordCount;
+      }
+
+      if (allSheetContents.length === 0) {
+        // eslint-disable-next-line no-console
+        console.log(`No valid sheets found in ${filename}.`);
+        return {
+          success: false,
+          reason: `No valid sheets found in ${filename}.`,
+          documents: [],
+        };
+      }
+
+      const combinedContent = allSheetContents.join("\n");
+      const sheetListText =
+        sheetNames.length > 1
+          ? ` (Sheets: ${sheetNames.join(", ")})`
+          : ` (Sheet: ${sheetNames[0]})`;
+
+      const combinedData = {
+        id: v4(),
+        url: `file://${fullFilePath}`,
+        title: metadata.title || `${filename}${sheetListText}`,
+        docAuthor: metadata.docAuthor || "Unknown",
+        description:
+          metadata.description ||
+          `Spreadsheet data from ${filename} containing ${sheetNames.length} ${
+            sheetNames.length === 1 ? "sheet" : "sheets"
+          }`,
+        docSource: metadata.docSource || "an xlsx file uploaded by the user.",
+        chunkSource: metadata.chunkSource || "",
+        published: createdDate(fullFilePath),
+        wordCount: totalWordCount,
+        pageContent: combinedContent,
+        token_count_estimate: tokenizeString(combinedContent),
+      };
+
+      const document = writeToServerDocuments({
+        data: combinedData,
+        filename: `${slugify(path.basename(filename))}-${combinedData.id}`,
+        destinationOverride: null,
+        options: { parseOnly: true },
+      });
+      documents.push(document);
+      // eslint-disable-next-line no-console
+      console.log(`[SUCCESS]: ${filename} converted & ready for embedding.`);
+    } else {
+      const folderName = slugify(
+        `${path.basename(filename)}-${v4().slice(0, 4)}`,
+        {
+          lower: true,
+          trim: true,
+        },
+      );
+      const outFolderPath = path.resolve(documentsFolder, folderName);
+      if (!fs.existsSync(outFolderPath))
+        fs.mkdirSync(outFolderPath, { recursive: true });
+
+      for (const sheet of workSheetsFromFile) {
+        const processed = processSheet(sheet);
+        if (!processed) continue;
+
+        const { name, content, wordCount } = processed;
+        const sheetData = {
+          id: v4(),
+          url: `file://${path.join(outFolderPath, `${slugify(name)}.csv`)}`,
+          title: metadata.title || `${filename} - Sheet:${name}`,
+          docAuthor: metadata.docAuthor || "Unknown",
+          description:
+            metadata.description || `Spreadsheet data from sheet: ${name}`,
+          docSource: metadata.docSource || "an xlsx file uploaded by the user.",
+          chunkSource: metadata.chunkSource || "",
+          published: createdDate(fullFilePath),
+          wordCount: wordCount,
+          pageContent: content,
+          token_count_estimate: tokenizeString(content),
+        };
+
+        const document = writeToServerDocuments({
+          data: sheetData,
+          filename: `sheet-${slugify(name)}`,
+          destinationOverride: outFolderPath,
+          options: { parseOnly: options.parseOnly },
+        });
+        documents.push(document);
+        // eslint-disable-next-line no-console
+        console.log(
+          `[SUCCESS]: Sheet "${name}" converted & ready for embedding.`,
+        );
+      }
+    }
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error("Could not process xlsx file!", err);
+    return {
+      success: false,
+      reason: `Error processing ${filename}: ${err.message}`,
+      documents: [],
+    };
+  } finally {
+    if (!options.absolutePath) trashFile(fullFilePath);
+  }
+
+  if (documents.length === 0) {
+    // eslint-disable-next-line no-console
+    console.error(`No valid sheets found in ${filename}.`);
+    return {
+      success: false,
+      reason: `No valid sheets found in ${filename}.`,
+      documents: [],
+    };
+  }
+
+  // eslint-disable-next-line no-console
+  console.log(
+    `[SUCCESS]: ${filename} fully processed. Created ${documents.length} document(s).\n`,
+  );
+  return { success: true, reason: null, documents };
+}
+
+/**
+ * Processes a single sheet and returns its content and metadata
+ * @param {{name: string, data: Array<Array<string|number|null|undefined>>}} sheet - Parsed sheet with name and 2D array of cell values
+ * @returns {{name: string, content: string, wordCount: number}|null} - Object with name, CSV content, and word count, or null if sheet is empty
+ */
+function processSheet(sheet) {
+  try {
+    const { name, data } = sheet;
+    const content = convertToCSV(data);
+
+    if (!content?.length) {
+      // eslint-disable-next-line no-console
+      console.log(`Sheet "${name}" is empty. Skipping.`);
+      return null;
+    }
+
+    // eslint-disable-next-line no-console
+    console.log(`-- Processing sheet: ${name} --`);
+    return {
+      name,
+      content,
+      wordCount: content.split(/\s+/).filter(Boolean).length,
+    };
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(`Error processing sheet "${sheet.name}":`, err);
+    return null;
+  }
+}
+
+module.exports = asXlsx;

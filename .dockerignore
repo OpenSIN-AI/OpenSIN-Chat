@@ -1,95 +1,65 @@
-# SPDX-License-Identifier: MIT
-# Purpose: Reduce Docker build context and prevent large / secret files from being copied into the image.
-# Docs: .dockerignore.doc.md
-
-# Git metadata
+# Repository and local tool state
 .git
-.gitignore
+.github
+.local
+**/.claude
+**/.codex
+**/.mimocode
+**/.pcpm
+**/.qoder
+**/.scratch
+**/.sin
+**/.sin-code
+**/.sin_evidence
+**/.skillopt
+**/.skillopt-sleep
 
-# Node dependencies (reinstalled inside the image)
+# Dependencies and generated output
 node_modules
-frontend/node_modules
-server/node_modules
-collector/node_modules
+**/node_modules
+**/dist
+**/coverage
+**/test-results
+**/.playwright-tests
+**/.vitest
+**/.tsbuildinfo
+**/package-lock.json
+tooling
+tests
 
-# Build outputs (rebuilt inside the image)
-frontend/dist
-frontend/coverage
-server/coverage
-*.log
-
-# Runtime data (mounted as volumes, not baked into the image)
-server/storage
-server/storage-opensin
-storage
-collector/hotdir
-collector/outputs
-
-# Docker / env files (mounted at runtime or contain secrets)
-docker/.env
-docker-opensin/.env
-docker-opensin/.env.*
+# Runtime state and secrets
 .env
 .env.*
-
-# IDE / OS / local database noise
-.DS_Store
-.vscode
-.idea
-*.swp
-*.swo
+apps/api/.env*
+apps/web/.env*
+apps/worker/.env*
+platform/containers/compose/.env*
+apps/api/storage
+apps/api/storage-opensin
+apps/worker/hotdir
+apps/worker/outputs
+storage
 *.db
 *.db-shm
 *.db-wal
 *.sqlite
 *.sqlite3
+*.log
 
-# OpenSIN tooling / CI / internal directories (not needed in the image)
-**/.sin
-**/.sin-code
-**/.sin_evidence
-**/.pcpm
-**/.claude
-**/.codex
-**/.mimocode
-**/.qoder
-**/.scratch
-**/.skillopt
-**/.skillopt-sleep
-.github
-n8n
-ceo-audits
-history
-images
-extras
-locales
-docker-opensin
-.skillopt
-.skillopt-sleep
-.codex
-.qoder
-sin_goal_mode.db
-bom.json
-sbom
-screenshots
+# Documentation material not needed for the in-app docs build
+docs/assets
+docs/archive
+docs/locales
 
-# Test artifacts, transient lockfiles and large downloads
-**/.vitest
-**/.playwright-tests
-**/test-results
-**/coverage
-**/.tsbuildinfo
-**/package-lock.json
-.nyc_output
+# IDE and OS noise
+.DS_Store
+.vscode
+.idea
+*.swp
+*.swo
+
+# Large or transient browser output
 chrome-linux
 chrome-linux.zip
 bundleinspector.html
 *-report.md
-
-# Documentation only
-*.md
-!README.md
-# Allow docs/ tree for frontend sync:docs prebuild hook
-!docs
-!docs/*.md
-!docs/**/*.md

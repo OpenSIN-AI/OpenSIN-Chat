@@ -13,9 +13,9 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 
 ## Status
 
-- Backlog: 9
+- Backlog: 8
 - In progress: 1
-- Blocked: 0
+- Blocked: 1
 - Done: 0
 - Cancelled: 0
 
@@ -23,8 +23,8 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 
 | ID | Priority | Kind | Status | Owner | Title | Dependencies |
 |---|---|---|---|---|---|---|
-| T-0001 | critical | implement | in_progress | chatgpt-web | Security P0: Zugangsdaten rotieren und Standardpasswort entfernen | — |
-| T-0002 | critical | implement | backlog | chatgpt-web | Security P0: Öffentliche Betriebsinformationen bereinigen | — |
+| T-0001 | critical | implement | blocked | chatgpt-web | Security P0: Zugangsdaten rotieren und Standardpasswort entfernen | — |
+| T-0002 | critical | implement | in_progress | chatgpt-web | Security P0: Öffentliche Betriebsinformationen bereinigen | — |
 | T-0003 | critical | implement | backlog | chatgpt-web | Security P0: SYS_ADMIN Cap und Docker Security | — |
 | T-0004 | high | implement | backlog | chatgpt-web | CI/CD: Echte GitHub Actions implementieren | — |
 | T-0005 | high | implement | backlog | chatgpt-web | CI/CD: Immutable Docker Images mit Commit-SHA | — |
@@ -38,26 +38,28 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 
 ### T-0001 — Security P0: Zugangsdaten rotieren und Standardpasswort entfernen
 
-- Status: `in_progress`
+- Status: `blocked`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-07-24T19:53:54+00:00
+- Updated: 2026-07-24T21:31:02+00:00
 
 Betroffene Auth-Tokens rotieren, Standardpasswort aus Skript/Doku entfernen, Skript ohne Passwort hart abbrechen lassen
 
 Acceptance:
 - Keine Standardpasswörter in Code/Doku, alle betroffenen Tokens rotiert, Secret-Scan bestanden
 
+Blocked: Produktionsrotation nicht verifizierbar: erreichbarer Host enthält keinen OpenSIN-Checkout/Container; direkter Test des historischen Credentials am externen Login wurde vom Connector-Sicherheitsfilter blockiert. Repository-Härtung und Secret-Scan sind abgeschlossen.
+
 ### T-0002 — Security P0: Öffentliche Betriebsinformationen bereinigen
 
-- Status: `backlog`
+- Status: `in_progress`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-07-24T19:40:24+00:00
+- Updated: 2026-07-24T21:31:19+00:00
 
 VM-IP, SSH-Benutzer, interne Ports, Container-Hostnamen, Produktionspfade aus öffentlichem Repo entfernen
 
@@ -192,3 +194,7 @@ Acceptance:
 - 2026-07-24T19:53:52+00:00 — `chatgpt-web` — `task_claimed` `T-0001`: claimed by chatgpt-web
 - 2026-07-24T19:53:54+00:00 — `local-agent` — `task_updated` `T-0001`: task fields updated
 - 2026-07-24T19:53:56+00:00 — `chatgpt-web` — `progress` `T-0001`: T-0001 gestartet: Credential- und Standardpasswort-Audit im bestehenden Worktree; fremde Änderungen werden erhalten.
+- 2026-07-24T21:31:02+00:00 — `chatgpt-web` — `progress` `T-0001`: Code/Doku gehärtet: kein Defaultpasswort, Credentials werden vor DB-Zugriff erzwungen, Pfade auf apps/api korrigiert; 9/9 Tests grün; Gitleaks aktueller Worktree 0 Findings.
+- 2026-07-24T21:31:02+00:00 — `chatgpt-web` — `task_blocked` `T-0001`: Produktionsrotation nicht verifizierbar: erreichbarer Host enthält keinen OpenSIN-Checkout/Container; direkter Test des historischen Credentials am externen Login wurde vom Connector-Sicherheitsfilter blockiert. Repository-Härtung und Secret-Scan sind abgeschlossen.
+- 2026-07-24T21:31:19+00:00 — `chatgpt-web` — `task_claimed` `T-0002`: claimed by chatgpt-web
+- 2026-07-24T21:31:20+00:00 — `chatgpt-web` — `progress` `T-0002`: T-0002 gestartet: aktueller Worktree und Git-Historie werden auf konkrete VM-/SSH-/Port-/Secret-Betriebsdaten geprüft; Werte werden nur redigiert/fingerprinted ausgegeben.

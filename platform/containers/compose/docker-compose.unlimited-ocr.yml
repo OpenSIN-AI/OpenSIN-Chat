@@ -1,0 +1,76 @@
+# SPDX-License-Identifier: MIT
+# Purpose: Optional, authenticated NVIDIA GPU sidecar for Baidu Unlimited-OCR.
+# Docs: ../../../docs/integrations/unlimited-ocr.md
+#
+# This overlay must be combined with the owning application Compose file.
+# The API is published on host loopback only; the application uses the private
+# Compose network and never requires a public vLLM endpoint.
+
+services:
+  opensin-chat:
+    depends_on:
+      unlimited-ocr:
+        condition: service_healthy
+    environment:
+      OCR_ENGINE: unlimited
+      UNLIMITED_OCR_BACKEND: vllm
+      UNLIMITED_OCR_BASE_URL: http://unlimited-ocr:8000/v1
+      UNLIMITED_OCR_MODEL: baidu/Unlimited-OCR
+      UNLIMITED_OCR_API_KEY: "${UNLIMITED_OCR_API_KEY:?UNLIMITED_OCR_API_KEY is required}"
+      UNLIMITED_OCR_TIMEOUT_MS: "${UNLIMITED_OCR_TIMEOUT_MS:-1200000}"
+      UNLIMITED_OCR_MAX_TOKENS: "${UNLIMITED_OCR_MAX_TOKENS:-8192}"
+      UNLIMITED_OCR_PAGES_PER_REQUEST: "${UNLIMITED_OCR_PAGES_PER_REQUEST:-8}"
+      UNLIMITED_OCR_PDF_DPI: "${UNLIMITED_OCR_PDF_DPI:-300}"
+  unlimited-ocr:
+    image: vllm/vllm-openai:unlimited-ocr@sha256:542961a42d9183813819a23ef3a8b50bfb4f5ef7b0fb4f8e4f56edd8445efb18
+    container_name: ${UNLIMITED_OCR_CONTAINER_NAME:-opensin-unlimited-ocr}
+    restart: unless-stopped
+    ipc: host
+    gpus: all
+    command:
+      - baidu/Unlimited-OCR
+      - --served-model-name
+      - baidu/Unlimited-OCR
+      - --trust-remote-code
+      - --logits_processors
+      - vllm.model_executor.models.unlimited_ocr:NGramPerReqLogitsProcessor
+      - --no-enable-prefix-caching
+      - --mm-processor-cache-gb
+      - "0"
+      - --tensor-parallel-size
+      - "${UNLIMITED_OCR_TENSOR_PARALLEL_SIZE:-1}"
+      - --gpu-memory-utilization
+      - "${UNLIMITED_OCR_GPU_MEMORY_UTILIZATION:-0.90}"
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
+    environment:
+      VLLM_API_KEY: "${UNLIMITED_OCR_API_KEY:?UNLIMITED_OCR_API_KEY is required}"
+      HF_TOKEN: "${HF_TOKEN:-}"
+      HF_HOME: /root/.cache/huggingface
+    volumes:
+      - unlimited-ocr-hf-cache:/root/.cache/huggingface
+    ports:
+      - "127.0.0.1:${UNLIMITED_OCR_PORT:-18080}:8000"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          python3 -c "import os,urllib.request; r=urllib.request.Request('http://127.0.0.1:8000/v1/models',headers={'Authorization':'Bearer '+os.environ['VLLM_API_KEY']}); urllib.request.urlopen(r,timeout=10).read()"
+      interval: 20s
+      timeout: 15s
+      retries: 60
+      start_period: 10m
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+    networks:
+      - opensin-chat
+
+volumes:
+  unlimited-ocr-hf-cache:

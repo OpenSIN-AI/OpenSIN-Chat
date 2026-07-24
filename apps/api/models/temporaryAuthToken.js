@@ -1,0 +1,168 @@
+// SPDX-License-Identifier: MIT
+const consoleLogger = require("../utils/logger/console.js");
+const crypto = require("node:crypto");
+
+const { makeJWT } = require("../utils/http");
+const prisma = require("../utils/prisma");
+
+const TOKEN_HASH_PREFIX = "sha256:";
+function hashTemporaryToken(token) {
+  return `${TOKEN_HASH_PREFIX}${crypto.createHash("sha256").update(String(token)).digest("hex")}`;
+}
+
+/**
+ * Temporary auth tokens are used for simple SSO.
+ * They simply enable the ability for a time-based token to be used in the query of the /sso/login URL
+ * to login as a user without the need of a username and password. These tokens are single-use and expire.
+ */
+const TemporaryAuthToken = {
+  expiry: 1000 * 60 * 60, // 1 hour
+  tablename: "temporary_auth_tokens",
+  writable: [],
+
+  makeTempToken: () => {
+    const uuidAPIKey = require("uuid-apikey");
+    return `sin-tat-${uuidAPIKey.create().apiKey}`;
+  },
+
+  /**
+   * Issues a temporary auth token for a user via its ID.
+   * @param {number} userId
+   * @returns {Promise<{token: string|null, error: string | null}>}
+   */
+  issue: async function (userId = null) {
+    if (!userId)
+      throw new Error("User ID is required to issue a temporary auth token.");
+
+    try {
+      const token = this.makeTempToken();
+      const expiresAt = new Date(Date.now() + this.expiry);
+      await prisma.$transaction(async (tx) => {
+        await tx.temporary_auth_tokens.deleteMany({
+          where: { userId: Number(userId) },
+        });
+        await tx.temporary_auth_tokens.create({
+          data: {
+            token: hashTemporaryToken(token),
+            expiresAt,
+            userId: Number(userId),
+          },
+        });
+      });
+
+      return { token, error: null };
+    } catch (error) {
+      consoleLogger.error(
+        "FAILED TO CREATE TEMPORARY AUTH TOKEN.",
+        error.message,
+      );
+      return { token: null, error: error.message };
+    }
+  },
+
+  /**
+   * Invalidates (deletes) all temporary auth tokens for a user via their ID.
+   * @param {number} userId
+   * @returns {Promise<boolean>}
+   */
+  invalidateUserTokens: async function (userId) {
+    if (!userId)
+      throw new Error(
+        "User ID is required to invalidate temporary auth tokens.",
+      );
+    await prisma.temporary_auth_tokens.deleteMany({
+      where: { userId: Number(userId) },
+    });
+    return true;
+  },
+
+  /**
+   * Validates a temporary auth token and returns the session token
+   * to be set in the browser localStorage for authentication.
+   * @param {string} publicToken - the token to validate against
+   * @returns {Promise<{sessionToken: string|null, token: import("@prisma/client").temporary_auth_tokens & {user: import("@prisma/client").users} | null, error: string | null}>}
+   */
+  validate: async function (publicToken = "") {
+    /** @type {import("@prisma/client").temporary_auth_tokens & {user: import("@prisma/client").users} | undefined | null} **/
+    let token;
+
+    try {
+      if (!publicToken)
+        throw new Error(
+          "Public token is required to validate a temporary auth token.",
+        );
+      const presentedToken = String(publicToken);
+      token = await prisma.temporary_auth_tokens.findUnique({
+        where: { token: hashTemporaryToken(presentedToken) },
+        include: { user: true },
+      });
+      if (!token) {
+        const legacy = await prisma.temporary_auth_tokens.findUnique({
+          where: { token: presentedToken },
+          include: { user: true },
+        });
+        if (legacy) {
+          token = await prisma.temporary_auth_tokens.update({
+            where: { id: legacy.id },
+            data: { token: hashTemporaryToken(presentedToken) },
+            include: { user: true },
+          });
+        }
+      }
+      if (!token) throw new Error("Invalid token.");
+      if (token.expiresAt < new Date()) throw new Error("Token expired.");
+      if (token.user.suspended) throw new Error("User account suspended.");
+
+      // Atomically claim the single-use token: delete only if it still exists
+      // and hasn't expired. If count === 0, a concurrent request already claimed
+      // it — refuse to issue a second session token (prevents check-then-act race).
+      const claimResult = await prisma.temporary_auth_tokens.deleteMany({
+        where: {
+          id: token.id,
+          expiresAt: { gte: new Date() },
+        },
+      });
+      if (claimResult.count === 0) {
+        throw new Error("Token already used or expired.");
+      }
+
+      // Create a new session token for the user valid for 30 days
+      const sessionToken = makeJWT(
+        { id: token.user.id, username: token.user.username },
+        process.env.JWT_EXPIRY,
+      );
+
+      return {
+        sessionToken,
+        token: {
+          id: token.id,
+          userId: token.userId,
+          expiresAt: token.expiresAt,
+          user: token.user,
+        },
+        error: null,
+      };
+    } catch (error) {
+      consoleLogger.error(
+        "FAILED TO VALIDATE TEMPORARY AUTH TOKEN.",
+        error.message,
+      );
+      return { sessionToken: null, token: null, error: error.message };
+    } finally {
+      // Best-effort cleanup: if the token was found but not claimed (e.g.,
+      // validation failed due to expiry/suspension), delete it so it can't
+      // be retried. If it was already claimed above, this is a no-op.
+      if (token) {
+        try {
+          await prisma.temporary_auth_tokens.deleteMany({
+            where: { id: token.id },
+          });
+        } catch {
+          // Already deleted or doesn't exist — ignore
+        }
+      }
+    }
+  },
+};
+
+module.exports = { TemporaryAuthToken, hashTemporaryToken };

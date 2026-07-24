@@ -1,27 +1,28 @@
-name: CI
+name: Quality Gate
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 concurrency:
-  group: ci-${{ github.workflow }}-${{ github.ref }}
+  group: quality-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
   contents: read
 
 env:
-  NODE_VERSION: "22"
+  NODE_VERSION: "24"
   YARN_VERSION: "1.22.22"
 
 jobs:
-  maintenance:
-    name: Maintenance scripts
+  quality:
+    name: Lint, types, tests, coverage, build
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 60
 
     steps:
       - name: Checkout repository
@@ -31,146 +32,69 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+          cache-dependency-path: yarn.lock
 
-      - name: Syntax-check maintenance scripts
-        run: node --check scripts/enable-multi-user.cjs
-
-      - name: Test maintenance scripts
-        run: node --test scripts/*.test.cjs
-
-      - name: Validate shell scripts
+      - name: Activate package manager
         run: |
-          bash -n scripts/deploy-production.sh
-          bash -n scripts/generate-auth-token.sh
+          corepack enable
+          corepack prepare "yarn@${YARN_VERSION}" --activate
+          yarn --version
+
+      - name: Install monorepo dependencies
+        run: yarn install --frozen-lockfile --network-timeout 600000
+
+      - name: Enforce repository architecture and policy
+        run: |
+          yarn check:layout
+          yarn check:branding
+          yarn check:spdx
+
+      - name: Validate repository maintenance scripts
+        run: |
+          node --check tooling/scripts/enable-multi-user.cjs
+          node --test tooling/scripts/*.test.cjs
+          bash -n tooling/scripts/deploy-production.sh
+          bash -n tooling/scripts/generate-auth-token.sh
+          bash -n platform/containers/image/docker-entrypoint.sh
+          bash -n platform/containers/image/docker-healthcheck.sh
 
       - name: Validate Docker Compose
         run: |
-          cp docker-opensin/.env.example docker-opensin/.env
+          cp platform/containers/compose/.env.example platform/containers/compose/.env
           docker compose \
-            -f docker-opensin/docker-compose.yml \
-            -f docker-opensin/docker-compose.production.yml \
+            -f platform/containers/compose/docker-compose.yml \
+            -f platform/containers/compose/docker-compose.production.yml \
             config >/dev/null
 
-  frontend:
-    name: Frontend
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
+      - name: Lint all applications
+        run: yarn lint:ci
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Type-check applications
+        run: yarn type-check
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Activate Yarn
+      - name: Verify translations and bundle graph
         run: |
-          corepack enable
-          corepack prepare "yarn@${YARN_VERSION}" --activate
-          yarn --version
+          yarn verify:translations
+          yarn workspace opensin-chat-frontend check:bundle
 
-      - name: Install frontend dependencies
-        run: |
-          yarn --cwd frontend install \
-            --frozen-lockfile \
-            --network-timeout 600000
+      - name: Check API dependency cycles
+        run: yarn workspace opensin-chat-server check:circular
 
-      - name: Lint frontend
-        run: yarn --cwd frontend lint:check
+      - name: Run unit and integration tests
+        run: yarn test
 
-      - name: Type-check frontend
-        run: yarn --cwd frontend type-check
+      - name: Enforce coverage thresholds
+        run: yarn test:coverage
 
-      - name: Verify translations
-        run: yarn --cwd frontend verify:translations
-
-      - name: Test frontend
-        run: yarn --cwd frontend test
-
-      - name: Build frontend
-        run: yarn --cwd frontend build
-
-  server:
-    name: Server
-    runs-on: ubuntu-latest
-    timeout-minutes: 35
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Activate Yarn
-        run: |
-          corepack enable
-          corepack prepare "yarn@${YARN_VERSION}" --activate
-          yarn --version
-
-      - name: Install server dependencies
-        run: |
-          yarn --cwd server install \
-            --frozen-lockfile \
-            --network-timeout 600000
-
-      - name: Lint server
-        run: yarn --cwd server lint:check
-
-      - name: Type-check server
-        run: yarn --cwd server type-check
-
-      - name: Check circular dependencies
-        run: yarn --cwd server check:circular
-
-      - name: Test server
-        run: yarn --cwd server test
-
-  collector:
-    name: Collector
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Activate Yarn
-        run: |
-          corepack enable
-          corepack prepare "yarn@${YARN_VERSION}" --activate
-          yarn --version
-
-      - name: Install collector dependencies
-        run: |
-          yarn --cwd collector install \
-            --frozen-lockfile \
-            --network-timeout 600000
-
-      - name: Lint collector
-        run: yarn --cwd collector lint:check
-
-      - name: Test collector
-        run: yarn --cwd collector test
+      - name: Build production frontend and Prisma client
+        run: yarn build
 
   container:
-    name: Production container
+    name: Production image and browser smoke
     runs-on: ubuntu-latest
-    timeout-minutes: 50
-    needs:
-      - maintenance
-      - frontend
-      - server
-      - collector
+    timeout-minutes: 60
+    needs: quality
 
     steps:
       - name: Checkout repository
@@ -183,11 +107,67 @@ jobs:
         run: |
           docker buildx build \
             --load \
-            --file docker/Dockerfile \
+            --file platform/containers/image/Dockerfile \
             --build-arg SKIP_CHROMIUM=1 \
             --tag opensin-chat:ci \
             .
 
-      - name: Inspect image
+      - name: Start production image
         run: |
-          docker image inspect opensin-chat:ci >/dev/null
+          set -euo pipefail
+          JWT_SECRET="$(openssl rand -hex 32)"
+          SIG_KEY="$(openssl rand -hex 32)"
+          SIG_SALT="$(openssl rand -hex 32)"
+          docker run -d \
+            --name opensin-chat-ci \
+            -p 38471:3001 \
+            -e STORAGE_DIR=/app/server/storage \
+            -e DATABASE_URL=file:/app/server/storage/opensin.db \
+            -e JWT_SECRET="$JWT_SECRET" \
+            -e SIG_KEY="$SIG_KEY" \
+            -e SIG_SALT="$SIG_SALT" \
+            opensin-chat:ci
+
+      - name: Wait for full readiness
+        run: |
+          for attempt in $(seq 1 60); do
+            status=$(docker inspect --format='{{.State.Health.Status}}' opensin-chat-ci 2>/dev/null || true)
+            if [ "$status" = "healthy" ]; then
+              exit 0
+            fi
+            if [ "$status" = "unhealthy" ]; then
+              docker logs opensin-chat-ci
+              exit 1
+            fi
+            sleep 2
+          done
+          docker logs opensin-chat-ci
+          exit 1
+
+      - name: Verify API and document worker
+        run: |
+          curl --fail --silent http://127.0.0.1:38471/api/ping >/dev/null
+          docker exec opensin-chat-ci curl --fail --silent http://127.0.0.1:8888/health >/dev/null
+
+      - name: Set up Node.js for Playwright
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+          cache-dependency-path: yarn.lock
+
+      - name: Install browser test dependencies
+        run: |
+          corepack enable
+          corepack prepare "yarn@${YARN_VERSION}" --activate
+          yarn install --frozen-lockfile --network-timeout 600000
+          yarn --cwd apps/web playwright install --with-deps chromium
+
+      - name: Run stateless browser smoke suite
+        env:
+          APP_URL: http://127.0.0.1:38471
+        run: yarn test:e2e:smoke
+
+      - name: Print container logs on failure
+        if: failure()
+        run: docker logs opensin-chat-ci || true

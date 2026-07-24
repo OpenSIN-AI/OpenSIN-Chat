@@ -4,8 +4,21 @@
 // Keeps the frontend vitest config (frontend/vitest.config.js) untouched.
 
 import { defineConfig } from "vitest/config";
+import { fileURLToPath, URL } from "node:url";
 
 export default defineConfig({
+  resolve: {
+    alias: [
+      {
+        find: /^\.\.\/server/,
+        replacement: fileURLToPath(new URL("./apps/api", import.meta.url)),
+      },
+      {
+        find: /^\.\.\/collector/,
+        replacement: fileURLToPath(new URL("./apps/worker", import.meta.url)),
+      },
+    ],
+  },
   test: {
     globals: true,
     environment: "node",
@@ -14,7 +27,7 @@ export default defineConfig({
     exclude: [
       "**/node_modules/**",
       "tests/e2e/**",
-      "frontend/**",
+      "apps/web/**",
     ],
     env: {
       INTEGRATION_TEST: "true",

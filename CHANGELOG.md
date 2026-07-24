@@ -5,6 +5,27 @@ All notable changes to **OpenSIN-Chat** are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
+## [1.15.0] — 2026-07-24 — SIN-Gmail and repository modernization
+
+### Added
+
+- Shared **SIN-Gmail** integration backed by Himalaya IMAP/SMTP and macOS Keychain.
+- Gmail account discovery, connection status, secure metadata-only configuration, and agent tooling compatibility.
+- Regression coverage for Himalaya v1 read, search, send, draft, flag, archive, inbox, and trash command forms.
+- Repository governance, integration documentation, operational tooling, and release-quality checks.
+
+### Changed
+
+- Repository layout migrated to the `apps/api`, `apps/web`, and `apps/worker` workspace structure.
+- Gmail credentials and legacy Google Apps Script bridge settings were removed from the application trust boundary.
+- Production frontend and server build paths now use the consolidated workspace layout.
+
+### Security
+
+- Gmail App Passwords remain outside the applications and are resolved only through Himalaya `auth.cmd` and macOS Keychain.
+- Legacy Gmail bridge secrets are removed from persisted application settings on migration.
+- Gmail availability fails closed when the shared runtime, Himalaya, or account configuration is unavailable.
+
 ## [Unreleased] — 2026-07-09 — Branch cleanup & dependency upgrades
 
 ### Changed

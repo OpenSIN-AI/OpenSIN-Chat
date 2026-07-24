@@ -1,5 +1,6 @@
 {
-  "buildCommand": "cd frontend && yarn install --frozen-lockfile && yarn build",
-  "outputDirectory": "frontend/dist",
+  "installCommand": "yarn install --frozen-lockfile",
+  "buildCommand": "yarn workspace opensin-chat-frontend build",
+  "outputDirectory": "apps/web/dist",
   "framework": null
 }

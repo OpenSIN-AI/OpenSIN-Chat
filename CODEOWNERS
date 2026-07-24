@@ -1,35 +1,31 @@
 # SPDX-License-Identifier: MIT
 # OpenSIN Chat — CODEOWNERS
-# Update owners as the team grows. Teams must be created under github.com/OpenSIN-AI.
 
-# Global fallback
 * @OpenSIN-AI
 
-# Backend / API
-server/ @OpenSIN-AI
-server/utils/agents/ @OpenSIN-AI
-server/utils/politician/ @OpenSIN-AI
-server/utils/research/ @OpenSIN-AI
-server/utils/reports/ @OpenSIN-AI
-server/utils/pdfAnalysis/ @OpenSIN-AI
+# Applications
+/apps/api/ @OpenSIN-AI
+/apps/api/utils/agents/ @OpenSIN-AI
+/apps/api/prisma/ @OpenSIN-AI
+/apps/web/ @OpenSIN-AI
+/apps/worker/ @OpenSIN-AI
 
-# Frontend
-frontend/ @OpenSIN-AI
-frontend/src/pages/Docs/ @OpenSIN-AI
+# Shared contracts
+/packages/ @OpenSIN-AI
 
-# Infrastructure & Deployment
-docker/ @OpenSIN-AI
-docker-opensin/ @OpenSIN-AI
-cloud-deployments/ @OpenSIN-AI
-scripts/deploy-production.sh @OpenSIN-AI
-scripts/oci-vm-bootstrap/ @OpenSIN-AI
+# Runtime and deployment
+/platform/ @OpenSIN-AI
+/platform/containers/ @OpenSIN-AI
 
-# Documentation
-docs/ @OpenSIN-AI
-*.md @OpenSIN-AI
+# Developer tooling and quality
+/tooling/ @OpenSIN-AI
+/tests/ @OpenSIN-AI
+/.github/ @OpenSIN-AI
 
-# Repository & CI configuration
-.github/ @OpenSIN-AI
-AGENTS.md @OpenSIN-AI
-ROADMAP.md @OpenSIN-AI
-PLAN.md @OpenSIN-AI
+# Documentation and governance
+/docs/ @OpenSIN-AI
+/AGENTS.md @OpenSIN-AI
+/CONTRIBUTING.md @OpenSIN-AI
+/SECURITY.md @OpenSIN-AI
+/package.json @OpenSIN-AI
+/yarn.lock @OpenSIN-AI

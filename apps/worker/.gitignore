@@ -1,0 +1,16 @@
+# Local environment
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Runtime input/output
+hotdir/*
+!hotdir/__HOTDIR__.md
+outputs/
+
+# Generated output and package-manager transients
+coverage/
+dist/
+package-lock.json
+yarn-error.log

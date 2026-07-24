@@ -1,112 +1,90 @@
 <!-- SPDX-License-Identifier: MIT -->
 
-# OpenSIN-Chat — Agent Context
+# OpenSIN Chat agent context
 
-> Project-specific guidance for AI agents working on OpenSIN-Chat.
-> For the full SIN-Code Tool Suite rules, see the global `~/.config/opencode/AGENTS.md`.
+This file defines repository-specific rules for coding agents.
 
-## Project Identity
+## Product
 
-- **Name:** OpenSIN-Chat
-- **Status:** Sovereign, independent AI platform (MIT-licensed)
-- **Domain:** Self-hosted AI workspace for political research, knowledge management, and assisted chat
-- **Brand:** OpenSIN-AI (primary wordmark, color `#009ee0`)
-- **Telemetry:** Completely disabled — no PostHog, no Mintplex CDN, no analytics
+OpenSIN Chat is a self-hosted AI workspace for chat, retrieval, document analysis, agents and controlled integrations.
 
-## Architecture
+Do not describe the repository as production-ready based on documentation alone. CI, runtime health and executed tests are the source of truth.
+
+## Canonical architecture
 
 ```text
-OpenSIN-Chat/
-├── frontend/          Vite + React 19 + TypeScript + Tailwind + i18next
-├── server/            Node.js + Express + Prisma + SQLite
-├── collector/         Node.js worker service for document parsing, OCR, and extraction
-├── docker/            Canonical production image and runtime scripts
-├── docker-opensin/    Hardened Compose profiles
-├── cloud-deployments/ AWS, GCP, Azure, DO, Helm, OpenShift stubs
-├── docs/              Architecture, ADRs, plans, runbooks
-└── tests/             E2E and integration tests
+apps/
+  web/       browser application
+  api/       API, persistence, authentication and agent orchestration
+  worker/    document parsing, OCR, scraping and extraction
+packages/    stable shared contracts
+platform/    containers, deployment and operational infrastructure
+tooling/     developer tools, skills and generated engineering artifacts
+docs/        current documentation and explicit archives
+tests/       cross-application integration and browser tests
 ```
 
-## Key Commands
+Read `docs/repository-layout.md` before moving or creating files.
 
-| Task | Command |
-|---|---|
-| Install | `yarn install` (root, server, frontend) |
-| Dev server | `yarn dev:server` + `yarn dev:frontend` |
-| Build | `yarn build` |
-| Lint | `yarn lint:check` |
-| Tests | `yarn test` (frontend), `yarn test:server` (server) |
-| Bundle check | `yarn check:bundle` |
-| SkillOpt-Sleep (dry-run) | `skillopt-sleep dry-run --project . --backend mock --progress` |
-| SkillOpt-Sleep (full + adopt) | `skillopt-sleep run --project . --backend claude` then `skillopt-sleep adopt` |
-| Schedule nightly auto-evolution | `skillopt-sleep schedule --project .` |
+## Commands
 
-## Working Rules
-
-1. **Always use SIN-Code tools first** (`sin_discover`, `sin_grasp`, `sin_scout`, `sin_execute`, `sin_map`, etc.) instead of OpenCode built-ins.
-2. **On macOS, use OrbStack (`orb`)**, never `docker`.
-3. **CoDocs standard:** every meaningful code file needs a `.doc.md` companion and a `Purpose` + `Docs:` header.
-4. **No direct `main` mutations** — edits go through normal branch/PR workflow unless explicitly told otherwise.
-5. **Keep minimal changes** — preserve existing logic and style.
-6. **Brand guard:** never re-introduce `AnythingLLM` or `Mintplex Labs` strings outside allowed files (see `scripts/check-branding.sh`).
-7. **VERIFY BEFORE YOU CLAIM (SACRED RULE).** An agent MUST NEVER report that something works, claim success, or end a task without first testing it end-to-end and seeing proof with its own eyes. "Testing" means: actually executing the flow, running the request, clicking the button, taking a screenshot, and confirming the expected result appeared. If the agent cannot test it (e.g. no browser available, no SSH access), the agent MUST explicitly say "I could not verify this — please test it yourself" instead of claiming it works. Claiming unverified success is the single most serious violation of trust an agent can commit. This rule overrides all other rules about brevity and conciseness.
-
-## SkillOpt + SkillOpt-Sleep Integration (Full)
-
-This repo is fully integrated with **SkillOpt** (text-space optimizer for agent skills) and **SkillOpt-Sleep** (nightly self-evolution from your own sessions).
-
-- **Main skill artifact**: `SKILL.md` (compact, optimized procedures). AGENTS.md remains the full context.
-- **Central source**: `/Users/jeremy/dev/SkillOpt` (source + plugins). CLI available globally via `skillopt-sleep`.
-- **Infra stack integration**: Central management lives in `/Users/jeremy/dev/Infra-SIN-OpenCode-Stack` (skills, agent configs, Claude/Codex plugins, opencode wrappers). Changes here propagate to team agents.
-- **Orca / worktrees**: Skills and .skillopt configs are part of the repo and travel with worktrees (amberjack, mola, etc.).
-- **OpenCode**: Global skill + commands available via `~/.config/opencode/skills/skillopt-sleep`. Use in opencode sessions.
-- **Claude Code + Codex**: Plugins + hooks from SkillOpt/plugins/{claude-code,codex} are reference-integrated. Use `/skillopt-sleep ...` (Claude) or equivalent in Codex. Cron + on-session hooks supported.
-- **Automatic behavior**:
-  - **Skill usage is automatic**: Once `SKILL.md` (or adopted best version) is in context / loaded by the agent (via system prompt, plugin, or explicit reference in AGENTS.md), the optimized procedures apply on every interaction without extra commands.
-  - **Evolution (Sleep) is not fully automatic by default**: Run `skillopt-sleep run --project .` (or `dry-run`, `status`, `adopt`). Install nightly cron with `skillopt-sleep schedule --project .` (or use the scripts in SkillOpt/plugins/.../scripts/install-cron.sh). Hooks can trigger on session end.
-  - In Claude Code: `/skillopt-sleep run`, `/skillopt-sleep adopt`, `/skillopt-sleep-handoff`.
-  - Prefer `--backend claude` or `codex` (or local compatible) for real optimization. Start with `mock` or `dry-run`.
-  - Proposals are **staged** (safe); explicit `adopt` applies with backup. Validation gate protects quality.
-
-### Quick Commands (in this repo)
 ```bash
-# Preview
-skillopt-sleep dry-run --project . --backend mock --progress
-
-# Full cycle (stages proposal)
-skillopt-sleep run --project . --backend claude --source auto
-
-# Review + adopt
-skillopt-sleep status --project .
-skillopt-sleep adopt --project .
-
-# Schedule nightly (automatic evolution)
-skillopt-sleep schedule --project .
-
-# From source checkout if needed
-cd /Users/jeremy/dev/SkillOpt && .venv/bin/python -m skillopt_sleep ...
+yarn install --frozen-lockfile
+yarn dev
+yarn check:layout
+yarn lint:ci
+yarn type-check
+yarn test
+yarn test:coverage
+yarn test:e2e
+yarn build
+yarn verify:strict
 ```
 
-See `/Users/jeremy/dev/SkillOpt/plugins/README.md` and docs/sleep/ for full details, backends, handoff mode, and preferences.
+Node.js 24 is required. The root `yarn.lock` is the only active lockfile.
 
-**For this repo + infra stack**: The SKILL.md + AGENTS.md are the primary targets for optimization. Run Sleep scoped to the project. Update central stack skills when patterns generalize.
+## Non-negotiable rules
 
-## Active Planning Documents
+1. Verify before claiming success. State explicitly when a build, test or browser flow was not run.
+2. Do not create product folders in the repository root.
+3. Do not create nested lockfiles.
+4. Do not place `.sin-code`, agent caches, screenshots, coverage or build output in active source trees.
+5. Local agent and runtime state belongs under ignored `.local/`.
+6. Generated engineering artifacts belong under ignored `tooling/artifacts/`.
+7. Historical reports and removed features belong under `docs/archive/` and are not current truth.
+8. Security-sensitive behavior must fail closed.
+9. Never log, commit or expose credentials.
+10. New product code belongs in an owning application until a real shared contract justifies `packages/`.
 
-- [`ROADMAP.md`](./ROADMAP.md) — GSD-style phase overview (all 10 phases complete; historical archive)
-- [`docs/MAJOR-UPGRADE-PLAN.md`](./docs/MAJOR-UPGRADE-PLAN.md) — future major version upgrade research (React 19, Prisma 7, Tailwind 4)
-- [`docs/PLAN-SCALE-DEPLOY-GUIDE.md`](./docs/PLAN-SCALE-DEPLOY-GUIDE.md) — production deployment guide (Docker Compose, Helm, Redis, CDN)
+## Application boundaries
 
-## Backlog & Issues
+- `apps/web` may consume API contracts but must not import API implementation files.
+- `apps/api` orchestrates product behavior and persistence.
+- `apps/worker` performs untrusted or resource-heavy document processing.
+- Product applications must not depend on `platform/` or `tooling/` implementation details.
+- OpenAfD/politician-specific behavior should move toward an explicit vertical rather than expanding the platform core.
 
-- GitHub Issues: all currently closed
+## Security status
 
-## Deployment
+- The web terminal has been removed from the active product.
+- Developer API keys, browser-extension keys, reset tokens and temporary SSO tokens are stored as digests; plaintext is returned only when issued.
+- Imported plugin handlers are not executed in the production API process.
+- API and document worker are jointly required for container health.
 
-- Production: `https://sinchat.delqhi.com` (Cloudflare Tunnel)
-- Container images: `ghcr.io/opensin-ai/opensin-chat`
-- Deployment guide: [`docs/OPENSIN-CHAT-DEPLOYMENT.md`](./docs/OPENSIN-CHAT-DEPLOYMENT.md)
+Do not weaken these controls for convenience.
 
-## Credits
+## Change discipline
 
-Original codebase by [Mintplex Labs Inc.](https://github.com/Mintplex-Labs) — used under MIT license.
+For structural changes, update package workspaces, CI, Docker, Compose, scripts, docs and tests in the same change. Run `yarn check:layout` after every move.
+
+For dependency upgrades, update the root lockfile and test the affected adapter or feature. Do not edit manifest versions without regenerating the lockfile.
+
+For database changes, add a Prisma migration and verify both a fresh database and an existing database upgrade.
+
+## Documentation
+
+Current documentation lives in `docs/`. Do not create new readiness reports or duplicate guides. Update the canonical document or add an ADR for a durable architectural decision.
+
+## Trust rule
+
+A large diff, a passing typecheck or a confident explanation is not proof. Proof means the relevant tests, build and user flow were actually executed and their results inspected.

@@ -1,0 +1,30 @@
+# Local environment
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Runtime storage and logs
+storage/
+storage-opensin/
+logs/
+documents/
+vector-cache/
+sslcert/
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+
+# Generated application output
+public/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Package-manager transients
+package-lock.json
+yarn-error.log
+
+# Test-generated fixtures
+__tests__/**/models/

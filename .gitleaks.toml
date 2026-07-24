@@ -1,0 +1,11 @@
+title = "OpenSIN Chat secret scanning"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Documentation may reference a credential through an environment variable, never as a literal"
+regexTarget = "match"
+regexes = [
+  '''(?i)Authorization:\s*Bearer\s+\$\{?[A-Z][A-Z0-9_]*\}?'''
+]
