@@ -13,7 +13,7 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 
 ## Status
 
-- Backlog: 8
+- Backlog: 12
 - In progress: 1
 - Blocked: 1
 - Done: 0
@@ -26,13 +26,17 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 | T-0001 | critical | implement | blocked | chatgpt-web | Security P0: Zugangsdaten rotieren und Standardpasswort entfernen | — |
 | T-0002 | critical | implement | in_progress | chatgpt-web | Security P0: Öffentliche Betriebsinformationen bereinigen | — |
 | T-0003 | critical | implement | backlog | chatgpt-web | Security P0: SYS_ADMIN Cap und Docker Security | — |
+| T-0011 | critical | implement | backlog | chatgpt-web | Oracle Cloud VM (sin-supabase) prüfen und updaten | — |
 | T-0004 | high | implement | backlog | chatgpt-web | CI/CD: Echte GitHub Actions implementieren | — |
 | T-0005 | high | implement | backlog | chatgpt-web | CI/CD: Immutable Docker Images mit Commit-SHA | — |
 | T-0006 | high | implement | backlog | chatgpt-web | Produkt: Videogenerierung und cvoice entfernen | — |
 | T-0007 | high | implement | backlog | chatgpt-web | Produkt: Navigation radikal fokussieren | — |
+| T-0012 | high | implement | backlog | chatgpt-web | OpenAfD-Chat Repository synchronisieren | — |
+| T-0013 | high | implement | backlog | chatgpt-web | Browser-Test aller Funktionen durchführen | — |
 | T-0008 | medium | implement | backlog | chatgpt-web | Repo: Veraltete Dokumente archivieren | — |
 | T-0009 | medium | implement | backlog | chatgpt-web | Repo: README und Branding aktualisieren | — |
 | T-0010 | medium | implement | backlog | chatgpt-web | Repo: Toolchain vereinheitlichen | — |
+| T-0014 | medium | implement | backlog | local-agent | Bugs und fehlende Features dokumentieren | — |
 
 ## Task details
 
@@ -79,6 +83,18 @@ SYS_ADMIN entfernen, cap_drop ALL, no-new-privileges, Port an 127.0.0.1 binden
 
 Acceptance:
 - Docker Compose hardened, kein SYS_ADMIN, sicherer Port-Bind
+
+### T-0011 — Oracle Cloud VM (sin-supabase) prüfen und updaten
+
+- Status: `backlog`
+- Owner: `chatgpt-web`
+- Kind: `implement`
+- Priority: `critical`
+- Dependencies: none
+- Updated: 2026-07-24T22:06:56+00:00
+
+Acceptance:
+- VM erreichbar, Docker-Container mit neuestem Code läuft, sinchat.delqhi.com erreichbar
 
 ### T-0004 — CI/CD: Echte GitHub Actions implementieren
 
@@ -136,6 +152,30 @@ Nur noch: Chats/Projekte, Quellen/Dokumente, Politische Daten, Recherche, Berich
 Acceptance:
 - Primäre Navigation nur noch 6 Einträge, versteckte Features hinter Labor oder komplett entfernt
 
+### T-0012 — OpenAfD-Chat Repository synchronisieren
+
+- Status: `backlog`
+- Owner: `chatgpt-web`
+- Kind: `implement`
+- Priority: `high`
+- Dependencies: none
+- Updated: 2026-07-24T22:06:57+00:00
+
+Acceptance:
+- OpenAfD-Chat hat gleichen Stand wie OpenSIN-Chat, alle Änderungen gepusht
+
+### T-0013 — Browser-Test aller Funktionen durchführen
+
+- Status: `backlog`
+- Owner: `chatgpt-web`
+- Kind: `implement`
+- Priority: `high`
+- Dependencies: none
+- Updated: 2026-07-24T22:06:58+00:00
+
+Acceptance:
+- Web-Suche, Datei-Upload, Quellen-Dateien, Chat-Funktionen alle getestet und dokumentiert
+
 ### T-0008 — Repo: Veraltete Dokumente archivieren
 
 - Status: `backlog`
@@ -178,10 +218,20 @@ Eine Node-Version, ein Paketmanager, ein ESLint-Major, ein TypeScript-Major. Col
 Acceptance:
 - Keine doppelten Lockfiles, konsistente ESLint/TS-Versionen, Root-Scripts einheitlich
 
+### T-0014 — Bugs und fehlende Features dokumentieren
+
+- Status: `backlog`
+- Owner: `local-agent`
+- Kind: `implement`
+- Priority: `medium`
+- Dependencies: none
+- Updated: 2026-07-24T22:06:59+00:00
+
+Acceptance:
+- Taskplan mit allen Bugs und fehlenden Features aktualisiert
+
 ## Recent events
 
-- 2026-07-24T19:39:49+00:00 — `local-agent` — `plan_initialized`: CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinigung
-- 2026-07-24T19:40:24+00:00 — `local-agent` — `task_added` `T-0001`: Security P0: Zugangsdaten rotieren und Standardpasswort entfernen
 - 2026-07-24T19:40:24+00:00 — `local-agent` — `task_added` `T-0002`: Security P0: Öffentliche Betriebsinformationen bereinigen
 - 2026-07-24T19:40:25+00:00 — `local-agent` — `task_added` `T-0003`: Security P0: SYS_ADMIN Cap und Docker Security
 - 2026-07-24T19:40:25+00:00 — `local-agent` — `task_added` `T-0004`: CI/CD: Echte GitHub Actions implementieren
@@ -198,3 +248,7 @@ Acceptance:
 - 2026-07-24T21:31:02+00:00 — `chatgpt-web` — `task_blocked` `T-0001`: Produktionsrotation nicht verifizierbar: erreichbarer Host enthält keinen OpenSIN-Checkout/Container; direkter Test des historischen Credentials am externen Login wurde vom Connector-Sicherheitsfilter blockiert. Repository-Härtung und Secret-Scan sind abgeschlossen.
 - 2026-07-24T21:31:19+00:00 — `chatgpt-web` — `task_claimed` `T-0002`: claimed by chatgpt-web
 - 2026-07-24T21:31:20+00:00 — `chatgpt-web` — `progress` `T-0002`: T-0002 gestartet: aktueller Worktree und Git-Historie werden auf konkrete VM-/SSH-/Port-/Secret-Betriebsdaten geprüft; Werte werden nur redigiert/fingerprinted ausgegeben.
+- 2026-07-24T22:06:56+00:00 — `local-agent` — `task_added` `T-0011`: Oracle Cloud VM (sin-supabase) prüfen und updaten
+- 2026-07-24T22:06:57+00:00 — `local-agent` — `task_added` `T-0012`: OpenAfD-Chat Repository synchronisieren
+- 2026-07-24T22:06:58+00:00 — `local-agent` — `task_added` `T-0013`: Browser-Test aller Funktionen durchführen
+- 2026-07-24T22:06:59+00:00 — `local-agent` — `task_added` `T-0014`: Bugs und fehlende Features dokumentieren
