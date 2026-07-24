@@ -46,7 +46,7 @@
     "@mintplex-labs/mdpdf": "^0.1.9",
     "@modelcontextprotocol/sdk": "^1.26.0",
     "@napi-rs/canvas": "1.0.2",
-    "@prisma/adapter-better-sqlite3": "7.8.0",
+    "@prisma/adapter-better-sqlite3": "7.9.0",
     "@prisma/client": "7.8.0",
     "@supabase/storage-js": "^2.110.6",
     "@vscode/ripgrep": "1.18.0",
