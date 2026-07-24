@@ -65,7 +65,7 @@
     "@tiptap/extension-youtube": "^3.27.3",
     "@tiptap/extensions": "^3.27.3",
     "@tiptap/pm": "^3.27.3",
-    "@tiptap/react": "^3.27.3",
+    "@tiptap/react": "^3.28.0",
     "@tiptap/starter-kit": "^3.27.3",
     "cronstrue": "^3.24.0",
     "dayjs": "^1.11.21",
