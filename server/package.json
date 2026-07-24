@@ -79,7 +79,7 @@
     "langchain": "1.5.3",
     "marked": "18.0.6",
     "mime": "^4.1.0",
-    "minimatch": "^9",
+    "minimatch": "^10",
     "mssql": "^12.7.0",
     "multer": "2.2.0",
     "mysql2": "^3.22.6",
