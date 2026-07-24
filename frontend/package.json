@@ -154,7 +154,7 @@
     "svgo": "^4.0.0",
     "tailwindcss": "^4.0.0",
     "typescript": "^7.0.2",
-    "typescript-eslint": "^8.62.1",
+    "typescript-eslint": "^8.65.0",
     "util": "^0.12.5",
     "vite": "8.1.4",
     "vite-plugin-image-optimizer": "^2.0.0",
