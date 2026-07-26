@@ -13,10 +13,10 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 
 ## Status
 
-- Backlog: 12
-- In progress: 1
+- Backlog: 10
+- In progress: 2
 - Blocked: 1
-- Done: 0
+- Done: 2
 - Cancelled: 0
 
 ## Tasks
@@ -32,11 +32,12 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 | T-0006 | high | implement | backlog | chatgpt-web | Produkt: Videogenerierung und cvoice entfernen | — |
 | T-0007 | high | implement | backlog | chatgpt-web | Produkt: Navigation radikal fokussieren | — |
 | T-0012 | high | implement | backlog | chatgpt-web | OpenAfD-Chat Repository synchronisieren | — |
-| T-0013 | high | implement | backlog | chatgpt-web | Browser-Test aller Funktionen durchführen | — |
+| T-0013 | high | implement | in_progress | chatgpt-web | Browser-Test aller Funktionen durchführen | — |
+| T-0015 | high | ops | done | local-agent | Manual ChatGPT Delegation Required | — |
 | T-0008 | medium | implement | backlog | chatgpt-web | Repo: Veraltete Dokumente archivieren | — |
 | T-0009 | medium | implement | backlog | chatgpt-web | Repo: README und Branding aktualisieren | — |
 | T-0010 | medium | implement | backlog | chatgpt-web | Repo: Toolchain vereinheitlichen | — |
-| T-0014 | medium | implement | backlog | local-agent | Bugs und fehlende Features dokumentieren | — |
+| T-0014 | medium | implement | done | local-agent | Bugs und fehlende Features dokumentieren | — |
 
 ## Task details
 
@@ -166,15 +167,31 @@ Acceptance:
 
 ### T-0013 — Browser-Test aller Funktionen durchführen
 
-- Status: `backlog`
+- Status: `in_progress`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-07-24T22:06:58+00:00
+- Updated: 2026-07-25T01:20:08+00:00
 
 Acceptance:
 - Web-Suche, Datei-Upload, Quellen-Dateien, Chat-Funktionen alle getestet und dokumentiert
+
+### T-0015 — Manual ChatGPT Delegation Required
+
+- Status: `done`
+- Owner: `local-agent`
+- Kind: `ops`
+- Priority: `high`
+- Dependencies: none
+- Updated: 2026-07-25T01:23:10+00:00
+
+Browser automation cannot send messages to ChatGPT due to ProseMirror editor limitations. User must manually paste delegation prompt into ChatGPT or use ChatGPT API.
+
+Acceptance:
+- Delegation message sent to ChatGPT and tasks started
+
+Evidence: Manual delegation prompt written to .sin-gpt-web/delegation-prompt.md and handoff.md. User must paste delegation message into ChatGPT manually or use ChatGPT API.
 
 ### T-0008 — Repo: Veraltete Dokumente archivieren
 
@@ -220,23 +237,22 @@ Acceptance:
 
 ### T-0014 — Bugs und fehlende Features dokumentieren
 
-- Status: `backlog`
+- Status: `done`
 - Owner: `local-agent`
 - Kind: `implement`
 - Priority: `medium`
 - Dependencies: none
-- Updated: 2026-07-24T22:06:59+00:00
+- Updated: 2026-07-25T01:22:45+00:00
+
+Bugs und fehlende Features dokumentiert: 1) Orca browser cannot send messages to ChatGPT ProseMirror editor (orca fill fills field but send button doesn't activate). 2) OCI VM SSH connection times out but web services work. 3) Type-check passes for both repos. 4) Both repos clean and on main. 5) Both sites live (sinchat.delqhi.com, openafd.delqhi.com).
 
 Acceptance:
 - Taskplan mit allen Bugs und fehlenden Features aktualisiert
 
+Evidence: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirror editor. 2) OCI VM SSH times out but web services work. 3) Type-check passes for both repos. 4) Both repos clean and on main. 5) Both sites live. See .sin-gpt-web/handoff.md for full details.
+
 ## Recent events
 
-- 2026-07-24T19:40:24+00:00 — `local-agent` — `task_added` `T-0002`: Security P0: Öffentliche Betriebsinformationen bereinigen
-- 2026-07-24T19:40:25+00:00 — `local-agent` — `task_added` `T-0003`: Security P0: SYS_ADMIN Cap und Docker Security
-- 2026-07-24T19:40:25+00:00 — `local-agent` — `task_added` `T-0004`: CI/CD: Echte GitHub Actions implementieren
-- 2026-07-24T19:40:25+00:00 — `local-agent` — `task_added` `T-0005`: CI/CD: Immutable Docker Images mit Commit-SHA
-- 2026-07-24T19:40:26+00:00 — `local-agent` — `task_added` `T-0006`: Produkt: Videogenerierung und cvoice entfernen
 - 2026-07-24T19:40:26+00:00 — `local-agent` — `task_added` `T-0007`: Produkt: Navigation radikal fokussieren
 - 2026-07-24T19:40:26+00:00 — `local-agent` — `task_added` `T-0008`: Repo: Veraltete Dokumente archivieren
 - 2026-07-24T19:40:27+00:00 — `local-agent` — `task_added` `T-0009`: Repo: README und Branding aktualisieren
@@ -252,3 +268,8 @@ Acceptance:
 - 2026-07-24T22:06:57+00:00 — `local-agent` — `task_added` `T-0012`: OpenAfD-Chat Repository synchronisieren
 - 2026-07-24T22:06:58+00:00 — `local-agent` — `task_added` `T-0013`: Browser-Test aller Funktionen durchführen
 - 2026-07-24T22:06:59+00:00 — `local-agent` — `task_added` `T-0014`: Bugs und fehlende Features dokumentieren
+- 2026-07-25T01:20:08+00:00 — `local-agent` — `task_claimed` `T-0013`: claimed by chatgpt-web
+- 2026-07-25T01:21:55+00:00 — `local-agent` — `task_added` `T-0015`: Manual ChatGPT Delegation Required
+- 2026-07-25T01:22:29+00:00 — `local-agent` — `task_updated` `T-0014`: task fields updated
+- 2026-07-25T01:22:45+00:00 — `local-agent` — `task_completed` `T-0014`: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirror editor. 2) OCI VM SSH times out but web services work. 3) Type-check passes for both repos. 4) Both repos clean and on main. 5) Both sites live. See .sin-gpt-web/handoff.md for full details.
+- 2026-07-25T01:23:10+00:00 — `local-agent` — `task_completed` `T-0015`: Manual delegation prompt written to .sin-gpt-web/delegation-prompt.md and handoff.md. User must paste delegation message into ChatGPT manually or use ChatGPT API.
