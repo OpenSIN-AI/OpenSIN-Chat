@@ -92,22 +92,22 @@ const request = async (method, path, body = null, headers = {}) => {
 ### Prerequisites
 1. Install dependencies:
    ```bash
-   cd /Users/jeremy/dev/OpenSIN-Chat
-   npm install
+   cd /path/to/OpenSIN-Chat
+   yarn install --frozen-lockfile
    ```
 
 2. Start the server:
    ```bash
-   npm run dev:all
+   yarn dev
    ```
 
 3. Run tests:
    ```bash
-   npm test
+   yarn test
    ```
 
 ### Test Commands
-- **Run all tests**: `npm test`
+- **Run all tests**: `yarn test`
 - **Run specific test file**: `npm test -- --testPathPattern=system.test.js`
 - **Run tests in watch mode**: `npm test -- --watch`
 

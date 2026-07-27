@@ -24,8 +24,6 @@ describe("feature flags", () => {
   test("high-risk features are disabled by default", () => {
     expect(featureSnapshot({})).toEqual({
       imageGeneration: false,
-      videoGeneration: false,
-      cvoiceTts: false,
     });
   });
 
@@ -36,11 +34,6 @@ describe("feature flags", () => {
       }),
     ).toBe(true);
 
-    expect(
-      isFeatureEnabled("videoGeneration", {
-        ENABLE_VIDEO_GENERATION: "false",
-      }),
-    ).toBe(false);
   });
 
   test("unknown feature names fail closed", () => {

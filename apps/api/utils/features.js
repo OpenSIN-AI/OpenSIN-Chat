@@ -3,8 +3,6 @@
 
 const FEATURE_ENVIRONMENT_KEYS = Object.freeze({
   imageGeneration: "ENABLE_IMAGE_GENERATION",
-  videoGeneration: "ENABLE_VIDEO_GENERATION",
-  cvoiceTts: "ENABLE_CVOICE_TTS",
 });
 
 const TRUE_VALUES = new Set(["1", "true", "yes", "on"]);

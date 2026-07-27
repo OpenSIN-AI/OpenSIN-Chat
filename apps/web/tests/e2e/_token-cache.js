@@ -18,11 +18,16 @@ const TOKEN_CACHE = path.join(os.tmpdir(), "opensin-chat-e2e-token.txt");
  * Login and cache the token, or return the cached token if it exists.
  * Retries with exponential backoff if the rate limiter returns 429.
  *
- * Uses the OPENSIN_PASSWORD env var (defaulting to empty password for the
- * no-auth dev configuration).
+ * Uses the OPENSIN_PASSWORD env var. Empty-password development mode requires
+ * the explicit ALLOW_EMPTY_E2E_PASSWORD=1 opt-in.
  */
 export async function sharedLogin(request) {
-  const password = process.env.OPENSIN_PASSWORD || "";
+  const password = process.env.OPENSIN_PASSWORD;
+  if (!password && process.env.ALLOW_EMPTY_E2E_PASSWORD !== "1") {
+    throw new Error(
+      "OPENSIN_PASSWORD is required. Set ALLOW_EMPTY_E2E_PASSWORD=1 only for an isolated local no-auth test instance.",
+    );
+  }
 
   const base =
     process.env.APP_URL ||

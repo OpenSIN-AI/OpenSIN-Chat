@@ -7,7 +7,6 @@ import { useTranslation } from "react-i18next";
 import { Sparkle } from "@phosphor-icons/react/dist/csr/Sparkle";
 import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
 import { ImageIcon } from "@phosphor-icons/react/dist/csr/Image";
-import { VideoCamera } from "@phosphor-icons/react/dist/csr/VideoCamera";
 import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
 import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
 import { X } from "@phosphor-icons/react/dist/csr/X";
@@ -87,18 +86,6 @@ export const AGENT_MODES: AgentMode[] = [
     prefix: "@agent [image-gen]",
     systemPromptHint:
       "You are operating in IMAGE GENERATION mode. Use the image-generation tool to create the requested image. Translate the user's request into a detailed, descriptive English image prompt covering subject, style, composition, colors, and lighting. Choose a short descriptive filename. If image generation is not configured, tell the user to enable and configure the 'Image Generation' skill in the admin agent settings.",
-  },
-  {
-    id: "video-gen",
-    icon: VideoCamera,
-    label: undefined,
-    labelKey: "agentMode.videoGen",
-    description: undefined,
-    descriptionKey: "agentMode.videoGenDesc",
-    enabled: FEATURES.videoGeneration,
-    prefix: "@agent [video-gen]",
-    systemPromptHint:
-      "You are operating in VIDEO GENERATION mode. Use the video-generation tool to create a short video.",
   },
   {
     id: "report",

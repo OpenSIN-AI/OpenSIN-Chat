@@ -9,9 +9,8 @@
 // Run locally (the Prisma client path is resolved automatically):
 //   node tests/e2e/webAccessPrompt.test.cjs
 //
-// Or run inside the OpenSIN container (legacy path):
-//   docker cp tests/e2e/webAccessPrompt.test.cjs opensin-chat:/tmp/test.cjs
-//   docker exec openafd sh -c 'cd /app/server && node /tmp/test.cjs'
+// The test is included in the image build context and must not be hot-patched
+// into a running production container.
 
 const http = require("http");
 const path = require("path");
@@ -19,11 +18,14 @@ const { existsSync } = require("fs");
 
 // Resolve the Prisma client location without hardcoding the Docker /app/ path.
 // Priority: 1) PRISMA_CLIENT_PATH env var, 2) local repo checkout relative to this test,
-// 3) legacy Docker path so the old documented container command still works.
+// 3) canonical image path.
 const PRISMA_CLIENT_PATH = (() => {
   if (process.env.PRISMA_CLIENT_PATH) return process.env.PRISMA_CLIENT_PATH;
 
-  const localPath = path.resolve(__dirname, "../../server/node_modules/@prisma/client");
+  const localPath = path.resolve(
+    __dirname,
+    "../../apps/api/node_modules/@prisma/client",
+  );
   if (existsSync(localPath)) return localPath;
 
   return "/app/server/node_modules/@prisma/client";

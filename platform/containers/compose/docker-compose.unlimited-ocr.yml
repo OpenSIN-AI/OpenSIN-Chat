@@ -25,7 +25,7 @@ services:
     image: vllm/vllm-openai:unlimited-ocr@sha256:542961a42d9183813819a23ef3a8b50bfb4f5ef7b0fb4f8e4f56edd8445efb18
     container_name: ${UNLIMITED_OCR_CONTAINER_NAME:-opensin-unlimited-ocr}
     restart: unless-stopped
-    ipc: host
+    shm_size: "${UNLIMITED_OCR_SHM_SIZE:-8gb}"
     gpus: all
     command:
       - baidu/Unlimited-OCR
@@ -62,6 +62,8 @@ services:
       timeout: 15s
       retries: 60
       start_period: 10m
+    cap_drop:
+      - ALL
     security_opt:
       - no-new-privileges:true
     logging:

@@ -22,7 +22,7 @@ The politician sync system fetches data from three sources:
 ### Trigger Sync Manually
 
 ```bash
-cd /Users/jeremy/dev/OpenSIN-Chat/server
+cd apps/api
 node jobs/sync-politician-data.js
 ```
 
@@ -39,7 +39,7 @@ curl -X POST http://localhost:3001/api/politician/sync/trigger \
 curl http://localhost:3001/api/politician/sync/status
 
 # Direct DB
-cd /Users/jeremy/dev/OpenSIN-Chat/server
+cd apps/api
 node -e "
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
@@ -62,7 +62,7 @@ stats();
 
 ```bash
 # Sync logs (if storage/logs/ exists)
-cat /Users/jeremy/dev/OpenSIN-Chat/server/storage/logs/politician-sync.log
+cat apps/api/storage/logs/politician-sync.log
 
 # Or via DB
 node -e "
@@ -121,7 +121,7 @@ Fallback: Abgeordnetenwatch is used automatically.
 **Cause**: Prisma migrations not applied.
 **Fix**: 
 ```bash
-cd /Users/jeremy/dev/OpenSIN-Chat/server
+cd apps/api
 npx prisma migrate deploy
 ```
 

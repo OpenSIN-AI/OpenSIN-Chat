@@ -22,16 +22,29 @@ Set at minimum strong values for authentication, JWT signing and encryption. Do 
 
 ## Build and start
 
-From the repository root:
+For a local production-equivalent build, tag the image with the exact commit:
 
 ```bash
+commit_sha=$(git rev-parse HEAD)
+export OPENSIN_IMAGE_REPOSITORY=opensin-chat
+export OPENSIN_IMAGE_TAG="$commit_sha"
+
 docker compose \
   -f platform/containers/compose/docker-compose.yml \
   -f platform/containers/compose/docker-compose.production.yml \
-  up --build -d
+  build opensin-chat
+
+docker compose \
+  -f platform/containers/compose/docker-compose.yml \
+  -f platform/containers/compose/docker-compose.production.yml \
+  up -d --no-deps opensin-chat
 ```
 
-The Compose build context is the repository root and the image definition is `platform/containers/image/Dockerfile`.
+For a remote production host, use `tooling/scripts/deploy-production.sh`; it
+resolves `origin/<branch>`, builds the full-SHA image, verifies internal and
+optional public health, and retains a rollback image. The Compose build context
+is the repository root and the image definition is
+`platform/containers/image/Dockerfile`.
 
 ## Required storage
 

@@ -142,22 +142,6 @@ function createGetters(ss) {
           "TTS_KOKORO_VOICE_MODEL",
         ),
 
-        // cvoice.ai TTS
-        TTSCvoiceApiKey: !!(await SettingsManager.get("TTS_CVOICE_API_KEY")),
-        TTSCvoiceEndpoint: await SettingsManager.get("TTS_CVOICE_ENDPOINT"),
-        TTSCvoiceVoiceModel: await SettingsManager.get(
-          "TTS_CVOICE_VOICE_MODEL",
-        ),
-        TTSCvoiceCustomVoiceModel: await SettingsManager.get(
-          "TTS_CVOICE_CUSTOM_VOICE_MODEL",
-        ),
-        TTSCvoicePersonName: await SettingsManager.get(
-          "TTS_CVOICE_PERSON_NAME",
-        ),
-        TTSCvoicePersonSlug: await SettingsManager.get(
-          "TTS_CVOICE_PERSON_SLUG",
-        ),
-
         // STT Selection
         SpeechToTextProvider:
           (await SettingsManager.get("STT_PROVIDER")) || "native",

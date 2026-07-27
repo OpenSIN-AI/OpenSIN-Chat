@@ -5,8 +5,7 @@
  *
  * Run: node frontend/tests/e2e/sidebar-tabs-repro.mjs [before|after]
  */
-import pkg from "/Users/jeremy/dev/OpenSIN-Chat/node_modules/playwright/index.js";
-const { chromium } = pkg;
+import { chromium } from "playwright";
 
 const STAGE = process.argv[2] || "before";
 const APP_URL = process.env.APP_URL || "http://localhost:3001";
@@ -20,10 +19,16 @@ function log(msg) {
 }
 
 async function unlock(page) {
+  const password = process.env.OPENSIN_PASSWORD;
+  if (!password && process.env.ALLOW_EMPTY_E2E_PASSWORD !== "1") {
+    throw new Error(
+      "OPENSIN_PASSWORD is required. Set ALLOW_EMPTY_E2E_PASSWORD=1 only for an isolated local no-auth test instance.",
+    );
+  }
   const resp = await fetch(APP_URL + "/api/request-token", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username: "admin", password: "" }),
+    body: JSON.stringify({ username: "admin", password }),
   });
   const { token } = await resp.json();
   await page.goto(APP_URL + "/", { waitUntil: "domcontentloaded" });

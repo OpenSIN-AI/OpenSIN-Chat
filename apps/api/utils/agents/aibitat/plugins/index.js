@@ -69,9 +69,4 @@ if (isFeatureEnabled("imageGeneration")) {
   registerPlugin("imageGeneration", imageGeneration);
 }
 
-if (isFeatureEnabled("videoGeneration")) {
-  const { videoGeneration } = require("./video-generation.js");
-  registerPlugin("videoGeneration", videoGeneration);
-}
-
 module.exports = registry;

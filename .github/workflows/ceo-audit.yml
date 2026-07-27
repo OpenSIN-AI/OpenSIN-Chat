@@ -1,0 +1,87 @@
+name: CEO Audit Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "40 5 * * 1"
+  workflow_dispatch:
+
+concurrency:
+  group: ceo-audit-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: "24"
+  YARN_VERSION: "1.22.22"
+
+jobs:
+  audit:
+    name: Architecture, policy, dependencies, deployment
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+
+    steps:
+      - name: Checkout full repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+          cache-dependency-path: yarn.lock
+
+      - name: Activate Yarn Classic
+        run: |
+          corepack enable
+          corepack prepare "yarn@${YARN_VERSION}" --activate
+          yarn --version
+
+      - name: Install exact dependency graph
+        run: yarn install --frozen-lockfile --ignore-scripts --network-timeout 600000
+
+      - name: Enforce repository and public-operations policy
+        run: |
+          yarn check:layout
+          yarn check:branding
+          yarn check:spdx
+          yarn check:public-ops
+          yarn check:dependencies
+
+      - name: Verify generated documentation is current
+        run: |
+          yarn workspace opensin-chat-frontend sync:docs
+          git diff --exit-code -- apps/web/src/pages/Docs/content
+
+      - name: Validate maintenance scripts
+        run: |
+          bash -n tooling/scripts/deploy-production.sh
+          bash -n tooling/scripts/backup-retention.sh
+          bash -n tooling/scripts/verify-backup.sh
+          bash -n tooling/scripts/oci-vm-bootstrap/emergency-recover.sh
+          bash -n tooling/scripts/oci-vm-bootstrap/aura-call-emergency-recover.sh
+          node --check tooling/scripts/check-public-operations.mjs
+
+      - name: Validate hardened production Compose
+        run: |
+          docker compose \
+            --env-file platform/containers/compose/.env.example \
+            -f platform/containers/compose/docker-compose.yml \
+            -f platform/containers/compose/docker-compose.production.yml \
+            config >/dev/null
+          UNLIMITED_OCR_API_KEY=ci-validation-only docker compose \
+            --env-file platform/containers/compose/.env.example \
+            -f platform/containers/compose/docker-compose.yml \
+            -f platform/containers/compose/docker-compose.unlimited-ocr.yml \
+            config >/dev/null
+
+      - name: Audit production dependencies
+        run: yarn audit --groups dependencies --level high

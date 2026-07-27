@@ -367,7 +367,7 @@ Die Politiker-DB ist beim ersten Start leer. Zum Befüllen:
 
 ```bash
 # Sync-Job manuell anstoßen
-cd /Users/jeremy/dev/OpenSIN-Chat/server
+cd apps/api
 node jobs/sync-politician-data.js
 ```
 
@@ -765,43 +765,18 @@ mit Quellenangabe.
 OpenSIN Chat unterstützt **7 TTS-Engines**. Die Auswahl erfolgt in den
 Audio-Einstellungen (`Einstellungen → Audio → TTS-Provider`).
 
-### 14.1 Verfügbare Provider
-
 | Provider | Typ | API-Key nötig | Besonderheit |
 |---|---|---|---|
 | **Native** | Browser Web Speech API | ❌ | Kein Internet, keine Qualitätsgarantie |
-| **OpenAI** | Cloud | ✅ | Offizielle OpenAI-TTS-Stimmen (alloy, echo, …) |
-| **OpenAI-kompatibel** | Cloud | ✅ | Funktioniert mit jedem OpenAI-kompatiblen Endpoint |
+| **OpenAI** | Cloud | ✅ | Offizielle OpenAI-TTS-Stimmen |
+| **OpenAI-kompatibel** | Cloud oder lokal | Optional | Funktioniert mit OpenAI-kompatiblen Endpoints |
 | **ElevenLabs** | Cloud | ✅ | Premium-Stimmen, hohe Qualität |
-| **Kokoro** | Lokal | ❌ | ONNX-Modell, läuft auf eigener Hardware |
-| **Piper** | Lokal | ❌ | Schnell, ressourcenschonend |
-| **NVIDIA NIM** | Cloud | ✅ | NVIDIA Magpie TTS via NIM-API |
-| **cvoice.ai** | Cloud | ✅ | **Deutsche Promi-Stimmen** (Gronkh, Dieter Bohlen, Joko, Julien Bam, Bushido, Daniela Katzenberger) + 20.000 Community-Stimmen |
+| **Kokoro** | Lokal | Optional | Selbst gehostete Open-Source-Stimmen |
+| **Piper** | Browser/lokal | ❌ | Schnell und datenschutzfreundlich |
+| **NVIDIA NIM** | Cloud | ✅ | NVIDIA Magpie TTS über die NIM-API |
 
-### 14.2 cvoice.ai einrichten (empfohlen für deutsche Inhalte)
-
-1. **Account erstellen:** https://cvoice.ai/dashboard/api
-2. **API-Key kopieren** (Format: `cvai_...`)
-3. **In `server/.env` eintragen:**
-   ```bash
-   TTS_PROVIDER="cvoice"
-   TTS_CVOICE_API_KEY=cvai_dein_key_hier
-   TTS_CVOICE_VOICE_MODEL=625332f3-27a9-4ecf-9a90-25265d901e72  # Gronkh (default)
-   ```
-4. **Server neu starten** — die Einstellung `Audio-Einstellungen → TTS-Provider → cvoice.ai`
-   wird automatisch verfügbar.
-
-**Wichtig:** Der API-Key bleibt serverseitig. Das Frontend sieht nur einen
-Boolean, ob ein Key gesetzt ist — der Key selbst wird nie an den Browser gesendet.
-
-### 14.3 Rate-Limits (cvoice.ai Gratis-Tier)
-
-- **10 Requests/Minute**
-- **1.000 Requests/Tag**
-
-OpenSIN Chat mildert das mit einem **256-Entry-LRU-Cache** ab: identische
-Texte + Stimme liefern immer dieselbe URL von cvoice.ai, also wird gecachte
-Audio ohne neuen API-Call ausgeliefert.
+Prominenten- und Stimmenklon-Anbieter gehören nicht zum Produkt. Verwende nur
+Stimmen, für die eine klare Einwilligung und Nutzungsberechtigung vorliegt.
 
 ---
 

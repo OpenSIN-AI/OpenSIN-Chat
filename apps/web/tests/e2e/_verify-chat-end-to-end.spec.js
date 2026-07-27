@@ -21,7 +21,9 @@ const SITE = {
   url: "https://sinchat.delqhi.com",
 };
 
-const SCREENSHOT_DIR = "/Users/jeremy/dev/OpenSIN-Chat/screenshots";
+const SCREENSHOT_DIR = path.resolve(
+  process.env.E2E_ARTIFACT_DIR || "tooling/artifacts/e2e",
+);
 
 const now = Date.now();
 const MARKER = `Verifiziere Chat Sichtbarkeit: Hallo OpenSIN! [E2E-${now}]`;

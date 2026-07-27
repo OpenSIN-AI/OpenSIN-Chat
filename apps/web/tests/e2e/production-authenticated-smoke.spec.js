@@ -13,7 +13,9 @@ import {
   assertAppLoaded,
 } from "./_helpers.js";
 
-const SCREENSHOT_DIR = "/Users/jeremy/dev/OpenSIN-Chat/screenshots";
+const SCREENSHOT_DIR = path.resolve(
+  process.env.E2E_ARTIFACT_DIR || "tooling/artifacts/e2e",
+);
 
 test.describe("authenticated production smoke", () => {
   const consoleErrors = [];

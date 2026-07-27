@@ -3865,36 +3865,6 @@ const TRANSLATIONS = {
       modelSelection: "Voice Model Selection",
       loadingModels: "-- loading available models --",
     },
-    cvoice: {
-      description:
-        "Use cvoice.ai for free hosted text-to-speech with 20,000+ character voices including curated German voices. Get an API key at",
-      docsLink: "cvoice.ai/api-docs",
-      voiceModel: {
-        label: "Voice Model",
-        germanGroup: "Curated German voices",
-        customOption: "Custom voice id…",
-        help: "Pick a curated German voice, or enter any voice id from the cvoice.ai dataset.",
-      },
-      customVoiceId: {
-        label: "Custom voice id",
-        placeholder: "e.g. bushido-official",
-        help: "Paste any voice id from https://cvoice.ai/dataset_voices.json",
-      },
-      advanced: {
-        toggle: "Advanced (person metadata)",
-        help: "Optional — only needed if you want cvoice.ai to attribute the voice to a specific person.",
-        personName: {
-          label: "Person name",
-          placeholder: "Gronkh",
-        },
-        personSlug: {
-          label: "Person slug",
-          placeholder: "gronkh",
-        },
-      },
-      rateLimitNotice:
-        "Free tier limits: 10 requests/minute and 1,000 requests/day. The server caches identical requests to stay within quota.",
-    },
   },
   speechToText: {
     genericOpenAi: {
@@ -4673,9 +4643,6 @@ const TRANSLATIONS = {
       nvidiaNim: "NVIDIA NIM",
       nvidiaNimDesc:
         "Use NVIDIA NIM's hosted text-to-speech API with high-quality voices.",
-      cvoice: "cvoice.ai",
-      cvoiceDesc:
-        "Free hosted TTS with 20,000+ character voices including curated German voices (Gronkh, Dieter Bohlen, Joko, Julien Bam, Daniela Katzenberger, Bushido).",
     },
   },
   embedChats: {
@@ -4797,8 +4764,6 @@ const TRANSLATIONS = {
       "Searches the web, analyzes sources, and creates a comprehensive research report",
     imageGen: "Generate images",
     imageGenDesc: "Create AI-generated images",
-    videoGen: "Generate video",
-    videoGenDesc: "Create AI-generated videos",
     reportGen: "Generate report",
     reportGenDesc: "Creates a structured, professional report with sources",
   },

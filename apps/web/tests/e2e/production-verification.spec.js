@@ -2,10 +2,9 @@
 // Purpose: Production smoke verification for OpenSIN-Chat.
 // Docs: frontend/tests/e2e/README.doc.md
 //
-// Runs from the local repo against the production sites. Because the operator
-// did not provide OPENSIN_PASSWORD in this environment, authenticated flows are
-// attempted only as a smoke check (login page renders, bad credentials are
-// rejected) and the report explicitly marks which flows require valid credentials.
+// Runs from the local repo against the configured production site. This suite
+// does not use a default credential; authenticated suites require
+// OPENSIN_PASSWORD through the shared login helper.
 import { test, expect } from "@playwright/test";
 import path from "path";
 import fs from "fs";
@@ -13,10 +12,10 @@ import fs from "fs";
 const SITES = {
   opensin: {
     name: "OpenSIN-Chat",
-    url: "https://sinchat.delqhi.com",
-    screenshotDir: "/Users/jeremy/dev/OpenSIN-Chat/screenshots",
-  },
-    screenshotDir: "/Users/jeremy/dev/OpenSIN-Chat/screenshots",
+    url: process.env.APP_URL || "https://sinchat.delqhi.com",
+    screenshotDir: path.resolve(
+      process.env.E2E_ARTIFACT_DIR || "tooling/artifacts/e2e",
+    ),
   },
 };
 

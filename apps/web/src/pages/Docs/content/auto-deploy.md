@@ -1,124 +1,55 @@
-# Auto-Deploy (Lokaler Polling-Cron auf dem Mac)
+# Local polling auto-deploy
 
-> **Status:** Dieses Dokument beschreibt den **lokalen Mac**-Auto-Deploy. Die
-> Produktions-Site `sinchat.delqhi.com` läuft seit der Migration auf der OCI VM
-> `sin-supabase`. Für Produktions-Deploys siehe `docs/OPENSIN-CHAT-DEPLOYMENT.md`
-> und `scripts/deploy-production.sh`. Ein Auto-Deploy für `sin-supabase` ist
-> noch einzurichten.
+`tooling/scripts/auto-deploy.sh` is an optional local polling deploy for a
+trusted host. Production operators should prefer the explicit
+`tooling/scripts/deploy-production.sh` workflow.
 
-Dieses Setup sorgt dafür, dass die **lokale** OpenSIN-Chat-Instanz automatisch
-aktualisiert wird, sobald etwas auf den `main`-Branch gepusht wird.
+## Security and immutability
 
-## Wie es funktioniert
+The polling deploy:
 
-Der Mac prüft per cron (oder launchd) in einem festen Intervall, ob es neue
-Commits auf `origin/main` gibt. Falls ja:
+1. refuses tracked or untracked source changes;
+2. fetches the configured remote branch;
+3. resolves the full target commit SHA;
+4. builds `IMAGE_REPOSITORY:<full-commit-sha>`;
+5. starts that exact image through the canonical Compose files;
+6. verifies the API health response;
+7. verifies the running image reference;
+8. restores a pre-tagged previous image if deployment fails.
 
-1. `git reset --hard origin/main` (Code aktualisieren)
-2. `docker compose build --no-cache` (Image **frisch** bauen — wichtig fürs Frontend-Bundle)
-3. `docker compose up -d` (Container neu starten)
-4. Healthcheck gegen `http://localhost:43939/api/ping`
+It never copies files into a running container and never rebuilds an old commit
+as a rollback mechanism.
 
-Das Skript dazu: [`scripts/auto-deploy.sh`](../scripts/auto-deploy.sh).
+## Configuration
 
-> **Warum `--no-cache`?** Ohne diesen Schalter darf Docker den Frontend-Build-Layer
-> aus dem Cache wiederverwenden. Dann läuft `yarn build` nicht erneut und das alte
-> JS-Bundle bleibt im Image — genau das war der ursprüngliche Bug.
-
-## Einrichtung
-
-### 1. Skript ausführbar machen
+Run from a trusted checkout:
 
 ```bash
-cd /pfad/zu/OpenSIN-Chat
-chmod +x scripts/auto-deploy.sh
+OPENSIN_BRANCH=main \
+OPENSIN_HEALTH_URL=http://127.0.0.1:43939/api/ping \
+./tooling/scripts/auto-deploy.sh
 ```
 
-### 2. Einmal manuell testen
+Optional variables:
 
-```bash
-./scripts/auto-deploy.sh
-# Ausgabe und Log prüfen:
-cat logs/auto-deploy.log
-```
+| Variable | Purpose |
+| --- | --- |
+| `OPENSIN_REPO_DIR` | Repository root; defaults to the script's checkout |
+| `OPENSIN_BRANCH` | Remote branch to poll |
+| `OPENSIN_COMPOSE_SERVICE` | Canonical Compose service |
+| `OPENSIN_IMAGE_REPOSITORY` | Local image repository name |
+| `OPENSIN_HEALTH_URL` | Loopback health endpoint |
+| `OPENSIN_LOCK_DIR` | Atomic directory lock path |
+| `OPENSIN_LOG_FILE` | Ignored local log path |
 
-### 3a. Per cron (einfachste Variante)
+## Scheduling
 
-`crontab -e` öffnen und hinzufügen (alle 3 Minuten):
+Use the host's scheduler to invoke the script at a suitable interval. Keep
+scheduler files and host-specific paths outside the public repository. The
+script's atomic directory lock prevents overlapping runs.
 
-```cron
-*/3 * * * * /pfad/zu/OpenSIN-Chat/scripts/auto-deploy.sh >> /pfad/zu/OpenSIN-Chat/logs/cron.log 2>&1
-```
+## Failure handling
 
-> Hinweis macOS: `cron` braucht ggf. "Full Disk Access" für `/usr/sbin/cron` in
-> den Systemeinstellungen → Datenschutz & Sicherheit, sonst scheitert `docker`.
-
-### 3b. Per launchd (empfohlen auf dem Mac, überlebt Reboots sauberer)
-
-Datei `~/Library/LaunchAgents/com.opensin.autodeploy.plist` anlegen:
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>Label</key>
-    <string>com.opensin.autodeploy</string>
-    <key>ProgramArguments</key>
-    <array>
-        <string>/pfad/zu/OpenSIN-Chat/scripts/auto-deploy.sh</string>
-    </array>
-    <key>StartInterval</key>
-    <integer>180</integer>
-    <key>StandardOutPath</key>
-    <string>/pfad/zu/OpenSIN-Chat/logs/launchd.out.log</string>
-    <key>StandardErrorPath</key>
-    <string>/pfad/zu/OpenSIN-Chat/logs/launchd.err.log</string>
-    <key>EnvironmentVariables</key>
-    <dict>
-        <key>PATH</key>
-        <string>/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
-    </dict>
-</dict>
-</plist>
-```
-
-Laden:
-
-```bash
-launchctl load ~/Library/LaunchAgents/com.opensin.autodeploy.plist
-# Status prüfen:
-launchctl list | grep opensin
-```
-
-Entladen (zum Stoppen):
-
-```bash
-launchctl unload ~/Library/LaunchAgents/com.opensin.autodeploy.plist
-```
-
-## Konfiguration (Umgebungsvariablen)
-
-Das Skript funktioniert ohne Anpassung, lässt sich aber über Env-Vars steuern:
-
-| Variable | Standard | Bedeutung |
-|---|---|---|
-| `OPENSIN_REPO_DIR` | Auto (Skript-Pfad) | Repo-Wurzel |
-| `OPENSIN_BRANCH` | `main` | Branch, der deployt wird |
-| `OPENSIN_COMPOSE_FILE` | `docker-opensin/docker-compose.yml` | compose-Datei |
-| `OPENSIN_HEALTH_URL` | `http://localhost:43939/api/ping` | Healthcheck-URL |
-| `OPENSIN_LOG_FILE` | `<repo>/logs/auto-deploy.log` | Logdatei |
-
-## Troubleshooting
-
-- **Online immer noch alt nach Deploy?** Zuerst prüfen ob ein **rogue Node-Prozess**
-  Port 3001 blockiert: `lsof -i :3001 -P -n`. Wenn dort `node *:3001 (LISTEN)` steht
-  (nicht Docker/OrbStack), wurde ein manuelles `node index.js` aus `/server/`
-  gestartet. Töten mit `kill <PID>`, dann Docker und Cloudflared neustarten.
-  Danach Browser Hard-Reload (`Cmd+Shift+R`).
-- **502 Bad Gateway auf sinchat.delqhi.com?** Produktion läuft auf `sin-supabase` — siehe `docs/OPENSIN-CHAT-DEPLOYMENT.md`. Lokal: prüfen ob `restart: always` fehlt (`docker ps | grep opensin-chat`). Fix: `docker update --restart always opensin-chat && docker start opensin-chat`.
-- **`docker: command not found` im cron-Log?** `PATH` im launchd-plist bzw. cron
-  ergänzen (Docker Desktop liegt oft unter `/usr/local/bin`).
-- **Build dauert lange / blockiert?** Der `flock`-Lock verhindert überlappende
-  Läufe — ein zweiter cron-Tick wird übersprungen, bis der Build fertig ist.
-- **Logs ansehen:** `tail -f logs/auto-deploy.log`
+A failed build leaves the running container untouched. A failed start or health
+check restores the previously running image tag with `--no-build`. If no prior
+image exists, the script exits non-zero and requires operator intervention.

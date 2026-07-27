@@ -6,7 +6,7 @@ networks:
 
 services:
   fix-permissions:
-    image: busybox:1.36.1
+    image: busybox:1.37.0@sha256:9532d8c39891ca2ecde4d30d7710e01fb739c87a8b9299685c63704296b16028
     container_name: opensin-fix-perms
     user: root
     command: >
@@ -39,7 +39,6 @@ services:
         CHROMIUM_SHA256: "${CHROMIUM_SHA256:-}"
         CHROMIUM_DOWNLOAD_URL: "${CHROMIUM_DOWNLOAD_URL:-}"
         VITE_ENABLE_IMAGE_GENERATION: "${VITE_ENABLE_IMAGE_GENERATION:-false}"
-        VITE_ENABLE_VIDEO_GENERATION: "${VITE_ENABLE_VIDEO_GENERATION:-false}"
 
     init: true
     restart: unless-stopped
@@ -77,7 +76,6 @@ services:
       DATABASE_URL: file:/app/server/storage/opensin.db
 
       ENABLE_IMAGE_GENERATION: "${ENABLE_IMAGE_GENERATION:-false}"
-      ENABLE_VIDEO_GENERATION: "${ENABLE_VIDEO_GENERATION:-false}"
 
     healthcheck:
       test:

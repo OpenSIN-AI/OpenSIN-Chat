@@ -4,8 +4,8 @@
 
 - **Date**: 2026-07-25
 - **Local Agent**: opencode/mimo-v2.5-free
-- **Worktree**: /Users/jeremy/dev/OpenSIN-Chat
-- **Sister Repo**: /Users/jeremy/dev/OpenAfD-Chat
+- **Worktree**: <repo-root>
+- **Sister Repo**: <sister-repo-root>
 - **ChatGPT Profile**: OpenSIN (bba91bb2-87b8-419a-8928-771ac370526e)
 - **Mac i9 Connector**: Available at http://127.0.0.1:8080/readyz
 
@@ -89,13 +89,13 @@ yarn lint:ci
 yarn test
 
 # For both repos
-cd /Users/jeremy/dev/OpenSIN-Chat && yarn type-check
-cd /Users/jeremy/dev/OpenAfD-Chat && yarn type-check
+cd <repo-root> && yarn type-check
+cd <sister-repo-root> && yarn type-check
 ```
 
 ## Completion
 
 Use `sin-gpt-web-state complete` to mark tasks done:
 ```bash
-sin-gpt-web-state --repo /Users/jeremy/dev/OpenSIN-Chat complete T-0002 --owner chatgpt-web --evidence "description of what was done" --actor chatgpt-web
+sin-gpt-web-state --repo <repo-root> complete T-0002 --owner chatgpt-web --evidence "description of what was done" --actor chatgpt-web
 ```

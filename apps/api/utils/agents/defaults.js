@@ -15,7 +15,6 @@ const DEFAULT_SKILLS = [
   AgentPlugins.generateReport?.name,
   AgentPlugins.deepResearch?.name,
   AgentPlugins.imageGeneration?.name,
-  AgentPlugins.videoGeneration?.name,
 ].filter(Boolean);
 
 /**

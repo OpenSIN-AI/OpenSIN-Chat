@@ -13,10 +13,10 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 
 ## Status
 
-- Backlog: 10
-- In progress: 2
+- Backlog: 5
+- In progress: 3
 - Blocked: 1
-- Done: 2
+- Done: 6
 - Cancelled: 0
 
 ## Tasks
@@ -24,12 +24,12 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 | ID | Priority | Kind | Status | Owner | Title | Dependencies |
 |---|---|---|---|---|---|---|
 | T-0001 | critical | implement | blocked | chatgpt-web | Security P0: Zugangsdaten rotieren und Standardpasswort entfernen | — |
-| T-0002 | critical | implement | in_progress | chatgpt-web | Security P0: Öffentliche Betriebsinformationen bereinigen | — |
-| T-0003 | critical | implement | backlog | chatgpt-web | Security P0: SYS_ADMIN Cap und Docker Security | — |
-| T-0011 | critical | implement | backlog | chatgpt-web | Oracle Cloud VM (sin-supabase) prüfen und updaten | — |
-| T-0004 | high | implement | backlog | chatgpt-web | CI/CD: Echte GitHub Actions implementieren | — |
-| T-0005 | high | implement | backlog | chatgpt-web | CI/CD: Immutable Docker Images mit Commit-SHA | — |
-| T-0006 | high | implement | backlog | chatgpt-web | Produkt: Videogenerierung und cvoice entfernen | — |
+| T-0002 | critical | implement | done | chatgpt-web | Security P0: Öffentliche Betriebsinformationen bereinigen | — |
+| T-0003 | critical | implement | done | chatgpt-web | Security P0: SYS_ADMIN Cap und Docker Security | — |
+| T-0011 | critical | implement | in_progress | chatgpt-web | Oracle Cloud VM (sin-supabase) prüfen und updaten | — |
+| T-0004 | high | implement | done | chatgpt-web | CI/CD: Echte GitHub Actions implementieren | — |
+| T-0005 | high | implement | done | chatgpt-web | CI/CD: Immutable Docker Images mit Commit-SHA | — |
+| T-0006 | high | implement | in_progress | chatgpt-web | Produkt: Videogenerierung und cvoice entfernen | — |
 | T-0007 | high | implement | backlog | chatgpt-web | Produkt: Navigation radikal fokussieren | — |
 | T-0012 | high | implement | backlog | chatgpt-web | OpenAfD-Chat Repository synchronisieren | — |
 | T-0013 | high | implement | in_progress | chatgpt-web | Browser-Test aller Funktionen durchführen | — |
@@ -48,91 +48,107 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 - Kind: `implement`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-07-24T21:31:02+00:00
+- Updated: 2026-07-27T02:12:55+00:00
 
 Betroffene Auth-Tokens rotieren, Standardpasswort aus Skript/Doku entfernen, Skript ohne Passwort hart abbrechen lassen
 
 Acceptance:
 - Keine Standardpasswörter in Code/Doku, alle betroffenen Tokens rotiert, Secret-Scan bestanden
 
-Blocked: Produktionsrotation nicht verifizierbar: erreichbarer Host enthält keinen OpenSIN-Checkout/Container; direkter Test des historischen Credentials am externen Login wurde vom Connector-Sicherheitsfilter blockiert. Repository-Härtung und Secret-Scan sind abgeschlossen.
+Blocked: Host-Block gelöst: sin-supabase ist per SSH erreichbar. Vollhistorien-Scan (3651 Commits) fand 118 redigierte historische Treffer; aktueller getrackter Baum hat 0 Gitleaks-Funde. Supabase hat 0 aktuelle Fingerprint-Matches. Fireworks-Key wurde am 2026-07-27 im angemeldeten Provider-Portal neu erzeugt und auf der VM ersetzt. Weiter blockiert sind NVIDIA NIM (aktiver Live-LLM-Provider; Portal verlangt ein nicht autofilltes Kontopasswort) und BUNDESTAG_DIP_API_KEY (kein verfügbares Provider-Rotationsportal/Session). Interne AUTH_TOKEN/JWT/SIG-Rotation wird beim kanonischen VM-Cutover durchgeführt.
 
 ### T-0002 — Security P0: Öffentliche Betriebsinformationen bereinigen
 
-- Status: `in_progress`
+- Status: `done`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-07-24T21:31:19+00:00
+- Updated: 2026-07-27T02:23:17+00:00
 
 VM-IP, SSH-Benutzer, interne Ports, Container-Hostnamen, Produktionspfade aus öffentlichem Repo entfernen
 
 Acceptance:
 - Keine produktiven Zugangsdaten im öffentlichen Repo, Git-Historie auf weitere Secrets geprüft
 
+Evidence: Sanitized production addresses, SSH users, tunnel identifiers, absolute operator paths, internal topology, container details and hardcoded recovery targets from active public docs/scripts; removed obsolete fail-open webhook deployment; made recovery and backup tooling fail-closed and environment-driven; added a permanent check:public-ops CI policy. Final candidate scan covered 2505 tracked/nonignored files with 0 Gitleaks findings, check:public-ops passed, and known production-address/private-path fingerprint findings were 0. Full Git history scan covered 3651 commits (~121 MB) and identified 118 redacted historical findings in 29 commits; active credential rotation is separately tracked under T-0001.
+
+Completion report: `.sin-gpt-web/reports/T-0002.md`
+
 ### T-0003 — Security P0: SYS_ADMIN Cap und Docker Security
 
-- Status: `backlog`
+- Status: `done`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-07-24T19:40:25+00:00
+- Updated: 2026-07-27T01:33:50+00:00
 
 SYS_ADMIN entfernen, cap_drop ALL, no-new-privileges, Port an 127.0.0.1 binden
 
 Acceptance:
 - Docker Compose hardened, kein SYS_ADMIN, sicherer Port-Bind
 
+Evidence: Rendered Docker Compose validation passed for production and Unlimited-OCR overlays; all rendered services drop ALL capabilities, use no-new-privileges, avoid privileged/host namespaces, and publish only on 127.0.0.1. Removed obsolete insecure compose definitions under platform/containers/image and verified zero tracked SYS_ADMIN references in platform/containers.
+
+Completion report: `.sin-gpt-web/reports/T-0003.md`
+
 ### T-0011 — Oracle Cloud VM (sin-supabase) prüfen und updaten
 
-- Status: `backlog`
+- Status: `in_progress`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-07-24T22:06:56+00:00
+- Updated: 2026-07-27T01:29:12+00:00
 
 Acceptance:
 - VM erreichbar, Docker-Container mit neuestem Code läuft, sinchat.delqhi.com erreichbar
 
 ### T-0004 — CI/CD: Echte GitHub Actions implementieren
 
-- Status: `backlog`
+- Status: `done`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-07-24T19:40:25+00:00
+- Updated: 2026-07-27T02:16:31+00:00
 
 Lint, Typecheck, Tests, Build in echte GitHub Actions workflow. Kein Platzhalter-CI mehr.
 
 Acceptance:
 - ceo-audit.yml, tests.yml existieren und führen echte Checks aus
 
+Evidence: Added .github/workflows/ceo-audit.yml and .github/workflows/tests.yml. CEO Audit runs real layout, branding, SPDX, public-operations, dependency, docs-sync, script, Compose and audit checks. Test Matrix runs API, web, worker, integration and maintenance suites. All workflow YAML parsed successfully; yarn check:public-ops, check:layout and check:spdx passed locally.
+
+Completion report: `.sin-gpt-web/reports/T-0004.md`
+
 ### T-0005 — CI/CD: Immutable Docker Images mit Commit-SHA
 
-- Status: `backlog`
+- Status: `done`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-07-24T19:40:25+00:00
+- Updated: 2026-07-27T02:21:03+00:00
 
 Docker-Build mit Commit-SHA taggen, kein docker cp in Produktionscontainer mehr
 
 Acceptance:
 - Image wird mit SHA getaggt, Deployment nutzt nur noch Images, kein Hot-Patching
 
+Evidence: Rendered production Compose with a synthetic 40-character commit SHA and verified the running app image reference resolves to opensin-chat:<full-sha>. Both deploy-production.sh and auto-deploy.sh tag by target_sha, retain an existing rollback image, and roll back with --no-build. Canonical BusyBox and Unlimited-OCR images are digest-pinned. Git scan found no active docker cp instructions or :latest Compose images; yarn check:public-ops passed.
+
+Completion report: `.sin-gpt-web/reports/T-0005.md`
+
 ### T-0006 — Produkt: Videogenerierung und cvoice entfernen
 
-- Status: `backlog`
+- Status: `in_progress`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-07-24T19:40:26+00:00
+- Updated: 2026-07-27T02:23:30+00:00
 
 Videogenerierungsmodus aus Standardprodukt entfernen, cvoice-Prominentenstimmen komplett entfernen
 
@@ -253,16 +269,6 @@ Evidence: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirro
 
 ## Recent events
 
-- 2026-07-24T19:40:26+00:00 — `local-agent` — `task_added` `T-0007`: Produkt: Navigation radikal fokussieren
-- 2026-07-24T19:40:26+00:00 — `local-agent` — `task_added` `T-0008`: Repo: Veraltete Dokumente archivieren
-- 2026-07-24T19:40:27+00:00 — `local-agent` — `task_added` `T-0009`: Repo: README und Branding aktualisieren
-- 2026-07-24T19:40:27+00:00 — `local-agent` — `task_added` `T-0010`: Repo: Toolchain vereinheitlichen
-- 2026-07-24T19:53:52+00:00 — `chatgpt-web` — `task_claimed` `T-0001`: claimed by chatgpt-web
-- 2026-07-24T19:53:54+00:00 — `local-agent` — `task_updated` `T-0001`: task fields updated
-- 2026-07-24T19:53:56+00:00 — `chatgpt-web` — `progress` `T-0001`: T-0001 gestartet: Credential- und Standardpasswort-Audit im bestehenden Worktree; fremde Änderungen werden erhalten.
-- 2026-07-24T21:31:02+00:00 — `chatgpt-web` — `progress` `T-0001`: Code/Doku gehärtet: kein Defaultpasswort, Credentials werden vor DB-Zugriff erzwungen, Pfade auf apps/api korrigiert; 9/9 Tests grün; Gitleaks aktueller Worktree 0 Findings.
-- 2026-07-24T21:31:02+00:00 — `chatgpt-web` — `task_blocked` `T-0001`: Produktionsrotation nicht verifizierbar: erreichbarer Host enthält keinen OpenSIN-Checkout/Container; direkter Test des historischen Credentials am externen Login wurde vom Connector-Sicherheitsfilter blockiert. Repository-Härtung und Secret-Scan sind abgeschlossen.
-- 2026-07-24T21:31:19+00:00 — `chatgpt-web` — `task_claimed` `T-0002`: claimed by chatgpt-web
 - 2026-07-24T21:31:20+00:00 — `chatgpt-web` — `progress` `T-0002`: T-0002 gestartet: aktueller Worktree und Git-Historie werden auf konkrete VM-/SSH-/Port-/Secret-Betriebsdaten geprüft; Werte werden nur redigiert/fingerprinted ausgegeben.
 - 2026-07-24T22:06:56+00:00 — `local-agent` — `task_added` `T-0011`: Oracle Cloud VM (sin-supabase) prüfen und updaten
 - 2026-07-24T22:06:57+00:00 — `local-agent` — `task_added` `T-0012`: OpenAfD-Chat Repository synchronisieren
@@ -273,3 +279,13 @@ Evidence: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirro
 - 2026-07-25T01:22:29+00:00 — `local-agent` — `task_updated` `T-0014`: task fields updated
 - 2026-07-25T01:22:45+00:00 — `local-agent` — `task_completed` `T-0014`: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirror editor. 2) OCI VM SSH times out but web services work. 3) Type-check passes for both repos. 4) Both repos clean and on main. 5) Both sites live. See .sin-gpt-web/handoff.md for full details.
 - 2026-07-25T01:23:10+00:00 — `local-agent` — `task_completed` `T-0015`: Manual delegation prompt written to .sin-gpt-web/delegation-prompt.md and handoff.md. User must paste delegation message into ChatGPT manually or use ChatGPT API.
+- 2026-07-27T01:28:21+00:00 — `chatgpt-web` — `task_claimed` `T-0003`: claimed by chatgpt-web
+- 2026-07-27T01:29:12+00:00 — `chatgpt-web` — `task_claimed` `T-0011`: claimed by chatgpt-web
+- 2026-07-27T01:33:50+00:00 — `chatgpt-web` — `task_completed` `T-0003`: Rendered Docker Compose validation passed for production and Unlimited-OCR overlays; all rendered services drop ALL capabilities, use no-new-privileges, avoid privileged/host namespaces, and publish only on 127.0.0.1. Removed obsolete insecure compose definitions under platform/containers/image and verified zero tracked SYS_ADMIN references in platform/containers.
+- 2026-07-27T02:12:55+00:00 — `chatgpt-web` — `task_blocked` `T-0001`: Host-Block gelöst: sin-supabase ist per SSH erreichbar. Vollhistorien-Scan (3651 Commits) fand 118 redigierte historische Treffer; aktueller getrackter Baum hat 0 Gitleaks-Funde. Supabase hat 0 aktuelle Fingerprint-Matches. Fireworks-Key wurde am 2026-07-27 im angemeldeten Provider-Portal neu erzeugt und auf der VM ersetzt. Weiter blockiert sind NVIDIA NIM (aktiver Live-LLM-Provider; Portal verlangt ein nicht autofilltes Kontopasswort) und BUNDESTAG_DIP_API_KEY (kein verfügbares Provider-Rotationsportal/Session). Interne AUTH_TOKEN/JWT/SIG-Rotation wird beim kanonischen VM-Cutover durchgeführt.
+- 2026-07-27T02:13:06+00:00 — `chatgpt-web` — `task_claimed` `T-0004`: claimed by chatgpt-web
+- 2026-07-27T02:16:31+00:00 — `chatgpt-web` — `task_completed` `T-0004`: Added .github/workflows/ceo-audit.yml and .github/workflows/tests.yml. CEO Audit runs real layout, branding, SPDX, public-operations, dependency, docs-sync, script, Compose and audit checks. Test Matrix runs API, web, worker, integration and maintenance suites. All workflow YAML parsed successfully; yarn check:public-ops, check:layout and check:spdx passed locally.
+- 2026-07-27T02:16:40+00:00 — `chatgpt-web` — `task_claimed` `T-0005`: claimed by chatgpt-web
+- 2026-07-27T02:21:03+00:00 — `chatgpt-web` — `task_completed` `T-0005`: Rendered production Compose with a synthetic 40-character commit SHA and verified the running app image reference resolves to opensin-chat:<full-sha>. Both deploy-production.sh and auto-deploy.sh tag by target_sha, retain an existing rollback image, and roll back with --no-build. Canonical BusyBox and Unlimited-OCR images are digest-pinned. Git scan found no active docker cp instructions or :latest Compose images; yarn check:public-ops passed.
+- 2026-07-27T02:23:17+00:00 — `chatgpt-web` — `task_completed` `T-0002`: Sanitized production addresses, SSH users, tunnel identifiers, absolute operator paths, internal topology, container details and hardcoded recovery targets from active public docs/scripts; removed obsolete fail-open webhook deployment; made recovery and backup tooling fail-closed and environment-driven; added a permanent check:public-ops CI policy. Final candidate scan covered 2505 tracked/nonignored files with 0 Gitleaks findings, check:public-ops passed, and known production-address/private-path fingerprint findings were 0. Full Git history scan covered 3651 commits (~121 MB) and identified 118 redacted historical findings in 29 commits; active credential rotation is separately tracked under T-0001.
+- 2026-07-27T02:23:30+00:00 — `chatgpt-web` — `task_claimed` `T-0006`: claimed by chatgpt-web

@@ -381,7 +381,7 @@ storage primitive will swap.
 ### Incident — 2026-06-17 — Cloudflare Error 1033 on sinchat.delqhi.com
 
 A fresh-out outage surfaced a structural gap: `cloudflared` had died
-on the OCI VM (`sin-blackbox` / `92.5.116.158`) with no external
+on the OCI VM (`sin-blackbox` / `<redacted-production-address>`) with no external
 monitor, so the silent network break was only noticed when the user
 opened the URL. This release ships the recovery, the prevention, and
 the runbook so this exact failure mode cannot recur.
@@ -447,7 +447,7 @@ the runbook so this exact failure mode cannot recur.
 ### Operator action (next 5 minutes)
 
 ```bash
-bash /Users/jeremy/dev/OpenSIN-Chat/scripts/oci-vm-bootstrap/emergency-recover.sh
+bash <repo-root>/scripts/oci-vm-bootstrap/emergency-recover.sh
 ```
 
 — runs the 5-step recovery on `sin-blackbox` from the operator's
@@ -456,7 +456,7 @@ laptop; exits 0 when `curl https://sinchat.delqhi.com/` returns 2xx/3xx.
 Then once back:
 
 ```bash
-bash /Users/jeremy/dev/OpenSIN-Chat/scripts/oci-vm-bootstrap/bootstrap.sh
+bash <repo-root>/scripts/oci-vm-bootstrap/bootstrap.sh
 ```
 
 — installs the watchdog + healthcheck so you don't have to do this
@@ -616,7 +616,7 @@ See git history. This CHANGELOG focuses on the 2026-06 wave prune.
 [Unreleased]: https://github.com/OpenSIN-AI/OpenSIN-Chat/compare/3.18.0...HEAD
 
 - `scripts/oci-vm-bootstrap/aura-call-emergency-recover.sh`: parallel
-  recovery script for the second VM `92.5.30.252` (Aura-Call telephony).
+  recovery script for the second VM `<redacted-production-address>` (Aura-Call telephony).
   Operators run on their Mac — agent sandbox cannot SSH (AGENTS.md
   Priority 20). 7-step mirror of `emergency-recover.sh` covering
   `systemctl status aura-call`, restart, disk-guard, `/api/docs` probe.

@@ -5,10 +5,8 @@
 //
 // This spec runs the full user journey requested in the task: login, chat with
 // 5 messages, create a new workspace, open Settings and Documents, and capture
-// console/network errors. Credentials are not required in this environment
-// because the production sites are currently configured in single-user mode
-// (empty password for user "admin"), which matches the default fallback in the
-// E2E helpers.
+// console/network errors. Production credentials must be supplied through
+// OPENSIN_PASSWORD; the shared login helper fails closed when it is absent.
 import { test, expect } from "@playwright/test";
 import path from "path";
 import fs from "fs";
@@ -20,13 +18,14 @@ import {
   assertAppLoaded,
 } from "./_helpers.js";
 
-const SCREENSHOT_DIR = "/Users/jeremy/dev/OpenSIN-Chat/screenshots";
+const SCREENSHOT_DIR = path.resolve(
+  process.env.E2E_ARTIFACT_DIR || "tooling/artifacts/e2e",
+);
 
 const SITES = {
   opensin: {
     name: "OpenSIN-Chat",
-    url: "https://sinchat.delqhi.com",
-  },
+    url: process.env.APP_URL || "https://sinchat.delqhi.com",
   },
 };
 

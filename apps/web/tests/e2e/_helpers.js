@@ -16,13 +16,11 @@ import os from "os";
 const TOKEN_CACHE_FILE = path.join(os.tmpdir(), "opensin-chat-e2e-token.txt");
 
 /**
- * Authenticate against the running backend (single-user mode) and return the
- * JWT. Username "admin" with an empty password matches the default dev/prod
- * single-user configuration.
+ * Authenticate against the running backend and return the JWT.
  *
- * In production the AUTH_TOKEN is set, so the caller must pass the live
- * password via the OPENSIN_PASSWORD env var. Without that env, this helper
- * falls back to an empty password (matching the no-auth dev config).
+ * The caller must pass the password through OPENSIN_PASSWORD. Empty-password
+ * development mode is available only with the explicit
+ * ALLOW_EMPTY_E2E_PASSWORD=1 opt-in.
  *
  * Checks a temp-file token cache first to avoid hitting the production rate
  * limiter when multiple test files call login() in quick succession. The
@@ -30,7 +28,12 @@ const TOKEN_CACHE_FILE = path.join(os.tmpdir(), "opensin-chat-e2e-token.txt");
  * login and is valid for ~30 days (JWT exp).
  */
 export async function login(request) {
-  const password = process.env.OPENSIN_PASSWORD || "";
+  const password = process.env.OPENSIN_PASSWORD;
+  if (!password && process.env.ALLOW_EMPTY_E2E_PASSWORD !== "1") {
+    throw new Error(
+      "OPENSIN_PASSWORD is required. Set ALLOW_EMPTY_E2E_PASSWORD=1 only for an isolated local no-auth test instance.",
+    );
+  }
 
   // Determine the absolute base URL — Playwright's request fixture uses
   // playwright.config's baseURL (defaulting to localhost:38471), which is

@@ -1,209 +1,58 @@
-# How to use Dockerized OpenSIN Chat
+# Run OpenSIN Chat with containers
 
-Use the Dockerized version of OpenSIN Chat for a much faster and complete startup of OpenSIN Chat.
+The supported Compose topology lives under `platform/containers/compose/`.
+Do not run the application with elevated Linux capabilities, privileged mode,
+host namespaces, or public database/application port bindings.
 
-### Minimum Requirements
+## Prepare configuration
 
-> [!TIP]
-> Running OpenSIN Chat on AWS/GCP/Azure?
-> You should aim for at least 2GB of RAM. Disk storage is proportional to however much data
-> you will be storing (documents, vectors, models, etc). Minimum 10GB recommended.
-
-- `docker` installed on your machine
-- `yarn` and `node` on your machine
-- access to an LLM running locally or remotely
-
-\*OpenSIN Chat by default uses a built-in vector database powered by [LanceDB](https://github.com/lancedb/lancedb)
-
-\*OpenSIN Chat by default embeds text on instance privately [Learn More](../server/storage/models/README.md)
-
-## Recommend way to run dockerized OpenSIN Chat!
-
-> [!IMPORTANT]
-> If you are running another service on localhost like Chroma, LocalAi, or LMStudio
-> you will need to use http://host.docker.internal:xxxx to access the service from within
-> the docker container using OpenSIN Chat as `localhost:xxxx` will not resolve for the host system.
->
-> **Requires** Docker v18.03+ on Win/Mac and 20.10+ on Linux/Ubuntu for host.docker.internal to resolve!
->
-> _Linux_: add `--add-host=host.docker.internal:host-gateway` to docker run command for this to resolve.
->
-> eg: Chroma host URL running on localhost:8000 on host machine needs to be http://host.docker.internal:8000
-> when used in OpenSIN Chat.
-
-> [!TIP]
-> It is best to mount the containers storage volume to a folder on your host machine
-> so that you can pull in future updates without deleting your existing data!
-
-Pull in the latest image from docker. Supports both `amd64` and `arm64` CPU architectures.
-
-```shell
-docker pull ghcr.io/opensin-ai/opensin-chat
+```bash
+cp platform/containers/compose/.env.example \
+  platform/containers/compose/.env
 ```
 
-<table>
-<tr>
-<th colspan="2">Mount the storage locally and run OpenSIN Chat in Docker</th>
-</tr>
-<tr>
-<td>
-  Linux/MacOs
-</td>
-<td>
+Set required secrets in the ignored `.env` file. Never commit that file.
 
-```shell
-export STORAGE_LOCATION=$HOME/opensin-chat && \
-mkdir -p $STORAGE_LOCATION && \
-touch "$STORAGE_LOCATION/.env" && \
-docker run -d --rm -p 3001:3001 \
---cap-add SYS_ADMIN \
--v ${STORAGE_LOCATION}:/app/server/storage \
--v ${STORAGE_LOCATION}/.env:/app/server/.env \
--e STORAGE_DIR="/app/server/storage" \
-ghcr.io/opensin-ai/opensin-chat
+## Start the canonical stack
+
+```bash
+docker compose \
+  --project-directory platform/containers/compose \
+  -f platform/containers/compose/docker-compose.yml \
+  -f platform/containers/compose/docker-compose.production.yml \
+  up -d --build
 ```
 
-</td>
-</tr>
-<tr>
-<td>
-  Windows
-</td>
-<td>
+The application port binds to host loopback by default. Put a reverse proxy or
+private tunnel in front of it rather than changing the bind address to a public
+interface.
 
-```powershell
-# Run this in powershell terminal
-$env:STORAGE_LOCATION="$HOME\Documents\opensin-chat"; `
-If(!(Test-Path $env:STORAGE_LOCATION)) {New-Item $env:STORAGE_LOCATION -ItemType Directory}; `
-If(!(Test-Path "$env:STORAGE_LOCATION\.env")) {New-Item "$env:STORAGE_LOCATION\.env" -ItemType File}; `
-docker run -d --rm -p 3001:3001 `
---cap-add SYS_ADMIN `
--v "$env:STORAGE_LOCATION`:/app/server/storage" `
--v "$env:STORAGE_LOCATION\.env:/app/server/.env" `
--e STORAGE_DIR="/app/server/storage" `
-ghcr.io/opensin-ai/opensin-chat;
-```
+## Security properties
 
-</td>
-</tr>
-<tr>
-<td> Docker Compose</td>
-<td>
+The canonical stack:
 
+- drops all Linux capabilities from the application container;
+- enables `no-new-privileges`;
+- runs the application as a non-root user;
+- uses a bounded permission-initialization container with only the minimal
+  filesystem capabilities it requires;
+- binds the application and optional sidecars to `127.0.0.1`;
+- uses an isolated bridge network;
+- declares resource and log limits;
+- verifies both API and document-worker health.
 
-```yaml
-version: '3.8'
-services:
-  opensin-chat:
-    image: ghcr.io/opensin-ai/opensin-chat
-    container_name: opensin-chat
-    ports:
-    - "3001:3001"
-    cap_add:
-      - SYS_ADMIN
-    environment:
-    # Adjust for your environment
-      - STORAGE_DIR=/app/server/storage
-      - JWT_SECRET="make this a large list of random numbers and letters 20+"
-      - LLM_PROVIDER=ollama
-      - OLLAMA_BASE_PATH=http://127.0.0.1:11434
-      - OLLAMA_MODEL_PREF=llama2
-      - OLLAMA_MODEL_TOKEN_LIMIT=4096
-      - EMBEDDING_ENGINE=ollama
-      - EMBEDDING_BASE_PATH=http://127.0.0.1:11434
-      - EMBEDDING_MODEL_PREF=nomic-embed-text:latest
-      - EMBEDDING_MODEL_MAX_CHUNK_LENGTH=8192
-      - VECTOR_DB=lancedb
-      - WHISPER_PROVIDER=local
-      - TTS_PROVIDER=native
-      - PASSWORDMINCHAR=8
-      # Add any other keys here for services or settings
-      # you can find in the docker/.env.example file
-    volumes:
-      - opensin_chat_storage:/app/server/storage
-    restart: always
+Do not weaken these controls to make a feature work. Fix the feature or isolate
+it in a narrowly scoped sidecar.
 
-volumes:
-  opensin_chat_storage:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /path/on/local/disk
-```
+## Immutable production deployment
 
-  </td>
-</tr>
-</table>
+Use `tooling/scripts/deploy-production.sh`. It resolves the target Git commit,
+builds an image tagged with the full commit SHA, starts that exact image, checks
+health, and retains a rollback image.
 
-Go to `http://localhost:3001` and you are now using OpenSIN Chat! All your data and progress will persist between
-container rebuilds or pulls from Docker Hub.
+## Optional GPU OCR
 
-## How to use the user interface
-
-- To access the full application, visit `http://localhost:3001` in your browser.
-
-## About UID and GID in the ENV
-
-- The UID and GID are set to 1000 by default. This is the default user in the Docker container and on most host operating systems. If there is a mismatch between your host user UID and GID and what is set in the `.env` file, you may experience permission issues.
-
-## Build locally from source _not recommended for casual use_
-
-- `git clone` this repo and `cd opensin-chat` to get to the root directory.
-- `touch server/storage/opensin-chat.db` to create empty SQLite DB file.
-- `cd docker/`
-- `cp .env.example .env` **you must do this before building**
-- `docker-compose up -d --build` to build the image - this will take a few moments.
-
-Your docker host will show the image as online once the build process is completed. This will build the app to `http://localhost:3001`.
-
-## Integrations and one-click setups
-
-The integrations below are templates or tooling built by the community to make running the docker experience of OpenSIN Chat easier.
-
-### Use the Midori AI Subsystem to Manage OpenSIN Chat
-
-Follow the setup found on [Midori AI Subsystem Site](https://io.midori-ai.xyz/subsystem/manager/) for your host OS
-After setting that up install the OpenSIN Chat docker backend to the Midori AI Subsystem.
-
-Once that is done, you are all set!
-
-## Common questions and fixes
-
-### Cannot connect to service running on localhost!
-
-If you are in docker and cannot connect to a service running on your host machine running on a local interface or loopback:
-
-- `localhost`
-- `127.0.0.1`
-- `0.0.0.0`
-
-> [!IMPORTANT]
-> On linux `http://host.docker.internal:xxxx` does not work.
-> Use `http://172.17.0.1:xxxx` instead to emulate this functionality.
-
-Then in docker you need to replace that localhost part with `host.docker.internal`. For example, if running Ollama on the host machine, bound to http://127.0.0.1:11434 you should put `http://host.docker.internal:11434` into the connection URL in OpenSIN Chat.
-
-
-### API is not working, cannot login, LLM is "offline"?
-
-You are likely running the docker container on a remote machine like EC2 or some other instance where the reachable URL
-is not `http://localhost:3001` and instead is something like `http://193.xx.xx.xx:3001` - in this case all you need to do is add the following to your `frontend/.env.production` before running `docker-compose up -d --build`
-
-```
-# frontend/.env.production
-GENERATE_SOURCEMAP=false
-VITE_API_BASE="http://<YOUR_REACHABLE_IP_ADDRESS>:3001/api"
-```
-
-For example, if the docker instance is available on `192.186.1.222` your `VITE_API_BASE` would look like `VITE_API_BASE="http://192.186.1.222:3001/api"` in `frontend/.env.production`.
-
-### Having issues with Ollama?
-
-If you are getting errors like `llama:streaming - could not stream chat. Error: connect ECONNREFUSED 172.17.0.1:11434` then visit the README below.
-
-[Fix common issues with Ollama](../server/utils/AiProviders/ollama/README.md)
-
-### Still not working?
-
-[Ask for help on Discord](https://discord.gg/6UyHPeGZAC)
+Combine the canonical stack with
+`platform/containers/compose/docker-compose.unlimited-ocr.yml`. The overlay
+uses private shared memory rather than a host IPC namespace and publishes its
+API on loopback only.

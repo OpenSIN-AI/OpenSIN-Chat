@@ -26,8 +26,8 @@ Harden Docker Compose configuration to meet security best practices.
 **Action:** Update security documentation to reflect hardened configuration
 
 ### Files to Modify
-- `/Users/jeremy/dev/OpenSIN-Chat/platform/containers/compose/docker-compose.unlimited-ocr.yml`
-- `/Users/jeremy/dev/OpenSIN-Chat/docs/` (security documentation)
+- `<repo-root>/platform/containers/compose/docker-compose.unlimited-ocr.yml`
+- `<repo-root>/docs/` (security documentation)
 
 ### Acceptance Criteria
 - [ ] All services have `cap_drop: ALL`
@@ -39,13 +39,13 @@ Harden Docker Compose configuration to meet security best practices.
 ### Verification
 ```bash
 # Check for SYS_ADMIN
-grep -r "SYS_ADMIN" /Users/jeremy/dev/OpenSIN-Chat/platform/
+grep -r "SYS_ADMIN" <repo-root>/platform/
 
 # Check cap_add usage
-grep -r "cap_add" /Users/jeremy/dev/OpenSIN-Chat/platform/
+grep -r "cap_add" <repo-root>/platform/
 
 # Verify port bindings
-grep -r "ports:" /Users/jeremy/dev/OpenSIN-Chat/platform/containers/compose/
+grep -r "ports:" <repo-root>/platform/containers/compose/
 ```
 
 ### Notes

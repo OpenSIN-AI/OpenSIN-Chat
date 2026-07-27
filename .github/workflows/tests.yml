@@ -1,0 +1,64 @@
+name: Test Matrix
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: tests-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: "24"
+  YARN_VERSION: "1.22.22"
+
+jobs:
+  tests:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: API unit tests
+            command: yarn test:api
+          - name: Web unit tests
+            command: yarn test:web
+          - name: Worker unit tests
+            command: yarn test:worker
+          - name: Cross-app integration tests
+            command: yarn test:integration
+          - name: Maintenance script tests
+            command: yarn test:maintenance
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+          cache-dependency-path: yarn.lock
+
+      - name: Activate Yarn Classic
+        run: |
+          corepack enable
+          corepack prepare "yarn@${YARN_VERSION}" --activate
+
+      - name: Install exact dependency graph
+        run: yarn install --frozen-lockfile --network-timeout 600000
+
+      - name: Generate Prisma client
+        run: yarn build:api
+
+      - name: Run ${{ matrix.name }}
+        run: ${{ matrix.command }}

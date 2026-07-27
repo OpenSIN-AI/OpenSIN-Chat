@@ -69,8 +69,9 @@
     "check:layout": "node tooling/scripts/check-repository-layout.cjs",
     "check:branding": "bash tooling/scripts/check-branding.sh",
     "check:spdx": "node tooling/scripts/spdx-headers.cjs --check",
+    "check:public-ops": "node tooling/scripts/check-public-operations.mjs",
     "check:dependencies": "node tooling/scripts/dependency-health.cjs --check",
-    "verify": "yarn check:layout && yarn check:branding && yarn lint:ci && yarn verify:translations && yarn test && yarn build",
+    "verify": "yarn check:layout && yarn check:branding && yarn check:public-ops && yarn lint:ci && yarn verify:translations && yarn test && yarn build",
     "verify:strict": "yarn verify && yarn type-check && yarn test:coverage",
     "smoke": "node tooling/scripts/smoke.mjs",
     "ocr:unlimited:check": "node tooling/scripts/check-unlimited-ocr.mjs"

@@ -3965,36 +3965,6 @@ const TRANSLATIONS = {
       modelSelection: "Stimmmodellauswahl",
       loadingModels: "-- verfügbare Modelle werden geladen --",
     },
-    cvoice: {
-      description:
-        "Nutzen Sie cvoice.ai für kostenloses gehostetes Text-zu-Sprache mit über 20.000 Charakterstimmen, einschließlich kuratierter deutscher Stimmen. API-Schlüssel erhalten Sie unter",
-      docsLink: "cvoice.ai/api-docs",
-      voiceModel: {
-        label: "Stimmmodell",
-        germanGroup: "Kuratierte deutsche Stimmen",
-        customOption: "Eigene Voice-ID…",
-        help: "Wählen Sie eine kuratierte deutsche Stimme oder geben Sie eine beliebige Voice-ID aus dem cvoice.ai-Datensatz ein.",
-      },
-      customVoiceId: {
-        label: "Eigene Voice-ID",
-        placeholder: "z.B. bushido-official",
-        help: "Fügen Sie eine beliebige Voice-ID von https://cvoice.ai/dataset_voices.json ein",
-      },
-      advanced: {
-        toggle: "Erweitert (Personen-Metadaten)",
-        help: "Optional — nur nötig, wenn cvoice.ai die Stimme einer bestimmten Person zuordnen soll.",
-        personName: {
-          label: "Personenname",
-          placeholder: "Gronkh",
-        },
-        personSlug: {
-          label: "Person-Slug",
-          placeholder: "gronkh",
-        },
-      },
-      rateLimitNotice:
-        "Free-Tarif-Limits: 10 Anfragen/Minute und 1.000 Anfragen/Tag. Der Server zwischenspeichert identische Anfragen, um das Kontingent einzuhalten.",
-    },
   },
   speechToText: {
     genericOpenAi: {
@@ -4782,9 +4752,6 @@ const TRANSLATIONS = {
       nvidiaNim: "NVIDIA NIM",
       nvidiaNimDesc:
         "Verwenden Sie NVIDIA NIMs gehostete Text-zu-Sprache-API mit hochwertigen Stimmen.",
-      cvoice: "cvoice.ai",
-      cvoiceDesc:
-        "Kostenloses gehostetes TTS mit über 20.000 Charakterstimmen, einschließlich kuratierter deutscher Stimmen (Gronkh, Dieter Bohlen, Joko, Julien Bam, Daniela Katzenberger, Bushido).",
     },
   },
   embedChats: {
@@ -4907,8 +4874,6 @@ const TRANSLATIONS = {
       "Durchsucht das Web, analysiert Quellen und erstellt eine umfassende Recherche",
     imageGen: "Bilder generieren",
     imageGenDesc: "KI-generierte Bilder erstellen",
-    videoGen: "Video generieren",
-    videoGenDesc: "KI-generierte Videos erstellen",
     reportGen: "Bericht generieren",
     reportGenDesc:
       "Erstellt einen strukturierten, professionellen Bericht mit Quellen",

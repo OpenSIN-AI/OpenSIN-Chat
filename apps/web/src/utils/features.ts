@@ -17,10 +17,6 @@ export const FEATURES = Object.freeze({
     import.meta.env.VITE_ENABLE_IMAGE_GENERATION,
     false,
   ),
-  videoGeneration: readBoolean(
-    import.meta.env.VITE_ENABLE_VIDEO_GENERATION,
-    false,
-  ),
 });
 
 export { readBoolean };

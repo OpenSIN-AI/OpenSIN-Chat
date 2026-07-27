@@ -26,7 +26,6 @@ export default function TTSMessage({
     case "generic-openai":
     case "elevenlabs":
     case "kokoro":
-    case "cvoice":
     case "nvidia-nim":
       return (
         <WrapTTS>

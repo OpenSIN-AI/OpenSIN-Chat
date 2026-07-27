@@ -1,60 +1,52 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: MIT
+# Purpose: Legacy fail-closed systemd service recovery helper.
+# Private host, user, key, service, and health URL values must come from the
+# operator environment or an ignored file under .local/operations/.
 
-# Purpose: Recovery one-shot for Aura-Call VM (92.5.30.252), parallel to sinchat emergency-recover.sh.
-# Docs: ../skill-oci-oracle-cloud SKILL.md §10.x
-# AUDIENCE: Operator on their Mac (NOT agent sandbox — Priority 20).
-# USAGE: bash scripts/oci-vm-bootstrap/aura-call-emergency-recover.sh [--dry-run]
+set -Eeuo pipefail
 
-set -euo pipefail
+required=(TARGET_HOST TARGET_SYSTEMD_SERVICE TARGET_HEALTH_URL)
+for name in "${required[@]}"; do
+  if [[ -z "${!name:-}" ]]; then
+    echo "[recover] ERROR: ${name} is required." >&2
+    exit 2
+  fi
+done
 
-SSH_ALIAS=""
-SSH_IP="92.5.30.252"
-SSH_USER="ubuntu"
-SSH_KEY="$HOME/.ssh/aura-call-vm-key"
-
+TARGET_USER="${TARGET_USER:-}"
+TARGET_KEY="${TARGET_KEY:-}"
 DRY_RUN=0
 [[ "${1:-}" == "--dry-run" ]] && DRY_RUN=1
 
-log() { printf '%s\n' "[$(date +%FT%T%z)] $*"; }
-err() { printf '%s\n' "[$(date +%FT%T%z)] $*" >&2; }
+ssh_target="${TARGET_HOST}"
+[[ -n "${TARGET_USER}" ]] && ssh_target="${TARGET_USER}@${TARGET_HOST}"
+
+ssh_args=(-o BatchMode=yes -o ConnectTimeout=10)
+if [[ -n "${TARGET_KEY}" ]]; then
+  [[ -f "${TARGET_KEY}" ]] || {
+    echo "[recover] ERROR: TARGET_KEY does not exist." >&2
+    exit 2
+  }
+  ssh_args+=(-i "${TARGET_KEY}")
+fi
+
 run() {
-  if [[ $DRY_RUN -eq 1 ]]; then
-    log "[dry-run] would: $*"
+  if [[ "${DRY_RUN}" == 1 ]]; then
+    printf '[dry-run]'
+    printf ' %q' "$@"
+    printf '\n'
   else
-    log "running: $*"
-    eval "$@"
+    "$@"
   fi
 }
 
-# 1) preflight on operator machine
-log "=== Aura-Call emergency-recover (VM 92.5.30.252) ==="
-[ -f "$SSH_KEY" ] || { err "[err] SSH key missing: $SSH_KEY — check ~/.ssh/aura-call-vm-key?"; exit 1; }
-[ "$(stat -f '%Lp' "$SSH_KEY")" = "600" ] || { err "[err] $SSH_KEY must be mode 0600 (current: $(stat -f '%Lp' "$SSH_KEY"))"; exit 1; }
-log "OK  SSH key present + mode 0600"
+run ssh "${ssh_args[@]}" "${ssh_target}" true
+run ssh "${ssh_args[@]}" "${ssh_target}" \
+  sudo systemctl restart "${TARGET_SYSTEMD_SERVICE}"
+run ssh "${ssh_args[@]}" "${ssh_target}" \
+  systemctl is-active --quiet "${TARGET_SYSTEMD_SERVICE}"
+run curl --fail --silent --show-error --max-time 15 "${TARGET_HEALTH_URL}" \
+  --output /dev/null
 
-# 2) Probe the VM (5 s timeout — agent priority 20 still applies: this is operator-Mac-only)
-log "Probe TCP/22 connectivity …"
-run "nc -z -w5 $SSH_IP 22 && echo reachable || echo unreachable"
-
-# 3) On-VM checks: aura-call.service + journal tail
-log "On-VM: systemctl status aura-call …"
-run "ssh -o ConnectTimeout=5 -i $SSH_KEY $SSH_USER@$SSH_IP 'sudo systemctl is-active aura-call && sudo systemctl status aura-call --no-pager | head -15'"
-
-# 4) Restart if down
-log "On-VM: restart aura-call (safe only if up-version is dead) …"
-run "ssh -o ConnectTimeout=5 -i $SSH_KEY $SSH_USER@$SSH_IP 'sudo systemctl restart aura-call 2>&1 || sudo systemctl start aura-call 2>&1 || true'"
-
-# 5) On-VM disk check (the BUG-OCI-001 trigger pattern)
-log "On-VM: df -h /  +  oci-space-guardian.sh if available …"
-run "ssh -o ConnectTimeout=5 -i $SSH_KEY $SSH_USER@$SSH_IP 'df -h / | tail -2 && echo --- && sudo test -x /usr/local/bin/oci-space-guardian.sh && sudo /usr/local/bin/oci-space-guardian.sh || echo [info] oci-space-guardian not installed yet'"
-
-# 6) Re-probe HTTP /api/docs (Aura-Call is exposed directly via public IP, NOT via Cloudflared)
-log "HTTP probe: http://92.5.30.252/api/docs …"
-run "curl -sS --max-time 8 http://$SSH_IP/api/docs -o /dev/null -w 'HTTP %{http_code}\\n' || true"
-
-# 7) If healthy, suggest deploy-watchdog install
-log "If still down: see SKILL.md §7.2 (Aura-Call setup) + run scripts/aura-call-watchdog-install.sh"
-log "=== done — DH (sinchat mirror) ==="
-log "Persistent prevention: scripts/aura-call-watchdog/ (parallel to sinchat watchdog)"
-exit 0
+printf '[recover] configured service recovery verification passed\n'

@@ -1,56 +1,57 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: MIT
+# Purpose: Apply bounded daily/weekly/monthly retention to a configured backup directory.
 
-set -euo pipefail
+set -Eeuo pipefail
 
-BACKUP_DIR="${1:-/home/ubuntu/backups}"
-LOG_FILE="${BACKUP_DIR}/retention.log"
+BACKUP_DIR="${1:-${OPENSIN_BACKUP_DIR:-}}"
+if [[ -z "${BACKUP_DIR}" ]]; then
+  echo "backup-retention: provide a backup directory argument or OPENSIN_BACKUP_DIR" >&2
+  exit 2
+fi
+if [[ ! -d "${BACKUP_DIR}" ]]; then
+  echo "backup-retention: directory does not exist" >&2
+  exit 2
+fi
+
+LOG_FILE="${OPENSIN_BACKUP_RETENTION_LOG:-${BACKUP_DIR}/retention.log}"
 NOW=$(date +%s)
-
-echo "[$(date)] Starting backup retention cleanup in $BACKUP_DIR" >> "$LOG_FILE"
-
 SEVEN_DAYS=$((NOW - 7 * 86400))
 FOUR_WEEKS=$((NOW - 28 * 86400))
 SIX_MONTHS=$((NOW - 180 * 86400))
-
 DELETED=0
 KEPT=0
 
-for backup in "$BACKUP_DIR"/*.db "$BACKUP_DIR"/*.tar.gz; do
-  [ -f "$backup" ] || continue
+printf '[%s] retention start\n' "$(date -u +%FT%TZ)" >>"${LOG_FILE}"
 
-  FILE_NAME=$(basename "$backup")
-  FILE_MTIME=$(stat -c %Y "$backup" 2>/dev/null || stat -f %m "$backup" 2>/dev/null)
-  FILE_DATE=$(date -r "$FILE_MTIME" +%Y-%m-%d 2>/dev/null || date -d @$FILE_MTIME +%Y-%m-%d 2>/dev/null)
+for backup in "${BACKUP_DIR}"/*.db "${BACKUP_DIR}"/*.sqlite3 "${BACKUP_DIR}"/*.tar.gz; do
+  [[ -f "${backup}" ]] || continue
 
-  if [ "$FILE_MTIME" -gt "$SEVEN_DAYS" ]; then
+  file_name=$(basename "${backup}")
+  file_mtime=$(stat -c %Y "${backup}" 2>/dev/null || stat -f %m "${backup}")
+  file_date=$(date -r "${file_mtime}" +%Y-%m-%d 2>/dev/null || date -d "@${file_mtime}" +%Y-%m-%d)
+
+  keep=false
+  reason=""
+  if ((file_mtime > SEVEN_DAYS)); then
+    keep=true
+    reason=recent
+  elif ((file_mtime > FOUR_WEEKS)); then
+    day_of_week=$(date -r "${file_mtime}" +%u 2>/dev/null || date -d "@${file_mtime}" +%u)
+    [[ "${day_of_week}" == 1 ]] && keep=true && reason=weekly
+  elif ((file_mtime > SIX_MONTHS)); then
+    day_of_month=$(date -r "${file_mtime}" +%d 2>/dev/null || date -d "@${file_mtime}" +%d)
+    [[ "${day_of_month}" == 01 ]] && keep=true && reason=monthly
+  fi
+
+  if [[ "${keep}" == true ]]; then
     KEPT=$((KEPT + 1))
-    echo "[$(date)] KEEP (recent): $FILE_NAME ($FILE_DATE)" >> "$LOG_FILE"
-  elif [ "$FILE_MTIME" -gt "$FOUR_WEEKS" ]; then
-    DAY_OF_WEEK=$(date -r "$FILE_MTIME" +%u 2>/dev/null || date -d @$FILE_MTIME +%u 2>/dev/null)
-    if [ "$DAY_OF_WEEK" = "1" ]; then
-      KEPT=$((KEPT + 1))
-      echo "[$(date)] KEEP (weekly): $FILE_NAME ($FILE_DATE)" >> "$LOG_FILE"
-    else
-      rm -f "$backup"
-      DELETED=$((DELETED + 1))
-      echo "[$(date)] DELETE (old weekly): $FILE_NAME ($FILE_DATE)" >> "$LOG_FILE"
-    fi
-  elif [ "$FILE_MTIME" -gt "$SIX_MONTHS" ]; then
-    DAY_OF_MONTH=$(date -r "$FILE_MTIME" +%d 2>/dev/null || date -d @$FILE_MTIME +%d 2>/dev/null)
-    if [ "$DAY_OF_MONTH" = "01" ]; then
-      KEPT=$((KEPT + 1))
-      echo "[$(date)] KEEP (monthly): $FILE_NAME ($FILE_DATE)" >> "$LOG_FILE"
-    else
-      rm -f "$backup"
-      DELETED=$((DELETED + 1))
-      echo "[$(date)] DELETE (old monthly): $FILE_NAME ($FILE_DATE)" >> "$LOG_FILE"
-    fi
+    printf '[%s] keep %s (%s, %s)\n' "$(date -u +%FT%TZ)" "${file_name}" "${file_date}" "${reason}" >>"${LOG_FILE}"
   else
-    rm -f "$backup"
+    rm -f -- "${backup}"
     DELETED=$((DELETED + 1))
-    echo "[$(date)] DELETE (expired): $FILE_NAME ($FILE_DATE)" >> "$LOG_FILE"
+    printf '[%s] delete %s (%s)\n' "$(date -u +%FT%TZ)" "${file_name}" "${file_date}" >>"${LOG_FILE}"
   fi
 done
 
-echo "[$(date)] Retention complete: $KEPT kept, $DELETED deleted" >> "$LOG_FILE"
+printf '[%s] retention complete kept=%s deleted=%s\n' "$(date -u +%FT%TZ)" "${KEPT}" "${DELETED}" >>"${LOG_FILE}"

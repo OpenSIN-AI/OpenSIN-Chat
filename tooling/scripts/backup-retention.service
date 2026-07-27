@@ -1,8 +1,13 @@
 [Unit]
-Description=OpenSIN-Chat backup retention cleanup
+Description=OpenSIN Chat backup retention cleanup
 After=network.target
 
 [Service]
 Type=oneshot
-ExecStart=/home/ubuntu/OpenSIN-Chat/scripts/backup-retention.sh
-User=ubuntu
+EnvironmentFile=/etc/opensin-chat/backup.env
+ExecStart=/usr/local/libexec/opensin-chat/backup-retention
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/opensin-chat/backups

@@ -32,4 +32,15 @@ describe("modeHints", () => {
     );
     expect(buildAgentModePrefix("report")).toBe("@agent [report]");
   });
+
+  test("rejects removed and unknown modes", () => {
+    const removed = parseAgentModeFromPrompt("@agent [video-gen] make a clip");
+    expect(removed.modeId).toBeNull();
+    expect(removed.systemPrompt).toBeNull();
+    expect(removed.cleanMessage).toBe("make a clip");
+
+    const unknown = parseAgentModeFromPrompt("@agent [unknown-mode] hello");
+    expect(unknown.modeId).toBeNull();
+    expect(unknown.systemPrompt).toBeNull();
+  });
 });

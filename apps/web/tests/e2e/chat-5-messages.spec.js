@@ -3,6 +3,8 @@
 // chat loop accepts each prompt and at least one response indicator appears.
 // Docs: frontend/tests/e2e/README.doc.md
 import { test, expect } from "@playwright/test";
+import fs from "fs";
+import path from "path";
 import { bootstrapWorkspaceChat } from "./_helpers.js";
 
 test.describe("chat flow — 5 messages", () => {
@@ -47,7 +49,11 @@ test.describe("chat flow — 5 messages", () => {
     // Save a screenshot of the final chat state.
     const siteName = "OpenSIN-Chat";
     const fileName = `${siteName.replace(/\s+/g, "-")}_chat-5-messages_${Date.now()}.png`;
-    const filePath = `/Users/jeremy/dev/OpenSIN-Chat/screenshots/${fileName}`;
+    const artifactDir = path.resolve(
+      process.env.E2E_ARTIFACT_DIR || "tooling/artifacts/e2e",
+    );
+    fs.mkdirSync(artifactDir, { recursive: true });
+    const filePath = path.join(artifactDir, fileName);
     await page.screenshot({ path: filePath, fullPage: true });
   });
 });

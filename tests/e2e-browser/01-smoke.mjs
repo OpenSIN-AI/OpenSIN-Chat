@@ -6,8 +6,10 @@ import { chromium } from 'playwright';
 import fs from 'fs';
 import path from 'path';
 
-const BASE = 'https://sinchat.delqhi.com';
-const OUT = '/Users/jeremy/dev/OpenSIN-Chat/tests/e2e-browser/_artifacts';
+const BASE = process.env.APP_URL || 'https://sinchat.delqhi.com';
+const OUT = path.resolve(
+  process.env.E2E_ARTIFACT_DIR || 'tooling/artifacts/e2e-browser',
+);
 fs.mkdirSync(OUT, { recursive: true });
 
 const results = []; // { id, title, status: 'pass'|'fail'|'skip', details, error?, consoleErrors? }
@@ -28,7 +30,15 @@ async function shot(page, name) {
 }
 
 async function login(page) {
-  const r = await page.request.post(`${BASE}/api/request-token`, { data: { username: 'admin', password: '' } });
+  const password = process.env.OPENSIN_PASSWORD;
+  if (!password && process.env.ALLOW_EMPTY_E2E_PASSWORD !== '1') {
+    throw new Error(
+      'OPENSIN_PASSWORD is required. Set ALLOW_EMPTY_E2E_PASSWORD=1 only for an isolated local no-auth test instance.',
+    );
+  }
+  const r = await page.request.post(`${BASE}/api/request-token`, {
+    data: { username: 'admin', password },
+  });
   if (!r.ok()) throw new Error('login token: ' + r.status());
   const { token } = await r.json();
   await page.addInitScript((t) => {

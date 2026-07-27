@@ -2,8 +2,8 @@
 
 ## Context
 
-- Repository: /Users/jeremy/dev/OpenSIN-Chat
-- Sister Repo: /Users/jeremy/dev/OpenAfD-Chat
+- Repository: <repo-root>
+- Sister Repo: <sister-repo-root>
 - Both repos are clean (no uncommitted changes), type-check passed, on main
 - Both are live: sinchat.delqhi.com and openafd.delqhi.com
 - Task plan: .sin-gpt-web/TASKPLAN.md and taskplan.sqlite3

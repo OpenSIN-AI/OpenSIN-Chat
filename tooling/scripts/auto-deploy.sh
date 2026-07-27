@@ -1,115 +1,114 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: MIT
+# Purpose: Poll a Git branch and deploy an immutable local image tagged by commit SHA.
 
-#
-# auto-deploy.sh — Lokaler Polling-Deploy für OpenSIN-Chat
-# -----------------------------------------------------------------------------
-# Holt regelmäßig den neuesten Stand von origin/main. Wenn sich etwas geändert
-# hat, wird das Docker-Image NEU gebaut (--no-cache erzwingt ein frisches
-# Frontend-Bundle) und der Container neu gestartet.
-#
-# Gedacht für einen lokalen Mac, der den Container hostet und von außen nicht
-# direkt erreichbar ist. Wird per cron / launchd alle paar Minuten ausgeführt.
-#
-# Einrichtung siehe: docs/AUTO-DEPLOY.md
-# -----------------------------------------------------------------------------
+set -Eeuo pipefail
 
-set -euo pipefail
-
-# --- Konfiguration (bei Bedarf anpassen) ------------------------------------
-# Wurzel des Repos. Standard: zwei Ebenen über tooling/scripts.
 REPO_DIR="${OPENSIN_REPO_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 BRANCH="${OPENSIN_BRANCH:-main}"
-COMPOSE_FILE="${OPENSIN_COMPOSE_FILE:-platform/containers/compose/docker-compose.yml}"
-HEALTH_URL="${OPENSIN_HEALTH_URL:-http://localhost:43939/api/ping}"
-LOCK_FILE="${OPENSIN_LOCK_FILE:-/tmp/opensin-chat-auto-deploy.lock}"
-LOG_FILE="${OPENSIN_LOG_FILE:-$REPO_DIR/logs/auto-deploy.log}"
+COMPOSE_SERVICE="${OPENSIN_COMPOSE_SERVICE:-opensin-chat}"
+IMAGE_REPOSITORY="${OPENSIN_IMAGE_REPOSITORY:-opensin-chat}"
+HEALTH_URL="${OPENSIN_HEALTH_URL:-http://127.0.0.1:43939/api/ping}"
+LOCK_DIR="${OPENSIN_LOCK_DIR:-${TMPDIR:-/tmp}/opensin-chat-auto-deploy.lock}"
+LOG_FILE="${OPENSIN_LOG_FILE:-${REPO_DIR}/.local/logs/auto-deploy.log}"
 
-# docker compose vs. docker-compose automatisch erkennen
-if docker compose version >/dev/null 2>&1; then
-  COMPOSE="docker compose"
-elif command -v docker-compose >/dev/null 2>&1; then
-  COMPOSE="docker-compose"
-else
-  echo "FEHLER: weder 'docker compose' noch 'docker-compose' gefunden" >&2
+mkdir -p "$(dirname "${LOG_FILE}")"
+log() { printf '[%s] %s\n' "$(date -u +%FT%TZ)" "$*" | tee -a "${LOG_FILE}"; }
+
+if ! mkdir "${LOCK_DIR}" 2>/dev/null; then
+  log "another deploy is active; skipping"
+  exit 0
+fi
+cleanup() { rmdir "${LOCK_DIR}" 2>/dev/null || true; }
+trap cleanup EXIT
+
+cd "${REPO_DIR}"
+
+if ! git diff --quiet || ! git diff --cached --quiet; then
+  log "tracked worktree changes present; refusing deploy"
+  exit 1
+fi
+if [[ -n "$(git ls-files --others --exclude-standard)" ]]; then
+  log "untracked source files present; refusing deploy"
   exit 1
 fi
 
-# --- Logging ----------------------------------------------------------------
-mkdir -p "$(dirname "$LOG_FILE")"
-log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOG_FILE"; }
+git fetch --prune origin "${BRANCH}" --quiet
+current_sha=$(git rev-parse HEAD)
+target_sha=$(git rev-parse "origin/${BRANCH}")
 
-# --- Nur eine Instanz gleichzeitig ------------------------------------------
-# Verhindert, dass sich zwei cron-Läufe überlappen, während gebaut wird.
-exec 9>"$LOCK_FILE"
-if ! flock -n 9; then
-  log "Ein anderer Deploy-Lauf ist aktiv — überspringe."
+if [[ "${current_sha}" == "${target_sha}" ]]; then
+  log "already at ${target_sha}"
   exit 0
 fi
 
-cd "$REPO_DIR"
+compose_dir="${REPO_DIR}/platform/containers/compose"
+compose=(
+  docker compose
+  --project-directory "${compose_dir}"
+  -f "${compose_dir}/docker-compose.yml"
+  -f "${compose_dir}/docker-compose.production.yml"
+)
 
-# --- Änderungen prüfen ------------------------------------------------------
-log "Prüfe origin/$BRANCH auf neue Commits…"
-git fetch origin "$BRANCH" --quiet
-
-LOCAL="$(git rev-parse "$BRANCH" 2>/dev/null || echo none)"
-REMOTE="$(git rev-parse "origin/$BRANCH")"
-
-if [ "$LOCAL" = "$REMOTE" ]; then
-  log "Keine Änderungen ($LOCAL). Nichts zu tun."
-  exit 0
+previous_container=$("${compose[@]}" ps -q "${COMPOSE_SERVICE}" || true)
+previous_image_id=""
+rollback_tag=""
+if [[ -n "${previous_container}" ]]; then
+  previous_image_id=$(docker inspect --format '{{.Image}}' "${previous_container}" 2>/dev/null || true)
+fi
+if [[ -n "${previous_image_id}" ]]; then
+  rollback_tag="rollback-$(date -u +%Y%m%d-%H%M%S)"
+  docker image tag "${previous_image_id}" "${IMAGE_REPOSITORY}:${rollback_tag}"
 fi
 
-log "Neue Version gefunden: $LOCAL -> $REMOTE. Starte Deploy."
-
-# --- Code aktualisieren -----------------------------------------------------
-git checkout "$BRANCH" --quiet
-git reset --hard "origin/$BRANCH" --quiet
-log "Code auf origin/$BRANCH gesetzt."
-
-# --- Image neu bauen & Container neu starten --------------------------------
-# --no-cache ist entscheidend: ohne ihn kann Docker den Frontend-Build-Layer
-# aus dem Cache wiederverwenden und das alte Bundle bliebe online.
-log "Baue Image neu (--no-cache)…"
-$COMPOSE -f "$COMPOSE_FILE" build --no-cache
-
-log "Starte Container neu…"
-$COMPOSE -f "$COMPOSE_FILE" up -d
-
-# --- Healthcheck ------------------------------------------------------------
-log "Warte auf Healthcheck ($HEALTH_URL)…"
-ok=0
-for i in $(seq 1 30); do
-  if curl -fsS "$HEALTH_URL" >/dev/null 2>&1; then
-    ok=1
-    break
-  fi
-  sleep 3
-done
-
-if [ "$ok" = "1" ]; then
-  log "Deploy erfolgreich. Live auf neuer Version $REMOTE."
-else
-  log "WARNUNG: Healthcheck nicht bestanden. Versuche Rollback auf $LOCAL…"
-  log "  $COMPOSE -f $COMPOSE_FILE logs --tail=100"
-  git reset --hard "$LOCAL" --quiet
-  log "Code auf $LOCAL zurückgesetzt. Baue altes Image neu…"
-  $COMPOSE -f "$COMPOSE_FILE" build --no-cache
-  $COMPOSE -f "$COMPOSE_FILE" up -d
-  rollback_ok=0
-  for i in $(seq 1 30); do
-    if curl -fsS "$HEALTH_URL" >/dev/null 2>&1; then
-      rollback_ok=1
-      break
+wait_for_health() {
+  local attempts="${1:-60}"
+  for ((attempt = 1; attempt <= attempts; attempt++)); do
+    if curl --fail --silent --show-error --max-time 5 "${HEALTH_URL}" \
+      | grep -Eq '"online"[[:space:]]*:[[:space:]]*true'; then
+      return 0
     fi
-    sleep 3
+    sleep 2
   done
-  if [ "$rollback_ok" = "1" ]; then
-    log "Rollback erfolgreich. Live auf $LOCAL."
+  return 1
+}
+
+rollback() {
+  local rc=$?
+  trap - ERR
+  if [[ -n "${rollback_tag}" ]]; then
+    log "deploy failed; restoring ${IMAGE_REPOSITORY}:${rollback_tag}"
+    OPENSIN_IMAGE_REPOSITORY="${IMAGE_REPOSITORY}" \
+    OPENSIN_IMAGE_TAG="${rollback_tag}" \
+      "${compose[@]}" up -d --no-build --no-deps "${COMPOSE_SERVICE}"
+    wait_for_health 45 || log "rollback health verification failed"
   else
-    log "FEHLER: Rollback ebenfalls fehlgeschlagen. Manuelle Intervention nötig."
-    exit 2
+    log "deploy failed and no rollback image is available"
   fi
+  exit "${rc}"
+}
+trap rollback ERR
+
+git checkout -B "${BRANCH}" "origin/${BRANCH}" --quiet
+git reset --hard "${target_sha}" --quiet
+
+export OPENSIN_IMAGE_REPOSITORY="${IMAGE_REPOSITORY}"
+export OPENSIN_IMAGE_TAG="${target_sha}"
+
+log "building immutable image ${IMAGE_REPOSITORY}:${target_sha}"
+"${compose[@]}" build --pull "${COMPOSE_SERVICE}"
+
+log "starting immutable image ${IMAGE_REPOSITORY}:${target_sha}"
+"${compose[@]}" up -d --no-deps "${COMPOSE_SERVICE}"
+wait_for_health 60
+
+running_container=$("${compose[@]}" ps -q "${COMPOSE_SERVICE}")
+running_image=$(docker inspect --format '{{.Config.Image}}' "${running_container}")
+expected_image="${IMAGE_REPOSITORY}:${target_sha}"
+if [[ "${running_image}" != "${expected_image}" ]]; then
+  log "unexpected running image: ${running_image}"
   exit 1
 fi
+
+trap - ERR
+log "deploy complete commit=${target_sha} image=${running_image}"
