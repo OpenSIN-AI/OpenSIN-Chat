@@ -36,10 +36,14 @@ const CURATED_FILES = [
   { src: "PDF-ANALYSIS.md", dst: "pdf-analysis.md" },
   { src: "security.md", dst: "security.md" },
   { src: "operations.md", dst: "operations.md" },
+  { src: "INCIDENT-RESPONSE.md", dst: "incident-response.md" },
 ];
 
 const ADR_FILES = [
-  { src: "adr/ADR-001-persistent-job-queue.md", dst: "adr-001-persistent-job-queue.md" },
+  {
+    src: "adr/ADR-001-persistent-job-queue.md",
+    dst: "adr-001-persistent-job-queue.md",
+  },
   { src: "adr/README.md", dst: "adr-overview.md" },
 ];
 

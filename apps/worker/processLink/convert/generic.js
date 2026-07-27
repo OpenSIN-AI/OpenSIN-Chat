@@ -1,8 +1,5 @@
 // SPDX-License-Identifier: MIT
 const { v4 } = require("uuid");
-const {
-  PuppeteerWebBaseLoader,
-} = require("@langchain/community/document_loaders/web/puppeteer");
 const { writeToServerDocuments } = require("../../utils/files");
 const { tokenizeString } = require("../../utils/tokenizer");
 const { default: slugify } = require("slugify");
@@ -14,15 +11,12 @@ const {
 const {
   loadYouTubeTranscript,
 } = require("../../utils/extensions/YoutubeTranscript");
-const RuntimeSettings = require("../../utils/runtimeSettings");
 const { htmlToMarkdown } = require("../helpers/htmlToMarkdown");
 const { browserPool } = require("../../utils/browserPool");
 const { assertSafeURL } = require("../../utils/url");
 
 const MAX_RESPONSE_BYTES = 50 * 1024 * 1024;
 const PUPPETEER_TIMEOUT_MS = 60_000;
-const IGNORE_HTTPS_ERRORS =
-  process.env.COLLECTOR_IGNORE_HTTPS_ERRORS === "true";
 
 /**
  * Scrape a generic URL and return the content in the specified format
@@ -197,24 +191,10 @@ async function continueSafeRequest(request, entryLink, overrideHeaders) {
  * @returns {Promise<string>} - The content of the page
  */
 async function getPageContent({ link, captureAs = "text", headers = {} }) {
-  const runtimeSettings = new RuntimeSettings();
   const overrideHeaders = validatedHeaders(headers);
-  const hasHeaders = Object.keys(overrideHeaders).length > 0;
-  let docs = [];
+  let docs;
 
   try {
-    const launchConfig = { headless: "new" };
-    if (
-      process.platform === "darwin" &&
-      process.env.NODE_ENV === "development"
-    ) {
-      // eslint-disable-next-line no-console
-      console.log(
-        "Darwin Development Mode: Disabling headless mode to prevent Chromium from crashing.",
-      );
-      launchConfig.headless = false;
-    }
-
     const capResponseBytes = async (response) => {
       const contentLength = parseInt(
         response.headers()?.["content-length"] || "0",
@@ -318,83 +298,8 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
       }
     };
 
-    const scrapeWithCustomLoader = async () => {
-      const loader = new PuppeteerWebBaseLoader(link, {
-        launchOptions: {
-          headless: launchConfig.headless,
-          ignoreHTTPSErrors: IGNORE_HTTPS_ERRORS,
-          args: runtimeSettings.get("browserLaunchArgs"),
-        },
-        gotoOptions: {
-          timeout: Math.min(PUPPETEER_TIMEOUT_MS, 30_000),
-          waitUntil: "domcontentloaded",
-        },
-        async evaluate(page, _browser) {
-          const innerHTML = await page.evaluate(
-            () => document.documentElement.innerHTML,
-          );
-          if (Buffer.byteLength(innerHTML, "utf8") > MAX_RESPONSE_BYTES)
-            throw new Error(
-              `Rendered page exceeds ${MAX_RESPONSE_BYTES} bytes`,
-            );
-          if (captureAs === "html") return innerHTML;
-          return htmlToMarkdown(innerHTML, link);
-        },
-      });
-      if (hasHeaders) {
-        loader.scrape = async function () {
-          const { launch } = await PuppeteerWebBaseLoader.imports();
-          const browser = await launch({
-            headless: "new",
-            defaultViewport: null,
-            ignoreDefaultArgs: ["--disable-extensions"],
-            ...this.options?.launchOptions,
-          });
-          try {
-            const page = await browser.newPage();
-            await page.setRequestInterception(true);
-            page.on("request", (request) => {
-              void continueSafeRequest(request, this.webPath, overrideHeaders);
-            });
-
-            try {
-              await page.goto(this.webPath, {
-                timeout: Math.min(PUPPETEER_TIMEOUT_MS, 30_000),
-                waitUntil: "domcontentloaded",
-                ...this.options?.gotoOptions,
-              });
-            } catch (navErr) {
-              if (navErr.message?.includes("ERR_TOO_MANY_REDIRECTS"))
-                throw new Error(`Too many redirects for ${this.webPath}`, {
-                  cause: navErr,
-                });
-              throw navErr;
-            }
-
-            const bodyHTML = this.options?.evaluate
-              ? await this.options.evaluate(page, browser)
-              : await page.evaluate(() => document.body.innerHTML);
-
-            if (Buffer.byteLength(bodyHTML, "utf8") > MAX_RESPONSE_BYTES)
-              throw new Error(
-                `Rendered page exceeds ${MAX_RESPONSE_BYTES} bytes`,
-              );
-            return bodyHTML;
-          } finally {
-            await browser.close();
-          }
-        };
-      }
-      const loadedDocs = await loader.load();
-      docs = Array.isArray(loadedDocs) ? loadedDocs : [];
-    };
-
-    if (hasHeaders) {
-      await scrapeWithCustomLoader();
-    } else {
-      const scrapedDoc = await scrapeWithPool(link);
-      docs = [scrapedDoc];
-    }
+    const scrapedDoc = await scrapeWithPool(link);
+    docs = [scrapedDoc];
 
     if (captureAs !== "html" && docs.length) {
       docs = docs.map((d) => ({

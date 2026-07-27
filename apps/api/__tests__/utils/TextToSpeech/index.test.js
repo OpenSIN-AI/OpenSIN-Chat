@@ -65,9 +65,7 @@ describe("TextToSpeech – getTTSProvider factory", () => {
 
   test("throws on unknown provider", () => {
     const { getTTSProvider } = loadTts("unknown-provider");
-    expect(() => getTTSProvider()).toThrow(
-      /No TTS_PROVIDER value found/,
-    );
+    expect(() => getTTSProvider()).toThrow(/Unsupported TTS_PROVIDER value/);
   });
 
   test("defaults to 'openai' when TTS_PROVIDER is unset", () => {
@@ -103,7 +101,10 @@ describe("TextToSpeech – OpenAiTTS.ttsBuffer", () => {
   test("returns a Buffer on success", async () => {
     const mockArrayBuffer = new ArrayBuffer(4);
     const view = new Uint8Array(mockArrayBuffer);
-    view[0] = 1; view[1] = 2; view[2] = 3; view[3] = 4;
+    view[0] = 1;
+    view[1] = 2;
+    view[2] = 3;
+    view[3] = 4;
     const mockCreate = jest.fn().mockResolvedValue({
       arrayBuffer: async () => mockArrayBuffer,
     });
@@ -114,9 +115,7 @@ describe("TextToSpeech – OpenAiTTS.ttsBuffer", () => {
   });
 
   test("returns null on API error (swallowed by catch)", async () => {
-    const mockCreate = jest
-      .fn()
-      .mockRejectedValue(new Error("API timeout"));
+    const mockCreate = jest.fn().mockRejectedValue(new Error("API timeout"));
     const tts = getOpenAiTTS(mockCreate);
     const result = await tts.ttsBuffer("Hello world");
     expect(result).toBeNull();
@@ -186,7 +185,8 @@ describe("TextToSpeech – GenericOpenAiTTS.ttsBuffer", () => {
   test("returns a Buffer on success", async () => {
     const mockArrayBuffer = new ArrayBuffer(2);
     const view = new Uint8Array(mockArrayBuffer);
-    view[0] = 0xff; view[1] = 0xfe;
+    view[0] = 0xff;
+    view[1] = 0xfe;
     const mockCreate = jest.fn().mockResolvedValue({
       arrayBuffer: async () => mockArrayBuffer,
     });

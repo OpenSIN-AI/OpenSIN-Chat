@@ -71,15 +71,15 @@ describe("getCollectorPath", () => {
     );
   });
 
-  it("falls back to <repo>/collector when STORAGE_DIR is unset", () => {
+  it("falls back to <repo>/apps/worker when STORAGE_DIR is unset", () => {
     delete process.env.STORAGE_DIR;
-    expect(getCollectorPath()).toBe(path.join(REPO_ROOT, "collector"));
+    expect(getCollectorPath()).toBe(path.join(REPO_ROOT, "worker"));
   });
 
-  it("fallback hotdir matches the repo-relative collector/hotdir", () => {
+  it("fallback hotdir matches the monorepo worker hotdir", () => {
     delete process.env.STORAGE_DIR;
     expect(getCollectorPath("hotdir")).toBe(
-      path.join(REPO_ROOT, "collector", "hotdir"),
+      path.join(REPO_ROOT, "worker", "hotdir"),
     );
   });
 });

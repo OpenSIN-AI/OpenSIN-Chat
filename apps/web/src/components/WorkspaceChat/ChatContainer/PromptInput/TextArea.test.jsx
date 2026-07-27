@@ -24,7 +24,6 @@ describe("TextArea", () => {
   const captureEnterOrUndo = vi.fn();
   const handlePasteEvent = vi.fn();
   const saveCurrentState = vi.fn();
-  const setFocused = vi.fn();
   const adjustTextArea = vi.fn();
 
   const renderTextArea = (props = {}) => {
@@ -40,7 +39,6 @@ describe("TextArea", () => {
           saveCurrentState={saveCurrentState}
           textSizeClass="text-base"
           t={t}
-          setFocused={setFocused}
           adjustTextArea={adjustTextArea}
           {...props}
         />
@@ -79,15 +77,6 @@ describe("TextArea", () => {
     fireEvent.paste(textarea);
     expect(saveCurrentState).toHaveBeenCalled();
     expect(handlePasteEvent).toHaveBeenCalled();
-  });
-
-  it("calls setFocused on focus and blur", () => {
-    renderTextArea();
-    const textarea = screen.getByRole("textbox");
-    fireEvent.focus(textarea);
-    expect(setFocused).toHaveBeenCalledWith(true);
-    fireEvent.blur(textarea);
-    expect(setFocused).toHaveBeenCalledWith(false);
   });
 
   it("calls adjustTextArea on blur", () => {

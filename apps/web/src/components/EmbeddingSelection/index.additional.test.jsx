@@ -56,9 +56,7 @@ vi.mock("@/models/system", () => ({
 }));
 
 import GenericOpenAiEmbeddingOptions from "./GenericOpenAiOptions";
-import LocalAiOptions from "./LocalAiOptions";
 import OllamaEmbeddingOptions from "./OllamaOptions";
-import LiteLLMOptions from "./LiteLLMOptions";
 import LMStudioEmbeddingOptions from "./LMStudioOptions";
 import GeminiOptions from "./GeminiOptions";
 
@@ -111,26 +109,6 @@ describe("EmbeddingSelection — icon & a11y regression suite", () => {
     });
   });
 
-  describe("LocalAiOptions", () => {
-    it("renders the advanced toggle as a type=button with aria-label", () => {
-      render(<LocalAiOptions settings={{}} />);
-      const toggle = screen.getByRole("button", {
-        name: /show advanced settings/i,
-      });
-      expect(toggle).toHaveAttribute("type", "button");
-      expect(toggle).toHaveAttribute("aria-label", "Show advanced settings");
-    });
-
-    it("does not render the Auto-Detect button when basePathValue is set", () => {
-      // The mocked hook returns basePathValue.value = "http://127.0.0.1:11434"
-      // so the Auto-Detect button should NOT be in the DOM until the
-      // user opens the advanced section.
-      render(<LocalAiOptions settings={{}} />);
-      const auto = screen.queryByRole("button", { name: /auto-detect/i });
-      expect(auto).toBeNull();
-    });
-  });
-
   describe("OllamaEmbeddingOptions", () => {
     it("renders the advanced toggle as a type=button with aria-label", () => {
       render(<OllamaEmbeddingOptions settings={{}} />);
@@ -153,25 +131,6 @@ describe("EmbeddingSelection — icon & a11y regression suite", () => {
       });
       fireEvent.click(toggle);
       expect(onSubmit).not.toHaveBeenCalled();
-    });
-  });
-
-  describe("LiteLLMOptions", () => {
-    it("renders the LiteLLM base URL input with the expected attrs", () => {
-      render(<LiteLLMOptions settings={{}} />);
-      const input = document.querySelector('input[name="LiteLLMBasePath"]');
-      expect(input).toBeInTheDocument();
-      expect(input).toHaveAttribute("type", "url");
-      expect(input).toHaveAttribute("placeholder", "http://127.0.0.1:4000");
-      expect(input).toBeRequired();
-    });
-
-    it("hydrates the base URL from settings", () => {
-      render(
-        <LiteLLMOptions settings={{ LiteLLMBasePath: "http://proxy:4000" }} />,
-      );
-      const input = document.querySelector('input[name="LiteLLMBasePath"]');
-      expect(input.value).toBe("http://proxy:4000");
     });
   });
 

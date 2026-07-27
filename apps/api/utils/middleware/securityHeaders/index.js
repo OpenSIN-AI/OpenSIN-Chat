@@ -132,11 +132,12 @@ function securityHeaders() {
 
     // The public widget and its API are intentionally consumed by third-party
     // origins. CORP=same-origin would make the documented embed feature fail.
+    const requestPath = request.path || request.originalUrl || "";
     const isPublicEmbedResource =
-      request.path === "/embed" ||
-      request.path.startsWith("/embed/") ||
-      request.path === "/api/embed" ||
-      request.path.startsWith("/api/embed/");
+      requestPath === "/embed" ||
+      requestPath.startsWith("/embed/") ||
+      requestPath === "/api/embed" ||
+      requestPath.startsWith("/api/embed/");
     response.setHeader(
       "Cross-Origin-Resource-Policy",
       isPublicEmbedResource ? "cross-origin" : "same-origin",

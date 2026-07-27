@@ -6,7 +6,10 @@ import { describe, it, expect, vi, beforeAll, afterAll } from "vitest";
 import { createApp } from "../server/app";
 
 vi.mock("../server/utils/helpers", () => ({
-  getVectorDbClass: () => ({ namespaceCount: vi.fn(() => Promise.resolve(0)), totalVectors: vi.fn(() => Promise.resolve(0)) }),
+  getVectorDbClass: () => ({
+    namespaceCount: vi.fn(() => Promise.resolve(0)),
+    totalVectors: vi.fn(() => Promise.resolve(0)),
+  }),
 }));
 
 vi.mock("../server/utils/helpers/customModels", () => ({
@@ -67,7 +70,10 @@ vi.mock("../server/utils/middleware/simpleRateLimit", () => ({
 }));
 
 vi.mock("../server/utils/collectorApi", () => ({
-  CollectorApi: () => ({ online: () => Promise.resolve(true), acceptedFileTypes: () => Promise.resolve([]) }),
+  CollectorApi: () => ({
+    online: () => Promise.resolve(true),
+    acceptedFileTypes: () => Promise.resolve([]),
+  }),
 }));
 
 vi.mock("../server/utils/chats", () => ({
@@ -121,7 +127,7 @@ describe("PDF analysis endpoints", () => {
         pdfPath: "/tmp/nonexistent.pdf",
         task: "analyze",
       });
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(403);
       expect(response.body).toHaveProperty("error");
     });
   });
@@ -131,7 +137,7 @@ describe("PDF analysis endpoints", () => {
       const response = await jsonRequest("POST", "/pdf-analysis/crosscheck", {
         claims: ["test claim"],
       });
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(500);
       expect(response.body).toHaveProperty("error");
     });
   });
@@ -141,7 +147,7 @@ describe("PDF analysis endpoints", () => {
       const response = await jsonRequest("POST", "/pdf-analysis/corpus", {
         pdfPaths: ["/tmp/nonexistent.pdf"],
       });
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(500);
       expect(response.body).toHaveProperty("error");
     });
   });

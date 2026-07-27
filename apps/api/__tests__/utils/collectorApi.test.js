@@ -99,13 +99,13 @@ describe("CollectorApi — constructor", () => {
   it("creates an endpoint with the correct port", () => {
     process.env.COLLECTOR_PORT = "7777";
     const api = new CollectorApi();
-    expect(api.endpoint).toBe("http://0.0.0.0:7777");
+    expect(api.endpoint).toBe("http://127.0.0.1:7777");
   });
 
   it("uses default port when COLLECTOR_PORT is not set", () => {
     delete process.env.COLLECTOR_PORT;
     const api = new CollectorApi();
-    expect(api.endpoint).toBe("http://0.0.0.0:8888");
+    expect(api.endpoint).toBe("http://127.0.0.1:8888");
   });
 
   it("initializes comkey for request signing", () => {
@@ -260,7 +260,11 @@ describe("CollectorApi — processLink()", () => {
     });
     const api = new CollectorApi();
 
-    const result = await api.processLink("https://example.com", {}, { source: "web" });
+    const result = await api.processLink(
+      "https://example.com",
+      {},
+      { source: "web" },
+    );
 
     expect(mockFetch).toHaveBeenCalledWith(
       expect.stringContaining("/process-link"),
@@ -460,7 +464,9 @@ describe("CollectorApi — parseDocument()", () => {
     });
     const api = new CollectorApi();
 
-    const result = await api.parseDocument("doc.pdf", { absolutePath: "/tmp/doc.pdf" });
+    const result = await api.parseDocument("doc.pdf", {
+      absolutePath: "/tmp/doc.pdf",
+    });
 
     expect(mockFetch).toHaveBeenCalledWith(
       expect.stringContaining("/parse"),
@@ -477,7 +483,9 @@ describe("CollectorApi — parseDocument()", () => {
     });
     const api = new CollectorApi();
 
-    await api.parseDocument("doc.pdf", { absolutePath: "/custom/path/doc.pdf" });
+    await api.parseDocument("doc.pdf", {
+      absolutePath: "/custom/path/doc.pdf",
+    });
 
     const body = JSON.parse(mockFetch.mock.calls[0][1].body);
     expect(body.options.absolutePath).toBe("/custom/path/doc.pdf");

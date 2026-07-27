@@ -108,9 +108,8 @@ const FILE_TO_SLUG = {
   "SYNC-RUNBOOK.md": "sync-runbook",
   "UPSTREAM-SYNC.md": "upstream-sync",
   "DOCKER-DEPLOYMENT.md": "docker-deployment",
-  "OPENSIN-CHAT-DEPLOYMENT.md": "opensin-chat-deployment",
   "AUTO-DEPLOY.md": "auto-deploy",
-  "vercel-deploy-fix.md": "vercel-deploy-fix",
+  "vercel.md": "vercel-deploy-fix",
   "ssh-remote-tunnel.md": "ssh-remote-tunnel",
   "supabase-self-hosted.md": "supabase-self-hosted",
   "ADR-001-persistent-job-queue.md": "adr-001-persistent-job-queue",
@@ -129,7 +128,8 @@ const DOC_ENTRIES = [
   {
     slug: "user-guide",
     title: "Benutzer-Handbuch",
-    description: "Einstieg, Workspaces, Chatten mit Dokumenten und Grundfunktionen.",
+    description:
+      "Einstieg, Workspaces, Chatten mit Dokumenten und Grundfunktionen.",
     category: "getting-started",
     file: "user-guide.md",
     source: "docs/user-guide.md",
@@ -137,7 +137,8 @@ const DOC_ENTRIES = [
   {
     slug: "api",
     title: "API-Referenz",
-    description: "Vollständige REST-API-Referenz für Entwickler und Integrationen.",
+    description:
+      "Vollständige REST-API-Referenz für Entwickler und Integrationen.",
     category: "api",
     file: "api.md",
     source: "docs/api.md",
@@ -153,7 +154,8 @@ const DOC_ENTRIES = [
   {
     slug: "adr-overview",
     title: "Architecture Decision Records",
-    description: "Überblick über dokumentierte Architekturentscheidungen (ADRs).",
+    description:
+      "Überblick über dokumentierte Architekturentscheidungen (ADRs).",
     category: "architecture",
     file: "adr-overview.md",
     source: "docs/adr/README.md",
@@ -169,7 +171,8 @@ const DOC_ENTRIES = [
   {
     slug: "pdf-analysis",
     title: "PDF-Analyse-Pipeline",
-    description: "70+ Schritt KI-Pipeline für PDF-Analyse: OCR, Vision, Fact-Verifikation, Cross-Check, Corpus-Vergleich.",
+    description:
+      "70+ Schritt KI-Pipeline für PDF-Analyse: OCR, Vision, Fact-Verifikation, Cross-Check, Corpus-Vergleich.",
     category: "architecture",
     file: "pdf-analysis.md",
     source: "docs/PDF-ANALYSIS.md",
@@ -177,7 +180,8 @@ const DOC_ENTRIES = [
   {
     slug: "data-sources",
     title: "Datenquellen & Politiker-Sync",
-    description: "Woher die Daten stammen und wie der Politiker-Sync funktioniert.",
+    description:
+      "Woher die Daten stammen und wie der Politiker-Sync funktioniert.",
     category: "data-sources",
     file: "data-sources.md",
     source: "docs/DATA-SOURCES.md",
@@ -207,14 +211,6 @@ const DOC_ENTRIES = [
     source: "docs/DOCKER-DEPLOYMENT.md",
   },
   {
-    slug: "opensin-chat-deployment",
-    title: "OpenSIN Chat Deployment",
-    description: "Deployment-Anleitung für sinchat.delqhi.com.",
-    category: "deployment",
-    file: "opensin-chat-deployment.md",
-    source: "docs/OPENSIN-CHAT-DEPLOYMENT.md",
-  },
-  {
     slug: "auto-deploy",
     title: "Auto-Deploy",
     description: "Lokaler Polling-Cron für automatische Deployments.",
@@ -227,8 +223,8 @@ const DOC_ENTRIES = [
     title: "Vercel Build Fix",
     description: "Lösung für bekannte Vercel-Build-Probleme.",
     category: "deployment",
-    file: "vercel-deploy-fix.md",
-    source: "docs/vercel-deploy-fix.md",
+    file: "vercel.md",
+    source: "docs/deployment/vercel.md",
   },
   {
     slug: "ssh-remote-tunnel",
@@ -249,7 +245,8 @@ const DOC_ENTRIES = [
   {
     slug: "security",
     title: "Sicherheits-Handbuch",
-    description: "Auth-Modi, Secrets-Management, Netzwerk-Sicherheit, DSGVO-Defaults und API-Sicherheit.",
+    description:
+      "Auth-Modi, Secrets-Management, Netzwerk-Sicherheit, DSGVO-Defaults und API-Sicherheit.",
     category: "operations",
     file: "security.md",
     source: "docs/security.md",
@@ -257,7 +254,8 @@ const DOC_ENTRIES = [
   {
     slug: "operations",
     title: "Operations-Runbook",
-    description: "Täglicher Betrieb, Deployments, Backups, Monitoring, Troubleshooting und Incident-Eskalation.",
+    description:
+      "Täglicher Betrieb, Deployments, Backups, Monitoring, Troubleshooting und Incident-Eskalation.",
     category: "operations",
     file: "operations.md",
     source: "docs/operations.md",
@@ -310,7 +308,8 @@ function resolveDocLink(href) {
 
   const goesToRoot = /^\.\.\//.test(path);
   const bare = path.replace(/^(\.\/|\.\.\/)+/, "");
-  const repoPath = goesToRoot || bare.startsWith("docs/") ? bare : `docs/${bare}`;
+  const repoPath =
+    goesToRoot || bare.startsWith("docs/") ? bare : `docs/${bare}`;
   return { url: `${GITHUB_DOCS_BASE}/${repoPath}${anchor}`, external: true };
 }
 
@@ -332,7 +331,8 @@ function renderMarkdown(content) {
 
   const defaultLinkOpen =
     md.renderer.rules.link_open ||
-    ((tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options));
+    ((tokens, idx, options, _env, self) =>
+      self.renderToken(tokens, idx, options));
 
   md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
     const token = tokens[idx];
@@ -395,7 +395,10 @@ function renderMarkdown(content) {
 
   for (let i = 0; i < tokens.length; i++) {
     const token = tokens[i];
-    if (token.type === "heading_open" && (token.tag === "h2" || token.tag === "h3")) {
+    if (
+      token.type === "heading_open" &&
+      (token.tag === "h2" || token.tag === "h3")
+    ) {
       const inline = tokens[i + 1];
       const text = inline?.content ?? "";
       let slug = slugify(text) || "section";

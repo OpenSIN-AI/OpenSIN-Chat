@@ -82,28 +82,31 @@ function pathToRegex(pattern) {
  */
 function createMockApp() {
   const routes = [];
-  const register = (method) => (pattern, ...rest) => {
-    // rest may be: [handler] or [middlewareArray, handler] or [mw1, mw2, ..., handler]
-    // Flatten any array arguments so middleware and handler are in one list.
-    const flat = rest.flatMap((a) => (Array.isArray(a) ? a : [a]));
-    const middlewares = flat.slice(0, -1);
-    const handler = flat[flat.length - 1];
-    const { regex, paramNames } = pathToRegex(pattern);
-    routes.push({
-      method: method.toLowerCase(),
-      pattern,
-      regex,
-      paramNames,
-      handler,
-      middlewares,
-    });
-  };
+  const register =
+    (method) =>
+    (pattern, ...rest) => {
+      // rest may be: [handler] or [middlewareArray, handler] or [mw1, mw2, ..., handler]
+      // Flatten any array arguments so middleware and handler are in one list.
+      const flat = rest.flatMap((a) => (Array.isArray(a) ? a : [a]));
+      const middlewares = flat.slice(0, -1);
+      const handler = flat[flat.length - 1];
+      const { regex, paramNames } = pathToRegex(pattern);
+      routes.push({
+        method: method.toLowerCase(),
+        pattern,
+        regex,
+        paramNames,
+        handler,
+        middlewares,
+      });
+    };
   const app = {
     get: register("get"),
     post: register("post"),
     put: register("put"),
     delete: register("delete"),
     patch: register("patch"),
+    options: register("options"),
   };
 
   /**
@@ -129,7 +132,8 @@ function createMockApp() {
         break;
       }
     }
-    if (!matched) throw new Error(`No route registered for ${methodLc} ${path}`);
+    if (!matched)
+      throw new Error(`No route registered for ${methodLc} ${path}`);
 
     const request = {
       body: req.body || {},

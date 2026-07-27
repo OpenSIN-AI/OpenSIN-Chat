@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Unit tests for PKCE helper + state store.
-const { createPKCE, putState, takeState } = require("../../../server/utils/connectors/pkce");
+const {
+  createPKCE,
+  putState,
+  takeState,
+} = require("../../utils/connectors/pkce");
 
 describe("PKCE + State Store", () => {
   describe("createPKCE", () => {
@@ -29,7 +33,11 @@ describe("PKCE + State Store", () => {
 
   describe("State Store", () => {
     it("should store and retrieve state", () => {
-      putState("state-123", { provider: "google", product: "gmail", userId: 1 });
+      putState("state-123", {
+        provider: "google",
+        product: "gmail",
+        userId: 1,
+      });
       const retrieved = takeState("state-123");
       expect(retrieved).not.toBeNull();
       expect(retrieved.provider).toBe("google");

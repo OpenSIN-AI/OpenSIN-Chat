@@ -1,7 +1,7 @@
 {
   "name": "opensin-chat",
   "version": "1.15.0",
-  "description": "OpenSIN Chat \u2014 self-hosted AI workspace for chat, retrieval, document analysis, agents, and controlled integrations.",
+  "description": "OpenSIN Chat — self-hosted AI workspace for chat, retrieval, document analysis, agents, and controlled integrations.",
   "type": "module",
   "author": "OpenSIN-AI",
   "contributors": [
@@ -23,10 +23,18 @@
   },
   "license": "MIT",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/@prisma/client",
+      "**/@prisma/client/**",
+      "**/prisma",
+      "**/prisma/**"
+    ]
+  },
   "packageManager": "yarn@1.22.22",
   "repository": {
     "type": "git",
@@ -37,7 +45,7 @@
   },
   "homepage": "https://sinchat.delqhi.com",
   "engines": {
-    "node": ">=24.0.0"
+    "node": ">=24.16.0 <25"
   },
   "scripts": {
     "dev:api": "yarn workspace opensin-chat-server dev",
@@ -58,7 +66,7 @@
     "test:api": "yarn workspace opensin-chat-server test",
     "test:web": "yarn workspace opensin-chat-frontend test",
     "test:worker": "yarn workspace opensin-chat-document-collector test",
-    "test:integration": "vitest run --config vitest.config.js",
+    "test:integration": "node tooling/scripts/run-integration-tests.mjs",
     "test:e2e": "yarn workspace opensin-chat-frontend e2e",
     "test:e2e:smoke": "yarn workspace opensin-chat-frontend e2e:smoke",
     "test:coverage": "yarn workspace opensin-chat-server test:coverage && yarn workspace opensin-chat-frontend test:coverage && yarn workspace opensin-chat-document-collector test:coverage",
@@ -77,7 +85,7 @@
     "ocr:unlimited:check": "node tooling/scripts/check-unlimited-ocr.mjs"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
+    "@eslint/js": "9.39.2",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
@@ -90,17 +98,18 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.3",
     "eslint-plugin-unused-imports": "^4.4.1",
-    "globals": "^17.6.0",
+    "globals": "^17.7.0",
     "jest": "^30.4.2",
     "playwright": "^1.60.0",
     "rollup-plugin-visualizer": "^7.0.1",
     "typescript-eslint": "^8.64.0",
     "vite": "^8.1.4",
     "vitest": "^4.1.10",
-    "eslint": "^10.7.0"
+    "eslint": "9.39.2"
   },
   "resolutions": {
-    "js-yaml": ">=4.2.0"
+    "js-yaml": ">=4.2.0",
+    "string-length/strip-ansi": "6.0.1"
   },
   "dependencies": {
     "@microsoft/fetch-event-source": "^2.0.1",

@@ -18,6 +18,10 @@ vi.mock("@/hooks/useUser", () => ({
   default: () => ({ user: { id: 1, role: "admin" } }),
 }));
 
+vi.mock("@/features/global-search/GlobalSearchProvider", () => ({
+  useGlobalSearchDialog: () => ({ openSearch: vi.fn() }),
+}));
+
 vi.mock("../Modals/NewWorkspace", () => ({
   default: () => null,
   useNewWorkspaceModal: () => ({
@@ -113,6 +117,24 @@ describe("Sidebar (desktop)", () => {
     const homeLink = screen.getByRole("link", { name: /home/i });
     expect(homeLink).toBeInTheDocument();
     expect(homeLink.getAttribute("href")).toBe("/");
+  });
+
+  it("renders exactly the six focused primary navigation entries", () => {
+    const { container } = renderSidebar();
+    const entries = Array.from(
+      container.querySelectorAll("[data-primary-navigation]"),
+    );
+    expect(entries).toHaveLength(6);
+    expect(
+      entries.map((entry) => entry.getAttribute("data-primary-navigation")),
+    ).toEqual([
+      "chats-projects",
+      "sources-documents",
+      "political-data",
+      "research",
+      "reports",
+      "admin",
+    ]);
   });
 
   it("renders the workspace switcher and ActiveWorkspaces children", () => {

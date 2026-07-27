@@ -18,7 +18,8 @@ jest.mock("../../utils/logger/console.js", () => ({
 
 jest.mock("../../utils/paths", () => ({
   getStoragePath: (...parts) => "/tmp/fake-storage/" + parts.join("/"),
-  getCollectorPath: (...parts) => "/tmp/fake-collector/" + (parts.length > 0 ? parts.join("/") : ""),
+  getCollectorPath: (...parts) =>
+    "/tmp/fake-collector/" + (parts.length > 0 ? parts.join("/") : ""),
 }));
 
 jest.mock("../../utils/prisma", () => ({
@@ -37,7 +38,16 @@ jest.mock("../../utils/prisma", () => ({
 jest.mock("fs", () => ({
   existsSync: jest.fn(() => true),
   mkdirSync: jest.fn(),
-  readFileSync: jest.fn(() => "0"),
+  readFileSync: jest.fn((filePath) =>
+    String(filePath).endsWith(".cached_at")
+      ? Date.now().toString()
+      : JSON.stringify({
+          openai: { "gpt-4o-mini": 128000 },
+          anthropic: { "claude-3-5-sonnet": 200000 },
+          gemini: { "gemini-2.0-flash": 1000000 },
+          xai: { "grok-2": 131072 },
+        }),
+  ),
   writeFileSync: jest.fn(),
 }));
 
@@ -209,14 +219,18 @@ describe("Embeddings Integration — Issue #7", () => {
 
   describe("NativeEmbeddingReranker integration", () => {
     it("constructs with default model", () => {
-      const { NativeEmbeddingReranker } = require("../../utils/EmbeddingRerankers/native");
+      const {
+        NativeEmbeddingReranker,
+      } = require("../../utils/EmbeddingRerankers/native");
       const reranker = new NativeEmbeddingReranker();
       expect(reranker.model).toBe("Xenova/ms-marco-MiniLM-L-6-v2");
       expect(reranker.modelDownloaded).toBe(true);
     });
 
     it("has a rerank method that returns scored results", async () => {
-      const { NativeEmbeddingReranker } = require("../../utils/EmbeddingRerankers/native");
+      const {
+        NativeEmbeddingReranker,
+      } = require("../../utils/EmbeddingRerankers/native");
       const reranker = new NativeEmbeddingReranker();
 
       // The rerank method exists and is callable

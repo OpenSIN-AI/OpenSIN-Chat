@@ -41,8 +41,8 @@ describe("docsManifest", () => {
   });
 
   it("loads the raw markdown content for security and operations", () => {
-    expect(getDocContent("security.md")).toContain("Sicherheits-Handbuch");
-    expect(getDocContent("operations.md")).toContain("Operations-Runbook");
+    expect(getDocContent("security.md")).toContain("Security architecture");
+    expect(getDocContent("operations.md")).toContain("# Operations");
   });
 
   it("loads incident-response content", () => {

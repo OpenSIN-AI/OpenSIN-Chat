@@ -41,39 +41,38 @@ via HTTP API only. No direct DB access, no shared state.
 
 ## Supported File Formats
 
-| Format | Converter | Status |
-|---|---|---|
-| PDF | asPDF/PDFLoader | KEEP |
-| DOCX | asDocx | KEEP |
-| XLSX | asXlsx | KEEP |
-| EPUB | asEPub (@langchain) | KEEP |
-| TXT/MD | asTxt | KEEP |
-| Image (PNG/JPG) | asImage (OCR via Tesseract) | KEEP |
-| Audio (WAV/MP3) | asAudio (Whisper) | KEEP |
-| MBOX | asMbox | KEEP |
-| Office MIME | asOfficeMime | KEEP |
+| Format          | Converter                     | Status |
+| --------------- | ----------------------------- | ------ |
+| PDF             | asPDF/PDFLoader               | KEEP   |
+| DOCX            | asDocx                        | KEEP   |
+| XLSX            | asXlsx                        | KEEP   |
+| EPUB            | asEPub (epub2 + html-to-text) | KEEP   |
+| TXT/MD          | asTxt                         | KEEP   |
+| Image (PNG/JPG) | asImage (OCR via Tesseract)   | KEEP   |
+| Audio (WAV/MP3) | asAudio (Whisper)             | KEEP   |
+| MBOX            | asMbox                        | KEEP   |
+| Office MIME     | asOfficeMime                  | KEEP   |
 
 ## Data Connectors (Extensions)
 
-| Connector | Status |
-|---|---|
-| YoutubeTranscript | KEEP |
-| Confluence | KEEP |
-| DrupalWiki | KEEP |
-| PaperlessNgx | KEEP |
-| RepoLoader (GitHub/GitLab) | KEEP |
-| ObsidianVault | KEEP |
-| WebsiteDepth | KEEP |
-| AfDPresse | KEEP (OpenSIN-specific) |
-| BundestagDrucksachen | KEEP (OpenSIN-specific) |
+| Connector                  | Status                  |
+| -------------------------- | ----------------------- |
+| YoutubeTranscript          | KEEP                    |
+| Confluence                 | KEEP                    |
+| DrupalWiki                 | KEEP                    |
+| PaperlessNgx               | KEEP                    |
+| RepoLoader (GitHub/GitLab) | KEEP                    |
+| ObsidianVault              | KEEP                    |
+| WebsiteDepth               | KEEP                    |
+| AfDPresse                  | KEEP (OpenSIN-specific) |
+| BundestagDrucksachen       | KEEP (OpenSIN-specific) |
 
 ## Removed Dependencies
 
-| Package | Reason |
-|---|---|
-| epub2 (Mintplex-Labs fork) | Unused — @langchain/community handles epub |
-| moment | Unused — no date formatting in collector |
-| nodemailer | Unused — no email sending in collector |
-| fix-path | Unused — no macOS path fixing needed |
-| strip-ansi | Unused |
+| Package                 | Reason                                   |
+| ----------------------- | ---------------------------------------- |
+| moment                  | Unused — no date formatting in collector |
+| nodemailer              | Unused — no email sending in collector   |
+| fix-path                | Unused — no macOS path fixing needed     |
+| strip-ansi              | Unused                                   |
 | youtube-transcript-plus | Unused — youtubei.js handles transcripts |

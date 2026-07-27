@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 const { v4 } = require("uuid");
-const { EPubLoader } = require("@langchain/community/document_loaders/fs/epub");
+const { EPub } = require("epub2");
+const { htmlToText } = require("html-to-text");
 const { tokenizeString } = require("../../utils/tokenizer");
 const {
   createdDate,
@@ -30,9 +31,15 @@ async function asEPub({
     };
   }
   try {
-    const loader = new EPubLoader(fullFilePath, { splitChapters: false });
-    const docs = await loader.load();
-    content = docs.map((doc) => doc.pageContent).join("\n\n");
+    const epub = await EPub.createAsync(fullFilePath);
+    const chapters = await Promise.all(
+      epub.flow.map(async (chapter) => {
+        if (!chapter.id) return "";
+        const html = await epub.getChapterRawAsync(chapter.id);
+        return html ? htmlToText(html).trim() : "";
+      }),
+    );
+    content = chapters.filter(Boolean).join("\n\n");
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error("Could not read epub file!", err);

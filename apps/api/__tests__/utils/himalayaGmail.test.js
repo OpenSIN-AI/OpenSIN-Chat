@@ -258,7 +258,7 @@ esac
         const checks = [
           await bridge.readMessage(inboxRef, "default"),
           await bridge.exportRaw(draftRef, "default", "drafts"),
-          await bridge.sendRaw("From: user@example.com\\r\\n\\r\\nBody", "default"),
+          await bridge.sendRaw("From: user@example.com\\r\\n\\r\\nBody", "default", { allowRaw: true }),
           await bridge.saveRawDraft("From: user@example.com\\r\\n\\r\\nDraft", "default"),
           await bridge.deleteDraft(draftRef, "default"),
           await bridge.markRead(inboxRef, "default"),

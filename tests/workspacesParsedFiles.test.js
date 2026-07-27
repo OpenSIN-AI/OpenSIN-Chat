@@ -12,7 +12,10 @@ import prisma from "../server/utils/prisma";
 globalThis.__parsedFilesTestUserId__ = 1;
 
 vi.mock("../server/utils/helpers", () => ({
-  getVectorDbClass: () => ({ namespaceCount: vi.fn(() => Promise.resolve(0)), totalVectors: vi.fn(() => Promise.resolve(0)) }),
+  getVectorDbClass: () => ({
+    namespaceCount: vi.fn(() => Promise.resolve(0)),
+    totalVectors: vi.fn(() => Promise.resolve(0)),
+  }),
 }));
 
 vi.mock("../server/utils/helpers/customModels", () => ({
@@ -27,7 +30,10 @@ vi.mock("../server/models/systemSettings", () => ({
 }));
 
 vi.mock("../server/models/user", () => ({
-  User: { _get: vi.fn(() => Promise.resolve(null)), filterFields: vi.fn((user) => user) },
+  User: {
+    _get: vi.fn(() => Promise.resolve(null)),
+    filterFields: vi.fn((user) => user),
+  },
 }));
 
 vi.mock("../server/models/eventLogs", () => ({
@@ -56,7 +62,11 @@ vi.mock("../server/utils/middleware/validatedRequest", () => ({
 vi.mock("../server/utils/http", () => ({
   reqBody: (req) => ({}),
   makeJWT: (payload, expiry) => `token_${payload.id}`,
-  userFromSession: () => Promise.resolve({ id: globalThis.__parsedFilesTestUserId__, username: "test" }),
+  userFromSession: () =>
+    Promise.resolve({
+      id: globalThis.__parsedFilesTestUserId__,
+      username: "test",
+    }),
   multiUserMode: () => false,
   queryParams: () => ({}),
 }));
@@ -68,7 +78,9 @@ vi.mock("../server/utils/middleware/simpleRateLimit", () => ({
 let app;
 
 beforeAll(async () => {
-  const existing = await prisma.users.findFirst({ where: { username: "parsed-files-test-user" } });
+  const existing = await prisma.users.findFirst({
+    where: { username: "parsed-files-test-user" },
+  });
   if (!existing) {
     const user = await prisma.users.create({
       data: {
@@ -107,7 +119,11 @@ const request = async (method, path, body = null, headers = {}) => {
       responseBody = data;
     }
   }
-  return { status: response.status, headers: response.headers, body: responseBody };
+  return {
+    status: response.status,
+    headers: response.headers,
+    body: responseBody,
+  };
 };
 
 const createWorkspace = async (name) => {
@@ -116,9 +132,15 @@ const createWorkspace = async (name) => {
   return response.body.workspace;
 };
 
-const createParsedFile = async (workspaceId, filename = "test-parsed-file.json") => {
-  const existing = await prisma.workspace_parsed_files.findFirst({ where: { filename } });
-  if (existing) await prisma.workspace_parsed_files.delete({ where: { id: existing.id } });
+const createParsedFile = async (
+  workspaceId,
+  filename = "test-parsed-file.json",
+) => {
+  const existing = await prisma.workspace_parsed_files.findFirst({
+    where: { filename },
+  });
+  if (existing)
+    await prisma.workspace_parsed_files.delete({ where: { id: existing.id } });
   const file = await prisma.workspace_parsed_files.create({
     data: {
       filename,
@@ -135,8 +157,14 @@ describe("workspace parsed files endpoints", () => {
   describe("GET /workspace/:slug/parsed-files", () => {
     it("should return parsed files for a workspace", async () => {
       const workspace = await createWorkspace("parsed-files-list-workspace");
-      const file = await createParsedFile(workspace.id, "parsed-files-list-test.json");
-      const response = await request("GET", `/workspace/${workspace.slug}/parsed-files`);
+      const file = await createParsedFile(
+        workspace.id,
+        "parsed-files-list-test.json",
+      );
+      const response = await request(
+        "GET",
+        `/workspace/${workspace.slug}/parsed-files`,
+      );
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("files");
       expect(Array.isArray(response.body.files)).toBe(true);
@@ -146,7 +174,10 @@ describe("workspace parsed files endpoints", () => {
     });
 
     it("should return 404 for non-existent workspace", async () => {
-      const response = await request("GET", "/workspace/nonexistent/parsed-files");
+      const response = await request(
+        "GET",
+        "/workspace/nonexistent/parsed-files",
+      );
       expect(response.status).toBe(404);
     });
   });
@@ -159,11 +190,19 @@ describe("workspace parsed files endpoints", () => {
     it.skip("should parse an uploaded file into workspace parsed files", () => {});
 
     it("should reject with no file uploaded", async () => {
-      const workspace = await createWorkspace("parsed-files-parse-no-file-workspace");
-      const response = await request("POST", `/workspace/${workspace.slug}/parse`);
+      const workspace = await createWorkspace(
+        "parsed-files-parse-no-file-workspace",
+      );
+      const response = await request(
+        "POST",
+        `/workspace/${workspace.slug}/parse`,
+      );
       expect(response.status).toBe(400);
       expect(response.body).toHaveProperty("success", false);
-      expect(response.body).toHaveProperty("error", "No file uploaded.");
+      expect(response.body).toHaveProperty(
+        "error",
+        "A file upload is required",
+      );
     });
   });
 
@@ -174,18 +213,31 @@ describe("workspace parsed files endpoints", () => {
     // made deterministic in this harness.
     it.skip("should delete parsed files by id list", async () => {
       const workspace = await createWorkspace("parsed-files-delete-workspace");
-      const file = await createParsedFile(workspace.id, "parsed-files-delete-test.json");
-      const response = await request("DELETE", `/workspace/${workspace.slug}/delete-parsed-files`, {
-        fileIds: [file.id],
-      });
+      const file = await createParsedFile(
+        workspace.id,
+        "parsed-files-delete-test.json",
+      );
+      const response = await request(
+        "DELETE",
+        `/workspace/${workspace.slug}/delete-parsed-files`,
+        {
+          fileIds: [file.id],
+        },
+      );
       expect(response.status).toBe(200);
     });
 
     it("should return 400 without file ids", async () => {
-      const workspace = await createWorkspace("parsed-files-delete-bad-workspace");
-      const response = await request("DELETE", `/workspace/${workspace.slug}/delete-parsed-files`, {
-        fileIds: [],
-      });
+      const workspace = await createWorkspace(
+        "parsed-files-delete-bad-workspace",
+      );
+      const response = await request(
+        "DELETE",
+        `/workspace/${workspace.slug}/delete-parsed-files`,
+        {
+          fileIds: [],
+        },
+      );
       expect(response.status).toBe(400);
     });
   });

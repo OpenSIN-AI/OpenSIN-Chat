@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 const { v4 } = require("uuid");
-const { DocxLoader } = require("@langchain/community/document_loaders/fs/docx");
+const mammoth = require("mammoth");
 const {
   createdDate,
   trashFile,
@@ -29,14 +29,12 @@ async function asDocX({
     };
   }
 
-  const loader = new DocxLoader(fullFilePath);
-
   // eslint-disable-next-line no-console
   console.log(`-- Working ${filename} --`);
-  let pageContent = [];
-  let docs;
+  let content;
   try {
-    docs = await loader.load();
+    const result = await mammoth.extractRawText({ path: fullFilePath });
+    content = result.value?.trim() || "";
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error(`Could not parse docx file ${filename}.`, err);
@@ -48,14 +46,7 @@ async function asDocX({
     };
   }
 
-  for (const doc of docs) {
-    // eslint-disable-next-line no-console
-    console.log(`-- Parsing content from docx page --`);
-    if (!doc.pageContent.length) continue;
-    pageContent.push(doc.pageContent);
-  }
-
-  if (!pageContent.length) {
+  if (!content.length) {
     // eslint-disable-next-line no-console
     console.error(`Resulting text content was empty for ${filename}.`);
     if (!options.absolutePath) trashFile(fullFilePath);
@@ -66,7 +57,6 @@ async function asDocX({
     };
   }
 
-  const content = pageContent.join("\n\n");
   const data = {
     id: v4(),
     url: "file://" + fullFilePath,

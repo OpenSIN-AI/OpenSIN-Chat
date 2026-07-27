@@ -1,10 +1,10 @@
 # Delegation Brief — Vollständige Aufgabenübernahme (OpenSIN-Chat + OpenAfD-Chat)
 
-Repository: /Users/jeremy/dev/OpenSIN-Chat
-Schwester-Repo: /Users/jeremy/dev/OpenAfD-Chat
+Repository: `$OPENSIN_REPO`
+Schwester-Repo: `$OPENAFD_REPO`
 
 Du bist der sovereign lead und default writer für dieses Projekt via Mac i9.
-Lies ZUERST `.sin-gpt-web/TASKPLAN.md` und `taskplan.sqlite3` (via `sin-gpt-web-state --repo /Users/jeremy/dev/OpenSIN-Chat summary`)
+Lies ZUERST `.sin-gpt-web/TASKPLAN.md` und `taskplan.sqlite3` (via `sin-gpt-web-state --repo "$OPENSIN_REPO" summary`)
 bevor du irgendetwas implementierst. Es gibt bereits einen aktiven Taskplan mit 15 Tasks
 (2 in_progress, 1 blocked, 10 backlog, 2 done). Übernimm die offenen Tasks in Prioritätsreihenfolge:
 
@@ -22,7 +22,7 @@ bevor du irgendetwas implementierst. Es gibt bereits einen aktiven Taskplan mit 
 
 OpenSIN-Chat ist aktuell clean und synced mit origin/main (nichts zu committen).
 
-OpenAfD-Chat (/Users/jeremy/dev/OpenAfD-Chat) hat AKTUELL UNCOMMITTED ÄNDERUNGEN:
+OpenAfD-Chat (`$OPENAFD_REPO`) hat AKTUELL UNCOMMITTED ÄNDERUNGEN:
 - collector/yarn.lock UND frontend/yarn.lock sind GELÖSCHT (jeweils komplett entfernt, ~13000 Zeilen)
 - root yarn.lock stark verändert (1031 Zeilen Diff)
 - package.json (root, collector, frontend, server) mit Dependency-Änderungen

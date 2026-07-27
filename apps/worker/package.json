@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": ">=24.0.0"
+    "node": ">=24.16.0 <25"
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon --ignore hotdir --ignore storage --trace-warnings index.js",
@@ -18,13 +18,13 @@
     "test:coverage": "jest --ci --coverage"
   },
   "dependencies": {
-    "@langchain/community": "^1.1.29",
     "@langchain/textsplitters": "^0.1.0",
     "@xenova/transformers": "^2.14.0",
     "ajv": "^8.20.0",
     "body-parser": "2.3.0",
     "cors": "^2.8.5",
     "dotenv": "17.4.2",
+    "epub2": "^3.0.2",
     "express": "^5.2.1",
     "html-to-text": "^10.0.0",
     "ignore": "^5.3.0",
@@ -50,13 +50,13 @@
     "youtubei.js": "^9.1.0"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
+    "@eslint/js": "9.39.2",
     "cross-env": "^10.1.0",
-    "eslint": "^9.0.0",
+    "eslint": "9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-unused-imports": "^4.0.0",
-    "globals": "^17.4.0",
+    "globals": "^17.7.0",
     "jest": "^30.0.0",
     "nodemon": "^3.1.14",
     "prettier": "^3.9.5"

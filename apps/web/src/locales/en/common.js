@@ -4104,6 +4104,15 @@ const TRANSLATIONS = {
   },
   sidebar: {
     mainNavigation: "Main navigation",
+    primary: {
+      label: "Work areas",
+      chatsProjects: "Chats / Projects",
+      sourcesDocuments: "Sources / Documents",
+      politicalData: "Political Data",
+      research: "Research",
+      reports: "Reports",
+      admin: "Admin",
+    },
     home: "Home",
     logo: "Logo",
     resizeSidebar: "Resize sidebar",

@@ -4,13 +4,13 @@
 const fs = require("fs");
 const path = require("path");
 
-// NOTE: __dirname here is <repo>/collector/utils. Fallbacks below are resolved
-// relative to that. Pinned by collector/__tests__/utils/paths.test.js.
+// NOTE: __dirname here is <repo>/apps/worker/utils. Fallbacks below are resolved
+// relative to that. Pinned by apps/worker/__tests__/utils/paths.test.js.
 
 /**
  * Resolve a path inside the server storage directory.
  * Uses STORAGE_DIR when set (Docker), otherwise falls back to the
- * local <repo>/server/storage directory (bare-metal/dev).
+ * local <repo>/apps/api/storage directory (bare-metal/dev).
  * @param {...string} subdirs - optional subdirectories/file segments
  * @returns {string} absolute path
  */
@@ -24,7 +24,7 @@ function getStoragePath(...subdirs) {
  * Resolve a path inside the collector directory (e.g. the hotdir).
  * In Docker, STORAGE_DIR is /app/server/storage, so the collector lives
  * two levels up at /app/collector. Bare-metal falls back to the
- * repo-relative <repo>/collector directory.
+ * repo-relative <repo>/apps/worker directory.
  * @param {...string} subdirs - optional subdirectories/file segments
  * @returns {string} absolute path
  */

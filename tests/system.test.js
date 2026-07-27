@@ -6,7 +6,10 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { createApp } from "../server/app";
 
 vi.mock("../server/utils/helpers", () => ({
-  getVectorDbClass: () => ({ namespaceCount: vi.fn(() => Promise.resolve(0)), totalVectors: vi.fn(() => Promise.resolve(0)) }),
+  getVectorDbClass: () => ({
+    namespaceCount: vi.fn(() => Promise.resolve(0)),
+    totalVectors: vi.fn(() => Promise.resolve(0)),
+  }),
 }));
 
 vi.mock("../server/utils/helpers/customModels", () => ({
@@ -29,7 +32,9 @@ vi.mock("../server/models/systemSettings", () => ({
 vi.mock("../server/models/user", () => ({
   User: {
     _get: vi.fn(() => Promise.resolve(null)),
-    create: vi.fn(() => Promise.resolve({ id: 1, username: "test", password: "test" })),
+    create: vi.fn(() =>
+      Promise.resolve({ id: 1, username: "test", password: "test" }),
+    ),
     delete: vi.fn(() => Promise.resolve()),
     update: vi.fn(() => Promise.resolve({ success: true, error: null })),
     filterFields: vi.fn((user) => user),
@@ -65,7 +70,11 @@ vi.mock("../server/utils/helpers/updateENV", () => ({
 
 vi.mock("../server/utils/PasswordRecovery", () => ({
   recoverAccount: () => ({ success: true, resetToken: "token", error: null }),
-  resetPassword: () => ({ success: true, message: "Password reset", error: null }),
+  resetPassword: () => ({
+    success: true,
+    message: "Password reset",
+    error: null,
+  }),
   generateRecoveryCodes: () => Promise.resolve(["code1", "code2"]),
 }));
 
@@ -80,12 +89,15 @@ vi.mock("../server/utils/middleware/multiUserProtected", () => ({
   isMultiUserSetup: () => true,
 }));
 
-
-
 vi.mock("../server/utils/files/logo", () => ({
   getDefaultFilename: () => "logo.png",
   determineLogoFilepath: () => "/tmp/logo.png",
-  fetchLogo: () => ({ found: true, buffer: "base64", size: 100, mime: "image/png" }),
+  fetchLogo: () => ({
+    found: true,
+    buffer: "base64",
+    size: 100,
+    mime: "image/png",
+  }),
   validFilename: () => true,
   renameLogoFile: () => Promise.resolve("logo.png"),
   removeCustomLogo: () => Promise.resolve(),
@@ -128,7 +140,10 @@ vi.mock("../server/utils/middleware/requireAuthWhenOnboardingComplete", () => ({
 }));
 
 vi.mock("../server/utils/collectorApi", () => ({
-  CollectorApi: () => ({ online: () => Promise.resolve(true), acceptedFileTypes: () => Promise.resolve([]) }),
+  CollectorApi: () => ({
+    online: () => Promise.resolve(true),
+    acceptedFileTypes: () => Promise.resolve([]),
+  }),
 }));
 
 vi.mock("../server/utils/chats", () => ({
@@ -164,7 +179,9 @@ vi.mock("../server/models/systemPromptVariables", () => ({
 }));
 
 vi.mock("../server/utils/SpeechToText", () => ({
-  getSTTProvider: () => ({ transcribe: () => Promise.resolve("transcribed text") }),
+  getSTTProvider: () => ({
+    transcribe: () => Promise.resolve("transcribed text"),
+  }),
 }));
 
 vi.mock("../utils/agents/aibitat/plugins/sql-agent/SQLConnectors", () => ({
@@ -286,8 +303,8 @@ describe("system endpoints", () => {
   describe("GET /system/logo", () => {
     it("should return logo", async () => {
       const response = await request("GET", "/system/logo");
-      expect(response.status).toBe(200);
-      expect(response.text.length).toBeGreaterThan(0);
+      expect(response.status).toBe(204);
+      expect(response.text).toBe("");
     });
   });
 

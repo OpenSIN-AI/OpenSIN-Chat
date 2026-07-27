@@ -9,7 +9,7 @@ import React, {
   lazy,
   Suspense,
 } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import {
   PROMPT_INPUT_EVENT,
@@ -36,7 +36,11 @@ import useUser from "@/hooks/useUser";
 import ChatSettingsMenu from "@/components/WorkspaceChat/ChatContainer/ChatSettingsMenu";
 import WorkspaceModelPicker from "@/components/WorkspaceChat/ChatContainer/WorkspaceModelPicker";
 import { ChatTooltips } from "@/components/WorkspaceChat/ChatContainer/ChatTooltips";
-import { ChatSidebarProvider } from "@/components/WorkspaceChat/ChatContainer/ChatSidebar";
+import {
+  ChatSidebarProvider,
+  useChatSidebar,
+} from "@/components/WorkspaceChat/ChatContainer/ChatSidebar";
+import { AGENT_MODE_EVENT } from "@/components/WorkspaceChat/ChatContainer/PromptInput/AgentModeButton";
 import logger from "@/utils/logger";
 
 // PERF: right-rail host is already panel-lazy; keep it off Home's sync graph.
@@ -363,6 +367,7 @@ function HomeContent({
 
   return (
     <ChatSidebarProvider>
+      <HomeDeepLinkController />
       <div
         style={
           {
@@ -404,6 +409,46 @@ function HomeContent({
       </div>
     </ChatSidebarProvider>
   );
+}
+
+function HomeDeepLinkController() {
+  const [searchParams] = useSearchParams();
+  const sidebar = useChatSidebar();
+  const sidebarRef = useRef(sidebar);
+  sidebarRef.current = sidebar;
+  const query = searchParams.toString();
+
+  useEffect(() => {
+    const params = new URLSearchParams(query);
+    const view = params.get("view");
+    const mode = params.get("mode");
+
+    if (["sources", "political", "results"].includes(view || "")) {
+      sidebarRef.current.openSidebar(view);
+    } else {
+      sidebarRef.current.closeSidebar();
+    }
+
+    const supportedMode = ["deep-research", "report"].includes(mode || "")
+      ? mode
+      : null;
+    try {
+      if (supportedMode) {
+        window.localStorage.setItem("opensin_agent_mode", supportedMode);
+      } else {
+        window.localStorage.removeItem("opensin_agent_mode");
+      }
+    } catch {
+      // Storage may be unavailable in hardened browser contexts; the event still works.
+    }
+    window.dispatchEvent(
+      new CustomEvent(AGENT_MODE_EVENT, {
+        detail: { mode: supportedMode },
+      }),
+    );
+  }, [query]);
+
+  return null;
 }
 
 function HomeSkeleton() {

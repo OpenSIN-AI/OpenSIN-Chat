@@ -154,6 +154,20 @@ export function useAgentMode() {
   const dropdownRef = useRef<any>(null);
 
   useEffect(() => {
+    function onExternalModeChange(event: Event) {
+      const modeId = (event as CustomEvent<{ mode?: string | null }>).detail
+        ?.mode;
+      const mode = modeId ? getAgentModeById(modeId) : null;
+      const nextMode = mode?.enabled ? mode : null;
+      setActiveMode(nextMode);
+      persistMode(nextMode?.id ?? null);
+    }
+    window.addEventListener(AGENT_MODE_EVENT, onExternalModeChange);
+    return () =>
+      window.removeEventListener(AGENT_MODE_EVENT, onExternalModeChange);
+  }, []);
+
+  useEffect(() => {
     if (!showDropdown) return;
     function handleClickOutside(e: MouseEvent) {
       if (

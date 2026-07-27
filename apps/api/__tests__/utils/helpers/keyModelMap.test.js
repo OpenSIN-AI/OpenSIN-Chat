@@ -29,8 +29,8 @@ describe("keyModelMap", () => {
       expect(KEY_MAPPING.xai).toBeDefined();
     });
 
-    test("contains at least 15 providers", () => {
-      expect(Object.keys(KEY_MAPPING).length).toBeGreaterThanOrEqual(15);
+    test("contains the focused supported providers", () => {
+      expect(Object.keys(KEY_MAPPING)).toHaveLength(11);
     });
   });
 
@@ -78,10 +78,8 @@ describe("keyModelMap", () => {
       expect(labels).toEqual(["my_custom_provider_model_pref"]);
     });
 
-    test("returns both canonical and alias labels for known provider", () => {
-      const labels = validLabelsForProvider("groq");
-      expect(labels).toContain("groq_model_pref");
-      expect(labels).toContain("GROQ_MODEL_PREF");
+    test("returns a normalized fallback label for removed providers", () => {
+      expect(validLabelsForProvider("groq")).toEqual(["groq_model_pref"]);
     });
 
     test("returns the canonical (first) label as first element", () => {

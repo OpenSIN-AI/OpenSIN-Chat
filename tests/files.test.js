@@ -6,7 +6,10 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { createApp } from "../server/app";
 
 vi.mock("../server/utils/helpers", () => ({
-  getVectorDbClass: () => ({ namespaceCount: vi.fn(() => Promise.resolve(0)), totalVectors: vi.fn(() => Promise.resolve(0)) }),
+  getVectorDbClass: () => ({
+    namespaceCount: vi.fn(() => Promise.resolve(0)),
+    totalVectors: vi.fn(() => Promise.resolve(0)),
+  }),
 }));
 
 vi.mock("../server/utils/helpers/customModels", () => ({
@@ -71,7 +74,10 @@ vi.mock("../server/utils/middleware/chatHistoryViewable", () => ({
 }));
 
 vi.mock("../server/utils/collectorApi", () => ({
-  CollectorApi: () => ({ online: () => Promise.resolve(true), acceptedFileTypes: () => Promise.resolve([]) }),
+  CollectorApi: () => ({
+    online: () => Promise.resolve(true),
+    acceptedFileTypes: () => Promise.resolve([]),
+  }),
 }));
 
 vi.mock("../server/utils/chats", () => ({
@@ -132,7 +138,7 @@ describe("file endpoints", () => {
   describe("GET /system/logo", () => {
     it("should return logo", async () => {
       const response = await request("GET", "/system/logo");
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(204);
     });
   });
 

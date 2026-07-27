@@ -6,7 +6,10 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { createApp } from "../server/app";
 
 vi.mock("../server/utils/helpers", () => ({
-  getVectorDbClass: () => ({ namespaceCount: vi.fn(() => Promise.resolve(0)), totalVectors: vi.fn(() => Promise.resolve(0)) }),
+  getVectorDbClass: () => ({
+    namespaceCount: vi.fn(() => Promise.resolve(0)),
+    totalVectors: vi.fn(() => Promise.resolve(0)),
+  }),
 }));
 
 vi.mock("../server/utils/helpers/customModels", () => ({
@@ -125,11 +128,11 @@ describe("extensions endpoints", () => {
       // TODO: CollectorApi mock doesn't intercept CommonJS import; run with real collector to test.
     });
 
-    it("should return 500 for unsupported repo platform", async () => {
+    it("should return 400 for unsupported repo platform", async () => {
       const response = await request("POST", "/ext/unknown/branches", {
         repo: "test/repo",
       });
-      expect(response.status).toBe(500);
+      expect(response.status).toBe(400);
     });
   });
 

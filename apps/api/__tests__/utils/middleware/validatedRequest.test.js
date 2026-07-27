@@ -86,12 +86,7 @@ describe("validatedRequest", () => {
     expect(response.body.id.length).toBeGreaterThan(0);
   });
 
-  it("passes through in production when only AUTH_TOKEN is missing (single-user no-password deployment)", async () => {
-    // Regression guard: the previous behavior was to 503 whenever either env
-    // var was missing. That silently broke single-user deployments that set
-    // JWT_SECRET (for session signing) but intentionally left AUTH_TOKEN unset
-    // so the login endpoint auto-grants a token. See PR / AGENTS.md for the
-    // contract.
+  it("returns 503 in production when AUTH_TOKEN is missing", async () => {
     process.env.NODE_ENV = "production";
     delete process.env.AUTH_TOKEN;
     process.env.JWT_SECRET = "secret";
@@ -100,11 +95,12 @@ describe("validatedRequest", () => {
 
     await validatedRequest(request, response, next);
 
-    expect(next).toHaveBeenCalledTimes(1);
-    expect(response.statusCode).toBeNull(); // success path never wrote a status
+    expect(next).not.toHaveBeenCalled();
+    expect(response.statusCode).toBe(503);
+    expect(response.body.error).toMatch(/misconfigured/i);
   });
 
-  it("passes through in production when only JWT_SECRET is missing (legacy single-user plain AUTH_TOKEN deployment)", async () => {
+  it("returns 503 in production when JWT_SECRET is missing", async () => {
     process.env.NODE_ENV = "production";
     process.env.AUTH_TOKEN = "my-token";
     delete process.env.JWT_SECRET;
@@ -113,8 +109,9 @@ describe("validatedRequest", () => {
 
     await validatedRequest(request, response, next);
 
-    expect(next).toHaveBeenCalledTimes(1);
-    expect(response.statusCode).toBeNull();
+    expect(next).not.toHaveBeenCalled();
+    expect(response.statusCode).toBe(503);
+    expect(response.body.error).toMatch(/misconfigured/i);
   });
 
   it("falls through to dev escape hatch when AUTH_TOKEN unset in development", async () => {
@@ -161,8 +158,15 @@ describe("validatedRequest", () => {
   it("routes to multi-user validation when multi-user mode is enabled", async () => {
     SystemSettings.isMultiUserMode.mockResolvedValue(true);
     decodeJWT.mockReturnValue({ id: 42 });
-    User.get.mockResolvedValue({ id: 42, username: "admin", role: "admin", suspended: 0 });
-    const { request, response } = mockReqRes({ authHeader: "Bearer valid.jwt" });
+    User.get.mockResolvedValue({
+      id: 42,
+      username: "admin",
+      role: "admin",
+      suspended: 0,
+    });
+    const { request, response } = mockReqRes({
+      authHeader: "Bearer valid.jwt",
+    });
     const next = jest.fn();
 
     await validatedRequest(request, response, next);
@@ -176,7 +180,9 @@ describe("validatedRequest", () => {
     SystemSettings.isMultiUserMode.mockResolvedValue(true);
     decodeJWT.mockReturnValue({ id: 42 });
     User.get.mockResolvedValue({ id: 42, suspended: 1 });
-    const { request, response } = mockReqRes({ authHeader: "Bearer valid.jwt" });
+    const { request, response } = mockReqRes({
+      authHeader: "Bearer valid.jwt",
+    });
     const next = jest.fn();
 
     await validatedRequest(request, response, next);
@@ -190,7 +196,9 @@ describe("validatedRequest", () => {
     SystemSettings.isMultiUserMode.mockResolvedValue(true);
     decodeJWT.mockReturnValue({ id: 99 });
     User.get.mockResolvedValue(null);
-    const { request, response } = mockReqRes({ authHeader: "Bearer valid.jwt" });
+    const { request, response } = mockReqRes({
+      authHeader: "Bearer valid.jwt",
+    });
     const next = jest.fn();
 
     await validatedRequest(request, response, next);
@@ -222,8 +230,12 @@ describe("validatedRequest", () => {
     process.env.NODE_ENV = "production";
     process.env.AUTH_TOKEN = "my-token";
     process.env.JWT_SECRET = "secret";
-    const { validatedRequest: freshValidated } = require("../../../utils/middleware/validatedRequest");
-    const { request, response } = mockReqRes({ authHeader: "Bearer valid.jwt" });
+    const {
+      validatedRequest: freshValidated,
+    } = require("../../../utils/middleware/validatedRequest");
+    const { request, response } = mockReqRes({
+      authHeader: "Bearer valid.jwt",
+    });
     const next = jest.fn();
 
     await freshValidated(request, response, next);
@@ -237,7 +249,9 @@ describe("validatedRequest", () => {
     process.env.AUTH_TOKEN = "my-token";
     process.env.JWT_SECRET = "secret";
     decodeJWT.mockReturnValue({ id: 1, p: "not!base64!with!colons:here" });
-    const { request, response } = mockReqRes({ authHeader: "Bearer valid.jwt" });
+    const { request, response } = mockReqRes({
+      authHeader: "Bearer valid.jwt",
+    });
     const next = jest.fn();
 
     await validatedRequest(request, response, next);

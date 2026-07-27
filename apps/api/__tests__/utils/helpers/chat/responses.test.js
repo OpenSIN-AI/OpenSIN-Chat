@@ -63,7 +63,10 @@ describe("convertToChatHistory", () => {
       {
         id: 3,
         prompt: "What is X?",
-        response: JSON.stringify({ text: "X is Y", sources: [{ title: "src" }] }),
+        response: JSON.stringify({
+          text: "X is Y",
+          sources: [{ title: "src" }],
+        }),
         createdAt: "2025-01-01T00:00:00Z",
       },
     ];
@@ -166,7 +169,13 @@ describe("formatChatHistory", () => {
       {
         role: "user",
         content: "hello",
-        attachments: [{ name: "file.txt" }],
+        attachments: [
+          {
+            name: "image.png",
+            mime: "image/png",
+            contentString: "data:image/png;base64,abc",
+          },
+        ],
       },
     ];
     const result = formatChatHistory(history, formatter, "asProperty");
@@ -176,7 +185,13 @@ describe("formatChatHistory", () => {
     });
     expect(formatter).toHaveBeenCalledWith({
       userPrompt: "hello",
-      attachments: [{ name: "file.txt" }],
+      attachments: [
+        {
+          name: "image.png",
+          mime: "image/png",
+          contentString: "data:image/png;base64,abc",
+        },
+      ],
     });
   });
 
@@ -189,7 +204,13 @@ describe("formatChatHistory", () => {
       {
         role: "user",
         content: "hello",
-        attachments: [{ name: "img.png" }],
+        attachments: [
+          {
+            name: "img.png",
+            mime: "image/png",
+            contentString: "data:image/png;base64,def",
+          },
+        ],
       },
     ];
     const result = formatChatHistory(history, formatter, "spread");
@@ -236,7 +257,9 @@ describe("writeResponseChunk", () => {
     const written = mockWrite.mock.calls[0][0];
     expect(written).toMatch(/^data: /);
     expect(written).toMatch(/\n\n$/);
-    const payload = JSON.parse(written.replace(/^data: /, "").replace(/\n\n$/, ""));
+    const payload = JSON.parse(
+      written.replace(/^data: /, "").replace(/\n\n$/, ""),
+    );
     expect(payload.type).toBe("test");
     expect(payload.value).toBe(42);
   });

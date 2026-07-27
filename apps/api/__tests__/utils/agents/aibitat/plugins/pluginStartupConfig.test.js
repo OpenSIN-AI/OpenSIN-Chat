@@ -13,6 +13,7 @@
 // This test asserts that every built-in single-stage plugin exposes a
 // `startupConfig.params` object so the loader never throws.
 
+const { isFeatureEnabled } = require("../../../../../utils/features");
 const AgentPlugins = require("../../../../../utils/agents/aibitat/plugins");
 
 describe("built-in agent plugin startupConfig", () => {
@@ -43,8 +44,15 @@ describe("built-in agent plugin startupConfig", () => {
     },
   );
 
-  test("image-generation specifically has startupConfig (was the regression)", () => {
+  test("image-generation obeys its feature flag and keeps the startup contract", () => {
+    if (!isFeatureEnabled("imageGeneration")) {
+      expect(AgentPlugins.imageGeneration).toBeUndefined();
+      expect(AgentPlugins["image-generation"]).toBeUndefined();
+      return;
+    }
     expect(AgentPlugins.imageGeneration?.startupConfig?.params).toBeDefined();
-    expect(AgentPlugins["image-generation"]?.startupConfig?.params).toBeDefined();
+    expect(
+      AgentPlugins["image-generation"]?.startupConfig?.params,
+    ).toBeDefined();
   });
 });

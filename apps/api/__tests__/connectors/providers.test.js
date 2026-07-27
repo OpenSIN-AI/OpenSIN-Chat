@@ -6,7 +6,7 @@ const {
   getAvailability,
   redirectUri,
   BASE_URL,
-} = require("../../../server/utils/connectors/providers");
+} = require("../../utils/connectors/providers");
 
 describe("OAuth Providers Registry", () => {
   describe("PROVIDERS", () => {

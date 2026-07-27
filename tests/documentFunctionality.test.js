@@ -8,7 +8,10 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { createApp } from "../server/app";
 
 vi.mock("../server/utils/helpers", () => ({
-  getVectorDbClass: () => ({ namespaceCount: vi.fn(() => Promise.resolve(0)), totalVectors: vi.fn(() => Promise.resolve(0)) }),
+  getVectorDbClass: () => ({
+    namespaceCount: vi.fn(() => Promise.resolve(0)),
+    totalVectors: vi.fn(() => Promise.resolve(0)),
+  }),
 }));
 
 vi.mock("../server/utils/helpers/customModels", () => ({
@@ -73,7 +76,10 @@ vi.mock("../server/utils/middleware/chatHistoryViewable", () => ({
 }));
 
 vi.mock("../server/utils/collectorApi", () => ({
-  CollectorApi: () => ({ online: () => Promise.resolve(true), acceptedFileTypes: () => Promise.resolve([]) }),
+  CollectorApi: () => ({
+    online: () => Promise.resolve(true),
+    acceptedFileTypes: () => Promise.resolve([]),
+  }),
 }));
 
 vi.mock("../server/utils/chats", () => ({
@@ -149,7 +155,7 @@ describe("document functionality endpoints", () => {
 
     it("should reject folder creation with missing name", async () => {
       const response = await request("POST", "/document/create-folder", {});
-      expect(response.status).toBe(500);
+      expect(response.status).toBe(400);
       expect(response.body).toHaveProperty("success", false);
     });
 

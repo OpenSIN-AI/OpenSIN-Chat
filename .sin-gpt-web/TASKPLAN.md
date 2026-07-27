@@ -13,8 +13,8 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 
 ## Status
 
-- Backlog: 5
-- In progress: 3
+- Backlog: 0
+- In progress: 8
 - Blocked: 1
 - Done: 6
 - Cancelled: 0
@@ -30,13 +30,13 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 | T-0004 | high | implement | done | chatgpt-web | CI/CD: Echte GitHub Actions implementieren | — |
 | T-0005 | high | implement | done | chatgpt-web | CI/CD: Immutable Docker Images mit Commit-SHA | — |
 | T-0006 | high | implement | in_progress | chatgpt-web | Produkt: Videogenerierung und cvoice entfernen | — |
-| T-0007 | high | implement | backlog | chatgpt-web | Produkt: Navigation radikal fokussieren | — |
-| T-0012 | high | implement | backlog | chatgpt-web | OpenAfD-Chat Repository synchronisieren | — |
+| T-0007 | high | implement | in_progress | chatgpt-web | Produkt: Navigation radikal fokussieren | — |
+| T-0012 | high | implement | in_progress | chatgpt-web | OpenAfD-Chat Repository synchronisieren | — |
 | T-0013 | high | implement | in_progress | chatgpt-web | Browser-Test aller Funktionen durchführen | — |
 | T-0015 | high | ops | done | local-agent | Manual ChatGPT Delegation Required | — |
-| T-0008 | medium | implement | backlog | chatgpt-web | Repo: Veraltete Dokumente archivieren | — |
-| T-0009 | medium | implement | backlog | chatgpt-web | Repo: README und Branding aktualisieren | — |
-| T-0010 | medium | implement | backlog | chatgpt-web | Repo: Toolchain vereinheitlichen | — |
+| T-0008 | medium | implement | in_progress | chatgpt-web | Repo: Veraltete Dokumente archivieren | — |
+| T-0009 | medium | implement | in_progress | chatgpt-web | Repo: README und Branding aktualisieren | — |
+| T-0010 | medium | implement | in_progress | chatgpt-web | Repo: Toolchain vereinheitlichen | — |
 | T-0014 | medium | implement | done | local-agent | Bugs und fehlende Features dokumentieren | — |
 
 ## Task details
@@ -157,12 +157,12 @@ Acceptance:
 
 ### T-0007 — Produkt: Navigation radikal fokussieren
 
-- Status: `backlog`
+- Status: `in_progress`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-07-24T19:40:26+00:00
+- Updated: 2026-07-27T09:44:55+00:00
 
 Nur noch: Chats/Projekte, Quellen/Dokumente, Politische Daten, Recherche, Berichte, Admin. Rest unter Labor/entfernt.
 
@@ -171,12 +171,12 @@ Acceptance:
 
 ### T-0012 — OpenAfD-Chat Repository synchronisieren
 
-- Status: `backlog`
+- Status: `in_progress`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-07-24T22:06:57+00:00
+- Updated: 2026-07-27T09:49:03+00:00
 
 Acceptance:
 - OpenAfD-Chat hat gleichen Stand wie OpenSIN-Chat, alle Änderungen gepusht
@@ -211,12 +211,12 @@ Evidence: Manual delegation prompt written to .sin-gpt-web/delegation-prompt.md 
 
 ### T-0008 — Repo: Veraltete Dokumente archivieren
 
-- Status: `backlog`
+- Status: `in_progress`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `medium`
 - Dependencies: none
-- Updated: 2026-07-24T19:40:26+00:00
+- Updated: 2026-07-27T09:49:03+00:00
 
 Alte CEO-Audits, MASTER-PLAN.md, Future-Plan, alte Readiness-Berichte nach docs/archive/ oder löschen
 
@@ -225,12 +225,12 @@ Acceptance:
 
 ### T-0009 — Repo: README und Branding aktualisieren
 
-- Status: `backlog`
+- Status: `in_progress`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `medium`
 - Dependencies: none
-- Updated: 2026-07-24T19:40:27+00:00
+- Updated: 2026-07-27T09:49:04+00:00
 
 Veraltete Screenshots ersetzen, OpenAFD-Video entfernen, Homepage-URL korrigieren
 
@@ -239,12 +239,12 @@ Acceptance:
 
 ### T-0010 — Repo: Toolchain vereinheitlichen
 
-- Status: `backlog`
+- Status: `in_progress`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `medium`
 - Dependencies: none
-- Updated: 2026-07-24T19:40:27+00:00
+- Updated: 2026-07-27T09:49:06+00:00
 
 Eine Node-Version, ein Paketmanager, ein ESLint-Major, ein TypeScript-Major. Collector entweder modernisieren oder abspalten.
 
@@ -269,13 +269,6 @@ Evidence: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirro
 
 ## Recent events
 
-- 2026-07-24T21:31:20+00:00 — `chatgpt-web` — `progress` `T-0002`: T-0002 gestartet: aktueller Worktree und Git-Historie werden auf konkrete VM-/SSH-/Port-/Secret-Betriebsdaten geprüft; Werte werden nur redigiert/fingerprinted ausgegeben.
-- 2026-07-24T22:06:56+00:00 — `local-agent` — `task_added` `T-0011`: Oracle Cloud VM (sin-supabase) prüfen und updaten
-- 2026-07-24T22:06:57+00:00 — `local-agent` — `task_added` `T-0012`: OpenAfD-Chat Repository synchronisieren
-- 2026-07-24T22:06:58+00:00 — `local-agent` — `task_added` `T-0013`: Browser-Test aller Funktionen durchführen
-- 2026-07-24T22:06:59+00:00 — `local-agent` — `task_added` `T-0014`: Bugs und fehlende Features dokumentieren
-- 2026-07-25T01:20:08+00:00 — `local-agent` — `task_claimed` `T-0013`: claimed by chatgpt-web
-- 2026-07-25T01:21:55+00:00 — `local-agent` — `task_added` `T-0015`: Manual ChatGPT Delegation Required
 - 2026-07-25T01:22:29+00:00 — `local-agent` — `task_updated` `T-0014`: task fields updated
 - 2026-07-25T01:22:45+00:00 — `local-agent` — `task_completed` `T-0014`: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirror editor. 2) OCI VM SSH times out but web services work. 3) Type-check passes for both repos. 4) Both repos clean and on main. 5) Both sites live. See .sin-gpt-web/handoff.md for full details.
 - 2026-07-25T01:23:10+00:00 — `local-agent` — `task_completed` `T-0015`: Manual delegation prompt written to .sin-gpt-web/delegation-prompt.md and handoff.md. User must paste delegation message into ChatGPT manually or use ChatGPT API.
@@ -289,3 +282,10 @@ Evidence: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirro
 - 2026-07-27T02:21:03+00:00 — `chatgpt-web` — `task_completed` `T-0005`: Rendered production Compose with a synthetic 40-character commit SHA and verified the running app image reference resolves to opensin-chat:<full-sha>. Both deploy-production.sh and auto-deploy.sh tag by target_sha, retain an existing rollback image, and roll back with --no-build. Canonical BusyBox and Unlimited-OCR images are digest-pinned. Git scan found no active docker cp instructions or :latest Compose images; yarn check:public-ops passed.
 - 2026-07-27T02:23:17+00:00 — `chatgpt-web` — `task_completed` `T-0002`: Sanitized production addresses, SSH users, tunnel identifiers, absolute operator paths, internal topology, container details and hardcoded recovery targets from active public docs/scripts; removed obsolete fail-open webhook deployment; made recovery and backup tooling fail-closed and environment-driven; added a permanent check:public-ops CI policy. Final candidate scan covered 2505 tracked/nonignored files with 0 Gitleaks findings, check:public-ops passed, and known production-address/private-path fingerprint findings were 0. Full Git history scan covered 3651 commits (~121 MB) and identified 118 redacted historical findings in 29 commits; active credential rotation is separately tracked under T-0001.
 - 2026-07-27T02:23:30+00:00 — `chatgpt-web` — `task_claimed` `T-0006`: claimed by chatgpt-web
+- 2026-07-27T09:44:09+00:00 — `local-agent` — `task_claimed` `T-0007`: claimed by chatgpt-web
+- 2026-07-27T09:44:55+00:00 — `local-agent` — `task_updated` `T-0007`: task fields updated
+- 2026-07-27T09:49:03+00:00 — `local-agent` — `task_claimed` `T-0012`: claimed by chatgpt-web
+- 2026-07-27T09:49:03+00:00 — `local-agent` — `task_claimed` `T-0008`: claimed by chatgpt-web
+- 2026-07-27T09:49:04+00:00 — `local-agent` — `task_claimed` `T-0009`: claimed by chatgpt-web
+- 2026-07-27T09:49:06+00:00 — `local-agent` — `task_claimed` `T-0010`: claimed by chatgpt-web
+- 2026-07-27T10:43:51+00:00 — `chatgpt-web` — `decision` `T-0012`: OpenAfD graph verified: 290 unique OpenAfD commits, 6 missing OpenSIN commits. Local changes are a coherent unfinished root-lockfile/dependency migration; preserve before merge and port only compatible parts into the new monorepo.

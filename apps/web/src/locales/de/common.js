@@ -4206,6 +4206,15 @@ const TRANSLATIONS = {
   },
   sidebar: {
     mainNavigation: "Hauptnavigation",
+    primary: {
+      label: "Arbeitsbereiche",
+      chatsProjects: "Chats / Projekte",
+      sourcesDocuments: "Quellen / Dokumente",
+      politicalData: "Politische Daten",
+      research: "Recherche",
+      reports: "Berichte",
+      admin: "Admin",
+    },
     home: "Startseite",
     logo: "Logo",
     resizeSidebar: "Seitenleiste skalieren",

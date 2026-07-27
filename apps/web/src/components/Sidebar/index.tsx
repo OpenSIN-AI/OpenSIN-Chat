@@ -16,6 +16,7 @@ import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass"
 import { useTranslation } from "react-i18next";
 import { Tooltip } from "react-tooltip";
 import ActiveWorkspaces from "./ActiveWorkspaces";
+import PrimaryNavigation from "./PrimaryNavigation";
 import WorkspaceSwitcher from "./WorkspaceSwitcher";
 import NewWorkspaceModal, {
   useNewWorkspaceModal,
@@ -169,6 +170,7 @@ function SidebarContent({
             {COMMAND_SHORTCUT_LABEL}
           </kbd>
         </button>
+        <PrimaryNavigation onNavigate={onNavigate} />
         <div className="mb-1 flex items-center justify-between px-2">
           <span className="text-[10px] font-semibold uppercase tracking-wider text-theme-text-muted">
             {t("commandHub.groups.notebooks")}

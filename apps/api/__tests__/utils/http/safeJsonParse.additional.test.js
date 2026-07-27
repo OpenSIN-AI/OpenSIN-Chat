@@ -81,9 +81,8 @@ describe("toValidNumber", () => {
     expect(toValidNumber("abc", 0)).toBe(0);
   });
 
-  test("returns 0 for null", () => {
-    // Number(null) === 0, so this returns 0
-    expect(toValidNumber(null, 99)).toBe(0);
+  test("returns fallback for null", () => {
+    expect(toValidNumber(null, 99)).toBe(99);
   });
 
   test("returns fallback for NaN", () => {
@@ -106,9 +105,8 @@ describe("toValidNumber", () => {
     expect(toValidNumber("3.14")).toBe(3.14);
   });
 
-  test("handles undefined as null (returns 0)", () => {
-    // Default value is null, so undefined gets converted to null -> 0
-    expect(toValidNumber(undefined, 50)).toBe(0);
+  test("returns fallback for undefined", () => {
+    expect(toValidNumber(undefined, 50)).toBe(50);
   });
 });
 

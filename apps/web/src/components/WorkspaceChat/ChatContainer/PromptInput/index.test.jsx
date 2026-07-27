@@ -32,6 +32,10 @@ vi.mock("@/hooks/useUser", () => ({
   default: vi.fn(() => ({ user: null })),
 }));
 
+vi.mock("../ChatSidebar", () => ({
+  useChatSidebar: () => ({ openSidebar: vi.fn() }),
+}));
+
 vi.mock("@/utils/toast", () => ({
   default: vi.fn(),
 }));
@@ -119,7 +123,9 @@ describe("PromptInput", () => {
 
   it("renders the prompt textarea and the AttachItem trigger", () => {
     renderPromptInput();
-    expect(screen.getByPlaceholderText("Send a message")).toBeInTheDocument();
+    expect(
+      screen.getByRole("textbox", { name: /Message input/i }),
+    ).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: /Attach a file to this chat/i }),
     ).toBeInTheDocument();
@@ -128,7 +134,7 @@ describe("PromptInput", () => {
   it("keeps the textarea value while opening the attachment menu", async () => {
     const user = userEvent.setup();
     renderPromptInput();
-    const textarea = screen.getByPlaceholderText("Send a message");
+    const textarea = screen.getByRole("textbox", { name: /Message input/i });
     const trigger = screen.getByRole("button", {
       name: /Attach a file to this chat/i,
     });
@@ -147,7 +153,7 @@ describe("PromptInput", () => {
     const clickSpy = vi.spyOn(input, "click");
     renderPromptInput();
 
-    const textarea = screen.getByPlaceholderText("Send a message");
+    const textarea = screen.getByRole("textbox", { name: /Message input/i });
     await user.type(textarea, "Keep me");
     expect(textarea).toHaveValue("Keep me");
 

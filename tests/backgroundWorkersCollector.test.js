@@ -173,7 +173,9 @@ describe("BackgroundService", () => {
   describe("onError", () => {
     it("should log error without throwing", () => {
       const error = new Error("worker crashed");
-      expect(() => service.onError(error, { name: "test-worker" })).not.toThrow();
+      expect(() =>
+        service.onError(error, { name: "test-worker" }),
+      ).not.toThrow();
     });
   });
 
@@ -282,10 +284,10 @@ describe("CollectorApi", () => {
   });
 
   describe("constructor", () => {
-    it("should set endpoint to http://0.0.0.0:{port}", () => {
+    it("should set endpoint to http://127.0.0.1:{port}", () => {
       process.env.COLLECTOR_PORT = "7777";
       const c = new CollectorApi();
-      expect(c.endpoint).toBe("http://0.0.0.0:7777");
+      expect(c.endpoint).toBe("http://127.0.0.1:7777");
       delete process.env.COLLECTOR_PORT;
     });
 
@@ -297,9 +299,7 @@ describe("CollectorApi", () => {
 
   describe("online", () => {
     it("should return true when collector responds ok", async () => {
-      global.fetch = vi.fn(() =>
-        Promise.resolve({ ok: true }),
-      );
+      global.fetch = vi.fn(() => Promise.resolve({ ok: true }));
       const result = await collector.online();
       expect(result).toBe(true);
     });
@@ -311,9 +311,7 @@ describe("CollectorApi", () => {
     });
 
     it("should return false when response is not ok", async () => {
-      global.fetch = vi.fn(() =>
-        Promise.resolve({ ok: false }),
-      );
+      global.fetch = vi.fn(() => Promise.resolve({ ok: false }));
       const result = await collector.online();
       expect(result).toBe(false);
     });
@@ -456,7 +454,9 @@ describe("CollectorApi", () => {
     });
 
     it("should return error object when fetch fails", async () => {
-      global.fetch = vi.fn(() => Promise.reject(new Error("connection refused")));
+      global.fetch = vi.fn(() =>
+        Promise.reject(new Error("connection refused")),
+      );
       const result = await collector.parseDocument("doc.pdf");
       expect(result.success).toBe(false);
       expect(result.reason).toBe("connection refused");

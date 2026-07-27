@@ -1,6 +1,10 @@
 # OpenSIN Chat
 
-OpenSIN Chat is a self-hosted AI workspace for chat, knowledge retrieval, document analysis, agents and controlled integrations.
+OpenSIN Chat is a sovereign, self-hosted AI workspace for political research, grounded chat, document analysis, source-backed reports and controlled integrations.
+
+**Live application:** [sinchat.delqhi.com](https://sinchat.delqhi.com)
+
+The product is deliberately focused on six work areas: chats and projects, sources and documents, political data, research, reports and administration. Experimental capabilities remain behind the admin laboratory instead of competing with the primary workflow.
 
 The repository is organized as a small monorepo with explicit product, platform and tooling boundaries. Current release status is determined by CI and release artifacts—not by hand-written readiness claims.
 
@@ -22,7 +26,7 @@ See [`docs/repository-layout.md`](docs/repository-layout.md) for ownership rules
 
 ## Requirements
 
-- Node.js 24
+- Node.js 24.16.0 (see `.nvmrc`)
 - Corepack
 - Yarn Classic 1.22.22 for the current lockfile
 - Docker with Compose for the production-like runtime

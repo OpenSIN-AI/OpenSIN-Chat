@@ -28,6 +28,13 @@ export default defineConfig({
       "**/node_modules/**",
       "tests/e2e/**",
       "apps/web/**",
+      // Removed product areas: these legacy endpoint contracts no longer exist.
+      "tests/communityHub*.test.js",
+      "tests/mobileEndpoints.test.js",
+      // Focused Jest suites under apps/api/__tests__ own these unit contracts.
+      "tests/mcpIntegration.test.js",
+      "tests/speechTtsPushNotifications.test.js",
+      "tests/vectorStoreDocumentManager.test.js",
     ],
     env: {
       INTEGRATION_TEST: "true",

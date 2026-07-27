@@ -105,6 +105,13 @@ vi.mock("@/utils/clipboard", () => ({
 
 vi.mock("@/utils/safeStorage", () => ({
   safeGetItem: vi.fn(() => null),
+  safeGetSessionItem: vi.fn((key) => {
+    try {
+      return window.sessionStorage.getItem(key);
+    } catch {
+      return null;
+    }
+  }),
 }));
 
 vi.mock("@/utils/constants", () => ({

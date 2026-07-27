@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Unit tests for runBus — event publishing, listener management.
-const { agentRunBus } = require("../../../server/utils/agents/runBus");
+const { agentRunBus } = require("../../utils/agents/runBus");
 
 describe("AgentRunBus", () => {
   afterEach(() => {
@@ -33,7 +33,11 @@ describe("AgentRunBus", () => {
     agentRunBus.on("agentrun", () => count++);
     agentRunBus.on("agentrun", () => count++);
 
-    agentRunBus.publish("ws", "run.finished", { runId: "r1", status: "done", ts: 0 });
+    agentRunBus.publish("ws", "run.finished", {
+      runId: "r1",
+      status: "done",
+      ts: 0,
+    });
     expect(count).toBe(2);
   });
 
@@ -53,6 +57,9 @@ describe("AgentRunBus", () => {
       done();
     });
 
-    agentRunBus.emit("respond", { runId: "run-respond", payload: { answer: "yes" } });
+    agentRunBus.emit("respond", {
+      runId: "run-respond",
+      payload: { answer: "yes" },
+    });
   });
 });

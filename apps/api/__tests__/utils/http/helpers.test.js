@@ -65,14 +65,14 @@ describe("reqBody", () => {
     expect(reqBody(req)).toEqual([1, 2, 3]);
   });
 
-  test("returns null body directly", () => {
+  test("normalizes a null body to an empty object", () => {
     const req = { body: null };
-    expect(reqBody(req)).toBeNull();
+    expect(reqBody(req)).toEqual({});
   });
 
-  test("returns undefined body directly", () => {
+  test("normalizes an undefined body to an empty object", () => {
     const req = { body: undefined };
-    expect(reqBody(req)).toBeUndefined();
+    expect(reqBody(req)).toEqual({});
   });
 
   test("returns empty string body as empty object", () => {

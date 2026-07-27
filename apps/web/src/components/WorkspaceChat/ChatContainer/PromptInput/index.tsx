@@ -82,6 +82,15 @@ export default function PromptInput({
   const agentMode = useAgentMode();
   const notebookSlug = workspaceSlug ?? (workspace as any)?.slug ?? null;
 
+  useEffect(() => {
+    const modeId = agentMode.activeMode?.id;
+    if (!modeId || !sendCommand) return;
+    const next = applyAgentModePrefix(promptInput || "", modeId);
+    if (next !== promptInput) {
+      sendCommand({ text: next, writeMode: "replace" });
+    }
+  }, [agentMode.activeMode?.id, promptInput, sendCommand]);
+
   const notebookMode = useNotebookMode({ notebookSlug, threadSlug });
   const selectedCodeRunner = useSelectedCodeRunner(notebookSlug);
 
