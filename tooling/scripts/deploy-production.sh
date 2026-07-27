@@ -60,7 +60,7 @@ compose_service="$3"
 compose_port="$4"
 compose_bind_address="$5"
 image_repository="$6"
-public_health_url="$7"
+public_health_url="${7:-}"
 
 if [[ "${remote_repo_input}" = /* ]]; then
   repo_dir="${remote_repo_input}"
