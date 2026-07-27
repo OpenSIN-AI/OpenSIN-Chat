@@ -233,6 +233,10 @@ RUN --mount=type=cache,target=/yarn-cache,uid=${ARG_UID},gid=${ARG_GID} \
     YARN_CACHE_FOLDER=/yarn-cache \
     yarn install --production --frozen-lockfile --network-timeout 600000
 
+# Fail the image build immediately when Yarn Classic produces an incomplete
+# production hoist for the worker browser stack.
+RUN node -e "require('puppeteer'); require('string-width')"
+
 COPY --chown=opensin:opensin ./apps/api/ /app/server/
 COPY --chown=opensin:opensin ./apps/worker/ /app/collector/
 
