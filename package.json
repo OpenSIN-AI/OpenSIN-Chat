@@ -124,6 +124,7 @@
     "openai": "^6.44.0",
     "pdf-parse": "^2.4.5",
     "slugify": "^1.6.9",
+    "string-width": "4.2.3",
     "uuid": "^14.0.1"
   }
 }
