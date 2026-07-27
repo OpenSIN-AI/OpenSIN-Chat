@@ -72,8 +72,8 @@ compose_dir="${repo_dir}/platform/containers/compose"
 base_compose="${compose_dir}/docker-compose.yml"
 production_compose="${compose_dir}/docker-compose.production.yml"
 
-if [[ ! -d "${repo_dir}/.git" ]]; then
-  echo "[deploy] ERROR: ${repo_dir} is not a Git repository." >&2
+if ! git -C "${repo_dir}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  echo "[deploy] ERROR: ${repo_dir} is not a Git worktree." >&2
   exit 1
 fi
 
@@ -105,7 +105,7 @@ short_sha="${target_sha:0:12}"
 
 echo "[deploy] Target commit: ${target_sha}"
 
-git checkout -B "${deploy_branch}" "origin/${deploy_branch}"
+git checkout --detach "${target_sha}"
 git reset --hard "${target_sha}"
 
 export COMPOSE_PORT="${compose_port}"
