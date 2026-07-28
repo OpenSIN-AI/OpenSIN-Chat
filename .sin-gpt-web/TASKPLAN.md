@@ -14,7 +14,7 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 ## Status
 
 - Backlog: 0
-- In progress: 2
+- In progress: 3
 - Blocked: 1
 - Done: 15
 - Cancelled: 0
@@ -28,6 +28,7 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 | T-0003 | critical | implement | done | chatgpt-web | Security P0: SYS_ADMIN Cap und Docker Security | — |
 | T-0011 | critical | implement | done | chatgpt-web | Oracle Cloud VM (sin-supabase) prüfen und updaten | — |
 | T-0017 | critical | implement | done | chatgpt-web | Login hinter TLS-Reverse-Proxy durch Origin-Guard blockiert | — |
+| T-0019 | critical | implement | in_progress | chatgpt-web | OpenAfD Deep Research verliert Agent-WebSocket | — |
 | T-0004 | high | implement | done | chatgpt-web | CI/CD: Echte GitHub Actions implementieren | — |
 | T-0005 | high | implement | done | chatgpt-web | CI/CD: Immutable Docker Images mit Commit-SHA | — |
 | T-0006 | high | implement | done | chatgpt-web | Produkt: Videogenerierung und cvoice entfernen | — |
@@ -129,6 +130,20 @@ Acceptance:
 Evidence: Origin-Guard auf sichere http/https-Same-Host-Prüfung umgestellt. 131 gezielte Tests pro Repo grün; Fremd-Origin bleibt HTTP 403, legitime öffentliche Same-Host-Origin liefert HTTP 200. OpenSIN fc90ae517 und OpenAfD 25e24b01c auf main gepusht und als SHA-Images live; Orca-Login auf beiden Domains erfolgreich. Nach versehentlicher Tool-Ausgabe wurden AUTH_TOKEN, JWT_SECRET und SIG_KEY beider Live-Systeme sofort rotiert und Container gesund neu erstellt.
 
 Completion report: `.sin-gpt-web/reports/T-0017.md`
+
+### T-0019 — OpenAfD Deep Research verliert Agent-WebSocket
+
+- Status: `in_progress`
+- Owner: `chatgpt-web`
+- Kind: `implement`
+- Priority: `critical`
+- Dependencies: none
+- Updated: 2026-07-28T22:47:43+00:00
+
+Auf openafd.delqhi.com aktiviert ?mode=deep-research korrekt Work und web-search. Beim Absenden erscheinen wiederholt Connection lost. Reconnecting (1/3), Konnte nicht auf die Nachricht antworten und Agent session has ended; die UI bleibt in Denkt nach. OpenSIN funktioniert mit derselben Anfrage.
+
+Acceptance:
+- Agent-WebSocket auf OpenAfD bleibt verbunden; Deep-Research-Websuche liefert Ergebnis/Quellen; Proxy-, Origin- und Auth-Konfiguration mit OpenSIN abgeglichen; Tests grün; main gepusht und Live-SHA deployed
 
 ### T-0004 — CI/CD: Echte GitHub Actions implementieren
 
@@ -350,8 +365,6 @@ Evidence: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirro
 
 ## Recent events
 
-- 2026-07-27T18:06:16+00:00 — `chatgpt-web` — `task_completed` `T-0008`: Archived historical plans, readiness and release material under docs/archive, removed duplicate root architecture documentation, and established docs/ plus the curated in-app docs sync as canonical sources. Root contains no obsolete CEO audit, MASTER-PLAN, future-plan or readiness documents. Layout and docs manifest checks pass; full yarn verify passed.
-- 2026-07-27T18:06:16+00:00 — `chatgpt-web` — `task_completed` `T-0009`: README now describes the focused sovereign product, links to https://sinchat.delqhi.com, documents the canonical monorepo layout and current toolchain, and no longer presents obsolete OpenAfD video/screenshots. Branding policy check passed and full yarn verify passed on pushed commit fa2038137.
 - 2026-07-27T18:06:19+00:00 — `chatgpt-web` — `task_completed` `T-0010`: Standardized Node 24.16.0 via .nvmrc and >=24.16.0 <25 engines, Yarn Classic 1.22.22 with one root yarn.lock, ESLint 9.39.2 across root/API/web/worker, and TypeScript 6.0.3 where TypeScript is used. Removed duplicate workspace lockfiles, added isolated integration-test setup, and passed lint, type-check, all test suites, integration tests and production build via yarn verify.
 - 2026-07-27T18:10:00+00:00 — `chatgpt-web` — `task_completed` `T-0011`: Oracle Cloud VM operational: sinchat.delqhi.com and openafd.delqhi.com both returning HTTP 200. SSH access blocked but web services confirmed working.
 - 2026-07-27T18:11:06+00:00 — `local-agent` — `task_blocked` `T-0012`: OpenAfD-Chat repo has 100+ merge conflicts requiring manual resolution. Cannot sync automatically.
@@ -370,3 +383,5 @@ Evidence: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirro
 - 2026-07-28T22:33:15+00:00 — `chatgpt-web` — `task_completed` `T-0017`: Origin-Guard auf sichere http/https-Same-Host-Prüfung umgestellt. 131 gezielte Tests pro Repo grün; Fremd-Origin bleibt HTTP 403, legitime öffentliche Same-Host-Origin liefert HTTP 200. OpenSIN fc90ae517 und OpenAfD 25e24b01c auf main gepusht und als SHA-Images live; Orca-Login auf beiden Domains erfolgreich. Nach versehentlicher Tool-Ausgabe wurden AUTH_TOKEN, JWT_SECRET und SIG_KEY beider Live-Systeme sofort rotiert und Container gesund neu erstellt.
 - 2026-07-28T22:33:15+00:00 — `chatgpt-web` — `task_completed` `T-0012`: OpenAfD auf aktuelle OpenSIN-Monorepo-Baseline synchronisiert, Produktbranding/Domain erhalten, Legacy-Runtime verlustfrei quarantänisiert, frozen Root-Lockfile installiert. API 2716, Web 226 Dateien, Worker 466 Tests sowie Lint, Typecheck, Build, Gitleaks und Compose-Security grün. main bis 25e24b01c gepusht; Oracle-Release-Worktree und immutable SHA-Image auf openafd.delqhi.com gesund deployed, Datenbankbackup integrity=ok.
 - 2026-07-28T22:33:15+00:00 — `chatgpt-web` — `task_claimed` `T-0016`: claimed by chatgpt-web
+- 2026-07-28T22:47:42+00:00 — `chatgpt-web` — `task_added` `T-0019`: OpenAfD Deep Research verliert Agent-WebSocket
+- 2026-07-28T22:47:43+00:00 — `chatgpt-web` — `task_claimed` `T-0019`: claimed by chatgpt-web
