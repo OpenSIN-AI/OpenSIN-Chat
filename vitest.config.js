@@ -39,6 +39,11 @@ export default defineConfig({
     env: {
       INTEGRATION_TEST: "true",
     },
+    // The first endpoint in a file boots the full API dependency graph. On
+    // Node 24 (especially arm64 CI/dev hosts) that cold start can exceed the
+    // Vitest defaults even though the endpoint itself succeeds.
+    testTimeout: 30_000,
+    hookTimeout: 60_000,
     // Reuse the same process to avoid spinning up multiple servers; tests
     // use the createApp() singleton.
     fileParallelism: false,
