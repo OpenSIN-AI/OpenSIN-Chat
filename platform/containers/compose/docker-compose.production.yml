@@ -6,7 +6,7 @@
 #   -f docker-compose.production.yml \
 #   up -d
 
-name: opensin-chat
+name: "${COMPOSE_PROJECT_NAME:-opensin-chat}"
 
 services:
   opensin-chat:

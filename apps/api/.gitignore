@@ -4,13 +4,13 @@
 !.env.example
 !.env.*.example
 
-# Runtime storage and logs
-storage/
-storage-opensin/
-logs/
-documents/
-vector-cache/
-sslcert/
+# Runtime storage and logs (anchored so source folders such as utils/storage remain trackable)
+/storage/
+/storage-opensin/
+/logs/
+/documents/
+/vector-cache/
+/sslcert/
 *.db
 *.db-journal
 *.db-shm

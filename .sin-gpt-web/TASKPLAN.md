@@ -13,7 +13,7 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 
 ## Status
 
-- Backlog: 0
+- Backlog: 1
 - In progress: 1
 - Blocked: 1
 - Done: 13
@@ -34,6 +34,7 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 | T-0012 | high | implement | in_progress | chatgpt-web | OpenAfD-Chat Repository synchronisieren | — |
 | T-0013 | high | implement | done | chatgpt-web | Browser-Test aller Funktionen durchführen | — |
 | T-0015 | high | ops | done | local-agent | Manual ChatGPT Delegation Required | — |
+| T-0016 | high | test | backlog | unassigned | T-0013 Acceptance im Orca-Browser vollständig nachholen | T-0012 |
 | T-0008 | medium | implement | done | chatgpt-web | Repo: Veraltete Dokumente archivieren | — |
 | T-0009 | medium | implement | done | chatgpt-web | Repo: README und Branding aktualisieren | — |
 | T-0010 | medium | implement | done | chatgpt-web | Repo: Toolchain vereinheitlichen | — |
@@ -225,6 +226,20 @@ Acceptance:
 
 Evidence: Manual delegation prompt written to .sin-gpt-web/delegation-prompt.md and handoff.md. User must paste delegation message into ChatGPT manually or use ChatGPT API.
 
+### T-0016 — T-0013 Acceptance im Orca-Browser vollständig nachholen
+
+- Status: `backlog`
+- Owner: `unassigned`
+- Kind: `test`
+- Priority: `high`
+- Dependencies: T-0012
+- Updated: 2026-07-28T19:40:16+00:00
+
+Die frühere T-0013-Abnahme dokumentiert ausdrücklich keinen vollständigen Browser-Test. Nach Deployment beide Live-Produkte im Orca-Browser testen: Login/Navigation, Chat, Websuche, Datei-Upload, Quellen zum Chat, Dokumentverarbeitung, Quellenanzeige und sichtbare Kernfunktionen. Jeden Fehler als eigenen Task dokumentieren.
+
+Acceptance:
+- Orca-Evidenz für Websuche, Datei-Upload, Quellen-Dateien und Chat-Funktionen auf beiden Live-Domains; jeder Bug als Task erfasst
+
 ### T-0008 — Repo: Veraltete Dokumente archivieren
 
 - Status: `done`
@@ -297,7 +312,6 @@ Evidence: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirro
 
 ## Recent events
 
-- 2026-07-27T02:23:30+00:00 — `chatgpt-web` — `task_claimed` `T-0006`: claimed by chatgpt-web
 - 2026-07-27T09:44:09+00:00 — `local-agent` — `task_claimed` `T-0007`: claimed by chatgpt-web
 - 2026-07-27T09:44:55+00:00 — `local-agent` — `task_updated` `T-0007`: task fields updated
 - 2026-07-27T09:49:03+00:00 — `local-agent` — `task_claimed` `T-0012`: claimed by chatgpt-web
@@ -317,3 +331,4 @@ Evidence: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirro
 - 2026-07-27T18:21:56+00:00 — `chatgpt-web` — `task_claimed` `T-0012`: claimed by chatgpt-web
 - 2026-07-27T18:21:57+00:00 — `chatgpt-web` — `evidence_correction` `T-0011`: Vorherige Evidence war unvollständig: SSH zu sin-supabase ist erreichbar; Commit-SHA-Deployment und Containerprüfung werden jetzt tatsächlich durchgeführt.
 - 2026-07-27T18:21:57+00:00 — `chatgpt-web` — `evidence_correction` `T-0013`: Vorherige Evidence erfüllte die Acceptance nicht: Typecheck ersetzt keinen Browser-Volltest. Orca-Tests werden für jede Kernfunktion mit Einzelergebnis nachgeholt.
+- 2026-07-28T19:40:16+00:00 — `chatgpt-web` — `task_added` `T-0016`: T-0013 Acceptance im Orca-Browser vollständig nachholen

@@ -15,7 +15,9 @@ const repoRoot = path.resolve(
 );
 const runtimeDir = path.join(repoRoot, ".local", "test-runtime");
 const databasePath = path.join(runtimeDir, "integration.db");
+const storageDir = path.join(runtimeDir, "storage");
 const databaseUrl = `file:${databasePath}`;
+const requestedTests = process.argv.slice(2);
 
 mkdirSync(runtimeDir, { recursive: true });
 for (const suffix of ["", "-shm", "-wal"]) {
@@ -27,6 +29,7 @@ const env = {
   NODE_ENV: "test",
   INTEGRATION_TEST: "true",
   DATABASE_URL: databaseUrl,
+  STORAGE_DIR: storageDir,
   AUTH_TOKEN: "test",
   JWT_SECRET: randomBytes(48).toString("hex"),
   SIG_KEY: randomBytes(32).toString("hex"),
@@ -36,8 +39,8 @@ const env = {
   TELEMETRY_DISABLED: "true",
 };
 
-function run(args) {
-  const child = spawnSync("yarn", args, {
+function runCommand(command, args) {
+  const child = spawnSync(command, args, {
     cwd: repoRoot,
     env,
     stdio: "inherit",
@@ -46,21 +49,37 @@ function run(args) {
   return child.status ?? 1;
 }
 
+function run(args) {
+  return runCommand("yarn", args);
+}
+
 let exitCode = 1;
 try {
-  const migrateStatus = run([
-    "workspace",
-    "opensin-chat-server",
-    "prisma:migrate",
+  const keyStatus = runCommand(process.execPath, [
+    "-e",
+    "new (require('./apps/api/utils/comKey').CommunicationKey)(true)",
   ]);
-  if (migrateStatus !== 0) {
-    process.exitCode = migrateStatus;
+  if (keyStatus !== 0) {
+    process.exitCode = keyStatus;
   } else {
-    exitCode = run(["vitest", "run", "--config", "vitest.config.js"]);
-    process.exitCode = exitCode;
+    const migrateStatus = run([
+      "workspace",
+      "opensin-chat-server",
+      "prisma:migrate",
+    ]);
+    if (migrateStatus !== 0) {
+      process.exitCode = migrateStatus;
+    } else {
+      exitCode = run([
+        "vitest",
+        "run",
+        "--config",
+        "vitest.config.js",
+        ...requestedTests,
+      ]);
+      process.exitCode = exitCode;
+    }
   }
 } finally {
-  for (const suffix of ["", "-shm", "-wal"]) {
-    rmSync(`${databasePath}${suffix}`, { force: true });
-  }
+  rmSync(runtimeDir, { recursive: true, force: true });
 }

@@ -36,8 +36,9 @@ bundleinspector.html
 *-report.md
 
 # Runtime state
-storage/
-apps/api/storage/
+/storage/
+/apps/api/storage/
+/apps/worker/storage/
 apps/api/storage-opensin/
 apps/api/logs/
 apps/worker/hotdir/
