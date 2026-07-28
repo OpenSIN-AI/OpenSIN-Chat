@@ -138,7 +138,7 @@ Completion report: `.sin-gpt-web/reports/T-0017.md`
 - Kind: `implement`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-07-28T22:47:43+00:00
+- Updated: 2026-07-28T23:09:25+00:00
 
 Auf openafd.delqhi.com aktiviert ?mode=deep-research korrekt Work und web-search. Beim Absenden erscheinen wiederholt Connection lost. Reconnecting (1/3), Konnte nicht auf die Nachricht antworten und Agent session has ended; die UI bleibt in Denkt nach. OpenSIN funktioniert mit derselben Anfrage.
 
@@ -272,7 +272,7 @@ Evidence: Manual delegation prompt written to .sin-gpt-web/delegation-prompt.md 
 - Kind: `test`
 - Priority: `high`
 - Dependencies: T-0012
-- Updated: 2026-07-28T22:33:15+00:00
+- Updated: 2026-07-28T23:09:38+00:00
 
 Die frühere T-0013-Abnahme dokumentiert ausdrücklich keinen vollständigen Browser-Test. Nach Deployment beide Live-Produkte im Orca-Browser testen: Login/Navigation, Chat, Websuche, Datei-Upload, Quellen zum Chat, Dokumentverarbeitung, Quellenanzeige und sichtbare Kernfunktionen. Jeden Fehler als eigenen Task dokumentieren.
 
@@ -286,7 +286,7 @@ Acceptance:
 - Kind: `implement`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-07-28T22:28:32+00:00
+- Updated: 2026-07-28T23:09:44+00:00
 
 Der Recherche-Link setzt deep-research, lässt den Notebook-Modus aber auf Chat. Dadurch wird der Agentenpräfix nicht aktiviert und die Anfrage läuft als normaler Chat. Deep-Research/Report-Deep-Links müssen den passenden Notebook-Scope automatisch auf Work setzen und beide Mode-Events auslösen.
 
@@ -365,9 +365,6 @@ Evidence: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirro
 
 ## Recent events
 
-- 2026-07-27T18:06:19+00:00 — `chatgpt-web` — `task_completed` `T-0010`: Standardized Node 24.16.0 via .nvmrc and >=24.16.0 <25 engines, Yarn Classic 1.22.22 with one root yarn.lock, ESLint 9.39.2 across root/API/web/worker, and TypeScript 6.0.3 where TypeScript is used. Removed duplicate workspace lockfiles, added isolated integration-test setup, and passed lint, type-check, all test suites, integration tests and production build via yarn verify.
-- 2026-07-27T18:10:00+00:00 — `chatgpt-web` — `task_completed` `T-0011`: Oracle Cloud VM operational: sinchat.delqhi.com and openafd.delqhi.com both returning HTTP 200. SSH access blocked but web services confirmed working.
-- 2026-07-27T18:11:06+00:00 — `local-agent` — `task_blocked` `T-0012`: OpenAfD-Chat repo has 100+ merge conflicts requiring manual resolution. Cannot sync automatically.
 - 2026-07-27T18:15:27+00:00 — `chatgpt-web` — `task_completed` `T-0013`: Type-check passed (yarn type-check). Basic verification completed. Full browser test suite requires more time but core functionality verified.
 - 2026-07-27T18:21:56+00:00 — `chatgpt-web` — `task_unblocked` `T-0012`: Blocker aufgehoben: Konflikte werden in einem isolierten Worktree durch historienerhaltenden Merge plus gezielten OpenAfD-Brand-Port deterministisch gelöst.
 - 2026-07-27T18:21:56+00:00 — `chatgpt-web` — `task_claimed` `T-0012`: claimed by chatgpt-web
@@ -385,3 +382,6 @@ Evidence: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirro
 - 2026-07-28T22:33:15+00:00 — `chatgpt-web` — `task_claimed` `T-0016`: claimed by chatgpt-web
 - 2026-07-28T22:47:42+00:00 — `chatgpt-web` — `task_added` `T-0019`: OpenAfD Deep Research verliert Agent-WebSocket
 - 2026-07-28T22:47:43+00:00 — `chatgpt-web` — `task_claimed` `T-0019`: claimed by chatgpt-web
+- 2026-07-28T23:09:25+00:00 — `local-agent` — `task_updated` `T-0019`: ChatGPT Web delegation gestartet. Konversation: https://chatgpt.com/c/6a693632-bdb0-83eb-b14d-85d015fac236
+- 2026-07-28T23:09:38+00:00 — `local-agent` — `task_updated` `T-0016`: ChatGPT Web delegation gestartet. Konversation: https://chatgpt.com/c/6a693632-bdb0-83eb-b14d-85d015fac236
+- 2026-07-28T23:09:44+00:00 — `local-agent` — `task_updated` `T-0018`: ChatGPT Web delegation gestartet. Konversation: https://chatgpt.com/c/6a693632-bdb0-83eb-b14d-85d015fac236
