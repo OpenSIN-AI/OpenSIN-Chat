@@ -41,6 +41,11 @@ import {
   useChatSidebar,
 } from "@/components/WorkspaceChat/ChatContainer/ChatSidebar";
 import { AGENT_MODE_EVENT } from "@/components/WorkspaceChat/ChatContainer/PromptInput/AgentModeButton";
+import { notebookModeForAgentDeepLink } from "@/features/notebook/deep-link-mode";
+import {
+  NOTEBOOK_MODE_CHANGE_EVENT,
+  writeNotebookMode,
+} from "@/features/notebook/notebook-mode-storage";
 import logger from "@/utils/logger";
 
 // PERF: right-rail host is already panel-lazy; keep it off Home's sync graph.
@@ -367,7 +372,10 @@ function HomeContent({
 
   return (
     <ChatSidebarProvider>
-      <HomeDeepLinkController />
+      <HomeDeepLinkController
+        workspaceSlug={workspace?.slug ?? null}
+        threadSlug={threadSlug}
+      />
       <div
         style={
           {
@@ -411,12 +419,21 @@ function HomeContent({
   );
 }
 
-function HomeDeepLinkController() {
+function HomeDeepLinkController({
+  workspaceSlug,
+  threadSlug,
+}: {
+  workspaceSlug: string | null;
+  threadSlug: string | null;
+}) {
   const [searchParams] = useSearchParams();
   const sidebar = useChatSidebar();
   const sidebarRef = useRef(sidebar);
-  sidebarRef.current = sidebar;
   const query = searchParams.toString();
+
+  useEffect(() => {
+    sidebarRef.current = sidebar;
+  }, [sidebar]);
 
   useEffect(() => {
     const params = new URLSearchParams(query);
@@ -441,12 +458,27 @@ function HomeDeepLinkController() {
     } catch {
       // Storage may be unavailable in hardened browser contexts; the event still works.
     }
+    const notebookMode = notebookModeForAgentDeepLink(supportedMode);
+    if (notebookMode) {
+      const scope = { notebookSlug: workspaceSlug, threadSlug };
+      writeNotebookMode(scope, notebookMode);
+      window.dispatchEvent(
+        new CustomEvent(NOTEBOOK_MODE_CHANGE_EVENT, {
+          detail: {
+            mode: notebookMode,
+            notebookSlug: workspaceSlug,
+            threadSlug,
+          },
+        }),
+      );
+    }
+
     window.dispatchEvent(
       new CustomEvent(AGENT_MODE_EVENT, {
         detail: { mode: supportedMode },
       }),
     );
-  }, [query]);
+  }, [query, workspaceSlug, threadSlug]);
 
   return null;
 }

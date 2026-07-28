@@ -13,10 +13,10 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 
 ## Status
 
-- Backlog: 1
+- Backlog: 0
 - In progress: 2
 - Blocked: 1
-- Done: 13
+- Done: 15
 - Cancelled: 0
 
 ## Tasks
@@ -27,15 +27,16 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 | T-0002 | critical | implement | done | chatgpt-web | Security P0: Öffentliche Betriebsinformationen bereinigen | — |
 | T-0003 | critical | implement | done | chatgpt-web | Security P0: SYS_ADMIN Cap und Docker Security | — |
 | T-0011 | critical | implement | done | chatgpt-web | Oracle Cloud VM (sin-supabase) prüfen und updaten | — |
-| T-0017 | critical | implement | in_progress | chatgpt-web | Login hinter TLS-Reverse-Proxy durch Origin-Guard blockiert | — |
+| T-0017 | critical | implement | done | chatgpt-web | Login hinter TLS-Reverse-Proxy durch Origin-Guard blockiert | — |
 | T-0004 | high | implement | done | chatgpt-web | CI/CD: Echte GitHub Actions implementieren | — |
 | T-0005 | high | implement | done | chatgpt-web | CI/CD: Immutable Docker Images mit Commit-SHA | — |
 | T-0006 | high | implement | done | chatgpt-web | Produkt: Videogenerierung und cvoice entfernen | — |
 | T-0007 | high | implement | done | chatgpt-web | Produkt: Navigation radikal fokussieren | — |
-| T-0012 | high | implement | in_progress | chatgpt-web | OpenAfD-Chat Repository synchronisieren | — |
+| T-0012 | high | implement | done | chatgpt-web | OpenAfD-Chat Repository synchronisieren | — |
 | T-0013 | high | implement | done | chatgpt-web | Browser-Test aller Funktionen durchführen | — |
 | T-0015 | high | ops | done | local-agent | Manual ChatGPT Delegation Required | — |
-| T-0016 | high | test | backlog | unassigned | T-0013 Acceptance im Orca-Browser vollständig nachholen | T-0012 |
+| T-0016 | high | test | in_progress | chatgpt-web | T-0013 Acceptance im Orca-Browser vollständig nachholen | T-0012 |
+| T-0018 | high | implement | in_progress | chatgpt-web | Recherche-Deep-Link verliert Agentenmodus beim Mount | — |
 | T-0008 | medium | implement | done | chatgpt-web | Repo: Veraltete Dokumente archivieren | — |
 | T-0009 | medium | implement | done | chatgpt-web | Repo: README und Branding aktualisieren | — |
 | T-0010 | medium | implement | done | chatgpt-web | Repo: Toolchain vereinheitlichen | — |
@@ -113,17 +114,21 @@ Completion report: `.sin-gpt-web/reports/T-0011.md`
 
 ### T-0017 — Login hinter TLS-Reverse-Proxy durch Origin-Guard blockiert
 
-- Status: `in_progress`
+- Status: `done`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-07-28T21:55:05+00:00
+- Updated: 2026-07-28T22:33:15+00:00
 
 Beide Live-Domains liefern bei POST /api/request-token mit legitimer gleicher Host-Origin HTTP 403, weil request.protocol intern http ist, während der Browser https sendet. Sichere Same-Host-Prüfung implementieren, Fremd-Origin weiterhin blockieren, Tests ergänzen, beide Repos pushen und deployen.
 
 Acceptance:
 - Same-Host http/https Origin hinter Reverse-Proxy akzeptiert; fremde Hosts und ungültige Origins bleiben 403; gezielte Tests grün; beide Live-Logins funktionieren im Orca-Browser
+
+Evidence: Origin-Guard auf sichere http/https-Same-Host-Prüfung umgestellt. 131 gezielte Tests pro Repo grün; Fremd-Origin bleibt HTTP 403, legitime öffentliche Same-Host-Origin liefert HTTP 200. OpenSIN fc90ae517 und OpenAfD 25e24b01c auf main gepusht und als SHA-Images live; Orca-Login auf beiden Domains erfolgreich. Nach versehentlicher Tool-Ausgabe wurden AUTH_TOKEN, JWT_SECRET und SIG_KEY beider Live-Systeme sofort rotiert und Container gesund neu erstellt.
+
+Completion report: `.sin-gpt-web/reports/T-0017.md`
 
 ### T-0004 — CI/CD: Echte GitHub Actions implementieren
 
@@ -199,15 +204,19 @@ Completion report: `.sin-gpt-web/reports/T-0007.md`
 
 ### T-0012 — OpenAfD-Chat Repository synchronisieren
 
-- Status: `in_progress`
+- Status: `done`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-07-27T18:21:56+00:00
+- Updated: 2026-07-28T22:33:15+00:00
 
 Acceptance:
 - OpenAfD-Chat hat gleichen Stand wie OpenSIN-Chat, alle Änderungen gepusht
+
+Evidence: OpenAfD auf aktuelle OpenSIN-Monorepo-Baseline synchronisiert, Produktbranding/Domain erhalten, Legacy-Runtime verlustfrei quarantänisiert, frozen Root-Lockfile installiert. API 2716, Web 226 Dateien, Worker 466 Tests sowie Lint, Typecheck, Build, Gitleaks und Compose-Security grün. main bis 25e24b01c gepusht; Oracle-Release-Worktree und immutable SHA-Image auf openafd.delqhi.com gesund deployed, Datenbankbackup integrity=ok.
+
+Completion report: `.sin-gpt-web/reports/T-0012.md`
 
 ### T-0013 — Browser-Test aller Funktionen durchführen
 
@@ -243,17 +252,31 @@ Evidence: Manual delegation prompt written to .sin-gpt-web/delegation-prompt.md 
 
 ### T-0016 — T-0013 Acceptance im Orca-Browser vollständig nachholen
 
-- Status: `backlog`
-- Owner: `unassigned`
+- Status: `in_progress`
+- Owner: `chatgpt-web`
 - Kind: `test`
 - Priority: `high`
 - Dependencies: T-0012
-- Updated: 2026-07-28T19:40:16+00:00
+- Updated: 2026-07-28T22:33:15+00:00
 
 Die frühere T-0013-Abnahme dokumentiert ausdrücklich keinen vollständigen Browser-Test. Nach Deployment beide Live-Produkte im Orca-Browser testen: Login/Navigation, Chat, Websuche, Datei-Upload, Quellen zum Chat, Dokumentverarbeitung, Quellenanzeige und sichtbare Kernfunktionen. Jeden Fehler als eigenen Task dokumentieren.
 
 Acceptance:
 - Orca-Evidenz für Websuche, Datei-Upload, Quellen-Dateien und Chat-Funktionen auf beiden Live-Domains; jeder Bug als Task erfasst
+
+### T-0018 — Recherche-Deep-Link verliert Agentenmodus beim Mount
+
+- Status: `in_progress`
+- Owner: `chatgpt-web`
+- Kind: `implement`
+- Priority: `high`
+- Dependencies: none
+- Updated: 2026-07-28T22:28:32+00:00
+
+Der Recherche-Link setzt deep-research, lässt den Notebook-Modus aber auf Chat. Dadurch wird der Agentenpräfix nicht aktiviert und die Anfrage läuft als normaler Chat. Deep-Research/Report-Deep-Links müssen den passenden Notebook-Scope automatisch auf Work setzen und beide Mode-Events auslösen.
+
+Acceptance:
+- Direkte Navigation und Sidebar-Link zu ?mode=deep-research aktivieren ohne Reload den Deep-Research-Modus; Prompt erhält @agent [deep-research] und web-search Quelle; Regressionstest grün; beide Repos gepusht und live
 
 ### T-0008 — Repo: Veraltete Dokumente archivieren
 
@@ -327,12 +350,6 @@ Evidence: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirro
 
 ## Recent events
 
-- 2026-07-27T09:49:03+00:00 — `local-agent` — `task_claimed` `T-0008`: claimed by chatgpt-web
-- 2026-07-27T09:49:04+00:00 — `local-agent` — `task_claimed` `T-0009`: claimed by chatgpt-web
-- 2026-07-27T09:49:06+00:00 — `local-agent` — `task_claimed` `T-0010`: claimed by chatgpt-web
-- 2026-07-27T10:43:51+00:00 — `chatgpt-web` — `decision` `T-0012`: OpenAfD graph verified: 290 unique OpenAfD commits, 6 missing OpenSIN commits. Local changes are a coherent unfinished root-lockfile/dependency migration; preserve before merge and port only compatible parts into the new monorepo.
-- 2026-07-27T18:06:15+00:00 — `chatgpt-web` — `task_completed` `T-0006`: Removed the video-generation agent plugin, feature flag, menu/mode references and all tracked cvoice implementation assets. Current tracked application code contains no cvoice files; product-focus validator tests pass. Full yarn verify passed on commit fa2038137, which is pushed to origin/main.
-- 2026-07-27T18:06:15+00:00 — `chatgpt-web` — `task_completed` `T-0007`: Implemented PrimaryNavigation with exactly six entries: Chats/Projekte, Quellen/Dokumente, Politische Daten, Recherche, Berichte and Admin. Removed separate email/task links from the primary workspace area and wired deep links to source, political, research and report views. Navigation tests and full yarn verify passed; commit fa2038137 is on origin/main.
 - 2026-07-27T18:06:16+00:00 — `chatgpt-web` — `task_completed` `T-0008`: Archived historical plans, readiness and release material under docs/archive, removed duplicate root architecture documentation, and established docs/ plus the curated in-app docs sync as canonical sources. Root contains no obsolete CEO audit, MASTER-PLAN, future-plan or readiness documents. Layout and docs manifest checks pass; full yarn verify passed.
 - 2026-07-27T18:06:16+00:00 — `chatgpt-web` — `task_completed` `T-0009`: README now describes the focused sovereign product, links to https://sinchat.delqhi.com, documents the canonical monorepo layout and current toolchain, and no longer presents obsolete OpenAfD video/screenshots. Branding policy check passed and full yarn verify passed on pushed commit fa2038137.
 - 2026-07-27T18:06:19+00:00 — `chatgpt-web` — `task_completed` `T-0010`: Standardized Node 24.16.0 via .nvmrc and >=24.16.0 <25 engines, Yarn Classic 1.22.22 with one root yarn.lock, ESLint 9.39.2 across root/API/web/worker, and TypeScript 6.0.3 where TypeScript is used. Removed duplicate workspace lockfiles, added isolated integration-test setup, and passed lint, type-check, all test suites, integration tests and production build via yarn verify.
@@ -347,3 +364,9 @@ Evidence: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirro
 - 2026-07-28T21:49:34+00:00 — `chatgpt-web` — `task_added` `T-0017`: Login hinter TLS-Reverse-Proxy durch Origin-Guard blockiert
 - 2026-07-28T21:51:44+00:00 — `chatgpt-web` — `task_claimed` `T-0017`: claimed by chatgpt-web
 - 2026-07-28T21:55:05+00:00 — `chatgpt-web` — `task_claimed` `T-0017`: claimed by chatgpt-web
+- 2026-07-28T22:24:51+00:00 — `chatgpt-web` — `task_added` `T-0018`: Recherche-Deep-Link verliert Agentenmodus beim Mount
+- 2026-07-28T22:28:09+00:00 — `chatgpt-web` — `task_updated` `T-0018`: Orca-Live-Evidenz: Nach Navigation localStorage opensin_agent_mode=deep-research, Textarea ohne Präfix; erst manueller Klick auf Work erzeugt @agent [deep-research] und [sources:web-search].
+- 2026-07-28T22:28:32+00:00 — `chatgpt-web` — `task_claimed` `T-0018`: claimed by chatgpt-web
+- 2026-07-28T22:33:15+00:00 — `chatgpt-web` — `task_completed` `T-0017`: Origin-Guard auf sichere http/https-Same-Host-Prüfung umgestellt. 131 gezielte Tests pro Repo grün; Fremd-Origin bleibt HTTP 403, legitime öffentliche Same-Host-Origin liefert HTTP 200. OpenSIN fc90ae517 und OpenAfD 25e24b01c auf main gepusht und als SHA-Images live; Orca-Login auf beiden Domains erfolgreich. Nach versehentlicher Tool-Ausgabe wurden AUTH_TOKEN, JWT_SECRET und SIG_KEY beider Live-Systeme sofort rotiert und Container gesund neu erstellt.
+- 2026-07-28T22:33:15+00:00 — `chatgpt-web` — `task_completed` `T-0012`: OpenAfD auf aktuelle OpenSIN-Monorepo-Baseline synchronisiert, Produktbranding/Domain erhalten, Legacy-Runtime verlustfrei quarantänisiert, frozen Root-Lockfile installiert. API 2716, Web 226 Dateien, Worker 466 Tests sowie Lint, Typecheck, Build, Gitleaks und Compose-Security grün. main bis 25e24b01c gepusht; Oracle-Release-Worktree und immutable SHA-Image auf openafd.delqhi.com gesund deployed, Datenbankbackup integrity=ok.
+- 2026-07-28T22:33:15+00:00 — `chatgpt-web` — `task_claimed` `T-0016`: claimed by chatgpt-web
