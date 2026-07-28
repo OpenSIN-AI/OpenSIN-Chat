@@ -72,6 +72,7 @@ const { globalSearchEndpoints } = require("./endpoints/globalSearch");
 const cspViolationEndpoint = require("./endpoints/cspViolation");
 const { httpLogger } = require("./middleware/httpLogger");
 const { securityHeaders } = require("./utils/middleware/securityHeaders");
+const { isAllowedMutatingOrigin } = require("./utils/request/origin");
 
 // Body-parser limit for JSON/text/urlencoded payloads.
 // File uploads are handled by multer with its own size limits, so
@@ -141,11 +142,13 @@ function buildApp() {
           .split(",")
           .map((s) => s.trim())
           .filter(Boolean);
-        const sameOrigin = `${request.protocol}://${request.get("host")}`;
-        const allowedOrigins = [sameOrigin, ...allowed].map((value) =>
-          value.toLowerCase(),
-        );
-        if (!allowedOrigins.includes(origin.toLowerCase())) {
+        if (
+          !isAllowedMutatingOrigin({
+            origin,
+            requestHost: request.get("host"),
+            explicitOrigins: allowed,
+          })
+        ) {
           const id = request.requestId || crypto.randomUUID();
           console.error(
             `[OriginBlock id=${id}] rejected ${request.method} ${request.path} from ${origin}`,

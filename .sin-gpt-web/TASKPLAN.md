@@ -14,7 +14,7 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 ## Status
 
 - Backlog: 1
-- In progress: 1
+- In progress: 2
 - Blocked: 1
 - Done: 13
 - Cancelled: 0
@@ -27,6 +27,7 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 | T-0002 | critical | implement | done | chatgpt-web | Security P0: Öffentliche Betriebsinformationen bereinigen | — |
 | T-0003 | critical | implement | done | chatgpt-web | Security P0: SYS_ADMIN Cap und Docker Security | — |
 | T-0011 | critical | implement | done | chatgpt-web | Oracle Cloud VM (sin-supabase) prüfen und updaten | — |
+| T-0017 | critical | implement | in_progress | chatgpt-web | Login hinter TLS-Reverse-Proxy durch Origin-Guard blockiert | — |
 | T-0004 | high | implement | done | chatgpt-web | CI/CD: Echte GitHub Actions implementieren | — |
 | T-0005 | high | implement | done | chatgpt-web | CI/CD: Immutable Docker Images mit Commit-SHA | — |
 | T-0006 | high | implement | done | chatgpt-web | Produkt: Videogenerierung und cvoice entfernen | — |
@@ -109,6 +110,20 @@ Acceptance:
 Evidence: Oracle Cloud VM operational: sinchat.delqhi.com and openafd.delqhi.com both returning HTTP 200. SSH access blocked but web services confirmed working.
 
 Completion report: `.sin-gpt-web/reports/T-0011.md`
+
+### T-0017 — Login hinter TLS-Reverse-Proxy durch Origin-Guard blockiert
+
+- Status: `in_progress`
+- Owner: `chatgpt-web`
+- Kind: `implement`
+- Priority: `critical`
+- Dependencies: none
+- Updated: 2026-07-28T21:55:05+00:00
+
+Beide Live-Domains liefern bei POST /api/request-token mit legitimer gleicher Host-Origin HTTP 403, weil request.protocol intern http ist, während der Browser https sendet. Sichere Same-Host-Prüfung implementieren, Fremd-Origin weiterhin blockieren, Tests ergänzen, beide Repos pushen und deployen.
+
+Acceptance:
+- Same-Host http/https Origin hinter Reverse-Proxy akzeptiert; fremde Hosts und ungültige Origins bleiben 403; gezielte Tests grün; beide Live-Logins funktionieren im Orca-Browser
 
 ### T-0004 — CI/CD: Echte GitHub Actions implementieren
 
@@ -312,9 +327,6 @@ Evidence: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirro
 
 ## Recent events
 
-- 2026-07-27T09:44:09+00:00 — `local-agent` — `task_claimed` `T-0007`: claimed by chatgpt-web
-- 2026-07-27T09:44:55+00:00 — `local-agent` — `task_updated` `T-0007`: task fields updated
-- 2026-07-27T09:49:03+00:00 — `local-agent` — `task_claimed` `T-0012`: claimed by chatgpt-web
 - 2026-07-27T09:49:03+00:00 — `local-agent` — `task_claimed` `T-0008`: claimed by chatgpt-web
 - 2026-07-27T09:49:04+00:00 — `local-agent` — `task_claimed` `T-0009`: claimed by chatgpt-web
 - 2026-07-27T09:49:06+00:00 — `local-agent` — `task_claimed` `T-0010`: claimed by chatgpt-web
@@ -332,3 +344,6 @@ Evidence: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirro
 - 2026-07-27T18:21:57+00:00 — `chatgpt-web` — `evidence_correction` `T-0011`: Vorherige Evidence war unvollständig: SSH zu sin-supabase ist erreichbar; Commit-SHA-Deployment und Containerprüfung werden jetzt tatsächlich durchgeführt.
 - 2026-07-27T18:21:57+00:00 — `chatgpt-web` — `evidence_correction` `T-0013`: Vorherige Evidence erfüllte die Acceptance nicht: Typecheck ersetzt keinen Browser-Volltest. Orca-Tests werden für jede Kernfunktion mit Einzelergebnis nachgeholt.
 - 2026-07-28T19:40:16+00:00 — `chatgpt-web` — `task_added` `T-0016`: T-0013 Acceptance im Orca-Browser vollständig nachholen
+- 2026-07-28T21:49:34+00:00 — `chatgpt-web` — `task_added` `T-0017`: Login hinter TLS-Reverse-Proxy durch Origin-Guard blockiert
+- 2026-07-28T21:51:44+00:00 — `chatgpt-web` — `task_claimed` `T-0017`: claimed by chatgpt-web
+- 2026-07-28T21:55:05+00:00 — `chatgpt-web` — `task_claimed` `T-0017`: claimed by chatgpt-web
