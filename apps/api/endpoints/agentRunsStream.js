@@ -241,7 +241,9 @@ function agentRunsStream(app) {
     },
   );
 
-  app.use("/api", router);
+  // `app` is the API router, already mounted under `/api` by app.js.
+  // Mounting another `/api` here would expose the endpoints at `/api/api/*`.
+  app.use("/", router);
 }
 
 /**
