@@ -34,12 +34,13 @@ const WorkspaceThread: any = {
       .catch(() => ({ results: [] }));
     return results || [];
   },
-  new: async function (workspaceSlug: any) {
-    const { thread, error } = await fetch(
+  new: async function (workspaceSlug: any, parsedFileIds: number[] = []) {
+    const { thread, error, message } = await fetch(
       `${API_BASE}/workspace/${workspaceSlug}/thread/new`,
       {
         method: "POST",
-        headers: baseHeaders(),
+        body: JSON.stringify({ parsedFileIds }),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
       },
     )
       .then((res) => res.json())
@@ -47,7 +48,7 @@ const WorkspaceThread: any = {
         return { thread: null, error: e.message };
       });
 
-    return { thread, error };
+    return { thread, error: error || message || null };
   },
   update: async function (workspaceSlug: any, threadSlug: any, data = {}) {
     const { thread, message } = await fetch(

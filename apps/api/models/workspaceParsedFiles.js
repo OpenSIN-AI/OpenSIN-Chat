@@ -128,6 +128,80 @@ const WorkspaceParsedFiles = {
     }
   },
 
+  /**
+   * Assigns unscoped parsed chat uploads to a newly-created thread.
+   * All requested files must belong to the same workspace/user and still have
+   * threadId=null; otherwise no rows are changed.
+   *
+   * @param {{fileIds: Array<number|string>, workspaceId: number|string, threadId: number|string, userId?: number|string|null}} params
+   * @returns {Promise<{success: boolean, assignedCount: number, error: string|null}>}
+   */
+  assignToThread: async function ({
+    fileIds = [],
+    workspaceId,
+    threadId,
+    userId = null,
+  }) {
+    try {
+      const parsedWorkspaceId = Number.parseInt(workspaceId, 10);
+      const parsedThreadId = Number.parseInt(threadId, 10);
+      const parsedUserId = userId == null ? null : Number.parseInt(userId, 10);
+      const parsedFileIds = [
+        ...new Set(fileIds.map((id) => Number.parseInt(id, 10))),
+      ];
+
+      if (!Number.isSafeInteger(parsedWorkspaceId) || parsedWorkspaceId <= 0)
+        throw new Error("Invalid workspace id");
+      if (!Number.isSafeInteger(parsedThreadId) || parsedThreadId <= 0)
+        throw new Error("Invalid thread id");
+      if (
+        userId != null &&
+        (!Number.isSafeInteger(parsedUserId) || parsedUserId <= 0)
+      )
+        throw new Error("Invalid user id");
+      if (
+        parsedFileIds.length === 0 ||
+        parsedFileIds.some((id) => !Number.isSafeInteger(id) || id <= 0)
+      )
+        throw new Error("Invalid file ids");
+
+      return await prisma.$transaction(async (tx) => {
+        const where = {
+          id: { in: parsedFileIds },
+          workspaceId: parsedWorkspaceId,
+          threadId: null,
+          userId: parsedUserId,
+        };
+        const matching = await tx.workspace_parsed_files.findMany({
+          where,
+          select: { id: true },
+        });
+        if (matching.length !== parsedFileIds.length) {
+          return {
+            success: false,
+            assignedCount: 0,
+            error: "One or more parsed files are unavailable for this thread",
+          };
+        }
+
+        const result = await tx.workspace_parsed_files.updateMany({
+          where,
+          data: { threadId: parsedThreadId },
+        });
+        if (result.count !== parsedFileIds.length)
+          throw new Error("Parsed file assignment was incomplete");
+
+        return { success: true, assignedCount: result.count, error: null };
+      });
+    } catch (error) {
+      consoleLogger.error(
+        "FAILED TO ASSIGN PARSED FILES TO THREAD.",
+        error.message,
+      );
+      return { success: false, assignedCount: 0, error: error.message };
+    }
+  },
+
   totalTokenCount: async function (clause = {}) {
     try {
       const { _sum } = await prisma.workspace_parsed_files.aggregate({

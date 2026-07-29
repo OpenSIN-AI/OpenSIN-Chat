@@ -15,6 +15,7 @@ const {
 } = require("../utils/middleware/multiUserProtected");
 const { EventLogs } = require("../models/eventLogs");
 const { WorkspaceThread } = require("../models/workspaceThread");
+const { WorkspaceParsedFiles } = require("../models/workspaceParsedFiles");
 const { WorkspaceThreadFolder } = require("../models/workspaceThreadFolder");
 const {
   validWorkspaceSlug,
@@ -36,10 +37,47 @@ function workspaceThreadEndpoints(app) {
       try {
         const user = await userFromSession(request, response);
         const workspace = response.locals.workspace;
+        const { parsedFileIds = [] } = reqBody(request) || {};
+        const normalizedParsedFileIds = Array.isArray(parsedFileIds)
+          ? [...new Set(parsedFileIds.map((id) => Number.parseInt(id, 10)))]
+          : null;
+        if (
+          normalizedParsedFileIds === null ||
+          normalizedParsedFileIds.length > 20 ||
+          normalizedParsedFileIds.some(
+            (id) => !Number.isSafeInteger(id) || id <= 0,
+          )
+        ) {
+          return response.status(400).json({
+            thread: null,
+            message: "parsedFileIds must contain at most 20 positive integers",
+          });
+        }
+
         const { thread, message } = await WorkspaceThread.new(
           workspace,
           user?.id,
         );
+        if (!thread)
+          return response.status(500).json({ thread: null, message });
+
+        if (normalizedParsedFileIds.length > 0) {
+          const assignment = await WorkspaceParsedFiles.assignToThread({
+            fileIds: normalizedParsedFileIds,
+            workspaceId: workspace.id,
+            threadId: thread.id,
+            userId: multiUserMode(response) ? user?.id || null : null,
+          });
+          if (!assignment.success) {
+            await WorkspaceThread.delete({ id: thread.id });
+            return response.status(409).json({
+              thread: null,
+              message:
+                assignment.error ||
+                "Failed to attach uploaded files to the new thread",
+            });
+          }
+        }
         await Telemetry.sendTelemetry(
           "workspace_thread_created",
           {

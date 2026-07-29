@@ -165,6 +165,25 @@ export default function useChatStream({
     resetTranscript();
   }
 
+  function parsedFileIdsForNewThread() {
+    return (files || [])
+      .filter(
+        (file) =>
+          file?.type === "upload" &&
+          file?.document?.id != null &&
+          ["added_context", "embedded", "success"].includes(file.status),
+      )
+      .map((file) => Number(file.document.id))
+      .filter((id) => Number.isSafeInteger(id) && id > 0);
+  }
+
+  async function createThreadWithPendingFiles() {
+    const parsedFileIds = parsedFileIdsForNewThread();
+    return parsedFileIds.length > 0
+      ? Workspace.threads.new(workspace.slug, parsedFileIds)
+      : Workspace.threads.new(workspace.slug);
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (loadingResponse) return false;
@@ -175,7 +194,7 @@ export default function useChatStream({
     clearPromptInputDraft(activeThreadSlug ?? workspace.slug);
 
     if (!activeThreadSlug && chatHistory.length === 0) {
-      const { thread } = await Workspace.threads.new(workspace.slug);
+      const { thread } = await createThreadWithPendingFiles();
       if (thread) {
         setMessageEmit("");
         sessionStorage.setItem(
@@ -322,7 +341,7 @@ export default function useChatStream({
     if (loadingResponse) return false;
 
     if (!activeThreadSlug && chatHistory.length === 0 && history.length === 0) {
-      const { thread } = await Workspace.threads.new(workspace.slug);
+      const { thread } = await createThreadWithPendingFiles();
       if (thread) {
         sessionStorage.setItem(
           PENDING_HOME_MESSAGE,

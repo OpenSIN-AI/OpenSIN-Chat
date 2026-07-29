@@ -306,9 +306,14 @@ describe("useChatStream — handleSubmit", () => {
       });
       return null;
     }
+    const uploadedFile = {
+      type: "upload",
+      status: "added_context",
+      document: { id: 42 },
+    };
     const wrapper = ({ children }) => (
       <DndUploaderContext.Provider
-        value={{ files: [], parseAttachments: () => [] }}
+        value={{ files: [uploadedFile], parseAttachments: () => [] }}
       >
         {children}
       </DndUploaderContext.Provider>
@@ -323,6 +328,7 @@ describe("useChatStream — handleSubmit", () => {
       "pending_home_message",
     );
     expect(pendingValue).toContain("Pending hello");
+    expect(Workspace.threads.new).toHaveBeenCalledWith("test-ws", [42]);
 
     const timeoutSpy = vi
       .spyOn(globalThis, "setTimeout")
