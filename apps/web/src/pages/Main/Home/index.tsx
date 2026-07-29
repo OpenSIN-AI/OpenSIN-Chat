@@ -136,7 +136,7 @@ export default function Home() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [user?.role]);
 
   // When workspace/thread becomes available and we have pending files, trigger upload
   useEffect(() => {
@@ -178,7 +178,7 @@ export default function Home() {
     window.addEventListener(PASTE_ATTACHMENT_EVENT, handlePaste);
     return () =>
       window.removeEventListener(PASTE_ATTACHMENT_EVENT, handlePaste);
-  }, [workspace, threadSlug]);
+  }, [workspace, threadSlug, t]);
 
   async function handleDropWithoutWorkspace(acceptedFiles: File[]) {
     setDragging(false);
@@ -382,7 +382,7 @@ function HomeContent({
             "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
           } as React.CSSProperties
         }
-        className="relative z-[2] flex h-[var(--content-height)] min-w-0 flex-1 md:mx-4 md:my-4 md:mr-[60px]"
+        className="relative z-[2] flex h-[var(--content-height)] min-w-0 flex-1 md:mx-4 md:my-4"
       >
         <ChatSettingsMenu />
         <div className="relative h-full w-full min-w-0 flex-1 overflow-hidden bg-theme-bg-container">

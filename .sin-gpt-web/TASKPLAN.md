@@ -13,8 +13,8 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 
 ## Status
 
-- Backlog: 1
-- In progress: 0
+- Backlog: 0
+- In progress: 2
 - Blocked: 1
 - Done: 22
 - Cancelled: 0
@@ -30,6 +30,7 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 | T-0017 | critical | implement | done | chatgpt-web | Login hinter TLS-Reverse-Proxy durch Origin-Guard blockiert | — |
 | T-0019 | critical | implement | done | chatgpt-web | OpenAfD Deep Research verliert Agent-WebSocket | — |
 | T-0020 | critical | implement | done | chatgpt-web | BUG: Normaler Chat verliert Agent-Verbindung (Agent session has ended) | — |
+| T-0025 | critical | review | in_progress | chatgpt-web | Produktabnahme: Chat UX radikal vereinfachen und live verifizieren | — |
 | T-0004 | high | implement | done | chatgpt-web | CI/CD: Echte GitHub Actions implementieren | — |
 | T-0005 | high | implement | done | chatgpt-web | CI/CD: Immutable Docker Images mit Commit-SHA | — |
 | T-0006 | high | implement | done | chatgpt-web | Produkt: Videogenerierung und cvoice entfernen | — |
@@ -42,7 +43,7 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 | T-0021 | high | implement | done | chatgpt-web | Erste Nachricht in neuem Workspace bleibt nach Thread-Navigation hängen | — |
 | T-0022 | high | implement | done | chatgpt-web | Chat-Dateiupload verliert Dokumentkontext | — |
 | T-0023 | high | implement | done | chatgpt-web | Agent-Run-SSE-Endpunkt ist live nicht registriert | — |
-| T-0024 | high | review | backlog | chatgpt-web | GitHub-Abhängigkeitswarnungen triagieren und schließen | — |
+| T-0024 | high | review | in_progress | chatgpt-web | GitHub-Abhängigkeitswarnungen triagieren und schließen | — |
 | T-0008 | medium | implement | done | chatgpt-web | Repo: Veraltete Dokumente archivieren | — |
 | T-0009 | medium | implement | done | chatgpt-web | Repo: README und Branding aktualisieren | — |
 | T-0010 | medium | implement | done | chatgpt-web | Repo: Toolchain vereinheitlichen | — |
@@ -171,6 +172,20 @@ Acceptance:
 Evidence: Frische Live-Browserläufe auf aktuellen SHA-Bundles bestanden: OpenSIN MODEL_OK_opensin_1785293356606 und OpenAfD MODEL_OK_openafd_1785293283158, jeweils historyCount=2 und agentRequests/agentResponses=[]; normaler Chat nutzt keinen Agent-Invocation-Endpunkt. Die weiterhin sichtbaren 1,5-s-Reconnects stammten aus den zwei vor Deployment geöffneten Orca-Tabs. Nach Reload der Sessions orca-tab-a8aa459c-2ab2-4ae9-a38d-3e654759fdc3 und orca-tab-4d4e26e1-a4e3-4c5e-ad18-0793a2691423 waren in beiden Containerlogs über den Nachprüfzeitraum keine agentSSE/invocation-already-closed/429-Einträge mehr vorhanden.
 
 Completion report: `.sin-gpt-web/reports/T-0020.md`
+
+### T-0025 — Produktabnahme: Chat UX radikal vereinfachen und live verifizieren
+
+- Status: `in_progress`
+- Owner: `chatgpt-web`
+- Kind: `review`
+- Priority: `critical`
+- Dependencies: none
+- Updated: 2026-07-29T21:44:51+00:00
+
+Beide Live-Produkte als Erstnutzer visuell und funktional prüfen. Informationsarchitektur, Navigation, Terminologie, leere Zustände, Chat-Komponist, Quellen, Recherche, Berichte, Spezialleisten und Fehlermeldungen vereinfachen. Alles Unlogische oder Entwicklerinterne entfernen oder hinter progressive disclosure verschieben.
+
+Acceptance:
+- OpenSIN und OpenAfD wirken wie ein verständlicher normaler Chat mit optionalen Erweiterungen; primärer Chatfluss ist selbsterklärend; keine redundanten Hauptaktionen oder Entwicklerbegriffe; alle sichtbaren Kernpfade im Orca-Browser geprüft; gefundene Bugs behoben oder explizit im Taskplan dokumentiert; Tests grün; main gepusht; beide SHA-Images live deployed.
 
 ### T-0004 — CI/CD: Echte GitHub Actions implementieren
 
@@ -398,12 +413,12 @@ Completion report: `.sin-gpt-web/reports/T-0023.md`
 
 ### T-0024 — GitHub-Abhängigkeitswarnungen triagieren und schließen
 
-- Status: `backlog`
+- Status: `in_progress`
 - Owner: `chatgpt-web`
 - Kind: `review`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-07-29T12:37:31+00:00
+- Updated: 2026-07-29T13:01:17+00:00
 
 GitHub meldet beim Push des Schwester-Repos 36 Abhängigkeitswarnungen (1 critical, 19 high, 14 moderate, 2 low). Wegen gemeinsamem Monorepo-/Lockfile-Unterbau beide Repositories gegen die konkreten Advisories prüfen, betroffene direkte/transitive Pakete sicher aktualisieren und verbleibende Ausnahmen dokumentieren.
 
@@ -488,9 +503,6 @@ Evidence: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirro
 
 ## Recent events
 
-- 2026-07-28T23:09:38+00:00 — `local-agent` — `task_updated` `T-0016`: ChatGPT Web delegation gestartet. Konversation: https://chatgpt.com/c/6a693632-bdb0-83eb-b14d-85d015fac236
-- 2026-07-28T23:09:44+00:00 — `local-agent` — `task_updated` `T-0018`: ChatGPT Web delegation gestartet. Konversation: https://chatgpt.com/c/6a693632-bdb0-83eb-b14d-85d015fac236
-- 2026-07-29T01:30:21+00:00 — `chatgpt-web` — `task_completed` `T-0019`: Agent-SSE-Reconnect-Schleife behoben: benannte close-Events und sauberes SSE-EOF werden als terminale Codes 1008/1000 verarbeitet; abgeschlossene Agent-UUIDs werden nicht erneut verbunden. 40 fokussierte Frontend- und 8 Agent-SSE-Tests, Typecheck und Produktionsbuild grün. OpenSIN a5f0cd049 und OpenAfD c15e0aca6 auf main gepusht, als immutable SHA-Images auf OCI deployed; beide internen und öffentlichen Healthchecks grün.
 - 2026-07-29T01:30:22+00:00 — `chatgpt-web` — `task_completed` `T-0018`: Recherche-Deep-Link auf beiden Live-Domains browserseitig verifiziert: /?mode=deep-research&view=sources aktiviert ohne Reload den Agentenmodus deep-research, setzt Notebook-Modus Work, schreibt @agent [deep-research] plus [sources:web-search] in den Prompt und öffnet das Quellenpanel. Regressionstest, Typecheck und Produktionsbuild grün; OpenSIN a5f0cd049 und OpenAfD c15e0aca6 live.
 - 2026-07-29T01:31:30+00:00 — `local-agent` — `task_added` `T-0020`: BUG: Normaler Chat verliert Agent-Verbindung (Agent session has ended)
 - 2026-07-29T02:16:20+00:00 — `chatgpt-web` — `task_added` `T-0021`: Erste Nachricht in neuem Workspace bleibt nach Thread-Navigation hängen
@@ -520,3 +532,6 @@ Live-Acceptance: Normaler Chat, Datei-Upload, Dokumentkontext, Workspace-Quelle,
 T-0001 bleibt extern blockiert: NVIDIA-NIM- und DIP-Schluessel koennen ohne Provider-Passwort/Rotationsportal nicht sicher rotiert werden; keine Werte wurden ausgegeben oder veraendert.
 T-0024 erfasst die GitHub-Abhaengigkeitswarnungen als High-Nachfolgetask.
 Verwaiste Container wurden nicht geloescht. Bekannte Vite-/Chunk-/Piper-Warnungen bleiben nicht-blockierend.
+- 2026-07-29T13:01:17+00:00 — `chatgpt-web` — `task_claimed` `T-0024`: claimed by chatgpt-web
+- 2026-07-29T21:44:29+00:00 — `chatgpt-web` — `task_added` `T-0025`: Produktabnahme: Chat UX radikal vereinfachen und live verifizieren
+- 2026-07-29T21:44:51+00:00 — `chatgpt-web` — `task_claimed` `T-0025`: claimed by chatgpt-web

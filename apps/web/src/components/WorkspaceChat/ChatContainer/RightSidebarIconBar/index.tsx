@@ -1,105 +1,158 @@
 // SPDX-License-Identifier: MIT
-// Purpose: Compact icon rail for workspace side panels — visually matches left sidebar icon area.
-// Docs: index.doc.md
-import { Tooltip } from "react-tooltip";
+// Purpose: Progressive-disclosure menu for optional chat workspace panels.
+import { useEffect, useRef, useState } from "react";
+import { SlidersHorizontal } from "@phosphor-icons/react/dist/csr/SlidersHorizontal";
 import { Eye } from "@phosphor-icons/react/dist/csr/Eye";
 import { Database } from "@phosphor-icons/react/dist/csr/Database";
 import { Newspaper } from "@phosphor-icons/react/dist/csr/Newspaper";
 import { FilePdf } from "@phosphor-icons/react/dist/csr/FilePdf";
 import { Broadcast } from "@phosphor-icons/react/dist/csr/Broadcast";
-
+import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
+import { Notepad } from "@phosphor-icons/react/dist/csr/Notepad";
+import { useTranslation } from "react-i18next";
 import { useChatSidebar } from "../ChatSidebar";
 import { useAgentRuns } from "../AgentSessionsSidebar/AgentRunsContext";
-import { useTranslation } from "react-i18next";
+
+type ToolId =
+  | "sources"
+  | "preview"
+  | "notepad"
+  | "pdf-analysis"
+  | "database"
+  | "political"
+  | "agent-sessions";
 
 export default function RightSidebarIconBar() {
   const { t } = useTranslation();
   const { activeSidebar, toggleSidebar } = useChatSidebar();
   const { activeRunCount } = useAgentRuns();
+  const [open, setOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
-  const icons = [
+  const tools: {
+    id: ToolId;
+    Icon: typeof Eye;
+    label: string;
+    badge?: number;
+  }[] = [
+    {
+      id: "sources",
+      Icon: BookOpen,
+      label: t("right_sidebar.icon_sources", "Quellen"),
+    },
     {
       id: "preview",
-      icon: Eye,
+      Icon: Eye,
       label: t("right_sidebar.icon_preview", "Vorschau"),
-      action: () => toggleSidebar("preview"),
     },
     {
-      id: "database",
-      icon: Database,
-      label: t("right_sidebar.icon_database", "Politiker-Datenbank"),
-      action: () => toggleSidebar("database"),
-    },
-    {
-      id: "political",
-      icon: Newspaper,
-      label: t("right_sidebar.icon_political", "Politisches"),
-      action: () => toggleSidebar("political"),
+      id: "notepad",
+      Icon: Notepad,
+      label: t("right_sidebar.icon_notepad", "Notizblock"),
     },
     {
       id: "pdf-analysis",
-      icon: FilePdf,
+      Icon: FilePdf,
       label: t("right_sidebar.icon_pdf_analysis", "PDF-Analyse"),
-      action: () => toggleSidebar("pdf-analysis"),
     },
-  ];
-
-  const agentIcons = [
+    {
+      id: "database",
+      Icon: Database,
+      label: t("right_sidebar.icon_database", "Politiker-Datenbank"),
+    },
+    {
+      id: "political",
+      Icon: Newspaper,
+      label: t("right_sidebar.icon_political", "Politisches"),
+    },
     {
       id: "agent-sessions",
-      icon: Broadcast,
-      label: t("right_sidebar.icon_agent_sessions", "Agent-Sessions"),
-      action: () => toggleSidebar("agent-sessions"),
+      Icon: Broadcast,
+      label: t("right_sidebar.icon_agent_sessions", "Agent-Sitzungen"),
       badge: activeRunCount,
     },
   ];
 
-  function renderIcon({ id, icon: Icon, label, action, badge = 0 }: any) {
-    const isActive = activeSidebar === id;
-    return (
-      <div
-        key={id}
-        className="relative flex flex-col items-center"
-        data-tooltip-id={`rsib-${id}`}
-        data-tooltip-content={label}
-      >
-        <button
-          type="button"
-          onClick={action}
-          aria-label={label}
-          aria-pressed={isActive}
-          className={`flex h-9 w-9 items-center justify-center rounded-lg border-none cursor-pointer transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-text-secondary ${
-            isActive
-              ? "bg-theme-bg-hover text-theme-text-primary"
-              : "text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary"
-          }`}
-        >
-          <Icon size={17} weight={isActive ? "fill" : "regular"} />
-        </button>
-        {badge > 0 && (
-          <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-[#009ee0] px-1 text-[10px] font-bold text-white">
-            {badge}
-          </span>
-        )}
-        <Tooltip
-          id={`rsib-${id}`}
-          place="left"
-          delayShow={300}
-          positionStrategy="fixed"
-          className="tooltip !text-xs z-[99]"
-        />
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (!open) return;
+    function handlePointerDown(event: PointerEvent) {
+      if (!menuRef.current?.contains(event.target as Node)) setOpen(false);
+    }
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") setOpen(false);
+    }
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open]);
+
+  const menuLabel = t("common.rightSidebar", "Werkzeuge");
 
   return (
-    <nav
-      aria-label={t("common.rightSidebar")}
-      className="mt-14 hidden h-[calc(100%_-_3.5rem)] w-12 flex-shrink-0 flex-col items-center gap-0.5 overflow-y-auto border-l border-t border-white/[0.08] bg-theme-bg-sidebar px-1 py-2.5 md:flex light:border-zinc-200/70"
+    <div
+      ref={menuRef}
+      className="relative z-[90] mt-3 mr-3 hidden shrink-0 md:block"
     >
-      {icons.map(renderIcon)}
-      <div className="my-1.5 h-px w-5 bg-theme-modal-border" aria-hidden />
-      {agentIcons.map(renderIcon)}
-    </nav>
+      <button
+        type="button"
+        onClick={() => setOpen((value) => !value)}
+        aria-label={menuLabel}
+        aria-expanded={open}
+        aria-haspopup="menu"
+        className={`relative flex h-9 items-center gap-2 rounded-lg border px-3 text-xs font-medium shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-text-secondary ${
+          open || activeSidebar
+            ? "border-theme-border bg-theme-bg-hover text-theme-text-primary"
+            : "border-theme-border bg-theme-bg-sidebar text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary"
+        }`}
+      >
+        <SlidersHorizontal size={16} weight={open ? "fill" : "regular"} />
+        <span>{menuLabel}</span>
+        {activeRunCount > 0 ? (
+          <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-[#009ee0] px-1 text-[10px] font-bold text-white">
+            {activeRunCount}
+          </span>
+        ) : null}
+      </button>
+
+      {open ? (
+        <div
+          role="menu"
+          aria-label={menuLabel}
+          className="absolute right-0 top-full mt-2 w-64 overflow-hidden rounded-xl border border-theme-border bg-theme-bg-sidebar p-1.5 shadow-2xl"
+        >
+          {tools.map(({ id, Icon, label, badge }) => {
+            const active = activeSidebar === id;
+            return (
+              <button
+                key={id}
+                type="button"
+                role="menuitem"
+                onClick={() => {
+                  toggleSidebar(id);
+                  setOpen(false);
+                }}
+                aria-current={active ? "page" : undefined}
+                className={`flex h-10 w-full items-center gap-3 rounded-lg px-3 text-left text-sm transition-colors ${
+                  active
+                    ? "bg-theme-bg-hover text-theme-text-primary"
+                    : "text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary"
+                }`}
+              >
+                <Icon size={17} weight={active ? "fill" : "regular"} />
+                <span className="min-w-0 flex-1 truncate">{label}</span>
+                {badge && badge > 0 ? (
+                  <span className="rounded-full bg-[#009ee0] px-1.5 py-0.5 text-[10px] font-bold text-white">
+                    {badge}
+                  </span>
+                ) : null}
+              </button>
+            );
+          })}
+        </div>
+      ) : null}
+    </div>
   );
 }

@@ -17,10 +17,6 @@ import { useTranslation } from "react-i18next";
 import { Tooltip } from "react-tooltip";
 import ActiveWorkspaces from "./ActiveWorkspaces";
 import PrimaryNavigation from "./PrimaryNavigation";
-import WorkspaceSwitcher from "./WorkspaceSwitcher";
-import NewWorkspaceModal, {
-  useNewWorkspaceModal,
-} from "../Modals/NewWorkspace";
 import ThemeToggle from "@/components/ThemeToggle";
 import Footer from "../Footer";
 import SettingsButton from "../SettingsButton";
@@ -74,7 +70,6 @@ function SidebarContent({
   const { slug } = useParams();
   const { workspaces } = useWorkspaces({ ordered: true });
   const [creating, setCreating] = useState(false);
-  const { showing, showModal, hideModal } = useNewWorkspaceModal();
   const { openSearch: openGlobalSearch } = useGlobalSearchDialog();
   const activeWorkspace = useMemo(() => {
     const current = workspaces.find(
@@ -171,31 +166,13 @@ function SidebarContent({
           </kbd>
         </button>
         <PrimaryNavigation onNavigate={onNavigate} />
-        <div className="mb-1 flex items-center justify-between px-2">
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-theme-text-muted">
-            {t("commandHub.groups.notebooks")}
-          </span>
-          <button
-            type="button"
-            onClick={showModal}
-            aria-label={t("commandHub.actions.createNotebook")}
-            title={t("commandHub.actions.createNotebook")}
-            className="flex h-7 w-7 items-center justify-center rounded-lg text-theme-text-secondary hover:bg-theme-bg-hover hover:text-theme-text-primary"
-          >
-            <Plus size={13} aria-hidden="true" />
-          </button>
-        </div>
-        <div className="mb-2 px-0.5">
-          <WorkspaceSwitcher onCreate={showModal} onNavigate={onNavigate} />
-        </div>
-        <div className="no-scroll min-h-0 flex-1 overflow-y-auto">
+        <div className="no-scroll min-h-0 flex-1 overflow-y-auto border-t border-theme-sidebar-border pt-2">
           <ActiveWorkspaces />
         </div>
         <div className="shrink-0 pt-2">
           <Footer />
         </div>
       </div>
-      {showing && <NewWorkspaceModal hideModal={hideModal} />}
     </>
   );
 }
@@ -261,7 +238,12 @@ export default function Sidebar({
           />
         </div>
         {showSidebar && (
-          <div
+          <input
+            type="range"
+            min={SIDEBAR_MIN_WIDTH}
+            max={SIDEBAR_MAX_WIDTH}
+            value={sidebarWidth}
+            onChange={(event) => setSidebarWidth(Number(event.target.value))}
             onPointerDown={(event) => {
               event.preventDefault();
               resizing.current = true;
@@ -286,13 +268,7 @@ export default function Sidebar({
                 setSidebarWidth(SIDEBAR_MAX_WIDTH);
               }
             }}
-            role="separator"
-            tabIndex={0}
-            aria-orientation="vertical"
             aria-label={t("sidebar.resizeSidebar")}
-            aria-valuemin={SIDEBAR_MIN_WIDTH}
-            aria-valuemax={SIDEBAR_MAX_WIDTH}
-            aria-valuenow={sidebarWidth}
             className="absolute right-0 top-0 z-50 h-full w-1.5 cursor-col-resize hover:bg-theme-bg-hover focus-visible:bg-theme-bg-hover focus-visible:outline-none"
           />
         )}

@@ -1,13 +1,10 @@
 // SPDX-License-Identifier: MIT
-// Purpose: Product-level navigation constrained to the six CEO-audit focus areas.
+// Purpose: Calm primary navigation for the core chat workflow.
 import { NavLink, useLocation } from "react-router";
 import { useTranslation } from "react-i18next";
 import { ChatsCircle } from "@phosphor-icons/react/dist/csr/ChatsCircle";
 import { Files } from "@phosphor-icons/react/dist/csr/Files";
-import { Buildings } from "@phosphor-icons/react/dist/csr/Buildings";
 import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
-import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
-import { GearSix } from "@phosphor-icons/react/dist/csr/GearSix";
 
 type PrimaryNavigationItem = {
   id: string;
@@ -19,28 +16,19 @@ type PrimaryNavigationItem = {
 
 const PRIMARY_NAVIGATION: PrimaryNavigationItem[] = [
   {
-    id: "chats-projects",
+    id: "chats",
     labelKey: "sidebar.primary.chatsProjects",
     href: "/",
     icon: ChatsCircle,
     isActive: (pathname, search) => pathname === "/" && search === "",
   },
   {
-    id: "sources-documents",
+    id: "sources",
     labelKey: "sidebar.primary.sourcesDocuments",
     href: "/?view=sources",
     icon: Files,
     isActive: (pathname, search) =>
       pathname === "/" && new URLSearchParams(search).get("view") === "sources",
-  },
-  {
-    id: "political-data",
-    labelKey: "sidebar.primary.politicalData",
-    href: "/?view=political",
-    icon: Buildings,
-    isActive: (pathname, search) =>
-      pathname === "/" &&
-      new URLSearchParams(search).get("view") === "political",
   },
   {
     id: "research",
@@ -50,21 +38,6 @@ const PRIMARY_NAVIGATION: PrimaryNavigationItem[] = [
     isActive: (pathname, search) =>
       pathname === "/" &&
       new URLSearchParams(search).get("mode") === "deep-research",
-  },
-  {
-    id: "reports",
-    labelKey: "sidebar.primary.reports",
-    href: "/?mode=report&view=results",
-    icon: FileText,
-    isActive: (pathname, search) =>
-      pathname === "/" && new URLSearchParams(search).get("mode") === "report",
-  },
-  {
-    id: "admin",
-    labelKey: "sidebar.primary.admin",
-    href: "/settings",
-    icon: GearSix,
-    isActive: (pathname) => pathname.startsWith("/settings"),
   },
 ];
 
@@ -77,10 +50,7 @@ export default function PrimaryNavigation({
   const location = useLocation();
 
   return (
-    <div className="mb-3" aria-label={t("sidebar.primary.label")}>
-      <div className="mb-1 px-2 text-[10px] font-semibold uppercase tracking-wider text-theme-text-muted">
-        {t("sidebar.primary.label")}
-      </div>
+    <nav className="mb-3" aria-label={t("sidebar.primary.label")}>
       <div className="flex flex-col gap-0.5">
         {PRIMARY_NAVIGATION.map((item) => {
           const Icon = item.icon;
@@ -103,6 +73,6 @@ export default function PrimaryNavigation({
           );
         })}
       </div>
-    </div>
+    </nav>
   );
 }

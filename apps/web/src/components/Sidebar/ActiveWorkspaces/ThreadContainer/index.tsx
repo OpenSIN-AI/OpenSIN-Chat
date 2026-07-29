@@ -9,14 +9,11 @@ import { FolderSimplePlus } from "@phosphor-icons/react/dist/csr/FolderSimplePlu
 import { FolderSimple } from "@phosphor-icons/react/dist/csr/FolderSimple";
 import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
 import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
-import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
-import { X } from "@phosphor-icons/react/dist/csr/X";
-import { ChatText } from "@phosphor-icons/react/dist/csr/ChatText";
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ThreadItem from "./ThreadItem";
 import ThreadFolderItem from "./ThreadFolderItem";
-import { useParams, useNavigate, Link } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import useThreads, { invalidateThreads } from "@/hooks/useThreads";
 import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 import logger from "@/utils/logger";
@@ -52,12 +49,6 @@ interface Folder {
 interface WorkspaceProp {
   slug: string;
   name: string;
-}
-
-interface ThreadsData {
-  threads: Thread[];
-  folders: Folder[];
-  defaultThreadChatCount?: number;
 }
 
 const DATE_GROUPS = [
@@ -150,9 +141,6 @@ function ThreadContainer({
     mutate,
   } = useThreads(workspace.slug);
 
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<any[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
   const [projectsOpen, setProjectsOpen] = useState(
     () => safeGetItem(`sidebar-projects-open-${workspace.slug}`) !== "false",
   );
@@ -165,35 +153,7 @@ function ThreadContainer({
       safeGetItem(`sidebar-codex-project-open-${workspace.slug}`) !== "false",
   );
 
-  useEffect(() => {
-    if (isActive) setProjectOpen(true);
-  }, [isActive]);
-
-  const isSearchActive = searchQuery.trim().length > 0;
-
-  useEffect(() => {
-    if (!searchQuery.trim()) {
-      setSearchResults([]);
-      setIsSearching(false);
-      return;
-    }
-    setIsSearching(true);
-    const timer = setTimeout(async () => {
-      const results = await Workspace.threads.search(
-        workspace.slug,
-        searchQuery,
-      );
-      setSearchResults(results);
-      setIsSearching(false);
-    }, 300);
-    return () => clearTimeout(timer);
-  }, [searchQuery, workspace.slug]);
-
-  const clearSearch = useCallback(() => {
-    setSearchQuery("");
-    setSearchResults([]);
-    setIsSearching(false);
-  }, []);
+  const effectiveProjectOpen = isActive || projectOpen;
 
   // Names that appear more than once across all threads need a date/time suffix
   // so duplicate thread titles remain distinguishable in the sidebar.
@@ -281,7 +241,7 @@ function ThreadContainer({
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [mutate]);
+  }, [mutate, threads]);
 
   const toggleForDeletion = (id: number) => {
     mutate(
@@ -487,7 +447,7 @@ function ThreadContainer({
       <section className="w-full overflow-hidden rounded-md">
         <button
           type="button"
-          aria-expanded={projectOpen}
+          aria-expanded={effectiveProjectOpen}
           onClick={() => {
             const next = !projectOpen;
             setProjectOpen(next);
@@ -505,14 +465,14 @@ function ThreadContainer({
           <span className="text-[11px] tabular-nums text-theme-placeholder">
             {visibleThreads.length + (defaultThreadHasChats ? 1 : 0)}
           </span>
-          {projectOpen ? (
+          {effectiveProjectOpen ? (
             <CaretDown size={12} className="shrink-0" />
           ) : (
             <CaretRight size={12} className="shrink-0" />
           )}
         </button>
 
-        {projectOpen && (
+        {effectiveProjectOpen && (
           <div className="ml-5 border-l border-theme-sidebar-border pl-1.5">
             {defaultThreadHasChats && (
               <ThreadItem
@@ -573,20 +533,8 @@ function ThreadContainer({
         role="list"
         aria-label={t("common.threads")}
       >
-        <ThreadSearchBar
-          value={searchQuery}
-          onChange={setSearchQuery}
-          onClear={clearSearch}
-        />
-        {isSearchActive ? (
-          <SearchResultsList
-            results={searchResults}
-            isSearching={isSearching}
-            query={searchQuery}
-            workspace={workspace}
-          />
-        ) : (
-          <>
+        <>
+          {folders.length > 0 && (
             <section className="mb-2">
               <div className="flex items-center gap-1">
                 <button
@@ -661,90 +609,83 @@ function ThreadContainer({
                 </div>
               )}
             </section>
-            <section>
-              <div className="flex items-center gap-1">
-                <button
-                  type="button"
-                  aria-expanded={chatsOpen}
-                  onClick={() => {
-                    const next = !chatsOpen;
-                    setChatsOpen(next);
-                    safeSetItem(
-                      `sidebar-chats-open-${workspace.slug}`,
-                      String(next),
-                    );
-                  }}
-                  className="flex h-8 min-w-0 flex-1 items-center gap-2 rounded-lg px-2 text-left text-sm font-medium text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
-                >
-                  {chatsOpen ? (
-                    <CaretDown size={13} />
-                  ) : (
-                    <CaretRight size={13} />
-                  )}
-                  <span className="flex-1">{t("sidebar.chats", "Chats")}</span>
-                  <span className="text-[11px] text-theme-placeholder">
-                    {unfolderedThreads.length + (defaultThreadHasChats ? 1 : 0)}
-                  </span>
-                </button>
-                <NewChatButton workspace={workspace} compact />
-              </div>
-              {chatsOpen && (
-                <UnfolderedDropZone isDragging={!!activeId}>
-                  {defaultThreadHasChats && (
-                    <ThreadItem
-                      idx={0}
-                      activeIdx={activeThreadIdx}
-                      isActive={activeThreadIdx === 0}
-                      workspace={workspace}
-                      thread={{ slug: null, name: "default" }}
-                      hasNext={
-                        unfolderedThreads.length > 0 || showVirtualThread
-                      }
-                    />
-                  )}
-                  <UnfolderedDateGroups
-                    threads={unfolderedThreads}
-                    defaultThreadHasChats={defaultThreadHasChats}
-                    activeThreadIdx={activeThreadIdx}
-                    ctrlPressed={ctrlPressed}
-                    toggleMarkForDeletion={toggleForDeletion}
-                    onRemoveThread={removeThread}
+          )}
+          <section>
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                aria-expanded={chatsOpen}
+                onClick={() => {
+                  const next = !chatsOpen;
+                  setChatsOpen(next);
+                  safeSetItem(
+                    `sidebar-chats-open-${workspace.slug}`,
+                    String(next),
+                  );
+                }}
+                className="flex h-8 min-w-0 flex-1 items-center gap-2 rounded-lg px-2 text-left text-sm font-medium text-theme-text-secondary transition-colors hover:bg-theme-bg-hover hover:text-theme-text-primary"
+              >
+                {chatsOpen ? <CaretDown size={13} /> : <CaretRight size={13} />}
+                <span className="flex-1">{t("sidebar.chats", "Chats")}</span>
+                <span className="text-[11px] text-theme-placeholder">
+                  {unfolderedThreads.length + (defaultThreadHasChats ? 1 : 0)}
+                </span>
+              </button>
+            </div>
+            {chatsOpen && (
+              <UnfolderedDropZone isDragging={!!activeId}>
+                {defaultThreadHasChats && (
+                  <ThreadItem
+                    idx={0}
+                    activeIdx={activeThreadIdx}
+                    isActive={activeThreadIdx === 0}
                     workspace={workspace}
-                    workspaceSlug={workspace.slug}
-                    showVirtualThread={showVirtualThread}
-                    duplicateNames={duplicateNames}
+                    thread={{ slug: null, name: "default" }}
+                    hasNext={unfolderedThreads.length > 0 || showVirtualThread}
                   />
-                  {!defaultThreadHasChats &&
-                    unfolderedThreads.length === 0 &&
-                    !showVirtualThread && (
-                      <p className="px-3 py-2 text-[11px] text-theme-text-muted italic">
-                        {t("threadContainer.noThreads", "No chats yet")}
-                      </p>
-                    )}
-                  {showVirtualThread && (
-                    <ThreadItem
-                      idx={activeThreadIdx}
-                      activeIdx={activeThreadIdx}
-                      isActive={true}
-                      workspace={workspace}
-                      thread={{
-                        slug: null,
-                        name: "*New Thread",
-                        virtual: true,
-                      }}
-                      hasNext={false}
-                    />
+                )}
+                <UnfolderedDateGroups
+                  threads={unfolderedThreads}
+                  defaultThreadHasChats={defaultThreadHasChats}
+                  activeThreadIdx={activeThreadIdx}
+                  ctrlPressed={ctrlPressed}
+                  toggleMarkForDeletion={toggleForDeletion}
+                  onRemoveThread={removeThread}
+                  workspace={workspace}
+                  workspaceSlug={workspace.slug}
+                  showVirtualThread={showVirtualThread}
+                  duplicateNames={duplicateNames}
+                />
+                {!defaultThreadHasChats &&
+                  unfolderedThreads.length === 0 &&
+                  !showVirtualThread && (
+                    <p className="px-3 py-2 text-[11px] text-theme-text-muted italic">
+                      {t("threadContainer.noThreads", "No chats yet")}
+                    </p>
                   )}
-                </UnfolderedDropZone>
-              )}
-            </section>
-            <DeleteAllThreadButton
-              ctrlPressed={ctrlPressed}
-              threads={threads}
-              onDelete={handleDeleteAll}
-            />
-          </>
-        )}
+                {showVirtualThread && (
+                  <ThreadItem
+                    idx={activeThreadIdx}
+                    activeIdx={activeThreadIdx}
+                    isActive={true}
+                    workspace={workspace}
+                    thread={{
+                      slug: null,
+                      name: "*New Thread",
+                      virtual: true,
+                    }}
+                    hasNext={false}
+                  />
+                )}
+              </UnfolderedDropZone>
+            )}
+          </section>
+          <DeleteAllThreadButton
+            ctrlPressed={ctrlPressed}
+            threads={threads}
+            onDelete={handleDeleteAll}
+          />
+        </>
       </div>
 
       <DragOverlay>
@@ -832,13 +773,18 @@ function UnfolderedDateGroups({
       if (!buckets[groupId]) buckets[groupId] = [];
       buckets[groupId].push(thread);
     }
-    return DATE_GROUPS.filter((g) => buckets[g.id]?.length > 0).map((g) => ({
-      ...g,
-      threads: buckets[g.id],
+    const visibleGroups = DATE_GROUPS.filter(
+      (group) => buckets[group.id]?.length > 0,
+    );
+    return visibleGroups.map((group, index) => ({
+      ...group,
+      threads: buckets[group.id],
+      startIndex: visibleGroups
+        .slice(0, index)
+        .reduce((total, previous) => total + buckets[previous.id].length, 0),
     }));
   }, [threads]);
 
-  let runningIdx = 0;
   const totalUnfoldered = threads.length;
 
   return (
@@ -849,8 +795,7 @@ function UnfolderedDateGroups({
           (th) => th.slug === threadSlug,
         );
         const effectiveCollapsed = isCollapsed && !containsActiveThread;
-        const startIdx = runningIdx + (defaultThreadHasChats ? 1 : 0);
-        runningIdx += group.threads.length;
+        const startIdx = group.startIndex + (defaultThreadHasChats ? 1 : 0);
 
         return (
           <div key={group.id}>
@@ -1112,155 +1057,6 @@ function DeleteAllThreadButton({
         </p>
       </div>
     </button>
-  );
-}
-
-function ThreadSearchBar({
-  value,
-  onChange,
-  onClear,
-}: {
-  value: string;
-  onChange: (v: string) => void;
-  onClear: () => void;
-}) {
-  const { t } = useTranslation();
-  return (
-    <div className="relative flex items-center w-full mb-2 mt-1">
-      <MagnifyingGlass
-        size={14}
-        className="absolute left-3 shrink-0 text-theme-placeholder light:text-slate-400 pointer-events-none"
-      />
-      <input
-        type="text"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={t("threadContainer.searchThreads")}
-        aria-label={t("threadContainer.searchThreads")}
-        className="h-8 w-full rounded-lg bg-theme-bg-secondary pl-8 pr-7 text-[13px] text-theme-text-primary outline-none transition-colors placeholder:text-theme-placeholder focus:bg-theme-bg-hover"
-      />
-      {value && (
-        <button
-          type="button"
-          onClick={onClear}
-          aria-label={t("threadContainer.clearSearch")}
-          className="absolute right-2 shrink-0 text-theme-placeholder light:text-slate-400 hover:text-theme-text-primary light:hover:text-theme-text-primary transition-colors"
-        >
-          <X size={14} weight="bold" />
-        </button>
-      )}
-    </div>
-  );
-}
-
-function HighlightMatch({ text, query }: { text: string; query: string }) {
-  if (!query || !text) return <>{text}</>;
-  const lowerText = String(text).toLowerCase();
-  const lowerQuery = String(query).toLowerCase();
-  if (!lowerQuery || !lowerText.includes(lowerQuery)) return <>{text}</>;
-  const parts: any[] = [];
-  let lastIndex = 0;
-  let idx = lowerText.indexOf(lowerQuery);
-  let key = 0;
-  while (idx !== -1) {
-    if (idx > lastIndex) parts.push(text.slice(lastIndex, idx));
-    parts.push(
-      <mark
-        key={`hl-${key++}`}
-        className="bg-white/20 light:bg-blue-200/70 text-inherit rounded px-0.5"
-      >
-        {text.slice(idx, idx + query.length)}
-      </mark>,
-    );
-    lastIndex = idx + query.length;
-    idx = lowerText.indexOf(lowerQuery, lastIndex);
-  }
-  if (lastIndex < text.length) parts.push(text.slice(lastIndex));
-  return <>{parts}</>;
-}
-
-function SearchResultsList({
-  results,
-  isSearching,
-  query,
-  workspace,
-}: {
-  results: Thread[];
-  isSearching: boolean;
-  query: string;
-  workspace: WorkspaceProp;
-}) {
-  const { t } = useTranslation();
-  if (isSearching) {
-    return (
-      <div className="flex items-center justify-center py-4">
-        <CircleNotch
-          size={16}
-          className="animate-spin text-theme-placeholder light:text-slate-400"
-        />
-      </div>
-    );
-  }
-  if (results.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center py-4 px-3">
-        <p className="text-[13px] text-theme-placeholder light:text-slate-400 text-center">
-          {t("threadContainer.noResults")}
-        </p>
-      </div>
-    );
-  }
-  return (
-    <div className="flex flex-col gap-0.5">
-      <p className="text-[11px] text-theme-placeholder light:text-slate-400 px-3 pb-1 uppercase tracking-wider">
-        {t("threadContainer.searchResults", { count: results.length })}
-      </p>
-      {results.map((thread) => (
-        <SearchResultItem
-          key={thread.slug}
-          thread={thread}
-          query={query}
-          workspace={workspace}
-        />
-      ))}
-    </div>
-  );
-}
-
-function SearchResultItem({
-  thread,
-  query,
-  workspace,
-}: {
-  thread: Thread & { nameMatch?: boolean; contentSnippet?: string };
-  query: string;
-  workspace: WorkspaceProp;
-}) {
-  const linkTo = thread.slug
-    ? paths.workspace.thread(workspace.slug, thread.slug)
-    : paths.workspace.chat(workspace.slug);
-  return (
-    <Link
-      to={linkTo}
-      className="w-full flex flex-col px-3 py-1.5 rounded-[6px] hover:bg-white/5 light:hover:bg-slate-200/70 transition-colors group/sr"
-    >
-      <div className="flex items-center gap-1.5">
-        {!thread.nameMatch && (
-          <ChatText
-            size={12}
-            className="shrink-0 text-theme-placeholder light:text-slate-400"
-          />
-        )}
-        <p className="text-left text-[13px] truncate text-theme-text-primary light:text-slate-600 group-hover/sr:text-white light:group-hover/sr:text-theme-text-primary">
-          <HighlightMatch text={thread.name} query={query} />
-        </p>
-      </div>
-      {thread.contentSnippet && (
-        <p className="text-[11px] text-theme-placeholder light:text-slate-400 truncate pl-[18px] mt-0.5">
-          <HighlightMatch text={thread.contentSnippet} query={query} />
-        </p>
-      )}
-    </Link>
   );
 }
 

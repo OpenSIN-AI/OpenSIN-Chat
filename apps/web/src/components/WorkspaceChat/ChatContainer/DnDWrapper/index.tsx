@@ -196,13 +196,6 @@ export function DnDFileUploaderProvider({
   }
 
   /**
-   * Clear queue of attached files currently in prompt box
-   */
-  function resetAttachments() {
-    setFiles([]);
-  }
-
-  /**
    * Turns files into attachments we can send as body request to backend
    * for a chat.
    * @returns {{name:string,mime:string,contentString:string}[]}
@@ -771,8 +764,7 @@ export default function DnDFileUploaderWrapper({ children }: any) {
       </div>
       <input
         id="dnd-chat-file-uploader"
-        aria-label={t("chat_window.attach_file")}
-        {...getInputProps()}
+        {...getInputProps({ tabIndex: -1, "aria-hidden": true })}
       />
       {children}
     </div>

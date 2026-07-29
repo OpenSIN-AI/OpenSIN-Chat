@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 import RightSidebarIconBar from "./index";
 
@@ -10,13 +10,11 @@ vi.mock("react-i18next", async () => {
 });
 
 const mockToggleSidebar = vi.fn();
-const mockCloseSidebar = vi.fn();
 
 vi.mock("../ChatSidebar", () => ({
   useChatSidebar: () => ({
     activeSidebar: null,
     toggleSidebar: mockToggleSidebar,
-    closeSidebar: mockCloseSidebar,
   }),
 }));
 
@@ -24,13 +22,13 @@ vi.mock("../AgentSessionsSidebar/AgentRunsContext", () => ({
   useAgentRuns: () => ({ activeRunCount: 0 }),
 }));
 
-// Render helper that provides the Router context useNavigate() requires.
-function renderBar() {
-  return render(
+function renderMenu() {
+  render(
     <MemoryRouter>
       <RightSidebarIconBar />
     </MemoryRouter>,
   );
+  fireEvent.click(screen.getByRole("button", { name: "Tools" }));
 }
 
 describe("RightSidebarIconBar", () => {
@@ -38,44 +36,39 @@ describe("RightSidebarIconBar", () => {
     vi.clearAllMocks();
   });
 
-  it("renders the four focused panels plus agent sessions", () => {
-    const { container } = renderBar();
-    const buttons = container.querySelectorAll("button");
-    expect(buttons.length).toBe(5);
+  it("shows one calm tools trigger instead of a permanent icon rail", () => {
+    render(
+      <MemoryRouter>
+        <RightSidebarIconBar />
+      </MemoryRouter>,
+    );
+    expect(screen.getAllByRole("button")).toHaveLength(1);
+    expect(screen.getByRole("button", { name: "Tools" })).toHaveAttribute(
+      "aria-expanded",
+      "false",
+    );
   });
 
-  it("calls toggleSidebar with 'pdf-analysis' when PDF-analysis icon clicked", () => {
-    const { container } = renderBar();
-    const pdfButton = container.querySelector(
-      'button[aria-label="PDF Analysis"]',
-    );
-    fireEvent.click(pdfButton);
+  it("reveals optional panels only after opening the tools menu", () => {
+    renderMenu();
+    expect(screen.getAllByRole("menuitem")).toHaveLength(7);
+    expect(screen.getByRole("menuitem", { name: "Sources" })).toBeVisible();
+    expect(screen.getByRole("menuitem", { name: "Notepad" })).toBeVisible();
+    expect(
+      screen.getByRole("menuitem", { name: "PDF Analysis" }),
+    ).toBeVisible();
+  });
+
+  it("opens PDF analysis and closes the menu", () => {
+    renderMenu();
+    fireEvent.click(screen.getByRole("menuitem", { name: "PDF Analysis" }));
     expect(mockToggleSidebar).toHaveBeenCalledWith("pdf-analysis");
+    expect(screen.queryByRole("menu")).not.toBeInTheDocument();
   });
 
-  it("calls toggleSidebar with 'preview' when preview icon clicked", () => {
-    const { container } = renderBar();
-    const previewButton = container.querySelector(
-      'button[aria-label="Preview"]',
-    );
-    fireEvent.click(previewButton);
-    expect(mockToggleSidebar).toHaveBeenCalledWith("preview");
-  });
-
-  it("calls toggleSidebar with 'database' when database icon clicked", () => {
-    const { container } = renderBar();
-    const dbButton = container.querySelector(
-      'button[aria-label="Politician database"]',
-    );
-    fireEvent.click(dbButton);
-    expect(mockToggleSidebar).toHaveBeenCalledWith("database");
-  });
-
-  it("has an accessible label on every button (a11y)", () => {
-    const { container } = renderBar();
-    const buttons = container.querySelectorAll("button");
-    buttons.forEach((btn) => {
-      expect(btn.getAttribute("aria-label")).toBeTruthy();
-    });
+  it("opens sources from the consolidated menu", () => {
+    renderMenu();
+    fireEvent.click(screen.getByRole("menuitem", { name: "Sources" }));
+    expect(mockToggleSidebar).toHaveBeenCalledWith("sources");
   });
 });

@@ -17,57 +17,10 @@ vi.mock("./PromptInput", () => ({
   ),
 }));
 
-vi.mock("./ChatSidebar", () => ({
-  useChatSidebar: () => ({
-    openSidebar: vi.fn(),
-  }),
-}));
-
-vi.mock("@/features/notebook/NotebookModeCards", () => ({
-  default: ({ value, onChange }) => (
-    <div data-testid="notebook-mode-cards" data-value={value}>
-      <button
-        role="radio"
-        aria-checked={value === "chat"}
-        aria-label="Chat"
-        onClick={() => onChange("chat")}
-      >
-        Chat
-      </button>
-      <button
-        role="radio"
-        aria-checked={value === "work"}
-        aria-label="Work"
-        onClick={() => onChange("work")}
-      >
-        Work
-      </button>
-      <button
-        role="radio"
-        aria-checked={value === "code"}
-        aria-label="Code"
-        onClick={() => onChange("code")}
-      >
-        Code
-      </button>
-    </div>
-  ),
-}));
-
 vi.mock("@/features/notebook/NotebookQuickActions", () => ({
   default: ({ mode, onSelect }) => (
     <div data-testid="notebook-quick-actions" data-mode={mode}>
-      <button onClick={() => onSelect("test-prompt")}>
-        Quellen zusammenfassen
-      </button>
-    </div>
-  ),
-}));
-
-vi.mock("@/features/notebook/RecentNotebookSources", () => ({
-  default: ({ workspace, onOpenSources }) => (
-    <div data-testid="recent-notebook-sources">
-      <button onClick={onOpenSources}>Quellen</button>
+      <button onClick={() => onSelect("test-prompt")}>Zusammenfassen</button>
     </div>
   ),
 }));
@@ -112,27 +65,34 @@ describe("EmptyState", () => {
     );
   }
 
-  it("renders the welcome heading and mode cards", () => {
+  it("renders a plain chat welcome instead of a dashboard", () => {
     renderEmptyState();
     expect(
       screen.getByRole("heading", { name: /Womit kann ich helfen/i }),
     ).toBeInTheDocument();
-    expect(screen.getByTestId("notebook-mode-cards")).toBeInTheDocument();
+    expect(
+      screen.getByText(/Schreib eine Nachricht oder füge bei Bedarf/i),
+    ).toBeInTheDocument();
   });
 
-  it("renders Chat, Work, and Code radio buttons", () => {
+  it("does not duplicate the composer mode selector or sources panel", () => {
     renderEmptyState();
-    expect(screen.getByRole("radio", { name: /Chat/i })).toBeInTheDocument();
-    expect(screen.getByRole("radio", { name: /Work/i })).toBeInTheDocument();
-    expect(screen.getByRole("radio", { name: /Code/i })).toBeInTheDocument();
+    expect(screen.queryByTestId("notebook-mode-cards")).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("recent-notebook-sources"),
+    ).not.toBeInTheDocument();
   });
 
-  it("renders quick actions with default chat suggestions", () => {
+  it("keeps concise optional suggestions", () => {
     renderEmptyState();
-    expect(screen.getByText("Quellen zusammenfassen")).toBeInTheDocument();
+    expect(screen.getByTestId("notebook-quick-actions")).toHaveAttribute(
+      "data-mode",
+      "chat",
+    );
+    expect(screen.getByText("Zusammenfassen")).toBeInTheDocument();
   });
 
-  it("passes workspace to prompt input", () => {
+  it("passes workspace and centered layout to the prompt input", () => {
     renderEmptyState();
     expect(screen.getByTestId("prompt-input")).toHaveAttribute(
       "data-workspace",
@@ -144,7 +104,7 @@ describe("EmptyState", () => {
     );
   });
 
-  it("passes streaming state to prompt input", () => {
+  it("passes streaming state to the prompt input", () => {
     renderEmptyState({ loadingResponse: true });
     expect(screen.getByTestId("prompt-input")).toHaveAttribute(
       "data-streaming",
@@ -152,15 +112,11 @@ describe("EmptyState", () => {
     );
   });
 
-  it("renders recent sources section", () => {
+  it("uses a product-neutral safety note", () => {
     renderEmptyState();
-    expect(screen.getByTestId("recent-notebook-sources")).toBeInTheDocument();
-  });
-
-  it("does not render model name in greeting", () => {
-    renderEmptyState();
-    expect(screen.queryByText(/openai\//i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/anthropic\//i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/ollama\//i)).not.toBeInTheDocument();
+    expect(screen.getByText(/KI kann Fehler machen/i)).toBeInTheDocument();
+    expect(
+      screen.queryByText(/OpenSIN kann Fehler machen/i),
+    ).not.toBeInTheDocument();
   });
 });

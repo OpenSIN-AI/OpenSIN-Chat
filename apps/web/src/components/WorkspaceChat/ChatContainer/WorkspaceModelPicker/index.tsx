@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Shows and opens the active workspace model selector.
 // Docs: index.doc.md
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
@@ -81,7 +81,6 @@ export default function WorkspaceModelPicker({
   const { workspace } = useWorkspace(slug);
   const { settings: systemSettings } = useSystemSettings();
   const [showSelector, setShowSelector] = useState(false);
-  const [modelName, setModelName] = useState("");
   const {
     isOpen: isSetupProviderOpen,
     openModal: openSetupProviderModal,
@@ -109,18 +108,16 @@ export default function WorkspaceModelPicker({
     return () => window.removeEventListener(SIDEBAR_TOGGLE_EVENT, handleToggle);
   }, []);
 
-  useEffect(() => {
-    if (!workspace || !systemSettings) return;
+  const modelName = useMemo(() => {
+    if (!workspace || !systemSettings) return "";
     if (effectiveProvider !== "opensin-router") {
       const rawModel = workspace.chatModel ?? systemSettings.LLMModel ?? "";
-      // Convert raw model ID (e.g. "accounts/fireworks/models/minimax-m3") to a friendly name
-      setModelName(prettifyModelName(rawModel));
-    } else if (router) {
-      setModelName(router.name);
-    } else if (!routerId) {
-      setModelName(t("model-router.metrics.model-router-default"));
+      return prettifyModelName(rawModel);
     }
-  }, [workspace, systemSettings, router, effectiveProvider, t]);
+    if (router) return router.name;
+    if (!routerId) return t("model-router.metrics.model-router-default");
+    return "";
+  }, [workspace, systemSettings, effectiveProvider, router, routerId, t]);
 
   useEffect(() => {
     function handleSave() {
@@ -161,7 +158,7 @@ export default function WorkspaceModelPicker({
       window.removeEventListener(PROVIDER_SETUP_EVENT, handleProviderSetup);
       if (timer) clearTimeout(timer);
     };
-  }, []);
+  }, [openSetupProviderModal]);
 
   if (!!user && user.role !== "admin") return null;
   if (!slug || isMobile) return null;
@@ -169,8 +166,10 @@ export default function WorkspaceModelPicker({
   return (
     <>
       {showSelector && (
-        <div
-          className="fixed inset-0 z-20"
+        <button
+          type="button"
+          aria-label={t("common.close")}
+          className="fixed inset-0 z-20 cursor-default"
           onClick={() => setShowSelector(false)}
         />
       )}
@@ -184,6 +183,7 @@ export default function WorkspaceModelPicker({
           onClick={() => setShowSelector(!showSelector)}
           aria-label={t("chat_window.select_model")}
           aria-expanded={showSelector}
+          title={modelName || t("chat_window.select_model")}
           className={`group flex cursor-pointer items-center rounded-md border px-2.5 py-1 transition-colors duration-150 pointer-events-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 ${
             showSelector
               ? "border-white/[0.14] bg-white/[0.08] light:border-zinc-300 light:bg-zinc-100"
@@ -197,7 +197,7 @@ export default function WorkspaceModelPicker({
                 : "text-[#a1a1aa] light:text-zinc-600 group-hover:text-[#e4e4e7] light:group-hover:text-zinc-900"
             }`}
           >
-            {modelName || t("chat_window.select_model")}
+            {t("chat_window.select_model")}
           </span>
         </button>
 
