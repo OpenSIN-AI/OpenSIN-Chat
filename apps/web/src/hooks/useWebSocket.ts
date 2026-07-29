@@ -199,10 +199,10 @@ export default function useWebSocket({
       ws.addEventListener("close", (event: CloseEvent) => {
         clearTimers();
 
-        // If the server closed with 1008 (Policy Violation), the session
-        // is permanently ended (e.g. invocation already closed). Don't
-        // attempt reconnection — it can never succeed.
-        if (event?.code === 1008) {
+        // A clean 1000 close means the agent stream completed; 1008 means
+        // the invocation is permanently unavailable (for example, already
+        // closed). Neither can succeed by reconnecting the same UUID.
+        if (event?.code === 1000 || event?.code === 1008) {
           intentionalCloseRef.current = true;
         }
 

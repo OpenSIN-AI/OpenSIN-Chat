@@ -8,6 +8,16 @@ const OPEN = 1;
 const CLOSING = 2;
 const CLOSED = 3;
 
+class FatalSSEError extends Error {
+  closeCode: number;
+
+  constructor(message: string, closeCode = 1008) {
+    super(message);
+    this.name = "FatalSSEError";
+    this.closeCode = closeCode;
+  }
+}
+
 function sseBaseHost() {
   const apiBase = import.meta.env.VITE_API_BASE || API_BASE;
   if (!apiBase || apiBase.startsWith("/")) {
@@ -49,6 +59,9 @@ export default class SSESocket {
   private listeners: Map<string, Set<EventListener>> = new Map();
   private isIntentionalClose: boolean = false;
   private abortController: AbortController | null = null;
+  private closeDispatched: boolean = false;
+  private serverCloseCode: number | null = null;
+  private serverCloseReason: string = "";
 
   constructor(socketId: string) {
     this.url = sseStreamUrl(socketId);
@@ -72,39 +85,86 @@ export default class SSESocket {
         if (response.ok) {
           this.readyState = OPEN;
           this._dispatch("open", new Event("open"));
-        } else {
-          this.readyState = CLOSED;
-          this._dispatch("error", new Event("error"));
-          throw new Error(`SSE connection failed: ${response.status}`);
+          return;
         }
+
+        const error = new FatalSSEError(
+          `SSE connection failed: ${response.status}`,
+        );
+        throw error;
       },
 
       onmessage: (event) => {
+        // The API sends a named `close` SSE event before ending a completed or
+        // permanently closed agent invocation. Preserve its WebSocket-style
+        // close code so useWebSocket can distinguish a terminal 1000/1008
+        // close from a transient network interruption. Treating this payload
+        // as an ordinary message caused an endless reconnect loop against the
+        // same closed invocation UUID until the rate limiter returned 429.
+        if (event.event === "close") {
+          try {
+            const payload = JSON.parse(event.data || "{}");
+            this.serverCloseCode =
+              Number.isInteger(payload?.code) && payload.code > 0
+                ? payload.code
+                : 1000;
+            this.serverCloseReason =
+              typeof payload?.reason === "string" ? payload.reason : "";
+          } catch {
+            this.serverCloseCode = 1000;
+            this.serverCloseReason = "";
+          }
+          this._dispatchClose(
+            this.serverCloseCode || 1000,
+            this.serverCloseReason,
+          );
+          return;
+        }
+
         const fakeEvent = { data: event.data } as MessageEvent;
         this._dispatch("message", fakeEvent);
       },
 
       onerror: (err) => {
         if (this.isIntentionalClose) {
-          this.readyState = CLOSED;
-          this._dispatch("close", new CloseEvent("close"));
+          this._dispatchClose(1000, "Client closed connection");
           throw err; // Stop retrying
         }
+        if (err instanceof FatalSSEError) {
+          this._dispatch("error", new Event("error"));
+          this._dispatchClose(err.closeCode, err.message);
+          throw err; // Authentication/policy failures cannot self-heal.
+        }
         this._dispatch("error", new Event("error"));
-        // fetch-event-source auto-retries; don't throw to allow retry
+        // fetch-event-source auto-retries transient transport failures.
       },
 
       onclose: () => {
-        this.readyState = CLOSED;
-        this._dispatch("close", new CloseEvent("close"));
+        // A clean EOF means the server intentionally completed this agent
+        // stream. Do not turn it into a reconnectable code-0 close.
+        this._dispatchClose(
+          this.serverCloseCode || 1000,
+          this.serverCloseReason || "Agent stream complete",
+        );
       },
     }).catch(() => {
-      // Connection ended or errored out
-      if (this.readyState !== CLOSED) {
-        this.readyState = CLOSED;
-        this._dispatch("close", new CloseEvent("close"));
-      }
+      // A fatal connection setup error reaches here after onerror rethrows.
+      // Ensure consumers always receive exactly one terminal close event.
+      this._dispatchClose(
+        this.serverCloseCode || 1008,
+        this.serverCloseReason || "SSE connection ended",
+      );
     });
+  }
+
+  private _dispatchClose(code: number, reason: string) {
+    if (this.closeDispatched) return;
+    this.closeDispatched = true;
+    this.readyState = CLOSED;
+    this._dispatch(
+      "close",
+      new CloseEvent("close", { code, reason, wasClean: code === 1000 }),
+    );
   }
 
   private _dispatch(type: string, event: Event) {
@@ -134,11 +194,7 @@ export default class SSESocket {
       this.abortController.abort();
       this.abortController = null;
     }
-    this.readyState = CLOSED;
-    this._dispatch(
-      "close",
-      new CloseEvent("close", { code: code || 1000, reason: reason || "" }),
-    );
+    this._dispatchClose(code || 1000, reason || "");
   }
 
   addEventListener(type: string, listener: EventListener) {
