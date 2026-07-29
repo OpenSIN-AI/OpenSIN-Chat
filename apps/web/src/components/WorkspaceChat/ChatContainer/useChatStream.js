@@ -42,7 +42,7 @@ export default function useChatStream({
   const [socketId, setSocketId] = useState(null);
   const [websocket, setWebsocket] = useState(null);
   const { files, parseAttachments } = useContext(DndUploaderContext);
-  const pendingMessageChecked = useRef(false);
+  const pendingMessageChecked = useRef(null);
   const pendingResetRef = useRef(false);
   const activeThreadSlug = threadSlug;
   const prevLoadingResponse = useRef(loadingResponse);
@@ -379,22 +379,27 @@ export default function useChatStream({
   sendCommandRef.current = sendCommand;
 
   useEffect(() => {
-    if (pendingMessageChecked.current || !workspace?.slug) return;
-    pendingMessageChecked.current = true;
+    // A message submitted from an empty workspace is parked in sessionStorage
+    // before React Router navigates to the newly-created thread. The workspace
+    // component remains mounted during that SPA transition, so key the guard
+    // by the active thread instead of marking the empty workspace as checked.
+    if (!workspace?.slug || !activeThreadSlug) return;
+    if (pendingMessageChecked.current === activeThreadSlug) return;
 
     const pending = safeJsonParse(sessionStorage.getItem(PENDING_HOME_MESSAGE));
-    if (pending?.message) {
-      const timer = setTimeout(() => {
-        sessionStorage.removeItem(PENDING_HOME_MESSAGE);
-        sendCommandRef.current({
-          text: pending.message,
-          attachments: pending.attachments || [],
-          autoSubmit: true,
-        });
-      }, 100);
-      return () => clearTimeout(timer);
-    }
-  }, [workspace?.slug]);
+    if (!pending?.message) return;
+    pendingMessageChecked.current = activeThreadSlug;
+
+    const timer = setTimeout(() => {
+      sessionStorage.removeItem(PENDING_HOME_MESSAGE);
+      sendCommandRef.current({
+        text: pending.message,
+        attachments: pending.attachments || [],
+        autoSubmit: true,
+      });
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [workspace?.slug, activeThreadSlug]);
 
   useEffect(() => {
     async function fetchReply() {

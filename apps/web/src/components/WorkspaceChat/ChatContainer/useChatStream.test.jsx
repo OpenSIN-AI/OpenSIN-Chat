@@ -288,6 +288,65 @@ describe("useChatStream — handleSubmit", () => {
 
     expect(Workspace.threads.new).toHaveBeenCalledWith("test-ws");
   });
+
+  it("sends the pending first message after navigating to the new thread", async () => {
+    const Workspace = (await import("@/models/workspace")).default;
+    Workspace.threads.new.mockResolvedValueOnce({
+      thread: { slug: "new-thread" },
+    });
+    Storage.prototype.clear.call(sessionStorage);
+    document.getElementById = vi.fn(() => ({ value: "Pending hello" }));
+
+    const result = { current: null };
+    function Harness({ threadSlug }) {
+      result.current = useChatStream({
+        workspace: { slug: "test-ws" },
+        threadSlug,
+        knownHistory: [],
+      });
+      return null;
+    }
+    const wrapper = ({ children }) => (
+      <DndUploaderContext.Provider
+        value={{ files: [], parseAttachments: () => [] }}
+      >
+        {children}
+      </DndUploaderContext.Provider>
+    );
+
+    const view = render(<Harness threadSlug={null} />, { wrapper });
+    await act(async () => {
+      await result.current.handleSubmit({ preventDefault: vi.fn() });
+    });
+    const pendingValue = Storage.prototype.getItem.call(
+      sessionStorage,
+      "pending_home_message",
+    );
+    expect(pendingValue).toContain("Pending hello");
+
+    const timeoutSpy = vi
+      .spyOn(globalThis, "setTimeout")
+      .mockImplementation((callback) => {
+        callback();
+        return 1;
+      });
+    view.rerender(<Harness threadSlug="new-thread" />);
+    await act(async () => {
+      await Promise.resolve();
+    });
+
+    expect(
+      Storage.prototype.getItem.call(sessionStorage, "pending_home_message"),
+    ).toBeNull();
+    expect(Workspace.multiplexStream).toHaveBeenCalledWith(
+      expect.objectContaining({
+        workspaceSlug: "test-ws",
+        threadSlug: "new-thread",
+        prompt: "Pending hello",
+      }),
+    );
+    timeoutSpy.mockRestore();
+  });
 });
 
 describe("useChatStream — sendCommand", () => {
