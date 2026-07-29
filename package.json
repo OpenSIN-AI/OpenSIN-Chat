@@ -111,13 +111,13 @@
     "js-yaml": ">=4.2.0",
     "string-length/strip-ansi": "6.0.1",
     "protobufjs": "7.6.5",
-    "undici": "6.28.0",
     "sharp": "0.35.3",
     "ws": "8.21.1",
     "adm-zip": "0.6.0",
     "@hono/node-server": "2.0.12",
     "valibot": "1.4.2",
-    "uuid": "14.0.1"
+    "uuid": "14.0.1",
+    "**/youtubei.js/undici": "6.28.0"
   },
   "dependencies": {
     "@microsoft/fetch-event-source": "^2.0.1",
