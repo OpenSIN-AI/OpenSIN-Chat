@@ -660,7 +660,7 @@ class FilesystemManager {
    * @returns {Promise<string[]>} Array of matching file paths
    */
   async searchFilesWithGlob(rootPath, pattern, options = {}) {
-    const minimatch = require("minimatch");
+    const { minimatch } = require("minimatch");
     const { excludePatterns = [] } = options;
     const results = [];
     const matchOptions = { dot: true, nocase: true };

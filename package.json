@@ -90,7 +90,7 @@
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
     "@vitejs/plugin-react": "^6.0.2",
-    "concurrently": "^10.0.3",
+    "concurrently": "^10.0.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.5.6",
@@ -109,7 +109,15 @@
   },
   "resolutions": {
     "js-yaml": ">=4.2.0",
-    "string-length/strip-ansi": "6.0.1"
+    "string-length/strip-ansi": "6.0.1",
+    "protobufjs": "7.6.5",
+    "undici": "6.28.0",
+    "sharp": "0.35.3",
+    "ws": "8.21.1",
+    "adm-zip": "0.6.0",
+    "@hono/node-server": "2.0.12",
+    "valibot": "1.4.2",
+    "uuid": "14.0.1"
   },
   "dependencies": {
     "@microsoft/fetch-event-source": "^2.0.1",
