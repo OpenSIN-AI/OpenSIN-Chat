@@ -59,7 +59,7 @@
     "cheerio": "^1.2.0",
     "cors": "2.8.6",
     "cron-parser": "^5",
-    "cron-validate": "1.4.5",
+    "cron-validate": "1.5.3",
     "diff": "^9.0.0",
     "docx": "9.6.1",
     "dompurify": "3.4.12",
