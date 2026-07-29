@@ -70,7 +70,7 @@
     "ffmpeg-static": "^5.2.0",
     "fix-path": "^5.0.0",
     "graphql": "^16.14.2",
-    "joi": "^17.13.4",
+    "joi": "^18.2.3",
     "joi-password-complexity": "^5.2.0",
     "js-tiktoken": "^1.0.21",
     "jsdom": "29.1.1",
