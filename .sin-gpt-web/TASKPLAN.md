@@ -299,7 +299,7 @@ Evidence: Manual delegation prompt written to .sin-gpt-web/delegation-prompt.md 
 - Kind: `test`
 - Priority: `high`
 - Dependencies: T-0012
-- Updated: 2026-07-29T12:34:37+00:00
+- Updated: 2026-07-29T12:49:46+00:00
 
 Die frühere T-0013-Abnahme dokumentiert ausdrücklich keinen vollständigen Browser-Test. Nach Deployment beide Live-Produkte im Orca-Browser testen: Login/Navigation, Chat, Websuche, Datei-Upload, Quellen zum Chat, Dokumentverarbeitung, Quellenanzeige und sichtbare Kernfunktionen. Jeden Fehler als eigenen Task dokumentieren.
 
@@ -488,8 +488,6 @@ Evidence: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirro
 
 ## Recent events
 
-- 2026-07-28T22:47:43+00:00 — `chatgpt-web` — `task_claimed` `T-0019`: claimed by chatgpt-web
-- 2026-07-28T23:09:25+00:00 — `local-agent` — `task_updated` `T-0019`: ChatGPT Web delegation gestartet. Konversation: https://chatgpt.com/c/6a693632-bdb0-83eb-b14d-85d015fac236
 - 2026-07-28T23:09:38+00:00 — `local-agent` — `task_updated` `T-0016`: ChatGPT Web delegation gestartet. Konversation: https://chatgpt.com/c/6a693632-bdb0-83eb-b14d-85d015fac236
 - 2026-07-28T23:09:44+00:00 — `local-agent` — `task_updated` `T-0018`: ChatGPT Web delegation gestartet. Konversation: https://chatgpt.com/c/6a693632-bdb0-83eb-b14d-85d015fac236
 - 2026-07-29T01:30:21+00:00 — `chatgpt-web` — `task_completed` `T-0019`: Agent-SSE-Reconnect-Schleife behoben: benannte close-Events und sauberes SSE-EOF werden als terminale Codes 1008/1000 verarbeitet; abgeschlossene Agent-UUIDs werden nicht erneut verbunden. 40 fokussierte Frontend- und 8 Agent-SSE-Tests, Typecheck und Produktionsbuild grün. OpenSIN a5f0cd049 und OpenAfD c15e0aca6 auf main gepusht, als immutable SHA-Images auf OCI deployed; beide internen und öffentlichen Healthchecks grün.
@@ -508,3 +506,17 @@ Evidence: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirro
 - 2026-07-29T12:33:54+00:00 — `chatgpt-web` — `task_completed` `T-0023`: Commit 5d0d43e33cb458afcd9b87c69f2fe3cabfbe6575; Mount-Regressionstest und Server-Typecheck bestanden; Live-GET /api/workspace/:slug/agent-runs/stream liefert 200 text/event-stream mit connected-Frame.
 - 2026-07-29T12:34:37+00:00 — `chatgpt-web` — `task_completed` `T-0016`: Live-Acceptance vollständig: normaler Chat OpenSIN MODEL_OK_opensin_1785293356606 und OpenAFD MODEL_OK_openafd_1785293283158; Datei-Upload OpenSIN UI UPLOADCODE_opensin_1785325444380, OpenAFD VM-Multipart plus Browser-Chat UPLOADCODE_openafd_1785326561922; Workspace-Quelle per sichtbarer UI OpenSIN SOURCECODE_opensin_1785326670419 und OpenAFD SOURCECODE_openafd_1785326712431; Deep Research mit echter IANA-Websuche und 30 bzw. 10 Quellen; anschließend Browser und Container jeweils 0 Agent-SSE-Reconnects und 0 HTTP 429. Gefundene Bugs wurden als T-0022 und T-0023 erfasst, behoben, getestet und live deployed.
 - 2026-07-29T12:37:31+00:00 — `chatgpt-web` — `task_added` `T-0024`: GitHub-Abhängigkeitswarnungen triagieren und schließen
+- 2026-07-29T12:48:49+00:00 — `chatgpt-web` — `completion_report_updated` `T-0016`: /Users/jeremy/dev/OpenSIN-Chat/.sin-gpt-web/final-report-input.md
+- 2026-07-29T12:49:46+00:00 — `chatgpt-web` — `completion_report_updated` `T-0016`: <!-- final-state-20260729 -->
+## Finaler Projektstand
+
+Taskplan: 22 erledigt, 0 in Arbeit, 1 extern blockiert, 1 dokumentierter Nachfolgetask.
+Produktions-Deployment: OpenSIN commit 5d0d43e33cb458afcd9b87c69f2fe3cabfbe6575; Healthchecks intern und oeffentlich bestanden.
+Datei-/Thread-Kontext-Fix: 0778ad42d2a07956f419b9c828ed67b7073c4f39.
+Agent-Run-SSE-Mount-Fix: 5d0d43e33cb458afcd9b87c69f2fe3cabfbe6575; HTTP 200, text/event-stream, initiales connected-Frame.
+
+Live-Acceptance: Normaler Chat, Datei-Upload, Dokumentkontext, Workspace-Quelle, Websuche/Deep Research und SSE-Stabilitaet auf beiden Domains verifiziert. OpenSIN Uploadcode UPLOADCODE_opensin_1785325444380; OpenAFD Uploadcode UPLOADCODE_openafd_1785326561922 via erlaubten VM-Multipart-Upload plus Browser-Chat. Quellen SOURCECODE_opensin_1785326670419 und SOURCECODE_openafd_1785326712431. 0 Reconnects und 0 HTTP 429.
+
+T-0001 bleibt extern blockiert: NVIDIA-NIM- und DIP-Schluessel koennen ohne Provider-Passwort/Rotationsportal nicht sicher rotiert werden; keine Werte wurden ausgegeben oder veraendert.
+T-0024 erfasst die GitHub-Abhaengigkeitswarnungen als High-Nachfolgetask.
+Verwaiste Container wurden nicht geloescht. Bekannte Vite-/Chunk-/Piper-Warnungen bleiben nicht-blockierend.
