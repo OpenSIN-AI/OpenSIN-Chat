@@ -1,61 +1,55 @@
 # Delegation Brief an ChatGPT Web
 
-## Repository
-- Pfad: `/Users/jeremy/dev/OpenSIN-Chat`
-- Schwester-Repo: `/Users/jeremy/dev/OpenAFD`
+## Deine Rolle
+Du bist der CEO und Lead-Developer dieses Projekts. Du hast volle Autorität für:
+- Planung und Architektur
+- Code-Änderungen
+- Testing und Verification
+- Git/GitHub Arbeit
+- Deployment
 
-## Aktuelle Tasks (aus Taskplan)
+## Projektstatus
+- **OpenSIN-Chat**: https://sinchat.delqhi.com (LÄUFT)
+- **OpenAFD-Chat**: https://openafd.delqhi.com (LÄUFT)
+- **Beide Repos**: Sauber, keine uncommitted Changes
+- **Letzte Commits**: 
+  - OpenSIN: fix(deps), docs(taskplan), fix: sidebar simplification
+  - OpenAFD: fix: simplify chat UX, fix(deps), chore: update taskplan
 
-### Offene Tasks:
-1. **T-0019** (critical): OpenAfD Deep Research verliert Agent-WebSocket
-   - Status: in_progress
-   - Owner: chatgpt-web
-   - Acceptance: Agent-WebSocket auf OpenAfD bleibt verbunden; Deep-Research-Websuche liefert Ergebnis/Quellen
+## Offene Aufgaben (Taskplan)
+1. **T-0001**: OpenSIN-Chat Repo - Alle offenen PRs/Issues prüfen, Fixes anwenden
+2. **T-0002**: OpenAFD-Chat Repo syncen mit OpenSIN Features
+3. **T-0003**: Beide Repos auf OCI VM deployen und verifizieren
+4. **T-0005**: Alle Funktionen im Browser testen (Websearch, Upload, Quellen)
+5. **T-0006**: Bugs beheben und Taskplan aktualisieren
 
-2. **T-0016** (high): T-0013 Acceptance im Orca-Browser vollständig nachholen
-   - Status: in_progress
-   - Owner: chatgpt-web
-   - Acceptance: Orca-Evidenz für Websuche, Datei-Upload, Quellen-Dateien und Chat-Funktionen auf beiden Live-Domains
+## Wichtige Infos
+- **Repository Pfad**: /Users/jeremy/orca/workspaces/OpenSIN-Chat/auto-1-opensin-chat-run-14-20260730T2300
+- **OpenAFD Repo**: /Users/jeremy/dev/OpenAFD-Chat
+- **Oracle CLI**: oci (konfiguriert)
+- **Deployment**: Docker Compose auf OCI VM
+- **Cloudflare Tunnel**: aktiv für beide Domains
 
-3. **T-0018** (high): Recherche-Deep-Link verliert Agentenmodus beim Mount
-   - Status: in_progress
-   - Owner: chatgpt-web
-   - Acceptance: Direkte Navigation zu ?mode=deep-research aktiviert Deep-Research-Modus
+## Deine Aufgaben
+1. Prüfe offene GitHub Issues und PRs für beide Repos
+2. Behebe alle Fehler und wende Fixes an
+3. Stelle sicher, dass alle Tests grün sind
+4. Sichere, dass beide Repos auf der OCI VM deployt sind
+5. Teste alle Funktionen im Browser:
+   - Websearch
+   - Dateien Upload
+   - Quellen zum Chat hinzufügen
+   - Jede einzelne Funktion
+6. Dokumentiere alle Bugs und fehlende Features
+7. Aktualisiere den Taskplan kontinuierlich
 
-### Erledigte Tasks (Auswahl):
-- T-0017 (critical): Login hinter TLS-Reverse-Proxy ✅
-- T-0012 (high): OpenAfD-Chat synchronisieren ✅
-- T-0011 (critical): Oracle Cloud VM prüfen ✅
+## Verification
+- Führe `yarn type-check` und `yarn lint:ci` aus
+- Führe `yarn test` aus
+- Prüfe `git status` für beide Repos
+- Teste die Live-URLs im Browser
 
-## Ziel
-1. Alle offenen Tasks abschließen
-2. Nicht-committete Änderungen commiten und pushen
-3. Fehler beheben
-4. OpenAFD mit OpenSIN-Chat synchronisieren (aktuell unterschiedliche Repos!)
-5. Beide Repositories auf Oracle Cloud VM live schalten
-6. Alle Funktionen im Browser testen:
-   - Websuche
-   - Datei-Upload
-   - Quellen-Dateien zum Chat hinzufügen
-   - Chat-Funktionen
-   - Deep Research Modus
-
-## Wichtige Hinweise
-- **sin-chrome funktioniert** und ist bereit
-- OpenAFD ist NICHT synchronisiert (nur 3 Commits vs. OpenSIN-Chat 5+)
-- Beide Repos müssen auf OCI VM live sein
-- ChatGPT ist sovereign Lead und default Writer
-- MiMo Code ist nur read-only explorer
-
-## Nächste Schritte
-1. Taskplan lesen: `sin-gpt-web-state --repo /Users/jeremy/dev/OpenSIN-Chat summary`
-2. Offene Tasks claimen und bearbeiten
-3. OpenAFD synchronisieren
-4. Deployment auf OCI VM
-5. Browser-Tests durchführen
-6. Bugs dokumentieren
-
-## Autorisierung
-- Commit/Push: Autorisiert für beide Repos
-- Deployment: Autorisiert für OCI VM
-- Keine destructive Operations ohne Bestätigung
+## WICHTIG
+- Fertigstellen ist wichtiger als Weiterentwickeln!
+- Halte alle Bugs im Taskplan fest
+- Aktualisiere den Taskplan nach jedem Abschluss
