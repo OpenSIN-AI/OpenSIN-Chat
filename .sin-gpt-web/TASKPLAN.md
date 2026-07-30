@@ -13,7 +13,7 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 
 ## Status
 
-- Backlog: 0
+- Backlog: 1
 - In progress: 2
 - Blocked: 1
 - Done: 22
@@ -31,6 +31,7 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 | T-0019 | critical | implement | done | chatgpt-web | OpenAfD Deep Research verliert Agent-WebSocket | — |
 | T-0020 | critical | implement | done | chatgpt-web | BUG: Normaler Chat verliert Agent-Verbindung (Agent session has ended) | — |
 | T-0025 | critical | review | in_progress | chatgpt-web | Produktabnahme: Chat UX radikal vereinfachen und live verifizieren | — |
+| T-0026 | critical | implement | backlog | local-agent | ChatGPT Web Delegation: CEO-Auftrag für Produktabnahme und Taskplan-Aktualisierung | — |
 | T-0004 | high | implement | done | chatgpt-web | CI/CD: Echte GitHub Actions implementieren | — |
 | T-0005 | high | implement | done | chatgpt-web | CI/CD: Immutable Docker Images mit Commit-SHA | — |
 | T-0006 | high | implement | done | chatgpt-web | Produkt: Videogenerierung und cvoice entfernen | — |
@@ -180,12 +181,23 @@ Completion report: `.sin-gpt-web/reports/T-0020.md`
 - Kind: `review`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-07-29T21:44:51+00:00
+- Updated: 2026-07-30T07:25:01+00:00
 
 Beide Live-Produkte als Erstnutzer visuell und funktional prüfen. Informationsarchitektur, Navigation, Terminologie, leere Zustände, Chat-Komponist, Quellen, Recherche, Berichte, Spezialleisten und Fehlermeldungen vereinfachen. Alles Unlogische oder Entwicklerinterne entfernen oder hinter progressive disclosure verschieben.
 
 Acceptance:
 - OpenSIN und OpenAfD wirken wie ein verständlicher normaler Chat mit optionalen Erweiterungen; primärer Chatfluss ist selbsterklärend; keine redundanten Hauptaktionen oder Entwicklerbegriffe; alle sichtbaren Kernpfade im Orca-Browser geprüft; gefundene Bugs behoben oder explizit im Taskplan dokumentiert; Tests grün; main gepusht; beide SHA-Images live deployed.
+
+### T-0026 — ChatGPT Web Delegation: CEO-Auftrag für Produktabnahme und Taskplan-Aktualisierung
+
+- Status: `backlog`
+- Owner: `local-agent`
+- Kind: `implement`
+- Priority: `critical`
+- Dependencies: none
+- Updated: 2026-07-30T07:25:01+00:00
+
+ChatGPT Web als CEO für OpenSIN-Chat und OpenAfD-Chat einsetzen. Produktabnahme durchführen, offene Tasks erledigen, Taskplan aktualisieren. Sin-chrome Control Timeout issue documented as GitHub issue #26.
 
 ### T-0004 — CI/CD: Echte GitHub Actions implementieren
 
@@ -503,9 +515,6 @@ Evidence: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirro
 
 ## Recent events
 
-- 2026-07-29T01:30:22+00:00 — `chatgpt-web` — `task_completed` `T-0018`: Recherche-Deep-Link auf beiden Live-Domains browserseitig verifiziert: /?mode=deep-research&view=sources aktiviert ohne Reload den Agentenmodus deep-research, setzt Notebook-Modus Work, schreibt @agent [deep-research] plus [sources:web-search] in den Prompt und öffnet das Quellenpanel. Regressionstest, Typecheck und Produktionsbuild grün; OpenSIN a5f0cd049 und OpenAfD c15e0aca6 live.
-- 2026-07-29T01:31:30+00:00 — `local-agent` — `task_added` `T-0020`: BUG: Normaler Chat verliert Agent-Verbindung (Agent session has ended)
-- 2026-07-29T02:16:20+00:00 — `chatgpt-web` — `task_added` `T-0021`: Erste Nachricht in neuem Workspace bleibt nach Thread-Navigation hängen
 - 2026-07-29T02:17:22+00:00 — `chatgpt-web` — `task_claimed` `T-0020`: claimed by chatgpt-web
 - 2026-07-29T02:17:23+00:00 — `chatgpt-web` — `task_claimed` `T-0021`: claimed by chatgpt-web
 - 2026-07-29T02:49:01+00:00 — `chatgpt-web` — `task_completed` `T-0021`: Fix live verifiziert: Commit OpenSIN 128869be9 und OpenAfD 1d6aac73e, 14/14 useChatStream-Regressionstests je Repo, TypeScript und Produktionsbuild grün, OCI-Healthchecks grün. Live-Acceptance aus leeren isolierten Workspaces erzeugte jeweils einen /t/<thread>, persistierte User+Assistant (historyCount=2) und lieferte exakte Modellantworten: OpenSIN MODEL_OK_opensin_1785293133447, OpenAfD MODEL_OK_openafd_1785293283158.
@@ -535,3 +544,6 @@ Verwaiste Container wurden nicht geloescht. Bekannte Vite-/Chunk-/Piper-Warnunge
 - 2026-07-29T13:01:17+00:00 — `chatgpt-web` — `task_claimed` `T-0024`: claimed by chatgpt-web
 - 2026-07-29T21:44:29+00:00 — `chatgpt-web` — `task_added` `T-0025`: Produktabnahme: Chat UX radikal vereinfachen und live verifizieren
 - 2026-07-29T21:44:51+00:00 — `chatgpt-web` — `task_claimed` `T-0025`: claimed by chatgpt-web
+- 2026-07-30T07:25:01+00:00 — `local-agent` — `task_updated` `T-0025`: task fields updated
+- 2026-07-30T07:25:01+00:00 — `local-agent` — `task_added` `T-0026`: ChatGPT Web Delegation: CEO-Auftrag für Produktabnahme und Taskplan-Aktualisierung
+- 2026-07-30T07:32:33+00:00 — `chatgpt-web` — `ceo_acceptance_resumed` `T-0025`: CEO resumed T-0025 live product acceptance and T-0024 dependency triage on 2026-07-30; untracked cancelled callback artifacts are preserved as foreign work.
