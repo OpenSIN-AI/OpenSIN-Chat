@@ -117,7 +117,9 @@
     "@hono/node-server": "2.0.12",
     "valibot": "1.4.2",
     "uuid": "14.0.1",
-    "**/youtubei.js/undici": "6.28.0"
+    "**/youtubei.js/undici": "6.28.0",
+    "**/glob/minimatch": "10.2.6",
+    "**/readdir-glob/minimatch": "10.2.6"
   },
   "dependencies": {
     "@microsoft/fetch-event-source": "^2.0.1",
