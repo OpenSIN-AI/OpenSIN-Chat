@@ -95,6 +95,9 @@ git reset --hard "${target_sha}" --quiet
 export OPENSIN_IMAGE_REPOSITORY="${IMAGE_REPOSITORY}"
 export OPENSIN_IMAGE_TAG="${target_sha}"
 
+log "normalizing persistent volume permissions"
+"${compose[@]}" run --rm --no-deps fix-permissions
+
 log "building immutable image ${IMAGE_REPOSITORY}:${target_sha}"
 "${compose[@]}" build --pull "${COMPOSE_SERVICE}"
 
