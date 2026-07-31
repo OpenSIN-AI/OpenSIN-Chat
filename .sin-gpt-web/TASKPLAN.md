@@ -9,11 +9,11 @@ Alle offenen Aufgaben erledigen: Git pushes, Fehler beheben, OpenAfD syncen, bei
 
 ## Definition of done
 
-- Alle Repos sauber gepusht, keine offenen Fehler, OCI VM live, alle Browserfunktionen getestet, Taskplan vollständig
+- Not specified yet
 
 ## Status
 
-- Backlog: 4
+- Backlog: 0
 - In progress: 0
 - Blocked: 0
 - Done: 0
@@ -23,65 +23,9 @@ Alle offenen Aufgaben erledigen: Git pushes, Fehler beheben, OpenAfD syncen, bei
 
 | ID | Priority | Kind | Status | Owner | Title | Dependencies |
 |---|---|---|---|---|---|---|
-| T-0001 | high | implement | backlog | chatgpt-web | Git: Uncommitted Changes prüfen und alle Repos zu GitHub main pushen | — |
-| T-0002 | high | implement | backlog | chatgpt-web | Beide Repos auf OCI VM deployen und Cloudflare Tunnel verifizieren | — |
-| T-0003 | high | implement | backlog | chatgpt-web | Alle Funktionen im Browser testen: Websearch, Datei-Upload, Quellen-Upload, Chat, Agent | — |
-| T-0004 | medium | implement | backlog | chatgpt-web | Bugs beheben und Taskplan stetig aktualisieren | — |
 
 ## Task details
 
-### T-0001 — Git: Uncommitted Changes prüfen und alle Repos zu GitHub main pushen
-
-- Status: `backlog`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `high`
-- Dependencies: none
-- Updated: 2026-07-31T07:05:37+00:00
-
-Acceptance:
-- Alle Repos auf main, keine uncommitted Changes, kein behind origin
-
-### T-0002 — Beide Repos auf OCI VM deployen und Cloudflare Tunnel verifizieren
-
-- Status: `backlog`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `high`
-- Dependencies: none
-- Updated: 2026-07-31T07:05:38+00:00
-
-Acceptance:
-- sinchat.delqhi.com und openafd.delqhi.com erreichbar, Docker gesund, aktueller Code deployed
-
-### T-0003 — Alle Funktionen im Browser testen: Websearch, Datei-Upload, Quellen-Upload, Chat, Agent
-
-- Status: `backlog`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `high`
-- Dependencies: none
-- Updated: 2026-07-31T07:05:38+00:00
-
-Acceptance:
-- Jede Funktion getestet, Bugs dokumentiert in Taskplan
-
-### T-0004 — Bugs beheben und Taskplan stetig aktualisieren
-
-- Status: `backlog`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `medium`
-- Dependencies: none
-- Updated: 2026-07-31T07:05:38+00:00
-
-Acceptance:
-- Alle bekannten Bugs behoben, Taskplan aktuell
-
 ## Recent events
 
-- 2026-07-31T07:01:54+00:00 — `local-agent` — `plan_initialized`: Alle offenen Aufgaben erledigen: Git pushes, Fehler beheben, OpenAfD syncen, beide Repos auf OCI VM deployen, alle Funktionen im Browser testen, ChatGPT Web als CEO agieren lassen
-- 2026-07-31T07:05:37+00:00 — `local-agent` — `task_added` `T-0001`: Git: Uncommitted Changes prüfen und alle Repos zu GitHub main pushen
-- 2026-07-31T07:05:38+00:00 — `local-agent` — `task_added` `T-0002`: Beide Repos auf OCI VM deployen und Cloudflare Tunnel verifizieren
-- 2026-07-31T07:05:38+00:00 — `local-agent` — `task_added` `T-0003`: Alle Funktionen im Browser testen: Websearch, Datei-Upload, Quellen-Upload, Chat, Agent
-- 2026-07-31T07:05:38+00:00 — `local-agent` — `task_added` `T-0004`: Bugs beheben und Taskplan stetig aktualisieren
+- 2026-07-31T13:01:51+00:00 — `local-agent` — `plan_initialized`: Alle offenen Aufgaben erledigen: Git pushes, Fehler beheben, OpenAfD syncen, beide Repos auf OCI VM deployen, alle Funktionen im Browser testen, ChatGPT Web als CEO agieren lassen
