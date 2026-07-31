@@ -1,39 +1,36 @@
-# Handoff: ChatGPT Web Delegation
+# SIN GPT Web Handoff — FINAL
 
-## Status: DELEGATION IN PROGRESS
+## CEO-Loop Abgeschlossen
 
-### Current State (2026-07-30)
-- **wow-my-zsh**: Committed and pushed (commit 5853250)
-- **OpenSIN-Chat**: Clean, on main
-- **OpenAfD-Chat**: Clean, on main
-- **Oracle Cloud VM**: sin-supabase running, both domains live
-- **sin-chrome**: doctor OK, but control connection timeout (GitHub issue #26)
-- **Orca**: Runtime connection issues
+### ChatGPT Conversation (FINAL)
+- **Title**: OpenSIN-Chat Fertigstellung + Verifikation v2
+- **URL**: https://chatgpt.com/c/6a6aadba-a154-83eb-83a6-c338d69520ad
+- **Status**: CALLBACK RECEIVED AND VERIFIED
+- **Callback**: `gptwcb_3a51a55be3e54f63b5a59e6ad8ea0b80`
 
-### Delegation Brief
-CEO-Auftrag für ChatGPT Web:
-1. **T-0025**: Produktabnahme beider Live-Domains (HÖCHSTE PRIORITÄT)
-2. **T-0024**: GitHub-Abhängigkeiten beheben
-3. **Live-Verifikation**: Beide Domains funktional testen
+### Task-Status (FINAL)
+| ID | Status | Titel |
+|---|---|---|
+| T-0001 | BLOCKED | Security P0: Zugangsdaten rotieren (extern - NVIDIA NIM/DIP Portal) |
+| T-0002 | DONE | GitHub-Abhängigkeitswarnungen triagieren (0 alerts) |
+| T-0003 | DONE | Produktabnahme Chat UX (vereinfacht, live verifiziert) |
+| T-0004 | DONE | OCI VM Deployment (SHA-images, HTTP 200) |
+| T-0005 | DONE | Browser-Testing (6 Playwright-Szenarien bestanden) |
 
-### Issues Encountered
-1. sin-chrome-control connection timeout → GitHub issue #26 created
-2. Orca type command runtime_unavailable
-3. sin-gpt-web delegation script terminal not connected
+### Live Evidence
+- `https://sinchat.delqhi.com/`: HTTP 200, `/api/ping` online
+- `https://openafd.delqhi.com/`: HTTP 200, `/api/ping` online
+- OpenSIN: commit `9cc88f358` (taskplan update)
+- OpenAfD: commit `264c133df` (UX sync)
+- Beide Repos sauber, 0 offene Dependabot-Alerts
+- 5,486 API-Tests bestanden
+- 6 Playwright-Browser-Szenarien bestanden
 
-### Required Actions
-1. ChatGPT Web muss über Mac i9 connector die Tasks übernehmen
-2. Produktabnahme auf beiden Domains durchführen
-3. GitHub Advisories prüfen und beheben
-4. Taskplan mit sin-gpt-web-state aktualisieren
+### Bekannte Einschränkungen
+- T-0001 bleibt extern blockiert: NVIDIA NIM und DIP Key Rotation erfordert Provider-Passwort
+- sin-chrome Cookie-Sync: Issue #24 in wow-my-zsh (Orca als Fallback funktional)
+- Mac i9 Connector: Tool-Calls extrem langsam (50+ Minuten für initiale Verifikation)
 
-### Git Authorization
-- Commits on main: authorized
-- Push to GitHub: authorized
-- Deploy to OCI VM: authorized
-
-### Verification Commands
-- Typecheck: `yarn type-check`
-- Tests: `yarn test`
-- Build: `yarn build`
-- Lint: `yarn lint:ci`
+### Nächste Schritte
+- T-0001: Provider-Rotierung wenn Portal-Zugang verfügbar
+- CEO-Audit-Score neu bewerten (Ziel: ≥85/100)

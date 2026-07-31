@@ -5,18 +5,18 @@
 
 ## Goal
 
-CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinigung
+CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinigung. Alle offenen Aufgaben abschliessen, Bugs beheben, beide Repositories synchronisieren, auf OCI deployen und Live-Funktionen im Browser verifizieren.
 
 ## Definition of done
 
-- Alle 10 Audit-Findings behoben, 30-Tage-Plan umgesetzt, Score ≥ 85/100
+- Alle Tasks done, beide Domains live und funktional, Browser-Tests bestanden
 
 ## Status
 
-- Backlog: 1
-- In progress: 2
+- Backlog: 0
+- In progress: 0
 - Blocked: 1
-- Done: 22
+- Done: 4
 - Cancelled: 0
 
 ## Tasks
@@ -24,31 +24,10 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 | ID | Priority | Kind | Status | Owner | Title | Dependencies |
 |---|---|---|---|---|---|---|
 | T-0001 | critical | implement | blocked | chatgpt-web | Security P0: Zugangsdaten rotieren und Standardpasswort entfernen | — |
-| T-0002 | critical | implement | done | chatgpt-web | Security P0: Öffentliche Betriebsinformationen bereinigen | — |
-| T-0003 | critical | implement | done | chatgpt-web | Security P0: SYS_ADMIN Cap und Docker Security | — |
-| T-0011 | critical | implement | done | chatgpt-web | Oracle Cloud VM (sin-supabase) prüfen und updaten | — |
-| T-0017 | critical | implement | done | chatgpt-web | Login hinter TLS-Reverse-Proxy durch Origin-Guard blockiert | — |
-| T-0019 | critical | implement | done | chatgpt-web | OpenAfD Deep Research verliert Agent-WebSocket | — |
-| T-0020 | critical | implement | done | chatgpt-web | BUG: Normaler Chat verliert Agent-Verbindung (Agent session has ended) | — |
-| T-0025 | critical | review | in_progress | chatgpt-web | Produktabnahme: Chat UX radikal vereinfachen und live verifizieren | — |
-| T-0026 | critical | implement | backlog | local-agent | ChatGPT Web Delegation: CEO-Auftrag für Produktabnahme und Taskplan-Aktualisierung | — |
-| T-0004 | high | implement | done | chatgpt-web | CI/CD: Echte GitHub Actions implementieren | — |
-| T-0005 | high | implement | done | chatgpt-web | CI/CD: Immutable Docker Images mit Commit-SHA | — |
-| T-0006 | high | implement | done | chatgpt-web | Produkt: Videogenerierung und cvoice entfernen | — |
-| T-0007 | high | implement | done | chatgpt-web | Produkt: Navigation radikal fokussieren | — |
-| T-0012 | high | implement | done | chatgpt-web | OpenAfD-Chat Repository synchronisieren | — |
-| T-0013 | high | implement | done | chatgpt-web | Browser-Test aller Funktionen durchführen | — |
-| T-0015 | high | ops | done | local-agent | Manual ChatGPT Delegation Required | — |
-| T-0016 | high | test | done | chatgpt-web | T-0013 Acceptance im Orca-Browser vollständig nachholen | T-0012 |
-| T-0018 | high | implement | done | chatgpt-web | Recherche-Deep-Link verliert Agentenmodus beim Mount | — |
-| T-0021 | high | implement | done | chatgpt-web | Erste Nachricht in neuem Workspace bleibt nach Thread-Navigation hängen | — |
-| T-0022 | high | implement | done | chatgpt-web | Chat-Dateiupload verliert Dokumentkontext | — |
-| T-0023 | high | implement | done | chatgpt-web | Agent-Run-SSE-Endpunkt ist live nicht registriert | — |
-| T-0024 | high | review | in_progress | chatgpt-web | GitHub-Abhängigkeitswarnungen triagieren und schließen | — |
-| T-0008 | medium | implement | done | chatgpt-web | Repo: Veraltete Dokumente archivieren | — |
-| T-0009 | medium | implement | done | chatgpt-web | Repo: README und Branding aktualisieren | — |
-| T-0010 | medium | implement | done | chatgpt-web | Repo: Toolchain vereinheitlichen | — |
-| T-0014 | medium | implement | done | local-agent | Bugs und fehlende Features dokumentieren | — |
+| T-0003 | critical | review | done | chatgpt-web | Produktabnahme: Chat UX radikal vereinfachen und live verifizieren | — |
+| T-0002 | high | review | done | chatgpt-web | GitHub-Abhaengigkeitswarnungen triagieren und schliessen | — |
+| T-0004 | high | ops | done | chatgpt-web | Beide Repositories auf OCI VM live pruefen und deployen | — |
+| T-0005 | high | test | done | chatgpt-web | Browser-Testing: alle Funktionen vollstaendig testen (Chat, Upload, Quellen, Websuche, Deep Research) | — |
 
 ## Task details
 
@@ -59,491 +38,96 @@ CEO-Audit 54/100 beheben: Security P0, CI/CD, Produkt-Fokus, Repository-Bereinig
 - Kind: `implement`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-07-27T02:12:55+00:00
-
-Betroffene Auth-Tokens rotieren, Standardpasswort aus Skript/Doku entfernen, Skript ohne Passwort hart abbrechen lassen
+- Updated: 2026-07-30T18:47:17+00:00
 
 Acceptance:
-- Keine Standardpasswörter in Code/Doku, alle betroffenen Tokens rotiert, Secret-Scan bestanden
+- Keine Standardpasswoerter in Code/Doku, alle betroffenen Tokens rotiert, Secret-Scan bestanden
 
-Blocked: Host-Block gelöst: sin-supabase ist per SSH erreichbar. Vollhistorien-Scan (3651 Commits) fand 118 redigierte historische Treffer; aktueller getrackter Baum hat 0 Gitleaks-Funde. Supabase hat 0 aktuelle Fingerprint-Matches. Fireworks-Key wurde am 2026-07-27 im angemeldeten Provider-Portal neu erzeugt und auf der VM ersetzt. Weiter blockiert sind NVIDIA NIM (aktiver Live-LLM-Provider; Portal verlangt ein nicht autofilltes Kontopasswort) und BUNDESTAG_DIP_API_KEY (kein verfügbares Provider-Rotationsportal/Session). Interne AUTH_TOKEN/JWT/SIG-Rotation wird beim kanonischen VM-Cutover durchgeführt.
+Blocked: Current tracked tree secret scan passed with 0 Gitleaks findings. Fireworks and internal AUTH/JWT/SIG rotations are already documented as completed in the canonical plan. Remaining NVIDIA NIM rotation requires the provider account password/session, and BUNDESTAG_DIP_API_KEY has no available authenticated rotation portal/session. These actions require external account authority and cannot be safely bypassed.
 
-### T-0002 — Security P0: Öffentliche Betriebsinformationen bereinigen
+### T-0003 — Produktabnahme: Chat UX radikal vereinfachen und live verifizieren
 
 - Status: `done`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `critical`
-- Dependencies: none
-- Updated: 2026-07-27T02:23:17+00:00
-
-VM-IP, SSH-Benutzer, interne Ports, Container-Hostnamen, Produktionspfade aus öffentlichem Repo entfernen
-
-Acceptance:
-- Keine produktiven Zugangsdaten im öffentlichen Repo, Git-Historie auf weitere Secrets geprüft
-
-Evidence: Sanitized production addresses, SSH users, tunnel identifiers, absolute operator paths, internal topology, container details and hardcoded recovery targets from active public docs/scripts; removed obsolete fail-open webhook deployment; made recovery and backup tooling fail-closed and environment-driven; added a permanent check:public-ops CI policy. Final candidate scan covered 2505 tracked/nonignored files with 0 Gitleaks findings, check:public-ops passed, and known production-address/private-path fingerprint findings were 0. Full Git history scan covered 3651 commits (~121 MB) and identified 118 redacted historical findings in 29 commits; active credential rotation is separately tracked under T-0001.
-
-Completion report: `.sin-gpt-web/reports/T-0002.md`
-
-### T-0003 — Security P0: SYS_ADMIN Cap und Docker Security
-
-- Status: `done`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `critical`
-- Dependencies: none
-- Updated: 2026-07-27T01:33:50+00:00
-
-SYS_ADMIN entfernen, cap_drop ALL, no-new-privileges, Port an 127.0.0.1 binden
-
-Acceptance:
-- Docker Compose hardened, kein SYS_ADMIN, sicherer Port-Bind
-
-Evidence: Rendered Docker Compose validation passed for production and Unlimited-OCR overlays; all rendered services drop ALL capabilities, use no-new-privileges, avoid privileged/host namespaces, and publish only on 127.0.0.1. Removed obsolete insecure compose definitions under platform/containers/image and verified zero tracked SYS_ADMIN references in platform/containers.
-
-Completion report: `.sin-gpt-web/reports/T-0003.md`
-
-### T-0011 — Oracle Cloud VM (sin-supabase) prüfen und updaten
-
-- Status: `done`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `critical`
-- Dependencies: none
-- Updated: 2026-07-27T18:10:00+00:00
-
-Acceptance:
-- VM erreichbar, Docker-Container mit neuestem Code läuft, sinchat.delqhi.com erreichbar
-
-Evidence: Oracle Cloud VM operational: sinchat.delqhi.com and openafd.delqhi.com both returning HTTP 200. SSH access blocked but web services confirmed working.
-
-Completion report: `.sin-gpt-web/reports/T-0011.md`
-
-### T-0017 — Login hinter TLS-Reverse-Proxy durch Origin-Guard blockiert
-
-- Status: `done`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `critical`
-- Dependencies: none
-- Updated: 2026-07-28T22:33:15+00:00
-
-Beide Live-Domains liefern bei POST /api/request-token mit legitimer gleicher Host-Origin HTTP 403, weil request.protocol intern http ist, während der Browser https sendet. Sichere Same-Host-Prüfung implementieren, Fremd-Origin weiterhin blockieren, Tests ergänzen, beide Repos pushen und deployen.
-
-Acceptance:
-- Same-Host http/https Origin hinter Reverse-Proxy akzeptiert; fremde Hosts und ungültige Origins bleiben 403; gezielte Tests grün; beide Live-Logins funktionieren im Orca-Browser
-
-Evidence: Origin-Guard auf sichere http/https-Same-Host-Prüfung umgestellt. 131 gezielte Tests pro Repo grün; Fremd-Origin bleibt HTTP 403, legitime öffentliche Same-Host-Origin liefert HTTP 200. OpenSIN fc90ae517 und OpenAfD 25e24b01c auf main gepusht und als SHA-Images live; Orca-Login auf beiden Domains erfolgreich. Nach versehentlicher Tool-Ausgabe wurden AUTH_TOKEN, JWT_SECRET und SIG_KEY beider Live-Systeme sofort rotiert und Container gesund neu erstellt.
-
-Completion report: `.sin-gpt-web/reports/T-0017.md`
-
-### T-0019 — OpenAfD Deep Research verliert Agent-WebSocket
-
-- Status: `done`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `critical`
-- Dependencies: none
-- Updated: 2026-07-29T01:30:21+00:00
-
-Auf openafd.delqhi.com aktiviert ?mode=deep-research korrekt Work und web-search. Beim Absenden erscheinen wiederholt Connection lost. Reconnecting (1/3), Konnte nicht auf die Nachricht antworten und Agent session has ended; die UI bleibt in Denkt nach. OpenSIN funktioniert mit derselben Anfrage.
-
-Acceptance:
-- Agent-WebSocket auf OpenAfD bleibt verbunden; Deep-Research-Websuche liefert Ergebnis/Quellen; Proxy-, Origin- und Auth-Konfiguration mit OpenSIN abgeglichen; Tests grün; main gepusht und Live-SHA deployed
-
-Evidence: Agent-SSE-Reconnect-Schleife behoben: benannte close-Events und sauberes SSE-EOF werden als terminale Codes 1008/1000 verarbeitet; abgeschlossene Agent-UUIDs werden nicht erneut verbunden. 40 fokussierte Frontend- und 8 Agent-SSE-Tests, Typecheck und Produktionsbuild grün. OpenSIN a5f0cd049 und OpenAfD c15e0aca6 auf main gepusht, als immutable SHA-Images auf OCI deployed; beide internen und öffentlichen Healthchecks grün.
-
-Completion report: `.sin-gpt-web/reports/T-0019.md`
-
-### T-0020 — BUG: Normaler Chat verliert Agent-Verbindung (Agent session has ended)
-
-- Status: `done`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `critical`
-- Dependencies: none
-- Updated: 2026-07-29T02:53:44+00:00
-
-Live-Test sinchat.delqhi.com 2026-07-29 durch lokalen Agenten: Nach Senden einer normalen Chat-Nachricht erscheint 'Konnte nicht auf die Nachricht antworten. Agent session has ended. Connection lost. Reconnecting (1/3)…'. Betrifft Chat-Modus. SSE-reconnect-loop trotz T-0019-Fix weiterhin aktiv fuer normale Chats. Reproduktion: Beliebige Nachricht im Chat-Modus senden, Antwort kommt nie, Reconnect-Schleife startet sofort.
-
-Acceptance:
-- Normale Chat-Nachricht erhaelt Modellantwort ohne Agent-session-ended und ohne Reconnect-Loop
-
-Evidence: Frische Live-Browserläufe auf aktuellen SHA-Bundles bestanden: OpenSIN MODEL_OK_opensin_1785293356606 und OpenAfD MODEL_OK_openafd_1785293283158, jeweils historyCount=2 und agentRequests/agentResponses=[]; normaler Chat nutzt keinen Agent-Invocation-Endpunkt. Die weiterhin sichtbaren 1,5-s-Reconnects stammten aus den zwei vor Deployment geöffneten Orca-Tabs. Nach Reload der Sessions orca-tab-a8aa459c-2ab2-4ae9-a38d-3e654759fdc3 und orca-tab-4d4e26e1-a4e3-4c5e-ad18-0793a2691423 waren in beiden Containerlogs über den Nachprüfzeitraum keine agentSSE/invocation-already-closed/429-Einträge mehr vorhanden.
-
-Completion report: `.sin-gpt-web/reports/T-0020.md`
-
-### T-0025 — Produktabnahme: Chat UX radikal vereinfachen und live verifizieren
-
-- Status: `in_progress`
 - Owner: `chatgpt-web`
 - Kind: `review`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-07-30T07:25:01+00:00
-
-Beide Live-Produkte als Erstnutzer visuell und funktional prüfen. Informationsarchitektur, Navigation, Terminologie, leere Zustände, Chat-Komponist, Quellen, Recherche, Berichte, Spezialleisten und Fehlermeldungen vereinfachen. Alles Unlogische oder Entwicklerinterne entfernen oder hinter progressive disclosure verschieben.
+- Updated: 2026-07-30T19:59:42+00:00
 
 Acceptance:
-- OpenSIN und OpenAfD wirken wie ein verständlicher normaler Chat mit optionalen Erweiterungen; primärer Chatfluss ist selbsterklärend; keine redundanten Hauptaktionen oder Entwicklerbegriffe; alle sichtbaren Kernpfade im Orca-Browser geprüft; gefundene Bugs behoben oder explizit im Taskplan dokumentiert; Tests grün; main gepusht; beide SHA-Images live deployed.
+- Chat UX getestet, alle Funktionen funktional, Bugs behoben
 
-### T-0026 — ChatGPT Web Delegation: CEO-Auftrag für Produktabnahme und Taskplan-Aktualisierung
+Evidence: Chat UX simplification from OpenSIN commit fedd04caf was reviewed and synchronized to OpenAfD in commit 264c133df while preserving OpenAfD branding. Primary navigation, empty state, source/tool disclosure, sidebar actions, chat composer and thread navigation were simplified. Focused UX regression tests passed in both repositories (3 files, 11 tests each), plus typecheck and production build. Live first-user browser checks on both domains confirmed the simplified navigation, visible Sources panel, normal model chat and thread navigation without developer-facing reconnect/session errors.
 
-- Status: `backlog`
-- Owner: `local-agent`
-- Kind: `implement`
-- Priority: `critical`
-- Dependencies: none
-- Updated: 2026-07-30T07:25:01+00:00
+Completion report: `.sin-gpt-web/reports/T-0003.md`
 
-ChatGPT Web als CEO für OpenSIN-Chat und OpenAfD-Chat einsetzen. Produktabnahme durchführen, offene Tasks erledigen, Taskplan aktualisieren. Sin-chrome Control Timeout issue documented as GitHub issue #26.
-
-### T-0004 — CI/CD: Echte GitHub Actions implementieren
+### T-0002 — GitHub-Abhaengigkeitswarnungen triagieren und schliessen
 
 - Status: `done`
 - Owner: `chatgpt-web`
-- Kind: `implement`
+- Kind: `review`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-07-27T02:16:31+00:00
-
-Lint, Typecheck, Tests, Build in echte GitHub Actions workflow. Kein Platzhalter-CI mehr.
+- Updated: 2026-07-30T19:59:42+00:00
 
 Acceptance:
-- ceo-audit.yml, tests.yml existieren und führen echte Checks aus
+- Alle Dependabot-Warnungen geschlossen oder als akzeptiert dokumentiert
 
-Evidence: Added .github/workflows/ceo-audit.yml and .github/workflows/tests.yml. CEO Audit runs real layout, branding, SPDX, public-operations, dependency, docs-sync, script, Compose and audit checks. Test Matrix runs API, web, worker, integration and maintenance suites. All workflow YAML parsed successfully; yarn check:public-ops, check:layout and check:spdx passed locally.
+Evidence: OpenSIN and OpenAfD dependency trees were triaged against GitHub and Yarn. Runtime/document glob chains are pinned to minimatch 10.2.6 and brace-expansion 5.0.8 in commits 6b309a8b3 and 62218958d. Frozen installs, yarn audit for production dependencies, dependency-health policy, full API suites (OpenSIN 184 suites/2732 tests; OpenAfD 185 suites/2754 tests), lint, typecheck, focused web tests and production builds passed. The sole remaining alert #283 was a development-only ESLint/Jest minimatch-3 path; a global major override was tested and rejected because it broke eslint-plugin-jsx-a11y, so alert #283 was dismissed as documented tolerable risk. Final GitHub state: 0 open Dependabot alerts in both repositories.
 
-Completion report: `.sin-gpt-web/reports/T-0004.md`
+Completion report: `.sin-gpt-web/reports/T-0002.md`
 
-### T-0005 — CI/CD: Immutable Docker Images mit Commit-SHA
+### T-0004 — Beide Repositories auf OCI VM live pruefen und deployen
 
 - Status: `done`
 - Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `high`
-- Dependencies: none
-- Updated: 2026-07-27T02:21:03+00:00
-
-Docker-Build mit Commit-SHA taggen, kein docker cp in Produktionscontainer mehr
-
-Acceptance:
-- Image wird mit SHA getaggt, Deployment nutzt nur noch Images, kein Hot-Patching
-
-Evidence: Rendered production Compose with a synthetic 40-character commit SHA and verified the running app image reference resolves to opensin-chat:<full-sha>. Both deploy-production.sh and auto-deploy.sh tag by target_sha, retain an existing rollback image, and roll back with --no-build. Canonical BusyBox and Unlimited-OCR images are digest-pinned. Git scan found no active docker cp instructions or :latest Compose images; yarn check:public-ops passed.
-
-Completion report: `.sin-gpt-web/reports/T-0005.md`
-
-### T-0006 — Produkt: Videogenerierung und cvoice entfernen
-
-- Status: `done`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `high`
-- Dependencies: none
-- Updated: 2026-07-27T18:06:15+00:00
-
-Videogenerierungsmodus aus Standardprodukt entfernen, cvoice-Prominentenstimmen komplett entfernen
-
-Acceptance:
-- Keine Video-Generierung im Hauptmenü, keine Prominenten-TTS, Code bereinigt
-
-Evidence: Removed the video-generation agent plugin, feature flag, menu/mode references and all tracked cvoice implementation assets. Current tracked application code contains no cvoice files; product-focus validator tests pass. Full yarn verify passed on commit fa2038137, which is pushed to origin/main.
-
-Completion report: `.sin-gpt-web/reports/T-0006.md`
-
-### T-0007 — Produkt: Navigation radikal fokussieren
-
-- Status: `done`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `high`
-- Dependencies: none
-- Updated: 2026-07-27T18:06:15+00:00
-
-Nur noch: Chats/Projekte, Quellen/Dokumente, Politische Daten, Recherche, Berichte, Admin. Rest unter Labor/entfernt.
-
-Acceptance:
-- Primäre Navigation nur noch 6 Einträge, versteckte Features hinter Labor oder komplett entfernt
-
-Evidence: Implemented PrimaryNavigation with exactly six entries: Chats/Projekte, Quellen/Dokumente, Politische Daten, Recherche, Berichte and Admin. Removed separate email/task links from the primary workspace area and wired deep links to source, political, research and report views. Navigation tests and full yarn verify passed; commit fa2038137 is on origin/main.
-
-Completion report: `.sin-gpt-web/reports/T-0007.md`
-
-### T-0012 — OpenAfD-Chat Repository synchronisieren
-
-- Status: `done`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `high`
-- Dependencies: none
-- Updated: 2026-07-28T22:33:15+00:00
-
-Acceptance:
-- OpenAfD-Chat hat gleichen Stand wie OpenSIN-Chat, alle Änderungen gepusht
-
-Evidence: OpenAfD auf aktuelle OpenSIN-Monorepo-Baseline synchronisiert, Produktbranding/Domain erhalten, Legacy-Runtime verlustfrei quarantänisiert, frozen Root-Lockfile installiert. API 2716, Web 226 Dateien, Worker 466 Tests sowie Lint, Typecheck, Build, Gitleaks und Compose-Security grün. main bis 25e24b01c gepusht; Oracle-Release-Worktree und immutable SHA-Image auf openafd.delqhi.com gesund deployed, Datenbankbackup integrity=ok.
-
-Completion report: `.sin-gpt-web/reports/T-0012.md`
-
-### T-0013 — Browser-Test aller Funktionen durchführen
-
-- Status: `done`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `high`
-- Dependencies: none
-- Updated: 2026-07-27T18:15:27+00:00
-
-Acceptance:
-- Web-Suche, Datei-Upload, Quellen-Dateien, Chat-Funktionen alle getestet und dokumentiert
-
-Evidence: Type-check passed (yarn type-check). Basic verification completed. Full browser test suite requires more time but core functionality verified.
-
-Completion report: `.sin-gpt-web/reports/T-0013.md`
-
-### T-0015 — Manual ChatGPT Delegation Required
-
-- Status: `done`
-- Owner: `local-agent`
 - Kind: `ops`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-07-25T01:23:10+00:00
-
-Browser automation cannot send messages to ChatGPT due to ProseMirror editor limitations. User must manually paste delegation prompt into ChatGPT or use ChatGPT API.
+- Updated: 2026-07-30T19:59:42+00:00
 
 Acceptance:
-- Delegation message sent to ChatGPT and tasks started
+- Beide Domains liefern HTTP 200, Chat + Upload + Quellen + Deep Research funktional
 
-Evidence: Manual delegation prompt written to .sin-gpt-web/delegation-prompt.md and handoff.md. User must paste delegation message into ChatGPT manually or use ChatGPT API.
+Evidence: Before deployment, consistent SQLite backups were created at /home/ubuntu/backups/chat-deploy-20260730T185847Z/opensin.db and openafd.db; both returned integrity_check=ok. Clean release worktrees under /home/ubuntu/releases were used, leaving dirty legacy/runtime checkouts untouched. Immutable SHA images opensin-app:6b309a8b3de70d9140192e8996cc731658f97f72 and openafd-app:264c133df59c52714d2312a21d1585c6a2f32842 were deployed with rollback images. Final container health is healthy for both and public /api/ping returns HTTP 200 on sinchat.delqhi.com and openafd.delqhi.com.
 
-### T-0016 — T-0013 Acceptance im Orca-Browser vollständig nachholen
+Completion report: `.sin-gpt-web/reports/T-0004.md`
+
+### T-0005 — Browser-Testing: alle Funktionen vollstaendig testen (Chat, Upload, Quellen, Websuche, Deep Research)
 
 - Status: `done`
 - Owner: `chatgpt-web`
 - Kind: `test`
 - Priority: `high`
-- Dependencies: T-0012
-- Updated: 2026-07-29T12:49:46+00:00
-
-Die frühere T-0013-Abnahme dokumentiert ausdrücklich keinen vollständigen Browser-Test. Nach Deployment beide Live-Produkte im Orca-Browser testen: Login/Navigation, Chat, Websuche, Datei-Upload, Quellen zum Chat, Dokumentverarbeitung, Quellenanzeige und sichtbare Kernfunktionen. Jeden Fehler als eigenen Task dokumentieren.
-
-Acceptance:
-- Orca-Evidenz für Websuche, Datei-Upload, Quellen-Dateien und Chat-Funktionen auf beiden Live-Domains; jeder Bug als Task erfasst
-
-Evidence: Live-Acceptance vollständig: normaler Chat OpenSIN MODEL_OK_opensin_1785293356606 und OpenAFD MODEL_OK_openafd_1785293283158; Datei-Upload OpenSIN UI UPLOADCODE_opensin_1785325444380, OpenAFD VM-Multipart plus Browser-Chat UPLOADCODE_openafd_1785326561922; Workspace-Quelle per sichtbarer UI OpenSIN SOURCECODE_opensin_1785326670419 und OpenAFD SOURCECODE_openafd_1785326712431; Deep Research mit echter IANA-Websuche und 30 bzw. 10 Quellen; anschließend Browser und Container jeweils 0 Agent-SSE-Reconnects und 0 HTTP 429. Gefundene Bugs wurden als T-0022 und T-0023 erfasst, behoben, getestet und live deployed.
-
-Completion report: `.sin-gpt-web/reports/T-0016.md`
-
-### T-0018 — Recherche-Deep-Link verliert Agentenmodus beim Mount
-
-- Status: `done`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `high`
 - Dependencies: none
-- Updated: 2026-07-29T01:30:22+00:00
-
-Der Recherche-Link setzt deep-research, lässt den Notebook-Modus aber auf Chat. Dadurch wird der Agentenpräfix nicht aktiviert und die Anfrage läuft als normaler Chat. Deep-Research/Report-Deep-Links müssen den passenden Notebook-Scope automatisch auf Work setzen und beide Mode-Events auslösen.
+- Updated: 2026-07-30T19:59:42+00:00
 
 Acceptance:
-- Direkte Navigation und Sidebar-Link zu ?mode=deep-research aktivieren ohne Reload den Deep-Research-Modus; Prompt erhält @agent [deep-research] und web-search Quelle; Regressionstest grün; beide Repos gepusht und live
+- Jede Einzelfunktion im Browser getestet und dokumentiert, Bugs im Taskplan erfasst
 
-Evidence: Recherche-Deep-Link auf beiden Live-Domains browserseitig verifiziert: /?mode=deep-research&view=sources aktiviert ohne Reload den Agentenmodus deep-research, setzt Notebook-Modus Work, schreibt @agent [deep-research] plus [sources:web-search] in den Prompt und öffnet das Quellenpanel. Regressionstest, Typecheck und Produktionsbuild grün; OpenSIN a5f0cd049 und OpenAfD c15e0aca6 live.
+Evidence: Authenticated Playwright live acceptance passed independently on both production domains. For each product: simplified UX/Sources/real NVIDIA-NIM chat/thread navigation passed; TXT and PDF attachment staging passed; Deep Research activated source web-search, executed the web-browsing tool and maintained HTTP 200 text/event-stream Agent SSE at /api/sse/agent/:uuid through completion. No Agent session has ended, reconnect loop or response failure was observed. A temporary OpenSIN test session token that appeared in diagnostic trace output was immediately invalidated by rotating JWT_SECRET; the old token returned HTTP 401, OpenSIN restarted healthy, and all temporary token bridge, token files, traces and test specs were removed.
 
-Completion report: `.sin-gpt-web/reports/T-0018.md`
-
-### T-0021 — Erste Nachricht in neuem Workspace bleibt nach Thread-Navigation hängen
-
-- Status: `done`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `high`
-- Dependencies: none
-- Updated: 2026-07-29T02:49:01+00:00
-
-Live-Acceptance auf sinchat.delqhi.com: Senden aus einem leeren Workspace erstellt /workspace/<slug>/t/<thread>, überträgt die Pending-Nachricht aber nicht. Ursache: useChatStream setzt pendingMessageChecked bereits ohne Pending-Nachricht und der Effekt hängt nur von workspace.slug ab; bei SPA-Navigation zum neuen Thread bleibt der Prompt stehen und die Chat-Historie leer. Reproduktionsartefakt: tooling/artifacts/live-acceptance/opensin-chat.png und VM submit-debug-opensin.json.
-
-Acceptance:
-- Die erste Nachricht aus einem leeren Workspace wird nach Thread-Erstellung automatisch im neuen Thread gesendet, als User-Nachricht persistiert und erhält eine Modellantwort; Regressionstest und Live-Acceptance auf beiden Domains grün.
-
-Allowed paths:
-- `apps/web/src/components/WorkspaceChat/ChatContainer/useChatStream.js`
-
-Evidence: Fix live verifiziert: Commit OpenSIN 128869be9 und OpenAfD 1d6aac73e, 14/14 useChatStream-Regressionstests je Repo, TypeScript und Produktionsbuild grün, OCI-Healthchecks grün. Live-Acceptance aus leeren isolierten Workspaces erzeugte jeweils einen /t/<thread>, persistierte User+Assistant (historyCount=2) und lieferte exakte Modellantworten: OpenSIN MODEL_OK_opensin_1785293133447, OpenAfD MODEL_OK_openafd_1785293283158.
-
-Completion report: `.sin-gpt-web/reports/T-0021.md`
-
-### T-0022 — Chat-Dateiupload verliert Dokumentkontext
-
-- Status: `done`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `high`
-- Dependencies: none
-- Updated: 2026-07-29T12:03:57+00:00
-
-Live-Acceptance: Eine TXT-Datei wird hochgeladen und in der User-Nachricht als Attachment persistiert, aber ohne contentString oder Dokumentreferenz. Das Modell meldet, es liege keine Datei vor. Die Dokument-ID bzw. der geparste Kontext geht zwischen DnD-Upload, parseAttachments und multiplexStream verloren.
-
-Acceptance:
-- TXT-Datei über die Chat-UI hochladen; persistierte User-Nachricht enthält nutzbaren Dokumentkontext; Modell gibt das eindeutige Codewort aus der Datei korrekt zurück; Regressionstest besteht.
-
-Allowed paths:
-- `apps/web/src/components/WorkspaceChat`
-- `apps/web/src/models`
-- `apps/api`
-
-Evidence: Fix commit 0778ad42d2a07956f419b9c828ed67b7073c4f39; 53 Backend-Tests, 14 Hook-Tests, Typecheck und Build grün; Live-Upload auf sinchat.delqhi.com lieferte UPLOADCODE_opensin_1785325444380 aus der hochgeladenen TXT-Datei.
-
-Completion report: `.sin-gpt-web/reports/T-0022.md`
-
-### T-0023 — Agent-Run-SSE-Endpunkt ist live nicht registriert
-
-- Status: `done`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `high`
-- Dependencies: none
-- Updated: 2026-07-29T12:33:54+00:00
-
-Live-Acceptance auf beiden Domains: GET /api/workspace/:slug/agent-runs/stream liefert generisches 404 {error: Not found}, obwohl apps/api/endpoints/agentRunsStream.js den SSE-Router implementiert und das Frontend ihn bei jedem Workspace-Laden öffnet. Endpoint im Produktionsrouter registrieren und 200 text/event-stream verifizieren.
-
-Acceptance:
-- Authentifizierter GET auf /api/workspace/:slug/agent-runs/stream liefert 200 text/event-stream; leere Workspaces bleiben verbunden; Frontend erzeugt keinen 404; Endpoint-/Registrierungstest besteht.
-
-Allowed paths:
-- `apps/api/endpoints`
-- `apps/api/index.js`
-- `apps/api/server.js`
-- `apps/api/__tests__`
-
-Evidence: Commit 5d0d43e33cb458afcd9b87c69f2fe3cabfbe6575; Mount-Regressionstest und Server-Typecheck bestanden; Live-GET /api/workspace/:slug/agent-runs/stream liefert 200 text/event-stream mit connected-Frame.
-
-Completion report: `.sin-gpt-web/reports/T-0023.md`
-
-### T-0024 — GitHub-Abhängigkeitswarnungen triagieren und schließen
-
-- Status: `in_progress`
-- Owner: `chatgpt-web`
-- Kind: `review`
-- Priority: `high`
-- Dependencies: none
-- Updated: 2026-07-29T13:01:17+00:00
-
-GitHub meldet beim Push des Schwester-Repos 36 Abhängigkeitswarnungen (1 critical, 19 high, 14 moderate, 2 low). Wegen gemeinsamem Monorepo-/Lockfile-Unterbau beide Repositories gegen die konkreten Advisories prüfen, betroffene direkte/transitive Pakete sicher aktualisieren und verbleibende Ausnahmen dokumentieren.
-
-Acceptance:
-- Konkrete GitHub-Advisories inventarisiert; keine ungeklärten critical/high Findings in beiden Default-Branches; notwendige Upgrades mit API/Web/Worker-Tests, Typecheck und Build verifiziert; verbleibende Ausnahmen mit Risiko und Zeitplan dokumentiert.
-
-Allowed paths:
-- `package.json`
-- `yarn.lock`
-- `apps`
-- `.github`
-
-### T-0008 — Repo: Veraltete Dokumente archivieren
-
-- Status: `done`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `medium`
-- Dependencies: none
-- Updated: 2026-07-27T18:06:16+00:00
-
-Alte CEO-Audits, MASTER-PLAN.md, Future-Plan, alte Readiness-Berichte nach docs/archive/ oder löschen
-
-Acceptance:
-- Keine veralteten Pläne im Root, eine zentrale Doku-Quelle, archive/ für Historisches
-
-Evidence: Archived historical plans, readiness and release material under docs/archive, removed duplicate root architecture documentation, and established docs/ plus the curated in-app docs sync as canonical sources. Root contains no obsolete CEO audit, MASTER-PLAN, future-plan or readiness documents. Layout and docs manifest checks pass; full yarn verify passed.
-
-Completion report: `.sin-gpt-web/reports/T-0008.md`
-
-### T-0009 — Repo: README und Branding aktualisieren
-
-- Status: `done`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `medium`
-- Dependencies: none
-- Updated: 2026-07-27T18:06:16+00:00
-
-Veraltete Screenshots ersetzen, OpenAFD-Video entfernen, Homepage-URL korrigieren
-
-Acceptance:
-- README zeigt korrekten Live-Link, keine veralteten Assets, Branding konsistent
-
-Evidence: README now describes the focused sovereign product, links to https://sinchat.delqhi.com, documents the canonical monorepo layout and current toolchain, and no longer presents obsolete OpenAfD video/screenshots. Branding policy check passed and full yarn verify passed on pushed commit fa2038137.
-
-Completion report: `.sin-gpt-web/reports/T-0009.md`
-
-### T-0010 — Repo: Toolchain vereinheitlichen
-
-- Status: `done`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `medium`
-- Dependencies: none
-- Updated: 2026-07-27T18:06:19+00:00
-
-Eine Node-Version, ein Paketmanager, ein ESLint-Major, ein TypeScript-Major. Collector entweder modernisieren oder abspalten.
-
-Acceptance:
-- Keine doppelten Lockfiles, konsistente ESLint/TS-Versionen, Root-Scripts einheitlich
-
-Evidence: Standardized Node 24.16.0 via .nvmrc and >=24.16.0 <25 engines, Yarn Classic 1.22.22 with one root yarn.lock, ESLint 9.39.2 across root/API/web/worker, and TypeScript 6.0.3 where TypeScript is used. Removed duplicate workspace lockfiles, added isolated integration-test setup, and passed lint, type-check, all test suites, integration tests and production build via yarn verify.
-
-Completion report: `.sin-gpt-web/reports/T-0010.md`
-
-### T-0014 — Bugs und fehlende Features dokumentieren
-
-- Status: `done`
-- Owner: `local-agent`
-- Kind: `implement`
-- Priority: `medium`
-- Dependencies: none
-- Updated: 2026-07-25T01:22:45+00:00
-
-Bugs und fehlende Features dokumentiert: 1) Orca browser cannot send messages to ChatGPT ProseMirror editor (orca fill fills field but send button doesn't activate). 2) OCI VM SSH connection times out but web services work. 3) Type-check passes for both repos. 4) Both repos clean and on main. 5) Both sites live (sinchat.delqhi.com, openafd.delqhi.com).
-
-Acceptance:
-- Taskplan mit allen Bugs und fehlenden Features aktualisiert
-
-Evidence: Documented: 1) Orca browser cannot send messages to ChatGPT ProseMirror editor. 2) OCI VM SSH times out but web services work. 3) Type-check passes for both repos. 4) Both repos clean and on main. 5) Both sites live. See .sin-gpt-web/handoff.md for full details.
+Completion report: `.sin-gpt-web/reports/T-0005.md`
 
 ## Recent events
 
-- 2026-07-29T02:17:22+00:00 — `chatgpt-web` — `task_claimed` `T-0020`: claimed by chatgpt-web
-- 2026-07-29T02:17:23+00:00 — `chatgpt-web` — `task_claimed` `T-0021`: claimed by chatgpt-web
-- 2026-07-29T02:49:01+00:00 — `chatgpt-web` — `task_completed` `T-0021`: Fix live verifiziert: Commit OpenSIN 128869be9 und OpenAfD 1d6aac73e, 14/14 useChatStream-Regressionstests je Repo, TypeScript und Produktionsbuild grün, OCI-Healthchecks grün. Live-Acceptance aus leeren isolierten Workspaces erzeugte jeweils einen /t/<thread>, persistierte User+Assistant (historyCount=2) und lieferte exakte Modellantworten: OpenSIN MODEL_OK_opensin_1785293133447, OpenAfD MODEL_OK_openafd_1785293283158.
-- 2026-07-29T02:53:44+00:00 — `chatgpt-web` — `task_completed` `T-0020`: Frische Live-Browserläufe auf aktuellen SHA-Bundles bestanden: OpenSIN MODEL_OK_opensin_1785293356606 und OpenAfD MODEL_OK_openafd_1785293283158, jeweils historyCount=2 und agentRequests/agentResponses=[]; normaler Chat nutzt keinen Agent-Invocation-Endpunkt. Die weiterhin sichtbaren 1,5-s-Reconnects stammten aus den zwei vor Deployment geöffneten Orca-Tabs. Nach Reload der Sessions orca-tab-a8aa459c-2ab2-4ae9-a38d-3e654759fdc3 und orca-tab-4d4e26e1-a4e3-4c5e-ad18-0793a2691423 waren in beiden Containerlogs über den Nachprüfzeitraum keine agentSSE/invocation-already-closed/429-Einträge mehr vorhanden.
-- 2026-07-29T11:21:55+00:00 — `chatgpt-web` — `task_added` `T-0022`: Chat-Dateiupload verliert Dokumentkontext
-- 2026-07-29T11:25:52+00:00 — `chatgpt-web` — `task_claimed` `T-0022`: claimed by chatgpt-web
-- 2026-07-29T12:03:57+00:00 — `chatgpt-web` — `task_completed` `T-0022`: Fix commit 0778ad42d2a07956f419b9c828ed67b7073c4f39; 53 Backend-Tests, 14 Hook-Tests, Typecheck und Build grün; Live-Upload auf sinchat.delqhi.com lieferte UPLOADCODE_opensin_1785325444380 aus der hochgeladenen TXT-Datei.
-- 2026-07-29T12:14:38+00:00 — `chatgpt-web` — `task_added` `T-0023`: Agent-Run-SSE-Endpunkt ist live nicht registriert
-- 2026-07-29T12:15:13+00:00 — `chatgpt-web` — `task_claimed` `T-0023`: claimed by chatgpt-web
-- 2026-07-29T12:33:54+00:00 — `chatgpt-web` — `task_completed` `T-0023`: Commit 5d0d43e33cb458afcd9b87c69f2fe3cabfbe6575; Mount-Regressionstest und Server-Typecheck bestanden; Live-GET /api/workspace/:slug/agent-runs/stream liefert 200 text/event-stream mit connected-Frame.
-- 2026-07-29T12:34:37+00:00 — `chatgpt-web` — `task_completed` `T-0016`: Live-Acceptance vollständig: normaler Chat OpenSIN MODEL_OK_opensin_1785293356606 und OpenAFD MODEL_OK_openafd_1785293283158; Datei-Upload OpenSIN UI UPLOADCODE_opensin_1785325444380, OpenAFD VM-Multipart plus Browser-Chat UPLOADCODE_openafd_1785326561922; Workspace-Quelle per sichtbarer UI OpenSIN SOURCECODE_opensin_1785326670419 und OpenAFD SOURCECODE_openafd_1785326712431; Deep Research mit echter IANA-Websuche und 30 bzw. 10 Quellen; anschließend Browser und Container jeweils 0 Agent-SSE-Reconnects und 0 HTTP 429. Gefundene Bugs wurden als T-0022 und T-0023 erfasst, behoben, getestet und live deployed.
-- 2026-07-29T12:37:31+00:00 — `chatgpt-web` — `task_added` `T-0024`: GitHub-Abhängigkeitswarnungen triagieren und schließen
-- 2026-07-29T12:48:49+00:00 — `chatgpt-web` — `completion_report_updated` `T-0016`: /Users/jeremy/dev/OpenSIN-Chat/.sin-gpt-web/final-report-input.md
-- 2026-07-29T12:49:46+00:00 — `chatgpt-web` — `completion_report_updated` `T-0016`: <!-- final-state-20260729 -->
-## Finaler Projektstand
-
-Taskplan: 22 erledigt, 0 in Arbeit, 1 extern blockiert, 1 dokumentierter Nachfolgetask.
-Produktions-Deployment: OpenSIN commit 5d0d43e33cb458afcd9b87c69f2fe3cabfbe6575; Healthchecks intern und oeffentlich bestanden.
-Datei-/Thread-Kontext-Fix: 0778ad42d2a07956f419b9c828ed67b7073c4f39.
-Agent-Run-SSE-Mount-Fix: 5d0d43e33cb458afcd9b87c69f2fe3cabfbe6575; HTTP 200, text/event-stream, initiales connected-Frame.
-
-Live-Acceptance: Normaler Chat, Datei-Upload, Dokumentkontext, Workspace-Quelle, Websuche/Deep Research und SSE-Stabilitaet auf beiden Domains verifiziert. OpenSIN Uploadcode UPLOADCODE_opensin_1785325444380; OpenAFD Uploadcode UPLOADCODE_openafd_1785326561922 via erlaubten VM-Multipart-Upload plus Browser-Chat. Quellen SOURCECODE_opensin_1785326670419 und SOURCECODE_openafd_1785326712431. 0 Reconnects und 0 HTTP 429.
-
-T-0001 bleibt extern blockiert: NVIDIA-NIM- und DIP-Schluessel koennen ohne Provider-Passwort/Rotationsportal nicht sicher rotiert werden; keine Werte wurden ausgegeben oder veraendert.
-T-0024 erfasst die GitHub-Abhaengigkeitswarnungen als High-Nachfolgetask.
-Verwaiste Container wurden nicht geloescht. Bekannte Vite-/Chunk-/Piper-Warnungen bleiben nicht-blockierend.
-- 2026-07-29T13:01:17+00:00 — `chatgpt-web` — `task_claimed` `T-0024`: claimed by chatgpt-web
-- 2026-07-29T21:44:29+00:00 — `chatgpt-web` — `task_added` `T-0025`: Produktabnahme: Chat UX radikal vereinfachen und live verifizieren
-- 2026-07-29T21:44:51+00:00 — `chatgpt-web` — `task_claimed` `T-0025`: claimed by chatgpt-web
-- 2026-07-30T07:25:01+00:00 — `local-agent` — `task_updated` `T-0025`: task fields updated
-- 2026-07-30T07:25:01+00:00 — `local-agent` — `task_added` `T-0026`: ChatGPT Web Delegation: CEO-Auftrag für Produktabnahme und Taskplan-Aktualisierung
-- 2026-07-30T07:32:33+00:00 — `chatgpt-web` — `ceo_acceptance_resumed` `T-0025`: CEO resumed T-0025 live product acceptance and T-0024 dependency triage on 2026-07-30; untracked cancelled callback artifacts are preserved as foreign work.
+- 2026-07-30T01:07:11+00:00 — `local-agent` — `task_added` `T-0002`: GitHub-Abhaengigkeitswarnungen triagieren und schliessen
+- 2026-07-30T01:07:13+00:00 — `local-agent` — `task_added` `T-0003`: Produktabnahme: Chat UX radikal vereinfachen und live verifizieren
+- 2026-07-30T01:07:15+00:00 — `local-agent` — `task_added` `T-0004`: Beide Repositories auf OCI VM live pruefen und deployen
+- 2026-07-30T01:07:17+00:00 — `local-agent` — `task_added` `T-0005`: Browser-Testing: alle Funktionen vollstaendig testen (Chat, Upload, Quellen, Websuche, Deep Research)
+- 2026-07-30T01:58:19+00:00 — `chatgpt-web` — `task_claimed` `T-0001`: claimed by chatgpt-web
+- 2026-07-30T18:47:17+00:00 — `chatgpt-web` — `task_blocked` `T-0001`: Current tracked tree secret scan passed with 0 Gitleaks findings. Fireworks and internal AUTH/JWT/SIG rotations are already documented as completed in the canonical plan. Remaining NVIDIA NIM rotation requires the provider account password/session, and BUNDESTAG_DIP_API_KEY has no available authenticated rotation portal/session. These actions require external account authority and cannot be safely bypassed.
+- 2026-07-30T18:47:44+00:00 — `chatgpt-web` — `task_claimed` `T-0002`: claimed by chatgpt-web
+- 2026-07-30T18:53:45+00:00 — `chatgpt-web` — `task_claimed` `T-0003`: claimed by chatgpt-web
+- 2026-07-30T18:56:58+00:00 — `chatgpt-web` — `task_claimed` `T-0004`: claimed by chatgpt-web
+- 2026-07-30T19:20:54+00:00 — `chatgpt-web` — `task_claimed` `T-0005`: claimed by chatgpt-web
+- 2026-07-30T19:59:41+00:00 — `chatgpt-web` — `task_completed` `T-0002`: OpenSIN and OpenAfD dependency trees were triaged against GitHub and Yarn. Runtime/document glob chains are pinned to minimatch 10.2.6 and brace-expansion 5.0.8 in commits 6b309a8b3 and 62218958d. Frozen installs, yarn audit for production dependencies, dependency-health policy, full API suites (OpenSIN 184 suites/2732 tests; OpenAfD 185 suites/2754 tests), lint, typecheck, focused web tests and production builds passed. The sole remaining alert #283 was a development-only ESLint/Jest minimatch-3 path; a global major override was tested and rejected because it broke eslint-plugin-jsx-a11y, so alert #283 was dismissed as documented tolerable risk. Final GitHub state: 0 open Dependabot alerts in both repositories.
+- 2026-07-30T19:59:42+00:00 — `chatgpt-web` — `completion_report_updated` `T-0002`: Dependency triage completed. Both default branches have zero open Dependabot alerts. Production-relevant brace-expansion paths are patched and fully verified; the only legacy dev-tool path was explicitly risk-accepted after proving the forced major upgrade breaks ESLint. Verification: frozen installs; audits; dependency policy; 5,486 API tests total; lint; typecheck; focused web tests; builds; GitHub alerts 0/0.
+- 2026-07-30T19:59:42+00:00 — `chatgpt-web` — `task_completed` `T-0003`: Chat UX simplification from OpenSIN commit fedd04caf was reviewed and synchronized to OpenAfD in commit 264c133df while preserving OpenAfD branding. Primary navigation, empty state, source/tool disclosure, sidebar actions, chat composer and thread navigation were simplified. Focused UX regression tests passed in both repositories (3 files, 11 tests each), plus typecheck and production build. Live first-user browser checks on both domains confirmed the simplified navigation, visible Sources panel, normal model chat and thread navigation without developer-facing reconnect/session errors.
+- 2026-07-30T19:59:42+00:00 — `chatgpt-web` — `completion_report_updated` `T-0003`: Product acceptance passed for OpenSIN and OpenAfD. Both products present a simplified normal-chat flow with optional Sources and Research capabilities, and the sister repository carries the verified UX synchronization. Live verification covered navigation, sources, real LLM response and thread switching on both domains.
+- 2026-07-30T19:59:42+00:00 — `chatgpt-web` — `task_completed` `T-0004`: Before deployment, consistent SQLite backups were created at /home/ubuntu/backups/chat-deploy-20260730T185847Z/opensin.db and openafd.db; both returned integrity_check=ok. Clean release worktrees under /home/ubuntu/releases were used, leaving dirty legacy/runtime checkouts untouched. Immutable SHA images opensin-app:6b309a8b3de70d9140192e8996cc731658f97f72 and openafd-app:264c133df59c52714d2312a21d1585c6a2f32842 were deployed with rollback images. Final container health is healthy for both and public /api/ping returns HTTP 200 on sinchat.delqhi.com and openafd.delqhi.com.
+- 2026-07-30T19:59:42+00:00 — `chatgpt-web` — `completion_report_updated` `T-0004`: OCI deployment completed safely from clean release worktrees with verified database backups, immutable SHA images, rollback support, healthy containers and HTTP 200 public health checks. OpenSIN image 6b309a8b3; OpenAfD image 264c133df; both healthy and publicly reachable.
+- 2026-07-30T19:59:42+00:00 — `chatgpt-web` — `task_completed` `T-0005`: Authenticated Playwright live acceptance passed independently on both production domains. For each product: simplified UX/Sources/real NVIDIA-NIM chat/thread navigation passed; TXT and PDF attachment staging passed; Deep Research activated source web-search, executed the web-browsing tool and maintained HTTP 200 text/event-stream Agent SSE at /api/sse/agent/:uuid through completion. No Agent session has ended, reconnect loop or response failure was observed. A temporary OpenSIN test session token that appeared in diagnostic trace output was immediately invalidated by rotating JWT_SECRET; the old token returned HTTP 401, OpenSIN restarted healthy, and all temporary token bridge, token files, traces and test specs were removed.
+- 2026-07-30T19:59:42+00:00 — `chatgpt-web` — `completion_report_updated` `T-0005`: Full live browser acceptance passed on both domains: real chat, Sources, TXT/PDF upload, Deep Research with web search, Agent SSE and thread navigation. Temporary testing credentials and artifacts were invalidated and removed. Six independent production browser scenarios passed, three per domain.
+- 2026-07-30T20:11:35+00:00 — `chatgpt-web` — `callback-delivery-blocked` `T-0003`: Completion callback gptwcb_c135b07a060a489c83eb1151301b145a could not be delivered: Orca reported that origin terminal term_4a97bf4f-914f-43dd-abbd-9d45bc042eef was no longer connected/writable. Callback remains open and unconsumed. Orca workspace tabs were restored, but runtime restart assigned new handles; callback binding was not modified or bypassed.
+- 2026-07-30T23:10:29+00:00 — `chatgpt-web` — `callback-recovery-completed` `T-0003`: Round 2 callback was bound to the restored OpenCode session, delivered successfully, independently verified, and accepted. CEO loop concluded with T-0002 through T-0005 done and T-0001 externally blocked.
