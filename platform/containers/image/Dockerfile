@@ -192,6 +192,9 @@ WORKDIR /app
 # The output (static HTML/CSS/JS) is platform-independent.
 FROM --platform=$BUILDPLATFORM node:24-slim AS frontend-build
 
+# Install Python for node-gyp (better-sqlite3 native binding)
+RUN apt-get update && apt-get install -y --no-install-recommends python3 make g++ && rm -rf /var/lib/apt/lists/*
+
 ARG VITE_ENABLE_IMAGE_GENERATION=false
 
 ENV VITE_ENABLE_IMAGE_GENERATION=${VITE_ENABLE_IMAGE_GENERATION}
