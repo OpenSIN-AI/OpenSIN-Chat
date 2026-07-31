@@ -13,55 +13,63 @@ Alle offenen Aufgaben erledigen: Git pushes, Fehler beheben, OpenAfD syncen, bei
 
 ## Status
 
-- Backlog: 4
-- In progress: 0
+- Backlog: 1
+- In progress: 1
 - Blocked: 0
-- Done: 0
+- Done: 2
 - Cancelled: 0
 
 ## Tasks
 
 | ID | Priority | Kind | Status | Owner | Title | Dependencies |
 |---|---|---|---|---|---|---|
-| T-0001 | high | implement | backlog | chatgpt-web | Git: Uncommitted Changes prüfen und alle Repos zu GitHub main pushen | — |
-| T-0002 | high | implement | backlog | chatgpt-web | Beide Repos auf OCI VM deployen und Cloudflare Tunnel verifizieren | — |
-| T-0003 | high | implement | backlog | chatgpt-web | Alle Funktionen im Browser testen: Websearch, Datei-Upload, Quellen-Upload, Chat, Agent | — |
+| T-0001 | high | implement | done | chatgpt-web | Git: Uncommitted Changes prüfen und alle Repos zu GitHub main pushen | — |
+| T-0002 | high | implement | done | chatgpt-web | Beide Repos auf OCI VM deployen und Cloudflare Tunnel verifizieren | — |
+| T-0003 | high | implement | in_progress | chatgpt-web | Alle Funktionen im Browser testen: Websearch, Datei-Upload, Quellen-Upload, Chat, Agent | — |
 | T-0004 | medium | implement | backlog | chatgpt-web | Bugs beheben und Taskplan stetig aktualisieren | — |
 
 ## Task details
 
 ### T-0001 — Git: Uncommitted Changes prüfen und alle Repos zu GitHub main pushen
 
-- Status: `backlog`
+- Status: `done`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-07-31T07:05:37+00:00
+- Updated: 2026-07-31T08:30:28+00:00
 
 Acceptance:
 - Alle Repos auf main, keine uncommitted Changes, kein behind origin
 
+Evidence: OpenSIN /Users/jeremy/dev/OpenSIN-Chat fast-forwarded to origin/main 9412edb88; main clean and divergence 0/0. OpenAfD /Users/jeremy/dev/OpenAfD-Chat main clean at 264c133df and divergence 0/0. Active delegation worktree matches origin/main. Two pre-existing generated coordination files in OpenSIN main were preserved verbatim under /tmp/opensin-main-coordination-20260731T082939Z before restoring the tracked state; no product changes were discarded.
+
+Completion report: `.sin-gpt-web/reports/T-0001.md`
+
 ### T-0002 — Beide Repos auf OCI VM deployen und Cloudflare Tunnel verifizieren
 
-- Status: `backlog`
+- Status: `done`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-07-31T07:05:38+00:00
+- Updated: 2026-07-31T08:57:30+00:00
 
 Acceptance:
 - sinchat.delqhi.com und openafd.delqhi.com erreichbar, Docker gesund, aktueller Code deployed
 
+Evidence: OpenSIN deployment executed through tooling/scripts/deploy-production.sh from clean main. Remote release worktree advanced from 6b309a8b3 to 9412edb884d5de304a39d5e2ad6fd41d98779ff1, rollback image opensin-app:rollback-20260731-084017 created, immutable image opensin-app:9412edb884d5de304a39d5e2ad6fd41d98779ff1 running healthy on 127.0.0.1:38471. OpenAfD was already exactly current at main/image 264c133df59c52714d2312a21d1585c6a2f32842 and remains healthy on 127.0.0.1:38472. systemctl is-active cloudflared=active. Public checks: https://sinchat.delqhi.com/api/ping HTTP 200; https://openafd.delqhi.com/api/ping HTTP 200.
+
+Completion report: `.sin-gpt-web/reports/T-0002.md`
+
 ### T-0003 — Alle Funktionen im Browser testen: Websearch, Datei-Upload, Quellen-Upload, Chat, Agent
 
-- Status: `backlog`
+- Status: `in_progress`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-07-31T07:05:38+00:00
+- Updated: 2026-07-31T08:57:57+00:00
 
 Acceptance:
 - Jede Funktion getestet, Bugs dokumentiert in Taskplan
@@ -85,3 +93,8 @@ Acceptance:
 - 2026-07-31T07:05:38+00:00 — `local-agent` — `task_added` `T-0002`: Beide Repos auf OCI VM deployen und Cloudflare Tunnel verifizieren
 - 2026-07-31T07:05:38+00:00 — `local-agent` — `task_added` `T-0003`: Alle Funktionen im Browser testen: Websearch, Datei-Upload, Quellen-Upload, Chat, Agent
 - 2026-07-31T07:05:38+00:00 — `local-agent` — `task_added` `T-0004`: Bugs beheben und Taskplan stetig aktualisieren
+- 2026-07-31T08:27:54+00:00 — `local-agent` — `task_claimed` `T-0001`: claimed by chatgpt-web
+- 2026-07-31T08:30:28+00:00 — `local-agent` — `task_completed` `T-0001`: OpenSIN /Users/jeremy/dev/OpenSIN-Chat fast-forwarded to origin/main 9412edb88; main clean and divergence 0/0. OpenAfD /Users/jeremy/dev/OpenAfD-Chat main clean at 264c133df and divergence 0/0. Active delegation worktree matches origin/main. Two pre-existing generated coordination files in OpenSIN main were preserved verbatim under /tmp/opensin-main-coordination-20260731T082939Z before restoring the tracked state; no product changes were discarded.
+- 2026-07-31T08:31:02+00:00 — `local-agent` — `task_claimed` `T-0002`: claimed by chatgpt-web
+- 2026-07-31T08:57:30+00:00 — `local-agent` — `task_completed` `T-0002`: OpenSIN deployment executed through tooling/scripts/deploy-production.sh from clean main. Remote release worktree advanced from 6b309a8b3 to 9412edb884d5de304a39d5e2ad6fd41d98779ff1, rollback image opensin-app:rollback-20260731-084017 created, immutable image opensin-app:9412edb884d5de304a39d5e2ad6fd41d98779ff1 running healthy on 127.0.0.1:38471. OpenAfD was already exactly current at main/image 264c133df59c52714d2312a21d1585c6a2f32842 and remains healthy on 127.0.0.1:38472. systemctl is-active cloudflared=active. Public checks: https://sinchat.delqhi.com/api/ping HTTP 200; https://openafd.delqhi.com/api/ping HTTP 200.
+- 2026-07-31T08:57:57+00:00 — `local-agent` — `task_claimed` `T-0003`: claimed by chatgpt-web

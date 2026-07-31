@@ -3,14 +3,14 @@
 > Generated from `.sin-gpt-web/taskplan.sqlite3` by `sin-gpt-web-state`.
 > Local agents should read this file together with `TASKPLAN.md` before continuing.
 
-- Task: `T-0001` — OpenSIN-Chat Repo: Alle offenen PRs/Issues prüfen, Fixes anwenden
+- Task: `T-0002` — Beide Repos auf OCI VM deployen und Cloudflare Tunnel verifizieren
 - Owner: `chatgpt-web`
-- Completed: 2026-07-30T23:44:04+00:00
+- Completed: 2026-07-31T08:57:30+00:00
 
 ## Report
 
-T-0001 abgeschlossen: Alle offenen OpenSIN-PRs und -Issues geprüft. PRs #696-#700 sind gemergt, #685 ist nach Überführung der Restarbeit in den Taskplan geschlossen. Lint, Typecheck, 989 Tests und Produktions-Build sind grün.
+OCI deployment and tunnel verification complete. OpenSIN was rolled forward to the current GitHub main SHA using the immutable-image/rollback deployment path; OpenAfD was already current and required no rebuild. Both containers are healthy, Cloudflare Tunnel is active, and both public domains return HTTP 200.
 
 ## Evidence
 
-GitHub OpenSIN geprüft: Dependabot-PRs #696-#700 konfliktfrei in main gemergt und von GitHub als merged/closed bestätigt; CEO-Audit #685 gegen aktuellen Stand verifiziert, verbleibende langfristige Punkte in T-0006 sowie T-0003/T-0005 dokumentiert und Issue mit Abschlusskommentar geschlossen. Verifikation: yarn lint:ci PASS; yarn type-check PASS; yarn test PASS (API 364 + Web 625 = 989 Tests); yarn build PASS; origin/main=0b8b02f22a2971f393d8968072eebcc83a6e5738; GitHub offene Issues/PRs=0.
+OpenSIN deployment executed through tooling/scripts/deploy-production.sh from clean main. Remote release worktree advanced from 6b309a8b3 to 9412edb884d5de304a39d5e2ad6fd41d98779ff1, rollback image opensin-app:rollback-20260731-084017 created, immutable image opensin-app:9412edb884d5de304a39d5e2ad6fd41d98779ff1 running healthy on 127.0.0.1:38471. OpenAfD was already exactly current at main/image 264c133df59c52714d2312a21d1585c6a2f32842 and remains healthy on 127.0.0.1:38472. systemctl is-active cloudflared=active. Public checks: https://sinchat.delqhi.com/api/ping HTTP 200; https://openafd.delqhi.com/api/ping HTTP 200.
