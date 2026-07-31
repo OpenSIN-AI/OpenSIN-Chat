@@ -5,121 +5,83 @@
 
 ## Goal
 
-Alle offenen Aufgaben erledigen, Repos updaten, OCI VM deployen, Funktionen testen
+Alle offenen Aufgaben erledigen: Git pushes, Fehler beheben, OpenAfD syncen, beide Repos auf OCI VM deployen, alle Funktionen im Browser testen, ChatGPT Web als CEO agieren lassen
 
 ## Definition of done
 
-- Alle Tasks im Taskplan abgeschlossen, Repos sauber, OCI VM live, alle Funktionen getestet
+- Alle Repos sauber gepusht, keine offenen Fehler, OCI VM live, alle Browserfunktionen getestet, Taskplan vollständig
 
 ## Status
 
-- Backlog: 5
+- Backlog: 4
 - In progress: 0
 - Blocked: 0
-- Done: 1
+- Done: 0
 - Cancelled: 0
 
 ## Tasks
 
 | ID | Priority | Kind | Status | Owner | Title | Dependencies |
 |---|---|---|---|---|---|---|
-| T-0001 | high | implement | done | chatgpt-web | OpenSIN-Chat Repo: Alle offenen PRs/Issues prüfen, Fixes anwenden | — |
-| T-0002 | high | implement | backlog | chatgpt-web | OpenAFD-Chat Repo syncen mit OpenSIN Features | T-0001 |
-| T-0003 | high | implement | backlog | chatgpt-web | Beide Repos auf OCI VM deployen und verifizieren | T-0002 |
-| T-0004 | high | implement | backlog | chatgpt-web | Beide Repos auf OCI VM deployen und verifizieren | — |
-| T-0005 | high | implement | backlog | chatgpt-web | Alle Funktionen im Browser testen (Websearch, Upload, Quellen) | — |
-| T-0006 | medium | implement | backlog | chatgpt-web | Bugs beheben und Taskplan aktualisieren | — |
+| T-0001 | high | implement | backlog | chatgpt-web | Git: Uncommitted Changes prüfen und alle Repos zu GitHub main pushen | — |
+| T-0002 | high | implement | backlog | chatgpt-web | Beide Repos auf OCI VM deployen und Cloudflare Tunnel verifizieren | — |
+| T-0003 | high | implement | backlog | chatgpt-web | Alle Funktionen im Browser testen: Websearch, Datei-Upload, Quellen-Upload, Chat, Agent | — |
+| T-0004 | medium | implement | backlog | chatgpt-web | Bugs beheben und Taskplan stetig aktualisieren | — |
 
 ## Task details
 
-### T-0001 — OpenSIN-Chat Repo: Alle offenen PRs/Issues prüfen, Fixes anwenden
-
-- Status: `done`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `high`
-- Dependencies: none
-- Updated: 2026-07-30T23:44:04+00:00
-
-Acceptance:
-- Repo sauber, keine offenen Fehler, Tests grün
-
-Evidence: GitHub OpenSIN geprüft: Dependabot-PRs #696-#700 konfliktfrei in main gemergt und von GitHub als merged/closed bestätigt; CEO-Audit #685 gegen aktuellen Stand verifiziert, verbleibende langfristige Punkte in T-0006 sowie T-0003/T-0005 dokumentiert und Issue mit Abschlusskommentar geschlossen. Verifikation: yarn lint:ci PASS; yarn type-check PASS; yarn test PASS (API 364 + Web 625 = 989 Tests); yarn build PASS; origin/main=0b8b02f22a2971f393d8968072eebcc83a6e5738; GitHub offene Issues/PRs=0.
-
-Completion report: `.sin-gpt-web/reports/T-0001.md`
-
-### T-0002 — OpenAFD-Chat Repo syncen mit OpenSIN Features
-
-- Status: `backlog`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `high`
-- Dependencies: T-0001
-- Updated: 2026-07-30T23:02:39+00:00
-
-Acceptance:
-- OpenAFD hat alle OpenSIN Features, Tests grün
-
-### T-0003 — Beide Repos auf OCI VM deployen und verifizieren
-
-- Status: `backlog`
-- Owner: `chatgpt-web`
-- Kind: `implement`
-- Priority: `high`
-- Dependencies: T-0002
-- Updated: 2026-07-30T23:02:39+00:00
-
-Acceptance:
-- sinchat.delqhi.com und openafd.delqhi.com erreichbar und funktional
-
-### T-0004 — Beide Repos auf OCI VM deployen und verifizieren
+### T-0001 — Git: Uncommitted Changes prüfen und alle Repos zu GitHub main pushen
 
 - Status: `backlog`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-07-30T23:02:47+00:00
+- Updated: 2026-07-31T07:05:37+00:00
 
 Acceptance:
-- sinchat.delqhi.com und openafd.delqhi.com erreichbar und funktional
+- Alle Repos auf main, keine uncommitted Changes, kein behind origin
 
-### T-0005 — Alle Funktionen im Browser testen (Websearch, Upload, Quellen)
+### T-0002 — Beide Repos auf OCI VM deployen und Cloudflare Tunnel verifizieren
 
 - Status: `backlog`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-07-30T23:02:57+00:00
+- Updated: 2026-07-31T07:05:38+00:00
 
 Acceptance:
-- Jede Funktion getestet, Bugs dokumentiert
+- sinchat.delqhi.com und openafd.delqhi.com erreichbar, Docker gesund, aktueller Code deployed
 
-### T-0006 — Bugs beheben und Taskplan aktualisieren
+### T-0003 — Alle Funktionen im Browser testen: Websearch, Datei-Upload, Quellen-Upload, Chat, Agent
+
+- Status: `backlog`
+- Owner: `chatgpt-web`
+- Kind: `implement`
+- Priority: `high`
+- Dependencies: none
+- Updated: 2026-07-31T07:05:38+00:00
+
+Acceptance:
+- Jede Funktion getestet, Bugs dokumentiert in Taskplan
+
+### T-0004 — Bugs beheben und Taskplan stetig aktualisieren
 
 - Status: `backlog`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `medium`
 - Dependencies: none
-- Updated: 2026-07-30T23:44:04+00:00
-
-Verbleibende valide Punkte aus GitHub-Issue #685 bearbeiten: Container-Capability-Hardening (SYS_ADMIN/cap_drop/no-new-privileges), Legacy-Audit-Dateien bereinigen, Produkt-Scope und Toolchain weiter konsolidieren sowie aus T-0003/T-0005 gefundene Live-/Browser-Bugs beheben.
+- Updated: 2026-07-31T07:05:38+00:00
 
 Acceptance:
-- Alle kritischen Bugs behoben, Taskplan aktuell
+- Alle bekannten Bugs behoben, Taskplan aktuell
 
 ## Recent events
 
-- 2026-07-30T23:02:04+00:00 — `local-agent` — `plan_initialized`: Alle offenen Aufgaben erledigen, Repos updaten, OCI VM deployen, Funktionen testen
-- 2026-07-30T23:02:33+00:00 — `local-agent` — `task_added` `T-0001`: OpenSIN-Chat Repo: Alle offenen PRs/Issues prüfen, Fixes anwenden
-- 2026-07-30T23:02:39+00:00 — `local-agent` — `task_added` `T-0002`: OpenAFD-Chat Repo syncen mit OpenSIN Features
-- 2026-07-30T23:02:39+00:00 — `local-agent` — `task_added` `T-0003`: Beide Repos auf OCI VM deployen und verifizieren
-- 2026-07-30T23:02:47+00:00 — `local-agent` — `task_added` `T-0004`: Beide Repos auf OCI VM deployen und verifizieren
-- 2026-07-30T23:02:57+00:00 — `local-agent` — `task_added` `T-0005`: Alle Funktionen im Browser testen (Websearch, Upload, Quellen)
-- 2026-07-30T23:03:00+00:00 — `local-agent` — `task_added` `T-0006`: Bugs beheben und Taskplan aktualisieren
-- 2026-07-30T23:07:55+00:00 — `chatgpt-web` — `task_claimed` `T-0001`: claimed by chatgpt-web
-- 2026-07-30T23:44:04+00:00 — `chatgpt-web` — `task_updated` `T-0006`: CEO-Audit #685 am 2026-07-31 geprüft und als überholtes Umbrella-Issue geschlossen; langfristige Restpunkte hier sowie in T-0003/T-0005 fortführen.
-- 2026-07-30T23:44:04+00:00 — `chatgpt-web` — `github-review` `T-0001`: PRs #696-#700 nach lokalen Gates gemergt; CEO-Audit #685 geprüft, Restarbeit in T-0006 dokumentiert und Issue transparent geschlossen.
-- 2026-07-30T23:44:04+00:00 — `chatgpt-web` — `task_completed` `T-0001`: GitHub OpenSIN geprüft: Dependabot-PRs #696-#700 konfliktfrei in main gemergt und von GitHub als merged/closed bestätigt; CEO-Audit #685 gegen aktuellen Stand verifiziert, verbleibende langfristige Punkte in T-0006 sowie T-0003/T-0005 dokumentiert und Issue mit Abschlusskommentar geschlossen. Verifikation: yarn lint:ci PASS; yarn type-check PASS; yarn test PASS (API 364 + Web 625 = 989 Tests); yarn build PASS; origin/main=0b8b02f22a2971f393d8968072eebcc83a6e5738; GitHub offene Issues/PRs=0.
+- 2026-07-31T07:01:54+00:00 — `local-agent` — `plan_initialized`: Alle offenen Aufgaben erledigen: Git pushes, Fehler beheben, OpenAfD syncen, beide Repos auf OCI VM deployen, alle Funktionen im Browser testen, ChatGPT Web als CEO agieren lassen
+- 2026-07-31T07:05:37+00:00 — `local-agent` — `task_added` `T-0001`: Git: Uncommitted Changes prüfen und alle Repos zu GitHub main pushen
+- 2026-07-31T07:05:38+00:00 — `local-agent` — `task_added` `T-0002`: Beide Repos auf OCI VM deployen und Cloudflare Tunnel verifizieren
+- 2026-07-31T07:05:38+00:00 — `local-agent` — `task_added` `T-0003`: Alle Funktionen im Browser testen: Websearch, Datei-Upload, Quellen-Upload, Chat, Agent
+- 2026-07-31T07:05:38+00:00 — `local-agent` — `task_added` `T-0004`: Bugs beheben und Taskplan stetig aktualisieren
