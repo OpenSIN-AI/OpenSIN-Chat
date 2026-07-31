@@ -99,3 +99,7 @@ apps/web/eslint-i18n-warnings.json
 *.bak
 *.old
 *.tmp
+
+# sin-gpt-web SQLite transient files
+.sin-gpt-web/taskplan.sqlite3-wal
+.sin-gpt-web/taskplan.sqlite3-shm
