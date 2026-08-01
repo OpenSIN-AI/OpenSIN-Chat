@@ -14,6 +14,7 @@ test("systemd unit creates its volatile writable runtime directory", () => {
 
   assert.match(unit, /^RuntimeDirectory=opensin-tunnel-healthcheck$/m);
   assert.match(unit, /^RuntimeDirectoryMode=0755$/m);
+  assert.match(unit, /^RuntimeDirectoryPreserve=yes$/m);
   assert.match(unit, /^ReadWritePaths=.*\/run\/opensin-tunnel-healthcheck$/m);
 });
 
