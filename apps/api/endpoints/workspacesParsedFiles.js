@@ -146,7 +146,11 @@ async function runParseJob(jobId, upload, ctx) {
       const batchResults = await Promise.all(
         batch.map(async (doc) => {
           const filename = `${originalname}-${doc.id}.json`;
-          const metadata = { ...doc, location: filename };
+          const location = path.posix.join(
+            "direct-uploads",
+            `${collectorFilename}-${doc.id}.json`,
+          );
+          const metadata = { ...doc, location };
           delete metadata.pageContent;
           const { file, error: dbError } = await WorkspaceParsedFiles.create({
             filename,

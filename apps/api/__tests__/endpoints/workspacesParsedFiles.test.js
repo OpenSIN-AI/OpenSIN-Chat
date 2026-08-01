@@ -494,7 +494,13 @@ describe("Workspace Parsed Files endpoints", () => {
         harness,
         "post",
         "/workspace/:slug/parse",
-        { file: { originalname: "doc.pdf" }, body: {} },
+        {
+          file: {
+            originalname: "doc.pdf",
+            filename: "upload-uuid_doc.pdf",
+          },
+          body: {},
+        },
         { workspace },
       );
       expect(res.statusCode).toBe(202);
@@ -517,7 +523,7 @@ describe("Workspace Parsed Files endpoints", () => {
         expect.objectContaining({
           filename: "doc.pdf-d1.json",
           metadata: expect.stringContaining(
-            '"location":"doc.pdf-d1.json"',
+            '"location":"direct-uploads/upload-uuid_doc.pdf-d1.json"',
           ),
         }),
       );

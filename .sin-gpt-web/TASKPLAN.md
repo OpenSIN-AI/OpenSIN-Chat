@@ -548,7 +548,7 @@ Completion report: `.sin-gpt-web/reports/T-0033.md`
 - Kind: `implement`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-08-01T12:24:57+00:00
+- Updated: 2026-08-01T13:29:42+00:00
 
 Fresh Orca acceptance: opensin-upload.txt uploads visibly, is bound to a new/existing thread and appears as a numbered citation, but the assistant says the attached file is unavailable instead of returning marker UPLOAD_OPENSIN_20260801_0745. Semantic Orca click was separately shown not to dispatch DOM events; DOM submit proves the product message path works.
 
@@ -657,8 +657,6 @@ Completion report: `.sin-gpt-web/reports/T-0029.md`
 
 ## Recent events
 
-- 2026-08-01T07:09:31+00:00 — `local-agent` — `blocker` `T-0026`: 2026-08-01: sin-chrome-control status funktioniert, aber snapshot timed out; Orca runtime schloss während der ChatGPT-Ausführung die Verbindung und snapshot blieb unavailable. Beide Live-Healthchecks 200 und OCI-Container healthy; vollständige Browserabnahme nicht beweisbar.
-- 2026-08-01T07:09:39+00:00 — `local-agent` — `task_added` `T-0030`: Browserabnahme blockiert: sin-chrome und Orca Runtime instabil
 - 2026-08-01T07:09:48+00:00 — `local-agent` — `task_blocked` `T-0030`: sin-chrome-control snapshot timeout und Orca runtime_unavailable während aktiver CEO-Delegation; kein stabiler Browser-Testkanal.
 - 2026-08-01T07:14:38+00:00 — `chatgpt-web` — `task_added` `T-0031`: Release-Gate: Repository-Layout und Public-Ops bereinigen
 - 2026-08-01T07:14:38+00:00 — `chatgpt-web` — `task_claimed` `T-0031`: claimed by chatgpt-web
@@ -677,3 +675,5 @@ Completion report: `.sin-gpt-web/reports/T-0029.md`
 - 2026-08-01T08:39:36+00:00 — `chatgpt-web` — `task_updated` `T-0034`: Root cause confirmed on production DB and storage: workspace_parsed_files row is correctly thread-scoped and direct-upload JSON contains pageContent marker, but metadata lacks location; getContextFiles skips rows without metadata.location. Fix stores generated JSON filename as metadata.location; focused endpoint regression 21/21 and assignment 3/3 pass.
 - 2026-08-01T08:39:36+00:00 — `chatgpt-web` — `bug_root_cause_confirmed` `T-0034`: T-0034: parsed upload metadata omitted direct-upload location, so getContextFiles discarded valid thread-scoped content.
 - 2026-08-01T12:24:57+00:00 — `chatgpt-web` — `task_updated` `T-0034`: Root cause behoben: WorkspaceParsedFiles metadata erhält den Direct-Upload-JSON-Pfad als location, damit getContextFiles den Inhalt in den Modellkontext lädt. Regressionstest 21/21, Zuordnungstest 3/3; vollständiger yarn test seriell Exit 0 (API 210/210 Suites, 3249 Tests; Web 229/229 Dateien; Worker 37/37 Suites; Integration 33 bestanden/20 skipped, 204 Tests bestanden). Live-Retest nach Deployment ausstehend.
+- 2026-08-01T13:10:44+00:00 — `chatgpt-web` — `task_updated` `T-0034`: Live-Retest des ersten Fixes deckte präzise Pfadabweichung auf: metadata.location muss direct-uploads/<multer collector filename>-<document id>.json enthalten; nur der Anzeigename reicht nicht. Korrigiert mit path.posix.join und Regressionstest auf vollständigen Direct-Upload-Pfad. Fokussierte Endpoint-/Zuordnungssuiten 24/24 grün; finale Vollgates laufen.
+- 2026-08-01T13:29:42+00:00 — `chatgpt-web` — `task_updated` `T-0034`: Korrigierter finaler Fix vollständig verifiziert: metadata.location verwendet direct-uploads/<collector filename>-<document id>.json. Lint, Typecheck, Build und vollständiger yarn test seriell Exit 0; fokussierte Regression 24/24. Live-Retest nach Deployment folgt.
