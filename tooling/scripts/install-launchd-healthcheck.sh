@@ -57,6 +57,7 @@ echo "[6/7] Reloading systemd and enabling timer ..."
 systemctl daemon-reload
 systemctl enable "$TIMER_NAME.timer"
 systemctl start "$TIMER_NAME.timer"
+systemctl start "$SERVICE_NAME.service"
 
 echo "[7/7] Verifying installation ..."
 echo
