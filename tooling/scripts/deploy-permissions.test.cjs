@@ -12,7 +12,7 @@ for (const relativePath of [
   "tooling/scripts/deploy-production.sh",
   "tooling/scripts/auto-deploy.sh",
 ]) {
-  test(`${relativePath} normalizes bind-mount ownership non-interactively before rollout`, () => {
+  test(`${relativePath} isolates bind-mount permission repair from deploy stdin before rollout`, () => {
     const script = fs.readFileSync(path.join(ROOT, relativePath), "utf8");
     const permissionIndex = script.indexOf(PERMISSION_COMMAND);
     const buildIndex = script.indexOf('"${compose[@]}" build');

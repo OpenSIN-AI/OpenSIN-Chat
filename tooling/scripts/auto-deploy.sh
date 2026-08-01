@@ -96,7 +96,7 @@ export OPENSIN_IMAGE_REPOSITORY="${IMAGE_REPOSITORY}"
 export OPENSIN_IMAGE_TAG="${target_sha}"
 
 log "normalizing persistent volume permissions"
-"${compose[@]}" run -T --rm --no-deps fix-permissions
+"${compose[@]}" run -T --rm --no-deps fix-permissions </dev/null
 
 log "building immutable image ${IMAGE_REPOSITORY}:${target_sha}"
 "${compose[@]}" build --pull "${COMPOSE_SERVICE}"
