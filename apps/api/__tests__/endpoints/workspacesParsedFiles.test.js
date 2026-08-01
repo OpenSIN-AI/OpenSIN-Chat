@@ -513,6 +513,14 @@ describe("Workspace Parsed Files endpoints", () => {
       expect(statusRes.statusCode).toBe(200);
       expect(statusRes.body.status).toBe("completed");
       expect(statusRes.body.files).toHaveLength(1);
+      expect(mockParsedCreate).toHaveBeenCalledWith(
+        expect.objectContaining({
+          filename: "doc.pdf-d1.json",
+          metadata: expect.stringContaining(
+            '"location":"doc.pdf-d1.json"',
+          ),
+        }),
+      );
       expect(mockEventLog).toHaveBeenCalled();
     });
 

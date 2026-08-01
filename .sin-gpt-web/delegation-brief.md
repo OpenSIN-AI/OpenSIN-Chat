@@ -24,8 +24,8 @@ Du bist der CEO und Lead-Developer dieses Projekts. Du hast volle Autorität fü
 5. **T-0006**: Bugs beheben und Taskplan aktualisieren
 
 ## Wichtige Infos
-- **Repository Pfad**: /Users/jeremy/orca/workspaces/OpenSIN-Chat/auto-1-opensin-chat-run-14-20260730T2300
-- **OpenAFD Repo**: /Users/jeremy/dev/OpenAFD-Chat
+- **Repository Pfad**: <OpenSIN-Chat checkout>
+- **OpenAFD Repo**: <OpenAfD-Chat checkout>
 - **Oracle CLI**: oci (konfiguriert)
 - **Deployment**: Docker Compose auf OCI VM
 - **Cloudflare Tunnel**: aktiv für beide Domains

@@ -35,14 +35,6 @@ vi.mock("./ActiveWorkspaces", () => ({
   default: () => <div data-testid="active-workspaces" />,
 }));
 
-vi.mock("./WorkspaceSwitcher", () => ({
-  default: () => (
-    <a href="/" aria-label="Home" data-testid="workspace-switcher">
-      OpenSIN
-    </a>
-  ),
-}));
-
 const newThreadMock = vi.fn().mockResolvedValue({
   thread: { slug: "new-thread" },
   error: null,
@@ -112,35 +104,28 @@ describe("Sidebar (desktop)", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders the OpenSIN brand link to the home page", () => {
+  it("renders the OpenSIN brand control", () => {
     renderSidebar();
-    const homeLink = screen.getByRole("link", { name: /home/i });
-    expect(homeLink).toBeInTheDocument();
-    expect(homeLink.getAttribute("href")).toBe("/");
+    expect(
+      screen.getByRole("button", { name: /opensin/i }),
+    ).toBeInTheDocument();
   });
 
-  it("renders exactly the six focused primary navigation entries", () => {
+  it("renders exactly the three focused primary navigation entries", () => {
     const { container } = renderSidebar();
     const entries = Array.from(
       container.querySelectorAll("[data-primary-navigation]"),
     );
-    expect(entries).toHaveLength(6);
+    expect(entries).toHaveLength(3);
     expect(
       entries.map((entry) => entry.getAttribute("data-primary-navigation")),
-    ).toEqual([
-      "chats-projects",
-      "sources-documents",
-      "political-data",
-      "research",
-      "reports",
-      "admin",
-    ]);
+    ).toEqual(["chats", "sources", "research"]);
   });
 
-  it("renders the workspace switcher and ActiveWorkspaces children", () => {
+  it("renders ActiveWorkspaces without the removed workspace switcher", () => {
     renderSidebar();
-    expect(screen.getByTestId("workspace-switcher")).toBeInTheDocument();
     expect(screen.getByTestId("active-workspaces")).toBeInTheDocument();
+    expect(screen.queryByTestId("workspace-switcher")).not.toBeInTheDocument();
   });
 
   it("creates a chat in the active workspace", async () => {
@@ -154,12 +139,13 @@ describe("Sidebar (desktop)", () => {
     expect(screen.getByTestId("footer")).toBeInTheDocument();
   });
 
-  it("renders the resize handle when the sidebar is visible", () => {
+  it("renders the resize slider when the sidebar is visible", () => {
     renderSidebar();
-    const handle = screen.getByRole("separator", {
+    const slider = screen.getByRole("slider", {
       name: /resize sidebar/i,
     });
-    expect(handle).toBeInTheDocument();
-    expect(handle).toHaveAttribute("aria-orientation", "vertical");
+    expect(slider).toBeInTheDocument();
+    expect(slider).toHaveAttribute("min", "260");
+    expect(slider).toHaveAttribute("max", "420");
   });
 });

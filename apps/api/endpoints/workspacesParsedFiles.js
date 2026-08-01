@@ -145,9 +145,9 @@ async function runParseJob(jobId, upload, ctx) {
       const batch = documents.slice(i, i + BATCH_SIZE);
       const batchResults = await Promise.all(
         batch.map(async (doc) => {
-          const metadata = { ...doc };
-          delete metadata.pageContent;
           const filename = `${originalname}-${doc.id}.json`;
+          const metadata = { ...doc, location: filename };
+          delete metadata.pageContent;
           const { file, error: dbError } = await WorkspaceParsedFiles.create({
             filename,
             workspaceId: workspace.id,

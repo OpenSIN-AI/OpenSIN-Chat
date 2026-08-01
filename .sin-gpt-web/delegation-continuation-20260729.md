@@ -1,7 +1,7 @@
 # Delegation Brief — Fortsetzung (T-0016 abschließen, T-0018/T-0019 abschließen, T-0001 entblocken)
 
-Repository: /Users/jeremy/dev/OpenSIN-Chat
-Schwester-Repository: /Users/jeremy/dev/OpenAfD-Chat
+Repository: <OpenSIN-Chat checkout>
+Schwester-Repository: <OpenAfD-Chat checkout>
 Konversations-URL: https://chatgpt.com/c/6a693632-bdb0-83eb-b14d-85d015fac236
 
 ## Kontext (dein letzter Stand, verifiziert)
@@ -16,7 +16,7 @@ Ich habe verifiziert: Beide Repos sind auf origin/main synchronisiert und sauber
 
 ## Deine Aufgaben jetzt (Priorität: fertig werden vor Weiterentwicklung)
 
-1. T-0019 + T-0018 formal abschließen: `sin-gpt-web-state --repo /Users/jeremy/dev/OpenSIN-Chat complete T-0019 --owner chatgpt-web --evidence "..." --actor chatgpt-web` (gleiches für T-0018) mit der Evidenz aus deinem letzten Report. Gleiches im OpenAfD-Taskplan (`--repo /Users/jeremy/dev/OpenAfD-Chat`), falls dort diese Tasks existieren.
+1. T-0019 + T-0018 formal abschließen: `sin-gpt-web-state --repo <OpenSIN-Chat checkout> complete T-0019 --owner chatgpt-web --evidence "..." --actor chatgpt-web` (gleiches für T-0018) mit der Evidenz aus deinem letzten Report. Gleiches im OpenAfD-Taskplan (`--repo <OpenAfD-Chat checkout>`), falls dort diese Tasks existieren.
 
 2. T-0016 abschließen (Hauptarbeit): Den unterbrochenen kombinierten Live-Browserlauf wiederholen, aber in KLEINEN Einzelschritten, damit kein Connector-Timeout entsteht. Nutze den bereits offenen Orca-Browser (Tabs für sinchat.delqhi.com und openafd.delqhi.com existieren; du kannst auch selbst serverintern per SSH auf der VM testen, wo es schneller ist). Zu verifizieren auf BEIDEN Live-Systemen:
    a. Normaler Chat: Nachricht senden, Modellantwort kommt an.
