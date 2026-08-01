@@ -66,6 +66,9 @@ jest.mock("../../../utils/chats/extractImageUrls", () => ({
 
 const { WorkspaceChats } = require("../../../models/workspaceChats");
 const {
+  WorkspaceParsedFiles,
+} = require("../../../models/workspaceParsedFiles");
+const {
   getVectorDbClass,
   resolveProviderConnector,
 } = require("../../../utils/helpers");
@@ -159,6 +162,7 @@ describe("streamChatWithWorkspace", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     grepAgents.mockResolvedValue(false);
+    WorkspaceParsedFiles.getContextFiles.mockResolvedValue([]);
     WorkspaceChats.new.mockResolvedValue({ chat: { id: 42 } });
   });
 
@@ -218,6 +222,62 @@ describe("streamChatWithWorkspace", () => {
         .find((c) => c.type === "finalizeResponseStream");
       expect(finalize).toBeDefined();
       expect(finalize.chatId).toBeUndefined();
+    });
+  });
+
+  describe("explicit source selection", () => {
+    it("keeps thread-scoped chat uploads in context alongside selected workspace sources", async () => {
+      const attachmentText = "CEO_ATTACHMENT_FILTER_MARKER";
+      WorkspaceParsedFiles.getContextFiles.mockResolvedValue([
+        {
+          pageContent: attachmentText,
+          filename: "ceo-upload.txt",
+          location: "direct-uploads/ceo-upload.json",
+          chatContextOnly: true,
+        },
+      ]);
+
+      const workspaceDocument = {
+        docId: "workspace-doc-1",
+        docpath: "folder/workspace-doc.txt",
+        filename: "workspace-doc.txt",
+      };
+      const { llm } = wireHappyPath();
+      llm.streamGetChatCompletion.mockResolvedValue({ metrics: {} });
+      llm.handleStream.mockResolvedValue("Attachment read successfully.");
+
+      const res = createSSEResponse();
+      await streamChatWithWorkspace(
+        res,
+        { ...WORKSPACE, documents: [workspaceDocument] },
+        "Read the uploaded file",
+        "chat",
+        null,
+        { id: 77, slug: "thread-77", name: "Upload test" },
+        [],
+        null,
+        {
+          sourceSelectionExplicit: true,
+          selectedSourceIds: [workspaceDocument.docId],
+        },
+      );
+
+      expect(llm.compressMessages).toHaveBeenCalledWith(
+        expect.objectContaining({ contextTexts: [attachmentText] }),
+        expect.any(Array),
+      );
+      expect(llm.handleStream).toHaveBeenCalledWith(
+        res,
+        expect.any(Object),
+        expect.objectContaining({
+          sources: [
+            expect.objectContaining({
+              filename: "ceo-upload.txt",
+              chatContextOnly: true,
+            }),
+          ],
+        }),
+      );
     });
   });
 
@@ -317,7 +377,9 @@ describe("streamChatWithWorkspace", () => {
       await streamChatWithWorkspace(res, WORKSPACE, "hallo");
 
       // Only the initial requestContext chunk should be present; no response content.
-      const responseChunks = res.chunks().filter((c) => c.type !== "requestContext");
+      const responseChunks = res
+        .chunks()
+        .filter((c) => c.type !== "requestContext");
       expect(responseChunks).toHaveLength(0);
       expect(WorkspaceChats.new).not.toHaveBeenCalled();
     });

@@ -246,9 +246,9 @@ async function streamChatWithWorkspace(
   const alwaysOnDocs = Array.isArray(alwaysOnDocsRaw) ? alwaysOnDocsRaw : [];
   const parsedFiles = Array.isArray(parsedFilesRaw) ? parsedFilesRaw : [];
 
-  // When the user explicitly selected sources, filter always-on docs and
-  // parsed files to only include those that match the selection.
-  // When explicit selection is empty, skip all always-on/parsed context.
+  // Explicit source selection limits persistent workspace knowledge only.
+  // Thread-scoped parsed files are direct user attachments and must remain in
+  // the current turn even when the user selected different workspace sources.
   if (sourceSelectionExplicit) {
     const allowedIds = new Set(ragScope.documentIds);
     const allowedPaths = new Set(ragScope.documentPaths);
@@ -277,22 +277,12 @@ async function streamChatWithWorkspace(
 
     parsedFiles.forEach((doc) => {
       const { pageContent, ...metadata } = doc;
-      const docId = doc?.docId || metadata?.docId || "";
-      const docPath = doc?.docpath || metadata?.docpath || "";
-      const docFilename = doc?.filename || metadata?.filename || "";
-      if (
-        allowedIds.has(docId) ||
-        allowedPaths.has(docPath) ||
-        allowedFilenames.has(docFilename)
-      ) {
-        contextTexts.push(doc.pageContent);
-        sources.push({
-          text:
-            pageContent.slice(0, 1_000) +
-            "...continued on in source document...",
-          ...metadata,
-        });
-      }
+      contextTexts.push(pageContent);
+      sources.push({
+        text:
+          pageContent.slice(0, 1_000) + "...continued on in source document...",
+        ...metadata,
+      });
     });
   } else {
     alwaysOnDocs.forEach((doc) => {

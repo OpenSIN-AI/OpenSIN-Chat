@@ -32,3 +32,20 @@ for (const relativePath of [
     );
   });
 }
+
+test("deploy-production forwards an explicit Compose project name", () => {
+  const script = fs.readFileSync(
+    path.join(ROOT, "tooling/scripts/deploy-production.sh"),
+    "utf8",
+  );
+
+  assert.match(script, /COMPOSE_PROJECT_NAME="\$\{COMPOSE_PROJECT_NAME:-\}"/);
+  assert.match(
+    script,
+    /"\$\{PUBLIC_HEALTH_URL\}" \\\n  "\$\{COMPOSE_PROJECT_NAME\}" <<'REMOTE_SCRIPT'/,
+  );
+  assert.match(
+    script,
+    /export COMPOSE_PROJECT_NAME="\$\{compose_project_name\}"/,
+  );
+});

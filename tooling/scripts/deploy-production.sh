@@ -10,6 +10,7 @@ DEPLOY_BRANCH="${DEPLOY_BRANCH:-main}"
 COMPOSE_SERVICE="${COMPOSE_SERVICE:-opensin-chat}"
 COMPOSE_PORT="${COMPOSE_PORT:-43939}"
 COMPOSE_BIND_ADDRESS="${COMPOSE_BIND_ADDRESS:-127.0.0.1}"
+COMPOSE_PROJECT_NAME="${COMPOSE_PROJECT_NAME:-}"
 
 OPENSIN_IMAGE_REPOSITORY="${OPENSIN_IMAGE_REPOSITORY:-opensin-chat}"
 PUBLIC_HEALTH_URL="${PUBLIC_HEALTH_URL:-}"
@@ -30,6 +31,11 @@ if [[ "${DEPLOY_BRANCH}" =~ [[:space:]] ]]; then
   exit 1
 fi
 
+if [[ "${COMPOSE_PROJECT_NAME}" =~ [[:space:]] ]]; then
+  echo "[deploy] ERROR: COMPOSE_PROJECT_NAME must not contain whitespace." >&2
+  exit 1
+fi
+
 SSH_OPTIONS=(
   -o BatchMode=yes
   -o ConnectTimeout=30
@@ -42,6 +48,7 @@ echo "[deploy] Host: ${DEPLOY_HOST}"
 echo "[deploy] Branch: ${DEPLOY_BRANCH}"
 echo "[deploy] Remote repository: ${REMOTE_REPO_DIR}"
 echo "[deploy] Service: ${COMPOSE_SERVICE}"
+echo "[deploy] Compose project override: ${COMPOSE_PROJECT_NAME:-<from .env>}"
 
 ssh "${SSH_OPTIONS[@]}" "${DEPLOY_HOST}" \
   bash -s -- \
@@ -51,7 +58,8 @@ ssh "${SSH_OPTIONS[@]}" "${DEPLOY_HOST}" \
   "${COMPOSE_PORT}" \
   "${COMPOSE_BIND_ADDRESS}" \
   "${OPENSIN_IMAGE_REPOSITORY}" \
-  "${PUBLIC_HEALTH_URL}" <<'REMOTE_SCRIPT'
+  "${PUBLIC_HEALTH_URL}" \
+  "${COMPOSE_PROJECT_NAME}" <<'REMOTE_SCRIPT'
 set -Eeuo pipefail
 
 remote_repo_input="$1"
@@ -61,6 +69,7 @@ compose_port="$4"
 compose_bind_address="$5"
 image_repository="$6"
 public_health_url="${7:-}"
+compose_project_name="${8:-}"
 
 if [[ "${remote_repo_input}" = /* ]]; then
   repo_dir="${remote_repo_input}"
@@ -110,6 +119,9 @@ git reset --hard "${target_sha}"
 
 export COMPOSE_PORT="${compose_port}"
 export COMPOSE_BIND_ADDRESS="${compose_bind_address}"
+if [[ -n "${compose_project_name}" ]]; then
+  export COMPOSE_PROJECT_NAME="${compose_project_name}"
+fi
 export OPENSIN_IMAGE_REPOSITORY="${image_repository}"
 export OPENSIN_IMAGE_TAG="${target_sha}"
 
