@@ -5,13 +5,14 @@ const path = require("node:path");
 const test = require("node:test");
 
 const ROOT = path.resolve(__dirname, "../..");
-const PERMISSION_COMMAND = '"${compose[@]}" run --rm --no-deps fix-permissions';
+const PERMISSION_COMMAND =
+  '"${compose[@]}" run -T --rm --no-deps fix-permissions';
 
 for (const relativePath of [
   "tooling/scripts/deploy-production.sh",
   "tooling/scripts/auto-deploy.sh",
 ]) {
-  test(`${relativePath} normalizes bind-mount ownership before rollout`, () => {
+  test(`${relativePath} normalizes bind-mount ownership non-interactively before rollout`, () => {
     const script = fs.readFileSync(path.join(ROOT, relativePath), "utf8");
     const permissionIndex = script.indexOf(PERMISSION_COMMAND);
     const buildIndex = script.indexOf('"${compose[@]}" build');

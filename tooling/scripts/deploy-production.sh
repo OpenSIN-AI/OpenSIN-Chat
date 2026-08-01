@@ -133,7 +133,7 @@ compose=(
 )
 
 echo "[deploy] Normalizing persistent volume permissions..."
-"${compose[@]}" run --rm --no-deps fix-permissions
+"${compose[@]}" run -T --rm --no-deps fix-permissions
 
 previous_container="$("${compose[@]}" ps -q "${compose_service}" || true)"
 previous_image_id=""
