@@ -282,9 +282,38 @@ describe("streamChatWithWorkspace", () => {
   });
 
   describe("provider failure paths", () => {
-    it("aborts with a helpful message when the provider returns a null stream (Issue #262)", async () => {
+    it("falls back to a non-streaming completion when the provider returns a null stream", async () => {
       const { llm } = wireHappyPath();
       llm.streamGetChatCompletion.mockResolvedValue(null);
+      llm.getChatCompletion.mockResolvedValue({
+        textResponse: "Fallback response",
+        metrics: { provider: "MockLLM" },
+      });
+
+      const res = createSSEResponse();
+      await streamChatWithWorkspace(res, WORKSPACE, "hallo");
+
+      expect(llm.getChatCompletion).toHaveBeenCalledWith(
+        expect.any(Array),
+        expect.objectContaining({ temperature: 0.7 }),
+      );
+      expect(res.chunks()).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            type: "textResponseChunk",
+            textResponse: "Fallback response",
+            close: true,
+          }),
+        ]),
+      );
+      expect(WorkspaceChats.new).toHaveBeenCalled();
+      expect(llm.handleStream).not.toHaveBeenCalled();
+    });
+
+    it("aborts with a helpful message when stream and fallback completion both fail", async () => {
+      const { llm } = wireHappyPath();
+      llm.streamGetChatCompletion.mockResolvedValue(null);
+      llm.getChatCompletion.mockResolvedValue(null);
 
       const res = createSSEResponse();
       await streamChatWithWorkspace(res, WORKSPACE, "hallo");
@@ -292,7 +321,9 @@ describe("streamChatWithWorkspace", () => {
       const abort = res.chunks().find((c) => c.type === "abort");
       expect(abort).toBeDefined();
       expect(abort.error).toMatch(/MockLLM/);
-      expect(abort.error).toMatch(/provider configuration|API key/i);
+      expect(abort.error).toMatch(
+        /fallback completion|provider configuration/i,
+      );
       expect(WorkspaceChats.new).not.toHaveBeenCalled();
       expect(llm.handleStream).not.toHaveBeenCalled();
     });

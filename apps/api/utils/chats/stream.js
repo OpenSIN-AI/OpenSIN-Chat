@@ -535,25 +535,55 @@ async function streamChatWithWorkspace(
         LLMConnector.constructor?.name ||
         "LLM provider";
 
-      consoleLogger.error(
-        `\x1b[31m[STREAM FAILED]\x1b[0m ${providerName} returned a null stream. The provider is likely misconfigured or the API key is invalid.`,
+      consoleLogger.warn(
+        `\x1b[33m[STREAM FALLBACK]\x1b[0m ${providerName} returned a null stream. Retrying with a non-streaming completion.`,
       );
+      let fallback = null;
+      try {
+        fallback = await LLMConnector.getChatCompletion(messages, {
+          temperature: workspace?.openAiTemp ?? LLMConnector.defaultTemp,
+          user,
+          signal: abortController?.signal,
+        });
+      } catch (error) {
+        consoleLogger.error(
+          `\x1b[31m[STREAM FALLBACK FAILED]\x1b[0m ${providerName}: ${error?.message || error}`,
+        );
+      }
+
+      if (!fallback?.textResponse) {
+        consoleLogger.error(
+          `\x1b[31m[STREAM FAILED]\x1b[0m ${providerName} returned neither a stream nor a non-streaming completion.`,
+        );
+        writeResponseChunk(response, {
+          uuid,
+          sources,
+          type: "abort",
+          textResponse: null,
+          close: true,
+          error: `${providerName} failed to start the chat stream and fallback completion. Please verify the provider configuration and API key in System Settings.`,
+        });
+        return;
+      }
+
+      completeText = fallback.textResponse;
+      metrics = fallback.metrics || {};
       writeResponseChunk(response, {
         uuid,
         sources,
-        type: "abort",
-        textResponse: null,
+        type: "textResponseChunk",
+        textResponse: completeText,
         close: true,
-        error: `${providerName} failed to start the chat stream. Please verify the provider configuration and API key in System Settings.`,
+        error: false,
+        metrics,
       });
-      return;
+    } else {
+      completeText = await LLMConnector.handleStream(response, stream, {
+        uuid,
+        sources,
+      });
+      metrics = stream?.metrics || {};
     }
-
-    completeText = await LLMConnector.handleStream(response, stream, {
-      uuid,
-      sources,
-    });
-    metrics = stream?.metrics || {};
   }
 
   if (completeText?.length > 0) {
