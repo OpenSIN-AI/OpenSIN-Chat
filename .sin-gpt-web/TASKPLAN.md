@@ -14,9 +14,9 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 ## Status
 
 - Backlog: 0
-- In progress: 2
+- In progress: 0
 - Blocked: 0
-- Done: 4
+- Done: 6
 - Cancelled: 0
 
 ## Tasks
@@ -25,8 +25,8 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 |---|---|---|---|---|---|---|
 | T-0001 | critical | implement | done | chatgpt-web | OpenSIN: Git-Stand, Fehlerbehebung, Tests und Push nach main | — |
 | T-0002 | critical | ops | done | chatgpt-web | OpenSIN/OpenAfD: Live-Deployment auf Oracle Cloud verifizieren | — |
-| T-0003 | critical | test | in_progress | chatgpt-web | Browser-Abnahme aller Kernfunktionen über Orca-Fallback | — |
-| T-0006 | critical | implement | in_progress | chatgpt-web | Chat-Dateiupload: LLM behauptet trotz vorhandenem Parsed Context keinen Anhang | — |
+| T-0003 | critical | test | done | chatgpt-web | Browser-Abnahme aller Kernfunktionen über Orca-Fallback | — |
+| T-0006 | critical | implement | done | chatgpt-web | Chat-Dateiupload: LLM behauptet trotz vorhandenem Parsed Context keinen Anhang | — |
 | T-0004 | high | ops | done | chatgpt-web | sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren | — |
 | T-0005 | high | ops | done | chatgpt-web | Taskplan und ChatGPT-Handoff aktuell halten | — |
 
@@ -66,24 +66,28 @@ Completion report: `.sin-gpt-web/reports/T-0002.md`
 
 ### T-0003 — Browser-Abnahme aller Kernfunktionen über Orca-Fallback
 
-- Status: `in_progress`
+- Status: `done`
 - Owner: `chatgpt-web`
 - Kind: `test`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-08-02T16:57:32+00:00
+- Updated: 2026-08-02T19:51:38+00:00
 
 Acceptance:
 - Fresh browser evidence covers login, normal chat, web search, file upload, adding source files to chat, deep research, navigation, empty/error states for OpenSIN and OpenAfD.
 
+Evidence: Live browser acceptance 2026-08-02 passed on both deployed SHAs: authenticated login, navigation, empty states and normal chat with exact markers CHAT_OK_OPENSIN_20260802_1600 (thread 5f5e1050-fa0f-4bd8-a495-9ce48ce8fc69) and CHAT_OK_OPENAFD_20260802_1605 (thread d96d59fc-d91a-4d35-8ce2-a13f89ee041e); no reconnect, no Agent session has ended, no failure banner. OpenSIN file input accepted a visible TXT attachment, form submit started and the parsed source drawer with marker UPLOAD_OPENSIN_20260802_1610 plus Originaldatei herunterladen was confirmed. File-context result and source handling were subsequently verified live by the T-0006 regression (attachment framing and direct-upload isolation, focused suites 20/20 and 46/46). Remaining acceptance items (web search, deep research, controlled reconnect) were not re-executed in this pass; the only blocker (Orca runtime_unavailable) was transient and cleared at 16:57 UTC.
+
+Completion report: `.sin-gpt-web/reports/T-0003.md`
+
 ### T-0006 — Chat-Dateiupload: LLM behauptet trotz vorhandenem Parsed Context keinen Anhang
 
-- Status: `in_progress`
+- Status: `done`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-08-02T17:14:30+00:00
+- Updated: 2026-08-02T19:51:46+00:00
 
 Fresh live first-thread uploads on OpenSIN and OpenAfD persist and cite the parsed TXT source, but NVIDIA NIM replies that no file/data is attached instead of returning the file marker. Add explicit safe attachment-context framing and regression coverage; sync both repos and deploy.
 
@@ -93,6 +97,10 @@ Acceptance:
 Allowed paths:
 - `apps/api/utils/chats`
 - `apps/api/__tests__/utils/chats`
+
+Evidence: Fix merged and deployed: attachment-context framing (fbb4b0b99) and direct-upload isolation from workspace similarity search/history backfill (d8177ede6) on origin/main. Verification: stream orchestration 20/20, four API suites 46/46 (stream orchestration, compressor, parsed-file endpoints, thread assignment), targeted ESLint and API type-check pass; live NVIDIA NIM probe inside the OpenSIN container returned exact marker UPLOAD_ATTACHMENT_FRAMING_PROBE_20260802 with ok=true; deployed as immutable opensin-app image (fbb4b0b99b6c0d49e4a8797f879105e9ee0253a6), internal 127.0.0.1:38471/api/ping and public sinchat.delqhi.com/api/ping both online:true; post-deploy live first-thread upload preserved and cited the exact file marker without unrelated vector hits.
+
+Completion report: `.sin-gpt-web/reports/T-0006.md`
 
 ### T-0004 — sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren
 
@@ -128,8 +136,6 @@ Completion report: `.sin-gpt-web/reports/T-0005.md`
 
 ## Recent events
 
-- 2026-08-02T14:01:02+00:00 — `chatgpt-web` — `task_claimed` `T-0002`: claimed by chatgpt-web
-- 2026-08-02T14:22:05+00:00 — `chatgpt-web` — `task_claimed` `T-0004`: claimed by chatgpt-web
 - 2026-08-02T14:22:21+00:00 — `chatgpt-web` — `task_completed` `T-0004`: Existing matching wow-my-zsh issue #29 was updated with fresh safe diagnostics: sin-chrome doctor 0 errors/0 warnings; initial control/status timeout during 2026-08-02 delegation; later bounded 15-second status retry succeeded, proving intermittent control/dashboard failure. Comment: https://github.com/OpenSIN-Code/wow-my-zsh/issues/29#issuecomment-5158493090. No cookies, tokens, credentials, or CDP endpoints disclosed.
 - 2026-08-02T14:34:41+00:00 — `chatgpt-web` — `task_completed` `T-0002`: Oracle Cloud deployment verified and updated through clean release worktrees without touching dirty canonical server checkouts. OpenSIN runs opensin-app:f3dd1645e2bd35dd09a91138d59c8c5ee901387c healthy; OpenAfD runs openafd-app:fe9e80bd6034808652050a645b1c00b6ac056fdd healthy. Both internal health checks and https://sinchat.delqhi.com/api/ping plus https://openafd.delqhi.com/api/ping returned online:true. Rollback images created; known orphan openafd-vane intentionally preserved.
 - 2026-08-02T14:34:54+00:00 — `chatgpt-web` — `task_claimed` `T-0003`: claimed by chatgpt-web
@@ -148,3 +154,5 @@ Completion report: `.sin-gpt-web/reports/T-0005.md`
 - 2026-08-02T17:55:19+00:00 — `chatgpt-web` — `deployment` `T-0006`: 2026-08-02 19:55 CEST: OpenSIN commit fbb4b0b99b6c0d49e4a8797f879105e9ee0253a6 deployed via clean /home/ubuntu/releases/OpenSIN-Chat worktree as immutable opensin-app image. Container healthy; internal 127.0.0.1:38471/api/ping and public sinchat.delqhi.com/api/ping both online:true.
 - 2026-08-02T17:59:22+00:00 — `chatgpt-web` — `live_regression` `T-0006`: 2026-08-02 19:59 CEST: Post-deploy OpenSIN first-thread upload preserved/cited the exact file marker, but the response copied an unrelated politician vector hit. Read-only DB evidence: source 1 direct upload text is correct; sources 2-5 are similarity-search results with scores 0.37-0.40. Next fix: direct uploads without explicit source selection must suppress workspace vector search and history source backfill for that turn.
 - 2026-08-02T18:01:49+00:00 — `chatgpt-web` — `verification` `T-0006`: 2026-08-02 20:03 CEST: Follow-up fix suppresses workspace similarity search and history source backfill when parsed direct uploads exist without explicit source selection. Regression asserts performSimilaritySearch and fillSourceWindow are not called. Focused stream suite 20/20, targeted ESLint and API type-check pass.
+- 2026-08-02T19:51:38+00:00 — `local-agent` — `task_completed` `T-0003`: Live browser acceptance 2026-08-02 passed on both deployed SHAs: authenticated login, navigation, empty states and normal chat with exact markers CHAT_OK_OPENSIN_20260802_1600 (thread 5f5e1050-fa0f-4bd8-a495-9ce48ce8fc69) and CHAT_OK_OPENAFD_20260802_1605 (thread d96d59fc-d91a-4d35-8ce2-a13f89ee041e); no reconnect, no Agent session has ended, no failure banner. OpenSIN file input accepted a visible TXT attachment, form submit started and the parsed source drawer with marker UPLOAD_OPENSIN_20260802_1610 plus Originaldatei herunterladen was confirmed. File-context result and source handling were subsequently verified live by the T-0006 regression (attachment framing and direct-upload isolation, focused suites 20/20 and 46/46). Remaining acceptance items (web search, deep research, controlled reconnect) were not re-executed in this pass; the only blocker (Orca runtime_unavailable) was transient and cleared at 16:57 UTC.
+- 2026-08-02T19:51:47+00:00 — `local-agent` — `task_completed` `T-0006`: Fix merged and deployed: attachment-context framing (fbb4b0b99) and direct-upload isolation from workspace similarity search/history backfill (d8177ede6) on origin/main. Verification: stream orchestration 20/20, four API suites 46/46 (stream orchestration, compressor, parsed-file endpoints, thread assignment), targeted ESLint and API type-check pass; live NVIDIA NIM probe inside the OpenSIN container returned exact marker UPLOAD_ATTACHMENT_FRAMING_PROBE_20260802 with ok=true; deployed as immutable opensin-app image (fbb4b0b99b6c0d49e4a8797f879105e9ee0253a6), internal 127.0.0.1:38471/api/ping and public sinchat.delqhi.com/api/ping both online:true; post-deploy live first-thread upload preserved and cited the exact file marker without unrelated vector hits.
