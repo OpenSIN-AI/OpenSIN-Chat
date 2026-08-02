@@ -327,6 +327,61 @@ describe("streamChatWithWorkspace", () => {
       expect(db.performSimilaritySearch).not.toHaveBeenCalled();
       expect(fillSourceWindow).not.toHaveBeenCalled();
     });
+    it("returns an exact single attachment deterministically when explicitly requested", async () => {
+      const attachmentText = "EXACT_ATTACHMENT_MARKER";
+      WorkspaceParsedFiles.getContextFiles.mockResolvedValue([
+        {
+          pageContent: attachmentText,
+          filename: "exact-upload.txt",
+          location: "direct-uploads/exact-upload.json",
+          chatContextOnly: true,
+        },
+      ]);
+
+      const { llm, db } = wireHappyPath();
+      const res = createSSEResponse();
+      await streamChatWithWorkspace(
+        res,
+        WORKSPACE,
+        "Gib den vollständigen Dateiinhalt exakt und ohne zusätzlichen Text zurück.",
+        "chat",
+        null,
+        { id: 89, slug: "thread-89", name: "New Thread" },
+      );
+
+      const responseChunk = res
+        .chunks()
+        .find((chunk) => chunk.type === "textResponse");
+      expect(responseChunk).toEqual(
+        expect.objectContaining({
+          textResponse: attachmentText,
+          sources: [
+            expect.objectContaining({
+              filename: "exact-upload.txt",
+              chatContextOnly: true,
+            }),
+          ],
+          close: true,
+          error: null,
+        }),
+      );
+      expect(WorkspaceChats.new).toHaveBeenCalledWith(
+        expect.objectContaining({
+          prompt:
+            "Gib den vollständigen Dateiinhalt exakt und ohne zusätzlichen Text zurück.",
+          response: expect.objectContaining({
+            text: attachmentText,
+            sources: [
+              expect.objectContaining({ filename: "exact-upload.txt" }),
+            ],
+          }),
+        }),
+      );
+      expect(db.performSimilaritySearch).not.toHaveBeenCalled();
+      expect(fillSourceWindow).not.toHaveBeenCalled();
+      expect(llm.compressMessages).not.toHaveBeenCalled();
+      expect(llm.streamGetChatCompletion).not.toHaveBeenCalled();
+    });
   });
 
   describe("provider failure paths", () => {

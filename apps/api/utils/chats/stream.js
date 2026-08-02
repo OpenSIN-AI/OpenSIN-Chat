@@ -53,6 +53,28 @@ function withAttachedFileContextInstruction(systemPrompt, parsedFiles = []) {
   return `${systemPrompt}\n\n${ATTACHED_FILE_CONTEXT_INSTRUCTION}`;
 }
 
+function isExactSingleAttachmentContentRequest(message, parsedFiles = []) {
+  if (!Array.isArray(parsedFiles) || parsedFiles.length !== 1) return false;
+
+  const normalized = String(message || "")
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim();
+  const asksForWholeContent =
+    /(?:vollständ(?:igen|ige|iger|iges)|komplett(?:en|e|er|es)|gesamten?)\s+(?:datei)?inhalt/.test(
+      normalized,
+    ) || /(?:full|complete|entire)\s+(?:file\s+)?contents?/.test(normalized);
+  const asksForExactOutput =
+    /\b(?:exakt|wortwörtlich|unverändert|exactly|verbatim|unchanged)\b/.test(
+      normalized,
+    );
+  const rejectsExtraText =
+    /ohne\s+(?:zusätzlichen|weiteren|anderen)\s+text/.test(normalized) ||
+    /without\s+(?:any\s+)?(?:additional|extra|other)\s+text/.test(normalized);
+
+  return asksForWholeContent && asksForExactOutput && rejectsExtraText;
+}
+
 async function streamChatWithWorkspace(
   response,
   workspace,
@@ -271,6 +293,50 @@ async function streamChatWithWorkspace(
   const parsedFiles = Array.isArray(parsedFilesRaw) ? parsedFilesRaw : [];
   const directUploadContextOnly =
     parsedFiles.length > 0 && !sourceSelectionExplicit;
+
+  if (isExactSingleAttachmentContentRequest(updatedMessage, parsedFiles)) {
+    const [{ pageContent = "", ...metadata }] = parsedFiles;
+    const textResponse = String(pageContent);
+    const exactSources = [
+      {
+        text:
+          textResponse.slice(0, 1_000) +
+          "...continued on in source document...",
+        ...metadata,
+      },
+    ];
+
+    writeResponseChunk(response, {
+      id: uuid,
+      type: "textResponse",
+      textResponse,
+      sources: exactSources,
+      attachments,
+      close: true,
+      error: null,
+    });
+    await WorkspaceChats.new({
+      workspaceId: workspace.id,
+      prompt: message,
+      response: {
+        text: textResponse,
+        sources: exactSources,
+        type: chatMode,
+        attachments,
+      },
+      threadId: thread?.id || null,
+      include: false,
+      user,
+      data: {
+        turnId,
+        notebookMode,
+        selectedSourceIds,
+        codeRunnerId,
+        sourceSelectionExplicit,
+      },
+    });
+    return;
+  }
 
   // Explicit source selection limits persistent workspace knowledge only.
   // Thread-scoped parsed files are direct user attachments and must remain in
