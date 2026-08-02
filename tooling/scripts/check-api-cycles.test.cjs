@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const { normalizeCycle, compareCycles } = require("./check-api-cycles.cjs");
