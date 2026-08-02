@@ -23,6 +23,11 @@ is_tunnel_running() {
   systemctl is-active --quiet "$CLOUDFLARED_SERVICE" 2>/dev/null
 }
 
+has_unsafe_debug_logging() {
+  systemctl show --property=ExecStart --value "$CLOUDFLARED_SERVICE" 2>/dev/null |
+    grep -Eq -- '(^|[[:space:]])--log-?level(=|[[:space:]]+)debug($|[[:space:]])'
+}
+
 should_restart() {
   local now file cutoff count tmp ts
   now=$(date +%s)
@@ -78,6 +83,11 @@ probe_url() {
 }
 
 main() {
+  if has_unsafe_debug_logging; then
+    log "FAIL: cloudflared service uses unsafe debug logging that can expose request credentials"
+    exit 1
+  fi
+
   if ! is_tunnel_running; then
     log "CHECK: cloudflared process is DOWN"
     if ! restart_tunnel; then

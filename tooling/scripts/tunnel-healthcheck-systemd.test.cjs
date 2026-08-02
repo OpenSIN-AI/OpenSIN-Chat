@@ -31,3 +31,17 @@ test("installer verifies the oneshot health service before reporting success", (
   assert.notEqual(timerStart, -1);
   assert.ok(serviceStart > timerStart);
 });
+
+test("healthcheck rejects cloudflared debug logging that can expose credentials", () => {
+  const script = fs.readFileSync(
+    path.join(ROOT, "tooling/scripts/tunnel-health-check-launchd.sh"),
+    "utf8",
+  );
+
+  assert.match(script, /systemctl show --property=ExecStart --value/);
+  assert.match(script, /--log-\?level/);
+  assert.match(
+    script,
+    /unsafe debug logging that can expose request credentials/,
+  );
+});
