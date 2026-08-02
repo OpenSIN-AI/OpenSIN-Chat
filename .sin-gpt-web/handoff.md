@@ -46,9 +46,15 @@
 - **OpenSIN T-0002**: done.
 - **OpenSIN T-0003**: blocked with partial fresh browser evidence and exact runtime blocker.
 - **OpenSIN T-0004**: done.
-- **OpenSIN T-0005**: completing with this handoff.
+- **OpenSIN T-0005**: done.
 - **OpenAfD T-0031**: blocked only on fresh deep-research browser termination evidence; code, tests, deployment and normal-chat regression are green.
 - **OpenAfD T-0025**: remains blocked with updated fresh browser evidence.
 
+### Callback Delivery Blocker
+- The required T-0001 round-1 callback was attempted exactly once after all durable state and pushes.
+- Delivery failed before consumption because the exact originating OpenCode terminal `term_eb94a5c7-986a-4e94-ae0d-a66dfc1b2287` is disconnected, non-writable and exited.
+- Orca still retains the exact tab, leaf and session metadata, but switching the terminal returns `terminal_exited`; the pane is absent from the current visual layout.
+- No alternate terminal was substituted and no second callback send was attempted.
+
 ### Next Action
-Restore a stable authenticated browser control channel, then resume only the remaining acceptance flows: file-context result, adding workspace sources to chat, source retrieval, web search/deep research, and controlled reconnect recovery. Do not repeat completed deployment or normal-chat work unless the deployed SHA changes.
+Reconnect or recreate the exact originating OpenCode terminal identity so the still-open callback capability can be delivered safely. Separately, restore a stable authenticated browser control channel, then resume only the remaining acceptance flows: file-context result, adding workspace sources to chat, source retrieval, web search/deep research, and controlled reconnect recovery. Do not repeat completed deployment or normal-chat work unless the deployed SHA changes.
