@@ -3,14 +3,14 @@
 > Generated from `.sin-gpt-web/taskplan.sqlite3` by `sin-gpt-web-state`.
 > Local agents should read this file together with `TASKPLAN.md` before continuing.
 
-- Task: `T-0033` — Regression: Sidebar-Resize-Tests erwarten veraltete ARIA-Rolle
+- Task: `T-0001` — OpenSIN: Git-Stand, Fehlerbehebung, Tests und Push nach main
 - Owner: `chatgpt-web`
-- Completed: 2026-08-01T08:08:28+00:00
+- Completed: 2026-08-02T13:58:51+00:00
 
 ## Report
 
-Stale Sidebar expectations were updated to the current product navigation and slider accessibility semantics; focused, web and full tests pass.
+OpenSIN commit 9efd1d3df pushed to origin/main; compatible SSE terminal-close abort fix and regression test applied. Focused SSESocket 4/4, web type-check, targeted ESLint 0 errors, production build with 17 docs pages, public-ops over 2549 tracked files, git diff --check and taskplan validation all passed.
 
 ## Evidence
 
-OpenSIN Sidebar test aligned with current three-item navigation and accessible range slider semantics already verified in OpenAfD; focused 7/7, full web 229/229 files and 1793/1793 tests, final root yarn test rc=0.
+OpenSIN commit 9efd1d3df pushed to origin/main; compatible SSE terminal-close abort fix and regression test applied. Focused SSESocket 4/4, web type-check, targeted ESLint 0 errors, production build with 17 docs pages, public-ops over 2549 tracked files, git diff --check and taskplan validation all passed.

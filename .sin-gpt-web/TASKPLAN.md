@@ -14,16 +14,16 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 ## Status
 
 - Backlog: 4
-- In progress: 1
+- In progress: 0
 - Blocked: 0
-- Done: 0
+- Done: 1
 - Cancelled: 0
 
 ## Tasks
 
 | ID | Priority | Kind | Status | Owner | Title | Dependencies |
 |---|---|---|---|---|---|---|
-| T-0001 | critical | implement | in_progress | chatgpt-web | OpenSIN: Git-Stand, Fehlerbehebung, Tests und Push nach main | — |
+| T-0001 | critical | implement | done | chatgpt-web | OpenSIN: Git-Stand, Fehlerbehebung, Tests und Push nach main | — |
 | T-0002 | critical | ops | backlog | chatgpt-web | OpenSIN/OpenAfD: Live-Deployment auf Oracle Cloud verifizieren | — |
 | T-0003 | critical | test | backlog | chatgpt-web | Browser-Abnahme aller Kernfunktionen über Orca-Fallback | — |
 | T-0004 | high | ops | backlog | chatgpt-web | sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren | — |
@@ -33,15 +33,19 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 
 ### T-0001 — OpenSIN: Git-Stand, Fehlerbehebung, Tests und Push nach main
 
-- Status: `in_progress`
+- Status: `done`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-08-02T13:03:51+00:00
+- Updated: 2026-08-02T13:58:51+00:00
 
 Acceptance:
 - Uncommitted changes reviewed, intended fixes implemented, relevant checks pass, and authorized changes pushed to GitHub main with evidence.
+
+Evidence: OpenSIN commit 9efd1d3df pushed to origin/main; compatible SSE terminal-close abort fix and regression test applied. Focused SSESocket 4/4, web type-check, targeted ESLint 0 errors, production build with 17 docs pages, public-ops over 2549 tracked files, git diff --check and taskplan validation all passed.
+
+Completion report: `.sin-gpt-web/reports/T-0001.md`
 
 ### T-0002 — OpenSIN/OpenAfD: Live-Deployment auf Oracle Cloud verifizieren
 
@@ -103,3 +107,4 @@ Acceptance:
 - 2026-08-02T13:22:37+00:00 — `chatgpt-web` — `delegation_continued` `T-0001`: CEO completion delegation continued in canonical ChatGPT conversation https://chatgpt.com/c/6a6f405e-7230-83eb-a991-b03b33e39336; title CEO Completion Delegation; repositories OpenSIN-Chat and OpenAfD-Chat; active task T-0001; status resumed after interrupted status check; sin-chrome-control timeout retained, Orca fallback required.
 - 2026-08-02T13:40:24+00:00 — `chatgpt-web` — `verification` `T-0001`: 2026-08-02 15:40 CEST: Compatible terminal SSE-close abort fix applied to OpenSIN; focused SSESocket regression 4/4 and web type-check passed.
 - 2026-08-02T13:57:34+00:00 — `chatgpt-web` — `verification` `T-0001`: 2026-08-02 15:44 CEST: OpenSIN SSE fix verified by 4/4 focused tests, web type-check, targeted ESLint with 0 errors, production build with 17 prerendered docs pages, and public-ops policy over 2549 tracked files.
+- 2026-08-02T13:58:51+00:00 — `chatgpt-web` — `task_completed` `T-0001`: OpenSIN commit 9efd1d3df pushed to origin/main; compatible SSE terminal-close abort fix and regression test applied. Focused SSESocket 4/4, web type-check, targeted ESLint 0 errors, production build with 17 docs pages, public-ops over 2549 tracked files, git diff --check and taskplan validation all passed.
