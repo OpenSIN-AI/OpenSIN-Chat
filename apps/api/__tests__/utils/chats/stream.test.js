@@ -72,6 +72,7 @@ const {
   getVectorDbClass,
   resolveProviderConnector,
 } = require("../../../utils/helpers");
+const { fillSourceWindow } = require("../../../utils/helpers/chat");
 const BackgroundQueue = require("../../../utils/backgroundJobs/queue");
 const { grepAgents } = require("../../../utils/chats/agents");
 const { streamChatWithWorkspace } = require("../../../utils/chats/stream");
@@ -298,7 +299,7 @@ describe("streamChatWithWorkspace", () => {
         },
       ]);
 
-      const { llm } = wireHappyPath();
+      const { llm, db } = wireHappyPath();
       llm.streamGetChatCompletion.mockResolvedValue({ metrics: {} });
       llm.handleStream.mockResolvedValue(attachmentText);
 
@@ -323,6 +324,8 @@ describe("streamChatWithWorkspace", () => {
         }),
         expect.any(Array),
       );
+      expect(db.performSimilaritySearch).not.toHaveBeenCalled();
+      expect(fillSourceWindow).not.toHaveBeenCalled();
     });
   });
 

@@ -269,6 +269,8 @@ async function streamChatWithWorkspace(
   // Destructure as const from Promise.all — reassigning was a no-const-assign bug.
   const alwaysOnDocs = Array.isArray(alwaysOnDocsRaw) ? alwaysOnDocsRaw : [];
   const parsedFiles = Array.isArray(parsedFilesRaw) ? parsedFilesRaw : [];
+  const directUploadContextOnly =
+    parsedFiles.length > 0 && !sourceSelectionExplicit;
 
   // Explicit source selection limits persistent workspace knowledge only.
   // Thread-scoped parsed files are direct user attachments and must remain in
@@ -334,7 +336,7 @@ async function streamChatWithWorkspace(
   }
 
   const vectorSearchResults =
-    embeddingsCount !== 0
+    embeddingsCount !== 0 && !directUploadContextOnly
       ? await VectorDb.performSimilaritySearch({
           namespace: workspace.slug,
           input: updatedMessage,
@@ -403,9 +405,10 @@ async function streamChatWithWorkspace(
     }
   }
 
-  // Skip fillSourceWindow when the user explicitly selected sources —
-  // backfilling from history would re-introduce non-selected sources.
-  if (sourceSelectionExplicit) {
+  // Skip fillSourceWindow when the user explicitly selected sources or
+  // attached files for this turn. Backfilling would re-introduce unrelated
+  // workspace/history sources and can override the direct attachment.
+  if (sourceSelectionExplicit || directUploadContextOnly) {
     contextTexts = [...contextTexts, ...vectorSearchResults.contextTexts];
     sources = [...sources, ...vectorSearchResults.sources];
   } else {
