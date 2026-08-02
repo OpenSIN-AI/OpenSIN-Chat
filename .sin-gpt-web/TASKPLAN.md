@@ -14,8 +14,8 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 ## Status
 
 - Backlog: 0
-- In progress: 0
-- Blocked: 1
+- In progress: 2
+- Blocked: 0
 - Done: 4
 - Cancelled: 0
 
@@ -25,7 +25,8 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 |---|---|---|---|---|---|---|
 | T-0001 | critical | implement | done | chatgpt-web | OpenSIN: Git-Stand, Fehlerbehebung, Tests und Push nach main | — |
 | T-0002 | critical | ops | done | chatgpt-web | OpenSIN/OpenAfD: Live-Deployment auf Oracle Cloud verifizieren | — |
-| T-0003 | critical | test | blocked | chatgpt-web | Browser-Abnahme aller Kernfunktionen über Orca-Fallback | — |
+| T-0003 | critical | test | in_progress | chatgpt-web | Browser-Abnahme aller Kernfunktionen über Orca-Fallback | — |
+| T-0006 | critical | implement | in_progress | chatgpt-web | Chat-Dateiupload: LLM behauptet trotz vorhandenem Parsed Context keinen Anhang | — |
 | T-0004 | high | ops | done | chatgpt-web | sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren | — |
 | T-0005 | high | ops | done | chatgpt-web | Taskplan und ChatGPT-Handoff aktuell halten | — |
 
@@ -65,17 +66,33 @@ Completion report: `.sin-gpt-web/reports/T-0002.md`
 
 ### T-0003 — Browser-Abnahme aller Kernfunktionen über Orca-Fallback
 
-- Status: `blocked`
+- Status: `in_progress`
 - Owner: `chatgpt-web`
 - Kind: `test`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-08-02T14:57:42+00:00
+- Updated: 2026-08-02T16:57:32+00:00
 
 Acceptance:
 - Fresh browser evidence covers login, normal chat, web search, file upload, adding source files to chat, deep research, navigation, empty/error states for OpenSIN and OpenAfD.
 
-Blocked: Fresh Orca acceptance partially passed on 2026-08-02: authenticated login/navigation/empty states and normal chat succeeded on both live SHAs with exact markers and no reconnect/session-ended errors; OpenSIN real file input accepted a visible TXT attachment and form submit started. Remaining file-context result, source-selection, deep-research and controlled reconnect checks are externally blocked because Orca then returned runtime_unavailable followed by two consecutive SIGTERM failures on minimal DOM reads. sin-chrome-control cannot substitute because the approved bot profile has no managed credentials for either product domain.
+### T-0006 — Chat-Dateiupload: LLM behauptet trotz vorhandenem Parsed Context keinen Anhang
+
+- Status: `in_progress`
+- Owner: `chatgpt-web`
+- Kind: `implement`
+- Priority: `critical`
+- Dependencies: none
+- Updated: 2026-08-02T17:14:30+00:00
+
+Fresh live first-thread uploads on OpenSIN and OpenAfD persist and cite the parsed TXT source, but NVIDIA NIM replies that no file/data is attached instead of returning the file marker. Add explicit safe attachment-context framing and regression coverage; sync both repos and deploy.
+
+Acceptance:
+- For a first message in a fresh thread, a parsed TXT attachment is explicitly framed as accessible source material in the LLM prompt; focused tests pass; both live products return the exact single-line marker without claiming the file is unavailable.
+
+Allowed paths:
+- `apps/api/utils/chats`
+- `apps/api/__tests__/utils/chats`
 
 ### T-0004 — sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren
 
@@ -111,13 +128,6 @@ Completion report: `.sin-gpt-web/reports/T-0005.md`
 
 ## Recent events
 
-- 2026-08-02T13:03:40+00:00 — `local-agent` — `task_added` `T-0001`: OpenSIN: Git-Stand, Fehlerbehebung, Tests und Push nach main
-- 2026-08-02T13:03:40+00:00 — `local-agent` — `task_added` `T-0002`: OpenSIN/OpenAfD: Live-Deployment auf Oracle Cloud verifizieren
-- 2026-08-02T13:03:41+00:00 — `chatgpt-web` — `task_added` `T-0003`: Browser-Abnahme aller Kernfunktionen über Orca-Fallback
-- 2026-08-02T13:03:41+00:00 — `local-agent` — `task_added` `T-0004`: sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren
-- 2026-08-02T13:03:41+00:00 — `chatgpt-web` — `task_added` `T-0005`: Taskplan und ChatGPT-Handoff aktuell halten
-- 2026-08-02T13:03:51+00:00 — `local-agent` — `task_claimed` `T-0001`: claimed by chatgpt-web
-- 2026-08-02T13:22:37+00:00 — `chatgpt-web` — `delegation_continued` `T-0001`: CEO completion delegation continued in canonical ChatGPT conversation https://chatgpt.com/c/6a6f405e-7230-83eb-a991-b03b33e39336; title CEO Completion Delegation; repositories OpenSIN-Chat and OpenAfD-Chat; active task T-0001; status resumed after interrupted status check; sin-chrome-control timeout retained, Orca fallback required.
 - 2026-08-02T13:40:24+00:00 — `chatgpt-web` — `verification` `T-0001`: 2026-08-02 15:40 CEST: Compatible terminal SSE-close abort fix applied to OpenSIN; focused SSESocket regression 4/4 and web type-check passed.
 - 2026-08-02T13:57:34+00:00 — `chatgpt-web` — `verification` `T-0001`: 2026-08-02 15:44 CEST: OpenSIN SSE fix verified by 4/4 focused tests, web type-check, targeted ESLint with 0 errors, production build with 17 prerendered docs pages, and public-ops policy over 2549 tracked files.
 - 2026-08-02T13:58:51+00:00 — `chatgpt-web` — `task_completed` `T-0001`: OpenSIN commit 9efd1d3df pushed to origin/main; compatible SSE terminal-close abort fix and regression test applied. Focused SSESocket 4/4, web type-check, targeted ESLint 0 errors, production build with 17 docs pages, public-ops over 2549 tracked files, git diff --check and taskplan validation all passed.
@@ -131,3 +141,10 @@ Completion report: `.sin-gpt-web/reports/T-0005.md`
 - 2026-08-02T14:58:51+00:00 — `chatgpt-web` — `task_claimed` `T-0005`: claimed by chatgpt-web
 - 2026-08-02T14:59:33+00:00 — `chatgpt-web` — `task_completed` `T-0005`: Canonical conversation title and URL, page IDs, OpenSIN/OpenAfD main commits, exact live image SHAs, health checks, wow-my-zsh issue #29 update, passed browser flows and the precise Orca/sin-chrome remaining blocker are recorded in .sin-gpt-web/handoff.md. Both taskplans were updated transactionally after milestones.
 - 2026-08-02T15:05:42+00:00 — `chatgpt-web` — `callback_delivery_blocked` `T-0001`: 2026-08-02: Mandatory round-1 callback send was attempted once after all durable state and pushes. Delivery failed before consumption because exact origin terminal term_eb94a5c7-986a-4e94-ae0d-a66dfc1b2287 is disconnected, non-writable and exited. Orca still knows the exact tab/leaf/session, but terminal switch returns terminal_exited and the pane is absent from the live layout. No alternate terminal was substituted and no second callback send was attempted.
+- 2026-08-02T16:57:13+00:00 — `chatgpt-web` — `task_unblocked` `T-0003`: 2026-08-02 18:24 CEST: Orca runtime is ready again. Existing OpenSIN upload thread shows parsed source drawer with exact marker UPLOAD_OPENSIN_20260802_1610 and Originaldatei herunterladen, but assistant response incorrectly repeats prior CHAT_OK_OPENSIN_20260802_1600. Browser acceptance resumed to diagnose and fix context handoff.
+- 2026-08-02T16:57:32+00:00 — `chatgpt-web` — `task_claimed` `T-0003`: claimed by chatgpt-web
+- 2026-08-02T17:14:08+00:00 — `chatgpt-web` — `task_added` `T-0006`: Chat-Dateiupload: LLM behauptet trotz vorhandenem Parsed Context keinen Anhang
+- 2026-08-02T17:14:30+00:00 — `chatgpt-web` — `task_claimed` `T-0006`: claimed by chatgpt-web
+- 2026-08-02T17:20:12+00:00 — `chatgpt-web` — `verification` `T-0006`: 2026-08-02 18:43 CEST: Fresh first-thread TXT uploads reproduced on both live products: parsed source persisted and cited, but NVIDIA NIM claimed no file/data was attached. Implemented explicit attached-file context labels plus safe system instruction in OpenSIN; focused stream orchestration tests 20/20, targeted ESLint and API type-check pass.
+- 2026-08-02T17:23:23+00:00 — `chatgpt-web` — `provider_verification` `T-0006`: 2026-08-02 19:23 CEST: Active production NVIDIA NIM provider was probed inside the OpenSIN container using the proposed attachment label and safe system instruction. It returned the exact marker UPLOAD_ATTACHMENT_FRAMING_PROBE_20260802 with ok=true; no credentials or API endpoints were printed.
+- 2026-08-02T17:24:59+00:00 — `chatgpt-web` — `verification` `T-0006`: 2026-08-02 19:24 CEST: OpenSIN attachment-context fix passes 4 focused API suites with 46/46 tests (stream orchestration, compressor, parsed-file endpoints and thread assignment), targeted ESLint and API type-check. Expected console errors came only from asserted negative endpoint tests.

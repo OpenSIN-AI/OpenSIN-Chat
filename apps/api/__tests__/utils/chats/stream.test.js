@@ -263,7 +263,12 @@ describe("streamChatWithWorkspace", () => {
       );
 
       expect(llm.compressMessages).toHaveBeenCalledWith(
-        expect.objectContaining({ contextTexts: [attachmentText] }),
+        expect.objectContaining({
+          contextTexts: [`[ATTACHED FILE: ceo-upload.txt]\n${attachmentText}`],
+          systemPrompt: expect.stringContaining(
+            "Do not claim that no file is attached",
+          ),
+        }),
         expect.any(Array),
       );
       expect(llm.handleStream).toHaveBeenCalledWith(
@@ -277,6 +282,46 @@ describe("streamChatWithWorkspace", () => {
             }),
           ],
         }),
+      );
+    });
+  });
+
+  describe("parsed file attachment context", () => {
+    it("labels first-thread uploads as accessible attachment content", async () => {
+      const attachmentText = "FIRST_THREAD_ATTACHMENT_MARKER";
+      WorkspaceParsedFiles.getContextFiles.mockResolvedValue([
+        {
+          pageContent: attachmentText,
+          filename: "first-thread-upload.txt",
+          location: "direct-uploads/first-thread-upload.json",
+          chatContextOnly: true,
+        },
+      ]);
+
+      const { llm } = wireHappyPath();
+      llm.streamGetChatCompletion.mockResolvedValue({ metrics: {} });
+      llm.handleStream.mockResolvedValue(attachmentText);
+
+      const res = createSSEResponse();
+      await streamChatWithWorkspace(
+        res,
+        WORKSPACE,
+        "Return the attached file contents",
+        "chat",
+        null,
+        { id: 88, slug: "thread-88", name: "New Thread" },
+      );
+
+      expect(llm.compressMessages).toHaveBeenCalledWith(
+        expect.objectContaining({
+          contextTexts: [
+            `[ATTACHED FILE: first-thread-upload.txt]\n${attachmentText}`,
+          ],
+          systemPrompt: expect.stringContaining(
+            "Treat those contents as available source material",
+          ),
+        }),
+        expect.any(Array),
       );
     });
   });

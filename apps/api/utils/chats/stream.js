@@ -29,6 +29,30 @@ const { executeRunner, isRunnerAvailable } = require("../codeRunners");
 
 const VALID_CHAT_MODE = ["automatic", "chat", "query"];
 
+const ATTACHED_FILE_CONTEXT_INSTRUCTION = [
+  "The user has attached file content to this chat.",
+  "Parsed attachment contents appear inside the RETRIEVED_CONTEXT block under [ATTACHED FILE: ...] labels.",
+  "Treat those contents as available source material and answer from them when relevant.",
+  "Do not claim that no file is attached or that its contents are unavailable when attached-file context is present.",
+].join(" ");
+
+function parsedFileContext(doc = {}) {
+  const rawFilename =
+    doc?.filename || doc?.title || doc?.metadata?.title || "uploaded file";
+  const filename =
+    String(rawFilename)
+      .replace(/[\r\n]+/g, " ")
+      .trim()
+      .slice(0, 240) || "uploaded file";
+  return `[ATTACHED FILE: ${filename}]\n${doc?.pageContent || ""}`;
+}
+
+function withAttachedFileContextInstruction(systemPrompt, parsedFiles = []) {
+  if (!Array.isArray(parsedFiles) || parsedFiles.length === 0)
+    return systemPrompt;
+  return `${systemPrompt}\n\n${ATTACHED_FILE_CONTEXT_INSTRUCTION}`;
+}
+
 async function streamChatWithWorkspace(
   response,
   workspace,
@@ -277,7 +301,7 @@ async function streamChatWithWorkspace(
 
     parsedFiles.forEach((doc) => {
       const { pageContent, ...metadata } = doc;
-      contextTexts.push(pageContent);
+      contextTexts.push(parsedFileContext(doc));
       sources.push({
         text:
           pageContent.slice(0, 1_000) + "...continued on in source document...",
@@ -300,7 +324,7 @@ async function streamChatWithWorkspace(
 
     parsedFiles.forEach((doc) => {
       const { pageContent, ...metadata } = doc;
-      contextTexts.push(doc.pageContent);
+      contextTexts.push(parsedFileContext(doc));
       sources.push({
         text:
           pageContent.slice(0, 1_000) + "...continued on in source document...",
@@ -445,6 +469,7 @@ async function streamChatWithWorkspace(
       rawHistory,
     }));
   if (imageUrlPrompt) systemPrompt += "\n\n" + imageUrlPrompt;
+  systemPrompt = withAttachedFileContextInstruction(systemPrompt, parsedFiles);
 
   // Inject inline-citation instructions when there are context documents so
   // the LLM marks statements with [source:N] markers for the frontend to render.
