@@ -3,14 +3,14 @@
 > Generated from `.sin-gpt-web/taskplan.sqlite3` by `sin-gpt-web-state`.
 > Local agents should read this file together with `TASKPLAN.md` before continuing.
 
-- Task: `T-0001` — OpenSIN: Git-Stand, Fehlerbehebung, Tests und Push nach main
+- Task: `T-0005` — Taskplan und ChatGPT-Handoff aktuell halten
 - Owner: `chatgpt-web`
-- Completed: 2026-08-02T13:58:51+00:00
+- Completed: 2026-08-02T14:59:33+00:00
 
 ## Report
 
-OpenSIN commit 9efd1d3df pushed to origin/main; compatible SSE terminal-close abort fix and regression test applied. Focused SSESocket 4/4, web type-check, targeted ESLint 0 errors, production build with 17 docs pages, public-ops over 2549 tracked files, git diff --check and taskplan validation all passed.
+Canonical conversation title and URL, page IDs, OpenSIN/OpenAfD main commits, exact live image SHAs, health checks, wow-my-zsh issue #29 update, passed browser flows and the precise Orca/sin-chrome remaining blocker are recorded in .sin-gpt-web/handoff.md. Both taskplans were updated transactionally after milestones.
 
 ## Evidence
 
-OpenSIN commit 9efd1d3df pushed to origin/main; compatible SSE terminal-close abort fix and regression test applied. Focused SSESocket 4/4, web type-check, targeted ESLint 0 errors, production build with 17 docs pages, public-ops over 2549 tracked files, git diff --check and taskplan validation all passed.
+Canonical conversation title and URL, page IDs, OpenSIN/OpenAfD main commits, exact live image SHAs, health checks, wow-my-zsh issue #29 update, passed browser flows and the precise Orca/sin-chrome remaining blocker are recorded in .sin-gpt-web/handoff.md. Both taskplans were updated transactionally after milestones.

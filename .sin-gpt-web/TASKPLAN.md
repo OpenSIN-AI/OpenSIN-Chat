@@ -13,10 +13,10 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 
 ## Status
 
-- Backlog: 4
+- Backlog: 0
 - In progress: 0
-- Blocked: 0
-- Done: 1
+- Blocked: 1
+- Done: 4
 - Cancelled: 0
 
 ## Tasks
@@ -24,10 +24,10 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 | ID | Priority | Kind | Status | Owner | Title | Dependencies |
 |---|---|---|---|---|---|---|
 | T-0001 | critical | implement | done | chatgpt-web | OpenSIN: Git-Stand, Fehlerbehebung, Tests und Push nach main | — |
-| T-0002 | critical | ops | backlog | chatgpt-web | OpenSIN/OpenAfD: Live-Deployment auf Oracle Cloud verifizieren | — |
-| T-0003 | critical | test | backlog | chatgpt-web | Browser-Abnahme aller Kernfunktionen über Orca-Fallback | — |
-| T-0004 | high | ops | backlog | chatgpt-web | sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren | — |
-| T-0005 | high | ops | backlog | chatgpt-web | Taskplan und ChatGPT-Handoff aktuell halten | — |
+| T-0002 | critical | ops | done | chatgpt-web | OpenSIN/OpenAfD: Live-Deployment auf Oracle Cloud verifizieren | — |
+| T-0003 | critical | test | blocked | chatgpt-web | Browser-Abnahme aller Kernfunktionen über Orca-Fallback | — |
+| T-0004 | high | ops | done | chatgpt-web | sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren | — |
+| T-0005 | high | ops | done | chatgpt-web | Taskplan und ChatGPT-Handoff aktuell halten | — |
 
 ## Task details
 
@@ -49,51 +49,65 @@ Completion report: `.sin-gpt-web/reports/T-0001.md`
 
 ### T-0002 — OpenSIN/OpenAfD: Live-Deployment auf Oracle Cloud verifizieren
 
-- Status: `backlog`
+- Status: `done`
 - Owner: `chatgpt-web`
 - Kind: `ops`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-08-02T13:03:40+00:00
+- Updated: 2026-08-02T14:34:41+00:00
 
 Acceptance:
 - Both live domains and service health are verified against the latest intended main commits; deployment blockers are recorded.
 
+Evidence: Oracle Cloud deployment verified and updated through clean release worktrees without touching dirty canonical server checkouts. OpenSIN runs opensin-app:f3dd1645e2bd35dd09a91138d59c8c5ee901387c healthy; OpenAfD runs openafd-app:fe9e80bd6034808652050a645b1c00b6ac056fdd healthy. Both internal health checks and https://sinchat.delqhi.com/api/ping plus https://openafd.delqhi.com/api/ping returned online:true. Rollback images created; known orphan openafd-vane intentionally preserved.
+
+Completion report: `.sin-gpt-web/reports/T-0002.md`
+
 ### T-0003 — Browser-Abnahme aller Kernfunktionen über Orca-Fallback
 
-- Status: `backlog`
+- Status: `blocked`
 - Owner: `chatgpt-web`
 - Kind: `test`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-08-02T13:03:41+00:00
+- Updated: 2026-08-02T14:57:42+00:00
 
 Acceptance:
 - Fresh browser evidence covers login, normal chat, web search, file upload, adding source files to chat, deep research, navigation, empty/error states for OpenSIN and OpenAfD.
 
+Blocked: Fresh Orca acceptance partially passed on 2026-08-02: authenticated login/navigation/empty states and normal chat succeeded on both live SHAs with exact markers and no reconnect/session-ended errors; OpenSIN real file input accepted a visible TXT attachment and form submit started. Remaining file-context result, source-selection, deep-research and controlled reconnect checks are externally blocked because Orca then returned runtime_unavailable followed by two consecutive SIGTERM failures on minimal DOM reads. sin-chrome-control cannot substitute because the approved bot profile has no managed credentials for either product domain.
+
 ### T-0004 — sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren
 
-- Status: `backlog`
+- Status: `done`
 - Owner: `chatgpt-web`
 - Kind: `ops`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-08-02T13:03:41+00:00
+- Updated: 2026-08-02T14:22:21+00:00
 
 Acceptance:
 - Reproducible timeout is documented with safe diagnostics in an issue in wow-my-zsh, or an existing matching issue is linked.
 
+Evidence: Existing matching wow-my-zsh issue #29 was updated with fresh safe diagnostics: sin-chrome doctor 0 errors/0 warnings; initial control/status timeout during 2026-08-02 delegation; later bounded 15-second status retry succeeded, proving intermittent control/dashboard failure. Comment: https://github.com/OpenSIN-Code/wow-my-zsh/issues/29#issuecomment-5158493090. No cookies, tokens, credentials, or CDP endpoints disclosed.
+
+Completion report: `.sin-gpt-web/reports/T-0004.md`
+
 ### T-0005 — Taskplan und ChatGPT-Handoff aktuell halten
 
-- Status: `backlog`
+- Status: `done`
 - Owner: `chatgpt-web`
 - Kind: `ops`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-08-02T13:03:41+00:00
+- Updated: 2026-08-02T14:59:33+00:00
 
 Acceptance:
 - Title, canonical ChatGPT conversation URL, task, repositories, last status, blockers and evidence remain recorded in durable state.
+
+Evidence: Canonical conversation title and URL, page IDs, OpenSIN/OpenAfD main commits, exact live image SHAs, health checks, wow-my-zsh issue #29 update, passed browser flows and the precise Orca/sin-chrome remaining blocker are recorded in .sin-gpt-web/handoff.md. Both taskplans were updated transactionally after milestones.
+
+Completion report: `.sin-gpt-web/reports/T-0005.md`
 
 ## Recent events
 
@@ -108,3 +122,12 @@ Acceptance:
 - 2026-08-02T13:40:24+00:00 — `chatgpt-web` — `verification` `T-0001`: 2026-08-02 15:40 CEST: Compatible terminal SSE-close abort fix applied to OpenSIN; focused SSESocket regression 4/4 and web type-check passed.
 - 2026-08-02T13:57:34+00:00 — `chatgpt-web` — `verification` `T-0001`: 2026-08-02 15:44 CEST: OpenSIN SSE fix verified by 4/4 focused tests, web type-check, targeted ESLint with 0 errors, production build with 17 prerendered docs pages, and public-ops policy over 2549 tracked files.
 - 2026-08-02T13:58:51+00:00 — `chatgpt-web` — `task_completed` `T-0001`: OpenSIN commit 9efd1d3df pushed to origin/main; compatible SSE terminal-close abort fix and regression test applied. Focused SSESocket 4/4, web type-check, targeted ESLint 0 errors, production build with 17 docs pages, public-ops over 2549 tracked files, git diff --check and taskplan validation all passed.
+- 2026-08-02T14:01:02+00:00 — `chatgpt-web` — `task_claimed` `T-0002`: claimed by chatgpt-web
+- 2026-08-02T14:22:05+00:00 — `chatgpt-web` — `task_claimed` `T-0004`: claimed by chatgpt-web
+- 2026-08-02T14:22:21+00:00 — `chatgpt-web` — `task_completed` `T-0004`: Existing matching wow-my-zsh issue #29 was updated with fresh safe diagnostics: sin-chrome doctor 0 errors/0 warnings; initial control/status timeout during 2026-08-02 delegation; later bounded 15-second status retry succeeded, proving intermittent control/dashboard failure. Comment: https://github.com/OpenSIN-Code/wow-my-zsh/issues/29#issuecomment-5158493090. No cookies, tokens, credentials, or CDP endpoints disclosed.
+- 2026-08-02T14:34:41+00:00 — `chatgpt-web` — `task_completed` `T-0002`: Oracle Cloud deployment verified and updated through clean release worktrees without touching dirty canonical server checkouts. OpenSIN runs opensin-app:f3dd1645e2bd35dd09a91138d59c8c5ee901387c healthy; OpenAfD runs openafd-app:fe9e80bd6034808652050a645b1c00b6ac056fdd healthy. Both internal health checks and https://sinchat.delqhi.com/api/ping plus https://openafd.delqhi.com/api/ping returned online:true. Rollback images created; known orphan openafd-vane intentionally preserved.
+- 2026-08-02T14:34:54+00:00 — `chatgpt-web` — `task_claimed` `T-0003`: claimed by chatgpt-web
+- 2026-08-02T14:50:42+00:00 — `chatgpt-web` — `browser_verification` `T-0003`: 2026-08-02 16:05 CEST: Fresh Orca live normal-chat acceptance passed on both deployed SHAs. OpenSIN returned CHAT_OK_OPENSIN_20260802_1600 in thread 5f5e1050-fa0f-4bd8-a495-9ce48ce8fc69; OpenAfD returned CHAT_OK_OPENAFD_20260802_1605 in thread d96d59fc-d91a-4d35-8ce2-a13f89ee041e. No reconnect, no Agent session has ended, no failure banner.
+- 2026-08-02T14:57:42+00:00 — `chatgpt-web` — `task_blocked` `T-0003`: Fresh Orca acceptance partially passed on 2026-08-02: authenticated login/navigation/empty states and normal chat succeeded on both live SHAs with exact markers and no reconnect/session-ended errors; OpenSIN real file input accepted a visible TXT attachment and form submit started. Remaining file-context result, source-selection, deep-research and controlled reconnect checks are externally blocked because Orca then returned runtime_unavailable followed by two consecutive SIGTERM failures on minimal DOM reads. sin-chrome-control cannot substitute because the approved bot profile has no managed credentials for either product domain.
+- 2026-08-02T14:58:51+00:00 — `chatgpt-web` — `task_claimed` `T-0005`: claimed by chatgpt-web
+- 2026-08-02T14:59:33+00:00 — `chatgpt-web` — `task_completed` `T-0005`: Canonical conversation title and URL, page IDs, OpenSIN/OpenAfD main commits, exact live image SHAs, health checks, wow-my-zsh issue #29 update, passed browser flows and the precise Orca/sin-chrome remaining blocker are recorded in .sin-gpt-web/handoff.md. Both taskplans were updated transactionally after milestones.
