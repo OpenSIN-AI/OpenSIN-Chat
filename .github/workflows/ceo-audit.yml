@@ -72,6 +72,10 @@ jobs:
 
       - name: Validate hardened production Compose
         run: |
+          set -euo pipefail
+          validation_env=platform/containers/compose/.env
+          cp platform/containers/compose/.env.example "${validation_env}"
+          trap 'rm -f "${validation_env}"' EXIT
           docker compose \
             --env-file platform/containers/compose/.env.example \
             -f platform/containers/compose/docker-compose.yml \

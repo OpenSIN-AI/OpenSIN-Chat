@@ -20,6 +20,7 @@ jest.mock("../../utils/http", () => ({
 
 jest.mock("../../utils/url", () => ({
   validURL: jest.fn(() => true),
+  assertSafeURL: jest.fn(async () => true),
   validateURL: jest.fn((u) => u),
 }));
 
@@ -70,7 +71,7 @@ jest.mock("dotenv", () => ({
 
 const extensions = require("../../extensions");
 const { reqBody } = require("../../utils/http");
-const { validURL, validateURL } = require("../../utils/url");
+const { validURL, assertSafeURL, validateURL } = require("../../utils/url");
 const RESYNC_METHODS = require("../../extensions/resync");
 const { resolveRepoLoaderFunction } = require("../../utils/extensions/RepoLoader");
 
@@ -80,6 +81,7 @@ describe("extensions", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    assertSafeURL.mockResolvedValue(true);
     routes = {};
     app = {
       post: jest.fn((path, ...handlers) => {
@@ -195,6 +197,29 @@ describe("extensions", () => {
 
       await handler(req, res);
       expect(validateURL).toHaveBeenCalledWith("https://example.com");
+      expect(assertSafeURL).toHaveBeenCalledWith("https://example.com");
+    });
+
+    it("returns error for URL resolving to a blocked network", async () => {
+      extensions(app);
+      const handlers = routes["/ext/website-depth"];
+      const handler = handlers[handlers.length - 1];
+
+      const req = {};
+      const res = { status: jest.fn(() => res), json: jest.fn() };
+      reqBody.mockReturnValue({ url: "https://internal.example" });
+      validateURL.mockReturnValue("https://internal.example");
+      validURL.mockReturnValue(true);
+      assertSafeURL.mockResolvedValue(false);
+
+      await handler(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          success: false,
+          reason: "URL is invalid or resolves to a blocked network.",
+        }),
+      );
     });
 
     it("returns error for invalid URL", async () => {

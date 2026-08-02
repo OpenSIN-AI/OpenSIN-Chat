@@ -25,7 +25,7 @@
     "env:sync": "node scripts/sync-env-example.js",
     "smoke": "node ../../tooling/scripts/smoke.mjs",
     "type-check": "tsc --noEmit",
-    "check:circular": "madge --circular --extensions js . --exclude 'node_modules|__tests__|__mocks__'"
+    "check:circular": "node ../../tooling/scripts/check-api-cycles.cjs"
   },
   "prisma": {
     "seed": "node prisma/seed.js"

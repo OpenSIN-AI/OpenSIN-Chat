@@ -49,6 +49,40 @@ We also take the approach that history is the least important and most flexible 
 There is a supplemental version of this function that also returns a formatted string for models like Claude-2
 */
 
+function splitSystemPromptContext(content = "") {
+  const retrievedContextIndex = content.indexOf("<RETRIEVED_CONTEXT ");
+  if (retrievedContextIndex >= 0) {
+    return {
+      prompt: content.slice(0, retrievedContextIndex).trimEnd(),
+      context: content.slice(retrievedContextIndex),
+      format: "retrieved-context",
+    };
+  }
+
+  const legacyMarker = "Context:";
+  const legacyContextIndex = content.indexOf(legacyMarker);
+  if (legacyContextIndex >= 0) {
+    return {
+      prompt: content.slice(0, legacyContextIndex).trimEnd(),
+      context: content
+        .slice(legacyContextIndex + legacyMarker.length)
+        .trimStart(),
+      format: "legacy-context",
+    };
+  }
+
+  return { prompt: content, context: "", format: "none" };
+}
+
+function joinSystemPromptContext({ prompt, context, format }) {
+  if (!context) return prompt;
+  if (format === "retrieved-context")
+    return `${prompt}
+${context}`;
+  return `${prompt}
+Context: ${context}`;
+}
+
 async function messageArrayCompressor(llm, messages = [], rawHistory = []) {
   // assume the response will be at least 600 tokens. If the total prompt + reply is over we need to proactively
   // run the compressor to ensure the prompt has enough space to reply.
@@ -109,9 +143,12 @@ async function messageArrayCompressor(llm, messages = [], rawHistory = []) {
       return;
     }
 
-    // Split context from system prompt - cannonball since its over the window.
-    // We assume the context + user prompt is enough tokens to fit.
-    const [prompt, context = ""] = system.content.split("Context:");
+    // Split retrieved context from the system prompt before compression. The
+    // current RAG formatter uses a nonce-bearing RETRIEVED_CONTEXT block; keep
+    // legacy `Context:` support for older/custom providers.
+    const { prompt, context, format } = splitSystemPromptContext(
+      system.content,
+    );
     let compressedPrompt;
     let compressedContext;
 
@@ -138,9 +175,11 @@ async function messageArrayCompressor(llm, messages = [], rawHistory = []) {
       compressedContext = context;
     }
 
-    system.content = `${compressedPrompt}${
-      compressedContext ? `\nContext: ${compressedContext}` : ""
-    }`;
+    system.content = joinSystemPromptContext({
+      prompt: compressedPrompt,
+      context: compressedContext,
+      format,
+    });
     resolve(system);
   });
 
@@ -447,8 +486,8 @@ function fillSourceWindow({
     const validSources = chatSources.filter((source) => {
       return (
         filterIdentifiers.includes(sourceIdentifier(source)) == false && // source cannot be in current pins
-        source.hasOwnProperty("score") && // source cannot have come from a pinned document that was previously pinned
-        source.hasOwnProperty("text") && // source has a valid text property we can use
+        Object.prototype.hasOwnProperty.call(source, "score") && // source cannot have come from a pinned document that was previously pinned
+        Object.prototype.hasOwnProperty.call(source, "text") && // source has a valid text property we can use
         seenChunks.has(source.id) == false // is unique
       );
     });
@@ -470,4 +509,6 @@ module.exports = {
   messageArrayCompressor,
   messageStringCompressor,
   fillSourceWindow,
+  splitSystemPromptContext,
+  joinSystemPromptContext,
 };

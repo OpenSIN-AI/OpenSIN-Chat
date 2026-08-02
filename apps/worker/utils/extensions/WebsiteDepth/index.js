@@ -7,9 +7,34 @@ const path = require("path");
 const fs = require("fs");
 const { default: slugify } = require("slugify");
 const { browserPool } = require("../../browserPool");
+const { assertSafeURL } = require("../../url");
 
 const MAX_RESPONSE_BYTES = 50 * 1024 * 1024;
 const PUPPETEER_TIMEOUT_MS = 60_000;
+
+async function continueSafeRequest(request) {
+  try {
+    if (!(await assertSafeURL(request.url()))) {
+      await request.abort("blockedbyclient");
+      return false;
+    }
+    await request.continue();
+    return true;
+  } catch {
+    await request.abort("failed").catch(() => undefined);
+    return false;
+  }
+}
+
+async function navigateSafely(page, url, options) {
+  if (!(await assertSafeURL(url)))
+    throw new Error("URL resolves to a blocked network.");
+  await page.setRequestInterception(true);
+  page.on("request", (request) => {
+    void continueSafeRequest(request);
+  });
+  return page.goto(url, options);
+}
 
 async function discoverLinks(startUrl, maxDepth = 1, maxLinks = 20) {
   const baseUrl = new URL(startUrl);
@@ -51,7 +76,7 @@ async function getPageLinks(url, baseUrl) {
   let page = null;
   try {
     page = await browser.newPage();
-    await page.goto(url, {
+    await navigateSafely(page, url, {
       timeout: PUPPETEER_TIMEOUT_MS,
       waitUntil: "networkidle2",
     });
@@ -115,7 +140,7 @@ async function bulkScrapePages(links, outFolderPath) {
     let page = null;
     try {
       page = await browser.newPage();
-      await page.goto(link, {
+      await navigateSafely(page, link, {
         timeout: PUPPETEER_TIMEOUT_MS,
         waitUntil: "networkidle2",
       });
@@ -200,3 +225,5 @@ async function websiteScraper(startUrl, depth = 1, maxLinks = 20) {
 }
 
 module.exports = websiteScraper;
+module.exports.continueSafeRequest = continueSafeRequest;
+module.exports.navigateSafely = navigateSafely;

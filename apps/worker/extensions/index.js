@@ -6,7 +6,7 @@ const {
   resolveRepoLoaderFunction,
 } = require("../utils/extensions/RepoLoader");
 const { reqBody } = require("../utils/http");
-const { validURL, validateURL } = require("../utils/url");
+const { validURL, assertSafeURL, validateURL } = require("../utils/url");
 const RESYNC_METHODS = require("./resync");
 const { loadObsidianVault } = require("../utils/extensions/ObsidianVault");
 
@@ -133,7 +133,8 @@ function extensions(app) {
         const websiteDepth = require("../utils/extensions/WebsiteDepth");
         const { url, depth = 1, maxLinks = 20 } = reqBody(request);
         const validatedUrl = validateURL(url);
-        if (!validURL(validatedUrl)) throw new Error("Not a valid URL.");
+        if (!validURL(validatedUrl) || !(await assertSafeURL(validatedUrl)))
+          throw new Error("URL is invalid or resolves to a blocked network.");
         const scrapedData = await websiteDepth(validatedUrl, depth, maxLinks);
         response.status(200).json({ success: true, data: scrapedData });
       } catch (e) {
