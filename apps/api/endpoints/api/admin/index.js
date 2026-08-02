@@ -116,7 +116,7 @@ function apiAdminEndpoints(app) {
           "application/json": {
             example: {
               username: "sample-sam",
-              password: 'hunter2',
+              password: '<new-user-password>',
               role: 'default | admin'
             }
           }
@@ -208,7 +208,7 @@ function apiAdminEndpoints(app) {
           "application/json": {
             example: {
               username: "sample-sam",
-              password: 'hunter2',
+              password: '<new-user-password>',
               role: 'default | admin',
               suspended: 0,
             }
