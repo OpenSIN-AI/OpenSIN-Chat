@@ -33,10 +33,14 @@ describe("SSESocket", () => {
     socket.addEventListener("close", closeListener);
     socket.addEventListener("message", messageListener);
 
+    const signal = callbacks.signal as AbortSignal;
+    expect(signal.aborted).toBe(false);
+
     callbacks.onmessage({
       event: "close",
       data: JSON.stringify({ code: 1008, reason: "Session ended" }),
     });
+    expect(signal.aborted).toBe(true);
     callbacks.onclose();
 
     expect(messageListener).not.toHaveBeenCalled();

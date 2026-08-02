@@ -1,33 +1,30 @@
 # Handoff: ChatGPT Web Delegation
 
-## Status: DELEGATION ACTIVE — TASKS ASSIGNED
+## Status: DELEGATION ACTIVE — CEO COMPLETION LOOP
 
-### Current Session (2026-07-31T09:15)
-- **ChatGPT URL**: https://chatgpt.com/c/6a6c49f0-cef8-83ed-ac0f-5a2c33d41c5e
-- **Page ID**: 1cddeabe-e1a3-4311-a380-c069dd8a0bc1
-- **Callback ID**: gptwcb_bfc3325759bd4d5599298c126ac29470
-- **Round**: 3 of 50
-- **Expires**: 2026-08-01T07:08:23Z
+### Current Session (2026-08-02T13:04)
+- **ChatGPT URL**: https://chatgpt.com/c/6a6f405e-7230-83eb-a991-b03b33e39336
+- **Page ID**: b2c7b337-7331-4afd-8e56-8152c7cf5d73
+- **Profile**: OpenSIN
+- **Mode**: Chat
+- **Connector**: Mac i9
+- **Callback ID**: gptwcb_b6b86c2edf0b45d6ad3f164696396e2b
+- **Round**: 1 of 50
+- **Expires**: 2026-08-03T13:04:20Z
 
-### What Was Done
-1. ✅ OpenSIN-Chat pulled (12 commits from main)
-2. ✅ sin-gpt-web taskplan initialized with 4 tasks
-3. ✅ OCI VM SSH access verified (sin-supabase @ 92.5.60.87)
-4. ✅ Both repos on VM verified up-to-date and healthy
-5. ✅ Both domains returning HTTP 200
-6. ✅ Taskplan updates committed and pushed to GitHub
-7. ✅ ChatGPT Web delegation sent with CEO role
-
-### Current Task Assignment
-- **T-0001**: Git status check + push (ChatGPT assigned)
-- **T-0002**: Deploy to OCI VM (ChatGPT assigned)
-- **T-0003**: Test all browser functions (ChatGPT assigned)
-- **T-0004**: Document bugs (ChatGPT assigned)
+### Current Assignment
+- **T-0001**: OpenSIN Git status, error fixing, verification and authorized push to main; CEO lead assigned
+- **T-0002**: Verify live Oracle Cloud deployment for OpenSIN and OpenAfD
+- **T-0003**: Complete browser acceptance for both repositories
+- **T-0004**: Document or update the wow-my-zsh issue for the reproducible sin-chrome-control timeout
+- **T-0005**: Keep both taskplans, completion evidence and this handoff current
 
 ### sin-chrome Status
-- MCP Server: Running but status unavailable
-- GitHub Issue needed: sin-chrome-control connection timeout
-- Fallback: Using Orca browser (working)
+- `sin-chrome doctor`: green
+- `sin-chrome start`: existing headed bot profile reused
+- `sin-chrome-control status`: timed out
+- Fallback: Orca browser via the existing OpenSIN worktree
+- GitHub issue: ChatGPT must create or update a safe diagnostic issue in wow-my-zsh
 
 ### Repositories
 - **OpenSIN-Chat**: main, clean, pushed
@@ -38,5 +35,4 @@
 - Domains: sinchat.delqhi.com, openafd.delqhi.com (HTTP 200)
 
 ### Next Action
-Wait for ChatGPT callback or monitor via snapshots.
-If callback received: verify changes, update taskplan, continue delegation.
+Monitor the active ChatGPT page and callback. Treat callback as a wake-up only: independently inspect status, diff, tests, deployment evidence and both taskplans before continuing or completing.

@@ -118,6 +118,13 @@ export default class SSESocket {
             this.serverCloseCode || 1000,
             this.serverCloseReason,
           );
+          // The named server close is terminal. Abort fetch-event-source
+          // immediately so its transport cannot retry the already-closed
+          // invocation UUID and append a false session-ended error.
+          if (this.abortController) {
+            this.abortController.abort();
+            this.abortController = null;
+          }
           return;
         }
 
