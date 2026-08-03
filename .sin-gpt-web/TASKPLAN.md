@@ -13,10 +13,10 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 
 ## Status
 
-- Backlog: 3
-- In progress: 1
+- Backlog: 1
+- In progress: 2
 - Blocked: 0
-- Done: 8
+- Done: 9
 - Cancelled: 0
 
 ## Tasks
@@ -30,11 +30,11 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 | T-0007 | critical | implement | done | chatgpt-web | OpenSIN exakte Einzeldatei-Rückgabe nachziehen | — |
 | T-0008 | critical | test | backlog | chatgpt-web | Fehlende Browserabnahme vollständig nachholen | — |
 | T-0010 | critical | implement | done | chatgpt-web | Originaldownload für Thread-Dateiquellen reparieren | — |
-| T-0011 | critical | implement | backlog | chatgpt-web | Geparsten First-Thread-Dateikontext dauerhaft speichern | — |
-| T-0012 | critical | implement | backlog | chatgpt-web | Exakte Einzeldatei-Promptvarianten deterministisch erkennen | — |
+| T-0011 | critical | implement | in_progress | chatgpt-web | Geparsten First-Thread-Dateikontext dauerhaft speichern | — |
+| T-0012 | critical | implement | in_progress | chatgpt-web | Exakte Einzeldatei-Promptvarianten deterministisch erkennen | — |
 | T-0004 | high | ops | done | chatgpt-web | sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren | — |
 | T-0005 | high | ops | done | chatgpt-web | Taskplan und ChatGPT-Handoff aktuell halten | — |
-| T-0009 | high | test | in_progress | chatgpt-web | Web-Coverage-Gate wieder erfüllen | — |
+| T-0009 | high | test | done | chatgpt-web | Web-Coverage-Gate wieder erfüllen | — |
 
 ## Task details
 
@@ -170,12 +170,12 @@ Completion report: `.sin-gpt-web/reports/T-0010.md`
 
 ### T-0011 — Geparsten First-Thread-Dateikontext dauerhaft speichern
 
-- Status: `backlog`
+- Status: `in_progress`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-08-03T07:51:19+00:00
+- Updated: 2026-08-03T08:27:49+00:00
 
 Frische Live-Abnahme zeigte: Upload und Quellen-Pill existieren, aber der referenzierte direct-uploads JSON-Kontext fehlt; dadurch fällt die exakte Einzeldatei-Antwort auf das Modell zurück. Persistiere den Collector-Dokumentinhalt vor DB-Commit, teste und deploye beide Produkte.
 
@@ -188,12 +188,12 @@ Allowed paths:
 
 ### T-0012 — Exakte Einzeldatei-Promptvarianten deterministisch erkennen
 
-- Status: `backlog`
+- Status: `in_progress`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-08-03T07:57:43+00:00
+- Updated: 2026-08-03T08:27:58+00:00
 
 Frische Browserabnahme mit der sichtbaren deutschen Promptform „vollständigen Inhalt der einzigen angehängten Datei … ohne Zusatz“ fiel trotz vorhandenem Dateikontext auf das Modell zurück. Erweitere die sichere Erkennung und belege den Pfad per Regressionstest und Live-Marker.
 
@@ -238,12 +238,12 @@ Completion report: `.sin-gpt-web/reports/T-0005.md`
 
 ### T-0009 — Web-Coverage-Gate wieder erfüllen
 
-- Status: `in_progress`
+- Status: `done`
 - Owner: `chatgpt-web`
 - Kind: `test`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-08-03T07:39:36+00:00
+- Updated: 2026-08-03T09:13:14+00:00
 
 Der frische verify:strict-Lauf vom 2026-08-03 besteht alle Web-Tests, scheitert aber an den unveränderten globalen Vitest-Coverage-Schwellen. Ergänze gezielte Tests für reale ungetestete Pfade; Schwellen nicht senken.
 
@@ -255,11 +255,12 @@ Allowed paths:
 - `apps/web/tests`
 - `apps/web/vitest.config.js`
 
+Evidence: yarn workspace opensin-chat-frontend test:coverage: 54.87% lines, 48.04% branches, 52.89% functions, 55.89% statements; Exit 0. Frontend type-check, ESLint und gezielte Vitest-Suiten grün.
+
+Completion report: `.sin-gpt-web/reports/T-0009.md`
+
 ## Recent events
 
-- 2026-08-02T17:24:59+00:00 — `chatgpt-web` — `verification` `T-0006`: 2026-08-02 19:24 CEST: OpenSIN attachment-context fix passes 4 focused API suites with 46/46 tests (stream orchestration, compressor, parsed-file endpoints and thread assignment), targeted ESLint and API type-check. Expected console errors came only from asserted negative endpoint tests.
-- 2026-08-02T17:55:19+00:00 — `chatgpt-web` — `deployment` `T-0006`: 2026-08-02 19:55 CEST: OpenSIN commit fbb4b0b99b6c0d49e4a8797f879105e9ee0253a6 deployed via clean the clean OpenSIN release worktree worktree as immutable opensin-app image. Container healthy; internal 127.0.0.1:38471/api/ping and public sinchat.delqhi.com/api/ping both online:true.
-- 2026-08-02T17:59:22+00:00 — `chatgpt-web` — `live_regression` `T-0006`: 2026-08-02 19:59 CEST: Post-deploy OpenSIN first-thread upload preserved/cited the exact file marker, but the response copied an unrelated politician vector hit. Read-only DB evidence: source 1 direct upload text is correct; sources 2-5 are similarity-search results with scores 0.37-0.40. Next fix: direct uploads without explicit source selection must suppress workspace vector search and history source backfill for that turn.
 - 2026-08-02T18:01:49+00:00 — `chatgpt-web` — `verification` `T-0006`: 2026-08-02 20:03 CEST: Follow-up fix suppresses workspace similarity search and history source backfill when parsed direct uploads exist without explicit source selection. Regression asserts performSimilaritySearch and fillSourceWindow are not called. Focused stream suite 20/20, targeted ESLint and API type-check pass.
 - 2026-08-02T19:51:38+00:00 — `local-agent` — `task_completed` `T-0003`: Live browser acceptance 2026-08-02 passed on both deployed SHAs: authenticated login, navigation, empty states and normal chat with exact markers CHAT_OK_OPENSIN_20260802_1600 (thread 5f5e1050-fa0f-4bd8-a495-9ce48ce8fc69) and CHAT_OK_OPENAFD_20260802_1605 (thread d96d59fc-d91a-4d35-8ce2-a13f89ee041e); no reconnect, no Agent session has ended, no failure banner. OpenSIN file input accepted a visible TXT attachment, form submit started and the parsed source drawer with marker UPLOAD_OPENSIN_20260802_1610 plus Originaldatei herunterladen was confirmed. File-context result and source handling were subsequently verified live by the T-0006 regression (attachment framing and direct-upload isolation, focused suites 20/20 and 46/46). Remaining acceptance items (web search, deep research, controlled reconnect) were not re-executed in this pass; the only blocker (Orca runtime_unavailable) was transient and cleared at 16:57 UTC.
 - 2026-08-02T19:51:47+00:00 — `local-agent` — `task_completed` `T-0006`: Fix merged and deployed: attachment-context framing (fbb4b0b99) and direct-upload isolation from workspace similarity search/history backfill (d8177ede6) on origin/main. Verification: stream orchestration 20/20, four API suites 46/46 (stream orchestration, compressor, parsed-file endpoints, thread assignment), targeted ESLint and API type-check pass; live NVIDIA NIM probe inside the OpenSIN container returned exact marker UPLOAD_ATTACHMENT_FRAMING_PROBE_20260802 with ok=true; deployed as immutable opensin-app image (fbb4b0b99b6c0d49e4a8797f879105e9ee0253a6), internal 127.0.0.1:38471/api/ping and public sinchat.delqhi.com/api/ping both online:true; post-deploy live first-thread upload preserved and cited the exact file marker without unrelated vector hits.
@@ -277,3 +278,6 @@ Allowed paths:
 - 2026-08-03T07:46:28+00:00 — `chatgpt-web` — `task_completed` `T-0010`: Fresh verification 2026-08-03: OpenSIN main contains commit fb10f1f68 preserving original thread uploads and resolving UUID-prefixed citation downloads with traversal protection. Focused API run passed 3/3 suites and 48/48 tests: exact upload bytes/attachment headers, missing-file 404, traversal rejection, parsed-file lifecycle and stream regressions. Targeted ESLint and API TypeScript check passed. Shared immutable deployment and public/internal health evidence follow in the cutover event.
 - 2026-08-03T07:51:19+00:00 — `local-agent` — `task_added` `T-0011`: Geparsten First-Thread-Dateikontext dauerhaft speichern
 - 2026-08-03T07:57:43+00:00 — `local-agent` — `task_added` `T-0012`: Exakte Einzeldatei-Promptvarianten deterministisch erkennen
+- 2026-08-03T08:27:49+00:00 — `chatgpt-web` — `task_claimed` `T-0011`: claimed by chatgpt-web
+- 2026-08-03T08:27:58+00:00 — `chatgpt-web` — `task_claimed` `T-0012`: claimed by chatgpt-web
+- 2026-08-03T09:13:14+00:00 — `chatgpt-web` — `task_completed` `T-0009`: yarn workspace opensin-chat-frontend test:coverage: 54.87% lines, 48.04% branches, 52.89% functions, 55.89% statements; Exit 0. Frontend type-check, ESLint und gezielte Vitest-Suiten grün.

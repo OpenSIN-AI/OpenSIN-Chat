@@ -3,14 +3,14 @@
 > Generated from `.sin-gpt-web/taskplan.sqlite3` by `sin-gpt-web-state`.
 > Local agents should read this file together with `TASKPLAN.md` before continuing.
 
-- Task: `T-0010` — Originaldownload für Thread-Dateiquellen reparieren
+- Task: `T-0009` — Web-Coverage-Gate wieder erfüllen
 - Owner: `chatgpt-web`
-- Completed: 2026-08-03T07:46:28+00:00
+- Completed: 2026-08-03T09:13:14+00:00
 
 ## Report
 
-OpenSIN thread-source original download fix verified: commit fb10f1f68, focused API 48/48, targeted lint and type-check green.
+Coverage-Gate mit gezielten Tests für Command Palette, Agent Mode, Deep-Research-Quellen und SSE/WebSocket-Lifecycle erfüllt. Unveränderte Schwellen 50/48/50/50 werden mit 54.87/48.04/52.89/55.89 überschritten.
 
 ## Evidence
 
-Fresh verification 2026-08-03: OpenSIN main contains commit fb10f1f68 preserving original thread uploads and resolving UUID-prefixed citation downloads with traversal protection. Focused API run passed 3/3 suites and 48/48 tests: exact upload bytes/attachment headers, missing-file 404, traversal rejection, parsed-file lifecycle and stream regressions. Targeted ESLint and API TypeScript check passed. Shared immutable deployment and public/internal health evidence follow in the cutover event.
+yarn workspace opensin-chat-frontend test:coverage: 54.87% lines, 48.04% branches, 52.89% functions, 55.89% statements; Exit 0. Frontend type-check, ESLint und gezielte Vitest-Suiten grün.

@@ -1,60 +1,28 @@
-# Handoff: CEO Completion Delegation
+# Handoff: Run-6 CEO Delegation (Mac-i9 Tunnel Fehler -> Chat-Branch)
 
-## Status: T-0001, T-0002 and T-0004 completed; browser acceptance externally blocked
+## Status: T-0007/T-0010 done, T-0009 in_progress; TUNNEL-FEHLER -> Branch needed
 
-### Canonical ChatGPT Session
-- **Title**: CEO Completion Delegation
-- **Conversation URL**: https://chatgpt.com/c/6a6f405e-7230-83eb-a991-b03b33e39336
-- **ChatGPT Page ID**: b2c7b337-7331-4afd-8e56-8152c7cf5d73
-- **Profile**: OpenSIN
-- **Mode**: Chat
-- **Connector**: Mac i9
-- **Callback round**: T-0001, round 1 of 50
+### Canonical ChatGPT Session (ALT - wird archiviert)
+- **Conversation URL**: https://chatgpt.com/c/6a704264-885c-83eb-94ad-0e340d70781f
+- **ChatGPT Page ID**: 696b7f95-6b66-4a18-99d0-2bfdeb00e20d
+- **Profile**: OpenSIN, **Mode**: Chat, **Connector**: Mac i9 (readyz healthy, Chat-Bindung verloren)
+- **Symptom**: Tab-Titel "Mac-i9 Tunnel Fehler"; ChatGPT beantwortet nichts mehr in diesem Chat.
+- **Recovery-Aktion**: `sin-gpt-web-recover` -> "Ab hier neuen Chat starten", neue URL verwenden, alten Chat archivieren. Fortsetzung NUR im neuen Chat (#1 - OpenSIN-Chat).
 
-### Repositories and GitHub
-- **OpenSIN-Chat main**: f3dd1645e2bd35dd09a91138d59c8c5ee901387c
-- **OpenAfD-Chat main**: fe9e80bd6034808652050a645b1c00b6ac056fdd
-- Both contain the terminal SSE-close abort fix and regression coverage.
-- Focused SSESocket tests: 4/4 per repository.
-- Web type-check, targeted ESLint with zero errors, production build and public-operations policy passed in both repositories.
+### Repos & Git (Stand nach ChatGPT-Arbeit)
+- OpenSIN-Chat main: a79c1a2b2 "fix: persist parsed chat upload context" (gepusht, 45/45 Jest grün)
+- OpenAfD-Chat main: 23653651e "fix: persist parsed chat upload context" (gepusht)
+- Vorher gepusht: OpenSIN fb10f1f68, OpenAfD e118861eb
+- Uncommitted (ChatGPT laufende Arbeit): apps/api/utils/chats/stream.js + stream.test.js (T-0012 deutsche Einzeldatei-Muster), Taskplan-Views, chat-capabilities.*, OpenAfD reports/T-0034.md
 
-### Oracle Cloud Deployment
-- **OpenSIN live image**: opensin-app:f3dd1645e2bd35dd09a91138d59c8c5ee901387c, healthy.
-- **OpenAfD live image**: openafd-app:fe9e80bd6034808652050a645b1c00b6ac056fdd, healthy.
-- Both public `/api/ping` endpoints returned `online:true`.
-- Clean release worktrees were used because the canonical OpenAfD server checkout contains intentional local changes.
-- Rollback images were preserved; the known orphan `openafd-vane` container was not deleted.
+### Open Tasks
+- OpenSIN: T-0009 (in_progress, Coverage-Gate), T-0008 (Browserabnahme), T-0011 (persist context - im Commit a79c1a2b2 vermutlich erledigt), T-0012 (Einzeldatei-Prompt, laufend)
+- OpenAfD: T-0033 (in_progress Coverage), T-0035, T-0036, blocked: T-0001, T-0025, T-0031
 
-### Browser Evidence
-- Dedicated Orca product pages:
-  - OpenSIN: 820619f3-8104-4177-8ef1-08bbc32d27be
-  - OpenAfD: e124c720-1e46-4717-9266-1b4ea9f8eaf1
-- Secure live login succeeded on both products without printing passwords or tokens.
-- Navigation and empty states were visible for Chats, Quellen, Recherche, file upload and Chat/Work/Code modes.
-- OpenSIN normal chat returned `CHAT_OK_OPENSIN_20260802_1600` in a fresh thread with no reconnect or session-ended error.
-- OpenAfD normal chat returned `CHAT_OK_OPENAFD_20260802_1605` in a fresh thread with no reconnect or session-ended error.
-- OpenSIN accepted and visibly attached `opensin-upload-20260802.txt`; the document-context response could not be read after the browser runtime failed.
+### Nächste Schritte nach Recovery
+1. Neuen Chat mit Resume-Brief bespielen (sin-gpt-web-state ensure + summary + TASKPLAN.md lesen, laufende T-0012-Arbeit committen/pushen, Coverage-Gate T-0009/T-0033, Browserabnahme T-0008, Deploy beider Repos als immutable Images inkl. Token-Rotation)
+2. Deployment: OpenSIN a79c1a2b2, OpenAfD 23653651e auf OCI VM sin-supabase (92.5.60.87)
+3. Browser-Abnahme T-0008 auf Live-Seiten
 
-### Remaining Browser Blocker
-- Orca returned `runtime_unavailable` during the upload-context wait, then two consecutive minimal DOM reads were terminated with `SIGTERM`.
-- Further file-context, workspace-source, deep-research and controlled reconnect checks were stopped rather than retried indefinitely.
-- `sin-chrome doctor` was green, but the managed bot profile has no provisioned product-domain credentials, so it cannot replace Orca for authenticated acceptance.
-- Existing wow-my-zsh issue #29 was updated with fresh safe evidence: https://github.com/OpenSIN-Code/wow-my-zsh/issues/29#issuecomment-5158493090
-
-### Task State
-- **OpenSIN T-0001**: done.
-- **OpenSIN T-0002**: done.
-- **OpenSIN T-0003**: blocked with partial fresh browser evidence and exact runtime blocker.
-- **OpenSIN T-0004**: done.
-- **OpenSIN T-0005**: done.
-- **OpenAfD T-0031**: blocked only on fresh deep-research browser termination evidence; code, tests, deployment and normal-chat regression are green.
-- **OpenAfD T-0025**: remains blocked with updated fresh browser evidence.
-
-### Callback Delivery Blocker
-- The required T-0001 round-1 callback was attempted exactly once after all durable state and pushes.
-- Delivery failed before consumption because the exact originating OpenCode terminal `term_eb94a5c7-986a-4e94-ae0d-a66dfc1b2287` is disconnected, non-writable and exited.
-- Orca still retains the exact tab, leaf and session metadata, but switching the terminal returns `terminal_exited`; the pane is absent from the current visual layout.
-- No alternate terminal was substituted and no second callback send was attempted.
-
-### Next Action
-Reconnect or recreate the exact originating OpenCode terminal identity so the still-open callback capability can be delivered safely. Separately, restore a stable authenticated browser control channel, then resume only the remaining acceptance flows: file-context result, adding workspace sources to chat, source retrieval, web search/deep research, and controlled reconnect recovery. Do not repeat completed deployment or normal-chat work unless the deployed SHA changes.
+### Authorization
+- Commit+Push main beide Repos: YES | Deployment: YES | Token-Rotation: YES | Keine externen irreversiblen Aktionen
