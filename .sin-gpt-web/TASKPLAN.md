@@ -372,8 +372,6 @@ Titel, Konversations-URL, Aufgabe, Repos, letzter Status, Blocker und Evidence d
 
 ## Recent events
 
-- 2026-08-03T14:32:40+00:00 — `chatgpt-web` — `task_added` `T-0019`: Websuche endet nach erfolgreichem Scraping mit Internal error
-- 2026-08-03T14:46:51+00:00 — `chatgpt-web` — `task_claimed` `T-0014`: claimed by chatgpt-web
 - 2026-08-03T14:46:51+00:00 — `chatgpt-web` — `task_claimed` `T-0015`: claimed by chatgpt-web
 - 2026-08-03T14:46:51+00:00 — `chatgpt-web` — `task_claimed` `T-0016`: claimed by chatgpt-web
 - 2026-08-03T14:46:51+00:00 — `chatgpt-web` — `task_claimed` `T-0018`: claimed by chatgpt-web
@@ -392,3 +390,5 @@ Titel, Konversations-URL, Aufgabe, Repos, letzter Status, Blocker und Evidence d
 - 2026-08-03T18:06:18+00:00 — `local-agent` — `verification` `T-0016`: API verification after fix: full existing API suite passed 3263 tests; direct formatter probe confirms document attachments emit text blocks and valid data:image attachments emit image_url only. Live browser upload payload now has no code path producing image_url with missing URL; final authenticated browser attachment send remains to be rechecked.
 - 2026-08-03T18:27:26+00:00 — `local-agent` — `deploy` `T-0016`: CEO immutable deploy completed: opensin-app:5c48a83adc415c7eaaf8a1d6a905f526cd67e3bb built with Node 24 image, Compose project opensin-production, container opensin-app healthy, public /api/ping online:true. Container-name collision eliminated by explicit COMPOSE_CONTAINER_NAME.
 - 2026-08-03T18:27:26+00:00 — `local-agent` — `blocker` `T-0016`: Post-deploy Orca browser session was invalidated by controlled container replacement and now shows the login screen. No credentials were available in the browser session to re-authenticate without exposing a secret; upload/deep-research live acceptance remains externally blocked, while deployment and API/formatter verification are complete.
+- 2026-08-03T18:54:41+00:00 — `local-agent` — `acceptance` `T-0016`: CEO live acceptance after immutable deploy: re-authenticated via deployment token without logging it; uploaded .sin-gpt-web/TASKPLAN.md through real hidden file input; normal Chat returned exact UUID-prefixed TASKPLAN.md citation with no image_url validation error; Work/Deep Research with web-search returned sourced IANA result, with no Internal error or Agent session has ended.
+- 2026-08-03T18:54:41+00:00 — `local-agent` — `bug_closed` `T-0016`: Shared attachment payload bug closed: document attachments no longer serialize as image_url; live OpenSIN acceptance confirms normal Chat and Deep Research succeed.
