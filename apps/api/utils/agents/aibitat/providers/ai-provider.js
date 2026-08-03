@@ -346,11 +346,24 @@ class Provider {
     // Transform message with attachments into multimodal format
     const content = [{ type: "text", text: message.content }];
     for (const attachment of message.attachments) {
+      const contentString = attachment.contentString;
+      const isImage =
+        typeof contentString === "string" &&
+        contentString.startsWith("data:image/");
+
+      if (isImage) {
+        content.push({
+          type: "image_url",
+          image_url: { url: contentString },
+        });
+        continue;
+      }
+
+      const name = attachment.name || attachment.file?.name || "attachment";
+      const text = contentString || attachment.text || "";
       content.push({
-        type: "image_url",
-        image_url: {
-          url: attachment.contentString,
-        },
+        type: "text",
+        text: `[Attached document: ${name}]\n${text}`,
       });
     }
 
