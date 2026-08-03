@@ -162,8 +162,6 @@ function math_block(state: any, start: number, end: number, silent: boolean) {
     found = false,
     pos = state.bMarks[start] + state.tShift[start],
     max = state.eMarks[start];
-  const token = state.push("math_block", "math", 0);
-
   // Check for $$, \[, or standalone [ as opening delimiters
   if (pos + 1 > max) {
     return false;
@@ -176,6 +174,12 @@ function math_block(state: any, start: number, end: number, silent: boolean) {
   if (!isDoubleDollar && !isLatexBracket) {
     return false;
   }
+
+  if (silent) {
+    return true;
+  }
+
+  const token = state.push("math_block", "math", 0);
 
   // Determine the closing delimiter and position adjustment
   let delimiter = "",
@@ -191,9 +195,6 @@ function math_block(state: any, start: number, end: number, silent: boolean) {
   pos += posAdjust;
   firstLine = state.src.slice(pos, max);
 
-  if (silent) {
-    return true;
-  }
   if (firstLine.trim().slice(-delimiter.length) === delimiter) {
     // Single line expression
     firstLine = firstLine.trim().slice(0, -delimiter.length);
@@ -294,7 +295,7 @@ export default function math_plugin(md: any, options: any) {
     return katexBlock(tokens[idx].content) + "\n";
   };
 
-  md.inline.ruler.after("escape", "math_inline", math_inline);
+  md.inline.ruler.before("escape", "math_inline", math_inline);
   md.block.ruler.after("blockquote", "math_block", math_block, {
     alt: ["paragraph", "reference", "blockquote", "list"],
   });

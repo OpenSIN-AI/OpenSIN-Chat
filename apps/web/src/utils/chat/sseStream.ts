@@ -49,9 +49,9 @@ export async function streamSSEPost(
 
   function dispatchEvent() {
     if (eventData === "") {
-      // No data — reset and skip
+      // No data — reset the per-event type and skip. The last event id is
+      // sticky across events per the SSE specification.
       eventType = "";
-      eventId = "";
       return;
     }
     // Strip trailing newline from data per spec
@@ -66,6 +66,46 @@ export async function streamSSEPost(
     // eventId is sticky — do NOT reset per SSE spec
   }
 
+  function processLine(line: string) {
+    if (line === "" || line === "\r") {
+      // Empty line = dispatch the buffered event
+      dispatchEvent();
+      return;
+    }
+
+    if (line.startsWith(":")) {
+      // SSE comment / heartbeat — treat as a ping: fire onmessage with empty
+      // data so stall timers can reset, matching fetch-event-source behaviour.
+      onmessage?.({ data: "" });
+      return;
+    }
+
+    const colonIdx = line.indexOf(":");
+    if (colonIdx === -1) {
+      // Field with no value
+      return;
+    }
+
+    const field = line.slice(0, colonIdx);
+    // Spec: if the char after ":" is a space, strip it
+    const value = line.slice(colonIdx + (line[colonIdx + 1] === " " ? 2 : 1));
+
+    switch (field) {
+      case "data":
+        eventData += value + "\n";
+        break;
+      case "event":
+        eventType = value;
+        break;
+      case "id":
+        eventId = value;
+        break;
+      case "retry":
+        // Ignore retry hints — we do not auto-reconnect
+        break;
+    }
+  }
+
   try {
     while (true) {
       if (signal?.aborted) break;
@@ -78,51 +118,12 @@ export async function streamSSEPost(
       // Keep last (potentially incomplete) line in the buffer
       buffer = lines.pop() ?? "";
 
-      for (const line of lines) {
-        if (line === "" || line === "\r") {
-          // Empty line = dispatch the buffered event
-          dispatchEvent();
-          continue;
-        }
-
-        if (line.startsWith(":")) {
-          // SSE comment / heartbeat — treat as a ping: fire onmessage with
-          // empty data so stall timers can reset, matching fetch-event-source
-          // behaviour.
-          onmessage?.({ data: "" });
-          continue;
-        }
-
-        const colonIdx = line.indexOf(":");
-        if (colonIdx === -1) {
-          // Field with no value
-          continue;
-        }
-
-        const field = line.slice(0, colonIdx);
-        // Spec: if the char after ":" is a space, strip it
-        const value = line.slice(
-          colonIdx + (line[colonIdx + 1] === " " ? 2 : 1),
-        );
-
-        switch (field) {
-          case "data":
-            eventData += value + "\n";
-            break;
-          case "event":
-            eventType = value;
-            break;
-          case "id":
-            eventId = value;
-            break;
-          case "retry":
-            // Ignore retry hints — we do not auto-reconnect
-            break;
-        }
-      }
+      for (const line of lines) processLine(line);
     }
 
-    // Dispatch any leftover event that didn't end with a blank line
+    // Process and dispatch a final event even when the stream ends without a
+    // terminating newline or blank separator.
+    if (buffer) processLine(buffer);
     if (eventData) dispatchEvent();
   } catch (err) {
     if (

@@ -55,6 +55,7 @@ jest.mock("../../utils/agents", () => ({
 
 const express = require("express");
 const http = require("node:http");
+const { TextDecoder } = require("node:util");
 const { agentSSE } = require("../../endpoints/agentSSE");
 const {
   WorkspaceAgentInvocation,
@@ -84,7 +85,8 @@ async function readUntil(response, predicate, { timeoutMs = 3000 } = {}) {
           if (predicate(payload)) return payload;
         }
       }
-      if (done) throw new Error("readUntil: stream ended before predicate matched");
+      if (done)
+        throw new Error("readUntil: stream ended before predicate matched");
     }
   }
 
@@ -93,7 +95,10 @@ async function readUntil(response, predicate, { timeoutMs = 3000 } = {}) {
       readLoop(),
       new Promise((_, reject) =>
         setTimeout(
-          () => reject(new Error("readUntil: predicate never matched before timeout")),
+          () =>
+            reject(
+              new Error("readUntil: predicate never matched before timeout"),
+            ),
           timeoutMs,
         ),
       ),
@@ -227,9 +232,7 @@ describe("agentSSE — error paths", () => {
       await new Promise((resolve) => setTimeout(resolve, 25));
     }
 
-    expect(WorkspaceAgentInvocation.close).toHaveBeenCalledWith(
-      "test-uuid-5",
-    );
+    expect(WorkspaceAgentInvocation.close).toHaveBeenCalledWith("test-uuid-5");
     releaseInit({ invocation: null }); // avoid dangling handler work
   });
 

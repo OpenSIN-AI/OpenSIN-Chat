@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-/* eslint-env jest */
 
 const {
   executionMethods,
