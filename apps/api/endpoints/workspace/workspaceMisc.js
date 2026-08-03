@@ -277,9 +277,12 @@ function workspaceMiscEndpoints(app) {
             .json({ error: "filename query param is required" });
         }
         const safeName = path.basename(filename);
-        const uploadsDir = getStoragePath("uploads");
+        if (safeName !== filename) {
+          return response.status(403).json({ error: "Access denied" });
+        }
+        const uploadsDir = path.resolve(getStoragePath("uploads"));
         const filePath = path.resolve(uploadsDir, safeName);
-        if (!filePath.startsWith(path.resolve(uploadsDir))) {
+        if (!filePath.startsWith(`${uploadsDir}${path.sep}`)) {
           return response.status(403).json({ error: "Access denied" });
         }
         let fileStat;

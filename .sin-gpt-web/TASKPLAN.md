@@ -13,8 +13,8 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 
 ## Status
 
-- Backlog: 1
-- In progress: 1
+- Backlog: 2
+- In progress: 2
 - Blocked: 0
 - Done: 6
 - Cancelled: 0
@@ -29,8 +29,10 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 | T-0006 | critical | implement | done | chatgpt-web | Chat-Dateiupload: LLM behauptet trotz vorhandenem Parsed Context keinen Anhang | — |
 | T-0007 | critical | implement | in_progress | chatgpt-web | OpenSIN exakte Einzeldatei-Rückgabe nachziehen | — |
 | T-0008 | critical | test | backlog | chatgpt-web | Fehlende Browserabnahme vollständig nachholen | — |
+| T-0010 | critical | implement | in_progress | chatgpt-web | Originaldownload für Thread-Dateiquellen reparieren | — |
 | T-0004 | high | ops | done | chatgpt-web | sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren | — |
 | T-0005 | high | ops | done | chatgpt-web | Taskplan und ChatGPT-Handoff aktuell halten | — |
+| T-0009 | high | test | backlog | chatgpt-web | Web-Coverage-Gate wieder erfüllen | — |
 
 ## Task details
 
@@ -136,6 +138,26 @@ T-0003 was marked done although web search and deep research were not re-execute
 Acceptance:
 - Fresh browser evidence covers login, normal chat, web search, file upload and source retrieval, deep research, navigation, empty/error states and reconnect/session termination for OpenSIN and OpenAfD.
 
+### T-0010 — Originaldownload für Thread-Dateiquellen reparieren
+
+- Status: `in_progress`
+- Owner: `chatgpt-web`
+- Kind: `implement`
+- Priority: `critical`
+- Dependencies: none
+- Updated: 2026-08-03T00:58:01+00:00
+
+Frische Browserabnahme: Ein einzelner TXT-Thread-Upload wird sichtbar, exakt beantwortet und im Quellen-Drawer angezeigt. Der Button Originaldatei herunterladen ruft jedoch /api/workspace/mein-workspace/download-document mit dem UUID-präfixierten Citation-Titel auf und erhält HTTP 404. Dateiauflösung für Thread-Uploads korrigieren und gegen Traversal absichern.
+
+Acceptance:
+- Frisch hochgeladene Thread-Datei kann aus dem Citation-/Quellen-Drawer als Original heruntergeladen werden; Response 200 und Bytes entsprechen exakt dem Upload; bestehende Workspace-Dokumentdownloads bleiben grün; Traversaltests bestehen.
+
+Allowed paths:
+- `apps/api/endpoints`
+- `apps/api/utils`
+- `apps/api/__tests__`
+- `apps/web/src/components/WorkspaceChat/ChatContainer/ChatHistory/Citation`
+
 ### T-0004 — sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren
 
 - Status: `done`
@@ -168,12 +190,27 @@ Evidence: Canonical conversation title and URL, page IDs, OpenSIN/OpenAfD main c
 
 Completion report: `.sin-gpt-web/reports/T-0005.md`
 
+### T-0009 — Web-Coverage-Gate wieder erfüllen
+
+- Status: `backlog`
+- Owner: `chatgpt-web`
+- Kind: `test`
+- Priority: `high`
+- Dependencies: none
+- Updated: 2026-08-03T00:57:51+00:00
+
+Der frische verify:strict-Lauf vom 2026-08-03 besteht alle Web-Tests, scheitert aber an den unveränderten globalen Vitest-Coverage-Schwellen. Ergänze gezielte Tests für reale ungetestete Pfade; Schwellen nicht senken.
+
+Acceptance:
+- yarn verify:strict ist vollständig grün; globale Web-Coverage erreicht mindestens statements 50%, branches 48%, functions 50%, lines 50%, ohne Schwellenabsenkung.
+
+Allowed paths:
+- `apps/web/src`
+- `apps/web/tests`
+- `apps/web/vitest.config.js`
+
 ## Recent events
 
-- 2026-08-02T14:57:42+00:00 — `chatgpt-web` — `task_blocked` `T-0003`: Fresh Orca acceptance partially passed on 2026-08-02: authenticated login/navigation/empty states and normal chat succeeded on both live SHAs with exact markers and no reconnect/session-ended errors; OpenSIN real file input accepted a visible TXT attachment and form submit started. Remaining file-context result, source-selection, deep-research and controlled reconnect checks are externally blocked because Orca then returned runtime_unavailable followed by two consecutive SIGTERM failures on minimal DOM reads. sin-chrome-control cannot substitute because the approved bot profile has no managed credentials for either product domain.
-- 2026-08-02T14:58:51+00:00 — `chatgpt-web` — `task_claimed` `T-0005`: claimed by chatgpt-web
-- 2026-08-02T14:59:33+00:00 — `chatgpt-web` — `task_completed` `T-0005`: Canonical conversation title and URL, page IDs, OpenSIN/OpenAfD main commits, exact live image SHAs, health checks, wow-my-zsh issue #29 update, passed browser flows and the precise Orca/sin-chrome remaining blocker are recorded in .sin-gpt-web/handoff.md. Both taskplans were updated transactionally after milestones.
-- 2026-08-02T15:05:42+00:00 — `chatgpt-web` — `callback_delivery_blocked` `T-0001`: 2026-08-02: Mandatory round-1 callback send was attempted once after all durable state and pushes. Delivery failed before consumption because exact origin terminal term_eb94a5c7-986a-4e94-ae0d-a66dfc1b2287 is disconnected, non-writable and exited. Orca still knows the exact tab/leaf/session, but terminal switch returns terminal_exited and the pane is absent from the live layout. No alternate terminal was substituted and no second callback send was attempted.
 - 2026-08-02T16:57:13+00:00 — `chatgpt-web` — `task_unblocked` `T-0003`: 2026-08-02 18:24 CEST: Orca runtime is ready again. Existing OpenSIN upload thread shows parsed source drawer with exact marker UPLOAD_OPENSIN_20260802_1610 and Originaldatei herunterladen, but assistant response incorrectly repeats prior CHAT_OK_OPENSIN_20260802_1600. Browser acceptance resumed to diagnose and fix context handoff.
 - 2026-08-02T16:57:32+00:00 — `chatgpt-web` — `task_claimed` `T-0003`: claimed by chatgpt-web
 - 2026-08-02T17:14:08+00:00 — `chatgpt-web` — `task_added` `T-0006`: Chat-Dateiupload: LLM behauptet trotz vorhandenem Parsed Context keinen Anhang
@@ -190,3 +227,7 @@ Completion report: `.sin-gpt-web/reports/T-0005.md`
 - 2026-08-02T20:03:33+00:00 — `chatgpt-web` — `task_added` `T-0007`: OpenSIN exakte Einzeldatei-Rückgabe nachziehen
 - 2026-08-02T20:03:33+00:00 — `chatgpt-web` — `task_added` `T-0008`: Fehlende Browserabnahme vollständig nachholen
 - 2026-08-02T20:03:47+00:00 — `chatgpt-web` — `task_claimed` `T-0007`: claimed by chatgpt-web
+- 2026-08-03T00:06:26+00:00 — `chatgpt-web` — `task_added` `T-0009`: Web-Coverage-Gate wieder erfüllen
+- 2026-08-03T00:29:24+00:00 — `chatgpt-web` — `task_added` `T-0010`: Originaldownload für Thread-Dateiquellen reparieren
+- 2026-08-03T00:57:51+00:00 — `chatgpt-web` — `task_updated` `T-0009`: Frischer Post-Fix-Lauf 2026-08-03: 229/229 Testdateien grün; Coverage 46.57/39.4/45.53/47.53 bleibt unter 50/48/50/50.
+- 2026-08-03T00:58:01+00:00 — `chatgpt-web` — `task_claimed` `T-0010`: claimed by chatgpt-web

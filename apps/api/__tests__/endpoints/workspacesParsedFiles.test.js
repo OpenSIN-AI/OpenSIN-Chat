@@ -5,7 +5,12 @@ jest.mock("../../utils/middleware/validatedRequest", () => ({
 jest.mock("../../utils/middleware/multiUserProtected", () => ({
   isSingleUserMode: (_req, _res, next) => next(),
   flexUserRoleValid: () => (_req, _res, next) => next(),
-  ROLES: { all: "<all>", admin: "admin", manager: "manager", default: "default" },
+  ROLES: {
+    all: "<all>",
+    admin: "admin",
+    manager: "manager",
+    default: "default",
+  },
 }));
 jest.mock("../../utils/middleware/validWorkspace", () => ({
   validWorkspaceSlug: (_req, _res, next) => next(),
@@ -14,6 +19,15 @@ jest.mock("../../utils/logger", () => () => ({
   error: jest.fn(),
   info: jest.fn(),
   warn: jest.fn(),
+}));
+
+const fs = require("fs");
+const path = require("path");
+const mockEnsureStorageDir = jest.fn(
+  () => "/tmp/opensin-chat-workspaces-parsed-files-test/uploads",
+);
+jest.mock("../../utils/paths", () => ({
+  ensureStorageDir: (...args) => mockEnsureStorageDir(...args),
 }));
 
 const mockUserFromSession = jest.fn();
@@ -128,7 +142,9 @@ jest.mock("../../utils/parseJobs", () => {
 });
 
 const { createMockApp, createMockRes } = require("../helpers/mockExpressApp");
-const { workspaceParsedFilesEndpoints } = require("../../endpoints/workspacesParsedFiles");
+const {
+  workspaceParsedFilesEndpoints,
+} = require("../../endpoints/workspacesParsedFiles");
 
 function buildApp() {
   const harness = createMockApp();
@@ -138,7 +154,9 @@ function buildApp() {
 
 async function callWithLocals(harness, method, path, req = {}, locals = {}) {
   const key = `${method.toLowerCase()} ${path}`;
-  const route = harness.routes.find(r => r.method === method.toLowerCase() && r.pattern === path);
+  const route = harness.routes.find(
+    (r) => r.method === method.toLowerCase() && r.pattern === path,
+  );
   if (!route) throw new Error(`No route registered for ${key}`);
   const handler = route.handler;
   const request = {
@@ -194,7 +212,11 @@ describe("Workspace Parsed Files endpoints", () => {
       mockUserFromSession.mockResolvedValue(user);
       mockMultiUserMode.mockReturnValue(false);
       mockThreadGet.mockResolvedValue({ id: 5, name: "T" });
-      mockGetContext.mockResolvedValue({ files: [], contextWindow: 4096, currentContextTokenCount: 0 });
+      mockGetContext.mockResolvedValue({
+        files: [],
+        contextWindow: 4096,
+        currentContextTokenCount: 0,
+      });
       const harness = buildApp();
       const res = await callWithLocals(
         harness,
@@ -528,6 +550,165 @@ describe("Workspace Parsed Files endpoints", () => {
         }),
       );
       expect(mockEventLog).toHaveBeenCalled();
+    });
+
+    it("copies the original upload before collector parsing consumes the hotdir file", async () => {
+      mockUserFromSession.mockResolvedValue(user);
+      mockMultiUserMode.mockReturnValue(false);
+      mockCollectorOnline.mockResolvedValue(true);
+      mockParsedCreate.mockResolvedValue({
+        file: { id: 1, filename: "doc.pdf-d1.json", tokenCountEstimate: 50 },
+        error: null,
+      });
+
+      const order = [];
+      const accessSpy = jest
+        .spyOn(fs.promises, "access")
+        .mockImplementation(async () => order.push("access"));
+      const copySpy = jest
+        .spyOn(fs.promises, "copyFile")
+        .mockImplementation(async () => order.push("copy"));
+      const rmSpy = jest.spyOn(fs.promises, "rm").mockResolvedValue(undefined);
+      mockCollectorParse.mockImplementation(async () => {
+        order.push("parse");
+        return {
+          success: true,
+          documents: [{ id: "d1", token_count_estimate: 50 }],
+        };
+      });
+
+      try {
+        const harness = buildApp();
+        const res = await callWithLocals(
+          harness,
+          "post",
+          "/workspace/:slug/parse",
+          {
+            file: {
+              path: "/tmp/hotdir/upload-uuid_doc.pdf",
+              originalname: "doc.pdf",
+              filename: "upload-uuid_doc.pdf",
+            },
+            body: {},
+          },
+          { workspace },
+        );
+        expect(res.statusCode).toBe(202);
+        await flush();
+        await flush();
+
+        const destination = path.resolve(
+          "/tmp/opensin-chat-workspaces-parsed-files-test/uploads",
+          "upload-uuid_doc.pdf",
+        );
+        expect(copySpy).toHaveBeenCalledWith(
+          "/tmp/hotdir/upload-uuid_doc.pdf",
+          destination,
+        );
+        expect(order.indexOf("copy")).toBeGreaterThanOrEqual(0);
+        expect(order.indexOf("copy")).toBeLessThan(order.indexOf("parse"));
+        expect(rmSpy).not.toHaveBeenCalledWith(destination, { force: true });
+      } finally {
+        accessSpy.mockRestore();
+        copySpy.mockRestore();
+        rmSpy.mockRestore();
+      }
+    });
+
+    it("removes the durable upload copy when collector parsing fails", async () => {
+      mockUserFromSession.mockResolvedValue(user);
+      mockMultiUserMode.mockReturnValue(false);
+      mockCollectorOnline.mockResolvedValue(true);
+      mockCollectorParse.mockResolvedValue({
+        success: false,
+        reason: "parse error",
+        documents: [],
+      });
+
+      const accessSpy = jest
+        .spyOn(fs.promises, "access")
+        .mockResolvedValue(undefined);
+      const copySpy = jest
+        .spyOn(fs.promises, "copyFile")
+        .mockResolvedValue(undefined);
+      const rmSpy = jest.spyOn(fs.promises, "rm").mockResolvedValue(undefined);
+
+      try {
+        const harness = buildApp();
+        const res = await callWithLocals(
+          harness,
+          "post",
+          "/workspace/:slug/parse",
+          {
+            file: {
+              path: "/tmp/hotdir/upload-uuid_doc.pdf",
+              originalname: "doc.pdf",
+              filename: "upload-uuid_doc.pdf",
+            },
+            body: {},
+          },
+          { workspace },
+        );
+        expect(res.statusCode).toBe(202);
+        await flush();
+        await flush();
+
+        const destination = path.resolve(
+          "/tmp/opensin-chat-workspaces-parsed-files-test/uploads",
+          "upload-uuid_doc.pdf",
+        );
+        expect(rmSpy).toHaveBeenCalledWith(destination, { force: true });
+      } finally {
+        accessSpy.mockRestore();
+        copySpy.mockRestore();
+        rmSpy.mockRestore();
+      }
+    });
+
+    it("rejects unsafe multer filenames instead of copying outside uploads", async () => {
+      mockUserFromSession.mockResolvedValue(user);
+      mockMultiUserMode.mockReturnValue(false);
+      mockCollectorOnline.mockResolvedValue(true);
+      mockCollectorParse.mockResolvedValue({
+        success: true,
+        documents: [{ id: "d1", token_count_estimate: 1 }],
+      });
+      mockParsedCreate.mockResolvedValue({
+        file: { id: 1, filename: "doc.pdf-d1.json" },
+        error: null,
+      });
+
+      const accessSpy = jest
+        .spyOn(fs.promises, "access")
+        .mockResolvedValue(undefined);
+      const copySpy = jest
+        .spyOn(fs.promises, "copyFile")
+        .mockResolvedValue(undefined);
+
+      try {
+        const harness = buildApp();
+        const res = await callWithLocals(
+          harness,
+          "post",
+          "/workspace/:slug/parse",
+          {
+            file: {
+              path: "/tmp/hotdir/escape.txt",
+              originalname: "doc.pdf",
+              filename: "../escape.txt",
+            },
+            body: {},
+          },
+          { workspace },
+        );
+        expect(res.statusCode).toBe(202);
+        await flush();
+        await flush();
+        expect(copySpy).not.toHaveBeenCalled();
+      } finally {
+        accessSpy.mockRestore();
+        copySpy.mockRestore();
+      }
     });
 
     it("marks job failed when the collector parse fails", async () => {

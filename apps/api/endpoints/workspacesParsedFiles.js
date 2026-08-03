@@ -47,7 +47,7 @@ async function copyToUploads(request) {
   try {
     const filePath = request.file?.path;
     const filename = request.file?.filename;
-    if (!filePath || !filename) return;
+    if (!filePath || !filename) return null;
     try {
       await fs.promises.access(filePath);
     } catch {
@@ -57,11 +57,34 @@ async function copyToUploads(request) {
       );
       return;
     }
-    const uploadsDir = ensureStorageDir("uploads");
-    const destPath = path.join(uploadsDir, filename);
+    const safeName = path.basename(filename);
+    if (safeName !== filename) {
+      consoleLogger.info(
+        "[copyToUploads] rejected unsafe upload filename:",
+        filename,
+      );
+      return null;
+    }
+    const uploadsDir = path.resolve(ensureStorageDir("uploads"));
+    const destPath = path.resolve(uploadsDir, safeName);
+    if (!destPath.startsWith(`${uploadsDir}${path.sep}`)) return null;
     await fs.promises.copyFile(filePath, destPath);
+    return destPath;
   } catch (e) {
     consoleLogger.info("[copyToUploads] best-effort copy failed:", e.message);
+    return null;
+  }
+}
+
+async function removeUploadsCopy(filePath) {
+  if (!filePath) return;
+  try {
+    await fs.promises.rm(filePath, { force: true });
+  } catch (e) {
+    consoleLogger.info(
+      "[removeUploadsCopy] best-effort cleanup failed:",
+      e.message,
+    );
   }
 }
 
@@ -107,6 +130,7 @@ async function runParseJob(jobId, upload, ctx) {
   const { workspace, user, thread } = ctx;
   const originalname = upload.file?.originalname || "unknown";
   const collectorFilename = upload.file?.filename || originalname;
+  let copiedUploadPath = null;
   await ParseJobs.markProcessing(jobId);
 
   try {
@@ -121,16 +145,18 @@ async function runParseJob(jobId, upload, ctx) {
       return;
     }
 
-    // Durability mirror runs in parallel with parsing — neither blocks
-    // the other and neither ever blocked the client's upload request.
+    // Start the remote durability mirror immediately, then complete the local
+    // uploads copy before Collector parsing. The collector may consume/remove
+    // the hotdir file, so copying afterward races and breaks original downloads.
     const mirrorPromise = mirrorToSupabase(upload).catch((e) =>
       console.warn("[workspacesParsedFiles] non-fatal error:", e?.message || e),
     );
+    copiedUploadPath = await copyToUploads(upload);
 
     const { success, reason, documents } =
       await Collector.parseDocument(collectorFilename);
     if (!success || !documents?.[0]) {
-      await mirrorPromise;
+      await Promise.all([mirrorPromise, removeUploadsCopy(copiedUploadPath)]);
       await cleanupHotdirFile(upload);
       await ParseJobs.markFailed(
         jobId,
@@ -167,9 +193,9 @@ async function runParseJob(jobId, upload, ctx) {
       files.push(...batchResults);
     }
 
-    // Mirror the local upload into the FilesystemSidebar uploads root and
-    // wait for the Supabase mirror to settle — both best-effort.
-    await Promise.all([copyToUploads(upload), mirrorPromise]);
+    // The local upload was copied before parsing so original downloads remain
+    // available even after Collector consumes the hotdir source.
+    await mirrorPromise;
 
     Collector.log(`Document ${originalname} parsed successfully.`);
     await EventLogs.logEvent(
@@ -183,7 +209,10 @@ async function runParseJob(jobId, upload, ctx) {
     );
     await ParseJobs.markCompleted(jobId, files);
   } catch (e) {
-    await cleanupHotdirFile(upload);
+    await Promise.all([
+      cleanupHotdirFile(upload),
+      removeUploadsCopy(copiedUploadPath),
+    ]);
     const errorId = crypto.randomUUID();
     consoleLogger.error(`[parse job error ${errorId}]`, e);
     await ParseJobs.markFailed(
