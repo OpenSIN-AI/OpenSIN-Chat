@@ -1,34 +1,42 @@
-# Handoff: Run-6 CEO Delegation (Mac-i9 Tunnel Fehler -> Chat-Branch)
+# Handoff: Run-7 CEO Delegation (2026-08-03)
 
-## Status: ALLE Tasks done (OpenSIN done=12, OpenAfD done=33); beide Repos deployed+verifiziert; T-0008 abgeschlossen
+## Status: DELEGATION ACTIVE — ChatGPT arbeitet an Run-7
 
-### Kanonischer ChatGPT-Chat (AKTIV)
+### Kanonischer ChatGPT-Chat (AKTIV, fortgesetzt aus Run-6)
+- **Titel**: #1 - OpenSIN-Chat
 - **Conversation URL**: https://chatgpt.com/c/6a70508f-569c-83eb-af07-9382d4f26ee3
-- **Chat-Titel**: "#1 - OpenSIN-Chat" (umbenannt 2026-08-03, in Sidebar verifiziert)
-- **Profile**: OpenSIN, **Mode**: Chat
-- Recovery abgeschlossen: Alter Chat 6a704264 ("Mac-i9 Tunnel Fehler") ist ARCHIVIERT (UI: "Das Gespräch ist archiviert"). Siehe `.sin-gpt-web/chat-recovery.json` (Counter #1).
+- **ChatGPT Page ID (Orca)**: d4c0660a-f53d-4cba-8a55-748133055ca3
+- **Profile**: OpenSIN (bba91bb2-87b8-419a-8928-771ac370526e), **Mode**: Chat (via Recovery verifiziert; bestehende Konversationen rendern kein Chat-Radio → manueller Orca-Recovery-Pfad)
+- **Connector**: Mac i9 (@Mac-i9 Mention gesendet)
+- **Callback**: DEAKTIVIERT (--no-callback: origin-Terminal ist an Worktree auto-8 gebunden, Skript verlangt Haupt-Checkout; Überwachung via Orca-Snapshots + Watchdog)
+- **Loop-Runde**: 1 von 12
 
-### Repos & Git (Stand 2026-08-03, alles gepusht)
-- OpenSIN-Chat main: 05d984d0b "docs(taskplan): complete T-0008 with fresh post-deploy browser acceptance"
-- OpenAfD-Chat main: e217bee02 "docs(taskplan): record post-deploy reload-persistence proof for T-0035"
-- Fix (beide): f85dd1537 / 5afa5604a "fix(api): persist exact single-attachment turns in thread history" (include:true, 43/43 Jest grün)
+### Delegations-Brief
+- Datei: `/Users/jeremy/dev/OpenSIN-Chat/.sin-gpt-web/delegation-run7.md`
+- Gesendet: 2026-08-03 ~13:10 UTC (manuell via Orca fill/click, weil delegate_chatgpt.py am fehlenden Chat-Radio in bestehender Konversation scheiterte)
+- ChatGPT-Antwort: "Ich starte mit dem kanonischen Run-7-Plan und dem DB-Summary, prüfe anschließend..." — Tool-Button "Aufgabenplan und Git-Status prüfen" sichtbar → arbeitet
 
-### Live-Deployment (OCI VM 92.5.60.87, verifiziert)
-- opensin-app: Image opensin-app:f85dd1537, health=healthy, public /api/ping online:true
-- openafd-app: Image openafd-app:5afa5604a, health=healthy, public /api/ping online:true
-- Cutover: docker rename alter Container -> legacy (Rollback möglich), compose up --no-build, interne+öffentliche Health-Pruefung, Legacy-Container: opensin-app-legacy-20260803T104406Z / openafd-app-legacy-20260803T104954Z (koennen entfernt werden)
-- Release-Worktrees auf VM: /home/ubuntu/releases/OpenSIN-Chat (f85dd1537), /home/ubuntu/releases/OpenAfD-Chat (5afa5604a); git checkout main schlaegt fehl (worktree-Konflikt), git merge --ff-only origin/main funktioniert
-- Build: docker compose build in platform/containers/compose mit OPENSIN_IMAGE_TAG=<sha>, OPENSIN_PORT: OpenSIN 38471 / OpenAfD 38472
+### Run-7 Tasks (kanonische DB in /Users/jeremy/dev/OpenSIN-Chat)
+- T-0013 (critical, implement): Git-Stand prüfen, Fehler beheben, alles nach main pushen (beide Repos)
+- T-0014 (critical, implement): OpenAfD-Chat vollständig synchronisieren + fehlerfrei
+- T-0015 (critical, ops): Beide Repos live auf OCI VM verifizieren und funktionierend halten
+- T-0016 (critical, test): Vollständige Browser-Abnahme ALLER Funktionen auf beiden Live-Domains (Websuche, Datei-Upload, Quellen-Dateien zum Chat hinzufügen, Deep Research, Modellwahl, Navigation, Empty/Error-States, Login/Reconnect, Notebooks, ⌘K-Suche)
+- T-0017 (high, ops, local-agent): sin-chrome-Fallback dokumentieren — ERLEDIGT, Issue #29 frisch kommentiert
+- T-0018 (high, ops): Taskplan und ChatGPT-Handoff aktuell halten
 
-### Live-Beweise (frisch, 2026-08-03)
-- OpenSIN: Thread 031dae27, Prompt "Gib den vollständigen Inhalt der einzigen angehängten Datei exakt und ohne Zusatz aus." -> exakt FILE_OK_OPENSIN_LIVE_960EEF_R2, 1 Quelle; Reload zeigt Nachricht (vorher leer); DB chat 105 include=1
-- OpenAfD: Thread f84e12e5, gleicher Prompt -> exakt FILE_OK_OPENAFD_LIVE_285C67_R2, 1 Quelle; Reload zeigt Nachricht; DB chat 13 include=1
-- ⌘K-Suche: Treffer auf round2-opensin-live-960eef.txt; Modellwahl: 10 NIM-Modelle, nemotron-nano-12b-v2-vl aktiv; Deep-Research-UI: @agent [deep-research] [sources:web-search]
-- Screenshots: OpenSIN/.local/browser-acceptance/round2-opensin-t0012-reload-persist-live.png, round2-opensin-cmdk-search-live.png; OpenAfD/.local/browser-acceptance/round2-openafd-t0035-reload-persist-live.png
+### Repos & Git (Stand 2026-08-03 ~13:00 UTC, beide clean auf main)
+- OpenSIN-Chat main: c9ccb529f (frisch gepusht, Run-7 TASKPLAN)
+- OpenAfD-Chat main: e217bee02, synced mit origin/main
+- OpenAfD blockiert: T-0001 (Key-Rotation, extern), T-0025 (Browserabnahme — ENTBLOCCKEN, Orca läuft), T-0031 (Deep-Research-Hang)
 
-### Open Tasks
-- Keine offenen Tasks. OpenSIN done=12, OpenAfD done=33. blocked (extern, beide Repos): OpenAfD T-0001 (Key-Rotation), T-0031 (Deep-Research-Hang), wow-my-zsh sin-chrome Issue #29
-- Legacy-Container auf der VM entfernt (existierten bereits nicht mehr; aktiv: opensin-app:f85dd1537, openafd-app:5afa5604a, beide healthy; Rollback jederzeit ueber die alten per-Commit-Images)
+### Live-Deployment (OCI VM 92.5.60.87, Stand Run-6)
+- opensin-app:f85dd1537, openafd-app:5afa5604a, beide health=healthy, /api/ping online:true
+- Release-Worktrees auf VM: /home/ubuntu/releases/OpenSIN-Chat, /home/ubuntu/releases/OpenAfD-Chat
 
-### Authorization
-- Commit+Push main beide Repos: YES | Deployment: YES | Token-Rotation: YES | Keine externen irreversiblen Aktionen
+### sin-chrome (2026-08-03 ~13:00 UTC)
+- NICHT funktionsfähig: control.py status → "the headed sin-chrome browser connection timed out", Dashboard-Port nicht erreichbar, CDP lebt (50698)
+- Issue #29 mit frischem Befund kommentiert: https://github.com/OpenSIN-Code/wow-my-zsh/issues/29#issuecomment-5166644794
+- → Orca-Browser-Fallback
+
+### Autorisierung
+- Commit+Push main beide Repos: YES | Deployment OCI VM: YES | Token-Rotation: YES | Keine destruktiven Aktionen ohne Rückfrage

@@ -13,10 +13,10 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 
 ## Status
 
-- Backlog: 6
+- Backlog: 5
 - In progress: 0
 - Blocked: 0
-- Done: 12
+- Done: 13
 - Cancelled: 0
 
 ## Tasks
@@ -39,7 +39,7 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 | T-0004 | high | ops | done | chatgpt-web | sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren | — |
 | T-0005 | high | ops | done | chatgpt-web | Taskplan und ChatGPT-Handoff aktuell halten | — |
 | T-0009 | high | test | done | chatgpt-web | Web-Coverage-Gate wieder erfüllen | — |
-| T-0017 | high | ops | backlog | local-agent | sin-chrome-Fallback dokumentieren und wow-my-zsh Issue #29 erneut bestätigen | — |
+| T-0017 | high | ops | done | local-agent | sin-chrome-Fallback dokumentieren und wow-my-zsh Issue #29 erneut bestätigen | — |
 | T-0018 | high | ops | backlog | chatgpt-web | Taskplan und ChatGPT-Handoff für Run-7 aktuell halten | — |
 
 ## Task details
@@ -323,14 +323,18 @@ Completion report: `.sin-gpt-web/reports/T-0009.md`
 
 ### T-0017 — sin-chrome-Fallback dokumentieren und wow-my-zsh Issue #29 erneut bestätigen
 
-- Status: `backlog`
+- Status: `done`
 - Owner: `local-agent`
 - Kind: `ops`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-08-03T13:04:34+00:00
+- Updated: 2026-08-03T13:15:58+00:00
 
 sin-chrome heute erneut geprüft: control.py status timeout, Dashboard nicht erreichbar, CDP lebt. Issue #29 mit frischem Befund kommentiert (siehe Kommentar). Delegation läuft über Orca-Fallback.
+
+Evidence: sin-chrome am 2026-08-03T13:00Z erneut geprüft: control.py status → 'the headed sin-chrome browser connection timed out'; Dashboard 127.0.0.1:40163 nicht erreichbar; CDP 50698 lebt. Wow-my-zsh Issue #29 mit frischem Befund kommentiert (comment 5166644794). Delegation läuft über Orca-Fallback. T-0017 erfüllt.
+
+Completion report: `.sin-gpt-web/reports/T-0017.md`
 
 ### T-0018 — Taskplan und ChatGPT-Handoff für Run-7 aktuell halten
 
@@ -345,9 +349,6 @@ Titel, Konversations-URL, Aufgabe, Repos, letzter Status, Blocker und Evidence d
 
 ## Recent events
 
-- 2026-08-03T07:46:28+00:00 — `chatgpt-web` — `task_completed` `T-0010`: Fresh verification 2026-08-03: OpenSIN main contains commit fb10f1f68 preserving original thread uploads and resolving UUID-prefixed citation downloads with traversal protection. Focused API run passed 3/3 suites and 48/48 tests: exact upload bytes/attachment headers, missing-file 404, traversal rejection, parsed-file lifecycle and stream regressions. Targeted ESLint and API TypeScript check passed. Shared immutable deployment and public/internal health evidence follow in the cutover event.
-- 2026-08-03T07:51:19+00:00 — `local-agent` — `task_added` `T-0011`: Geparsten First-Thread-Dateikontext dauerhaft speichern
-- 2026-08-03T07:57:43+00:00 — `local-agent` — `task_added` `T-0012`: Exakte Einzeldatei-Promptvarianten deterministisch erkennen
 - 2026-08-03T08:27:49+00:00 — `chatgpt-web` — `task_claimed` `T-0011`: claimed by chatgpt-web
 - 2026-08-03T08:27:58+00:00 — `chatgpt-web` — `task_claimed` `T-0012`: claimed by chatgpt-web
 - 2026-08-03T09:13:14+00:00 — `chatgpt-web` — `task_completed` `T-0009`: yarn workspace opensin-chat-frontend test:coverage: 54.87% lines, 48.04% branches, 52.89% functions, 55.89% statements; Exit 0. Frontend type-check, ESLint und gezielte Vitest-Suiten grün.
@@ -365,3 +366,6 @@ Titel, Konversations-URL, Aufgabe, Repos, letzter Status, Blocker und Evidence d
 - 2026-08-03T13:04:34+00:00 — `local-agent` — `task_added` `T-0016`: Vollständige Browser-Abnahme ALLER Funktionen auf beiden Live-Domains (Websuche, Datei-Upload, Quellen-Dateien zum Chat hinzufügen, Deep Research, Modellwahl, Navigation, Empty/Error-States, Login/Reconnect, Notebooks, ⌘K-Suche)
 - 2026-08-03T13:04:34+00:00 — `local-agent` — `task_added` `T-0017`: sin-chrome-Fallback dokumentieren und wow-my-zsh Issue #29 erneut bestätigen
 - 2026-08-03T13:04:34+00:00 — `local-agent` — `task_added` `T-0018`: Taskplan und ChatGPT-Handoff für Run-7 aktuell halten
+- 2026-08-03T13:15:53+00:00 — `local-agent` — `delegation` `T-0013`: Run-7 Delegation an ChatGPT Web gesendet (Konv. #1 - OpenSIN-Chat 6a70508f). ChatGPT übernommen: 'Ich starte mit dem kanonischen Run-7-Plan...' Tool: Aufgabenplan+Git-Status prüfen. Callback deaktiviert (Worktree-Terminal), Überwachung via Orca+Watchdog.
+- 2026-08-03T13:15:53+00:00 — `local-agent` — `checkpoint` `T-0017`: sin-chrome weiterhin defekt (control timeout, Dashboard down). Issue #29 kommentiert, Orca-Fallback aktiv. T-0017 erfüllt.
+- 2026-08-03T13:15:58+00:00 — `local-agent` — `task_completed` `T-0017`: sin-chrome am 2026-08-03T13:00Z erneut geprüft: control.py status → 'the headed sin-chrome browser connection timed out'; Dashboard 127.0.0.1:40163 nicht erreichbar; CDP 50698 lebt. Wow-my-zsh Issue #29 mit frischem Befund kommentiert (comment 5166644794). Delegation läuft über Orca-Fallback. T-0017 erfüllt.
