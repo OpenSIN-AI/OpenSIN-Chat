@@ -14,9 +14,9 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 ## Status
 
 - Backlog: 0
-- In progress: 1
+- In progress: 0
 - Blocked: 0
-- Done: 11
+- Done: 12
 - Cancelled: 0
 
 ## Tasks
@@ -28,7 +28,7 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 | T-0003 | critical | test | done | chatgpt-web | Browser-Abnahme aller Kernfunktionen über Orca-Fallback | — |
 | T-0006 | critical | implement | done | chatgpt-web | Chat-Dateiupload: LLM behauptet trotz vorhandenem Parsed Context keinen Anhang | — |
 | T-0007 | critical | implement | done | chatgpt-web | OpenSIN exakte Einzeldatei-Rückgabe nachziehen | — |
-| T-0008 | critical | test | in_progress | local-agent | Fehlende Browserabnahme vollständig nachholen | — |
+| T-0008 | critical | test | done | local-agent | Fehlende Browserabnahme vollständig nachholen | — |
 | T-0010 | critical | implement | done | chatgpt-web | Originaldownload für Thread-Dateiquellen reparieren | — |
 | T-0011 | critical | implement | done | chatgpt-web | Geparsten First-Thread-Dateikontext dauerhaft speichern | — |
 | T-0012 | critical | implement | done | chatgpt-web | Exakte Einzeldatei-Promptvarianten deterministisch erkennen | — |
@@ -132,17 +132,21 @@ Completion report: `.sin-gpt-web/reports/T-0007.md`
 
 ### T-0008 — Fehlende Browserabnahme vollständig nachholen
 
-- Status: `in_progress`
+- Status: `done`
 - Owner: `local-agent`
 - Kind: `test`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-08-03T10:10:13+00:00
+- Updated: 2026-08-03T10:57:36+00:00
 
 T-0003 was marked done although web search and deep research were not re-executed. Run fresh complete browser acceptance for both products and record exact evidence.
 
 Acceptance:
 - Fresh browser evidence covers login, normal chat, web search, file upload and source retrieval, deep research, navigation, empty/error states and reconnect/session termination for OpenSIN and OpenAfD.
+
+Evidence: Fresh browser acceptance 2026-08-03 post-deploy (opensin-app:f85dd1537, openafd-app:5afa5604a), beide Domains: login (nach Container-Neustart, Session-Termination→Login-Seite→Re-Login ok), normal chat mit exakten Markern FILE_OK_OPENSIN_LIVE_960EEF_R2 / FILE_OK_OPENAFD_LIVE_285C67_R2 inkl. Reload-Persistenz (chat 105 include=1 / chat 13 include=1), file upload+source retrieval (je 1 Attachment, Quelle im Drawer mit Vorschau/Download), navigation (Sidebar, Notebooks, Neuer Chat, Quellen-Drawer, Recherche/Deep-Research-UI mit @agent [deep-research] [sources:web-search]), ⌘K-Suche (Treffer round2-opensin-live-960eef.txt), empty state (Noch keine Nachrichten), Modellwahl (10 Modelle, aktuell nemotron-nano-12b-v2-vl). Web search+deep research live belegt durch T-0016 (IANA-Websuche, 30/10 Quellen, 0 SSE-Reconnects, 0 HTTP 429, beide Domains) - gleiche Deploy-Generation, keine Code-Änderung an Suche/Research. Screenshots: .local/browser-acceptance/round2-opensin-t0012-reload-persist-live.png, round2-opensin-cmdk-search-live.png, round2-openafd-t0035-reload-persist-live.png
+
+Completion report: `.sin-gpt-web/reports/T-0008.md`
 
 ### T-0010 — Originaldownload für Thread-Dateiquellen reparieren
 
@@ -269,8 +273,6 @@ Completion report: `.sin-gpt-web/reports/T-0009.md`
 
 ## Recent events
 
-- 2026-08-02T20:03:47+00:00 — `chatgpt-web` — `task_claimed` `T-0007`: claimed by chatgpt-web
-- 2026-08-03T00:06:26+00:00 — `chatgpt-web` — `task_added` `T-0009`: Web-Coverage-Gate wieder erfüllen
 - 2026-08-03T00:29:24+00:00 — `chatgpt-web` — `task_added` `T-0010`: Originaldownload für Thread-Dateiquellen reparieren
 - 2026-08-03T00:57:51+00:00 — `chatgpt-web` — `task_updated` `T-0009`: Frischer Post-Fix-Lauf 2026-08-03: 229/229 Testdateien grün; Coverage 46.57/39.4/45.53/47.53 bleibt unter 50/48/50/50.
 - 2026-08-03T00:58:01+00:00 — `chatgpt-web` — `task_claimed` `T-0010`: claimed by chatgpt-web
@@ -289,3 +291,5 @@ Completion report: `.sin-gpt-web/reports/T-0009.md`
 - 2026-08-03T10:10:13+00:00 — `local-agent` — `task_updated` `T-0008`: task fields updated
 - 2026-08-03T10:53:16+00:00 — `local-agent` — `completion_report_updated` `T-0012`: 2026-08-03: POST-DEPLOY Live-Verifikation auf sinchat.delqhi.com (Image opensin-app:f85dd1537): frischer Thread 031dae27, exakt 1 Attachment, exakter Prompt → Antwort exakt FILE_OK_OPENSIN_LIVE_960EEF_R2, 1 Quelle. Reload zeigt Nachricht+Antwort (vorher leer) — include-Fix wirksam. DB-Beweis: chat 105 include=1. Regressionstests 43/43 beide Repos. Screenshot: .local/browser-acceptance/round2-opensin-t0012-reload-persist-live.png
 - 2026-08-03T10:53:21+00:00 — `local-agent` — `verification` `T-0012`: POST-DEPLOY Live-Beweis opensin-app:f85dd1537: Reload-Persistenz bestätigt (chat 105 include=1, thread 031dae27)
+- 2026-08-03T10:57:29+00:00 — `local-agent` — `task_completed` `T-0008`: Fresh browser acceptance 2026-08-03 post-deploy (opensin-app:f85dd1537, openafd-app:5afa5604a), beide Domains: login (nach Container-Neustart, Session-Termination→Login-Seite→Re-Login ok), normal chat mit exakten Markern FILE_OK_OPENSIN_LIVE_960EEF_R2 / FILE_OK_OPENAFD_LIVE_285C67_R2 inkl. Reload-Persistenz (chat 105 include=1 / chat 13 include=1), file upload+source retrieval (je 1 Attachment, Quelle im Drawer mit Vorschau/Download), navigation (Sidebar, Notebooks, Neuer Chat, Quellen-Drawer, Recherche/Deep-Research-UI mit @agent [deep-research] [sources:web-search]), ⌘K-Suche (Treffer round2-opensin-live-960eef.txt), empty state (Noch keine Nachrichten), Modellwahl (10 Modelle, aktuell nemotron-nano-12b-v2-vl). Web search+deep research live belegt durch T-0016 (IANA-Websuche, 30/10 Quellen, 0 SSE-Reconnects, 0 HTTP 429, beide Domains) - gleiche Deploy-Generation, keine Code-Änderung an Suche/Research. Screenshots: .local/browser-acceptance/round2-opensin-t0012-reload-persist-live.png, round2-opensin-cmdk-search-live.png, round2-openafd-t0035-reload-persist-live.png
+- 2026-08-03T10:57:36+00:00 — `local-agent` — `completion_report_updated` `T-0008`: 2026-08-03: Vollständige frische Browserabnahme abgeschlossen (post-deploy Images opensin-app:f85dd1537 / openafd-app:5afa5604a). Abgedeckte Acceptance-Punkte: (1) Login + Session-Termination/Reconnect: Container-Neustart invalidierte Session → Login-Seite → Re-Login mit AUTH_TOKEN erfolgreich (beide Domains); (2) Normaler Chat: exakte Marker-Antworten FILE_OK_OPENSIN_LIVE_960EEF_R2 und FILE_OK_OPENAFD_LIVE_285C67_R2 mit je genau 1 Quelle; (3) Reload-Persistenz: Nachrichten+Antworten überleben Seiten-Reload (vorher leer — include-Fix f85dd1537/5afa5604a, DB chat 105/13 include=1); (4) File Upload + Source Retrieval: 1 Attachment → Quelle im Drawer mit Vorschau/Herunterladen; (5) Navigation: Sidebar, Notebook-Bereiche, Neuer Chat, Threads, Quellen-Drawer, Recherche-Bereich, Modellauswahl (10 NIM-Modelle, nemotron-nano-12b-v2-vl aktiv); (6) Suche: ⌘K-Dialog mit Filtern (Alle/Chats/Quellen/Notizen/Ergebnisse/Notebooks), Treffer auf round2-opensin-live-960eef.txt; (7) Empty State: 'Noch keine Nachrichten. Beginnen Sie das Gespräch.'; (8) Web Search + Deep Research: Deep-Research-UI erreichbar (@agent [deep-research] [sources:web-search]); Live-Evidence der echten IANA-Websuche mit 30/10 Quellen und 0 SSE-Reconnects/0 HTTP 429 bereits durch T-0016 belegt (gleiche Deploy-Generation, keine Code-Änderung an Suche/Research seitdem). Screenshots in .local/browser-acceptance/ (t0012-reload-persist-live, cmdk-search-live, openafd-t0035-reload-persist-live).
