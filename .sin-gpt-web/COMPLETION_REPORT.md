@@ -5,11 +5,11 @@
 
 - Task: `T-0006` — Chat-Dateiupload: LLM behauptet trotz vorhandenem Parsed Context keinen Anhang
 - Owner: `chatgpt-web`
-- Completed: 2026-08-02T19:51:46+00:00
+- Completed: 2026-08-03T07:07:12+00:00
 
 ## Report
 
-Chat-Dateiupload-Kontext fixiert: parsed TXT wird explizit als Quellmaterial im LLM-Prompt geframt, direkte Uploads ohne Source-Auswahl unterdruecken Workspace-Similarity-Suche und History-Backfill; alle Fokus-Tests gruen, Live-Deployment verifiziert, exakter Marker im ersten Thread zitiert.
+Chat-Dateiupload: LLM behauptet trotz vorhandenem Parsed Context keinen Anhang
 
 ## Evidence
 
