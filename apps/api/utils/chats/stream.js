@@ -332,7 +332,7 @@ async function streamChatWithWorkspace(
         attachments,
       },
       threadId: thread?.id || null,
-      include: false,
+      include: true,
       user,
       data: {
         turnId,

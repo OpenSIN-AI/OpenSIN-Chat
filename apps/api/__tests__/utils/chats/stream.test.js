@@ -369,6 +369,7 @@ describe("streamChatWithWorkspace", () => {
         expect.objectContaining({
           prompt:
             "Gib den vollständigen Inhalt der einzigen angehängten Datei exakt und ohne Zusatz aus.",
+          include: true,
           response: expect.objectContaining({
             text: attachmentText,
             sources: [
