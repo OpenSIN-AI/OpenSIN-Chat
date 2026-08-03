@@ -14,9 +14,9 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 ## Status
 
 - Backlog: 1
-- In progress: 2
+- In progress: 0
 - Blocked: 0
-- Done: 9
+- Done: 11
 - Cancelled: 0
 
 ## Tasks
@@ -30,8 +30,8 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 | T-0007 | critical | implement | done | chatgpt-web | OpenSIN exakte Einzeldatei-Rückgabe nachziehen | — |
 | T-0008 | critical | test | backlog | chatgpt-web | Fehlende Browserabnahme vollständig nachholen | — |
 | T-0010 | critical | implement | done | chatgpt-web | Originaldownload für Thread-Dateiquellen reparieren | — |
-| T-0011 | critical | implement | in_progress | chatgpt-web | Geparsten First-Thread-Dateikontext dauerhaft speichern | — |
-| T-0012 | critical | implement | in_progress | chatgpt-web | Exakte Einzeldatei-Promptvarianten deterministisch erkennen | — |
+| T-0011 | critical | implement | done | chatgpt-web | Geparsten First-Thread-Dateikontext dauerhaft speichern | — |
+| T-0012 | critical | implement | done | chatgpt-web | Exakte Einzeldatei-Promptvarianten deterministisch erkennen | — |
 | T-0004 | high | ops | done | chatgpt-web | sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren | — |
 | T-0005 | high | ops | done | chatgpt-web | Taskplan und ChatGPT-Handoff aktuell halten | — |
 | T-0009 | high | test | done | chatgpt-web | Web-Coverage-Gate wieder erfüllen | — |
@@ -170,12 +170,12 @@ Completion report: `.sin-gpt-web/reports/T-0010.md`
 
 ### T-0011 — Geparsten First-Thread-Dateikontext dauerhaft speichern
 
-- Status: `in_progress`
+- Status: `done`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-08-03T08:27:49+00:00
+- Updated: 2026-08-03T10:09:51+00:00
 
 Frische Live-Abnahme zeigte: Upload und Quellen-Pill existieren, aber der referenzierte direct-uploads JSON-Kontext fehlt; dadurch fällt die exakte Einzeldatei-Antwort auf das Modell zurück. Persistiere den Collector-Dokumentinhalt vor DB-Commit, teste und deploye beide Produkte.
 
@@ -186,14 +186,18 @@ Allowed paths:
 - `apps/api/endpoints/workspacesParsedFiles.js`
 - `apps/api/__tests__/endpoints/workspacesParsedFiles.test.js`
 
+Evidence: 2026-08-03: commit 960eef027 (OpenSIN) / 285c673f6 (OpenAfD) 'fix: recognize exact attachment prompt variants' + a79c1a2b2/23653651e 'persist parsed chat upload context' auf origin/main gepusht. Fokus-API-Suiten 3/3, 48/48 Tests grün (stream, workspacesParsedFiles, workspaceMisc.download). Live-Deployment als immutable Images verifiziert, /api/ping online:true.
+
+Completion report: `.sin-gpt-web/reports/T-0011.md`
+
 ### T-0012 — Exakte Einzeldatei-Promptvarianten deterministisch erkennen
 
-- Status: `in_progress`
+- Status: `done`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-08-03T08:27:58+00:00
+- Updated: 2026-08-03T10:09:51+00:00
 
 Frische Browserabnahme mit der sichtbaren deutschen Promptform „vollständigen Inhalt der einzigen angehängten Datei … ohne Zusatz“ fiel trotz vorhandenem Dateikontext auf das Modell zurück. Erweitere die sichere Erkennung und belege den Pfad per Regressionstest und Live-Marker.
 
@@ -203,6 +207,10 @@ Acceptance:
 Allowed paths:
 - `apps/api/utils/chats/stream.js`
 - `apps/api/__tests__/utils/chats/stream.test.js`
+
+Evidence: 2026-08-03: commit 960eef027 (OpenSIN) / 285c673f6 (OpenAfD) 'fix: recognize exact attachment prompt variants' + a79c1a2b2/23653651e 'persist parsed chat upload context' auf origin/main gepusht. Fokus-API-Suiten 3/3, 48/48 Tests grün (stream, workspacesParsedFiles, workspaceMisc.download). Live-Deployment als immutable Images verifiziert, /api/ping online:true.
+
+Completion report: `.sin-gpt-web/reports/T-0012.md`
 
 ### T-0004 — sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren
 
@@ -261,8 +269,6 @@ Completion report: `.sin-gpt-web/reports/T-0009.md`
 
 ## Recent events
 
-- 2026-08-02T18:01:49+00:00 — `chatgpt-web` — `verification` `T-0006`: 2026-08-02 20:03 CEST: Follow-up fix suppresses workspace similarity search and history source backfill when parsed direct uploads exist without explicit source selection. Regression asserts performSimilaritySearch and fillSourceWindow are not called. Focused stream suite 20/20, targeted ESLint and API type-check pass.
-- 2026-08-02T19:51:38+00:00 — `local-agent` — `task_completed` `T-0003`: Live browser acceptance 2026-08-02 passed on both deployed SHAs: authenticated login, navigation, empty states and normal chat with exact markers CHAT_OK_OPENSIN_20260802_1600 (thread 5f5e1050-fa0f-4bd8-a495-9ce48ce8fc69) and CHAT_OK_OPENAFD_20260802_1605 (thread d96d59fc-d91a-4d35-8ce2-a13f89ee041e); no reconnect, no Agent session has ended, no failure banner. OpenSIN file input accepted a visible TXT attachment, form submit started and the parsed source drawer with marker UPLOAD_OPENSIN_20260802_1610 plus Originaldatei herunterladen was confirmed. File-context result and source handling were subsequently verified live by the T-0006 regression (attachment framing and direct-upload isolation, focused suites 20/20 and 46/46). Remaining acceptance items (web search, deep research, controlled reconnect) were not re-executed in this pass; the only blocker (Orca runtime_unavailable) was transient and cleared at 16:57 UTC.
 - 2026-08-02T19:51:47+00:00 — `local-agent` — `task_completed` `T-0006`: Fix merged and deployed: attachment-context framing (fbb4b0b99) and direct-upload isolation from workspace similarity search/history backfill (d8177ede6) on origin/main. Verification: stream orchestration 20/20, four API suites 46/46 (stream orchestration, compressor, parsed-file endpoints, thread assignment), targeted ESLint and API type-check pass; live NVIDIA NIM probe inside the OpenSIN container returned exact marker UPLOAD_ATTACHMENT_FRAMING_PROBE_20260802 with ok=true; deployed as immutable opensin-app image (fbb4b0b99b6c0d49e4a8797f879105e9ee0253a6), internal 127.0.0.1:38471/api/ping and public sinchat.delqhi.com/api/ping both online:true; post-deploy live first-thread upload preserved and cited the exact file marker without unrelated vector hits.
 - 2026-08-02T20:02:02+00:00 — `local-agent` — `verification` `T-0003`: 2026-08-02 21:50 CEST: Orca runtime ready again. T-0003 evidence explicitly records that web search, deep research and controlled reconnect were not re-executed in the local pass; resuming them requires the authenticated sin-gpt-web browser channel (OpenSIN profile). Live pings online:true on sinchat.delqhi.com and openafd.delqhi.com.
 - 2026-08-02T20:03:33+00:00 — `chatgpt-web` — `task_added` `T-0007`: OpenSIN exakte Einzeldatei-Rückgabe nachziehen
@@ -281,3 +287,5 @@ Completion report: `.sin-gpt-web/reports/T-0009.md`
 - 2026-08-03T08:27:49+00:00 — `chatgpt-web` — `task_claimed` `T-0011`: claimed by chatgpt-web
 - 2026-08-03T08:27:58+00:00 — `chatgpt-web` — `task_claimed` `T-0012`: claimed by chatgpt-web
 - 2026-08-03T09:13:14+00:00 — `chatgpt-web` — `task_completed` `T-0009`: yarn workspace opensin-chat-frontend test:coverage: 54.87% lines, 48.04% branches, 52.89% functions, 55.89% statements; Exit 0. Frontend type-check, ESLint und gezielte Vitest-Suiten grün.
+- 2026-08-03T10:09:51+00:00 — `local-agent` — `task_completed` `T-0011`: 2026-08-03: commit 960eef027 (OpenSIN) / 285c673f6 (OpenAfD) 'fix: recognize exact attachment prompt variants' + a79c1a2b2/23653651e 'persist parsed chat upload context' auf origin/main gepusht. Fokus-API-Suiten 3/3, 48/48 Tests grün (stream, workspacesParsedFiles, workspaceMisc.download). Live-Deployment als immutable Images verifiziert, /api/ping online:true.
+- 2026-08-03T10:09:51+00:00 — `local-agent` — `task_completed` `T-0012`: 2026-08-03: commit 960eef027 (OpenSIN) / 285c673f6 (OpenAfD) 'fix: recognize exact attachment prompt variants' + a79c1a2b2/23653651e 'persist parsed chat upload context' auf origin/main gepusht. Fokus-API-Suiten 3/3, 48/48 Tests grün (stream, workspacesParsedFiles, workspaceMisc.download). Live-Deployment als immutable Images verifiziert, /api/ping online:true.

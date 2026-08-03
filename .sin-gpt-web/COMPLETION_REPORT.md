@@ -3,14 +3,14 @@
 > Generated from `.sin-gpt-web/taskplan.sqlite3` by `sin-gpt-web-state`.
 > Local agents should read this file together with `TASKPLAN.md` before continuing.
 
-- Task: `T-0009` — Web-Coverage-Gate wieder erfüllen
+- Task: `T-0012` — Exakte Einzeldatei-Promptvarianten deterministisch erkennen
 - Owner: `chatgpt-web`
-- Completed: 2026-08-03T09:13:14+00:00
+- Completed: 2026-08-03T10:09:51+00:00
 
 ## Report
 
-Coverage-Gate mit gezielten Tests für Command Palette, Agent Mode, Deep-Research-Quellen und SSE/WebSocket-Lifecycle erfüllt. Unveränderte Schwellen 50/48/50/50 werden mit 54.87/48.04/52.89/55.89 überschritten.
+2026-08-03: commit 960eef027 (OpenSIN) / 285c673f6 (OpenAfD) 'fix: recognize exact attachment prompt variants' + a79c1a2b2/23653651e 'persist parsed chat upload context' auf origin/main gepusht. Fokus-API-Suiten 3/3, 48/48 Tests grün (stream, workspacesParsedFiles, workspaceMisc.download). Live-Deployment als immutable Images verifiziert, /api/ping online:true.
 
 ## Evidence
 
-yarn workspace opensin-chat-frontend test:coverage: 54.87% lines, 48.04% branches, 52.89% functions, 55.89% statements; Exit 0. Frontend type-check, ESLint und gezielte Vitest-Suiten grün.
+2026-08-03: commit 960eef027 (OpenSIN) / 285c673f6 (OpenAfD) 'fix: recognize exact attachment prompt variants' + a79c1a2b2/23653651e 'persist parsed chat upload context' auf origin/main gepusht. Fokus-API-Suiten 3/3, 48/48 Tests grün (stream, workspacesParsedFiles, workspaceMisc.download). Live-Deployment als immutable Images verifiziert, /api/ping online:true.
