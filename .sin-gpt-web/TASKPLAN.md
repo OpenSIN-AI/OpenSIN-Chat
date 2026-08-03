@@ -241,11 +241,11 @@ Beide Repos auf uncommitted/fehlerhafte Änderungen prüfen, alle gefundenen Feh
 - Kind: `implement`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-08-03T15:00:28+00:00
+- Updated: 2026-08-03T17:25:05+00:00
 
 OpenAfD mit dem neuesten Stand von OpenSIN ausstatten (insb. Datei-Upload/Quellen/Exact-File-Pfade), alle Checks grün, Tests bestanden, auf main gepusht.
 
-Evidence: OpenAfD shared upload/context/SSE/coverage paths are byte-identical to OpenSIN. Final serial verify:strict passed in both repos: OpenSIN 212 API suites/3261 tests, 233 web files, 38 worker suites/470 tests, 33 integration files, build/typecheck, web coverage 54.87/48.04/52.89/55.89; OpenAfD 187 API suites/2766 tests, same web/worker/integration/build/typecheck, web coverage 54.87/48.17/52.89/55.89. Detached SSE and parse-job test races were made deterministic in both repos.
+Evidence: OpenAfD synchronized with the shared research deadline fix and API/SSE regression coverage; main pushed at 9495a91d; 2768 tests passed.
 
 Completion report: `.sin-gpt-web/reports/T-0014.md`
 
@@ -372,8 +372,6 @@ Titel, Konversations-URL, Aufgabe, Repos, letzter Status, Blocker und Evidence d
 
 ## Recent events
 
-- 2026-08-03T13:04:34+00:00 — `local-agent` — `task_added` `T-0016`: Vollständige Browser-Abnahme ALLER Funktionen auf beiden Live-Domains (Websuche, Datei-Upload, Quellen-Dateien zum Chat hinzufügen, Deep Research, Modellwahl, Navigation, Empty/Error-States, Login/Reconnect, Notebooks, ⌘K-Suche)
-- 2026-08-03T13:04:34+00:00 — `local-agent` — `task_added` `T-0017`: sin-chrome-Fallback dokumentieren und wow-my-zsh Issue #29 erneut bestätigen
 - 2026-08-03T13:04:34+00:00 — `local-agent` — `task_added` `T-0018`: Taskplan und ChatGPT-Handoff für Run-7 aktuell halten
 - 2026-08-03T13:15:53+00:00 — `local-agent` — `delegation` `T-0013`: Run-7 Delegation an ChatGPT Web gesendet (Konv. #1 - OpenSIN-Chat 6a70508f). ChatGPT übernommen: 'Ich starte mit dem kanonischen Run-7-Plan...' Tool: Aufgabenplan+Git-Status prüfen. Callback deaktiviert (Worktree-Terminal), Überwachung via Orca+Watchdog.
 - 2026-08-03T13:15:53+00:00 — `local-agent` — `checkpoint` `T-0017`: sin-chrome weiterhin defekt (control timeout, Dashboard down). Issue #29 kommentiert, Orca-Fallback aktiv. T-0017 erfüllt.
@@ -392,3 +390,5 @@ Titel, Konversations-URL, Aufgabe, Repos, letzter Status, Blocker und Evidence d
 - 2026-08-03T15:58:15+00:00 — `local-agent` — `task_updated` `T-0013`: Erst T-0019 Websuche-Fix, danach Git-Abschluss.
 - 2026-08-03T15:58:15+00:00 — `local-agent` — `task_updated` `T-0015`: Deployment erst nach Code-Fixes, Tests und sauberem Push.
 - 2026-08-03T16:00:01+00:00 — `local-agent` — `replan` `T-0019`: Verbindliche Reihenfolge korrigiert: zuerst T-0019 Websuche-Fix, T-0031 Deep-Research-Fix, Repo-Sync/Tests/Push und Dokumentation; erst danach T-0013, T-0015, T-0016 und OpenAfD T-0025 Browserabnahme. ChatGPT bestätigt und startet T-0019.
+- 2026-08-03T17:24:49+00:00 — `local-agent` — `acceptance` `T-0016`: Orca live acceptance partial: both authenticated UIs loaded; navigation, normal chat, Recherche, Quellen, Werkzeuge, upload menu, agent session and model selection visible. Normal chat markers ORCA_FINAL_ACCEPTANCE_OPENSIN_20260803 and ORCA_FINAL_ACCEPTANCE_OPENAFD_20260803 visible. File transfer, real web-search result and deep-research end-to-end remain open and are not claimed complete.
+- 2026-08-03T17:25:05+00:00 — `local-agent` — `task_completed` `T-0014`: OpenAfD synchronized with the shared research deadline fix and API/SSE regression coverage; main pushed at 9495a91d; 2768 tests passed.
