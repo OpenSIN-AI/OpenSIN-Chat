@@ -5,12 +5,12 @@
 
 - Task: `T-0014` — OpenAfD-Chat: vollständige Synchronisierung und Fehlerfreiheit herstellen
 - Owner: `chatgpt-web`
-- Completed: 2026-08-03T15:00:28+00:00
+- Completed: 2026-08-03T17:25:05+00:00
 
 ## Report
 
-OpenAfD ist mit allen aktuellen OpenSIN-Datei-, Quellen-, Persistenz-, SSE- und Coverage-Fixes synchron. Beide vollständigen Strict-Gates sind grün; nur die separat dokumentierte Live-Websuche benötigt noch den begrenzten Produktions-Agentenwert und erneute Abnahme.
+OpenAfD synchronized with the shared research deadline fix and API/SSE regression coverage; main pushed at 9495a91d; 2768 tests passed.
 
 ## Evidence
 
-OpenAfD shared upload/context/SSE/coverage paths are byte-identical to OpenSIN. Final serial verify:strict passed in both repos: OpenSIN 212 API suites/3261 tests, 233 web files, 38 worker suites/470 tests, 33 integration files, build/typecheck, web coverage 54.87/48.04/52.89/55.89; OpenAfD 187 API suites/2766 tests, same web/worker/integration/build/typecheck, web coverage 54.87/48.17/52.89/55.89. Detached SSE and parse-job test races were made deterministic in both repos.
+OpenAfD synchronized with the shared research deadline fix and API/SSE regression coverage; main pushed at 9495a91d; 2768 tests passed.
