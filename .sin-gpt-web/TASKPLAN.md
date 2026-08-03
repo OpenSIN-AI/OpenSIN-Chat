@@ -13,8 +13,8 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 
 ## Status
 
-- Backlog: 1
-- In progress: 0
+- Backlog: 0
+- In progress: 1
 - Blocked: 0
 - Done: 11
 - Cancelled: 0
@@ -28,7 +28,7 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 | T-0003 | critical | test | done | chatgpt-web | Browser-Abnahme aller Kernfunktionen über Orca-Fallback | — |
 | T-0006 | critical | implement | done | chatgpt-web | Chat-Dateiupload: LLM behauptet trotz vorhandenem Parsed Context keinen Anhang | — |
 | T-0007 | critical | implement | done | chatgpt-web | OpenSIN exakte Einzeldatei-Rückgabe nachziehen | — |
-| T-0008 | critical | test | backlog | chatgpt-web | Fehlende Browserabnahme vollständig nachholen | — |
+| T-0008 | critical | test | in_progress | local-agent | Fehlende Browserabnahme vollständig nachholen | — |
 | T-0010 | critical | implement | done | chatgpt-web | Originaldownload für Thread-Dateiquellen reparieren | — |
 | T-0011 | critical | implement | done | chatgpt-web | Geparsten First-Thread-Dateikontext dauerhaft speichern | — |
 | T-0012 | critical | implement | done | chatgpt-web | Exakte Einzeldatei-Promptvarianten deterministisch erkennen | — |
@@ -132,12 +132,12 @@ Completion report: `.sin-gpt-web/reports/T-0007.md`
 
 ### T-0008 — Fehlende Browserabnahme vollständig nachholen
 
-- Status: `backlog`
-- Owner: `chatgpt-web`
+- Status: `in_progress`
+- Owner: `local-agent`
 - Kind: `test`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-08-02T20:03:33+00:00
+- Updated: 2026-08-03T10:10:13+00:00
 
 T-0003 was marked done although web search and deep research were not re-executed. Run fresh complete browser acceptance for both products and record exact evidence.
 
@@ -197,7 +197,7 @@ Completion report: `.sin-gpt-web/reports/T-0011.md`
 - Kind: `implement`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-08-03T10:09:51+00:00
+- Updated: 2026-08-03T10:53:16+00:00
 
 Frische Browserabnahme mit der sichtbaren deutschen Promptform „vollständigen Inhalt der einzigen angehängten Datei … ohne Zusatz“ fiel trotz vorhandenem Dateikontext auf das Modell zurück. Erweitere die sichere Erkennung und belege den Pfad per Regressionstest und Live-Marker.
 
@@ -269,10 +269,6 @@ Completion report: `.sin-gpt-web/reports/T-0009.md`
 
 ## Recent events
 
-- 2026-08-02T19:51:47+00:00 — `local-agent` — `task_completed` `T-0006`: Fix merged and deployed: attachment-context framing (fbb4b0b99) and direct-upload isolation from workspace similarity search/history backfill (d8177ede6) on origin/main. Verification: stream orchestration 20/20, four API suites 46/46 (stream orchestration, compressor, parsed-file endpoints, thread assignment), targeted ESLint and API type-check pass; live NVIDIA NIM probe inside the OpenSIN container returned exact marker UPLOAD_ATTACHMENT_FRAMING_PROBE_20260802 with ok=true; deployed as immutable opensin-app image (fbb4b0b99b6c0d49e4a8797f879105e9ee0253a6), internal 127.0.0.1:38471/api/ping and public sinchat.delqhi.com/api/ping both online:true; post-deploy live first-thread upload preserved and cited the exact file marker without unrelated vector hits.
-- 2026-08-02T20:02:02+00:00 — `local-agent` — `verification` `T-0003`: 2026-08-02 21:50 CEST: Orca runtime ready again. T-0003 evidence explicitly records that web search, deep research and controlled reconnect were not re-executed in the local pass; resuming them requires the authenticated sin-gpt-web browser channel (OpenSIN profile). Live pings online:true on sinchat.delqhi.com and openafd.delqhi.com.
-- 2026-08-02T20:03:33+00:00 — `chatgpt-web` — `task_added` `T-0007`: OpenSIN exakte Einzeldatei-Rückgabe nachziehen
-- 2026-08-02T20:03:33+00:00 — `chatgpt-web` — `task_added` `T-0008`: Fehlende Browserabnahme vollständig nachholen
 - 2026-08-02T20:03:47+00:00 — `chatgpt-web` — `task_claimed` `T-0007`: claimed by chatgpt-web
 - 2026-08-03T00:06:26+00:00 — `chatgpt-web` — `task_added` `T-0009`: Web-Coverage-Gate wieder erfüllen
 - 2026-08-03T00:29:24+00:00 — `chatgpt-web` — `task_added` `T-0010`: Originaldownload für Thread-Dateiquellen reparieren
@@ -289,3 +285,7 @@ Completion report: `.sin-gpt-web/reports/T-0009.md`
 - 2026-08-03T09:13:14+00:00 — `chatgpt-web` — `task_completed` `T-0009`: yarn workspace opensin-chat-frontend test:coverage: 54.87% lines, 48.04% branches, 52.89% functions, 55.89% statements; Exit 0. Frontend type-check, ESLint und gezielte Vitest-Suiten grün.
 - 2026-08-03T10:09:51+00:00 — `local-agent` — `task_completed` `T-0011`: 2026-08-03: commit 960eef027 (OpenSIN) / 285c673f6 (OpenAfD) 'fix: recognize exact attachment prompt variants' + a79c1a2b2/23653651e 'persist parsed chat upload context' auf origin/main gepusht. Fokus-API-Suiten 3/3, 48/48 Tests grün (stream, workspacesParsedFiles, workspaceMisc.download). Live-Deployment als immutable Images verifiziert, /api/ping online:true.
 - 2026-08-03T10:09:51+00:00 — `local-agent` — `task_completed` `T-0012`: 2026-08-03: commit 960eef027 (OpenSIN) / 285c673f6 (OpenAfD) 'fix: recognize exact attachment prompt variants' + a79c1a2b2/23653651e 'persist parsed chat upload context' auf origin/main gepusht. Fokus-API-Suiten 3/3, 48/48 Tests grün (stream, workspacesParsedFiles, workspaceMisc.download). Live-Deployment als immutable Images verifiziert, /api/ping online:true.
+- 2026-08-03T10:10:13+00:00 — `local-agent` — `task_claimed` `T-0008`: claimed by local-agent
+- 2026-08-03T10:10:13+00:00 — `local-agent` — `task_updated` `T-0008`: task fields updated
+- 2026-08-03T10:53:16+00:00 — `local-agent` — `completion_report_updated` `T-0012`: 2026-08-03: POST-DEPLOY Live-Verifikation auf sinchat.delqhi.com (Image opensin-app:f85dd1537): frischer Thread 031dae27, exakt 1 Attachment, exakter Prompt → Antwort exakt FILE_OK_OPENSIN_LIVE_960EEF_R2, 1 Quelle. Reload zeigt Nachricht+Antwort (vorher leer) — include-Fix wirksam. DB-Beweis: chat 105 include=1. Regressionstests 43/43 beide Repos. Screenshot: .local/browser-acceptance/round2-opensin-t0012-reload-persist-live.png
+- 2026-08-03T10:53:21+00:00 — `local-agent` — `verification` `T-0012`: POST-DEPLOY Live-Beweis opensin-app:f85dd1537: Reload-Persistenz bestätigt (chat 105 include=1, thread 031dae27)

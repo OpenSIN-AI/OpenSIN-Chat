@@ -9,7 +9,7 @@
 
 ## Report
 
-2026-08-03: commit 960eef027 (OpenSIN) / 285c673f6 (OpenAfD) 'fix: recognize exact attachment prompt variants' + a79c1a2b2/23653651e 'persist parsed chat upload context' auf origin/main gepusht. Fokus-API-Suiten 3/3, 48/48 Tests grün (stream, workspacesParsedFiles, workspaceMisc.download). Live-Deployment als immutable Images verifiziert, /api/ping online:true.
+2026-08-03: POST-DEPLOY Live-Verifikation auf sinchat.delqhi.com (Image opensin-app:f85dd1537): frischer Thread 031dae27, exakt 1 Attachment, exakter Prompt → Antwort exakt FILE_OK_OPENSIN_LIVE_960EEF_R2, 1 Quelle. Reload zeigt Nachricht+Antwort (vorher leer) — include-Fix wirksam. DB-Beweis: chat 105 include=1. Regressionstests 43/43 beide Repos. Screenshot: .local/browser-acceptance/round2-opensin-t0012-reload-persist-live.png
 
 ## Evidence
 
