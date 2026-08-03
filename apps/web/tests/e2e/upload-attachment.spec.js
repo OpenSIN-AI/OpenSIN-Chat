@@ -10,6 +10,8 @@
 // regenerator-runtime polyfill that fixes the production bundle.
 import { test, expect } from "@playwright/test";
 import path from "path";
+import fs from "fs";
+import os from "os";
 import { fileURLToPath } from "url";
 import { bootstrapWorkspaceChat } from "./_helpers.js";
 
@@ -60,5 +62,42 @@ test.describe("upload attachment flow", () => {
     await expect(
       page.locator('[data-tooltip-content*="test-image.png"]'),
     ).toHaveCount(1);
+  });
+
+  test("sends a document attachment without an invalid image payload", async ({
+    page,
+    request,
+  }) => {
+    await bootstrapWorkspaceChat(page, request, { waitFor: "attach" });
+    const fixturePath = path.join(
+      os.tmpdir(),
+      `e2e-attachment-${Date.now()}.txt`,
+    );
+    fs.writeFileSync(fixturePath, "E2E attachment payload regression");
+
+    try {
+      await page.getByTestId("attach-item-trigger").click();
+      await page
+        .getByRole("menuitem", { name: /Upload from computer/i })
+        .click();
+      await page
+        .locator("input#dnd-chat-file-uploader")
+        .setInputFiles(fixturePath);
+      await expect(page.getByText(path.basename(fixturePath))).toBeVisible({
+        timeout: 10000,
+      });
+
+      await page
+        .locator("#primary-prompt-input")
+        .fill("Return the attached file name.");
+      await page.getByRole("button", { name: /send/i }).click();
+      await expect(
+        page.getByText(/image_url\.url|validation error|Internal error/i),
+      ).toHaveCount(0, {
+        timeout: 30000,
+      });
+    } finally {
+      fs.rmSync(fixturePath, { force: true });
+    }
   });
 });

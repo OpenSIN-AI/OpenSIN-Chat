@@ -27,7 +27,7 @@ services:
 
   opensin-chat:
     image: "${OPENSIN_IMAGE_REPOSITORY:-opensin-chat}:${OPENSIN_IMAGE_TAG:-local}"
-    container_name: "${COMPOSE_CONTAINER_NAME:-opensin-chat}"
+    container_name: "${COMPOSE_CONTAINER_NAME:-opensin-app}"
 
     build:
       context: ../../..
