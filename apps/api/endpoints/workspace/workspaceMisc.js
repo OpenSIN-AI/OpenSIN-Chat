@@ -77,7 +77,7 @@ function workspaceMiscEndpoints(app) {
         });
         await WorkspaceChats.bulkCreate(chatsData);
         await WorkspaceThread.update(newThread, {
-          name: !!lastMessageText
+          name: lastMessageText
             ? truncate(lastMessageText, 22)
             : "Forked Thread",
         });

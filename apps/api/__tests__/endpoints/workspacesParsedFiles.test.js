@@ -23,8 +23,10 @@ jest.mock("../../utils/logger", () => () => ({
 
 const fs = require("fs");
 const path = require("path");
-const mockEnsureStorageDir = jest.fn(
-  () => "/tmp/opensin-chat-workspaces-parsed-files-test/uploads",
+const storageTestRoot =
+  "/tmp/opensin-chat-workspaces-parsed-files-test/storage";
+const mockEnsureStorageDir = jest.fn((...subdirs) =>
+  path.resolve(storageTestRoot, ...subdirs),
 );
 jest.mock("../../utils/paths", () => ({
   ensureStorageDir: (...args) => mockEnsureStorageDir(...args),
@@ -178,7 +180,16 @@ async function callWithLocals(harness, method, path, req = {}, locals = {}) {
 }
 
 describe("Workspace Parsed Files endpoints", () => {
+  let writeFileSpy;
+
+  beforeEach(() => {
+    writeFileSpy = jest
+      .spyOn(fs.promises, "writeFile")
+      .mockResolvedValue(undefined);
+  });
+
   afterEach(() => {
+    writeFileSpy.mockRestore();
     jest.clearAllMocks();
     _jobStore.clear();
   });
@@ -403,7 +414,13 @@ describe("Workspace Parsed Files endpoints", () => {
       mockCollectorOnline.mockResolvedValue(true);
       mockCollectorParse.mockResolvedValue({
         success: true,
-        documents: [{ id: "d1", token_count_estimate: 50 }],
+        documents: [
+          {
+            id: "d1",
+            pageContent: "FILE_OK_PERSISTED_CONTEXT",
+            token_count_estimate: 50,
+          },
+        ],
       });
       mockParsedCreate.mockResolvedValue({
         file: { id: 1, filename: "doc.pdf-d1.json" },
@@ -505,7 +522,13 @@ describe("Workspace Parsed Files endpoints", () => {
       mockCollectorOnline.mockResolvedValue(true);
       mockCollectorParse.mockResolvedValue({
         success: true,
-        documents: [{ id: "d1", token_count_estimate: 50 }],
+        documents: [
+          {
+            id: "d1",
+            pageContent: "FILE_OK_PERSISTED_CONTEXT",
+            token_count_estimate: 50,
+          },
+        ],
       });
       mockParsedCreate.mockResolvedValue({
         file: { id: 1, filename: "doc.pdf-d1.json", tokenCountEstimate: 50 },
@@ -548,6 +571,15 @@ describe("Workspace Parsed Files endpoints", () => {
             '"location":"direct-uploads/upload-uuid_doc.pdf-d1.json"',
           ),
         }),
+      );
+      expect(writeFileSpy).toHaveBeenCalledWith(
+        path.resolve(
+          storageTestRoot,
+          "direct-uploads",
+          "upload-uuid_doc.pdf-d1.json",
+        ),
+        expect.stringContaining('"pageContent":"FILE_OK_PERSISTED_CONTEXT"'),
+        "utf8",
       );
       expect(mockEventLog).toHaveBeenCalled();
     });
@@ -598,7 +630,8 @@ describe("Workspace Parsed Files endpoints", () => {
         await flush();
 
         const destination = path.resolve(
-          "/tmp/opensin-chat-workspaces-parsed-files-test/uploads",
+          storageTestRoot,
+          "uploads",
           "upload-uuid_doc.pdf",
         );
         expect(copySpy).toHaveBeenCalledWith(
@@ -654,7 +687,8 @@ describe("Workspace Parsed Files endpoints", () => {
         await flush();
 
         const destination = path.resolve(
-          "/tmp/opensin-chat-workspaces-parsed-files-test/uploads",
+          storageTestRoot,
+          "uploads",
           "upload-uuid_doc.pdf",
         );
         expect(rmSpy).toHaveBeenCalledWith(destination, { force: true });

@@ -131,6 +131,8 @@ async function runParseJob(jobId, upload, ctx) {
   const originalname = upload.file?.originalname || "unknown";
   const collectorFilename = upload.file?.filename || originalname;
   let copiedUploadPath = null;
+  const persistedContextPaths = [];
+  let parsedFilesCommitted = false;
   await ParseJobs.markProcessing(jobId);
 
   try {
@@ -165,17 +167,33 @@ async function runParseJob(jobId, upload, ctx) {
       return;
     }
 
+    const directUploadsDir = path.resolve(ensureStorageDir("direct-uploads"));
+    const safeCollectorFilename = path.basename(collectorFilename);
+    if (safeCollectorFilename !== collectorFilename)
+      throw new Error("Unsafe collector filename");
+
     const files = [];
     const BATCH_SIZE = 5;
     for (let i = 0; i < documents.length; i += BATCH_SIZE) {
       const batch = documents.slice(i, i + BATCH_SIZE);
       const batchResults = await Promise.all(
         batch.map(async (doc) => {
-          const filename = `${originalname}-${doc.id}.json`;
-          const location = path.posix.join(
-            "direct-uploads",
-            `${collectorFilename}-${doc.id}.json`,
+          const documentId = String(doc.id || crypto.randomUUID())
+            .replace(/[^A-Za-z0-9._-]/g, "_")
+            .slice(0, 128);
+          const contextBasename = `${safeCollectorFilename}-${documentId}.json`;
+          const contextPath = path.resolve(directUploadsDir, contextBasename);
+          if (!contextPath.startsWith(`${directUploadsDir}${path.sep}`))
+            throw new Error("Parsed context path escaped direct uploads");
+          const location = path.posix.join("direct-uploads", contextBasename);
+          await fs.promises.writeFile(
+            contextPath,
+            JSON.stringify({ ...doc, location }),
+            "utf8",
           );
+          persistedContextPaths.push(contextPath);
+
+          const filename = `${originalname}-${documentId}.json`;
           const metadata = { ...doc, location };
           delete metadata.pageContent;
           const { file, error: dbError } = await WorkspaceParsedFiles.create({
@@ -192,6 +210,7 @@ async function runParseJob(jobId, upload, ctx) {
       );
       files.push(...batchResults);
     }
+    parsedFilesCommitted = true;
 
     // The local upload was copied before parsing so original downloads remain
     // available even after Collector consumes the hotdir source.
@@ -209,10 +228,16 @@ async function runParseJob(jobId, upload, ctx) {
     );
     await ParseJobs.markCompleted(jobId, files);
   } catch (e) {
-    await Promise.all([
-      cleanupHotdirFile(upload),
-      removeUploadsCopy(copiedUploadPath),
-    ]);
+    const cleanupPromises = [cleanupHotdirFile(upload)];
+    if (!parsedFilesCommitted) {
+      cleanupPromises.push(removeUploadsCopy(copiedUploadPath));
+      cleanupPromises.push(
+        ...persistedContextPaths.map((contextPath) =>
+          fs.promises.rm(contextPath, { force: true }),
+        ),
+      );
+    }
+    await Promise.all(cleanupPromises);
     const errorId = crypto.randomUUID();
     consoleLogger.error(`[parse job error ${errorId}]`, e);
     await ParseJobs.markFailed(
