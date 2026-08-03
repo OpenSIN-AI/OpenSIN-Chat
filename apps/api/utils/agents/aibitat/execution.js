@@ -266,6 +266,32 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
 
     if (depth === 0) this?.flushRoutingMetadata?.(v4());
 
+    if (
+      depth > 0 &&
+      this._invocationDeadline &&
+      Date.now() > this._invocationDeadline
+    ) {
+      this.handlerProps?.log?.(
+        "[warning]: Agent wall-clock deadline reached after tool execution; generating a final response without further tools.",
+      );
+      this?.introspect?.(
+        "Research time limit reached. Generating the final response from the collected sources.",
+      );
+      const fallbackStream = await this._safeProviderCall(() =>
+        this.providerInstance.stream(messages, [], eventHandler),
+      );
+      this._recordInvocationUsage();
+      const fallbackUuid = fallbackStream?.uuid || v4();
+      eventHandler?.("reportStreamEvent", {
+        type: "usageMetrics",
+        uuid: fallbackUuid,
+        metrics: this.providerInstance.getUsage(),
+      });
+      this?.flushCitations?.(fallbackUuid);
+      this?.emitChatId?.(fallbackUuid);
+      return fallbackStream?.textResponse || "";
+    }
+
     checkInvocationBudget();
 
     /** @type {{ functionCall: { name: string, arguments: string }, textResponse: string }} */
@@ -507,6 +533,31 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
     }
 
     if (depth === 0) this?.flushRoutingMetadata?.(msgUUID);
+
+    if (
+      depth > 0 &&
+      this._invocationDeadline &&
+      Date.now() > this._invocationDeadline
+    ) {
+      this.handlerProps?.log?.(
+        "[warning]: Agent wall-clock deadline reached after tool execution; generating a final response without further tools.",
+      );
+      this?.introspect?.(
+        "Research time limit reached. Generating the final response from the collected sources.",
+      );
+      const fallbackCompletion = await this._safeProviderCall(() =>
+        this.providerInstance.complete(messages, []),
+      );
+      this._recordInvocationUsage();
+      eventHandler?.("reportStreamEvent", {
+        type: "usageMetrics",
+        uuid: msgUUID,
+        metrics: this.providerInstance.getUsage(),
+      });
+      this?.flushCitations?.(msgUUID);
+      this?.emitChatId?.(msgUUID);
+      return fallbackCompletion?.textResponse || "";
+    }
 
     checkInvocationBudget();
 

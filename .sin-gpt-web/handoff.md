@@ -12,11 +12,11 @@
 - **Loop-Runde**: 1 von 12
 
 ### Delegations-Brief
-- Datei: `/Users/jeremy/dev/OpenSIN-Chat/.sin-gpt-web/delegation-run7.md`
+- Datei: `$REPO/.sin-gpt-web/delegation-run7.md`
 - Gesendet: 2026-08-03 ~13:10 UTC (manuell via Orca fill/click, weil delegate_chatgpt.py am fehlenden Chat-Radio in bestehender Konversation scheiterte)
 - ChatGPT-Antwort: "Ich starte mit dem kanonischen Run-7-Plan und dem DB-Summary, prüfe anschließend..." — Tool-Button "Aufgabenplan und Git-Status prüfen" sichtbar → arbeitet
 
-### Run-7 Tasks (kanonische DB in /Users/jeremy/dev/OpenSIN-Chat)
+### Run-7 Tasks (kanonische DB in $REPO)
 - T-0013 (critical, implement): Git-Stand prüfen, Fehler beheben, alles nach main pushen (beide Repos)
 - T-0014 (critical, implement): OpenAfD-Chat vollständig synchronisieren + fehlerfrei
 - T-0015 (critical, ops): Beide Repos live auf OCI VM verifizieren und funktionierend halten
@@ -31,7 +31,7 @@
 
 ### Live-Deployment (OCI VM 92.5.60.87, Stand Run-6)
 - opensin-app:f85dd1537, openafd-app:5afa5604a, beide health=healthy, /api/ping online:true
-- Release-Worktrees auf VM: /home/ubuntu/releases/OpenSIN-Chat, /home/ubuntu/releases/OpenAfD-Chat
+- Release-Worktrees auf VM: $REMOTE_OPENSIN_RELEASE, $REMOTE_OPENAFD_RELEASE
 
 ### sin-chrome (2026-08-03 ~13:00 UTC)
 - NICHT funktionsfähig: control.py status → "the headed sin-chrome browser connection timed out", Dashboard-Port nicht erreichbar, CDP lebt (50698)

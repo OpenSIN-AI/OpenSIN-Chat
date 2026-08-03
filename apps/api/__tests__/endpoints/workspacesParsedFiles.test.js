@@ -500,8 +500,18 @@ describe("Workspace Parsed Files endpoints", () => {
     const workspace = { id: 1, slug: "ws" };
     const user = { id: 10 };
 
-    /** Lets pending background microtasks (runParseJob) settle. */
-    const flush = () => new Promise((resolve) => setTimeout(resolve, 0));
+    /** Waits for the detached parse job to reach a terminal state. */
+    async function waitForJobStatus(jobId, expectedStatus, timeoutMs = 2_000) {
+      const deadline = Date.now() + timeoutMs;
+      while (Date.now() < deadline) {
+        const job = _jobStore.get(jobId);
+        if (job?.status === expectedStatus) return job;
+        await new Promise((resolve) => setTimeout(resolve, 10));
+      }
+      throw new Error(
+        `Job ${jobId} did not reach ${expectedStatus}; current status: ${_jobStore.get(jobId)?.status || "missing"}`,
+      );
+    }
 
     it("rejects missing file with 400", async () => {
       mockUserFromSession.mockResolvedValue(user);
@@ -552,7 +562,7 @@ describe("Workspace Parsed Files endpoints", () => {
       expect(res.body.success).toBe(true);
       expect(res.body.jobId).toBeDefined();
 
-      await flush();
+      await waitForJobStatus(res.body.jobId, "completed");
 
       const statusRes = await callWithLocals(
         harness,
@@ -626,8 +636,7 @@ describe("Workspace Parsed Files endpoints", () => {
           { workspace },
         );
         expect(res.statusCode).toBe(202);
-        await flush();
-        await flush();
+        await waitForJobStatus(res.body.jobId, "completed");
 
         const destination = path.resolve(
           storageTestRoot,
@@ -683,8 +692,7 @@ describe("Workspace Parsed Files endpoints", () => {
           { workspace },
         );
         expect(res.statusCode).toBe(202);
-        await flush();
-        await flush();
+        await waitForJobStatus(res.body.jobId, "failed");
 
         const destination = path.resolve(
           storageTestRoot,
@@ -736,8 +744,7 @@ describe("Workspace Parsed Files endpoints", () => {
           { workspace },
         );
         expect(res.statusCode).toBe(202);
-        await flush();
-        await flush();
+        await waitForJobStatus(res.body.jobId, "failed");
         expect(copySpy).not.toHaveBeenCalled();
       } finally {
         accessSpy.mockRestore();
@@ -764,7 +771,7 @@ describe("Workspace Parsed Files endpoints", () => {
       );
       expect(res.statusCode).toBe(202);
 
-      await flush();
+      await waitForJobStatus(res.body.jobId, "failed");
 
       const statusRes = await callWithLocals(
         harness,
@@ -812,7 +819,7 @@ describe("Workspace Parsed Files endpoints", () => {
         { file: { originalname: "doc.pdf" }, body: {} },
         { workspace },
       );
-      await flush();
+      await waitForJobStatus(res.body.jobId, "completed");
 
       const otherWorkspace = { id: 999, slug: "other" };
       const statusRes = await callWithLocals(

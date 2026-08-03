@@ -1,7 +1,7 @@
 # Delegation Brief Run-7 — Vollständige Abnahme + Fehlerfreiheit (OpenSIN-Chat + OpenAfD-Chat)
 
-Repository (primary): `/Users/jeremy/dev/OpenSIN-Chat`
-Schwester-Repo: `/Users/jeremy/dev/OpenAfD-Chat`
+Repository (primary): `$REPO`
+Schwester-Repo: `$SISTER_REPO`
 Datum: 2026-08-03, Run-7
 
 ## Priorität: FERTIG WERDEN, nicht weiterentwickeln
@@ -20,7 +20,7 @@ KEINE Refactorings — nur fertigstellen, verifizieren, beheben, deployen.
 ## Deine Aufgabe (ChatGPT Web als sovereign lead via Mac i9)
 
 Lies ZUERST `.sin-gpt-web/TASKPLAN.md` und frage die DB ab:
-`sin-gpt-web-state --repo /Users/jeremy/dev/OpenSIN-Chat summary`
+`sin-gpt-web-state --repo $REPO summary`
 
 Neue Run-7-Tasks (backlog, in Prioritätsreihenfolge):
 

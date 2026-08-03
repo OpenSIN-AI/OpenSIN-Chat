@@ -204,15 +204,28 @@ describe("agentSSE — error paths", () => {
     );
 
     const controller = new AbortController();
-    const fetchPromise = fetch(`${baseUrl}/sse/agent/test-uuid-5`, {
+    const response = await fetch(`${baseUrl}/sse/agent/test-uuid-5`, {
       signal: controller.signal,
-    }).catch(() => null);
+    });
 
-    // Give the server a moment to register the connection, then disconnect.
-    await new Promise((r) => setTimeout(r, 100));
+    // Waiting for the response guarantees the route registered the SSE socket;
+    // a fixed sleep is flaky when the full API suite is CPU-bound.
     controller.abort();
-    await fetchPromise;
-    await new Promise((r) => setTimeout(r, 100));
+    try {
+      await response.body?.cancel();
+    } catch {
+      /* abort already closed the response body */
+    }
+
+    const deadline = Date.now() + 2_000;
+    while (
+      !WorkspaceAgentInvocation.close.mock.calls.some(
+        ([invocationUuid]) => invocationUuid === "test-uuid-5",
+      ) &&
+      Date.now() < deadline
+    ) {
+      await new Promise((resolve) => setTimeout(resolve, 25));
+    }
 
     expect(WorkspaceAgentInvocation.close).toHaveBeenCalledWith(
       "test-uuid-5",
