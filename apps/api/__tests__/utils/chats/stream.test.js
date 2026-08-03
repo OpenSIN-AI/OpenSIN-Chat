@@ -343,7 +343,7 @@ describe("streamChatWithWorkspace", () => {
       await streamChatWithWorkspace(
         res,
         WORKSPACE,
-        "Gib den vollständigen Dateiinhalt exakt und ohne zusätzlichen Text zurück.",
+        "Gib den vollständigen Inhalt der einzigen angehängten Datei exakt und ohne Zusatz aus.",
         "chat",
         null,
         { id: 89, slug: "thread-89", name: "New Thread" },
@@ -368,7 +368,7 @@ describe("streamChatWithWorkspace", () => {
       expect(WorkspaceChats.new).toHaveBeenCalledWith(
         expect.objectContaining({
           prompt:
-            "Gib den vollständigen Dateiinhalt exakt und ohne zusätzlichen Text zurück.",
+            "Gib den vollständigen Inhalt der einzigen angehängten Datei exakt und ohne Zusatz aus.",
           response: expect.objectContaining({
             text: attachmentText,
             sources: [

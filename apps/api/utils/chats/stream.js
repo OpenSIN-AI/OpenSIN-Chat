@@ -63,13 +63,20 @@ function isExactSingleAttachmentContentRequest(message, parsedFiles = []) {
   const asksForWholeContent =
     /(?:vollständ(?:igen|ige|iger|iges)|komplett(?:en|e|er|es)|gesamten?)\s+(?:datei)?inhalt/.test(
       normalized,
-    ) || /(?:full|complete|entire)\s+(?:file\s+)?contents?/.test(normalized);
+    ) ||
+    /(?:vollständ(?:igen|ige|iger|iges)|komplett(?:en|e|er|es)|gesamten?)\s+inhalt\s+(?:der|dieser)\s+(?:einzigen\s+)?(?:angehängten\s+)?datei/.test(
+      normalized,
+    ) ||
+    /(?:full|complete|entire)\s+(?:file\s+)?contents?/.test(normalized);
   const asksForExactOutput =
     /\b(?:exakt|wortwörtlich|unverändert|exactly|verbatim|unchanged)\b/.test(
       normalized,
     );
   const rejectsExtraText =
     /ohne\s+(?:zusätzlichen|weiteren|anderen)\s+text/.test(normalized) ||
+    /ohne\s+(?:jeden\s+)?(?:zusatz|kommentar|erklärung|formatierung)/.test(
+      normalized,
+    ) ||
     /without\s+(?:any\s+)?(?:additional|extra|other)\s+text/.test(normalized);
 
   return asksForWholeContent && asksForExactOutput && rejectsExtraText;

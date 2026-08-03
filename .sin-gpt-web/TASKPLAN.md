@@ -13,7 +13,7 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 
 ## Status
 
-- Backlog: 2
+- Backlog: 3
 - In progress: 1
 - Blocked: 0
 - Done: 8
@@ -31,6 +31,7 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 | T-0008 | critical | test | backlog | chatgpt-web | Fehlende Browserabnahme vollständig nachholen | — |
 | T-0010 | critical | implement | done | chatgpt-web | Originaldownload für Thread-Dateiquellen reparieren | — |
 | T-0011 | critical | implement | backlog | chatgpt-web | Geparsten First-Thread-Dateikontext dauerhaft speichern | — |
+| T-0012 | critical | implement | backlog | chatgpt-web | Exakte Einzeldatei-Promptvarianten deterministisch erkennen | — |
 | T-0004 | high | ops | done | chatgpt-web | sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren | — |
 | T-0005 | high | ops | done | chatgpt-web | Taskplan und ChatGPT-Handoff aktuell halten | — |
 | T-0009 | high | test | in_progress | chatgpt-web | Web-Coverage-Gate wieder erfüllen | — |
@@ -185,6 +186,24 @@ Allowed paths:
 - `apps/api/endpoints/workspacesParsedFiles.js`
 - `apps/api/__tests__/endpoints/workspacesParsedFiles.test.js`
 
+### T-0012 — Exakte Einzeldatei-Promptvarianten deterministisch erkennen
+
+- Status: `backlog`
+- Owner: `chatgpt-web`
+- Kind: `implement`
+- Priority: `critical`
+- Dependencies: none
+- Updated: 2026-08-03T07:57:43+00:00
+
+Frische Browserabnahme mit der sichtbaren deutschen Promptform „vollständigen Inhalt der einzigen angehängten Datei … ohne Zusatz“ fiel trotz vorhandenem Dateikontext auf das Modell zurück. Erweitere die sichere Erkennung und belege den Pfad per Regressionstest und Live-Marker.
+
+Acceptance:
+- Die natürliche deutsche Promptvariante liefert bei exakt einem Attachment nur den Dateiinhalt; kein LLM-Aufruf, keine Zusätze, Live-Marker exakt einmal.
+
+Allowed paths:
+- `apps/api/utils/chats/stream.js`
+- `apps/api/__tests__/utils/chats/stream.test.js`
+
 ### T-0004 — sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren
 
 - Status: `done`
@@ -238,7 +257,6 @@ Allowed paths:
 
 ## Recent events
 
-- 2026-08-02T17:23:23+00:00 — `chatgpt-web` — `provider_verification` `T-0006`: 2026-08-02 19:23 CEST: Active production NVIDIA NIM provider was probed inside the OpenSIN container using the proposed attachment label and safe system instruction. It returned the exact marker UPLOAD_ATTACHMENT_FRAMING_PROBE_20260802 with ok=true; no credentials or API endpoints were printed.
 - 2026-08-02T17:24:59+00:00 — `chatgpt-web` — `verification` `T-0006`: 2026-08-02 19:24 CEST: OpenSIN attachment-context fix passes 4 focused API suites with 46/46 tests (stream orchestration, compressor, parsed-file endpoints and thread assignment), targeted ESLint and API type-check. Expected console errors came only from asserted negative endpoint tests.
 - 2026-08-02T17:55:19+00:00 — `chatgpt-web` — `deployment` `T-0006`: 2026-08-02 19:55 CEST: OpenSIN commit fbb4b0b99b6c0d49e4a8797f879105e9ee0253a6 deployed via clean the clean OpenSIN release worktree worktree as immutable opensin-app image. Container healthy; internal 127.0.0.1:38471/api/ping and public sinchat.delqhi.com/api/ping both online:true.
 - 2026-08-02T17:59:22+00:00 — `chatgpt-web` — `live_regression` `T-0006`: 2026-08-02 19:59 CEST: Post-deploy OpenSIN first-thread upload preserved/cited the exact file marker, but the response copied an unrelated politician vector hit. Read-only DB evidence: source 1 direct upload text is correct; sources 2-5 are similarity-search results with scores 0.37-0.40. Next fix: direct uploads without explicit source selection must suppress workspace vector search and history source backfill for that turn.
@@ -258,3 +276,4 @@ Allowed paths:
 - 2026-08-03T07:46:27+00:00 — `chatgpt-web` — `task_completed` `T-0007`: Fresh verification 2026-08-03: OpenSIN main contains commit e9c84eb38 (deterministic exact single parsed attachment response). Focused API run passed 3/3 suites and 48/48 tests, including exact-content stream regression, parsed-file endpoint and original-download/traversal tests. Targeted ESLint passed with 0 errors after removing one pre-existing redundant boolean cast in the shared download endpoint; API TypeScript check passed. Shared immutable deployment and live ping are recorded in the subsequent cutover event.
 - 2026-08-03T07:46:28+00:00 — `chatgpt-web` — `task_completed` `T-0010`: Fresh verification 2026-08-03: OpenSIN main contains commit fb10f1f68 preserving original thread uploads and resolving UUID-prefixed citation downloads with traversal protection. Focused API run passed 3/3 suites and 48/48 tests: exact upload bytes/attachment headers, missing-file 404, traversal rejection, parsed-file lifecycle and stream regressions. Targeted ESLint and API TypeScript check passed. Shared immutable deployment and public/internal health evidence follow in the cutover event.
 - 2026-08-03T07:51:19+00:00 — `local-agent` — `task_added` `T-0011`: Geparsten First-Thread-Dateikontext dauerhaft speichern
+- 2026-08-03T07:57:43+00:00 — `local-agent` — `task_added` `T-0012`: Exakte Einzeldatei-Promptvarianten deterministisch erkennen
