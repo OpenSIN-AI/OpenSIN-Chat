@@ -31,6 +31,7 @@ import { safeJsonParse } from "@/utils/request";
 import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 import { useSidebarToggle } from "./SidebarToggle";
 import { useGlobalSearchDialog } from "@/features/global-search/GlobalSearchProvider";
+import OpenAfDIcon from "@/media/logo/openafd-icon.svg";
 
 type WorkspaceSummary = {
   id?: number | string;
@@ -45,7 +46,6 @@ const SIDEBAR_MAX_WIDTH = 420;
 const SIDEBAR_DEFAULT_WIDTH = 264;
 const SIDEBAR_WIDTH_STORAGE_KEY = "opensin-sidebar-width";
 const APP_NAME = "OpenSIN";
-const APP_MONOGRAM = "S";
 const COMMAND_SHORTCUT_LABEL =
   typeof navigator !== "undefined" &&
   /Mac|iPhone|iPad|iPod/.test(navigator.platform)
@@ -120,9 +120,12 @@ function SidebarContent({
           onClick={() => navigate(paths.home())}
           className="flex min-w-0 items-center gap-2"
         >
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-theme-text-primary text-xs font-bold text-theme-bg-primary">
-            {APP_MONOGRAM}
-          </div>
+          <img
+            src={OpenAfDIcon}
+            alt=""
+            aria-hidden="true"
+            className="h-8 w-8 shrink-0 rounded-lg object-contain"
+          />
           <span className="truncate text-sm font-semibold text-theme-text-primary">
             {APP_NAME}
           </span>
@@ -320,6 +323,12 @@ export function SidebarMobileHeader({
         >
           <List size={22} aria-hidden="true" />
         </button>
+        <img
+          src={OpenAfDIcon}
+          alt=""
+          aria-hidden="true"
+          className="ml-2 h-7 w-7 rounded-md object-contain"
+        />
         <span className="ml-2 text-sm font-semibold text-theme-text-primary">
           {APP_NAME}
         </span>

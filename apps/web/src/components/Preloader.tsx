@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Shared loading indicators for inline and full-screen application states.
 // Docs: Keep the full-screen state branded, calm, and accessible while the app boots.
-import OpenSINIcon from "@/media/logo/opensin-icon.svg";
+import OpenAfDIcon from "@/media/logo/openafd-icon.svg";
 
 export default function PreLoader({ size = "16" }: any) {
   const dimension =
@@ -30,11 +30,11 @@ export function FullScreenLoader() {
           <div className="preloader-glow" />
           <div className="preloader-ring" />
           <div className="preloader-logo">
-            <img src={OpenSINIcon} alt="" />
+            <img src={OpenAfDIcon} alt="" />
           </div>
         </div>
         <div className="preloader-caption" aria-hidden="true">
-          <span>OpenSIN Intelligence</span>
+          <span>OpenSIN Chat</span>
           <span className="preloader-dots">
             <i />
             <i />

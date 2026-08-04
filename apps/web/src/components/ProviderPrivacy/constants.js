@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import OpenSINChatIcon from "@/media/logo/opensin-icon.svg";
+import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import OpenAiLogo from "@/media/llmprovider/openai.png";
 import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";
 import AnthropicLogo from "@/media/llmprovider/anthropic.png";

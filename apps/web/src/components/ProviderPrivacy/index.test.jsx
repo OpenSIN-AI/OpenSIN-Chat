@@ -7,7 +7,7 @@ vi.mock("@/hooks/useSystemSettings", () => ({
   default: vi.fn(),
 }));
 
-vi.mock("@/media/logo/opensin-icon.svg", () => ({
+vi.mock("@/media/logo/openafd-icon.svg", () => ({
   default: "mock-logo.svg",
 }));
 

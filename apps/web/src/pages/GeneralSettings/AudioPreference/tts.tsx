@@ -8,7 +8,7 @@ import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass"
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import CTAButton from "@/components/lib/CTAButton";
 import OpenAiLogo from "@/media/llmprovider/openai.png";
-import OpenSINChatIcon from "@/media/logo/opensin-icon.svg";
+import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import ElevenLabsIcon from "@/media/ttsproviders/elevenlabs.png";
 import PiperTTSIcon from "@/media/ttsproviders/piper.png";
 import GenericOpenAiLogo from "@/media/ttsproviders/generic-openai.png";

@@ -18,7 +18,7 @@ export {
   ALL_LLM_PROVIDERS,
   LLM_PREFERENCE_CHANGED_EVENT,
 };
-import OpenSINChatIcon from "@/media/logo/opensin-icon.svg";
+import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import PreLoader from "@/components/Preloader";
 import LLMItem from "@/components/LLMSelection/LLMItem";
 import { CaretUpDown } from "@phosphor-icons/react/dist/csr/CaretUpDown";

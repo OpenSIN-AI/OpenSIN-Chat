@@ -7,14 +7,12 @@ import React, {
   useRef,
 } from "react";
 import useSWR from "swr";
-import OpenSINLogo from "./media/logo/opensin-logo.png";
-import OpenSINLogoDark from "./media/logo/opensin-logo-dark.png";
-import DefaultLoginLogo from "./media/logo/opensin-logo.png";
+import OpenAfDLogo from "./media/logo/openafd-icon.svg";
 import System from "./models/system";
-import { resolveDarkMode } from "./hooks/useTheme";
 
 export const REFETCH_LOGO_EVENT = "refetch-logo";
 export const LOGO_CACHE_KEY = "system/logo";
+export const DEFAULT_OPENAFD_LOGO = OpenAfDLogo;
 
 export const LogoContext = createContext<any>(undefined);
 
@@ -31,31 +29,24 @@ export function LogoProvider({ children }: { children: React.ReactNode }) {
   const currentLogoRef = useRef<string | null>(null);
 
   async function fetchLogoData(): Promise<LogoData> {
-    const isDarkMode = resolveDarkMode();
-    const fallbackLogo = isDarkMode ? OpenSINLogoDark : OpenSINLogo;
-    const defaultLoginLogo = isDarkMode ? OpenSINLogoDark : DefaultLoginLogo;
-
     try {
       const { isCustomLogo, logoURL } = await System.fetchLogo();
-      if (logoURL) {
+      if (isCustomLogo && logoURL) {
         return {
           logo: logoURL,
-          loginLogo: isCustomLogo ? logoURL : defaultLoginLogo,
-          isCustomLogo,
+          loginLogo: logoURL,
+          isCustomLogo: true,
         };
       }
-      return {
-        logo: fallbackLogo,
-        loginLogo: defaultLoginLogo,
-        isCustomLogo: false,
-      };
     } catch {
-      return {
-        logo: fallbackLogo,
-        loginLogo: defaultLoginLogo,
-        isCustomLogo: false,
-      };
+      // Use the shared product logo when no custom logo is configured.
     }
+
+    return {
+      logo: DEFAULT_OPENAFD_LOGO,
+      loginLogo: DEFAULT_OPENAFD_LOGO,
+      isCustomLogo: false,
+    };
   }
 
   const { data, mutate } = useSWR<LogoData>(LOGO_CACHE_KEY, fetchLogoData, {
@@ -63,8 +54,8 @@ export function LogoProvider({ children }: { children: React.ReactNode }) {
     revalidateOnReconnect: false,
     // Provide immediate fallback values so consumers never receive undefined.
     fallbackData: {
-      logo: OpenSINLogo,
-      loginLogo: DefaultLoginLogo,
+      logo: DEFAULT_OPENAFD_LOGO,
+      loginLogo: DEFAULT_OPENAFD_LOGO,
       isCustomLogo: false,
     },
   });
