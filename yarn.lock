@@ -3030,10 +3030,10 @@
   resolved "https://registry.yarnpkg.com/@tiptap/extension-strike/-/extension-strike-3.28.0.tgz#aafaff70b12a1374174cbb95d3c12ad7be315452"
   integrity sha512-VVj2ZZU9QYqiHLcjqMqRYvuHSsokj/AgUl+6TzLrKjlWwyZ18D4H2vkyI0g70iVTKnUpZ3sEy8WA/rqjgBjqBg==
 
-"@tiptap/extension-table-cell@^3.29.1":
-  version "3.29.1"
-  resolved "https://registry.yarnpkg.com/@tiptap/extension-table-cell/-/extension-table-cell-3.29.1.tgz#9ac1a58b3a9a9ae581b48ceb646e4b0235ff87dd"
-  integrity sha512-kyodW/Bcn0JVjEherMrAMisVCd1bsv3tX7CBugbrvLD+Mj//arpbhtMNXxjWMTnLEpOFjYOjiCZwywS5WrkSZg==
+"@tiptap/extension-table-cell@^3.29.2":
+  version "3.29.2"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-table-cell/-/extension-table-cell-3.29.2.tgz#e40f84b3b6cdabc0aefe9270544bc9bb8bbf35c8"
+  integrity sha512-SAdjUM9AdtEI7Uyd9wEKpYao7xJ/WVjkLoRm07uWB/J71JE9ewSilV9887C9JPPdFNhzMEL+OcO0be8d3z4qrA==
 
 "@tiptap/extension-table-header@^3.27.3":
   version "3.28.0"
@@ -5839,10 +5839,17 @@ domhandler@^5.0.2, domhandler@^5.0.3, domhandler@~5.0.3:
   dependencies:
     domelementtype "^2.3.0"
 
-dompurify@3.4.12, dompurify@^3.3.1, dompurify@^3.4.12:
+dompurify@3.4.12:
   version "3.4.12"
   resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.4.12.tgz#6fa2265e9bbdce882c4ace4107626051b448ffa8"
   integrity sha512-zQvGet8Z2sWbQhCmfFz/T5QWH2oBmjnqK3qvOjaqaNLrLEF912WamU+ohnTp0TCep/MFVHpdJuCZEdFOdTnEFg==
+  optionalDependencies:
+    "@types/trusted-types" "^2.0.7"
+
+dompurify@^3.3.1, dompurify@^3.4.12:
+  version "3.4.13"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.4.13.tgz#fc28949d59f92d62e28a3a764bcbeee35897a1be"
+  integrity sha512-2vmYIoqjze2d+kakP8S/nS5shfsl587kzwEjcGlTdiksUVgFHnFCsLYDVj/JNqJVOQZGSYBTmuycv0PodwmnMQ==
   optionalDependencies:
     "@types/trusted-types" "^2.0.7"
 
@@ -8471,9 +8478,9 @@ js-tokens@^10.0.0:
   integrity sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==
 
 js-yaml@>=4.2.0, js-yaml@^3.13.1, js-yaml@^4.3.0:
-  version "5.2.2"
-  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-5.2.2.tgz#497bfe63f0b0db11c7bbc5ce8bc568e836c8b08c"
-  integrity sha512-dayzUzKkJ1MkuUtZglSebU43utNXH0OWQByK9rKOOuYIO8M5TV1y+n8ALMdG0rdzBnfNkOmZEqrURepb0ejqBw==
+  version "5.2.3"
+  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-5.2.3.tgz#0942ae8f507e22eb0e54624871789cd477106e54"
+  integrity sha512-n+mUVyUX5bVv7G/G2zyIHOhdxfuU1dY2NOFzTQUWiMUbFss8b57NFlgCCaggU78wSw5KVS9cllzeLyzyR+n5nw==
   dependencies:
     argparse "^2.0.1"
 
@@ -9947,9 +9954,9 @@ named-placeholders@^1.1.3, named-placeholders@^1.1.6:
     lru.min "^1.1.0"
 
 nanoid@^3.3.12, nanoid@^3.3.16:
-  version "3.3.16"
-  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.16.tgz#a04d8ec4b1f10009d2d533947aefe4293737816c"
-  integrity sha512-bzlKTyNJ7+LdGIIwy8ijFpIqEQIvafahV7eYykJ8Cvh42EdJeODoJ6gUJXpQJvej1BddH8OqTXZNE/KfbWAu8Q==
+  version "3.3.17"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.17.tgz#f1c3aa253c52547956a52c50bff754316f61037a"
+  integrity sha512-xQLf0A3HOMlgHq0n247/LRuAOYmB7dXJ/DvAxGvsSBij45XtBSmQycu+F8ODbHwns/XyFZagyL1+J0Offw1E0g==
 
 nanoid@^5.1.3:
   version "5.1.16"
@@ -13811,7 +13818,16 @@ wordwrapjs@^5.1.0:
   resolved "https://registry.yarnpkg.com/wordwrapjs/-/wordwrapjs-5.1.1.tgz#bfd1eb426f0f7eec73b7df32cf7df1f618bfb3a9"
   integrity sha512-0yweIbkINJodk27gX9LBGMzyQdBDan3s/dEAiwBOj+Mf0PPyWL6/rikalkv8EeD0E8jm4o5RXEOrFTP3NXbhJg==
 
-"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@7.0.0, wrap-ansi@^7.0.0:
+"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-7.0.0.tgz"
+  integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
+  dependencies:
+    ansi-styles "^4.0.0"
+    string-width "^4.1.0"
+    strip-ansi "^6.0.0"
+
+wrap-ansi@7.0.0, wrap-ansi@^7.0.0:
   version "7.0.0"
   resolved "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-7.0.0.tgz"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
