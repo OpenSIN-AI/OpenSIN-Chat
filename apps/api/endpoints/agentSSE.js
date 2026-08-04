@@ -216,6 +216,46 @@ function agentSSE(app, routePrefix = "") {
         return;
       }
 
+      // Capture route params before the first await. This avoids relying on
+      // mutable router state after asynchronous authorization completes.
+      const uuid = String(req.params.uuid);
+      let responseClosed = false;
+      let connectionRegistered = false;
+      let isTerminated = false;
+      let agentHandler = null;
+      let socket = null;
+
+      const cleanup = () => {
+        if (isTerminated) return;
+        isTerminated = true;
+        activeSSESockets.delete(uuid);
+        if (connectionRegistered && activeConnectionCount > 0) {
+          activeConnectionCount--;
+        }
+      };
+
+      // The SSE response is the long-lived object. IncomingMessage "close"
+      // can fire once the request itself is complete, before the stream ends.
+      res.on("close", () => {
+        responseClosed = true;
+        if (!connectionRegistered || !socket) return;
+
+        socket._emit("close");
+        cleanup();
+        if (agentHandler) {
+          agentHandler.closeAlert();
+          try {
+            if (agentHandler.aibitat) agentHandler.aibitat.abort();
+          } catch (e) {
+            consoleLogger.error(
+              "[agentSSE] Error aborting agent on close:",
+              e.message,
+            );
+          }
+        }
+        WorkspaceAgentInvocation.close(uuid);
+      });
+
       res.writeHead(200, {
         "Content-Type": "text/event-stream",
         "Cache-Control": "no-store, no-cache, must-revalidate",
@@ -232,6 +272,10 @@ function agentSSE(app, routePrefix = "") {
         return;
       }
 
+      // A client can disconnect while authorization is pending. Do not create
+      // a registry entry after the response has already gone away.
+      if (responseClosed || res.destroyed || res.writableEnded) return;
+
       if (activeConnectionCount >= MAX_SSE_CONNECTIONS) {
         consoleLogger.warn(
           `[agentSSE] Rejecting connection: ${activeConnectionCount}/${MAX_SSE_CONNECTIONS} slots in use.`,
@@ -244,37 +288,9 @@ function agentSSE(app, routePrefix = "") {
       }
       activeConnectionCount++;
 
-      const uuid = String(req.params.uuid);
-      const socket = createSSESocket(res);
+      socket = createSSESocket(res);
       activeSSESockets.set(uuid, socket);
-
-      let isTerminated = false;
-
-      const cleanup = () => {
-        if (isTerminated) return;
-        isTerminated = true;
-        activeSSESockets.delete(uuid);
-        if (activeConnectionCount > 0) activeConnectionCount--;
-      };
-
-      let agentHandler = null;
-
-      req.on("close", () => {
-        socket._emit("close");
-        cleanup();
-        if (agentHandler) {
-          agentHandler.closeAlert();
-          try {
-            if (agentHandler.aibitat) agentHandler.aibitat.abort();
-          } catch (e) {
-            consoleLogger.error(
-              "[agentSSE] Error aborting agent on close:",
-              e.message,
-            );
-          }
-        }
-        WorkspaceAgentInvocation.close(uuid);
-      });
+      connectionRegistered = true;
 
       try {
         agentHandler = await new AgentHandler({ uuid }).init();
@@ -398,11 +414,11 @@ function agentSSE(app, routePrefix = "") {
       }),
     ],
     async (req, res) => {
+      const uuid = String(req.params.uuid);
       if (!(await isAuthorizedRequest(req))) {
         return res.status(401).json({ error: "Unauthorized" });
       }
 
-      const uuid = String(req.params.uuid);
       const socket = activeSSESockets.get(uuid);
       if (!socket) {
         return res
@@ -434,4 +450,20 @@ function agentSSE(app, routePrefix = "") {
   app.use(`${routePrefix}/sse`, router);
 }
 
-module.exports = { agentSSE, isOriginAllowed };
+/**
+ * Reset module-level connection state between integration tests. This is
+ * intentionally exported only as a test hook; production callers never use it.
+ */
+function _resetForTest() {
+  for (const socket of activeSSESockets.values()) {
+    try {
+      socket.terminate();
+    } catch {
+      /* already closed */
+    }
+  }
+  activeSSESockets.clear();
+  activeConnectionCount = 0;
+}
+
+module.exports = { agentSSE, isOriginAllowed, _resetForTest };

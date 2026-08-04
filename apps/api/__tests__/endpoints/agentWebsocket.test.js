@@ -57,7 +57,10 @@ const express = require("express");
 const http = require("node:http");
 const WebSocket = require("ws");
 const expressWs = require("@mintplex-labs/express-ws").default;
-const { agentWebsocket, _resetForTest } = require("../../endpoints/agentWebsocket");
+const {
+  agentWebsocket,
+  _resetForTest,
+} = require("../../endpoints/agentWebsocket");
 const {
   WorkspaceAgentInvocation,
 } = require("../../models/workspaceAgentInvocation");
@@ -94,6 +97,46 @@ function nextClose(ws, { timeoutMs = 3000 } = {}) {
   });
 }
 
+/**
+ * Waits for a disallowed WebSocket connection to be rejected. Depending on
+ * whether express-ws reaches the application callback before the upgrade is
+ * refused, ws observes either the explicit 1008 close or an HTTP 403 error.
+ * Both are secure rejection outcomes and listeners must be attached before
+ * either event can fire.
+ */
+function nextRejectedConnection(ws, { timeoutMs = 3000 } = {}) {
+  return new Promise((resolve, reject) => {
+    const cleanup = () => {
+      clearTimeout(timer);
+      ws.off("close", onClose);
+      ws.off("error", onError);
+    };
+    const onClose = (code, reason) => {
+      cleanup();
+      resolve({ type: "close", code, reason: reason?.toString() || "" });
+    };
+    const onError = (error) => {
+      const match = error.message.match(/Unexpected server response: (\d+)/);
+      if (match) {
+        cleanup();
+        resolve({ type: "http", status: Number(match[1]) });
+        return;
+      }
+      cleanup();
+      reject(error);
+    };
+    const timer = setTimeout(() => {
+      cleanup();
+      reject(
+        new Error("nextRejectedConnection: timed out waiting for rejection"),
+      );
+    }, timeoutMs);
+
+    ws.once("close", onClose);
+    ws.once("error", onError);
+  });
+}
+
 describe("agentWebsocket — error paths", () => {
   let server;
   let baseUrl;
@@ -123,8 +166,7 @@ describe("agentWebsocket — error paths", () => {
     // server-side client explicitly first, otherwise server.close()'s
     // callback never fires and the test hangs until Jest's per-test
     // timeout (exactly the kind of leak tracked in #373).
-    getWss()
-      .clients.forEach((client) => client.terminate());
+    getWss().clients.forEach((client) => client.terminate());
     await new Promise((r) => setTimeout(r, 20));
     server.closeAllConnections?.();
     await new Promise((resolve) => server.close(resolve));
@@ -238,13 +280,16 @@ describe("agentWebsocket — error paths", () => {
     });
 
     const ws = new WebSocket(`${baseUrl}/agent-invocation/uuid-disconnect`);
-    await new Promise((resolve, reject) => {
+    // Subscribe to both events before either can fire. Under full-suite CPU
+    // load the initial status frame can arrive in the same turn as "open".
+    const initialMessage = nextMessage(ws);
+    const opened = new Promise((resolve, reject) => {
       ws.once("open", resolve);
       ws.once("error", reject);
     });
     // The initial "Verbindung hergestellt..." status message confirms the
     // handler reached the post-auth/post-init code path before we disconnect.
-    await nextMessage(ws);
+    await Promise.all([opened, initialMessage]);
 
     ws.terminate();
     await new Promise((r) => setTimeout(r, 150));
@@ -265,11 +310,15 @@ describe("agentWebsocket — error paths", () => {
     process.env.INTEGRATION_TEST = "false";
     try {
       const ws = new WebSocket(`${baseUrl}/agent-invocation/uuid-origin`, {
-        headers: { Origin: "https://evil.example.com" },
+        origin: "https://evil.example.com",
       });
-      const closeEvent = await nextClose(ws);
-      expect(closeEvent.code).toBe(1008);
-      expect(closeEvent.reason).toMatch(/origin/i);
+      const rejection = await nextRejectedConnection(ws);
+      if (rejection.type === "close") {
+        expect(rejection.code).toBe(1008);
+        expect(rejection.reason).toMatch(/origin/i);
+      } else {
+        expect(rejection.status).toBe(403);
+      }
     } finally {
       process.env.INTEGRATION_TEST = previous;
     }

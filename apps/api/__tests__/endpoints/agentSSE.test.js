@@ -56,7 +56,7 @@ jest.mock("../../utils/agents", () => ({
 const express = require("express");
 const http = require("node:http");
 const { TextDecoder } = require("node:util");
-const { agentSSE } = require("../../endpoints/agentSSE");
+const { agentSSE, _resetForTest } = require("../../endpoints/agentSSE");
 const {
   WorkspaceAgentInvocation,
 } = require("../../models/workspaceAgentInvocation");
@@ -118,6 +118,7 @@ describe("agentSSE — error paths", () => {
 
   beforeEach(async () => {
     jest.clearAllMocks();
+    _resetForTest();
     const app = express();
     app.use(express.json());
     agentSSE(app);
@@ -127,6 +128,7 @@ describe("agentSSE — error paths", () => {
   });
 
   afterEach(async () => {
+    _resetForTest();
     // Force-close any lingering SSE keep-alive sockets so server.close()
     // resolves immediately instead of waiting out the HTTP keep-alive
     // timeout. Without this, aborted-but-not-yet-torn-down connections from
