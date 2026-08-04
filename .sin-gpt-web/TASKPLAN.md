@@ -395,7 +395,6 @@ Acceptance:
 
 ## Recent events
 
-- 2026-08-03T23:13:12+00:00 — `local-agent` — `task_added` `T-0020`: sin-chrome: explizite Tab-Steuerung und Timeout nach Mehrtab-Nutzung beheben
 - 2026-08-03T23:38:08+00:00 — `local-agent` — `task_blocked` `T-0019`: External blocker 2026-08-04: ChatGPT Web in Orca project chat CEO-Runde Abschlussauftrag (https://chatgpt.com/c/6a7125d6-5084-83eb-a182-746d87c353f4) cannot complete Mac-i9 fs/cmd calls. First aggregate call was rejected by tool safety filter; smaller TASKPLAN read remains stuck without taskplan activity. sin-gpt-web-recover failed because Ab hier neuen Chat starten was unavailable. No repo write/test/commit/push/deploy/browser acceptance was claimed.
 - 2026-08-03T23:38:08+00:00 — `local-agent` — `task_blocked` `T-0013`: Blocked by T-0019: ChatGPT Web Mac-i9 connector/safety-filter failure prevents authoritative cross-repo fix, verification and push.
 - 2026-08-03T23:38:08+00:00 — `local-agent` — `task_blocked` `T-0015`: Blocked by T-0013: current ChatGPT Web delegation cannot access the repository through Mac-i9, so deployment changes cannot be safely verified or applied.
@@ -415,3 +414,4 @@ Acceptance:
 - 2026-08-04T01:45:14+00:00 — `local-agent` — `verification` `T-0019`: Independent sin verify passed when run serially: sin verify yarn test:integration. Security scan 0 issues, style scan 0 issues, tests 0 failures.
 - 2026-08-04T11:19:33+00:00 — `local-agent` — `verification` `T-0019`: 2026-08-04: Cross-repo agent SSE lifecycle fix a19fc30 is on OpenSIN main and deployed to opensin-app. Focused agentSSE/agentWebsocket tests passed 15/15; server typecheck and lint passed. Public sinchat.delqhi.com/api/ping online:true. Fresh real web-search browser acceptance remains pending because OpenSIN profile is logged out after auth rotation.
 - 2026-08-04T11:19:33+00:00 — `local-agent` — `verification` `T-0018`: 2026-08-04: Read Run-9 and Run-10 ChatGPT handoffs; Run-10 canonical session 6a71920a-27c0-83ed-a6f1-82f8577423a8 is retained as latest. Older 6a70be0a session archived; older Run-9/aborted Run-10 histories reviewed. Taskplan/handoff updates continue through local-agent because connector session is interrupted.
+- 2026-08-04T11:25:24+00:00 — `local-agent` — `verification` `T-0019`: 2026-08-04: Added and ran attachment-formatting regression test in OpenSIN (3/3 passed), committed as 2eeba1, pushed to main. Main remains clean after this evidence update; live web-search browser acceptance remains the only T-0019 gate.
