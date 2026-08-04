@@ -71,3 +71,11 @@
 - **Current tasks**: OpenSIN T-0019 and T-0018; dependency chain T-0013 → T-0015 → T-0016 follows after web-search verification.
 - **Current status**: Mac-i9 access is working in Run 9. Shared post-tool deadline finalization and scraped-document text serialization are present in both repositories. Fresh focused regression: 2 suites / 5 tests passed in each repo. A direct regression test was added for document-vs-image attachment formatting.
 - **Remaining gates**: full verification, reviewed commits/push, immutable OCI deployment, and fresh authenticated live browser acceptance on both domains. No success is claimed before those gates.
+
+## Run-10 / CEO Closure Status (2026-08-04)
+
+- **Latest retained ChatGPT conversation**: `https://chatgpt.com/c/6a71920a-27c0-83ed-a6f1-82f8577423a8` in the authenticated OpenSIN profile; the session is retained because it is the newest project session, although its last visible state is connector interruption.
+- **Archived after review**: Run-8/Run-9 predecessor sessions `6a70be0a...`, `6a7125d6...`, `6a713bb9...`, and interrupted Run-10 `6a718f80...`.
+- **OpenSIN main**: `3e3146e`; agent-stream lifecycle fix `45ea40b`, attachment regression test `2eeba1`; focused tests/typecheck/lint passed; `opensin-app` restarted and public ping is `online:true`.
+- **OpenAfD main**: `42ae4be`; shared agent-stream lifecycle fix `1121140`; focused API tests 18/18 and typecheck passed; `openafd-app` restarted and public ping is `online:true`.
+- **Remaining gates**: authenticated browser re-login, real sourced web-search/deep-research acceptance, and provider-only credential rotation. No unverified completion is claimed.
