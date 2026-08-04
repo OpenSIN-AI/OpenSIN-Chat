@@ -51,3 +51,23 @@
 
 ### Autorisierung
 - Commit+Push main beide Repos: YES | Deployment OCI VM: YES | Token-Rotation: YES | Keine destruktiven Aktionen ohne Rückfrage
+
+## Run-8 Delegation Status (2026-08-04)
+
+- **Titel**: CEO-Runde Abschlussauftrag
+- **Conversation URL**: https://chatgpt.com/c/6a7125d6-5084-83eb-a182-746d87c353f4
+- **Aufgabe**: Alle offenen OpenSIN/OpenAfD-Tasks bearbeiten, Tests/Push/OCI-Deployment und vollständige Orca-Abnahme durchführen; wow-my-zsh nur bei relevanten sin-chrome-Befunden prüfen.
+- **Repositories**: `$REPO`, `$SISTER_REPO`; sin-chrome-Befund in `$TOOLING_REPO`.
+- **Letzter Status**: Brief in einem neuen Projektchat gesendet. ChatGPT führte zunächst einen Tool-Sicherheitsfilter-Fehler und anschließend einen hängenden Mac-i9-Leseaufruf aus; keine Repo-Änderung, kein Test, kein Commit, kein Push und kein Deployment wurden behauptet.
+- **Blocker**: `sin-gpt-web-recover` konnte nicht branch-first fortsetzen, weil `Ab hier neuen Chat starten` nicht verfügbar war. T-0019/T-0013/T-0015/T-0016 sowie OpenAfD T-0037/T-0025 sind im SQLite-Taskplan mit dieser Ursache blockiert.
+- **sin-chrome**: `doctor`, `connect` und initialer `control status` grün; Mehrtab-Steuerung wechselte dennoch in einen fremden Chat und ein expliziter Stop-Aufruf timeoutete. Befund ist in wow-my-zsh Issue #29 kommentiert und als T-0020 erfasst.
+
+## Run-9 Delegation Status (2026-08-04)
+
+- **Titel**: CEO-Runde Abschlussauftrag Run 9
+- **Canonical conversation URL**: https://chatgpt.com/c/6a713bb9-d694-83eb-98d0-f57b6de5fcf5
+- **Source conversation URL**: https://chatgpt.com/c/6a7125d6-5084-83eb-a182-746d87c353f4
+- **Repositories**: `$REPO`, `$SISTER_REPO`; related tooling `$TOOLING_REPO`.
+- **Current tasks**: OpenSIN T-0019 and T-0018; dependency chain T-0013 → T-0015 → T-0016 follows after web-search verification.
+- **Current status**: Mac-i9 access is working in Run 9. Shared post-tool deadline finalization and scraped-document text serialization are present in both repositories. Fresh focused regression: 2 suites / 5 tests passed in each repo. A direct regression test was added for document-vs-image attachment formatting.
+- **Remaining gates**: full verification, reviewed commits/push, immutable OCI deployment, and fresh authenticated live browser acceptance on both domains. No success is claimed before those gates.

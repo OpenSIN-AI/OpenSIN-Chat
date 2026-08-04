@@ -13,9 +13,9 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 
 ## Status
 
-- Backlog: 0
-- In progress: 5
-- Blocked: 0
+- Backlog: 1
+- In progress: 1
+- Blocked: 4
 - Done: 14
 - Cancelled: 0
 
@@ -32,16 +32,17 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 | T-0010 | critical | implement | done | chatgpt-web | Originaldownload für Thread-Dateiquellen reparieren | — |
 | T-0011 | critical | implement | done | chatgpt-web | Geparsten First-Thread-Dateikontext dauerhaft speichern | — |
 | T-0012 | critical | implement | done | chatgpt-web | Exakte Einzeldatei-Promptvarianten deterministisch erkennen | — |
-| T-0013 | critical | implement | in_progress | chatgpt-web | OpenSIN+OpenAfD: Git-Stand prüfen, Fehler beheben, alles nach main pushen | T-0019 |
+| T-0013 | critical | implement | blocked | chatgpt-web | OpenSIN+OpenAfD: Git-Stand prüfen, Fehler beheben, alles nach main pushen | T-0019 |
 | T-0014 | critical | implement | done | chatgpt-web | OpenAfD-Chat: vollständige Synchronisierung und Fehlerfreiheit herstellen | — |
-| T-0015 | critical | ops | in_progress | chatgpt-web | Beide Repos live auf Oracle Cloud VM verifizieren und funktionierend halten | T-0013 |
-| T-0016 | critical | test | in_progress | chatgpt-web | Vollständige Browser-Abnahme ALLER Funktionen auf beiden Live-Domains (Websuche, Datei-Upload, Quellen-Dateien zum Chat hinzufügen, Deep Research, Modellwahl, Navigation, Empty/Error-States, Login/Reconnect, Notebooks, ⌘K-Suche) | T-0015 |
+| T-0015 | critical | ops | blocked | chatgpt-web | Beide Repos live auf Oracle Cloud VM verifizieren und funktionierend halten | T-0013 |
+| T-0016 | critical | test | blocked | chatgpt-web | Vollständige Browser-Abnahme ALLER Funktionen auf beiden Live-Domains (Websuche, Datei-Upload, Quellen-Dateien zum Chat hinzufügen, Deep Research, Modellwahl, Navigation, Empty/Error-States, Login/Reconnect, Notebooks, ⌘K-Suche) | T-0015 |
 | T-0019 | critical | implement | in_progress | chatgpt-web | Websuche endet nach erfolgreichem Scraping mit Internal error | — |
 | T-0004 | high | ops | done | chatgpt-web | sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren | — |
 | T-0005 | high | ops | done | chatgpt-web | Taskplan und ChatGPT-Handoff aktuell halten | — |
 | T-0009 | high | test | done | chatgpt-web | Web-Coverage-Gate wieder erfüllen | — |
 | T-0017 | high | ops | done | local-agent | sin-chrome-Fallback dokumentieren und wow-my-zsh Issue #29 erneut bestätigen | — |
-| T-0018 | high | ops | in_progress | chatgpt-web | Taskplan und ChatGPT-Handoff für Run-7 aktuell halten | — |
+| T-0018 | high | ops | blocked | chatgpt-web | Taskplan und ChatGPT-Handoff für Run-7 aktuell halten | — |
+| T-0020 | high | ops | backlog | local-agent | sin-chrome: explizite Tab-Steuerung und Timeout nach Mehrtab-Nutzung beheben | — |
 
 ## Task details
 
@@ -225,14 +226,16 @@ Completion report: `.sin-gpt-web/reports/T-0012.md`
 
 ### T-0013 — OpenSIN+OpenAfD: Git-Stand prüfen, Fehler beheben, alles nach main pushen
 
-- Status: `in_progress`
+- Status: `blocked`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `critical`
 - Dependencies: T-0019
-- Updated: 2026-08-03T15:58:15+00:00
+- Updated: 2026-08-03T23:38:08+00:00
 
 Beide Repos auf uncommitted/fehlerhafte Änderungen prüfen, alle gefundenen Fehler beheben (Tests/Lint/Typecheck/Build grün), alles autorisiert nach origin/main pushen.
+
+Blocked: Blocked by T-0019: ChatGPT Web Mac-i9 connector/safety-filter failure prevents authoritative cross-repo fix, verification and push.
 
 ### T-0014 — OpenAfD-Chat: vollständige Synchronisierung und Fehlerfreiheit herstellen
 
@@ -251,25 +254,29 @@ Completion report: `.sin-gpt-web/reports/T-0014.md`
 
 ### T-0015 — Beide Repos live auf Oracle Cloud VM verifizieren und funktionierend halten
 
-- Status: `in_progress`
+- Status: `blocked`
 - Owner: `chatgpt-web`
 - Kind: `ops`
 - Priority: `critical`
 - Dependencies: T-0013
-- Updated: 2026-08-03T15:58:15+00:00
+- Updated: 2026-08-03T23:38:08+00:00
 
 Deployment-Images beider Produkte auf der OCI VM aktualisieren (falls neue Commits), Health-Checks intern+öffentlich, Rollback-Images dokumentieren.
 
+Blocked: Blocked by T-0013: current ChatGPT Web delegation cannot access the repository through Mac-i9, so deployment changes cannot be safely verified or applied.
+
 ### T-0016 — Vollständige Browser-Abnahme ALLER Funktionen auf beiden Live-Domains (Websuche, Datei-Upload, Quellen-Dateien zum Chat hinzufügen, Deep Research, Modellwahl, Navigation, Empty/Error-States, Login/Reconnect, Notebooks, ⌘K-Suche)
 
-- Status: `in_progress`
+- Status: `blocked`
 - Owner: `chatgpt-web`
 - Kind: `test`
 - Priority: `critical`
 - Dependencies: T-0015
-- Updated: 2026-08-03T15:58:01+00:00
+- Updated: 2026-08-03T23:38:09+00:00
 
 Jede einzelne Funktion im Browser voll durchtesten (sin-chrome defekt → Orca-Browser). Websuche und Deep Research mit echten Suchen, Datei-Upload mit echten Attachments, Quellen-Dateien aus dem Drawer in den Chat übernehmen, Modellwahl, Navigation, Reconnect, Reload-Persistenz. JEDEN Bug/fehlendes/nicht fertiges exakt im Taskplan dokumentieren (block/update/neuer Task).
+
+Blocked: Blocked by T-0015: final browser acceptance must follow verified fix/deploy; current delegated ChatGPT run is blocked before repo access.
 
 ### T-0019 — Websuche endet nach erfolgreichem Scraping mit Internal error
 
@@ -278,7 +285,7 @@ Jede einzelne Funktion im Browser voll durchtesten (sin-chrome defekt → Orca-B
 - Kind: `implement`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-08-03T14:46:51+00:00
+- Updated: 2026-08-04T01:32:59+00:00
 
 Run-7 ORCA live on sinchat.delqhi.com: @agent web search executes repeated DuckDuckGo web-browsing and scrapes https://example.com, then returns Internal error instead of a sourced answer. Diagnose backend exception, add regression coverage, fix both products, deploy and reaccept live.
 
@@ -361,34 +368,50 @@ Completion report: `.sin-gpt-web/reports/T-0017.md`
 
 ### T-0018 — Taskplan und ChatGPT-Handoff für Run-7 aktuell halten
 
-- Status: `in_progress`
+- Status: `blocked`
 - Owner: `chatgpt-web`
 - Kind: `ops`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-08-03T14:46:51+00:00
+- Updated: 2026-08-04T01:25:19+00:00
 
 Titel, Konversations-URL, Aufgabe, Repos, letzter Status, Blocker und Evidence dauerhaft in .sin-gpt-web/handoff.md + DB festhalten; COMPLETION_REPORT.md am Ende aktualisieren.
 
+Blocked: Run-9 implementierte und fokussierte Websuche-Regressionen, aber Mac-i9 bleibt selbst bei einem einzelnen printf-Sanity-Call im ChatGPT-Toolpfad haengen; lokale unabhaengige Verifikation/Push/Deployment muss den Rest belegen.
+
+### T-0020 — sin-chrome: explizite Tab-Steuerung und Timeout nach Mehrtab-Nutzung beheben
+
+- Status: `backlog`
+- Owner: `local-agent`
+- Kind: `ops`
+- Priority: `high`
+- Dependencies: none
+- Updated: 2026-08-04T01:05:35+00:00
+
+2026-08-04: doctor/connect/control status zunaechst gruen. Nach Oeffnen des OpenSIN-Chats wechselte unqualifizierte sequence dennoch auf den fremden Teds-Chat; expliziter Stop-Versuch timeoutete. Kein Secret/CDP-Endpunkt offengelegt. Siehe wow-my-zsh Issue #29 Kommentar.
+
+Acceptance:
+- Projektdelegation darf niemals in einen fremden Chat schreiben; expliziter Tab bleibt stabil, Status/Stop/Snapshot funktionieren nach Mehrtab-Nutzung oder der reproduzierbare Fehler ist upstream dokumentiert.
+
 ## Recent events
 
-- 2026-08-03T14:46:51+00:00 — `chatgpt-web` — `task_claimed` `T-0015`: claimed by chatgpt-web
-- 2026-08-03T14:46:51+00:00 — `chatgpt-web` — `task_claimed` `T-0016`: claimed by chatgpt-web
-- 2026-08-03T14:46:51+00:00 — `chatgpt-web` — `task_claimed` `T-0018`: claimed by chatgpt-web
-- 2026-08-03T14:46:51+00:00 — `chatgpt-web` — `task_claimed` `T-0019`: claimed by chatgpt-web
-- 2026-08-03T15:00:28+00:00 — `chatgpt-web` — `task_completed` `T-0014`: OpenAfD shared upload/context/SSE/coverage paths are byte-identical to OpenSIN. Final serial verify:strict passed in both repos: OpenSIN 212 API suites/3261 tests, 233 web files, 38 worker suites/470 tests, 33 integration files, build/typecheck, web coverage 54.87/48.04/52.89/55.89; OpenAfD 187 API suites/2766 tests, same web/worker/integration/build/typecheck, web coverage 54.87/48.17/52.89/55.89. Detached SSE and parse-job test races were made deterministic in both repos.
-- 2026-08-03T15:00:28+00:00 — `chatgpt-web` — `task_updated` `T-0013`: Run-7 found and fixed two deterministic API test races in both repos: SSE client-close waited on fixed sleeps; detached parse jobs leaked across tests via a constant mock job ID. Final verify:strict is green in both repos; commit/push follows.
-- 2026-08-03T15:58:01+00:00 — `local-agent` — `task_updated` `T-0016`: Browser-Abnahme ausschließlich als letzter Schritt nach Fix, Push und Deployment.
-- 2026-08-03T15:58:15+00:00 — `local-agent` — `task_updated` `T-0013`: Erst T-0019 Websuche-Fix, danach Git-Abschluss.
-- 2026-08-03T15:58:15+00:00 — `local-agent` — `task_updated` `T-0015`: Deployment erst nach Code-Fixes, Tests und sauberem Push.
-- 2026-08-03T16:00:01+00:00 — `local-agent` — `replan` `T-0019`: Verbindliche Reihenfolge korrigiert: zuerst T-0019 Websuche-Fix, T-0031 Deep-Research-Fix, Repo-Sync/Tests/Push und Dokumentation; erst danach T-0013, T-0015, T-0016 und OpenAfD T-0025 Browserabnahme. ChatGPT bestätigt und startet T-0019.
-- 2026-08-03T17:24:49+00:00 — `local-agent` — `acceptance` `T-0016`: Orca live acceptance partial: both authenticated UIs loaded; navigation, normal chat, Recherche, Quellen, Werkzeuge, upload menu, agent session and model selection visible. Normal chat markers ORCA_FINAL_ACCEPTANCE_OPENSIN_20260803 and ORCA_FINAL_ACCEPTANCE_OPENAFD_20260803 visible. File transfer, real web-search result and deep-research end-to-end remain open and are not claimed complete.
-- 2026-08-03T17:25:05+00:00 — `local-agent` — `task_completed` `T-0014`: OpenAfD synchronized with the shared research deadline fix and API/SSE regression coverage; main pushed at 9495a91d; 2768 tests passed.
-- 2026-08-03T17:32:21+00:00 — `local-agent` — `acceptance` `T-0016`: Final Orca pass: OpenSIN and OpenAfD authenticated; normal chat markers passed; Recherche/Work mode and Deep Research dialog activated on OpenSIN; web-search query submitted and no Internal error/Agent session ended observed within bounded 30s snapshot. Upload menu opened and showed Vom Computer hochladen, Aus Workspace auswählen, Aus URL einfügen. Native file chooser did not expose a file input to Orca CLI, so byte-level upload/retrieval remains unclaimed.
-- 2026-08-03T17:36:44+00:00 — `local-agent` — `bug` `T-0016`: Final Orca upload test found reproducible product bug: attaching TASKPLAN.md (26 KB) succeeds and is visible, but sending a normal Chat or Deep-Research prompt with the attachment ends in 'The agent model failed to respond: 400 1 validation error for ChatCompletionContentPartImageParam image_url.url ... None'. No Internal error; attachment is accepted but provider payload incorrectly treats the document as an image. Keep T-0016 open; fix attachment content-part serialization before claiming browser acceptance.
-- 2026-08-03T18:06:17+00:00 — `local-agent` — `deploy` `T-0016`: Manual runtime deploy completed for attachment serializer commit 9ba6d4b367fe92be03acc1bb3d736b25ee395b61. VM fetched commit in isolated release worktree, copied ai-provider.js and helpers/tooled.js into opensin-app, restarted container, local and public /api/ping online:true. Automatic webhook was not usable because VM runs Node 22 while repo requires Node 24 and branding path is stale.
-- 2026-08-03T18:06:18+00:00 — `local-agent` — `verification` `T-0016`: API verification after fix: full existing API suite passed 3263 tests; direct formatter probe confirms document attachments emit text blocks and valid data:image attachments emit image_url only. Live browser upload payload now has no code path producing image_url with missing URL; final authenticated browser attachment send remains to be rechecked.
-- 2026-08-03T18:27:26+00:00 — `local-agent` — `deploy` `T-0016`: CEO immutable deploy completed: opensin-app:5c48a83adc415c7eaaf8a1d6a905f526cd67e3bb built with Node 24 image, Compose project opensin-production, container opensin-app healthy, public /api/ping online:true. Container-name collision eliminated by explicit COMPOSE_CONTAINER_NAME.
-- 2026-08-03T18:27:26+00:00 — `local-agent` — `blocker` `T-0016`: Post-deploy Orca browser session was invalidated by controlled container replacement and now shows the login screen. No credentials were available in the browser session to re-authenticate without exposing a secret; upload/deep-research live acceptance remains externally blocked, while deployment and API/formatter verification are complete.
-- 2026-08-03T18:54:41+00:00 — `local-agent` — `acceptance` `T-0016`: CEO live acceptance after immutable deploy: re-authenticated via deployment token without logging it; uploaded .sin-gpt-web/TASKPLAN.md through real hidden file input; normal Chat returned exact UUID-prefixed TASKPLAN.md citation with no image_url validation error; Work/Deep Research with web-search returned sourced IANA result, with no Internal error or Agent session has ended.
-- 2026-08-03T18:54:41+00:00 — `local-agent` — `bug_closed` `T-0016`: Shared attachment payload bug closed: document attachments no longer serialize as image_url; live OpenSIN acceptance confirms normal Chat and Deep Research succeed.
+- 2026-08-03T23:13:12+00:00 — `local-agent` — `task_added` `T-0020`: sin-chrome: explizite Tab-Steuerung und Timeout nach Mehrtab-Nutzung beheben
+- 2026-08-03T23:38:08+00:00 — `local-agent` — `task_blocked` `T-0019`: External blocker 2026-08-04: ChatGPT Web in Orca project chat CEO-Runde Abschlussauftrag (https://chatgpt.com/c/6a7125d6-5084-83eb-a182-746d87c353f4) cannot complete Mac-i9 fs/cmd calls. First aggregate call was rejected by tool safety filter; smaller TASKPLAN read remains stuck without taskplan activity. sin-gpt-web-recover failed because Ab hier neuen Chat starten was unavailable. No repo write/test/commit/push/deploy/browser acceptance was claimed.
+- 2026-08-03T23:38:08+00:00 — `local-agent` — `task_blocked` `T-0013`: Blocked by T-0019: ChatGPT Web Mac-i9 connector/safety-filter failure prevents authoritative cross-repo fix, verification and push.
+- 2026-08-03T23:38:08+00:00 — `local-agent` — `task_blocked` `T-0015`: Blocked by T-0013: current ChatGPT Web delegation cannot access the repository through Mac-i9, so deployment changes cannot be safely verified or applied.
+- 2026-08-03T23:38:09+00:00 — `local-agent` — `task_blocked` `T-0016`: Blocked by T-0015: final browser acceptance must follow verified fix/deploy; current delegated ChatGPT run is blocked before repo access.
+- 2026-08-04T01:05:35+00:00 — `local-agent` — `task_updated` `T-0020`: sin-chrome-control tab-open meldete Erfolg, danach timeouteten status und snapshot bei zwei ChatGPT-Tabs; gleicher Mehrtab-/Timeout-Befund wie wow-my-zsh Issue #29. Orca-Fallback ist aktiv.
+- 2026-08-04T01:07:07+00:00 — `local-agent` — `task_updated` `T-0018`: Run-9 automation branch-first recovery abgebrochen: sichtbarer Button 'Ab hier neuen Chat starten' fehlt, alter Chat wurde nicht archiviert. Manueller Orca-Snapshot-Fallback erforderlich; sin-chrome Mehrtab-Timeout ist in T-0020/Issue #29 dokumentiert.
+- 2026-08-04T01:11:48+00:00 — `chatgpt-web` — `task_unblocked` `T-0019`: Run 9 has working Mac-i9 fs/cmd access; prior external safety-filter blocker is cleared.
+- 2026-08-04T01:11:48+00:00 — `chatgpt-web` — `task_claimed` `T-0019`: claimed by chatgpt-web
+- 2026-08-04T01:11:48+00:00 — `chatgpt-web` — `milestone` `T-0018`: Run 9 started in normal Chat mode from source conversation 6a7125d6-5084-83eb-a182-746d87c353f4; Mac-i9 access verified; both plans validated before code changes.
+- 2026-08-04T01:13:11+00:00 — `local-agent` — `task_updated` `T-0019`: Mac-i9 read-only Taskplan-Abfrage blieb im neuen Chat >3 Minuten als aktiver Tool-Call ohne Ergebnis; nach Recovery-Regel einmaliger Stop und kompakter Resume-Prompt erforderlich. Keine Codeänderung behauptet.
+- 2026-08-04T01:17:40+00:00 — `chatgpt-web` — `verification` `T-0019`: Run-9 focused regression passed in OpenSIN: execution deadline finalization plus scraped document attachment text serialization, 2 suites/5 tests. Shared implementation is present on main; live deployment/browser verification remains.
+- 2026-08-04T01:21:20+00:00 — `local-agent` — `task_updated` `T-0018`: Nach gruenen Fokusregressionen und Handoff-Update haengt die naechste Mac-i9-Schrittfolge bei der Handoff-Public-Ops-Pruefung; kein neuer Codefehler belegt. Einmaliger zweiter Stall-Stop und kompakter Resume-Hinweis erforderlich.
+- 2026-08-04T01:23:17+00:00 — `local-agent` — `task_updated` `T-0018`: Auch der einzelne Public-Ops/Handoff-Policy-Check bleibt nach dem Resume ohne Ergebnis haengen; Fokusregressionen bleiben gruen, noch kein Commit/Push/Deployment behauptet. Nach einmaligem Stop folgt nur ein minimaler Connector-Sanity-Check.
+- 2026-08-04T01:25:19+00:00 — `local-agent` — `task_blocked` `T-0018`: Run-9 implementierte und fokussierte Websuche-Regressionen, aber Mac-i9 bleibt selbst bei einem einzelnen printf-Sanity-Call im ChatGPT-Toolpfad haengen; lokale unabhaengige Verifikation/Push/Deployment muss den Rest belegen.
+- 2026-08-04T01:32:59+00:00 — `local-agent` — `task_updated` `T-0019`: Lokaler Fokustest 2 Suites/5 Tests je Repo gruen; Layout/Branding/Public-Ops/SPDX gruen. Paralleles verify:strict scheitert im OpenSIN-Integrationsteil an 4 Embed-Tests plus Setup/Runtime-Folgen; OpenAfD an 26 Tests (Embed, Scheduled Jobs, System, parsed files FK/ECONNRESET). Integration seriell wiederholen; kein Push behauptet.
+- 2026-08-04T01:40:40+00:00 — `local-agent` — `verification` `T-0019`: Canonical serial integration verification passed in OpenSIN: yarn test:integration; 33 test files passed, 20 skipped; 204 tests passed, 272 skipped. Focused Jest regression also passed: 2 suites/5 tests. Parallel verify:strict failure was not reproduced serially.
+- 2026-08-04T01:45:14+00:00 — `local-agent` — `verification` `T-0019`: Independent sin verify passed when run serially: sin verify yarn test:integration. Security scan 0 issues, style scan 0 issues, tests 0 failures.
+- 2026-08-04T11:19:33+00:00 — `local-agent` — `verification` `T-0019`: 2026-08-04: Cross-repo agent SSE lifecycle fix a19fc30 is on OpenSIN main and deployed to opensin-app. Focused agentSSE/agentWebsocket tests passed 15/15; server typecheck and lint passed. Public sinchat.delqhi.com/api/ping online:true. Fresh real web-search browser acceptance remains pending because OpenSIN profile is logged out after auth rotation.
+- 2026-08-04T11:19:33+00:00 — `local-agent` — `verification` `T-0018`: 2026-08-04: Read Run-9 and Run-10 ChatGPT handoffs; Run-10 canonical session 6a71920a-27c0-83ed-a6f1-82f8577423a8 is retained as latest. Older 6a70be0a session archived; older Run-9/aborted Run-10 histories reviewed. Taskplan/handoff updates continue through local-agent because connector session is interrupted.
