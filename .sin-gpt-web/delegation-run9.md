@@ -5,8 +5,8 @@
 - Title: CEO-Runde Abschlussauftrag Run 9
 - Source conversation URL: https://chatgpt.com/c/6a7125d6-5084-83eb-a182-746d87c353f4
 - Current task: T-0018, plus every eligible or blocked task that can be advanced in both plans
-- Repositories: /Users/jeremy/dev/OpenSIN-Chat and /Users/jeremy/dev/OpenAfD-Chat
-- Related tooling repository: /Users/jeremy/dev/wow-my-zsh
+- Repositories: `$REPO` and `$SISTER_REPO`
+- Related tooling repository: `$TOOLING_REPO`
 - Last status: Run 8 was blocked by Mac-i9 safety-filter/timeout and did not prove the remaining implementation, deployment, or browser gates. The local Chrome-first probe is now documented in wow-my-zsh Issue #29; use Orca only as the fallback.
 
 ## Mission

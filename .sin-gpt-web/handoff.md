@@ -79,3 +79,14 @@
 - **OpenSIN main**: `3e3146e`; agent-stream lifecycle fix `45ea40b`, attachment regression test `2eeba1`; focused tests/typecheck/lint passed; `opensin-app` restarted and public ping is `online:true`.
 - **OpenAfD main**: `42ae4be`; shared agent-stream lifecycle fix `1121140`; focused API tests 18/18 and typecheck passed; `openafd-app` restarted and public ping is `online:true`.
 - **Remaining gates**: authenticated browser re-login, real sourced web-search/deep-research acceptance, and provider-only credential rotation. No unverified completion is claimed.
+
+## Run-11 / Current CEO Delegation (2026-08-04)
+
+- **Titel**: CEO Delegation Run 11
+- **ChatGPT-Konversations-URL**: `https://chatgpt.com/g/g-p-6a61454e40e081919af9f0eb09c97ca2-opensin-chat-und-openafd-chat/c/6a71e4b7-b1cc-83eb-87dc-092ff065a79a`
+- **Aufgabe**: OpenSIN Chat und OpenAfD fertigstellen, Fehler beheben, beide `main`-Branches prüfen/pushen, OCI-Livebetrieb verifizieren und alle Browserfunktionen mit echter Evidenz abnehmen.
+- **Repository**: OpenSIN `$REPO`; Schwesterrepo `$SISTER_REPO`; Tooling `$TOOLING_REPO`.
+- **Letzter Status**: Run 11 arbeitet in `T-0002` an einzeln ausgeführten Verifikations-Gates. Die one-shot Callback-Capability bleibt ausschließlich im repository-lokalen Store und wird nicht in Handoff, Taskplan oder Tool-Argumente kopiert.
+- **Browser**: `OpenSIN`-Profil in Orca authentifiziert; Chat-Modus bestätigt; SIN-Chrome-Doctor grün, `sin-chrome-control status` reproduzierbar timeoutet; Orca-Fallback aktiv.
+- **Konversationswechsel**: Branch-first aus dem letzten Chat war wegen fehlendem `Ab hier neuen Chat starten` nicht möglich. Der alte Run-10-Chat blieb archiviert; die neue Konversation wurde im Projekt neu gestartet und ist bestätigt.
+- **Letzte Intervention**: Ein Mac-i9-Git-Status-Aufruf hing länger als 90 Sekunden. Er wurde einmal gestoppt; ChatGPT erhielt eine kurze Fortsetzungsanweisung für getrennte Einzelbefehle und arbeitet in derselben Run-11-Konversation weiter.
