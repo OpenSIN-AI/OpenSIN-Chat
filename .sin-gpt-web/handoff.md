@@ -113,3 +113,13 @@
 - **Letzter Status**: sin-chrome Doctor grün; nach Prompt-Eingabe timeouteten Submit, Status und Snapshot reproduzierbar. Orca bestätigte den gesendeten Auftrag. Ein neuer OpenSIN-Chat wurde im Chat-Modus verifiziert, Taskpläne wurden gelesen und Repo-Prüfung begonnen, danach erneut Mac-i9-Verbindung unterbrochen. Keine frischen Tests, Commits, Pushes, Deployments oder vollständige Browserabnahme behauptet.
 - **Archivierung**: Run-11 wurde erst nach bestätigtem neuen Chat zur Archivierung angesteuert, die UI bestätigte die Archivierung jedoch nicht; alter Chat bleibt deshalb vorerst erhalten und der Grund ist im Taskplan dokumentiert.
 - **Taskplan**: T-0021 ist wegen Connector-Unterbrechung blockiert; offene T-0013/T-0015/T-0016/T-0019/T-0020 bleiben unverifiziert.
+
+## Run-12 / Local takeover after connector failure (2026-08-05)
+
+- **Connector**: ChatGPT reported `mcp_network_error`; `sin-gpt-web-recover` was attempted against the canonical Run-12 URL and failed at the conversation-options control. No further work is being sent to that conversation.
+- **Local task ownership**: T-0019 is now owned by `local-agent`; T-0020 and T-0021 are blocked on the browser/connector path. OpenAfD T-0031, T-0037 and T-0039 are blocked for the same external reason.
+- **OpenSIN fix**: commit `e9c6e5c6667e034f22d8be362380a02d621c9c67` is pushed to `origin/main`. It suppresses the false completed-agent `wssFailure`, closes completed SSE/WebSocket sessions cleanly, and adds scraped-text regression coverage.
+- **Verification**: focused API tests 21/21, full API tests 3272/3272 via `sin verify` with forced Jest exit, API type-check, layout check and SPDX check passed. Full API lint has 0 errors and existing warnings only.
+- **OCI**: direct SSH to `92.5.60.87` works, but the canonical VM checkout is detached with uncommitted files and the active `opensin-app` container still runs `opensin-app:c1c4ec491`. The CI webhook is inactive. Public `/api/ping` remains `online:true` but reports no commit SHA. No VM files were overwritten.
+- **GitHub**: API, worker, maintenance, security and CEO-audit checks for `e9c6e5c` passed; the test/quality matrix was still running at the last check. The Vercel status for this commit failed independently.
+- **Next action**: repair or explicitly authorize the OCI release/deployment path, then run fresh authenticated live web-search/deep-research and browser acceptance before completing T-0019/T-0015/T-0016.
