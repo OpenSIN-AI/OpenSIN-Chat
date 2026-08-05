@@ -13,9 +13,9 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 
 ## Status
 
-- Backlog: 0
-- In progress: 0
-- Blocked: 7
+- Backlog: 1
+- In progress: 2
+- Blocked: 5
 - Done: 14
 - Cancelled: 0
 
@@ -36,14 +36,15 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 | T-0014 | critical | implement | done | chatgpt-web | OpenAfD-Chat: vollständige Synchronisierung und Fehlerfreiheit herstellen | — |
 | T-0015 | critical | ops | blocked | chatgpt-web | Beide Repos live auf Oracle Cloud VM verifizieren und funktionierend halten | T-0013 |
 | T-0016 | critical | test | blocked | chatgpt-web | Vollständige Browser-Abnahme ALLER Funktionen auf beiden Live-Domains (Websuche, Datei-Upload, Quellen-Dateien zum Chat hinzufügen, Deep Research, Modellwahl, Navigation, Empty/Error-States, Login/Reconnect, Notebooks, ⌘K-Suche) | T-0015 |
-| T-0019 | critical | implement | blocked | local-agent | Websuche endet nach erfolgreichem Scraping mit Internal error | — |
-| T-0021 | critical | ops | blocked | unassigned | Run 12: CEO-Abschluss in ChatGPT Web mit Chrome | — |
+| T-0019 | critical | implement | in_progress | chatgpt-web | Websuche endet nach erfolgreichem Scraping mit Internal error | — |
+| T-0021 | critical | ops | in_progress | chatgpt-web | Run 12: CEO-Abschluss in ChatGPT Web mit Chrome | — |
 | T-0004 | high | ops | done | chatgpt-web | sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren | — |
 | T-0005 | high | ops | done | chatgpt-web | Taskplan und ChatGPT-Handoff aktuell halten | — |
 | T-0009 | high | test | done | chatgpt-web | Web-Coverage-Gate wieder erfüllen | — |
 | T-0017 | high | ops | done | local-agent | sin-chrome-Fallback dokumentieren und wow-my-zsh Issue #29 erneut bestätigen | — |
 | T-0018 | high | ops | blocked | chatgpt-web | Taskplan und ChatGPT-Handoff für Run-7 aktuell halten | — |
 | T-0020 | high | ops | blocked | unassigned | sin-chrome: explizite Tab-Steuerung und Timeout nach Mehrtab-Nutzung beheben | — |
+| T-0022 | high | test | backlog | unassigned | API-Jest-Suite beendet sich nach grünem Lauf nicht | — |
 
 ## Task details
 
@@ -281,12 +282,12 @@ Blocked: Blocked by T-0015: final browser acceptance must follow verified fix/de
 
 ### T-0019 — Websuche endet nach erfolgreichem Scraping mit Internal error
 
-- Status: `blocked`
-- Owner: `local-agent`
+- Status: `in_progress`
+- Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-08-05T13:54:44+00:00
+- Updated: 2026-08-05T14:08:34+00:00
 
 Run-7 ORCA live on sinchat.delqhi.com: @agent web search executes repeated DuckDuckGo web-browsing and scrapes https://example.com, then returns Internal error instead of a sourced answer. Diagnose backend exception, add regression coverage, fix both products, deploy and reaccept live.
 
@@ -297,21 +298,17 @@ Allowed paths:
 - `apps/api`
 - `apps/web/src`
 
-Blocked: Implementation and local verification are complete, but acceptance requires fresh live web-search evidence after deployment. OCI release path cannot be safely advanced because the VM checkout is detached with unrelated uncommitted files, the CI webhook is inactive, and the active container remains on c1c4ec491; public ping is online but reports no commit SHA.
-
 ### T-0021 — Run 12: CEO-Abschluss in ChatGPT Web mit Chrome
 
-- Status: `blocked`
-- Owner: `unassigned`
+- Status: `in_progress`
+- Owner: `chatgpt-web`
 - Kind: `ops`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-08-05T13:41:02+00:00
+- Updated: 2026-08-05T14:09:27+00:00
 
 Acceptance:
 - ChatGPT Web übernimmt alle offenen Aufgaben aus T-0013, T-0015, T-0016, T-0019 und T-0020 sowie offene OpenAfD-Aufgaben T-0031, T-0037 und T-0025; Status, URL, Repositories und Evidence werden aktualisiert.
-
-Blocked: Run 12 Mac-i9 mcp_network_error; sin-gpt-web-recover failed at conversation-options control, so ChatGPT Web cannot continue the cross-repository CEO loop.
 
 ### T-0004 — sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren
 
@@ -412,16 +409,25 @@ Acceptance:
 
 Blocked: Run 12 Mac-i9 mcp_network_error; sin-gpt-web-recover failed at conversation-options control. Known sin-chrome multi-tab timeout remains external blocker in wow-my-zsh Issue #29.
 
+### T-0022 — API-Jest-Suite beendet sich nach grünem Lauf nicht
+
+- Status: `backlog`
+- Owner: `unassigned`
+- Kind: `test`
+- Priority: `high`
+- Dependencies: none
+- Updated: 2026-08-05T14:03:02+00:00
+
+Run 12 reproduced that the complete OpenSIN API Jest suite finishes all 3272 tests green but remains alive because of open handles, causing Mac-i9 transport timeouts. Diagnose handles and make the normal test command exit cleanly without forceExit.
+
+Acceptance:
+- Full API Jest suite exits by itself with code 0 after all tests; no lingering cross-env/jest processes and no open-handle warning.
+
+Allowed paths:
+- `apps/api`
+
 ## Recent events
 
-- 2026-08-05T13:29:35+00:00 — `chatgpt-web-run12` — `task_unblocked` `T-0019`: Run 12 repository checks resumed through Mac-i9.
-- 2026-08-05T13:29:49+00:00 — `chatgpt-web` — `issue_updated` `T-0019`: wow-my-zsh issue #29 updated with sanitized Run 12 reproduction evidence: https://github.com/OpenSIN-Code/wow-my-zsh/issues/29#issuecomment-5192357405. Orca OpenSIN profile is now the authorized bounded fallback.
-- 2026-08-05T13:30:38+00:00 — `chatgpt-web-run12` — `task_claimed` `T-0019`: claimed by chatgpt-web
-- 2026-08-05T13:30:54+00:00 — `chatgpt-web-run12` — `task_unblocked` `T-0021`: Run 12 active in current ChatGPT Web session; repository access verified.
-- 2026-08-05T13:30:54+00:00 — `chatgpt-web-run12` — `task_claimed` `T-0021`: claimed by chatgpt-web
-- 2026-08-05T13:30:54+00:00 — `chatgpt-web-run12` — `task_claimed` `T-0020`: claimed by chatgpt-web
-- 2026-08-05T13:32:08+00:00 — `chatgpt-web` — `verification` `T-0019`: Run 12 fresh focused regression on main 25f33888372e49998bac7b246c5ce0cee5b217ce: 7 API suites / 68 tests passed serially covering execution deadline finalization, scraped-document attachment formatting, agent SSE/WebSocket lifecycle, chat attachments, parsed files and exact original download. Jest emitted only expected error-path logs plus a non-failing open-handle warning.
-- 2026-08-05T13:34:23+00:00 — `chatgpt-web-run12` — `finding` `T-0019`: Fresh cross-repo diff: OpenSIN agentSSE/agentWebsocket still emit wssFailure Agent session has ended for already-closed successful invocations; OpenAfD main e70f6767d closes cleanly with code 1000. OpenSIN also lacks the scraped-text regression suite from OpenAfD 728095edb.
 - 2026-08-05T13:35:06+00:00 — `chatgpt-web` — `browser_auth_checked` `T-0019`: Orca fallback with explicit page ID and isolated OpenSIN profile: OpenSIN live domain loads the branded login page but has no active session or browser autofill. Empty submit and a bounded autofill-keyboard attempt both remain on login with required-field alert. No credential value was read. Next action: use the existing OCI deployment auth variable internally without printing it, then resume live verification.
 - 2026-08-05T13:37:18+00:00 — `chatgpt-web-run12` — `verification` `T-0019`: Mirrored shared clean-completion runtime fix and scraped-text regression into OpenSIN. Focused Jest passed: agentSSE, agentWebsocket, web-scraping; 3 suites, 21/21 tests, exit 0. Jest printed its generic open-handle post-run notice after success.
 - 2026-08-05T13:39:28+00:00 — `chatgpt-web` — `external_blocker_reproduced` `T-0019`: Attempt to reuse the production AUTH_TOKEN without disclosure was blocked before secret access: SSH alias sin-supabase requires an interactive Tailscale additional check; the previously used direct OCI endpoint timed out on port 22. No remote command or secret read occurred. Next browser action: test the existing authenticated Orca acceptance profile for OpenSIN.
@@ -434,3 +440,11 @@ Blocked: Run 12 Mac-i9 mcp_network_error; sin-gpt-web-recover failed at conversa
 - 2026-08-05T13:41:02+00:00 — `local-agent` — `task_blocked` `T-0021`: Run 12 Mac-i9 mcp_network_error; sin-gpt-web-recover failed at conversation-options control, so ChatGPT Web cannot continue the cross-repository CEO loop.
 - 2026-08-05T13:54:44+00:00 — `local-agent` — `verification` `T-0019`: Local patch e9c6e5c6667e034f22d8be362380a02d621c9c67 pushed. Focused 21/21 and full API 3272/3272 passed under sin verify; type-check, layout and SPDX passed. Live acceptance and OCI rollout remain blocked: public ping is online but exposes no SHA, VM active image is c1c4ec491, canonical VM checkout is detached/uncommitted, and CI webhook is inactive.
 - 2026-08-05T13:54:44+00:00 — `local-agent` — `task_blocked` `T-0019`: Implementation and local verification are complete, but acceptance requires fresh live web-search evidence after deployment. OCI release path cannot be safely advanced because the VM checkout is detached with unrelated uncommitted files, the CI webhook is inactive, and the active container remains on c1c4ec491; public ping is online but reports no commit SHA.
+- 2026-08-05T14:03:02+00:00 — `chatgpt-web-run12` — `verification` `T-0019`: Full OpenSIN API suite completed 215/215 suites and 3272/3272 tests successfully in 78.111s. Jest then remained alive on open handles; two duplicated run processes were identified by exact repo command and terminated with SIGTERM. Test log saved at .sin-gpt-web/reports/T-0019-full-api.log.
+- 2026-08-05T14:03:02+00:00 — `chatgpt-web-run12` — `task_added` `T-0022`: API-Jest-Suite beendet sich nach grünem Lauf nicht
+- 2026-08-05T14:08:27+00:00 — `chatgpt-web-run12` — `task_unblocked` `T-0019`: Run 12 continues from pushed fix e9c6e5c66 using the clean release workflow.
+- 2026-08-05T14:08:34+00:00 — `chatgpt-web-run12` — `task_claimed` `T-0019`: claimed by chatgpt-web
+- 2026-08-05T14:08:45+00:00 — `chatgpt-web-run12` — `task_unblocked` `T-0021`: Current ChatGPT Web session has restored Mac-i9 access and continues the CEO closeout.
+- 2026-08-05T14:09:27+00:00 — `chatgpt-web-run12` — `task_claimed` `T-0021`: claimed by chatgpt-web
+- 2026-08-05T14:51:06+00:00 — `chatgpt-web-run12` — `blocker` `T-0020`: Fresh bounded reproduction on 2026-08-05: sin-chrome-service reports browser and dashboard ready; sin-chrome doctor reports 0 errors/warnings; read-only snapshot succeeds, but control status and tab-open each time out. Multi-tab controller remains unreliable as documented in wow-my-zsh Issue #29. No cookies, secrets, or CDP values recorded.
+- 2026-08-05T14:51:19+00:00 — `chatgpt-web-run12` — `verification` `T-0021`: Fresh release gates on current OpenSIN main: check:layout, check:branding, check:public-ops, check:spdx and production build all pass. Public-ops initially found three private absolute paths in the tracked Run-12 delegation; replaced only with canonical $REPO/$SISTER_REPO/$TOOLING_REPO variables and reran successfully.
