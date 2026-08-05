@@ -96,9 +96,9 @@
 - **Titel**: `CEO Delegation OpenSIN Tasks`
 - **ChatGPT-Konversations-URL**: `https://chatgpt.com/c/6a73363a-ad4c-83eb-96f5-d780a615ca18`
 - **Aufgabe**: Alle aktuell offenen OpenSIN-/OpenAfD-Aufgaben abschließen: Fehler beheben, Tests und Browsermatrix ausführen, beide `main`-Branches prüfen/pushen, OCI-Livebetrieb verifizieren/reparieren und alle Restpunkte in den SQLite-Taskplänen festhalten.
-- **Repository**: `/Users/jeremy/dev/OpenSIN-Chat`; Schwesterrepo `/Users/jeremy/dev/OpenAfD-Chat`; sin-chrome-Befund `/Users/jeremy/dev/wow-my-zsh`.
+- **Repository**: OpenSIN-Chat; Schwesterrepo OpenAfD-Chat; sin-chrome-Befund wow-my-zsh.
 - **Letzter Status**: Brief im normalen Chat-Modus mit verifiziertem `Mac-i9`-Connector gesendet; Callback für T-0019/Runde 12 gebunden. ChatGPT hat die Taskpläne gelesen und mit der Repo-/Remote-Inventur begonnen; Abschlussstatus steht aus.
-- **Konversationswechsel**: Automatischer Branch aus Run 11 scheiterte, weil die UI „Ab hier neuen Chat starten“ nicht anbietet. Neuer Chat wurde deshalb separat erstellt und nach Bestätigung von Titel/URL verwendet. Run-11-Quellchat wurde danach manuell über die verifizierte ChatGPT-Menüaktion `Archivieren` entfernt; die UI-Sidebar bestätigte, dass `CEO Delegation Run 11` nicht mehr vorhanden ist.
+- **Konversationswechsel**: Automatischer Branch aus Run 11 scheiterte, weil die UI „Ab hier neuen Chat starten“ nicht anbietet. Neuer Chat wurde deshalb separat erstellt und nach Bestätigung von Titel/URL verwendet. Die Archivierung des Run-11-Quellchats konnte nicht verifiziert werden; der alte Chat bleibt erhalten und wird nicht als archiviert behauptet.
 - **sin-chrome**: Doctor, headed Chrome, Login, Account-Menü, Composer und Snapshot grün. Bei zwei Tabs timeouteten expliziter Conversation-Options-Klick und Tab-Close erneut; Befund in OpenSIN T-0020 und bestehendem wow-my-zsh Issue #29 erfasst. Orca `OpenSIN`-Profil ist der begründete Fallback.
 - **Offene Gates**: ChatGPT-Callback, unabhängige Prüfung von Diff/Taskplan, Testresultaten, GitHub-Pushes, OCI-Images/Health und frischer authentifizierter Browser-Evidenz beider Domains.
 
