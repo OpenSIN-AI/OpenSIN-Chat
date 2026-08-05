@@ -3099,10 +3099,10 @@
   resolved "https://registry.yarnpkg.com/@tiptap/extension-underline/-/extension-underline-3.28.0.tgz#011bae7edb1af271272f66d4499412511f771691"
   integrity sha512-rwxCS6vTh2DJkNIYQX7JSrrRSmm76e2y48aZeuZO5ShkvLWMuJ3/zqDHRxAQVDiJhuE2Cp8NrTmPYlUc9YrT0A==
 
-"@tiptap/extension-youtube@^3.27.3":
-  version "3.28.0"
-  resolved "https://registry.yarnpkg.com/@tiptap/extension-youtube/-/extension-youtube-3.28.0.tgz#bb7460b15915902349f206f352ea7ee4a4542043"
-  integrity sha512-87J7YcUmdti7DQjy5CGjRwb+K3ibX36nGlC3XrU/b2ef6snEBCnXwhqtRgofhL10RH/HJ1D1ndnQ5fWkcAQ4MQ==
+"@tiptap/extension-youtube@^3.29.2":
+  version "3.29.2"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-youtube/-/extension-youtube-3.29.2.tgz#f44bd600fae60bb614f256375d8647a582416e27"
+  integrity sha512-uROfBCyb0BIY0qxm2FdOAGFYpye7frZAPtfY80lKUB9uUdjJuDTs7cRBvPcnaa8+fOTNwC5wUOMhbPQmOUiLSA==
 
 "@tiptap/extensions@^3.27.3", "@tiptap/extensions@^3.28.0":
   version "3.28.0"
