@@ -197,16 +197,25 @@ describe("agentWebsocket — error paths", () => {
     ws.terminate();
   });
 
-  it("treats an 'already closed' invocation as permanent and closes with code 1008", async () => {
+  it("closes an 'already closed' invocation cleanly (code 1000) without emitting a wssFailure error", async () => {
     AgentHandlerMock.init.mockRejectedValue(
       new Error("Invocation is already closed"),
     );
     const ws = new WebSocket(`${baseUrl}/agent-invocation/uuid-3`);
-    const payload = await nextMessage(ws);
-    expect(payload.content).toBe("Agent session has ended.");
 
+    // A completed session is a normal terminal condition, not an error. The
+    // client already holds the successful result; the server must close cleanly
+    // (HTTP 1000) and must NOT emit the false "Agent session has ended."
+    // wssFailure error that was being appended after deep-research results.
+    const receivedMessages = [];
+    ws.on("message", (data) => {
+      receivedMessages.push(data.toString());
+    });
     const closeEvent = await nextClose(ws);
-    expect(closeEvent.code).toBe(1008);
+    expect(closeEvent.code).toBe(1000);
+
+    // No error message may be emitted before the socket closes.
+    expect(receivedMessages).toHaveLength(0);
   });
 
   it("gives every error payload a stable correlation id distinct per connection", async () => {

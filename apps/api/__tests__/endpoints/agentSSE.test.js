@@ -189,15 +189,25 @@ describe("agentSSE — error paths", () => {
     expect(p1.id).not.toBe(p2.id);
   });
 
-  it("treats an 'already closed' invocation as a permanent session-ended failure", async () => {
+  it("does NOT emit a wssFailure when reconnecting to an already-closed invocation (completed session is not an error)", async () => {
     AgentHandlerMock.init.mockRejectedValue(
       new Error("Invocation is already closed"),
     );
 
+    // Reconnecting to a closed invocation must close cleanly (HTTP 200, empty
+    // stream, no `wssFailure` error payload). The client already holds the
+    // successful result; surfacing an "Agent session has ended." failure here
+    // is exactly the false end-message reported for deep research.
     const res = await fetch(`${baseUrl}/sse/agent/test-uuid-4`);
-    const payload = await readUntil(res, (p) => p.type === "wssFailure");
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    const { value } = await reader.read();
+    await reader.cancel();
 
-    expect(payload.content).toBe("Agent session has ended.");
+    expect(res.status).toBe(200);
+    const text = decoder.decode(value ?? new Uint8Array(), { stream: true });
+    expect(text).not.toMatch(/wssFailure/);
+    expect(text).not.toMatch(/Agent session has ended/i);
   });
 
   it("closes the invocation via WorkspaceAgentInvocation.close on client disconnect", async () => {

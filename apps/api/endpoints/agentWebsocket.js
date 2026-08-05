@@ -375,22 +375,14 @@ function agentWebsocket(app, routePrefix = "") {
         cleanup();
 
         // If the invocation is already closed (e.g. reconnection to a
-        // disconnected session), close with 1008 so the frontend knows
-        // this is permanent and does not attempt reconnection.
+        // disconnected session), the session has already reached its terminal
+        // state — a successful result was streamed and the invocation
+        // completed. This is a normal lifecycle condition, NOT an error. Close
+        // cleanly with 1000 so the frontend finalizes the already-held result
+        // without surfacing a false "Agent session has ended." failure banner.
         if (e?.message?.includes("already closed")) {
           try {
-            socket.send(
-              JSON.stringify({
-                type: "wssFailure",
-                content: "Agent session has ended.",
-                id,
-              }),
-            );
-          } catch {
-            /* socket already gone */
-          }
-          try {
-            socket.close(1008, "Session ended");
+            socket?.close(1000, "Session completed");
           } catch {
             /* socket already gone */
           }

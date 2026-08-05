@@ -349,25 +349,20 @@ function agentSSE(app, routePrefix = "") {
 
         if (e?.message?.includes("already closed")) {
           // Expected condition: the client (browser EventSource) reconnected or
-          // navigated away and the invocation was already closed. This is not an
-          // error — log it quietly at debug level instead of spamming ERROR with
-          // a full stack trace on every reconnect attempt.
+          // navigated away and the invocation was already closed. The session
+          // has already reached its terminal state (a successful deep-research
+          // result was streamed and the invocation completed). This is a normal
+          // lifecycle condition, NOT an error — do NOT emit a wssFailure error
+          // payload (which the UI renders as a false "Konnte nicht auf die
+          // Nachricht antworten / Agent session has ended." appended after the
+          // result). Close cleanly with code 1000 so the client finalizes the
+          // already-held result without surfacing a failure banner. Log quietly
+          // at debug level instead of spamming ERROR on every reconnect attempt.
           consoleLogger.debug?.(
             `[agentSSE id=${id}] invocation already closed (client reconnect); ignoring.`,
           );
           try {
-            socket.send(
-              JSON.stringify({
-                type: "wssFailure",
-                content: "Agent session has ended.",
-                id,
-              }),
-            );
-          } catch (e) {
-            console.warn("[agentSSE] non-fatal error:", e?.message || e);
-          }
-          try {
-            socket.close(1008, "Session ended");
+            socket.close(1000, "Session completed");
           } catch (e) {
             console.warn("[agentSSE] non-fatal error:", e?.message || e);
           }
