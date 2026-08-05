@@ -10,9 +10,9 @@ fortlaufend fest.
 
 ## Repositories
 
-- OpenSIN Chat: `/Users/jeremy/orca/workspaces/OpenSIN-Chat/auto-8-opensin-chat-run-6-20260804T1300`
-- Schwesterrepo OpenAfD: `/Users/jeremy/dev/OpenAfD`
-- Tooling-Issue-Repo: `/Users/jeremy/dev/wow-my-zsh`
+- OpenSIN Chat: OpenSIN-Chat
+- Schwesterrepo OpenAfD: OpenAfD-Chat
+- Tooling-Issue-Repo: wow-my-zsh
 - Beide kanonischen GitHub-Repositories und die OCI-Zielumgebung sind für
   Commit, Push und Deployment ausdrücklich autorisiert.
 
@@ -51,7 +51,7 @@ fortlaufend fest.
 8. `sin-chrome doctor` war grün, aber `sin-chrome-control status` timed out,
    während der Mac-i9-Tunnel und Orca liefen. Prüfe den Befund erneut. Wenn er
    reproduzierbar ist, erstelle oder aktualisiere im Repo
-   `/Users/jeremy/dev/wow-my-zsh` ein GitHub-Issue mit exakter Reproduktion,
+    `wow-my-zsh` ein GitHub-Issue mit exakter Reproduktion,
    ohne Credentials, und vermerke URL/Status im OpenSIN-Taskplan.
 9. Nach jedem Meilenstein aktualisiere beide Taskplan-Datenbanken. Jede nicht
    behobene Funktion, jeder externe Blocker, fehlende Credential-/Provider-

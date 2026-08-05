@@ -90,3 +90,26 @@
 - **Browser**: `OpenSIN`-Profil in Orca authentifiziert; Chat-Modus bestätigt; SIN-Chrome-Doctor grün, `sin-chrome-control status` reproduzierbar timeoutet; Orca-Fallback aktiv.
 - **Konversationswechsel**: Branch-first aus dem letzten Chat war wegen fehlendem `Ab hier neuen Chat starten` nicht möglich. Der alte Run-10-Chat blieb archiviert; die neue Konversation wurde im Projekt neu gestartet und ist bestätigt.
 - **Letzte Intervention**: Ein Mac-i9-Git-Status-Aufruf hing länger als 90 Sekunden. Er wurde einmal gestoppt; ChatGPT erhielt eine kurze Fortsetzungsanweisung für getrennte Einzelbefehle und arbeitet in derselben Run-11-Konversation weiter.
+
+## Run-12 / Aktuelle CEO-Delegation (2026-08-05)
+
+- **Titel**: `CEO Delegation OpenSIN Tasks`
+- **ChatGPT-Konversations-URL**: `https://chatgpt.com/c/6a73363a-ad4c-83eb-96f5-d780a615ca18`
+- **Aufgabe**: Alle aktuell offenen OpenSIN-/OpenAfD-Aufgaben abschließen: Fehler beheben, Tests und Browsermatrix ausführen, beide `main`-Branches prüfen/pushen, OCI-Livebetrieb verifizieren/reparieren und alle Restpunkte in den SQLite-Taskplänen festhalten.
+- **Repository**: `/Users/jeremy/dev/OpenSIN-Chat`; Schwesterrepo `/Users/jeremy/dev/OpenAfD-Chat`; sin-chrome-Befund `/Users/jeremy/dev/wow-my-zsh`.
+- **Letzter Status**: Brief im normalen Chat-Modus mit verifiziertem `Mac-i9`-Connector gesendet; Callback für T-0019/Runde 12 gebunden. ChatGPT hat die Taskpläne gelesen und mit der Repo-/Remote-Inventur begonnen; Abschlussstatus steht aus.
+- **Konversationswechsel**: Automatischer Branch aus Run 11 scheiterte, weil die UI „Ab hier neuen Chat starten“ nicht anbietet. Neuer Chat wurde deshalb separat erstellt und nach Bestätigung von Titel/URL verwendet. Run-11-Quellchat wurde danach manuell über die verifizierte ChatGPT-Menüaktion `Archivieren` entfernt; die UI-Sidebar bestätigte, dass `CEO Delegation Run 11` nicht mehr vorhanden ist.
+- **sin-chrome**: Doctor, headed Chrome, Login, Account-Menü, Composer und Snapshot grün. Bei zwei Tabs timeouteten expliziter Conversation-Options-Klick und Tab-Close erneut; Befund in OpenSIN T-0020 und bestehendem wow-my-zsh Issue #29 erfasst. Orca `OpenSIN`-Profil ist der begründete Fallback.
+- **Offene Gates**: ChatGPT-Callback, unabhängige Prüfung von Diff/Taskplan, Testresultaten, GitHub-Pushes, OCI-Images/Health und frischer authentifizierter Browser-Evidenz beider Domains.
+
+## Run-12 / Chrome zuerst, Orca-Fallback (2026-08-05)
+
+- **Titel alt**: CEO Delegation Run 11
+- **Quell-Konversations-URL**: `https://chatgpt.com/g/g-p-6a61454e40e081919af9f0eb09c97ca2-opensin-chat-und-openafd-chat/c/6a71e4b7-b1cc-83eb-87dc-092ff065a79a`
+- **Neue Konversations-URL**: `https://chatgpt.com/g/g-p-6a61454e40e081919af9f0eb09c97ca2-opensin-chat-und-openafd-chat/c/6a7336c4-49cc-83ed-99b6-2135454ac988`
+- **Neue Chat-Bezeichnung**: CEO-Auftrag und Deployment
+- **Aufgabe**: Offene OpenSIN-/OpenAfD-Aufgaben zuerst abschließen: Fehlerbehebung, Tests, Push nach `main`, OCI-Livebetrieb und vollständige authentifizierte Browserabnahme.
+- **Repositories**: OpenSIN-Chat, OpenAfD-Chat; sin-chrome/upstream wow-my-zsh.
+- **Letzter Status**: sin-chrome Doctor grün; nach Prompt-Eingabe timeouteten Submit, Status und Snapshot reproduzierbar. Orca bestätigte den gesendeten Auftrag. Ein neuer OpenSIN-Chat wurde im Chat-Modus verifiziert, Taskpläne wurden gelesen und Repo-Prüfung begonnen, danach erneut Mac-i9-Verbindung unterbrochen. Keine frischen Tests, Commits, Pushes, Deployments oder vollständige Browserabnahme behauptet.
+- **Archivierung**: Run-11 wurde erst nach bestätigtem neuen Chat zur Archivierung angesteuert, die UI bestätigte die Archivierung jedoch nicht; alter Chat bleibt deshalb vorerst erhalten und der Grund ist im Taskplan dokumentiert.
+- **Taskplan**: T-0021 ist wegen Connector-Unterbrechung blockiert; offene T-0013/T-0015/T-0016/T-0019/T-0020 bleiben unverifiziert.
