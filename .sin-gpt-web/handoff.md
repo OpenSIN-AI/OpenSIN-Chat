@@ -123,3 +123,14 @@
 - **OCI**: direct SSH to `92.5.60.87` works, but the canonical VM checkout is detached with uncommitted files and the active `opensin-app` container still runs `opensin-app:c1c4ec491`. The CI webhook is inactive. Public `/api/ping` remains `online:true` but reports no commit SHA. No VM files were overwritten.
 - **GitHub**: API, worker, maintenance, security and CEO-audit checks for `e9c6e5c` passed; the test/quality matrix was still running at the last check. The Vercel status for this commit failed independently.
 - **Next action**: repair or explicitly authorize the OCI release/deployment path, then run fresh authenticated live web-search/deep-research and browser acceptance before completing T-0019/T-0015/T-0016.
+
+## Run-20 / Aktuelle CEO-Abschlussdelegation (2026-08-06)
+
+- **Titel**: `Mac-i9 Abschlussarbeit`
+- **ChatGPT-Konversations-URL**: `https://chatgpt.com/c/6a73c53c-1028-83ed-a55a-e21d9385a88d`
+- **Aufgabe**: Alle offenen OpenSIN-/OpenAfD-Aufgaben abschließen: Websuche-Internal-error, API-Jest-open-handles, Deep-Research-Sessionfehler und Quellenintegrität prüfen; beide Repositories synchronisieren, testen, nach `origin/main` pushen, OCI immutable deployen/verifizieren und die vollständige authentifizierte Browsermatrix ausführen.
+- **Repositories**: `$REPO`, `$SISTER_REPO`; Browser-/sin-chrome-Befund `$TOOLING_REPO`.
+- **Letzter Status**: Neuer Projektchat nach fehlgeschlagenem Branch-first-Recovery manuell im Orca-OpenSIN-Profil gestartet; Chat-Modus, Account-Menü und Mac-i9-Brief verifiziert. ChatGPT bestätigt den Start der Pflichtchecks und arbeitet als CEO/Standard-Writer.
+- **Browserpriorität**: SIN-Chrome zuerst geprüft; Doctor/Status/Snapshot grün, expliziter Conversation-Options-Klick timeoutet reproduzierbar. Orca-Fallback aktiv. Bestehender Befund in wow-my-zsh Issue #29.
+- **Archivierung**: Alte Run-12-URL `https://chatgpt.com/c/6a7336c4-49cc-83ed-99b6-2135454ac988` erst nach bestätigtem neuen Chat zur Archivierung angesteuert; `sin-gpt-web-archive` konnte die alte URL nicht laden. Alte Konversation bleibt erhalten; keine erfolgreiche Archivierung behauptet.
+- **Callback**: Deaktiviert, weil der aktuelle OpenCode-TUI-Terminal im Orca-Arbeitscheckout liegt, während der kanonische Taskplan im Hauptcheckout liegt. Status wird über Orca-Snapshots und die kanonischen SQLite-Taskpläne überwacht.

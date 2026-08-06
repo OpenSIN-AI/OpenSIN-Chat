@@ -13,9 +13,9 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 
 ## Status
 
-- Backlog: 1
+- Backlog: 0
 - In progress: 2
-- Blocked: 5
+- Blocked: 6
 - Done: 14
 - Cancelled: 0
 
@@ -44,7 +44,7 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 | T-0017 | high | ops | done | local-agent | sin-chrome-Fallback dokumentieren und wow-my-zsh Issue #29 erneut bestätigen | — |
 | T-0018 | high | ops | blocked | chatgpt-web | Taskplan und ChatGPT-Handoff für Run-7 aktuell halten | — |
 | T-0020 | high | ops | blocked | unassigned | sin-chrome: explizite Tab-Steuerung und Timeout nach Mehrtab-Nutzung beheben | — |
-| T-0022 | high | test | backlog | unassigned | API-Jest-Suite beendet sich nach grünem Lauf nicht | — |
+| T-0022 | high | test | blocked | chatgpt-web | API-Jest-Suite beendet sich nach grünem Lauf nicht | — |
 
 ## Task details
 
@@ -411,12 +411,12 @@ Blocked: Run 12 Mac-i9 mcp_network_error; sin-gpt-web-recover failed at conversa
 
 ### T-0022 — API-Jest-Suite beendet sich nach grünem Lauf nicht
 
-- Status: `backlog`
-- Owner: `unassigned`
+- Status: `blocked`
+- Owner: `chatgpt-web`
 - Kind: `test`
 - Priority: `high`
 - Dependencies: none
-- Updated: 2026-08-05T14:03:02+00:00
+- Updated: 2026-08-06T01:07:29+00:00
 
 Run 12 reproduced that the complete OpenSIN API Jest suite finishes all 3272 tests green but remains alive because of open handles, causing Mac-i9 transport timeouts. Diagnose handles and make the normal test command exit cleanly without forceExit.
 
@@ -426,25 +426,27 @@ Acceptance:
 Allowed paths:
 - `apps/api`
 
+Blocked: Fresh Run-20 bounded evidence: the full OpenSIN API suite was allowed more than 8 minutes after all tests had reported green and still did not exit; the step was manually aborted. A subsequent 10-second process inventory found no remaining Jest/cross-env processes, only unrelated long-lived sin-chrome/opencode services. The focused agentWebsocket suite exits cleanly under --runInBand --detectOpenHandles (7/7), so the leak is only reproduced by the aggregate suite and is not yet isolated. Per user instruction no further unbounded full-suite run will be attempted; diagnosis must use bounded shards or handle instrumentation.
+
 ## Recent events
 
-- 2026-08-05T13:35:06+00:00 — `chatgpt-web` — `browser_auth_checked` `T-0019`: Orca fallback with explicit page ID and isolated OpenSIN profile: OpenSIN live domain loads the branded login page but has no active session or browser autofill. Empty submit and a bounded autofill-keyboard attempt both remain on login with required-field alert. No credential value was read. Next action: use the existing OCI deployment auth variable internally without printing it, then resume live verification.
-- 2026-08-05T13:37:18+00:00 — `chatgpt-web-run12` — `verification` `T-0019`: Mirrored shared clean-completion runtime fix and scraped-text regression into OpenSIN. Focused Jest passed: agentSSE, agentWebsocket, web-scraping; 3 suites, 21/21 tests, exit 0. Jest printed its generic open-handle post-run notice after success.
-- 2026-08-05T13:39:28+00:00 — `chatgpt-web` — `external_blocker_reproduced` `T-0019`: Attempt to reuse the production AUTH_TOKEN without disclosure was blocked before secret access: SSH alias sin-supabase requires an interactive Tailscale additional check; the previously used direct OCI endpoint timed out on port 22. No remote command or secret read occurred. Next browser action: test the existing authenticated Orca acceptance profile for OpenSIN.
-- 2026-08-05T13:41:01+00:00 — `local-agent` — `task_released` `T-0019`: Run 12 Mac-i9 mcp_network_error; supported branch-first recovery failed at conversation-options control. Local agent is taking over review and verification of the uncommitted shared fix.
-- 2026-08-05T13:41:01+00:00 — `local-agent` — `task_updated` `T-0019`: Preserve and locally verify the uncommitted OpenSIN false-agent-session fix and scraping regression; do not push or deploy until tests and diff review pass.
-- 2026-08-05T13:41:01+00:00 — `local-agent` — `task_claimed` `T-0019`: claimed by local-agent
-- 2026-08-05T13:41:01+00:00 — `local-agent` — `task_released` `T-0020`: Run 12 connector failed; sin-chrome timeout remains documented in wow-my-zsh Issue #29.
-- 2026-08-05T13:41:01+00:00 — `local-agent` — `task_blocked` `T-0020`: Run 12 Mac-i9 mcp_network_error; sin-gpt-web-recover failed at conversation-options control. Known sin-chrome multi-tab timeout remains external blocker in wow-my-zsh Issue #29.
-- 2026-08-05T13:41:01+00:00 — `local-agent` — `task_released` `T-0021`: Run 12 connector failed; recovery could not branch from current conversation.
-- 2026-08-05T13:41:02+00:00 — `local-agent` — `task_blocked` `T-0021`: Run 12 Mac-i9 mcp_network_error; sin-gpt-web-recover failed at conversation-options control, so ChatGPT Web cannot continue the cross-repository CEO loop.
-- 2026-08-05T13:54:44+00:00 — `local-agent` — `verification` `T-0019`: Local patch e9c6e5c6667e034f22d8be362380a02d621c9c67 pushed. Focused 21/21 and full API 3272/3272 passed under sin verify; type-check, layout and SPDX passed. Live acceptance and OCI rollout remain blocked: public ping is online but exposes no SHA, VM active image is c1c4ec491, canonical VM checkout is detached/uncommitted, and CI webhook is inactive.
-- 2026-08-05T13:54:44+00:00 — `local-agent` — `task_blocked` `T-0019`: Implementation and local verification are complete, but acceptance requires fresh live web-search evidence after deployment. OCI release path cannot be safely advanced because the VM checkout is detached with unrelated uncommitted files, the CI webhook is inactive, and the active container remains on c1c4ec491; public ping is online but reports no commit SHA.
-- 2026-08-05T14:03:02+00:00 — `chatgpt-web-run12` — `verification` `T-0019`: Full OpenSIN API suite completed 215/215 suites and 3272/3272 tests successfully in 78.111s. Jest then remained alive on open handles; two duplicated run processes were identified by exact repo command and terminated with SIGTERM. Test log saved at .sin-gpt-web/reports/T-0019-full-api.log.
-- 2026-08-05T14:03:02+00:00 — `chatgpt-web-run12` — `task_added` `T-0022`: API-Jest-Suite beendet sich nach grünem Lauf nicht
-- 2026-08-05T14:08:27+00:00 — `chatgpt-web-run12` — `task_unblocked` `T-0019`: Run 12 continues from pushed fix e9c6e5c66 using the clean release workflow.
-- 2026-08-05T14:08:34+00:00 — `chatgpt-web-run12` — `task_claimed` `T-0019`: claimed by chatgpt-web
 - 2026-08-05T14:08:45+00:00 — `chatgpt-web-run12` — `task_unblocked` `T-0021`: Current ChatGPT Web session has restored Mac-i9 access and continues the CEO closeout.
 - 2026-08-05T14:09:27+00:00 — `chatgpt-web-run12` — `task_claimed` `T-0021`: claimed by chatgpt-web
 - 2026-08-05T14:51:06+00:00 — `chatgpt-web-run12` — `blocker` `T-0020`: Fresh bounded reproduction on 2026-08-05: sin-chrome-service reports browser and dashboard ready; sin-chrome doctor reports 0 errors/warnings; read-only snapshot succeeds, but control status and tab-open each time out. Multi-tab controller remains unreliable as documented in wow-my-zsh Issue #29. No cookies, secrets, or CDP values recorded.
 - 2026-08-05T14:51:19+00:00 — `chatgpt-web-run12` — `verification` `T-0021`: Fresh release gates on current OpenSIN main: check:layout, check:branding, check:public-ops, check:spdx and production build all pass. Public-ops initially found three private absolute paths in the tracked Run-12 delegation; replaced only with canonical $REPO/$SISTER_REPO/$TOOLING_REPO variables and reran successfully.
+- 2026-08-05T23:14:27+00:00 — `local-agent` — `browser_fallback` `T-0021`: SIN-Chrome is authenticated and snapshots work, but explicit project conversation-options click timed out; using the authenticated Orca OpenSIN profile as fallback per user instruction. Existing wow-my-zsh Issue #29 is the matching upstream issue.
+- 2026-08-05T23:14:49+00:00 — `local-agent` — `delegation_state` `T-0021`: Chrome project chat is authenticated and last Run-12 ended partially. Chrome conversation-options click timed out, so the same canonical chat is being handled through Orca OpenSIN profile for branch/replacement and continuation.
+- 2026-08-05T23:16:36+00:00 — `local-agent` — `task_claimed` `T-0022`: claimed by chatgpt-web
+- 2026-08-05T23:20:11+00:00 — `local-agent` — `delegation_blocked` `T-0021`: Run 20 branch-first recovery failed because ChatGPT UI does not expose Ab hier neuen Chat starten; callback binding also failed from this Orca worktree. The existing Run-12 chat was preserved. A project-new-chat attempt could not resolve a canonical conversation URL, so no new brief is claimed as sent.
+- 2026-08-05T23:22:23+00:00 — `local-agent` — `delegation_started` `T-0021`: Run 20 started in new canonical project conversation: title Mac-i9 Abschlussarbeit; URL https://chatgpt.com/c/6a73c53c-1028-83ed-a55a-e21d9385a88d; repositories OpenSIN-Chat and OpenAfD-Chat; ChatGPT confirmed mandatory state/security checks and acts as CEO writer.
+- 2026-08-05T23:22:23+00:00 — `local-agent` — `archive_blocked` `T-0021`: Old Run-12 conversation https://chatgpt.com/c/6a7336c4-49cc-83ed-99b6-2135454ac988 was targeted only after new chat URL/title verification; sin-gpt-web-archive could not load the requested URL. Old chat remains retained and is not claimed archived.
+- 2026-08-05T23:22:40+00:00 — `chatgpt-web` — `diagnosis` `T-0022`: Found and terminated stale cross-env/jest processes from focused agentWebsocket.test.js; process had remained alive for over 10 hours after test completion. Narrowing open handle in the same test path.
+- 2026-08-05T23:25:57+00:00 — `local-agent` — `watchdog_error` `T-0021`: Documented watchdog dry-run could not handle the intentional no-callback delegation: watchdog_chatgpt.py raised AttributeError on null callback conversation metadata. No recovery was attempted because the active Orca conversation is making observable progress.
+- 2026-08-06T01:06:04+00:00 — `local-agent` — `browser_fallback` `T-0021`: SIN-Chrome doctor/status/snapshot succeeded, but sending the Run-20 completion brief timed out on the headed browser action; no retry performed. Existing wow-my-zsh Issue #29 remains the matching multi-tab/control timeout. Continue via authenticated Orca OpenSIN profile.
+- 2026-08-06T01:07:18+00:00 — `local-agent` — `delegation_continued` `T-0021`: Run-20 completion brief was sent successfully through authenticated Orca OpenSIN profile after SIN-Chrome send timeout. Canonical URL https://chatgpt.com/c/6a73c53c-1028-83ed-a55a-e21d9385a88d; task covers all open OpenSIN/OpenAfD fixes, tests, main pushes, OCI deployment and full browser acceptance.
+- 2026-08-06T01:07:29+00:00 — `chatgpt-web-run20` — `task_blocked` `T-0022`: Fresh Run-20 bounded evidence: the full OpenSIN API suite was allowed more than 8 minutes after all tests had reported green and still did not exit; the step was manually aborted. A subsequent 10-second process inventory found no remaining Jest/cross-env processes, only unrelated long-lived sin-chrome/opencode services. The focused agentWebsocket suite exits cleanly under --runInBand --detectOpenHandles (7/7), so the leak is only reproduced by the aggregate suite and is not yet isolated. Per user instruction no further unbounded full-suite run will be attempted; diagnosis must use bounded shards or handle instrumentation.
+- 2026-08-06T01:08:35+00:00 — `chatgpt-web-run20` — `verification` `T-0019`: Run 20: focused Node 24 T-0019 regression passed, 4 suites and 23 tests. Command exited 0; Jest printed its one-second open-handle warning tracked in blocked T-0022.
+- 2026-08-06T01:08:54+00:00 — `local-agent` — `live_health_failure` `T-0015`: Independent public check returned HTTP 502 from https://sinchat.delqhi.com/api/ping on 2026-08-06; no online payload. OCI/live deployment gate remains open and requires diagnosis before completion.
+- 2026-08-06T01:08:54+00:00 — `local-agent` — `live_health_failure` `T-0021`: Independent public check returned HTTP 502 from https://sinchat.delqhi.com/api/ping on 2026-08-06; no online payload. This is a fresh external/live blocker to feed into the CEO run.
+- 2026-08-06T01:12:20+00:00 — `local-agent` — `browser_runtime_blocker` `T-0016`: Orca wait for normal send state failed with runtime_unavailable: Orca runtime closed the connection before responding. No browser acceptance claim; restart/reconnect required before further UI work.
+- 2026-08-06T01:12:20+00:00 — `local-agent` — `browser_runtime_blocker` `T-0021`: Run-20 Orca supervision lost runtime connection during active ChatGPT work; no acceptance claim. Preserve canonical conversation and recover runtime before continuing.

@@ -1189,6 +1189,12 @@ body,
   overflow-wrap: anywhere;
 }
 
+.assistant-markdown .markdown-invalid-link {
+  color: var(--chat-text-muted, inherit);
+  text-decoration: line-through;
+  cursor: default;
+}
+
 .assistant-markdown > :first-child {
   margin-top: 0;
 }

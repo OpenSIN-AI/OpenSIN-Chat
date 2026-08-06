@@ -344,4 +344,48 @@ describe("chat/markdown — renderMarkdown (real markdown-it)", () => {
       expect(out).toContain("https://example.com/?a=1&#x26;b=2");
     });
   });
+
+  // ── Citation URL validation (T-0041) ───────────────────────────────────
+  describe("citation URL validation (T-0041)", () => {
+    it("does NOT render a hallucinated URL as a clickable link", () => {
+      const md =
+        "[reserved.dreams.direct](https://www.iana.org/domains/reserved/reserved.dreams.direct)";
+      const out = renderMarkdown(md);
+      // The malformed href must never appear inside an <a> element.
+      expect(out).not.toContain(
+        'href="https://www.iana.org/domains/reserved/reserved.dreams.direct"',
+      );
+      // The label is rendered as marked-up plain text, not a link.
+      expect(out).toContain('class="markdown-invalid-link"');
+      expect(out).toContain("reserved.dreams.direct");
+    });
+
+    it("does NOT render a relative URL as a clickable link", () => {
+      const out = renderMarkdown("[see more](reserved.dreams.direct)");
+      expect(out).not.toContain('href="');
+      expect(out).toContain('class="markdown-invalid-link"');
+    });
+
+    it("keeps normal IANA/RFC citation URLs clickable", () => {
+      const out = renderMarkdown(
+        "[RFC 5737](https://www.rfc-editor.org/rfc/rfc5737.txt)",
+      );
+      expect(out).toContain(
+        'href="https://www.rfc-editor.org/rfc/rfc5737.txt"',
+      );
+      expect(out).not.toContain("markdown-invalid-link");
+    });
+
+    it("keeps a normal example.com link clickable", () => {
+      const out = renderMarkdown("[click here](https://example.com)");
+      expect(out).toContain('href="https://example.com"');
+      expect(out).not.toContain("markdown-invalid-link");
+    });
+
+    it("keeps safe internal links clickable", () => {
+      const out = renderMarkdown("[workspace](/workspace/mein-workspace)");
+      expect(out).toContain('href="/workspace/mein-workspace"');
+      expect(out).not.toContain("markdown-invalid-link");
+    });
+  });
 });

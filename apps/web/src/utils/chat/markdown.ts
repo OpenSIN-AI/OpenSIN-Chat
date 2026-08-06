@@ -9,6 +9,7 @@ import "./themes/github.css";
 import { v4 } from "uuid";
 import { resolveDarkMode } from "@/hooks/useTheme";
 import i18next from "i18next";
+import { sanitizeCitationHref } from "./citationHref";
 
 const markdown = markdownIt({
   html: Appearance.get("renderHTML") ?? false,
@@ -62,16 +63,47 @@ const markdown = markdownIt({
 markdown.renderer.rules.strong_open = () =>
   '<strong class="text-white light:text-slate-900">';
 markdown.renderer.rules.strong_close = () => "</strong>";
+
+// Citation URL validation — only absolute, well-formed URLs are rendered as
+// clickable links. Malformed/hallucinated URLs (T-0041) are rendered as plain
+// text so they cannot become misleading links. This must run before the
+// scheme blocklist below so invalid URLs never appear in the emitted HTML.
+let invalidLinkOpen = false;
 markdown.renderer.rules.link_open = (tokens, idx) => {
   const token = tokens[idx];
   const href = token.attrs?.find((attr) => attr[0] === "href")?.[1] ?? "#";
+  // Collect the link label text (may span several inline tokens) so we can
+  // verify the label agrees with the destination host.
+  let labelText = "";
+  for (
+    let i = idx + 1;
+    i < tokens.length && tokens[i].type !== "link_close";
+    i++
+  ) {
+    labelText += tokens[i].content ?? "";
+  }
+  const isSafeNonCitationLink = /^(mailto:|tel:|ftp:|\/|#|\.)/i.test(href);
+  const citationHref = /^https?:/i.test(href)
+    ? sanitizeCitationHref(href, labelText)
+    : isSafeNonCitationLink
+      ? href
+      : null;
+  if (citationHref === null) {
+    invalidLinkOpen = true;
+    return '<span class="markdown-invalid-link">';
+  }
   // Block dangerous URI schemes (javascript:, data:, vbscript:) — DOMPurify
   // also strips them, but defence-in-depth prevents them from ever appearing
   // in the HTML string that downstream consumers might cache or log.
-  const safeHref = /^(https?:|mailto:|tel:|ftp:|\/|#|\.)/i.test(href)
-    ? href
-    : "#";
+  const safeHref = citationHref;
   return `<a href="${HTMLEncode(safeHref)}" target="_blank" rel="noopener noreferrer">`;
+};
+markdown.renderer.rules.link_close = () => {
+  if (invalidLinkOpen) {
+    invalidLinkOpen = false;
+    return "</span>";
+  }
+  return "</a>";
 };
 
 // Custom renderer for responsive images rendered in markdown
