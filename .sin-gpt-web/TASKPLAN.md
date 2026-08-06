@@ -14,8 +14,8 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 ## Status
 
 - Backlog: 0
-- In progress: 2
-- Blocked: 6
+- In progress: 1
+- Blocked: 7
 - Done: 14
 - Cancelled: 0
 
@@ -36,7 +36,7 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 | T-0014 | critical | implement | done | chatgpt-web | OpenAfD-Chat: vollständige Synchronisierung und Fehlerfreiheit herstellen | — |
 | T-0015 | critical | ops | blocked | chatgpt-web | Beide Repos live auf Oracle Cloud VM verifizieren und funktionierend halten | T-0013 |
 | T-0016 | critical | test | blocked | chatgpt-web | Vollständige Browser-Abnahme ALLER Funktionen auf beiden Live-Domains (Websuche, Datei-Upload, Quellen-Dateien zum Chat hinzufügen, Deep Research, Modellwahl, Navigation, Empty/Error-States, Login/Reconnect, Notebooks, ⌘K-Suche) | T-0015 |
-| T-0019 | critical | implement | in_progress | chatgpt-web | Websuche endet nach erfolgreichem Scraping mit Internal error | — |
+| T-0019 | critical | implement | blocked | chatgpt-web | Websuche endet nach erfolgreichem Scraping mit Internal error | — |
 | T-0021 | critical | ops | in_progress | chatgpt-web | Run 12: CEO-Abschluss in ChatGPT Web mit Chrome | — |
 | T-0004 | high | ops | done | chatgpt-web | sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren | — |
 | T-0005 | high | ops | done | chatgpt-web | Taskplan und ChatGPT-Handoff aktuell halten | — |
@@ -282,12 +282,12 @@ Blocked: Blocked by T-0015: final browser acceptance must follow verified fix/de
 
 ### T-0019 — Websuche endet nach erfolgreichem Scraping mit Internal error
 
-- Status: `in_progress`
+- Status: `blocked`
 - Owner: `chatgpt-web`
 - Kind: `implement`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-08-05T14:08:34+00:00
+- Updated: 2026-08-06T01:14:51+00:00
 
 Run-7 ORCA live on sinchat.delqhi.com: @agent web search executes repeated DuckDuckGo web-browsing and scrapes https://example.com, then returns Internal error instead of a sourced answer. Diagnose backend exception, add regression coverage, fix both products, deploy and reaccept live.
 
@@ -297,6 +297,8 @@ Acceptance:
 Allowed paths:
 - `apps/api`
 - `apps/web/src`
+
+Blocked: Run 20 local implementation and bounded verification are complete and pushed on OpenSIN main at e94989392; focused API regression passed 23/23 and release web gates passed. OCI deployment/live acceptance is externally blocked because bounded SSH via sin-supabase requires an interactive Tailscale additional check; no remote command executed and no server state changed.
 
 ### T-0021 — Run 12: CEO-Abschluss in ChatGPT Web mit Chrome
 
@@ -430,7 +432,6 @@ Blocked: Fresh Run-20 bounded evidence: the full OpenSIN API suite was allowed m
 
 ## Recent events
 
-- 2026-08-05T14:08:45+00:00 — `chatgpt-web-run12` — `task_unblocked` `T-0021`: Current ChatGPT Web session has restored Mac-i9 access and continues the CEO closeout.
 - 2026-08-05T14:09:27+00:00 — `chatgpt-web-run12` — `task_claimed` `T-0021`: claimed by chatgpt-web
 - 2026-08-05T14:51:06+00:00 — `chatgpt-web-run12` — `blocker` `T-0020`: Fresh bounded reproduction on 2026-08-05: sin-chrome-service reports browser and dashboard ready; sin-chrome doctor reports 0 errors/warnings; read-only snapshot succeeds, but control status and tab-open each time out. Multi-tab controller remains unreliable as documented in wow-my-zsh Issue #29. No cookies, secrets, or CDP values recorded.
 - 2026-08-05T14:51:19+00:00 — `chatgpt-web-run12` — `verification` `T-0021`: Fresh release gates on current OpenSIN main: check:layout, check:branding, check:public-ops, check:spdx and production build all pass. Public-ops initially found three private absolute paths in the tracked Run-12 delegation; replaced only with canonical $REPO/$SISTER_REPO/$TOOLING_REPO variables and reran successfully.
@@ -450,3 +451,4 @@ Blocked: Fresh Run-20 bounded evidence: the full OpenSIN API suite was allowed m
 - 2026-08-06T01:08:54+00:00 — `local-agent` — `live_health_failure` `T-0021`: Independent public check returned HTTP 502 from https://sinchat.delqhi.com/api/ping on 2026-08-06; no online payload. This is a fresh external/live blocker to feed into the CEO run.
 - 2026-08-06T01:12:20+00:00 — `local-agent` — `browser_runtime_blocker` `T-0016`: Orca wait for normal send state failed with runtime_unavailable: Orca runtime closed the connection before responding. No browser acceptance claim; restart/reconnect required before further UI work.
 - 2026-08-06T01:12:20+00:00 — `local-agent` — `browser_runtime_blocker` `T-0021`: Run-20 Orca supervision lost runtime connection during active ChatGPT work; no acceptance claim. Preserve canonical conversation and recover runtime before continuing.
+- 2026-08-06T01:14:51+00:00 — `chatgpt-web-run20` — `task_blocked` `T-0019`: Run 20 local implementation and bounded verification are complete and pushed on OpenSIN main at e94989392; focused API regression passed 23/23 and release web gates passed. OCI deployment/live acceptance is externally blocked because bounded SSH via sin-supabase requires an interactive Tailscale additional check; no remote command executed and no server state changed.
