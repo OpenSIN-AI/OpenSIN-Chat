@@ -36,6 +36,7 @@ fi
 git fetch --prune origin "${BRANCH}" --quiet
 current_sha=$(git rev-parse HEAD)
 target_sha=$(git rev-parse "origin/${BRANCH}")
+short_sha="${target_sha:0:12}"
 
 if [[ "${current_sha}" == "${target_sha}" ]]; then
   log "already at ${target_sha}"
@@ -94,6 +95,8 @@ git reset --hard "${target_sha}" --quiet
 
 export OPENSIN_IMAGE_REPOSITORY="${IMAGE_REPOSITORY}"
 export OPENSIN_IMAGE_TAG="${target_sha}"
+export APP_VERSION="${APP_VERSION:-${short_sha}}"
+export GIT_SHA="${target_sha}"
 
 log "normalizing persistent volume permissions"
 "${compose[@]}" run -T --rm --no-deps fix-permissions </dev/null

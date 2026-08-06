@@ -50,3 +50,30 @@ test("deploy-production forwards an explicit Compose project name", () => {
     /export COMPOSE_PROJECT_NAME="\$\{compose_project_name\}"/,
   );
 });
+
+test("deployment propagates immutable commit metadata into the image and runtime", () => {
+  const compose = fs.readFileSync(
+    path.join(ROOT, "platform/containers/compose/docker-compose.yml"),
+    "utf8",
+  );
+
+  assert.equal(
+    (compose.match(/APP_VERSION: "\$\{APP_VERSION:-dev\}"/g) || []).length,
+    2,
+    "APP_VERSION must be present in both build args and runtime environment",
+  );
+  assert.equal(
+    (compose.match(/GIT_SHA: "\$\{GIT_SHA:-unknown\}"/g) || []).length,
+    2,
+    "GIT_SHA must be present in both build args and runtime environment",
+  );
+
+  for (const relativePath of [
+    "tooling/scripts/deploy-production.sh",
+    "tooling/scripts/auto-deploy.sh",
+  ]) {
+    const script = fs.readFileSync(path.join(ROOT, relativePath), "utf8");
+    assert.match(script, /export APP_VERSION="\$\{APP_VERSION:-\$\{short_sha\}\}"/);
+    assert.match(script, /export GIT_SHA="\$\{target_sha\}"/);
+  }
+});

@@ -39,6 +39,8 @@ services:
         CHROMIUM_SHA256: "${CHROMIUM_SHA256:-}"
         CHROMIUM_DOWNLOAD_URL: "${CHROMIUM_DOWNLOAD_URL:-}"
         VITE_ENABLE_IMAGE_GENERATION: "${VITE_ENABLE_IMAGE_GENERATION:-false}"
+        APP_VERSION: "${APP_VERSION:-dev}"
+        GIT_SHA: "${GIT_SHA:-unknown}"
 
     init: true
     restart: unless-stopped
@@ -74,6 +76,8 @@ services:
       NODE_ENV: production
       STORAGE_DIR: "${STORAGE_DIR:-/app/server/storage}"
       DATABASE_URL: "${DATABASE_URL:-file:/app/server/storage/opensin.db}"
+      APP_VERSION: "${APP_VERSION:-dev}"
+      GIT_SHA: "${GIT_SHA:-unknown}"
 
       ENABLE_IMAGE_GENERATION: "${ENABLE_IMAGE_GENERATION:-false}"
 

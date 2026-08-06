@@ -124,6 +124,8 @@ if [[ -n "${compose_project_name}" ]]; then
 fi
 export OPENSIN_IMAGE_REPOSITORY="${image_repository}"
 export OPENSIN_IMAGE_TAG="${target_sha}"
+export APP_VERSION="${APP_VERSION:-${short_sha}}"
+export GIT_SHA="${target_sha}"
 
 compose=(
   docker compose
