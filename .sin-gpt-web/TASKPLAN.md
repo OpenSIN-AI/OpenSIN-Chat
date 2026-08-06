@@ -14,8 +14,8 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 ## Status
 
 - Backlog: 0
-- In progress: 1
-- Blocked: 7
+- In progress: 0
+- Blocked: 8
 - Done: 14
 - Cancelled: 0
 
@@ -37,7 +37,7 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 | T-0015 | critical | ops | blocked | chatgpt-web | Beide Repos live auf Oracle Cloud VM verifizieren und funktionierend halten | T-0013 |
 | T-0016 | critical | test | blocked | chatgpt-web | Vollständige Browser-Abnahme ALLER Funktionen auf beiden Live-Domains (Websuche, Datei-Upload, Quellen-Dateien zum Chat hinzufügen, Deep Research, Modellwahl, Navigation, Empty/Error-States, Login/Reconnect, Notebooks, ⌘K-Suche) | T-0015 |
 | T-0019 | critical | implement | blocked | chatgpt-web | Websuche endet nach erfolgreichem Scraping mit Internal error | — |
-| T-0021 | critical | ops | in_progress | chatgpt-web | Run 12: CEO-Abschluss in ChatGPT Web mit Chrome | — |
+| T-0021 | critical | ops | blocked | chatgpt-web | Run 12: CEO-Abschluss in ChatGPT Web mit Chrome | — |
 | T-0004 | high | ops | done | chatgpt-web | sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren | — |
 | T-0005 | high | ops | done | chatgpt-web | Taskplan und ChatGPT-Handoff aktuell halten | — |
 | T-0009 | high | test | done | chatgpt-web | Web-Coverage-Gate wieder erfüllen | — |
@@ -302,15 +302,17 @@ Blocked: Run 20 local implementation and bounded verification are complete and p
 
 ### T-0021 — Run 12: CEO-Abschluss in ChatGPT Web mit Chrome
 
-- Status: `in_progress`
+- Status: `blocked`
 - Owner: `chatgpt-web`
 - Kind: `ops`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-08-05T14:09:27+00:00
+- Updated: 2026-08-06T01:18:15+00:00
 
 Acceptance:
 - ChatGPT Web übernimmt alle offenen Aufgaben aus T-0013, T-0015, T-0016, T-0019 und T-0020 sowie offene OpenAfD-Aufgaben T-0031, T-0037 und T-0025; Status, URL, Repositories und Evidence werden aktualisiert.
+
+Blocked: Run 20 code/release work is locally complete and pushed, but final OCI deployment/live verification is blocked by sin-supabase requiring an interactive Tailscale additional check; sinchat.delqhi.com/api/ping independently returns HTTP 502; full authenticated browser acceptance is blocked by Orca runtime_unavailable and the known SIN-Chrome multi-tab send timeout in wow-my-zsh Issue #29.
 
 ### T-0004 — sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren
 
@@ -432,8 +434,6 @@ Blocked: Fresh Run-20 bounded evidence: the full OpenSIN API suite was allowed m
 
 ## Recent events
 
-- 2026-08-05T14:09:27+00:00 — `chatgpt-web-run12` — `task_claimed` `T-0021`: claimed by chatgpt-web
-- 2026-08-05T14:51:06+00:00 — `chatgpt-web-run12` — `blocker` `T-0020`: Fresh bounded reproduction on 2026-08-05: sin-chrome-service reports browser and dashboard ready; sin-chrome doctor reports 0 errors/warnings; read-only snapshot succeeds, but control status and tab-open each time out. Multi-tab controller remains unreliable as documented in wow-my-zsh Issue #29. No cookies, secrets, or CDP values recorded.
 - 2026-08-05T14:51:19+00:00 — `chatgpt-web-run12` — `verification` `T-0021`: Fresh release gates on current OpenSIN main: check:layout, check:branding, check:public-ops, check:spdx and production build all pass. Public-ops initially found three private absolute paths in the tracked Run-12 delegation; replaced only with canonical $REPO/$SISTER_REPO/$TOOLING_REPO variables and reran successfully.
 - 2026-08-05T23:14:27+00:00 — `local-agent` — `browser_fallback` `T-0021`: SIN-Chrome is authenticated and snapshots work, but explicit project conversation-options click timed out; using the authenticated Orca OpenSIN profile as fallback per user instruction. Existing wow-my-zsh Issue #29 is the matching upstream issue.
 - 2026-08-05T23:14:49+00:00 — `local-agent` — `delegation_state` `T-0021`: Chrome project chat is authenticated and last Run-12 ended partially. Chrome conversation-options click timed out, so the same canonical chat is being handled through Orca OpenSIN profile for branch/replacement and continuation.
@@ -452,3 +452,5 @@ Blocked: Fresh Run-20 bounded evidence: the full OpenSIN API suite was allowed m
 - 2026-08-06T01:12:20+00:00 — `local-agent` — `browser_runtime_blocker` `T-0016`: Orca wait for normal send state failed with runtime_unavailable: Orca runtime closed the connection before responding. No browser acceptance claim; restart/reconnect required before further UI work.
 - 2026-08-06T01:12:20+00:00 — `local-agent` — `browser_runtime_blocker` `T-0021`: Run-20 Orca supervision lost runtime connection during active ChatGPT work; no acceptance claim. Preserve canonical conversation and recover runtime before continuing.
 - 2026-08-06T01:14:51+00:00 — `chatgpt-web-run20` — `task_blocked` `T-0019`: Run 20 local implementation and bounded verification are complete and pushed on OpenSIN main at e94989392; focused API regression passed 23/23 and release web gates passed. OCI deployment/live acceptance is externally blocked because bounded SSH via sin-supabase requires an interactive Tailscale additional check; no remote command executed and no server state changed.
+- 2026-08-06T01:18:15+00:00 — `local-agent` — `task_blocked` `T-0021`: Run 20 code/release work is locally complete and pushed, but final OCI deployment/live verification is blocked by sin-supabase requiring an interactive Tailscale additional check; sinchat.delqhi.com/api/ping independently returns HTTP 502; full authenticated browser acceptance is blocked by Orca runtime_unavailable and the known SIN-Chrome multi-tab send timeout in wow-my-zsh Issue #29.
+- 2026-08-06T01:18:15+00:00 — `local-agent` — `final_status` `T-0021`: Run 20 final local status: pushed origin/main e9498939221015a8e7c11d35d07ec3743ebf1e3e; clean worktree; local release gates and focused 23/23 web-search plus 59/59 citation checks passed. OCI deployment/live verification and complete browser matrix remain blocked by interactive Tailscale SSH, OpenSIN public ping HTTP 502, OpenAfD commit unknown, Orca runtime_unavailable and SIN-Chrome Issue #29 timeout.

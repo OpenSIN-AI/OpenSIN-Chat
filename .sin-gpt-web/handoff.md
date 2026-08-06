@@ -134,3 +134,14 @@
 - **Browserpriorität**: SIN-Chrome zuerst geprüft; Doctor/Status/Snapshot grün, expliziter Conversation-Options-Klick timeoutet reproduzierbar. Orca-Fallback aktiv. Bestehender Befund in wow-my-zsh Issue #29.
 - **Archivierung**: Alte Run-12-URL `https://chatgpt.com/c/6a7336c4-49cc-83ed-99b6-2135454ac988` erst nach bestätigtem neuen Chat zur Archivierung angesteuert; `sin-gpt-web-archive` konnte die alte URL nicht laden. Alte Konversation bleibt erhalten; keine erfolgreiche Archivierung behauptet.
 - **Callback**: Deaktiviert, weil der aktuelle OpenCode-TUI-Terminal im Orca-Arbeitscheckout liegt, während der kanonische Taskplan im Hauptcheckout liegt. Status wird über Orca-Snapshots und die kanonischen SQLite-Taskpläne überwacht.
+
+## Run-20 / Finaler lokaler Status (2026-08-06)
+
+- **Titel**: `Mac-i9 Abschlussarbeit`
+- **ChatGPT-Konversations-URL**: `https://chatgpt.com/c/6a73c53c-1028-83ed-a55a-e21d9385a88d`
+- **Aufgabe**: Offene Fehler beheben, OpenAfD synchronisieren, Tests und Builds ausführen, beide `main`-Branches pushen, OCI-Livebetrieb verifizieren und die vollständige Browsermatrix abnehmen.
+- **Repositories**: OpenSIN `/Users/jeremy/dev/OpenSIN-Chat`; OpenAfD `/Users/jeremy/dev/OpenAfD-Chat`; Tooling `/Users/jeremy/dev/wow-my-zsh`.
+- **Letzter Status**: OpenSIN `origin/main` steht auf `e9498939221015a8e7c11d35d07ec3743ebf1e3e`, Arbeitsbaum sauber. Lokale Release-Gates sowie fokussierte Websuche `23/23` und Citation-Tests `59/59` bestanden. OpenAfD wurde auf den identischen Citation-Fix synchronisiert und gepusht; Details stehen im Schwester-Handoff.
+- **Liveblocker**: OCI-SSH über `sin-supabase` verlangt eine interaktive Tailscale-Zusatzprüfung; kein Remote-Befehl und kein Deployment ausgeführt. `https://sinchat.delqhi.com/api/ping` liefert unabhängig HTTP `502`; `https://openafd.delqhi.com/api/ping` liefert `online:true`, aber `version: dev` und `commit: unknown`.
+- **Browserblocker**: SIN-Chrome `doctor/status/snapshot` grün, Send-Action timeoutet reproduzierbar wie in wow-my-zsh Issue #29. Orca `OpenSIN`-Profil authentifiziert, aber Run-20-Supervision verlor die Runtime (`runtime_unavailable`). Vollständige frische Browserabnahme ist daher nicht behauptet.
+- **Taskstatus**: T-0019 erledigt und gepusht; T-0022, T-0015, T-0016 und T-0021 mit Evidence blockiert. Keine OCI-, Live- oder Browser-Completion behauptet.
