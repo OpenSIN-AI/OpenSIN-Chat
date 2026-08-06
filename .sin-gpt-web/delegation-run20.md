@@ -6,9 +6,9 @@ Du bist CEO, Lead-Implementierer, Tester und Release-Verantwortlicher. Arbeite d
 
 ## Kanonische Repositories
 
-- OpenSIN Chat: `/Users/jeremy/dev/OpenSIN-Chat`
-- Schwesterrepo OpenAfD: `/Users/jeremy/dev/OpenAfD-Chat`
-- sin-gpt-web / Browser-Tooling: `/Users/jeremy/dev/wow-my-zsh`
+- OpenSIN Chat: OpenSIN repository root
+- Schwesterrepo OpenAfD: OpenAfD repository root
+- sin-gpt-web / Browser-Tooling: SIN tooling repository root
 
 Nutze für jede lokale Datei, jedes Kommando, jeden Test, Git-/GitHub-Vorgang und jede Browserabnahme ausschließlich den Mac-i9-Connector. Lies in beiden Repositories zuerst `AGENTS.md`, `.sin-gpt-web/TASKPLAN.md`, `.sin-gpt-web/COMPLETION_REPORT.md` und `.sin-gpt-web/handoff.md`. Verwende `sin-gpt-web-state` für alle Planänderungen; bearbeite generierte Markdown-Ansichten nicht manuell.
 
