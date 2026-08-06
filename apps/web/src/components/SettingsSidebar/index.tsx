@@ -6,21 +6,16 @@ import { House } from "@phosphor-icons/react/dist/csr/House";
 import { List } from "@phosphor-icons/react/dist/csr/List";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { CaretLeft } from "@phosphor-icons/react/dist/csr/CaretLeft";
-import { Flask } from "@phosphor-icons/react/dist/csr/Flask";
 import { Gear } from "@phosphor-icons/react/dist/csr/Gear";
 import { UserCircleGear } from "@phosphor-icons/react/dist/csr/UserCircleGear";
 import { PencilSimpleLine } from "@phosphor-icons/react/dist/csr/PencilSimpleLine";
 import { Nut } from "@phosphor-icons/react/dist/csr/Nut";
 import { Toolbox } from "@phosphor-icons/react/dist/csr/Toolbox";
-import { Plugs } from "@phosphor-icons/react/dist/csr/Plugs";
-import AgentIcon from "@/media/animations/agent-static.png";
 import useUser from "@/hooks/useUser";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import Footer from "../Footer";
 import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
-import showToast from "@/utils/toast";
-import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 import Option from "./MenuOption";
 import { CanViewChatHistoryProvider } from "../CanViewChatHistory";
 import useAppVersion from "@/hooks/useAppVersion";
@@ -322,24 +317,6 @@ const SidebarOptions = ({ user = null, t }: any) => (
               flex: true,
               roles: ["admin"],
             },
-            {
-              btnText: t("settings.voice-speech"),
-              href: paths.settings.audioPreference(),
-              flex: true,
-              roles: ["admin"],
-            },
-            {
-              btnText: t("settings.transcription"),
-              href: paths.settings.transcriptionPreference(),
-              flex: true,
-              roles: ["admin"],
-            },
-            {
-              btnText: t("settings.model-router"),
-              href: paths.settings.modelRouters(),
-              flex: true,
-              roles: ["admin"],
-            },
           ]}
         />
         <Option
@@ -384,20 +361,6 @@ const SidebarOptions = ({ user = null, t }: any) => (
           ]}
         />
         <Option
-          btnText={t("settings.agent-skills")}
-          icon={
-            <img
-              src={AgentIcon}
-              alt={t("common.agent")}
-              className="h-5 w-5 flex-shrink-0 light:invert"
-            />
-          }
-          href={paths.settings.agentSkills()}
-          user={user}
-          flex={true}
-          roles={["admin"]}
-        />
-        <Option
           btnText={t("settings.customization")}
           icon={<PencilSimpleLine className="h-5 w-5 flex-shrink-0" />}
           user={user}
@@ -423,57 +386,13 @@ const SidebarOptions = ({ user = null, t }: any) => (
           ]}
         />
         <Option
-          btnText={t("settings.channels")}
-          icon={<Plugs className="h-5 w-5 flex-shrink-0" />}
-          user={user}
-          childOptions={[
-            {
-              btnText: t("settings.available-channels.telegram"),
-              href: paths.settings.telegram(),
-              flex: true,
-              hidden: !!user,
-            },
-          ]}
-        />
-        <Option
           btnText={t("settings.tools")}
           icon={<Toolbox className="h-5 w-5 flex-shrink-0" />}
           user={user}
           childOptions={[
             {
-              hidden: !canViewChatHistory,
-              btnText: t("settings.embeds"),
-              href: paths.settings.embedChatWidgets(),
-              flex: true,
-              roles: ["admin"],
-            },
-            {
               btnText: t("settings.event-logs"),
               href: paths.settings.logs(),
-              flex: true,
-              roles: ["admin"],
-            },
-            {
-              btnText: t("settings.scheduled-jobs"),
-              href: paths.settings.scheduledJobs(),
-              flex: true,
-              roles: ["admin"],
-            },
-            {
-              btnText: t("settings.api-keys"),
-              href: paths.settings.apiKeys(),
-              flex: true,
-              roles: ["admin"],
-            },
-            {
-              btnText: t("settings.system-prompt-variables"),
-              href: paths.settings.systemPromptVariables(),
-              flex: true,
-              roles: ["admin"],
-            },
-            {
-              btnText: "Transformations",
-              href: paths.settings.transformations(),
               flex: true,
               roles: ["admin"],
             },
@@ -488,78 +407,10 @@ const SidebarOptions = ({ user = null, t }: any) => (
           roles={["admin", "manager"]}
           hidden={user?.role}
         />
-        <HoldToReveal key="exp_features">
-          <Option
-            btnText={t("settings.experimental-features")}
-            icon={<Flask className="h-5 w-5 flex-shrink-0" />}
-            href={paths.settings.experimental()}
-            user={user}
-            flex={true}
-            roles={["admin"]}
-          />
-        </HoldToReveal>
       </>
     )}
   </CanViewChatHistoryProvider>
 );
-
-function HoldToReveal({ children, holdForMs = 3_000 }: any) {
-  const { t } = useTranslation();
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [showing, setShowing] = useState(() =>
-    safeGetItem("opensin_experimental_feature_preview_unlocked"),
-  );
-
-  useEffect(() => {
-    const onPress: any = (e) => {
-      if (!["Control", "Meta"].includes(e.key) || timeoutRef.current !== null)
-        return;
-      timeoutRef.current = setTimeout(() => {
-        setShowing("enabled");
-        showToast(t("settingsSidebar.experimentalFeaturesUnlocked"));
-        safeSetItem("opensin_experimental_feature_preview_unlocked", "enabled");
-        window.removeEventListener("keydown", onPress);
-        window.removeEventListener("keyup", onRelease);
-        if (timeoutRef.current !== null) {
-          clearTimeout(timeoutRef.current);
-          timeoutRef.current = null;
-        }
-      }, holdForMs);
-    };
-    const onRelease: any = (e) => {
-      if (!["Control", "Meta"].includes(e.key)) return;
-      if (showing) {
-        window.removeEventListener("keydown", onPress);
-        window.removeEventListener("keyup", onRelease);
-        if (timeoutRef.current !== null) {
-          clearTimeout(timeoutRef.current);
-          timeoutRef.current = null;
-        }
-        return;
-      }
-      if (timeoutRef.current !== null) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-    };
-
-    if (!showing) {
-      window.addEventListener("keydown", onPress);
-      window.addEventListener("keyup", onRelease);
-    }
-    return () => {
-      window.removeEventListener("keydown", onPress);
-      window.removeEventListener("keyup", onRelease);
-      if (timeoutRef.current !== null) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-    };
-  }, [showing, t]);
-
-  if (!showing) return null;
-  return children;
-}
 
 function AppVersion() {
   const { version, isLoading } = useAppVersion();

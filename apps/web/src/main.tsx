@@ -1,13 +1,4 @@
 // SPDX-License-Identifier: MIT
-// react-speech-recognition (split into the "vendor-speech" chunk) is a
-// babel-compiled CJS library that references the global `regeneratorRuntime`
-// at module-evaluation time. Vite 8/Rolldown no longer injects that polyfill
-// automatically, so the production build crashed with
-// "regeneratorRuntime is not defined" the moment the workspace chat chunk
-// loaded — taking down the whole app with an "Unexpected Application Error!".
-// Importing the runtime as the very first entry-chunk statement guarantees the
-// global is defined before any lazy vendor chunk that depends on it evaluates.
-import "regenerator-runtime/runtime";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import {
@@ -78,21 +69,6 @@ const router = createBrowserRouter([
         path: "/sso/simple",
         element: <SimpleSSOPassthrough />,
       },
-      // Developer documentation (public)
-      {
-        path: "/docs",
-        lazy: async () => {
-          const { default: Docs } = await import("@/pages/Docs");
-          return { element: <Docs /> };
-        },
-      },
-      {
-        path: "/docs/:slug",
-        lazy: async () => {
-          const { default: Docs } = await import("@/pages/Docs");
-          return { element: <Docs /> };
-        },
-      },
       {
         path: "/workspace/:slug/settings",
         element: <WorkspaceSettingsRedirect />,
@@ -154,26 +130,6 @@ const router = createBrowserRouter([
         },
       },
       {
-        path: "/settings/transcription-preference",
-        lazy: async () => {
-          const { default: GeneralTranscriptionPreference } =
-            await import("@/pages/GeneralSettings/TranscriptionPreference");
-          return {
-            element: <AdminRoute Component={GeneralTranscriptionPreference} />,
-          };
-        },
-      },
-      {
-        path: "/settings/audio-preference",
-        lazy: async () => {
-          const { default: GeneralAudioPreference } =
-            await import("@/pages/GeneralSettings/AudioPreference");
-          return {
-            element: <AdminRoute Component={GeneralAudioPreference} />,
-          };
-        },
-      },
-      {
         path: "/settings/embedding-preference",
         lazy: async () => {
           const { default: GeneralEmbeddingPreference } =
@@ -204,45 +160,10 @@ const router = createBrowserRouter([
         },
       },
       {
-        path: "/settings/agents",
-        lazy: async () => {
-          const { default: AdminAgents } = await import("@/pages/Admin/Agents");
-          return { element: <AdminRoute Component={AdminAgents} /> };
-        },
-      },
-      {
-        path: "/settings/agents/builder",
-        lazy: async () => {
-          const { default: AgentBuilder } =
-            await import("@/pages/Admin/AgentBuilder");
-          return {
-            element: <AdminRoute Component={AgentBuilder} />,
-          };
-        },
-      },
-      {
-        path: "/settings/agents/builder/:flowId",
-        lazy: async () => {
-          const { default: AgentBuilder } =
-            await import("@/pages/Admin/AgentBuilder");
-          return {
-            element: <AdminRoute Component={AgentBuilder} />,
-          };
-        },
-      },
-      {
         path: "/settings/event-logs",
         lazy: async () => {
           const { default: AdminLogs } = await import("@/pages/Admin/Logging");
           return { element: <AdminRoute Component={AdminLogs} /> };
-        },
-      },
-      {
-        path: "/settings/embed-chat-widgets",
-        lazy: async () => {
-          const { default: ChatEmbedWidgets } =
-            await import("@/pages/GeneralSettings/ChatEmbedWidgets");
-          return { element: <AdminRoute Component={ChatEmbedWidgets} /> };
         },
       },
       // Manager routes
@@ -295,58 +216,6 @@ const router = createBrowserRouter([
         },
       },
       {
-        path: "/settings/beta-features",
-        lazy: async () => {
-          const { default: ExperimentalFeatures } =
-            await import("@/pages/Admin/ExperimentalFeatures");
-          return { element: <AdminRoute Component={ExperimentalFeatures} /> };
-        },
-      },
-      {
-        path: "/settings/api-keys",
-        lazy: async () => {
-          const { default: GeneralApiKeys } =
-            await import("@/pages/GeneralSettings/ApiKeys");
-          return { element: <AdminRoute Component={GeneralApiKeys} /> };
-        },
-      },
-      {
-        path: "/settings/model-routers",
-        lazy: async () => {
-          const { default: ModelRouters } =
-            await import("@/pages/GeneralSettings/ModelRouters");
-          return { element: <AdminRoute Component={ModelRouters} /> };
-        },
-      },
-      {
-        path: "/settings/model-routers/:id",
-        lazy: async () => {
-          const { default: RouterRulesPage } =
-            await import("@/pages/GeneralSettings/ModelRouters/RouterRulesPage");
-          return { element: <AdminRoute Component={RouterRulesPage} /> };
-        },
-      },
-      {
-        path: "/settings/system-prompt-variables",
-        lazy: async () => {
-          const { default: SystemPromptVariables } =
-            await import("@/pages/Admin/SystemPromptVariables");
-          return {
-            element: <AdminRoute Component={SystemPromptVariables} />,
-          };
-        },
-      },
-      {
-        path: "/settings/transformations",
-        lazy: async () => {
-          const { default: AdminTransformations } =
-            await import("@/pages/Admin/Transformations");
-          return {
-            element: <AdminRoute Component={AdminTransformations} />,
-          };
-        },
-      },
-      {
         path: "/settings/politician-sync",
         lazy: async () => {
           const { default: PoliticianSync } =
@@ -395,76 +264,6 @@ const router = createBrowserRouter([
       {
         path: "/onboarding/:step",
         element: <OnboardingFlow />,
-      },
-      // Experimental feature pages
-      {
-        path: "/settings/beta-features/live-document-sync/manage",
-        lazy: async () => {
-          const { default: LiveDocumentSyncManage } =
-            await import("@/pages/Admin/ExperimentalFeatures/Features/LiveSync/manage");
-          return {
-            element: <AdminRoute Component={LiveDocumentSyncManage} />,
-          };
-        },
-      },
-      {
-        path: "/settings/external-connections/telegram",
-        lazy: async () => {
-          const { default: TelegramBotSettings } =
-            await import("@/pages/GeneralSettings/Connections/TelegramBot");
-          return { element: <AdminRoute Component={TelegramBotSettings} /> };
-        },
-      },
-      {
-        path: "/settings/scheduled-jobs",
-        lazy: async () => {
-          const { default: ScheduledJobs } =
-            await import("@/pages/GeneralSettings/ScheduledJobs");
-          return { element: <AdminRoute Component={ScheduledJobs} /> };
-        },
-      },
-      {
-        path: "/settings/scheduled-jobs/:id/runs",
-        lazy: async () => {
-          const { default: ScheduledJobRuns } =
-            await import("@/pages/GeneralSettings/ScheduledJobs/RunHistoryPage");
-          return { element: <AdminRoute Component={ScheduledJobRuns} /> };
-        },
-      },
-      {
-        path: "/settings/scheduled-jobs/:id/runs/:runId",
-        lazy: async () => {
-          const { default: ScheduledJobRunDetail } =
-            await import("@/pages/GeneralSettings/ScheduledJobs/RunDetailPage");
-          return {
-            element: <AdminRoute Component={ScheduledJobRunDetail} />,
-          };
-        },
-      },
-      {
-        path: "/mail",
-        lazy: async () => {
-          const { default: EmailCenterPage } =
-            await import("@/pages/EmailCenter");
-          return { element: <ManagerRoute Component={EmailCenterPage} /> };
-        },
-      },
-      {
-        path: "/pdf-analysis",
-        lazy: async () => {
-          const { default: PdfAnalysisPage } =
-            await import("@/pages/PdfAnalysis");
-          return { element: <AdminRoute Component={PdfAnalysisPage} /> };
-        },
-      },
-      // Embed widget preview (public, no auth required)
-      {
-        path: "/embed/:uuid",
-        lazy: async () => {
-          const { default: EmbedPreview } =
-            await import("@/pages/EmbedPreview");
-          return { element: <EmbedPreview /> };
-        },
       },
       // Catch-all route for 404s
       {

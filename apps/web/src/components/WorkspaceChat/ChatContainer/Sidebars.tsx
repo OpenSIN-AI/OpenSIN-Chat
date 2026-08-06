@@ -10,21 +10,12 @@ import MobileSidebarMenu from "./MobileSidebarMenu";
 import { useChatSidebar } from "./ChatSidebar";
 import { useTranslation } from "react-i18next";
 
-// Lazy panels: only the open sidebar is downloaded. Notepad (TipTap), PDF,
-// Database, etc. must not land in the initial WorkspaceChat graph.
+// Lazy panels: only the open core sidebar is downloaded.
 const SourcesSidebar = lazy(() => import("./SourcesSidebar"));
 const PreviewSidebar = lazy(() => import("./PreviewSidebar"));
-const ConsoleSidebar = lazy(() => import("./ConsoleSidebar"));
 const DatabaseSidebar = lazy(() => import("./DatabaseSidebar"));
 const PoliticalSidebar = lazy(() => import("./PoliticalSidebar"));
-const PdfAnalysisSidebar = lazy(() => import("./PdfAnalysisSidebar"));
 const NotepadSidebar = lazy(() => import("./NotepadSidebar"));
-const AgentSessionsSidebar = lazy(() => import("./AgentSessionsSidebar"));
-const AgentSettingsSidebar = lazy(() => import("./AgentSettingsSidebar"));
-const WorkspaceSettingsSidebar = lazy(
-  () => import("./WorkspaceSettingsSidebar"),
-);
-const ResultsSidebar = lazy(() => import("./ResultsSidebar"));
 
 function PanelFallback() {
   return (
@@ -51,32 +42,14 @@ function ActiveSidebarPanel({
     case "preview":
       panel = <PreviewSidebar />;
       break;
-    case "console":
-      panel = <ConsoleSidebar />;
-      break;
     case "database":
       panel = <DatabaseSidebar workspace={workspace} />;
       break;
     case "political":
       panel = <PoliticalSidebar />;
       break;
-    case "pdf-analysis":
-      panel = <PdfAnalysisSidebar />;
-      break;
     case "notepad":
       panel = <NotepadSidebar workspace={workspace} />;
-      break;
-    case "agent-sessions":
-      panel = <AgentSessionsSidebar workspace={workspace} />;
-      break;
-    case "agent-settings":
-      panel = <AgentSettingsSidebar workspace={workspace} />;
-      break;
-    case "workspace-settings":
-      panel = <WorkspaceSettingsSidebar workspace={workspace} />;
-      break;
-    case "results":
-      panel = <ResultsSidebar workspace={workspace} />;
       break;
     default:
       panel = null;

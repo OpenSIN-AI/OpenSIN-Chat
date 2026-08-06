@@ -15,26 +15,15 @@ import { Eye } from "@phosphor-icons/react/dist/csr/Eye";
 import { Database } from "@phosphor-icons/react/dist/csr/Database";
 import { Newspaper } from "@phosphor-icons/react/dist/csr/Newspaper";
 import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
-import { FilePdf } from "@phosphor-icons/react/dist/csr/FilePdf";
 import { Notepad } from "@phosphor-icons/react/dist/csr/Notepad";
-import { Broadcast } from "@phosphor-icons/react/dist/csr/Broadcast";
 import { useTranslation } from "react-i18next";
 import { useChatSidebar } from "./ChatSidebar";
-import { useAgentRuns } from "./AgentSessionsSidebar/AgentRunsContext";
 
-type ToolId =
-  | "preview"
-  | "database"
-  | "political"
-  | "sources"
-  | "pdf-analysis"
-  | "notepad"
-  | "agent-sessions";
+type ToolId = "preview" | "database" | "political" | "sources" | "notepad";
 
 export default function MobileSidebarMenu() {
   const { t } = useTranslation();
   const { activeSidebar, toggleSidebar, closeSidebar } = useChatSidebar();
-  const { activeRunCount } = useAgentRuns();
   const [open, setOpen] = useState(false);
   const sheetRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
@@ -43,7 +32,6 @@ export default function MobileSidebarMenu() {
     id: ToolId;
     Icon: typeof Eye;
     label: string;
-    badge?: number;
   }[] = [
     {
       id: "preview",
@@ -66,20 +54,9 @@ export default function MobileSidebarMenu() {
       label: t("right_sidebar.icon_sources", "Quellen"),
     },
     {
-      id: "pdf-analysis",
-      Icon: FilePdf,
-      label: t("right_sidebar.icon_pdf_analysis", "PDF-Analyse"),
-    },
-    {
       id: "notepad",
       Icon: Notepad,
       label: t("right_sidebar.icon_notepad", "Notizblock"),
-    },
-    {
-      id: "agent-sessions",
-      Icon: Broadcast,
-      label: t("right_sidebar.icon_agent_sessions", "Agent-Sessions"),
-      badge: activeRunCount,
     },
   ];
 
@@ -134,7 +111,7 @@ export default function MobileSidebarMenu() {
             role="toolbar"
             aria-label={fabLabel}
           >
-            {items.map(({ id, Icon, label, badge }) => {
+            {items.map(({ id, Icon, label }) => {
               const isActive = activeSidebar === id;
               return (
                 <button
@@ -150,11 +127,6 @@ export default function MobileSidebarMenu() {
                   }`}
                 >
                   <Icon size={18} weight={isActive ? "fill" : "regular"} />
-                  {badge && badge > 0 ? (
-                    <span className="absolute right-0.5 top-0.5 flex h-3.5 min-w-[14px] items-center justify-center rounded-full bg-[#009ee0] px-0.5 text-[9px] font-bold text-white">
-                      {badge}
-                    </span>
-                  ) : null}
                 </button>
               );
             })}
@@ -193,11 +165,6 @@ export default function MobileSidebarMenu() {
         ) : (
           <SlidersHorizontal size={20} weight="regular" />
         )}
-        {activeRunCount > 0 && !open ? (
-          <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-[#009ee0] px-1 text-[10px] font-bold text-white">
-            {activeRunCount}
-          </span>
-        ) : null}
       </button>
 
       {open
@@ -244,7 +211,7 @@ export default function MobileSidebarMenu() {
                   <p className="mt-0.5 w-full text-left text-xs text-theme-text-secondary">
                     {t(
                       "common.toolsSheetHint",
-                      "Notizen, Quellen, PDF und mehr — auch unterwegs.",
+                      "Quellen, Vorschau, Notizen und politische Daten.",
                     )}
                   </p>
                 </div>
@@ -253,7 +220,7 @@ export default function MobileSidebarMenu() {
                   role="menu"
                   className="grid grid-cols-2 gap-2 p-3 sm:grid-cols-3"
                 >
-                  {items.map(({ id, Icon, label, badge }) => (
+                  {items.map(({ id, Icon, label }) => (
                     <button
                       key={id}
                       type="button"
@@ -267,11 +234,6 @@ export default function MobileSidebarMenu() {
                       <span className="min-w-0 flex-1 truncate font-medium">
                         {label}
                       </span>
-                      {badge && badge > 0 ? (
-                        <span className="rounded-full bg-[#009ee0] px-1.5 py-0.5 text-[10px] font-bold text-white">
-                          {badge}
-                        </span>
-                      ) : null}
                     </button>
                   ))}
                 </div>

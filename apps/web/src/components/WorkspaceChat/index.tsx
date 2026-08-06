@@ -17,10 +17,6 @@ import { AUTH_TOKEN } from "@/utils/constants";
 import { safeGetItem, safeGetSessionItem } from "@/utils/safeStorage";
 import { useTranslation } from "react-i18next";
 import i18n from "@/i18n";
-import {
-  TTSProvider,
-  useWatchForAutoPlayAssistantTTSResponse,
-} from "../contexts/TTSProvider";
 import { PENDING_HOME_MESSAGE } from "@/utils/constants";
 import { copyText } from "@/utils/clipboard";
 import useChatHistory from "@/hooks/useChatHistory";
@@ -31,7 +27,6 @@ export default function WorkspaceChat({
   workspace,
   threadSlug: threadSlugProp = null,
 }: any) {
-  useWatchForAutoPlayAssistantTTSResponse();
   const { t } = useTranslation();
   const { threadSlug: threadSlugParam = null } = useParams();
   const threadSlug = threadSlugProp ?? threadSlugParam;
@@ -117,28 +112,26 @@ export default function WorkspaceChat({
   }
 
   return (
-    <TTSProvider>
-      <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-        <DnDFileUploaderProvider
-          workspace={loaded.workspace}
-          threadSlug={loaded.threadSlug}
+    <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+      <DnDFileUploaderProvider
+        workspace={loaded.workspace}
+        threadSlug={loaded.threadSlug}
+      >
+        <AgentRunsProvider
+          workspaceSlug={loaded.workspace?.slug || ""}
+          authToken={
+            typeof window !== "undefined" ? safeGetItem(AUTH_TOKEN) || "" : ""
+          }
+          apiBase="/api"
         >
-          <AgentRunsProvider
-            workspaceSlug={loaded.workspace?.slug || ""}
-            authToken={
-              typeof window !== "undefined" ? safeGetItem(AUTH_TOKEN) || "" : ""
-            }
-            apiBase="/api"
-          >
-            <ChatContainer
-              workspace={loaded.workspace}
-              threadSlug={loaded.threadSlug}
-              knownHistory={loaded.history}
-            />
-          </AgentRunsProvider>
-        </DnDFileUploaderProvider>
-      </ErrorBoundary>
-    </TTSProvider>
+          <ChatContainer
+            workspace={loaded.workspace}
+            threadSlug={loaded.threadSlug}
+            knownHistory={loaded.history}
+          />
+        </AgentRunsProvider>
+      </DnDFileUploaderProvider>
+    </ErrorBoundary>
   );
 }
 

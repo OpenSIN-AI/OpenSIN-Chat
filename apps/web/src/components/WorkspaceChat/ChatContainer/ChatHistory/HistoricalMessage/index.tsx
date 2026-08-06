@@ -10,7 +10,6 @@ import { v4 } from "uuid";
 import DOMPurify from "@/utils/chat/purify";
 import { EditMessageForm, useEditMessage } from "./Actions/EditMessage";
 import { useWatchDeleteMessage } from "./Actions/DeleteMessage";
-import TTSMessage from "./Actions/TTSButton";
 import {
   THOUGHT_REGEX_CLOSE,
   THOUGHT_REGEX_COMPLETE,
@@ -161,22 +160,6 @@ const HistoricalMessage = ({
   // Assistant message
   const cleanedMessage = stripThoughtContent(message);
 
-  function strippedTtsMessage() {
-    if (!message) return message;
-    let ttsMessage = message;
-    ttsMessage = ttsMessage.replace(THOUGHT_REGEX_COMPLETE, "");
-    if (
-      ttsMessage.match(THOUGHT_REGEX_OPEN) &&
-      !ttsMessage.match(THOUGHT_REGEX_CLOSE)
-    ) {
-      ttsMessage = ttsMessage.replace(THOUGHT_REGEX_OPEN, "");
-    }
-    ttsMessage = ttsMessage
-      .replace(/<\/?(response|answer)\s*(?:[^>]*?)?>/gi, " ")
-      .trim();
-    return ttsMessage;
-  }
-
   return (
     <div
       key={uuid}
@@ -211,15 +194,6 @@ const HistoricalMessage = ({
             <AssistantMessageActions
               message={cleanedMessage || ""}
               onRegenerate={isLastMessage ? regenerateMessage : undefined}
-              readAloudButton={
-                chatId ? (
-                  <TTSMessage
-                    slug={workspace?.slug}
-                    chatId={chatId}
-                    message={strippedTtsMessage()}
-                  />
-                ) : undefined
-              }
             />
           }
         >

@@ -3,7 +3,6 @@
 // Docs: index.doc.md
 import { useTranslation } from "react-i18next";
 import StopGenerationButton from "./StopGenerationButton";
-import SpeechToText from "./SpeechToText";
 import AttachmentManager from "./Attachments";
 import { useEffect } from "react";
 import AttachItem from "./AttachItem";
@@ -221,7 +220,6 @@ export default function PromptInput({
                   </div>
                   <div className="flex shrink-0 items-center gap-1 sm:gap-2">
                     <TextSizeButton />
-                    <SpeechToText sendCommand={sendCommand} />
                     <EnhancePromptButton
                       promptInput={promptInput}
                       setPromptInput={setPromptInput}

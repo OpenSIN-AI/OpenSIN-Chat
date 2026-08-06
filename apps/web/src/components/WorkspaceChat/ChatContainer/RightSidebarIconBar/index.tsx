@@ -5,27 +5,16 @@ import { SlidersHorizontal } from "@phosphor-icons/react/dist/csr/SlidersHorizon
 import { Eye } from "@phosphor-icons/react/dist/csr/Eye";
 import { Database } from "@phosphor-icons/react/dist/csr/Database";
 import { Newspaper } from "@phosphor-icons/react/dist/csr/Newspaper";
-import { FilePdf } from "@phosphor-icons/react/dist/csr/FilePdf";
-import { Broadcast } from "@phosphor-icons/react/dist/csr/Broadcast";
 import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
 import { Notepad } from "@phosphor-icons/react/dist/csr/Notepad";
 import { useTranslation } from "react-i18next";
 import { useChatSidebar } from "../ChatSidebar";
-import { useAgentRuns } from "../AgentSessionsSidebar/AgentRunsContext";
 
-type ToolId =
-  | "sources"
-  | "preview"
-  | "notepad"
-  | "pdf-analysis"
-  | "database"
-  | "political"
-  | "agent-sessions";
+type ToolId = "sources" | "preview" | "notepad" | "database" | "political";
 
 export default function RightSidebarIconBar() {
   const { t } = useTranslation();
   const { activeSidebar, toggleSidebar } = useChatSidebar();
-  const { activeRunCount } = useAgentRuns();
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -33,7 +22,6 @@ export default function RightSidebarIconBar() {
     id: ToolId;
     Icon: typeof Eye;
     label: string;
-    badge?: number;
   }[] = [
     {
       id: "sources",
@@ -51,11 +39,6 @@ export default function RightSidebarIconBar() {
       label: t("right_sidebar.icon_notepad", "Notizblock"),
     },
     {
-      id: "pdf-analysis",
-      Icon: FilePdf,
-      label: t("right_sidebar.icon_pdf_analysis", "PDF-Analyse"),
-    },
-    {
       id: "database",
       Icon: Database,
       label: t("right_sidebar.icon_database", "Politiker-Datenbank"),
@@ -64,12 +47,6 @@ export default function RightSidebarIconBar() {
       id: "political",
       Icon: Newspaper,
       label: t("right_sidebar.icon_political", "Politisches"),
-    },
-    {
-      id: "agent-sessions",
-      Icon: Broadcast,
-      label: t("right_sidebar.icon_agent_sessions", "Agent-Sitzungen"),
-      badge: activeRunCount,
     },
   ];
 
@@ -110,11 +87,6 @@ export default function RightSidebarIconBar() {
       >
         <SlidersHorizontal size={16} weight={open ? "fill" : "regular"} />
         <span>{menuLabel}</span>
-        {activeRunCount > 0 ? (
-          <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-[#009ee0] px-1 text-[10px] font-bold text-white">
-            {activeRunCount}
-          </span>
-        ) : null}
       </button>
 
       {open ? (
@@ -123,7 +95,7 @@ export default function RightSidebarIconBar() {
           aria-label={menuLabel}
           className="absolute right-0 top-full mt-2 w-64 overflow-hidden rounded-xl border border-theme-border bg-theme-bg-sidebar p-1.5 shadow-2xl"
         >
-          {tools.map(({ id, Icon, label, badge }) => {
+          {tools.map(({ id, Icon, label }) => {
             const active = activeSidebar === id;
             return (
               <button
@@ -143,11 +115,6 @@ export default function RightSidebarIconBar() {
               >
                 <Icon size={17} weight={active ? "fill" : "regular"} />
                 <span className="min-w-0 flex-1 truncate">{label}</span>
-                {badge && badge > 0 ? (
-                  <span className="rounded-full bg-[#009ee0] px-1.5 py-0.5 text-[10px] font-bold text-white">
-                    {badge}
-                  </span>
-                ) : null}
               </button>
             );
           })}

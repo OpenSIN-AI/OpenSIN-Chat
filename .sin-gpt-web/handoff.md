@@ -140,8 +140,31 @@
 - **Titel**: `Mac-i9 Abschlussarbeit`
 - **ChatGPT-Konversations-URL**: `https://chatgpt.com/c/6a73c53c-1028-83ed-a55a-e21d9385a88d`
 - **Aufgabe**: Offene Fehler beheben, OpenAfD synchronisieren, Tests und Builds ausführen, beide `main`-Branches pushen, OCI-Livebetrieb verifizieren und die vollständige Browsermatrix abnehmen.
-- **Repositories**: OpenSIN `/Users/jeremy/dev/OpenSIN-Chat`; OpenAfD `/Users/jeremy/dev/OpenAfD-Chat`; Tooling `/Users/jeremy/dev/wow-my-zsh`.
-- **Letzter Status**: OpenSIN `origin/main` steht auf `e9498939221015a8e7c11d35d07ec3743ebf1e3e`, Arbeitsbaum sauber. Lokale Release-Gates sowie fokussierte Websuche `23/23` und Citation-Tests `59/59` bestanden. OpenAfD wurde auf den identischen Citation-Fix synchronisiert und gepusht; Details stehen im Schwester-Handoff.
+- **Repositories**: OpenSIN `$REPO`; OpenAfD `$SISTER_REPO`; Tooling `$TOOLING_REPO`.
+- **Letzter belegter Produktstand**: Unabhängige Git-Prüfung bestätigt OpenSIN `HEAD/origin/main` auf `e9498939221015a8e7c11d35d07ec3743ebf1e3e` und einen sauberen Arbeitsbaum. Lokale Release-Gates sowie fokussierte Websuche `23/23` und Citation-Tests `59/59` bestanden. OpenAfD wurde auf den identischen Citation-Fix synchronisiert und gepusht; Details stehen im Schwester-Handoff.
 - **Liveblocker**: OCI-SSH über `sin-supabase` verlangt eine interaktive Tailscale-Zusatzprüfung; kein Remote-Befehl und kein Deployment ausgeführt. `https://sinchat.delqhi.com/api/ping` liefert unabhängig HTTP `502`; `https://openafd.delqhi.com/api/ping` liefert `online:true`, aber `version: dev` und `commit: unknown`.
 - **Browserblocker**: SIN-Chrome `doctor/status/snapshot` grün, Send-Action timeoutet reproduzierbar wie in wow-my-zsh Issue #29. Orca `OpenSIN`-Profil authentifiziert, aber Run-20-Supervision verlor die Runtime (`runtime_unavailable`). Vollständige frische Browserabnahme ist daher nicht behauptet.
-- **Taskstatus**: T-0019 erledigt und gepusht; T-0022, T-0015, T-0016 und T-0021 mit Evidence blockiert. Keine OCI-, Live- oder Browser-Completion behauptet.
+- **Taskstatus**: T-0019 ist lokal implementiert, getestet und gepusht, bleibt aber bis zur frischen Live-Abnahme blockiert. T-0022, T-0015, T-0016 und T-0021 sind mit den jeweiligen echten Blockern dokumentiert. Keine OCI-, Live- oder Browser-Completion behauptet.
+
+## Run-21 / ChatGPT-Web-Delegation (2026-08-06)
+
+- **Titel**: `Mac-i9 Verbindung nicht erreichbar` (neuer Projektchat nach fehlgeschlagenem branch-first Recovery)
+- **ChatGPT-Konversations-URL**: `https://chatgpt.com/c/6a748a73-1114-83eb-8509-8833627bf77b` (Projektpfad: `https://chatgpt.com/g/g-p-6a61454e40e081919af9f0eb09c97ca2-opensin-chat-und-openafd-chat/c/6a748a73-1114-83eb-8509-8833627bf77b`)
+- **Quellchat**: `https://chatgpt.com/c/6a73c53c-1028-83ed-a55a-e21d9385a88d`, `Mac-i9 Abschlussarbeit`; branch-first und Recovery konnten wegen fehlendem `Ab hier neuen Chat starten` nicht ausgeführt werden. Quelle bleibt erhalten; Archivierung nicht behauptet.
+- **Aufgabe**: Alle offenen OpenSIN-/OpenAfD-Aufgaben abarbeiten: Fehler beheben, Tests, GitHub-main-Push, immutable OCI-Deployment, Live-Health und vollständige Browsermatrix mit Websuche, Upload, Quellen-Dateien, Deep Research, Modellwahl, Navigation, Notebooks, Suche, Persistenz und Reconnect.
+- **Repositories**: `/Users/jeremy/dev/OpenSIN-Chat`, `/Users/jeremy/dev/OpenAfD-Chat`; Tooling `/Users/jeremy/dev/wow-my-zsh`.
+- **Letzter Status**: Brief mit Push-/Deployment-Autorisierung und Taskplan-Pflichten gesendet. ChatGPT meldete `mcp_network_error: Connection timed out` für Mac-i9 und `command_line`; keine Repo-Datei gelesen/geändert, kein Test, Commit, Push, Deployment, Taskplan-Callback oder Browserabnahme ausgeführt. `sin-gpt-web-recover` scheiterte erneut am fehlenden Branch-Control.
+- **Taskplan**: OpenSIN `T-0024` Run-21-Delegationsblocker hinzugefügt und blockiert; OpenSIN weiterhin `T-0023` in Arbeit sowie die früheren Release-/Live-/Browser-Gates offen oder blockiert. Keine Completion behauptet.
+- **SIN-Chrome/Orca**: `sin-chrome doctor` grün; Status/Snapshot liefern Daten, aber Navigation, Optionsmenü und Interaktion timeouten. Fresh Befund in wow-my-zsh Issue #29 kommentiert: https://github.com/OpenSIN-Code/wow-my-zsh/issues/29#issuecomment-5205131356. Authentifiziertes Orca-Profil `OpenSIN` ist verfügbar.
+- **Unabhängige Live-Prüfung**: `https://sinchat.delqhi.com/api/ping` HTTP 502; `https://openafd.delqhi.com/api/ping` HTTP 200. OCI-SSH/Tailscale und vollständige Browserabnahme bleiben ungeprüft.
+- **Git-Arbeitsstand**: OpenSIN `main` enthält lokale Änderungen in den Web-Navigations-/Produktkern-Dateien sowie `.sin-gpt-web`-Artefakte; nichts wurde verworfen oder als fertig gepusht. OpenAfD enthält lokale `.sin-gpt-web`-Änderungen.
+
+## Run-22 / CEO Merge- und Release-Delegation (2026-08-06)
+
+- **Titel**: `CEO Delegation Execution`
+- **ChatGPT-Konversations-URL**: `https://chatgpt.com/c/6a749e53-f918-83eb-8f6c-5bca12ead662`
+- **Quelle/Branch**: Run-21 `https://chatgpt.com/c/6a748a73-1114-83eb-8509-8833627bf77b`; automatischer Branch und manuelle Branch-Option waren nicht verfügbar. Als dokumentierter Ersatz wurde ein neuer normaler Chat mit verifiziertem `Chat`-Radio und Account-Menü erstellt; Quellchat bleibt erhalten und Archivierung wird erst nach verifizierbarer UI-Bestätigung behauptet.
+- **Aufgabe**: T-0025 und OpenAfD T-0044: alle relevanten Branches, Worktrees und PRs prüfen, getestete beabsichtigte Änderungen nach `main` integrieren, pushen, OCI deployen und beide Live-Domains vollständig authentifiziert im Browser abnehmen.
+- **Letzter Status**: ChatGPT Web las beide Taskpläne und startete nach einem Retry die Git-/Worktree-Inventur. Der Lauf wurde beim OpenAfD-PR-Listing nach mehr als vier Minuten ohne Mac-i9-Ausgabe gestoppt; es gab keine Merge-, Push-, Deployment- oder Completion-Behauptung.
+- **Unabhängige Run-22-Prüfung**: OpenSIN `main`/`origin/main` = `3edad4e2e`; vorhandene Auto-Worktrees zeigen nur diesen Stand oder den bereits enthaltenen Ancestor `b94d8bd96`; OpenAfD `main`/`origin/main` = `d0d39e58d`; offene PRs: `[]` in beiden Repositories. Beide `yarn type-check`-Läufe bestanden. Frische öffentliche Pings: OpenSIN HTTP 502, OpenAfD HTTP 200 mit `version: dev`, `commit: unknown`. Uncommitted Änderungen wurden nicht angefasst.
+- **Archivierung**: Der explizite Archivierungsversuch für Run 21 schlug mit `ChatGPT did not load the requested conversation URL` fehl; Run 21 bleibt erhalten und ist nicht als archiviert markiert.
