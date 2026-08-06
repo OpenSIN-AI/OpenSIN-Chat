@@ -48,9 +48,9 @@ jest.mock("../../utils/middleware/simpleRateLimit", () => ({
   simpleRateLimit: () => (_req, _res, next) => next(),
 }));
 
-const AgentHandlerMock = { init: jest.fn() };
+const mockAgentHandler = { init: jest.fn() };
 jest.mock("../../utils/agents", () => ({
-  AgentHandler: jest.fn().mockImplementation(() => AgentHandlerMock),
+  AgentHandler: jest.fn().mockImplementation(() => mockAgentHandler),
 }));
 
 const express = require("express");
@@ -140,7 +140,7 @@ describe("agentSSE — error paths", () => {
   });
 
   it("maps a missing-provider AgentHandler failure to a friendly setup message", async () => {
-    AgentHandlerMock.init.mockRejectedValue(
+    mockAgentHandler.init.mockRejectedValue(
       new Error("No valid provider configured for this workspace"),
     );
 
@@ -154,7 +154,7 @@ describe("agentSSE — error paths", () => {
   });
 
   it("maps an API-key AgentHandler failure to the same friendly setup message", async () => {
-    AgentHandlerMock.init.mockRejectedValue(new Error("Invalid API key"));
+    mockAgentHandler.init.mockRejectedValue(new Error("Invalid API key"));
 
     const res = await fetch(`${baseUrl}/sse/agent/test-uuid-2`);
     const payload = await readUntil(res, (p) => p.type === "wssFailure");
@@ -163,7 +163,7 @@ describe("agentSSE — error paths", () => {
   });
 
   it("maps an unrecognized AgentHandler failure to a generic Internal error (no leak)", async () => {
-    AgentHandlerMock.init.mockRejectedValue(
+    mockAgentHandler.init.mockRejectedValue(
       new Error("ENOENT: something/very/internal/path.db"),
     );
 
@@ -175,7 +175,7 @@ describe("agentSSE — error paths", () => {
   });
 
   it("gives every error payload a stable correlation id distinct per request", async () => {
-    AgentHandlerMock.init.mockRejectedValue(new Error("boom"));
+    mockAgentHandler.init.mockRejectedValue(new Error("boom"));
 
     const [res1, res2] = await Promise.all([
       fetch(`${baseUrl}/sse/agent/uuid-a`),
@@ -190,7 +190,7 @@ describe("agentSSE — error paths", () => {
   });
 
   it("does NOT emit a wssFailure when reconnecting to an already-closed invocation (completed session is not an error)", async () => {
-    AgentHandlerMock.init.mockRejectedValue(
+    mockAgentHandler.init.mockRejectedValue(
       new Error("Invocation is already closed"),
     );
 
@@ -214,7 +214,7 @@ describe("agentSSE — error paths", () => {
     // Keep AgentHandler.init() pending so the connection stays open long
     // enough for us to abort it from the client side.
     let releaseInit;
-    AgentHandlerMock.init.mockReturnValue(
+    mockAgentHandler.init.mockReturnValue(
       new Promise((resolve) => {
         releaseInit = resolve;
       }),
@@ -260,7 +260,7 @@ describe("agentSSE — error paths", () => {
   it("rejects an oversized POST message with 413", async () => {
     // AgentHandler never resolves invocation here; we only need the socket
     // registered in activeSSESockets, which happens before init() settles.
-    AgentHandlerMock.init.mockReturnValue(new Promise(() => {}));
+    mockAgentHandler.init.mockReturnValue(new Promise(() => {}));
 
     const controller = new AbortController();
     fetch(`${baseUrl}/sse/agent/big-msg-uuid`, {

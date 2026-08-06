@@ -48,9 +48,9 @@ jest.mock("../../utils/middleware/validatedRequest", () => ({
   getAuthTokenHash: jest.fn(() => "hash"),
 }));
 
-const AgentHandlerMock = { init: jest.fn() };
+const mockAgentHandler = { init: jest.fn() };
 jest.mock("../../utils/agents", () => ({
-  AgentHandler: jest.fn().mockImplementation(() => AgentHandlerMock),
+  AgentHandler: jest.fn().mockImplementation(() => mockAgentHandler),
 }));
 
 const express = require("express");
@@ -173,7 +173,7 @@ describe("agentWebsocket — error paths", () => {
   });
 
   it("maps a missing-provider AgentHandler failure to a friendly setup message", async () => {
-    AgentHandlerMock.init.mockRejectedValue(
+    mockAgentHandler.init.mockRejectedValue(
       new Error("No valid provider configured for this workspace"),
     );
     const ws = new WebSocket(`${baseUrl}/agent-invocation/uuid-1`);
@@ -186,7 +186,7 @@ describe("agentWebsocket — error paths", () => {
   });
 
   it("maps an unrecognized AgentHandler failure to a generic Internal error (no leak)", async () => {
-    AgentHandlerMock.init.mockRejectedValue(
+    mockAgentHandler.init.mockRejectedValue(
       new Error("ENOENT: /very/internal/secret/path.db"),
     );
     const ws = new WebSocket(`${baseUrl}/agent-invocation/uuid-2`);
@@ -198,7 +198,7 @@ describe("agentWebsocket — error paths", () => {
   });
 
   it("closes an 'already closed' invocation cleanly (code 1000) without emitting a wssFailure error", async () => {
-    AgentHandlerMock.init.mockRejectedValue(
+    mockAgentHandler.init.mockRejectedValue(
       new Error("Invocation is already closed"),
     );
     const ws = new WebSocket(`${baseUrl}/agent-invocation/uuid-3`);
@@ -219,7 +219,7 @@ describe("agentWebsocket — error paths", () => {
   });
 
   it("gives every error payload a stable correlation id distinct per connection", async () => {
-    AgentHandlerMock.init.mockRejectedValue(new Error("boom"));
+    mockAgentHandler.init.mockRejectedValue(new Error("boom"));
     const ws1 = new WebSocket(`${baseUrl}/agent-invocation/uuid-a`);
     const ws2 = new WebSocket(`${baseUrl}/agent-invocation/uuid-b`);
     const [p1, p2] = await Promise.all([nextMessage(ws1), nextMessage(ws2)]);
@@ -234,7 +234,7 @@ describe("agentWebsocket — error paths", () => {
     // resolves (see agentWebsocket.js), so init() must resolve quickly and
     // a later lifecycle step must hang — otherwise no slot is ever counted
     // as occupied.
-    AgentHandlerMock.init.mockResolvedValue({
+    mockAgentHandler.init.mockResolvedValue({
       invocation: { id: "inv-fill" },
       closeAlert: jest.fn(),
       createAIbitat: jest.fn(() => new Promise(() => {})), // never resolves
@@ -279,7 +279,7 @@ describe("agentWebsocket — error paths", () => {
   }, 15000);
 
   it("closes the invocation via WorkspaceAgentInvocation.close when the client disconnects", async () => {
-    AgentHandlerMock.init.mockResolvedValue({
+    mockAgentHandler.init.mockResolvedValue({
       invocation: { id: "inv-1" },
       closeAlert: jest.fn(),
       createAIbitat: jest.fn(() => new Promise(() => {})), // never resolves

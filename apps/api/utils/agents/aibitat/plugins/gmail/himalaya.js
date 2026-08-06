@@ -7,10 +7,13 @@ const consoleLogger = require("../../../../logger/console.js");
 const { SystemSettings } = require("../../../../../models/systemSettings");
 const { safeJsonParse } = require("../../../../http");
 
-const runtimePath = path.resolve(
-  String(
-    process.env.SIN_GMAIL_RUNTIME_PATH ||
-      path.join(
+const configuredRuntimePath = String(
+  process.env.SIN_GMAIL_RUNTIME_PATH || "",
+).trim();
+const runtimePath = configuredRuntimePath
+  ? path.resolve(configuredRuntimePath.replace(/^~(?=$|\/)/, os.homedir()))
+  : process.platform === "darwin"
+    ? path.join(
         os.homedir(),
         "dev",
         "wow-my-zsh",
@@ -19,13 +22,15 @@ const runtimePath = path.resolve(
         "sin-gmail",
         "runtime",
         "himalaya-adapter.js",
-      ),
-  ).replace(/^~(?=$|\/)/, os.homedir()),
-);
+      )
+    : null;
 
 function unavailableRuntime(error) {
+  const remediation = runtimePath
+    ? `Set SIN_GMAIL_RUNTIME_PATH or restore ${runtimePath}. `
+    : "Set SIN_GMAIL_RUNTIME_PATH to a mounted shared runtime. ";
   const message =
-    `SIN-Gmail runtime is unavailable. Set SIN_GMAIL_RUNTIME_PATH or restore ${runtimePath}. ` +
+    `SIN-Gmail runtime is unavailable. ${remediation}` +
     String(error?.message || error || "");
   const failure = async () => ({ success: false, error: message });
 
@@ -96,15 +101,21 @@ function unavailableRuntime(error) {
 }
 
 let runtime;
-try {
-  runtime = require(runtimePath);
-  runtime.configure({ consoleLogger, SystemSettings, safeJsonParse });
-} catch (error) {
-  consoleLogger.error(
-    `[sin-gmail] Shared runtime could not be loaded from ${runtimePath}:`,
-    error.message,
+if (!runtimePath) {
+  runtime = unavailableRuntime(
+    new Error("No shared SIN-Gmail runtime is configured for this platform."),
   );
-  runtime = unavailableRuntime(error);
+} else {
+  try {
+    runtime = require(runtimePath);
+    runtime.configure({ consoleLogger, SystemSettings, safeJsonParse });
+  } catch (error) {
+    consoleLogger.error(
+      `[sin-gmail] Shared runtime could not be loaded from ${runtimePath}:`,
+      error.message,
+    );
+    runtime = unavailableRuntime(error);
+  }
 }
 
 module.exports = runtime;

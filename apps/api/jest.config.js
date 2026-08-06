@@ -6,6 +6,8 @@ module.exports = {
   testMatch: ["**/__tests__/**/*.test.js"],
   moduleDirectories: ["node_modules", "<rootDir>/node_modules"],
   moduleFileExtensions: ["js", "json", "node"],
+  modulePathIgnorePatterns: ["<rootDir>/../../.local/"],
+  watchPathIgnorePatterns: ["<rootDir>/../../.local/"],
   transform: {},
   collectCoverageFrom: [
     "utils/**/*.js",
