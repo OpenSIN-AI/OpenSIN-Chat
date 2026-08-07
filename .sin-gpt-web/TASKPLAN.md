@@ -359,14 +359,14 @@ Blocked: Run 21 ChatGPT Web: mcp_network_error Connection timed out on Mac-i9 an
 - Kind: `ops`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-08-07T07:57:00+00:00
+- Updated: 2026-08-07T08:19:27+00:00
 
 Nach dem blockierten Run 21 den Chat branch-first fortsetzen. Alle relevanten OpenSIN/OpenAfD Branches, Worktrees und offenen PRs inventarisieren, sicher testen, nur beabsichtigte Änderungen nach main integrieren, pushen, OCI deployen und die vollständige Browsermatrix abnehmen. Stale oder unabhängige Branches nicht blind mergen; jede Entscheidung mit Evidence dokumentieren.
 
 Acceptance:
 - Neue ChatGPT-Konversation ist verifiziert; beide Taskpläne wurden gelesen; relevante Branches/Worktrees/PRs sind geprüft; getestete Änderungen sind nach main integriert und gepusht; OCI und Browsermatrix sind frisch verifiziert oder mit exakten externen Blockern dokumentiert.
 
-Evidence: Run 22 completed: OpenSIN code SHA 2d4104e61 has CEO Audit 31157427217, CodeQL 31157427227, Security 31157427237, Quality 31157427239 and Test Matrix 31157427245 all green and is live; OpenAfD code SHA 05f3bbbd3 is live, local audits/tests green and has zero open Dependabot alerts, with GitHub Actions solely blocked by external account billing.
+Evidence: Run 22 complete. OpenSIN code SHA 2d4104e618308f045aa9c44eb2f54c88764de7e5 is live and all five workflows are green: CEO Audit 31157427217, CodeQL 31157427227, Security 31157427237, Quality 31157427239, Test Matrix 31157427245. OpenAfD final code SHA 789b20a7ba4fb72b8c1169edb563a742198032b3 is live; frozen install, effective dependency graph and production audit are safe with pdfjs-dist 6.2.108 and local PDF/worker tests green. OpenAfD GitHub Actions remain externally blocked by billing on runs 31160197037, 31160196373, 31160197103, 31160196396; CodeQL 31160196514 skipped. Original P5 alerts 293-295 were addressed. Dependabot #291 remains UI-open with stale updated_at although GitHub SBOM already contains only safe pdfjs-dist versions 6.2.108/5.4.296/6.2.108; it was not manually dismissed.
 
 Completion report: `.sin-gpt-web/reports/T-0025.md`
 
@@ -490,7 +490,6 @@ Blocked: Belegt blockiert: Der vollständige API-Jest-Lauf war nach mehr als 8 M
 
 ## Recent events
 
-- 2026-08-06T16:56:41+00:00 — `chatgpt-web` — `p1_commit_created` `T-0025`: OpenSIN P1 policy fix committed as dac56d3ef49ec245956e1729d24100a53ac70a23 after check:public-ops, taskplan validation, and diff checks passed.
 - 2026-08-06T16:57:05+00:00 — `chatgpt-web` — `p1_pushed` `T-0025`: OpenSIN main push succeeded: origin/main advanced from 1d9c4ffc5 to dac56d3ef49ec245956e1729d24100a53ac70a23.
 - 2026-08-06T16:58:00+00:00 — `chatgpt-web` — `openafd_billing_blocker_verified` `T-0025`: Fresh OpenAfD main GitHub Actions evidence: runs 31117898425, 31117898432, 31117898442, 31117898449 failed and 31117898444 skipped because recent account payments failed or the spending limit must be increased. External GitHub billing blocker; no repository fix attempted.
 - 2026-08-06T16:59:01+00:00 — `chatgpt-web` — `deployment_blocker_verified` `T-0025`: Fresh deployment evidence: sinchat.delqhi.com/api/ping returns HTTP 502; openafd.delqhi.com/api/ping returns HTTP 200 with version dev and commit unknown. Bounded BatchMode SSH to sin-supabase was terminated because Tailscale requires an interactive additional check. No remote command or deployment executed.
@@ -510,3 +509,4 @@ Blocked: Belegt blockiert: Der vollständige API-Jest-Lauf war nach mehr als 8 M
 - 2026-08-07T07:49:03+00:00 — `chatgpt-web` — `final_deploy_verified` `T-0025`: Final OpenSIN immutable release deployed successfully from clean OCI release worktree: image opensin-app:2d4104e618308f045aa9c44eb2f54c88764de7e5 on production port 43939. Internal and public health passed; https://sinchat.delqhi.com/api/ping returns online=true, version 2d4104e61830, commit 2d4104e618308f045aa9c44eb2f54c88764de7e5.
 - 2026-08-07T07:56:41+00:00 — `chatgpt-web` — `cross_repo_release_complete` `T-0025`: Run 22 cross-repo release closure: OpenSIN final code SHA 2d4104e618308f045aa9c44eb2f54c88764de7e5 is live and all five GitHub workflows are green. OpenAfD final code SHA 05f3bbbd322ba1f1f7cee0a416dd36dbec51d8d4 is live with local audit/tests green and zero open Dependabot alerts; its GitHub hosted workflows remain externally blocked solely by account billing.
 - 2026-08-07T07:57:00+00:00 — `chatgpt-web` — `task_completed` `T-0025`: Run 22 completed: OpenSIN code SHA 2d4104e61 has CEO Audit 31157427217, CodeQL 31157427227, Security 31157427237, Quality 31157427239 and Test Matrix 31157427245 all green and is live; OpenAfD code SHA 05f3bbbd3 is live, local audits/tests green and has zero open Dependabot alerts, with GitHub Actions solely blocked by external account billing.
+- 2026-08-07T08:19:27+00:00 — `local-agent` — `task_completed` `T-0025`: Run 22 complete. OpenSIN code SHA 2d4104e618308f045aa9c44eb2f54c88764de7e5 is live and all five workflows are green: CEO Audit 31157427217, CodeQL 31157427227, Security 31157427237, Quality 31157427239, Test Matrix 31157427245. OpenAfD final code SHA 789b20a7ba4fb72b8c1169edb563a742198032b3 is live; frozen install, effective dependency graph and production audit are safe with pdfjs-dist 6.2.108 and local PDF/worker tests green. OpenAfD GitHub Actions remain externally blocked by billing on runs 31160197037, 31160196373, 31160197103, 31160196396; CodeQL 31160196514 skipped. Original P5 alerts 293-295 were addressed. Dependabot #291 remains UI-open with stale updated_at although GitHub SBOM already contains only safe pdfjs-dist versions 6.2.108/5.4.296/6.2.108; it was not manually dismissed.

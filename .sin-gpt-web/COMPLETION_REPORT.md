@@ -5,18 +5,18 @@
 
 - Task: `T-0025` — Run 22: Branch-/Merge-/Release-Abschluss für OpenSIN und OpenAfD
 - Owner: `chatgpt-web`
-- Completed: 2026-08-07T07:57:00+00:00
+- Completed: 2026-08-07T08:19:27+00:00
 
 ## Report
 
 # T-0025 Run 22 — Abschluss
 
-Run 22 ist abgeschlossen. Die veralteten Workspace-Chat-Tests wurden an die konsolidierte UI angepasst und die vollständige Frontend-Suite läuft mit 237/237 Testdateien und 1.873/1.873 Tests grün. Ein anschließend vom CI entdeckter High-Security-Fund in pdfjs-dist wurde in beiden Repositories auf 6.2.108 behoben; Production-Audits melden lokal 0 High-Vulnerabilities, die fokussierten PDF-API-Tests laufen 91/91 grün und die Worker-Suiten 470/470.
+Run 22 ist abgeschlossen. Die fünf veralteten Workspace-Chat-Tests wurden an die konsolidierte UI angepasst; der vollständige OpenSIN-Frontendlauf ist mit 237/237 Testdateien und 1.873/1.873 Tests grün. Der anschließend gefundene High-Security-Fund in `pdfjs-dist` wurde auf 6.2.108 korrigiert und der OpenAfD-Lockfile-Eintrag zusätzlich normalisiert.
 
 ## Finale Code-SHAs
 
 - OpenSIN: `2d4104e618308f045aa9c44eb2f54c88764de7e5`
-- OpenAfD: `05f3bbbd322ba1f1f7cee0a416dd36dbec51d8d4`
+- OpenAfD: `789b20a7ba4fb72b8c1169edb563a742198032b3`
 
 ## OpenSIN CI
 
@@ -25,28 +25,34 @@ Run 22 ist abgeschlossen. Die veralteten Workspace-Chat-Tests wurden an die kons
 | CEO Audit Gate | 31157427217 | grün |
 | CodeQL Security Analysis | 31157427227 | grün |
 | Security Gate | 31157427237 | grün |
-| Quality Gate | 31157427239 | grün, inkl. Production-Image + Browser-Smoke |
+| Quality Gate | 31157427239 | grün, inkl. Production-Image + stateless Browser-Smoke |
 | Test Matrix | 31157427245 | grün, alle 5 Jobs |
 
 ## OpenAfD CI / externer Blocker
 
 | Workflow | Run | Ergebnis |
 |---|---:|---|
-| CEO Audit Gate | 31157445750 | blocked: GitHub Billing |
-| Quality Gate | 31157445720 | blocked: GitHub Billing |
-| Test Matrix | 31157445742 | blocked: GitHub Billing |
-| Security Gate | 31157445718 | blocked: GitHub Billing |
-| CodeQL | 31157445721 | skipped |
+| CEO Audit Gate | 31160197037 | blocked: GitHub Billing |
+| Quality Gate | 31160196373 | blocked: GitHub Billing |
+| Test Matrix | 31160197103 | blocked: GitHub Billing |
+| Security Gate | 31160196396 | blocked: GitHub Billing |
+| CodeQL | 31160196514 | skipped |
 
-GitHub meldet auf dem finalen Main-SHA ausdrücklich, dass Jobs wegen fehlgeschlagener Kontozahlungen bzw. erforderlicher Erhöhung des Spending-Limits nicht gestartet werden. Dies ist kein Repository-Defekt und hat keinen Code-Workaround.
+GitHub meldet auf dem finalen OpenAfD-Main-SHA ausdrücklich, dass Hosted Jobs wegen fehlgeschlagener Kontozahlungen beziehungsweise eines zu niedrigen Spending-Limits nicht gestartet werden. Das ist ein externer Account-Blocker ohne Code-Workaround.
+
+## Security / Dependabot
+
+OpenSIN und OpenAfD lösen die produktiven 6.x-`pdfjs-dist`-Pfade auf 6.2.108 auf. `yarn audit --groups dependencies --level high` meldet lokal 0 Vulnerabilities; die fokussierten PDF-API-Tests sind 91/91 grün, die Worker-Suite 470/470. Die ursprünglich angeforderten OpenAfD-Dependabot-Fixes aus `6fb485824` sind umgesetzt (`brace-expansion` 1.1.18, `postcss` 8.5.25).
+
+Dependabot #291 zeigt aktuell noch `open` mit unverändert altem `updated_at`, obwohl GitHubs aktueller Dependency-Graph/SBOM `pdfjs-dist` ausschließlich als 6.2.108, 5.4.296 und 6.2.108 ausweist. Der Alert wurde nicht künstlich dismissed; dies ist ein verzögerter Alert-State, nicht ein verbleibender verwundbarer Runtime-Pfad.
 
 ## Live-Release
 
 - `sinchat.delqhi.com/api/ping`: 200, commit `2d4104e618308f045aa9c44eb2f54c88764de7e5`
-- `openafd.delqhi.com/api/ping`: 200, commit `05f3bbbd322ba1f1f7cee0a416dd36dbec51d8d4`
+- `openafd.delqhi.com/api/ping`: 200, commit `789b20a7ba4fb72b8c1169edb563a742198032b3`
 
-Beide immutable OCI-Releases bestanden interne und öffentliche Healthchecks. OpenAfD hat außerdem keine offenen Dependabot-Alerts mehr; die in `6fb485824` aktualisierten Abhängigkeiten sind wirksam.
+Beide immutable OCI-Releases bestanden interne und öffentliche Healthchecks.
 
 ## Evidence
 
-Run 22 completed: OpenSIN code SHA 2d4104e61 has CEO Audit 31157427217, CodeQL 31157427227, Security 31157427237, Quality 31157427239 and Test Matrix 31157427245 all green and is live; OpenAfD code SHA 05f3bbbd3 is live, local audits/tests green and has zero open Dependabot alerts, with GitHub Actions solely blocked by external account billing.
+Run 22 complete. OpenSIN code SHA 2d4104e618308f045aa9c44eb2f54c88764de7e5 is live and all five workflows are green: CEO Audit 31157427217, CodeQL 31157427227, Security 31157427237, Quality 31157427239, Test Matrix 31157427245. OpenAfD final code SHA 789b20a7ba4fb72b8c1169edb563a742198032b3 is live; frozen install, effective dependency graph and production audit are safe with pdfjs-dist 6.2.108 and local PDF/worker tests green. OpenAfD GitHub Actions remain externally blocked by billing on runs 31160197037, 31160196373, 31160197103, 31160196396; CodeQL 31160196514 skipped. Original P5 alerts 293-295 were addressed. Dependabot #291 remains UI-open with stale updated_at although GitHub SBOM already contains only safe pdfjs-dist versions 6.2.108/5.4.296/6.2.108; it was not manually dismissed.
