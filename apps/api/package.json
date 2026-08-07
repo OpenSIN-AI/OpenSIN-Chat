@@ -88,7 +88,7 @@
     "p-queue": "6.6.2",
     "pdf-lib": "1.17.1",
     "pdf-parse": "^2.4.5",
-    "pdfjs-dist": "6.1.200",
+    "pdfjs-dist": "6.2.108",
     "pg": "^8.22.0",
     "picocolors": "^1.1.1",
     "pkce-challenge": "^6",
