@@ -50,13 +50,6 @@ vi.mock("@/hooks/useChatHistory", () => {
   };
 });
 
-vi.mock("../contexts/TTSProvider", () => ({
-  TTSProvider: ({ children }) => (
-    <div data-testid="tts-provider">{children}</div>
-  ),
-  useWatchForAutoPlayAssistantTTSResponse: () => {},
-}));
-
 vi.mock("./LoadingChat", () => ({
   default: () => <div data-testid="loading-chat">LoadingChat</div>,
 }));
@@ -182,14 +175,14 @@ describe("WorkspaceChat — successful render with workspace", () => {
     );
   });
 
-  it("wraps ChatContainer in TTSProvider and DnDFileUploaderProvider", async () => {
+  it("wraps ChatContainer in file-upload and agent-run providers", async () => {
     const workspace = { slug: "test-ws" };
     renderWorkspaceChat({ loading: false, workspace });
 
     await waitFor(() => {
-      expect(screen.getByTestId("tts-provider")).toBeInTheDocument();
+      expect(screen.getByTestId("dnd-provider")).toBeInTheDocument();
     });
-    expect(screen.getByTestId("dnd-provider")).toBeInTheDocument();
+    expect(screen.getByTestId("agent-runs-provider")).toBeInTheDocument();
   });
 
   it("passes threadSlug to ChatContainer when provided as prop", async () => {

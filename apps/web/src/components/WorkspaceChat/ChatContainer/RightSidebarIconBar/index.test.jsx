@@ -51,18 +51,16 @@ describe("RightSidebarIconBar", () => {
 
   it("reveals optional panels only after opening the tools menu", () => {
     renderMenu();
-    expect(screen.getAllByRole("menuitem")).toHaveLength(7);
+    expect(screen.getAllByRole("menuitem")).toHaveLength(5);
     expect(screen.getByRole("menuitem", { name: "Sources" })).toBeVisible();
     expect(screen.getByRole("menuitem", { name: "Notepad" })).toBeVisible();
-    expect(
-      screen.getByRole("menuitem", { name: "PDF Analysis" }),
-    ).toBeVisible();
+    expect(screen.getByRole("menuitem", { name: "Preview" })).toBeVisible();
   });
 
-  it("opens PDF analysis and closes the menu", () => {
+  it("opens preview and closes the menu", () => {
     renderMenu();
-    fireEvent.click(screen.getByRole("menuitem", { name: "PDF Analysis" }));
-    expect(mockToggleSidebar).toHaveBeenCalledWith("pdf-analysis");
+    fireEvent.click(screen.getByRole("menuitem", { name: "Preview" }));
+    expect(mockToggleSidebar).toHaveBeenCalledWith("preview");
     expect(screen.queryByRole("menu")).not.toBeInTheDocument();
   });
 
