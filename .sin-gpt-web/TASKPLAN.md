@@ -14,9 +14,9 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 ## Status
 
 - Backlog: 0
-- In progress: 2
+- In progress: 1
 - Blocked: 9
-- Done: 14
+- Done: 15
 - Cancelled: 0
 
 ## Tasks
@@ -40,7 +40,7 @@ Finish OpenSIN Chat and sibling OpenAfD: inspect uncommitted changes, fix all di
 | T-0021 | critical | ops | blocked | chatgpt-web | Run 12: CEO-Abschluss in ChatGPT Web mit Chrome | — |
 | T-0023 | critical | implement | in_progress | chatgpt-web | Produktkern konsolidieren und aktive Overkill-Flächen entfernen | — |
 | T-0024 | critical | ops | blocked | local-agent | Run 21: ChatGPT Web CEO-Delegation wegen Mac-i9 Timeout blockiert | — |
-| T-0025 | critical | ops | in_progress | chatgpt-web | Run 22: Branch-/Merge-/Release-Abschluss für OpenSIN und OpenAfD | — |
+| T-0025 | critical | ops | done | chatgpt-web | Run 22: Branch-/Merge-/Release-Abschluss für OpenSIN und OpenAfD | — |
 | T-0004 | high | ops | done | chatgpt-web | sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren | — |
 | T-0005 | high | ops | done | chatgpt-web | Taskplan und ChatGPT-Handoff aktuell halten | — |
 | T-0009 | high | test | done | chatgpt-web | Web-Coverage-Gate wieder erfüllen | — |
@@ -354,17 +354,21 @@ Blocked: Run 21 ChatGPT Web: mcp_network_error Connection timed out on Mac-i9 an
 
 ### T-0025 — Run 22: Branch-/Merge-/Release-Abschluss für OpenSIN und OpenAfD
 
-- Status: `in_progress`
+- Status: `done`
 - Owner: `chatgpt-web`
 - Kind: `ops`
 - Priority: `critical`
 - Dependencies: none
-- Updated: 2026-08-06T16:44:48+00:00
+- Updated: 2026-08-07T07:57:00+00:00
 
 Nach dem blockierten Run 21 den Chat branch-first fortsetzen. Alle relevanten OpenSIN/OpenAfD Branches, Worktrees und offenen PRs inventarisieren, sicher testen, nur beabsichtigte Änderungen nach main integrieren, pushen, OCI deployen und die vollständige Browsermatrix abnehmen. Stale oder unabhängige Branches nicht blind mergen; jede Entscheidung mit Evidence dokumentieren.
 
 Acceptance:
 - Neue ChatGPT-Konversation ist verifiziert; beide Taskpläne wurden gelesen; relevante Branches/Worktrees/PRs sind geprüft; getestete Änderungen sind nach main integriert und gepusht; OCI und Browsermatrix sind frisch verifiziert oder mit exakten externen Blockern dokumentiert.
+
+Evidence: Run 22 completed: OpenSIN code SHA 2d4104e61 has CEO Audit 31157427217, CodeQL 31157427227, Security 31157427237, Quality 31157427239 and Test Matrix 31157427245 all green and is live; OpenAfD code SHA 05f3bbbd3 is live, local audits/tests green and has zero open Dependabot alerts, with GitHub Actions solely blocked by external account billing.
+
+Completion report: `.sin-gpt-web/reports/T-0025.md`
 
 ### T-0004 — sin-chrome-control Timeout in wow-my-zsh als GitHub Issue dokumentieren
 
@@ -486,10 +490,6 @@ Blocked: Belegt blockiert: Der vollständige API-Jest-Lauf war nach mehr als 8 M
 
 ## Recent events
 
-- 2026-08-06T16:50:01+00:00 — `chatgpt-web` — `p1_paths_redacted` `T-0025`: Redacted the six private absolute operator paths in tracked delegation-run21.md, delegation-run22.md, and handoff.md to neutral repository-root labels. Files remain versioned as durable agent handoff history; no product source changed.
-- 2026-08-06T16:52:14+00:00 — `chatgpt-web` — `p1_scope_expanded` `T-0025`: Fresh full tracked-tree scan found the only remaining private absolute user paths in .sin-gpt-web/delegation-run20.md lines 9-11; the originally reported run21, run22, handoff and generated taskplan paths are clean.
-- 2026-08-06T16:52:40+00:00 — `chatgpt-web` — `p1_all_paths_redacted` `T-0025`: Redacted the three additional private absolute paths in delegation-run20.md. A full tracked-tree scan now has no private absolute user path path findings pending verification by check:public-ops.
-- 2026-08-06T16:55:05+00:00 — `chatgpt-web` — `p1_local_gate_passed` `T-0025`: OpenSIN private-path policy repair verified locally: full tracked-tree scan has no private operator path findings; taskplan validates; yarn check:public-ops passed across 2573 tracked files.
 - 2026-08-06T16:56:41+00:00 — `chatgpt-web` — `p1_commit_created` `T-0025`: OpenSIN P1 policy fix committed as dac56d3ef49ec245956e1729d24100a53ac70a23 after check:public-ops, taskplan validation, and diff checks passed.
 - 2026-08-06T16:57:05+00:00 — `chatgpt-web` — `p1_pushed` `T-0025`: OpenSIN main push succeeded: origin/main advanced from 1d9c4ffc5 to dac56d3ef49ec245956e1729d24100a53ac70a23.
 - 2026-08-06T16:58:00+00:00 — `chatgpt-web` — `openafd_billing_blocker_verified` `T-0025`: Fresh OpenAfD main GitHub Actions evidence: runs 31117898425, 31117898432, 31117898442, 31117898449 failed and 31117898444 skipped because recent account payments failed or the spending limit must be increased. External GitHub billing blocker; no repository fix attempted.
@@ -506,3 +506,7 @@ Blocked: Belegt blockiert: Der vollständige API-Jest-Lauf war nach mehr als 8 M
 - 2026-08-07T07:03:12+00:00 — `chatgpt-web` — `quality_frontend_tests_fixed` `T-0025`: Quality Gate run 31127186070 had five stale frontend expectations across WorkspaceChat/index.test.jsx, Sidebars.test.jsx, and RightSidebarIconBar/index.test.jsx after product-core consolidation removed TTS wrapping and Console/PDF-analysis optional panels. Tests were updated to the current contract (DnD+AgentRuns wrapper, five active sidebar tools, Preview path). Fresh apps/web yarn test passes 237/237 files and 1873/1873 tests, exit 0.
 - 2026-08-07T07:18:51+00:00 — `chatgpt-web` — `security_pdfjs_fixed` `T-0025`: Final push b95de0b9e exposed a genuine high production audit finding in pdfjs-dist, not a runner failure. Patched OpenSIN API direct pdfjs-dist 6.1.200 to 6.2.108 and constrained officeparser's pinned 6.1.200 path via Yarn-v1 resolution **/officeparser/pdfjs-dist=6.2.108 while preserving the unrelated React-PDF 5.4.296 path. Fresh production audit reports 0 vulnerabilities; focused PDF API tests pass 5/5 suites, 91/91 tests; worker passes 38/38 suites, 470/470 tests.
 - 2026-08-07T07:19:04+00:00 — `chatgpt-web` — `ci_infra_evidence` `T-0025`: Old finalization runs were confirmed as GitHub hosted-runner infrastructure failures: Test Matrix 31127183871 had maintenance/API/worker jobs green but Web and cross-app jobs were not acquired by hosted runners; Security Gate 31127193440 likewise had both jobs fail runner acquisition. New push runs supersede these and will be used for final status.
+- 2026-08-07T07:48:41+00:00 — `chatgpt-web` — `final_ci_green` `T-0025`: Final OpenSIN main code SHA 2d4104e618308f045aa9c44eb2f54c88764de7e5 has all five required workflows green: CEO Audit 31157427217, CodeQL 31157427227, Security Gate 31157427237, Quality Gate 31157427239 (including production image + stateless browser smoke), and Test Matrix 31157427245 (API, Web, cross-app, worker, maintenance all green).
+- 2026-08-07T07:49:03+00:00 — `chatgpt-web` — `final_deploy_verified` `T-0025`: Final OpenSIN immutable release deployed successfully from clean OCI release worktree: image opensin-app:2d4104e618308f045aa9c44eb2f54c88764de7e5 on production port 43939. Internal and public health passed; https://sinchat.delqhi.com/api/ping returns online=true, version 2d4104e61830, commit 2d4104e618308f045aa9c44eb2f54c88764de7e5.
+- 2026-08-07T07:56:41+00:00 — `chatgpt-web` — `cross_repo_release_complete` `T-0025`: Run 22 cross-repo release closure: OpenSIN final code SHA 2d4104e618308f045aa9c44eb2f54c88764de7e5 is live and all five GitHub workflows are green. OpenAfD final code SHA 05f3bbbd322ba1f1f7cee0a416dd36dbec51d8d4 is live with local audit/tests green and zero open Dependabot alerts; its GitHub hosted workflows remain externally blocked solely by account billing.
+- 2026-08-07T07:57:00+00:00 — `chatgpt-web` — `task_completed` `T-0025`: Run 22 completed: OpenSIN code SHA 2d4104e61 has CEO Audit 31157427217, CodeQL 31157427227, Security 31157427237, Quality 31157427239 and Test Matrix 31157427245 all green and is live; OpenAfD code SHA 05f3bbbd3 is live, local audits/tests green and has zero open Dependabot alerts, with GitHub Actions solely blocked by external account billing.
